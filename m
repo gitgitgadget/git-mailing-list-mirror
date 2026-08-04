@@ -1,138 +1,134 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11394562A2
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 14:00:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E068B3EEAE5
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 14:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785852039; cv=none; b=SfOu1dZxZMKYEgrPQi0OchdUmBJfiy+One4rmT1x53/ffMZZiGcU58gnSb8rcfIlzGjcImhDCnr4pbLvPoQjbQJGhCWXCKGL4pQRDNv6yCLYfvEOp87MqFqD3dITbvlaLymBWEomj7Oz+sIX6+2S+2XmL8NwbVEEea5DX6R1CEQ=
+	t=1785853867; cv=none; b=WKViXduCdM3qi3TkaFNnIscHFPZKmGzYtoLQaJJVYCNF1nxgjk+ZV8rkjhj/Hz/pv63+XHxS+kM2HC+VTHenXFb5CmP5tZ0aUEQCciEpIZv4fBmEz2CRKhrYKdeOVV+eKGbGZdPt4vsk8XeNT8cjWmkjKw4jADreQUOMPAFLfhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785852039; c=relaxed/simple;
-	bh=QZE7xtm4FoaorxV4fwIcQjFfPAWGimgxa9fXsUURgfo=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=hTtFxD9JAjoGqoTA46XXALI2Yx25wlppDlb+rLtewxdWJk3PNTyO2shrhRZZj+pl00UK3lML+4OKr3WqCKJRJQyLPIv9bWrMSwrXh3TRSpS2Hj0Y7bahLky9YvpIpCnZJuMXSXnQWJIMIDuWm5K9MqG5Iu/p8u3iOR997uqhndE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KwK1PhxU; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785853867; c=relaxed/simple;
+	bh=P+AU9JdkM5kSOOsLDxncpWn2hKBmCH1sI2O+9lC3ojo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m3L3GUmU9zI6unSJKJ0D3PQN/aTGx/nbvam2KRs96OoQiCfp6Ssq5soVX9nNvwaQhXtVgH4Q+6zQW2kf6qTVdvE9R2pKuEGph5iMH9mj0GBLtVOL5IBZdNNljLPLyrfgDoQRYHpbZJUcNlH6XIiWnTsBN7moyXPnxzjfoqHF7iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PrVgBDkp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G185erZ6; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KwK1PhxU"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-8486ac3f347so1082851b3a.1
-        for <git@vger.kernel.org>; Tue, 04 Aug 2026 07:00:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785852037; x=1786456837; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=5hI2jRcrCRdm+ZVABtO2RQKaOoK67cjDGqCoX4568uc=;
-        b=KwK1PhxUSTO6tFlJNb6+/HdGBbas8aM9lIrne2P1KUQVPpkXioDL5wMfTy9MfzvEhf
-         W8VxX+nirevTRAFWq2ykd0Zk0AwI5uA664O/i6bOMlneoE6Rvgdtg3rgn1MRFRJBZ0eY
-         wzr6t1ARsY7OUfXwBQtedzPOGzl8Yd6kMnfIx/9GPZI2sy/TxH38EpYJiQ0JsG6sL+lG
-         n6/Wf0lbUGRee2NA2QQLRHDFyaXeeUaDG2eNfZemb+zxITpwoZSGzAFPzX/e+ukM3xbC
-         uDMalSaXuNJYWSUKbnwRb8EttTpRDB94syg51fUunKdwf9/4rcd1WqiDmKH5pbWj35TU
-         kn+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785852037; x=1786456837;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=5hI2jRcrCRdm+ZVABtO2RQKaOoK67cjDGqCoX4568uc=;
-        b=SwUwfr10ww7Gvtm8gSAFB0E80qECIHQqENmPV4iLYa/C5VPit9JngBd5BERtCukfSi
-         fES9hsvMzmj2FhP/D+YS1TSZkrs0KOSLFflHDo/41jTkcC5RTlAwGGifcWb3U4ftWZnK
-         6krOPI55aFRpfVpFub6YE57NtHhdAleOW5Hjgo0LSSJebBXBvHBzkvrtFa5ZW2xtYwOJ
-         WKneT9BU0o6Ze3Xs71wfD9HFl4szQA0CyKfzUwz1UMCe4oxKCNnFfHGh5kpyi7PQfzVD
-         VEI65ieLrwI5ZT7GRSy4MfBrcdC9izVm7crfPuL5I4xhlHU5rwcVGUJclZ4sHeAB09jH
-         F65A==
-X-Gm-Message-State: AOJu0Yzkmd+yLeNttBIpCYs1t3QUWSrLaMoB2O1wux1Cb3FIVc4CHI/V
-	N9ALKgA0p6sqZ/awW1UmCkMvUg/V7jhhsAza6fBmGKLh0tQUcg2gBm/l9y9RAw==
-X-Gm-Gg: AR+sD10U/vz3rPtSJ5Pl5hfbXCN/I959CECbT5aqMAf1BzmD7sluTUzDB9sguVL6eNY
-	u7Uo0IquLBfOU9/Dc/qREF91F//BZP90lQbM+6YcaFv+61PboB/bF0pqTK/0X2Wt+UpepJkkuFS
-	6lWH16+wQBz5lLD/HF9fr9VWiivLjE6WvaFClcY0CGqEY8pqadf//7hmxE/l0kkhc/vZfKCTWov
-	LGlfXlotsKZ8a8EQLRyCm3DPInZjGmM7tAq8JkbA7+6hBJ0atYhgcBJRIoi8+jT5m+2zWawHujg
-	e/qiPzpd03sWnnrs/uAjAUjDdE00oWcIqcR0noxCFI1m1ekCaFoXZQBYmzrHCEByNlYiMuOoydp
-	2eHjgUrmph7rqKKH26AaKoyo8pP28eRx579caJvvGbRXRen1B6zLpqnd6L9XLWR6w88zt2fOHMq
-	liqvOfAoXb3qi/iXhYKCxHdukE1bwJx7jrC48mRIvqL2xagu7HcroY0Q2+CkSG7w==
-X-Received: by 2002:a05:6a21:4cc2:b0:3c3:a195:518c with SMTP id adf61e73a8af0-3cb6c9c0ea1mr4269861637.21.1785852035761;
-        Tue, 04 Aug 2026 07:00:35 -0700 (PDT)
-Received: from [127.0.0.1] ([20.83.228.70])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbe64a58ce4sm1344596a12.31.2026.08.04.07.00.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 07:00:33 -0700 (PDT)
-Message-Id: <pull.2192.git.1785852032626.gitgitgadget@gmail.com>
-From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 04 Aug 2026 14:00:31 +0000
-Subject: [PATCH] worktree add: shouldn't dwim if -b or -B is given
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PrVgBDkp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G185erZ6"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 948971400112;
+	Tue,  4 Aug 2026 10:30:52 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 04 Aug 2026 10:30:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1785853852;
+	 x=1785940252; bh=RetsLf6fqv/XFdbQEPCvI31seRBkIBfnTlntx0bBDgE=; b=
+	PrVgBDkpt690URcJch6R3L8BytPsdTfb8QV/t9+tXIHpqe9DCa42wjLZXivYytQg
+	6gpifcl4m2vdBGI1BFlOgs/T8FScnv1e2neKRi56S3azZH2MeHtvhIl14cQYoXLH
+	5KKVhCKiE7Bwscf7zoVYOpOBFHCS/cThgqPyWB7VUXnzRTNYN4rxl3x0/c/pUU45
+	JG/I+WF3/zD9eztuw5cHiB6VUU0FRasBEJU8O8tuS936AScuF6a6uGJBvQhl/yM/
+	dRTOqM9Sp+CUAiFMrOAAAzp8SRqdvS0oD1kJN6edor1wOYXrDidmYzvEdL+s0mBL
+	s/GQl+5G+rQufMyPqjtm3Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785853852; x=
+	1785940252; bh=RetsLf6fqv/XFdbQEPCvI31seRBkIBfnTlntx0bBDgE=; b=G
+	185erZ6/mz1OgVcI6/6tyhIkP6SrNjgoU2ecF5S5y5CzD7CsEVzHWtJ97Zo8RCxB
+	m4Jjkw5qwUrqaWojtGS/B08OH8chkpfww0pwrVALQVeA9q7S9bOGeUa+mfmLc6/C
+	Yn0L9TLpC61RlRCsx7pCPFlkoJAo2hG7qfjyl5QuHniH+p0exsRxGjYRpxzQoN4Q
+	93QLPAOT0VC3OF4o9myFb5eLqwBtLuBlrZCN/gUyNwLf1jkJ6g5i10m0vyDO5Fmj
+	dcCnD7XfOHcSRydWxzVe0jwPzRfQNEXE5RPLzH/W5anapBHDdmlqLX9s7CpS/3Xw
+	DiBkj85kVPXckgMDH6g7Q==
+X-ME-Sender: <xms:nPdxaqekk27LOmuqPQ1GPPvup8SN2tSXkYWQY8ABCaU1qbk2oNpqUw>
+    <xme:nPdxarPl7bmdgG4iCZGNZrgPpJQGNAN1D5txykXCdf7Q7y8S8rARE1tojyIyj3syd
+    g8_eUegjM5sg5_E2O9N8-yuVrlby7AsLrUlqvkUtN6f4Hkcvc392RM>
+X-ME-Received: <xmr:nPdxagitl08ozoh-5jMpIVuaKDYa_yvRAiYvcHSVy0gp8IlgHq0MQF6HQRV8ipxBbmFL9lWBO9B_XF4Dm93x6Qb5QUDq9Y18IU3NTzb7>
+X-ME-Proxy-Cause: dmFkZTEQc1uwD566AmVWdDzuFTdfFeGYWfeLuUeNYXT4E2QDU8RYOramtEyCJHd0xWaghg
+    /WddsyfDEg8quDdNYBFDqVqwJ9OPER+YBfYhIr7qPZg4UavXqvT/s5F59VD5jIC3bf0i5n
+    Rlb6YhgWMTDMosZefJi50CDqndEhWF0vtKtHbu5+oeJxFCqsPgU1Yiz4mAlj5kdBX7H3Mh
+    repFCJZgrfZtrcrtnfX7m+s0b+CSDyJ2t31Cn/MuCMfoEVlXSn9zIT1Zu1HpwGZlVHswJi
+    F2wYqJBwNDwiAamyfibnkn8OeRbD/4J3BbVn/OMaCqYCTWNL9mnu4qMSOwZ6Ip5C/pDASA
+    tNIoxGUzf3uhho6o0Ej3J+rEostxNg73m4nSXPMFxy4xGtHQI8Jwzqkp8rjVBRf7Y59mIW
+    RgTl/qvJ1CycVPf0R9fxNWmSU1aOJbxi7d4heLmLj8qIsk+4QY+3L3f9H7Oq0lcd29uljO
+    EIj3VivTnWKojej7tSfQNqcwbLZZ5HMC+ZqBScmLj17aRo1MIfxBi1yzdKdHTGtBnhFCM0
+    BfBFziXPeU1gPN7Br1feOmNpf6dOQnothwYwxse8ICU4camqh8SXrJC7vzVnzT9CXxfJ1Q
+    cZhoChL4wyqDYSrKgaJ8DxrKlElyQ+UVcUxB4OeCBPaOvRgDdvQFtbjEaxOQ
+X-ME-Proxy: <xmx:nPdxam3qiXUZKopkiXxTEQzUDvv8KGB68P3wgDjf9_Ltq9GcNQJcZw>
+    <xmx:nPdxaij0E0RbEW7urPAT6EX7LDfwZkUEonBf7qvnUDX71_6G2AHd4Q>
+    <xmx:nPdxaucyUf04MUi_4gVqW2v8BSuycL-yOITcmcuPhjjZ9MzaYTDUjw>
+    <xmx:nPdxatlJLZZsdjHAu4Zz5ElbPsXizC3828nzrbFUIdrqsvzW23iD2w>
+    <xmx:nPdxakBtqlFVYNQx0htW43WmOyvHUNokWxG_dIewqaTx-kw0uZB1ehVh>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Aug 2026 10:30:51 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 817c1250 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Aug 2026 14:30:47 +0000 (UTC)
+Date: Tue, 4 Aug 2026 16:30:43 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 1/2] doc: refs: put ref migration warning under the
+ command
+Message-ID: <anH3k9PvWHMpWLT_@pks.im>
+References: <CV_git_ref_migration_warning.b09@msgid.xyz>
+ <ref_migration_warning.b0a@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jacob Abel <jacobabel@nullpo.dev>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ref_migration_warning.b0a@msgid.xyz>
 
-From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+On Fri, Jul 31, 2026 at 11:07:02AM +0200, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> 
+> I have to scroll down at least three screens in man(1) from the
+> `migrate` description in order to see the “known limitations” for
+> it. This is important information since the text says that concurrent
+> writes can lead to an inconsistent migrated state. Let’s move that text
+> up to the command description and put it inside a Caution admonition.
+> 
+> This section made sense when it was added in 25a0023f (builtin/refs:
+> new command to migrate ref storage formats, 2024-06-06); `migrate` was
+> the only subcommand, and this section was visible from the command
+> description. A one-page man page. But that is not the case anymore
+> now that the command has nine subcommands to describe.
 
-'git worktree add <path> <branch>' DWIMs <branch> to a
-remote-tracking branch when neither -b, -B, nor --detach
-is given.
+That feels quite sensible indeed.
 
-However, 'git worktree add -b <new-branch> <path> <branch>' can
-still DWIM <branch>, causing <new-branch> to be ignored.
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+>  Documentation/git-refs.adoc | 30 +++++++++++++++---------------
+>  1 file changed, 15 insertions(+), 15 deletions(-)
+> 
+> diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+> index ce278c59bfc..98828041c23 100644
+> --- a/Documentation/git-refs.adoc
+> +++ b/Documentation/git-refs.adoc
+> @@ -35,6 +35,21 @@ COMMANDS
+>  
+>  `migrate`::
+>  	Migrate ref store between different formats.
+> ++
+> +[CAUTION]
+> +--
 
-This is a regression introduced in v2.42.0
-(128e5496b325640f0a09cc1d5b1e346c069b410f).
+Hm, okay, first time I see this format. It feels like the rendered
+version is indented once level too deep, but I guess that's more of a
+problem with how asciidoc decides to process this. And it's a tiny nit
+only that may not even be worth addressing.
 
-Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
----
-    worktree add: shouldn't dwim if -b or -B is given
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2192%2Fyoichi%2Fworktree-add-should-not-dwim-with-b-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2192/yoichi/worktree-add-should-not-dwim-with-b-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2192
-
- builtin/worktree.c      |  2 +-
- t/t2400-worktree-add.sh | 10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 654d27c3e1..3204afdb12 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -897,7 +897,7 @@ static int add(int ac, const char **av, const char *prefix,
- 
- 		/* DWIM: Infer --orphan when repo has no refs. */
- 		opts.orphan = (!s) && dwim_orphan(&opts, !!opt_track, 1);
--	} else if (ac == 2) {
-+	} else if (ac == 2 && !new_branch) {
- 		struct object_id oid;
- 		struct commit *commit;
- 		char *remote;
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 87b926728a..9cbf84861d 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -621,6 +621,16 @@ test_expect_success '"add" <path> <branch> dwims' '
- 	)
- '
- 
-+test_expect_success '"add" <path> <branch> does not dwim with -b' '
-+	test_when_finished rm -rf repo_upstream repo_dwim foo &&
-+	setup_remote_repo repo_upstream repo_dwim &&
-+	git init repo_dwim &&
-+	(
-+		cd repo_dwim &&
-+		test_must_fail git worktree add -b branch ../foo foo
-+	)
-+'
-+
- test_expect_success '"add" <path> <branch> dwims with checkout.defaultRemote' '
- 	test_when_finished rm -rf repo_upstream repo_dwim foo &&
- 	setup_remote_repo repo_upstream repo_dwim &&
-
-base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
--- 
-gitgitgadget
+Patrick
