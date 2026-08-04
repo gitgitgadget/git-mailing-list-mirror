@@ -1,114 +1,203 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B863CB570
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 20:06:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785874011; cv=pass; b=UuNZEaxh9eDoy+vOzhjXru/4XxbBA/VUGoCHK7WAIkuJeR/xjVWdCFVDwdXIavqnQ2RONDnbLZRrKvYoZ6UQOuqwxLLSfadWOMwodSpBLhg4wtw+KNY75dNpbKePMU27Nb0qx33l5Y/0Da5g7tXcHL5jUpp3xgCBHc93m5yx+DI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785874011; c=relaxed/simple;
-	bh=ns53vF0ApJv+TqMqmEUTsU2jdpc2vmbxJKWT1D2A2Yg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=sX2+2IiU3/bJstw4KLywsX2aaGZxVolK9K7y73L2gHEDfIai/pqGX7IIHvhcC2IcAy/Ljh9JlHwYm3HEa8OBefFs15pKerfnBL1rTSC/X4NncqRH3dQO7MhhWu+k5p3AnJYae8PXTYDGA+wqP2UKaSKn3yjvgAydYsNI+XAbb/U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aY7f8L9u; arc=pass smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CD34963CA
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 20:28:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785875309; cv=none; b=C6ejyFrfvQrRjiUEd6lv1CFDCK5IbxDAQiHT5j4ZBs+oVrY3EiqoRjCD6d6Dnv3+vT/dVaYtdBhwyl+V6M7DJXOnldVPA1XadnxptwCi53D6S04zDqYQAML14fsh8du85NPU1Br82ac2StZIblnhRRMCpeFrsEZRPpL59C41Kk4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785875309; c=relaxed/simple;
+	bh=R6XmLNPp89GREipNzBjKG+fJ8QaeUho/8QcNvLsazOM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lca7mW3K5hT4gUQQRTt/D7ctcCoV8uYZSMu06ka3ynmMma0OKzmiB4cyYuMG3P6AIv1TRsN2c5Ja5C40Uy8WDfhzPjsZtgbNG2sZtomJDv4STBSsay393aypNQ6aYbtIdM2D5JXBMCoTc+tS31qye4RmCdn54wHrpiLtLYoutwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tIyTVU0J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FmzFxIzr; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aY7f8L9u"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8487b7b3fc8so259994b3a.3
-        for <git@vger.kernel.org>; Tue, 04 Aug 2026 13:06:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785874009; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KDFvVdXivl26yDxVhx/4y7un9WKqKFS8hTSe/mslsMVZMGLewSaDIJoXXTH/tt64KV
-         uc1D6Me3I8MZHF3YTYIIyLSi36hZvvE6DzEYc7UpYASMH53E+z1j0uo7vOuQO0Oc4/kB
-         0I8rQmfBayHRedUtDjJGfg6lQpR2QPdJEtGuzu9VPQYwXSh0GP4JdE3bo+hW2GZM+FAR
-         F2m7bqejJQ48W4YybTk5Kmj3E6Nq7l6tPDa8eBMH4oYFXr/JC5CeyvV4wSjE7CkWXqt6
-         M6Is6KWfnZE+ObMCdGUaCeXrQAA2tArY+rYDeWi/Cpm4Cd5jUueVOdm75NSxdIxAu5Xr
-         Lr6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=ns53vF0ApJv+TqMqmEUTsU2jdpc2vmbxJKWT1D2A2Yg=;
-        fh=n69HU0xdvyfaxYri5fBnlRQ1JNzOk5TqdDasfOy/Pzo=;
-        b=OJ61Ftn/xXydXKzEYllqrWm1sX7ejlCAbBEUQMBVgGaGETj/vKHP4/WpcfzF6WSvDu
-         wrW0FrP/N7pyiBojaLh/PdSPCAruIFq8/IEfZyoqp5wUJr5Ik/XwUyxXigpnBa6r917o
-         8L39hsm8H5JKOMlh2gFPuF02xt0QtHEI7cRmjRLxivCcmf+dONeIpPxJZzW3I/etStE4
-         BF/0bSSNgxERg2wZ2Y/hCtgTg2yFnYfxffBa88iBQenxBTSddF+BsEukenb/rNnyMtwV
-         fwClkrAyg8Pk6aDOEzILBC7Zu9P8v5RopZYlEpESQfr7h7zh3nkn2UcQ5AIXi/RxbPfB
-         R5gQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785874009; x=1786478809; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ns53vF0ApJv+TqMqmEUTsU2jdpc2vmbxJKWT1D2A2Yg=;
-        b=aY7f8L9uJPzJ6aF6OZ03z7PDxJOI6cM6U1lsggef/KnfVH0KvesGurNo4PfZqATkTk
-         nqJ7cKlVOGh5UELoTQx9/R+TvElZld7s2xACgSSBRcm9A5EaQxHsKOl/ePktiF7jWWoA
-         m8vS87llkdwqu/KNdvyJMncokwo4BBr53zK6TlfuGjPb/63iZY1SBTDznwGdLvxdmoVE
-         Gte/Bny3kozUUBQ7cUsoxKWg83JbkArHwLZaj/pn8zHys1sa4A7g+XoTtrVmswl6XuQe
-         wcEWrd9sukN1KOa+ILNKXJFS2qGILiCEJhyUN3gjtyNoxwf6i2ZeJwRXyf0I680o3Sm7
-         bPIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785874009; x=1786478809;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ns53vF0ApJv+TqMqmEUTsU2jdpc2vmbxJKWT1D2A2Yg=;
-        b=j6oYEZx8Qe8wJX5E2nX+62xrK5bIhum92jKRbV+KmvBFWsKU/lddaHh0YaZcaSKbxw
-         GAGoMLn6aOzTtpKY4CXIPfVh1ETnFVqGC9+XA6yTuz+CkILS7Ha8CUXQmh2JNrx1yz30
-         n9fKzp2kJG4IdOPJ3Kp8R6Ut+FS8vED8kXwTBFwy56wZqvrTLlYvJTJ8EmhRBL6A/IdU
-         pmMQAOKMsTzbJ15XHnL1ktObNL6bGxa8n5OsqkZY/0vN7ZofpczUXt0ajaX3Otdkk0yc
-         SqP7YG/mfyNXasXRzxZKXnRTmP2WMgVBYqp08iC/9M/GvF5g7d+Jz9VMB76GwJ42e6mT
-         F/WQ==
-X-Gm-Message-State: AOJu0YzZddtEkrYUNFHybxOyG//aZNNzkfDazoW2hW4S3bE9TiPDDhmR
-	0rO9G3G+bKM0h1KtJXdBg4V2gHIov6JXs+TZZWsrUcoFv/l4xskn7fF0eauPDHUdRFtZwlzmb3h
-	65/clZZ77ltyC59r5wV3ah+A4MpSXJ/Kucg==
-X-Gm-Gg: AR+sD11DE390FpoY3/71mojKwe6DUZg4A24cyHbTNFw9pGGhbUwoXok2vDNRfIw3vaM
-	yeJ9J/LFpfC3lmpWiR28nV56+xa7Mg4LDvqT4uUJPnYCVgVpEguv3f08wFtEyeY//04wt/tf2b3
-	Bti2GEpg87+hrL6ifemORwqwwN+MqfGUVaBtWBcYJLcFFT6Tl3XTyI4Cy3gGNGTTIlLUvlLSc1x
-	oFiH37y0/+lwJq7/2F2V7VkNscOZmxXDZpgh3/mCDnD6Giig7VKepIGy/ko8En29DPkZjQuV8h0
-	0+YB4YeoufNI3/A7rD5ezpLSgIXb4wF/Og15JKveiqcD/DGwBLP9AvtHOZySA90fiaX2b7ggih1
-	TYffsCV34+gaY+uE87G0CmSfjWZRxjVRWPAl0xYc0RVw7Z6EwrdMLlMBF/EEhc9Lflgmx3c0SR1
-	VEBtqMMUDFA29/xy/T3+5MijsNePsipw==
-X-Received: by 2002:a05:6a20:e347:b0:3c3:9ed1:2549 with SMTP id
- adf61e73a8af0-3cb85fa02e6mr1206520637.41.1785874009345; Tue, 04 Aug 2026
- 13:06:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tIyTVU0J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FmzFxIzr"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6FA2B14000F8;
+	Tue,  4 Aug 2026 16:28:25 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 04 Aug 2026 16:28:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1785875305;
+	 x=1785961705; bh=7kEeNW7fDA9+55lfxRu/kqDjbxtCXWM4KCw0t9VL020=; b=
+	tIyTVU0J9Si/wbryD47bZC09euik0lsvBhpvdhe0SPHHBegFkx6jYeCCJT8snUCm
+	MSKiNFhmuX6LryqeEbod4m1tyOi5a1JFtC7y5Wl2jcbDsKJ/LHW+SAYUyUUm0loU
+	a3hW6Y2kZJdO4vHzoF2U4eimDg7LmwKhFu5URlW1wJocz2ShQFWLCFinYEQLEMM3
+	WaxaTFzT5WxSJ9QwI0OuesgCKiAXEmkJrA4O79s0c4m5m7pp8D8odU4qXA0yBEeb
+	lYmlrY9g7ldEOQWzeBvoCbgzSOberKMV3cXLjU8Ut8H0rQVcIXhKS9KyjfuiOJ2y
+	vFt8odmIk2WXFyelbonmQw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785875305; x=
+	1785961705; bh=7kEeNW7fDA9+55lfxRu/kqDjbxtCXWM4KCw0t9VL020=; b=F
+	mzFxIzraXf+TTynK7fNy6Zvw6s1Mo7MkWZXAAgTIo47e1IgO19PnoPpDRCOVTyKM
+	VkGyvwVTt80AHGHYgN9aXJYWMXkSHaZ1svAGCOMdVTJ1Gx246I5rvBEwNMRc/klK
+	EWOxk+CQgt6vrcFCLM7uKEtCaibD1sZKf8D/n8KTUbEtVN/QFbdNFlf2JbFmfSyl
+	xixTRWgI7JN4CdkUQzIDv3PVLkERw/fRs41tv6EKv11ImQuyKd6FPLxG/VSxv0/7
+	TsZ9ScjSM40a/OUH7p3CdQO3lYli4WjX6VZkprt20UoHhYgESNx8wgxoUTiIaT74
+	3/xnsIAiGdd5I4LM4dEPA==
+X-ME-Sender: <xms:aUtyajCDg03AyqtF_c0yTZNjiQmXetBAwufXkhfZpDLQju5tUFxXsQ>
+    <xme:aUtyaon2hEcXjs4F04HMFGPEqSajBZqDuL_G1p2_0a2ZBsJVlr_j-kAZ52JZiqk0v
+    OZx8MWBAOy4IvJ04IvMy1uxr8EoZ8ub--E7DYc3Zu42W4RJc3xmiBo>
+X-ME-Received: <xmr:aUtyakzM9JD22G4IEzFYjfgONMA1SfiYEqEocRq8xPiDhzRKi-UmkDt89jp9HV-7YjYfXWOgdFJwQKtCzjwuK0b44U1aMqi9Sg>
+X-ME-Proxy-Cause: dmFkZTFGy8+kcjMgCc1TVkVQdoMHffCeaDGyQO7NDIe9KowVWC78XLtP/IjqGu+snBpo7D
+    L/PHEtOK8RsK5Qk0d5usNStgl7EvVTnsy+puxRnrrY16eAZx5ubBBtQ3Uf9X2/10GPTpcT
+    ljMhwCXQuXfwg+CnP4btsssP2TYFayLi6qYUTVXynPL7pvi4gMITI4RR3Yo19UrJNpIJZ2
+    wtOq5akAEQEjvX4gCS7nctNTmaefXjviB9Qqq7XCSCxmVaiJleghsH/1X2n9D2pfYD+ibX
+    j5+hlLSFsEy1gwZPj57xvMfMMuNfZKop/tsAHsIL1PjKRGuOLBPiwcMTo5kmbMd/EGm3HO
+    GMEaNvHBwwhF+PlrunMtDWztJ1dLpLrDTQVltGIJV2BiH14G1JLVTBU3nSfp8ckTLi29mL
+    ttQb7gKZFceA+IzflhWi2gLx6IcDB7gjS4f/LaMJwHEeZJkqPeqq9pZdl2nh+F+Vp8f/Hn
+    vyS486mCgfXx5ZYE1nSKfvfeGvdvaSPsyrDRTtLwZpeNC76GU/XLT3zVgcLAI/EnQTj0a3
+    3wxEKMoTizTNn19QhzeIgL/L2piOcGIvcz+dfxvji8wvYId/F1m9DOUp3p03a+7e868gFm
+    dRm5T/Tr/42WeHZZIPCjEROAR4NIE6fioArkP0lGe3zCCIT0uUBdD6Xd6zrw
+X-ME-Proxy: <xmx:aUtyaiRiwFpIEq4NE3WRxttJuPHh1EORTVQv5O8CFoNNgHbCPl2dyw>
+    <xmx:aUtyas-vhFWwq-N0JRC81VSJ3GqK2e5xGxpa9yo18Vv_PSgEFmkOVQ>
+    <xmx:aUtyagvT_hSibe3RYagxeNQes81D339-gSOKzcKuO_diwHGD2WZycA>
+    <xmx:aUtyakMOA33z9q5DopErkK-qPhk5o1dkWri2STg7-LDfFrQvigd7xA>
+    <xmx:aUtyavb11eXNIgOcZfC0YcI5nZEZBQ4z2JvbpMaVf3RX2QwI58rxPnz2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Aug 2026 16:28:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Caleb White <cdwhite3@pm.me>
+Cc: domen@cachix.org,  git@vger.kernel.org,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>,
+  Patrick Steinhardt <ps@pks.im>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH v2 0/4] worktree: add lifecycle hooks
+In-Reply-To: <DKGE5DORETW5.1S9NXEX8KMQHH@pm.me> (Caleb White's message of
+	"Tue, 04 Aug 2026 19:03:19 +0000")
+References: <7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net>
+	<371a01cf-2765-4cf5-b1fd-414d1b55a325@mtasv.net>
+	<DKGE5DORETW5.1S9NXEX8KMQHH@pm.me>
+Importance: high
+Date: Tue, 04 Aug 2026 13:28:23 -0700
+Message-ID: <xmqqtsp9tyu0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 4 Aug 2026 16:06:38 -0400
-X-Gm-Features: AUfX_mxLW9xzjYxeS4J6PC4jFmwNKqGFJ7CFq6JVDk2gAAtQ3Gx7UsU7UzcCYzQ
-Message-ID: <CALnO6CAN1=dgRsYjABfa3CJkGnvb139EcrzS9EnX43i3szOgtQ@mail.gmail.com>
-Subject: git-replay/git-history lose notes
-To: Git <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi all,
+Caleb White <cdwhite3@pm.me> writes:
 
-I don't think this has been reported or discussed yet, though my
-apologies if my search skills just didn't find it.
+> On Tue Aug 4, 2026 at 1:14 PM CDT, Domen Kožar wrote:
+>> Hi everyone,
+>>
+>> First, apologies that my earlier reply reached the list as a separate
+>> message rather than as part of this thread. This is my first patch series
+>> submitted by email, and I am still getting the threading details right. I
+>> have made sure this reroll is plain text and correctly threaded.
+>>
+>> Thanks,
+>> Domen
+>
+> Hi Domen,
+>
+> I love the idea of having hooks for worktrees, especially now that
+> they are becoming more popular for having agents work on tasks in
+> parallel.
 
-It looks like git-replay and git-history will drop notes (or rather,
-not carry them over) when rewriting history. I've seen this both with
-"git replay --onto=3D=E2=80=A6 =E2=80=A6" and "git history fixup" recently,=
- though I
-suspect it affects all the modes.
+Before going there, we need to consider if these hooks are necessary
+in the first place.  If you _always_ want to perform something
+before or after running "git worktree add" or "git worktree remove",
+you can instruct your agents to use "git wt" script when they want
+to run "git worktree", and install a "git-wt" script on their $PATH,
+which essentially would be something like
 
-Fortunately when I check range-diffs before pushing out new versions,
-I notice notes have disappeared and can "git notes copy @{1}" or
-similar for a note at the tip. Recovery for the intermediate commits
-is a little more=E2=80=A6 involved=E2=80=A6 as I'm sure you can imagine.
+	#!/bin/sh
+	# git worktree [add/remove] ...
+	case "$1" in
+	add)
+		... do whatever you want to do before add ...
+		;;
+	remove)
+		... do whatever you want to do before remove ...
+		;;
+	esac
 
-Are notes out of scope for replay and history, or is this just a
-"nobody's gotten around to it yet"?
+	git worktree "$@"
 
---=20
-D. Ben Knoble
+	case "$1" in
+	add)
+		... do whatever you want to do after add ...
+		;;
+	remove)
+		... do whatever you want to do after remove ...
+		;;
+	esac
+
+The users would need to write the "... do whatever you want to do"
+part as the hook script _anyway_, and unless there are compelling
+reason why these _must_ be implemented as hooks, you should resist
+the temptation to pile more hooks on the system.
+
+Having said all that.
+
+There are five valid reasons you might still want to have a hook in
+a Git command or operation:
+
+ (1) A hook that countermands the normal decision made by the
+     underlying command.  Examples of this class are the 'update'
+     hook and the 'pre-commit' hook.
+
+ (2) A hook that operates on data generated after the command starts
+     to run.  The ability to munge the commit log message via the
+     'commit-msg' hook is an example.  You cannot easily prepare
+     what the 'commit-msg' hook may produce before you run
+     'git commit'.
+
+ (3) A hook that operates on the remote end of the connection that
+     you may not otherwise have access to, other than over the Git
+     protocol.  An example is the 'post-update' hook that runs
+     update-server-info().
+
+ (4) A hook that runs under a lock acquired by the command for
+     mutual exclusion.  Currently there is no example, but if we
+     allowed the 'update' hook to modify the commit that was pushed
+     through a send-pack and receive-pack pair (which was discussed on
+     the list a while ago), it would be a good example of this.
+
+ (5) A hook that is run differently depending on the outcome of the
+     command.  The 'post-merge' hook conditionally run by 'git pull' is
+     an example of this (it is not run if no merge takes place).
+     Another example is the 'post-checkout' hook that gets
+     information that is otherwise harder to get (namely, whether it
+     was a branch checkout or a file checkout -- you can figure it
+     out by examining the command line, but that is already part of the
+     processing 'git checkout' does anyway, so there is no need to
+     force duplication of that code in userland).
+
+If you cannot do an equivalent operation from outside the Git command
+for the above classes of operations, you need hooks for them.
+
+On the other hand, if you want to always trigger an action before or
+after running a Git operation locally, you do not need a hook.  This
+is true even if the action you perform after running a Git operation
+depends on what happened (class (5) above), provided the result is
+easily observable after the fact.
+
+Of course, one very valid exception to the above policy is when an
+action is common enough that the policy effectively forces everyone
+to reinvent the same wrapper.  We may be better off adding it as an
+officially supported hook in such a case.
+
+But for the hooks proposed in this topic, I do not think such an
+exception applies.
+
+Thanks.
