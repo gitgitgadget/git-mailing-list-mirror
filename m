@@ -1,130 +1,153 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214043624A9
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 13:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CE14582DD
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 13:21:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785849601; cv=none; b=HT1oP9JBWds6W/N85N66kzf6V8Gpc6d1ORUTdn7Icusnr7BtxpjH/aJkU4lVUDMmWbVA0ElMt3u9sY+fb5H1rPysyTixrbUmFGZwRl0y8cOTcAuDLqa+4RZq0RbibsbG+H6SrUUmk+OgsvWIKSCqdwuEcUYDMpk2z0L1OeicY54=
+	t=1785849691; cv=none; b=etHso87GuzGlnGHBcRA9FXdtxZhrjq+/qhCgkDT/X8ba3ioMJXJ/WxhlQQImprh6KVIVsVY/IVB17nUpnLZs/ZnwXfQmzfJq+SVmEh1VVjtGs0rL+fI7D9tW+I59kepO7v6G2hHPKZbk2whPmVstSdv2mYc/A8sgAP7IzUwP4Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785849601; c=relaxed/simple;
-	bh=8M0DlaQgj0fMpGjJKu83OomfKAY7QiSjH5nB3yYdyAc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=F6x5PqgKdXGftTeeVCuw8ZPmBi4VyKk3v7np03LVbl/jh7akwy2iTXE7Z+1Uc3SMpeKWvqV6UlzJx9wwHOGKJ1mJNRGXN2h62Gmwj0gRg4dXi6mrmtkDPcr46j29npx8Y8NB63O192GurnSQ0NV8YFHovi4CEG5xUYY7L1VWB/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PUJNqL6n; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785849691; c=relaxed/simple;
+	bh=JQ4FGKIy5X6j+czr4vw4w7+SmHwKU4h14a9TGPXZRrI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OugH4191cFNu+zA1NVc0YGYGuWhNCxUjQ3q+or/wcqiRkicWImdbULpJ34x8CASoMVNngOW6lx7vhURy+YGON8rXLg2HbOBop8aMAsh7OMdtlpGdgdHXayQe/uSRUtWfKTEKc35lJLZKhtygDEIayqjH6SYqNwbZ8ehRd6/OJ2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hzbwb3Ii; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SPO+6oqW; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PUJNqL6n"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c15d3cd51b2so621487366b.3
-        for <git@vger.kernel.org>; Tue, 04 Aug 2026 06:19:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785849598; x=1786454398; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=KA8/+18oYPOEoEr9tDPwA64lNQObhFGKNASWw7I3WnQ=;
-        b=PUJNqL6nFIkrN+WbDSb0xGP9e+v2m4LWcxV35eDsVlYAXo8xnxx5pIQd4Kz6hTBSzS
-         gzIB9a8Svi2wC7+VPg8QuTtaU2UiUDewd690cXMDj5o0iEhFZl9512VX+ulPsYp46msa
-         WPC7f9Y0/9H10rK50Fq+bz6H+3PWNCeanygo3pBVWnkRzjAXT/nJA5kNpqHYmvtfLYO8
-         JqLOJirZQvqqRvGstjYQCgaDHDzsinCVWPIFaY2jS2qRDQN7feAXwlLKFFk8GganPPOb
-         oy7K2PWAGFO6o7HW/iqanC8Dg9wyRltU1UbRi1L1sgUbcyI/DDz/jhoI9CWNYZbba6MU
-         +QQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785849598; x=1786454398;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=KA8/+18oYPOEoEr9tDPwA64lNQObhFGKNASWw7I3WnQ=;
-        b=BD+xDVblNQyA9WkwEf6crQ7NF/02u9k2J2g+yWBrK67c7M4eDEnnX0ZZL1phnzShXq
-         w9zfD+taKbQXJCqGB4BFc3arUhz0mmZkahWPKPtdwmK1tjiyjkgMjsRcamzeG3kppsFE
-         mnUwEIZIxA07CxPxXDuVspFbpTsjk16fQgfzFSxpp24YxamrUN+bfZWK6cMMLO7npbKc
-         td92Oup/A3YMcTacR7QmoWyXs1Gc5Qasd5OxTQIO09GnD8CZAHa1/9x4EP9FrzKZKytV
-         s+lABPTQ8mT9SvBJwCfyamjneiFgaphing+Xc7RbY76D+YGmWFZ45jnFOMn7YKpUbo3a
-         MVJw==
-X-Forwarded-Encrypted: i=1; AHgh+RooEJa/fVV1CZmsmoUIvJQPa0/ZZOe8164FAIRnCvOkRkxNvWMCu1eSVYpz7/KsxhTfh9o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwbFM4j4Q5z6EBavmWPTkHv6y0MYim7T/vTGSlMLUk3/Jd6QUz
-	YFVwpeFumO13FKJS/6l1bSxtBKB7iIlaZuo1GZE9beAjRwGJCJX2atOC
-X-Gm-Gg: AR+sD11eQ0mDEjBQEkVRz8suZChfms/OXbFshMHWO8OHL9dS53BWnbfTl1y/wgqWasU
-	PqkAjWjhPIX/mNkX1jqgMPHXkc9FlckJsztGrhSj74vmg0OISXVyGAOVrB6HCxMNoA3X3k9SrlL
-	NRZYgL/Wnr7ekt3vAwVGpy1bAcddwVeXkbzKT7AdvmbTu1WWPUu+TcYJxly918GpfKM1EgQgeXv
-	tBnCzVJmf5/TAufIp9LzHUyjm+2YF8ZsqsQW2R1uaJWINOxr0sW0r1VnBLRyc7O1hKLkuHXgSEU
-	PFX1eZ7o5NIhdI49lVRgQHL7hSBysHnoG3z2SC7JhkGupnIry8pJ9FOrdcRf6BIai0rNvBBxJdb
-	KKn4YMzvmjcb8gPqjYRKfMxU6fk6AxcyB5qfkCpP8l6seHan6L6aNOH04l560lW6cxGwifbpLGU
-	1Ez+7rLrGNhcoWxOrvgJWmJTXmHDn70pBltP5Het40iXnBZd1sA2nWnQb8lOGKTecIDzAhMydwV
-	R003xM0LhiBhe2X9vVNd1JOvcEleUEaHtIkP4Eb4Cg=
-X-Received: by 2002:a17:906:5498:b0:c12:6d25:2c7a with SMTP id a640c23a62f3a-c1fe7eec317mr912640566b.17.1785849598097;
-        Tue, 04 Aug 2026 06:19:58 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2036256374sm11853466b.25.2026.08.04.06.19.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Aug 2026 06:19:56 -0700 (PDT)
-Message-ID: <97c244f4-52d1-4d59-9ced-6f2dbe14a2f6@gmail.com>
-Date: Tue, 4 Aug 2026 14:19:51 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hzbwb3Ii";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SPO+6oqW"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 542F47A00BD;
+	Tue,  4 Aug 2026 09:21:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 04 Aug 2026 09:21:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1785849688; x=1785936088; bh=h+GuHZGJpX
+	/n/NmJ7ft3VCizVktgWHTjtPg9jj6G0M0=; b=hzbwb3IiuZd6GWlWudrCEo/waU
+	qIKNPQh5EF86iwEA8EP6khpn23nxSyHGbXeLnYinx6q7MFUvSXF2uxjipdLRq0Cd
+	/hzTekT8HbD4bvm+RNNMvfzuD2NsolUumqX9z2vcRfHgKNkM0Ifs/Zn3RxzFFBub
+	KoOlIrgRRxl2hC3iIu9PiBYFU9Nl8wG7uxETssamy7MfjwyAuvD/GN+I5EO+uhcg
+	Ex1hIXF4BsGkcCgPMOdPJdhHZ4qttlgtHjXu1yPfm/5oYX3VPrSXZsUaKOBH8V+l
+	kjzX3vQ1FTIZKDWZZpQg2AAGG8Z2mczIB6HSMPaZEkb69111+Y/+UmCZy7MA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1785849688; x=1785936088; bh=h+GuHZGJpX/n/NmJ7ft3VCizVktgWHTjtPg
+	9jj6G0M0=; b=SPO+6oqW+sIlU0CemlwwSLwGBK7XTuFqPlljTGq2Cl1S6TbdDGl
+	zqMABt2M+CBCwe6lprCOXt073NWefWXqvFdkQbTmkL+2PpK+KLagEMymoB6Irl7k
+	bJA3bcybMIiWu/euunq5BiQ2s1SzgwPxB+jl4Sd15uo05YM1ZaluUbB4fAag/slo
+	qB8Jeanv68ZqvF3f2I0mu3Q7uBd4pat5QRKvpVk4xW55AWNXRh5Jp6IroZLIaI9t
+	GddUoRPMX8HYWa6GA/bvmEBA8CKrZNKZwRz9VCTCd8lwqxXFkSLlqYml0is9Pg47
+	VzuxfHImJeaRHafBl+nPG+XVPcrK0WQuMBw==
+X-ME-Sender: <xms:V-dxalSQIH8WKIpEvzZ6iNxSZggAQGW5xr_ICDaSk8XERhfuAS6uDg>
+    <xme:V-dxaqzpsCigyNgBMu8vlBdjtKQ2FYVNud9f5SVRvZH_lWBYfZlpZxLx_XOR479yT
+    7WrkCPOuxY0HzUZ5I7EXi3XkRcKrfSwPVWVnG0vVr1_wTKNTPyl9A>
+X-ME-Received: <xmr:V-dxatBWl1rljCQEN28KMS2sAl7ZUXSRKVhiCvpFsNL_AJS34wtkto0sxlXqMakCpMJCg1Wpn0g4UQGPZwRsRjo_vIXSDABMvQ>
+X-ME-Proxy-Cause: dmFkZTFD2ID9ORgzrMyOdBR4EiR8TQt66j8IvbO0zNeYX5akyQFeD08KfcHmeV8A4gIA7i
+    F3riZHxTmvzlh8dic4IJyEr/YPHp8SPfnytA1HjI7ZJYVAhcOGfDZoiv25PxrxCin2L75y
+    srL5kmNN6F3ANAFvdeHQG1kfAqMe/4PCMHg0+dM4cDp3ma/hAVlMcH0Dsvh+DaGFBg7HSA
+    1ogSiJbF3Hu8IWKOpXpLcMpkeXMcCjrT23PibvM/dBsB5PWuLhi/Q1A5d+FCK/eg5nQA1B
+    5Ka0o+9N8CHd/Q8A1F/yGdNRdeBQh0b020TK6nDy08qmNGsMAYoa/uF3etxVoN/dOUEyCw
+    fdlB3Eb7PhA/Se/aBcaLzfvot8xVw4wSCHJvitbb0cIQ+ETMsz2uPRe77lbEUDrIEO0v77
+    vOJl2OV4S/+2IH3CknZIlCOKdi8+fIPaeDz+LfQP/LGgup6itcBQ630gyxvoxQjLgKrWdQ
+    nXfw4GvkPSV37fk6rz7ivpzBDP55J+3wCGsP4eNmnfxX8vnge/qw6BcsoZ5C2YTbi+t1/b
+    GqMSyynN9ICti1+z6TQvnjWKgrpqhq5+o/hUnKHc4N2KNaM9jttgC3s6w/D4sKxU+OpnhW
+    PoWA20vamq8wgQDZeyrCCOGqEl6n/pXG2q4PvGe3dSnN5ElfzP7izSOZxSHw
+X-ME-Proxy: <xmx:V-dxauG24iSZWy3kpld3fkMmcsfQB0AfdrbxdKQFfM_8nLse9ClQ0A>
+    <xmx:V-dxasPYX6EVOQdJblVPs11QFRP4jdRZs8c5U8NC86qFT0gGloX9EA>
+    <xmx:V-dxan4y383F3E5Guh7mgvBHjbuqqcoi2G1IjrEZjeX8hRAa2yXYLQ>
+    <xmx:V-dxanjjDYExQvbi5h5A9UpejreOQkbehu29nY7DwSkTQ1IEJT8KLg>
+    <xmx:WOdxaqjuv7TB9B9VrFhbNtKugEH_GmiH2fMfaMPV7H46LYveyg0qitrT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Aug 2026 09:21:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Phillip Wood <phillip.wood@dunlem.org.uk>,  git@vger.kernel.org,
+  Phillip Wood <phillip.wood@dunelm.org.uk>,  Matt Hunter <m@lfurio.us>,
+  Patrick Steinhardt <ps@pks.im>,  "D . Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v10 3/5] history: add squash subcommand to fold a range
+In-Reply-To: <CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
+	(Harald Nordgren's message of "Mon, 3 Aug 2026 18:35:22 +0200")
+References: <6b5b2c93f2e3e55bf456b86a8be61f5f85137a2c.1784536024.git.gitgitgadget@gmail.com>
+	<cover.1785750108.git.phillip.wood@dunelm.org.uk>
+	<CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
+Date: Tue, 04 Aug 2026 06:21:25 -0700
+Message-ID: <xmqqqzkevx62.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Jul 2026, #12)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Matt Hunter <m@lfurio.us>, Harald Nordgren <haraldnordgren@gmail.com>,
- phillip.wood@dunelm.org.uk, git@vger.kernel.org
-References: <xmqqfr15ruw7.fsf@gitster.g>
- <f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
- <CAHwyqnXYi76rMOWYEgJhoh2rXaTgLbze7mKd+WGoC9BbDFHXHA@mail.gmail.com>
- <DKCKB3HW6VJA.19CQLPOHR6WTI@lfurio.us>
- <f00673cc-afc8-4a4f-a668-e22c53b46181@gmail.com> <xmqqfr0vyyxm.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqfr0vyyxm.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 03/08/2026 17:02, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> If you raise a point and it is dismissed without a convincing
->> explanation then its fine to raise it again asking for more details so
->> that you can understand the reason behind the decision. That often leads
->> to a productive discussion and an improved design.
-> 
-> True.  But because "convincing" is not black and white, we need to
-> be careful a bit.
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-Indeed - what I'm really looking for in a discussion is to be convinced 
-that there is a reasonably logical rationale behind a decision and that 
-the other person has considered the counterarguments. Many decisions are 
-trade offs and different people may quite reasonably place different 
-weight the factors involved leading to different results. If I disagree 
-with a decision I try to only keep pushing back if I think the logic 
-behind the decision is flawed. I also find such discussions useful for 
-improving my own understanding of the problem and sometimes change my 
-mind as a result.
+>> These patches can be fetched with
+>>
+>>   git fetch https://github.com/phillipwood/git wip/hn/history-squash/v10-early-part
+>>
+>> note that they do not support editing the commit message of the
+>> squashed commit.
+>
+> Thanks, what should I do with it?
+>
+> Is it a replacement for my branch, or should it apply them as fixups
+> (if so how do we handle the lack of re-edit support)?
 
->> Having thought about it a bit over the weekend I wonder if the best
->> solution when squashing is to default to looking at the commits being
->> squashed before deciding whether to open the editor or not and allow the
->> user to override that on the commandline like "git commit". If we're
->> squashing a bunch of "fixup!" and/or "amend!" commits into a single
->> target then I'm not sure its worth opening the editor...
-> 
-> Hmph, a base commit with an "amend!" (tells the machinery to use the
-> message from the "amend!" commit only, discarding the existing one)
-> is clear to me that there is no need for further editing, but if
-> there is any "fixup!" (code change, for which need for associating
-> log message change is unknown) or if there are multiple "amend!", I
-> am not so sure.  It does make it confusing, I suspect.
+I am not Phillip, but in light of what I said elsewhere, I would
+expect you to review them as if they were patch submissions to your
+tree.  You may agree with some parts while disagreeing with others.
 
-I certainly don't object to always opening the editor, it has the 
-advantage that it is much easier to explain and encourages users to 
-revise the commit message when they are squashing.
+Respond to them.
 
-Thanks
+Respond even to the ones you agree with, just as you would when
+giving a positive review.  Demonstrate that you read them,
+understood how they work, and then state that you agree.  If you
+disagree, explain why you think it is better without such
+changes.  
 
-Phillip
+Just do not send a new iteration without a thorough explanation of
+how you addressed each of the review comments, including those
+review messages disguised as patches.  Be inviting to even those who
+have not been involved in this topic so far to join the discussion,
+which requires you to be transparent.  Engage in dialogue.  Explain
+what you are doing.  Do not let patches alone explain themselves.
 
+First and foremost, this development community is built on humans
+collaborating with other humans.  An author posts a patch, a
+reviewer responds with suggestions or critiques, and the author
+replies to that e-mail.  In their own words, the author might:
+
+ - build on the suggestion, rephrasing it and proposing further
+   improvements;
+
+ - disagree and offer a counter-proposal;
+
+ - concede the patch's shortcomings and outline how they plan to fix
+   them; or
+
+ - defend their original design to give the reviewer a chance to
+   reconsider.
+
+Doing this in your own words helps reviewers see how close we are to
+an agreement.  This kind of discussion often needs a few rounds of
+back-and-forth.  It should also welcome folks watching from the
+sidelines, which means letting the globe spin at least once so
+developers in other timezones can chime in before we declare a rough
+consensus.
+
+Firing off a new iteration before there is a rough consensus on what
+the final shape of the patches should look like makes it appear as
+though the only thing you care about is producing the next
+iteration, and that you care much less about collaborating with
+others.
+
+Thanks, Phillip, for these patches-as-reviews.
