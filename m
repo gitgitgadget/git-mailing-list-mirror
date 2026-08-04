@@ -1,120 +1,150 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360DE41CB5A
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 07:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4139041D627
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 07:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785828114; cv=none; b=nC+Zmh0nsY8nGtFAWFYvavtCQt5U/LQ9YffjJrinjsIGAQVcHT+jG8kCJeC4cGgrvLZ3gf/DlyAs++ylR0cLCPiIzXfqiodGTBlJsLOV7NUn2EXqRnsmdfXjwgNKChLt0K7G2Sv4UuujmN0mA5lq2+fti4y1OO0hFlspjWp1Ni4=
+	t=1785828345; cv=none; b=lMtOZFVaftCclVGv71KSwrh5F++6PwZnk8FrzxFP1trSmaDTPNlIw7QF9K53YOr6uvwOubbXSRvpoV85CC+OOYXEUMJQsQVR6G+P9xYm6qpBjs1LUAfbMTARy+4uxMl2w0vIp5Vp0INiN6vIzx3a+kIwX7AzGEGFi+ZcC8+69jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785828114; c=relaxed/simple;
-	bh=EIskeG5RkDwJH3O87bkHaTDuhDu7k+p3RlvOgteEav4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T7vTfafDF1mIriXGzRZSAbiqSPD08zwjdG2h/q6s8ViJ6kdrj1/JTc7WOs9XDFeKCE7NxabY+hYe6aAKGtHfQkDSBdMoodt7PevA7LqvmOfA6vB0AJUrzd+0FhEH4GybP9KABApwVhh9yzlcFekDatg1cS8WziITiYwRs+JFhGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l5se3hKG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d9MRSZXN; arc=none smtp.client-ip=202.12.124.149
+	s=arc-20240116; t=1785828345; c=relaxed/simple;
+	bh=fDfIjwQ+Oe8vpp1zCtbewE1rO1DkDeOhw7hMycoA9jI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=p1dNMszEVvNsJ3XGdMXddy6+bzbhmVpjALRNauI6UIAkSH5oh8PIyHo7XfPFY6edOuWh8KsdRWx+w3YvHhRIIW1pCCPC1QUpFjZMSoWsp8GtVDAEWWsYA+WQ30p4YkR0/ewYtJmi0PPwM/2B3KIx8aHzDUzwqFZ3993yDHML5Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jN0SLqdI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gVF3GBKg; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l5se3hKG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d9MRSZXN"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9DAB01D00187;
-	Tue,  4 Aug 2026 03:21:52 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 04 Aug 2026 03:21:52 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jN0SLqdI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gVF3GBKg"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 92B2E7A0148
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 03:25:43 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 04 Aug 2026 03:25:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1785828112; x=1785914512; bh=RpQ+M7y9hz
-	TwLk9JWplxLokDup+vQ6lI7NYYhy5IcAU=; b=l5se3hKGylLXEK6MDYAsK5CdDH
-	VoKPmBK6py8ZYT52XOkQ6XEqcJWmxky4VgrWg6Apkx4H30xMLmzQU790byrLDqFi
-	czlN23MmtLmXCt6jhJ3i/3da/434ufNMXRsJa7iYiPITbtb4q4dTlnZlAplRCvev
-	9oEs/d20mKiSOS2R90s1dxIkKm3l2DyXUntq7Ybk1onG/lxWE6BWoYoygrZuxIcw
-	xQfWOqcNw+ybekhrGMYO0XlNfAttUgMr7EkXW/jDNPaFHIZk/gAw0IVN2+zXkE4b
-	dpX8P5R60p/6TFlZMz8OqRfpXQWCjiFoo3UzgT1OtwVQdhCXhNS+Z+R/YBUQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1785828343; x=1785914743; bh=n/X/rKD2wj
+	sle7mkpQku7rXKKfbCEIUcRVzk1BbR7wE=; b=jN0SLqdIODG96S8H1rleAW7wmm
+	ZxjrKg7UnC18RD+vuwg2TPbOYc73GPnNv7j1iA7Q/R9QmLvAC7KYr9dlM50U0F1O
+	uN57gKx9xjdaxLSa8TbYDLaA3DaRqZ5WJ+PGJx9s5EVNFLlktYmVNdO1bsaQfpA/
+	yU+qHTQYM1KurBHg4zZFKqbQSBSZwERSeSCvOXHScqw0GGKvPWNTSlQZe4fffy1r
+	2DgZkEepuk7bhbEhLWvBjkyxoWfUOPEQMxFmRZLunLnl8J1ttcLBTLO4aX9P6Ub4
+	5MCtxK/H2Qvfumh+LygcUgbFJh+S+VEzgA9OT23dMC3ljH3zWxsjmajGs7qw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785828112; x=1785914512; bh=RpQ+M7y9hzTwLk9JWplxLokDup+vQ6lI7NY
-	Yhy5IcAU=; b=d9MRSZXNSMhmn/ssaL+St+Yn7DIeog56h4plNixnuzpcvng1Tuu
-	LrwnsrBPuVVOgObJAdkffUv52FS92Lgk2aK775Nj/tb5gGNPb3AMWIn7o2xCxdpI
-	LxNUN6opMQGRMbxMV8nfjO+iu11A+4TDTZs4BM4rJXUPlgbNQjT0IIaPHOljQ+Cc
-	+vt3hfPwrgzZjITb9aJiEeEbg8YyhHFWJPMhk3NIz2aFTUnIIWmzHeIniTxjxkf+
-	Pf5IF7b2jhFnx/dD7F0UCk9x/oSOP7hFuIG2d/MB+pJ97CGT6/AqZn9wNgxzmKX8
-	lhJkLvvjwEghpzOa71plCmpF31PB3Wh5ORA==
-X-ME-Sender: <xms:EJNxavr0c9hMhdlLVjXWKWTYGEBKCSROJXHors1Tyom8GSnZr3Ntgg>
-    <xme:EJNxavqJg9JndvtEOGJrarJIYcHejNv0J9j0WwRKLkYTSKn3p8GwsGNPMP0jV3TdP
-    ihbJI3vCjcuoZCpsEsuEYyFxotzuTegv2d0xdeu7uhDAQ3hBkOhFVI>
-X-ME-Received: <xmr:EJNxap1RuQJWN3G5E3oF5QqKY6_myPjMwDyLvi59W8H1IrXt1lO_xM_CPK8vzaW8gp9QoZZDrRWPYUrNTueiScSe-cOZnYX8xdL9YY7->
-X-ME-Proxy-Cause: dmFkZTEW21OsGZxUpWZhdkXtbm/1B/RJ4l8Q+GteNB83+vGg16KxWvo9EDlkFLPwh4XmVg
-    tonzBCmSlMcq9Zv5kkMsAOrl3v08zRX5F5Kf/PjQV7dQl7CLH9DoiWJINC1zs+NzgfwbPb
-    o/vBuEQsSqrZT13qzTRXc554btVvCS/6lfjTQKMetN17r0fR9TYxOWWeyrliUtKDxD9PGp
-    NrcEbQBCL7dK6pSjPXks7iNDoYJDpbaOkZ3ZDai5LJtC1i8/s7ATR2oU3ZQZ+La75i1u0F
-    hpyPnpq/uoBEpgm0v46vVCf+YWFQ4IBX0XlK2EWgOqGNi6VR3S767OqMXno5X3836ebyc2
-    4bWFeK6G4j5c3OurNyLTgePWCbSmOLMaQtiVAr1T/oy+y0MTbH3D5pnOd/D32wuXQvQKSi
-    ywz9SKiXyMOfJpjubdx/ciiDVXDqnkKf3lHgrX3Thvi0cMoDBuW6ungnT3SKaxnwkRe3Gw
-    esVMZFWI0WmU+9AvMjEbgT0ovGG+8ar/anIUkLnIOrX+Y75vHm4iCmW289Sp0HbkLIqQMm
-    m+Ujb2bnvsNowwKUOHpQYtkWIEhDx/tHYaog1sLTL60pGEE56CLOea3Zu0OAtANTbaHuZI
-    65C8i6iU8W6vQ6bEJdXk6fFGhbFOgJJXfOgLCRMC90G9dgjvs7uBsY4x+B+g
-X-ME-Proxy: <xmx:EJNxauAW0TJzdLYJRC2UJGivimvAhr0-WSg7VZHvF5qPAT2JOqFTLA>
-    <xmx:EJNxahd72r0dKS0BBQtoUDP1V84_by5FQmOQ5KLzia5MeBaFQ3qYTA>
-    <xmx:EJNxajj-aClzYRtod3PHGN4L825Ns21TAvdR2IYv1uXvmMELJRTkOg>
-    <xmx:EJNxappAT72MWw6LGd3cL1y3GJqENrE5MOYCHae0807jLPs5Mf3KOg>
-    <xmx:EJNxajAIWddBRHuZTYYYYPbCLJbzs-x7-cM8hUfu8GR2P0jlEFubLX-e>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1785828343; x=1785914743; bh=n/X/rKD2wjsle7mkpQku7rXKKfbC
+	EIUcRVzk1BbR7wE=; b=gVF3GBKgMSvNL1DipMDo+ah8KJaW09W9JGlkVgFAgaMY
+	rsMoA0lxY8WsmHqOZFQCUSMW9mVmQsc9DGyo/1ruD7WDXQvkXlZ0W9tm69pctGTP
+	8M8qjk1H6FcI+bK4R6sVLTu4OBxYyN/7CngHV+sijHZadDkNaaZ8+4N8o2FYuwDR
+	Mb/QERbggWYifkMGrpw7RHiQMLBwNzGZj6UcpFdkTu4xqMAbcDnJVU0EsmnjKSex
+	1Z5hKcfc6h0c2JHVL1eK2Le/fvuUiluIgSzEzkiUxNI8AZJ0d+nABsXUiOfM4pzu
+	R7HlA7cgc2Zhfm5ko8Ihkls89M2g5xqllk4jSshuug==
+X-ME-Sender: <xms:95NxaoxCg5ZAG9YzBiyLIRRi6g-oTquoSsMwHT-VDqf98V2hrhC6VA>
+    <xme:95NxajMyXWtnwPIZSo7hD8KvtDcz0bGwt8abV6pmpGDPI-IfJo3TPPu5cHEH-y0JR
+    uwZgjWbBPW99WpZl7kDMdOtkvqsIx33O3e81dlksoM94eq1XC7SDQ>
+X-ME-Received: <xmr:95Nxav-c7m7r5wVKqd86logXDg97uGAVHOP1v_Z1nul9IqhXGO0jGNyan4uJ8HBGgp3DdLUhETyrnIVFvKYWtPu0XRdjO9Z4oMf6qW1b>
+X-ME-Proxy-Cause: dmFkZTEu6h61h/4de27kvZgkop/V4OEcaCaEmwJyBl8rNlpPjDWCaqLrqQYJngDxeU0iVh
+    BF1dSixKKxJYuTJy7Y/oUVmLKiED+qysyjFmPWVCYJfEQ3KKban8sj1mWpaQzV6gUhosEa
+    BhFK8AULTnEfEvhfFrNoCdb2mv0F6SKoFHS9pcXUH6Bumde4t15gbwbLxWCA/ZgnB4VHEP
+    3Ofpu8IrMcilsnY74xgdMnamEH3ph4rYWvHJnKBnmwmJr+mYR9qbv9jyjgOFkT8FY5ojtU
+    93k+tiGrSjwCmFYwQoYj8GPOv9oolRk3vSyJBwHeYRLrrb1LR/dWhUn3y1Gfn4D5rxKWn1
+    KjCQ6NidSmdwIhzZLVoMkYGYtpAX5VE9SRsYPSq7x1nAJitsLxFYhM2ZT+In8hgB+EvQKj
+    9WOe2gWDdEdziCBRdBJ3RpJUCFMG1LK5IjbOVealQRRPRBMSYKOln1xrWawwxyZEy3jhq5
+    kSG4zF/CcUAqcBXRzcMoKDfQWyqgjIwmsrHm5Ha2QSaO2UDP447mI3zTDRbaBkOQGnhr7A
+    KGK7YdlSVrr39H2nJVnZ4tvnhcAsNt9Zw/ka18V2XvaVt/DKpmmWcN79vuQOmBIcpDXWT/
+    sP7aqKruwA5hVd7HhHQOjRI6NEfNVOhStM0vYj4XcTiFf4ZEubmIOjPCWL8w
+X-ME-Proxy: <xmx:95NxarpzL-IzbEP5K5AzWQhx-c1WFbuBNpyRIxxmM3nd_ofNRJOKmQ>
+    <xmx:95Nxap5XyoxCCAHQJ24v_tSjMyK31g_8f0NrysZjSJjViSECotdq3w>
+    <xmx:95NxajMvMkjc6UXRtB1NCvL4ukqjERLGyDKqxo8hLxVuowRSumKyWQ>
+    <xmx:95NxajP0yJ-FIV1EK6dxli9MvfSIXx5OG4tcLTDcmmf-tpeKDT97fw>
+    <xmx:95NxaqwlMF8gJHL_j6W_CbAyhTU11WC-kv6ADrK0rgYJD23Sn9TUUgsA>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 03:21:51 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 4 Aug 2026 03:25:42 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 296c2443 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Aug 2026 07:21:50 +0000 (UTC)
-Date: Tue, 4 Aug 2026 09:21:47 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 83f65a6a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 4 Aug 2026 07:25:40 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/5] setup: defer object database creation
-Message-ID: <anGTC81J4q76fUr1@pks.im>
-References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
- <20260724-pks-odb-create-on-disk-v1-3-3b3d265d979b@pks.im>
- <xmqq5x246x35.fsf@gitster.g>
+Subject: [PATCH 0/7] odb: unify read and write streams
+Date: Tue, 04 Aug 2026 09:25:28 +0200
+Message-Id: <20260804-pks-odb-stream-unification-v1-0-86d70e82345e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5x246x35.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBBA0avIrB2wUWvwKuIiJmM7ilEyUQri3
+ Zva5Vv8f4JQYBJosxMCHSy8+oRHnoF9G/8iZJcMqlDPolEVbrPg6gaUGMgsuHse2ZqYMizLyll
+ lmlprDWmwBRr5c8+7/m/Zh4ls/B3hur5zcxH0fgAAAA==
+X-Change-ID: 20260724-pks-odb-stream-unification-334dc2a75888
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-On Fri, Jul 24, 2026 at 11:50:38AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/setup.c b/setup.c
-> > index 825572f5f1..a7b1b9eaef 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -2885,7 +2902,9 @@ int init_db(struct repository *repo,
-> >  
-> >  	if (!(flags & INIT_DB_SKIP_REFDB))
-> >  		create_reference_database(repo, initial_branch, flags & INIT_DB_QUIET);
-> > -	create_object_directory(repo);
-> > +	create_object_database(repo);
-> > +
-> > +	startup_info->have_repository = 1;
-> 
-> Instead we call create_object_database() rather late, after we
-> finish creating leading directories and default files and processing
-> the configuration.  I guess this is a prelude to specifying "no, we
-> are not doing the files backend but are using this new thing" in the
-> global configuration?
+Hi,
 
-Yes, exactly. Many of the refactorings I'm doing in "setup.c" ultimately
-have the goal to detangle the setup and configuration of repository
-extensions. It's been painful back when I introduced the "refStorage"
-extension, and it's still painful now with the planned "objectStorage"
-extension. So this time around I decided to detangle the logic before
-introducing the extension to make the infra easier to understand going
-forward.
+we have two different kind of object database streams in our code base:
+`odb_write_stream` and `odb_read_stream`. While those are used for
+different use cases, the provided functionality is ultimately the exact
+same.
+
+This patch series thus refactors these streams so that we have a single
+`odb_stream`, only. This allows us to reuse the streams for different
+kinds of purposes and makes them more generally useful overall. For
+example, it's trivially possible now to create an object stream for any
+given object and then write that stream into a different source.
+
+The series is built on top of 5b2471720c (The 10th batch, 2026-08-03).
+
+Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (7):
+      odb/streaming: track write stream size in the structure
+      odb/streaming: drop `is_finished` field
+      odb/streaming: support streaming arbitrary object types
+      odb/streaming: rename `struct odb_read_stream`
+      odb/streaming: consolidate read and write streams
+      odb/streaming: rename `struct read_object_fd_data`
+      odb/streaming: unify function names to create new streams
+
+ archive-tar.c                 |   8 ++--
+ archive-zip.c                 |  12 ++---
+ builtin/index-pack.c          |   8 ++--
+ builtin/pack-objects.c        |  18 ++++----
+ builtin/unpack-objects.c      |  42 +++++++++--------
+ object-file.c                 |  76 +++++++++++++++---------------
+ object-file.h                 |   2 +-
+ object.c                      |   6 +--
+ odb.c                         |   4 +-
+ odb.h                         |   4 +-
+ odb/source-files.c            |   7 ++-
+ odb/source-inmemory.c         |  32 +++++++------
+ odb/source-loose.c            |  33 ++++++++------
+ odb/source-packed.c           |   5 +-
+ odb/source.h                  |  13 +++---
+ odb/streaming.c               | 104 ++++++++++++++++++++----------------------
+ odb/streaming.h               |  69 ++++++++++------------------
+ odb/transaction.c             |   6 +--
+ odb/transaction.h             |   6 +--
+ pack-check.c                  |   4 +-
+ packfile.c                    |   8 ++--
+ packfile.h                    |   4 +-
+ t/unit-tests/u-odb-inmemory.c |  37 ++++++++-------
+ 23 files changed, 247 insertions(+), 261 deletions(-)
+
+
+---
+base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
+change-id: 20260724-pks-odb-stream-unification-334dc2a75888
+
