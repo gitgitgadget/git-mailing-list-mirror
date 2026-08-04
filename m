@@ -1,161 +1,126 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7F8431A57
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 20:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785876019; cv=none; b=sD8e9bqFo8Zr/Wzpb5xMCIyE7Rb0KvoT2Vsu9sAr3sMSY6idXfPdv4iVt5dKjzxgDrZ5Q/4ycThoIuZSuyHSNARZMTRJxKRz4cEw8F9rep5nF1i7t9+te0TWjkZlJEQKgMACwTZnHarlKUwhM8jd0aLCfce7VMN5fZsaCbGghcI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785876019; c=relaxed/simple;
-	bh=k/x04YAny7xYFq8aLXsEWjHcH5HYVTW077xWSPTxxbo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WAvapWdwgpLQsxND0L5usiDlvfJv6hNDpjP92PsrLQJx8M+Vf+/qwYLsxblRcRGzNk43KAjS5ZSiQTNbSqfbQGHt5VAODZwJWb6RJSdFSlr62XhGwGXgZal7YJnLdUMsvBGFNTekyDZNdzhpaFR+hVwW30F7s41dq+tkKMvp7KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S29Secf+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VNPnmqNq; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD23448BB4
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 20:42:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785876142; cv=pass; b=YRFnmxmthOd/LFs5hQfOv8iQnT4IcWEhzQaLOml6YdhCEGKMaQYAcjc4uyPaTq7P7tysxcVauKMR2m5lUlNLNgtnzT5KToXln8uI57q9lo8ixs17+wdL02iQF4UuMvcZSWKiCjVipaBQzKRoExaVu2xO7fUune/c/S9n0ab/ras=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785876142; c=relaxed/simple;
+	bh=Jxe+jjYAC5gIAu444E9AteqX1vZKfibCv0OT3UIXqGw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j/9MMIspMeUZN9qO17qWRmPDJWSQDbWjR2zrRzsPdyS7oN2slCy2JoNfPIq7eRy0EXgMLi/Vf61bgbwzPIxYZ+9nrtvMD6wvWhTyh5s0lZSHK0+fGts0iar1An8LfUxX+eex0H4No68gYoVxS8g+fg9qho4/IQcOW/rsjKdUdbg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WAlKukMJ; arc=pass smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S29Secf+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VNPnmqNq"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87BEB14000EC;
-	Tue,  4 Aug 2026 16:40:13 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 04 Aug 2026 16:40:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785876013; x=1785962413; bh=8nyroDYXeC
-	kcyhs9Xqj8gDsbNkywch7xjjpOllwbLQU=; b=S29Secf+84JkqFegFyHJ5fUtq9
-	PhUZJwAKrRDp7fd0Goq4mnDaGh49wXUOqMQf74tJG0yRL2WwOqI4ydIeUJ98hGsr
-	7yeen4/05lt8tF3MCSotBW7Pt+FzEVclw32KiHtQF1HNDCxva2FYndHiF+KTmFbG
-	3cRfmHveOE8hGW2aBd4quE+b+OyoXdbYXK0MVyZFuXvbnJCyBtJhWhc3v71zQ/0g
-	zCLbv9dUNxR+n0NvB3UgEgUwdMGH5fD6u2ElcSC6T+qdFia43E3CI0Q9DGTZOS6B
-	v7kua0AxOgokmAe90BwIyUVb3uKgSpOzmy2Yv+S7hyN293bJDZLWAQJJ6/lQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785876013; x=1785962413; bh=8nyroDYXeCkcyhs9Xqj8gDsbNkywch7xjjp
-	OllwbLQU=; b=VNPnmqNqsXegZRYIvas1VU2knYuEO8AB9vJcTS3P9lwXdfeuwLT
-	zOscNvgWaJn77cEtdE6h316kHh0ccMd6n+dPTMrAwn+E8AOYUdAFHS1N+v3DrLXQ
-	KjgYs3NM7vzBNgiWdKAzYxLLj+8aJpIIVlTyzHw+ISIG+udFs928mXZ0FWVpxNCH
-	Ly2SjByaZoi9PpugZPYdCbb57VqoYTIyFEAHcVZVGatJs3T1Lwqn4PRALrRLBToq
-	+lJ2JPZ64UD4zXwc2MQRQvTohhrSDhcbODJKCKpgfV/qGQvc+5Epcmu/T32HzQQC
-	nOMGU4bYU8nrHA8+pykhGWU63/672N6kBMw==
-X-ME-Sender: <xms:LU5yasY4Njv3cxjvl1uELSzlBczFYDIdzAyLlO3JId-EImsOARschQ>
-    <xme:LU5yarFREe-DJqwqtvw_B-NcO5L6jRqRMP9xA5YaEEtRY_ojHt1aKGC9uXnW-AS9P
-    q_PEjOuihoUGAUs4z-9eh6T7ULEbHkRfbzBko-h9nz6vd4VtcPz2G8>
-X-ME-Received: <xmr:LU5yagwptG8RRU9qGkQtgkKY6db1Nz_jDZSGYGpT1qM5Sya1kNh6Lwni9RJmpvvWawZYukB3Z-loT-Sbh644fwlb1ocoSik2PA>
-X-ME-Proxy-Cause: dmFkZTEHyByB66VMz17eShDFcFw0aqybwDwbKaaquRsxituPG696jwoa2MUK1tvDY8T1/7
-    Kw1uA9tJ8iU7qUBqOxL7KFdY97voeA7tGP4vI/hGeH3ipp2ur47HkEszarTa44g3Sxbjvu
-    H52RqVvCbPjaAbv3qfwMuQCGxuZ4BlP/ALI0UB6drV7hso1s0FSj+PtC7KluD4ghSONN1d
-    k89qSnghDMnhSIYuRyg72jt7lroBpiXUj3bDVC2Rylt6FauXxRdUoSMMytVdDXH5ijkSm5
-    PBDTJxhnXV/XiyOYSQx4VPq3XQIs53FsIZ6BHgejDq2MITRaUs1Xa6ieDgblfHV9Zphyc0
-    SeoLYIlr52P+f385LVYje6FKacsaXz8QPaTm943iAo3JkoBY6EFIcKKztPxCJJlSMq0BSB
-    ma+6QQ+trRfdPQEQch/H1W+ZCEft/bfwMD4OB/lpirsPgv58Kj5nGqgLEMjPa019CU3iSh
-    DsoBR0QHtz9bPuaNvVkP1qVAcgeIyJEJjdeRu0rHqSXR3eiL8k4AwhQNjW7p/tCnSjWkul
-    XmmCVVghCfnHM4vZFjeAPF+6RUiWcCEtbIrIPOZd48rMIFSwF7yJeIbupo2yJv4XI0WzJQ
-    a+4AS0vgCPRs3uBGzK+BPLDc2Cd/YYP6a5enF1iXla5/AjlFZVDocbTn7THQ
-X-ME-Proxy: <xmx:LU5yatmxk4_DReteOaZcAcobgaHZ37rzaAPYZ5bhA_Kn0_0ufY9HEQ>
-    <xmx:LU5yapl-LVz4DvC7LvGYxyucN1Y5s4SZopmmlf7367ivIO_HAFZtJA>
-    <xmx:LU5yavx7WBFna1NMb1g4pCYjDJ9_LsKR9lqA1K3fAOnh1Q_zXY0ANw>
-    <xmx:LU5yauqoacQ_epIbs8po47gVgxhVDqfMEE4GM0FloNWs35z-YpX59A>
-    <xmx:LU5yamIuCnopor8kRm1EmtlLPMTwN5A2Ha9Xg-kBoTDr1cIl7Uutw8ch>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 16:40:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  chandrapratap3519@gmail.com,
-  karthik.188@gmail.com,  peff@peff.net
-Subject: Re: [PATCH GSoC v4 2/9] fetch-object-info: detect malformed server
- responses
-In-Reply-To: <20260804-objecttype-support-v4-2-31511b0231be@gmail.com> (Pablo
-	Sabater's message of "Tue, 04 Aug 2026 20:42:56 +0200")
-References: <20260804-objecttype-support-v4-0-31511b0231be@gmail.com>
-	<20260804-objecttype-support-v4-2-31511b0231be@gmail.com>
-Date: Tue, 04 Aug 2026 13:40:11 -0700
-Message-ID: <xmqqpkzxtyac.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WAlKukMJ"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-69c5fda04a8so377926a12.1
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 13:42:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785876140; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Y4k1g2bl3PATmotDN8ADGxu82kt9mFi4sQRiwZjYcJ6719m/P5k9tpodGDIWREtY2M
+         rYNA9N89LUV4lSE8GbWNLcoo5F320k4vxlFsXzr0nUcr0ZfjTJH2lJA/PZx7nbD+MsqY
+         2b/PgwgQ9m/fPdrNJb/LBoAjd9x7/n1jHjGfNqur3sIUjP6lIH3RTKz6aT074vBJuR69
+         oQTxoEfnyrH0A/L1uMKsK2nZ7ZLJZXrDubr+MesBcpJ2HKeudEiG4pnw+xoRDTa0pCGo
+         L5dVB0hIiGwn1H7i9Z6iPD2lv6v7e0AyRbxlsVRUNCRpYeweJBUQ8O66pbz9Kc9zMpSB
+         frpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Jxe+jjYAC5gIAu444E9AteqX1vZKfibCv0OT3UIXqGw=;
+        fh=STFwXFf2v+Z9KXm8pd2v3d1W7iY+OI73/ovM5X/VfiY=;
+        b=kSkFHF6EUGrGKOD+F6Lwlw111tdjgEbo3CGjHaH8g9pe8L4dx0VHhPljdMlnPchFfp
+         x3FvSvVYAHIejBQmdXW4Wzza7dwBMnoseUMxmoV1cD74dyiFl5XIOOwDyuXgGEwfeuz7
+         dV/MyWuAzwLD/ywW3UfVcdCMqNrshwE/bHnC0lNymiy6IjCQwTATsbSX1uMyrotxsYRO
+         9ukgtDMmy7U2IKmz0K//hvg+X/IoY9aGHioCGEP2OcI3KAZogAL6NgGuq4fq5Zs0LBw3
+         b3dx6yhGIM/TQzMQNgEo8UM1+CBVchgM/uclJEVO034jPgowF0HsZA4Xd6DQUHP4uPZY
+         GuMQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785876140; x=1786480940; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Jxe+jjYAC5gIAu444E9AteqX1vZKfibCv0OT3UIXqGw=;
+        b=WAlKukMJ2LIAnHZ69UdzdAtdZnx3VKyObYfNuI0Ar/04WDmCaMf360CpjAhkZGhyel
+         fkZejpTC1M3FteptzLZNYhwg7meYUaSTHjHnInf8BsylknxIbK8YCeuOdB5A07eClpm3
+         ER1AvL7sfnRO1NROMA2HLSdyKmLXvaJpPv2rCCQEO+8YO4HhKr8piZ1Dyfr4db9MGkUJ
+         cDSrkvgc8/xzILFURkLRIu3d8hrzJHAVmr+66geSxPOYq+hJd3Je3mTLmW5U79eoiSZ0
+         Lmf5ND7vjPKitxv7iaDm2Nm8ZffuUcbeAGllJyAlQiaVoqvcuzw5fN73p8XmHrEGmFEq
+         cPvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785876140; x=1786480940;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Jxe+jjYAC5gIAu444E9AteqX1vZKfibCv0OT3UIXqGw=;
+        b=QPImKn+zC9+5lkdPYeygzHqhtqg0r6ByssvtD1P0oEc6huAAJqLrdiFKJN/W/RUjSn
+         Tqai7AtLZicso6g8HGb8ofcZvQmHs2aMFv58p1Dh+A5SeaTJYrl/WlKWdm7wAvJDydg+
+         qHWlBE5TrhG1iidn9zkreVFTM41oQrLhxcCrWwJ49cOH6Ymo8+a53uX6ppwPiNTMJAnt
+         +MholAwOluRvet7XUPYSrtC2Q7vf1n7RcZiWVzCAflTJ90poRLD7L/DySIcQSknWIn8E
+         4/74iVKwGJS5a6q5EWJ6gIlBndH5gEYZ2KNdeeyVwye1dU+uW4OhRVSaeSeEhkWgNDI/
+         O7YQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rox7/2kUvQ3eN8V+33s992tVgqcYYw+7UJSDDand9TG+pVam0N3VvnpEGFwZbdpu914rg4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+5+tsl6DrTvkVBioQXejwFfil0ddn6JZaP4sTYK9Td8TA7+qf
+	g90cWZ9V84Yu7PB+LXxwbUN/eFiCQm3DSRuYVvBze+mtsUl/goRzaviysPbjN+tST828n6pP+Ze
+	z6lCWWjwZd2AO/q+f5yzkvKfCiYFL038=
+X-Gm-Gg: AR+sD11yeorwcSjQmr1XkJMXjugY2MsV8BWZFRO0wwJs9pbT2O4VmYbvZuzfdDPygv/
+	f/rzYMydqUMFrDlSoWDY/5TZ5vYQ4oa5BikjpGQul94Gm9KBHL+svrsFfT5eLHZntQly0o4TPIR
+	p5qoNn9dPC4m4av15ZUi68Qbn8Nqn/wBd6DjA4R3eT8aKE2QMSDuHnFLae6DqBNp1xuU85Coh9G
+	3yiBChjr+sVyOAjR4xrayMbyiFYMMyvgmeISwuXcA4i1BZTtkOYyNqtaLw9xK2m24GB9TO0biRY
+	htoUli0BXjmMfIadWaY7ieclusiJbMY5HYciaqE1a+or
+X-Received: by 2002:a05:6402:4509:b0:698:c13e:179a with SMTP id
+ 4fb4d7f45d1cf-6a14f12439bmr1032852a12.10.1785876139777; Tue, 04 Aug 2026
+ 13:42:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <6b5b2c93f2e3e55bf456b86a8be61f5f85137a2c.1784536024.git.gitgitgadget@gmail.com>
+ <cover.1785750108.git.phillip.wood@dunelm.org.uk> <CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
+ <xmqqqzkevx62.fsf@gitster.g>
+In-Reply-To: <xmqqqzkevx62.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Tue, 4 Aug 2026 22:41:42 +0200
+X-Gm-Features: AUfX_myZYJ-B3yxbAmP2iJ5lmwcqPAp3hAAjxGjrwjaqt5xzu_q8FJIgMu8EwxE
+Message-ID: <CAHwyqnXJLQ_naFb1RRQWS3eft0FXL7ripviSA15Zy5D6nvHGAQ@mail.gmail.com>
+Subject: Re: [PATCH v10 3/5] history: add squash subcommand to fold a range
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood@dunlem.org.uk>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>, Matt Hunter <m@lfurio.us>, Patrick Steinhardt <ps@pks.im>, 
+	"D . Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Hi Phillip and Junio!
 
-> The loop reading the object-info response stops as soon as the reader
-> returns something other than PACKET_READ_NORMAL, or once it has read as
-> many lines as we requested. Neither end is checked.
->
-> A server that answers with fewer objects leaves the end of the result
-> arrays empty, and the caller trusts that every requested object was
-> filled in. A server that answers with more leaves the extra packets
-> unread. On stateless transports check_stateless_delimiter() notices, but
-> on the others it passes unnoticed.
->
-> Check both limits by extracting the packet_reader_read() from the loop
-> condition, so the loop no longer consumes the last packet (flush). If
-> while looping the read is different from a PACKET_READ_NORMAL, die()
-> meaning there are fewer objects than expected. After iterating, we only
-> expect a flush, so if the last packet is not a flush, die().
+I admit I=E2=80=99m trying to expedite the process. Especially given what
+feels like endless review cycles, and some frustration that this topic
+was queued for =E2=80=99master=E2=80=99 and now it feels like we=E2=80=99re=
+ miles away again.
+I recognize that this mindset is not a good collaborative attitude, so
+I=E2=80=99ll try to step back and re-adjust my mindset.
 
-OK.
+I am used to a work process where moving fast is paramount, and good
+enough is good enough in terms of code quality. I=E2=80=99m not seeing a
+healthy code review process here =E2=80=94 any feedback halts the process
+completely. Should it really take months to merge a topic?
 
-After looking at "if (i != oids->nr)" now gone from the end of the
-function, but before looking at how the loop terminates its
-iterations, I wondered how the "there are too few" detection went.
-It now not just stops iterating when seeing a status other than
-PACKET_READ_NORMAL, but it actively barfs by dying, to detect a
-short read.  So the only thing we need to check after the loop is if
-we are truly at the end of the "list of oids->nr things".
+I realize I'm too impatient for asynchronous communication, I get very
+stressed about the idea of getting out-of-sync. When Phillip
+graciously wrote a lot of code for me, I wanted to bring us up to
+speed as soon as possible so his changes were not wasted if someone
+else also started reviewing v11 in parallel. (In this particular case
+I went back to v10, applied the fixups and then fit my v11 work on top
+of that.)
 
-Makes sense.
+I have v13 already in the pipeline, but I won=E2=80=99t send it now.
 
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
->  fetch-object-info.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
->
-> diff --git a/fetch-object-info.c b/fetch-object-info.c
-> index ba7e179c44..c2d4bf9403 100644
-> --- a/fetch-object-info.c
-> +++ b/fetch-object-info.c
-> @@ -106,12 +106,13 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
->  		}
->  	}
->  
-> -	for (size_t i = 0;
-> -	     packet_reader_read(reader) == PACKET_READ_NORMAL &&
-> -	     i < args->oids->nr;
-> -	     i++) {
-> +	for (size_t i = 0; i < args->oids->nr; i++) {
->  		struct string_list object_info_values = STRING_LIST_INIT_DUP;
->  
-> +		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
-> +			die(_("object-info: expected %" PRIuMAX " objects, got %" PRIuMAX),
-> +			    (uintmax_t)args->oids->nr, (uintmax_t)i);
-> +
->  		string_list_split(&object_info_values, reader->line, " ", -1);
->  
->  		if (strcmp(object_info_values.items[0].string,
-> @@ -150,6 +151,11 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
->  
->  		string_list_clear(&object_info_values, 0);
->  	}
-> +
-> +	if (packet_reader_read(reader) != PACKET_READ_FLUSH)
-> +		die(_("object-info: expected flush after %"PRIuMAX" objects"),
-> +		    (uintmax_t)args->oids->nr);
-> +
->  	check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
->  
->  	return 0;
+
+Harald
