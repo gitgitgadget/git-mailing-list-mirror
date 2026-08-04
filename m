@@ -1,115 +1,135 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388642BEFEF
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 19:32:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D314A2E21
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 19:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785871943; cv=none; b=Cog1qqOPNiVYpFj2xLKw15GjM2B5zdIjQeJc+3cTn17FzNlNc7SNBY1VmtV8NFzMV0nNG9o9z/F395Su5ds3MkC+O6RnKg8mJGU2lLQarPx8w8UTSs6KqA7U0cpUXq+YDdJRPtTGXdm1tArVkwYZZK0i5TizM+XGMyVhNrZvhwk=
+	t=1785873402; cv=none; b=lyjaFMmdWFtNhd/5mrUvXADvqmeicgWgRdOLpVBmFR9BMtl8I9g3Xxm5i+tFGvEDg1Q8Au2K92Pylj2AVseJ62dJRp0kbYMgeaRfCXLZTKozzlg51Qp2VBF5rSRG+mekXQQgd7I9qK5fr+NIRJyr8n3Wa9ZRNAjsp4WCVuCEnYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785871943; c=relaxed/simple;
-	bh=+YwWtlBTAL5UYbDL05loiRqI620jTyZS9MUJDe1VSnA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XC73EDzV3zzJAgr59ATOsbpQOnubUBIVq0b91fvhLD3UlPXO2FoVgLqGuDzujJ4is3f9GAFXA8w1cGgoDF3ga9OxyukbhOvcGaMcUAg6jaIhXf5qGo1BknrwAKkyZ/1q3cyZB54hTZnCRw6uX+4DJ729QkDq7Op1rRxD4pbem2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RuL/zSoU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CflROHDy; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785873402; c=relaxed/simple;
+	bh=mAxEkk8AMzjfGyw+D+g0xnAGGiFa9nkTuzS/uKymg2A=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=myDWn8bCQQA3OT+AV6OQUri6bgDpf0wmGkVgwgqSYP97KTydOwdSEIt6JQaYLl/eholur2vWP/2Lk31xyM9rxDIIcq/pT9C8j3vd7Mws/AKkGMqbxnzR4+LhGJwd3tERSSUE+tpqikIwGjSd7m+HyhDWr78IOoEvNQqHTvESWdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C4y/0DCr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RuL/zSoU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CflROHDy"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9B92EEC010E;
-	Tue,  4 Aug 2026 15:32:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 04 Aug 2026 15:32:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785871940; x=1785958340; bh=bsTZxCdXtV
-	fS9FbFzpjY/aUd7S0YhcknHNCEZeBd+KA=; b=RuL/zSoUgIkpvDyLxMFp1g0jMi
-	MvIGNVVBuzRJMzT79GUQESnEn2rqVuwPTtSHY1ZoWjn4hewY5TqT0bsIo8cOOsmr
-	5rPIuV2oN+qCka1WgScSST9GZatlve89MY9PilTzN1MsO7ZNb3PWhbDuMaKs2wdj
-	PKA4xrCA/9005DuDAzy4QCqECr5UlS8cXTCYoiTocLMr0PZZYlkF14466/or0za3
-	8nC1bwLTuLUV68mQQkV9bnxJcV8eW03bI8JzRzgEYRblfVO9GJnIRhsGuQbzmj9V
-	/UYq/Bs4zNSgcH6fo+RR56KNtTzjjSGAQ60qL2mzg6grcTooH672us/GcnyQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785871940; x=1785958340; bh=bsTZxCdXtVfS9FbFzpjY/aUd7S0YhcknHNC
-	EZeBd+KA=; b=CflROHDy5JgfRqerkjlNAmWgH8ybcFk2/UrsCRzO4LsckVFImgW
-	P/ZqmuEMdUGoi9Sf5E9F5pA2EMUDHo9vGNOB7uhu9tl1kqeOpf9kL5TA5V/Ic9Nc
-	56zTFHZWlmxzK+AkzPDDl0gog9OpDEmcwqmb2ppSEBTTEuWwKiJBp8elupCKep5B
-	2ixbzQ/Nd+QHc3CJHakwmuPK5FCXoJoKBcOs0WvetJM9Bjlwib5KuCiI8bibZV2x
-	RuhCfndrNkSupQ77xBh9NZTP8JOx3XFmbYg9lsoM8ZQDPrYe2VvZMQq433Fng7kR
-	wJa/Ykz9il5XKpS9XgGTC81+xy5w0bMkeaw==
-X-ME-Sender: <xms:RD5yaob9c5KNOYE8UDw6nKiC8rKdTrBUMOvfV8gLxn388twsHzahOg>
-    <xme:RD5yaq1Ngy4mj-EW9m3DpYr1gMFvUfb6yz6oaGoCJqlZrPUTSplozc63-7Idw27vI
-    DdN8BcLDNAn0KmLnJDxKFxnsziRMMtAJuL6oTGqxLwbwjZWDJoiWdc>
-X-ME-Received: <xmr:RD5yagWJq5usVvfW5B-0dh9AnykVCk_l4nWixfTHrd2faxLjHi6Ji0hOu2Wgd7pcRP8d1HuNdNsYRokv3RNuQNw5vFT1QZupjQ>
-X-ME-Proxy-Cause: dmFkZTGWx3L+VWg50XuETqdnhyW/nZ8Cmw/DDUGCx5bsJcezAdOAm58nxJAiIhvaDNvzGb
-    OJxntZqkLN0bvdfJvAgL0YcoPeqUipz/6j+lMMdQ0nUsFhsl/koCUkgL5U+dRvV2GiwDdR
-    2owzsAd4cIT52p1yyO8zw8yLzmPzKbnAj5Of3NHbdLZgkyFrfSwwwzSDafxq3iusi5bZQA
-    UyVFfk06hJnqY90K89Lu1Bji0cPA7XLDQlFw8GNPLySBCE4C3ooeOU0+WyhLvD79ZbuHzY
-    wUqLIkacbUrMH4EgdwmL7ItXOutLC+6ECvaesRAtpwNh20EsRT8YXBSmAOnQ2OM+dUQuJG
-    czwkVAYGVxA8xwYbQe47TKjQ68dpfBxXYddf8OHhIyXJxYH3LVzx3KqUHmhzdLK8KglXOV
-    biuVVu0a4A+P3VEOWTMct8ceBKWMOC53fSn1BiBr3+2IR0aSej63RB0qZZlFURaO1XcK+w
-    v5GkX1u63dYRACxcin/vabyx0ejmYsPY15M6+/9r49bdH573BTVIzeqddjT/Ws2PZPYcXH
-    HWQ89foqP/J47JYPFGu23romgycg0nBKfDXfMBViERufnk8ssVj4GWTD8ek9ZhSoOnRsZ0
-    frCMsdd/3go12ByJDtTshuOqiJXz7FAuOu6W7KRkCFZJBde92rj4ylbotZyw
-X-ME-Proxy: <xmx:RD5yasVYivTEQ-4aZgvPnMm0UcW3x0XI7Au6fstzscEm9KAqHnbOvw>
-    <xmx:RD5yandFpoClneCSVhVrcUVHOZeVDN0jmwHP8HgwF0-MSnEHgzQbKA>
-    <xmx:RD5yatX-eW_Ze-iHitEE8byfhor7l5zSUx1iPYGcEPse54ke_qQ7YA>
-    <xmx:RD5yaofoEyJHTZPBchYOrU8rf_gu_Q5YIw7vTIAdBkZItUa2GZl-AQ>
-    <xmx:RD5yaoA-JmCaiy3RtSMDHAZ7YLGHrFQ4tGBc3Y7a80GPP-MkrHub6Uoc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 15:32:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC PATCH 6/6] hex: allow only lowercase object IDs in
- breaking changes mode
-In-Reply-To: <am_AL9dymrkidizF@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Sun, 2 Aug 2026 22:09:52 +0000")
-References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
-	<20260729233215.398654-7-sandals@crustytoothpaste.net>
-	<xmqqv79vha69.fsf@gitster.g>
-	<am_AL9dymrkidizF@fruit.crustytoothpaste.net>
-Date: Tue, 04 Aug 2026 12:32:18 -0700
-Message-ID: <xmqqldalvfzx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C4y/0DCr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6961F000E9;
+	Tue,  4 Aug 2026 19:56:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785873401;
+	bh=JyF/CSxap8UXjzVw0PooJGP/i3+qMDCzHZNS6clcN9c=;
+	h=From:Date:Subject:To:Cc;
+	b=C4y/0DCrYTIjU4BqH0baCNRJya+95z5WpsDxi3SNphKHKAjUzYdFudraoV4sNgndf
+	 XKSg9zKP3ClbnU0LOdMmb3kRciYp++GlL1HtlkOvVnS59aUmLEXSC7DbE5B6+53D61
+	 OPSRhHW1/dA2RyqrKviREbHPgIB7FYceE+RbYs+ml4TwTSs8I4q+yiDuwOcbCPVoEH
+	 Q53pErewOKzKpMtwz1jlxryj2k3GMnElqgFnFSNmEliTxZzda5LMW0M5BFCKnE8St2
+	 WwmdveOv+uVgnEgmBvAMNVzMamxJ6P8xvKK2F4zodR6kwGvmCadm1ADgEIqpxD2EfG
+	 P2ksLR6kZ0PNg==
+From: Vincent Mailhol <mailhol@kernel.org>
+Date: Tue, 04 Aug 2026 21:56:32 +0200
+Subject: [PATCH] completion: add 'git history' subcommands
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260804-history_autocompletion-v1-1-6f7459ffb677@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MQQqAIBBA0avErBMmKZGuEhFiYw1UhloU0d2Tl
+ n/x/gORAlOEtngg0MmR/ZajKguws9kmEjzmBolSocZazByTD/dgjuStX/eFUiZC10qilU43iJD
+ xHsjx9Y+7/n0/v26JTmgAAAA=
+X-Change-ID: 20260804-history_autocompletion-84620c2f8500
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ Philippe Blain <levraiphilippeblain@gmail.com>, 
+ Patrick Steinhardt <ps@pks.im>, Vincent Mailhol <mailhol@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2019; i=mailhol@kernel.org;
+ h=from:subject:message-id; bh=mAxEkk8AMzjfGyw+D+g0xnAGGiFa9nkTuzS/uKymg2A=;
+ b=owGbwMvMwCV2McXO4Xp97WbG02pJDFlFzt/bT555M0es+Wnd9cQnore4227a5BitmvpS82z81
+ C8/btyU6ZjIwiDGxWAppsiyrJyTW6Gj0Dvs0F9LmDmsTCBDpEUaGICAhYEvNzGv1EjHSM9U21DP
+ EMjQMWLg4hSAqfbKYWR4/Cjq3YrXr8Wm689O+L3b2U533YcXp1tuqe7Zc4g1UHLOP4b/aQHlC7/
+ fkrJnWrQsdZnk9pMxxwvVuQ2UGeQVGeb+mFrLBwA=
+X-Developer-Key: i=mailhol@kernel.org; a=openpgp;
+ fpr=ED8F700574E67F20E574E8E2AB5FEB886DBB99C2
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Use the parse-options completion helpers for the "git history"
+subcommands and their options. Complete positional arguments as
+revisions, and add coverage for each kind of completion.
 
-> Postel's Law was a great idea on the early Internet, but it is
-> unfortunately no longer a good idea.  The problem is that being liberal
-> in what you accept these days usually has security implications.
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+---
+ contrib/completion/git-completion.bash | 24 ++++++++++++++++++++++++
+ t/t9902-completion.sh                  | 17 +++++++++++++++++
+ 2 files changed, 41 insertions(+)
 
-I am afraid that is debatable, though.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index e875787710..f10813c8d7 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2137,6 +2137,30 @@ _git_help ()
+ 	fi
+ }
+ 
++_git_history ()
++{
++	local subcommands subcommand
++
++	__git_resolve_builtins "history"
++
++	subcommands="$___git_resolved_builtins"
++	subcommand="$(__git_find_subcommand "$subcommands")"
++
++	if [ -z "$subcommand" ]; then
++		__gitcomp "$subcommands"
++		return
++	fi
++
++	case "$cur" in
++	--*)
++		__gitcomp_builtin "history_$subcommand"
++		;;
++	*)
++		__git_complete_refs
++		;;
++	esac
++}
++
+ _git_init ()
+ {
+ 	case "$cur" in
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 9ae3c48ebd..08ecf682ed 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -3107,6 +3107,23 @@ test_expect_success 'git clone --config= - value' '
+ 	EOF
+ '
+ 
++test_expect_success 'git history subcommands' '
++	test_completion "git history " <<-\EOF
++	drop Z
++	fixup Z
++	reword Z
++	split Z
++	EOF
++'
++
++test_expect_success 'git history subcommand options' '
++	test_completion "git history fixup --upd" "--update-refs="
++'
++
++test_expect_success 'git history revisions' '
++	test_completion "git history split ma" "main "
++'
++
+ test_expect_success 'git reflog show' '
+ 	test_when_finished "git checkout - && git branch -d shown" &&
+ 	git checkout -b shown &&
 
-I would grant you that you can increase the attack surface by being
-carelessly liberal.  Recall my example of allowing mixed-case names
-for loose object files and storing them verbatim on a case-sensitive
-filesystem without normalizing the names; that is an example of
-being carelessly liberal.
-
-But is it a good excuse to give up being careful, declare it is
-impossible to be careful enough, and punt?
-
-Will queue, but I invite others to chime in.  My practical side says
-we should just take the series as it is much less work for us to
-declare that any incompatibility fallout is the problem of other
-people who have reimplementations of Git, but my more principled
-side feels dirty, just for saying this ;-).
-
-Thanks.
+---
+base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
+change-id: 20260804-history_autocompletion-84620c2f8500
 
