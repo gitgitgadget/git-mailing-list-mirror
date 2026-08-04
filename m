@@ -1,80 +1,80 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0463141A4EF
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 07:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F564395AF2
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 07:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785828359; cv=none; b=BsB5Kvn8MSAbYNpHFfIIBtPRxZoo/C1Kj6i0c8VIFphTxogUOR+8EVMsLcXkHb6h3y1vAUYpSiaDuzUISA8qyibeoBUROqNMxw7DRdAuMtw52nzzjNLd26AXWas5WFacWUnBGBTIQelvFuOlKAVWTMpUgF/C/7xBICC8nPJ5oiQ=
+	t=1785828362; cv=none; b=EBkq2T8qiRd3G9w6xccKbu5eAZhJ9Uz56NVZ7nI+PyUnlF2rLqOKCxBHgiiXLREfcKVKliY6Rno7OBq9aO3OtCXIJ/5foBsLFNTd+g3bkGGQcyPvmy6cl/Bp320HMaT6tY88L44Gr0KID3TrNlR8V8rb8gUTwiVaD35TqYbQgSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785828359; c=relaxed/simple;
-	bh=8pMbIjUTg8R2QUfUSt/kioULM2PKavmgNzplea0beQU=;
+	s=arc-20240116; t=1785828362; c=relaxed/simple;
+	bh=uvMjznQh1Elwp9dMQB67V4UHTwTYL+wZeVhXYhfYCL0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=i6Vv4Lo3MjkL6TF7iT2WwRHB9Xo/okaERpfXHZQl6jy7JUr2w5Y2Iac91ZIHMrk9+QTECIjEYV8EuJZrtuyBf3WSZYe3JZwfcNq16grIMSYaq4xgqcbuTCMnCedNe8N3SpUV8vmjf7H6ybB7ZASKQQUVFiqKBQQuiCZ6qOZfByU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M7ArxmX9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QySbK0jz; arc=none smtp.client-ip=202.12.124.157
+	 In-Reply-To:To:Cc; b=AT86h0pQn4nL7PaILonKrnGaGKN5hkmIO1nxcqkYRA9UtPNtp3kGv51uQEh68sv2KBZw4mQLH4OqRJfz0ftvcPASyAAp/DDYLfXZKBPL67ute6LFcuGJifFFAV7ejYWugbFTTvfAh4TIGbEBdTto3XJgJ15ICictnHxIl+s57LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ey2Ie58l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RVpHquD1; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M7ArxmX9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QySbK0jz"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 868BA7A014B
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 03:25:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ey2Ie58l";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RVpHquD1"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B4FDF7A014B
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 03:25:59 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 04 Aug 2026 03:25:56 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 04 Aug 2026 03:25:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785828356;
-	 x=1785914756; bh=yAqZhlb7DlvbLsaa4GIT3/qWLGKuRt6ujqtkIaPj3j4=; b=
-	M7ArxmX96eTlHErBcZfR8FAOE3Kcj3wnLYkG0T6/jjWSnLXOHGp4a4uQAlHXEaYt
-	4akP0os8dBEczURzg/PEVjJHWI5qGE+2lc1csgL06Pz4819N1BE80+9zCigM7W8C
-	Ra0NaC1KgzjumxhpvSLKcl1S+725se5nYI3yHkuUojVh3Gybq2TFykdh7jgZBa+s
-	C5QdYhDmdc4wbLIYNTj5aui62e8EAq0FkeF7cPXTNHvjeR8Zugbuz8IoCwMJQK49
-	TTo9sIGNp1lgTtEgxto5uwQfcTkWhEcih5BDMprny9BS9LegjIlBo3CTu96a8cbf
-	6JdPiFP3joLPQU0W581XiQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1785828359;
+	 x=1785914759; bh=Q6whX+74ubT8hp6c7G/gAXJx3iuo2B8gIZDUwZ9uRcU=; b=
+	Ey2Ie58lGPuk6ACIvUz67FMLbKL1dy49QRlKAPjYkg0ENpGI9tAEkkADm/aCU6rd
+	I4CqguVHSVPzx1ni3I1bhuaqWQgGl40jgS3HNaSPuSTUDKM1498KlVBYV0OAKtoy
+	GqKyJKvHfucVRr4aw+/yNap9JOIaXjkyVvM/TazIqc8byogVYj7nsytE2fL7Sy1E
+	iUjfwmADfWNWJuGpX5wFHXmaFrOpVQlgqL2LLCQZdcesRMVrA6Sr+SwnEo+xzvXd
+	qDCFB2pBDyBHh4JSqRlfHdNhGDfS8Xp40pbGbizxLG/po8QSb3fnyPlWWVBtnOkA
+	X5Sp48gP2Pz9AEKSOwnB4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785828356; x=
-	1785914756; bh=yAqZhlb7DlvbLsaa4GIT3/qWLGKuRt6ujqtkIaPj3j4=; b=Q
-	ySbK0jzBzpJA1z910P8pdN0rQnJMAHc2/d8XKRnBrk/l+QQoODQXVIz72prol2/t
-	QNyof/ArAbND6dCKw7avKdKgoCeBa+VE/Yo+w3AXBl50QXwRTa6MROdT0xVQgLtd
-	fqvHaRxvHkwSusz7FEoyIkPiSNA5p8WA2IDGCRPNhoGkx+hqzhXQbdKAzJM8w8u0
-	eWBnWHgLZmDUE/Oi6qU4e9lLF6TOy8fP+M0sCb2ifSRoesMVWd5v9N9bTW8DcgQh
-	LHB8zpMTlB0atLHv0s6iUhy9heDQKwD5YOB4fp6RSFtgPi5GzWoH4QrnGpYqzcIk
-	bNnrkZoibdKJ9ZShlHXsQ==
-X-ME-Sender: <xms:BJRxame0hA_x33kgVSwRd5pK7AZy5MyCqJ3RJIHCdP_KHE7bxbKrxw>
-    <xme:BJRxanJuKR3GEMETXj-oTSL8RpEgVRzRUTcQLRieLtcXJ_c-zC4IW_8ygstT8Sq1m
-    5-1uEEgjYgMrzYG7QG6R_RBxl4SsjaL78scyv654HmYabosqd14XsQ>
-X-ME-Received: <xmr:BJRxatLdGM0DDCc4MV8vxVOMKjZrhf4GgPt2lSuO1N4N1diWhivJdoqvli37wC_HRmffeQkR6hrahECZJk2sgTYUvBQs8Mmbh2B4A82J>
-X-ME-Proxy-Cause: dmFkZTGaw7KkDjgajDpaxV2Iw8X+9GB+eFUuTHytPlpk9e4DeA/0fhZcyyfCQhNwmklQVQ
-    V0lleKWUq93kXUbkfpvvAaxWPVHegpYZFmUESv3Yg0zVt80t33sC3bXTg0imQnqoZCksYu
-    ryHqT6JXukAeu3/FAEQgfQ1tWX90p6cJ6AxE7v2fYE0wlKD/+2hT0gPxBYcIMy2vT9FU4r
-    YmXNIDVxGtS52A/KchwI/j00nDOcaPI1mKnJl9Gef/0JJz5q3PXkc9lpbofiU/v+aemSgw
-    grY96ll1stIVp2o2Ggc5KSfGQu7H/AL20kNlEhEeiOM2DLNJcBD27ECK9hkrmJ52ghtKpn
-    XsGym+6TorU/e+DKsLWLPf+v7bP07zDQIhHJZOpehRai+M770/yAG+s9QhbuewNFLwRa4l
-    ZoxPUUUgQ1NP5/O+ujl57d1Jmz9lCWmVHXrKfSJCO+6UBe2O6bz7v1vIWBOf1KXcYGdYaB
-    fTp+YUQNNvOnJbRZLZXMp0o8Zp4dG8cWZ7o7tLKu+/XD/HrnBaxgooIgSqyV+SbfrRxHHc
-    dk8A07ggGx2Mew8y52y6PAgacH4/Ox0kDtBGXxDNfLPyv0rpM5doJRmogUDHgbYCCQK8j8
-    NzPBg1jMQ4eJBi+YhAMZ8TtB+L2rbhBjyjQer3yIMn4UG8ftrhcOnk88T+aw
-X-ME-Proxy: <xmx:BJRxapGf7qyHEgGTEJmzVZFYS47HCIlgusG3fxddjIrluswestr1vw>
-    <xmx:BJRxaiksx32Dh-G5nRuOPPV-zwk5RVOdVXdRb13EFVEHsEuO2BQ3dQ>
-    <xmx:BJRxamKQ8YTcg-miiR3QV4Zq8SZuiRIOGTI6H4pM6CT8BpzeDGbgFw>
-    <xmx:BJRxajaP6cdk64MSAVSSoq2ILFL3IcnI18F5_ohH4b6sHf04i-5HVg>
-    <xmx:BJRxakP1fdW1hUt_o3U7WjbAysjF0mAFLqc0Z8jFGDiwEET8SyWs1JGi>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785828359; x=
+	1785914759; bh=Q6whX+74ubT8hp6c7G/gAXJx3iuo2B8gIZDUwZ9uRcU=; b=R
+	VpHquD1Vwfc9uy9pHd+y8M9T0rzrhr9GjSCNOGGw2uF/Wa3x3EiUhF8dKax1tQ8E
+	hAQWb9GmtlnRpJ9bwWkMDDaXy1FDNDs/OSbYMmGi09x4zYcpLEs0/OGLwHExywc8
+	BrV54mXN/8pVvGfq2iae3YhoOjmdffthag0lx6JlEPK2KXoL8ps4iN19WKpTZvxH
+	DMUZ1TijOCMGVejrRWNVSg58MXgjpITHxSzvGVjYPCzvOpfcGmR1VyZ0h/DI6OqE
+	6UqRuE4K64ucNP/zOq2ocdLQ6j5upHL9NuEdzfP0tjoZ3KTjNELYAYEuV7Drr0ag
+	fFEXw5wTv7mC0Hj+1K3pQ==
+X-ME-Sender: <xms:B5RxatH2ZXbvVHkRP45mdXWlHL17BkXH6RRJpiS2_pzyYn62wYhQqw>
+    <xme:B5RxapTxdXKNDv0ZHfSBgCWtTRJD4vQ0eRPv52otUEtX2nHXXbLBKvwDfRKiqCE11
+    chqKKTAykL-nRoR6Dyk9AkSqRjxGoDppt5aPSnkcecrI61rBte-4oo>
+X-ME-Received: <xmr:B5Rxakw_1Ts3gF55gLrQ-Q5eGT0q794nClUFd08M81n9jAUMXqnFwMqJWGQLf3JQKFGGWjVFFYBG-xN_robhKDYyNrmX-PNwb75f2vbx>
+X-ME-Proxy-Cause: dmFkZTE4jmjwdJCxVDwIdd5N139XefUbavw4SjskC4qNWLRD89hPXuOSXE9CEN/r+Ia1/8
+    zx7VYpFnqpIwMm0UAK/K3Fsf4vn4MBZN95Xx+i0pNBdmvWqHHEeT+/kyBbQfsrb1ohLO6X
+    d38IQWrjLrkOA3ii9T4NGNC4srWSYTyHn/b2OCzbbnkfdSvRrJAaghOIoN3ttGCqNKTb+I
+    KFP1WWB71zl7jIWuIiCYBoJICuO5oYp3nLRyhgiznIpPdM4LK0bEUM89viYkhueL/IOKAs
+    fLCDCWlmBjoSFkEPUiwuj1f/o8JUlYAcCl80I1pkhrP5U9doWxe3CFCXMNKp8y5g6+a+b+
+    s++eRe+ZaHIJ5VzS5Yv6pKFQ4mDtfwvI1pnbwbbLnSjOXQjokwKRV+vMa1Q9TpdjuEOzxH
+    3Be+5XfS2r42ll3lwdzNB6XsRF4rugosTDqIUJCHa+Nb/T44NsaK6hyv1GZm5UmXHTuRlG
+    iVjV9LjDKkM4uYkCyZw0ssWOuEZpEHOE9uCH9a68233roZo4KA6TqYfts7IZF4D/HK/1I4
+    qINzjtbvZtSSmLZNQCYZ2ocfRF3KUQjpQhqPc1fjQA19LK6wv7jzhIIQ8Tk5w2glPn0e5r
+    +TG+HoS+LdZfPV9i4y+5c8YsdBAmaqjgewCN4pePlVLH9UGlDDs8IyUKd/LA
+X-ME-Proxy: <xmx:B5RxaoO8L7s0Xs0PA5yewcaZye3ef7MdrdnNQw2dfJJM6Fsq33qr3Q>
+    <xmx:B5RxajPrmZoLU_nkFHTuxKK4clcU0KLln1DIBqm8SpzxnyQv8654nw>
+    <xmx:B5RxaqTjh-s__HTLOGNhyZSXsDHDXFk5hrRJzvqRAJgDTAJtQdwfng>
+    <xmx:B5RxalBOkIFZp41VeGsUdZpXzCxkUCdRlCvnw5F7OVsEwTNfJwuUTg>
+    <xmx:B5RxarUy6NNplo_nziL6u-envFeXobvpl0oLqq8f0z-EU78_4pm_LjHW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 4 Aug 2026 03:25:55 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 4 Aug 2026 03:25:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d77f43fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 1c84a2dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 4 Aug 2026 07:25:54 +0000 (UTC)
+	Tue, 4 Aug 2026 07:25:58 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 04 Aug 2026 09:25:32 +0200
-Subject: [PATCH 4/7] odb/streaming: rename `struct odb_read_stream`
+Date: Tue, 04 Aug 2026 09:25:33 +0200
+Subject: [PATCH 5/7] odb/streaming: consolidate read and write streams
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,747 +83,511 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260804-pks-odb-stream-unification-v1-4-86d70e82345e@pks.im>
+Message-Id: <20260804-pks-odb-stream-unification-v1-5-86d70e82345e@pks.im>
 References: <20260804-pks-odb-stream-unification-v1-0-86d70e82345e@pks.im>
 In-Reply-To: <20260804-pks-odb-stream-unification-v1-0-86d70e82345e@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Rename `struct odb_read_stream` to just `struct odb_stream`. This
-prepares for unification of the two different types of streams, as these
-provide the same functionality with the preceding refactorings.
+The `struct odb_read_stream` and `struct odb_write_stream` both provide
+the same functionality: they allow a caller to read object data from an
+arbitrary source. Historically, the only difference was that the read
+stream was used to read data out of the object database, whereas the
+write stream was used to write data into the object database, but the
+interfaces were mostly the same.
+
+Over the preceding commits we have refactored the write stream to have
+almost exactly the same interface as the read stream. With these
+refactorings we can now easily merge those two streams into a single
+interface that's used for both use cases.
+
+While most of the changes are mechanical, there are two sites that need
+special mention:
+
+  - "builtin/unpack-objects.c" creates a write stream from compressed
+    object data.
+
+  - "odb/streaming.c" creates a write stream from a file descriptor.
+
+Adapting these sites to yield the new stream type requires a couple more
+changes. Most importantly, instead of embedding the pointer to the data
+in `struct odb_write_stream`, we now allocate a structure that wraps the
+new `struct odb_stream` base. Other than that though, the changes are
+rather straight forward.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- archive-tar.c                 |  6 +++---
- archive-zip.c                 | 10 ++++-----
- builtin/index-pack.c          |  6 +++---
- builtin/pack-objects.c        | 14 ++++++-------
- object-file.c                 |  4 ++--
- object-file.h                 |  2 +-
- object.c                      |  6 +++---
+ builtin/unpack-objects.c      | 31 ++++++++++++++++---------------
+ object-file.c                 | 25 ++++++++++++-------------
+ odb.c                         |  2 +-
+ odb.h                         |  4 ++--
  odb/source-files.c            |  2 +-
- odb/source-inmemory.c         |  8 ++++----
- odb/source-loose.c            |  8 ++++----
+ odb/source-inmemory.c         |  4 ++--
+ odb/source-loose.c            |  6 +++---
  odb/source-packed.c           |  2 +-
- odb/source.h                  |  6 +++---
- odb/streaming.c               | 48 +++++++++++++++++++++----------------------
- odb/streaming.h               | 24 +++++++++++-----------
- pack-check.c                  |  4 ++--
- packfile.c                    |  8 ++++----
- packfile.h                    |  4 ++--
- t/unit-tests/u-odb-inmemory.c | 12 +++++------
- 18 files changed, 87 insertions(+), 87 deletions(-)
+ odb/source.h                  |  4 ++--
+ odb/streaming.c               | 35 ++++++++++++++++-------------------
+ odb/streaming.h               | 31 +++----------------------------
+ odb/transaction.c             |  2 +-
+ odb/transaction.h             |  4 ++--
+ t/unit-tests/u-odb-inmemory.c |  6 +++---
+ 14 files changed, 65 insertions(+), 93 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 0fc70d13a8..df2d7fb8e9 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -129,7 +129,7 @@ static void write_trailer(void)
-  */
- static int stream_blocked(struct repository *r, const struct object_id *oid)
- {
--	struct odb_read_stream *st;
-+	struct odb_stream *st;
- 	char buf[BLOCKSIZE];
- 	ssize_t readlen;
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 7439ec53be..05a2d48011 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -359,20 +359,21 @@ static void unpack_non_delta_entry(enum object_type type, unsigned long size,
+ }
  
-@@ -137,12 +137,12 @@ static int stream_blocked(struct repository *r, const struct object_id *oid)
- 	if (!st)
- 		return error(_("cannot stream blob %s"), oid_to_hex(oid));
- 	for (;;) {
--		readlen = odb_read_stream_read(st, buf, sizeof(buf));
-+		readlen = odb_stream_read(st, buf, sizeof(buf));
- 		if (readlen <= 0)
- 			break;
- 		do_write_blocked(buf, readlen);
- 	}
--	odb_read_stream_close(st);
-+	odb_stream_close(st);
- 	if (!readlen)
- 		finish_record();
- 	return readlen;
-diff --git a/archive-zip.c b/archive-zip.c
-index 97ea8d60d6..8095fd04d5 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -309,7 +309,7 @@ static int write_zip_entry(struct archiver_args *args,
- 	enum zip_method method;
- 	unsigned char *out;
- 	void *deflated = NULL;
--	struct odb_read_stream *stream = NULL;
-+	struct odb_stream *stream = NULL;
- 	unsigned long flags = 0;
- 	int is_binary = -1;
- 	const char *path_without_prefix = path + args->baselen;
-@@ -428,7 +428,7 @@ static int write_zip_entry(struct archiver_args *args,
- 		ssize_t readlen;
- 
- 		for (;;) {
--			readlen = odb_read_stream_read(stream, buf, sizeof(buf));
-+			readlen = odb_stream_read(stream, buf, sizeof(buf));
- 			if (readlen <= 0)
- 				break;
- 			crc = crc32(crc, buf, readlen);
-@@ -438,7 +438,7 @@ static int write_zip_entry(struct archiver_args *args,
- 							    buf, readlen);
- 			write_or_die(1, buf, readlen);
- 		}
--		odb_read_stream_close(stream);
-+		odb_stream_close(stream);
- 		if (readlen)
- 			return readlen;
- 
-@@ -461,7 +461,7 @@ static int write_zip_entry(struct archiver_args *args,
- 		zstream.avail_out = sizeof(compressed);
- 
- 		for (;;) {
--			readlen = odb_read_stream_read(stream, buf, sizeof(buf));
-+			readlen = odb_stream_read(stream, buf, sizeof(buf));
- 			if (readlen <= 0)
- 				break;
- 			crc = crc32(crc, buf, readlen);
-@@ -485,7 +485,7 @@ static int write_zip_entry(struct archiver_args *args,
- 			}
- 
- 		}
--		odb_read_stream_close(stream);
-+		odb_stream_close(stream);
- 		if (readlen)
- 			return readlen;
- 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index bc86925ad0..7226da3e65 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -763,7 +763,7 @@ static void find_ref_delta_children(const struct object_id *oid,
- 
- struct compare_data {
- 	struct object_entry *entry;
--	struct odb_read_stream *st;
-+	struct odb_stream *st;
- 	unsigned char *buf;
- 	unsigned long buf_size;
+ struct input_zstream_data {
++	struct odb_stream base;
+ 	git_zstream *zstream;
+ 	int status;
  };
-@@ -780,7 +780,7 @@ static int compare_objects(const unsigned char *buf, unsigned long size,
- 	}
  
- 	while (size) {
--		ssize_t len = odb_read_stream_read(data->st, data->buf, size);
-+		ssize_t len = odb_stream_read(data->st, data->buf, size);
- 		if (len == 0)
- 			die(_("SHA1 COLLISION FOUND WITH %s !"),
- 			    oid_to_hex(&data->entry->idx.oid));
-@@ -813,7 +813,7 @@ static int check_collison(struct object_entry *entry)
- 		die(_("SHA1 COLLISION FOUND WITH %s !"),
- 		    oid_to_hex(&entry->idx.oid));
- 	unpack_data(entry, compare_objects, &data);
--	odb_read_stream_close(data.st);
-+	odb_stream_close(data.st);
- 	free(data.buf);
- 	return 0;
- }
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 1ec5b6f206..683160c6bb 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -411,7 +411,7 @@ static unsigned long do_compress(void **pptr, unsigned long size)
- 	return stream.total_out;
- }
- 
--static unsigned long write_large_blob_data(struct odb_read_stream *st, struct hashfile *f,
-+static unsigned long write_large_blob_data(struct odb_stream *st, struct hashfile *f,
- 					   const struct object_id *oid)
+-static ssize_t feed_input_zstream(struct odb_write_stream *in_stream,
+-				  unsigned char *buf, size_t buf_len)
++static ssize_t feed_input_zstream(struct odb_stream *in_stream,
++				  char *buf, size_t buf_len)
  {
- 	git_zstream stream;
-@@ -425,7 +425,7 @@ static unsigned long write_large_blob_data(struct odb_read_stream *st, struct ha
- 	for (;;) {
- 		ssize_t readlen;
- 		int zret = Z_OK;
--		readlen = odb_read_stream_read(st, ibuf, sizeof(ibuf));
-+		readlen = odb_stream_read(st, ibuf, sizeof(ibuf));
- 		if (readlen == -1)
- 			die(_("unable to read %s"), oid_to_hex(oid));
+-	struct input_zstream_data *data = in_stream->data;
++	struct input_zstream_data *data = container_of(in_stream, struct input_zstream_data, base);
+ 	git_zstream *zstream = data->zstream;
  
-@@ -521,7 +521,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 	unsigned hdrlen;
- 	enum object_type type;
- 	void *buf;
--	struct odb_read_stream *st = NULL;
-+	struct odb_stream *st = NULL;
- 	const unsigned hashsz = the_hash_algo->rawsz;
+ 	if (data->status != Z_OK)
+ 		return 0;
  
- 	if (!usable_delta) {
-@@ -589,7 +589,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 			dheader[--pos] = 128 | (--ofs & 127);
- 		if (limit && hdrlen + sizeof(dheader) - pos + datalen + hashsz >= limit) {
- 			if (st)
--				odb_read_stream_close(st);
-+				odb_stream_close(st);
- 			free(buf);
- 			return 0;
- 		}
-@@ -603,7 +603,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 		 */
- 		if (limit && hdrlen + hashsz + datalen + hashsz >= limit) {
- 			if (st)
--				odb_read_stream_close(st);
-+				odb_stream_close(st);
- 			free(buf);
- 			return 0;
- 		}
-@@ -613,7 +613,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 	} else {
- 		if (limit && hdrlen + datalen + hashsz >= limit) {
- 			if (st)
--				odb_read_stream_close(st);
-+				odb_stream_close(st);
- 			free(buf);
- 			return 0;
- 		}
-@@ -621,7 +621,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 	}
- 	if (st) {
- 		datalen = write_large_blob_data(st, f, &entry->idx.oid);
--		odb_read_stream_close(st);
-+		odb_stream_close(st);
- 	} else {
- 		hashwrite(f, buf, datalen);
- 		free(buf);
+-	zstream->next_out = buf;
++	zstream->next_out = (unsigned char *) buf;
+ 	zstream->avail_out = buf_len;
+ 
+ 	while (data->status == Z_OK && zstream->avail_out == buf_len) {
+@@ -388,24 +389,24 @@ static ssize_t feed_input_zstream(struct odb_write_stream *in_stream,
+ static void stream_blob(unsigned long size, unsigned nr)
+ {
+ 	git_zstream zstream = { 0 };
+-	struct input_zstream_data data = { 0 };
+-	struct odb_write_stream in_stream = {
+-		.read = feed_input_zstream,
+-		.data = &data,
+-		.size = size,
+-		.type = OBJ_BLOB,
++	struct input_zstream_data in_stream = {
++		.base = {
++			.read = feed_input_zstream,
++			.size = size,
++			.type = OBJ_BLOB,
++		},
++		.zstream = &zstream,
++		.status = Z_OK,
+ 	};
+ 	struct obj_info *info = &obj_list[nr];
+ 
+-	data.zstream = &zstream;
+-	data.status = Z_OK;
+ 	git_inflate_init(&zstream);
+ 
+-	if (odb_write_object_stream(the_repository->objects, &in_stream, &info->oid))
++	if (odb_write_object_stream(the_repository->objects, &in_stream.base, &info->oid))
+ 		die(_("failed to write object in stream"));
+ 
+-	if (data.status != Z_STREAM_END)
+-		die(_("inflate returned (%d)"), data.status);
++	if (in_stream.status != Z_STREAM_END)
++		die(_("inflate returned (%d)"), in_stream.status);
+ 	git_inflate_end(&zstream);
+ 
+ 	if (strict) {
 diff --git a/object-file.c b/object-file.c
-index 699a6a008c..5f6d584c35 100644
+index 5f6d584c35..068c6e5672 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -122,7 +122,7 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
+@@ -702,7 +702,7 @@ static void prepare_packfile_transaction(struct odb_transaction_files *transacti
+ 		die_errno("unable to write pack header");
  }
  
- int stream_object_signature(struct repository *r,
--			    struct odb_read_stream *st,
-+			    struct odb_stream *st,
- 			    const struct object_id *oid)
+-static int hash_stream(struct odb_write_stream *stream,
++static int hash_stream(struct odb_stream *stream,
+ 		       const struct git_hash_algo *hash_algo,
+ 		       struct object_id *result_oid)
  {
- 	struct object_id real_oid;
-@@ -138,7 +138,7 @@ int stream_object_signature(struct repository *r,
- 	git_hash_update(&c, hdr, hdrlen);
- 	for (;;) {
- 		char buf[1024 * 16];
--		ssize_t readlen = odb_read_stream_read(st, buf, sizeof(buf));
-+		ssize_t readlen = odb_stream_read(st, buf, sizeof(buf));
- 		if (readlen < 0)
+@@ -717,8 +717,8 @@ static int hash_stream(struct odb_write_stream *stream,
+ 	git_hash_update(&ctx, buf, header_len);
+ 
+ 	while (1) {
+-		ssize_t read_result = odb_write_stream_read(stream, buf,
+-							    sizeof(buf));
++		ssize_t read_result = odb_stream_read(stream, buf,
++						      sizeof(buf));
+ 		if (read_result < 0)
  			return -1;
- 		if (!readlen)
-diff --git a/object-file.h b/object-file.h
-index 805f2cfa28..f44758c4f8 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -101,7 +101,7 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
-  * the streaming interface and rehash it to do the same.
+ 		if (!read_result)
+@@ -742,7 +742,7 @@ static int hash_stream(struct odb_write_stream *stream,
   */
- int stream_object_signature(struct repository *r,
--			    struct odb_read_stream *stream,
-+			    struct odb_stream *stream,
- 			    const struct object_id *oid);
+ static void stream_to_pack(struct transaction_packfile *state,
+ 			   struct git_hash_ctx *ctx,
+-			   struct odb_write_stream *stream)
++			   struct odb_stream *stream)
+ {
+ 	git_zstream s;
+ 	unsigned char ibuf[16384];
+@@ -761,8 +761,8 @@ static void stream_to_pack(struct transaction_packfile *state,
  
- enum finalize_object_file_flags {
-diff --git a/object.c b/object.c
-index 23b84aa7e2..37e6efee47 100644
---- a/object.c
-+++ b/object.c
-@@ -345,7 +345,7 @@ struct object *parse_object_with_flags(struct repository *r,
- 	if ((!obj || obj->type == OBJ_NONE || obj->type == OBJ_BLOB) &&
- 	    odb_read_object_info(r->objects, oid, NULL) == OBJ_BLOB) {
- 		if (!skip_hash) {
--			struct odb_read_stream *stream = odb_read_stream_open(r->objects, oid, NULL);
-+			struct odb_stream *stream = odb_read_stream_open(r->objects, oid, NULL);
+ 	while (status != Z_STREAM_END) {
+ 		if (!is_finished && !s.avail_in) {
+-			ssize_t rsize = odb_write_stream_read(stream, ibuf,
+-							      sizeof(ibuf));
++			ssize_t rsize = odb_stream_read(stream, ibuf,
++							sizeof(ibuf));
+ 			if (rsize < 0)
+ 				die("failed to read object data");
+ 			if (!rsize)
+@@ -872,7 +872,7 @@ static void flush_packfile_transaction(struct odb_transaction_files *transaction
+  * callers should avoid this code path when filters are requested.
+  */
+ static int odb_transaction_files_write_object_stream(struct odb_transaction *base,
+-						     struct odb_write_stream *stream,
++						     struct odb_stream *stream,
+ 						     struct object_id *result_oid)
+ {
+ 	struct odb_transaction_files *transaction = container_of(base,
+@@ -952,8 +952,8 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+ 		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
+ 				 type, path, flags);
+ 	} else {
+-		struct odb_write_stream stream;
+-		odb_write_stream_from_fd(&stream, fd, xsize_t(st->st_size), OBJ_BLOB);
++		struct odb_stream *stream = odb_write_stream_from_fd(fd, xsize_t(st->st_size),
++								     OBJ_BLOB);
  
- 			if (!stream) {
- 				error(_("unable to open object stream for %s"), oid_to_hex(oid));
-@@ -354,11 +354,11 @@ struct object *parse_object_with_flags(struct repository *r,
- 
- 			if (stream_object_signature(r, stream, repl) < 0) {
- 				error(_("hash mismatch %s"), oid_to_hex(oid));
--				odb_read_stream_close(stream);
-+				odb_stream_close(stream);
- 				return NULL;
- 			}
- 
--			odb_read_stream_close(stream);
-+			odb_stream_close(stream);
+ 		if (flags & INDEX_WRITE_OBJECT) {
+ 			struct object_database *odb = the_repository->objects;
+@@ -963,15 +963,14 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+ 			if (!inflight)
+ 				odb_transaction_begin_or_die(odb, &transaction, 0);
+ 			ret = odb_transaction_write_object_stream(transaction,
+-								  &stream,
+-								  oid);
++								  stream, oid);
+ 			if (!inflight)
+ 				odb_transaction_commit(transaction);
+ 		} else {
+-			ret = hash_stream(&stream, the_repository->hash_algo, oid);
++			ret = hash_stream(stream, the_repository->hash_algo, oid);
  		}
- 		parse_blob_buffer(lookup_blob(r, oid));
- 		return lookup_object(r, oid);
+ 
+-		odb_write_stream_release(&stream);
++		odb_stream_close(stream);
+ 	}
+ 
+ 	close(fd);
+diff --git a/odb.c b/odb.c
+index 585b2b2965..eec4cc5302 100644
+--- a/odb.c
++++ b/odb.c
+@@ -1028,7 +1028,7 @@ int odb_write_object_ext(struct object_database *odb,
+ }
+ 
+ int odb_write_object_stream(struct object_database *odb,
+-			    struct odb_write_stream *stream,
++			    struct odb_stream *stream,
+ 			    struct object_id *oid)
+ {
+ 	return odb_source_write_object_stream(odb->sources, stream, oid);
+diff --git a/odb.h b/odb.h
+index 019d3af3e8..fbe75c5a81 100644
+--- a/odb.h
++++ b/odb.h
+@@ -626,10 +626,10 @@ static inline int odb_write_object(struct object_database *odb,
+ 	return odb_write_object_ext(odb, buf, len, type, oid, NULL, 0);
+ }
+ 
+-struct odb_write_stream;
++struct odb_stream;
+ 
+ int odb_write_object_stream(struct object_database *odb,
+-			    struct odb_write_stream *stream,
++			    struct odb_stream *stream,
+ 			    struct object_id *oid);
+ 
+ void parse_alternates(const char *string,
 diff --git a/odb/source-files.c b/odb/source-files.c
-index f51960bd71..f7b8c76549 100644
+index f7b8c76549..6defe5ac4f 100644
 --- a/odb/source-files.c
 +++ b/odb/source-files.c
-@@ -63,7 +63,7 @@ static int odb_source_files_read_object_info(struct odb_source *source,
- 	return -1;
+@@ -174,7 +174,7 @@ static int odb_source_files_write_object(struct odb_source *source,
  }
  
--static int odb_source_files_read_object_stream(struct odb_read_stream **out,
-+static int odb_source_files_read_object_stream(struct odb_stream **out,
- 					       struct odb_source *source,
- 					       const struct object_id *oid)
+ static int odb_source_files_write_object_stream(struct odb_source *source,
+-						struct odb_write_stream *stream,
++						struct odb_stream *stream,
+ 						struct object_id *oid)
  {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
 diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-index 4f76db5496..4bee3ae699 100644
+index 4bee3ae699..bb63cdce86 100644
 --- a/odb/source-inmemory.c
 +++ b/odb/source-inmemory.c
-@@ -73,12 +73,12 @@ static int odb_source_inmemory_read_object_info(struct odb_source *source,
+@@ -256,7 +256,7 @@ static int odb_source_inmemory_write_object(struct odb_source *source,
  }
  
- struct odb_read_stream_inmemory {
--	struct odb_read_stream base;
+ static int odb_source_inmemory_write_object_stream(struct odb_source *source,
+-						   struct odb_write_stream *stream,
++						   struct odb_stream *stream,
+ 						   struct object_id *oid)
+ {
+ 	char buf[16384];
+@@ -268,7 +268,7 @@ static int odb_source_inmemory_write_object_stream(struct odb_source *source,
+ 	while (1) {
+ 		ssize_t bytes_read;
+ 
+-		bytes_read = odb_write_stream_read(stream, buf, sizeof(buf));
++		bytes_read = odb_stream_read(stream, buf, sizeof(buf));
+ 		if (bytes_read < 0) {
+ 			ret = error("failed to read object stream");
+ 			goto out;
+diff --git a/odb/source-loose.c b/odb/source-loose.c
+index 038defd905..ff1bede7fe 100644
+--- a/odb/source-loose.c
++++ b/odb/source-loose.c
+@@ -845,7 +845,7 @@ static int odb_source_loose_write_object(struct odb_source *source,
+ }
+ 
+ static int odb_source_loose_write_object_stream(struct odb_source *source,
+-						struct odb_write_stream *in_stream,
++						struct odb_stream *in_stream,
+ 						struct object_id *oid)
+ {
+ 	struct odb_source_loose *loose = odb_source_loose_downcast(source);
+@@ -891,8 +891,8 @@ static int odb_source_loose_write_object_stream(struct odb_source *source,
+ 		unsigned char *in0 = stream.next_in;
+ 
+ 		if (!stream.avail_in && !is_finished) {
+-			ssize_t read_len = odb_write_stream_read(in_stream, buf,
+-								 sizeof(buf));
++			ssize_t read_len = odb_stream_read(in_stream, buf,
++							   sizeof(buf));
+ 			if (read_len < 0) {
+ 				close(fd);
+ 				err = -1;
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+index b3186ca593..630d955585 100644
+--- a/odb/source-packed.c
++++ b/odb/source-packed.c
+@@ -609,7 +609,7 @@ static int odb_source_packed_write_object(struct odb_source *source UNUSED,
+ }
+ 
+ static int odb_source_packed_write_object_stream(struct odb_source *source UNUSED,
+-						 struct odb_write_stream *stream UNUSED,
++						 struct odb_stream *stream UNUSED,
+ 						 struct object_id *oid UNUSED)
+ {
+ 	return error("packed backend cannot write object streams");
+diff --git a/odb/source.h b/odb/source.h
+index 89b0c39682..0b99c698b5 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -221,7 +221,7 @@ struct odb_source {
+ 	 * otherwise.
+ 	 */
+ 	int (*write_object_stream)(struct odb_source *source,
+-				   struct odb_write_stream *stream,
++				   struct odb_stream *stream,
+ 				   struct object_id *oid);
+ 
+ 	/*
+@@ -436,7 +436,7 @@ static inline int odb_source_write_object(struct odb_source *source,
+  * out pointer for the object ID.
+  */
+ static inline int odb_source_write_object_stream(struct odb_source *source,
+-						 struct odb_write_stream *stream,
++						 struct odb_stream *stream,
+ 						 struct object_id *oid)
+ {
+ 	return source->write_object_stream(source, stream, oid);
+diff --git a/odb/streaming.c b/odb/streaming.c
+index 98e2152e36..1a267e6b90 100644
+--- a/odb/streaming.c
++++ b/odb/streaming.c
+@@ -232,16 +232,6 @@ struct odb_stream *odb_read_stream_open(struct object_database *odb,
+ 	return st;
+ }
+ 
+-ssize_t odb_write_stream_read(struct odb_write_stream *st, void *buf, size_t sz)
+-{
+-	return st->read(st, buf, sz);
+-}
+-
+-void odb_write_stream_release(struct odb_write_stream *st)
+-{
+-	free(st->data);
+-}
+-
+ int odb_stream_blob_to_fd(struct object_database *odb,
+ 			  int fd,
+ 			  const struct object_id *oid,
+@@ -299,14 +289,15 @@ int odb_stream_blob_to_fd(struct object_database *odb,
+ }
+ 
+ struct read_object_fd_data {
 +	struct odb_stream base;
- 	const unsigned char *buf;
+ 	int fd;
+ 	size_t remaining;
+ };
+ 
+-static ssize_t read_object_fd(struct odb_write_stream *stream,
+-			      unsigned char *buf, size_t len)
++static ssize_t read_object_fd(struct odb_stream *stream,
++			      char *buf, size_t len)
+ {
+-	struct read_object_fd_data *data = stream->data;
++	struct read_object_fd_data *data = container_of(stream, struct read_object_fd_data, base);
+ 	ssize_t read_result;
+ 	size_t count;
+ 
+@@ -323,17 +314,23 @@ static ssize_t read_object_fd(struct odb_write_stream *stream,
+ 	return read_result;
+ }
+ 
+-void odb_write_stream_from_fd(struct odb_write_stream *stream, int fd,
+-			      size_t size, enum object_type type)
++static int close_object_fd(struct odb_stream *stream UNUSED)
++{
++	/* The file descriptor is owned by the caller for now. */
++	return 0;
++}
++
++struct odb_stream *odb_write_stream_from_fd(int fd, size_t size, enum object_type type)
+ {
+ 	struct read_object_fd_data *data;
+ 
+ 	CALLOC_ARRAY(data, 1);
++	data->base.read = read_object_fd;
++	data->base.close = close_object_fd;
++	data->base.size = size;
++	data->base.type = type;
+ 	data->fd = fd;
+ 	data->remaining = size;
+ 
+-	stream->data = data;
+-	stream->read = read_object_fd;
+-	stream->size = size;
+-	stream->type = type;
++	return &data->base;
+ }
+diff --git a/odb/streaming.h b/odb/streaming.h
+index 037954c231..60b9803190 100644
+--- a/odb/streaming.h
++++ b/odb/streaming.h
+@@ -15,8 +15,8 @@ typedef int (*odb_stream_close_fn)(struct odb_stream *);
+ typedef ssize_t (*odb_stream_read_fn)(struct odb_stream *, char *, size_t);
+ 
+ /*
+- * A stream that can be used to read an object from the object database without
+- * loading all of it into memory.
++ * A stream that can be used to read an object from or write an object into the
++ * object database without loading all of it into memory.
+  */
+ struct odb_stream {
+ 	odb_stream_close_fn close;
+@@ -48,30 +48,6 @@ int odb_stream_close(struct odb_stream *stream);
+  */
+ ssize_t odb_stream_read(struct odb_stream *stream, void *buf, size_t len);
+ 
+-/*
+- * A stream that provides an object to be written to the object database without
+- * loading all of it into memory.
+- */
+-struct odb_write_stream {
+-	ssize_t (*read)(struct odb_write_stream *, unsigned char *, size_t);
+-	void *data;
+-	size_t size;
+-	enum object_type type;
+-};
+-
+-/*
+- * Read data from the stream into the buffer. Returns 0 when finished and the
+- * number of bytes read on success. Returns a negative error code in case
+- * reading from the stream fails.
+- */
+-ssize_t odb_write_stream_read(struct odb_write_stream *stream, void *buf,
+-			      size_t len);
+-
+-/*
+- * Releases memory allocated for underlying stream data.
+- */
+-void odb_write_stream_release(struct odb_write_stream *stream);
+-
+ /*
+  * Look up the object by its ID and write the full contents to the file
+  * descriptor. The object must be a blob, or the function will fail. When
+@@ -92,7 +68,6 @@ int odb_stream_blob_to_fd(struct object_database *odb,
+ /*
+  * Sets up an ODB write stream that reads from an fd.
+  */
+-void odb_write_stream_from_fd(struct odb_write_stream *stream, int fd,
+-			      size_t size, enum object_type type);
++struct odb_stream *odb_write_stream_from_fd(int fd, size_t size, enum object_type type);
+ 
+ #endif /* STREAMING_H */
+diff --git a/odb/transaction.c b/odb/transaction.c
+index 6aaf133812..69d71b9e97 100644
+--- a/odb/transaction.c
++++ b/odb/transaction.c
+@@ -39,7 +39,7 @@ int odb_transaction_commit(struct odb_transaction *transaction)
+ }
+ 
+ int odb_transaction_write_object_stream(struct odb_transaction *transaction,
+-					struct odb_write_stream *stream,
++					struct odb_stream *stream,
+ 					struct object_id *oid)
+ {
+ 	return transaction->write_object_stream(transaction, stream, oid);
+diff --git a/odb/transaction.h b/odb/transaction.h
+index ffb279314c..b83c77c80a 100644
+--- a/odb/transaction.h
++++ b/odb/transaction.h
+@@ -31,7 +31,7 @@ struct odb_transaction {
+ 	 * otherwise.
+ 	 */
+ 	int (*write_object_stream)(struct odb_transaction *transaction,
+-				   struct odb_write_stream *stream,
++				   struct odb_stream *stream,
+ 				   struct object_id *oid);
+ 
+ 	/*
+@@ -81,7 +81,7 @@ int odb_transaction_commit(struct odb_transaction *transaction);
+  * error code otherwise.
+  */
+ int odb_transaction_write_object_stream(struct odb_transaction *transaction,
+-					struct odb_write_stream *stream,
++					struct odb_stream *stream,
+ 					struct object_id *oid);
+ 
+ /*
+diff --git a/t/unit-tests/u-odb-inmemory.c b/t/unit-tests/u-odb-inmemory.c
+index 839a0fd3b7..b8b331b37d 100644
+--- a/t/unit-tests/u-odb-inmemory.c
++++ b/t/unit-tests/u-odb-inmemory.c
+@@ -266,13 +266,13 @@ void test_odb_inmemory__freshen_object(void)
+ }
+ 
+ struct membuf_write_stream {
+-	struct odb_write_stream base;
++	struct odb_stream base;
+ 	const char *buf;
  	size_t offset;
  };
  
--static ssize_t odb_read_stream_inmemory_read(struct odb_read_stream *stream,
-+static ssize_t odb_read_stream_inmemory_read(struct odb_stream *stream,
- 					     char *buf, size_t buf_len)
+-static ssize_t membuf_write_stream_read(struct odb_write_stream *stream,
+-					unsigned char *buf, size_t len)
++static ssize_t membuf_write_stream_read(struct odb_stream *stream,
++					char *buf, size_t len)
  {
- 	struct odb_read_stream_inmemory *inmemory =
-@@ -94,12 +94,12 @@ static ssize_t odb_read_stream_inmemory_read(struct odb_read_stream *stream,
- 	return bytes;
- }
- 
--static int odb_read_stream_inmemory_close(struct odb_read_stream *stream UNUSED)
-+static int odb_read_stream_inmemory_close(struct odb_stream *stream UNUSED)
- {
- 	return 0;
- }
- 
--static int odb_source_inmemory_read_object_stream(struct odb_read_stream **out,
-+static int odb_source_inmemory_read_object_stream(struct odb_stream **out,
- 						  struct odb_source *source,
- 						  const struct object_id *oid)
- {
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index 5681a38f03..038defd905 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -278,7 +278,7 @@ static void *odb_source_loose_map_object(struct odb_source_loose *loose,
- }
- 
- struct odb_loose_read_stream {
--	struct odb_read_stream base;
-+	struct odb_stream base;
- 	git_zstream z;
- 	enum {
- 		ODB_LOOSE_READ_STREAM_INUSE,
-@@ -292,7 +292,7 @@ struct odb_loose_read_stream {
- 	int hdr_used;
- };
- 
--static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t sz)
-+static ssize_t read_istream_loose(struct odb_stream *_st, char *buf, size_t sz)
- {
- 	struct odb_loose_read_stream *st =
- 		container_of(_st, struct odb_loose_read_stream, base);
-@@ -339,7 +339,7 @@ static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t
- 	return total_read;
- }
- 
--static int close_istream_loose(struct odb_read_stream *_st)
-+static int close_istream_loose(struct odb_stream *_st)
- {
- 	struct odb_loose_read_stream *st =
- 		container_of(_st, struct odb_loose_read_stream, base);
-@@ -350,7 +350,7 @@ static int close_istream_loose(struct odb_read_stream *_st)
- 	return 0;
- }
- 
--static int odb_source_loose_read_object_stream(struct odb_read_stream **out,
-+static int odb_source_loose_read_object_stream(struct odb_stream **out,
- 					       struct odb_source *source,
- 					       const struct object_id *oid)
- {
-diff --git a/odb/source-packed.c b/odb/source-packed.c
-index e6ff74833b..b3186ca593 100644
---- a/odb/source-packed.c
-+++ b/odb/source-packed.c
-@@ -70,7 +70,7 @@ static int odb_source_packed_read_object_info(struct odb_source *source,
- 	return 0;
- }
- 
--static int odb_source_packed_read_object_stream(struct odb_read_stream **out,
-+static int odb_source_packed_read_object_stream(struct odb_stream **out,
- 						struct odb_source *source,
- 						const struct object_id *oid)
- {
-diff --git a/odb/source.h b/odb/source.h
-index 0080148ba7..89b0c39682 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -26,7 +26,7 @@ enum odb_source_type {
- };
- 
- struct object_id;
--struct odb_read_stream;
-+struct odb_stream;
- struct strvec;
- 
- /*
-@@ -125,7 +125,7 @@ struct odb_source {
- 	 * The callback is expected to return a negative error code in case
- 	 * creating the object stream has failed, 0 otherwise.
- 	 */
--	int (*read_object_stream)(struct odb_read_stream **out,
-+	int (*read_object_stream)(struct odb_stream **out,
- 				  struct odb_source *source,
- 				  const struct object_id *oid);
- 
-@@ -339,7 +339,7 @@ static inline int odb_source_read_object_info(struct odb_source *source,
-  * Create a new read stream for the given object ID. Returns 0 on success, a
-  * negative error code otherwise.
-  */
--static inline int odb_source_read_object_stream(struct odb_read_stream **out,
-+static inline int odb_source_read_object_stream(struct odb_stream **out,
- 						struct odb_source *source,
- 						const struct object_id *oid)
- {
-diff --git a/odb/streaming.c b/odb/streaming.c
-index 0918cad426..98e2152e36 100644
---- a/odb/streaming.c
-+++ b/odb/streaming.c
-@@ -20,8 +20,8 @@
-  *****************************************************************/
- 
- struct odb_filtered_read_stream {
--	struct odb_read_stream base;
--	struct odb_read_stream *upstream;
-+	struct odb_stream base;
-+	struct odb_stream *upstream;
- 	struct stream_filter *filter;
- 	char ibuf[FILTER_BUFFER];
- 	char obuf[FILTER_BUFFER];
-@@ -30,14 +30,14 @@ struct odb_filtered_read_stream {
- 	int input_finished;
- };
- 
--static int close_istream_filtered(struct odb_read_stream *_fs)
-+static int close_istream_filtered(struct odb_stream *_fs)
- {
- 	struct odb_filtered_read_stream *fs = (struct odb_filtered_read_stream *)_fs;
- 	free_stream_filter(fs->filter);
--	return odb_read_stream_close(fs->upstream);
-+	return odb_stream_close(fs->upstream);
- }
- 
--static ssize_t read_istream_filtered(struct odb_read_stream *_fs, char *buf,
-+static ssize_t read_istream_filtered(struct odb_stream *_fs, char *buf,
- 				     size_t sz)
- {
- 	struct odb_filtered_read_stream *fs = (struct odb_filtered_read_stream *)_fs;
-@@ -86,7 +86,7 @@ static ssize_t read_istream_filtered(struct odb_read_stream *_fs, char *buf,
- 
- 		/* refill the input from the upstream */
- 		if (!fs->input_finished) {
--			fs->i_end = odb_read_stream_read(fs->upstream, fs->ibuf, FILTER_BUFFER);
-+			fs->i_end = odb_stream_read(fs->upstream, fs->ibuf, FILTER_BUFFER);
- 			if (fs->i_end < 0)
- 				return -1;
- 			if (fs->i_end)
-@@ -97,8 +97,8 @@ static ssize_t read_istream_filtered(struct odb_read_stream *_fs, char *buf,
- 	return filled;
- }
- 
--static struct odb_read_stream *attach_stream_filter(struct odb_read_stream *st,
--						    struct stream_filter *filter)
-+static struct odb_stream *attach_stream_filter(struct odb_stream *st,
-+					       struct stream_filter *filter)
- {
- 	struct odb_filtered_read_stream *fs;
- 
-@@ -120,19 +120,19 @@ static struct odb_read_stream *attach_stream_filter(struct odb_read_stream *st,
-  *****************************************************************/
- 
- struct odb_incore_read_stream {
--	struct odb_read_stream base;
-+	struct odb_stream base;
- 	char *buf; /* from odb_read_object_info_extended() */
- 	unsigned long read_ptr;
- };
- 
--static int close_istream_incore(struct odb_read_stream *_st)
-+static int close_istream_incore(struct odb_stream *_st)
- {
- 	struct odb_incore_read_stream *st = (struct odb_incore_read_stream *)_st;
- 	free(st->buf);
- 	return 0;
- }
- 
--static ssize_t read_istream_incore(struct odb_read_stream *_st, char *buf, size_t sz)
-+static ssize_t read_istream_incore(struct odb_stream *_st, char *buf, size_t sz)
- {
- 	struct odb_incore_read_stream *st = (struct odb_incore_read_stream *)_st;
- 	size_t read_size = sz;
-@@ -147,7 +147,7 @@ static ssize_t read_istream_incore(struct odb_read_stream *_st, char *buf, size_
- 	return read_size;
- }
- 
--static int open_istream_incore(struct odb_read_stream **out,
-+static int open_istream_incore(struct odb_stream **out,
- 			       struct object_database *odb,
- 			       const struct object_id *oid)
- {
-@@ -178,7 +178,7 @@ static int open_istream_incore(struct odb_read_stream **out,
-  * static helpers variables and functions for users of streaming interface
-  *****************************************************************************/
- 
--static int istream_source(struct odb_read_stream **out,
-+static int istream_source(struct odb_stream **out,
- 			  struct object_database *odb,
- 			  const struct object_id *oid)
- {
-@@ -196,23 +196,23 @@ static int istream_source(struct odb_read_stream **out,
-  * Users of streaming interface
-  ****************************************************************/
- 
--int odb_read_stream_close(struct odb_read_stream *st)
-+int odb_stream_close(struct odb_stream *st)
- {
- 	int r = st->close(st);
- 	free(st);
- 	return r;
- }
- 
--ssize_t odb_read_stream_read(struct odb_read_stream *st, void *buf, size_t sz)
-+ssize_t odb_stream_read(struct odb_stream *st, void *buf, size_t sz)
- {
- 	return st->read(st, buf, sz);
- }
- 
--struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
--					     const struct object_id *oid,
--					     struct stream_filter *filter)
-+struct odb_stream *odb_read_stream_open(struct object_database *odb,
-+					const struct object_id *oid,
-+					struct stream_filter *filter)
- {
--	struct odb_read_stream *st;
-+	struct odb_stream *st;
- 	const struct object_id *real = lookup_replace_object(odb->repo, oid);
- 	int ret = istream_source(&st, odb, real);
- 
-@@ -221,9 +221,9 @@ struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
- 
- 	if (filter) {
- 		/* Add "&& !is_null_stream_filter(filter)" for performance */
--		struct odb_read_stream *nst = attach_stream_filter(st, filter);
-+		struct odb_stream *nst = attach_stream_filter(st, filter);
- 		if (!nst) {
--			odb_read_stream_close(st);
-+			odb_stream_close(st);
- 			return NULL;
- 		}
- 		st = nst;
-@@ -248,7 +248,7 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 			  struct stream_filter *filter,
- 			  int can_seek)
- {
--	struct odb_read_stream *st;
-+	struct odb_stream *st;
- 	ssize_t kept = 0;
- 	int result = -1;
- 
-@@ -263,7 +263,7 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 	for (;;) {
- 		char buf[1024 * 16];
- 		ssize_t wrote, holeto;
--		ssize_t readlen = odb_read_stream_read(st, buf, sizeof(buf));
-+		ssize_t readlen = odb_stream_read(st, buf, sizeof(buf));
- 
- 		if (readlen < 0)
- 			goto close_and_exit;
-@@ -294,7 +294,7 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 	result = 0;
- 
-  close_and_exit:
--	odb_read_stream_close(st);
-+	odb_stream_close(st);
- 	return result;
- }
- 
-diff --git a/odb/streaming.h b/odb/streaming.h
-index 3c8ed55129..037954c231 100644
---- a/odb/streaming.h
-+++ b/odb/streaming.h
-@@ -8,19 +8,19 @@
- #include "odb.h"
- 
- struct object_database;
--struct odb_read_stream;
-+struct odb_stream;
- struct stream_filter;
- 
--typedef int (*odb_read_stream_close_fn)(struct odb_read_stream *);
--typedef ssize_t (*odb_read_stream_read_fn)(struct odb_read_stream *, char *, size_t);
-+typedef int (*odb_stream_close_fn)(struct odb_stream *);
-+typedef ssize_t (*odb_stream_read_fn)(struct odb_stream *, char *, size_t);
- 
- /*
-  * A stream that can be used to read an object from the object database without
-  * loading all of it into memory.
-  */
--struct odb_read_stream {
--	odb_read_stream_close_fn close;
--	odb_read_stream_read_fn read;
-+struct odb_stream {
-+	odb_stream_close_fn close;
-+	odb_stream_read_fn read;
- 	enum object_type type;
- 	size_t size; /* inflated size of full object */
- };
-@@ -31,22 +31,22 @@ struct odb_read_stream {
-  *
-  * Returns the stream on success, a `NULL` pointer otherwise.
-  */
--struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
--					     const struct object_id *oid,
--					     struct stream_filter *filter);
-+struct odb_stream *odb_read_stream_open(struct object_database *odb,
-+					const struct object_id *oid,
-+					struct stream_filter *filter);
- 
- /*
-- * Close the given read stream and release all resources associated with it.
-+ * Close the given object stream and release all resources associated with it.
-  * Returns 0 on success, a negative error code otherwise.
-  */
--int odb_read_stream_close(struct odb_read_stream *stream);
-+int odb_stream_close(struct odb_stream *stream);
- 
- /*
-  * Read data from the stream into the buffer. Returns 0 on EOF and the number
-  * of bytes read on success. Returns a negative error code in case reading from
-  * the stream fails.
-  */
--ssize_t odb_read_stream_read(struct odb_read_stream *stream, void *buf, size_t len);
-+ssize_t odb_stream_read(struct odb_stream *stream, void *buf, size_t len);
- 
- /*
-  * A stream that provides an object to be written to the object database without
-diff --git a/pack-check.c b/pack-check.c
-index c3b8db7c5c..1b5e26847d 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -106,7 +106,7 @@ static int verify_packfile(struct repository *r,
- 	QSORT(entries, nr_objects, compare_entries);
- 
- 	for (i = 0; i < nr_objects; i++) {
--		struct odb_read_stream *stream = NULL;
-+		struct odb_stream *stream = NULL;
- 		void *data;
- 		struct object_id oid;
- 		enum object_type type;
-@@ -171,7 +171,7 @@ static int verify_packfile(struct repository *r,
- 			display_progress(progress, base_count + i);
- 
- 		if (stream)
--			odb_read_stream_close(stream);
-+			odb_stream_close(stream);
- 		free(data);
- 	}
- 
-diff --git a/packfile.c b/packfile.c
-index 0eee45055f..70254573a3 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2115,7 +2115,7 @@ int parse_pack_header_option(const char *in, unsigned char *out, unsigned int *l
- }
- 
- struct odb_packed_read_stream {
--	struct odb_read_stream base;
-+	struct odb_stream base;
- 	struct packed_git *pack;
- 	git_zstream z;
- 	enum {
-@@ -2127,7 +2127,7 @@ struct odb_packed_read_stream {
- 	off_t pos;
- };
- 
--static ssize_t read_istream_pack_non_delta(struct odb_read_stream *_st, char *buf,
-+static ssize_t read_istream_pack_non_delta(struct odb_stream *_st, char *buf,
- 					   size_t sz)
- {
- 	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
-@@ -2187,7 +2187,7 @@ static ssize_t read_istream_pack_non_delta(struct odb_read_stream *_st, char *bu
- 	return total_read;
- }
- 
--static int close_istream_pack_non_delta(struct odb_read_stream *_st)
-+static int close_istream_pack_non_delta(struct odb_stream *_st)
- {
- 	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
- 	if (st->z_state == ODB_PACKED_READ_STREAM_INUSE)
-@@ -2195,7 +2195,7 @@ static int close_istream_pack_non_delta(struct odb_read_stream *_st)
- 	return 0;
- }
- 
--int packfile_read_object_stream(struct odb_read_stream **out,
-+int packfile_read_object_stream(struct odb_stream **out,
- 				const struct object_id *oid,
- 				struct packed_git *pack,
- 				off_t offset)
-diff --git a/packfile.h b/packfile.h
-index e1f77152b5..f913cb3d0c 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -12,7 +12,7 @@
- 
- /* in odb.h */
- struct object_info;
--struct odb_read_stream;
-+struct odb_stream;
- 
- struct packed_git {
- 	struct pack_window *windows;
-@@ -306,7 +306,7 @@ off_t get_delta_base(struct packed_git *p, struct pack_window **w_curs,
- 		     off_t *curpos, enum object_type type,
- 		     off_t delta_obj_offset);
- 
--int packfile_read_object_stream(struct odb_read_stream **out,
-+int packfile_read_object_stream(struct odb_stream **out,
- 				const struct object_id *oid,
- 				struct packed_git *pack,
- 				off_t offset);
-diff --git a/t/unit-tests/u-odb-inmemory.c b/t/unit-tests/u-odb-inmemory.c
-index 1ab07af6d6..839a0fd3b7 100644
---- a/t/unit-tests/u-odb-inmemory.c
-+++ b/t/unit-tests/u-odb-inmemory.c
-@@ -100,7 +100,7 @@ void test_odb_inmemory__read_written_object(void)
- void test_odb_inmemory__read_stream_object(void)
- {
- 	struct odb_source_inmemory *source = odb_source_inmemory_new(odb);
--	struct odb_read_stream *stream;
-+	struct odb_stream *stream;
- 	struct object_id written_oid;
- 	const char data[] = "foobar";
- 	char buf[3] = { 0 };
-@@ -112,15 +112,15 @@ void test_odb_inmemory__read_stream_object(void)
- 	cl_assert_equal_i(stream->type, OBJ_BLOB);
- 	cl_assert_equal_u(stream->size, 6);
- 
--	cl_assert_equal_i(odb_read_stream_read(stream, buf, 2), 2);
-+	cl_assert_equal_i(odb_stream_read(stream, buf, 2), 2);
- 	cl_assert_equal_s(buf, "fo");
--	cl_assert_equal_i(odb_read_stream_read(stream, buf, 2), 2);
-+	cl_assert_equal_i(odb_stream_read(stream, buf, 2), 2);
- 	cl_assert_equal_s(buf, "ob");
--	cl_assert_equal_i(odb_read_stream_read(stream, buf, 2), 2);
-+	cl_assert_equal_i(odb_stream_read(stream, buf, 2), 2);
- 	cl_assert_equal_s(buf, "ar");
--	cl_assert_equal_i(odb_read_stream_read(stream, buf, 2), 0);
-+	cl_assert_equal_i(odb_stream_read(stream, buf, 2), 0);
- 
--	odb_read_stream_close(stream);
-+	odb_stream_close(stream);
- 	odb_source_free(&source->base);
- }
- 
+ 	struct membuf_write_stream *s = container_of(stream, struct membuf_write_stream, base);
+ 	size_t chunk_size = 2;
 
 -- 
 2.55.0.679.g6767b8d81c.dirty
