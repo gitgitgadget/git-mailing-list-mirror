@@ -1,112 +1,145 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED6D78F39
-	for <git@vger.kernel.org>; Mon,  3 Aug 2026 21:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785794160; cv=none; b=dKTWSTOwoz8thqfOCwWD3pW8XjHAiwW340DS736pIn9IrkM4M2xnmRJX1GmZHfm3MjZEMaIi555QLiz/k/pGFlPZt4/V1rPhFvKCloqlIFBrzo+0WAW7uF7e52IXoT+hdwPAADFKDSsB2Gs3zEu6CkvIA48dba8ebe3bVmh++wQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785794160; c=relaxed/simple;
-	bh=+ZG7DsjaxXCx2VrgiFJ2J8N/h9fGf1e7cTKk7b4A3Vw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qxm0rVaGCQG9mt7cXvCJr9c1EJ30Naw1FaCSI5/vd7czW8wdPCdBQe1b1WeV8rMvZVVHtL+smCa1P83NljwGck+5ZbpNn0TQJbwtbnwOtzU8CNPqRWiIxBWNkjBhEpJF+IG4BfgdTsYgpPJORX7qSxIXcPSetBYY6QTTO3Nbivg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gXQcxeKq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eiJI/uPL; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D8326AF4
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 03:15:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785813330; cv=pass; b=Nz/V5uJK8lDQ8Z9Ja5cLFzAiptwv0iE2F0c5JdeMkkj+WgfaNPy9XDWiveKr2Zge4QctNv01d0jfQ2Y4r2MeaU+f6age41UKUSvuDgZRNrRuXSZgeyIHELIyOGvjfbqta3U6ZsBAo96Bs8CMJJRUpztZiWIcxrIPjdgozSwDkoo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785813330; c=relaxed/simple;
+	bh=SJnOfErtbdFXBUjC5KdzymH4RzokDazXh7P6zW6Magk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nbUdj5JjoJ975U7zVS9OvPSyCSq1zteCEVTqbr9MzkFaB99gpAgimTPK2ljjp/unJeubBQQK0EobpwL0qK+YOcHuTfz6zkBEXy6OSPTX/aIQ6R864mAkEibmcoWYbESmwxDPNrpIA94cB9U9a0C0lCeYvmfNnUVGiifaMF9dYHI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q2L3RCRq; arc=pass smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gXQcxeKq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eiJI/uPL"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B97C71400056;
-	Mon,  3 Aug 2026 17:55:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 03 Aug 2026 17:55:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785794157; x=1785880557; bh=ZgGT5u6WMg
-	q9h1Pi+C0e8VpysWbDf4+UKDu+n+9EYGY=; b=gXQcxeKqyP+MtT5VriHjdK/Emj
-	M0z43jW2ZvjNmbEAscZPg9FxiYUlY9c88mZuiOlrXaXVqaUd5rmvmB77zsh7LKFO
-	X8mWKVL1wQj67an0ZkRsj3PRdh0Ckr9yDkMS3d+sTG9qc+NW9VHy0ILDK2pqccY4
-	2dROjYKwKQG7hIjVUyGXinerw8NILy717pmszDJWBWGTZ71qZdkaXoMBCXiXYl0a
-	51GDZ3E9o/mD/mqKRyPBoN0w9JzikDoMCQebEQU2ObIMoAvsEOh8eTWqEBpJ3XeH
-	9AHAc9C9khPCq1ru9hqWjXiJgXXTjoPV6zPUtSaIxag6621OdzcrngiYjahg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785794157; x=1785880557; bh=ZgGT5u6WMgq9h1Pi+C0e8VpysWbDf4+UKDu
-	+n+9EYGY=; b=eiJI/uPLJYhce7KWySgDvkb+aYR3y06Ow5c6BwwDdM21P1+fOjH
-	8Gfln8/J7An6ntqEIZJVF0orZQhzCXypF6wj+x/DFSsEK89A6FAt5L3E/Tq/79Jr
-	JBjNhv/9EL7z3ZeAMonDusl/pTf7uT0Y/5h6YJXfY0mXr0kNOhGqLn4n3E22kdvU
-	s8D6tKllyThFOFUTmksqZfiZ0XkLfWOlfC2j1n32VP1h/X9LWOEQls7KxxvC9wz8
-	Yys5gEFTMq+KDeXuzS0Wv3B5Grs/+wC8rVa8mTWlWhRETTM1VcJJvSZqsG3HEaNw
-	E04fQ5t+wk9mcN6sLISqaBg8lQSsIjoLtXg==
-X-ME-Sender: <xms:bQ5xamgB2k_40BNAlrGPaoCayTh04JOQzw7JOICggDzoyVglXBuBZQ>
-    <xme:bQ5xauDJJLyjW865H2W3SpwcOIzLxvySVXZz_GuKjaKspuVP4bHsk-2CTxsDktFdH
-    xDB7oPsTjwXS1-FUJ_bgjdl9RbrikwLDfE_aGCT8YiABKbYMITn0bg>
-X-ME-Received: <xmr:bQ5xajFCc_FJsaWn72XQoXEPlkYBLw4fbfBmoRZ8iTUSglzCLrhUSrL_Jsc7pumd4A58KRQCvSyUDfWpcjG916WbzYAG4dheiw>
-X-ME-Proxy-Cause: dmFkZTE7FV6ZZYK+HRazlVNsViEqVL6PktfWU/JU7VjdCYa88xR32/9RKYO+m1x+rf/6id
-    PfaF+CMxujcjsvirRrvZ049wL4vdgoNdppQHi/gjFUlZkbgCVIQJTswM3jxcRgNq0+9rLz
-    WwC+pUhv4mrZy1ERp/QQSbR57lo1VN+MhXKxt/viQb32NvmviyS/DC2hffnGhCwfYKjycZ
-    Gau7LND1FH9vf+F5n/082HnARqTltj7Yos/HVSCRP7b6TlDwq5xnlzrsD9zo3oJ0igsqI3
-    ur9wxiK6PW9U2owXpQ85LLFT9MkhGCnZnP2iKy4xNsCKObT8RPiT73NyiF9gJp1IOebjLc
-    uqzUy7/g4NI5pROZgTv4M2cpO/4efQMzJiRflTcdbiZtjAWn8q9xn1EWlUCqcUBUay3hOD
-    nahhSbeL/Il4UfJU77hHs2Ns3Lc/Bz7v233ryvstME2CjWK1Kt3zkogCGXaup2lQFjC11P
-    AyooLgGkqbQome+cuioH9JEQi2Tw/YiJDVsDjB3gTF/ai3KWMqMOVQa5JIm7iwUyfnxBn+
-    Ly0RdJTnHp20prt4osV20dAQM4DuuvSFRDYw6p+NCePCcSBbatOH0q4WMO4kJ1DHBx530P
-    AW1AJNY5wTBQxLjaZr0hzMpmPuTR+Wmv8vhO0OfEwjh8V7A9LeCmU27U8xfA
-X-ME-Proxy: <xmx:bQ5xauJC17dQuS-xKLV4at-E-BZmW96UfANYos5EdOsAK-oOmbbS4w>
-    <xmx:bQ5xavm7V_45nrH3cDklpt61KUfk-wTCXoHJ7eA3K6Yd5lQGjYOJeg>
-    <xmx:bQ5xauQMX6S9VSZFjLo99s9HXV7RQvguhty8VWkh5eVy2gBQjoRIUg>
-    <xmx:bQ5xapJoKITnuHWYk0NQbyWosCfiRurVzByj1qpfHGeVZFQHbsCLaA>
-    <xmx:bQ5xaqmvGwHilCpZQBkLzw76OJ4sK6bEKfJU7ybCuBwdQ0MApu5rMiOT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Aug 2026 17:55:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH v2 0/3] t/lib-httpd: make CGI test helpers concurrency-safe
-In-Reply-To: <pull.2171.v2.git.1783704657.gitgitgadget@gmail.com> (Michael
-	Montalbo via GitGitGadget's message of "Fri, 10 Jul 2026 17:30:54
-	+0000")
-References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
-	<pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
-Date: Mon, 03 Aug 2026 14:55:55 -0700
-Message-ID: <xmqq4ihayil0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q2L3RCRq"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7ec58fa3e01so1949391a34.1
+        for <git@vger.kernel.org>; Mon, 03 Aug 2026 20:15:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785813328; cv=none;
+        d=google.com; s=arc-20260327;
+        b=kU5SNAcmDYYyh/Uje9JWLybQhoLpO6zdbpMcD8rU5csBn/VgFsuXN+9M1+4A+kDZ77
+         61X7ybkDn19qNCGjYMVQyFuJ/i4KrREKyyxZ10IRtWi5pLHaXAbT668FcUXAGRNv3RCx
+         XmQC9pm7XUBLwPstR4VRLGJW7EINJvbFhGm6FXPcAcl2gYS1sOX2TnNn4raXYA0fHoda
+         AfSnO3fT11MtwSTVf8/FABIKLSqHl6BZND70KjP5g3cos0VDoS8JIOrYKs6k5ZxDvxoC
+         yHy87ri0/eUl99AiVnS95g8FEG9MLxdqtthUHfmJHJ9q/VRVHfUgf5RyLEGE0jW4Qj9e
+         eR0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=LBDYUQWb1l0BQDszMY7VbmG2/0TjPlpfp7W/p/bJ9S4=;
+        fh=IVGEz1OY2FLCd/VFfFv5hNHv0THxOHDjSY5jvQzW2Lw=;
+        b=MhTZDM1AAynaMV3ACR+U3DCZbu/y1et82Gn1+fBP8JaWKiAZ++Dw4d8YumS5qnkcGU
+         uR47S+2OgjonPxfOFQ9N4/frzGSQlll4zbsxgj8/VKlpB2cX4NswtSIiU5PZ9kxT4kV9
+         4EmfBuRPIsqTOtreEl/ZFmFS3rXdEpX7WiripzD9kRNj+Y2nmUfauMVbOIbq0V56rdSW
+         0boywizeMTcnBE/HsVd4v+SfvCLB3yZF5i+Be5dR+I5wxAfwnhxuQRYtD4iFZ+akZxqj
+         wEx46AxN5f7riHWWDoS5bTe+LickyKmtC/ObwXixMtUJlI/4JrK3DTahcOEQRNHC3Khw
+         9xHQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785813328; x=1786418128; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=LBDYUQWb1l0BQDszMY7VbmG2/0TjPlpfp7W/p/bJ9S4=;
+        b=Q2L3RCRqs6SngLw+9ok/jb7LrKMtvouXzdiMIURLaPsOAcwUBA7gdjpAR6qOyZfR44
+         p0gcWYOXty0+rWJC3Ejb2HnCDh8d8L8HZPldTXrnvYCxrBIPyhA1zSTHfz/layd1ZhjL
+         +GJjRyLXH+pu2bWt7Bsar7fxW/UmjuvihwPBLvpcQQfX4om5ANSwlLkQk9WmUDpJbEFq
+         LHHYWDxEIy9gDMptkzRTJ0/CRiFYkYf1NcYU49u5Y6UiRby7mZH9tt1Vee9ngLnyHxJm
+         T8KwD1LaYGtHA+bESWJ966n+CsfmGUGOgtQx2vKuXS+iMuIVETBodDzK7jNOKvzWl77y
+         xqAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785813328; x=1786418128;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LBDYUQWb1l0BQDszMY7VbmG2/0TjPlpfp7W/p/bJ9S4=;
+        b=UZM8AqqlZ047s6KYDcPPmoRlW+qNp+S0YwV/EMsoEjmRc9IgxfeLa4UL2W7iED72dK
+         yjXFOcjreHbtAbdQZZ/IbroincqVlnuofGGY0A7JFbxmvwSoaG8glwlrdjo1xBlx/59Z
+         jFJknpYjxg22uLdIqAU/obSVgmamN5gm2L9TGTCuzuzmE25SRIGtWVbN6w04pXDZ/ROD
+         U423ekmvqnj4VFSaa9H9Fc4Fenpg/7JE6ibTRT5xqWfgyPbP1GgNOLhawChyZ2s/1Um1
+         Cljv4LKeDeIVDHl9mIg3NJyJqlld64CT//AR0Y582/GsHGaesSJMIQyx4tl9iKeM3f/p
+         GShA==
+X-Gm-Message-State: AOJu0YwOn7KsfcBLX3NjCREnYs0Ae12L6YV9MbFpKg/qJpcRTWcr2CMt
+	cVAlg0eqeicW96IrIwlOf0du6rOGOCER419AFCIOsfYWAlty1ZGUeG3rilKfxFD9qIb2WSS5S/n
+	aCPRJTAnunJMmmm4U1feTwbEv6luv9qFe3ebe
+X-Gm-Gg: AR+sD10gCSXZSjG4O3AxTuq0A2hCKjFVsfVHNiMSfbvofgTIbIyJlMqjZohUblLVNca
+	HR4kdMO3I0Mq/gBESnm5nwNQHQ/qTvY3+dsbS/QKShLQtrnaM8bfm3H72LYcEon/bVeGsm036B9
+	Ndm+XOpo64GI6DqLpAESZhNGDaKfmQV7zIIFp9fkyFXYuciJqphPSPs2Pf/YroerlnYpOwS7Lhy
+	j/mPHetJ+zR6taU2x8kpnb0DgFU8YbH5jCnm3xzow6VTZ+ZZzwbY7ey1qSdIcFrJp+FcPrjputh
+	Eby7dA/BAWuJbnJvSkqZkulpTg7ELHEYUlV8nRDTrWevyFKiy/3y8D6JCO0TRmboB2mQb8Tt6xP
+	UIY00wHjTrAEKdFIw5eQ0prQRZpJNrOKtJ67VQkKKcFxgDt/uQ6nNEagY7hXl1PU=
+X-Received: by 2002:a05:6830:61ce:b0:7dc:3db6:f02 with SMTP id
+ 46e09a7af769-7f196d51885mr22612244a34.9.1785813327763; Mon, 03 Aug 2026
+ 20:15:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
+ <20260801174156.2998808-1-mmontalbo@gmail.com> <20260801174156.2998808-11-mmontalbo@gmail.com>
+In-Reply-To: <20260801174156.2998808-11-mmontalbo@gmail.com>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Mon, 3 Aug 2026 20:15:16 -0700
+X-Gm-Features: AUfX_mz6Fcb6neuIBnsMUaeUhHaXh0nCAL4qcEUPrfcmA2wttA_0mqY7EB9pWG8
+Message-ID: <CAC2QwmJbkh023AZe7fHxRVwzyVmFghvs8fuBHEAg5tdD52F0-A@mail.gmail.com>
+Subject: Re: [RFC PATCH v7 10/10] diff: consult oid-only hunk providers via diff.<driver>.process
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> Each fix is local: claim/consume the one-shot marker with an atomic rename,
-> and elect the first request with an atomic mkdir, rather than a "test -f"
-> followed by a separate remove or touch.
+On Sat, Aug 1, 2026 at 10:42=E2=80=AFAM Michael Montalbo <mmontalbo@gmail.c=
+om> wrote:
 >
->  * Patch 1 fixes apply-one-time-script.sh (the actual flake) and adds t5567,
->    which drives the helper directly with no web server so the overlap can be
->    forced deterministically.
->  * Patch 2 makes http-429.sh atomic.
->  * Patch 3 documents the atomic idioms generally in t/README (they are not
->    specific to CGI or HTTP), citing Git's own lockfile machinery and
->    make_symlink(), with a pointer from the lib-httpd list.
+> +static long blob_line_cap(struct repository *r, const struct object_id *=
+oid)
+> +{
+> +       unsigned long size;
+> +       struct object_info oi =3D OBJECT_INFO_INIT;
+> +
+> +       oi.sizep =3D &size;
+> +       if (odb_read_object_info_extended(r->objects, oid, &oi,
+> +                                         OBJECT_INFO_SKIP_FETCH_OBJECT) =
+< 0)
+> +               return -1;
+> +       if (size > INT32_MAX)
+> +               return INT32_MAX;
+> +       return (long)size;
+> +}
 
-I was scanning the "What's cooking" report for topics marked as
-"Needs review" to see if I could find ones that are relatively easy
-to validate, and I hit this one.
+"unsigned long" for size breaks the build wherever size_t differs from
+unsigned long (32-bit platforms and 64-bit Windows):
 
-The key change [1/3] is well thought out and nicely done.  [2/3] is
-explained better than the corresponding step in v1, and [3/3] adds
-helpful tips to the t/README documentation.  They all look quite
-good.
+  diff-process.c:331:18: assignment to 'size_t *' {aka 'long long
+unsigned int *'} from incompatible pointer type 'long unsigned int *'
+[-Wincompatible-pointer-types]
+    331 |         oi.sizep =3D &size;
 
-Thanks.
+I'll fold this into a re-roll; in the meantime, squashing the following
+into "diff: consult oid-only hunk providers via diff.<driver>.process" on
+mm/diff-process-hunks resolves it.
+
+-- >8 --
+
+diff --git a/diff-process.c b/diff-process.c
+index 121903a6c8..d28f9cf973 100644
+--- a/diff-process.c
++++ b/diff-process.c
+@@ -325,7 +325,7 @@ static int validate_external_hunks(const struct
+xdl_hunk *hunks, size_t nr,
+  */
+ static long blob_line_cap(struct repository *r, const struct object_id *oi=
+d)
+ {
+-    unsigned long size;
++    size_t size;
+     struct object_info oi =3D OBJECT_INFO_INIT;
+
+     oi.sizep =3D &size;
