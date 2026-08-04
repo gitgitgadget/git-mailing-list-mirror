@@ -1,63 +1,63 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D9D45040E
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 10:04:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC0E450917
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 10:04:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785837865; cv=none; b=WMNhRtOA9lZPtTh+5scbslMxJKnbkHTLLFCe+/7X1o9tHm6R0xBFJ1FK9OSq9MWic5a9lkWjsSDcKhBbejlWJorY+Wbn/V3Mxf8/5SYGMnsmvZ+y4s/GuHAGZXv+CaXOFa2bFWn8iIJaALmugpOMLpTm9YiDGAkcGbeeRCrMZNs=
+	t=1785837865; cv=none; b=phfnM2uZ1Cv+U0hTSCk42Gskhp1GVmo0K0Xxfvj/DWVHepuBLGq+FKeZdisXEWs9/2rt9y6nqYs/+cFxm2XC+p2zfSI18TmLMsGl+0onxAGJQvLB0ZOF2mR/8ErHwLYbuf8BAdUV/uJAQj1Ox6sP6GgdRNOigiH8aXri+bIo5k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785837865; c=relaxed/simple;
-	bh=Mh2T/TI9bYEeG0fR23j3HBUFR1iCU+APRoYdN+Dfvbg=;
+	bh=Xgg/kxvRgsjSsF4d1du9BngLU5+zfgsgbRAzZZWAJUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyrGMAiPa0GkimSgwf/JVMxOx63CoyrO0MFrqnkCKiOFS+Ac2sdq61m4BL7fYQbnkCtHjUQEyP6I4Fo6kO3GIrnxJqKlfh5oT2mgeU7VuBSsjvieMEwdEzx/8+1bwiLOux6ygC40Hir1rdSmgwtjHlezAM9fN6YP1efUkNyf8Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCFok4tm; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version; b=n29qvkho1YYVlaOb+8VZgPmdZqLgpjDbQRyjIc7AsAUK5a/c8AUh8sW0T9D8y1WGLwJkjQjmn/fGmeQ/dOFDELBkgkf5xJ711EyWxmbbt/ZgdxoepRGhmO8fPLbiqTbBRZop/ktxl3ZCuEyRn4aFDX1h28wvNf5JjJIXICnscco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rex+g9lZ; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCFok4tm"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4954afac04bso35588075e9.0
-        for <git@vger.kernel.org>; Tue, 04 Aug 2026 03:04:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rex+g9lZ"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493b966dd74so17041605e9.3
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 03:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785837862; x=1786442662; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785837863; x=1786442663; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=UrkIcRMroFRadRqZV8MTZjuNgcEWoTjXziCETOzx/c8=;
-        b=RCFok4tmKE1i7mURYNH6uqQHadxuQF9V1lsVt/v7hF7j5WAmRC8sop60xM5zkERueE
-         ZQ44VViS3VdxylfTrYsfjv7tlAA14ORm6Dm/RJvmu+8rOODkTBBDx1CyCvENK74vjzcn
-         fcf02FJVQAe4Sqo7aR/g/W8zPoaTr3JsDbjcxraKpALaeQILTZiWFidRvF4D1ytzfXw/
-         9DQEgZp+AWNy1t3s8JlscE4N03/t3qnjQV+vNBV3Bso46cPDxDtAJBqya8TRL18WlMVx
-         Kq09IPgv01YvOhX+/KgYysQfqy4GKkR7V8Yoex2Al2q0yNTy9ePUShLHh3xPAY0c9iEA
-         Hysw==
+        bh=wmgtJ37Mn9YjhYRRh3RWpGP8JCuHEWpDFg6b55gAGmQ=;
+        b=rex+g9lZUn29QLyDMnd1N9EAkP9ZaZIZgfmqPML9XzOMDfpBWwg4K9CytCGS5ybkwY
+         iaI/Xg39wyPVstPOuaBPl4LMkJO5pBnz4A6/Gka1P7+6BNFA5Mi9U8OaZVWumPDhldNF
+         DrkGvuWIBenxKl5kfwywMch4ydcgS79IDIaNd6O6U5FSwWkqN3dRcAM7Um4Iokfjdf0K
+         vBZDrTZsWwAKxCkZyRqOdSouM/zWIcn594FONsoQed1JV1V6nfkX8z3OvaWkj7Y0pAQD
+         l6lLXT9k9uzw7n+sc/ZGE9ABKNzGMEFanmzmaRQiT6AZF8DdFKX53bcG+SakmqOUdJ0c
+         PyZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785837862; x=1786442662;
+        d=1e100.net; s=20251104; t=1785837863; x=1786442663;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=UrkIcRMroFRadRqZV8MTZjuNgcEWoTjXziCETOzx/c8=;
-        b=McTttkAg5GuX/1X/SbfhsFs5JbvojZhK6jqMac2p/ty3N65BZqdzQvbxXvCfGAkt+h
-         APG6YRUDMyW13b+Ck+eVyoDh2WJy8BNVwHxEHysbboSdHHn4rAYw6j0UhtXkszPysgV7
-         h+WvnAvueldbqvUU6lh4wFLUGy6FhjVGgIMymSXuf58OdMybgq9ACHj4hnQdKwzFoDpb
-         PbwJnwcZDPBCZwQnfKXr6VpzJCnBnablDFldjq18pw5NsFLKLVi6P6lKCHLr7OcNYXRP
-         CvKasETjBGaP7mfncijJag9VfPsvDmw6ugHtLhSnnp2D7Sk6jl699cnIyipmobcZRidP
-         9BmA==
-X-Gm-Message-State: AOJu0YxgICGjhfkxuVuwHmg7oO4yH14oZLcBFJ7osXDFARI5QhKJXxc7
-	3EqSYzF3yi2MtM906pbXXbi/JBpmaIVVYyUTcMRGBvbfyV8anE8bS1dxPmLYYQ==
-X-Gm-Gg: AR+sD12tePAx4HvtarMh6/Mr3kUTcoCpybYxoqqCrWEX+f6sulOQ14o0SlGET7iBnD7
-	Ppo8cCMfuQAu49HQIrZkDHuqCW6kxmM1U67WrtERD3nTf1M16jCVc3swT7gTo+729I3UiTF6NkU
-	5ierTFwVaS0hUfLfj+Q1o+L9X+vulztiLk1X2bnJywZdnr5p5vBg7E81DWK2LZq2ADhj+Yuk58G
-	F59CZsWWoXFI1EpN5wE1vA4PoLNt7eeDhfsqdegC9neOOEqrZHwcs9ffy/JxrqYDXdRyHlNR2lc
-	FoGe2YOBjPvJKjttPWFVs/C5X+ll+0zqiwIMxLoNf4Hsq88rxXl78OVGrxadLMc+b11u5W9TVm3
-	3M5UqX/Nt6ZMw+9t8rwH+xa7pMBgAamhcUnVT+RTFNWlI4ePVbdJuwaY5vtkM5Eh7HIplwYgRNZ
-	+BTESIWHiDe04zCg852lAh/Qg3uXB/0LyBINfTyi+0j2tCYHkSkg3I0iKp/C49W07xCQus7mFEH
-	s23XhwXF01lwO+AENZnyXvmdeSRVEM11Uox4yQZ2fY4SCf/YQeTMjbeg5pKxAzdQJnhH9+ekqLF
-X-Received: by 2002:a05:600c:314f:b0:495:4572:21af with SMTP id 5b1f17b1804b1-4980c673252mr264471645e9.9.1785837861528;
-        Tue, 04 Aug 2026 03:04:21 -0700 (PDT)
+        bh=wmgtJ37Mn9YjhYRRh3RWpGP8JCuHEWpDFg6b55gAGmQ=;
+        b=F6C7tFDohT7F9FHpv5CR+yoLFM/cHD7lbv2XybE0C/M5bi2fWCPGQ7DvufxIvNnliV
+         zJf/43skHJtevyg6ilcjWN/SocOHM+2egdQSLUVuDAQIwFF+f1Ln+6DtxBP59Y4vnuUi
+         dmWYbw6JT+RkgQvvUVDGutygn3yZtIJX++d+im67Vq8/EqeaZa7aoRLzitju87M2pBpE
+         t2xJnofP/tcgH8IsPgudZ6A7h2MV78gbVAEe/K8HV0BSc+vS7gvNhURN8GBgCdwPeJGC
+         75U2UZjMHaN+BxRsJI/0MEKs7ttHl+/+0mRJLXEx8sD1W7pEIiiBF0NPJNQAD3RHCZXE
+         8QOw==
+X-Gm-Message-State: AOJu0YxP+U+n40tEMsjBoZL57eC5sMjNJ+YcpC47wcnhoNRovWu29O6P
+	gspJJaid1cNV/h2+DeqBMLiWSlp4NkX3yG3W/t0xwcchxcDXdWDYG5lbP2+EAA==
+X-Gm-Gg: AR+sD10JykLNyP2TLOMNmwc7F9OnZWO1RTU5WDPe9RtNabWuyMAivN6kd2CRxHvDnkI
+	OnDjOBB85D8KvlWdhHjCCWgbecKm/Oer5zMTvASNJjp5/kWZ1fdRIZFQ59c2Ydi3b807sQCDCKi
+	czM4FappsvMI1jQG0NcmYLAfUalAKskVSfGFyonmZmPt3poyHBtgEiwZ7D4WAH4+j6nvzC40Eih
+	4dAiF6sflQEWO4dYZazaPo6i/QUGKF+3I/1ILYbGwXyPgl1dJD1DxacSP0o53ky9QYyYX2kDu2N
+	I1RQpb2FXTLnWTsNYv7GebxhERRPod06gaQ8Krs3XjCavsIp3nfn3zx3eSW7dwMsZcst3prt8L6
+	7EPWvr1BTwz/wKayFlC84qDPkc85N3uppI8tqA+2tP1n29qg35nreYKI6shD9pCrkYlPoC+0ypY
+	NPFhMSqN7B6pQvCK3rjF1SPfY7QawJdZ0jh/q+Xv5p4PpRmYqqAk021FZILuRflGJb4s8CItCkK
+	LINHatG+xIFpFik8lfNzBFQjripr+m6g2/iQMghoLFRiA2KSbJ3VZI/lKNALLgYjI67smwCPWYh
+X-Received: by 2002:a05:600c:4444:b0:493:f5bf:4dc6 with SMTP id 5b1f17b1804b1-4980c645e1amr294413845e9.7.1785837862662;
+        Tue, 04 Aug 2026 03:04:22 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49949fec7cdsm72456045e9.13.2026.08.04.03.04.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49949fec7cdsm72456045e9.13.2026.08.04.03.04.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 03:04:20 -0700 (PDT)
+        Tue, 04 Aug 2026 03:04:22 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Justin Tobler <jltobler@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 02/12] api-parse-options.adoc: document per-option flags
-Date: Tue,  4 Aug 2026 12:03:45 +0200
-Message-ID: <20260804100355.1299498-3-christian.couder@gmail.com>
+Subject: [PATCH v2 03/12] api-parse-options.adoc: document hidden and OPT_*_F option macros
+Date: Tue,  4 Aug 2026 12:03:46 +0200
+Message-ID: <20260804100355.1299498-4-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.55.0.492.g44bba30fd7.dirty
 In-Reply-To: <20260804100355.1299498-1-christian.couder@gmail.com>
 References: <20260716165517.433849-1-christian.couder@gmail.com>
@@ -83,101 +83,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The "Flags" section in "Documentation/technical/api-parse-options.adoc"
-documents the flags that can be passed to parse_options() itself. It
-does not, however, document the flags that can be set on individual
-options through the `flags` member of `struct option` (and through the
-`OPT_*_F()` macro variants).
+In "Documentation/technical/api-parse-options.adoc", the list of option
+macros does not mention the `OPT_*_F()` macro variants that take a
+trailing `flags` argument, nor the `OPT_HIDDEN_GROUP()` and
+`OPT_HIDDEN_BOOL()` convenience macros.
 
-These per-option flags are used throughout the codebase (for example
-`PARSE_OPT_HIDDEN` is used to hide an option from `-h` while still
-showing it with `--help-all`), but a reader currently has to dig into
-"parse-options.h" to find them.
+Now that a previous commit documents the per-option flags, let's
+document these macros too:
 
-To remediate that, let's add an "Option flags" subsection to the
-"Data Structure" section, just before the list of option macros.
+  - Add a paragraph explaining the `OPT_*_F` convention and how it
+    relates to the per-option flags.
 
-Let's also make it explicit that these are distinct from the
-parse_options() flags described earlier, and let's describe the `-h`
-versus `--help-all` behavior for `PARSE_OPT_HIDDEN`.
+  - Document `OPT_HIDDEN_GROUP()`, introduced in a previous commit,
+    right after `OPT_GROUP()`.
+
+  - Document `OPT_HIDDEN_BOOL()` right after `OPT_BOOL()`.
 
 Signed-off-by: Christian Couder <christian.couder@gmail.com>
 ---
- .../technical/api-parse-options.adoc          | 61 +++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ Documentation/technical/api-parse-options.adoc | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
 diff --git a/Documentation/technical/api-parse-options.adoc b/Documentation/technical/api-parse-options.adoc
-index 880eb94642..fb4580e755 100644
+index fb4580e755..0e10327d07 100644
 --- a/Documentation/technical/api-parse-options.adoc
 +++ b/Documentation/technical/api-parse-options.adoc
-@@ -150,6 +150,67 @@ Data Structure
+@@ -213,6 +213,13 @@ Macros
  
- The main data structure is an array of the `option` struct,
- say `static struct option builtin_add_options[]`.
-+
-+Option flags
-+~~~~~~~~~~~~
-+
-+Each option can carry flags in the `flags` field of its `option`
-+struct. These are per-option flags and are distinct from the
-+`parse_options()` flags described above; they are usually set through
-+the `OPT_*_F()` macro variants (see below) rather than by hand. They
-+are the bitwise-or of:
-+
-+`PARSE_OPT_OPTARG`::
-+	The option's argument is optional, i.e. both `--option` and
-+	`--option=<value>` are accepted.
-+
-+`PARSE_OPT_NOARG`::
-+	The option takes no argument at all. Using `--option=<value>`
-+	is rejected.
-+
-+`PARSE_OPT_NONEG`::
-+	Disable the automatically generated negated `--no-option`
-+	form.
-+
-+`PARSE_OPT_HIDDEN`::
-+	Hide the option: it is omitted from the usage shown by
-+	`git <cmd> -h`, but is still shown by `git <cmd> --help-all`.
-+	The option is parsed as usual either way. This is meant for
-+	deprecated, advanced or otherwise uncommon options.
-+
-+`PARSE_OPT_LASTARG_DEFAULT`::
-+	Use the default value (`defval`) when the option is used
-+	without an argument, even for an option that normally requires
-+	one. Only the last argument on the command line takes effect.
-+
-+`PARSE_OPT_NODASH`::
-+	The option is a single character without a leading dash, such
-+	as the `+` used by some commands.
-+
-+`PARSE_OPT_LITERAL_ARGHELP`::
-+	Use the argument help string (`argh`) verbatim in the usage
-+	output instead of surrounding it with `<>` or `[]`. Useful when
-+	`argh` already contains a hand-formatted description.
-+
-+`PARSE_OPT_FROM_ALIAS`::
-+	Internal flag, set on options that were expanded from a
-+	configured alias. It should not be set by callers.
-+
-+`PARSE_OPT_NOCOMPLETE`::
-+	Do not offer this option for completion.
-+
-+`PARSE_OPT_COMP_ARG`::
-+	The option's argument, rather than the option itself, is what
-+	should be completed.
-+
-+`PARSE_OPT_CMDMODE`::
-+	The option is one of several mutually exclusive "command mode"
-+	options that share the same variable. Using more than one of
-+	them at once is rejected.
-+
-+Macros
-+~~~~~~
-+
  There are some macros to easily define options:
  
++Many of the macros below have an `_F` variant (for example `OPT_BOOL_F`,
++`OPT_STRING_F`, `OPT_INTEGER_F`, `OPT_SET_INT_F`, `OPT_BIT_F` and
++`OPT_CALLBACK_F`) that takes an additional trailing `flags` argument.
++That argument is the bitwise-or of the per-option flags described in the
++"Option flags" section above; the non-`_F` macros are simply defined
++with `flags` set to `0`.
++
  `OPT__ABBREV(&int_var)`::
+ 	Add `--abbrev[=<n>]`.
+ 
+@@ -236,10 +243,21 @@ There are some macros to easily define options:
+ 	describes the group or an empty string.
+ 	Start the description with an upper-case letter.
+ 
++`OPT_HIDDEN_GROUP(description)`::
++	Like `OPT_GROUP()`, but the group header carries
++	`PARSE_OPT_HIDDEN`, so it is only shown by `--help-all` and not
++	by `-h`. Use it to label a group that contains only hidden
++	options, which would otherwise show an empty header under `-h`.
++
+ `OPT_BOOL(short, long, &int_var, description)`::
+ 	Introduce a boolean option. `int_var` is set to one with
+ 	`--option` and set to zero with `--no-option`.
+ 
++`OPT_HIDDEN_BOOL(short, long, &int_var, description)`::
++	Like `OPT_BOOL()`, but the option carries `PARSE_OPT_HIDDEN`,
++	so it is hidden from `-h` while still being shown by
++	`--help-all`.
++
+ `OPT_COUNTUP(short, long, &int_var, description)`::
+ 	Introduce a count-up option.
+ 	Each use of `--option` increments `int_var`, starting from zero
 -- 
 2.55.0.492.g44bba30fd7.dirty
 
