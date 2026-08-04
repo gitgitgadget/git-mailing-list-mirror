@@ -1,139 +1,186 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DDB429818
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 21:04:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4E2392C2A
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 21:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785877482; cv=none; b=CIDpsckR4nziHKmNKzY8Jp0VV5TTB7WmA3rfd4vnbmMVWVyT4lUmN2Hg0aigHUsngKwu2Z7QuRVRs0WIkpzQ6VCWs0YZQmv96s6XHbAcMKAEyhOA6OFhzdUUnIh+F5L68BAGnlYqTUFqlof2bMKiBLvXDi9bH+xPKCubY+1ywbY=
+	t=1785877931; cv=none; b=W3Vv3ajnzDqJ74qKj9whyMRM2F49dxmY1AqeyWpICM/BeGJKvbKgLiEI0+e6NvzYS7gaHBPgddw+rec8rf6ezrKyb3MHoRFoirikuzXax+Vxa7oXw0gbFnMkZ83UCOofIm8fUDelfMP4WDrXlNDWisg0lBfs/LU1WO9CUBwfzVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785877482; c=relaxed/simple;
-	bh=YPHS73QDtfx9XGagtJ65gwrgwSI3QQweRHJvRSyO8zs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I/CR2/DyOq9IAVK92Etw1ymy9dvHnVbQU8wWWlB2d0c5XI+5yoAOXzYe558GfzArpWh0r+jb6zArC3hHqzVoRLfGS/NQTmkSLB2kugnXhmhLfMY5hGJ4xwGpdyaLokPrSMcwyMfjTxl0YVTek3jhkOCGnQXvt9IP+z8f+/BOfJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QU1ecbGH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=enux/LGS; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785877931; c=relaxed/simple;
+	bh=JBIytVkRB+xHvW3LDGXmYyBThO++f0DGUW90ZeOQMnM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XUk1mJjYIAnEgATcUM/+HpQOLbvGG8tFP2eFI54WKfIxsXYDTt/rRC+oZAIzMfeRKzHs8NocGXeH1LSvE8dHOEY/kRKRUDK5dvy910LK4v7l366AclPU8KGphxKYLa/1yuYqdOstkBVriL1xNYhQl1f/kYoaGz3kVrjGT2EQ52M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uek29OvK; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QU1ecbGH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="enux/LGS"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 999AA14000EE;
-	Tue,  4 Aug 2026 17:04:38 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 04 Aug 2026 17:04:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785877478; x=1785963878; bh=qyTX/rXiBG
-	XT8uUbuhgkS74bAFclH1SSz4Iyz7QKEus=; b=QU1ecbGHxMqQuXgPl4GXFx2wUl
-	neiGKMB7uFMFuwGjaikSwOAyXtxGvQfaRVMzs3rsIu5eodVpXbbh4HUPJFj+mKWo
-	6BhAt1yV9qCdmmdPJlPBKPdiUaDA0CKD97QAf9ror+Yt2K7fED+UDicuRVS5rhbo
-	nOHZ1CcKAANk6yO4l1JLKiLb9jav69iOATB716qIkIAWO1bt8G3vUUSde/cs226T
-	cXCAto+bJucn7Wwa3RM+dczvvzJI5ngwXs00IifAqTqh+5RVDsGJAsrjNnHal+Ns
-	3BeDLRmCaQiWtqcuTsB35YXLVwqUb4YzSO98qygOgYr3moIBE1MrwGPnfFug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785877478; x=1785963878; bh=qyTX/rXiBGXT8uUbuhgkS74bAFclH1SSz4I
-	yz7QKEus=; b=enux/LGSoq3vvn+PRhMW2fgwHNxhDGXBZFfmhWHHh8C6AXjvwvI
-	WJu7JvK1ubPXVDvjkymH56c5SSHDl1ClK7SKHYrc0RNSLkRuNl/+aR0GLaLqxyM7
-	43Tek+mXYXxELkF0wq30gOGHRe81LtF7l8Y6r+ZoI5AZWascJ2/QGG+5D3EwCARA
-	SX4DmZUcmzKTeOeMPncuoOO3YomnD5tvRLWN/hwM7Xpymf/nD+KoIMkMkMkLQ+2R
-	x5XiweJAIuWx0aD70wsq5nJugRgM9TmFpgQe8tBXLvq3vsqTpY8MVxGn8wFn2Hpx
-	ij+oncqZXwHWdJfabzQKPOMWhUcohnaRTUw==
-X-ME-Sender: <xms:5lNyataALQ9YXgKm0fe5ZIXR9YBuslnNbeb2vFr9B7y3rWx2vUohSw>
-    <xme:5lNyamojNrBKDn6MR1dK5kWSCDZ6DSF6LN1tzEnPaxqKgtEbl4taovRt7Az0OZa4O
-    wRk2wdpxCwpY02g2qeuY84mLmyJLJBFgLh9SCtR6p3qQYundI8GWA>
-X-ME-Received: <xmr:5lNyaiMs2ieFrGO5vARc20bqk6mBkL4trEvREn0av6yBYtaVU-6nJBtWmqAiS8Hw62UDIXSFEJzHe4PDs-Es6A-TKFz5gGYoGA>
-X-ME-Proxy-Cause: dmFkZTF+OAr3V/pDUkxUV0BYUNp7la13/FaywWy1YRovURY1JKGA4PEBgLRsJ3OTNw5j8x
-    NcERmTlw6isIcrYjkpXfq2IhjvhQmUd3CgDl0ooErklXFJYna7ThcS1qLV9CrXgFfVl1UP
-    d74eIWXxVu5ZEVeKcwn0fOMUltYG+fvKwX/7sLZ64QNM5zBRQYuCTTz1aJgbHsFl4fjNB9
-    +pFnV2wKLcPrPF5TP6/3i1y5Cz8PAiNKBXcCN0qwXeaWaCarb/Y519rTfIHk8/AYRoTHoF
-    zf4kCrbHCJ7APDK5RmDhcARwz/4HtYC85SK5XK3d4LQbuauSjX6ef5yWWToAYgmQjYm+oG
-    ceSpOhaKEXFuPDmsPOtVyjTpqnfaAx30u+6j2wVIagUl+AdIhzwPs60+sMYUV+7J2NvOAD
-    rbkFYE0/dU/Dtm8A1f8VURo9NMzvykxryl12ocAqqBYvU1PA1KWy1rawFYWXgeYxvc1/VQ
-    cLTmv6Xj+AaXEergHJC5Rx9b7vosdreqzdM9zebWJlY8reQfpy25VLpedE0ru0VPC9/vV+
-    ML/cNn9/AZQ3Y02y5xPyFjB3PxrASLTystC6UM2kwa4ebEEPDZ81RY4cpe8dn2Tbzfp7uD
-    lyN0AKjOIlm8lN5aFKEQlV/I2a6mQH1OrbZVBe8R+rZlMGOA4Ij+gPVMMouQ
-X-ME-Proxy: <xmx:5lNyahqrf5TPLFNEtUdgK26WltP48gKfsaYwstGthn6jOcKeXBazwg>
-    <xmx:5lNyancKwn0bjZNWVhCSLfQ_Ri532_yZ-v23TIW0n6os2nbuBVFPdQ>
-    <xmx:5lNyanS-BgtVWmE3A_6LIWQ4gD67QKKklaJR4qxfNROkOW_2xk2Txg>
-    <xmx:5lNyagarxV8zWJz3Vtl1cgHW4zeegmSyEPinojGb0wVTwGuZwOkNaQ>
-    <xmx:5lNyapWg1XhnkQQrLbk3FlnR_w9Dp7hKPASoPxpTFiGOSopDoQnfaz6B>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 17:04:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt <j6t@kdbg.org>,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v24 0/7] branch: delete-merged
-In-Reply-To: <0ea7bbec-3381-4bc6-99a9-2c3b5d1bfebd@gmail.com> (Phillip Wood's
-	message of "Tue, 4 Aug 2026 16:58:16 +0100")
-References: <pull.2285.v23.git.git.1784979136.gitgitgadget@gmail.com>
-	<pull.2285.v24.git.git.1785419916.gitgitgadget@gmail.com>
-	<0ea7bbec-3381-4bc6-99a9-2c3b5d1bfebd@gmail.com>
-Date: Tue, 04 Aug 2026 14:04:36 -0700
-Message-ID: <xmqqcxvxtx5n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uek29OvK"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2cc97653887so3852825ad.1
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 14:12:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785877930; x=1786482730; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pY6lb0MCC5D1fLxe0aZtMkz0J5t8AzM74qewpRqqhIs=;
+        b=Uek29OvKmDAuGjy6YHuFcP/ppFIB4p654GSg16Zp2NCb4r8VVAyDTeVc7DoofgUoHP
+         T6oC2NWb/ciw/Of8wNC6yPM3CQ0f0MF3bTOG9u4EVDU2TPFg6I5Ln3VJhrBam4KchMJW
+         E4WmyI700EZigXdxak4fOTc0EZY/MIWvGbBWuhBwhYxcDldIT/OSg0snLXy3S6zJwXN3
+         iszVuPiF73uDYTLC8rmtt2qpWTU2V5esGiTaz0VPJG1d4MsPkJCsO46oKBtHCVAPzaCS
+         G+sS10kejSpK1CStyTWYKWGaqQ0ZIAovqHh7yF2sSZrC9hrRr630yChH8Iqgkbdp6VlC
+         fGHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785877930; x=1786482730;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=pY6lb0MCC5D1fLxe0aZtMkz0J5t8AzM74qewpRqqhIs=;
+        b=R7H/1VgF+FtB0DzBOfZmXXJrZYpmETyzlXf+fy+UNnWXzvR5VAQxhc4LIbEbWgaGt6
+         a/FxAOueJxxlb9aY6SV98T+z4Aw8mTiWOMCXPRXkvZ9XkEVyNpyrnvHqK5r9FdjCO5XN
+         Lj6RMb4nf48ETEObMSylNwlS94hKf/IHzloyrPSkG6LO5V7ocvybb40bqjdIY5JBzQug
+         7rhKh7EMA9sk9m21A11SpG+3M/lW6p2mUCfyifP16KnPvR2tXeU3Wkg4+MyBIs/2qFsa
+         6HVLTxC3lY3UFp5incHiby/VBuqoRAGoaNtjhLBI/ws1HbhLEF5mGrbQX/IS35FhSKee
+         hZkw==
+X-Forwarded-Encrypted: i=1; AHgh+RopYXW+JaYMhIo/LvtlZlxlcrXrqI4wqllueXOmbwZaMtj+Xe1bVt57Ou9rzCsT6XuDYfY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2xEeVV/0ochGtDvb8aabrEfTktFUYTk5qQ3VKxV+Un+T+gTsD
+	k1d8HXYHvYajky+63/H0Sp3BvqcZNN/EeZrua0rOIdVCq44CxH73eWJp
+X-Gm-Gg: AR+sD12o8oSGhlQaTFyrZLV9lXgJEO0VtGNpMFHVgKqzOsGX3F0WDSITUkz1QdaF/YL
+	Tei1K/wUE72n5KMUL34c+MRlRuQIDu/B19pijVmexZmQlZoyPbKQ+re1I9Gvzp1MNAAj79y6mXn
+	+VQreXwArXaZqKyI6/8Ul/2AdlFjONqqBMqK8+RB/mbrkltHsqNMC6zWTpZuraUcmBSCYt/ciTA
+	CZosftS/8R/kPsxOmf22fI2TA4UgkTMglirfzRRunUaNLYC8YVB66dj8lhdeMEtGUOVmcnmLcGV
+	w3aXoBhezJkjldJIGIyIGal5NXn1iy19ChsBOfJ4j7p8L5KN0QU12gIkxvsPnuBPmlW56fvqzNw
+	hbeRI51WvJH42hgO++dlQ7JdqVJuFlgvijNIMg5lAxa0LnZMupFpy+SfgzR2uFFLeoJMYCYPEA0
+	Y2Hxq52S4M0HBqSAwQ4vLNqINuXLWF8sbByzY/aeRZqEldFimTq0NeWq00CVjBtcy8RumaTrKEy
+	zfqrQonNKXG4B4KoVTtF0zRNt1h9q8qQCO1MAX8PTnG3CNSg2iT6DLwaNMSIbGV/Deq9j1oR+j5
+	4OB2AWU8KMKvF75QcNdsy9+g0MUY5u6kGTjcMoQeyaXVtp6sueXdOyW6xL17YQxqmZhpF9F9dmI
+	J0JwCEiXJ
+X-Received: by 2002:a17:90b:538f:b0:38f:9674:ef61 with SMTP id 98e67ed59e1d1-3903c584291mr1928911a91.13.1785877929600;
+        Tue, 04 Aug 2026 14:12:09 -0700 (PDT)
+Received: from ?IPV6:2409:40e3:40f2:e504:7c90:c2e4:caf2:ba21? ([2409:40e3:40f2:e504:7c90:c2e4:caf2:ba21])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fca9111b6sm6615922c88.13.2026.08.04.14.12.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Aug 2026 14:12:08 -0700 (PDT)
+Message-ID: <81939944-9d8a-4bcd-a6ba-f3a7728b33bd@gmail.com>
+Date: Wed, 5 Aug 2026 02:42:03 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH v2 0/7] repack: add --drop-filtered to reclaim space
+ in partial clones
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, christian.couder@gmail.com, me@ttaylorr.com,
+ ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de
+References: <20260716132848.95982-1-r.siddharth.shrimali@gmail.com>
+ <20260730174153.9949-1-r.siddharth.shrimali@gmail.com>
+Content-Language: en-GB
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <20260730174153.9949-1-r.siddharth.shrimali@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> As far as I can see, from here ...
->
->>       @@ builtin/branch.c: static int parse_opt_forked(const struct option *opt, const ch
->...
->>       ++	strbuf_release(&key);
->>        +}
->
-> ... to here pretty much takes us back to V19 with the difference that we 
-> only prune protected branches from the deleteable set after we've 
-> visited all the branches - looks good.
->
->>        +static int branch_pushes_to_upstream(struct branch *branch,
->>        +				     const char *upstream)
->>        +{
->>        +	struct remote *remote = remote_get(remote_for_branch(branch, NULL));
->>       ++	char *push_refname = NULL;
->>        +	char *tracking = NULL;
->>        +	int ret = 0;
->>        +
->>       -+	if (remote)
->>       -+		tracking = apply_refspecs(&remote->fetch, branch->refname);
->>       ++	if (!remote)
->>       ++		return 0;
->>       ++	if (remote->push.nr)
->>       ++		push_refname = apply_refspecs(&remote->push, branch->refname);
->>       ++	else
->>       ++		push_refname = xstrdup(branch->refname);
->>       ++	if (push_refname)
->>       ++		tracking = apply_refspecs(&remote->fetch, push_refname);
->>        +	if (tracking && !strcmp(tracking, upstream))
->>        +		ret = 1;
->>       ++	free(push_refname);>        +	free(tracking);
->>        +	return ret;
->>        +}
->
-> This looks good now - we map the branch name with the push refspec if 
-> there is one and then with the fetch refspec.
->
-> The test changes below look good as well.
 
-OK.
+On 30/07/26 23:11, Siddharth Shrimali wrote:
+> This is v2 of the series adding "git repack --drop-filtered" to reclaim
+> disk space in partial clones by dropping large, locally-held promisor
+> blobs that remain recoverable from the promisor remote. v1 was sent as
+> an RFC [1].
+> 
+> Partial clones let you work with large repositories without downloading
+> every blob up front. Mising blobs are lazily fetched from the promisor
+> remote on demand. Over time these accumulate locally and there is
+> currently no safe, built-in way to reclaim that space short of
+> re-cloning. This series adds that reverse direction: enumerate promisor
+> blobs over a size threshold, drop them locally, and rely on the existing
+> lazy-fetch machinery to bring them back transparently when needed.
+> 
+> How it works:
+>    * Enumerate promisor objects directly (ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)
+>      and select the blobs exceeding the filter threshold. Every enumerated
+>      object is a promisor object by construction, so it is guaranteed
+>      recoverable and locally-created objects are never candidates.
 
-I'd mark the topic as "expecting a (hopefully small and final)
-reroll", perhaps.
+
+
+Thanks for v2. Guards, docs, and dropping the drop-log all match what we 
+have talked about on the RFC.
+
+On "guaranteed": I would soften that a bit in next round. It is 
+recoverable in the same sense as the rest of partial clone, as long as 
+the promisor remote still has it. Fine for now, just a bit strong
+without a remote check.
+
+For the promisor-only walk: that matches how we already treat those
+objects, so using it here looks right to me.
+
+On the guards you already covered Junio's point well. I still like the
+index one so we do not drop something and fetch it straight back. Mid-op
+is more UX. Docs/cover can just say that clearly.
 
 Thanks.
+Siddharth
+
+
+>    * Rebuild the promisor pack without the selected blobs, reusing the
+>      existing repack machinery, so the drop is crash-safe (write, fsync,
+>      install, then delete the old pack).
+>    * --dry-run lists the candidates and changes nothing.
+> 
+> Safety guards refuse to run while a merge, rebase, am, cherry-pick,
+> revert, or bisect is in progress, and refuse to drop a blob referenced
+> by the current index (it would only be lazily re-fetched by the next
+> worktree command). Both are skipped for bare repositories.
+> 
+> Changes since v1:
+>    * distinguish an explicit -b/--write-bitmap-index on the command line
+>      (reported as a conflict) from a repack.writeBitmaps config value
+>      (silently disabled for the command). This addresses Junio's review
+>      that the previous check could not tell the two apart
+>    * documented the choice to keep --dry-run as a separate option rather
+>      than --drop-filtered=<mode>
+>    * implemented the safety guards
+>    * Added git-repack documentation for --drop-filtered and --dry-run
+>    * Reorganised so enumerate_promisor_blobs() is introduced in its final
+>      signature
+>    * Distributed the tests into the commits that introduce each behavior,
+>      instead of a single standalone test commit.
+>    * Dropped the drop-log commit from this series
+> 
+> To do:
+>    * Remote verification: verifying against the remote awaits the "remote-object-info"
+>      cat-file protocol command.
+>    * Drop log: introduce with the error-path change that reads it.
+>    * --verbose: space-reclaimed reporting.
+> 
+> [1] https://lore.kernel.org/git/20260716132848.95982-1-r.siddharth.shrimali@gmail.com/
+> 
+> Siddharth Shrimali (7):
+>    builtin/repack.c: add --drop-filtered and --dry-run options
+>    list-objects-filter: add list_objects_filter__filter_oidset()
+>    repack-promisor: allow excluding objects from the rebuilt promisor
+>      pack
+>    builtin/repack: enumerate promisor blobs for --drop-filtered
+>    builtin/repack: actually drop filtered promisor blobs
+>    builtin/repack: add safety guards for --drop-filtered
+>    Documentation/git-repack: document --drop-filtered and --dry-run
+> 
+>   Documentation/git-repack.adoc   |  35 +++++++
+>   builtin/repack.c                | 135 +++++++++++++++++++++++-
+>   list-objects-filter.c           |  45 ++++++++
+>   list-objects-filter.h           |  16 +++
+>   repack-filtered.c               |  81 +++++++++++++++
+>   repack-promisor.c               |  15 ++-
+>   repack.h                        |   8 +-
+>   t/meson.build                   |   1 +
+>   t/t7706-repack-drop-filtered.sh | 179 ++++++++++++++++++++++++++++++++
+>   9 files changed, 511 insertions(+), 4 deletions(-)
+>   create mode 100755 t/t7706-repack-drop-filtered.sh
+> 
+
