@@ -1,153 +1,452 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CE14582DD
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 13:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2533B468C3D
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 13:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785849691; cv=none; b=etHso87GuzGlnGHBcRA9FXdtxZhrjq+/qhCgkDT/X8ba3ioMJXJ/WxhlQQImprh6KVIVsVY/IVB17nUpnLZs/ZnwXfQmzfJq+SVmEh1VVjtGs0rL+fI7D9tW+I59kepO7v6G2hHPKZbk2whPmVstSdv2mYc/A8sgAP7IzUwP4Rs=
+	t=1785851563; cv=none; b=EYKMJq+e/eg9qwH3/spDveIOjWfQ99ddF6yYHItdv+cFsr7oTQjsbzDDaiA2D4eRD0rPHaFrov8mgSiuk3uS9g4ku8AJGO30F6d4NJHMSvcFENO08aoT9VnMc2nIIkmSrDhns5garuijpp5Nd/MlEvLg2RYmPEbpgjKNoaT8McE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785849691; c=relaxed/simple;
-	bh=JQ4FGKIy5X6j+czr4vw4w7+SmHwKU4h14a9TGPXZRrI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OugH4191cFNu+zA1NVc0YGYGuWhNCxUjQ3q+or/wcqiRkicWImdbULpJ34x8CASoMVNngOW6lx7vhURy+YGON8rXLg2HbOBop8aMAsh7OMdtlpGdgdHXayQe/uSRUtWfKTEKc35lJLZKhtygDEIayqjH6SYqNwbZ8ehRd6/OJ2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hzbwb3Ii; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SPO+6oqW; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785851563; c=relaxed/simple;
+	bh=ZFFe7/RNzUHyCrQ8cACLyCV7lrb3LHY87lEgJWtFT68=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LntInI8R8ebVqHEe+zJKTNKDOU65zDnhzuYqzabPO6broJSmaB/z5UOVwfySsR5KoVSdIJnAAYagK/3C7ci0w2BY0OyjiAqpsaPA/d5l4q6gGl36oNKEA1vNZILuDvXzhS4MMWANlbVeZa2hlj9jiT8YnJfVY0Ou0947eyz/Qw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qgXTjsuk; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hzbwb3Ii";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SPO+6oqW"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 542F47A00BD;
-	Tue,  4 Aug 2026 09:21:28 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 04 Aug 2026 09:21:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785849688; x=1785936088; bh=h+GuHZGJpX
-	/n/NmJ7ft3VCizVktgWHTjtPg9jj6G0M0=; b=hzbwb3IiuZd6GWlWudrCEo/waU
-	qIKNPQh5EF86iwEA8EP6khpn23nxSyHGbXeLnYinx6q7MFUvSXF2uxjipdLRq0Cd
-	/hzTekT8HbD4bvm+RNNMvfzuD2NsolUumqX9z2vcRfHgKNkM0Ifs/Zn3RxzFFBub
-	KoOlIrgRRxl2hC3iIu9PiBYFU9Nl8wG7uxETssamy7MfjwyAuvD/GN+I5EO+uhcg
-	Ex1hIXF4BsGkcCgPMOdPJdhHZ4qttlgtHjXu1yPfm/5oYX3VPrSXZsUaKOBH8V+l
-	kjzX3vQ1FTIZKDWZZpQg2AAGG8Z2mczIB6HSMPaZEkb69111+Y/+UmCZy7MA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785849688; x=1785936088; bh=h+GuHZGJpX/n/NmJ7ft3VCizVktgWHTjtPg
-	9jj6G0M0=; b=SPO+6oqW+sIlU0CemlwwSLwGBK7XTuFqPlljTGq2Cl1S6TbdDGl
-	zqMABt2M+CBCwe6lprCOXt073NWefWXqvFdkQbTmkL+2PpK+KLagEMymoB6Irl7k
-	bJA3bcybMIiWu/euunq5BiQ2s1SzgwPxB+jl4Sd15uo05YM1ZaluUbB4fAag/slo
-	qB8Jeanv68ZqvF3f2I0mu3Q7uBd4pat5QRKvpVk4xW55AWNXRh5Jp6IroZLIaI9t
-	GddUoRPMX8HYWa6GA/bvmEBA8CKrZNKZwRz9VCTCd8lwqxXFkSLlqYml0is9Pg47
-	VzuxfHImJeaRHafBl+nPG+XVPcrK0WQuMBw==
-X-ME-Sender: <xms:V-dxalSQIH8WKIpEvzZ6iNxSZggAQGW5xr_ICDaSk8XERhfuAS6uDg>
-    <xme:V-dxaqzpsCigyNgBMu8vlBdjtKQ2FYVNud9f5SVRvZH_lWBYfZlpZxLx_XOR479yT
-    7WrkCPOuxY0HzUZ5I7EXi3XkRcKrfSwPVWVnG0vVr1_wTKNTPyl9A>
-X-ME-Received: <xmr:V-dxatBWl1rljCQEN28KMS2sAl7ZUXSRKVhiCvpFsNL_AJS34wtkto0sxlXqMakCpMJCg1Wpn0g4UQGPZwRsRjo_vIXSDABMvQ>
-X-ME-Proxy-Cause: dmFkZTFD2ID9ORgzrMyOdBR4EiR8TQt66j8IvbO0zNeYX5akyQFeD08KfcHmeV8A4gIA7i
-    F3riZHxTmvzlh8dic4IJyEr/YPHp8SPfnytA1HjI7ZJYVAhcOGfDZoiv25PxrxCin2L75y
-    srL5kmNN6F3ANAFvdeHQG1kfAqMe/4PCMHg0+dM4cDp3ma/hAVlMcH0Dsvh+DaGFBg7HSA
-    1ogSiJbF3Hu8IWKOpXpLcMpkeXMcCjrT23PibvM/dBsB5PWuLhi/Q1A5d+FCK/eg5nQA1B
-    5Ka0o+9N8CHd/Q8A1F/yGdNRdeBQh0b020TK6nDy08qmNGsMAYoa/uF3etxVoN/dOUEyCw
-    fdlB3Eb7PhA/Se/aBcaLzfvot8xVw4wSCHJvitbb0cIQ+ETMsz2uPRe77lbEUDrIEO0v77
-    vOJl2OV4S/+2IH3CknZIlCOKdi8+fIPaeDz+LfQP/LGgup6itcBQ630gyxvoxQjLgKrWdQ
-    nXfw4GvkPSV37fk6rz7ivpzBDP55J+3wCGsP4eNmnfxX8vnge/qw6BcsoZ5C2YTbi+t1/b
-    GqMSyynN9ICti1+z6TQvnjWKgrpqhq5+o/hUnKHc4N2KNaM9jttgC3s6w/D4sKxU+OpnhW
-    PoWA20vamq8wgQDZeyrCCOGqEl6n/pXG2q4PvGe3dSnN5ElfzP7izSOZxSHw
-X-ME-Proxy: <xmx:V-dxauG24iSZWy3kpld3fkMmcsfQB0AfdrbxdKQFfM_8nLse9ClQ0A>
-    <xmx:V-dxasPYX6EVOQdJblVPs11QFRP4jdRZs8c5U8NC86qFT0gGloX9EA>
-    <xmx:V-dxan4y383F3E5Guh7mgvBHjbuqqcoi2G1IjrEZjeX8hRAa2yXYLQ>
-    <xmx:V-dxanjjDYExQvbi5h5A9UpejreOQkbehu29nY7DwSkTQ1IEJT8KLg>
-    <xmx:WOdxaqjuv7TB9B9VrFhbNtKugEH_GmiH2fMfaMPV7H46LYveyg0qitrT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 09:21:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Phillip Wood <phillip.wood@dunlem.org.uk>,  git@vger.kernel.org,
-  Phillip Wood <phillip.wood@dunelm.org.uk>,  Matt Hunter <m@lfurio.us>,
-  Patrick Steinhardt <ps@pks.im>,  "D . Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v10 3/5] history: add squash subcommand to fold a range
-In-Reply-To: <CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
-	(Harald Nordgren's message of "Mon, 3 Aug 2026 18:35:22 +0200")
-References: <6b5b2c93f2e3e55bf456b86a8be61f5f85137a2c.1784536024.git.gitgitgadget@gmail.com>
-	<cover.1785750108.git.phillip.wood@dunelm.org.uk>
-	<CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
-Date: Tue, 04 Aug 2026 06:21:25 -0700
-Message-ID: <xmqqqzkevx62.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qgXTjsuk"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4921eed3fa2so19578175e9.0
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 06:52:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785851559; x=1786456359; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=u8nUOZYPszGfr3TSkCnFGpnJQRUPFS0gqKOKdgBVOwA=;
+        b=qgXTjsukdMEAQ2Cwqb1BJ5bpclwxOkadHPk2J9qPTzrXSh7NztEa46iDmq9r/ZpcLi
+         2JmcMxJxplTHTA61wixsZlCIwjNAzIYpqINwSYrYYwdz6OVGkAfdwSXZdo49KPsTWJt5
+         Xz6/eDKBmjh7JethkwSaIuFa3uT9Xs5+xYk3QZTbWZ0sXZMf/zBwXzj5wxxzrbKz97NN
+         LyLXqb5oTtrRyFOmjiS1E8VpP/gmJdeABTqdAwi1p5WombF5gk3Ttyfonwq7mrt+t4+4
+         zn14CW9vDW9xaAzD53PNGlZ/2AQxF9GXDg5ZIp++jVdiUlHgdPFW4VJ98lm8LCLW4JnM
+         4Rsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785851559; x=1786456359;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=u8nUOZYPszGfr3TSkCnFGpnJQRUPFS0gqKOKdgBVOwA=;
+        b=hdGAywvTbPaadWvLhlj5bjsZBchG25nqJjPpdNHBZWuip/vcFR1IGOW0Tm51hmIOW3
+         b3WjwQYptEP7kw/b/GEO9RclA+/p5G8JTv6aJQaJkx3n7DTKw5nLRgYFlCbQMr2tH7RA
+         XNQg4w+qUGOx7cMorRnQzUjQEjH9lczVEuvO6Pv664vu0VmD5R7m6ZkZdwPXAvoblAUN
+         kkllMRLPsZlOms8tsO2oMd/FNTAKf1GMsFe7KQ+6dbFpnjz5WqABExDX27eHNY/yHHtE
+         2PgzBvK7lrMAEm+KRmQcW3vCyDt8QMod+7J553jrWFikOUChblSYk08XZgKzTgIo4Cmi
+         3/kg==
+X-Forwarded-Encrypted: i=1; AHgh+RoUcy/R/xlwjyWpbictxXB/TXyD3AkWx+vmEjhgwp+xcLP59+sxVa3cM8a5ZLZ8WKgknxM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz2djrrlysTWNDzwziWaJk2hexJB0Uc4jJMZ05g74kagqdK7e2r
+	SBRy9i0sMYm8IboCymZaA0dvbBdSxuVK40A5cS3jzwN+4XLb40ZR1OiF
+X-Gm-Gg: AR+sD108nkFepky7PJ+RHRFkw1MgUDMiYJNUnN4OAlOnaWxI2E3sNZvG+vGpdhFiMBc
+	7ljhDfyPf2Trk4OwD9GyDG3ee5RGD6vFCOW4xcptiku1T5lLFjGecfElnDICRwQKSCXrOKtn4oV
+	M1LWVtEHQmgAi7xb0DxI+ynEBxumkdNs74UmiDo/1jAw7B41k3n9mFynFD4lfI0qO0zqBkoWCqI
+	YUQK0tgdrCtYXEpSiwNo8vh6sYmNBCoyOz6c16mZIN8WAgSC60irjJxnzsa4rjIM4RgB4nJnlDV
+	IFiOQhtPqt+EiDCKLDh5EYWoBFdf7LU/klVsjIAWOk3BZEY28oXA+1qxvCIcvdBIwS+yOtNqZzb
+	1Dm4a6Ek7N0mnFaV6MPkgGOscEGMk+7c69VnG6iHVYVO2ZoHJ/U0RlzxMht3IFbXuaoZOE5/Sc8
+	ckaHEggBinA29JwL2u5ZozxieC0jscY8rihDwo2o1howzu6g79gMdY1SYgD/h7L6L0Ulb9GgcYC
+	SGlZaNpZpH4AdwykT6gYCPtD1zt1xsXMoV2KRaH+gI=
+X-Received: by 2002:a05:600c:468e:b0:495:4b42:8677 with SMTP id 5b1f17b1804b1-4980c6a2268mr311762365e9.18.1785851558466;
+        Tue, 04 Aug 2026 06:52:38 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49807b5b4a2sm403967615e9.1.2026.08.04.06.52.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Aug 2026 06:52:37 -0700 (PDT)
+Message-ID: <1f8fe709-ef19-496e-9857-8c2d24b29c56@gmail.com>
+Date: Tue, 4 Aug 2026 14:52:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH v7 0/10] diff: add provider interface and initial
+ providers
+To: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
+ <20260801174156.2998808-1-mmontalbo@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260801174156.2998808-1-mmontalbo@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Hi Michael
 
->> These patches can be fetched with
->>
->>   git fetch https://github.com/phillipwood/git wip/hn/history-squash/v10-early-part
->>
->> note that they do not support editing the commit message of the
->> squashed commit.
->
-> Thanks, what should I do with it?
->
-> Is it a replacement for my branch, or should it apply them as fixups
-> (if so how do we handle the lack of re-edit support)?
+On 01/08/2026 18:41, Michael Montalbo wrote:
+> Every in-process diff in Git reduces, at one point, to a single
+> question: given two blobs and the settings the diff runs under, which
+> line ranges changed?  The answer is the diff's hunks: for each change,
+> the position and length of the range on the old side and on the new.
+> Each consumer asks in its own shape:
+> 
+> - blame diffs each suspect's blob against its parent's, taking only the
+>    coordinates through xdiff's hunk callback;
+> - the stat formats keep only the added and deleted counts;
+> - patch output emits from the hunks, with xdiff interleaving context and
+>    content around them;
+> - log -L maps the tracked range across each commit from the coordinates.
+> 
+> In every case the answer is computed the same way: load both blobs and
+> run xdiff.  That is the only source, so nothing that already holds the
+> answer, or that would answer differently on purpose, can supply it
+> instead.  Sometimes that is what we want, which is why patch-id and
+> format-patch stay on the builtin computation throughout: patch-id needs
+> identical hashes on every machine, and a format-patch must apply for
+> recipients who share none of the sender's configuration.  Other times
+> another source would be useful.
 
-I am not Phillip, but in light of what I said elsewhere, I would
-expect you to review them as if they were patch submissions to your
-tree.  You may agree with some parts while disagreeing with others.
+This explains the mechanics of the existing implementation, but doesn't 
+really explain what the advantage of the change is beyond having a 
+unified interface. What are things that are unlocked by this change? Are 
+we doing it purely to cache the hunk headers or does it (as I suspect) 
+unlock other features?
 
-Respond to them.
+> This RFC sketches a direction.  The unified series shows one interface
+> carrying two example providers and their interaction; it is not shaped
+> to merge as one topic.  If the direction holds, the work returns as
+> separate reviewable series (see Roadmap).  The two examples are
+> demonstrations, each an RFC on its own: diff.<driver>.process, the RFC
+> cooking as mm/diff-process-hunks, lets a configured external process
+> answer with its own notion of which lines changed, and the diff-hunks
+> store, new in this thread, remembers what xdiff computed and serves it
+> back.  One is authoritative and external, one a cache and in-process.
 
-Respond even to the ones you agree with, just as you would when
-giving a positive review.  Demonstrate that you read them,
-understood how they work, and then state that you agree.  If you
-disagree, explain why you think it is better without such
-changes.  
+What does it mean to be authoritative? Why isn't the xdiff code 
+authoritative?
 
-Just do not send a new iteration without a thorough explanation of
-how you addressed each of the review comments, including those
-review messages disguised as patches.  Be inviting to even those who
-have not been involved in this topic so far to join the discussion,
-which requires you to be transparent.  Engage in dialogue.  Explain
-what you are doing.  Do not let patches alone explain themselves.
+> Three pieces:
+> 
+> - A hunk provider interface (diff-provider.h) is the point of the
+>    series.  A provider is an alternate source for the answer: asked with
+>    the pair's object ids and the diff settings, before any blob is
+>    loaded, it may supply the hunks in place of the builtin computation.
+>    A miss falls through to that computation, and every answer passes one
+>    shared validity check first.  The providers form a chain the
+>    repository owns, built on first consultation and released in
+>    repo_clear(), so provider state such as a running process never
+>    outlives its repository.  
 
-First and foremost, this development community is built on humans
-collaborating with other humans.  An author posts a patch, a
-reviewer responds with suggestions or critiques, and the author
-replies to that e-mail.  In their own words, the author might:
+> Chain order is the authority,
+I'm not sure what that phrase means
 
- - build on the suggestion, rephrasing it and proposing further
-   improvements;
+> and the
+>    terminal provider is the builtin computation itself, so the interface
+>    never exists without an implementor: patch 02 ships it answering every
+>    request the way the consumers did before.  A consumer states its
+>    request in one struct and reads one set of outcomes (answered,
+>    unanswered, or failed); it never names a provider, and a provider>    added later maps onto those outcomes inside the interface, so consumer
+>    code is written once.  Because every diff now walks the chain even
+>    with no store or process configured, the default path was measured
+>    against the pre-series base and runs within noise (a 5000-commit
+>    log --stat and a long-history blame, ratio 1.00 either way).
 
- - disagree and offer a counter-proposal;
+So we can configure a provider for a particular file type via 
+.gitattributes and diff.<driver>.process and then it is used 
+automatically, if there is no provider configured we use xdiff?
 
- - concede the patch's shortcomings and outline how they plan to fix
-   them; or
+> - The diff-hunks store shows the non-authoritative side: an in-process
+>    cache at $GIT_DIR/objects/info/diff-hunks that may only reproduce the
+>    builtin diff, so serving from it never changes a command's output.  It
+>    is read by default and written only when a repository owner opts in,
+>    warming it as a side effect of diff work the command already does:
+> 
+>        GIT_DIFF_HUNKS_WRITE=1 git log --all --stat >/dev/null
+> 
+>    A warmed store then serves the stat formats and blame from stored
+>    coordinates instead of a fresh diff: on git.git a 5000-commit log
+>    --stat runs about 1.9x faster, and blame reads the same entries
+>    opportunistically (full numbers in [1]).  Its format and keying, what
+>    it may not serve, and how it handles corruption and staleness are in
+>    git-diff-hunks(1), gitformat-diff-hunks(5), and [2].  The interface
+>    point is small: a cache drops in as the provider that stands aside
+>    wherever an authoritative one answers.
 
- - defend their original design to give the reviewer a chance to
-   reconsider.
+I had a very quick look at the documentation in patch that implements 
+this. Am I right in thinking it stores xdl_opts directly so that we 
+cannot change the in-memory representation without breaking the cache? 
+Are there plans to garbage collect cache entries when the corresponding 
+blobs are removed?
 
-Doing this in your own words helps reviewers see how close we are to
-an agreement.  This kind of discussion often needs a few rounds of
-back-and-forth.  It should also welcome folks watching from the
-sidelines, which means letting the globe spin at least once so
-developers in other timezones can chime in before we declare a rough
-consensus.
+> - diff.<driver>.process shows the authoritative side: an external
+>    process, configured per driver, whose answers may deliberately differ
+>    from the builtin diff and outrank the store.  Git asks it for a pair by
+>    object names alone, so it answers before any blob is read, which suits
+>    a cache or a process that fetches the blobs itself.  Consulting is
+>    opt-in per command, following the allow_textconv precedent, and a pair
+>    the process cannot answer falls back to the builtin diff.  The
+>    protocol, the per-command gate, how failures are handled, and the
+>    versioning that lets it grow are in gitattributes(5) and footnotes [3]
+>    and [4].  The interface point, again, is small: an external,
+>    authoritative provider joins the same chain ahead of the cache, and
+>    neither consumer learns it is there.  A later content-carrying request
+>    would extend it to the pairs and consumers this identity-only form
+>    leaves on the builtin diff.
+> 
+> The series stops at the coordinates.
 
-Firing off a new iteration before there is a rough consensus on what
-the final shape of the patches should look like makes it appear as
-though the only thing you care about is producing the next
-iteration, and that you care much less about collaborating with
-others.
+Does this mean the offsets and lengths in the hunk header? I can't see 
+any reference to "coordinates" in the existing code.
 
-Thanks, Phillip, for these patches-as-reviews.
+> A consumer that needs the changed
+> text, such as patch output, would have only its hunk selection replaced,
+> with xdiff still emitting content from the blobs; that machinery is the
+> content enrichment sketched in the Roadmap.  Establishing the framework
+> on coordinates first keeps this series one design: the question, the
+> interface, and two providers answering by identity.
+
+This seems like an interesting proposal and the diff headers seem like a 
+good place for initial phase to stop. It would be helpful to have a 
+clearer explanation of the features this interface would support (i.e. 
+what's the motivation for these changes) and a lot less jargon in the 
+interface description.
+
+Thanks
+
+Phillip
+
+
+> 
+> Shape of the series:
+> 
+>    01     documentation: how external diff drivers relate to the
+>           features layered on the diff
+>    02     the provider interface: the request and outcome types, the
+>           emit entry point, the shared validity check, and the
+>           repository-owned chain with its terminal builtin provider
+>    03     the store: on-disk format, library, and the diff-hunks command
+>    04     recording: the stat walk computes, sums, and records
+>           trim-stable pairs (writes gated off by default)
+>    05     reading: the consult entry point and the store's registration
+>           as a provider; the request gains the object ids and diff
+>           options
+>    06     blame reading through the interface's emit path
+>    07-09  process preparation: sub-process lifecycle split, a gentle
+>           status read for an optional process, and the
+>           diff.<driver>.process config
+>    10     the process provider, oid-only, at the head of the chain, with
+>           the per-command gate; the request gains the path
+> 
+> Roadmap:
+> 
+> This RFC asks whether the direction is right, not for these ten patches
+> to merge as one topic.  If it holds, the work returns in reviewable
+> pieces:
+> 
+> - the interface and the store (patches 01 through 06): a cache with
+>    measured numbers and no external-process machinery
+> 
+> - the process provider (patches 07 through 10) on the same interface
+> 
+> - the content enrichment (the content-carrying request, patch output and
+>    log -L consulting, and the xdiff machinery that feeds a provider's
+>    hunks into emission) once the identity-keyed framework settles.
+> 
+> Several design questions are left for those series.
+> 
+> mm/diff-process-hunks in seen would be dropped in favor of this thread
+> and its split.
+> 
+> The series applies on the line-log topic (mm/line-log-limited-ops)
+> rebased onto current master.  The topic rewrites the same
+> builtin_diffstat() region this series touches, and current master
+> includes 061a68e443 (sub-process: use gentle handshake to avoid die()
+> on startup failure), which this topic leans on: a process that dies
+> during the handshake degrades to the builtin diff like every other
+> failure.  A trial merge against seen shows no interaction with other
+> topics beyond the mm/diff-process-hunks replacement above.
+> 
+> The base (line-log topic on current master) and the full series are
+> available at:
+> 
+>    git fetch https://github.com/mmontalbo/git mm/line-log-stat-formats-followup
+>    git fetch https://github.com/mmontalbo/git mm/hunk-providers-oid-first
+> 
+> Changes since v6:
+> 
+> This is a restructuring, not an incremental reroll, so a range-diff
+> against v6 is unreadable; the map of what changed:
+> 
+> - The series now leads with the hunk provider interface and brings the
+>    diff-hunks store in as its in-process implementation (patches 02
+>    through 06, new to this thread).  It keeps only the identity-keyed
+>    half of the external diff process protocol from mm/diff-process-hunks.
+> - v6's gitattributes documentation, sub-process split, and userdiff
+>    config return close to their v6 form as patches 01, 07, and 09.  Patch
+>    08 is new: a gentle status read so a protocol error in an optional
+>    process degrades to the builtin diff instead of dying.
+> - v6's protocol patch returns as patch 10, reduced to the oid-only
+>    request, consulting through the interface, and carrying a per-command
+>    gate (v6's bypass patch folds into it).
+> - v6's blame and stat consults return as identity-keyed consults
+>    (patches 05, 06, and 10); their content legs, along with v6's xdiff
+>    external-hunks machinery, content-carrying request, and line-log
+>    consult, are withheld for the content enrichment.
+> 
+> Footnotes:
+> 
+> [1] Store numbers, measured with hyperfine against the same build with
+>      core.diffHunks=false.  The warm is a full cold build of the store;
+>      the blame speedup is file-dependent (see the coverage limitation):
+> 
+>      git.git (82,912 commits, --all)
+>        warm log --all --stat      20.9 s        store 28 MB, verify 39 ms
+>        log --stat -5000           1.91x    (1.38 s -> 0.72 s)
+>        blame diff.c               1.26x     (509 ms -> 403 ms)
+>        blame hit rate             54% (896 of 1653 pairs)
+> 
+>      linux (1,445,548 commits, --all)
+>        warm log --all --stat      714 s       store 298 MB, verify 415 ms
+>        log --stat -5000           1.43x    (2.29 s -> 1.60 s)
+>        blame kernel/sched/core.c  1.43x     (1.59 s -> 1.11 s)
+>        blame hit rate             74% (2414 of 3263 pairs)
+> 
+> [2] The store is its own file because nothing existing is addressed by a
+>      blob pair: notes attach to single objects, commit-graph chunks to
+>      commits.  One entry per pair, keyed by (old blob, new blob,
+>      xdl_opts) and recorded only when the pair's trimmed and untrimmed
+>      diffs agree, serves blame at zero context and the stat formats at
+>      any -U (divergent pairs are 0.4-0.5% of a warm and always compute).
+>      The writer fsyncs and commits atomically, and a reader bounds-checks
+>      every record and treats an unparsable file as absent; the trailing
+>      checksum is checked by git diff-hunks verify, not on every read, the
+>      same read-time trust the commit-graph and multi-pack-index take.
+>      There is deliberately no fsck integration, expiry, or background
+>      maintenance: the store is derivable at any time, so the recovery
+>      path is git diff-hunks clear and a re-warm.  New commits make it
+>      incomplete, not wrong; a later warm seeds from the file and pays
+>      only for what is new.
+> 
+> [3] Consulting the process is allowed per command, like textconv: git
+>      diff, git log and git show, and git blame consult it; the plumbing
+>      diff commands do not unless --ext-diff or --diff-process is given,
+>      and the interactive-patch machinery, format-patch, and range-diff
+>      stay builtin.  Options the process is never told about select no
+>      process, and an object id is sent only when it names the exact bytes
+>      diffed (a pair under an active object replacement is not sent).  The
+>      command comes from local configuration, as with filter.<name>
+>      .process: attributes select only a driver name, so cloning cannot
+>      cause a process to run.  gitattributes(5) has the full gate.
+> 
+> [4] The protocol is versioned and capability-negotiated, and extends
+>      without breaking deployed processes: a process ignores request keys
+>      it does not know, Git ignores trailing tokens on a hunk line so
+>      fields can be appended, and new request forms arrive as capabilities
+>      a process may decline.  Announcing a capability Git did not request
+>      aborts the command, the filter protocol's handshake rule.  The
+>      content-carrying request is the natural first extension; markers for
+>      formatting-only changes and function or token boundaries are
+>      candidates beyond it.
+> 
+> Michael Montalbo (10):
+>    gitattributes: document how external diff drivers relate to diff
+>      features
+>    diff: introduce a hunk provider interface
+>    diff-hunks: add the store format, library, and command
+>    diff: record precomputed hunks during stat output
+>    diff: read precomputed hunks for stat output
+>    blame: read precomputed hunks
+>    sub-process: separate process lifecycle from hashmap management
+>    sub-process: add a gentle status read
+>    userdiff: add diff.<driver>.process config
+>    diff: consult oid-only hunk providers via diff.<driver>.process
+> 
+>   .gitignore                               |    1 +
+>   Documentation/Makefile                   |    1 +
+>   Documentation/config.adoc                |    2 +
+>   Documentation/config/core.adoc           |   10 +-
+>   Documentation/config/diff-hunks.adoc     |    8 +
+>   Documentation/config/diff.adoc           |    6 +
+>   Documentation/diff-algorithm-option.adoc |    3 +
+>   Documentation/diff-options.adoc          |   15 +-
+>   Documentation/git-diff-hunks.adoc        |  146 +++
+>   Documentation/gitattributes.adoc         |  171 ++++
+>   Documentation/gitformat-diff-hunks.adoc  |  129 +++
+>   Documentation/meson.build                |    2 +
+>   Makefile                                 |    5 +
+>   blame.c                                  |   81 +-
+>   builtin.h                                |    1 +
+>   builtin/blame.c                          |    9 +-
+>   builtin/diff-hunks.c                     |   53 ++
+>   builtin/diff-tree.c                      |    3 +
+>   builtin/diff.c                           |   11 +
+>   builtin/log.c                            |   19 +
+>   chunk-format.c                           |   62 +-
+>   chunk-format.h                           |   14 +
+>   command-list.txt                         |    2 +
+>   diff-hunks.c                             | 1034 ++++++++++++++++++++++
+>   diff-hunks.h                             |  141 +++
+>   diff-process.c                           |  669 ++++++++++++++
+>   diff-provider-internal.h                 |  130 +++
+>   diff-provider.c                          |  190 ++++
+>   diff-provider.h                          |  159 ++++
+>   diff.c                                   |  294 +++++-
+>   diff.h                                   |   47 +
+>   environment.c                            |    1 +
+>   git.c                                    |    1 +
+>   meson.build                              |    4 +
+>   odb.c                                    |    2 +
+>   odb.h                                    |    4 +
+>   range-diff.c                             |    6 +
+>   repo-settings.c                          |    1 +
+>   repo-settings.h                          |    1 +
+>   repository.c                             |    3 +
+>   repository.h                             |    8 +
+>   sub-process.c                            |   52 +-
+>   sub-process.h                            |   19 +-
+>   t/helper/meson.build                     |    1 +
+>   t/helper/test-diff-process-backend.c     |  349 ++++++++
+>   t/helper/test-tool.c                     |    1 +
+>   t/helper/test-tool.h                     |    1 +
+>   t/meson.build                            |    3 +
+>   t/perf/p4218-diff-hunks.sh               |   48 +
+>   t/t4080-diff-process.sh                  |  593 +++++++++++++
+>   t/t4220-diff-hunks.sh                    |  819 +++++++++++++++++
+>   t/t4220/README                           |   55 ++
+>   t/t4220/trim-divergent-new               |  319 +++++++
+>   t/t4220/trim-divergent-old               |  316 +++++++
+>   userdiff.c                               |    7 +
+>   userdiff.h                               |    2 +
+>   write-or-die.h                           |    7 +-
+>   xdiff-interface.h                        |   12 +
+>   58 files changed, 5989 insertions(+), 64 deletions(-)
+>   create mode 100644 Documentation/config/diff-hunks.adoc
+>   create mode 100644 Documentation/git-diff-hunks.adoc
+>   create mode 100644 Documentation/gitformat-diff-hunks.adoc
+>   create mode 100644 builtin/diff-hunks.c
+>   create mode 100644 diff-hunks.c
+>   create mode 100644 diff-hunks.h
+>   create mode 100644 diff-process.c
+>   create mode 100644 diff-provider-internal.h
+>   create mode 100644 diff-provider.c
+>   create mode 100644 diff-provider.h
+>   create mode 100644 t/helper/test-diff-process-backend.c
+>   create mode 100755 t/perf/p4218-diff-hunks.sh
+>   create mode 100755 t/t4080-diff-process.sh
+>   create mode 100755 t/t4220-diff-hunks.sh
+>   create mode 100644 t/t4220/README
+>   create mode 100644 t/t4220/trim-divergent-new
+>   create mode 100644 t/t4220/trim-divergent-old
+> 
+> 
+> base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
+> prerequisite-patch-id: 6270dea79c9f06530737cefa3e1a0a39a1be7877
+> prerequisite-patch-id: 46fcc16a7a2ed760a1134d2a92c87699f3ec7bdb
+> prerequisite-patch-id: c1e3da243003d060e429bc2196ae02b3453f01f9
+> prerequisite-patch-id: 4ad4e273494d4e8503706c21bfdc90a5d7ce116a
+> prerequisite-patch-id: f7fa1367756daafa83f4f030a5c7b6dc3dbb70d7
+> prerequisite-patch-id: 829e76c9fec655a07f9383086a35bff3290b1c74
+> prerequisite-patch-id: 5c5a0d61ae9b6d628d05f1eb5df046758f3111a8
+
