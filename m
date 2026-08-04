@@ -1,105 +1,138 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892C241F34B
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 08:37:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9847F28D831
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 09:36:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785832632; cv=none; b=Y3XDkL2OvEg+Wr6d+5ZjhK6MPSoCuVvnhi9l6xtb9WlgEzCK8qdgw25h8UaWI7t/r2yyvoQ40ZyY/9CoRFFl+tbmGuQB5Le3uB2QMzybmAnvIn+pnuxIvdqwICoytUtDmsyTdhaBTQ/EwW9UbV856B4ebaGJGCMY7ngQyxUqQtM=
+	t=1785836202; cv=none; b=pQhDtd29JlkLO0eUYijD6rzAiIN73nJvXT9Pdch6Cg+E7j6D26iMfl7IYatb6lsk5EtRV6KursgvnOPwlMjHar00jqq6J/P3koW+fvIes9z7I2Tsrz/h+iL1VvIvlfW7ChPZtGV21x/vOyozN1zpSX1xZsX9GLStOYJ+BmXLXU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785832632; c=relaxed/simple;
-	bh=/0WUC9ekGzvACXb5n/0eVVearLzGMjxosQFYgEUGrY8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=V/gVkkJDc3T/ySRYglwhE2m3CFH9ca6huatn1J+bztqEjZpnmoa5/h6MEljw8dwqh6rReARTxN+CxlwIijXUXA8cAsqs0A9TCyzUfemOXYPPl2LM86awA+lFT8P23sN4jzlLpinUdpVZ9yPNevWXUQO76UrwEjqZ5EIYZikFMKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Sk5Byr7N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HmdZ0Kee; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1785836202; c=relaxed/simple;
+	bh=LuvGnc9GUxqJnK+aS+08BWZAwwGEG2ybl6KmS8qnw2I=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=K+fKqXGdI0IqSAF/jHDm6p9wbIT1jVZ5BXY18kOMXKXfUZ21vMVyyS7xeNsa0jsAfQyrs+vjq6+5n41LCWfIum4AbJqpSse25f57Eappr/PBUxSWPta2DnbKCd4L0+MRUDgQHQLKKldnhvAMbkp8TW/0naPqF3wwF0n6uTbbU5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P+bSUa3V; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Sk5Byr7N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HmdZ0Kee"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4CDB4140008B;
-	Tue,  4 Aug 2026 04:37:09 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 04 Aug 2026 04:37:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785832628;
-	 x=1785919028; bh=/0WUC9ekGzvACXb5n/0eVVearLzGMjxosQFYgEUGrY8=; b=
-	Sk5Byr7N1MfklOAaZVhik6XXO5NkJ5pvi7u2RCLrWTRcEOroQQbWpdM9ksN0Fsq8
-	7MZZ+xamZCA1tbaM8Sfei5u0Zj7d115SMYv0gMbfFumQqXclH1wO9ASGyl6Iu3l4
-	qfmc82BZajDRPnsC9elNJrfmQ6Mxx3KtSJ/hhiTZ/yMaTsOBiBBM/+PzsjHBt0/7
-	jCQ1BbVqVzeqRJ9B9IU/MmWqdBGQ7f9YkwkHOrYOcHe4bMNA66cGOuuhF/dZstuE
-	IHWqGf3Rk8pZbTLv10vTLceRBlFna4o9yMVn85O6elV89AGTKziwrwqlSwp73lH3
-	GNSlGTQP5+Wr4Jzs7kCupA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785832628; x=
-	1785919028; bh=/0WUC9ekGzvACXb5n/0eVVearLzGMjxosQFYgEUGrY8=; b=H
-	mdZ0Keec6Fr6TYDW7hPz/uPucL9zKWxhUq6moItaBsV5QPdtyxO63CUGNqB/hzrC
-	5goEmq+9+KrFIYX39qNhjKY9a9nWsAbMPK7p8gbtUOqmVSaTfccJCJ/3hqKGJhtm
-	uIov/fWKXTSJs1j56T4zFEr5f7+zVDtMcy37UvtGYp+/P7dTRXb+Z5cASLZlqmdY
-	5muIzXqHbGJG5zfTC5xeXfdz+yqbUngy3cedZldnaecGmgtWh77Aft/HuyXSNo8P
-	lNbO/Fpg44KxneWUJ/oRJIfrSZeFnCAJn/2t5NhBXi3VKLXwq4TaacKNUhEDNs6u
-	nN5M5lWWOLpXoqe6Duvdw==
-X-ME-Sender: <xms:saRxaj6OzlLW6dF1vsy4vhpjhcxIfJGT0kWX_KnG1TQXQs_btvyGje4>
-    <xme:saRxajsYdZa_kZMmN7LjtNcy2rPxQzVuH0TJaevhd9xkahTlPZvNDvFbUsm-WTHmu
-    l5Y8t46O3sNus00aaDJkuLb83U940PDN05QEHjSasn59Bp_SxGgFg>
-X-ME-Proxy-Cause: dmFkZTGkxISwAqmxtETVVgBPoICxzpPjFkciX7u/9JXlL5l/6D2Q0qhU6cOHKXnhPW34H2
-    HgYemeF37JvcMeA3PbXvwCvvthoQXe+4Zrib98B9rNjwuJTuS8n4CTWSdI4u3fY34RthJ/
-    bESbAbwgK2LuYfstdcaa6ZwUe/XL1eel3ovEM2fNkA3yV8zT81vCjXTwtQ5tTIf0KLth8e
-    cYFrRfRlv3/ssh1wq1X5nDYBEzOAZjd9IeePpj+IjtXm62lNimbs2nm4Z+WtnKyKVg6NeS
-    Uzq7lvgOWEgEAkUaBeUGJSRNOOiYLRlsLwmI+Oj7uynGVVkzp9aXZKMHrYneZ/dbMuPtt3
-    4GanxSuSgeDzPXeiEKHjLnMbV8v7HIH88zl5zZg+q4BWYwVInrmZNQMPnZCxa08n9ztIsj
-    c4t0c0bH3VIttAPK+dnxpBw0yMug/UYEYu2CjClrVs2Dtkdm1xFJJMABY0nnEpHay4oe8g
-    4NQ0tfdIQI2cDwiY2/o5CC/6JOw35KkH6rUpppPLkqsQdseJ16UJopilQy9dWHm2PH5uuj
-    uSRG1/UXASSg03HTCqXtstFW7LdEYZTnllvOzzbjOOHLgFEB+LqkfLUCjgyFSs5C7Bo9uK
-    3L6UQoiu09OcxjwdYESHMVGb2frSS3CSAqZtEeFhVa5Y5HFMtIQo8a5QykjQ
-X-ME-Proxy: <xmx:sqRxaiXp6KFC9OPf3lIfCGIW25uuCUxDPVcPDcXntshQT8qG5S6dgg>
-    <xmx:sqRxamUGiR7g9tPYm_FK4Y0Yh5Gj7IH7F-QLKND4xnUYFznRwpqYnA>
-    <xmx:sqRxapfykwHV5Thfr-2BpgX4Vavf8-9zta5yUoh6o3yjUJu7Ft4ElA>
-    <xmx:sqRxanV1tzeT40gQZwixBpc0gaDXA-e9_G6XjF3hOu5P11EBJgcoWQ>
-    <xmx:tKRxau2p3U93IAxKSn8w10GHjqBBcV87LElTy69gSzmJyjr2zRvVp6Yi>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 5691122C0062; Tue,  4 Aug 2026 04:37:05 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P+bSUa3V"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c15cd3fd760so473364466b.2
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 02:36:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785836197; x=1786440997; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=t3333bzWH/6jrPim7XQ1nPiEIuKKjsUmwXmnaYD563I=;
+        b=P+bSUa3VNLeYo1cXH7yOGNWQR3F1wKJWaSLjmD7EaXgTCcZMK7AN4sA4BPrdy4DI5T
+         rxtXrAzdUPYjlSOm3kc89GrJSl+JHBcP6FH4cEKI7+Lu6uBr37dAcCXut7LGBMMWygPE
+         fnmbpqjFCVqiu0hYdstAc62PLj84qPfENWwHCDekdi392g3soJ/lO5uBFEcGHfjQVzzv
+         IVLMK1TSU/n5In8Y9NcUilOSjmYBYcKJacL2bf/w6DevvLd35MSYYefyB5LZ98iiVkkL
+         2eA3c1RzVqG+BaV3szFTTlCTTZ03nTEZ5GVwV6e2MYwVbMo6Rvft0lQpil20omLApH1Z
+         +Alw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785836197; x=1786440997;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=t3333bzWH/6jrPim7XQ1nPiEIuKKjsUmwXmnaYD563I=;
+        b=H8Gj6wwOKrYr0v9FzfxZpreyUb0zHXLWw+C+1DiIl4JH80qX61jae95JlMOn5Z86uZ
+         XXvnc+ks2FzFkVCS43NhHvywrqcQvVVDnZzdVKNu5O1/uj1+xX0QQEM/zGxb4sCJTPPM
+         gwE4N7rWOfCGztk20cLXAXdHcVXS1hT1fNb8DjOdXBN6fxSP6bgLYl3uR3DobyavvrmN
+         o/JVnKuIKkJcQyPtqqnkLHsctONTPtC1NFxRBWawYBtl3dH5xKG2fHmHKH8n7bX8QgGn
+         n29QQk8Se+ofMkLTixlQUtmxXQShPds90h2hy59T76k9RBGlw6FSVsPe9iNZybHbpqUe
+         ECGw==
+X-Gm-Message-State: AOJu0YwLyJMKJM7zRdwVgYN78j4BzlcPPa9So82ErCpnn+/4FdlAy5iK
+	c9LQvJMSMLzN8Z8SapaZ+L1+P2wZEgDrQYFcscmosL0iWq6lb3zcMBfN
+X-Gm-Gg: AR+sD128sfqSav24EnhBZX9lFrVA+E/KXi9q04rgnUY8YXWrJzt4SLYhwR7W8zw/iA7
+	QU3VsUDP+1UP6WUNx9kP5pPuelIfxKdjgDagf69Ra8iBpg+UeriTTT6bqd2/s8kA+0Jxp2qT3EH
+	M7QQSZU3UZU1PGfRe3J2Ej3JimqgZEcBrFDCegQAIWQzEb1Dj0oHUvc2l13HOWxBsWDmEebZFX+
+	LL1WWLGF9qlg6orGRBSgIBrWDjnoU+oJb5blcKPUzV93XhRFxx0hH1JsC4vBgI40adfD1gTUSWV
+	wPGJYcLCzhlmWKUVNk2ubXaLfLdS3J/0mmyqpMkQDIg1wgTDCIaDvbv7co+zHjDf57tCvChF9v+
+	qRC1AKBrxSunARYd6IOjSuOGoR5u02r0GvAbIuM3jF7ZfXdPpAdcipbAky3O/k/ZgsoreXnCUU0
+	cokKFgCmpAXvBpaAlhuH6FP2QAY0WbsQV2WCNzIUIlUMfCy6uA4aIZm/o1d3g+zLhKlrpMkpRGi
+	wdV+ObuvI87HUFPm6uc/zVEw4oIAIix45+87y2XWcQ=
+X-Received: by 2002:a17:906:34c3:b0:c16:209f:d48e with SMTP id a640c23a62f3a-c1fe8250ff3mr1018231166b.30.1785836196772;
+        Tue, 04 Aug 2026 02:36:36 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1fd4537702sm664403566b.53.2026.08.04.02.36.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Aug 2026 02:36:36 -0700 (PDT)
+Message-ID: <49186d54-f7a4-40ff-a88f-62d9f44fdbcd@gmail.com>
+Date: Tue, 4 Aug 2026 10:36:31 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Amoin9sslaaw
-Date: Tue, 04 Aug 2026 10:35:58 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Michael Montalbo" <mmontalbo@gmail.com>, shrimech <eddinen77@gmail.com>
-Cc: git@vger.kernel.org
-Message-Id: <0240dcad-ef4d-4beb-ac52-10728c7463e5@app.fastmail.com>
-In-Reply-To: <am9Vy9vMsixhaR9E@nixos>
-References: <20260802032549.50389-1-eddinen77@gmail.com>
- <am9Vy9vMsixhaR9E@nixos>
-Subject: Re: [PATCH] interactive: add interactive command helper
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v10 3/5] history: add squash subcommand to fold a range
+To: Harald Nordgren <haraldnordgren@gmail.com>,
+ Phillip Wood <phillip.wood@dunlem.org.uk>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Matt Hunter <m@lfurio.us>, Patrick Steinhardt <ps@pks.im>,
+ "D . Ben Knoble" <ben.knoble@gmail.com>
+References: <6b5b2c93f2e3e55bf456b86a8be61f5f85137a2c.1784536024.git.gitgitgadget@gmail.com>
+ <cover.1785750108.git.phillip.wood@dunelm.org.uk>
+ <CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Sun, Aug 2, 2026, at 16:46, Michael Montalbo wrote:
->[snip]
->> diff --git a/git-interactive b/git-interactive
->> new file mode 100755
->> index 0000000000000000000000000000000000000000..980a21c967d02ab121a54ee586cc9de4a98aa725
->> GIT binary patch
+Hi Harald
+
+On 03/08/2026 17:35, Harald Nordgren wrote:
+>> These patches can be fetched with
 >>
->
-> I think including this binary patch was a mistake?
+>>    git fetch https://github.com/phillipwood/git wip/hn/history-squash/v10-early-part
+>>
+>> note that they do not support editing the commit message of the
+>> squashed commit.
+> 
+> Thanks, what should I do with it?
+> 
+> Is it a replacement for my branch, or should it apply them as fixups
+> (if so how do we handle the lack of re-edit support)?
 
-@shrimech your two next versions of this patch have also included this
-binary patch. `git-interactive` is a compiled artifact and should not be
-version controlled.
+I'd start by reading through them and asking any questions you have 
+about the implementation or the reasoning behind it. Before you send a 
+new version patch 3.5 needs some work to print the branch names (that 
+shouldn't be difficult the ref-filter has functions to handle sorting 
+and printing the contents of the ref_array) and patch 3.6 needs tweaking 
+to work with editing the commit message (I'm afraid I haven't given that 
+any thought yet). We should also think about how to split the series up 
+to make it easier to review: the last patch in v12 is over 1500 lines of 
+new code and tests. It would be better if we could split it into a few steps
 
-I am replying to this email because replying to the latest patch in my
-email webapp was too difficult.
+1 - add the skeleton command with option parsing and the checks for
+     rev-list arguments and BOTTOM commits.
+2 - walk the revs and add all the error checks for multiple tips, merges
+     outside the range, root commits etc.
+3 - add the check for branches that point into the range.
+4 - add the code that creates the new commit and its message when it is
+     not being edited.
+5 - add support for editing the commit message.
+
+That makes each logical step easier to review and gives you the 
+opportunity to explain the rationale for the design and implementation 
+of each step in the commit messages.
+
+I see you've sent another version already - it would have been helpful 
+to wait for a response to this message first. The mailing list is 
+asynchronous so you wont always receive an immediate response to your 
+messages. Each time you send a new version you should think what it is 
+you want to achieve from that iteration. Simply sending a series of what 
+are in effect works-in-progress without any indication of what feedback 
+you are looking for just clutters the list and makes it hard for 
+reviewers to keep up.
+
+Thanks
+
+Phillip
+
+
