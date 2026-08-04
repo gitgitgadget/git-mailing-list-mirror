@@ -1,145 +1,118 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D8326AF4
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 03:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785813330; cv=pass; b=Nz/V5uJK8lDQ8Z9Ja5cLFzAiptwv0iE2F0c5JdeMkkj+WgfaNPy9XDWiveKr2Zge4QctNv01d0jfQ2Y4r2MeaU+f6age41UKUSvuDgZRNrRuXSZgeyIHELIyOGvjfbqta3U6ZsBAo96Bs8CMJJRUpztZiWIcxrIPjdgozSwDkoo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785813330; c=relaxed/simple;
-	bh=SJnOfErtbdFXBUjC5KdzymH4RzokDazXh7P6zW6Magk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nbUdj5JjoJ975U7zVS9OvPSyCSq1zteCEVTqbr9MzkFaB99gpAgimTPK2ljjp/unJeubBQQK0EobpwL0qK+YOcHuTfz6zkBEXy6OSPTX/aIQ6R864mAkEibmcoWYbESmwxDPNrpIA94cB9U9a0C0lCeYvmfNnUVGiifaMF9dYHI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q2L3RCRq; arc=pass smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445093603C2
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 06:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785824396; cv=none; b=Q6ESkdGqf3rlR83KcRX0mDwJm2n4YBHdz9lGi/4kMnZX0LqYFnFTa7HDDFZl10zV3ZCUcyvJNCZDzsgSEmodQjXv8ygJCYbTptb5ZRfSIEV5atpMh296hdQI+4ML/ZA3GETsFGpdYH6foldP7rjLvdiEGZZe90Y3KR1+3j/T4BQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785824396; c=relaxed/simple;
+	bh=o3LQb5dU7Ut0LRSbQQ8R1eIiti180x0EcDS6+psyPkQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=igg8B4S3n9tq7z57xU2dVaFl2q03q08TAwviVaX8ECMZgw0IHRZPIe2Vz8mPtI6xsSikq6wl46AyURRAIrWpTrYNX3IqHfv0uBhb9Eam+1fV3t0AstsQwdpQXBZHA4nkQHcirKmJy3fn0yE0KgopAcakNZMUjy5xx6kxMwG/2Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fjzvefN5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TgYHtSTb; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q2L3RCRq"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7ec58fa3e01so1949391a34.1
-        for <git@vger.kernel.org>; Mon, 03 Aug 2026 20:15:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785813328; cv=none;
-        d=google.com; s=arc-20260327;
-        b=kU5SNAcmDYYyh/Uje9JWLybQhoLpO6zdbpMcD8rU5csBn/VgFsuXN+9M1+4A+kDZ77
-         61X7ybkDn19qNCGjYMVQyFuJ/i4KrREKyyxZ10IRtWi5pLHaXAbT668FcUXAGRNv3RCx
-         XmQC9pm7XUBLwPstR4VRLGJW7EINJvbFhGm6FXPcAcl2gYS1sOX2TnNn4raXYA0fHoda
-         AfSnO3fT11MtwSTVf8/FABIKLSqHl6BZND70KjP5g3cos0VDoS8JIOrYKs6k5ZxDvxoC
-         yHy87ri0/eUl99AiVnS95g8FEG9MLxdqtthUHfmJHJ9q/VRVHfUgf5RyLEGE0jW4Qj9e
-         eR0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LBDYUQWb1l0BQDszMY7VbmG2/0TjPlpfp7W/p/bJ9S4=;
-        fh=IVGEz1OY2FLCd/VFfFv5hNHv0THxOHDjSY5jvQzW2Lw=;
-        b=MhTZDM1AAynaMV3ACR+U3DCZbu/y1et82Gn1+fBP8JaWKiAZ++Dw4d8YumS5qnkcGU
-         uR47S+2OgjonPxfOFQ9N4/frzGSQlll4zbsxgj8/VKlpB2cX4NswtSIiU5PZ9kxT4kV9
-         4EmfBuRPIsqTOtreEl/ZFmFS3rXdEpX7WiripzD9kRNj+Y2nmUfauMVbOIbq0V56rdSW
-         0boywizeMTcnBE/HsVd4v+SfvCLB3yZF5i+Be5dR+I5wxAfwnhxuQRYtD4iFZ+akZxqj
-         wEx46AxN5f7riHWWDoS5bTe+LickyKmtC/ObwXixMtUJlI/4JrK3DTahcOEQRNHC3Khw
-         9xHQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785813328; x=1786418128; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LBDYUQWb1l0BQDszMY7VbmG2/0TjPlpfp7W/p/bJ9S4=;
-        b=Q2L3RCRqs6SngLw+9ok/jb7LrKMtvouXzdiMIURLaPsOAcwUBA7gdjpAR6qOyZfR44
-         p0gcWYOXty0+rWJC3Ejb2HnCDh8d8L8HZPldTXrnvYCxrBIPyhA1zSTHfz/layd1ZhjL
-         +GJjRyLXH+pu2bWt7Bsar7fxW/UmjuvihwPBLvpcQQfX4om5ANSwlLkQk9WmUDpJbEFq
-         LHHYWDxEIy9gDMptkzRTJ0/CRiFYkYf1NcYU49u5Y6UiRby7mZH9tt1Vee9ngLnyHxJm
-         T8KwD1LaYGtHA+bESWJ966n+CsfmGUGOgtQx2vKuXS+iMuIVETBodDzK7jNOKvzWl77y
-         xqAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785813328; x=1786418128;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LBDYUQWb1l0BQDszMY7VbmG2/0TjPlpfp7W/p/bJ9S4=;
-        b=UZM8AqqlZ047s6KYDcPPmoRlW+qNp+S0YwV/EMsoEjmRc9IgxfeLa4UL2W7iED72dK
-         yjXFOcjreHbtAbdQZZ/IbroincqVlnuofGGY0A7JFbxmvwSoaG8glwlrdjo1xBlx/59Z
-         jFJknpYjxg22uLdIqAU/obSVgmamN5gm2L9TGTCuzuzmE25SRIGtWVbN6w04pXDZ/ROD
-         U423ekmvqnj4VFSaa9H9Fc4Fenpg/7JE6ibTRT5xqWfgyPbP1GgNOLhawChyZ2s/1Um1
-         Cljv4LKeDeIVDHl9mIg3NJyJqlld64CT//AR0Y582/GsHGaesSJMIQyx4tl9iKeM3f/p
-         GShA==
-X-Gm-Message-State: AOJu0YwOn7KsfcBLX3NjCREnYs0Ae12L6YV9MbFpKg/qJpcRTWcr2CMt
-	cVAlg0eqeicW96IrIwlOf0du6rOGOCER419AFCIOsfYWAlty1ZGUeG3rilKfxFD9qIb2WSS5S/n
-	aCPRJTAnunJMmmm4U1feTwbEv6luv9qFe3ebe
-X-Gm-Gg: AR+sD10gCSXZSjG4O3AxTuq0A2hCKjFVsfVHNiMSfbvofgTIbIyJlMqjZohUblLVNca
-	HR4kdMO3I0Mq/gBESnm5nwNQHQ/qTvY3+dsbS/QKShLQtrnaM8bfm3H72LYcEon/bVeGsm036B9
-	Ndm+XOpo64GI6DqLpAESZhNGDaKfmQV7zIIFp9fkyFXYuciJqphPSPs2Pf/YroerlnYpOwS7Lhy
-	j/mPHetJ+zR6taU2x8kpnb0DgFU8YbH5jCnm3xzow6VTZ+ZZzwbY7ey1qSdIcFrJp+FcPrjputh
-	Eby7dA/BAWuJbnJvSkqZkulpTg7ELHEYUlV8nRDTrWevyFKiy/3y8D6JCO0TRmboB2mQb8Tt6xP
-	UIY00wHjTrAEKdFIw5eQ0prQRZpJNrOKtJ67VQkKKcFxgDt/uQ6nNEagY7hXl1PU=
-X-Received: by 2002:a05:6830:61ce:b0:7dc:3db6:f02 with SMTP id
- 46e09a7af769-7f196d51885mr22612244a34.9.1785813327763; Mon, 03 Aug 2026
- 20:15:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fjzvefN5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TgYHtSTb"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E9D107A0138;
+	Tue,  4 Aug 2026 02:19:52 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 04 Aug 2026 02:19:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1785824392; x=1785910792; bh=9kQSP2LuVW
+	qcx3V6XXsKJe9Tj61rBtZVDfIocTKqA9I=; b=fjzvefN5OU/DzisHXOLnwzgKfF
+	rftryyhD4Wj5NHdeVwnvvGIEsG1QF7g6Tp6vrEB3MY97nMi+rPubKdNxHNL9sv1U
+	YZnmxPhj0uzTF77hUARFwgEQ5p0LB6B+2AgI2zAvaYy4aluHngclq1SLgXR/7lqj
+	YslnEtBtsfH/b02HDkI2tSGcOSkLBPRLv9/ELxs0aMB9cItJqHEkd+HSUivvC1UJ
+	lH3LGFTYazVlnOo3LtG2yi/zY7KUAVM8Z8CPiMMX1qaG8Cu5G1hNqPqYZMBEisPQ
+	Wwlyom6OeO62Rk77YkvylzZtC8kLLIgFHBfiOKs+K/ICfM2fTjtgoj4IZ4EA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1785824392; x=1785910792; bh=9kQSP2LuVWqcx3V6XXsKJe9Tj61rBtZVDfI
+	ocTKqA9I=; b=TgYHtSTbE7hntIiDAgx1M41SV9JsRSmbKv/Ib6ltAC+JOgl8tvx
+	prqHivBg+9LFI5U+t/wboFtobWe3VpUYZifpdeik1sLh18jb5qpHXB/nfz0aVR3B
+	eywi9kFMcWAPH2csk7GRLeUzq3F+PV6QKD4Im7brNOvIlmU27WaYIGHS8blmkJ6M
+	qtNI+3mcLpuNGGGSo2+eFAdXr++auMJeHTvTsHueqPKXIM2X7WcdybwSjRsKABQn
+	o2qII4umFv4djPbFVy1rD0aGBKjVhy9Vv7XXQplZCTBK6egOhD4PS5Phhj4e7hq3
+	qvJYzDgGT+i2ysIH0Pf9ZgGbeWgAzfPS0og==
+X-ME-Sender: <xms:iIRxau1cqPMjrf5iA_bSvuS-J9vUkABRbnuRQY98yDzQVOUHaDCOQQ>
+    <xme:iIRxan9l1U2sjI9uwLYAhYCRhqB0Eoto6Wtwkl6ihdM-hoXv3enwgMQeNybvWVKZZ
+    0skXQE3bbXHMHBpsAXFY530vc-2TB-ajKSJc4f0vv-9LvcQ_TNW>
+X-ME-Received: <xmr:iIRxavPjMjNjycfK412dATceifWGYWJ8ZJLZz4XHxR3yD0EQ_bACHs8TRj6xXeW19D5vMsR7d0IoYXnHO5ByNMoMOI9_f74g98iUoT6d>
+X-ME-Proxy-Cause: dmFkZTFEcIP0mIo/0/YEv0UyoUro1uDednvPbW3EgQqzPqXUZfRXwo6KoXYQkjNWBvp0ir
+    wKUiide8zfvMVmw6tQOOWpDybgc9xcpXkAlQJ7MO3vRsIHo5D9sTq/UZcNhspFN6TBgsb4
+    xZVz6WuH0gYRu3HIJz5pMxA3rzsO1Rp36WUBMrLR5j1xa3rKBrOxVzMelwW2Okf1Xdm39d
+    9DU3HMBGH7s6y/W9sd3lDgkQga26AW+y2joctFSHrjK1czg5CIni1EGDZ4IaLhLykhG6M0
+    ozENGTDpcaAE9GqrHMVULAoZe3+/RCL1YPpbthmiOtNbedOUr/8wEcahpAzj+UaNwUNoRW
+    PtPc9jDuDs8jiYqb0fRHsVfDPqfI8GaJ368Mv04hZ7QCZvq92YR7nm91/IWDoKrxKyC19Y
+    qAdPSPtcIvSgrU9OvnLUdZSwFKEuabUWtBm2AbtAYJDbt4x+JNTeRHbkvVuVao+Wz/tTnX
+    08jQnE1FWS8JpWfKGONkVrhSWh6KWzZOEkoDyKC8yXTUc1kbk775AyZjSHUIA5tM4NA04k
+    s2rNwJnC+QFWWRx/UV6EfQtk8WnB84A8aGDOLlKnDKynGwCX50t2ws+0keMEbt3Lpxn6/R
+    5S+qHoJ1SMGe0QwmpXZ+zWMxu4ZNhNlgrcgJBaQHYtpCcmlftcoBk6BO5dnA
+X-ME-Proxy: <xmx:iIRxareKHOmOyQy8eNZdvUT8T4SJt4LKgrvnXy-cooYte14fTynYqQ>
+    <xmx:iIRxauU2ka27szRzA9Q_URvixu3IfPkYi0luv6Cdddp5OrUtZPnyvg>
+    <xmx:iIRxajh3PpMM9zyafsWg8ARAdjcOHV-G_d6f4p-6N6dCrVjT3RqkBA>
+    <xmx:iIRxat9ajp4m48zceTFPMFzclsURvYu-TWHbohTx2Oxk3NLqbRM_bg>
+    <xmx:iIRxas5tlYKzUTHzULbbFbmVtTe0Ahnd2_m_6HoEeKDeqHbWRAcTpJnC>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Aug 2026 02:19:51 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id deb121d7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Aug 2026 06:19:49 +0000 (UTC)
+Date: Tue, 4 Aug 2026 08:19:45 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Wolfgang Kritzinger <wkritzinger@atlassian.com>,
+	git@vger.kernel.org
+Subject: Re: Performance regression in connectivity check during receive-pack
+ (git 2.54)
+Message-ID: <anGEgUrzzQYzEK_K@pks.im>
+References: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
+ <20260721035733.GA581473@coredump.intra.peff.net>
+ <xmqqtsps76f1.fsf@gitster.g>
+ <amCuLpT6vYzo1GF8@pks.im>
+ <xmqqh5lrrplt.fsf@gitster.g>
+ <20260723104943.GC604358@coredump.intra.peff.net>
+ <amLgMqkqxR8mKIbT@pks.im>
+ <amd4yR3EEn_fVZcm@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
- <20260801174156.2998808-1-mmontalbo@gmail.com> <20260801174156.2998808-11-mmontalbo@gmail.com>
-In-Reply-To: <20260801174156.2998808-11-mmontalbo@gmail.com>
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Mon, 3 Aug 2026 20:15:16 -0700
-X-Gm-Features: AUfX_mz6Fcb6neuIBnsMUaeUhHaXh0nCAL4qcEUPrfcmA2wttA_0mqY7EB9pWG8
-Message-ID: <CAC2QwmJbkh023AZe7fHxRVwzyVmFghvs8fuBHEAg5tdD52F0-A@mail.gmail.com>
-Subject: Re: [RFC PATCH v7 10/10] diff: consult oid-only hunk providers via diff.<driver>.process
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <amd4yR3EEn_fVZcm@denethor>
 
-On Sat, Aug 1, 2026 at 10:42=E2=80=AFAM Michael Montalbo <mmontalbo@gmail.c=
-om> wrote:
->
-> +static long blob_line_cap(struct repository *r, const struct object_id *=
-oid)
-> +{
-> +       unsigned long size;
-> +       struct object_info oi =3D OBJECT_INFO_INIT;
-> +
-> +       oi.sizep =3D &size;
-> +       if (odb_read_object_info_extended(r->objects, oid, &oi,
-> +                                         OBJECT_INFO_SKIP_FETCH_OBJECT) =
-< 0)
-> +               return -1;
-> +       if (size > INT32_MAX)
-> +               return INT32_MAX;
-> +       return (long)size;
-> +}
+On Mon, Jul 27, 2026 at 10:45:46AM -0500, Justin Tobler wrote:
+> On 26/07/24 05:46AM, Patrick Steinhardt wrote:
+[snip]
+> > I think overall this could simplify some of the design, and it makes a
+> > bunch of issues that I have been struggling with go away. The devil may
+> > be in the details of course, but I think transitioning towards this
+> > should be doable.
+> 
+> I am certainly a fan of this direction. We do lose some flexibility in
+> terms of supporting alternates more generically, but I'm not sure
+> supporting alternates of different source types in the same repo would
+> be something we want anyways in practice due to the additional
+> complexity.
 
-"unsigned long" for size breaks the build wherever size_t differs from
-unsigned long (32-bit platforms and 64-bit Windows):
+True. But if we ever find that we actually want that flexibility we
+don't paint ourselves into a corner, either, as it is rather trivial to
+introduce another source type that allows us to mix and match different
+sources.
 
-  diff-process.c:331:18: assignment to 'size_t *' {aka 'long long
-unsigned int *'} from incompatible pointer type 'long unsigned int *'
-[-Wincompatible-pointer-types]
-    331 |         oi.sizep =3D &size;
-
-I'll fold this into a re-roll; in the meantime, squashing the following
-into "diff: consult oid-only hunk providers via diff.<driver>.process" on
-mm/diff-process-hunks resolves it.
-
--- >8 --
-
-diff --git a/diff-process.c b/diff-process.c
-index 121903a6c8..d28f9cf973 100644
---- a/diff-process.c
-+++ b/diff-process.c
-@@ -325,7 +325,7 @@ static int validate_external_hunks(const struct
-xdl_hunk *hunks, size_t nr,
-  */
- static long blob_line_cap(struct repository *r, const struct object_id *oi=
-d)
- {
--    unsigned long size;
-+    size_t size;
-     struct object_info oi =3D OBJECT_INFO_INIT;
-
-     oi.sizep =3D &size;
+Patrick
