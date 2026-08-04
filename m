@@ -1,63 +1,63 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7CF4562A4
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 10:04:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE61448D09
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 10:04:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785837875; cv=none; b=c9K7gLlAE6aJzT/Jvm3D6OjdFuXHJW5kzWWN5el0tH9s+Sf6QB/1BjHyZ5oAET9fZe0SQkRPrwsnDfdzCDqocD2dPde+AB1lUMtB8fLVxPDsEiaJnRblPzPzXhGjUDzDCkYIBj5ZiKlfymD24INjTArX4nvo+sNKy3WdTNGSRRg=
+	t=1785837876; cv=none; b=pn1uCh7lQuDbLsS8+UuMzGFzghovtXknVnLB4c4v7KFBAlSbvyLp0xI1loaJdxj0Q5QiRfK3xGcSMH7z25j7gPKf0rtrUlh8yMlwvu0K7gd9OaTwM+dXipzLcpPtLNIL61Rbdou/JOrjHQWao/g5SRFw8Eg9dCirXXgX82gM3wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785837875; c=relaxed/simple;
-	bh=qrpmjor5husuFYjEYTkom0Id51q6p7v3IpIglIGUZYk=;
+	s=arc-20240116; t=1785837876; c=relaxed/simple;
+	bh=NEJArp5tgQdsbZnYoAlBpDdsJiZMi7aengGKXVvqB7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4qcKnQ8dajUWficnjyy7MxXtJ5XSKLR8bbdptSE2f05mXpd3ZWlcpjuV9HStzWSY+xJCVX1YbKsNGVKqFbC8CbHTUKtgZ5bQmulMzwczuBmAviPE5w2zy6TnOobBQk5dVkMK7GejTCYLRKdAJ1rLbw+dW3+/GvXol7dKVBcJQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z1SxTqQq; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version; b=CCI1AraSpHKUnq91NYOJU2wzjQU7nsap+4Qmj6OrPKiekB/5uTGbJ1y8XV6kB/Z+OtqD/ht7f8LWizXkusExcjitvf4c10SeoapaZ5qUCXL8N4NJONHzS4eccZMzTp8capnR17IcqElRsyl6+cNMaP5IDqKpfbuMuQCYooGGY5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QHDgD73B; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z1SxTqQq"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4955158f26aso20533495e9.3
-        for <git@vger.kernel.org>; Tue, 04 Aug 2026 03:04:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHDgD73B"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-49557167508so27257815e9.1
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 03:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785837872; x=1786442672; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785837873; x=1786442673; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=aOu8G8tou/7nvBnNhJ9G8hbfWDyFDT+dVnNABW7iwnk=;
-        b=Z1SxTqQqaiGI46SHlLIEZfJJ8e13DJAdWhj6fVT2F/TBCx4rrNZ8iEELuQP6UiP8W7
-         LpIa/uzd2yLv40CJRnZx1HTM1IvYpsfoidVVZc2fZdsbpb0EmbhSttmMU8SlHU7iF3Nn
-         mZOPXmyhy18uEgk3oPKIRfHUVbeKxuloueg7umONyXR74ngMpipusDKINUy5/Fl+3Hl6
-         zXRG1israkZ+VSy15qbrHK4FwSKFkD7zNGrQ8g6m3zO8RYePzDa03s6+/wrUmvEpnZAu
-         9GmLTbB7pyo/KKJIp25kcJhQWKTZufME3tuT02YW0NmAr1OBjVd0p+6n93yuKY4lRKDf
-         TI3w==
+        bh=AaXVWWFtaX9SyAudS7ielq7eNpmvIJpF2QznY0JcrMA=;
+        b=QHDgD73BJGNWIU8oz3w508LM4RsRuGRbXXyEM1NRPu++F9syOQVnMyQbvFH5RZOhse
+         wNMC7BjVT3sIUWFNKEHDMlNQEoM+WNdQGhIxv6RsFbng9PZkGCuG07alHunCVZIGqSjx
+         BFY17mXAbDmUv0D2Pa+tdcVdrvw7TWUST1gBQSmLJI0xCTJUKnlVYzpbUJvWDBblEXK4
+         NmUDGNt9lNx2mVK02Cf+8AHlCU979St1AR0Pt00crbOiwrMo+cG8epO4zjTLY4QwQCXa
+         DsSnV+5AhE7qI2k1v955JOevfFtFoxj7A/ToLsEE37F2W/W2IwpTji1qw3UviUgAVlEx
+         l/1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785837872; x=1786442672;
+        d=1e100.net; s=20251104; t=1785837873; x=1786442673;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=aOu8G8tou/7nvBnNhJ9G8hbfWDyFDT+dVnNABW7iwnk=;
-        b=rBQm60k8KHhbzYHIxuNJQVXebkEOb2N4jdHapNw8Jmp/Sg/zRzuQ2im+e4czfoktE7
-         +AyAl0KEpNuo7QgR6WxUPiTYErdTpBwEGTE8dHtJc58vuUAbl2ImZnZVV/eEK2AMzKrA
-         IoDGkGtOoGWWYENU1R01XuRhTv3CL1aJMkfGRtnwI1+pkGLuFSLZdlHsnfQqiWbXVJhN
-         PHbbmDswcCCNXooenflf77ySYp/RocK/aWxIc9RXRDKQ3o8GdQWTJ2rKtoqT0ez84dB6
-         z+tFGmzmuCOhm/S9QPU7dH7d+R8HEt7bKQzEZUDAnMCQRwPXGQfqBA2+C2f2JYjOXWZY
-         Df5A==
-X-Gm-Message-State: AOJu0Yw1LwBi22jGDvRqevmShEG6Y+1xeJgFgi68MXXIBGoCQXHkSmet
-	kgAfVf/BVDq1SobpVV97v84km+YAkZjPgKJguRHJthuXlWqGtkoRt734g9rrlA==
-X-Gm-Gg: AR+sD13d5H135y5DDL5yws1GsHdaYevmIjngnxVCgOCtbaiYy1WX+AQYjSWmP3Rhk2+
-	wN5hE8dYgenTHXfG/U6ZrwzwS7wInXt+4akqGVPigpqhjiAePfUczFOQxnHB01rtCBJACN8dzxb
-	fe6ds3lgfcD7Rfdk2sXYL3zAJhLEElXOyP+aOppSWBkBWCeM/KyfJ3ANqYcamJ4ap/GTL2Ne56G
-	llUK+izTAQpDYhQOgsPMz2vBShKRyqRu/BjzRuDq0aCNlAmOxkB0bmJH1ATlDszmQZkB/jxp6t7
-	/qDwZxKYnYKqIpokh/LlBNAhtgVnRscwqOxl4ViW5FMWBTOq2vnBpzspfla6qUaa9O0MX2DaH1S
-	DFmK/kBg//55kR5nlkLXFcQJDXC/R9o3mrx2vX9weF9zfiyt0s5+lUPdcWxgQuJxArGY9JJ6/v7
-	uzA9/N2RFN7MfJ8ICCy+MBAPuF4xoXvGF9AJv40hymeUNg25FmccTzHoGeCE19cknzxl4IwF33m
-	PMWAliojEHkjBMkT/nKNZFd8diWGWYDDYA3Jw9H8c2Jz2MU2xswbuEeH8rTMf6I+KiWHHlkiP+B
-X-Received: by 2002:a05:600c:4f56:b0:499:484a:98e7 with SMTP id 5b1f17b1804b1-499484a9989mr123851845e9.14.1785837871701;
-        Tue, 04 Aug 2026 03:04:31 -0700 (PDT)
+        bh=AaXVWWFtaX9SyAudS7ielq7eNpmvIJpF2QznY0JcrMA=;
+        b=fvhDomUN022QkwTN6EGNIDzr1XfJ73AcysqLa3NIKf+/d7DQYbJdoxgZof3nFQyi9B
+         YYDNKqXn4IiFANHdXfRwFXCoQHMexLwSCVfu2hAdUG2LrRfnF3a3Inv+z0G4oZ066Q1E
+         H4mAdRFnPDgSPAtZodtXx5eleGg1o4oaMEJ6FzmkkMYGXdOjw8AZSCXl6EkCXZ2wGv01
+         ps5nt8/KhJ45tshFNSvsLO950MgdOZLP8pp1WskPN4bGIw7bPieO2s07KdM8nTdTc5wN
+         D5wohuL6shSyAzJolfI08XVRUogftfxqzhq/siOPX9vw4bgeQPJ8zl34uhCZkOz+huyP
+         HHtA==
+X-Gm-Message-State: AOJu0YxVCE47yCbnD+L3gIQjuCfa/BFGm27/040OTCCWsiqcH8q0FoD+
+	ptB5R3+Q5KpNKn6L6HWDLKi0eiE6vFtDcn/8P9rGAYHMay2yKRYO2vEkkEVMOg==
+X-Gm-Gg: AR+sD11YbQvV9N064ZbzcukDmKRuhEcF2QNpaQeeD9nPh2Or20lSrkx8Hvm6j4zAK8/
+	9Jjeh9wh5u0CSh7JwXzlMy6tFZfi0AjGKzUp1BRTY4BgHSn1ofknc4HLGHCIS7fWlIcpXIhijda
+	Cs++xLh44lFelHJTCf0CVjXODTf+IeXvx1w8FnD4PHoQFlv7p/Ms1TBWGumJiLyBax5xQV3CmNY
+	HZIOcB4MScR5zZXv1QaslIj0pq99Qbw/ApJPBrL+Rj4d/RmhbzEGaK98sx5/R4TaCJR8H2E0W6W
+	JCp3++tO66pVGRgf/He4N7LKFW/ogW+8YSLKQkLZ4Pf3m4NAA63uVoz5ASDpUOTx0MdQAbtxTdI
+	0MPgHGZRanO1wHTFyrJxOEk8w+Ula0pVGTu4zxGE6fTD+QqgrORiPkooV4aCPlwNeRrEy51984r
+	/WibR4Zoxfl80fZLrvSQDUdsw1TtM37YPTqDOuoLv0IdZvbWTSFv3SUIvpCczUpl7PLo/k26SSq
+	L8RRgi5/4MH+STu490sm9x4UB/6aDavaxOnO0Yd/c/OGcoAyBKKtSjA6X50nFg8E6VWbHsNj2uO
+X-Received: by 2002:a05:600c:8711:b0:495:52a5:8829 with SMTP id 5b1f17b1804b1-4980c652515mr373516205e9.11.1785837872924;
+        Tue, 04 Aug 2026 03:04:32 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49949fec7cdsm72456045e9.13.2026.08.04.03.04.30
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49949fec7cdsm72456045e9.13.2026.08.04.03.04.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 03:04:31 -0700 (PDT)
+        Tue, 04 Aug 2026 03:04:32 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Justin Tobler <jltobler@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 10/12] fast-import: use callbacks to parse some options
-Date: Tue,  4 Aug 2026 12:03:53 +0200
-Message-ID: <20260804100355.1299498-11-christian.couder@gmail.com>
+Subject: [PATCH v2 11/12] fast-import: use parse_options() for command line options
+Date: Tue,  4 Aug 2026 12:03:54 +0200
+Message-ID: <20260804100355.1299498-12-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.55.0.492.g44bba30fd7.dirty
 In-Reply-To: <20260804100355.1299498-1-christian.couder@gmail.com>
 References: <20260716165517.433849-1-christian.couder@gmail.com>
@@ -83,270 +83,115 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A previous commit started using the parse-option API to generate proper
-`git fast-import -h` and `git fast-import --help-all` output.
+Previous commits have started to use the parse-options API to display
+output from `git fast-import -h` and `git fast-import --help-all` and
+to prepare for parsing the command line options using this API.
 
-Let's prepare for when we can use that API to also parse the options by
-using OPT_CALLBACK for some options that require special processing of
-their arguments.
+Let's now actually use the API to parse command line options.
 
-A following commit will actually parse the options using these
-callbacks.
+This brings a number of changes that are mostly beneficial:
+
+  - The `--alias`, `--get-mark`, `--cat-blob`, `--ls` and `--notes`
+    options are no longer accepted on the command line. They were
+    previously accepted as no-ops because parse_argv() fell through to
+    parse_one_feature(). They are not documented in the OPTIONS section
+    and are only meaningful as in-stream feature assertions, so
+    accepting them on the command line was an accident of code sharing
+    dating back to 9c8398f0c9 (fast-import: add option command,
+    2009-12-04).
+
+  - Abbreviated options like `--dep=5` now work since parse_options()
+    allows unambiguous prefixes.
+
+  - As `--cat-blob` is an abbreviation of `--cat-blob-fd`, using the
+    former on the command line will fail with "option `cat-blob-fd'
+    requires a value" unlike the other four options that are not
+    accepted anymore on the command line (see above).
+
+  - The error messages for some options might differ a bit.
+
+  - The code is shorter and more standard.
+
+Note that parse_one_feature() is now always called with its
+`from_stream` argument set to 1, but the code simplifications that
+can be made are left for a following clean-up commit.
 
 Signed-off-by: Christian Couder <christian.couder@gmail.com>
 ---
- builtin/fast-import.c | 208 ++++++++++++++++++++++++++++++++++--------
- 1 file changed, 168 insertions(+), 40 deletions(-)
+ builtin/fast-import.c  | 33 ++++-----------------------------
+ t/t9300-fast-import.sh |  7 +++++++
+ 2 files changed, 11 insertions(+), 29 deletions(-)
 
 diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index bf72adf62b..f3c46fb567 100644
+index f3c46fb567..0df7a31014 100644
 --- a/builtin/fast-import.c
 +++ b/builtin/fast-import.c
-@@ -3978,6 +3978,126 @@ static void parse_argv(struct fast_import_state *state)
- 	build_mark_map(&sub_marks_from, &sub_marks_to);
- }
+@@ -3945,31 +3945,11 @@ static const char *const fast_import_usage[] = {
  
-+static int option_parse_date_format(const struct option *opt UNUSED,
-+				    const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_date_format(arg);
-+	return 0;
-+}
-+
-+static int option_parse_export_pack_edges(const struct option *opt,
-+					  const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_export_pack_edges(opt->value, arg);
-+	return 0;
-+}
-+
-+static int option_parse_max_pack_size(const struct option *opt UNUSED,
-+				      const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_max_pack_size(arg);
-+	return 0;
-+}
-+
-+static int option_parse_big_file_threshold(const struct option *opt UNUSED,
-+					   const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_big_file_threshold(arg);
-+	return 0;
-+}
-+
-+static int option_parse_signed_commits(const struct option *opt UNUSED,
-+				       const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_signed_commits(arg);
-+	return 0;
-+}
-+
-+static int option_parse_signed_tags(const struct option *opt UNUSED,
-+				    const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_signed_tags(arg);
-+	return 0;
-+}
-+
-+static int option_parse_rewrite_submodules_from(const struct option *opt,
-+						const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_rewrite_submodules(opt->value, arg, &sub_marks_from);
-+	return 0;
-+}
-+
-+static int option_parse_rewrite_submodules_to(const struct option *opt,
-+					      const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_rewrite_submodules(opt->value, arg, &sub_marks_to);
-+	return 0;
-+}
-+
-+static int option_parse_cat_blob_fd(const struct option *opt,
-+				    const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_cat_blob_fd(opt->value, arg);
-+	return 0;
-+}
-+
-+static int option_parse_import_marks(const struct option *opt,
-+				     const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_import_marks(opt->value, arg, 0, 0);
-+	return 0;
-+}
-+
-+static int option_parse_import_marks_if_exists(const struct option *opt,
-+					       const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_import_marks(opt->value, arg, 0, 1);
-+	return 0;
-+}
-+
-+static int option_parse_export_marks(const struct option *opt,
-+				     const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_export_marks(opt->value, arg);
-+	return 0;
-+}
-+
-+static int option_parse_depth(const struct option *opt UNUSED,
-+			      const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_depth(arg);
-+	return 0;
-+}
-+
-+static int option_parse_active_branches(const struct option *opt UNUSED,
-+					const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_active_branches(arg);
-+	return 0;
-+}
-+
-+static int option_parse_quiet(const struct option *opt UNUSED,
-+			      const char *arg UNUSED, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	option_quiet();
-+	return 0;
-+}
-+
- int cmd_fast_import(int argc,
- 		    const char **argv,
- 		    const char *prefix,
-@@ -3985,10 +4105,6 @@ int cmd_fast_import(int argc,
+ static void parse_argv(struct fast_import_state *state)
+ {
+-	unsigned int i;
+-
+-	for (i = 1; i < state->argc; i++) {
+-		const char *a = state->argv[i];
+-
+-		if (*a != '-' || !strcmp(a, "--"))
+-			break;
++	int argc = parse_options(state->argc, state->argv, state->prefix,
++				 state->option, fast_import_usage,
++				 PARSE_OPT_KEEP_ARGV0);
+ 
+-		if (!skip_prefix(a, "--", &a))
+-			die(_("unknown option %s"), a);
+-
+-		if (parse_one_option(state, a))
+-			continue;
+-
+-		if (parse_one_feature(state, a, 0))
+-			continue;
+-
+-		if (skip_prefix(a, "cat-blob-fd=", &a)) {
+-			option_cat_blob_fd(state, a);
+-			continue;
+-		}
+-
+-		die(_("unknown option --%s"), a);
+-	}
+-	if (i != state->argc)
++	if (argc > 1)
+ 		usage_with_options(fast_import_usage, state->option);
+ 
+ 	state->seen_data_command = 1;
+@@ -4105,11 +4085,6 @@ int cmd_fast_import(int argc,
  {
  	struct fast_import_state state;
  
--	unsigned long pack_size_limit, big_file_threshold;
--	char *edges, *signed_commits, *signed_tags, *date_format;
--	char *import_marks_if_exists, *submodules_from, *submodules_to;
--
- 	/*
- 	 * NEEDSWORK: For now this is used only to render
- 	 * `-h`/`--help-all` usage messages. The actual parsing is
-@@ -3996,58 +4112,70 @@ int cmd_fast_import(int argc,
- 	 */
+-	/*
+-	 * NEEDSWORK: For now this is used only to render
+-	 * `-h`/`--help-all` usage messages. The actual parsing is
+-	 * done by parse_one_option()/parse_one_feature().
+-	 */
  	struct option fast_import_options[] = {
  		OPT_GROUP(N_("Common")),
--		OPT_STRING_F(0, "date-format", &date_format, N_("fmt"),
--			   N_("format of the commit/tag dates"), PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F(0, "date-format", NULL, N_("fmt"),
-+			       N_("format of the commit/tag dates"),
-+			       PARSE_OPT_NONEG, option_parse_date_format),
- 		OPT_BOOL_F(0, "stats", &show_stats,
- 			   N_("display some basic statistics (objects, packfiles and memory)"),
- 			   PARSE_OPT_NONEG),
--		OPT_BOOL_F(0, "quiet", &quiet,
--			   N_("disable the output shown by --stats"), PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F(0, "quiet", NULL, NULL,
-+			       N_("disable the output shown by --stats"),
-+			       PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			       option_parse_quiet),
- 		OPT_BOOL_F(0, "force", &force_update,
- 			   N_("force updating modified existing branches"), PARSE_OPT_NONEG),
- 		OPT_BOOL_F(0, "done", &require_explicit_termination,
- 			   N_("require a terminating 'done' command"), PARSE_OPT_NONEG),
--		OPT_UNSIGNED(0, "max-pack-size", &pack_size_limit,
--			     N_("maximum size of each output pack file")),
--		OPT_UNSIGNED(0, "big-file-threshold", &big_file_threshold,
--			     N_("maximum size of a blob that will be deltified")),
--		OPT_UNSIGNED(0, "depth", &max_depth,
--			     N_("maximum delta depth")),
--		OPT_UNSIGNED(0, "active-branches", &max_active_branches,
--			     N_("maximum number of branches to maintain active")),
-+		OPT_CALLBACK_F(0, "max-pack-size", NULL, N_("n"),
-+			       N_("maximum size of each output pack file"),
-+			       PARSE_OPT_NONEG, option_parse_max_pack_size),
-+		OPT_CALLBACK_F(0, "big-file-threshold", NULL, N_("n"),
-+			       N_("maximum size of a blob that will be deltified"),
-+			       PARSE_OPT_NONEG, option_parse_big_file_threshold),
-+		OPT_CALLBACK_F(0, "depth", NULL, N_("n"),
-+			       N_("maximum delta depth"),
-+			       PARSE_OPT_NONEG, option_parse_depth),
-+		OPT_CALLBACK_F(0, "active-branches", NULL, N_("n"),
-+			       N_("maximum number of branches to maintain active"),
-+			       PARSE_OPT_NONEG, option_parse_active_branches),
- 		OPT_GROUP(N_("Marks")),
--		OPT_STRING_F(0, "import-marks", &import_marks_file, N_("file"),
--			     N_("import marks from <file>"), PARSE_OPT_NONEG),
--		OPT_STRING_F(0, "import-marks-if-exists", &import_marks_if_exists, N_("file"),
--			     N_("import marks from <file> if it exists"), PARSE_OPT_NONEG),
--		OPT_STRING_F(0, "export-marks", &export_marks_file, N_("file"),
--			     N_("dump marks to <file>"), PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F(0, "import-marks", &state, N_("file"),
-+			       N_("import marks from <file>"),
-+			       PARSE_OPT_NONEG, option_parse_import_marks),
-+		OPT_CALLBACK_F(0, "import-marks-if-exists", &state, N_("file"),
-+			       N_("import marks from <file> if it exists"),
-+			       PARSE_OPT_NONEG, option_parse_import_marks_if_exists),
-+		OPT_CALLBACK_F(0, "export-marks", &state, N_("file"),
-+			       N_("dump marks to <file>"),
-+			       PARSE_OPT_NONEG, option_parse_export_marks),
- 		OPT_BOOL(0, "relative-marks", &relative_marks_paths,
- 			 N_("are --(import|export)-marks= paths relative to '.git/info/fast-import'?")),
- 		OPT_GROUP(N_("Submodule rewrite")),
--		OPT_STRING_F(0, "rewrite-submodules-from", &submodules_from, N_("name:filename"),
--			     N_("rewrite object IDs for submodule <name> from <filename>"),
--			     PARSE_OPT_NONEG),
--		OPT_STRING_F(0, "rewrite-submodules-to", &submodules_to, N_("name:filename"),
--			     N_("rewrite object IDs for submodule <name> to <filename>"),
--			     PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F(0, "rewrite-submodules-from", &state, N_("name:filename"),
-+			       N_("rewrite object IDs for submodule <name> from <filename>"),
-+			       PARSE_OPT_NONEG, option_parse_rewrite_submodules_from),
-+		OPT_CALLBACK_F(0, "rewrite-submodules-to", &state, N_("name:filename"),
-+			       N_("rewrite object IDs for submodule <name> to <filename>"),
-+			       PARSE_OPT_NONEG, option_parse_rewrite_submodules_to),
- 		OPT_GROUP(N_("Signing")),
--		OPT_STRING_F(0, "signed-commits", &signed_commits, N_("mode"),
--			     N_("how to handle signed commits"),
--			     PARSE_OPT_NONEG),
--		OPT_STRING_F(0, "signed-tags", &signed_tags, N_("mode"),
--			     N_("how to handle signed tags"),
--			     PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F(0, "signed-commits", NULL, N_("mode"),
-+			       N_("how to handle signed commits"),
-+			       PARSE_OPT_NONEG, option_parse_signed_commits),
-+		OPT_CALLBACK_F(0, "signed-tags", NULL, N_("mode"),
-+			       N_("how to handle signed tags"),
-+			       PARSE_OPT_NONEG, option_parse_signed_tags),
- 		OPT_HIDDEN_GROUP(N_("Advanced")),
- 		OPT_BOOL_F(0, "allow-unsafe-features", &state.allow_unsafe_features,
- 			   N_("allow unsafe mark commands from the stream"),
- 			   PARSE_OPT_HIDDEN | PARSE_OPT_NONEG),
--		OPT_STRING_F(0, "export-pack-edges", &edges, N_("file"),
--			     N_("dump edge commits to <file>"),
--			     PARSE_OPT_HIDDEN | PARSE_OPT_NONEG),
--		OPT_INTEGER_F(0, "cat-blob-fd", &cat_blob_fd,
--			    N_("write some responses to <fd> instead of stdout"),
--			      PARSE_OPT_HIDDEN | PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F(0, "export-pack-edges", &state, N_("file"),
-+			       N_("dump edge commits to <file>"),
-+			       PARSE_OPT_HIDDEN | PARSE_OPT_NONEG,
-+			       option_parse_export_pack_edges),
-+		OPT_CALLBACK_F(0, "cat-blob-fd", &state, N_("fd"),
-+			       N_("write some responses to <fd> instead of stdout"),
-+			       PARSE_OPT_HIDDEN | PARSE_OPT_NONEG,
-+			       option_parse_cat_blob_fd),
- 		OPT_END()
- 	};
+ 		OPT_CALLBACK_F(0, "date-format", NULL, N_("fmt"),
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index fe6c2617ac..d9de2ef0d8 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2827,6 +2827,13 @@ test_expect_success 'R: unknown commandline options are rejected' '\
+ 	test_must_fail git fast-import --non-existing-option < /dev/null
+ '
  
++test_expect_success 'R: feature-only names are rejected on the command line' '
++	for opt in --alias --get-mark --ls --notes
++	do
++		test_must_fail git fast-import "$opt" </dev/null || return 1
++	done
++'
++
+ test_expect_success 'R: die on invalid option argument' '
+ 	echo "option git active-branches=-5" |
+ 	test_must_fail git fast-import &&
 -- 
 2.55.0.492.g44bba30fd7.dirty
 
