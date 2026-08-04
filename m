@@ -1,71 +1,72 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC76D4756B2
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 17:47:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69246377AB6
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 18:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785865623; cv=none; b=VKZScWO9Tr5crdor1wXdY9m1/CndScWd56XZirw335f9ljv68h2Qx61BHVHgA7eRY0zmSuHGvqeDzErow0LGHO4Dw26tHVuic7u7hU5S8e3IKglpR+0l3TQQ9b8n8FtEt0/7+VHS+9qaZZOD+TGhDJA9ZURwQB0p6OXMuUDbisc=
+	t=1785866627; cv=none; b=Z8YiiQv9q3BhY2vM+tfE5mEmu1o9NKG11VMdiuZzvHbHXs8LJKuyISIiB38pS+QE1EhwrpOmZUoFrBIX0IxU0FLGUNtqfDjpbOKBeamiugEdNCa/QjnedvOyopEelCJJowCtDw546TeIo6VqoM7fDPgz1WRziQ5yo5/KAk6DzXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785865623; c=relaxed/simple;
-	bh=fedjTGj9f77xdsxAO92M2fa2jekz9Rf2QY3/snPpH8U=;
+	s=arc-20240116; t=1785866627; c=relaxed/simple;
+	bh=Y+rKFAbVL7OpxRvEZVckprXDJ8hFEMVHs9jjGEfbV0E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CYXFYrQTjJGBayP24hWC3bX9c7wxw8or3u61Mh+5froMYTIr+7h0HtK3Jzw9MabjaQFA2Y/pbwV4RbNuSLbcBW3uvmaE+JSdnJaQhjFp9yGoMAgEtUk5//KvtGDoatLBnUym3tX5NbtseLI/hne4LPrQqvOhrWKxuIOUleQd7cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f6SUqgK6; arc=none smtp.client-ip=209.85.210.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=cW1Vp8yZHi0vGSzU5oeXPVunJ3r+vjhyAQX4mjUhvR/xt3NB/jlO9sGI7LsPToJCUkEWjx8MU4520WK+CsldVZ448R/c+g1aH0S4jzdvGmNtkar/El2Vi4wr8868v4DRM7tQt2bMIAB9lVFKIqXpEJsoF+CfNAcSmjBLcoaU6ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TsrExKO3; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f6SUqgK6"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7ebd88be784so104078a34.2
-        for <git@vger.kernel.org>; Tue, 04 Aug 2026 10:47:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TsrExKO3"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-81f64e8dfbcso2112357b3.2
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 11:03:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785865620; x=1786470420; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785866625; x=1786471425; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=ln9Cy7mURAYJmXB2FOiGB8hoOMFGiIhTWZTCCGkblto=;
-        b=f6SUqgK6dBgEgvvCfcsuRrMD4cJTZ72h5aOkBR0uMfBp/Sc93/M8qf8iwrWqVMMFv0
-         1+3HnE1tGSSXGcvT+/9LfK6PO1UqNj+z3kDJEfP9/0dOzYcHdkw5QWekgFghb8GbMSxC
-         xaNRQjiszcame16o4/D6TxOT9ZC1MFxF8DO6WfzgwGKMZ6ipUYHYsUTMq66VW+us9dSd
-         OS5Ngzp3lf6BO4VKHP7zG3xrEfOxfjAg6d5RYmuTx8QZ7jvfuyZrYAlTAQrPvxZ5I4kC
-         XZPBVpHGbGOFdKgAOkeIfUNiqhqeOQoYlAKr7Et3pIjGTadnOEobgOfu3IqYmgh0H9lJ
-         4wVw==
+        bh=3nrlX/gWdZ3WciAtjHprHFS7pYzwL9nPf48HVR2XKz0=;
+        b=TsrExKO3AGeqDNA99unp/pYIOwgFThqfDlJK/s5wQDNUFJPx7dvvtTbaU3RnM0aNJs
+         sSYr0oJ3ddYMgUGx0gWEb6e7Vi1p9/2QS2Ca0tuYExZ+3GQKzr/ce2lQ8lNbA5V7SjGx
+         0Bp5j8ubxv7paHAM2XDZxyMg9Ug4+yevQnUa7LgKAvhH1J5Z7fV5PJK41Mh0RgNGOJjc
+         pVUJqKQjDgZrB2rnJYeg3l1tUtyxbPWsFfqBbOKnc8Rn2xMbPpx/1QOci+PIvKzT/E1E
+         w0kKWAkx3U7WCShdo0gO6T6/o9nbi2Pa8ef7sulFuu1IUTO37FBSHQYbBI2YFxWXBUgJ
+         5yaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785865620; x=1786470420;
+        d=1e100.net; s=20251104; t=1785866625; x=1786471425;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ln9Cy7mURAYJmXB2FOiGB8hoOMFGiIhTWZTCCGkblto=;
-        b=geOM+DdpmpGRXpaU9VxvSBo478t0dHC3EqplvxXlsVSPGj6ePcuPVuEOfmtEObyOc2
-         Z9b8rlPwBisFuSmnmfLJBSo6gGQ7WtRTcglZikj7atgdAQwvhVIfPc6i3yxzfeBcNunB
-         n67GfEV1tuveVe3/o7uZ2+oJAxC1lRbdKTtZoQfTkwwz/1SF0GkqlS0radvLdV0d9Pyl
-         pagnYpgM9fkwcIz9c9YLwhu8ddEkhCpbU+fbyuOS6jgM8b+B0nueKkfnLiOCUG7XTXJJ
-         ojcJRMDYyjwjIz1myZwiRpWbzi5S/QhEcAvPwlWuisedswcQOCBJkdwP7lKLljYD1lYE
-         zcsA==
-X-Gm-Message-State: AOJu0YwtObAxEDMRKl8VYNhlQDX6sNkysDWTZFDW46BavFbtInC9ZC5M
-	Bpf/0GbDbB8YzQdBQwO5+fcTmBMerV5ivkcL+LInr0uPPFDguHRYE+GEYWyxtQ==
-X-Gm-Gg: AR+sD12RmnXEa4XYzoEkBtifHuNqoTWKs8UCI9Hl7AMYtigyRWfmmrerpI02Pm2IKiM
-	6Ngv8ELwSZRQwr9VvoAqFjN2AqKoo4hl52Tu402lK5CZPN9IeokzJuTSrTwOkiiEL7rue0CtbDV
-	l4enJVcbu7JZkYN+qCm80/gwTOB0sayG52MnJ+IkyIj6XOVTxov4+loeWziwOOpTKOYmF+QivAP
-	Pk11sd0YGNTUhhjmCcI+3gPUNpfOOqOO2aGpgCNVUVgCf/U4oLM0xfoy4TvoVWFk3DSq0YhgycI
-	Ebd+XPGdlBpKsSHIpW2o1tWmWcQtxNSe4k/RJVLM1IW/YspJ9chupT7RhTls4rPwG1byGe266c4
-	b7zbiEqqcL4AOwzr15Z3bhMoYotq43Bn3JjoWoxsANkRxsiEmMysCUWSGoO6VUWIpGcxq+A3OVB
-	ZH90pH/0+ElHUDmkfja7p/Mfa6fzWR6ve1ZbEDMldZ9k6C9bZd2qjV8Q==
-X-Received: by 2002:a05:6830:3741:b0:7ee:41ca:e7b0 with SMTP id 46e09a7af769-7f1e5ea078fmr585913a34.14.1785865620434;
-        Tue, 04 Aug 2026 10:47:00 -0700 (PDT)
+        bh=3nrlX/gWdZ3WciAtjHprHFS7pYzwL9nPf48HVR2XKz0=;
+        b=LgVJ9D4gFwrYh8MrVTABMuxI1dSJ5ivCLANxrdROPLr6UukuCvWWYM2zu40fgUYeN+
+         tUFLtUIafKP+bg1nYvcpyO7fsRbpWHadhSW+r98nq4h807TKENl3lF3RYVf9/LC2+vEq
+         AZT7Hot2tN8czAN0dzx1YqiXRe7D5jSX3i79TMb1iuI4R91mKWjhMh4f0XPn8TaAIB+J
+         dGPf2S1hwnadBppL0xDhbHojnEsbUwPbdxvQqqK95OWdQHU/Bx+1txNxKJUql49B3C9u
+         9qjzwWWu0RNWXc6Lat5FJtW2Jpvysdzw0GMjN0NOA5oV4P0zRGFw/yjFZ4kDOlVLTYpE
+         RYCw==
+X-Gm-Message-State: AOJu0Yz7aQuOVgKNle00ebe3d1pbtg1KhBO7SdojIZT90JNUFXXQ6+8O
+	axM6wi5RpPjIdM3H8ctyX0oE8CDnmgZVOZ34c/xq0XVaNQUBzfPL+4LvdJUDZg==
+X-Gm-Gg: AR+sD13TQ5LNRUAmIa+nUiD59mYkl1Kd2J62YoDnlEWQisZBJ7qWe6mEs0O83fGIZmr
+	Pq253EmzQSykm4AGspUK8E/G/mIaOzxbT049A38/Jg/TzdHq8ZrDetRohgy2OH8tktvtyiUgBM6
+	YNcOCgV6ieqm8DC0QUDzro8mmAVK6B3MidwnffzKyg6f+WJRIpjyj6Red4EjnyVWGKbETEy2Ut0
+	s7iG5P0lU3pHC1MIdFl0A40i2dkpOSB8QsvSVIlDfseAm0tuCnhJh+u5JpgVTLvnlB4Za7YGIj2
+	AGklgPydC+rebWzZ2Ywa9H9sD9E823mo2MYS5nN5mJNkhK8ZNltGptzAjiFHJS6D7KkznmJ7G4o
+	AR1CiJovd4gtqt6x5otIWz5DzM2zO1OnNXrgqQXNVnDBSXuxSVPUnA+8uyPdKH+RukYGDBXLjLw
+	LaMIhofAmbyDHPlPV6h9rX6d5i6TBUCBNtCCqAIhjVTPQya1/tv7U25Q==
+X-Received: by 2002:a05:690c:3a0:b0:81e:5f38:b20e with SMTP id 00721157ae682-8201f0bd386mr2258247b3.6.1785866625291;
+        Tue, 04 Aug 2026 11:03:45 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f1df345ed1sm1319101a34.8.2026.08.04.10.46.59
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8201447eb4fsm8690787b3.36.2026.08.04.11.03.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 10:46:59 -0700 (PDT)
-Date: Tue, 4 Aug 2026 12:46:56 -0500
+        Tue, 04 Aug 2026 11:03:44 -0700 (PDT)
+Date: Tue, 4 Aug 2026 13:03:41 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/7] odb/streaming: drop `is_finished` field
-Message-ID: <anIXut41fFzRcyOI@denethor>
+Subject: Re: [PATCH 3/7] odb/streaming: support streaming arbitrary object
+ types
+Message-ID: <anInniMjCtU9Qae7@denethor>
 References: <20260804-pks-odb-stream-unification-v1-0-86d70e82345e@pks.im>
- <20260804-pks-odb-stream-unification-v1-2-86d70e82345e@pks.im>
+ <20260804-pks-odb-stream-unification-v1-3-86d70e82345e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,90 +75,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260804-pks-odb-stream-unification-v1-2-86d70e82345e@pks.im>
+In-Reply-To: <20260804-pks-odb-stream-unification-v1-3-86d70e82345e@pks.im>
 
 On 26/08/04 09:25AM, Patrick Steinhardt wrote:
-> The `is_finished` field is used to track whether a write stream is done
-> writing all of its data. Tracking this field as part of the stream
-> itself shouldn't be required though: callers will already know when the
-> stream is done when the stream's read function returns zero bytes, same
-> as when reading from a file descriptor.
+> The object database supports the ability to write object streams into
+> it. This functionality is used when we encounter a blob that is larger
+> than "core.bigFileThreshold" so that we don't have to soak large files
+> into memory.
 > 
-> There is one exception where it gets a bit more complicated: when
-> consuming data in "builtin/unpack-objects.c" it may happen that we don't
-> yield any new bytes after reading from the pipe. This is addressed by
-> looping until we have produced at least a single byte of output.
+> As we only ever write large files, the infrastructure doesn't support
+> specifying any other object type than "blob". This limitation is quite
+> artificial though: there is no reason why we shouldn't support writing
+> arbitrary large objects with a stream. While it's very unlikely that we
+> encounter a huge object other than a blob, users are known to be
+> creative and sometimes like to inflict pain on themselves by creating
+> commits or trees that are huge.
+> 
+> Extend the infrastructure to support streaming arbitrary object types.
+> For now we don't use this functionality anywhere, but it brings us a bit
+> closer to unify `struct odb_read_stream` and `struct odb_write_stream`.
 
-Addressing this one outlier sounds reasonable.
-
-> Drop the field from `struct odb_write_stream`. Again, same as in the
-> preceding commit, this brings the structure a bit closer to its sibling
-> `struct odb_read_stream`.
-
-This also makes the overal interface a bit simpler. Callers can trust
-that when `odb_write_stream_read()` returns zero, it is actually
-finished without having to inspect further.
+Very happy to see this change. :)
 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  builtin/unpack-objects.c      | 15 ++++++++-------
->  object-file.c                 | 13 ++++++++-----
->  odb/source-inmemory.c         |  9 ++++++++-
->  odb/source-loose.c            | 12 ++++++++----
->  odb/streaming.c               |  5 +----
->  odb/streaming.h               |  1 -
->  t/unit-tests/u-odb-inmemory.c |  5 +++--
->  7 files changed, 36 insertions(+), 24 deletions(-)
-> 
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index f3e0b504f4..b7c486ea94 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -368,20 +368,20 @@ static ssize_t feed_input_zstream(struct odb_write_stream *in_stream,
->  {
->  	struct input_zstream_data *data = in_stream->data;
->  	git_zstream *zstream = data->zstream;
-> -	void *in = fill(1);
->  
-> -	if (in_stream->is_finished)
-> +	if (data->status != Z_OK)
->  		return 0;
->  
->  	zstream->next_out = buf;
->  	zstream->avail_out = buf_len;
-> -	zstream->next_in = in;
-> -	zstream->avail_in = len;
->  
-> -	data->status = git_inflate(zstream, 0);
-> +	while (data->status == Z_OK && zstream->avail_out == buf_len) {
-> +		zstream->next_in = fill(1);
-> +		zstream->avail_in = len;
-> +		data->status = git_inflate(zstream, 0);
-> +		use(len - zstream->avail_in);
-> +	}
+>  builtin/unpack-objects.c      |  1 +
+>  object-file.c                 | 31 +++++++++++++++----------------
+>  odb/source-inmemory.c         |  2 +-
+>  odb/source-loose.c            |  2 +-
+>  odb/streaming.c               |  3 ++-
+>  odb/streaming.h               |  3 ++-
+>  t/unit-tests/u-odb-inmemory.c |  7 +++++--
+>  7 files changed, 27 insertions(+), 22 deletions(-)
 
-Ok, now we call `git_inflate()` in a loop until there is an error or we
-get some data back. This makes it so we can trust that returning zero
-does mean that the stream is finished. Previously, it was the callers
-responsibility to check the `is_finished` stream field to be certain.
+Just FYI, there is also a comment in "odb/transaction.h" for the
+`write_object_stream` callback that is also now outdated due to this
+change. We may want to update that too.
 
-I was curious if we needed to update any code documentation with this
-change, but it looks like the comments for `odb_write_stream_read()`
-already made it sound like this was the current behavior.
+[snip]
+> @@ -953,7 +953,7 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+>  				 type, path, flags);
+>  	} else {
+>  		struct odb_write_stream stream;
+> -		odb_write_stream_from_fd(&stream, fd, xsize_t(st->st_size));
+> +		odb_write_stream_from_fd(&stream, fd, xsize_t(st->st_size), OBJ_BLOB);
+
+We still only target large blobs for streaming here, but the underlying
+infrastructure is now generic which is nice.
 
 [snip]
 > diff --git a/odb/streaming.h b/odb/streaming.h
-> index 4d7d31b5aa..5e8e6e532e 100644
+> index 5e8e6e532e..3c8ed55129 100644
 > --- a/odb/streaming.h
 > +++ b/odb/streaming.h
-> @@ -56,7 +56,6 @@ struct odb_write_stream {
+> @@ -56,6 +56,7 @@ struct odb_write_stream {
 >  	ssize_t (*read)(struct odb_write_stream *, unsigned char *, size_t);
 >  	void *data;
 >  	size_t size;
-> -	int is_finished;
+> +	enum object_type type;
 
-The field is dropped. Nice.
+We now store the object type in the stream itself. Similar to size
+information, the type information is always known in advance when
+creating the object stream.
 
-The rest of this patch looks good.
+The rest of this patch is just updating call sites accordingly. Looks
+good.
 
 -Justin
