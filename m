@@ -1,84 +1,84 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D24C4302E7
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 08:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2113EC81F
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 08:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785830602; cv=none; b=ZQ/PF2h21TQz1/n6YoQVw8y72hyjXom+BFGnaqT1Jrg68KoStfD8WEjE8zt/UbdQLHTbvymwR5i0aUqwmSUoelO+MedbzsivxTV7CIADIAI+oNJAb3EjBYrAFdvKoWM7YzHGrxVYvwNL+tVqn8K1P/tkDxlHs2ERbdlENCCT+Q4=
+	t=1785830606; cv=none; b=XAPXXuga6ATPytyQ1F5HSu1NhlpF3IzVllZh7pWVQiw6hpgYf4QueyEIQ4zwPccUjdgjM2gu0XsaV1yrUbk9SZ5ZklMgPgTcI0MmBoFxnIxOyCT1rtLK3g2MiPOT9b1CB8kZHmTIjVEERAuJBi5bd1yjbTUOASHpFzwp/OsG3CE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785830602; c=relaxed/simple;
-	bh=hSz6cIphwcpD8D6I41s5T4/l6htjxzW2kHTsdEtduqc=;
+	s=arc-20240116; t=1785830606; c=relaxed/simple;
+	bh=nyOXCO2OEYrSF6DvMpAzBpU0kVKCP4L3qnqa08eUBwM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hA+gnvGElncANYmQazJ8gye1jxcKy4a6uHLxXZTkxHuaUKaj0McWhLn541UMRHFc4cjFTSJvDr3zqCj0Sd8We+PLlMoxNpN7Zc5pSH0y3/wBSUdCfXISxf2jxBHMlQSth/R0TEFgG9aTsGmjHWHXq4+u38bHJhPtRoJVi2PwoK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JnwgeqX4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xpy20xzs; arc=none smtp.client-ip=202.12.124.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=EULsbv1ail8Bwkyemmc0b1LzT7QGfIuu0tDovzRI6s6s0uSa/E8Ktw0hfyw7LpDihDHLVBPgeQhGtUcUfJhTTFo4fYrFbTL+pIMrmZq2qojsD2XIeXD2+fJklZ7/o0aiAFqMc3dBxzHAPmbJelj1WZTGR2Jkp/ZNtK60N79FF6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KTl+uY6/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CfjAFTiK; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JnwgeqX4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xpy20xzs"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AD9457A013B;
-	Tue,  4 Aug 2026 04:03:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KTl+uY6/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CfjAFTiK"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 738A27A0045;
+	Tue,  4 Aug 2026 04:03:24 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 04 Aug 2026 04:03:20 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 04 Aug 2026 04:03:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1785830600; x=1785917000; bh=gxKJEej5U6
-	mp/jzjDjUKfLzrcEJ3pRTx57lLvBCM1Uw=; b=JnwgeqX4hjB6srdcyjj2HbQdma
-	4RWSDMOko2yMc9dRrUSFlJlD9dSiAQ9NBlGJjGFt/ufXYK6kDywkviEB5LbUSRtl
-	WjMMKJRxD4Qo0EdJAoDIYBQ0rxmGBG5+ijajU34Y24HuthsJYEZt3wjCFbCV6579
-	2KBkWYvr/MwwyrYq3hzz07B22cG2k+dAXCRx7KUVmukVPqIHgS2oLYdkUll+/SE2
-	RiM8OhLr/mFTRaCrbz5UXpauPtCfxILcFEOAxiydHADh+20cdj/DQh4+t/Mj+YSQ
-	cIxShXuDdkE99u7mGMgSSX8qH9rSjopNxMmRIaI46uJAzpK5dj1lvZtjRu4g==
+	:subject:to:to; s=fm3; t=1785830604; x=1785917004; bh=9eD/0IjjSB
+	cqOyJGyNgZ/+uc8WlB04kxPZS/DXvYKtw=; b=KTl+uY6/aFLyA92yL8f8JtVzIZ
+	zvh9CXGQ2MP5bx9Tvr4aujNNPJgHEt+QlnNkCMt/Tw24qEL+2bzOp06yuXMIe6Tm
+	MntGs2E/MLgpxxEWzps7y53MqiygL1c3XFfaMnUld2EwIuBfbU0MYIrjvKgCT2zj
+	gcDX8+sCmwqF+3X4vDmp4F1HxX0XHmwbTUEOAw+B2NsIKi7o0rNKP3E+tZspVtX3
+	KviH5L2oM5ZXPDn/NLMP4ZTsFBV2nR1Y3Wh3PwPU+aNvCHLAvybs8EaP56Pmq0uJ
+	MkpAsw5KKLiP3SJnYlj/nMIL8IrC65HHJVXch5wgwdE0x1pNZMhXkOspipIQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785830600; x=1785917000; bh=gxKJEej5U6mp/jzjDjUKfLzrcEJ3pRTx57l
-	LvBCM1Uw=; b=Xpy20xzsEB3y3JA1caWNRxUHbgydJywApxIvL3BwrDr0cXkddz+
-	u6ualpp/6TwDleiLx49qdRZppb7mfXYxVEU2+OREeOuSQwLL2JB5HiIGJ+WIwdIz
-	trxpQ4v24bF+MXN+68InmG34AlV+ZXDqsxqhn9Vardam8hCas5cIemyzjCrE+VHu
-	VBi4rnANYM/IXSEnh6OqdYVebWqKWmvv8Rr2PowyBQ3OkXplytM4gmfuxTAu/MlF
-	uIdiOvwu93mTe8/2WifjHX0mMviJPJp3J5Ac4cXtJtXxQ1PdnTGBkpeR96MBtWen
-	H9ebOyqbcdZgNLRyy+K4PZ7atrt/oOB24JQ==
-X-ME-Sender: <xms:yJxxajmC44HXQSBDygjsHCtwXYilBEDRnvsIRgUwL6GpNABpC-_iwg>
-    <xme:yJxxauSfO-Gah-0oqLtMDTbTSaC1NbLx89F-cJauplc1rfQKdDHIQSzNOxjIkvTKu
-    IaqREmAvB4nhksffy9tJonVHQkWWUc1j1CtvvKvrOZPrlWbXGH6Eg>
-X-ME-Received: <xmr:yJxxanD0t8rK02QjooTLVHY_eh4l-AmQfKPj6ettRJDZtgEYt0VlsdC9IGwcI79cdwPW-EOKWocexcQGngtUwGpuqK6IltmVT3lA6wFE>
-X-ME-Proxy-Cause: dmFkZTEMyfMZ4MCBMDknvoQhuOGJ4XBygHLgPxELZswOLLDf8DV4OfWay52zKITWOjzV+9
-    5xHdT5BCBCLjL4u3C0L4A3/dDHHjGTU24pDc0o/1ZoaV2q4XoCds+X32ISwchX9VqjRJv/
-    eWYZtWrGAHIZ49/5F1vhoVLsApMeNStf5WXllhwdLV1aCE1W4ieHSX3WmSBJaj3TCfjWbY
-    9DicACDEsBxFhq+OyI+qDoL3x5CE1l4MVKto6CQ6+kfu9uYmmBITE3U+OZEzqWFaNrzdS5
-    dUtw+/vv7eUzZtmV6bFXukSAega982KuVY2jjF53294cHFhuWMOa/mszx6PYPR+N2KRPQT
-    qllzgPBiMEjhrSDyB+dqIYja16NsRkXgpsSfyzdwqXhEkh+IQGLIJE570FI4DxSo8ibmMO
-    ky4cPiiOGC6bMsnS8kLmrfn/UCoNV2AyXUmbZ1Wrv4Si84nI/ZsOKVRQPjMprHwrxnUyo1
-    N4MD0eFowDaMWxsWceaAxU8R7I7O6fIpgNvAQA/U8nWmtiKx5I0i+k5OggBpGDVcQejeVO
-    IsBt3JzrGSXANdfqNDiEAvLS8tOUxvVl4ektbIZ8jzqslhBDw9i6Fg0pjrhH7bRk9nHAgf
-    OB3I4rMK7GfsU5dzndrEPAQKtYDkk58ZyMeBK9V180QZf4lLXreplDUHO9Dw
-X-ME-Proxy: <xmx:yJxxalQ3-vV9DJzalTY2cu3DaguLjODC0GAY3JpzPCLPyuViqIlY2Q>
-    <xmx:yJxxalqCEM2rbDxtjukxjR0IE4U0m5Brr0L7QUJjsCwT48QhhrsIfw>
-    <xmx:yJxxanzdrWYs_Y0UIifBfCn7nxryS3vZFIAjVVXV7BKc0ehRkqF1Iw>
-    <xmx:yJxxaqK_JxGatJrSNzT2xgSmFdMijyQJYuPcc5yikOgR0_OaEZctGQ>
-    <xmx:yJxxamvWG8zgNd6N5VbXuOZLdDUNl4UC7UwSSTqKU6FuBNrX1-m7sfRX>
+	1785830604; x=1785917004; bh=9eD/0IjjSBcqOyJGyNgZ/+uc8WlB04kxPZS
+	/DXvYKtw=; b=CfjAFTiKgfFpO/LP4hsUsoq89Pa75+L/RC71+1HFujoTjNl8TxB
+	+8nwvDa5tc70x5v/uvp37lsrqIrEKF9tVFSEyNK58GlAHeHvb4mLvueqZW/QyoH8
+	rGqWi+t0EjCme4Y1tus1KTm22qFhBDDNkG9jVMy2nWkJBIRkB0eaWP/rAfd4q8vV
+	NrCeAJeqL4g2PJbsi/IDeUssSmJLvwWarW0mg2ITXUNQ8EzmoNI0hEnQpCvOGmV1
+	/s/u5+oozecwBlPW9IAsnwfwuxTnvMNurrLGi01BAGyVthxBqzyBBb0jVqNJFH41
+	nM8s6sT9EL343y6cjL9CNzIvAWbPO3CofFA==
+X-ME-Sender: <xms:zJxxapTRUHx_HYC_tiRehYqhsTuIMgqRLMx4Ns5P4uC6V6NoVCMaEQ>
+    <xme:zJxxaqMr9sizM3tcIKdwFMNoJLCIKbstaGk9OJZyV8-WUSwg3kmlZxu3XEuRxpxdg
+    O_DiI7G7B_jjazWHuvw4R3FqIQKNPxVpR9ywhpJdHExshYVcyrzXw>
+X-ME-Received: <xmr:zJxxasMOx4S3YiwQrThpoHNoLQrEfcmyYPESJk4G8-WNrSI9ZsLshucBQcpibbGlx9xNZc5vg5JC_G4j0lkdCHHk6XrRfI8MSSJ3XGvM>
+X-ME-Proxy-Cause: dmFkZTFtS23iDodEFZ5RDT+c2iRhG++4MgU8A6ydGisgJXXy+qcuaiWy0iQ5sAXAqVpJ0v
+    TpMfKz07fltuZK2Xw311xulspJ/WR53VMk8kT65L9ojvf2JN9OOmx+z8fuBg0hL+jDt8Cv
+    0a4LeHlIW0iuwlXIztxakFx+CbwewCtzXZk89hzhslQ9cz6nYsiY4K16rL6z6ZomI69nHP
+    923pjMAWq1TdwcH9XHdrEL/5TjvWtmyVyHyL308Tb2BtkmMOr5xWg5Pozu4reGz2n8y5VF
+    W5889I3e5leJ2/CxUcw1a+HtobRlc7jm3DS9avXawA5NvAyNzbP7AmVSpLWEnXofzC3MOD
+    ihNu/J5J5JyRIDO/xN/63FeQ4tajIYDRk4n8x1uverCn1eDF2IBVKVgGWOFq4nmeWuPheF
+    VzAH4/OCQX58b1QmFf4At8GMkgOtsxOFK7YEVc9ErWABRxTqtouvW9D/PxXazpTARp55zE
+    Zr5UPjvQJef5EnHNwiwKtK0jVEky9zD+RHi6Tdmt0bkTkL4wkDp2B6SzVIK5qXVSJ0ivuZ
+    sx17YgSijpXscHf+jwkSfopqaJgZn74sAAgqHI2dFaSY4kNiOb3T8Ea8kuxeftYMJ997Bh
+    bfVPbJxF2ZG0a0wdWmbQ30n2aitmbZh/z4F4yuOxkXjTnaI47X7V42rCNs6g
+X-ME-Proxy: <xmx:zJxxaqv-kv5A0N8YDHvowqNESPILADDS-koisv9pKSlmXMjbj4IiOw>
+    <xmx:zJxxamWMae-fx38YvjIyIFWRxbR03ADv77rsQdoFwgBt6VOP61xqIQ>
+    <xmx:zJxxaisGwdEUQ3eE17rvR_m-wk_IJmcm30eMzkgChHRQ4IVu1W-pBw>
+    <xmx:zJxxaiVMMSLwBD44kmAt6jpBVb-6kVOetwErje5TtTZzVsdNASrxTg>
+    <xmx:zJxxaiI9skatEEGIqK7KKCQb4svVaR-BfN51eCvq7y2N5k7tT0eqLM-Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 04:03:19 -0400 (EDT)
+ 4 Aug 2026 04:03:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8c7aacf1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Aug 2026 08:03:16 +0000 (UTC)
-Date: Tue, 4 Aug 2026 10:03:12 +0200
+	by mail (OpenSMTPD) with ESMTPSA id d31cbc0b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Aug 2026 08:03:22 +0000 (UTC)
+Date: Tue, 4 Aug 2026 10:03:19 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH v2 1/3] t/lib-httpd: fix apply-one-time-script race under
- concurrent requests
-Message-ID: <anGcwAZgbarxi6_k@pks.im>
+Subject: Re: [PATCH v2 3/3] t/README: document writing concurrency-safe
+ helpers
+Message-ID: <anGcx4lRyy3jyS1D@pks.im>
 References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
  <pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
- <79b56402c0d5d8b709f41b25ca66aed98ebbb007.1783704657.git.gitgitgadget@gmail.com>
+ <f158e1f92e9c586fca34faecaef23f9581d65478.1783704657.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,59 +87,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <79b56402c0d5d8b709f41b25ca66aed98ebbb007.1783704657.git.gitgitgadget@gmail.com>
+In-Reply-To: <f158e1f92e9c586fca34faecaef23f9581d65478.1783704657.git.gitgitgadget@gmail.com>
 
-On Fri, Jul 10, 2026 at 05:30:55PM +0000, Michael Montalbo via GitGitGadget wrote:
-> diff --git a/t/lib-httpd/apply-one-time-script.sh b/t/lib-httpd/apply-one-time-script.sh
-> index b1682944e2..adb9cec528 100644
-> --- a/t/lib-httpd/apply-one-time-script.sh
-> +++ b/t/lib-httpd/apply-one-time-script.sh
-> @@ -6,21 +6,37 @@
->  #
->  # This can be used to simulate the effects of the repository changing in
->  # between HTTP request-response pairs.
-> -if test -f one-time-script
-> -then
-> -	LC_ALL=C
-> -	export LC_ALL
-> +#
-> +# Apache can run this CGI for concurrent requests (for example a partial fetch
-> +# that lazily fetches a missing object while the first response is still in
-> +# flight), so the helper claims the marker atomically with a rename, and only
-> +# once it has decided to modify the response. A request that loses the race
-> +# finds the marker already gone and serves its response unchanged; no request
-> +# is left emitting an empty body, which the server would report as HTTP 500.
-> +# Scratch files are per-request ($$) so concurrent requests do not clobber each
-> +# other.
-> +#
-> +# The script may run more than once: the marker is consumed when the response
-> +# actually changes (the rename after "cmp"), not when the script runs, so a
-> +# request whose response is not the targeted one runs the script, sees no
-> +# change, and leaves the marker for a later request. That is safe because the
-> +# scripts are stateless filters over the captured response.
+On Fri, Jul 10, 2026 at 05:30:57PM +0000, Michael Montalbo via GitGitGadget wrote:
+> diff --git a/t/README b/t/README
+> index 085921be4b..a9d425f392 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -854,6 +854,38 @@ from the test harness library.  At the end of the script, call
+>  'test_done'.
 >  
-> -	"$GIT_EXEC_PATH/git-http-backend" >out
-> -	./one-time-script out >out_modified
-> +test -f one-time-script || exec "$GIT_EXEC_PATH/git-http-backend"
 >  
-> -	if cmp -s out out_modified
-> -	then
-> -		cat out
-> -	else
-> -		cat out_modified
-> -		rm one-time-script
-> -	fi
-> +LC_ALL=C
-> +export LC_ALL
-> +
-> +out=out.$$
-> +modified=out-modified.$$
-> +"$GIT_EXEC_PATH/git-http-backend" >"$out"
-> +
-> +if ./one-time-script "$out" 2>/dev/null >"$modified" &&
+> +Writing concurrency-safe helpers
+> +--------------------------------
 
-Is it intentional that we swallow stderr of this script now? We didn't
-before. I assume that this is to swallow the error in case the script
-got removed by the concurrent request?
+Nit: this paragraph is quite specific to lib-httpd, so it would make
+sense to mention it in the header here. E.g.
+
+    Writing concurrency-safe lib-httpd helpers
+
+> +Some test code runs concurrently: a test may background work with '&',
+> +and the helper scripts installed for the web server (in t/lib-httpd) are
+> +run once per request, so the same script can execute for several
+> +requests at once.  Such code cannot assume it has exclusive access to a
+> +file.
+> +
+> +When exactly one of several concurrent processes needs to "win" a
+> +decision, a single atomic filesystem operation can make it, rather than
+> +a check followed by a separate action.  A "test -f X" then "touch X"
+> +(or "rm X") races: two processes can both pass the check before either
+> +acts.  Two atomic operations avoid this:
+> +
+> + - "mkdir dir", which fails if the directory already exists, so that
+> +   exactly one caller wins, electing a first or only request (see
+> +   t/lib-httpd/http-429.sh).
+> +
+> + - "mv src dst" (rename), which fails if the source is gone, so that
+> +   exactly one caller consumes it, claiming a planted one-shot marker
+> +   (see t/lib-httpd/apply-one-time-script.sh).
+
+A simple "rm" (without "-f") should work as well, right?
+
+> +A "$$" suffix on per-request scratch files keeps concurrent invocations
+> +from clobbering each other's fixed-name files.
+
+Nit: it might be a bit easier to read if we explicitly mention PIDs
+instead of assuming that every reader immediately knows that "$$" will
+expand to the PID. E.g.:
+
+    Appending a PID to the per-request scratch filenames keeps...
+
+Thanks!
 
 Patrick
