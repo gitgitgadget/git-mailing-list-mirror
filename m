@@ -1,82 +1,85 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD85847F2EB
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 17:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CEC47FB16
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 17:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785863496; cv=none; b=I90qB/cN17Onurbm07qEabml8sN4tZtT6fcZAQW5c4kVaZ4DxWhU7+qjye9hvaNo0LiPxjqebqE2cNd8fRwwhgUtk61LyX8+m6Z6o6qqE/vbL6dKZ0xXkPkY8hdb8YJCXaV17ykBBaYM++fgjNN4g4qyy+zu/F4848LWf3Y8rUo=
+	t=1785865103; cv=none; b=M2F7dRlNQcNJMhi54RfhrxsicEdUfCJOOXoVdVUDazn6qpPnb8dj0+Gam7SCcst82IkDscxBk5Idpuh0d0TUuOJaDl6o7mTrIuI3QV/+syd3En0XU3tWvkV3DPGaXISk7CSF2c9SJfhrtO6RobDR5i130LuK18yANUXzDMrsyjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785863496; c=relaxed/simple;
-	bh=hpc2h2I7hQijRBrAoM8qchBbqRuwNs8e07azJFdTjYk=;
+	s=arc-20240116; t=1785865103; c=relaxed/simple;
+	bh=u/chMJi6SlxlucXYNmyce3DrokcFRsuLiwWrTqYIU9Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YjmSk8/EK1X5ivVCMUEXOB/NVuduonT5+Th8YhbSvqpmDeP3SniujPLcy9IvBXbmYvlYGijJ3eNv1xxl4D8jOrniH2bS8UJbB9dPPXyX+7/MwV37QrXr/YPlpM7GM3tspTTWvNW2oZ1p5CdGBG5Qf9+B82R+3dwAM//dUdXDllM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iqwq+PnD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bp0mgAJW; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=P1qx6jprEOVfFwYl9IWSZVYAd+KzP4UYW2wwzX2PV7mX+Yl0BQrpT0a4jaar5FLw1pnPxewOrwpNdsVS1wqv6X7EQxgrlooPm7nS+6+ncyG9BJrS5FIABeYHbwtmK6Tu24mE+qPs2XXJ9O5VTxCkOutDnDLeoQEb0WTV0IXQUHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BnSasNyd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h3QRWy3q; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iqwq+PnD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bp0mgAJW"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id A72311D00084;
-	Tue,  4 Aug 2026 13:11:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BnSasNyd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h3QRWy3q"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id A15E81D00110;
+	Tue,  4 Aug 2026 13:38:16 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 04 Aug 2026 13:11:25 -0400
+  by phl-compute-10.internal (MEProxy); Tue, 04 Aug 2026 13:38:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785863485; x=1785949885; bh=zLVC2/fXzg
-	rE6fiHN7NJ3ZRWUTtw6A9UAQ7JIo7i6iI=; b=iqwq+PnD4jCXalFhaMwHrHyXM9
-	UkaOVpVnNRSs+furuExe8xH1tTIRig4uGchCNoujR6zNZiFqM+nvcLoIlTkNnNkr
-	0r6g8x3IYJ27zybIet7fL0DZAA661/Wdgg3KhYO8wU+b0l+iMwuktWClw9AYCMUl
-	ArcRFhFfCZQkBX15xLIw9NogH60nCfoTzzogwqaBIAbqcaZzxnhng3dA3MhmB8pq
-	/q4/S5mBP60G9cNtGVYal+KEbbl7AmjI4E3M2YZ+d6jh7BwGefY7KV81VD3w1oNE
-	lPdFH/uvGIvYr9xatXKvMZm2K/1P7eAdPjPG2k/l8avOJKPlsFvwEHrhETDg==
+	:subject:to:to; s=fm2; t=1785865096; x=1785951496; bh=n06JfepM/l
+	NhxUHX6yfdnqRpPXm5dwpr1KkG1mSL/Os=; b=BnSasNyduXSxMgfXi731+VTFKE
+	jrxBN7dghCqFpSbvomfiqGTRhw4bTzeHJUauZeKOUDAK5AUEEuGUIMZLRfe1f8S5
+	Y7LvFOxjwCQXOnK2zjObJPcQTINT9+cLMCSjIFyLuLjGBhKm8jUz76weaQsG31RF
+	3DWmD5Ispi+ah8C6GhnCgQ+x72Y+GownkDZyzgb6x6RxEJNg4pYBC56mGNVPhN0q
+	hajRoG5B266JofylLvUsDsKTIc9Z97EKFb9PpgiZzII9m2zmtKpSuAjxxXqg+BK/
+	3oZ7gw6NV407TazHptFN8IrYUaFRbI0LDyc937VdFGmGPLUPMLcdaIK0UQ8g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785863485; x=1785949885; bh=zLVC2/fXzgrE6fiHN7NJ3ZRWUTtw6A9UAQ7
-	JIo7i6iI=; b=Bp0mgAJWPbF5bfEnyqO8JdvH+vQ4Tq5rsUowqf7uuCsS47uinCm
-	7tqzQNnL7bKZleoj/kBfIDmmWDNcPZuTlWvaIvkR0Etz5EWDr6GbP+hvXtH/ej7B
-	XHh7pfgUfwpXzw6ZEf2gL2Gwnon43JUBetFi7qJbpCuPYSsbKLFAFG3GLsdpQRTu
-	2rX/qeC1EHB8k38W2JeSEN/gs3jjnc43vn35+xtx++HrzroNGb6F1mGqv7g5p7wJ
-	/LeQd+v4Gc/W9MfAUauY6sFl7SYbP5WdHP3xI9TVqz/R42N6vs3AtQCm6240L8jV
-	nspOp83E4m7V9yEvLDXItqNMfSYcH3i+3nA==
-X-ME-Sender: <xms:PR1yajuVQj97Ufv5yvtQwvyVt84T5hE2T10rn1-Mb_URxCK3-uTyrQ>
-    <xme:PR1yarVy_Zjpap_1bltD4H2CWUZ1O-8lGh3nJ-cJJdDK8wivQKdl-tXH2N2om8pDw
-    cf7LuRJWe2VIH8i0Z9jNyuXKYa7KVE7A93QvRDFoeBRZMTNriBRtKg>
-X-ME-Received: <xmr:PR1yavEH5zBTri-0hx-YQWjUFXDmZll66Bwf80ubcEvyJnqG4Fk5nPMbvWNnt71F62OYao4i1isuw3_9bSPZZO2i4akEhHPa4g>
-X-ME-Proxy-Cause: dmFkZTET5z8NUmZfocL4nFs5gquCNqZ6hqsaasnSDT8M41q+kL2IMNSUosalQmrYiB3hst
-    zQHnOk8529YMl6UZraSTNsVYO1N3eowLuqRk2RFzncw2AFxWec2H6xVP02o5FqAzeJ9Rnk
-    IkBCbkOqDWCHkP71ZrormUQQzqtZd8BmmqKLmo2LkS7Zlxgz7rhkQC4ikJfUANry7vbL/r
-    IQJsacPO+40JUCov6CspEb2NZOyprW7TP+dCXkrFTP3nNFPu0CoeSGDQoKktdG5fXgUILE
-    IqYx6rxcfoBQwHBiUSGQUyIzXX/eTEkB8ynA0ZRLDVS/VKdtHW4M5s8LM7toXTVs48hCIp
-    qQ0qeFXgL6gMv86jls/cwgJqgZDCD21x+iQ/mTcUlLj5lp2SwlSat/6/JUGwbrLJSVmtgS
-    nJdVgo9H85t9e92W57wEh+xPdA9VK1IV9YbkzJ6bZvzZyzMBUv8GyC9vmFCOKdhuHvO/Df
-    OPtpvFwpk6H1AazJjmEUq8+RZ0o0cJ9lrcq8MZRcMimxAU5kryubipUSKXEue1vQcp2iUP
-    YiJrZTxwGPEiAztTV7uPRFsKNBNFqyzJeQDxtJ88wpOakbz6VkFn1mJx+Y+AD85oLi/QBA
-    +LfGfRf6G2vMGiHN5DyE6R1Ap4iBubMQQfAkW5LdZs/Quc3F4JeYr0AD4gig
-X-ME-Proxy: <xmx:PR1yat0RTjnG1uzxpU0wQyYebPD6POvWSzCpWdY1WdV6lnXi-JzSIw>
-    <xmx:PR1yahPmG92kJwz8RhLf46REWAzMtNitoP2SvGuAteb-zUmjFBP-iA>
-    <xmx:PR1yas5hFs0SznTLF16xrKolT36AVIHon-SvTCpJQdVdoadKvEqvNg>
-    <xmx:PR1yar0AiJI1MgFnUy08ejxBUdYNya_nLJiWYeIP2O6q2ZUkFPLF5w>
-    <xmx:PR1yaoQZUhN7jSaJ2zI2ZJzHl7v3A6Xe3fqX6jykbbF9SAsFlm6zDLin>
+	1785865096; x=1785951496; bh=n06JfepM/lNhxUHX6yfdnqRpPXm5dwpr1Kk
+	G1mSL/Os=; b=h3QRWy3q6JmjDnUU5PbnXJF3e76tHVIh/Q0d4XfOX5/jCo8LGTe
+	XaWFkV0+FhsF+OkHHO9cJnHG6dGIKoMyj/HFs0rbN6hbh84rHy6UF6dCj7KOyZxz
+	w8GhlQ8Ir+SY6vP3uiDTMdmVpBe/FUUnY2xu8g92BTYyPjUJCMXtZZwxpWPe4ClE
+	GUr19LrFXnN3IZMSBZh312VAcwGs92OvXuxfvtqGOtHgbql9hzp9NpCH3WZrbChJ
+	KFPPLYxoJ+JkRtyd0CK3U9tQ/oo5Vltjl0OCHjQv+DiZOyeWF3t/MBYkH1m/xfrT
+	/KnX0uICbyCIHsJTlKdND+gQCzsXH3li16A==
+X-ME-Sender: <xms:iCNyas7JlL6vE0VGGPvWuZVk8v1NwWB79xLR9JzXHH8hVv70VgsVlA>
+    <xme:iCNyagfhRLNoiSbMTt68yak5rrwPxQToZJNKlOKMWLCALR5ait0MPbfKAFpnoiO_K
+    lVtl5w4dDM-T-xvpC-H5Lnm8jYQ40FcGaWvjimSDX2vvzMz1Z-b5sQ>
+X-ME-Received: <xmr:iCNyavHuEULgCubmy3O0JuiDkj0byamDe6XqFr7LOknBFtv4CqkPnURxx6YjcJ5KNNtAHnPkSwd_xsJmvtBnDBZ941_TwQEo0g>
+X-ME-Proxy-Cause: dmFkZTFlUBVwCQsXAE6iqPaW1nGUgfOjrPnSxit6gR+ZuGKtEfCdt6kVrkY00f3bjUnMYm
+    52/u+N/jUbie21eej2ux9ivuEgqmvgT8w1fh5udnmJEHGaYHQc7bGGVB/K8AdnnnkHGBx+
+    deTJIQZ7nmHCgDkdH0T9rgKCGXFhA7xKdB2acGlJ8wrY5q/oZzQhWImAw6rznpPvRq7ISI
+    9fWSP/271cYiScYA3tbP4lpE7hHGMl9T157omLOvXJAIFA+jE8Rio3mrO0UihLN0ACmNhg
+    2+XV7mWGOCFFD5p+4hkxVeXMvoBsjqcvnC3pQGML3sk7t9OwsGcCk2T5Y5dAFsxlGOyWsP
+    Cf2r9jUahoepWO8H+ZZcXeUoWgKh0r3OuB/Nz5hpWGYSMTfluPH4oL+qk33EWQ2hg2RvgY
+    q3VVdiiwutceMt6g81YHN+76QOEjlUmMK7Tf1c8G86KErOIJ+kyA1on/edKvL9H9hOWne5
+    CkEmtWNNaMdE8US8/RMMmgNQIoFJLgGMYgGHCvx4lmNppv/GVpp/g91rjdRcEw0vMSNrlM
+    HFYbQUhOOhYUF+dWcPIA875nZmnWcCrSTblf3epAZeXFdaVnnrpoeY61TvwqdLkMorrIzH
+    8zb5OAyDD5m/AyFyDuQ0O+1bQdxCm3GZSPdxWh54JPPYBID/NCVaJ9Ix88KQ
+X-ME-Proxy: <xmx:iCNyahT4B5B4GcWA9srnQmselN0s_FPqoY42vfA6sfFZshVttWbAtQ>
+    <xmx:iCNyalbINghSIM_nQyOklkN0YYTsWQVN1mHGkZfwSffhYX-kT4x2_g>
+    <xmx:iCNyas1GOgz6E4iSjV-oECl47QfpxeNS_suHb62L4JFaSwHbXu_YPg>
+    <xmx:iCNyaopPb2TRXVdIwNW_qbZXo3E2_gQeHS1NdMiVTch-Gy3F5lDN1Q>
+    <xmx:iCNyarCSTONBQm3hdbgcRZYFDgAmgTs6sDZUUG9OJMV3j6mDw2eoaOSC>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 13:11:24 -0400 (EDT)
+ 4 Aug 2026 13:38:15 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jacob Abel <jacobabel@nullpo.dev>,  Yoichi
- NAKAYAMA <yoichi.nakayama@gmail.com>
-Subject: Re: [PATCH] worktree add: shouldn't dwim if -b or -B is given
-In-Reply-To: <pull.2192.git.1785852032626.gitgitgadget@gmail.com> (Yoichi
-	NAKAYAMA via GitGitGadget's message of "Tue, 04 Aug 2026 14:00:31
-	+0000")
-References: <pull.2192.git.1785852032626.gitgitgadget@gmail.com>
-Date: Tue, 04 Aug 2026 10:11:23 -0700
-Message-ID: <xmqq33wtx138.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org,
+  five231003@gmail.com,  hariom18599@gmail.com,  Christian Couder
+ <christian.couder@gmail.com>,  Ayush Chandekar <ayu.chandekar@gmail.com>,
+  Olamide Caleb Bello <belkid98@gmail.com>
+Subject: Re: [PATCH v2] repository: move fetch_if_missing into struct
+ repository
+In-Reply-To: <anGhtfPaGK7v3NNR@pks.im> (Patrick Steinhardt's message of "Tue,
+	4 Aug 2026 10:24:21 +0200")
+References: <20260715011850.3181131-1-cat@malon.dev>
+	<20260716072954.582235-1-cat@malon.dev> <anGhtfPaGK7v3NNR@pks.im>
+Date: Tue, 04 Aug 2026 10:38:14 -0700
+Message-ID: <xmqqwlu5vla1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,128 +89,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+>> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+>> index 0793dc595c..74f9694662 100644
+>> --- a/builtin/index-pack.c
+>> +++ b/builtin/index-pack.c
+>> @@ -1898,15 +1898,16 @@ int cmd_index_pack(int argc,
+>>  	int report_end_of_input = 0;
+>>  	int hash_algo = 0;
+>>  
+>> +	show_usage_if_asked(argc, argv, index_pack_usage);
+>> +
+>>  	/*
+>>  	 * index-pack never needs to fetch missing objects except when
+>>  	 * REF_DELTA bases are missing (which are explicitly handled). It only
+>>  	 * accesses the repo to do hash collision checks and to check which
+>>  	 * REF_DELTA bases need to be fetched.
+>>  	 */
+>> -	fetch_if_missing = 0;
+>> -
+>> -	show_usage_if_asked(argc, argv, index_pack_usage);
+>> +	if (repo)
+>> +		the_repository->fetch_if_missing = 0;
+>>  
+>>  	disable_replace_refs();
+>>  
 >
-> 'git worktree add <path> <branch>' DWIMs <branch> to a
-> remote-tracking branch when neither -b, -B, nor --detach
-> is given.
->
-> However, 'git worktree add -b <new-branch> <path> <branch>' can
-> still DWIM <branch>, causing <new-branch> to be ignored.
->
-> This is a regression introduced in v2.42.0
-> (128e5496b325640f0a09cc1d5b1e346c069b410f).
->
-> Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-> ---
->     worktree add: shouldn't dwim if -b or -B is given
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2192%2Fyoichi%2Fworktree-add-should-not-dwim-with-b-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2192/yoichi/worktree-add-should-not-dwim-with-b-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2192
->
->  builtin/worktree.c      |  2 +-
->  t/t2400-worktree-add.sh | 10 ++++++++++
->  2 files changed, 11 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 654d27c3e1..3204afdb12 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -897,7 +897,7 @@ static int add(int ac, const char **av, const char *prefix,
->  
->  		/* DWIM: Infer --orphan when repo has no refs. */
->  		opts.orphan = (!s) && dwim_orphan(&opts, !!opt_track, 1);
-> -	} else if (ac == 2) {
-> +	} else if (ac == 2 && !new_branch) {
->  		struct object_id oid;
->  		struct commit *commit;
->  		char *remote;
+> This one looks a bit weird -- we check for `repo`, but then set
+> `the_repository->fetch_if_missing`. We can probably just loose the
+> conditional completely, and furthermore we don't need to reorder any
+> code here at all anymore.
 
-This part checks 'branch' (assigned from av[1] earlier) to see if it
-names a commit.  When it does not, the code checks if it is the name
-of a unique remote-tracking branch; if it is, the code uses that as
-'branch', which is the origin to be used to fork 'new_branch' (av[1]
-in this case) from.
+The 4-line comment is about disabling fetch-if-missing, so the code
+movement is not even unnecessary, but it is harmful, I think.  If
+the command can work without repository, incoming "repo" might be
+NULL, and unconditionally doing
 
-Your observation is correct that this would overwrite 'new_branch'
-if it were supplied.
+	repo->fetch_if_missing = 0;
 
-Stepping back a bit, though, does this change the behavior when
-'branch' *does* resolve to a commit (hence, the DWIM is already
-bypassed and 'new_branch' or 'branch' are not nuked)?  When 'ac' is
-equal to 2 and 'new_branch' is supplied, we used to call:
+may cause a crash.  But that is not an excuse to blindly add
 
-        if (!strcmp(branch, "HEAD"))
-                can_use_local_refs(&opts);
+	if (repo)
 
-inside the block you are now skipping.  It looks to me that this
-patch also changes behavior when the user says:
+in front of such an assignment.
 
-        $ git worktree add -b <new-branch> <path> HEAD
+It gives you a chance to rethink what you are doing.
 
-by not calling can_use_local_refs(), whose only effect in this
-context is that it may issue a warning() to the user.  I do not know
-offhand what the ramifications of this difference are.
+If a command can work without a repository, yet it cares about how
+fetch_if_missing bit is set, it hints that it may be a mistake in
+the first place to try associating fetch_if_missing bit with a
+particular struct repository instance, as you must be prepared to
+work with repo==NULL.
 
-I wonder if we want to skip only the dwim part inside of this "else if"
-arm, e.g.
+There could be at least three approaches you may have to think about
+at that point.
 
-diff --git i/builtin/worktree.c w/builtin/worktree.c
-index 654d27c3e1..2205f4e9b2 100644
---- i/builtin/worktree.c
-+++ w/builtin/worktree.c
-@@ -898,6 +898,7 @@ static int add(int ac, const char **av, const char *prefix,
- 		/* DWIM: Infer --orphan when repo has no refs. */
- 		opts.orphan = (!s) && dwim_orphan(&opts, !!opt_track, 1);
- 	} else if (ac == 2) {
-+	    if (!newbranch) {
- 		struct object_id oid;
- 		struct commit *commit;
- 		char *remote;
-@@ -910,6 +911,7 @@ static int add(int ac, const char **av, const char *prefix,
- 				branch = new_branch_to_free = remote;
- 			}
- 		}
-+	    }
- 
- 		if (!strcmp(branch, "HEAD"))
- 			can_use_local_refs(&opts);
+ * Perhaps the command may not have to work outside a repository at
+   all.  If so, then it is a bug for the caller to call this
+   function with repo==NULL.  So we should just say
 
-Note that above diff is with broken indentation to help reduce the
-patch noise to illustrate where the new block boundary would be.
+	repo->fetch_if_missing = 0;
 
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> index 87b926728a..9cbf84861d 100755
-> --- a/t/t2400-worktree-add.sh
-> +++ b/t/t2400-worktree-add.sh
-> @@ -621,6 +621,16 @@ test_expect_success '"add" <path> <branch> dwims' '
->  	)
->  '
->  
-> +test_expect_success '"add" <path> <branch> does not dwim with -b' '
-> +	test_when_finished rm -rf repo_upstream repo_dwim foo &&
-> +	setup_remote_repo repo_upstream repo_dwim &&
-> +	git init repo_dwim &&
-> +	(
-> +		cd repo_dwim &&
-> +		test_must_fail git worktree add -b branch ../foo foo
-> +	)
-> +'
+   without "if (repo)" check at all here.  After all, the situation
+   we might want to enable fetch_if_missing is where we have a place
+   to fetch into, so by definition, we _should_ have a repository in
+   such a case.
 
-Two comments.
+ * Perhaps the command may want to work outside a repository but it
+   may be acceptable to operate in a degraded way.  By definition,
+   when we are outside a repository, we have no object store to
+   fetch objects lazily into, so fetch_if_missing MUST BE off.
 
- * You call setup_remote_repo(), which takes two names, runs
-   'git init' on each of them, and prepares those repositories.  Do
-   you need to run 'git init repo_dwim' to initialize it again?
-   What for?
+   Because Git is primarily about working inside a repository,
+   perhaps it may be acceptable, even when you are outside a
+   repository, to assume that the_repository can be used as a
+   back-up "fake repository" object, and fetch_if_missing and its
+   friends that are necessary to have their meaning to be in that
+   fake repository object.  If that the stance we are going to take,
+   this part should probably say:
 
- * Expecting a failure to create a worktree may be fine, but can we
-   say how we expect the command to fail as well?  Perhaps you can
-   capture the error message while ensuring that the command fails,
-   and then check the error message to make sure it failed in the
-   expected way, or something like that.
+	(repo ? repo : the_repository)->fetch_if_missing = 0;
 
-Thanks.
+   We need to make sure that everybody who passes the code paths
+   that ever reference fetch_if_missing would pass the_repository
+   down when the command is running outside a repository, though.
+
+ * Or perhaps there are some settings that really need to be
+   available whether you are in a repository or not.  I think
+   fetch_if_missing is a borderline case, but more generally, things
+   like user.name should conceptually be available even outside a
+   repository, with in-repository configuration files overriding
+   them.  And it may be a mistake to force such settings to be
+   stored in an instance of "struct repository" (or repo_settings
+   that is part of it).  We would need a framework to represent a
+   structure in which a basic setting, which does not belong to any
+   repository (whose members may be the same as those in "struct
+   repo_settings", so I think it is OK to use an instance of that
+   struct to represnt this "basic settings that is global"), exists
+   globally, and it is overriden by per repository setting, which is
+   in "struct repo_settings" embedded in "struct repository".
+
+The earlier choices require fewer changes than the later choices,
+but the later choices are more concepturely pure, I think.
+
+
+
+
