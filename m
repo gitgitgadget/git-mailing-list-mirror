@@ -1,134 +1,112 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E068B3EEAE5
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 14:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887383AE18C
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 14:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785853867; cv=none; b=WKViXduCdM3qi3TkaFNnIscHFPZKmGzYtoLQaJJVYCNF1nxgjk+ZV8rkjhj/Hz/pv63+XHxS+kM2HC+VTHenXFb5CmP5tZ0aUEQCciEpIZv4fBmEz2CRKhrYKdeOVV+eKGbGZdPt4vsk8XeNT8cjWmkjKw4jADreQUOMPAFLfhI=
+	t=1785853875; cv=none; b=a3oixOZzXw/DRfGvw6PldUFmkzDKFffVH3OlTUBGzTbZuk0nYaxyoElG5AH2TyJ0fI3j6/lW9RfoPSfWLnxhgeUNEOA8dMpOmhhKa0u3JwUIRXzIkUEqxzoZiBHmtDo/KWgrbD9/qEp6W3YUO79ph+09wH9HPWYQKEGpx86sXFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785853867; c=relaxed/simple;
-	bh=P+AU9JdkM5kSOOsLDxncpWn2hKBmCH1sI2O+9lC3ojo=;
+	s=arc-20240116; t=1785853875; c=relaxed/simple;
+	bh=zSYUkbxJJLL1oAXxiWv4yWqmqcz/XXD8+UUf/l0DkTo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m3L3GUmU9zI6unSJKJ0D3PQN/aTGx/nbvam2KRs96OoQiCfp6Ssq5soVX9nNvwaQhXtVgH4Q+6zQW2kf6qTVdvE9R2pKuEGph5iMH9mj0GBLtVOL5IBZdNNljLPLyrfgDoQRYHpbZJUcNlH6XIiWnTsBN7moyXPnxzjfoqHF7iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PrVgBDkp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G185erZ6; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=gAtXdyq4K3et4eYk33GP1Osfx8NsmDJK4Ivj+A0QQxyOxQJJ4evIaFUFyt8kEPsI1pT/PEhfRXJgoxq/tVbpLHy+JEQ4ZP8PWkQR4fk9HTiIwDYe3la8qOOvHG1U7eETcy70nR7qjtvNOe9UipWA5BnFpFAU2cUXPdzwyfMPtyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YhU0+3nA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VOkOE69o; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PrVgBDkp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G185erZ6"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YhU0+3nA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VOkOE69o"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 948971400112;
-	Tue,  4 Aug 2026 10:30:52 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 04 Aug 2026 10:30:52 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 58C7D1400129;
+	Tue,  4 Aug 2026 10:30:56 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Tue, 04 Aug 2026 10:30:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785853852;
-	 x=1785940252; bh=RetsLf6fqv/XFdbQEPCvI31seRBkIBfnTlntx0bBDgE=; b=
-	PrVgBDkpt690URcJch6R3L8BytPsdTfb8QV/t9+tXIHpqe9DCa42wjLZXivYytQg
-	6gpifcl4m2vdBGI1BFlOgs/T8FScnv1e2neKRi56S3azZH2MeHtvhIl14cQYoXLH
-	5KKVhCKiE7Bwscf7zoVYOpOBFHCS/cThgqPyWB7VUXnzRTNYN4rxl3x0/c/pUU45
-	JG/I+WF3/zD9eztuw5cHiB6VUU0FRasBEJU8O8tuS936AScuF6a6uGJBvQhl/yM/
-	dRTOqM9Sp+CUAiFMrOAAAzp8SRqdvS0oD1kJN6edor1wOYXrDidmYzvEdL+s0mBL
-	s/GQl+5G+rQufMyPqjtm3Q==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1785853856; x=1785940256; bh=VneIl3VFWE
+	CX+GgpMFR6GOSPne5n5UMBIdHaCVwpAgM=; b=YhU0+3nAWTaKIDZIy4xyZGhINA
+	1dM8l/CQzl2f6DmVCjCm4jU1erFYgxVAHJD/MMDGfUFv14xGB9ZCCzHb/+JndBV3
+	LFqOvxJlp4dmMPh0XBZGnfKEH/mBOAQneyec7sw6PXN96sKHQM4zqU8EQyhFrZ0X
+	k7SR9Ju+3MvbbikEkzLyqliHjGBOZNVhuo4Wh2UOcWhQn0wNRniv4mZvWI/9Zg3B
+	f2bwBr7gfg1Y1EUAZdbzHqGo6hH0DH5wzEbrqgkGBcYCwuOXBUILatoGir5LbtSH
+	HyGFegrELjGREHE9fQDblenrAkCwCsgvykFtzMoiYy+QOKuKG091V4tMnRhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785853852; x=
-	1785940252; bh=RetsLf6fqv/XFdbQEPCvI31seRBkIBfnTlntx0bBDgE=; b=G
-	185erZ6/mz1OgVcI6/6tyhIkP6SrNjgoU2ecF5S5y5CzD7CsEVzHWtJ97Zo8RCxB
-	m4Jjkw5qwUrqaWojtGS/B08OH8chkpfww0pwrVALQVeA9q7S9bOGeUa+mfmLc6/C
-	Yn0L9TLpC61RlRCsx7pCPFlkoJAo2hG7qfjyl5QuHniH+p0exsRxGjYRpxzQoN4Q
-	93QLPAOT0VC3OF4o9myFb5eLqwBtLuBlrZCN/gUyNwLf1jkJ6g5i10m0vyDO5Fmj
-	dcCnD7XfOHcSRydWxzVe0jwPzRfQNEXE5RPLzH/W5anapBHDdmlqLX9s7CpS/3Xw
-	DiBkj85kVPXckgMDH6g7Q==
-X-ME-Sender: <xms:nPdxaqekk27LOmuqPQ1GPPvup8SN2tSXkYWQY8ABCaU1qbk2oNpqUw>
-    <xme:nPdxarPl7bmdgG4iCZGNZrgPpJQGNAN1D5txykXCdf7Q7y8S8rARE1tojyIyj3syd
-    g8_eUegjM5sg5_E2O9N8-yuVrlby7AsLrUlqvkUtN6f4Hkcvc392RM>
-X-ME-Received: <xmr:nPdxagitl08ozoh-5jMpIVuaKDYa_yvRAiYvcHSVy0gp8IlgHq0MQF6HQRV8ipxBbmFL9lWBO9B_XF4Dm93x6Qb5QUDq9Y18IU3NTzb7>
-X-ME-Proxy-Cause: dmFkZTEQc1uwD566AmVWdDzuFTdfFeGYWfeLuUeNYXT4E2QDU8RYOramtEyCJHd0xWaghg
-    /WddsyfDEg8quDdNYBFDqVqwJ9OPER+YBfYhIr7qPZg4UavXqvT/s5F59VD5jIC3bf0i5n
-    Rlb6YhgWMTDMosZefJi50CDqndEhWF0vtKtHbu5+oeJxFCqsPgU1Yiz4mAlj5kdBX7H3Mh
-    repFCJZgrfZtrcrtnfX7m+s0b+CSDyJ2t31Cn/MuCMfoEVlXSn9zIT1Zu1HpwGZlVHswJi
-    F2wYqJBwNDwiAamyfibnkn8OeRbD/4J3BbVn/OMaCqYCTWNL9mnu4qMSOwZ6Ip5C/pDASA
-    tNIoxGUzf3uhho6o0Ej3J+rEostxNg73m4nSXPMFxy4xGtHQI8Jwzqkp8rjVBRf7Y59mIW
-    RgTl/qvJ1CycVPf0R9fxNWmSU1aOJbxi7d4heLmLj8qIsk+4QY+3L3f9H7Oq0lcd29uljO
-    EIj3VivTnWKojej7tSfQNqcwbLZZ5HMC+ZqBScmLj17aRo1MIfxBi1yzdKdHTGtBnhFCM0
-    BfBFziXPeU1gPN7Br1feOmNpf6dOQnothwYwxse8ICU4camqh8SXrJC7vzVnzT9CXxfJ1Q
-    cZhoChL4wyqDYSrKgaJ8DxrKlElyQ+UVcUxB4OeCBPaOvRgDdvQFtbjEaxOQ
-X-ME-Proxy: <xmx:nPdxam3qiXUZKopkiXxTEQzUDvv8KGB68P3wgDjf9_Ltq9GcNQJcZw>
-    <xmx:nPdxaij0E0RbEW7urPAT6EX7LDfwZkUEonBf7qvnUDX71_6G2AHd4Q>
-    <xmx:nPdxaucyUf04MUi_4gVqW2v8BSuycL-yOITcmcuPhjjZ9MzaYTDUjw>
-    <xmx:nPdxatlJLZZsdjHAu4Zz5ElbPsXizC3828nzrbFUIdrqsvzW23iD2w>
-    <xmx:nPdxakBtqlFVYNQx0htW43WmOyvHUNokWxG_dIewqaTx-kw0uZB1ehVh>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1785853856; x=1785940256; bh=VneIl3VFWECX+GgpMFR6GOSPne5n5UMBIdH
+	aCVwpAgM=; b=VOkOE69ocRkzQkwYF/qU+/LU+5iBxkr9vyaJqFaHiwjEGCrnalp
+	oBraOA0Kcuy8K9yt+lVeg5eYib5b9hFx86KXbqLWKFl6SyC9eDtGMtOnaTSIccm4
+	EsK7kisqG6qD99wC3AwoNeddezBrN1ErKUlahMg00a1oTIDDDot/HWlEqLgJESN6
+	w0cWso76OLeZMfFSUdspO6BSr5SYyHcXgVXGhQyK1pZuh+kKAUPnT6xM3Vtmi14T
+	7QuIO5HIiHTS6GBjYsMn2Z/fxErtfJQytxQMDmnu2VszShre3q2eI0RFn4pAqups
+	V1FZM5gbJNIwGiwLT15KR4E2Xhfaecy6M4g==
+X-ME-Sender: <xms:oPdxapKPY0tnEECZmo0Tn92WIkszUhmaVq7yGnQd9Q82LNYYjfXBKg>
+    <xme:oPdxasINKObc4cDsiH6EzqcODpliK5oviGaBZxiHEb-SYRH9SivSRrBuN0d6hmu9H
+    aU2oAFnODLPDhQ2hupOhxuRBl7HNBA0ZjwNv2FOPA6rVY3hgPHg1w>
+X-ME-Received: <xmr:oPdxams1LFRC_kf7tAkHoGskOt4HQ2qDmIFO4XM7dtFcinTVtS1KaYvQltYv3u2NUrSiqoFiDevki5G_B6WLJ8pcQk6m29X_VdkzR3iw>
+X-ME-Proxy-Cause: dmFkZTEOLWXGLpNyijzhPxnxMPOYE++w8gJ5d41nBoOT0Jz+yAnZb/lrIK/1MiM2Yx8N6o
+    n+S6h2mskzzVw5X6+wL+fQN0ScspcC/xtKstBMlKIZS37TXMpl85kcKYfAFf+bXhTQV9eU
+    PFCOgMQsgZ7cx14VqQhr5+4yO+uoe/ruA8gg07C67XDr1fKLHDJ+gBDvxOXLXmltV6sBu/
+    Ckzh9rpde+oXkmfN/twCv3ImKd/rZZ4kx8KH00kcAjxE3ijytflN6ya+D/Pm5GRhq7pE+D
+    E1Y/JzPR61MVYOh5x9oRcks99h5VxAUqHu6x9K+tx+LRO//luAxeQ7DukesHTdB+Hp3ksT
+    rJA7b5/zqvSvtiSZ57kYBI7SFO6bY1/fAife4f17N9eJIrcRznq570RmsIh8HpsMntOA4E
+    /Xsl0fUJqCcDiPajUIuslSFn4gwN2UitZafjFyZ+tJ8bslAn88Yquvoyq981CdVdpSqaho
+    WCReGS8qgPUw/z5LKncd0bu66sUEU7lt20n+2sAlC5h8pYUYps8dIdm308VC+ERqE0dNi1
+    7KUOvdmt+1/H2/LOvucd2a48fFVwZGew2Dl2stGnG3tvG3+XxLksgj2lYG+uHHedpoFFZO
+    8msHXq1o/nYz/YAFwkWJO7mLF/GewAgeG4gv2qO9BRLIjYJalNCSuXm774kg
+X-ME-Proxy: <xmx:oPdxapTulHBXjIZPbxdlhgc5fPIWFamcmbLeFw60jYfCgvLfWIqQxg>
+    <xmx:oPdxasPCc7PTe0WYwKlG1VIfjideNsHv2bmbZZXD1r2Rm11zt4ilfg>
+    <xmx:oPdxauZsn13coSfmmW9_e5GmXaknLeipM0jpG9f2z9ijKONcNfPzDA>
+    <xmx:oPdxamwVq3gtakYS1xH7mPz-uLs541Nh8uUeGRzqszyg5aVjXzFQgA>
+    <xmx:oPdxal6d1OFhFeOd3219By_6wJ9dTdSLmm2nQ7K45i496wyD1wReipBX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 10:30:51 -0400 (EDT)
+ 4 Aug 2026 10:30:54 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 817c1250 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Aug 2026 14:30:47 +0000 (UTC)
-Date: Tue, 4 Aug 2026 16:30:43 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 9a47c6e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Aug 2026 14:30:53 +0000 (UTC)
+Date: Tue, 4 Aug 2026 16:30:50 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: kristofferhaugsbakk@fastmail.com
 Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 1/2] doc: refs: put ref migration warning under the
- command
-Message-ID: <anH3k9PvWHMpWLT_@pks.im>
+Subject: Re: [PATCH 2/2] doc: refs: linkgit to git-maintenance(1)
+Message-ID: <anH3mkk6K5RPMZlJ@pks.im>
 References: <CV_git_ref_migration_warning.b09@msgid.xyz>
- <ref_migration_warning.b0a@msgid.xyz>
+ <linkgit_maintenance.b0b@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ref_migration_warning.b0a@msgid.xyz>
+In-Reply-To: <linkgit_maintenance.b0b@msgid.xyz>
 
-On Fri, Jul 31, 2026 at 11:07:02AM +0200, kristofferhaugsbakk@fastmail.com wrote:
+On Fri, Jul 31, 2026 at 11:07:03AM +0200, kristofferhaugsbakk@fastmail.com wrote:
 > From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 > 
-> I have to scroll down at least three screens in man(1) from the
-> `migrate` description in order to see the “known limitations” for
-> it. This is important information since the text says that concurrent
-> writes can lead to an inconsistent migrated state. Let’s move that text
-> up to the command description and put it inside a Caution admonition.
-> 
-> This section made sense when it was added in 25a0023f (builtin/refs:
-> new command to migrate ref storage formats, 2024-06-06); `migrate` was
-> the only subcommand, and this section was visible from the command
-> description. A one-page man page. But that is not the case anymore
-> now that the command has nine subcommands to describe.
-
-That feels quite sensible indeed.
-
 > Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 > ---
->  Documentation/git-refs.adoc | 30 +++++++++++++++---------------
->  1 file changed, 15 insertions(+), 15 deletions(-)
+>  Documentation/git-refs.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
-> index ce278c59bfc..98828041c23 100644
+> index 98828041c23..1ec26be0b4f 100644
 > --- a/Documentation/git-refs.adoc
 > +++ b/Documentation/git-refs.adoc
-> @@ -35,6 +35,21 @@ COMMANDS
->  
->  `migrate`::
->  	Migrate ref store between different formats.
-> ++
-> +[CAUTION]
-> +--
+> @@ -46,7 +46,7 @@ The ref format migration has several known limitations in its current form:
+>    ongoing migration. Concurrent writes can lead to an inconsistent migrated
+>    state. Users are expected to block writes on a higher level. If your
+>    repository is registered for scheduled maintenance, it is recommended to
+> -  unregister it first with git-maintenance(1).
+> +  unregister it first with linkgit:git-maintenance[1].
 
-Hm, okay, first time I see this format. It feels like the rendered
-version is indented once level too deep, but I guess that's more of a
-problem with how asciidoc decides to process this. And it's a tiny nit
-only that may not even be worth addressing.
+Makes sense.
 
 Patrick
