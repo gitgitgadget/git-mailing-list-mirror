@@ -1,72 +1,72 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5657E32E729
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 19:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC03486628
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 19:17:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785870596; cv=none; b=mog0La5CJIkEjoda72RmL7LMmptHSa420DmetjUsDl20ZCBU4ERm7SQf3aENgaQNyOrig4P4Aue1p0uaJG5tMFnsMCU5SmWKsuJRxRZyTYMGXgea9vXjE9SyGqASoWp4Id7xR2BshufpvaqxPsZey3VDgnV1V7PPUhRIMf8ZgpQ=
+	t=1785871025; cv=none; b=iz3uI/aIcfEqKNc1Z8krB+6XO+v15xsYn3eCX0G6Ip8ZKU43SnyBjQ8UdPomSeRVTIX/4GechyW4o1hUGqtxlFcWT6Gyy6safIjg2taU7QYtxek5g/dU7kWJjYo5JKsDM4dog5RC1FM+p1OGWmo3QRM9W0LVP4RKXwRYXphqrBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785870596; c=relaxed/simple;
-	bh=2xFwi5PmPyLrkddOumwx7yWNqtWTR4CbqPPeSkLT4jw=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=SlmtU/VFCsiQ5U5kW0mUnurzVr4MHLSKjqgtJlg+jzE1I4djCqOV3Mqx7x8K7mjpKeh2a+vGBnsK81es+qGp+1E2b4WTYYVbBTenU1mETdQ7Grpq3EqIKR2Emar8/U9ywYHQOGeUTVSiAbKc/FVkIFc3s8x9s8hmSuiszn9xsx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=eUDmXeap; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N6hw1Wbf; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1785871025; c=relaxed/simple;
+	bh=GZK2TlqLflSpPaeZiWnEL2UKbWjeawK4zKUMtkq+xRo=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=mnxz6R/YH81iVi4l4mozZzLIRIVj7c2Ujb3TAbHUDq5JqutQ9VooeKZqk9PGS2N6GfvBr2dThPVtVarsD0Pt/+yYTrB4iJ9nmGoAWLqg75d9RI02UotUH3EBO27kxwUqFJ8cPi0iy1kRcRbQhAA3BQSe6n9r9XQougwELQXp8NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=iE5yoiQh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y55fKAte; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="eUDmXeap";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N6hw1Wbf"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="iE5yoiQh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y55fKAte"
 Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0FFF1EC00E5;
-	Tue,  4 Aug 2026 15:09:52 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 56FA0140003C;
+	Tue,  4 Aug 2026 15:17:02 -0400 (EDT)
 Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 04 Aug 2026 15:09:53 -0400
+  by ams-compute-01.internal (MEProxy); Tue, 04 Aug 2026 15:17:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785870592;
-	 x=1785956992; bh=Qdfdv073R0S6kMtVAPCzw6lDPHLtGIxaBJM+bCxY8Lc=; b=
-	eUDmXeapEjbWWBsvFCwYYh79HkzHqWdaUfoK+6+ejvVyXxhb3GoTponz+IikFurB
-	Ub8mwu16O2re6w3/fS5WtWaRnzEyXFo+SuRtXvFF9HoHX7qNwddbkxRFosmhYaDd
-	5FDjY7rHqM+CKah8lR0vEzgWmb+65uHtgNOdg9VLedESOlflGRpzLdQh6mHMayYX
-	Ig84OTfiIQ+X46kYK+JWlTJwUOu5hxtVVB5hK7QN5K3PY1bE9ZAnz+oXFo97yrMy
-	zNdLUqUu3OEMhkGHDtpuc9qyk0RWkJjMAWVgfH/qFMc9SfC4zUj4L7yuXctXXAaQ
-	N/KpUvHiPk5MELB08fRGpw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
+	cc:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785870592; x=
-	1785956992; bh=Qdfdv073R0S6kMtVAPCzw6lDPHLtGIxaBJM+bCxY8Lc=; b=N
-	6hw1WbfpeIb9GuMTjBYgUpPvDBvQZ0ZQWvFaQ18/HC7yTFcaJaQJlwP9J2ysSwTu
-	MTonUQoVurW3t4a/ZWAng38pHYs+xSUTUj8qm2up9bhwpZg7IhybBvY6TEkJQDpE
-	REWScAGVj1RcAUlnvmvYBVSWEGVxOQbntJ5inJlzKCvsZS+QkO77avwyzmbyJLsA
-	bbsKbZb70fqoKTCjycXJhYqRIZ/aioWF8oG2GNJ5bUQG5KX/uqpTNX4sU2bZlt3v
-	LY5g2E9SF/YilJZLDrCmrlUeNrs+S+VEXpmepYRHx4d53OsOL9LU0ggXd1GOa0EI
-	JFOWnpWy7oDQli2LgrwYQ==
-X-ME-Sender: <xms:_Thyauj_9ftIpBbZUQBxL1JTq9YEOv_-g4BqMFHtmeN7-7doV08PSJU>
-    <xme:_Thyap05F0GRGL8HUtUqsocOHXMo01E13Py186g47s01VujxIZKBHDW4L7U-MzTlP
-    hYwPDX4HZHwbnR7tGvwHuQCzPvIGUTtm31gdiz6JAvJ_AqOQ4vtQA>
-X-ME-Proxy-Cause: dmFkZTFL/l/rf/MSxk7P6guGFLEdcKBbvZp7YFabFIz3V+8482+xdRzXui2HR/n/kdDsKy
-    i8FIgdu7OdSX7tRVWiDsKfptFVrbK1kj5BVtJEdZ4PzXK/DeFzHuUeLVi0p0LaGgEFrfSH
-    GKJJr2UbuIljzNC3vszgCuDUy778TPzs3O5CCpXhzHi0Ji+n4yeNbz+oqriZ2G+lb51mqS
-    SDWSQUAfY6SZO09jPAuJI9hbKewSO426p3BR+l+GHBqfSBbKGe32gQflopX5dfVLuhoV6r
-    2cp+vof70dKruKIbJpHcAnVtNNaU0tF9HYltbHHz6HlzRpME2MASoPflO+W7YB5WUiTuBl
-    MkU7YRXglCh7A4TjSFhZ1dVOWQms3mgjisvl8BF6SWW5DkJXZ800pih3c6AU7qBn+dMOT1
-    e3SpLm2/eXf2MhsiNEyuOI9imy0DAFCx6Rs94HxL/zur7efRXEm6HoOEMvoASUoNxBGxVs
-    PD307O2deLCJQ57XCxAjmDwta3fhecDycAK3hyG2kAA9Phrgbcy9+8im6uWE0ZbN6xAZcE
-    ji2gE3qSvaIm6eMQ2pPJXzJWQoQ0PuINB+5RZjgVfTVpPA5jvvyclS4uloXo9vklyeVOIX
-    EPxdiTJXfTVQ/J1+BQUmPWAgqtVyuen48J2MxcDh1w2XRyPFC5xwSGgkyG8Q
-X-ME-Proxy: <xmx:_jhyahL7e2p2DX22FsDxupzzDUIwCeIe_gs-gmFQD6S7Bp9QGLu3pw>
-    <xmx:_jhyaq8gFKT9dC6umrtRO2zU3zb3nFGF5hl7CmzUCH9sV4GuFwnQlw>
-    <xmx:_jhyakJahILpPcDwloTcnFsyXm4PLGgesEAf5n0Q5HH67ovfk186uw>
-    <xmx:_jhyavkH4DqByGWrZo3Lfk8EL_q_-E4BEE0fr3GYr_p3MuojKOJlyQ>
-    <xmx:ADlyaktcfRK-ty9qMkgS2nPYoTiZRMM728xMd7iduv-QioRpQ4FdKdEq>
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1785871021;
+	 x=1785957421; bh=Zr24Sf9aZJZKD7YyBMXOhrVu6r9854JFfAjvWmnJszo=; b=
+	iE5yoiQhU3/JTcsw/vSBJDCtQnlo/JyfkPBwqjG/YFg3xaEyZuC4+afoyF59/EjK
+	2hFMmY8ww9tgVmgBkV5XI8jUPnWVvYagzDvAJviL/7MpOTNs0m7MrJeze6qSzU1s
+	D8gSMuP+4pi0t6XTZOTNNiVgljKERvRnq9M5aLVrJnRmP3qhYST960k/+A5Zx2Np
+	uV31SEtFMVz1HHidXiaeoJY47pfWFQigZHgALpt4izALMwQNfYtQulCR1ddprzGj
+	H+SRa0Z1p7Y7t7xr+cvue9wFokc6iczD3DAOEnSXRIFAoeqq/vVyejw/Hcy/5s5D
+	UbCiAI7uJi+Id/Sw1Yq7ug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1785871021; x=1785957421; bh=Z
+	r24Sf9aZJZKD7YyBMXOhrVu6r9854JFfAjvWmnJszo=; b=Y55fKAtey/hpc1m7U
+	oCI81te8aTzYYMSKBw0zgx+aas6WYM69wnmc2qKws9GhcP09wUHXMBKuhiKjT82l
+	0favO5MdcKQS308tQoDXlKbbbG/eGn1swj00QmdELtUzkvV/C+CNiVxQ4ybrnC2J
+	16Gw48JmcS2huRei0DSd5tgBHiU7NrzFd9zvcPCmY0Y5qSS4ApR2shMNjLRF8hE9
+	Zi93cnJqfFYkF/OHairCRpRoheVuDC47D59xSsWeWgcvKhaJGq/yeJSZfl4uNBaP
+	cAh2WBOJYAOWNAlEP6lsgl2PyvKU4phhC7ZUhYtdOmDcg+F3X+k33KeYJ5MDNXAD
+	HLczw==
+X-ME-Sender: <xms:qjpyajJ1AZh0fQFKthHNeLC-XjkfgSTPHdgPeHGCma8DqPcQ3Hg_cvY>
+    <xme:qjpyah-mkElXfQsRdgD0hQc8LGCsKEcZ9iHefyg2pvxXglOdHcxH3OXXdgh1Fq7wp
+    iaYywSaNDsoYju3v7USJ3jO-Wg_UqMLmNVPwuyBnKD8wu-ADM7PqQ>
+X-ME-Proxy-Cause: dmFkZTEsqOP9XYYn6gdAd3wzmWhkugLnutDDl/4sO7FXOhJMoKDSuKo+F/o1bFM3qj/PHI
+    cfdhmN7IuZAs1F5Wcy4gsKOqQcriw0BC5tzyDxe/EaaZxkivZXlVW5Te4tvSWTpUfmdURw
+    f7gdaQzVapxvCK6L7L+5ZC+CpUqzQkpHWHSURIYnP2h4tIRaZ+GYKZryzfGQC8lSmoM8Jg
+    5uNod0pwroT4KRfy7EIFJdT43xXsMawjq4DRx8zE6JG4ZCgmOUgdBhb9g7hWMHFwr4wDI0
+    o/ZYGl38AopCe+lZL8ycr8ShVEqkcedX8W/1cYi6CioPd+FMZpvQED7ODMm01EigiEHIAM
+    c60Zzfxo3qRArEoM0cslfLKENIvXTEno5C3moaWh+sNR9/YCfBjTMNv3nVc9OgGVOwAV7K
+    DXXdxowalWt8XTMUkvDcmlog2k59+KII75Xnc5WeESL2Fd9MclonwUIKz+AC59rFMLXpDf
+    3SP5euzt+AwA3l1uEMa/T+5eyxV+zc0udtHwlWRKxccM+6yyU/6Eoiq4ERENNAb8WCn6+s
+    UIhCoQc8Mnl/ElC6E0SHleUam4NCP0qijZtZ8D7kEgdoBpmqG1uLvv9CGCpAd23MkZdMuF
+    FyXmXmPTm07SeTWNSZdXdzl2L0amX6gNlMtiN6t7BVEcQDVyoWhIJkjtG0CQ
+X-ME-Proxy: <xmx:rDpyat2MO3EqNj4v9r9EYx9nstOYUPkXzHA27EJvortbrWolStXX5Q>
+    <xmx:rDpyaiDRf2BedXVU2RQ9Fj6TR5tofFQeM5ZUcm78yFSvt7qxR2n-mg>
+    <xmx:rDpyaldIlV_hS5eMEmM8MXdniKIHyqqAq3QgPPTPIAUwz8OLgsj0bA>
+    <xmx:rDpyanjiWZF8404cOyp868k8hsxNB3Evfi1BvCvk8NL6J5IF9mDGtw>
+    <xmx:rTpyasuhYrpwrh10w_YbKbAHYAQLAUzv5w0nyP1cor2FU5dxEUQjKN2k>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 3065F22C0061; Tue,  4 Aug 2026 15:09:49 -0400 (EDT)
+	id C8BBC22C0061; Tue,  4 Aug 2026 15:16:58 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,79 +74,39 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AU0jXUOk-qtB
-Date: Tue, 04 Aug 2026 21:09:25 +0200
+X-ThreadId: A9-6LbebrgRw
+Date: Tue, 04 Aug 2026 21:16:38 +0200
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Karthik Nayak" <karthik.188@gmail.com>
-Message-Id: <7f34d9b6-de00-44c5-a59c-11f154e7a64a@app.fastmail.com>
-In-Reply-To: <anH3k9PvWHMpWLT_@pks.im>
-References: <CV_git_ref_migration_warning.b09@msgid.xyz>
- <ref_migration_warning.b0a@msgid.xyz> <anH3k9PvWHMpWLT_@pks.im>
-Subject: Re: [PATCH 1/2] doc: refs: put ref migration warning under the command
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <b9d5e84b-a25d-40e3-826e-de555cba7fc1@app.fastmail.com>
+In-Reply-To: <xmqqldanxbq9.fsf@gitster.g>
+References: <xmqqldanxbq9.fsf@gitster.g>
+Subject: kh/trailers-no-urls
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 4, 2026, at 16:30, Patrick Steinhardt wrote:
->>[snip]
->> diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
->> index ce278c59bfc..98828041c23 100644
->> --- a/Documentation/git-refs.adoc
->> +++ b/Documentation/git-refs.adoc
->> @@ -35,6 +35,21 @@ COMMANDS
->>
->>  `migrate`::
->>  	Migrate ref store between different formats.
->> ++
->> +[CAUTION]
->> +--
+On Mon, Aug 3, 2026, at 21:09, Junio C Hamano wrote:
+> * kh/trailers-no-urls (2026-08-02) 2 commits
+>  - trailers: stop recognizing URLs as trailers
+>  - Merge branch 'kh/doc-trailers' into kh/trailers-no-urls
+>  (this branch uses kh/doc-trailers.)
 >
-> Hm, okay, first time I see this format. It feels like the rendered
-> version is indented once level too deep, but I guess that's more of a
-> problem with how asciidoc decides to process this. And it's a tiny nit
-> only that may not even be worth addressing.
+>  The trailers code has been taught to avoid mistaking a line that has
+>  <token>:// at the beginning as a trailer line.
+>
+>  Will merge to 'next'?
+>  cf. <20260803152025.GA189075@coredump.intra.peff.net>
+>  cf. <xmqqmrv42lrg.fsf@gitster.g>
+>  cf. <xmqqtspbz00x.fsf@gitster.g>
+>  source: <URLs_not_trailers.b13@msgid.xyz>
 
-The admonition format is used in many places in the docs, but probably
-mostly in the one-block/paragraph format:
+The kh/docs-trailers topic that this uses isn=E2=80=99t ready for `next`=
+ so I
+don=E2=80=99t see how it can go to `next` yet.
 
-    NOTE: <paragraph>
-
-Not this this open-block syntax. (But see git-blame(1) for an open block
-`NOTE` example.)
-
-Like two times in git-clone(1). On that doc there is a contrast between
-this markup and a `NOTE:` which is just that plain text. With just
-`NOTE:`:
-
-    This option ...
-
-    NOTE: This operation ...
-
-And with the markup (manpage):
-
-    When the repository ...
-
-        NOTE
-        this is a possibly dangerous operation; ...
-
-Or in HTML:
-
-    When the repository ...
-
-    NOTE | this is a possibly dangerous operation; ...
-         | ...
-         | ...
-
-This is just an informational note and not an argument for using this
-particular construct.
-
-By the way, I think I looked at the AsciiDoc admonition reference[1] and
-saw `CAUTION` and `WARNING`, but now I don=E2=80=99t recall why I chose =
-Caution
-over Warning.
-
-=F0=9F=94=97 1: https://docs.asciidoctor.org/asciidoc/latest/blocks/admo=
-nitions/
-
-Thanks for taking a look.
+I can make some improvements to the explanation based on my last message
+and maybe the code could be improved too (`starts_with`?). I think I=E2=80=
+=99ll
+just let it sit for some days since it uses the in-review
+kh/docs-trailers anyway. Maybe there will be other comments in the
+meanwhile.
