@@ -1,91 +1,84 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445093603C2
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 06:19:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D698257435
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 07:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785824396; cv=none; b=Q6ESkdGqf3rlR83KcRX0mDwJm2n4YBHdz9lGi/4kMnZX0LqYFnFTa7HDDFZl10zV3ZCUcyvJNCZDzsgSEmodQjXv8ygJCYbTptb5ZRfSIEV5atpMh296hdQI+4ML/ZA3GETsFGpdYH6foldP7rjLvdiEGZZe90Y3KR1+3j/T4BQ=
+	t=1785828079; cv=none; b=nQZYEqQdfldrYxeRk++dD4EMXotoVYGItnz9HX8pf6acnpSjNF+JAeuMcR1z3oYa1zlITjA2wFHCxe3K9e4QzVnbIqeQ23rHV0nMZpfusqMy4O1u0mczxFTBsN1NxlS9Olqgof3A5lOvSfA4+o56Wwh1s6L5sC9eWevIg5bcnQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785824396; c=relaxed/simple;
-	bh=o3LQb5dU7Ut0LRSbQQ8R1eIiti180x0EcDS6+psyPkQ=;
+	s=arc-20240116; t=1785828079; c=relaxed/simple;
+	bh=eabpD5YNvjJmPo5KKSqtO52OBPNPt34wT4I1FqpUKEo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=igg8B4S3n9tq7z57xU2dVaFl2q03q08TAwviVaX8ECMZgw0IHRZPIe2Vz8mPtI6xsSikq6wl46AyURRAIrWpTrYNX3IqHfv0uBhb9Eam+1fV3t0AstsQwdpQXBZHA4nkQHcirKmJy3fn0yE0KgopAcakNZMUjy5xx6kxMwG/2Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fjzvefN5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TgYHtSTb; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z3LES/HG3oxxi5NRMM0ElgunwikWXgePmE6Q4yEdGtrmgAAN3eJNaYRkaKv4+gfyyzBrrIIipmQ8fCINzDSO/Dq+cJVPAgjAwyPz34XUo2Rz5UbWpe0+7oAEdaYtnmP6dNEYW43bMKh8368nnaP/opRwVhHGXDX7w6QFvVphD7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f0asb9wz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JP/fRVFW; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fjzvefN5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TgYHtSTb"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E9D107A0138;
-	Tue,  4 Aug 2026 02:19:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f0asb9wz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JP/fRVFW"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id C3E081D001C1;
+	Tue,  4 Aug 2026 03:21:16 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 04 Aug 2026 02:19:53 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 04 Aug 2026 03:21:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1785824392; x=1785910792; bh=9kQSP2LuVW
-	qcx3V6XXsKJe9Tj61rBtZVDfIocTKqA9I=; b=fjzvefN5OU/DzisHXOLnwzgKfF
-	rftryyhD4Wj5NHdeVwnvvGIEsG1QF7g6Tp6vrEB3MY97nMi+rPubKdNxHNL9sv1U
-	YZnmxPhj0uzTF77hUARFwgEQ5p0LB6B+2AgI2zAvaYy4aluHngclq1SLgXR/7lqj
-	YslnEtBtsfH/b02HDkI2tSGcOSkLBPRLv9/ELxs0aMB9cItJqHEkd+HSUivvC1UJ
-	lH3LGFTYazVlnOo3LtG2yi/zY7KUAVM8Z8CPiMMX1qaG8Cu5G1hNqPqYZMBEisPQ
-	Wwlyom6OeO62Rk77YkvylzZtC8kLLIgFHBfiOKs+K/ICfM2fTjtgoj4IZ4EA==
+	:subject:to:to; s=fm3; t=1785828076; x=1785914476; bh=CsOh1HSucC
+	Vk/WGA3cv6h0CZHtUOc8TizcmL4FW3ZQ0=; b=f0asb9wzkzVGPCSvfmnZipK1yy
+	LZ5oItyc+62mHKUk9xDhmzhjzhLadl7uqjJQxKR9icdSUvAKIReDQ2OHfDh986Cn
+	yMVM8rnmW4yE8xYFrwY5kKVUjClH67JyLx0TxupInIfmac/40+mjNjz5yLz1g+XZ
+	4P6zCqos9oA3rHPx6g0YnbWwyUB+LuvBJNzzpVZ6VAx3iUg62DXu+kQc1j3v0jYK
+	pY7bH6nVZAXpruBx8AMJ5I0JUwsaXp8V7M/SHSuy8u/Z3+DBUE14w6740BvTtSph
+	Xe/NY0ckMjOHn0werj6Ln2JONlbg2ztTLr9XvSba7OMrMjrpU7s5Xb+ywk9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785824392; x=1785910792; bh=9kQSP2LuVWqcx3V6XXsKJe9Tj61rBtZVDfI
-	ocTKqA9I=; b=TgYHtSTbE7hntIiDAgx1M41SV9JsRSmbKv/Ib6ltAC+JOgl8tvx
-	prqHivBg+9LFI5U+t/wboFtobWe3VpUYZifpdeik1sLh18jb5qpHXB/nfz0aVR3B
-	eywi9kFMcWAPH2csk7GRLeUzq3F+PV6QKD4Im7brNOvIlmU27WaYIGHS8blmkJ6M
-	qtNI+3mcLpuNGGGSo2+eFAdXr++auMJeHTvTsHueqPKXIM2X7WcdybwSjRsKABQn
-	o2qII4umFv4djPbFVy1rD0aGBKjVhy9Vv7XXQplZCTBK6egOhD4PS5Phhj4e7hq3
-	qvJYzDgGT+i2ysIH0Pf9ZgGbeWgAzfPS0og==
-X-ME-Sender: <xms:iIRxau1cqPMjrf5iA_bSvuS-J9vUkABRbnuRQY98yDzQVOUHaDCOQQ>
-    <xme:iIRxan9l1U2sjI9uwLYAhYCRhqB0Eoto6Wtwkl6ihdM-hoXv3enwgMQeNybvWVKZZ
-    0skXQE3bbXHMHBpsAXFY530vc-2TB-ajKSJc4f0vv-9LvcQ_TNW>
-X-ME-Received: <xmr:iIRxavPjMjNjycfK412dATceifWGYWJ8ZJLZz4XHxR3yD0EQ_bACHs8TRj6xXeW19D5vMsR7d0IoYXnHO5ByNMoMOI9_f74g98iUoT6d>
-X-ME-Proxy-Cause: dmFkZTFEcIP0mIo/0/YEv0UyoUro1uDednvPbW3EgQqzPqXUZfRXwo6KoXYQkjNWBvp0ir
-    wKUiide8zfvMVmw6tQOOWpDybgc9xcpXkAlQJ7MO3vRsIHo5D9sTq/UZcNhspFN6TBgsb4
-    xZVz6WuH0gYRu3HIJz5pMxA3rzsO1Rp36WUBMrLR5j1xa3rKBrOxVzMelwW2Okf1Xdm39d
-    9DU3HMBGH7s6y/W9sd3lDgkQga26AW+y2joctFSHrjK1czg5CIni1EGDZ4IaLhLykhG6M0
-    ozENGTDpcaAE9GqrHMVULAoZe3+/RCL1YPpbthmiOtNbedOUr/8wEcahpAzj+UaNwUNoRW
-    PtPc9jDuDs8jiYqb0fRHsVfDPqfI8GaJ368Mv04hZ7QCZvq92YR7nm91/IWDoKrxKyC19Y
-    qAdPSPtcIvSgrU9OvnLUdZSwFKEuabUWtBm2AbtAYJDbt4x+JNTeRHbkvVuVao+Wz/tTnX
-    08jQnE1FWS8JpWfKGONkVrhSWh6KWzZOEkoDyKC8yXTUc1kbk775AyZjSHUIA5tM4NA04k
-    s2rNwJnC+QFWWRx/UV6EfQtk8WnB84A8aGDOLlKnDKynGwCX50t2ws+0keMEbt3Lpxn6/R
-    5S+qHoJ1SMGe0QwmpXZ+zWMxu4ZNhNlgrcgJBaQHYtpCcmlftcoBk6BO5dnA
-X-ME-Proxy: <xmx:iIRxareKHOmOyQy8eNZdvUT8T4SJt4LKgrvnXy-cooYte14fTynYqQ>
-    <xmx:iIRxauU2ka27szRzA9Q_URvixu3IfPkYi0luv6Cdddp5OrUtZPnyvg>
-    <xmx:iIRxajh3PpMM9zyafsWg8ARAdjcOHV-G_d6f4p-6N6dCrVjT3RqkBA>
-    <xmx:iIRxat9ajp4m48zceTFPMFzclsURvYu-TWHbohTx2Oxk3NLqbRM_bg>
-    <xmx:iIRxas5tlYKzUTHzULbbFbmVtTe0Ahnd2_m_6HoEeKDeqHbWRAcTpJnC>
+	1785828076; x=1785914476; bh=CsOh1HSucCVk/WGA3cv6h0CZHtUOc8Tizcm
+	L4FW3ZQ0=; b=JP/fRVFWzmhT2ZqOia/1VIllHyGmBQf4yiTa9FiE+xGdIxIdpWG
+	wF53tHZUHHo8WK9CxnX03GNYce6DBhdfRPkWaI8WKPQqrkNFSlx8x80M2a3wRFaW
+	QzpkDCt9nBBGtGfx+8gcW9+HQ5Y/ENoUoYkZH37ZR0484Ydx3F+Mefcb0TwUTVAw
+	6C4NxJSKs5lN8q0W9jz83U/K7FcCu90PUBt6QQQGDqXVJJ4BPU/B5A+cdiA9dzWC
+	TaRGnKcfqxA2ORa5CxJg2bCcxP+DLIvB0K+2WLPXHh0cdEoQbfzcboO+zULMvxoD
+	whodGND4k3+wZw29Uv5ylN5O/tykNTscyng==
+X-ME-Sender: <xms:7JJxakEicnsL_ZBrUxzx4SQptpl6CpSOXPVpaX1-2xXzNoBI2EcrqA>
+    <xme:7JJxakzzHL4t3aHdoXzL49Ne2FU1V3tmTPbpT-i7kHg0hIF-DONwdUeA7rMrfNrSd
+    vAFzM_R3o2mLfZGiojHf3scBFgQUvc8-gXbeRpdAUZr5woW7PW9Kx4>
+X-ME-Received: <xmr:7JJxarjnd1uQhPYAduMl22WbBPCeY2ToM8hZTm1kL1kM7jBSxKdCuefAputNkWdy9NTQFJ1o2JkuFhmTUFjwOM6EUCxSJOIHuyMpXr3y>
+X-ME-Proxy-Cause: dmFkZTGHB/BtFsTHMxz54XYKr3pb1NdqVGZZgpa70fhzRiWBE6IpdGW2MuKshyDlUzvURR
+    6Yi8GJNystEhuLYBJPTY437SURCIOdV7yOubHk2ki1jVAJOQ3RUuSP+tYYwM6Gn133767I
+    MI4g9d/ruHt3p9GXxxb0RgeAYfiEniqlf82nYkABlCZl+uJgo2gXo3F7Fesvj+LURvjGIT
+    XpjN69eeIZ7JyPH0NTOtOmO1FOSG1LJpHyDLKuNj6D3D6d8eJytVHieSFiuclOJDkfcOvn
+    l0OqKCEm20UoMdFukL7Cj5ViFjYMGz7nemkB6ceKMDq7JXU3iQCwsEESdYDyxa9JdLWZhW
+    JLfKOTwVYgFiAY58y0/EfujteeLSXZudtKzFHkhMK+5R2DdNfh8vcK4XEfbnsdtLzLrhvL
+    et/atvBWWaxUoiRrIfcd5egvShj98VrgRYVuzLUuvGb1+Uvbbcxj+qilaKcI4PaMjp9Yop
+    wfmHkY8HrNc9CQPAs1YhlJBshKitulPrk9YKqImf6NEcihAyHUteSXT5gUe+A9RBuUbwj7
+    CmFwnKKR7SzchXkVKvA04qoqTWhBH8zV1BQkX62eXps3vCS0YOAswPKBLRSVqhgu8f5KJl
+    S5A4RzIJW9XGQthmmc7hW2y/ShMoAaXomv7TvCrrUDSJsH7uU+gbCJP3Vqkw
+X-ME-Proxy: <xmx:7JJxavx8p8IoXEPOXP4C5QybBfFSnQxhM_xRaMfh1-vfUtAy9ak_lg>
+    <xmx:7JJxauIaTIbZ1zquAnxFyVREXs0S7oaSVdHoy9gDfhFAY4q3NH1G6w>
+    <xmx:7JJxamT_d12Jq-GMhiqwUwWaU6dEc7ipoz5JCz1fKYMga8SVp0n4cw>
+    <xmx:7JJxamqfjjE16tm8N5X0uTv6SarxXf3WUEoSJJNwkbbQVmXKQdVdBA>
+    <xmx:7JJxakIyfk8mRMdBwJlvbyRticCojEkVwzyZLzmbfnOgM8b_h9ybbpKo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 02:19:51 -0400 (EDT)
+ 4 Aug 2026 03:21:15 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id deb121d7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Aug 2026 06:19:49 +0000 (UTC)
-Date: Tue, 4 Aug 2026 08:19:45 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0402d251 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Aug 2026 07:21:11 +0000 (UTC)
+Date: Tue, 4 Aug 2026 09:21:03 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Wolfgang Kritzinger <wkritzinger@atlassian.com>,
-	git@vger.kernel.org
-Subject: Re: Performance regression in connectivity check during receive-pack
- (git 2.54)
-Message-ID: <anGEgUrzzQYzEK_K@pks.im>
-References: <CAFXJcxvpKHoVDwE5mBOd=w-A5vPdUmehqr8SHLUD7qv1qB00rA@mail.gmail.com>
- <20260721035733.GA581473@coredump.intra.peff.net>
- <xmqqtsps76f1.fsf@gitster.g>
- <amCuLpT6vYzo1GF8@pks.im>
- <xmqqh5lrrplt.fsf@gitster.g>
- <20260723104943.GC604358@coredump.intra.peff.net>
- <amLgMqkqxR8mKIbT@pks.im>
- <amd4yR3EEn_fVZcm@denethor>
+To: Toon Claes <toon@iotcl.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/5] loose: load loose object map for the correct source
+Message-ID: <anGS37r_67pWr7u0@pks.im>
+References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
+ <20260724-pks-odb-create-on-disk-v1-1-3b3d265d979b@pks.im>
+ <amkMipjGA_7cwpOR@denethor>
+ <87tspgd4p5.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,25 +87,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <amd4yR3EEn_fVZcm@denethor>
+In-Reply-To: <87tspgd4p5.fsf@emacs.iotcl.com>
 
-On Mon, Jul 27, 2026 at 10:45:46AM -0500, Justin Tobler wrote:
-> On 26/07/24 05:46AM, Patrick Steinhardt wrote:
-[snip]
-> > I think overall this could simplify some of the design, and it makes a
-> > bunch of issues that I have been struggling with go away. The devil may
-> > be in the details of course, but I think transitioning towards this
-> > should be doable.
+On Thu, Jul 30, 2026 at 02:47:50PM +0200, Toon Claes wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 > 
-> I am certainly a fan of this direction. We do lose some flexibility in
-> terms of supporting alternates more generically, but I'm not sure
-> supporting alternates of different source types in the same repo would
-> be something we want anyways in practice due to the additional
-> complexity.
+> > On 26/07/24 05:48AM, Patrick Steinhardt wrote:
+> >> When loading the loose object map via `load_one_loose_object_map()` we
+> >> pass in both a repository and the corresponding source. We ultimately
+> >> don't really respect the passed-in source though as we instead always
+> >> load the map via the common directory. This doesn't make any sense
+> >> though, as the function is called in a loop through all sources, and as
+> >> such the expectation is that we'll load the map that belongs to the
+> >> given source.
+> >> 
+> >> Fix this bug by instead loading the map via the loose source's path.
+> >
+> > IIUC the primary source is always being used, does this mean that
+> > repositories using a compat hash and alternates are currently broken?
+> 
+> Yeah, the commit message seems to undersell this fix.
+> 
+> I think it wouldn't hurt to add a small test for this:
+> 
+>     test_expect_success 'rev-parse maps oid of object borrowed from alternate' '
+>     	test_when_finished rm -rf alt borrow &&
+>     
+>     	git init --object-format=sha256 alt &&
+>     	git -C alt config extensions.compatObjectFormat sha1 &&
+>     	test_commit -C alt A &&
+>     
+>     	git init --object-format=sha256 borrow &&
+>     	git -C borrow config extensions.compatObjectFormat sha1 &&
+>     	echo "$PWD/alt/.git/objects" >borrow/.git/objects/info/alternates &&
+>     
+>     	oid=$(git -C alt rev-parse HEAD) &&
+>     	git -C alt    rev-parse --output-object-format=sha1 "$oid" >expect &&
+>     	git -C borrow rev-parse --output-object-format=sha1 "$oid" >actual &&
+>     	test_cmp expect actual
+>     '
 
-True. But if we ever find that we actually want that flexibility we
-don't paint ourselves into a corner, either, as it is rather trivial to
-introduce another source type that allows us to mix and match different
-sources.
+Good idea indeed, will do. Thanks!
 
 Patrick
