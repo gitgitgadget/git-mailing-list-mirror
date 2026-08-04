@@ -1,135 +1,70 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail-43102.protonmail.ch (mail-43102.protonmail.ch [185.70.43.102])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D314A2E21
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 19:56:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431C2361970
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 20:04:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.102
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785873402; cv=none; b=lyjaFMmdWFtNhd/5mrUvXADvqmeicgWgRdOLpVBmFR9BMtl8I9g3Xxm5i+tFGvEDg1Q8Au2K92Pylj2AVseJ62dJRp0kbYMgeaRfCXLZTKozzlg51Qp2VBF5rSRG+mekXQQgd7I9qK5fr+NIRJyr8n3Wa9ZRNAjsp4WCVuCEnYw=
+	t=1785873853; cv=none; b=mDTm8ekWnETqaxxvwQgAWtBYQG4zI0R2Swp5AexMdTWiTbMAA5CvVZrwLDwk08hlKwDHDTjBZ6QHSnHPECr2eDEY2efPvZEB+sIxk8/uNZOtFmVWNUhsNO2nGlGHZb7q2Cfr0iz8jcSZ0YcJ6i9JdtuPh/oZRvTdtmQf4b7mpVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785873402; c=relaxed/simple;
-	bh=mAxEkk8AMzjfGyw+D+g0xnAGGiFa9nkTuzS/uKymg2A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=myDWn8bCQQA3OT+AV6OQUri6bgDpf0wmGkVgwgqSYP97KTydOwdSEIt6JQaYLl/eholur2vWP/2Lk31xyM9rxDIIcq/pT9C8j3vd7Mws/AKkGMqbxnzR4+LhGJwd3tERSSUE+tpqikIwGjSd7m+HyhDWr78IOoEvNQqHTvESWdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C4y/0DCr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785873853; c=relaxed/simple;
+	bh=UiG+CGEtCeI+vfxByl/QJuWv1otwDiou00btkkKy43U=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nBawfdZJo+N10C8ATzSJcx9eKUfhHw2DiehWjFp2zqXE7GLsgoR3I8FIBGmZ2Kj3HuaIP/0PHSMqLWemdG+5GIjL201e23cfuT+Txlty3NyXM65GZPltn/2AL0XWU0KdcUhC0e+Rt+SSqqKR+xqthvGSdo30AqIhiVrVmTlQe/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=FB39lRVp; arc=none smtp.client-ip=185.70.43.102
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C4y/0DCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6961F000E9;
-	Tue,  4 Aug 2026 19:56:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785873401;
-	bh=JyF/CSxap8UXjzVw0PooJGP/i3+qMDCzHZNS6clcN9c=;
-	h=From:Date:Subject:To:Cc;
-	b=C4y/0DCrYTIjU4BqH0baCNRJya+95z5WpsDxi3SNphKHKAjUzYdFudraoV4sNgndf
-	 XKSg9zKP3ClbnU0LOdMmb3kRciYp++GlL1HtlkOvVnS59aUmLEXSC7DbE5B6+53D61
-	 OPSRhHW1/dA2RyqrKviREbHPgIB7FYceE+RbYs+ml4TwTSs8I4q+yiDuwOcbCPVoEH
-	 Q53pErewOKzKpMtwz1jlxryj2k3GMnElqgFnFSNmEliTxZzda5LMW0M5BFCKnE8St2
-	 WwmdveOv+uVgnEgmBvAMNVzMamxJ6P8xvKK2F4zodR6kwGvmCadm1ADgEIqpxD2EfG
-	 P2ksLR6kZ0PNg==
-From: Vincent Mailhol <mailhol@kernel.org>
-Date: Tue, 04 Aug 2026 21:56:32 +0200
-Subject: [PATCH] completion: add 'git history' subcommands
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="FB39lRVp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1785873843; x=1786133043;
+	bh=UiG+CGEtCeI+vfxByl/QJuWv1otwDiou00btkkKy43U=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=FB39lRVpg63g0jSuTxDW1qBWH0uxSu3Mn0tUyHLa2dUMX0aRkrot8YZYaObDndq2X
+	 hVp5oncPIJ2S0lJILp9oE/zLI8jIoC4dxNLHaxPbMrHnXdtBg35vMIABhjHNSziJhl
+	 9dIzWHqB3p0CyukW3TJCq5KBMhvVv/0nBLgw8I3weCW5baZpDL9fc1Lhrkj1le6Zy0
+	 X6U7Tzi46dkvvS3xHBZ6iPheW1I3DXy8dTbazwr5aYFvbD9XQJZqUUqMlybt57Ss38
+	 fgIEyMQo3XQ3ZUQvOckMTdbAvTA4SvfUm0rTQPD3WS43wVUkOOgmhGNBcJjohVNCDA
+	 6V7sdd3sFn4tg==
+Date: Tue, 04 Aug 2026 20:03:57 +0000
+To: domen@cachix.org, git@vger.kernel.org
+From: Caleb White <cdwhite3@pm.me>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>, Patrick Steinhardt <ps@pks.im>, =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>, Caleb White <cdwhite3@pm.me>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/4] worktree: add post-worktree-add hook
+Message-ID: <DKGFFRLXG2GY.VYU49MX8QE8Q@pm.me>
+In-Reply-To: <9f6bb2ec-afe3-4a1c-ade2-addf73f8681d@mtasv.net>
+References: <7c8b4673-37ac-45fa-ad8c-a1dc09afe5fe@mtasv.net> <20260804181358.532970-1-domen@cachix.org> <9f6bb2ec-afe3-4a1c-ade2-addf73f8681d@mtasv.net>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: 0e8a5f56a9179de13c204344ed81b60b5f3d22db
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260804-history_autocompletion-v1-1-6f7459ffb677@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MQQqAIBBA0avErBMmKZGuEhFiYw1UhloU0d2Tl
- n/x/gORAlOEtngg0MmR/ZajKguws9kmEjzmBolSocZazByTD/dgjuStX/eFUiZC10qilU43iJD
- xHsjx9Y+7/n0/v26JTmgAAAA=
-X-Change-ID: 20260804-history_autocompletion-84620c2f8500
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, 
- Philippe Blain <levraiphilippeblain@gmail.com>, 
- Patrick Steinhardt <ps@pks.im>, Vincent Mailhol <mailhol@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2019; i=mailhol@kernel.org;
- h=from:subject:message-id; bh=mAxEkk8AMzjfGyw+D+g0xnAGGiFa9nkTuzS/uKymg2A=;
- b=owGbwMvMwCV2McXO4Xp97WbG02pJDFlFzt/bT555M0es+Wnd9cQnore4227a5BitmvpS82z81
- C8/btyU6ZjIwiDGxWAppsiyrJyTW6Gj0Dvs0F9LmDmsTCBDpEUaGICAhYEvNzGv1EjHSM9U21DP
- EMjQMWLg4hSAqfbKYWR4/Cjq3YrXr8Wm689O+L3b2U533YcXp1tuqe7Zc4g1UHLOP4b/aQHlC7/
- fkrJnWrQsdZnk9pMxxwvVuQ2UGeQVGeb+mFrLBwA=
-X-Developer-Key: i=mailhol@kernel.org; a=openpgp;
- fpr=ED8F700574E67F20E574E8E2AB5FEB886DBB99C2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Use the parse-options completion helpers for the "git history"
-subcommands and their options. Complete positional arguments as
-revisions, and add coverage for each kind of completion.
+On Tue Aug 4, 2026 at 1:14 PM CDT, Domen Ko=C5=BEar wrote:
+> Introduce a post-worktree-add hook that runs after the working tree
+> has been fully set up, including with --no-checkout and --orphan. The
+> hook runs inside the new working tree with GIT_DIR and GIT_WORK_TREE
+> cleared, mirroring the existing post-checkout invocation, and takes no
+> arguments. Details such as the absolute path, worktree identifier, and
+> checked-out branch can be queried by running git from the hook's working
+> directory. Taking no arguments also lets a configured command shared
+> with post-worktree-remove distinguish the events by argument count.
 
-Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
----
- contrib/completion/git-completion.bash | 24 ++++++++++++++++++++++++
- t/t9902-completion.sh                  | 17 +++++++++++++++++
- 2 files changed, 41 insertions(+)
+It looks like the `post-worktree-remove` and `post-worktree-move` hooks
+both receive arguments but this hook does not. While the hook can
+certainly use git to query the path and identifier, if you already have
+that information I'm not sure why you can't and shouldn't just pass it
+through to the hook (same thing goes for the new path and identifier on
+the move hook).
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e875787710..f10813c8d7 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2137,6 +2137,30 @@ _git_help ()
- 	fi
- }
- 
-+_git_history ()
-+{
-+	local subcommands subcommand
-+
-+	__git_resolve_builtins "history"
-+
-+	subcommands="$___git_resolved_builtins"
-+	subcommand="$(__git_find_subcommand "$subcommands")"
-+
-+	if [ -z "$subcommand" ]; then
-+		__gitcomp "$subcommands"
-+		return
-+	fi
-+
-+	case "$cur" in
-+	--*)
-+		__gitcomp_builtin "history_$subcommand"
-+		;;
-+	*)
-+		__git_complete_refs
-+		;;
-+	esac
-+}
-+
- _git_init ()
- {
- 	case "$cur" in
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 9ae3c48ebd..08ecf682ed 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -3107,6 +3107,23 @@ test_expect_success 'git clone --config= - value' '
- 	EOF
- '
- 
-+test_expect_success 'git history subcommands' '
-+	test_completion "git history " <<-\EOF
-+	drop Z
-+	fixup Z
-+	reword Z
-+	split Z
-+	EOF
-+'
-+
-+test_expect_success 'git history subcommand options' '
-+	test_completion "git history fixup --upd" "--update-refs="
-+'
-+
-+test_expect_success 'git history revisions' '
-+	test_completion "git history split ma" "main "
-+'
-+
- test_expect_success 'git reflog show' '
- 	test_when_finished "git checkout - && git branch -d shown" &&
- 	git checkout -b shown &&
 
----
-base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
-change-id: 20260804-history_autocompletion-84620c2f8500
+Best,
+Caleb
 
