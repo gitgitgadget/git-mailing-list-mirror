@@ -1,120 +1,135 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B5E3CFF66
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 14:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785853879; cv=none; b=L7x0aQJiS0XGNKmvVFCRtPugMFWkFVL6WagYle2ftItmZ8E2fCwQIr/Y4PtohVV0dyCXnAPF72cBS175vs+MspkUcRSyLI06uXPFNI8cU3poK2IxLlvGcx4WM2cAilHN1sM5wE+J9D241m7DcSC6ki4kWQwApqoxM1SOVqc78eE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785853879; c=relaxed/simple;
-	bh=tQCB6iCLzOglmOLsKiNlUkh/j3ZAkMN7bQ9XFxPxjgg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JkrDVYRWVbynIH7szemugREiSuJLDs9HjWEQvdTvpwPiA+XAJ4ou0Lo9drZ3K1u93rHqm2BBY9fyLMMrGq2j3/yh8vPB4vgbfTLFmUvYhGCHJpKLi47xftg0XRFV1dlnPfSWbWOJ50R4bKmze7v+PW44SnMbeVktVe5ltF62MRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iSse2QoY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BjI9/y2Y; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9803F8883
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 15:23:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785856997; cv=pass; b=pKjDXnvQbEyE+yNLlu/h5pyKhqVH29ObfqZGr/IDaP4p7ykldO8BEig3HkJ3QV4f6hCy5l6dDcv74ah1IBYW8OKQsDkHGc97WZtBsAxfawfhrnqaYzmAZU3ZU3tbKlQxOIJPVMZIPkpVhRm7ZC+vDNkpG2liy3PcKPzwewcLozc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785856997; c=relaxed/simple;
+	bh=lrOLo7e+glqFHwTKO1G+eFM0HuFAr5MBGBQmx2NQS2A=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dCS0OpYJHt46dafjka1/ZlAEstAMCSd/MyWXwzc5WW/GEBAy/yxIVZzAVNlLDrwmgoxzmL77pMxKgR6B2XwODj57YATDxjvbdQx0K6FvetXSXl7buJJCynAxurevCgf0DmJBVdIbJzlOxLd3AlAXGrdfLBm0LvEtcB2Y+qP/xmc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ETHv8wRW; arc=pass smtp.client-ip=209.85.217.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iSse2QoY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BjI9/y2Y"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 13F061400131;
-	Tue,  4 Aug 2026 10:31:02 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 04 Aug 2026 10:31:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785853862;
-	 x=1785940262; bh=69nWiD7hCBvTcCpYKumu5x1nhif9I3nPeCUEueURV6I=; b=
-	iSse2QoYJPzdPORogeYv09Txjl+sNwUPYWCIusHN1kgX3koNuwSzlKSxsEUlcmpr
-	GnQZwMR0twnMgkMetBD+ivOJLAD3yJtVBvwcGsKsgsekMoOb2X9qDP/GZ131zWfT
-	pO61YoUbDj0X3BN/LCxyhClAmArWoXH66nmv46raa9hyceQbgwElq/66CvZQIk8o
-	cLm86fE2j8xxpl6gFB5+242eImMZPKuA7/jHMW+24wCvfEIUifPLZXCOG3PUTFe8
-	qj6MfXGI3/BCSbfFUYg2Hvp2Ni334W5EXkM7NC4yahuSRHxVnr3yOv3WzuOlCDve
-	nTZWf+XVTfotFXK8k08/tg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785853862; x=
-	1785940262; bh=69nWiD7hCBvTcCpYKumu5x1nhif9I3nPeCUEueURV6I=; b=B
-	jI9/y2Yu2UBC/Ra7Tl/bLlB2gMJsNPeJ3EBisGQUmhKDwEdNZkyoxDTgTAIjJRU0
-	V2mOC+bM59RJVHLuR7EITJ0R0Wes/h1a4S9cZvqeSSf3U4ldZSg31gGN00apilTY
-	dqxyKsKq83WfpBfo2iilA0iZSkP3hGoj0zGfEtOWD4a5w01tpQy6VyPjfmc+iRVK
-	00wfURUVbRTSzVZmfyhk4Pci9JvlsY+8KFV9Ib9V4EckNBPG4ImLjptBKXH8YNHR
-	Ur/rWUleMPi4NhQMh+XFcBLVF7I3hw5ufQCQlNx/DolR8usdROuTSquDgaxZHEH2
-	w80OmfXxgXJexeZZWMcBA==
-X-ME-Sender: <xms:pvdxahoITEwfePZdnVPMLGQqn1hAXAWSWIwKHde_W7-eINfzzfIq1A>
-    <xme:pvdxaqi1y-reUMLFfTkR9DRc7RqdkBET3P-II_i5iHxbgzJIVkB0Y_xTaQIJ446hL
-    pnNFLqjlkqdhx6wepGk8W_Lmy8daAa6sYrdSA_lXezBE9dcgAuZ9A>
-X-ME-Received: <xmr:pvdxamjb48eba_WUN-l874KJg2kHfoCbDvv6LA547wqboWICdSWbxcpanmS9n7EG0CWCJiksIK7FZb3I8iVn2Z3sFtpGRuakJGcnugkL>
-X-ME-Proxy-Cause: dmFkZTF3Brg0dI3QO/zTnnmlrjkArIpQTLaTXUd5haVI+Tb4s/YBXEcA1i6lJEBW6de3d1
-    kqJJFo10gijIskv8Fs2VUzlemUXXYuJTicQ3JNWOLyR2b7AhqYs+5iJk6I8hBCIvAoRTrN
-    63JEvj46eo7g4kQspd3mBjMHcthc5fXQReaRzK2h1GboGFK17ZM14MS3H1BAH1J5wQSP8G
-    FLjlRaVV9r17vMfqrPoEnOEN9gzAMHivA1pWOpJvULf9DN3nbcJyUEb4seqGGQEjbmKoJc
-    k+YJDJFs4+hYVXCvTkx5wGl++JVCVL2rGiX5hNxDTKeXTfrZm+pVDIZHmeXqhkdTl43Zd8
-    L96qU4sJ6PWrhMkJAOREMoo7tFuSRAbuLBgZBXxsJlhHKzwIjFDzBkaszH94TGliAthGD3
-    RQVjxUKMsQFFdkniUtiqw43ERM2/q6eODEgCE14PtRyvYYqi0uBeKy8OfUSoN/TdQl/0dl
-    GuPimIlbC3r1FscOaVFU1hqiM4OU4rlznP3abq/IoXgiSWOPOcpbPYAkSVmJtxdOAUmzgR
-    +UsQZ/OW3m8cEuaM0W7IifqPWxgwGTtLzJZnqwGH9BiVEQOaHkkEt6Ayts+szZ2ICFBzf9
-    0clRN6rcnqBXY08PL+laNqUPbPOGlS8D4+RiKaN7RBvoFhvsRgJj4AIV9NjQ
-X-ME-Proxy: <xmx:pvdxaogFpcwKSK5pCoZMBz2kv9d0D1CYx98gUJQ0Fh2VLGAnKqaeZw>
-    <xmx:pvdxauJHsaNTVc1KBQpsafKUPQiYYLrmbj0_ieT9vHw-LPK6yDqjMQ>
-    <xmx:pvdxavEAZT3kWWcWfhaR6MIdUQsYC7L7RXIeLebvt_2Pyep6ipOGCQ>
-    <xmx:pvdxaqQ0PxXN7YM0BsJb01GKB7FKTZu80BpGxYFrXSkk6RUz863QQQ>
-    <xmx:pvdxaryhpluSMTm9wpvppFsRGjHix9EwTTDO6joYTTh1ZvJN9_4Shh8Q>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 10:31:00 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 68d81ca4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Aug 2026 14:30:59 +0000 (UTC)
-Date: Tue, 4 Aug 2026 16:30:56 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 0/2] doc: refs: put ref migration warning under the
- command
-Message-ID: <anH3oN3JRaG1eEfK@pks.im>
-References: <CV_git_ref_migration_warning.b09@msgid.xyz>
- <xmqqbjbncdv5.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETHv8wRW"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-738bcf9a573so1561797137.2
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 08:23:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785856995; cv=none;
+        d=google.com; s=arc-20260327;
+        b=DilLJtGDkaqW2pbfyRzkoTK2MfOAC0KO+2fo9/2xmjcdpg6npOL1Et7Q4icTb5N4o7
+         hLZSyIa8SvbfOyNKPS3Q5kGYEjsVTC+y95QFL7oTHOGQhIp7m1nKCX7wdw8t5ZomoHCI
+         L1M7lnLNyOvuefykjtuymSYKU/F4SDL6DsQLDumtVh4zp5Yal1xeQ5HFW1myw+XLsOou
+         cg88whozIo0rUffDQzHyG/Sk+B4cnlFMHtXUt8Z0wBQp+h6/zHM3iN5xEmtSFJ9rb5YH
+         zJoYp2q2JsR8c5a0ATfLDmYqT9sjHXkEzvKcurlA3ac0+c8B0U2675AFxD4aK+qlx1vN
+         GGnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=lrOLo7e+glqFHwTKO1G+eFM0HuFAr5MBGBQmx2NQS2A=;
+        fh=1nG1bbBeWcjtZS6hn0Z4n1kHGcNU7MzNe/qxi22xP0U=;
+        b=kcg2mJZA25aOr8QE/MCACbubNc3GFbhX7qZ73k94boZmrvcSJw8F+czCC0GOUxBEQ4
+         VStJriLfXipXdNvzIUV5Csqzp4dT3x2848hLg2Xwvxtx/jMqPn2lBxXaXzy2q13FQmUK
+         Zz7VYWn+8palVJ+7nPDnu117QnF7x/l0OprRnsDQq8Dq1qKw8/m35rAS+PUp7Kd74jV0
+         jnjSM2cROrWUw33gxtpEqiYTdoPmqBW0yYxMX7vbWgo5CJb9/oc3X/rfE80TsP2p1hFV
+         p58hIRZelVSBj7M9sxSpekcRblSbAUXbczFt493wFR6bU6PijqM2SSbmthU5F71jOy5g
+         NxAA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785856995; x=1786461795; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lrOLo7e+glqFHwTKO1G+eFM0HuFAr5MBGBQmx2NQS2A=;
+        b=ETHv8wRWKeklYQdWdITJf57Eo2Jgq9iIMAmo/dyvQKSZ8qzsI3l+br2TLtLiAVc81T
+         WKCWGUatPn/JIgUDOHcbeUIVW6veLx13ikws543t0fthrcCKDEpG5L4aoymanQwE7NQa
+         zmEdiV7yc5gfckxEZrW2Z6Zifp3UMpUfNbBolCg8c7GXpxOobpFvSuoq0kFNSC+dLKWa
+         11c1MSZlXQDo2oTml9bSu842wA+nm9yCY7NpMD5sImdXoireUFGa793PRVRzmh/05gcS
+         oMAFvsGvjsWe5Omnc/BP9QIJaVdAK4mLeyFYKapGY/eqbxVtkVyRqF5gd0JuWu/2B3hU
+         C5kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785856995; x=1786461795;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=lrOLo7e+glqFHwTKO1G+eFM0HuFAr5MBGBQmx2NQS2A=;
+        b=YiSgs2Ts2Ri4p2jPS+bhwpgUWYI3ZIh6Sve220muYj+g4OSGqMCbK8eySglqO0uATu
+         Nznz+jFwSvtXXGjY7j9EOKVLJPgRwf1KxFpuDvUEkUzQ5/vIo0MTHI4GKQeMsWTHwZ5T
+         GmDDeAJ95EuvDYdS/raM24WZScgJBzbfhWT0NH7aIZ9xrjx3YfhG/57E0/H/Itp7gCgf
+         puDIG+BAvICLWt8RPAGbpEUxE92z3a9acsEsySEmxe3cH0B4zf8EVwpZGxaaadvyv1pn
+         GOKUcByaBo4ESVetbqqK2DMELUoPXDcootO1KieR+DAN8aEACVe9dy7hiQexo0Wuq9Rs
+         1UBg==
+X-Forwarded-Encrypted: i=1; AHgh+RonOptTqvNc7I00kJAHVoH3mv57j8jyiW4q6LtMTSX5MCDNoebDjfiXDB0L24kTrHumQ7U=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUPDYLioAOB3w4rsPcMIr/busrYGz42HcjjYBdqF/0JdDMVUoi
+	FETWUIC0cL+HaVJhd+K7uts8TmWF+0ZwHWXCjHzB+iTR+VHCz/CBCvdn+jZcPWYz4pG/BRNnMT3
+	fpx7JmuQLMPCHHILCsoV6Hp889ufQUy4=
+X-Gm-Gg: AR+sD13x3dxDGC/UR41seSNGXhhb+kJASOkwPotO38wRjnXUBPOlRKtsM8hX/UyE7NS
+	WOFychn/AOCmA0obt7vZqc+rOPt9weEi5RvuLOgd4acGJZKzljO0pwOAANUiP/Rl/iOBIKtg9EI
+	OJQqwKzxA2o2INjhnJvWcb2kDYHdCbiqwCQ7XJa51CYFSEMwOx6eBZzJhmloS/NMTMCO6plxYC+
+	ENoPhnKzm8YhQ1JSoEDWBbbaihxExSKfoYXa/fvYT4vC2A/IG8lMTo0BESctCfdFeXk98nccoGQ
+	561VzI6mx8VJLUbT8umvNGjoTMi0H8oQwHVRtVdxaRRlscUnDWO4LS7N2sr/RUjYtx55tw5LM/W
+	egSQwTLRbJU8PmX1eeUqU48Oj5KKafS4w8FM=
+X-Received: by 2002:a05:6102:1086:b0:760:418c:8a9f with SMTP id
+ ada2fe7eead31-760418c96b5mr717927137.13.1785856994889; Tue, 04 Aug 2026
+ 08:23:14 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 4 Aug 2026 10:23:14 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 4 Aug 2026 10:23:14 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260803-objecttype-support-v3-3-7176fecf7950@gmail.com>
+References: <20260803-objecttype-support-v3-0-7176fecf7950@gmail.com> <20260803-objecttype-support-v3-3-7176fecf7950@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqbjbncdv5.fsf@gitster.g>
+Date: Tue, 4 Aug 2026 10:23:14 -0500
+X-Gm-Features: AUfX_myw00bsPsmLhS38-AqAS3Ox1X49GGGDWKF8afwJgc3kdTrCtav4zXb6d8Y
+Message-ID: <CAOLa=ZQbbziEK8HiPU7Lpsn0NmWfEnh=-L4wSBFt4qHJWAbJHw@mail.gmail.com>
+Subject: Re: [PATCH GSoC v3 3/8] fetch-object-info: pass arguments directly
+ instead of a struct
+To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
+Cc: chandrapratap3519@gmail.com, gitster@pobox.com, peff@peff.net
+Content-Type: multipart/mixed; boundary="000000000000ccf3db06583a3b5d"
 
-On Fri, Jul 31, 2026 at 09:39:42AM -0700, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
-> 
-> > From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> >
-> > Topic name: doc-refs-migrate-limitations
-> >
-> > Topic summary: Put ref migration warning as an admonition under the command
-> > so that it is visible.
-> 
-> The caveat only applies to the "migrate" subcommand, and the new
-> placement gives us a much better logical organization.
-> 
-> > That’s the first patch. The second patch adds a missing `linkgit` since it
-> > touches that same warning text.
-> 
-> Looks good.  Thanks.
+--000000000000ccf3db06583a3b5d
+Content-Type: text/plain; charset="UTF-8"
 
-Both patches look good to me. The indentation feels one level too deep
-on the firstr patch, but this is a tiny nitpick that we may not even
-want to address in the first place.
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-Thanks!
+> struct object_info_args groups three pointers that already live in the
+> transport and are given to fetch_object_info().
+> Grouping them into a struct reduces the number of parameters, but it
+> suggests that fetch_object_info() uses all three of them.
+>
 
-Patrick
+But it does use all of them, no? Not sure I follow the reasoning here.
+
+[snip]
+
+--000000000000ccf3db06583a3b5d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e2a4cbd4d35a7d50_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1weUErQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meGxPQy93SXgwdUU0b2I2ME11dm03eWRIUFcvdXpRZAp0YXZQeUZGWXJE
+M2hWdkVWUEZwTTM4RW9xZkNtek5sUVBaVkNXOUV6M0QwalQvTUFwV1AyemhWTDg2SUFKcVJUCnRt
+MzBzTkl0SkVhU1kxYkduWmVVanRldjFhbjdCTFFVNWpYeWNWT2IydnJ0VE5aVi84MkRsUCtiSit5
+S3RwYjUKcWt6T28rRWJySi9Xc0Z4aTdjUnNSTFZvdGtkSkJqWW1iVWpySUduVXc5ZGJQY21NQkJY
+K0s0cDR2eWhpcndMUApPc0tMMlJPNU94cVY2RCtlbEtiZlp4WWE5T29Mei91LzJhWWIrOWpaV3d2
+UlVWM1V4MVNlaU54SWY2N1RkaVJLCnFaalJDc3lJMkNicUFJdDgwd2tpTXdvd1ZGRVZSVGM3T2tL
+UVQyNmhrVGhyaVB4MkZBSyt6aE00QnBzWFQzNmMKMjZuWGlLNUM2cDF1RjFqUlIwQ0t6YTFZT3ZU
+bEt3RllLQVhlb0pxVDdmMk4xTXBubCtYYnlMSk0vaHo1aTM0NQpPemxwTnhHZFpyTVpkTmZlTktH
+NjNreDBnOGY3OXVCWnFuUVU0amVoekNDbk5UM3RXZlhlR1JKK2wyajdabmJiCmtlTmQvYklmYWR4
+QWpwcWw1TWFab3crOEFFeGdtejRWRkIxUmgyVT0KPStIejgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ccf3db06583a3b5d--
