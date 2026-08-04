@@ -1,84 +1,83 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9749C427F84
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 07:21:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3DE429013
+	for <git@vger.kernel.org>; Tue,  4 Aug 2026 07:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785828089; cv=none; b=mWQuWFi0S7nX88RprFFExmvaFlRMR8d5OROORn4Bv2yIDly/5hpxERgHDYLBS6X0AfATtCBkZGvhliwQNO+RDC+jSZEGxcK8iqj+YXB2OW90q0AF8CJAA9qiAfLYJzQY8zyouTbI6wdOIiv6AuqaHvuL4xArm67c0nPGkXD9v5s=
+	t=1785828095; cv=none; b=pNlBQWdkGYZPKzr812w07dQoWAXl6ZTR+HP2WN1UO8fZEL74Mw25htzJQK4oluNCtqyCNV7bCY674vwfzFXLVtFX5BmfPy4a4Ktbn2BEvNNvxEhOptT3ufGRuMHBeDH/ZG53WK09/h2I12SnrXXNpLiOI3SKTTqmGg6kwhV3Ikg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785828089; c=relaxed/simple;
-	bh=562dTBZleGJcgAmsKr+ic884/kHlVYd3fiCNVKwu9Xw=;
+	s=arc-20240116; t=1785828095; c=relaxed/simple;
+	bh=7hsOTsZtHuWT9qdlQf5hN0ecnAso5yYl5T96RCBcPLs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bWHnYZKgKWYNBwVFs1PgNd2WVb/d6f+sdn2rya6cSFWl4TC/Fl5Hkn3xTd1+egm6W7bTPGPdLs89WEaGj55Oib/FbcnwNu+N0U0TslJfo84azR+O2EL3CQEWPu+rK6T23xI0awN2zw0fXXgkOB7hLPexV7bmrI79amf+DiHRUJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oP4hbmyq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ijzitftJ; arc=none smtp.client-ip=202.12.124.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=eSaqt7vhR9VcEwvINHJxU6yms6JtWya8/g+PZh5KxrsttKXiATwfs7YWyh8CcafFccwDf/KSaFxDrt8SQDeyt+Gng4ZcxpLlcmarAJWW5N5EYAV/zFE3JIBC3qEdZpuALc0qpuXv7kB/IKTRCenccMK7O5eQQus0DodpKjbdu/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q17IhorA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CzIPrK/V; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oP4hbmyq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ijzitftJ"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D9E817A0144;
-	Tue,  4 Aug 2026 03:21:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q17IhorA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CzIPrK/V"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4E6571D0017D;
+	Tue,  4 Aug 2026 03:21:33 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 04 Aug 2026 03:21:26 -0400
+  by phl-compute-10.internal (MEProxy); Tue, 04 Aug 2026 03:21:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1785828086; x=1785914486; bh=sJJI6WjPJk
-	mziSJxDHF+EgCU0VIw6gA1GadMXwZXjgE=; b=oP4hbmyqIiKrsSvzrV90qeWt5c
-	Fex+6b0ME7AnjKEmB0gAQsbmYLdgcEH3TgfhO/S5FoOiTHMikxK8wZR6+/iUy4H0
-	c50vCfNKXszttJsWW0rXh5ckyJDsB4yK0nB1kZ5G9J+/w+UT0PYLPpy8rGyyD644
-	hhN+b8v4ONBlKvdKuUMd/ICMXIJVvuVunoIhVC1I1HDV8xwfW6rmFkxXav1RBrGT
-	sLX9gTMgcvPzhtDRoJ1Ai9p3quUdxwmODbXTHeHVwdCG8M7tv9cYzYTNra3vws0P
-	VQt0aAYmVp38MHGrKqu8GYRug40I6qk9y+2OxhuF9od0nk1M8vejLmMR9RiA==
+	:subject:to:to; s=fm3; t=1785828093; x=1785914493; bh=KUQg7foEKP
+	5HqsL7V8nenGbILoj6cswPMYbsFAGNc/g=; b=Q17IhorAw5zFWrU96sknEB5ZBT
+	/igd7xxW0W+KsC4Rh7p+q3LjOg705XvRV7+Z+++z922708sl55vYzxiHFH8CO6bb
+	8c58O53oiXM0ZMIlsEFgzZoOzy01JrOQMJ/6LvjyTq2yb5PHCs3ADLdDyIJNXFZH
+	RfYrBHJaI56w+0w5NCMSCCfxltdVBQ1QvIMn6lHoAAkuEO4s8i7h4w8HI+za8DgN
+	tl3ZHQJiTqFQJmp2AS0UNY9V0xUIo8VggfiQv82k/VN00XdeOg9rygAi93DjqPv0
+	FHyP/+5OekLg6fqJYcVXKrXHwPunB2CXYrLUad0mgZqt/vSXN1V/Du3vfvWg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785828086; x=1785914486; bh=sJJI6WjPJkmziSJxDHF+EgCU0VIw6gA1Gad
-	MXwZXjgE=; b=ijzitftJu6GonczY+LbxtjlLJqLwE1/s6MQOV/8ZQrd19nUX2Nw
-	+gOk5NHR3FZ/Z5ATya0cC/CkVSpR1PDmU9MV2dDwTXuIQSQB5pX59C+UFLpY6S4w
-	Fq3a6EbNGR+Wz2euo4QsWM/q3jfwRoZi+THNSbtGOb1EeO514Vn50Tw8ccbLqt2S
-	lho2hTdfXvjSVCmlJidX3kSTTgP/sMYXBF7sFZyDeU4JeZOoJVq8tQ2YOBo3tH6S
-	C2Oxq1Dw/I6gF188tXYMULwDZTCGvJZXDJCYTua+zjpxvi/VJuaW+TApe8IzKAfT
-	fXyhLXVyW4dqqqWzbhZbsGzXv0fiQ2fBJWQ==
-X-ME-Sender: <xms:9pJxah3PRiGAb9jx2zREncma7ToOlwXl1t6f6xLlcSvbma1EQ57ZdQ>
-    <xme:9pJxauHcibZdw58loqGXnGnxqPEFCfi63Q_gsBqAnew53bl1Xdu4Ta3b-UhqfvyAF
-    Dw_0Os6Gy-1diO6yJ1FnbIceFPqzrxtMbEsz2EjgcuKfSBDezkloA>
-X-ME-Received: <xmr:9pJxavgn2obVGWhsw5pZABfghyDKA18sNYgn5d8q_Pmsay4MCiv7yPLIkRRGetloeKIraBptBZbBJx4bw__IMs6cpMHVM-ER98C5N0V7>
-X-ME-Proxy-Cause: dmFkZTGdM6jpBGZhzGMeQuy374uz75V+gHLRV9Ekqz689qKkzsSrlSeOAdb5ajEbF1ADvZ
-    aKHz+UqItg9eOBUZzQLX30I+y8dByine6J+JuyBCqa5+dApg1SLbjKwh7txknVAHrnlb1o
-    vGTi+lkqwLGopOwdnxxGdhw6JxwTAczw6VYSB/5MBvYYIXm12wX+SB9/WSHHWgtVJnIBLT
-    eIeb+2VKNnQINhFj5bHPozqcS6IFe+HaWy0gZTjRUVXWwZuP+eV/kfasJtvQdwktRwCQGj
-    fGWnparXTfRW6OIicMtsa86HUHe3Nqr75cwUYC5cG/RNSylYzj57UR1LbMCDqbDxsRX/Ob
-    7ZH4Gi/OgsCD+0wSj78HCKkn0SQFYSpkXoxjoObM421n3NSGzVT0/jb01nMFlL9mK34agQ
-    VU/hy1XR3H4x3Hl6upIncbsLxsGhXWo6Hz85aWCPYkVGZfUW17MUJVaeFnXqNxL3yFLFB+
-    7l/6iElCuuu2TWhn0+09b/QFdSFf215LPxM29xaQx5plfS8ozrVCDm04lYqfBS9RPXni0Z
-    btPKB5vQZhn4C8hgiVEq20UDyW6FgS4KPU+qQ0kpuh3uhnP5xUGG9WWGy4u8Js9hUGrgE1
-    D6BC10mj/x2BnqblzP7C53f0dXi9nY6iFkiGmUOtnt0MZ1EFnh4j7o2yAi1A
-X-ME-Proxy: <xmx:9pJxap8dRnuzPu9925RLwD7_pW4yuxvV9m3_iMIpdLld2pu9TrgUKg>
-    <xmx:9pJxamr00ZUGS9mLK9zWG0LXgXgmqqmD0LATMdZ3gFxJpq2WgHgyZQ>
-    <xmx:9pJxao84TEfMgoqsQ5QW_zZXaBc6MHedmFJUQaL5msOGWfKitslUgA>
-    <xmx:9pJxaqVBrddbzFTPKUwf_azYwlm4eKiKqPofe-edXtlNYPDaEQfQ3g>
-    <xmx:9pJxatOvCpM_2DLY5140LoqxqTgGCriZ2ciB5d1iad2-cRckrv_BxD_S>
+	1785828093; x=1785914493; bh=KUQg7foEKP5HqsL7V8nenGbILoj6cswPMYb
+	sFAGNc/g=; b=CzIPrK/VqLOl7suzqrIjRZc8hrYF/DTh+v2kCllE1pHSUbLi555
+	JAtgGuUV2+41nT3jZmi/6gVdGJQKUyRHb4EstYq6+O6qc4+MVe+0RB8i99fJWe4V
+	kruHq6O6OryiVOEaq2DWIXtDBT9pb3fbylTj4/A+NlTAjlNg86dlkxO6EnAXPkaA
+	Yds27IZildMl5obrN4nqXSWO1GAIVR76sP+LyZNQrGxPCOKXVdghfbB/l7v8bTiM
+	oHzU1eAvi3Sk1ZkhZchF0ajBJevzNcOHFfUznL/gr9jnETD/fnKH4RnngCid3WAf
+	1jmszLpMVLwvpWd6OQTpq6eOizbvJzXnzBA==
+X-ME-Sender: <xms:_ZJxatxkFL4LDW1GneFjx1bCcJ-GHjHZXSggOx_PSq40gfCSIcC7Gw>
+    <xme:_ZJxajQ5sNzUWjF07MK1u-LCycuwy9drGORevrBTVN5RzxyrDk3RRqRHt2n6e2jJZ
+    fuGWJ7i8cVc7Is6j_hrG3Zj-fzXsJXFGMlQQotOy3WbzyuGAWYopw>
+X-ME-Received: <xmr:_ZJxak8JplLR0HkIimC4ZtTcxljB9RX8rQNhKAbKTOT7RayI6Mam6r3V6Qgc6uQcWosYXWjUCmqmu90Sqhk1oCTw6X2NZZAqNERVBVgb>
+X-ME-Proxy-Cause: dmFkZTEW21OsGZxUpWZhdkXtbm/1B/RJ4l8Q+GteNB83+vGg16KxWvo9EDlkFLPwh4XmVg
+    tonzBCmSlMcq9Zv5kkMsAOrl3v08zRX5F5Kf/PjQV7dQl7CLH9DoiWJINC1zs+NzgfwbPb
+    o/vBuEQsSqrZT13qzTRXc554btVvCS/6lfjTQKMetN17r0fR9TYxOWWeyrliUtKDxD9PGp
+    NrcEbQBCL7dK6pSjPXks7iNDoYJDpbaOkZ3ZDai5LJtC1i8/s7ATR2oU3ZQZ+La75i1u0F
+    hpyPnpq/uoBEpgm0v46vVCf+YWFQ4IBX0XlK2EWgOqGNi6VR3S767OqMXno5X3836ebysg
+    LcXJALL+NtLt48BHoRG8o8Cn89gmEoSpzUTbD7vKnnCMdlVhx+a3ZfULl4lxMhKwbPO/nu
+    etRaQiYcP0+5kG9PJa6ZLTfho/h8BPMcrctPCgh+bO1wMk1v8xFnIKH4/N/J1Rkm9U4jDW
+    SBUcOOwU76MD+xSCHffDVkM1eabkkbw68SuXvYyO2r4P2J3NBTQLbDIi7VOFwywgVZcmWc
+    Z6FBVox9dPre83eKlJzoRPqcojE4da5LhDWuKmwzA+1RVKk1KsITjdZk5yirKoX4dbwcZD
+    qVFDf+ywImXfXSYwLwv0gROFopveKGOZuINMcQHjKyVPnem9etWoiGrXYqXw
+X-ME-Proxy: <xmx:_ZJxaqo5vZt8kpL0dYZXX63ZQDfjK_Bjr4FPgdtBm2lCHhRUeBf6BA>
+    <xmx:_ZJxahnH3s80XaHynQcRD3iGzTIIpJhZWwCRcAHxvSZvsePkBiwF6g>
+    <xmx:_ZJxahInX3-uo_V_fzH7cPIsowC8nWh-iiZVsqJhC_ft0HDo8PdnNQ>
+    <xmx:_ZJxamyByjT-EanGkge_vLqZL0CR7OIn27aNDu9QGDsfc66IEjCCmQ>
+    <xmx:_ZJxat3eGQTnG1CCCmyfkypUr0dWnC0Um3x6-t4QrWzcHKTxp6Q_N6sE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Aug 2026 03:21:25 -0400 (EDT)
+ 4 Aug 2026 03:21:32 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 25f996fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Aug 2026 07:21:25 +0000 (UTC)
-Date: Tue, 4 Aug 2026 09:21:21 +0200
+	by mail (OpenSMTPD) with ESMTPSA id de7e59a9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Aug 2026 07:21:31 +0000 (UTC)
+Date: Tue, 4 Aug 2026 09:21:28 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/5] odb/source: introduce function to map source type to
- name
-Message-ID: <anGS8aD_j6rq5YeT@pks.im>
+Subject: Re: [PATCH 2/5] setup: detangle loading of loose object maps
+Message-ID: <anGS-IOKHMo5VUJm@pks.im>
 References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
- <20260724-pks-odb-create-on-disk-v1-4-3b3d265d979b@pks.im>
- <xmqqfr15v6ba.fsf@gitster.g>
+ <20260724-pks-odb-create-on-disk-v1-2-3b3d265d979b@pks.im>
+ <xmqqh5lo6xi2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,40 +86,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqfr15v6ba.fsf@gitster.g>
+In-Reply-To: <xmqqh5lo6xi2.fsf@gitster.g>
 
-On Sun, Jul 26, 2026 at 01:34:17PM -0700, Junio C Hamano wrote:
+On Fri, Jul 24, 2026 at 11:41:41AM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > Introduce a new function that maps an object source's type to a
-> > human-readable name. Use the function to provide better human-readable
-> > error messages for the downcasting functions.
+> > When a repository is configured to use a compatibility hash function
+> > then we load the loose object map when we initialize the repository.
+> > This object map provides the mappings between the canonical object hash
+> > and the compatibility object hash.
 > >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  odb/source-files.h    |  4 +++-
-> >  odb/source-inmemory.h |  4 +++-
-> >  odb/source-loose.h    |  4 +++-
-> >  odb/source-packed.h   |  4 +++-
-> >  odb/source.c          | 19 +++++++++++++++++++
-> >  odb/source.h          |  6 ++++++
-> >  6 files changed, 37 insertions(+), 4 deletions(-)
+> > Loading the object map happens in `repo_set_compat_hash_algo()`, which
+> > calls `repo_read_loose_object_map()` in case the compatibility object
+> > hash is non-zero. This setup sequence has two major downsides:
+> >
+> >   - We assume that the primary object database is the "files" object
+> >     database so that we can extract its "loose" backend. This stops
+> >     working with pluggable object databases.
 > 
-> OK.
-> 
-> > +static const char * const odb_source_names_by_type[] = {
-> > +	[ODB_SOURCE_UNKNOWN] = "unknown",
-> > +	[ODB_SOURCE_FILES] = "files",
-> > +	[ODB_SOURCE_LOOSE] = "loose",
-> > +	[ODB_SOURCE_PACKED] = "packed",
-> > +	[ODB_SOURCE_INMEMORY] = "inmemory",
-> > +};
-> 
-> This is a trivially obvious implementation for mapping in either
-> direction.
-> 
-> 'inmemory' should probably be spelled 'in-memory', though.
+> I am not sure if I understand this sentence, especially "we can
+> extract its loose backend" part.  Do you mean 'extract the object
+> map from the loose backend'?  Or something else?
 
-Fair, that reads better indeed. Will adapt.
+Yeah, this is a bit awkward. Rewritten like this:
+
+  - We assume that the primary object database is the "files" object
+    database and unconditionally downcast it. This will BUG in case a
+    different object database type was used together with a compat hash
+    algorithm.
+
+> > @@ -112,14 +115,10 @@ int repo_read_loose_object_map(struct repository *repo)
+> >  {
+> >  	struct odb_source *source;
+> >  
+> > -	if (!should_use_loose_object_map(repo))
+> > -		return 0;
+> > -
+> >  	odb_prepare_alternates(repo->objects);
+> > -
+> >  	for (source = repo->objects->sources; source; source = source->next) {
+> >  		struct odb_source_files *files = odb_source_files_downcast(source);
+> > -		if (load_one_loose_object_map(files->loose) < 0)
+> > +		if (loose_object_map_load(files->loose) < 0)
+> >  			return -1;
+> 
+> If this particular source in the list of sources is not backed by
+> the files backend, would downcast signal the fact (e.g., by
+> returning NULL) so that we can skip the next call instead?
+
+No, the downcast will BUG in case it's not the "files" backend.
+
+> Or would the next step in refactoring be to define "load object map"
+> method that is generic to odb_source so that this part does not have
+> to do any of these and instead simply do
+> 
+> 	for (source = ...) {
+> 		if (odb_source_object_map_load(source))
+>                 	return -1;
+>         }
+> 
+> or something?
+
+This patch series is rather moving into the direction of making the
+object map an internal implementation detail. Ideally, callers shouldn't
+even have to be aware that such an object map exists. And by making the
+loose object source load it automatically we get closer to that state.
+
+There's only one more caller that calls `repo_read_loose_object_map()`
+directly, in "object-file-convert.c", and that caller only calls it to
+reload the map in case a concurrent process may have rewritten it. If we
+make the backends handle this via `odb_source_prepare(FLUSH_CACHES)`
+then we could also get rid of that caller.
 
 Patrick
