@@ -1,249 +1,137 @@
-Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0AD37E5F1
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 14:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E35375AC4
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 14:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785939720; cv=none; b=r0yOs9jL45JjIlj03fbOAyHiN4Ir4hRFFW5GZw5lUII49NqdZQCYmKXzAyQC0IRffEwVjhWHjdKeK/PQm1TF5KOt4IRZ/7VorICW16eVuwg27Da2j+Jsmk0UtyP8PutW6Gqwo5JKd/I5Gc+uwLN/21HSxOFayO7S9IuvO2RGntw=
+	t=1785939900; cv=none; b=PwV6hNrCH/4QdVjqSrfQMt9j50SWydCVq2UqVeCp6H3rPf+uO/MF0moS/h9QC9cO4Azm9+2d51NIOs1Sh8xCYdEMZF37GmN2fANlYJuEzZXDWCmIGOr9GZkKXujZrUfccfbINt2DDd7RD6mOn+eg1D96LioszXiyv98cVaNHVGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785939720; c=relaxed/simple;
-	bh=lt9DqqYPQLjpOH0MmxBkCiCG0I7IFCoqKqrPpU57WTE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uD7Rd0dNCTd0UAm1nhhaTBEkR2TmaKWzUlV3hjgTarTg11s7wGuoS9rTgL3X//96AJd3JsXGBUEv5DPsMOGlcGoaIHkgN53AJ81hF1V8cjWRw/QHtMmXb1SO5Qj8xA6OvFydP5nb5A7SAWHN+vd05oUIZugb+iV/uylnFPpIX4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=1wO81RQB; arc=none smtp.client-ip=91.218.175.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1785939900; c=relaxed/simple;
+	bh=oZxcyKEgebUOznRHTj26KqhhWGf5WTO8oXdFz8wKzC0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=L3q6jaNcFYaUjkkRlxsWtdGoqVKdqG77OgsiTSPWhwmLFcsvQ6J6dwFgO0qlI0Mj9QSK25Ip0MQxGrrRyoTWjByPpOpt858rKyijtnsA7RzDeAgWm02c1ORRVdslVCpjd3R+/o2FpIRIhSn0PBV4XGN+cFqewheUIJBwwiqDJwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bOlpf99U; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="1wO81RQB"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1785939706;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2DhZVPrKPw/HS+F5aM/PjFtRNoT5CL2Oh3aI5xKa0DU=;
-	b=1wO81RQBvOJUKFTZxfuLcN65FPVxl4Bimt7VqYvsYLeIAl93ltftVODVh4mhLvdTJOYv8m
-	0Axa6KcpJN6YrQGWZ4A9HrWumkd4ehOhrB6GAI5GMOqFT2YaHkwNehZVZyaMzXcGWPTsbN
-	zBwAwhsR5vXhLIiAnUF1XWeOG1Fkq0w=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 4/6] setup: defer object database creation
-In-Reply-To: <20260805-pks-odb-create-on-disk-v3-4-c0ee3ac5141f@pks.im>
-References: <20260805-pks-odb-create-on-disk-v3-0-c0ee3ac5141f@pks.im>
- <20260805-pks-odb-create-on-disk-v3-4-c0ee3ac5141f@pks.im>
-Date: Wed, 05 Aug 2026 16:21:39 +0200
-Message-ID: <8733ws6424.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bOlpf99U"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-84a2c90e383so1760855b3a.0
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 07:24:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785939887; x=1786544687; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=B8qQ7Ma5tZlqfL2G15c1hQMz6FCWNR1N6tn/tZhDRzE=;
+        b=bOlpf99Up6FyB+6lh8o1v3Z1Hhwrf0j7elOWbn3H9GSpFy9yZQYdeVAP1Up1Hh2Zvn
+         vDMNUYLWsyLl8jRhqQdVtk0kuVnL8k9l7jSAiUY/LP7pjHcNpe1pMZsZpOalonOH37aJ
+         XRLmv0v1i5LJlFV2jTC9NfqfHDbNt522AY+UuI3Rh8oSE6uX5mYjnEqkmUsq6SHuoyec
+         rs3mNJuSk5qFZ220IQ+CJ3JaL95b4gwCWfe816vehu3l5TYMRAETlB10XoSqLme8ChXa
+         Zm8sbNbrmhF1bXF+q9azW2m/RrFcg0fHucu3MhSA6NP3d6Ue+XxAvV3No4nkJij3k+FY
+         XvhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785939887; x=1786544687;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=B8qQ7Ma5tZlqfL2G15c1hQMz6FCWNR1N6tn/tZhDRzE=;
+        b=UUsKwUNM+4y52st03Pqj0Vwyj3DYt1l/aCD0So/syVWo+LiZxXaooqxtyGZbwFyeZb
+         MLOxvZhZ1UtuxZNnnVnK4+nfIUhzovgh7RqteRBWTslsmK6riHeK6NyXyEhJ9ROMuIzV
+         M116yIib3hc0eJ44H1KdsEg0afj4CdZtayHOr9KGKTccpRCwrh1rVaVAYz5+omnmr4TB
+         j0L+2zrPN1TfRxzNJYlkJelwLdMC+xnBsxF2f4CJ3Q4wXa3w8QKZvrn+CCwUezYYfun2
+         yH6DOeF3FuruwHpKlQQQoDlgleCiAwzI6Ci0DZtGH2UiDNBeslvWZZrYAvikvpeaQmlO
+         JpyQ==
+X-Gm-Message-State: AOJu0YxDJkjIgm8MHWiqb0uU3lKuxC3HmoazZQ069KwupoM0J7MP6n46
+	gB+MhS+Avna6BsKb8Lbu9/ic+lloCe83cXiPLMqD7li3QJ6Pzdpnhbdzwiyb4g==
+X-Gm-Gg: AR+sD10ZTVH8oNKbgTGQFwDDtuXLoQyDKu1dMgPTSSTlQO9lK4UC3B+1zASHGloYG9I
+	PQ8D7P+ji7cwCVGnD32/DSruPaoZfDa8SfK2i78yb5cGLikynBaRM8g0v+hLuk/GgSET1C2qz/B
+	ja4GZT0T2AX2KxaV+ahk73N2BOgWAiFG42GIa79whhDckAVKKYSEJNwd3mEe2p/g2/ZKjcgWdYK
+	DQfwMiK0XciC9N1Cq7KktAlhXxaJfGvq/awQVD+zbeCZD1Tf8CUOim90BK4P7GP9dSngrDaNC0i
+	OUfK1+0jWNS9gOHYq6osOgmgd+QKKqxqziGVRnwV90K5neW3aRANZXt64PnpqD+//wZ2nNlfuLy
+	zKY6KShXeFhqeQCsEzkBAqG819z8jXC2cSw5NtLCA8RGyVElLxh5XxZAoH88EYaQUPQkfBBpGmX
+	0j9jo+Jv5XLdd4m693WavNqSFYcZmkceimuBm1NZWE0s0O+QPmIJRIuCCbcboc6GHGiA==
+X-Received: by 2002:a05:6300:2209:b0:3c3:80bc:1540 with SMTP id adf61e73a8af0-3cb6c75303emr14389949637.3.1785939887172;
+        Wed, 05 Aug 2026 07:24:47 -0700 (PDT)
+Received: from [127.0.0.1] ([172.215.216.197])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3158673b7b2sm17424673eec.19.2026.08.05.07.24.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Aug 2026 07:24:46 -0700 (PDT)
+Message-Id: <83cc3fd6a5e4da6204f1b97e76d33dd431abc5af.1785939877.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.v25.git.git.1785939877.gitgitgadget@gmail.com>
+References: <pull.2285.git.git.1777671337839.gitgitgadget@gmail.com>
+	<pull.2285.v25.git.git.1785939877.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 05 Aug 2026 14:24:34 +0000
+Subject: [PATCH v25 4/7] branch: prepare delete_branches for a bulk caller
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-> In a subsequent commit we'll make the creation of the on-disk data
-> structures of an object database pluggable. This will lead to an
-> in-between state where we have already configured the repository's
-> object database, but it's not usable yet until we eventually call
-> `create_object_directory()`.
->
-> Defer the object database creation so that we handle both steps in the
-> same function.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  setup.c | 24 +++++++++++++++---------
->  setup.h |  9 +++++++++
->  2 files changed, 24 insertions(+), 9 deletions(-)
->
-> diff --git a/setup.c b/setup.c
-> index 5dfab3e79e..d85171f3b6 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1765,8 +1765,6 @@ int apply_repository_format(struct repository *repo,
->  			    enum apply_repository_format_flags flags,
->  			    struct strbuf *err)
->  {
-> -	enum odb_new_flags odb_new_flags = 0;
-> -
->  	if (verify_repository_format(format, err) < 0)
->  		return -1;
->  
-> @@ -1801,9 +1799,12 @@ int apply_repository_format(struct repository *repo,
->  	repo->repository_format_precious_objects =
->  		format->precious_objects;
->  
-> -	if (flags & APPLY_REPOSITORY_FORMAT_HONOR_ENV)
-> -		odb_new_flags |= ODB_NEW_HONOR_ENV;
-> -	repo->objects = odb_new(repo, odb_new_flags);
-> +	if (!(flags & APPLY_REPOSITORY_FORMAT_SKIP_ODB_CREATION)) {
-> +		enum odb_new_flags odb_new_flags = 0;
-> +		if (flags & APPLY_REPOSITORY_FORMAT_HONOR_ENV)
-> +			odb_new_flags |= ODB_NEW_HONOR_ENV;
-> +		repo->objects = odb_new(repo, odb_new_flags);
-> +	}
->  
->  	return 0;
->  }
-> @@ -2651,11 +2652,13 @@ static int create_default_files(struct repository *repo,
->  	return reinit;
->  }
->  
-> -static void create_object_directory(struct repository *repo)
-> +static void create_object_database(struct repository *repo)
->  {
->  	struct strbuf path = STRBUF_INIT;
->  	size_t baselen;
->  
-> +	repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
-> +
->  	strbuf_addstr(&path, repo_get_object_directory(repo));
->  	baselen = path.len;
->  
-> @@ -2864,9 +2867,10 @@ int init_db(struct repository *repo,
->  	 */
->  	read_and_verify_repository_format(&repo_fmt, repo_get_git_dir(repo), NULL);
->  	repository_format_configure(&repo_fmt, hash, ref_storage_format);
-> -	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
-> +	if (apply_repository_format(repo, &repo_fmt,
-> +				    APPLY_REPOSITORY_FORMAT_HONOR_ENV |
-> +				    APPLY_REPOSITORY_FORMAT_SKIP_ODB_CREATION, &err) < 0)
->  		die("%s", err.buf);
-> -	startup_info->have_repository = 1;
->  
->  	/*
->  	 * Ensure `core.hidedotfiles` is processed. This must happen after we
-> @@ -2882,7 +2886,9 @@ int init_db(struct repository *repo,
->  
->  	if (!(flags & INIT_DB_SKIP_REFDB))
->  		create_reference_database(repo, initial_branch, flags & INIT_DB_QUIET);
-> -	create_object_directory(repo);
-> +	create_object_database(repo);
-> +
-> +	startup_info->have_repository = 1;
->  
->  	if (repo_settings_get_shared_repository(repo)) {
->  		char buf[10];
-> diff --git a/setup.h b/setup.h
-> index 654f10e059..e55d647b70 100644
-> --- a/setup.h
-> +++ b/setup.h
-> @@ -241,6 +241,15 @@ enum apply_repository_format_flags {
->  	 * relate to the object database.
->  	 */
->  	APPLY_REPOSITORY_FORMAT_HONOR_ENV = (1 << 0),
-> +
-> +	/*
-> +	 * Usually, the object database is created after the repository format
-> +	 * was applied. This step is skipped if this flag is set, which leaves
-> +	 * us with a partially-working repository.
-> +	 *
-> +	 * This is useful when initializing a new repository.
-> +	 */
-> +	APPLY_REPOSITORY_FORMAT_SKIP_ODB_CREATION = (1 << 1),
->  };
->  
->  /*
->
-> -- 
-> 2.55.0.679.g6767b8d81c.dirty
->
+Teach delete_branches() a new mode for the upcoming --delete-merged
+caller that checks whether a branch is merged into its upstream without
+falling back to HEAD when there is no upstream. Existing callers keep
+their current behavior.
 
-With [PATCH v3 3/6], Justin's objection[1] is stronger now:
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ builtin/branch.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-> Naive question: would it be simpler to just require invoking `odb_new()`
-> explicitly after `apply_repository_format()` in all cases? There doesn't
-> appear to be too many callsites.
-
-As a matter of fact, I've given this a try and see these changes on top
-of this series below.
-
-[1]: <amkXcmwzbBYsMgjc@denethor>
-
---- >8 ---
-
-diff --git a/repository.c b/repository.c
-index 6d633002b4..9eee74113c 100644
---- a/repository.c
-+++ b/repository.c
-@@ -295,6 +295,8 @@ int repo_init(struct repository *repo,
- 		goto error;
- 	}
- 
-+	repo->objects = odb_new(repo, 0);
-+
- 	if (worktree)
- 		repo_set_worktree(repo, worktree);
- 
-diff --git a/setup.c b/setup.c
-index af02cd965c..1106f38bb0 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1799,13 +1799,6 @@ int apply_repository_format(struct repository *repo,
- 	repo->repository_format_precious_objects =
- 		format->precious_objects;
- 
--	if (!(flags & APPLY_REPOSITORY_FORMAT_SKIP_ODB_CREATION)) {
--		enum odb_new_flags odb_new_flags = 0;
--		if (flags & APPLY_REPOSITORY_FORMAT_HONOR_ENV)
--			odb_new_flags |= ODB_NEW_HONOR_ENV;
--		repo->objects = odb_new(repo, odb_new_flags);
--	}
--
- 	return 0;
- }
- 
-@@ -1889,6 +1882,7 @@ const char *enter_repo(struct repository *repo, const char *path, unsigned flags
- 		read_and_verify_repository_format(&fmt, ".", NULL);
- 		if (apply_repository_format(repo, &fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
- 			die("%s", err.buf);
-+		repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
- 		startup_info->have_repository = 1;
- 
- 		clear_repository_format(&fmt);
-@@ -2092,6 +2086,8 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 						    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
- 				die("%s", err.buf);
- 
-+			repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
-+
- 			clear_repository_format(&discovery.format);
- 			strbuf_release(&err);
- 		}
-@@ -2870,8 +2866,7 @@ int init_db(struct repository *repo,
- 	read_and_verify_repository_format(&repo_fmt, repo_get_git_dir(repo), NULL);
- 	repository_format_configure(&repo_fmt, hash, ref_storage_format);
- 	if (apply_repository_format(repo, &repo_fmt,
--				    APPLY_REPOSITORY_FORMAT_HONOR_ENV |
--				    APPLY_REPOSITORY_FORMAT_SKIP_ODB_CREATION, &err) < 0)
-+				    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
- 		die("%s", err.buf);
- 
- 	/*
-diff --git a/setup.h b/setup.h
-index e55d647b70..654f10e059 100644
---- a/setup.h
-+++ b/setup.h
-@@ -241,15 +241,6 @@ enum apply_repository_format_flags {
- 	 * relate to the object database.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index c44f710a48..7b0aa68572 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -168,10 +168,13 @@ static int branch_merged(int kind, const char *name,
+ 	 * upstream, if any, otherwise with HEAD", we should just
+ 	 * return the result of the repo_in_merge_bases() above without
+ 	 * any of the following code, but during the transition period,
+-	 * a gentle reminder is in order.
++	 * a gentle reminder is in order.  Callers that opt out of the
++	 * HEAD fallback by passing head_rev=NULL are not interested in
++	 * the reminder either: they have already established that the
++	 * branch has an upstream, so HEAD is irrelevant to the decision.
  	 */
- 	APPLY_REPOSITORY_FORMAT_HONOR_ENV = (1 << 0),
--
--	/*
--	 * Usually, the object database is created after the repository format
--	 * was applied. This step is skipped if this flag is set, which leaves
--	 * us with a partially-working repository.
--	 *
--	 * This is useful when initializing a new repository.
--	 */
--	APPLY_REPOSITORY_FORMAT_SKIP_ODB_CREATION = (1 << 1),
+-	if (head_rev != reference_rev) {
+-		int expect = head_rev ? repo_in_merge_bases(the_repository, rev, head_rev) : 0;
++	if (head_rev && head_rev != reference_rev) {
++		int expect = repo_in_merge_bases(the_repository, rev, head_rev);
+ 		if (expect < 0)
+ 			exit(128);
+ 		if (expect == merged)
+@@ -193,6 +196,7 @@ enum delete_branch_flags {
+ 	DELETE_BRANCH_FORCE = (1 << 0),
+ 	DELETE_BRANCH_QUIET = (1 << 1),
+ 	DELETE_BRANCH_SKIP_UNMERGED = (1 << 2),
++	DELETE_BRANCH_NO_HEAD_FALLBACK = (1 << 3),
  };
  
- /*
-
+ static int check_branch_commit(const char *branchname, const char *refname,
+@@ -262,7 +266,8 @@ static int delete_branches(int argc, const char **argv, int kinds,
+ 	}
+ 	branch_name_pos = strcspn(fmt, "%");
+ 
+-	if (!(flags & DELETE_BRANCH_FORCE))
++	if (!(flags & DELETE_BRANCH_FORCE) &&
++	    !(flags & DELETE_BRANCH_NO_HEAD_FALLBACK))
+ 		head_rev = lookup_commit_reference(the_repository, &head_oid);
+ 
+ 	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+-- 
+gitgitgadget
 
