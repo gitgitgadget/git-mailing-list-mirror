@@ -1,143 +1,216 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1FE3E2751
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 07:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B645E353A7F
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 07:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785914894; cv=none; b=GvT+7EyeY9Vvq7ZzNXU56CJ42IYpy2F+q9YN1J11EfdSi6HSUVqAbwJdzoH0KRkRXkmr1lxYajQUFGNOWU4TYt/EG8UscIHZJ9oNxS7zVJdr+PEnFShtx8HFKnkfeF2fIev0khbwHoQ1XfGExFBFvD8SAzA+a6Uc1tO89bX0inI=
+	t=1785915899; cv=none; b=OBiAV57UlDAl0ry03M863xAAUmHByE2snZMNETpNk1R9+ugOkShNFYBkkp5lw5/tnHYrp8DdhKpQvJkPKVj/YCS5YMjf9IByTyTjhSnhpOjwDqszBFFwL/yceCk3q9hbrbvo0fmR1nObG4Vcndj4Wno8wSthVXhxP0XS6HU24fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785914894; c=relaxed/simple;
-	bh=pEoO0pX/4J6lllTOZr08qaHwjh2JbCA/V1jRActmK2M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P1haJfmL1G82ubidL0QZu/kiRb8GXOk3jbgdHWhymuP55J9NSRR+WdxEwnTFDxD8gkiX7H2Imho3St2QfBsBN3hoz6Z5diIlRsRnH4f2dnGIse8MrotxkNbkx07HOix+Whnarjc5a7oaa08z6oMh1ywagZ+hxE3idDPzZpiFVHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nsFBn/LG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y0Gp2PJ9; arc=none smtp.client-ip=103.168.172.153
+	s=arc-20240116; t=1785915899; c=relaxed/simple;
+	bh=AmPfTS+3TDssDeq5Mizusa5JUm8aZyOMQXoTFQ2PaRU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=qGKU/JTGLGVOHdSZ9ghnkjabunEoZUaU0Jy4NTmMM35hq9HQweQ08jE08n5m2KCTzALJf8pv8o4BGtaEL9d7wFZa2hcWvk1IjM2LOmUhLLNlmpQFMj1lGRiG5owB/4x1lDL309gQtmNAm6GAs5wC1p4cfVaY3rgYC4UwS2woMJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ygc0Ftjk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Utd1VVK7; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nsFBn/LG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y0Gp2PJ9"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C6A32140013E;
-	Wed,  5 Aug 2026 03:28:11 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 05 Aug 2026 03:28:11 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ygc0Ftjk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Utd1VVK7"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 99156140010B;
+	Wed,  5 Aug 2026 03:44:56 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Wed, 05 Aug 2026 03:44:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1785914891; x=1786001291; bh=Fk4s4k7HYS
-	yyBiJNAXe2sr+XrqsHuG7U2HioFnSQDuI=; b=nsFBn/LGwgxU2WtIVYaW5bwLws
-	+vHaczri2UVDWBeIQ9ygRqgLHcW8uME7GUeTKLxtoe0B/0A64E3PNsQdbT9jObQs
-	sUH/DXca2/ABYndENIhGLCqPGPkiVE9v36QruVncsqMB1YTgLHtw5TJWTCfcvndT
-	tdhZeZmmMCDqkhadIwPf6pykKYQfEyl3KdSmdcLMqTmNhXQtpP1iQ56gkdX16u5Q
-	PL04vh0mtEZKXZWB/cw3AGLamj9PSk7LAfp5BqCtGzs+98zuvV7XRZZNcV/zu6W/
-	bcFQqEF3O8beiqyvOAGSXea1B0+/jAbkB96T+SwhXq58n8kd/IXnU5Isl7dw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1785915896;
+	 x=1786002296; bh=KFoCFJoOa8lHR7MZxEIu5y9X9CVUzXB06GYFXISjNa0=; b=
+	Ygc0Ftjksw0k5zSlBPVN/+CUScsBfLxU4fV/hi0ac51KQNP2qxvUedxvYXRSpfUS
+	psMzMvJH3NFjr8Hj5KsnKe1EVLtEko/kcR+X0I6WUvA6PobRU1hicPPckdibp+5Z
+	6jN8FEILe7K6PJwp6DKWHQhdIM1VXEEell98C/rd51uhZsz7SULoX+XUY/xq9AT7
+	LjL6pTxiOEw9fWHvIGyqbF8doNpx8NlNRkMYG+jlTozs26UmVn3qj1QniJUdk0L3
+	jH0tXkzk/IX8eknGBv5ErxSao8dOxSCzPDhj/1uT4tWjeqkEgbaVuHJHYyH8jkKm
+	5+TFivm2X+eMMR/+SK34Zg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785914891; x=1786001291; bh=Fk4s4k7HYSyyBiJNAXe2sr+XrqsHuG7U2Hi
-	oFnSQDuI=; b=Y0Gp2PJ9nw7PCpKi3NMzvWUCralRJXYBnM59SjIyQXwRRm4/IgS
-	sLGrNCj65gXiJ44YoxgyA9w5cVMPQAnO3Ia+LtF1wDdyG6LI3U1y9920fwoFGvIF
-	vOs5iAKnpvMT9Qd+JObGinP1FDs8xcynogzYEZcih9xQif3IE2qW2YswsMaTc7sJ
-	6A5qbKPtUJ+K5TBMSAivctvyrZSxnwAmonmEb+MpQP97R0GdZJmgkWb9zcD2k6ru
-	O1roEOYKQve4kEgC5XNbZmIC0eTA6onwDjcQbDas0uxXk1+JCn1MBvTFBGHuavWH
-	tz038cUdBI5KKEcs7ytwFFFeFdglcGX+vRQ==
-X-ME-Sender: <xms:C-ZyatIrC3x1IK-J9gZe8LkBzR16k0dp0h0E6PE-P04ghSm-WOdN-w>
-    <xme:C-ZyagIV576vh5oO9Fcn-0ObsXFQIsBNNxeLrlEGYMt3Z7U1zCn6g2h07hS9wAbMP
-    alTIMRZ4RtY3D2tFtE6BtAnYIxkOGe-VVWp8_hqW2517aJcQwbBRw>
-X-ME-Received: <xmr:C-ZyaqvLBW0_6z3-w8cb9okfVC5fR8HNB_5vPvH_GD53rBVXIdlEIySg1gtnQRmTpq-0YinflnNw6ZoENz5oAQK6YhcK_xIqcALskwbAIw>
-X-ME-Proxy-Cause: dmFkZTGwf3Pr9sJrZLSyl0izwhwblActY59P0a84QKtTU8RM81/CXG9hjXwq5KZcqvwhFg
-    22g8uUrUjZdAxIMUashrSU365hjpskljuSy3mDFDfLXIET2nBNRDxVkeHdNWyzj/Kw3Dkr
-    oonZbhP8j4/A8wWwUionwUHw2B4Yo17eyi1jS3GqTjMFfMwqeHmPAie3pbc/Qd9fGn5CcK
-    fx26gDd6FATUaBVRpZLYrd6b82/39RegwzELgh3yvkiczRVHAe5NOlO8l3Rm7oI2dWg4GG
-    FLubNG4yxogd/zVJjPcfEHrjoarA5DabWRwFv4DtgvebO46XsZnMTOXFXR/gIgdss8rpJ2
-    cthAaotMXsQctOgee9bxBMdpwN4lZW9AYhR0c5NHelAg2VaiXb6+ZkI9Yd38ViOUNwl7Da
-    icFZKiltu6CELPwUP3vvDPQXWOsahxa5jWHPEX5+l6u1jkY9lePzBfqcsKC6hduB00rR5A
-    C0erU/NmEe9U8uotk1LDze8ywBAwBQr8hnIatRBz1xGJPOKZrzUJpJA0hWE57mtNxoMGrk
-    5O0IqUHNvRyb+uvpNZicMAOX8r7srKi8jotnR2WiwBybtfKE6WylHiFRCQEQLWACWwXrMX
-    Dirq4W7C+UiHlenJi9jnD4wKrLLbbTJjG8fIYJW3iTy1j5+0UbQSK7xB5Nzg
-X-ME-Proxy: <xmx:C-ZyatRnN4V5VX4M6lS-qeDOPiQvb98DIPvkgd9viV4cRILPcwv-bg>
-    <xmx:C-ZyagPjkLz2s96_mzAN43MMAqSPg7pDR2jgvWfVyFNaov_x-Vg1Ow>
-    <xmx:C-Zyaiao_6QXQuyVcTzNnClrtLd3WMUjS8QJ4CYhGAw-rbr7YUBfvw>
-    <xmx:C-ZyaqzP33DTnSeVGBdUR7_KewR7DZTrzo7ycCLpj_ZRBskIA34Zxg>
-    <xmx:C-ZyajtqsRqqTDW5UpiYaDhLtsS48c6up-nNNsMl-OFbmSDafaHVHnNJ>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785915896; x=
+	1786002296; bh=KFoCFJoOa8lHR7MZxEIu5y9X9CVUzXB06GYFXISjNa0=; b=U
+	td1VVK7nyE8v5yj1kED1wF5HUa6di4gCqIJXD2f2DtfIbNTCbrLV71glHoyVvMBJ
+	qs7181v8TJ4VW1ET52kEXIx2PUt5nsY6HFIEWdcDcdBbPwUHMAxdki5L6SUTBnyx
+	t+1yS2dpTFs2bITd7jzFWLhjfLS3Eo3c+U8lsmjZRqf/EKpYib+sYJaqvuM/2AUj
+	5liMD+PVgT8yzT/flcAQRk4XkH2ix8XUfpizVdkwwlZCV7jkEeD8jJR0RLu/ciBN
+	WCYR0cClm37EX4rygIzKv2bgKYxeax4xt8NHJrqo44BVimy6FP3OAA/j8faY2ekH
+	5ZFblW/nITiQg2fe3Kwow==
+X-ME-Sender: <xms:-OlyasrjwVKX5UhdrmtDC6_eRWVNGzecjHIN1EgI9sz8cayMci2uIg>
+    <xme:-OlyaqFwP0vyah9f6WfnSyi1zLI5YqoEveC8LHTO_nFZHMYvXZ_THabTFszhReYnQ
+    yOZZTV7nETWKctleX5Jbf-jxHnDNcYtfmGnPJ1pyOeOuZoMzCPHZw>
+X-ME-Received: <xmr:-OlyaumiHbDf5tqY3XrKKz4bLhNZOgrss7Xt7n9RPWV_9Nks2sj7npTGe2WYWw2emOkCchddO0dRrPlJDiEHqjwVqfnvykmrb4kECGItjg>
+X-ME-Proxy-Cause: dmFkZTFySYuY4jxq7h0RdfyYcGzb01hvbKZfNL5X11LIsROWjTCpkDvqQL5s6VFWbPogde
+    J/9iv6LYvcL/Cr0FpYa5cffEoUvFPlYHvmaAAHW9xZeBTAhASQQpY3yl7rdv5txMCSU5j0
+    hLIuo/WOuReYIg4ZTDVioFekp7+wfG3XaOWR5kWcs4lDFt2fTvpDQRMZrTXaBPjmEY01jZ
+    7DLZs81qLGoWIKU4e/t6epRVhkbaOZD6LUzekTehC/kvjPiUYJoB0qKK2sW6DRL0AHAKeb
+    L9AYpYLyCUvBEQG1S7GCTg0/WDTRkGpySPQazvVHG1ZdJKrL8FXPX8N1Aez4r67WuO+0oW
+    cc4cOJOX7r2Hdhe/34FP5FNvCbQdIopTies88j87BYtzySBxl2YbhrWgY9HvY0nXBne1VO
+    k2JrolUncbmR1K4N/YDMfOY1qE4/B3a0xTWnxX8PubhirY1xzn+o0R6+IEaM/n30XFDpvF
+    NqQLfBWtUeeJnTxLPOS1STDso7LcNn4ts7hGvjGZg3TTKmHgjIzAYtxxTbpzxBJSo3MeVT
+    kfJ5sfEaYjKtd3APjGkR45WbztUwrnbPO2Zy0eOVqsDIIVZMfZElSMuLgkCH7jNAfDaEhe
+    MvTuadpKiEDEJMNFgmUAyuEwKl6nWSV080kUx9ZaWNnEBxYIyb7jh4tISz0Q
+X-ME-Proxy: <xmx:-Olyatk2ksIZpysESHLXtjD7TLp-eIQTkjHQ3hBpZitlTKrb7emP5Q>
+    <xmx:-OlyavvL9V0J0fnhGlsuWcEMdvW3aq-XhfNzX25xJCX4l7uZiEDgYg>
+    <xmx:-Olyagnd4JYe1UYue2uB1eVvepwNUuKVrUV67ZuQDAe3TlgfUrDL-Q>
+    <xmx:-Olyaqs8c0RlJUYm-bYqj8TvHMqC3IFUB_jwtf-_HIh2RV3fGF_dRw>
+    <xmx:-OlyaiHOomWO7VY-aBVuGubyayTnBPLr1G41mzTrEn5vWrjIufig--YP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Aug 2026 03:28:10 -0400 (EDT)
+ 5 Aug 2026 03:44:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e892838e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Aug 2026 07:28:07 +0000 (UTC)
-Date: Wed, 5 Aug 2026 09:27:59 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 62288dcf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 5 Aug 2026 07:44:53 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 3/5] setup: defer object database creation
-Message-ID: <anLl8Cy6Bkv5XA7-@pks.im>
-References: <20260804-pks-odb-create-on-disk-v2-0-ddf8b59bd207@pks.im>
- <20260804-pks-odb-create-on-disk-v2-3-ddf8b59bd207@pks.im>
- <87bjbh67sl.fsf@emacs.iotcl.com>
+Subject: [PATCH v2 0/8] odb: unify read and write streams
+Date: Wed, 05 Aug 2026 09:44:44 +0200
+Message-Id: <20260805-pks-odb-stream-unification-v2-0-b8c369564641@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87bjbh67sl.fsf@emacs.iotcl.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32Nyw6CMBBFf4XM2jGlvBpX/odhUdpBRsMjbSEaw
+ r9bYO/yJOeeu4Inx+ThlqzgaGHP4xBBXhIwnR6ehGwjgxSyFJXMcXp7HG2DPjjSPc4Dt2x0iDP
+ MstwaqatCKQUxMDlq+XPEH/XJfm5eZMJe3I2OfRjd93hf0t07j5T4e7SkKFCVthKkZJYXdI/yl
+ Xuot237Ab5c7DjTAAAA
+X-Change-ID: 20260724-pks-odb-stream-unification-334dc2a75888
+In-Reply-To: <20260804-pks-odb-stream-unification-v1-0-86d70e82345e@pks.im>
+References: <20260804-pks-odb-stream-unification-v1-0-86d70e82345e@pks.im>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.15.2
 
-On Tue, Aug 04, 2026 at 08:48:42PM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > In a subsequent commit we'll make the creation of the on-disk data
-> > structures of an object database pluggable. This will lead to an
-> > in-between state where we have already configured the repository's
-> > object database, but it's not usable yet until we eventually call
-> > `create_object_directory()`.
-> >
-> > Defer the object database creation so that we handle both steps in the
-> > same function.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  setup.c | 35 +++++++++++++++++++++++++++--------
-> >  setup.h |  9 +++++++++
-> >  2 files changed, 36 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/setup.c b/setup.c
-> > index 825572f5f1..a7b1b9eaef 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -1760,6 +1760,13 @@ enum discovery_result discover_git_directory_reason(struct strbuf *commondir,
-> >  	return result;
-> >  }
-> >  
-> > +static void get_object_directories(char **object_directory,
-> > +				   char **alternate_object_directories)
-> > +{
-> > +	*object_directory = xstrdup_or_null(getenv(DB_ENVIRONMENT));
-> > +	*alternate_object_directories = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
-> > +}
-> 
-> Would it make sense to wrap these in a APPLY_REPOSITORY_FORMAT_HONOR_ENV
-> guard?
-> 
-> I mean, below we call this function *only* when flags has that bit set.
-> But the return values of that function are used at the bottom of
-> apply_repository_format(), that's a bit awkard.
-> 
-> So can I suggest the following patch instead? That would remove the
-> weird double pointer passing around, which feels a bit unneeded.
+Hi,
 
-You're right, this is somewhat awkward. I have a different proposal
-though: instead of creating a separate function, we can move handling of
-environment variables into `odb_new()` itself. This also paves the way
-for moving handling of these environment variables into the backend,
-which is something I want to do soonish [1].
+we have two different kind of object database streams in our code base:
+`odb_write_stream` and `odb_read_stream`. While those are used for
+different use cases, the provided functionality is ultimately the exact
+same.
+
+This patch series thus refactors these streams so that we have a single
+`odb_stream`, only. This allows us to reuse the streams for different
+kinds of purposes and makes them more generally useful overall. For
+example, it's trivially possible now to create an object stream for any
+given object and then write that stream into a different source.
+
+The series is built on top of 5b2471720c (The 10th batch, 2026-08-03).
+
+Changes in v2:
+  - Use the correct object type when hashing in-memory objects.
+  - Remove a stale comment.
+  - Adapt a commit message to mention that renames will follow in
+    subsequent commits.
+  - Add another commit to rename `struct input_zstream_data`.
+  - Link to v1: https://patch.msgid.link/20260804-pks-odb-stream-unification-v1-0-86d70e82345e@pks.im
+
+Thanks!
 
 Patrick
 
-[1]: https://lore.kernel.org/git/amLgMqkqxR8mKIbT@pks.im/
+---
+Patrick Steinhardt (8):
+      odb/streaming: track write stream size in the structure
+      odb/streaming: drop `is_finished` field
+      odb/streaming: support streaming arbitrary object types
+      odb/streaming: rename `struct odb_read_stream`
+      odb/streaming: consolidate read and write streams
+      odb/streaming: rename `struct read_object_fd_data`
+      odb/streaming: rename `struct input_zstream_data`
+      odb/streaming: unify function names to create new streams
+
+ archive-tar.c                 |   8 ++--
+ archive-zip.c                 |  12 ++---
+ builtin/index-pack.c          |   8 ++--
+ builtin/pack-objects.c        |  18 ++++----
+ builtin/unpack-objects.c      |  44 ++++++++++--------
+ object-file.c                 |  76 +++++++++++++++---------------
+ object-file.h                 |   2 +-
+ object.c                      |   6 +--
+ odb.c                         |   4 +-
+ odb.h                         |   4 +-
+ odb/source-files.c            |   7 ++-
+ odb/source-inmemory.c         |  35 ++++++++------
+ odb/source-loose.c            |  33 ++++++++------
+ odb/source-packed.c           |   5 +-
+ odb/source.h                  |  13 +++---
+ odb/streaming.c               | 104 ++++++++++++++++++++----------------------
+ odb/streaming.h               |  69 ++++++++++------------------
+ odb/transaction.c             |   6 +--
+ odb/transaction.h             |   8 ++--
+ pack-check.c                  |   4 +-
+ packfile.c                    |   8 ++--
+ packfile.h                    |   4 +-
+ t/unit-tests/u-odb-inmemory.c |  37 ++++++++-------
+ 23 files changed, 251 insertions(+), 264 deletions(-)
+
+Range-diff versus v1:
+
+1:  0085df877f = 1:  1966710c12 odb/streaming: track write stream size in the structure
+2:  5fbbfd9010 = 2:  87c7981a6c odb/streaming: drop `is_finished` field
+3:  52e5b87761 ! 3:  9aede44fba odb/streaming: support streaming arbitrary object types
+    @@ object-file.c: int index_fd(struct index_state *istate, struct object_id *oid,
+     
+      ## odb/source-inmemory.c ##
+     @@ odb/source-inmemory.c: static int odb_source_inmemory_write_object_stream(struct odb_source *source,
+    - 	hash_object_file(source->odb->repo->hash_algo, data, total_read, OBJ_BLOB, oid);
+    + 		goto out;
+    + 	}
+    + 
+    +-	hash_object_file(source->odb->repo->hash_algo, data, total_read, OBJ_BLOB, oid);
+    ++	hash_object_file(source->odb->repo->hash_algo, data, total_read,
+    ++			 stream->type, oid);
+      
+      	ret = odb_source_inmemory_write_object(source, data, stream->size,
+     -					       OBJ_BLOB, oid, NULL, NULL, 0);
+    @@ odb/streaming.h: int odb_stream_blob_to_fd(struct object_database *odb,
+      
+      #endif /* STREAMING_H */
+     
+    + ## odb/transaction.h ##
+    +@@ odb/transaction.h: struct odb_transaction {
+    + 
+    + 	/*
+    + 	 * This callback is expected to write the given object stream into
+    +-	 * the ODB transaction. Note that for now, only blobs support streaming.
+    ++	 * the ODB transaction.
+    + 	 *
+    + 	 * The resulting object ID shall be written into the out pointer. The
+    + 	 * callback is expected to return 0 on success, a negative error code
+    +
+      ## t/unit-tests/u-odb-inmemory.c ##
+     @@ t/unit-tests/u-odb-inmemory.c: void test_odb_inmemory__write_object_stream(void)
+      	struct odb_source_inmemory *source = odb_source_inmemory_new(odb);
+4:  f178d441f0 = 4:  ca84a2b645 odb/streaming: rename `struct odb_read_stream`
+5:  0d72d27078 ! 5:  838394bffc odb/streaming: consolidate read and write streams
+    @@ Commit message
+         new `struct odb_stream` base. Other than that though, the changes are
+         rather straight forward.
+     
+    +    Some of the structures and functions are now somewhat misnamed. These
+    +    will be fixed in subsequent commits.
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## builtin/unpack-objects.c ##
+6:  ced59bdc85 = 6:  850b7e081d odb/streaming: rename `struct read_object_fd_data`
+-:  ---------- > 7:  c3fe9f8b0c odb/streaming: rename `struct input_zstream_data`
+7:  f76f4350ef = 8:  4df81651ba odb/streaming: unify function names to create new streams
+
+---
+base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
+change-id: 20260724-pks-odb-stream-unification-334dc2a75888
+
