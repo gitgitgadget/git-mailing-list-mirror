@@ -1,136 +1,181 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE0E358D37
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 18:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575433C870E
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 19:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785955217; cv=none; b=emOGWKEJTfCKYZAAS7NQ45NCA/9TO1/MKXcSHteZ1+Qx0yM5uPS2UurPddRYBucWJeKkxafneoa+C+5INLfVnAY8xKuxJ8yq2meDpnKjUzwkk51UJQSPaEsyEt+AAcMeKS4AJPsvfsQNfdMRCYoCVXsonM08XxftRHKSC37PvnY=
+	t=1785956592; cv=none; b=GxmiIA6AA9W4Ob8WTCQV8ddcb/fClKajwSYLx5v4cjayAGfH0GbHs7+G6mG/iA8uWoe0AYrJ8LiJZBQWTu63797mNT7ouUMHhjuZ7zH5RbXHC1hpunWq2CjMCvCZhP0WcGHPslYm5fIjAjT+4+VU+4UCOQaW3BwEpGYkqk8jxug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785955217; c=relaxed/simple;
-	bh=QoG03z0kai5wR+4aFWtluBNhe94AngVFtRfjnU5MmfA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tVKcfOKLxkhOIvAWke1cRGzMJ2EkFmEEe/TGtkyFaT3MkSlwN/Bl8gFoVVdQQJ1Ibjpn9qVDGlAc7cLu4Yt8TCh4Kkr/Vm4H1DwHe8Vi3yHbH8SeROxjEqOwwho+NDleIpK6u8+sNXeP1caIWqOcI4JbTMZSnJ5G5hSsvAu/rc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=myu1YFog; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dpnLw7T6; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785956592; c=relaxed/simple;
+	bh=DpF5Rt+puuh5s4DWM6M0Uei3TNoz95HxOmTFgtnTnGQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mMX68qOi1/K1veihsezimSmewZEti4PYRv9PglqdhY7PRADdsABxd1jOicjKqLN/z/s2Ppa2FK0pLBv8YTWQlyXjIm5kOtSzHeNYFDQqbVDmTxn7KXb+5k1lETaxdKJbwheHnNFQcVm2QFbx7bxGwGDFjki7o2KhF3OCwVqn7YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=TOl4QbPJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d9yEdyfp; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="myu1YFog";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dpnLw7T6"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 063347A015E;
-	Wed,  5 Aug 2026 14:40:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 05 Aug 2026 14:40:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785955213; x=1786041613; bh=tJBFvwQkcD
-	OcBB1YXQJAl/Dw2HauPPIWDwAM6ebG2zw=; b=myu1YFogX41B7Wr6i3JcxfWQ6r
-	cITrMUb3kHXPfD7JQ4jftT7786MYxYQFTn7sInXx9mq1sPINI1jnQscUU5wr5Ult
-	h1ocUYICoNsRMifBgkubE/stO8oxrNhj2yINsbg+qzXdln/w6LioM9IiiVO+SzgF
-	+97Gtl2ZzvPNAZiRuqPsUP54nKGkSm28PRbdCh57xlfa2frPdt/ukEx0upWO+rc/
-	BgrGoDUWfHsX1FJNwQ9XE/8ETmbKW22XslqFHM00FoxlKfhs1q75AbH75MEHUf1y
-	foXWPeZ83tfa6IB7uD1gQCbGXGLBLN1NMl+ADcY4nc/SvcXt0L2UdSIEV4Mw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="TOl4QbPJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d9yEdyfp"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BF35F7A0070;
+	Wed,  5 Aug 2026 15:03:03 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 05 Aug 2026 15:03:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1785956583;
+	 x=1786042983; bh=+3Fxi57/BOvGfH7oHcPc6HSgB3QW+yOBNZ71YMg9TRU=; b=
+	TOl4QbPJQ5tcqWMCTWkmhELjaJXsyi0CyHMGfwYfQeJA9XQHv7WUkRLaVHoFACmY
+	Bn/Ca544r1WrJD1jtUJcZFPCTtI+q5Ip4S1a0UojAdqNxlxA94fSZPll9cm+FFWG
+	rNct1fgxeD7HLUA7ZUVw8Yo9PGopUf5Tyvjq/9zbQOy5ohpNoKmMYQqmrsIhuQ3/
+	jtCNhD8YB0J/QwUDuQxcz1jGGV10mc33h6rxfeRm6Ux0EKBKtHIWYCagkIvvJ9wu
+	DPWxjmsjVHqremphPE/AMKXaFHlFBjCD9P+BJkC6FMUZquuLONZEKMPpSrBc1gN5
+	tOtDiI2DPj/Oc34n4d70ag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785955213; x=1786041613; bh=tJBFvwQkcDOcBB1YXQJAl/Dw2HauPPIWDwA
-	M6ebG2zw=; b=dpnLw7T6vmo8r68MC234to1Q3bqHX22UdBBkaX8MhoB8l3wdKHm
-	Cyiv8/m6uOzltQZW3sq3Fxu3qAqfYT/XrsrbylHaLDLmT6eNjfagvI9dRXMgjdaf
-	f1a4SgRFcCCO4SUU0uw7uiR18CEflM5vRyPd18NUsjgPo9j42p+gyRIbcUow9NMI
-	CUlHjx2jxWjF0mpDwNBLmNo6SvYVJvRlx3/Yi82DbmMSrL6gnFUjBY2WckGzWVvg
-	DXgPX1j+9cFycDolZ2kkbPxSoVH1/vSWqJ8dqtUchqgZVmNb3thkeTDPZDD+aOzl
-	tabfxTZzFldbqh2jevfJe/Bo25JD3jBihKw==
-X-ME-Sender: <xms:jYNzapz_LRHebwuLDuAQmOw7XfXgSJPl33WEmZSush3_elnkkJR67A>
-    <xme:jYNzasX-gMB0aLu1vX70LZkHwxNWB1TyEXUSlRlgjNGrJ10hVT8SWWrbDca4oZJki
-    EkGKpNPmW4ynrhhlZhRp0DVuLAzD1M8lP9EkAQ4K72I6esrhwcyo-U>
-X-ME-Received: <xmr:jYNzat9Pi-s5lpO8gqiPQgPFrTlgEreYjaRbGMy2FBzlDLY_R1mfToDhUVugHLziL_WMgSUfTsM-TmHbKNEK538s47oDqHX_sA>
-X-ME-Proxy-Cause: dmFkZTEhGj9YjsRSgAtaE9+MMsshqOVo6E4ogJTgr2kd8yb0uJUZ1HxJ0vjjJGUVdhhBKa
-    IfpvlOa4WWFY+cLON9x9FZ5ucKe5Dz2zeRjPDeR6IK7SfgAtgQOsImCoznBPeUTglytGdZ
-    nsjpeidlNbKBnpoxGnYSZcEOdqqsFceEO6RpEiho7Q/D4tRZvCiMhq7ol+RfAA6b6ERX7f
-    BAadLNGWATM/pn4CqT/ogeBQd4XpvSrEfJs4TskfyWBdH1MTQuOQ2A+/yPkfgtLfPmTAG0
-    XKqgl97swtKz8BEjJzryI1F01Xsm9Fa+IxkTVm/shljroNMGdiiMXYqF2mGy65wAyTXrMT
-    +7JB/kEojedl1MBREU2X4tBESxJLJm+8SfJP4b5iSd2hlDd0nBrY7jzGuNPIFx57P1cMr9
-    uB5xKdmArGA2jdAJ75GC/oWtrozGArVGc3g2hkKPIhVfvJxfBNmLse13uvwAU85897kiwY
-    hLLDubzbyiFoDic6NJ4tak3PjgDvLb6ZmHfe44yZo1iKgKdvNxw8Y9C2eqtFFmu8ltystx
-    D4N4KR8DpevjyQ0uRMAJzmKkqUmtZ36TXEW3vKMog2uxIVhlZbIGa2WnIK+tfUmRE9cyw/
-    0poDgqAshZ6+f7l5NJQgXOHVjEn6ouBEV63TmWHYgrCI3NpBuVjrFFOlmcHw
-X-ME-Proxy: <xmx:jYNzanvTqVCRVOItZlXmq7qDtf6ZkoAC0BbrOIiXC7sYV4_0aKhj4w>
-    <xmx:jYNzal32cx__gwqJwUaDw7-9YyCiI0nd9jPuTnEYuDQhLEUMLAiWzg>
-    <xmx:jYNzakSE5RmLy37f8T05ExT_FU54n7mMkLXeDZA_P9Esc4PNCS5LkQ>
-    <xmx:jYNzahcruatM1lSYux9yWUYlJY4BAFja7Svz79p88R03s5FcGdpb7w>
-    <xmx:jYNzal95hDFI02KBa2ak-W9SC1S7w4yh5O253HokPoKrzUfbANmGhyhb>
-Feedback-ID: if26b431b:Fastmail
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785956583; x=
+	1786042983; bh=+3Fxi57/BOvGfH7oHcPc6HSgB3QW+yOBNZ71YMg9TRU=; b=d
+	9yEdyfpHlJEwo6JHU0snGzOCOcZkElKeEyW7LyQPcltl3dM4CZ7MG7XV+6dVaBxB
+	MwTwpAWAEZ0vUWJ2Yq3Ji2NvLuhKe/dXBBbDct/4dtmmIQRg84yrzWF+R94hK5an
+	D4neKpUcj194U0pRCcnlLHZYtfzYAV89Eo+44ry3IAEmK9mAdTzgPL9aqNixo4dV
+	i1kEvDWUoBNzi7iQW1A+PK+dcOhAtz3kIHNNJkrMPpOueMq441E45YCn4MbD5vxU
+	9bHj4uwBGfA52F3n77bKmzDwv4fgUd2FDY1EHoA+d2/Z03W6L1tSrmlsXBJ1zUaf
+	04h+xQhwd84RrK4SEZdxw==
+X-ME-Sender: <xms:54hzajTFlULZgUNy3pzIGrj3rzb_YeEsUUC6aYKSUrRmNxosH39UJWg>
+    <xme:54hzarxvEDDBCdlxHi_kEK-f2grDbOOVSXBDmoYwaRjQyBbUmVTTgxu2OL3do1rqp
+    CfAOdQo4XkkTtQtXHCW28tY8rOttMgmQWE2VznCHYnBaWzZY2FlSA>
+X-ME-Received: <xmr:54hzat2InLK4yIckhSf1XugVCxCvctmLjg-ub79bptwMAW973yFrCiCWHoNNJducujHjBdhGF36OB0wh7FaFJJv4GEGESlhpWukZlQR3B6Q0c8xFoCDUEpU>
+X-ME-Proxy-Cause: dmFkZTEfKT0/5nMtnr3adXnNklPXuVJO7ce/t1tFIYe8pOFluyLFYpzIsUqrEwhY5UdHN4
+    5e8mzJrZTAsPwMn+WF/CxVZ+PcQjp30SfxZ1DMh8uNPnPNe8IbF7M5J+z/MasUdpcFtzwc
+    liUop4yDgGRzzTkUoJAJeCVTA74mdzZ+ZtiVeBT/zzRKu4A+zLPObRzYMkFaK3y2BgDInr
+    A0oW5vPVuQ9Qg37cNI+3GFCydzjYEFV5sl+x2QLJ0wDTgK/9HuyLHOoRGooQ4Sq68a5bdt
+    BvsqbfhLVP1/jevMONXMkCpdZLSziUpzr2q55zfBz2qVPuwpiwQrE2GxK1bDO2sJeoLfXM
+    viQ+EhaeumKGe288rfZ891fpCnUEmV5ErtZCpiISTZHqi6V0xvyZ6MOvtEdK560kWNUpod
+    wNcoek8aWAcwaN1gLzu9oiBSfQQO97MUnyGCRDwQnBkuNBfipezgDkTWYRkOgHxUmk0oyb
+    3aGTvIPV0ETWHWGzdVqITddVOK/g2ZAKpPNccmvWj9rYb0pH56EVZ5W95ubEnKJoPeiYoh
+    5ztoOCHnSAm1jNE/1m+drvE6GAXQNs/nDFPq3e0RwrV8FvzGT1JmJULAttAo23rnkPAum+
+    Dm/kB2WG1ctbbSZrNlMDyON/b7+GrMN2UB5yLAmrmkuTrhgIOwsx8WHiFgrw
+X-ME-Proxy: <xmx:54hzah7ieFqcgt3_VyoIOpyboR6qBRE0rKg9szcr_qY6HPrceyeUug>
+    <xmx:54hzaoVwiEVPfFU9gTRA0f8kIlnnUqDxOwzu_D5yEXth_pOZd-SjaQ>
+    <xmx:54hzaoC0YY9t4Ip_mXXOlLGoDG435FEkQmaHB0dFG6cz-3CprBNZRg>
+    <xmx:54hzav7tr8KcOZ1NqHgENLBsdIzEKxjzmSwGBYPcvCoaBZUZKljoHQ>
+    <xmx:54hzalWF8w044jL03lc5ngiliDXCDNwU0QW4KmSRtStk6wr1NYOHwl8n>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Aug 2026 14:40:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Patrick Steinhardt <ps@pks.im>,  Ben Knoble <ben.knoble@gmail.com>,
-  Jeff King <peff@peff.net>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  "Randall S. Becker"
- <randall.becker@nexbridge.ca>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/5] Reintroduce writev(3p)
-In-Reply-To: <2952d9a7-c7c0-44c0-a321-7ddad6497a6e@kdbg.org> (Johannes Sixt's
-	message of "Wed, 5 Aug 2026 19:55:30 +0200")
-References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
-	<f8050598-392f-44c9-8d66-0454740a7a12@kdbg.org>
-	<xmqqo6fso2s8.fsf@gitster.g> <anL0nIk6uzkYR9Oc@pks.im>
-	<xmqqy0ekr0bm.fsf@gitster.g>
-	<2952d9a7-c7c0-44c0-a321-7ddad6497a6e@kdbg.org>
-Date: Wed, 05 Aug 2026 11:40:11 -0700
-Message-ID: <xmqqpkzwpg1g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 5 Aug 2026 15:03:02 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/2] doc: refs: put ref migration warning under the command
+Date: Wed,  5 Aug 2026 21:02:34 +0200
+Message-ID: <V2_CV_git_ref_migration_warning.b20@msgid.xyz>
+X-Mailer: git-send-email 2.54.0.22.g9e26862b904
+In-Reply-To: <CV_git_ref_migration_warning.b09@msgid.xyz>
+References: <CV_git_ref_migration_warning.b09@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Johannes Sixt <j6t@kdbg.org> writes:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-> Am 05.08.26 um 18:36 schrieb Junio C Hamano:
->>>> I think Patrick's writev(2) follows the pattern our previous compat/
->>>> routines have taken.  We use real writev(2) where it is available,
->>>> and in the fake implementations in compat/ we have comments that
->>>> essentially say "the real function offers X, Y, and Z, but we only
->>>> want X and Z and do not need Y, so this implementation does not
->>>> support Y".
->
->> A different way to put the same question is "what is Y in the
->> context of the intended uses of writev(2) in our codebase"?
-> The Y that I am thinking of primarily is the atomicity guarantee:
->
->> The  data transfers performed by readv() and writev() are atomic: the
->> data written by writev() is written as a single block that is not
->> intermingled with output from writes in  other  processes; [...]
->
-> (See `man 2 writev`; this isn't spelled out explicitly in the Open Group
-> Base Specification.)
->
-> This is basically unimplementable by any emulation that has to call
-> write() multiple times.
+Topic name (applied): doc-refs-migrate-limitations
 
-Looking at hits from 'git grep -e writev seen', the only two places
-we use writev() or write_gather() are:
+Topic summary: Put ref migration warning as an admonition under the command
+so that it is visible.
 
- - fast-import, where we write out concatenation of the object
-   header, the payload, and the trailing newline in three separate
-   buffers in one go; and
+That’s the first patch. The second patch adds a missing `linkgit` since it
+touches that same warning text.
 
- - sideband, where we send the length and band designator in one
-   buffer and the payload in another in one go.
+I have two other patches that are not included here. They are unrelated
+cleanups that I will post later. Here are the commit subjects and the first
+paragraph so that you can see what they are about:
 
-Neither use would work at all if we had competing writers working in
-parallel to write to the same pipe, regardless of whether atomicity
-is guaranteed.
+• doc: refs: wrap standalone placeholders in underscores
 
-I think it is OK to explicitly document that any writev(2) emulation
-is allowed to be non-atomic, and it is also OK to declare that using
-writev(2) in this application to allow competing writes to the same
-destination is a bug.
+  This is a synopsis manpage which means that standalone placeholders[1]
+  are supposed to use underscores (_), not backticks (`).[2]
+• doc: refs: use inline-verbatim throughout
+
+  Use inline-verbatim backticks (`) for literal commands, options, and
+  subcommands listed under the “Commands” section.
+
+§ Cc list
+
+The two people that I have the impression that have worked most on
+this command.
+
+§ Changes in v2
+
+• Patch 1/2: Use Warning admonition instead of Caution
+• Patch 2/2: Add Ack
+
+§ Link to v1
+
+https://lore.kernel.org/git/CV_git_ref_migration_warning.b09@msgid.xyz/
+
+[1/2] doc: refs: put ref migration warning under the command
+[2/2] doc: refs: linkgit to git-maintenance(1)
+
+ Documentation/git-refs.adoc | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
+
+Interdiff against v1:
+diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+index 1ec26be0b4f..9063892651e 100644
+--- a/Documentation/git-refs.adoc
++++ b/Documentation/git-refs.adoc
+@@ -36,7 +36,7 @@ COMMANDS
+ `migrate`::
+ 	Migrate ref store between different formats.
+ +
+-[CAUTION]
++[WARNING]
+ --
+ The ref format migration has several known limitations in its current form:
+ 
+Range-diff against v1:
+1:  cc4d9ca5006 ! 1:  8a6415e2d9b doc: refs: put ref migration warning under the command
+    @@ Commit message
+         `migrate` description in order to see the “known limitations” for
+         it. This is important information since the text says that concurrent
+         writes can lead to an inconsistent migrated state. Let’s move that text
+    -    up to the command description and put it inside a Caution admonition.
+    +    up to the command description and put it inside a Warning admonition.
+     
+         This section made sense when it was added in 25a0023f (builtin/refs:
+         new command to migrate ref storage formats, 2024-06-06); `migrate` was
+    @@ Documentation/git-refs.adoc: COMMANDS
+      `migrate`::
+      	Migrate ref store between different formats.
+     ++
+    -+[CAUTION]
+    ++[WARNING]
+     +--
+     +The ref format migration has several known limitations in its current form:
+     +
+2:  7265de45c9d ! 2:  801a3d7f539 doc: refs: linkgit to git-maintenance(1)
+    @@ Metadata
+      ## Commit message ##
+         doc: refs: linkgit to git-maintenance(1)
+     
+    +    Acked-by: Patrick Steinhardt <ps@pks.im>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Documentation/git-refs.adoc ##
+
+base-commit: 13c7afec212fc97ce257d15601659314c6673d6c
+-- 
+2.54.0.22.g9e26862b904
+
