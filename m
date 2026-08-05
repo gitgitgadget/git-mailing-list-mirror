@@ -1,137 +1,137 @@
-Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5128D471407
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 13:29:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E805472F65
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 13:42:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785936576; cv=none; b=sw1dEMAlgndjElHzx8jF83X+jmv1l/D4qdkKSykIT5YBs6fIz+YX60bQLcauvKSzFQcegbBW+oYdN/awf3OlN18Q9RFkl4NyyF6+Z6UHh2lZWUt0QJXD3bqmOoYicfIH1j8/V6dCnWivBYsKzG8/qnXuk8tLiGk0uQ6EUVpQvg4=
+	t=1785937360; cv=none; b=d4wcfXawA4Y8nmYMurh+aTOPB0mASRPNYxFjYMT74xW3CEAXMx0yHZ4sCN5+jfm5tubf/gF9zM6viFUniANJzZDJ5/kBeGz3o8YEVzq6xxU3n/04SfYpgmDwr73KietJdAPeeS65ihVXEDO3hDODdwAljd60Y6FLt2JafUqJOoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785936576; c=relaxed/simple;
-	bh=S4yRGbHLbwko0qh8fdTq/JCGKWMl3T/6Vv1UMqd3Z8U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R8q4flw0DzNHy6DaqGcaJPW3w5d0FqF1Dm5diCfuI1T0LTv3vukHPxEbhs5XWbSwQ7Xp39gYr3SDmsmhubq1u2G8pSmcW6dP+OBZ7mfKJsE9a1IqaM5PZqLZ7P23VhzVNXUCoJ1DPmJzY3BLXVwAY/UvysQuiG0yApZxuiCddBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=PSTvQXi4; arc=none smtp.client-ip=91.218.175.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1785937360; c=relaxed/simple;
+	bh=CU+IlZc9lTVfDvy1U40z+CSa6Fh8zTAy2nC1c4Pe0Qk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Q518uJtxSm3mZnQotEEfpC00IqUQo7x0bqp2Hkg8VY4gQx2cwRgVl7G5gmgQurVXeCubMgoCT2gVCH41ifMMBZGUpWQPC0VkDtfRT26+ZnjxOD+uj0ZM3/q21sTvpjYmY9vY1Z20+RAUIa/rAu8MlrFyFTr0CWTHgQ7Cvfhv1PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qQgwNml6; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="PSTvQXi4"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1785936570;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5mMuQw1RLkoPJUjuSzG8WotGO3ESQ6BSChKNaIQTdvA=;
-	b=PSTvQXi492Yi9RGEt3q/h4B2gIDznTcyKs/VqRVz/TrQf0PpJ7ZnHiibatxUNxIORoruB3
-	8bPDEHEOfIk6nNbkU/PHk7omH9hZmKaeihaskNyb/Ba6r3ykqh5GiWEbx5ECG0oKPdqji2
-	aG4d4e8Sft5/6Pb1Wad5PgGJQ8gyEwc=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 3/6] setup: handle ODB-related environment variables
- in `odb_new()`
-In-Reply-To: <20260805-pks-odb-create-on-disk-v3-3-c0ee3ac5141f@pks.im>
-References: <20260805-pks-odb-create-on-disk-v3-0-c0ee3ac5141f@pks.im>
- <20260805-pks-odb-create-on-disk-v3-3-c0ee3ac5141f@pks.im>
-Date: Wed, 05 Aug 2026 15:29:21 +0200
-Message-ID: <878q6k66ha.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qQgwNml6"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-c1f5208b38dso188121166b.0
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 06:42:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785937357; x=1786542157; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=oFO14/BnGN5pusJZZAhw0mEtu6uEZDcXlpBvEP3fazM=;
+        b=qQgwNml64D83w0KErK7GNaEb4aS40lb3/m/yokdXYW/qc+Meo3hKw/pCtG88SbugbR
+         DM4/sHr1EIq3ZVoPqV75Nf1GrarYOwkGsVuoSckzed6IXyrg4+xgJwq6X4VQPjmKg1nB
+         sW7h8Z89rehlQGAMk3jTe0UqpmaE5ZD6XcSRFEFQ5Z6LjHnc/c9nYYsYRB0cSGBbcLhb
+         l9fDTbnC34ggpmiG6GA/Voq08jTbWHx/NWNPXxpzFJsLCK9LLPLDIkKztPGLT4AYAzv+
+         7msvWb9VzXXix0weJmhUY1H5fZV8kqKqzNqxj7WpCvCm9eQfVE4DdjS9YRLoThcxXx/8
+         J32w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785937357; x=1786542157;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=oFO14/BnGN5pusJZZAhw0mEtu6uEZDcXlpBvEP3fazM=;
+        b=Tl1z3P/7QWcLuOZkZitqAemlq/DpRs5lEWKte9XA2H1VDblOj5cpaV8Yq2tRst2cn5
+         3yOGJhU0Y42ZINURsHaTZ0PTyv6QFu+ZgN3sux04auvHYItVKalAt+bnA3o92a3EmNGP
+         CkyQoZfKvhFX2RXVVBe7oa+7WJ6pvGx62ZDcazDqYtsbiw3MY9uOtgp+EN0XE7uwomiI
+         iPrbEnvma/0ri+uU+8LoPGstI2TYq+2rFfqp4xLZHHPehXFTOCB2ifQQk0QLcxhRoFWZ
+         KIe66M0unfOkJtg7jSefEAA2upQvGGPcJRE+uXW+C8RXrAU2Lsd/fQwghwLE5hLY4tE+
+         4v8A==
+X-Forwarded-Encrypted: i=1; AHgh+Rq2sWLg8JCtvuw1e8qVEQetf3h0rwIFMwnap2TodrqzBb1Qgt8XrYgEzayGFQtkpIULsls=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWUtnMQZ5hTTMO1Q/CU8oqPxZp6MEwaUzvgc6q1MzWVJ+endAQ
+	0ypsfljTG+WBuOcyDVPRWLd2N3kvPEbKc9wZhvhSXXCmf4dK5zD7O1WGBaQPug==
+X-Gm-Gg: AR+sD129O+oxob6whPLLg2RQA7Qj4cWX4hX2zE4I7jQk0VawVDFiNlwdfr3vKrydbQR
+	RRANE+DdhT7k18+nPXZqmOJbQCICZu/wQP/m4wjZwjn03J2PfLHjXeZxQ3NE01zukKX7dMCn6Wh
+	bkGleeZXzulWtmxIUgC521O/xgycbl/M+lyBUSSu5irqS743a0QYUabYy/9CNOc4nbcNvsijRHj
+	5jsTcMcIXwhy14xgi1aOBVee98w2L0GPIqCZrCnNPYUBsgNTiZ6v/XFGFCAQSBwjQiUp2ia/G/q
+	5MqWH3IYCln0zNbdyMsUhZ850IPRD67x5oe+xcAGYnGqIEwyMiXvGL8xhj79NqKAeGhRMBtYce9
+	NlZ2a+Ww7uxD9LC+7EgutKE1sfn1mDZeu6IEBAOB8cuSLYH9ZU8H5QDb/8rSGBs2VMVoBDnxvdS
+	D76pzYLXKt72TfiZ0TlUUXeDonWgpLHtVa0lWTMJyq4dUPKgo2XvzXcT0HXxyaUi+QcNsSLmBf5
+	LUtzJsBCM4J/bZ8rR5wuxFQGLFiTI0v9WsEUEinnwI=
+X-Received: by 2002:a17:907:398c:b0:c12:b2db:873d with SMTP id a640c23a62f3a-c2039c03328mr376784166b.5.1785937356070;
+        Wed, 05 Aug 2026 06:42:36 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c203642a663sm112441766b.51.2026.08.05.06.42.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Aug 2026 06:42:35 -0700 (PDT)
+Message-ID: <307abaeb-b033-4c55-8edf-1ea765199dce@gmail.com>
+Date: Wed, 5 Aug 2026 14:42:33 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: =?UTF-8?Q?Re=3A_BUG=3F_git_rebase_-x_=22git_commit_--amend_?=
+ =?UTF-8?Q?=E2=80=A6=22_loses_notes?=
+To: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>
+References: <CALnO6CDh6kbL5KH=Nt00ksZCaDbJAnjbepU_tyRTcbGekSyeMg@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CALnO6CDh6kbL5KH=Nt00ksZCaDbJAnjbepU_tyRTcbGekSyeMg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Ben
 
-> When initializing a repository's object database we have to respect the
-> GIT_OBJECT_DIRECTORY and GIT_ALTERNATE_OBJECT_DIRECTORIES environment
-> variables, which can be set by the user to override the default location
-> of where we write objects to and read objects from.
->
-> This is handled in `apply_repository_format()`, which is fine. But in a
-> subsequent commit we'll have to defer constructing the object database
-> to a later point in some cases, and that will require a second site
-> where we call `odb_new()`. And of course, that second site would have to
-> handle those environment variables, as well.
->
-> It would be somewhat awkward to duplicate the logic though. But there's
-> a better alternative: instead of handling this logic in "setup.c", we
-> can easily handle environment variables in `odb_new()` itself. This
-> ensures that object database creation is neatly self-contained, and we
-> don't have to duplicate any of the logic.
->
-> Another benefit is that in a future patch series we plan to move
-> handling of alternates into the backends themselves [1], and that will
-> require us to also handle those environment variables in the "files"
-> backend itself. So moving the logic into the ODB level already gets us
-> one step closer to that goal.
->
-> Refactor the logic accordingly.
+On 05/08/2026 14:13, D. Ben Knoble wrote:
+> Sigh… I haven't minimized a reproduction case here yet, but maybe
+> someone can tell me how I'm holding it wrong.
+> 
+> I have a local branch with notes in refs/notes/benknoble/commits (in
+> particular, the tip commit has a note). I forgot to adjust my author
+> email before creating some of these commits, and I wanted to adjust it
+> to match the mailmap patch I just sent out, so I ran
+> 
+>      git rebase -x "git commit --no-verify --no-edit --amend
+> --author='$(git config get user.name) <$(git config get user.email)>'"
+> 
+> Upon checking (much) later, I discovered the note was missing! It had
+> not been rewritten. And yet:
 
-I like this!
+I suspect the note was rewritten to the un-amended commit (i.e. the 
+commit created by rebase before it ran the exec command). The way the 
+note writing works is that as rebase picks commits it remembers the new 
+object id of each commit and after all the commits have been rebased 
+passes a list of "old-oid new-oid" pairs to "git notes copy". If a 
+commit gets amended by an exec command then we don't record the new 
+object id correctly. I have some old, half finished, patches that try to 
+fix that by making "git commit --amend" update the file where rebase 
+stores the list of rewritten commits. I think it worked for exec 
+commands that run "git commit amend", but the effort got bogged down 
+trying to improve the way we handle commits that are edited. I've just 
+pushed them to [1] if anyone is interested (though the commit messages 
+are dreadful so I don't know how much help the patches will be).
 
->
-> [1]: https://lore.kernel.org/git/amLgMqkqxR8mKIbT@pks.im/
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb.c                         | 20 ++++++++++++--------
->  odb.h                         | 17 +++++++++++++++--
->  setup.c                       | 11 ++++-------
->  t/unit-tests/u-odb-inmemory.c |  2 +-
->  4 files changed, 32 insertions(+), 18 deletions(-)
->
-> diff --git a/odb.c b/odb.c
-> index cf6e7938c0..b463afa072 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -1004,26 +1004,30 @@ int odb_write_object_stream(struct object_database *odb,
->  }
->  
->  struct object_database *odb_new(struct repository *repo,
-> -				const char *primary_source,
-> -				const char *secondary_sources)
-> +				enum odb_new_flags flags)
->  {
-> -	struct object_database *o = xmalloc(sizeof(*o));
-> -	char *to_free = NULL;
-> +	char *primary_source = NULL, *secondary_sources = NULL;
-> +	struct object_database *o;
->  
-> -	memset(o, 0, sizeof(*o));
-> +	CALLOC_ARRAY(o, 1);
->  	o->repo = repo;
->  	pthread_mutex_init(&o->replace_mutex, NULL);
->  	string_list_init_dup(&o->submodule_source_paths);
->  
-> +	if (flags & ODB_NEW_HONOR_ENV) {
-> +		primary_source = xstrdup_or_null(getenv(DB_ENVIRONMENT));
-> +		secondary_sources = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
-> +	}
->  	if (!primary_source)
-> -		primary_source = to_free = xstrfmt("%s/objects", repo->commondir);
-> +		primary_source = xstrfmt("%s/objects", repo->commondir);
-> +
->  	o->sources = odb_source_new(o, primary_source, true);
->  	o->sources_tail = &o->sources->next;
->  	o->alternate_db = xstrdup_or_null(secondary_sources);
+Thanks
 
-I'd say this xstrdup_or_null() is not needed no more, and so is the
-free() of that variable below.
+Phillip
 
->  	o->inmemory_objects = &odb_source_inmemory_new(o)->base;
->  
-> -	free(to_free);
-> -
-> +	free(secondary_sources);
-> +	free(primary_source);
->  	return o;
->  }
+[1] https://github.com/phillipwood/git/commits/wip/rebase-update-rewritten
 
--- 
-Cheers,
-Toon
+>      git config get --all --regexp --show-names --show-scope notes | column -t
+>      global  format.notes      true
+>      global  notes.rewriteref  refs/notes/commits
+>      local   core.notesref     refs/notes/benknoble/commits
+>      local   notes.rewriteref  refs/notes/benknoble/commits
+>      local   notes.displayref  refs/notes/origin/amlog
+> 
+> So I would have expected the notes to get rewritten?
+> 
+> - Running "git commit … --amend …" (author change and all) rewrites the notes
+> - Running "git rebase -x echo" rewrites the notes (well, it has
+> nothing to do right now, so it doesn't modify anything; however, I'm
+> 99.9% convinced that when I did a plain rebase earlier today the notes
+> were preserved, just like they are all the time)
+> 
+> It's just the combination that loses them :/
+> 
+
