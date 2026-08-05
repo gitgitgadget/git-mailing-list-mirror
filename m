@@ -1,70 +1,71 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3B93D349E
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 18:31:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9493D6CD9
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 18:31:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785954679; cv=none; b=ryG8HNpZ/Mav5hbQUNVTrgc452Q6UOyc439tLpcJn4+5ZbpYUv4MZX4uapV/ldBkMj2UMbmIqmH0ZkeC8SDw1pd4/q6CAPEh9Tdm/P19Puct/kFgWvLaZkfYEJXQ6/QpZY6yVnP/LtUbPi59mwZAvYrpLNJJqL+vFrAVa+5T+RU=
+	t=1785954681; cv=none; b=lnDFXqyi56IXWcLGwGy+8LD4g7XoxkknLrdcO8fR8aTHyqsLERB7sCiW516lZ9tu3RUMa3sw5aGyXx6w0hP4vs/ErM0RBRqT+bZF6yqG621OJmRGwcxq1s9E8DatqWqihfv4KpqBUCglDHNqKjAKJwI6511vfqBS8ptv7l3RsVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785954679; c=relaxed/simple;
-	bh=+Muevasa9jPcYd7V1K/wLI+mK/GrFv6eGna0Joyn92g=;
+	s=arc-20240116; t=1785954681; c=relaxed/simple;
+	bh=jb1+5zh525lJx2yTH4w9R1S975YJtAmBtoDENblHSJY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=aE/TKvZApxfzJSxY0AeUUI3EsCi6GH5EDkAnmxabCtf431plqbvNbacGtbD9VvRonXVQR4PEOKns6iaOV5lm4R6popV7PK2bp3JSX63tpmch+/QQAaFsub/fNVzLY1Kaa1ZBKB9jSrOlGIw6Nq+UA4qdpZqU6cYezGfgz9OBbL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j5fc2xuw; arc=none smtp.client-ip=209.85.210.169
+	 MIME-Version:To:Cc; b=JiuO7C+iDjCwucbbcYfPP6PD6xL8NihWTzCJKj15+gzyw0vxO9YPVp+eGI3Nty1l8qizgw/ItpPkZtrz18ngeFyBM5/alSktks2KKJYB9sj0YmVbcIJvuy9/7IVQFUqdYR+yqZokFpKl/M2yAOvcoGHOYlWqSdz7zC+g7xxSpZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ajXcaPrw; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j5fc2xuw"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-8485ef63b68so1993257b3a.1
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 11:31:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ajXcaPrw"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e347638adso1475288a91.0
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 11:31:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785954675; x=1786559475; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785954678; x=1786559478; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=sNwElakNprIyz8vd0DZzwqm0QIUBxJKxuV/ofs2Zw+8=;
-        b=j5fc2xuwbrjaS92oYk0LBEK1RQAMI+sa+pH4iYu8mu6nQ9Id4OaZ9/j6qNO+HvFS1M
-         58ieITB3HsHbe63Ewm+cajbTduumh0/QTlXJ0S2fJgubm9K9XZg+Jgmw9XnoTd8GfvFZ
-         7+5OfvpVbLtpcAtiwwX6imtKtJCAK43r2OW5ep0QyTNLcDxXKlNwNthl/XPePGIld+Pa
-         WHNrAMLAi4Trdf5L1XjIdXmbZH80JmGGXxW2LLFlfW/yLOO2doPgjDIvsJXdvv0HXw8B
-         oJG93XxQ1YIprJLIgNLF8YUtSichckkrphIIedm5/rcqkAzf1LYDhcdkhE38oB3YJobK
-         kQuA==
+        bh=fRccCIDR+jTMBT4usvw0ZbAZlpjVniL2pBi2VJhyIow=;
+        b=ajXcaPrwhgBVOcHeMvcGaUYPCrcI1TGJCEMOmkFOCd47ZdIMy4m94lHgO+eFe0hdbQ
+         Ss6Q2eTsG6CEba9iQhGc6q22FIyG6eUpLzvUdRODBoBL415+KB+c78OW+w+w48qSdCpm
+         6oBymmGmgQlaJHiEwTRGKJ5x7AeYQgSaLI7Xoxwr1z/dVbL7Jm4/NB9wQHf7EngpU8nT
+         EOGWIWpNxF7fpTB4mPNKeBft0ToE/2252Zux/Of7dqD6x0V1wOF1rtmNcMRdF0T1r+4T
+         j6aUR5+WAONT3A4I0IHnAlw6JjGWyW5ZwSoFNX5SpFfTSKxMeQuaN3EQyZgVPkqWyVEq
+         dYdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785954675; x=1786559475;
+        d=1e100.net; s=20251104; t=1785954678; x=1786559478;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=sNwElakNprIyz8vd0DZzwqm0QIUBxJKxuV/ofs2Zw+8=;
-        b=AkcH9P49J1QSPM/Fz6z6hT366mdG5t2XnKg+BbEEzeD/E9N9fwj6L8MNoOoKvbYJ+t
-         yBnhSR2120upv1NRflYfuYP8Tdht58r+MAQf60ST1XPpeMSOy0la6PBZceyYlZezo3nW
-         oatUMLfKTecMMMWjHRQOq3t7FcBCqqb5Psi5M8A7G7AlPb0o+FXck1hveGOOdAgXIveQ
-         /sINa8OywNLXcN98caxnfXUozaIILa9IliBYx/gakwOdbXotHf29ukkztGEKZs5sBqPr
-         jqsyWuJWTLSJrFloC2CZpHsJUFRDmOKAMuIXUDlOPdCiqQD26DvkL7FUsZtrHsK4xIcC
-         OAOA==
-X-Gm-Message-State: AOJu0Yz3ebApgld76Eyp9wdGH+3SmHYjYc6lXbkG2GgzHuk58mkTAq0S
-	TTKacw3w2RAzQ7nb/Xz8BViaW+euNAziKHmFISwioNrseYbk13yYnseUklRecA==
-X-Gm-Gg: AR+sD13QQiCEQPu4iaWeOYYoI5b02t53m5s2cLpjr9LuVbKUW5i+k7Bx/EYvKqWYTSv
-	VjOoNBWcuNmt0jucw0ZLyQtgo40uKcICZHk9ZIS6SpF9QdCk+K9yHnxW3y4t7xRllkDj/sYqK8c
-	uP3EngnYUNJZWFWWpoUo31MOKAJ8hEXf0HWrnAbBwtlvh+sydFNLjTZyLZBdKVLSnYgYMxfwFw4
-	v8v4drmJBBtr0vQVqEylxH2XVMOIMEXDvgFsc7MFnNVw1bQMW5OxNy4FFMz2OV0b315fhNOQqTR
-	gDAseRyworriz/NlKg9VtFH/tT3b4zEi/XDqkLVLTRqBu/+xd3qhHlGRh4IzanZBMKJb2MW5hAw
-	hc1qHPqANDkofq4ct8HHidqQOSQpkHjipVeJbhvMhhOh/fwSexGjJ1go9UNEtmxQcoIJ0/4IUXn
-	FbYdoY3gK7NykNPuGQ2XYbaRXcAOaimX+bUPUznKPhsL8j32cgkPeT67lk9DbvzMyjmG8=
-X-Received: by 2002:a05:6a00:2d0b:b0:848:4d1a:9554 with SMTP id d2e1a72fcca58-84f2e0ed972mr9631489b3a.38.1785954675387;
-        Wed, 05 Aug 2026 11:31:15 -0700 (PDT)
+        bh=fRccCIDR+jTMBT4usvw0ZbAZlpjVniL2pBi2VJhyIow=;
+        b=iXMrgIed4LAseNHyzjWk3xFI2cCRg3/RDJkfYuAfCzQ5GyTNJTTvBKVEU0eK9Zdf4M
+         BjBEbIIfd8JkykjFuoIEdSoOLgso7EzW8PagPDQcXRaMglCNOrpglr3Y03ZI4Dz4zuVC
+         iqItuw/PG4ndZpcce35ZjJxfLR+vO1w2Ock4/altYpDWKxq/Y+tK5K0hRbvMZgUsIoXT
+         eWRtXc5JYSCgyiPlcKtqbUoZHAEGauqHtJwQPVz+/FBZmcqweiCZDR4/51w/ldpfBHD2
+         RYN59g3lHtI43l/HELgaBMa5hdiW5w4qS2r3sUaloBur+xlv2NrT6WpHuVIaaoNjqDl1
+         ER8w==
+X-Gm-Message-State: AOJu0YyGoB7bt8/AZg5XRGNx/rvbUqU7m4t64ZeiACk9KoydEeP41FfN
+	LXmUMMgZ2YbqEm5V8B8FarND85e8wdI5a7qyYjaKQaN8t/2TWeNqVBCJikIEgA==
+X-Gm-Gg: AR+sD10PP8zH/eQ5U3uMUux+8kKoRE3E07fC2gNub+HZlJQNoQ3xAR4yGuso+56EFxI
+	VIHD25fws0JzZhBo5N0BeB0Pc27e/4WISzkjme1g1T7YMJSXBNMxq1F27JHLXZROW98yzqy5xqv
+	4qIGEtraAybn4jTioCzBt8YjQNBdguINgT81/EJv98cRx8/99842pP8O/lnnRLBG00krdRLVYs6
+	9F4wN4lVY/q3iu2w1dUSdJXGcjwsDZIs2fiG9UzC8xRw35yC/p4jObBsJIT2GWrNsdE1smKWkan
+	mQBrtK0ieplXg9hLFCTQ0zN726TLc539Ua0Q7+wOA3uEi0xiIR4tbzorMw6VRPtWcOjw9ZfExuG
+	mOWEBg4RvTRVrpn8bfg5L7yM8mSFU64o8/iUYxaUAa6jpBUOPsFwWPGLHmvFdAuMN5qz2+fJqog
+	m/IFV+xVcCP2kOMON+Xi4tpZY+zlMI+xWdEMwnq5eer8s5lDxD0YpDsFJ5gc1LLR7zsQ==
+X-Received: by 2002:a17:90b:6cf:b0:380:7688:fbe9 with SMTP id 98e67ed59e1d1-3903c559075mr9659314a91.8.1785954678055;
+        Wed, 05 Aug 2026 11:31:18 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.220.200])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84f2e52e28fsm1259149b3a.53.2026.08.05.11.31.13
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3903f62ccccsm1706849a91.3.2026.08.05.11.31.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2026 11:31:13 -0700 (PDT)
-Message-Id: <0facb9e8cabc739cf05829934fb2399ed9a58259.1785954661.git.gitgitgadget@gmail.com>
+        Wed, 05 Aug 2026 11:31:16 -0700 (PDT)
+Message-Id: <2b0e4f32fda6672f5d093e203e2e9774cf464aef.1785954661.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2179.v2.git.1785954661.gitgitgadget@gmail.com>
 References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
 	<pull.2179.v2.git.1785954661.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 05 Aug 2026 18:30:56 +0000
-Subject: [PATCH v2 07/11] transport-helper: check dup() return in get_exporter
+Date: Wed, 05 Aug 2026 18:30:57 +0000
+Subject: [PATCH v2 08/11] transport-helper: warn when export-marks file cannot
+ be finalized
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,37 +82,42 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-get_exporter() duplicates helper->in via dup() and stores the
-result in fastexport->out. If dup() fails (fd exhaustion), it
-returns -1. The child_process machinery interprets out = -1 as
-"create a pipe for stdout", which would silently change the
-fast-export process's output wiring: instead of sending data
-back through the helper's input fd, it would write to a new pipe
-that nobody reads from.
+When push_refs_with_export() finalizes a successful push, it writes
+the fast-export marks file to a .tmp sibling and rename()s it into
+place. The return value of rename() is currently ignored. If the
+rename fails (permission denied, full disk, or an antivirus product
+locking the destination on Windows), the .tmp file is left behind
+and the existing export_marks file remains stale; the next
+fast-export operation that resumes from it then silently operates on
+inconsistent bookkeeping.
 
-Check the return value and report the error before proceeding.
+The push itself succeeded by that point, so promoting this to a
+fatal error would be inappropriate. Emit warning_errno() naming both
+paths so the user can recover manually, and keep returning 0.
 
-Pointed out by Coverity.
+Flagged by Coverity as CID 1427723 ("Unchecked return value").
 
-Assisted-by: Claude Opus 4.6
+Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- transport-helper.c | 2 ++
- 1 file changed, 2 insertions(+)
+ transport-helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/transport-helper.c b/transport-helper.c
-index 80f90eb7ba..31883b244e 100644
+index 31883b244e..ed0543f1ad 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -487,6 +487,8 @@ static int get_exporter(struct transport *transport,
- 	/* we need to duplicate helper->in because we want to use it after
- 	 * fastexport is done with it. */
- 	fastexport->out = dup(helper->in);
-+	if (fastexport->out < 0)
-+		return error_errno(_("could not dup helper output fd"));
- 	strvec_push(&fastexport->args, "fast-export");
- 	strvec_push(&fastexport->args, "--use-done-feature");
- 	strvec_push(&fastexport->args, data->signed_tags ?
+@@ -1184,7 +1184,9 @@ static int push_refs_with_export(struct transport *transport,
+ 
+ 	if (data->export_marks) {
+ 		strbuf_addf(&buf, "%s.tmp", data->export_marks);
+-		rename(buf.buf, data->export_marks);
++		if (rename(buf.buf, data->export_marks))
++			warning_errno(_("could not rename '%s' to '%s'"),
++				      buf.buf, data->export_marks);
+ 		strbuf_release(&buf);
+ 	}
+ 
 -- 
 gitgitgadget
 
