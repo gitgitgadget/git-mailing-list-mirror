@@ -1,153 +1,94 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1E742BC46
-	for <git@vger.kernel.org>; Tue,  4 Aug 2026 22:40:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15A41B6D08
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 00:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785883221; cv=none; b=eJOk3kWwv5l/BXuDhWS0A9BrVWv5g+2WNmcIfiuRWqAuHQAXvHuW4orlMLOUHEw1gaCw6CVFKquWNAvees8o1tg5n7jj1gU/hWX214fg4UAEsiLpWGA+KtFLbIX2lTmZ2DzNIk9PUoELHtedEkvRY36L2hJ1vednXDAaPg51RXc=
+	t=1785890635; cv=none; b=eDEx33rcC4Wu9g6pVuFr3EF8xBS/TLt+lPTW/ei81CTscuACaFFc5tFkIPYD0Pi0FxmorH2pz4zG9W6bl6pzzBbhIMfrNxeobJ6GoYqB1AV10lf4bZgyWRy84CmjGOaeu5cHVcnUbs2+5htHniQoOS+laYZRZh4gfHGcOjXi72Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785883221; c=relaxed/simple;
-	bh=5mKBrNmwwIvzZYdKVVwYLuVHl7fTp0wdt3LnIKO/GHs=;
-	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=Nw4XAbKHowV7o/DyOGrc1t3TD01+SVfJmoiI0v21ZLwyQPCPPvDCEA1sCE0LeEE1Cr5W4lxtbiuFdUteVlIEOMVgrErCQ/Li27myGiuG8IJx/zjtRKI+3s+FTDC4g03FVf+4WWMH/AH+XeyZblBBWt18AWbWt7H7Q+ZcDCbYi3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z2fHk9Vf; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785890635; c=relaxed/simple;
+	bh=dbaUMzcP2Fsgc/ppLUBNKKY9tFclenlzSx6nflWF+2g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d8TX6qtZtVL28ZkQRRlBdxyibTBFc4Yx/saMdHyxDlusBcb32vSPcx5DolwUJwOJl00LGG1lDs8S7tEE7h7+b5vAAcj4bknruer+WgSsPofKabVCLI5JpA6M0roI50qTRmisvTG6MpRFWyUpFiEXwhH2hNIpDPWsejzEpeKq52I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=AYYjnZTh; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z2fHk9Vf"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-382ef647e20so352536a91.1
-        for <git@vger.kernel.org>; Tue, 04 Aug 2026 15:40:19 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="AYYjnZTh"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-930f72317a6so27890285a.3
+        for <git@vger.kernel.org>; Tue, 04 Aug 2026 17:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785883219; x=1786488019; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=kgEjS00c/vz/kCxF5CktkMo8wQ7ufqB/MNIyk9cRLiw=;
-        b=Z2fHk9Vfg42akvIptfA0UjiUF14Qua4PfazIDz69R11kJp4z//99AfksawYlkJA4gB
-         cpT4bu4eSJTsoRYhasZT4uESq1jV0uDzqqfOWYngNDyopdcvKKYlya7wAUKzd7oGvSiq
-         cEsz+48EiCzMVaNAAgJrZxw4R4DC0l+f9PtIuuim/qnOv6CGNScBTMbNuxj/iaHQJWfm
-         n++KfKz2JbQlIi+Y+xbF77JY6XLBuwDZXABYkEHfyzpwOuuBXQmkWW5yC9106H5uvYMG
-         nabeh+oYtZ2dffxQLQ1UUr/YnZrfZFX4KjNgUFLbwnZHJGQOXUOeievFV6YCLCM6A5El
-         yPJg==
+        d=openai.com; s=google; t=1785890633; x=1786495433; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Tkd5gCqoqVta9SswoYmm1ezGGFaqldUDH052ihlIL7E=;
+        b=AYYjnZThGn6mVdi0WdUNDGtOGV2cB/VMpRO3hCifWC5P3b7eEmN91yYqnwCVnACuaq
+         oY2GhFBYHS2YFvL/YHLAugQhjLJ12xR94k5/dkOdgxaT4Irh5sS+Cd3pEW4Op4h3RsPR
+         MmMQVcksVxXoqHykeaZ5KIxDvs5ElHtB8aBfs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785883219; x=1786488019;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=kgEjS00c/vz/kCxF5CktkMo8wQ7ufqB/MNIyk9cRLiw=;
-        b=ZZeZ+IBpq/6vxpgqM0byr4gYMdgs0xy/8hrdlePjUBXYUR2fDAhsanmYGIvtJ+nNV2
-         8QctrJ706Wei/DRrYHWOTvVkjaQcciiJVtyKoH/PPRC1ThTlNLgoU+epI/bgbsQxumpS
-         pjBRDXik4BWj42KAgJsAgbMDL0S2f1eI5wf6VTMD/n6/kuiDfKrhPRMwluYWG4QY1/qL
-         kYCXRo4pgEPryJeOdEsA0TAEPmNk2xdlSzFQpiA5gpAxzdDUKSgLJq4wtE5yIYe8Hi2b
-         q0zGlwxbvO6E/R5+7w/Ia51vJzyiSKvvRR34kWyAMPSmlDpl9TSV9jy/3dMZCltvAZGF
-         KAcQ==
-X-Gm-Message-State: AOJu0YyTCaT2t4AKPEllOGt7gVbpTWzsvFmgastBnS42cUTI9nT2xOC+
-	St48rOjcm5i32W8ylXYENnmpOnaC7AsoYo9HIOvENdb6j1OjivqChj7IajSkww==
-X-Gm-Gg: AR+sD1001ws+L0Egv34eVEwmssY7CWkZVdmW5tpAs1y9L5TXG/LWhyECdC6Um+JVmPO
-	8tDpcxXzSC06BjubYsTkfld8LWjIIMaYKcfssBhYMTCzOwJvzPKNFLGqRCY21ZiusWKWV+kPEAQ
-	HU6x+rx6N8GWiI+Uoytr9pHtLb+Or1uFQAU6QOxNvQoS7eMLLsXfn/IUv/XyyKfEy+dVmd3/636
-	Nk03CXNiuB51az3+5uijEDDUH2O1wvAJyEuxCGSkKRfWCFY+MD3QCKXfVudTvRRiuZYOTkAtQ1h
-	9PAgr2S09bkMeGgBcQCfnPFkgtNsYI2dOkSOUmGxJ8RPIaOOO7iJI5G8Fpj76yx9Smil02af7NU
-	XaGBFzXd/NI1KDkLi5y5PHwv3Bt6oGeMbwR6+AmgQf/7Vpj2Ya/N/uRXi+oi4Nfc+NxrnAsdHiU
-	C7aejuyaXd4950N9YLJ59GtNFukJ8EGdBDGxMbYwsKVauQRX5GG0jgpWYTmZzOhhyr
-X-Received: by 2002:a17:90b:1843:b0:37f:bfa2:1887 with SMTP id 98e67ed59e1d1-3903c53639amr2652805a91.8.1785883219103;
-        Tue, 04 Aug 2026 15:40:19 -0700 (PDT)
-Received: from [127.0.0.1] ([20.168.101.211])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-315867bc341sm15214359eec.27.2026.08.04.15.40.18
+        d=1e100.net; s=20251104; t=1785890633; x=1786495433;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Tkd5gCqoqVta9SswoYmm1ezGGFaqldUDH052ihlIL7E=;
+        b=oj1OHnBmPUP3rkuZ0Y5nJvba40+vHg63q2ULSSNNsqeo9Af4H9qv8t8ZkmXz02sM9d
+         wb7LN/2ILmn7wVqM+1WKFtFEdSgc4g/nBXowHMJ98fWO2Gu8+tRGdIo1FOQ/n97qsQqq
+         fezoIS9pd64HHZ4CruF4jcR7KJL0b5CMKL4c+NpwZzLhtMeMWzyaiazjz9ATWCS7AnRa
+         wDY6R87m+4U4/j1I4q7+ezKQ8jhPjbqi7suTRF0FK4hcexFigGm9FrKSnlyROqQBfZUz
+         s60YTT8wr1qflQdj1dkFTCXDHFbbBTS0yuyuR2+Ueka4BsiDMvk/uwG6+Sk2OuhCJAzx
+         qlxg==
+X-Forwarded-Encrypted: i=1; AHgh+Rq09JniasyMhUTcFFKGo3nnrhbzxZv7E+MMOEllJHEDDelfuwj1ztPBZyYQ5qB3FwXzdJM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJQHs287xwS0nfs+E5L3tC/lWrROn9QBSOZev6Zt9/9R5Dq1Vg
+	DxJ9eIFrXDikotiLwYn+iNuFbgQJWFLog1z3BJAzo74gKCwRufwFDWoA635VEvF9yWE=
+X-Gm-Gg: AR+sD13/yy60kBKdWeNM6/1Yf6RpJwnjjz5HnXUR78vyCAws8LwKTfYYSmmfIw4b5tN
+	wDgArQct9BDBPmZ5PbZg0pw8yLZCFVZJOS6ua80RduajPFJ3nYjNlOQfd8LF45QrY3QceNY40RB
+	YTRIHRnHX2mpODgiRcJkrEUtq9oc9VfKOxWvkgPDmhIw5CzQWUFJSro9aCHR4UnPn/VoN21lADg
+	+2oEQa4P8ujSuEiaqm9qXuMsGjlNhGIN0COH8uTmhOEx5Ash1gtosBUnc+0hn3ygxy7D/VLrbwx
+	fqG+bRePqoZ00FAfH08kXwRK1jm/6SXtFUlSKp6ckEaeItOB9Vg62R/GVHrS0hjpBfk4z9/mdrF
+	JX2jDhbOVZAcBFzdTXaSaWGpX48I+jEn8FpU8ol3iYFazq2kE0+V1UsuoIO2AH1MpI0Bah7fPGI
+	Fb8/5UWuB4XyA1u5MBqbPqqiJV4ONQhjC8SINq4MYEKz4hUu3kD/JEIRm0xWtPPt6j1xN1FeQo6
+	ALY5SvPwgh+8Xv4pwVT+y5rMwXCOHF/u8AaYSsSg283/Ur4jiffNIo=
+X-Received: by 2002:a05:620a:4387:b0:92e:e299:dfdc with SMTP id af79cd13be357-93649181774mr265740885a.21.1785890632632;
+        Tue, 04 Aug 2026 17:43:52 -0700 (PDT)
+Received: from com-79390 ([199.47.143.8])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9364a3fc84esm50825185a.9.2026.08.04.17.43.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 15:40:18 -0700 (PDT)
-Message-Id: <pull.2372.git.git.1785883217733.gitgitgadget@gmail.com>
-From: "Daniel =?UTF-8?Q?Mart=C3=AD?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 04 Aug 2026 22:40:17 +0000
-Subject: [PATCH] credential/libsecret: load secrets explicitly
+        Tue, 04 Aug 2026 17:43:52 -0700 (PDT)
+Date: Tue, 4 Aug 2026 17:43:43 -0700
+From: Taylor Blau <ttaylorr@openai.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Toon Claes <toon@iotcl.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Gusted <gusted@codeberg.org>
+Subject: Re: [PATCH 4/4] last-modified: keep per-path Bloom filters for
+ wildcard pathspecs
+Message-ID: <anKHP7G1uE78e2x0@com-79390>
+References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
+ <20260717-toon-speed-up-last-modified-v1-4-410418f18614@iotcl.com>
+ <87a4rp1l65.fsf@emacs.iotcl.com>
+ <20260718081407.GC22588@coredump.intra.peff.net>
+ <xmqqzez1sf3m.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: M Hickford <mirth.hickford@gmail.com>,
-    Mantas =?UTF-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Daniel =?UTF-8?Q?Mart=C3=AD?= <mvdan@mvdan.cc>,
-    =?UTF-8?q?Daniel=20Mart=C3=AD?= <mvdan@mvdan.cc>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzez1sf3m.fsf@gitster.g>
 
-From: =?UTF-8?q?Daniel=20Mart=C3=AD?= <mvdan@mvdan.cc>
+On Tue, Aug 04, 2026 at 03:19:57PM -0700, Junio C Hamano wrote:
+> So what happened to this discussion?  Are we happy with the set of
+> patches in v1 after all, or are we still thinking it over?
 
-secret_service_search_sync() can return an item whose secret is not
-loaded, despite SECRET_SEARCH_LOAD_SECRETS being set: the search
-silently discards secret-loading failures, and the GNOME keyring
-daemon silently omits from its GetSecrets reply any item that is
-locked or that was deleted after the search matched it, e.g. by a
-concurrent "credential erase" from another git process.
+I don't have a strong sense of this particular discussion, since this
+sub-thread involves only Peff and Toon. But in general, I think that my
+comment[1] here needs to be resolved before we start merging this down.
 
-secret_item_get_secret() then returns NULL, which we pass unchecked
-to secret_value_get_text() and secret_value_unref(), producing
+Thanks,
+Taylor
 
-    secret_value_get_text: assertion 'value' failed
-    secret_value_unref: assertion 'value != NULL' failed
-
-and losing the password even when the secret is still retrievable.
-
-Drop SECRET_SEARCH_LOAD_SECRETS and instead load the secret of the
-one item we use with secret_item_load_secret_sync(), which does
-report errors. A secret the search would have silently dropped is
-now retrieved normally, and a genuinely inaccessible item produces
-a useful message instead of assertion spew, with git falling back
-to prompting either way. Merely guarding against NULL would avoid
-the assertions, but would forfeit a secret that is still available.
-The cost is unchanged: the search no longer batch-fetches the
-secrets of all matching items, and the explicit load fetches the
-one we use.
-
-Signed-off-by: Daniel Martí <mvdan@mvdan.cc>
----
-    credential/libsecret: load secrets explicitly
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2372%2Fmvdan%2Flibsecret-null-secret-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2372/mvdan/libsecret-null-secret-v1
-Pull-Request: https://github.com/git/git/pull/2372
-
- .../libsecret/git-credential-libsecret.c           | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/credential/libsecret/git-credential-libsecret.c b/contrib/credential/libsecret/git-credential-libsecret.c
-index 941b2afd5e..6bbdf2bd45 100644
---- a/contrib/credential/libsecret/git-credential-libsecret.c
-+++ b/contrib/credential/libsecret/git-credential-libsecret.c
-@@ -126,7 +126,7 @@ static int keyring_get(struct credential *c)
- 	items = secret_service_search_sync(service,
- 					   &schema,
- 					   attributes,
--					   SECRET_SEARCH_LOAD_SECRETS | SECRET_SEARCH_UNLOCK,
-+					   SECRET_SEARCH_UNLOCK,
- 					   NULL,
- 					   &error);
- 	g_hash_table_unref(attributes);
-@@ -143,6 +143,18 @@ static int keyring_get(struct credential *c)
- 		gchar **parts;
- 
- 		item = items->data;
-+
-+		/*
-+		 * Load the secret explicitly rather than via
-+		 * SECRET_SEARCH_LOAD_SECRETS, which silently discards load
-+		 * failures and returns items whose secret is NULL.
-+		 */
-+		if (!secret_item_load_secret_sync(item, NULL, &error)) {
-+			g_critical("could not load secret: %s", error->message);
-+			g_error_free(error);
-+			g_list_free_full(items, g_object_unref);
-+			return EXIT_FAILURE;
-+		}
- 		secret = secret_item_get_secret(item);
- 		attributes = secret_item_get_attributes(item);
- 
-
-base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
--- 
-gitgitgadget
+[1]: https://lore.kernel.org/git/alq1Q55ezuN9ZI9j@com-79390/
