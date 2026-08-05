@@ -1,70 +1,37 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7D33A6EF1
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 03:57:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6603612D8
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 04:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785902273; cv=none; b=uCabQ25z+GwbEl3u4od8IddCjHYQTF4TitabdpHctQxXYxlnkkVShXypALKX4jch/5U/0qrTDniqjCRGayS3D2QpVxB5qBEXQy05KmazUI5TMd9XHDiCEQJ4VkmYEcdKC1V9Tfgay/sXKMQHrKPoBx+p3iM7WEyYaEnsmlbH5T0=
+	t=1785905430; cv=none; b=HwItB/xzWMumxs0uvKTsIA7xVVwGzHXYnXRasemG/Nmna8lsINGZJ1ZeZGXyLN7nR4Hit5Qw7GLroG2S+RbBrxSo0zrM5gjG37lnEmXF9l1iL/O1NGWlZHlk0UjeqcJAklzL1lE99XEZa6Y/MIVpVYhrIG5nujs8r32E1aS+zTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785902273; c=relaxed/simple;
-	bh=NXPnpm44ZAGei9+FLfD4xGdWVotEkPOxJ9ix50sS7j0=;
+	s=arc-20240116; t=1785905430; c=relaxed/simple;
+	bh=L4po1GbiWN4U5uLvIdczWIYlI/D9QF6ascx2ZZFxtQw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cNXUWUTA4Tv+3ETqKwrZuRSp47tvdkWQhQiQDGD1Kn9dC4+n/ArSB1i5RvhGwb+KjuTSUrjZ9h0LJ/wA2l8C+Y/YW2LGNH985lA6yBu6BD3fAJrqLCvFfRMMkADH007IzZvwrpI/fSUZVUXKN0u8f0pKzRtWeI2pCGnSfYxy8Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=Tuy/TpNW; arc=none smtp.client-ip=74.125.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=Axyf8NpXrP+75XHVZMO2/RhpVyy8OQ1UWC0HG420e2Lf8Y+Bjm0ycc+6e2eRiZiCzGIQtMDt0MmBP03pkhBX+K2XGSQj8GvstYsMSfiQ84p6ViPpZENjU/19QwYWqTWIYlHLQSkMDbQ+GnDUV6XwefU/twopbturstZsQd4t+k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YwCz55vh; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="Tuy/TpNW"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-6688acd1a51so708735d50.3
-        for <git@vger.kernel.org>; Tue, 04 Aug 2026 20:57:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1785902271; x=1786507071; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=jqk2ni2NcWN7VxtKX1LvhX6EEw5DFCUh7BbY8rM/H9o=;
-        b=Tuy/TpNW3rQ0trbSyCexp0AAlpB2Pe2pNX3YvkUVqO5FgBMlcXK6XQrxiOQTPYE9X/
-         KNJI4UngX4IR6p3+597AKDtBhJjZdNT9sxJISc8HCKhxPq0ptwo786i7xe6kC0Bx43P6
-         w1DnrTMTJQXN5HkHnwo+vZ4oFE9p1WrojIhxo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785902271; x=1786507071;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jqk2ni2NcWN7VxtKX1LvhX6EEw5DFCUh7BbY8rM/H9o=;
-        b=Ch/tLMPDyIJji7wkp1jYsnoMh9dQNH0sKrjYwgW9i++kC+9MwcmV88pRrTdN17T9Kz
-         fPx0c+OSYNka2SQlYcd7Tnb2f/2oDSS+faGIOTYjIWSRS1RXTTfcmQX7XsSCVKoUxz+5
-         +/1MBrxsJ/G4HDU1dWoCU+BqRgP2JL+zVfIcno0y8PLSYgWdkQ0NLbC6YhJrf2UDM9dH
-         XJWQURYVsteyqy5LqAX4xVje8ZUkDHA4serG1vJMZA0uOYzBhAKnfE13aDsWf19OYM1s
-         slkfAQwXIYPojiPCZ1UMrOc0Dl+SXTlnjCmmWWeDc9vuH3LEslfB8kmi0P8XVw4lpo6e
-         mi1w==
-X-Gm-Message-State: AOJu0YxHw1SDBkQRotYLY1UCDUnJY5YLfdEmefrYmjsRSBIgxrxkMfbn
-	SFQ6aVHBXeIVFYy9IBxeEcJi9gHXVainrQ8IadLIFY+aFpwJ2AiO3C858fooR+ZrfVCzTUMkkh7
-	JVoMH0mY=
-X-Gm-Gg: AR+sD11yIM03VLeBhyjV+4WVqZIQEgwxup9XOCxXLK+i8RdxPR6NSyPqGF0MP2EmMfJ
-	kEHX9xInhIlR/0bSD9rJsbUNOWwJyLpFwWlQ6kbQfAh5HQL7Y/V7T/ze2dDuOl9YFhGpu/Yafmv
-	S+aGEauI2Pz61FNv3kRh9/tfbqY1nIiRTWExoifLBYM7+udMXeVZ5PTs+0dbBfuPLLjM3B3/VJp
-	XPW2uiWf9ILMPc6jk77QdgcXse1xVnrbU0LPOqQ4gpVB60tGSOU1lnkX5hgWubj9eQDuaKrvhlV
-	c5mByiHXJFo753hFqhcNsLichjvS4qNdZ3mjraKp3lKrUN6ojoyrakMgrL7KHizlPHapFl8jU/V
-	oKSj6OFMzMNqobtrckqYMEHe+u7LGSzrx1IgP7cqqaVr9Z9nU3NDUpzIe/dDC6PKDtePMYaQpb2
-	Yw6EsBuX4ocDvC63OV9VumkSVQku2fgUo4Kzz/3iaOC49NU9iwEH5N4T0lqt8ev7NvF/s4rFuJe
-	P33R7TnmchhbuTBr10ePtMaqHogIB0PmXb62svNaxYB
-X-Received: by 2002:a53:c446:0:b0:667:f3d7:eb35 with SMTP id 956f58d0204a3-6699aa3eb17mr1736050d50.6.1785902271130;
-        Tue, 04 Aug 2026 20:57:51 -0700 (PDT)
-Received: from com-79390 ([199.47.143.8])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6699136af8dsm2162098d50.2.2026.08.04.20.57.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 20:57:50 -0700 (PDT)
-Date: Tue, 4 Aug 2026 20:57:46 -0700
-From: Taylor Blau <ttaylorr@openai.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>, Ted Nyman <tnyman@openai.com>
-Subject: [PATCH 2/2] maintenance: trigger --auto for promisor rollups
-Message-ID: <dc2fffc37cead551f8036c9ecab5e52a4cbee37b.1785902237.git.ttaylorr@openai.com>
-References: <cover.1785902237.git.ttaylorr@openai.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YwCz55vh"
+Received: (qmail 48361 invoked by uid 106); 5 Aug 2026 04:50:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=L4po1GbiWN4U5uLvIdczWIYlI/D9QF6ascx2ZZFxtQw=; b=YwCz55vhzQsto6SfE0MGd1K9WWQ082icka4mj3nE2uSTSebOQLg2eQJe17zHwe/poSN33AG06NA/RECWbjuUxhqeDNxmVz3JgcmsI0Ka7G6myATPDJqVTkNqJjC9UWAbtXBV+jVh/U8lOpAxBaQmdSiL559jiAwP5uOxsUML85zW5CQL6r5sllewHB1QTDS0S7db/GqBx+Wo09F0/jjIAXHgiZcqhxDFiICGfMUK5+qAXNH+7006QGritJZJa5qnK13sxQ7GY6x0HRUubul1NFNprKjfXRoS6wZD2TrKRnsUCvKUX08rhQnjsvYzBoBGk5QGwxTOh90G0qcyb56YbA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 05 Aug 2026 04:50:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 71113 invoked by uid 111); 5 Aug 2026 04:50:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 05 Aug 2026 00:50:27 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 5 Aug 2026 00:50:26 -0400
+From: Jeff King <peff@peff.net>
+To: rsbecker@nexbridge.com
+Cc: git@vger.kernel.org
+Subject: Re: Question on textconv
+Message-ID: <20260805045026.GA972736@coredump.intra.peff.net>
+References: <017e01dd2441$476839f0$d638add0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,97 +40,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1785902237.git.ttaylorr@openai.com>
+In-Reply-To: <017e01dd2441$476839f0$d638add0$@nexbridge.com>
 
-Commit 9bc151850c (builtin/maintenance: introduce "geometric-repack"
-task, 2025-10-24) added an auto condition for the geometric-repack
-task. It runs the task when ordinary packs need to be combined or when
-the number of loose objects crosses the configured threshold.
+On Tue, Aug 04, 2026 at 02:44:22PM -0400, rsbecker@nexbridge.com wrote:
 
-Later on in commit dcc9c7ef47 (builtin/repack: handle promisor packs
-with geometric repacking, 2026-01-05), the geometric repack machinery
-started handling promisor packs separately, but did not correspondingly
-update the auto condition.
+> The supplied file going to the textconv program looks like
+> /tmp/git-blob-GFtIhK/simple
+> and is always empty regardless of the file contents.
 
-As a result, a repository can have promisor packs ready to combine
-while its non-promisor packs and loose object count require no work. In
-that case, `--auto` skips the task even though a geometric repack
-would combine at least two promisor packs.
+I can't reproduce the problem here, even for files with embedded NULs.
+However...
 
-Check `geometry.promisor_split` alongside `geometry.split`.
+> When there is only one file named simple in the repository I can find
+> it, but otherwise any ambiguity in the name makes textconv processing
+> impractical. Somewhere prior to this I was supplied with the actual
+> file in the working index instead of a temp file.
 
-There is some fallout in t5331: the new condition makes a filtered
-clone eligible for auto-maintenance before the test inspects its
-promisor packs. Disable auto-maintenance in that fixture so it
-continues to test `--stdin-packs`, not the maintenance task.
+This part I can explain. We sometimes try to reuse the working tree
+instead of generating a tempfile, as an optimization. We can only do
+this when the working tree file is clean. But we also only bother to try
+when one of the diff endpoints is the index. So if we set up a sample
+textconv like:
 
-Signed-off-by: Taylor Blau <ttaylorr@openai.com>
----
- builtin/gc.c                  |  2 +-
- t/t5331-pack-objects-stdin.sh |  3 ++-
- t/t7900-maintenance.sh        | 23 +++++++++++++++++++++++
- 3 files changed, 26 insertions(+), 2 deletions(-)
+  git config diff.foo.textconv 'echo >&2 "got: $*" && tr a-z A-Z <'
+  echo "file diff=foo" >.gitattributes
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index ed75c12c43..e9572940dc 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1649,7 +1649,7 @@ static int geometric_repack_auto_condition(struct gc_config *cfg UNUSED)
- 	 * When we'd merge at least two packs with one another we always
- 	 * perform the repack.
- 	 */
--	if (geometry.split) {
-+	if (geometry.split || geometry.promisor_split) {
- 		ret = 1;
- 		goto out;
- 	}
-diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
-index c74b5861af..2a983e28ac 100755
---- a/t/t5331-pack-objects-stdin.sh
-+++ b/t/t5331-pack-objects-stdin.sh
-@@ -368,7 +368,8 @@ test_expect_success '--stdin-packs does not perform backfill fetch' '
- 	git -C remote config set --local uploadpack.allowfilter 1 &&
- 	git -C remote config set --local uploadpack.allowanysha1inwant 1 &&
- 
--	git clone --filter=tree:0 "file://$(pwd)/remote" client &&
-+	git -c maintenance.auto=false clone --filter=tree:0 \
-+		"file://$(pwd)/remote" client &&
- 	(
- 		cd client &&
- 		ls .git/objects/pack/*.promisor | sed "s|.*/||; s/\.promisor$/.pack/" >packs &&
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index ba5b359e77..fb5f2d8902 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -759,6 +759,29 @@ test_expect_success 'geometric repacking with --auto' '
- 	)
- '
- 
-+test_expect_success 'geometric repacking with --auto handles promisor packs' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git config set maintenance.auto false &&
-+		git remote add promisor garbage &&
-+		git config set remote.promisor.promisor true &&
-+
-+		for n in $(test_seq 6)
-+		do
-+			test_commit $n || return 1
-+		done &&
-+
-+		pack_promisor 1 >/dev/null &&
-+		pack_promisor 1..2 >/dev/null &&
-+		pack_promisor 2..6 >/dev/null &&
-+		git prune-packed &&
-+
-+		test_geometric_repack_needed true auto=9000
-+	)
-+'
-+
- test_expect_success 'geometric repacking honors configured split factor' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
--- 
-2.55.0.483.gdc2fffc37c
+  echo one >file && git add file && git commit -m one
+  echo two >file && git add file && git commit -m two
+
+The running either "git diff HEAD^" or "git diff --cached HEAD^" will
+convert the copy in the working tree, and you'll get:
+
+  got: /tmp/git-blob-0CLCMr/file
+  got: file
+  diff --git a/file b/file
+  index 5626abf..f719efd 100644
+  --- a/file
+  +++ b/file
+  @@ -1 +1 @@
+  -ONE
+  +TWO
+
+but if you do "git show HEAD", you'll get two tempfiles:
+
+  got: /tmp/git-blob-w1binM/file
+  got: /tmp/git-blob-1nu2Rm/file
+  [same diff]
+
+even though this is the same diff! We _could_ try harder to reuse the
+working tree copy here by checking whether the path has the same sha1 in
+the tree and the index (and that the index entry is clean). But it only
+helps in a few special cases, and it's not something users should rely
+on (we might choose to create a tempfile anyway if the index is
+stat-dirty).
+
+-Peff
