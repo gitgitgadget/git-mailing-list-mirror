@@ -1,118 +1,165 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD6A3EBF11
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 08:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09D8384CE8
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 08:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785917288; cv=none; b=Kbcmcq9nm0oPRohEauWFx/J65rEO96y3XtaHm3Cz0Pd7DNjQfdOXCSSQNuTwCFMxDP6z16aPl56pKTVE23phIPAEh6cxKYfnLsmNktaOzHWCstgbhdj/+rcpcaCIA0jsfC2A9VVapv6UTEYj1bYHJ1j9tm4HHiz9CAK099PQ2tE=
+	t=1785918617; cv=none; b=uaBm7++z7CbmMA/t7bkHl0U2jIn8ISHlMyjSWoNgZmhMSvkgYMbZrbYZG8Gyl1aISYbkLjnt1TYnh7S2HCaFxYjiU16MaQrI4HkPLosFY7vgIZdECRgVadbcWmjGcit33sZaZGowwTijJznQCX88rVPKtxemtVvEg6JPbQZonHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785917288; c=relaxed/simple;
-	bh=BrK14Aro7ypSKhnxfllfiEjx22rQCS5oDsnQbaFccZE=;
+	s=arc-20240116; t=1785918617; c=relaxed/simple;
+	bh=sGmhD3UokkjhFXtWE7WkYxWGCS9hSVEmqcHNKurig1k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fbHc76yrX7MRHtfrSDL1n+o/IGUYGyqREO9I4iTjuxi2fFTHrJWqtL9Bs1ZI9RxHwpnRSz5A2y9VGtf6sRPpsMXtgwB9MKUqr+yqzyjYPEiRmoFzRk0vGxYkQOqb71gjxBd+Q1GevctT9O2yHOSHxuQViWS19++Di/OvKx0lAjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XNQdLi+d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JktST1Z7; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=H1Ho7umYJfFJN3xWSA+csgaw8ZYLYR7DS6SnzoWvt4UyagKntspbA4hGlLM2+mEWwtyWi/rDjEAfl+iARIjDgreqT3bjJGXTSbeYj6bRhAIVwtfzYIgXIwoqggsp/MclXlA9KQ4WM48QS3p3/nLdQP5keScvJcfzqhUo5FSdT9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fdJwi1WA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CyHWNmZG; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XNQdLi+d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JktST1Z7"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7B1DD14000B6;
-	Wed,  5 Aug 2026 04:07:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fdJwi1WA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CyHWNmZG"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BA273140015A;
+	Wed,  5 Aug 2026 04:30:13 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 05 Aug 2026 04:07:54 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 05 Aug 2026 04:30:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785917274;
-	 x=1786003674; bh=uVW6Go2qQ2EHUPVM+cvEXoerOcOFPYuQreVM6nYGeE0=; b=
-	XNQdLi+dX3Tnn7NGIMD6SMSVUx3byhNt1Ii+U16a1BSH+EM+wNW44Cn3zXx8AlML
-	r1JNw9eUONwKhD8/g2Ix3rj+GRpTIv7rfIx6qebzKxyFa2SilRao6+6vRhdritMD
-	KjyzfDrLpPNIJh0vyFWDAeDyzFR7FUScxqcGtF+XejPGjW1O5pY8cTCXETqx6nH0
-	I2KRjLzxLblqULZntsDwD3zGtDJwMBvBbmXCWpDE0O8DomIQXgel8H0VP9AM45YJ
-	Ekp1TdCSsekzJukIRjCiRqE1k28Zl0GJF0A6HlzpNUdKtr/um7UOQ3bd9mzpYcDU
-	wzFmuB9w9npfXUbZfVeTbQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1785918613; x=1786005013; bh=nBq3ZhaBzu
+	BDpnorJuh2bZyPq12vHtYcmr3C1kPbmZw=; b=fdJwi1WAyztTukHJmHMU2n/G0C
+	n/ug+0/lw8gM5wqWDwCMoidqk5LXJE0fra4LLbj5kKUz3TwA/7Vhtf1zsz2DNdl5
+	mogkIpuxTbqvZqiRE1WYb+vsfstJiRBv1l1BGM3/hWhEwha5FPPHWxzbB2ShTlT6
+	5kwbpSQh6/6wJuyDWToL1ks7fW8DX/QznwtcTxbiITOWHkQhlOusSLjekgZmtax9
+	E7aWmEHjgm4O1QY0nHbpeiSbM+n0+HAffJ6zQtbQ8+Sq7PWQEYe+ung+015vLbca
+	Cu29SEjW8g+NF/cC9O9PnK2pw9Ezy9uSW8rj18lOptGFxxJEoMpQZXKmZQpg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785917274; x=
-	1786003674; bh=uVW6Go2qQ2EHUPVM+cvEXoerOcOFPYuQreVM6nYGeE0=; b=J
-	ktST1Z7+0E2joioOpgnM41Oq2KSVlEPd5R+IBUja8bA5Pgp3KU8HvjdSNVyGKfX+
-	N460AaNp7EXqXgi29NAMg1vqkDgyJa15IhD8KXmGA6z9VQUys7cmrBLdk8RssQ3A
-	mFcPTgqQumdvxg0uSPpw175uXshebUamAo5V+YoZ6oBTbfQLkeQ/59hLJIG+0X+E
-	WOhFiajqYjcBfO90OjJaV/i/iZXsLlPR933TV4daeqjRy9HULcA28gtgAPmz+te1
-	s08rA2jT5wrJl7YA5iStZUxHUCq61Pli6JU/JuF0xm1mmWRCNW7IF63q0JTDfMpU
-	Mlk6tawAUCZyHflk+ZGLQ==
-X-ME-Sender: <xms:Wu9yahPAs2R9K-VOfF2SSkDiT_k7yQNoVHwRMxj5IhSNe6ryLtlzgA>
-    <xme:Wu9yaq-azE1WPM692fJJvDAhMa1YwMvB-wrRb5Zj0I4z0qGuU-6oTKY_zT8kw3Ow0
-    AP1V7rHFLB7Eake1-mkjhjPTYRDW5AT-Dm1EqlvyLi3Zb8N8xOxNA>
-X-ME-Received: <xmr:Wu9yalQkVbw9uMK8AWbB-2iSnMT6GpaRjgyKfdRMJCgTRBsQzt4hdSgDWeHRjUrE5auYmOeZbA9qrAi-ND0Fuvcz8OV2Gx9Z45_7KN_hRQ>
-X-ME-Proxy-Cause: dmFkZTEE4jA+P9rwwKWOs4BJLHxTJWHjUU8giztZ7+Bm6GynehUOcwoHrixKI9OHWKI8tX
-    BimHSDC41m6Jd9rj4quxeWjSRWJQM+0s9HidhqIF3pOxG+nX39PRr23quoiIKdSUYRnQj3
-    4OrArCGj7M4/QHw8C2rSGsQgayNDEOVzSygw264SZmxr9d+45xnxEOEVOur5xOUKHmIFk1
-    kjnWGtW0TtAXQoa2aIfAQuWGap8xgdmn5jYrocPfx0V7dNBKQ2vp+1zG2WL4XTbunHPXYu
-    xCyDknS+8tEt7/883AV0RXxxvKI3ptPT+U4A0GdgtEGw83iSEol3sCZROdYTgDB4D2eNYW
-    qi2oRgakopmOCnRGj6+Zk7zq20wUHlwoLgbPiY9CNDlIT5mAEZpHJmZ3sv2/TCMMRjlL2W
-    a4EGxVcmhWbKm0mV3wL/lfEGy6US1O2YkDv+EfqzeJm174OU3WVfndFRD+k03ZFSjHG2GZ
-    we39pbQEvQKfnNMFwsMnGYvtyNCASR251ow+UiDF2OD+SqTuJCx91SiuR9fElyJ/PXK9wm
-    C3PvlDbnbG0+JkjFpotgt/i9NxPR5fSQ/dl5peXWFFYHJfsP8D6TBnKiyzHh7A/d9/xke7
-    bXxKYpe0MhqUKhb+kEi4DCl4tU01n044BZpTbNz2hWGkoPUo1vh/kkAII2ng
-X-ME-Proxy: <xmx:Wu9yasn9c91m19ZYHvpBKWrHwCR3-AZup9lTeWHyZoOHxs4KENzDXQ>
-    <xmx:Wu9yalTa8nC-Ziu6gZv4w2QQQNyUQMV4byZ3Rywf7znxkMvyvoVwHA>
-    <xmx:Wu9yaqO7lLPyIGfeVzQzyfuk0oRV_2NHomb-1EYDX2jsw-KfhohtAg>
-    <xmx:Wu9yauVpF_MtYH9paS7Q7oiaSCcxBDh2K1wwECjUigCtt35cAsRatA>
-    <xmx:Wu9yaox7XebcEYSQ0ZAtyQqqra2otiQnGhA8TaBWU_JvRWMM2geIHG3l>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1785918613; x=1786005013; bh=nBq3ZhaBzuBDpnorJuh2bZyPq12vHtYcmr3
+	C1kPbmZw=; b=CyHWNmZGHwNOEb6Iq0Sc6KZBhB4eRqtEMD2ib/3G9KXaQKdpZcq
+	NaMQ87qGoabbp2CgbOF2CE7zAcDBWFWZIPNUMYfq4ruoGoci0Ujv6NF3ZFVNfbd2
+	SuHo8vK3vXk0BERqK9QgLRgmXIAQbWI61sSZRm9mnw7MxPMa9UXqXydRn80o9E7j
+	9kAUAwZYrMd8wp/kIDEOOPHj1lcB0YSczsiM4gdpGwehOjYj7R19KjfKIrc6lHHX
+	wiQzy+3e8fZRZXfrthtDlYVOvzSGYfIfcxl1hrPQ2rEv4Up6iKdWPYfp9JV2i85f
+	A4zroVkh+xVwLiB29kZclO2gTgrFxD3fhlQ==
+X-ME-Sender: <xms:lPRyarStN5uv5n9WkQSr4c2LOJLWymq2DVNAWMUU2bvkFX4ww-UFBw>
+    <xme:lPRyahtjQWT1_fl8OHVSzMNAzr9YxqJnAdekaRuI14Mcj9dIVsAffucxsSDLl1oNB
+    KgJ8w9jn2FG-y027YPTVwQO6R74VeDqztF08CSxMTGQKDl894Yxv-Y>
+X-ME-Received: <xmr:lPRyalGkRbdGq4kTKVnvGrWSBnx6Q6lM6NX9hxb-LH-FdmjZ5IAaVVF3LLraGX9CQKPQu5swMTlhozJ9IPL0rtukUpjKC19esw9mzmdtUg>
+X-ME-Proxy-Cause: dmFkZTE9Mkb0lFTjEz+spjUxgS8S6WpapGxLk9/ocXPXdKBTsfixIceF7h62j6ftrY4LkR
+    XzccmF8WCB/lVDMZkHwbvrE5CKrb1wuB1a0odGog/4rDlnJXBTwgXAou4aVcaz99mHNj2C
+    xDnhZtDwA0+cPB/rWKVJ6KkFQrKOEPj0tdrLAfqo/yK/nfi0dFChmx0pcuUD7uWSBevv3H
+    MG9GLnH2voYUirW3zule4DbleFTYP/HaXV/aGQFu9T0XyOC8Y7hi7o7WSbMZ5kNYSbTGTS
+    l1I5bCI32QiBwtO6+6RpobCiGugH7jLFG1Kfci1HvBylY9A30sVXiqEFQby6n3J/Yp9vJn
+    sh1gcC98XUuS03VE8eCtYJ4fR96c5xEJvWhn0w8X7oBJN76CTPIYjav3yFugFIXo9g4oTN
+    sM8f/3hYp0lNrZ5tktD3rxfdi2BcVmgYDSwyWdREbTC9nDyt43eaqfK9VkIrtPoqxbwBDe
+    hfWmQmw6DKiQVUp1joNl0e4pWcObKmPcrEsEYWOM44n5j0rHMyxpT1zM1Aj6H4j7KGZKmR
+    fG2OB3jBZeMGjkV2q4XczXVUPrLUY0vrdzEa7mkPZELX/cmT0Z5hH8p9Hj1mvLhiqxgo/J
+    CLvbKgs5pUIhUHcEn66LZ9OIVPU/spMOZIZ4qXCpugSDYM/9IPAdWV90BL0Q
+X-ME-Proxy: <xmx:lPRyaqxylWRADvPV4zKEFkfQiD6YojWsO82tUSgIANlxUDU2kL30Fw>
+    <xmx:lPRyan1XP8DblLD9-lG70n1tdRAYu7sGZNMsSVi4qRAXVs6t8V3l4w>
+    <xmx:lPRyaip1mkiqOTHbjQ27TWaKMUhyxd87nJZkwrpPzYzI62uW7dIJww>
+    <xmx:lPRyasXXZZEXFbCBXkWjTRALF7OjU8h8X60jgKAs7t1cpfr2BjwQNw>
+    <xmx:lfRyatwK5EIL8HN7vVJsi6WA-jxkISMh7pwQZArLmuYz-VUhHo0jVF5C>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Aug 2026 04:07:53 -0400 (EDT)
+ 5 Aug 2026 04:30:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6b3b3e2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Aug 2026 08:07:51 +0000 (UTC)
-Date: Wed, 5 Aug 2026 10:07:48 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 4ac27176 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 5 Aug 2026 08:30:07 +0000 (UTC)
+Date: Wed, 5 Aug 2026 10:30:04 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 1/2] doc: refs: put ref migration warning under the
- command
-Message-ID: <anLvVAyckm7S9Vo0@pks.im>
-References: <CV_git_ref_migration_warning.b09@msgid.xyz>
- <ref_migration_warning.b0a@msgid.xyz>
- <anH3k9PvWHMpWLT_@pks.im>
- <7f34d9b6-de00-44c5-a59c-11f154e7a64a@app.fastmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Simon Richter <Simon.Richter@hogyros.de>, git@vger.kernel.org,
+	Ben Knoble <ben.knoble@gmail.com>, Jeff King <peff@peff.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	"Randall S. Becker" <randall.becker@nexbridge.ca>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/5] compat/posix: introduce writev(3p) wrapper
+Message-ID: <anL0jMyS3v2alJht@pks.im>
+References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
+ <20260716-pks-reintroduce-writev-v1-1-ea9038c884bc@pks.im>
+ <a2676ec6-39d5-4220-8549-10a17daec668@hogyros.de>
+ <xmqqfr1ig0hv.fsf@gitster.g>
+ <xmqqwluuekbh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7f34d9b6-de00-44c5-a59c-11f154e7a64a@app.fastmail.com>
+In-Reply-To: <xmqqwluuekbh.fsf@gitster.g>
 
-On Tue, Aug 04, 2026 at 09:09:25PM +0200, Kristoffer Haugsbakk wrote:
-> On Tue, Aug 4, 2026, at 16:30, Patrick Steinhardt wrote:
-[snip]
-> This is just an informational note and not an argument for using this
-> particular construct.
-
-Thanks for the explanation!
-
-> By the way, I think I looked at the AsciiDoc admonition reference[1] and
-> saw `CAUTION` and `WARNING`, but now I don’t recall why I chose Caution
-> over Warning.
+On Thu, Jul 16, 2026 at 01:44:18PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> 🔗 1: https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/
+> > Simon Richter <Simon.Richter@hogyros.de> writes:
+> >
+> >> Hi,
+> >>
+> >>> +		if (iov[i].iov_len > maximum_signed_value_of_type(ssize_t) ||
+> >>> +		    iov[i].iov_len + sum > maximum_signed_value_of_type(ssize_t)) {
+> >>
+> >> That feels like it could overflow.
+> >
+> > Isn't it checking if it would overflow (and dying if so)?
+> >
+> > Ah, wait.  The addition "(iov[i].iov_len + sum)" can indeed wrap
+> > around, and comparing it with the maximum value of ssize_t wouldn't
+> > catch that.  Is that what you mean?
+> >
+> > Would something like this:
+> >
+> >     if (maximum_signed_value_of_type(ssize_t) < iov[i].iov_len ||
+> > 	iov[i].iov_len + sum < iov[i].iov_len ||
+> > 	maximum_signed_value_of_type(ssize_t) < iov[i].iov_len + sum)
+> >
+> > work better to catch the three cases independently?
+> >
+> >  (1) The value is already too large on its own.
+> >  (2) Adding them together would cause an unsigned wrap-around.
+> >  (3) The sum does not wrap around, but it exceeds the maximum
+> >      representable value of ssize_t anyway.
+> 
+> Actually, looking at it again, I think the original code is safe
+> after all, because:
+> 
+>  * "sum", even though it is a size_t, is checked inside the loop to
+>    ensure it stays below the maximum value of ssize_t each time it
+>    gets a new value.
+>  * iov[i].iov_len is checked to ensure it does not exceed the
+>    maximum value of ssize_t by the first part of the condition.
+> 
+> If both values are less than or equal to the maximum value of
+> ssize_t, their sum is at most twice that limit.  For an N-bit
+> size_t, this sum is at most (2^N - 2), which can be computed safely
+> without any unsigned wrap-around.
+> 
+> So...?
 
-Hm, interesting. According to the docs, WARNING is to instruct the user
-of any lingering danger, whereas CAUTION asks them to act carefully. And
-while the first bullet point is merely a limitation (we cannot migrate
-worktrees), the second bullet point is indeed a warning that concurrent
-writers may cause harm. So going by that I think that a WARNING would
-indeed be a better fit.
+Yeah, I think your analysis is correct. It's quite subtle though, so
+maybe we should make this a bit more explicit? Something like the
+following patch for example:
+
+diff --git a/compat/writev.c b/compat/writev.c
+index ab2e223634..960673861d 100644
+--- a/compat/writev.c
++++ b/compat/writev.c
+@@ -12,6 +12,7 @@ ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt)
+ 	 */
+ 	for (int i = 0; i < iovcnt; i++) {
+ 		if (iov[i].iov_len > maximum_signed_value_of_type(ssize_t) ||
++		    unsigned_add_overflows(iov[i].iov_len, sum) ||
+ 		    iov[i].iov_len + sum > maximum_signed_value_of_type(ssize_t)) {
+ 			errno = EINVAL;
+ 			return -1;
+
+I doubt the performance overhead of this additional check is really
+going to matter :)
 
 Patrick
