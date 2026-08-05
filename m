@@ -1,106 +1,120 @@
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDBC3EB0E1
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 12:24:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785932700; cv=none; b=qqBRB9XwkIvpdNticPk5gSlInMWIQOix29P/tw1Qvrl4JnpaCeA8rFQ+tPjtTuMMOnZpGAu01jt3FMXDQUtdhpquScOwQdX4/U2R2DDKNIPeed5CHoU6+/68u5K05cJBBJKPnysmvplCcs4bfoH6ioRGDKRCaPZeZAw+k2xx5NQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785932700; c=relaxed/simple;
-	bh=vtonoNr+z4xp1FTtz0MMgvAYwH8wBbjoHZ1KFtZ3yDc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=udA+yRz7lO3mQq1PV9Nh8a8Kr/bIQvtZ7ZGF7lE2ghr/NX4j4/QtgsWwxTg77NKKBmSHoDID1xKltVOtI+/1fwRuNmYkvg/rC1yzoaQoFidqVX6/of6Ol/C+Tbb5lJdlyeOCGtTljT6XYSnwp6unPu/xOJMLNuBViUBNBFBrY2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gqiAeGKl; arc=none smtp.client-ip=74.125.224.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753311EBFE0
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 12:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785933047; cv=pass; b=m6F/KoUS/rbxDI8qziF1zczo9U6EkHc5hTZ8lhfCBaVr/SG/DlrYxFNHpSWw4j6qloo483fmBbdvSxWFAThCvKmr/tqGfqMdz/LQTCzoq0WcKp9gfMUWS8TNuBww+6KgX4QD9wCbGxJAryMbxRsToU3Xv+HIYHOuCZH6+l5uNcg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785933047; c=relaxed/simple;
+	bh=CharL08s3/fnaG8kq7BeqbcJYhlm1B3DAGsbDchIdXc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ioi0g5IXbmUDxmMlg44QCFVdR/SLyM9M7XAGjSqG+VBQTDi5aZcB+uVcrDcXv818X1mVY2o4otpU0g1NQTnnOKY5kd3Jr7yQFgFqdHgnIs4U1+XbY3JUhfj1rx1+LqYO0/qm8jbqZG81VDfasYFzdgv8MTF6AtG4nySWW2Hnaus=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RvuGrM7s; arc=pass smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gqiAeGKl"
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-664c6304683so879245d50.2
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 05:24:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RvuGrM7s"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8efec2c28f8so5937356d6.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 05:30:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785933045; cv=none;
+        d=google.com; s=arc-20260327;
+        b=G9zSVn7hyC+KP89l1DoKvaUb+AhGqzc5AsoonrTqX/CgKxm3fm1NJAJwQGZdQj6H13
+         al5l0vauB0UNRjFiEusjC15EjjNQVMJhBbDeVaYFhlD6yQzIh98xbt1Hbf4kl8LkANey
+         tLZ9l3V0Z/jnc5ZbrfpzLr7L6JtAjAWYTrjO8OWkqJ98KXyTdPYT1LJRX7zwTA33NL0j
+         3CoGEQYNJJx8/2+5Af75+wkYCLBjz5vtTEgZ+PbDDHqfSEYTbyJZSQNDNbXLOFuU+3bd
+         ocQyb8AwxvZ3kedORSPlJyUfZJ+KgRtR1rydALlKC800d03eWUr+/ustfv9dEIZKzrbC
+         /xag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=fT+1EkPJ0QSscvrZj5POZW8GIIMUZQYEQZqfgKjkAIw=;
+        fh=0oc6VvDwKUk6qEk60XqXbHYmY2uQ+b5A3T4hwVO51bc=;
+        b=iCrq4XFmlFF6BdKlXqlWV7JMl1dl485Mfr1JOrN0IZ01FVHurEtmIRx9EIDoebrHQK
+         4GZko4yW7p5VFBLjNltqc45YLPtedjV9YG1fhsP41sGfDQfAXvLJW01K/ttZy8RkOs9R
+         26OdaJkBpfgZmNiCyhX0jDm4m2Ab8BXD/gnQjM0YauM+3ME8+rPyxAi4ATGbfpOuCWfk
+         /lud8RcVrJd2v+T24X/g2F07LCSul7o60AItAUbvWJA4k2Emnjb65jNqpX0qK3Psz+Mp
+         VHQ8aePEUDygwkc2R5TyOMgnoIaPqlBzbzyaE1Ulwtlc12ioNgtXrsXBUVI0jqB+HJ3H
+         h/Rg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785932698; x=1786537498; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ce6Cqn1tkZtnaVl8coU2yM6mw3a72udN19U8Clh1oMU=;
-        b=gqiAeGKlKFlxlXHEt7zVuA7Rb01RyrAtL9XbIjw9c56xgFpAIpRiQH3EWzCjVYTmB1
-         pJdG07Zc0bVbz9MiDGcU5p1lYLY3AoSFYsBtokovQuKMiX6XPdh+BQ5j3MXtjIXv4PTQ
-         pyNr+BQKOthEPMs24IJaCKKDzQDNqJ+3s4zyAvro6HZ1zZTzRg8aDUZ93T4ScQ1DZCLb
-         7Gw1Tr7WavAs0LKyIZuQsipcuW96fT1UXz2UWAiTmyMsogN9TbZVKl0HoLdG000odQCe
-         ljAIwvymNl9Gq2oLUz37lg8QRor6ywvZMnpOv/CbUh198PdF+YPdUQJ+4YoMIS37Pimb
-         82kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785932698; x=1786537498;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1785933045; x=1786537845; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=ce6Cqn1tkZtnaVl8coU2yM6mw3a72udN19U8Clh1oMU=;
-        b=YGm0IyUSLuiYOTHnwISkMaiupwEivEvV9qoeEfGY4WUCB5AUnkK3M7VZxjj6rG2RqK
-         xbR13sSuJMa10QK1vex4vV9IwbcUHabBFykHfPCcOvNFSJ3xgkdw/0Nsac4++LvQnhy3
-         Tv144rOi/f0cD+Pynf8V0HrffXhLl59IHKmBpYRTu4PAAh3QIgRN1MBQKok//Fq2vzza
-         TaR4nceXmduX0oHT/C39atqSDm5dxZJH/ZP/XmMsEYqmIVAssXPnE44DL2iJFSvfOuAg
-         Le98ACMILAvNMnKHcEafrj8rX6JjmDCXcfdbiQnZ7RYHMLhGTrHkTLFTj3Yn9vPr1xeZ
-         qCOw==
-X-Gm-Message-State: AOJu0YzDabI0+ee/us5tApZucKA8b4gDG+oltEWfHEIYj/uOPAx7atbZ
-	RcKXq6m/3G7rRcFfzSVRAFa0CUwQcBNnoq3E+hWwMRMvXtduzJC4sV5uxBWI0ut7JUE=
-X-Gm-Gg: AR+sD11QvDMtYFiNFJitoSvgRdi+RrrFxWFTcy7bGW9itgTPAstup9IWWHCFPRXkO6b
-	/JL5LUkWHxvwUvPchAy36UZTdimMX1+evA3KTFstkUyxTDAG8qmUNviMrWy+BRZt0LD0H0cywFS
-	ZXljqYzGb3EdRhtJQDjIhyYgit4Lt7Ed1lVo5+TMRLL+/B4FMvWTWyLmIGX7X7mgCi1i9qrsR2k
-	96BiOza4gfRINcv6gaGbONE1+x8994CPSNRZnbn4zGHtXhj7/kzUXg8dL5PN0LUlMth94GBBNhK
-	Kect+gzjDoCFVfzSwKmZ01SfuWL4LX/5SDL/mEY+79FCwWXmqLOBb1QX60BDxAL5fDw6YTCKUU3
-	Wgotf7UJeZZ3CuiZ9yPg0rKJPwSA7n8f5OBgTG+R88ytNZjsjvw/0Opo9UTaHmLSiytQh15iwM4
-	fWvieX7R3fU6a0b0Nl1o0Og0CbxtO2z9Rq/FYUp5eP3jtQr3nCitKh3ubX8GIsmBbymHlpcPRS5
-	574intmTyNkMVtcYR3dcsHBNLBbaoy2D3dHnLnet36TvVy6JDF+o5sseTveJm1bZBqKRO0IMCK8
-	111SDPXZHQs=
-X-Received: by 2002:a05:690c:f14:b0:80b:bc16:8a2a with SMTP id 00721157ae682-8202297a72fmr31870687b3.36.1785932698227;
-        Wed, 05 Aug 2026 05:24:58 -0700 (PDT)
-Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::2])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8201326bb32sm19264127b3.21.2026.08.05.05.24.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2026 05:24:57 -0700 (PDT)
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] mailmap: change primary address for D. Ben Knoble
-Date: Wed,  5 Aug 2026 08:19:32 -0400
-Message-ID: <f7756811449494b378b5e82c84f46ef77672b8cf.1785932372.git.ben.knoble@gmail.com>
-X-Mailer: git-send-email 2.55.0.340.g8e2bf96aa5.dirty
+        bh=fT+1EkPJ0QSscvrZj5POZW8GIIMUZQYEQZqfgKjkAIw=;
+        b=RvuGrM7s6ptlwANbF20NJXXV76QmSwnqZ5huF4U7avNrk5fF0IgG1AffCm2nKXMWUA
+         iY2KS5JYW0H662BE+M3Wsz8cMx3vpoNj6LRQI89NzcYg8P1vGv5hRHw6E9eEXBY9u/ho
+         Ho9SdrWSC3oDtnM1l/D4fRsPCuRYTWAS9dh5Qh2lKl21Zo2ekNdeSPR95BgxkXO0Klo4
+         0yCJ8ugmv2VTStrZyUiXTeiTtcny4t07sCaqpz1zBZqooZAO21jpECIs7RSanjuXXPM2
+         VOh+lWECiPE+ENqgveYuWXXtqxa+TsnOroV2dJuYZX+s+mDu0TlFDl1r91Une0bmyHGl
+         S/VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785933045; x=1786537845;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=fT+1EkPJ0QSscvrZj5POZW8GIIMUZQYEQZqfgKjkAIw=;
+        b=LG/eOmwJXMRt8RUIRmDPaRuAlNDF7CbhUEs6QxZi/d4Uxq5ZXIeK+kkArWEqJybE4s
+         cju1vEyjeotRe7YiqXw1c/FuW8pfR3PZacwU50vO1ZTymC53+3RUi5dpGJG2XLHE32cZ
+         mpb4MKxbq8UUMj8eVlDTQ8hp7BOFWQRChnHNEXQl2/U/Bl+N3VnyT7PwJxyXwW51eE8o
+         m6uwPYAmIhgRnSDS/EZs6A8UfiVUYWsLKWqOqR5ACtsnOn3ZOlWYRbJ9cEG67zmOrzjB
+         S4T0nnBQT5d6Okygd5k5DzJtBLfA5UuveGKZCzWxCCj5Xc6rrMHNHffE78CmSj/l7f+E
+         RiAA==
+X-Gm-Message-State: AOJu0YxA9rKWHGotux5oZGquNeZBOzX5MraQztTTbvukvul7R+tQCR0p
+	J8vslU9MH779PVZ5gjy3LZsLLAzXlEtI+1Qxm7i1YmOvXxECl+X4V3dUgNHjt16lqGe54gOJ7zL
+	nnDDlKpBFaevupJdSXA+2+oc1b8JFhHAB54nkm+M=
+X-Gm-Gg: AR+sD10SqZRyI8JuSpLEeJ3LvTdf5YJtf+kkAQOuGAx+XLjBWU6HIS/GGGZZCx6pqBS
+	41cFEp5GEnTTyNpjkWBx7XnP6lxxAyKcunk4HkumpCxlWiOrt++VAss/ED5NHPbl00m6BO3Lmgy
+	gbkK+BX4jFtKAyLCfBfhW4hwfabzvyhxDKZ59LhtQac+TsfZk/CoAWWeOnFkzn6nRna0zCI9BK1
+	jHqKER/4pKs9PbZngdshWpnAXv8FIFRdYUAyIA/AWCMbwM/YdijQt67/fv9xXPF23PtDUa29so3
+	hyoRuLgdFlwGvL59oax9QOFlR/JPxlgNpzt3JCKnbLOvLu/+XU+ybQND9NVmJNh1FYO2GJYO8eg
+	PIWXRJm735uH63a2OwnXcNV25avA6VjFN
+X-Received: by 2002:a05:6214:29c5:b0:8ee:b05c:596f with SMTP id
+ 6a1803df08f44-908813906a1mr61817516d6.29.1785933044942; Wed, 05 Aug 2026
+ 05:30:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.2192.git.1785852032626.gitgitgadget@gmail.com> <pull.2192.v2.git.1785932208004.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2192.v2.git.1785932208004.gitgitgadget@gmail.com>
+From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Date: Wed, 5 Aug 2026 21:30:33 +0900
+X-Gm-Features: AUfX_mytDpoIWm5PZjhQDPfdDNKZBPbG8Q-CY8h3wUSr9WIxPMnybESzkkrPrxE
+Message-ID: <CAF5D8-sca=qutDYH=SZEjZsWFGkFAVLiJZz27jzUOfhvi3LWKQ@mail.gmail.com>
+Subject: Re: [PATCH v2] worktree add: shouldn't dwim if -b or -B is given
+To: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jacob Abel <jacobabel@nullpo.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ben uses the +github GMail trick to identify emails sent to him by folks
-that found his GitHub profile. At the time, that also meant he had to
-commit under the same email for GitHub to recognize his commits. He has
-since found out that GitHub can be configured with more than one email
-for identification, and he would prefer his canonical email to omit
-mention of GitHub (where it's not relevant) going forward.
+On Wed, Aug 5, 2026 at 9:16=E2=80=AFPM Yoichi NAKAYAMA via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Range-diff vs v1:
+>
+>  1:  908a32fb56 ! 1:  b00f6c2fa1 worktree add: shouldn't dwim if -b or -B=
+ is given
+>      @@ Metadata
+>        ## Commit message ##
+>           worktree add: shouldn't dwim if -b or -B is given
+>
+>      -    'git worktree add <path> <branch>' DWIMs <branch> to a
+>      +    git worktree add <path> <branch> DWIMs <branch> to a
+>           remote-tracking branch when neither -b, -B, nor --detach
+>           is given.
+>
+>      -    However, 'git worktree add -b <new-branch> <path> <branch>' can
+>      +    However, git worktree add -b <new-branch> <path> <branch> can
+>           still DWIM <branch>, causing <new-branch> to be ignored.
+>
+>           This is a regression introduced in v2.42.0
 
-Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
----
- .mailmap | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/.mailmap b/.mailmap
-index f8ede075ea..9277f4d5f7 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -45,6 +45,7 @@ Christopher Díaz Riveros <chrisadr@gentoo.org> Christopher Diaz Riveros
- Clemens Buchacher <drizzd@gmx.net> <drizzd@aon.at>
- Clemens Buchacher <drizzd@gmx.net> <clemens.buchacher@intel.com>
- Csaba Henk <csaba@gluster.com> <csaba@lowlife.hu>
-+D. Ben Knoble <ben.knoble@gmail.com> <ben.knoble+github@gmail.com>
- Dan Johnson <computerdruid@gmail.com>
- Dana L. How <danahow@gmail.com> <how@deathvalley.cswitch.com>
- Dana L. How <danahow@gmail.com> Dana How
-
-base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
--- 
-2.55.0.340.g8e2bf96aa5.dirty
-
+I accidentally removed the quotes in the commit message. I'll fix it.
+--=20
+Yoichi NAKAYAMA
