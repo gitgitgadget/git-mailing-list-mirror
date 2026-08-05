@@ -1,271 +1,159 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737E63E6DC8
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 07:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA613E0226
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 07:59:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785915921; cv=none; b=lxWzxBATzGdp3ns+FIDsdN9imlLwvedB7UwDVXs8SsKGdmE5cR9FgrbxrDZRckTVo3GdiYYlb6z3+pIBWLUG2+k1ghZeXKcXEpX1X6y02Roqi8unv2LM2lGesCcUSfQ5GlBlaUEsa8RHhBVMTR1ct9MdactaCdQxg0M/atkR9n4=
+	t=1785916768; cv=none; b=LUGzuX4H6CPEgi/+MGf4O2R3LQMkDWDdwLFCVBVUkPNGU7CZZifFQ83znFTEbfJUIauAiZo//iMJb8owykKgB6mymE5N9oftPfvoDdZgZGuTS7P6PPC0E1J53MK9bn2ipdGiowJU6qtVuF+CIFkikuJt+STa2YfX14J3GPk1xt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785915921; c=relaxed/simple;
-	bh=eDZkau2yyZ47Ps9yxT50Y76FqHhJblfJRh9AT0yIbZo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mhtaQe3TgMMA4qvhlc5SiYNEm303on20QTY4JBnBiDfIqmBH9lbjRjHmOT2KV1PJKFRxhWSBq5P1n3IOSPnQ1YKecbCO2cE4zYFy8YzILyKfr/21TyVUDREMRNz29/3QIaRo8w1TTHeVy0vpt6+MFnba9uqJwL7JSGX+tcU19Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DsE1TV9Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c/8MexzG; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1785916768; c=relaxed/simple;
+	bh=cN4vavReustKFt6k6FxuM/lwuGCxWzeEXCjSgSfblqE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e+ZYWI3Y9KLVjo+GUGna0FBsqFAi5E11keWFYSMx/VQWVE3HP5SVZiLnZCAkiAjFwHAWDnL5NxSycqK+vlNG4QFh2fz6n0bNr8+dPrIAPCnriVEPkq56L1QM56Q6D4zctLWh5ckUO1AvcOc0FLb3ubSon46tFYPqU6jf6epmSJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GsiEuWQL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yqmc3+TU; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DsE1TV9Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c/8MexzG"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 95BBDEC00E1;
-	Wed,  5 Aug 2026 03:45:18 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 05 Aug 2026 03:45:18 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GsiEuWQL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yqmc3+TU"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 579D6EC01D5;
+	Wed,  5 Aug 2026 03:59:26 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Wed, 05 Aug 2026 03:59:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785915918;
-	 x=1786002318; bh=c/9XFjvEXOyQyccAm66VM8kbWSTqS0QlAYhDVhQjKYg=; b=
-	DsE1TV9Zn72f+344TmUuc4dN8ps4V2kIeI0cAl0nrPHwiiCA6FE4vcST1YnP8En+
-	Y4xNpBSQUklERwGaPlAVFdzfePks8+aJrCGyKMyLdtkDTxgOwwliPsl1d/U3wtsa
-	9jW2hiigKH6Z9chGIpkdbwa1Qo6KGviR6EN50sO+Q7GEqyCPFOA1T0YzOXPgNL5S
-	8vj5WUEMzByT9YWp7M6LVy+c0jVDYvO9JQQmQEQ+Yov5FwURcL+OVh5q9Eiebq34
-	D2dcesKV757zeD+Uc8l3ilBdy+KzSxNw0aaR1K3DDeHAJT5iFF3nOl4zdOgyAEwc
-	6crNogNPmigFHm/FLbphzA==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1785916766; x=1786003166; bh=6p4ElkgyWl
+	3dPJ77ojwH7cHFwOTao+zHS0J35b9I6xY=; b=GsiEuWQLT0vZ0zw028qxnxtIeo
+	GlFLjaaIcAqvIedNZOEdQZ5kJkS7v/Yjlc5sTuH+zGS6k6RpxJAyfBf3ZHAGng8G
+	UaeRWJ4z3qojAm6HenGpEVcFQpfD6SJGwz2YohqLLhYa6N6Moth64V4gLHFI9oBO
+	DZg6CtHBlV1dytUUDbrYDuDe2OFSKNqQdcHux+uTXbZOg9mnYKb7t5Ww/82x0auD
+	kcOkpa0ArnLT/9jcI2n29TRwYdV5YeJ7D+yCsrPV88OGWVYV3B3DnQvezljHg1Gh
+	0Dd4FU29IkZO4a21i1/gcaJtRTjGBF1qRi6xRO1ZQLabSyaboQcH1cHSBN3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785915918; x=
-	1786002318; bh=c/9XFjvEXOyQyccAm66VM8kbWSTqS0QlAYhDVhQjKYg=; b=c
-	/8MexzGVO0w8fai3MZSFPStaIot1pSkoW9wy/r57D3roaHyzObr2m3iNqn+59BSb
-	Ag/7JiHFA6o/gtQKwCm0bsIF02GNjR5U+yZ/BHaBE92DyRLuHZU/uSnw28U8MQpq
-	chYMQonITez+zecIuZtXu9rJMjqGXOWo8Zjo5GokMA5rWhG+iIrIKPJOz8eMbm6q
-	5b0Awg+G13xazGRrVJYe0pRRGDfD0UxwpxjTON1OydEUCtESyVl1OcXF3WWC1GG+
-	8ajcKMzf9SzdMnw6Y7Spwe69bPYUASiNxt63w4cuCo3VLigKyleXr9ODSISxm66n
-	vS8gjgkp1HxCGp7hNmp5A==
-X-ME-Sender: <xms:DupyahSEKV1a8NMb5wt_UaIvKCcCWRkqVj0FEiaETCDbSQvMG9GSAQ>
-    <xme:DupyaiMsmcNT8wtGCWTVUezaow0LnCO5YzsoUsT01C63evKYKu2bdBIhd-Q5Mst01
-    Sz33iXOC3lnKNoe724zUJbdh_dsUumTs4UszKt5JTQozoSWbtp21g>
-X-ME-Received: <xmr:DupyakNFoSTFD8Zw5CEPDXOWyfiSeW5dSnXAIksMJBy-P6z9bmmLMlDPN021yzSmX0ggQsw4c4_vnn9acs02QeijuIbxQXRaz08wTSYZGg>
-X-ME-Proxy-Cause: dmFkZTGmCW7FS5WU705XWsAUlCL2gb7Dg3VPhOR8EIMEigdVk2tgGbZg8bV7NnSm2EME+B
-    6B0IbGHx+c50eWimkZF2a9OcVem+ot5nHi8FpDSM98u39bYEaTXWwt4FuP6kivtt+4/9O5
-    /Av2bRjLClE2AgyaNo+c8BMZjn6KfKeheuuTXw+w3HCRQ3Ru8ix6PbDoPBHTmhpj/vIjAY
-    VkdEHfFNdXb4/+Y/PZXIOZ2gZwCyuc9LPHTjpWTx96RMhiFZ8IqYxmw6Ibk5gBfMargK6x
-    4i+M7wP1gSRi48ogUVpfbe2gUJbsGPWoK1OYF2ZuNQ9C5kiM+cBug8OrRwW40VO7A7sCCe
-    8KGQ+1F49eSTUi5J9Pu8K8Ya6zH5HrYkCQIQOe1kUWyFIOwmkc4B7F7GEmNKKI0ji6uWtC
-    dYF4S4Ouo5tRmNK13SXv7hfVauMscA04ZLLHZaCaLVPStsnPzeMvTPpJ+OZwm5iz1ZsuME
-    xMto62S4QzWd1LLINC1VAZREFtBe/um4f0sXEpQmQN6XKj0iVH9WFfmCYsJOM8RbnCXdq+
-    wfl7jEDAhb9kdqvfICzuFY0etdNiu4Odvr7fNNRfxK/fdgjrkdnLMts5IsuWS8Iyz0783y
-    C/PAylOmQR6JJ1Iwv4ngQOzhNUwM6piUQ9dwXoSLjiylDG2XNsCaj/dfJjyA
-X-ME-Proxy: <xmx:Dupyaiszc1mKGoP_jlgc5zifGzRnYdLxg8rtwWd0VlHmIOnS9kDI8Q>
-    <xmx:DupyauXmCnZnOFtm814dV2oXpBYn9kxsgOFk60xRi9BHKVrhkauYbg>
-    <xmx:DupyaquOw4kGZCXhD5CY4ydR3jb4KUf-jVim7Zel1abrxJzE6oX0xQ>
-    <xmx:DupyaqVq6Jdyoi01S-XhCmHreZ878TqlEVJUnIvaYaaMzOZ_nNdgaQ>
-    <xmx:DupyaiNAZ3gBsvxexCFMFk8l0w0CTMv4lEtT7AE514Xf3vtVDQbPlv1f>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1785916766; x=1786003166; bh=6p4ElkgyWl3dPJ77ojwH7cHFwOTao+zHS0J
+	35b9I6xY=; b=Yqmc3+TUYnrg7XtFO+RnatvMYnEj6icKRk0laTdQYU7LtqAE5Jz
+	UjYDMwt17NHL/kODLmdHY1nyC/jQrejnkIM8iLe+lLTObNyFHTEOPT3wQHHjmpCc
+	bqufjsnHLcRj7i2ZZTgCUZY7Na3+jqLSQ/fYPQ8L/3WX7ZKYySItfHqzHF3LF2cU
+	XoFYxRcgYL56T16SwpyANd6Sxl04wUuiS5r8QA74dbsrsWAoskxPMmHsfyh8wYYG
+	6MTelpROrFBL9RPuGCmPnIzc8Kf+qQFap41RFrL84TcSqvWoAT5sOu7M6+vcev/i
+	GjxaDRiSkoNchjOzxuGQu4CE+qD+7wo0AmQ==
+X-ME-Sender: <xms:Xu1yakTQbFJjAxYHtoWrZOMm9VRnRNrevatO-tdYp5wpZjLf_RKZLQ>
+    <xme:Xu1yakWl1QRvJaIOz99VUq1pz1ihg4SYoLMJ81SoosQ1zj4ajpO4L2d3O0vSmShEo
+    ZgTveTnqR5-OQRTmV6V2NudMipHUqms6B45RwtS-fFZ_qry_capwQU>
+X-ME-Received: <xmr:Xu1yalcxLbrIDdljjfiu7Y8B4nfcidDT5F_pOeAzV7EB8hxt1kPochlZXFsRdWpQBIsQOGiG_oYslN2FwY7Saa4zahbWQFGj2s1XFTEDVg>
+X-ME-Proxy-Cause: dmFkZTENRfhMcY8nzzQL8Z/Up8alfoL4fsoIDwMnpKlZwYzzuj5v70hSWZvwpiU+pxr+X5
+    ocia2FNcX0Lo4bEayi4BH6q2wbxo6xpBEL3Oq+wRw2xBm/vkSFLCb/PneLINbLpL317mgT
+    uW9m5f0X3Xli8X+tgwE9vWDmX/GbYH0OMmpHYRfZr5xJEUJZaMCj8U03fjLN/Ix4NpW6L7
+    1ed3Pna68qrnWGt+Hzn8Ci1x7fehzwZsTDghWnm2py80HP1MNmLNRGczczwsuGTMma7/Wv
+    H3peJg+0/HXYo/K9QZ8C74CxIMZXXj3eDm6BMVVp0bRkIsXJfGOJKUFAcBSiNeIB4JXdXV
+    dR+iOrbRcToOt/XKos4+107cYyou1AbUgpV15BRt+bHL8CPdEIXmk4NUOyzoTJ10lgEdtw
+    YH7hjLQ3eThTpxelyMzFyMAfCn7+PlWCuhUyxFi6mS7EX+NJP68b27263ksrfcZSDK6HDe
+    JIwThwoNyxQTB8FK30L9SZwuYYLswlGAfbhRpZNqwhSZsv0R5h97WHzF9JE4HC66Gvg8if
+    OdIC1vHiNomFU08QElUvPAmGLRtVmB5H3KGPHf8r467d4hkW2Dm42b1/NyEl5RCdvW3P+I
+    BwkzpxX1EzHN6J1AyX5OWSdTRXa0pp/JZJJTfWRshRVoaVaofotAkZZ3amgQ
+X-ME-Proxy: <xmx:Xu1yaoLhUtvd8MBSwxqzz4SfBM1vMCeV9Ost3FSvJ52opb1l_Kkncw>
+    <xmx:Xu1yaiwAPfpe3JK5Z14OUZuVtUN4pOnoNi7A20NTpjkoUMhA_NGoRg>
+    <xmx:Xu1yautQUryBy_TUQ5uVyYtMc1VMo0_weFM2B_RcTORxFNj_DX4CmQ>
+    <xmx:Xu1yalCSak9bamVQtRBjxcCnc5DAjCqSqQa6TKaZZC6egBCWmyBBEg>
+    <xmx:Xu1yasw64PxVSZMNPETfnWsjfQC2kbQ7M3AxqGHlyV6jGJ-sMa6WB_u4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Aug 2026 03:45:17 -0400 (EDT)
+ 5 Aug 2026 03:59:24 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 98192ce0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Aug 2026 07:45:17 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 98776c68 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 5 Aug 2026 07:59:22 +0000 (UTC)
+Date: Wed, 5 Aug 2026 09:59:15 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 05 Aug 2026 09:44:52 +0200
-Subject: [PATCH v2 8/8] odb/streaming: unify function names to create new
- streams
+To: Tamir Duberstein <tamird@gmail.com>
+Cc: git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+	Paul Tarjan <github@paulisageek.com>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Taylor Blau <me@ttaylorr.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Koji Nakamaru <koji.nakamaru@gree.net>
+Subject: Re: [PATCH] fsmonitor: flush pending FSEvents before cookie wait
+Message-ID: <anLtSOKqgcCrrNHo@pks.im>
+References: <20260721-fsmonitor-darwin-cookie-flush-v1-1-357dc5e32040@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260805-pks-odb-stream-unification-v2-8-b8c369564641@pks.im>
-References: <20260805-pks-odb-stream-unification-v2-0-b8c369564641@pks.im>
-In-Reply-To: <20260805-pks-odb-stream-unification-v2-0-b8c369564641@pks.im>
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260721-fsmonitor-darwin-cookie-flush-v1-1-357dc5e32040@gmail.com>
 
-Unify the function names to create new streams from different sources so
-that they follow a common schema. While at it, document the ownership of
-the file descriptor passed to `odb_stream_from_fd()`.
+On Tue, Jul 21, 2026 at 05:04:56PM -0400, Tamir Duberstein wrote:
+> 56cef9cb1a (fsmonitor: use pthread_cond_timedwait for cookie wait,
+> 2026-04-15) limits the cookie wait to one second so that a filesystem
+> which never delivers events cannot hang fsmonitor clients. A client that
+> times out receives a trivial response and scans the entire index.
+> 
+> FSEvents can defer delivery while it batches notifications and does not
+> guarantee that its queue is drained in one latency interval. A loaded
+> macOS system can therefore time out even though the event stream is
+> working.
+> 
+> On an Apple M4 Max (16 cores, 128 GiB RAM) running macOS 26.5.2, two
+> worktrees with a 1,001,178-entry index timed out 484 of 545 and 297 of
+> 365 fsmonitor requests. One status call performed 934,519 lstat() calls
+> during a 47-second preload and took 52 seconds overall.
+> 
+> Ask FSEvents to flush pending notifications after creating the cookie
+> and before starting the timed wait. Use the asynchronous form because
+> the client handler holds main_lock, which the listener callback also
+> acquires. Keep the timeout and the behavior of the other backends
+> unchanged.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- archive-tar.c          |  2 +-
- archive-zip.c          |  2 +-
- builtin/index-pack.c   |  2 +-
- builtin/pack-objects.c |  4 ++--
- object-file.c          |  4 ++--
- object.c               |  2 +-
- odb/streaming.c        | 10 +++++-----
- odb/streaming.h        | 23 +++++++++++++----------
- 8 files changed, 26 insertions(+), 23 deletions(-)
+I cannot really say much about the FSEvent interfaces, but to me it
+feels quite reasonable to flush the queue when we are waiting for events
+to be delivered. And that's exactly what `FSEventStreamFlushAsync()`
+does: it basically overrides the latency we have configured (which is
+1ms) and asks the kernel to flush stuff immediately.
 
-diff --git a/archive-tar.c b/archive-tar.c
-index df2d7fb8e9..a1c66024d4 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -133,7 +133,7 @@ static int stream_blocked(struct repository *r, const struct object_id *oid)
- 	char buf[BLOCKSIZE];
- 	ssize_t readlen;
- 
--	st = odb_read_stream_open(r->objects, oid, NULL);
-+	st = odb_stream_from_object(r->objects, oid, NULL);
- 	if (!st)
- 		return error(_("cannot stream blob %s"), oid_to_hex(oid));
- 	for (;;) {
-diff --git a/archive-zip.c b/archive-zip.c
-index 8095fd04d5..1a948c2f83 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -347,7 +347,7 @@ static int write_zip_entry(struct archiver_args *args,
- 			method = ZIP_METHOD_DEFLATE;
- 
- 		if (!buffer) {
--			stream = odb_read_stream_open(args->repo->objects, oid, NULL);
-+			stream = odb_stream_from_object(args->repo->objects, oid, NULL);
- 			if (!stream)
- 				return error(_("cannot stream blob %s"),
- 					     oid_to_hex(oid));
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 7226da3e65..d1761282db 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -806,7 +806,7 @@ static int check_collison(struct object_entry *entry)
- 
- 	memset(&data, 0, sizeof(data));
- 	data.entry = entry;
--	data.st = odb_read_stream_open(the_repository->objects, &entry->idx.oid, NULL);
-+	data.st = odb_stream_from_object(the_repository->objects, &entry->idx.oid, NULL);
- 	if (!data.st)
- 		return -1;
- 	if (data.st->size != entry->size || data.st->type != entry->type)
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 683160c6bb..10d00ca792 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -528,8 +528,8 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 		if (oe_type(entry) == OBJ_BLOB &&
- 		    oe_size_greater_than(&to_pack, entry,
- 					 repo_settings_get_big_file_threshold(the_repository)) &&
--		    (st = odb_read_stream_open(the_repository->objects, &entry->idx.oid,
--					       NULL)) != NULL) {
-+		    (st = odb_stream_from_object(the_repository->objects, &entry->idx.oid,
-+						 NULL)) != NULL) {
- 			buf = NULL;
- 			type = st->type;
- 			size = st->size;
-diff --git a/object-file.c b/object-file.c
-index 068c6e5672..11d1af342e 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -952,8 +952,8 @@ int index_fd(struct index_state *istate, struct object_id *oid,
- 		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
- 				 type, path, flags);
- 	} else {
--		struct odb_stream *stream = odb_write_stream_from_fd(fd, xsize_t(st->st_size),
--								     OBJ_BLOB);
-+		struct odb_stream *stream = odb_stream_from_fd(fd, xsize_t(st->st_size),
-+							       OBJ_BLOB);
- 
- 		if (flags & INDEX_WRITE_OBJECT) {
- 			struct object_database *odb = the_repository->objects;
-diff --git a/object.c b/object.c
-index 37e6efee47..97f7fc0e87 100644
---- a/object.c
-+++ b/object.c
-@@ -345,7 +345,7 @@ struct object *parse_object_with_flags(struct repository *r,
- 	if ((!obj || obj->type == OBJ_NONE || obj->type == OBJ_BLOB) &&
- 	    odb_read_object_info(r->objects, oid, NULL) == OBJ_BLOB) {
- 		if (!skip_hash) {
--			struct odb_stream *stream = odb_read_stream_open(r->objects, oid, NULL);
-+			struct odb_stream *stream = odb_stream_from_object(r->objects, oid, NULL);
- 
- 			if (!stream) {
- 				error(_("unable to open object stream for %s"), oid_to_hex(oid));
-diff --git a/odb/streaming.c b/odb/streaming.c
-index c436b18d39..9c85ec54f5 100644
---- a/odb/streaming.c
-+++ b/odb/streaming.c
-@@ -208,9 +208,9 @@ ssize_t odb_stream_read(struct odb_stream *st, void *buf, size_t sz)
- 	return st->read(st, buf, sz);
- }
- 
--struct odb_stream *odb_read_stream_open(struct object_database *odb,
--					const struct object_id *oid,
--					struct stream_filter *filter)
-+struct odb_stream *odb_stream_from_object(struct object_database *odb,
-+					  const struct object_id *oid,
-+					  struct stream_filter *filter)
- {
- 	struct odb_stream *st;
- 	const struct object_id *real = lookup_replace_object(odb->repo, oid);
-@@ -242,7 +242,7 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 	ssize_t kept = 0;
- 	int result = -1;
- 
--	st = odb_read_stream_open(odb, oid, filter);
-+	st = odb_stream_from_object(odb, oid, filter);
- 	if (!st) {
- 		if (filter)
- 			free_stream_filter(filter);
-@@ -320,7 +320,7 @@ static int fd_stream_close(struct odb_stream *stream UNUSED)
- 	return 0;
- }
- 
--struct odb_stream *odb_write_stream_from_fd(int fd, size_t size, enum object_type type)
-+struct odb_stream *odb_stream_from_fd(int fd, size_t size, enum object_type type)
- {
- 	struct fd_stream *fds;
- 
-diff --git a/odb/streaming.h b/odb/streaming.h
-index 60b9803190..b522ff513f 100644
---- a/odb/streaming.h
-+++ b/odb/streaming.h
-@@ -26,14 +26,22 @@ struct odb_stream {
- };
- 
- /*
-- * Create a new object stream for the given object database. An optional filter
-- * can be used to transform the object's content.
-+ * Create a new object stream for the given object. An optional filter can be
-+ * used to transform the object's content.
-  *
-  * Returns the stream on success, a `NULL` pointer otherwise.
-  */
--struct odb_stream *odb_read_stream_open(struct object_database *odb,
--					const struct object_id *oid,
--					struct stream_filter *filter);
-+struct odb_stream *odb_stream_from_object(struct object_database *odb,
-+					  const struct object_id *oid,
-+					  struct stream_filter *filter);
-+
-+/*
-+ * Create a new object stream for the given file descriptor. This can be used
-+ * to, for example, stream an object into the object database. This function
-+ * does _not_ take ownership of the file descriptor. It's the responsibility of
-+ * the caller to close it after the stream has been closed.
-+ */
-+struct odb_stream *odb_stream_from_fd(int fd, size_t size, enum object_type type);
- 
- /*
-  * Close the given object stream and release all resources associated with it.
-@@ -65,9 +73,4 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 			  struct stream_filter *filter,
- 			  int can_seek);
- 
--/*
-- * Sets up an ODB write stream that reads from an fd.
-- */
--struct odb_stream *odb_write_stream_from_fd(int fd, size_t size, enum object_type type);
--
- #endif /* STREAMING_H */
+> diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+> index 4161dd8282..8e32b5ae5e 100644
+> --- a/builtin/fsmonitor--daemon.c
+> +++ b/builtin/fsmonitor--daemon.c
+> @@ -206,6 +206,9 @@ static enum fsmonitor_cookie_item_result with_lock__wait_for_cookie(
+>  	close(fd);
+>  	unlink(cookie_pathname.buf);
+>  
+> +	/* The listener callback takes main_lock, so this must not block. */
+> +	fsm_listen__flush_async(state);
+> +
+>  	/*
+>  	 * Wait for the listener thread to observe the cookie file.
+>  	 * Time out after a short interval so that the client
 
--- 
-2.55.0.679.g6767b8d81c.dirty
+Okay, so we've unlinked the cookie file and the next thing is that we're
+waiting for all events to have been processed. As said, it feels
+reasonable that we're flushing all events before we start waiting for
+them.
 
+What I find surprising though is that this is supposed to make a
+difference at all. The latency we pass to `FSEventStreamCreate()` is
+1 millisecond, and we wait up to 1 second for the cookie event. I would
+have expected that batching events for 1 milliseconds should be totally
+fine when we're waiting for a full second anyway.
+
+So given that I cannot verify this at all and that I have no clue about
+the FSEvent interfaces... do you have any explanation why the flush
+seems to help regardless?
+
+I _think_ you're already hinting at this in the commit message, where
+you say that it's not guaranteed that the queue is drained in a single
+latency interval. Is there any documentation that tells us what the
+provided guarantees are?
+
+Other than that the code changes look sensible to me, thanks!
+
+Patrick
