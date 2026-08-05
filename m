@@ -1,150 +1,135 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7EA48382F
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 16:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35353F1AAD
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 16:36:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785947446; cv=none; b=a54VblNPmyAUztfcSwYkL+VkZNB9vcr68fVW1DUt2Pv1lsDBryS6fky8LhqX9ZOgJ7h73FADHHZN2+7zdvYmYv3cjwBFPydLF9DidKKXERR5L47al1TaaFe7TiPLckq5p5QmfKzgcT5WZk4t7D7BrphpIFx+XuSRphusec0TuAo=
+	t=1785947810; cv=none; b=njBC9T4DsYrJFl6sSUPJ72xUm9Pnx3KwKguNngEHfxsWEKY+JAhu2Md6V1+yY+SsaBvECxbO2rATfT/jZzjjx2S2kKsitx+EhduZfqFSUAx5YnrRTjL5urlalJEB3vzkI2lxb4nkixwRpihN0gwvjXIJBr7MJUwS7+9RlgT3968=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785947446; c=relaxed/simple;
-	bh=iqfkNhwk5+oUcWbYLey3d4WWQWsqqkWOVF8XXhR4y8U=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=vBTDrKRmqtWx6dk2fRmVF3PDS967htJYH3rpe/54E0yaexzUWqarNp1yYWNixllz/BPqJ8yUFLf2vfvFsGCfpWfSqnKmpR0Mr3ntkwePB4Bj3hT2UHbZApdwalDS0qPqveAayh3LdEqYvfoG05kbh3+8qhmaUtV3zlwXKLRtRbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aTbON8PT; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785947810; c=relaxed/simple;
+	bh=Prtwp3nNHQqBGBeY/Hlm5MJNQubM8uHqY02WGuuRRFQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Y2M551ixrWtA7Ndnph17Gtn/zlOH+gESI+mgcxWAsJsAwzYfonJga1kBxnUscDkGeH7awkGxxh1AjxN5mQopWAdnyzhp1QB0V2tgGJ9/JO1PJOtOkm/cZusDiz1Gi+M+qEyQ1Sm2+fGl4Ex4tyS4hD381C/ZCvUPIznIF9mwhvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XBqV8Slv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F3j0K8xV; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aTbON8PT"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-49556f97a9dso8096315e9.1
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 09:30:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785947442; x=1786552242; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:reply-to:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=eh1NE+vmTc1RQaUk94iOB6IZNKjgw4+1c4QfYO13/kw=;
-        b=aTbON8PThpcm2gkKv+aCS7PC295m1LMWlvdvHzLFRiBtIKJu0/EF7KPNpwa1ZtiBYr
-         K7IEyDHT/YNqPt01XASKx90rNpG5gMjULMkYrjuHUlGU04grfAmhY2LYccdodoYesLnV
-         Fz18xUyzB7alQ8DS97DlURMbEuPG6ovixEYBZod7n0PZGKxThQ10k12wmRU9emA9nL5E
-         tjjisL5oeJYiggjoosyGwAeqH0xdAIDwpNv+vXkqTr7S4v8SMpYoTi14PF757InE+uQz
-         Y+eZhEfEFuUTj6GAWjC/rCBb431WkkT2B4TaL9vNRFm6iqSTg6BGDbk44Ri8P80NC1Sf
-         uv1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785947442; x=1786552242;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:reply-to:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=eh1NE+vmTc1RQaUk94iOB6IZNKjgw4+1c4QfYO13/kw=;
-        b=AbBVFsV4OLVBowrNEv55hHmY3JF7XiMtzBFFb7g27CZrFzC6OXu7vdcVHbpilDIDkg
-         2NElaYm3xutDNzebwAGgrZAY80S1l4ORpJ0BKwxX6nZZsywLCc8GrCNtSXlu2VPB9vr1
-         Cu0h+FYSY/EeUyvbquNr0Eqlmuot77585R8iUjzr3zEw0x8gmREP9n+wDi5lp+m9yusT
-         qHBwOXRFpV2+cU+I0mIdvaei/iL+KbVGotKo/+ldPju/hq3rC5ORuhnEvuKlTlLofBPB
-         HGUBs1RoDx1yCIzGFSSOIbcDCX2WqUjYDdD2e/jMq2+K9yEwM9mFHJ0W8N02ysAcGHGk
-         4b3Q==
-X-Forwarded-Encrypted: i=1; AHgh+RqxwhXiLXpj8WFdENv6ZCbwCsBJwX1uXI0DkKOZTQyWAtnTVlIKbwTm9EJsSMps/twX4V0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOjKJf71LL8f3yDAOmxwZkVdFxaSEgbb2gEr4TpCsPdrv+n+ur
-	B0d7MND48jKHOg3wdGEpQ/JazrjnL3cMBUGSNRuGFNys3jkm3ZNSC9Sr
-X-Gm-Gg: AR+sD11CbFUVlmbOLzHQmEaOSQ4L/tgx2GxBAzZzq7+pNY3ZgeAaNOQUJ7KB1MAq4Ea
-	oALD8/De5AuG0gg2ZpCmWbQpQiOzc5mTXQWgN81s7lPBVGYrJsrdKwqypKgkN1NTaaMOdD6OudR
-	1kVJshGTvGBY/KvEwCi4PXPg+sHnyEEiU2xED5nCIAujDX9B1RLjbrHU38L/sEls7hqRVaZkVLH
-	k/gVk370fpKox3rGgflQhFB/1+iAtY+AVMJsPd7UDWuV9sr4rcco/pFCsL6WKZmT0DFyMSyugZp
-	6lYfrhDAkJTVRskfEVy70MC15ZYxzRU1yBQhxjZqU2Q8EZ/0lxWnWtXnckUm5UCnIRG6b7MEY8d
-	A1PYO9/BOxuljFaePOQNgDLcasQv2/0QRZZVUlq2U+40gGJGQMulAmZnswd2S/g3RtJbiPviwZL
-	JabnY1VpGk9U4ydrmQXDTpiP+urnkICNce/H3rJIGZlISS9gmjQL9QvmyigwZBSOTyy8PL1PxDb
-	i0ZSIOF4OZOO//wYsjLDjTmRjHoJ5lVGkJQulHHNlBwjMbw
-X-Received: by 2002:a05:600c:4688:b0:495:6bc9:62b0 with SMTP id 5b1f17b1804b1-4994e7d1487mr103883915e9.17.1785947442194;
-        Wed, 05 Aug 2026 09:30:42 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:6dc7:af50:9cd:3275? ([2a0a:ef40:17bb:9901:6dc7:af50:9cd:3275])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4994dfcc84dsm95648435e9.2.2026.08.05.09.30.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Aug 2026 09:30:41 -0700 (PDT)
-Message-ID: <de96a0de-a0a3-4e3e-b44e-8991f8ae87d3@gmail.com>
-Date: Wed, 5 Aug 2026 17:31:07 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XBqV8Slv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F3j0K8xV"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 22A011D00147;
+	Wed,  5 Aug 2026 12:36:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 05 Aug 2026 12:36:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1785947807; x=1786034207; bh=CUaggcpMs+
+	UqAxyL2tQpWxeSdXEH5NXORGFrK9fOT48=; b=XBqV8Slv9ByeiLxLGlEam+ICzM
+	IpCpuqRDnMpk7sdOxbIPfpFjGNAD5cD3F+L6cH1/wS1YurK3128TNu7z3ttzcfQD
+	5PDJUdrsBac6tHe1ZfXIDGSQa8ihI+MTY4Znn7TnsomUCDzIs+wzWKh2lF3ge9te
+	b5SQ2bC6B+5yp+nlQgamABZ3wKHOHyJHCjAYcar69PB+3lt0gSEw5P/0S0PUJGUp
+	aJx0zGiO0WREzPa8womXIKp/Gad+9/fpLWrnlbmnUVC8dMaU93IQwQ/huEN8wVU0
+	oXp0dFqw+ezYkkgpBIb6n1m+/LYg+2EKLZOLS0ZBqijIfVwHdvpivHz2o2Og==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1785947807; x=1786034207; bh=CUaggcpMs+UqAxyL2tQpWxeSdXEH5NXORGF
+	rK9fOT48=; b=F3j0K8xVvDXABCjNrJM/BruU3k4zgNCZ0CEj8CsMBeWPI7Zpw2K
+	VTT+Vmf66U2dWIOhpvvlCDC4Rkg29HfQXx9o41BW5UOscZ1HpcE/4pEacVUJA8Wn
+	Bn8laEeLKcOKxnSr587DqwXcNkLeedKhzFcQ23O0huI6oPYYBGP8tjjlkQcsqbfD
+	V7CwCGlme2bGJpqfTklUpytYg7NR6IfpleCCeNmhif0YMUH1uZ6RR+Pl6kJAvYWF
+	LzO66VEIySB28xeGqDXpzULLZu3xPMvdA3lORRpZ1Rn2igD2aHh5xdwSIq5s/nhw
+	BOLg2fHgsVwykOzr2wKFc5CVZGU2lXuHcXA==
+X-ME-Sender: <xms:n2Zzau_5s_Gw8v19yDq9mMDXbP76m3-u_xTETPEl4vA4LJmmj2eryA>
+    <xme:n2Zzahwm93bRmkLCo15YIMdTq6rbpWzHl2xUE-7qM7blycYOz-yz7D4eJFFndlF6s
+    5tUada42BxUwXJJIzNA_2BM1hb4PK8cMxnjyHy8PI6HBpKxnfEc>
+X-ME-Received: <xmr:n2Zzauo5ZnkI_PHSJuU_Wx4Vcwe-YOpGs4BePh95LIeJ4H6hG4JiTCH2qCQcyLAj9YJLw4Y1Az_BKRfhe5vC_uk0bFpjB-B4RA>
+X-ME-Proxy-Cause: dmFkZTEA0aJxyoF4bXzKYjI519qDkS9kk1xG/L2y6LdW39Lk78BsjaB3a7W2HNlT81gg/2
+    a8tW1fjpU1ECVHb/iPsQ6IZeljEWjpu2vhQO9SjtBol25zzA9WNMFYdktCFdO/Jk6oBi9o
+    BgX7QWCmxi2F7JWUh3a/shlE3o3MB55EEIcZ6GehCtBPfniVHAFYpWLnqmoV6jPLhRoI61
+    WztMlpI/xNsOzS60z62Jbp8/Fzj8y7AX+QRQ+Mtga9T/sUbp2hogAdbH4PEaTHMUlLeoTJ
+    An5NwE5rPCyr1h1n7xI9KSdXg7W8X80pUPzkh3xy9BWdayidfjAImerCYDIELFR6GbejKU
+    v139/seJbPjZ1SF2pCi6AO+mPXx6uxfKCBk5Mb/mAEyo1iwHrKVFxeTtkAIbC2A3hn4cVj
+    KzV4/g5qDrZORLXraOqAb5WytcMbY+ECvDNiRju+m33iqkP3s+ko7WpDKtkdKmzN/uYMO5
+    x1VSvVsVHM0xY6cWWNLnL3BlD2ZSYKWMOzxdajg5Zh8LWbCx4zH7vS0qFZNA1575pdTI/A
+    lp4+tsTNgZFPb+sB8PvkjevmkGWyvdRLCfjpLYcQzfEzmNNVADDerZjns7DmvflOGtpoul
+    dWHjlwO0rmSxw80DZKMz7H6X4pMCC59i46IUmvwFlurl/k0GvWxWsj46s/QA
+X-ME-Proxy: <xmx:n2ZzaipcSbH7JZq174IP8hOpevHnuucmozpSUf29pGsA7nQBHVUrLw>
+    <xmx:n2ZzauBiglugveQ3EAYjAZYZgGent3GnQGQ543pcuAACcKQocoEQvg>
+    <xmx:n2ZzagtqS0TGx345m_OcGs8o-FMtfwmX2Mhr68navfPdBo2Wx4W9ZQ>
+    <xmx:n2ZzatLKAKvDpeTVGUk-n7SbIuNstJcrUkSMgJXO9_T4FlrUyJYXjg>
+    <xmx:n2Zzau1CUelyKCa_e7cIX6f6DfdPuMa-HAeP8eGuSf3x-CG8ls_rpuSf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Aug 2026 12:36:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Sixt <j6t@kdbg.org>,  Ben Knoble <ben.knoble@gmail.com>,  Jeff
+ King <peff@peff.net>,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  "Randall S. Becker" <randall.becker@nexbridge.ca>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/5] Reintroduce writev(3p)
+In-Reply-To: <anL0nIk6uzkYR9Oc@pks.im> (Patrick Steinhardt's message of "Wed,
+	5 Aug 2026 10:30:20 +0200")
+References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
+	<f8050598-392f-44c9-8d66-0454740a7a12@kdbg.org>
+	<xmqqo6fso2s8.fsf@gitster.g> <anL0nIk6uzkYR9Oc@pks.im>
+Date: Wed, 05 Aug 2026 09:36:45 -0700
+Message-ID: <xmqqy0ekr0bm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_BUG=3F_git_rebase_-x_=22git_commit_--amend_?=
- =?UTF-8?Q?=E2=80=A6=22_loses_notes?=
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>
-Reply-To: phillip.wood@dunelm.org.uk
-References: <CALnO6CDh6kbL5KH=Nt00ksZCaDbJAnjbepU_tyRTcbGekSyeMg@mail.gmail.com>
- <307abaeb-b033-4c55-8edf-1ea765199dce@gmail.com>
-Content-Language: en-US
-In-Reply-To: <307abaeb-b033-4c55-8edf-1ea765199dce@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 05/08/2026 14:42, Phillip Wood wrote:
-> On 05/08/2026 14:13, D. Ben Knoble wrote:
->> Sigh… I haven't minimized a reproduction case here yet, but maybe
->> someone can tell me how I'm holding it wrong.
->>
->> I have a local branch with notes in refs/notes/benknoble/commits (in
->> particular, the tip commit has a note). I forgot to adjust my author
->> email before creating some of these commits, and I wanted to adjust it
->> to match the mailmap patch I just sent out, so I ran
->>
->>      git rebase -x "git commit --no-verify --no-edit --amend
->> --author='$(git config get user.name) <$(git config get user.email)>'"
->>
->> Upon checking (much) later, I discovered the note was missing! It had
->> not been rewritten. And yet:
-> 
-> I suspect the note was rewritten to the un-amended commit (i.e. the 
-> commit created by rebase before it ran the exec command). The way the 
-> note writing works is that as rebase picks commits it remembers the new 
-> object id of each commit and after all the commits have been rebased 
-> passes a list of "old-oid new-oid" pairs to "git notes copy". If a 
-> commit gets amended by an exec command then we don't record the new 
-> object id correctly. I have some old, half finished, patches that try to 
-> fix that by making "git commit --amend" update the file where rebase 
-> stores the list of rewritten commits. I think it worked for exec 
-> commands that run "git commit amend", but the effort got bogged down 
-> trying to improve the way we handle commits that are edited. I've just 
-> pushed them to [1] if anyone is interested (though the commit messages 
-> are dreadful so I don't know how much help the patches will be).
+Patrick Steinhardt <ps@pks.im> writes:
 
-Another approach would be to copy the notes before we stop for an "exec" 
-or "edit" command (the latter is complicated by the fact it might have 
-conflicts) so that "git commit --amend" could just copy them to the 
-amended commit. If we did that we'd want to copy the notes in-process 
-rather than forking "git notes copy" before each "exec" command.
+> On Mon, Jul 27, 2026 at 08:44:39AM -0700, Junio C Hamano wrote:
+>> Johannes Sixt <j6t@kdbg.org> writes:
+>> 
+>> I think Patrick's writev(2) follows the pattern our previous compat/
+>> routines have taken.  We use real writev(2) where it is available,
+>> and in the fake implementations in compat/ we have comments that
+>> essentially say "the real function offers X, Y, and Z, but we only
+>> want X and Z and do not need Y, so this implementation does not
+>> support Y".  It is harder to maintain because the application side
+>> may be tempted over time to start depending on Y.  If some platforms
+>> cannot easily provide an equivalent of the real function, it is
+>> easier for them if the rules explicitly state from the beginning
+>> that we do not require and will never require Y, needing only X and
+>> Z from either the fake or real implementation.
+>> 
+>> At that point, we are not describing the real function anymore, so
+>> your proposal to give it a specific name is one step away from that,
+>> and that step is in the right direction.
+>
+> Yeah, I was mostly trying to follow the precedent that we currently have
+> in our code base, where we assume POSIX functions and paper over any
+> gaps that a specific platform has via compatibility wrappers. And I
+> think that the compatibility wrapper we have for writev(3p) is close
+> enough to the original semantics of it to not really matter much in
+> practice.
+>
+> I overall don't disagree that it would've been nice at times to have a
+> higher-level interface that abstracts over such platform specifics
+> without assuming POSIX semantics. But I'm not really sure what it buys
+> us to rename this to `write_gather()` without rethinking the bigger
+> approach we have to I/O. That is, what does it buy us to now diverge
+> from the current practice, and where do we want to end up?
 
-Thanks
+As I am not the party who needs to implement a good enough
+emulation, and what is hard to do in non POSIX environment that is
+needed for writev(2) emulation, I think that is a question for j6t.
 
-Phillip
+A different way to put the same question is "what is Y in the
+context of the intended uses of writev(2) in our codebase"?
 
-> Thanks
-> 
-> Phillip
-> 
-> [1] https://github.com/phillipwood/git/commits/wip/rebase-update-rewritten
-> 
->>      git config get --all --regexp --show-names --show-scope notes | 
->> column -t
->>      global  format.notes      true
->>      global  notes.rewriteref  refs/notes/commits
->>      local   core.notesref     refs/notes/benknoble/commits
->>      local   notes.rewriteref  refs/notes/benknoble/commits
->>      local   notes.displayref  refs/notes/origin/amlog
->>
->> So I would have expected the notes to get rewritten?
->>
->> - Running "git commit … --amend …" (author change and all) rewrites 
->> the notes
->> - Running "git rebase -x echo" rewrites the notes (well, it has
->> nothing to do right now, so it doesn't modify anything; however, I'm
->> 99.9% convinced that when I did a plain rebase earlier today the notes
->> were preserved, just like they are all the time)
->>
->> It's just the combination that loses them :/
->>
-> 
-
+Thanks.
