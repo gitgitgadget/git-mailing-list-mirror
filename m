@@ -1,71 +1,133 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725043D300F
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 20:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4393EFD10
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 21:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785961980; cv=none; b=TaA9FB+t9scDktq54R8KCN5x/bm/f3z0TuXYC9KaOYcbzfu1Zf85YLsE6ZS8os+NWgfUrxXuBh8+ZJvuqiGk9AuULruEVV986Z57iLi1ERUdOVijT4lwi8eWZoqrCZoUkpYlm3/LiuH+WgTYI9dwhJ62Utzjbw/3pC2dwCrsP30=
+	t=1785964870; cv=none; b=rf6GPeNWJfxOKw6nA7qiekJfGEawzaL1KD3DCkNQL1WvaX1iT8x9mAmAuY1ZYUgTEfC8XcybPtQB5Ky1HWmXkiArC/f77x0J15GSWVkiiImghmX/FD04FinIhQe4uIC0EwT1M2ZPYYP6EbLABJCTSll3hIDGgko3+kA9tmSrU5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785961980; c=relaxed/simple;
-	bh=GRT9VBba1xOZBVUeTXOkDvqi8xbbaWzHWeogjWKDbNg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VU2f5d7oKoMTaYCAM2mBTao+wpmd32av4+azHQ/VcCcKy6b7r9za3Ur16vhj7GKqQzS4b85nYBh7AUI/NfAFOXvqTm8/Nwat3F89hCvstr+Hm8kM5u8DyWOYHc7pau4lrVOX1C2FXYdu+XECT3QuBtx5OT6IZhg5hxhJ6Og2YNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aEcVchud; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1785964870; c=relaxed/simple;
+	bh=VtHH1w0ezZgQbx43FCk/4p1jt+xwCb30NR4pkrQBZQ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RF2AoBZ76GNpSz//VOaT+z+bdiBGleN04Ym94Lc49n5D++esjG7Ad1mrD5uCpWrv9iUrzRbkH10OHIUkwNebc+aTlvzDYxCyeIYilMQHS0H4zdskFq2KDERDE4VLR2sAexseLO+Gew65Ovv4qaOQFqWf+5Km3GwneXnQrhsils0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rz3YbzV/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aEcVchud"
-Received: (qmail 54414 invoked by uid 106); 5 Aug 2026 20:32:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=GRT9VBba1xOZBVUeTXOkDvqi8xbbaWzHWeogjWKDbNg=; b=aEcVchudmmFwGFGaXcdSMST6srEsf9z8V1KZ1NUWwFIDsLjHz7Iz5SwntQff64+Ld1hiNdEqyVURHZBmrpT45g0SxhxIrHa/HQeoR73pWooh1BmMvIr2C800eufEgRD3J/EqQAZudbnCeTqHTcLOTb55zeOp+URmAcEQLwqOLqpBtDgC9mGSde+NRwTRRZ/70uqVXQTpB5ZlLRGyf6HXiCzw+/EZjRCEj8e0VysPuSmQh53GWsrhxojvka/3C+jXYAnzbCkOWoBDnWVPCor7NjxfsR5zTafMxIp9jsziCxWwE97TXQzp9rON0X5SzgdN+jSKVY/q3CsjPI9YQN8Quw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 05 Aug 2026 20:32:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 81762 invoked by uid 111); 5 Aug 2026 20:32:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 05 Aug 2026 16:32:56 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 5 Aug 2026 16:32:55 -0400
-From: Jeff King <peff@peff.net>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Gusted <gusted@codeberg.org>
-Subject: Re: [PATCH 1/4] revision: move bloom keyvec precondition into
- function
-Message-ID: <20260805203255.GA1010713@coredump.intra.peff.net>
-References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
- <20260717-toon-speed-up-last-modified-v1-1-410418f18614@iotcl.com>
- <20260718075700.GB22588@coredump.intra.peff.net>
- <87wlu44bv3.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rz3YbzV/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100C21F000E9;
+	Wed,  5 Aug 2026 21:20:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785964861;
+	bh=I7rzBgbDRzT+82aA/Y1238tGbkXzhiavSUvshvIcesI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Rz3YbzV/bmf4MLEYh3YMKMjCQW3Xkug3hkUqH/7eZOlgZ6MjvBQ6Ep7JEKhex/PgA
+	 GgIf/SR1cKOA8EKfFddQ3FDIPIyH3Owep5fzTMYRojRYn9cgxUp28jR41eq+VS3J+g
+	 eGzy4tzt/OeVqdKiiwXXUUq/UUeAiID9/ubL7stjpBtKGa9yiT+B4HFSHVkEI4ayXX
+	 zuCh75SntECsQ2BtgHEdH5zLI2wKAK4bLb3Liq/kejwRB1MQe3Folez9RQ3NhLCtt0
+	 a+suXa4j3z66SOqf+PusoC5DLm1IWUQ6/m69BfjFSMsI3tjAuqLgyllizgnC/123np
+	 Ea4gtzfn/FpQw==
+Message-ID: <6a8e934e-5ccc-40cc-877b-d1f1752888de@kernel.org>
+Date: Wed, 5 Aug 2026 23:20:58 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87wlu44bv3.fsf@emacs.iotcl.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] completion: add 'git history' subcommands
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+References: <20260804-history_autocompletion-v1-1-6f7459ffb677@kernel.org>
+ <anLV__4THdvugj8f@pks.im> <xmqq7bm4sfvh.fsf@gitster.g>
+From: Vincent Mailhol <mailhol@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=mailhol@kernel.org; keydata=
+ xjMEZluomRYJKwYBBAHaRw8BAQdAf+/PnQvy9LCWNSJLbhc+AOUsR2cNVonvxhDk/KcW7FvN
+ JFZpbmNlbnQgTWFpbGhvbCA8bWFpbGhvbEBrZXJuZWwub3JnPsKZBBMWCgBBFiEE7Y9wBXTm
+ fyDldOjiq1/riG27mcIFAmdfB/kCGwMFCQp/CJcFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcC
+ F4AACgkQq1/riG27mcKBHgEAygbvORJOfMHGlq5lQhZkDnaUXbpZhxirxkAHwTypHr4A/joI
+ 2wLjgTCm5I2Z3zB8hqJu+OeFPXZFWGTuk0e2wT4JzjgEZx4y8xIKKwYBBAGXVQEFAQEHQJrb
+ YZzu0JG5w8gxE6EtQe6LmxKMqP6EyR33sA+BR9pLAwEIB8J+BBgWCgAmFiEE7Y9wBXTmfyDl
+ dOjiq1/riG27mcIFAmceMvMCGwwFCQPCZwAACgkQq1/riG27mcJU7QEA+LmpFhfQ1aij/L8V
+ zsZwr/S44HCzcz5+jkxnVVQ5LZ4BANOCpYEY+CYrld5XZvM8h2EntNnzxHHuhjfDOQ3MAkEK
+In-Reply-To: <xmqq7bm4sfvh.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 05, 2026 at 09:16:00PM +0200, Toon Claes wrote:
-
-> > But nobody ever cares about the difference between "1" and "-1", because
-> > the probabilistic data structure means "we could not check" must err on
-> > the side of "it might be in the filter".
+On 05/08/2026 at 18:15, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> That's not entirely true. The `count_bloom_filter_false_positive`
-> depends on knowing whether the filter said "maybe" or if no filter was
-> used at all.
+>> On Tue, Aug 04, 2026 at 09:56:32PM +0200, Vincent Mailhol wrote:
+>>> Use the parse-options completion helpers for the "git history"
+>>> subcommands and their options. Complete positional arguments as
+>>> revisions, and add coverage for each kind of completion.
+>>
+>> Ah, great! I wanted to write shell completion for git-history(1) for a
+>> while but never really found the time to actually do it.
+>>
+>>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>>> index e875787710..f10813c8d7 100644
+>>> --- a/contrib/completion/git-completion.bash
+>>> +++ b/contrib/completion/git-completion.bash
+>>> @@ -2137,6 +2137,30 @@ _git_help ()
+>>>  	fi
+>>>  }
+>>>  
+>>> +_git_history ()
+>>> +{
+>>> +	local subcommands subcommand
+>>> +
+>>> +	__git_resolve_builtins "history"
+>>> +
+>>> +	subcommands="$___git_resolved_builtins"
+>>> +	subcommand="$(__git_find_subcommand "$subcommands")"
+>>> +
+>>> +	if [ -z "$subcommand" ]; then
+>>> +		__gitcomp "$subcommands"
+>>> +		return
+>>> +	fi
+>>
+>> Okay. We first try to figure out whether there is any subcommand passed
+>> by the user already. If not, we complete available subcommands.
+> 
+> This may be a tangent, but anyway.  I was looking at this patch (not
+> that I think I am capable of giving a completion patch a serious
+> review), comparing with other completions, and the similarity of the
+> boilerplate part above was so striking.  I suspect that these were
+> organically grown, but at some point when the tree is quiescent, can
+> we coalesce the completion routines for subcommands that share the
+> same pattern for better maintainability?
 
-Ah, yeah, you're right. I saw the "== 0" comparison there, but didn't
-notice that we later checked it against "== 1".
+I am not sure if this would increase the maintainability.
 
-> That said, the public function might have a boolean interface, while
-> the private wrapper still uses the tristate. I'll address in the next
-> version.
+For example, I started looking at Patrick's suggestion ※ to cover the
 
-Yeah, I'd be OK with that. Or leaving it as-is, given that there is a
-caller who cares. It might be less subtle if we used symbolic constants,
-but that could be done separately (later or never if nobody cares
-enough).
+  git history split
 
--Peff
+special case. If we add this, we would need to dispatch this in
+_git_history() by adding something like:
+
+	if [ "$subcommand" = "split" ]; then
+		__git_complete_history_split
+		return
+	fi
+
+but if we coalesce the completion routine for the subcommands, where
+should this dispatcher go?
+
+I see this boilerplate as a skeleton waiting for extensions. Of course,
+maybe I am missing some points and maybe we can coalesce the code while
+still allowing for extensions. But currently, I am not able to depict
+how this should look like.
+
+
+※ The fact that I started to look at the 'git history split' completion
+doesn't mean that I am committing myself to implement it. I will do a
+best effort try in my available time. If I get a decent result, I will
+share, if not, I would ask you to bear with the current patch!
+
+
+Yours sincerely,
+Vincent Mailhol
+
