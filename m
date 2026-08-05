@@ -1,109 +1,119 @@
-Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3363D9543
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 19:16:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD813D1CA5
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 19:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785957386; cv=none; b=S4aJ4ENRNmTGfEqmETd7d1OBqVrbOqm1mFTRm64/9CrIyZsvf/YJ4kFSDrXL6EGWptlcp6WBvHKg3DEeEdhm08QB6E6Cx/N8+f0WGxyBiHlKz/CgUS/1mhEqwY7TCK31EKCxS5UodQtGvQczutamuT90E2M/KVoxmVqHtnzeoWc=
+	t=1785958975; cv=none; b=OGIEv0+rTvpfhT3HeWL6t9GWRDUfvkvVSYzXOdSbVTqo1/aSw51RXQ5QHb+Jt5Cfb+O0q4RoDLGNmsw+iH3Mz1dZiy30qjgrvwYWaoXFE6BdPtnzOMTL8Kqiw8XMTz+eQMT18efMe92S8tSQBDWBbfp2S/myIWmhapFaK646MY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785957386; c=relaxed/simple;
-	bh=gbBWWF+xhGfq+j4id8W8o2sbM3TXOXhcbIWW1Kf13EA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bXE1QQdPUy3LCRWRw7ej7GfM1BLd3FDSAemk/n/g2EcJZBL0k7LvaJZYQERZYUQADbI79CVn5/QhxnzStbueY1yQM4kUo4I4HXaKbkzrRN8juZYdIiiFPTPdYx0S9DiG1cbzbHTfnY26xRPlZRTYFg/pgTFmuB0fZsjjDuWt4tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=lrRtytrs; arc=none smtp.client-ip=91.218.175.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1785958975; c=relaxed/simple;
+	bh=CaBftkwo0SzCWIM0r4FhUzkTnQpnOg6wpq2zpAxn1Bc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NW696lV3QG/6eNocIM4oG4GvOP6Vewi9zsTA89m/cZOYMaMgUQD2VKQ+GtnZdUzxs7EFOYpCqXckNuDisRKR1RCdd1ZVJBfr8W5YGOlViXUG0AkL+cOAvZtjBMEI99LPj8HoHxKTFZuRbaiC8woHtyv7nw247poudbHs1AnoMCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qnXwQtM3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kop3H8ua; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="lrRtytrs"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1785957376;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WPhQhnjb/VWki5nvX96UjYq6ucmVhUVsqSUncnIrxiQ=;
-	b=lrRtytrsVohjFiXnX9R+GZ4EiaYND6FFmOcHdXZU0WmhVzIOqd4N62k2DWHPsrPdlNWMH+
-	UFf5V+7EENl6ImMJZ3c81opIHRYPSsRYJXXbZxsKNDZDpH3ctLkR3FM9VitN/VasNt1qky
-	DRF5l4sLrq+phlSZctDXRPXS7jZQjXo=
-From: Toon Claes <toon@iotcl.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Gusted <gusted@codeberg.org>
-Subject: Re: [PATCH 1/4] revision: move bloom keyvec precondition into function
-In-Reply-To: <20260718075700.GB22588@coredump.intra.peff.net>
-References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
- <20260717-toon-speed-up-last-modified-v1-1-410418f18614@iotcl.com>
- <20260718075700.GB22588@coredump.intra.peff.net>
-Date: Wed, 05 Aug 2026 21:16:00 +0200
-Message-ID: <87wlu44bv3.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qnXwQtM3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kop3H8ua"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 03E047A0090;
+	Wed,  5 Aug 2026 15:42:52 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Wed, 05 Aug 2026 15:42:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1785958972; x=
+	1786045372; bh=MD9bJr7uSseLJaoNC6v4eoih71Mmd/Jn8e1R5VxjggQ=; b=q
+	nXwQtM3F2pgkA9G+Hks5hqP0mRHzpRgo8MYAcRyoqvxE7qt2ckLanXoETEpO0IR9
+	YnZjMJqvcDsLZTFNk406zDkgBsnBCINOBGa1Hh81vJgFSsOF4QxZK+/efxszT3hM
+	OvF02oRNltytwQylHYt7cABCU/PhsJ+vt2ih6COyKpF3LMJ4w5v7koEw/cF4g0xO
+	bCVmbVn2MG2/DAvwpsjROTbkx6DxuCtxWvYSUN1oOHnkn71CVDswRR/cg/eqz6nM
+	/G3f/v/dG109gUv1M6Lcnlc0vSrLDq+kqkYnp16EV5Gop1Qvu03D0Nov5bpcnAjU
+	vGTdNEwELfjeUJg6EC3fg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1785958972; x=1786045372; bh=M
+	D9bJr7uSseLJaoNC6v4eoih71Mmd/Jn8e1R5VxjggQ=; b=kop3H8ualLgY2S7IS
+	zfZ/4xOO10+EcwsFSh44Hap6eX9PVPVGoy67D1Qw5arSjJ6xNXxz2S8kdYAvwyn6
+	rqcn4DZ6Md3HB8Y+cJKHItrK3YXO54SOPBFufUdEugS7O+MrofKvMVLyu8YfANlb
+	OaSydjE+iesZPw+piOptO0qV2w1qal4H9oCls/zMsDx5WKrizus1cnI719WCGo/z
+	lI7X5BmcR9omU5yR24zKAW042MTmsRytM6Ky3BHCg95U5VqSgpX0DjVSpfZuJxiO
+	oZOCoTJOi3y1+BguUz5U8jLf2cZqcPXtm9CXYp5l75HjK4I6jHsFZMZACaUXN2rs
+	/zzLQ==
+X-ME-Sender: <xms:PJJzappYZcbziUrebdJzgFRuwpncPO5nOtXPBliMbPWEW8E9-qXsIw>
+    <xme:PJJzaqsQIk_bTIdIE5iLmC41HfqS5ZO5MOuQc9Oi-gJQAGH7qHgaV0B4n8LPVpL5O
+    UPNcI936Yw8RGQ4CcHWWauAmujuY1UKi5n2Ojyck9qTWsjwlQiHDg>
+X-ME-Received: <xmr:PJJzasZ4q4dHmAtBlV8H5hxD8Bq8oCtEdbXy3w1JrUMfCPvWnvJSF3KmdBbrEySuQ7wp236JDELlBQiwQOV3gv3g1V0O6aPjJw>
+X-ME-Proxy-Cause: dmFkZTEnTKk4KYDyqnRoRBJmy2/UMGDifkBmrQI2+K4xM8TZ6536BfGReSZnfUjppMlF82
+    e4lazL5A04wOv48DeqzJLY8S54PVLBg3cBd4wWQKdvSf+6nP0xj90+r674LdRRxjw3j51R
+    A73abH8QeRk4lpQNWE3Su2N6jkl3zpln+TIPTW9Yy9NwE39pLpijInOAQQnzDuuoG9T1Zh
+    JWDkXTjOgq1uANBb46PCQ5HYSltdHrCMT2coJTLMKYov4FP1AYbC+Ia9tIha+w0wb2igjO
+    YimTywUMAt/aUUbStjxGCQ71L580CrJPk4J/F/sukELklkb9oRhcr3ie1jmSxT3Z3FNFmg
+    l3YsT/r7f2R8hGHRYujCAqW1oaZ/QsoGGd38fK71g3sL5pYXEx4UZ8EPKVm+TAMTMBwZRE
+    Uqg1eQpi43eqTL60Lff13KezsO1zOB9gBVrDg+rgFAwCyEbu1OJdPKQKtM9S09pVEdvgWA
+    Utz3qYJhBhzTfvaWyqrTjaR+u+zd06hm62ai8AQsxOK04oBlV1NTDQd2WPp6dseni01sVn
+    cQfWcwE7yGLf7P8TyFY041joidWd2Ln94/mMZmaVMdWVfcRftytSMVzbpFUJNEyjxmahoM
+    uzd3YJJgHHAyUyNk5Cbmxqq6z2Z0/f833dyCgt9E87LVh8Iz9ufAgKogDbqA
+X-ME-Proxy: <xmx:PJJzahZu9VFy00Z382J1t-N_1oU4iVxIRVfF1uuN3QMZpEFdsubMfg>
+    <xmx:PJJzatkx7h7MnihQYzlaAp3gikqHmRhhKJI2U72TTmYSYXL_iqelAg>
+    <xmx:PJJzak0t-C6luDtMIvsJdQ1TiyvreLhvQLnyc89fs4Uq-9Dsa8B79Q>
+    <xmx:PJJzal3IHQR5ITDIlIqI9ORoi_xW1ml7RdoD0460EjH9Ci7_0A3IaA>
+    <xmx:PJJzahrlQynSawnV9tm7LuDBf6rnJkvyyXFUEaAFdnxwqvFsk2evVps2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Aug 2026 15:42:52 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
+	Britton Leo Kerin <britton.kerin@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	=?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v3 0/3] completion of 'git [-C <dir>] diff'
+Date: Wed,  5 Aug 2026 12:42:47 -0700
+Message-ID: <20260805194250.3316220-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.55.0-653-g9745b9777e
+In-Reply-To: <xmqqcxw010me.fsf@gitster.g>
+References: <xmqqcxw010me.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+Here is another reroll.
 
-> On Fri, Jul 17, 2026 at 05:46:59PM +0200, Toon Claes wrote:
->
->> There are currently two callsites calling
->> check_maybe_different_in_bloom_filter(). They both check if
->> revs->bloom_keyvecs_nr is not zero before they call that function.
->> 
->> Move bloom_keyvecs_nr precondition into
->> check_maybe_different_in_bloom_filter() to simplify the code.
->
-> Makes sense, but...
->
->> Note that this changes `bloom_ret` to become -1 when there are no Bloom
->> key vectors, which results in `count_bloom_filter_false_positive` not
->> being incremented. This is unobservable, as the Bloom statistics are
->> only reported when key vectors were set up.
->
-> This "-1" return is kind of subtle. The function is really a tristate
-> returning one of:
->
->   0: no, it's definitely not in the filter
->   1: yes, it's (probably) in the filter
->   -1: we could not even check the filter
->
-> But nobody ever cares about the difference between "1" and "-1", because
-> the probabilistic data structure means "we could not check" must err on
-> the side of "it might be in the filter".
+The primary motivation for this topic is that the command-line
+completion of 'git diff' does not handle paths (unlike 'git status'
+and 'git add') and instead relies on the default behavior of Bash
+command-line completion, which completes files in $PWD; this does
+not work at all with the '-C <directory>' option.
 
-That's not entirely true. The `count_bloom_filter_false_positive`
-depends on knowing whether the filter said "maybe" or if no filter was
-used at all.
+Previous iterations of the patch taught the completion script to
+offer tracked paths that match the prefix before <TAB> to improve
+the situation.
 
-> But that leads to code like:
->
->   if (!bloom_ret)
->
-> that _looks_ wrong at first glance (as in "oops, we are not catching -1
-> and accidentally treating it the same as 1"). But it's is actually
-> correct for the reason above.
->
-> The "return -1" you are adding here is not the first (we'd do a similar
-> thing if the commit was not found in the graph file). So it is not
-> really adding to the confusion.
->
-> But as we prepare to make this function public, should we consider
-> changing that tristate to a boolean, like:
->
->   false: no, the path is definitely not touched by this commit
->   true: the path could be touched by this commit
->
-> It's a minor point, but I think this makes the interface much more
-> obvious.
+This time, we also complete untracked paths ourselves, so that even
+the following commands, which compare files like 'file[12]' that are
+not under the control of Git in a different directory, are
+completed:
 
-That said, the public function might have a boolean interface, while
-the private wrapper still uses the tristate. I'll address in the next
-version.
+        $ git -C not-a-git-dir diff fil<TAB>
+        $ git -C not-a-git-dir diff --no-index fil<TAB>
 
+ 1/3: completion: no-op refactoring of diff completion
+ 2/3: completion: complete tracked paths for 'git diff'
+ 3/3: completion: 'git diff' completes untracked paths as a last resort
 
--- 
-Cheers,
-Toon
+ contrib/completion/git-completion.bash | 69 +++++++++++++++-----------
+ t/t9902-completion.sh                  | 59 ++++++++++++++++++++++
+ 2 files changed, 100 insertions(+), 28 deletions(-)
