@@ -1,114 +1,71 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1243D47DD
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 20:29:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725043D300F
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 20:32:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785961789; cv=none; b=ow4vp6yMnBGsSi2EvdkKIAdu9e7dhTGrqMxXUh3psDoisiaJxoIhkOvOp22ApsndCqcpMabgkL5XjSmJetsUQ+dYNFsIyujFyUhVg+yfWmobrI2GvNyPVO2UjOwP65+gTfzQwvKX6/Zlq6TkPiCyvQgLlUjtqeMLL+KsMKKYtek=
+	t=1785961980; cv=none; b=TaA9FB+t9scDktq54R8KCN5x/bm/f3z0TuXYC9KaOYcbzfu1Zf85YLsE6ZS8os+NWgfUrxXuBh8+ZJvuqiGk9AuULruEVV986Z57iLi1ERUdOVijT4lwi8eWZoqrCZoUkpYlm3/LiuH+WgTYI9dwhJ62Utzjbw/3pC2dwCrsP30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785961789; c=relaxed/simple;
-	bh=s8nIPlD6rEahRkXOrm07PEQeiGQjXykcGjL81YIFOSs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PG1S5bAb8BjSVEb/5KFKt91SQKJkZxNeeiy297u/idViOtvE6Yr+Kstz1sJFL7JXqFBPHnPUd3ox/prdZWaXbY13Ampbka85jnkk0/O7bx+/eJt9rNjyNPokktA0I98yo1UyJW+r8aGGNEpGcqF7rm4ZEJIyFOj5Y20c+BxD0Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=x2rm4t+6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fuacAQSQ; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1785961980; c=relaxed/simple;
+	bh=GRT9VBba1xOZBVUeTXOkDvqi8xbbaWzHWeogjWKDbNg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VU2f5d7oKoMTaYCAM2mBTao+wpmd32av4+azHQ/VcCcKy6b7r9za3Ur16vhj7GKqQzS4b85nYBh7AUI/NfAFOXvqTm8/Nwat3F89hCvstr+Hm8kM5u8DyWOYHc7pau4lrVOX1C2FXYdu+XECT3QuBtx5OT6IZhg5hxhJ6Og2YNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aEcVchud; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="x2rm4t+6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fuacAQSQ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 87C287A00CE;
-	Wed,  5 Aug 2026 16:29:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 05 Aug 2026 16:29:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785961787; x=1786048187; bh=s8nIPlD6rE
-	ahRkXOrm07PEQeiGQjXykcGjL81YIFOSs=; b=x2rm4t+6x60Xok3ZrQDGILAaAO
-	jG4bGDVmZMkza0rLgPuC86GG4/UmFxVgiFfNJMv8+diwd35VMRw1IYGFEhB7ZVNr
-	yeWgxIxudtkc0kDHAbUoSeqHwueJHY70L8vZGE65QTIWz4EOtihh3wbQiw0W/t7d
-	Ozfq3Mr545Dwvg5Xynu/jyFkpnSqUrSgqfpG8151NJe7iIxlEZk2xM0IV9mTJhx9
-	pPgQ/p7Ofn8o3BSjyoAuTpsu9kNJgzr5J/NhsVNUe4i8W8ibvEprGR3a0hX4K2BF
-	NeKQ2qhE39c0N9h9ouvESzy1BZOD6YTu2qSG+j3JM4BG5Kvf5C+a6ANunYzQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785961787; x=1786048187; bh=s8nIPlD6rEahRkXOrm07PEQeiGQjXykcGjL
-	81YIFOSs=; b=fuacAQSQJy41Z/xWQ4wRbR0o9wC79jWZ0k1jZn7fzVRtajJSSp6
-	MX+LKM8AuthINukKWmV+6jQutxX2JsLgv2pB6qh0EqNGLb1Ovzho8S4vs3fNVNx9
-	nkAxZJkvOCulua2pwMzq5mwbbcz2g/o9VDANPXFoJ7yYpd4qpX/+v4B+lhMrP66z
-	luS//eZUj3SZI9kqL3++Kd9url87hlIk5qpIx74Fh0eIcr9axWUcgItUPx3XOrB3
-	7lBQXGCxP+mlpNtrGodOFyulzoiKl8YJT6PB+s+nqBzBJnA0ApydqS6gYixqCP9S
-	CwIJErWJ9zgaRty5X8AMtBuPCZrtVaflISw==
-X-ME-Sender: <xms:Op1zaoYsJALPDF0pQt6ukN9fK1sNKVQzXXD2-d85jYqAJYpawkS_pQ>
-    <xme:Op1zamdaZNl8MWdCCghXak9sjZNAlPnPnZ2vkHVFSMk43pJFDtESZafhhjXZUJgVD
-    lyZJMzlEYsv-ldx9Dq_R_xFcLR4yAJ66Q_4m7eY2Ewal6GtWPlLpNI>
-X-ME-Received: <xmr:Op1zatnfBL4Ln89gToHEm6c99B9HX8IykpEqFG3t3s2sb6cP9vI_kNRBYFA4qAEt8ceR5Z5WnDD6Wkuwu4ecDTd-wL5_7lygMg>
-X-ME-Proxy-Cause: dmFkZTGtNqkwlvufG1p8ADOfmTgyBbzjxFNXl2roGBkZ5uhu1wb1YxckVvnEI7tVJf5Ose
-    lwgE0zP3Cq0S/ct/+ZUlTsazpc7gYQx1iXW7fYBoDc2kZlbVU34g9pNYH70Qozi3olmkXG
-    lBzygisk3SmWpwG8djub8wTiNx5IQTBxnGMs9Xn3tY7gHK7yBd7EnQLwqAYUa+M1YUSVkn
-    udgPDgvmaA/eeyWj1SDrzCewaMIxheGEfAsO6BROMqUTZXJPT7GVX0fjviNjbNOxycARXu
-    7Wi6R97H8Cr0sEIV14Lz7Ew0k5I50b5EflcY+3AbptGMf0JgEHuo+LGFWfm87TA+ZNFvMs
-    mgO0wLZbkPZ3oV9XiQbkSm4TgcZ2Ca4uAfylDBThSrb2yIvvFjIXuWvTGsoXTdtRJCZK83
-    FmYxbzMjfKfbi4CG+darvZA1NsgKPiQ3xYLqlEIGYvXQwFb2VCGjDWJMGs2cg21vzMpgy+
-    m4gWvHjand3zN+lpwDLHvjc1Fymh2mzf7cLJs8dXJHjzG9YMtZ6ArmtubXnlwgsd0NrBRh
-    MI7ZEa3oiaCDFvKNYSwJeRvBQpqVroT/trjM+6M3I7qweaubmXjraqxIm++xQhWA4LCooH
-    +LT92UcUOREFQHGyKN9I8fVZHdp89OA7JBxVxVFG06SYMm+xYwavzzjS1l4w
-X-ME-Proxy: <xmx:Op1zau28PqzoWLV9V7wILl6gzCRPZUA4yAduzUO8nJ2cGtbA8hNIqA>
-    <xmx:Op1zaufHr_i8JVyWv4zevx-b0eAdB_6jeVHc5u5NS2YfVvk9vuaE6g>
-    <xmx:Op1zaga41y0kGzT83fEK5OhykZFEeNO_Dl8ruoZ8BNo1YvNi9g-vmg>
-    <xmx:Op1zarGAMbfxXtw-5-soqXyfotZUYa40UlcXdslGZJciFT4GXOABrA>
-    <xmx:O51zahmlDgwcFyAGMX87y0e_8G2t9VyWrTY4zB8lB35y6i7QsaAlZUZP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Aug 2026 16:29:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Patrick Steinhardt <ps@pks.im>,  Ben Knoble <ben.knoble@gmail.com>,
-  Jeff King <peff@peff.net>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  "Randall S. Becker"
- <randall.becker@nexbridge.ca>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/5] Reintroduce writev(3p)
-In-Reply-To: <8ff3c3ea-2604-4d65-8a7d-6acd6218b7c2@kdbg.org> (Johannes Sixt's
-	message of "Wed, 5 Aug 2026 22:00:51 +0200")
-References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
-	<f8050598-392f-44c9-8d66-0454740a7a12@kdbg.org>
-	<xmqqo6fso2s8.fsf@gitster.g> <anL0nIk6uzkYR9Oc@pks.im>
-	<xmqqy0ekr0bm.fsf@gitster.g>
-	<2952d9a7-c7c0-44c0-a321-7ddad6497a6e@kdbg.org>
-	<xmqqpkzwpg1g.fsf@gitster.g>
-	<8ff3c3ea-2604-4d65-8a7d-6acd6218b7c2@kdbg.org>
-Date: Wed, 05 Aug 2026 13:29:44 -0700
-Message-ID: <xmqqa4r0payv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aEcVchud"
+Received: (qmail 54414 invoked by uid 106); 5 Aug 2026 20:32:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=GRT9VBba1xOZBVUeTXOkDvqi8xbbaWzHWeogjWKDbNg=; b=aEcVchudmmFwGFGaXcdSMST6srEsf9z8V1KZ1NUWwFIDsLjHz7Iz5SwntQff64+Ld1hiNdEqyVURHZBmrpT45g0SxhxIrHa/HQeoR73pWooh1BmMvIr2C800eufEgRD3J/EqQAZudbnCeTqHTcLOTb55zeOp+URmAcEQLwqOLqpBtDgC9mGSde+NRwTRRZ/70uqVXQTpB5ZlLRGyf6HXiCzw+/EZjRCEj8e0VysPuSmQh53GWsrhxojvka/3C+jXYAnzbCkOWoBDnWVPCor7NjxfsR5zTafMxIp9jsziCxWwE97TXQzp9rON0X5SzgdN+jSKVY/q3CsjPI9YQN8Quw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 05 Aug 2026 20:32:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 81762 invoked by uid 111); 5 Aug 2026 20:32:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 05 Aug 2026 16:32:56 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 5 Aug 2026 16:32:55 -0400
+From: Jeff King <peff@peff.net>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Gusted <gusted@codeberg.org>
+Subject: Re: [PATCH 1/4] revision: move bloom keyvec precondition into
+ function
+Message-ID: <20260805203255.GA1010713@coredump.intra.peff.net>
+References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
+ <20260717-toon-speed-up-last-modified-v1-1-410418f18614@iotcl.com>
+ <20260718075700.GB22588@coredump.intra.peff.net>
+ <87wlu44bv3.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87wlu44bv3.fsf@emacs.iotcl.com>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Wed, Aug 05, 2026 at 09:16:00PM +0200, Toon Claes wrote:
 
-> Am 05.08.26 um 20:40 schrieb Junio C Hamano:
->> I think it is OK to explicitly document that any writev(2) emulation
->> is allowed to be non-atomic, and it is also OK to declare that using
->> writev(2) in this application to allow competing writes to the same
->> destination is a bug.
->
-> These are fine.
->
-> But I'm not worried about current uses of writev, I'm worried about
-> future uses: "Look, we already use writev elsewhere. Let's use it here,
-> too, where we can take adavantage of the atomicity of the write." It's
-> too easy to miss a note about non-atomic emulations when the function
-> name advertises more than can be guaranteed. For this reason, I strongly
-> suggest to use a different name.
+> > But nobody ever cares about the difference between "1" and "-1", because
+> > the probabilistic data structure means "we could not check" must err on
+> > the side of "it might be in the filter".
+> 
+> That's not entirely true. The `count_bloom_filter_false_positive`
+> depends on knowing whether the filter said "maybe" or if no filter was
+> used at all.
 
-That is why I added the "it is also OK to declare" in the above.
+Ah, yeah, you're right. I saw the "== 0" comparison there, but didn't
+notice that we later checked it against "== 1".
+
+> That said, the public function might have a boolean interface, while
+> the private wrapper still uses the tristate. I'll address in the next
+> version.
+
+Yeah, I'd be OK with that. Or leaving it as-is, given that there is a
+caller who cares. It might be less subtle if we used symbolic constants,
+but that could be done separately (later or never if nobody cares
+enough).
+
+-Peff
