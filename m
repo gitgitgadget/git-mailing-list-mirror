@@ -1,70 +1,71 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853423D4116
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 18:31:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8A33D3D1E
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 18:31:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785954675; cv=none; b=twG/ymxyJVmdM0NBTNytGK16jXIsHDv5FpX9ovkPaNAyp/7Y5/vPxMHJiDOkbogjMEin8cdWC2B0oSvkPCkCjLRKIR4bsX3Rerxo5NyhNkWdGbvFYnWfViqVQUlAk0w5+Yb+3T+3RQ1LxKANk+OViON7DoxuQ1h7+EjYKlsfdxc=
+	t=1785954675; cv=none; b=HRAEDzXxIOg1KNsUw/5WUpCiUMUOv/sH/bdxx60b8tESNfmWPKOcz9k7+TIb6VNYS94VGci36NeLyqrWmoQr84RuH+MdlVVEnhNdNS9vJwS2VUwNxToHDWoXyDHG/V3uyaK7QDtH/3z15spR8ISxImIuIqpWobo2ng83feRyg94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785954675; c=relaxed/simple;
-	bh=My6xMcWiSQRC21O7e03KbFzyG+Lek3st4bEshLposLE=;
+	bh=YuZdmJtWAH56WLbqJWyweyHSW7QAabiH0PVEsHBdonc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BIw8fiLGlENi85wzaaLzMLuG4ux3iKkluBZfshZkHP1pjfEWN3aqp1j6tsEdYqHVHZrIjizniyKqpegEoDxquTRu2Wy4zy9oNvzMEG3LTwge5yNtdfVX17WYKocbUruN+1xUvfunvaHxnG8/Hua/sG7H7ptp7rNtlWwbKL7hQZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h3nuD1/S; arc=none smtp.client-ip=209.85.214.169
+	 MIME-Version:To:Cc; b=Fpqji1HDH0pDnkSLeo0RDm6Eq/TZgA+ScTX9/kOyrabmqryVnmyYb12b/sj6wciXjdySWO3NFsNdvx9x2u4riEgvRru1AE6x4gShhf695LWxOuv4JBb5iTDjTjSLMbFtpaD/m5wRLXRYaRlt/PMgtidsiyCw1pwR4jm7FBCAPC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=URnCzEQ7; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h3nuD1/S"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d0407aedd6so16179075ad.0
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 11:31:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="URnCzEQ7"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-848743155bcso701261b3a.0
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 11:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785954673; x=1786559473; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785954670; x=1786559470; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=czqKAQJUC/S5g5U+hEUPK7DNG0qtNEtNKLR4YJglJmY=;
-        b=h3nuD1/Sh9WqgaHlK3V2a82KPSaBBPVrNCjUGYo6nMtHoWJ95KfrrFlihmwrTyQfDB
-         3uPk9I3M+545APcU6u8iXZoBaGXk0xOiYcJYh+pIQ1/RYdmVQdoEwYaCGPURAIvjhhXd
-         /eLZiGdwQd9XkAxjANYruGy4fCeIqew029IIjwAA1NdF69myhmL7WragRvpjSSi2QqhS
-         Ne3gAbNF/Q8BiN4tK+1vJ0CJxIWM0vyn3jvQTLkAM16aEPCiHIhrVjBM0QR9bcHMH8ZA
-         DiqhzP9saQpDrINbD4zscCoC+FoeSv8hPZpoVhU32NkeRDRCNWCiifa+Jf5IkBoSDOy7
-         YkdA==
+        bh=qyFuMK1yo/xnP5V6pKD1c36GCJ+o2ocvuldTJW4PwWE=;
+        b=URnCzEQ7dx+/5yHv9GLqgLhvdCOaKDhm3zfJbD0nUNPO01L7AilppGHOboGIHSx11O
+         Xbc8y0dtwIvZdy17SIow982+uAUCimphTplWcQ5PJerKXlCKPuWxJtoqKLBZBXYtIzsJ
+         nZ+YSJpcOa6YZDz0jYwscvpAJz82zFwYh0CBns65CMu4QhfaaBFUB05pSUJbGCvQd69t
+         YfBO30GVF2LdEgcYCExs2Oq9NgfLyfNOaa2vL5oCt91jmDb5JhH37AZKGOgeD1MhRIXq
+         ePSuRZyrdApl7DipQlMKHBFtF/3byxh69O9y5rMeMJLJoIh4KnJa+hOaKD1k7cLbL69S
+         NQ0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785954673; x=1786559473;
+        d=1e100.net; s=20251104; t=1785954670; x=1786559470;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=czqKAQJUC/S5g5U+hEUPK7DNG0qtNEtNKLR4YJglJmY=;
-        b=kJy/hkzph2CqWLoNtYB3WKqwSr8tIyZ3O2ZT5Ml0mj7YqRxnATp+S981gw+FiaA953
-         if3qQrtn1jFh/HA1dt2+sl2QHtODHPoGNd+MKDQbyhG4wkmNNYRuov3jWoO/OeBL9BCF
-         sf03Sc+zDU1z+0MN8DeMQFSyxJkmbdkD8fChVQx4CTS6FCN/CfPH1CusU8YouOzLZFLB
-         Sxlx2l+h9+irqWXVqET8qxXhuqNfFLZV4WsL6nuyPuTygbVl6fFmfPCc6uyoomwOTUbn
-         HBEclHzItlx8yLz9qUhWQoHywa20VdToz4BXmaT6Goj6qW7rOCirlVLvLMoCZNgk57r9
-         wCvQ==
-X-Gm-Message-State: AOJu0Yx/w9jXI42Ws2UHY09MTpxRVuGbO9BhqI1A5rK5AazCCKbY9nDK
-	uj0WNjeADoQj7luaUqYYg8doHDq+WdpOSCc/rPOMy0ZxaN3xawNEU68ZTdSp9g==
-X-Gm-Gg: AR+sD12sOf2gnXDVRSlu49YAAgR7RjcY4SDpdTTce1G9B+Mc/yZRv1+OHcsVBKio2gZ
-	xYGPakL9XsRqWqy6fRMKGiI8hYIACYpEH/9VSosc5uKH0oBQrcWfsO6kKkevOVDdeYLRxS/BsLQ
-	kwdHExYfbh8BUzzGn8oLvG4spdURv5t3P36m1kJnE6PpGx7q+2wmWyMwyJycWtGn1eYzl0a5XgB
-	/e+1GQdM9DzRnSmy4NHtWQtevV1Rzyg6u3jq3yiND1IPyVj4bOh6dI9PJZFu6PZxDU78gmaU29I
-	/u6iR9S2svmz6Ky8dD2C9H4B115eIBZBIp7PkLThSTbkSYRZYw23eSE/TGahyitF8bcOO5oT0FN
-	M6ej+nTakTdyd7ZLn1RQrx70nIFzlPmSdzWk2iCJ8WxCnXsbyyZ0Byb8dI386X/V2scFN1C4vMm
-	4Fbplr7m2vyhtEgX+BRJUGL6BxJhoaIWvGeg5U6SrmmaV38O4ixWK2Bg0oD6uUswr60Q==
-X-Received: by 2002:a17:90a:d644:b0:38e:2860:253f with SMTP id 98e67ed59e1d1-3903c582511mr9390932a91.12.1785954672780;
-        Wed, 05 Aug 2026 11:31:12 -0700 (PDT)
+        bh=qyFuMK1yo/xnP5V6pKD1c36GCJ+o2ocvuldTJW4PwWE=;
+        b=MVsCdRf839Kt5QrjuGwxtdNfHmT9R5LLIdOrovOfXPPNe54ZrqIr75d/tPBbDTb0Cw
+         Lq0TwWi2QWupoOwsLyvfpThKmg7ZnlFrMT4pLm1fUWbnfOTZhnK1ostbMWOASaDaH+gs
+         5e7DBamexDYmSHAH3SVOPCXaHj0+CiJVGHCXB6BowFK4bjq3f3vBr6ZZZA0O9Zm30k7E
+         vCDGyRhcc7peBTa556djIjaVplcaNgta4/o7v+UtYecrIMmPbCP0bx2i2DTDLekc6nju
+         T8SI0458rZF/Jk1mAHG23Iz4h2WboxBU77qfx5kOJjkpfANXzh576D4hqbhi/by1tQXn
+         0aUg==
+X-Gm-Message-State: AOJu0YzTgbX9f73DUZKiIEcGz0uOBQlcuimgOrr/q/C5SwQUNHlD73ls
+	Fe6dd9KhXh1jD646hVpplcadFTMU8WrwUxI8J4JUZx9G4nl2mLXwzAsagiMb7g==
+X-Gm-Gg: AR+sD111SqfN3ZfhSn8AFge4ACKhIIeny5TGRqR9mfSjXn6y7s6lUnP+yeS8VfcaI9i
+	bt9EbbuYkB8olUSRxiGsZEqdgh1TSGBKl7hyQ4Lxn6B3b5F6PMXcemDFsuCdYP2fQTwLi/kWsXV
+	DzJ3n91fecn5v2fo+9GbMcbV5L+5aTcY5ErkGaEsJTdk8Q2sPh2irY76a8+J9jDhLCrtQecqZQd
+	jTIb5ejGBGeXsPh6p9lLJ9sZTfHokqNO43OMxmi+1Vcn2Vb6nGfr5Ep6VxprYz0JOozzdiKWkZ2
+	gcJeLkQ33aEx4UAwUGO1CFY6lCkB5Rd9JqEnLHqkAnbpIhJH11iwi8AJGhpcp4m1t2FRfw5dsnM
+	NaRKMRFeUi+vY1MuEA/Y1wIt6TM/og2ep6CuvX/Vei3TmprMKgsmrI4f5TzazPPr1uUn4HldTmp
+	8nQjXnDKIENwYIvd9c3PucRbgxhjaJ2F8mNoxCDuI6ArZNH0TLN5sHWZKik5QcPXHsYg==
+X-Received: by 2002:a05:6a00:1784:b0:84e:23f7:1188 with SMTP id d2e1a72fcca58-84f2e01077fmr9386909b3a.28.1785954669568;
+        Wed, 05 Aug 2026 11:31:09 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.220.200])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38fee06b438sm5325431a91.16.2026.08.05.11.31.11
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84f2e2c41besm1310508b3a.6.2026.08.05.11.31.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2026 11:31:12 -0700 (PDT)
-Message-Id: <f0b1e13979bc41e10ac9fe7b042d8d4c1191c411.1785954661.git.gitgitgadget@gmail.com>
+        Wed, 05 Aug 2026 11:31:08 -0700 (PDT)
+Message-Id: <711671c3abac64d9bb0872a69d45df4f103afc66.1785954661.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2179.v2.git.1785954661.gitgitgadget@gmail.com>
 References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
 	<pull.2179.v2.git.1785954661.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 05 Aug 2026 18:30:55 +0000
-Subject: [PATCH v2 06/11] compat/pread: check initial lseek for errors
+Date: Wed, 05 Aug 2026 18:30:53 +0000
+Subject: [PATCH v2 04/11] reftable tests: check
+ reftable_table_init_ref_iterator() return
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,39 +82,54 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-git_pread() saves the current file offset via lseek(fd, 0,
-SEEK_CUR) and later restores it. If the initial lseek fails
-(e.g., the fd is a pipe or otherwise non-seekable),
-current_offset is -1. This negative value is later passed to
-lseek(fd, -1, SEEK_SET) at line 16, which sets the file position
-to an unintended location (or fails with EINVAL on some
-platforms).
+test_reftable_table__seek_once() and test_reftable_table__reseek()
+both call reftable_table_init_ref_iterator() without checking its
+return value. This function returns an int error code (0 on
+success, negative on failure). Every other reftable function call
+in these same tests checks the return via cl_assert_equal_i() or
+cl_assert(), making this omission inconsistent.
 
-Check the initial lseek return value and return -1 immediately
-if it fails, consistent with the error handling for the other
-lseek calls in the same function.
+If the iterator initialization ever fails (e.g., due to a memory
+allocation failure in the reftable internals), the test would
+proceed to seek and read with an uninitialized iterator, producing
+misleading test results or crashes rather than a clear assertion
+failure.
+
+Check the return value via cl_assert_equal_i(ret, 0), consistent
+with the surrounding code.
 
 Pointed out by Coverity.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/pread.c | 2 ++
- 1 file changed, 2 insertions(+)
+ t/unit-tests/u-reftable-table.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/compat/pread.c b/compat/pread.c
-index 484e6d4c71..ac7d058cb8 100644
---- a/compat/pread.c
-+++ b/compat/pread.c
-@@ -7,6 +7,8 @@ ssize_t git_pread(int fd, void *buf, size_t count, off_t offset)
-         ssize_t rc;
+diff --git a/t/unit-tests/u-reftable-table.c b/t/unit-tests/u-reftable-table.c
+index fae478ee04..6f444f8cf9 100644
+--- a/t/unit-tests/u-reftable-table.c
++++ b/t/unit-tests/u-reftable-table.c
+@@ -29,7 +29,8 @@ void test_reftable_table__seek_once(void)
+ 	ret = reftable_table_new(&table, &source, "name");
+ 	cl_assert(!ret);
  
-         current_offset = lseek(fd, 0, SEEK_CUR);
-+	if (current_offset < 0)
-+		return -1;
+-	reftable_table_init_ref_iterator(table, &it);
++	ret = reftable_table_init_ref_iterator(table, &it);
++	cl_assert_equal_i(ret, 0);
+ 	ret = reftable_iterator_seek_ref(&it, "");
+ 	cl_assert(!ret);
+ 	ret = reftable_iterator_next_ref(&it, &ref);
+@@ -71,7 +72,8 @@ void test_reftable_table__reseek(void)
+ 	ret = reftable_table_new(&table, &source, "name");
+ 	cl_assert(!ret);
  
-         if (lseek(fd, offset, SEEK_SET) < 0)
-                 return -1;
+-	reftable_table_init_ref_iterator(table, &it);
++	ret = reftable_table_init_ref_iterator(table, &it);
++	cl_assert_equal_i(ret, 0);
+ 
+ 	for (size_t i = 0; i < 5; i++) {
+ 		ret = reftable_iterator_seek_ref(&it, "");
 -- 
 gitgitgadget
 
