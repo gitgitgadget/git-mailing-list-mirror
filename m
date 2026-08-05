@@ -1,123 +1,145 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A4A3AF656
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 11:36:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BE23F6C59
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 11:39:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785929789; cv=pass; b=TYtm+1zuLpZbQ4fxQnj8PK0QPQOSQHjpkEfrcvhKPtOJC77H8Zt3zIe4qgs+iDFwwz0UDZv7EQqji8N+unZjpI3q93tR4oPOw0Yyv8zV6W9UxJDoq/VdrGEiZlJLhxkAPMV4U1y5+an1zeyYc7IR3yy282L3Vx+WzNiP7eMUG1M=
+	t=1785929979; cv=pass; b=DdrVArDyss0f4m7Xh1SEpzPVhVyJZ3prHNBx+Zklwgex86P88GGpwwl78FI+E+rDwXhuBiJDgxiZkWSDvSqQ8asmjiSNzpmF5bfkl1Ix2GqLmIIKU1486SkGLE1lohVBbaXzlZzWUYKNpPEVameuOFo82gMnSjGWSlkRS1Xh2ZY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785929789; c=relaxed/simple;
-	bh=R9sIoH7D92Lw91sqH67DDTytjb85gSiZDGfY5uHxkGc=;
+	s=arc-20240116; t=1785929979; c=relaxed/simple;
+	bh=audiDQRqpA2gCzSrgUsFtRs3n7X1xYMAFgpkZ4Or2xU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ksPtllht+Z1uP1eJV3ouaj+0UfHyM8pkxwpyMbrTczluBgE5oRxCPf4uhV9khpmjrn4XzpOXmb80lkwfwhxAWfeqmf3JOYI94VfLvM89nDVQ6fiXxquj0HTV6oUmaTJL1zeFHYFXqFBlKeNAdUGs227/MMC3vR1DWio3Z0Zl/6s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HJl5+o8b; arc=pass smtp.client-ip=209.85.214.176
+	 To:Cc:Content-Type; b=WBk1CMLFftQVvBOUyYuMLeLPX+PeaW4Fex5bM/uPXgR/5NMPVzkinN+8vxOCDH7bVZuo3BjBRnY/3dSZ/LQbxRkRepiGP21ESnrPAtLKh/xIia4YLLuKea46BUrXKXqOldMKNhp9dOYlNti8UYWtpLhT01C9ARSYygY7jqIGquY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TaoI9LpO; arc=pass smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HJl5+o8b"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2ccf2360620so8554085ad.3
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 04:36:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785929787; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TaoI9LpO"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38de840f2f0so651746a91.0
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 04:39:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785929978; cv=none;
         d=google.com; s=arc-20260327;
-        b=L0dyoKlwkktSUZOmcgRmXvGVw2tPDTIT5rSSV6YmYBy+0mVe4giRTPkYWIzIfHIb2v
-         bQ2vVAo+ZR12uSg/naTbCpYIf4Qd8hz7ghDHpNR4JkwTagUXOrKUjCbp6ORGwIR8+aTq
-         zFAigf6iiLrCifnJnoqyhw+hyBqCp1Tg4Hb0/ifKldZK540cnmFMiaSnft7CuCEPCgRF
-         6xlnfqZJesNSXCYTHAYdLpY8ChjKm9EcguB4dheFarsZV6CmJvBfEebfIVqEhz3Ro2nJ
-         97ZsmHYsXrztMMF9h6fDIoIbO0svyjV2u5nfkek8yvthO6vtdIuhG8RkXUjpPhOCRuMl
-         QlhA==
+        b=qvm7UciatOdfyalCaoe7vm5MPzEpCm+OmYjJYcGBKADQO/PXNi7olhh8kICrt8S7mE
+         b/dEURWALbSgLJ5mxIXovC/8Tk31irhiL9lkea0bo7BvcP9t7d9NuUrRxhaWeH2+v2uM
+         E2WtKVROJqgly+g9m35rEMQLRycyddPTSvaHoG7+aUbMAfPAqz5ZftQWAFl0MGZJ6FgI
+         elo3OUOavTGNpem13HzH67LLemHpe+mfpzW1pWZQ6ZbOqEjuF4xZEdazrY1veEedLLZV
+         ag0DjEdhhkEZj+kp8c5sCcxzveJCk5kWkxOll3u9+zEAMOWo5fxDF0g8dqpiUSlJ13X0
+         gscA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=vr6UJXkoD7LkCySBjD4HmwtggoHaB+096Plg8WMp7e8=;
-        fh=u2MGwot6xBr9jRNju3lkljFVgwsgA5VIU0PfIkmnFxc=;
-        b=Ax4N5UE/TqcoZu7ClchUxDEq0rY9VXA3sN1GO5UOpIveLJ6V+Gy6Z7+2Mj6QtMtIVy
-         dSlF8C+vGcCNWGraKmvuc3bzUfHMP/U2UnKFKNSmlDr1DRjftQ+IISI1gQdVg05H0RJe
-         yBBNUZ8J8KulWWt9OZ5++jxw2rmHwiR6PJjlUgOi4MoOWRsh3DI3ntKTO1PprUColawT
-         IFuP4U+oBK/9j4Qh8UQzwKcaBdnFEqH6/0wX0e1355z+8FGBLGTN+EkGgN6FFF9VKM81
-         4UtC2IP7PlKexeFBNNHy8bgCs/YeRoSDgisNAn4gI4CPKNdJCWPBkxXRKXGWG62IKxhq
-         PPqg==;
+        bh=audiDQRqpA2gCzSrgUsFtRs3n7X1xYMAFgpkZ4Or2xU=;
+        fh=92Tkvip5+Uv0xznDncd2nXUB2I+db6hkkkTbNZurL4E=;
+        b=jbQbTPSZNENZsd6d566erZnUJ6rzPt3aBbV6P/PsEUu0cloECvlEw5/0rZVN8y08AN
+         w63efWVBme0qJ3saBxcpzcytpiYQdGf3zSMDtVBQd0VSHoSsw0v/asxq21AheDLuSynd
+         tuTjwrdfksP3zlQsOzpqXdiho4sZe2KA8Pw46FzKJMRdEpvL0A98XiuqUOnmVYs72dK8
+         aUQTq6HOzy7oANPe2/CQceXbkiZ1NtyLRIrUWsXPmngEqT0bQu8Wn8KmCjFi1EOuLXCZ
+         a7jTkddaZO3qgw34mWbp5NvYLBkjP7IyJx59MDxoxzrt9968Jwg4KDYcuZFN+IKUgayc
+         dgDQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785929787; x=1786534587; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785929978; x=1786534778; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=vr6UJXkoD7LkCySBjD4HmwtggoHaB+096Plg8WMp7e8=;
-        b=HJl5+o8bGw2NYVioKlCpBJuru0ldx3HQR1kdj2ZIOa1zoZ3dB3SqnGw1QwxDcjAEDR
-         UVuU4uOtuMPZHpDhnur/7vGHQ0bKt0ckRmUsqghrqFVmew9ke2RyXU7Lphg3tq7asK+d
-         rRnxIxnmDY6RjTVQBNggdkoHDkzGC583dy8enFxO4O8sowoyxytisoIIRviTBrMAawcy
-         hV8+ITje7bYNNkxJBiiN1Vh+46vAF/sicjGhyjIMD4Q2/AxqWtUW5dOK4sUN58UGm7Ur
-         aectn5PIlLlXyuM/NreLwhv/HH8QRCpaob7oyOlQExRcDPtnavXqZoNoDYC/VXTYMgLP
-         WTnA==
+        bh=audiDQRqpA2gCzSrgUsFtRs3n7X1xYMAFgpkZ4Or2xU=;
+        b=TaoI9LpOFh4/ORKz90isMbPBecIkkfWKnir0Hp/e0IN5IggXucv9r70l3crtDkv7Z/
+         u80zwfT0rlpTxoP7YvVHjLUsZYNd239PUi9KFlBrDQ4cuUxyo1mDqzXpj+4XUMS7Jih9
+         7ib6U1VnJfQ5hjcSJRX+QD/9vT36lU3dKw0v5isxAlDiJ93ti147UAtPFLG4cx6I6KNW
+         qPSGK03sOoe9E0TMTISx5Ob+SMfUytj15/MZXhxXffP/SJXko6ap4sTGX8xRuJR1wh75
+         YtVULJDIb6jsCvPIy8BcUqX1bb4BaMCz13ROYbsl/syvQcrg6RFR/2slRLZv9rlhTtNq
+         R81Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785929787; x=1786534587;
+        d=1e100.net; s=20251104; t=1785929978; x=1786534778;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=vr6UJXkoD7LkCySBjD4HmwtggoHaB+096Plg8WMp7e8=;
-        b=c5Hpfg+wAiHYcXLgB95pOo8rGZRxqd/84+JgO/9k+/jZAOGj5GvuLGbOAKFTyF4mbh
-         M/4Ql56uL8hXA/H4Xq6l68cjQa1+gTly+EN7qzFFXVYFi7apN0uug0STPcY7N5++9Amd
-         +PfqYXPDRYeWPXYFKle6luW6FXPua5RnENZIv9PctVL6bbVfcxhRoIsBGTQ74lZJyYeu
-         1MN1QNgjLE9HjeVqwi3iPIp96mV0+5IJIZItwPrFPsNN0Qex+h7ANRGn2BGMK/LrZLSe
-         7c6Bkn2dXUCbc2rYG7zkBjcx5W+cPWX3W7a/L/ZbuH1ed5XgFENu1ZjknAA87EOpBjhN
-         HvHQ==
-X-Forwarded-Encrypted: i=1; AHgh+RrmdXRudbnLV1offUYhwfmgV4hnLDl/JwOOTPr5I9K10NJWqcw/IYNnul3mHEKsYoAnmwU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwoyiA9BdG9oI1JL9aAOyXIuBc1PPd/aLi0Jjv6Saq7rcs8I8OE
-	MojY/H/oMI5HZN9kX4Rztb2M8rFkZB6KCITVZs5vyvVEv+Fn9hDd0F0W15h6HVGul9Tjml3aFio
-	pLsXquGVpe7Kgv+cnx2fuh8y1y1cov+gLuCRJ2Ng=
-X-Gm-Gg: AR+sD12IcB+MHaJgxgH9X8/5L3E2ZN7Ok4OzW23MmRhgy2NEVYMF9zdAaY8JSsnEMlH
-	57dvexRRqFsYWzzYAKDyFL0DsbTi0Ci0hU8s6LNa4Ln/nSmndTJFSr2G3pcZxiL85zvVBMDiR65
-	jVgoJ3fTykLsALCT8AtCKhvbiu47JSV7S3gx6hz25TRACk5GJqi2SZKpiVp0Oa+4GYOhZjAoNJ+
-	OjEW+NkQoZdyKPY9hNFR8BX99gg/6bXvfoBhx7IGs97t0XQmDkizqOafCeer54nFJKWZ4Y3I535
-	Pl4NDfjccF9lIo+NVPNFU/9Py2K5jtW3rTw+0olrOFHprh7bZyG4W+o6Md9WZFLA1rgC+TMKmDU
-	XqZFKH6supsc8UxUSx5d6FFxNr3nnMQPitGcB/zELCiuletgTLSVMW5JgMp81PzrvTFR6CZEOSq
-	DY+f+aZM5pMm3yU/BghA==
-X-Received: by 2002:a17:903:2bcc:b0:2b2:67ca:5ff9 with SMTP id
- d9443c01a7336-2d0ca159fd7mr72882245ad.0.1785929786469; Wed, 05 Aug 2026
- 04:36:26 -0700 (PDT)
+        bh=audiDQRqpA2gCzSrgUsFtRs3n7X1xYMAFgpkZ4Or2xU=;
+        b=fnZff4mOA5zFV4sQaFVyOJpWO+ewmdQRffFPVnAKu++dnUzO8RybyCLOS1yVWMj3zg
+         9qul734fu2gBD4k5GcqFSy4LSC5tXuDDldsAG/Vjh7YcuXssEVisq26HTFTlEtCmkFI6
+         K0TO5JBiN7/28R1Sxd+GL+Vr6kczSyoDrk4kGtAbzyM33N9YJ7xb6jbCliailtae8CGI
+         z7fYBMAyFs4PuIwCWbMvtZrAF1QfjsA3W6ufnbty4tLPokicFZpdJCXJ8fYywk93M+ln
+         rlOflLrf+lYqX7xzpcb79FHyhcJcr5jLo45+05k+w1fdlspkUXJ+01tBPJhKsJ1C6gxa
+         YYzQ==
+X-Gm-Message-State: AOJu0YwijT0dkMgfqfN6Nl2ZkEnHDy1TZHvuq7jX2ZIX0ESRKcK+grUA
+	HLp8odlnFmD3Uyt0e+faT46XOExXTJJmX7iGmfAHOv/iTAHyOifg0A/JFqGQF98fdAZChm6bIej
+	FbjYM38Fe0dZrvmQIIilUsdgKbUROFuU=
+X-Gm-Gg: AR+sD11bHdoF3NXA70bQyw+DaYQxLf9svCGFvidojHBpcjEM/f+HRCtpVYMupWUzobe
+	M/QbmbEMn9rd591BfEOE2BwuDitRWZ8OKTRm/pKUsyjcOnO27O+nBGEcGWERhHVl66+IId9ZHL6
+	4ykf+TvFK+MFHV/dmUnNB+bktAuytNGqZVF5obLNuJpEdeaLvAEWJP22pIodsekj2tPo4mG/X7E
+	5JFLhem3wtpiw9GNOaasyeACWsYRNcHqxPvOZcEpSKTwxImjC+tIXUV16gXiD6D+CxmcVsErALo
+	A93FiYNhdGp+hi8uVE17UDJ+tnOEkZug6xDQzFYs1pYBx4SadfQAkvHTFQ6nk34AnKM/PKD/nVZ
+	NoOoxlh1sWPoXlqgDf+LV1cmqvbXAkeVf0NpETWGmRkgTviCucpgi2skEk4rPQnabQ4ItxKB+rG
+	yaucY4g5temWvkGNkFSw==
+X-Received: by 2002:a17:90b:2248:b0:38d:adae:4866 with SMTP id
+ 98e67ed59e1d1-3903c63c51dmr5119768a91.21.1785929977872; Wed, 05 Aug 2026
+ 04:39:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <017e01dd2441$476839f0$d638add0$@nexbridge.com> <20260805045026.GA972736@coredump.intra.peff.net>
-In-Reply-To: <20260805045026.GA972736@coredump.intra.peff.net>
+References: <CALnO6CAN1=dgRsYjABfa3CJkGnvb139EcrzS9EnX43i3szOgtQ@mail.gmail.com>
+ <anLXz2vos4zbIciW@pks.im>
+In-Reply-To: <anLXz2vos4zbIciW@pks.im>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 5 Aug 2026 07:36:15 -0400
-X-Gm-Features: AUfX_mwG9SpK_WE1lha5c3-vU9O_U7foBSfBFHRFy3upwgPiSgqQAEtLq_2ZHwA
-Message-ID: <CALnO6CAhVzptUYpoHU93y5Sho3cPJgVbT81bb0ChugNCE9zsTw@mail.gmail.com>
-Subject: Re: Question on textconv
-To: Jeff King <peff@peff.net>
-Cc: rsbecker@nexbridge.com, git@vger.kernel.org
+Date: Wed, 5 Aug 2026 07:39:25 -0400
+X-Gm-Features: AUfX_mwbTRP6-14f-oNAdbb8buTE0QNs0nlJXZFNHa5mwqlBXnGT_mNQ33itpWc
+Message-ID: <CALnO6CDtihFytS1dhfZPDA7jUL3bvAt=zYOH9Wi=naEoC58B1Q@mail.gmail.com>
+Subject: Re: git-replay/git-history lose notes
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 5, 2026 at 12:50=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+On Wed, Aug 5, 2026 at 2:27=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
 >
-> On Tue, Aug 04, 2026 at 02:44:22PM -0400, rsbecker@nexbridge.com wrote:
+> Hi,
 >
-> > The supplied file going to the textconv program looks like
-> > /tmp/git-blob-GFtIhK/simple
-> > and is always empty regardless of the file contents.
+> On Tue, Aug 04, 2026 at 04:06:38PM -0400, D. Ben Knoble wrote:
+> > Hi all,
+> >
+> > I don't think this has been reported or discussed yet, though my
+> > apologies if my search skills just didn't find it.
+> >
+> > It looks like git-replay and git-history will drop notes (or rather,
+> > not carry them over) when rewriting history. I've seen this both with
+> > "git replay --onto=3D=E2=80=A6 =E2=80=A6" and "git history fixup" recen=
+tly, though I
+> > suspect it affects all the modes.
+[snip]
 >
-> I can't reproduce the problem here, even for files with embedded NULs.
+> This somehow rings a bell -- wasn't there a recent discussion about this
+> on the mailing list somewhere? I might be confusing it with a different
+> command though that's loosing notes.
 
-Yeah, same:
+Yeah, that rings a bell for me, too. A peculiar rebase bug, I think?
 
-    dd if=3D/dev/zero of=3Dfile count=3D1
-    echo 'file diff=3Ddebug' >.gitattributes
-    git config diff.debug.textconv 'echo >&2 "got $*"; xxd'
+> > Are notes out of scope for replay and history, or is this just a
+> > "nobody's gotten around to it yet"?
+>
+> For git-replay(1) I'm not too sure, as I consider that command to be
+> part of plumbing. But git-history(1) is a user-facing command, and
+> because of that I think it should handle notes automatically for the
+> user.
 
-shows (with "git add --intent-to-add file; git diff file") the xxd
-dump of zeros from the working tree. Then
+I can't speak for replay, although I do use it as a convenient "rebase
+a bunch of local branches that have conflicts without checking each
+one out"=E2=80=A6 but the history part makes sense to me.
 
-    git commit file -mwip
-    dd if=3D/dev/zero of=3Dfile count=3D2
-    git diff file
+> So for me at least it's more of a "nobody's gotten around to it yet"
+> scenario. I've created an issue in our GitLab issue tracker so that we
+> can maybe pick this up in the next release cycle. But I won't complain
+> if anybody beats us to it :)
+>
+> Thanks!
 
-shows a diff between a temp file and the working tree (but still
-correctly showing the new block of zeros).
+Thank you!
+
+--=20
+D. Ben Knoble
