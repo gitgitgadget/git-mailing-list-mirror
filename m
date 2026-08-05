@@ -1,71 +1,71 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E8F38BF9C
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 18:31:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F041A3D3D19
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 18:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785954666; cv=none; b=oo47gDJ42WrQ9rf7vHjLksirIfwyWZP4gh3wkKOHDCS7Pvd7yP0jyF9MLAue87zdzEVAcZiQnWI78Mk11tR3nyRvcCe6uH1SLzx5YGeCUQAcHPvryPWnKYTtnaauUWTeSI4FVyhvxqMnMbfbO3XZfW7YUhZTW9ExRzVfXAfcBhE=
+	t=1785954668; cv=none; b=nY08GsT6U2vnXjh+xd+uRsqDNRBoa5CxtiGZeSMqzlNUBpMIcgKh/u445QRhJDvxzy+h5eb73brsr/C0RGwGdcTeRznUrk0etHjOtxdnPYXNW3b8lQlE4FZXna9dFGtaeGoFlodX7D51iJkctCfu2D0+WQmn9Ysv9sm8A7Eh7dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785954666; c=relaxed/simple;
-	bh=hmSbXH2EWUKB9j1xDAwuEwUIYytbLmXsmJidgaGXjgs=;
+	s=arc-20240116; t=1785954668; c=relaxed/simple;
+	bh=hBcXB4/MZ2qiandxi0tb5lmXZyTUNl0HN3iRN+0u4o8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=TrQR30b5P2sIWJXToq2PwxDeXaYc0u9xCMBoIPo4PsnZx8vbR+YjhSbXn8Me82hguW438xrewtog3bJCebtHjaKmhc0fMyv/j2ipU0YUIjSUeRjff0gT7tXpqVHMBC+UndhDhr4cTbcOiTMsW95tm5WOYsrdhp7uWqqAK7V8qv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mAQfIotC; arc=none smtp.client-ip=209.85.210.181
+	 MIME-Version:To:Cc; b=cFH9TuRlBNEbloz2fe9QrtpwQfOiqg3gsfUaXI7snFtbV1IjbE3RsXB2i9Rt2Tm99LdnKfhoYaJAPiGiP3bavzmliOL6pEu2hKmJ3ND3JW37DHmEIKWSxyGbYBQkK1y4i0sTR6WQgSicLB5iuxUumhXrtxDC5IBxoOG+d99SDkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PcsQI4NM; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mAQfIotC"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-84862b0d5aeso1635784b3a.2
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 11:31:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PcsQI4NM"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-381c51fde6bso1603678a91.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 11:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785954665; x=1786559465; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785954666; x=1786559466; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=v1F/2hg5z+y7GQEVMdvNrsCJfqGQgTDTAC1VrdddO8g=;
-        b=mAQfIotCHSd5shn+UnGe9Lr95pdXnuuhgRYxoQwjWOtZYnINlEk1AFjV5P4vxJAE9w
-         w93j/HD36L03K7Hdxk/616se6jpdWgDwD294nr4QTuqmQ1dTiQ9xxKdZx/z19y129Ez1
-         jbs92Br5gp+mmRIoEXc1m9ct2QDr5RAz3lAzZa4VVNans56nkNZTMxpmO51egl/tF+HM
-         6IiVK/cCsssdDt6C20q3oWv13v3aH9pUUyFi4DQKty98nNyyKJy2u6CMlATPRs8//y/W
-         lNY/oGJyvSFxzizQCGDCvXXx8gytB+tG5YO0Nhp6WKN6+fnlVjg10HEYGkVlFJSdKfbX
-         4BVg==
+        bh=1lmKKOy9qNJlPi0r5GCaMfQJVRWGA7FF3QlA6yt/sNw=;
+        b=PcsQI4NMqhbQke389tHRYkzeL8xaESzqOlaVtikaA+rGyMAEckrQIaQDuEuemU0vXU
+         bvehJIWNP1WVQYgS5/1hdo7k1ovFBUEiRdzzmedwDRroS21sI8c7RXxnFuJ+ByIsWxlK
+         8eCrtprqkRiXYbqLVl6PwG95R4+VxNUtRcml0HpJgShAh1jGdPz/hojqokEz6osXXndC
+         vs1J0QUSjv8o21PE4mKvXZ8Mam6dIIKQuKCdDamjaEUG05uLmoRwm+U2I+93Qehn4gci
+         RSPLnwGdGfxYv/ZKnWkS5jadNmLPW1J26LuGmYvFari/6hcN/OyG55Vi3Vtpmh/DByC3
+         GP1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785954665; x=1786559465;
+        d=1e100.net; s=20251104; t=1785954666; x=1786559466;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=v1F/2hg5z+y7GQEVMdvNrsCJfqGQgTDTAC1VrdddO8g=;
-        b=V/YLe+qfq1ZLaAc1h9QILSxy0QuYdXGl1sjOO0GYEjTfLPnwdhoifLWOuC2a7kwFGz
-         iEQFRuMzIQkzraMtMhSQHjGkTLrMAiO3BXNN0at2a3ALF9qxWLMvANe/p3rMYaTt+kgJ
-         74Dzs4buUp+T5CnbfyQmhsc3b1Nb/MZEpDowgS29eBnB9LTLdOvD6duJKgk0o/3CzIKY
-         e1uT0Od9GvYBuYtpIuVPBDs3VkfWFfV9p8sP+JHjpWyRYNaKGDXuQqXkOvVGwZJzXlbN
-         xYTUnUJ3nfclG0Cb7AXE1gqx2rRypc0Kxr4ICBAlGRkxSowG0vbYBjnx7px80zc7aVhx
-         QMfg==
-X-Gm-Message-State: AOJu0YyJYHrhVyy6xN1/DZ9TnJ51DN7qWd3XLHf+Dy6s6Dnn3qBaHxNV
-	3vzsT94u8eNZj/Flp2edNI55dduJKvTmM320NwXFJX8rPtjNpewkSN5I8OVf6A==
-X-Gm-Gg: AR+sD10H5lhhk4V9lJRdpDOQU6O1MBwMGEn3keANGTSD8rzn/4GAQh7B0bPvV1apg/6
-	tPc+t5rKC5WV+S0wGvNfZJ4xyHDRo2mh3B++nHgB4LIcTqb2/yD6eQFZgpGVdi5Ju3x+eR1Z2DN
-	Qzls0fsM2YbXHGEyXghigV8pM/Q0WU8X4E8eFWX6eNm3P0c5L7hfct9F+UVJPPgBU+/MNZgUCgC
-	Gkx56YsqCiJx+oi4v8p8wj1e19jiA87kPMwENLCb3eZXwvcCrddVN4pa5McwovH4zeZfG8eNzIA
-	NKPdUQYxuYwm4Xd/3nGd8x0dYAbCSJWwo+Ry2Y79sVp87xU+vcKeoRrkeIu8tLWA3bhZiiivasS
-	cTjW3UqzOEdSw1QXyKLBX1GMNTOyB8u/vVvq0Wio3TnhOGunjGu/QLI6Hgn6VtW6iy8k40kdBEI
-	nE2k3m5Bb+9Oxs/ecyJlaz/mqCqOlwWV0HnwKGsGFJgF4v9EUz4BFFve1Ky5loL9NiqQ==
-X-Received: by 2002:a05:6a00:4b09:b0:842:3a98:b34d with SMTP id d2e1a72fcca58-84f2e032626mr9764114b3a.31.1785954664485;
-        Wed, 05 Aug 2026 11:31:04 -0700 (PDT)
+        bh=1lmKKOy9qNJlPi0r5GCaMfQJVRWGA7FF3QlA6yt/sNw=;
+        b=MUm4OMTo4IQvqcQt56C6vXxeaClzE4oIsq/gW66E0/DD0JzpBUqXCA8qTZYa9sNl9K
+         Ls0nTesKgjJO9il1k4J/XIKEYbIbacJEFfYPrsbnn+niPs6P7WQ6IMtCO9uGS7ItEth/
+         hwbm0StClvWXzOsFC2UEvit4HbJ6Sgyqu22CGnmH+uVTwCxihA+mTOPREK8Xe3S2BTFw
+         ST3/13Uv8zuZcevhRFHioQcCn/hJwi9rdvERfMrBPqAzk1lyG075JbPfPl/lF5Mzq1iU
+         pbju6b/+XZNZufNpwZNTTHxY0y2Fk0LDt+Q0ppIIrdAsDQZgA6beMOPpaAZrnD6RrkhA
+         KPVg==
+X-Gm-Message-State: AOJu0YwBR8Sk26u/D+BaBBcBIPSazzPr4/t1B9Uc0gmV3UonNvw1rK4H
+	50fbNGykgdaG5gXfgxhlvozV5K8JCGSEj1f+G1T8tX1m6Dyne7/js9CV8y/yvA==
+X-Gm-Gg: AR+sD13q1wSbOLb9lbdyCWa8xyiAcSPVUXqeQfQ2hb7Mz63l+BRUq7SF9uqOdLVOXJ8
+	AHbJLZcFzAkJTSL5L66rzW+TnpgNJpmXOZ8asckAi2dxelI1WnWNmhDFxCAutYOxVCcWwDYrgO0
+	njXZcN5kanhMB7NuaSWeZtG/uxweTRCUGqhq9bFbXEecEsf0yA3vfSbKK+eOSeBkTU0ml3hnQXj
+	uIwstMgPwTVGrso1XkAr02eFPPnVVX39M1wOHtOXbQcrePVpI7yJF6HbGe6bhiCYQhsAJ4qTRBa
+	/zaOXAh6q5RQPfGcqVYfSaXJC5W1ap4J3udX3EephwsNypr7XrM3zl71JYs1hykz4Q1x6E4lYJe
+	LLx7dpNFSda6iKNAD8DlXewvfGs96Z5oB6UHgIppvUM8uxOgZYu5dCU3/+qEQJCXir+xKTIYIhO
+	wJITNt9+eYNUj6AhZY8VDUHyeD2HA7W0wcSrgbpGbyePfNwF52zYSCSxzMYlhuVeApZw==
+X-Received: by 2002:a17:90b:4d91:b0:38d:dfd1:7a8 with SMTP id 98e67ed59e1d1-3903c559592mr6916690a91.2.1785954666237;
+        Wed, 05 Aug 2026 11:31:06 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.220.200])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84f2e2bff03sm1293080b3a.3.2026.08.05.11.31.03
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3903d2f9a9fsm2126092a91.1.2026.08.05.11.31.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2026 11:31:03 -0700 (PDT)
-Message-Id: <e653255de19decfe45d4ef8d3277aaf69c44c391.1785954661.git.gitgitgadget@gmail.com>
+        Wed, 05 Aug 2026 11:31:05 -0700 (PDT)
+Message-Id: <0692704d45060a62579b50dd7a2f07da04f435c8.1785954661.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2179.v2.git.1785954661.gitgitgadget@gmail.com>
 References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
 	<pull.2179.v2.git.1785954661.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 05 Aug 2026 18:30:50 +0000
-Subject: [PATCH v2 01/11] http: die on curl_easy_duphandle failure in
- get_active_slot
+Date: Wed, 05 Aug 2026 18:30:51 +0000
+Subject: [PATCH v2 02/11] config: propagate launch_editor() failure in
+ show_editor()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,47 +82,49 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-get_active_slot() duplicates the default curl handle via
-curl_easy_duphandle() to create a per-slot session handle. The
-return value is stored directly in slot->curl without checking
-for NULL. curl_easy_duphandle() can return NULL when memory
-allocation fails internally, and the libcurl documentation
-explicitly states this possibility.
+show_editor() calls launch_editor() to open the user's editor on
+the configuration file, but discards the return value and
+unconditionally returns 0 (success). When the editor fails to
+launch (e.g., $EDITOR is not found, or the editor exits with a
+nonzero status), the caller receives no indication that anything
+went wrong.
 
-When this happens, slot->curl is NULL and the very next operation
-(curl_easy_setopt on line 1632 for CURLOPT_COOKIEFILE) passes
-NULL as the curl handle, which is undefined behavior in libcurl
-and typically crashes.
+This affects "git config edit" and "git config --edit": the
+command silently succeeds even when the editor could not be
+started. In contrast, other editor-launching paths in git (such
+as "git commit" and "git rebase --edit-todo") properly propagate
+editor failures and exit with an error.
 
-Every HTTP operation in git goes through get_active_slot(), so
-this affects all remote-https, remote-http, and HTTP-based
-operations (clone, fetch, push over HTTP, bundle-uri downloads).
-
-Add a NULL check and die() with a clear message. There is no
-reasonable recovery from a failed handle duplication: the process
-is out of memory and cannot perform any HTTP operation.
+Check the return value and propagate the failure by returning -1.
+The two callers (cmd_config_edit at line 1315 and the legacy
+cmd_config at line 1478) both propagate this return to
+handle_builtin, which translates negative returns into an error
+exit.
 
 Pointed out by Coverity.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- http.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/config.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/http.c b/http.c
-index b4e7b8d00b..8f1d6d1f56 100644
---- a/http.c
-+++ b/http.c
-@@ -1608,6 +1608,8 @@ struct active_request_slot *get_active_slot(void)
- 
- 	if (!slot->curl) {
- 		slot->curl = curl_easy_duphandle(curl_default);
-+		if (!slot->curl)
-+			die("curl_easy_duphandle failed");
- 		curl_session_count++;
+diff --git a/builtin/config.c b/builtin/config.c
+index 8d8ec0beea..1307fdb0d6 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -1313,7 +1313,10 @@ static int show_editor(struct config_location_options *opts)
+ 		else if (errno != EEXIST)
+ 			die_errno(_("cannot create configuration file %s"), config_file);
  	}
+-	launch_editor(config_file, NULL, NULL);
++	if (launch_editor(config_file, NULL, NULL)) {
++		free(config_file);
++		return -1;
++	}
+ 	free(config_file);
  
+ 	return 0;
 -- 
 gitgitgadget
 
