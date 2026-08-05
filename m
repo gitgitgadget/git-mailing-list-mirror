@@ -1,118 +1,145 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BC53E4C69
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 09:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785920436; cv=none; b=SwrAzbSPW/X7hodnafYZ0u6kO9BiDKnwYFLRqZapAe/tgQrD6Wdlu2RXp29JYqxOr7ts+AIFDKXoB5EGHSPE8lyc8gD+d/I15GCjgNSSM/loy/Yd3ceAIpjxYQJ/bWL/vcvrlQymTmX9+CGSeymRZeRfYeaYCn/RgdEvOPzUUa4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785920436; c=relaxed/simple;
-	bh=NPgwZ7dj0M3sAJjYXnbUnhkiFG7MD8RD82AkcyiRY68=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hqIG4uImdjeXI6+Lbe3b8Tpo4Vt51AbPnDR4G7YyC4V+lpJFhEjTSlUgIDEYTKcX+712bPQpsPScUHm4i+KqIcY88QMcLCKdYqBfE8UDJvOYhEtiqkQ7bNP0hJoq8RhjSpUD0AemS/QvPaEJ9P4npHALkunf5qPWASKsnO8jZBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Vwvevo+o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZVALUi6j; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E313F6600
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 09:06:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785920787; cv=pass; b=ZFuZEg/XfVjO180fnLZXYAwUU270J9pnkzOoKb7XkRyCOkXZcF1pq/NQeNjNJRcDwfoEJoHBSvOKtoIRrGXDKdF5eTqodYgh1bEhE304MsmStWFEo9fPq07LG2jvk77XPcFFXn0WppWuRmmZjgMDMsH0PnqjKm21MhKvnkSWgWI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785920787; c=relaxed/simple;
+	bh=k3HOr9YOide4pHL6q+kXXpOk98Qr8uazTCz/dXRD+zM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=iqUUpPBADx8rFqeeOspGPOwlrc8x9+Ss3I8S58yQH0B1dKPNY8htUTiNhXwrCUViNKnnFURXT1MlBwjQegY7DFhkpwXylE2cpQZLxP5RhCcgazfXrsjP2j5HqErBC+Rj4V5iRK+FweYRIzotqmVoxH0hKSMPN9egxywaJPSWxQ8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J1zV7dDh; arc=pass smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Vwvevo+o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZVALUi6j"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6121EEC01E5;
-	Wed,  5 Aug 2026 05:00:30 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 05 Aug 2026 05:00:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1785920430; x=1786006830; bh=zUBMWn9lgA
-	6TIYPBy2mL6THku2WLVTpL4P4OrMoZyjM=; b=Vwvevo+oKzd0sP618RFX/yFVPL
-	st+LfLUw7mJmj9J3C8kHSj6of+eb8Y4z1MKyovKt3HfIRKLhD4jTlK3Hz5hHx+qw
-	XMWoNDggoEjCgzO3omnSkkiJzwR7kZD7wdLEfj8GwHmuio6m859lBWzrFB7wSdlP
-	ogcNGairVFp+7xtQq0SrDkgJtDAq/8op2qeHVbWErX+KsISJKETGkxCAfrhURW6I
-	bdHC2GIk1vVd0msSPO0cla4GaoikmC3IXqxiohjerfMEEuQCw5nY1pY/4498L/Yf
-	TRW0y9x2Y+fbgAezROl39Ct13EzZD1OxgMvz4yuWa/T7l67LJ8L0jFkmVuiA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785920430; x=1786006830; bh=zUBMWn9lgA6TIYPBy2mL6THku2WLVTpL4P4
-	OrMoZyjM=; b=ZVALUi6j6sF1HC2Qnh0PeeSRk7gauqKDN54a9LV/eMvJUeKK9l1
-	IVUT/FEhfAsWK66R3bDgSKU5Fb9gJ7sZ8lAdsQhxm7KbBihDu6kJMki44NW71pge
-	y3+HOG1Q4o8EzXyWQlvqaUGvyzpbszILIh06ipJHSiX8cAHPaw9627wWrITupobU
-	cxrMdT3wIXbR2uUqsq/M4sxE63b0EILyKSZp7ujkvxvMGNcAFmSKbe33Tskqxagl
-	FdIqvUbjRwXh3pflJFxJpF1NgaY7KNLiA1hNfuRCy9K20mQ4Q44xzpyZESx8QZEP
-	zwPtEtmvt6zEe7mVsZXZH0o+50u1tqELndg==
-X-ME-Sender: <xms:rvtyarflvewMC_dNWIK4K-AosMLVUOBsrTiYqlpZIvuRBAbiHBxXPw>
-    <xme:rvtyaooww5Em7PfQlpRwZWJpsPr98Ya4PUdSQ7kmqoR_AQsDlai2Xjjjrl57tmnuZ
-    AW1FzhTbC_9T3uggMtYgZGWSL49x9E97LssaxgXIFONZvWOKvpoLsE>
-X-ME-Received: <xmr:rvtyah6vbQ26VdSBJ2IJXNAHcSvPu2j3x15zSr_RMHqCKDDDrbxJ9wcIWVMiWcOPSbTSpEKf_5VUDZqtXOkJ8DObI_iArLnc8KNqdHHBnw>
-X-ME-Proxy-Cause: dmFkZTF+IPhItshHZ0zAxRIjt3YU4piPXwLZJ/C/68pur23DBZ8NFpmOD2vCwu4qIzxZtN
-    4QbolidCTPlTC6J0gwh/82sUBG5L/CA0gp9XE4OoDAkKPtFTkFoWbWRAhJXBnDvUH543zD
-    qgEHq8AYI7ET5Rd6zltVvWzZU3Riw7/vhixp+AuHQC3HlFEtt5g8/mBxMTMlpjtvYk6GNe
-    sem6OqXpoBUfqyrQFKajtmdI484bNuHt25PxvVKd3/nN0bBa5/gxq0kCY4sEkcx0X2mfxJ
-    JUcbdjZcr8AapYikJRi6LkliCGXv+EoouDfkFbdp5sZDRMxbgrPV8g2nDjMoQciNssR4pv
-    kqJjWBeu++1W5AjDvY5hebCj/rbonlaQHnjrvpoKGHewYMTZA/Yw0HPeV4ktftoYebFjcF
-    x06pK2ZCLI4Pa7GGSbjbsiDD3peZfTBpz4VNcb1A0tWlPR20RIsC2aRl4OI6Q9EPfGPzHl
-    PFBhlnEWvfidjPTdt7VJyE4ve+fzNQtJTY+ql84trekwQ00gtq4+UWw1luuncOTqTLpPzR
-    d3Ley8ydbKNAL9f6qyh7V2VadsyeIoub098hwrU73EtKFL1Qzt/c+1QTLg40f9xtmcbsj+
-    E9e0ZET0O1R84fcTsk14gOrGtZnrne5K4ZvA59hTdeoHBFlhfvxEvtrAGbHg
-X-ME-Proxy: <xmx:rvtyamoHe585Eh7OXo7QforwgkxdkXS2YjxVFV5S3Ambt43LD6-L6Q>
-    <xmx:rvtyarjfJJyBbNpsusA6uGTfiL9V1qMZG7MYT8qzr-iQsax6_R9aqw>
-    <xmx:rvtyaoIS5HT0yZcU_jo9FBO6NXyPLHpP2gvRR6g7oF1guD34mH7XWA>
-    <xmx:rvtyajC3Z-eBnyfIqGkczIwOAqzmXG_Oi0GmZKX8Aw9elnHDLm_AMw>
-    <xmx:rvtyajmy2rqlA0F8elI7slZV-vVDV2RBwwgdWaunXSBrVaCKqIgO13LN>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Aug 2026 05:00:29 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c0d5db46 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Aug 2026 09:00:27 +0000 (UTC)
-Date: Wed, 5 Aug 2026 11:00:24 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Chungmin Lee <chungmin@chungminlee.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] regexec: work around macOS TRE leak on invalid UTF-8
-Message-ID: <anL7qL2-4h8ZlLcg@pks.im>
-References: <20260722053127.37244-1-chungmin@chungminlee.com>
- <20260728052538.12429-1-chungmin@chungminlee.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J1zV7dDh"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6a097f5ab95so1041288a12.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 02:06:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785920777; cv=none;
+        d=google.com; s=arc-20260327;
+        b=QLsJXcPkp+u0bU7OdWf1Wd98vHFSgUbYy9wQ8w/UwwbKQTvfHcKJk1lEcEAoyrNlBz
+         EXqR/f2KDkun/WzLqJyR/sFv/zm7B1lu1R2MBAQ9zJDA11g+dac9iajJaPzZjqLSSJc/
+         JfXRPBgiHDp7UnWfp8bO5C/0im3o70NK6AJtXnAhxdaJ5YBGOQXtMdxk/SI3q9QHBHPT
+         wPAcxreTsV5ErZIqY0l3HiFE5XY2yqfzYHeFPE710+10CPFxMVKL9b/zMVxwiMPrF2G5
+         sr+4VnfUpPA5ghMhOgr7mdy7oIm8Xe2eKgZjUIwqr3WBtkAMYLZWIqubfE5y7TVUEO8z
+         jRpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=k3HOr9YOide4pHL6q+kXXpOk98Qr8uazTCz/dXRD+zM=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=dvaVHCVEWAcyO8Cfe3JgrJw5lpR5TtKcGLuZxnlb1fD94dFqu4AKl+EgOedyL8zsOm
+         c0PRYcz23sZwvmE+MA5uZ47iFununnstCwnu6BIiy9Z9jBlY+LVUqjN4njJrfo7tLf5y
+         hgW4SCtNsIvmgNhiqZXVWqsQ5oZAe6tEyjTv1ItF2Vw4e3mp90f0f+5ThjGEuBHcexW0
+         kCJ3GGr0aIbvd0xTENNqVSETHvs3KdIukB2X5CboNrSgOwQtJcfLzg93wyTQOZNgRXpR
+         D19cHUT6nZV9KuoL6TEQ40tc8ErgdDUJYarTSnojg0NLj2oBpqHzqlB2Xt9jnnJ+qxtF
+         Lf2A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785920777; x=1786525577; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=k3HOr9YOide4pHL6q+kXXpOk98Qr8uazTCz/dXRD+zM=;
+        b=J1zV7dDhM/GT8PK3/8AH5oEArLF7vDh1A+FAJU/kM7JpjyUxNP5Yzzar3e/VRrE7NG
+         hg5dSNSFMtqLjECpHYuo3mXJDijdzMfYA8YfBnTsh8TVcmtRwv87rPfDPTfNHCVRRj2H
+         AIwTs8ybfxsxbikMUEZpGAMJwkwqqRVJIh/JEw0Gt+if30GtB8p3mbLBi2NenPpXCPdC
+         RJXSVLlVCph2JwkX/sF5LpWwoNl3OMvc8y8NX5ke0HeZp/PEjCWJrWgdPbWNfwyLfjoI
+         yec3KTp3CO0l0Gs68UOZVzzdfgO+TIjD0jzJKBmYvI7luwuhMZe5ReR26UQP9BiQYzT2
+         /Jhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785920777; x=1786525577;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=k3HOr9YOide4pHL6q+kXXpOk98Qr8uazTCz/dXRD+zM=;
+        b=gx1xn730orXZTYxMKZXddM/H8BBU4X3hXh9rT0bkOCix5gsk0ip8lozvw103K5zK0S
+         ZPGfUXrYh9ZnVqIKlaMRauJeV9KNN51GNHJrEaxvOISaweFgZQLMmWsEf6Q6Ysz+51fC
+         RMir0kbovNn7zbjZT3jR4xHs/ax+J5z0a+xTfWnr6kQD6TUzL67K7NsdynfxKLm+LnWg
+         yYmzX6VwtnM/0dvWF7bcChQSyShIt62XSEQPoBaF/1cIn/duiQ9m0V1XSsenKUqHeOmc
+         TmSVO8kCieh4UXqSFZKimWrCzRf/6SBwxg0LHmxaxTFCfE2B5a62tVAHnCYc+BahjZqZ
+         JZsA==
+X-Gm-Message-State: AOJu0YyBTEZqpmXo+D0wew12FB3XJFZMqkWCUpX4wAtPoHgR9HwLZGaV
+	4ap0i5TQzQp9UcEUNafwSY4j9lNlROgZU6mtvwRy4BpfSkMSyXnIQuJcDScz1LsJHczTeb+8MjH
+	y3enJndEJMbRAEhyPBObnOMHWQ+95ANfTJ4utTKo=
+X-Gm-Gg: AR+sD12zro0O5uxgK8KxNYl/LoEw0YTxx1tFRnWI8ep7uPLqx0YCoR43q7Jq2L/IlI8
+	ddKmgraButQ+s3M0jrc3Q18Vve/fL0o1KFACJO3E7AP+/3s849kiIJgyAcVkt8JQ/FFq1whvetc
+	GYxtR+N7w1GTgc5BKRaioej1rOIwz8HZKtH2Uo2zwE2e1+tDpemjvxaRUixxYiXLOSbE0MNrcJT
+	tvUHy/Bh8lTN0yEDt2GDJ1x2vyDgDOCc8Nn+t0/p6dW5usTYEZ0VdR2wirnTMaOUExm9D4pKYJJ
+	ntShBfB/9cPF7Y37lSVWPXkTK/GpN6dmsKWgQn5ZMwjF
+X-Received: by 2002:a17:906:eec4:b0:c1c:2ee9:5e6d with SMTP id
+ a640c23a62f3a-c2039c39717mr256553566b.17.1785920776873; Wed, 05 Aug 2026
+ 02:06:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260728052538.12429-1-chungmin@chungminlee.com>
+From: Adien Akhmad <adien.akhmad@gmail.com>
+Date: Wed, 5 Aug 2026 16:06:05 +0700
+X-Gm-Features: AUfX_mzIUZp8AYlqtIBuzHXCNyw7GUj-Ox0c0OOdICvt2Rc_9zAeqM6dq9C4xQo
+Message-ID: <CADoNwcscDrx+YcfbcW4YKONDZZQgnPiwEOxL4QYV_C7_=FOFcg@mail.gmail.com>
+Subject: bug: git credentials helper strips wwwauth[] on HTTP redirect
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jul 27, 2026 at 10:25:38PM -0700, Chungmin Lee wrote:
-> On macOS, the system regex engine leaks an internal buffer when
-> regexec() encounters an invalid multibyte sequence in a UTF-8 locale.
-> The line-by-line path can call regexec_buf() for each pattern on every
-> line, so "git grep" can leak repeatedly on a file containing invalid
-> UTF-8.  The total leak grows with the number of calls, and the per-call
-> allocation grows with the pattern's automaton.  In one case, grepping a
-> repository containing PDFs exhausted memory and caused the machine to
-> restart.
-> 
-> ce025ae4f61e (grep: disable lookahead on error, 2024-10-20) made "git
-> grep" fall back to line-by-line matching when regexec() reports an error
-> on invalid UTF-8.  That fallback cannot prevent this leak: the allocation
-> has already leaked when regexec() returns REG_ILLSEQ.
-> 
-> Avoid the leaking path by providing a Darwin-specific regexec_buf().
-> Walk the input with mbrtowc(), split it at bytes that cannot form a
-> complete multibyte character, and search each valid segment separately.
-> This preserves matches in valid text on either side of an invalid byte.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Hm. I feel like we're adding quite a lot of logic only to fix an
-upstream bug that we expect will be eventually fixed. At the same time
-we already have a compatibility "regexec" implementation that I'd expect
-doesn't have the bug. So would an alternative be to detect whether the
-given platform is susceptible to the bug and, if so, define NO_REGEX and
-then use our own regex implementation? Or are there good reasons to not
-do that?
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Patrick
+Ran `git push` to a remote whose URL 301-redirects to a new path before the
+server responds 401 with a WWW-Authenticate header.
+
+What did you expect to happen? (Expected behavior)
+
+wwwauth[] to be passed to my credential helper, as it is when pushing to the
+same server without a redirect.
+
+What happened instead? (Actual behavior)
+
+wwwauth[] was empty, so the helper couldn't detect the auth scheme.
+
+What's different between what you expected and what actually happened?
+
+The redirect causes wwwauth[] to be dropped
+
+Anything else you want to add:
+
+The credential helper in context is
+https://github.com/hickford/git-credential-oauth
+The server is a self hosted forgejo https://forgejo.org/
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.55.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+rust: disabled
+feature: fsmonitor--daemon
+gettext: enabled
+libcurl: 8.15.0
+OpenSSL: OpenSSL 3.5.7 9 Jun 2026
+zlib-ng: 2.3.3
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Linux 7.1.5-101.fc43.x86_64 #1 SMP PREEMPT_DYNAMIC Tue Jul 28
+14:24:13 UTC 2026 x86_64
+compiler info: gnuc: 15.2
+libc info: glibc: 2.42
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
