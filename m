@@ -1,85 +1,82 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A217A41B8F7
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 17:03:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04070481FD0
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 17:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785949402; cv=none; b=I2Nj4P969gp3eZVD4+2zIqz0JaIziahmsL8tHMK/xmZEsn51BtKZ4Dg7B9l7cy5liebs8K6wGvCiaiM2Cia3C8ekhrv7f9zkN5zyZCRGrtcy2HeRogJFJKyr0wk8/dgD/9Zy9HGy6I2JiCdkhQFKufl6j95Ay3bevYWtN2cDqRc=
+	t=1785949932; cv=none; b=gGazMg9/+jN/MCzyzXuDWRQgZ77rGK6z2LHHso2AU6MgxTu/GuFOf4a4IpwCye5xJKQVmImC7cz4CS0YWuhTAO+gAX5Q3U1yiAbm7CRx1cW8rgI4pDCIkPHzgiO7xz1uP1vzeQOZgycuJauVVS7qwa50+td6vBfj/wEsT2oX/58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785949402; c=relaxed/simple;
-	bh=NmrfpSWDHmdMRQylMvhmK2HydB4GE9idxLk1ok74EiY=;
+	s=arc-20240116; t=1785949932; c=relaxed/simple;
+	bh=c+LhS3+aOkyUY/ZYhQDGG7LLRrbpZgDlzwO0ysPBfL8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ntI7h91S0G4SgipGDwdK1qRw9IurVXILGGHu8AL/znImNvd90lOM3loYFh4snsNueYPb6gDkTFIDE8B68d/kSCnWzFN9qDwZZ3hQHDg3FES261JAsWuQZP+hSR7aNAy0ruK8gc6mXwUzww+/tsvixiBQh9tZBqzHYATWLAKBbhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LnSJDA8O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jzFpZxrM; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=uxZD3p6wjzFP8el/o9SX0KYUsowjepoSvjs+bFTJwG9SLl8WW3UxjhcPKp787yTUcbQylzHri09JitJFilW513y8djNlvYufJGbh74MhM/5+Mc6LM+1QqqGYDk5A9x0EkJG3KjCh5HLsbcR4M5EGSd4/x/oKjMSnBljkwPMULWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dT091I/X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iscsnpL2; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LnSJDA8O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jzFpZxrM"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id DF3A31D00121;
-	Wed,  5 Aug 2026 13:03:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dT091I/X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iscsnpL2"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F32EB7A00E6;
+	Wed,  5 Aug 2026 13:12:09 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 05 Aug 2026 13:03:20 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 05 Aug 2026 13:12:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785949399; x=1786035799; bh=lFIJsduPa+
-	9ZT3kHJYb7356dI3N3EeBwV6GE9vbw/Bc=; b=LnSJDA8Om5/L/j50sCpe8fK/+X
-	VX92EhCBnejrGbSCfqJ5HlVag1Z5kYT+KNlBsUBRtbsfJfGr+8fluSUXdLXvRlla
-	1Ktjj/mrKDvCPn4yRYv50N4omirFhR0nnoEfAtZMP1ixgwM/rzOd+AVHPE8DUSPy
-	wbIcninO/KmCm0odNEXUmsKpmhR8HWNtrPpdaaeeEg7aRcn8ZICu649AGvdmSglN
-	9aevrOVNAE5MbH4Ck9Mq9OTgaRBjQyYFVVebLeaC5DwUpJ4sy3AWNEC6vOaEcMD0
-	jSxrK7GWs2eP7XwYR8Pj9e6vx5+g62lclMRanzBgThO0ePpVV17AkHk5aepg==
+	:subject:to:to; s=fm2; t=1785949929; x=1786036329; bh=ALSd1HTO6n
+	LcADf4/DYOBs4g6Jll7Nmtm9pS/ESSfTA=; b=dT091I/XKteBj4dTPmz+r6ulgz
+	9ccJE4fiHPL8/SgiaJPS8wL16690C5/jnWkJERShyqAnBY0qJWrWKwe0gWXscuFV
+	z/JkqzRwxwnMcL9AGj+h5PnE/ctxp1nnsJOnNcD2PpCneDah6CXMqJ3cwSt65cN1
+	ozXjslFAyWf3QmUOYFh1gxQsjb/RPAr5WLOaqbCZAcIRwsb/oqjupWTNEB80t/FZ
+	yFMIHpyFe1Y+jsjCygFKzwWJjeRnK5DQhT7uq7gVK+s2j6dZQEbgPEW4+PWXxiT3
+	lzRCTbEQW3r3YI0jhGL2AMys2oPTXO7pWGW+X4md/54ok3UVJxZx2EUJhKAg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785949399; x=1786035799; bh=lFIJsduPa+9ZT3kHJYb7356dI3N3EeBwV6G
-	E9vbw/Bc=; b=jzFpZxrMG1XNcaow1JLoyyUQSQVrZo+8x4QK38H85Topp/99lsQ
-	n05/uJnF58jebfVJu7YcIfoHzTsXaglIagEB8hN5rEocQlhsheouABvZLudWR/Uw
-	Se0m1EzFzLlo4A7qKlXg400jeaFfP2EFt/3ybpVEN/dJ1B0dT/1/Vg4fxJjEVz4l
-	U7yfX50qCHFlwm2P1NJyQxp0non/5MokwxkUkP7aYjC/d6zdwyHuheouDjeyl5ru
-	JyWk2gF0+IJiNJuckYmoyu8kTzJ21hiu07ER1Lew/NO0hNPN9WaAsMISw+y8v1MC
-	I3O7BDbM7OsnTcoULmyjkPttOOAuZ/fH1jQ==
-X-ME-Sender: <xms:12xzaiCfdCXSH_grBv3lgvhZo4u5Sns3-FaF3w0LZjUtu85R8qeCnw>
-    <xme:12xzajhBTY473HmBBK4zPfp6XcqN1dyn7SGByhjJZO0A9UYYGmXLjmU4eNB1XvYpA
-    rWwwzKzipZmshlwZ3913eHG2rpJff3w8PViY5aIPczruTGh1SdqJJU>
-X-ME-Received: <xmr:12xzaqkiBx0J6RRW9xppAra-xjIXcf0q5qCEoadYAgWqiSThvZlYSCh5kANJP7hl5cGNJpmIm2PK49Hjl18LrYribOgXPJmA7g>
-X-ME-Proxy-Cause: dmFkZTGzsTuKVn82CrCow0JsbWkr/aMmG9nR5tFm+BRx/94TfOm43fntkFlFfAcTshGJeS
-    wh2npuCebpa8tgwb8GQKoKajEHCIINMUWqL19Kcbc5DzNzs6l/qLvIZGFJcHbR4nfq4tkv
-    C1j3t48HhzE/UfCe0EbiB2pLPRGaxY/8oBos4ZiZiP7OcZZ0QcMEtEbV3QrrrOTUV8qqlI
-    r5SHjNbDjRgi6QFtb5cr/Q8e6YhIjjC7Q3vmDV6O7dhAm7MEiy0EWE7NicErbGymY6u3KY
-    P9r6qXD+JeHnF5jKxA7W4C/uxThj1UBQxstbTtztiCdx2Oari78tT4vM1tP8mr0KxDvncw
-    v5ODTwuf0Pz3WnHnTNlbPLX35HRP/GDj0vHfEwKQPojoIxUbwi0vT8T5pQKQFgtlO0Vg8l
-    y4p3g3Zh77f7dxS8aWe45740scwpvxaN6NGfxUrOxeUAmxWBu8U0SQ/juWXFZhblkWPIGh
-    Sk3Xz1veQUcIYTUWaBicDppBG0qaTVEG5pyWklp5yb0GiCoS6pwG6FcOwvkueOv1M1X1gl
-    eGbU1oOzq7yqKUJFMA6czxsKVhdG18trjeYdyFLW2EyyBguAvKqA5Uat5FfjZvwEGL5obo
-    iNSWmMmOIT+/NCwRlpoGvcQ6gmbUmbOIxgHFmFq+nYwMM4679sLsTCaVZzTg
-X-ME-Proxy: <xmx:12xzavqlGSD9RxWpSVyH9L0ZLMdRiS1HfYJKiE65Mh-fCKqL1rQ-lg>
-    <xmx:12xzajF9wzFYmgMFS5sCtIh1CDtYs-sSN1OKyo4NO8jqDHg70A2N2w>
-    <xmx:12xzaryheAizX2zt8ETpuS1EMLwii6L53n02fZAusRJywfGnq23Gyg>
-    <xmx:12xzaorY5qXBDqEHWECwNIs9uk3M1Oe_Wy-D1zspUcshI44XYAdXXw>
-    <xmx:12xzaiHWp9xj_CvdTLXatBZ_Wb8cwBsvAKOV9OjrZgeutTQVLmkxDrHB>
+	1785949929; x=1786036329; bh=ALSd1HTO6nLcADf4/DYOBs4g6Jll7Nmtm9p
+	S/ESSfTA=; b=iscsnpL2JN8KXFYgk9FGAagj3m1fT62abvUwJBHUqjegNM4xAUY
+	Qkt1m+IGn9PC2U85CsU5WHbdE5iCvi7fnXEqfw4NO9zn+uC2OBWYhHMES18a3jRU
+	8OKVO5XuVlXN2O7Bk6evfEdCkVYx74VSEIc8L6hdLMUauqd/nGFsX97uzfBGq2Y4
+	8tw2m3DRtvt3EF0YReocS3+ZUrbx6oy3iRwIjtkvBENTwTRskD4/y3Uf2MwNMf46
+	Cmz71cAqdhDZrnHyl26530EkySepbPgaJQOjN+o2tRQEgftLN6G1HiUO50j77l3X
+	IY5nLeXknXaMEgkTGdONpCDc/DZMXm6CkRQ==
+X-ME-Sender: <xms:6W5zavA2bcu_stfEnXBn-dlWeRJmc9-pLlUlA1OjL-UJ8DHYihJijQ>
+    <xme:6W5zasjESuUgBNuM10rW_7Y_hVPCib-VMt8nRke0gp8Q3HllpYangWYet_eAbof-J
+    Yn_E98oDv54_VJpVPgQT-n1Noe-oDGKZziMGS5tgnoe7zT7f8ca>
+X-ME-Received: <xmr:6W5zavmG6xPuMKAafXWYYN7HyhNRbE03qfew9iC9vxByL1XWrVgRq5sN20S6JWEo8wc-x7yu4mYg_1Brk1FdswrQojKdfo6spA>
+X-ME-Proxy-Cause: dmFkZTGp8baG6Ueu8jXMVu0GMGUKerWz3xvX5QMa8KDDY3gp/u+mImI6dssuw5Y9KfZeUv
+    ybTdMEU8uarQKoDDcjWTA/RU+oqB5KvRpGzxN9NqfE6Hk8MI1eHEoGHxpNEUBHcCtVEyRb
+    2/WsQXYK3Oa0Yq05DUgzXW4KzaoWfsWUrdoRIgUoQPbxIIELuTRvtZnBw2zV3ZsXYO8rY4
+    2lMEjENhdQ9z1FtmvhPxQltmF00kJ5xnAI6u57BRvN80Xl3eFCNWEF41RcK8iKJDifKHmJ
+    IaZDxqKNr6SeCZWumw396yA37ugXe/D3la140ZiRdwtkiIbIQk3M2KSkhU/iMPNzMBHAG+
+    xmazIEJxfSArRKu6Aotm7DW1hfz1cEnPExzI9NBoOp9kJ44tCqpVrlBQckM4/sWC9UdtH7
+    +ID8ygNjueNycCwMYQ72CGindTWOle1m8hCcYSKeKMOOqEYccYHjHiWzf6UUyjBk0B/Wqx
+    6rvlUs8FEfoM5sWiKuGFzqy9kVKIArNjPClfla/YC+sEy1MBVCy5UalBICTOu2XLUaVbry
+    eJPOMG2xdbmPj+fT/2mcXyA4xNYka5y5V9a1bQ1lAPdYHqf/sfkygqy/FFGsvNQQ1bdw7+
+    NUG88tHewSuKO7CuaSWMexcEptOCzzfiPe4PqxeMHjTIRkd6qynTVle+WNKw
+X-ME-Proxy: <xmx:6W5zago8OEuMonYWUz_IQXCTwW0qmWet3CZjulyJYvvHmq7SHRa91A>
+    <xmx:6W5zagHCWz9qj50GL9XGiQ2M1hXafA4eEwzikxE8E315T3bqr4UrVg>
+    <xmx:6W5zakzO4G-F6lHOP1xvWAfTGXLke7_isWa_3n99VUEONr6P7lMbxw>
+    <xmx:6W5zatoxCzpWHVBIwpK3yp23fuugBuQoG4DDFufEJJ8_hOpn8dtmjw>
+    <xmx:6W5zak_XLwexM-0FdY-tPTH9qq7FCIEJLuONIoScpDBX3giNS7so819c>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Aug 2026 13:03:19 -0400 (EDT)
+ 5 Aug 2026 13:12:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2026, #12)
-In-Reply-To: <47bd0302-fc52-4df0-98a0-6fad7eb0fb05@gmail.com> (Phillip Wood's
-	message of "Wed, 5 Aug 2026 14:10:39 +0100")
-References: <xmqqfr15ruw7.fsf@gitster.g>
-	<f5f7af53-df3e-4902-b350-8fcf8ccb02ad@gmail.com>
-	<xmqq1pclc210.fsf@gitster.g>
-	<414ebe62-c7f6-4d44-bde2-b689e35accfc@gmail.com>
-	<xmqqbjbpptzr.fsf@gitster.g>
-	<47bd0302-fc52-4df0-98a0-6fad7eb0fb05@gmail.com>
-Date: Wed, 05 Aug 2026 10:03:18 -0700
-Message-ID: <xmqqmrv0qz3d.fsf@gitster.g>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 09/12] windows: skip linking `git-<command>` for built-ins
+In-Reply-To: <c4e97449c1065c5d6c4346803ab571eb343ed034.1785939999.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Wed, 05 Aug 2026
+	14:26:35 +0000")
+References: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
+	<c4e97449c1065c5d6c4346803ab571eb343ed034.1785939999.git.gitgitgadget@gmail.com>
+Date: Wed, 05 Aug 2026 10:12:08 -0700
+Message-ID: <xmqqik5oqyon.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,37 +86,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Hi Junio
->
-> On 29/07/2026 18:48, Junio C Hamano wrote:
->> 
->> Perhaps the sensible thing for me to do is to stop taking any new
->> topics into 'seen', even if I've spotted them, until I see somebody
->> give them a real review.
->> 
->> Otherwise, it becomes too tempting for me to jump in, give them a
->> superficial read after seeing them linger in the "What's Cooking"
->> draft in the "Needs review" state for too long, and, believing I've
->> seen enough, mark them for 'next'.  If I don't queue a patch that
->> nobody seems to have read carefully, I won't succumb to such
->> temptation.
->
-> Maybe, though I do find having the patches in seen makes it easier to do 
-> an in-depth review as it means I don't have to apply them myself.
+> The "dashed form" has been officially deprecated in Git version 1.5.4,
+> which was released on February 2nd, 2008, i.e. a very long time ago.
+> This deprecation was never finalized by skipping these hard-links, but
+> we can start the process now, in Git for Windows.
 
-Yes, that is a very good point.  And if the authors are paying
-attention, it would hopefully also help them how well their changes
-play with others' changes.
-
-OK, then I will keep picking them up, but under these conditions:
-
- (1) They will not leave 'seen' without anyone commenting on them;
-
- (2) They will automatically be discarded after four weeks without
-     positive feedback; and
-
- (3) I will not feel obligated to review them even if no one steps up.
+Good.  Perhaps somebody (you do not have to volunteer) can champion
+their removal from everywhere at Git 3.0 version boundary?
 
 Thanks.
