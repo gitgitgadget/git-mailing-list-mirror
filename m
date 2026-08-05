@@ -1,70 +1,69 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3788374197
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 14:26:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A8334A3D6
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 14:27:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785940018; cv=none; b=AiZVTV3ATEG9PL81GQDHlzHBH3IcBJw7rZp6VqDys+9BA2K4qmh7eC750nDL07RnQ74uhKTdtoACtzsJoIhI6FK79H0N3y59/Y6tLYpvG2LuNx7rXSIQtwm47FIoUyoiFM9WPC7A73PpmWvU2z0gYPeJupYHHFVjYQjwuNmiZZM=
+	t=1785940028; cv=none; b=m2KgBCNyi7kfD8xEIPOB205yMFdKEmbk0r8vnrIoUDoI77/vP97RloaE5VTquXkkK6oNMX/8tgROmFG1hMcX+9+9F4A9JyEKXiXTcq/qBv2oTjXlGchWUKAskVfSyIZ4EjUGzetRNergd4u06G/XVr0suYLXBTGppb/VtQov4JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785940018; c=relaxed/simple;
-	bh=E5TAcKaEOCi7ReHacavmPN3FxQB+iBTnP9fH3OdfmNU=;
+	s=arc-20240116; t=1785940028; c=relaxed/simple;
+	bh=K60gN3CnsnwDPlxbjyhf3cZf88h3yS49poNTacXGbAc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gxWNsNXFYFhi+zLrgbU65LtBz1omfPzxg3gb+gZlGqSxQ9EtNUcbNDzpRZ0C4UL3wsQEtiWAHpU2EXYP0easoM1RnW3/rnHT+zvq+AWESZNibpTXkFLccOVyRcwICI1/3/DiMI7VH0Jhp3Z83PB+wSF7motpmyHVZ1XdEzmX1xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GztrlBEK; arc=none smtp.client-ip=209.85.222.176
+	 MIME-Version:To:Cc; b=AnL3hzHf9D1jSJzYTQ2sQwzXXkvmNRgmp0kH9Q0yYqD0YRlyCXIkdL7o/Anu+G2gViDUjIK2xPUdG81Cdk7wh9bL+Pd2fykkoIPb6AXwYwpvOoDlJtYid8kifV91VckxtzYO/NgHCCdcVE+lCgXRGAdcFbYOM6X/2pEnt9QEBRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M+Ek9C1e; arc=none smtp.client-ip=74.125.224.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GztrlBEK"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-93108a3c326so139823685a.1
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 07:26:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M+Ek9C1e"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-668005ba03cso1287485d50.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 07:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785940008; x=1786544808; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785940018; x=1786544818; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=bnTtnwxcdY7RASz7pb7KoB8/awq+9cPpOpxZ/RWp49s=;
-        b=GztrlBEKaFaKNNXNPuBP25sq8Qow5mvEkqXHkoAJ5Yyg8WStTPfk52KvFaaRtsCI/N
-         y0b5rUIMoWkIrLRNMzdLCqyAWU7xXxHynDthPfpHLWNMgAY3aQ8gnqGAILbNndLz9Adu
-         GqHzdJdd+fyDHOmH0JhpI3kh75fNLDuuMeCeBB+wEcorZLyKvEmhGA92rmE0WMOIlR60
-         JRDRJHAocLJDdiFw0jnGRFMyJlrxvpM/ObMKUjQQwFCpAbMwozl4pOrM0xZjmyrqG5uV
-         eud5LE1rJtJKStACFoCj81QKnxlFbZlUGyGax1+XNGPx6Tw3SW7+yIBEJCIMAAkSaq0w
-         MvzQ==
+        bh=trmP1Np1a9mBCEUqkoeT5C8Z1lh1laiWfhSi1Cyfagw=;
+        b=M+Ek9C1ep9ZPOANVE2KG2Goox8MZ/mYlcWG1345MbR4fo0sFLISt0zDn1QZChiaM/+
+         bWxZMnEYB89Xhx5XZ9AWMILZFDq5BnENHltVELiuNDNv5azwBmOzp9KyY1fc1A0Le8/9
+         eOJr4Eo0xO9vTokoab96B654LoXdfhPgEm5WaRatS4dvesY+MUup5lge3q+BxjXO74yQ
+         q+OBHWHpUX/8mMQ7lRpmfxUoBnqm2bhoQHcjOGuRiTNKfg3mR/+flzXbN2pt71yFLEu4
+         MDmfK+VAfmCEZ+h4OWptFmRWngRVozMy1gBv4iL5YA92iBEfCspuHjcaaAlOISoJ+38l
+         +VAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785940008; x=1786544808;
+        d=1e100.net; s=20251104; t=1785940018; x=1786544818;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=bnTtnwxcdY7RASz7pb7KoB8/awq+9cPpOpxZ/RWp49s=;
-        b=VY1PscrnxnzMBPOrYCacHBJC+gkFvsIaSoBMI1vV1sRZBk/+KnHkhdM/dQmCIrD8iu
-         kR+aHfOKhosW0cAYXAsS5oNDDYHKTd4XkBW2uruV3Ka5rbLFTib1rgAzUbaRqbwYmxDW
-         ZIAKS2w28ik1lVyn8yOOyMJIJtw6IkWzWXfXxaGxbM0iwjprzNf9ROQ/zVdH3UkLqwCa
-         97152I3l4Z3d0RMzweSpc97rpIoQRaXPrMKhLSjKDNg4EgcIhSHWC8aNqyQfUeR2Mklo
-         TE6nyFdZum0jeObBxb6dss/zCd1LJG0l39titdHf+laVrLe6Kac85kDn98W/OWWXZgps
-         GoNw==
-X-Gm-Message-State: AOJu0YxZznHKISThwNl1wz8kfVUafXWa159u3do/oBkz9v6IRRdotWPq
-	GEvi3IJEg7uVJts5/BAFJCLYa8s3t+szOvfX5dkTsgO/xvIqh4uqh4op720icA==
-X-Gm-Gg: AR+sD124z6QR9lJ36xn0dCzi0DgoqQFvFXS5FE7hpDc1db+EpePFmV7SlVct386SchX
-	HoXLldOnR9+9nxejc1AG3IlxLwKz4TlLJHlFFzNVslf9sDDhRhhyeO6uGem2nPqEHj2cgsFehp7
-	bEeYFqoLLzbW32nuAHtwfwIlC9Bek1Uehpho68LCXlfWKHemUN7zIAZpRxfQ8vF3c7qhtil02sf
-	fij5WMOyIgXu41DxTX6Uf8MfHYEnejVh9W53+lQfixUkUaj7p/z/EGP6lIl2cNUkXjglLJwBmQj
-	b7vmC7Dsj15UP7hvfYDCQmsgMgwqkYoEmUkoHPswIeMB/Ir6tbrYLYil5aMMCP3d6vOPLoNEcFN
-	lL3m8aIUghJNyIAz9Bdor6wAPCl9VL6TAeg35zsy7t1VwTq8pXxBOloE74HQj2ofOvZrMyNGDUV
-	UA5Uh8R7SXuEmJFUVXqIHzocrt6pgCyGiYhQP7jy0RPl3e2a1lOyymZ/9w+wbx2WI=
-X-Received: by 2002:a05:620a:2982:b0:915:92f3:54e3 with SMTP id af79cd13be357-93631802725mr1138750285a.4.1785940008431;
-        Wed, 05 Aug 2026 07:26:48 -0700 (PDT)
+        bh=trmP1Np1a9mBCEUqkoeT5C8Z1lh1laiWfhSi1Cyfagw=;
+        b=e8VQiTH7rjX7skr1wM9WkOPQYEAPaHSFFVaCUHGzOOalZ24qIOz+nuVvoSW3F2CKfv
+         s/GBxbVMNwOuuji4EKQW658TWNexeBtIeTthiKdog5nDjeHJyLeOq5sJrX+MozBPMhSG
+         TwAUjn/O89R7BGA8ZwtVWOnKHEAwlwl7FVB531lQK+71dvxeYru2jQ09EVEzTs/Nf310
+         8MdMfE+rMBEH7a1/Wl5/fWoGRXxSPeN/eVZ4miR8N1U5wbYYJZi7OD9Nuvpk5eRMpjr9
+         zTv6gMvZAGxuXKU8TpTO1ey42SWbJbk1wr5Fv2UNh0cQ41ylh6jl/NpvWGTgyuzywcJY
+         ggQw==
+X-Gm-Message-State: AOJu0YwVjBYWca6grzJWAQ67ON7740G1fSRtPhVfEN/P1haRo9ANFWMd
+	wa0WM40QibxgdLK4D6ugoZAjFPPcOz1CcUGwtfuQ6tLeO02UgRvHLOd18SNSuA==
+X-Gm-Gg: AR+sD11yynLNh3arJEatVHIMKKNipfNN96ND7bzEQeUj92rnK4Avlm/RCvF+Y9tNmSM
+	KN/tZT0zLOUq7eEZRdrkZz5/qrDyGAa2qybMdUAbWU/K8ngFFc2bYHyPB4Xc8p94XPdKg6frY6F
+	E40w/fw+M4vJbW8k5z//88tWq4cNhumXQBFkOJcxVGSKEL2AWWVOMmLpLgEjk0QukVsesvzfrD8
+	AIx4M2YmoekKQCy8nViTv/5GBiicBhujfz6/xxDLCr9RxEaynMYIEa0Hk4DvLtX9xNvXxAwiEbe
+	CvET/MKKq0H2n2EGaaRJo4adcD9WzGqeUh7j6da1QvKn1M4F7syy2IHCJeaO9gmxEJXTNUxpNKF
+	ZjkzeUZ/MJEeErESIaaUGNpOSgmJDcE74rI7MdVjmMiV6ItTUWhQr4d8ZfexJC1hcmrBWzExU0/
+	6jNiw7hhqmRIwda2RzgF/bUYqRu/ZsNXEiH58GaOP0himPIr50h5BWrhi4MJHWgoc=
+X-Received: by 2002:a05:690c:f14:b0:81f:2825:dfe with SMTP id 00721157ae682-82022874fe5mr37527597b3.36.1785940017563;
+        Wed, 05 Aug 2026 07:26:57 -0700 (PDT)
 Received: from [127.0.0.1] ([74.249.78.162])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9364a429cf5sm163016485a.15.2026.08.05.07.26.47
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-820134cadb4sm21380417b3.44.2026.08.05.07.26.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2026 07:26:47 -0700 (PDT)
-Message-Id: <ad96aedda6a2b22b80200a035b714ca111b97cdc.1785939999.git.gitgitgadget@gmail.com>
+        Wed, 05 Aug 2026 07:26:56 -0700 (PDT)
+Message-Id: <625f01ad2961a8ca9c31048b9128bbce17ee7655.1785939999.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
 References: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 05 Aug 2026 14:26:30 +0000
-Subject: [PATCH 04/12] mingw: only use -Wl,--large-address-aware for 32-bit
- builds
+Date: Wed, 05 Aug 2026 14:26:36 +0000
+Subject: [PATCH 10/12] mingw: always define `ETC_*` for MSYS2 environments
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,39 +79,48 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-That option only matters there, and is in fact only really understood in
-those builds; UCRT64 versions of GCC, for example, do not know what to
-do with that option.
+Special-casing even more configurations simply does not make sense.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ config.mak.uname | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/config.mak.uname b/config.mak.uname
-index cc0ed63af3..b667c693ec 100644
+index 88bbe1d78f..2f7d445eb3 100644
 --- a/config.mak.uname
 +++ b/config.mak.uname
-@@ -757,9 +757,8 @@ ifeq ($(uname_S),MINGW)
-         ifeq (MINGW32,$(MSYSTEM))
- 		prefix = /mingw32
- 		HOST_CPU = i686
--		BASIC_LDFLAGS += -Wl,--pic-executable,-e,_mainCRTStartup
--        endif
--        ifeq (MINGW64,$(MSYSTEM))
-+		BASIC_LDFLAGS += -Wl,--pic-executable,-e,_mainCRTStartup -Wl,--large-address-aware
-+        else ifeq (MINGW64,$(MSYSTEM))
- 		prefix = /mingw64
- 		HOST_CPU = x86_64
- 		BASIC_LDFLAGS += -Wl,--pic-executable,-e,mainCRTStartup
-@@ -768,7 +767,6 @@ ifeq ($(uname_S),MINGW)
- 		HOST_CPU = aarch64
- 		BASIC_LDFLAGS += -Wl,--pic-executable,-e,mainCRTStartup
-         else
--		BASIC_LDFLAGS += -Wl,--large-address-aware
+@@ -519,7 +519,7 @@ ifeq ($(uname_S),Windows)
+ 	NATIVE_CRLF = YesPlease
+ 	DEFAULT_HELP_FORMAT = html
+ 	SKIP_DASHED_BUILT_INS = YabbaDabbaDoo
+-ifeq (/mingw64,$(subst 32,64,$(subst clangarm,mingw,$(prefix))))
++ifneq (,$(MINGW_PREFIX))
+ 	# Move system config into top-level /etc/
+ 	ETC_GITCONFIG = ../etc/gitconfig
+ 	ETC_GITATTRIBUTES = ../etc/gitattributes
+@@ -762,6 +762,9 @@ ifeq ($(uname_S),MINGW)
+                 ifeq (MINGW32,$(MSYSTEM))
+ 			BASIC_LDFLAGS += -Wl,--large-address-aware
+                 endif
++		# Move system config into top-level /etc/
++		ETC_GITCONFIG = ../etc/gitconfig
++		ETC_GITATTRIBUTES = ../etc/gitattributes
          endif
- 	COMPAT_CFLAGS += -D__USE_MINGW_ANSI_STDIO=0 -DDETECT_MSYS_TTY \
- 		-fstack-protector-strong
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ANSI_STDIO=0 -fstack-protector-strong
+ 	EXTLIBS += -lntdll
+@@ -772,11 +775,6 @@ ifeq ($(uname_S),MINGW)
+ 	USE_GETTEXT_SCHEME = fallthrough
+ 	USE_LIBPCRE = YesPlease
+ 	NO_PYTHON =
+-        ifeq (/mingw64,$(subst 32,64,$(subst clangarm,mingw,$(prefix))))
+-		# Move system config into top-level /etc/
+-		ETC_GITCONFIG = ../etc/gitconfig
+-		ETC_GITATTRIBUTES = ../etc/gitattributes
+-        endif
+ endif
+ ifeq ($(uname_S),QNX)
+ 	COMPAT_CFLAGS += -DSA_RESTART=0
 -- 
 gitgitgadget
 
