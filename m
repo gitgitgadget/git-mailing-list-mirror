@@ -1,76 +1,126 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCB73E009D
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 06:59:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785913179; cv=none; b=f0w2wqQxKqIlW1+6nlJgrQpP1OA4nMewlGYRL+3qdbPkB98TMNhtYmdGckHTgB8narhQvWB+KxfliUcXp3pw8QRVe2JcdxVGMVhYD2Wx11G3EcNe/B6ArZJdA0TE8uHZdkFEU0ktUQ8VZJ3L2tSrJG1XvrClcAzwS1VRPNF8zjg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785913179; c=relaxed/simple;
-	bh=RZ5TESBkoGD8N7rBe8eZWA06Nz8lajtl/9yukUt1ezU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aNG4XmUwAiEwcxlCXBpcpUE8laiTt57YGwsCfPOqeMOvCqKAXR1j1YAFrfe1oXzGvTO5n+mllC2t63x88Q2MJRmHiCuSGOzS5SVOY2J2KmqCW3OdTLZTxgQ8xnzCoTKBIspAcDes8OaxNSV7hIqm7j+B+lG+6DTXMLOrfriRBHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp.bon.at (unknown [192.168.181.102])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4hFLr06ZRSz7Qw2l
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 08:59:28 +0200 (CEST)
-Received: from [192.168.1.102] (unknown [89.144.223.124])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4hFLqq5S7zzRnlW;
-	Wed,  5 Aug 2026 08:59:19 +0200 (CEST)
-Message-ID: <82e59e71-5cb0-4a7f-9fc1-e66b367670f0@kdbg.org>
-Date: Wed, 5 Aug 2026 08:59:14 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A622C346A08
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 07:15:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785914148; cv=pass; b=sX9cdF6L7m+j8BfabVx9t1CD2jqQvGMtonMT2tsXtzKzbSHwPL7XnucNnO0SQLYLbYgye7vd+8ssv59sw8uNDu/RT69NTH1QcI/eK7JFMbL2qCXhqd6sHsdUOna2XJxZE4LMoZoQAVR1uW/jrXZXkrtEKAJ2FY7wkEAc+neAWic=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785914148; c=relaxed/simple;
+	bh=G4rA1WY/nD7RmPUb+LbYijezt6MB6UcHMpS5RDJUtT4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=roUi79lrRqxXCosKbxDX2YEhhOeuUKY7mbkUh7sJTHYdPWp6eLo7/Jopfy0HlwQym3F/dpJrvlGRw946SMMV11LzCKAiqY7+vvB4q5VBsCjeOHFJ4yX0TP+Z08i23pPNExqLa7UUL/y0UFosW78yXB4XbNtssSK6Xh+/VI+1kdU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PKasrml+; arc=pass smtp.client-ip=209.85.160.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PKasrml+"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-448cf99c133so2216121fac.1
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 00:15:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785914146; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ha9d6uC08cF5Zg+fGO0fCk/u01S724ARcduitUFFKCVwuOaJCunAev5WacyV9cZ1Wd
+         Wid8gWPXV02WiVpBVKONR3lVX8RzqsXQGV5fF5sJYpZObPU+DxOBjsC099f/oyNvOQ8q
+         jnFQFaAtcop8fDaF7OXXNBAm2zAIrtRmg/KLUj70K8EP0XXPaMxWM1pFPoGFGMQPRvj1
+         Kgj7D4YeuBV/NLXADbWLj+7SSNynbiJKrACP0RP8kLN47x7MyxOBXnMDucO3hEN3xPQL
+         7H8eV+36IByjYLKtQA+6UK4zkVE2AD/GGgYUb65MBujURiHavfLfLeoY536p/hmgPw1s
+         gnVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=mv3efqw3XlUxvj7BX3e9W9jV1rZVgNkv44peYPBB+2M=;
+        fh=7EuA2s/sYzt0UA/lwaqSdP04xQWSFF4lGtDkIBxIVbs=;
+        b=NnWDVlQntgqEibcQP4kqHDfXJ1/OQmffnlPeRHRKBViPNeXF5jBS7e9IKsNHp2UfyQ
+         h6thB7QW/HVKGxAGrOLTjfq3JcgNzNiFfwdDJ8869FmLv6tJBqdGUHfwbQjOzQOyuDZi
+         /71xX20vRelc/zEJ36clvy9mmH9at0Zg7dcmFk9Djcrgc5LcSZPQxgi4t/K5ViyBw6bx
+         YrNSMOjLf/ahd57uIxdyTtcXS4vsELW7gRY6vOwFb+JyNBKPXl//b30jPoWbKZ5jLCLV
+         ykAdVCsl4kwFqF7nST/FMjQAqwl+vDOV+z4Ym2Kx5N1+RY0LCUtvDutaxrKPlbiWVGED
+         LaEg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785914146; x=1786518946; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=mv3efqw3XlUxvj7BX3e9W9jV1rZVgNkv44peYPBB+2M=;
+        b=PKasrml+2hTTJDAERdcitoGYNbxVlSlYpHkgoB53/VE7V1gOVNwehixWZnWI2rHV/J
+         /APVn1+tmPPIztWzqYK4RitGZLt9vK76q7yFcBfAQa7MRf2/4/GKZxSyXPF3I4WEjiTm
+         HGQWNkJdA4hpmjfmE/W2sKqJZm4Dmemjhj2KAfQktGm43OJlMHXn2Dl+qGFn4PD/3K9Y
+         k5AHwjeFss/LgGzYwJAfCGurgdpdEb+qhjq+/hs5i04637FH9Kidv3937BZzpRohUHBA
+         J/oV0B6F2dlzHeyteCkSlt774i1sug4yYfjbx+slcTI7rzCkhf9gP0UMoam42jv/wPTM
+         B1Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785914146; x=1786518946;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mv3efqw3XlUxvj7BX3e9W9jV1rZVgNkv44peYPBB+2M=;
+        b=FVErUqSxtpCmXm8JCXTI4nUIX6uKPKVmSjWWTWnE+vykD2A9tPzVMS6Lg50Gy+Fjt8
+         eo5VoyFkrocUnTWd4n/UV8OOLIPahnw2qS2ursJytp2kNN8EqRw95naRyZFzzE0UnVxX
+         mhbGbMEAv5sZO4OX6kpXKllPTHhD157kjWhkWXHjzO0fHdFNZk9TfJE1tG4StaVOZ994
+         Mkqsi61HsvTkQEPerMtwFE6tg6+kEFK+x76J6i13TP78GoK+vNXdZCjb/r8+4O8mrV7p
+         stieq/i0iIrQ8MHORVBMhT6evC9EnwdPwfrbVdIO9wGa0BtBayzoUNwoMxGAxgbiX6R1
+         d1+A==
+X-Gm-Message-State: AOJu0YwcfF8rlT3N2zwGKXpeXHcJLvO7uOAkf5s1P6KMMG7eXR+K67eT
+	HQ3cky1mUaaVcA+OEQRv3aJRAPF0Kk/0MUFkTTHiTCER2/jDo5AkZmxpIpO/2uktKbufBOklHFK
+	/ZHB/ZCCgUc6mkhDRyfwjX5iGvj/Fg5bKRhLa
+X-Gm-Gg: AR+sD11wIp2eIriZ9xWd3bcWdIoYrSZwgRB9eYge6yA5um67jw2y39XgkRGDpnFoL0h
+	h+0gzbJk973MEE7Ni0aEnrBSg2F+hKbFoblMe1APZhUBHeSvzap6ExvMpwMIjWpqoNv9AXdsHdc
+	GbbjF+hyBbiAUunIqCVkiKK8A5b+lsDpCg+6LtrMJNbJtDBaFZv/J5gfqlpJt2A9myXc8uoC2wF
+	SKmM2bOlnpBlV828OE4M8y/4P4+S9Pp8FmIoYclmFjg+LMMh2C7qMcndVNjslIHtwwnMb1cr+Ij
+	aJdq3cGo6sYLKujyzQUmbttff8H1hzA0UfvnZ8SyMYtIB41pUA9moBIxyWmM3v/ib/EQXhGz2UV
+	fUOJLQTS9HBgf6ql+YJrYRKegE7AckEeVKCe6Kv8hTr6jh3AlJPXwiSZ1SdztDooEOVWADtc6tQ
+	==
+X-Received: by 2002:a05:6870:d40f:b0:43b:c04f:7a11 with SMTP id
+ 586e51a60fabf-45978ad4a9fmr8530901fac.4.1785914146457; Wed, 05 Aug 2026
+ 00:15:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitk: add user-defined custom commands
-To: Tim Wiederhake <twied@gmx.net>
-Cc: git@vger.kernel.org,
- Tim Wiederhake via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260805054611.128396-1-eddinen77@gmail.com>
+In-Reply-To: <20260805054611.128396-1-eddinen77@gmail.com>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Wed, 5 Aug 2026 00:15:34 -0700
+X-Gm-Features: AUfX_mx4ja508I5fa7HWcn38g7PIyM0cD_PYebj7ITnIGghcu-FmOi02PmL27hY
+Message-ID: <CAC2QwmL2HSzJEb5hPbukNdqBzvMd=6ObiDrty+6T9tZ0otmogg@mail.gmail.com>
+Subject: Re: [PATCH] add: remove interactive mode
+To: shrimech <eddinen77@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Am 04.08.26 um 23:43 schrieb Tim Wiederhake via GitGitGadget:
-> Allow users to define up to three custom commands each for the commit
-> list and the diff display area.  Commands are configured in a new
-> "Commands" tab in the preferences dialog, with a name and a command
-> template per slot.  Non-empty slots appear in the right-click context
-> menu of the respective area.
-> 
-> Command templates support placeholder substitution (commit id, commit
-> title, author name, author date, etc.) and are executed via "sh -c"
-> to allow for background execution by appending "&", and pipeing.  If
-> a command terminates with exit code 42, its output is displayed;
-> otherwise only non-zero exit codes are reported.
+On Tue, Aug 4, 2026 at 10:50=E2=80=AFPM shrimech <eddinen77@gmail.com> wrot=
+e:
+>
+> Remove the --interactive (-i) option from git add and drop
+> its associated interactive-mode documentation.
+>
+> The patch mode (--patch/-p) remains available for interactively
+> selecting hunks to stage.
+>
+> Signed-off-by: shrimech <eddinen77@gmail.com>
 
-Thanks, but this commit message is a bit lacking: it does not explain
-why it is a good idea to have this feature, what purpose it servers. For
-this reason, it is not possible to tell whether the design is sound and
-whether the implementation follows the design.
+I don't think this commit message is meaningful according to
+Documentation/SubmittingPatches[1]:
 
-> Signed-off-by: Tim Wiederhake <twied@gmx.net>
-> Assisted-by: Claude Opus 4.6
-Thank you for being explicit about AI assistance. Note that this code is
-going to be downstreamed to the Git project. Therefore, their AI
-rules[*] must be obeyed.
+    The body should provide a meaningful commit message, which:
 
-Equally important is that I want to be sure that you have checked and
-carefully reviewed and understood everything the AI produced. I am not
-going to look at the code until there is sufficient insurance that you
-did. (Blatantly put, I don't want to review code produced by someone
-else with AI.)
+    . explains the problem the change tries to solve, i.e. what is wrong
+      with the current code without the change.
 
-[*] https://git-scm.com/docs/SubmittingPatches#ai
+    . justifies the way the change solves the problem, i.e. why the
+      result with the change is better.
 
--- Hannes
+    . alternate solutions considered but discarded, if any.
 
+    . records the resolution of design or viability concerns raised by the
+      community during the review, if any, ensuring the historical record
+      explains why the chosen approach was accepted over alternatives.
+
+[1] https://git-scm.com/docs/SubmittingPatches
