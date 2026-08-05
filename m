@@ -1,174 +1,206 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B023BD643
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 16:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214F63375C3
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 16:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785948299; cv=none; b=WsUe9U55xMn38pboQqEC8sTA48SfKZiEVDnB6l4bQ292OpXqR+PPkJV03AlucXCH0TChdD/H3Ksi0I9tt2w0egqBHIXNPyKLzjWfZPiI11gnlggFEcscbgDdISWghOFaQsmWh1GNF0y81vvybwL58mWJcP2oakryFXxxHufN3qc=
+	t=1785949087; cv=none; b=ZPFIl5QYEiwSg4tqXob+fE1a2mxSHCoQXIpzH+gRQL2dgYg9nwID9GNrTVDHqzvV4tQXdN/iDv7sqqt6NIhKQAGdAMKi3MZsvpGkjMUg5GgdDjdQTZdit4JQaKdMGtZMdf6d97UZ1aqTi5K9bB5f6UJoLJ6X1dPlCPPQ+YQgu8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785948299; c=relaxed/simple;
-	bh=ks/mAXW3RdPpHYwMMKJpjAxa2toA/YVVuVCgGCmKkR0=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=AsEDCj62cpcioXKec8kx6cgRbCE5LlAOsLMvxs39+5NNyVGQZ3mb4oUNyZnWn271V5of97oOC5z/OTG4qFh5QF9q96B7HcPyvZFjPk0FnHF4waHRJ7XV+rmuCUaJohfw/91AtJZnUFDGkvUM+vrMxTJiboMH+8TV61WikdzHAEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=nYIfP6vv; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1785949087; c=relaxed/simple;
+	bh=9X1tOttsxYElV8b2cEzitaW/myDX2VUMmq9ddjiveP0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mrdBVmPDdzlBTdyzJNs/xz5GWQIgY+kFZucLCCRTwo3s5+6hZ0Fxif7aF7fiAvjBluDKzzbnwheX8NMaXHFD6sM/V7n9J7qYxAJP+A1qX7Owq9uzWQ9PNuNaDpBGPbI2ZGTDAw3DovpVRDL23cq1TzBFwzn7ZekZTUVdgRHGeOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ChLWIDxC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OgKGGuGk; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="nYIfP6vv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1785948294; x=1786553094;
-	i=johannes.schindelin@gmx.de;
-	bh=Nd09/ENWFBSYhEgaxQirFtuNjg1XDFLbaBvuxRg4Sl8=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=nYIfP6vviK5q3gOsmSpKEmoEeUrB6c34AKzFik+HFV645uM5WzJztGxWEbalLfsA
-	 XM+xLrgakL15cqtI7pBDffS1JU4IL8jhbQDfCCsLeq98iVyHoaMF4BCGEyr7+BVJ0
-	 cznb+HfKBfcN45CFChB2JnFDOl/Fby+rNpJncsUInxpk+XsueUITFVRKtWWem0Byp
-	 qi1XRYxsFhtNO0Ucyl40/1xwEYi4LKsOxk1gMcFcsaNucb6NLyJsEObGrRIi4Hveo
-	 1+7BBVda+KfpWWI9DPpIvqYOx2eOqluU894b4y0zoLYsxb5ra7gfGK2gadiZvJiwH
-	 CMmn9vYwF9RIQTmG0g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mplbx-1xGnQR2BuH-00aO63; Wed, 05
- Aug 2026 18:44:54 +0200
-Date: Wed, 5 Aug 2026 18:44:53 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org
-Subject: Re: [PATCH 11/11] bisect: handle dup() failure when redirecting
- stdout
-In-Reply-To: <alcvnm0xiOv5W0w_@pks.im>
-Message-ID: <8f0e066f-c995-e47b-a3a4-709821255671@gmx.de>
-References: <pull.2179.git.1784069325.gitgitgadget@gmail.com> <2da452e39cbe1bd53da9d76fa7f7615c1a453634.1784069325.git.gitgitgadget@gmail.com> <alcvnm0xiOv5W0w_@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ChLWIDxC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OgKGGuGk"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5B4827A0173;
+	Wed,  5 Aug 2026 12:58:05 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 05 Aug 2026 12:58:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1785949085; x=1786035485; bh=qbqN4I1+UX
+	cb5A0PW5hVOpkuaIxhjLrXjiff6/vte/o=; b=ChLWIDxC6g/ZsRiQLbR/dJOLwN
+	8aIRSGsGFLdatvrlgoEjfbPyY5Ebw2x5OwKM8Rvq6BnbGZX4j0z+gjHhzYBzpHYz
+	PeeKvKkNxeux8hFwYO9tH1X2GJVuMtyXdJ6+R1dvaZmH7tBcscME2YI1W3AFL4qZ
+	vDkCZhtlo43scjFqD0O3Pm/k2CGZDtcfaKcd5ycJFqsj+GjVEikztaoKLLkk889E
+	dM78aLcEIviXPH3yrpPxKkzz8NZfr7CP3UP3odYlXhcOOixq8zGv4azt6jtSYfL6
+	PgLqYMygh6KJVoxtb3+yMxyLHg35mMEF4BKfe2fz4lM9UQ0P4i8UFzSpTAHw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1785949085; x=1786035485; bh=qbqN4I1+UXcb5A0PW5hVOpkuaIxhjLrXjif
+	f6/vte/o=; b=OgKGGuGkbW91IexnRxyONO6EcLeh0VoIW/4yEs2iFQrYhnE3ep+
+	YEpJ3jeV9cxDmzZpFmPPakitXprMCyBNnXzoFLjfIERscnMgeFE18/rNgqY1Vdqo
+	RclFWPMjvLI3xecz8JNiq4E7muUdwAdlSsu3oWhA58mcEkOZeY3CVk8G1OlYBgRx
+	yRbpmN5yu4Ftns2CoZ0cPyddMld02B5ilWjXsd6Af85IOwbZfGAsIxOcWtg1kqjx
+	yFZSFBO4mNmAyAxd4tFQxDZU5/GU9EnGwoSPr5gE3hC0zkagYttlmbF44PkKYauD
+	Sacxi/tqSZdXItLUORvV8ev7KamdIL8mkwg==
+X-ME-Sender: <xms:nWtzauoQryHnq75Tz5ceoyqharjg0RAj5rVrUMVFB56_tD19el7wrA>
+    <xme:nWtzajhWoT-XD7wud1tQBfN4kfCESbmAxpXkkZH5gOfQTW5iNRXXLJ4LKpxSN9NW7
+    WsUtE6_3CJzse899LkzUgUbPsXIQQA40gaIr1fXX-cLyJooaWmmSA>
+X-ME-Received: <xmr:nWtzariY2rlTPeUW9Vt_FDtg5R9D5wtUyn-95SKnMTYLaK1GEZraCHxyOe283yNIsGQZ5GKl-rlBxyvQ47OsquRIW2oDD6NwFg>
+X-ME-Proxy-Cause: dmFkZTFxQuJUp60Tlt47PwTxK3qxO+W2kSkZPOVxjs2eNFfw3Ho2Ul94zT0xKZzJsPMb78
+    WotD9LYB2tZO3vf24PJx8Q8WY2cVILW8e3OSHoiZPGPGb5xSLbjVZqzKTN0S4Ky0W6cJA6
+    jnsqweb0ll6rCrCaiar55cwRkf86QwREjXrnYYITWvwjcilf5zhE6v5Iwj110crKiLjCcw
+    R9/q2pZOPEKRuD5IxOg3PHwm7xOs7k8oMzYjktryj+gQfgyVaPPdo/KLue+YyqVKGaoQ9/
+    Tyufp1JMMew4MU60Imlvd7XpnkHiTpcUP2fnR4hr1k03sj2JImbKYhlwmugblfkd1IBuHd
+    eBiZCud6B9cIMwQcQAhYc2MLNulWKpMRHAJGUoN0KA1JRvJyXetD2FtK0L3xWtqYFdBPYY
+    FZ7Ny5n8dSvzIKqs1WgcDpArhcvpVaFtuBc25CCV0dkfSygJGZz1v0Kq0h65na5OyraPqF
+    /+UwTfPXvpuGBU5ESrTZ3dueKvNaoilzA8PhRR5zx2vCWi9rMTjNuJSM1T+9fwh2EuPbOf
+    9s01CI1aGcE3vUpD690KOaTfUktDqwEWON5FcpWMg3v7aYLZfg/qL2s2y05yAhrzHILLqu
+    Exz6siyvDEyGgxHIjngUZW7zBak2MU/og9HzA1A2V6/7XStAYuSjkFnAwiVQ
+X-ME-Proxy: <xmx:nWtzapiAiWY0CeFiHqgi81Q_-XCU-i5Q4om5GiuKYAJkQbL59-He0g>
+    <xmx:nWtzarINSsNWE2TRAGktSOQ9xCoZAoFYaSF_sH0hgDKAcF3Q9JRWPg>
+    <xmx:nWtzaoEa6q7o-JTlfwpRvziaT2iDrv3RVStgDF0gaTz8QT0caU0Wew>
+    <xmx:nWtzavR2onBJ2bJrzzyG0UuJpToYFMltiaYuvbnbM7d4rU-A5mt2iw>
+    <xmx:nWtzaucDAVMjPdTr240xdj6zJsgt7lTpZTvTfUv-l0CSkpGBV9D_ViWl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Aug 2026 12:58:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jacob Abel <jacobabel@nullpo.dev>,  Yoichi
+ Nakayama <yoichi.nakayama@gmail.com>
+Subject: Re: [PATCH v3] worktree add: shouldn't dwim if -b or -B is given
+In-Reply-To: <pull.2192.v3.git.1785934486496.gitgitgadget@gmail.com> (Yoichi
+	NAKAYAMA via GitGitGadget's message of "Wed, 05 Aug 2026 12:54:45
+	+0000")
+References: <pull.2192.git.1785852032626.gitgitgadget@gmail.com>
+	<pull.2192.v3.git.1785934486496.gitgitgadget@gmail.com>
+Date: Wed, 05 Aug 2026 09:58:03 -0700
+Message-ID: <xmqqtsp8qzc4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Provags-ID: V03:K1:uIwd+7Cy5IfugdZUJjN1wPcqvM5AehVV95XN1G91161c5OHgQMu
- iRJWDLNfnHHX4Ar9JGDbFQ6BO10Np8sTf885a8JnjfwK0u5SJdijsCqutOnuDGLZKds+peL
- VJBKnvKn9g8vpdozu73bMEbMtabDrQrklaQTaA8RIuLWGQYKywMwi+HLtuK8k6jMO9mlHpP
- P+QDjnLnceAR7d5U4pAlw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:J1TSrGPeiyw=;pYZF7MNAuinwjCJg2WXj+NooFc8
- 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
- W+3rhmPf/pZ38weX7HTorGlXEYu1Bd+ok+Y5g=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Patrick,
+"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Wed, 15 Jul 2026, Patrick Steinhardt wrote:
+> From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+>
+> 'git worktree add <path> <branch>' DWIMs <branch> to a
+> remote-tracking branch when neither -b, -B, nor --detach
+> is given.
+>
+> However, 'git worktree add -b <new-branch> <path> <branch>' can
+> still DWIM <branch>, causing <new-branch> to be ignored.
+>
+> This is a regression introduced in v2.42.0
+> (128e5496b325640f0a09cc1d5b1e346c069b410f).
 
-> On Tue, Jul 14, 2026 at 10:48:44PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > diff --git a/builtin/bisect.c b/builtin/bisect.c
-> > index 15a2a30f89..801daf8c78 100644
-> > --- a/builtin/bisect.c
-> > +++ b/builtin/bisect.c
-> > @@ -1308,6 +1308,11 @@ static int bisect_run(struct bisect_terms *term=
-s, int argc, const char **argv)
-> > =20
-> >  		fflush(stdout);
-> >  		saved_stdout =3D dup(1);
-> > +		if (saved_stdout < 0) {
-> > +			res =3D error_errno(_("could not duplicate stdout"));
-> > +			close(temporary_stdout_fd);
-> > +			break;
-> > +		}
-> >  		dup2(temporary_stdout_fd, 1);
->=20
-> Shouldn't we also verify the return value of `dup2()` while at it?
+I'll commit with the latter half of the above message rewritten like
+this:
 
-True. I wonder why Coverity didn't complain... funny. I changed it to also
-check the return value of `dup2()`.
+    However, 'git worktree add -b <new-branch> <path> <branch>' can
+    still DWIM <branch>, causing <new-branch> to be ignored.  This is a
+    regression introduced by 128e5496b3 (worktree add: extend DWIM to
+    infer --orphan, 2023-05-17), which appeared in Git 2.42.
 
-Thank you for your review!
-Johannes
+As we refer to an individual commit using "log -1
+--pretty=reference" format.
+
+> Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+> ---
+>     worktree add: shouldn't dwim if -b or -B is given
+
+The change looks good to me.
+
+Thanks.
+
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2192%2Fyoichi%2Fworktree-add-should-not-dwim-with-b-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2192/yoichi/worktree-add-should-not-dwim-with-b-v3
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2192
+>
+> Range-diff vs v2:
+>
+>  1:  b00f6c2fa1 ! 1:  477ea27c8b worktree add: shouldn't dwim if -b or -B is given
+>      @@ Metadata
+>        ## Commit message ##
+>           worktree add: shouldn't dwim if -b or -B is given
+>       
+>      -    git worktree add <path> <branch> DWIMs <branch> to a
+>      +    'git worktree add <path> <branch>' DWIMs <branch> to a
+>           remote-tracking branch when neither -b, -B, nor --detach
+>           is given.
+>       
+>      -    However, git worktree add -b <new-branch> <path> <branch> can
+>      +    However, 'git worktree add -b <new-branch> <path> <branch>' can
+>           still DWIM <branch>, causing <new-branch> to be ignored.
+>       
+>           This is a regression introduced in v2.42.0
+>
+>
+>  builtin/worktree.c      | 22 ++++++++++++----------
+>  t/t2400-worktree-add.sh | 10 ++++++++++
+>  2 files changed, 22 insertions(+), 10 deletions(-)
+>
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index 654d27c3e1..cc46c1b415 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -898,16 +898,18 @@ static int add(int ac, const char **av, const char *prefix,
+>  		/* DWIM: Infer --orphan when repo has no refs. */
+>  		opts.orphan = (!s) && dwim_orphan(&opts, !!opt_track, 1);
+>  	} else if (ac == 2) {
+> -		struct object_id oid;
+> -		struct commit *commit;
+> -		char *remote;
+> -
+> -		commit = lookup_commit_reference_by_name(branch);
+> -		if (!commit) {
+> -			remote = unique_tracking_name(branch, &oid, NULL);
+> -			if (remote) {
+> -				new_branch = branch;
+> -				branch = new_branch_to_free = remote;
+> +		if (!new_branch) {
+> +			struct object_id oid;
+> +			struct commit *commit;
+> +			char *remote;
+> +
+> +			commit = lookup_commit_reference_by_name(branch);
+> +			if (!commit) {
+> +				remote = unique_tracking_name(branch, &oid, NULL);
+> +				if (remote) {
+> +					new_branch = branch;
+> +					branch = new_branch_to_free = remote;
+> +				}
+>  			}
+>  		}
+>  
+> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+> index 87b926728a..ba3bec078f 100755
+> --- a/t/t2400-worktree-add.sh
+> +++ b/t/t2400-worktree-add.sh
+> @@ -621,6 +621,16 @@ test_expect_success '"add" <path> <branch> dwims' '
+>  	)
+>  '
+>  
+> +test_expect_success '"add" <path> <branch> does not dwim with -b' '
+> +	test_when_finished rm -rf repo_upstream repo_dwim wt &&
+> +	setup_remote_repo repo_upstream repo_dwim &&
+> +	(
+> +		cd repo_dwim &&
+> +		test_must_fail git worktree add -b branch ../wt foo 2>actual &&
+> +		test_grep "^fatal: invalid reference: foo" actual
+> +	)
+> +'
+> +
+>  test_expect_success '"add" <path> <branch> dwims with checkout.defaultRemote' '
+>  	test_when_finished rm -rf repo_upstream repo_dwim foo &&
+>  	setup_remote_repo repo_upstream repo_dwim &&
+>
+> base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
