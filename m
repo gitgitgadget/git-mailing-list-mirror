@@ -1,145 +1,113 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E313F6600
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 09:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785920787; cv=pass; b=ZFuZEg/XfVjO180fnLZXYAwUU270J9pnkzOoKb7XkRyCOkXZcF1pq/NQeNjNJRcDwfoEJoHBSvOKtoIRrGXDKdF5eTqodYgh1bEhE304MsmStWFEo9fPq07LG2jvk77XPcFFXn0WppWuRmmZjgMDMsH0PnqjKm21MhKvnkSWgWI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785920787; c=relaxed/simple;
-	bh=k3HOr9YOide4pHL6q+kXXpOk98Qr8uazTCz/dXRD+zM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=iqUUpPBADx8rFqeeOspGPOwlrc8x9+Ss3I8S58yQH0B1dKPNY8htUTiNhXwrCUViNKnnFURXT1MlBwjQegY7DFhkpwXylE2cpQZLxP5RhCcgazfXrsjP2j5HqErBC+Rj4V5iRK+FweYRIzotqmVoxH0hKSMPN9egxywaJPSWxQ8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J1zV7dDh; arc=pass smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBDE3EE1E3
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 09:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785921223; cv=none; b=n4lCYzeoI6NP3doMOMzpF2AqLEHe40rZdwj0xwIHe1Iz4wJonybC8kL+SNqBCx+kBjdc+Cv5fGRh8MNAZEMyS4yHBUnr37PgWDehNzYJ3ENlr84KfAzAKF1VlDznhBmA47MHShlTXcvqT8iEHCSvFcLuJSex4H+6mRqnZkXaNWk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785921223; c=relaxed/simple;
+	bh=OKeIoGkWVMr4WXOCpyAbibm3C94gxJVpfXjDytBC7M8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ART30MZR2pD9gh0LM6oqe55YIOdrD3vTG/O7NQsUh8Ng5eQVucRGQCWQz1nJuVT9+y6n1lXJC9EXc47BdmIO4WrhCDv3+UIh9MATiAnr3ThVx3yim7cP+SYAwMN8PEmf8E0kgQd1bQSvhiJ4+VzbX7D1D3khesoHb6GJgS5wyBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=hOGarTZh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=huDi9JTH; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J1zV7dDh"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6a097f5ab95so1041288a12.2
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 02:06:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785920777; cv=none;
-        d=google.com; s=arc-20260327;
-        b=QLsJXcPkp+u0bU7OdWf1Wd98vHFSgUbYy9wQ8w/UwwbKQTvfHcKJk1lEcEAoyrNlBz
-         EXqR/f2KDkun/WzLqJyR/sFv/zm7B1lu1R2MBAQ9zJDA11g+dac9iajJaPzZjqLSSJc/
-         JfXRPBgiHDp7UnWfp8bO5C/0im3o70NK6AJtXnAhxdaJ5YBGOQXtMdxk/SI3q9QHBHPT
-         wPAcxreTsV5ErZIqY0l3HiFE5XY2yqfzYHeFPE710+10CPFxMVKL9b/zMVxwiMPrF2G5
-         sr+4VnfUpPA5ghMhOgr7mdy7oIm8Xe2eKgZjUIwqr3WBtkAMYLZWIqubfE5y7TVUEO8z
-         jRpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=k3HOr9YOide4pHL6q+kXXpOk98Qr8uazTCz/dXRD+zM=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=dvaVHCVEWAcyO8Cfe3JgrJw5lpR5TtKcGLuZxnlb1fD94dFqu4AKl+EgOedyL8zsOm
-         c0PRYcz23sZwvmE+MA5uZ47iFununnstCwnu6BIiy9Z9jBlY+LVUqjN4njJrfo7tLf5y
-         hgW4SCtNsIvmgNhiqZXVWqsQ5oZAe6tEyjTv1ItF2Vw4e3mp90f0f+5ThjGEuBHcexW0
-         kCJ3GGr0aIbvd0xTENNqVSETHvs3KdIukB2X5CboNrSgOwQtJcfLzg93wyTQOZNgRXpR
-         D19cHUT6nZV9KuoL6TEQ40tc8ErgdDUJYarTSnojg0NLj2oBpqHzqlB2Xt9jnnJ+qxtF
-         Lf2A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785920777; x=1786525577; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=k3HOr9YOide4pHL6q+kXXpOk98Qr8uazTCz/dXRD+zM=;
-        b=J1zV7dDhM/GT8PK3/8AH5oEArLF7vDh1A+FAJU/kM7JpjyUxNP5Yzzar3e/VRrE7NG
-         hg5dSNSFMtqLjECpHYuo3mXJDijdzMfYA8YfBnTsh8TVcmtRwv87rPfDPTfNHCVRRj2H
-         AIwTs8ybfxsxbikMUEZpGAMJwkwqqRVJIh/JEw0Gt+if30GtB8p3mbLBi2NenPpXCPdC
-         RJXSVLlVCph2JwkX/sF5LpWwoNl3OMvc8y8NX5ke0HeZp/PEjCWJrWgdPbWNfwyLfjoI
-         yec3KTp3CO0l0Gs68UOZVzzdfgO+TIjD0jzJKBmYvI7luwuhMZe5ReR26UQP9BiQYzT2
-         /Jhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785920777; x=1786525577;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=k3HOr9YOide4pHL6q+kXXpOk98Qr8uazTCz/dXRD+zM=;
-        b=gx1xn730orXZTYxMKZXddM/H8BBU4X3hXh9rT0bkOCix5gsk0ip8lozvw103K5zK0S
-         ZPGfUXrYh9ZnVqIKlaMRauJeV9KNN51GNHJrEaxvOISaweFgZQLMmWsEf6Q6Ysz+51fC
-         RMir0kbovNn7zbjZT3jR4xHs/ax+J5z0a+xTfWnr6kQD6TUzL67K7NsdynfxKLm+LnWg
-         yYmzX6VwtnM/0dvWF7bcChQSyShIt62XSEQPoBaF/1cIn/duiQ9m0V1XSsenKUqHeOmc
-         TmSVO8kCieh4UXqSFZKimWrCzRf/6SBwxg0LHmxaxTFCfE2B5a62tVAHnCYc+BahjZqZ
-         JZsA==
-X-Gm-Message-State: AOJu0YyBTEZqpmXo+D0wew12FB3XJFZMqkWCUpX4wAtPoHgR9HwLZGaV
-	4ap0i5TQzQp9UcEUNafwSY4j9lNlROgZU6mtvwRy4BpfSkMSyXnIQuJcDScz1LsJHczTeb+8MjH
-	y3enJndEJMbRAEhyPBObnOMHWQ+95ANfTJ4utTKo=
-X-Gm-Gg: AR+sD12zro0O5uxgK8KxNYl/LoEw0YTxx1tFRnWI8ep7uPLqx0YCoR43q7Jq2L/IlI8
-	ddKmgraButQ+s3M0jrc3Q18Vve/fL0o1KFACJO3E7AP+/3s849kiIJgyAcVkt8JQ/FFq1whvetc
-	GYxtR+N7w1GTgc5BKRaioej1rOIwz8HZKtH2Uo2zwE2e1+tDpemjvxaRUixxYiXLOSbE0MNrcJT
-	tvUHy/Bh8lTN0yEDt2GDJ1x2vyDgDOCc8Nn+t0/p6dW5usTYEZ0VdR2wirnTMaOUExm9D4pKYJJ
-	ntShBfB/9cPF7Y37lSVWPXkTK/GpN6dmsKWgQn5ZMwjF
-X-Received: by 2002:a17:906:eec4:b0:c1c:2ee9:5e6d with SMTP id
- a640c23a62f3a-c2039c39717mr256553566b.17.1785920776873; Wed, 05 Aug 2026
- 02:06:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="hOGarTZh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="huDi9JTH"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.phl.internal (Postfix) with ESMTP id 66E52EC0094;
+	Wed,  5 Aug 2026 05:13:40 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Wed, 05 Aug 2026 05:13:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1785921219;
+	 x=1786007619; bh=OKeIoGkWVMr4WXOCpyAbibm3C94gxJVpfXjDytBC7M8=; b=
+	hOGarTZhRz25DfpqGpoFxedNqf+IlCunewrHVOL15j4EhkayOP4DuvMsq+zkcr/U
+	xtJbMvLAsmlvsjcfshW/33wr95O6FtI6NjssmBufTt1iQU83hAAG6i8O9ZJv0ttH
+	b4lO1AKVDmNmxFUNYmp2HAH/0TS1RDJxV9BOI4ZHx7xpYhAnUkV1zjKgCOBJNx9a
+	I8znU+b357dgrgCeIAPvFezMS3EL/4StmwdMHeUATSmuuqow8ESut4k9lJ4wwqRj
+	RQ/4grfO52+TppL8UmPwXaz3jCx3BXa0IKYIP0g4PIYz9Co6wjZPq7l9HADWB/Xu
+	wZMi2R3sGrTb5z6s8ZC71w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785921219; x=
+	1786007619; bh=OKeIoGkWVMr4WXOCpyAbibm3C94gxJVpfXjDytBC7M8=; b=h
+	uDi9JTHwtpFlxT8VBEogunJJdwEOqEE01du5QSdsi4veXSXcBLPTXXlJp87w3X0U
+	ea+/FaU0a0WN0oMHWYDjOJnAl1d0ERd65h4LQKLWNNzlGgzGH0Iz6svGcoFFhtyp
+	iUWSTdKlWZupTb5EPOfj9T0Fiv+Eid4q8qZ8Mqdk/U7ouvJqsy12ltoeK7/fZb6R
+	WUSwyqrYUz1gscxrWhP0tRIe7p6paNt/XVBAm/KLT/Fs+VMon9ElPOUS8k5ida8G
+	Z6YPrLW7C5vPfGNO4nSCDCx80glIkYuXOl7VKfEsUBvNyY2JScxiYzM1tzAgT/Sg
+	wBE9+JVuU4Y9cZtYzeFhQ==
+X-ME-Sender: <xms:wP5yapvRyG3Gam-bKAwdHz7Mbmr5xHzx7h50wBjwBl1FNcnxZULfcLo>
+    <xme:wP5yatRURatzI5WEuDxoZIAvbDnDB6Ww8HfxtBWycwlEROJccG5R9AIKf7I9Pb98m
+    eI56pndD1-g1X75GTdIqWEdrEz9FPjFjEsmmaqHDWYixPR65gKl7kI>
+X-ME-Proxy-Cause: dmFkZTGbomfYV9WaY3kSR1Gq6iI/JzQOBrY3QoPwyNBzs4RwB3R6LM/ORoq/R0LE7CEfrc
+    yluorW89GD9L/h/Tk8OfG7g/5AR85ZXZeXG1kIUZBSK8wiGvnfV0tgRTmunS8vMMYr3tbf
+    62iLNhgMmySG/k4kWYxXVE45Qlsj/OYYqe0P7vhnEPNWxYKKLKVzCHE4v8bp67l/UJiY9K
+    t288LbEhwo8WWJ93f2Do3fQFk1jEo/tYICGFGaBBRAwUehdBOxfk3YVzg3EE2iFFNcabsV
+    TIAWwums4Qt1mVsfBzGs7M6U8hipuKeS09wgp3z04LWiHcarmbbmdcsg/DBIyUf8roKZDv
+    m8ksgBcjZ2lqPUbb04utQ61IKR+YqaYZvxZS9YKCUd64OlD7HaZGF0GULhoMFC5lqYX9jk
+    o8Lt38kdLsMNPh+KaW9PumXJvb9q7r+hT4kE1oKgPA6Y0d29rYk/bS4htQ+5NVHgTJmxkN
+    4MqUfHyFg4tiQOVkUKvcuiDXCQgJgoLiCsCLNf99kuiBe2pKFD5xZqaByHpQWqdgmYCIZi
+    3H630WC6LWZNIsF3T1GAz2mPLsZcApc8o6ht3fGT0aVLp/br3FPwPK3NG253sP424zHeBT
+    WnrUqYCwahm36Kp8EPKgNrtd6OvliCyFVFmJRKVJXP/reYA4JndYdJWfFIjg
+X-ME-Proxy: <xmx:wv5yahXlxt_8ADjfjKNN0liDOOfyb7C7ogRXbSmzkXiU69iDTLajww>
+    <xmx:wv5yavZ1_DemGFBOgb07M2bPuFzFYx3qlSgdiy71D38aUoC_LBbf7g>
+    <xmx:wv5yan1zgmigSpSbpK8xWEBQItO1bweTRUTOUYV8iXFiCxXZHucx0A>
+    <xmx:wv5yahjIH98U8BXX4pkNhIRSqdNI5nap4AQEk2KRUiuUzC9wd9Vheg>
+    <xmx:w_5yajpZE3ZvXfN8x9rZRQeSsGqryxzUHMjaMeJlYpKDZRog_hbntaI->
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 5AF6A22C0061; Wed,  5 Aug 2026 05:13:36 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Adien Akhmad <adien.akhmad@gmail.com>
-Date: Wed, 5 Aug 2026 16:06:05 +0700
-X-Gm-Features: AUfX_mzIUZp8AYlqtIBuzHXCNyw7GUj-Ox0c0OOdICvt2Rc_9zAeqM6dq9C4xQo
-Message-ID: <CADoNwcscDrx+YcfbcW4YKONDZZQgnPiwEOxL4QYV_C7_=FOFcg@mail.gmail.com>
-Subject: bug: git credentials helper strips wwwauth[] on HTTP redirect
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AU0jXUOk-qtB
+Date: Wed, 05 Aug 2026 11:13:15 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
+ "Karthik Nayak" <karthik.188@gmail.com>
+Message-Id: <ef423f09-11dd-452b-9459-1baf017cde6f@app.fastmail.com>
+In-Reply-To: <anLvVAyckm7S9Vo0@pks.im>
+References: <CV_git_ref_migration_warning.b09@msgid.xyz>
+ <ref_migration_warning.b0a@msgid.xyz> <anH3k9PvWHMpWLT_@pks.im>
+ <7f34d9b6-de00-44c5-a59c-11f154e7a64a@app.fastmail.com>
+ <anLvVAyckm7S9Vo0@pks.im>
+Subject: Re: [PATCH 1/2] doc: refs: put ref migration warning under the command
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Wed, Aug 5, 2026, at 10:07, Patrick Steinhardt wrote:
+> On Tue, Aug 04, 2026 at 09:09:25PM +0200, Kristoffer Haugsbakk wrote:
+>[snip]
+>> By the way, I think I looked at the AsciiDoc admonition reference[1] =
+and
+>> saw `CAUTION` and `WARNING`, but now I don=E2=80=99t recall why I cho=
+se Caution
+>> over Warning.
+>>
+>> =F0=9F=94=97 1: https://docs.asciidoctor.org/asciidoc/latest/blocks/a=
+dmonitions/
+>
+> Hm, interesting. According to the docs, WARNING is to instruct the user
+> of any lingering danger, whereas CAUTION asks them to act carefully. A=
+nd
+> while the first bullet point is merely a limitation (we cannot migrate
+> worktrees), the second bullet point is indeed a warning that concurrent
+> writers may cause harm. So going by that I think that a WARNING would
+> indeed be a better fit.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-Ran `git push` to a remote whose URL 301-redirects to a new path before the
-server responds 401 with a WWW-Authenticate header.
-
-What did you expect to happen? (Expected behavior)
-
-wwwauth[] to be passed to my credential helper, as it is when pushing to the
-same server without a redirect.
-
-What happened instead? (Actual behavior)
-
-wwwauth[] was empty, so the helper couldn't detect the auth scheme.
-
-What's different between what you expected and what actually happened?
-
-The redirect causes wwwauth[] to be dropped
-
-Anything else you want to add:
-
-The credential helper in context is
-https://github.com/hickford/git-credential-oauth
-The server is a self hosted forgejo https://forgejo.org/
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.55.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: disabled
-feature: fsmonitor--daemon
-gettext: enabled
-libcurl: 8.15.0
-OpenSSL: OpenSSL 3.5.7 9 Jun 2026
-zlib-ng: 2.3.3
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Linux 7.1.5-101.fc43.x86_64 #1 SMP PREEMPT_DYNAMIC Tue Jul 28
-14:24:13 UTC 2026 x86_64
-compiler info: gnuc: 15.2
-libc info: glibc: 2.42
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+Thanks. I=E2=80=99ll use Warning in the next version.
