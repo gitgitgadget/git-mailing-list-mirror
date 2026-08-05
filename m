@@ -1,86 +1,83 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35BA47D951
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 16:01:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33786480DCD
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 16:11:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785945681; cv=none; b=fcci2OZmn52gpuBwVSNVzSan7nFuR+7mvTSkBQ4Jrhv76yPS9gr+XwTJ4xghFU32ycppss/Q9xGzpPr9vlUzI34TGBwfKOChR3atLg2VQoLHG/cjKU6JtN7nX7LebBe0QUp53TBtinhK/157U/s94fY3Fk4tNUvNd3nYHZudEDs=
+	t=1785946265; cv=none; b=NKl8V+WOAljjuJia/2nUfKMAZESRxQLOC3+pxj0nUWH8M6oEuqzW/VxJsAAREgc37dxt/9Rf1RqQ2vED4sbX1s4D4cY/W+D4A9bfJWfbC1/9t4QlxW2vYWOuKdvLFysgmFvC+cPzVxIErQbEaK86EdJ9z0CxQ7JPicdosU4SNOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785945681; c=relaxed/simple;
-	bh=yHUnE6TjYiYda3nM+sJOoWMXsrQT3tgDD6aNMargaBw=;
+	s=arc-20240116; t=1785946265; c=relaxed/simple;
+	bh=QdtxpTsoD7EyTxTHQoFgMVMzU7MREj/GJV8pGvOGCh0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GuQm+23510idtM/jjiti1wfwXidvJrSGHDntyDp1ovTxP8o0DrNzQF/LacVoBlCg/nH6pfad5wgRMEbovLEDom5XeMGJqXutZGGgG8SR0+QrsMru9TiaHPs8BqOyGpqTWVJJcbHiK7jrePyH9cnyfRNJw8T8wB2pWzTUNKGJFTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dLkdDB8A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gwah4e5i; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=enR6zJG9J1EPypfrdlODyr6WT+41nBIAu22fFayV+pj9Ub4cZBzslAilpL/gVwfJKzG5uuMyQvjfoVHlX+OzqR9bGP5ku9hv5MERj4OsNCfcXtUYlPbpBtYvjp5HWJVzqDXb1tmChjdEIcksJuJoSFzPfOZ9uGaYfH7XEn6hHaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HprQLYWp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jp7WOUFw; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dLkdDB8A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gwah4e5i"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 008047A0161;
-	Wed,  5 Aug 2026 12:01:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HprQLYWp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jp7WOUFw"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 64D211D0015C;
+	Wed,  5 Aug 2026 12:11:03 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 05 Aug 2026 12:01:13 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 05 Aug 2026 12:11:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1785945672; x=1786032072; bh=vLTM1Nfpc5
-	FD3hEu7v6+m/O1gSvMi8NeIUazkWQ9Fuo=; b=dLkdDB8A4X49bZUnuhsS28LJSO
-	5qtCNg2p5MQP8Evg5VsnKuVD1e6r4T7c2AOxV9zKwBrJ0gZ+J4aE1aZbj4aHqN2x
-	D6bf5NZoExUJ8Oeo3jkbInXcl4maL40NmWgc7XiijwneWQVEVfi1YnvDIp6Fh2Y7
-	A8JoSSRHCS3D22YOukIQbqBzWx790WUePyFGKTutt9aPDM8l9k6OhxN7IGTtOYs5
-	V0/+i8BvhTfiRwBXKin+DmckqJPUF4Ibq7JI6alOV3TKocnEhqFXNXwgMn5UxuK/
-	s+zkIvrDzN0VhG2tCwZ1GEv4cEdKchVYszYgWbWDANvWPJLf5R70cg4xCouA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1785946263;
+	 x=1786032663; bh=oSxD9gabPsAl8LCKvf/22JFooJNUbrnQt2XwIZAS0rg=; b=
+	HprQLYWpZpXA0vfZNKcxDLCUFQI0PMWbjvUJXVc4b4VTqHPJrxzd/Qdw7T21TWNI
+	l3Lih/lyOlSG3sIxECkC4eHRjFswVWPW+GeFZz1hS7dHYynrJkmqznhy6lsBKyhc
+	x+TDtVcyQ2EjH02wnKZqOcumnRHG4UcOq53t44TYmlTyJCOpDLC9n+dgR7ZIfzS5
+	9iQk7HEX/o68AiXm31MD7FNwfMom1Vchm9w3LSlXO+PNiQQ3Lvs+PhYwZZfRwCBu
+	vLCGO9d4tKrb8LVvq2zWKaa/C02FQQpTQEfV5lLRsJNfHLipzBSzTGRA2IseEWjs
+	hX61Y3Fb19ZQ5Byi7qDtXg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785945672; x=1786032072; bh=vLTM1Nfpc5FD3hEu7v6+m/O1gSvMi8NeIUa
-	zkWQ9Fuo=; b=Gwah4e5iyTA8gvYVQCWyNEFoNg5FJ7FI5sgGGJFEJsTXojZThS2
-	/SK8cIsa+5anXr/DuwE0RF7qFp0KjZ6kf9B5Ge+FxVZu5ZdozXeCqUY8z8cY3IN3
-	vjIBHaz/WyuYR9vfb7xsATxKdxXohvo+5Uofw4+Qw/yFqbFNjCDx0ESuyc/K/HyO
-	FZjTpTt2zLiUEYXg4P3Xon73BQdwpf6s5QQXjUZKaCrEdC846oKNirDaPtNSXezt
-	J36k/OhuyzzZbL2HjURgO+BTU7iZ8CLOWW6afBObdfNhU/oiGypGFvrhMInbOYBf
-	ekCeTuARjhJwEpI/GiIKT72zE64eIvKIv8g==
-X-ME-Sender: <xms:SF5zalD9B1tzZIHABF4HS0dVUaRnflhcs3ehuckCL-NsllMLcmEDQA>
-    <xme:SF5zanP8Lc2xa-W01uUNs1z4E0Vp10mfpkdFddrVlDXmqoSUAnt59vMQc9COS4TpB
-    5SzLxI7ws8OOLVj-t_zHUimpiq2Xi5RJW7THwcLQwSedPoFIgZzcA>
-X-ME-Received: <xmr:SF5zaqYpK2oED3W0k_b9YOVvYDh588R_BDwJa5iymGzVaYTpVNblEk0jE3Lpjm1eLhexK2SLpCSrqLcGQ3aENe9e11T28_Sn_A>
-X-ME-Proxy-Cause: dmFkZTFlRSlig0eO/tOVJDTf+2rmlTysjsJVOnLIxFupdS9WpaEoar0ymXbIT6j4KPX+G/
-    3bWHs/QtPleioELDn0tv4of9/6DroybS0rSqI7BNH8s9rANDxebdNbdlv+HHCauWzndNAT
-    qLkyGECfGmYh8hc3HA7Rc08OA+cbIJISCeRuw8FnGoqzzi7q3zB0XcQwA0FHEnVJQ0KTS/
-    B+R2skbhbcxRrsVIC1kJmrgi6SnRyEENH1pQaVOoDw11DSxDhSVnQickK52AXRyfJOWxaH
-    8BzQntREIynxCK3skl8kyY4wYwzEDQyKCHFA47HpAf3BxBcFZLGo+pY8X6UzwfdYPNk7oq
-    8cbweGXO/tEenwI4TfaRk9UIMj5FuWNoKMWzu+vVkxz5y3tqo30p22Rdplp1PnHTfve/rR
-    CuFdPr/GH9T4gK8+r64BisST81A3elTBzgHTnCATI98M/fg0jHNwVA+dNZWT19elDNK6Z5
-    YfCx88siX05KZxZYamILtjRg5h8BidmfAN5SFeUgHSrRl+G6UuLG0q0R8l3fNGGWytJXQg
-    MjfNZcw9o/bRJnfshLf9gf2PFljJktr3XiS+Gm0xyiBx7Z0LfZFJZBhE/dHrMeT7XkcwnS
-    V+SBsckcD4lIyeHlMPzZUhEP5wbkXbqGqTZJgU1f25sdcV62mjYG1cTylqGg
-X-ME-Proxy: <xmx:SF5zamtPwThYdf6uKmsbTgN3HqqwDrylXe_OcJzZYVCsHfo7XbOxag>
-    <xmx:SF5zasPBwj7s3p_BCD2nYUxdLbjDF6rkiVvfji_fi8kbqr9wk24b3w>
-    <xmx:SF5zat7Q9ftV6X1X-zS4Eeti66oXpsH01T7OBC4YsmoZk2r7DJoixw>
-    <xmx:SF5zaiTZAUDdyaaFpyKkHM2NmCJRT11AwbpPjpGovpUmhVQMVHeMig>
-    <xmx:SF5zalvPBnQWSodb2D9Yzhl1zZC229GIo_u3bmYUVtnX1XQ3JapoY4Z2>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785946263; x=
+	1786032663; bh=oSxD9gabPsAl8LCKvf/22JFooJNUbrnQt2XwIZAS0rg=; b=J
+	p7WOUFweMgNQNLvIIJc7YJBifT6Qvi01XmijdIjSzoU9WOQoHTPhyZE7hwaST0hG
+	vxoYPkA57e4TWRaCu+2iQpUBM+/SH4kw1tpyRPiduXk12SkJBRqCW9EK44Fj3sKi
+	xwpq0EzPLRcirXxMB8fnyV3XL0S3acRh5PnTs6lXnDVExOJSFoYKoS8wcRulHjMp
+	QM4hOH6S7OxKc9/Y4eXc1DpYhVGYLTMkrZFein3BIqVumRIhZ8pBc3oz92MpKH/8
+	J5B22klLBlL+rXlD1jn4KReHrxFVMy5Detpuue/KsoKgenUt6h58eoLg/0XSlATI
+	+ZAy6Tw2EzDoXXL0VSU3A==
+X-ME-Sender: <xms:l2BzaqIqaV44PfUje7dx7aHznRDlPVSU2OZX_2YgevkXuyGw4dr2Ng>
+    <xme:l2BzapJzm9tzISBvHWeaxkrVF5xZRVP8_SC1HyrEg3Ec5lLaqt_FsKXleg4O7K1jO
+    h9OB9D-nedrZtjg-9q2FEwRZYejFi8SRx6QbBSmDl3bTcCKLdFF>
+X-ME-Received: <xmr:l2Bzavtuh783yV97_qRgkMEKP0-Ey-avQMymp27rFI7ZPRu_T7WOVR6o7TGrj3V0Mh6ZSaRxwbzzjJSQdpvxPizwNQEI6VbsAQ>
+X-ME-Proxy-Cause: dmFkZTEz1ClQxVJh2KvLp+8Kc6Bb94RzB6GoXr7BdXrewfROOIht238LJ3FybWBlfGfXKN
+    n4uToD9Qsv7ejPJtDGsiYIcUs5RDxLfluejXmJ/FWDd1WKNUr6lbPLYhl6BP4xV74q0zoH
+    zttb70WFq4E23V4mXExhWXHM+RnJFokM0HX3RXS661fsnlSMKJXENLXXkpLIMRtbdHUpsl
+    CsD00s2HilmUZpTP/nyvCZw6wBxP44VjTAWrZEpA5DyDGE/7su+rdmScZ6+6HCzaUfYQXC
+    M4SrrpCZfDEGFRNd3G5x0U5/7RZ4Bl3LAXv9Q3CpAIx2EWIisG1jeaE+oH8x0nMfbqGGON
+    W0swqnhqyoeyIwSmiKgVBFES4KhemSwOnWAJXJbUKee11+7JUMMjzvt2IUkjpIhQlqB7Wu
+    QKx//Szrcvb0Rd9Ze+O0z2YBz66Iqx2VOWLz4ejRjlHjQ66X4wt/homsVyZGJR5h7A3jIv
+    yx2BXXBzs6ykEh8cSMAk02IsujQ01ZPbCkz3pey/doT90ELzY1ewWvtc92qJarE6EoI9fx
+    70vwW4nqOGZ3ci33bwBtuMY4qLybv+x9OugkRRxu87rDWbOhUkKDAP4s3kY8SVjujiHYMe
+    Y3wlriSeKKwxn19YlAcCCB2hyeD/wTmzOiyzv5fRMBb8GW/OU7qC3qi7iYsQ
+X-ME-Proxy: <xmx:l2BzauTQ4wxW3vhUvMlefvgrBwgFyZXTbrYW0KyQBmqu-VHbjt3HhA>
+    <xmx:l2BzatP-HSKzt6QYkrKTzOXPO47hG_uayqVRdNxWtNKI1D9rJm6AxQ>
+    <xmx:l2BzarZf0azr2kRJz_Ili5Y9sMsIo_46Xfc1EXb490H4QXZqepaH0Q>
+    <xmx:l2BzavxX1kgWS4L6ZJcdYkpMn93c-cyOsI4cwSxkpwhuxEYCIq8Myg>
+    <xmx:l2BzavP8USJ3rr6zdoUTBxqx9zuOUL-sZLgd7CVUBhBL_5hk71raFgUW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Aug 2026 12:01:12 -0400 (EDT)
+ 5 Aug 2026 12:11:02 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: Toon Claes <toon@iotcl.com>,  Jeff King <peff@peff.net>,
-  git@vger.kernel.org,  Gusted <gusted@codeberg.org>
-Subject: Re: [PATCH 4/4] last-modified: keep per-path Bloom filters for
- wildcard pathspecs
-In-Reply-To: <anKHP7G1uE78e2x0@com-79390> (Taylor Blau's message of "Tue, 4
-	Aug 2026 17:43:43 -0700")
-References: <20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com>
-	<20260717-toon-speed-up-last-modified-v1-4-410418f18614@iotcl.com>
-	<87a4rp1l65.fsf@emacs.iotcl.com>
-	<20260718081407.GC22588@coredump.intra.peff.net>
-	<xmqqzez1sf3m.fsf@gitster.g> <anKHP7G1uE78e2x0@com-79390>
-Date: Wed, 05 Aug 2026 09:01:10 -0700
-Message-ID: <xmqqqzkcsgjd.fsf@gitster.g>
+To: Michael Montalbo <mmontalbo@gmail.com>
+Cc: shrimech <eddinen77@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] add: remove interactive mode
+In-Reply-To: <CAC2QwmL2HSzJEb5hPbukNdqBzvMd=6ObiDrty+6T9tZ0otmogg@mail.gmail.com>
+	(Michael Montalbo's message of "Wed, 5 Aug 2026 00:15:34 -0700")
+References: <20260805054611.128396-1-eddinen77@gmail.com>
+	<CAC2QwmL2HSzJEb5hPbukNdqBzvMd=6ObiDrty+6T9tZ0otmogg@mail.gmail.com>
+Date: Wed, 05 Aug 2026 09:11:01 -0700
+Message-ID: <xmqqh5l8sg2y.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,22 +85,53 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Taylor Blau <ttaylorr@openai.com> writes:
+Michael Montalbo <mmontalbo@gmail.com> writes:
 
-> On Tue, Aug 04, 2026 at 03:19:57PM -0700, Junio C Hamano wrote:
->> So what happened to this discussion?  Are we happy with the set of
->> patches in v1 after all, or are we still thinking it over?
+> On Tue, Aug 4, 2026 at 10:50 PM shrimech <eddinen77@gmail.com> wrote:
+>>
+>> Remove the --interactive (-i) option from git add and drop
+>> its associated interactive-mode documentation.
+>>
+>> The patch mode (--patch/-p) remains available for interactively
+>> selecting hunks to stage.
+>>
+>> Signed-off-by: shrimech <eddinen77@gmail.com>
 >
-> I don't have a strong sense of this particular discussion, since this
-> sub-thread involves only Peff and Toon. But in general, I think that my
-> comment[1] here needs to be resolved before we start merging this down.
+> I don't think this commit message is meaningful according to
+> Documentation/SubmittingPatches[1]:
 >
-> Thanks,
-> Taylor
+>     The body should provide a meaningful commit message, which:
 >
-> [1]: https://lore.kernel.org/git/alq1Q55ezuN9ZI9j@com-79390/
+>     . explains the problem the change tries to solve, i.e. what is wrong
+>       with the current code without the change.
+>
+>     . justifies the way the change solves the problem, i.e. why the
+>       result with the change is better.
+>
+>     . alternate solutions considered but discarded, if any.
+>
+>     . records the resolution of design or viability concerns raised by the
+>       community during the review, if any, ensuring the historical record
+>       explains why the chosen approach was accepted over alternatives.
+>
+> [1] https://git-scm.com/docs/SubmittingPatches
 
-Thanks.  Yes, the --show-trees issue looks a lot more relevant.
+More importantly, a breaking change that will negatively affect
+existing users' workflows needs to be accompanied by a much better
+justification than a typical opt-in addition.
 
+I could send a patch to remove 'git add' altogether, claiming that
+"the diff feature remains available so 'git diff' will still work",
+and yet that is not a sane justification for removing 'git add'.
+Justifying the removal of '-i' based on the availability of '-p' is
+just as bogus as that.
+
+Of course, none of "I have not heard of this feature", "I have not
+used this feature", "I no longer use this feature", and "I do not
+like this feature" is good enough.  "I have not met anyone who uses
+this feature" used to be viable twenty years ago, but not anymore.
+
+Thanks.
