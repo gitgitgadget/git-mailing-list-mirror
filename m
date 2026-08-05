@@ -1,128 +1,137 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101DF46F488
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 13:13:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785935631; cv=pass; b=ezUOv3e+nKTIHYDePZlvi2DFxMrQxMh0ko6Wz240newj1O6mnYj1i02ycmDsy1tDawJZV5ZDrFXUSuVgDQ5sXBdulq+yxkNA1dPYsfqUUxT0weamJmCHoQnI+MA3JcLA3Y2+XvxV2NxAcxDyu2j4cOglx2fytzU0JUU+rbhHlRM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785935631; c=relaxed/simple;
-	bh=Ryq4fSPwv1rFp+ozap+75VLnRWB1kvyMPtk11bMX9NM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Ao58fzWMm5SFB86iKCRXCV6Fpw1UzhXlSokxxghoR4DWoy++MG2ruh0vf5aG9xacNyhasu8/wKF8TZ6KMWDelCdhsKfZIr0h7P0RaWicjKbtkMY8LKLOrvaVRORo22+uuqsWEN9bT/FXu5maDEk4Y4FUqBuPe/Xg/f+zLZZd5oc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bc9q1h8A; arc=pass smtp.client-ip=209.85.215.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5128D471407
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 13:29:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785936576; cv=none; b=sw1dEMAlgndjElHzx8jF83X+jmv1l/D4qdkKSykIT5YBs6fIz+YX60bQLcauvKSzFQcegbBW+oYdN/awf3OlN18Q9RFkl4NyyF6+Z6UHh2lZWUt0QJXD3bqmOoYicfIH1j8/V6dCnWivBYsKzG8/qnXuk8tLiGk0uQ6EUVpQvg4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785936576; c=relaxed/simple;
+	bh=S4yRGbHLbwko0qh8fdTq/JCGKWMl3T/6Vv1UMqd3Z8U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=R8q4flw0DzNHy6DaqGcaJPW3w5d0FqF1Dm5diCfuI1T0LTv3vukHPxEbhs5XWbSwQ7Xp39gYr3SDmsmhubq1u2G8pSmcW6dP+OBZ7mfKJsE9a1IqaM5PZqLZ7P23VhzVNXUCoJ1DPmJzY3BLXVwAY/UvysQuiG0yApZxuiCddBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=PSTvQXi4; arc=none smtp.client-ip=91.218.175.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bc9q1h8A"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c998fd549a8so728962a12.2
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 06:13:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785935629; cv=none;
-        d=google.com; s=arc-20260327;
-        b=VaX8L0o80oyR/6tg8HiUvIgKQra+ITPuJ6bhxhi5HDI+60DDIZyt+lfOcZPMhAfJDi
-         Vl3176/MBp0Rg0L19dFJBBEW1fAAEHp+VHEK2T+sQ8llXwN/GS40O/HvFJULLujAcbyF
-         y3jhOByb768GjfakEeQdKoEj/c3l3u43ezkh3NjN2cHztyCPXxZMQr7cRW56dkHX0fyz
-         99Aa0whAEhgv9rnRU7Ri0/3Vvfdv4OaHDkK5sV+uzhccM6jPkYDNt/anPCircH9tTO2d
-         d8/uGpd4191DFyri8GQtjcPJdBOiaUArDqGpwGHPwpVju91hcTXLMB7ZWL1jEmjJdykt
-         K7Xw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=B1Gz7H4QZMHymNR1a14SLI7Nk1L0aBIZsGKf+bcPuJk=;
-        fh=WfJB1YkHjfxkSMCsogHMbYc3pvCTmQRpLXh1eGJSZoM=;
-        b=EmeGN124Qnsc2WnlfcuXxzIAWqheIL68qNv3ffq2NzhmFtRFmZDUYTLBkXmxejhWVL
-         c1AfDJZVVd119B4mW7EV5Z2SYehPQ1nYsf45BnAklLIqF48jG2WwU1uZWpr9QMbgVdcS
-         mAu3Z8lvF+98s48LK03WTGvZpx3/wHdbkD9YnYCHXa2oGlIDASZM/iRLXQLVdCFdtVLK
-         3PoREiOO3/W1ftflTS9j90MapG9cxcs0gOQMFr8nyttiy6DZb5z9Dlt0LNoDlaH4NAZT
-         JRGrGLA2RPLkx3DGbHHQAPmJpgN1Rv04sVzWw+Y0HB9pqAL0mJ+tylKChiGIdNtZqDiu
-         HUnw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785935629; x=1786540429; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=B1Gz7H4QZMHymNR1a14SLI7Nk1L0aBIZsGKf+bcPuJk=;
-        b=bc9q1h8AQACxy0hY/HaAIWE3zPcJBodNfBLay5wuwqwZaHKtn6lfsuEs5z2XRcgU8I
-         i/19edI0/+BWQpuRhYe0iLM5eYKNY19XmO5lptmPXU1Y7xduMJZCQN0ZocraSYtrc6a3
-         950e8b2HRmWcSFM8ALkzGTclvgCdoQgmM0pwlBtuLCEIQKLgLtx30ZTX9wvmbG7ydOTb
-         EdQbiZ9ztYC2OwtjZfo2q+Adhpvx/Y0m+gCmcUBcQMGlSrivLXjPsxn37LQwkQkv1lsS
-         UIfhwfAMsai2amQl80WqPBIyz9RB6rNX98ovETHmBK1DOh6cOvh41w6x6IWT4x8gZxEB
-         SV8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785935629; x=1786540429;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=B1Gz7H4QZMHymNR1a14SLI7Nk1L0aBIZsGKf+bcPuJk=;
-        b=XznmPP0p36RR+3wheoN8WP1tcHo0ExQiaf39nl9H70vLKd3B3EzQDNdK4OIUnTMZU4
-         BvD/CZ2p4dDnRNgtf16MYuL3SmlRzHOVwIAUpUaLppo4W6zTbDhR3Q/0Th/HZUilxjFS
-         Qad8FekhojCvv+bC345vO/9zVe7UQacpOqsOiElf9SoAuBx0p380aUNkFkwkMryvad9x
-         Wf7YYnkpsy3Qd3ZKNKxRHCXVZh7WY4eib0D3YtGLCGmmAdYhtTf2WwUn1JDxWZHbEdKC
-         4aTGu+RznlSUwU0+3rHx2gyiXi66tRBGkYZqTjW7DBb23lxu0XfsZClO/Nzjo0PB8qgv
-         oxuw==
-X-Gm-Message-State: AOJu0YyNzx9Uo7qJc/kMgakjUa/Pko91vQQl2WYAxfDwTVgH+x6b4syU
-	KPvQKqQO+FLZ+PVI54cMT2Ol3ZUmGaTDJE9+chXf7ssu5DlAb0AuKq20Yoa9gB82Rt0ZZK/qUJX
-	14BcpQ8JGTYqAL1wBOTRheYkhIT1S7uQG6MDbXK5jCA==
-X-Gm-Gg: AR+sD13cUWz67d2KkuRcsADx2z6mK3OxV0h4+PfrdkL1hIVdLMHd6ubvZo+S2imG9De
-	NoEqlh1w8RXrWMscDVn5Bg4sIEJdxdET/GEWLNalT0DHVm28Fcdu+lZhcysi7yEOgjvrQ6apMSv
-	vrZPZM5YzLvgg1c3+7B8UDx/EvM8GEHvByPa7+zy3kuCqbJR6Qh+E6VxzGDONXoUJLfwiOD0F3s
-	2JJTgx+722kJ9pYoHkZvcDOeNldEbDXv3vGC1JQyRvBRBI4j0ExGjlcJX3kdIRRXbaQmIkLEkTJ
-	IsXs/FpWr+Htmkz0itKWrJYGX7In9LwZaxxoffdzyaThGcXlHTr/DueklNhjdciQz0CkMWT1o4J
-	OR3ilZsShMYys14QgpD4WEfi4a4pSsXOG73LYyq/yOsj53LeB+yso9NRjBOl3g9OUCQU6aWEWlb
-	GsgKG22B3rpf/AJa7US9gJyyfvGsIE
-X-Received: by 2002:a05:6a21:2293:b0:3c3:994f:b4f5 with SMTP id
- adf61e73a8af0-3cb85eefa11mr9096916637.28.1785935629256; Wed, 05 Aug 2026
- 06:13:49 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="PSTvQXi4"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1785936570;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5mMuQw1RLkoPJUjuSzG8WotGO3ESQ6BSChKNaIQTdvA=;
+	b=PSTvQXi492Yi9RGEt3q/h4B2gIDznTcyKs/VqRVz/TrQf0PpJ7ZnHiibatxUNxIORoruB3
+	8bPDEHEOfIk6nNbkU/PHk7omH9hZmKaeihaskNyb/Ba6r3ykqh5GiWEbx5ECG0oKPdqji2
+	aG4d4e8Sft5/6Pb1Wad5PgGJQ8gyEwc=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 3/6] setup: handle ODB-related environment variables
+ in `odb_new()`
+In-Reply-To: <20260805-pks-odb-create-on-disk-v3-3-c0ee3ac5141f@pks.im>
+References: <20260805-pks-odb-create-on-disk-v3-0-c0ee3ac5141f@pks.im>
+ <20260805-pks-odb-create-on-disk-v3-3-c0ee3ac5141f@pks.im>
+Date: Wed, 05 Aug 2026 15:29:21 +0200
+Message-ID: <878q6k66ha.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 5 Aug 2026 09:13:37 -0400
-X-Gm-Features: AUfX_mx3v8ZiIHtIBUKTP-5V9BuPADORQqIm859XQltlo6zdLBEqH8NJG65po-4
-Message-ID: <CALnO6CDh6kbL5KH=Nt00ksZCaDbJAnjbepU_tyRTcbGekSyeMg@mail.gmail.com>
-Subject: =?UTF-8?Q?BUG=3F_git_rebase_=2Dx_=22git_commit_=2D=2Damend_=E2=80=A6=22_loses_no?=
-	=?UTF-8?Q?tes?=
-To: Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Sigh=E2=80=A6 I haven't minimized a reproduction case here yet, but maybe
-someone can tell me how I'm holding it wrong.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I have a local branch with notes in refs/notes/benknoble/commits (in
-particular, the tip commit has a note). I forgot to adjust my author
-email before creating some of these commits, and I wanted to adjust it
-to match the mailmap patch I just sent out, so I ran
+> When initializing a repository's object database we have to respect the
+> GIT_OBJECT_DIRECTORY and GIT_ALTERNATE_OBJECT_DIRECTORIES environment
+> variables, which can be set by the user to override the default location
+> of where we write objects to and read objects from.
+>
+> This is handled in `apply_repository_format()`, which is fine. But in a
+> subsequent commit we'll have to defer constructing the object database
+> to a later point in some cases, and that will require a second site
+> where we call `odb_new()`. And of course, that second site would have to
+> handle those environment variables, as well.
+>
+> It would be somewhat awkward to duplicate the logic though. But there's
+> a better alternative: instead of handling this logic in "setup.c", we
+> can easily handle environment variables in `odb_new()` itself. This
+> ensures that object database creation is neatly self-contained, and we
+> don't have to duplicate any of the logic.
+>
+> Another benefit is that in a future patch series we plan to move
+> handling of alternates into the backends themselves [1], and that will
+> require us to also handle those environment variables in the "files"
+> backend itself. So moving the logic into the ODB level already gets us
+> one step closer to that goal.
+>
+> Refactor the logic accordingly.
 
-    git rebase -x "git commit --no-verify --no-edit --amend
---author=3D'$(git config get user.name) <$(git config get user.email)>'"
+I like this!
 
-Upon checking (much) later, I discovered the note was missing! It had
-not been rewritten. And yet:
+>
+> [1]: https://lore.kernel.org/git/amLgMqkqxR8mKIbT@pks.im/
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  odb.c                         | 20 ++++++++++++--------
+>  odb.h                         | 17 +++++++++++++++--
+>  setup.c                       | 11 ++++-------
+>  t/unit-tests/u-odb-inmemory.c |  2 +-
+>  4 files changed, 32 insertions(+), 18 deletions(-)
+>
+> diff --git a/odb.c b/odb.c
+> index cf6e7938c0..b463afa072 100644
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -1004,26 +1004,30 @@ int odb_write_object_stream(struct object_database *odb,
+>  }
+>  
+>  struct object_database *odb_new(struct repository *repo,
+> -				const char *primary_source,
+> -				const char *secondary_sources)
+> +				enum odb_new_flags flags)
+>  {
+> -	struct object_database *o = xmalloc(sizeof(*o));
+> -	char *to_free = NULL;
+> +	char *primary_source = NULL, *secondary_sources = NULL;
+> +	struct object_database *o;
+>  
+> -	memset(o, 0, sizeof(*o));
+> +	CALLOC_ARRAY(o, 1);
+>  	o->repo = repo;
+>  	pthread_mutex_init(&o->replace_mutex, NULL);
+>  	string_list_init_dup(&o->submodule_source_paths);
+>  
+> +	if (flags & ODB_NEW_HONOR_ENV) {
+> +		primary_source = xstrdup_or_null(getenv(DB_ENVIRONMENT));
+> +		secondary_sources = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
+> +	}
+>  	if (!primary_source)
+> -		primary_source = to_free = xstrfmt("%s/objects", repo->commondir);
+> +		primary_source = xstrfmt("%s/objects", repo->commondir);
+> +
+>  	o->sources = odb_source_new(o, primary_source, true);
+>  	o->sources_tail = &o->sources->next;
+>  	o->alternate_db = xstrdup_or_null(secondary_sources);
 
-    git config get --all --regexp --show-names --show-scope notes | column =
--t
-    global  format.notes      true
-    global  notes.rewriteref  refs/notes/commits
-    local   core.notesref     refs/notes/benknoble/commits
-    local   notes.rewriteref  refs/notes/benknoble/commits
-    local   notes.displayref  refs/notes/origin/amlog
+I'd say this xstrdup_or_null() is not needed no more, and so is the
+free() of that variable below.
 
-So I would have expected the notes to get rewritten?
+>  	o->inmemory_objects = &odb_source_inmemory_new(o)->base;
+>  
+> -	free(to_free);
+> -
+> +	free(secondary_sources);
+> +	free(primary_source);
+>  	return o;
+>  }
 
-- Running "git commit =E2=80=A6 --amend =E2=80=A6" (author change and all) =
-rewrites the notes
-- Running "git rebase -x echo" rewrites the notes (well, it has
-nothing to do right now, so it doesn't modify anything; however, I'm
-99.9% convinced that when I did a plain rebase earlier today the notes
-were preserved, just like they are all the time)
-
-It's just the combination that loses them :/
-
---=20
-D. Ben Knoble
+-- 
+Cheers,
+Toon
