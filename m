@@ -1,70 +1,70 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EB7388382
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 14:26:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAB7388885
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 14:26:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785940022; cv=none; b=DxPGXvaXNXIBinXUN+RKfW+Hpd8sBml0fg5lfxZeSFA+p+nK2VUnq7SnQIh5VO64Vsl5w3hNY5vqc5+PGb65ySrwKOe7CtRR5rAc43cyaL61FDqo+h1lA5J5r9UmN4RAgc8GID1P/umlVg94AtDXiqfF+1j+inNvTPcxVyMNr8c=
+	t=1785940023; cv=none; b=YGwHjsA6pAK5Z8nPKD9rC3Gw0JFv4yfTpY7elrJ0ZliTKz08qgLXWtaWwa831LVuQG1v/9g9dw6yBqm96ktnBt1JqPEltBi8wWQ1z2vlniZ1pdll8SLxu7vrsPKbL2suLZsFaZEfmpTxzZO6ACE9UAAckbIY947uATqzbS4Mid4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785940022; c=relaxed/simple;
-	bh=wqVy581eHaomChLx3smLXz52HSrB5qQbeGjYp5NLg+g=;
+	s=arc-20240116; t=1785940023; c=relaxed/simple;
+	bh=9nw5qJuhTup9/RftlFnhcLt9X0dyTpRGtOaBMqnh9/M=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Vx3PKN3wSTkYTU4TRGwIpwpMpY2Omm6J84CkOGOwjpXxnQga/1oRFVygYq+DboWCNOXmn8jc1A9MR1/QWGXB7vCn5SHA40Dl9sXNHWnQpYEIQ34GZT289uCar5VmiyuKQioJBlI5Q8s4KSJ+dUpIPe+OE6dOBNH8hxC8l7MpcMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oWUtrOFm; arc=none smtp.client-ip=209.85.219.54
+	 MIME-Version:To:Cc; b=n4L3EfiT3Y2JdaPefw963jVXraHJAZYeNpOnJS0H4D8kUFvMlXaXNP5h2OStEv45ZFIFuQILjcF9jfrV8XxdNd7WDs+3hODyR398q0K29I69Q91vNSrB8x1BUOWDySIUH5zri/CArja0RgwcenjkTF5XrNsfe6tQRWsfVwjozAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pLeKGS+Y; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oWUtrOFm"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-902fc790cd5so6472646d6.1
-        for <git@vger.kernel.org>; Wed, 05 Aug 2026 07:26:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pLeKGS+Y"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-51c04bf4711so9124281cf.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 07:26:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785940015; x=1786544815; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785940014; x=1786544814; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=3ML1yiUPOVtYcs4oHR/KMvq52L6Y4JD789Ox32l02VQ=;
-        b=oWUtrOFmYnRjIoXLAQwT0Jz9CzxF6nUYkP9CAB5AYqG5q3KzGA0JgKecFXxV0+lxhk
-         yFrm6i25iVYHGu7JmZB4H8XDJSVFzfcxWROEVpaDhgnnUmDdhDgGORciXYE38UlUBLtt
-         PbeW5t+txvCXYfC6JbO0wdriMcmBUeUCwj/g9y0e0mjeK0ppEK9AYNP+Wuy7u6Z/cKUX
-         3XYYkGP8VNBLAlKkgGrrpZSOrLsZkGRKyqrj94mhWjyn0vsQpPiGocEqU8Jr3iV2lT0u
-         mI7BgWAemLVSXwhfPvPP5lB7lKgAAdgs5GzBWtvr7qfv5PA6se3z0u2UFoPHOhGeYe//
-         Rwvw==
+        bh=PiXXz2ixKbQNTYbOqGgau58vHVVinCL7ipI4PQruFik=;
+        b=pLeKGS+Y9Bml6SBURJMtIKCVdkabgDRcdTeqKBBrbr1ieaDL+5UZq1KyZoyW8v8VmF
+         iURJgvbYMdaHtRLkIuxUeAVT60xF4cPPygD/5hf9CqTaBfLhMm6jDYcfNyiURNFWmplR
+         6t1yxnYVMlw3V5PE7fP45xEQAyDsIHMooIGOVU1JvVYtUKA71anOcj1eBfZ9/BEPR9R/
+         gxUwW0D37UKN9i/BpdQFINOZwpN5YAVQpxJIEGxcofyX78LbrgW1EZfEgx6Bo9myNOh1
+         vOf9Ii0+e9xQsNULQHEt8SxUkEfyvPugW/jGpH7UJakJoSXWt6iWULfqT5YJiyNsifct
+         3qDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785940015; x=1786544815;
+        d=1e100.net; s=20251104; t=1785940014; x=1786544814;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=3ML1yiUPOVtYcs4oHR/KMvq52L6Y4JD789Ox32l02VQ=;
-        b=YeR6ZqQuD2Qka+GVZqUN1cgDIWs6gbGwhVFFLIh9xyS+u4Zwlb2TprB6y6Wupn/ln8
-         DR3EDIhfl+jMOjh2EQ4m5+Ex6TJHN62fAmrsRREB1rV+ZQ4oWZ2tx4qFbyn9nPfgcau/
-         iMi9CbqfBFTjJDxu7H+x/wj9H9JabrTurSvnDaAdJFKpfRLjP97fzZHhwkO0XJ4pRO3a
-         SLew72AhhiijBvUcmGluY+KXXyBM4jUUuPyXEZ40ZqrFy42q7VCXUOffDeeFL3j7ps/k
-         YRoeXiK8bxFml5JsYSu7hS9NH5i/F0xeRMOAgCgPo2L6rZMdP6nHIyjC2YAAERiwyrN4
-         CyMg==
-X-Gm-Message-State: AOJu0YzgyHwxYwLYtt7eYZT+EbEu1VuzfSnGnh0DSPshaCRHYOVWcPhQ
-	DKG5YfcDclCw0WnbTooQrdWyZ4YKPpD/9n7EPhDfdXJiTD1TqXl2briM9XjpDg==
-X-Gm-Gg: AR+sD13yzCUBQze3rJFQ7nLVoBfWOiVLOLhOLsCMSdHv/Y7PclDosXK9yUWnjDFsJ1v
-	u8kcGnmQ6wAgikEVMji720rnPcc1w83xdmh7X+eyOqNgvFDqfl0aTHcx6zaQvVdm64QHsklQ35B
-	pvVLKH6nix7xqscd+tXFMD2SmH7m64g7ZHDmUzy8wlfuHT/QNXLuJn1HbHCsOjmPzNmWhBjQdiN
-	/cF51M5imPZ+XgQE1U5cCXSt3fzyLM4GgDnQYMbL+/5vYkETanULuUQJ171i5wUYGpFxbZkqPIX
-	xjpxkgpv1EiYB0FOLkV4CZW2MNHluzziHgZIMlgjoLCQnXXUuWIe0Z5luldefnrGnxXJV7b/jzY
-	q7FCb2Goq8CGtBSKt8VnBWDAaWnGMSeQdlBlr7Rw71o5G4jwID93ycmgTifM3fFex43W7m3c6FD
-	MxaN/pQ0eqD/UzN5WcPH710w0ADWJcwdqpP3bz/2q25jWDMM6Q+YfENtyr1qU2B9g=
-X-Received: by 2002:a05:6214:1cc1:b0:907:5516:3d61 with SMTP id 6a1803df08f44-90881260b5fmr83155656d6.21.1785940014830;
-        Wed, 05 Aug 2026 07:26:54 -0700 (PDT)
+        bh=PiXXz2ixKbQNTYbOqGgau58vHVVinCL7ipI4PQruFik=;
+        b=aR308GcUumj+2AZFRX3pgJ75DQxOGJq4UA70FHwkASn7yVHnJqiCILFyzxTsJ2EV4E
+         6BsOLJ0/CrsC4yiI8bUieanOSgK22G851EjfCDAZ0Q00mRbVZe8uPdMcfj+ZFD7uJNXO
+         JYE8UFHkEJ59NSTng8IhJk0cTtPl8szq26EN0wdN7c3KlLyQ8YdoKrEikJAivdBMxEY6
+         my1TuHmqugvLHfYYHkOjPvRSf85b+rzMBE/4x7DoO8o5zJ97Igo2ofDlTLvQid0O4yns
+         gM7b19J0MvIpEM2sJparB1/mEftHmrz1AT3CnS0+07FsRTz/EaNgmWDkAjX+3zLRGWxu
+         3g8A==
+X-Gm-Message-State: AOJu0YyuDJ0slU0XXkznEuejqb/x5cZUvQU8xsHM5N1pP8gDnlF9ydVm
+	j6pUzyn7gph8vEG84FAsy1BgtKVGt39uV9TlCdKGqMqkOT+atFFLj/HmJs9Nbg==
+X-Gm-Gg: AR+sD1287TW2NRFDNW47IwNncDAg73fgn7CAAY/ZUDiPtNBcGrKw257ThWVIAv/nX0b
+	VeUNqXAgD2YVDUSV3+VfDO6haYTKe6ujkaormrTGLHi6NUn6YU/bL5mxMQqJ/4ryYEKo20sQ3hC
+	HHH5Sa5B+rS/1V79jp5+TS6Mx0s0H11vorL3i55S8BMW1IAXqxjpFgJhOJpkSAeaCM7PhoVKQGv
+	vi7lsRNqdOSR2VUtfdHSdRGKKrS8kgyP48z/bewdHpKgCJNJ6jYDmdBUSGoK1vwHyvS6z95j8HR
+	OtewduGxktvHRDB2MiHdfDyF4vwvFoTqQ1H5RzsGvxLzCB/On4ch8oIpXoMg8SZyUzw0xwMG8jB
+	i081SD5ujW6KoNNZZcRtxYL0QRIhyiA9hE+Uzo/mJ8JAbFNbBoVNbuf08hbJivdn7mW5zqre0zS
+	yCVWJMGjbcbGsdUmp2JcxC6f7aR9qqpgplLYqcm2/rvCZsmljrtFWo+VgW3GUZ0yo=
+X-Received: by 2002:a05:622a:986:b0:517:9f43:4732 with SMTP id d75a77b69052e-52ce5fbd06fmr75830001cf.11.1785940013702;
+        Wed, 05 Aug 2026 07:26:53 -0700 (PDT)
 Received: from [127.0.0.1] ([74.249.78.162])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9087ffda379sm26556176d6.20.2026.08.05.07.26.54
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-908800cabedsm26481416d6.46.2026.08.05.07.26.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2026 07:26:54 -0700 (PDT)
-Message-Id: <1593d1d1a0dceb58640cfa56b49bf30d8a2c6365.1785939999.git.gitgitgadget@gmail.com>
+        Wed, 05 Aug 2026 07:26:53 -0700 (PDT)
+Message-Id: <b00d242621ad2da67cd07edf34d3c8d3bb19f638.1785939999.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
 References: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 05 Aug 2026 14:26:34 +0000
-Subject: [PATCH 08/12] mingw: rely on MSYS2's metadata instead of hard-coding
- it
+Date: Wed, 05 Aug 2026 14:26:33 +0000
+Subject: [PATCH 07/12] mingw: only enable the MSYS2-specific stuff when
+ compiling in MSYS2
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,142 +80,34 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-MSYS2 defines some helpful environment variables, e.g. `MSYSTEM`. There
-is code in Git for Windows to ensure that that `MSYSTEM` variable is
-set, hard-coding a default.
-
-However, the existing solution jumps through hoops to reconstruct the
-proper default, and is even incomplete doing so, as we found out when we
-extended it to support CLANGARM64.
-
-This is absolutely unnecessary because there is already a perfectly
-valid `MSYSTEM` value we can use at build time. This is even true when
-building the MINGW32 variant on a MINGW64 system because `makepkg-mingw`
-will override the `MSYSTEM` value as per the `MINGW_ARCH` array.
-
-The same is equally true for the `/mingw64`, `/mingw32` and
-`/clangarm64` prefix: those values are already available via the
-`MINGW_PREFIX` environment variable, and we just need to pass that
-setting through.
-
-Only when `MINGW_PREFIX` is not set (as is the case in Git for Windows'
-minimal SDK, where only `MSYSTEM` is guaranteed to be set correctly), we
-use as fall-back the top-level directory whose name is the down-cased
-value of the `MSYSTEM` variable.
-
-Incidentally, this also broadens the support to all the configurations
-supported by the MSYS2 project, i.e. clang64 & ucrt64, too.
-
-Note: This keeps the same, hard-coded MSYSTEM platform support for CMake
-as before, but drops it for Meson (because it is unclear how Meson could
-do this in a more flexible manner).
+The tell-tale is the presence of the `MSYSTEM` value while compiling, of
+course. In that case, we want to ensure that `MSYSTEM` is set when
+running `git.exe`, and also enable the magic MSYS2 tty detection.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname                    | 14 ++++++--------
- contrib/buildsystems/CMakeLists.txt |  9 ++++++++-
- meson.build                         | 13 ++++++++++++-
- meson_options.txt                   |  4 ++++
- 4 files changed, 30 insertions(+), 10 deletions(-)
+ config.mak.uname | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/config.mak.uname b/config.mak.uname
-index 21f53e3f7e..3a90995587 100644
+index 8363239513..21f53e3f7e 100644
 --- a/config.mak.uname
 +++ b/config.mak.uname
-@@ -465,14 +465,8 @@ ifeq ($(uname_S),Windows)
- 	GIT_VERSION := $(GIT_VERSION).MSVC
- 	pathsep = ;
- 	# Assume that this is built in Git for Windows' SDK
--        ifeq (MINGW32,$(MSYSTEM))
--		prefix = /mingw32
--        else
--                ifeq (CLANGARM64,$(MSYSTEM))
--			prefix = /clangarm64
--                else
--			prefix = /mingw64
--                endif
-+        ifneq (,$(MSYSTEM))
-+		prefix = $(MINGW_PREFIX)
-         endif
- 	# Prepend MSVC 64-bit tool-chain to PATH.
- 	#
-@@ -755,6 +749,10 @@ ifeq ($(uname_S),MINGW)
- 		BASIC_LDFLAGS += -Wl,--dynamicbase
-         endif
-         ifneq (,$(MSYSTEM))
-+                ifeq ($(MINGW_PREFIX),$(filter-out /%,$(MINGW_PREFIX)))
-+			# Override if empty or does not start with a slash
-+			MINGW_PREFIX := /$(shell echo '$(MSYSTEM)' | tr A-Z a-z)
-+                endif
+@@ -758,12 +758,12 @@ ifeq ($(uname_S),MINGW)
  		prefix = $(MINGW_PREFIX)
  		HOST_CPU = $(patsubst %-w64-mingw32,%,$(MINGW_CHOST))
  		BASIC_LDFLAGS += -Wl,--pic-executable
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index a57c4b464f..7285bd9ac2 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -256,7 +256,14 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
- 				NOGDI OBJECT_CREATION_MODE=1 __USE_MINGW_ANSI_STDIO=0
- 				OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
--				HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET HAVE_RTLGENRANDOM)
-+				HAVE_WPGMPTR HAVE_RTLGENRANDOM)
-+	if(CMAKE_GENERATOR_PLATFORM STREQUAL "x64")
-+		add_compile_definitions(ENSURE_MSYSTEM_IS_SET="MINGW64" MINGW_PREFIX="mingw64")
-+	elseif(CMAKE_GENERATOR_PLATFORM STREQUAL "arm64")
-+		add_compile_definitions(ENSURE_MSYSTEM_IS_SET="CLANGARM64" MINGW_PREFIX="clangarm64")
-+	elseif(CMAKE_GENERATOR_PLATFORM STREQUAL "x86")
-+		add_compile_definitions(ENSURE_MSYSTEM_IS_SET="MINGW32" MINGW_PREFIX="mingw32")
-+	endif()
- 	list(APPEND compat_SOURCES
- 		compat/mingw.c
- 		compat/winansi.c
-diff --git a/meson.build b/meson.build
-index 7073d5844d..6ddc461873 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1318,7 +1318,6 @@ elif host_machine.system() == 'windows'
- 
-   libgit_c_args += [
-     '-DDETECT_MSYS_TTY',
--    '-DENSURE_MSYSTEM_IS_SET',
-     '-DNATIVE_CRLF',
-     '-DNOGDI',
-     '-DNO_POSIX_GOODIES',
-@@ -1328,6 +1327,18 @@ elif host_machine.system() == 'windows'
-     '-D__USE_MINGW_ANSI_STDIO=0',
-   ]
- 
-+  msystem = get_option('msystem')
-+  if msystem != ''
-+    mingw_prefix = get_option('mingw_prefix')
-+    if mingw_prefix == ''
-+      mingw_prefix = '/' + msystem.to_lower()
-+    endif
-+    libgit_c_args += [
-+      '-DENSURE_MSYSTEM_IS_SET="' + msystem + '"',
-+      '-DMINGW_PREFIX="' + mingw_prefix + '"'
-+    ]
-+  endif
-+
-   libgit_dependencies += compiler.find_library('ntdll')
-   libgit_include_directories += 'compat/win32'
-   if compiler.get_id() == 'msvc'
-diff --git a/meson_options.txt b/meson_options.txt
-index dc88f130d7..becf4689bf 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -21,6 +21,10 @@ option('runtime_prefix', type: 'boolean', value: false,
-   description: 'Resolve ancillary tooling and support files relative to the location of the runtime binary instead of hard-coding them into the binary.')
- option('sane_tool_path', type: 'array', value: [],
-   description: 'An array of paths to pick up tools from in case the normal tools are broken or lacking.')
-+option('msystem', type: 'string', value: '',
-+  description: 'Fall-back on Windows when MSYSTEM is not set.')
-+option('mingw_prefix', type: 'string', value: '',
-+  description: 'Fall-back on Windows when MINGW_PREFIX is not set.')
- 
- # Build information compiled into Git and other parts like documentation.
- option('build_date', type: 'string', value: '',
++		COMPAT_CFLAGS += -DDETECT_MSYS_TTY
+                 ifeq (MINGW32,$(MSYSTEM))
+ 			BASIC_LDFLAGS += -Wl,--large-address-aware
+                 endif
+         endif
+-	COMPAT_CFLAGS += -D__USE_MINGW_ANSI_STDIO=0 -DDETECT_MSYS_TTY \
+-		-fstack-protector-strong
++	COMPAT_CFLAGS += -D__USE_MINGW_ANSI_STDIO=0 -fstack-protector-strong
+ 	EXTLIBS += -lntdll
+ 	EXTRA_PROGRAMS += headless-git$X
+ 	INSTALL = /bin/install
 -- 
 gitgitgadget
 
