@@ -1,189 +1,182 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFB946AA6B
-	for <git@vger.kernel.org>; Wed,  5 Aug 2026 12:34:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD483E1D1A
+	for <git@vger.kernel.org>; Wed,  5 Aug 2026 12:54:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785933286; cv=none; b=dhATCUTpsuv8RghUBAuPfKqvFivp9OR834v+jd91xsiOICuI7+fZ4fY1bW4lAcJga6qGrm4gRslrCTJW7cxgvw+GUIP390CeG/qlFpukSg37jfYAnZLba0EIzjifpqxcH2oP62yX5HYX+B6M6ciRlYGVe0Znlbk4HQEYLDfzXJU=
+	t=1785934491; cv=none; b=NJPhmzzJJD2eaFUw2ZnMan/Lhzim4PK0izf5bv7whoCo4umCyHiR6d/LpGI27tzHQuDe3mO2P9Iu0VO34PmxG1h8FhXj+l9BcgnlXRLqVELGi7JABtDPTXV4XYgfiWWqwxCc/yKhmK8g5QS5T61ZIlgSt7y7qW0VqC3h7v9bbzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785933286; c=relaxed/simple;
-	bh=cEo/h//352r8Rt3kKHG3qdRJ6peX64eqQAzHaICV2Ls=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CCUf4Px/YmpcjHfBwOI1RnmG1Tosa/69KI+lw5vRyuphRNCIMjTEE7lkcxFdwvFz6mRwHBQJN4i97lPQZZ0jPWx2pTVtypyMykU1Ki9/vacIcH2y+5UI525UBNOhOXRmwM7i+cQmoK4t7qt9axu73UQavyYKXEuZXCAUU5eCUyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=JsP8u1lD; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=ScgozPRD; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1785934491; c=relaxed/simple;
+	bh=DY3cnNmnPknOYOErzqNd/A5QcNZszvn7Cc0BS/u2Rws=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Z34NnZ9m0xP2LpAfWfly4Pjb8VW7h1WgoGVAsIMF26mokxnl9egHDnCmCjCe5BORDvt9P+CmtF4fOhvLI9kfwlVdngElr4bABpz+iRl4Zq1QCeiIRxB25nc91qQqdklKUz9DYjY3GCIadwZuItzdcR4qIXY7ZN/CTBt1XkokaPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K+5Rq9q0; arc=none smtp.client-ip=209.85.167.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="JsP8u1lD";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="ScgozPRD"
-DKIM-Signature: a=rsa-sha256; b=JsP8u1lD9aj4G9SBsATe5VXRYdAnWhCcGmW2bMLpP0Gyt0lCvbIy84IdR9sFU/8j6AL9NCudu0yY9wgB+2+DXjfR6+4SZIev9d6ASoR2ouF+1F4IiF8HHiyjOzA7x5MayEsYsitAiCK0K3jbx3Oadk5i4/079Ymlsk+pTdCwXvaB4Fh72c/TY/LuKgNvwcqWfmzqv4rXlSQbQCtupOQt8kAolg3XPhBnkoL5iv0l8QaA5CcFkg6blLi1wObKODNZ9BGO0v1Q8YO2jowiM6cXLhdfAVRBP1edf9ULNilRL4Hm30Egr1HsJDCywVr2Kz5KIVJgFETdSxHvZhBbjYNimw==; s=purelymail1; d=malon.dev; v=1; bh=cEo/h//352r8Rt3kKHG3qdRJ6peX64eqQAzHaICV2Ls=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=ScgozPRDdjAsenxlDe4oJI1vTnqIvNJ+7rNR+0pgMLYajpiWG+HBAxGqFTi9VyflOpxNlToUdt0w0LJzJ0LmtlwK4NDu2byJPR+B8zQTSSiHl074KjPij0VelGCos23vqfRnY9ngeH3NL8CQZfsHPljxIst8IDzO6cIV5UiIoI4v+o6q7KaufPymd81pgdLRRV9LUm1iCiPZoH2Ghr61+Hy93jDuYKjz6h/dmJOyWZexB2sveXq6ULdRjOK0W91AIzS+QK1GcOUvN7AIxT+3rVZjz0yS8EDv/weLZ9+keDyClIBB89TTNYWwLagmHgcVCR6vT6yaoQxqfNimjIoFSg==; s=purelymail1; d=purelymail.com; v=1; bh=cEo/h//352r8Rt3kKHG3qdRJ6peX64eqQAzHaICV2Ls=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1304091343;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 05 Aug 2026 12:34:40 +0000 (UTC)
-Message-ID: <48c183b4-3752-4f4a-adb7-0819a956cfc1@malon.dev>
-Date: Wed, 5 Aug 2026 20:34:30 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K+5Rq9q0"
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-4af173320f9so618782b6e.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 05:54:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785934488; x=1786539288; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=8d3cLnONuX9acgtNbCexdl8ONKRojaojjsTnBGP8kSg=;
+        b=K+5Rq9q0NC/zimrTDIx6KmOHsDSpl1CPsayZRgNnJlZtFu5mI7+AReQklIWgiisFCh
+         ilm1XX0LRTsibAluA00ULv3vBRtb/5UORmN3yyhj8Z2ERBaXH16OKG8VeIAuwLH7HseI
+         v4WD/8yof2BAdSa+VOhiogtAfSvxyMXbBKaxVPyL74PrLjITrblSvaaLA76kXfs+ETS3
+         +NGk+W+tY2IKIvM/U+51aKEG85Z2+MAniFI2NghfRy5XfVvOrODDRH8douCcoGUl9xy7
+         +JDHbwp7n7hu4JJMrt+Y8mKU561aXRQrEgC9z/xKkdVyeRkwb9h6dSWksY+V7NF9OoQQ
+         IMQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785934488; x=1786539288;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8d3cLnONuX9acgtNbCexdl8ONKRojaojjsTnBGP8kSg=;
+        b=MLxWXO6cHc1dxWQOSZfXO+wQcu1F3ERpPVzCIKYLttgjnf0ztlkpSPr45Fk/tPtt+u
+         9CeDVkcM+sAp0N66oHwlYBfPWczrcSOn/43eJMX32m1fIhdviB04H0SJVcdebmTMFeX8
+         WsajBycmKOgq/LCuwWpWTjRRVXI4GkztpJ5NmvsZmww8ikgyTd/m+G3JCRv+NDdsAXJp
+         EEsXMZkjfkn1gAZU2+SzBHj+AHGmCPGOKln0P7r2bCgf+vNRXvdeB3BOtg95S4brOBhb
+         J5AUpolal4TjCyat7/xKcBU7In+Jx3defitk5sgSeBEwOKK36QD5e9YOLLcq/jXzZJyt
+         8DKQ==
+X-Gm-Message-State: AOJu0Yw6wNYETSLz/ua9QAnJW0e3fgt5z04/YM2dtogrpTK5IE/S404a
+	sv+aO9HEw3Pyp/rmXSpBRYHE+MrvJrY1nPXh+Vxm3bG+M8IClHr0auHznVQbCg==
+X-Gm-Gg: AR+sD11Mv0WONvvhEoT8bQevM1WIJXgj1zVhGKdsxMmrpvTG3eb/pGtTnGcqXtgSP5C
+	FRAsEzBS21kPNBGXBhReEDX2XTsavJPahPX7Ciz4MzC9aCClBWdTiOESSwOvXvLzKmvzgM6inBa
+	OxhkEwVke+Q8Gi7uGZzuQzn+VEG/JkXPGFOWAjgzcPIObkQNOIArW43B9Ftv87OaKyxfnZJ7/69
+	DGD0eR1+lY4GgLt0M9o+jrFPJXVYGxIfu9vgBGVNYZdwIdrHkkxhzmRFobW7xW9lU7niH9Pat0k
+	RDXs3gQ3LpzqqeCg6/qPY4W+ZSOR0fDL3LU1uYQSVVFVD8J95Qya+Vq8OhoeLB54lP+b8XPIJAY
+	FAT3kz1nvciHI/Oo0O782GIB5w7Qa3adrekp4/ObzSthsl+WTBxtwdxeAAlMljg1Vh/x41asiWs
+	tgVyFiGyH1XslMXYJOw1u8vloTndXdFZO4c9TlnA+W40P8OEzKy7QJfRVd5gJK9tk=
+X-Received: by 2002:a05:6820:1524:b0:6ac:a175:fe66 with SMTP id 006d021491bc7-6ae96ed3de2mr3584161eaf.21.1785934488371;
+        Wed, 05 Aug 2026 05:54:48 -0700 (PDT)
+Received: from [127.0.0.1] ([52.161.75.168])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6ae940782desm2811365eaf.14.2026.08.05.05.54.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Aug 2026 05:54:47 -0700 (PDT)
+Message-Id: <pull.2192.v3.git.1785934486496.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2192.git.1785852032626.gitgitgadget@gmail.com>
+References: <pull.2192.git.1785852032626.gitgitgadget@gmail.com>
+From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 05 Aug 2026 12:54:45 +0000
+Subject: [PATCH v3] worktree add: shouldn't dwim if -b or -B is given
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] repository: move fetch_if_missing into struct
- repository
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, five231003@gmail.com, hariom18599@gmail.com,
- Christian Couder <christian.couder@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Olamide Caleb Bello <belkid98@gmail.com>
-References: <20260715011850.3181131-1-cat@malon.dev>
- <20260716072954.582235-1-cat@malon.dev> <anGhtfPaGK7v3NNR@pks.im>
- <xmqqwlu5vla1.fsf@gitster.g>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <xmqqwlu5vla1.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Jacob Abel <jacobabel@nullpo.dev>,
+    Yoichi Nakayama <yoichi.nakayama@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-On 8/5/26 01:38, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
->>> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
->>> index 0793dc595c..74f9694662 100644
->>> --- a/builtin/index-pack.c
->>> +++ b/builtin/index-pack.c
->>> @@ -1898,15 +1898,16 @@ int cmd_index_pack(int argc,
->>>   	int report_end_of_input = 0;
->>>   	int hash_algo = 0;
->>>   
->>> +	show_usage_if_asked(argc, argv, index_pack_usage);
->>> +
->>>   	/*
->>>   	 * index-pack never needs to fetch missing objects except when
->>>   	 * REF_DELTA bases are missing (which are explicitly handled). It only
->>>   	 * accesses the repo to do hash collision checks and to check which
->>>   	 * REF_DELTA bases need to be fetched.
->>>   	 */
->>> -	fetch_if_missing = 0;
->>> -
->>> -	show_usage_if_asked(argc, argv, index_pack_usage);
->>> +	if (repo)
->>> +		the_repository->fetch_if_missing = 0;
->>>   
->>>   	disable_replace_refs();
->>>   
->>
->> This one looks a bit weird -- we check for `repo`, but then set
->> `the_repository->fetch_if_missing`. We can probably just loose the
->> conditional completely, and furthermore we don't need to reorder any
->> code here at all anymore.
-> 
-> The 4-line comment is about disabling fetch-if-missing, so the code
-> movement is not even unnecessary, but it is harmful, I think.  If
-> the command can work without repository, incoming "repo" might be
-> NULL, and unconditionally doing
-> 
-> 	repo->fetch_if_missing = 0;
-> 
-> may cause a crash.  But that is not an excuse to blindly add
-> 
-> 	if (repo)
-> 
-> in front of such an assignment.
+From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-Yes, this is a mistake. :(
+'git worktree add <path> <branch>' DWIMs <branch> to a
+remote-tracking branch when neither -b, -B, nor --detach
+is given.
 
-> 
-> It gives you a chance to rethink what you are doing.
-> 
-> If a command can work without a repository, yet it cares about how
-> fetch_if_missing bit is set, it hints that it may be a mistake in
-> the first place to try associating fetch_if_missing bit with a
-> particular struct repository instance, as you must be prepared to
-> work with repo==NULL.
-> 
-> There could be at least three approaches you may have to think about
-> at that point.
-> 
->   * Perhaps the command may not have to work outside a repository at
->     all.  If so, then it is a bug for the caller to call this
->     function with repo==NULL.  So we should just say
-> 
-> 	repo->fetch_if_missing = 0;
-> 
->     without "if (repo)" check at all here.  After all, the situation
->     we might want to enable fetch_if_missing is where we have a place
->     to fetch into, so by definition, we _should_ have a repository in
->     such a case.
-> 
+However, 'git worktree add -b <new-branch> <path> <branch>' can
+still DWIM <branch>, causing <new-branch> to be ignored.
 
-Yep, this approach looks the most reasonable to me. I think I will apply 
-this approach and update the commit message.
+This is a regression introduced in v2.42.0
+(128e5496b325640f0a09cc1d5b1e346c069b410f).
 
->   * Perhaps the command may want to work outside a repository but it
->     may be acceptable to operate in a degraded way.  By definition,
->     when we are outside a repository, we have no object store to
->     fetch objects lazily into, so fetch_if_missing MUST BE off.
-> 
->     Because Git is primarily about working inside a repository,
->     perhaps it may be acceptable, even when you are outside a
->     repository, to assume that the_repository can be used as a
->     back-up "fake repository" object, and fetch_if_missing and its
->     friends that are necessary to have their meaning to be in that
->     fake repository object.  If that the stance we are going to take,
->     this part should probably say:
-> 
-> 	(repo ? repo : the_repository)->fetch_if_missing = 0;
-> 
->     We need to make sure that everybody who passes the code paths
->     that ever reference fetch_if_missing would pass the_repository
->     down when the command is running outside a repository, though.
-> 
->   * Or perhaps there are some settings that really need to be
->     available whether you are in a repository or not.  I think
->     fetch_if_missing is a borderline case, but more generally, things
->     like user.name should conceptually be available even outside a
->     repository, with in-repository configuration files overriding
->     them.  And it may be a mistake to force such settings to be
->     stored in an instance of "struct repository" (or repo_settings
->     that is part of it).  We would need a framework to represent a
->     structure in which a basic setting, which does not belong to any
->     repository (whose members may be the same as those in "struct
->     repo_settings", so I think it is OK to use an instance of that
->     struct to represnt this "basic settings that is global"), exists
->     globally, and it is overriden by per repository setting, which is
->     in "struct repo_settings" embedded in "struct repository".
-> 
+Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+---
+    worktree add: shouldn't dwim if -b or -B is given
 
-I'm not sure if I'm right, but I feel that 'fetch_if_missing' 
-essentially carries two meanings simultaneously: "Does this repository 
-allow lazy fetching?" and "Does this object lookup allow network 
-behavior to be triggered?" In other words, suppose we consider 
-'fetch_if_missing' to meet the third case, allowing it to exist in an 
-ambiguous situation, i.e. it makes sense both within and outside the 
-repository...Can we then consider the existence of this variable itself 
-to have some semantic ambiguity? If so, do we really need to invent 
-another mechanism to accommodate this ambiguity? Or should we 
-temporarily apply minimal changes and discuss the ownership issue when 
-the time is right (i.e. subsystems ready for 'repo' rather than 
-'the_repository' only)? Perhaps this is what you mean by "a borderline 
-case".
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2192%2Fyoichi%2Fworktree-add-should-not-dwim-with-b-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2192/yoichi/worktree-add-should-not-dwim-with-b-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2192
 
-Furthermore: when we do libification, is the goal to eliminate global 
-state, or to "package global state more reasonably"? The third approach 
-seems to be the latter one.
+Range-diff vs v2:
 
-> The earlier choices require fewer changes than the later choices,
-> but the later choices are more concepturely pure, I think.
-> 
+ 1:  b00f6c2fa1 ! 1:  477ea27c8b worktree add: shouldn't dwim if -b or -B is given
+     @@ Metadata
+       ## Commit message ##
+          worktree add: shouldn't dwim if -b or -B is given
+      
+     -    git worktree add <path> <branch> DWIMs <branch> to a
+     +    'git worktree add <path> <branch>' DWIMs <branch> to a
+          remote-tracking branch when neither -b, -B, nor --detach
+          is given.
+      
+     -    However, git worktree add -b <new-branch> <path> <branch> can
+     +    However, 'git worktree add -b <new-branch> <path> <branch>' can
+          still DWIM <branch>, causing <new-branch> to be ignored.
+      
+          This is a regression introduced in v2.42.0
 
-All in all, I think your core point is that we shouldn't blindly put all 
-global variables in a struct repository. I totally agree with that.
 
-> 
+ builtin/worktree.c      | 22 ++++++++++++----------
+ t/t2400-worktree-add.sh | 10 ++++++++++
+ 2 files changed, 22 insertions(+), 10 deletions(-)
 
-Thanks! yuchen
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 654d27c3e1..cc46c1b415 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -898,16 +898,18 @@ static int add(int ac, const char **av, const char *prefix,
+ 		/* DWIM: Infer --orphan when repo has no refs. */
+ 		opts.orphan = (!s) && dwim_orphan(&opts, !!opt_track, 1);
+ 	} else if (ac == 2) {
+-		struct object_id oid;
+-		struct commit *commit;
+-		char *remote;
+-
+-		commit = lookup_commit_reference_by_name(branch);
+-		if (!commit) {
+-			remote = unique_tracking_name(branch, &oid, NULL);
+-			if (remote) {
+-				new_branch = branch;
+-				branch = new_branch_to_free = remote;
++		if (!new_branch) {
++			struct object_id oid;
++			struct commit *commit;
++			char *remote;
++
++			commit = lookup_commit_reference_by_name(branch);
++			if (!commit) {
++				remote = unique_tracking_name(branch, &oid, NULL);
++				if (remote) {
++					new_branch = branch;
++					branch = new_branch_to_free = remote;
++				}
+ 			}
+ 		}
+ 
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index 87b926728a..ba3bec078f 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -621,6 +621,16 @@ test_expect_success '"add" <path> <branch> dwims' '
+ 	)
+ '
+ 
++test_expect_success '"add" <path> <branch> does not dwim with -b' '
++	test_when_finished rm -rf repo_upstream repo_dwim wt &&
++	setup_remote_repo repo_upstream repo_dwim &&
++	(
++		cd repo_dwim &&
++		test_must_fail git worktree add -b branch ../wt foo 2>actual &&
++		test_grep "^fatal: invalid reference: foo" actual
++	)
++'
++
+ test_expect_success '"add" <path> <branch> dwims with checkout.defaultRemote' '
+ 	test_when_finished rm -rf repo_upstream repo_dwim foo &&
+ 	setup_remote_repo repo_upstream repo_dwim &&
+
+base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
+-- 
+gitgitgadget
