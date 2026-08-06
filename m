@@ -1,141 +1,213 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12324D90CD
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 20:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B004DBD96
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 20:27:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786047986; cv=none; b=d8+rPHF65GhPDFw7EYhRA1ATjEdIHKm9ING8Fh7BcAIGUZppuLleCmPLl5eNQU5w2MATo+mFwTa0PIeBztpRa8dMxJluoSP7AXOjvwKLxLmBtLQlAo/7YTQNYVr+wmqDBntoSvzJuOuyux/aS/APNE5G0ANqFLde1IcXWqIx6nY=
+	t=1786048067; cv=none; b=H/zv8kcPXwHiObVAVqmB4KzEr5cURqIJVUrd2J1JYZsCJ5BmNJ44K9e4XiFm8lisVeRLVmpXplblHSbNaiJmynurzh79l+c3BEfuEVd1NfH7a9oPt3zH8WlComTpLnW7AbIB9vPUd0E75L8EtcOLuxDUZPoryd/Cjyl8IftZoPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786047986; c=relaxed/simple;
-	bh=XdXWOMPT2imtkAiFWi6XZeymtdFCN7QBUKL9yq8qITM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hrvhza5u+ASx2UhQlq2pP1FK3sCMhr8hdbqe78fULrE20go14ymsQHdMrQtlxcnovpuz7aYkcIa3VFpq6duxDmVa+CHn09Nf/68eWSCvBSIW0BNH4XxOr5s4boDe+rf2xe/M6lhYULOzl7O7Znb6Fook9vlaM5MO1PmXcJb2aIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rFP0cyuD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OGRr+TVE; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786048067; c=relaxed/simple;
+	bh=Cn5yXc2BM6it8ADcHTSTNV9IxGxGNQJZlk6OEtsx9OU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=JODf4xXix2zt26oIX5mh2rbF1/TP78yTj38Fe2IrEh5acX9NwiKZ8lhxWrwtV24kx8Z2cVt/B8DlfzUWTYT5r5P8S1YvRbtsybutGGVwCez+9OhB0DgFF3ocDXuT91CZRPBMNj3SbSIoIW4bsaHiIAhg2DCD2YxwgeTTiDO5gXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AyO0eBkB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rFP0cyuD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OGRr+TVE"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id C89861D000F7;
-	Thu,  6 Aug 2026 16:26:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 06 Aug 2026 16:26:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786047983; x=1786134383; bh=MmGxlV3Lkt
-	miwxY2BHMI/XBofhbnJdsvTJEDcL43ZeI=; b=rFP0cyuDJQG3WOyGyNc4mWJl2f
-	ocPk6Wrw2edMdb4FnXosgKrcoNdEjmzArEGrFy0MLLLxWU6g2DPb4JMduTa7CiYk
-	/FGuBKv4RwAFIT4+3myit6FlYs6Y9iLzSbycA6yxFkqppCDUK1nKNWWVMZy/iZQ3
-	bUlKqCWMG9FgzdKieeIJSZh5js9Vtyn3yKYMxG8QCSljt6vO7PjA5D8rLuh7dz4f
-	i6Ly84YSXQlKLJ6VPB8CAXc4KMLLa3aGae3kO4qnqzMiXoy49zYqPQK5PRCVZIi6
-	6tDFJW7Gv8JqdOsrdVst94uceZ9ezwuV48GNpAwyHgcwwRSj5iThfG2WQ/WQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786047983; x=1786134383; bh=MmGxlV3LktmiwxY2BHMI/XBofhbnJdsvTJE
-	DcL43ZeI=; b=OGRr+TVEG7EBKMrpV+mqtadRDQ3bXrLAaE9SLa4LwdaqtjePcC4
-	NsjVoUmzggo5nZ4HGGnh+rRpj4S3xRivPUqHuc2nIYm47JJ9jRZvIhhmLQURGc+P
-	gyHTxSi1Ua4um9J4Mu0CIKdNQ3OHts5D5mKj3seUVgX3twWcSfeLjAtehysSYi9B
-	N0kes918xUCCqOGCF27oJzuaHF4xj9uIY0fREeDLxmKq914JeOHbv0wX3y//E6CQ
-	I75a265IwsWbWW6bPK7yGoDVt+uYd6p/+CFWgRO5yo3EHN3pDAiiCbE89gN4gDBc
-	CaJFfWoiTN8mMSk0VCUBffJJItBge6N12dQ==
-X-ME-Sender: <xms:7u10arP9xF_zr01wKSEM69EmT8O8oGazNzYqJ_qL04urwXj9yrZbHg>
-    <xme:7u10apDYRw6Q_Jy66QFLqIUUeLJqwWlHCrJKJlZNrN8f5ntHgEPd2rNHa1PmJ_Y4c
-    IQnYIkzJ9CATPoZHA2aVqVpxbVwQu_sYJZQeUCvxSXzV1gcKjlESQ>
-X-ME-Received: <xmr:7u10ak5tBoLZaSlqRl81yIwbRyHcteRpOWDU6PhKcAsAwafHzwpETiBtTFHYJcKYDwo3NvSz9hbUfprFvgmzkonPZd38Yc3EHg>
-X-ME-Proxy-Cause: dmFkZTF4ipjblrwmJoenfCnnH6GLlxFq+QgV3zetllyyylRsPqnzo9J6V8oo72Z/eqvTDr
-    a605QypEDUNagONeN64h5O4r5d95CT+WGDu9TeZMynfmAtWGyOE6iTFfhQUo5aHkEEFHzY
-    Lp18Kx7NgK1/onUm55jA/l5e37kDiPzW3kY31OV82uMxuzq71Gb22visl40UspPbsFjtPJ
-    7X0flWQBA0GI9ERnSpV7s5+rWlgpxCnL1qcQtrO40G48Rco6LsQHgIubzG6esjSpOsCqnV
-    XvNfE4AzIp5YuvF79DPDDWMyVypsXIh7vd/5KH2d7Io5BA+7ZvU9sGarMxibXKrl6kxYnQ
-    +3wuTOD/gd+ohXh+Eiym4g7kh8DRoC+dGJuGIpmc6FHanNOCjdveURwzLSKb74/isRHUrP
-    89ZvfLQj4rEZdNoaKkzCBSym5ZMoMY44FFdybaKcxBF5DOC8XkPk2m5yl9o/PUlXHyvSnq
-    9Tot8e1DlBjGRSHJdeB6AFQMUamUzq64CzE21KDHbDxLYiiKhDAH6beYVBL35U8VcPNWdn
-    bl6a6CIX37OmuZJ362UW/nKU2D+TIBfU1xVEgZFE5jkPbByXA/fAiwiyEyTVw9S6epx0pm
-    N31bwoh5cuLQigM4Jf4a7/mB3dd+2o5m2VQIDlOIiZtc7B3J4Mvk2tYNavmQ
-X-ME-Proxy: <xmx:7u10ar4V22ME-agW3IT9fWslJePhWYqboiNpiUBlIe_vPI4gqAplkA>
-    <xmx:7u10auReubw_P2qZHwgILOJadCDtRuyQ5uAoS8VMDrWlCnwSkypqqg>
-    <xmx:7u10ar9P0Nomp_CPIbKvpXSAy0DNWVBxyd0WFeorF8iRRl80Sy38QQ>
-    <xmx:7u10anZQ5gG1S_nIvDHoNCp0AvKV1PH0cULtYQhYqdRsH9yEHWAImA>
-    <xmx:7-10am41dY8ocgj74efFsFCwAzcLvU85BkHWpmnEIVvK-88sgYCRbgPd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 16:26:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Sixt <j6t@kdbg.org>,  Ben Knoble <ben.knoble@gmail.com>,  Jeff
- King <peff@peff.net>,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  "Randall S. Becker" <randall.becker@nexbridge.ca>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/5] Reintroduce writev(3p)
-In-Reply-To: <anQpop92SCAA2C9z@pks.im> (Patrick Steinhardt's message of "Thu,
-	6 Aug 2026 08:28:50 +0200")
-References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
-	<f8050598-392f-44c9-8d66-0454740a7a12@kdbg.org>
-	<xmqqo6fso2s8.fsf@gitster.g> <anL0nIk6uzkYR9Oc@pks.im>
-	<xmqqy0ekr0bm.fsf@gitster.g>
-	<2952d9a7-c7c0-44c0-a321-7ddad6497a6e@kdbg.org>
-	<xmqqpkzwpg1g.fsf@gitster.g>
-	<8ff3c3ea-2604-4d65-8a7d-6acd6218b7c2@kdbg.org>
-	<xmqqa4r0payv.fsf@gitster.g> <anQpop92SCAA2C9z@pks.im>
-Date: Thu, 06 Aug 2026 13:26:21 -0700
-Message-ID: <xmqqcxvvhu6q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AyO0eBkB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A031F00A3A;
+	Thu,  6 Aug 2026 20:27:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786048066;
+	bh=bJQ0r+9Qde0KTa2lJf1Q6ZAb8h1qmtbvlwsBtP8HBgc=;
+	h=From:Subject:Date:To:Cc;
+	b=AyO0eBkBzYy0tEQzyCtvWPkcQXKPwXeqHA5tAw6fVUm1+ME4H4MRBwMYFiX8X9c/o
+	 6kMFBZIKunOvqNRx6B3fwmVXqVs7mXn4VKhAOt4+55jfWfQyR6MoCDLT6lo2wV8vYe
+	 nd2l8SRe99QLO6NKR1FulQUbNb+oPtAd1r7zgXmb8UtmBlsArkPzBsMuprBBpmxp0j
+	 Y/GxlWXBxAfzldijacr0MGhoQUCHujJZYDS+AWHi6k8jApgcuAM26C2a8fcPQWfhoe
+	 MwuK5Sm81hPbL2x6C5dsOgP1QeApztU4YDe3y6npFzHFibpHnbEztlyymA0G+5bssd
+	 IHsASvvJNJkQg==
+From: Vincent Mailhol <mailhol@kernel.org>
+Subject: [PATCH v2 0/4] completion: add support for 'git history'
+Date: Thu, 06 Aug 2026 22:27:35 +0200
+Message-Id: <20260806-history_autocompletion-v2-0-7e60f52a1c20@kernel.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNQQ7CIBQFr9L8tRhKKKAr72EaU/HTEis0gETTc
+ Hexce9yXjLzVogYLEY4NisEzDZa7yqwXQN6GtyIxN4qA6NMUEU5mWxMPrwvwzN57R/LjKkqRHH
+ BqGZGdZRClZeAxr628Lmv/NO2n9x+17/J3JKWCCN5dzDmKqQ83TE4nPc+jNCXUj7Q3O3ivQAAA
+ A==
+X-Change-ID: 20260804-history_autocompletion-84620c2f8500
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ Philippe Blain <levraiphilippeblain@gmail.com>, 
+ Patrick Steinhardt <ps@pks.im>, Vincent Mailhol <mailhol@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5332; i=mailhol@kernel.org;
+ h=from:subject:message-id; bh=Cn5yXc2BM6it8ADcHTSTNV9IxGxGNQJZlk6OEtsx9OU=;
+ b=owGbwMvMwCV2McXO4Xp97WbG02pJDFkl7+xF79o8cLoc33GqcM0+sfIifq5jM5OL0xrO6Snr6
+ Kf0bz3aMZGFQYyLwVJMkWVZOSe3Qkehd9ihv5Ywc1iZQIZIizQwAAELA19uYl6pkY6Rnqm2oZ4h
+ kKFjxMDFKQBTHcjOyLD5XGuc1mnv/qQtC+e7f18xO1hl3zd3hp9yX/VWis4pyA9lZNj49sizQDV
+ d39ftuqkBHulX/F2F2m6d/uO04vDVhZFfCvgA
+X-Developer-Key: i=mailhol@kernel.org; a=openpgp;
+ fpr=ED8F700574E67F20E574E8E2AB5FEB886DBB99C2
 
-Patrick Steinhardt <ps@pks.im> writes:
+This series adds Bash completion for the subcommands of "git history"
+and their options.
 
-> On Wed, Aug 05, 2026 at 01:29:44PM -0700, Junio C Hamano wrote:
->> Johannes Sixt <j6t@kdbg.org> writes:
->> 
->> > Am 05.08.26 um 20:40 schrieb Junio C Hamano:
->> >> I think it is OK to explicitly document that any writev(2) emulation
->> >> is allowed to be non-atomic, and it is also OK to declare that using
->> >> writev(2) in this application to allow competing writes to the same
->> >> destination is a bug.
->> >
->> > These are fine.
->> >
->> > But I'm not worried about current uses of writev, I'm worried about
->> > future uses: "Look, we already use writev elsewhere. Let's use it here,
->> > too, where we can take adavantage of the atomicity of the write." It's
->> > too easy to miss a note about non-atomic emulations when the function
->> > name advertises more than can be guaranteed. For this reason, I strongly
->> > suggest to use a different name.
->> 
->> That is why I added the "it is also OK to declare" in the above.
->
-> We could of course trivially restore the non-interleaving property by
-> only ever writing the first iovec. POSIX doesn't guarantee that the full
-> iovec is being written, and write(3p) is already non-interleaving. It
-> wouldn't even be less efficient compared to the current implementation,
-> as we have to loop around write(3p) anyway in our compatibility wrapper.
+Patch #1 adds the basic subcommand and options completion. Patch #2
+and #3 take care of the value of the --empty and --update-refs options.
+Finally, Patch #4 adds completion for pathspecs accepted by "split".
 
-OK, by castrating the writev(2) emulation implementation to write
-out only the first iovec[], we are making the emulation "atomic", so
-there is no need to say "your emulation does not have to be atomic"
-and we can rely on being able to pretend that we have writev(2)
-available everywhere.  Also, it is a bug on the programmers' side to
-assume that their writev() calls will not result in a short write,
-so it does not have to be spelled out, either, which automatically
-means you'd better be calling writev_in_full() and not writev()
-itself.
+For each of the completions, add a set of relevant test cases.
 
-I can buy that.  Clever.  It means we'd need an update for [PATCH
-1/5] 1ed0bc4e3b (compat/posix: introduce writev(3p) wrapper,
-2026-07-16), right?  The update would be a simplification that loses
-a lot of code (and overflow check), which is even nicer ;-).
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+---
+Changes in v2:
 
+  - Complete exactly one required revision and leave subsequent
+    arguments to subcommand-specific completion.
+  - Do not complete options after "--".
+  - Complete values for "--empty" and "--update-refs".
+  - Complete pathspecs for "git history split".
+  - Expand the test coverage for options, revisions, and pathspecs.
+
+Link to v1: https://lore.kernel.org/r/20260804-history_autocompletion-v1-1-6f7459ffb677@kernel.org
+
+---
+Vincent Mailhol (4):
+      completion: add 'git history' subcommands
+      completion: complete 'git history --empty' values
+      completion: complete 'git history --update-refs' values
+      completion: complete 'git history split' pathspecs
+
+ contrib/completion/git-completion.bash | 68 ++++++++++++++++++++++++++++++++++
+ t/t9902-completion.sh                  | 49 ++++++++++++++++++++++++
+ 2 files changed, 117 insertions(+)
+
+Range-diff versus v1:
+
+1:  d0574dca8c ! 1:  6625c7ac29 completion: add 'git history' subcommands
+    @@ Metadata
+      ## Commit message ##
+         completion: add 'git history' subcommands
+     
+    -    Use the parse-options completion helpers for the "git history"
+    -    subcommands and their options. Complete positional arguments as
+    -    revisions, and add coverage for each kind of completion.
+    +    Use the parse-options completion helpers for the
+    +
+    +      git history
+    +
+    +    subcommands and their options. All current history subcommands take a
+    +    revision as their first positional argument, so complete that argument
+    +    as a revision.
+    +
+    +    Once the revision is present, leave any further positional arguments to
+    +    subcommand-specific completion. This allows a subcommand to complete
+    +    another kind of argument, such as the pathspec accepted by
+    +
+    +      git history split
+    +
+    +    or another revision if a future subcommand accepts one.
+     
+         Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+    +    ---
+    +    Changes in v2:
+    +
+    +      - Test options before and after revisions.
+    +      - Do not complete options after "--".
+    +      - Stop revision completion after the first required
+     
+      ## contrib/completion/git-completion.bash ##
+     @@ contrib/completion/git-completion.bash: _git_help ()
+      	fi
+      }
+      
+    ++__git_history_has_revision ()
+    ++{
+    ++	local i
+    ++
+    ++	for ((i = __git_cmd_idx + 2; i < cword; i++)); do
+    ++		case "${words[i]}" in
+    ++		--empty|--update-refs)
+    ++			((i++))
+    ++			;;
+    ++		-*)
+    ++			;;
+    ++		*)
+    ++			return 0
+    ++			;;
+    ++		esac
+    ++	done
+    ++	return 1
+    ++}
+    ++
+     +_git_history ()
+     +{
+     +	local subcommands subcommand
+    @@ contrib/completion/git-completion.bash: _git_help ()
+     +		return
+     +	fi
+     +
+    -+	case "$cur" in
+    -+	--*)
+    -+		__gitcomp_builtin "history_$subcommand"
+    -+		;;
+    -+	*)
+    ++	if ! __git_has_doubledash; then
+    ++		case "$cur" in
+    ++		--*)
+    ++			__gitcomp_builtin "history_$subcommand"
+    ++			return
+    ++			;;
+    ++		esac
+    ++	fi
+    ++
+    ++	if ! __git_history_has_revision; then
+     +		__git_complete_refs
+    -+		;;
+    -+	esac
+    ++		return
+    ++	fi
+     +}
+     +
+      _git_init ()
+    @@ t/t9902-completion.sh: test_expect_success 'git clone --config= - value' '
+     +'
+     +
+     +test_expect_success 'git history subcommand options' '
+    -+	test_completion "git history fixup --upd" "--update-refs="
+    ++	test_completion "git history split main --" <<-\EOF &&
+    ++	--update-refs=Z
+    ++	--dry-run Z
+    ++	--no-dry-run Z
+    ++	EOF
+    ++	test_completion "git history fixup --upd" "--update-refs=" &&
+    ++	test_completion "git history fixup --ree" "--reedit-message " &&
+    ++	test_completion "git history split --upd" "--update-refs=" &&
+    ++	test_completion "git history split main --dry" "--dry-run " &&
+    ++	test_completion "git history reword main -- --d" ""
+     +'
+     +
+     +test_expect_success 'git history revisions' '
+    -+	test_completion "git history split ma" "main "
+    ++	test_completion "git history split ma" "main " &&
+    ++	test_completion "git history split --update-refs head ma" "main " &&
+    ++	test_completion "git history fixup --empty drop ma" "main " &&
+    ++	test_completion "git history reword main m" ""
+     +'
+     +
+      test_expect_success 'git reflog show' '
+-:  ---------- > 2:  f618f35153 completion: complete 'git history --empty' values
+-:  ---------- > 3:  abae09f208 completion: complete 'git history --update-refs' values
+-:  ---------- > 4:  7bfb6664dc completion: complete 'git history split' pathspecs
+
+---
+base-commit: c56d675cccfbcf71406c4a6806c7745e4a756294
+change-id: 20260804-history_autocompletion-84620c2f8500
 
