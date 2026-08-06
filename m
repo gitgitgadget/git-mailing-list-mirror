@@ -1,64 +1,64 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1AA309EF9
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 11:22:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7DD44C4E5
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 11:22:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786015348; cv=none; b=J2tIaPPm0FCCtE01bmqj/VuacUEFYyXDhIrO+UrmgtN8QhjrW9u5vPYbc2siBVrw5Gw77wFcgM0ZJNP77fKNY3V0A+ff/jf+KVOYO9OTmZPmx02/8gR+pQ9qH5jO8ISU4P0uXpztpz7A1+ViE8dj37IGOa354QmxWqhLRTrowdY=
+	t=1786015353; cv=none; b=VoEEUrUn1Z/mbXLhXtgXf3+L4LbkMR2IzS+k5AbU8UmmkvwVAFDnfMMVNNR3VWMswlHzmDwpHDflA15KFIXGkIJqBYc93IQyy8vMop1GxiB/t4YQ2OxZyEYEZiBXeG7JvYxNme8zQy8PR1s4s4ehr7431G76/zRPnazhUXxlC9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786015348; c=relaxed/simple;
-	bh=73bH0MiODiQL/EeHkddlbHF9SACFGPZsjuaqPnJbIWE=;
+	s=arc-20240116; t=1786015353; c=relaxed/simple;
+	bh=WHxLgisO5U5Pj3dqkHmuDaIfkATa6gpIRERY/ttBCa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1pQ3jF7b8Qsd0uMdpLwlZHEF1jjnHL6L1ZR3RFRVB3ii7tg6oSULnJjifeudHZMrkXXwRzoEVTcWjRGxnElpua30Rh9SplLQb1MBHvcTt+WFYSZpmz3zszRgCRiycSDgqZv5KQMxtIy4tnoctRFnp8sIXUoqqtvAT8gmaxkVeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YygBUej/; arc=none smtp.client-ip=209.85.216.48
+	 MIME-Version; b=ZgpNBIhHK92QOhN3UatBshlqShyohgD6ZwDbZtfu0tmFuelJi/71w9A1JE42gBRt2pgNWd2mEraKNxmt2PdTkZe8gFHW8g/OJ43x5WIMdi9q6KnM00Z1xjZBVfNQsNseyl/uxVSGYDmaFoG9UzhK5jpx4VCIhlRb4Jpuis3ZQdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aZ5gRKTl; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YygBUej/"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-38511175ad3so1756624a91.2
-        for <git@vger.kernel.org>; Thu, 06 Aug 2026 04:22:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZ5gRKTl"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38e42560ebcso1826270a91.1
+        for <git@vger.kernel.org>; Thu, 06 Aug 2026 04:22:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786015346; x=1786620146; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786015351; x=1786620151; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=2Cg6cZdSF9f8VVfLqRonYhMdW2NhQaOydkDst5gPhxA=;
-        b=YygBUej/u8CyLUZEGaeCTLZ4q4AhhqhIU8Oj1LrdkMBstQkU7JxWDh57SPDyPrzmg/
-         AN9m+i47U119WUmYDlOE1UpQwrT5KamvzSxbjBcFk42owFM1GkneTWEJ1VdLgnpoZpj8
-         5JT6HyvCtI6d0bFuBvIbDSus0oJkHqPUm78tsKfnjsUDWNPHZxmz6OSMbLox3CFezhlB
-         8ipG5n1TGzPedG45//q9UEC0MHdRKorERkovXBti7fwRmyIeppdZ0Nuk1+UBb7oUXbVL
-         j/d8Z2X6yzSLEf5zYtAVGgSsXvRgvQvZnnVS/pHxrgS50A8PhNv1QzRg1fhXm4P+pz2u
-         3djg==
+        bh=5M3EgrbEi7lZ3MMmlC7q9ZfEWvkfbTAg6dgOfBkK7UU=;
+        b=aZ5gRKTlsLtrEDFkbXrOnZqF17Y636/xun6zgwGMhajghBCHT5/ugOkVGTcWJx4ulG
+         5NemWqQU5m8KKq5NjNRtBvH6bIOzvhsMouzMKHjz/L1YW5qTABFO91hdpnUFsKadrcNz
+         LiCK6RM/kSxH9Uqx7WYxW2Um4A3+755VpNsKEIX7IYMEKmclZN9oe9yZE1TB5/BZVdjM
+         iehxZYsmLC9kDzJZlfyKyLA5WMtkCEPEPaJTENISCLDASVCqph+HQ8wHOCVPqIwOKSkx
+         ZHqUz/w33RB2TwZs2zyynL/wj8sAP6VHwa+qNGvvPncU21C/rSmrOtqnTVDJaqEe7zlD
+         Ek9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786015346; x=1786620146;
+        d=1e100.net; s=20251104; t=1786015351; x=1786620151;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2Cg6cZdSF9f8VVfLqRonYhMdW2NhQaOydkDst5gPhxA=;
-        b=N5nk1zASdlCwCazAFBGAEgX1CcMm/pd+ErNR1+PkzRAp/JSCv5qoNqCUCSPv2WHK9S
-         aLtcml2m7GVrEm4hiDEr59FwdbEJ4CyO6BAZwh3sq+dV2Z+A99SpsrRWrzSV/lV//lO/
-         KFw+1iTvDYczFegOCkM/Ml540e9yB30IlTj4g4zVAO02lzVkxTlK8ZzMXUNCsCxeDLnX
-         3d2AQrT8LKN0RtHCu0HKLa97FgGoHLT1M2ZK6nliR03pXrPK3yMWCEliHW5jMWrS0kqw
-         s+IQEASDvWSSRbfWMRPdjGUvOeSaCe5Iwrcj0VHLlYyXN/drDcK0Cu5zY7d5dhPIkyon
-         gCzw==
-X-Gm-Message-State: AOJu0Yx7tYtppIB9MCSDugSQ2Jatc5uFMbzbci6YlpQCXqYiwrIU2kda
-	H7pScsb4Xg2M+3swC2XehuyQv5JDxzQpbpUEiLUFJ4RNQQjI+8qz4Rwl2PAMz+bK
-X-Gm-Gg: AR+sD12iq1H+5NaO3CbDEC3ftnAo18rcS718AL0b5JsdC0aMDEnWN+N0WC6NiwmBwTC
-	Wde6qlvbxW8/Ueh7TIOLwwIzRbxUjwSo3VBhZ9UEEcOhJNM13JlYV52Od6o/f1TXWSkxT6z2aF1
-	AgGLhv6/Tg76HO//A+gXBi1jFJl5jtm6VzFGf0I6VGYnVibfh2/W/x1qZE0KVh5BPB/aJmVE118
-	SwmaiUkMFmRrqnuvTRIRpI+mIPTwFbv3hyf25Jw3/Ja1y9MTMR9p+P4w1OFXN+vBTMQWt4P6BMd
-	YHeUJpWLizWzh4z3LcCOb24AJKd7k+Jib/ITKLh5JLAZf6ynVNH/1oj9M1QO4DesQ4smG3dJJ4F
-	vVoChmtfp6Usxvvg6fRGlPZCWUDcHJ4dvdZ8VxpEUewgUiX9iR6Q3uEmdXgiaCxFf255z1owqcM
-	r8mDXJsXDtLNBJU/PONy6buWOrIgwkCXo/Tf/cJe5EdndeLOJQHAKBe67JZWFlUYD4+HFzL+4Up
-	neAS+rXhoRjTJ0NYzpvdbOFar9yvzYdUZrylhOOJM/f38otieXCZYg0b1UrTkH4JBaE7XiTa47g
-	Sv7qKUnsWs/4
-X-Received: by 2002:a05:6300:6d83:20b0:3cb:9a16:b159 with SMTP id adf61e73a8af0-3cb9a16b43fmr6672688637.6.1786015346147;
-        Thu, 06 Aug 2026 04:22:26 -0700 (PDT)
+        bh=5M3EgrbEi7lZ3MMmlC7q9ZfEWvkfbTAg6dgOfBkK7UU=;
+        b=o0HORQ6SiUe6k9dqs+1XfghabX+ebRoBuQYnXOFBi/9glJRkt+vN2XMDtciAQM3sX4
+         ZRQOdezrVmO0VhtN716QjBX0zff+7bjFHbnu3CC0YLhyr//i1v+CHrHo5fTXBBoh7t+D
+         OjgNdkDIOG0kRWZim55Fm5fD2ie2NPvXZP3GcJvsai/5t05msnWtwUU3ro6M1I4sM0wv
+         Uyqs3LCI5m6G4vXaxJ9hWUC+I5q9Hkjf/1IVE2e/GKEQmOUh1h4JMiJ2BamwMv+V6mhD
+         RW7+PXy4Yqbplnv6FBccusQz+4Sz9sj/QVcfIK4iy0QLn3nKkQhJZ8YiPusPSdIUG3tP
+         uISg==
+X-Gm-Message-State: AOJu0YyjINHAmMf+xeSZ37WyszHYQsR6tgv7ndRmAMveQl6kvH1T+zY2
+	UROSdo8/LU9CiVbwHinGToFtI0LK+9I6nokSWr27v38WItxD0cug1H7PGbC82x3C
+X-Gm-Gg: AR+sD13qNIFgSsxPo5FgV3GWhDOKHUyMiN9QxC9Dv0ZqrlR3Rq2MufY9wxuFR9dtg7M
+	Dg7fxmUQB4FftmgfUgVRU0YJaSO09XqEdCL2jY2ivnzIiKWIGMVTzIic97lUlIW8/1X0bGmtad6
+	/tt3ZUKlzoWUo2IGGpbSGENP2NzVkROReaePPIZgr7jNxM+Dr99vpXl57cvVfJPVrspSQCkKs0B
+	p57Ce2gskoTlBw65/Pd2xVhGLaIhbkDPqE5npuVjd8lGEH10IGUF1WN1WellG/8jbtmjwZadBOJ
+	/TM/EmYsosSmWpBxJ49oOEBq1NtSpEV+VMP7oauxAw8aFYW0bTlvEU2TGBRGU7b3rQFYO9ik/kE
+	xdaZDgLd1N0oXZYFECmyt3SmR+WW0NOwvDUIe27tWWZx3BtSvSfjJ/uNmcfUDYQldz7DmLPU8Le
+	banURbumcQx49AalPnW5/5UM3nMhVHE+2Tl17GVirNNKOZbhvsCvC/Kyn+EjeaIwYyxC1OeZXPK
+	C//f0XPlKfP0cW3fGJhcAclu3s30DNrslQpMVNi/zWQg4tjH/TiYTqYouArKpy5K94x8W4HfFpm
+	bSBy6GKO3AqHg0F1IyvFJPUC
+X-Received: by 2002:a17:90b:2248:b0:38d:adae:4866 with SMTP id 98e67ed59e1d1-3903c63c51dmr11597289a91.21.1786015350848;
+        Thu, 06 Aug 2026 04:22:30 -0700 (PDT)
 Received: from localhost.localdomain ([123.252.204.197])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fca8df89asm42490376c88.9.2026.08.06.04.22.21
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fca8df89asm42490376c88.9.2026.08.06.04.22.26
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 06 Aug 2026 04:22:25 -0700 (PDT)
+        Thu, 06 Aug 2026 04:22:30 -0700 (PDT)
 From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -70,9 +70,9 @@ Cc: gitster@pobox.com,
 	johannes.schindelin@gmx.de,
 	l.s.r@web.de,
 	r.siddharth.shrimali@gmail.com
-Subject: [GSoC PATCH v3 2/7] list-objects-filter: add list_objects_filter__filter_oidset()
-Date: Thu,  6 Aug 2026 16:51:57 +0530
-Message-ID: <20260806112202.75067-3-r.siddharth.shrimali@gmail.com>
+Subject: [GSoC PATCH v3 3/7] repack-promisor: allow excluding objects from the rebuilt promisor pack
+Date: Thu,  6 Aug 2026 16:51:58 +0530
+Message-ID: <20260806112202.75067-4-r.siddharth.shrimali@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
 References: <20260730174153.9949-1-r.siddharth.shrimali@gmail.com>
@@ -85,118 +85,108 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The existing filter entry point, list_objects_filter__filter_object(),
-is built around the object-walk path: it expects traversal context and
-provisional omit sets, and is meant to be called as objects are
-visited during a walk. A caller that already has a set of OIDs in hand
-and only wants to know which ones a filter would select has no usable
-entry point into the filter API.
+Add a to_drop oidset parameter to repack_promisor_objects(). When it is
+non-NULL, write_oid() omits those objects from the rebuilt promisor
+pack. This is the mechanism --drop-filtered will use to remove promisor
+blobs, i.e. rebuild the promisor pack without them.
 
---drop-filtered is exactly such a caller: it collects promisor blobs
-into an oidset and needs to know which of them exceed the filter
-threshold, without performing an object walk.
-
-Add a helper, list_objects_filter__filter_oidset(), that takes a set
-of OIDs and populates an "omitted" set with those that would be
-filtered out by the given filter options. Only blob:limit=N filters
-are supported for now.
-
-This helper does not actually reuse the existing filter machinery.
-It reimplements the blob:limit size check directly. That machinery
-is tied to the object-walk path and cannot easily be driven
-from a plain oidset. A NEEDSWORK comment marks this so the helper can
-later be refactored to reuse the real filter logic instead of
-duplicating it.
-
-OBJECT_INFO_SKIP_FETCH_OBJECT is passed when reading object info so
-the helper never triggers a lazy fetch.
+All existing callers pass NULL, so behavior is unchanged.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Siddharth Asthana <siddharthasthana31@gmail.com>
 Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 ---
- list-objects-filter.c | 45 +++++++++++++++++++++++++++++++++++++++++++
- list-objects-filter.h | 16 +++++++++++++++
- 2 files changed, 61 insertions(+)
+ builtin/repack.c  |  2 +-
+ repack-promisor.c | 15 ++++++++++++++-
+ repack.h          |  4 +++-
+ 3 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index c912ff3079..6a2e9d5b24 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -828,3 +828,48 @@ void list_objects_filter__free(struct filter *filter)
- 	filter->free_fn(filter->filter_data);
- 	free(filter);
- }
-+
-+/*
-+ * NEEDSWORK: this reimplements the blob:limit size check rather than
-+ * reusing the existing filter machinery in
-+ * list_objects_filter__filter_object(). That machinery is currently
-+ * tied to the object-walk path and cannot easily be driven from a
-+ * plain oidset. It would be nice to refactor the filter code so this
-+ * helper can reuse it instead of duplicating the size check.
-+ */
-+int list_objects_filter__filter_oidset(struct repository *r,
-+	struct list_objects_filter_options *opts,
-+	const struct oidset *in,
-+	struct oidset *omitted)
-+{
-+	struct oidset_iter iter;
-+	const struct object_id *oid;
-+
-+	if (opts->choice != LOFC_BLOB_LIMIT)
-+		return error(_("filter_oidset: only blob:limit filters are supported"));
-+
-+	oidset_iter_init(in, &iter);
-+	while ((oid = oidset_iter_next(&iter))) {
-+		struct object_info info = OBJECT_INFO_INIT;
-+		enum object_type type;
-+		unsigned long size;
-+
-+		info.typep = &type;
-+		info.sizep = &size;
-+
-+		/*
-+		 * Use OBJECT_INFO_SKIP_FETCH_OBJECT to avoid triggering
-+		 * a lazy fetch while inspecting candidates for removal.
-+		 */
-+		if (odb_read_object_info_extended(r->objects, oid, &info,
-+				OBJECT_INFO_SKIP_FETCH_OBJECT) < 0)
-+			continue;
-+
-+		if (type != OBJ_BLOB)
-+			continue;
-+
-+		if (size >= opts->blob_limit_value)
-+			oidset_insert(omitted, oid);
-+	}
-+	return 0;
-+}
-diff --git a/list-objects-filter.h b/list-objects-filter.h
-index 9e98814111..56a2d87aa0 100644
---- a/list-objects-filter.h
-+++ b/list-objects-filter.h
-@@ -94,4 +94,20 @@ enum list_objects_filter_result list_objects_filter__filter_object(
-  */
- void list_objects_filter__free(struct filter *filter);
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 2e8b7ea45c..0a4dadb896 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -429,7 +429,7 @@ int cmd_repack(int argc,
+ 		strvec_push(&cmd.args, "--delta-islands");
  
-+/*
-+ * Given a set of OIDs in 'in', populate 'omitted' with those that
-+ * would be filtered by 'opts'. Currently only blob:limit=N is
-+ * supported. Objects that cannot be read are silently skipped.
-+ *
-+ * NEEDSWORK: this reimplements the blob:limit size check rather than
-+ * reusing the existing filter machinery. See the matching comment in
-+ * list-objects-filter.c.
-+ *
-+ * Return 0 on success, -1 if the filter is not supported.
-+ */
-+int list_objects_filter__filter_oidset(struct repository *r,
-+	struct list_objects_filter_options *opts,
-+	const struct oidset *in,
-+	struct oidset *omitted);
+ 	if (pack_everything & ALL_INTO_ONE) {
+-		repack_promisor_objects(repo, &po_args, &names, packtmp);
++		repack_promisor_objects(repo, &po_args, &names, packtmp, NULL);
+ 
+ 		if (existing_packs_has_non_kept(&existing) &&
+ 		    delete_redundant &&
+diff --git a/repack-promisor.c b/repack-promisor.c
+index 90318ce150..fabfdc168a 100644
+--- a/repack-promisor.c
++++ b/repack-promisor.c
+@@ -6,10 +6,12 @@
+ #include "path.h"
+ #include "repository.h"
+ #include "run-command.h"
++#include "oidset.h"
+ 
+ struct write_oid_context {
+ 	struct child_process *cmd;
+ 	const struct git_hash_algo *algop;
++	const struct oidset *to_drop;
+ };
+ 
+ /*
+@@ -23,6 +25,15 @@ static int write_oid(const struct object_id *oid,
+ 	struct write_oid_context *ctx = data;
+ 	struct child_process *cmd = ctx->cmd;
+ 
++	/*
++	 * Objects in to_drop are being removed from the repository, so
++	 * omit them from the rebuilt promisor pack. Each such object is a
++	 * promisor object and therefore remains recoverable from the
++	 * promisor remote.
++	 */
++	if (ctx->to_drop && oidset_contains(ctx->to_drop, oid))
++		return 0;
 +
- #endif /* LIST_OBJECTS_FILTER_H */
+ 	if (cmd->in == -1) {
+ 		if (start_command(cmd))
+ 			die(_("could not start pack-objects to repack promisor objects"));
+@@ -81,7 +92,8 @@ static void finish_repacking_promisor_objects(struct repository *repo,
+ 
+ void repack_promisor_objects(struct repository *repo,
+ 			     const struct pack_objects_args *args,
+-			     struct string_list *names, const char *packtmp)
++			     struct string_list *names, const char *packtmp,
++			     const struct oidset *to_drop)
+ {
+ 	struct write_oid_context ctx;
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+@@ -98,6 +110,7 @@ void repack_promisor_objects(struct repository *repo,
+ 	 */
+ 	ctx.cmd = &cmd;
+ 	ctx.algop = repo->hash_algo;
++	ctx.to_drop = to_drop;
+ 	odb_for_each_object(repo->objects, NULL, write_oid, &ctx,
+ 			    ODB_FOR_EACH_OBJECT_PROMISOR_ONLY);
+ 
+diff --git a/repack.h b/repack.h
+index f9fbc895f0..a5a3f7c6ba 100644
+--- a/repack.h
++++ b/repack.h
+@@ -3,6 +3,7 @@
+ 
+ #include "list-objects-filter-options.h"
+ #include "string-list.h"
++#include "oidset.h"
+ 
+ struct pack_objects_args {
+ 	char *window;
+@@ -100,7 +101,8 @@ void generated_pack_install(struct generated_pack *pack, const char *name,
+ 
+ void repack_promisor_objects(struct repository *repo,
+ 			     const struct pack_objects_args *args,
+-			     struct string_list *names, const char *packtmp);
++			     struct string_list *names, const char *packtmp,
++			     const struct oidset *to_drop);
+ 
+ struct pack_geometry {
+ 	struct packed_git **pack;
 -- 
 2.54.0
 
