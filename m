@@ -1,112 +1,188 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FB23C943F
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 19:06:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAF549482A
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 19:44:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786043203; cv=none; b=WfM/biAmbcCSVSa0Xgnr6v45oMzuAC84zG6N5Cf7SRGCg4u6WAUYCREGKPTwV6m0Q++PXR8tprW9Sjih/43VlmMHJxuqq4RG20h3Ih/OqPOTnlnLGLbOi0/W7l6+bv4npmC18tvS0nCAaHthstCoWloE8BN4SXHrk9FLttb7bxo=
+	t=1786045470; cv=none; b=jw8EN+pGMKv7nYxTo7cwOOUBKJaMw9ENepEiIX1Elk9eGlppyGfpxygt5builc06AFR0Wy89/Zs7lx2zSSfSV6esmVOHvqlcKbLFY8Qxr7Rw0OTdxoidoz7fT4nDCDlxoBBqYj8a2aV3xHtcfbuyT+yXyIYZxfpANNjsIHE61Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786043203; c=relaxed/simple;
-	bh=JTEsflXGrlk8taxo1JYyy53ziz2ZiXq3orfb4CbXYfg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K5Lpk+YVg8snsdMW9gSm92tVNyyKrGI58FObWxwxAEcaBrxLmJLMjWfVFIoxtO0K6nKVxKDV49b9AmO1C11TqrDDYumQAk4U/LX8Fhw7IvezYgGlYLkevM3QjYgeyMowUYGQeo/ytEprlUHKA8BIhBr86acAzUKPEo+N9NQuIiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jNax5qpd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q2m4HImd; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786045470; c=relaxed/simple;
+	bh=U+fJjn3gcTla+XPIOfJPtcYeep3RmI5HLpzjdLk6Vf8=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:Cc:To; b=mhEuS7HTSBlMDu9NhbS26WcA6tAYXVc51YdQJbJihgmpkNl+YcXd7U04m5mDnFzxufL7mv0/yAcTtpPGpo53oUewLlsRfckDURafIjvo1tSUNlF8eBKN+8Gupvxuzs12hVzFFXVfhqI3BSL/Z43dfBdAmQ0zFyiojxPCHT3MCAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XD7klpsc; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jNax5qpd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q2m4HImd"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 00B591D000B2;
-	Thu,  6 Aug 2026 15:06:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 06 Aug 2026 15:06:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786043200; x=1786129600; bh=Xm6ZCVzznv
-	07aM3Waw+GStk7bLK43xoceom0xy16PQo=; b=jNax5qpdpNNfnEsCPMQwHErz9x
-	+GzRcfOQE+DMCyk19QHy9V/kJ8MvijjMhlxUV7ML8NQ+HuFdKZ6hsQ1/KxwX1UuH
-	vv6LSvO9ARvlyUXgkcUZY/voyWmUEJRCgfBPHkzjqhDGEHN8Dd9zyXkO8qs+wuE9
-	UC5PesbcHcOQi5pBY1OMXHM5ru9+a81TTl2ctiuDsT0Yc6/2v9dZG5X59s+m7Rwj
-	qW5Y91j4QgTeNzIxTkeb5ShsXoG+G9R541RyYQWb2GbgMj36T/VasKd2oSNtKo6H
-	d/3r1U3Lv3KUZbglBRBYK3MCY/vzzRIaQ2DTqlz5wl5JF+P2e9k6c8tI2vag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786043200; x=1786129600; bh=Xm6ZCVzznv07aM3Waw+GStk7bLK43xoceom
-	0xy16PQo=; b=Q2m4HImdOIOprJ838hYyJzPxTCpBjriD6yfBba/D+TqckUc7ykF
-	C7ZBAZNjaMsK8Pmc+JE7eYzIXeU8/HXyFmaAJoZXRWzNwNzrzmnmx5XQVjpOsJQ6
-	HbaILIW6Gmtgcppo6Oh/FLiU1ssXQFH2SrQfBIULx5z7XJ8jrQKCbKAY0Q+qoDct
-	1W0vF+Y1YbDurnK8N1QZAsX9CKfx/YxkH5KpLdKdeVAhuZoXm5NfLZAHu21TUoZB
-	qOQkLz2kgIy4V0AgfWCM3UVqewxpITYNikwo9uJUdfAFQ8QKQmrs1QgOLUwYI8YJ
-	h94Q7q+IC6f7gquthmNoZSAoMe/eRUmSyHQ==
-X-ME-Sender: <xms:QNt0amDxabsZa8d6OdC462QPK_2iVMoMPDpP95MHD7aOSCcCCSqDcA>
-    <xme:QNt0anjGpiJCijGT5n4y3wlcs6reeH7sauP2qir3dk82EHMQaUdB_yo5qywmtp7o0
-    IxVgWzIh98eEIRFu6N8BX800WdI0igS9trtXdeBMh-Vbxe1pD0oHag>
-X-ME-Received: <xmr:QNt0aule3Assj7KKMiieIIMt2x7xbxOdFzHswUrK47P8lX4bSZ86XnXgaXFt5sHSdfwpY_jUBj9aobc_EhoccXbNbhzq9f1I3Q>
-X-ME-Proxy-Cause: dmFkZTEBEzGqig6TvgaEAo498HkBdiQFRt4oakgig+p/N0NCNNQuDvHCLZDVPYHhZLUmcR
-    RX0YL80UGIy/faPLaR04lgw+YaVZZwsDoCYSq1EJUNbBaFZWh906iofg2LMq4N0DsbsCjN
-    NfZwEWdC5TpYqyehxsQK7viPgopcAmF5Yg4EbkMSViecy6t4sctDXWKoj1vF2g7oR95Kzv
-    MlhpZuoFPZLSBWKdsFO2a6u5cv6xQEFTPnzD8EHyFCwB9C3+goknvi+sqpmx7z+l+Tr/Sb
-    3Vsh7v3RJVcVpqGxYxnneEb+1fdfTuQz8Dqk+ogXpR1iQ3u1lDLG3f3Cec8CKFljuGX3rR
-    Vsd1YlKjxmEZqAADQd8vY6ElGy/jjuuWiXQcOExQmV0YFNUuzVCXQ6gvTJ1hcmC2p8iExK
-    a2Hcmi/O1zRaV1c7vxhW3765/efpKFffEiVRgzA8RbRTGRF/oQXTd47gS1X61HWQCB2/DW
-    OFeLBJLOIrUwySWXR7mF6kkqS1iOLK/mJIcI7VlKFST7wwnO6mhUronBE0gEF1rXwVpKUN
-    2+L9cQU/kp6zQ9yAdSMFuhNM2eH5IEkgwqnFIiCiYxFbpnA6/Wo1ci9N1phNOkIUjjTrP7
-    BJJEGl6j1pNUj7eJkUvwH+81/N08+k78YgQQakm2/x/gYfEk1j6+yoSzhV1A
-X-ME-Proxy: <xmx:QNt0ajrNBXCTVo3DexR8hbO84IFSjYEeovrcGAqh3_FVzace5AwsJQ>
-    <xmx:QNt0anGzkxOq4Z7GlgJaAsBxQWe-m7_pWItZhIykAKsCWR6dTYr5cA>
-    <xmx:QNt0avw63cEGJBWqyRIAoK7BVVKYwDU84GqRWTUdKwQkEsDTpZpKTg>
-    <xmx:QNt0asqYa75AhcWjaI00Z6cRdPzYGCYJtnmZBwt0H21vB8X_xZbBVw>
-    <xmx:QNt0alsA2XU5661RH3u4TKT3M5kzP8x8K0U8pHv23hnQHs_ou-TenqNQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 15:06:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v7 04/10] t6099, t6600: add side-exhaustion regression
- tests
-In-Reply-To: <CAL71e4O7HXmNOPJr=RBRRkFgzg04JUWE0qD_Gx3_24d2P-hY7g@mail.gmail.com>
-	(Kristofer Karlsson's message of "Thu, 6 Aug 2026 19:20:11 +0200")
-References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
-	<pull.2149.v7.git.1786013982.gitgitgadget@gmail.com>
-	<e8565ce0203e7f94f3f1ac193eb1fd703fe50463.1786013982.git.gitgitgadget@gmail.com>
-	<xmqqa4qzmdp7.fsf@gitster.g>
-	<CAL71e4O7HXmNOPJr=RBRRkFgzg04JUWE0qD_Gx3_24d2P-hY7g@mail.gmail.com>
-Date: Thu, 06 Aug 2026 12:06:39 -0700
-Message-ID: <xmqq4ih7jcg0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XD7klpsc"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-92e5d6f35c1so212125885a.0
+        for <git@vger.kernel.org>; Thu, 06 Aug 2026 12:44:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786045467; x=1786650267; darn=vger.kernel.org;
+        h=to:cc:message-id:subject:date:mime-version:from
+         :content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=GPRd0pxiuBt4+9q97U6vGmhgbpgz8ylFoad2LMVXUrc=;
+        b=XD7klpscgQWHl9wNgjfjOhqJpoXYVkRAUcJBU3nDA4iJl0q5McAN5o8z9YemPRiHAs
+         TFm2R3Uj9MS3tUadVbq+Jr7BuEdrNIKWq9OVclK3DqgJo48/kAxYkf/4kPsdTQC9VgyJ
+         2OlH+ViyCTKtQpXKlVsrqHvJTLBc3n67C4NlsI6XfJ420+vPLNjJ3aN/I+LnV4NtqA/7
+         DPdiNS6dztOGl1CvJXZzxzlngO/sylB+H2Ngo7H895H/fiPc7fkQQA9V6cxEXFzztw5P
+         PWJl+/RW+V2w6zjuVh4XDH8nZBN1Q+LT5eSNYsy2frKWZ1CXbdHXSKH7yveMRUt2pBoM
+         uFYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786045467; x=1786650267;
+        h=to:cc:message-id:subject:date:mime-version:from
+         :content-transfer-encoding:content-type:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GPRd0pxiuBt4+9q97U6vGmhgbpgz8ylFoad2LMVXUrc=;
+        b=VG6Jx9DYIjxiwsL2WB3CjStHgYrvlSDnJ6taxb6i1D1zojdI1ls7Hy6QeXNwjMYKrS
+         huFLKN6G9n/7yv8Xp4SLeVkoSVOdUsh1AkqFchasTNgx55LEc8nS9piEqbTuZhaz/bcX
+         7504TBUab9SKG2MNIjsQXDEWaf6TYDC4oCJr5YtYD0wiuyW7uxUCm7pCoFAcXVE7EEWI
+         R6a6XLKuZPYFiU4tZSDM5BWwtZndIAK60K8zxZpX91RTnDRUm6fTq2g8VzEv77Pg7zem
+         AJUZVh3OBGDOPTtk2zZ3LUUnRYI/P2D8NvmxypTplGik+ybBThRrfdDy+Wo2CX2pvl2b
+         n8dA==
+X-Forwarded-Encrypted: i=1; AHgh+Rp+zFd9iKRYM+jGs248tMZMhTB7TsDtlljAJmZliP5hAMq3RjgwQtIy1FSxTdYT3m8kNWs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWrw/3ZlSQusaJ3Vt9knyJnCdB49bpmF/p/5GYsSShFT0BY1oJ
+	DoeQp/6j2OokuL2/XPMJNz7a/2yvmdzOUBl/r6AoU7gQXbe//NxK+x1n
+X-Gm-Gg: AR+sD117qPPmPbn7HC2qzB16/qVXxceBDU1q2sQZJ6MQyChZNnNGJclSLQzn3E3dqvQ
+	NBFy3Llort0zJ+3/VEtyHXD8NaRMIULqLPGv5RWsB/hhetX0h/6JDWngXKzXAHeUIpJBIChk3mC
+	HHP6ACAqtOn1z2zs1qj18SbZnl5TnCjduJ2b1B2ieILiUWwZUlcyx1lbp4F779WrvRDSLewzdLH
+	pl3JshY0Cb+fboCk1O8QoVnVll6eDP1mpPDfMgfoNX7Ilk4gqboFLL/GamSZWnLettUHRXsoFsU
+	9jiHZaEygZSk8cQds/NIB5i2/PINj7h/ZUPIS5VHJjFYotxA+GZgI0sBcWRjG8I9qTQGDYh5iqX
+	xsVdszxogPiudjdmYC+UWKaVja/HuY+KqOKdYzFkpA9l4bbHTANo/rvCpD225OH0n4U/M69zFPg
+	mmQJhIbdHfRSkPobkcTh1yeKPZQ8B6yrv7m6jZrDu00YD+kbrrDK+dSlwGymH4AyOccXmn413C9
+	nTrU/o/wneW0Kq/hHgD8VqgYBA=
+X-Received: by 2002:a05:620a:28c7:b0:936:6911:38ed with SMTP id af79cd13be357-93669113909mr264184685a.0.1786045467210;
+        Thu, 06 Aug 2026 12:44:27 -0700 (PDT)
+Received: from smtpclient.apple ([204.48.93.237])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-936582d9eb5sm320520085a.34.2026.08.06.12.44.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Aug 2026 12:44:26 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Date: Thu, 6 Aug 2026 15:44:25 -0400
+Subject: [BUG] "commit graph is likely corrupt" on git rebase
+Message-Id: <4983BE1D-4099-4CAF-9374-459F7913982A@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Git mailing list <git@vger.kernel.org>
+To: flosch@nutanix.com
+X-Mailer: iPhone Mail (22C152)
 
-Kristofer Karlsson <krka@spotify.com> writes:
+Hi Florian,
 
-> On Thu, 6 Aug 2026 at 18:11, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> The log message and diffstat contradict each other.  The addition to
->> 't6600' happens a bit later at step 6/10, which presumably introduces
->> this finite/infinite distinction, does it not?
->
-> Oops, you're right, that was well spotted. I am not quite
-> sure how I overlooked that. Will fix for v8,
->
-> Looking back at the history, the commit message was correct
-> at v4 but when the test commits were split/reorganized for v5 I
-> failed to update the commit message to reflect that.
+Florian Schmidt <flosch@nutanix.com> wrote:
+> Hiya,
+>=20
+> Hitting an issue during git rebase. I am starting to suspect git is=20
+> possibly getting confused between main and submodule repos. I noticed=20
+> this with a self-compiled git 2.54, but I compiled git v2.55 just now,=20
+> and seem to hit the same issue still. Full bisect at the end of the messag=
+e.
+>=20
+> The first-order issue, trying to rebase a work/foo branch which is=20
+> tracking origin/master.  There's only one commit difference, a commit=20
+> that changes two submodule pointers:
+>=20
+>> devvm:~/gitrepo[git:work/foo *%|u+1-116]$ git show --format=3D"" -p
+>> diff --git a/rpmsrc/kernel b/rpmsrc/kernel
+>> index d8d411244..17006b605 160000
+>> --- a/rpmsrc/kernel
+>> +++ b/rpmsrc/kernel
+>> @@ -1 +1 @@
+>> -Subproject commit d8d411244cfb3463ce09b9577970f7955073ed14
+>> +Subproject commit 17006b605eaed1820ae1c717d4782728b9afc6d3
+>> diff --git a/rpmsrc/qemu-kvm b/rpmsrc/qemu-kvm
+>> index e7d525d0f..8bf4019df 160000
+>> --- a/rpmsrc/qemu-kvm
+>> +++ b/rpmsrc/qemu-kvm
+>> @@ -1 +1 @@
+>> -Subproject commit e7d525d0fdc42fca65c2b70bb5f56adc5aa1d7b1
+>> +Subproject commit 8bf4019dfcb320108a0f014d92d926320a4c8058
+>>=20
+>> devvm:~/gitrepo[git:work/foo *%|u+1-116]$ git rebase
+>> error: Could not read 157b7492624beac3ac667dd3a84de9969377866b
+>> fatal: invalid commit position. commit-graph is likely corrupt
+>>=20
+>> devvm:~/gitrepo[git:work/foo *%|u+1-116]$ git cat-file -t 157b7492624beac=
+3ac667dd3a84de9969377866b
+>> fatal: git cat-file: could not get object info
+>=20
+> git fsck reported no corruption, just a bunch of dangling=20
+> commits/trees/blobs, no warnings about=20
+> 157b7492624beac3ac667dd3a84de9969377866b
+>=20
+> Now, hint 1: the rebase *does* work when disabling commit-graphs:
+>=20
+>> devvm:~/gitrepo[git:work/foo *%|u+1-116]$ git -c core.commitGraph=3Dfalse=
+ rebase origin/master
+>> Rebasing (1/1)
+>> [... thinking thinking thinking for a long time ...]
+>> Failed to merge submodule rpmsrc/kernel
+>> CONFLICT (submodule): Merge conflict in rpmsrc/kernel
+>> Failed to merge submodule rpmsrc/qemu-kvm
+>> CONFLICT (submodule): Merge conflict in rpmsrc/qemu-kvm
+>> [...]
+>=20
+> which is fair enough, the submodule pointers moved.
+> And hint 2:
+>=20
+>> $ git cat-file -t 157b7492624beac3ac667dd3a84de9969377866b
+>> fatal: git cat-file: could not get object info
+>> $ git -C rpmsrc/kernel cat-file -t 157b7492624beac3ac667dd3a84de996937786=
+6b
+>> fatal: git cat-file: could not get object info
+>> $ git -C rpmsrc/qemu-kvm cat-file -t 157b7492624beac3ac667dd3a84de9969377=
+866b
+>> commit
+>=20
+> So it tries to identify something on the submodule? Maybe it gets=20
+> confused between submodule and main repo(?)
+>=20
+> For good measure, I did a git fsck --full on rpmsrc/qemu-kvm, but again=20=
 
-Heh, sorry for nitpicking.  Maybe others can give more serious
-reviews on the topic.  This gives us an important optimization.
+> only a few dangling warnings, and no change to the issue.
+> So I went to bisect and noticed the issue appeared somewhere between=20
+> v2.53 and v2.54. v2.53 also complains, but then continues:
+>=20
+>> $ ~/upstream/git/git rebase
+>> error: Could not read 157b7492624beac3ac667dd3a84de9969377866b
+>> error: Could not read 95d676ad199191d81a000761733ea25c17172d8b
+>> Failed to merge submodule rpmsrc/kernel (commits don't follow merge-base)=
 
-Thanks.
+>> CONFLICT (submodule): Merge conflict in rpmsrc/kernel
+>> Failed to merge submodule rpmsrc/qemu-kvm (commits don't follow merge-bas=
+e)
+>> CONFLICT (submodule): Merge conflict in rpmsrc/qemu-kvm
+>> [...]
+>=20
+> In any case, to figure out the cause, I bisected it down to commit=20
+> bb5da75d61 ("commit: use commit graph in=20
+> `lookup_commit_reference_gently()`"), which makes sense in the context=20
+> of "it works with commit-graph disabled".
 
+It=E2=80=99s usually a good idea to CC the commit author when you bisect a r=
+egression (I=E2=80=99ve CC=E2=80=99d Patrick)
+
+
+> At this point, I wonder what the best next step is. I notice that there=20=
+
+> are two errors listed even when the "git rebase" works on v2.53.0, which=20=
+
+> are not there in the commitGraph=3Dfalse case. I wonder whether that's a=20=
+
+> sign that something deeper is not as it should be. I'm happy to provide=20=
+
+> more details as needed, but I didn't want to touch the repo at this=20
+> point and possibly lose the repro.
+
+A good next step would be to try to write a from-scratch reproducer :)
+
+Cheers,
+
+Philippe.=20=
