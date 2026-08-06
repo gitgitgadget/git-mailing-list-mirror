@@ -1,69 +1,69 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE72F376A04
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717F0412BE4
 	for <git@vger.kernel.org>; Thu,  6 Aug 2026 21:39:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786052351; cv=none; b=lioEO5aLK93MlfgSOe0NeS0CsyyEloeYy8LFB7WprqZMLYTEzVyf7K+4/WX3rEZmv3PwnwtCvkC8EV04Euz19kV39wh080SGRPuilkA6ztswxFDLT6YfCjiiDGIUgZvkxzr2YGOtUmXx5hzITfyBX6tEo7UVA5YF/RsrKbr9rS4=
+	t=1786052351; cv=none; b=A35BBeWB+ggDnHOg4W/01PlRilr5OMd98nJ+AI7OKS1QeugaBvFiizXirSruRSyDqZDWv6XjY+N9qsPhdIvZ6beF4PtbTNi5ODIjPIiurKi4Y683hIT5AXnMH9W45u46b2CQxmfZONYqkN4VyTqzR7VYKqIpBukyKxjjy/KIZZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786052351; c=relaxed/simple;
-	bh=LVx8LeAc8lm8R0iy43wXxe0cqVCKyJ0NO/x25xBzWCc=;
+	bh=mU5cDfnKDy+hm+y4bxp2vNITbvB5ao0y095+s8S/E1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tikDT+UotpivEbXcCXYXc9vjNJYpO6rIK802Z8BoBB5+0vP7trSX2uYKGb7gcVBnA0itwRGgI/V0RKLvH/apbSAU2PovCm1ny1f9cOgNIsPlLAOGHLFoi34dFeVsef7QJpgbf1Cmp9QwddHwH0mSEdAgYHZRIpHp2UfLJUOFgvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gxRxMvyX; arc=none smtp.client-ip=209.85.210.49
+	 MIME-Version; b=gbMav07sc5D1qePnTCNyfXAgJUO/mpdosGRrYK0Dq1DDG5xKeEHCKEn7e1PNhNskV7xjjRyPNooDCBuVe5L7gBigRVchizkrefEsHET/YL02kX+aBN2A8EUEKnYKQ0TV8CVKKwA2AvDsXuRaH5AgcTb3OJ4tLZ4mMGicmJNOenA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RwVzPkbJ; arc=none smtp.client-ip=209.85.161.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gxRxMvyX"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7ee37dc91f5so1778807a34.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RwVzPkbJ"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-6ae4aff94c2so1651751eaf.3
         for <git@vger.kernel.org>; Thu, 06 Aug 2026 14:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786052347; x=1786657147; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786052346; x=1786657146; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=l23ZwgT33CqxWTfSO8iFFA6V03Bvl4LSidgYg+M0Cao=;
-        b=gxRxMvyXnw64512EVWHzPzbpHVZKkO4pS8buClAqsBBxWOuMqUCp1M6Nn9UJ9MGkYF
-         ArSr0VagJVUcQoE+VE/cdax1dtXxa6/D6eEp9nDKocTzQBxWgIOq924bVr0czujb0o6C
-         ap3WHz2AB0V6xs9Ndo4cijFq2zha2Esrmu7UBeuSUIIASRhd1ROzUrTdFjHttZE5+y3Z
-         LfS3HuXFLiPRmXoF+3XBqCk3xZxJkQsxtMgrRQB+0wleXSzkFmsO5J4TJ/IfkhhYmk+X
-         CKEz9PKvUnG1KYJcMjsjbiwvi93EghHRI+z5Jmss0k8tdVMNnilhbzUZoDJYiGovqeBw
-         LGow==
+        bh=+l3yfBOZbKa5AtFxobx/ERfS/hBGd2j74RGpHvk7Wrc=;
+        b=RwVzPkbJC7a6CTvwQ42HVM5WCZAIiHV+tyef1l/xm9mQY1ar+eluHDHgVwckE4y70v
+         ArndInGMmAAY548CKhdN29Fyo87thPLvx+qLGzlNtlweo0vUo9luQPWEzZ/6n6FoNiNt
+         cuI0jlYLp68uDElZORrGwR87bFf3ssAoJBUWscQmsMDHA3+FQUgNQX4GEWsQeB+zAQSD
+         yrLT/I9kx6t0ckrV/UNYpvKo09D+u+saa3pZrfUshRsm2R+J1w4sY5eP9p3YodZJLTIE
+         V9L2iuRBxk4eI+PDgKbsKBewl21TLRqtC3BG1ebcdmQmFDCkUIKiYxQRDoDlP5aX8XqF
+         mllg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786052347; x=1786657147;
+        d=1e100.net; s=20251104; t=1786052346; x=1786657146;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=l23ZwgT33CqxWTfSO8iFFA6V03Bvl4LSidgYg+M0Cao=;
-        b=FsFap0JHtuA+tj7ZLMxY9gtBxuGD+ChyXdRepkBS0kdVHKu+vmj/5Qx1r3l5MEKmdO
-         2OUh2shdJ8fTnwbJEo+8Mwf8jMKstdwLgLeRll2j1FiyG08vnScxMnGN1QpImBW7BCX0
-         e4asEpsmBW+bDn0qhoQLtSGLbFZFQVV/1bgTi71Ohpei6ioLvu5eqBYCI66JkptB0K3X
-         1IcalwD1iyWINtQqHzNmUCl6DTYfsOnkH5qnXx+jKPNPXdRO24jmsnXJ6isRKoE973FU
-         59XwDqzYwUIy7ofjEOtqfMNfUCKx0k1hUREqxTXQ/5ILOV5j+Jv3oyvcMVWOTw0CCysV
-         4lGQ==
-X-Gm-Message-State: AOJu0YyF8E7o8THeo4X9s5kKSmqu4OSJf0toLU60gtUDnbRoCgO9icRx
-	zZUOjTyOMO00k1fARFzz6X1FOfX6VtWopU5XuaWNX0duOzL7IPxk9336BUFflA==
-X-Gm-Gg: AR+sD13TD2ZtW1WBBus3Tk8lFUFcm0smPgl6EBFP+cFvd02bmV8zMTDEZ1t0wxKUncF
-	tY76NSy0OpBU8ve+OJRLVwPdRHuPZqA/1BcbUcbPIhcVOTvlAfBf767wmKhWkYs5NreN7+kwmkZ
-	8pb3++M+FeWkw5FgBo7brlLrsN5GHpm2++4Rhrd4hCHC2flO1in1BmebuLNJoLYnlkNoF63m1xW
-	vz6/0wuXVkwOHsQZU9a1tXhbkO8y1bC5QEpnGi64vMzBFN4Xl/axQUvIJOwfZaizPIzLbKbh55+
-	GWi8Vrblz0jYBoI1TzeZJ4ANgDN8oDdyh5vsyawbxVw8skG7ohPKHMPre+LsTPXcugiuHlpHlxy
-	sBGtq2N2TJup3m5oXwnlrV5Srg2vb3q910qEurzb6s0b0YsMQL5M/VrEr9vPIueF4o0n4OPmLvo
-	UU+X9nI4k9KNXZ1v5Sbyzgc+S5vdpGi4+ZXJ/lq24jIGc3QK2LOQYUkL3T5zssnvRlrvud
-X-Received: by 2002:a05:6820:2909:b0:6ae:8ee4:e01f with SMTP id 006d021491bc7-6ae96c1003amr9244874eaf.4.1786052346988;
+        bh=+l3yfBOZbKa5AtFxobx/ERfS/hBGd2j74RGpHvk7Wrc=;
+        b=CJ/W5cmzRrjrEwuR2zcSNHt4CRdSo3weFdU7tXMz2sLJDisAXevTx53jD4knB2SX0p
+         8MV1x5WPdsnJ/gHerc7TB7YqaX/D/9HLAXLatTi4v10uT6YazpGGnniHI0SxDTh6tv8Q
+         qu9k/SikZdWoBjfGd3MaRSKg6YCx2bEp5hBFjUkvzD3+5jhRgrN7pSZa0Rigzxo5WMPB
+         NhzWIN8oXDDZ7UTQ38ahgqoOrtNUSkjg4GBlCxQl1+9hOkXqi731CI3oE4iGwcmc2G6n
+         zBVFnz3jP3xxy9VDR+h66W+0iSaklX99B6/Z55yMLEJn0SIvEeQdJcJo3bSKvQGYOmVR
+         yomw==
+X-Gm-Message-State: AOJu0YwKTW4ZNv9dEYCtUPfsbh+ZYvJkEWO1otQY41IVLkbnHf6J2EAh
+	Y+mj0rbII1ReWEawYX5lED+ENMFEFXf9XQyocrab+8iL9GH7Lr6fBP3kvknuAg==
+X-Gm-Gg: AR+sD13vNaiLCgu5mqE6lAj6lZ2KK36RxDqMtIzfY0aMH2NnJ6OaaOKHrgqpnIWxGny
+	5FFdyE6CzKpDBXQ8HdYtiApQYjEaVD9b+4k33j7yy1NOOZoj9LzPeaRUD9fJkHPAxOwLt84AaOy
+	VLOv8msSA43YHyT8rcp5NJFuD47XB+4RuTNWLk/9LH5xkodkACk3rZU92YmUrDNCP/AcNjafZCQ
+	ygmttI8t8scNQD6o6GBSHIs6NFHjFEUHTsOvpJiwaO3WQPPfSn8qi7z5pP3eTWHxikmIL6YH0Gb
+	jkwsYvl8rryDRrpsIN4MFj4V8CPF2ZDBCJDmgiZfqqSUnY7J+CibrszHZQpyU7FrUsy6E7/kl1u
+	8VXgHUR4GMG2Ld/iK5Opp8yjWtBFM2bq4HM45vWMzp85MDvw7hetekjAa2hPaw/ji9ldx0T5S/f
+	YKPD/uyygNwCLEYobHwdwUasJxl9XKAMNuCk9TzLLsFBdPxp/A1nNSiLlw5V8tRxu3zmrc
+X-Received: by 2002:a4a:ee0a:0:b0:6ae:4d93:cdc2 with SMTP id 006d021491bc7-6ae96c10127mr9797758eaf.5.1786052346430;
         Thu, 06 Aug 2026 14:39:06 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b02be475b6sm587078eaf.11.2026.08.06.14.39.06
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b02be475b6sm587078eaf.11.2026.08.06.14.39.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 06 Aug 2026 14:39:06 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 4/6] builtin/receive-pack: report unpack errors via strbuf
-Date: Thu,  6 Aug 2026 16:38:57 -0500
-Message-ID: <20260806213859.816157-5-jltobler@gmail.com>
+Subject: [PATCH 3/6] builtin/receive-pack: lift global state out of unpack()
+Date: Thu,  6 Aug 2026 16:38:56 -0500
+Message-ID: <20260806213859.816157-4-jltobler@gmail.com>
 X-Mailer: git-send-email 2.55.0.424.g13c7afec21
 In-Reply-To: <20260806213859.816157-1-jltobler@gmail.com>
 References: <20260806213859.816157-1-jltobler@gmail.com>
@@ -75,206 +75,152 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When writing packfiles via `unpack()`, error messages are returned
-directly by the function. In preparation for `unpack()` logic being
-moved behind a generic ODB transaction interface, update the function to
-instead write any error messages to a caller provided strbuf and return
-a negative value on error. Call sites are updated to use the error
-strbuf accordingly.
+In git-receive-pack(1), writing the packfile to the transaction is
+handled via `unpack()` which relies on global variables to decide how to
+invoke the underlying git-index-pack(1) or git-unpack-objects(1) child
+processes. In a subsequent commit, the `unpack()` logic is moved behind
+a generic ODB transaction interface to handle writing packfiles and thus
+can no rely on these globals.
+
+Lift the global state out of `unpack()` by instead storing this state in
+a `struct unpack_opts` that gets passed to the function explicitly.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/receive-pack.c | 63 ++++++++++++++++++++++++------------------
- 1 file changed, 36 insertions(+), 27 deletions(-)
+ builtin/receive-pack.c | 67 +++++++++++++++++++++++++++---------------
+ 1 file changed, 44 insertions(+), 23 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 8c2d6e5789..7635b82bd3 100644
+index 6da854fca2..8c2d6e5789 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -2028,7 +2028,7 @@ static void execute_commands_atomic(struct command *commands,
+@@ -2333,18 +2333,25 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
+ 		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
  }
  
- static void execute_commands(struct command *commands,
--			     const char *unpacker_error,
-+			     int unpacker_error,
- 			     struct shallow_info *si,
- 			     struct odb_transaction *transaction,
- 			     const struct string_list *push_options)
-@@ -2344,8 +2344,8 @@ struct unpack_opts {
- 	int quiet;
- };
- 
--static const char *unpack(struct odb_transaction *transaction,
--			  const struct unpack_opts *opts)
-+static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
-+		  const struct unpack_opts *opts)
++struct unpack_opts {
++	const char *fsck_msg_types;
++	const char *shallow_file;
++	off_t max_input_size;
++	int fsck_objects;
++	int unpack_limit;
++	int reject_thin;
++	int err_fd;
++	int quiet;
++};
++
+ static const char *unpack(struct odb_transaction *transaction,
+-			  const char *shallow_file, int err_fd)
++			  const struct unpack_opts *opts)
  {
  	struct pack_header hdr;
  	const char *hdr_err;
-@@ -2357,7 +2357,8 @@ static const char *unpack(struct odb_transaction *transaction,
+ 	int status;
+ 	struct child_process child = CHILD_PROCESS_INIT;
+-	int fsck_objects = (receive_fsck_objects >= 0
+-			    ? receive_fsck_objects
+-			    : transfer_fsck_objects >= 0
+-			    ? transfer_fsck_objects
+-			    : 0);
++	int err_fd = opts->err_fd;
+ 
+ 	hdr_err = parse_pack_header(&hdr);
  	if (hdr_err) {
- 		if (err_fd > 0)
- 			close(err_fd);
--		return hdr_err;
-+		strbuf_addstr(err_msg, hdr_err);
-+		return -1;
+@@ -2353,24 +2360,24 @@ static const char *unpack(struct odb_transaction *transaction,
+ 		return hdr_err;
  	}
  
- 	if (opts->shallow_file) {
-@@ -2382,8 +2383,10 @@ static const char *unpack(struct odb_transaction *transaction,
- 		child.err = err_fd;
- 		child.git_cmd = 1;
- 		status = run_command(&child);
--		if (status)
--			return "unpack-objects abnormal exit";
-+		if (status) {
-+			strbuf_addstr(err_msg, "unpack-objects abnormal exit");
-+			return -1;
-+		}
- 	} else {
- 		char hostname[HOST_NAME_MAX + 1];
- 		char *lockfile;
-@@ -2414,8 +2417,10 @@ static const char *unpack(struct odb_transaction *transaction,
- 		child.err = err_fd;
- 		child.git_cmd = 1;
- 		status = start_command(&child);
--		if (status)
--			return "index-pack fork failed";
-+		if (status) {
-+			strbuf_addstr(err_msg, "index-pack fork failed");
-+			return -1;
-+		}
- 
- 		lockfile = index_pack_lockfile(the_repository, child.out, NULL);
- 		if (lockfile) {
-@@ -2425,15 +2430,18 @@ static const char *unpack(struct odb_transaction *transaction,
- 		close(child.out);
- 
- 		status = finish_command(&child);
--		if (status)
--			return "index-pack abnormal exit";
-+		if (status) {
-+			strbuf_addstr(err_msg, "index-pack abnormal exit");
-+			return -1;
-+		}
- 		odb_reprepare(the_repository->objects);
+-	if (shallow_file) {
++	if (opts->shallow_file) {
+ 		strvec_push(&child.args, "--shallow-file");
+-		strvec_push(&child.args, shallow_file);
++		strvec_push(&child.args, opts->shallow_file);
  	}
--	return NULL;
-+	return 0;
- }
  
--static const char *unpack_with_sideband(struct odb_transaction *transaction,
--					const char *shallow_file)
-+static int unpack_with_sideband(struct odb_transaction *transaction,
-+				const char *shallow_file,
-+				struct strbuf *err_msg)
+ 	odb_transaction_env(transaction, &child.env);
+ 
+-	if (ntohl(hdr.hdr_entries) < unpack_limit) {
++	if (ntohl(hdr.hdr_entries) < opts->unpack_limit) {
+ 		strvec_push(&child.args, "unpack-objects");
+ 		push_header_arg(&child.args, &hdr);
+-		if (quiet)
++		if (opts->quiet)
+ 			strvec_push(&child.args, "-q");
+-		if (fsck_objects)
++		if (opts->fsck_objects)
+ 			strvec_pushf(&child.args, "--strict%s",
+-				     fsck_msg_types.buf);
+-		if (max_input_size)
++				     opts->fsck_msg_types);
++		if (opts->max_input_size)
+ 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+-				     (uintmax_t)max_input_size);
++				     (uintmax_t)opts->max_input_size);
+ 		child.no_stdout = 1;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+@@ -2391,18 +2398,18 @@ static const char *unpack(struct odb_transaction *transaction,
+ 			     (uintmax_t)getpid(),
+ 			     hostname);
+ 
+-		if (!quiet && err_fd)
++		if (!opts->quiet && err_fd)
+ 			strvec_push(&child.args, "--show-resolving-progress");
+-		if (use_sideband)
++		if (err_fd)
+ 			strvec_push(&child.args, "--report-end-of-input");
+-		if (fsck_objects)
++		if (opts->fsck_objects)
+ 			strvec_pushf(&child.args, "--strict%s",
+-				     fsck_msg_types.buf);
+-		if (!reject_thin)
++				     opts->fsck_msg_types);
++		if (!opts->reject_thin)
+ 			strvec_push(&child.args, "--fix-thin");
+-		if (max_input_size)
++		if (opts->max_input_size)
+ 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+-				     (uintmax_t)max_input_size);
++				     (uintmax_t)opts->max_input_size);
+ 		child.out = -1;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+@@ -2428,11 +2435,24 @@ static const char *unpack(struct odb_transaction *transaction,
+ static const char *unpack_with_sideband(struct odb_transaction *transaction,
+ 					const char *shallow_file)
  {
- 	struct unpack_opts opts = {
- 		.fsck_objects = (receive_fsck_objects >= 0
-@@ -2449,20 +2457,20 @@ static const char *unpack_with_sideband(struct odb_transaction *transaction,
- 		.quiet = quiet,
- 	};
++	struct unpack_opts opts = {
++		.fsck_objects = (receive_fsck_objects >= 0
++				 ? receive_fsck_objects
++				 : transfer_fsck_objects >= 0
++				 ? transfer_fsck_objects
++				 : 0),
++		.fsck_msg_types = fsck_msg_types.buf,
++		.max_input_size = max_input_size,
++		.shallow_file = shallow_file,
++		.unpack_limit = unpack_limit,
++		.reject_thin = reject_thin,
++		.quiet = quiet,
++	};
  	struct async muxer;
--	const char *ret;
-+	int ret;
+ 	const char *ret;
  
  	if (!use_sideband)
--		return unpack(transaction, &opts);
-+		return unpack(transaction, err_msg, &opts);
+-		return unpack(transaction, shallow_file, 0);
++		return unpack(transaction, &opts);
  
  	use_keepalive = KEEPALIVE_AFTER_NUL;
  	memset(&muxer, 0, sizeof(muxer));
- 	muxer.proc = copy_to_sideband;
- 	muxer.in = -1;
+@@ -2441,7 +2461,8 @@ static const char *unpack_with_sideband(struct odb_transaction *transaction,
  	if (start_async(&muxer))
--		return NULL;
-+		return 0;
+ 		return NULL;
  
- 	opts.err_fd = muxer.in;
--	ret = unpack(transaction, &opts);
-+	ret = unpack(transaction, err_msg, &opts);
+-	ret = unpack(transaction, shallow_file, muxer.in);
++	opts.err_fd = muxer.in;
++	ret = unpack(transaction, &opts);
  
  	finish_async(&muxer);
  	return ret;
-@@ -2551,13 +2559,13 @@ static void update_shallow_info(struct command *commands,
- 	free(ref_status);
- }
- 
--static void report(struct command *commands, const char *unpack_status)
-+static void report(struct command *commands, struct strbuf *unpack_status)
- {
- 	struct command *cmd;
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	packet_buf_write(&buf, "unpack %s\n",
--			 unpack_status ? unpack_status : "ok");
-+			 unpack_status->len ? unpack_status->buf : "ok");
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (!cmd->error_string)
- 			packet_buf_write(&buf, "ok %s\n",
-@@ -2575,14 +2583,14 @@ static void report(struct command *commands, const char *unpack_status)
- 	strbuf_release(&buf);
- }
- 
--static void report_v2(struct command *commands, const char *unpack_status)
-+static void report_v2(struct command *commands, struct strbuf *unpack_status)
- {
- 	struct command *cmd;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct ref_push_report *report;
- 
- 	packet_buf_write(&buf, "unpack %s\n",
--			 unpack_status ? unpack_status : "ok");
-+			 unpack_status->len ? unpack_status->buf : "ok");
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		int count = 0;
- 
-@@ -2711,8 +2719,8 @@ int cmd_receive_pack(int argc,
- 			   PACKET_READ_DIE_ON_ERR_PACKET);
- 
- 	if ((commands = read_head_info(&reader, &shallow))) {
--		const char *unpack_status = NULL;
- 		struct string_list push_options = STRING_LIST_INIT_DUP;
-+		struct strbuf unpack_status = STRBUF_INIT;
- 
- 		if (use_push_options)
- 			read_push_options(&reader, &push_options);
-@@ -2732,22 +2740,22 @@ int cmd_receive_pack(int argc,
- 				alt_shallow_file = setup_temporary_shallow(si.shallow);
- 
- 			if (odb_transaction_begin(the_repository->objects, &transaction, ODB_TRANSACTION_RECEIVE))
--				unpack_status = "unable to start object transaction";
-+				strbuf_addstr(&unpack_status, "unable to start object transaction");
- 			else
--				unpack_status = unpack_with_sideband(transaction, alt_shallow_file);
-+				unpack_with_sideband(transaction, alt_shallow_file, &unpack_status);
- 
- 			update_shallow_info(commands, &si, &ref, alt_shallow_file);
- 		}
- 		use_keepalive = KEEPALIVE_ALWAYS;
--		execute_commands(commands, unpack_status, &si, transaction,
-+		execute_commands(commands, !!unpack_status.len, &si, transaction,
- 				 &push_options);
- 		odb_transaction_release(transaction);
- 		delete_tempfile(&pack_lockfile);
- 		sigchain_push(SIGPIPE, SIG_IGN);
- 		if (report_status_v2)
--			report_v2(commands, unpack_status);
-+			report_v2(commands, &unpack_status);
- 		else if (report_status)
--			report(commands, unpack_status);
-+			report(commands, &unpack_status);
- 		sigchain_pop(SIGPIPE);
- 		run_receive_hook(commands, "post-receive", 1, NULL,
- 				 &push_options);
-@@ -2772,6 +2780,7 @@ int cmd_receive_pack(int argc,
- 		if (auto_update_server_info)
- 			update_server_info(the_repository, 0);
- 		clear_shallow_info(&si);
-+		strbuf_release(&unpack_status);
- 	}
- 	if (use_sideband)
- 		packet_flush(1);
 -- 
 2.55.0.424.g13c7afec21
 
