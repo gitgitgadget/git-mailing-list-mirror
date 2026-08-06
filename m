@@ -1,108 +1,132 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B9847ACD5
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 17:20:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786036827; cv=pass; b=WPSd4FSjC6GdmMAh16cFCN19I9Z4/ohEcGVZ2YyIrBGMqZMEHX3mrRNi0i8w/qtQ0krLEPuOqxN8CAS+TIa1VJXDX9yNg/qbfdXu271j+L8Fk7+l9YaPo/K16zdJGx0oF9sgEJWzIU1Jcbl/dd1MKsYGVMiBOJ1/+O36BNVN1Xo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786036827; c=relaxed/simple;
-	bh=yrdTYHUv7kZhoAHMgXqfEqLfnJDRe7oR1R5R/FfHKL8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NfBmXL/dmlysM4EgUYtl8CkAJvE0DMwSlL2b9O5Rb/eLalqmlV+Mg4TEaHvE5kuWi7ggk6OKXEQw9O3K51dUTG2lY5u4GywdHP/EFak821otJGk64/sFMyIiODVYU0jDkqP2WIVYOgQL3ymqPH8vp4VdUOJUEayf9NgjjYj8ev0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=OFhn0nYx; arc=pass smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909AD373BF2
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 17:26:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786037212; cv=none; b=RYlrhqAGAL1D4lj6nLkvrmNDSmicdjt7a7bZn9JTMEQbPdbdqwjFiKgsFrwxBv/AVcyg5ngEGQ/gTrADfrAqZJe8zEZZq9+5MLjEbXBFpzbbEyv2TUSj+c73heO73sW23dSDkDGwvSVTPqRrNJ01BnIsNSdLOh4dBXGjWO2pnrQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786037212; c=relaxed/simple;
+	bh=sZckkjEsFm/mybDIoPg91n514CQrQGWsOMiKMPUGy9s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iZHzi2omVG0WZZ42rZkYn/SnG/ABustxiee4BYGZSaVFJ6dMN3JXT9UcVStu7PgcJoZChdU7WyA7XxTwd+JTQXVyB3bGRUpsseZuTcuxWVBTBWigGX0ON5vgxPxZg3NphE9CjcswS6rZTGOttQsHaGeAXVjID7eKFMCGVrpGf9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jSkPy2y9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wm8cJwzd; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="OFhn0nYx"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-821106b5b64so24719567b3.1
-        for <git@vger.kernel.org>; Thu, 06 Aug 2026 10:20:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786036824; cv=none;
-        d=google.com; s=arc-20260327;
-        b=bKVj9IgKU8SkulMip/cXGlCe8umhXt61synqtTAyiXo8IT3+jGLc88gZNe+2gF3M0R
-         8bxuZGvZWYsmrhwhdHVpW/MKFFe+fUsNYKLHFaCcq4Cj2Mg9bl51sAzjm9NugeDxJjcR
-         Mgm9hPIH9BsFNnFLP9EpmqhplOaE8GH9VHIkHAAsDNMuA6yf+JP9hHYU7wNpiNV08BZY
-         nQ/xoW2ZUmSUQUafFPVYdO5OZ+BEi4Nj0j6pQ/bh+m2kQsZzP5UWEekfuwz7gzhZvbeg
-         UQFQIqYWmXc+eQktunZm0mK2W+op+3I7V/NKorl5rP0+RF8vUl2ti3YbzbVFVo5K5aEr
-         2Reg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=wBGhd7s6C5SSx/HOCCQ8ABzPP7UwrbizKdTFGiLct0M=;
-        fh=pWTCMAGfV3RyVPT6nxL1S1Sv9uifu1spvd0uu6CXCW8=;
-        b=TbmOInMQSqmOvBTbbB3ylljaSP30suopRROK2gw93Pedj3zG5q01pTEQTW6GpkH4W1
-         esZxaJ7kHM+sJmkAuZMc/33sLUTG+sv/X5/Wru9/8XKLwvZxP3NAjJUs5TmvEbK8V4+2
-         6q5KpgUCMhzz6f1FeiDtrPFZDBctugAZ+60j9E3/THOEheMuSHX8c+FY8Rk5kP04rCcX
-         o/5GlADzCxMAM/zhUhB9Ado9IoF1J4KJo4Coch8GVVbiqQWD2IFfbSmEqLZJ9riMAjMa
-         X5wRmfvNuuZ2qiZ/NrlOpAccfBJLMah8+PFebCVuhmJeAYS3je24cldrM3Jlt+6mcu94
-         yqxw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1786036824; x=1786641624; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=wBGhd7s6C5SSx/HOCCQ8ABzPP7UwrbizKdTFGiLct0M=;
-        b=OFhn0nYxJ8xPcjK1Y+bG0xl7KWy2H4+uhK0aKGbjocwB+CIvuCq8PgrpaXN1Rgd4n0
-         vDvfDXuh9sQSOFO9VgNneF1SmGtyrRgbE/fJoYx0e9QUBQCf8g7NCzr9koO7w4YqfZp4
-         MNzxtRK74RLdn4pjKpNndkhQ5eOEbOrjBme/w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786036824; x=1786641624;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=wBGhd7s6C5SSx/HOCCQ8ABzPP7UwrbizKdTFGiLct0M=;
-        b=qPW3OPkDPqWURoN6hPJgcqOTpcRxZHKDe8dAwtjaexxq59G/1c9dzhOXQjkTSgw/IZ
-         aO01l79GN85Dm2fzeN1oRW+7VmcZfBe/aa492UffwHRtePxmDveaoKD5Ekt1vQmfz13G
-         jMaDlUoDPzYjZHynOHWckkxaz4UE/MU2LpWT13CzfgSRoK9EjUxzTOKGXwoGhyVbBj7l
-         GnVEdyqM96suWq+G7OSEr4gqK9V+vbyRlCFtYVZfl9MwlvoguR2ys893J0TckiejrMNx
-         3/kZ3j9TT/EKkk8NHr1byR8g1Wnxu3F62oBE/wXObRz36fz4f8w2RmBN+n6lV09U7zsu
-         Mvxg==
-X-Forwarded-Encrypted: i=1; AHgh+Rp0BIYxdVlUByMMgK/1R3+Qz5jrdGjQ8Ec+v/IoR8TwrwDDlNZd7uWcO7YuICfcSLyfQQg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYBlsPKK5lRlmIo+LO09qUeagXt4lh6fOriWg7CfGMENnIBGYF
-	2z7kUFf/Nedlkv6HaD/E32X95Pm0pnniclsXO4IgO+Lpl9b9FuqZl6fsa6Mfx2XrDQWDpXg/U7I
-	kQ/7FtA8mJ+lTkZNmeMcDKyLHANqJ52znzSTQHIlOHw==
-X-Gm-Gg: AR+sD11tSSlzSnI4y4omPbcJL56b5VH3DgSEtHVmsv7RROuXcvY1Soor8Ccgi/QasrG
-	5Tyr+BBxTHSYDVRJ52Lt4XUPR0qgEtuWySYqmi49uj1sUDZe67wnEAHjaX6OR+nBK15Zt1Eu+NT
-	dFe3uN+8HN5DWcYt6p714XyydmYvIed2ZPyNEFBCw6TDzSQrCuJCwHcr5otKeA2jpUxhrpTileY
-	TPH08ftJfAsHHdrAUEppGw270dOD/iyqzULDOACRw7K4qct2wO0hGTjhw39ryRQR7+qHWh0VtMs
-	9O6706gZR8kAgIdk0PCwQS4JYEeeE8ysCsAP2nuEDrA=
-X-Received: by 2002:a05:690c:3701:b0:81e:abe2:e022 with SMTP id
- 00721157ae682-8213a06598bmr36958527b3.5.1786036823158; Thu, 06 Aug 2026
- 10:20:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jSkPy2y9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wm8cJwzd"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C3DB97A00D0;
+	Thu,  6 Aug 2026 13:26:50 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 06 Aug 2026 13:26:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786037210; x=1786123610; bh=nZdBl2VPBy
+	UXJVJFy4TeP8Z0OumsUUhzsm8Xk5lLOpQ=; b=jSkPy2y9QJ//i0jxAr+RaSTzZt
+	IJUIocf6vUoCK+uwNqzvMLoWma5pQe3NNo3GeWB2L8eId1/odxLNnvWFr7OMIl4/
+	4kOrWuBXuekfaPcdIsLxS/EA8Zn4NF8iVEqGpfOrCzY/0k7IQaFE+kSJ+6cCTOpP
+	jyigEsqd6Mty8LEX5OX7mxaYUiUMW+e/TMyI8z4bcb9kkLnRPhZINo/TjoL+GCXu
+	+/kHv9aCg6Hq0xy0mwDB72C4LwJFW01DY3aD7MHbgBJVHI5jOZwn+0ApN8UndnAU
+	W/DtVQeRXRw+6efXdh1pZdPhJ0/lElMBgudvm9D+PpANXlPMhdHumv6DcJrw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786037210; x=1786123610; bh=nZdBl2VPByUXJVJFy4TeP8Z0OumsUUhzsm8
+	Xk5lLOpQ=; b=Wm8cJwzdcVrJuXC0PB95ktKiCUB6F77eGQ0E89cDTaIlcDC3qE7
+	FUU83RX/ujBRF/dkzbW11VkA6/eIHasCp4Xtf1eF18ZICQRlM0f5/S/RLcpoT+gd
+	8glTVjEcVyQtde1rHc8T7y5s4V+PXaw3Dt17ypbxNKEef10KrY1MdksQMjjf0FqP
+	wSpv4jyN91/4ftGlWv8R9VEcTFSV6x9EtWAxOgygGpiItI7DQdH9VTU/WPPmGJKU
+	12VvFbxyQT7dmGZ/9h22UScHZ52EABC1eFrowSuVG75mHhhOX+J98Sg7VeX1T0l9
+	ZyIWzLHfsGx5K/whM1wKvcpY2v1/pHi7Hng==
+X-ME-Sender: <xms:2sN0avnFZU_dMvrQH7NQ1YmtKmsKwJ-RbzGiJZfSB5kQbA7r_5VmOg>
+    <xme:2sN0ap3B7RBmsGiBLShK9LHUQnYvYs_jbpmGhzrA9BdoUZnxH8GOZy4leXj6NPINW
+    mXxkiALXS8Op4wjRIQLIgitiyFdSfixALzU-L6E4ev3OcDaMDhThQ>
+X-ME-Received: <xmr:2sN0aqqL1OHWKHi8Na0FwumSMxfb6CmGVudgbtuewUWvOGtjtHbZB817AgCy_s4mGG3cu33hfMMZKo9YRSmRhxz90MgQvCPpXA>
+X-ME-Proxy-Cause: dmFkZTElnZWLExWKBKZWlCxAl4wMjHAYIeltk/droKY8L1quXe/XzMhXK3AG/DQn1EMJhc
+    CRBdYJMCQYEn1y1571RbYBQhxvA40fQpUdB1j/vzfxguRQ/VALduUB3EklQFWEedzW5OkH
+    pE3Bzpgo/TisZzriBu3s8H9NwL2vX99Y/BLsJlUZfSD7IGd7PPAxafphUTHQciVCRx18IS
+    W2euKuN3ww1Ig1tqndtK50gbUIn2S2tz7FWDhXBWJyHsv0Z5DHA7usILuYdWiUPKfAY4sj
+    y90TcrIb7h8ErHL+qPK564fR/iRl+I+nBAze18TYfpFde3uSG23n8isZ9Eevh2lGWnztCE
+    FBsUe5wb6a4aYlWQYS7kJ1I7c2WzKGVgqg+IfbSzcqgh9skgr0NLGChbQUcSx3DInQfz0B
+    iw4OavH4wSesg2o2JB50CLycqobbLGn2l8TiReK1dwPtks1wPJfrv9A5m6WQI1O11/XJGW
+    xoOEPn4VGqrxgUpdx7W2r7KdpJ8SE86jKgXkGBtafvsye7gzaYVOVB2agXYTYrRFidzqLn
+    tb/PMahY+OlNWwGnxbv/s+0wcyX82VffJ2IMx3LXIMm2SQBW6SvuNe18xZltpfVrCQ+brs
+    yiQdbI4A+78tgbMk19M1PP7QV6SFS3KJBDql60wOe70AVU3KXs58PI/PysYw
+X-ME-Proxy: <xmx:2sN0amdB0iKKRy9ucoa6ERp2hgeWWlx4Eza7tBSLPCZALPjk5I2JLw>
+    <xmx:2sN0apqYfQQfzHtfaVa9Rx2zB49EX-hc0qHD34VkmB2H5zNHIMjrCA>
+    <xmx:2sN0anGjIkm8bRqPXYncfTb9Xb55GrJQa-Q9EGRuhxCiozVLjFMdow>
+    <xmx:2sN0apswrnTGn_gBwhjHoUFy-1eR5e5CmeVhcmZFL54RknTRqtGZ0w>
+    <xmx:2sN0aoAhISzsn7XqYOFB5Y_XiE1vmeEKIikqsSxVM9UDaDibvEp9Uyii>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Aug 2026 13:26:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 12/12] mingw: allow `git.exe` to be used instead of the
+ "Git wrapper"
+In-Reply-To: <f822133191c9cca40477fb1bdd5d1416c9fe66c1.1785939999.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Wed, 05 Aug 2026
+	14:26:38 +0000")
+References: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
+	<f822133191c9cca40477fb1bdd5d1416c9fe66c1.1785939999.git.gitgitgadget@gmail.com>
+Date: Thu, 06 Aug 2026 10:26:49 -0700
+Message-ID: <xmqq33wrkvmu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <e8565ce0203e7f94f3f1ac193eb1fd703fe50463.1786013982.git.gitgitgadget@gmail.com>
- <xmqqa4qzmdp7.fsf@gitster.g>
-In-Reply-To: <xmqqa4qzmdp7.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Thu, 6 Aug 2026 19:20:11 +0200
-X-Gm-Features: AUfX_mycVw3xYJF-zGmp23iqc5BxR1kMQ-7QIv_mE7U5lsUpyT7pLp2f_I7qLSY
-Message-ID: <CAL71e4O7HXmNOPJr=RBRRkFgzg04JUWE0qD_Gx3_24d2P-hY7g@mail.gmail.com>
-Subject: Re: [PATCH v7 04/10] t6099, t6600: add side-exhaustion regression tests
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Thu, 6 Aug 2026 at 18:11, Junio C Hamano <gitster@pobox.com> wrote:
->
-> The log message and diffstat contradict each other.  The addition to
-> 't6600' happens a bit later at step 6/10, which presumably introduces
-> this finite/infinite distinction, does it not?
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Oops, you're right, that was well spotted. I am not quite
-sure how I overlooked that. Will fix for v8,
+> @@ -3186,6 +3225,32 @@ static void setup_windows_environment(void)
+>  			setenv("HOME", tmp, 1);
+>  	}
+>  
+> +	if (!getenv("PLINK_PROTOCOL"))
+> +		setenv("PLINK_PROTOCOL", "ssh", 0);
+> +
+> +#ifdef ENSURE_MSYSTEM_IS_SET
+> +	if (!(tmp = getenv("MSYSTEM")) || !tmp[0]) {
 
-Looking back at the history, the commit message was correct
-at v4 but when the test commits were split/reorganized for v5 I
-failed to update the commit message to reflect that.
+Checking tmp[0] is a sign that we do not consider MSYSTEM set to an
+empty string a sane state and ENSURE_MSYSTEM_IS_SET is about
+correcting it, right?
 
-Thanks,
-Kristofer
+> +		const char *home = getenv("HOME"), *path = getenv("PATH");
+> +		char buf[32768];
+> +		size_t off = 0;
+> +
+> +		setenv("MSYSTEM", ENSURE_MSYSTEM_IS_SET, 1);
+
+In config.mak.uname, ENSURE_MSYSTEM_IS_SET is defined to "$(MSYSTEM)".
+
++	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DDETECT_MSYS_TTY \
++		-DENSURE_MSYSTEM_IS_SET="\"$(MSYSTEM)\"" -DMINGW_PREFIX="\"$(patsubst /%,%,$(MINGW_PREFIX))\"" \
+
+Can $(MSYSTEM) be an empty string or undefined at the build time,
+making ENSURE_MSYSTEM_IS_SET set to "" (two double-quotes)?  Which
+would mean we are exporting MSYSTEM defined to be an empty string as
+well with this setenv.
+
+It seems ifeq($(uname_S),MINGW) side protects against this situation
+by placing the cflags definition
+	
++		COMPAT_CFLAGS += -DDETECT_MSYS_TTY \
++			-DENSURE_MSYSTEM_IS_SET="\"$(MSYSTEM)\"" \
+
+inside "ifneq (,$(MSYSTEM))..endif".  That way, ENSURE_MSYSTEM_IS_SET
+is not defined to "" (two double-quotes), so #ifdef ENSURE_MSYSTEM_IS_SET
+would not kick in.
+
