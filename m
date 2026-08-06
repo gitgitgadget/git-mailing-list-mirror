@@ -1,179 +1,240 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from alln-iport-4.cisco.com (alln-iport-4.cisco.com [173.37.142.91])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76A142BEB5
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 22:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786054754; cv=none; b=gLYhfc+unMBHkFW1AYZwXFF2qwzx5rK/MoCzL6ybgG4tH7ukNwe4WdKEvpXqkpuM9A0gRCxs+z0uC9EQZC/ZnecainELP1DFVx3I97k6vNI2b4a7m0lGgquuHTMd1oqv4eqTT7k3vyPS831ZmRqizSwdYCz+IqMe7EYveqbXWfM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786054754; c=relaxed/simple;
-	bh=wUQpmvx1qlpme1ozMx8wypYq74NdlDIgTDrrU12A5Qw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UYCuMCL/iMQc8/bk1LtF9X82oLE8T1jHNJok8lgfYt9fefy+7IdlbwUT6tp0v5PqKyBZHIKKkFHeM/ZP7ABbqVe3pxb1cNg7dK73OdRnD/3MjLjncV+3Dqh39ic8v10VbPFMCRhsPucR7aq0kAhJmQoJ1tQ/RvqH+xQreINEaks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B6D21dDT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZVvftCiD; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167C142DA43
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 22:26:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=173.37.142.91
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786055179; cv=fail; b=jJXJS0RUoUWYM6abRvgnfeetCe4X0gj0YjtR9Q3m2GLubEUgt6SxGYIVxLWcHR/TfRaYOrzBL7QzKOIaLQByC/rsLIh3dC3cJN4gO8gDXrtV3bfGHyWwvkZ/dMaVE36G5+DDYhIVs96LGVM1NOct/gysu1MQAOZGO8RIY5KDH5o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786055179; c=relaxed/simple;
+	bh=LYFToTUjcSaGKVRJEbRhn6DfTYURYkDnzwyqi6cpZp4=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=VtT9bbzdB+Q6qrYcKkxjTtpau+fjLJR8i2XItLVV8lvKmgDljQ48ouv1IjwAmx9SGPWi5R/vzeGNvisGjExv3I6n3gPeKRplyWzYLNEs8UczdS0yXuZhMILJfm1J90u7SM4kMPBx7+PSNi90tHgLkrfefOEnz+PukVhopwYRLXE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cisco.com; spf=pass smtp.mailfrom=cisco.com; dkim=pass (2048-bit key) header.d=cisco.com header.i=@cisco.com header.b=RFyg8tDT; arc=fail smtp.client-ip=173.37.142.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cisco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cisco.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B6D21dDT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZVvftCiD"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9E8967A0120;
-	Thu,  6 Aug 2026 18:19:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 06 Aug 2026 18:19:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786054750; x=1786141150; bh=jXs1DsGilp
-	49qFVWeIygX2Qme5DEtM7T6zZxFEtwonQ=; b=B6D21dDTZ3fgH6hjWkKiGHClSi
-	l5MTcm1ju0CzRXZAcWWPpibK7ANK6+CRCKQQnFj0Z7gP+qR4fh4IBOZ2z51TBtAH
-	X7scQg3bhL1B529yLChiwaxao/NRqU43dG/4mro9VHxY6D7xwTcP5WM1Nah4R4v7
-	tdEcOp7bHLSOpOZ3AiMFdZBje40/NzdiKeVKuR5VJj2yHWWPa54aVuI5PNOT3cNh
-	5U1yeV0yxxfSb/rAKwG1a6/7wRp6FdSNHw4cZ45vWTvEW7MEnNif7muHhM/kLGpE
-	3vG8vVKcVqeELDEkCfsYQKfA0nYGKLvwQPsEo84BwUPrkx7ChNDxOuN5JWAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786054750; x=1786141150; bh=jXs1DsGilp49qFVWeIygX2Qme5DEtM7T6zZ
-	xFEtwonQ=; b=ZVvftCiDBJo/lWiUJcrkO419uHE6V+xP3+8pN0R3tZxvNV2Jf7s
-	C9mcrILTve1QDZ06k602IDrGuT1t0G0flPtxt0xzILfv1zUuiuKthChB8lKQXZq7
-	dro11XWaNqyFtdpqkGnEdc0juwVo9Bg9rO7FkNKEKpDXGxdrRghG7KTzVliyk7Fr
-	T3OlaHeO9u7T8FM+QtNrjGhAD35Kr/e1lxFHffUAkiiYSA2hbpvNaa6WUrnKy77v
-	phE/uT+RscVcLIt0O/GUnqmO4P5LZvRxRpTwIgj0Z1A6Oi0deHwpxiS/Ultxrw+V
-	O0TyFDC2bX2+8lZCWFKpMw8neQ1VhG2GKLw==
-X-ME-Sender: <xms:Xgh1avNy5G2MkTtQedpiDGh8iCvq6g3fxXqqHmQGFM1WoDf5uvTYLg>
-    <xme:Xgh1amgqWzNrGxjFWbYL8rO71OGKlA33mCZxf5MJzdmh-OYKM5MwltTCHS7KmoUFn
-    _wYO7aYFuDx9FzKQ5NAfhCW5Qk6LxfuEeGJ8bQJ6JODnylBeD_fWq0>
-X-ME-Received: <xmr:Xgh1aiu3cIEk09Xxhw_d3Ua_qoGI12yx6rE9gyWnlkpc1Liuere3K8ydfqGtZKQqrkg_I1yxcp-n3qFKBAeyy-Dmz1o9uIImMQ>
-X-ME-Proxy-Cause: dmFkZTFLvYKf1veR9GG6C3V4HJKoXampDThK5nZjK/O5EQTXvxJ3FRjcOHp+6Xt0sE463s
-    z86eCEQ2KM9++RZM2BHSupu0rfQ/hM3HgEQuV9xfDyT0vrJOIYL15Cr5u7ViClB8DPWhQW
-    ishj6PvigiovafVW1SnMMTWUABZtnzG96QECGhgXrc0K+tVH7/S/htJq1o2jNDtmhwNRxj
-    QL3flCJh5L5JrA1/lhc0b4Ia8PrhxI02IOjfEXT0K2M/pVfW4lBV6cUE8EO9rx8JNJSWLu
-    NPo5QF91+UmaedZsZgIu0vfijsUkrKvbnWIsXO187dq9WDhWl1jOzABpmvzLnOpAUpg/sS
-    YtdSb5MQvLXwfC04q97+XikPAgn6BF6XRy86brdgmVPPVTxrQqQzfSwUDN/dW5leE+M8fL
-    ueLbIU0vXiu34fMpV2CT+MmhAs4FVRgrReUefGlQ7AmAqWOSJjRH2fyoiTrpKGLeRqc8UC
-    t4w12kJptI8Go3Gfu/WCx8kd82gtgA1Yju9H5P4CJry6xY0DInVII/jyFx0b4pe1mpi4Fx
-    2MTWq/GHr+RVv44fL9YojEhOVBeHObcK65Wi+tSVXEfkUomTbwvZC0ltmeipQVRF8+nqno
-    RnjEWO6I4eRRFyhz5bfnrW8X+7uSKM20s5bpnND2hJ4mj5gQKzuGXKYr0vVw
-X-ME-Proxy: <xmx:Xgh1aqigp7eZVuvY2AEyCfUu-QhlxgJhhOhitKcD0cK9Pn2FH3-bYg>
-    <xmx:Xgh1aoYvtPMHmm4R86O528knXN6LbOo2D6DYKMF_KRUuexkzI4myNA>
-    <xmx:Xgh1apYX9YJknM0KC_nnDr9ZSclfjOdReM8gevX_-hkne6N3yK1pEg>
-    <xmx:Xgh1atw3lFurBVFLHulJ2o7ERMvDR1Mun0jOWvcF7xXGiX4PwgEqtg>
-    <xmx:Xgh1aiWJd1b_O4GfZpFlB4qFTE_tXVl2L1G1k5WIe_6cl4gTngryUyvZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 18:19:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  siddharthasthana31@gmail.com,  ttaylorr@openai.com,  me@ttaylorr.com,
-  ps@pks.im,  johannes.schindelin@gmx.de,  l.s.r@web.de
-Subject: Re: [GSoC PATCH v3 0/7] repack: add --drop-filtered to reclaim
- space in partial clones
-In-Reply-To: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
-	(Siddharth Shrimali's message of "Thu, 6 Aug 2026 16:51:55 +0530")
-References: <20260730174153.9949-1-r.siddharth.shrimali@gmail.com>
-	<20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
-Date: Thu, 06 Aug 2026 15:19:08 -0700
-Message-ID: <xmqqpkzuhoyr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=cisco.com header.i=@cisco.com header.b="RFyg8tDT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=cisco.com; i=@cisco.com; l=1755; q=dns/txt;
+  s=iport01; t=1786055177; x=1787264777;
+  h=from:to:subject:date:message-id:content-id:
+   content-transfer-encoding:mime-version;
+  bh=+rp61CO5+l2pkmGq5pBhl5ry2FTtWITLXWNfp3oXSjQ=;
+  b=RFyg8tDTEOr3BAGhsLZk1TqFcviexa511MKpCHPOUgRjsoRqPIBmCDmh
+   G4uxY4nz9kiPOYSjw/TK4He44g/QJdCVnmagPwia8p+uHRXt6D+/jUpde
+   UxlGaqF4M5ALafOXKnMJBxK949x4hTuBCJepcNDHuCHw4vjAs00rWVhez
+   3tdaUKMX59aJmgO6pT1+jNGxqy1jFWqwg4Awv6s47tWXhUiZZbkcGLBjG
+   bNIbTKKP0ZgoPZ9NiNnHbjdT9AN3jCZheeNydLtDNn2Z9aTiPTZKQZ6ys
+   uoCJgEsGjySFc4QcLlxVjfV8jBrFrZ/XHdJxrj2l3rScb5EASMrMP6p4p
+   w==;
+X-CSE-ConnectionGUID: MrVbJQzwQ5qe9WKxU52kcg==
+X-CSE-MsgGUID: oy2ND/t+TJaGfMIJ4EGbZA==
+X-IPAS-Result: =?us-ascii?q?A0AFAADXCHVq/5IQJK1aGgEBAQEBAQEBAQEDAQEBARIBA?=
+ =?us-ascii?q?QEBAgIBAQEBZYEXBQEBAQELAYFtU4EKgSGIbAOETF+GWIIhnh6Bfg8BAQENA?=
+ =?us-ascii?q?QFRBAEBkm0CJjQJDgECBAMCAwEBAQEBAQEBAQEBCwEBBQEBAQIBBwWBDhOGU?=
+ =?us-ascii?q?AyGcyhRAT5BJwQ1gmABgnQDAQKzGgGBPQKKKniBNIEBhH3bNAaBTQGIXAGGM?=
+ =?us-ascii?q?IREJxuBSUSBPBuCOIFaGgGHUoIwBIINFYEMiEWDV4ZcgUocA1ksAVUTFwsHB?=
+ =?us-ascii?q?YFmAyovLTI8Mh2BIz4XNVgbBwWBHYEohGcjGTZ8gQlegS0qZRIXgQmCYQKCd?=
+ =?us-ascii?q?4E1BAttPRQjFBkEkS8+gRUrLoEFVSkKLgQ4kyyPXqMwCoQdoXUEL4QEjRSZV?=
+ =?us-ascii?q?JkII4I2oTEBhQ0CBAIEBQIQAQEGgWg8gVlwFWUBgj1SGQ+OONAEgTYCBwIHD?=
+ =?us-ascii?q?gMLkWgsgVIBAQ?=
+IronPort-PHdr: A9a23:SaXrahKSZvMASDNCAdmcuVQyDhhOgF28FgcR7pxijKpBbeH6uZ/jJ
+ 0fYo/5qiQyBUYba7qdcgvHN++D7WGMG6Iqcqn1KbpFWVhEEhMlX1wwtCcKIEwv6edbhbjcxG
+ 4JJU1oNwg==
+IronPort-Data: A9a23:VCREcqB8ZNXUyxVW/2Tiw5YqxClBgxIJ4kV8jS/XYbTApDtx1jwBx
+ mdNCzuDPvaDNmbxL910aoyyox4BvcSHmocxOVdlrnsFo1CmBibm6XV1Cm+qYkt+++WaFBoPA
+ /02M4eGdIZvCCeA+n9BC5C5xVFkz6aEW7HgP+DNPyF1VGdMRTwo4f5Zs7ZRbrVA357jXmthh
+ fuo+5eBYA/9hWYuWo4pw/vrRC1H7ayaVAww5jTSVdgT1HfCmn8cCo4oJK3ZBxPQXolOE+emc
+ P3Ixbe/83mx109F5gSNy+uTnuUiG9Y+DCDW4pZkc/HKbitq+kTe5p0G2M80Mi+7vdkmc+dZk
+ 72hvbToIesg0zaldO41C3G0GAkmVUFKFSOuzXWX6aSuI0P6n3TE5u9QBmMPL5Ihp/96UF5t5
+ cFFcjMGYUXW7w626OrTpuhEj8AnKozveYgYoHwllWCfBvc9SpeFSKLPjTNa9G5v3YYVQ7CHO
+ YxANWQHgBfoO3WjPn8bEI81nO6snVH0ciZTrxSeoq9fD237nFQpieC8YYuPEjCMbcJExGC04
+ X6Fw0bwLR8/Ff7D5BWPwFv504cjmgu+Aur+DoaQ+f92qEOcy3ZVCxAMU1a/5/6jhSaDt8l3I
+ kgQ/G8q6KM17kHuFoi7VByjq3nCtRkZMzZNL9AHBMi24vO8yy6SB3MPSXhKb9lOiSP8bWZCO
+ oOh9z8xOQFSjQ==
+IronPort-HdrOrdr: A9a23:YPvbi6v77zxfPQtFmGkRVXnd7skCZYAji2hC6mlwRA09TyXGrb
+ HMoB1L73/JYWgqOU3IwerwRZVoIUmxyXbsibNhd4tKLzOWxFdAS7sSoLcKogeQUBEWmdQtrp
+ uIH5IObOEYbmIKwfoSgjPIaerIqePvmMvH9IWuqkuFJjsaDZ2Imj0JcjpzZXcGPTWua6BJc6
+ a0145snRblU3IRaciwG3kCWMb+h/CjrvjbSC9DLSQKrC2Vgx2VyJOSKXWl9yZbfyJEwL8k/2
+ SAqArk+6Wlvci8zx/Xx0XT455VlNaJ8KoNOCWLsKcoAwSprjztSJVqWrWEsjxwivqo8kwWnN
+ 7FpAplF9hv6lvKF1vF4CfF6k3F6nID+nXiwViXjT/IusriXg83DMJHmMZwbgbZ0Uw9p9txuZ
+ g7n15x9qAnTi8orh6NouQgZCsa0nZcZkBS1tL7ukYvE7f2roUh67D3snklSavoVxiKl7zPWN
+ Mecv00oswmP2+yXjT+onRlxsCqUzAYGxeLRVVHh+muugImxEyQCyAjtZYidrBqzuNnd7BUo+
+ vDKahmj7dIU4sfar98Hv4IRY+tBnXKWg+kChPlHb3LLtByB5v2ke+B3JwloOWxPJAYxpo7n5
+ rMFFteqG4pYkrrTcmDxodC/BzBSHi0GW2F8LAX27Fp/rnnALb7OyyKT14j18OmvvUEG8XeH/
+ K+IohfDfPvJXbnXYxJwwr9UZ9PLmR2arxdhv8rH1aV5s7bIIzjseLWNP7VObr2CD4hHnjyB3
+ MSNQKDUfmoLnrbKEMQrCKhKE8FIHaPjK6YOJKqj9Qu9A==
+X-Talos-CUID: 9a23:WLOCjWO4Fdoa1O5DfTNZ/mwtCN8cL2TQnUjzM3LlU2ViR+jA
+X-Talos-MUID: 9a23:lKgHfQUFHurHpGrq/Dj93hdOc9sr34anJ04osLdaluaOBwUlbg==
+X-IronPort-Anti-Spam-Filtered: true
+Received: from alln-l-core-09.cisco.com ([173.36.16.146])
+  by alln-iport-4.cisco.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384; 06 Aug 2026 22:26:09 +0000
+Received: from alln-opgw-1.cisco.com (alln-opgw-1.cisco.com [173.37.147.229])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by alln-l-core-09.cisco.com (Postfix) with ESMTPS id 308BE1800021B
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 22:26:09 +0000 (GMT)
+X-CSE-ConnectionGUID: cpGt5TxzQwKUMdaLEC8+yQ==
+X-CSE-MsgGUID: 2ehMLicYQoiQeEP7Vr35ag==
+Authentication-Results: alln-opgw-1.cisco.com; dkim=pass (signature verified) header.i=@cisco.com
+X-IronPort-AV: E=Sophos;i="6.25,209,1779148800"; 
+   d="scan'208";a="82760065"
+Received: from mail-eastus2azon11010031.outbound.protection.outlook.com (HELO BN1PR04CU002.outbound.protection.outlook.com) ([52.101.56.31])
+  by alln-opgw-1.cisco.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384; 06 Aug 2026 22:26:08 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=msDK98OobVwhFpTP0JFhgUCZxR4J5Tp4yiGzu1uTGaAw55YWn3L44qqEZ41E5zU+3LLqOlau2EixxHqewDnEzHq142NufXnMOuhyYD1f8crZ6n/pkBnXB0dkU1W8Gi7be/8ksdPExzk1LbtHoKJO0VBiYpHjba0ID1bNGjg7bpjv+O9iwlvuaLl/KtJF0+4NQW7VQJJ9GOvJILjK+AxO2U8xvolMFKuGsZcbmZxZt1RfBz02SPtjcTPud5jAH92eyiiCUq6qbhLtP3nIFHsjxUNDoW+4w+p74EYdswsnBOmWODeGwkGrKkcxWXTtrXOzkFHC2v7EC5Cog4zXqtyZ3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+rp61CO5+l2pkmGq5pBhl5ry2FTtWITLXWNfp3oXSjQ=;
+ b=Vk11Upc/ZsJbU2QS3raiVxv5FjyIAorL3HWryJQIjJDd46QjOiulKHBEZu4wfhvT7ERbtJ88/grZ9t4XDqmV0l/CBi2x2FdKfnIITWOzdk+B/oVIw+Sn4/ycdA8BeR0YMB9BxbV2ojtZuYdEmyq9R9O1Yiswy3QahQqfAKXWMt4Eq05JGTl1UNtb+lcX1vInk0uXrwQ2bSDbS/ujA3Ph7aYKmc0dU3R/4j0YL72zbZpYQcSLOKQHViNFefKX+J8qsM/57f8/S+unRyW0HyqSZWTzkNLcRGuHTMCQofG+43gtZcOUkodSob8BFxEQa/V+pKzr1tBfTcnVB+4oFILmdQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cisco.com; dmarc=pass action=none header.from=cisco.com;
+ dkim=pass header.d=cisco.com; arc=none
+Received: from DM4PR11MB6405.namprd11.prod.outlook.com (2603:10b6:8:b5::12) by
+ SJ5PPF09F392AFF.namprd11.prod.outlook.com (2603:10b6:a0f:fc02::808) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Thu, 6 Aug
+ 2026 22:26:06 +0000
+Received: from DM4PR11MB6405.namprd11.prod.outlook.com
+ ([fe80::a1ce:2981:4693:faf3]) by DM4PR11MB6405.namprd11.prod.outlook.com
+ ([fe80::a1ce:2981:4693:faf3%6]) with mapi id 15.21.0292.019; Thu, 6 Aug 2026
+ 22:26:05 +0000
+From: "Douglas Puchalski (dpuchals)" <dpuchals@cisco.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [Feature request] Separate explicit fetch mapping from default fetch
+ selection
+Thread-Topic: [Feature request] Separate explicit fetch mapping from default
+ fetch selection
+Thread-Index: AQHdJfKSOjaZZcnTKEyUIGaNB1l1Qg==
+Date: Thu, 6 Aug 2026 22:26:05 +0000
+Message-ID: <C47215A6-B86F-4AB2-B20D-54D048B9B2BA@cisco.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM4PR11MB6405:EE_|SJ5PPF09F392AFF:EE_
+x-ms-office365-filtering-correlation-id: d6c5e1fd-5191-4043-dfad-08def409b4d7
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|11063799006|10067099003|6133799003|56012099006|3023799007|18002099003|38070700021;
+x-microsoft-antispam-message-info:
+ qcKoeDULBOsAeEV7c6F5Rx1V2ZHwkk0Y0Bc8ZfYZKT9Hc+DZexxC65At3QAa+lZNLq8L6iegvIS0ZT5lyk+OC1L1fJFcVtQlMdMYJoR6nS/kcfbnjMaVeRFeEUUMvUOKLu0y2azzfl26WIhaQTxrdIHjBQ9t/l2ph7FAtSUMBETvW85U5ZVX8P9eX5DBoSarZP0sli8Uy9E5c12rXroIwvVxBpusak15hpbGzm35j8bo6FFb1m8akTpreLTCGXtgrBWkmMvP0mD7tDVai8ukamabXuDHsbE1vMGOv/CrdmnEhgKtRbwh9f5zrc9aHY+MmAMIu3JsBVV25l4lfZg9Rag+tZ98n+sPmJVmtu2evXCToMa4vdAmtBkmSiQv6NhRGPJd+gnoODzOaeLH4H9A348to5rqvVqlolQxednEo5AhXLIkEiBj3nBqa0gquoo1b33L4mvtNT3xsJXjjA7uAtXCnJS38iY1r85fAeJ5xaxWxBXVGEqshGz57SgE7p5sIZKlvgAzmRMWktrGyKRUq3TkSBhDLMPK5RcewagtovvR0cViPmc05sdp585ZZA2pYPnYLCIBek0/8pymdxBzMl/NswUhb6qwzSzseCh4I5XdOCnEUGGLQJqJxK2Iq1eUTG6AYtr+jx87kMYNbBeclc5I/7Zf/PjtSYpnxiyi44flBs5efOV8en8cv2V3lK2p3fsEB0RJ+mfSrhMQcfLEpcctrBUegQOyJtFiQ0SMgg4=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR11MB6405.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(11063799006)(10067099003)(6133799003)(56012099006)(3023799007)(18002099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?K56+uQkjLU1zbVGpqU/dw2ARzEh0xtz5nm9B1Bgl4JmpjEolud4a0+MjaPuW?=
+ =?us-ascii?Q?OZluz8Hds+nFnMztwn6l4vf8mkdogNghYBHQGhutN3whpVJELtcv3Y2pdZ3M?=
+ =?us-ascii?Q?2N5wW99rNMSCBEYtzCPEfgPS4H6vdWIHnSf58qmmX7qRCAgD1q9V/ta1j5PP?=
+ =?us-ascii?Q?H1ByANXli5H02tVFbukhB0IFr7ysEhpMQ7I5bV/lWMEFFm9VayRo6Cp8t823?=
+ =?us-ascii?Q?e0wXvsL2lRMucfEQKlKLd/NgMM4KGYnQSrtRFdT5N7RiDGdiELWVdnx9GtOg?=
+ =?us-ascii?Q?XEaKiGKWjElo9gAxamRFhjwlEEfSRTdu4Yn+DlcI9SPN+npwR3e5L0xU7pBX?=
+ =?us-ascii?Q?QXxCorQUoF/RlLg5aaksmImQjFHCQXDtziHH+3vP8BiXuzQ+FS+OZTBh0C2R?=
+ =?us-ascii?Q?PZerwO6vybELPT7R1A260eSRQBnzUm/qVRae82IjrGrkbjkhe0yCGdGAf37T?=
+ =?us-ascii?Q?GWiJ+cBUAmgjATEYMqpNORW1NKfgShfJDW+Ad7dctpUSslHW3XtMsyG5UJvl?=
+ =?us-ascii?Q?nl6YqXdbMMzXOMpEWUex/M8Oo5RFNRnAqfsrGGcbScTuKvF3IIhtFy5hZK0G?=
+ =?us-ascii?Q?RmcMogzHYO8KZcmEkETcH/2R+Hr3U4ZM/14eRzu8BGSBpw9knm9i3N5F5tpU?=
+ =?us-ascii?Q?vqgl3zNrxVLMDtSXBrnbknlvkDbwy2FGMtKHw9nA+KWrFd7ZKqYkCjMcgbn6?=
+ =?us-ascii?Q?hZL+PjAAg1KRwz67FXHS1NO3X/0UgVgBk19BONpHw8fziccuC0CDBiwaCgVe?=
+ =?us-ascii?Q?Tta3YH8dXTvnCAESodTEy3Y6qihngFJaMg3r7s8BCoVbcKo0zvwQcGuKaAP6?=
+ =?us-ascii?Q?K+8TXnvBZJWycExtfM8xKA7y9o/YVtbisH0yUoetHQl4qk3823Or9mSp+FX4?=
+ =?us-ascii?Q?wnLUPC5y3Dct+QSmPr6a5u+nzPevWWaTCm/vLk7nXvRgcQydHR5lDS9m9+rS?=
+ =?us-ascii?Q?EkTNzamgZujSAiar0ehshpqypz+E9PMgP8hr06rBwksCBJIuOU2EwssLpBDH?=
+ =?us-ascii?Q?wy+E6eSYa8O3j9U2Gtf8tvP/55WWlJjWLfCgQ1AhamUCq9QpNDj8/u8eBvl3?=
+ =?us-ascii?Q?VpcmFTHP9EBOyxJOJMYwcYE/pZgEqtLzyG7UHMvE0nKUih3RFCozAaqkYbzs?=
+ =?us-ascii?Q?zWLeghQBztUtI2DPh/GT+0AXzX5FkgMgonb9soX54Pyrh6hKGTJb7cT98Cti?=
+ =?us-ascii?Q?wBKRuZpr+97yjjmibg5rTX+F7XarX6hGbBf5+l6IapXfwcqpyAQC47kU4Pii?=
+ =?us-ascii?Q?Aj4LXaSc5T1wricuOQBRQeYTrgEms5ylaqdBOg0nbtQWBAUgZ0Amo0UZdBwe?=
+ =?us-ascii?Q?cHKVWK2v69BfkWKJkM7fS+4XFIoY8kllY6I0zW7L0I8wLkUDIhFmK3+txUa1?=
+ =?us-ascii?Q?Lcbxg5vlKjM053iqOw7tOBB+Nw7PyvnwzUml48nxb9mTqoqnpVAaXIgsMWWJ?=
+ =?us-ascii?Q?DAY+wgvw5DiR1zJc2dRZxw78+2tUBMhQinxULu9gX2uuYFQrrbKgW72VbEHD?=
+ =?us-ascii?Q?0N92n+W/3b2kEoj9Cx+HSl8y8ZNvI1eW/mT5gGFFcnXA20hJSSBeM8/SeYmx?=
+ =?us-ascii?Q?SGCKQKWLRxXiRG3k61m8iKpBuYy2+7RgaIcVBEXNQo+CoNqVDvgVxknexIoY?=
+ =?us-ascii?Q?AV9GdAONtKcxWQ8RdV4jY2I3yqqFaB1T3HksQahH4/4ui9wGRXgq9lT9Z/up?=
+ =?us-ascii?Q?GVZYutL95GfsnQrsETGVsrCp6oODxSCYP4hc8H5r2s9wVe7IcqrBgyR9kIr6?=
+ =?us-ascii?Q?LhzLVUoJlA=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <52D0B863844E344192A66020BF572CFF@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Exchange-RoutingPolicyChecked:
+	YwO0XxlezyQNtNNUf5JIvQC0HtVmRGheZasaKAcJ7WdhZ/tW4WRaU6ZPZg3rFEIeFoXM1tQ6qnjAKm1bBo7DnFuXfzp6+KPK/RxQ8QzsrpvxDh+KvU7M3uDqEnVqWK4CoD4wZoXynUoiSgRC0IqKtc1IK4s0m2IURkgSTXSETo2T2HYbs2Wvr7+TRGqg5zKJJXBsdbJ1EtvIBMBIQJ9meiq0Dwd4azBLWzyTEtp6sHRAnjy1qpI6d1rC9oDd9VClQuSToWY7UFWqNrcpXMhxpOQaYGx36PqG7QLQOvOs8rAYTMxIUuTyXQNvPBPMJTU3oEMHlGdZP2BsxB52+UGzSQ==
+X-OriginatorOrg: cisco.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB6405.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d6c5e1fd-5191-4043-dfad-08def409b4d7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Aug 2026 22:26:05.8469
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 5ae1af62-9505-4097-a69a-c1553ef7840e
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: unHRFBd7Npx0wuz00z0CM+cNhXOF7xYjJDx+6/bo1U7SWuT9QG+f+UbtF6Y/DEx/2ERU0VPWPxhKrqnLvaB4lA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF09F392AFF
+X-Outbound-Client-TLS: ANONYMOUS;alln-opgw-1.cisco.com [173.37.147.229];TLSv1.3;TLS_AES_256_GCM_SHA384;256
+X-Outbound-SMTP-Client: 173.37.147.229, alln-opgw-1.cisco.com
+X-Outbound-Node: alln-l-core-09.cisco.com
 
-Siddharth Shrimali <r.siddharth.shrimali@gmail.com> writes:
+Git version: 2.55.0
+Environment: macOS 26.6
 
-> This is v3 of the series adding "git repack --drop-filtered" to reclaim
-> disk space in partial clones by dropping large, locally-held promisor
-> blobs that remain recoverable from the promisor remote. v2 was at [1].
+I configure a remote to fetch only a small default set of branches:
 
-Also I am getting a failure from t0450.
+    [remote "origin"]
+        fetch =3D +refs/heads/main:refs/remotes/origin/main
+        fetch =3D +refs/heads/team/*:refs/remotes/origin/team/*
 
---- adoc        2026-08-06 22:05:39.038464944 +0000
-+++ help        2026-08-06 22:05:39.046464970 +0000
-@@ -1,4 +1,3 @@
- git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
-            [--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
-            [--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]
--           [--filter=<filter-spec>] [--drop-filtered [--dry-run]]]
-not ok 650 - repack -h output and SYNOPSIS agree
-#
-#                       t2s="$(adoc_to_synopsis "$builtin")" &&
-#                       if test "$builtin" = "merge-tree"
-#                       then
-#                               test_when_finished "rm -f t2s.new" &&
-#                               sed -e 's/ (deprecated)$//g' <"$t2s" >t2s.new
-#                               t2s=t2s.new
-#                       fi &&
-#                       h2s="$(help_to_synopsis "$builtin")" &&
-#
-#                       # The *.adoc and -h use different spacing for the
-#                       # alignment of continued usage output, normalize it.
-#                       align_after_nl "$builtin" <"$t2s" >adoc &&
-#                       align_after_nl "$builtin" <"$h2s" >help &&
-#                       test_cmp adoc help
-#
-1..650
+This prevents `git fetch origin` from fetching and updating a very large
+number of remote branches.
 
+When I explicitly request another branch:
 
-Have these patches been reviewed and tested?  Is this a new breakage
-in v3?
+    git fetch origin topic/example
 
-I think the accumulated fixes so far I have are as follows, but I
-suspect they need to be split and squashed into multiple patches (I
-didn't check).
+Git fetches the branch into FETCH_HEAD but does not create or update:
 
- Documentation/git-repack.adoc   | 2 +-
- builtin/repack.c                | 3 ++-
- t/t7706-repack-drop-filtered.sh | 4 ++--
- 3 files changed, 5 insertions(+), 4 deletions(-)
+    refs/remotes/origin/topic/example
 
-diff --git i/Documentation/git-repack.adoc w/Documentation/git-repack.adoc
-index 1364d6cd49..1775fb7645 100644
---- i/Documentation/git-repack.adoc
-+++ w/Documentation/git-repack.adoc
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
- 	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
- 	[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]
--	[--filter=<filter-spec>] [--drop-filtered [--dry-run]]]
-+	[--filter=<filter-spec>] [--drop-filtered [--dry-run]]
- 
- DESCRIPTION
- -----------
-diff --git i/builtin/repack.c w/builtin/repack.c
-index 9473342843..81ec093808 100644
---- i/builtin/repack.c
-+++ w/builtin/repack.c
-@@ -40,7 +40,8 @@ static int write_bitmaps_given;
- static const char *const git_repack_usage[] = {
- 	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
- 	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
--	   "[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]"),
-+	   "[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]\n"
-+	   "[--filter=<filter-spec>] [--drop-filtered [--dry-run]]"),
- 	NULL
- };
- 
-diff --git i/t/t7706-repack-drop-filtered.sh w/t/t7706-repack-drop-filtered.sh
-index 6774886f1e..05d58fa456 100755
---- i/t/t7706-repack-drop-filtered.sh
-+++ w/t/t7706-repack-drop-filtered.sh
-@@ -142,8 +142,8 @@ test_expect_success '--drop-filtered removes the promisor blob locally' '
- 		repack --drop-filtered --filter=blob:limit=1k -a &&
- 
- 	git -C repo cat-file --batch-all-objects --batch-check="%(objectname)" >present &&
--	! grep -q "$BIG" present &&
--	grep -q "$SMALL" present
-+	test_grep ! "$BIG" present &&
-+	test_grep "$SMALL" present
- '
- 
- test_expect_success '--drop-filtered refuses when a merge is in progress' '
+Consequently, the natural checkout command fails:
+
+    git checkout -b topic/example origin/topic/example
+
+The documented behavior couples two separate policies in
+`remote.<name>.fetch`:
+
+1. Which branches an ordinary `git fetch <remote>` selects automatically.
+2. Where an explicitly requested branch is stored locally.
+
+Please provide a configuration or default behavior under which an explicitl=
+y
+named remote branch is stored as the corresponding remote-tracking ref, whi=
+le
+the remote's automatic fetch set remains restricted.
+
+With that behavior, this sequence would work:
+
+    git fetch origin topic/example
+    git checkout -b topic/example origin/topic/example
+
+It should not require fetching every remote branch, repeating the branch na=
+me
+in a two-sided refspec, supplying `--refmap`, defining aliases, or handing =
+the
+result between commands through FETCH_HEAD. FETCH_HEAD is shared mutable st=
+ate
+and can be overwritten by another fetch between commands.
+
+A backward-compatible opt-in configuration would address existing scripts
+that rely on source-only fetches remaining temporary.
+
+Relevant documentation:
+https://git-scm <https://git-scm/>.com/docs/git-fetch=
