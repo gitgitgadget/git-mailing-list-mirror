@@ -1,82 +1,82 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD7A18E02A
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 11:30:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5234218E02A
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 11:31:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786015850; cv=pass; b=lTDZD6a4yKItYcrDsG7ezC/cfjIOunOodVlwtNcuvyeAjf5UqrQcf/1HWujImua85g4aznSExsec8jw12hLHzNEuNBeA1bF0KOO/psSjvOLYZrzKL9H7jYsoj109svwNu6IXjSLWcjN/oAG+5pR0ac7LfZ4H/+EyCtId1NYjnRE=
+	t=1786015870; cv=pass; b=Y6kJWRq01o/dj0GeGNyZ2K32xGerYnIJPiX22qUKMXZlkax32i3dl2MLbuGsvXRS7UL6qMXMKGroBt3Jk+EIGEJK19540kpt+Vsx3hOMY9vkQ0NRAxbmfN5uz35BN5tm4ixXk8RITpVbflIvqoR63jyAnPFpyYEKSrOwQphOMOI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786015850; c=relaxed/simple;
-	bh=e59QaQRHEkT+qlBq8YzN+xlv8vD9zChB5yWJ2TLt9yQ=;
+	s=arc-20240116; t=1786015870; c=relaxed/simple;
+	bh=gzAvBZmBUp0h6aNyKGay1G8mE1R6FN/PsFOnInuMraA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PPueLD4Sybljy+PBlwcEgLAgkLlpBVJbSD/P66WIC8CogGFAFedzofbQDYP7sgHte9aWm6dcUvn8tzL2XsO3ucK2WtnhmaT1Im9Em+qRfdAn1gaj8mq76j6etwb0fDwAMx2U28k28VTAM/5eGGBXOV40pW8As3HMIP4GXD17ac8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R8jvAV3y; arc=pass smtp.client-ip=209.85.216.49
+	 To:Cc:Content-Type; b=q7TKG03xksAPCmiglny6SwqVL2fm7uwUNHbtIORsPB3DD5iEo4qhjLnzWWFyoH4018YNaz+YNTcNU0WYQc8kQoW/gpbT+VChOkh7rw5quXIHxJh5WxDxIfEg/adFkhWGmchZcYVoQ/wYLFYjb+oe++CvHoie1Uw0/AKusDIehIE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YYCOALWs; arc=pass smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R8jvAV3y"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-38de840f2f0so1496657a91.0
-        for <git@vger.kernel.org>; Thu, 06 Aug 2026 04:30:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786015848; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YYCOALWs"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-cbe827e3cb4so385330a12.3
+        for <git@vger.kernel.org>; Thu, 06 Aug 2026 04:31:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786015868; cv=none;
         d=google.com; s=arc-20260327;
-        b=knRL32dtvAS6gio8zain9biIikeZObtOG0FqVFAS/YpKv07WnU3Wpu3oL4btYFJqgt
-         L93D1HTH7DFBxCV9GWoXK4IuQ5/Mons4z+T9mfyvnm3ZIKXK945qQCtbHuHNCENpWzei
-         Y5umCtd9PT0jezM6bcWvtvJeNhpZI7tDLYvauZqPlwnApUmGEGE3/HiceakyHCDIhZmf
-         W0Bi6LlMwp4/DF830gH+6GH/+t69qTNkFXCwjK4a2vGAA+nualFiFoBuEjaiuOm3SUgR
-         zCg90nekX6a6JgKHJ0fFEeHJkLu0BgNYdzN58+72muILgtwmghGfq2IjUOpVYfiINfHC
-         esog==
+        b=nwwuFwn9xJiWASVG3qfbVD1D8VAr4r7dV1Nvcl8cRZmwJCbyYmFoJnXNyMH5MNEaP2
+         BUXx4aVZmWzhG12OhFQLzqbH87vccI0c+oIwkbQi+XSpszIHQvwXGEsmak70j0vUmyGQ
+         MEgbrUtpjdEoS3ctpvKUTZkRdeoA8XGHijlVnUZk75Dq9OsxBs+X/MFx76ksbdd5Qv3h
+         z9HU9ytyUhRAs7JPNwPvYSBkSHpvWmGWwJ10btMiUNaYNGTNjqOAQCYxK/TA/4jjyok3
+         Q/eYY5ui6gpOtmnm5VsGqYSC4Ae70+ed+tNn9MIYRj7onbQ5xzJMVA9qH00pK6MFPKt3
+         pWgQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=yIFTyGIrS/VscC9IKaUvM/NOvn+2KvJaA4/7k9u4o40=;
+        bh=g5gF0vKAGsK1iwyu1hjqgFt5Am4As+ZjjEheetVneaI=;
         fh=Gl1yUhNnY/d0FwAIaGoMwb0WkywJIt0FuZR+TDAfljI=;
-        b=DohRH0IV3bGPWJ65FGM4O6cgX4Hs21WefAtdm7vm5aKU4BGsg8eVQI6rOwAbzUGyfH
-         XucnZAzwD/3WqUu7UQUKNfmd3JORvWm4wFSOsoH40izljDCJ5CGoMU8xhuqrSZush1ay
-         Vb35hh5GRhbU+PrBoyGO0kOjavrB2RzOeUTq9GVZCHxKPV+O0YgrisSu0rTSQDOYj8R7
-         ciEl+ifbAzplr065pDYajsW7KyDDgl4oRXjTaL7lOE6tUEzLJzsVl0wbzI44cUKAWvc8
-         R5aapAKgEYW2UJJOyj29y6FBk3nXDyKYSz6DajOuOGPdUyGQwuKRek7m3+TEl8JaTTSg
-         8PbA==;
+        b=M1GNv6U64O9g8FSwBipWNsUwiA2pexTkGLrw80u1tUnOHviNnMIuSry75+oBoo24Sr
+         EqcFawttUgqXs+IUvsPOdNJfNE9Bc3eptUAngCjH+35DYiVpZ9HUyy84eUOtnoRElcYE
+         jQP8kcgsm79uRP5p8jBN01C55MPXbHebxh7cPy829mYrSdQxISGxvZ8GQfAmAtoy6o6y
+         Zi/a/NWZSF5kQutMMFcsLtgryOjP15XAqVKHmctNeOyowKAWIDmK2z+CGZkYGNGJea/u
+         Rm/jXUsi7pYQDv6N4tc6W3YtrCSslHqifD2yP78MGOw7Up/aTKHyg81XCKtKulyyLAjc
+         3y2g==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786015848; x=1786620648; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786015868; x=1786620668; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=yIFTyGIrS/VscC9IKaUvM/NOvn+2KvJaA4/7k9u4o40=;
-        b=R8jvAV3y4+PTcPnotv4bwjL3GRt5z3eXqSFog5V3tkh+2Iqch0dAGJoaVoel9b95eS
-         +Y09HIK++MNQQwccUKdjPQJ6ShgtNO8b90KQYl/79HoXUyAHAbI662m0sh7yV1NNoguf
-         IbRl87VK0cizH0SUXIPSYZpbeqmO8I3UVOeqQDfKPon9zN/NrHzWJ1zWE76i4RWkGs7B
-         kpjuFs2lg/JMM7h7WKvz4ZlovAGjeGAYif3QdwP2nOpK8lKE+eRBxgNanL8dyDXnDBH5
-         oHxM6cJS80U70XM+xj8cisAWzOfVffdEMebUdSPFUUuCPEbZSX7/WH1/kCnYK4RiUKcB
-         axfA==
+        bh=g5gF0vKAGsK1iwyu1hjqgFt5Am4As+ZjjEheetVneaI=;
+        b=YYCOALWsnq1FQt2WwH3CUdKQ0CMOH/OSd0CDooEMdRIq4b3YwBX9hQeQRYToq6IltT
+         Y7dcyUsANnWxqDbOQday3Sh9SMrer1rZXhJ1pwjU43VbW5fwM75n21mSTIsWrzkOqodD
+         sg0Vso4VuaKAoOwX426irMrkURnhucMA6+H8emDjIaOZyAfb6qMqlLfRlyXpWhtMqrCI
+         w8t+ePFPjPBXkmlZgD56BdMA74jASaaceee72p+DaVplDnBETTrMGW5W/NJ2jU6jogPO
+         3gQiZ3Vc2ANCkUrhHoYLCyxkjD49RFyFnxi16wMrLAWgWZ60EuQ2CW3CnDTfoHCyJ7pP
+         T2CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786015848; x=1786620648;
+        d=1e100.net; s=20251104; t=1786015868; x=1786620668;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=yIFTyGIrS/VscC9IKaUvM/NOvn+2KvJaA4/7k9u4o40=;
-        b=keY32lxRMDuQTvUJa8Gf9fUkRtNJmGYVPNu73i88PWaxQGkJGsC8hhPuy0GIFkVOTi
-         8KkGmwEisRfovvIWKEtTHmHzqZfL1gfIzpK+2jeKSEb813/ZI7DW7wUxsQI3v04kPOpH
-         PG09k/MR5XeXazrYWVoitm6dFB52YT0DwtzC9njKXW8iAIMrZi9I4g9putM599Wjl/XL
-         flAziHYGeqNPnXRmR1BAChF/9OIddMGkuUbLW7KUcI/NPf3Y9gtG0r6JXlw243OVePIa
-         bCcdwAKVswL4RKboehg2HFSSZKKWK/2j7ztCyqIF/BWW+QCnt7hLPrwd9M/xSThsrv85
-         Rz6g==
-X-Gm-Message-State: AOJu0Yxvskiss0SYLzcujYs2AxfwA9vFvF5EyhgH+/rXw+8/DZ7BzIJS
-	heb2CDpdPuAx2bvs6lR5gsn9J87N846shm3bjHyfnFLPFn0cLcjwk14DJ0pcOjgPLmUo6MEj2oa
-	bXOnaowcyNOf1PEHNoAYZXjIr/if7jrhPUFJK0ivRxg==
-X-Gm-Gg: AR+sD109r6GZNEzEUuSPgIQ/owNRmowLsjFOatHYLfiTjGadcsTJzqgMUWp9WzOHrIj
-	be0G1uCYahlxfhqSxraob516Nkxl8NSqa6MraAFWt2t3kmf7VYh8KDqzT88eA7t4Ae88bo7Zqwg
-	5e9IRE+2AMlpbR5i7EjSAif7+N441uQjY+3jBjEXv7qYLdzPPHmdYVdA2U2yX4/4JufStXq5P8z
-	BHiRc0brSR/CvY4TIk8i8pa+AHXkb4gD1D0EVGMe5SrKAy3Q6Az/aTUoIjrIUG7nfWQwzhYuTSz
-	P9DPMnRNFqPuLZF9wJLfz91ZgroBimzCUNva+pfy1JOrQzNTUGmvD7ceVrj5bICsxL0mpk7xD37
-	7W5hlSdcYvwkoogB+amZEs7pKqoHpxcjw/5grOkezrf4S5XEw4AXlhYFEU3ypCu4WnpuZpxNkpY
-	V/w7UbTYH2W23iFwBjffk=
-X-Received: by 2002:a17:90b:3803:b0:38e:6dd:a9ad with SMTP id
- 98e67ed59e1d1-3903bb00ecbmr12101633a91.0.1786015848102; Thu, 06 Aug 2026
- 04:30:48 -0700 (PDT)
+        bh=g5gF0vKAGsK1iwyu1hjqgFt5Am4As+ZjjEheetVneaI=;
+        b=g6erWid6m4OIzTLH3yH2rlFOEjQZEZSDnOoGLGWkD86tjujUmvVZlmv+XwOL7QU9ws
+         cXK9oRWnzLPCB/THCU28PUJ/kMzhsX6KToVre2HD0nWF4usj9rtoBH2RDl8m/Wfhu9ri
+         ayes/fe9H4sJYUCa0RsS7ZaHszWQtvqCUdMxiq295YB1RjkTTFoZx3jyPbfoOQX7xBMQ
+         qgEhqUNcD3zF6TIBFqR0q/u6pdHjeS4N+49NDcxmmPXdZPZpmBZ50+Y98oddE3jGQqu8
+         0bZAYpZzdJMOtMhePWncL0F5dH6Dnp2DwsO5VnMGjdYUm3NwBvgHX1i7nIbUAdzFi0G5
+         JHYQ==
+X-Gm-Message-State: AOJu0YxnMxB/Aqrqs3Ofn9rW8wxePULDEszcGYY4nGdUBAeVFYXzR3FN
+	GWHz4cj+dBnhkSiCEljzA75onq/54g6mU/8IR4h+Seb6jJJjWOZx5QoXA9y8ke/ZwVTzsdXkynO
+	zpI1vc3i1Sow91S9jXcy0dDFDV4gx7XyoCvpsVME=
+X-Gm-Gg: AR+sD133795yZhagqruTAGNQzV/qoTszlnekGthMO81Gs4GqDEWKkD2sclGBTmdTHO1
+	Xe0QKT4ZYGymXMwS/gwCiPLUa6ZFqbOMZcKSmUM2wu2pe2ns4EoFa0PfNMjf9OZPtK7KzRzxuIb
+	fxFIz63Ppp1Yc47UNfXneggp3wE9JMDLINZ6z0m982+gEreJItMEC9KXA/86ffNGKyOOj3LcYEK
+	MUpX0fQkuhy6B36G0tdcXbKTut9+PzHp6csco6+6BlXwIvtwlM78NTGQE9gRZsWpDTubeYGR7Qe
+	Y2qQQfuSG+fNUTBIubccb7nvDG43tXOvKoFnM97rMtKifwsn2ulmnC/HzfjNAq3r9RNhA+NiA2i
+	5x6bCLiIyF9dFMxG6k+K3m7Jgq+UNqrLs9jb6GZwLKRdJTDku14fGyC65Kl/84aulZ8JM/WSt1g
+	DkdGtQbGLHsQN5J1Otk1NRL65JvHTksA==
+X-Received: by 2002:a05:6a20:cc0e:b0:3bf:ba48:ca88 with SMTP id
+ adf61e73a8af0-3cb85e6b038mr17939375637.15.1786015868564; Thu, 06 Aug 2026
+ 04:31:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,14 +84,12 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <xmqqcxw010me.fsf@gitster.g> <20260805194250.3316220-1-gitster@pobox.com>
- <20260805194250.3316220-4-gitster@pobox.com>
-In-Reply-To: <20260805194250.3316220-4-gitster@pobox.com>
+In-Reply-To: <20260805194250.3316220-1-gitster@pobox.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 6 Aug 2026 07:30:36 -0400
-X-Gm-Features: AUfX_mycXHsRdotZkIitwErcUeOi6Y5ogDSjSI6ughxsydyFeckdZAk0DOJL6V0
-Message-ID: <CALnO6CA8sjivVfz45OEDWnvw516z9Nd9SnC+zfJ=FK=Y6Q7MJg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] completion: 'git diff' completes untracked paths
- as a last resort
+Date: Thu, 6 Aug 2026 07:30:57 -0400
+X-Gm-Features: AUfX_mxeU96jG7cWidoiO4nrWYkApIqA_qEVIezDSrk3kpsTAPQhFPPQevoLI2A
+Message-ID: <CALnO6CAFYZb+x0W8sxLe8cicCuvhCZFrxiEJSRQs-aMF=cd14A@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] completion of 'git [-C <dir>] diff'
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>, 
 	Britton Leo Kerin <britton.kerin@gmail.com>, Elijah Newren <newren@gmail.com>, 
@@ -100,112 +98,41 @@ Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hello Junio,
+Hi Junio,
 
-On Wed, Aug 5, 2026 at 3:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+On Wed, Aug 5, 2026 at 3:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
 rote:
 >
-> We taught 'git diff' to first try to complete revisions (unless '--'
-> is present on the command line) and, failing that, to complete
-> tracked paths.  If this yields nothing, it lets the Bash default,
-> which offers paths in $PWD, kick in.
+> Here is another reroll.
 >
-> Teach it to complete untracked paths before giving up and letting
-> the Bash default kick in.  With this change,
+> The primary motivation for this topic is that the command-line
+> completion of 'git diff' does not handle paths (unlike 'git status'
+> and 'git add') and instead relies on the default behavior of Bash
+> command-line completion, which completes files in $PWD; this does
+> not work at all with the '-C <directory>' option.
 >
->     $ git -C another-directory diff un<TAB>
+> Previous iterations of the patch taught the completion script to
+> offer tracked paths that match the prefix before <TAB> to improve
+> the situation.
 >
-> finds the 'untracked' file in another-directory and offers it as a
-> completion candidate.
+> This time, we also complete untracked paths ourselves, so that even
+> the following commands, which compare files like 'file[12]' that are
+> not under the control of Git in a different directory, are
+> completed:
 >
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  contrib/completion/git-completion.bash |  4 ++++
->  t/t9902-completion.sh                  | 22 +++++++++++++++++++++-
->  2 files changed, 25 insertions(+), 1 deletion(-)
+>         $ git -C not-a-git-dir diff fil<TAB>
+>         $ git -C not-a-git-dir diff --no-index fil<TAB>
 >
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 845fd19f70..7741789e41 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1985,6 +1985,10 @@ _git_diff ()
->         if [ ${#COMPREPLY[@]} -eq 0 ]; then
->                 __git_complete_index_file
->         fi
-> +
-> +       if [ ${#COMPREPLY[@]} -eq 0 ]; then
-> +               __git_complete_index_file "--others --directory"
-> +       fi
->  }
+>  1/3: completion: no-op refactoring of diff completion
+>  2/3: completion: complete tracked paths for 'git diff'
+>  3/3: completion: 'git diff' completes untracked paths as a last resort
 >
->  __git_mergetools_common=3D"diffuse diffmerge ecmerge emerge kdiff3 meld =
-opendiff
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 10ac690e21..53a2bfb2ac 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -2663,6 +2663,7 @@ test_expect_success 'setup for integration tests' '
->         echo content >file1 &&
->         echo more >file2 &&
->         git add file1 file2 &&
-> +       echo untracked >ufile &&
->         git commit -m one &&
->         git branch mybranch &&
->         git tag mytag
-> @@ -2728,6 +2729,15 @@ test_expect_success 'git diff -- completes tracked=
- paths' '
->         EOF
->  '
+>  contrib/completion/git-completion.bash | 69 +++++++++++++++-----------
+>  t/t9902-completion.sh                  | 59 ++++++++++++++++++++++
+>  2 files changed, 100 insertions(+), 28 deletions(-)
 >
-> +test_expect_success 'git diff [--] completes untracked paths, too' '
-> +       test_completion "git diff u" <<-\EOF &&
-> +       ufile
-> +       EOF
-> +       test_completion "git diff -- u" <<-\EOF
-> +       ufile
-> +       EOF
-> +'
-> +
 
-LGTM up to here.
-
->  test_expect_success 'git -C <path> diff completes tracked paths in speci=
-fied repo' '
->         test_when_finished "rm -rf repo-for-diff" &&
->         git init repo-for-diff &&
-> @@ -2744,11 +2754,21 @@ test_expect_success 'git -C <path> diff -- comple=
-tes pathspecs in specified repo
->         test_when_finished "rm -rf repo-for-diff" &&
->         git init repo-for-diff &&
->         echo content >repo-for-diff/otherfile &&
-> +       echo untracked >repo-for-diff/untracked &&
->         git -C repo-for-diff add otherfile &&
->         git -C repo-for-diff commit -m otherfile &&
-> -       test_completion "git -C repo-for-diff diff -- o" <<-\EOF
-> +       test_completion "git -C repo-for-diff diff o" <<-\EOF &&
-> +       otherfile
-> +       EOF
-
-Here, with more context (which I won't paste, because GMail=E2=80=A6), it
-looks like this test is redundant with the test just before?
-
-> +       test_completion "git -C repo-for-diff diff -- o" <<-\EOF &&
->         otherfile
->         EOF
-> +       test_completion "git -C repo-for-diff diff u" <<-\EOF &&
-> +       untracked
-> +       EOF
-> +       test_completion "git -C repo-for-diff diff -- u" <<-\EOF
-> +       untracked
-> +       EOF
->  '
-
-These tests intermingle with -- and without; the other tests separated them=
-.
-
-I don't think I have a strong preference, but perhaps consistency is a
-good ideal?
+Left one comment on 3/3, but the rest looks good!
 
 --=20
 D. Ben Knoble
