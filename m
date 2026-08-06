@@ -1,131 +1,116 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BB0480331
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 15:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786032000; cv=pass; b=lzMr9tdfdXkR2xJ3u50okeSo7gj4k4jKG7qkIMGId+STs8oqUHP+kXJCSWiTqVFZ++hx1ex5oTP2lND2T1He6mZ/Awdv2hmpXZyCXkHAzlGs37OxkSoRvuenPSHdScnnBWy0rhKAGdLS+R0xUeFTxlO9O89Mb8NpEv8kUXj3gnY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786032000; c=relaxed/simple;
-	bh=pXOiikr+i7yBl5kFZ2mSxixaCfqJ+phTogb9uuEEIWY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OMRK+SQ7WgI4mIcXrB7+mnwSqMzMcTus0C6s25QouafA1cwoxM9S5VPdAsLvao9APRoRqIHzhLd2XkOCyT40fTA0W5QP0GlrM/w/KDnMaeWbjzhFGsmH1Lc4yvxYnmyXQz81lmPo8Zw1ytVjou63qVrZ4c2yR5WyXFpRrou5LI4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=spz0LnPX; arc=pass smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AB047ECDD
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 16:11:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786032681; cv=none; b=L7QL4YpJU7MEru7Gi9xVoz9iZsRK0OypSVv9qMpGGnABZbQZqddAKB0c6lx7uTo7nhDdzaMeUe9xQvW5XNdNWMmk87Jx0J7uImvBztL53VGU0BxICN/U4DsQKIVRrqy39cgb6fhPUMumHqw9HobjQEyQBcsdsie7ehrzETa3vwI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786032681; c=relaxed/simple;
+	bh=9ulPvrgPyeutq2wtBMVkNkHQWd4CI4IO1PJf/KSYGeU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=msfeiMwkUrpnBEACwgiKe4KS2UxPiM7fPDyFvoYWeYUxwswgpCirt/3RQDr7w+ai4jscy9Px5qos6Ct+9TloWROAYp9ml0dmh8rNpqKinv4VaF+lskrU+OlPtIiwqwlCaJOpnjEaN1i0HFfpgsasEeZrWG2qzLswNpANE9R+zFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mKiwc1rB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HCg3Nyj+; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="spz0LnPX"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-69c108fee7fso3558231a12.3
-        for <git@vger.kernel.org>; Thu, 06 Aug 2026 08:59:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786031995; cv=none;
-        d=google.com; s=arc-20260327;
-        b=a35Rd1PgBHuEUz3dWAg1rk8ToRTDb6rSxbNwaaaqjOXLhxOl+F+NKh8cdiCl1aNlNB
-         ZB+buZ801TKsgPhR5H87EOvr+t1BdWJ7qGTf5m8s6aCDSei6loE3uMemAy9+d5fwH3Du
-         3/4GgXJ2e47HGf16ppsadtyqVUnc38aC5T7wHr9vVLpcjwiE6Epiv4UM7+lN4STmjHz2
-         CIocYkSh+GVRbLKDXa6OwP5BNsNnsXEZHlkHVgKsmXM53Byqb6GIrPwYTcD/HZeOQ6aS
-         cDXIEkOy7qcsCjMcqGz0VktpPnekSXzg/sW4L5icyqINtyiBwKFCFtmb6xXg1AWt4zsB
-         3u4A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=hzKoablORe/aCwuHcvVHKgCXa4zY993VP8fWSCEDFvo=;
-        fh=fUIyouBM+bQq+KD/y9TgugC3cUG1UfBR1MRSG3jLYK4=;
-        b=NwoZtHFYfvd0ZqYwFraf+NLvQI7jcwcjBChAbuTjtiC06lDYipWMX4eXsZ4DXPO3ra
-         hh8Yam0yIkKLprtxAgCdTr0azJCLmX3p4URqoU9pDeEiIRgUMl9qGg6EN/HM95MYL4Ma
-         lM2y2BsTpl3JhR5lZg52ADXfUO78k28Xh7oKfVkX06GtsIkfqYAIyQwJ/UQTLb/MPRgc
-         nSEDwExUqekDWfRnGGu4fuKhpZSwq5Xq/kEysyAPZ+450SV59K/8rFo44X5tK25AuFjl
-         EBbreIEwUqLLNmLN0vVIhG4jvjZ7oH7NthWwCcU3nt8+TZOSlfKKRcdzjhw5TQQVvG2e
-         t1tA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786031995; x=1786636795; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=hzKoablORe/aCwuHcvVHKgCXa4zY993VP8fWSCEDFvo=;
-        b=spz0LnPXza7yitcakY0xiwifj1moU9Dyar+f87a5B38gxpTOl/HkplLwwRqhEiLSn+
-         MDcr8I5ixEur3ARxyl1IBbDwZ/B1dsyT+QPHFJ7rmLRI7ntD5KnHJKTFFIj9p4cZ2HUf
-         8KLPEWGmJ/9h1naekBW+kM/RmEIBswVfuzkv7B8ONmkQcva+TfjdYf8+VvnzVFyLDtuH
-         LZIfkBOFQXacOBWNy5omRK4sSXpVLAEcmCDkncWn6bc7tM5qfJPMNBe4VzZ4sP3Dfo9p
-         S2WUPoFYGGplqKab19kF1qreAnrDOznloKkx6w93uZytbzyxmi2lO3f8kYcWKFuczZtj
-         TTow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786031995; x=1786636795;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hzKoablORe/aCwuHcvVHKgCXa4zY993VP8fWSCEDFvo=;
-        b=qGPF7BIsJEUEyfvSDAs4vZiiBcoCivbLED0z9Sfe9dfJVWD0Kwb2eckA/4tN9e5FOs
-         4pUwhJzYdYNegssMqNKcH0UA0hCcSvA5zt/o77B5wlRdQzk2O8/07kD6pMd+Vvg+fAFZ
-         rcEcKB5cTJKRhzvQn9+dZ7pOSVWfC+XU+b0D/1UKmqZHZ8cN31w146WL3+LnZH7jPCfw
-         cfHzVNGWp860RYzZymQ7lQfgIyRMQz4Hx0qf0b0COj2WP5PSzw3PkkwuIgX61KGDTSkF
-         MDqbE8aibPWKIBWb9RrqJ1ddcD4gao2McuX2FNZ7So/5IO5GROiTQHxGFg8JyOipDnB1
-         y9SA==
-X-Forwarded-Encrypted: i=1; AHgh+RpJxp7TAgar800P95q8IMig8anLXKufSrYrGMlwfZnUIzE697Q+NYYZHELtAOm7bqrAWYg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxtYHWxwzUWAFyAMBqKbDbzT8M6wmLDbX41h9QgL6XIl+VOV0J7
-	GmjOojKHAzphTjQ/S3JCXAhWOnwX2Xu+V9cXspEVVrlEg2gdWKGlk9NNWs2oCjJJITiYu/r8M5H
-	JUyB4kduYKBQ/SstI3rdAdjSPTwfhiZs=
-X-Gm-Gg: AR+sD12kQuid9nvAtrirNKblPrQuenGzZ0cEUTgh8grM+zOUSD71qc1IRA/La08XFa3
-	6XxZxXJ1A7KUJEx0GyLnnnaayv8PN0+TQV0WRbm+Kn25GkBqaePQCU0yQnCiRjER2YimPuV8eA2
-	n5hAGkYTGtMWcDW0KvztPqnsLBMzVw76ZDzduyzxCwKfZZra6Ph9tb7wyhge/eC0pPoQLqVHpA5
-	x47EVCk/Eiba4GQJZ8whB+jjAel91yIUgZIlWPH8vt9qDkAtDNbM6Ql0WaGpw+MmCs9pKPBUpsH
-	iBmrLn0SUG3VmexyT2+tkozG1xVi2+9scCPiSF+DEJFC
-X-Received: by 2002:a05:6402:278c:b0:69f:4c65:86c2 with SMTP id
- 4fb4d7f45d1cf-6a14f09fed4mr7887209a12.2.1786031995058; Thu, 06 Aug 2026
- 08:59:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mKiwc1rB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HCg3Nyj+"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 36D911D0011D;
+	Thu,  6 Aug 2026 12:11:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 06 Aug 2026 12:11:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786032678; x=1786119078; bh=b/q7nL1fWp
+	DC/Z0xq104mUdkVUUvUCX+8eHzBgEehCc=; b=mKiwc1rBJi7r8GPLv32kLU1IKk
+	YCJd1tEu8B6h+LSS6Cn02KTnaQF3ZutQOOx29DEJOQhZK0WL+zaMjKw91eK4z+hV
+	X2Z5sp33RVhbcWdUtqRtkbknwPjtY3KzfZ9opKiWyUAaOSBFPgMP9P/k5uj8bYsP
+	jP99GUj5x0KD/Qig/oaB4ste0xfmryhtRGwILJcg2NBfkpdzp9RmboaX3xtE6a0E
+	17LM/fRBR/iD6MD05PfqvOosmdzftF++flbVKkBgB+TGneq26fPgD2EtUtZbReGd
+	q3XfR63B22SKmPEsP7dCb22zkmPzY/wgtKMV4IG/ET6lMcwwGrSSI0vHXMyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786032678; x=1786119078; bh=b/q7nL1fWpDC/Z0xq104mUdkVUUvUCX+8eH
+	zBgEehCc=; b=HCg3Nyj+ItIe6kmvEQjcPIKw+US6KnnYzDgq3wNJzjM9LopdSsI
+	cvKwWoRebmpdDuA1Ei9bunEryOpqvcqdWkVcdaiLy+XohvZPatRfWwr2C7ynWulE
+	JjlGDWQjGUPkw228QRV/EMOeNEE/4IctJOCXsgSjvOCPszeN92IU8dwVZyLXaj+G
+	Ht+sIkZhvX9yjZ03IrDjen7zwALTkM2NokITVvSsHaeX+RwbUb4AS4/JTZPj1AwF
+	3QyIykxnYFgyiHxr76hRbvd2zMpM0luxrWyExcUZb/su6+JSXtOhPBwSpzjfttj0
+	W/WwRk80fWLgNdZ9O8ST1q81Dpm3IfqHTcg==
+X-ME-Sender: <xms:JbJ0ap5QMaaX1ic_IxTjg9xkdaMO6o7r_EVkcH6KIlTsbFCKfY0_XQ>
+    <xme:JbJ0ahdV_9Qyibln9FhsUOuE1i8OLZz4xss2FIiycwsv0Yo1cB4l92pkfjlLlUTqW
+    026eohxjQHCI2ROXgrPz4J2Bvjwim-rnb8hWOv0o-VMoALHcDZ7>
+X-ME-Received: <xmr:JbJ0atDyfVP-Wi1soHqxVQ656w30M1xXRUvX09h5b2pXpb6TGt47FdQuBY2IOPyPww4d4qnGOuvjbwB8KG9_zEc3uK4BhZjDpg>
+X-ME-Proxy-Cause: dmFkZTEAP2v4EvXacrqAqPJs8VTxpry0d4oJZPBHAPT8QfKCUDItPibXxwGCJObZDaretB
+    Of6gDef1QtPOZELmtKUBq2GIYcCoCNIdnWv3aCCCTAQ1OI9/fAYxT7FEjXWve/CyNmMjJE
+    jnYRkxXCLdj01HKksbDvMMTw/dG1G0aZY9ImOSacK2lSmb2igBHDOvr99nGDiF9e2yG5uz
+    LoN3A6SKALDRJDu8P1IowFdZmeEnnv0GXSLmVs8VN2z99dYbiAwOlzQIff224UmEprbl9W
+    ynnj9kiX06KEMxaJyKYip2j07NpC3QDW/eDo/HWnb+GeslbffM3fjKglNe/onnH0A2c2Y1
+    6OYhP3Hi8AXbmvtXANlpBJ+en+R3m63kn+u+1hVabNsIsyn335b6l7bv534Lf6Sq10HYjR
+    ZEbYvf1AwOvl17THHDsxpTOvRTGO402IMnSN9P9/5cWD3rc7gVgeCcrb+s1XDTdi5rvfdG
+    YxIjg9sosvgj8hqbilPu3uiJ2s69Ul6ohp0ybzezeu+s/XMPplJua9iTLk8CKiWAoPKZQa
+    JtS2uV1tbLc50qsgqB9FugO+VZcpx6hMACPv6ggWv0tHhHzxt8lX0Joe48jl3DgGcrx5zv
+    L6DDHqkMZDoQkCScKGPc2ETgDwU00s3IQUKogfLnVEgFBtNbYNTGS9FSqBig
+X-ME-Proxy: <xmx:JbJ0ak94yJkihRHKqbNsrIwBoAhj4i0diu9B1R1FNYFos2r3GFmj-g>
+    <xmx:JbJ0aoKB3E8CwzRPI_o8UVIilJb5dumUDCfA8sdntVqf2SeHEzZhSQ>
+    <xmx:JbJ0atgDAcVxFixeexPRRQ1zszjHlC8rwTnz5lVmaOO3IvQBreoGKg>
+    <xmx:JbJ0ao6ZL8EsmpFFthXoVX0J7X5BmuKvttjpMOAZkziVzduHws-FEQ>
+    <xmx:JrJ0avh4xEXrkV9NHnaZeO8IF6n3YKd1WAISlOilG04PQCLMEpXbz1C6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Aug 2026 12:11:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH v7 04/10] t6099, t6600: add side-exhaustion regression
+ tests
+In-Reply-To: <e8565ce0203e7f94f3f1ac193eb1fd703fe50463.1786013982.git.gitgitgadget@gmail.com>
+	(Kristofer Karlsson via GitGitGadget's message of "Thu, 06 Aug 2026
+	10:59:35 +0000")
+References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
+	<pull.2149.v7.git.1786013982.gitgitgadget@gmail.com>
+	<e8565ce0203e7f94f3f1ac193eb1fd703fe50463.1786013982.git.gitgitgadget@gmail.com>
+Date: Thu, 06 Aug 2026 09:11:16 -0700
+Message-ID: <xmqqa4qzmdp7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2335.v5.git.git.1785663075.gitgitgadget@gmail.com>
- <pull.2335.v6.git.git.1785705860.gitgitgadget@gmail.com> <97a4da55374c6dc52e6e990b3cadfaaa86a57640.1785705860.git.gitgitgadget@gmail.com>
- <xmqqjyq812wr.fsf@gitster.g> <CAHwyqnXOno2De_eOvH=LizyfWSpyVWpzGBwV4ZGW4bxOEtETOg@mail.gmail.com>
- <xmqqik5nmk7s.fsf@gitster.g>
-In-Reply-To: <xmqqik5nmk7s.fsf@gitster.g>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 6 Aug 2026 17:59:17 +0200
-X-Gm-Features: AUfX_mxFTzOYyMVXFK84A0oBOu2k5bnwld7vNN_ULaiMkqRusZ_FDnGCj51uDnA
-Message-ID: <CAHwyqnX2wUsccqwmp-3WTsZQOcq0VV2TGHMPEpgKsGxOcH3sTQ@mail.gmail.com>
-Subject: Re: [PATCH v6 2/2] bisect: add --reset-when-found to leave when done
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Aug 6, 2026 at 3:50=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> From: Kristofer Karlsson <krka@spotify.com>
 >
-> Harald Nordgren <haraldnordgren@gmail.com> writes:
+> Add t6099 to test the case where multiple merge-base candidates exist
+> and one is an ancestor of another. This exercises the side-exhaustion
+> optimization in paint_down_to_common together with the
+> remove_redundant safety net in get_merge_bases_many_0.
 >
-> >> Are there "dead end" states, other than '1st-bad-found', in which we
-> >> can no longer make any progress?  One thing that comes to mind is
-> >> "you said this one is good, but that contradicts what you said about
-> >> its ancestor that you said is bad".  I wonder if we want to do
-> >> anything special here, just as this part of the code handles the
-> >> '1st-bad-found' state, for such "dead end" states.
-> >
-> > Maybe, but I'm not sure this topic is the right place to dig into this?
+> Add a mixed finite/INFINITY test to t6600 where one tip is outside
+> the commit-graph (INFINITY generation) and the other is inside.
+> This exercises the region transition: the walk starts in the
+> INFINITY region where side-exhaustion is disabled, then crosses
+> into the finite region where it can fire.
 >
-> No.  But thinking if it supports such new use cases in the future
-> before committing to the new code structure is something you would
-> want to make a habit of doing.
+> Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+> ---
+>  t/meson.build                         |  1 +
+>  t/t6099-merge-base-side-exhaustion.sh | 82 +++++++++++++++++++++++++++
+>  2 files changed, 83 insertions(+)
+>  create mode 100755 t/t6099-merge-base-side-exhaustion.sh
 
-It makes sense, but it is still hard for me to reason about the system
-as a whole or how it will develop. I still have a myopic view of the
-codebase. But I agree in principle.
-
-> I personally think the new "do your thing just as usual, but then
-> the new code cleans up afterwards" structure better supports
-> anything new we will throw at in the future.
-
-I'll take this as not needing any change now. Overall, I am a big
-believer in the power of iterative development.
-
-
-Harald
+The log message and diffstat contradict each other.  The addition to
+'t6600' happens a bit later at step 6/10, which presumably introduces
+this finite/infinite distinction, does it not?
