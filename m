@@ -1,70 +1,69 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3597E422E25
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 21:39:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97F5423E99
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 21:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786052353; cv=none; b=ed7LdvpH2x34ndvDOGzxSY+4IDXL6gl1nM7xeCbbzaQinnoM3jeToRz0JmQW6F4GQ5oO63lqATyfDUaSw1THeuAUGO05IMbG8XrWNAM3h/UC80nvPx0nZQ5KNE32jxCv96BpRzN9o0PV9X19IveIL5yW5xrpDIJOoLuGEbC+Icc=
+	t=1786052354; cv=none; b=LhuDa6EpLH1+Odjkw0rh1lXD3MDMWLxGurg2x5ovtcmQhCGkqkyhXx45tjSrFkhJcdTSkufF+sXgnmfTnqa8O/Qp9IB0JQ/C0yp6yW03xQnKwdNixPYR3yGqU5iPF17vC/XwCrW/lKxtiVW63hfbLxtKqsfcnk7j70rQIfR+hYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786052353; c=relaxed/simple;
-	bh=dQbNoy1X1zuY4PoTxNIqnT7rQUOdOpnlyjzca2UGxks=;
+	s=arc-20240116; t=1786052354; c=relaxed/simple;
+	bh=8/7YZOn+t4Y10naYd9sbfmLN0yHMAB9qL5v8V7Qohqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/kdJ8/VK2ntAHq1m5HN/14mtkU4L3TT3mksuTmr3/dtoXVewSO7gEi5r6TDoCtbQ3vvWIl8YRKOiHK95/21rxQBU0OgbkHGnpMZyvaJqYlFxO4C+bU1mbPSmnGKkoFoSp6MVnHNURmDYo1ZpteaVia2QHfCIVtdfOn13X0dlP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jeGYxhxz; arc=none smtp.client-ip=209.85.161.52
+	 MIME-Version; b=XGuPp5YrHNGO7D+CADoSMHrryiFVfxV/Z3Jn/fF1CKYOuKiZNj8+dx5r6NvErk4Z/2yv3d5FZnlS9Fza3rNTSLtoVP6RzzoktoRfViw0RAt28N3lm4AXksVsig4KvcoGH3I3rjXukSq8XmWicWASDXcS1OCabimEBDz2mfJJ4dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iu6tYSKK; arc=none smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jeGYxhxz"
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-6aeaaef491cso749446eaf.2
-        for <git@vger.kernel.org>; Thu, 06 Aug 2026 14:39:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iu6tYSKK"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-6ae9b721927so1432808eaf.0
+        for <git@vger.kernel.org>; Thu, 06 Aug 2026 14:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786052346; x=1786657146; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786052347; x=1786657147; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=zej4B90F+w2VYQPulyF+o9sI2XEqz+F2bpwmAvum6kc=;
-        b=jeGYxhxzjUWdgJ4YHkWphs2rJzjikr2Thtnhxoglvc/DG4e0kO5cpL4bQsW1+7i+lJ
-         j0wrzcLM+WNnJFVyMDuABbDUrCXfV1pPsuScXmmyFnwD8RrGBd9w47qgVgantcqH9Uls
-         F2vPzcr2jOCQc14FZB72Gs0gNiPaRpBteaE/4c8sZ4wNBTUddU7YCNeJn+YA9cHhIv+F
-         zkaMYSJF+6xmZ8wHy4UWddGExq45ehcDTCMivwVKB996WNinqG9V/QjGsRI/GkSq9ErQ
-         aT3EtrRnuVgQxZ54qPXpIr+fRX1yn3ZkaY3VbeK8G742Ok7+6s9qEFAuBGLnCXMbJ4wZ
-         XHaQ==
+        bh=Xkp0E8wojGY0TWq8lXcWWvHddvuJm9pD41vygX/lUso=;
+        b=iu6tYSKKsXKzfB0KAxWqBnOfC8XvnbWg+GaZkGnuTT32JHOZPVmGl9GbisH8+jWB0C
+         WxqjKZmnjq4HUgw8OZK34R9iRWrZ9LcCh8hm7Y9sGBTr0ohlu0mZ4mpeFd8/S44p1IKE
+         FzXWzM6fv5o4NxCLnXTzO9qC7GsIBL2pFdZTRHUCj78mfp5GVgpT+DU6yzKvrALUBO1t
+         LYw3dRGHUxH780xIrusO806ZpYntRojrgReuY1LKDsYOvNK4dt5WedS5Qd7K/4TnQOyW
+         MD1vaDR3vYdJPWhwR9EG5y9ovcM5r9uJnXy5UxBWoYWWvZDw0wWlYL0Bgi3/iSz2CrvK
+         9HKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786052346; x=1786657146;
+        d=1e100.net; s=20251104; t=1786052347; x=1786657147;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=zej4B90F+w2VYQPulyF+o9sI2XEqz+F2bpwmAvum6kc=;
-        b=XNuR0ovFuiyUuZfcLby3phR3jNzQKFEssx8fm/y/qB9x788VegZ8BycTJlEE+eP0j1
-         hhVZhtBpPeFXbDqbUgNwt/iMFpDRjVV9QnlXOZso79QZhmvF4CWAIdzoYKOFH+vqEl5t
-         kHPR5qePaw1bHO34llFRKaCvV7YnBTZhvJIxVwbySzrQFL+xDW6wxTFcW+sl/YuTDTG4
-         NDO6xkRnCYwcd2lAPEslOTEj4NmTA2308O70e8d7iiCMtQCG0StphWraSIGnzFuFeT9R
-         WpP/HTlQwNATmIFRHVqqlct9yLPSEmy0ZyNwb8iApMqtOrx2OkC/B0SWnPOHhCKPOiaa
-         CiUQ==
-X-Gm-Message-State: AOJu0YxkryLLTgobJc7FbX32sVu1jWpiSD/4f3MvgK8akcOHk5Zox/Q0
-	bfaHlvQ2TRWOsRkCcAy6jNguInlKB7vxHzRusy08z1Tj4Jm0ef/Dd0gOt6vFIQ==
-X-Gm-Gg: AR+sD11yOZ/A2rI5MQ+MD/2rn0Pp+yU0v7DdAY4Po4Dc5KYVfgBZOPUak9eMULGDfNI
-	ihdy9LMTksFyzQobJj9AYJCi+usN20fia+H7CyLQ80b169eh5090iESkkeG1KR71d6JKbEdeh3F
-	TqRNm1/BdJ3KrtOt+YPigyFafevMkvRPQCqTQdlJsINU2UcnKGBPSRvOoajRo1IAm0QCQBIr0MD
-	01GBvqmzGNQz6uyDwkL43xndyd0i+1i+9fCR5csGncRHZk+uMxoUDD/IVreeWM7F0fbsINXr6z3
-	TZEOANeET5YalK/nG7uoAbKWlMy8Q7x9KTdRhTOyKHbNWjIoZyAcj7yLflS38657Z6vFkNCAsNn
-	GEYHu8WSyzphozWi+4jNxu77dfroRVehBzTU2ZLkEyuHMEZ1X2fRkokoXJ9ZkVjusgKXi+vASRl
-	xa5vOQGAksFM1qh9FyuuOGQB5i/Qb0sE3XW8LwzazitcEwAJxZn7Uc0UbXH2ghz6oUG+v7cxgQN
-	KqwVwk1
-X-Received: by 2002:a05:6820:8183:b0:6a1:8192:4d89 with SMTP id 006d021491bc7-6ae96f82811mr8810919eaf.29.1786052345803;
-        Thu, 06 Aug 2026 14:39:05 -0700 (PDT)
+        bh=Xkp0E8wojGY0TWq8lXcWWvHddvuJm9pD41vygX/lUso=;
+        b=nMjG00fONWF9ywJeuDn63hQrcRZ1iUByChFaOgv3Bic+nRUyvFvrS/SnjLYXhgyvCF
+         /K5+o8uq/u70YSO6M4eriYkxvfpmMKTPUlYNieWFbS3o8L2UzAmn1aix804j6258vsOj
+         dZ5haGBnGR0Hik8yTEkQjmFsnKrIdhtHAq3lbFEa5Vx8kr8h2OnH8AdPJVa6tVd6yp+B
+         E6UvIFbSNkbesTNo8bLwOb1UgcZ/72IKGfozndbYPpZBWYbul/O98cpj8gEfZS1mtHxz
+         z7xNxlLMvgmW4Wz6r+7O05Jz89NZ00gzku3jWUOnkRs7NTsqU2tmnV8Sh8t66Fs7FHiL
+         KTQg==
+X-Gm-Message-State: AOJu0YwukK16ach2b67lBbYvotQPjiO1k+dM7ijNwJwmz7MjsXSNt7pN
+	/d90nYK7G6vUy9AHw34+GYX3UbAWMJDQTr/l254tpPwB6Kjzalck7qnWqYCs0Q==
+X-Gm-Gg: AR+sD13/PN572jJTIalOuiCVEY5X1/kDBX+3arp61IdWy4PUSdY+H5LZGLLaJ+kkCsc
+	LLwDcz0BCuINxbWxKAhPtQp/JlTStmGhtVmuIpHE2fd4N6WgCnsaqSJw1kKabcSq7DnfZatwPaZ
+	5DRxZt0DFZRa6qGeex3F+ubpOBRcweAzp6ITLs9wxPDG8+tHrNlfciS+ehryvUFDpaDE9D9GpFS
+	vN0f+5Dvd5xD8L3WLhWCfd+e4zxT5ICBx6MpwZlmyOWQMzEOQeQnIn7HYsQqAMSp8vlD1ny10Xi
+	wcsmRp0f972AunyrG1cpWQ6OQYRcGYAUPhIx4OkEaPQVMtU8J8BUWT49Bjly8VTtBfcdEERyF8u
+	f1EqsJrLqP0hrs9MbHUctN+NJVCZmYeLA/0hW0n1Bzo6DbXXJLEPLIDviXY6Ln+xpF/rV+tKzaQ
+	Avukryx4YVO9z4z+6G20lSagU1BaukKnJQIK7TAG7I0/+aAfSfygcnZvBABqDtQFurbLVD
+X-Received: by 2002:a05:6820:81e:b0:6ae:871c:e3f2 with SMTP id 006d021491bc7-6ae970269a4mr8600746eaf.29.1786052347520;
+        Thu, 06 Aug 2026 14:39:07 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b02be475b6sm587078eaf.11.2026.08.06.14.39.05
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b02be475b6sm587078eaf.11.2026.08.06.14.39.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2026 14:39:05 -0700 (PDT)
+        Thu, 06 Aug 2026 14:39:07 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 2/6] builtin/receive-pack: pass shallow file explicitly
-Date: Thu,  6 Aug 2026 16:38:55 -0500
-Message-ID: <20260806213859.816157-3-jltobler@gmail.com>
+Subject: [PATCH 5/6] builtin/receive-pack: explicitly pass packfile fd
+Date: Thu,  6 Aug 2026 16:38:58 -0500
+Message-ID: <20260806213859.816157-6-jltobler@gmail.com>
 X-Mailer: git-send-email 2.55.0.424.g13c7afec21
 In-Reply-To: <20260806213859.816157-1-jltobler@gmail.com>
 References: <20260806213859.816157-1-jltobler@gmail.com>
@@ -76,134 +75,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If shallow information is provided during `unpack()`, a temporary
-shallow file is created and stored in global state. In a subsequent
-commit, the `unpack()` logic is moved behind a generic ODB transaction
-interface to handle writing packfiles and thus can no longer rely on
-such global state. Lift the setup of the temporary shallow file out of
-`unpack()` and wire it through to its call sites explicitly.
+When processing the incoming packfile in git-receive-pack(1), `unpack()`
+assumes it should always read it from stdin. In preparation for
+`unpack()` logic being moved behind a generic ODB transaction interface,
+update the function signature to take the an explicit fd provided by
+callers to read the incoming packfile from instead. Call sites are
+updated accordingly.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/receive-pack.c | 38 ++++++++++++++++++++++----------------
- 1 file changed, 22 insertions(+), 16 deletions(-)
+ builtin/receive-pack.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 420de9aa7f..6da854fca2 100644
+index 7635b82bd3..743005f1f5 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -86,7 +86,6 @@ static const char *head_name;
- static void *head_name_to_free;
- static int sent_capabilities;
- static int shallow_update;
--static const char *alt_shallow_file;
- static struct strbuf push_cert = STRBUF_INIT;
- static struct object_id push_cert_oid;
- static struct signature_check sigcheck;
-@@ -2334,8 +2333,8 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
- 		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
+@@ -2305,9 +2305,9 @@ static void read_push_options(struct packet_reader *reader,
+ 	}
  }
  
--static const char *unpack(int err_fd, struct shallow_info *si,
--			  struct odb_transaction *transaction)
-+static const char *unpack(struct odb_transaction *transaction,
-+			  const char *shallow_file, int err_fd)
+-static const char *parse_pack_header(struct pack_header *hdr)
++static const char *parse_pack_header(struct pack_header *hdr, int pack_fd)
+ {
+-	switch (read_pack_header(0, hdr)) {
++	switch (read_pack_header(pack_fd, hdr)) {
+ 	case PH_ERROR_EOF:
+ 		return "eof before pack header was fully read";
+ 
+@@ -2344,8 +2344,8 @@ struct unpack_opts {
+ 	int quiet;
+ };
+ 
+-static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
+-		  const struct unpack_opts *opts)
++static int unpack(struct odb_transaction *transaction, int pack_fd,
++		  struct strbuf *err_msg, const struct unpack_opts *opts)
  {
  	struct pack_header hdr;
  	const char *hdr_err;
-@@ -2354,10 +2353,9 @@ static const char *unpack(int err_fd, struct shallow_info *si,
- 		return hdr_err;
- 	}
+@@ -2353,7 +2353,7 @@ static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	int err_fd = opts->err_fd;
  
--	if (si->nr_ours || si->nr_theirs) {
--		alt_shallow_file = setup_temporary_shallow(si->shallow);
-+	if (shallow_file) {
- 		strvec_push(&child.args, "--shallow-file");
--		strvec_push(&child.args, alt_shallow_file);
-+		strvec_push(&child.args, shallow_file);
- 	}
- 
- 	odb_transaction_env(transaction, &child.env);
-@@ -2427,14 +2425,14 @@ static const char *unpack(int err_fd, struct shallow_info *si,
- 	return NULL;
- }
- 
--static const char *unpack_with_sideband(struct shallow_info *si,
--					struct odb_transaction *transaction)
-+static const char *unpack_with_sideband(struct odb_transaction *transaction,
-+					const char *shallow_file)
- {
- 	struct async muxer;
- 	const char *ret;
+-	hdr_err = parse_pack_header(&hdr);
++	hdr_err = parse_pack_header(&hdr, pack_fd);
+ 	if (hdr_err) {
+ 		if (err_fd > 0)
+ 			close(err_fd);
+@@ -2380,6 +2380,7 @@ static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
+ 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+ 				     (uintmax_t)opts->max_input_size);
+ 		child.no_stdout = 1;
++		child.in = pack_fd;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+ 		status = run_command(&child);
+@@ -2414,6 +2415,7 @@ static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
+ 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+ 				     (uintmax_t)opts->max_input_size);
+ 		child.out = -1;
++		child.in = pack_fd;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+ 		status = start_command(&child);
+@@ -2460,7 +2462,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
+ 	int ret;
  
  	if (!use_sideband)
--		return unpack(0, si, transaction);
-+		return unpack(transaction, shallow_file, 0);
+-		return unpack(transaction, err_msg, &opts);
++		return unpack(transaction, 0, err_msg, &opts);
  
  	use_keepalive = KEEPALIVE_AFTER_NUL;
  	memset(&muxer, 0, sizeof(muxer));
-@@ -2443,13 +2441,14 @@ static const char *unpack_with_sideband(struct shallow_info *si,
- 	if (start_async(&muxer))
- 		return NULL;
+@@ -2470,7 +2472,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
+ 		return 0;
  
--	ret = unpack(muxer.in, si, transaction);
-+	ret = unpack(transaction, shallow_file, muxer.in);
+ 	opts.err_fd = muxer.in;
+-	ret = unpack(transaction, err_msg, &opts);
++	ret = unpack(transaction, 0, err_msg, &opts);
  
  	finish_async(&muxer);
  	return ret;
- }
- 
--static void prepare_shallow_update(struct shallow_info *si)
-+static void prepare_shallow_update(struct shallow_info *si,
-+				   const char *shallow_file)
- {
- 	int i, j, k, bitmap_size = DIV_ROUND_UP(si->ref->nr, 32);
- 
-@@ -2489,12 +2488,13 @@ static void prepare_shallow_update(struct shallow_info *si)
- 	 * command. check_connected() will be done with
- 	 * true .git/shallow though.
- 	 */
--	setenv(GIT_SHALLOW_FILE_ENVIRONMENT, alt_shallow_file, 1);
-+	setenv(GIT_SHALLOW_FILE_ENVIRONMENT, shallow_file, 1);
- }
- 
- static void update_shallow_info(struct command *commands,
- 				struct shallow_info *si,
--				struct oid_array *ref)
-+				struct oid_array *ref,
-+				const char *shallow_file)
- {
- 	struct command *cmd;
- 	int *ref_status;
-@@ -2513,7 +2513,7 @@ static void update_shallow_info(struct command *commands,
- 	si->ref = ref;
- 
- 	if (shallow_update) {
--		prepare_shallow_update(si);
-+		prepare_shallow_update(si, shallow_file);
- 		return;
- 	}
- 
-@@ -2705,11 +2705,17 @@ int cmd_receive_pack(int argc,
- 		if (!si.nr_ours && !si.nr_theirs)
- 			shallow_update = 0;
- 		if (!delete_only(commands)) {
-+			const char *alt_shallow_file = NULL;
-+
-+			if (si.nr_ours || si.nr_theirs)
-+				alt_shallow_file = setup_temporary_shallow(si.shallow);
-+
- 			if (odb_transaction_begin(the_repository->objects, &transaction, ODB_TRANSACTION_RECEIVE))
- 				unpack_status = "unable to start object transaction";
- 			else
--				unpack_status = unpack_with_sideband(&si, transaction);
--			update_shallow_info(commands, &si, &ref);
-+				unpack_status = unpack_with_sideband(transaction, alt_shallow_file);
-+
-+			update_shallow_info(commands, &si, &ref, alt_shallow_file);
- 		}
- 		use_keepalive = KEEPALIVE_ALWAYS;
- 		execute_commands(commands, unpack_status, &si, transaction,
 -- 
 2.55.0.424.g13c7afec21
 
