@@ -1,85 +1,84 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875E236C9EC
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 16:42:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979B137E2E6
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 16:50:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786034561; cv=none; b=t0tkcSITrEjDGZrzwN2khqnLvvsFPhMq6azX0TpY/NZVF82Lg416dmkPbdXFPHVC8aD4sryMHYuwB1Og+8lx54BFLR8UKQweR1PtMtxQkZXMk66WT1DSGCKFZbVxJZbAW6wDcZWYqxTb4rlDjx7z4QaS1OkIi2QdL+Fu86V0RBs=
+	t=1786035017; cv=none; b=g3NPhnVVV5ZuN+RpUHKes8UlZkEcuN9/JxERI/+xR/vJRoHwh5znCgaPSKL8Qp3uRUoZyg0aGde4Uy/ltZeufBJ4nfxBuRF12bxXiy7iDvoa01DufEHaSyCOciA+xid5NVsSZ8scvf1LJBCG/1KbfgzwscjtArM8H9rksudki0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786034561; c=relaxed/simple;
-	bh=19NYEbo+rnkLrb8XrAkBNjjlTFKcTVXk4EAf+8/MY70=;
+	s=arc-20240116; t=1786035017; c=relaxed/simple;
+	bh=3ODITlrYuL3n256PRxi/14qDYxRVcZH2eNeacwlSMts=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cfOr72JX60beK8Kg1qAc/NY6T0MZpAYnleh2BIUYnPqSpTh9jj+wgi8fgFu7KcElcJpu7tdHtc6rM+YXtCANEdESZt5+LyC+15qepac+BczDNR4tWaDd1oDsD7p+XzxmzToxqb7l5uonTYS1xseXWxTRod9PnnJJTrroQjyi0cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WeBXuRcx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jZJmi/U/; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=nkbdE5bXodmEcA3EEkow4tx+3JhmRzWaQeWgGRmVSqsaW6eezE7EF7YYprdZ/8otJ7z/C/zHExNx3/b7N+rgbYs0RWXNdGoiofNEhokkNaYitMrqaCKn9VARbv3/1jiQ9F1zt7gxNESZydu6keA4HpG2IOsoD7XtBVc+L7SXt3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lbo9PA5H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IaUoQHIN; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WeBXuRcx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jZJmi/U/"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 32B917A0041;
-	Thu,  6 Aug 2026 12:42:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lbo9PA5H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IaUoQHIN"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 36A0C1D000C6;
+	Thu,  6 Aug 2026 12:50:06 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 06 Aug 2026 12:42:37 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 06 Aug 2026 12:50:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786034557; x=1786120957; bh=yMYNd9WTWj
-	codcMEZC9zG6DHmorySTsRdR6EK/MA7/I=; b=WeBXuRcxXcnm5vDA/ZV4841eHA
-	AyctDd3n9Q5EbGL/pEjjfbXzSrWPFAokjXN8yFPmqyHhC78SfKUnstK3V56sKcpz
-	TTd8ngIrnHIZhD7doq9rNsLVUPAgngIgKaXotZlqd6trKs8B6AO5125nFlCYvD43
-	l9roqqlQV9PnxTzi6RTuXNlezHEH6bedE4RB4hNrGCmH34s2VAKdqZwPT66u3YNS
-	4zARMoTGVgxOzTH/SB/KzVwLUA/Jkevg7VR9BXATmYuijlPJc5mmmmtlakS177AU
-	Ng/m4ZDQCPXDu1w60T1A17WZ5BFtLbA+jJriutyWMpO8hWLJufvGBt/Wznow==
+	:subject:to:to; s=fm2; t=1786035006; x=1786121406; bh=wSF63jd6/b
+	XG3iYERs2DoI8ur9lJYUTgsKtllZn9iro=; b=lbo9PA5HPpP9xCtFaaQo2FAaWc
+	QGd7TKT6qZD69GFO2IiJtfO/0yjPU4C5S9k32xLFLXmYMVKw4vD+qfRluXpDfIdU
+	B9Zgdhrbe36CEPRykBA2mxvYVO8kFn4uh//nE10H3y3N3peb+bTR22AllCdZ7RyR
+	ZfINRueWeZqJ4QqxpUuMFdpOLDqOJuZpDMdXbTYclx36V5g/Ys9cHqzGCFy+kWYj
+	4i5dUy4yE1pyUV5aRAlTlxkOFr7QLou8k3EWAVVAoaWbY62U1BtkzpNeRhx6r4bH
+	ZrTPm2ZV+4KHeVu/2IfxbF+100/kWzhJ9s7xckV+cLwhTJ2S6j9sJ7z0GbYQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786034557; x=1786120957; bh=yMYNd9WTWjcodcMEZC9zG6DHmorySTsRdR6
-	EK/MA7/I=; b=jZJmi/U/71aRLMI82a+95Gt4944MQTcUGpZ1SrpEHUi8/OweCKG
-	pftqb7n7SI+gOVOUdkgIFYBVWYGnwCJtFh3L+n/5PtLhyevGtjkb2+eTU1tUvlTj
-	u6UywZ1PAHWKhEaAGWMAGkzxPbLDu0iZq0LfEwu3x6IIg2Bq252jsAqR9Mnkx3vG
-	XwjrJ/UfkyF7xPm+tcIchtng1lCSB40CK2zS9m4sRI3M6Prr9lpneVigyEKoO5sq
-	PJrJSHylRi+M8Mdy14X+tGBlTQJS7pShUHoAY/4mdWpJ80le+jU9B90nf7GzKpBy
-	yuuOdQpoJ9Ki3ghYwiLWjmgRD4/0tAQa2fA==
-X-ME-Sender: <xms:fLl0aj3H5ikOIBb3SRePtMNtnNWKBAEMORBoNmnx07hgCffOUivfsA>
-    <xme:fLl0alzk8Lcepip5B3CF-99PtjBy_vdVrCXbtXOGb5DXSbOJGKk7aKbFu3R5EWTxE
-    PuJme8kOwsNJHCKTpr2_ImJkZ_tLpBy6QZXA80H9ZNz5MtvPKIfQ9E>
-X-ME-Received: <xmr:fLl0ats9T1RR4rJElojZ9yAX2M0DZRnW134dqpebiRBNHZRb-p2_e0w-7P5HqVbuZo_pzn79WtaCalLFxPvIABbZvQ_CB91YlQ>
-X-ME-Proxy-Cause: dmFkZTExVusNIji43rC7jX3Teatot9Ua5zZwskQtdDdLEW4hLBEuPRlL89c+F/arpJrCQO
-    Q3PW51ud16OP4v9Z0Pa+5mnL22runXvehHewyuYOP2uhGLhLbniayQKl3TD88MahADjtrl
-    apJc978r9d7k0hq8JoWMC45c1Uf+esiVT7bVwlkNU06/9HWBySbgYoZOnHIXQYYhKCOlu9
-    f8zHFOnPyKvTnDgbxZVIveJXGoonuptUUfAdB1VZKOd54nUZJcDwDmT8D4Wk7RGwsWwQ+H
-    rOocFW5qawauPK/yW8AAyRsyv/YNrs1VWYuVqJjYyyt2oYFwrQ5fZUImQBb7ONblObE5sD
-    JZnQwguME/YlufuJipJB+GhIyrlesPvRyLinAUxBD0Wl6ZKwTUhszAhNngUR61iUMJTLdg
-    BC8FCAg/oKCkFvPkHITDgGg7r8kb2NdYY3ZnGF68qq0PTjbMOr+WA0jq1rTpqLhdB28vK0
-    KjnroRcUFCCtfwKcZ2gcR1QvYXIUfSswBkPvuUeqEDMTvZ5QwOKsXOJkQsKs92+E5a5X4K
-    a9Plbk2ESUnRHguf93yfn3R+5Cr5l6N5P/BtTeYlz/QTxren3dlQjCpuFhP8Ix8ccolwv9
-    TJV8mik14n3AB0p2SOaSgpYdcK1BmVa4Zl88uzwvU8mPr/RFs0sgmqTpaK/Q
-X-ME-Proxy: <xmx:fLl0avyHIeuti3rOGl7F3_hn6mOrAiW91gSBIRQMMxQ6vlaIGNxJuw>
-    <xmx:fLl0aoAdOYiE0VVntGhP18voqtDtsLTYCifw9SuFB2hwwt_pyewfQg>
-    <xmx:fLl0aleuAhKmtEBkeNB9rjEzRfbWVTVRVJocfRgcTvuNxD1JC4Lmww>
-    <xmx:fLl0aqnbAkzi-kiUaOBtpR4aYQSH92y8qju1JZVomAQgKukr3rjW2w>
-    <xmx:fbl0ajgYE8qfe6Wulu18ONSyG9EbszqUUZsjCrDt8xv2xWDxx2JyLFg7>
+	1786035006; x=1786121406; bh=wSF63jd6/bXG3iYERs2DoI8ur9lJYUTgsKt
+	llZn9iro=; b=IaUoQHINLFYCQhlqXg75SI8NblfepDKSirDJgoclLa4PQJPbtAp
+	mzBznLU8+5qah3yD5fcmmuF1u8aUC7ErNjN51CkxZAZFRmf4jkrpxfgsQfRMqfH3
+	OLW6Az4qFsRY3A/2lq1OExOveFgVH2IPsX+P1w/pVcOv4yyinnYFhSA+GWT4oQEe
+	pTgdbj3X3PYPsu4uPCG1yH+4uJVitNp/R63qDa3pZsqNeFfc/j5E5z1A+14o6+RU
+	+s+fLnZ9qgQZulVxeCXYTOU3lZD9nmuKFP9R/UJ9gJMsw3NkkdaIRqd4YnqxEmUF
+	OiRVvyKcPA468iC0qJQd3SM5U5hdx03aAmQ==
+X-ME-Sender: <xms:Pbt0akTKZlA8Z4ItoRYqRe0oVlcBJZAY59PI_y8h1MIPxgrfvHFupQ>
+    <xme:Pbt0ald4nvt6skOOhYOxwfQrE_mUwKaZ79w2vkaZU381m0_u7XfupJ4HwFcUJV-aw
+    cxpDW3TgcbZZJ0jWHlLi70OcSEKsNlpKHfdltLtH6GPiBX697-8>
+X-ME-Received: <xmr:Pbt0arrBji2yl47vQZDWkSr9ybOKFQWx4dWbtGucgtLGNECM7i0FuEQPmTJXFFev77kgLn4uDBHlkj7bwrLRomL4kQDQhplKAQ>
+X-ME-Proxy-Cause: dmFkZTEfOIZCDiQB3cZcqb1CT8p9K+cyelm5fRaILJ9bx1mNUd0HQzhRf7Eof2htO58IZ6
+    iwnAaQXT03OnkonbbWMuqSHg7pBlOv8t/Z2JzeCtSb5tuZF0yLd00QmhvTJFEuV9SyJkYn
+    1Yr1qKC2dM/Q582wDIzUJxFdnHY0RTmwhBvHKDNx/xIUnIUFJMPlteTcx1gFpGZQ+l5c1T
+    PWmqTeyqPOm78IIPSsObsRicKA/HR+Pv+L0itv3jGgo1jSsXtXoylJMWqMLuHROi5QMOUm
+    r1IEk5en6BMLDM9PQ2trvisNvUjzqiQJWNwkGYrmTOO1LflmjBvxGTH0JxkQoU8XZhWoKu
+    a4CFTjllfIO7rzvLT5PIeJP4+1KDdlJpnpgH91qeOugPy46iNOsRHL6byXg/P0Q/jz6tmN
+    TwBiIToMIdGylccH/NOAZ9v/I+8HLL2M+aSTZ3iOdiIMvCNbnKEBKHHYr66Ty2EHDt3R6S
+    X9mSp4KMoI24jpWZUB4VaXwpgzQdyxBNPHNjDrpGPW1YqO3Q28G5kswqihSfU+U+axdB2z
+    zM3XH2Ra47I7owwwF3sDCvgcDISgej75rvpRd7kOVUiNUBS/PbgKaLtENO0+frfNDe6HLc
+    y8/HqKOUROk41cApFEDMTMJROYV031FScTP7kOzXEhrMYLQjQPo0Ove/R3kQ
+X-ME-Proxy: <xmx:Pbt0au8HO2-eJp3fRwPdQBFh-lI9ZnnB2y0zh0M74NP8JFjqFO23nw>
+    <xmx:Pbt0avfpDF7bnxthyh7JacIlChYw_MjmOHYA_2ks6bODMjXmKzVsmg>
+    <xmx:Pbt0agKnlxYTIlyVS3bCAjRLEEcrSLHXxwSbd6yQuG_lU2I7LZFIsQ>
+    <xmx:Pbt0anhefp5YwbsB9nt60sotLcmGI-vQnSzsUrzzdyggjZcFvH-28w>
+    <xmx:Prt0arddJ2gH9RVSGsq2N_bjCJaVvKaGV54SwM-iIAt9bayPAQgeu4bs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 12:42:36 -0400 (EDT)
+ 6 Aug 2026 12:50:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Tian Yuchen <cat@malon.dev>
 Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>,
   Ayush Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
  <belkid98@gmail.com>
-Subject: Re: [PATCH 3/3] environment: reorder variables in
- repo_config_values structure
-In-Reply-To: <dbcbb042-5c50-4569-9b18-3edcc7b1ef4b@malon.dev> (Tian Yuchen's
-	message of "Thu, 6 Aug 2026 16:44:03 +0800")
+Subject: Re: [PATCH v2 1/3] environment: simplify repository config getters
+In-Reply-To: <20260806092557.3951208-2-cat@malon.dev> (Tian Yuchen's message
+	of "Thu, 6 Aug 2026 17:25:55 +0800")
 References: <20260805115342.3939931-1-cat@malon.dev>
-	<20260805115342.3939931-4-cat@malon.dev> <xmqqo6fgnssx.fsf@gitster.g>
-	<dbcbb042-5c50-4569-9b18-3edcc7b1ef4b@malon.dev>
-Date: Thu, 06 Aug 2026 09:42:35 -0700
-Message-ID: <xmqq5x1nmc90.fsf@gitster.g>
+	<20260806092557.3951208-1-cat@malon.dev>
+	<20260806092557.3951208-2-cat@malon.dev>
+Date: Thu, 06 Aug 2026 09:50:04 -0700
+Message-ID: <xmqqv79nkxc3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,43 +90,59 @@ Content-Type: text/plain
 
 Tian Yuchen <cat@malon.dev> writes:
 
-> On 8/6/26 05:47, Junio C Hamano wrote:
->> Tian Yuchen <cat@malon.dev> writes:
->> 
->>> Reorder the fields in struct repo_config_values and its initialization
->>> function to follow the order of configuration sections.
->>>
->>> Keeping the declaration and initialization order aligned makes the
->>> structure easier to review and maintain.
->> 
->> Really?
->> 
->> Do you have some automated tool to make sure these initialization
->> assignments in the environment.c file and declaration in the
->> environment.h file match the order in Documentation/config/*.adoc or
->> something else?  Have you designated some list as the authoritative
->> source of truth to check these against?  Without such a list to
->> check the code against and a mechanism to enforce the ordering, I
->> find it hard to agree with such a claim that this makes it easier to
->> maintain.
+> Drop unnecessary parentheses and NULL checks in repository config
+> getters.
 >
-> I see.
->
->> 
->> It is typical to list the structure members in the order of stricter
->> to looser alignment requirement of their types.  I do not know how
->> strictly it is followed for "struct repo_config_values", but by
->> spreading pointer valued members more widely with smaller enums in
->> between, the change certainly is making the overall structure size
->> larger by requiring more padding between the members with different
->> alignment requirements.  Not that we would have 100s of instances of
->> these structures.
->> 
->
-> Oh, I overlooked the size issue. Thanks for pointing out.
+> These getters are only used with non-NULL repositories, so the
+> extra checks do not match their current callers.
 
-I didn't mean to "point out" any size issue.  As I said, it is not
-like we have hundreds of these, so padding bloat here and there
-would not matter and if we get a readability boost by reordering
-into a sensible order, that by itself could be a win.
+You would need to explain why it is sensible to enforce on future
+callers the same rule that current callers honor, or why it is
+unlikely that we will gain any more callers in the future (which
+would justify catering only to current callers).
 
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+> Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+> Signed-off-by: Tian Yuchen <cat@malon.dev>
+> ---
+>  environment.c | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
+>
+> diff --git a/environment.c b/environment.c
+> index 76ee65e62b..f5628b6758 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -119,23 +119,23 @@ int is_bare_repository(struct repository *repo)
+>  
+>  int repo_protect_ntfs(struct repository *repo)
+>  {
+> -	return (repo && repo->initialized) ?
+> -		repo_config_values(repo)->protect_ntfs :
+> -		PROTECT_NTFS_DEFAULT;
+> +	return repo->initialized
+> +		? repo_config_values(repo)->protect_ntfs
+> +		: PROTECT_NTFS_DEFAULT;
+>  }
+>  
+>  int repo_protect_hfs(struct repository *repo)
+>  {
+> -	return (repo && repo->initialized) ?
+> -		repo_config_values(repo)->protect_hfs :
+> -		PROTECT_HFS_DEFAULT;
+> +	return repo->initialized
+> +		? repo_config_values(repo)->protect_hfs
+> +		: PROTECT_HFS_DEFAULT;
+>  }
+>  
+>  int repo_ignore_case(struct repository *repo)
+>  {
+> -	return (repo && repo->initialized) ?
+> -		repo_config_values(repo)->ignore_case :
+> -		0;
+> +	return repo->initialized
+> +		? repo_config_values(repo)->ignore_case
+> +		: 0;
+>  }
+>  
+>  int repo_trust_executable_bit(struct repository *repo)
