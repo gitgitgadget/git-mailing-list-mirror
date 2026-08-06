@@ -1,133 +1,125 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FBA34EEF7
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 14:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5498144CF4A
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 15:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786028081; cv=none; b=usK6Tlv4Fo4LfypKPyuwUgmkHWFepvb2bSTYuePr4+AkMYIyjR+2HJH67+Y0J5frHho/Kg5AxhtCQlqkgZ0uYJ11oYByCTM16mgc5L1rmCTcT14n2jJn8Ei9KODbcNGCoYuUxvcj2FEbdhWNSvAiAZ4qgm+BQgy+RX4jwD8QSD0=
+	t=1786028810; cv=none; b=AaR5+sKdhgbqPyGnyLmJmYxiVVNd8EbYpFhX0IMUp5+KG/zVpCCxv0v6TPbvgNIhxFTx5G63igRd+0J3eb7KZyDIAtTUCQ6XCvZlQU5rxunoA3qjI+ON7znFoVbZrTLy9SzQzb4uAtqXmSDEERDkDY1zvGgH5iH0+n3n+sk1FWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786028081; c=relaxed/simple;
-	bh=O7cbE0FaTPkSfAU4GKvsNDHjNM0fDUdEh9an5Dl7eFk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XkAh2tcO65PDElOjx5av/mbxoKLD5K3EIrxKghleJxf0h0vi5ywkzXgLhvHUCDkVf/Jx+fGHoLohPk6XtboJ4Yv2kq87D1TwqAOixO6vBz1i6vWPb3O4IZvLoaaG1ILTlw1tw1vLYKdIK2BDgclOKRxHs02AIznsMx8jhsLqSk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lqmBFqoD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LzSbJyZR; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1786028810; c=relaxed/simple;
+	bh=aFZJJEovzJNUouDYbEKLyssaR4LcrF38MzParwx8z4A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sHbw0D0F85LS+zsnEDqtHEN1QRiUJubBzoooTRX+bJweCV8V0zujrVGMD075QU366r7if0Ts8Khz0+JuFgPePN7qMFZhCluNxfhynuIO5NzdfU0InpbX13Bvvw1CeIxNHFp8zXv19Z4MHDX3heTwKQRV1gprVixF2hDtnt/IxOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=trnHLGwo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bl3C35LI; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lqmBFqoD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LzSbJyZR"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="trnHLGwo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bl3C35LI"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7B32C7A00E6;
-	Thu,  6 Aug 2026 10:54:38 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 06 Aug 2026 10:54:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786028078; x=1786114478; bh=6VxUc2mOA8
-	C30e8peRCtC34jLAv3ZFfetAZW8+ezJTY=; b=lqmBFqoDdKzFAGB+5DcuLyjiV3
-	o15IJlbbD90zBzvYBlSrxeBeefg6VQ8eDZCGzjpbAh76H3m/4sZPJ+TCbxdSrOU/
-	5sZ5dEpAydPSRU1+xg+aLqjEfLM5mA5E1FZhv3WLx7NNWM6FIVfVq4dcOcoTdHTY
-	x/fAk7rl7PzosTwcGK8IynhPWmlGZX4T+pT5MpnWB5aEjJVQi3NlGmwd5Y2GHUXP
-	qV3+ipCS3hkaP9av9MQdVcEqMEqMo0N9LcH5gRFor0i61aXf49dQx84om9VGl2RS
-	kRO51D0WezwsnosVSYDbtXa+0UQhwtlH/eSbN/S0AyYX1K7rNCSvO1oYTypQ==
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 233067A00A5;
+	Thu,  6 Aug 2026 11:06:47 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 06 Aug 2026 11:06:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1786028806;
+	 x=1786115206; bh=VUlymaROiTitYb5pJFeG0TKGJIO2CvVBPTPiial2lY0=; b=
+	trnHLGwo7LGFwE5tDL7UygjBcfIfC4JwYvZ5G3vsWxfTBeTGpvb669DuYEUYFg0x
+	ukNvpuYVu+cH3y5OiWiX7ci11tpEDYcBMwrAIs0yhS8Fq4AkbNpnARfFHaddFlJy
+	M9OxFb7cifsiWyfvyWW5/bZ6y4cPrsyg6SvxM9KMF9Wnqf/hBqXQjtOCraLPAW8P
+	oquiEApaL4ePZPLWEYjr7ts1InrL2CM5W90sOGOXor4DhssDe0PM18jLvTWBxdkO
+	QREExQp8o4ZD1Z6/t6jD6mCAd4Z1MISLT4b+CWB9ZwJUwyNNQxQ9tZv+ggqr+U1Z
+	K5scN8zA/4TjqfRun1qFmA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786028078; x=1786114478; bh=6VxUc2mOA8C30e8peRCtC34jLAv3ZFfetAZ
-	W8+ezJTY=; b=LzSbJyZRMiB4aMiAs5xm0c0rB96UeMPGt6AzjHQ9TVmPMvB5Q5g
-	TFFaLMexSe+pRaR8laj21UijYMpgWKjfeKuw+XKk07LOVZcsFGs/I60dj+rfF/Yt
-	5oLhJSdUTokx9G0erG4ZuB6BpDx1Yn3CrYkxGGqIck8W923YEAdfEYEPW5A37A1U
-	gE6MIBqsTBG25JXAQwlSJsXwBWA+EHQnxFyLOaNw9dIuIAd6la+UTUI0yYly4TT1
-	p4EG3uCK+CNhsN89XY8T47gje1qWqAt6t5RkC6JkLJYi5d7+8kS4W6jaU0uf4AwJ
-	o2ILn4OdkticAWOnVYkpMA3Q/yfYa0r23tg==
-X-ME-Sender: <xms:LqB0apsldjS3cbNkyQx2UNT_rrwSv4ik85FevnJMVOr2ay7zM_bHag>
-    <xme:LqB0apcFKvSTOlsXiHomxw8v-n5heXuR2Uy1392RrRjEW0HErHE5Z-GncIBne36hH
-    tpCLpI4tyuVSSZaddEgPvvxMstyeN_i5v4gY7SI46X9J-vtYkmp>
-X-ME-Received: <xmr:LqB0ahwZCD6F7LGcbcTcsxbqORG5itW_rlSGNzs-UtQCj61zX65lFfRYu6eKpT2DbHBR-gfhQxflzio-joC9BXa20PlWnrxjdz7d0XnPcUM>
-X-ME-Proxy-Cause: dmFkZTEBpqZP71tDXvlYEqXpq3vbOb4Tdr0tAL5dRoXLHzVQiXC5dIok1G6N+rC1SZmcVw
-    kB9ZEnEgncoxErhxVPbQHQDZbtTo/b8F1e6Nnm21Xkyn1hqoYYaEteZQjYyRDf5lES5erU
-    qRF2YULaWaXDwVuXk0ZVNIshAzLrwyQ0IEyZH4IOrbvOvWRLq5g5/drSquXbgfgjRJsS1r
-    JGu2ojl2/aAyLJSnHA54RI03E+/xxI1qqhVQLbiw7OfFv52ZzfvyBC2MO4Xzl0B8WBAHSi
-    XP2oWBC+43/gjiNbFCdAMKigDIb41YV+v2AwjewYvZFKIwm+EkUS7HIIjbN1J4mcQePWie
-    KrBiLRFTFNdkXTtPldUkDb5PfMfHq5akTFUPaQw6aHa2bWHipIPKv3ArLga0XH+tMRV+GE
-    xctp5tc38QZ/2Umpkj6+oRdXvlthWCAv3NFBnZFDhstmQVmIySo7wdjJArTU3gmAlUm1uY
-    4Y5ilAKGPH4s0SMvkl6DYh/rK4C89cDXGkGE0CeRSCIXKQ6ej3f1hpnkZXlnB5nZDLcv8B
-    9rK3Qfz7AlQbeuzVYLZoXrmpaJ62Ey7+eiSxwZfOTBIztQ/opIOFFEpKDwmmoI7ioc1SOR
-    pIgNoQGmHlR7ZoTAe5r8vx+1DhSxO8X0mAq5d4MwmE2puEKvgsE22QN5wfsg
-X-ME-Proxy: <xmx:LqB0avHm8fYHuSXgtZQtYJk9I9qnZfZ2HFK1mMgCkefuGKQ22-kvrw>
-    <xmx:LqB0alwQ6QtAoqPM5vfZMSeVTFiibQpKcb4qYRPekvLk9TE7CoUbLA>
-    <xmx:LqB0agvtVKKA5EPNH3DFPIQFL4Pn4n3w9eS2Uk9IcYtgiXnyibv6dw>
-    <xmx:LqB0ai3jLwPm43uw1tT1_gMMIq1Md-AIB5OyST94nM3BjU_eyWlwog>
-    <xmx:LqB0ahxAriXgZokQruH-muFUJs6Hs-GRNjK5TQABO8goyBFWnl6qVNnu>
-Feedback-ID: i197146af:Fastmail
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786028806; x=
+	1786115206; bh=VUlymaROiTitYb5pJFeG0TKGJIO2CvVBPTPiial2lY0=; b=b
+	l3C35LI9MFI8JAj5JK5zBS4ow3MloN84P9a1uWYE4QQj4tCXxDBE1M2Rgngcr3oc
+	XeGtifWxOQwTSsttczWdvpNJgUHb4vJbBw5M7hXrzIJhTwSjPaiEnMUoTu8Mmbhy
+	Eg3lCJK04wK6hTShbPhrsVKhKAzXOQjCfhpOgzk0VfUe28ITfDSaWL5xdsbFHy9G
+	UKyrMQMK3T/lEToYhmChTO0E/frh5qCSlJl86nrNGj76p8qzzbjGSS+8HW+PXrIm
+	alzMAg5i51uJgyZyo57gLB7cGbhnCRchxvyTF9XqgpstUI41mwS/lpmsDt8XX1Ri
+	SOWYtV+VvrfNdV0FENnyg==
+X-ME-Sender: <xms:BqN0ajBzwnFuYu6bWBFRSfQKFBXh0LTCjKTNgUH4xBfRaTcw6ue14g>
+    <xme:BqN0asELPCb4sSY1pmQ28ZW7VsIdnpmUWWJkJlazWIdlw072YH8LZnPMVae2pi1Fr
+    tzdyFERO4gHf44nlQRlJFk7HeKyHvv5QRaW5nD_DoYd52pCrAp->
+X-ME-Received: <xmr:BqN0aiM8KvWL993lt9jAz-WF0RVZ2U2DgdW8fFVCSw6evqg3rEANpyafTW6nsXYW2k0oDInrTjg_xC19YrU5pq0Q-i2sITJbKg>
+X-ME-Proxy-Cause: dmFkZTGBAKAUE/1ic9hwDI9wGnCg1BVuuH7FMmCnYzAFFfLSM0Zbvc3hT3+Deq4J3ZftQ1
+    e/ooL9q6UqPAz2uk2qZIDtESxk6MYq/BN+uorvGsspcw0tW0rwYmxJbu1wwctlR7ncf60F
+    Zb3EzAIdSs+ZMT+k/LxjrM2aGF/AueG1puseEWx84+qVMjckfWfnQMQT0tYMrnMJyTYxc5
+    Dq0iv+D2gY3eV/b+JBLFp4fFHj0SaIhNrAT/WNRcoiYjQv53aAY3juQpoxMDHGoGeoDxRi
+    TMViM0hbNozyksBe1JKn0ulQGnzmcDQbwQim6fcMJDnBRhQIjirdSQNxr0Qozu0XTo12bE
+    WKuambJTRRpvlSjOzMg1IN3Ay+Ly1DKPzg3O0rCxq1AVEcJgrX3FbrXlSrVc7X5fklIAuu
+    8XXxq/t4lX/sPRRw0S/FlNhX+KCYV/2R4clY5eaMHk6jTjtq+JZMuBZ4sYFoPf8nRqJkAp
+    9myFFPQ++PH+h2Ucbg3FKWvkzH3dE36sBnsvHt1P6LC6S0WK/MXzGt4DdaUuGDJPJzpbik
+    sa8CAV52QnrKp1IMbSSwN8iU6PRBGxBvkcRftsdJCyZqsRVhP7siy2p12w7MO/C7duXpFS
+    6jlUU7BhghNAFhNUFzX5EUtMJIUxwHUW2vhnnlP7863kYqMI11L603fbiLPw
+X-ME-Proxy: <xmx:BqN0al7C0yy230bNRBK5_mycELOLqAfnQcG5Z3S7igbi0aJBKmhw5g>
+    <xmx:BqN0athl8ooljSRKZ8LLMprC0TDipC7cQ33VKMfyhKk2O_nckkAnTQ>
+    <xmx:BqN0aicjdzUcbwOevEDwmq9dgywIwkdu3VlyV9Q0EGhNuMz0UDY2xw>
+    <xmx:BqN0atz9SdAgVuKpjMozo63QPa_mL2ihLzPH0FdU1iGshaY0Mb38_w>
+    <xmx:BqN0aouKogaU_sBHekbdb2lMvG_ggo2An6Rrrtjo28QJ1hkjKwXO7l_i>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 10:54:37 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e4315081 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Aug 2026 14:54:34 +0000 (UTC)
-Date: Thu, 6 Aug 2026 16:54:31 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v4 4/6] setup: defer object database creation
-Message-ID: <anSgJ4pHuwJ5hylE@pks.im>
-References: <20260806-pks-odb-create-on-disk-v4-0-ba8b4fdd2e3c@pks.im>
- <20260806-pks-odb-create-on-disk-v4-4-ba8b4fdd2e3c@pks.im>
- <87tsp749be.fsf@emacs.iotcl.com>
+ 6 Aug 2026 11:06:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org,  Philippe Blain <levraiphilippeblain@gmail.com>,
+  Britton Leo Kerin <britton.kerin@gmail.com>,  Elijah Newren
+ <newren@gmail.com>,  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
+  Patrick Steinhardt
+ <ps@pks.im>,  SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3 3/3] completion: 'git diff' completes untracked paths
+ as a last resort
+In-Reply-To: <CALnO6CA8sjivVfz45OEDWnvw516z9Nd9SnC+zfJ=FK=Y6Q7MJg@mail.gmail.com>
+	(D. Ben Knoble's message of "Thu, 6 Aug 2026 07:30:36 -0400")
+References: <xmqqcxw010me.fsf@gitster.g>
+	<20260805194250.3316220-1-gitster@pobox.com>
+	<20260805194250.3316220-4-gitster@pobox.com>
+	<CALnO6CA8sjivVfz45OEDWnvw516z9Nd9SnC+zfJ=FK=Y6Q7MJg@mail.gmail.com>
+Date: Thu, 06 Aug 2026 08:06:45 -0700
+Message-ID: <xmqqecgbmgoq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87tsp749be.fsf@emacs.iotcl.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Aug 06, 2026 at 04:23:17PM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/setup.c b/setup.c
-> > index 5dfab3e79e..e39a1646bb 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -1765,8 +1765,6 @@ int apply_repository_format(struct repository *repo,
-> >  			    enum apply_repository_format_flags flags,
-> >  			    struct strbuf *err)
-> 
-> I've noticed the docs in setup.h say:
-> 
->     /*
->      * Apply the given repository format to the repo. This initializes extensions
->      * and basic data structures required for normal operation. Returns 0 on
->      * success, a negative error code when the format is not valid as determined by
->      * `verify_repository_format()`.
->      */
-> 
-> I'm not sure that's still applicable, now odb_new() isn't called no
-> more.
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-Fair enough.
+>>  test_expect_success 'git -C <path> diff completes tracked paths in specified repo' '
+>>         test_when_finished "rm -rf repo-for-diff" &&
+>>         git init repo-for-diff &&
+>> @@ -2744,11 +2754,21 @@ test_expect_success 'git -C <path> diff -- completes pathspecs in specified repo
+>>         test_when_finished "rm -rf repo-for-diff" &&
+>>         git init repo-for-diff &&
+>>         echo content >repo-for-diff/otherfile &&
+>> +       echo untracked >repo-for-diff/untracked &&
+>>         git -C repo-for-diff add otherfile &&
+>>         git -C repo-for-diff commit -m otherfile &&
+>> -       test_completion "git -C repo-for-diff diff -- o" <<-\EOF
+>> +       test_completion "git -C repo-for-diff diff o" <<-\EOF &&
+>> +       otherfile
+>> +       EOF
+>
+> Here, with more context (which I won't paste, because GMail…), it
+> looks like this test is redundant with the test just before?
 
-> > @@ -2864,9 +2862,9 @@ int init_db(struct repository *repo,
-> >  	 */
-> >  	read_and_verify_repository_format(&repo_fmt, repo_get_git_dir(repo), NULL);
-> >  	repository_format_configure(&repo_fmt, hash, ref_storage_format);
-> > -	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
-> > +	if (apply_repository_format(repo, &repo_fmt,
-> > +				    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
-> 
-> Nit: Not sure why this formatting change was needed. I would have
-> assumed to have all apply_repository_format() calls formatted the same,
-> but I've noticed at line 1883 in enter_repo() it's still a single-line
-> call.
+You're right.   As these prefix strings ('f', 'o', or 'u') tested
+do not begin any valid refs, the result should be the same with or
+without '--', and I wanted to test both in a single test block, but
+I botched the conversion.
 
-It's an artifact from previous versions.
+Will fix in v4, which hopefully will be test-only updates.
 
-I'll send a (hopefully last) reroll in a bit. Thanks!
-
-Patrick
+Thanks.
