@@ -1,129 +1,112 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAD33DA7F1
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 06:28:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122FB3876A7
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 06:40:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785997739; cv=none; b=EXSaSB9zGScO3UQvaCQnm12sc+rH4RY2m2C+epJgUQwXorXPoV+6BsI6b36B06cGmeDN57ZJ2efYKT7GtEtOAn6Nux5W2hZkJkSZR1lrqyjenYVmYtlEbWauXEKTUslKo05+3VeZq7gnXpz/jY9qAmqQFUP2KpBGeGzDhijLNBA=
+	t=1785998425; cv=none; b=BEWjzTSGME591jBYlNCkWbd/PXRh5wZFZLaQYj5od/cIue8fiRFCvCYy0EXmBoiJ8hnsmVIWWfsMoAw97slTLPYnXJfpUuAgm/XTdHYw1rsUrJ+Yt0zZ7MUcji6T2d4p8pGzkMwFQ6cNSF4DiWkxtaG+OK2+mLQYgUNd9vAOryY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785997739; c=relaxed/simple;
-	bh=WmMjzSqNJOMQjnZ8UO0eEcnq6yWkyfGBwkK+XkeG7lE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W9mXWLBMdVdDvKR/LagQCw/Ad76G+MDh9XFOi1PXbeNeFxd66wZf4EGTPrd/Uz8HTlukjr/ElzT4hoX7sJktFpSVMRhZW4VuW40JPNtxogMfiQIT6tTYkDeLpEzYfbAJ9Iw0giCvRsHCc6mdFI2mqbqx5bAtnAZVnVxeu+/J6S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R9NwcfMm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DVayBoEg; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1785998425; c=relaxed/simple;
+	bh=EsSk6FuJ9BYy4VvVUNxe0+URBTuDnnzWVHjXRxhcu+c=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=GTDKERM67Hl4B04VgrLzrGYOOkXTMfe0xkoqvvy8zODqRpAFRdSK525c0qLKh9N3DtZ3JWobFMQ2iFBflKxMUCeruXWpHlU/x17irzem1YO21zldhFN4crQlaBBrUefC8ihT7TgKekO6P3G50y0FDos2PY7lWyDnbEma2T7JFak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y87GCkBj; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R9NwcfMm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DVayBoEg"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 971B07A016C;
-	Thu,  6 Aug 2026 02:28:57 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 06 Aug 2026 02:28:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1785997737; x=1786084137; bh=aiZw7Fsafm
-	2vKxXLmiyl9wIXubtICqyzydjc1V/OnII=; b=R9NwcfMm4eZIG1ddV5W0HF5mDX
-	cHJW+IsI61yvWRsSFOGokVF3iWz3rl2qDELktftih/5d7Xr/1r81D2Xo1Nn6XGRw
-	Fr05x7JM1Y8cYhELDjCAbjwvwgg3K5PoCwhjM3yXAtYwGZZ4L9UF8kEz8q8E5nM9
-	FQ0SiACZymAvQbvUYKrq1wLMr6cnO+xdXo1kg3HTyj78vKcsoguizg9PNmQbdKfn
-	tL+zrBtFmV+TLNLtHDrBN6eD5ta2hcPUxzI84A7bLMECEcko7b8Y+BqaRD2MqYSn
-	ofi5IlpgTWqH/OXaBox6FWWjyA3JRsSeSrdmQ+eGq/OTd5t7+JbDjX3ZAdMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785997737; x=1786084137; bh=aiZw7Fsafm2vKxXLmiyl9wIXubtICqyzydj
-	c1V/OnII=; b=DVayBoEgSdTmJWxOBp7rQKMxR8e9WLxcT2puIecAOaPqsigb1oK
-	FklSJhkw8703tq1TS1vDVFaLKfvCmazHZoWi3Z/WU839LEiGdcZzWjddnls9rPxi
-	Qx2rIsEtNN+0HeJSnRxwKvAed4Dago0t9NtzdbAax/6hl/gODAyq46L+miZPzPEb
-	KU2JIjq7jvSEACdmyXVgGL+BlKTWLniouRnZ8+LjqBTuTr+zT1AOPK8+heRo62PC
-	1ID+/AH6v2s2tf5FBhYgpoWHprNwvju51z9Mtr3WxOWV8N1J3JfN28lIqC7oYYxs
-	lRTJ/aSTrTiUkdvyqZ9Cbl5sWMGm4w3kQaQ==
-X-ME-Sender: <xms:qCl0apFyGVNQu-qpLieY_PZIM0ImxDi_3APsP7SiLIALMmFiR_R38w>
-    <xme:qCl0ajTD_Kch7-q2j-0BsNB7Yr7M-h6poHJiUoQdXHhan2BuHujr3X-SH04QbltRl
-    2BSMdeKmGGppLSmqho_V6jsE7wBI57TSnshJ5fC-QgLchxE1Y350g8>
-X-ME-Received: <xmr:qCl0avYEcCvj1LszQNGN62LJMp4j2l5jNC8UyEMRctv_ABrJgFl6K1get06ng3iJ_T4FvGoUNnHzvlh6Gjm_7saV3fZUN0b8pgUPjAKomd4>
-X-ME-Proxy-Cause: dmFkZTFpJrE/RFQbAlmrxkmtDdeHz48/yMExxkrlwuvRwskUqrod6Tr1ijhDpWUAtL5u0Y
-    aWOuzcNWXKAdnhHb6NqmOx7MVEQoso7UEhhYlwa6kJD5Wa5+Df8ByGrAzWZP0RaNhBshMe
-    obA4O3xXf+qc6mGNIBTmouYPoFiOjamL4Iol2wM9sUrztazi6LW+YvPHS8icoSd1bxOryH
-    D9CIR3q4Zr5Az/BJgwijpXmYfunnqrr+LIqBWzF/XaJLvqRVAmQG2e8akv7ne6Ty+vBMq5
-    2wrBkwLmODNWs57GIOunKFDGFWGvuy9qa7HkgWM1hoZVDcvXcnid4XcLqqzlJkkoKZPTGH
-    Hhg8hFXDBjmkIKL6vMf9NXFcsMq7+ndWViE6mHiG9FIVMd3joq1WodA7K7pbUB7R2i5j4e
-    WjNZKXaFOYiPeoSP5AkO6F//Y38af7cNcddoUil3lNO4/xFveZKk6FQ0+ZbcWeXWhx4TLz
-    KrBepccmTG7jVzKtjAloDaqEKNDFsthqqX0oYaI2l5+bGWAcBmnd3bxmjOjFfxVjNZT8DV
-    HIe16yRUbiEJ4/s7RT6mjV7RyJlTkcBxixT7pWEaj3E9b45QjUvpxOXY7Epy8pMNQ+8x/9
-    g+/QTF2E90IkWZgq3za0AB8Gr1WKDSFMH4Cfbp32F5cQ9o4hJyN87Qe1oKfg
-X-ME-Proxy: <xmx:qCl0au3WkBs62_DaedPGgJ2fjoLBjZ90TGFckd5Gxc504XeC4xM9Kg>
-    <xmx:qCl0aiptR0_LyKCw0k9Q2T0hSRNDtULtV1TsxbnmCfow3Kr9xUW-5w>
-    <xmx:qCl0atMdAXTYfzt0WWysX7iQgylZ_xceTuZAy2cvA5pZaC3uBIhtrg>
-    <xmx:qCl0arp9b1GHzla1YymslNvOhKDWCQC661lGzE_X5hKU3BjkO6A5gw>
-    <xmx:qSl0aplY0pKHqnmScQvMihO544ADNEUl7OcoNhR7Wg0_b1uV56IF1OO1>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 02:28:55 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d792802c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Aug 2026 06:28:53 +0000 (UTC)
-Date: Thu, 6 Aug 2026 08:28:50 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, Ben Knoble <ben.knoble@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Randall S. Becker" <randall.becker@nexbridge.ca>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 0/5] Reintroduce writev(3p)
-Message-ID: <anQpop92SCAA2C9z@pks.im>
-References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
- <f8050598-392f-44c9-8d66-0454740a7a12@kdbg.org>
- <xmqqo6fso2s8.fsf@gitster.g>
- <anL0nIk6uzkYR9Oc@pks.im>
- <xmqqy0ekr0bm.fsf@gitster.g>
- <2952d9a7-c7c0-44c0-a321-7ddad6497a6e@kdbg.org>
- <xmqqpkzwpg1g.fsf@gitster.g>
- <8ff3c3ea-2604-4d65-8a7d-6acd6218b7c2@kdbg.org>
- <xmqqa4r0payv.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y87GCkBj"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7e9eaf04bfaso741047a34.1
+        for <git@vger.kernel.org>; Wed, 05 Aug 2026 23:40:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785998423; x=1786603223; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=+oxKeIJJ+6BGoKmtsMKk5DVJZ2DmcpYX6dRVuWYSlZ8=;
+        b=Y87GCkBjL7/G59xHPbsYdxEXqVEzxoWxaj/UaBSsrB5HrCzSxQTt3d2imbEZTdb/2p
+         CVk+0+6kSiwhU8Ncbcl/mZyywF43RN7SWBH2kkTCiT2q55afl0M0kdhG/EvQu7rhHzTX
+         V3og5YK4Nlg+9TvRcW9baCxXPfDMLU/Y5uMyySo9IoeM0vh7uD++xR2bY02jUwH3+EU6
+         gO92iVY5hhrt7KTV9zwdHUtPEtk8PcmF42Zb4ZefqK6ySyhUEB3TAa2QYVEdsekmLp4w
+         RHEPswMPU/3wo3/E8cHRKtJSa6j1tUCL0VKUQeqcxDxHHTFKCUl4GCaI83xCRPYlw5ep
+         9iNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785998423; x=1786603223;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=+oxKeIJJ+6BGoKmtsMKk5DVJZ2DmcpYX6dRVuWYSlZ8=;
+        b=pblWlx2wxNeEjkoETG86/70RmjMuxcuOS3li+ice41NhQ8bhGNXeHnEAWJNgHHNnro
+         iFWpzmGoBgg5hK1CeriHHuIudzUKOGKWK7x7vtTin7p/2DBiVQK1OIYp1NLQZspwUy8D
+         9UxdBRabqDOA9ixRHKxRCA/L/M6u4heJnSrmzOnpBhPUye/xFtZDOWyUQtSKN1KsSUNH
+         UE2aotTs7EYfH/DWze3E5BTrbjGFaN1mYe4kYr1LY6wXSvO75i+eLZaIVGbbi9IqyOEJ
+         lTIcaedhUP7Y96mzZzFHS74MFV1LUzQHB98q0vP6NVj1ib/smoWkbqi0Q4H1LMJRa69B
+         QYlQ==
+X-Gm-Message-State: AOJu0Yy1yxWPLjdbXoBeogLlFTgrk0S56Qr1+VMXmqE48/reQvATa4VG
+	/uikcAs9PNED76SUu1Er8Lb6xrOPpkEOAzfYABxDgFVThNYJgJF1qFR4aGddUdB/
+X-Gm-Gg: AR+sD13n1Mk8ub8uSjQf3b/Ga1BDpTt/LqKiVVw9eDoSAdEF5GNFK34iSKDuEteXRpC
+	K/o+9hEDGm71wvSw+Z8tASg1RIPLcgFSUWQT79RmA9LxOXF8NEmgz7OlnODMYaem4IK23/EWppx
+	cqnGPDjYOFlBh3c4PI2p8OUZY60M5sD9baASZ5RkHke/21APnOyiOCPx1hJxs506Nb4XsYtCspr
+	UaFW86KDjCLfr9xgjymlB5MojVZrfjrZ5gr2Dgri23QUnwB6Sm1/6w3L3TPwF1jWJvKrlzVnQjS
+	j5hC1whvfBvFnvUMvgarub4W3VAMDvJznPTHPNsjdaqPo/mdVPwrFh6M/g7dH1cVZfIDhsMKHE0
+	/x3+k3mVHF5aoVjxZ8NPBYkRcldeUhXwEkavLwdGwe2Rf0lbQXqfQBMECdRwcjMgmXJtFqyXG62
+	yV8uVJnjXDW0STah71dYovI2G23PnNKWe4G7nPQWdmjuQrwoUJAfoo2//OoGQ3m1XE
+X-Received: by 2002:a05:6830:6105:b0:7d7:ea9f:c0f9 with SMTP id 46e09a7af769-7f1e5996ca2mr7497579a34.0.1785998422770;
+        Wed, 05 Aug 2026 23:40:22 -0700 (PDT)
+Received: from [127.0.0.1] ([172.212.167.80])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f1df5a664dsm4301550a34.24.2026.08.05.23.40.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Aug 2026 23:40:21 -0700 (PDT)
+Message-Id: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
+From: "Johannes Sixt via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 06 Aug 2026 06:40:13 +0000
+Subject: [PATCH 0/5] gitk: make color preferences visually more pleasing and better usable
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa4r0payv.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>
 
-On Wed, Aug 05, 2026 at 01:29:44PM -0700, Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
-> > Am 05.08.26 um 20:40 schrieb Junio C Hamano:
-> >> I think it is OK to explicitly document that any writev(2) emulation
-> >> is allowed to be non-atomic, and it is also OK to declare that using
-> >> writev(2) in this application to allow competing writes to the same
-> >> destination is a bug.
-> >
-> > These are fine.
-> >
-> > But I'm not worried about current uses of writev, I'm worried about
-> > future uses: "Look, we already use writev elsewhere. Let's use it here,
-> > too, where we can take adavantage of the atomicity of the write." It's
-> > too easy to miss a note about non-atomic emulations when the function
-> > name advertises more than can be guaranteed. For this reason, I strongly
-> > suggest to use a different name.
-> 
-> That is why I added the "it is also OK to declare" in the above.
+I find the user interface to set the color preferences a bit ugly for these
+reasons:
 
-We could of course trivially restore the non-interleaving property by
-only ever writing the first iovec. POSIX doesn't guarantee that the full
-iovec is being written, and write(3p) is already non-interleaving. It
-wouldn't even be less efficient compared to the current implementation,
-as we have to loop around write(3p) anyway in our compatibility wrapper.
+ * The color samples are not clickable as one would expect who enters the
+   dialog. Instead, the description is the button that must be clicked.
 
-Patrick
+ * Since the descriptive texts are different for the preferences, the width
+   of the buttons are different, too.
+
+ * The descriptions themselves are not always natural language (read: they
+   are nerdy) and use abbreviations.
+
+This series makes the descriptions static text and turns the color samples
+into the clickable buttons. It also makes the descriptions and dialog titles
+more natural language.
+
+This is the dialog before the change: Screenshot_color_buttons_before
+[https://github.com/user-attachments/assets/910a647f-4e56-47b0-b4c4-e6e7bc966e9c]
+And this is the dialog after the change: Screenshot_color_buttons_after
+[https://github.com/user-attachments/assets/d985d837-1b1e-4b43-8bcd-76bca8d060ce]
+
+Johannes Sixt (5):
+  gitk: set intitial colors of swatches using the available helper
+  gitk: condense repetitive code around color buttons into foreach loops
+  gitk: show color preferences on the button instead of the label
+  gitk: use more natural language for labels of color preferences
+  gitk: avoid constructing dialog titles from text pieces
+
+ gitk-git/gitk | 123 ++++++++++++++++++++++++--------------------------
+ 1 file changed, 59 insertions(+), 64 deletions(-)
+
+
+base-commit: a97fcc37c2bc6340a8d7ce78dedf227aac4e9aa7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2194%2Fj6t%2Fgitk-prefs-color-buttons-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2194/j6t/gitk-prefs-color-buttons-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2194
+-- 
+gitgitgadget
