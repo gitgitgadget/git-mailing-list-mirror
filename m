@@ -1,249 +1,239 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B233DB331
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 07:51:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DD73C819C
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 08:44:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786002689; cv=none; b=UgyZx49KIPAe3vsr85SXGdG+n6N9A9MuwiGvFO2dfNM8DCG9gMV+F94HsyWSg+9ZtkkseZSZvyoJPWFBzCeOHXwUWuoYDaA1JF9gOBBQi0tJbPcXPu0EzSHsCqp475Zobyod7JTlBrSLrCBxFxDW1NU1164z2v2xj0YuOSxGkiU=
+	t=1786005855; cv=none; b=RIibAHn/P8FbhkDLQhx/udQi6iyx6mVSm3gKgzAWKEwzsP+4Ag6SoHccnZY1C2a+zUd6fDgkpkCnI/ic2UcuWfBLTE3MeWltGw/64u1HtoSm6RdZqGLrZwJ85Oj+2ID8ufrgArbwecu4AOY3IhGAzqVOg6jP2UzRPeWm1QG5f9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786002689; c=relaxed/simple;
-	bh=Bg83hM3BMA6KroK3ahMOo6FvLJdF8/aZ2jO8hrXMBds=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ckyb/Zfbzhyy3rpYrFpGy4AB9d3TG+FYJqDi6OshxwU6HuaZhmaMKIkJDggVRPcPsn56uby6Bke6d9Y40XYanC/M5BtrTQmXNJ9XU7aNTvii9xNMLjAiwwYdxL8TsKcX+TVDuP5lTNS5bdjgS5ATXzu6JbmrTAfYCJdQJ1x+tMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bHq2eYxw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B5sGSEuf; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1786005855; c=relaxed/simple;
+	bh=cTmleWjavagWZqk9qTVKnpm4zqP2AV16I1tmR79+iYY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H6bT/EoDERzeKZmSLRsPsIvCYp142zkoMgUTOhhH9IrC0/x2H7L5wcPcCUxb8mzmZqr7dU0Kq/ZDhqEXbGxrMcqVeQ33KS7jEkLtHFjIaj1p6jNzRHjJReZoarNYThBSeJVOaU/7SYiR/wmekV1SmrI/z8BGsPP5aYT15CONJas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=BuIkEsBm; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=IyFyHKe2; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bHq2eYxw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B5sGSEuf"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D1EF57A0064;
-	Thu,  6 Aug 2026 03:51:26 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 06 Aug 2026 03:51:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786002686;
-	 x=1786089086; bh=qFpOwpmWscGAFO4J4fWwyhNBZgGJpGqo02MUEs1p0VI=; b=
-	bHq2eYxwHBSK/uzxlrJYj7ZqYyvvZD6LxNpxVzYtwmxLwgQCsCGOfgRkqOghOZF9
-	3b6qtKaSOmGbW10S34xmcH1+yZwPQjCIRAhC55aJoCZhqpvN70LuVNJghYPHYpCs
-	xS9nsNaHweGgIFqAHCVbgrmOY9hHgdRWtnUCTABhxKFI25KR8fe0nX3eIV14DFJa
-	leOXr2ltFNfGlWafiV3uajC6tEiE2Gsrn56CwaYdfyzq4L/FB12+iMTa4f4LIBtU
-	qe5Km3Wgd7Yj2eIWhDL418L/n6r+ScVayywPpyjH6zOHAFbJ8Uj163gz182V6hta
-	V3FgsmunXUtUfFlcn3kleQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786002686; x=
-	1786089086; bh=qFpOwpmWscGAFO4J4fWwyhNBZgGJpGqo02MUEs1p0VI=; b=B
-	5sGSEufKAHmTpByUbKki79125kQ7BIhgC9OBWtZkBt7EfxXr3+hdlawDqjHlk5WK
-	Ttl2txTvKsCZmMy/C6YDC7hfrxYAJGgVaoJDziulOUoFA/Wc2n/XYHf2H2YMDfAK
-	dNLNZWilpqdv2DK6XEGvVL5MtmdBIsU2v862r2OuJxhPQvzfw8ALEAjLsnVEYQem
-	naB+XZleJMTShHFQFGCP9drPxjYtHZJqhSjL+Xqxb2yAx8vyc/zWLXJu/BWthquJ
-	CHTfCKQAKeAA5KXB9WWzCvoaDveyYTSUI4fn1Z7204kENjgQMRayq8DZIUpaE8Fb
-	Bz8r4/6KLMcHQm4ks7mQw==
-X-ME-Sender: <xms:_jx0ajQAl8XtWbA_byGJPkFT0PWs6S0F8Gt3xRTUbk-guzFIHrnapg>
-    <xme:_jx0aryOmHb0LsNd7v4K4oFxFk5bhYVW2A1nDKBvu6oN0D4UALa-z4v7OMlmPejYY
-    FQALVCso6_hJIgojHVWT-spgMhgDkyqM7oe3hh-duVfLIC72eje3R0>
-X-ME-Received: <xmr:_jx0at27a5r6AsaIT5cZ3ucnUFPc3K5OlL3ST__yLfTCqug2Co6h58sBdppRjaQbIDbTZphs0Pm3-SWVSpsrXUm3ynhO6U3c7d58MnQYxHI>
-X-ME-Proxy-Cause: dmFkZTEtzha/e+/fLcr4yLYpFwljivEi4kiTD7GQZPS8Iw0t2O9ajSX2+zUSgp9R1U7o7/
-    hmHI+bz0bFhYZWQWsopHriyW8MDU5aGaxS/Ka5E1xvBCiYuRw74vzVpofzEXygJ1CwqDlG
-    9MK5XFO9NkVkUvYdezd7H/YB5y5u+Kd3CVS2NtPW3YgPmy5Z8yRnFeh6G4pRMZORW6pnsn
-    MVklV1UcYGQBbOa6rKltEdQPLJLC3eZHnHD7G+UXpSJ2eKBLWwYzrr+h2+pufPwNDlElaq
-    hGTFGng084YkBjiId1Qpsg1lA0yeLxZrliGnN9/Z1rO+VHoSsgHcG3jlFfU1PzSAzMcklR
-    7E45qSztQ34HwIcDgCfmwUrl2Fd8e3Zgn/WNbrrToo11b7Q7ZI3GwxTln27zjuzGBxmCP2
-    XmLXf/G26AUpoAtHpMIaC91eel7deaTjzCtjZqfwKQ5EVT9pc04vA3ABMspSpHkzkYeM3j
-    VbJG1+9UvxfpYO2dv6lTvgcgYFu/6VHLxr6LTS1nrZgIedT6Owq2qxi6GpvGOXkrVhi+pX
-    gTpYjDYCYqGoQLHsqzJ4Zby0ojgor+be3qTLg8zi+nzM7iXGeKxoACn1r8kB4OYuhE7iKT
-    fIK8bk7xSVEVQz1F+tEPTr48IZ1JQ4QhJTK3Erdonpm//ney3wGD+Or4697w
-X-ME-Proxy: <xmx:_jx0ah6ZgznbNCrnwdFVC-aXt0UgFJdjO7aN4brHe201j1clU1U4Gw>
-    <xmx:_jx0aoVbgpFLha7P151_wUtHouo2thgAU7lb59WJT8O4v5HriItBEg>
-    <xmx:_jx0aoDD7BX596yBLJd_kbtwWwZwJYUR4ewxQYVMylajP1dekfGMcQ>
-    <xmx:_jx0av5QX89_Jz7TMuDEcUq4bxE_rDdwFKnwGDiWltifwt6oyaMuvg>
-    <xmx:_jx0ak3uY53uboqi_hL1DNSTr7mDchTcM67uhSdiWBFovRni6_2PZU55>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 03:51:25 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9e3d2837 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Aug 2026 07:51:24 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 06 Aug 2026 09:51:04 +0200
-Subject: [PATCH v4 6/6] odb: make creation of on-disk structures pluggable
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="BuIkEsBm";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="IyFyHKe2"
+DKIM-Signature: a=rsa-sha256; b=BuIkEsBmtf2CsU5iD7+vYau1v432FJvhOrBoIqgEoT8oCsjOEHRAHxDi9D+S+jX18wjrbFBNQjPA8MDX1IoVBkIN0ql16rkc/ocKb2yTsAE5y91SvT4emox0f/lWdcIs+MEj94L320aIAkC6nKwWPN2KLGvYb03ijbX+jtdniMAlZhL/w0BbH4xM6ZSV9f2WAuLm0oPEbFY2czh+3q293bN51lrcuDNonGa+qwDegu/10THxg9MK4KNjKZqNY16A1/43o8bz89aJLOHtgyA+QdO2qHh/0qPwK2CzAgKHZL9lWVQ8fWIQSqVNtFOxYA9LHe7c/AEEtA0ABKNBoCsjfw==; s=purelymail2; d=malon.dev; v=1; bh=cTmleWjavagWZqk9qTVKnpm4zqP2AV16I1tmR79+iYY=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=IyFyHKe2obWhVQJjU2SOav2UFMyEprrgcAhV8BYpcujQK8JLoAtKB8V7vvyY52ZREYrKwJf3lue+omT/0mF0kINvGKE7SwQLmlJxmCOCbPP+Kd32su9DNzvFOLykAayEiYsT0qR+VyaaXbt05wBBcEmnryrv35JGeV7zvmu051/szFA5QomudrZeT3gXulJkfoR6EWteQ4eeoVOkYvjVA32m90fnine5vdQL8BmXdQAnfFeB10fujUWznbycXJllqhsgO91RzwOfa9PANFkT1CY240Wy/ldcEC3d8OaQ4QHshDeDyTqEcp/5RReg6dMStIwbbB+Hk6eSXNVsFUex9g==; s=purelymail2; d=purelymail.com; v=1; bh=cTmleWjavagWZqk9qTVKnpm4zqP2AV16I1tmR79+iYY=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1736058855;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Thu, 06 Aug 2026 08:44:09 +0000 (UTC)
+Message-ID: <dbcbb042-5c50-4569-9b18-3edcc7b1ef4b@malon.dev>
+Date: Thu, 6 Aug 2026 16:44:03 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] environment: reorder variables in repo_config_values
+ structure
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Olamide Caleb Bello <belkid98@gmail.com>
+References: <20260805115342.3939931-1-cat@malon.dev>
+ <20260805115342.3939931-4-cat@malon.dev> <xmqqo6fgnssx.fsf@gitster.g>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <xmqqo6fgnssx.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260806-pks-odb-create-on-disk-v4-6-ba8b4fdd2e3c@pks.im>
-References: <20260806-pks-odb-create-on-disk-v4-0-ba8b4fdd2e3c@pks.im>
-In-Reply-To: <20260806-pks-odb-create-on-disk-v4-0-ba8b4fdd2e3c@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>, 
- Toon Claes <toon@iotcl.com>
-X-Mailer: b4 0.15.2
 
-When creating a new "files" object database source we have to create a
-couple of directories. These directories are of course specific to this
-particular backend, and a different backend may require a setup that is
-completely different.
+On 8/6/26 05:47, Junio C Hamano wrote:
+> Tian Yuchen <cat@malon.dev> writes:
+> 
+>> Reorder the fields in struct repo_config_values and its initialization
+>> function to follow the order of configuration sections.
+>>
+>> Keeping the declaration and initialization order aligned makes the
+>> structure easier to review and maintain.
+> 
+> Really?
+> 
+> Do you have some automated tool to make sure these initialization
+> assignments in the environment.c file and declaration in the
+> environment.h file match the order in Documentation/config/*.adoc or
+> something else?  Have you designated some list as the authoritative
+> source of truth to check these against?  Without such a list to
+> check the code against and a mechanism to enforce the ordering, I
+> find it hard to agree with such a claim that this makes it easier to
+> maintain.
 
-Make the creation of on-disk structures pluggable to accommodate for
-this.
+I see.
 
-Note that there is one exception though: the "objects" directory must
-exist in a repository regardless of which backend is in use. If it
-doesn't exist then the repository is not treated as a Git repository at
-all. Consequently, we create this directory regardless of the backend.
+> 
+> It is typical to list the structure members in the order of stricter
+> to looser alignment requirement of their types.  I do not know how
+> strictly it is followed for "struct repo_config_values", but by
+> spreading pointer valued members more widely with smaller enums in
+> between, the change certainly is making the overall structure size
+> larger by requiring more padding between the members with different
+> alignment requirements.  Not that we would have 100s of instances of
+> these structures.
+> 
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- odb/source-files.c | 19 +++++++++++++++++++
- odb/source.h       | 23 +++++++++++++++++++++++
- setup.c            | 34 ++++++++++++++++++----------------
- 3 files changed, 60 insertions(+), 16 deletions(-)
+Oh, I overlooked the size issue. Thanks for pointing out.
 
-diff --git a/odb/source-files.c b/odb/source-files.c
-index 4138758511..0db6e681fe 100644
---- a/odb/source-files.c
-+++ b/odb/source-files.c
-@@ -9,6 +9,7 @@
- #include "odb/source-files.h"
- #include "odb/source-loose.h"
- #include "packfile.h"
-+#include "path.h"
- #include "strbuf.h"
- #include "write-or-die.h"
- 
-@@ -41,6 +42,23 @@ static void odb_source_files_close(struct odb_source *source)
- 	odb_source_close(&files->packed->base);
- }
- 
-+static int odb_source_files_create_on_disk(struct odb_source *source)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	safe_create_dir(source->odb->repo, source->path, 1);
-+
-+	strbuf_addf(&path, "%s/pack", source->path);
-+	safe_create_dir(source->odb->repo, path.buf, 1);
-+
-+	strbuf_reset(&path);
-+	strbuf_addf(&path, "%s/info", source->path);
-+	safe_create_dir(source->odb->repo, path.buf, 1);
-+
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
- static void odb_source_files_prepare(struct odb_source *source,
- 				     enum odb_prepare_flags flags)
- {
-@@ -271,6 +289,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
- 
- 	files->base.free = odb_source_files_free;
- 	files->base.close = odb_source_files_close;
-+	files->base.create_on_disk = odb_source_files_create_on_disk;
- 	files->base.prepare = odb_source_files_prepare;
- 	files->base.read_object_info = odb_source_files_read_object_info;
- 	files->base.read_object_stream = odb_source_files_read_object_stream;
-diff --git a/odb/source.h b/odb/source.h
-index ab16d152f4..4abc418bdd 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -89,6 +89,18 @@ struct odb_source {
- 	 */
- 	void (*close)(struct odb_source *source);
- 
-+	/*
-+	 * This callback is expected to create on-disk data structures that are
-+	 * required for this source to operate.
-+	 *
-+	 * The callback is expected to return 0 on success, a negative error
-+	 * code otherwise.
-+	 *
-+	 * This callback may be NULL in case the source does not need any
-+	 * on-disk setup.
-+	 */
-+	int (*create_on_disk)(struct odb_source *source);
-+
- 	/*
- 	 * This callback is expected to prepare the source so that it becomes
- 	 * ready for use. It optionally clears underlying caches of the object
-@@ -316,6 +328,17 @@ static inline void odb_source_close(struct odb_source *source)
- 	source->close(source);
- }
- 
-+/*
-+ * Create on-disk data structures that are required for this source to operate
-+ * correctly. Returns 0 on success, a negative error code otherwise.
-+ */
-+static inline int odb_source_create_on_disk(struct odb_source *source)
-+{
-+	if (!source->create_on_disk)
-+		return 0;
-+	return source->create_on_disk(source);
-+}
-+
- /*
-  * Prepare the object database source and clear any caches. Depending on the
-  * backend used this may have the effect that concurrently-written objects
-diff --git a/setup.c b/setup.c
-index e39a1646bb..1f65f69534 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2649,25 +2649,27 @@ static int create_default_files(struct repository *repo,
- 
- static void create_object_database(struct repository *repo)
- {
--	struct strbuf path = STRBUF_INIT;
--	size_t baselen;
-+	/*
-+	 * Create the "objects" directory in the common directory. This is done
-+	 * so that the repository can be discovered regardless of the backend
-+	 * used.
-+	 *
-+	 * Note that we only do this in case the object directory wasn't
-+	 * overwritten via an environment variable. If it _is_ being overridden
-+	 * then we skip this step, as the repository won't be discoverable
-+	 * anyway without the environment variable.
-+	 */
-+	if (!getenv(DB_ENVIRONMENT)) {
-+		struct strbuf objects_dir = STRBUF_INIT;
-+		repo_common_path_append(repo, &objects_dir, "objects");
-+		safe_create_dir(repo, objects_dir.buf, 1);
-+		strbuf_release(&objects_dir);
-+	}
- 
- 	repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
- 
--	strbuf_addstr(&path, repo_get_object_directory(repo));
--	baselen = path.len;
--
--	safe_create_dir(repo, path.buf, 1);
--
--	strbuf_setlen(&path, baselen);
--	strbuf_addstr(&path, "/pack");
--	safe_create_dir(repo, path.buf, 1);
--
--	strbuf_setlen(&path, baselen);
--	strbuf_addstr(&path, "/info");
--	safe_create_dir(repo, path.buf, 1);
--
--	strbuf_release(&path);
-+	if (odb_source_create_on_disk(repo->objects->sources) < 0)
-+		die(_("failed creating object database"));
- }
- 
- static void separate_git_dir(const char *git_dir, const char *git_link)
 
--- 
-2.55.0.679.g6767b8d81c.dirty
+I think I will drop this commit. However, the original comments:
+
+struct repo_config_values {
+	/* section "core" config values */
+	char *attributes_file;
+	char *excludes_file;
+	char *editor_program;
+	char *pager_program;
+	char *askpass_program;
+	char *apply_default_whitespace;
+	char *apply_default_ignorewhitespace;
+	enum push_default_type push_default;
+	enum rebase_setup_type autorebase;
+	enum object_creation_mode object_creation_mode;
+	int apply_sparse_checkout;
+	int trust_ctime;
+	int check_stat;
+	int zlib_compression_level;
+	int pack_compression_level;
+	int precomposed_unicode;
+	int core_sparse_checkout_cone;
+	int warn_on_object_refname_ambiguity;
+	int protect_hfs;
+	int protect_ntfs;
+	int ignore_case;
+	int trust_executable_bit;
+	int has_symlinks;
+
+	/* section "sparse" config values */
+	int sparse_expect_files_outside_of_patterns;
+
+	/* section "branch" config values */
+	enum branch_track branch_track;
+};
+
+still do not accurately reflect the grouping of the members, right? Can 
+we remove them directly instead?
+
+
+Thanks, yuchen
+
+>> Mentored-by: Christian Couder <christian.couder@gmail.com>
+>> Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+>> Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+>> Signed-off-by: Tian Yuchen <cat@malon.dev>
+>> ---
+>>   environment.c | 31 +++++++++++++++++++++----------
+>>   environment.h | 20 +++++++++++++-------
+>>   2 files changed, 34 insertions(+), 17 deletions(-)
+>>
+>> diff --git a/environment.c b/environment.c
+>> index f5628b6758..918d8b50b8 100644
+>> --- a/environment.c
+>> +++ b/environment.c
+>> @@ -745,31 +745,42 @@ int git_default_config(const char *var, const char *value,
+>>   
+>>   void repo_config_values_init(struct repo_config_values *cfg)
+>>   {
+>> +	/* core */
+>>   	cfg->attributes_file = NULL;
+>>   	cfg->excludes_file = NULL;
+>>   	cfg->editor_program = NULL;
+>>   	cfg->pager_program = NULL;
+>>   	cfg->askpass_program = NULL;
+>> -	cfg->apply_default_whitespace = NULL;
+>> -	cfg->apply_default_ignorewhitespace = NULL;
+>> -	cfg->push_default = PUSH_DEFAULT_UNSPECIFIED;
+>> -	cfg->autorebase = AUTOREBASE_NEVER;
+>>   	cfg->object_creation_mode = OBJECT_CREATION_MODE;
+>>   	cfg->apply_sparse_checkout = 0;
+>> +	cfg->trust_ctime = 1;
+>> +	cfg->check_stat = 1;
+>> +	cfg->zlib_compression_level = Z_BEST_SPEED;
+>> +	cfg->precomposed_unicode = -1;
+>> +	cfg->core_sparse_checkout_cone = 0;
+>> +	cfg->warn_on_object_refname_ambiguity = 1;
+>>   	cfg->protect_hfs = PROTECT_HFS_DEFAULT;
+>>   	cfg->protect_ntfs = PROTECT_NTFS_DEFAULT;
+>>   	cfg->ignore_case = 0;
+>>   	cfg->trust_executable_bit = 1;
+>>   	cfg->has_symlinks = platform_has_symlinks();
+>> +
+>> +	/* apply */
+>> +	cfg->apply_default_whitespace = NULL;
+>> +	cfg->apply_default_ignorewhitespace = NULL;
+>> +
+>> +	/* branch */
+>> +	cfg->autorebase = AUTOREBASE_NEVER;
+>>   	cfg->branch_track = BRANCH_TRACK_REMOTE;
+>> -	cfg->trust_ctime = 1;
+>> -	cfg->check_stat = 1;
+>> -	cfg->zlib_compression_level = Z_BEST_SPEED;
+>> +
+>> +	/* pack */
+>>   	cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
+>> -	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+>> -	cfg->core_sparse_checkout_cone = 0;
+>> +
+>> +	/* push */
+>> +	cfg->push_default = PUSH_DEFAULT_UNSPECIFIED;
+>> +
+>> +	/* sparse */
+>>   	cfg->sparse_expect_files_outside_of_patterns = 0;
+>> -	cfg->warn_on_object_refname_ambiguity = 1;
+>>   }
+>>   
+>>   void repo_config_values_clear(struct repo_config_values *cfg)
+>> diff --git a/environment.h b/environment.h
+>> index 30678257b5..52ed13c0fc 100644
+>> --- a/environment.h
+>> +++ b/environment.h
+>> @@ -121,16 +121,11 @@ struct repo_config_values {
+>>   	char *editor_program;
+>>   	char *pager_program;
+>>   	char *askpass_program;
+>> -	char *apply_default_whitespace;
+>> -	char *apply_default_ignorewhitespace;
+>> -	enum push_default_type push_default;
+>> -	enum rebase_setup_type autorebase;
+>>   	enum object_creation_mode object_creation_mode;
+>>   	int apply_sparse_checkout;
+>>   	int trust_ctime;
+>>   	int check_stat;
+>>   	int zlib_compression_level;
+>> -	int pack_compression_level;
+>>   	int precomposed_unicode;
+>>   	int core_sparse_checkout_cone;
+>>   	int warn_on_object_refname_ambiguity;
+>> @@ -140,11 +135,22 @@ struct repo_config_values {
+>>   	int trust_executable_bit;
+>>   	int has_symlinks;
+>>   
+>> -	/* section "sparse" config values */
+>> -	int sparse_expect_files_outside_of_patterns;
+>> +	/* section "apply" config values */
+>> +	char *apply_default_whitespace;
+>> +	char *apply_default_ignorewhitespace;
+>>   
+>>   	/* section "branch" config values */
+>> +	enum rebase_setup_type autorebase;
+>>   	enum branch_track branch_track;
+>> +
+>> +	/* section "pack" config values */
+>> +	int pack_compression_level;
+>> +
+>> +	/* section "push" config values */
+>> +	enum push_default_type push_default;
+>> +
+>> +	/* section "sparse" config values */
+>> +	int sparse_expect_files_outside_of_patterns;
+>>   };
+>>   
+>>   struct repo_config_values *repo_config_values(struct repository *repo);
 
