@@ -1,39 +1,86 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6F632E143
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 04:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCA738E13F
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 05:15:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785989462; cv=none; b=C7Mah2QAtEhpIFLxfcBrmfxNvoq/QeS1oo7Rnx8xmTvV5Kjcz6dB636i3YIsZsVXCBRoXBuFZdQptQ+QNps670XoT/fTJ3wN8me4Ahl3NW+tjB8DeHdBARfhs5LCXEKnYUGuYFTGjTSe5+nr9nLJQ1k5u+4r+7TRFsf2zCEY7I0=
+	t=1785993318; cv=none; b=sW2GYiDEJfCss/DHIpGceYF/lp4kyC2H7zaasjZTYxAdHSmmNrOLMQD1LOrfCLdmj7lMj6k8xVeG2UkUCaKjpS+ZRrOOiPLErU6BFXUlpqhhca2f6CbypcJUH23CAMOcneO6amZWZqaNe8jVyYqKGvP0aP0QfmZwP3n3YohoJMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785989462; c=relaxed/simple;
-	bh=AomykgFot2jiiU1l/FzFFQzfD6pTsqJTGrtS68M+gQI=;
+	s=arc-20240116; t=1785993318; c=relaxed/simple;
+	bh=4mCz1Kn0G4kFPIeQJjGNGill1XBCMRmqssaDDvJER8w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r/Vp0VTwFA6aEllpblHON845q9HPHT0jGUxABgKnIxj+X+oSGMFZ1C8ph0IMzfVeLnY5ra+pI0qs8usjI7NOEQ/LEGErLforCxZ8FcbIHtZgf4xxnM6hEYH4fTpJvF2QWprdWyvky+qZ6s2P9gMnKw86x/3OtGFFosozcEthOuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=B60TyS6J; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=k719E0/RfcPOtAolH3Z2Ie/Z9Ob/9/30Bu0R30VKMBBlhRbnuP0xPODw02k8YPH8QX5cYrkJIRdrWEPfy33Ss8B12Z7EzDdKAj+HlBd9alCUKn1ANNNmHJi02mwmr6xWh8ZB6QlByGox5Hme7vS1s+uLJDvKYUZmywPVsofI7W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eCCe7Nhg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CIpVTXLe; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="B60TyS6J"
-Received: (qmail 56529 invoked by uid 106); 6 Aug 2026 04:10:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=AomykgFot2jiiU1l/FzFFQzfD6pTsqJTGrtS68M+gQI=; b=B60TyS6JuASq1G2ylxQ6jgR5875vzzkHGeRa4Qer7SccYJoYjL1EjK1Adi9Shuum/eX1QpybL/4MejVBGDmN2QCwLKSWGnaL7h/xBtfQW2TILbLw4L+rueF/nQ/Pg7E6d5Ul0trpd/7PkMPYggyRPPKIAPlCW4mKDqnYo6bbKFmXZDdC/k69HrCFASv51qdixScfYhpPOgomIz3fe7I1tRLkdNOQvfvV4MEERnwApNbuxT2oYbRZIlj43tBIz19haeqq16G2WyZTYH/9k21wY4DsEnkiw4kviwnflRmhA33zwx/aITpG+MtYrIwj1izwZABuslbxxa+XFeDHjjSG0w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 Aug 2026 04:10:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 86378 invoked by uid 111); 6 Aug 2026 04:10:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 Aug 2026 00:10:53 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 6 Aug 2026 00:10:52 -0400
-From: Jeff King <peff@peff.net>
-To: rsbecker@nexbridge.com
-Cc: git@vger.kernel.org
-Subject: Re: Question on textconv
-Message-ID: <20260806041052.GA1610686@coredump.intra.peff.net>
-References: <017e01dd2441$476839f0$d638add0$@nexbridge.com>
- <20260805045026.GA972736@coredump.intra.peff.net>
- <020201dd24e3$89ad1220$9d073660$@nexbridge.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eCCe7Nhg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CIpVTXLe"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 322ADEC0107;
+	Thu,  6 Aug 2026 01:15:14 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 06 Aug 2026 01:15:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1785993314;
+	 x=1786079714; bh=IKgSgXemsvSlri5U3tObmhr5omXeIlxhyHzs84YB+4o=; b=
+	eCCe7Nhg/SUuGYo3eVK8pkQ0AEB4vvg1eNv1f8pbIioJhFiAflhUVCTDuExEMOjA
+	e2d8cwcGsXRO973Y+E7xst3WDe9+RsO73E3vzzSkVHH9IrfaHDpVqMsybPpdTSvI
+	mhQp7RJKkj6a+/hV+PgUMcqdnjuyl9v+NuaHh/nmzJQpb7H6U+f3QZbIl0uiNb7F
+	k3ylykDS/jGpbmSRzknD4ntJs/RZK6q+XiQTKlqtmx9rfXRzBTtzZUFu3oIT3ssC
+	8oBmwCNtjwpTZVI5U31F1AgMuPT0gzWPX8Mri+KqAVaY1Ib8WipBmzefjxov2WsF
+	axtAyfqroVZoV6OUWjadHA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785993314; x=
+	1786079714; bh=IKgSgXemsvSlri5U3tObmhr5omXeIlxhyHzs84YB+4o=; b=C
+	IpVTXLeA8KPtbb5Xq9T72NA8B11YUr+oFTwQvt20YcKJ50px2eQxTk0aVU95ifap
+	RdKvGg+cEB3yUo/niiSI1j8YamdIy6ahrtiPcb+ZQmkobfB9/fGBRc6ncJprGpDU
+	g7BRtpkanUTQpKXBE/fenD977Yf4PFLX6+HyYt8rExZecLDjiAA36A+1Ed5mevot
+	YlfSa6mzaSDAqbwfY35OWaotmAJz3uIjzm45wvJC/5s/jxXOniYrThO/DbMKZjHk
+	EVqxadN05PnTx/6OA1pUrMPrZ5G6iTXzN4/IpHKmyx7X9vpPuWa/dn6eSTSRP8i7
+	aVpwwh0Z6IcvNxDhWm1gw==
+X-ME-Sender: <xms:YRh0aofY7lXCReZWGoFyBR9BsbixwyyiF2y9zIEaEfcUD2VLnwacXg>
+    <xme:YRh0ahM83j7xal3SXGZF9wkjfdfQDK_9xC5zZgwuCNUsyCCI5BBZdlAVh8_e-17Ek
+    y4pZzoro8mjgscYmZRynZbdOrGCPZjH7YtcyYFy2acO9kLY7uTYjqY>
+X-ME-Received: <xmr:YRh0auizBrhL6vVFJn27TGU2csUVuuRAr5mfYJ1mJK42CnMMXy7JtBK6vNwRlQqpkoVW3m8JpTLaF_riP8KpfVW_H5bRzoMORcDmLLHrJGo>
+X-ME-Proxy-Cause: dmFkZTFLv0CiVclCgLZQK+YTTasBBO/QxeVMOphOOlkkeJgxVFNr/unGf1jIasPriFMiIG
+    CURjPjqP25mfkf06Pge/qDUBOoWMLQ1nHDv6irl3F6OTJ2cds6zKeei351KhDMY1oRVKVg
+    jwrIX/RtbcLen0LevitfoRPkxsBLVtyh2tPPaUY+CHJhSqMFXcSg+fGITF1BGLeCJf7nxr
+    27yvzOj4uWiut3cHSrE6tEYCAuA9ECdtyQ9aQzVxRY8bwBLMvJ4hFoOq5OIhJ3nVi6bPUP
+    5hROcIKdTRcy0iaxOzJzqQjT4jfEU49vO1T9QTKABgoROVwaVLyToNZqiCI+s/ovapmtjR
+    T6LJcATgPQNF2vFuyNG2639TSPqwN61GQVuH9j0zH3bYJEjflkvefj3BpNQAi6EiqAJcGb
+    9L7K/NYLkRo9jn/ftOeAcuIKkVZklXdEekecoveWlhT3ZQk/muYPnz/eY9130XrC+JcWuR
+    OOSn72CmBGjJR0e3sOZ2ivRsPM3QciBL0Z1wAW27tjcpFT/8LClL5kPLsGG/F8slRPu19T
+    mazlj0h6TtbnkPS3Bm4tN7hLs4L3oFSlViIqlXslQSiHnFxyWCGXDvP0X0TLp4YYT4ozS4
+    WJ7drrHhpHDeP5VmHe6c2VhNCWNXSOM/nlFpGeHr8OmBOQ72nzF0bzoSA0gw
+X-ME-Proxy: <xmx:YRh0as0XfUMFgVm7E2oUesp1KeOxJB-1yPnnPyY7GIqoCA2BKuYKkw>
+    <xmx:YRh0agiG4oPxFjrMprjPdJbjJMwfgwj-h1WODpQGOwOtvt9jLavBEw>
+    <xmx:YRh0akeP1HkGHv0zPGHsRh0rw0p2tZ2AveBY9A8emEaIvRAReaqJrA>
+    <xmx:YRh0arnemQeqPjtKQ_3n4u2CM4kd6aD_iD_ETw-V2atpVHu2hpMiJw>
+    <xmx:Yhh0aiDMsuWM_u61jWLUNinVJ9zV3pRIDdoCy0Up0fqWGj9I1Rd16rxV>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Aug 2026 01:15:12 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id bdf72caf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Aug 2026 05:15:10 +0000 (UTC)
+Date: Thu, 6 Aug 2026 07:15:06 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 0/2] doc: refs: put ref migration warning under the
+ command
+Message-ID: <anQYWlv3UhpS3iE7@pks.im>
+References: <CV_git_ref_migration_warning.b09@msgid.xyz>
+ <V2_CV_git_ref_migration_warning.b20@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,24 +89,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <020201dd24e3$89ad1220$9d073660$@nexbridge.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <V2_CV_git_ref_migration_warning.b20@msgid.xyz>
 
-On Wed, Aug 05, 2026 at 10:05:52AM -0400, rsbecker@nexbridge.com wrote:
+On Wed, Aug 05, 2026 at 09:02:34PM +0200, kristofferhaugsbakk@fastmail.com wrote:
+> § Changes in v2
+> 
+> • Patch 1/2: Use Warning admonition instead of Caution
+> • Patch 2/2: Add Ack
 
-> Could we extend textconv to support %f (the original path) if specified in the
-> textconv configuration? That would solve the ambiguity of what is being supplied.
+Thanks, I'm happy with this version!
 
-In theory, yes. But there is one gotcha: there's a system for caching
-textconv output in git-notes, and it uses only the original blob id as
-the cache key.
-
-So I'm not opposed to adding something like %f, as long as the patch to
-do so handles the caching problem (even if it just refuses to cache,
-that would be much better than returning possibly-wrong results).
-
-That said, it sounds like you just want %f to work around a bug where
-the content is not provided. Probably fixing the bug is a better path
-forward. Looking at the working tree file to get the contents will not
-always be correct (e.g., if you're diffing an old tree).
-
--Peff
+Patrick
