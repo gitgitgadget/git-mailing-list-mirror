@@ -1,71 +1,115 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0A447CC97
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 15:41:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC9547D95F
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 15:41:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786030868; cv=none; b=LXCloVR3JTuapMFFhlloArHfCi1SRzKeV0Otx3hFqOjRAYK/Zpy86cgkIyf4P8pswos2Al73uiRlX/HEpE6Ms2urnJAvu3smVsgrEE96Gfl8WkEG9oqCeKObuQb1uXGUyj+h6jkt4IhGQ6oB3LGKmFXwomcjE37kWYxdC9K7xc0=
+	t=1786030898; cv=none; b=KYWkT+BAUMhzIuniDXD3Ij5uXNbBe32WfXb4EQhbH5XG8NBPNuuAkOeGBG4xGSnMRBXHT8Yobcc8ryGmkhaDeOrgtHecYQ4t74sZCB9RLU74nNOKQh4m3Asi6Opw/UNyIY00xghol9xhe9rYy1mFbFVju6hpOMfwNoivVOeUSFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786030868; c=relaxed/simple;
-	bh=6sF5B4GWXsqkrm7UtELydMqr/bXv8iH6om0xNh03U6k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KKjJxb37DToaZ6KiKMJ1ImwrrAeN9ZN6PCTLwiSi+VUW+WQy8oNjGTrm8Z6wl52N8vIB9PwYl+Gq4yRM4j+29U5NK9TRFt3c1my8YW765P4gwTQrX4ICTqD+YLgb6AiVKukGtHZRWSqGPVNWoH+v07KOtiWVwgRnbvrlnMhqYFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HizLWB8Z; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1786030898; c=relaxed/simple;
+	bh=Su/9nvzS83QoF4nJ1pv9rO2EfMlgtj2esmEFbRx7ROk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Subject:From:
+	 References:In-Reply-To; b=dpwi29YzLKxRPoCm1j/1Sz/p3hdVHR2cV4Hv8rg1uV1CoE2z/TyNWAszkHJGqe6iNTrrihnLYYhjImGn5ydCAC4Q8VQcgRKHIsKDGUAkZtYQ7x9jRvK0BrhySnk0nSa7ZgTpfCwgw+flwK07dNHJwz0oBWM9wgCslRg0bMOcvtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pu1wdB1F; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HizLWB8Z"
-Received: (qmail 61420 invoked by uid 106); 6 Aug 2026 15:41:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6sF5B4GWXsqkrm7UtELydMqr/bXv8iH6om0xNh03U6k=; b=HizLWB8ZLvkFPnkBCxC2DxT5ql40H9xT9YqLl9hQeEDWuZuq8H+t7zou+24DkqkhY/kEmjBjMMI092B2MxgsFTH1y3VBubqRdBHJmDJH8h3pU/qC5yTa+rjEwJT7AiHCi9Gn21R+W+KBN/Y2vjM0QLFx/D6UwGdF6lLwWS6opjmKqbpg4BuWA4UyAd+xxhcC+b26SaYejcoNzvhULX/ue7s7rxyFIuxGJqB1oO/WB86nRzqVx6KirrOwaK5yf0ls+OSFk4wk7y6XvOGRLLk9Fc8ywaS+zkY92Bp8iK3HZUmYiJXXzF8ZwJjHJxeX3aCyIyf9bmNJo2ZdVwtVvGqK0A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 Aug 2026 15:41:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 94753 invoked by uid 111); 6 Aug 2026 15:41:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 Aug 2026 11:41:04 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 6 Aug 2026 11:41:03 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 11/11] bisect: handle dup() failure when redirecting
- stdout
-Message-ID: <20260806154103.GA1625706@coredump.intra.peff.net>
-References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
- <pull.2179.v2.git.1785954661.gitgitgadget@gmail.com>
- <829cd82177a8e72e450d42db2af3166123c5b7c6.1785954661.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pu1wdB1F"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-49554ebb87dso21199545e9.3
+        for <git@vger.kernel.org>; Thu, 06 Aug 2026 08:41:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786030891; x=1786635691; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:to:message-id:date:content-type
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=H9RO8pKphPzcbYBGiCfPBt5BZJz/SlvkRY83vXBq4TI=;
+        b=Pu1wdB1F0gIM4FtiGaK9ZxDkFiJdmMNxPxdOWKIMEWjPTobcnqEpzQDN31d5UoIhNV
+         BSOcEawCEbwwlugsTZCbiJy3E2AT1WbBgl8nOgrx2AXhhZOF/zsEcEobPapzJRbVITll
+         ueMI2xOFbjc4KDAa0QaBTMQ1zy49CTqbXmM5b770T28TxgV2tlD+nB0om+74hm8y5ZSy
+         J7p/f2Zz7Vp1JvSx2+M5OXHXtlEYpC3qOGSzsoIoTWYZeBX024HX3aTfLWeRu/rjzP9O
+         iK2ivdOsh4PnG/W1YD7A1c9Uz5JMdXjg4tRqdZcNVxLJ/cDWM4DtbBfAXtvLIFbU9qdB
+         bFgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786030891; x=1786635691;
+        h=in-reply-to:references:from:subject:to:message-id:date:content-type
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=H9RO8pKphPzcbYBGiCfPBt5BZJz/SlvkRY83vXBq4TI=;
+        b=caH0h9Kropl0iTTzdp9bdUC9W5/RJOszeFVZdzNjfoZ3F8SEGKt32Ab/wjS69so2w0
+         PMnJ9lR6sIn2CHrNbNkbv27vfby3t+sRy+667NqlV7SkII/asz+xqHF5OnUcewQWaE2y
+         1oMrdWLJnLRycKmeYI+hNAvR1IDxPXoUJOyp05d/PFiY/FUF4tKdlE4WG06ocBBN9xGy
+         js6yAlJS7xaFAXQpNyCnFnpXJPn9FGgqHTQwUV8lrWJCbt7KVkx2SGB4a3uuptlqQibM
+         Tb8uV+d8Ouo75iM607l/YrewfGXb/foB4aVIipiC493s9j/WJ+678ORzXAMr+gREE367
+         9U/w==
+X-Forwarded-Encrypted: i=1; AHgh+RowjYbq1ngQdnO15BawsF/ZO60FlxSFvgQcVZbOqiG7YHmEPGOPLCbhYCdLZmgb6Hp3cmU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQgGpBWMIiUH3LTPw9c9l3ruQpOalgk9hCokXvSxlq9Xp2eE+2
+	QgYnLopjukr+oE9xFBNE2PJDzGhZeZqOcOQxQ5zn4VORK17mUfRJKUrOJB0cbi4n
+X-Gm-Gg: AR+sD10VkIvnBm2EveisM0DPqRt1mu8fllxase2tHQoIkBuQ/lmmhiJ8U2FZMHAoEss
+	Xxpte/4nz00yuBotdWmDuYtdkwZrZD2T5fVCbJ/ZSozRZBWkohDA7kHwJex9KMkoDe1VCGaf3j5
+	J+qmK0KBTVIB4P4ZvOqonj3katvgoG88sePBfiBVR9g2ySF0FKpBISBQyNnhPr8T5GhVhGi2v4P
+	eCCQ8lPafOk9MKH0k2zNg/4qlmthR+T+QpoWnOm7yrj6mXSLxZbgiD6c9PaTvQoitFcrdThOMim
+	Ic2evKT418DkI+DfwN9nAEqdKgsS2sURJSCtb6Yyqs2DYI1bgM9aIND1UUVkkvOLt+b+M+X9FQs
+	2gytRoDe+uByWoWpzdl907YkuNon53fNJMCwHbwj4FtscLqrLvTb/VBXexA0N3he+iExwoihc0f
+	dWUGg6xT+q7a96KiE/BrIkhhL6QCPGxvsizutILkQBUlvOOGQCLaWPZ2l1YA/F6+2vlYkvz1eeD
+	eQ3b8MLNG7EXWhEly2d/OQVMi2EnQIcad/XPdVeTSmRdmGfN0R4Fm6msIW1IJIAZS0MAA9XZ/OL
+	fTo8n2XvOf+X2VkoUpkdQ8oHkkY+d+zLOd8hk4HqG3Dse4pyJ8x5wRnTI3CnqEGybOg/fSWRgvo
+	=
+X-Received: by 2002:a05:600c:a21b:b0:495:4e89:3f30 with SMTP id 5b1f17b1804b1-4994e7c5e49mr165678605e9.15.1786030891149;
+        Thu, 06 Aug 2026 08:41:31 -0700 (PDT)
+Received: from localhost ([47.58.8.78])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47ff7b250e5sm7268223f8f.27.2026.08.06.08.41.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Aug 2026 08:41:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <829cd82177a8e72e450d42db2af3166123c5b7c6.1785954661.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 06 Aug 2026 17:41:29 +0200
+Message-Id: <DKHZ3ZMG23JK.369PS06XOZPU6@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Aug 2026, #02)
+From: "Pablo Sabater" <pabloosabaterr@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <xmqq8q6knpyv.fsf@gitster.g>
+In-Reply-To: <xmqq8q6knpyv.fsf@gitster.g>
 
-On Wed, Aug 05, 2026 at 06:31:00PM +0000, Johannes Schindelin via GitGitGadget wrote:
+On Thu Aug 6, 2026 at 12:48 AM CEST, Junio C Hamano wrote:
+>
+> * ps/cat-file-remote-object-info-type (2026-08-04) 10 commits
+>  - cat-file: unify default format
+>  - serve: advertise type capability
+>  - fetch-object-info: parse type from server response
+>  - protocol-caps: add type support to object-info
+>  - fetch-object-info: die() on the remaining error path
+>  - fetch-object-info: use dedicated struct for the results
+>  - fetch-object-info: pass arguments directly instead of a struct
+>  - fetch-object-info: detect malformed server responses
+>  - t5701: use test_file_size() to get the size of a file
+>  - Merge branch 'ps/cat-file-remote-object-info' into ps/cat-file-remote-=
+object-info-type
+>
+>  The 'remote-object-info' command for 'git cat-file --batch-command'
+>  has been extended to support the '%(objecttype)' placeholder.
+>
+>  Needs review.
+>  cf. <xmqqpkzxtyac.fsf@gitster.g>
+>  cf. <xmqqldalty3i.fsf@gitster.g>
+>  source: <20260804-objecttype-support-v4-0-31511b0231be@gmail.com>
+>
 
-> diff --git a/builtin/bisect.c b/builtin/bisect.c
-> index ceb60b0626..733d28d377 100644
-> --- a/builtin/bisect.c
-> +++ b/builtin/bisect.c
-> @@ -1308,7 +1308,12 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
->  
->  		fflush(stdout);
->  		saved_stdout = dup(1);
-> -		dup2(temporary_stdout_fd, 1);
-> +		if (saved_stdout < 0 ||
-> +		    dup2(temporary_stdout_fd, 1) < 0) {
-> +			res = error_errno(_("could not duplicate stdout"));
-> +			close(temporary_stdout_fd);
-> +			break;
-> +		}
+Hi,
 
-Ironically this produces a new Coverity complaint. ;)
+The topic ps/cat-file-remote-object-info graduated to 'master' last
+What's cooking [1], so ps/cat-file-remote-object-info-type can go on top
+of 'master' as is and the merge requirement can be dropped.
 
-If dup2() fails, then we break out of the loop, leaking saved_stdout.
+[1]: https://lore.kernel.org/git/xmqqldanxbq9.fsf@gitster.g/T/#t
 
--Peff
+Thanks,
+Pablo
+
