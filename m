@@ -1,86 +1,40 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52CE39D3C0
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 13:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4BB3B5E19
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 14:23:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786024236; cv=none; b=W9GQ5tKn0mq2RialHb5LmRFE4XwC7ufZtWDJ31f7kSgDCN4YgDAE+bIw+bNkbFOzsWnWILgCbO8RWqYCWQMuNQSy2ZhuB7yea6wdaL66ZwOOuZjf9/XelDaI6DfhAPq/dZDu58kkvJZZ5K95l1ycQETP87CaJVsS9DaTrvtEDmU=
+	t=1786026211; cv=none; b=fb46SVh7IQ17duTO5Mnxz25Ky7YbCysO5RN3uYyHwlAAqw9jbtsMjQFKeJBHNSst6fkKnbVkZmsHeqEGe1FFK0YY291j0rinfLkhVc/fWbTaEyUVDpCJ0lZ79SsRw9z8QQ92FiT4lqCP6Wbl80U5//AOn7oAdaoSjtZbGql5LdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786024236; c=relaxed/simple;
-	bh=3Qc8/OQhAUQHioW7jKYw2Ft2RxXrcblaG2DCvRY0kt8=;
+	s=arc-20240116; t=1786026211; c=relaxed/simple;
+	bh=2tqDy2THMmU18ykTgQQ4qXgL/JvYUSIjJEZtoUDDSi0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I+HnRvMGY1xsbZUN1wnk+0nlFDc7UXMnJSSMJSfFFrCaB6Uw20OxCBVnPd7I0LSDtpgMPU7a54XrtSornNwoTXSjvJ0zeKjI9Fm4DHpEnvfHUeevFJ5BfpILDNlSruEoYquV3pyDMzJXcqxTbAbpjFH74m/WOtKI1NVuhLw/Z6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UNEwTPpI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O/Vs48zx; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=fs2JPcSefWUEWr2RcAII0f8ynGd9CTIBRVuQau5Li1ZP6tTcg6/KTza7xFnVQlQHDlWlS8Tq3172mtd7yxActjm1ofIAb6sXDZ8VtG7vz7/InwPou26cMrBIdAdiwYv6Rnev/KmL3uK/7LVySxF7vwdokUi5Ew8+/FQco/q69kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=4dc2Ru4H; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UNEwTPpI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O/Vs48zx"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DA07E7A0135;
-	Thu,  6 Aug 2026 09:50:33 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 06 Aug 2026 09:50:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786024233; x=1786110633; bh=p6tI3pZ90U
-	AW19PgCwwsM3BvM5r5uwQ+tU5vhuhOobQ=; b=UNEwTPpIIwdDiM6ydd4HQjSK2j
-	gF2CN3KZOYVqjL9hEQOwuoyD5hrXXL0vqxJV7zA/6ZcAU2LxsfFZtyH8AgoVfn0Q
-	Iw4T3egmSXFRxSGPxfxj6jkYHZn6MY/HlqIrwPs42t3jqe/PQALxIo+2ubFbxUga
-	fUuuoBlNLy3kiCm1kB2OrKLvuSvGDe6uFwzpDrRHCBx7skYd7vlsnNPpi/HlDHTp
-	mvSUfZWgOTEFSEMIMOOXSLOBhTmgVVHu9j6ZOmDMu6UPMY9xS4nzsH8NzVlfwF+v
-	C5UGRmO9Sl8QnBoEzkjYRhWEXnadOE0X6bJBUYj4of62a2wGdnuzE1VEhsmg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786024233; x=1786110633; bh=p6tI3pZ90UAW19PgCwwsM3BvM5r5uwQ+tU5
-	vhuhOobQ=; b=O/Vs48zxAA6xH4vaNy3EkiChGAF/rmCZOzazowuA/q3QtzzY6Ku
-	QWmxMLguByESDcjTVBNfSMhyjkDjTImF09D/DsWZaj+zxMfgsrmatw9k07Y95gWu
-	j9XBQjKv8k/npys82RQj2nmXc2cmB2oSG58XK0pC+/PSgXpUgaim/9jPDHBuLCS/
-	9JcBCLvtVri0hG3W+8nHPXTXQKzTtU0+WFL+8xSwUWxnJ0KEsBlwT1Gw5/iPurwV
-	OIiZciq/3BMVD+wbdSoQiWlQDaMmkWujhJbsk2QnodPa7tWRgpenLP/bC1qYb3/E
-	4/PeNOPd+icjdYKwILrqNhoT4akXwiC1udg==
-X-ME-Sender: <xms:KZF0akAD596YFJDR3Q7oM1jH5-N0y9H8QbuWwcGpYuy02CRPF8Kz3A>
-    <xme:KZF0atbIdA9f3gC5eqBuzf5LAK1VqIXpUEaJAyojyZn0IS1ASECrkxDZcKM8Ii5dc
-    tK9hgcondURnBVT0WGbHsIhX9BiedvM53UE4Qv9iUcPAWRF5UE>
-X-ME-Received: <xmr:KZF0av5ZhN3hGzy7vOzhP-0iI47M_JUpCX_Izq7oaEWLLTVecId7xL7x7Rutf03ZPKtYtjVrTWSDahlI5We9yG56IbCTCMq8og>
-X-ME-Proxy-Cause: dmFkZTGdEJ6i149iSRzVEf/koDhqqjkyjUaQLh2b5WcjCuI8m/Y5Grpt+74xyhAlyfnNaE
-    01RYQZHAQXjHS/3s5T8yRNG5Jdz22d6CO9IXnroXI8R5u9E+hC34JyX/Mss+CmTyBf9Oup
-    a8ZUxL8TWQ6+25I93iMvO4et7JTKfNbo7EANr3bRHI4rvKXiuEg/4ntm6qhxTtd4yogASt
-    n9jgcZLCUaS0CrW2/Zo/j0eQ/LyW8C2R9hTrVChEHavtGUrFN2Xqh8lIMbMEgd9HIx7IVG
-    n+MoTVM1a1CccvRg2aoTvs10doyMmKWCS3qlgtNAzxN+1MLkvwNl0CS94/D4ie+68Arokk
-    37nXgALVSdwkNoDMJVKM6Wz/AZcn1DmoeTXskO+HjY7Bj+LEWhHDCL2prWQJTtv57qBJEw
-    yAi1WGaPCInrQrk8kXMy9epv0swj9Cksci9QIc3qxgRofdQUTozcHJhCZ2V/tWACRCh0wS
-    oeKICrAUXJv4kZ5i94LZjvjSHSudYGa82Rl0/RDCWG+M2KsAQ18lLsjQeaeow1HFY5J+RR
-    b9TgQhpuapnpbs4kmQ59ajX0zvZrwE+ptq1P6ZrAe8pKH/cr6CTlzlzY3DdMRjRquSSLCL
-    t5u3J+Ln+Tcv6pzieurhWKIcWtRs70hC80w++3UbfauIY4JRu59w5+ksmrCA
-X-ME-Proxy: <xmx:KZF0amav_fl8vz_kgTlvAbzzLxSNEs6QatDdCVmyO2rrKebl_md7Wg>
-    <xmx:KZF0amgPt7c0KsX1D0FEJaQO7pBnDt5DBaDpWXnIPlBQFOy3bVuApQ>
-    <xmx:KZF0av9YpRgLfCaECCtneYxRoP9MmsobpfNZA0BTcDQBXDw77d6Cvg>
-    <xmx:KZF0appGqY8WzRUn-iCb70U9zHMwkdi0s1aDKxOTyLBvVNlB0LSl6w>
-    <xmx:KZF0akrr_PW7RSjTFO33oc8BLgKyfcKX_7KDRPvMeleH_T5Z2lCkK1-y>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 09:50:33 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v6 2/2] bisect: add --reset-when-found to leave when done
-In-Reply-To: <CAHwyqnXOno2De_eOvH=LizyfWSpyVWpzGBwV4ZGW4bxOEtETOg@mail.gmail.com>
-	(Harald Nordgren's message of "Thu, 6 Aug 2026 09:30:57 +0200")
-References: <pull.2335.v5.git.git.1785663075.gitgitgadget@gmail.com>
-	<pull.2335.v6.git.git.1785705860.gitgitgadget@gmail.com>
-	<97a4da55374c6dc52e6e990b3cadfaaa86a57640.1785705860.git.gitgitgadget@gmail.com>
-	<xmqqjyq812wr.fsf@gitster.g>
-	<CAHwyqnXOno2De_eOvH=LizyfWSpyVWpzGBwV4ZGW4bxOEtETOg@mail.gmail.com>
-Date: Thu, 06 Aug 2026 06:50:31 -0700
-Message-ID: <xmqqik5nmk7s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="4dc2Ru4H"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1786026205;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qm75Zsyb9JxActJDapd7aCsTipQYEQG5AQ2YXbSm1Rk=;
+	b=4dc2Ru4HujDCHtvfTQZUI7XLOGRqE/GXD/5DHTCVPe2cHWggOtM/JO3NPT6vFs2arJB5Zy
+	9DHzYDw9GjljRbgiUimQuyawNl07r8EMwSaHqrbP0b9CtFaYyihtG6LCrTxvoB4BT0QI7M
+	VAoa47DxgTJHOo+zbrbHkZHNLhlhZMA=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 4/6] setup: defer object database creation
+In-Reply-To: <20260806-pks-odb-create-on-disk-v4-4-ba8b4fdd2e3c@pks.im>
+References: <20260806-pks-odb-create-on-disk-v4-0-ba8b4fdd2e3c@pks.im>
+ <20260806-pks-odb-create-on-disk-v4-4-ba8b4fdd2e3c@pks.im>
+Date: Thu, 06 Aug 2026 16:23:17 +0200
+Message-ID: <87tsp749be.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,25 +42,146 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> Are there "dead end" states, other than '1st-bad-found', in which we
->> can no longer make any progress?  One thing that comes to mind is
->> "you said this one is good, but that contradicts what you said about
->> its ancestor that you said is bad".  I wonder if we want to do
->> anything special here, just as this part of the code handles the
->> '1st-bad-found' state, for such "dead end" states.
+> In a subsequent commit we'll make the creation of the on-disk data
+> structures of an object database pluggable. This will lead to an
+> in-between state where we have already configured the repository's
+> object database, but it's not usable yet until we eventually call
+> `create_object_directory()`.
 >
-> Maybe, but I'm not sure this topic is the right place to dig into this?
+> Lift the call to `odb_new()` out of `apply_repository_format()` so that
+> callers have more wiggle room with when exactly they call it, and adapt
+> them accordingly. The only exception is `init_db()`, where we now defer
+> creating the object database until we call `create_object_database()`.
+>
+> With this change, initializing and creating the object database on disk
+> is now neatly encapsulated in a single function, which will make it
+> easier for a subsequent commit to move creation of the on-disk data
+> structures into the `struct odb_source` backends.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  repository.c |  1 +
+>  setup.c      | 20 ++++++++++----------
+>  2 files changed, 11 insertions(+), 10 deletions(-)
+>
+> diff --git a/repository.c b/repository.c
+> index 6d633002b4..5ec264e607 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -294,6 +294,7 @@ int repo_init(struct repository *repo,
+>  		warning("%s", err.buf);
+>  		goto error;
+>  	}
+> +	repo->objects = odb_new(repo, 0);
+>  
+>  	if (worktree)
+>  		repo_set_worktree(repo, worktree);
+> diff --git a/setup.c b/setup.c
+> index 5dfab3e79e..e39a1646bb 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -1765,8 +1765,6 @@ int apply_repository_format(struct repository *repo,
+>  			    enum apply_repository_format_flags flags,
+>  			    struct strbuf *err)
 
-No.  But thinking if it supports such new use cases in the future
-before committing to the new code structure is soemthing you would
-want to make a habit of doing.
+I've noticed the docs in setup.h say:
 
-I personally think the new "do your thing just as usual, but then
-the new code cleans up afterwards" structure better supports
-anything new we will throw at in the future.
+    /*
+     * Apply the given repository format to the repo. This initializes extensions
+     * and basic data structures required for normal operation. Returns 0 on
+     * success, a negative error code when the format is not valid as determined by
+     * `verify_repository_format()`.
+     */
 
-Thanks.
+I'm not sure that's still applicable, now odb_new() isn't called no
+more.
 
+>  {
+> -	enum odb_new_flags odb_new_flags = 0;
+> -
+>  	if (verify_repository_format(format, err) < 0)
+>  		return -1;
+>  
+> @@ -1801,10 +1799,6 @@ int apply_repository_format(struct repository *repo,
+>  	repo->repository_format_precious_objects =
+>  		format->precious_objects;
+>  
+> -	if (flags & APPLY_REPOSITORY_FORMAT_HONOR_ENV)
+> -		odb_new_flags |= ODB_NEW_HONOR_ENV;
+> -	repo->objects = odb_new(repo, odb_new_flags);
+> -
+>  	return 0;
+>  }
+>  
+> @@ -1888,6 +1882,7 @@ const char *enter_repo(struct repository *repo, const char *path, unsigned flags
+>  		read_and_verify_repository_format(&fmt, ".", NULL);
+>  		if (apply_repository_format(repo, &fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+>  			die("%s", err.buf);
+> +		repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
+>  		startup_info->have_repository = 1;
+>  
+>  		clear_repository_format(&fmt);
+> @@ -2090,6 +2085,7 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+>  			if (apply_repository_format(repo, &discovery.format,
+>  						    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+>  				die("%s", err.buf);
+> +			repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
+>  
+>  			clear_repository_format(&discovery.format);
+>  			strbuf_release(&err);
+> @@ -2651,11 +2647,13 @@ static int create_default_files(struct repository *repo,
+>  	return reinit;
+>  }
+>  
+> -static void create_object_directory(struct repository *repo)
+> +static void create_object_database(struct repository *repo)
+>  {
+>  	struct strbuf path = STRBUF_INIT;
+>  	size_t baselen;
+>  
+> +	repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
+> +
+>  	strbuf_addstr(&path, repo_get_object_directory(repo));
+>  	baselen = path.len;
+>  
+> @@ -2864,9 +2862,9 @@ int init_db(struct repository *repo,
+>  	 */
+>  	read_and_verify_repository_format(&repo_fmt, repo_get_git_dir(repo), NULL);
+>  	repository_format_configure(&repo_fmt, hash, ref_storage_format);
+> -	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+> +	if (apply_repository_format(repo, &repo_fmt,
+> +				    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+
+Nit: Not sure why this formatting change was needed. I would have
+assumed to have all apply_repository_format() calls formatted the same,
+but I've noticed at line 1883 in enter_repo() it's still a single-line
+call.
+
+>  		die("%s", err.buf);
+> -	startup_info->have_repository = 1;
+>  
+>  	/*
+>  	 * Ensure `core.hidedotfiles` is processed. This must happen after we
+> @@ -2882,7 +2880,9 @@ int init_db(struct repository *repo,
+>  
+>  	if (!(flags & INIT_DB_SKIP_REFDB))
+>  		create_reference_database(repo, initial_branch, flags & INIT_DB_QUIET);
+> -	create_object_directory(repo);
+> +	create_object_database(repo);
+> +
+> +	startup_info->have_repository = 1;
+>  
+>  	if (repo_settings_get_shared_repository(repo)) {
+>  		char buf[10];
+>
+> -- 
+> 2.55.0.679.g6767b8d81c.dirty
+>
+
+-- 
+Cheers,
+Toon
