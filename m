@@ -1,85 +1,85 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F14A6FC5
-	for <git@vger.kernel.org>; Thu,  6 Aug 2026 06:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5DF3D6CDE
+	for <git@vger.kernel.org>; Thu,  6 Aug 2026 06:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785997252; cv=none; b=qngwmTd7HUJv9OTZjcEvx6QKLCjvkum2BRvTnPQg1x0BevuPwSnWjhqiPsEsOHBhyByGVTwWv2xS0Uw7Dim2DGj2mkxF+dGJwAIcoiZ/B9WeTNovhP4RetVhyeK+JA+A7A9nQL95ubWQOdzw81HZIuSxxdMpN8kqkX0VCfU+W1E=
+	t=1785997270; cv=none; b=YZ2ULTrAvliQfGZ5ITOBBQnBBHEk7X1QEPJ62lNtI8i1JGZrKEPR5QVdGnT02xNAegerH0pZ5RuaFjdigNzXjp/NpSDIVrJOjXOx1UozFbLTdKBwRclzN+DEns6D00mB3DhmPqkq2qVSxT6x9pICYhQdQRBFSB3pMa/ImhZV1kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785997252; c=relaxed/simple;
-	bh=w6gXWHHk7Mm2OJlCEnAacOF8l4szFjA+4xcTVJCc4x8=;
+	s=arc-20240116; t=1785997270; c=relaxed/simple;
+	bh=o+qjkban5oLvpd8b3UHvdCEAR9NpIFMawGRDUuDs3pM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=egH9mdmG0nJjS6smSXDNkDwFmxdFtGp7HdnUUN9SeHSwFf/Il7bs82Q/1Yfp84FC1KiHXQEi4xKvUjmJFWqX4H/+CdtCMQjl7dDhj2jP61yYE6Vc5/1/xDG4rSkxUPqhwO0BLCOJDxzUYSLaNYoOKcABteIdQjWTPTVpRKG8ZuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=OBhn68BW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CmigqOlv; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=DXCI5L1q5FJywe8qPS1+jgMnS1Rl+5BGfK8H+Horr8bfRjWY/4sU8nSYQWw0FNHSB2nFBNnA6V3307fCXKuOL3ck++N3AgA8gF+EoZjlm1FhDKtwVB9R88R1EjTkmN2u+MIGATJb7Gelz9AzRbcQpLZoaGTLMyi2cSaHUA2iDK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RzLy19w4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VbQTLZPw; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="OBhn68BW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CmigqOlv"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 816257A0122;
-	Thu,  6 Aug 2026 02:20:49 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RzLy19w4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VbQTLZPw"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BC3CC7A0122;
+	Thu,  6 Aug 2026 02:21:07 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 06 Aug 2026 02:20:49 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 06 Aug 2026 02:21:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1785997249;
-	 x=1786083649; bh=w2SGFr2ar5YJCxx1RmdXMEw2mn3F8CczsHPZPYuWPgc=; b=
-	OBhn68BWwhB+FX2nSGjrHXE9jYFgf8I9DzgD3oxmn25uIEw9Rfd2R+k3YpsYe2+S
-	rXZ4TL85joWH7YpwN3+tfUG5iZ7oR/h2uVoiErchqsgYMn0Cgrm6QaL/o0WhBjdX
-	75KP7gfssqkx0K8F7KO5bVxWgudGL5EciyrtowabFM36M0cqRMXJwqFPbnqmVYao
-	6/8/7C5XDPhJ5m7A185FO0ZFvE0t5vmBJICoLnNakJUdQSZ84vF3YAJU0rZ4Z9KX
-	cuu1HyTHbdvD2ZAZlDwfsQiMop5egeJ6nyirrQQRFyzAxNUc7hNwvURfI/RKpy4x
-	1OGYSLv7+STQhE6DgsTjiQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1785997267;
+	 x=1786083667; bh=HRa2KQM9EMPJqsSA/av2EsP4Tb2/qpVcRg/BaVG9WOY=; b=
+	RzLy19w4ntpAS6BuCvVGICo0XyrU4bo9PTAvYUHJh246BV8wUBGQfVj8mhN9PCUQ
+	ZjOqpqSE86J1qKR2Miy5TL9QM4Gy//5jmcGRtG9mtN+7jHFjncC/Oj7xnXApEeLs
+	Mow2Hfx9kSpudXA+Mh6K9jNjRFLpenTM/3frTDjvqz+GpPPIIj/O5D04HWG3pHUQ
+	eMEEBnnVvsy7lVwHqLpETvFLaOr02mIrTYd5bPUIk0KZauVcg5x2+QUGBMQxca/Q
+	R0M21RfsYIZ3cRlxNdJa3rjNkNUum08fgMscBEfXhWGgniSbGgqJcV3aMVB1eq/S
+	FDXoURlHaVLUv8L9oPVUjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785997249; x=
-	1786083649; bh=w2SGFr2ar5YJCxx1RmdXMEw2mn3F8CczsHPZPYuWPgc=; b=C
-	migqOlvKqoSpGS0qT9x3q+RJOSXYTZWycCvO2zWdWxw1if9JlXTgN3FhtUoOwTjx
-	YNtN4EeWktGqSpfYpz0pyaRT8iO+xvfmm4IFKsdVkaqbfLj827eJHQlSWXV8QAdU
-	lLWAr2VyvaUdHmBZ0urjfeo1IORyPRdgasi1dUuGfS2hye4saqH2yBLPpixXhn7N
-	gBaOlkMX4QMBIlL4r6gmd0HE2BJk0mwE/Mld5UnyG1D+XowAztwWGXL3NxNWvHag
-	Dw0ms+FtEwv7eNB4AQnz+EkO23cafQ42VRwCAtXLGICd6WpNHoVyY8hp+p5vo9B/
-	DSH+DHJgQLdjjnQAjKTBg==
-X-ME-Sender: <xms:wSd0aomR_HYLL6iJD-CfDLFidyDeRV6-bZvEWHnLElhRd6ybOuCMQkY>
-    <xme:wSd0auvzw6cZOqv2k1_qBOD5uNZ62igjv7FVrp5Jnxjl1fzKKrXQL3461NQst3XxU
-    bF-G_3yK8ZN5aDH7J6a4Q8GCm6Kw_VHZddOF0s1MQclLzvjpfReKJQ>
-X-ME-Received: <xmr:wSd0au-PSsUmu8b2-7Rczp9rSnRQNzyl6W5R4nlNtmeW9zueOH0WLNqYWnGTpv8Vk5AIVC8HRbjT8a9fUP-sX08VEfVtb4UsuoDMzjc>
-X-ME-Proxy-Cause: dmFkZTF7opqThSzJJIz/EpKNfuB085fd4M1mlOTNISiTx7j1F2foq4or9eip76oggg7LtA
-    Agkm1f0l4Rrc5+oNq84yhL7xAAIStLV7UawSt4beiuT+P/stYY+OX4N70Vkfy0UL+lvZT1
-    oD1vNZjsUzXtxNmrLwrXu9U5HIVtuur+8r99kxfv5ENDUVOF/bhEEr3FJYJrSebNnPq8Zr
-    Fayi0Fo8wlf1QHts0QaR33F+G4o18smJiwR+sc8Uk8j1fs399srs9RdiG+l0DpHDFGUA4+
-    O7RZ6LU3rT3o5y2nyZS6/3r/zGEdqC0rTaP2YXjPVEKWR/m1xwjzwnN7+bEsl5ZjtpCrXE
-    NT9ykNho5Ipdi4nn93NWaSVeLa+ilyEKRJNj55d28PXjiNTs3sG0nYfTWV//50bwTf0C5+
-    p1G1BNZCsk/ja0JwU1f/CMD8EY4PjA+Tk8nc+XhoJeRvdvtzeFDPAaG5YDwQayLb/NAlrh
-    k9CgdqLqJFdj30Bre64IAbs5yI9pYF4flafPxf39ltFNPVtQDdiip22Aij1pJ/6elHk9oX
-    wMSdVvqFHUkOVbBQEuTyp7YeBgQ3OrZw5y6EhRzoxCMwb0ESxIA6Gben1rtVMwyusk2/h5
-    za+CbwTF6buASP2lxMUDqeRY9jAjLkC19NwbR2C/aAJK4UfSWvO/D03n8RBg
-X-ME-Proxy: <xmx:wSd0agMtBXabYsPQ5J9bLf8DZEo8p9L-wkrP35netDV8i3D_HSWe1Q>
-    <xmx:wSd0akGZfjSrCQThfFkNwOCwQCHxQCyW8DogFXHcsNkObYCA_7XPTw>
-    <xmx:wSd0amQAgMH4gBp72h67sKe_exahBgcncVXl9T-xHqsiyV_IcyGZkw>
-    <xmx:wSd0aptKQ8522WRpNm5TUiZSbnskd7HYdLk1RKWIJFKdPInytOgwyA>
-    <xmx:wSd0avfQmYVbWEd6cA2aD8nwCuL_yzPL4hNwkZ8DP86SdGLCsSmvJe5M>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1785997267; x=
+	1786083667; bh=HRa2KQM9EMPJqsSA/av2EsP4Tb2/qpVcRg/BaVG9WOY=; b=V
+	bQTLZPwPo/tUAnj4a5/m3F6wMeoWCFT7gO6K/YlpYoIzDHGo87LYsOcb9f0QbknM
+	zr4GYGRJnuherngbqp0C+EGp8JG1Hhn2Wg4E2cLPbwKNeaaDLj5tlMBL0qdv0gBa
+	Fb5cQ7KLEiwUPug4krC7M+dHrpjhGabKBtEtw/K1kutRIXABW+aItr1mh8CauoeG
+	XZzR0K9jTC9vCa6BkT7eBVbCQOVQ42oP4Gw3MfFSeCoZ7oEZSHycYU9cPgP779rG
+	pxKRQNJjTMkqOpgiA4MTlVyVPWAKJtT24dn7UeDoBuaIEsM1wyf9p8zvF8DEt1+6
+	hcx1DqtYuXVzAztP+zfQw==
+X-ME-Sender: <xms:0yd0aoVqBhlXo60XHaO-nJSDGajHh8aC1xNJOid6PfBi-Qq15l-w1mY>
+    <xme:0yd0aje_Nw_23lkcMfwPhTwg790CottbDkdqihipvi6Y4VHCnOv7Tq8FLXuhGlAHp
+    ws0v4Fq5VYrIaiuK0hzHi09m3M2sDbGG3cou5FM38FcUWAafgqurHo>
+X-ME-Received: <xmr:0yd0aktnTiwbAZ4l1nUKgaie96_JFaQ2l7MTBaiSDq94xJagtrP6kfbNG0EiEFNpqbGXIohQDpwiKjlNLTi0GTAm-3VKYnEvHRQaoZc>
+X-ME-Proxy-Cause: dmFkZTFhdQ2PvCZTQPE7rdyQfzfBRrUCpxo8RixZOF1sl+kEL9ioLP5AlFuPaXml2Le+Q1
+    IuY2iO/fkpaciaS/feL+AdjygfJXCPouVMv9vg0hD96y3Jifamdi2n13UnRY5Dzittuj1Q
+    5rs0I3K9aJtEyelHSl6NXjn/mUSm5lVGuok8Ie+6MUN3WPfUvLgCOe/FwfSldWfZhYDqFC
+    gVXyhfQGSd3VzfUNOXuMXVmbtzgZv8Nc6FYzq+dAVkckq13Yayzo8A6ajypLhEwtnnVDpc
+    TVLewLoyqa0wQ01/vBqBVg9vvvuNvoNgJB32eb4zAuCj0luznUXW9/ssnc0R/o0l1qUvo8
+    2LWSegolpZNT4kTHlCISTu5lZI1acmU4EvQWFGU8W9kYUgYhXGu+ZUoWIIKZRvuEa4AR7s
+    /WmjZFAm/wIWvsLXPtFaDpMvzOQTFCtHqAOCSSdMqLxJHBdR0ffzAac6OhvGp68aUuDK8m
+    Fj6Bu4GZlOoq0PSklpK58TqSmzUxdU/mMiE7MxEoIYKmvFwqgCjSlIwIgP3sBRNAyI+/s3
+    L6ixQJ9/5CBz6z7vlvBsHX8xM2C6iW7AfHuQuoAJyYAW2lZ/AWpgeNAGVFrIHfq1EupKea
+    5T+PLbC8Yy/Kjo30fe0jaxpte72ujP3aQL9TlmqTUbJVJYRInEE6ncyqCRbg
+X-ME-Proxy: <xmx:0yd0ai-H9BbwK3r78NElrCASKpAfLF9keByhwkAi3ukaqhMRn4GNjg>
+    <xmx:0yd0av2F-w0wRsIVbubDZ88vICqabmixw6LiANx-XJbOqzyilLxIYw>
+    <xmx:0yd0anC0sd2t-WNRRTMtYaHcp3h3PWlBTv6ZTbsl_HHugSLIBdQQgw>
+    <xmx:0yd0are7P9qpxDTl9xCAUhKgLMjf6-ziiGNQjFocRl3Y_L1XWArO_g>
+    <xmx:0yd0aiMaw1t_TBL46SW0IIIeuwxLSX_bpefAtySAGboX4VmxEP8XWbpD>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 02:20:48 -0400 (EDT)
+ 6 Aug 2026 02:21:06 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	git@vger.kernel.org,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 0/2] doc: refs: put ref migration warning under the command
-Date: Thu,  6 Aug 2026 08:20:20 +0200
-Message-ID: <V3_CV_git_ref_migration_warning.b23@msgid.xyz>
+Subject: [PATCH v3 1/2] doc: refs: put ref migration warning under the command
+Date: Thu,  6 Aug 2026 08:20:21 +0200
+Message-ID: <V3_ref_migration_warning.b24@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.22.g9e26862b904
-In-Reply-To: <CV_git_ref_migration_warning.b09@msgid.xyz>
-References: <CV_git_ref_migration_warning.b09@msgid.xyz>
+In-Reply-To: <V3_CV_git_ref_migration_warning.b23@msgid.xyz>
+References: <CV_git_ref_migration_warning.b09@msgid.xyz> <V3_CV_git_ref_migration_warning.b23@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,60 +91,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Topic name (applied): doc-refs-migrate-limitations
+I have to scroll down at least three screens in man(1) from the
+`migrate` description in order to see the “known limitations” for
+it. This is important information since the text says that concurrent
+writes can lead to an inconsistent migrated state. Let’s move that text
+up to the command description and put it inside a Warning admonition.
 
-Topic summary: Put ref migration warning as an admonition under the command
-so that it is visible.
+This section made sense when it was added in 25a0023f (builtin/refs:
+new command to migrate ref storage formats, 2024-06-06); `migrate` was
+the only subcommand, and this section was visible from the command
+description. A one-page man page. But that is not the case anymore
+now that the command has nine subcommands to describe.
 
-That’s the first patch. The second patch adds a missing `linkgit` since it
-touches that same warning text.
+Acked-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-I have two other patches that are not included here. They are unrelated
-cleanups that I will post later. Here are the commit subjects and the first
-paragraph so that you can see what they are about:
-
-• doc: refs: wrap standalone placeholders in underscores
-
-  This is a synopsis manpage which means that standalone placeholders[1]
-  are supposed to use underscores (_), not backticks (`).[2]
-• doc: refs: use inline-verbatim throughout
-
-  Use inline-verbatim backticks (`) for literal commands, options, and
-  subcommands listed under the “Commands” section.
-
-§ Cc list
-
-The two people that I have the impression that have worked most on
-this command.
-
-§ Changes in v3
-
-• Patch 1/2: Add Ack
-
-§ Link to v2
-
-https://lore.kernel.org/git/V2_CV_git_ref_migration_warning.b20@msgid.xyz/
-
-[1/2] doc: refs: put ref migration warning under the command
-[2/2] doc: refs: linkgit to git-maintenance(1)
+Notes (series):
+    v3: add Ack from previous round
+    v2: use Warning admonition instead of Caution[1]
+        🔗 1: https://lore.kernel.org/git/anLvVAyckm7S9Vo0@pks.im/
 
  Documentation/git-refs.adoc | 30 +++++++++++++++---------------
  1 file changed, 15 insertions(+), 15 deletions(-)
 
-Interdiff against v2:
-Range-diff against v2:
-1:  8a6415e2d9b ! 1:  3ea1680afc8 doc: refs: put ref migration warning under the command
-    @@ Commit message
-         description. A one-page man page. But that is not the case anymore
-         now that the command has nine subcommands to describe.
-     
-    +    Acked-by: Patrick Steinhardt <ps@pks.im>
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-      ## Documentation/git-refs.adoc ##
-2:  801a3d7f539 = 2:  1d91be5762b doc: refs: linkgit to git-maintenance(1)
-
-base-commit: 13c7afec212fc97ce257d15601659314c6673d6c
+diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+index ce278c59bfc..3b5af936ed6 100644
+--- a/Documentation/git-refs.adoc
++++ b/Documentation/git-refs.adoc
+@@ -35,6 +35,21 @@ COMMANDS
+ 
+ `migrate`::
+ 	Migrate ref store between different formats.
+++
++[WARNING]
++--
++The ref format migration has several known limitations in its current form:
++
++* It is not possible to migrate repositories that have worktrees.
++
++* There is no way to block concurrent writes to the repository during an
++  ongoing migration. Concurrent writes can lead to an inconsistent migrated
++  state. Users are expected to block writes on a higher level. If your
++  repository is registered for scheduled maintenance, it is recommended to
++  unregister it first with git-maintenance(1).
++
++These limitations may eventually be lifted.
++--
+ 
+ `verify`::
+ 	Verify reference database consistency.
+@@ -130,21 +145,6 @@ The following options are specific to commands which write references:
+ 	Operate on <ref> itself rather than the reference it points to via a
+ 	symbolic ref.
+ 
+-KNOWN LIMITATIONS
+------------------
+-
+-The ref format migration has several known limitations in its current form:
+-
+-* It is not possible to migrate repositories that have worktrees.
+-
+-* There is no way to block concurrent writes to the repository during an
+-  ongoing migration. Concurrent writes can lead to an inconsistent migrated
+-  state. Users are expected to block writes on a higher level. If your
+-  repository is registered for scheduled maintenance, it is recommended to
+-  unregister it first with git-maintenance(1).
+-
+-These limitations may eventually be lifted.
+-
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 -- 
 2.54.0.22.g9e26862b904
 
