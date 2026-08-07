@@ -1,77 +1,77 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB10345EB7
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC74ECA6B
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 16:01:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786118293; cv=pass; b=eYRSK89cQ7b0rr/PEv1WKhUBcXVx5o2dGYZQRA1z+baZm3exmAvKg/4wmEHKVhL3QezLLxXDI/DH25CsonhVgKo8Vk77EjMgZiVou1T3vagMsYu3Yzi0s5G+0ybWNDsbhKDI5jfzXN8YDDWBMa2YMLsoAd6Jeyz/3xvO7ybT6AI=
+	t=1786118470; cv=pass; b=KZ0F2YVf/zJGlCEBIsAVE01V7IBGYFtIZVYKAR9v4wjCGFOuhTrx2PVQg3lhetXtsyVam1ZbZeCLbWk51vo1JcpX2LE6sXU918w+XnV44X2Ur3iWLrYg2i7zLKh2XNJrElXJPLZCaphGxLK78zJL3a46++yBdFcndrv1+A4U3Ok=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786118293; c=relaxed/simple;
-	bh=hHXYHAJ6IS3XPLaR6hF6GnVEreHZzRrkfiCPT0LZunU=;
+	s=arc-20240116; t=1786118470; c=relaxed/simple;
+	bh=AQzmlhbVNrGtxN70biObl8CcTWRf4GKNALAHqlJk35Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gKdVE86qmS/z4PrnXQHuCk7mp8kEljf2HWqROClHW/KJ9qiEPm6d2loFYGujMSIfRv0BTZ/gG3wLddLp8846WmxmtCXG5gxZzGArRGeBUWzlXRl07FcI7cnHD83MH1ewR1mibKJ+9cC2UJDg6v5a2wuzkStNvm1UVY/MTfwRx4I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=VoM8Fa6K; arc=pass smtp.client-ip=209.85.128.181
+	 To:Cc:Content-Type; b=UfrdEz7aYRdvyzTk24vHt7W4GPKpdRIZF/go+HTdflnzrNNSQLx+FdCJUmenaN1fsk/fuk0V05EgWVzGArOHBi01jebxBY94I2BRtG1qwnlMPxQ7C51BzTYkrg8jv4Jz7k0n1Y3KnmkMAlfmQAvbfuLFt6zF+6e31Dl8gwBKhPQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=PkEz3/jQ; arc=pass smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="VoM8Fa6K"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-80cebd41372so53795317b3.3
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:58:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786118290; cv=none;
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="PkEz3/jQ"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-8114a4542b2so51430957b3.1
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 09:01:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786118468; cv=none;
         d=google.com; s=arc-20260327;
-        b=VuWYX6RAt6V5xfTJ0Y9DLqazgzGs+yDVq7kYYPnIaiyQ5ZvurV3nppnq19DwyOkvwK
-         JKbDocKa5qfI9Np5CuorjVpD3C4TrulqvSj05T8MjggXzAO6UGg/1qo602mSO0har6F5
-         f+3OuE0RuBvNQYgKpZYDAwdoi1sba0kSVhtgWIlReOxLdejfLcNKJCHtg2S0jCmnJTKX
-         s+1+ebsdmvg6tDXP/qdMIiXJsD4T9TdKOFuNz3Us9I5lR4aL3tbTHtbZg/a5r/4ykgD0
-         AHack87cWXmvc2Umo5eOKnBNTheW1fY4jAU2P6ZJTo9xSRGXLDFAUirs0/lCmpbMklY6
-         KIfQ==
+        b=fxguyMW7R7aLx77rR2P5HIVpkNjBghyMxvdhTC7/cNqFnhSE/PhjssviyHksLgOoM4
+         XRMdudRRoBeuLvRQahLy77U/yLL+Jx3/NW/mjogpGYF9mu0kQ1WSgUlG5ijuOGxEzND9
+         1JOyrI2xLmPdiBWIRLIIMhgMQk5uY8DgiWUzdFVNZ8Jsr59aq972eEPc/OmVvfV2NsmQ
+         9AqTHVZlvO5GUSfie1j3RQbPLQsvgSJN+70UnfImpmxziHJ6DxPZYKNOBCDYKTcTCtOT
+         JVN50VRXf6Sh0xfPe7RClrB4P3HFE4kn/fC4ApS3oTattHxpPDnmIgCLQtqPEvAUu8cx
+         WtCw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=hHXYHAJ6IS3XPLaR6hF6GnVEreHZzRrkfiCPT0LZunU=;
-        fh=DBLE/l5h78hZNRedv8+dYMuoTBE+MYqdK8zXkJNlbf4=;
-        b=HuILsWH6VBTWSdHdy3d04XSaTDfAuhlXhCI/jVe9jBDjLdhPh3OHijbk/JQk0Q7aZL
-         1/q/x+c+yrFL3bD5ywNoFfNtYKYp9mrPYDGueooq9HsSKsixtv2HRSNuh9t8P5t25w4f
-         U/jtYQmqRVaaazGgcbPaGZO0NwQgwziRXKETlHZWrJHiC5XcLkk7Z40Cfs8TXHJi9zsa
-         u/oz+HvBZ/ZUwKpN14OLCuIcpWstZdJBQLK9/VLvg1okKX8Qs0+N48O6+8N+w312zBO1
-         S44AkxZqpiEthSTcg6K29aXZu57s8Zzp1exKVedZ8GTr8ydMlbcp93zwwQfZUQXjLyHP
-         2Dag==;
+        bh=KK9TIfkCw2AathRBtaZ87a6ixjaO8eLGkUuP4a5yqTo=;
+        fh=DGIa/P8azKuq0h6oxXLh48i9S2AuJ4FwT0fjQOFPTJU=;
+        b=d8yzbHNBtX0XN0Aqx9orFvQsMl/fjCEgqcLor9s2mQlCn7RO73dhCO6c4/gCpBrGC+
+         yjLbUMmZZRptEFWqLeLSjQjcCDQGotTbZxddJVjCznth5KkSHykcUifL5TPBp1DcpDLb
+         OE3FQFumIG130nP0EJx3xMacKxlFwdsQ3az2EvbDseTTwT8Is8/NrqddCeayR6YojNF8
+         efy+ngwXJe7KgC3qTrJeAM9jvcGkbQiLXjsU5n02/6K3moca8JVCVJdRD4XWPP9Lqgn/
+         wmuPiYMFec/azqBYPmTW90Iqm9I8MsbjDZFJ/0YCEJKp7voGI3uLxjiNowVhA75IlzXo
+         DZpw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1786118290; x=1786723090; darn=vger.kernel.org;
+        d=spotify.com; s=google; t=1786118468; x=1786723268; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=hHXYHAJ6IS3XPLaR6hF6GnVEreHZzRrkfiCPT0LZunU=;
-        b=VoM8Fa6KV85SLIHCwCVYBhu84ouZbfWuVJO80YHYsLJj0DrWCb0sJsWbw1kke2eLKJ
-         tHlA7RKAAAPe1nJ/FO0KuiGlLydeW0b+PBxYU6UHtxcXiWsafQFSDSPHoAIMUkc0slua
-         woF+3ejnu4+vQVBUMtw9o0mGMgE7fdZkHTW9g=
+        bh=KK9TIfkCw2AathRBtaZ87a6ixjaO8eLGkUuP4a5yqTo=;
+        b=PkEz3/jQCjutY1HdR1om3kWmvKV53zO7/uzgR9qam0tktAS9lfBJ9OpZ+7htg49M3h
+         /eSyZBUtTQ7iGf0yugXH7/l/l0BEpoqpsFnUQQFypWt21ko5MzgQnvZMOvC06Kj8Zx/J
+         WGXuF4jyPayRFpalfzw6fJ7ucefxLhdbm9GNM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786118290; x=1786723090;
+        d=1e100.net; s=20251104; t=1786118468; x=1786723268;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=hHXYHAJ6IS3XPLaR6hF6GnVEreHZzRrkfiCPT0LZunU=;
-        b=a/uqNGExo+ZdXjA6O2mbHuQdm8l88QYBWuitMWHeMi0I+NjQST/v69KUdGg4JYkWAu
-         VBzVM3uT8at7rchg03CJeC9Vjb9zroQH+XYxXYWCKl+HlUgNIqGON5vC1Qt22s6zT1Xu
-         /fO9+/sdXXSvs63rcseJwEDg3FpjXzMCLQHjkG3Pry1zJj2JY+Patg0MXd6o/J1S2h4/
-         bgz2OcLBQlpuIvIBC2Yhm1pBXKiBSggnMIisLwMsSr2dg5j0cOcSMK5Ezjwhrp2dRNns
-         w+InBLtR1USnBHRG89zgQzJlwKxoAmF0i38W+0oawUWCryIx3k2aH+yYndj7oNbtsfuj
-         lNrg==
-X-Forwarded-Encrypted: i=1; AHgh+RohENKUzebKVQ4Zd5n5jN8zBS3xAlK7sK79sZReZwq1jy8TIcyvI8j5UPudHSRc/aBBmmM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxlv64tJiL/tJfDRimL4RJRIiI0kkOutt+VlauEWf8bdbC7gCrK
-	hbILq0QlF2lZGMcpm1OW47n8UAxKXNQQSKYIh9UabhwCRsZbMGHXJZqRSrvnvVpeQ6QCTtnOkwK
-	gx3D4HhS2wDzYUsyab8by4okfTcbOQONVf8OnKoeEuA==
-X-Gm-Gg: AR+sD126qUk4onjazTJ2jT5LBGLNK6n84D4q5eh8YUP1zrax/shEukpYujH019IUfrk
-	M+gAVa+oIvKeBinavjbREAapolYf4tvStQCxo/bkPO5eOQyh1x6z6qtJ+x9qSjP6kjf7hmVBin+
-	9Dg2fjGtCV6tFfMytF/lLzv4XsWdY6fH5nwLXRNIO8Zd7/M6tqUiBDmNlfZ7WsXj9I3W3xWAMlq
-	XqKr3kMrnIOqi3qnzdGH5bXKX+V4GV+2Jr6zNn0Xj9+Sgz8QjiJ+GsGUAPDHXLtET8J21DVpmLF
-	FfCVgzyogS5sghRssUMi1NO2YT66jQX4R5P2bRVAvzY=
-X-Received: by 2002:a05:690c:4a13:b0:81e:735b:c880 with SMTP id
- 00721157ae682-82022631e89mr147728227b3.26.1786118290097; Fri, 07 Aug 2026
- 08:58:10 -0700 (PDT)
+        bh=KK9TIfkCw2AathRBtaZ87a6ixjaO8eLGkUuP4a5yqTo=;
+        b=CpnmjEhQebO70qliJypD4YQs+/LSgWJf5atdz6i4D5VKtZ3EX216QadJORLi8tZqzX
+         wBRsNOVoKGXbvXDV4v8q2qeu+hMwVyDjrL61bM7wxe6OR5jZbyca2GJS+KhM56zJFarB
+         ejxQTV0C9s5IzfwcQ8+tUGaVzWvJl5jn/Q7wTa1IKlgC5EMXK+pSM17taozJbJOWXMWD
+         L3bIKaNG+LTP1+67QSwL9jj+USxplu6nI6DJq8N76vmctZl8HaT+KlhlQ3a/3yI849bb
+         xMu07weul2xSOpjOdwRmdWShOO86i9V4g34NXHk8Q2gPIoJTrX2nz0Nz6cDNI4LH1yQ4
+         q9nQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpECffDTLzlLKOS/ZqbPE94JIU2AqYbo+rOOFl30S9/PUr38AdANiZAIH3zRm8UTcgxKmo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5b1hpyxbQ/26WnPiguzeopNBYS/BguU4RGmo4bSb9P+SfKUza
+	kqJk0LeFCJNywXt0VuvRvHJdfHjaIYl53THWXugeDP6hKW/h4brv2oGDJ9+ScRkdpen2fPGZl50
+	xgU+HPcEsDmTOtykIsP1XE0YnjI7cmMprVyOf5JOl/w==
+X-Gm-Gg: AR+sD11tI0BdzoiCOlcT9cYfaZmdtbh9NEz9MMQ7wg/0swX8sNZiutUUyQ6EqUPD+wk
+	Dvls8cOz93Ws7esDOzbpwy2bQHvJ18SvZhOUE7y4n22FXkdmBebMUicInxZvAG1G6i1Ac7lLJw6
+	s9L9ZlUK8PyISI2/TxjD2/dAqsj/CqWaXTfLim2ev7qkcfrTsE9Z3Uv2Vod+tMLc5X8R5l3FZPS
+	axMH9xHYO36I3qPqL6PI608Uz5wH+V6WPNNDYlBveTKXN7xO6X5o9/k3TnUbYprk8jct76JEJxr
+	fbd4vLJ+ldNHATebIhh9iZJPgtSKNSy1mzFGaxxEA9Ij1h/8ygRG9SE=
+X-Received: by 2002:a05:690c:4b0a:b0:81f:c2dc:6870 with SMTP id
+ 00721157ae682-82573d3ac01mr10509247b3.15.1786118467667; Fri, 07 Aug 2026
+ 09:01:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,30 +79,48 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <490be76befc4689d463d472829c0271351b69a43.1786013982.git.gitgitgadget@gmail.com>
- <CABPp-BHLHGQxuG3gO+nCa-FPFyOFEU2rk_oxLtFjekLqENvQUw@mail.gmail.com>
- <CAL71e4Opn3u6qYG9xhhkB1qqYj9ZLk6_=fxznyFzSFbrh2BMTw@mail.gmail.com> <CABPp-BHE2KwjcVc14heMhpBLz64eEQ8y6qu56vzXKN9VK12qzA@mail.gmail.com>
-In-Reply-To: <CABPp-BHE2KwjcVc14heMhpBLz64eEQ8y6qu56vzXKN9VK12qzA@mail.gmail.com>
+ <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <a1c8e89ef9f1d0fb5cb10ec9687633df8792ec7b.1786013982.git.gitgitgadget@gmail.com>
+ <CABPp-BFqghtx4p_Nqx+AWpU7SVn3mXOZGDQ0yoN-ZYQgXmZC=g@mail.gmail.com>
+ <CAL71e4MULMmbMyrE2iKgNXD36vpjnxCYXTcNw75ibu_nwxqAPQ@mail.gmail.com> <CABPp-BE+QBBYj=oaRDcQj8bFrDX6Z_JVK39ciAk4TwMPb0zHOQ@mail.gmail.com>
+In-Reply-To: <CABPp-BE+QBBYj=oaRDcQj8bFrDX6Z_JVK39ciAk4TwMPb0zHOQ@mail.gmail.com>
 From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 7 Aug 2026 17:57:59 +0200
-X-Gm-Features: AUfX_mz7N8pUhEMODJ8xv8i8W3VeMTQ04XFpopdQkecJ0arFNOCaLAlORsxXnGc
-Message-ID: <CAL71e4MDRGWeKsmKsRhyFsSBT8+QKbiGZ7+AydRk_Zxb2arn-Q@mail.gmail.com>
-Subject: Re: [PATCH v7 05/10] commit-reach: add trace2 instrumentation to paint_down_to_common()
+Date: Fri, 7 Aug 2026 18:00:56 +0200
+X-Gm-Features: AUfX_mxVy8XMXvkz-Dqsn5VFSQQpZGkQa8VMkTr2-pu-XSn9ix0dlya3svzUFg8
+Message-ID: <CAL71e4P1hRcDk0TiR_Gjapf=EScGNbeHqSQ6BqeiAkEvczNu4g@mail.gmail.com>
+Subject: Re: [PATCH v7 07/10] commit-reach: introduce struct paint_state with
+ per-side counters
 To: Elijah Newren <newren@gmail.com>
 Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 7 Aug 2026 at 17:49, Elijah Newren <newren@gmail.com> wrote:
+On Fri, 7 Aug 2026 at 17:44, Elijah Newren <newren@gmail.com> wrote:
 >
-> I think a short comment in the commit message about the new tests in
-> this commit triggering the existing min_generation optimization would
-> have dispelled my original misunderstanding and made the review
-> easier, and would thus be worthwhile to add for other reviewers or
-> future folks running across the commit.
+>
+> My comment was meant more as a "review out loud; show how I'm thinking
+> about the patch as I read it" kind of comment rather than as a note of
+> something worth changing in the patch.  The order _is_ important here,
+> so the idea of adding a comment to reinforce it seems quite reasonable
+> to consider (I thought about changing my comment to ask for one when
+> reviewing), but I'm on the fence about whether it's important enough
+> or overkill.  I'm okay with the patch either way.
 
-Agreed -- I was initially thinking about adding a comment in the
-test itself but adding it to the commit message makes a lot more
-sense. Will fix.
+True, but your thinking out loud fortunately reminded me that I had
+the same thought process, and that the ordering may not be
+immediately obvious -- and thus we should document it.
+
+I will add a comment for it...
+
+> Although, if you do add one, as per the CodingGuidelines:
+>
+> /*
+>  * Multi-line comments include their delimiters
+>  * on separate lines from the text.
+>  */
+>
+> :-)
+
+... and I will be stricter about the formatting in the patches
+than I was in the email :)
 
 Thanks,
 Kristofer
