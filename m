@@ -1,80 +1,79 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0876C40A940
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 06:18:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87C9414DE0
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 06:18:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786083496; cv=none; b=hQqkNfnzrhLm2mIXwf3FatdfDXuCLyffYpx7cQpwF4nL7XK8x4U2tcc301OmAu5EHeQ0mo3Lvrs1SatmUYU3MVcfvaZ2SOGsNffoXEqXW8Zao6Lf5KtCOQEifKksU15WsYCbr2dk8TS4e+T8uAQdwpHZ3eeTvxc1TUW+EDXeClg=
+	t=1786083497; cv=none; b=pRF8iQnyYUJPMjU10fuK734QxChvlKcvwnoEokB6uDhNxkZtCtU6lqEm0Z+smSsywyta0YoYYAh4N5ACX2je55vCtUWN1YLun+ewACtTfs/DnGvgZyTdbBCWJHuYKg6NU4KfANPyN4IIM+YKZAmrCvJbhI5OyqAGKQXed0soppU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786083496; c=relaxed/simple;
-	bh=+xSjb2GFf76zAOAdRFWOGxOqi9bT5hqT75f8zrKK468=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=GLlq7D+aK/zfnor4xXjovey+SohTojii/p0uMgRJQ139XOrJ54ZWd1pUPp2ARvqHA3bwEJuTrW2YiMeSh/+9LoQA9lu4QV4jJLW7KfQWUBwoe4b/tXSFurolZg0UZ4u0C4HREPVsU+6MaP9K84+dSsaWKJRYo4CW06ZxoAAV9to=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VDAkWMyI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DZ8xqkyp; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1786083497; c=relaxed/simple;
+	bh=AT7mas/7JS1PsYglWaaRWUiX0E3WmFSCapysCQYxR/8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=dG1LJoSIb9f03qO1+vBr9SEeMsy+NgroVu8Kn7QpRkHM1tTtvlhp2VdQm+q4caPAWFNDkt/Mu75wQ9gCENSy+uZj6YRMCA1MgSYZLjzUH5NTc+05GICHhtoK5ODDHtu2zekAJ5SJ4jvBEr4jdSTNjK1v84MKNRGl3NSeP+9THQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fQODf4ft; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ru13q8IW; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VDAkWMyI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DZ8xqkyp"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EF6A714000DF;
-	Fri,  7 Aug 2026 02:18:13 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 07 Aug 2026 02:18:13 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fQODf4ft";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ru13q8IW"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id D0BD7EC01AE;
+	Fri,  7 Aug 2026 02:18:14 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 07 Aug 2026 02:18:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786083493;
-	 x=1786169893; bh=W3FOoka32SdYRjxzV5tI/nhEJhOGjJ/juz69FQnU29k=; b=
-	VDAkWMyIU0cFoEv93tM5cvRgcf/g+CGNh96ymwOijYEVGDvVgkmBPtbFAHjLDR41
-	d91KGHNkMPNHOUE5UBWQUrAUdaAq9TvXkUhjgEfK69dvnTJtWIrb5Tq5oOvAJGMN
-	Q6LsQBx8jPcRANQMKOEOFR6Z4/DxGR7+CH9UMq+H1JD5VYHl6l4Yh+n/0m7cTRiX
-	jzC4d+dZlv0xFnCPmJinuxPqhxgRWZoW4Ob7kXpE8R4LcbO5vGPZL0EUz2q8IpG+
-	OKQFGxrPdXqBNm81D3bvvgwSGDoTPsyJmN9hbrOh9omyAj6HdHoZQVNktlTQBzWa
-	P8GZmNs6XpusMtIuKIjbkA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786083494;
+	 x=1786169894; bh=cK+GPTCwMAbpMExY+HvLHzS+1+bcZBfx8B0Yp+cZJiY=; b=
+	fQODf4ftV3S92rrK1WRvEo5Ue0SPuOLdIZsyuJ3fIDS0hLN08V8LzI1gj7Tsorgs
+	ZIx0fwfOAjNos+PPm1/HbLQ5iEyB4f8CdVK40HG3167U3Tou0u7fE457ZD2rqTSj
+	/bIW28Ckg+BcyJpcaLZ5Z0jHdAfb/fvdH1G/xTOQMeFTUaHPgU2F886gVB8YEPSS
+	oGgJpkkTO1GVAyr+tuaBy1TBOWE8YZGk8LS2JrrLLVqT/JCn+8Yp47nn9V4+bjWK
+	XUprCsVmCHurCZohVCodlDKIj2n9EZTS7hLtfGRcX3q9iC/ZzMwXxjUEpUs5podl
+	TjDDek+0tf+fjvZb1/jCVg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786083493; x=
-	1786169893; bh=W3FOoka32SdYRjxzV5tI/nhEJhOGjJ/juz69FQnU29k=; b=D
-	Z8xqkypCJU4Tf+JC6H41cJXlNOfFBvdxV9p8hhDe/zmsPVtDvwV++yO5EJ3ncL3f
-	3XmFBmvfAnX0sJsxJVV2qlhXTCCXEaE4Jb6mRdjARTZFsETz/C9/TwCmKrHMSTey
-	Fq2flOF/fcYpNzMfrOpBohun80ObjGvTynRgdKNYNBkgGPF9ZcHuEU1zOBhM+qA0
-	Msre+XEo7HLSMqJUazf8QTK+FEdaSY5ktWn4HwU/cNkDL+YxXWo3Xa8yzRyXDILH
-	ldh9zhinH/B77cup6TT8TnMhH3GPo4gUKUqnmtbkIVkdZx3DORM2dGYMmapqZ8pF
-	dXAI6zTzM1IO1SNip54YQ==
-X-ME-Sender: <xms:pXh1ah-IEgOZlsXmrvghCNX9rCf4h_ZDufOYk-11vNPn_hBBx5r28A>
-    <xme:pXh1avvsrMjsZaF987nuSM3oAFE9VhRniWwUSjeyZi5mZdxBxhYEWK8711Ii2srGr
-    u1GdtwP17ZAY9o6sl4AuUKIGNH3mRJjtWSY5rGfvF_SuQaqOgLeTA>
-X-ME-Received: <xmr:pXh1alr3LBhLcpfNToRZLGFmnt1_uJqzsstOLZfP0f1a5LHC5t2-LE50yU_5drwpXHB_0u6zbm_PPwgsXAQihvE_O4ciuK2cIjpdoFFcFHFkJg>
-X-ME-Proxy-Cause: dmFkZTFAYxr/gBtsd93GBbRfb2/C1hu7omVY9H9i+4awpHqkW6FlkqjIBeCDwXP4Kk50jT
-    ZblfYDxrSV2WZ9vPENaEpg2jYpd7O/13QnXiDyl/3V5XJ77E0328gqpF6DcCd2HP2+M77a
-    HRkPO1+Dh+TlfYp/wrCDelPVJqnnqtrRZ4I1zCHVHgzfNY3hYSoWq/JLn8pyrcG5IGI76z
-    hcYB8XoPWcez7TLhewXlF0RtE87FHOVgi64vR+Qcl8zvy/Mp7EZMNUMwgXNgKfWRpeJ3Kw
-    B6jdPf+NSEoyzunhwA8jXZcS7tctK3MHn5H7f4aOf2dZywJECQ713aaNOpFCIMf0nJRgpW
-    lgSqhSm7wtATLDFr4+d9CT8iE58W/uJzm3m4JvyIMBKvCGBEW174LQLtoZ1MytaY2gkiwA
-    GKPGlpXKBL30BaK+Cgilk7Pi+vJ5sQIneeSS4jfZN1uyXAd826bBEvQGuHNGUmxtH8g5pQ
-    ZZz3KKB4A2IPm1MCoedKrNSCJ6akovNhGvbYbolqAc8/gaGa1nW5As6Ym3gBUEvPmJxfwc
-    /p559joC/Ar7+Df1cRIMsUxp44MGAzdh0sHfH2qxF+PAt/qwc3mKKBpOvJ0pLLXukRGNHE
-    aU9YhDaRvpRUpFUbN6z3PQi1OReC3bYiHCEcaputfmDnE92q7yDSZFBMvFNQ
-X-ME-Proxy: <xmx:pXh1ajorEKUyoTXLSxsDc7EczLTsuwh3_tA4qxouMogymnhE7mGa8A>
-    <xmx:pXh1akbU83aQoWiBnJ6NtmIVGhHgONcQCL4acDLDfksaA8EiGuFXrw>
-    <xmx:pXh1ah8mxE3qKaw_gLZR33lcgWvSFs2NVp8LbhQgyC2ujZCooeNUxw>
-    <xmx:pXh1ainqdeToNWTnfYNzehiuLM5QQFGB3mF3N0iw0DO3eaXyV9zK1Q>
-    <xmx:pXh1arNBEyCP2gUHUsgOq5GxxcX4-14MNvv9uyE4wmhZhy6N1eGzCY_r>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786083494; x=
+	1786169894; bh=cK+GPTCwMAbpMExY+HvLHzS+1+bcZBfx8B0Yp+cZJiY=; b=R
+	u13q8IWx3RhK5k4ZYoaTmTW7uwsJDgMQPLKM+aKuaJLyugz2dQK1Gk6upbiupv3E
+	mkgiHapdv2b7L+iNdtf5O/saMaGPX4PXv+IW9wCwp+PkHlmWdg7ysHDntYnr/HGR
+	UnkkI5c+8SpeerjSZi8OztF6k+fW/QI/W7Mc/4TUYQRAk8EUC3OczR3j6CR7xPeR
+	QYKsXnylu9senCc2/TWMN93dimopW/qM6szARb9k9B3oFouYwgDodjDF7QmijNws
+	GtZoZvI89Xz0wYIeA+D29jNyoEKC7IP/z2v7JjrUiBG0vHouOhmRgsF4ReCgeTiW
+	Cpttp/mcxtXpnoxNCalHQ==
+X-ME-Sender: <xms:pnh1apGah8QUiFL0jftvmUWHXf85Qy5RBuG6BGxlQzr1nWVi0g-oYQ>
+    <xme:pnh1aoUzMDMwon8themVaZxCRKEY6B2nRp66xZnEo1Uo2yBppr2TUGeffAV0gYP5p
+    KDF8yKPBkHl6O9SnEWHuo721s_y_N_s2r_BkThtsZNZRh4nUCK2awk>
+X-ME-Received: <xmr:pnh1ahz8qRZnpW3KynR6sxxJ3FA2VeygUT9lRDhNSawTSAnEYn369rhF1het9l2MqVp7Lc54klXBFaTLkpgcgAhlB9DhI1QFmDEC0nujt0_iPg>
+X-ME-Proxy-Cause: dmFkZTGrFKEnXSwaYDZrO5VYsNTB6YREH7zz7IaYBHZsn/hcrevsHTrUCqHoUn7irspjW0
+    CJyVWa+ZfqvqB/Kjqz+gstFEctXbDsz9jm1LeUKDn2GrmC1iH57he0u6+KcONE+b6BkJtN
+    rWiMWORwqTkOlUbBjo0zBPwuaP4komJ+GuFaxNmNYmMeNXJJOxCV3jW1BPdVaV/UygHHJr
+    BlveDp0ynmz0xvi6b4U7pMsG4fI57EE2jjzRLmgYx4yHE2qp9nM7G0nXTkW4ysw7bm2LIg
+    ECnDJhU/D2RiS+ZmABQ/xgEARzJ186Tpf5wwZxd73QeOOdw3RLWA9rtF9HQCtsWyOJFZRZ
+    HcCPXRV2Dx5WNvCFHcEC1Ie69OZLW/Xgd7GhiEtaONBMtDVmbujHQgN0YQzt9is3f+irtD
+    Xl8LhREtibmrhsO25ErxSMZxAwDx7vT+/zbSlgGs2+CHP2WGOkn+cgfqV5cCJkZRU+BX9o
+    IvuxAS6B5/Q87rBEBdcE14vAu9lMGPJhtnKnu7masGb9dof9xiyNB7JkdANq+NL3noErA4
+    qNjf8PAtq5NrhFfBAeja6HBowK1rO2HnVt54jKAyufmgoRaf9z1J5+uKTV7PrBHoWLlxWT
+    xeph89Ab1DThhJqaR6VSgk+BLdBdvF5h73/EKPFKUFJg4poJHAmA1J7qqg4A
+X-ME-Proxy: <xmx:pnh1atR9afFrCKsK2EgQmpHGnDgHf9vC0l_0FSrN6NdxXwnSJPZyrQ>
+    <xmx:pnh1athbKuuZhFgVFS76Pc3lqXpgFr1ga_LhPTfEQJP2oywiDIEUjw>
+    <xmx:pnh1akkLYV3IyXyCgnTc5v-8-WxL_kIA3We3p1-1S7UuXpPcREQbyQ>
+    <xmx:pnh1ags53y72mQf4QDWtsecBYfNoyEPMGkDHDl9EcRQW5tunnJn0AA>
+    <xmx:pnh1avUeFW6fpeLsI8OcwcdYnusoWSLwHLIQnetCtPOoI6H8QyQ6n6Oa>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 02:18:12 -0400 (EDT)
+ 7 Aug 2026 02:18:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b9c63bfc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Aug 2026 06:18:09 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 78308405 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Aug 2026 06:18:12 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/5] Reintroduce writev(3p)
-Date: Fri, 07 Aug 2026 08:18:02 +0200
-Message-Id: <20260807-pks-reintroduce-writev-v2-0-30fcff0e89c1@pks.im>
+Date: Fri, 07 Aug 2026 08:18:03 +0200
+Subject: [PATCH v2 1/5] compat/posix: introduce writev(3p) wrapper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,13 +82,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3WNQQ6CMBBFr0JmbU2pCMWV9zAsoAwyGguZlqoh3
- N2CcenyJe//N4NDJnRwSmZgDORosBHULgHT1/aKgtrIoKTKZZFmYrw7wUjW89BOBsWTyWMQqtV
- dgUeFiCXE8cjY0Ws7vlRfdlNzQ+PXt9XoyfmB31s5pKv3i+T/IiEVUmBdyoM2WmeNOUdxTw+ol
- mX5AClNfCbLAAAA
-X-Change-ID: 20260714-pks-reintroduce-writev-2d8f7e52eee9
-In-Reply-To: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
-References: <20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im>
+Message-Id: <20260807-pks-reintroduce-writev-v2-1-30fcff0e89c1@pks.im>
+References: <20260807-pks-reintroduce-writev-v2-0-30fcff0e89c1@pks.im>
+In-Reply-To: <20260807-pks-reintroduce-writev-v2-0-30fcff0e89c1@pks.im>
 To: git@vger.kernel.org
 Cc: Ben Knoble <ben.knoble@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
  Jeff King <peff@peff.net>, 
@@ -99,136 +94,179 @@ Cc: Ben Knoble <ben.knoble@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-Hi,
+In a subsequent commit we're going to add the first caller to
+writev(3p). Introduce a compatibility wrapper for this syscall that we
+can use on systems that don't have this syscall.
 
-this patch series reintroduces the writev(3p) wrapper. This wrapper was
-originally introduced as part of Git 2.54 [1], but was ejected due to
-issues on NonStop [2].
+The syscall exists on modern Unixes like Linux and macOS, and seemingly
+even for NonStop according to [1]. It doesn't seem to exist on Windows
+though.
 
-This patch series here revives the effort with a couple of fixes on top:
+[1]: http://nonstoptools.com/manuals/OSS-SystemCalls.pdf
+[2]: https://www.gnu.org/software/gnulib/manual/html_node/writev.html
 
-  - It picks Dscho's fix for CMake [3].
-
-  - It picks a fix for NonStop [4] and polishes it a bit.
-
-  - It adapts one more site to demonstrate that its usefulness is not
-    limited to a single callsite, only.
-
-Furthermore, I have included benchmarks now that demonstrate the
-benefits to make this series a bit more appealing. Ultimately, I'd be
-fine if we say we rather don't want to go this way though. I merely
-wanted to tie some loose ends that I left dangling.
-
-That, and it's nice to not work on pluggable object databases once in a
-while.
-
-Changes in v2:
-  - Adapt the writev compatibility shim to not do torn writes anymore
-    across multiple iovecs. Instead, we now only write the first iovec,
-    which should be fine as callers are expected to loop around writev
-    anyway.
-  - Link to v1: https://patch.msgid.link/20260716-pks-reintroduce-writev-v1-0-ea9038c884bc@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: <20260227-pks-upload-pack-write-contention-v1-0-7166fe255704@pks.im>
-[2]: <028901dcc859$d2419470$76c4bd50$@nexbridge.com>
-[3]: <pull.2078.git.1775206502134.gitgitgadget@gmail.com>
-[4]: <20260409-b4-pks-writev-max-io-size-v1-1-81730e8f35df@pks.im>
-
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (5):
-      compat/posix: introduce writev(3p) wrapper
-      wrapper: introduce writev(3p) wrappers
-      wrapper: properly handle MAX_IO_SIZE in writev(3p)
-      sideband: use writev(3p) to send pktlines
-      fast-import: use writev(3p) to send cat-blob responses
-
- Makefile                            |  4 ++
- builtin/fast-import.c               | 18 +++++++--
- compat/posix.h                      | 14 +++++++
- compat/writev.c                     | 41 +++++++++++++++++++
- config.mak.uname                    |  2 +
- contrib/buildsystems/CMakeLists.txt |  6 ++-
+ Makefile                            |  4 ++++
+ compat/posix.h                      | 14 +++++++++++++
+ compat/writev.c                     | 41 +++++++++++++++++++++++++++++++++++++
+ config.mak.uname                    |  2 ++
+ contrib/buildsystems/CMakeLists.txt |  6 +++++-
  meson.build                         |  1 +
- sideband.c                          | 14 +++++--
- wrapper.c                           | 78 +++++++++++++++++++++++++++++++++++++
- wrapper.h                           | 10 +++++
- write-or-die.c                      |  8 ++++
- write-or-die.h                      |  1 +
- 12 files changed, 190 insertions(+), 7 deletions(-)
+ 6 files changed, 67 insertions(+), 1 deletion(-)
 
-Range-diff versus v1:
+diff --git a/Makefile b/Makefile
+index 1f3f099f5c..eda5ecc5b4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2033,6 +2033,10 @@ ifdef NO_PREAD
+ 	COMPAT_CFLAGS += -DNO_PREAD
+ 	COMPAT_OBJS += compat/pread.o
+ endif
++ifdef NO_WRITEV
++	COMPAT_CFLAGS += -DNO_WRITEV
++	COMPAT_OBJS += compat/writev.o
++endif
+ ifdef NO_FAST_WORKING_DIRECTORY
+ 	BASIC_CFLAGS += -DNO_FAST_WORKING_DIRECTORY
+ endif
+diff --git a/compat/posix.h b/compat/posix.h
+index e2e794cad7..71cc731620 100644
+--- a/compat/posix.h
++++ b/compat/posix.h
+@@ -148,6 +148,9 @@
+ #include <sys/socket.h>
+ #include <sys/ioctl.h>
+ #include <sys/statvfs.h>
++#ifndef NO_WRITEV
++#include <sys/uio.h>
++#endif
+ #include <termios.h>
+ #ifndef NO_SYS_SELECT_H
+ #include <sys/select.h>
+@@ -334,6 +337,17 @@ int git_lstat(const char *, struct stat *);
+ ssize_t git_pread(int fd, void *buf, size_t count, off_t offset);
+ #endif
+ 
++#ifdef NO_WRITEV
++#define writev git_writev
++#define iovec git_iovec
++struct git_iovec {
++	void *iov_base;
++	size_t iov_len;
++};
++
++ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt);
++#endif
++
+ #ifdef NO_SETENV
+ #define setenv gitsetenv
+ int gitsetenv(const char *, const char *, int);
+diff --git a/compat/writev.c b/compat/writev.c
+new file mode 100644
+index 0000000000..540f66de61
+--- /dev/null
++++ b/compat/writev.c
+@@ -0,0 +1,41 @@
++#include "../git-compat-util.h"
++#include "../wrapper.h"
++
++ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt)
++{
++	size_t sum = 0;
++
++	if (iovcnt <= 0) {
++		errno = EINVAL;
++		return -1;
++	}
++
++	/*
++	 * According to writev(3p), the syscall shall error with EINVAL in case
++	 * the sum of `iov_len` overflows `ssize_t`.
++	 */
++	for (int i = 0; i < iovcnt; i++) {
++		if (iov[i].iov_len > maximum_signed_value_of_type(ssize_t) ||
++		    unsigned_add_overflows(iov[i].iov_len, sum) ||
++		    iov[i].iov_len + sum > maximum_signed_value_of_type(ssize_t)) {
++			errno = EINVAL;
++			return -1;
++		}
++
++		sum += iov[i].iov_len;
++	}
++
++	/*
++	 * We only ever write the first non-empty vector so that we can
++	 * guarantee the call to be non-interleaving as guaranteed by POSIX.
++	 * This works just fine as callers have to loop around writev anyway.
++	 */
++	for (int i = 0; i < iovcnt; i++) {
++		if (!iov[i].iov_len)
++			continue;
++		return xwrite(fd, iov[i].iov_base, iov[i].iov_len);
++	}
++
++	/* When all iovec members were zero we ought to return 0 according to POSIX. */
++	return 0;
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index 9ebd240378..95ef6e64dc 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -483,6 +483,7 @@ ifeq ($(uname_S),Windows)
+ 	SANE_TOOL_PATH ?= $(msvc_bin_dir_msys)
+ 	HAVE_ALLOCA_H = YesPlease
+ 	NO_PREAD = YesPlease
++	NO_WRITEV = YesPlease
+ 	NEEDS_CRYPTO_WITH_SSL = YesPlease
+ 	NO_LIBGEN_H = YesPlease
+ 	NO_POLL = YesPlease
+@@ -697,6 +698,7 @@ ifeq ($(uname_S),MINGW)
+ 	pathsep = ;
+ 	HAVE_ALLOCA_H = YesPlease
+ 	NO_PREAD = YesPlease
++	NO_WRITEV = YesPlease
+ 	NEEDS_CRYPTO_WITH_SSL = YesPlease
+ 	NO_LIBGEN_H = YesPlease
+ 	NO_POLL = YesPlease
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index a57c4b464f..8f56203f34 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -378,7 +378,7 @@ endif()
+ #function checks
+ set(function_checks
+ 	strcasestr memmem strlcpy strtoimax strtoumax strtoull
+-	setenv mkdtemp poll pread memmem)
++	setenv mkdtemp poll pread memmem writev)
+ 
+ #unsetenv,hstrerror are incompatible with windows build
+ if(NOT WIN32)
+@@ -423,6 +423,10 @@ if(NOT HAVE_MEMMEM)
+ 	list(APPEND compat_SOURCES compat/memmem.c)
+ endif()
+ 
++if(NOT HAVE_WRITEV)
++	list(APPEND compat_SOURCES compat/writev.c)
++endif()
++
+ if(NOT WIN32)
+ 	if(NOT HAVE_UNSETENV)
+ 		list(APPEND compat_SOURCES compat/unsetenv.c)
+diff --git a/meson.build b/meson.build
+index ca235801cf..613828ff25 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1446,6 +1446,7 @@ checkfuncs = {
+   'initgroups' : [],
+   'strtoumax' : ['strtoumax.c', 'strtoimax.c'],
+   'pread' : ['pread.c'],
++  'writev' : ['writev.c'],
+ }
+ 
+ if host_machine.system() == 'windows'
 
-1:  69b8be6ec5 ! 1:  f519260452 compat/posix: introduce writev(3p) wrapper
-    @@ compat/writev.c (new)
-     +
-     +ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt)
-     +{
-    -+	size_t total_written = 0;
-     +	size_t sum = 0;
-     +
-    ++	if (iovcnt <= 0) {
-    ++		errno = EINVAL;
-    ++		return -1;
-    ++	}
-    ++
-     +	/*
-     +	 * According to writev(3p), the syscall shall error with EINVAL in case
-     +	 * the sum of `iov_len` overflows `ssize_t`.
-     +	 */
-     +	for (int i = 0; i < iovcnt; i++) {
-     +		if (iov[i].iov_len > maximum_signed_value_of_type(ssize_t) ||
-    ++		    unsigned_add_overflows(iov[i].iov_len, sum) ||
-     +		    iov[i].iov_len + sum > maximum_signed_value_of_type(ssize_t)) {
-     +			errno = EINVAL;
-     +			return -1;
-    @@ compat/writev.c (new)
-     +		sum += iov[i].iov_len;
-     +	}
-     +
-    ++	/*
-    ++	 * We only ever write the first non-empty vector so that we can
-    ++	 * guarantee the call to be non-interleaving as guaranteed by POSIX.
-    ++	 * This works just fine as callers have to loop around writev anyway.
-    ++	 */
-     +	for (int i = 0; i < iovcnt; i++) {
-    -+		const char *bytes = iov[i].iov_base;
-    -+		size_t iovec_written = 0;
-    -+
-    -+		while (iovec_written < iov[i].iov_len) {
-    -+			ssize_t bytes_written = xwrite(fd, bytes + iovec_written,
-    -+						       iov[i].iov_len - iovec_written);
-    -+			if (bytes_written < 0) {
-    -+				if (total_written)
-    -+					goto out;
-    -+				return bytes_written;
-    -+			}
-    -+			if (!bytes_written)
-    -+				goto out;
-    -+			iovec_written += bytes_written;
-    -+			total_written += bytes_written;
-    -+		}
-    ++		if (!iov[i].iov_len)
-    ++			continue;
-    ++		return xwrite(fd, iov[i].iov_base, iov[i].iov_len);
-     +	}
-     +
-    -+out:
-    -+	return (ssize_t) total_written;
-    ++	/* When all iovec members were zero we ought to return 0 according to POSIX. */
-    ++	return 0;
-     +}
-     
-      ## config.mak.uname ##
-2:  f6013a18ba = 2:  41814b6668 wrapper: introduce writev(3p) wrappers
-3:  3dc0eff00b = 3:  af2e351491 wrapper: properly handle MAX_IO_SIZE in writev(3p)
-4:  95c872432f = 4:  d3ba9d73d2 sideband: use writev(3p) to send pktlines
-5:  4c1efb5284 = 5:  148a2c8928 fast-import: use writev(3p) to send cat-blob responses
-
----
-base-commit: 55526a18268bbc1ddaf8a6b7850c33d984eac9e9
-change-id: 20260714-pks-reintroduce-writev-2d8f7e52eee9
+-- 
+2.55.0.679.g6767b8d81c.dirty
 
