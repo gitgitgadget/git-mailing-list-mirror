@@ -1,138 +1,140 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00632DB7BB
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410FC17A309
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:11:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115353; cv=none; b=mxrILDL9kb/qGVOeyuocJpzjLEJYuGEpBlW2SN2hmBBbd2jNy1Z/xVmP2OtJ20viVzda1ilUMOOkbAQh6Qmu+78zCO3lNfe1T+1eXpL4EYkE9jRwYhfknCandKD+eMralQ4xy+F3aPilo7Z/61HVBDm7ptAkE6PA0Eo3P/Oyop0=
+	t=1786115514; cv=none; b=MenCx6iiP9pKO8TnJMcZp7F7hoKOM8Rg/0WjCPI5dYpbu3ALO1rfzr9VvdQsAPR3byfwhXJCrRwxp1rjdQ0ZeDccbwjLK8VSkhcA1l1S00zEg4YksO/1hNvFL2o0GI/O7BC4Hqgfij7hPSEHjBvq+OMxOfXymi/boLRGOESTMfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115353; c=relaxed/simple;
-	bh=UEHAMyzy35GG3216TL32BkGKxU/XUPEmE9FENJYWah4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GiOmW2ycD+xYFxt9MB0QrvRRVayyk4a7J0998XOxrK9n5pC42lhJW6eXh56mp1STM6QdlGZCWPWmPpfqZKC8lZez4XyvAkQxXTGD7iLO1zwJ2wwCCzYe0YJ2ivcTdbcp0uwPnAT++g0tdnB1VsyZ88vU6ac16uViXlJBS65KNls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=r/iJ6M4r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A3BvE7SQ; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786115514; c=relaxed/simple;
+	bh=Ux9UQVg/Wc7Pl4SmMn3lPkEXSNGtMWYREK7lcc8QdWc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AYKPYSVKwQyZMDZ1xFVVc17TZR0zTYcmqFKDseTVcvQ+c69Zt+heHih4Ispb4UIqAmBBCYNSzfZ20KNB39gK7jsvMnxwqhFvq685M1LUdZucGMwq1FKZIFYBRTqUzuoA79NssnFW5lcGp4V/4X3guj/uQynnda4XrnM/FxClUTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ah1DjFWq; arc=none smtp.client-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="r/iJ6M4r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A3BvE7SQ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id B83761D000E2;
-	Fri,  7 Aug 2026 11:09:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 07 Aug 2026 11:09:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1786115350;
-	 x=1786201750; bh=BIL7sVtMCQs2MGuoYrP74pXBq+VSWjrKpBCjlmLZSCc=; b=
-	r/iJ6M4rggqEexiOs4AvNBF9Lef8ea4I8LDGZAyALR08WR+M5nqAKoBLpM/Y/Wgp
-	SkXkIUvt2ezn17JYOz0ELAqPWzc73Z1FZhsVmB0GNk6c/oYP+BbxtPPmlxTHoHHM
-	8kcCWTE+F9Qh9ChWDlUUxNL5QiJIUmdUghshKclxGgB7zCdr+0IXlyzSreL46l9J
-	IG7rLg3Vs4oZc0kWadssF+PpM9K2eTmeVRIGVGQ0kFmkYEjUvxXBWGDm3OkiRiFw
-	/1GKCcORryOWP9rT2XL8CpQhRqT8zhwHVG0vkUSfZ607H9KmetgQyjVJZGCYCXMP
-	ack4eh+NE/GhqQm7feERNw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786115350; x=
-	1786201750; bh=BIL7sVtMCQs2MGuoYrP74pXBq+VSWjrKpBCjlmLZSCc=; b=A
-	3BvE7SQk06kp7RqKqQdLXp2Lry+GWU8Lh4ouyHSkF6xMjNBQdQSLB+DttscuYHfX
-	FjZrbWC2tcunIuLU1xdnm7jLSguaAWMD68WeKfpMG8aWHVPA8azksrrXPYzhwT7t
-	3tlhLmlvjKjANLqZvj6Z+0DvjMVTQj8d+wzjKjHXwtq8lRzcfg42gRZuqstw+9JQ
-	gctD6ArCZKL36T7Gi5COf1riHwjg+AWs+AOw2j2mW22saxNcSjDwikic1FAlFft2
-	TiBFumsEaBuN5MJunuyGwlwV97QxhC7AZcuu5NVEB/rjZTRhanK5brrp0AZi2m46
-	IfXQvH6OeUf9zhbyfTdOg==
-X-ME-Sender: <xms:FvV1alEacBgFeuHYpj83VBmYZDo6YFhMXfgL1kJDwbGCRZKL-J6iuw>
-    <xme:FvV1as7av9Ji33gOzxFghSw2kznHCyl37pX6XFXyf2eMaEbbb_aRlZEOSYuypFJ2b
-    cb1RUyWW_mLQWCaqCGBM6n8HfHuKKIoZoU_u1WUmILg61r2E2QEaGY>
-X-ME-Received: <xmr:FvV1aqwSS_ubpxWKfiAx-yYiXtLMV0-rnN9JtThDitVLKMHB9KA5bH9o-YL-uj0ihyD1Vm3KhXMVdaqcEfMMwmCBWuN59Xwt6w>
-X-ME-Proxy-Cause: dmFkZTGEqvN9dqYpH+sS3Ox55YG9t96+YcDitLsqzKfqtzCgyIDcAPoUS65JIDpXXy66uz
-    cJ7YMkf28/ckr3KUyqtYWfMCfzC4W1nSX6VllJXera5iSLqzkoA5Eg4tZTroa+OiSgakhx
-    CJ0IqeKLUHspYNb86HWzBcu9Yuj5xklsvbgJfSBsp/Bo33h0XDGBjJtUrUx9m3MYBjv8Mg
-    PKWHVgpomxq0f/sI3x6ZEa8naqfW6nAI5yQOPNZFmp7zI3fpBtfWpshN3SLqdzrdI4ergw
-    pZf7Up0ICvEiAozwOs0OT55d2V8RVZLXDb65TEF0L4BFRtPlSSflnpehfxK3HUeQiMijOw
-    8F/CeI6e+SkYX61YKUlYHfoyiInFpouYWJQBjuWgksjPncWp3oydFjjBObqxsFyYqxydGf
-    DEXMqAIoDumQYIt4pD/n6zQLwz7e0rrWCjB04mT8XPjhlBcV8aj5WHexBLRQoLvwIjp5+p
-    CjCXnbxJxaQxP7+XGFfE5txqRimenHMfhuNwAjiA/hemnq2Hp/fDdmPhQB4XC4NzGK5Ql7
-    H4F5HOhgmMg22pcxyU82spJZS4+0lqdFQBqXEyhl88GiYyQrAOIfVKkl0GcduIuIy1aZF6
-    OlvButgOvEDGc2T7uy8G/Fjfl+7ibU2vI0Bdwcn4JNZ5SpxeOtrklTE2qipA
-X-ME-Proxy: <xmx:FvV1arMw2t2uqC_n9uUlr309NLsfsqhDHhnzHvm-38tvX1vIryU55w>
-    <xmx:FvV1agm-Kx4y_Q72SKpVCdsPADTXLqxWHCZUadUdNhc3YcKdtSs4Ig>
-    <xmx:FvV1agS2STU76Z6MLCgfXTvPpQX3O0cB3CFgnzWGkAW4d-E9JW0N5A>
-    <xmx:FvV1avUTofZg2BMedF5tAj40FeqBBhV-NjxncAbVLwGXYM0L2aLeVA>
-    <xmx:FvV1anBJo6cp7ADwuoExPiDXUD2NfwiNzIwVLvD_DnMbrHX_RgVPnlN5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 11:09:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org,  Philippe Blain <levraiphilippeblain@gmail.com>,
-  Britton Leo Kerin <britton.kerin@gmail.com>,  =?utf-8?Q?Rub=C3=A9n?= Justo
- <rjusto@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>
-Subject: Re: [PATCH v4 1/3] completion: no-op refactoring of diff completion
-In-Reply-To: <CABPp-BHhNHBN0Mt0LVjGEcNL_y7mad7rS6NRX6p14ELrRD-+bg@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 6 Aug 2026 23:15:52 -0700")
-References: <xmqqcxw010me.fsf@gitster.g>
-	<20260807013830.698340-1-gitster@pobox.com>
-	<20260807013830.698340-2-gitster@pobox.com>
-	<CABPp-BHhNHBN0Mt0LVjGEcNL_y7mad7rS6NRX6p14ELrRD-+bg@mail.gmail.com>
-Date: Fri, 07 Aug 2026 08:09:08 -0700
-Message-ID: <xmqqpkzuezmz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ah1DjFWq"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6b026020b92so747243eaf.1
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:11:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786115508; x=1786720308; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=AEbq/wj+gMmgHonHnVQQ4D/ZeUtT+URVH8ZJ3vtHDUE=;
+        b=Ah1DjFWqpIQ+rqF3yvJ5EI3X3L1OcVf5RL/i0UmmDTCHDg8PgzsFfD/BffweWOz/yC
+         /SqSkChge8LSQnS0DIywn55AwoVsBteKJxIV5wrttVgNyL++CGN/1BoC9nnAB0CcQNLq
+         hs5zz65hrKk1MpM1PuyVufCCLplxkmIqpeKAG17olsj8fxznwXB7qhU6Fa6eCf358EAe
+         N+AQCna90bp28y358RcwRMtq/cfhyRCjIUbVTaSpiosTtqHyBzANvcW2SahOIy5NGJYz
+         pcr3WVx1dGQO1xDoHLL+1Wi1AAxl6rOByUdO8gV8jU72pKFyjrvBWq02JQU2xHqTNwiR
+         vNOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786115508; x=1786720308;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AEbq/wj+gMmgHonHnVQQ4D/ZeUtT+URVH8ZJ3vtHDUE=;
+        b=e015Fi0B/fq9r/FO/AIPef9TPRUZBflNksved/YyLWzyV5CFu3Hdfe+CYMLVRxS5/N
+         ZvOLcP9kELB5R6ssaVKR2grsI9RqhTRgso+bpSrQhh+YAvzcYiuo+x7EtgC8QtZoiaE+
+         GXwjgIGeGlzul4KYhZAimNlLlNDk/TN94nrLJFgU/M0+c8Z5HUFnGpNWQDBEuTMLy+Dl
+         bOlx51ii0Z8oHAUBtzU0vOhmKUvTaGrH7GMvkKto28He7BhmEuA3xAsmgdH5sPNAZsYg
+         jyNQuE9stzZjrNh7FUmxiP3+gwL9Fqi73bQte++obiszeFFu1GTPB8ZADIsWMTxgx92m
+         dk+A==
+X-Gm-Message-State: AOJu0YxQjUwi2uPiuBlzmnHnRxfXTksKgd1BjkzUWUhRYKtHzCccEKjb
+	9caqsWivNGUTvuPVhc54bvgPDFxXxFBUAengK5tPW5SZ0uoCaS3CdsbKWW7ssg==
+X-Gm-Gg: AR+sD120mqysVeeprc+WvKGF3R1HniNcTILhjc2Foq9+JQOW6GOkxxbgf7DMSGn2coy
+	AebQe8v/LHnQlO/J5ETptPZEJmTzp1/2Pu1IzVyH7XrLFdNBpdxnWp/1YsXGuX1O7X/0pPw/uqk
+	gSRuI2a7JvMkj5dPvCA+5UYA0yr7IbLxgoTj+GBIyeqroBXCno19gPSh4n8UUlSeqZkMOJ+o5uj
+	rItsWTkaJNiTkPoFMRU6MCRkAvL48DhLj6Pz0W70g2EMlzp0Xjm9oWOeduPd6dcgzQu+tzAnPhm
+	SGTME/da43aIRiNn9WOr7M8VxBMHWr7JxIhS08Bh1FcRoxY2UBKeyCpc1+0CS9Li6r/lVfB83dN
+	ul0nlK4bSd5DqxyhGs/Wm/YPlws/hBWgx/1atDIDZLUFcoh2SOUC3xfiklPkw+TGaWDiTfLSO9F
+	pd/om/y2zvt4QR5VpOF6+dTPBpSQdWkJG0Lue+J8MdkcSJr5f6fJA+FQ==
+X-Received: by 2002:a05:6820:6ac4:b0:6ac:b5ae:65cb with SMTP id 006d021491bc7-6b02127098emr5215297eaf.14.1786115507647;
+        Fri, 07 Aug 2026 08:11:47 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b02bc25c74sm2568769eaf.5.2026.08.07.08.11.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2026 08:11:46 -0700 (PDT)
+Date: Fri, 7 Aug 2026 10:11:44 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/6] odb/transaction: add transaction release interface
+Message-ID: <anX0NDfcaKGFOTjS@denethor>
+References: <20260806213859.816157-1-jltobler@gmail.com>
+ <20260806213859.816157-2-jltobler@gmail.com>
+ <anWDKwkRp1EK9NRi@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <anWDKwkRp1EK9NRi@pks.im>
 
-Elijah Newren <newren@gmail.com> writes:
+On 26/08/07 09:03AM, Patrick Steinhardt wrote:
+> On Thu, Aug 06, 2026 at 04:38:54PM -0500, Justin Tobler wrote:
+> I'm not a 100% sure whether I like "release" as a name, as it typically
+> indicates that we release memory and other resources hold on by Git. On
+> the other hand we also kind of release state in this case here, but it
+> feels like the consequence of that is broader than it usually is.
+> 
+> How about we call this "finalize" instead?
 
-> On Thu, Aug 6, 2026 at 6:38 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> The "git diff" completion function punts very early when it sees
->> "--" on the command line, since it is a sign that options or
->> revisions can appear and the current completion does not need to do
->> anything "git diff" specific. By returning, it lets Bash default
->> action that completes the names of the files in $PWD to kick in.
->>
->> In preparation for the next step to change what happens when we
->> "punt", arrange the code flow to avoid this early return.  The
->> behaviour at this step is unchanged, but the control flow just
->> falls straight to the end.
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  contrib/completion/git-completion.bash | 61 ++++++++++++++------------
->>  1 file changed, 33 insertions(+), 28 deletions(-)
->>
->> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
->> index e875787710..ccd3b2a372 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -1947,35 +1947,40 @@ __git_diff_difftool_options="--cached --staged
->>
->>  _git_diff ()
->>  {
-> [...]
->> +       if ! __git_has_doubledash; then
->> +               case "$cur" in
->> +               --diff-algorithm=*)
->> +                       __gitcomp "$__git_diff_algorithms" \
->> +                               "" "${cur##--diff-algorithm=}"
->> +                       return
->>                 ;;
->
-> The refactor in this commit is a faithful no-op -- every arm got
-> re-indented by one tab as expected.  One tiny slip, though: this first
-> case's ";;" didn't get the extra tab that every other arm received.
+Ya, that is fair. If we keep freeing the transaction and removing
+lockfiles in the same lifecycle phase, "finalize" is probably a better
+name. Will update in the next version.
 
-Good eyes.  Will fix.
+> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> > index 86933d8d7e..420de9aa7f 100644
+> > --- a/builtin/receive-pack.c
+> > +++ b/builtin/receive-pack.c
+> > @@ -2714,6 +2714,7 @@ int cmd_receive_pack(int argc,
+> >  		use_keepalive = KEEPALIVE_ALWAYS;
+> >  		execute_commands(commands, unpack_status, &si, transaction,
+> >  				 &push_options);
+> > +		odb_transaction_release(transaction);
+> >  		delete_tempfile(&pack_lockfile);
+> >  		sigchain_push(SIGPIPE, SIG_IGN);
+> >  		if (report_status_v2)
+> 
+> I think this here is the only caller that we care about where we release
+> the transaction not immediately after committing it. This is because
+> `execute_commands()` is the function that's responsible for updating the
+> references, and thus we don't want to delete the ".keep" files before
+> it.
+> 
+> It would make sense to single out this caller in the commit message.
+
+That is correct, git-receive-pack(1) is the only ODB transaction user
+currently that cares about this. At this point in the series,
+`odb_transaction_release()` is not yet cleaning up any lockfiles yet,
+but will later on in the series. I'll explain this in the commit
+message.
+
+> > diff --git a/odb/transaction.h b/odb/transaction.h
+> > index 4cb2eafcbf..ec0b27c449 100644
+> > --- a/odb/transaction.h
+> > +++ b/odb/transaction.h
+> > @@ -75,6 +82,13 @@ static inline void odb_transaction_begin_or_die(struct object_database *odb,
+> >   */
+> >  int odb_transaction_commit(struct odb_transaction *transaction);
+> >  
+> > +/*
+> > + * Releases an ODB transaction, performing any deferred cleanup and freeing it.
+> > + * Must be called for every successfully started transaction. Note that, if the
+> > + * specified transaction is NULL, the function is a no-op.
+> > + */
+> > +void odb_transaction_release(struct odb_transaction *transaction);
+> 
+> Should this function be able to report errors? Cleaning up ".keep" files
+> can fail, and I'm not sure whether we should simply ignore those.
+
+Good point. Will update in the next version.
+
+-Justin
