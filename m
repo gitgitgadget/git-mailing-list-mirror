@@ -1,82 +1,83 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3E73AFB14
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 07:03:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449D83AB28D
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 07:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786086220; cv=none; b=UWVcwf8HCooMIIbArFGKgZiUu0pjspnLzs+JPoz85JN2CawaJfb75BrEi3AB7Bf4thEjxlnnJZdgXsHuh2F4LzcNBrUkljPCK6iUtXx+vPqaJW2bTsaDU1nME+r4EonsnRwfFs++GMqgJ7Gqc3ISiDPtfMVD/VnMJn2s1dm1Q+Q=
+	t=1786086224; cv=none; b=Pkp9S2O92oxelFizdjT/qtVXHgGGuhoa7dDh1HaNFNcoXYbc6OLeqbHev8BtNdTMZX7gjG6p6fQydspFLAxY3YVwUl42X6b0ulITgg1kUDuKR3+5HkQ6DJfWRXeA0kvOpHpeX3sibZ2U7iZdMAcUGq7Mx+5bC5NeEVIUG9nhACI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786086220; c=relaxed/simple;
-	bh=Zrj1bFui2VZmNsoqNiMDqmkelGzx1LIfENaJvIYCzXU=;
+	s=arc-20240116; t=1786086224; c=relaxed/simple;
+	bh=AwiBLtcqaU50/LI1lcVcLYtTX8ip77lHoh++qVPvkTg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tEbBOmMCcMU/I4GJrzZxI4mBb1xvEBdol99NS556Se/cu5Ndos2CsEo/1vXtViVr+2ap94VbU5WU4NHj2+sQDQv/E9UigDgCUSlgt2JA7Xdo+BZNTJIAOlUxJX255Jvld2votVW03Wxp3fcNyU+iMzUyJtrdyB4LlOS0dOFDiMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Gk4OhItd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KNNnAy1h; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=eoP8VFolFDA1J3WJwGHVclcewmnvJ8+cPGrBO5rUmNPKhB2wV7m+FzrNtSSnTBAvmjA5Tv+RWJ+J1dTCEaVHymULSsuJ1Cfl9OjkiNLwtRfmUQxGHNtBN1oKPZDEEVmQwNd2eMP2X7e+o/ccQu6+JyO+TGxEljR83dkwO8n1dNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BbLownRL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZEKORnYv; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Gk4OhItd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KNNnAy1h"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 72854EC0191;
-	Fri,  7 Aug 2026 03:03:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BbLownRL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZEKORnYv"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4CEF414000B4;
+	Fri,  7 Aug 2026 03:03:42 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 07 Aug 2026 03:03:37 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 07 Aug 2026 03:03:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786086217; x=1786172617; bh=uKtROZLAvU
-	aVl3PNbLAHDT38oUcQWHJI5P4LueYl5JU=; b=Gk4OhItdLjwBltURv5nAvlvkZl
-	Do8hNNzvCpttDa5wPnLaLue5UqhKgc/jAu5KhLfgf1THV1XTC5DfEowXu8S+jDKu
-	popOx5MZh/0+7wO+NmcNmy+jyqmJir78zp0FU/41SQQuXVWMR9YLY3KrZTzEXocL
-	m4v+TuLqbkD9TVu2MnJ/ekEUeop2bpdNj33AF5R/ah9R89lJB2+qfDft3z0f1++l
-	GwHrI8wQXqQIqowu+gE7kMxPRv1R/IZd7i2oI/3VCcbPXW8Ewu9UZlCHU+yZncBT
-	T2PPJWaIb56nLJ8v4kxpAGIdFjTBE25la/7vxXT6YV+rhOjJ8pRvnA55DaRA==
+	:subject:to:to; s=fm3; t=1786086222; x=1786172622; bh=eWtbCrKY7C
+	HCkX8n7+aTsUL+ye9gqvVmRmQnEAs0MQ8=; b=BbLownRL2gMJ7+W10FfKRhog31
+	0xGkqHIhFYH9+DXbazrgae3W6OO4m+elThIMcNPBVTf8TYl31ovawd0HP73Dvh0v
+	PzWWwl0NnSyjN1o5W4PdAYyCKxd+5N5m/7GNLtvZlm7GyHK1kH7IQtmi9dbHNkPs
+	tlT5SPfvWYTZuQV5xGbTsrQyibmIslgIGEd1VOH+JviNYUzBOvy3Vh5U1IZc/R+J
+	trswhxQB5mGNYuHNCvC8CPl6jl1thJhrg6QIs722d9vwujEhScZO0zIA6NRnkDt5
+	sLWUKis4bb4/AAcSVOlt0BCpHjLioFYbw/9ApcIX8gx7a7wg7UwaBUNfjCAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786086217; x=1786172617; bh=uKtROZLAvUaVl3PNbLAHDT38oUcQWHJI5P4
-	LueYl5JU=; b=KNNnAy1hryzB3jk6avrmI3cSTbIiqA3ORWTBl5Piqx2enLnlsFI
-	WgutB+SagOZR5m6Vy3iNBlO1kPBaFdyiupSvJfSCA3u/fnkGQf7W240kavquMbvq
-	VruFK25GrqYXbpKWoVgfVUzDu3L6aEIlHrOMH5IHMZHTXyKy8WL8VRIjJ2FqbDW5
-	qkFh98/3908BQHr6sVYV1z9MHR4edP27Ha5TOX68bnrBKlAaaTbeXlT62AZr8D1+
-	ksEQ0CLNGacJ/Bz5VqNMj4Sh5goCP0tYqsu7wRwvager6uJO71PbD8UuPX6DkzlS
-	gSzl7HDHZ44a0LUfaLaUp9FeK0HfeARqc1w==
-X-ME-Sender: <xms:SYN1apjdyiPOGFhR-QP1blx92fRCkQSQYP3rz6g-v-BzmxdGo4khtA>
-    <xme:SYN1akCJKnHfMWEEy-4aSJpyus3oZI_1jpQ5XYLraqgRYZYXbuh8fmMwPvOTOEVNv
-    _Sl16do4YjRg1qIGuFT-BZ5s5qLXqx520R_dduxqiUFedfKIhtJAg>
-X-ME-Received: <xmr:SYN1amvmtKG_RrCbk5jtXgJtVuy2_CMeyn8yKDRjCQybeZIT0WcdRFuyFd212u-jYMAIZx8eEh2FKarmNsW5xidTgVZR_GYnQ96jBzpEvE6wzQ>
+	1786086222; x=1786172622; bh=eWtbCrKY7CHCkX8n7+aTsUL+ye9gqvVmRmQ
+	nEAs0MQ8=; b=ZEKORnYvVsIOMahe6uU1Fiv2rtiMMT00Bn5+WcVFkpX6W0VIl0W
+	ZqjOGGKakhcw/ThhoBi/oTGTETS+mK4ucyOJZBIM4dhduPdfHTmaL2QdutzTY8an
+	kqcYYSFA765GcRxKElVsJh/yjVB//6OZiiyf6nCLQaGEQZeE+6b6KYJ1yJyMc1cl
+	NmO/+XUgWqvob27giVr7SqTcp+Jpjb4aD2Ryv4TmJBL6RtpxieaoeURjooaLF1Lr
+	0yajqxFlCrxTTnTZ3e/0DMQ6LEMYoPpPCtTqlw7hTsmLMB8f9eVL/CznznGsUmwb
+	xaPw90KchxrvalFk/jsDRXROtYH6p8Bo7ow==
+X-ME-Sender: <xms:ToN1amZ5yBmLWJm-AV-UjUDIMkFxMQpA64clLf-Hhj3AMEOWbnlGgQ>
+    <xme:ToN1avbzCE7MscgPqLS_ejxS1ICKEyc_t2gwM1MO_wqA_4LCSGzNAH95Tkmoy7kAv
+    _FtY9O28y6wdCnZoV0-n9-77cluG3_-FWjqRAf8A4SL-03qsxPp9w>
+X-ME-Received: <xmr:ToN1aunZD7Si92yUDrf8VBqWM-xN0cPYdr5sIUOQfGBOpT8FgaYciVUCHG0qtp6CMMML_DvyyU5RPjdtJEE2oAQ0QY872xXu4WYvv13C_et9VQ>
 X-ME-Proxy-Cause: dmFkZTE26y9njCNpXPcmZxYe4ifaNpV+sYlC5mYRUIr+ln+pB38Sh4kjo5WX0zU5LY8sit
     +oeUUeuwuVDmjatud2iyJtMdnBGrHtsLnRGmbTcsfv4XslNEpw1gmYRc4vkyxvvkVzb6bZ
     FW+Hc4Ewp0bN9yMqVLHrPU0VZXSxvfa2uONHO4C1LZMZN/4xo/SlyjWqoa1PpzuveaGMel
     tb8CZN49JwAhjMMI8vzeUDPe9GRJE1Pij+NlRwONiI8W2cbrpyJAIUbCY4UmewvnRVelNo
-    mmLmZkIFSOfTf9/ExxwJZ9KjT4RrzlQa8TreUzcLYfr16STGdtDWK6anYTN5DZxvjKF6oa
-    xTVzlw6Ei9MH+nCriR5K78lAp2Uus/2BzWGE6ApAt5lPdw0Nolmjcr4RhQ84jaI2bHle0R
-    xHxy8UqYqWgbz+qL63l3zfM3n95RdPPq+hd9aMisTSvvBZRgsoRMCEaDDXremr2TeqPBNB
-    7hofnY8k+ToSURJswZnLhhgx/1E+/dVpEVdib2HN5lomdJCr3FbGQZZGVV9pciBfK0f8SZ
-    GesAv46T04WK0RBHfjJ3L733X1YL81/0uhRq/pO0pD7HfYu+6SW18p6ZAfn+3BHoF3Vq7k
-    hgiO/Sxfh2f0OedyAVVom63toMBgX7zUmwv0wAUTgnfijJc3netZ0SjM2BwA
-X-ME-Proxy: <xmx:SYN1apaGiL3Nbh8srD04J9LzIHbiwbcJn8UWQvJXtU8Of0bmg-dPIg>
-    <xmx:SYN1apWPGmxTA4YDZKb2UJjiMalDvxLS7KrikQGmbT2xQF_NsBXhTg>
-    <xmx:SYN1at7rQhXPsetrORRQeOEJ5Lz_FmTwUPbAILYfHdJPSFK5aQjPVQ>
-    <xmx:SYN1akiUpP0Svdl4KyRgnkd2S76to3NpKuyU27ZuvWJOLilKRQolBA>
-    <xmx:SYN1ahTye-C5Q1E9utB5e5s6Uev-fYiSBCSeLcuBQg0woffCi0SaMhmM>
+    mmLmZkIFSOfTf9/ExxwJZ9KjT4RrzlQa8TreUzcLYfr16STGdtDWK6anYTN5DZxvjKF6Nt
+    q1KxqKInJZZBJE1C8oDy66AANguOy9xDghfkKBXAzFIRKeP0LiToXB9FlGxlfY8t7nso9O
+    igDwK4A0YFrsMipFlsSHY4Y4c6lZEZizYFwM3QaAZbEIj2V6m1i0D0csQN3UOstu3a+CXc
+    6xqKnqWLp8+bcdVXertarGFoiDafI5YLEuZbiqtvIdkDi0Fem7SAKJI37zM6Li/gw3Yj2G
+    kjWc+YfX1UDlL/NmCh5j+gp0gg1Y9OnqqB0qIDVgVix57tmOBX0tB0JemaWxKpVR5KkdmK
+    He2IEVkBsKL+lUj35TZzukyn914zAj1zh/TUdtOrMSNtnj72CLwhEeEeIYxw
+X-ME-Proxy: <xmx:ToN1ajxnLQFObvvyl-ybzTuxlIIg_-33dAH3b-vyturJUT1UMcdPEg>
+    <xmx:ToN1akNaK2jh5IpMvTw37GUjCVBaCEGSFpOegWUcOT7Z6fSRRE8aNw>
+    <xmx:ToN1avSL6Tq8DDQxYIivBGEu7ZHlEuzrYdPsHzk7DSA4DP9kWKnjBw>
+    <xmx:ToN1aqaBsmHY4cvckEn2a5qRWqssKnrm2s9aSE0OD_tuGKCZKLSwVw>
+    <xmx:ToN1asIaUqmZxL_MfRBWLQ884cU5KOHQSJewJRXN05nkp3VYWk3IaVBF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 03:03:36 -0400 (EDT)
+ 7 Aug 2026 03:03:41 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 031a8841 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Aug 2026 07:03:36 +0000 (UTC)
-Date: Fri, 7 Aug 2026 09:03:33 +0200
+	by mail (OpenSMTPD) with ESMTPSA id efc56621 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Aug 2026 07:03:41 +0000 (UTC)
+Date: Fri, 7 Aug 2026 09:03:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/6] builtin/receive-pack: pass shallow file explicitly
-Message-ID: <anWDRVA0mSQva2QX@pks.im>
+Subject: Re: [PATCH 3/6] builtin/receive-pack: lift global state out of
+ unpack()
+Message-ID: <anWDSt155Y9hzHGM@pks.im>
 References: <20260806213859.816157-1-jltobler@gmail.com>
- <20260806213859.816157-3-jltobler@gmail.com>
+ <20260806213859.816157-4-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,63 +86,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260806213859.816157-3-jltobler@gmail.com>
+In-Reply-To: <20260806213859.816157-4-jltobler@gmail.com>
 
-On Thu, Aug 06, 2026 at 04:38:55PM -0500, Justin Tobler wrote:
+On Thu, Aug 06, 2026 at 04:38:56PM -0500, Justin Tobler wrote:
+> In git-receive-pack(1), writing the packfile to the transaction is
+> handled via `unpack()` which relies on global variables to decide how to
+> invoke the underlying git-index-pack(1) or git-unpack-objects(1) child
+> processes. In a subsequent commit, the `unpack()` logic is moved behind
+> a generic ODB transaction interface to handle writing packfiles and thus
+> can no rely on these globals.
+
+Nit: either "can not" or "can no longer".
+
 > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 420de9aa7f..6da854fca2 100644
+> index 6da854fca2..8c2d6e5789 100644
 > --- a/builtin/receive-pack.c
 > +++ b/builtin/receive-pack.c
-> @@ -86,7 +86,6 @@ static const char *head_name;
->  static void *head_name_to_free;
->  static int sent_capabilities;
->  static int shallow_update;
-> -static const char *alt_shallow_file;
->  static struct strbuf push_cert = STRBUF_INIT;
->  static struct object_id push_cert_oid;
->  static struct signature_check sigcheck;
-
-I always like seeing less global state.
-
-> @@ -2354,10 +2353,9 @@ static const char *unpack(int err_fd, struct shallow_info *si,
->  		return hdr_err;
->  	}
+> @@ -2333,18 +2333,25 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
+>  		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
+>  }
 >  
-> -	if (si->nr_ours || si->nr_theirs) {
-> -		alt_shallow_file = setup_temporary_shallow(si->shallow);
-> +	if (shallow_file) {
->  		strvec_push(&child.args, "--shallow-file");
-> -		strvec_push(&child.args, alt_shallow_file);
-> +		strvec_push(&child.args, shallow_file);
->  	}
+> +struct unpack_opts {
+> +	const char *fsck_msg_types;
+> +	const char *shallow_file;
+> +	off_t max_input_size;
+> +	int fsck_objects;
+> +	int unpack_limit;
+> +	int reject_thin;
+> +	int err_fd;
+> +	int quiet;
+> +};
+> +
+>  static const char *unpack(struct odb_transaction *transaction,
+> -			  const char *shallow_file, int err_fd)
+> +			  const struct unpack_opts *opts)
+>  {
+>  	struct pack_header hdr;
+>  	const char *hdr_err;
+>  	int status;
+>  	struct child_process child = CHILD_PROCESS_INIT;
+> -	int fsck_objects = (receive_fsck_objects >= 0
+> -			    ? receive_fsck_objects
+> -			    : transfer_fsck_objects >= 0
+> -			    ? transfer_fsck_objects
+> -			    : 0);
+> +	int err_fd = opts->err_fd;
 >  
->  	odb_transaction_env(transaction, &child.env);
+>  	hdr_err = parse_pack_header(&hdr);
+>  	if (hdr_err) {
 
-Okay, so instead of creating the shallow file here, ...
+It's quite hard to see that the function indeed doesn't rely on the
+global variables anymore, and I'm quite certain that I'd not spot cases
+that you forgot to convert to use the options structure instead. But I
+assume that the function will move into a different file in a subsequent
+commit, so we'd notice in that patch.
 
-> @@ -2705,11 +2705,17 @@ int cmd_receive_pack(int argc,
->  		if (!si.nr_ours && !si.nr_theirs)
->  			shallow_update = 0;
->  		if (!delete_only(commands)) {
-> +			const char *alt_shallow_file = NULL;
-> +
-> +			if (si.nr_ours || si.nr_theirs)
-> +				alt_shallow_file = setup_temporary_shallow(si.shallow);
-> +
->  			if (odb_transaction_begin(the_repository->objects, &transaction, ODB_TRANSACTION_RECEIVE))
->  				unpack_status = "unable to start object transaction";
->  			else
-> -				unpack_status = unpack_with_sideband(&si, transaction);
-> -			update_shallow_info(commands, &si, &ref);
-> +				unpack_status = unpack_with_sideband(transaction, alt_shallow_file);
-> +
-> +			update_shallow_info(commands, &si, &ref, alt_shallow_file);
->  		}
+> @@ -2428,11 +2435,24 @@ static const char *unpack(struct odb_transaction *transaction,
+>  static const char *unpack_with_sideband(struct odb_transaction *transaction,
+>  					const char *shallow_file)
+>  {
+> +	struct unpack_opts opts = {
+> +		.fsck_objects = (receive_fsck_objects >= 0
+> +				 ? receive_fsck_objects
+> +				 : transfer_fsck_objects >= 0
+> +				 ? transfer_fsck_objects
+> +				 : 0),
 
-... we create it in a transitive caller and then pass it down the stack.
-Makes sense.
+This looks quite ugly, but it's no more ugly than the previous code it
+replaces.
 
-It's nice that we don't have to pass the shallow information at all
-anymore as a consequence.
+> @@ -2441,7 +2461,8 @@ static const char *unpack_with_sideband(struct odb_transaction *transaction,
+>  	if (start_async(&muxer))
+>  		return NULL;
+>  
+> -	ret = unpack(transaction, shallow_file, muxer.in);
+> +	opts.err_fd = muxer.in;
+> +	ret = unpack(transaction, &opts);
+
+Hm, okay. I guess this here is because we only want to manually read
+stderr in case we use the sideband. It's a bit unfortunate that this
+requires us to modify the passed-in options structure, but I guess I can
+live with that.
 
 Patrick
