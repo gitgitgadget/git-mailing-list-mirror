@@ -1,182 +1,154 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2047833C1AD
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:22:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116180; cv=pass; b=jAIhIYvbLQmf1UY+nnri7Tr5HabIeNPeSjXkjSQcNzs7mXQ/kD6GR6MUMC3jXz59nXCDa33u0B7RZhAiC4n+4qDj4Tstn8959Y8vwu4PrTMJJi4HCaTmSHYNfJ3lkE6l0mXH/vTGNMpkGJQ7TJGaUEa5yY6vCple3ngSXn6Yg4k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116180; c=relaxed/simple;
-	bh=jIffu+JSRhF7fDKfzRKKi2R93Rhh3yjnWX75gkT0sPo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Tsnq/130Op+K1gdka4RvRHeZlIcnknuPKufhK8vjGtORExN/dybl2qNQh8Y9sZHHkKniO1mvIwb+xFdx/ZAIp9H/KpF21T6ZUar29XNJKEiRHzoiItkKvtoRVeoS+buVn1c0mBHg8pH/lfqwSY/SIFU0xQuUfoMMUWnT7kXQLVE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=brotZDt+; arc=pass smtp.client-ip=209.85.161.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B791A681E
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:28:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786116503; cv=none; b=jW0N4CQ8sv2yICIwayFsEKl9ERIQMHIcoKNRiOex93JGdzURRBpjL96852IxNd3Hz+Wu8jDwM6Tj4FKKi9oL73V+LQoIjMGFYkseQOlOceTLqtX4IGYyf4fj1JL7bW7viW938LrQ6smEJ3Cyq4KTVL0Mwr24z/q6bzIK/qYVFRo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786116503; c=relaxed/simple;
+	bh=ukHAMhkJG60JHKgXLbObHb+c4Fbs47mdiszBtwFXW9I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XDzhFvzs3csfyD6LlA3qDUDkBKH7GKOpIJ8CGft/Cq74sH/Is3xcAiqbGeXsXh1C0j2u/ZGbsxtPtgE0D5umyYdc5dJrWQlIPbNlJS/YiAsDdCWRCvPKSUP3zsakguot5ss2Pk2cZed7rwi7N5dQldERPfr/nhUgGDZhzIUCxCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BTTxHVBD; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="brotZDt+"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-6aea94f96c4so1610959eaf.2
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:22:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786116178; cv=none;
-        d=google.com; s=arc-20260327;
-        b=hHhatfcSEPkGuAlwuhGfp4AadHKURQNJdtVpeDAJkcJ79fYjDPPF78sUSvP8reSNVt
-         imVL+Qt3cSJwlvhosSfNH3PWEiRAvKpeoEFTTj/Ua14Dd1Oshk9D9XjdhEsmTV+RJppo
-         rv5EoPDJoDhY7U1f21Qt2qHMaCTNhOpn56MNaj/9RKpjbsksSmjct7OUmbDndDOsEjeh
-         wdoJSiUYPLTmMaHhOTItChgc+eMOSAFoNLc9xacSskJgaPxXeHOkJtgnUt2jfstrVUJO
-         EcLkaUjtcLpnTOr4xSIAYmjNTSjaXpbYUn9p63J4JZMU2JCbkxHfiV7xroWoZhA/JhOv
-         q9Gw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=J5tPdHGuTnavBGBpDauYuI3WvWV/VHhAYPO3soBaDHY=;
-        fh=K+nwAsTgvJIY4kMWVokCW6lJIm9qzCyizIjWP69oThQ=;
-        b=YFmIBmXE0eRf7ZgyHY5uJbNOPm+ZeacyozWfa0XEQdUY+podyqehBAOnMDXuPVAwdd
-         EOXDg0erHoCCBNbMYVgVuTfbeC9D5dkiL9yx++cKItDO9+QvOBsrzQDegOSJBh2+Clzo
-         6+7prjVlIOiuY21neRKZE8MdVQkAB5PnWsY39oQMSachcbzOjh89pRJxFyTQPZ8yPY4H
-         8NWAQ9aWou4cJtkDzqRFWcpGV27v23ej62IUq4zac2lOfD710wqN4E2pagaiBLpk7flc
-         LZl7Z+BkdQ+HkY0LgDlRpoA5ecEIrW2bQ+ETcItRhXBtZN95yhMZssg6h/gUer3XdprC
-         pKMA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BTTxHVBD"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-49557167508so31768785e9.1
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:28:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786116178; x=1786720978; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=J5tPdHGuTnavBGBpDauYuI3WvWV/VHhAYPO3soBaDHY=;
-        b=brotZDt+b7SNMrYCPWHK5UIVOvHxcrBSHzpYC64T7pPC9jtQGZygRK0QjCqX8aX92+
-         W1NeLEKz8+4K3RK2l8aVNs8A9qTf//doTtAoBovv0+JCK2wM+5feFw638Hw17WRE+2M7
-         kEhVFxaQjLQ+Mt6QqC9kvvoYWpWqC2t6Q6dRlDcLf9NPwl8MDh1aToxhnxYaOnmcsZhc
-         8Xpph5raSIsRsk3AEGN1d2tFw5ZHYzhpnQs5HtVVVORfBjclecZBeSukl0pfUnWiRD/U
-         3D9b1sP88K0rt1XvRZiA1VMBXHQytJRf6j/s1fkgqt4SQSOn0VM3klgW9sHzVsczog9d
-         SHdg==
+        d=gmail.com; s=20251104; t=1786116500; x=1786721300; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=DfV9sdwGSkHkwdJbanwmpCjRnvSWObDW59T9WHNtWIo=;
+        b=BTTxHVBDRkEhqg81dUHMMbzCxwqTKZhmoI3rV6RueVFtbroXIyCRyzwnbYWGxjuU9G
+         ao0AgNo29hfmqTwv+hW2LPDiXXiDIdK5q2rnNOWgHF4KvBeUgXk/sfUpr5llShWjeqts
+         LHZKHqKQgbj5LNcDNauKi/vBEACSBky3HOHBzAoN8SwlRwYYbFvJ7CQ1sxbKAKYKob3l
+         gEInnSuUYQtPWoRtpvGRcalDEJ87BvS67315ndaBpQFx94Sx4izfxaT/68dv/trtoXYz
+         42Jgite7iWYTX8Czf2CS02dd37u0Arc4dVxMWnQ+gn1YueawhxQmPVkzKdF4+IL9oHQA
+         LLWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786116178; x=1786720978;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=J5tPdHGuTnavBGBpDauYuI3WvWV/VHhAYPO3soBaDHY=;
-        b=d/gS3i1/sT90rIQGxacuPPmrCgGBZCHzHJyTNjQ35R+LhZVHfd0lR3aUDukmLSpdHS
-         7YEqpNht+hTyYugbI04+GswYUXBJva55UeB+9csKQnAPs2nUYXEVXRvVUmqzFUP0ip2v
-         cPhPDGm+mAVopgZJ7370MkRg5CCl1WVHIXtkcSvZqG428DECrhinqYCWb99a0hSJhm1+
-         0UIkrs9LvuWQlbud9iTDLJIXTSXXi9LSe2Apw3RDgODCvwUW4FlOTGERoh0jr4xZaupz
-         g5NHJzMogESaIa+uLOLEHZMUS5cv8fY8ql3hq6s/ndB77PpOLxohF7OUGq/vivv5+9Zu
-         Lpkg==
-X-Gm-Message-State: AOJu0YyN3reP8mfNjG4QAtGJWD9N9sHpVkqDHW2H4sXBbGBdDYKBbqYz
-	GvTa1G2gDN/clhrK9cQMIy2WBGPLhneJwjfmqgGS5Re5HiTpRQsPyBT/7arGSwQczRML+Krit9L
-	N2t6UWnBAfpXen07qYujVGUaq5FmMGww=
-X-Gm-Gg: AR+sD12fh3JTCwxHip7BMufJYlk6WR86x5TTcC7Ze3PQt1IPMPHIXg/Q9UZukyp687G
-	O6DdNVH1Fc3LM50YNn/9yi2BDH2tRcQVzG34kdi2Ovj2rwfV+dNP2mBa+P2S9j6YXgtWn/aPN7O
-	MHKViE0rEgMKtv6djYeTpYUeMMlPwFmXpFe7nRRrGAojgxvLV/+Vbggg4A4PhmWA5H2W6bpqZEx
-	X1tm3JRFbbXL2lTyEzqBK/OjIXAkhLQ35tnKnH1HNEIepoVKO2uXc7RwboN5HNE0CcLOVIkU9p+
-	5FGRg56GTsjg0PIfKcPltiqAQWEN/G0yR+7nqE4YNr+nNQpiJI1mSHi0BWTYLrYR8rg12qUZ2IU
-	mwGmkODem2R0D3C9r+npdUFmFQe7H/bSG3F+X74YaAB7kHNabs4hg+Zr0ElGHq9s=
-X-Received: by 2002:a05:6820:810:b0:6ac:9756:c70c with SMTP id
- 006d021491bc7-6ae96ec7b08mr9830984eaf.20.1786116177789; Fri, 07 Aug 2026
- 08:22:57 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786116500; x=1786721300;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DfV9sdwGSkHkwdJbanwmpCjRnvSWObDW59T9WHNtWIo=;
+        b=G1nN5xAf6hdjtkqeVb3COI0p/0+Oc1ZNtcVA/fkCh5rvQbZjdyHPFcJIkuxo1f9DdA
+         v+/yX62tcB9eUkYVTiwfFV5vqCCbYnNTKP5Z1qHAxciYgQ4CItc3Ag4VJtgkZj8swT/X
+         swFPY1gTfx+PVyzY0sK2n6ODLwPV/wZ5UHPXDCkPkOn+vsOuT9gtuQKxxbijOnp7EPjX
+         Vg91GAJvrkxMR6nhHEj4zEpyx1IrW/3avO391pXOBXStC01wDv5LVVYhjf4ELAlr7zCv
+         4CNvSdp9d0gQ52m4h9CiyzTnLTGIt9qqIpnP1I5Xt1N1dkC72f6dUCJEaFBVIiELmgdG
+         OJkw==
+X-Forwarded-Encrypted: i=1; AHgh+Rra3rGimi9GYwKuCieNxOYuOvwqUU7roAiR4O79gpF0P12QbMnf6JgvvG0XOiIsIOPrj9E=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDo+Ip8Qsb5eov1y8r1vM6ZDgTAqQOHJy9OotHAxJ75Ki6bjeZ
+	OwcYzC5WAqS7r0y9ob4JBFQItl+U4QcjmW7LWMzkY5aaOEzacoCO7vUs
+X-Gm-Gg: AR+sD10CuWA9tAfnK9psrVf0V4bmHd/hpMUS2CKigSueXWqn5QXniFR2R6BKnrqMHnz
+	92HhfrRDKHFCMrSeQrtTMNSRV4pJTe8UqO/n0pI1WuQM9UCwJCKMNoKb7OEwKhVKSVcWzhoAFSX
+	I0uHTTWLiDD7dqFNS9jEb976ptgm4qruuuWJDuIsXhVg96N4j7QceVccoeSHzL6xdwkl0bG8x0A
+	VqquTE/5AJYBkKuV8MYDF6Vnv/qvIX/HoOHUqSygUTJiSVqZ2do0hcDqztQaCx57qxO1s+9dC1G
+	NNaRly5WuEst+lDuxuDNDbqEwAqaZ3G+WWSGIOKCWpQhtZ0rBIlzsAinYbp4l2Y1MlK/gqKO7SA
+	aHXUxUj7gO/RHEGBgkOK82/AYKSmTEgKFwA6PP8IRZ+f0me2xTZH3AoYUuIulJ2WKYwnscibCo7
+	LWLwQ8sJWEH1DLKyo+2nKuAxRqyTz0YDDQaGg3mco0WqzdMtiTRQiG7D/RsrVVaj0yigA1PsW8F
+	dl/yCD9ZxaJ/xMDindKyTy4dTaFNYag+z0EZTHZZ3YsoNfqIyCi3A==
+X-Received: by 2002:a05:600c:3b20:b0:499:4893:97d3 with SMTP id 5b1f17b1804b1-4994e7cb8ebmr285678685e9.13.1786116500183;
+        Fri, 07 Aug 2026 08:28:20 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4995e9f0230sm44170355e9.6.2026.08.07.08.28.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Aug 2026 08:28:19 -0700 (PDT)
+Message-ID: <1eba5fb2-ab76-41e9-955d-e283256ad25d@gmail.com>
+Date: Fri, 7 Aug 2026 16:28:18 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqcxw010me.fsf@gitster.g> <20260807013830.698340-1-gitster@pobox.com>
- <20260807013830.698340-3-gitster@pobox.com> <CABPp-BEAtpT208afwSNoBbR-Nowss8OsLsL8ynETuBfN_xvWag@mail.gmail.com>
- <xmqqldaiezgd.fsf@gitster.g>
-In-Reply-To: <xmqqldaiezgd.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 7 Aug 2026 08:22:45 -0700
-X-Gm-Features: AUfX_mwaidn_srK4YmTzJ3e-8j_FdXlHTEFt8jIGToi7JF_01c_x0KcmAoZUesw
-Message-ID: <CABPp-BFmrqdEP1AQx1mB50LX1q63c9cgMeOsVeUZfzgLUA9wLg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] completion: complete tracked paths for 'git diff'
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/2] rebase: skip branch symref aliases
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>, 
-	Britton Leo Kerin <britton.kerin@gmail.com>, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, "D. Ben Knoble" <ben.knoble@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
+ Erik Cervin-Edin <erik@cervined.in>, git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Son Luong Ngoc <sluongng@gmail.com>
+References: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
+ <pull.2126.v3.git.1784708107.gitgitgadget@gmail.com>
+ <b9a01e9141d580606527cb1a658c7c72710fb013.1784708107.git.gitgitgadget@gmail.com>
+ <5bece313-6ffb-450b-add1-29652b64de10@gmail.com>
+ <00e529b6-7ae7-463f-a4b3-0991e9411aba@gmail.com> <xmqq7bmhycxq.fsf@gitster.g>
+ <8631114b-aa6f-446e-9710-92c400320eac@gmail.com> <xmqqpl07fb1u.fsf@gitster.g>
+ <61291144-60da-4e37-83ef-fe09e91c4f51@gmail.com> <xmqqwludan2m.fsf@gitster.g>
+ <0844b4e0-679b-4c0a-bea1-5779b4d0489d@gmail.com> <xmqqh5l7huuc.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqh5l7huuc.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Aug 7, 2026 at 8:13=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Thu, Aug 6, 2026 at 6:38=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
-m> wrote:
-> >>
-> >> When completing arguments for 'git diff', _git_diff() delegates to
-> >> __git_complete_revlist_file(), which only completes revision
-> >> references.  This is good [*], as mixing both revisions and paths in a
-> >> single list for the user to pick from is simply too confusing.
-> >>
-> >> If no reference matches, or if '--' is given, however, _git_diff()
-> >> leaves COMPREPLY empty.  Bash then falls back to default filename
-> >> completion in $PWD.  This fails when 'git -C <path>' is used because
-> >> $PWD is not the target repository.
-> >>
-> >> Update _git_diff() to use __git_complete_index_file() when '--' is
-> >> present, or when revision reference completion yields no matching
-> >> candidates, so that tracked paths are offered as candidates.
-> >>
-> >> This changes behavior even in the case where '-C <there>' is not
-> >> used.  The new behavior omits untracked paths from suggestions when
-> >> no revs match the prefix but matching tracked paths exist, which is
-> >> more useful in the context of 'git diff'.
-> >
-> > I'm looking forward to using this.  :-)
-> >
-> > [...]
-> >> diff --git a/contrib/completion/git-completion.bash b/contrib/completi=
-on/git-completion.bash
-> >> index ccd3b2a372..845fd19f70 100644
-> >> --- a/contrib/completion/git-completion.bash
-> >> +++ b/contrib/completion/git-completion.bash
-> >> @@ -1981,6 +1981,10 @@ _git_diff ()
-> >>                 esac
-> >>                 __git_complete_revlist_file
-> >>         fi
-> >> +
-> >> +       if [ ${#COMPREPLY[@]} -eq 0 ]; then
-> >> +               __git_complete_index_file
-> >> +       fi
-> >>  }
-> >
-> > Curious; __git_complete_index_file() is documented as "requires 1
-> > argument", but you pass none here.  As far as I can tell, it works
-> > anyway, but feels like an accident:
-> >
-> > 1.   __git_complete_index_file CALLS
-> >       __git_index_files "$1" ...
-> >       (Here, "$1" =3D=3D "")
-> > 2.   __git_index_files "$1" ... CALLS
-> >       __git_ls_files_helper "$root" "$1" ...
-> >       (Here, "$1" =3D=3D "", again)
-> > 3.   __git_ls_files_helper "$root" "$1" CALLS
-> >       __git -C "$1" -c core.quotePath=3Dfalse ls-files
-> > --exclude-standard $2 -- ...
-> >       (Note that $2 is unquoted, and since it's empty, it disappears)
-> >
-> > It seems like it'd be better to pass an explicit "" to
-> > __git_complete_index_file than to implicitly get it.
->
-> OK.  It feels a bit strange as an API for the function to insist
-> taking one and only one option, which forces the caller to do
->
->         __git_complete_index_file "--cached --others --directory"
->
-> when the intention clearly is "we take zero or more options that we
-> pass to ls-files", which would have been more obvious if the above
-> were written as three separate parameters, but I'll do as Romans in
-> the (hopefully small and final) reroll.
->
-> Thanks.
+On 06/08/2026 21:12, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> On 29/07/2026 15:26, Junio C Hamano wrote:
+>>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>>
+>>>>> But that was about a low level mechanism that must be more lenient
+>>>>> to be usable as repair tools to recover from such a broken state,
+>>>>> no?
+>>>>
+>>>> It checks the new value of HEAD, not the old one so I don't think so.
+>>>> The commit message talks about topgit using "git symbolic-ref" to set
+>>>> head outside "refs/heads/" - peff had previously tried to tighten it to
+>>>> reject non-branch refs but that broke topgit. I've just had a quick look
+>>>> at the topgit code and still sets HEAD to point to "refs/top-bases/..."
+>>>> by default[1], although there are plans to start using
+>>>> "refs/heads/{top-bases}/..." instead.
+>>>
+>>> Ah, that name vaguely rings a bell.  Is it still in use, and now
+>>> they prevent us from forbidding funny characters like {} in the
+>>> refname?  Sigh...
+>>
+>> Yes, it still seems to be maintained, I guess they chose the funny
+>> characters to try and avoid name collisions because no-one would want
+>> them in a "normal" branch name.
+>>
+>> Thanks
+> 
+> I guess I dropped the ball here.  So given that we are OK to see
+> HEAD pointing outside refs/heads/, this subthread should be closed.
+> 
+> My understanding is that we still have an issue reported by Erik in
+> <amSSYagL0jTgzElD@mbp> that needs to be addressed before this topic
+> can move further?
 
-Yeah, I don't disagree.  I would be equally happy with an update to
-the __git_complete_index_file function to change the comment and
-explain what the first argument, if given, means (making it clear that
-no arguments are okay); but without either that or having your new
-caller pass an argument, the inconsistency between the documentation
-and this new caller felt like an issue someone might trip over in the
-future.
+Maybe I misunderstood but I thought Erik was pointing out a bug in v2 
+that was fixed in v3. I do think we want a re-roll though for
+
+ >> +        /*
+ >> +         * If the branch is the current HEAD, then it will be
+ >> +         * updated by the default rebase behavior.
+ >> +         */
+ >> +        if (head_ref && !strcmp(head_ref, decoration->name)) {
+ >> +            free(resolved_ref);
+ >>               decoration = decoration->next;
+ >>               continue;
+ >>           }
+ > [...]
+ > Should we be using "resolved_ref" instead of "decoration->name"? That
+ > would explain why this was moved and would makes sense as we resolve
+ > symrefs when reading HEAD. When HEAD points outside "refs/heads/" 
+we'd > then skip updating any symrefs under "refs/heads/" that pointed 
+to the > same ref as HEAD.
+
+in [1]. I've also just left some comments on the second patch
+
+Thanks
+
+Phillip
+
+[1] 
+https://lore.kernel.org/git/00e529b6-7ae7-463f-a4b3-0991e9411aba@gmail.com
