@@ -1,115 +1,139 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BDD3BB103
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 04:28:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786076905; cv=none; b=ZMKE5x8Pg3IGLX40fyZ/ZGpDGaUCQ5Bt7AE1n7jvxPHu0S+bI8uCTrA0WkCkPKF2DV0mh3PzqfCC95m+QWXWpnc18PNxU4uzncbH65oAGaxzkowggNtIyhqjgM18SWpagz3Ux1MF5qkd1QYReHALibzHjmCokKHvULBr5ZY5oTg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786076905; c=relaxed/simple;
-	bh=NlctKPznehn63dJdFhjlivSmlKPXqON+t7h+CLzK9O0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YqU5MbyT5e24YbdOQOnNGR4iqdHGK62NA2FZhX2y1vJiueEPumi9K7L7vFpMlxUhtBgX23SNCuW74CPxhql0U4Y8EpiXHRLa8ARQ9nhseY/v2t2ob8rBK4SnUSIW1auW1wb6585qt7GDZd3T63FG0blOsGuyyHTUByt/5WRNPJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Kh675dC5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ID08ursL; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012C44B04B2
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 06:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786083367; cv=pass; b=egbco71cC35YkkIPHLAvvrAdWbGwP6kfRa14QU+OEPCsJ8tTBv8gX/pR2wKAbkZYtE/GcB0kMINzFUk7Ijt3fXxQupU5vnz2f5dxXFniJUcP7NM4G5FiF2IfAITsX3wuPB9HQWhfecZSuObc9pboWQu4Jf17CtbI8nZAsfzQOEw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786083367; c=relaxed/simple;
+	bh=MCNRrn1TaM4VZa599TRRzfBnFs+YJNMyCE3Wk2eJgUw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Snm4Jy2xPHZJfwKVRkL2KaVnhsAhrGrQMbaUHlMatCsPBHeITpDwFKw43LeY3hZLk04c2NeoybGjSy8zaWzzvq3XeBCjIVtKSadgugARUf9DPtlxPf57p9LUCv/m+jhG7v+RfyNAS08TnpRCgqDVNUyBz7BqPsDIs3+XgurUQCM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hd/o7kxp; arc=pass smtp.client-ip=209.85.161.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Kh675dC5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ID08ursL"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 64D471D0007E;
-	Fri,  7 Aug 2026 00:28:21 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 07 Aug 2026 00:28:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786076901; x=1786163301; bh=gzuJ93nrx2
-	dN8bsexkt1fN6SDQAw1AE3MPWoNvb6tMI=; b=Kh675dC5/182Sa9y6TIGMjvQZ+
-	RcHuLARA5XmUGVDj+j1cOCjAZIeouef3I6g8lq+6Phz4OLSHnCaP+frndnkXqj3k
-	smo6/RHlUQGE7ajlV0b/9BO+oGufZmmO/CFmrpsQ1oOMyKDzZDQSHH/oSWFsyeHd
-	7vqcsNMG3rGjhyEh04NxWP7P7UjyE+W06ikocFqLYO7w2tUpakeirulFNAVtgAFs
-	iSEe0glGRffYexqAZlZpUgkA3IMxJNQEVGZMXGmlRILRIa0kds573PbjpoHXdg1q
-	4jnJr8JhXh8KiThETHDBv1gQ0Mkk7F/p2ZmRc8Shn4HcOepcKZa8AVfSOnog==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786076901; x=1786163301; bh=gzuJ93nrx2dN8bsexkt1fN6SDQAw1AE3MPW
-	oNvb6tMI=; b=ID08ursL8KijeFpIpMpW2795btx/95K45QfzK92xWuEbcT/E+In
-	c5+lm2QUvzr9FqeqHdSZb/I6xxdlN70j++OM1tGML7W3jmniWqy4ot2hEvnNktW6
-	t0PjGHkccJ2cRjZCtLHOweTKX78j0IS1/FwQPcLLtCUiiMilzhhlY6YzgC20eGEh
-	loxTd+6Fnw19UTYw17EZ2NdgBNcWHXLj+iga1ShFKo9C+iRwwlGEuHlF9GfQJx7l
-	Ld6eb/FLeVzaBkMwwnsez9UywCXJW8OoqHfV7IP67FqEhEyzpr3u9/6nlDpJbmF8
-	mo0EEy2TyfaypsBNuJqK1HgDpDEJfBz2N0g==
-X-ME-Sender: <xms:5V51akdPJdaZpLEB13ZJbBM4qGrOQjg0YsTZohcwxU7ujW1Z3HJ27Q>
-    <xme:5V51atFxvXWlUrEp2iyumFOp-6KRWdlg_5AOGKlrefkYel_X4A7IfkKgzsXCmocsy
-    WYrrmmhIdE-l5zRPmG75a-036Hnsv3lawkohQD-mcuPHQ00wPBPpA>
-X-ME-Received: <xmr:5V51at3OqSO6YYmFaUv00mHy56I3D818Hemkc2nnUGo5tfpJnehiDNXXXaLz050PFUDWfVw_DJegr7x5l5x64c6CV58boEHQCw>
-X-ME-Proxy-Cause: dmFkZTF8tghpWfxjf9ssYvutJ1h+CZ+I5WVf9Nzd3tqwpPSCTdXdZKgCAWA3WrCnm4sJQM
-    c/DBWPxOnJUn3DAWvownrsRztcgm9iJe3hUyPqr+icdwBgpVosZJwKZpiFNOze3AkAWmZV
-    V9BTjOvxM/S/l4DvkZVUeGczd5x5qq4E8A70IbGuiSdZUkBYLjv1W4AuwqaQoBLc8G6qdG
-    xtQEthEcfKzlfGOzF5sD4/fj05huJYPierUeH98Y6aCUadaNBe9l+vggppRNEL5xTSysyA
-    EQ2Gic9Dkp2tp0LyOKzAH9Fo4ou1AcAMHFKWWogJzjdHiAM3oI/RdUfIE9QNkz7E4NIplO
-    +LXMJfwgJeqIGX6IefO38Nr7pXoqlPwAJvBZAJpqXPkLFxHSwAeaKve0yiUZpNQRSRjCUH
-    OQQpaqbFFS/jjnD5HbNT1wyW6Cex9o4cV0BFtYgbXaiVTei1URn6jB/iHoBnN1ZTM+CO6o
-    M6/JY/7LmwVx4yeqLMCBhRjF5LI3vBAV02Js4a9VJzZy7rdRNMVh9oPSTqp755Ca1DorS0
-    mPUXb6Uf46UNzwq/be3Q1YQ2LTsbQ7FNxO43finMTmqxX8a+UCurlzcw0KlvsKH+Pz4q5E
-    rkAPLjovoO2FiOwm6SHlZiOxrwFZ0eWMH5YGYK63ylxje20FA8m/muWx/zHw
-X-ME-Proxy: <xmx:5V51alnMhJ4SjppD6qxjMqGbkXQj1CI5kLHJBRak54WR-n_dk2_Gdg>
-    <xmx:5V51at-0RJNpFpd4KbqwOIN-najhOB3eX8kxchaa_5fWU4KPqgEIlw>
-    <xmx:5V51aqq2UZLgmwqdAoa1D3NN3aosoBVhEEuI9Ej72Uw2Mb_ymAnLxw>
-    <xmx:5V51amnK2N3WFR7S6RQWmKNWN2fl0levqgatJYNSMKqk6aBuXy9jjw>
-    <xmx:5V51akCODcKd_lP3wJorA4PVqRVqL9x0V06cPtoYieMH8IEt_CMZPXI5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 00:28:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>,  Toon Claes
- <toon@iotcl.com>
-Subject: Re: [PATCH v5 4/6] setup: defer object database creation
-In-Reply-To: <20260807-pks-odb-create-on-disk-v5-4-399da0b0b140@pks.im>
-	(Patrick Steinhardt's message of "Fri, 07 Aug 2026 05:34:28 +0200")
-References: <20260807-pks-odb-create-on-disk-v5-0-399da0b0b140@pks.im>
-	<20260807-pks-odb-create-on-disk-v5-4-399da0b0b140@pks.im>
-Date: Thu, 06 Aug 2026 21:28:19 -0700
-Message-ID: <xmqq1pcah7vg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hd/o7kxp"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-6ae88f4e4f4so1339230eaf.0
+        for <git@vger.kernel.org>; Thu, 06 Aug 2026 23:16:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786083365; cv=none;
+        d=google.com; s=arc-20260327;
+        b=htbVcYWHCkL8/Ir7nIRjeafjQicn7NTAbYHf74quhuRIrQ6FWd0nqqQ/IIWeY0yFgb
+         WoRikR6jA97fRd3skynFbcviJUI2aHpQuolrxs06k3f2nRpuC6ZtF5lChhBkgaZzIsOi
+         3onSDOBK0MkObMBNm5zcCUPXPS53YLGGI/x6Flt9WwtEDlzY29k1ZIuE3wZuudcTSwDm
+         25jgdKmV9HDWuoZv7vfkdDX61ds0/TS1mC7iQFhoPRsTdVHhe7afiLKzaTRR9xjS5q/N
+         ipUzt1L0IQbAjCwoBOIrTovXtgExj490DAfC3Je7bZyEy9RInMTbj5gKkPEQw77V8iDE
+         guFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nIH83vewMIIWFnBwoj5nXvBFB0m4coug3CbHSJzuRY8=;
+        fh=K+nwAsTgvJIY4kMWVokCW6lJIm9qzCyizIjWP69oThQ=;
+        b=ZZcBfNh2UeUKHkiRGwh0Md/NmasDxze1uc1rdYbUsMsJ74Y/DlejJCI2TWHsp280OR
+         LnZ2VCDjOeZxEEIRyeIZCvqtKqhuMb80TNtVEDoFnaeFHnWagwGA+LKDgb6WjWcr/CKL
+         32aWTMjwiA6dbYJQvvVuhBxmKCLJflzL9bZC6Bx8CyD9Aof0VvORLaeU6Ml5uVYYodZz
+         JRUzd4mDg6dW4G0G9NhMoxE7hMCoSG3SOdHRyj2yGCeFidhKw0nlvzyOsagWjf36suZE
+         aMw5Fe1dGlHQdFrNayTbrVv/ULcbBAlCuBvqFfJJGYBefo79npr9xRP44FT+Zsd/IcY7
+         6RxQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786083365; x=1786688165; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=nIH83vewMIIWFnBwoj5nXvBFB0m4coug3CbHSJzuRY8=;
+        b=Hd/o7kxp2/xdFQX6yJENsSZYO40V7uTvfhEluuTSDCMDXTCjpc8xK64Ztir+RPKXXL
+         I47tmWoxg8Fc+Pdvu5dBNklNKBioMWQ4ZJIMgUMCVKyQIvBEgVOpSxGM8+EpaXmjW0Vl
+         2JQ7P7uNdRI43B/O+RZRKhPajTCGCyBI3YEp6Aj4lK9mrAhMkzPHdF/094TxiGAreJeG
+         Vr+5nhtG3dn52ufZp5O3udsr19WC++sUBg06oO90kQhkhxGs7zItphiglz8mpWMjdAM+
+         ZIEuSXDr6J4y3rg8hmwrnviuZWmL61eQUojDqXQJ4y+WQt6VsNMrT7gg1+6+nzs9786r
+         F08w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786083365; x=1786688165;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nIH83vewMIIWFnBwoj5nXvBFB0m4coug3CbHSJzuRY8=;
+        b=OWBFF0BUClgRIgcMMYOOrPdDz8bSft+eVJo1Ll1ZqCil3wjpLKl6C5I6neSw/sVOAB
+         7AwWT7Y0f5ulfSLrgVX8opiRdQS3vJhn/Qjhqa93+WJj7pOhewmTe6/dtKYr+UzB31Tw
+         +LZGc8fEtZbNTgd4zAxU1kULKFDr3rXGxyTe+mIkbiWsFtnvS9lR7HZ6B2qnwjD/xOqF
+         B4ivdx11/y21MyUfXuZFYmOCzC9mMcJG6KCA2xdq7uBAQrI5CrBjxWMdjP1e1HAHD5HY
+         QOvioGGOA6bd9+C9jtsWffHwefiEerSWGxEHCAvGKC7oA9C913jzFJUOG5vuO50RHQ7h
+         ahpA==
+X-Gm-Message-State: AOJu0YwOZa0D4/ofq2fK6kAVtRWwtcPQPi42dYmo2D6lJkeau6sPO0ey
+	GitNAqt/v49d9DkkVCi7r05DhbsvP/qsmUvVs5kOn5ONXCHeapBUOMytyoESs4X5pjXh2Egr9BY
+	g9jOI4PTXQPGrSXonoXfLmBWsFvDCzXA=
+X-Gm-Gg: AR+sD11/IxLIiDLPBbHmAa4nnOZgEs0ZPRPpxDuiksOC0UQtvzAJyKBvni1N0JmvM9O
+	RoVtv/xjf1VeuI3jX1eEgMHv90Y0cwbGG51SdTxd3GI94ovY1eFgfot5gNvdUhbxB4kw1v3meQW
+	PRvsFnvMg9rB1TsQyuaL0JRJBpsk0EnbcoTIxq3cUTbA4dKBFBtw9DkqB+SaBsMZH41o0NnVG9G
+	cWob/bJQHtvxd4JZ2BtHAhcZiXhxykuQOEkkFtYkAJDOs5BwuzKhaAhcql1sYX7FFUFNxAGzWV1
+	V1+plBrIQ5dl0Huz4TcED4J3N+4V1ujZWullaGDQoPF2ThaRO8h6WSl/8/1g+Wd63K4USSkjo63
+	wRGF+r8i4iBeXquvA3GLuf92WmCqS59JBjwVaoSCxqrb+2etH/ZRNmCe1xE/OjYo=
+X-Received: by 2002:a4a:ee0a:0:b0:6ae:6f38:dac with SMTP id
+ 006d021491bc7-6ae96c8490emr10890908eaf.10.1786083364794; Thu, 06 Aug 2026
+ 23:16:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqcxw010me.fsf@gitster.g> <20260807013830.698340-1-gitster@pobox.com>
+ <20260807013830.698340-2-gitster@pobox.com>
+In-Reply-To: <20260807013830.698340-2-gitster@pobox.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 6 Aug 2026 23:15:52 -0700
+X-Gm-Features: AUfX_mzd6G3zrJPxr_XOkdmAx062RwjBnxlghxfqnm32kIfZaZvX-LDvrQnbutU
+Message-ID: <CABPp-BHhNHBN0Mt0LVjGEcNL_y7mad7rS6NRX6p14ELrRD-+bg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/3] completion: no-op refactoring of diff completion
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>, 
+	Britton Leo Kerin <britton.kerin@gmail.com>, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, "D. Ben Knoble" <ben.knoble@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Aug 6, 2026 at 6:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> The "git diff" completion function punts very early when it sees
+> "--" on the command line, since it is a sign that options or
+> revisions can appear and the current completion does not need to do
+> anything "git diff" specific. By returning, it lets Bash default
+> action that completes the names of the files in $PWD to kick in.
+>
+> In preparation for the next step to change what happens when we
+> "punt", arrange the code flow to avoid this early return.  The
+> behaviour at this step is unchanged, but the control flow just
+> falls straight to the end.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  contrib/completion/git-completion.bash | 61 ++++++++++++++------------
+>  1 file changed, 33 insertions(+), 28 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
+git-completion.bash
+> index e875787710..ccd3b2a372 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1947,35 +1947,40 @@ __git_diff_difftool_options=3D"--cached --staged
+>
+>  _git_diff ()
+>  {
+[...]
+> +       if ! __git_has_doubledash; then
+> +               case "$cur" in
+> +               --diff-algorithm=3D*)
+> +                       __gitcomp "$__git_diff_algorithms" \
+> +                               "" "${cur##--diff-algorithm=3D}"
+> +                       return
+>                 ;;
 
-> diff --git a/setup.c b/setup.c
-> index 5dfab3e79e..97338cbc51 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1888,6 +1882,7 @@ const char *enter_repo(struct repository *repo, const char *path, unsigned flags
->  		read_and_verify_repository_format(&fmt, ".", NULL);
->  		if (apply_repository_format(repo, &fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
->  			die("%s", err.buf);
-> +		repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
->  		startup_info->have_repository = 1;
->  
->  		clear_repository_format(&fmt);
-
-The previous round corrected the overly long line while at it, but
-it is no longer done here.
-
-Which is OK either way.
-
-> @@ -2090,6 +2085,7 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
->  			if (apply_repository_format(repo, &discovery.format,
->  						    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
->  				die("%s", err.buf);
-> +			repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
-
-Looks like the differences since the last round is truly minimum ;-)
+The refactor in this commit is a faithful no-op -- every arm got
+re-indented by one tab as expected.  One tiny slip, though: this first
+case's ";;" didn't get the extra tab that every other arm received.
