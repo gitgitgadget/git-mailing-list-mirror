@@ -1,157 +1,144 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227D534216C
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:33:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116798; cv=none; b=dRHBncf1iC5LLhdtnvEz4hacQdVRmDuClpZkHgj2FA0n8/M9TV4QIGQon0+z6k60K5Y5ZH+vy0xP+H18wxpt7BeyqT4J4zifnQdWeh3nK0c0x1CfdazAo+mEfuCoe1wmLL60LrL56LH8X1Wph+BBHmzC6btvXIXucnPLV9h4rbE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116798; c=relaxed/simple;
-	bh=u1myE46IF3KNp5EFGcO5zxEPk2X0Y+Qhj5jDShnrVe8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qVROlbzDZ+GAVWC+faMAfe7vHe8yh1znIsKY8GQ6F8Y5P/xY1xRNkJMt+X2cA1VTipcGlEzPXEr2KNHKqDpplmXGsVv8rg9XHjTvcbTC56OIO4RajV4bHp7qDNAitVrOw+j5MqX3V9G3zslWGVHhECBUKZrPckwEPdbptk5eFsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tg8o8iBc; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9647280331
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:33:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786116817; cv=pass; b=Gh3qMZbqzUtpBcfZLoaUBlP++s8xDEtzlwtAo6O0jWqbnNKvHT9rgNpn3cY9CuYxNPxxJgWiIelJV5ytatQeEArt+jaOth11MzjkvZcakKgj21lQZYtuUYGKAHkHA5dpy7HntqOgqdXxm5avSpDOEotZ7BuKzrpvccKMI9HDmtU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786116817; c=relaxed/simple;
+	bh=ntQZfoqt6YRMQtO4iFAYbJARhhnUk6DQsfLLTqlQCPk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DfRkoOaYiFG4Wgp9VtEhiOoB6fjuidUd8OUOpeCObJeEbtnRZP8FVPp3c1oT73o/drKc6HYgY1kp559S6R3EyaaXTcZOLsJiNGo2MzS76+58WOAnDP+0GXA904xsT3VGlF0SKnsBQLkKRm4duqCE6mvMI1O80SDoiauYs47c5UI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YYKE9wzM; arc=pass smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tg8o8iBc"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7f18c0e03e3so1821523a34.2
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:33:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YYKE9wzM"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-456f7012050so1762536fac.0
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:33:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786116814; cv=none;
+        d=google.com; s=arc-20260327;
+        b=j9nbgnNqbZ3PXUyn2aET5U83jX63iEALPh7AwKquJWQqYmVmXJ4vJeqX3C+Qhk1wGM
+         9/MaKWwO78ocaPPX49azMkwDbpuMDgpZkFGDyxZ1VtY0xu5UHFU3TT2MPUcINGeqccGm
+         VYOELINCO5MDkUBQNq9C9IHJrPfImF3PK5nsEqlBixSAE7Ab7JOXuKgDvbXAfUdx4Tka
+         IFMpHERuQdh1DBm24gSdtWx3TeeRGvjAGXcbpvPs7lC3I5c9icssBZVws2yxcILICl15
+         8n8kyJIB/AxJDblHr7acTFsz0X7swIqM0whkajGyHoU6Sn00d+VI5NuuvT5n8feH57GR
+         Fypg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ga4d6UG9770Httjkf36V7b+ujUnuVg+hiB6Dcld22ec=;
+        fh=euL+wxaGGjBW4xTZbmmY4PM5MI9XSlhvJbT45YaBhE8=;
+        b=rO2kdOZWKJPcf8Kxr6zXwsT+kfiQilt6PvzoTcr5v6lIVVuy8XYF3G1bnA8N0rHhbw
+         wp3+Fj0tajFaDHqt662kuQlWO70Q/LRbSi/HTf2poWsrVuf6mnw5IBjXzjyVyg83eU+O
+         z0Iugj1Dnaq4XK/u4BCBGevSIyuzlhDy8zhIQ2hVLJAub2xTDBCq0rygoFzLkEAerERK
+         i2UAxzOOJRwFWEGejHiYUYsB8Rz06fb4GCKUEud8vVUpcAx8vy7aWmBQZRWfnKpBfICZ
+         kZ61xOiEhUEtrw5ar1KtW7W8GshOa6RoiBoX8oJRik5/PxMPNQutgVV2LSvtaXrbsAni
+         UgsQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786116796; x=1786721596; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1786116814; x=1786721614; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=mu9DfOlbuIbBsQqUU6NdAPYaazplVEnq9ZiGl0KcQkU=;
-        b=Tg8o8iBcIcu+CuuC926IjDzWuD0TUYtMJS49yEoMkP5gKj7daKWo0OHQJJ9C3jpzc5
-         cuyQEiHC2wYrpnqfd+ClNv8wicQmJfag7UZYEmjwWRWf0loYTGyKO9201TQJZ8GInnQS
-         mvEjPn2kZqS53hRT/7aFA5bDDDIx3WTcu5dFSrxtQLpbd32sT231063fboRA89UmUn/+
-         ZmCwmSPx2XlM5SwYUdzZhjH7tPqvzc9eMtthvN2k+mbSO8KkWKHxEe0htfiQinGYdiL9
-         dzZhuYrk1Ms9Puz4C72EYyNdP1s0tQfv7miV/ybQWbxuUiYfiGtBsWxeKxx9sKBfCKL6
-         /Kyw==
+        bh=ga4d6UG9770Httjkf36V7b+ujUnuVg+hiB6Dcld22ec=;
+        b=YYKE9wzMantMD1EBCE8eC1I9mXvttIXHoH4aGdDe92AS019W8ZzaPi2wtLfe0hjsDg
+         2e6sya1+D58U/L1PtaoO2IYYYOa9ayrU8q80XdrdBdUM74mfr0s14XaFPacjWLZtd6P7
+         bNuydc0iHxKytEYCeY2Ys6h6r5vvtpdlNFFsCRAgLPIdCjR//dPQB7xUjaMQKUbue0D/
+         FLJgBHW1kJ2sxuGusVa0jHohYz3l+bGcdhPcrm44WhFXWWllgUFxB0sqlElZhJMdwEd9
+         cC3G7QDfZ9Yk0v/kszWr9//Q09geHj4tUS7djBBK74Nb+l7S2H4LSi2AZfmO47Nwj+VB
+         YmLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786116796; x=1786721596;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1786116814; x=1786721614;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=mu9DfOlbuIbBsQqUU6NdAPYaazplVEnq9ZiGl0KcQkU=;
-        b=WjggKMoqwYSVFpnKhN2TPsoyFr0kINHvZ0ah5lLBnP21K5TOIibnp3j3fOKiEdQfUv
-         ybtnwl6MtApYcNIrQQhQ8yc49ArCIyPHg1pBEi8euwyo6A+9VnZsaNNsvNBLTW4J5ld2
-         /wAcRyqJO+BLdCIlVCRZKVWmF8+NqIcUKiyt3SP+lsYste8J/1bcgeAwleNX9BraoG7q
-         E8NmkKFJHaF4hxMgN7SM5mDk1f+bvYp7SVkYw1QUJgcyVnDPcnTovE3yreyMh4uLy3s+
-         i9J+8UuyamKn/KL/cWNa4ihY24Wk8N+zS4o23iKB45E7L12VCmZfKkCPTY2l0Xsrg43p
-         HCnw==
-X-Gm-Message-State: AOJu0YyYwKps9gxQZBUDwMG2Pi7h+34dS/WU+jB9W+7PP+CEF8xehbdg
-	+rxsbsW6Frf4422dBezbGuEj21Me7eX40As+2h9bdXdvuuSh2A/aB8FM
-X-Gm-Gg: AR+sD10rDMx9SfZtB8ZsCFvJoSf9o3Ac/nEdPQVCgRXaq+Xtczz/XRRFmqbNWW7qu1C
-	1C0K009usFpw+pEzH/9rAFDjeHE8DXg8qQXJlH9rZzSa8fJG2MKfXq/XIgYQWPOt3sN0x9BLoHd
-	UG42JMIPgy04HSFq1nNXyy/6jPKluq7+XuFfi3XVdvDp5okTwYlxHA5Dp5jMJfqQMi5riocCttP
-	MM2Rm090GwB3S+Dc9h8NRS7CoIC4jWi6rAfdwpyvWQVy9GLkTYiGLv6cc7kx8Scd9LDa1py9uLr
-	mEQdteh1jEnqpVo2vxzSdORyCFMmWcgb8GTfF0s+U1M7aJ2deKqntZ6PQ1DkyKO/qsCcZwuw9GA
-	DupL0YVp6FyOMug55ej67kKZQmdXT/G3lDBSRV2CKxngBzE/zVJWs2ah1PLx5Pk975jmc6av+Sh
-	tiE3Hdxy2pSUKDrVnijPuqvdTTK2ASYyADY3STYTZtItT6GqC1GWN+sw==
-X-Received: by 2002:a05:6820:1508:b0:6a3:1dc5:356e with SMTP id 006d021491bc7-6ae970ab4f0mr11305872eaf.36.1786116795919;
-        Fri, 07 Aug 2026 08:33:15 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-459f1a9d9b9sm2127604fac.7.2026.08.07.08.33.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2026 08:33:15 -0700 (PDT)
-Date: Fri, 7 Aug 2026 10:33:12 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/6] builtin/receive-pack: lift global state out of
- unpack()
-Message-ID: <anX5PxN15qvtfFEX@denethor>
-References: <20260806213859.816157-1-jltobler@gmail.com>
- <20260806213859.816157-4-jltobler@gmail.com>
- <anWDSt155Y9hzHGM@pks.im>
+        bh=ga4d6UG9770Httjkf36V7b+ujUnuVg+hiB6Dcld22ec=;
+        b=BAdwIVrvmYWpFUvEtaVLUBzSnErUJma1IkTQlDoakkUTi0hVCoPq+ITEiDgHI81M8r
+         LNibOgpIv5JYaKHNF3/tzi4Yctetn7LjMjVrBxssIM7g9MvKEoJ0KtvqEo57XnSUcqBz
+         AzVVRG+zxsagDF0yUI49kJJ8jDZlbH5v+3gCeIVk+vgmXz81ETtuz/3ziWVaRyPWxXRf
+         TxzgOu7gVtdCo7Q+HdVsTHMzrYZJiYvioJWLJfmY6rkKY9z8l7M+rZTnlc0Z0EPu14Qd
+         3UITXTeOOrRCsixQWw1MLA4KKSC6yCQvqV5Yf3Shl8ocjtGUvXUfouAdzjNJ2opTxGvs
+         DwfA==
+X-Gm-Message-State: AOJu0Yxo3NZt33xJI4njNOzKKbViGvYyfMojj8cBL7QGJuVxYCFO2ZBU
+	IWcRG3MvOQcc5ZakHbo2yJz7pqo4A8rEcC0vLibPBh1FRrqSUfUN7KMgfoL+0EytA4jMJrnzSSa
+	UnrJamJFIB5thetUpvCTPcvsgTmKOmrI=
+X-Gm-Gg: AR+sD11dRTzqMvZW05yYXVFopv2GAGa5u4W6U+ziy99X62yxFBJdepl8DrNbPHfQQUX
+	gEX92269n27gyQ7TDuAtpAqIRgPXJ4A9Tc9v2Hx0lRRu9AFyu0lqkw/TP4FNnnQSx8SrbJjyIRc
+	/fNOT+px9462/BkEdRp9WRbgh06cSozPYqBT7QJLgMjowcmbfYuxHQEI9f1/owjJRvNQ3j904sT
+	R5RMe1vnJsKCA/T+arzcmrOrZ2N6raBbSSRpMF5IIIrelDUSt/vZH9F5UtqbpBonKiQy33rZJ7n
+	d2hCACVx4g/k6BH+BViAKxw2eJ1a64kUFyzI155LP+6y6EC5zY/rTsGwY7lAXYQadmEfkWYJ6vR
+	EZI3sG/GhWBduJ6CLQCc7GxjNsuh4z9WV/ckjgSSveJOTiiNQzM/vydqQq5Yl8lj7z6he+HA64o
+	s=
+X-Received: by 2002:a05:6820:f033:b0:6b0:16d3:fc8a with SMTP id
+ 006d021491bc7-6b016d40c4bmr6073079eaf.14.1786116814510; Fri, 07 Aug 2026
+ 08:33:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <anWDSt155Y9hzHGM@pks.im>
+References: <20260802212826.1090943-1-sahityajb@gmail.com> <CABPp-BGYuQA_ngR3xS-_Mndzf_ubkn7rSc25CJG=UbLCVGdnyg@mail.gmail.com>
+ <CAP=WS+sp74WQ=xndQ+2a6W-qP3Zz8=bVnEymgVpS+gwMv1Dh7g@mail.gmail.com>
+In-Reply-To: <CAP=WS+sp74WQ=xndQ+2a6W-qP3Zz8=bVnEymgVpS+gwMv1Dh7g@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 7 Aug 2026 08:33:23 -0700
+X-Gm-Features: AUfX_myC4bzWmn7NNd8eQn5gqLoB7fZrgfbo0ukY-pa1auKzV1ytnBrKDbEQyd0
+Message-ID: <CABPp-BHLaW6_CxMdPQURN7zMK1p7dEkihFMAkyWvcd2+j7gJqw@mail.gmail.com>
+Subject: Re: [PATCH] read-cache: avoid sparse-index expansion for unborn HEAD
+To: Sahitya Chandra <sahityajb@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 26/08/07 09:03AM, Patrick Steinhardt wrote:
-> On Thu, Aug 06, 2026 at 04:38:56PM -0500, Justin Tobler wrote:
-> > In git-receive-pack(1), writing the packfile to the transaction is
-> > handled via `unpack()` which relies on global variables to decide how to
-> > invoke the underlying git-index-pack(1) or git-unpack-objects(1) child
-> > processes. In a subsequent commit, the `unpack()` logic is moved behind
-> > a generic ODB transaction interface to handle writing packfiles and thus
-> > can no rely on these globals.
-> 
-> Nit: either "can not" or "can no longer".
+On Fri, Aug 7, 2026 at 1:05=E2=80=AFAM Sahitya Chandra <sahityajb@gmail.com=
+> wrote:
+>
+> On Fri, Aug 7, 2026 at 12:17=E2=80=AFPM Elijah Newren <newren@gmail.com> =
+wrote:
+> >
+> > This explains what, but not why. It feels like a pedagogical exercise
+> > with no actual utility.
+>
+> You are right, I found this through the TODO comment and do not have a
+> concrete user bug report or use case driving it.
+>
+> > Why would someone with an unborn HEAD be using a sparse index? [...]
+>
+> I do not have a good answer to that. My thinking was simply that
+> removing the special-case fallback still has some value: it deletes a
+> long-standing TODO, unifies the unborn-branch path with the normal diff
+> path, and removes an ensure_full_index() call that future readers would
+> need to reason about.
 
-Will fix.
+Ah, thanks for looking through the code for TODOs and trying to clean
+them up.  That's noble.
 
-> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> > index 6da854fca2..8c2d6e5789 100644
-> > --- a/builtin/receive-pack.c
-> > +++ b/builtin/receive-pack.c
-> > @@ -2333,18 +2333,25 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
-> >  		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
-> >  }
-> >  
-> > +struct unpack_opts {
-> > +	const char *fsck_msg_types;
-> > +	const char *shallow_file;
-> > +	off_t max_input_size;
-> > +	int fsck_objects;
-> > +	int unpack_limit;
-> > +	int reject_thin;
-> > +	int err_fd;
-> > +	int quiet;
-> > +};
-> > +
-> >  static const char *unpack(struct odb_transaction *transaction,
-> > -			  const char *shallow_file, int err_fd)
-> > +			  const struct unpack_opts *opts)
-> >  {
-> >  	struct pack_header hdr;
-> >  	const char *hdr_err;
-> >  	int status;
-> >  	struct child_process child = CHILD_PROCESS_INIT;
-> > -	int fsck_objects = (receive_fsck_objects >= 0
-> > -			    ? receive_fsck_objects
-> > -			    : transfer_fsck_objects >= 0
-> > -			    ? transfer_fsck_objects
-> > -			    : 0);
-> > +	int err_fd = opts->err_fd;
-> >  
-> >  	hdr_err = parse_pack_header(&hdr);
-> >  	if (hdr_err) {
-> 
-> It's quite hard to see that the function indeed doesn't rely on the
-> global variables anymore, and I'm quite certain that I'd not spot cases
-> that you forgot to convert to use the options structure instead. But I
-> assume that the function will move into a different file in a subsequent
-> commit, so we'd notice in that patch.
+If you submit a v2, it's probably worth just being upfront about this
+in the commit message -- that we don't expect this to be used in
+practice, but it makes sense both (a) to remove one more TODO, and (b)
+because it provides a net reduction in lines of code in read-cache.c.
 
-Ya, that is indeed the plan. :)
+> > This seems to presume a single dirty file, otherwise wouldn't the
+> > printing look pretty odd?
+>
+> I agree that "dirty=3D%s" looks wrong when multiple paths are
+> present. I can fix that in v2.
 
-> > @@ -2428,11 +2435,24 @@ static const char *unpack(struct odb_transaction *transaction,
-> >  static const char *unpack_with_sideband(struct odb_transaction *transaction,
-> >  					const char *shallow_file)
-> >  {
-> > +	struct unpack_opts opts = {
-> > +		.fsck_objects = (receive_fsck_objects >= 0
-> > +				 ? receive_fsck_objects
-> > +				 : transfer_fsck_objects >= 0
-> > +				 ? transfer_fsck_objects
-> > +				 : 0),
-> 
-> This looks quite ugly, but it's no more ugly than the previous code it
-> replaces.
+:-)
 
-In a different version of this patch, I modified the fsck objects field
-after initialization and dropped the single statement here, but I
-ultimately didn't think that looked much better either.
+I'm curious if the unittesting harness could help here and avoid the
+need for the test helper changes.  Is that possible?  (I don't
+actually know much about the unittesting harness abilities, so I'm
+genuinely curious).
 
--Justin
+> Thanks for the review.
+
+Thanks for contributing!
