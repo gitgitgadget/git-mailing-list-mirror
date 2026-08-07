@@ -1,77 +1,122 @@
-Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2533305057
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 07:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786087057; cv=none; b=tg1x1wqWWV4FtsyxQBH3jPUKvqU9p+7vD9B7EIYyNfe+ACGTEYP2BOzWUY8C7tdeB2s5FyAD8cKh8gCzQxzP2g86pvvFh2V0Lxp2VBNF5Xtb//qI263nTzK1XjWX53aw7JCfsYNQwmiGG4aYvrZgjSrOKdL9Wk0ZEZdom3cWTTk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786087057; c=relaxed/simple;
-	bh=wamw69lAQQKxxlEL5MLjzEEgudji/fLnzzUPbToLRaM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qzj+I0Mr44FjYq6zzvzBp6LJrNAMTwp12ew5V3/MpTWlwvmw6nPcKgeNN7NGWaQJX6ZxI50hEX5TwyMpzZ4ysvSuKqxQo6tRJGe085aGX4Sa1kVVSHjSy7K2oMIaj9EIVN2lfFDEdiOli+QG8doOcyNouSd+C678BVSyv7C6uM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=VwdQDZP2; arc=none smtp.client-ip=91.218.175.185
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BDE3E4C94
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 07:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786088352; cv=pass; b=ad9VXBTaABNCkp4ALjSE+uWl+xTLAJcAZuYnuGLZaRq68brMkhuyKJshUydD0j/ViXvcgSHwgNqFkyyRCPwgfrBZ/pkgZoG5H0Ti4o2vu17+gADJa7Qo/j1eNZuYHpeGyewHFgM6fr6okYqSpIFbvINTRxdJpBoE7sW6Y24qxp8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786088352; c=relaxed/simple;
+	bh=z/S1K10Txd1OudBU8G49N9pStkLzFJ5Yqtt+1kP+3so=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AYf9CHFParYXSVuwUIINxhiMhfCSglPwU0t6C98VtwO+4seLy1Xs6cb30nGCb6usisVB/DxatkNPIRonNuWH+PIZ+uNO+9rSLO+oI4RYNPp8Wc+usocG44aMJJwnTf6ibIbgnjfripFpdHf8ljinjWI4NfddDiq/P74sL0YWx70=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SAkEKRoC; arc=pass smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="VwdQDZP2"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1786087050;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lZfCSMxOnrVcQiUCtKdD4x7TgswfRrpT4LV3bBv8yZU=;
-	b=VwdQDZP2hcE18mCWkeB8CbMD7hHs0Nw2kOElcfyyJQ/klbOaVQr0uXThD1ZZ5IRovcFE9a
-	8sM8Gh2XYPLBF0VKU2mzFQDhLZEpqdyL/Iqnb5h2ATobk4SlpovYC4sWHkMeQwLO6SJBjD
-	kwwwqAc2I8rKgtQKiCrw4V3NoMiz+zk=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v5 0/6] odb: make creation of object database pluggable
-In-Reply-To: <20260807-pks-odb-create-on-disk-v5-0-399da0b0b140@pks.im>
-References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
- <20260807-pks-odb-create-on-disk-v5-0-399da0b0b140@pks.im>
-Date: Fri, 07 Aug 2026 09:17:25 +0200
-Message-ID: <87jyq24cxm.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SAkEKRoC"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38759bcd877so3256390a91.2
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 00:39:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786088350; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WWA5h8XPn5Hc9DRa26LxSKPlEXWIOmET7/OUXXo6LCmmx0u61hymcDdF1QmzG+UI/l
+         dhJSM01TRhoqKxDtEt3lIXDiSM3TU/8CpfQtKzW+ChWWmioYdq1HLRqth4tuLy1SS4ZU
+         3yx3EtMi8Cw1PWV1t/G66SpEoyiJyMUw7l3dqNMeL1HMBcXURz/kw3Nvia6Y8gVzTj35
+         A+Rby8L/sYk6YIZMO2sFGuBd5K6927tzvZys2fddSW8ENtB42tpQaBYsEBKPMLCsraG7
+         IRIC3QyOONx5Uwsg1ujXniAK3Z0MGPOeGPy+751smu6UGZkjvqnLCrvB0CTzFU/yPWGp
+         BAYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=2TUKW+E/XjEtZxCJyZGk+IjyLc7xvEwQmPt/C1xSt8M=;
+        fh=jMsHqQQH38l9hZ5LmZiiTQ5KFo0wM+ejHUCTa3FXjXk=;
+        b=EslnMWAj7LUhzI3OtRrcWlodVX6erd4rwPCoqtwdRKWIpZAgbiw+6x7IjlO7o5pj5j
+         DuxAFIWVWOSkjBkIi9EWtBb+Zm+QxtHu7TnESUXxDon7VsQjZ9B7ZPI0IIOZDyhGfYCk
+         z2z4JK4TnMy0tDs2hGDOhGXDiQo8DyF9DAXu1hrgaYx1QCMbX/BSTxE9bvy4KPpl923B
+         YrObqosAkIabJZtg/blgxAGXyoxxkaQ69IUYFaIHlcsMcfPnt+wXRBjPh/defWwjYoKZ
+         961oEI0htKW7GqZQy/NiJxFQhqMueoPTBX8YSozsNLx2tvoQsxZ2ocdg61ViDu+hE5UU
+         119A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786088350; x=1786693150; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=2TUKW+E/XjEtZxCJyZGk+IjyLc7xvEwQmPt/C1xSt8M=;
+        b=SAkEKRoCoXgfHGj3meV7OJ7v8A6dVUhNLXL6MpyT00ymAVaD1VwuR0OKGIUb9nYMXY
+         3mGSp/1AtwuRnJj8kyU+SVJyIs0OPpJotS4qAL66wG7vmLrYT51L3Xwn9BgsPtzL77q6
+         daJNZfvTyESRCYR0OMGQndfotTLNP2jagG3XdE/H2d5I2uQuXYbkehg4BmHGLgFnv/1A
+         zJCeSQlTknfOMZ3ifFS+b+pW+ZoFuqGVXvDybnbwS6EyCpIIEUL1oPltEp3dpUURu6Vf
+         oE4hV9g27qLghtBxY0AVRuyJVgvZYPjoMAyzdk94BY3VhIbl0VnXJyG6syQok+7DPZNZ
+         DPNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786088350; x=1786693150;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=2TUKW+E/XjEtZxCJyZGk+IjyLc7xvEwQmPt/C1xSt8M=;
+        b=pE49UiFl0Iws7t1BCmktZBcLK63rmSrYfZ2kaSOVrQ/7XvPM1aRAf+VkRXdWhH7Q03
+         s69CwZ5OHZ1xwPRb8Uff+aK/HB/eJUZ3o2xv9SFNwodZSHHs/ZVlDnA2F6/2JNGWUntA
+         Q3F0aYxGn+nxaCAlI+fW/msQx2Wqd+88tD6Pod3P25PBTV+ZdovRdG7qwUrmBQ3o85cJ
+         OsIpNkeO7gZWa8mcHoLmgi1HH0cm26P6/qqn3jnD0/WO35GCkNHjJP+9qklU7ge1+cDr
+         zLFDhBrPtCCSoCulL9Qxj1XN0s53/Im4GlflY5tuHLKkpUXa9P6pl8Z/I2zwZYn0x+CZ
+         SMAg==
+X-Gm-Message-State: AOJu0YwdPi2yuAgjhsYIhAjpTJJ8W/a6d2R5gKHGw+89iUTNDVcSnVqW
+	9TRumXfsm/oNWRo6ao8W2Lo00xZR19hKaX99xNAh6lheS8EDbn3adKhThtvBaaZdMLu6QDlnJVr
+	LJL4wC5s+7UHb6f1Hv1GdPlroAwIKVaY=
+X-Gm-Gg: AR+sD11dbIwOAEVLbQuO2jIuVHRp+k6H0+t1jClW/ssvUE4sNrNQqowFKsu+fy4NfyI
+	KYJpg+VsZU8zRSh2luQxOQm39CMJPTmiaZaHf/gsFMHi+Rp1To9uZkGKdKxsAFOzbmfv9QoV1Td
+	nRHBe2N1XWngp1lDEtzRv+vUGGjDtg2Sd5F0WjnIn3sfOsVGzXNEtSFl3+8GfM2MkNLKyZZeKAy
+	LcwhCafDBrkxV/EJjyRKNZH0a+g5OJTGa6LTBNaIxURaV+/nTsu1tqD6/YG9JoF+7klTE1SZGdC
+	WWqUWSVZUKphn5Hx+VvJ5PG1Lqh0YHu1T3xgb7vk1NH3ZM0xm2/AjTBY5+j6EEgYysCuZ4hi/n8
+	GGs23QSly+QGktyh9XIJxG9stxkt5EQ==
+X-Received: by 2002:a17:90b:5683:b0:381:26f:8f05 with SMTP id
+ 98e67ed59e1d1-3903c5380f7mr20655046a91.3.1786088350238; Fri, 07 Aug 2026
+ 00:39:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+References: <xmqq8q6ih924.fsf@gitster.g>
+In-Reply-To: <xmqq8q6ih924.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 7 Aug 2026 09:38:58 +0200
+X-Gm-Features: AUfX_my0Bp3B8k-d3eJ_AjahD6VdnsNUxOcmJ3kAHMk75rT_J3gvP0c_Hpppqls
+Message-ID: <CAP8UFD0i3fr8sNu6wa8iqfdy3t=j0aVHVpjsvks43WVKogSdXg@mail.gmail.com>
+Subject: Re: Can we do better than "git checkout/add -p"
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Aug 7, 2026 at 6:02=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> I am doing more "git checkout -p" (selective revert of local changes
+> out of the working tree files) these days, as well as "git add -p"
+> (selective adding of local changes to the index), and what I often
+> wish is to have _both_ as possible options in a single session.
+> That is, the local changes in my working tree often fall into three
+> categories.  (1) One that is clearly good, (2) one that is good but
+> not yet ready, and (3) one that is bogus and should be discarded.
 
-> Hi,
->
-> when creating a new repository we create a couple of on-disk data
-> structures for the object database. This includes the "objects/"
-> directory hierarchy with "objects/info" and "objects/pack", which are
-> specific to the backend.
->
-> This patch series makes the creation of the on-disk data structures
-> pluggable. While we continue to always create "objects/" regardless of
-> the backend (it's required for a repository to be recognized as such),
-> the other subdirectories are now created by the backend. This will allow
-> other backends to plug in their own logic.
->
-> The series starts with a small detour into the loose-object map. This
-> detour is required so that we can defer initialization of the object
-> database itself to a later point in time.
->
-> The series is based on 9a0c4701dc (The 7th batch, 2026-07-22).
->
-> Changes in v5:
->   - Remove a leftover formatting change.
->   - Fix a stale comment.
->   - Link to v4: https://patch.msgid.link/20260806-pks-odb-create-on-disk-v4-0-ba8b4fdd2e3c@pks.im
+What if there is a hunk you want to squash to a previous commit like
+HEAD~2 or to a new commit in a separate branch?
 
-I'm completely happy with this version, thanks for bearing with me.
+I think that if we add a new way to handle hunks, we should consider
+more cases than just reverting, keeping or indexing. We could perhaps
+take advantage of recent developments in `git history` to implement
+the additional cases.
 
--- 
-Cheers,
-Toon
+On the other hand, it seems to me that GitButler's `but rub` command
+could do a lot of things like that, but it looks like they recently
+replaced and split that command into more explicit, intent-based
+commands (see https://github.com/gitbutlerapp/gitbutler/releases).
+
+So I guess the main issue in designing such a feature is to make it do
+many things, but not too many.
