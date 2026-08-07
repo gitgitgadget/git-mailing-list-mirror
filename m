@@ -1,83 +1,84 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BE8339B41
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 21:11:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78610231A23
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 21:17:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786137072; cv=none; b=j4uKX8OLM8TVHpaBVWAhftxnR9oXhoYTWw98j2L0HjFFsdQqvu2LU3D9xZ89/HvJ2X5TCdzGpHiiFshUr+BK3nYCRwzf2CRIDALwNc5OgVvW/rUDfCCDHMTAU2VANVjXuXGvniLYxFk361vK5xWFh1YK3sh74WbAExVrQlcC7m8=
+	t=1786137462; cv=none; b=S9H6hO5areC4P8AlGb4GDHifEFJHdw8ub4HVgH2rSKaZI8ae2WzyjlfSCAdbzDWl/YkFVVKi8FUN7vlGyAvyVR4pIHHigB4Yq63SZw45UQJqW9F6VBWOofZt3tLrerJwUPuc1wmu0vqKI7LZd1CqjhjduZ0sNcvBncM8aZ55SVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786137072; c=relaxed/simple;
-	bh=RS1LAQPWOsxwZ7AvNIPNDQwpEEENymDKZJ3PiFVOSOY=;
+	s=arc-20240116; t=1786137462; c=relaxed/simple;
+	bh=ZF8Hyt1Wo60sI8DJhjULORtIoCTfCuYQ4G9jo+fyX1E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bmJ2jyr3hFQSNZHGB19NzGS14/zmGD0V7BYL59iyGJTTobcM2sVMwkdq+CFOSywqPmKwxXGK8T9xBKvZjcXU3fEqZ/wLKouqv5wvPSxkl2m/F6Jp+8eLZthIdJ69LeCMQ/mI95YOWmjJxOrih07b5He9CSOXH/6EqcsU0sksjxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bWM6j0jq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SRmEobfR; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=bw9LKiWzvik//EhMoqiy1lt4EvatAPFJQm/MzjoZoipbLr3xlIaRF+N4tXA9BDFYvOWdiouOgbTBRvkSVNhnS6RpxV1B5l3C1qxkSbgQ7Lkpjzq4Ale0I+pq+D9lHEcU8/+cR6ZqYJWjeFAxA01NNMx79/lLUIydgLoF7xYsc8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DOiOADVX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mXIPDEx5; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bWM6j0jq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SRmEobfR"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id C43B01D0012E;
-	Fri,  7 Aug 2026 17:11:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 07 Aug 2026 17:11:10 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DOiOADVX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mXIPDEx5"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B658A7A015A;
+	Fri,  7 Aug 2026 17:17:40 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 07 Aug 2026 17:17:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1786137070;
-	 x=1786223470; bh=Cbb0nesWizRqHjUaWc4OMSr9/x2Vn24DODzqXiwoC4Q=; b=
-	bWM6j0jqKqU6CbDh1vm1IZSnKfXJnWi6eNHzw/1G+hrDYm8QZ6QbbRh0ZnQ1/DWK
-	V2b2Y5vh65MpnptKwhK5qPmrlmQFarP9M5yRVOsBomq2zJ8oqNVebADuVFWWtiYB
-	0g8f8X3vay7S7oKD96gl0Zb9j9fTr/ZNcBwmd+xzt5FkDn3tdlTl+HeEwWc/LDFU
-	kQx1zZ0bVoCCZEkEWUkk5hL9S0QdffcrlPeM8bR2mdM6HRAsTlZwVfGVSaNgBFrT
-	b+23uiEf91JytbaLl934r4Z/UOXmhbj9Ba6TSgTZQkHBGRI79lsnSnJ5vjng179p
-	dCt7no34obrHgtWj5JYxwQ==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786137460; x=1786223860; bh=T74NvYepvk
+	CY+XotSOI7NmVp56ABSOi2sZWL2NTMJXU=; b=DOiOADVXTb0IvHdVDH7fZKHCK8
+	yOsaQkq2JDasFG8xgXSudcagG3s+DIK3NKrZfQOkk6MmPSzrgr15N2w8E83rb1Oy
+	NSZU2y8fybHX8VBj29jR1+uVlL2Abjm7SZLtkmlvAAR7GwY4zYgncvowr9rHH9/Y
+	9bSt9Hor4Cm0bXGM8IfFHb6QurMNK3QGctovQz1jfcYTElCW5Q885Im1579xSLny
+	5aWqA/JpBJwydjzFU5HfnMlKlIqSYD4AVd3tC9nnhQQ4b/hCoFccXLq6WOb4iWsG
+	VeDXE6EzJAh1ULHLV4H+NwRazzuWIlYFbLi/+LfL5xIGfqJ9z4rc2Mxmb95g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786137070; x=
-	1786223470; bh=Cbb0nesWizRqHjUaWc4OMSr9/x2Vn24DODzqXiwoC4Q=; b=S
-	RmEobfRB2ZI45o573B5TrcNx5TVxtusUf/ypMibjC3gcPEvKVaUtOdpA7wsZgm/W
-	qhhfd2J1dnn5iq1FyADJ0K1pdao50ErkIL+sQwCHDuSXA9cQVGCPCDBoz+wYImwS
-	rrRzHy3kqApPsqf1rcoExdJeMqfhPPCAODUHmhy/ShYkjDvM4VQEMLzc2yLApeIu
-	XJ4FAqtNoa2sIXUxMakd36SfV8I1JFbpemPjJ/vH1MSinu9aM6jE/dAAZaDpsL3u
-	x62T/T2b9c4meNGaJF6GdL58YvDnYXFXS8fiwIMzJLXT/eImOzjO2bmo8d0Sk8RL
-	8dnAJJErE60/U3zEmCdUQ==
-X-ME-Sender: <xms:7kl2aryVTzcOqdjoY3nWgCC6fSON3cia2Q7oPof7osxCrTF2SPIQBg>
-    <xme:7kl2aqRp6IGU1W6FDtgILwI08krtpYiy2ge2ijnWWkvx6VsVzgTIFs0enI67BQgmR
-    Ekewsem1H1v1GIfJrAPWtS6TtOqCZUC-vT8PR4jRwAfSF1_LoYOJKI>
-X-ME-Received: <xmr:7kl2aqVg-Cc_nkvOsi-nuShXaoCZ1cxyd9MIPGRiZnKJxgslAaQp7C_lHWvJeIvuHKqL-f5x2ueMqs4khdoOpAVggNQawPd_rw>
-X-ME-Proxy-Cause: dmFkZTF6dgcjJsk1DUmm3DG6OLrdC9wn2OK5j5OODnRwCOmHWx080oeLhZQH+2dxWgjWP1
-    tOeFBCTReWxRJa0t5UmO/tSNq+HxN2qXqO/9eNx9KmicvCdwrDrLQJEvVuU58QeEiR8cuj
-    Mc3SQSPzeonMJQqjvauh+8ATpu27TJPt9FlFEc5baQXwAYgmDNvNCuaFiUS3p8ClBXZok1
-    DR2ugvTpOc+OEvw5UWfWrMeyPAT4gB13+VzHaqbaBd+PBELOiZ5eqx+Zs0RUIxR6VQjnJ4
-    6l4k+pxcvQ4NNraCeSJqm/RNNJhbhOUE6pdXwjy/OvqCvnZXB5aOTThix/Hdkdo44gB+RQ
-    voEhHJoX1wJL+YFWfJxCWEC88OLV2WERv5mYOAn1zdZyBkCyAKqHpTa4tedI2u89AU73nS
-    U0X1yd/J98day3r+21OYZlClDAyLk7nu5HqE+gief0YiIJKOzRBoCg2tV+ZGJeymmsAkBf
-    VFxAxaXWTo+NTmKmJg2njQVkngJ3fpoEfNPTViQbq+F5o9E7qJtdQRXvf2TTA8ovZo82EC
-    LjToi9GxjBKj9X5RTdcEsBm4pZ1qr6S8mECSe4knBbJ0eHmWKMZsy5DaU4I1u0vi329Ecb
-    +GtkN6DETUN566Ci73IUfm3fyrUgji+PjywoetruIDXedKfMr7jSe/hKtYrA
-X-ME-Proxy: <xmx:7kl2akZy0TKi_q54xKZ9Xo94TeilWVlIMuCj0oCPJevA0UMWhXDVEw>
-    <xmx:7kl2ao3BoYm8Y5-bz4rHijPrNcSlJL2C-WWjKFMDqVFv7IX6Oa80pg>
-    <xmx:7kl2auhkVvCwT3sAgem3fBq_nYU0mCi1r01qc0vJt0ggu4007GCsGA>
-    <xmx:7kl2akZ6PLGRRJ6f-E1UkjmWb34BM4RxSsjxVuifVhb7Q27K7HNyhA>
-    <xmx:7kl2av5vTv8383kQHOsuiL8zGFgNopYJE4vzwSuu8taXrA81l35w3lfX>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786137460; x=1786223860; bh=T74NvYepvkCY+XotSOI7NmVp56ABSOi2sZW
+	L2NTMJXU=; b=mXIPDEx52hh9EVjiBrF8qf6qkDoD35qoeFhZxw1X/h90XphjfOG
+	7k/tFc1tBnvjltViizYRaK1S9kimbFWSgILWB3zh8pRRXBOnx4/5Nl9oLsmSuuy1
+	HsAMgU1lOdDCYKI6Xf2OFtlD1ZD7GUjqBB1zrOtl25X51PDE3axvAdSd/V/yRFZs
+	80LqDrIVcC1RfYELMiTaHQ59zHTPZvmdHoLFkLH8kUThOLEi3a4IH/AoXVZqutjc
+	g2wLJzZfXqdiWbkgWv9qKomWm9zxPREYhpn0saInuE+xtKCFUnqMNS7R4mS8Kb7P
+	znMxrWfZRUQDb1G7MZ99LiDl6nwYnBSKUJQ==
+X-ME-Sender: <xms:dEt2aqHJBvtyEVVTIQ0tQjj6SrGj1Z-_uMLMkytSegXZ1JeiwYE78g>
+    <xme:dEt2atmDRHi_SY0x6juCMbNcQMtaL1hvp81k8PLay3WlY8luweqkIDUOqr907bQay
+    ahal5vtCysboNIT0cvN3a_dvcqOCRFlngZxWhY5xRHheM9aK__c>
+X-ME-Received: <xmr:dEt2amb18Gimi4_MMeaNyKnx3AY_S-Ebd3cdgI9mZpS2Z7Ep6ESup6Ge_blDYnnGHXmMPV7H3e8DEngbq0YcmMYL7-gO85K1GQ>
+X-ME-Proxy-Cause: dmFkZTFHJAFmjvideK+NYc8grSKNI1YRTPk4ZuSIYtC0Tfvf25PP5RCClygqJk9HfZXQ+H
+    mU61l10pUnn6oRXG39jp+qJ7yg8HH/jIBFry5WohgDVL5vA+Xis0f2LKv94YMVbpJsSoet
+    /D2uJbSDQHtMKn4Rv4eIbkwGZdYadPeFhx3kXeSPVEA2gJk1oThPle3o0NUQwnxo3Td9q5
+    iEFas6rrtIUwHbwvccFNTFMFC4GRylI1nbldOr8S1hFwHCKJkOMYQlScxMDjhFuGE0mtxU
+    Mz5i004ETgwYNo5yrEDOkbFhv02QjifwXbvmSqtypYzmX9WTEU0bchodFO5eRP1ouBzNCS
+    9EZEfmpJHbgqVUnIf09cPLBTiE47RYIerkipZVmNzn1bzhr1ogDNRfMOjd8QG2tdgzJf3g
+    GE5P+r48WF8mpYphT3W5UoPiNebKzK67pwRU98gaBFxLp1LKyJMtXUsATjGYaH3vVFEdvR
+    6IYkJprrsPWshcm8xFZpns0AjkvDaLHVtmuX1v9YO28Rr8SGZ2/0ITjIBuYJmr1dlOcCTo
+    W+b6HYbRjPPnC6EjHpmo949NT0Glwut+JxEr6wA4hhOSjJrkLp3r6+OeN2sCw5ckPMMGKR
+    k3+P32mc+FTWR/2li6hvcL7Z4vCW2QQM1t3hup0V2r4Nk6wsl4SmhwyGkOUw
+X-ME-Proxy: <xmx:dEt2aqGOyWeW8idEbcy3fncAZk7fz0Lr49YipgnmQyY-aqF4sjuSNQ>
+    <xmx:dEt2avI0F6kEa7ZN9ppKBkLUQjngKmI7Xx1aKGpnvJPpfI7OWJiCdA>
+    <xmx:dEt2atNW2NXgR7ANR270ZcKy8JrRyXzDrGI1hjlLWfHUZ2CC6NALvg>
+    <xmx:dEt2annlfONGULZwup3d6T7gKYovTs5D7ywNT8uNTshgW-haaroQTA>
+    <xmx:dEt2asEps0VMerwKd7UtmEHqmXTCKBhZqp-8QsvAEvNnAmSH8LLKD7yf>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 17:11:10 -0400 (EDT)
+ 7 Aug 2026 17:17:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] environment: clean up repository config handling
-In-Reply-To: <anW7wHfUxYj9cj0P@pks.im> (Patrick Steinhardt's message of "Fri,
-	7 Aug 2026 13:04:32 +0200")
-References: <20260805115342.3939931-1-cat@malon.dev>
-	<20260807085932.3958759-1-cat@malon.dev> <anW7wHfUxYj9cj0P@pks.im>
-Date: Fri, 07 Aug 2026 14:11:08 -0700
-Message-ID: <xmqq1pc9eivn.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org,  Tian Yuchen <cat@malon.dev>,  Todd Zullinger
+ <tmz@pobox.com>,  Patrick Steinhardt <ps@pks.im>,  Olamide Caleb Bello
+ <belkid98@gmail.com>
+Subject: Re: [PATCH 3/3] core: convert build-time USE_NSEC into runtime
+ core.useNanosec
+In-Reply-To: <dbbd96d50811e4c2decb6f754b56dc1f7ee0944a.1786103607.git.ben.knoble@gmail.com>
+	(D. Ben Knoble's message of "Fri, 7 Aug 2026 07:56:26 -0400")
+References: <cover.1786103607.git.ben.knoble@gmail.com>
+	<dbbd96d50811e4c2decb6f754b56dc1f7ee0944a.1786103607.git.ben.knoble@gmail.com>
+Date: Fri, 07 Aug 2026 14:17:39 -0700
+Message-ID: <xmqqv79ld40c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,60 +86,65 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-> On Fri, Aug 07, 2026 at 04:59:29PM +0800, Tian Yuchen wrote:
->> Hi all,
->> 
->> This series contains several cleanup patches for repository configuration
->> handling.
->> 
->> No functional changes are intended. The patches make the related code
->> more consistent and easier to maintain by improving documentation,
->> formatting, and the organization of repo_config_values.
->> 
->> RFC:
->> If there are other small cleanups in this area that would be useful to
->> include, suggestions are welcome.
+> Racy Git problems persist today, manifesting themselves in the
+> performance of commands like "git diff" in new worktrees [1]. We have
+> long had a build knob "USE_NSEC" to tell Git to use in-core nanosecond
+> precision when available, which mitigates most if not all racy issues,
+> but most builds we know about it don't use it. In part, that's because
+> someone distributing Git can't safely enable it at compile-time if they
+> don't know exactly what platforms their distribution will be used on.
 >
-> Somewhat unrelated to this patch series, but I was wondering whether you
-> plan to drop the limitation in `repo_config_values()` that requires that
-> the passed-in repository is `the_repository`. This limitation is
-> starting to create problems as more and more of our infrastructure is
-> migrating into `struct repo_config_values`, so using a different repo
-> than `the_repository` is starting to become harder and harder in our
-> codebase.
+> [1]: https://lore.kernel.org/git/CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com
 >
-> Thanks!
+> These days, most platforms are likely to be safe for the USE_NSEC code.
+> Regardless, we want to give users the ability to benefit from it. This
+> requires exposing the compile-time gated code as a runtime option.
 >
-> Patrick
+> In addition, update the Racy Git documentation and other mentions of
+> USE_NSEC in the code.
+>
+> Best-viewed-with: --ignore-space-change
 
-Hmph, that is an interesting point.  What is our plan to really
-enable the use of repository instances other than 'the_repository'
-here?  They of course need to be initialized with repo_init(),
-but is that enough to sensibly use the embedded 'repo_settings'
-and 'repo_config_values' structures?  (By the way, it is not
-entirely clear to me why we need both and how we sift variables
-between them.)  Some code paths need to work outside a repository
-and still need to know about per-user or per-system settings.
-We were perfectly happy reading from global variables when we had
-the majority of them there.  It is my understanding that they are
-now found in 'repo_config_values' or 'repo_settings' associated
-with 'the_repository', which I think is something we cannot
-really avoid doing.  Unless we try to get rid of 'the_repository'
-and instead have free-standing 'repo_settings' and
-'repo_config_values' structures that are not tied to any
-repository instance, we are back to depending on a set of global
-variables. 😞
+Don't do this.  It probably is helpful to have something like that
+below the three-dash lines, though.
 
-In any case, all of that has little to do with this series, I
-suspect, unless we are redesigning these configurations and
-settings in such a way that they are not necessarily tied to
-any repository instance.  While I do not know the exact details,
-I can imagine a hierarchical system where system- and
-user-wide sets of setting values are known independently of any
-repository, only to be overridden by per-repository settings
-using a last-one-wins strategy at lookup time.
+> Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
+> ---
+
+> diff --git a/environment.c b/environment.c
+> index 6676e6f5ae..e6a50060e8 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -571,6 +571,11 @@ int git_default_core_config(const char *var, const char *value,
+>  		return 0;
+>  	}
+>  
+> +	if (!strcmp(var, "core.usenanosec")) {
+> +		cfg->use_nanosec = git_config_bool(var, value);
+> +		return 0;
+> +	}
+
+OK.
+
+> diff --git a/read-cache.c b/read-cache.c
+> index 6c449f393d..297646c357 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -353,15 +353,16 @@ static int ce_match_stat_basic(const struct cache_entry *ce, struct stat *st)
+>  static int is_racy_stat(const struct index_state *istate,
+>  			const struct stat_data *sd)
+>  {
+> +	int use_nsec = 0;
+> +	repo_config_get_bool(the_repository, "core.useNanosec", &use_nsec);
+
+Yeek.  Isn't this a relatively hot code path?  If it is, it is
+criminal to force string parsing and matching like this, every time
+somebody calls the function.
+
+Doesn't istate know what repository it is working with and in there
+you should be able find its repo_settings struct cheaply, no?
+
