@@ -1,159 +1,215 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBB744A3F2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ECC449ECB
 	for <git@vger.kernel.org>; Fri,  7 Aug 2026 06:18:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786083500; cv=pass; b=go8YxMiCrVoEXWASBLvB3um8/iFYUb9wbljhIZK6j4M9KFaFznhnh6Bcc8lcAvQNIQV5Db3dMtYnA526jgyIDuJI1Oz/Gx7C9x0PjVdKAWjXrQPN0QD5nsIiYqAUage6QINRvxrz1ZY0p4EM4F8Z7RupMmD1EkUSmkBrxO9zRr4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786083500; cv=none; b=GDnmv7DngMSyo4O9Fr3WcdoeTXkZABnIxkdABnaZON9mdVG/tET6KgwmcyveQUqkfwono8vi8xgr8unz7iQpxueo8qhL/xUrpHIzpPADSXH48CUAqIM1+ZWXIXwuTzSxmgCeWUli5NhPkWxZh/CebNGXdWdzp9J/Bw8Opeoj5BU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786083500; c=relaxed/simple;
-	bh=Kwq40FXd9U/IT69Mp5aESPYYHpz3uZgCFoqx3bhMJc8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SkQVCoD/u7BMXRw3UPugXpyMW3Rxr742I6bEbAxTbrRnzKU9h5YhxM7L+yTrTSc9iUMSaJrzhtdAfZh0LJ4CEfd98gi+yDj2fnreBC4Wb+e/hCnl8IsQvZNnvV78bXsk8/RWLivQqS41jyYKoZ1GlhiF1SYXzB0TBj0XPCgekoE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rcDqcnEA; arc=pass smtp.client-ip=209.85.210.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	bh=An9Be1p0F2Xcz+nY0buzujh9peESEerTttXISo5iZtg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Y6dBInxBGtCrUmLYeMm16ve8t6dmzybv+CNIKXVWpe8C24SIFQcWcRsfCRR6rX21DJQschE7EqLEtV6hAXg58JBrkpHSFxJwVpun7SbfEw7hoE5Owe3/uCFwgdV3pRNKtwPhFcvf75DoQQvVDK59IqaZA0etXY7wXEwqGdiyxNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=axOM2zcp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iYHU4YRc; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rcDqcnEA"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7ec58fa3e01so1606286a34.1
-        for <git@vger.kernel.org>; Thu, 06 Aug 2026 23:18:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786083497; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ie2Tf9B2N9f/L4CYPbjXH5t7p1z0+hjOMEWwbO4ICzPtVfTV8jGxRMi2ssd3Gu2WRE
-         4nU4DSD5f3znlaNOiUCeIjxlxdSYq+xn1FUDklPCecz5H76ydjYYXKRovxooNUROYwob
-         HVzSYM+u4v5aQyKiIzm9vvZPHfvHme8ps7KBnQxShtx23/9Ss4gb4brVeh2UKFwfdZ+S
-         0Yy++1HV7KAARRM/06WSZO5Lov/MjfFVBSxcVYUmoP6jX9zRLy+5R87sl3O5bUCQKtkm
-         +/YczfisBJ68YxI4pJG7JLl6iSppagZ7MO6BwGqGm6MzG3GwPclVGX6DlUDoUQkHRVLs
-         5VJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=mpKU+h8DQhFZiE3n0uakTrLO3Nyi3RpXdr1xGxJNc/k=;
-        fh=K+nwAsTgvJIY4kMWVokCW6lJIm9qzCyizIjWP69oThQ=;
-        b=JtNU8ULWJVbAFCfrNNSidvZKe3HqqdLyPKg93C8gSd++xjA1crLAz0ZxOwQaWIIcdy
-         fUOR4x5gv/rIPzOZ02Xb6LNwaTfo1964vKSfzfS536F2FoKdx124t/vkgiFQtKpgVcH7
-         IgGhYInIpbzjOu/WRH8t0V3P909FafwsduQZ2HRQFW0lcwKKGJHgOapz/w1+Jv2LPET/
-         o2aGexvpCjJ0PmZ1SMeR/ZmP8RBKZOA5ymdGciI2ZfaHMOsXzF5Awnh2vnJgxJJpDvl0
-         2MOuJeH9I85X3hKujx/rPnPbu39EAKiFXIfvSTFKoxxDkdGVTqJ1iu3IhgT4neVQ5lb6
-         EbHw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786083497; x=1786688297; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=mpKU+h8DQhFZiE3n0uakTrLO3Nyi3RpXdr1xGxJNc/k=;
-        b=rcDqcnEAY1x/HRtt5fl2NT3dBUaRaDlRzvi1Xs3KMwt8ChMa4hSk/Xp1xY8CQU/7J5
-         SmBLNpi2HjGEx5ZeHs7L5IQrrsLvMM5zF/lhsz+7ZjNHBoI+KFPMlzdXzg7+BUB+OuNA
-         kIUlVazMshgRelXCe6qqcWP6FdGcPZ3Zq7XMKIA7DMp5CkLSsRDEDGm7WyUKDMwbpZXI
-         zzMNmawSvnsRQX+3VNKHG2/XXGrzFXRNG9OCtNd0WMS1eEOf+9JGHqJgzgrnjEM8XGwc
-         tNeZVZ+w7HxHnXttpLnYZpqZyDw+8kOalyVGdPhc+Z5MtUHWnU5EajiYkZBropWsqetX
-         sfbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786083497; x=1786688297;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=mpKU+h8DQhFZiE3n0uakTrLO3Nyi3RpXdr1xGxJNc/k=;
-        b=LNHn6iEYyWDLtPuyU56xEpKfqfEuMFJaSQXLJ8zUa910pBy1r4MOeuULXQ3WXp1IIU
-         ry6gM/K9a0UHhdTmQTdjgQWBpVuQW2qS+xpw+Wtmk/kUyo+UNu6mMa2Lm3eBgCjNipOs
-         lhPsmyQlcC37C38we45aT8PBoxbKEK+mSQd+yikMUL+yyBxGOhR7Spy0QyZ5n/f7fMxS
-         un/fkgWY1U+nIeXIVNJe95HJ6c3RK+P20TrzvvnZ8MKDQmvFVOwcFBB3K5Uky/evj2xr
-         IgK4ryA1zkBHoXTd4jVjSPRXpjhibckdH4uwYPUD6v6Auntf0snu2F22fRixcva77n70
-         /ITA==
-X-Gm-Message-State: AOJu0YxKhlRcC4RSHiMYrgo9q5U9xTMSjKdzVuUPrApUzpbiZFdGCdVM
-	e+f608zcvV4Jhvlua1Q/MWbmm32lkQK00qY/n5oJUZ7qEZMGsnCAA9qkwb3qGV6Lx1IAewqJgpo
-	oXNKNRAx/O7XvXdAgHQMOV6NAY0si+P0=
-X-Gm-Gg: AR+sD13EShLbEXQ75IgOeiXMQxxbsDuyIa+5dfc+ItsVbxwy3hwMTHSsiykMD4lSeP/
-	xgbl9XB3nRLxjPnMML9Cu0FoSmKFNRMAm8/8zhnCG7kN4CMFRRzmhA3GtayHL+zTpNbnI6cCtdh
-	jZBJd8LY8qFHRj7BRaXpvpFzavwp2ZqprO1Kmqm4K4h6UDd/WNNi6BDPWwXhIj9ZrIGGpDZf5yt
-	r9aZ5aBcpDFrsyCFPfo0Lov1a+F81ktaMhFC/Zo/6wOcRpKIilJ9VmuJIPAzGqNkzQr/ezmt+Tg
-	a66u6byNGao7Q8V5NFJGtxrcigiJ1OyG/sWPlvDyPwOqD6gDoyD6SQW7y4Ozs2mabOlBRuOktWz
-	40qXFZm+5ZG7fyfD7eNHo3G7ukGYlFlt3XZbkiaQ94Wrh/4ZdcYssVIkvukjwDms=
-X-Received: by 2002:a05:6808:1443:b0:4a4:12c4:9c16 with SMTP id
- 5614622812f47-4b1a0e40450mr719590b6e.7.1786083497364; Thu, 06 Aug 2026
- 23:18:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="axOM2zcp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iYHU4YRc"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 86171140010D;
+	Fri,  7 Aug 2026 02:18:17 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 07 Aug 2026 02:18:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786083497;
+	 x=1786169897; bh=4SaCcJe45tictldw+Rhe5e9iQ+yE+o1x2nrIT4Yn9S0=; b=
+	axOM2zcp4Z/Q+G68hlI/VUyJg6dGctAtjVSdMuTEamY6M2HnA37Wr191Y5RHqKFO
+	otUXloBFi5rzUY1hmhRSCfJTdbChUd/tmGjW2Jtx6HHKJyz+JdmbdHz1ggXDTXrk
+	Fm3NPnHNLPQr8Kdr78Au5icOAfbCr/L5EPwUFDknA7qkpvmxHGifofxRwMskRTRL
+	P7BLi3nwPgiI+nEcj1zwqYxh/Y1I6w6Fnk3mk0tHNxwBprYA8T70sEkka/ETShrV
+	8JmMTklzMLoaw2/eQ2TxkHv3c1McTK5UER51lzC9WoPQQe/fBlsRlIKzLcAy9qVv
+	8oBFFGswICI3OJgMhfNDEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786083497; x=
+	1786169897; bh=4SaCcJe45tictldw+Rhe5e9iQ+yE+o1x2nrIT4Yn9S0=; b=i
+	YHU4YRch+PYNBHenRBLD13jKMK3Xb0LAXoP2TTdKoI36OsKqLvGmxvzWV2jkvzIp
+	SR4kN2qj9wtmyqc2Wg/y7vxZ40u2KcaGFxbNvUxgYe+/fbMheisOFRgIAkfcM+4t
+	mUTJuWRiCepEtbftTCQSD66xop5nsrETdYwNzL/2eW9RBPNfob4kOuAnf2LTRxBR
+	xc4V/wuTUIoz+XJg5jXI03UZJWe/J2uCVBimfQdgb2v9bsEb5CDX5506S6TbGBXl
+	Sh9pxAy1pqcT3K8RY9fPnQChtdFEPIJbbV5Jg/SVzi0GYSz/naVWNhEE8UbeySlX
+	KSkvKkqwLAuUxDblgMV2g==
+X-ME-Sender: <xms:qXh1aoHRyLtnE2HQ2OInoIzhh7P4lTTa0VYTqYplrQ9nRm_ouS2CwQ>
+    <xme:qXh1arU3kNakP4uS3eDgqsvRE5Hgosm5WjDpBrzKrs_PHgP29E0___a4bogGb7ihc
+    6cr0f5UBXQJ1RJMHbpPl3ays7uoWKEdpkCI1xLXU4nT1lpRCnNczw>
+X-ME-Received: <xmr:qXh1aozkjmYY7uDN7E8Hba2oqEeztLiF2Vs2dbbmWbr3JDUMwu2pLIDUJcTysjYUEM4feqN4BGbS0n46Kf-aTP06SPidg09CQZWqtJID1DHWEQ>
+X-ME-Proxy-Cause: dmFkZTG1N9eFOEjW9F/tsHTgYGBMfnzYVsZfiUzzNpfy3L349Ebh7o8+PZfg6+wr8dRRUg
+    uKE0BCvRENZpzpWgLGZ2ALsR1sPlrhJ31UvM7Z2fQGGTWm/nsUtTmV4d4Zw+HB8KsTXqsj
+    Mr4aSAdrP7HAJGB5X6OZXLDRSLWjD+cWJhxqBkWEdsn8S5Gn1EuQNVG/2nv+InZMCkKigh
+    xR54FCYub0oPnDNtzMLuaGdqW6oxyPe/5ITPzFYgYghT0kjvkVR4Ey3voz1kxslGrQnxeC
+    17UEnIXgbLOJ8DrWekwMXizAmnNSYpX1ocQWnXZqwore1sflIOlPGrkXcxYFe/ppt7sAn4
+    DDm5/kWxoEvMtVSDc3fuMlKlPEXgQuWJYnp2yrrkaTXwViO9qvFXFHIiEkNzW7LkQZOJCy
+    zx0C64BQCElMxO+ucV89epO874hUZLUHfDxXkMEZNHj+sNyOVqu2Hmwwb8TC55q0e/awpY
+    av5oKJprLsTJz2sAYSIdvmU8NgeqVG7yQJOIrSNlHBRGIlpQkcPxS7Kc9rZ8kOKQ+qbKNu
+    PYgk8RIfDc3IGbzb8Hzyf7U5S//SnKtpIX+cvnyvAJM3WzilGmvERAi8fO55qA/wqHd3xy
+    78kfmiH10ORTVrYylO/u7tNq85RvuhjAmlCiIj6/zeSW8kH5oMtNnqZkkATA
+X-ME-Proxy: <xmx:qXh1aoQV9QVLjGeRs-sXFuBfS54l-ypeho3CF4TjOQDDA7EZwEaN_w>
+    <xmx:qXh1asgRIovHJkFiQrHKZMXO3cn63b1S3d86_217cXLsv3jde-1AJw>
+    <xmx:qXh1ankij-DDBREP1CRFVSqwtB7NvmTodQh-EiFCQIYhYdLtI4Qi5g>
+    <xmx:qXh1ans4lHJMWKcM6CdLQS-YPxT5X1OOjxZuZvyCmgog9ulldzJnvA>
+    <xmx:qXh1amXj2LaOgZvmJHGWxwt2a0U5Dp-kDLHrQP7MY2jN8v67pR7F3jz_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Aug 2026 02:18:15 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 6389d0f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Aug 2026 06:18:15 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Fri, 07 Aug 2026 08:18:04 +0200
+Subject: [PATCH v2 2/5] wrapper: introduce writev(3p) wrappers
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqcxw010me.fsf@gitster.g> <20260807013830.698340-1-gitster@pobox.com>
- <20260807013830.698340-3-gitster@pobox.com>
-In-Reply-To: <20260807013830.698340-3-gitster@pobox.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 6 Aug 2026 23:18:05 -0700
-X-Gm-Features: AUfX_mzpzh7-TiIoOT8KOaJgROR2tjdiG-4xs30s2guQrb63ckzT_cR5Cbn1920
-Message-ID: <CABPp-BEAtpT208afwSNoBbR-Nowss8OsLsL8ynETuBfN_xvWag@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] completion: complete tracked paths for 'git diff'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>, 
-	Britton Leo Kerin <britton.kerin@gmail.com>, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, "D. Ben Knoble" <ben.knoble@gmail.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260807-pks-reintroduce-writev-v2-2-30fcff0e89c1@pks.im>
+References: <20260807-pks-reintroduce-writev-v2-0-30fcff0e89c1@pks.im>
+In-Reply-To: <20260807-pks-reintroduce-writev-v2-0-30fcff0e89c1@pks.im>
+To: git@vger.kernel.org
+Cc: Ben Knoble <ben.knoble@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+ Jeff King <peff@peff.net>, 
+ "brian m. carlson" <sandals@crustytoothpaste.net>, 
+ "Randall S. Becker" <randall.becker@nexbridge.ca>, 
+ Phillip Wood <phillip.wood@dunelm.org.uk>, 
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Mailer: b4 0.15.2
 
-On Thu, Aug 6, 2026 at 6:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> When completing arguments for 'git diff', _git_diff() delegates to
-> __git_complete_revlist_file(), which only completes revision
-> references.  This is good [*], as mixing both revisions and paths in a
-> single list for the user to pick from is simply too confusing.
->
-> If no reference matches, or if '--' is given, however, _git_diff()
-> leaves COMPREPLY empty.  Bash then falls back to default filename
-> completion in $PWD.  This fails when 'git -C <path>' is used because
-> $PWD is not the target repository.
->
-> Update _git_diff() to use __git_complete_index_file() when '--' is
-> present, or when revision reference completion yields no matching
-> candidates, so that tracked paths are offered as candidates.
->
-> This changes behavior even in the case where '-C <there>' is not
-> used.  The new behavior omits untracked paths from suggestions when
-> no revs match the prefix but matching tracked paths exist, which is
-> more useful in the context of 'git diff'.
+In the preceding commit we have added a compatibility wrapper for the
+writev(3p) syscall. Introduce some generic wrappers for this function
+that we nowadays take for granted in the Git codebase.
 
-I'm looking forward to using this.  :-)
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ wrapper.c      | 41 +++++++++++++++++++++++++++++++++++++++++
+ wrapper.h      |  9 +++++++++
+ write-or-die.c |  8 ++++++++
+ write-or-die.h |  1 +
+ 4 files changed, 59 insertions(+)
 
-[...]
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index ccd3b2a372..845fd19f70 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1981,6 +1981,10 @@ _git_diff ()
->                 esac
->                 __git_complete_revlist_file
->         fi
-> +
-> +       if [ ${#COMPREPLY[@]} -eq 0 ]; then
-> +               __git_complete_index_file
-> +       fi
->  }
+diff --git a/wrapper.c b/wrapper.c
+index 16f5a63fbb..be8fa575e6 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -323,6 +323,47 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
+ 	return total;
+ }
+ 
++ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt)
++{
++	ssize_t total_written = 0;
++
++	while (iovcnt) {
++		ssize_t bytes_written = writev(fd, iov, iovcnt);
++		if (bytes_written < 0) {
++			if (errno == EINTR || errno == EAGAIN)
++				continue;
++			return -1;
++		}
++		if (!bytes_written) {
++			errno = ENOSPC;
++			return -1;
++		}
++
++		total_written += bytes_written;
++
++		/*
++		 * We first need to discard any iovec entities that have been
++		 * fully written.
++		 */
++		while (iovcnt && (size_t)bytes_written >= iov->iov_len) {
++			bytes_written -= iov->iov_len;
++			iov++;
++			iovcnt--;
++		}
++
++		/*
++		 * Finally, we need to adjust the last iovec in case we have
++		 * performed a partial write.
++		 */
++		if (iovcnt && bytes_written) {
++			iov->iov_base = (char *) iov->iov_base + bytes_written;
++			iov->iov_len -= bytes_written;
++		}
++	}
++
++	return total_written;
++}
++
+ ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset)
+ {
+ 	char *p = buf;
+diff --git a/wrapper.h b/wrapper.h
+index 15ac3bab6e..27519b32d1 100644
+--- a/wrapper.h
++++ b/wrapper.h
+@@ -47,6 +47,15 @@ ssize_t read_in_full(int fd, void *buf, size_t count);
+ ssize_t write_in_full(int fd, const void *buf, size_t count);
+ ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
+ 
++/*
++ * Try to write all iovecs. Returns -1 in case an error occurred with a proper
++ * errno set, the number of bytes written otherwise.
++ *
++ * Note that the iovec will be modified as a result of this call to adjust for
++ * partial writes!
++ */
++ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt);
++
+ static inline ssize_t write_str_in_full(int fd, const char *str)
+ {
+ 	return write_in_full(fd, str, strlen(str));
+diff --git a/write-or-die.c b/write-or-die.c
+index 01a9a51fa2..5f522fb728 100644
+--- a/write-or-die.c
++++ b/write-or-die.c
+@@ -96,6 +96,14 @@ void write_or_die(int fd, const void *buf, size_t count)
+ 	}
+ }
+ 
++void writev_or_die(int fd, struct iovec *iov, int iovlen)
++{
++	if (writev_in_full(fd, iov, iovlen) < 0) {
++		check_pipe(errno);
++		die_errno("writev error");
++	}
++}
++
+ void fwrite_or_die(FILE *f, const void *buf, size_t count)
+ {
+ 	if (fwrite(buf, 1, count, f) != count)
+diff --git a/write-or-die.h b/write-or-die.h
+index ff0408bd84..a045bdfaef 100644
+--- a/write-or-die.h
++++ b/write-or-die.h
+@@ -7,6 +7,7 @@ void fprintf_or_die(FILE *, const char *fmt, ...);
+ void fwrite_or_die(FILE *f, const void *buf, size_t count);
+ void fflush_or_die(FILE *f);
+ void write_or_die(int fd, const void *buf, size_t count);
++void writev_or_die(int fd, struct iovec *iov, int iovlen);
+ 
+ /*
+  * These values are used to help identify parts of a repository to fsync.
 
-Curious; __git_complete_index_file() is documented as "requires 1
-argument", but you pass none here.  As far as I can tell, it works
-anyway, but feels like an accident:
+-- 
+2.55.0.679.g6767b8d81c.dirty
 
-1.   __git_complete_index_file CALLS
-      __git_index_files "$1" ...
-      (Here, "$1" =3D=3D "")
-2.   __git_index_files "$1" ... CALLS
-      __git_ls_files_helper "$root" "$1" ...
-      (Here, "$1" =3D=3D "", again)
-3.   __git_ls_files_helper "$root" "$1" CALLS
-      __git -C "$1" -c core.quotePath=3Dfalse ls-files
---exclude-standard $2 -- ...
-      (Note that $2 is unquoted, and since it's empty, it disappears)
-
-It seems like it'd be better to pass an explicit "" to
-__git_complete_index_file than to implicitly get it.
-
-[...]
-The rest looks good.
