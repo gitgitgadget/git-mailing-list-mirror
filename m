@@ -1,73 +1,73 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14B03002AB
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 01:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC2B22F767
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 01:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786066724; cv=none; b=SOzqkQ5nUOEwsNMYo0VbTlc3RAWDLPBmXhjx0q2P0qnBjzcHqbL65H4WX2Oyy1jHJ9taA0x1XUjuoslViP0e8dT57r+xD0valfZVKsYXM4k61r+pKJEbw3lOnt88CIpoZKKwYRkM86NAZuArVPOb7H6wRydviwpUxCmKq2b4/ps=
+	t=1786066729; cv=none; b=dtF8VizyWx11d4SWHSbK/hY4DPe5wB8bQYQTGdGuD7s+ll8W7yFX90Ja20T/0I2AoUO4w27A1T4a5K5LDYQvdY0QO8nRXFB3EvmHoAeA8E9x8dKmSPiQNOUTmrXateW2i92EYgUkFWXcbEaOFx/PjZZTXO3Dc2LhTDbQIpr6Wt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786066724; c=relaxed/simple;
-	bh=OwuT6Dznn0RG4xAlbI18gh5/DtnBYMUAMiUJN8i2aJs=;
+	s=arc-20240116; t=1786066729; c=relaxed/simple;
+	bh=FZm1sm9OHSWSQjdLVM+a7bId5W5XJ2X52g3fDquGuJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QhA2jE8S6ahxdbHm2CRO+xIp4dtds3yoA5lYSWSozRs3ngPCPip6eG0NSyY8duZ5clKde1LrmqXl6VEKQKgGa1JoX1KeSoRgQWAl+HEdvPshSOAW1iQ4yEKU6kmvRftwkzdhTEzISM6vb578LIcLaolvB69nNqDTWaZhEDpoYaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c8xcpBkg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jTtPCRJ0; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version; b=OMtXZ3/Es/vASKbJ8n8S+nnDCu6LjiYm4i3dIB9x36b5veFuIi2gMtBHu3G/IWYDzIoYBmdlicN2MbMT7Opfqf+rkRgiEUnuM6+FmiqqTRvCPCnbn3dnbsTawrLPKU9MhOojvvsoHXv1Xx15RUJkndkUYS6EOeLX0PJHTuC1P3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DvwKat1D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AuY/vfv1; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c8xcpBkg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jTtPCRJ0"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0CFC91D000B3;
-	Thu,  6 Aug 2026 21:38:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DvwKat1D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AuY/vfv1"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0CD1B1D000E2;
+	Thu,  6 Aug 2026 21:38:34 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 06 Aug 2026 21:38:32 -0400
+  by phl-compute-11.internal (MEProxy); Thu, 06 Aug 2026 21:38:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1786066711; x=
-	1786153111; bh=7XZC9Odc8cAxn8eMvGeLmZRmQMNcd4RRUnoqS0cv2aE=; b=c
-	8xcpBkgKlHdDbsrCnlmVEJThfzdWRJo9BVLO7MKvNpx/rW42wa6+V4AM8DLt3Zld
-	cXBW2f08uTabkG1RkOS7k+iDrfAWIaLu1gb8LZWi8EKZ2umyeeSpYhpLIZWJs+Ja
-	NPmzmVoi2RXRH3RLfM5i394q8zgTQH6VRFMIldtM9LUUfViyPpqkpAhX0KZExNWN
-	mghYcB8Ps9cxRUKw/sR9XM9t+VR1l7geO9ARO5ymBvbROvSXwArCNQSApQ3HVdpF
-	PTN+PNmtWQWbYIl1N3uQUJwfj4RXhwyP5MZKpSn+D0QDeb4xiEu6J4VVRee9bfCW
-	PkmwIqFhPE/3ysohYse5g==
+	:reply-to:subject:subject:to:to; s=fm2; t=1786066713; x=
+	1786153113; bh=fOPlPwwQHXx9k5BS4bFcuMYdFXp4I5m3sVI4ArpT88U=; b=D
+	vwKat1DJJr1pA0j0x2HMy4e+dW89nsiQG2IvrH7rIW+oU9WDozcBO6CLYfbC0m/m
+	myL60nSXzxy0z+6wOPEK35W8XUfM9iyTl8YCnuKfO+DncsoCf4EZcF8pW1AN26+Q
+	FSPRxjM/8vNTTOU8V233De/Ak/3/wGxRZVOlvzRwDXDVlj7ldeQCoOF8myOpMJCi
+	ciSvOACTVBJhaR7YuWP2QGQBD9iYHMVh9XyZzy56+QD+DgOsRgT57cBHrURNMG5H
+	OUGDxuiGYmA5eGt5s6MZABTNNSBYHbkkMmeSDfZUZ9sILkT75pk8NtwLoAzUZjlX
+	v2dTYgd2ruEoxQ70PSTLw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1786066711; x=1786153111; bh=7
-	XZC9Odc8cAxn8eMvGeLmZRmQMNcd4RRUnoqS0cv2aE=; b=jTtPCRJ0Yt/5h7Q94
-	bDaB5q7X+wnxJfK5NFGehHHq6I4KKAkuoIdSpE0k+jtvKmFGJgbu5Q1w8VcXsvlT
-	Bpd26fji09COrdRlvZGPmQADuJda5ytK1LzatXx0evDR9i8uQQT92362w1FaB/lU
-	YIXjY92/+/w5y4l1KkY/5xNCFkAesARiExSAavk2bSe06Yztz4NK+hb44wEhndF1
-	cr2EyC0q4/rGLgElZ89poTR6TpPb5a7n+0xp7e0I843GniejSnVbs2CECHhuO/mv
-	8isn4tFI+7H5W7S/JSRZ5okQXrvp/5N31BklGeGIMBRhLanPGUMT2ZMBL8aV3Vsr
-	9NETQ==
-X-ME-Sender: <xms:Fzd1at1AnjWxj9h9BANsAhmt1R8DjbU_-jOa00V5ocpPSos_XWUl-w>
-    <xme:Fzd1amoMGKe0dBlqOyQZuEww0Ebk1NTzR4lnG6h4-ZIM70IPVojHEDRUrxfGBMKyU
-    1rwMkCMDB1o35kOMAJn9vvxZph6hpG1mI2VV_VYhGsk0YGp66CPig>
-X-ME-Received: <xmr:Fzd1ahhaOqUXVIBRSUS_ncYCLzIhI9yhuDv9VSuKFaAlE4QSjNrwq4qDoNuVbtX1Juf1sCQWd1DnAWEhrt2NHDSsrbKO5JFk_A>
+	:x-me-sender:x-sasl-enc; s=fm3; t=1786066713; x=1786153113; bh=f
+	OPlPwwQHXx9k5BS4bFcuMYdFXp4I5m3sVI4ArpT88U=; b=AuY/vfv151kbHIsnl
+	RZXNba0Chg04nFw/VovyTQFq2EMoM0UyngSYsn1X994Wc3wGB/B2s+U6gnLsJIBI
+	WHmvx2L1rZ70MRrbKbAeHyXXFxefIlqGGjQi+6fu/ijyUrCJm1ydpR17iHbyJHrW
+	XshfxS48LPbRlIrvQ+ZapSzp5OwGa3wIpo+jffadGel2J1U+j1ddn3pvg5lhZXqL
+	PCl4JU7Vrof35K9s+FW/WDNisuEHENMBfo0jq064++NOwvc09NtMNErupqVp9+Kf
+	7n5olLm03i/QNCbGjMquh9YKTr0D0lPk72XoFRKA8aShm8D52cPypm6kS4X7nLxS
+	Li6hQ==
+X-ME-Sender: <xms:GTd1ahJ2kypwa6iS0-gr89oJrDhvo2UcYMmGFah4zgUwR9eKotgNzA>
+    <xme:GTd1avtRKUTTtTWx_8rr94qM0tk81rkuWGOaNizqlR55z6rfsoS2I2xEVnqg4x8-6
+    -UFB1l0qlIRgYPA8d1fdXqRfJRqJVcWVt58Cpgq5ll-WKVE3VKjYxg>
+X-ME-Received: <xmr:GTd1atU-welLGLwrnPSVn6PbjrWSQ_bY4LwDkWhhc0oDHZjPbA6fX-g17rgTL4nmvqfVBuYLIS7zJwoX_cT1TnsooySPQn70UA>
 X-ME-Proxy-Cause: dmFkZTFq7MzKWLxG+4X43Fk1A+9+V44cVi14HmRnlZI3MPpq0IXmpruKrxVv3EBIxIBKPP
     jGWkcZ1SfvzfgAZqhyYXPJhiexxo4v20CG8uf5ATK5plYBugOG7rVR9zbDzeeQ06XeAZ3c
     2xIJvlyaLhvEmLOoJVwNI1e9Eih3SPcNk+clOEydmVRIe09dtZs3cRi6WsO8rRs0leHQJh
     h0CD+jxxGRxSHYDfyAe4OoJPtMxecAcr0vz2jF5EWiuoyarsJe9bl9xfK7cGU+kvOkJLQr
-    2xQfrEoMlwoHhIGtRjiKLNC9/olDxKb9Ai3/ZlxO1afrgzsIfdkKaWB2MkyVyhPZ0EiXVB
-    14oXBTqdjM5kb8oW38PohcsDyoVlMErzQ+KCQmIVlwyZSwAj4i0ZPxhmwjBJFIomf8ezST
-    yQfx8fp8hOtqMpoODxbUHxzEWdFHiiAfhm+uI7M5sHBBHSEWDQbwRdLaU8ThnKN7dbcuc4
-    DkYps7QwScfhgfO9oMPrE71tMnwWrJrpGgXMooaVdg2E/k177rB/YIOsbJ5UpESdzzYlpg
-    c1qubG8zICi7c7Caz3XR3y338eV+SFtyqSZUEAJCTX2YgLa81UY67I+58FYd9u8+FHARt3
-    zm/V624g+uH1wqX1PJNjzyfE/HIlCjNk1FZfTU2IdWUCmM8idkvfcqVyHWWA
-X-ME-Proxy: <xmx:Fzd1aq-hdrKGcojy2nOwB8AVtDTx_kgVWCmbU5ATfLj4MAuP9IzgjQ>
-    <xmx:Fzd1alVBmuJRgVPAtE5nUtgJA77ZSSZN0MBordL23JtoyT-Tdos4qA>
-    <xmx:Fzd1amDlXRSfjD5s4bjDw_01IfMvtOCwfsg_KqGERvDZ4HfpKumidw>
-    <xmx:Fzd1aiHmlYVf3hPfAd5Qp1IlgEfzD445kQQkjZ1jk_W4x-sHWkeLEg>
-    <xmx:Fzd1aiwRt-LCafs0DTvOm3zrzKeqRu6kCisuYqIpkEv0_-Ie5WLX8UbI>
+    2xQfrEoMlwoHhIGtRjiKLNC9/olDxKb9Ai3/ZlxO1afrgzsIfdkKaWB2MkyVyhPZ0EiXs1
+    E7ZtfobpolRL3lCY7uCO8QHoDoHFe1+pvL0TmWb6Ly8HpcFER7EeyJcNmO01JnMmH8q94/
+    hsyh3ue7WVfSpMSvOcF6cM1TnqNTn/CPbDZjh2VhDYNhc1lMPm0/YuG5mLQckXDG5b0Pac
+    JIzYZtA1SQWxkUN+QB52VICFFztzb9rSSAxRO0oAFRSmxI0+hRh1HHZnqsnBWeWfrML7XH
+    NpydOam5xxlR0qkBfDa2zIjhwR9ilNDG22DaxoPk1swyt2xAm1QYkFqk/za6cJrzfHgY3V
+    LAUvhCtM1PQ2q/ttgAcO2H5M2jhcu84mjWaVQdUEUzMSZhGwS9Zhxb0Lk53g
+X-ME-Proxy: <xmx:GTd1aijUo9VNI6d0ifn5znf4LDdMUjsVqGtT5GtCK9yD2M0Yoj8YoQ>
+    <xmx:GTd1atp0ve3kftPrWXstHqOHt7fFnqzOOW7gj8M3itOBaKnpMaZVDQ>
+    <xmx:GTd1agFTQEelxYccyhw7FzUhqBvnlRZY16CNEXC122bTPhloq4_i7Q>
+    <xmx:GTd1aq456Uyqd8kGiQqb6D0yjbZVdA_nW4LBSgHcac7ox-t4HsgQ4w>
+    <xmx:GTd1anWXzYq7fwu7kvh-urKCQ8pCG8EstsLUIvSbE4OJFjnBAs2WFYPl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 21:38:31 -0400 (EDT)
+ 6 Aug 2026 21:38:33 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
@@ -77,12 +77,13 @@ Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	"D. Ben Knoble" <ben.knoble@gmail.com>,
 	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v4 0/3] completion of 'git [-C <dir>] diff'
-Date: Thu,  6 Aug 2026 18:38:27 -0700
-Message-ID: <20260807013830.698340-1-gitster@pobox.com>
+Subject: [PATCH v4 1/3] completion: no-op refactoring of diff completion
+Date: Thu,  6 Aug 2026 18:38:28 -0700
+Message-ID: <20260807013830.698340-2-gitster@pobox.com>
 X-Mailer: git-send-email 2.55.0-655-g8b87133eb9
-In-Reply-To: <xmqqcxw010me.fsf@gitster.g>
+In-Reply-To: <20260807013830.698340-1-gitster@pobox.com>
 References: <xmqqcxw010me.fsf@gitster.g>
+ <20260807013830.698340-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,161 +92,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The primary motivation for this topic is that the command-line
-completion of 'git diff' does not handle paths (unlike 'git status'
-and 'git add') and instead relies on the default behavior of Bash
-command-line completion, which completes files in $PWD; this does
-not work at all with the '-C <directory>' option.
+The "git diff" completion function punts very early when it sees
+"--" on the command line, since it is a sign that options or
+revisions can appear and the current completion does not need to do
+anything "git diff" specific. By returning, it lets Bash default
+action that completes the names of the files in $PWD to kick in.
 
-This series teaches the completion machinery to complete revisions
-(unless '--' exists), then tracked paths, and then untracked paths,
-before letting the Bash default kick in.  This way, we correctly
-complete 'git diff' command line even when '-C <directory>' is in
-effect.
+In preparation for the next step to change what happens when we
+"punt", arrange the code flow to avoid this early return.  The
+behaviour at this step is unchanged, but the control flow just
+falls straight to the end.
 
-The tests are the only changes relative to v2.  In the step where
-tracked paths are completed, v2 did not demonstrate that untracked
-ones are *not* completed at the same time.  Now we do by having
-untracked 'file3' next to 'file1' and 'file2' that are tracked.  In
-the last step, we demonstrate untracked paths that do not share
-prefix with refs or tracked paths are completed, with or without the
-"-C <dir>" option.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ contrib/completion/git-completion.bash | 61 ++++++++++++++------------
+ 1 file changed, 33 insertions(+), 28 deletions(-)
 
- 1/3: completion: no-op refactoring of diff completion
- 2/3: completion: complete tracked paths for 'git diff'
- 3/3: completion: 'git diff' completes untracked paths as a last
-        resort
-
- contrib/completion/git-completion.bash | 69 +++++++++++++++-----------
- t/t9902-completion.sh                  | 49 ++++++++++++++++++
- 2 files changed, 90 insertions(+), 28 deletions(-)
-
-Range-diff against v3:
-1:  d3c51c042c = 1:  3b99b45fee completion: no-op refactoring of diff completion
-2:  c3658d6ca2 ! 2:  bcc24b6bda completion: complete tracked paths for 'git diff'
-    @@ contrib/completion/git-completion.bash: _git_diff ()
-      __git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
-     
-      ## t/t9902-completion.sh ##
-    +@@ t/t9902-completion.sh: test_expect_success 'setup for integration tests' '
-    + 	echo content >file1 &&
-    + 	echo more >file2 &&
-    + 	git add file1 file2 &&
-    ++	echo untracked >file3 &&
-    + 	git commit -m one &&
-    + 	git branch mybranch &&
-    + 	git tag mytag
-     @@ t/t9902-completion.sh: test_expect_success 'git -C <path> checkout uses the right repo' '
-      	EOF
-      '
-      
-     +test_expect_success 'git diff completes tracked paths when no refs match' '
-     +	# file1 and file2 are tracked but file3 is not
-    -+	test_completion "git diff f" <<-\EOF
-    ++	# there is no ref that begins with f
-    ++	test_completion "git diff f" <<-\EOF &&
-     +	file1
-     +	file2
-     +	EOF
-    -+'
-    -+
-    -+test_expect_success 'git diff -- completes tracked paths' '
-    -+	# file1 and file2 are tracked but file3 is not
-     +	test_completion "git diff -- f" <<-\EOF
-     +	file1
-     +	file2
-     +	EOF
-     +'
-     +
-    -+test_expect_success 'git -C <path> diff completes tracked paths in specified repo' '
-    ++test_expect_success 'git -C <path> diff completes in the specified repo' '
-     +	test_when_finished "rm -rf repo-for-diff" &&
-     +	git init repo-for-diff &&
-    ++
-    ++	# otherfile is tracked, oops is untracked
-     +	echo content >repo-for-diff/otherfile &&
-     +	git -C repo-for-diff add otherfile &&
-    -+	echo untracked >repo-for-diff/oops &&
-     +	git -C repo-for-diff commit -m otherfile &&
-    -+	test_completion "git -C repo-for-diff diff o" <<-\EOF
-    ++	echo untracked >repo-for-diff/oops &&
-    ++	test_completion "git -C repo-for-diff diff o" <<-\EOF &&
-     +	otherfile
-     +	EOF
-    -+'
-    -+
-    -+test_expect_success 'git -C <path> diff -- completes pathspecs in specified repo' '
-    -+	test_when_finished "rm -rf repo-for-diff" &&
-    -+	git init repo-for-diff &&
-    -+	echo content >repo-for-diff/otherfile &&
-    -+	git -C repo-for-diff add otherfile &&
-    -+	git -C repo-for-diff commit -m otherfile &&
-     +	test_completion "git -C repo-for-diff diff -- o" <<-\EOF
-     +	otherfile
-     +	EOF
-3:  ba5dc6f164 ! 3:  34720a30ab completion: 'git diff' completes untracked paths as a last resort
-    @@ contrib/completion/git-completion.bash: _git_diff ()
-     
-      ## t/t9902-completion.sh ##
-     @@ t/t9902-completion.sh: test_expect_success 'setup for integration tests' '
-    - 	echo content >file1 &&
-      	echo more >file2 &&
-      	git add file1 file2 &&
-    + 	echo untracked >file3 &&
-     +	echo untracked >ufile &&
-      	git commit -m one &&
-      	git branch mybranch &&
-      	git tag mytag
-    -@@ t/t9902-completion.sh: test_expect_success 'git diff -- completes tracked paths' '
-    +@@ t/t9902-completion.sh: test_expect_success 'git diff completes tracked paths when no refs match' '
-      	EOF
-      '
-      
-     +test_expect_success 'git diff [--] completes untracked paths, too' '
-    ++	# there is no ref or tracked path that begin with u
-     +	test_completion "git diff u" <<-\EOF &&
-     +	ufile
-     +	EOF
-    @@ t/t9902-completion.sh: test_expect_success 'git diff -- completes tracked paths'
-     +	EOF
-     +'
-     +
-    - test_expect_success 'git -C <path> diff completes tracked paths in specified repo' '
-    - 	test_when_finished "rm -rf repo-for-diff" &&
-    - 	git init repo-for-diff &&
-    -@@ t/t9902-completion.sh: test_expect_success 'git -C <path> diff -- completes pathspecs in specified repo
-    + test_expect_success 'git -C <path> diff completes in the specified repo' '
-      	test_when_finished "rm -rf repo-for-diff" &&
-      	git init repo-for-diff &&
-    + 
-    +-	# otherfile is tracked, oops is untracked
-    ++	# otherfile is tracked, oops and ufile are untracked
-      	echo content >repo-for-diff/otherfile &&
-    -+	echo untracked >repo-for-diff/untracked &&
-      	git -C repo-for-diff add otherfile &&
-      	git -C repo-for-diff commit -m otherfile &&
-    + 	echo untracked >repo-for-diff/oops &&
-    ++	echo untracked >repo-for-diff/ufile &&
-    + 	test_completion "git -C repo-for-diff diff o" <<-\EOF &&
-    + 	otherfile
-    + 	EOF
-     -	test_completion "git -C repo-for-diff diff -- o" <<-\EOF
-    -+	test_completion "git -C repo-for-diff diff o" <<-\EOF &&
-    -+	otherfile
-    -+	EOF
-     +	test_completion "git -C repo-for-diff diff -- o" <<-\EOF &&
-      	otherfile
-      	EOF
-     +	test_completion "git -C repo-for-diff diff u" <<-\EOF &&
-    -+	untracked
-    ++	ufile
-     +	EOF
-     +	test_completion "git -C repo-for-diff diff -- u" <<-\EOF
-    -+	untracked
-    ++	ufile
-     +	EOF
-      '
-      
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index e875787710..ccd3b2a372 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1947,35 +1947,40 @@ __git_diff_difftool_options="--cached --staged
+ 
+ _git_diff ()
+ {
+-	__git_has_doubledash && return
+-
+-	case "$cur" in
+-	--diff-algorithm=*)
+-		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
+-		return
+-		;;
+-	--submodule=*)
+-		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
+-		return
+-		;;
+-	--color-moved=*)
+-		__gitcomp "$__git_color_moved_opts" "" "${cur##--color-moved=}"
+-		return
+-		;;
+-	--color-moved-ws=*)
+-		__gitcomp "$__git_color_moved_ws_opts" "" "${cur##--color-moved-ws=}"
+-		return
+-		;;
+-	--ws-error-highlight=*)
+-		__gitcomp "$__git_ws_error_highlight_opts" "" "${cur##--ws-error-highlight=}"
+-		return
+-		;;
+-	--*)
+-		__gitcomp "$__git_diff_difftool_options"
+-		return
++	if ! __git_has_doubledash; then
++		case "$cur" in
++		--diff-algorithm=*)
++			__gitcomp "$__git_diff_algorithms" \
++				"" "${cur##--diff-algorithm=}"
++			return
+ 		;;
+-	esac
+-	__git_complete_revlist_file
++		--submodule=*)
++			__gitcomp "$__git_diff_submodule_formats" \
++				"" "${cur##--submodule=}"
++			return
++			;;
++		--color-moved=*)
++			__gitcomp "$__git_color_moved_opts" \
++				"" "${cur##--color-moved=}"
++			return
++			;;
++		--color-moved-ws=*)
++			__gitcomp "$__git_color_moved_ws_opts" \
++				"" "${cur##--color-moved-ws=}"
++			return
++			;;
++		--ws-error-highlight=*)
++			__gitcomp "$__git_ws_error_highlight_opts" \
++				"" "${cur##--ws-error-highlight=}"
++			return
++			;;
++		--*)
++			__gitcomp "$__git_diff_difftool_options"
++			return
++			;;
++		esac
++		__git_complete_revlist_file
++	fi
+ }
+ 
+ __git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
 -- 
 2.55.0-655-gb2c071042d
 
