@@ -1,119 +1,144 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FA34B04A1
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 10:24:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AF242FCCA
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 10:45:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786098273; cv=none; b=oG4mWHP2wtw1xf7CqLrdaxP2mc8q1PLA72sQAoqoOKdOGbdhhSl9BE++JFt+o0LYWqck2bFLtpYlms4pwTFuvSeEvcAFytmdnxsoBFV0dZZPsRPZkDGErdVi69QAh8Q6Nu0pFtzVpNLGyFk0nXxbbSdfWPSz5peCx67YYUxc008=
+	t=1786099544; cv=none; b=Cwv3YMNJ+l1tWs907Rm1jVh+OEsJm+IlfU4CHPp3q0BY/SyDLJi0idXL3Gi1du4fI6E9EkNeiC4ndhLTZpq0tbPoysAVG//ZIsEjmuQlRfYWsupoc8RZRqPrlj8q0WrV/eG5DV/W2ryBrNkSNH82Bt4ZRNdhnoPVqbIFwn7Zbus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786098273; c=relaxed/simple;
-	bh=zVLv4ipxbEZF3PhzZ509H+QrL0RwREUr7ufp7XAe9dw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D//D7t+aFGIpaDXF+aAMEXDUjsQjWt5V9HtDlnxbb+a6YXqaeoLNJYxhcaiVBjTfnvK4aTfgi3hEiHab8Ai/lZdl3j/QQrCD9KbDqDbUuP5SxBgVDVY9b5XxkIZ5ztMPGmttsKusMPIHApHUXCbziyTOd+ATTUM7DHH+AbNfACw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RS+pKcDC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HhUTL8HF; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1786099544; c=relaxed/simple;
+	bh=+ovm9t7MHg66lx31ACMLzVsUOsMiqJRWTJHfhMFE+sM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=i5ORDmdNfCgJTBf7HRm0wjpOTMgi698o3NpCwKfRlIEh0BKK4sqtA+mhSNkz3/beo8BEIE2caaHGqDOQ0Nq0wcrF6DxHVpvcnIRjFgHxHTv4kYcCDr4UUFrlCqQZs3SObbEKv5KMrKf3qMXXxCgme7iGn9j56VbiEmz9ubBdLUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jZUCSYYU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H51GhWXr; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RS+pKcDC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HhUTL8HF"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B1ECCEC0129;
-	Fri,  7 Aug 2026 06:24:30 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 07 Aug 2026 06:24:30 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jZUCSYYU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H51GhWXr"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id D2862EC0171
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 06:45:41 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 07 Aug 2026 06:45:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786098270; x=1786184670; bh=W1v5zrZNRg
-	FRK6gkVEB3AjgSqIK+IFfc4+hQqAgX+Ok=; b=RS+pKcDCL9BoNHiw87nkESUczT
-	TcjHzsDmDYSC09BgBCEH9RNxqRAAh9cwtjH724CoX4a5946qRZ18s3DHI9nSG9HZ
-	/0xTrewarX2nQnVDIAXzKsraYOGa/ax6fTOfOfz/ktdYLTzvX3ZsgbQfJbS/GIKH
-	apitzNecISlMhfuUXY+cBaFMZpijpDbQmiomnBxMcEISV+ewy5Ui6SgnnvSQXVDe
-	hk+NJZmm3LQqEkRLfuGdfd2NlP7PZITfDdnsKnUSNakcnKnSxvU1HKqUTmjiNIdh
-	SSTCj0XWBzNpGf2oPabmt3DH70zLUmzv+hRJDUox1fgXdehY2o5/AvfN0biA==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1786099541; x=1786185941; bh=kkqwdiOLEm
+	N0A/l4z7C8TlLbvZP4YZ2+ocKseTJgNjk=; b=jZUCSYYUVsaySS8n/k5fjZ1ICP
+	sGSAP97u32JUw7ltwaNpeMl4R5i4magUyfAdHw1kwvib245iL5w/x5UmET4X8NLi
+	pDPhgT9c0sIreHeQf5NoGfZW2nCkXs4e63cY5Yt3hUgPPp6dyDOIo8HOZOMEkVAG
+	KvHygaB87GtVQ6nc6YMrjcdrm8E+gBqs/I5dsI9EuK1zYSXfz+mUJwbwuin5Zd3K
+	qeIu3PQOIPeOoTncwApLRgZ4FE3uPJY1BfAT8jAaw3hcby+4ZnrvNy3Hk7KIV/AQ
+	i0S+9f+qPh3B7kR8ttqRrB5vdWQ3/eooMjAXAD27YPql/g2k6Lko/FYm4umw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786098270; x=1786184670; bh=W1v5zrZNRgFRK6gkVEB3AjgSqIK+IFfc4+h
-	QqAgX+Ok=; b=HhUTL8HF8KALVfw5NvLItDtm1NvV0lRoeie1x+vjmcdjCtk7SNj
-	SwUcTLpj22yxGrh/LX2/PnXcpWBcX7TkciVmrRAeD2uly0/Z7dSgUnu3ew/1bTGq
-	w/OQ6lkF36oJ5l/a+JH4xf8WFQAMLQXxClbP6GXnU1XH61Kc5RsXX9QN4trxdG7H
-	UeDbtsbfoSzN5MNiEV3DlAPlpSo7N/2L5z2+VPyr7Huhwhr144oVxpG9JGmQrMhj
-	rKJPA2r4y0tgXOFY0ZyAtjw0z1/ptJ2lSpmyBQEkGfT7vDYDgNPn+ozIrluoTeYF
-	4fQYQkBmApfblbrMrQsVliw41nj4+m7uooA==
-X-ME-Sender: <xms:XrJ1atj1AvqL4RRNrCIR1y7BuMItWQcp3VugO3aTPHEd3C1q2vFhlg>
-    <xme:XrJ1alv-swZLoLktuKuVqUB2haHtfxaaOYPJdRRuMlW-k-pOCJrJzIs3MPattAua-
-    MosfhO1_bGgkQXDbh2ZV7o9QtCsBhSjl1rNrhcgiTqkc7H8GjOQlHA>
-X-ME-Received: <xmr:XrJ1am5p0D_yVXfviyuKZoZXFv3J1LV1WtluCLWMshVCKUkkpVnaJYFmxSsUdbegiwcYVAtoe0UTed7SS3jcCbgdpw54R07fx-pgeiMgbNGYDQ>
-X-ME-Proxy-Cause: dmFkZTEaI8dqWXpBcdka3nLd1vLCfiyXibQhZeJI9rCcQQNwfaJWH4hVQQGPMXnU5itMO6
-    bL7lLtI7kt3HuRCiV7RlXphedL+kDd7lK0FjndHUvjY/Y003Yb4xbNPDpV7IjWLnJEfOGJ
-    1Nb7XdldhV87AthZRkPY8JpSB51xx2dRcwlsa4qSnuY/F438vD5tCKMGV2PTXaQWLd0jBj
-    ejj8+AlF4WPjMvo37K/9NLvoolzqJVJF9a7Gyt1KddrskdGnSsE3nLihYz4NlUW/Y4Hbu1
-    vtRffowkOWZ79Fh+bDeziSJ3c7uevgQw3fB3yJHwLbNtcrGeRTjp+Wi2TacMrEKN3hfamZ
-    7pn8liH6fFFM9E6o3f29iqivzuBQ1FT674ASSaKNrxkPJH26bog4t7tMkiulHm/tTZO7c/
-    AeKQvg3LWzAkRBDfuRyH1YmkfyfOVJvZ017krpDIvFpcCwc9rahV8VKXRZDlXAoDjVo62I
-    kTN7fZ7k0UN9I4J7B57CgpnInmXBh/NqWzekpHQ450cSgFMOc4l2EzXA18CTH0mIV/4jkK
-    eFsC5RB59FrE6cRDAViq96OCcifKF6MZHGR/xEAiPLgQ6X7feqOC6DmlyjHTwtUwyBDTMi
-    mhhNrF+9NXwDg3yVjAj+PB8gRV4ZZXocm37eFFuk7Thu7stbVSMU3KOXgVGQ
-X-ME-Proxy: <xmx:XrJ1apMny-OgWBFERKzRymyOFFkWgx-3UpUkkI1x_EHLaxs9dTQEsw>
-    <xmx:XrJ1asu6B9-67_g5AiVn9CkJr51NjzwPKb8paUyQAUFLxs1l0JuX-Q>
-    <xmx:XrJ1akYJcbRhv3O_RGD2x8UnjJLjsUOs7UehumXpS9IAh3Tbj8sSSw>
-    <xmx:XrJ1amxNBrHvenBapyy3L3mJ6ih6I6BM5_K7qvqNRAVJfJMq0lIRAQ>
-    <xmx:XrJ1aiYUT_4Hy-IG0boHycggCpAs-Q86pDT9ryPZv9G9EYaK3YFNHYa3>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1786099541; x=1786185941; bh=kkqwdiOLEmN0A/l4z7C8TlLbvZP4
+	YZ2+ocKseTJgNjk=; b=H51GhWXryM38WwX264LIBU/sGz+0PkrpexH3mHrYrmBv
+	zWJzy52P3iLZlL6AYvV32KXs7sIOMET7kYe2MP+MEJK884agKkyv7xZjgj7B+XUp
+	EyQGvaG1rBZNRXlcZFcj4yZXXRVV0EokgvPF9wc7XZs+N4IcqiHrKzjuMffWJgRX
+	N2aM7/5fvDZsdeo7e/t6hWubU3EasRjxp24NogciHCDnEONIKCcRfxUILtJ7+aOw
+	5jkW0Du61CPG4T4QadFY7V91Xy5HxOb14ZkxD7VwSGYJAvmO860Q40ZRx6wB9+Ru
+	atm/+xM74r+1X7DC0YdVYwHZe2gHasij5Q6SfBdqhA==
+X-ME-Sender: <xms:Vbd1alwR4D3YCp4mDnLmRCQlKgT-JUNd04tI2APVzFTnT-pE525kkA>
+    <xme:Vbd1asMgcBfbQgvxlRP-j-a-m8E4oTedOdwyPHDAM5zNlxkbHiNhda5obAlDCdGHP
+    lAAC7vXoUe_1XDgla3jxnIMzw1AH9CU1tuNFb04cy2rzvxTvAPNsg>
+X-ME-Received: <xmr:Vbd1ak-QE4I41e2Ytx7RqC74lYk6qAzBKAyt0xPdPvLqsQo5KBRXBqmPpO9M0DyhRRc4Tf2ULAbNE3bk1udol9rggdHdhRbCAMKtl2MXF4lyvg>
+X-ME-Proxy-Cause: dmFkZTEasdwVJOn4K++jV/+SAWtAmBPK2gQlnJvBVZIc4N8syPY5OJuSe0gUr0AmJsAQu1
+    uI9ioZI91Me1Km54GBFFt/5frYS2itksH+YU7f438hEs24epk6TM93tVXrkKOkKN5ufWQ7
+    BnKTF2Opeww3t4IKorNu3hzigq+3DEn4OzElObusc0oYKJ1n6yhhZ57klPgsflvZ40o/z9
+    arz4ezCHKveU2gC7ZX/uAaHm5ygncOTVYPk/hGtLG1C7pevRqXolZMrqloEELjIqO6RXQg
+    O5Ddk16RU0VD620nJaR1uew3kvZNUSwwyrKBxJJv6yvX3qx3jCPueAHEyly17HL8EDAZfL
+    impZAkruL6p7CR9ErgtwnXSPQBIvPPNcgbGCUdfjib7vrkhcAAEcGORvDm9Mt+avSmNZt2
+    HoaN4yn8TJ92mEZ23ARH1tdMWFvo2BbaZ38fEOpn3cu3xVr8wxITSrgSk4aUvvlPesfskL
+    szugyhsGXfV5c9+xm/avuMLkud7GO8dZJO3GAEY73OhiOscZgLeuBZJJHYgZxIozzwIXmn
+    TufRnlAC7lp76EajqXh1FDBRb69dgrHKu+nJn9w2UfkVNpCRGZ3jhtSRchWbkt8dIVf7vN
+    Dg9CBxf2wBcNRBlkaDQUx+9PQ6Ivqgf/XOihhsZRPuN73TWOoEBNR3D5ZeXg
+X-ME-Proxy: <xmx:Vbd1asrsROmFjs3rMWzgdVR5WPJv7T-EI6lHg3LZLEI3mMvxcjlN0g>
+    <xmx:Vbd1am5Dc1a8ULxqL-57SGP1OZdpr2g5tBGhXOmm309Hv5PwE39dDw>
+    <xmx:Vbd1asN2u6yFhZupsesIqcP-em5HlUuwwE298RyWvQmhXPZrgdhiiA>
+    <xmx:Vbd1aoPMR502mje3_x30eVaZP1ldu8o0c598Eb1DaWE8KYIXucDuow>
+    <xmx:Vbd1arwC1jHyT2cFTDJLpn_CehuLn75OsyyXUK7XMjn8KJe7b0whBV9q>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 06:24:29 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 7 Aug 2026 06:45:41 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 769538c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Aug 2026 10:24:27 +0000 (UTC)
-Date: Fri, 7 Aug 2026 12:24:23 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b21f1754 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Fri, 7 Aug 2026 10:45:38 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, tnyman@openai.com, Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/2] ci: bump ubuntu image version for static-analysis job
-Message-ID: <anWyV9Q4Cmsa5AoT@pks.im>
-References: <20260726083254.GA3528497@coredump.intra.peff.net>
- <20260726083905.GB3529069@coredump.intra.peff.net>
+Subject: [PATCH 0/5] odb: make packfile generation pluggable
+Date: Fri, 07 Aug 2026 12:45:06 +0200
+Message-Id: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260726083905.GB3529069@coredump.intra.peff.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQrCMBBG4auUWTsQW1HxKuIimfxTYyENmSpC6
+ d2NuvwW761kqAlGl26lileyNOeG/a4jufs8glNspt71R3d2Jw4HLpPxHAOPyKh+ARcvE+vgNEi
+ EDirU8lKh6f1bX29/2zM8IMv3R9v2AdYsi6t8AAAA
+X-Change-ID: 20260807-b4-pks-odb-generate-pack-f30fbcdef3fc
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-On Sun, Jul 26, 2026 at 04:39:05AM -0400, Jeff King wrote:
-> We recently ran into a case[1] where old versions of coccinelle ran very
-> slowly, but newer ones are fine. The version we use in GitHub's CI was
-> the old slow version, leading to timeouts of the static-analysis job.
-> 
-> We get the old version because we ask for the ubuntu-22.04 image. That
-> has coccinelle 1.1.1, but the "fast" improvement is in coccinelle 1.3.0,
-> specifically their 58619b8fe (break up envs for e1 & e2, 2024-08-18).
+Hi,
 
-I have been wondering about slow Coccinelle for a while now. Making
-things faster via a simple version upgrade is great, as it comes almost
-for free.
+this patch series makes packfile generation pluggable.
 
-But that being said, we also have a bunch of Coccinelle rules nowadays,
-and my gut feeling tells me that there's a bunch of them that aren't
-useful anymore. "refs", "object_id", "the_repository",
-"git_config_number", "index-compatibility" and "context_fn_ctx" all look
-like files that we could probably just get rid of because we have long
-done the migrations, and it's unlikely anybody still has patches that
-use the pre-migration variants.
+Note that this series only makes those parts pluggable that are required
+for the transport layer. The other parts that relate to packfile
+generation as required by our repository maintenance is kept as-is, as
+there is a bunch of options there that are way too specific to the
+"files" backend to be portable. This should ultimately not be much of a
+problem though, as maintenance itself is already pluggable in the first
+place.
 
-They'd of course require a bit of a deeper look, but that could be
-another way to speed up Coccinelle for us. Even though I cannot say for
-sure by how much, I didn't give it a test.
+It's a bit of a shame though for git-pack-objects(1), which still isn't
+usable with alternate backends. I tried several times to find good
+solutions for making it fully pluggable, but due to the backend-specific
+options it's an utter mess. I want to eventually address this though:
+same as with git-refs(1), I want to introduce git-objects(1) to care
+about all things ODB. And as part of that command we can also introduce
+a command that generates packfiles in a generic fashion, without all the
+cruft that git-pack-objects(1) has. This is part of a future patch
+series though.
+
+The series is built on top of 2c78326f81 (The 11th batch, 2026-08-05).
 
 Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (5):
+      odb: introduce interface to generate packfiles
+      upload-pack: generate packfiles via the object database
+      send-pack: generate packfiles via the object database
+      builtin/bundle: refactor option handling for progress meter
+      bundle: generate packfiles via the object database
+
+ builtin/bundle.c      |  31 ++++------
+ bundle.c              |  68 +++++++++++-----------
+ bundle.h              |   3 +-
+ odb.c                 |  21 +++++++
+ odb.h                 | 152 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ odb/source-files.c    | 144 +++++++++++++++++++++++++++++++++++++++++++++++
+ odb/source.h          |  33 +++++++++++
+ send-pack.c           | 101 +++++++++++----------------------
+ t/t5516-fetch-push.sh |  12 ++--
+ upload-pack.c         | 125 +++++++++++++++--------------------------
+ 10 files changed, 482 insertions(+), 208 deletions(-)
+
+
+---
+base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+change-id: 20260807-b4-pks-odb-generate-pack-f30fbcdef3fc
+
