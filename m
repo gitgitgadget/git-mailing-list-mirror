@@ -1,33 +1,31 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A0F3C1D7B
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 08:09:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAC23BA22E
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 08:26:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786090175; cv=none; b=PR6ioFPQpTbb2aUG8g63m00lsOTCTPYnLehLyJvjhdKEERESMDD74OwcXuVooFgIphMF7e8Pr66PF0zt3K21KefbApbbyq5D1Z+B1TOIs1O4i7/xvHf0Jjj28wTDOQhE++6kr0zIqFm8vzmo3K3zrV6OjPr5ZEdwfhWr5VwN7CA=
+	t=1786091194; cv=none; b=tcpg4EE5CfJpUW7tZndEr04X+KWBcKyZG7gehkMrhv9GYhzqZL8JocH1glAhzewOs4iqtOk2eCdfRAZARcWde+ij0E8Nsno/+023td9cU1JBLPydHK/AENUUTurHX8HX+IyAonb9SMgOs1MYqV3+tm/aixoActGd0YDrlNZbdpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786090175; c=relaxed/simple;
-	bh=g656+hALuo601c/DegupuXrTP+FHwlntjRZW1Xbs3Rc=;
+	s=arc-20240116; t=1786091194; c=relaxed/simple;
+	bh=J3iLzH9vTc82R2d6YLU6ZD465CrnstpJQjiiqNT3++4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U0xwncvVwvezV+bh6VvJmQgyNzHizIbhragZiLLPBrqRFUqTtjgn3iaXH9Oo0Muqn+rRlzybSYfeDBCsGm0ugtaDmQ6m36hvfpXx+R9wGHiNvvt2jNAbtfU09eTOsw5R7rma8Udcjcb+I2tXZTXl1tmEkaIG19vU7afZB7ZjNzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oJ10e7V7; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=r2u4nbY4d6I5FZ3owGK1pStwmihRF/NWerhJCp0PHbN608WTbjGgFtyfd3B76RBLdZYfXgA1nJoSEbDT3U69jw4GQQOc4z7rNRW5D6iERNw7feh0ud0hYscxMSiKP54wQzoJT0KoOl+rtUa/QPyppzIKKN6e24ml85+rfi3db5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=GwRUhpnd; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=REYl3W6T; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oJ10e7V7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C361F00A3D;
-	Fri,  7 Aug 2026 08:09:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786090169;
-	bh=hhu4may6/287P2jxsL9EEm3ZrHrEui+dLmNrZQfiIpo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=oJ10e7V7VMNBIvL5de9hkDJzGmEAdodvgqrZxY9T5/rEhwcQNQMG6JnSeFC276v0D
-	 GcGYzz6q1amzOvadqk8FYdBPmY2/CLs3+I4r6vz5orcQvR/aAhBpnCjlXDxSB+opIx
-	 ceWzI2WiBNWMSsCDV6uV1GmpHxbjDdOb9SE+5OPhHlMM1pPI/NEhtzqtYx4ouqwSGC
-	 Gr4TngtbGUMxSIFtEvJRYqA4UX6fq+C0/GJEqj/Kh7AV6sOpASpzWLYlc7VydWEt1C
-	 BFofbx5hc3AQqsErT52vQtyQaxb14unYwz31Eqll+UaqNedT/+X1PPo5jV6GKvKx0O
-	 jSmSANFyGjcDg==
-Message-ID: <0ea2cce4-2174-4866-9619-d7f74ae5c91f@kernel.org>
-Date: Fri, 7 Aug 2026 10:09:26 +0200
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="GwRUhpnd";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="REYl3W6T"
+DKIM-Signature: a=rsa-sha256; b=GwRUhpnd6P96T/sMwcvY5GYvH8cnkvyBXGdOUeLVmPxGlsIGnH3lVEsdwO93nYRe/otBGoEJWJ3dAiT+L5naBBrFJKpEvKBQrq/ehneoGuL9GWdHUHMJs13jCNslTOoobRdGeVJm7nVGjIiHJTMjHehIjTuplX5GoBZR/O0Pz3f4oWAccfRSN1V5uAlDnJNAl+V4yCLeGcxp2xI04MfkrKgB8sX61AfHkxJravW03G93YuXIyV0pE2P7+dALSy1FXjjwJJY1Xf9OkRlBB3jn+sdcAZCyyZJwgBZ40gMOdKJcOW/dhDjtd1I0sCtIBwLSS2ee/GmKLAi0gBaTDw19UQ==; s=purelymail2; d=malon.dev; v=1; bh=J3iLzH9vTc82R2d6YLU6ZD465CrnstpJQjiiqNT3++4=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=REYl3W6TyUcqp8OfrRI1vlDR55Fbjb5j201RZEDL6DFvDOtZy0bFuc7mUUqbeUaeUpgwtcJycwVCe5CZbt2qVcb1shYpcqAOtSBUlLcR6d40n0B0KQfA1iT4TOcHFyRJAJpMkSRY8NdYXhikOhebXnrhEidMAE9PdWmHRpCcJznlRYRP0+EWnKVOBGAOB7qFL1t2ezykQZoJrfBdwEjoYzjyGQg6zmdVWDAg4JBDFn4/mJPRcWJgU6mLxTA6zU/XMNaoUGSxSp81F3n+3+i0yBv4xl6NC/v7HkpH946M7HeacFp8ikT5fcIwhspTfTCli1vXStbpfw8lowJWymJgzQ==; s=purelymail2; d=purelymail.com; v=1; bh=J3iLzH9vTc82R2d6YLU6ZD465CrnstpJQjiiqNT3++4=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 329137153;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Fri, 07 Aug 2026 08:26:23 +0000 (UTC)
+Message-ID: <dc22396e-21b8-442f-a93d-f49e7af5e99a@malon.dev>
+Date: Fri, 7 Aug 2026 16:26:15 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -35,176 +33,69 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] completion: add 'git history' subcommands
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Philippe Blain <levraiphilippeblain@gmail.com>
-References: <20260806-history_autocompletion-v2-0-7e60f52a1c20@kernel.org>
- <20260806-history_autocompletion-v2-1-7e60f52a1c20@kernel.org>
- <anV7cHblfmGvbl-e@pks.im> <e894cf4e-7df2-489a-a596-96f1d4d95dc0@kernel.org>
- <anWEcfhdzvNQfskU@pks.im>
-From: Vincent Mailhol <mailhol@kernel.org>
+Subject: Re: [PATCH 3/3] environment: reorder variables in repo_config_values
+ structure
 Content-Language: en-US
-Autocrypt: addr=mailhol@kernel.org; keydata=
- xjMEZluomRYJKwYBBAHaRw8BAQdAf+/PnQvy9LCWNSJLbhc+AOUsR2cNVonvxhDk/KcW7FvN
- JFZpbmNlbnQgTWFpbGhvbCA8bWFpbGhvbEBrZXJuZWwub3JnPsKZBBMWCgBBFiEE7Y9wBXTm
- fyDldOjiq1/riG27mcIFAmdfB/kCGwMFCQp/CJcFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcC
- F4AACgkQq1/riG27mcKBHgEAygbvORJOfMHGlq5lQhZkDnaUXbpZhxirxkAHwTypHr4A/joI
- 2wLjgTCm5I2Z3zB8hqJu+OeFPXZFWGTuk0e2wT4JzjgEZx4y8xIKKwYBBAGXVQEFAQEHQJrb
- YZzu0JG5w8gxE6EtQe6LmxKMqP6EyR33sA+BR9pLAwEIB8J+BBgWCgAmFiEE7Y9wBXTmfyDl
- dOjiq1/riG27mcIFAmceMvMCGwwFCQPCZwAACgkQq1/riG27mcJU7QEA+LmpFhfQ1aij/L8V
- zsZwr/S44HCzcz5+jkxnVVQ5LZ4BANOCpYEY+CYrld5XZvM8h2EntNnzxHHuhjfDOQ3MAkEK
-In-Reply-To: <anWEcfhdzvNQfskU@pks.im>
-Content-Type: text/plain; charset=UTF-8
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Olamide Caleb Bello <belkid98@gmail.com>
+References: <20260805115342.3939931-1-cat@malon.dev>
+ <20260805115342.3939931-4-cat@malon.dev> <xmqqo6fgnssx.fsf@gitster.g>
+ <dbcbb042-5c50-4569-9b18-3edcc7b1ef4b@malon.dev> <xmqq5x1nmc90.fsf@gitster.g>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <xmqq5x1nmc90.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 07/08/2026 at 09:08, Patrick Steinhardt wrote:
-> On Fri, Aug 07, 2026 at 08:44:41AM +0200, Vincent Mailhol wrote:
->> On 07/08/2026 at 08:30, Patrick Steinhardt wrote:
->>> On Thu, Aug 06, 2026 at 10:27:36PM +0200, Vincent Mailhol wrote:
->>>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
->>>> index e875787710..7372e2919b 100644
->>>> --- a/contrib/completion/git-completion.bash
->>>> +++ b/contrib/completion/git-completion.bash
->>>> @@ -2137,6 +2137,54 @@ _git_help ()
->>>>  	fi
->>>>  }
->>>>  
->>>> +__git_history_has_revision ()
->>>> +{
->>>> +	local i
->>>> +
->>>> +	for ((i = __git_cmd_idx + 2; i < cword; i++)); do
->>>> +		case "${words[i]}" in
->>>> +		--empty|--update-refs)
->>>> +			((i++))
->>>> +			;;
+On 8/7/26 00:42, Junio C Hamano wrote:
+> Tian Yuchen <cat@malon.dev> writes:
+> 
+>> On 8/6/26 05:47, Junio C Hamano wrote:
+>>> Tian Yuchen <cat@malon.dev> writes:
 >>>
->>> This will unfortunately be quite a pain to maintain going forward, as we
->>> now have to be aware of updating this site every single time we add a
->>> new option that accepts a parameter.
+>>>> Reorder the fields in struct repo_config_values and its initialization
+>>>> function to follow the order of configuration sections.
+>>>>
+>>>> Keeping the declaration and initialization order aligned makes the
+>>>> structure easier to review and maintain.
+>>>
+>>> Really?
+>>>
+>>> Do you have some automated tool to make sure these initialization
+>>> assignments in the environment.c file and declaration in the
+>>> environment.h file match the order in Documentation/config/*.adoc or
+>>> something else?  Have you designated some list as the authoritative
+>>> source of truth to check these against?  Without such a list to
+>>> check the code against and a mechanism to enforce the ordering, I
+>>> find it hard to agree with such a claim that this makes it easier to
+>>> maintain.
 >>
->> Do you foreseen such new parameters?
+>> I see.
+>>
+>>>
+>>> It is typical to list the structure members in the order of stricter
+>>> to looser alignment requirement of their types.  I do not know how
+>>> strictly it is followed for "struct repo_config_values", but by
+>>> spreading pointer valued members more widely with smaller enums in
+>>> between, the change certainly is making the overall structure size
+>>> larger by requiring more padding between the members with different
+>>> alignment requirements.  Not that we would have 100s of instances of
+>>> these structures.
+>>>
+>>
+>> Oh, I overlooked the size issue. Thanks for pointing out.
 > 
-> Yes, I'm very sure we'll gain more parameters for those commands. Commit
-> signing, sign-offs, handling of notes are all things that are currently
-> being discussed, and they likely will require new options.
-
-Got it! I kind of mixed subcommands and parameters in my head. My
-previous answer was totally off topic, sorry.
-
-For the new parameters, indeed. The issue is that these options accept
-two syntax:
-
-  --empty=<value>
-
-or
-
-  --empty <value>
-
-The first one falls under the '-*)' switch case anyway, so if you do a
-
-  git history fix --new-option=foo <TAB>
-
-the __git_history_has_revision will handle it properly. If you do:
-
-  git history fix --new-option=<TAB>
-
-you just get no completion until the code is modified to teach what are
-the correct value for --new-option. This is acceptable in term of
-maintainability.
-
-If you do:
-
-  git history fix --new-option <TAB>
-
-then __git_history_has_revision will assume that --new-option is a
-toggle parameter which takes no value and will incorrectly complete it
-with a reference.
-
-Finally, if you do a:
-
-  git history fix --new-option value <TAB>
-
-then the value is interpreted as a reference and the <TAB> gives no
-completion.
-
-For a
-
-  git history fix --gpg-sign
-
-this is mostly OK. Assuming the new --gpg-sign works identically as the
-git rebase option, the --gpg-sign value is optional and default the the
-committer identity. So in most of the cases, the user will not give a
-value and will correctly get the reference completion when doing:
-
-  git history fix --gpg-sign <TAB>
-
-So the only case where we are screwed is if the option takes an argument
-*and* the user specify it as --new-option (without the final '='). In
-that case, the damage is still not huge. I expect most of the users to
-pass option with the final '='.
-
->>> I don't really have a good idea for how to fix that reliably though, I
->>> have to admit. Maybe we should just mostly ignore this edge case and
->>> always complete references, unless we have seen a `--`? That can be
->>> checked rather easily via `__git_hash_doubledash`.
->>
->> My toughs are that if such a special case ever surface, we can just
->> dispatch it earlier before we check for the
->> __git_history_has_revision, like this:
->>
->> ---8<---
->> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
->> index d313780d8b..786fcb5e16 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -2193,6 +2193,15 @@ _git_history ()
->>  		esac
->>  	fi
->>  
->> +	# Subcommands which takes something else than a revision
->> +	case "$subcommand" in
->> +	foo)
->> +		# 'git history foo' take a file first
->> +		__git_complete_index_file "--cached"
->> +		return
->> +		;;
->> +	esac
->> +
->>  	if ! __git_history_has_revision; then
->>  		__git_complete_refs
->>  		return
->> ---8<---
->>
->> This seems reasonable to me. Once we know what this mysterious new
->> command would be, maybe we can find a smarter and more tailored
->> solution, but at the moment, I would not call this a blocker.
+> I didn't mean to "point out" any size issue.  As I said, it is not
+> like we have hundreds of these, so padding bloat here and there
+> would not matter and if we get a readability boost by reordering
+> into a sensible order, that by itself could be a win.
 > 
-> I'm not really concerned about new subcommands for now, true. But
-> hardcoding the parameters as we do above feels error prone to me and
-> will very likely diverge as the command evolves.
 
-I think that there are two options:
+Okay.
 
-  1. What I did, which work great today and will start to diverge the
-     day we add more arguments which takes a value as you highlighted.
+As you said before, the boost on readability seems to be limited. 
+Reordering by config section is not a strong maintenance rule without an 
+authoritative source. So let's don't reorder them anyways.
 
-  2. Ignore the '--argument <value>' syntax and only complete the
-     '--argument=<value>'.
-
-Point 2. will consistently give incorrect results when doing:
-
-  git history fix --new-option value <TAB>
-
-but is easier to maintain. And the '--argument <value>' syntax isn't
-covered in the manpages anyway, so this option is just a "we implement
-the manpages and that's it!" approach.
-
-My preference goes slightly to 1., but I am OK to send a v3 with
-option 2.
-
-
-Yours sincerely,
-Vincent Mailhol
-
+Thanks, yuchen
