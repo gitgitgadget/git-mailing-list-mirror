@@ -1,118 +1,312 @@
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C4035F184
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115774; cv=pass; b=KNHTyB6naWPu5+DMrqD60lsawmOW2DqAqsGaHlt5nmkYBecdidsvq9xKkVX7QzcUw9VTdx2+HN+LeesW50/5pT4fuKSa4sPIWkU9SiEUsQSiIAx8RJJhhrOuKXF3tD0JApOJHj0M7Ajy2vKJvXzkUGvrZEuoB1LxM0ise7r4j5I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115774; c=relaxed/simple;
-	bh=LZq66Iwu2SBFJ/526aQMdejDD8phXhtmSaozeC+zWdQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lkGw5HPpSqr0fAjDN+oU5FK4QpJJY/3w00keHplUXiry8vwsO+cUYJutXWWi4lAw2eHpseKqyQLkptF9RxvW3tJnzbKH1MMt9xF+m/S+bPsFDzmMHBz7eWg594Bklk7z229QhrPKO1ogqiFns5bYfpjI/WmgdZ9Iez4g1ik1sWk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MjetgS5E; arc=pass smtp.client-ip=209.85.167.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536DB33E355
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:22:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786116159; cv=none; b=rE/HMhU0aVYVa4A35VpSSVu+59XIOSw6iL05P8Rd+QBaLUYUhutbT4ZzP6cpuiecMtURGZF5qajaGP+PAJGLWs1G7f93Qk1w8qzC3OzQGl9xFcYgy6QRmzsXd2+v3ZIRY5lYY2ycghM/WQfkoOVkGHwQHXWu16x3q6F00mfp64w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786116159; c=relaxed/simple;
+	bh=Snj7wIriCt3cCAeQ6ucLGNAeZ51XyxQ6IzHmscKryrU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Vlmm6x/4OmLCF4Gk1/O9XA1gNIF7CTTkuU9BeoLCf+oW6ewfx0zAtncsTaXKSAGyWIJjpZ2akh1mHALeHpXSt1QAl/XaDV71s/VxhpOfs9yMPhNB1HdpiG3Q3fdQTpM8R0XrfXV3vuTnVlD3ChwZDDYPFi79UmnkvNJrttp3FQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sDMh4Lvt; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MjetgS5E"
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-495b27007d0so2099493b6e.1
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:16:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786115772; cv=none;
-        d=google.com; s=arc-20260327;
-        b=By/Jm3x7yhShRrACa5mFUbSbkfeKm+AOBhu112TOJx04+/3UwmIjPMBZoN2qGmZqY6
-         Ox9EA1vIqOCN57AC81wKeSdyuQgb/k1CfVFAwJP7C7fO3CuxHxe8x0R6QBNhXVv5Tt1X
-         8OAqyjvKwEmfAbTEGP3wooxQLybmyU96YUftMhHzUqMD8dKLMckrhIfxSw/AwbHeXsEQ
-         cS2X/YAekOJntZRpVKVivSLg4WnwlPRrrUFeNuG9jzuySmmJqZWjCoEsim9Qwgac2KoP
-         YYA2GpiZtzZ9CK+UFU5mWApQZTiPm9MhKH0m3UaDOxreeH9z/TreeJvJFSMIQ1fk3OwG
-         hi1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=bjsHYJk57rUJy838n/jOGA1FoqdYnoP6a+T1rtQoaFU=;
-        fh=tWeD7t0wKZf+Off6vGLQNOfMoo7hTOFbWrsZeSQp1yc=;
-        b=UZMAln9T6hRf6FvPKkavYnJiRxARvJWb0plLrsGxpoyK4f/CYjZljNGe6qNJoC7IPi
-         xPojs77yfIpvyyORlqiItLIhfcaHtBcqzmZxXFhDgwfwZYkVQxHftZRcTqMugG4GbcCX
-         TjUjnVho411vjM5C70L/qIOzDrKI7nDHqKQgFUWYKujFEZ7BBIpVgU0lC13WtL0aJ/XG
-         Bv7zfm0WC7QhATvPIDxwchcydnSVwdS3QpMGds8nZ+KSbZaM+WryN7+GmD34Q4Dmc89l
-         ymyc+U4n9ancILi/Pox9Khl+WovRS3kbzFxtMpKoa0aofwiJPhGzLkOAYTaXqVfAtFuY
-         WnWg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sDMh4Lvt"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-49556f97a9dso22965565e9.1
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:22:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786115772; x=1786720572; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=bjsHYJk57rUJy838n/jOGA1FoqdYnoP6a+T1rtQoaFU=;
-        b=MjetgS5E11+/qjG5TASaRQVgVpuLAdMdIBkclgUb0NfQ9PRWS3aw8NFNEPkJJLF/xP
-         Ipmr+yz5yuTHhSMPjF8tse5iUvsWbEKiuA5DUZMKkISO0v2RPMJYcpx13JjAXe5rjQAd
-         L8Espoe/TckTu7b8na/svCOC01Eb+d9cYEJEE0f3I3KvA1O/3HfEyGzKSAykx5qie0HG
-         TTLT/HeXrJrt/r/YV6kaceJ36WiO4vQSn7ygfTArtCfnV8BF233WoUr74nGRyY3uU7ck
-         4BzrkJ4W9H4OE5q05/Iwger2iFHPpDdFxzPXtF3nyJf7nz/VNNBWxSBAs2IjoTKJ1oea
-         yqQA==
+        d=gmail.com; s=20251104; t=1786116155; x=1786720955; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=dNQfp+X9Bz3Wk9nwKwoXYKS7Vc7h7cHwmj8GPzTETfo=;
+        b=sDMh4LvtaSOkH1CXvDiU43iZTatTdgqnwQC+8Kgg7GSslBFCK3aUAgsG1KoHAl9qh5
+         1X8Pe6D+iOWHlqauYIH+JXsnJIHoDtEmclFg5ZPU9ykjlPHpPQBbDD0nYnazci/tviyC
+         R5JCFAoCQx10S6xWn4zOWV6wzM9cJPKPqUYvMZS+LfZmvx8kwsN5IUhekjS6PRTMoPZV
+         B8i4L6tFouWSukZvRQFyocYODXkAjjNYMvoN/Zt1qouLt9AjG34KYGwHFYl4MGgVRsnc
+         TDZE91dNJJHgsZ6OkNTzicoXRZM8txos38ln1KxajhZ8MbT7Ri9SqhrSlsLmAU7+kdG6
+         LIOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786115772; x=1786720572;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bjsHYJk57rUJy838n/jOGA1FoqdYnoP6a+T1rtQoaFU=;
-        b=RbIcumb0Xlq7OtDZcKLA4LTdejhuZcqRguZFM+zjcyaJ+ZnSdlji69UDNRf6hLmpAu
-         4FHWzJrpUIhDXPHkPeMpp7ILlGR6Rn+mGpmB9ColqipSE7ZzbejMtjE/0O+ZkVti1X3f
-         /UvzHaST0Y4CWxZWITjXOAr6xQfPzKZWTk/JtdadnoOf1+Jj6ZZGBerKqdzDcPw4UDnF
-         D03lLpmBcr84mL0ibWa888JEgqA8VzCh+ITjHh/TmDQepPXOXXGJO2uJYp53x7Zgdabt
-         U+uZ6vrMTyG3DNac5Ftp2Oq1mzgc48nCNLMjHoqEKmNbxHTMuqXJrE17kzxodQQnE+Iw
-         lWgw==
-X-Forwarded-Encrypted: i=1; AHgh+Rr8yaHrp+LrleKnAYvOTt90Fh8Lqd8HMeCVDWV6DRT5xHvmyQUANQGrZsf1cJyWqYCiokc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLMtCzIJlA49DNfTENEJLTUjxo8lxGlKkFAmQzCYb0qAHaCTbj
-	a463K8Q8HG3+HN+YnXsMEBnmHeVXvS46w5G6ukfDEOrji24jeVbbqTV81FNTjpQHk+xbktXycnU
-	99glWznHQlLGJFRd+lG6+qo92PfS3LiM=
-X-Gm-Gg: AR+sD11EiilQuYKIcXRTG8geU1F1GPB4VTRJxgo+hMSk1YdTE8PBoWhzn35sZP5uBlN
-	tcIlj9OTwLXHqzYHZxwsKI1YxS+stO5JrA5hYxTr9G6N4q67gzKPgCfOnPNe4XrHNT4EwIOBuiq
-	Tzk79i6t4BPCvInB2MeaIrF7bI9GtSTxBdoCQZe9DCrjaNONv6sTF+JuUXfx/xIKFsjrmFHkkRA
-	BagnPB1TLT7nmzlDTBxKM1KQ1NZu2xc2wTmYhhG3vj7hE3PLrlbt2n7Pd8FRMcndOiOz+z0NOUg
-	prsbhITky6OASJiZFVvHYxtkHz2H20cI3Uw1YB9caNbLTatkUHBCC0F9ilR1LE8M++C6/QSNQo/
-	rnbrM4PHvUUwfQ3somSWY+W8GLDnxK1dbOx9Xlqs/QCTbq/jO7++hg79t5H8zSjM=
-X-Received: by 2002:a05:6808:159a:b0:49b:dcb8:e2b5 with SMTP id
- 5614622812f47-4b13eee8c3cmr5749682b6e.19.1786115771977; Fri, 07 Aug 2026
- 08:16:11 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786116155; x=1786720955;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=dNQfp+X9Bz3Wk9nwKwoXYKS7Vc7h7cHwmj8GPzTETfo=;
+        b=AVu5ZY8GeKU45Mprigb7UPJgFbmzl6lD/JDSZs0ZXChzwStQ+TFIcevPa5gNlPjxY8
+         8Zk2ZYGYoU/wj6gvqlLh0w3glE27lbVib61w+49acr6yOmULMzrGEZ3tsDonqrnbBjuM
+         g7bsnPL3cZSWLqp0LTVB3EYwed+guD+6KwkCKmNZf01NWQsz7fP3S3/kf//zE1epzyRQ
+         6qXm+t5e5UxPO4jyrOKRn7iNLeKh/iViqhzsvIdeonoXuECDZyzOBCSnh5i7PKrH3xbL
+         DFDc26+cZ22mgcujqjzuZuC+zsvDvwNtpJJxWu1fABW/d9y0+KHzoUgbNj6hOsX+F8uY
+         4BOg==
+X-Forwarded-Encrypted: i=1; AHgh+RoW3Kx6uoegy44APw1ZnY1TlEQMBPglslEeyr/rDdvTNBV4z2KbwuaQRz/1ZZXpQJPy5/k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxWOA4z1ICcWIEM4xD13xKpYgSJ+7oK1xvpeI7+TIRluhCNkax
+	ecPdNW2cNG3GihUfBKMhk0nQfPi9viOnN6997Tdjc53lpzF1FWnPcPUPQIbyfA==
+X-Gm-Gg: AR+sD113taDj7SOhqlQmYsiA9BgVOHiS5pHK5o9ZYFv+83MbvTN6r+JNsTDff0mwzto
+	W0MRutT5Wz+w63S+wRhy0yutJXDY72PI2wI7PhV4aAtn5a65gB8pHqudWdsyjbE4bE+H4YAAFzF
+	Cc115Br1ykwCmuZT226G+yuZgrld9nmlnbAC7pZ79YpTIly9+FUtOlr6eoMsgt4XbFM1NRLOmox
+	+wfOZ/vZaK+9QycwriscXIlPGezjw2XsGDQBAxG/CKdOIEKdMTOEi6FJt94WRnCzzBJJm9116ME
+	sXu4eC/SVsS4r2TTCXISd70zvcaDzaHcKr+w6iA2xp2p7dldw7AhhjOnLAH1v2F43ReuGx5Gp/J
+	5zb1WDc6TMkuGLtwpkRI2AExomINxCVHZGJIIhzwFyRHC4eSuLmeZ5tAIz/XmKy0uxu8hZj5Ehf
+	bEU26ayFkN0KduCYRT4ZbsQI5Wd7b/McLY4qJaSIfvc/agxFkxBCPGNNEZ4smO1LxHtc9u43i2k
+	J12v4SNk7lURJTkv+hG73x+5OTu+gmrxExHI0k4PVbu
+X-Received: by 2002:a05:600c:1991:b0:493:e451:a9e1 with SMTP id 5b1f17b1804b1-4994e7448d9mr292813235e9.2.1786116155256;
+        Fri, 07 Aug 2026 08:22:35 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4995e9f9424sm40395785e9.8.2026.08.07.08.22.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Aug 2026 08:22:34 -0700 (PDT)
+Message-ID: <98682fa4-55d9-4829-97f1-02e244b35266@gmail.com>
+Date: Fri, 7 Aug 2026 16:22:33 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALnO6CAN1=dgRsYjABfa3CJkGnvb139EcrzS9EnX43i3szOgtQ@mail.gmail.com>
- <CABPp-BHbWKr5tv9ApH8ZagJkY39XZgQbLoFrmQJfU71z1y6_xw@mail.gmail.com> <anWpt6rzws0yYdFH@vader>
-In-Reply-To: <anWpt6rzws0yYdFH@vader>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 7 Aug 2026 08:16:00 -0700
-X-Gm-Features: AUfX_mwNhiXYGe_lGzo7fXFv0Zi9Q1-q8D_wUa2A1Pqh5RmaoB43SApaXEM44nU
-Message-ID: <CABPp-BFwbiasLBS3LDvaz736o2u0FkQJ73Tb8SQnc5rcR5Vn0A@mail.gmail.com>
-Subject: Re: git-replay/git-history lose notes
-To: erik88 <erik88@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 2/2] rebase: guard non-branch symref targets
+To: Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Son Luong Ngoc <sluongng@gmail.com>
+References: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
+ <pull.2126.v3.git.1784708107.gitgitgadget@gmail.com>
+ <a653f56ea214e74ea71ba31f5378f9cbf8b04dde.1784708107.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <a653f56ea214e74ea71ba31f5378f9cbf8b04dde.1784708107.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Aug 7, 2026 at 2:49=E2=80=AFAM erik88 <erik88@gmail.com> wrote:
->
-> On 06/08/26 23:53, Elijah Newren wrote:
-> > git filter-repo (and implicitly fast-export/fast-import) too, though
-> > that one's a slightly bigger can of worms.  (Trying to treat notes as
-> > the underlying commits they are represented as is a really poor way to
-> > export and import them; any filtering on the underlying commits will
-> > cause the notes that attach to them to just be lost since they will
-> > instead attach to the original commit.)
->
-> There are some workarounds for filter-repo, IIRC they work _okay_.
->
-> https://github.com/newren/git-filter-repo/issues/22#issuecomment-18340414=
-70
+On 22/07/2026 09:15, Son Luong Ngoc via GitGitGadget wrote:
+> From: Son Luong Ngoc <sluongng@gmail.com>
+> 
+> A local branch symbolic ref may point outside refs/heads/. Such an alias
+> cannot be skipped like a branch-to-branch alias because its concrete
+> target ref is absent from the local branch decoration list.
+> 
+> However, queuing each alias independently can update the same target ref
+> more than once and make the second compare-and-swap fail. A reservation
+> from another worktree can also name either an alias or its resolved
+> target ref, so checking only one form can miss an in-progress update.
+> 
+> Fix these cases by checking both the literal alias and its resolved
+> target ref against checked-out reservations. Deduplicate updates by
+> target ref. Also reserve both forms when loading another worktree's
+> update-refs state. This makes different aliases honor the same
+> in-progress update.
+> 
+> This keeps non-branch symrefs supported without allowing duplicate or
+> cross-worktree ref updates.
 
-Yes, I'm the one that added the "workaround-available" label on that
-ticket.  :-)  Just thought the lack of built-in support (which would
-require fast-export & fast-import changes) and questions about ringing
-bells meant it might be an interesting tidbit to add.
+I've left a couple of questions below. If you're short on time I'd 
+suggest we just concentrate on getting the first patch merged as that 
+fixes the common case of one branch being a symlink to another. We can 
+worry about two branches being symlinks to a ref outside "refs/heads/*" 
+later if it turns out to be a problem in practice.
+
+> diff --git a/branch.c b/branch.c
+> index 243db7d0fc..98a50d8368 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -442,10 +442,25 @@ static void prepare_checked_out_branches(void)
+>   						     &update_refs)) {
+>   			struct string_list_item *item;
+>   			for_each_string_list_item(item, &update_refs) {
+> +				char *resolved_ref;
+> +				int flags = 0;
+> +
+>   				old = strmap_put(&current_checked_out_branches,
+>   						 item->string,
+>   						 xstrdup(wt->path));
+>   				free(old);
+> +
+> +				resolved_ref = refs_resolve_refdup(
+> +					get_main_ref_store(the_repository),
+> +					item->string, RESOLVE_REF_READING,
+> +					NULL, &flags);
+> +				if (resolved_ref && (flags & REF_ISSYMREF)) {
+> +					old = strmap_put(
+> +						&current_checked_out_branches,
+> +						resolved_ref, xstrdup(wt->path));
+> +					free(old);
+> +				}
+> +				free(resolved_ref);
+>   			}
+
+After the last commit, when we prepare the todo list don't we skip any 
+symbolic refs and only record their target? That would mean there 
+shouldn't be any symbolic refs to resolve here. I do wonder if the 
+earlier part of this function should be storing the symref and its 
+target when it walks all the worktree HEADs. If we have a branch 
+"refs/heads/feature" and a symref "refs/heads/symlink-to-feature" is it 
+possible to have them checkedout in different worktrees because we only 
+add HEAD to the list of checked out branches when we walk all the 
+worktree HEADs?
+
+>   			string_list_clear(&update_refs, 1);
+>   		}
+> diff --git a/sequencer.c b/sequencer.c
+> index 63aba60a08..040b5bf645 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -6459,6 +6459,7 @@ struct todo_add_branch_context {
+>   	size_t items_alloc;
+>   	struct strbuf *buf;
+>   	struct string_list refs_to_oids;
+> +	struct string_list symref_update_targets;
+>   };
+>   
+>   static int add_decorations_to_list(const struct commit *commit,
+> @@ -6473,6 +6474,7 @@ static int add_decorations_to_list(const struct commit *commit,
+>   	while (decoration) {
+>   		struct todo_item *item;
+>   		const char *path;
+> +		const char *checked_ref;
+>   		char *resolved_ref;
+>   		int flags = 0;
+>   		size_t base_offset = ctx->buf->len;
+> @@ -6508,6 +6510,17 @@ static int add_decorations_to_list(const struct commit *commit,
+>   		}
+>   
+>   		path = branch_checked_out(decoration->name);
+> +		if (!path && resolved_ref && (flags & REF_ISSYMREF)) {
+> +			checked_ref = resolved_ref;
+> +			path = branch_checked_out(checked_ref);
+> +		}
+> +		if (!path && resolved_ref && (flags & REF_ISSYMREF) &&
+> +		    string_list_has_string(&ctx->symref_update_targets,
+> +					   resolved_ref)) {
+> +			free(resolved_ref);
+> +			decoration = decoration->next;
+> +			continue;
+> +		}
+
+So we check the to see if the symref or its target are checked out. 
+That's necessary because we might have stored a symref rather than its 
+target in current_checked_out_branches above (which I think is probably 
+a bug). If two branches are symrefs to the same ref we'll only queue the 
+update once which is good.
+
+Thanks
+
+Phillip
+>   		ALLOC_GROW(ctx->items,
+>   			ctx->items_nr + 1,
+> @@ -6523,6 +6536,10 @@ static int add_decorations_to_list(const struct commit *commit,
+>   					      decoration->name, path);
+>   		} else {
+>   			struct string_list_item *sti;
+> +
+> +			if (resolved_ref && (flags & REF_ISSYMREF))
+> +				string_list_insert(&ctx->symref_update_targets,
+> +						   resolved_ref);
+>   			item->command = TODO_UPDATE_REF;
+>   			strbuf_addf(ctx->buf, "%s\n", decoration->name);
+>   
+> @@ -6554,6 +6571,7 @@ static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
+>   	struct todo_add_branch_context ctx = {
+>   		.buf = &todo_list->buf,
+>   		.refs_to_oids = STRING_LIST_INIT_DUP,
+> +		.symref_update_targets = STRING_LIST_INIT_DUP,
+>   	};
+>   
+>   	ctx.items_alloc = 2 * todo_list->nr + 1;
+> @@ -6579,6 +6597,7 @@ static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
+>   	res = write_update_refs_state(&ctx.refs_to_oids);
+>   
+>   	string_list_clear(&ctx.refs_to_oids, 1);
+> +	string_list_clear(&ctx.symref_update_targets, 0);
+>   
+>   	if (res) {
+>   		/* we failed, so clean up the new list. */
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 11afa8be56..110ed8ae63 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -2024,6 +2024,78 @@ test_expect_success '--update-refs updates refs correctly' '
+>   	test_cmp expect err.trimmed
+>   '
+>   
+> +test_expect_success '--update-refs checks resolved non-branch symref target' '
+> +	test_when_finished "
+> +		git worktree remove --force checked-out-target-wt &&
+> +		git symbolic-ref -d refs/heads/non-branch-alias &&
+> +		git tag -d checked-out-target
+> +	" &&
+> +	git tag checked-out-target HEAD~1 &&
+> +	git symbolic-ref refs/heads/non-branch-alias refs/tags/checked-out-target &&
+> +	git worktree add --detach checked-out-target-wt checked-out-target &&
+> +	git -C checked-out-target-wt symbolic-ref HEAD refs/tags/checked-out-target &&
+> +
+> +	GIT_SEQUENCE_EDITOR="cat >todo" git rebase -i --update-refs HEAD~2 &&
+> +
+> +	test_grep "^# Ref refs/heads/non-branch-alias checked out at" todo &&
+> +	test_write_lines refs/tags/checked-out-target >expect &&
+> +	git symbolic-ref refs/heads/non-branch-alias >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--update-refs deduplicates non-branch symref targets' '
+> +	test_when_finished "
+> +		git symbolic-ref -d refs/heads/non-branch-alias-one &&
+> +		git symbolic-ref -d refs/heads/non-branch-alias-two &&
+> +		git tag -d shared-non-branch-target
+> +	" &&
+> +	git tag shared-non-branch-target HEAD~1 &&
+> +	git symbolic-ref refs/heads/non-branch-alias-one \
+> +		refs/tags/shared-non-branch-target &&
+> +	git symbolic-ref refs/heads/non-branch-alias-two \
+> +		refs/tags/shared-non-branch-target &&
+> +
+> +	GIT_SEQUENCE_EDITOR=: git rebase -i --force-rebase --update-refs HEAD~2 &&
+> +
+> +	test_cmp_rev HEAD~1 refs/heads/non-branch-alias-one &&
+> +	test_cmp_rev HEAD~1 refs/heads/non-branch-alias-two &&
+> +	test_write_lines refs/tags/shared-non-branch-target >expect &&
+> +	git symbolic-ref refs/heads/non-branch-alias-one >actual &&
+> +	test_cmp expect actual &&
+> +	git symbolic-ref refs/heads/non-branch-alias-two >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--update-refs honors non-branch symref reservations' '
+> +	test_when_finished "
+> +		test_might_fail git worktree remove --force reserved-target-wt &&
+> +		test_might_fail git symbolic-ref -d \
+> +			refs/heads/reserved-non-branch-alias-one &&
+> +		test_might_fail git symbolic-ref -d \
+> +			refs/heads/reserved-non-branch-alias-two &&
+> +		test_might_fail git tag -d reserved-non-branch-target
+> +	" &&
+> +	git tag reserved-non-branch-target HEAD~1 &&
+> +	git symbolic-ref refs/heads/reserved-non-branch-alias-one \
+> +		refs/tags/reserved-non-branch-target &&
+> +	git symbolic-ref refs/heads/reserved-non-branch-alias-two \
+> +		refs/tags/reserved-non-branch-target &&
+> +	git worktree add --detach reserved-target-wt HEAD &&
+> +	wt_gitdir=$(git -C reserved-target-wt rev-parse --absolute-git-dir) &&
+> +	mkdir -p "$wt_gitdir/rebase-merge" &&
+> +	old_oid=$(git rev-parse refs/heads/reserved-non-branch-alias-one) &&
+> +	test_write_lines refs/heads/reserved-non-branch-alias-one \
+> +		"$old_oid" "$old_oid" >"$wt_gitdir/rebase-merge/update-refs" &&
+> +
+> +	GIT_SEQUENCE_EDITOR="cat >todo" git rebase -i --update-refs HEAD~2 &&
+> +
+> +	test_grep "^# Ref refs/heads/reserved-non-branch-alias-one checked out at" \
+> +		todo &&
+> +	test_grep "^# Ref refs/heads/reserved-non-branch-alias-two checked out at" \
+> +		todo &&
+> +	test_grep ! "^update-ref refs/heads/reserved-non-branch-alias" todo
+> +'
+> +
+>   test_expect_success 'respect user edits to update-ref steps' '
+>   	git checkout -B update-refs-break no-conflict-branch &&
+>   	git branch -f base HEAD~4 &&
+
