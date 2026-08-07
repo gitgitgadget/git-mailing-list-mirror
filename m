@@ -1,80 +1,83 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C82378D70
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 21:06:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BE8339B41
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 21:11:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786136762; cv=none; b=ovw1hFBotunKKAnQDJkMrfQEj60CMD05RWUDf4fKyLy5ek5B/jUZfNbLh1fg11Af8wBGA2WjTtWL1hA/tcFCWo4MaapzNt4OdoYDlC4/TPgZppOuRE7VBdntUEo2/MzB/va4QMTj5A4ZHZuC6C1zFecLtj3V0bpUnsnmx2YSzlI=
+	t=1786137072; cv=none; b=j4uKX8OLM8TVHpaBVWAhftxnR9oXhoYTWw98j2L0HjFFsdQqvu2LU3D9xZ89/HvJ2X5TCdzGpHiiFshUr+BK3nYCRwzf2CRIDALwNc5OgVvW/rUDfCCDHMTAU2VANVjXuXGvniLYxFk361vK5xWFh1YK3sh74WbAExVrQlcC7m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786136762; c=relaxed/simple;
-	bh=4PAfOZEzHcqikrPKNITqzBRjGS8gh7jo/em+702tI3U=;
+	s=arc-20240116; t=1786137072; c=relaxed/simple;
+	bh=RS1LAQPWOsxwZ7AvNIPNDQwpEEENymDKZJ3PiFVOSOY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=smGon2r1UY0sRwOKiiR1wBxAuiC8aG3v/npiAoyc9xA9+1P2tUyfYttxRbLKF25p96YSpTq/HigNL7xDOo1XxwnEx3Xg0IPQpOTEjP431rjsrm+TTSTlCvdGrdL3Bu9X0lnmlTMcas6hWrd0gfw1q1qzTqYDQurMiSois4EJaEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W+aAvjjE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ixr3h4aY; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=bmJ2jyr3hFQSNZHGB19NzGS14/zmGD0V7BYL59iyGJTTobcM2sVMwkdq+CFOSywqPmKwxXGK8T9xBKvZjcXU3fEqZ/wLKouqv5wvPSxkl2m/F6Jp+8eLZthIdJ69LeCMQ/mI95YOWmjJxOrih07b5He9CSOXH/6EqcsU0sksjxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bWM6j0jq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SRmEobfR; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W+aAvjjE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ixr3h4aY"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 906847A0162;
-	Fri,  7 Aug 2026 17:06:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bWM6j0jq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SRmEobfR"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id C43B01D0012E;
+	Fri,  7 Aug 2026 17:11:10 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 07 Aug 2026 17:06:00 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 07 Aug 2026 17:11:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786136760; x=1786223160; bh=4PAfOZEzHc
-	qikrPKNITqzBRjGS8gh7jo/em+702tI3U=; b=W+aAvjjET5r1lsiq7EDOfHHSDL
-	LuW/GHFJLGtfkZ+lsVtVtN8eO9fnDu5XGntG0Bx70Bj2i2YjURuMKFLCJhG+rvPO
-	NNPr9gTi7NBGXOSz2tPHDAks6K6MkOTngm/BKFUwO1lathnxOfrs5eOaV4Vc9ttY
-	XIBAn5JmDP1Gq8FBFQNw74594oWmGY3LkKVZxdMQgnmAFAbxJuHJZ0iHTJ+SpfBT
-	XjpmYz8YynuiwkclDSI1YxyrFXJIYVFNsryP8YfkYWPiJrqWwEXZaRQe0kXoDpYi
-	A2ZVpHtNIUKAyVWXeB10Fd5FlvG6QHxsWq8FT+lpSCvQgQ8dMAwfM2p4XuPA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1786137070;
+	 x=1786223470; bh=Cbb0nesWizRqHjUaWc4OMSr9/x2Vn24DODzqXiwoC4Q=; b=
+	bWM6j0jqKqU6CbDh1vm1IZSnKfXJnWi6eNHzw/1G+hrDYm8QZ6QbbRh0ZnQ1/DWK
+	V2b2Y5vh65MpnptKwhK5qPmrlmQFarP9M5yRVOsBomq2zJ8oqNVebADuVFWWtiYB
+	0g8f8X3vay7S7oKD96gl0Zb9j9fTr/ZNcBwmd+xzt5FkDn3tdlTl+HeEwWc/LDFU
+	kQx1zZ0bVoCCZEkEWUkk5hL9S0QdffcrlPeM8bR2mdM6HRAsTlZwVfGVSaNgBFrT
+	b+23uiEf91JytbaLl934r4Z/UOXmhbj9Ba6TSgTZQkHBGRI79lsnSnJ5vjng179p
+	dCt7no34obrHgtWj5JYxwQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786136760; x=1786223160; bh=4PAfOZEzHcqikrPKNITqzBRjGS8gh7jo/em
-	+702tI3U=; b=ixr3h4aYAmfiXmB6waAGO5ntBrxekaDU1wioPMxnDEHdfob1Tf3
-	kBHl+lSX52WRIjbQVxEaRGQnveaE8WtTwIr3LwrM7MK2hOLvgrP0y8BhG3y7FSlg
-	4iWPyU2UOb5//5+rrPZx1e6maX5Ya5kKz5UYp8Yqk0K/oWu3lHOAoHErLeMbNvR5
-	HIOAl6xtPIbVOoL5DXGVydO8QV11NfnWc/yxjo5l8vCmWmlQJESx7Tbx8nNazduY
-	1ojoJFDzJMg7HuoykcV1RQjKVQGPXnkjgGJFoCOSgdHV4cVOWVHK0oYBWct/TLpY
-	861OHPLh90FcRk/eKQT0qQh/2GfDl1s+NEA==
-X-ME-Sender: <xms:uEh2aonsaJr5r87TLnTWlgh2m_OSwTRO9wkNrv8omulkIlgu85kWFw>
-    <xme:uEh2avTDTZEiDuRShcBfPwIYmTWE0FIMH4EYvbfR5ZE4POnnZvPruYpFkwkQ9K6XT
-    -7R83wtI2C67CqwrWd_OtxLcmbZH947nsG-4wyac6-weBmjy4fSvw>
-X-ME-Received: <xmr:uEh2akCvly1cIY-wLQESg-d7OnOWQFNQKf2xaexeoGqQX1cPoKWmdxgwU9AgD3A346wcOlV0YltX9Q_E3sEERb9OT0YsWgkPUA>
-X-ME-Proxy-Cause: dmFkZTFXuuSsBORLnAhas12xLcXfNhq6UHTW1HLX47FJ+BTmnZxH5Z52WHAi01IoeyI38O
-    aHbUIEmQPuRjyrFGEW9sdcWOFC3cEtS3YmwQH8M9jjSVaaY2WsamILgYcAWkErjs/gEjyD
-    ccrOTaRX55AKMnJ7mMN0Vq9Cl2gnZNCsi7EJYmOnu5Q/DDZvJKOf+kGMeleCvPp98ZcH02
-    3r2TOaFaDwOerrrbpgqJzzYxI9Jk3saoNqni5fW6Y8SMh6Zx/NnU2rLMOlaEtTdTP5y/nK
-    pW1z2XMKQsFego7csttUxaqm/BqAMUzBQkAegUlId37qx5EcbQq0+3XlJXZbqnNtU5GBcp
-    iWdMxePpicfxuUrR/t/J4b21MX3DF52q0Vj+FBQboa6zSUo3uMKkpMZU993jgDWlkMKVY4
-    7nitFrnagwVz0qalZRGvb2twhzIOiN+KokK/Hpn/IWZqd2RtFAcVOPOyPQQTIs8WaFiky5
-    ntUoyEtmU+ZF0exhgBHdj9+M6FKqERYboLlW/wHMOsAEDRVUPiGK/8P0ECvB3JuOUyShKw
-    gzwDgribSxmAlFFCj2Lgy4DKr3osVm8taoBR7hJYlvFbr880O+7kpSbrvkXcP2OP31+6Y4
-    sMz2NsSCp5/KmeaMmv8Q9NsQnEOXdMDexUkCrQ1F5NE+WDN6+oR9cfZIBwyw
-X-ME-Proxy: <xmx:uEh2auSh06j6bZTLDvfCPRwY-mM0Hkz5__uckXxPYDoTB_qLe0eRpA>
-    <xmx:uEh2aqpBIGYi1QLs99GIkAACv3kXJFsL9KLVSpaJfTGw9eTQepSx6g>
-    <xmx:uEh2aowyBHYd500dEA1XXdWiwsTX8PpjIaDLXs94SI2Ppe3F71wA_w>
-    <xmx:uEh2anJXFnTvNjl_YyjikAfTheHJI5oXC83TJ_hxhsU90cWcl7dTIA>
-    <xmx:uEh2avY7nuCbidnO6CED6CKLWd--0s0Cn__KwJXkbLJIAUYAV-zw_nzt>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786137070; x=
+	1786223470; bh=Cbb0nesWizRqHjUaWc4OMSr9/x2Vn24DODzqXiwoC4Q=; b=S
+	RmEobfRB2ZI45o573B5TrcNx5TVxtusUf/ypMibjC3gcPEvKVaUtOdpA7wsZgm/W
+	qhhfd2J1dnn5iq1FyADJ0K1pdao50ErkIL+sQwCHDuSXA9cQVGCPCDBoz+wYImwS
+	rrRzHy3kqApPsqf1rcoExdJeMqfhPPCAODUHmhy/ShYkjDvM4VQEMLzc2yLApeIu
+	XJ4FAqtNoa2sIXUxMakd36SfV8I1JFbpemPjJ/vH1MSinu9aM6jE/dAAZaDpsL3u
+	x62T/T2b9c4meNGaJF6GdL58YvDnYXFXS8fiwIMzJLXT/eImOzjO2bmo8d0Sk8RL
+	8dnAJJErE60/U3zEmCdUQ==
+X-ME-Sender: <xms:7kl2aryVTzcOqdjoY3nWgCC6fSON3cia2Q7oPof7osxCrTF2SPIQBg>
+    <xme:7kl2aqRp6IGU1W6FDtgILwI08krtpYiy2ge2ijnWWkvx6VsVzgTIFs0enI67BQgmR
+    Ekewsem1H1v1GIfJrAPWtS6TtOqCZUC-vT8PR4jRwAfSF1_LoYOJKI>
+X-ME-Received: <xmr:7kl2aqVg-Cc_nkvOsi-nuShXaoCZ1cxyd9MIPGRiZnKJxgslAaQp7C_lHWvJeIvuHKqL-f5x2ueMqs4khdoOpAVggNQawPd_rw>
+X-ME-Proxy-Cause: dmFkZTF6dgcjJsk1DUmm3DG6OLrdC9wn2OK5j5OODnRwCOmHWx080oeLhZQH+2dxWgjWP1
+    tOeFBCTReWxRJa0t5UmO/tSNq+HxN2qXqO/9eNx9KmicvCdwrDrLQJEvVuU58QeEiR8cuj
+    Mc3SQSPzeonMJQqjvauh+8ATpu27TJPt9FlFEc5baQXwAYgmDNvNCuaFiUS3p8ClBXZok1
+    DR2ugvTpOc+OEvw5UWfWrMeyPAT4gB13+VzHaqbaBd+PBELOiZ5eqx+Zs0RUIxR6VQjnJ4
+    6l4k+pxcvQ4NNraCeSJqm/RNNJhbhOUE6pdXwjy/OvqCvnZXB5aOTThix/Hdkdo44gB+RQ
+    voEhHJoX1wJL+YFWfJxCWEC88OLV2WERv5mYOAn1zdZyBkCyAKqHpTa4tedI2u89AU73nS
+    U0X1yd/J98day3r+21OYZlClDAyLk7nu5HqE+gief0YiIJKOzRBoCg2tV+ZGJeymmsAkBf
+    VFxAxaXWTo+NTmKmJg2njQVkngJ3fpoEfNPTViQbq+F5o9E7qJtdQRXvf2TTA8ovZo82EC
+    LjToi9GxjBKj9X5RTdcEsBm4pZ1qr6S8mECSe4knBbJ0eHmWKMZsy5DaU4I1u0vi329Ecb
+    +GtkN6DETUN566Ci73IUfm3fyrUgji+PjywoetruIDXedKfMr7jSe/hKtYrA
+X-ME-Proxy: <xmx:7kl2akZy0TKi_q54xKZ9Xo94TeilWVlIMuCj0oCPJevA0UMWhXDVEw>
+    <xmx:7kl2ao3BoYm8Y5-bz4rHijPrNcSlJL2C-WWjKFMDqVFv7IX6Oa80pg>
+    <xmx:7kl2auhkVvCwT3sAgem3fBq_nYU0mCi1r01qc0vJt0ggu4007GCsGA>
+    <xmx:7kl2akZ6PLGRRJ6f-E1UkjmWb34BM4RxSsjxVuifVhb7Q27K7HNyhA>
+    <xmx:7kl2av5vTv8383kQHOsuiL8zGFgNopYJE4vzwSuu8taXrA81l35w3lfX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 17:06:00 -0400 (EDT)
+ 7 Aug 2026 17:11:10 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/5] odb: make packfile generation pluggable
-In-Reply-To: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
-	(Patrick Steinhardt's message of "Fri, 07 Aug 2026 12:45:06 +0200")
-References: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
-Date: Fri, 07 Aug 2026 14:05:58 -0700
-Message-ID: <xmqq33wpej49.fsf@gitster.g>
+Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org
+Subject: Re: [PATCH v3 0/3] environment: clean up repository config handling
+In-Reply-To: <anW7wHfUxYj9cj0P@pks.im> (Patrick Steinhardt's message of "Fri,
+	7 Aug 2026 13:04:32 +0200")
+References: <20260805115342.3939931-1-cat@malon.dev>
+	<20260807085932.3958759-1-cat@malon.dev> <anW7wHfUxYj9cj0P@pks.im>
+Date: Fri, 07 Aug 2026 14:11:08 -0700
+Message-ID: <xmqq1pc9eivn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,33 +85,60 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Hi,
+> On Fri, Aug 07, 2026 at 04:59:29PM +0800, Tian Yuchen wrote:
+>> Hi all,
+>> 
+>> This series contains several cleanup patches for repository configuration
+>> handling.
+>> 
+>> No functional changes are intended. The patches make the related code
+>> more consistent and easier to maintain by improving documentation,
+>> formatting, and the organization of repo_config_values.
+>> 
+>> RFC:
+>> If there are other small cleanups in this area that would be useful to
+>> include, suggestions are welcome.
 >
-> this patch series makes packfile generation pluggable.
+> Somewhat unrelated to this patch series, but I was wondering whether you
+> plan to drop the limitation in `repo_config_values()` that requires that
+> the passed-in repository is `the_repository`. This limitation is
+> starting to create problems as more and more of our infrastructure is
+> migrating into `struct repo_config_values`, so using a different repo
+> than `the_repository` is starting to become harder and harder in our
+> codebase.
 >
-> Note that this series only makes those parts pluggable that are required
-> for the transport layer. The other parts that relate to packfile
-> generation as required by our repository maintenance is kept as-is, as
-> there is a bunch of options there that are way too specific to the
-> "files" backend to be portable. This should ultimately not be much of a
-> problem though, as maintenance itself is already pluggable in the first
-> place.
+> Thanks!
 >
-> It's a bit of a shame though for git-pack-objects(1), which still isn't
-> usable with alternate backends. I tried several times to find good
-> solutions for making it fully pluggable, but due to the backend-specific
-> options it's an utter mess. I want to eventually address this though:
-> same as with git-refs(1), I want to introduce git-objects(1) to care
-> about all things ODB. And as part of that command we can also introduce
-> a command that generates packfiles in a generic fashion, without all the
-> cruft that git-pack-objects(1) has. This is part of a future patch
-> series though.
->
-> The series is built on top of 2c78326f81 (The 11th batch, 2026-08-05).
+> Patrick
 
-With "--no-ref-delta" thing in flight, this will not play well with
-what is in 'seen', though.
+Hmph, that is an interesting point.  What is our plan to really
+enable the use of repository instances other than 'the_repository'
+here?  They of course need to be initialized with repo_init(),
+but is that enough to sensibly use the embedded 'repo_settings'
+and 'repo_config_values' structures?  (By the way, it is not
+entirely clear to me why we need both and how we sift variables
+between them.)  Some code paths need to work outside a repository
+and still need to know about per-user or per-system settings.
+We were perfectly happy reading from global variables when we had
+the majority of them there.  It is my understanding that they are
+now found in 'repo_config_values' or 'repo_settings' associated
+with 'the_repository', which I think is something we cannot
+really avoid doing.  Unless we try to get rid of 'the_repository'
+and instead have free-standing 'repo_settings' and
+'repo_config_values' structures that are not tied to any
+repository instance, we are back to depending on a set of global
+variables. 😞
+
+In any case, all of that has little to do with this series, I
+suspect, unless we are redesigning these configurations and
+settings in such a way that they are not necessarily tied to
+any repository instance.  While I do not know the exact details,
+I can imagine a hierarchical system where system- and
+user-wide sets of setting values are known independently of any
+repository, only to be overridden by per-repository settings
+using a last-one-wins strategy at lookup time.
