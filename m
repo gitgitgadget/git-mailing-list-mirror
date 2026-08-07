@@ -1,82 +1,82 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93531435EE7
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71440371880
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:49:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117443; cv=pass; b=or0MHi2RVOssy5zcC01FLDyCySdcJEAaYaV51xv/vqxtKSQ1SPA34co4i/MTmCSf1Z8L//W31Nie2Swzty+OHO2Jwavou1Xm3LS/DmR9A1uKjcHmXmLiT0W4j26nTw7MvSFrtNjXBvVwcyJtwEHLiovRw5xDuuhLadGZZQ3WNgU=
+	t=1786117747; cv=pass; b=X//6QX/1ZRSGekwFzUe3gnwpilat92nM6zIR5HZPsg1ZYGbFYg2nXqYQiCj+WwA8lBN7sMelzyF49Zi15FWQ9MtwS3Msu1neqFOyT46j/3Z7PsUQsavJHb5FSR3MgWNNgUp6s7jlVpcTW40j1SZeAvpMOSuHUQgC6OYWv9Pw1ac=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117443; c=relaxed/simple;
-	bh=7NxT3hUoGGv3Qb+xFoAwsG8lyEUkBvFCPlk7aVZBOa0=;
+	s=arc-20240116; t=1786117747; c=relaxed/simple;
+	bh=BmzdAWLXIORZyhluSp07kUY39SOdokHGd5u8bKvyALc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oP9hBIPGDo11B8OoWF7id/eYecbyEkqFzLjkLGqvBRw5jJECv2B8D+kr7MCXBwkoZyPKSYL+VMBKHuUqqHCCr9z3FdktY8UaxTiHze6jEQ9yVdtTCjiCNe5NIEqCZUoP+R4eVLJyBRKkSdu5EdtfecEPXzmRHHNWEwgA+VLvPPI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kR8wVJwW; arc=pass smtp.client-ip=209.85.167.180
+	 To:Cc:Content-Type; b=U/pAIde2iqGylbIU6aWAYvbpOSsxqfWDtUr/lEthe6x+s4od2tNmx1lOwIx+f9uHSLSG9cPrVHU+XznkmJvJlsM5xe+bVnOLg0DDt3wKCNXOKm2AFBXyEABbvf3hK5yXU9DV6ScEo+FOsw7E2pY2m5bQwEiMF2NlCddhgKkIG58=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pwWNlJzm; arc=pass smtp.client-ip=209.85.161.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kR8wVJwW"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-4a4c6081f9fso1077847b6e.3
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:44:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786117441; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pwWNlJzm"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6acc15016f1so2145557eaf.3
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:49:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786117745; cv=none;
         d=google.com; s=arc-20260327;
-        b=py8e4uWwe1Ffi37GKhW8Mc08sWl25E9seki5Vk0CdvVaCImd2tt2QEvyja07GAV3W1
-         hPU2LnnZQuhFGQNNN4mV87UrMtsYA4hOxffR5b2chNfYTDSPAGU+VXLit0miDiXO7TOi
-         cUTLuji/yrcVWIKmC7k46RmyaTdjJYJJ0Y7Tidx1hJLWsG9kmUryaVaBLBh0N522waM8
-         uoi/z5dhZd6z8RWLM1gwp6XAgilqVpKEg5X6goxbRAwlTD+r+DODI26c/PfxeGHI4VdC
-         j91+BSC6/sEF2r3Pppb9kzlmTJ4MketjFOU3dkYwGWsLFILyHJH8HcfJkGpeKELbP58s
-         VWfw==
+        b=f2DQnSi0/X50To6qbhr8XVJPxlCpHmpxFpa2Ngltwk6BT7pAHToqHGYSKyOIFxsCeO
+         L7eIDL2Z+3lWRiQGCYRZCcpS9r/9Ju9l2t4YVtmhfCimv8MVBl78OYRtjKpwSf0C0eM/
+         BVfcFeIyHe8uux8Ik2rDh64mGOyTdUvYZBeQDKfZ1qi/8viTHBN8Kqsi8aV/N/qe4qIW
+         +C1wDBbS//Rf5g7ueYt0dEbuzcIW6psX5ZLdr2Sa9QQ5xeBAUiZBXy3SYTK9F8yn+6QT
+         9z5pHpKX4tODD/XuW9N/Z+YTCR/rg/0uptvF6n7xDPI6xzFpa6H6nfl+VDO5+wjF9Pb0
+         Q7Kg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=e3D7Wt4FOPZbAJqDWSfMEVJnjFN7unIt5aOfBcx9pbo=;
-        fh=/lL00N6kXIWIOj/3B8UdQZrVaAIPvK0J/tbnM8hNW2M=;
-        b=agXM0HUhKxZ1jIL59BoW8Ts0oABYqssrd2vS3fu9AlLjX2PGZafyDQ3swBN6Qt3hfX
-         ClLMe6rqqMlp96Zu3J1awHngDUnyUHiFY44bJHZJD62x64EN1IkMBQDVTegwBOMUze+S
-         I0MKBglWw4YqPMZdtx9zinQPLSJpPcetOti48Fw4FUA/mJHcz1u4Sf2sHp1D4oYwCjOR
-         BgPDZ5sm+w/oNmRjg7gshWrd1NytOeQBu/XT3zxVDHvjxVR08yLf6svmkEpC10Z+Av42
-         ofX3/l2Hhsnu/q4D6WxWatzXrNgh9Y0R2wj2qi4ju+XNbn7r9wksuQzxPmb7fDawIJT2
-         Crgg==;
+        bh=JjC3Fs1Phgg45Ozw7CR70bRaI8dgSm1l4cQ7ylYi9RA=;
+        fh=6GtIQO80bQumahWgb2CI5Q8adPxEIwz8Zrvm9WY2c90=;
+        b=DdkgW6V5KgVw37k4o3X7mv1CDXSOtiFPLSwGX+XnA0f8RjKKogz0uuWnjn8oXIN1V6
+         dMTw0+eGtYI2EKs/nwW0k2JN+ItYQ//k6HeSjE0nxPVvSEV+xakJ7DVonmKPPAt+YE5X
+         YUHfkeMR25reCkj6bCC7poqj3HcD7mZwxJw9DtHtgekdtIwZdQW29eZ0hiw53xhgeywu
+         leUBbVkKYVV9u1poblmOnZHiGXMO3Z+AGLMNANZ6wIDXkqIvZUZVQLjAB/c7lNST9xpp
+         2Z0iWZXrO3O1U6ePCP/qKnatlq0FpxsqptO3MnuAR9EgSgBYBFQpufOG4jSvTnUFSswN
+         2JYg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786117441; x=1786722241; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786117745; x=1786722545; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=e3D7Wt4FOPZbAJqDWSfMEVJnjFN7unIt5aOfBcx9pbo=;
-        b=kR8wVJwWyMDFg6xECc1Tf16bg6MQehqooxqcxRhvNRF9/UWuLW6q24Wxui/D7iy8qy
-         VqhsILnibo+D0E5VYU7tds1NvkHrrRIwCVjWAmOF3maLBhtfhaQ27FgzQhkcH2OrKDaL
-         Z97f0cj6fiMakX+dSzkENmWrTrrqA3mqrLuQEV4eb+c7S3Uo/i/PzewOgATsMTsQRRbj
-         ysZT1th6BiOGJdibjjh/gzt0+8ZcN67KpGsEOdUZErge0z/LYt0/4RgDIwny0IHKmFFm
-         9L8shDe23ibWmqppgTbfqud0IsENkxgNLzllOtlN9oIWLW60TOA408nC/C/9DLweiqcj
-         83iw==
+        bh=JjC3Fs1Phgg45Ozw7CR70bRaI8dgSm1l4cQ7ylYi9RA=;
+        b=pwWNlJzmc23UcEDcmXIfwR2wxTx2KpREaNo4DjkEtEXmtS1hroHWd0ObIeapWdmWWG
+         LauA5Lb0AyaRGO/KoBbyrcLQETO19WWEV46+pWZ+U3nviH2qIARMmngNAtGfwO0OSLmt
+         ubj5GldvItErdRBkIWVVoXk5h4A0t/uaCic9xNpkJNYU/RywA6MDbPF1O53dMrfYAv53
+         Zf4bbowDlTWSdlJczZPKDn43LIE0zkIxD4LeIynDbFCcCKRtUQvgczGaq25pzssIK6sL
+         1tiKLKuLqDvKHVB7Hx9zL6qMCk5hsuWXf0j9xBpo3LdP9i/WNWrW4dm3n0fiN3c1+TbP
+         9klw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786117441; x=1786722241;
+        d=1e100.net; s=20251104; t=1786117745; x=1786722545;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=e3D7Wt4FOPZbAJqDWSfMEVJnjFN7unIt5aOfBcx9pbo=;
-        b=JhFkIt/5rFOT8s3sKYCfIc4Lv40Il+xMUHbXIv4JXpZ3ef53RVlQDdXpQKUIUim5kb
-         9KJTB4wUlHwwR72w2KMXfsyoeDOQzZsOYfgl2Lid+jNGbs2u2pI6DtUq3yDeCCTIDuft
-         wD+WkNxG4WNXV4GOixHCEiLnkow4SIiYZYL5uAi1YtI+ZGevgZKYkfhnKRXS/WJryUek
-         90E8NyVHLZeYLHHPhS8WrmGzqvxFtQslfrr+UH5EBZRORlPBBDn53YzF0eeUx7DVGn90
-         bHTovP+my8q6B8+JX3F443pAI+mcqUvGArhQyQfTjE7GiZ/KnXNUYh3n8KiXzSAGRaVv
-         dHTg==
-X-Forwarded-Encrypted: i=1; AHgh+Rplllr6H/GPyE7fTKafEsH5schKgd5uLPJyv03zlkDQzFRFiadO7lTjc5a5PDvBXtCYSXY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkzKcRON2K3xkRgtaf2Jfr3vClOHDe1y8GyNWMrvBppedkqmul
-	QxYRADkzv1aq013YsvnHVyfZ87ze/CQ4FKQKjyvvVm8kiW35umThAcAx6e0jeg4/nkw8wzzH4T+
-	l9+ivJbQacMSgA3ofa4cQKNOjoIzFqLY=
-X-Gm-Gg: AR+sD12E1M5xYAkxksCVxRlbn5QX+8WHGtSr3EecSwQTZXthWPvAySU+AKcqtLL8h5q
-	UcEVZJZ1fTlMEu5QxtbNV8HeZtY0Z04eVAwPfC/VjFc0gzTXUGvV6So7sOVArUKYJwX7vEyu0xX
-	/Cfwofcz+ZWVpS/c8246cbG4FRar8Tk4Gb81r082g/qAAm0tajaFGyknZ0/EjqZWuqHLxnayM/6
-	x2WgwaeUniaDkzA36xzCl0OvtKE2JRsi04CRlc0E90eYHK+QMbIAB23MSQX/4+seAyZNTKrSJbp
-	V8oBEY2zGych9OX9sVUIl6Kgo93JftdqnLe4oKQEjqHcadM7ILLgSbR+j8vQBSKUmY126YjWXG7
-	W2z68zMmYxvRiJHVaMhzZfaK01kD8bx49AYCBhG8WdFDSYyfEnMEiDXM2BXa6mf4=
-X-Received: by 2002:a05:6808:4dcb:b0:4b1:a33a:3886 with SMTP id
- 5614622812f47-4b1a33a4132mr1903167b6e.20.1786117441264; Fri, 07 Aug 2026
- 08:44:01 -0700 (PDT)
+        bh=JjC3Fs1Phgg45Ozw7CR70bRaI8dgSm1l4cQ7ylYi9RA=;
+        b=I5nhmpsSGQ/ShW2UxYo5yTiXO9h/N5InI6h4wd12B+drKPCTtK7azElXiIAkX5W4NE
+         pZgMH/BTUdsBepLFHkNlhzUajHx/Rj/715vh6M/pXc1IwKp0YxGHnaWfURquJeobcbn5
+         /YK9jU8GYlTj3ZQWtt4p3UOUr9lJjBiq/xkKlz3uzRhEyTPh868N/5XVZIy90LpU+LTm
+         JJZQyJH9BtDaxf2dvOgH1IDZ1tWKS/RlRZmgGnzuFDwHfMHnX1LjjlNpXWhQmaPUe4gI
+         B64y7M+bJw6mYwkl6NdSDzHCaNNm9CPmqk2Stxxapfqq1cdjKzI+luaXmYn9kLxHvaiS
+         9YWA==
+X-Forwarded-Encrypted: i=1; AHgh+Rq8PS5OSw2xFGsI/0grzORDrYAIFi7+TDMxxNbEidS2ec7GO/sGJYhPLXVURfpXaor0N5o=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6rrQPxBJGu1FxxkVbwIjyltApcBMF/te+IQ9ldnePtceL0Wjz
+	1gS+A37Cy3pbAxjk1QzrF7apg8UOsCaUnuDTNaSGT8z4msCpJiHPmzlMKJuNBq7aO2LwVDly3z7
+	/hWW+OIGP9Qbbo3veqfMUTNzD8AX5+WOkVg==
+X-Gm-Gg: AR+sD12/L8zmgH88YlbxJ9iiJfMczwPjxEK6BQDdn75Qj5y9Iq+QYTOMf1nXWEsTX6l
+	rDXK4R+R0WTHXpzzNF17rNTaHEqdClVvU5bkF3yjLBX/EXd4E0sTmMwmA9NFfaETbJ/sslxmPM3
+	BJHZ2zrDQLRMkOuHpFXdNDEo7UebcgFjXb8FjF9K1iwCZD36xMygi5QZNcGUH58zZHV6u52IcKB
+	sEwIjYjYJ55epAFPHYqeKwliE5rw3shHTPiVm+UTey38ZPoL5xvI+hWhl+lkR2w/GUuQqOmz8BN
+	kaUxOuenFjzUK07K8Kz7WL0HYhf4rJphJLPcjvt7GOdD8b578kt/n+JM7a7qW+Cz13PHPK/KRbt
+	BsCuNoW4YRIYZnVALI209tP0WWnBytKSa7gQxdfhH2Z8m2TOdZLYesrzn+NJZwWo=
+X-Received: by 2002:a05:6820:2084:b0:6aa:a1e5:f596 with SMTP id
+ 006d021491bc7-6ae96c1005dmr11846351eaf.3.1786117744861; Fri, 07 Aug 2026
+ 08:49:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,58 +84,67 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <a1c8e89ef9f1d0fb5cb10ec9687633df8792ec7b.1786013982.git.gitgitgadget@gmail.com>
- <CABPp-BFqghtx4p_Nqx+AWpU7SVn3mXOZGDQ0yoN-ZYQgXmZC=g@mail.gmail.com> <CAL71e4MULMmbMyrE2iKgNXD36vpjnxCYXTcNw75ibu_nwxqAPQ@mail.gmail.com>
-In-Reply-To: <CAL71e4MULMmbMyrE2iKgNXD36vpjnxCYXTcNw75ibu_nwxqAPQ@mail.gmail.com>
+ <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <490be76befc4689d463d472829c0271351b69a43.1786013982.git.gitgitgadget@gmail.com>
+ <CABPp-BHLHGQxuG3gO+nCa-FPFyOFEU2rk_oxLtFjekLqENvQUw@mail.gmail.com> <CAL71e4Opn3u6qYG9xhhkB1qqYj9ZLk6_=fxznyFzSFbrh2BMTw@mail.gmail.com>
+In-Reply-To: <CAL71e4Opn3u6qYG9xhhkB1qqYj9ZLk6_=fxznyFzSFbrh2BMTw@mail.gmail.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Fri, 7 Aug 2026 08:43:49 -0700
-X-Gm-Features: AUfX_mzGo-3-UgkbaiW5zGx07s0_YW-AZY9nTJu78z-q3E9y49c8ZBMBW3KuNYY
-Message-ID: <CABPp-BE+QBBYj=oaRDcQj8bFrDX6Z_JVK39ciAk4TwMPb0zHOQ@mail.gmail.com>
-Subject: Re: [PATCH v7 07/10] commit-reach: introduce struct paint_state with
- per-side counters
+Date: Fri, 7 Aug 2026 08:48:52 -0700
+X-Gm-Features: AUfX_mxg8K0JsnORoerqvD0Bj0sqYjJid-ZDZC6iBsyRWJTKKC_ai2GabvJY0N8
+Message-ID: <CABPp-BHE2KwjcVc14heMhpBLz64eEQ8y6qu56vzXKN9VK12qzA@mail.gmail.com>
+Subject: Re: [PATCH v7 05/10] commit-reach: add trace2 instrumentation to paint_down_to_common()
 To: Kristofer Karlsson <krka@spotify.com>
 Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 7, 2026 at 4:48=E2=80=AFAM Kristofer Karlsson <krka@spotify.com=
+On Fri, Aug 7, 2026 at 5:34=E2=80=AFAM Kristofer Karlsson <krka@spotify.com=
 > wrote:
 >
-> On Fri, 7 Aug 2026 at 05:02, Elijah Newren <newren@gmail.com> wrote:
+> On Fri, 7 Aug 2026 at 05:03, Elijah Newren <newren@gmail.com> wrote:
 > >
-> > became -> become
+> > > Add a step counter and trace2_data_intmax() call so that the number
+> > > of commits visited during the paint walk is observable via
+> > > GIT_TRACE2_EVENT. This provides a way to measure the impact of
+> > > future optimizations without relying on wall-clock benchmarks alone.
+> >
+> > Ooh, I like it.
 >
-> Good catch, will fix.
+> I will need to credit Stolee for this idea to count steps instead
+> of measuring wall clock -- but I agree, it comes in very handy
+> here.
 >
-> > So: pop, clear, check the counters, and _then_ decrement the counters.
-> > This means the zero-counter-check still include the just-popped
-> > commit.  If the decrement were before the check, we'd actually just
-> > barely miss the merge-base most the time, so this order is important.
+> > > -       test_all_modes in_merge_bases_many
+> > > +       test_all_modes in_merge_bases_many &&
+> > > +       test_paint_down_steps 45 2 25 3
+> > >  '
+> >
+> > Whoa, what?  <Digs around for a while.>  So, this is really confusing
+> > at first to a reviewer; it makes me think you are testing that you've
+> > already written the optimization and that some forms of commit-graphs
+> > provide a speedup from your work that doesn't land until later in the
+> > series.  It might help if you point out either in the commit message
+> > or a comment here that this code is just relying on pre-existing
+> > optimization where a min_generation is passed and --all is not passed.
+> > (In contrast to below where --all is passed, so it has to dig deeper
+> > with or without the commit graph).
 >
-> Yes, I should perhaps add a code comment for this to ensure it
-> does not get corrupted in the future. Something like this:
+> Yeah, the numbers are a bit hard to understand here -- I could
+> add a comment saying that the min_generation floor optimization
+> kicks in here and this is how it behaves for:
+> no graph, full v2 graph, partial v2 graph, v1 graph
+> (in that order)
 >
->     /* must check exit conditions before decrementing counters
->        for the dequeued commit -- the counters may otherwise be
->        be temporarily zero until the commit has been processed
->        and its parent nodes have been enqueued.
->      */
+> So it's not about the new optimization, it's adding these
+> counters to existing graph tests.
 >
-> Or is it overkill?
+> I am not sure what the best approach is here:
+> skip these step-asserts for graphs that already use some other
+> optimization (min_generation floor), add a test comment,
+> or leave it as it is (confusing for reviewing now, but perhaps
+> not as confusing long term?)
 
-My comment was meant more as a "review out loud; show how I'm thinking
-about the patch as I read it" kind of comment rather than as a note of
-something worth changing in the patch.  The order _is_ important here,
-so the idea of adding a comment to reinforce it seems quite reasonable
-to consider (I thought about changing my comment to ask for one when
-reviewing), but I'm on the fence about whether it's important enough
-or overkill.  I'm okay with the patch either way.
-
-Although, if you do add one, as per the CodingGuidelines:
-
-/*
- * Multi-line comments include their delimiters
- * on separate lines from the text.
- */
-
-:-)
+I think a short comment in the commit message about the new tests in
+this commit triggering the existing min_generation optimization would
+have dispelled my original misunderstanding and made the review
+easier, and would thus be worthwhile to add for other reviewers or
+future folks running across the commit.
