@@ -1,176 +1,235 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EC82EFD9B
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 13:48:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329753955C6
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 13:55:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786110489; cv=none; b=LXaJlOmmrUal27Hg9vSiQdX9CkAq1RB9kMxy92ilEwbj863s74tSn7T9ncCK3hGXRRV4MSJEGSPMBvzNs1y6DRPiA80wXezQyvzmn3LAFaUbj9jfH2cb43IWbPN86HeVj2h2O1AicG3qJmBb6fuKkf97El8YpQ3S3luiUFivCtQ=
+	t=1786110937; cv=none; b=JUNzDenrOCzj8vMOTbhsnvAxw1kVq6yA3GKtjTcJdeNZnswZJtH7nSWzWQUXwA2v3m+3KsFSKYqelqhZoFPcySgjgQQMPIgemSpjHM+lBocg/VHSZ9UD1tJ2DFIjcX0tbdPQ8CaC54Uqp5A0I9Z1hK8a58zjJGVrJvoK4BBbV0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786110489; c=relaxed/simple;
-	bh=FefeteEZbsI503CXbnFmK75gBFQ00JnavNkykXIk4i8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bwtA66Px3uk6lkJTsQihfgCU9HnEGUwMGKYLdJNkHqETFVjOJFR99HXC5uKt2WGsPm72toePNU/AEe6Glr6MxRxHUHHWslhlUsX6D2QwWW75L1dzFOewjNgKle3v5/v6pIR3HWIu2qhOIQTnNX4XFkepftgbTiKWSxFN8VcNUUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O6+iWy+m; arc=none smtp.client-ip=209.85.221.53
+	s=arc-20240116; t=1786110937; c=relaxed/simple;
+	bh=hc0JXxr34WjItTOoB/SkVLhWAbrm7eJPRwzfmI2BzEc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=nOHqKqncQirZJDoqcd+Ry8yj5LCQGndaYJ9a+E3Z1jD0JfJSPCzSERNmKuGvEj2g6iHJyk9geiTTw07JsniDZUrCRPuUVsvEMa3ojQTEu4/bhpKj2YyMrs2kFBuxTR90EpBlEZCCn0nLZfELhClFYnQEmhZMMSh1+otlzYN8Q9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LAm2cygn; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O6+iWy+m"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-47ffaa8ebbdso1373772f8f.0
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 06:48:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LAm2cygn"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-471eeac43bfso2886263f8f.3
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 06:55:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786110475; x=1786715275; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=fK2s5PMQTa+UNhsFHNop1sMUdrUY1eYXUtP77GaLZC4=;
-        b=O6+iWy+mh9qtjtHBpIxUEBZHWJILnm5vqHDWNpTW4nhrkuL8suaxe61hSf1y0beX5Z
-         nVe2N2orn6uqIpFDLrlRxEtyi7feYLv6NMMc43mTrYSER+uu+ezuyibJ55IWINPV4Tok
-         89T7AGdilcriLqQtS/KTfZh/JKSvM6utuN4tGkhZljsfbRpI7p4oDxG/YQfSJ5Hne6St
-         53rJrL751Fb6CUKMI+HlJOlFtwRMAWpAwUEmA6pJfZx6tovSx75dtchABu4nVa61lBhd
-         rBtyXq3U7nkH+xDCLj172EGkndk8e5nmLVclY5fquucXxEbgdw4L578ZvgIo89vGJB8S
-         x2ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786110475; x=1786715275;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1786110928; x=1786715728; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=fK2s5PMQTa+UNhsFHNop1sMUdrUY1eYXUtP77GaLZC4=;
-        b=p33EJVRzjx13fGPfuqPwgj9tBsm3iUMhL8Jh6nAb7lS2uD/QA0pcZ01q2maGW4ZbmR
-         5uzhIxeGPtIP15TJG0UDF7DDCRoUxC8HXirx90OpbzJZ8hdPA083j0PDOxSvOkLdSmDX
-         6qvk6yiGEj59esPdjY8noxzDpJCNGwaXueBeTYtlfDMLqUVPUfms68lkYJqLP07R1UHV
-         kfdhotHyVo0ibCCBEwbd1F3wPqoSWyN+atq08+f3rHZtqUaQyEd9+Rej87Rk7MUd4PqF
-         eHIy6UHMFhJ+8pIscLdjLTJqj7ZUvN2O1h03ogfIogkrQzwqCO+5rFWC8Ye9xzMm4izJ
-         NUEg==
-X-Forwarded-Encrypted: i=1; AHgh+RoLjQA3MJpPv08w2h+1VQ///QZ7byLHrTOH/mP8MXGfbFt/wpiKRStFMwQfbHz6xrRMeZA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzN6Fb1/DCCzQggujlLD3lTMwYEPbMyWeQnGFTi5Vu/sh+Ndb4I
-	oKJNSi7KLNSrCIgAAQrxQglJMeS9UR2aYt+VOeZ2FuEK7pVSVeP0ad1d
-X-Gm-Gg: AR+sD11n91xSV+Nx9p4eEAzvg1rqx8BU3i2KEkvjV/HjooawQ+xELsjOrim3OxxFnNL
-	VzjCuNSYJSFCwMDdeuOx2VrzG7G2xrn8t9rMW/NrjTvOZ+Izd0H3eZz5Psmkfo/1G/XAVCSFpIz
-	q5BfNdB5XAEs9lrpk8zmYJ4ET9DpF7V4S59RajeoCDv+owFUQ0ipvGk4jZL/+nMzyoMo4Qmi6wj
-	VwCYBqNABUPYA71V/so2c41zMiiMobzMgyvlX6gb5gonq4QEhYxdeDtO5aimYAg3HGxts0ef80C
-	PVW9wdH1hVCE0uFiQaGtbv9WG3YobnowhrhHJUNepoEdcNfe460m4ML/jy5BZe2+43yAC2Ysb+b
-	4S1udMrrfcf849tiJ32YwbVlo/M+Wf26OCwA7C4d456eN/RR/kKvlZNgSLJoZTbKD9LTKqK34uZ
-	pEe9m5wKwi5xHkR6OtkYHyCD3+58c3QLw/gZ9+BfUBZszS2u2VCHfyne8CNtM9Mq92k2jkQjykq
-	b5C76B6rjLUPnrU4YgpJJy1R252qPOVGm4NqLZecyM=
-X-Received: by 2002:adf:f184:0:b0:47f:8fc8:af01 with SMTP id ffacd0b85a97d-47fec63302bmr28483293f8f.27.1786110475088;
-        Fri, 07 Aug 2026 06:47:55 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4800220ab04sm5491874f8f.37.2026.08.07.06.47.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Aug 2026 06:47:54 -0700 (PDT)
-Message-ID: <bf9384e9-3707-4d34-82bf-cfda84a17d94@gmail.com>
-Date: Fri, 7 Aug 2026 14:47:53 +0100
+        bh=SjfwRpBReoybmIDZDU88AA7VOTdsLhdlPkiV/r8WhW8=;
+        b=LAm2cygnb+ZRK6ipQ27QIoNaK1Vx55f0f20fJh4TM8el7eoxddOjREpIPwtDjp7j8O
+         Cu4NjwgHgTVjIBUak67I/IzJ9tdTZwWBlPK2aru7OD0fELcS/NaFMFdh/ZKIZwpWm9mn
+         3Nvkn0Zm+yUTTXg1Sb06QfI8oY8MVaASv1EkTDSfQHxTcFXh0uLUDkrP6/O9prXPG+HC
+         wAvjwLnKxVeG6nkkZH8TbbGnMzOV7IaqJ1MBK16aHKZSMB8+UhHavvR5r2l+SEeP0xiF
+         1BCZUiITVkyMh8ljLMfXsJEvd+s0AYoRD2Nsi9mjM03aYE/yTfB4wZjlkx7QXeVBUGwz
+         yF6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786110928; x=1786715728;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=SjfwRpBReoybmIDZDU88AA7VOTdsLhdlPkiV/r8WhW8=;
+        b=XUshfa8/VBQQ+ppLjBtSnxrCclFJdHxUNKn5iABmMQBtmQ+S7D1EbfAQ2SrqB4lfn7
+         jBpxbG+lyrKqIWO57LOmtaoMzNC/pljhZ5fMkVdQI98mbz984nGRL2r+RsSoujn6Meuz
+         WKDzVO6MXEyobc+FemJmBHMZwkDSxjhZQV0+6z2u12VVoTZjMTuSd4Qf9jejDiMYK6DC
+         NVuSS+6c3y9RWbd3NyuIN0zE1piRePcLPl4cg6RnNjUvatjeWBsZUNrAP4WdyeEClemM
+         DfXaB9lZhEjqgeUQl5ACzLVkvjwEX2CufT2yIusE31jUiu7fo11Q0ZMJPW71l30ocN+I
+         FxiQ==
+X-Gm-Message-State: AOJu0Yx8UQgNycAEFRwG41DhRRr4t/+ad+n4ZDEpP9Tutr3Aa0ihAu0Y
+	0n6+hdVXtf2SLT8f3JlwIDj9l+ArJyALZelGtsn8zityyw1M3EcKjSmyyw4bfg==
+X-Gm-Gg: AR+sD12itznWkoCFbNe01OsFTOSjCoUQumnjqCEiC17pmcPegL4604xCxh9NJzW2S9v
+	npq87vMBdnaqv18J79oV0lH8f+GV/LYhed+4AVgZyiW+PU0q+JJBotD1qYdnSSm/nzODPTIJn3c
+	ElZPh1fuB/G0YtD6uAxavAmUpzdifRTWZJ+dBFjAznpSyvvywxJrJVUt8g0l3HN5UrIoQBXOcDH
+	ORAkqKItO/xLzuPlwogavFlCA1laG8m9w67biuwI8PvXAL9Xg6OlEVqLjqlEiO5nvGZ3MFzVg+u
+	JCeMBxvQb1yl27xGiSDSgVaw59xIszcZujL1zg04/h5oDkcB1BWADY1AXzuKarn/FuXsNSveORc
+	MsEakOyjvBchHPkzyXxbLTc7ZBVbre3PuQh0wM/caCywHB53ZI745P77HAfac4ExbfWWXcTdpvd
+	upf/9nzwYlnephSIuFasneElMDbTjZnI1mtK+DP/ITa/fPnVdjWHcYMyZbo5Lw3aQxvpI8qlOr1
+	YqikGiAv8EJueVVVDWuOhj/Q0ulC2OECqCEpspttk9vQHHwaySjjkdAMjuuIo/7lUlDfXnw2TD6
+X-Received: by 2002:a05:6000:2989:20b0:47f:ece1:5d with SMTP id ffacd0b85a97d-47fece100b6mr30306614f8f.27.1786110927953;
+        Fri, 07 Aug 2026 06:55:27 -0700 (PDT)
+Received: from christian--20230123--2G7D3 ([62.35.114.108])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-480021ec565sm6094207f8f.22.2026.08.07.06.55.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2026 06:55:26 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 0/5] Introduce 'uploadpack.lazyFetchTrusted'
+Date: Fri,  7 Aug 2026 15:55:06 +0200
+Message-ID: <20260807135511.1818458-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.55.0.530.gdb3615d990.dirty
+In-Reply-To: <20260710085137.4171240-1-christian.couder@gmail.com>
+References: <20260710085137.4171240-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v10 3/5] history: add squash subcommand to fold a range
-To: Junio C Hamano <gitster@pobox.com>,
- Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Phillip Wood <phillip.wood@dunlem.org.uk>, git@vger.kernel.org,
- Phillip Wood <phillip.wood@dunelm.org.uk>, Matt Hunter <m@lfurio.us>,
- Patrick Steinhardt <ps@pks.im>, "D . Ben Knoble" <ben.knoble@gmail.com>
-References: <6b5b2c93f2e3e55bf456b86a8be61f5f85137a2c.1784536024.git.gitgitgadget@gmail.com>
- <cover.1785750108.git.phillip.wood@dunelm.org.uk>
- <CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
- <xmqqqzkevx62.fsf@gitster.g>
- <CAHwyqnXJLQ_naFb1RRQWS3eft0FXL7ripviSA15Zy5D6nvHGAQ@mail.gmail.com>
- <xmqq8q6ltwsb.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqq8q6ltwsb.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 04/08/2026 22:12, Junio C Hamano wrote:
-> Harald Nordgren <haraldnordgren@gmail.com> writes:
-> 
->> Hi Phillip and Junio!
->>
->> I admit I’m trying to expedite the process. Especially given what
->> feels like endless review cycles, and some frustration that this topic
->> was queued for ’master’ and now it feels like we’re miles away again.
->> I recognize that this mindset is not a good collaborative attitude, so
->> I’ll try to step back and re-adjust my mindset.
->>
->> I am used to a work process where moving fast is paramount, and good
->> enough is good enough in terms of code quality.
+Recently the "promisor-remote" capability was added to protocol v2,
+allowing servers and clients to agree on the promisor remotes they can
+safely use.
 
-We don't have the luxury of being able to easily roll-back features that 
-have been merged and are being used in the wider world so need to have a 
-considered approach to designing new features.
+The more servers use promisor remotes, the more it is important to
+properly control if they can lazy fetch when responding to a clone or
+fetch request from the client.
 
-Hardly anyone who is employed to work on git is given work time to 
-review random patches that are not of direct interest to their employer, 
-   the reviews are mostly from people volunteering their own time. 
-Therefore comparing it to what happens inside a company where it is part 
-of the job to review others code is not a realistic comparison.
+For example, in the context of large object promisors (see
+"Documentation/technical/large-object-promisors.adoc"), if a client
+clones with a filter set to 100kB while the server has moved all of
+the blobs >= 10kB to a promisor remote, the server will not be able to
+provide blobs between 10kB and 100kB to the client, which will make
+the clone fail.
 
->> I’m not seeing a
->> healthy code review process here — any feedback halts the process
->> completely. Should it really take months to merge a topic?
+Even if the `--filter=auto` option is available since ef2f1845ec
+(fetch-pack: wire up and enable auto filter logic, 2026-02-16) it's
+still a good idea to provide more control over lazy fetching on the
+server side to server operators, as lazy fetching on the server side
+could be useful in corporate environments.
 
-I'm not sure what you mean by "any feedback halts the process 
-completely". If you spot something you want to improve, you can flag 
-that on the list and still work on your patches while you're waiting for 
-a review. Though, if you're frequently doing that, then it is an 
-indication that you're posting patches that are not ready for review.
+Since 7b70e9efb1 (upload-pack: disable lazy-fetching by default,
+2024-04-16), lazy fetching has been controlled by the
+`GIT_NO_LAZY_FETCH` environment variable. This is a boolean that is
+set to 'true' by default when calling `git upload-pack` for security
+reasons.
 
-The communication around the code is just as important as the code 
-itself and, especially in the early stages of a topic, when the design 
-is being thrashed out, it is more important than the code. Sending out a 
-re-roll immediately in response to every comment is not productive, as 
-it leads to a multitude of different versions with small changes between 
-them. It's far better to reply to any questions and comments, and allow 
-others time to comment as well, so that we reach a consensus before the 
-next set of patches are posted. If you're not following other topics on 
-the list then it might be a good idea to start - you'll see others are 
-not posting 20 revisions before their work is merged.
+The main security issue on the server side is making sure the served
+repo itself is also trusted, as lazily fetching runs `git fetch`,
+which may execute arbitrary commands specified in the configuration
+and hooks of the served repo. The operator of the server should decide
+and mark that trust, not the served repo itself, nor the client.
 
-> When you reroll too fast without waiting for reviewers, it
-> invalidates almost-done-but-yet-unpublished reviews.  If you
-> repeatedly do so, it exacerbates the problem by discouraging
-> reviewers from even looking at your topic, as they wonder if a
-> rapid reroll will invalidate their reviews yet again.
+This series introduces a new 'uploadpack.lazyFetchTrusted' protected
+configuration variable similar to 'safe.directory' (see
+"Documentation/config/safe.adoc") to mark trusted repos where lazy
+fetching is allowed. As it is protected, this config variable will
+only take effect if it is set in global or system scope, so only
+server operators can control it.
 
-Yes, I've definitely waited a couple of days to see if another iteration 
-is going to appear before starting a review.
+Previous related work
+=====================
 
-> If it is taking months, I suspect that half of that is due to your
-> rapid rerolls, which have discouraged people from engaging, as they
-> cannot make a time commitment to a bottomless time sink.  The summer
-> being a relatively slow season certainly has played a role, too.
+A previous series called "Introduce a 'fromAccepted' option to
+GIT_NO_LAZY_FETCH" [1] took a different approach as it wanted to make
+it easier to allow lazy fetching from accepted promisor remotes. But
+after brian replied that he didn't think it was a good idea, and after
+thinking about this more, my opinion now is that some promisor remotes
+being accepted or not is not really relevant to the issue.
 
-I've found these series taking more time than I'd like to review. Part 
-of that is the rapid re-rolls, the other part is the very brief cover 
-letters that are not very detailed or explicit with regard to what 
-exactly has changed in the implementation and behavior [1] since the 
-last version.
+In my reply to brian, I said:
 
-I'm going to be off the list next week, so it be a while before I look 
-at these patches again. I'm hoping to see a reply to [2] when I'm back.
+"""
+Different features could be developed (in future work) to improve on
+the current state:
+    - a way for lazy fetching to work without reading config files,
+triggering hooks, or doing potentially sensitive things,
+    - an explicit way for operators to mark trusted repos (like
+perhaps a server-side config the operator sets per-repo),
+    - operator-defined allow/deny rules, or maybe
+    - some ways/scripts/commands to scan repos and check configuration
+information, remote settings and everything potentially sensitive to
+decide if a repo looks safe enough to allow lazy fetching or not.
+"""
 
-Thanks
+So I decided to go with "an explicit way for operators to mark trusted
+repos" and this series is an implementation of that.
 
-Phillip
+Note that the feature developed in this series applies to protocol
+v0/v1 as well as v2 while the previous one was only related to v2.
 
-[1] For example in <pull.2285.v20.git.git.1784704238.gitgitgadget@gmail.com>
+[1]: https://lore.kernel.org/git/CAP8UFD0_S9eg_w42tcNRnT9E2ntLr_eHLnzE4c2dSu67DzZoXg@mail.gmail.com/
 
-     * Protect branches transitively required by a surviving local
-       upstream stack. Traverse upstream chains once and defer delete-set
-       mutation until traversal completes.
+Overview of the patches
+=======================
 
-That was actually a change in behavior from the previous version but it 
-was not clear to me at all. It would have been much more helpful to 
-explicitly call that out as a change in behavior and explain why the 
-behavior had changed.
+  - Patch 1/5 is the only patch saved from the "Introduce a
+    'fromAccepted' option to GIT_NO_LAZY_FETCH" series. It's not
+    necessary for the rest of this series and its main feature to
+    work, but I think it's a nice refactoring related to lazy
+    fetching, so it might as well be part of this series. There is a
+    small change in the commit message (to not mention following
+    commits) compared to the version in the previous series.
 
-[2] 
-https://lore.kernel.org/git/ddd0160c-7f4c-41c7-855f-58288db00050@gmail.com
+  - Patches 2/5 and 3/5 extract and modify code used by the
+    'safe.directory' config variable in a path_allowlist_apply()
+    function, so that this function can be reused to process
+    'uploadpack.lazyFetchTrusted' in the next patch.
+
+  - Patch 4/5 actually uses path_allowlist_apply() from a new
+    upload_pack_lazy_fetch_trusted() function to process
+    'uploadpack.lazyFetchTrusted', but the result from that processing
+    isn't actually used to have a practical effect.
+
+  - Patch 5/5 wires up the new upload_pack_lazy_fetch_trusted()
+    function to decide if lazy fetching can actually be enabled.
+
+CI tests
+========
+
+They all pass, see:
+
+https://github.com/chriscool/git/actions/runs/31171494296
+
+Range diff with previous series
+===============================
+
+The range diff with the previous ("Introduce a 'fromAccepted' option
+to GIT_NO_LAZY_FETCH") series is not very interesting as only the
+first patch has been saved, but anyway here it is:
+
+1:  8dd67ddaca ! 1:  b5b0836d19 promisor-remote: factor out lazy_fetch_objects()
+    @@ Commit message
+         that could not be fetched are promisor objects.
+     
+         Let's refactor the lazy fetching logic out of these two functions
+    -    into a new lazy_fetch_objects() function. This will make it easier
+    -    to extend the lazy fetching logic in following commits.
+    +    into a new lazy_fetch_objects() function.
+     
+         This is a pure refactoring with no intended behavior change. Two
+         things shift in ways that are observably equivalent though:
+2:  314c61cbbe < -:  ---------- promisor-remote: introduce enum allow_lazy_fetch
+3:  cb2f5447e2 < -:  ---------- promisor-remote: teach 'fromAccepted' to GIT_NO_LAZY_FETCH
+-:  ---------- > 2:  879e3a34e3 setup: extract path_allowlist_apply()
+-:  ---------- > 3:  98431ab7b3 setup: add 'allow_dot' arg to path_allowlist_apply()
+-:  ---------- > 4:  a46f4c1bb8 upload-pack: read uploadpack.lazyFetchTrusted
+-:  ---------- > 5:  4063f233aa builtin/upload-pack: set GIT_NO_LAZY_FETCH to 0 on trusted repo
+
+
+Christian Couder (5):
+  promisor-remote: factor out lazy_fetch_objects()
+  setup: extract path_allowlist_apply()
+  setup: add 'allow_dot' arg to path_allowlist_apply()
+  upload-pack: read uploadpack.lazyFetchTrusted
+  builtin/upload-pack: set GIT_NO_LAZY_FETCH to 0 on trusted repo
+
+ Documentation/config/uploadpack.adoc  |  42 ++++++++++
+ Documentation/git-upload-pack.adoc    |   5 ++
+ Documentation/git.adoc                |   4 +-
+ builtin/upload-pack.c                 |  11 +++
+ promisor-remote.c                     |  76 ++++++++++--------
+ setup.c                               | 108 ++++++++++++++------------
+ setup.h                               |  28 +++++++
+ t/t5710-promisor-remote-capability.sh |  70 +++++++++++++++++
+ upload-pack.c                         |  37 +++++++++
+ upload-pack.h                         |   3 +
+ 10 files changed, 304 insertions(+), 80 deletions(-)
+
+-- 
+2.55.0.530.gdb3615d990.dirty
 
