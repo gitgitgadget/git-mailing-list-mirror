@@ -1,81 +1,81 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98819246770
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 03:00:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666F94B04B3
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 03:01:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.179
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786071655; cv=pass; b=A/YgbgE5LrHab4ImZFJ1ilFGkQE8aZtoTwE9Si7D5LXv+x2BjCLZvhrfNE9fIlE3BQYFYzAmSxcsG1iJCIPZMQw7mBSxdr19l/N+Jo1O4y5nc+1Zeqi5BaR+V0VCFUUHRzI2Fqr4zoCAFzmYMSaujC17IsI+ituvuHvFZQ+SMBM=
+	t=1786071674; cv=pass; b=p8MBiVdMzjbwbMhFHgzGRJzZbY5ZKRVi8sLA+u0dOyh9/10Zf+60N7UTK3d76eQNHSex/u2Tu8/Z+yiVUVKftRB6M0C+4ndYa5TTt8Jgmme+Zj84Ri7sMcRsUuju8gu5MUXJuL5jI8ulNhgN5JcLkzG+m7rcQdX2R+3tbdWzKpA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786071655; c=relaxed/simple;
-	bh=6awdshfsZBUoR11gJUrNbAJFsnKMfdzlzwCr/GXyX0o=;
+	s=arc-20240116; t=1786071674; c=relaxed/simple;
+	bh=WpX89Yk+npQS4MrSpzL5f4v1B3HDlMQb6PA6+fWLL2Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ND8gIZlHThg4mwaDXIyBSe16thcue82oY1tllVqI9AVfARpEPnp4x9z1xiHNn29Aul+B0Ni5jSBi2S6rL+eDVgVKsT/vu6h+K9x3mPu7/ud4fXeQB9OhwR6okRHkNV0LDasqreKcBX/OJOKbZH8HwDzrElE1dzJijQwqCIFgM1M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhNmvDK4; arc=pass smtp.client-ip=209.85.161.48
+	 To:Cc:Content-Type; b=PU2KITB6uHEtG5nBGjqcHHSgWIgATfq05MNmUZ3jS3nZ+VYaM1nvLRZXo6mFDY9g2I4g6Nx8B4M8tpPYbYhOQTNE4y/I5k5Ux3kxIsT3Rw9/it0Lhj5BnqMvyM17M1I7xqIJ5GGSefSvipxvoLihrLwim/4uX6m0xjkm64hreBQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GGvabQ/T; arc=pass smtp.client-ip=209.85.167.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhNmvDK4"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-6ae8c4b9822so1287644eaf.1
-        for <git@vger.kernel.org>; Thu, 06 Aug 2026 20:00:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786071652; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GGvabQ/T"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-4955cd5da3dso1083424b6e.2
+        for <git@vger.kernel.org>; Thu, 06 Aug 2026 20:01:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786071672; cv=none;
         d=google.com; s=arc-20260327;
-        b=YLqUz52wMW0gQqzaa/jtzLm6INbiSNs3gAe32rBYvbY1TuIfcqXxDPY8W2l1lQkm5M
-         2eAX7GtzVq3m+/8aKHZ1ezWjO9+YgP2q0LqtCOe+uznICPKEyL01kA8b85P7/vttCmSK
-         a+qSg6eInPaBkMGiZaH8Mk5pg/x2xS2Fdu2HeOSGlLkL2T4Uo+JB2+W7odp41pCEn8sK
-         1QdZ9fosUTgYolZ4Gr3Ao9/yDnSRxOLxnKi5oHinGTQoB2dXBvCAsjIGCgKUaZNiKvfW
-         Gm36hfT3joicMOnUWo5kFHR7bt0mAn7Fc5JGQGc6a5PQ3/0+ShpBY5GMcAsrdTOsVoUD
-         CU/Q==
+        b=fPBZKisHc33MXqVb3ts5ErJ7hwNAUcx5ASF3gpZTy0g3OE2CpkK8XfwMQx8OQSJnIU
+         HX+1KfbE/gZ21g1rI9NX1PDdUyRKn34BrYCQZgTb5KbtoHMX34oIKzkyH21gVWhekIE4
+         xNMb6PzVL4UeWPuMc3Xn3/Zi1j7v/S5xYwZWMUlL4tidR/XU4lq0gNd/dovhHRQvPUmt
+         fUv6wVwYsDr9Ec3jfUAAAUYUiah99O7jj7Npe60KhO3oo1bvJGtGO3GWhjeBpESEcdPq
+         11sEHcI7u4AzxjYbOeakeZt+cK8blSMAyb4WNUHvdRclxQw6OdAnqxlZGv+MNOfbkHDf
+         eT6A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=tBwasWS2MM2jZOyIoqxULGXHrv2qo1JacCuWVYVaNLk=;
-        fh=PdGuLsJN9JVZy5BHY9bPXqzeWCeYFKwbJ2iGslXTO1Q=;
-        b=jE5+5xDjec9DP4YlXPy/ypdb/b7QbMSnbGtY1cqL54u07w5ACByxR6akGba6LrLJat
-         pZMZ0Fql0sYwNaBxrXig+nbeNVZIcKEYJrgZToc/JcEG6MkwCJkjlxXMo4TR9Hr5KJ6S
-         2+SavluPC99JsCcLgUAbXiJTCttdH9LUrUq6b0DV38JRWICtvuLrTBFg5QlYVHAZx7DK
-         ko0jraJnFnzemegAElsByaO36zC05c1aR9qbyuka4r7QQlQrCwlq+RY3S78SgVfasiTX
-         2v/9grJeqhxbTART2yuBaR4WkK8cHDKcGIUUebZ91CW3uEpCtIYmYRwvtHg5CBWcbOU0
-         oDqA==;
+        bh=lmekR0/ekAHY9U+u+9TNSC/jQZPjvBniExy57WAfXjQ=;
+        fh=RF7Txg/Qy5EHKPT0wQF8SoXXRiHNj7JP1ffg1OoGnlw=;
+        b=bhoJU94+0RshWUPhkb7IioklKERfTLxoCKO9Czqr52tnYHoQC/qxbbqyM1snjx7pCN
+         qjkJJcUC2Xv9vU/i4bNuhL8TwJ5tyb5+/bDqxu3ICjHQvFXlcMraJAcQAJxregtkiQYU
+         6gkekXMPpu6v43fs2ALhP7i1pkimLkwNluTlfRxM4GKceLiCVcElcVhawWoUUeD10ekH
+         xUcDz5szb0dt86YCzqqxwbuE/f6aBovFfSfpstmlF22SohgcNeqgGo+cwHHin0Drn72g
+         LRpApQrHKO1lAir2eaHhxaLHfUhx5u6FobQO3GNVw4vV2tAQAI78Nkq3SnIw7j2YKuim
+         bASw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786071652; x=1786676452; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786071672; x=1786676472; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=tBwasWS2MM2jZOyIoqxULGXHrv2qo1JacCuWVYVaNLk=;
-        b=MhNmvDK4R4CDpimNs0tP5IMHMyLjKVtU4wqaKOezOIpCGTMlEbR5UmP2q9GBuyT3JV
-         r0w6/owmb5p8hUOy8f3HeQ4AUljYLa+hxwswHYX0Pd8W75xFhlu81mKmYZS2Q4SfaVL3
-         OMcHm7UdJCPjngOlVfXZMiwWmCQs+tLzf8oNHn7V1vHaOMrueFvBb+D3MDYtUTmS05fs
-         uF8c3NP+QTaroCeleiHyZHCEw6LDN4qNABtUIoNhFdDiEkd4sblrX1fGxPdXNrhlLZDx
-         ywITNsh+SHAWmw9PC0qNGKoUviVb1VrMHrk2JTcGYHTJRUe7VC5xH8Cu7IOXu944Yy+h
-         xLWQ==
+        bh=lmekR0/ekAHY9U+u+9TNSC/jQZPjvBniExy57WAfXjQ=;
+        b=GGvabQ/TJo9EB6eFvF74+NwOsEQjDY/AVj2JEtafnXmdap9yf1JziLNjYj9tpHrYq4
+         5xysqmgVd/Ax8p76uVI+CTusxg289coLYPLW5s3bb7C1nq1VP8oGz3+AUDA8tOw3B5CG
+         RxBh588EkKKGj42eFB1qkojfuPSdihiao6Tn2UUNc+frq5f+elN7K9sJtWmurubHrBc8
+         5+99Tk8tR/P/w0w0a4lr4oBfoGXUsKZin4Skxshf2hMLwZmObWJjbZ2yQ6PciMOPmQkg
+         XbStTRbuXLt3HzsB1k4bRgKoe5zvbFhrMa23ZL6tYo7l8U1M7tVovqETCP81bu0E1iev
+         wjtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786071652; x=1786676452;
+        d=1e100.net; s=20251104; t=1786071672; x=1786676472;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tBwasWS2MM2jZOyIoqxULGXHrv2qo1JacCuWVYVaNLk=;
-        b=Y2eQzvT3I1JF0SVMZj+0nbcI8ozDoPlDjo4yOXj155zHuNQRRtaZA5bj5az7HvjdBH
-         n6rn68l2vRnBys7q/E73gJi760mBC0nFRX7bgilBiS/dVKzGeMiedTLvOsPJRA/8815c
-         JZiKqsmMSlr0hGcISsAPNxxfFQniextMXApr2vSszDSyGMsoN8GTgJqQ3CP9BgNtia0w
-         KhvyTfvSBoaxkZG/6FKZ/hmDRaqO/Fvrjgd+ek6jfWSzzg1ezQtDqCgITVCIPfsuUJ9R
-         CdeosR8JW7Addda753I24sGisHhv+u1fLP3jZxVRkdpI34IJ1kWGkhTosKMRhPYAHzfV
-         0Hgw==
-X-Gm-Message-State: AOJu0YxUHbFjNaE8A5DXe0hH2rePKA77D8xUtXV8aG0wMPz825QLJheC
-	PCPzsziH3fOsDQAxbM7Jng0zql8GpNdTwVtQnT851sP116Q+r8e+eY8+R6JlBJiQ42XkdqemudC
-	fRg37ElG2uOUX9K0U/1h4NlW5HzJyXKw=
-X-Gm-Gg: AR+sD12gGWtGu7BAeBClKKD9qvuuUU9ttwvReqPbDi2uF72+sQU1ghnDZnLKzsz6Cyd
-	4zt/A2WNcBYuWsDuVAhKkJ9EVwMESJ7bzGT/Bh34TiDEdBrUauqzGz3e+2nXvcGQ+GHhH3Fkcf7
-	VPmAtb0KknAVNKKiQFRMl5J8x9LIpOyEQNiupwQ0GPmFDt4ferI4/7ctcVjjRdSo9UpXPpVQr8n
-	ML6NGsfBUAWlf+yWvNXK80kOOYndmpuqx9CTQxV3KTXOfoyZKCtmUfajDZuQnyh9/xW5p40zNxk
-	LWheAPHcJdKpTf0vuQggvX7FEQT+djWfuVxWToOvZZHSkrrUkvfnRKo/keXtbwgMoPQQCar/DgD
-	GBsYtQ+hfsadDP0LP48gjcF4aLAkUQHc3PQRPr0/ifuBT8LKtjmlHYtuVcTtgMg==
-X-Received: by 2002:a05:6820:2083:b0:6aa:da04:b56f with SMTP id
- 006d021491bc7-6ae96c10163mr10087769eaf.3.1786071652371; Thu, 06 Aug 2026
- 20:00:52 -0700 (PDT)
+        bh=lmekR0/ekAHY9U+u+9TNSC/jQZPjvBniExy57WAfXjQ=;
+        b=qOVBZ0MYE0us4/F4Zzkpzy0ssSDo3Yoi3H+2sAiq0bfiMyIcs2YTc0Km/1fsev24ha
+         O2MmYf4hvVg9jYKyD1rjetHZhGKcqVe6FwS4piGk0e+7LbIooqGrYFPU7Zk102Rc+Wrj
+         sC94/ElOxTDORqIIP83Y4PyARsvqQ6ZBNLQvomjnQj6WL6K3g00vqeTZ+VOfzLrcSHIc
+         GodhKwQwBxelrAkeBZ9O8xfzx0iC0Q2odOGfEKVLjevIVTD6+4uqvxtbQlFiHMgKOntC
+         5SIdhoLOmSxsw5GjNy9KGijOjW8VEExuRlhsiWsj4fD3+HXVPJbypCIq/YsU8Amvgp/S
+         ZZeg==
+X-Gm-Message-State: AOJu0YyD97bdDZQHwyJom1IiMWl5SCZC3HHp1DZsBd0REXSGQa+nlunW
+	NpLWC86B3SMKjJE+g3qjAoElf3GHFZjdwN2PvcyE0bU/Eeh/kZxcrBLF7xuygOAs5mqhBWJKU1o
+	nKMNgztSjR5PpCppsPpsqDBTYZkGxRFJGxA==
+X-Gm-Gg: AR+sD11j1tVnwjOkS7tIJt3Pff9Wo9f4nSQAzFxo/hHzT4cEJUV+M5yy6NUOSiu/DiS
+	DeIHE3NVlyUk0hsdb9NiAdeb4MBi/IQKxkE+24EjAxktKPihWJ9rbbd28MoBLEcH5j405FbaZPI
+	QsFfRuNWgk3lu7LCQ6Mn1EjTTTm407hOPBx/BraCqRFOdYn5uQ9OZ/DDOSyPAl7cF07bng3+Cxt
+	QcZIqjcoe/Tw8hiuqx5KU+zbxVi0CMuQgZ2nnsNk3W4gU0+0lslN2bEnPVM9mBd+xNeieXy/2q3
+	tKV5DeRn+HibabqMVTvHRFdC+LOuCS1xu4AsE/eqB59UjfNEh44BCu+sTBl3Y3Uyz4Yzm6On3yj
+	nZq3Z/g+VsUWpRuv9ZWMiitCday6bbxB1xbjpxiDJYHd5zD5X6Mn6ssS9zvtWo0rAd/crIhbp
+X-Received: by 2002:a05:6808:3a0f:b0:495:fa73:2e44 with SMTP id
+ 5614622812f47-4afae19c2dbmr10765324b6e.15.1786071671918; Thu, 06 Aug 2026
+ 20:01:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,100 +83,43 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <57ecc0b18a53ac567c24d90288d75aee16eefc01.1786013982.git.gitgitgadget@gmail.com>
-In-Reply-To: <57ecc0b18a53ac567c24d90288d75aee16eefc01.1786013982.git.gitgitgadget@gmail.com>
+ <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <f857577e0cedc11f8db614b4ab2bf9217652a312.1786013982.git.gitgitgadget@gmail.com>
+In-Reply-To: <f857577e0cedc11f8db614b4ab2bf9217652a312.1786013982.git.gitgitgadget@gmail.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Thu, 6 Aug 2026 20:00:41 -0700
-X-Gm-Features: AUfX_mxxpZlMgutoNamN2GZTmXLiKLBIirSBrO252dfGDwb3RX6kDwAat2PZ3y0
-Message-ID: <CABPp-BFKNkXB0gBDVhS1szqkSv0pOYepZ-hJhxQro-ViphDPTg@mail.gmail.com>
-Subject: Re: [PATCH v7 02/10] test-lib-functions: improve diagnostic output
- for trace2 data assertions
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+Date: Thu, 6 Aug 2026 20:01:00 -0700
+X-Gm-Features: AUfX_mxG2PpwgGT7jqrVF-Bey5NrhjtGYCPQe1hk8z6vwh3IE-6e5flZqEEgm7c
+Message-ID: <CABPp-BEV=u82AV=bXoHN9N+iNOrBjAig=1FY0sxiQNusrNGUbg@mail.gmail.com>
+Subject: Re: [PATCH v7 03/10] t6600: add test cases for side-exhaustion edge cases
+To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 6, 2026 at 4:04=E2=80=AFAM Kristofer Karlsson via GitGitGadget
+On Thu, Aug 6, 2026 at 3:59=E2=80=AFAM Elijah Newren via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
-> From: Kristofer Karlsson <krka@spotify.com>
+> From: Elijah Newren <newren@gmail.com>
 >
-> test_trace2_data is a bare grep that silently exits on failure.
-> Add a more informative variant that verifies the event appears
-> exactly once and reports what went wrong: key not found, multiple
-> entries, or value mismatch. Diagnostics go to FD 4 like test_grep.
+> Add test cases to t6600-test-reach.sh that exercise edge cases in the
+> side-exhaustion optimization for paint_down_to_common():
 >
-> Before (value mismatch):
+>  - in_merge_bases_many:self: commit is both A and one of the X inputs
+>  - get_merge_bases_many:duplicate-twos: duplicate entries in X list
+>  - get_merge_bases_many:pending-stale: STALE transition on an
+>    already-painted commit (ps-* diamond topology)
+>  - get_merge_bases_many:infinity-both-sides: both tips outside the
+>    commit-graph with non-monotonic dates (pi-* topology)
 >
->   $ test_trace2_data status count/changed 999 <trace2.txt
->   $ echo $?
->   1
->   (no output)
->
-> After:
->
->   $ test_trace2_data_singular status count/changed 999 <trace2.txt
->   error: trace2 data 'status/count/changed'
->     expected: 999
->     actual:   0
-
-Nice.
-
+> Signed-off-by: Elijah Newren <newren@gmail.com>
 > Signed-off-by: Kristofer Karlsson <krka@spotify.com>
-> ---
->  t/test-lib-functions.sh | 35 +++++++++++++++++++++++++++++++++++
->  1 file changed, 35 insertions(+)
->
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 809c662124..8c6d327b03 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1996,6 +1996,41 @@ test_trace2_data () {
->         grep -e '"category":"'"$1"'","key":"'"$2"'","value":"'"$3"'"'
->  }
->
-> +# Check that the given trace2 data event has the expected value and
-> +# appears exactly once.  Produces a diagnostic on failure.
-> +#
-> +#      test_trace2_data_singular <category> <key> <value> [<label>]
-> +test_trace2_data_singular () {
-> +       local category=3D"$1" key=3D"$2" expect_val=3D"$3"
-> +       local label_suffix=3D"${4:+ [$4]}"
-> +       local kv_pattern=3D'"category":"'"$category"'","key":"'"$key"'","=
-value":"\([^"]*\)"'
-> +       local actual
-> +
-> +       actual=3D$(sed -n "s|.*${kv_pattern}.*|\1|p") &&
-> +
-> +       if test -z "$actual"
-> +       then
-> +               echo >&4 "error: trace2 data '$category/$key'$label_suffi=
-x not found"
-> +               return 1
-> +       fi &&
-> +
-> +       case "$actual" in
-> +       *"$LF"*)
 
-Ah, you've got Rene's suggestion from v6 included as well; nice.
+As the author of these tests, and as my Signed-off-by attests, I can
+confirm with the full weight of my authority that these tests are
+good.
 
-> +               echo >&4 "error: trace2 data '$category/$key'$label_suffi=
-x has multiple entries, expected 1"
-> +               printf '%s\n' "$actual" | sed 's/^/  actual:   /' >&4
-> +               return 1
-> +               ;;
-> +       esac &&
-> +
-> +       if test "$actual" !=3D "$expect_val"
-> +       then
-> +               echo >&4 "error: trace2 data '$category/$key'$label_suffi=
-x"
-> +               echo >&4 "  expected: $expect_val"
-> +               echo >&4 "  actual:   $actual"
-> +               return 1
-> +       fi
-> +}
-> +
+However, I would be remiss not to note the perfidious destruction of
+my two spaces after each period, cruelly collapsed down to a mere one.
+Have you no decency, sir?
 
-Function appears to match the comment above it and the commit message.
-It looks like a nice usability addition.
+(Kidding, of course -- I mostly point it out so the next reviewer can
+appreciate just how little else changed from the original.)
