@@ -1,75 +1,84 @@
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE783D092E
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 09:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FA34B04A1
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 10:24:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786096180; cv=none; b=V7195pRIpQTh28mgKfW5cPvQOS8SzKNwo2g40Hy0Af5NKutRtWk6naeEhkHlzQOuKPtiZboqU543anYm1F1Izc7KfL3cVoC4WhnThhRWxseTWcMX0/IWbk3ilhdjPKyVuMaP0nH6z6875BiZzQ7vAyvZPJB6DxjZ0sfoxM61pN4=
+	t=1786098273; cv=none; b=oG4mWHP2wtw1xf7CqLrdaxP2mc8q1PLA72sQAoqoOKdOGbdhhSl9BE++JFt+o0LYWqck2bFLtpYlms4pwTFuvSeEvcAFytmdnxsoBFV0dZZPsRPZkDGErdVi69QAh8Q6Nu0pFtzVpNLGyFk0nXxbbSdfWPSz5peCx67YYUxc008=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786096180; c=relaxed/simple;
-	bh=9B4ueq7rXtJw1FwYGtMNYdpLY2WpH7BVjAX0kPABOs8=;
+	s=arc-20240116; t=1786098273; c=relaxed/simple;
+	bh=zVLv4ipxbEZF3PhzZ509H+QrL0RwREUr7ufp7XAe9dw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lUQuQlzEJxi6mHgp8NZmV5eP3VbBDEnp8Wl1i/Y7xrNmqs4XRSAZ261Is+5wLrHpUE5P6svRuTznG+uDgy9j4YK1TXeXhmzSH9eSpgxW3TunaVK9xLZI5oUjFn3a3pI2/318Ew8LZxeFAyKe+qVM/MZGAZ5IgwCNdfgOzrUNu+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kbk6tVkE; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=D//D7t+aFGIpaDXF+aAMEXDUjsQjWt5V9HtDlnxbb+a6YXqaeoLNJYxhcaiVBjTfnvK4aTfgi3hEiHab8Ai/lZdl3j/QQrCD9KbDqDbUuP5SxBgVDVY9b5XxkIZ5ztMPGmttsKusMPIHApHUXCbziyTOd+ATTUM7DHH+AbNfACw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RS+pKcDC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HhUTL8HF; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kbk6tVkE"
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-39f927721f2so22655701fa.0
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 02:49:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786096177; x=1786700977; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=MyM/2iIPwdU9MpfSYRzp+EeYVqBP9gu4PZe/6jCJd3I=;
-        b=kbk6tVkE3kK+o8FOT9jWeub1S2Hhy/Nqqa7TUVLxq7Y6N7RTZGU29A5nqZQaIiqCHP
-         +uNJ0g/f4t2B+/jQEYBOMLjpTl5yIsUQqqzLk0Y07He7wLIXYNguYU3Mw2OrMDXA6jl3
-         GlkmOnFoIGx/NbROaEVqOWj6cDdOV8RinWCs43FORk3xcUg0qkHgBMYCcqlerk1VVpy5
-         ryPO9LGUsav0gYYjt85X/rDKREfMoZQvr2GExPjrLzq4DBAk8nI1ogAtlF5D/wHf0K/j
-         oCKoGMbn5O9BmJVXuxA2WKY7hOlUc/FvJAD5alWFVuqZ4+7bNZji2xCgvbK3ncfEP4qm
-         VTSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786096177; x=1786700977;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MyM/2iIPwdU9MpfSYRzp+EeYVqBP9gu4PZe/6jCJd3I=;
-        b=skQPzY9CGSktJclHN7lhVEwMCBAHkZoGC7TXllAtuqp08qDshXYIZ1BYvLju4qP4tT
-         63hySahqWapGj0VaJ1lNNVWQWq+ZCJtTh9l7DXj4GB8XzeTbbJZG3/XdoCNquPP16GBZ
-         vyWv7go/N0/Fa1cqv0AGzbWg/29Mjvvr11qSGvTXjFfGGYan3dRo0TlW4GMIuEMdGuNE
-         RwzIMUXp3hRQHoY+J3XhOFb+JlwqNFpw2EkbhjH9eyvpxWa2CPJWfzgc4DL7L+na6k9c
-         OZDqhbF3g2bcBtdE+x5sQsi83CFzS1xTnwdHTeUU8PbhvliD9P5GsJTvz9Dpb1JGCjV7
-         CeBA==
-X-Forwarded-Encrypted: i=1; AHgh+RpdMydJ97Y0nFJhj3QlraKbs4dwliLldEqjlVM7l50lfpwfgVu/h1paqLU08EvhGwz193A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLh/z56SDebI94OiigjSiwO4OefVyJQunr0A7J3QRTZeAOetja
-	AKBYD46QLtPjdkBbcLD8d3sM8kbxH4jSIJKva53g0HxhFYbCCQuwMyxgQAc5tg==
-X-Gm-Gg: AR+sD1280gF+TWs7reoIlgBA6I5hgE/pwsnD08FNs9441+2q7yC9n0Ryt+geGM6kgJN
-	1NufNfnEWLR5Ot7F9QWL4Tz/3+QjNCMGbYg9Blvw95q63C3Rlqom0w8GFintDnAPo6e/gQJdhUO
-	wEig0INLG74AnVOortRhQ/0SPV137MuZ9j0KxX9hdtv31uKg4+OvHFapU3gWCK2FauPHPhpiZ4S
-	/J/60FL3+GHwVJFqxAL72nUGjl0Ggs8eTGR27M5qcOAJxcy5JcRREwvpa2n0MrK42l90C56mB3I
-	FP6IirdNwprxt9YWZicP42/z4pv+aINFQqclhS0fTCyOz1rX6/XdbrKGwLlCqCsgGacxC3aoHjm
-	KkHOfVJrmWPrqmGFJFA6zdfoLh8xS7vqQotYs2ot4YiMIWDLF/MU6/qVbXpb2gOfOXQID7cVZv7
-	26ckdnVS+QZwgCBXIufVuWU92bIFGzsGMQZ5W4xzKmVWhJ15aJnlTADODL4CCNPgaj6kXeGZKrN
-	5vqvZ1z/d7fAI8SiFHcTJRMBy36eFSK1LS4Ns3FHlHFUUL8Y8Y0Iu7prPAwFQggKeAcPxe48dvP
-	3Wo3vZdfqz9MMcg=
-X-Received: by 2002:a05:651c:1993:b0:39f:bc94:eba4 with SMTP id 38308e7fff4ca-39fbc94ec51mr24402431fa.26.1786096176728;
-        Fri, 07 Aug 2026 02:49:36 -0700 (PDT)
-Received: from localhost ([2001:2043:be0a:d700:bd32:e7e3:cfbd:5b51])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39fddd51581sm2272701fa.22.2026.08.07.02.49.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2026 02:49:36 -0700 (PDT)
-Date: Fri, 7 Aug 2026 11:49:35 +0200
-From: erik88 <erik88@gmail.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>, 
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: git-replay/git-history lose notes
-Message-ID: <anWpt6rzws0yYdFH@vader>
-References: <CALnO6CAN1=dgRsYjABfa3CJkGnvb139EcrzS9EnX43i3szOgtQ@mail.gmail.com>
- <CABPp-BHbWKr5tv9ApH8ZagJkY39XZgQbLoFrmQJfU71z1y6_xw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RS+pKcDC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HhUTL8HF"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id B1ECCEC0129;
+	Fri,  7 Aug 2026 06:24:30 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 07 Aug 2026 06:24:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1786098270; x=1786184670; bh=W1v5zrZNRg
+	FRK6gkVEB3AjgSqIK+IFfc4+hQqAgX+Ok=; b=RS+pKcDCL9BoNHiw87nkESUczT
+	TcjHzsDmDYSC09BgBCEH9RNxqRAAh9cwtjH724CoX4a5946qRZ18s3DHI9nSG9HZ
+	/0xTrewarX2nQnVDIAXzKsraYOGa/ax6fTOfOfz/ktdYLTzvX3ZsgbQfJbS/GIKH
+	apitzNecISlMhfuUXY+cBaFMZpijpDbQmiomnBxMcEISV+ewy5Ui6SgnnvSQXVDe
+	hk+NJZmm3LQqEkRLfuGdfd2NlP7PZITfDdnsKnUSNakcnKnSxvU1HKqUTmjiNIdh
+	SSTCj0XWBzNpGf2oPabmt3DH70zLUmzv+hRJDUox1fgXdehY2o5/AvfN0biA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786098270; x=1786184670; bh=W1v5zrZNRgFRK6gkVEB3AjgSqIK+IFfc4+h
+	QqAgX+Ok=; b=HhUTL8HF8KALVfw5NvLItDtm1NvV0lRoeie1x+vjmcdjCtk7SNj
+	SwUcTLpj22yxGrh/LX2/PnXcpWBcX7TkciVmrRAeD2uly0/Z7dSgUnu3ew/1bTGq
+	w/OQ6lkF36oJ5l/a+JH4xf8WFQAMLQXxClbP6GXnU1XH61Kc5RsXX9QN4trxdG7H
+	UeDbtsbfoSzN5MNiEV3DlAPlpSo7N/2L5z2+VPyr7Huhwhr144oVxpG9JGmQrMhj
+	rKJPA2r4y0tgXOFY0ZyAtjw0z1/ptJ2lSpmyBQEkGfT7vDYDgNPn+ozIrluoTeYF
+	4fQYQkBmApfblbrMrQsVliw41nj4+m7uooA==
+X-ME-Sender: <xms:XrJ1atj1AvqL4RRNrCIR1y7BuMItWQcp3VugO3aTPHEd3C1q2vFhlg>
+    <xme:XrJ1alv-swZLoLktuKuVqUB2haHtfxaaOYPJdRRuMlW-k-pOCJrJzIs3MPattAua-
+    MosfhO1_bGgkQXDbh2ZV7o9QtCsBhSjl1rNrhcgiTqkc7H8GjOQlHA>
+X-ME-Received: <xmr:XrJ1am5p0D_yVXfviyuKZoZXFv3J1LV1WtluCLWMshVCKUkkpVnaJYFmxSsUdbegiwcYVAtoe0UTed7SS3jcCbgdpw54R07fx-pgeiMgbNGYDQ>
+X-ME-Proxy-Cause: dmFkZTEaI8dqWXpBcdka3nLd1vLCfiyXibQhZeJI9rCcQQNwfaJWH4hVQQGPMXnU5itMO6
+    bL7lLtI7kt3HuRCiV7RlXphedL+kDd7lK0FjndHUvjY/Y003Yb4xbNPDpV7IjWLnJEfOGJ
+    1Nb7XdldhV87AthZRkPY8JpSB51xx2dRcwlsa4qSnuY/F438vD5tCKMGV2PTXaQWLd0jBj
+    ejj8+AlF4WPjMvo37K/9NLvoolzqJVJF9a7Gyt1KddrskdGnSsE3nLihYz4NlUW/Y4Hbu1
+    vtRffowkOWZ79Fh+bDeziSJ3c7uevgQw3fB3yJHwLbNtcrGeRTjp+Wi2TacMrEKN3hfamZ
+    7pn8liH6fFFM9E6o3f29iqivzuBQ1FT674ASSaKNrxkPJH26bog4t7tMkiulHm/tTZO7c/
+    AeKQvg3LWzAkRBDfuRyH1YmkfyfOVJvZ017krpDIvFpcCwc9rahV8VKXRZDlXAoDjVo62I
+    kTN7fZ7k0UN9I4J7B57CgpnInmXBh/NqWzekpHQ450cSgFMOc4l2EzXA18CTH0mIV/4jkK
+    eFsC5RB59FrE6cRDAViq96OCcifKF6MZHGR/xEAiPLgQ6X7feqOC6DmlyjHTwtUwyBDTMi
+    mhhNrF+9NXwDg3yVjAj+PB8gRV4ZZXocm37eFFuk7Thu7stbVSMU3KOXgVGQ
+X-ME-Proxy: <xmx:XrJ1apMny-OgWBFERKzRymyOFFkWgx-3UpUkkI1x_EHLaxs9dTQEsw>
+    <xmx:XrJ1asu6B9-67_g5AiVn9CkJr51NjzwPKb8paUyQAUFLxs1l0JuX-Q>
+    <xmx:XrJ1akYJcbRhv3O_RGD2x8UnjJLjsUOs7UehumXpS9IAh3Tbj8sSSw>
+    <xmx:XrJ1amxNBrHvenBapyy3L3mJ6ih6I6BM5_K7qvqNRAVJfJMq0lIRAQ>
+    <xmx:XrJ1aiYUT_4Hy-IG0boHycggCpAs-Q86pDT9ryPZv9G9EYaK3YFNHYa3>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Aug 2026 06:24:29 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 769538c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Aug 2026 10:24:27 +0000 (UTC)
+Date: Fri, 7 Aug 2026 12:24:23 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, tnyman@openai.com, Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] ci: bump ubuntu image version for static-analysis job
+Message-ID: <anWyV9Q4Cmsa5AoT@pks.im>
+References: <20260726083254.GA3528497@coredump.intra.peff.net>
+ <20260726083905.GB3529069@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,16 +87,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABPp-BHbWKr5tv9ApH8ZagJkY39XZgQbLoFrmQJfU71z1y6_xw@mail.gmail.com>
+In-Reply-To: <20260726083905.GB3529069@coredump.intra.peff.net>
 
-On 06/08/26 23:53, Elijah Newren wrote:
-> git filter-repo (and implicitly fast-export/fast-import) too, though
-> that one's a slightly bigger can of worms.  (Trying to treat notes as
-> the underlying commits they are represented as is a really poor way to
-> export and import them; any filtering on the underlying commits will
-> cause the notes that attach to them to just be lost since they will
-> instead attach to the original commit.)
+On Sun, Jul 26, 2026 at 04:39:05AM -0400, Jeff King wrote:
+> We recently ran into a case[1] where old versions of coccinelle ran very
+> slowly, but newer ones are fine. The version we use in GitHub's CI was
+> the old slow version, leading to timeouts of the static-analysis job.
+> 
+> We get the old version because we ask for the ubuntu-22.04 image. That
+> has coccinelle 1.1.1, but the "fast" improvement is in coccinelle 1.3.0,
+> specifically their 58619b8fe (break up envs for e1 & e2, 2024-08-18).
 
-There are some workarounds for filter-repo, IIRC they work _okay_.
+I have been wondering about slow Coccinelle for a while now. Making
+things faster via a simple version upgrade is great, as it comes almost
+for free.
 
-https://github.com/newren/git-filter-repo/issues/22#issuecomment-1834041470
+But that being said, we also have a bunch of Coccinelle rules nowadays,
+and my gut feeling tells me that there's a bunch of them that aren't
+useful anymore. "refs", "object_id", "the_repository",
+"git_config_number", "index-compatibility" and "context_fn_ctx" all look
+like files that we could probably just get rid of because we have long
+done the migrations, and it's unlikely anybody still has patches that
+use the pre-migration variants.
+
+They'd of course require a bit of a deeper look, but that could be
+another way to speed up Coccinelle for us. Even though I cannot say for
+sure by how much, I didn't give it a test.
+
+Thanks!
+
+Patrick
