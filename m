@@ -1,64 +1,63 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1E3381EB4
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 13:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2D72D0C7E
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 13:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786110942; cv=none; b=POzImXgqQcb9XvLiBVLEXWsLc3YI91k6SUaqID8Z/G90COHHQK5xRutL4Q7SbjqlKvNuXfvQia+nk5k1tgyR0XaXR320h2t2dSTzEO03GsNPFBOeOpkuCh4THrjQQ0be9vl/521SBk2Evs58zr2g8tSzFZans1+b8trytDWo5t0=
+	t=1786110944; cv=none; b=mjQ5PrbXHSo2UtDPOxClTpFBf8W0lOhupx9GOpe+Iw3oknIVBu/eH7c8DWCR935l+OYFZkw9oypRnUIO4F2pmSLACfkph6UFNDcTCsRtd/t7bwVwAGZlK1Nr9dhjWD8Y4sG/lY728xvZKsZu181lMVX6xeTribw2nE/USSk0wLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786110942; c=relaxed/simple;
-	bh=xoivOwkBfgpNcRD4KHBHSqPrm9KYAPSFjYN6yU6APjg=;
+	s=arc-20240116; t=1786110944; c=relaxed/simple;
+	bh=Oh7AJV/cnIi1+Yv5epW8j0zVwU9RB56PYBUcJ5Zkq1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XTJGLuu9ISXc/Pr7QuPliPD1W+kTyBoqRRmtQnaebLHbRWn4aoZ57xJYfwOHiUHs4/HHz0gRf/lD49myhcoGnhTLU3AL52v5w1p6YkpgjV3k0iV5TgNGWkN3W/SEM1hxGq4nee0HDwRb1cVkFjEfGrckm5qx/2mT7iX+lhKSsU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iZAWr9Jl; arc=none smtp.client-ip=209.85.221.46
+	 MIME-Version; b=MujHFqTFcRc7kkyJt18TA7dp/n9w9iJrtbSbl+Kd2vlTJnB7BRUMieQIXKryqy+4NSjAZi/n8SUYC4SD8qUjQhoRb7idJ/+BBqNvPbsiVlR2Wf4QKpj0WpfPPb/18MPzxShbMQw2gE82p1NTlfg0H+y3Pu/4nUGz2Y21ZcFt1Yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QSytwjoK; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iZAWr9Jl"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-47f703a9e5dso1806080f8f.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QSytwjoK"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-47ffaa8ebbdso1381155f8f.0
         for <git@vger.kernel.org>; Fri, 07 Aug 2026 06:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786110933; x=1786715733; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786110932; x=1786715732; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=HAqgELBeVpCpGCm7Yg6hfttkmQV2Wrt4gztJ70XzKJY=;
-        b=iZAWr9Jltb8qcx7Lbb53eP8ljWmbBQlgNW14PXyonW+2ou3Ozr1MlodZJHRrs9PHut
-         jGu3nqfsXs4GjY837CS2cQmh9EnAWQDcPEqGGA1wGKMs20ndn0f9ywvDsxP/m5TT3bQE
-         pYwrSXsZgDpFZFO62EooXYKeXyvzFvoq0bs+2w8sVdWnQtgGCpCwYb/LKs1yofbd8zC0
-         XgD4jVpQSC6OzsMhxgd65OAvlJ1LaddYMEShgjpIPssBCHJqzS9Sr3lAYeq25KzwjamQ
-         c8ltKc5Wo8ghF1JxW3EJCcwyPAzqY2+RpGzFlMkRjYis2YyzEQjec9XmRqOrJPeLqjx/
-         1/Mw==
+        bh=eALS19OvTurT3e7yfXP6nEXDg5oQV6o7+Fc0tHgOfRM=;
+        b=QSytwjoK1WJnRuTEuvG8/YMsk+oDEy6h/JRRY1gUVafvNjoFhfVhElzIuRnp5Flm4y
+         wyMNSafk9HnzrCHjsWAXZmFGaiIWleDre5opRfSwHVIQvE8iajOBC9iqeGY6qc+eYslX
+         ArMmwoCak7J9ES4VL1uur1Z5dtHw8JwnvRX5NhZiwN3E8D6e4L1XgxJZzCU+ya2WrahD
+         zUj7xptzxHG0r7Vxnmq4x8lLQWtEeWmra7k34oedQM6tcgImXi7NSNK99Nof2Yz0mjRL
+         0oF9+M4fU6L32gCJy4LpsAVGtccpFHhZgeIfj0mcmmAJKg/372XdEie1+fe42GLvIAF6
+         TqoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786110933; x=1786715733;
+        d=1e100.net; s=20251104; t=1786110932; x=1786715732;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=HAqgELBeVpCpGCm7Yg6hfttkmQV2Wrt4gztJ70XzKJY=;
-        b=aD64Wyu8pdAy8dWZ9XJbRM1NN3BTKrfFr1kEVGOy5O/yopr7/ZCdia+cxAFPJ8sFXo
-         jeYUl88PEqaavNwxROus8GJQ7lcAkeXVFtAgf7TOKQhHHldKwNcCTLqhn9je1/lEP6jS
-         gXsVuBTcCpVmyESIBVsz0hwLGVny5ZWwUeO24WPM9uAJTwFdoNQQEWSk/M41CiRP9TWP
-         CNrw/lOC9W33IskU8qnqQX5xwE2HR2XZIDbERPKyiCYvecfUuNv3QNbqQaqqNkQ1uWSD
-         00N3Scr3nz5VsxHEZ+iebqg9a6YYqMPZ+1KMGOdjMs/GgC4MDfPEQ0JIezyEzMSuj4Fi
-         8OxA==
-X-Gm-Message-State: AOJu0YzGGEkpot8gwClnzlHmloi+w9PZsJclKsFQkVr7bVcG53jP9yQw
-	y114HypT2Klk6g/sFRiKyMejjcwADkaJPfCKOyVzIdRqpUEdBzVUUcbugGPkHA==
-X-Gm-Gg: AR+sD105TlcqjkMgYPj8lT3FPDjIkb9JMuaOUEZG8ETkn4sn2K3XB1En4U4CNSCWBvU
-	VDOjZopmT2LH0RPFfJk7y6DPq2DW7sjLcXqZHNKL53A+sjniJQBAxxIWT4NAtbHfOQlCEWHf71f
-	4MZxzebKxjwScPrQUB1bGqObYDDmL3UUVBvoqdU4Jnynrukpk2WrqS5z+wy76JZqKXv/DCZ/uvH
-	H9G6Dlg81hoYHHMy16vkj+EabEgdZM/NZkaN+aAeN5CCd+RRsiRjLMsYzGXnkg4sp4HNsf1y9vy
-	6X2L5cL7TRCb3w3MNOjhWC1XsgDWDuoMPiUFUiiBDA1mKZwgSsQoOCW6dW+9HRRhwjNdQ/i1BbL
-	9avz0zr0WpQdxQGPPpTv8vX82eQ7e6S1b7Lb6tZzm9e+MmnqpBNCTcZlJzlXxo2NiCo5PCP7CoN
-	2UfPyhdLe7b818DZCWSYDHF+03bOieibnjr3WKDgu0CDjWRoT0PIhbOe7BoQPHzEZrI9QeE1Kvo
-	y9xaszs2ESvG2bBc0MQ2LGIpld4ncWR0Wbgl+eekKUfVj7ufUoqYmc+0yS0FO7jsDxT9sYcORAb
-	A/mXjWOOVSw=
-X-Received: by 2002:a05:6000:982:b0:481:98d:b24 with SMTP id ffacd0b85a97d-481098d0e88mr3008850f8f.19.1786110933237;
-        Fri, 07 Aug 2026 06:55:33 -0700 (PDT)
+        bh=eALS19OvTurT3e7yfXP6nEXDg5oQV6o7+Fc0tHgOfRM=;
+        b=gh+RAx9laomXEv2dX1lZiIA3XvGFhBrkN45tiVGBogohiHsouFy0G384dC2VD9gIQ+
+         uVTMn06432+mDb9fiMVDq80/bZg3tutt/Bv6wRNL+/V4FTPTdkSogwngWIEOLomkjWtk
+         ibZfh0tPgqrbuzNplwBAC+hbK2xOsgOvjm5Yg8iUVhUhXKNW9sxjOD56kl4c7CLSvE+3
+         Xp20tqYSZk6EfesejHl1MxZ4lNOBYXSLi91PyWaee2jE9p9j+zi+uC0JjgINbPRqcdgU
+         DCpmFiKiEmp3XK7xkMEjvmoV+4nl972KAKXsC17/wJRBfWv95o+Nb0kA6Rb85WIE+Gw/
+         1EYA==
+X-Gm-Message-State: AOJu0Yz/hxIZcvlSgk6GWXLMbq/bXexuN2qiMODh5j6EKa1P3k+Zg+Wk
+	HyhY+Ky8seMY0AkppEG4qWrPixZOAh6RPzO19oerZliWud/WhSIMRg1PYwszww==
+X-Gm-Gg: AR+sD10QRTu4mE5T/uqLxIgGr9Z4dko0tiJHrJaWdEKKyTU68AYm34yc/N+md4zBP0c
+	3Ejsz1Ot583QDlDYYIDfWTfEQFyE4FqEQbE+ORXRFmaSr9wrT5udfhJU53GIUA9aoJTNo91/HE9
+	ozXaJ3ZGIzyAGamCq8uu4pMocMy4ThlTfqzuo4rJ83hN28ivPAA5VJ7ou9vUzfyRFzHUDZt06Va
+	luVicfZAecNzsdmGMngu8dcD9wlsCxmPqpkvL8WY2okZyC2Dpqa4bYDBlWj53gseG/L1JOVqgaf
+	ErwroeYV667F55DSTfG2VNIvKB0UPOJN8oVMk6yqvMPO1AOXx9UmyVKGW/4z0B/9usqShf8Njvo
+	3H5bvUswim/R3uLHrfHH+3pAbVknv9ApsoSNqDjTMvrQs6jhWxknXTF12oXRbb5ayETTSxAQifd
+	mLZbix7M8GOG4fqrC/bZgmwsf4G3DgEOPNP576w5NHkdYOtbnSOPjxWFbBUd9uqUALHArDInRI4
+	YelvGZ2eD5xN74e05sWBw4NKklcvWs4HQe/Jc25pzLbXwH+5wr5nnUOSRb6KT+JDktfN6cmto1p
+X-Received: by 2002:a05:6000:41fa:b0:47f:fa17:ae0e with SMTP id ffacd0b85a97d-47ffa17ae68mr19112983f8f.11.1786110931882;
+        Fri, 07 Aug 2026 06:55:31 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-480021ec565sm6094207f8f.22.2026.08.07.06.55.32
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-480021ec565sm6094207f8f.22.2026.08.07.06.55.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2026 06:55:32 -0700 (PDT)
+        Fri, 07 Aug 2026 06:55:31 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -69,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 4/5] upload-pack: read uploadpack.lazyFetchTrusted
-Date: Fri,  7 Aug 2026 15:55:10 +0200
-Message-ID: <20260807135511.1818458-5-christian.couder@gmail.com>
+Subject: [PATCH 3/5] setup: add 'allow_dot' arg to path_allowlist_apply()
+Date: Fri,  7 Aug 2026 15:55:09 +0200
+Message-ID: <20260807135511.1818458-4-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.55.0.530.gdb3615d990.dirty
 In-Reply-To: <20260807135511.1818458-1-christian.couder@gmail.com>
 References: <20260710085137.4171240-1-christian.couder@gmail.com>
@@ -84,97 +83,93 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Previous commits created and prepared the path_allowlist_apply()
-function.
+A previous commit created path_allowlist_apply() with the goal of later
+reusing that function. But when it will be reused in a following commit
+this function will need to reject non-absolute paths including those
+with a single dot that are currently accepted.
 
-Let's reuse this function for a new "uploadpack.lazyFetchTrusted"
-configuration variable.
+To prepare for reusing path_allowlist_apply(), let's add a
+`bool allow_dot` argument to it, and let's export this function.
 
-It allows us to:
-
-  - read an allowlist from that config variable,
-  - check if the current repo is in that list, and
-  - return the result from a new upload_pack_lazy_fetch_trusted()
-    function.
-
-The new function will be used in a following commit.
-
-Note that the new config variable should be read only from protected
-configuration files.
+While at it let's document it properly in "setup.h".
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- upload-pack.c | 37 +++++++++++++++++++++++++++++++++++++
- upload-pack.h |  3 +++
- 2 files changed, 40 insertions(+)
+ setup.c |  9 +++++----
+ setup.h | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index a52856d869..29e700e43b 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -34,6 +34,8 @@
- #include "json-writer.h"
- #include "strmap.h"
- #include "promisor-remote.h"
-+#include "setup.h"
-+#include "abspath.h"
- 
- /* Remember to update object flag allocation in object.h */
- #define THEY_HAVE	(1u << 11)
-@@ -1378,6 +1380,41 @@ static int upload_pack_config(const char *var, const char *value,
- 	return parse_hide_refs_config(var, value, "uploadpack", &data->hidden_refs);
+diff --git a/setup.c b/setup.c
+index 39dfa1cc5f..a09e697e3a 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1339,8 +1339,9 @@ static int canonicalize_ceiling_entry(struct string_list_item *item,
+ 	}
  }
  
-+struct lazy_fetch_trusted {
-+	int trusted;
-+	char *repo_path;
-+};
-+
-+static int upload_pack_protected_lazy_fetch_config(const char *var, const char *value,
-+						   const struct config_context *ctx UNUSED,
-+						   void *cb_data)
-+{
-+	struct lazy_fetch_trusted *data = cb_data;
-+
-+	if (!strcmp("uploadpack.lazyfetchtrusted", var)) {
-+		path_allowlist_apply(var, value, data->repo_path,
-+				     &data->trusted, false);
-+		return 0;
-+	}
-+
-+	return 0;
-+}
-+
-+bool upload_pack_lazy_fetch_trusted(struct repository *r)
-+{
-+	struct lazy_fetch_trusted data = { 0 };
-+
-+	data.repo_path = real_pathdup(r->worktree ? r->worktree : r->gitdir, 0);
-+	if (!data.repo_path)
-+		return false;
-+
-+	git_protected_config(upload_pack_protected_lazy_fetch_config, &data);
-+
-+	free(data.repo_path);
-+
-+	return !!data.trusted;
-+}
-+
- static int upload_pack_protected_config(const char *var, const char *value,
- 					const struct config_context *ctx UNUSED,
- 					void *cb_data)
-diff --git a/upload-pack.h b/upload-pack.h
-index d6ee25ea98..b2212992c3 100644
---- a/upload-pack.h
-+++ b/upload-pack.h
-@@ -12,4 +12,7 @@ struct strbuf;
- int upload_pack_advertise(struct repository *r,
- 			  struct strbuf *value);
+-static void path_allowlist_apply(const char *key, const char *value,
+-				 const char *target_path, int *is_match)
++void path_allowlist_apply(const char *key, const char *value,
++			  const char *target_path, int *is_match,
++			  bool allow_dot)
+ {
+ 	char *allowed = NULL;
+ 	char *normalized = NULL;
+@@ -1366,7 +1367,7 @@ static void path_allowlist_apply(const char *key, const char *value,
+ 	 * OK", which is slightly tighter than "*" that allows
+ 	 * discovery.
+ 	 */
+-	if (!is_absolute_path(allowed) && strcmp(allowed, ".")) {
++	if (!is_absolute_path(allowed) && (!allow_dot || strcmp(allowed, "."))) {
+ 		warning(_("%s '%s' not absolute"), key, allowed);
+ 		goto end;
+ 	}
+@@ -1410,7 +1411,7 @@ static int safe_directory_cb(const char *key, const char *value,
+ 	if (strcmp(key, "safe.directory"))
+ 		return 0;
  
-+/* Is this repo trusted for lazy fetching? */
-+bool upload_pack_lazy_fetch_trusted(struct repository *r);
+-	path_allowlist_apply(key, value, data->path, &data->is_safe);
++	path_allowlist_apply(key, value, data->path, &data->is_safe, true);
+ 
+ 	return 0;
+ }
+diff --git a/setup.h b/setup.h
+index 654f10e059..d4f8af5457 100644
+--- a/setup.h
++++ b/setup.h
+@@ -304,4 +304,32 @@ struct startup_info {
+ extern struct startup_info *startup_info;
+ extern const char *tmp_original_cwd;
+ 
++/*
++ * Apply the path allowlist in 'value' against 'target_path' setting
++ * '*is_match' accordingly.
++ *
++ * `value` is the value of a multi-valued config variable named `key`
++ * that holds an allowlist of paths. `target_path` is the (normalized)
++ * path being tested. `*is_match` is updated in place:
++ *
++ *   - an empty value resets it to 0 (so a later, more specific config
++ *     scope can clear entries from a broader one),
++ *   - "*" sets it to 1 (allow everything),
++ *   - "<path>" sets it to 1 if <path> equals `target_path`,
++ *   - "<path>" + "/" + "*" sets it to 1 if <path> is a leading
++ *     directory of `target_path`,
++ *   - any other (unmatching) value leaves `*is_match` unchanged.
++ *
++ * Non-absolute values are rejected with a warning, except "." when
++ * `allow_dot` is set (used by 'safe.directory' to mean "the top level
++ * of the current repository").
++ *
++ * Callers are expected to invoke this once per config value,
++ * typically from a protected-config callback, so that untrusted
++ * repository config cannot influence the decision.
++ */
++void path_allowlist_apply(const char *key, const char *value,
++			  const char *target_path, int *is_match,
++			  bool allow_dot);
 +
- #endif /* UPLOAD_PACK_H */
+ #endif /* SETUP_H */
 -- 
 2.55.0.530.gdb3615d990.dirty
 
