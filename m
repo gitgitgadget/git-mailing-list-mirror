@@ -1,169 +1,143 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9794F2E5B29
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 18:31:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786127467; cv=none; b=U4aLh69SjDdiPgqPdii/GATYLzOdX94yrxdlLl1xIAC1aDNR5PYZ0OKLmUZsC2YwZ/P/saNVT+Ds1f54VlVC+7RFO4y9YZVdoGDzLpNBCGoDqE0nLQK5SKUEj5GwiI8yvrC+haonUiXsm/fXRvgPMNFLB7mokXYMXNFtemeGkt4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786127467; c=relaxed/simple;
-	bh=tXp9++etolBaU0zjgxVdiTu5OMkSv87cBjURTlQ2PeE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U/lprcBBC4TiwbnOhH/5h6uTQc8YNSwOS2MgZAFZQVXL9Ppv1uEWZeWEzWAcfE2lINx1wGulX0TXRkg8vxXw7TbO69c5FhScKshZIsC4lDMCObcQJxrCISbxzcdMclbt+4JQrDznzCs7GjR93oFqitahJiNAZNGpXOH68ra92ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f7gdmbiN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lBkhxWxk; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67968285CAA
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 18:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786127505; cv=pass; b=qaRJEr2AC9Oa5lXC3tc7bRWYh282VEzhZyYmq2K3GOfO/K3oSlC4ZcRfssrFFlVFZyu4JSgMYRVFzoFONFADUXF5avwnyOGwWdDpym4MrFGZYByDkHHjJ7vA8qCPFVWXV/Dn7MT1CjZrJ42lztkHzr5Rc082mAfoORMMlmU8YP0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786127505; c=relaxed/simple;
+	bh=XvQxk/tnbaCCGbBUSKrOoHmn9ADHYjam+slzw93OMEE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B5bOCUoPgEeTsJVVU+HEC9PjE4xF+CsPZRc1wLHxHjyw7mjJl5J9VORJepePK98iUr4R3rrOuMElPTAbRyW8abMU6mJHjZEKgaASnbRMOHnMW5zgLjVerl67zPPNCGSqa5eJMGAjTyhUE+ffxZQYqbFGCoSw0nFbZ0b/+rhj2Iw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YdQKszNK; arc=pass smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f7gdmbiN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lBkhxWxk"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6514A7A0130;
-	Fri,  7 Aug 2026 14:31:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 07 Aug 2026 14:31:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1786127464;
-	 x=1786213864; bh=eNd/OMUO0EgDOwi/1YP4mMrdj83YncBj6adxPdNEMdw=; b=
-	f7gdmbiNisBlWtFYORPBFQLyGiFvmPGg/B6m640aVHqLqC9JHwrx8RqnyLxGKVPp
-	ZPiK8bIFuN3zIiiyzs2/Y8YRULcLf53/uUHr95Y6zCxzT6K2HIkrqXqdCnaUXk/v
-	uE4zcMmmFae9xEX/d5728FlgekvlbIO+r/csuplKJW9wFntEOSOps0t0KauJXO3L
-	apy7mUFdiQ83wjy2iA9ZMKqeZWxExrOXLwX56FrtowuKk1FT3lDByJFOqK2JRhS5
-	7wN6rJC+TfUcPSEGacxsvfgOcjxc8DJVU1djz2ef4DxVmw2lJO6LtBTg8kZFeKTN
-	bEMD4L86bArveeaLiM9RnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786127464; x=
-	1786213864; bh=eNd/OMUO0EgDOwi/1YP4mMrdj83YncBj6adxPdNEMdw=; b=l
-	BkhxWxkrbGSPlkJOmDnuKuS8YIjsufz+DLeiXn7DIVXQWc4V9QmoIffSzbua8y1u
-	oh4i2GLX6VFM470iapcM0LGzUKtIjaChEuPcUXC7gNgD4ASfQ3OfQtDXEQOCyLfP
-	eYrQ7nwVFtpLKxNsZJcqJyTv3Fxu9wywBzgqys39o0HbJjnPZfXx5YD4zDYITo3/
-	CkRxdJv+bXAqKerrGbfvnjOAWXGEx1Q3jgf3NHeLkebZsmGMV9phe8BfrpUAO8je
-	4/I+ggeOpLV90cH6JEDmW9MvzZeDzRhOvc32ZGcPuqHX4iLhsNsn2c8hzQFeC/pF
-	AAi8q3ujyqIKhPUcjzGQg==
-X-ME-Sender: <xms:ZyR2aqQ3SKnZn14jdosMMiw_OouxVnksug2SiUa0OZtg2-dsJkw4Ew>
-    <xme:ZyR2au0DVgdiB8Unv6ijIhlfQ2BkEz1fiUwxlYsjL2zQ571pJRwW82vBvsso6QSoc
-    lSq9mp0642TQqhs-zCdvlI0RQZZDCpqBP0IMEp2aBmaiFV7eMyEcA>
-X-ME-Received: <xmr:ZyR2auBXLx-hkoVVkRT--2QmaiOljc_IvyOOG5E6O7kpDyQGIfyn02w28dDLGqtzYiYHAPZoh8bMUJsmAA9YLgvIrIZp2KlKXQ>
-X-ME-Proxy-Cause: dmFkZTEFGLs/IKm9cDOUYdRkTnBaEBSyQzJYy7e2Jpn+qOg2OdkE+Ele+Xo6UvFMiGLggq
-    mS7ahjB0W9oJM/MprL3H8VuSzCr2IZcL7OGzCI6QXqeBJUOQVv4RMxv9m/zA8F+kpejD6Z
-    KBHt57o/kGNFk2Ljo5xq5RZ+y+0vbxFM07ctiz5pT9fZPUVm1s7nPCdE8tHSkb0B0DuCOF
-    n4l00Mj9LRX9SCR9robgo2XNcOcw3mxixw/pkGsN7UtEBV9agkTon7IirHxJi5qy1IoL8x
-    I90gomxcq6o2mMt7bDbJVWicuUWkGEkyvymE6kLCXcNx8GTO9NczU2OmJxPuU3gwhrfUYD
-    Cumf2MJreEnGBn0Mh5J2EU46o/auVrHEsD+DsoJu9c+ogtcwscQLtaKJwVP3eN36KYnKko
-    QOvSCza/WcfZJoPN5UAavSXhKp5pX5Igj3b82HCbI85vyfeRXGITJktIIvoIHgvzxqkcxx
-    qTo/tie/Ct2T6JjERFSGxE4fRa+IlZH4sj2izxzyy85eQrwpHfF8wPRD6XxYNqUspz1Ula
-    hjyvIvhO3wxaa5FyMvV36pXnYbtr9E2ZzOX3NA9slzwBGnV8/K5vUME1AAVMa0X+VgCMW7
-    MgafRiqPhOGSzmePydQLXlfWCsQuVZsMZqatLprpVsfA15Lrlw0nP0k9dNxQ
-X-ME-Proxy: <xmx:ZyR2aijIhIf_r32hOSjFmsVp9KQsIeCs-yA_6rD8_h850xh9vg6xng>
-    <xmx:ZyR2aoO3e1xm8U3d53hChhEQt7-ptBNJ1kZITayD1pUQGAEhB46ghA>
-    <xmx:ZyR2aq_SCC_uyD_wBs3gtbkPiTl5PuOT8k93P1iILQnkIBNAFXxefw>
-    <xmx:ZyR2ahc_InJQgxF_KJJjGWGTNfl6-VKpph-Dg7YUvscRYrIObNiZ3w>
-    <xmx:aCR2aiXramVaRxWtg60j4_IxVdSOjCbiweaX5t719X16a8AQ3ilGSfY->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 14:31:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Karthik
- Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH 0/5] Introduce 'uploadpack.lazyFetchTrusted'
-In-Reply-To: <20260807135511.1818458-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Fri, 7 Aug 2026 15:55:06 +0200")
-References: <20260710085137.4171240-1-christian.couder@gmail.com>
-	<20260807135511.1818458-1-christian.couder@gmail.com>
-Date: Fri, 07 Aug 2026 11:31:02 -0700
-Message-ID: <xmqqjyq1eqah.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YdQKszNK"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6a097f5ab95so5830486a12.2
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 11:31:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786127503; cv=none;
+        d=google.com; s=arc-20260327;
+        b=g8Jq5+NOn85q9yPewfG5S/ebozyVriLVWuTf2chUZcqZ4q65W/6H3I4HiUnBTZ8GSr
+         bsU2k4K+wyebbpQbbHNWdjnMZI7lLs9XY4qCmyVRrj2ODKuEbZTI3CFnpFfsN/FK+N4/
+         b8FV3gbi8Fi/bsZRtXaLNcwEtPX7ub5uXlrs4x0g2XHQyilIdI51ISJtGpVHjYzO9exM
+         IJjdXM3JHdH+PZgzCvbtb4eLYNxPolTVsil95VEsTSXofNaPv+fZnFNxTmX3tzf6uB3a
+         57r6MewHz0v+vc53Zpa82/zGQ/pg8/DL6rngOkEX/ijGLgx3SgJdNH5FIdjytSiciYL/
+         D/Qg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=4faYn5HjOL744ICSKproCVA40TkWT6Vm5nkvXWpQqBQ=;
+        fh=vKkbgLGH8wiv/5PEL8BsW/bT6GHGnhXnXbGRTmPFG98=;
+        b=K6WI+IcIjougrxDuuGdCpnB1U0xbiIIw18cGPcPyNFpd2VBY3W+dFsYMNmnB89xvfV
+         dCA175SsW0q/who606/aBFaZNf+fzhyb5+Yc30ALlIA9fJubZfhdEjBAGcGAKzgTyXlN
+         du/jPwdwZKKhOcF/fWwius5t0tqAWa/Yueng3EIfbo2FrPsPoCgZsLW0r1Ew6HMSPN/y
+         ERwXShHJ1ylvHYNUqPDKsFz3G2S+SW92utjKv4DEZmvibErjExl2q60geCkkzilpD6N3
+         F1WMR7bDAFAGCUr6/ECnx5LdRof+pu5WINLmfaWmXF6hnpTrvRqrAi6QQfQXlDI45HPo
+         8ggA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786127503; x=1786732303; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4faYn5HjOL744ICSKproCVA40TkWT6Vm5nkvXWpQqBQ=;
+        b=YdQKszNKKndwMgqW+cfZgiVOIX/M6Eob8Ma2dwrj8Jt07AAXCs2HQZS4KX+as3gDQ1
+         G2ekxdBD8//mZ3/QWPSep62SLMZHTjoL9he4m3RudP+ZZ7etimjFXXuc1fpA3Abdf+cD
+         NGuFOtC4QdgQ8FXXwy+EBSQ83dPOlQ9Nl5vttdfQH8ThLSkEsUuiNv93ZOyLJPr6AWmi
+         gQAF5wuJ3N2nBpIBySRZS9121B47mWnJVJJi02GyYR3sAOmIhLsGuM+D+4iJKQCB44Tb
+         Ab9IPJos2jHUI9IpnTCs6CGmCFsk8thLS3QzBF661o85PNm5axAsc5qbtcOfd4OFq1eT
+         WvNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786127503; x=1786732303;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=4faYn5HjOL744ICSKproCVA40TkWT6Vm5nkvXWpQqBQ=;
+        b=H7FWuLV0KFct/L3dAgnhUkbjyHkGZYQEaTj4pwS1Yd5zqq5duGa0fD+OmPSsTpiJk9
+         C0TD1ih1dL77AhHyRcq7r6jOUtHQLUILpHJNU7pQzn4wsMLxFjd6m8STcDHxpIYWEKAd
+         1HOYrMgTRb1UHAgyeV7pF6MUgZgTfHkVj3eYZysjSPgiTfqIM0X7IuswUoxGwytaiH3l
+         Aux1FptCARe8MR4iq4gEJ2aulHcbKC3mn3IzshMr3HuuEoKIxKsg9eonkAh8zocdr0ux
+         3S7xMBcsFPjYhclsPW+7XWq47/T8UcdNUkD1p2lADGtC1ZfvsfpvNnUEwISoISh75x3T
+         qEnw==
+X-Forwarded-Encrypted: i=1; AHgh+RoczNhXzAcdTASXcr+wskfxcx9gqgrCYCAc/vgXSclJY4b7yRfzU1Pfff0u8D+92OR38+E=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxflSWDbZdhk29Qwh0IzTlDllEwqLePiycXd6vaZO/D0e2Ia0za
+	+B2XPTNfExipZZDRpL/Fq3nIIWUsdT5BbeBKbgbRwy+YeAdPvSxKRmZxxF4pBO23OmAvkTqYANL
+	E4VdTt1sPdKZFBh+oii0NBHYydwEnDSU=
+X-Gm-Gg: AR+sD13dnD25pSyqtqzkJ5rTu6/AQFTot/yAniy7KZxbcjhhYuOtYQjOzESs5jYcGpc
+	fxudTqlpXaImxiwqepfrwYcdzv5h9wC8nvbCutVWFGbQbYtt2RkXwsStqRtLvAM/UF1Y72jUva2
+	QnWPWpnAosdzCsD6w/ghZZ/3xw0qwZz1P2Ov+RX6vnRWfTJFybRrzgG+aCakj+lg1NgMMaJUqKL
+	/+XxJOuICjEAIthClVlHHklHXKfl30mttvVuEPD1oICxO4w9Z1VXSmpkTw2GCdJi6Q2uMJ/wkyl
+	zaZMOiOIrDEL+l2LHfEgTk0NCrefZRWqbXuXoDhaZy8W
+X-Received: by 2002:a05:6402:504e:b0:69f:2c1d:d83c with SMTP id
+ 4fb4d7f45d1cf-6a1e62d8b29mr3083465a12.21.1786127502489; Fri, 07 Aug 2026
+ 11:31:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <6b5b2c93f2e3e55bf456b86a8be61f5f85137a2c.1784536024.git.gitgitgadget@gmail.com>
+ <cover.1785750108.git.phillip.wood@dunelm.org.uk> <CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
+ <xmqqqzkevx62.fsf@gitster.g> <CAHwyqnXJLQ_naFb1RRQWS3eft0FXL7ripviSA15Zy5D6nvHGAQ@mail.gmail.com>
+ <xmqq8q6ltwsb.fsf@gitster.g> <bf9384e9-3707-4d34-82bf-cfda84a17d94@gmail.com>
+In-Reply-To: <bf9384e9-3707-4d34-82bf-cfda84a17d94@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Fri, 7 Aug 2026 20:31:04 +0200
+X-Gm-Features: AUfX_mxJVB-Cpo5Lx7vfxykigwBGGM7rVAfUz6i0wLy-BG56pl9FBAVuinORF_Y
+Message-ID: <CAHwyqnUDJ05hrS3BeFR1b9Ei=VWCT+gD2AGJveL+Vq+5bg0PSw@mail.gmail.com>
+Subject: Re: [PATCH v10 3/5] history: add squash subcommand to fold a range
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood@dunlem.org.uk>, git@vger.kernel.org, 
+	Matt Hunter <m@lfurio.us>, Patrick Steinhardt <ps@pks.im>, "D . Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Christian Couder <christian.couder@gmail.com> writes:
+> We don't have the luxury of being able to easily roll-back features that
+> have been merged and are being used in the wider world so need to have a
+> considered approach to designing new features.
 
-> Range diff with previous series
-> ===============================
+This is fair and an important point since Git is distributed as a
+binary. However, I still think there is a balance to be struck.
+
+> Hardly anyone who is employed to work on git is given work time to
+> review random patches that are not of direct interest to their employer,
+>    the reviews are mostly from people volunteering their own time.
+> Therefore comparing it to what happens inside a company where it is part
+> of the job to review others code is not a realistic comparison.
+
+This is very fair and of course makes a lot of sense!
+
+> > When you reroll too fast without waiting for reviewers, it
+> > invalidates almost-done-but-yet-unpublished reviews.  If you
+> > repeatedly do so, it exacerbates the problem by discouraging
+> > reviewers from even looking at your topic, as they wonder if a
+> > rapid reroll will invalidate their reviews yet again.
 >
-> The range diff with the previous ("Introduce a 'fromAccepted' option
-> to GIT_NO_LAZY_FETCH") series is not very interesting as only the
-> first patch has been saved, but anyway here it is:
->
-> 1:  8dd67ddaca ! 1:  b5b0836d19 promisor-remote: factor out lazy_fetch_objects()
->     @@ Commit message
->          that could not be fetched are promisor objects.
->      
->          Let's refactor the lazy fetching logic out of these two functions
->     -    into a new lazy_fetch_objects() function. This will make it easier
->     -    to extend the lazy fetching logic in following commits.
->     +    into a new lazy_fetch_objects() function.
->      
->          This is a pure refactoring with no intended behavior change. Two
->          things shift in ways that are observably equivalent though:
-> 2:  314c61cbbe < -:  ---------- promisor-remote: introduce enum allow_lazy_fetch
-> 3:  cb2f5447e2 < -:  ---------- promisor-remote: teach 'fromAccepted' to GIT_NO_LAZY_FETCH
-> -:  ---------- > 2:  879e3a34e3 setup: extract path_allowlist_apply()
-> -:  ---------- > 3:  98431ab7b3 setup: add 'allow_dot' arg to path_allowlist_apply()
-> -:  ---------- > 4:  a46f4c1bb8 upload-pack: read uploadpack.lazyFetchTrusted
-> -:  ---------- > 5:  4063f233aa builtin/upload-pack: set GIT_NO_LAZY_FETCH to 0 on trusted repo
->
->
-> Christian Couder (5):
->   promisor-remote: factor out lazy_fetch_objects()
->   setup: extract path_allowlist_apply()
->   setup: add 'allow_dot' arg to path_allowlist_apply()
->   upload-pack: read uploadpack.lazyFetchTrusted
->   builtin/upload-pack: set GIT_NO_LAZY_FETCH to 0 on trusted repo
->
->  Documentation/config/uploadpack.adoc  |  42 ++++++++++
->  Documentation/git-upload-pack.adoc    |   5 ++
->  Documentation/git.adoc                |   4 +-
->  builtin/upload-pack.c                 |  11 +++
->  promisor-remote.c                     |  76 ++++++++++--------
->  setup.c                               | 108 ++++++++++++++------------
->  setup.h                               |  28 +++++++
->  t/t5710-promisor-remote-capability.sh |  70 +++++++++++++++++
->  upload-pack.c                         |  37 +++++++++
->  upload-pack.h                         |   3 +
->  10 files changed, 304 insertions(+), 80 deletions(-)
+> Yes, I've definitely waited a couple of days to see if another iteration
+> is going to appear before starting a review.
 
-What's missing is the information on the base.  I tried applying
-these patches to 'v2.55.0' and the recent tips of 'master':
+This puts us on a "resonant frequency" since I often finish the work
+and then wait a day before sending out. I think there are definitely
+cases where rerolling quicker would also be beneficial.
 
-    2c78326f81 The 11th batch
-    5b2471720c The 10th batch
-    a97fcc37c2 The 9th batch
-    13c7afec21 The 8th batch
-    9a0c4701dc The 7th batch
-    5d2e770923 The 6th batch
-    48bbf81c29 The 5th batch
-    41365c2a9b The 4th batch for Git 2.56
-    d35c5399e3 The 3rd batch for Git 2.56
-    55526a1826 The 2nd batch for Git 2.56
+> [2]
+> https://lore.kernel.org/git/ddd0160c-7f4c-41c7-855f-58288db00050@gmail.com
 
-but the series did not apply to any of them.
+My main opposition to this is two-fold:
 
-It turns out the reason has nothing to do with your choice of
-base.  It is because the series structure is not understood by 'b4'.
+1. I don't see the value that the new format would bring; I don't
+understand that the proposed format is better than the current one (I
+am not sure if I actually understand the new format at all), and Junio
+expressed a similar sentiment earlier so I have been counting on this
+discussion dying down organically.
 
-The cover letter I am responding to is a reply to another series,
-but the patches in this round are not marked as 'v2'.  This seems
-to cause 'b4' to grab patches from both series and smash them
-together, resulting in an inapplicable mess.  It seems you cannot
-have your cake and eat it, too 😠.
+2. It's consistent to keep them the same, which is in itself valuable.
+And it requires work to implement a new format, so there should be a
+good reason to do that, which goes back to my point 1.
 
-Next time, please do not thread the two topics together unless you
-are marking the newer iteration with a higher 'vN' number.
 
-Thanks.
+Harald
