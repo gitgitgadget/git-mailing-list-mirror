@@ -1,63 +1,64 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329753955C6
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 13:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583AC327BEC
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 13:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786110937; cv=none; b=JUNzDenrOCzj8vMOTbhsnvAxw1kVq6yA3GKtjTcJdeNZnswZJtH7nSWzWQUXwA2v3m+3KsFSKYqelqhZoFPcySgjgQQMPIgemSpjHM+lBocg/VHSZ9UD1tJ2DFIjcX0tbdPQ8CaC54Uqp5A0I9Z1hK8a58zjJGVrJvoK4BBbV0o=
+	t=1786110940; cv=none; b=B/PFnvdD+lopSlxEp8hjd5hQSSqbH8vGPrvMbwAODAATzhYnlszzO5mjbc6FUn0+zDczY6mfFJnJ2QHNSYvV5y7vO0na94gMXWb8qDed0D5mg6IbQhu4nZgFQp2h6COLUXxm5laW0mpCdwl1PWzhFD22L0ygZhKPOJ1nowY86RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786110937; c=relaxed/simple;
-	bh=hc0JXxr34WjItTOoB/SkVLhWAbrm7eJPRwzfmI2BzEc=;
+	s=arc-20240116; t=1786110940; c=relaxed/simple;
+	bh=7AcXHtbJjI06zl9uBZCb8RwN7JEi4Br19zZ7MJdkBkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nOHqKqncQirZJDoqcd+Ry8yj5LCQGndaYJ9a+E3Z1jD0JfJSPCzSERNmKuGvEj2g6iHJyk9geiTTw07JsniDZUrCRPuUVsvEMa3ojQTEu4/bhpKj2YyMrs2kFBuxTR90EpBlEZCCn0nLZfELhClFYnQEmhZMMSh1+otlzYN8Q9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LAm2cygn; arc=none smtp.client-ip=209.85.221.50
+	 MIME-Version; b=Mw59DI091cHLtWbW0YX1zLuibBpzncsYI0uyxgZZ1txO954qNbOePvefUhAXAR/pXlVdsVYcOI+3intWpd67prVwc2QNEOUyTEOXZemSAUXuoWPjoR4fbCFX29SXkNdKXrycJfFik0imdUB4JsvSJQvYXqgpAHWW0N0BnnSVDGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6qpLD5A; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LAm2cygn"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-471eeac43bfso2886263f8f.3
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 06:55:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6qpLD5A"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-47ddf7b09e5so3266302f8f.1
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 06:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786110928; x=1786715728; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786110931; x=1786715731; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=SjfwRpBReoybmIDZDU88AA7VOTdsLhdlPkiV/r8WhW8=;
-        b=LAm2cygnb+ZRK6ipQ27QIoNaK1Vx55f0f20fJh4TM8el7eoxddOjREpIPwtDjp7j8O
-         Cu4NjwgHgTVjIBUak67I/IzJ9tdTZwWBlPK2aru7OD0fELcS/NaFMFdh/ZKIZwpWm9mn
-         3Nvkn0Zm+yUTTXg1Sb06QfI8oY8MVaASv1EkTDSfQHxTcFXh0uLUDkrP6/O9prXPG+HC
-         wAvjwLnKxVeG6nkkZH8TbbGnMzOV7IaqJ1MBK16aHKZSMB8+UhHavvR5r2l+SEeP0xiF
-         1BCZUiITVkyMh8ljLMfXsJEvd+s0AYoRD2Nsi9mjM03aYE/yTfB4wZjlkx7QXeVBUGwz
-         yF6A==
+        bh=qtKf+Bnu2yEwMDEOz/D4L1Mn3iDPYOsb8UICvH96rlw=;
+        b=m6qpLD5AL3ES0NgHjeX56hLjrscvWAau126+VjkFHpFp4nqAOZWJR5954ah9irZv2P
+         HstRoCkxdJp3gWqUf5c6uQyvDfWdcSgEFH/nLT3wkArWNhz/2H3dof0stDeCrrM6k0J3
+         +QNivi0iXEcqupSHWKz6Ui9YqJsUDVJuUpj8w5v/FFm3PENr8SKq0OecQ4c+fHcCjRrF
+         tkCd6lopmxxX9Z9SaotypCwW1K2VqnI67Qjjc7xuvTQITnKrQCXrRgiw+9mMc7/fQb+w
+         nUO65vv3Syd5MMb3OnaL1pkDSExho0lVpAFxaRdPib1MAK6pVySmIjKc+8gWaSeOChEf
+         rFHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786110928; x=1786715728;
+        d=1e100.net; s=20251104; t=1786110931; x=1786715731;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=SjfwRpBReoybmIDZDU88AA7VOTdsLhdlPkiV/r8WhW8=;
-        b=XUshfa8/VBQQ+ppLjBtSnxrCclFJdHxUNKn5iABmMQBtmQ+S7D1EbfAQ2SrqB4lfn7
-         jBpxbG+lyrKqIWO57LOmtaoMzNC/pljhZ5fMkVdQI98mbz984nGRL2r+RsSoujn6Meuz
-         WKDzVO6MXEyobc+FemJmBHMZwkDSxjhZQV0+6z2u12VVoTZjMTuSd4Qf9jejDiMYK6DC
-         NVuSS+6c3y9RWbd3NyuIN0zE1piRePcLPl4cg6RnNjUvatjeWBsZUNrAP4WdyeEClemM
-         DfXaB9lZhEjqgeUQl5ACzLVkvjwEX2CufT2yIusE31jUiu7fo11Q0ZMJPW71l30ocN+I
-         FxiQ==
-X-Gm-Message-State: AOJu0Yx8UQgNycAEFRwG41DhRRr4t/+ad+n4ZDEpP9Tutr3Aa0ihAu0Y
-	0n6+hdVXtf2SLT8f3JlwIDj9l+ArJyALZelGtsn8zityyw1M3EcKjSmyyw4bfg==
-X-Gm-Gg: AR+sD12itznWkoCFbNe01OsFTOSjCoUQumnjqCEiC17pmcPegL4604xCxh9NJzW2S9v
-	npq87vMBdnaqv18J79oV0lH8f+GV/LYhed+4AVgZyiW+PU0q+JJBotD1qYdnSSm/nzODPTIJn3c
-	ElZPh1fuB/G0YtD6uAxavAmUpzdifRTWZJ+dBFjAznpSyvvywxJrJVUt8g0l3HN5UrIoQBXOcDH
-	ORAkqKItO/xLzuPlwogavFlCA1laG8m9w67biuwI8PvXAL9Xg6OlEVqLjqlEiO5nvGZ3MFzVg+u
-	JCeMBxvQb1yl27xGiSDSgVaw59xIszcZujL1zg04/h5oDkcB1BWADY1AXzuKarn/FuXsNSveORc
-	MsEakOyjvBchHPkzyXxbLTc7ZBVbre3PuQh0wM/caCywHB53ZI745P77HAfac4ExbfWWXcTdpvd
-	upf/9nzwYlnephSIuFasneElMDbTjZnI1mtK+DP/ITa/fPnVdjWHcYMyZbo5Lw3aQxvpI8qlOr1
-	YqikGiAv8EJueVVVDWuOhj/Q0ulC2OECqCEpspttk9vQHHwaySjjkdAMjuuIo/7lUlDfXnw2TD6
-X-Received: by 2002:a05:6000:2989:20b0:47f:ece1:5d with SMTP id ffacd0b85a97d-47fece100b6mr30306614f8f.27.1786110927953;
-        Fri, 07 Aug 2026 06:55:27 -0700 (PDT)
+        bh=qtKf+Bnu2yEwMDEOz/D4L1Mn3iDPYOsb8UICvH96rlw=;
+        b=XF+O9HjkiBv1L47rFd23faWvOx5O9w94JmvAeQ49BIhDo09rofukO3aIoJbo7skojd
+         6964Y9Wcz3y/KXjHCVXjAI9889A74AJagjhiVzJDTM6ikaq4f5wPKANA0ek+3PoZP4vl
+         Ad14z0kWLCJA4wNOJnOZr0GNJFzY6ayoDSQRwV/3VRLpkrcCaFwqCw03qFy6hEvd1QE8
+         jmlHZmENMUkJi55B02if+XQSG8tGUaelLxnqqqE/rfBODwwq5LxLqakt8MfPvD6T6fyd
+         xMPlO/u7ZJMsrIKKM/HF+6kKUGEoiLK+yA7CcNwpGf+u9+I1d8YHPova2uJMs9nCV8I+
+         4lcw==
+X-Gm-Message-State: AOJu0YwcQ0JCBbglntOi2icOyu+z2j6byhHpiirMkT9Nd7QIdLHuckQ6
+	gyVKIvMYlrKGhy9SBCAp7udsvUDKE77+AjJ9xcCqA7mpXJt/eg+i3uVBTzFkdA==
+X-Gm-Gg: AR+sD11t+UnVjGoKpbAo7/HsxuyOTNsxsvzX9JFsHF5qY3ImKBFVbgcZbWPoqI2fki2
+	p8sWAsbVu8K6ikwixVhLFvzJ6B5Weqe1uBLqumRvIuZykRG3z2vT6k++abJ5PPRFXpvpot7O2Bj
+	lzlb33ox/RFpoIZFFlynkOKVszoQ8bCGzEqcRUYsw1jL1NXnH22O5x0U2fqoEf/khT/n1YwUPxH
+	x13le5f3swBaqhaOMAydLtMh5d+80T4y6fNv4ZLf8PGn2cQqr6ReSKSb3hRlWo5s5NIpnss2x1m
+	Et0u3prybHQsqH9Gc0wvxDQR4QNXFOQ0aDlK0dMGTrRQ7qrVO5KKK7wOMMzKS/48WcT0EuYeSS/
+	XuLq1R/jKjrCRf+CiXsiy3EQHZHWzFkbvZGgseRTOZXp31rVg/hoCMwhQyvYDdp0k76d9uM28X5
+	8S6ho91wdOp7Y/OiZtwKRVdgUDXKSa/XjHHkInlbiAKxpPwP7/9vJFLq5UebONGhc6+c9GLy4fa
+	a6UwW62CXdKIHF8B6MWBf1EJU6+I9fsGHhlVcjR+pfx9i90hfergDIXUzg2Kwo3PPFMtK+adWGz
+	lbde2LcdVaY=
+X-Received: by 2002:a05:6000:470e:b0:47f:7f95:8a1e with SMTP id ffacd0b85a97d-47ffd203d5amr16407218f8f.5.1786110930521;
+        Fri, 07 Aug 2026 06:55:30 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-480021ec565sm6094207f8f.22.2026.08.07.06.55.26
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-480021ec565sm6094207f8f.22.2026.08.07.06.55.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2026 06:55:26 -0700 (PDT)
+        Fri, 07 Aug 2026 06:55:29 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -66,13 +67,15 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 0/5] Introduce 'uploadpack.lazyFetchTrusted'
-Date: Fri,  7 Aug 2026 15:55:06 +0200
-Message-ID: <20260807135511.1818458-1-christian.couder@gmail.com>
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 2/5] setup: extract path_allowlist_apply()
+Date: Fri,  7 Aug 2026 15:55:08 +0200
+Message-ID: <20260807135511.1818458-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.55.0.530.gdb3615d990.dirty
-In-Reply-To: <20260710085137.4171240-1-christian.couder@gmail.com>
+In-Reply-To: <20260807135511.1818458-1-christian.couder@gmail.com>
 References: <20260710085137.4171240-1-christian.couder@gmail.com>
+ <20260807135511.1818458-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,155 +84,145 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Recently the "promisor-remote" capability was added to protocol v2,
-allowing servers and clients to agree on the promisor remotes they can
-safely use.
+In a following commit we are going to check whether a repository is
+part of an allowlist specified in a config variable.
 
-The more servers use promisor remotes, the more it is important to
-properly control if they can lazy fetch when responding to a clone or
-fetch request from the client.
+To prepare for that let's extract existing code from
+safe_directory_cb() into a new path_allowlist_apply() helper that will
+help with such checks.
 
-For example, in the context of large object promisors (see
-"Documentation/technical/large-object-promisors.adoc"), if a client
-clones with a filter set to 100kB while the server has moved all of
-the blobs >= 10kB to a promisor remote, the server will not be able to
-provide blobs between 10kB and 100kB to the client, which will make
-the clone fail.
+While at it let's make the helper's code simpler and more generic.
 
-Even if the `--filter=auto` option is available since ef2f1845ec
-(fetch-pack: wire up and enable auto filter logic, 2026-02-16) it's
-still a good idea to provide more control over lazy fetching on the
-server side to server operators, as lazy fetching on the server side
-could be useful in corporate environments.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ setup.c | 107 +++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 59 insertions(+), 48 deletions(-)
 
-Since 7b70e9efb1 (upload-pack: disable lazy-fetching by default,
-2024-04-16), lazy fetching has been controlled by the
-`GIT_NO_LAZY_FETCH` environment variable. This is a boolean that is
-set to 'true' by default when calling `git upload-pack` for security
-reasons.
-
-The main security issue on the server side is making sure the served
-repo itself is also trusted, as lazily fetching runs `git fetch`,
-which may execute arbitrary commands specified in the configuration
-and hooks of the served repo. The operator of the server should decide
-and mark that trust, not the served repo itself, nor the client.
-
-This series introduces a new 'uploadpack.lazyFetchTrusted' protected
-configuration variable similar to 'safe.directory' (see
-"Documentation/config/safe.adoc") to mark trusted repos where lazy
-fetching is allowed. As it is protected, this config variable will
-only take effect if it is set in global or system scope, so only
-server operators can control it.
-
-Previous related work
-=====================
-
-A previous series called "Introduce a 'fromAccepted' option to
-GIT_NO_LAZY_FETCH" [1] took a different approach as it wanted to make
-it easier to allow lazy fetching from accepted promisor remotes. But
-after brian replied that he didn't think it was a good idea, and after
-thinking about this more, my opinion now is that some promisor remotes
-being accepted or not is not really relevant to the issue.
-
-In my reply to brian, I said:
-
-"""
-Different features could be developed (in future work) to improve on
-the current state:
-    - a way for lazy fetching to work without reading config files,
-triggering hooks, or doing potentially sensitive things,
-    - an explicit way for operators to mark trusted repos (like
-perhaps a server-side config the operator sets per-repo),
-    - operator-defined allow/deny rules, or maybe
-    - some ways/scripts/commands to scan repos and check configuration
-information, remote settings and everything potentially sensitive to
-decide if a repo looks safe enough to allow lazy fetching or not.
-"""
-
-So I decided to go with "an explicit way for operators to mark trusted
-repos" and this series is an implementation of that.
-
-Note that the feature developed in this series applies to protocol
-v0/v1 as well as v2 while the previous one was only related to v2.
-
-[1]: https://lore.kernel.org/git/CAP8UFD0_S9eg_w42tcNRnT9E2ntLr_eHLnzE4c2dSu67DzZoXg@mail.gmail.com/
-
-Overview of the patches
-=======================
-
-  - Patch 1/5 is the only patch saved from the "Introduce a
-    'fromAccepted' option to GIT_NO_LAZY_FETCH" series. It's not
-    necessary for the rest of this series and its main feature to
-    work, but I think it's a nice refactoring related to lazy
-    fetching, so it might as well be part of this series. There is a
-    small change in the commit message (to not mention following
-    commits) compared to the version in the previous series.
-
-  - Patches 2/5 and 3/5 extract and modify code used by the
-    'safe.directory' config variable in a path_allowlist_apply()
-    function, so that this function can be reused to process
-    'uploadpack.lazyFetchTrusted' in the next patch.
-
-  - Patch 4/5 actually uses path_allowlist_apply() from a new
-    upload_pack_lazy_fetch_trusted() function to process
-    'uploadpack.lazyFetchTrusted', but the result from that processing
-    isn't actually used to have a practical effect.
-
-  - Patch 5/5 wires up the new upload_pack_lazy_fetch_trusted()
-    function to decide if lazy fetching can actually be enabled.
-
-CI tests
-========
-
-They all pass, see:
-
-https://github.com/chriscool/git/actions/runs/31171494296
-
-Range diff with previous series
-===============================
-
-The range diff with the previous ("Introduce a 'fromAccepted' option
-to GIT_NO_LAZY_FETCH") series is not very interesting as only the
-first patch has been saved, but anyway here it is:
-
-1:  8dd67ddaca ! 1:  b5b0836d19 promisor-remote: factor out lazy_fetch_objects()
-    @@ Commit message
-         that could not be fetched are promisor objects.
-     
-         Let's refactor the lazy fetching logic out of these two functions
-    -    into a new lazy_fetch_objects() function. This will make it easier
-    -    to extend the lazy fetching logic in following commits.
-    +    into a new lazy_fetch_objects() function.
-     
-         This is a pure refactoring with no intended behavior change. Two
-         things shift in ways that are observably equivalent though:
-2:  314c61cbbe < -:  ---------- promisor-remote: introduce enum allow_lazy_fetch
-3:  cb2f5447e2 < -:  ---------- promisor-remote: teach 'fromAccepted' to GIT_NO_LAZY_FETCH
--:  ---------- > 2:  879e3a34e3 setup: extract path_allowlist_apply()
--:  ---------- > 3:  98431ab7b3 setup: add 'allow_dot' arg to path_allowlist_apply()
--:  ---------- > 4:  a46f4c1bb8 upload-pack: read uploadpack.lazyFetchTrusted
--:  ---------- > 5:  4063f233aa builtin/upload-pack: set GIT_NO_LAZY_FETCH to 0 on trusted repo
-
-
-Christian Couder (5):
-  promisor-remote: factor out lazy_fetch_objects()
-  setup: extract path_allowlist_apply()
-  setup: add 'allow_dot' arg to path_allowlist_apply()
-  upload-pack: read uploadpack.lazyFetchTrusted
-  builtin/upload-pack: set GIT_NO_LAZY_FETCH to 0 on trusted repo
-
- Documentation/config/uploadpack.adoc  |  42 ++++++++++
- Documentation/git-upload-pack.adoc    |   5 ++
- Documentation/git.adoc                |   4 +-
- builtin/upload-pack.c                 |  11 +++
- promisor-remote.c                     |  76 ++++++++++--------
- setup.c                               | 108 ++++++++++++++------------
- setup.h                               |  28 +++++++
- t/t5710-promisor-remote-capability.sh |  70 +++++++++++++++++
- upload-pack.c                         |  37 +++++++++
- upload-pack.h                         |   3 +
- 10 files changed, 304 insertions(+), 80 deletions(-)
-
+diff --git a/setup.c b/setup.c
+index 95909e9603..39dfa1cc5f 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1339,6 +1339,64 @@ static int canonicalize_ceiling_entry(struct string_list_item *item,
+ 	}
+ }
+ 
++static void path_allowlist_apply(const char *key, const char *value,
++				 const char *target_path, int *is_match)
++{
++	char *allowed = NULL;
++	char *normalized = NULL;
++
++	if (!value || !*value) {
++		*is_match = 0;
++		return;
++	}
++
++	if (!strcmp(value, "*")) {
++		*is_match = 1;
++		return;
++	}
++
++	if (git_config_pathname(&allowed, key, value) || !allowed)
++		return;
++
++	/*
++	 * Setting the config variable to a non-absolute path makes
++	 * little sense---it won't be relative to the configuration
++	 * file the item is defined in.  Except for ".", which means
++	 * "if we are at the top level of a repository, then it is
++	 * OK", which is slightly tighter than "*" that allows
++	 * discovery.
++	 */
++	if (!is_absolute_path(allowed) && strcmp(allowed, ".")) {
++		warning(_("%s '%s' not absolute"), key, allowed);
++		goto end;
++	}
++
++	/*
++	 * A .gitconfig in $HOME may be shared across different
++	 * machines and the config variable entries may or may not
++	 * exist as paths on all of these machines.  In other words,
++	 * it is not a warning worthy event when there is no such path
++	 * on this machine---the entry may be useful elsewhere.
++	 */
++	normalized = real_pathdup(allowed, 0);
++	if (!normalized)
++		goto end;
++
++	if (ends_with(normalized, "/*")) {
++		size_t len = strlen(normalized);
++		if (!fspathncmp(normalized, target_path, len - 1))
++			*is_match = 1;
++		goto end;
++	}
++
++	if (!fspathcmp(target_path, normalized))
++		*is_match = 1;
++
++end:
++	free(normalized);
++	free(allowed);
++}
++
+ struct safe_directory_data {
+ 	char *path;
+ 	int is_safe;
+@@ -1352,54 +1410,7 @@ static int safe_directory_cb(const char *key, const char *value,
+ 	if (strcmp(key, "safe.directory"))
+ 		return 0;
+ 
+-	if (!value || !*value) {
+-		data->is_safe = 0;
+-	} else if (!strcmp(value, "*")) {
+-		data->is_safe = 1;
+-	} else {
+-		char *allowed = NULL;
+-
+-		if (!git_config_pathname(&allowed, key, value) && allowed) {
+-			char *normalized = NULL;
+-
+-			/*
+-			 * Setting safe.directory to a non-absolute path
+-			 * makes little sense---it won't be relative to
+-			 * the configuration file the item is defined in.
+-			 * Except for ".", which means "if we are at the top
+-			 * level of a repository, then it is OK", which is
+-			 * slightly tighter than "*" that allows discovery.
+-			 */
+-			if (!is_absolute_path(allowed) && strcmp(allowed, ".")) {
+-				warning(_("safe.directory '%s' not absolute"),
+-					allowed);
+-				goto next;
+-			}
+-
+-			/*
+-			 * A .gitconfig in $HOME may be shared across
+-			 * different machines and safe.directory entries
+-			 * may or may not exist as paths on all of these
+-			 * machines.  In other words, it is not a warning
+-			 * worthy event when there is no such path on this
+-			 * machine---the entry may be useful elsewhere.
+-			 */
+-			normalized = real_pathdup(allowed, 0);
+-			if (!normalized)
+-				goto next;
+-
+-			if (ends_with(normalized, "/*")) {
+-				size_t len = strlen(normalized);
+-				if (!fspathncmp(normalized, data->path, len - 1))
+-					data->is_safe = 1;
+-			} else if (!fspathcmp(data->path, normalized)) {
+-				data->is_safe = 1;
+-			}
+-		next:
+-			free(normalized);
+-			free(allowed);
+-		}
+-	}
++	path_allowlist_apply(key, value, data->path, &data->is_safe);
+ 
+ 	return 0;
+ }
 -- 
 2.55.0.530.gdb3615d990.dirty
 
