@@ -1,127 +1,132 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14BB2C1788
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 02:42:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786070567; cv=none; b=XC4H+bI86BRolP1kTQaQai18x0S1p+0W27nzm+BV1A52y4q7YdQ2KWePM6V5fewxHBF9MCmhYJM4SOM4Il0WpaY7y41OEOohMuLylYLEn0YZFJ66Mnqn6wsJIFYQmFVsuuz1s4ut/VXrOvMLFRJOiOAfXfO4Or2XgZt7PieI6Z0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786070567; c=relaxed/simple;
-	bh=Hcg680jZ/x4Tw+r06FINxmfgtNfskG94ndjo0p/jO2E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bD4EOD2icXCT/1066cp++niobW8vnODIohS/8sVtA7HY0yv4XWc+y7MWw0pTsWeViFxoIC3napmpilpHH8Jby7Ja9SAKu8oJ/fRhAud0W7HxkfXlwz2S6VX9ch1Xeo+Elvjm9dO/V9TIKw4CUYLqIq4l3HxCGpPJTBVMbOddMsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WgsjnYjz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ecF1WFzX; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDB613B58C
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 03:00:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786071642; cv=pass; b=Iq3o1qgFn3aBFYZlJMYI1WIpeHqvyfTm/xo9Q9905Anv3y29Ja5EG3eJnUOzS4C0kkRdRUQRdQIq3snaYoVCvnlXaHd5cvzaBNicF4yCGsz3+Xf5I1ssrCj1b8kmTlgh2GKhYYYJ8Fg+BwkmvqjIl6EGVklzAFvZLqC/k0pOIS4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786071642; c=relaxed/simple;
+	bh=iTRjtKBSYkKpyD5+tiR8FvGUShcZiyoPJZVugvm8NPk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OFzmpVpKFpsqJL16vaVUNAtvUqx/8fFdQuI7F7mmrm2RIqTSjsaxYJtJetOVvE/a6eMez0zq4TrnRV1HHH5wCcdSe9jNbsdGZphNiQH6dWbc3jMONkS6y3T732vN568HY/78db2q4pJ7eXw+AzmSHjNFmsa6OktGdDqK98tDRbA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f1BPo2fC; arc=pass smtp.client-ip=209.85.167.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WgsjnYjz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ecF1WFzX"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2C0007A00B0;
-	Thu,  6 Aug 2026 22:42:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 06 Aug 2026 22:42:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786070565; x=1786156965; bh=4mtXr9PFHs
-	KkZAWyqU4P6pSQGq80mEutwyRYAxWfCnk=; b=WgsjnYjzYiLj/+6pavrYQM8JCm
-	OuNSQVpv4yOYlgQxTBRT0llicGXWCgzzn5eWfkSc8ZRIxa++LRZ+RAwHKmMuGEEs
-	sOgbk5ESNVueHMPoQRrIuoKoXm4wNhSUt05elu4tRxzJpaR3xW178fFJsacKQyna
-	ueUwbhMKauUqAuP9MQdz2+Wd6seGHVHnPNt00QLB7rgYpjIIKN3FPUho1RYXsioE
-	PWW6TXNyOk/2/gLGpbZDJdm/6RBOIe5DlQT3AruEyT+VaO/3UiDTNPmire7QcdxD
-	SIYO36ozk68FYQVa8OM/7+q1rBelgWA68q/mGlcK5qsagyPjUSp0UPRaWUPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786070565; x=1786156965; bh=4mtXr9PFHsKkZAWyqU4P6pSQGq80mEutwyR
-	YAxWfCnk=; b=ecF1WFzXqQG6bVykzZQUAHf5UvRpfmxvY080DIrf/jCOhnAeWhP
-	I0GcI0QyEE53HHwAQNOvVsgG4scdKDZm3XpETUCi5i+SU9E+FQXmxcNxE0aE5TdX
-	1Pz/CEpzxnxtX7zNV5H8InGgQzUE9mrfWONbd47B2KU7tYBp/MhZomwcRdGzLh8e
-	Ayd4n1il5KhvKEcsfteY8boQgx6uJwre1pY3Y/ieDNcTo8RL69y7hTrwpUHSt0uU
-	9AhgoLXfCE7Pq5dfirmKYkjWRlY9P+Zry67u3IIdNxLgsiVmkuPXm7MzRcpn/PIU
-	lEcgTZkEYMBdDsQfOgjSHmSpDer5L1WFTPA==
-X-ME-Sender: <xms:JEZ1agd2wjmVZmV-Rc3oIDam0A8YQ5ml-8mXiwQVyU_5ibBx5Stl-Q>
-    <xme:JEZ1apqCHOA8dhGcoLGU5lAkdTc_XuBIhYW3PVSb8WjSM5pyZYlbCIRXDzbAwqB54
-    zwxfoCa5Mpoi_Y6F1PunGFHndp1Ragwc2mwz3PUlgzI68IBCRFAF6w>
-X-ME-Received: <xmr:JEZ1au7_7y-owpYXpOhGoK3VOh9T_vx_s0lJvwFmAgufvYnD5Vxbz3vzk81qajSOKABLCWnDliSqXAtTQsWwA6_ra8-M2wGoUg>
-X-ME-Proxy-Cause: dmFkZTEFgNko7OurW3HfyK5aiy75knYl99dldqAXWl6+TMBS/JGeJ+dsr8dyoEH3/Mk4O9
-    RTr6hpjMFwzcYFdEJQKABBDU1QUm5/pRYawWBscmZTH0QH5i7M0J6HoDGS2xQhiOqLNo4h
-    rStMwxTSLdg+q7NTy9T1T9AHUpoOZ2KQOtykWZ+ZeLzYu1rTbCv9PmWN4BzetcLFrbGbsQ
-    RF02LXky2mut2AxAJPd8ZsMo/7HnSKRtf9jxmBFUq/KAXZ6sRJF07WBUlnnnSQcJYsraVW
-    qyJXc7rkDAzrUHkZlwxiy7kyhlTldlSIrBjahchadtxW4D7aqOzg6yltSSr1/YrrGGW8sU
-    wkCG/eHvWeD+0bNvNtmp5HtOwMpaUro3H9B/keM3g/IekznUrCfImmRgOUD9eSuC1sT85M
-    qltt457AvYiVr3ONEXhJgDQXvtGtbf4Za8U9rCnEbY1vACZ6uHhdPu0QdCA5ye1XA9lfVD
-    1L4zOkFzU/F2eeEEFnPhmDTBnOxiCeM+sj1IAhG60B/LfUopXpCgNFvGeepsMoBEYBZGbf
-    Z7bNWB61KBEQ3mHuAwCnAJP3t9gALe410HLcXJyIf4HhcJxo9XGLZTvjYyynJtg8kCnuco
-    0U2zZI0xkngJ3ykyrBMNN+ey6PpMnFNwNYs7SDrs4OqhugrALz5hGCNUQSRg
-X-ME-Proxy: <xmx:JEZ1avpPUkUvmx1I-f4-jEA_-m8jeuwvmgV5m_pPCesnZ_C1COoTGA>
-    <xmx:JEZ1agglwGgZWFWDcwuzPmkUM2KyB65-hI-VBjKyrBpmZorbDheFCQ>
-    <xmx:JEZ1apJ1BlkTIWCjmw8HRzqJ2rkYZ8ms4RlR5IDjudcO-KcB26tO9g>
-    <xmx:JEZ1agBFzCEbsKrCpCEOvSic4QaClErrzHZTCMPUCC7LO1ecY-VCBQ>
-    <xmx:JUZ1au7PrrGGbgzBqKoHgOwuk5nBJTBw8Zj2xgKV-PqW54gtfJtVGVsp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 22:42:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Douglas Puchalski (dpuchals)" <dpuchals@cisco.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [Feature request] Separate explicit fetch mapping from default
- fetch selection
-In-Reply-To: <C47215A6-B86F-4AB2-B20D-54D048B9B2BA@cisco.com> (Douglas
-	Puchalski's message of "Thu, 6 Aug 2026 22:26:05 +0000")
-References: <C47215A6-B86F-4AB2-B20D-54D048B9B2BA@cisco.com>
-Date: Thu, 06 Aug 2026 19:42:43 -0700
-Message-ID: <xmqqcxvuhcrg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f1BPo2fC"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-495b98b4f6aso1055525b6e.2
+        for <git@vger.kernel.org>; Thu, 06 Aug 2026 20:00:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786071640; cv=none;
+        d=google.com; s=arc-20260327;
+        b=NqU0aJb3Xjib/3VwOlwIXX9A7+UwB+1xWd7eiIUaHzfuk+rFRcGvY7TndofSZ6RvG+
+         tmo7Jk0svmT94RYX1uMybmaAEABrBOH4IBoqDCA0i+DGeVq8IXbqsxXRLzFQLJkbI2lA
+         lfaKNlELQk11jQEv1B2FIPAi+PZtEVx5v+Z/Mzi9+kk/RTk8w4CQGOeVyMzC4cYhpo50
+         0lzOkKviB1l0viS5l/QuSKK4KMGHjh0RLb6mvh7KLW1V9S63cWQ24rSwReeBN0p+Lpqf
+         ZvJ7yAWmL+nPsvJIGUAbooZ6SWcFP1N/kUplLysRrrbHJCx6C9rW6Tmou03qjbMq84W7
+         i3RQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=iTRjtKBSYkKpyD5+tiR8FvGUShcZiyoPJZVugvm8NPk=;
+        fh=PdGuLsJN9JVZy5BHY9bPXqzeWCeYFKwbJ2iGslXTO1Q=;
+        b=V8CRAAz9kxpA1tNkrFrPIxi8D7mRQ3orbSNJe5ujI0Kiuo/iBkmBpAxwKPKAsffv65
+         CntQSGVw2OXRlktUoHq14RkAsu+TvBnhZwyaF/t8fFP5JEtWkCrhFjYQVN4Ww1ZSQVl/
+         UumwX+77d2d9HXzlxAUcscMuEeZ+HzgxVlhLlXwYLq3KYqHLPkeB3n7rzJr5c0yGvgnF
+         c378qi/ezPF28wOUebSrhfAppHakt9KXnY7HGoy0p6/0h8lxwTgrvSfaouu9vOdimyr2
+         g0nvSYOKKw4h9vGW8jqHb/HY/WalVewVpujvstfgrBHPmRDDWG8UD3NVx7YBOhSRbOuV
+         qnFA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786071640; x=1786676440; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=iTRjtKBSYkKpyD5+tiR8FvGUShcZiyoPJZVugvm8NPk=;
+        b=f1BPo2fCb/qBTvdD4WVyFUoLYVm6eG/KE8GKsyTtwV4r9xww+D/r6iWbuwXiziWtnk
+         SE5KCLIJMfG10sbLVL0OXNoR+N/k9AufOmv/UJv+X/ZuY7f3rb6pC+xkEIDFWIj6RGm6
+         Kwnd5MvjtlwS8INaLdMuZN/DKzADEWrw2looL7B6g+IAJX2qboD4QcOet5I/HWSDMqYT
+         yPLdzcG2vc1EP/ti9Ll7mVkgtkay8GldSoKdUzDmrm1Gj2SWTKs6O0xoBwhynGS1xAnv
+         aizJGLUOojeclOlGKCSTrq2d577GpR0KUhIxv1hsfAvsQsKn2Q0dvcjVZrbQXYxOmIOK
+         A1/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786071640; x=1786676440;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=iTRjtKBSYkKpyD5+tiR8FvGUShcZiyoPJZVugvm8NPk=;
+        b=sjZn7roeNzLqzCGP7uG20IpHw2auWy+trSGmJ6D6HWY6qYENZnhDS1M+GBLVgvWzMp
+         YI0EVrq16gEz7+lF4Qvjmu7HTQtQMO4ghdUFsg6BWzzBXWcVIlcKq7J9L6XAhrFKI3vU
+         Xq3rXShOXepB6cYd0umIc0oA0R1mBeh14BLEciKJCnn24awHZVyAFHriBcgWlb5UntLg
+         O9/Gc7fBdNqloJJ2w5dtugG1aG9b1YZviESzdtAhn23B3E7sZPVhKzw14PRpi7dTZsyp
+         mhNllWfkR3fMctCOrUxM1YGNS7enO0lGxWkGzAp3iU1AqgRgc6n9w19YNjwuvMK2MeNC
+         CO0Q==
+X-Gm-Message-State: AOJu0YyKHq9jcrmXwlQ6YOVnkpEVIfI8iNNHWE1k4yFr7xPAUKmCzul9
+	9CKJ7oly4lyRcgJmr5x1LsnMBrjCKLzsQOV3HioHTt4lMb+OJtuULdPOLb2/u4cQdOIVNDu2SRO
+	7lFNmp8Pva83Qe81ZaMaPjmiex9rnAm4=
+X-Gm-Gg: AR+sD12UtUa8FxLXCWQkDkvSTqevYRB5xunMNO3UvDmDyA8co1p+yQmD15CP/rzsT2R
+	ek9cDnbKqpChbihMweBK1qjF/Fj+Oxx1Xl8qlAkPKPC3PTcvaZ5eRnqLeZTmkt3JZUS13h7wihr
+	sCQjwQb9VfVmSBPQVtxaPFr80iidp5YBFJun1VxFbJSiHXo3VaiY4tRs0Gcf/+v58QzUUbzLR/j
+	Vb331dNZYcZb6Nma+sWMUT/osnRFOsmOJwv/GmT7tARkmO/wWL6cjxvRlmICaIKzcu5+c7G72He
+	mgjUweUq7QXFv/sl4MvTwcdT+lNn4W7QRbSlp0ydCIIcbVwqmrdb1ExBUMcw6o4JS8trc4CwBsh
+	27E0Bx/VORzwXRjv7nQwcK1cEB6Vz0qx2tGMzsQxn5/mBnCKF2QA5dxghQx8sOwAszjGHywM0
+X-Received: by 2002:a05:6808:1986:b0:4a3:fb6c:9adf with SMTP id
+ 5614622812f47-4afae067fe6mr12284419b6e.12.1786071640093; Thu, 06 Aug 2026
+ 20:00:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
+ <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <c1f303353caeb5be301ea24f4a042d695459061b.1786013982.git.gitgitgadget@gmail.com>
+In-Reply-To: <c1f303353caeb5be301ea24f4a042d695459061b.1786013982.git.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 6 Aug 2026 20:00:28 -0700
+X-Gm-Features: AUfX_mzdXmGHW6riyUhcuI0R3oGSkB9LtkD8Sfi01CBHFImZ-1-dzJ4wPlXqojI
+Message-ID: <CABPp-BH2gfLOJdHJ3EqaRuCLkG=JNT=f_sO=7PTEgPqnppwYnA@mail.gmail.com>
+Subject: Re: [PATCH v7 01/10] Documentation/technical: add paint-down-to-common
+ doc
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Douglas Puchalski (dpuchals)" <dpuchals@cisco.com> writes:
-
-> Git version: 2.55.0
-> Environment: macOS 26.6
+On Thu, Aug 6, 2026 at 4:04=E2=80=AFAM Kristofer Karlsson via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> I configure a remote to fetch only a small default set of branches:
+> From: Kristofer Karlsson <krka@spotify.com>
 >
->     [remote "origin"]
->         fetch = +refs/heads/main:refs/remotes/origin/main
->         fetch = +refs/heads/team/*:refs/remotes/origin/team/*
->
-> This prevents `git fetch origin` from fetching and updating a very large
-> number of remote branches.
->
-> When I explicitly request another branch:
->
->     git fetch origin topic/example
->
-> Git fetches the branch into FETCH_HEAD but does not create or update:
->
->     refs/remotes/origin/topic/example
+> Add a technical document describing the paint_down_to_common()
+> algorithm used for merge-base computation, covering the paint
+> walk, generation number regions, and termination conditions.
 
-I haven't thought things through, but I suspect that what you want
-might be an opposite of explicitly listing what is tracked on
-remote.*.fetch configuration, but having remotes/origin/* hierarchy
-of refs as the source of the tracking information.
+This is a great doc providing an overview of how everything works.
 
-It was a long ago this was invented, and I haven't used it for
-almost forever, but shouldn't this
+> +With v1 commit-graphs (topological levels, no GDAT chunk),
+> +generation numbers saturate at `GENERATION_NUMBER_V1_MAX`.
+> +Saturated commits share the same generation value despite
+> +different topological depths, which breaks ordering guarantees
+> +in the same way as INFINITY. The early exit gates compare
+> +against `GENERATION_NUMBER_V1_MAX` for v1 graphs and
+> +`GENERATION_NUMBER_INFINITY` for v2 graphs, so that saturated
+> +commits are treated as unordered.
 
-    $ git fetch \
-            --refmap="refs/heads/*:refs/remotes/origin/*" \
-            origin topic/example
+Perfect, thanks for addressing this since the previous round.
 
-do what you want to do?  If so, perhaps it would make a good
-starting point to make it easier to use (e.g., perhaps a
-configuration variable can specify the refmap to be used, or
-something).
+> +Generation cutoff
+> +~~~~~~~~~~~~~~~~~
+> +Some callers (notably `remove_redundant()`) supply a `min_generation`
+> +threshold equal to the minimum generation of the input commits.
+> +These callers only need to determine reachability among the inputs,
+> +not find deep merge bases, so the walk can safely terminate when it
+> +dequeues a commit below this threshold.
 
+This reads much better; thanks.
 
+The rest looks the same as the last round that I already reviewed and
+looks good.
