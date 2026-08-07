@@ -1,108 +1,96 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F22B2FF641
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 13:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786111156; cv=pass; b=u/scLOWfF+8EZb4gbUW//gOfD6vO3qqs4eZWnOEuM9CaB4o9lzj9rEHOiS7xSXavkAY5Bd9muT5E1GrzAQ9fs6jXuESIEftIKNZKX9mDcZMjkOuT++Hik+z8tg+gN/okvu2bLdxbu2ycIhGQxtoQUHRoDWZV4r4Ovou/NrhXqcY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786111156; c=relaxed/simple;
-	bh=N2X700eqTfULofnQmGW8aJ7QXGQJeRSgX3eEdrcscVE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qL0RIcz/S2SjbEEjmszAlZp5MHrYDcBQp0Bj1N8QzYq2eKy+YyS1rnKQduo7VzWUZQfYJU12wwTNdwHcDZgQ6LxbXcqi+jL5cmWOtHQOOoR8BX3fqkQHsbQZCzRktDpu3ak3xccjlbkEjNWLal28L5YsHJoyEMi3eZLBNWty2AI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hPownSbd; arc=pass smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DB83090C6
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 14:37:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786113422; cv=none; b=VzTDmGDfk6EkqceVHn/GNYwAo1OqGMSIpamxqPy50bnvptEH1VGx0/NgiuDaQTerT55j9xNRPERmrtU7XwFCHdKYls3GSpxxB/ztIVY8RoNlDlBpNh9PTagV3q50LPiJAO3U/NrJsCPon0fb6SAC//1rV2TYAfASqd5pBV9Od8A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786113422; c=relaxed/simple;
+	bh=oqmxxix9wJMZ1T6fW1nUdS2iobsu1nJ+xR3wpPPXtSs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FOOzoX8qkyDfKLqGVYgGgOy91c+9n5FmlTVz8OK1mLTOyTceLJQmPcxs+CXCWRZUon7MM944LHug34bV0NAE6WaCQndRSPXg5KqDjeC5Q8sUN9WQwiB9KMjW03qlAn9dCP+X87O+eJhijrkmahTW4DAW1E7C1S8swIX2EPwVsCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OJvMMjnW; arc=none smtp.client-ip=209.85.160.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hPownSbd"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-38e88b60121so2840216a91.3
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 06:59:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786111151; cv=none;
-        d=google.com; s=arc-20260327;
-        b=stXizOryUTJYDTtSISNc63WgsEtml/ZrDtW9sXduLiHytdqu07jTFo2mP7dTLw7zcl
-         kKn9yaiHsaHSlZCBB3EXLZM817Kkw+oQomWuzoMWef0QVGP/AvrtqdjueCu+SoVO1FGA
-         d0YUsXR7ghyO+puUyIF3ndAyjJTm7A8yP3KqWIBJSgBBvHXT3UDOfoWm9BaDbj49kNIF
-         JwY8aUc6ul0AV9zMp9NNY2JzfBxo5fWhqO3A+kmvmSjHzqhSJ4oR+A14NIUL6O+zY8yg
-         e0kr+LH9dUPOpWRQmsMYd22T621Pos49PIosr498fPEzMA37JXW7mKEqRge6kue2Mnzo
-         MlZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=N2X700eqTfULofnQmGW8aJ7QXGQJeRSgX3eEdrcscVE=;
-        fh=2GA+52EOTTtrxPI6sUYdCtK52BJg4kdWCeOMQQlyAls=;
-        b=LAcYuIPG1ndSxSiBWgbboenUxoeaWNFmwF6Pw588vBKWFZEKv4gbBEP8ey8aGNnCFR
-         0B098QXpRNHlLs3dXVWmbU7oV4AOs/UlyII45SF/HA0r+nI5flRGvkr6G4mu8VHfeZ4N
-         W8K00VTpzY9oAoa2KioAatxP6PYlNG4AqEIr5hHH4CwGtLiJbqLdVqLn9SbB15DGqEUn
-         dP7lrHzwcNmkwcp+YF+2FoYiyOmekMWv/ObUiQi2llRAUkBZxOMbxT1kOouGaVLX1BKz
-         F429/3RCt/knTliHJf/KOOUvlftA+3WZbknTRGncRpYVAMra9kEhu1iSZCDUiG7GgnSA
-         sjZA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OJvMMjnW"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-51c05dcdf49so32565041cf.0
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 07:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786111151; x=1786715951; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=N2X700eqTfULofnQmGW8aJ7QXGQJeRSgX3eEdrcscVE=;
-        b=hPownSbdJkOJQwiUYkHmrESpKbcrMqm808lCvuqW5zncNlQxWzZRxqHpx/RLhkzBiT
-         G5YVQ4IKlbPpgFlBS5ClHDBJGltcvn4/SXcVt1MZ/yMibI95ElcFcVRvJ+h2TP9nkB7J
-         Dg4vGzKjAqCup8rrh08mGJODxcNy2K4V37itvWQlyuRLF5sSFEU9u/OMRLODRdyJapTE
-         IRri3fBDhRRS0cYjY/1f9F6/LkPYd+lT0XJepjhrWlBguF3kXngbv+oZ5CyhztvyYBLE
-         xTdB5GpWePWV7Q0J4JS0O86ZdjiqdaMGIQZpk4A5L76biASqq4lfBY/9oHWj77Qf7SB7
-         /K9g==
+        d=gmail.com; s=20251104; t=1786113419; x=1786718219; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=V4cDMckaTpbW8fkum60njm6XV9LvPReOgi1mq6mwVls=;
+        b=OJvMMjnWc9UP1nl08YQG8pK7OzdRUrvVdzxrIdi6CQCyfcYnKTp1F3iuMzKslXPGUp
+         1BNUu/DpPzMg8ve212k5ix3WxmFbOtA/cvgPeQmLiLJN+8ux5fnjGP2W/eQdNwgREK4i
+         htXGOPKFRHDwSAE4NbMtaSI/LU5RfqR2LENWOajT3TCpec10JQmB6cTzCb84BZ0dVYru
+         ePf+x4oEtUmdX/JQt1vmdeh4YKfmyqv0AFf9J5+bLKUb/+aWfXJBwGYb7qBKXXRn0U1f
+         fxkVnseahAehO0v3Rud4h6Zf/npF0+Sa/39mXV0L3CM/6QvTcFdm4xOdlLasIUy+bQCy
+         IVOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786111151; x=1786715951;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=N2X700eqTfULofnQmGW8aJ7QXGQJeRSgX3eEdrcscVE=;
-        b=cFAp1Tm7WyAZW1gL/weWWWNNJTyJ94T3S93nOmyDVz8TE7iuFYGUxqnSiZV/4OIbDr
-         MNij04i3ygFu/ROI4F63UD0hlo7/OKFYvZBesLiHMO4lOV5C8h+7JUKA7XX7rkKAZfwG
-         Oehn4vVNQabAsf9oQs+cC+JDM2yRLe4o+G9Z7t3VoybmvpxA3NDJWukPYwSdXs+FiD9s
-         fXM3wfe+8nfUXs8faTwUbJZcof3KX1fnWB1p4IrBXgw+2vVuCWnJhVKEF9E7JsGCAA8u
-         GChz7SXtlreMdfHtr+Q2SNs7RzqMvMmBDEM5MYhmXoroI2ywqfJfVer9iL8bNdh+bX3a
-         Nq0w==
-X-Gm-Message-State: AOJu0YzCtCuxD32sCCrM7O8wKRVjEhOGgzJi6LdhjXOFSLgMiw6ojmsW
-	k5yHz55/1fX4a7LBG4HvQjEsC1iq6TAFe30Mn2CEHiaWlKhzve4D1KtekClCUQNh4IbkdEJfL9U
-	wUwF/ZrxSoSwmPkPzWEwYsz7VpQcyLNYYQQ==
-X-Gm-Gg: AR+sD10Pn/0oQUxFYW9XPWrC+rAiZzJ8zOkfrTcthB+VRWCj2lVSFOsFaSzp0X4ocs4
-	HXI6pJqRSOl6LyZH+Strkq6EhasOeHjH4uzd2vqYT2y86hVE++JDC3em0Tqcajduj+alfA3kV8B
-	DfUdcU2xsVGa//GhMwSbWFN9Gl3bAZNQNgXSWbPSLOMCFhPAp8nG6RBITl1kpXnLx4ev4lVATOZ
-	0Zly703viMDYDorxthIK9K41BxqAeoe5byUzh3lVKZRBQQb7WLkpwqj803bhNgDAQDPpDo60DQ2
-	zHOFlDu8AO6Ii/GLBhIlaKfeXgnQy5f2/xSKX2M7zQ5tl0R+j6Hl2QGNruknfqNCKnAIGXIlPXa
-	TvgUWLrAB/X5ZusqlEHLtSXEF2yELbw==
-X-Received: by 2002:a17:90b:3f43:b0:38f:57f3:4dc6 with SMTP id
- 98e67ed59e1d1-3903c6798bdmr26257268a91.21.1786111151553; Fri, 07 Aug 2026
- 06:59:11 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786113419; x=1786718219;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=V4cDMckaTpbW8fkum60njm6XV9LvPReOgi1mq6mwVls=;
+        b=J6EPSwAAezQKoIWbQIb0Qw3DWYTUWKhZE+I6EsRAsh0T3an7bBZzBqYU/O/FsuDK+M
+         Q2LBeKzRO8c7x7SfL7zIGXtFWDXvExRpNRnOkRXO8Y/yiVZx2aTPczt5f4VkoMzyJwtY
+         eSbe2+LusNyW09vyuXAoBiuISspJA4+Sge4THcSxcp+6dMagKIQ7F1rGOh89UgK9F2Nb
+         Kj34r8QgdxEJewknBuRtrxTleTSmG0AV1r4sqwkjgHcacLJ2TojiodDjhM4hzzl63gcI
+         yEByJrkOgp0HZveUsxqoSMtpBccB71Ac1HEBSimRVkY800oSPeIwlgLPtF/9SpN6JD2K
+         ftmQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrYin+X0Hwq3brN2if8n3WbiyfAP5YpKg0A1EvAWEsyYSBFez+3yjbu77wPdOEnX6d6keQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvN+mtyoxKiO4lLvZe4TxZK0phMtXpYqCQN6B0NTPfcBOWont1
+	PKtJKyzl4ZKdYNeuom+LGDd7ChXDE1wBDIm8fFM2A6VCylYBTv+RhUfl
+X-Gm-Gg: AR+sD13SFn6AyT3zI5CGqr4SAb38ZK1VHeecNkEDfc4ZkRC4grd5QxGAJf0vCZe6Kz9
+	yBmkNECT7LoAfH/mvrY9PRNrb3bNwX4obhdnECLGdiucbMvMSnnXjU1Xecun/jOa6RsDWg+81A5
+	E9umMZKuPvf3WH7wKibHepii803nvcg4xhLdByy665kXU7VTdagN8xj4bKMVcezbMRQ1SrJiHD+
+	AiR/o7A49z651G45GJEEQC9NpOnzb+TSk7MBHzrswDhfUm72S0A0P0tytWR83DdxNOVAgARRgcq
+	WQyr6sYZjFaFPL9JX8mM9klCBXjkGFeqhFTMAseKNSUmMIHxGzvxh/bjV4PhSE2GiOjwCytyHaZ
+	xrJPxHoS6h58BCb0/r1tHsV8yQONA6uZRgn0sb5yoMHQSImDa4mKDBTDUUSkizzUce3X4xRmFIH
+	6TABLmCk6UOhQ3FX6j7zpIFo9G9zPQW3FFtlypYXDXzjp/7kQ0rAf9necOw7cC2ydkNZo1po+vW
+	8/QXEBCJsFC8KklkypLl48pO1VLrEMbMt2lWWfPG2B+JuY=
+X-Received: by 2002:a05:622a:3d1:b0:51c:a2ea:64d3 with SMTP id d75a77b69052e-52ce61c772cmr239933851cf.35.1786113419417;
+        Fri, 07 Aug 2026 07:36:59 -0700 (PDT)
+Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-52d1659c1e4sm13075891cf.19.2026.08.07.07.36.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Aug 2026 07:36:58 -0700 (PDT)
+Message-ID: <4a1dc534-e9bd-41e6-8ae5-fb08c06479a7@gmail.com>
+Date: Fri, 7 Aug 2026 10:36:58 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260710085137.4171240-1-christian.couder@gmail.com>
- <20260807135511.1818458-1-christian.couder@gmail.com> <20260807135511.1818458-2-christian.couder@gmail.com>
-In-Reply-To: <20260807135511.1818458-2-christian.couder@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 7 Aug 2026 15:58:59 +0200
-X-Gm-Features: AUfX_mxOicFP58N4PESabC908wU1jo8syWlVLmxKhTcL9-z4zvxLkoumU50NhqM
-Message-ID: <CAP8UFD3txHujpg_NxZN9m4VbH2Yp5g38ZV3=HrXrDrFSHLpaQg@mail.gmail.com>
-Subject: Re: [PATCH 1/5] promisor-remote: factor out lazy_fetch_objects()
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
-	Elijah Newren <newren@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] gitk: set intitial colors of swatches using the
+ available helper
+To: Johannes Sixt via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>
+References: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
+ <ab16ec6276e448db3c8150e58e2f08d137317198.1785998419.git.gitgitgadget@gmail.com>
+From: mark <mlevedahl@gmail.com>
+Content-Language: en-US
+In-Reply-To: <ab16ec6276e448db3c8150e58e2f08d137317198.1785998419.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Aug 7, 2026 at 3:55=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
-
-[...]
-
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-
-Sorry I just realized that there is the wrong sign-off email address
-again. Will fix it in v2.
+On 8/6/26 2:40 AM, Johannes Sixt via GitGitGadget wrote:
+> From: Johannes Sixt <j6t@kdbg.org>
+> 
+> After the user has selected a color in the Preferences dialog, the
+> helper proc prefspage_set_colorswatches is used update the colors shown
+> in the Preferences dialog. Use this proc also after the Preferences
+> dialog is constructed to show the initial colors. This keeps the
+> procedure that gives the UI elements their colors in a single place.
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+This completes collecting the color settings to one place, Good!
