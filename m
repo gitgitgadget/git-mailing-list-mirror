@@ -1,118 +1,139 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4BC44239B
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 11:48:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786103296; cv=pass; b=hVcGd5/L6a1o7MvvxPW6u6l/qlddmlrPk5gYJEZaFT4jL2sgC15ojCLCFIE3TSPzHmtR+GilgJ82yZzGSxDAM/QWOID/HQuomxuUlaJ9KMl9Sb3tbPZNU7uZ/pPEjLuDpMH6mvefzQncIeKAh5PKc7VweYIdC9Z5guaRB/u/kT0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786103296; c=relaxed/simple;
-	bh=x+4Y11Lvb0i49/1WgM4BoA6P0vrjVLIgjTsUWtUt7Uw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qpjfNu92xalzr9IM8GAYv9fV/sWfbMrXS+0fDXCJXQ06Zpwdt+SXVap/GgKTtMe65YPyMQjDHWRgrI8+v25UPpYkQXatSigHRScEQxbc/KKyDY9jUJwbb0kSF4ubSxISuXgJOd9oD75jg+2SKOTnsdYxoSCFbTpea3l6XbFWfGU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=ARe/p9iG; arc=pass smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D20473C8C
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 12:00:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786104056; cv=none; b=pucqBXbJ3G2MIGAVo0Op8r8cccSHBuSzRIYzrtf9jK1dRQwhX+wjXe4vRQi5J4gm+eN4xcAB/ri3VvSkuuHvAWWYg57yioaGLXWpyPnJsruZQX3ZvgnNyrMW8ANtAmIObZNtpQsTyDA66hKU8kLBzmd3z3dCMFwGSjy2K6vntXk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786104056; c=relaxed/simple;
+	bh=vwAkG4qIz0JfjcDY+ymFfnvU3vAzdOwgxWpC5fvEflI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AFFqmkCQDriEiDkxmyUWbjD1u29oYnBeJ7WgdklG1V3VlaAJ/4/j2jmjSbRWUP0WK5jvoD/0YKZSmj4filZ/yUos1NVBX1nH243lvXw0oJOHHq7VwpdT32oCV0ii3PdSPN1vdQWLnX+xrXhE/BxmmaetJUI2+AOWf5lIZyzbZXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=maf74jCE; arc=none smtp.client-ip=74.125.224.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="ARe/p9iG"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-80e24970f1dso27329077b3.0
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 04:48:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786103285; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZiAocPvl7D3Or6Xy054ECPSOc/3bGl9yQNrK6eZu3tF+BHA/A5t1HIq4hWJMaax0Yu
-         tY4Bkqf0n5cv7SypdXyyDRG2fLT021uLg5CG5CfcXiMOeWcEKsF0zGFDOCRM8TMLNUNl
-         CVe0Ta6uanA7khXedOyFfTpinIh+grNTN+0QcwiRsq05iGgVRE0SLQfh75RL8nW1mB2y
-         IbLSYFolOAvjK+BtTTQFX51rfMOOMma6+VOC2PpdvnQYoX2ickNDKWC+FI/zXBP2NU9W
-         KUIGMytM6OuxukOjrTf1LnZL5CCKznRpLfECwYsoUNB+CX4bbRWe6noAUme6+dEbuKBQ
-         iF2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=iQ2DszuhVI/PlJv1/qwBI6MvlIRG/arqEmu/6lv4nPw=;
-        fh=UddtoLbE9Yj9iozJv7vvmEEv3aOSMqmdtuygYe0qd+M=;
-        b=U9gFdzelEJ1aBsvRdYu+KAGht2S01hHBBwsC9qKv1vK7opMFgeYv3Tp8vOR3/kUf0h
-         W+rV4lpg3qR56Cwwt19uMSAXfmmLt9Yr5AUDcOXLNrFDT6y96nM/84acrzC58TMQcf2/
-         V01+TIj+4HxWkCkQfXYaOGH3PcRuAXfe0tf/Noa6+ednVGXBxMzWaiL2JbqAehRYt4fQ
-         xIROPBfMmmE5QtJsobkCHVUIoT8elXcTwTHXpnMZkKKRX0vssZrYv1ZUfqXCOXi/viGe
-         A93xiCB1G2BPfXAHaEJvEpEciAW4Hk/l2z/VdBKGwX92HNYfMj/KIscXbrAAK1HiiGwu
-         ywbw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="maf74jCE"
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-66807ba2f0fso5049968d50.3
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 05:00:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1786103285; x=1786708085; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1786104043; x=1786708843; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=iQ2DszuhVI/PlJv1/qwBI6MvlIRG/arqEmu/6lv4nPw=;
-        b=ARe/p9iGSEN1ohTlEjzKNiEfA42SW8h6LMJhS3KJJaY0K2KvH2DqsS9T6gjPY8KBQX
-         cgrAHGjtB52qdBvbCuXkSsUVuhUUYy186tYBYMur6XjnUjAykDQKDVrgvIFvHhvpMdrj
-         +LW8CNBOimP0C0LC5ipsESOy+CRF4vJ9ax9Rg=
+        bh=CrVvm05ysgs+yMuCQJwcCnYjhRzZM+vksnxSbidOo4M=;
+        b=maf74jCEN2ezODGIvL0KFDNADKjYtp+7N8sFbElFiy6DAM68bAIJiRs0oibbMYAUI9
+         zHsNX/XmLQPSAhnbU8mf4TiOheHgg+GKrTqrzcwI1EIYixmJt6ZrVHsQf4QDUrFM9ywI
+         k9GxnD9x1nL9wYHSZNPpeNzp3QEriNvMdDZxmIZlOO2tPS33k4KhLySOJynunXK2xtc8
+         qVIxEbghFUCLWOQnqIs+EHyzxp9hDyRI070BoE9rJZQTIu3zzEe1F7/03CTSpjKmfOwh
+         PQrhOfiOrSAaEus+jKUAZW3CbEqjyGcuWDYYW5J/Yl2zp29uWMgWpWm5l9wX3m46zM1v
+         +02A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786103285; x=1786708085;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=iQ2DszuhVI/PlJv1/qwBI6MvlIRG/arqEmu/6lv4nPw=;
-        b=nNZYnTRAmiNM0x+wPsuxhz/Y30ROYmoPr3/Ak7XyxlEy2Zxh4qq7n6cEzO0f0DGGlW
-         iR0XbPZbYJ2L8YTHnYxjDDKax3qCXhDeraeBGDvCncgZFpQZxfL1P75526RUfZMJw5Ks
-         R7Bm5D7HsDjA01jVTOC1YGTuRUBhWMeyvq7IyrX6IwUM56nJOzOSoG7qU5eEARI4k9LO
-         xkRla0jghpdhuR2I52PoqrmDAsj/cERJ3GuMewW1yr4Ft42vKK2K6WUBKUVk7X7i7prL
-         1V9mxe5stKSjP2DUSOJFv0hojGb+rZw6W+LBwQXY6v1pgdCbNU3f1Uri1ZtUZv9w6A/n
-         6rVg==
-X-Forwarded-Encrypted: i=1; AHgh+RqZkrgC/C9WqNt7x+7PcDdI5d2uD7Pk4ywwndj7ACD3vOtdKIAuaU18gvCYym07eaUVMss=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxm7anrYsHJFYd5c+vZrsS9ikWRNMGXbmelPa2S7LRSF4pGxgsh
-	Qvih6Z7M8RR4YQ0hfxMgvjgahin+Le7HhmvQOM9bt3C4sZ/7HEQEH5fUfyMgQwaep0grsBQKnsW
-	POaotQmYejX0334K2mUApXLap0tVPiJZD0PSg8JHf58aqZKhTUZSoEsXGeQ==
-X-Gm-Gg: AR+sD11Zc+kFXSR3D29pbNltkBL4lrmNWndm9/+F8DISpqvaKMK6s1g4IkmbqTJbQeK
-	lC1I99g5nPB8ufpYvGP+iwHrJedrqbvvlKWOsYQa8+ovH5/Dgk+qw40FYK0bI8nMjbKuwJa2BfJ
-	gk64md8mlezT646ywwgFnrIwRcGynWdFcxIDiXwuE6I+t6z87zJY4X+DEcjhgzJ15AXtVBAvfXu
-	AtP2RInisP3lUlxB5vjYylkGmKBkHvlqw6iL9CWxI98ttqKCW04o1ty6A8cvkTZNeoL5ly3ENPz
-	PK7FJ/8hFTwRIWNVs5dgyZvw7j3hpIz43mE5IF0N2Lo=
-X-Received: by 2002:a05:690c:9689:b0:80c:3848:bde5 with SMTP id
- 00721157ae682-82258a8f2dbmr49109607b3.13.1786103285405; Fri, 07 Aug 2026
- 04:48:05 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786104043; x=1786708843;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=CrVvm05ysgs+yMuCQJwcCnYjhRzZM+vksnxSbidOo4M=;
+        b=n9TXkmUqrLiXYZryXx4lYHum7tLt10JSx7XZzlDcrYfI9c3ypd5jxSVstsbL7xR/xi
+         gsulgt+YbwE/uJHDoIH0RLuVETu0STMWCAIsOHEA7Sn85h1pTQWmeEi4RxXxUDZvAmar
+         g4tm+zwS1FJffk2IJXBuUI3xv6g1+tDA3fLxkEi2bqH59i4TVdwSCECsPz0H+M2x2kVH
+         MMQW0wD7A2T5qYwYlMJtU9i2amIn2/LEO0Jx7yZq4A8yxv4U18LQ2tV6Og2vTF2nDvqm
+         z4y/HCkHS05sY10yEPRHzZKpzV/eGTaLnQ0jY76CLyGe7NXXYtcYkaUb64PHSiE8FFFD
+         nkrQ==
+X-Gm-Message-State: AOJu0YygkV+fkMWVS3tHmwVmNClA8cbSPWIwVEyHYZhTKpkujhj+ui2f
+	W0K1ZzOkdnEQnwiOAezlziX34jIP9r2EpKFhrongxPY9DoC8AilqdM4Vl3+CqjiiGcg=
+X-Gm-Gg: AR+sD11Esz4miFv1zglFIiGlUTGmpfgpyGH8qdLLSt2UXLnXForN+XIi1o4iyVtm9yx
+	hMgMdjVkLQQ+Aa7micrPVQiEx+GX35wgf7FLF1dAjOoiPMfhD8epIaPWjHY40678I5j6kR6ITsV
+	tiVwF7z8MBTn0unSQNArC/1qjjUnYNA/V1oVSbf6KT21Mz1IE5LF81Xw0zh4B5DZA1/Zd2GWVil
+	zznVq/e3NIzvfOJxoXAowb3qShtHS3CDUF1Erz3Yl0YevK2GN2C0BGaDErX48QiIzeELXi9DJqH
+	tL/cUJiCzH1DPWJMfGxp4oXO5DcqYDOWaiGK5tCqGmrZ1vBR4DAspKzU10JAUHD3sU1LdPhFsRE
+	QuAQDQzMAYaREMB19Y3/ZcegW7abDfSooiwsKzOLhrpW6Rmm/TwmdpLAROMOgkn2cBX5VgR/540
+	a1/J4StdXozRJiT4sdobdHbaEQHywfsNtR3uXyTyTBJH3SQqhyPQ2YogxwAIK5OYxpZfAN6521f
+	7K4MiA9igD/axnuUVHDamrDFU4lZ6EaFNxPDCQSkvZQA/JpUSYa0MFHj7ir1fZR7qmJcNUS3w1o
+	L7mlSc/9lo4=
+X-Received: by 2002:a05:690e:c8f:b0:667:c3f6:3810 with SMTP id 956f58d0204a3-6699ab97ab4mr13473750d50.49.1786104043330;
+        Fri, 07 Aug 2026 05:00:43 -0700 (PDT)
+Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::2])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66acae63149sm1048042d50.11.2026.08.07.05.00.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2026 05:00:42 -0700 (PDT)
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: [PATCH 0/3] Convert USE_NSEC to runtime config
+Date: Fri,  7 Aug 2026 07:56:23 -0400
+Message-ID: <cover.1786103607.git.ben.knoble@gmail.com>
+X-Mailer: git-send-email 2.55.0.340.g8e2bf96aa5.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <a1c8e89ef9f1d0fb5cb10ec9687633df8792ec7b.1786013982.git.gitgitgadget@gmail.com>
- <CABPp-BFqghtx4p_Nqx+AWpU7SVn3mXOZGDQ0yoN-ZYQgXmZC=g@mail.gmail.com>
-In-Reply-To: <CABPp-BFqghtx4p_Nqx+AWpU7SVn3mXOZGDQ0yoN-ZYQgXmZC=g@mail.gmail.com>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 7 Aug 2026 13:47:54 +0200
-X-Gm-Features: AUfX_mzBgAT7h3w6LjH7qnTggbHU0kYNhpb6-LViLcl3MPJO9u2lPqeEXalxM8M
-Message-ID: <CAL71e4MULMmbMyrE2iKgNXD36vpjnxCYXTcNw75ibu_nwxqAPQ@mail.gmail.com>
-Subject: Re: [PATCH v7 07/10] commit-reach: introduce struct paint_state with
- per-side counters
-To: Elijah Newren <newren@gmail.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, 7 Aug 2026 at 05:02, Elijah Newren <newren@gmail.com> wrote:
->
-> became -> become
+Topic name: dk/use-nsec-runtime
 
-Good catch, will fix.
+Topic summary: Expose USE_NSEC as a runtime configuration, since
+build-time is too early for distributing Git [1]. As a result, common
+index-related options, like git-diff, are less likely to hit "racy git"
+problems on supported filesystems.
 
-> So: pop, clear, check the counters, and _then_ decrement the counters.
-> This means the zero-counter-check still include the just-popped
-> commit.  If the decrement were before the check, we'd actually just
-> barely miss the merge-base most the time, so this order is important.
+[1]: https://git.github.io/rev_news/2026/07/31/edition-137/
 
-Yes, I should perhaps add a code comment for this to ensure it
-does not get corrupted in the future. Something like this:
+Built on master (2c78326f81 (The 11th batch, 2026-08-05)).
 
-    /* must check exit conditions before decrementing counters
-       for the dequeued commit -- the counters may otherwise be
-       be temporarily zero until the commit has been processed
-       and its parent nodes have been enqueued.
-     */
+Hi all, this series follows up on the previous racy Git/USE_NSEC
+conversations.
 
-Or is it overkill?
+- The first patch is a mostly-unrelated documentation fix for Meson, but
+  it came out of something I spotted while reviewing the outputs of the
+  final (main) patch.
+- The second patch is a preliminary no-op reorganization of
+  repo_config_values_init.
+- The third patch is the meat, converting USE_NSEC into core.useNanosec.
 
-Thanks,
-Kristofer
+There is a small textual and semantic conflict with
+'ty/repo-config-cleanups' in 'seen', since that branch removes the
+comments in 'struct repo_config_values' which this series adds to. (The
+semantic conflict is that, if we drop those comments, we should probably
+not add them to repo_config_values_init like I do in patch 2.)
+
+Todo: I haven't touched any tests; I saw a bunch of hits for "git grep
+racy t" but wasn't sure how to fit this particular change in, especially
+since it won't be equally valid on all systems? Advice welcome.
+
+Todo: I wonder if "useNanosec" paints us into too much of a corner; that
+is (slightly more abstractly), we are using *extended precision* in the
+index. Maybe the name and documentation should reflect that, so we
+aren't too committed to "nanoseconds"?
+    - Some platforms could offer extended precision that is not as
+      precise as nanoseconds
+    - Some could offer precision _beyond_ nanoseconds
+idk.
+
+[1/3] meson: expose knob for xmlto relative links in manuals
+[2/3] environment: align repo_config_values_init with struct declaration
+[3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
+
+ Documentation/config/core.adoc        |  6 ++++++
+ Documentation/meson.build             |  7 ++++++-
+ Documentation/technical/racy-git.adoc | 11 ++++++-----
+ Makefile                              | 12 +-----------
+ builtin/update-index.c                |  2 +-
+ compat/posix.h                        |  1 -
+ configure.ac                          |  6 ------
+ environment.c                         | 25 ++++++++++++++++++-------
+ environment.h                         |  1 +
+ meson_options.txt                     |  2 ++
+ read-cache.c                          | 17 +++++++++--------
+ statinfo.c                            | 14 +++++++-------
+ 12 files changed, 57 insertions(+), 47 deletions(-)
+
+
+base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+-- 
+2.55.0.340.g8e2bf96aa5.dirty
+
