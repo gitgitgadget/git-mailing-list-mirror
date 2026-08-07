@@ -1,126 +1,167 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC74ECA6B
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 16:01:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786118470; cv=pass; b=KZ0F2YVf/zJGlCEBIsAVE01V7IBGYFtIZVYKAR9v4wjCGFOuhTrx2PVQg3lhetXtsyVam1ZbZeCLbWk51vo1JcpX2LE6sXU918w+XnV44X2Ur3iWLrYg2i7zLKh2XNJrElXJPLZCaphGxLK78zJL3a46++yBdFcndrv1+A4U3Ok=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786118470; c=relaxed/simple;
-	bh=AQzmlhbVNrGtxN70biObl8CcTWRf4GKNALAHqlJk35Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UfrdEz7aYRdvyzTk24vHt7W4GPKpdRIZF/go+HTdflnzrNNSQLx+FdCJUmenaN1fsk/fuk0V05EgWVzGArOHBi01jebxBY94I2BRtG1qwnlMPxQ7C51BzTYkrg8jv4Jz7k0n1Y3KnmkMAlfmQAvbfuLFt6zF+6e31Dl8gwBKhPQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=PkEz3/jQ; arc=pass smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A04ECA6B
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 16:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786118501; cv=none; b=sDyjsvTnup7W6HNHeB3ldtE4uIoEgVj3PGW2ABeKMXV5cM7RhL6GNRve7r4GcaSRNOKct8smjl2O4ckWujNBcwitz+vq4ZiQWPKJ94WidwCagDf3NQuwjmK5qYjN27oWvQ6W1yvM7NGhdK49LdlTCQPEGapgO+dYuWDoawhoraU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786118501; c=relaxed/simple;
+	bh=bnPkyD5JpfGj531Jyj+Vea4UmG3JIkFM5UygaTeKnvA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PQATg7HLj2/n+QZ8XKIDPg8eX489AauAxaQN67LMMVy4HcXd9lYFPQefLvmQi8Unv84IFqH8/OEF0Hnaq3B44NGzfkgXcnM22eUWznfES8mFQwgYOnzNl30/VoxBuQsm3vI/8NXkffnpsP8dcUz8WPfLxdIo86VKST2eknexVvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U6v7OIH5; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="PkEz3/jQ"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-8114a4542b2so51430957b3.1
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 09:01:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786118468; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fxguyMW7R7aLx77rR2P5HIVpkNjBghyMxvdhTC7/cNqFnhSE/PhjssviyHksLgOoM4
-         XRMdudRRoBeuLvRQahLy77U/yLL+Jx3/NW/mjogpGYF9mu0kQ1WSgUlG5ijuOGxEzND9
-         1JOyrI2xLmPdiBWIRLIIMhgMQk5uY8DgiWUzdFVNZ8Jsr59aq972eEPc/OmVvfV2NsmQ
-         9AqTHVZlvO5GUSfie1j3RQbPLQsvgSJN+70UnfImpmxziHJ6DxPZYKNOBCDYKTcTCtOT
-         JVN50VRXf6Sh0xfPe7RClrB4P3HFE4kn/fC4ApS3oTattHxpPDnmIgCLQtqPEvAUu8cx
-         WtCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=KK9TIfkCw2AathRBtaZ87a6ixjaO8eLGkUuP4a5yqTo=;
-        fh=DGIa/P8azKuq0h6oxXLh48i9S2AuJ4FwT0fjQOFPTJU=;
-        b=d8yzbHNBtX0XN0Aqx9orFvQsMl/fjCEgqcLor9s2mQlCn7RO73dhCO6c4/gCpBrGC+
-         yjLbUMmZZRptEFWqLeLSjQjcCDQGotTbZxddJVjCznth5KkSHykcUifL5TPBp1DcpDLb
-         OE3FQFumIG130nP0EJx3xMacKxlFwdsQ3az2EvbDseTTwT8Is8/NrqddCeayR6YojNF8
-         efy+ngwXJe7KgC3qTrJeAM9jvcGkbQiLXjsU5n02/6K3moca8JVCVJdRD4XWPP9Lqgn/
-         wmuPiYMFec/azqBYPmTW90Iqm9I8MsbjDZFJ/0YCEJKp7voGI3uLxjiNowVhA75IlzXo
-         DZpw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U6v7OIH5"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7eb63dbd229so1586185a34.1
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 09:01:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1786118468; x=1786723268; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=KK9TIfkCw2AathRBtaZ87a6ixjaO8eLGkUuP4a5yqTo=;
-        b=PkEz3/jQCjutY1HdR1om3kWmvKV53zO7/uzgR9qam0tktAS9lfBJ9OpZ+7htg49M3h
-         /eSyZBUtTQ7iGf0yugXH7/l/l0BEpoqpsFnUQQFypWt21ko5MzgQnvZMOvC06Kj8Zx/J
-         WGXuF4jyPayRFpalfzw6fJ7ucefxLhdbm9GNM=
+        d=gmail.com; s=20251104; t=1786118498; x=1786723298; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=iFdxl2hh5MHYmNa8Jp1nu/bV6P0iBUti/97kSGrzxKg=;
+        b=U6v7OIH5nRlpEprqmUHPG1Omss8BIqSU2dKK8NRmTQdLe3GKMNFbXHlXBAFiKT3avM
+         nkHehQryAZpFdRF/ggSX4IxEk9Y3MVfgCTsK7OJojh9fKy0kEqeY9N5smxCJb0REJREv
+         +Brn7BnQRRgNiPNOfAEcaukX97rllo2nYN5BGjeozW8X6wfkvtY2L4gynmv40xa++IEX
+         I3NTK5/HK+P+a0uUnFj0RB4rx+RtId89POuIyPhFIgOzVTylCXOJwaEnvxDEyT4vubCz
+         UkBoizUMCDUVTPPWVgnSb8ai50f9u9MUlEacRRsXht/HNijIDkGwwYU0oJ+6GJ7MYRJl
+         Rjsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786118468; x=1786723268;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=KK9TIfkCw2AathRBtaZ87a6ixjaO8eLGkUuP4a5yqTo=;
-        b=CpnmjEhQebO70qliJypD4YQs+/LSgWJf5atdz6i4D5VKtZ3EX216QadJORLi8tZqzX
-         wBRsNOVoKGXbvXDV4v8q2qeu+hMwVyDjrL61bM7wxe6OR5jZbyca2GJS+KhM56zJFarB
-         ejxQTV0C9s5IzfwcQ8+tUGaVzWvJl5jn/Q7wTa1IKlgC5EMXK+pSM17taozJbJOWXMWD
-         L3bIKaNG+LTP1+67QSwL9jj+USxplu6nI6DJq8N76vmctZl8HaT+KlhlQ3a/3yI849bb
-         xMu07weul2xSOpjOdwRmdWShOO86i9V4g34NXHk8Q2gPIoJTrX2nz0Nz6cDNI4LH1yQ4
-         q9nQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpECffDTLzlLKOS/ZqbPE94JIU2AqYbo+rOOFl30S9/PUr38AdANiZAIH3zRm8UTcgxKmo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5b1hpyxbQ/26WnPiguzeopNBYS/BguU4RGmo4bSb9P+SfKUza
-	kqJk0LeFCJNywXt0VuvRvHJdfHjaIYl53THWXugeDP6hKW/h4brv2oGDJ9+ScRkdpen2fPGZl50
-	xgU+HPcEsDmTOtykIsP1XE0YnjI7cmMprVyOf5JOl/w==
-X-Gm-Gg: AR+sD11tI0BdzoiCOlcT9cYfaZmdtbh9NEz9MMQ7wg/0swX8sNZiutUUyQ6EqUPD+wk
-	Dvls8cOz93Ws7esDOzbpwy2bQHvJ18SvZhOUE7y4n22FXkdmBebMUicInxZvAG1G6i1Ac7lLJw6
-	s9L9ZlUK8PyISI2/TxjD2/dAqsj/CqWaXTfLim2ev7qkcfrTsE9Z3Uv2Vod+tMLc5X8R5l3FZPS
-	axMH9xHYO36I3qPqL6PI608Uz5wH+V6WPNNDYlBveTKXN7xO6X5o9/k3TnUbYprk8jct76JEJxr
-	fbd4vLJ+ldNHATebIhh9iZJPgtSKNSy1mzFGaxxEA9Ij1h/8ygRG9SE=
-X-Received: by 2002:a05:690c:4b0a:b0:81f:c2dc:6870 with SMTP id
- 00721157ae682-82573d3ac01mr10509247b3.15.1786118467667; Fri, 07 Aug 2026
- 09:01:07 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786118498; x=1786723298;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=iFdxl2hh5MHYmNa8Jp1nu/bV6P0iBUti/97kSGrzxKg=;
+        b=FqE+DCd25pSjQNMPgdaNQkVEgDN43kZ08rnc/9qurJP0vcYVKUMEGpNhnFuXeKdD5i
+         vxiw+/QBfu7NR3+5a/o7xskzxt3KfMSwpOKWPWhz4gH4lC1dQiFGZbgqcE+V7+eBlubF
+         BpuAVNthn9BMaZy9d2GKE/jwk2wbtxH6R6wwsJla/D9W1JjbDHtymQelporE+YMTto1D
+         rrZ4U9Di9+H/1koMtfUjcQSQsnMEp1/ZLysPbTqXoie4MR7UtPSESzK15l+yz1nj4CX/
+         e9ha5eayMtwKyWTw7JywC46pS447HSJz3liX+/HfQccfoV9b7m9xbmUyLlSmJ9EjAuhj
+         nwqQ==
+X-Gm-Message-State: AOJu0YyCYt9XJzPmONuNusXUD7fRepCPgkfFxAxIeeYqvqyX2lFII0Kp
+	4xM0NkThHhK8vEG0FyVhgbM1hU1KsoSA9V/uoZ1/HS5mNlxL4ZG+VppCf0TBRQ==
+X-Gm-Gg: AR+sD10TjB+2myFw5U9j78aRhfC0fviErkYiyTiaRva2yIERe/qU7EXNmZQqz16Fty6
+	Wv+mDtvi6U1a3NTzTtmyJTw41UaC/mGMy+OGVvuaCcqjqumojMIT1zRIZQBPhO5b1IUI/bwsm05
+	Okq2k7Ay9JbImLWnW10BKPkY3yJrE16wkRtZst1KjX3vjT9ArbOfPkKPSq/CyPsV4/Qsg4NjUH9
+	RjyBMWcJKxmED41CgWUd3DwqzXlZ0XT+PVhrEM3dGAMIBx6DhPuaCsDoYaEqycRSb8kMQ4Yi/eu
+	aQGsOWYVGhIf3r8eVqFGKw2A/FM0+/5ELoeZS60NiLicseC4DycNqgqfJsk9xYChdI7ihHTxdbQ
+	ToyQJDfLyVzVZ0vJx2/E+IZfhW903YHQpP8mHu+VcQMFPIs7a7ZXHUxvIxr3IlEs1qOTOTy6vQq
+	wDidQXfmdP/8zVs+jtGqHUpnZmM9j0h7tRaUfyeRGmlwhvm2+1JRZ0rQ==
+X-Received: by 2002:a05:6830:7086:20b0:7de:9b99:a8ee with SMTP id 46e09a7af769-7f1ff361df8mr2493590a34.9.1786118498061;
+        Fri, 07 Aug 2026 09:01:38 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f35b7c4b2dsm1571801a34.20.2026.08.07.09.01.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2026 09:01:37 -0700 (PDT)
+Date: Fri, 7 Aug 2026 11:01:35 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 6/6] odb/transaction: add transaction interface to write
+ packfiles
+Message-ID: <anX7baSyrG2dvFDk@denethor>
+References: <20260806213859.816157-1-jltobler@gmail.com>
+ <20260806213859.816157-7-jltobler@gmail.com>
+ <anWDVFL6OjX2xdR-@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <a1c8e89ef9f1d0fb5cb10ec9687633df8792ec7b.1786013982.git.gitgitgadget@gmail.com>
- <CABPp-BFqghtx4p_Nqx+AWpU7SVn3mXOZGDQ0yoN-ZYQgXmZC=g@mail.gmail.com>
- <CAL71e4MULMmbMyrE2iKgNXD36vpjnxCYXTcNw75ibu_nwxqAPQ@mail.gmail.com> <CABPp-BE+QBBYj=oaRDcQj8bFrDX6Z_JVK39ciAk4TwMPb0zHOQ@mail.gmail.com>
-In-Reply-To: <CABPp-BE+QBBYj=oaRDcQj8bFrDX6Z_JVK39ciAk4TwMPb0zHOQ@mail.gmail.com>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 7 Aug 2026 18:00:56 +0200
-X-Gm-Features: AUfX_mxVy8XMXvkz-Dqsn5VFSQQpZGkQa8VMkTr2-pu-XSn9ix0dlya3svzUFg8
-Message-ID: <CAL71e4P1hRcDk0TiR_Gjapf=EScGNbeHqSQ6BqeiAkEvczNu4g@mail.gmail.com>
-Subject: Re: [PATCH v7 07/10] commit-reach: introduce struct paint_state with
- per-side counters
-To: Elijah Newren <newren@gmail.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <anWDVFL6OjX2xdR-@pks.im>
 
-On Fri, 7 Aug 2026 at 17:44, Elijah Newren <newren@gmail.com> wrote:
->
->
-> My comment was meant more as a "review out loud; show how I'm thinking
-> about the patch as I read it" kind of comment rather than as a note of
-> something worth changing in the patch.  The order _is_ important here,
-> so the idea of adding a comment to reinforce it seems quite reasonable
-> to consider (I thought about changing my comment to ask for one when
-> reviewing), but I'm on the fence about whether it's important enough
-> or overkill.  I'm okay with the patch either way.
+On 26/08/07 09:03AM, Patrick Steinhardt wrote:
+> On Thu, Aug 06, 2026 at 04:38:59PM -0500, Justin Tobler wrote:
+> > +		status = finish_command(&child);
+> > +		if (status) {
+> > +			strbuf_addstr(err_msg, "index-pack abnormal exit");
+> > +			return -1;
+> > +		}
+> > +		odb_reprepare(repo->objects);
+> 
+> Now that this is part of the ODB transaction, do we really have to
+> reprepare the whole object database? Shouldn't it suffice to reprepare
+> just the one source that we've created the transaction for?
 
-True, but your thinking out loud fortunately reminded me that I had
-the same thought process, and that the ordering may not be
-immediately obvious -- and thus we should document it.
+Ya, this is a good suggestion. At this point, the packfile has only been
+written to the transaction source, so it should be fine to just prepare
+that source. Will do in the next version.
 
-I will add a comment for it...
+> > diff --git a/odb/transaction.h b/odb/transaction.h
+> > index ec0b27c449..491026e815 100644
+> > --- a/odb/transaction.h
+> > +++ b/odb/transaction.h
+> > @@ -4,6 +4,51 @@
+> >  #include "gettext.h"
+> >  #include "odb.h"
+> >  
+> > +/*
+> > + * Options controlling how odb_transaction_write_pack() ingests a packfile.
+> > + */
+> > +struct odb_transaction_write_pack_opts {
+> > +	/*
+> > +	 * Optional fsck severity configuration to apply when incoming objects
+> > +	 * are verified.
+> > +	 */
+> > +	const char *fsck_msg_types;
+> > +	/*
+> > +	 * Path to an alternative shallow file describing the shallow boundaries
+> > +	 * to honor while ingesting the pack.
+> > +	 */
+> > +	const char *shallow_file;
+> > +	/*
+> > +	 * The max size in bytes of the incoming packfile allowed. No limit is
+> > +	 * enforced when set to 0.
+> > +	 */
+> > +	off_t max_input_size;
+> > +	/*
+> > +	 * Whether the validity of incoming objects should be verified.
+> > +	 */
+> > +	int fsck_objects;
+> > +	/*
+> > +	 * The threshold for the number of incoming objects required to store
+> > +	 * the objects in a packfile. This option may not be relevant to
+> > +	 * backends that do not store obejcts in loose/packed formats and can be
+> > +	 * ignored.
+> > +	 */
+> > +	int unpack_limit;
+> 
+> I wonder whether this option should rather be handled internal in the
+> backend itself, as it very likely doesn't apply to alternative backends
+> anyway. I don't think we allow command line options to override this, so
+> the backend could just read the configuration manually.
 
-> Although, if you do add one, as per the CodingGuidelines:
->
-> /*
->  * Multi-line comments include their delimiters
->  * on separate lines from the text.
->  */
->
-> :-)
+This was something I was also considering initially. This option doesn't
+really make much sense to have as part of the generic interface though.
+I'll update in the next version to have the backend read this
+configuration manually.
 
-... and I will be stricter about the formatting in the patches
-than I was in the email :)
+> > +	/*
+> > +	 * Whether to reject an incoming packfile if it is "thin".
+> > +	 */
+> > +	int reject_thin;
+> > +	/*
+> > +	 * Optional file descriptor for reporting progress and errors. Set to 0
+> > +	 * for none.
+> > +	 */
+> > +	int err_fd;
+> > +	/*
+> > +	 * Suppresses progress reporting.
+> > +	 */
+> > +	int quiet;
+> > +};
+> 
+> Nit: I think having some spacing between the different options would
+> make this a bit easier to grok.
 
-Thanks,
-Kristofer
+Will do.
+
+-Justin
