@@ -1,131 +1,97 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BABA3955EB
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 14:37:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755CB40099B
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 14:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113460; cv=none; b=kiuceisGjFzfoeVB7xWfbJni7MK9YhR6DVkMUwu2SWg8s74GNs/wZoAsRyNg06k+11/ZPJ0MBo9dJN5Wy7/u0xLWtW4AzWgLBDQDJF59dY1GjyQ9aXHLypSvD0JWqiSOFTtP53J09o/74ae3vjp/razSkaFDefMogzS7bZcaNWQ=
+	t=1786114051; cv=none; b=hFdenB6rvapY/73aKAtHtN/0E8GSi0vLjCmLONtAu/NwiRiHS30lFDIXM4UAqlcabVGgXhxtpT/MThM/UxLwV7bdyY7XrnPviffpfC19oWaWbae/GRldsPRYWF9P+C2Ota+KhQdmAYy67m1+56SMXKgf2k5rJdolUDhBw4COzTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113460; c=relaxed/simple;
-	bh=8ttVBm3wUuNtbwSCIgG3Tppka3yR28nnw2SdMZma8hE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t21I/A9fx9GtCLTL+p3AXbK8y+EAPckSbwvJpoPmAXbvEfhOKBHXG5TzZ7rPdgZALAKY3Wsy9sF3VphdYkOi39njnf3LPrkwlAN+uoHZRL/hlPL+gUfhvB09Db8vcue+rHK4f3vF8BVgEtDsNuIwr79C/8Im+RgUubXpH4PvWsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o+Ek5wy5; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786114051; c=relaxed/simple;
+	bh=d3h+cCRW9ig1TM+kMeQs9muCg/+nEng4oV5Q4c1J0gI=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DvMmObX2Xac/TmR1MZgKEKLbCG//EuhGP70YGgfPSWxgMLbHIJnKXMwl8v4pkN6SOZlb1Gu3ONGyoltZtuYR3VWiXxCzRgZ2lE4JwfgpzpzxSQoA/z+VZxFCkD4cL2Kiw/012KRBOIxN5RdKIkzNzM9zNYMOSWDqvN1Ft4C2O+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=NgmXzxkS; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o+Ek5wy5"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8f1a8e914a9so27018846d6.1
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 07:37:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786113456; x=1786718256; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+1xvFAI26WkSzQM67WffQ9sr/qsVdDWC59oxrEjpsEY=;
-        b=o+Ek5wy5It7pIY35u9x5r7L0Z6YlSj3gQPrK4LiqZtlzlSJnEH9EPt+zM+7SukuLXl
-         xxQOuazzseWZbjxOY/HzqQXErQHmvjgqPiUQ9qNBVTN5r+JM3V4OK6PtngwLynqAcNQR
-         UmktLfZlwoQ2yRubxtmEWkl01EgjodmYJ8+fjg2+SYE7xQdQSp4nLDJSYa+NDOmZoER9
-         2ObRz/Di9mCeoD+33cApvKXC/H3y2K6E6B7MXBUW4y5w21VT5Sc0HIgq+3NSwgZ8wITz
-         tBIxyRvlzcJ/YS8Qhjh8X+XyjMWta8SOmZcy8BEwQ0+x/WyEyRFJJsQdMNDl06fzULNI
-         QIKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786113456; x=1786718256;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+1xvFAI26WkSzQM67WffQ9sr/qsVdDWC59oxrEjpsEY=;
-        b=OsIbgE8kb0ZFI27iRmpMVcZC+KeRAobWHMcXe6eehQ8WJnbeKLg6KVNhXWg8lfLXIy
-         +LtNgAgnJ3q5TQkfGtdJJHGhrAG+kjq6gh4vOZKyC0iyvUMMlF8wBRZtOIZEegf4nr7X
-         MbIkqOF0Y5DIUgCFo7zbP96WXrBTRj0BG3ZWIdWo5jPZjnYcV9bsjciuIUxAvSsY8xp1
-         bYIs0Ir/RGe3P0Dn1xFlTLiCF1grrXAgX8ue7c+il+MHw2yc1BAnrgZudrNewqv/x0LK
-         JUOFnYAsWy/EK63LHJep5AZNasmG7dOUNX9cqmSjFvXhbWDVOT02D/KLplJgc7rYy606
-         D7dw==
-X-Forwarded-Encrypted: i=1; AHgh+Ro9tnXt9JsJuiwMpcnaTDryXZlXg47REt0qYhO7/+wxdAuoKt4q/6c1urFUDFOqm14P/gs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YydnN6fbzfpGpNOoMNk+9+8lQxjdzGyz3JGivDx4wPZwFQDicOV
-	9LmPkW8hju2cg5lgbL6RuRWGED/BxNPl+7L9aXxQhvGLLxKICw8KDlG5
-X-Gm-Gg: AR+sD13/sM7C62YubX88lYAGxan+JCxaWmoNK0kHHM+6sIKtLBTs4cWr/i5eVPlP2AC
-	EMIQz+NKuYN1Zvndg1fsv0hYD5yUuF37gtM0wwAHDW5BwqwTa5xISd3voMXwJzcf6FZLMyI6m00
-	F7I4qGm4vVTdVxXQUS+drjvlSrQE5lHIF3mYV5DbYsPqH5nNpVSc//O3C8JFN9/IHJzxUsXj6q7
-	29dgbQQvW9ZyOXuEvBwFH2N4XVU+vxNfJqkbwQgz++CQ0U1pQf8JGog2Acs9ZmNurK2uey48SZN
-	c0INm5aeicucVSI4uRIMGek4OaVNArhCna0if6Zsl5tvreUHHm7RR9JMofrOJj6aPlb3ALHr65u
-	dikBnQylUivkAuEwQZaX8UMvDML9oxzMaMgu6+h6OihjYHkt9WwlrIYT5T+VG5taA0LvIrTbUVM
-	d6wBUSTPVe2CQpXtEJ3W1MW22R6X7nsno9x6rYfc7LAd/f4sJ+OyNoqpalrU3qrlFQzcnw7lcBP
-	EvTzOcLVd0tzqIbfCCTx/DbRhqkj42OohCe
-X-Received: by 2002:a05:6214:f2e:b0:8df:98e0:4594 with SMTP id 6a1803df08f44-90a34677432mr5718426d6.15.1786113456225;
-        Fri, 07 Aug 2026 07:37:36 -0700 (PDT)
-Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-908a9300db9sm10006046d6.23.2026.08.07.07.37.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Aug 2026 07:37:35 -0700 (PDT)
-Message-ID: <f25e5fe8-cf6a-4d87-9c46-bf5b7490434d@gmail.com>
-Date: Fri, 7 Aug 2026 10:37:35 -0400
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="NgmXzxkS"
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 677EW1jm009005-677EW1jo009005
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Fri, 7 Aug 2026 17:32:01 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1wsLc9-00EK9s-8s;
+	Fri, 07 Aug 2026 17:32:01 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Fri, 7 Aug
+ 2026 17:32:01 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 5db319cd;
+	Fri, 7 Aug 2026 14:32:00 +0000 (UTC)
+Date: Fri, 7 Aug 2026 17:32:00 +0300
+From: Tuomas Ahola <taahol@utu.fi>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+CC: Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+	<gitster@pobox.com>, <git@vger.kernel.org>, Matt Hunter <m@lfurio.us>,
+	Patrick Steinhardt <ps@pks.im>, "D . Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v10 3/5] history: add squash subcommand to fold a
+ range
+Message-ID: <20260807143200.my1sI%taahol@utu.fi>
+In-Reply-To: <CAHwyqnW-py0QZNWUikzYO3yyqrYWdZcHQ+axW41GMv94hHh0nw@mail.gmail.com>
+References: <6b5b2c93f2e3e55bf456b86a8be61f5f85137a2c.1784536024.git.gitgitgadget@gmail.com>
+ <cover.1785750108.git.phillip.wood@dunelm.org.uk>
+ <CAHwyqnX8Api2VWqaDt4vgnG5P9RHGkK2Bhhi4dVAu7Qrh908rw@mail.gmail.com>
+ <xmqqqzkevx62.fsf@gitster.g>
+ <CAHwyqnXJLQ_naFb1RRQWS3eft0FXL7ripviSA15Zy5D6nvHGAQ@mail.gmail.com>
+ <CAHwyqnW-py0QZNWUikzYO3yyqrYWdZcHQ+axW41GMv94hHh0nw@mail.gmail.com>
+User-Agent: s-nail v14.9.22
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] gitk: avoid constructing dialog titles from text
- pieces
-To: Johannes Sixt via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>
-References: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
- <1e1bcfaf5bbe66fac364d5b7d3a7ebdc5f37531c.1785998419.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: mark <mlevedahl@gmail.com>
-In-Reply-To: <1e1bcfaf5bbe66fac364d5b7d3a7ebdc5f37531c.1785998419.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-12.utu.fi (130.232.247.52) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhaXEgACRoJBAwGBxoMDxoNBigP
+ BQkBBEYLBwVIWEhaSFlcSFlbWEZaW1pGWlhfRltYSFBIWEhYSF1IWEhYSFhIWlhICg0GRgMGBwoEDSgPBQkBBEYLBwVIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhI
+ WV9IDwEcGxwNGigYBwoHEEYLBwVIWEhZWUgFKAQOHRoBB0YdG0hYSFFIGBsoGAMbRgEFSFg=
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=IBoufXYF+1Vu0J0wFTnLCD1uOknJxJ/wtpvsQWOtb0o=;
+ b=NgmXzxkSpHR3Otf0Xn9ZPl7AgWzcMnESyHHpNaaiV/wfZ8hr9HWsnFq3nhl3HDsk4cTlR4/rLMvO
+	bdQpm9TLUuTIQXF0WE/EnM8DsKMKQlejqYxPJ5XIf2EyF+KEpSMIR+qZH7aRS35u7FR9GH6xlr2v
+	BsccSuN/hD5WxrqenfNiQVEPgmdqACRkzn+BDNBKqV4azsNVC+fY20l6V1kIoyKToACSB+qmRqF6
+	AxJIwJZpfW1aUC+VSgi/ypOpM3ENncaZdPRgbNOeSn7bjYGjJETTkBBAYKe6sJK1cF2W1+KnvjI7
+	4s9IJzbOEfFQt7wPKrXalA4LIDpUx237EkU2kg==
 
-On 8/6/26 2:40 AM, Johannes Sixt via GitGitGadget wrote:
-> From: Johannes Sixt <j6t@kdbg.org>
-> 
-> When the user clicks a color preference, a color selection dialog is
-> presented whose title is provided in parts by the caller. The dialog
-> implementation must supply the rest of the title. This is unfriendly
-> for translations. Provide the full title by the caller. Rewrite the
-> texts to be more natural language.
-> 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  gitk-git/gitk | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 9e735d91bf..454f54dca8 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -11836,34 +11836,34 @@ proc prefspage_colors {notebook} {
->      set coloruielems [list \
->          bg          bgcolor {} \
->                      [mc "Background"] \
-> -                    [mc "background"] \
-> +                    [mc "choose background color"] \
->          fg          fgcolor {} \
->                      [mc "Main text"] \
-> -                    [mc "foreground"] \
-> +                    [mc "choose main text color"] \
+Harald Nordgren <haraldnordgren@gmail.com> wrote:
 
-> @@ -12014,11 +12014,11 @@ proc choose_themeloader {prefspage} {
->      }
->  }
->  
-> -proc choosecolor {v vi prefspage x} {
-> +proc choosecolor {v vi prefspage title} {
->      global $v
->  
->      set c [tk_chooseColor -initialcolor [lindex [set $v] $vi] \
-> -               -title [mc "Gitk: choose color for %s" $x]]
-> +               -title "Gitk: $title"]
->      if {$c eq {}} return
->      lset $v $vi $c
->      set_gui_colors
+> Btw, I have now twice seen this message from Google when using Reply
+> All, which sends to Phillip's reply-to email, whereas mails are
+> actually sent from phillip.wood123@gmail.com:
+> 
+> "Your message wasn't delivered to phillip.wood@dunlem.org.uk because
+> the domain dunlem.org.uk couldn't be found
+> 
+> DNS Error: DNS type 'mx' lookup of dunlem.org.uk responded with code
+> NXDOMAIN Domain name not found: dunlem.org.uk For more information, go
+> to https://support.google.com/mail/?p=BadRcptDomain"
+> 
+> 
+> Harald
+> 
 
-This with the prior patch should help translation due to use of more common idioms and
-complete phrases rather than jargon. Good.
+There is a typo in the domain---should be dunelm, not dunlem.
+
+--Tuomas
