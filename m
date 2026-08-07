@@ -1,167 +1,113 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A04ECA6B
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 16:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AF5471252
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 16:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786118501; cv=none; b=sDyjsvTnup7W6HNHeB3ldtE4uIoEgVj3PGW2ABeKMXV5cM7RhL6GNRve7r4GcaSRNOKct8smjl2O4ckWujNBcwitz+vq4ZiQWPKJ94WidwCagDf3NQuwjmK5qYjN27oWvQ6W1yvM7NGhdK49LdlTCQPEGapgO+dYuWDoawhoraU=
+	t=1786119423; cv=none; b=nhUpbJ5bMnOIpNWMZ0Adx+ABsfu44EWNE0DD0mwUIwX34UeDG9nEEE1AR0PuH6Oui3CubDGXI0RvJPW0ws7RiqbB7Md/awe1K1pfTLCm0Gy3Fg38sdndfqX+yBQJibFLmoUtYZrKFi5mkWrmiIivo3/h2+MRUFPCwubpbEYO1D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786118501; c=relaxed/simple;
-	bh=bnPkyD5JpfGj531Jyj+Vea4UmG3JIkFM5UygaTeKnvA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PQATg7HLj2/n+QZ8XKIDPg8eX489AauAxaQN67LMMVy4HcXd9lYFPQefLvmQi8Unv84IFqH8/OEF0Hnaq3B44NGzfkgXcnM22eUWznfES8mFQwgYOnzNl30/VoxBuQsm3vI/8NXkffnpsP8dcUz8WPfLxdIo86VKST2eknexVvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U6v7OIH5; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786119423; c=relaxed/simple;
+	bh=ouibquiODxEuYuA0d9OnrqQ9YD5nWE1M7u6xa4apwPA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qoa1Hr7UHAulpbyO9yp2xw76wf2J98+OuTcGlO4J2Ovax15IFLg7QabemQC2YrbNuz7OwMGM/oeG6rJ6Z8Q9Ax0I69kLz6PFOnU1PiFVsbcSNxZpesRIw0y+G4qE4A4Iy0Fo2OdcyAHEM2kZTxy7E/yrI5M3LAKiqwMkL7ZAVuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fxw9Gd/j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AqLreMs2; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U6v7OIH5"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7eb63dbd229so1586185a34.1
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 09:01:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786118498; x=1786723298; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=iFdxl2hh5MHYmNa8Jp1nu/bV6P0iBUti/97kSGrzxKg=;
-        b=U6v7OIH5nRlpEprqmUHPG1Omss8BIqSU2dKK8NRmTQdLe3GKMNFbXHlXBAFiKT3avM
-         nkHehQryAZpFdRF/ggSX4IxEk9Y3MVfgCTsK7OJojh9fKy0kEqeY9N5smxCJb0REJREv
-         +Brn7BnQRRgNiPNOfAEcaukX97rllo2nYN5BGjeozW8X6wfkvtY2L4gynmv40xa++IEX
-         I3NTK5/HK+P+a0uUnFj0RB4rx+RtId89POuIyPhFIgOzVTylCXOJwaEnvxDEyT4vubCz
-         UkBoizUMCDUVTPPWVgnSb8ai50f9u9MUlEacRRsXht/HNijIDkGwwYU0oJ+6GJ7MYRJl
-         Rjsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786118498; x=1786723298;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=iFdxl2hh5MHYmNa8Jp1nu/bV6P0iBUti/97kSGrzxKg=;
-        b=FqE+DCd25pSjQNMPgdaNQkVEgDN43kZ08rnc/9qurJP0vcYVKUMEGpNhnFuXeKdD5i
-         vxiw+/QBfu7NR3+5a/o7xskzxt3KfMSwpOKWPWhz4gH4lC1dQiFGZbgqcE+V7+eBlubF
-         BpuAVNthn9BMaZy9d2GKE/jwk2wbtxH6R6wwsJla/D9W1JjbDHtymQelporE+YMTto1D
-         rrZ4U9Di9+H/1koMtfUjcQSQsnMEp1/ZLysPbTqXoie4MR7UtPSESzK15l+yz1nj4CX/
-         e9ha5eayMtwKyWTw7JywC46pS447HSJz3liX+/HfQccfoV9b7m9xbmUyLlSmJ9EjAuhj
-         nwqQ==
-X-Gm-Message-State: AOJu0YyCYt9XJzPmONuNusXUD7fRepCPgkfFxAxIeeYqvqyX2lFII0Kp
-	4xM0NkThHhK8vEG0FyVhgbM1hU1KsoSA9V/uoZ1/HS5mNlxL4ZG+VppCf0TBRQ==
-X-Gm-Gg: AR+sD10TjB+2myFw5U9j78aRhfC0fviErkYiyTiaRva2yIERe/qU7EXNmZQqz16Fty6
-	Wv+mDtvi6U1a3NTzTtmyJTw41UaC/mGMy+OGVvuaCcqjqumojMIT1zRIZQBPhO5b1IUI/bwsm05
-	Okq2k7Ay9JbImLWnW10BKPkY3yJrE16wkRtZst1KjX3vjT9ArbOfPkKPSq/CyPsV4/Qsg4NjUH9
-	RjyBMWcJKxmED41CgWUd3DwqzXlZ0XT+PVhrEM3dGAMIBx6DhPuaCsDoYaEqycRSb8kMQ4Yi/eu
-	aQGsOWYVGhIf3r8eVqFGKw2A/FM0+/5ELoeZS60NiLicseC4DycNqgqfJsk9xYChdI7ihHTxdbQ
-	ToyQJDfLyVzVZ0vJx2/E+IZfhW903YHQpP8mHu+VcQMFPIs7a7ZXHUxvIxr3IlEs1qOTOTy6vQq
-	wDidQXfmdP/8zVs+jtGqHUpnZmM9j0h7tRaUfyeRGmlwhvm2+1JRZ0rQ==
-X-Received: by 2002:a05:6830:7086:20b0:7de:9b99:a8ee with SMTP id 46e09a7af769-7f1ff361df8mr2493590a34.9.1786118498061;
-        Fri, 07 Aug 2026 09:01:38 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f35b7c4b2dsm1571801a34.20.2026.08.07.09.01.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2026 09:01:37 -0700 (PDT)
-Date: Fri, 7 Aug 2026 11:01:35 -0500
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fxw9Gd/j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AqLreMs2"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 32A4A7A0137;
+	Fri,  7 Aug 2026 12:16:51 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 07 Aug 2026 12:16:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786119411; x=1786205811; bh=GKYG2e7H98
+	5bHkbw8s1UtD8VXsffDGeRfDNdn5w5ui8=; b=Fxw9Gd/jbIYEAxmzNOMHG0TABo
+	bo+Mpyg6RJ5WwkWNgrxGdIKou4wVkUIvfo9RBV3y//A2UvDia2Oe4wRpGc6m0UY9
+	qy0bOWKGBY+P7fH/Ke/A1Nk0QHA5V0gvi1XCOKnn9MdDQT7+IrdYJb6LjLhn/FNp
+	PODD6I7nFbBo9cHWcgK8AxAxMnK5nbe4zTsjl5pFlCm+uZuq+ILeROUdEVEIbon8
+	+9ix0NLnM95mUFOxnLLJz6eVLj6U7LeHWFDG75cEq1FIQYZ4kjqnKjvvar+5syn2
+	NlDz2KHbgRSCM6M8lyrOo9gBXxxrkjXlAJciTJG2ysPT7wYwUFn2hGJZc/Ug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786119411; x=1786205811; bh=GKYG2e7H985bHkbw8s1UtD8VXsffDGeRfDN
+	dn5w5ui8=; b=AqLreMs2oycLVjpqFu6dN31uRdmRPf/uVACQmHNhWPwR4p457Gs
+	3nmowBDcKoralkbupoV7cfCR5P+GP1v6oxeWQwUdzKstUpKmFPrFeXRt0AMQt5yv
+	JGlwcoo0m9ijWtLnbS95gpTimYIasg3iAkHEQ5F6J+5mTpgiHlzNL9rhpYGObjxa
+	EbUiyrm7JZMMpIFf4niPyqug7WXBdLC0uHRFxtsgLEzbH08Lss9Lr1IulciELVFD
+	3IYSeD1hj6MalUE249sV3Q5TtnTUrbsJr+yQL2qCb9iuXCICJatRXvclC+noJRGY
+	3UV1LZ5hSOlY/WeHqVHq+sQAjVsYAAG7wkQ==
+X-ME-Sender: <xms:8gR2andiDixgZvXALJFJ0nErRAfEpy4PVF40cpfoxKnxxivQthte2A>
+    <xme:8gR2avfaGKUkYvO8T_ZPgcMUJbJz0B4-6SJ6L357VB6e4rqLOQQGs2LA1jvkX9zD6
+    zGfR7-_dcgvtPlhkaEg843J9hk-LY6EDXYDWdDLqCCfs7Pqm8Tan-Q>
+X-ME-Received: <xmr:8gR2aiwBR5mIrXFsk89GVnIg_ATzv6MnsNdqYqrBULwAXroR2fV76H9SQ6spBc6FaOI9vZEjgdHsMkeiO_QzxUqlFuq8ihhcgw>
+X-ME-Proxy-Cause: dmFkZTES59/UKpC8m/3wNu539QKohs41yXELenzXIhI8pB1ml6zpXMsRiWSWAkz3oR+HQv
+    RmErxxQh5tooYNo53c0xozeRgWlSYfFLNohvxCvxEhPNdQE7Qh6+B9rLtWBtVkrzQMRWDh
+    Y6HYdq5c0uwqtD7JrNDpuQB1NmPC2nbPwbgEndI9+Mo/JMRYdoUHhcUFIi20CUoY5ca1DG
+    DB5/xgJc1bUa7gF9nQS71vH+tV32teY5nYBHSWykZYvzPe4aQpKV00WuaeSvYC8wEwuuNj
+    b406WBqc03DFT1wSDrp9CIkr3F2d+x7yaKYsKQLmOKLWeWuwJLdwXjbFGzjLRPvgQV6Zj7
+    eflXwNv97ZdfJy3KymtobCkdQEoVW+mqxAKeRwoT+Ks9n85t7nQTEYJQ787MXqyi5x6Qz7
+    cYIQWlsut2r0stleI1A2b/M6XerKQU3OkLaHbUuBLx01I+kSvm4xW9NWAY9RSZVjmwr5To
+    9qggYhpSYatqaXp+MfX33Awk2Dyhm2ksN6Im2MiLciAMqsQi+pMJqqSOUPeQG6YVAXdofx
+    s3FbWAqUcMOoIbtzDC91YGOMrRzWagqQBNpaSeS4NPNqz+6LCB9mnmw64QiEq5P+HsJLWg
+    eDi2w5AlnSwgGmmxAhN24by+HISVFaR+4U5fYcRxkQPYsSsiMB9+mdnSjlEg
+X-ME-Proxy: <xmx:8gR2au91iNnOWM4-q4dS2oa8YqA8ZW6wnAN4XVfmNpfbjxKpmu2DXg>
+    <xmx:8gR2aijFF3ufgQTmmRwxke9rtPgfYJoXnMlUHkFG2WlpcD8pd9g1Sg>
+    <xmx:8gR2atFBboc-7mcxtgTYgP2sDNdPTHMToC33YDPv9RtAiNuwdQzU3g>
+    <xmx:8gR2ap8nmheFPkt27IdLD1xHw36hwbaasU1TcfXfmRJjQqq9G1AGkQ>
+    <xmx:8wR2arDO_S7EizEzbE_yz0SQR8f3XNh3tuDBGoW0z1lEByLwcpi6k1aB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Aug 2026 12:16:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 6/6] odb/transaction: add transaction interface to write
- packfiles
-Message-ID: <anX7baSyrG2dvFDk@denethor>
-References: <20260806213859.816157-1-jltobler@gmail.com>
- <20260806213859.816157-7-jltobler@gmail.com>
- <anWDVFL6OjX2xdR-@pks.im>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  tnyman@openai.com,
+  Taylor Blau <me@ttaylorr.com>,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] ci: bump ubuntu image version for static-analysis job
+In-Reply-To: <anWyV9Q4Cmsa5AoT@pks.im> (Patrick Steinhardt's message of "Fri,
+	7 Aug 2026 12:24:23 +0200")
+References: <20260726083254.GA3528497@coredump.intra.peff.net>
+	<20260726083905.GB3529069@coredump.intra.peff.net>
+	<anWyV9Q4Cmsa5AoT@pks.im>
+Date: Fri, 07 Aug 2026 09:16:49 -0700
+Message-ID: <xmqq8q6hgb2m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <anWDVFL6OjX2xdR-@pks.im>
+Content-Type: text/plain
 
-On 26/08/07 09:03AM, Patrick Steinhardt wrote:
-> On Thu, Aug 06, 2026 at 04:38:59PM -0500, Justin Tobler wrote:
-> > +		status = finish_command(&child);
-> > +		if (status) {
-> > +			strbuf_addstr(err_msg, "index-pack abnormal exit");
-> > +			return -1;
-> > +		}
-> > +		odb_reprepare(repo->objects);
-> 
-> Now that this is part of the ODB transaction, do we really have to
-> reprepare the whole object database? Shouldn't it suffice to reprepare
-> just the one source that we've created the transaction for?
+Patrick Steinhardt <ps@pks.im> writes:
 
-Ya, this is a good suggestion. At this point, the packfile has only been
-written to the transaction source, so it should be fine to just prepare
-that source. Will do in the next version.
+> They'd of course require a bit of a deeper look, but that could be
+> another way to speed up Coccinelle for us. Even though I cannot say for
+> sure by how much, I didn't give it a test.
 
-> > diff --git a/odb/transaction.h b/odb/transaction.h
-> > index ec0b27c449..491026e815 100644
-> > --- a/odb/transaction.h
-> > +++ b/odb/transaction.h
-> > @@ -4,6 +4,51 @@
-> >  #include "gettext.h"
-> >  #include "odb.h"
-> >  
-> > +/*
-> > + * Options controlling how odb_transaction_write_pack() ingests a packfile.
-> > + */
-> > +struct odb_transaction_write_pack_opts {
-> > +	/*
-> > +	 * Optional fsck severity configuration to apply when incoming objects
-> > +	 * are verified.
-> > +	 */
-> > +	const char *fsck_msg_types;
-> > +	/*
-> > +	 * Path to an alternative shallow file describing the shallow boundaries
-> > +	 * to honor while ingesting the pack.
-> > +	 */
-> > +	const char *shallow_file;
-> > +	/*
-> > +	 * The max size in bytes of the incoming packfile allowed. No limit is
-> > +	 * enforced when set to 0.
-> > +	 */
-> > +	off_t max_input_size;
-> > +	/*
-> > +	 * Whether the validity of incoming objects should be verified.
-> > +	 */
-> > +	int fsck_objects;
-> > +	/*
-> > +	 * The threshold for the number of incoming objects required to store
-> > +	 * the objects in a packfile. This option may not be relevant to
-> > +	 * backends that do not store obejcts in loose/packed formats and can be
-> > +	 * ignored.
-> > +	 */
-> > +	int unpack_limit;
-> 
-> I wonder whether this option should rather be handled internal in the
-> backend itself, as it very likely doesn't apply to alternative backends
-> anyway. I don't think we allow command line options to override this, so
-> the backend could just read the configuration manually.
+Another benefit is that it would reduce the programmer's burden, as
+it is not immediately apparent which rules are still relevant.
 
-This was something I was also considering initially. This option doesn't
-really make much sense to have as part of the generic interface though.
-I'll update in the next version to have the backend read this
-configuration manually.
+I wonder if we can easily define the exit criteria when we introduce
+a new rule and document them, immediately next to the rules.
 
-> > +	/*
-> > +	 * Whether to reject an incoming packfile if it is "thin".
-> > +	 */
-> > +	int reject_thin;
-> > +	/*
-> > +	 * Optional file descriptor for reporting progress and errors. Set to 0
-> > +	 * for none.
-> > +	 */
-> > +	int err_fd;
-> > +	/*
-> > +	 * Suppresses progress reporting.
-> > +	 */
-> > +	int quiet;
-> > +};
-> 
-> Nit: I think having some spacing between the different options would
-> make this a bit easier to grok.
+You said "refs, object_id, the_repository, ... all look like we have
+long done with the migrations"; in retrospect, would it have been
+easily doable for those who introduced these rules to describe how
+we would declare "now migration is done"?  If so, perhaps a good
+step forward may be to update tools/coccinelle/README to add such a
+rule.
 
-Will do.
+    ... goes and looks ...
 
--Justin
+The readme file clearly states that transformations needed for
+migrations are *not* regularly run.  Is it possible that we have
+these rules you mentioned misclassified?
