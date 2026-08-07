@@ -1,531 +1,122 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F58F3A5445
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 07:39:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786088389; cv=none; b=eoM43BUbbKszchX58GPCLQhEDfqeV2jzvcCVU7vj8BfCw4dkm4WS9EGuP9XLvhUfKqpjhIIMz0ehz/ofVSUHZ4WzHuuV2gzD8HOaZ8RSUuQ367ycFFSJPy5KvPI5PeSaNql/1rYj/00YxccO0LhlKr/AlkhYTACY6BKUuU3f2nI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786088389; c=relaxed/simple;
-	bh=S8BYpQ25OIT1rpQOD6xUswYmlkUqO19YoopVfhCDxS8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=j2c/WTLglBHjjR3YQTwsx5kM+mtuR+MJ0JfaRoyydPgiLNDZ6GDHrOfMlRfKCNsnmRC/0pzMsOzxv1hHdjoPUsBb1IJAD4n86O3NcjVw4I21MwlgAll5zmn8PGc7D+EnGDonj9VuwYaFNMHvqzmlcH4Bqts2vnEmVhbL8ELEOs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l1wRPKB4; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C0946C4C5
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 08:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786089925; cv=pass; b=Uemw6rgefTCkCbrLuLgb1AgVtPjGgvQgHHlTxXFRHCFVwPe/utgjMJo8vqxEVBcPRhEC/WAiliT+FRkKUNRGQGWHCF/V+Uk2rBRMhdjgdt+I2FoK/ceUDMULBC6ulYZG/i7d1lby3EksP9Nmx5jRSvdfECv2CIm/14tm5d5smms=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786089925; c=relaxed/simple;
+	bh=Hi1361V3xSYMHzkGwdNjYqVST/t0ZYb18/KLwpADpGQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mW8jifQhe97XH2tLNSe02J6Muc0cf0W9GHosiz7MZAMEXnyD4iB57eAX/FzRmpljbMgrXh3iDHhr0+ggSte+gDNTzYtXJbRxqg1CnqrGB+9hZL/cS5pejLRaWgPDC4FVIPehlSHUqT7uE2GjMoTfk4h15T4GZn4UehkAItmpZvQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L1zKi9op; arc=pass smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l1wRPKB4"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-cb5b8572b70so3352884a12.2
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 00:39:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L1zKi9op"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5b159850b16so2992503e87.3
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 01:05:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786089921; cv=none;
+        d=google.com; s=arc-20260327;
+        b=GeYu7ZYlO+FbPEnh3ZQR8JRbGP2/1eWMpTPk2GlmeHxZB64rJ4ebIHFXq6vdXFLWxA
+         FxVSHSLuFuNXtlg/ORE1o7+zyHNz+fghPY8wAz9FKlWeSkFTeRahlsuWgzDB9r48vuxy
+         7Z7UNDk4o33WbG2niXg6eJJS/StXxzts1f0oBdDsm8Xei3unZl9kFXaIOKLRqEtyawg+
+         55Z4SnqynDBe7yC/GaP8xoPrhM1kdV82yRV2rlxc5aI+lpy/cuGrkDdCA6hA9J7vQLBD
+         r0TtEFtSpv6Nk2MEUJGovNWA40k8azE+B7gBEEkh89icSRApAmVdZBuIN6YAxX2ZnnyA
+         gOxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Hi1361V3xSYMHzkGwdNjYqVST/t0ZYb18/KLwpADpGQ=;
+        fh=+rxVMgasjTcw63aikTTVOCzA993n6RNNUEErhksVvWI=;
+        b=E1cfUK+qY2wYguY/jxRPyoXk4SM1Fh2acHkK0VWYD9kkF8g6TgZM5OZUhhmvI/FoNH
+         A3+vKAOiutp8gLQjn6/101g1ARlVtfinogUv16vL51TFMHntygpXSbXDM9irLrK8N0k1
+         KrjHeH27AFrFNtZ6FcShQLDLWZoHcN2qpYb7SjGMSWEsijdbazL0poNzuCZYEE5Gvqq3
+         5EuD4UKmxg91BfKLXHqmATgWP1uwBDhQfl425zRTxUk54YmTfAna+t6pKmbqo6k8VUSu
+         Pucxj13QQFkB52dZUVWv3nvnyEnWzJNq3GHj66bZZuaKxH9VeXckUva5Ddj6URX+K8ed
+         HnMg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786088387; x=1786693187; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=fciGtvMMnJzTevKeQWyn6C5bF+qhVtQ+sC2xsFsw3cY=;
-        b=l1wRPKB4NQHwiNqGsXoNzBT/9JPCXWubkyvizloBh6hYf6GMt9T1qJS+I2XHTnZoI0
-         JlBRnDxBfBNFsjroLj6XBLYagv5XVe3CZ9YeHS1ke+2MKIlIWKIQTEdIV1IbgBwbRzOb
-         VFGpfSVOQ/zOp6viDFgsHXgdqZOuSNsgH5H4wZHjTQFOfA9XZe+hsOmkJhbjc+Fm1zAJ
-         ePcqx22prWFteTxb0X16jXxoPjWP4otS6KKTj79Kxx98DLOHYoyJcOld7Q50h5uNv9hw
-         x6s3Ev8rJXZ0FT+03iUr249sdkqBWGIkreaPpengbbTB1tlI1b1in9hPuSflIEQQJ6es
-         /h0g==
+        d=gmail.com; s=20251104; t=1786089921; x=1786694721; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Hi1361V3xSYMHzkGwdNjYqVST/t0ZYb18/KLwpADpGQ=;
+        b=L1zKi9opewaS1ELFgMRMEV0bWHSSSUaUyauDZRfEIhSmitA6rnOpr41VCyrMJb0PGX
+         21PvvuD/i3/NSWws6SH2bdwEG3n0WG44S1qfl3n93BhUpn+2lKh3mLxsbCIOyOSD+NP8
+         MYlpmwn9LpCHHjCNvkhIv5j+Qg8BvVeM8iDmMsaK5oLqUiLui6Q12W07n0cjPmrcSJ6P
+         hel0goAoH8YX4iUT8OpPAwJKyKkTg7NNeE+CDD408tgCfQk6nHm96bqWRLqJsf2vedUm
+         JLvcAAI8aXlbSVezD9tyiik23lzhmfos6zjngFlIlh+ihltN20WpSNb/uKLK2+OuzPqy
+         sQsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786088387; x=1786693187;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1786089921; x=1786694721;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=fciGtvMMnJzTevKeQWyn6C5bF+qhVtQ+sC2xsFsw3cY=;
-        b=b0GNq4ALZ/85EzeLLZcYipC46hSSiZ47oPtmJaXpMnEh/n0aHMxJShoI8s/GnrEd+b
-         no+s83iKOLHRKMgqUaZlvIqvbd6KsM2Kezhe3EWbfv30F21fcwpBPzFDaJS9uC70mwEV
-         pMnH7xH+69AJQx81IQB9gYnBBkwNUhXSKgXEcIH9DuxczcPPFPRa8FNiMbqlSUO2TwDB
-         6kfYrSeyYzDkFeRwut62fJ3ZFBHkT3K4OfajcPmwGS1iGy9/9lxzdZarbOKy058Si5WK
-         xKU+pBr3jtpju7d5r51oeMAoIzGHBFA2MQnMiXnf6i6K9NThK0nalnhbvfCiPbg31a2P
-         M/rw==
-X-Gm-Message-State: AOJu0Yx5UMQoDsZmNixfiWMAm71j25X1dsugpGXwIW+C6neSi1G0wYBj
-	s9zK/34nvBDXYuU8K3+Yv7mKenwve59QOIJ33y/TUMWEXmhnmQkewDFHzqwfOMZN
-X-Gm-Gg: AR+sD10ZrSeVOOXVPhW7dsUHCqHEaDh/jTAxA+DTq7Mdrr+MVgiCgY68qShzW0Iy2Mr
-	GBymb2R8LTtRVDSVBy3GX3oImudvqVhIQ9Ofxbo4C30yqwE2T+x5rao3twKycGqGbQa/N2x2mTa
-	3gD+KgBR68jllAADCNZJpK6NIPAZCFfj4fFl3QZEbhxf30C8jg0pmLrSdbaFyEvjk6g0HFuq2b8
-	nxZ8ianD2LJ64NEoDwXmOqVOfGQUsduYYdEQQu+ZcQnztxohWdqW7rDO7puMQ44p0U3+HYf8gkA
-	AXi+izzOV6myc/cxuQBaIVYQ9Q4cjCcThTIsFkfy8UvioQWE77h5p3ASzJ9FpjF2JQYJijmoVb1
-	XUSkLOLQ9gl4UIvpSTRZXjDRqoA3RkLa+tAYOTGv6ODIvsNqq+9nAZmKrATZatrm6XCQBZgAQNv
-	jihAwK6M8FQvwXxX+yKVZ8TP9jevo/gyL9vNcRRW698J/Y8jxoGSC2fOMU0qyYDNQ=
-X-Received: by 2002:a05:6a00:1bcb:b0:847:9745:2f83 with SMTP id d2e1a72fcca58-84f2dffe143mr24423453b3a.18.1786088386886;
-        Fri, 07 Aug 2026 00:39:46 -0700 (PDT)
-Received: from [127.0.0.1] ([20.163.82.244])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84f5a51e99asm563289b3a.33.2026.08.07.00.39.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2026 00:39:46 -0700 (PDT)
-Message-Id: <821217ed7ca8e10aac84344be0fc9560157b359c.1786088371.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2337.v13.git.git.1786088371.gitgitgadget@gmail.com>
-References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
-	<pull.2337.v13.git.git.1786088371.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 07 Aug 2026 07:39:31 +0000
-Subject: [PATCH v13 8/8] history: support editing squashed commit messages
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=Hi1361V3xSYMHzkGwdNjYqVST/t0ZYb18/KLwpADpGQ=;
+        b=ptmum6pVP0ovFSFrNa1W7+A/B4/mDx/bQl1eCGRIgNW3mhoJnFVoPDIFd1Vs71U959
+         hjzajdNny9aFPVxJo38Y1WQJY4XgaxqOl+j4vYZHAK1VF47YaQW1E+CTHj7/5lZem+bX
+         gNzNicy+hWWgwbyUe0+4Siee/LCSZs7XgxAfrSYk0Z2AFy65c3mX7Pktrqhl7eYHLWvJ
+         k7ubH4+bE1B4deKEe4pQT+BpFkTbRFawaVZEOyq/HQiGuRAxYwED5MoE4klEFIGPbI1v
+         ZMIjAYfcqwpC2UfGrExunwGPgSLH5Jy6nkDu+P7JsAlFB3w5bhYpp9VKX9YtueOS5y8+
+         egUw==
+X-Gm-Message-State: AOJu0YyAkSFjuxsHmWsT+q1ruB0BW0XWShQuZJvegVRFbueP5TwwIp77
+	Gaogk6845YCe12vmKGwGCq9Te4ZvzxBK45GK37u/zsorfdEHpeMHODw8/wLHt+CWQCX5QFEyjFy
+	dJc+7o4pFONkE7w4nvOAEzWeEsHxM3K0=
+X-Gm-Gg: AR+sD11LpnT+QLPQG5spzKsa/n/mu4ciT31QvezBlRb5zEjxpgGQlOA9bnVfYW4tHQ4
+	So0dL+S0vGU49gnp1rqHNz3rSBpSl9Y5S2Kzv8O8O9V5uz1DCfpd6xcQPty8jiFfsJQV3h/fToE
+	4WgRl5CdsTNHWbOZzTxZpDO+XfILfFjLGeZBR0+Ktce3JZecxw5pLAgzQa9JM1M95lrF0nD0EwU
+	A4XwDY4vt3704nM2w+UFsQoyjw56MNn+LKjVveYqHaeApqY5Dzv4U054So5VJc7fosy0pxx9qrT
+	LcXAUq/JEiY+60qwwBtc7u53hX/Uor6FaUz0AZQBy+zKzgyDHgwKum25Ezy/4lmQmnyMIU4lERI
+	xqcg=
+X-Received: by 2002:a05:6512:668e:20b0:5b0:113d:8ad9 with SMTP id
+ 2adb3069b0e04-5b2f4b8816fmr1803332e87.12.1786089920618; Fri, 07 Aug 2026
+ 01:05:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Matt Hunter <m@lfurio.us>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+References: <20260802212826.1090943-1-sahityajb@gmail.com> <CABPp-BGYuQA_ngR3xS-_Mndzf_ubkn7rSc25CJG=UbLCVGdnyg@mail.gmail.com>
+In-Reply-To: <CABPp-BGYuQA_ngR3xS-_Mndzf_ubkn7rSc25CJG=UbLCVGdnyg@mail.gmail.com>
+From: Sahitya Chandra <sahityajb@gmail.com>
+Date: Fri, 7 Aug 2026 13:35:08 +0530
+X-Gm-Features: AUfX_myKCBoulwss8IsdpbTgMT2DnXJCAK8BPrNsNUJ7NEK7-lciYOPleTmkJUA
+Message-ID: <CAP=WS+sp74WQ=xndQ+2a6W-qP3Zz8=bVnEymgVpS+gwMv1Dh7g@mail.gmail.com>
+Subject: Re: [PATCH] read-cache: avoid sparse-index expansion for unborn HEAD
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On Fri, Aug 7, 2026 at 12:17=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
+ote:
+>
+> This explains what, but not why. It feels like a pedagogical exercise
+> with no actual utility.
 
-Open the editor by default when squashing and provide --no-edit as the
-opt-out. Record the exact commits selected by the revision walk,
-rearrange that todo list with the sequencer's autosquash machinery, and
-build the message template from the resulting order.
+You are right, I found this through the TODO comment and do not have a
+concrete user bug report or use case driving it.
 
-Match interactive rebase's treatment of marker messages: comment out
-fixup! messages, retain squash! bodies, and let amend! replace its target
-unless a preceding squash! requires both bodies. This keeps message
-editing aligned with the marker validation used by the no-edit path.
+> Why would someone with an unborn HEAD be using a sparse index? [...]
 
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-history.adoc |  18 ++-
- builtin/history.c              |  97 +++++++++++++++-
- t/t3455-history-squash.sh      | 197 +++++++++++++++++++++++++++++++++
- 3 files changed, 305 insertions(+), 7 deletions(-)
+I do not have a good answer to that. My thinking was simply that
+removing the special-case fallback still has some value: it deletes a
+long-standing TODO, unifies the unborn-branch path with the normal diff
+path, and removes an ensure_full_index() call that future readers would
+need to reason about.
 
-diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-index fb04a67685..2e2e31f521 100644
---- a/Documentation/git-history.adoc
-+++ b/Documentation/git-history.adoc
-@@ -133,8 +133,9 @@ given, for example `HEAD~3..HEAD ^topic` to additionally exclude what is
- already on `topic`. Rev-list options may also be given, but any that would
- change how the range is walked are overridden with a warning.
- +
--With `--no-edit`, the oldest commit's message is preserved, except that an
--`amend!` commit targeting it replaces its message.
-+An editor opens pre-filled with the messages of all the folded commits so you
-+can combine them. With `--no-edit`, the oldest commit's message is preserved
-+instead, except that an `amend!` commit targeting it replaces its message.
- +
- The selected commits must form a connected graph with a single tip and must
- not include a root commit. Every parent of a commit after the oldest one must
-@@ -148,6 +149,13 @@ of markers for one target is combined into a single commit. With `--no-edit`,
- the last `amend!` message is used if there is one; a `squash!` or `amend!` is
- otherwise refused if folding it would discard its message.
- +
-+The editor template mirrors `git rebase -i --autosquash`: each `fixup!`,
-+`squash!`, or `amend!` is grouped under the commit it targets rather than
-+shown in commit order. A `fixup!` message is dropped (commented out in full),
-+a `squash!` keeps its body with only the marker subject commented, and an
-+`amend!` replaces its target's message, unless a `squash!` folded into that
-+target first, in which case it keeps its body like a `squash!`.
-++
- A local branch descended from a selected commit but not from the range tip
- cannot be rewritten as a descendant of the result, so with the default
- `--update-refs=branches` the command refuses. Rerun with `--update-refs=head`
-@@ -163,6 +171,12 @@ OPTIONS
- 	objects will be written into the repository, so applying these printed
- 	ref updates is generally safe.
- 
-+`--edit`::
-+`--no-edit`::
-+	For `squash`, open an editor to combine the messages of the folded commits.
-+	This is the default; use `--no-edit` to keep the selected message without
-+	opening an editor.
-+
- `--reedit-message`::
- 	Open an editor to modify the target commit's message.
- 
-diff --git a/builtin/history.c b/builtin/history.c
-index 915cfb0cb9..db35a7451a 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -1266,6 +1266,10 @@ static int squash_check_subject(struct repository *repo,
- 	return ret;
- }
- 
-+static int build_squash_message(struct repository *repo,
-+				const struct strbuf *todo_buf,
-+				struct strbuf *out);
-+
- static int setup_squash_revisions(struct repository *repo,
- 				  int argc, const char **argv,
- 				  struct rev_info *revs)
-@@ -1319,6 +1323,7 @@ static int setup_squash_revisions(struct repository *repo,
-  */
- static int resolve_squash_range(struct repository *repo,
- 				bool update_branches,
-+				bool edit_message,
- 				int argc, const char **argv,
- 				struct commit **oldest_out,
- 				struct commit **tip_out,
-@@ -1327,11 +1332,13 @@ static int resolve_squash_range(struct repository *repo,
- 	struct rev_info revs;
- 	struct subject_data subject_data = SUBJECT_DATA_INIT;
- 	struct commit *commit, *oldest = NULL, *tip = NULL;
-+	struct strbuf todo_buf = STRBUF_INIT;
- 	int ret, tip_count = 0;
- 	bool walk_started = false;
- 	struct ref_filter filter = REF_FILTER_INIT;
- 	struct ref_array refs = { 0 };
- 
-+	subject_data.edit_message = edit_message;
- 	ret = setup_squash_revisions(repo, argc, argv, &revs);
- 	if (ret < 0)
- 		goto out;
-@@ -1344,6 +1351,10 @@ static int resolve_squash_range(struct repository *repo,
- 	while ((commit = get_revision(&revs))) {
- 		struct commit_list *p;
- 
-+		if (edit_message)
-+			strbuf_addf(&todo_buf, "pick %s\n",
-+				    oid_to_hex(&commit->object.oid));
-+
- 		if (!commit->parents) {
- 			ret = error(_("cannot squash down to root commit"));
- 			goto out;
-@@ -1457,6 +1468,13 @@ static int resolve_squash_range(struct repository *repo,
- 		string_list_clear(&sorting_options, 0);
- 		goto out;
- 	}
-+	if (edit_message) {
-+		strbuf_reset(&subject_data.squash_message);
-+		ret = build_squash_message(repo, &todo_buf,
-+					   &subject_data.squash_message);
-+		if (ret < 0)
-+			goto out;
-+	}
- 
- 	*oldest_out = oldest;
- 	*tip_out = tip;
-@@ -1464,6 +1482,7 @@ static int resolve_squash_range(struct repository *repo,
- 	ret = 0;
- 
- out:
-+	strbuf_release(&todo_buf);
- 	clear_object_flags(repo, SQUASH_SEEN | SQUASH_TIP |
- 			   SQUASH_AMEND_TARGET);
- 	if (walk_started)
-@@ -1475,6 +1494,76 @@ out:
- 	return ret;
- }
- 
-+static bool amend_replaces_target(struct todo_list *todo, int target)
-+{
-+	for (int i = target + 1; i < todo->nr &&
-+				 todo->items[i].command != TODO_PICK; i++) {
-+		if (todo->items[i].command == TODO_SQUASH)
-+			return false;
-+		if (todo->items[i].flags & TODO_REPLACE_FIXUP_MSG)
-+			return true;
-+	}
-+	return false;
-+}
-+
-+static int build_squash_message(struct repository *repo,
-+				const struct strbuf *todo_buf,
-+				struct strbuf *out)
-+{
-+	struct todo_list todo = TODO_LIST_INIT;
-+	struct replay_opts opts = REPLAY_OPTS_INIT;
-+	int nr_commits, ret;
-+
-+	if (todo_list_parse_insn_buffer(repo, &opts, todo_buf->buf, &todo) < 0 ||
-+	    todo_list_rearrange_squash(&todo) < 0) {
-+		ret = error(_("could not prepare the squash message"));
-+		goto out;
-+	}
-+
-+	nr_commits = todo.nr;
-+	for (int i = 0; i < nr_commits; i++) {
-+		struct todo_item *item = &todo.items[i];
-+		const char *message, *body;
-+		size_t commented_len;
-+		bool skip, squashing;
-+
-+		squashing = item->command == TODO_SQUASH ||
-+			    (item->flags & TODO_REPLACE_FIXUP_MSG);
-+		if (item->command == TODO_PICK)
-+			skip = amend_replaces_target(&todo, i);
-+		else
-+			skip = !squashing;
-+
-+		message = repo_logmsg_reencode(repo, item->commit, NULL, NULL);
-+		find_commit_subject(message, &body);
-+
-+		if (skip)
-+			commented_len = strlen(body);
-+		else if (squashing)
-+			commented_len = squash_subject_comment_len(body, 1);
-+		else
-+			commented_len = 0;
-+
-+		if (!i)
-+			add_squash_combination_header(out, nr_commits);
-+		strbuf_addch(out, '\n');
-+		add_squash_message_header(out, i + 1, skip);
-+		strbuf_addstr(out, "\n\n");
-+		strbuf_add_commented_lines(out, body, commented_len, comment_line_str);
-+		strbuf_addstr(out, body + commented_len);
-+		strbuf_complete_line(out);
-+
-+		repo_unuse_commit_buffer(repo, item->commit, message);
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	todo_list_release(&todo);
-+	replay_opts_release(&opts);
-+	return ret;
-+}
-+
- static int cmd_history_squash(int argc,
- 			      const char **argv,
- 			      const char *prefix,
-@@ -1519,14 +1608,11 @@ static int cmd_history_squash(int argc,
- 	strbuf_join_argv(&reflog_msg, argc - 1, argv + 1, ' ');
- 
- 	ret = resolve_squash_range(repo, action == REF_ACTION_BRANCHES,
-+				   edit,
- 				   argc, argv, &oldest, &tip,
- 				   &message_template);
- 	if (ret < 0)
- 		goto out;
--	if (edit) {
--		ret = error(_("message editing is not supported yet; use '--no-edit'"));
--		goto out;
--	}
- 
- 	ret = setup_revwalk(repo, action, tip, &revs);
- 	if (ret < 0)
-@@ -1538,7 +1624,8 @@ static int cmd_history_squash(int argc,
- 
- 	ret = commit_tree_ext(repo, "squash", oldest, message_template,
- 			      oldest->parents, base_tree_oid, tip_tree_oid,
--			      &rewritten, 0);
-+			      &rewritten,
-+			      edit ? COMMIT_TREE_EDIT_MESSAGE : 0);
- 	if (ret < 0) {
- 		ret = error(_("failed writing squashed commit"));
- 		goto out;
-diff --git a/t/t3455-history-squash.sh b/t/t3455-history-squash.sh
-index d2d8e5fdb9..591463cb86 100755
---- a/t/t3455-history-squash.sh
-+++ b/t/t3455-history-squash.sh
-@@ -381,6 +381,203 @@ test_expect_success 'squashing fixups into a merge' '
- 	sed 1,2d msg | test_commit_message HEAD
- '
- 
-+test_expect_success 'edits every message and aborts on an empty result' '
-+	git reset --hard start &&
-+	stage_file b &&
-+	git commit -m "re-one subject" -m "re-one body line" &&
-+	test_commit --no-tag re-two file c &&
-+	test_commit re-three file d &&
-+	head_before=$(git rev-parse HEAD) &&
-+
-+	write_script empty-editor <<-\EOF &&
-+	>"$1"
-+	EOF
-+	test_set_editor "$(pwd)/empty-editor" &&
-+	test_must_fail git history squash start.. 2>err &&
-+	test_grep "Aborting commit due to empty commit message" err &&
-+	test_cmp_rev "$head_before" HEAD &&
-+
-+	write_script editor <<-\EOF &&
-+	cat "$1" >edited &&
-+	echo combined >"$1"
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	git history squash start.. &&
-+
-+	cat >expect <<-EOF &&
-+	# This is a combination of 3 commits.
-+	# This is the 1st commit message:
-+
-+	re-one subject
-+
-+	re-one body line
-+
-+	# This is the commit message #2:
-+
-+	re-two
-+
-+	# This is the commit message #3:
-+
-+	re-three
-+
-+	# Please enter the commit message for the squash changes. Lines starting
-+	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
-+	# Changes to be committed:
-+	#	modified:   file
-+	#
-+	EOF
-+	test_cmp expect edited &&
-+	check_log_subjects -1 <<-\EOF
-+	combined
-+	EOF
-+'
-+
-+test_expect_success 'handles fixup!, squash! and amend! like rebase' '
-+	git reset --hard start &&
-+	test_commit --no-tag mark-base file b &&
-+	stage_file c &&
-+	commit_with_message "fixup! mark-base\n\nfixup body\n" &&
-+	stage_file d &&
-+	commit_with_message "squash! mark-base\n\nsquash remark\n" &&
-+	stage_file e &&
-+	commit_with_message "amend! mark-base\n\namended message\n" &&
-+
-+	write_script editor <<-\EOF &&
-+	cat "$1" >edited
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	git history squash start.. &&
-+
-+	cat >expect <<-EOF &&
-+	# This is a combination of 4 commits.
-+	# This is the 1st commit message:
-+
-+	mark-base
-+
-+	# The commit message #2 will be skipped:
-+
-+	# fixup! mark-base
-+	#
-+	# fixup body
-+
-+	# This is the commit message #3:
-+
-+	# squash! mark-base
-+
-+	squash remark
-+
-+	# This is the commit message #4:
-+
-+	# amend! mark-base
-+
-+	amended message
-+
-+	# Please enter the commit message for the squash changes. Lines starting
-+	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
-+	# Changes to be committed:
-+	#	modified:   file
-+	#
-+	EOF
-+	test_cmp expect edited &&
-+	check_log_messages -1 <<-\EOF
-+	mark-base
-+
-+	squash remark
-+
-+	amended message
-+
-+	EOF
-+'
-+
-+test_expect_success 'groups fixups under their targets in the editor' '
-+	git reset --hard start &&
-+	test_commit --no-tag alpha file a1 &&
-+	test_commit --no-tag beta file b1 &&
-+	stage_file a2 &&
-+	commit_with_message "fixup! alpha\n" &&
-+	stage_file b2 &&
-+	commit_with_message "fixup! beta\n" &&
-+
-+	write_script editor <<-\EOF &&
-+	cat "$1" >edited
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	git history squash start.. &&
-+
-+	cat >expect <<-EOF &&
-+	# This is a combination of 4 commits.
-+	# This is the 1st commit message:
-+
-+	alpha
-+
-+	# The commit message #2 will be skipped:
-+
-+	# fixup! alpha
-+
-+	# This is the commit message #3:
-+
-+	beta
-+
-+	# The commit message #4 will be skipped:
-+
-+	# fixup! beta
-+
-+	# Please enter the commit message for the squash changes. Lines starting
-+	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
-+	# Changes to be committed:
-+	#	modified:   file
-+	#
-+	EOF
-+	test_cmp expect edited
-+'
-+
-+test_expect_success 'lets amend! replace its target message in the editor' '
-+	git reset --hard start &&
-+	test_commit --no-tag mark-base file b &&
-+	stage_file c &&
-+	commit_with_message "amend! mark-base\n\namended message\n" &&
-+	stage_file d &&
-+	commit_with_message "squash! mark-base\n\nsquash remark\n" &&
-+
-+	write_script editor <<-\EOF &&
-+	cat "$1" >edited
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	git history squash start.. &&
-+
-+	cat >expect <<-EOF &&
-+	# This is a combination of 3 commits.
-+	# The 1st commit message will be skipped:
-+
-+	# mark-base
-+
-+	# This is the commit message #2:
-+
-+	# amend! mark-base
-+
-+	amended message
-+
-+	# This is the commit message #3:
-+
-+	# squash! mark-base
-+
-+	squash remark
-+
-+	# Please enter the commit message for the squash changes. Lines starting
-+	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
-+	# Changes to be committed:
-+	#	modified:   file
-+	#
-+	EOF
-+	test_cmp expect edited &&
-+	check_log_messages -1 <<-\EOF
-+	amended message
-+
-+	squash remark
-+
-+	EOF
-+'
-+
- test_expect_success '--update-refs=head only moves HEAD' '
- 	git reset --hard three &&
- 	git branch -f other HEAD &&
--- 
-gitgitgadget
+> This seems to presume a single dirty file, otherwise wouldn't the
+> printing look pretty odd?
+
+I agree that "dirty=3D%s" looks wrong when multiple paths are
+present. I can fix that in v2.
+
+Thanks for the review.
