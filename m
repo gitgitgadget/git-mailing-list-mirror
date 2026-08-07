@@ -1,183 +1,167 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B825A43030A
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 10:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786100354; cv=none; b=cN2Oes6mfFljqZxQV3ICLpflSSWtFauCdOg5EcBiFsq1LHIXphTolAnm8NGsGsVRshpw+kzDBrO+o7I/iI/5Xhkkhc68PkeduJADYmpIOMfMZMKcNpbiYNOi4YvIa69NAeSigYNsegDST9qeCu+NGc6mQrG8YyaeoFm42VQ4Ct8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786100354; c=relaxed/simple;
-	bh=9YUGBqtWNt7UeCcf3N5l5wXxcOc0i/k7K9J/r/S/4ec=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nxE/ExTYmdjKwkVPHJusfbgOHmi+tTBODGUbPO4GfwR3nQt1+6+SlDcpJk5fmcziakrqJrGRPjlsn4HsW54vyA7c6VZ5NdFzJR5C9Bgco+QAKq+FXoOR+sFyspJ2/JILtGp/h/Nf3V9fkjRmhBs9xLynLPbYxp0c/lXAxdX9dao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B52LGLrS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EsgMFmVm; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37D82EEE7E
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 11:02:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786100574; cv=pass; b=T1ysELXF5+6V+xDVK7O+/haNRdKyZ9gAo2uiH51spw6Xf8HIb/P914ZqhD5goiRLS7c20cx+HUPnblQT1hZLKKob+y9w/CdScYTat8jTAHoWPQb/BCARzQvUOyYFXZMZhN1MMtX2dfuO0Hup10kXjkFNaZT8XnOh+r52WrkR2dU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786100574; c=relaxed/simple;
+	bh=8EZ7vt6TN7KAFpVDuD7AxisY/02tMcWoqxVRLiQR4w0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F2OsVnLg5u0Z1Gd0a5g4oueWIL4f3yFAUNPL08v9tw+g+3vl1foL5l9gnA2/JG1JjD7faurjZzAUOxcuv5QvbMIJK7nI7TWEl7cyetB3GHFoP0CrL/vbrHJsEppkFE3FvVxQDAXSVmlJMGTfvfS3lbeuMYSq2UJC8yI6obftf+Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TZ1skAZV; arc=pass smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B52LGLrS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EsgMFmVm"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id BC7BDEC011B
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 06:59:11 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 07 Aug 2026 06:59:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786100351;
-	 x=1786186751; bh=tChN+QoBFSyPUR2UpJXJDJiuZ89G2rY3Yucib+v5q3s=; b=
-	B52LGLrSuK6OLq6GLXQ+l0OAbD70v1t8UQ0Vy348mxqhxEyV5jrljNB8dZ+JWpcM
-	goxTA5TN/+te1XqGDeGtU3TgFbXUcgwEjp/Xdv0mLO+1lMpdQvvX3xuhZjlNnEnx
-	m6CQ5IgVU97LB09nSCmr+uIf7I3D7QICnWRsg8bK7ckro8LxpjY79AyLBUlSPcCU
-	cg9DwtxVWPCUwLZd38VfnQaNwsMRz5rWump0Tn1O3TvAkdn/BSUhYe9a6YzNI9rS
-	2swygH0aGXoC41t/bFV690rYc5lHHOL6UkyjuGHlmTeQQf/Uw0QvorbFTut/YGoL
-	ZV2ADpKC6pYd/enzRRmc+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786100351; x=
-	1786186751; bh=tChN+QoBFSyPUR2UpJXJDJiuZ89G2rY3Yucib+v5q3s=; b=E
-	sgMFmVmh+SniIrL02BLRUTW40ZtjS/3FzeP2MxnBpf84sPl3lSm4XelfguDIj51w
-	em+Nj33xsa7qUOvkuOoVXzkVPlP9gWaX6dzMiZiC0PSOh+fDvqSgEIMRIEfDHdvz
-	Ag59itj9r7End6JRRqw1cdhqnL/Pf19xr9yVj3vSZovCk/zyJuEaz/xi3pt586lw
-	xHA8TZO+cGGLe0NMh44PFTV5H0s+dtZu2xi8qCrEXyIReFV1Cnlv5ItEn7xRzTqy
-	7NKcbesjMie+XXybQFTio3ITl2STUlutpGfkxOwzGaqjwOtrT+f4GVMe94i0Gr5P
-	IreHUDqR7mKMeYJmEcq2g==
-X-ME-Sender: <xms:f7p1ah78vbPS6wmiXTEKjHFu-sGHF9VuEUdpHL_eVyWx5rfgBG5YiA>
-    <xme:f7p1al1hr05dTOeknlDsjVE_2X31P21uOz1C5TtbpKw0fU1_MD5X7HR7o-YGqlO3g
-    q5mC4jTo1OmFHwDoDsUnm247py5ZmZ4BVJi1gUFZZf7V_-dva-46h8>
-X-ME-Received: <xmr:f7p1auFtBPYYqEfEHwsxb7O6tx7KJIPVEH2KrHLSQqD-x28EHAEk5lOwwd7hvkAs-vHobHp2QI3qEAAxs_VkT8BXlCMyVwuprMm9EJl4XTflPQ>
-X-ME-Proxy-Cause: dmFkZTEbu99otfHh8LAFyCPxK0Y4e7mjatBmVn+4biSTGAMQrlhf1LxIE/5cxO1NZZahBZ
-    nTC+O1qQbD/4ygBaWO4Gl8fqwFhMErx4ZYOQei70UnB8WoRKs1ry2MuoclM+LTws/n3y+I
-    AVFOfgLSRHLc1htuDPKg8HluDck/GHY9lCS/+CqT5aKp3NI0+4yGaANMKEaiuUeN54ZA8+
-    jCCvoCl1epzwbnGh/CH9Z0tl819P2mnpqwbvc2EmyL+AMZYyr4Bw+32ErCdUaW/IbFi+l2
-    g3T6oJpKujzykRVb6YO0S/RwWdddViXdaLHzFqkXufloT/zs45yRbWiUNwht4IiEzdoWbn
-    LSVSEUYrrRHGysf0fq9oB2DFFIpMuPSY4zXscrNYZzCeSui9urnSuOzuIa9DhgPKpn01SR
-    d0FLo+8dc3li0sWv9N+Nx5o8mw3LXhaEN+6nydWLo8wXLbLyYlUk6T1VWINJeSr3/336/n
-    T3nR1OwLgpO4C0sLmF/xKh5oh9IzPhKWBAGBkoUZInazqyFVk/V7qd4LQF1qmTox+sYOIi
-    2BEGDkC9uLHBaAdbDmu1rEKyux8b3X0JcCjklxjjBBF7ZqWAK1sGazBFSK/h6eUWmm5HJd
-    AD+fbigaC3nlVi6si7vNyGvzPrq8NNBwtrOFSkGnYuOjlb4Eoh8KBKlUtXzg
-X-ME-Proxy: <xmx:f7p1avRvfIzZ4qm2bN_zc_ZHTfLdrn69SdViRMmrlfUj3nyhzKdwUQ>
-    <xmx:f7p1alDYpQt541xIYmvbZsu5Frs1eWr1iAjRwZw8nj-wQaZ852aWNw>
-    <xmx:f7p1av3mX4GRHEog2BDXqaIfA_MJ_akz5k8OSno9oNSuW3QF3LHV0w>
-    <xmx:f7p1ajWxl6XJqegO6PH93PFLuAjv591YOG8wOyJVVjLR8hOdzNkGsA>
-    <xmx:f7p1amak_ECubotCKpaLVIo9oyg3Ubisaykqw1r9cOt4yzczA0guhD6W>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 7 Aug 2026 06:59:11 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4e5262f6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Fri, 7 Aug 2026 10:59:10 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 07 Aug 2026 12:59:02 +0200
-Subject: [PATCH 2/2] t7900: fix flaky "maintenance.strategy" test
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TZ1skAZV"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2cf27856f9cso40596985ad.2
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 04:02:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786100572; cv=none;
+        d=google.com; s=arc-20260327;
+        b=awWFdwL6SY12KxcSgMUIbz7VtzVosOiO+/mFBMlWoKKHy/AWgQsNAlvuk+gQoKoekV
+         LhuaakRFqhKVkKSmHoV/ZSycnO+G2y/BHv+6w2xbMmE+rVREenQxhIarpY9Ab5h1JvGo
+         B8zxYbqjeHyRSdeC9foF+J0KsBY7tV4mxxHY0KNUGCfI0alclvMT/Bga48yivc4Hyk2A
+         KaUoNrAHB3wXUsV4wJyyR0ROW3D59YHl8gfD1xLv9pH7liLGo6t0DlzMXdPTawOG6N9W
+         MhDVHBURvAaac7vZ1zFKpReVDPLRhPMtitKgS7XUMZZOyMVi2/ZDruBx0pG/uV6KD54M
+         q5xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=DqW2HcjJuDOLPHIHNrwGP9NCuIRHc1/zFjX54Tx3mS8=;
+        fh=NU7o0yG4D7p5TwgORj2GD2mgCGNQzXhM+pTqyVp7sf0=;
+        b=XA4WS3P1lluFG5fjv8gnLZiEku7PYIkm9ci+9TbhqePlL6oTeGXvKp68ScSQQKhzZI
+         t9tAEDLvIdeb3NrNOhcWfy+BhKHpNEuEBMnihIhJlVqsu/v7NwLAi2KRjm4UVEaXSzXr
+         HNYyf5PHl4xtxIlRLMslNaCgynug/aUK/Cq6yDPdOPuOio3+LyXq5VhwUH4bUrwv7DNa
+         ud1IvDnGayBSFYj6PWt4i2F8J6Nrpipi1UELYY3ffJ6f8tyKstLKJ9FDoVoVzRtHBil0
+         YRVoNULC44sC5HpnKId9VpIWoEcBGlXRej4TGL+unpsFHi43xzFBAd2vZ7JXRdGIydRi
+         uGyg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786100572; x=1786705372; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DqW2HcjJuDOLPHIHNrwGP9NCuIRHc1/zFjX54Tx3mS8=;
+        b=TZ1skAZV7Hc8RuCAtCXiu6rOYZJ1cy98mn/cNIPmdYzrjSsoTbzSrdNah+f3D2nhJP
+         omHFjaoekxVLnIlDslp1lPnAOrjqaIkX3OLrrWQxG45IxY2wpR07DZvKic4pwFEhfIzW
+         T1VF0Y5xM1NJy80q7ActBjqLnPXOzA1+VzcoYRCl5KcArMu4gZ+PZhSHxA1iOvxQKC07
+         2Eo+Xb63/igI8kzVRrVHK9pW7TK0xHxyTiYBxu76J/gOOJ3sMs+Of8mVJaHYvJ2yARec
+         srLvWIQovP27Yr85LrENDumntkUl+/Y2M3tcruaL1p7iIPKs/nYNgZnnKopf0vETxwFu
+         y8ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786100572; x=1786705372;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DqW2HcjJuDOLPHIHNrwGP9NCuIRHc1/zFjX54Tx3mS8=;
+        b=sf0oWR9g0K7+PW/JAvADgy9HrpfvQyZqDoVxsN0uisWbN5I+DnZWhwsQWc0Jo5WhID
+         ZfsHY6C6EtgLIKEUFWSh94JOv+q0aXWMQeMWx9FxVTFcfbXKdtsLzrgbg2MP6Vzb1asw
+         RwPplT7w8muR8jqv833a8xJzv5E+ejCO5QJvjBqkelw9m8YmQ32TxOQ3TFjZz/5KTDbm
+         NFWR3AXEmyoHWPa3ox74Z1qiVjMCod2seOTOTF2E9PK3uWHJtmBev+nl1gzqDHjnxmTk
+         UtgKZnu9BZD+TKpm+JcU1ZBGwnAw98ojGrdSebVQ3aSZz/vOio1AnUkJ2Y7a5fHLh/CP
+         AgQw==
+X-Forwarded-Encrypted: i=1; AHgh+Ro/dMR/58HjBS7X8GuyLtfkLlg+N2pUbA3wfdc6CRUaUdRYJVtqFirxvwdrT5qN4EqvebM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKQF4KDnnWx8fgxiamQzfjD8eMqQF7ph5nkLdtZSLvftG5p8JJ
+	gMIv2a3ChLmnbMJXHnIMZwf6hHGmiKFe+63ab1SBN2v1i3lygBdyR5/VxKHjd9Yt/qICilcOYNy
+	x2zGvUG+56KcKMjNbh2FpZbAgGt43amM=
+X-Gm-Gg: AR+sD11KlxZHYYOXxJlL4N+BEdw+QFrPjJBZrj8zJ2o/FZm0Pcs1+gYcBetjBZvAew1
+	mvW6KVkZILxVvPUdHZXi4AcL19vovQOMlbUDEV/hFKhT60TUr2qtLr9HAx0VZT1638GvozdMPcR
+	bpE9XImh83nE7sLXvPOrpI2IuTJwXKdiWFcvnPczkRH2nIeg0M7FZeixA3yi8HLncNWisrEIShW
+	BDtdZ4soHtuXhkmm68r+G9X3aFBS9mFTkF1fKa4s1c8CmLYceaLfhzzV7+rBoGmypIazAuOoQWE
+	vuGPej8dgwO2LrGgAUzdTGQfVxX9lKEuysOvANyMo2ALD6QTeDnhNuXp7LaDuWlgiAfrYcpwNyA
+	tE7kW9h+5L6i1wu2NDLSVbHtFLwy+rhl6j0PW4Eq2oHbY1hcojSsaTffpq/ws7spM/UVspeqRXq
+	ynp5XnlH2CsvpL9oqnuw==
+X-Received: by 2002:a05:6a21:1fc8:b0:3c4:397a:69ba with SMTP id
+ adf61e73a8af0-3cb85ef8666mr26350736637.28.1786100571956; Fri, 07 Aug 2026
+ 04:02:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260807-pks-t7900-fix-flaky-test-v1-2-08d0ea0fbbc5@pks.im>
-References: <20260807-pks-t7900-fix-flaky-test-v1-0-08d0ea0fbbc5@pks.im>
-In-Reply-To: <20260807-pks-t7900-fix-flaky-test-v1-0-08d0ea0fbbc5@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.15.2
+References: <xmqqcxw010me.fsf@gitster.g> <20260807013830.698340-1-gitster@pobox.com>
+ <20260807013830.698340-3-gitster@pobox.com> <CABPp-BEAtpT208afwSNoBbR-Nowss8OsLsL8ynETuBfN_xvWag@mail.gmail.com>
+In-Reply-To: <CABPp-BEAtpT208afwSNoBbR-Nowss8OsLsL8ynETuBfN_xvWag@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 7 Aug 2026 07:02:40 -0400
+X-Gm-Features: AUfX_mz9JEdyjSESthw3zY_JXCDdPV1P1hLiu9FEh8pXplJAyhpwxDPThPWu3iI
+Message-ID: <CALnO6CBdZT3nVco+AREz-SVj7QG2P3Q24Hov_HJ2rAzELFm10A@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] completion: complete tracked paths for 'git diff'
+To: Elijah Newren <newren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Philippe Blain <levraiphilippeblain@gmail.com>, Britton Leo Kerin <britton.kerin@gmail.com>, 
+	=?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-One of our tests for whether "maintenance.strategy" is being respected
-in t7900 is flaky in our CI systems:
+On Fri, Aug 7, 2026 at 2:18=E2=80=AFAM Elijah Newren <newren@gmail.com> wro=
+te:
+>
+> On Thu, Aug 6, 2026 at 6:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> >
+> > When completing arguments for 'git diff', _git_diff() delegates to
+> > __git_complete_revlist_file(), which only completes revision
+> > references.  This is good [*], as mixing both revisions and paths in a
+> > single list for the user to pick from is simply too confusing.
+> >
+> > If no reference matches, or if '--' is given, however, _git_diff()
+> > leaves COMPREPLY empty.  Bash then falls back to default filename
+> > completion in $PWD.  This fails when 'git -C <path>' is used because
+> > $PWD is not the target repository.
+> >
+> > Update _git_diff() to use __git_complete_index_file() when '--' is
+> > present, or when revision reference completion yields no matching
+> > candidates, so that tracked paths are offered as candidates.
+> >
+> > This changes behavior even in the case where '-C <there>' is not
+> > used.  The new behavior omits untracked paths from suggestions when
+> > no revs match the prefix but matching tracked paths exist, which is
+> > more useful in the context of 'git diff'.
+>
+> I'm looking forward to using this.  :-)
+>
+> [...]
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+> > index ccd3b2a372..845fd19f70 100644
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -1981,6 +1981,10 @@ _git_diff ()
+> >                 esac
+> >                 __git_complete_revlist_file
+> >         fi
+> > +
+> > +       if [ ${#COMPREPLY[@]} -eq 0 ]; then
+> > +               __git_complete_index_file
+> > +       fi
+> >  }
+>
+> Curious; __git_complete_index_file() is documented as "requires 1
+> argument", but you pass none here.  As far as I can tell, it works
+> anyway, but feels like an accident:
+>
+> 1.   __git_complete_index_file CALLS
+>       __git_index_files "$1" ...
+>       (Here, "$1" =3D=3D "")
+> 2.   __git_index_files "$1" ... CALLS
+>       __git_ls_files_helper "$root" "$1" ...
+>       (Here, "$1" =3D=3D "", again)
+> 3.   __git_ls_files_helper "$root" "$1" CALLS
+>       __git -C "$1" -c core.quotePath=3Dfalse ls-files
+> --exclude-standard $2 -- ...
+>       (Note that $2 is unquoted, and since it's empty, it disappears)
+>
+> It seems like it'd be better to pass an explicit "" to
+> __git_complete_index_file than to implicitly get it.
 
-    + GIT_TRACE2_EVENT=/tmp/test-output/trash directory.t7900-maintenance/repo/trace2.txt git -c maintenance.strategy=incremental maintenance run --quiet
-    + test_maintenance_tasks trace2.txt
-    + cat
-    + sed -ne s/.*"region_enter".*"category":"maintenance\([^"]*\)".*"label":"\([^"][^"]*\)".*/\2\1/p trace2.txt
-    + test_cmp expect actual
-    + test 2 -ne 2
-    + eval /usr/bin/diff -u "$@"
-    + /usr/bin/diff -u expect actual
-    --- expect	2026-08-07 06:20:51.388322602 +0000
-    +++ actual	2026-08-07 06:20:51.388322602 +0000
-    @@ -1,2 +0,0 @@
-    -gc foreground
-    -gc
+Good spot. All the other callers pass an argument.
 
-When running with the "incremental" strategy, we expect two git-gc(1)
-tasks to have been executed, but sometimes the test simply doesn't
-execute any of those tasks.
-
-A first hunch may be that maybe the disk-state is sometimes different
-and thus we decide not to run maintenance. But git-maintenance(1)
-doesn't run with the "--auto" switch, so we should execute those tasks
-regardless of the on-disk state.
-
-But there's a second condition that may cause us to not execute tasks,
-namely when the "maintenance.lock" file exists due to a concurrently
-running tasks. We usually disable auto-maintenance from detaching in our
-test suite to avoid exactly these kinds of race conditions, but in t7900
-we unset "GIT_TEST_MAINT_AUTO_DETACH" and thus enable the auto-detach
-logic. The intent of this is to exercise git-maintenance(1) closer to
-how it would run in a real-world scenario, but it does cause us to race
-when the detached maintenance job that was triggered by `test_commit()`
-lives long enough.
-
-We could trivially fix this race by disabling auto-maintenance for this
-specific test. But that doesn't fix this class of races in this test
-suite: while I haven't seen any of the other tests fail in the same way,
-a bunch of them have this race, as well.
-
-Instead, let's retain "GIT_TEST_MAINT_AUTO_DETACH" and only unset it as
-required.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t7900-maintenance.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 6735a9e082..5fbb16f0f0 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -7,9 +7,6 @@ test_description='git maintenance builtin'
- GIT_TEST_COMMIT_GRAPH=0
- GIT_TEST_MULTI_PACK_INDEX=0
- 
--# Ensure that auto-maintenance detaches as usual.
--sane_unset GIT_TEST_MAINT_AUTO_DETACH
--
- test_lazy_prereq XMLLINT '
- 	xmllint --version
- '
-@@ -71,6 +68,7 @@ test_expect_success 'maintenance.auto config option' '
- 	git init repo &&
- 	(
- 		cd repo &&
-+		sane_unset GIT_TEST_MAINT_AUTO_DETACH &&
- 
- 		GIT_TRACE2_EVENT="$(pwd)/default" git commit --quiet --allow-empty -m 1 &&
- 		test_subcommand git maintenance run --auto --quiet --detach <default &&
-@@ -90,6 +88,7 @@ test_expect_success 'gc.auto config option' '
- 	git init repo &&
- 	(
- 		cd repo &&
-+		sane_unset GIT_TEST_MAINT_AUTO_DETACH &&
- 
- 		GIT_TRACE2_EVENT="$(pwd)/default" git commit --quiet --allow-empty -m 1 &&
- 		test_subcommand git maintenance run --auto --quiet --detach <default &&
-@@ -107,6 +106,7 @@ test_expect_success 'maintenance.auto overrides gc.auto' '
- 	git init repo &&
- 	(
- 		cd repo &&
-+		sane_unset GIT_TEST_MAINT_AUTO_DETACH &&
- 
- 		git config set maintenance.auto false &&
- 		git config set gc.auto 1 &&
-
--- 
-2.55.0.679.g6767b8d81c.dirty
-
+--=20
+D. Ben Knoble
