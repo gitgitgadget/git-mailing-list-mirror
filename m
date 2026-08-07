@@ -1,82 +1,83 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136D334CFC5
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 07:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E777F38A299
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 07:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786086230; cv=none; b=h5E+Y781AgoKJeg/mil4CkQJE9ZgSBsp9Hdnt/GjxL6+zKk/BOWA1TM1Nz9j/S7qo7R58K6h/3vtzNk1UkTY/FEtr6uRI2jWozu2tOJd78L6Z3XpK6yWYyJt11TlU2UvkQPXeXWywtuKFMLFo+uYq/YXy0WMiSkfBRJGVtI31Fk=
+	t=1786086235; cv=none; b=TnfJAGwrWdmmqO0AzqYNDmONpIYwD0aukOrKjF7faSnOC0Dhyr+0vuvKjry14Hfr9yYhdHyVLDtklyR6J6K0gGAWWtHInqyPmquGe9XbtKu/tbfuyx7NH8E/4mzLJFd8hrCGyN19VTMxj8BUrAACI8ystETK+iohIgpDHP8l07U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786086230; c=relaxed/simple;
-	bh=EasrLLHDnVzMC1C7ZKN2dr3MG1ETwJTmN4SD7Z52l70=;
+	s=arc-20240116; t=1786086235; c=relaxed/simple;
+	bh=rvhXe5vsawBr18+EcJCOoiIHK3FY82xVB7YrP88zrtE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oKS7NtoKIJ09woVWIFzw93lOVvGB1tHjbUQRPHn4XAl5R6REDyQDHJIMcGbh+L1TEuWrfGz28ZG0bAsItgB7KuSI5U1/kk0cyMKFpiZ2VnwShBdadqyzSgY26F8hGSlNed7cPoxm2K9stT5shomAoiddgldT1IYnGuZUtqRI5Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GezOHoMT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WmMKOjp5; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=ik09z7RdA3+VVJJosWQGLp1aM43dD/mH5SlVJpVwqS/NOBJpqZwAqYHeID31WFlKgEklbRGzLju2erjA4zbCnZhYDDQc9RNNnF2Eqakae58DtruhMMmVEWjqTfmnwLiqsY73PZH8ToCRagXCLba/87tEjn4ycVW6UyL8xjnUDrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ftXrDFIt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KbUVuc+h; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GezOHoMT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WmMKOjp5"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ftXrDFIt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KbUVuc+h"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 279D1EC01AE;
-	Fri,  7 Aug 2026 03:03:48 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id EC591EC01C5;
+	Fri,  7 Aug 2026 03:03:51 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 07 Aug 2026 03:03:48 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 07 Aug 2026 03:03:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786086228; x=1786172628; bh=htFE1PIu0K
-	0Bb2uGcSzZqkyRdNo0u6AwzQ6s3Q85VCU=; b=GezOHoMTGzwtJ/B7Nt/4bcr57y
-	dtyHgExiP7aKZEFD7Wisuo4B9xUyR05gI8L8shhdUc7UBqjrpy31XFd5l7wscgkO
-	W7Vd9n6Msq3EjTvySqnU8k3JqvN7QW776N78TULfHAEJyEor8M9pYZOX4TW/M1Hb
-	rx5BznlWFzGtS27vEzER7i98Sm7gtK9cUDsfiiR0wOmtf75B8b80e9ZL94lmvkT4
-	h44zkeU6aW1oobtTv0GgXDA1fXMATRePWhrCKdKvg5Ola3/2iy2v/cp4uAHLHMs4
-	brRTwzYom3ScHh/hLvdLJM0aS6YUaUCiZkiXQ9/ISOiKCsTUdAjHHLwzfqJQ==
+	:subject:to:to; s=fm3; t=1786086231; x=1786172631; bh=m304cQmvDI
+	sSXeseEoSPUy8MsCnYfwF5lkr4qvD8sWs=; b=ftXrDFItX52t8VYFXh6yjd7MMo
+	tOKYae8xbFo6upovyCctaOVodIpRmUV3qfovTgFrvOGZg6ZhfiCWTi24reHP+EsG
+	ObJZEZYoNQDUOmnG09+dWKTEE2bf+rAeHtsS5ls2U+SGS7kp/di7ik3tb4pXn7ga
+	3bwhjve9eUbocs6W/L6nj0Wr1V9w0FTDxjUbEk02WTxapf0RrtgJFk6LtAREy0Pq
+	gPb4xi5Inbbiwn1Un8PNIKzzDlp9NwOI1G9wTfdoOX0RpDdOAwOoKnX4F0wuo22F
+	FDNvK+QNEcKc0rjNGC6Z3AmBwW15cg8XXlPLW5GfBh9pPam4I6igsVMKxFaw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786086228; x=1786172628; bh=htFE1PIu0K0Bb2uGcSzZqkyRdNo0u6AwzQ6
-	s3Q85VCU=; b=WmMKOjp5i0eIu007Nbx80yaT1U5RJ9KREjzbDpx6Yk1oQlahCAt
-	mUCMaGMFvPZ/AveazNP3nHnxYD0jz2Z2QJi4jW9NQT1Z+GoDR1vpb/bXt8YGUDWC
-	FCuzYWalht+0BoO28gOf1YjdJ0PGnKcD7dYOfDbJfL3Vq6/Xxuk9hRksS+OcewSS
-	6iyVx6YNAASjXcM38DN2sokiJkDkcXeHz1eQuR6N6lcAI6csV7hLEJfz0ux0Ma1P
-	wiDfz6o3wxjpSL2kJnm3gkRPTXO+bH3JypMX6FabP75LlZA5pAQtRgR3Ry48IGrm
-	8KbMuA12hkUDimqwuT8bW973sr4YnpZpTbQ==
-X-ME-Sender: <xms:VIN1ajW3pHRoECGUtrAGvX_CQUDEvEBTaVbpMX7cTrgbMWxR242zyA>
-    <xme:VIN1ahk_K1qzoL45JUaSwiEdc_aDrVTMBs4KwpIuWn6CCaGuMmP9QpFpNNUi8M0RK
-    E0gAi8-zegKLNPRc7gZHyW5rkARR0WrH7cE8nVqaNYx_kMGXWmS120>
-X-ME-Received: <xmr:VIN1atBJb0xkrtWdthcBnzed5oWj2SCAJd7TnR-Qtgesd2HnXVlxkU73XpQJho17X0Pf-cXgIDKN_JNk4mxsAnXr2tCdveKW8NM8iTD99LqKpQ>
+	1786086231; x=1786172631; bh=m304cQmvDIsSXeseEoSPUy8MsCnYfwF5lkr
+	4qvD8sWs=; b=KbUVuc+hLGLqbG4k5NZrc9NlutHFh/tJHP2Aqt7inwDts5cxFtf
+	W8T77NFfG2whnF1h46dKiv7s/g4cU7p4qVZo1xxEqchHnjMJUtxxwAgNDBl4sdVU
+	U4000U8TganmB+8qEMOfkJNUf4olfEO/U8cCVqWu1G1Q92I30T+q4zpDRJ0DJoFv
+	I78rA8wU6XBrd60tDNpGs8ujG3DQQd7pyBsplTejR0vsh8VsHfK13PUCRPDYKJSh
+	4sJT8DzgiXQYZzFy6t2f17rapylUMKja8PTSbQm6C4YLNpsOHGAnS7dvvgAJNQlK
+	azbOScThp/EuYEeShm3E9ovi5qreD6Y5LrQ==
+X-ME-Sender: <xms:V4N1alF67KaVqPLlNVja49oYjxFFVv8bJLrJghFq8X6yF1vyL-d2iw>
+    <xme:V4N1agV61GF1kAE7L-jy5vV4H20cmTQpmol7lN8Rbh6rs4za_-h5o5nQmn9kXoUaA
+    uIsAAmiB3HqJLCtmYHsj8LrqKUC9Tis45dkbWdIEU3FluOtbdeK580>
+X-ME-Received: <xmr:V4N1akxo_ZNhDSEiBG4ESo1V4TgDVR9Ue1SMyzN1vWXuXvp7udPB35sLx0hmTBPhIpMfQ8JBUvfT7-hkYwGdhj5Ar7YQ2_Z08w3Toe8sMEbWSA>
 X-ME-Proxy-Cause: dmFkZTE26y9njCNpXPcmZxYe4ifaNpV+sYlC5mYRUIr+ln+pB38Sh4kjo5WX0zU5LY8sit
     +oeUUeuwuVDmjatud2iyJtMdnBGrHtsLnRGmbTcsfv4XslNEpw1gmYRc4vkyxvvkVzb6bZ
     FW+Hc4Ewp0bN9yMqVLHrPU0VZXSxvfa2uONHO4C1LZMZN/4xo/SlyjWqoa1PpzuveaGMel
     tb8CZN49JwAhjMMI8vzeUDPe9GRJE1Pij+NlRwONiI8W2cbrpyJAIUbCY4UmewvnRVelNo
-    mmLmZkIFSOfTf9/ExxwJZ9KjT4RrzlQa8TreUzcLYfr16STGdtDWK6anYTN5DZxvjKF6HU
-    U1Rll8Gteb8+knp3b5g6+xa9dqby2Rwa4C1ZfOQ5PXYlh4vBNTYza63j0C5Hyt4cxpolfw
-    qAZcVdcEO4F8MPiXrn2FuZCHVptzw7S9/0l+Dzy6L9m4Plg8+FJtUOvBVL6mbAmNCpqN4Y
-    nAlIrC5KDa3euPsJkQamtrgC1KFrrlb6dSTmJCo/oubr3p7TWR4QnLrao4BBsJ9ylN6BeZ
-    R9OQXsj+Ebm4MgDoLWCDxYtKlmkiKGDwqvfvRUIIk9GYy3SL5va65yfGAWO5n5/2ojhY0E
-    OSdSJI+Ug5ZZsYhI4wvrBmiDskBSn17U64rtDj6gEzUOvkcjE3F70TPHLeWA
-X-ME-Proxy: <xmx:VIN1apeWTRsDjFXrva7mOEbCh8z9CCAY6yxyCk48FlS7dj6ga6EkfA>
-    <xmx:VIN1agJGTwSl8HlbRX53fhDYIdwb53wKkLoP_JTPU4MGXaFWuunCxw>
-    <xmx:VIN1akeGFvLliyBn-lnkVUN9YTqn_cD_Eg1mo6liXFKEsClXQaVF2Q>
-    <xmx:VIN1av2oQ4dKzEMPRgYsnlDzLJA0tljSZUqnw1Trn9sbkYizty19Xw>
-    <xmx:VIN1aoFdKX3KbI1_v74G32_8SYinxVTk8VDQMbLWn1SJOxViVDJw_CPI>
+    mmLmZkIFSOfTf9/ExxwJZ9KjT4RrzlQa8TreUzcLYfr16STGdtDWK6anYTN5DZxvjKF6HH
+    M+TiSrJ30uPaA+LI/bbjM+6pk60lH86yLFyUgzdXt/twzyoV1k1JYx08BFhvvGYSucDT5U
+    v3v+70dKnv8JgtFR78YVj70gel5L/ZBGTzJQwXgCxw5nJ7AjLzqXOdlmscoOtZJJUmuG7M
+    zbDbgXaHP7P07SkdHGRZlOwiIXWCBWN8JVoCUSj0dv1fchnPHerDdcPDJtVszflkraJhTJ
+    wZplT+Yt/JHkmfp4SSMooZn1eNJau0iiLHnEW1XqFcfwqAc8odAkgu2UJ7aEmnVMsc1XjZ
+    4vNpdDO91vErz8J+eP97d415u3NLrO0yZjwYXN55L1BE4oq/TuvoQD+hauLg
+X-ME-Proxy: <xmx:V4N1amP5g-Sz-iFn2efm6P7QHsK15SbEMDvJxiCSLAYJma-3Bmxr2w>
+    <xmx:V4N1at6eSonuZY6avoygsJZu66i8zqEylIgiUIY23Gy4se0KReDamA>
+    <xmx:V4N1avMDwRXJ8LKctdteKt7Eve7xozaRK3REDojd6MOBhzcptNrjkQ>
+    <xmx:V4N1ajmzU-ZEMGW_RyINcAOStQY_n3RFQbiGQbq49lMt_pLuTyt1lw>
+    <xmx:V4N1al3y3iWGyf0O5Fb1GnxFi26otek8LTE83HOwRAHP4Ia2_3tSPIvN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 03:03:47 -0400 (EDT)
+ 7 Aug 2026 03:03:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f88bc9a7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Aug 2026 07:03:46 +0000 (UTC)
-Date: Fri, 7 Aug 2026 09:03:43 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 519ead86 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Aug 2026 07:03:51 +0000 (UTC)
+Date: Fri, 7 Aug 2026 09:03:48 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/6] builtin/receive-pack: report unpack errors via strbuf
-Message-ID: <anWDTwCwMn5wEdIQ@pks.im>
+Subject: Re: [PATCH 6/6] odb/transaction: add transaction interface to write
+ packfiles
+Message-ID: <anWDVFL6OjX2xdR-@pks.im>
 References: <20260806213859.816157-1-jltobler@gmail.com>
- <20260806213859.816157-5-jltobler@gmail.com>
+ <20260806213859.816157-7-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,72 +86,222 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260806213859.816157-5-jltobler@gmail.com>
+In-Reply-To: <20260806213859.816157-7-jltobler@gmail.com>
 
-On Thu, Aug 06, 2026 at 04:38:57PM -0500, Justin Tobler wrote:
-> When writing packfiles via `unpack()`, error messages are returned
-> directly by the function. In preparation for `unpack()` logic being
-> moved behind a generic ODB transaction interface, update the function to
-> instead write any error messages to a caller provided strbuf and return
-> a negative value on error. Call sites are updated to use the error
-> strbuf accordingly.
-
-If only Git had a structured error type, than we wouldn't have to have
-such ugly workarounds. Anyway, this is a deeper issue and nothing we can
-blame on this patch series.
-
+On Thu, Aug 06, 2026 at 04:38:59PM -0500, Justin Tobler wrote:
 > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 8c2d6e5789..7635b82bd3 100644
+> index 743005f1f5..3069b53509 100644
 > --- a/builtin/receive-pack.c
 > +++ b/builtin/receive-pack.c
-> @@ -2344,8 +2344,8 @@ struct unpack_opts {
->  	int quiet;
->  };
->  
-> -static const char *unpack(struct odb_transaction *transaction,
-> -			  const struct unpack_opts *opts)
-> +static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
-> +		  const struct unpack_opts *opts)
+[snip]
+>  static int unpack_with_sideband(struct odb_transaction *transaction,
+>  				const char *shallow_file,
+>  				struct strbuf *err_msg)
 >  {
->  	struct pack_header hdr;
->  	const char *hdr_err;
-
-While I'm not a huge fan of error message parameters like this, this
-change does make the calling convention more straight-forward. A reader
-probably wouldn't have known beforehand what to do with the return value
-without reading through docs.
-
-Also, we cannot just return the equivalent of `return error("msg")`, as
-we do want to use and munge the error message as part of the status
-report we send to the client.
-
-> @@ -2551,13 +2559,13 @@ static void update_shallow_info(struct command *commands,
->  	free(ref_status);
->  }
+> -	struct unpack_opts opts = {
+> +	struct odb_transaction_write_pack_opts opts = {
+>  		.fsck_objects = (receive_fsck_objects >= 0
+>  				 ? receive_fsck_objects
+>  				 : transfer_fsck_objects >= 0
+> @@ -2462,7 +2326,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
+>  	int ret;
 >  
-> -static void report(struct command *commands, const char *unpack_status)
-> +static void report(struct command *commands, struct strbuf *unpack_status)
-
-Should we mark this parameter as `const`?
-
-> @@ -2575,14 +2583,14 @@ static void report(struct command *commands, const char *unpack_status)
->  	strbuf_release(&buf);
->  }
+>  	if (!use_sideband)
+> -		return unpack(transaction, 0, err_msg, &opts);
+> +		return odb_transaction_write_pack(transaction, 0, err_msg, &opts);
 >  
-> -static void report_v2(struct command *commands, const char *unpack_status)
-> +static void report_v2(struct command *commands, struct strbuf *unpack_status)
-
-And here, as well?
-
-> @@ -2711,8 +2719,8 @@ int cmd_receive_pack(int argc,
->  			   PACKET_READ_DIE_ON_ERR_PACKET);
+>  	use_keepalive = KEEPALIVE_AFTER_NUL;
+>  	memset(&muxer, 0, sizeof(muxer));
+> @@ -2472,7 +2336,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
+>  		return 0;
 >  
->  	if ((commands = read_head_info(&reader, &shallow))) {
-> -		const char *unpack_status = NULL;
->  		struct string_list push_options = STRING_LIST_INIT_DUP;
-> +		struct strbuf unpack_status = STRBUF_INIT;
+>  	opts.err_fd = muxer.in;
+> -	ret = unpack(transaction, 0, err_msg, &opts);
+> +	ret = odb_transaction_write_pack(transaction, 0, err_msg, &opts);
+>  
+>  	finish_async(&muxer);
+>  	return ret;
 
-Can't we reuse this buffer and reset it on every run to save some memory
-allocations?
+Nicely done. All we need to do now is to rename the structure and the
+parameters, and everything else was already taken care of in the
+preceding commits.
+
+> diff --git a/object-file.c b/object-file.c
+> index 30b4717d3e..ec3b9a185e 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1292,6 +1297,148 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
+[snip]
+> +static int odb_transaction_files_write_pack(struct odb_transaction *base,
+> +					    int pack_fd, struct strbuf *err_msg,
+> +					    const struct odb_transaction_write_pack_opts *opts)
+> +{
+> +	struct odb_transaction_files *transaction =
+> +		container_of(base, struct odb_transaction_files, base);
+> +	struct repository *repo = base->source->odb->repo;
+> +	struct child_process child = CHILD_PROCESS_INIT;
+> +	struct pack_header hdr;
+> +	const char *hdr_err;
+> +	int err_fd = opts->err_fd;
+> +	int status;
+> +
+> +	hdr_err = parse_pack_header(&hdr, pack_fd);
+> +	if (hdr_err) {
+> +		if (err_fd > 0)
+> +			close(err_fd);
+> +		strbuf_addstr(err_msg, hdr_err);
+> +		return -1;
+> +	}
+> +
+> +	if (opts->shallow_file) {
+> +		strvec_push(&child.args, "--shallow-file");
+> +		strvec_push(&child.args, opts->shallow_file);
+> +	}
+> +
+> +	odb_transaction_env(base, &child.env);
+> +
+> +	if (ntohl(hdr.hdr_entries) < (unsigned int)opts->unpack_limit) {
+> +		strvec_push(&child.args, "unpack-objects");
+> +		push_header_arg(&child.args, &hdr);
+> +		if (opts->quiet)
+> +			strvec_push(&child.args, "-q");
+> +		if (opts->fsck_objects)
+> +			strvec_pushf(&child.args, "--strict%s",
+> +				     opts->fsck_msg_types);
+> +		if (opts->max_input_size)
+> +			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+> +				     (uintmax_t)opts->max_input_size);
+> +		child.no_stdout = 1;
+> +		child.in = pack_fd;
+> +		child.err = err_fd;
+> +		child.git_cmd = 1;
+> +		status = run_command(&child);
+> +		if (status) {
+> +			strbuf_addstr(err_msg, "unpack-objects abnormal exit");
+> +			return -1;
+> +		}
+> +	} else {
+> +		char hostname[HOST_NAME_MAX + 1];
+> +		char *lockfile;
+> +
+> +		strvec_pushl(&child.args, "index-pack", "--stdin", NULL);
+> +		push_header_arg(&child.args, &hdr);
+> +
+> +		if (xgethostname(hostname, sizeof(hostname)))
+> +			xsnprintf(hostname, sizeof(hostname), "localhost");
+> +		strvec_pushf(&child.args,
+> +			     "--keep=receive-pack %"PRIuMAX" on %s",
+> +			     (uintmax_t)getpid(),
+> +			     hostname);
+> +
+> +		if (!opts->quiet && err_fd)
+> +			strvec_push(&child.args, "--show-resolving-progress");
+> +		if (err_fd)
+> +			strvec_push(&child.args, "--report-end-of-input");
+> +		if (opts->fsck_objects)
+> +			strvec_pushf(&child.args, "--strict%s",
+> +				     opts->fsck_msg_types);
+> +		if (!opts->reject_thin)
+> +			strvec_push(&child.args, "--fix-thin");
+> +		if (opts->max_input_size)
+> +			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+> +				     (uintmax_t)opts->max_input_size);
+> +		child.out = -1;
+> +		child.in = pack_fd;
+> +		child.err = err_fd;
+> +		child.git_cmd = 1;
+> +		status = start_command(&child);
+> +		if (status) {
+> +			strbuf_addstr(err_msg, "index-pack fork failed");
+> +			return -1;
+> +		}
+> +
+> +		lockfile = index_pack_lockfile(repo, child.out, NULL);
+> +		if (lockfile) {
+> +			ALLOC_GROW(transaction->pack_lockfiles,
+> +				   transaction->pack_lockfiles_nr + 1,
+> +				   transaction->pack_lockfiles_alloc);
+> +			transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
+> +				register_tempfile(lockfile);
+> +			free(lockfile);
+> +		}
+> +		close(child.out);
+
+A `git diff --color-moved` shows that almost all of the code was simply
+moved around. The biggest change is this part here, where we now
+register the packfiles as part of the transactions. Makes sense.
+
+> +		status = finish_command(&child);
+> +		if (status) {
+> +			strbuf_addstr(err_msg, "index-pack abnormal exit");
+> +			return -1;
+> +		}
+> +		odb_reprepare(repo->objects);
+
+Now that this is part of the ODB transaction, do we really have to
+reprepare the whole object database? Shouldn't it suffice to reprepare
+just the one source that we've created the transaction for?
+
+> diff --git a/odb/transaction.h b/odb/transaction.h
+> index ec0b27c449..491026e815 100644
+> --- a/odb/transaction.h
+> +++ b/odb/transaction.h
+> @@ -4,6 +4,51 @@
+>  #include "gettext.h"
+>  #include "odb.h"
+>  
+> +/*
+> + * Options controlling how odb_transaction_write_pack() ingests a packfile.
+> + */
+> +struct odb_transaction_write_pack_opts {
+> +	/*
+> +	 * Optional fsck severity configuration to apply when incoming objects
+> +	 * are verified.
+> +	 */
+> +	const char *fsck_msg_types;
+> +	/*
+> +	 * Path to an alternative shallow file describing the shallow boundaries
+> +	 * to honor while ingesting the pack.
+> +	 */
+> +	const char *shallow_file;
+> +	/*
+> +	 * The max size in bytes of the incoming packfile allowed. No limit is
+> +	 * enforced when set to 0.
+> +	 */
+> +	off_t max_input_size;
+> +	/*
+> +	 * Whether the validity of incoming objects should be verified.
+> +	 */
+> +	int fsck_objects;
+> +	/*
+> +	 * The threshold for the number of incoming objects required to store
+> +	 * the objects in a packfile. This option may not be relevant to
+> +	 * backends that do not store obejcts in loose/packed formats and can be
+> +	 * ignored.
+> +	 */
+> +	int unpack_limit;
+
+I wonder whether this option should rather be handled internal in the
+backend itself, as it very likely doesn't apply to alternative backends
+anyway. I don't think we allow command line options to override this, so
+the backend could just read the configuration manually.
+
+> +	/*
+> +	 * Whether to reject an incoming packfile if it is "thin".
+> +	 */
+> +	int reject_thin;
+> +	/*
+> +	 * Optional file descriptor for reporting progress and errors. Set to 0
+> +	 * for none.
+> +	 */
+> +	int err_fd;
+> +	/*
+> +	 * Suppresses progress reporting.
+> +	 */
+> +	int quiet;
+> +};
+
+Nit: I think having some spacing between the different options would
+make this a bit easier to grok.
 
 Patrick
