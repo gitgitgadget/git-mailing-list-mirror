@@ -1,123 +1,459 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A253DC4B1
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 09:10:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F58E364942
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 09:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786093836; cv=none; b=pQ8CowFUeW8MINk0iXfXtakMwwoVAmCEc0XUorFGZzuc5HmX39kC0N2L+QI2svBgSCwoj4d4LOTjSvJFRa6fW4laY7fQubJMHI3nIaOk2Px5m3ZfjqxfTo0MEt47QuIoewJ28XRnANy+NYR0JMddj3OaG4tA9/R/scROEaykndg=
+	t=1786095705; cv=none; b=roWJKJ2vyR5OqfoXdpfU01b7d3kssOKG6wdvMg6RIUVljxKjyPmFs1u+aULkvqjpoeo1JsargGSBucrZzumiBPb9JhCn6/QDHTylUFlrqI5K1wRaQWYOGE/qlWKLXXqpNYd7SX+kxV1Qw9KrwMUbGMVioGj1ikxFb06h10JooUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786093836; c=relaxed/simple;
-	bh=BS1QtDzzJ81zV96O26yVOwjk/q2mnmYkRB67QxPxa4c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lhTtEJyzqRI+zLDvao2a9Tf3dhZQsKijW9QoycZ+o6mkzz2doSBF1VxNmSoD0fd7F29ExqFI4wM6chQqpOWxK1bqIwj+uB6vEwoUmmBIu3CyTMdmDJsX6fPABpXjoTQXDIZ2j1oKxbUr2rBkBUzOYiQfG59ydb0LTomtMzmHdsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hsdZdc2G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NCmVVWJh; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1786095705; c=relaxed/simple;
+	bh=unslO7lVy+IF5pG3WtGziMNLF4hlMTWW0wXJ6qTqW7w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=es72fnIpDn/Gnah63e6SAlqIvGVYtXKoR4MShxnwNfLQ7h4646+HKJwI/4UqDsYECzchKbA4uVsR817GIBOTHNsExLwtfoLcj+clCyygehsWi3+hIxnOy0Xl31fGLPMVHqW3MmDEb5p04sRvPG5BYNXzEzFMRVQJvIMTs/1/TcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=HBLHerXJ; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=C/TiWCE/; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hsdZdc2G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NCmVVWJh"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1EACD14000F4;
-	Fri,  7 Aug 2026 05:10:34 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 07 Aug 2026 05:10:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786093834; x=1786180234; bh=C7yGYEynBG
-	LDfsLUMpAbkAH3dMnk6VGBFQDMufqovzs=; b=hsdZdc2GXZYtymik4leovjVf+p
-	vHYg8br4NjV87wcvAF8jZtR2TaIivqkuJQk1GOALj5ADQDcpUmTWuGbS6ec5yqEx
-	mTclUFRYds25AX0GXP5EkbRicFjZ4Z4vjKnKJmCgujHOq71DGrfF7gcCM+Of+46w
-	yeJfzTb/9Yvne7uHzq20sbj0zQIWPPQO7DRrkl2e7ZdyMYLDwCPLoWM/A/hYgWBT
-	xL13q9YHWwtL4fY6ehs+NS5m7fZsUF6xp80B1zyahFMzoxSsEfwn56WeWLchDUTY
-	5gihY6ecIqFLA7fVPhM330etY8Cl2MTJOJ6RfuqhswpUtJ70eWVns00IoZQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786093834; x=1786180234; bh=C7yGYEynBGLDfsLUMpAbkAH3dMnk6VGBFQD
-	Mufqovzs=; b=NCmVVWJhd4SKa+L6nV60ChgcPtqDvYLta9LcbOiviEYeKbMmSfQ
-	9eePbuoZPMUJc+tfRb0D7BTSAUTJCElF6rvZD5Zr+LKvRrKUdITGfIjaFlERL6rj
-	KM7kZKlwxHmJxrHEvZNGsWB2I7B/BZkrznz8HkNX/ScD9nq1vqHLx97mD6vEjpDM
-	4oI8gQFtQ1BuuHiI7fMnXaoqacN14Bi5I7Uq8IG1cNmKJMOCwFy9UsR2GNgmylxB
-	EukZ3qpr1IQtAnxEss8uSnXIb9SUQ60UezE0zBdOP+XV79VzU2I4byepJPzgx83k
-	1IV4m7aBe715SpZf8ZaWS3sLdvzIAkOzdWQ==
-X-ME-Sender: <xms:CaF1ajnoYQXmYR4JinLhDhulc_IyGw_xKA8vRr_Mh3RlQ9Ab2yLOdQ>
-    <xme:CaF1at3WDSeDMYWOdmcjF3bVEP_i9pGTaQ_7zv_0Wzw3dg0UYrKB49P5OUpsdSjXk
-    Uak_INDayfL1SdpN8GSHEkAHzUI4L5Zg60YCpeHwUtplfg99jX3Q1c>
-X-ME-Received: <xmr:CaF1auoXlTdqb7mQwm-JrYS0nU8FXvglf7CkJbZ-qaYtRt5TykDrMTJFDotKJCHwiGiSISxZkjuiTLDNftcP2yJmAvwbmAC6zSy9MrF94xk_oQ>
-X-ME-Proxy-Cause: dmFkZTEgYY+G5Q9KCBDGtpR0G8gtA2xXWypLvWtGeT2+VwRQFw48A8z1ilA5DYUcF7qwI9
-    AE9zsbVGkmxTZlC8grL4e5l7FF4TfUbJm/LnhpU3t1AhvODOVM7dr3wbG6IgLN8lNaxIaM
-    ufAvyUHe/G8z5x98WT1ViXPpu2nQPbaWzDETCBlJmHOOYUTk8emm8ug87QWI3woYM2O7FM
-    A20D/Byit6Bw1EE/FHzM2Iovw3MMT/znhMT4aasMwt5wcUv2d95oC2l2V4+rTniLKkxNBW
-    TmQlg/yRA9YguvIyUS5NgfBeik1gUPhOuQ6KS2h8GM86rrBaQDHz9vIr+HhRGvWs7FWhnN
-    23byv2WVxx5+tLJOp6F8Lnn7ODbHO+FoQdvthoN+Sgpv60mWzgvpFgvz4oqEgHcGnHYkdV
-    plqcY4krVaIBuuvxs8+ZmgjJ5pVLAxBQ2Jh96gqz9bkuCkdGL00YrZDT8xz8yKBAaxJ7mI
-    rh5fTgvHZq3/XVIa0Do0V9Px7YNYZ1DzTryXureeSkwBRk5UM5dTuxyavR5qufkkg5DqAH
-    xwr/M5lAfqSdDALfZmrRBTcIvJ8xGWhmIjS1iomICNjKzDc0YLsyzV13s4SEgMKD8/ondt
-    fcLVbwbWHN0frHP1JaLZPJHlNPjfvnaTj0mkHUImjelJMhUpqZZMJxnbQgWw
-X-ME-Proxy: <xmx:CaF1aqd4z24sgk0g82AovFTQt60dS_LLj81kNubz7UPi-bppv53_wQ>
-    <xmx:CaF1atqe8U3aeBd-OqgfXWl7JUvZ_NoeInLuJxoRcZbVWLUYplEzaw>
-    <xmx:CaF1arHMJhBH94qVq4OKCGkXtik40Ehr8mTrOS87e46x88flTd1IyQ>
-    <xmx:CaF1attAg3XwkhqvY19QRmT7aBtdrz3liX6M8tV6BN_OuHgxzzyiug>
-    <xmx:CqF1ago7MPSY-L1Akp4zs918Uhx-2l2OrZMZh9UYQht8ghvn2k9AU3cm>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 05:10:32 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 464ed380 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Aug 2026 09:10:30 +0000 (UTC)
-Date: Fri, 7 Aug 2026 11:10:27 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v5 0/6] odb: make creation of object database pluggable
-Message-ID: <anWhA5zZK2eg1h47@pks.im>
-References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
- <20260807-pks-odb-create-on-disk-v5-0-399da0b0b140@pks.im>
- <87jyq24cxm.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="HBLHerXJ";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="C/TiWCE/"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=HBLHerXJBhFCds3GRwXTPC2q+/O+dPNLNlXl95DgDXb3gZlEhE09r45HtrHbO4xtI8YWdaOt8L/Clksc5piQSA7voctYvDfW2qXluJaUjKhn/XKLOjMw0pdMGkCG2Ghg9mRz1x1b+fkncv/n/Fmn3anvrNKWxjnT5ZWhX/llTLtgh4JsK71pqTLAJvU5FzxuPJAnf7NoGfL7XC1CoSkRhLb67lAaJej78gr58HGClJ25oc11c52k0pPfPbaimpv4UFxO866wwUtBEUqFFgob0vLqGpWtLT/WMbWnvSlteTT/N5fYG60/CuTPgiYWC2DEVP4flQB+A9DEz/40qRMt7A==; s=purelymail2; d=malon.dev; v=1; bh=unslO7lVy+IF5pG3WtGziMNLF4hlMTWW0wXJ6qTqW7w=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=C/TiWCE/r3iKtUarpaYQqwBc6UBb/ew7D1VwlrEzxMRzTnM5rFRQ+odgh0t65xSF3IlksVRV3+ZTguCowUHwZIEpstd5TLp9FwBo0kQUhrVv3nhMCdiG2dk3BHGKsLQ4Y5cho+vX0quvtCpFMLb3WrG+tYtwFbO5nfLibDaXnkt07YF2svDGOcO9WU66r5iVdcrBqyaC4LaCpFwKbNvT7iM8b22enbt0UuXKSHOflHDfTCZrjlZ7UaxHwnDsNweuNAGOiptI2G/KbfSOKjK3QQLpLz420JJ/4W+dJcLw+1F60+KEU99/l/S89FgIS1oESMza4xfYzA4PS11b4XyFJw==; s=purelymail2; d=purelymail.com; v=1; bh=unslO7lVy+IF5pG3WtGziMNLF4hlMTWW0wXJ6qTqW7w=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1546605735;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Fri, 07 Aug 2026 09:41:40 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Tian Yuchen <cat@malon.dev>,
+	Christian Couder <christian.couder@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [PATCH v3] repository: move fetch_if_missing into struct repository
+Date: Fri,  7 Aug 2026 17:41:32 +0800
+Message-ID: <20260807094132.806165-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260716072954.582235-1-cat@malon.dev>
+References: <20260716072954.582235-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87jyq24cxm.fsf@emacs.iotcl.com>
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-On Fri, Aug 07, 2026 at 09:17:25AM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Hi,
-> >
-> > when creating a new repository we create a couple of on-disk data
-> > structures for the object database. This includes the "objects/"
-> > directory hierarchy with "objects/info" and "objects/pack", which are
-> > specific to the backend.
-> >
-> > This patch series makes the creation of the on-disk data structures
-> > pluggable. While we continue to always create "objects/" regardless of
-> > the backend (it's required for a repository to be recognized as such),
-> > the other subdirectories are now created by the backend. This will allow
-> > other backends to plug in their own logic.
-> >
-> > The series starts with a small detour into the loose-object map. This
-> > detour is required so that we can defer initialization of the object
-> > database itself to a later point in time.
-> >
-> > The series is based on 9a0c4701dc (The 7th batch, 2026-07-22).
-> >
-> > Changes in v5:
-> >   - Remove a leftover formatting change.
-> >   - Fix a stale comment.
-> >   - Link to v4: https://patch.msgid.link/20260806-pks-odb-create-on-disk-v4-0-ba8b4fdd2e3c@pks.im
-> 
-> I'm completely happy with this version, thanks for bearing with me.
+The global variable 'fetch_if_missing' controls whether a missing
+object check should prompt a lazy fetch from a promisor remote.
+In order to continue the libification effort, move it into
+'struct repository' and initialize it to 1 by default to keep the
+previous behavior.
 
-Thanks for your reviews!
+Note that in builtin/fsck.c and builtin/index-pack.c, when running
+related commands with the '-h' parameter, the 'repo' pointer is not
+passed in. To prevent null pointer dereferences, we defer
+operations on the repo until after parameter parsing is complete.
 
-Patrick
+Additionally, update the partial clone documentation to reflect
+that this is now a per-repository flag.
+
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+Signed-off-by: Tian Yuchen <cat@malon.dev>
+---
+Range-diff since v2:
+
+    @@ builtin/fsck.c: int cmd_fsck(int argc,
+
+
+      ## builtin/index-pack.c ##
+    +@@ builtin/index-pack.c: static void repack_local_links(void)
+    + int cmd_index_pack(int argc,
+    +              const char **argv,
+    +              const char *prefix,
+    +-             struct repository *repo UNUSED)
+    ++             struct repository *repo)
+    + {
+    +   int i, fix_thin_pack =3D 0, verify =3D 0, stat_only =3D 0, rev_inde=
+x;
+    +   const char *curr_index;
+     @@ builtin/index-pack.c: int cmd_index_pack(int argc,
+        int report_end_of_input =3D 0;
+        int hash_algo =3D 0;
+    @@ builtin/index-pack.c: int cmd_index_pack(int argc,
+     -  fetch_if_missing =3D 0;
+     -
+     -  show_usage_if_asked(argc, argv, index_pack_usage);
+    -+  if (repo)
+    -+          the_repository->fetch_if_missing =3D 0;
+    ++  (repo ? repo : the_repository)->fetch_if_missing =3D 0;
+
+        disable_replace_refs();
+
+ Documentation/technical/partial-clone.adoc |  2 +-
+ builtin/fetch-pack.c                       |  2 +-
+ builtin/fsck.c                             |  6 +++---
+ builtin/index-pack.c                       |  8 ++++----
+ builtin/pack-objects.c                     | 14 +++++++-------
+ builtin/prune.c                            |  2 +-
+ builtin/rev-list.c                         | 10 +++++-----
+ git.c                                      |  2 +-
+ midx-write.c                               |  2 +-
+ odb.c                                      |  4 +---
+ odb.h                                      |  8 --------
+ repository.c                               |  1 +
+ repository.h                               |  6 ++++++
+ revision.c                                 |  2 +-
+ setup.c                                    |  2 +-
+ 15 files changed, 34 insertions(+), 37 deletions(-)
+
+diff --git a/Documentation/technical/partial-clone.adoc b/Documentation/tec=
+hnical/partial-clone.adoc
+index e513e391ea..18718a3840 100644
+--- a/Documentation/technical/partial-clone.adoc
++++ b/Documentation/technical/partial-clone.adoc
+@@ -159,7 +159,7 @@ and prefetch those objects in bulk.
+ - `repack` in GC has been updated to not touch promisor packfiles at all,
+   and to only repack other objects.
+=20
+-- The global variable "fetch_if_missing" is used to control whether an
++- The per-repository flag "fetch_if_missing" is used to control whether an
+   object lookup will attempt to dynamically fetch a missing object or
+   report an error.
+ +
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 316badd969..c5edd7b80f 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -67,7 +67,7 @@ int cmd_fetch_pack(int argc,
+ =09struct packet_reader reader;
+ =09enum protocol_version version;
+=20
+-=09fetch_if_missing =3D 0;
++=09the_repository->fetch_if_missing =3D 0;
+=20
+ =09packet_trace_identity("fetch-pack");
+=20
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 248f8ff5a0..aa31c69486 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -1017,15 +1017,15 @@ int cmd_fsck(int argc,
+ =09=09.ref =3D NULL
+ =09};
+=20
+-=09/* fsck knows how to handle missing promisor objects */
+-=09fetch_if_missing =3D 0;
+-
+ =09errors_found =3D 0;
+ =09disable_replace_refs();
+ =09save_commit_buffer =3D 0;
+=20
+ =09argc =3D parse_options(argc, argv, prefix, fsck_opts, fsck_usage, 0);
+=20
++=09/* fsck knows how to handle missing promisor objects */
++=09repo->fetch_if_missing =3D 0;
++
+ =09fsck_options_init(&fsck_walk_options, repo, FSCK_OPTIONS_DEFAULT);
+ =09fsck_walk_options.walk =3D mark_object;
+=20
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 0793dc595c..1be374806d 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1881,7 +1881,7 @@ static void repack_local_links(void)
+ int cmd_index_pack(int argc,
+ =09=09   const char **argv,
+ =09=09   const char *prefix,
+-=09=09   struct repository *repo UNUSED)
++=09=09   struct repository *repo)
+ {
+ =09int i, fix_thin_pack =3D 0, verify =3D 0, stat_only =3D 0, rev_index;
+ =09const char *curr_index;
+@@ -1898,15 +1898,15 @@ int cmd_index_pack(int argc,
+ =09int report_end_of_input =3D 0;
+ =09int hash_algo =3D 0;
+=20
++=09show_usage_if_asked(argc, argv, index_pack_usage);
++
+ =09/*
+ =09 * index-pack never needs to fetch missing objects except when
+ =09 * REF_DELTA bases are missing (which are explicitly handled). It only
+ =09 * accesses the repo to do hash collision checks and to check which
+ =09 * REF_DELTA bases need to be fetched.
+ =09 */
+-=09fetch_if_missing =3D 0;
+-
+-=09show_usage_if_asked(argc, argv, index_pack_usage);
++=09(repo ? repo : the_repository)->fetch_if_missing =3D 0;
+=20
+ =09disable_replace_refs();
+=20
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 8a1709a1ab..c6536b1f65 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4059,7 +4059,7 @@ static void add_unreachable_loose_objects(struct rev_=
+info *revs);
+=20
+ static void read_stdin_packs(enum stdin_packs_mode mode, int rev_list_unpa=
+cked)
+ {
+-=09int prev_fetch_if_missing =3D fetch_if_missing;
++=09int prev_fetch_if_missing =3D the_repository->fetch_if_missing;
+ =09struct rev_info revs;
+=20
+ =09/*
+@@ -4067,7 +4067,7 @@ static void read_stdin_packs(enum stdin_packs_mode mo=
+de, int rev_list_unpacked)
+ =09 * walk is best-effort though we don't want to perform backfill fetches
+ =09 * for them.
+ =09 */
+-=09fetch_if_missing =3D 0;
++=09the_repository->fetch_if_missing =3D 0;
+=20
+ =09repo_init_revisions(the_repository, &revs, NULL);
+ =09/*
+@@ -4115,7 +4115,7 @@ static void read_stdin_packs(enum stdin_packs_mode mo=
+de, int rev_list_unpacked)
+ =09trace2_data_intmax("pack-objects", the_repository, "stdin_packs_hints",
+ =09=09=09   stdin_packs_hints_nr);
+=20
+-=09fetch_if_missing =3D prev_fetch_if_missing;
++=09the_repository->fetch_if_missing =3D prev_fetch_if_missing;
+ }
+=20
+ static void add_cruft_object_entry(const struct object_id *oid, enum objec=
+t_type type,
+@@ -4451,14 +4451,14 @@ static int option_parse_missing_action(const struct=
+ option *opt UNUSED,
+=20
+ =09if (!strcmp(arg, "allow-any")) {
+ =09=09arg_missing_action =3D MA_ALLOW_ANY;
+-=09=09fetch_if_missing =3D 0;
++=09=09the_repository->fetch_if_missing =3D 0;
+ =09=09fn_show_object =3D show_object__ma_allow_any;
+ =09=09return 0;
+ =09}
+=20
+ =09if (!strcmp(arg, "allow-promisor")) {
+ =09=09arg_missing_action =3D MA_ALLOW_PROMISOR;
+-=09=09fetch_if_missing =3D 0;
++=09=09the_repository->fetch_if_missing =3D 0;
+ =09=09fn_show_object =3D show_object__ma_allow_promisor;
+ =09=09return 0;
+ =09}
+@@ -5247,7 +5247,7 @@ int cmd_pack_objects(int argc,
+ =09=09=09=09  exclude_promisor_objects_best_effort,
+ =09=09=09=09  "--exclude-promisor-objects-best-effort");
+ =09if (exclude_promisor_objects) {
+-=09=09fetch_if_missing =3D 0;
++=09=09the_repository->fetch_if_missing =3D 0;
+=20
+ =09=09/* --stdin-packs handles promisor objects separately. */
+ =09=09if (!stdin_packs) {
+@@ -5256,7 +5256,7 @@ int cmd_pack_objects(int argc,
+ =09=09}
+ =09} else if (exclude_promisor_objects_best_effort) {
+ =09=09use_internal_rev_list =3D 1;
+-=09=09fetch_if_missing =3D 0;
++=09=09the_repository->fetch_if_missing =3D 0;
+ =09=09option_parse_missing_action(NULL, "allow-any", 0);
+ =09=09/* revs configured below */
+ =09}
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 55635a891f..a7e4678d11 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -194,7 +194,7 @@ int cmd_prune(int argc,
+ =09if (show_progress =3D=3D -1)
+ =09=09show_progress =3D isatty(2);
+ =09if (exclude_promisor_objects) {
+-=09=09fetch_if_missing =3D 0;
++=09=09repo->fetch_if_missing =3D 0;
+ =09=09revs.exclude_promisor_objects =3D 1;
+ =09}
+=20
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 8f63003709..a6a0c5559e 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -509,25 +509,25 @@ static inline int parse_missing_action_value(const ch=
+ar *value)
+=20
+ =09if (!strcmp(value, "allow-any")) {
+ =09=09arg_missing_action =3D MA_ALLOW_ANY;
+-=09=09fetch_if_missing =3D 0;
++=09=09the_repository->fetch_if_missing =3D 0;
+ =09=09return 1;
+ =09}
+=20
+ =09if (!strcmp(value, "print")) {
+ =09=09arg_missing_action =3D MA_PRINT;
+-=09=09fetch_if_missing =3D 0;
++=09=09the_repository->fetch_if_missing =3D 0;
+ =09=09return 1;
+ =09}
+=20
+ =09if (!strcmp(value, "print-info")) {
+ =09=09arg_missing_action =3D MA_PRINT_INFO;
+-=09=09fetch_if_missing =3D 0;
++=09=09the_repository->fetch_if_missing =3D 0;
+ =09=09return 1;
+ =09}
+=20
+ =09if (!strcmp(value, "allow-promisor")) {
+ =09=09arg_missing_action =3D MA_ALLOW_PROMISOR;
+-=09=09fetch_if_missing =3D 0;
++=09=09the_repository->fetch_if_missing =3D 0;
+ =09=09return 1;
+ =09}
+=20
+@@ -745,7 +745,7 @@ int cmd_rev_list(int argc,
+ =09for (i =3D 1; i < argc; i++) {
+ =09=09const char *arg =3D argv[i];
+ =09=09if (!strcmp(arg, "--exclude-promisor-objects")) {
+-=09=09=09fetch_if_missing =3D 0;
++=09=09=09the_repository->fetch_if_missing =3D 0;
+ =09=09=09revs.exclude_promisor_objects =3D 1;
+ =09=09} else if (skip_prefix(arg, "--missing=3D", &arg)) {
+ =09=09=09parse_missing_action_value(arg);
+diff --git a/git.c b/git.c
+index 36f08891ef..315d2e160e 100644
+--- a/git.c
++++ b/git.c
+@@ -202,7 +202,7 @@ static int handle_options(const char ***argv, int *argc=
+, int *envchanged)
+ =09=09=09if (envchanged)
+ =09=09=09=09*envchanged =3D 1;
+ =09=09} else if (!strcmp(cmd, "--no-lazy-fetch")) {
+-=09=09=09fetch_if_missing =3D 0;
++=09=09=09the_repository->fetch_if_missing =3D 0;
+ =09=09=09setenv(NO_LAZY_FETCH_ENVIRONMENT, "1", 1);
+ =09=09=09if (envchanged)
+ =09=09=09=09*envchanged =3D 1;
+diff --git a/midx-write.c b/midx-write.c
+index 19e1cd10b7..e7313c9d2c 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -865,7 +865,7 @@ static void find_commits_for_midx_bitmap(struct commit_=
+stack *commits,
+ =09 * complain later that we don't have reachability closure (and fail
+ =09 * appropriately).
+ =09 */
+-=09fetch_if_missing =3D 0;
++=09ctx->repo->fetch_if_missing =3D 0;
+ =09revs.exclude_promisor_objects =3D 1;
+=20
+ =09if (prepare_revision_walk(&revs))
+diff --git a/odb.c b/odb.c
+index 965ef68e4e..664256e1a4 100644
+--- a/odb.c
++++ b/odb.c
+@@ -528,8 +528,6 @@ void disable_obj_read_lock(void)
+ =09pthread_mutex_destroy(&obj_read_mutex);
+ }
+=20
+-int fetch_if_missing =3D 1;
+-
+ static int register_all_submodule_sources(struct object_database *odb)
+ {
+ =09int ret =3D odb->submodule_source_paths.nr;
+@@ -595,7 +593,7 @@ static int do_oid_object_info_extended(struct object_da=
+tabase *odb,
+ =09=09=09continue;
+=20
+ =09=09/* Check if it is a missing object */
+-=09=09if (fetch_if_missing && repo_has_promisor_remote(odb->repo) &&
++=09=09if (odb->repo->fetch_if_missing && repo_has_promisor_remote(odb->rep=
+o) &&
+ =09=09    !already_retried &&
+ =09=09    !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
+ =09=09=09promisor_remote_get_direct(odb->repo, real, 1);
+diff --git a/odb.h b/odb.h
+index 0030467a52..1dca583fcb 100644
+--- a/odb.h
++++ b/odb.h
+@@ -14,14 +14,6 @@ struct repository;
+ struct strbuf;
+ struct strvec;
+=20
+-/*
+- * Set this to 0 to prevent odb_read_object_info_extended() from fetching =
+missing
+- * blobs. This has a difference only if extensions.partialClone is set.
+- *
+- * Its default value is 1.
+- */
+-extern int fetch_if_missing;
+-
+ /*
+  * Compute the exact path an alternate is at and returns it. In case of
+  * error NULL is returned and the human readable error is added to `err`
+diff --git a/repository.c b/repository.c
+index 187dd471c4..b959f7a028 100644
+--- a/repository.c
++++ b/repository.c
+@@ -73,6 +73,7 @@ void initialize_repository(struct repository *repo)
+ =09ALLOC_ARRAY(repo->index, 1);
+ =09index_state_init(repo->index, repo);
+ =09repo->check_deprecated_config =3D true;
++=09repo->fetch_if_missing =3D 1;
+ =09repo_config_values_init(&repo->config_values_private_);
+=20
+ =09/*
+diff --git a/repository.h b/repository.h
+index 36e2db2633..e8bd6ef0e7 100644
+--- a/repository.h
++++ b/repository.h
+@@ -169,6 +169,12 @@ struct repository {
+ =09/* True if commit-graph has been disabled within this process. */
+ =09int commit_graph_disabled;
+=20
++=09/*
++=09 * Controls whether the repository should lazily fetch missing
++=09 * objects from promisor remotes. Defaults to 1.
++=09 */
++=09int fetch_if_missing;
++
+ =09/*
+ =09 * Lazily-populated cache mapping hook event names to configured hooks.
+ =09 * NULL until first hook use.
+diff --git a/revision.c b/revision.c
+index e91d7e1f11..5f70aa81e6 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2714,7 +2714,7 @@ static int handle_revision_opt(struct rev_info *revs,=
+ int argc, const char **arg
+ =09=09revs->ignore_missing =3D 1;
+ =09} else if (opt && opt->allow_exclude_promisor_objects &&
+ =09=09   !strcmp(arg, "--exclude-promisor-objects")) {
+-=09=09if (fetch_if_missing)
++=09=09if (the_repository->fetch_if_missing)
+ =09=09=09BUG("exclude_promisor_objects can only be used when fetch_if_miss=
+ing is 0");
+ =09=09revs->exclude_promisor_objects =3D 1;
+ =09} else {
+diff --git a/setup.c b/setup.c
+index b4652651df..ce2a80ac31 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1064,7 +1064,7 @@ static void setup_git_env_internal(struct repository =
+*repo,
+ =09=09set_alternate_shallow_file(repo, shallow_file, 0);
+=20
+ =09if (git_env_bool(NO_LAZY_FETCH_ENVIRONMENT, 0))
+-=09=09fetch_if_missing =3D 0;
++=09=09the_repository->fetch_if_missing =3D 0;
+ }
+=20
+ static void set_git_dir_1(struct repository *repo, const char *path)
+--=20
+2.43.0
+
