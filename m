@@ -1,82 +1,82 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B4E47A873
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:37:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93531435EE7
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 15:44:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.180
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117030; cv=pass; b=OKVSA2Y3VDTapuORZBY1Ke1Qd0G+gLeLWLKIf3Kc0h76PW+JlZ0T08yO6p4I/mZj2FHibwH9lf6HGIGz/N4Cs+u2o0cyHGPHQ8dfTP6SO22d/wnt19qnHHW55Z3GJEOaTdfaDVMEhGJ0l0dICl5s5ZY8/TjkSD0T73A/hiY6Z7o=
+	t=1786117443; cv=pass; b=or0MHi2RVOssy5zcC01FLDyCySdcJEAaYaV51xv/vqxtKSQ1SPA34co4i/MTmCSf1Z8L//W31Nie2Swzty+OHO2Jwavou1Xm3LS/DmR9A1uKjcHmXmLiT0W4j26nTw7MvSFrtNjXBvVwcyJtwEHLiovRw5xDuuhLadGZZQ3WNgU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117030; c=relaxed/simple;
-	bh=B0lrQhGreZbxiDQ4jWab+fvwfWuW4pZsLKYzlM07sjk=;
+	s=arc-20240116; t=1786117443; c=relaxed/simple;
+	bh=7NxT3hUoGGv3Qb+xFoAwsG8lyEUkBvFCPlk7aVZBOa0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Zz90mc1i62LiJvO5KuyEnl04FFj7fGWlYFGGTVDmYgPnAYncG0qFdQwHoJ2Z3fd8THz9IGH+X4txLGnfIbTZ7EoTZx17sdDDF4dyp9L+UQNnlGr+MtIFHC/QHlP5DKa2AsVWFlytvYdDa3SGotPzkH6AUL5FgrKIWlAlKh8p964=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SyzHcego; arc=pass smtp.client-ip=209.85.167.170
+	 To:Cc:Content-Type; b=oP9hBIPGDo11B8OoWF7id/eYecbyEkqFzLjkLGqvBRw5jJECv2B8D+kr7MCXBwkoZyPKSYL+VMBKHuUqqHCCr9z3FdktY8UaxTiHze6jEQ9yVdtTCjiCNe5NIEqCZUoP+R4eVLJyBRKkSdu5EdtfecEPXzmRHHNWEwgA+VLvPPI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kR8wVJwW; arc=pass smtp.client-ip=209.85.167.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SyzHcego"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-495b27007d0so2115226b6e.1
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:37:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786117028; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kR8wVJwW"
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-4a4c6081f9fso1077847b6e.3
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 08:44:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786117441; cv=none;
         d=google.com; s=arc-20260327;
-        b=ZkOsPkR/rz7IXbGE2JPbI1Rxb2S32KbklOdfcMHrqItpI//09gc/eV7nIUIuadUNj5
-         cmvHZLzkAPJfJHu2gyTQmOJw7Xna/vcs1XPf2aIReJzWMXlgLLP+4epKK9h9x1kisINm
-         flKX3p4l2Q6aVJ0PyCtuN9mUINZTes/TGFunKmeQl025VQiRG5nd+es1y8v4HRDjg7Q/
-         FBYWZL0iJCN5xkVQnZvkgyNG/yGM3GGdijtAWp4aXiFHOeKJHRreRVgqOHYESl2NEFEM
-         J532tO7Ol22ObaCBvgGoi4d1U18juFnXnW8X7+uoAhAAHc+6vqbIOTpEDqloKZ7c7d+l
-         hypA==
+        b=py8e4uWwe1Ffi37GKhW8Mc08sWl25E9seki5Vk0CdvVaCImd2tt2QEvyja07GAV3W1
+         hPU2LnnZQuhFGQNNN4mV87UrMtsYA4hOxffR5b2chNfYTDSPAGU+VXLit0miDiXO7TOi
+         cUTLuji/yrcVWIKmC7k46RmyaTdjJYJJ0Y7Tidx1hJLWsG9kmUryaVaBLBh0N522waM8
+         uoi/z5dhZd6z8RWLM1gwp6XAgilqVpKEg5X6goxbRAwlTD+r+DODI26c/PfxeGHI4VdC
+         j91+BSC6/sEF2r3Pppb9kzlmTJ4MketjFOU3dkYwGWsLFILyHJH8HcfJkGpeKELbP58s
+         VWfw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=xqcZFcbhxY1vI11nYbjvzTeiusXZosHKxh7e6KvVvkg=;
-        fh=6kgF6f86q/MaGTxmVt55E+SsQPZ3gwWAPTZHo5+Kcjs=;
-        b=ifZESYDGMyzQF63aX3VKbEQg3vVV1+MgIdiiGv4x67erylnLHWZ8pYwib9hS405tDs
-         +oVWX8FZQYUukD4tAn3a2VW5Kkbdvfs12GAvLWuATHIyNQJBHPr6TlKAevKDnr1uqoxP
-         WO8iCxanI/o9LK7AWGypKjGUxfsfDmst/zPZi1HfOCw+07E5IFHW4RKo8tOyHYsI+Cn1
-         d1V0CpRcri1dt0PHksCTzyFirl/gUYPHsVXo27EY93r33xNdu6GaR4IqMDICLXyixH3e
-         ER/hLQHBkmhdeCXUD1MaO37lmGcCXTnJr/rmHFdPVu0rJdtazD1uRtrmBr014B7Gp1+C
-         f4Nw==;
+        bh=e3D7Wt4FOPZbAJqDWSfMEVJnjFN7unIt5aOfBcx9pbo=;
+        fh=/lL00N6kXIWIOj/3B8UdQZrVaAIPvK0J/tbnM8hNW2M=;
+        b=agXM0HUhKxZ1jIL59BoW8Ts0oABYqssrd2vS3fu9AlLjX2PGZafyDQ3swBN6Qt3hfX
+         ClLMe6rqqMlp96Zu3J1awHngDUnyUHiFY44bJHZJD62x64EN1IkMBQDVTegwBOMUze+S
+         I0MKBglWw4YqPMZdtx9zinQPLSJpPcetOti48Fw4FUA/mJHcz1u4Sf2sHp1D4oYwCjOR
+         BgPDZ5sm+w/oNmRjg7gshWrd1NytOeQBu/XT3zxVDHvjxVR08yLf6svmkEpC10Z+Av42
+         ofX3/l2Hhsnu/q4D6WxWatzXrNgh9Y0R2wj2qi4ju+XNbn7r9wksuQzxPmb7fDawIJT2
+         Crgg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786117028; x=1786721828; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786117441; x=1786722241; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=xqcZFcbhxY1vI11nYbjvzTeiusXZosHKxh7e6KvVvkg=;
-        b=SyzHcegouz/1uDEXMuWCPRG7fak1qGd+xUwAN6EUhaOYHBWOzbnwWvWTD7TSSZOQSt
-         g7zLogfvBL+z4E8p/w7AuCsbvXjsFFmIAIOpdXCAJlcjb+x40ZNe8qAbYTNnRn63TTdK
-         zwNzTsZdBUuj9dKF4hzeaenBAl8nneWpbHXeyEA2KR1Aw2zj1BqbCNiPPpxcN9vkCHIq
-         CoPja/+qfuSqgv5MiMeYAORzn5D3r+2yyFJQ9cJ/Kvj4l/0COdl5aTiuH1Y+B7W4O2b6
-         YoOwBHKCeXO2s2cx+HtXwE6wrvAeEOdaYXljaXOaiLcJwnNYrkMOv4ODO7rq6aZ0h5zc
-         UXPQ==
+        bh=e3D7Wt4FOPZbAJqDWSfMEVJnjFN7unIt5aOfBcx9pbo=;
+        b=kR8wVJwWyMDFg6xECc1Tf16bg6MQehqooxqcxRhvNRF9/UWuLW6q24Wxui/D7iy8qy
+         VqhsILnibo+D0E5VYU7tds1NvkHrrRIwCVjWAmOF3maLBhtfhaQ27FgzQhkcH2OrKDaL
+         Z97f0cj6fiMakX+dSzkENmWrTrrqA3mqrLuQEV4eb+c7S3Uo/i/PzewOgATsMTsQRRbj
+         ysZT1th6BiOGJdibjjh/gzt0+8ZcN67KpGsEOdUZErge0z/LYt0/4RgDIwny0IHKmFFm
+         9L8shDe23ibWmqppgTbfqud0IsENkxgNLzllOtlN9oIWLW60TOA408nC/C/9DLweiqcj
+         83iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786117028; x=1786721828;
+        d=1e100.net; s=20251104; t=1786117441; x=1786722241;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xqcZFcbhxY1vI11nYbjvzTeiusXZosHKxh7e6KvVvkg=;
-        b=aHGBHdyrAWIFiZqrIUxSA4PP+KNaW55SYqTb1/aG3NBv0q5uqbgmXQRepUSheaVRZp
-         ic3UijrVSIpI3GM1lzLcu46W4fwwVlYfaR75jd+nZ91kUT4c63vPc4ZbOuryoAVf5uLk
-         CzxCEm5FtCQtn+1x3LIYZ1IRBfgUGF2Lq9JZMFD1+21CHIaiR8n/8TQZdqaiD1gecIdX
-         2ylwYJpDKAveWyDm74Bq/cjy9rpUOuZ87mrQx0w5ey4JO/dc3Im8+W/T6Uozml51E/7L
-         X/ehC56sJ2r5n6bTmXmJ0l0CfIQFPEKp8cC1W1ibf0x3I0OrxapvpUYfDX/DsJ5zJtzo
-         0V6A==
-X-Forwarded-Encrypted: i=1; AHgh+RrBVuwl2M6kxHnuI47Ivc42FyHhs2DVa774MHr28tRuiuy6CEqcUtxPIOXme5IZBrPJt+8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzts2okDYSlmwKCVmhcuEdKG9azX7d8ANQEDkg0I3ir9egNdEhR
-	eKNzS1RC0VAphCHmleMCjLm59GF2mzDDN+xO+p8soskexROyTegT9PJbE5Ct3H+z4F1p/yW9lsb
-	xFMp6oVbB6FH8b/xukMXO6s9OvfU2P2z3Jw==
-X-Gm-Gg: AR+sD10kcE8eDX7EBD+rfI12TCGkqI2hXYzOR/8MQySZhtKJ3h7SsiFLtYynVPdPD1C
-	jthm5dFuJJx0aTnefaT3DrkNjq/f1+XETo0MlsGZgXnOAaj3+kbhGWAs6i4a7bHGkviZJToAxTy
-	SKVH+YXFqUQTLiigq2ozW3HW1Ffg+/1HYuwNao6wIsHClLyY0kWEB0B8iDAOY2wkraVoQY30Wst
-	biyP4vbk+1jknzywzqvK7+KibGLjhgGlbHDKz+S6u71j5quoALRABWTXdBtbjz93GvWCEsZf2Pz
-	2kxR4YBApzqjEEp8h7EXTmYOB1QOzqynDOpriNElxiVNS6N2CGcbmu6H4sHToWNb0iEVnEbt3NG
-	qzxyz1+Tna0zzn2ZHoT2h/Ft/Rd2zk4HldF+h7WEGx495SvhCfCUEB/jiIkklcRE=
-X-Received: by 2002:a05:6808:ec2:b0:496:892:c58f with SMTP id
- 5614622812f47-4b13317e801mr5057466b6e.2.1786117028223; Fri, 07 Aug 2026
- 08:37:08 -0700 (PDT)
+        bh=e3D7Wt4FOPZbAJqDWSfMEVJnjFN7unIt5aOfBcx9pbo=;
+        b=JhFkIt/5rFOT8s3sKYCfIc4Lv40Il+xMUHbXIv4JXpZ3ef53RVlQDdXpQKUIUim5kb
+         9KJTB4wUlHwwR72w2KMXfsyoeDOQzZsOYfgl2Lid+jNGbs2u2pI6DtUq3yDeCCTIDuft
+         wD+WkNxG4WNXV4GOixHCEiLnkow4SIiYZYL5uAi1YtI+ZGevgZKYkfhnKRXS/WJryUek
+         90E8NyVHLZeYLHHPhS8WrmGzqvxFtQslfrr+UH5EBZRORlPBBDn53YzF0eeUx7DVGn90
+         bHTovP+my8q6B8+JX3F443pAI+mcqUvGArhQyQfTjE7GiZ/KnXNUYh3n8KiXzSAGRaVv
+         dHTg==
+X-Forwarded-Encrypted: i=1; AHgh+Rplllr6H/GPyE7fTKafEsH5schKgd5uLPJyv03zlkDQzFRFiadO7lTjc5a5PDvBXtCYSXY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkzKcRON2K3xkRgtaf2Jfr3vClOHDe1y8GyNWMrvBppedkqmul
+	QxYRADkzv1aq013YsvnHVyfZ87ze/CQ4FKQKjyvvVm8kiW35umThAcAx6e0jeg4/nkw8wzzH4T+
+	l9+ivJbQacMSgA3ofa4cQKNOjoIzFqLY=
+X-Gm-Gg: AR+sD12E1M5xYAkxksCVxRlbn5QX+8WHGtSr3EecSwQTZXthWPvAySU+AKcqtLL8h5q
+	UcEVZJZ1fTlMEu5QxtbNV8HeZtY0Z04eVAwPfC/VjFc0gzTXUGvV6So7sOVArUKYJwX7vEyu0xX
+	/Cfwofcz+ZWVpS/c8246cbG4FRar8Tk4Gb81r082g/qAAm0tajaFGyknZ0/EjqZWuqHLxnayM/6
+	x2WgwaeUniaDkzA36xzCl0OvtKE2JRsi04CRlc0E90eYHK+QMbIAB23MSQX/4+seAyZNTKrSJbp
+	V8oBEY2zGych9OX9sVUIl6Kgo93JftdqnLe4oKQEjqHcadM7ILLgSbR+j8vQBSKUmY126YjWXG7
+	W2z68zMmYxvRiJHVaMhzZfaK01kD8bx49AYCBhG8WdFDSYyfEnMEiDXM2BXa6mf4=
+X-Received: by 2002:a05:6808:4dcb:b0:4b1:a33a:3886 with SMTP id
+ 5614622812f47-4b1a33a4132mr1903167b6e.20.1786117441264; Fri, 07 Aug 2026
+ 08:44:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,47 +84,58 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <f857577e0cedc11f8db614b4ab2bf9217652a312.1786013982.git.gitgitgadget@gmail.com>
- <CABPp-BEV=u82AV=bXoHN9N+iNOrBjAig=1FY0sxiQNusrNGUbg@mail.gmail.com> <CAL71e4OZwDzZaE4kfZTcBy8wtdeX2Y8H8XM9x12qH8TaUkVUnw@mail.gmail.com>
-In-Reply-To: <CAL71e4OZwDzZaE4kfZTcBy8wtdeX2Y8H8XM9x12qH8TaUkVUnw@mail.gmail.com>
+ <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <a1c8e89ef9f1d0fb5cb10ec9687633df8792ec7b.1786013982.git.gitgitgadget@gmail.com>
+ <CABPp-BFqghtx4p_Nqx+AWpU7SVn3mXOZGDQ0yoN-ZYQgXmZC=g@mail.gmail.com> <CAL71e4MULMmbMyrE2iKgNXD36vpjnxCYXTcNw75ibu_nwxqAPQ@mail.gmail.com>
+In-Reply-To: <CAL71e4MULMmbMyrE2iKgNXD36vpjnxCYXTcNw75ibu_nwxqAPQ@mail.gmail.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Fri, 7 Aug 2026 08:36:57 -0700
-X-Gm-Features: AUfX_mwOKzX9lIIkgnHXdT-M7kBnS_ktdq_BlxYlECcVpoZtUIZG9dhZS_Y0GII
-Message-ID: <CABPp-BEOR2rPVH8Uc446rhAATBUQTX+o3YELeV2jU2isnZwnCQ@mail.gmail.com>
-Subject: Re: [PATCH v7 03/10] t6600: add test cases for side-exhaustion edge cases
+Date: Fri, 7 Aug 2026 08:43:49 -0700
+X-Gm-Features: AUfX_mzGo-3-UgkbaiW5zGx07s0_YW-AZY9nTJu78z-q3E9y49c8ZBMBW3KuNYY
+Message-ID: <CABPp-BE+QBBYj=oaRDcQj8bFrDX6Z_JVK39ciAk4TwMPb0zHOQ@mail.gmail.com>
+Subject: Re: [PATCH v7 07/10] commit-reach: introduce struct paint_state with
+ per-side counters
 To: Kristofer Karlsson <krka@spotify.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 7, 2026 at 4:33=E2=80=AFAM Kristofer Karlsson <krka@spotify.com=
+On Fri, Aug 7, 2026 at 4:48=E2=80=AFAM Kristofer Karlsson <krka@spotify.com=
 > wrote:
 >
-> On Fri, 7 Aug 2026 at 05:01, Elijah Newren <newren@gmail.com> wrote:
+> On Fri, 7 Aug 2026 at 05:02, Elijah Newren <newren@gmail.com> wrote:
 > >
-> > As the author of these tests, and as my Signed-off-by attests, I can
-> > confirm with the full weight of my authority that these tests are
-> > good.
-> >
-> > However, I would be remiss not to note the perfidious destruction of
-> > my two spaces after each period, cruelly collapsed down to a mere one.
-> > Have you no decency, sir?
-> >
-> > (Kidding, of course -- I mostly point it out so the next reviewer can
-> > appreciate just how little else changed from the original.)
+> > became -> become
 >
-> Oops! The irony here is that I tried to be very careful to not
-> corrupt your changes and thus the attribution. I was already
-> somewhat hesitant to even modify the patch to split out the tests
-> from the code changes.
+> Good catch, will fix.
 >
-> I added my own helper script to check and correct patch series
-> and I had snuck in a double-space remover for personal preference
-> but I think I will actually get rid of that since there is a slight
-> preference (but not enforced) for double-space in this community.
+> > So: pop, clear, check the counters, and _then_ decrement the counters.
+> > This means the zero-counter-check still include the just-popped
+> > commit.  If the decrement were before the check, we'd actually just
+> > barely miss the merge-base most the time, so this order is important.
 >
-> And since I need to reroll _anyway_, I might as well repair this. :)
+> Yes, I should perhaps add a code comment for this to ensure it
+> does not get corrupted in the future. Something like this:
+>
+>     /* must check exit conditions before decrementing counters
+>        for the dequeued commit -- the counters may otherwise be
+>        be temporarily zero until the commit has been processed
+>        and its parent nodes have been enqueued.
+>      */
+>
+> Or is it overkill?
 
-Heh, I don't think it's worth the effort.  I really was just trying to
-throw a joke in there for anyone reading the archives to enjoy, but
-the patch is fine either way.
+My comment was meant more as a "review out loud; show how I'm thinking
+about the patch as I read it" kind of comment rather than as a note of
+something worth changing in the patch.  The order _is_ important here,
+so the idea of adding a comment to reinforce it seems quite reasonable
+to consider (I thought about changing my comment to ask for one when
+reviewing), but I'm on the fence about whether it's important enough
+or overkill.  I'm okay with the patch either way.
+
+Although, if you do add one, as per the CodingGuidelines:
+
+/*
+ * Multi-line comments include their delimiters
+ * on separate lines from the text.
+ */
+
+:-)
