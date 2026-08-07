@@ -1,79 +1,79 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1F53597B
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 03:34:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A293806CD
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 03:34:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786073679; cv=none; b=ZCgt8YyfZWRxoGkQwJijQ3ETlF4l3DvJ642DOOMnLpuObynoVGMUIz3zG4JUjDv2qDVC9jH7rCg6RCBljbO7b8Vg+zziQBGnEfL+yO/ndxHLgBwdXNAIAxYlko8m1/Hb7Bv8CuFZwWxc70qhtG1Cnnuyg1bDbMJ2wLzJ9GD7P2c=
+	t=1786073680; cv=none; b=oRrteMfmKW8RmoUtoi0O1+pKbgYjx7Xhi/smmeqDgBRtWzwhq9gp7fHJy2ibZFu+O46qzErOlyPJo/ge3drwpQqLIQOlp/5gR2C/yISEGNk43pqwiQ3vm44c8GfuzafbtSKE5SMbkZ165NT+F1sZOkN7AQJslS5I3+gGJB2EAvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786073679; c=relaxed/simple;
-	bh=f6cFjoLlnFfH2hwTFje89MkuYI1XV44R4voGIAq6Ago=;
+	s=arc-20240116; t=1786073680; c=relaxed/simple;
+	bh=3naYBg1LByg3E9Oyop+h7d3uxqZ/s8YhzPwYiyIt7bU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RDXNH7PGLOL6DNv5LppRNZg+aQfK09fH4rj2jJFXoZF1nKMBHgLWAEhq8iMuaOoLoyEjm4+dJsoZEv0Rq52f+Uo7qviVqSjHNtOWhYKEpRK3hI7IUfSVAu+aZ/7p9PcD+DV4M3D7bJN5RtO3KyTmYFZfJ90vXrDyKASHVGbuEfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dGAzg4x3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XurMQt18; arc=none smtp.client-ip=103.168.172.147
+	 In-Reply-To:To:Cc; b=McNwi5ORjQIw4aS/7WQpuZnwOBNkp0ldEsteVMa9dLXG2j30Nomi21HMakpFuiL1QXtuAWy3cCfJ0A0WCmysFR/+aQZDwsbuV+mbwjn4VikcsXxZpt6PP13wKSbC3Amz8hMsMXea4PeovTLeLcBU9eID3oDU22rlzn/yRYGOY3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Hj9IxEbO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C2T7R3r1; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dGAzg4x3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XurMQt18"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Hj9IxEbO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C2T7R3r1"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5388FEC01B8;
-	Thu,  6 Aug 2026 23:34:36 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5A5AD14000BF;
+	Thu,  6 Aug 2026 23:34:38 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 06 Aug 2026 23:34:36 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 06 Aug 2026 23:34:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786073676;
-	 x=1786160076; bh=TeNNo7XrpFpLNeKgLEZfuDW9c19t2ccAPVUTfXKoXnA=; b=
-	dGAzg4x3Yu/5v6GddZxcNFdmUNcNo/ZNGfabP1f61kzIxtHSwNxT1+UrKb5RfYmn
-	BA/ueSl/GBJ1+Rs1gGVX/gtFmMjOi0OlXBWgUuyPPO+mHfKn2MgWowsdW+Ul5HIB
-	Xb2Ar+sipefirVBDiPWV5b6lCKOfGUX28E/mZaQBtBVRt3iHoDNaItImB+K5fmb/
-	2VuKL+sa9V9IgK8Yn6HsyICpFgaMjVcMsgVITbyjy3q9Za+MCs7Ixr8vGIye6rut
-	kFmcykb2o7K2RniUHAPWXUpcVsn/zwL5vbBbB0dwey1fXr0uciSwgmGxUoi6Njwm
-	ny5hnTdsAVhhrAhfYpISiA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786073678;
+	 x=1786160078; bh=cPo/55/wbb7PM3Y8Sbz1kXuBojaUDpnuMPqvcHv5UE4=; b=
+	Hj9IxEbOZRy9F0c8Yxkx02Di3rMMJznqPR549Y+8jJXeZoRUlVaLTlp6zoJlzR0K
+	ld1hSHky7oWhOGHuDi/9fuc98O3etjK4ZNTfzyie0KjXJFNQuMCYAHL08jgq5+c4
+	DZ4ab7S5r+Qhl1ukZ2I62nNxXfFHg1wKm3UMC5Oz1pm6jqwsoJ1eXEy8t5lUdsIt
+	vakRNV0LeHOSLRfQcW9zh2rNsETm56/oQojPt2jLXEAbem9/vDDbv6sVTk+t1OrR
+	oKWdxI0KTEibd25NP1A/RUEUBm1V2HRaFUKCS70WxnZVfX5YEHtpKtZfUp1BGTOx
+	3Cuu50OxU7AMjeodts2kdg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786073676; x=
-	1786160076; bh=TeNNo7XrpFpLNeKgLEZfuDW9c19t2ccAPVUTfXKoXnA=; b=X
-	urMQt18D/PVN4YmBm21yqbSC2Dnrg9pzygdz1ktxz+CWrD64if1D3zYwT8o/JN3K
-	2BvzOBA621r7CvrDt5vLS05LZfa/I1y4E9gcY0VtWrhnTDdZ7OW1pLstS7s9OMI7
-	2kcpi5F/vGzU0pkEoY6n4lbBkcn2D/Qq2bRaUpiforMndq9aukQeXT8Oxls9CLI6
-	TfeOy4QPcQIRqS2PVk2R7/xYmvX2I+jQY0uLAVt8G2rJ6AuxmeO6NE7l2KaODzmF
-	etAlRfIrMWp9KcVJrChwHgh5cod1ak9ZH6HjosY/cTjxtnP6xt0Fi+eofVeCSVo+
-	Ar//cCaiL7DZF9vVn+qFQ==
-X-ME-Sender: <xms:TFJ1aiO2Nqg4JWBr1hBS5Hlo8ifJ741DQGMd5FfU4fSS0YXt-38ElA>
-    <xme:TFJ1an-_YWw9A7b7lwBpQ8V2NNHk1IAgk9GLg4fGSYNNDwoh2k3k-Cj2dfRrSde6g
-    7Jxbo4tphN3nTRqtGYuEqDXvV85EceTQhwACZYl9t9KQXpKT1rhnzQ>
-X-ME-Received: <xmr:TFJ1auSwqBA2XenFBhGHHWUw33BNJBn-r7ijU5hZXGXlqoAGbQIl6eHmp2A0-Erck6OcmGOToI_xEYudB5Cpx0kORLTNTycrIMhBjKRz8zzz1Q>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786073678; x=
+	1786160078; bh=cPo/55/wbb7PM3Y8Sbz1kXuBojaUDpnuMPqvcHv5UE4=; b=C
+	2T7R3r1CKO75gnwUIlc5p+NhFZrWdCfIm9vGtOqRLxmXUrDPLdOv7Fuk9mTPJnvi
+	uDNSBCtt+GFG05ym8UdzFxgmklzEQLbQ9MAO7bof8Th/mWDM8Y4EhX2XnzmynsA9
+	C5VkVgVOG3DfBAR/s8t+SQzSA72thb6xHIf8aVCmgoNQSJM3LuXCbuZS6EasVKYE
+	c1H61fRPgo9u/iqyj3D/eXztHSP6T8EG5hwhjnJ242wXeOd/ygA79um9mq3vBHfB
+	iSB/mRBTXfYas+p95hCl/EN51WCkW11XstBvlPHsnuoXWIOai37X4fpeaS9cDTUV
+	NjyHmsZN/O8jSgzV7xxxQ==
+X-ME-Sender: <xms:TlJ1amVpvdcIoTaM9yFyWz0D7G8RLj7I45pntgGXbzRzpKuFBP_2Pg>
+    <xme:TlJ1apleoSo0xIv4R9gax969EgpuXrrg7hn42NzF4c0pJo47V8PtE4th6m2H_BYW-
+    7LfBG82AyD90ZF2khkHq6x1spDm5gKEC8pLXi7stmWftgf0MYbRZhQ>
+X-ME-Received: <xmr:TlJ1avbKqHJH_Q8aA3IorP_oCAqx0eQ8xWIQTNMJoGja7XviRXj91b3GqPID-mtL_AqIuvN_elr4RUVMJhx9WGAVfrFxIHZ4XtvGFbxF5t2A9w>
 X-ME-Proxy-Cause: dmFkZTE7kdBa+2ZpN9yaQzNopvi5XGOOKBTvLDG9gmHatLClTyCzXowykrFEsXwaSZzd4i
     7rZ+PYPbEsDpQY65/3WEOnc3hfu3bdJkEr0npqZzCOFaVJnElXRww4Mk5FBkx2+neuda5y
     A+H0Sn3NmT1/usz1Tgjyy7AJoC08TLsGbBAgN5++8fR1k3aPnOSgHwDRp6T+iuecMdWx7o
     nj7jBoWmovohcLM4ckangVr/9NTxAZBdKgEEJXE/ShuS40CTDkm1PTxNMXsIZneVIrNtc+
-    YP0jF47y+J8bJU/RfS7k4wGaeZn5/rp5UAv2tEyMAQrx5mBuiXa3CjLgjK6t3CHEGqxXCr
-    4TvxchQCdwZqiQLLxEhI56l/2SIjGhOgPSDsoYuaZmiz761J04dMeFYsxH/Te6iiqwdIEQ
-    Us4/bQ/ZWqQUPZZwZWgp4seh7b5X9StwivGH0sTPJomUFHAMrcX/Ie0Fqr/fO05qizH7ko
-    jOmw/+PadBxzxqSUTufYVjBMbU3dKbFT7WKEKfhPG96aev7JcerIWk6BR9z8J9sTPFoG8m
-    HPDpQKX7LNYgjLxQRcEor7b+XNML1AvqYwBkTeixbGVUAqpWaFVT6ryOib7ScmRPrUf7ev
-    cnOY6gG6lE47Gql6T+RQNco8KL4xl5ekcqut2f2OcDKfBKhHzsSjBp62A0pA
-X-ME-Proxy: <xmx:TFJ1ahk3EEq5OpRs76XP6ZiC85rjU4C_T41q9N9I8EPaksDNI3tjnQ>
-    <xmx:TFJ1amQhtUB4XHhENXN9XEVKzj8Hmq3QRkWnYuMQIzNkCKrB74VrOA>
-    <xmx:TFJ1anNd5Revx87TvzgNy4c8--PJ8gtLjMjv7dHHfbPORtNAmUJJlA>
-    <xmx:TFJ1anUvjaYds3u8pE2wkO0cvMZMQVTDjenxSy7OSvtyc_bzSFyrOQ>
-    <xmx:TFJ1ajskctOzgJTmu7UaGt5ejziwIYf3mslzy4F1hn6fKcxSnL2dIf_i>
+    YP0jF47y+J8bJU/RfS7k4wGaeZn5/rp5UAv2tEyMAQrx5mBuiXa3CjLgjK6t3CHEGqxXuI
+    MITPMLNzrxguVr4YqAa45NbVl+WEiZrDZqSAuiGMRBnf6C5EaqZYzr3Svj35UEdJznDN8z
+    6M9UWUsk2Chy3UmV2qWPncIlfEYWDX+w5zfia4gVa6KbZDJxF+NAK/jtLNIzPDQJ7qdVjB
+    pRqhFvCmZEU2ebRJZfw2gIiHzRQ7eZncpM8MVNr5eSkbEcOvd6+CYygxeXENfte1V3n991
+    K50VT3Ig49ij/1QiPvQNqPBaoS3is/ZIk1lDXT9HbVYlKKlARPiCPPsIo5jU0anfH6gk+V
+    +JKStMtrEft3xA8PfVGk6ylUuPHnXZsuds6msgXoiXYWHonY9GJ64eayIytQ
+X-ME-Proxy: <xmx:TlJ1asN8H8BaWuKPKTXQxKiFtF-dOSUN7-xKwjQdT7S-Wgd8TWxPnQ>
+    <xmx:TlJ1asaGhOL4rDK4MJZvtJPHC7E06mvDP0ireY4hqavDf8WWcJZJ8w>
+    <xmx:TlJ1ai2UocTzC2kdG-xDzLyvrkczdbzsHGIVnEBC70Amwspb-Ad0Yg>
+    <xmx:TlJ1aqeYUwtlASRXknD5TmsqVoqISgIRgyhbX589OGbbczv4hiPcUw>
+    <xmx:TlJ1alZXQk3yYHy936oAGL0NW9llyqE7bELMa3kKSjKg-cRxziRHQ4z0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Aug 2026 23:34:35 -0400 (EDT)
+ 6 Aug 2026 23:34:37 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 06c960f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Aug 2026 03:34:34 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9681cbef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Aug 2026 03:34:37 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 07 Aug 2026 05:34:25 +0200
-Subject: [PATCH v5 1/6] loose: load loose object map for the correct source
+Date: Fri, 07 Aug 2026 05:34:26 +0200
+Subject: [PATCH v5 2/6] setup: detangle loading of loose object maps
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260807-pks-odb-create-on-disk-v5-1-399da0b0b140@pks.im>
+Message-Id: <20260807-pks-odb-create-on-disk-v5-2-399da0b0b140@pks.im>
 References: <20260807-pks-odb-create-on-disk-v5-0-399da0b0b140@pks.im>
 In-Reply-To: <20260807-pks-odb-create-on-disk-v5-0-399da0b0b140@pks.im>
 To: git@vger.kernel.org
@@ -90,107 +90,136 @@ Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>,
  Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.15.2
 
-When loading the loose object map via `load_one_loose_object_map()` we
-pass in both a repository and the corresponding source. We ultimately
-don't really respect the passed-in source though as we instead always
-load the map via the common directory. This doesn't make any sense
-though, as the function is called in a loop through all sources, and as
-such the expectation is that we'll load the map that belongs to the
-given source. The consequence is that we'll ignore loose object maps of
-any configured alternates.
+When a repository is configured to use a compatibility hash function
+then we load the loose object map when we initialize the repository.
+This object map provides the mappings between the canonical object hash
+and the compatibility object hash.
 
-Fix this bug by instead loading the map via the loose source's path.
+Loading the object map happens in `repo_set_compat_hash_algo()`, which
+calls `repo_read_loose_object_map()` in case the compatibility object
+hash is non-zero. This setup sequence has two major downsides:
 
-Helped-by: Toon Claes <toon@iotcl.com>
+  - We assume that the primary object database is the "files" object
+    database and unconditionally downcast it. This will cause us to BUG
+    in case a different object database type was used together with a
+    compat hash algorithm.
+
+  - We require the object database to already have been initialized when
+    configuring the object database. This means that we must intermix
+    configuration of the repository and initialization of its
+    sub-structures in a weird way.
+
+Refactor the logic so that we instead load the loose object map via the
+"loose" backend, which fixes both of the above issues.
+
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- loose.c                       | 18 ++++++++++--------
- t/t1016-compatObjectFormat.sh | 18 ++++++++++++++++++
- 2 files changed, 28 insertions(+), 8 deletions(-)
+ loose.c            | 11 +++++------
+ loose.h            |  1 +
+ odb/source-loose.c |  2 ++
+ repository.c       |  2 --
+ setup.c            |  5 +++--
+ 5 files changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/loose.c b/loose.c
-index bf01d3e42d..9dad75373b 100644
+index 9dad75373b..a3b2dcedc2 100644
 --- a/loose.c
 +++ b/loose.c
-@@ -61,9 +61,11 @@ static int insert_loose_map(struct odb_source_loose *loose,
+@@ -61,7 +61,7 @@ static int insert_loose_map(struct odb_source_loose *loose,
  	return inserted;
  }
  
--static int load_one_loose_object_map(struct repository *repo, struct odb_source_loose *loose)
-+static int load_one_loose_object_map(struct odb_source_loose *loose)
+-static int load_one_loose_object_map(struct odb_source_loose *loose)
++int loose_object_map_load(struct odb_source_loose *loose)
  {
--	struct strbuf buf = STRBUF_INIT, path = STRBUF_INIT;
-+	struct repository *repo = loose->base.odb->repo;
-+	struct strbuf buf = STRBUF_INIT;
-+	char *path;
+ 	struct repository *repo = loose->base.odb->repo;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -69,6 +69,9 @@ static int load_one_loose_object_map(struct odb_source_loose *loose)
  	FILE *fp;
  	int ret = -1;
  
-@@ -78,10 +80,10 @@ static int load_one_loose_object_map(struct repository *repo, struct odb_source_
- 	insert_loose_map(loose, repo->hash_algo->empty_blob, repo->compat_hash_algo->empty_blob);
- 	insert_loose_map(loose, repo->hash_algo->null_oid, repo->compat_hash_algo->null_oid);
++	if (!should_use_loose_object_map(repo))
++		return 0;
++
+ 	if (!loose->map)
+ 		loose_object_map_init(&loose->map);
+ 	if (!loose->cache) {
+@@ -112,14 +115,10 @@ int repo_read_loose_object_map(struct repository *repo)
+ {
+ 	struct odb_source *source;
  
--	repo_common_path_replace(repo, &path, "objects/loose-object-idx");
--	fp = fopen(path.buf, "rb");
-+	path = xstrfmt("%s/loose-object-idx", loose->base.path);
-+	fp = fopen(path, "rb");
- 	if (!fp) {
--		strbuf_release(&path);
-+		free(path);
- 		return 0;
- 	}
- 
-@@ -102,7 +104,7 @@ static int load_one_loose_object_map(struct repository *repo, struct odb_source_
- err:
- 	fclose(fp);
- 	strbuf_release(&buf);
--	strbuf_release(&path);
-+	free(path);
- 	return ret;
- }
- 
-@@ -117,10 +119,10 @@ int repo_read_loose_object_map(struct repository *repo)
- 
+-	if (!should_use_loose_object_map(repo))
+-		return 0;
+-
+ 	odb_prepare_alternates(repo->objects);
+-
  	for (source = repo->objects->sources; source; source = source->next) {
  		struct odb_source_files *files = odb_source_files_downcast(source);
--		if (load_one_loose_object_map(repo, files->loose) < 0) {
-+		if (load_one_loose_object_map(files->loose) < 0)
+-		if (load_one_loose_object_map(files->loose) < 0)
++		if (loose_object_map_load(files->loose) < 0)
  			return -1;
--		}
  	}
+ 
+diff --git a/loose.h b/loose.h
+index 6c9b3f4571..ed663ac550 100644
+--- a/loose.h
++++ b/loose.h
+@@ -13,6 +13,7 @@ struct loose_object_map {
+ 
+ void loose_object_map_init(struct loose_object_map **map);
+ void loose_object_map_clear(struct loose_object_map **map);
++int loose_object_map_load(struct odb_source_loose *loose);
+ int repo_loose_object_map_oid(struct repository *repo,
+ 			      const struct object_id *src,
+ 			      const struct git_hash_algo *dest_algo,
+diff --git a/odb/source-loose.c b/odb/source-loose.c
+index 3f7d04a56e..812ca1c138 100644
+--- a/odb/source-loose.c
++++ b/odb/source-loose.c
+@@ -727,5 +727,7 @@ struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
+ 	if (!is_absolute_path(loose->base.path))
+ 		chdir_notify_register(NULL, odb_source_loose_reparent, loose);
+ 
++	loose_object_map_load(loose);
 +
- 	return 0;
+ 	return loose;
  }
+diff --git a/repository.c b/repository.c
+index 2ef0778846..6d633002b4 100644
+--- a/repository.c
++++ b/repository.c
+@@ -201,8 +201,6 @@ void repo_set_compat_hash_algo(struct repository *repo MAYBE_UNUSED, uint32_t al
+ 	if (hash_algo_by_ptr(repo->hash_algo) == algo)
+ 		BUG("hash_algo and compat_hash_algo match");
+ 	repo->compat_hash_algo = algo ? &hash_algos[algo] : NULL;
+-	if (repo->compat_hash_algo)
+-		repo_read_loose_object_map(repo);
+ #else
+ 	if (algo)
+ 		die(_("compatibility hash algorithm support requires Rust"));
+diff --git a/setup.c b/setup.c
+index d31808130b..825572f5f1 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1788,8 +1788,6 @@ int apply_repository_format(struct repository *repo,
  
-diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
-index 92d48b96a1..9cafcee509 100755
---- a/t/t1016-compatObjectFormat.sh
-+++ b/t/t1016-compatObjectFormat.sh
-@@ -187,6 +187,24 @@ do
- 		eval signedtag3_${hash}_oid=$(git hash-object -t tag -w ../${hash}_signedtag3) &&
- 		eval signedtag4_${hash}_oid=$(git hash-object -t tag -w ../${hash}_signedtag4)
- 	'
-+
-+	test_expect_success 'rev-parse maps oid of object borrowed from alternate' '
-+		for repo in alt borrow
-+		do
-+			test_when_finished "rm -rf $repo" &&
-+			git init --object-format=$hash $repo &&
-+			git -C $repo config set core.repositoryformatversion 1 &&
-+			git -C $repo config set extensions.compatObjectFormat $(compat_hash $hash) || exit 1
-+		done &&
-+
-+		git -C alt commit --allow-empty --message A &&
-+		echo "$(pwd)/alt/.git/objects" >borrow/.git/objects/info/alternates &&
-+
-+		oid=$(git -C alt rev-parse HEAD) &&
-+		git -C alt    rev-parse --output-object-format=$(compat_hash $hash) "$oid" >expect &&
-+		git -C borrow rev-parse --output-object-format=$(compat_hash $hash) "$oid" >actual &&
-+		test_cmp expect actual
-+	'
- done
- cd "$base"
+ 	repo->bare_cfg = format->is_bare;
+ 	repo_set_hash_algo(repo, format->hash_algo);
+-	repo->objects = odb_new(repo, object_directory,
+-				alternate_object_directories);
+ 	repo_set_compat_hash_algo(repo, format->compat_hash_algo);
+ 	repo_set_ref_storage_format(repo,
+ 				    format->ref_storage_format,
+@@ -1805,6 +1803,9 @@ int apply_repository_format(struct repository *repo,
+ 	repo->repository_format_precious_objects =
+ 		format->precious_objects;
  
++	repo->objects = odb_new(repo, object_directory,
++				alternate_object_directories);
++
+ 	free(alternate_object_directories);
+ 	free(object_directory);
+ 	return 0;
 
 -- 
 2.55.0.679.g6767b8d81c.dirty
