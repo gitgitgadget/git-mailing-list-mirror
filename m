@@ -1,382 +1,251 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768813B1B3
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 00:30:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14B03002AB
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 01:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786062661; cv=none; b=Da7jb9FqEf5O+GeMd/veIuzrzlK/uroaP2QhP+Bt+vOqnfE7bzfL3uYdDwJ5AZvlkRaHIZLq2KBbfTBX8LQyPo/GTGIeD3fx/RUwXIPkYNB/Cw0A3BMYR8WlNYGqjhiAquwRyEGAK4dICc0HHVjCp4MGY7y3jRpHZ1/Ix3pNtxM=
+	t=1786066724; cv=none; b=SOzqkQ5nUOEwsNMYo0VbTlc3RAWDLPBmXhjx0q2P0qnBjzcHqbL65H4WX2Oyy1jHJ9taA0x1XUjuoslViP0e8dT57r+xD0valfZVKsYXM4k61r+pKJEbw3lOnt88CIpoZKKwYRkM86NAZuArVPOb7H6wRydviwpUxCmKq2b4/ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786062661; c=relaxed/simple;
-	bh=Rr+GNsqWNWzbuTwCzO/UqWo4axijE/5UipmXqaVSc84=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=pvPFV7cujFSJlFcStnYRdV9/0t6+lsS1OObc5pJDH3eEzeXQjDXbCQmWmW1+ighGwLyLhVZRrdBPieM+mbJ5NK6JnyUNpbTps4ktxMsjqqD/WIwN11Agem2pgg/NrHTkOk20GwsCxjzoHz2jdVEa27uxzT5a+9RtJ5F9ELIi5r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gWPDzZGF; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786066724; c=relaxed/simple;
+	bh=OwuT6Dznn0RG4xAlbI18gh5/DtnBYMUAMiUJN8i2aJs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QhA2jE8S6ahxdbHm2CRO+xIp4dtds3yoA5lYSWSozRs3ngPCPip6eG0NSyY8duZ5clKde1LrmqXl6VEKQKgGa1JoX1KeSoRgQWAl+HEdvPshSOAW1iQ4yEKU6kmvRftwkzdhTEzISM6vb578LIcLaolvB69nNqDTWaZhEDpoYaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c8xcpBkg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jTtPCRJ0; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gWPDzZGF"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-47fe89fb333so1688958f8f.3
-        for <git@vger.kernel.org>; Thu, 06 Aug 2026 17:30:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786062657; x=1786667457; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=zmnrSdqJzWvAUolxoMnsJeWG8nwAiHMD4qK06wzMkXY=;
-        b=gWPDzZGF9LqC0wPikP1E5xnMsavBLOMNR9URBJcZoiOJ7nMnvC5Gp/xfY0bQ2AA2Xy
-         hAqJ2p4y7G2bzrqVv+fqXOAYOuP4uYA9o77qWJePdrHvcyUDLbHKiVA8HYN/GFEUMDOx
-         2wz8tynVQRlzuxK/1Gs8buKKGB2fU7zLSZsdvcVnSeXVrCIicHKLE5goKJ6w17arde1z
-         t1lFql5RdnGH3VrwaFs3NZWItcrdPQ3kbx9B/lQndgZ61wKbetCTKMJHB5ZVc3GZeBEu
-         1nRx3zbiqbcJOUzKK8MNzNq9tNN9tv1lzjwMpuvq1I3Rk9Kd2I8E81Y8r4PrThHwxUeE
-         szxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786062657; x=1786667457;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zmnrSdqJzWvAUolxoMnsJeWG8nwAiHMD4qK06wzMkXY=;
-        b=KiHu4HScFNiZxM7vDpU6jVGAdrk2+nqeUYObZYqXAH8joN6TV4iFAwt57dH1ndxUFu
-         inBlZ4YXSullDCmng7wgBovT6lEfQoocvQl1suSs6SgM1OryztyRy4QRy9eWwXGGPlMw
-         xiBgllRnrAdnYkC81YPw3BJdLCpg1p7d9OYzSzVElL5y4EDhRtLLbf6/5RC8fiRLvAdn
-         mtq9qnNpcU5ONR0sgm6pYA8GM6HpTU7gL9pTrFEnB4URqu8VO5o3Qf3AetkQiIlF1c5Y
-         9giC6rBL4AJRe2+3eYhsMJRePClCSbSfu0nVqujTunwjcc4LgTYWBJbkjj/Aswnvj5cx
-         dTzw==
-X-Gm-Message-State: AOJu0YwbAxHS7kTQcpcFMidcXdAmAepL7ooqbmUDnhwPv48pTbpVD9Fy
-	o9lt3GUBImUhXA63k2tNiu/rtIsy7IQ02xoe2yVWPi20wBGSFTbWDAKq
-X-Gm-Gg: AR+sD13C7uHyDIdQQAsbb0SYdcEbC/0KAVffYGf+ywKHb30cK5Y3UmN21wdraL5Q15s
-	R9bFlcIOC8fAW5A9zz2+pRV3kUIr6PN82gQtU/LlhmDCuUg2zkPk2ZB3PcafdJ/LPpGWYIHNv3O
-	WtLCI+w5LzPkES32eTVWl1lpifI0/upmzJ4dOYjDslFSijjjQ8dSy9vqzgD7aoN4AqHuafJWtci
-	2NMR06mLKGgwFUDf33bMhitdc6hQM3VBI5y5Wq64VZ0/soSJfwOic/mdnzuZQ9fp3ruaEuqjNRZ
-	CMYlzZeGk5Vl2ERLekF7f+t3dlkh7TiERF0qWVZm3541rw0KGV2ibQrgypnBn6wEXwpBu/mUyB2
-	RIGY9vhfmq5nIzDZVYxR0NLGG7496XzfzSh4xUwJzuhWG3Klk5V3YwSf1ChDZTxlAYcUBpkGv4F
-	aavmG5oTSpSd+oSv91yG9tFQ9FoN5bc5nmJx/hY9uB0FOsiu5OrdI9kr3HFzBS6P3JZDjvR0DxI
-	EyM3obAT47yqasPE8oYIUn3TFgvLediYLHVF3jpvO/yXV1QE4J89f6Mg6rPxa1+04nk4kxr+nYH
-	CY43CajgbAN2+IDxvdfC/cBbtHLchQpIWlj3OmqR+TjxlEZo/iM+NiJ6DEpYKrPh9npGwXmDvuk
-	=
-X-Received: by 2002:adf:f082:0:b0:47f:e729:c588 with SMTP id ffacd0b85a97d-47fec5224abmr24840438f8f.14.1786062657297;
-        Thu, 06 Aug 2026 17:30:57 -0700 (PDT)
-Received: from localhost ([47.58.8.78])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48002145589sm451329f8f.1.2026.08.06.17.30.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Aug 2026 17:30:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c8xcpBkg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jTtPCRJ0"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0CFC91D000B3;
+	Thu,  6 Aug 2026 21:38:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 06 Aug 2026 21:38:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1786066711; x=
+	1786153111; bh=7XZC9Odc8cAxn8eMvGeLmZRmQMNcd4RRUnoqS0cv2aE=; b=c
+	8xcpBkgKlHdDbsrCnlmVEJThfzdWRJo9BVLO7MKvNpx/rW42wa6+V4AM8DLt3Zld
+	cXBW2f08uTabkG1RkOS7k+iDrfAWIaLu1gb8LZWi8EKZ2umyeeSpYhpLIZWJs+Ja
+	NPmzmVoi2RXRH3RLfM5i394q8zgTQH6VRFMIldtM9LUUfViyPpqkpAhX0KZExNWN
+	mghYcB8Ps9cxRUKw/sR9XM9t+VR1l7geO9ARO5ymBvbROvSXwArCNQSApQ3HVdpF
+	PTN+PNmtWQWbYIl1N3uQUJwfj4RXhwyP5MZKpSn+D0QDeb4xiEu6J4VVRee9bfCW
+	PkmwIqFhPE/3ysohYse5g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1786066711; x=1786153111; bh=7
+	XZC9Odc8cAxn8eMvGeLmZRmQMNcd4RRUnoqS0cv2aE=; b=jTtPCRJ0Yt/5h7Q94
+	bDaB5q7X+wnxJfK5NFGehHHq6I4KKAkuoIdSpE0k+jtvKmFGJgbu5Q1w8VcXsvlT
+	Bpd26fji09COrdRlvZGPmQADuJda5ytK1LzatXx0evDR9i8uQQT92362w1FaB/lU
+	YIXjY92/+/w5y4l1KkY/5xNCFkAesARiExSAavk2bSe06Yztz4NK+hb44wEhndF1
+	cr2EyC0q4/rGLgElZ89poTR6TpPb5a7n+0xp7e0I843GniejSnVbs2CECHhuO/mv
+	8isn4tFI+7H5W7S/JSRZ5okQXrvp/5N31BklGeGIMBRhLanPGUMT2ZMBL8aV3Vsr
+	9NETQ==
+X-ME-Sender: <xms:Fzd1at1AnjWxj9h9BANsAhmt1R8DjbU_-jOa00V5ocpPSos_XWUl-w>
+    <xme:Fzd1amoMGKe0dBlqOyQZuEww0Ebk1NTzR4lnG6h4-ZIM70IPVojHEDRUrxfGBMKyU
+    1rwMkCMDB1o35kOMAJn9vvxZph6hpG1mI2VV_VYhGsk0YGp66CPig>
+X-ME-Received: <xmr:Fzd1ahhaOqUXVIBRSUS_ncYCLzIhI9yhuDv9VSuKFaAlE4QSjNrwq4qDoNuVbtX1Juf1sCQWd1DnAWEhrt2NHDSsrbKO5JFk_A>
+X-ME-Proxy-Cause: dmFkZTFq7MzKWLxG+4X43Fk1A+9+V44cVi14HmRnlZI3MPpq0IXmpruKrxVv3EBIxIBKPP
+    jGWkcZ1SfvzfgAZqhyYXPJhiexxo4v20CG8uf5ATK5plYBugOG7rVR9zbDzeeQ06XeAZ3c
+    2xIJvlyaLhvEmLOoJVwNI1e9Eih3SPcNk+clOEydmVRIe09dtZs3cRi6WsO8rRs0leHQJh
+    h0CD+jxxGRxSHYDfyAe4OoJPtMxecAcr0vz2jF5EWiuoyarsJe9bl9xfK7cGU+kvOkJLQr
+    2xQfrEoMlwoHhIGtRjiKLNC9/olDxKb9Ai3/ZlxO1afrgzsIfdkKaWB2MkyVyhPZ0EiXVB
+    14oXBTqdjM5kb8oW38PohcsDyoVlMErzQ+KCQmIVlwyZSwAj4i0ZPxhmwjBJFIomf8ezST
+    yQfx8fp8hOtqMpoODxbUHxzEWdFHiiAfhm+uI7M5sHBBHSEWDQbwRdLaU8ThnKN7dbcuc4
+    DkYps7QwScfhgfO9oMPrE71tMnwWrJrpGgXMooaVdg2E/k177rB/YIOsbJ5UpESdzzYlpg
+    c1qubG8zICi7c7Caz3XR3y338eV+SFtyqSZUEAJCTX2YgLa81UY67I+58FYd9u8+FHARt3
+    zm/V624g+uH1wqX1PJNjzyfE/HIlCjNk1FZfTU2IdWUCmM8idkvfcqVyHWWA
+X-ME-Proxy: <xmx:Fzd1aq-hdrKGcojy2nOwB8AVtDTx_kgVWCmbU5ATfLj4MAuP9IzgjQ>
+    <xmx:Fzd1alVBmuJRgVPAtE5nUtgJA77ZSSZN0MBordL23JtoyT-Tdos4qA>
+    <xmx:Fzd1amDlXRSfjD5s4bjDw_01IfMvtOCwfsg_KqGERvDZ4HfpKumidw>
+    <xmx:Fzd1aiHmlYVf3hPfAd5Qp1IlgEfzD445kQQkjZ1jk_W4x-sHWkeLEg>
+    <xmx:Fzd1aiwRt-LCafs0DTvOm3zrzKeqRu6kCisuYqIpkEv0_-Ie5WLX8UbI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Aug 2026 21:38:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
+	Britton Leo Kerin <britton.kerin@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	=?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v4 0/3] completion of 'git [-C <dir>] diff'
+Date: Thu,  6 Aug 2026 18:38:27 -0700
+Message-ID: <20260807013830.698340-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.55.0-655-g8b87133eb9
+In-Reply-To: <xmqqcxw010me.fsf@gitster.g>
+References: <xmqqcxw010me.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 07 Aug 2026 02:30:55 +0200
-Message-Id: <DKIADCID62IW.1MII8E3AYCI6F@gmail.com>
-Subject: Re: [PATCH GSoC v4 0/9] cat-file: extend remote-object-info to
- support %(objecttype)
-From: "Pablo Sabater" <pabloosabaterr@gmail.com>
-To: "Jeff King" <peff@peff.net>, "Pablo Sabater" <pabloosabaterr@gmail.com>
-Cc: <git@vger.kernel.org>, <chandrapratap3519@gmail.com>,
- <karthik.188@gmail.com>, <gitster@pobox.com>
-X-Mailer: aerc 0.21.0
-References: <20260725-objecttype-support-v1-0-2d4ca3bbabf1@gmail.com>
- <20260804-objecttype-support-v4-0-31511b0231be@gmail.com>
- <20260806171714.GA1632126@coredump.intra.peff.net>
-In-Reply-To: <20260806171714.GA1632126@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Thu Aug 6, 2026 at 7:17 PM CEST, Jeff King wrote:
-> On Tue, Aug 04, 2026 at 08:42:54PM +0200, Pablo Sabater wrote:
->
->> Patches 1-5 are preparatory. They don't change what the command does:
->> - [1/9] is a test cleanup.
->> - [2/9] fixes a possible bug in case of a malformed response.
->> - [3/9] and [4/9] refactor how the object data is stored and handled. Th=
-e
->>   why about this refactor comes from [2].
->
-> Thanks, I think these refactors in patches 3 and 4 make sense and
-> address the issues raised in the earlier thread. I'd actually take patch
-> 3 just a step further, as below (which you are welcome to put on top of
-> your series, or work it into the middle, or even take as inspiration and
-> rewrite as part of another patch).
+The primary motivation for this topic is that the command-line
+completion of 'git diff' does not handle paths (unlike 'git status'
+and 'git add') and instead relies on the default behavior of Bash
+command-line completion, which completes files in $PWD; this does
+not work at all with the '-C <directory>' option.
 
-Wow, thanks a lot for getting so involved, I think I'll place it as is.
+This series teaches the completion machinery to complete revisions
+(unless '--' exists), then tracked paths, and then untracked paths,
+before letting the Bash default kick in.  This way, we correctly
+complete 'git diff' command line even when '-C <directory>' is in
+effect.
 
->
-> -- >8 --
-> Subject: transport: drop remote object-info fields from transport struct
->
-> A remote object-info request needs three things: the transport for
-> contacting the remote, the list of oids to request, and a place to store
-> the output.
->
-> Rather than take these as function parameters, we take only the
-> transport object, and expect the caller to have placed the other two
-> into special fields in the transport struct. But this doesn't make much
-> sense. The set of oids and results are really only valid for one
-> request. There is no reason the transport would need to hang on to them
-> outside of the single function call.
->
-> Even though we save a few lines passing the parameters around through
-> the various vtable functions, the result is harder to understand (for
-> example, who is responsible for cleaning up results, and when shoudl it
-> happen?). It also opens up the possibility of a subtle bug. A caller is
-> likely to point those fields to stack variables which could go out of
-> scope, and the transport struct would be left holding invalid pointers.
->
-> This is mostly harmless now, as we disconnect the transport immediately
-> after the sole caller of transport_fetch_object_info(). But conceptually
-> we could keep we could keep the transport open and make multiple fetch
-> calls (and reuse the same connection to the helper, to a remote HTTP
-> server, and so on).
->
-> So let's pull these out of the struct and pass them as function
-> parameters. It's a little more verbose, but I think more clearly
-> illustrates the intent. I've also tweaked a few function signatures to
-> mark the input oid array as const, since it is purely an input to the
-> function.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I do think the concept of reusing the transport will become useful
-> later. We limit a single request to 10,000 objects, so it is quite
-> conceivable a caller would want to make several. That can mostly come
-> later on top, though I think the design of the remote-object-info
-> command makes it awkward. Each invocation provides a remote by name,
-> which is then resolved to a transport. But a given caller is likely
-> going to provide the same remote over and over again.
->
-> We probably could get away with just caching the last-used transport and
-> reusing it when fed the same remote name again. But we could perhaps
-> also change the protocol (which AFAICT is not yet in any released
-> version, so still available for changes) to specify the two
-> independently, like:
->
->    remote https://example.com/foo.git
->    remote-object-info objA objB objC...
->    remote-object-info objX objY objZ
->
-> And then it is more clear that setting "remote" is stateful, and will be
-> used for subsequent remote-* commands. But maybe that statefulness is
-> something we don't want. I dunno.
+The tests are the only changes relative to v2.  In the step where
+tracked paths are completed, v2 did not demonstrate that untracked
+ones are *not* completed at the same time.  Now we do by having
+untracked 'file3' next to 'file1' and 'file2' that are tracked.  In
+the last step, we demonstrate untracked paths that do not share
+prefix with refs or tracked paths are completed, with or without the
+"-C <dir>" option.
 
-Yeah, I think it is not in any released version yet as the
-ps/cat-file-remote-object-info (the one that precedes this series)
-landed in 'master' the first What's cooking of August [1].
+ 1/3: completion: no-op refactoring of diff completion
+ 2/3: completion: complete tracked paths for 'git diff'
+ 3/3: completion: 'git diff' completes untracked paths as a last
+        resort
 
-Given that, I think that it could be a good idea to have both, if a user
-foresees that he's only going to make one 'remote-object-info' command
-he can write it as it is now:
+ contrib/completion/git-completion.bash | 69 +++++++++++++++-----------
+ t/t9902-completion.sh                  | 49 ++++++++++++++++++
+ 2 files changed, 90 insertions(+), 28 deletions(-)
 
-  remote-object-info <remote> objA objB
-
-But if a user foresees that he will have to make multiple ones, we can
-make what you suggested:
-
->    remote https://example.com/foo.git
->    remote-object-info objA objB objC...
->    remote-object-info objX objY objZ
-
-We would have to make the remote optional, if there's no remote die(),
-etc. We would also have to tell apart a remote from an OID in the first
-argument, but full OIDs and remote URLs are not very similar so that
-should not be hard haha.
-
-I do like the idea, but I see it more as a follow-up series after this
-one, as the topic of this series is type support.
-Also, I'm biased as I have little time before my deadline ends.
-
-I'm happy to keep doing things and there are more things related to the
-object-info protocol that I'd like to keep working on after finishing
-GSoC.
-
->
-> Anyway, either way I think the cleanup below is worth doing in the short
-> term.
->
->  builtin/cat-file.c   |  6 ++----
->  fetch-object-info.c  |  4 ++--
->  fetch-object-info.h  |  2 +-
->  transport-helper.c   |  7 +++++--
->  transport-internal.h |  4 +++-
->  transport.c          | 14 +++++++++-----
->  transport.h          |  7 +++----
->  7 files changed, 25 insertions(+), 19 deletions(-)
->
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 950d9f237f..4f4d791821 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -730,10 +730,8 @@ static int get_remote_info(int argc,
->  		goto cleanup;
->  	}
->
-> -	gtransport->smart_options->object_info_oids =3D object_info_oids;
-> -
-> -	gtransport->smart_options->object_info_results =3D results;
-> -	retval =3D transport_fetch_object_info(gtransport);
-> +	retval =3D transport_fetch_object_info(gtransport, object_info_oids,
-> +					     results);
->  cleanup:
->  	transport_disconnect(gtransport);
->  	return retval;
-> diff --git a/fetch-object-info.c b/fetch-object-info.c
-> index ad27b1e4ca..385462c707 100644
-> --- a/fetch-object-info.c
-> +++ b/fetch-object-info.c
-> @@ -12,7 +12,7 @@
->  /* Sends object-info command and its arguments into the request buffer. =
-*/
->  static void send_object_info_request(const int fd_out,
->  				     const struct string_list *server_options,
-> -				     struct oid_array *oids,
-> +				     const struct oid_array *oids,
->  				     unsigned ask_size,
->  				     unsigned ask_type)
->  {
-> @@ -54,7 +54,7 @@ static int parse_object_size(const char *s, size_t *res=
-)
->
->  void fetch_object_info(enum protocol_version version,
->  		       const struct string_list *server_options,
-> -		       struct oid_array *oids,
-> +		       const struct oid_array *oids,
->  		       struct packet_reader *reader,
->  		       struct fetch_object_info_results *results,
->  		       int stateless_rpc,
-> diff --git a/fetch-object-info.h b/fetch-object-info.h
-> index 10b3641f7c..2fba96c6f7 100644
-> --- a/fetch-object-info.h
-> +++ b/fetch-object-info.h
-> @@ -29,7 +29,7 @@ struct oid_array;
->   */
->  void fetch_object_info(enum protocol_version version,
->  		       const struct string_list *server_options,
-> -		       struct oid_array *oids,
-> +		       const struct oid_array *oids,
->  		       struct packet_reader *reader,
->  		       struct fetch_object_info_results *results,
->  		       int stateless_rpc,
-> diff --git a/transport-helper.c b/transport-helper.c
-> index f3cb8f8662..d5a064d386 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -786,11 +786,14 @@ static int fetch_refs(struct transport *transport,
->  	return -1;
->  }
->
-> -static int fetch_object_info_helper(struct transport *transport)
-> +static int fetch_object_info_helper(struct transport *transport,
-> +				    const struct oid_array *oids,
-> +				    struct fetch_object_info_results *results)
->  {
->  	get_helper(transport);
->  	if (process_connect(transport, 0))
-> -		return transport->vtable->fetch_object_info(transport);
-> +		return transport->vtable->fetch_object_info(transport, oids,
-> +							    results);
->
->  	die(_("object-info requires protocol v2"));
->  }
-> diff --git a/transport-internal.h b/transport-internal.h
-> index 60db0bedcd..e7ead5d785 100644
-> --- a/transport-internal.h
-> +++ b/transport-internal.h
-> @@ -51,7 +51,9 @@ struct transport_vtable {
->  	 *
->  	 * Uses object-info capability of v2 protocol.
->  	 */
-> -	int (*fetch_object_info)(struct transport *transport);
-> +	int (*fetch_object_info)(struct transport *transport,
-> +				 const struct oid_array *oids,
-> +				 struct fetch_object_info_results *results);
->
->  	/**
->  	 * Push the objects and refs. Send the necessary objects, and
-> diff --git a/transport.c b/transport.c
-> index 35acdf71a2..25e2c14a7b 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -433,7 +433,9 @@ static int get_bundle_uri(struct transport *transport=
-)
->  				     transport->bundles, stateless_rpc);
->  }
->
-> -static int fetch_object_info_via_pack(struct transport *transport)
-> +static int fetch_object_info_via_pack(struct transport *transport,
-> +				      const struct oid_array *oids,
-> +				      struct fetch_object_info_results *results)
->  {
->  	int ret =3D 0;
->  	struct git_transport_data *data =3D transport->data;
-> @@ -450,9 +452,9 @@ static int fetch_object_info_via_pack(struct transpor=
-t *transport)
->
->  	fetch_object_info(data->version,
->  			  transport->server_options,
-> -			  transport->smart_options->object_info_oids,
-> +			  oids,
->  			  &reader,
-> -			  data->options.object_info_results,
-> +			  results,
->  			  transport->stateless_rpc, data->fd[1]);
->
->  	close(data->fd[0]);
-> @@ -465,11 +467,13 @@ static int fetch_object_info_via_pack(struct transp=
-ort *transport)
->  	return ret;
->  }
->
-> -int transport_fetch_object_info(struct transport *transport)
-> +int transport_fetch_object_info(struct transport *transport,
-> +				const struct oid_array *oids,
-> +				struct fetch_object_info_results *results)
->  {
->  	if (!transport->vtable->fetch_object_info)
->  		die(_("remote does not support object-info"));
-> -	return transport->vtable->fetch_object_info(transport);
-> +	return transport->vtable->fetch_object_info(transport, oids, results);
->  }
->
->  static int fetch_refs_via_pack(struct transport *transport,
-> diff --git a/transport.h b/transport.h
-> index 6948b65db9..39193d0077 100644
-> --- a/transport.h
-> +++ b/transport.h
-> @@ -57,9 +57,6 @@ struct git_transport_options {
->  	 * common commits to this oidset instead of fetching any packfiles.
->  	 */
->  	struct oidset *acked_commits;
-> -
-> -	struct oid_array *object_info_oids;
-> -	struct fetch_object_info_results *object_info_results;
->  };
->
->  enum transport_family {
-> @@ -317,7 +314,9 @@ int transport_fetch_refs(struct transport *transport,=
- struct ref *refs);
->  /*
->   * Fetch the object info from remote
->   */
-> -int transport_fetch_object_info(struct transport *transport);
-> +int transport_fetch_object_info(struct transport *transport,
-> +				const struct oid_array *oids,
-> +				struct fetch_object_info_results *results);
->
->  /*
->   * If this flag is set, unlocking will avoid to call non-async-signal-sa=
-fe
-
-I see everything all right.
-
-There's two typos on the patch's commit message:
-- s/shoudl/should/
-- a duplicated "we could keep"
-
-I will fix them, so if you see anything changed in your patch it's just
-that. If I end up changing anything else, I'll let you know.
-
-[1]: https://lore.kernel.org/git/xmqqldanxbq9.fsf@gitster.g/T/#t
-
-Thanks, a lot,
-Pablo
+Range-diff against v3:
+1:  d3c51c042c = 1:  3b99b45fee completion: no-op refactoring of diff completion
+2:  c3658d6ca2 ! 2:  bcc24b6bda completion: complete tracked paths for 'git diff'
+    @@ contrib/completion/git-completion.bash: _git_diff ()
+      __git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
+     
+      ## t/t9902-completion.sh ##
+    +@@ t/t9902-completion.sh: test_expect_success 'setup for integration tests' '
+    + 	echo content >file1 &&
+    + 	echo more >file2 &&
+    + 	git add file1 file2 &&
+    ++	echo untracked >file3 &&
+    + 	git commit -m one &&
+    + 	git branch mybranch &&
+    + 	git tag mytag
+     @@ t/t9902-completion.sh: test_expect_success 'git -C <path> checkout uses the right repo' '
+      	EOF
+      '
+      
+     +test_expect_success 'git diff completes tracked paths when no refs match' '
+     +	# file1 and file2 are tracked but file3 is not
+    -+	test_completion "git diff f" <<-\EOF
+    ++	# there is no ref that begins with f
+    ++	test_completion "git diff f" <<-\EOF &&
+     +	file1
+     +	file2
+     +	EOF
+    -+'
+    -+
+    -+test_expect_success 'git diff -- completes tracked paths' '
+    -+	# file1 and file2 are tracked but file3 is not
+     +	test_completion "git diff -- f" <<-\EOF
+     +	file1
+     +	file2
+     +	EOF
+     +'
+     +
+    -+test_expect_success 'git -C <path> diff completes tracked paths in specified repo' '
+    ++test_expect_success 'git -C <path> diff completes in the specified repo' '
+     +	test_when_finished "rm -rf repo-for-diff" &&
+     +	git init repo-for-diff &&
+    ++
+    ++	# otherfile is tracked, oops is untracked
+     +	echo content >repo-for-diff/otherfile &&
+     +	git -C repo-for-diff add otherfile &&
+    -+	echo untracked >repo-for-diff/oops &&
+     +	git -C repo-for-diff commit -m otherfile &&
+    -+	test_completion "git -C repo-for-diff diff o" <<-\EOF
+    ++	echo untracked >repo-for-diff/oops &&
+    ++	test_completion "git -C repo-for-diff diff o" <<-\EOF &&
+     +	otherfile
+     +	EOF
+    -+'
+    -+
+    -+test_expect_success 'git -C <path> diff -- completes pathspecs in specified repo' '
+    -+	test_when_finished "rm -rf repo-for-diff" &&
+    -+	git init repo-for-diff &&
+    -+	echo content >repo-for-diff/otherfile &&
+    -+	git -C repo-for-diff add otherfile &&
+    -+	git -C repo-for-diff commit -m otherfile &&
+     +	test_completion "git -C repo-for-diff diff -- o" <<-\EOF
+     +	otherfile
+     +	EOF
+3:  ba5dc6f164 ! 3:  34720a30ab completion: 'git diff' completes untracked paths as a last resort
+    @@ contrib/completion/git-completion.bash: _git_diff ()
+     
+      ## t/t9902-completion.sh ##
+     @@ t/t9902-completion.sh: test_expect_success 'setup for integration tests' '
+    - 	echo content >file1 &&
+      	echo more >file2 &&
+      	git add file1 file2 &&
+    + 	echo untracked >file3 &&
+     +	echo untracked >ufile &&
+      	git commit -m one &&
+      	git branch mybranch &&
+      	git tag mytag
+    -@@ t/t9902-completion.sh: test_expect_success 'git diff -- completes tracked paths' '
+    +@@ t/t9902-completion.sh: test_expect_success 'git diff completes tracked paths when no refs match' '
+      	EOF
+      '
+      
+     +test_expect_success 'git diff [--] completes untracked paths, too' '
+    ++	# there is no ref or tracked path that begin with u
+     +	test_completion "git diff u" <<-\EOF &&
+     +	ufile
+     +	EOF
+    @@ t/t9902-completion.sh: test_expect_success 'git diff -- completes tracked paths'
+     +	EOF
+     +'
+     +
+    - test_expect_success 'git -C <path> diff completes tracked paths in specified repo' '
+    - 	test_when_finished "rm -rf repo-for-diff" &&
+    - 	git init repo-for-diff &&
+    -@@ t/t9902-completion.sh: test_expect_success 'git -C <path> diff -- completes pathspecs in specified repo
+    + test_expect_success 'git -C <path> diff completes in the specified repo' '
+      	test_when_finished "rm -rf repo-for-diff" &&
+      	git init repo-for-diff &&
+    + 
+    +-	# otherfile is tracked, oops is untracked
+    ++	# otherfile is tracked, oops and ufile are untracked
+      	echo content >repo-for-diff/otherfile &&
+    -+	echo untracked >repo-for-diff/untracked &&
+      	git -C repo-for-diff add otherfile &&
+      	git -C repo-for-diff commit -m otherfile &&
+    + 	echo untracked >repo-for-diff/oops &&
+    ++	echo untracked >repo-for-diff/ufile &&
+    + 	test_completion "git -C repo-for-diff diff o" <<-\EOF &&
+    + 	otherfile
+    + 	EOF
+     -	test_completion "git -C repo-for-diff diff -- o" <<-\EOF
+    -+	test_completion "git -C repo-for-diff diff o" <<-\EOF &&
+    -+	otherfile
+    -+	EOF
+     +	test_completion "git -C repo-for-diff diff -- o" <<-\EOF &&
+      	otherfile
+      	EOF
+     +	test_completion "git -C repo-for-diff diff u" <<-\EOF &&
+    -+	untracked
+    ++	ufile
+     +	EOF
+     +	test_completion "git -C repo-for-diff diff -- u" <<-\EOF
+    -+	untracked
+    ++	ufile
+     +	EOF
+      '
+      
+-- 
+2.55.0-655-gb2c071042d
 
