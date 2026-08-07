@@ -1,79 +1,79 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ECC449ECB
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 06:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04E7448CEC
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 06:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786083500; cv=none; b=GDnmv7DngMSyo4O9Fr3WcdoeTXkZABnIxkdABnaZON9mdVG/tET6KgwmcyveQUqkfwono8vi8xgr8unz7iQpxueo8qhL/xUrpHIzpPADSXH48CUAqIM1+ZWXIXwuTzSxmgCeWUli5NhPkWxZh/CebNGXdWdzp9J/Bw8Opeoj5BU=
+	t=1786083502; cv=none; b=cvsOwOZf/ozUpa7PIftZbY2pLiRK1J68TQTCb9rSLzUq7mA1nMaKOYju+Pztd0IRsp6VST6LiRPEVgHpmc8DO/JTSO5c9HOO473CgylPr49hnnmvoq/R5iOlet+uVgszsbtA+V1WV/R9IaB4AMuWMyE9Wo8ymr+qcDMrjs7KMuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786083500; c=relaxed/simple;
-	bh=An9Be1p0F2Xcz+nY0buzujh9peESEerTttXISo5iZtg=;
+	s=arc-20240116; t=1786083502; c=relaxed/simple;
+	bh=XuaOxrqSyHf7uijFWc5hM1yhLVRXLi8xjtrjW8YLdcA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Y6dBInxBGtCrUmLYeMm16ve8t6dmzybv+CNIKXVWpe8C24SIFQcWcRsfCRR6rX21DJQschE7EqLEtV6hAXg58JBrkpHSFxJwVpun7SbfEw7hoE5Owe3/uCFwgdV3pRNKtwPhFcvf75DoQQvVDK59IqaZA0etXY7wXEwqGdiyxNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=axOM2zcp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iYHU4YRc; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=njwJNKQLyxd5yHat6NoDzkK21h5zEctbqqjN2iL6GN3S3IpwDam+hJ/oVwmQcPOEhh2vnuF78XH1VL5XqfZ+hUxNa1viCFhz8ofoCovh+QIkjYBdgbSPzQzqgKEIPK/Q4hqy7EqRK+I7E+ad5oTvIH/avPppAH62EZhp/6+TnLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mcvq4TlZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=msJHm1W/; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="axOM2zcp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iYHU4YRc"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mcvq4TlZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="msJHm1W/"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 86171140010D;
-	Fri,  7 Aug 2026 02:18:17 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 030551400106;
+	Fri,  7 Aug 2026 02:18:20 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 07 Aug 2026 02:18:17 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 07 Aug 2026 02:18:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786083497;
-	 x=1786169897; bh=4SaCcJe45tictldw+Rhe5e9iQ+yE+o1x2nrIT4Yn9S0=; b=
-	axOM2zcp4Z/Q+G68hlI/VUyJg6dGctAtjVSdMuTEamY6M2HnA37Wr191Y5RHqKFO
-	otUXloBFi5rzUY1hmhRSCfJTdbChUd/tmGjW2Jtx6HHKJyz+JdmbdHz1ggXDTXrk
-	Fm3NPnHNLPQr8Kdr78Au5icOAfbCr/L5EPwUFDknA7qkpvmxHGifofxRwMskRTRL
-	P7BLi3nwPgiI+nEcj1zwqYxh/Y1I6w6Fnk3mk0tHNxwBprYA8T70sEkka/ETShrV
-	8JmMTklzMLoaw2/eQ2TxkHv3c1McTK5UER51lzC9WoPQQe/fBlsRlIKzLcAy9qVv
-	8oBFFGswICI3OJgMhfNDEQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786083500;
+	 x=1786169900; bh=8IqSKCno7pR+G9S6macZq/TIrpNlBj246rp964rMPBg=; b=
+	mcvq4TlZQNi0K3EdF/Exhl/u116/VufX2h1Ob5E2ShbQnxIigt0XZh5xyx/OHLhC
+	teteORpwjuGzuYE4ondeDGkIHZDy77G4wzm85pSGXMEtT3h+1w7otieQxw7p+gl5
+	ZLyQFhxDaHVdJhwfAnCe75O+FNDTzeSK5rrtqk8dYiE+SPMeXfm/nrN9SJo/dQZx
+	/DJK3i34v5MPNvEKkQg/4jhp0S8dmxv9vISnQrVkpkg8m2gk3xOeDlDSnHhm92fr
+	Sv78DwG5O88xHH0Jp/G4YtFqmFgKdm5Pv9YoxxStbYGev54xGYSrjjLwD/RR74GG
+	U8g6uf/34bZ+wucMAQxzYw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786083497; x=
-	1786169897; bh=4SaCcJe45tictldw+Rhe5e9iQ+yE+o1x2nrIT4Yn9S0=; b=i
-	YHU4YRch+PYNBHenRBLD13jKMK3Xb0LAXoP2TTdKoI36OsKqLvGmxvzWV2jkvzIp
-	SR4kN2qj9wtmyqc2Wg/y7vxZ40u2KcaGFxbNvUxgYe+/fbMheisOFRgIAkfcM+4t
-	mUTJuWRiCepEtbftTCQSD66xop5nsrETdYwNzL/2eW9RBPNfob4kOuAnf2LTRxBR
-	xc4V/wuTUIoz+XJg5jXI03UZJWe/J2uCVBimfQdgb2v9bsEb5CDX5506S6TbGBXl
-	Sh9pxAy1pqcT3K8RY9fPnQChtdFEPIJbbV5Jg/SVzi0GYSz/naVWNhEE8UbeySlX
-	KSkvKkqwLAuUxDblgMV2g==
-X-ME-Sender: <xms:qXh1aoHRyLtnE2HQ2OInoIzhh7P4lTTa0VYTqYplrQ9nRm_ouS2CwQ>
-    <xme:qXh1arU3kNakP4uS3eDgqsvRE5Hgosm5WjDpBrzKrs_PHgP29E0___a4bogGb7ihc
-    6cr0f5UBXQJ1RJMHbpPl3ays7uoWKEdpkCI1xLXU4nT1lpRCnNczw>
-X-ME-Received: <xmr:qXh1aozkjmYY7uDN7E8Hba2oqEeztLiF2Vs2dbbmWbr3JDUMwu2pLIDUJcTysjYUEM4feqN4BGbS0n46Kf-aTP06SPidg09CQZWqtJID1DHWEQ>
-X-ME-Proxy-Cause: dmFkZTG1N9eFOEjW9F/tsHTgYGBMfnzYVsZfiUzzNpfy3L349Ebh7o8+PZfg6+wr8dRRUg
-    uKE0BCvRENZpzpWgLGZ2ALsR1sPlrhJ31UvM7Z2fQGGTWm/nsUtTmV4d4Zw+HB8KsTXqsj
-    Mr4aSAdrP7HAJGB5X6OZXLDRSLWjD+cWJhxqBkWEdsn8S5Gn1EuQNVG/2nv+InZMCkKigh
-    xR54FCYub0oPnDNtzMLuaGdqW6oxyPe/5ITPzFYgYghT0kjvkVR4Ey3voz1kxslGrQnxeC
-    17UEnIXgbLOJ8DrWekwMXizAmnNSYpX1ocQWnXZqwore1sflIOlPGrkXcxYFe/ppt7sAn4
-    DDm5/kWxoEvMtVSDc3fuMlKlPEXgQuWJYnp2yrrkaTXwViO9qvFXFHIiEkNzW7LkQZOJCy
-    zx0C64BQCElMxO+ucV89epO874hUZLUHfDxXkMEZNHj+sNyOVqu2Hmwwb8TC55q0e/awpY
-    av5oKJprLsTJz2sAYSIdvmU8NgeqVG7yQJOIrSNlHBRGIlpQkcPxS7Kc9rZ8kOKQ+qbKNu
-    PYgk8RIfDc3IGbzb8Hzyf7U5S//SnKtpIX+cvnyvAJM3WzilGmvERAi8fO55qA/wqHd3xy
-    78kfmiH10ORTVrYylO/u7tNq85RvuhjAmlCiIj6/zeSW8kH5oMtNnqZkkATA
-X-ME-Proxy: <xmx:qXh1aoQV9QVLjGeRs-sXFuBfS54l-ypeho3CF4TjOQDDA7EZwEaN_w>
-    <xmx:qXh1asgRIovHJkFiQrHKZMXO3cn63b1S3d86_217cXLsv3jde-1AJw>
-    <xmx:qXh1ankij-DDBREP1CRFVSqwtB7NvmTodQh-EiFCQIYhYdLtI4Qi5g>
-    <xmx:qXh1ans4lHJMWKcM6CdLQS-YPxT5X1OOjxZuZvyCmgog9ulldzJnvA>
-    <xmx:qXh1amXj2LaOgZvmJHGWxwt2a0U5Dp-kDLHrQP7MY2jN8v67pR7F3jz_>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786083500; x=
+	1786169900; bh=8IqSKCno7pR+G9S6macZq/TIrpNlBj246rp964rMPBg=; b=m
+	sJHm1W/vOQIYwwd0/zK5V/o1KdlSnLWF5m/igqr+6t5t4H2Q5wGmEIGK75WhTYwv
+	lnWIn5RUrTICQlYC2pVOnGRAx0SHo3JnRzdh8tDBg5AM+Cb4LatpnXZGs+NZcX/D
+	LzCPxx6T81N1FDlCIpOp+9yg3gYMeq6OePJphf7dqD3PPAvxk4r73xsxDt1yDCbu
+	BfFDxxmC8AwwTXwfK12o7TZEfZQZxSzyfOuCSJ2v1PHRM09iHruQYajnwZXP/Miv
+	5xeGFSQvOZJbwr34mpDAMk6O+PZQ/V+cT4n1/dhxr8Lp1SsfK7A1JiaYJWkPQK9M
+	FoTib2t+z5/Ift2R0S0xQ==
+X-ME-Sender: <xms:q3h1aieQVTDMKq7iG7hjCc_mm8831v5p3wfQ_8XGzj8f8fFnKzoEXg>
+    <xme:q3h1amOIzp75pcW7GUpBGBzGCns5e0nOwkm70amVXOlf7GIYCF_YD9mCAB79Nlcoj
+    ZJxVvHey5nIPht0XuOlyfwN6zLrEv76eW0hhOul9SbVqcA2EWsYx54>
+X-ME-Received: <xmr:q3h1aqKS--mMZEdbD3hIsXcXhPfbb5bIZAHDCHvIFaOUsaaLSOcvGF_7WQTLOZwdPR8uQPzUnqpEV4agB6Uybf3YgAPqOXmwJLJxG2iSGzSiWg>
+X-ME-Proxy-Cause: dmFkZTGtplrCE+Xj2F6jSqC5NQvtjZ5r4G8UrSfnEbgyqfaIBhkJRlzCC+cqo5AGchBgiE
+    Pl2kY0PU7OTWtQD98oRJFwOpKBwSlz6qyr4pRzhwfwePH7N6OakjjG2MmQ4+GCk0NHOjWV
+    KLlVYwjprsIwtMI78SWchI7c0K46Iiw2ptoFS9vQqq09Bq7nJdaRlORv8sZtFkophUmeg/
+    4ucf6of6VznlyeSqmsJV7KNRGF1j+8+X83lOMP/7SBLhts5g31/o659Gc58QA26mBhhEiS
+    xMYKwBoECPmwMhyZW0aUsLc2mZ8rW9/eqHw7xrZw2pIXROv5IcV9wd0vVoC1xgRBwkDrBY
+    +qSDe0dH/wDh9uO0bzHKGCbHCSBXwaubOtrYCYKtAP9C7rlI3aC1agx0VlTCildDzFOX3G
+    0toS8FIoOqLG6P73PkNXG3LjpBwLVgzr7kebVgLrMtradIHZJXVYzPYM5sw4mXIdhTKLcM
+    TTCXrw/9B+yMIh3VYoy9YQU0uOZFywRtU8KjXGjh9Tt04V/sW3eHt02pPDvT7rUCDpX6MC
+    3+QQqznrdZhoYInQIieYuv/QCimonzS/Pqq7Z23d9LG7pFMIQ31tRvkre2TR7cuOf0VBw1
+    dD0wJNq68m+Ur4K4qh5usexK431iAdyklad5VVj2Xm+VMb8eXO64SVdAnZCw
+X-ME-Proxy: <xmx:q3h1auL46i-rz9yn2lYUZ5WST1YzVDOqZy1bAUXpZT7J8QUhNdiHPQ>
+    <xmx:q3h1as5UwnEWIn6VUm5-6Ee8oZ7Jex_vOolG6D3GRrV7BHkbMtI2Hw>
+    <xmx:q3h1agcQiwyIXL0sWK908NDMSWQ6QQx92zQ8tUj4Ktl_MWi5fB0GOQ>
+    <xmx:q3h1avHxLacUcmSOdr10rEdJjHaggMSrhruOHe3hoovcT8jQJ3sQyQ>
+    <xmx:rHh1alxYyua1O9SjrkKSueeNvBwElIRZjtn10yFkmWKkvhWtT89tYFwk>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 02:18:15 -0400 (EDT)
+ 7 Aug 2026 02:18:18 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6389d0f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Aug 2026 06:18:15 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 64ba070b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Aug 2026 06:18:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 07 Aug 2026 08:18:04 +0200
-Subject: [PATCH v2 2/5] wrapper: introduce writev(3p) wrappers
+Date: Fri, 07 Aug 2026 08:18:05 +0200
+Subject: [PATCH v2 3/5] wrapper: properly handle MAX_IO_SIZE in writev(3p)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260807-pks-reintroduce-writev-v2-2-30fcff0e89c1@pks.im>
+Message-Id: <20260807-pks-reintroduce-writev-v2-3-30fcff0e89c1@pks.im>
 References: <20260807-pks-reintroduce-writev-v2-0-30fcff0e89c1@pks.im>
 In-Reply-To: <20260807-pks-reintroduce-writev-v2-0-30fcff0e89c1@pks.im>
 To: git@vger.kernel.org
@@ -94,121 +94,119 @@ Cc: Ben Knoble <ben.knoble@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-In the preceding commit we have added a compatibility wrapper for the
-writev(3p) syscall. Introduce some generic wrappers for this function
-that we nowadays take for granted in the Git codebase.
+Some systems like NonStop set a comparatively small `MAX_IO_SIZE`, which
+limits the maximum number of bytes we're allowed to write in a single
+call. We already handle this limit properly in `xwrite()`, but we have
+recently introduced wrappers for writev(3p) where we don't. This will
+cause the syscall to return EINVAL in case somebody passes an iovec
+entry to writev(3p) that is larger than `MAX_IO_SIZE`.
 
+Introduce a new function `xwritev()` that is similar to `xwrite()` in
+that it handles such platform-specific nuances:
+
+  - We only pass the leading iovec entries to writev(3p) that fit into
+    `MAX_IO_SIZE`, pretending that the underlying syscall performed a
+    short write. This mirrors how `xwrite()` chomps overly large
+    requests before handing them to write(3p). As a consequence, callers
+    will never see writev(3p)'s EINVAL error for requests whose summed
+    length would overflow an ssize_t, but observe a short write instead.
+
+  - If already the first iovec entry exceeds the limit we instead punt
+    to `xwrite()`, which knows to handle this case for us.
+
+  - We restart the underlying syscall on EINTR and EAGAIN, just like
+    `xwrite()` does for write(3p).
+
+Adapt `writev_in_full()` to use this new wrapper. With the retry logic
+now living in `xwritev()`, the calling loop becomes the exact mirror
+image of `write_in_full()`, which also retains the responsibility of
+translating a zero-length write into ENOSPC.
+
+Reported-by: Randall Becker <randall.becker@nexbridge.ca>
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- wrapper.c      | 41 +++++++++++++++++++++++++++++++++++++++++
- wrapper.h      |  9 +++++++++
- write-or-die.c |  8 ++++++++
- write-or-die.h |  1 +
- 4 files changed, 59 insertions(+)
+ wrapper.c | 47 ++++++++++++++++++++++++++++++++++++++++++-----
+ wrapper.h |  1 +
+ 2 files changed, 43 insertions(+), 5 deletions(-)
 
 diff --git a/wrapper.c b/wrapper.c
-index 16f5a63fbb..be8fa575e6 100644
+index be8fa575e6..561f9ee9c9 100644
 --- a/wrapper.c
 +++ b/wrapper.c
-@@ -323,6 +323,47 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
+@@ -323,17 +323,54 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
  	return total;
  }
  
-+ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt)
++ssize_t xwritev(int fd, struct iovec *iov, int iovcnt)
 +{
-+	ssize_t total_written = 0;
++	size_t allowed = MAX_IO_SIZE;
++	int i;
 +
-+	while (iovcnt) {
-+		ssize_t bytes_written = writev(fd, iov, iovcnt);
-+		if (bytes_written < 0) {
-+			if (errno == EINTR || errno == EAGAIN)
-+				continue;
-+			return -1;
++	/*
++	 * Some platforms define a comparatively small `MAX_IO_SIZE` that
++	 * limits how many bytes can be written with a single call to
++	 * write(3p) or writev(3p); exceeding that limit causes the syscall to
++	 * fail with EINVAL. Just like xwrite() chomps overly large requests
++	 * for write(3p), pretend that the underlying writev(3p) performed a
++	 * short write by only passing along the leading iovec entries that
++	 * fit into that limit.
++	 */
++	for (i = 0; i < iovcnt; i++) {
++		if (iov[i].iov_len > allowed) {
++			/*
++			 * If the first buffer is larger than MAX_IO_SIZE,
++			 * let xwrite() deal with it.
++			 */
++			if (!i)
++				return xwrite(fd, iov->iov_base, iov->iov_len);
++			break;
 +		}
-+		if (!bytes_written) {
-+			errno = ENOSPC;
-+			return -1;
-+		}
-+
-+		total_written += bytes_written;
-+
-+		/*
-+		 * We first need to discard any iovec entities that have been
-+		 * fully written.
-+		 */
-+		while (iovcnt && (size_t)bytes_written >= iov->iov_len) {
-+			bytes_written -= iov->iov_len;
-+			iov++;
-+			iovcnt--;
-+		}
-+
-+		/*
-+		 * Finally, we need to adjust the last iovec in case we have
-+		 * performed a partial write.
-+		 */
-+		if (iovcnt && bytes_written) {
-+			iov->iov_base = (char *) iov->iov_base + bytes_written;
-+			iov->iov_len -= bytes_written;
-+		}
++		allowed -= iov[i].iov_len;
 +	}
 +
-+	return total_written;
++	while (1) {
++		ssize_t bytes_written = writev(fd, iov, i);
++		if (bytes_written < 0) {
++			if (errno == EINTR)
++				continue;
++			if (handle_nonblock(fd, POLLOUT, errno))
++				continue;
++		}
++
++		return bytes_written;
++	}
 +}
 +
- ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset)
+ ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt)
  {
- 	char *p = buf;
+ 	ssize_t total_written = 0;
+ 
+ 	while (iovcnt) {
+-		ssize_t bytes_written = writev(fd, iov, iovcnt);
+-		if (bytes_written < 0) {
+-			if (errno == EINTR || errno == EAGAIN)
+-				continue;
++		ssize_t bytes_written = xwritev(fd, iov, iovcnt);
++		if (bytes_written < 0)
+ 			return -1;
+-		}
+ 		if (!bytes_written) {
+ 			errno = ENOSPC;
+ 			return -1;
 diff --git a/wrapper.h b/wrapper.h
-index 15ac3bab6e..27519b32d1 100644
+index 27519b32d1..a6287d7f4d 100644
 --- a/wrapper.h
 +++ b/wrapper.h
-@@ -47,6 +47,15 @@ ssize_t read_in_full(int fd, void *buf, size_t count);
- ssize_t write_in_full(int fd, const void *buf, size_t count);
- ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
- 
-+/*
-+ * Try to write all iovecs. Returns -1 in case an error occurred with a proper
-+ * errno set, the number of bytes written otherwise.
-+ *
-+ * Note that the iovec will be modified as a result of this call to adjust for
-+ * partial writes!
-+ */
-+ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt);
-+
- static inline ssize_t write_str_in_full(int fd, const char *str)
- {
- 	return write_in_full(fd, str, strlen(str));
-diff --git a/write-or-die.c b/write-or-die.c
-index 01a9a51fa2..5f522fb728 100644
---- a/write-or-die.c
-+++ b/write-or-die.c
-@@ -96,6 +96,14 @@ void write_or_die(int fd, const void *buf, size_t count)
- 	}
- }
- 
-+void writev_or_die(int fd, struct iovec *iov, int iovlen)
-+{
-+	if (writev_in_full(fd, iov, iovlen) < 0) {
-+		check_pipe(errno);
-+		die_errno("writev error");
-+	}
-+}
-+
- void fwrite_or_die(FILE *f, const void *buf, size_t count)
- {
- 	if (fwrite(buf, 1, count, f) != count)
-diff --git a/write-or-die.h b/write-or-die.h
-index ff0408bd84..a045bdfaef 100644
---- a/write-or-die.h
-+++ b/write-or-die.h
-@@ -7,6 +7,7 @@ void fprintf_or_die(FILE *, const char *fmt, ...);
- void fwrite_or_die(FILE *f, const void *buf, size_t count);
- void fflush_or_die(FILE *f);
- void write_or_die(int fd, const void *buf, size_t count);
-+void writev_or_die(int fd, struct iovec *iov, int iovlen);
- 
- /*
-  * These values are used to help identify parts of a repository to fsync.
+@@ -16,6 +16,7 @@ void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_
+ int xopen(const char *path, int flags, ...);
+ ssize_t xread(int fd, void *buf, size_t len);
+ ssize_t xwrite(int fd, const void *buf, size_t len);
++ssize_t xwritev(int fd, struct iovec *iov, int iovcnt);
+ ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+ int xdup(int fd);
+ FILE *xfopen(const char *path, const char *mode);
 
 -- 
 2.55.0.679.g6767b8d81c.dirty
