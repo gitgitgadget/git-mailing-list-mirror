@@ -1,77 +1,77 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE94435F5ED
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 11:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799083A9636
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 11:41:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.176
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786102407; cv=pass; b=gXl8Xmtb7sz+ypL17+/eq9a35OuaZhQu82S0JzR0kGNqwgip6zf3dlt2AtObSvsrpea/LnkNyC9Tb4gNcqF8JNaOlh4cvSn4PjFLrfAZw+AcaOKPaOs6UDv4M6mOZNlxD43OUx8StAUOjqBDLiv04ESAl7ZIf8p+qdshQ/0AarE=
+	t=1786102898; cv=pass; b=jDSyQcdxuwXnf05+ExHpNrEencp8qOq+IAz14D0rlxDCjFLOJTO2HhHuJbKHVacmR+hd1fYflQzsb7zyg8E+yXHPpzgftV95anA/UE82FhroiQS7qfUYZlvA25JybdlUtfwxztcsyUD6MOObMOynVctouEtHjmI73tIeQu6WzVQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786102407; c=relaxed/simple;
-	bh=VrsVgelmarIWruCHCEfCh8bJAa93Qq0ja4h45u4HqeU=;
+	s=arc-20240116; t=1786102898; c=relaxed/simple;
+	bh=qMivnjAFlCmPpR1B+xg8aCg7p+N8jzC7eNNY6k+0FRM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aGwLPHzHZng7ziuzl0wadYEXUhM5MufAnJFmbVAZpM4g5lsYgTdA5IOwW8X6HKZAYcNl7NaB6pW0NEpmfVGiqWcpaNywt2ycakaifKrtuOhmSZ8NXmw6PbqiQyOQEg4p21UdiaamE+Z3eHOK6/BR/ckOv/OUfM1wqMLDfai6FSE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=KnnW+nxq; arc=pass smtp.client-ip=209.85.128.178
+	 To:Cc:Content-Type; b=Ge4/k2Q6SXd90wG1+c3sgqPVA+XS1u1oZisVsnoGqvCDOE1cNPb14l5skShTK+F04VDVjbUn6lfdYA9X6NXVTf1REBrd6F22s4KH7xsjEU4z0xMOHadLwBXkDrKO/IqDHk0pkZsYUYw4LHTi/HkUFMWsQv6WXe03xqmClcjA76I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=bzdaRIin; arc=pass smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="KnnW+nxq"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-81ed2a06b9eso33953707b3.3
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 04:33:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786102404; cv=none;
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="bzdaRIin"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-7dbcb505578so31268097b3.3
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 04:41:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786102882; cv=none;
         d=google.com; s=arc-20260327;
-        b=Drd/IsCd2s4w42vh0oeJHVMIJxrlS8+Vs+5Sg7PVpkO3YrOQTgEHX9+01joApa8Q3R
-         qulRxqhQgnGapkHElrh+dQZGcLvpl7BS65xTItD/p5Elx3q/dciJ8yjUHsIGbR+XX0ah
-         Dq/SCHJOsSPPT41QDDzCj660lJaf4+mPpnNc09swTto5yjGJMFjlxzKbne1drmhQFRyo
-         Q5nSqOgbgs4VLWoaY6wrrkPY02z3PBmbu7PJqmldBZaodSTIAVtde9jr9xt76ZYH+mzP
-         GE06Jgzc6/6Dvq/mcDPASdagIR4OeG+8iSFzxiQ3lfSR2gJcn6AeKX+A7uAJO0DDLOfq
-         Td2w==
+        b=dCpuyWPggkXOkmR/OrRAZ7MQRVYe+jg1XbTd8FIQY5k8MquT0bx/m3TnYEVGjtfCfd
+         H28tEaghTwrcNQeYhXixTuU0bOBECT0P3hJYG4abz+b8jejQ+VN/GQSEBMZ1Dq5ip2VI
+         +8lhJCXa4ukgQnRZMFedcR0z3d3ADK8UJSFWaPN1kNhGXdbiM+lOPjxHj9zNcrTDFVej
+         D7AY2460L+EPhl37fiB3JmiW5h4sxowDpz7MlZOxNxkOzsUbuM9XLwcfw06Y9h2FRfA4
+         c2TcyIsefUD2ASnj76nI5xrWDud7e49SoFY9meb53Bv5j6Dykl8/uGoUUgdLVdAyS41c
+         WcaA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=VrsVgelmarIWruCHCEfCh8bJAa93Qq0ja4h45u4HqeU=;
-        fh=e68/hF5m8mJcOq78Jc58jLoxAGCyl2TEonFF8NqM0uk=;
-        b=W2AsKIWiUVb0lBVnr6EupaCdMknWpb6nqlKUDyzejKkB3pJR6dxYWr8/1PLGBGBWQk
-         qTQQtvmsiC7quVr9scq5e3+ZazL9BHuJM6kx8YIoZx3o/kt9wJ/ZyUMTeCGa+3MqmbU2
-         TBDugph2s49y3bbcxlRlaLL7Z6QrK4AyTNrqlV2PX8Hk8L+NHy+urzf/t0jRHVe/EFMN
-         5V+FH8FBThiYcgCIEJ3CtmWFqW5E6syIrpWWZTCe5HdoXZkEI58zfnOgntXhVKZ8Ersq
-         dWX8v1Onyc4iF/38ymNs77RXZfIBTAV8RdpBOPi6pBrx1DgfXVr8hvnV6mXnLdpVBQAV
-         xSUw==;
+        bh=TBXl3mwK7ASxgFWERR1U8e+fQ0Rjcw1FgkxxKkb8rIU=;
+        fh=GEPRzH8vi/3SwJlHLsbGO+lU6CxPmUC+LT8JY4AErgw=;
+        b=Aw4wMALLkRiD0IubvXxlGwOSs3JteXMOxwnqRhqdX1LYyxKXjt89pX+al49yKRKhU6
+         dcawljHA3pbaZACGVgTG6/ugh68Gp3EvN1LcFFBDI6BVhZebXWrtPZghQblTdi+/57fd
+         AV2QrAfwQBDO4ylgLXaW3rc5nmehnJQ5WPQn3JbB+2Ame9KbxR5yQazjkxwrkONTIZ0B
+         /2d9IMbjC1MihO6kzoYMhhxGWiC3tJduPU1zLiyP7ZeH/y39jzUeggBK5wzBQkTbtkbk
+         iPs7LJVLQIQpl2Ri96+uKo/ts9ieDyj2QDy87grkaAWpLHfzvwtQD4MAPuSGAIs1YDLc
+         4AUg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1786102404; x=1786707204; darn=vger.kernel.org;
+        d=spotify.com; s=google; t=1786102882; x=1786707682; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VrsVgelmarIWruCHCEfCh8bJAa93Qq0ja4h45u4HqeU=;
-        b=KnnW+nxq//mv2FaBszo843aFhVrYfYX0Fmo21pP2OEavsGbegyJWRCuERVNdpS2EBH
-         K4V5QM3hW78xPGhzfGHxD7teRkhmG7XK3XSqjtD8wiiwDW2U9dRaJnVCIdFy3oNG6p4Q
-         BF23oqGTTfxAp6thO9bqaA+4ZE3xGiuLdWYIo=
+        bh=TBXl3mwK7ASxgFWERR1U8e+fQ0Rjcw1FgkxxKkb8rIU=;
+        b=bzdaRIinav+8Pi9SE2C3EH8ljeB4Deom2cjPl3g46ecjzcAIpVdxq/5yjeFoZQQxFa
+         5Wqa6YXNLdtcfvVpVFNGDY/8Z85ZhSnr0F6AcGd+NkMW1m+gak5RMLCVlBTZLwLcqRcD
+         F4CCtcgtBO8FH5wy3CtYRbWqTzPEDwuqGID/Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786102404; x=1786707204;
+        d=1e100.net; s=20251104; t=1786102882; x=1786707682;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=VrsVgelmarIWruCHCEfCh8bJAa93Qq0ja4h45u4HqeU=;
-        b=hlR9YB0ZRRBJELB2S9U922jUnYeHc+CZi2cKeq8vIjR1ck9+F7s01S66G2xuHj3Bvv
-         Or7x/PoA/VHm8FwQod7OV3rkpJubZDQGFT7YdYfrVhI/GtaO0XGlz4yzzPUDdRDJqGkc
-         XGgYpcHVasJf9dil12nUxRzURyPiEUuydfDNGvkfoaIz2fK0fvaa2L+yr6rU8I2M/rG2
-         vJ/5fx9lEjgHSFrvcUr6LjGYuIAh5faI4jnI6UtBZFPd0ncpSAoowqdin5urSvGlRqiD
-         YWQqC85fMessgBsa7lq9EQ9J+NgUtgKSj+rsthQRwZsVpe6EGRmLsG+pC4Rv1ZXXlcNk
-         IIBQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rp7uwkeAJJa/cPFtpVPyBF6tL0M8Wxm8VuI53hE+RL0fYUhs6uVveCYRAO0G4COYk8JKyg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2L16c0E592/x1/qXeeyTdT+6HqoqEixyK6u6v+m8j8ewcvtJF
-	g0+CmXSpNDNoiCGxd6VkCNyw6FOjKldBKNHoSEjmP/PmrfPQnWY8G+CqJtYN3F9ublP0/x5MMin
-	MlADJOiZbtjcqqq8ESj+5W7l+NWyp/VQCtQjCY1KxbsQKduSL2WA6NI3T1Q==
-X-Gm-Gg: AR+sD10RnhfV3+/6wopFdykRZZ5eRi6siu683MjZ3hmKYnhf72kWQUT+QOAXA7nORVR
-	ahHhIvOx5e7dAfNEUsSMNpR15yTCI8ToORU5Qr02bpWPynN0mTprSCAKzgQj6dfsb9lLJXsLI7P
-	8XDfAYG+SnD9i4qw18ZY04GRo8KgjUwEYqme3cmMEGzADRVSsZEKb+7YFP+sLMiKQRoEnvRtXMo
-	CJBbVTta1B7WfhMsQN4Z0xm3n+irD3mintD1Fy4FRIy9HOnue+dX0ldFFQqCzXTZbyMxrP6bFdG
-	qXaV67+HnFJ2QcRt48hkvTuWNChhPwJrOI1BSYdzvgg=
-X-Received: by 2002:a05:690c:6d8c:b0:80b:a6a3:937c with SMTP id
- 00721157ae682-8225ba2bad2mr47758807b3.20.1786102404506; Fri, 07 Aug 2026
- 04:33:24 -0700 (PDT)
+        bh=TBXl3mwK7ASxgFWERR1U8e+fQ0Rjcw1FgkxxKkb8rIU=;
+        b=T0/V71+DDvkajfgN815R/lRmc8jE5tH9/SE2yLe9sLp6/9alAxj129GMT0Nyv03Wg0
+         sfVHoFDSde0YFFVoFfjtJRg0ZJj7GfNInlZQNIfrIRRxaKrDA2XZq/7i3+PtoVh0jmAd
+         YcvQVx7905hWJyNvSJstD0EGKkNXHZgrT+IWLSpSVMbJhoShRQoeIZXDPQozVn9Ods+U
+         Q1DNdBB8MVuG+TSMXGYUujR+gmVU4cLtf633ispQME2LbcxrGlAeZtmepTZp4dKjuNUp
+         YCSzgm2eL2pJKoAlqY7WV5MyyuMIN2DjNDwZiRU5OQNrGkbVMshd7pGM7SaE50ZhOORE
+         wKxw==
+X-Forwarded-Encrypted: i=1; AHgh+Rp2dZe5GGOqHq42UBiROwmP4ghzddgN5BbN4RekzZK9sZ/hAI5ir4ip8j+uFzI86g6frtk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHL1SHZDMD3KkzzzutUWfxqPSS1prjpPZDDm0dV46kb5YgB68x
+	aWWQf9Rj27Chj7at0pe1yi8ENMs3SVS/z1a5FI1pTwrBsRqpiciPIVNn+3OPxOnyg6iBd725yj1
+	ZNJ9vMM/asbD+rTHVGgKGGa6VVDArdkAYaAavBrlKlQ==
+X-Gm-Gg: AR+sD11MuaiOHBqITP6R9OOtd0UgtFys2tMNOaNQQ3+avE9NabkrL515Kp+w4oE6GBg
+	pCttcd/XqyFwH+EC1mIQCiD18kdtMZWHd01zN79GEcnM0WD68TZfgepp/MJpHu/wouQOfmAeBNP
+	SMS6tHaUZM/GjMKdWv6f7oKHnjkn+SeS1zAKPtiAyVLeiQW2o3EGiPjuv0/FilzNlCgapEyaGGM
+	6dkwRpjK/y7oqqqbNS4+vPX/xTNVGouEyMKubJykqy9hsH6tGrVTdvzdbcO/mz9hHAqYoqqzl3u
+	ivzDu8zD8vpDwEK86mvPCWDvaiX/tfCUQ1i/EQuQ9Fg=
+X-Received: by 2002:a05:690c:e3c7:b0:823:2ad3:d392 with SMTP id
+ 00721157ae682-824463282efmr12594717b3.31.1786102882203; Fri, 07 Aug 2026
+ 04:41:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,42 +79,69 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <f857577e0cedc11f8db614b4ab2bf9217652a312.1786013982.git.gitgitgadget@gmail.com>
- <CABPp-BEV=u82AV=bXoHN9N+iNOrBjAig=1FY0sxiQNusrNGUbg@mail.gmail.com>
-In-Reply-To: <CABPp-BEV=u82AV=bXoHN9N+iNOrBjAig=1FY0sxiQNusrNGUbg@mail.gmail.com>
+ <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <e8565ce0203e7f94f3f1ac193eb1fd703fe50463.1786013982.git.gitgitgadget@gmail.com>
+ <CABPp-BHp=-fA1Mwo3zqNAROjjdZ4gCq8G7h=e80qLfzrAb3VxQ@mail.gmail.com>
+In-Reply-To: <CABPp-BHp=-fA1Mwo3zqNAROjjdZ4gCq8G7h=e80qLfzrAb3VxQ@mail.gmail.com>
 From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 7 Aug 2026 13:33:13 +0200
-X-Gm-Features: AUfX_mw5sLDqrgY3Dm-rlNhUB65xzUAEQMG-4Vc5Ae5RmQ9wU8zkpaTZm3X3bNA
-Message-ID: <CAL71e4OZwDzZaE4kfZTcBy8wtdeX2Y8H8XM9x12qH8TaUkVUnw@mail.gmail.com>
-Subject: Re: [PATCH v7 03/10] t6600: add test cases for side-exhaustion edge cases
+Date: Fri, 7 Aug 2026 13:41:10 +0200
+X-Gm-Features: AUfX_mzJW4Mq9uc_Ubhn8BZOrH2YWDzLAMnUru26NdgWdcKKfaheOmemXVahGKk
+Message-ID: <CAL71e4O6gyc_DSX40AEUOxyv4zCxtW4wdiJzwG6zaJbRS9Q39A@mail.gmail.com>
+Subject: Re: [PATCH v7 04/10] t6099, t6600: add side-exhaustion regression tests
 To: Elijah Newren <newren@gmail.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
 On Fri, 7 Aug 2026 at 05:01, Elijah Newren <newren@gmail.com> wrote:
 >
-> As the author of these tests, and as my Signed-off-by attests, I can
-> confirm with the full weight of my authority that these tests are
-> good.
+> > +Graph shape (parents are below children):
+> > +
+> > +   A ----------- X
+> > +   |\           /|
+> > +   | B---------/ |
+> > +   | |           |
+> > +   e2 \         f2
+> > +   |   |         |
+> > +   e1 d1        f1
+> > +    \  |        /
+> > +     \ |       /
+> > +      \|      /
+> > +       C
+> > +
+> > +A and X are the two tips.
+> > +B and C are both reachable from A and X.
+> > +B reaches C through d1.
+> > +Only B should appear in merge-base --all output.
 >
-> However, I would be remiss not to note the perfidious destruction of
-> my two spaces after each period, cruelly collapsed down to a mere one.
-> Have you no decency, sir?
+> Was this graph created in an editor using a variable width font?  In a
+> fixed width font, it makes one assume that C is not an ancestor of X,
+> but instead that C and f1 will likely eventually converge on common
+> history.  One might need to know what your original variable width
+> font was in order to see it right.  The description below if very
+> helpful, but could we replace the graph with:
 >
-> (Kidding, of course -- I mostly point it out so the next reviewer can
-> appreciate just how little else changed from the original.)
+>    A ----- X
+>    |\     /|
+>    | B---/ |
+>    |  \    |
+>    e2  \   f2
+>    |   |   |
+>    e1  d1  f1
+>     \  |  /
+>      \ | /
+>       \|/
+>        C
+>
+> ?
 
-Oops! The irony here is that I tried to be very careful to not
-corrupt your changes and thus the attribution. I was already
-somewhat hesitant to even modify the patch to split out the tests
-from the code changes.
+I don't _quite_ remember how my ascii art ended up in this shape,
+I must have either have corrupted it along the way, or I considered
+it good enough to illustrate it even if does not look fully
+connected. The graph topology originally came from Stolee's
+counter-example in the original discussion thread but it looked
+prettier there.
 
-I added my own helper script to check and correct patch series
-and I had snuck in a double-space remover for personal preference
-but I think I will actually get rid of that since there is a slight
-preference (but not enforced) for double-space in this community.
-
-And since I need to reroll _anyway_, I might as well repair this. :)
+Regardless, I will try to clean it up for v8, perhaps by copying
+your suggestion verbatim.
 
 Thanks,
 Kristofer
