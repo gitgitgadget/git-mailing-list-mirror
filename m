@@ -1,383 +1,219 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046BA26A1AC
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 03:03:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786071797; cv=pass; b=TJaGOxg0JtBj4V6xuCVRfFkCGhSy513ENmql70/e7JLFDBi9axpaVjYXmHOBdXL55nx5hxLh8oQOazeeeJTZbQcBdYzxA0zTODfCIboTVcq+obc5oNyzRiJn0TVsXUnbiAcZ90XkwCXlI50LU56ydP2ROEuRxQxuVVVJzKwaDnk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786071797; c=relaxed/simple;
-	bh=mzVqt1LxMZE7KUSTOXTrShvwpcUrq9dKNNLopporGm8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Xp/sgg9bqx4skEw6K2CdWrOzn5T9WCFoazvIt6dlcxRhx4HuLLv/y4QdtKP9WBkWvFmXuhKycUwlTra14+7aqc7fJ7dpH+F8Caw/tKCw+R1+GdQG+5DivJHZEaWBrNeYKkyEbeWc+nwx86/wPW+A9LfyM0oiGIJvMbgLOVMkHI8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pybrUAuZ; arc=pass smtp.client-ip=209.85.167.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC0E266B72
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 03:34:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786073678; cv=none; b=PW7SPVjGFlMT30yDecIw9p3L0uhTYj+r5sxXZxMAvnKVl2G3Q+MfQ1d2Qv85Zihjey6IbeGcu1V5Q/zvnInkmkrZdpLqjelv09s0jDRHWyA9b2VgNAfxfu98WngpHIr7Udr8xgBX1snD8A/e5XvJz4UsRCsbR4IKXconB280gew=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786073678; c=relaxed/simple;
+	bh=sH8KouLA29J7/iLzwMG0x0g8Xf8mrL/6RtzpYMkxUhY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=iS8RDwV0jTJAUdTYjSHiujzb/ZVuwggT0U4+Lg2PUCn1KNcT1iF++EnrWSqTeEfcZUF/uLnrv0QknayHdFe7OiqypZ7G32fCCznRpV+UIRHmkiPGBxUoyj2kMyv2Oi7wSG0temUigaMB73byGFMKS3OQu08OBya1tnxywSKS8KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q7adYKdQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T6STFYTD; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pybrUAuZ"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-4ab47c40e7eso1239684b6e.3
-        for <git@vger.kernel.org>; Thu, 06 Aug 2026 20:03:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786071795; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PxZXNLJ2nBiGLFJ5dU9n5/FN7r8FZRzrtXr2oXgqFsYfUePvjgj0FDJa7qs4quvEI8
-         zoIfk0xxsRpfFs4dpyOiCmiO4GUJI1w4iweL1vGK+XfWmXEuh5xsoMO80Z7hjarfQyPC
-         2n0wF6dZRG40XjnVW6BBhUAPIn853TrddoNqGHh4Yk8c+emh1MvsoqamnTtUzkOhPy8O
-         0bTOdHIthBJDXQkfJJCwg4lqp+2+jp4JgDqG575bOvPnh+Nvea30MW9/FYUW7iK8jc9X
-         2hrPiTAWamb0PszNvudsjv6pvlrPISdWSFBdcIu7BgHGSmGAx3Gtl+t8EKLipO/Pu9pM
-         xlLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=kXGrQQ8yJLyR1/n6fLBjIaRfcYC1gjmDWkgZvwXoidQ=;
-        fh=PdGuLsJN9JVZy5BHY9bPXqzeWCeYFKwbJ2iGslXTO1Q=;
-        b=KQisVDwR4vu6KRcqFBtL30zLXF2cypE/5tG7hmTDbMAqelf5kjNowQqHZta8Cc3nzd
-         4ByBzuA0xheOFv6yrGRZ6saaHU2NWuWie7T81DV2anQFwQaBIg32RRyJjNxw3gKEPIkN
-         t2kLmqDCMxFDCYaDwvWlkz30ungxiawQtllgGnTqnVGr3YT6aisLlEu3QRcWdVhvONF4
-         g6XZlzqdZBE2PZrXm7V7S2iSbS9WWbSgt93h89VR/ndFFy/G+lFAua38msjZSH/bXY88
-         N34IZrF4Vgy/M7SJKdR1d/tDR2I3BkFJ+IpHRFbwIWPB/NCUG3ujp3h4I93pHiSuQ+yF
-         A4Vw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786071795; x=1786676595; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=kXGrQQ8yJLyR1/n6fLBjIaRfcYC1gjmDWkgZvwXoidQ=;
-        b=pybrUAuZftf83SrQfdPtZOWOiTbd4ZmWSUA9gU7h7j/1K+4Yju/KE6v0JJryRqexAF
-         5K+HzK5e3ZG8D+LakWAAl+lhUdGHT1Ld2eAfs/1IX2Gp4Ow3f6jcFohnjY6YjH7gVphE
-         67R8+oTIMm0NuM6uoQID85EySPI7sGqPGWBMlNdPqBTVVltI0R8vwOke5NeZl9gRq30i
-         5dCn917etzMkTDQtd1jxGYPKYOUMPCyEVsL+P2RsfK0Tc2W2rJ6B2N+kV/d5r+vVC1gE
-         DLgSwFHoAAfDp0SmBkQKohKsr5X2FOberWXhuUdS252/oLDruHJ0TKP6V+0Wl7hCd976
-         AXxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786071795; x=1786676595;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=kXGrQQ8yJLyR1/n6fLBjIaRfcYC1gjmDWkgZvwXoidQ=;
-        b=l3MzEmluewK2xcS2eA2/l4NgWujO3ufPw9HWev3OqbFWmAb60OEjH3+tNEvhXwdxVD
-         xv7xnVI9abABNVnoe1CntQbJeHjqSkok6LUJLIP/OMIAfMZIh+VbdznYsb89U34WZlfe
-         xiOt+L5Vcmg1jNXbHzB2u7Ia2esNcOa955njmUNmk2mKCd+KYD0frBUhfHw4DxFBKk3/
-         +sYe7IKWMqgI2/R1u16jnnsePsKi5NYuZ2ZMOiCgz6ns61/y8u+3aHn/FoRz6Mkee3R6
-         Vi2RvwpILyvvwWrdsxrLCL+cETbLLxzZPh6ydxFEzCyov7iImud3adT/BQEQ2eJrTa5U
-         Gyxg==
-X-Gm-Message-State: AOJu0YwiuhhAnC4P3Iaa2j5cDmx/yrrPhVofJrsLkQ4rNEHUHom675Pu
-	p5d8S2wCETw3Xp4utLM2dywCMMJ8doCXLQ7gBlD1t1HbyUnq5NEvk11kUp0aaR7R2jlLNQ5FPUj
-	T2ToOLAKZIxgNafBI735HPbpZIdN6Y/A=
-X-Gm-Gg: AR+sD12pLNkwUtN1gaRkjfnPrDPLKcdGR+HKlBXX2MyTaNM9uQpS545NoOcNl+4Z0zO
-	atj6WnOjzpuKYNkjo41e/a+dGPZdWfdxWKCD1FVjS8qjBRssp6+fquR8NWuIkDajVsqsB/qD0fy
-	X4tv8Fc+pvrvfnNk9jCuAOhsY5sYYejL4CVkx36tCrSLkvFnzmW2IGEZzVIOGHQeMGdsu09n9+v
-	aHH6dpOSchYLfa9DMQM0NoauH5XgktnNPQCwMFcxhhBBCmM10j0JFKPVpQeudAch0GrUXItD6Ct
-	HyxT05pFGB2AVoh+wTeK0ozg8pfdmnvb3S6kcVCfr7F5QzxDhrocNfSY2xCd84KchwzAQDiwND3
-	XcK380563/Kd4sf/Eelws5EhkSSNJZV69r7zqtB7/dJi1x0L/mpsBAaKbqPYszAW95hT81UCO
-X-Received: by 2002:a05:6808:14c5:b0:497:df42:1e04 with SMTP id
- 5614622812f47-4afae15ab7bmr10599462b6e.18.1786071794773; Thu, 06 Aug 2026
- 20:03:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q7adYKdQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T6STFYTD"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3B74C14000BF;
+	Thu,  6 Aug 2026 23:34:35 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Thu, 06 Aug 2026 23:34:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786073675;
+	 x=1786160075; bh=QrqHjONG5ZMN8cdTK5KNN+PgPlDVJfpwTWYxBe6R7e0=; b=
+	Q7adYKdQgJp1wKVf06s0iBvg011/N4EhbR2lgHLscQ+yDg9cFJC7omAME2a3pbkC
+	OdAao3DLKkGqlEwX67F9qtI/wtRGgJi9NxUS5r11bMRFghYPBF7w0xQZ/pow3v65
+	NTUdz+cI7p5ySoNRJtS7SUX9iBRCRysd0LAW6Jy1GHVJvBWEbbvUBG8912BC9pf2
+	thr8khWw6c8d29sGTc4v7/OU5fioWEwNC8F+9oWVnoAeWSe33FDRZs3FCW1xn9a5
+	9T8EpqbwfgdeL1I1YEpW3d740dKbelBE6sn2XQrkYer7ytYwsRUG101wr/unVkg1
+	1pv7yDnXgnLcyQ1XYbSRWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786073675; x=
+	1786160075; bh=QrqHjONG5ZMN8cdTK5KNN+PgPlDVJfpwTWYxBe6R7e0=; b=T
+	6STFYTDwH+JI2zBM7cZaGGKau2HxNtvQXXpgvXq/uea0R4cu3e5ngY2jQO4c4c6K
+	Ew4bO+6Z8/pRLIU/SKt2p3cNXRj/AuX5RxF//sF4ZgstB6TJGubSy1uTEqUKY1Hb
+	PvJ8MvIt+8NoUpkq6Qsg8UZCiLyU/UBzJMi2yybMlgFfsPSOAoo9ow6cFWPOjEex
+	1XLFLQ4+E/tkH1GbuIWVsvTqWry296SogxgUlAWWaq8JMmQ5xjioHUnesrwknLvZ
+	MyAcajXTD/kdFU5n5yhox8HhQ4mIiVcnHR/U+fpS91owzInwOoTXB7ybRKq0LFYk
+	xD5VYLLt3RgWFyB6G9SVQ==
+X-ME-Sender: <xms:SlJ1atCIxGHKEa9lCEQPMW84GOdVVq38OMEPEBEkn_VlZgx8Jas3Gg>
+    <xme:SlJ1amEuQyGPd88QFt9P-JKpNs-wUxD8U3VM8cWoqQRBiLCuknjmxcTPlaKsimD6L
+    pOOY6Qz2DWnjGJRwBxVehdcJE4RbPhPs8jQSxkTRHtrbT1jb0Ippw>
+X-ME-Received: <xmr:SlJ1alLz0T0VOYpAZ3HLkzFPqxHDafr_FldvQ2kfSuqZZG9q-5bG0w4HiqErypuarGd4k0WkLB5avf-Wz5TGo810xMAD-rJQupF1Sfoyvomixw>
+X-ME-Proxy-Cause: dmFkZTGA/cKQbkeyWRDyPWmnanBCWu9s3oYeGXVL1mJX+jPBNhIfSCm0rlelEAlLCXYzqY
+    WzwieOKgjfXpyct/PrQ3jqMJ9n9wuRiTkdW9gddnK2cOadFFLWg4X3fSTKcdRK3e48NQU/
+    FdVS1Hk5vhhv9RtK+rAyltok3H2/HBO7wRWgem/4fN84ffzBqJzr3JDgHOx7s5qTu0kPQQ
+    eqkxK1aZH/26hjjL5eZiuVA95fEt8nnk1Ny1FCiRvU8ts38JyPCF+UEY/5/iglo4CBi8AE
+    AoS3ZdV/ghz+k5xxUbC+Z0K4xgh3FsfrfpiNEUjpX2jxrZYrklNnGttE2vuthIdLr3Z1q/
+    xBJLjg14OYzW1gn7joQlFJHRDQ3LuL4ifB0+r178VUwhORlMfAgy8duFOl2cM6c0OAsdjU
+    ehKK9HW2woEO8WxsNCxuxY9d3sA22yydqBhi50sG8+PF7t5zQqRYArGZm+akrX8kYxO1xL
+    D1sQmoRCU2fSG/7GhD3Kr1RTQJVvEJHS9I5+dWtOL2FTKGzxOYk6rSSzFaVw2FgC+j7RR2
+    lz2JBY68LB4MyVlNwqOKLn55H828/e3tppuktJNYD5uoRRccosMq/WC6yX2fR7/FlRubI6
+    B8ciidEMr6i4bzJJT43AZ+j6t1CyIIUlFPYl65xhwtdQWjBG0HfvRcIldaRg
+X-ME-Proxy: <xmx:SlJ1aql72QtP0asMJE07Yd3AeATXfEhvZAI06be_yFQ75J6tDx_beA>
+    <xmx:SlJ1atTKFU02-UcO2SkxWX5RaW-ngTgwWa_JUGr942PE89VlLG3zlQ>
+    <xmx:SlJ1asLn3MHjnV00Hov97ohDvj4lZUFEoPJE0WiRTST_UxTfARmX8Q>
+    <xmx:SlJ1ajDgSwHaxUsiv3Auj3tdHhZZykoa8waF08D8SVrt-ixNpZwBWQ>
+    <xmx:S1J1amTYXhmbWVo4nYtM-3L_Yh0XT3tDZt0SySXlL3K66K92cPpw5od7>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Aug 2026 23:34:33 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f6563075 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Aug 2026 03:34:30 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v5 0/6] odb: make creation of object database pluggable
+Date: Fri, 07 Aug 2026 05:34:24 +0200
+Message-Id: <20260807-pks-odb-create-on-disk-v5-0-399da0b0b140@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
- <pull.2149.v7.git.1786013982.gitgitgadget@gmail.com> <b655b24dc0bedbe8803da87e977684217f7d1f69.1786013982.git.gitgitgadget@gmail.com>
-In-Reply-To: <b655b24dc0bedbe8803da87e977684217f7d1f69.1786013982.git.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 6 Aug 2026 20:03:02 -0700
-X-Gm-Features: AUfX_myyog_K05mdd8XFpc4VcYQvfJnoGzbgk07rNXSk7LyobLlo7mKjzf9oBVY
-Message-ID: <CABPp-BFJDc5t3cCj9mZBkXs+Ee+EoWUKw2p9UXq7tSGoosqMmw@mail.gmail.com>
-Subject: Re: [PATCH v7 10/10] commit-reach: remove commit-date ordering fallback
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XNzU7DMBAE4FepfGaR/+30xHugHmzvhpqKpLLTC
+ FTl3XEKgvaQ40gz31xZpZKpsv3uygrNueZxaME87Vg6huGNIGPLTHJpuRMczqcKI0ZIhcJEMA6
+ AuZ4gkHfGeSuS7Vgbnwv1+fMGvx5+cr3Ed0rTqq2NY67TWL5uz7NYe78nUm+dzAI4qKhQWoOd6
+ +JLKz7nD7Y+zPLf8HzbkM1A7H00XUTJ3YOh7g2zaahmJE6kQjJCi/7B0PeG3TR0M2LwUfeIklT
+ 6M5Zl+QYzsCpzlwEAAA==
+X-Change-ID: 20260710-pks-odb-create-on-disk-ae8757861c69
+In-Reply-To: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
+References: <20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>, 
+ Toon Claes <toon@iotcl.com>
+X-Mailer: b4 0.15.2
 
-On Thu, Aug 6, 2026 at 4:00=E2=80=AFAM Kristofer Karlsson via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Kristofer Karlsson <krka@spotify.com>
->
-> Remove the fallback that switched paint_down_to_common() from
-> generation ordering to commit-date ordering when the commit-graph
-> lacks corrected commit dates (v1 graph with topo levels only).
->
-> The fallback was added in 091f4cf3 (commit: don't use generation
-> numbers if not needed, 2018-08-30) to avoid a performance
-> regression on the Linux kernel repo where v1 topo levels caused
-> "git merge-base v4.8 v4.9" to walk 636k commits instead of 167k.
-> A side branch with a low topo level stayed in the queue behind a
-> long chain, preventing early STALE propagation.
->
-> Side-exhaustion (added in the previous commits) solves this
-> differently by terminating the walk as soon as one paint side
-> empties from the queue, preventing the deep walk regardless of
-> queue ordering.
+Hi,
 
-Nice!
+when creating a new repository we create a couple of on-disk data
+structures for the object database. This includes the "objects/"
+directory hierarchy with "objects/info" and "objects/pack", which are
+specific to the backend.
 
-> Benchmarks of "git merge-base --all v4.8 v4.9"
-> on the Linux kernel repo show that side-exhaustion reduces the
-> step count far below what the date-ordering fallback achieved:
->
->                          steps      time
->   no graph, baseline:   167,413    3.25 s
->   v1 graph, baseline:   167,413    0.25 s
->   v2 graph, baseline:   167,441    0.29 s
->   v1 graph, this series:  5,725    0.02 s
->   v2 graph, this series:  3,887    0.01 s
+This patch series makes the creation of the on-disk data structures
+pluggable. While we continue to always create "objects/" regardless of
+the backend (it's required for a repository to be recognized as such),
+the other subdirectories are now created by the backend. This will allow
+other backends to plug in their own logic.
 
-Even better!
+The series starts with a small detour into the loose-object map. This
+detour is required so that we can defer initialization of the object
+database itself to a later point in time.
 
-> With generation ordering always active, the existing min_generation
-> check in paint_queue_get() correctly identifies when the walk has
-> reached the finite generation region. The date ordering fallback
-> broke this invariant: a commit could have a finite topo level
-> while the queue was date-ordered, causing the early exit to fire
-> before all merge bases were found.
->
-> For v1 commit-graphs where generation numbers saturate at
-> GENERATION_NUMBER_V1_MAX, introduce a topological ceiling that
-> the early exit gates compare against instead of
-> GENERATION_NUMBER_INFINITY. This ensures saturated commits are
-> treated as unordered, preventing premature termination when
-> generation values are unreliable.
+The series is based on 9a0c4701dc (The 7th batch, 2026-07-22).
 
-Should the work associated with this paragraph come earlier so 8/10
-doesn't have its weird split?
+Changes in v5:
+  - Remove a leftover formatting change.
+  - Fix a stale comment.
+  - Link to v4: https://patch.msgid.link/20260806-pks-odb-create-on-disk-v4-0-ba8b4fdd2e3c@pks.im
 
->
-> Signed-off-by: Kristofer Karlsson <krka@spotify.com>
-> ---
->  .../technical/paint-down-to-common.adoc       | 51 +++----------------
->  commit-reach.c                                | 23 +++++----
->  t/t6600-test-reach.sh                         | 23 ++++-----
->  3 files changed, 27 insertions(+), 70 deletions(-)
->
-> diff --git a/Documentation/technical/paint-down-to-common.adoc b/Document=
-ation/technical/paint-down-to-common.adoc
-> index 7c93f7e676..bdd5ffb5c3 100644
-> --- a/Documentation/technical/paint-down-to-common.adoc
-> +++ b/Documentation/technical/paint-down-to-common.adoc
-> @@ -44,10 +44,6 @@ ancestor is necessarily redundant.
->  INFINITY and finite generation regions
->  --------------------------------------
->
-> -The properties in this section assume generation-number ordering (the
-> -default comparator). They do NOT hold when the date-ordering fallback
-> -is active -- see <<date-ordering-fallback>>.
-> -
->  The commit-graph stores a generation number for each commit.
->  Commits not in the commit-graph have generation
->  `GENERATION_NUMBER_INFINITY`. The graph is closed under
-> @@ -91,10 +87,12 @@ traversal: children are always visited before their p=
-arents. This
->  means that paint on already-visited commits is final -- no future
->  traversal step can add paint to them.
->
-> -In the INFINITY region, commit-date ordering can violate this: a
-> -parent with a later date can be visited before a child with an earlier
-> -date. Paint flags are therefore NOT final at visit time, and a
-> -commit visited with only one side's paint may later gain the other.
-> +In the INFINITY region, all commits share the same generation
-> +value, so the queue breaks ties by commit date. This can violate
-> +topological ordering: a parent with a later date can be visited
-> +before a child with an earlier date. Paint flags are therefore
-> +NOT final at visit time, and a commit visited with only one
-> +side's paint may later gain the other.
+Changes in v4:
+  - Drop `APPLY_REPOSITOY_FORMAT_SKIP_ODB_CREATION` in favor of explicit
+    calls to `odb_new()`.
+  - Remove a useless call to `xstrdup()`.
+  - Mark a string as translatable.
+  - Link to v3: https://patch.msgid.link/20260805-pks-odb-create-on-disk-v3-0-c0ee3ac5141f@pks.im
 
-Similar issues exist in the GENERATION_NUMBER_V1_MAX region, right?
+Changes in v3:
+  - Move handling of GIT_OBJECT_DIRECTORY and
+    GIT_ALTERNATE_OBJECT_DIRECTORIES into `odb_new()` itself. This
+    deduplicates some of the logic and also preps us for a future where
+    alternates are handled in the "files" backend itself.
+  - Link to v2: https://patch.msgid.link/20260804-pks-odb-create-on-disk-v2-0-ddf8b59bd207@pks.im
 
->  Paint flags are only added, never removed. Since each flag can be set
->  at most once per commit, the number of times a commit can be
-> @@ -159,43 +157,6 @@ descendant of this candidate (generation ordering gu=
-arantees
->  children are visited first), so it cannot be redundant and the walk
->  can stop immediately.
->
-> -This optimization is NOT safe when the date-ordering fallback is
-> -active, because commit-date order can visit a deeper ancestor
-> -before a shallower one -- see <<date-ordering-fallback>>.
-> -
-> -[[date-ordering-fallback]]
-> -Date-ordering fallback
-> -----------------------
-> -
-> -When the commit-graph has generation numbers v1 and no
-> -generation floor is specified, topological ordering
-> -(via generation numbers) is disabled.  Topological levels are
-> -correct but unbalanced -- ordering by such generation numbers
-> -can sometimes cause the walk to detour too far before finding
-> -merge bases.  Commit-date ordering typically reaches them in
-> -fewer steps -- see this change for more details:
-> -
-> -   091f4cf3 (commit: don't use generation numbers if not needed,
-> -   2018-08-30)
-> -
-> -With generation number v2 (corrected commit dates) we have the best
-> -of both worlds and do not need this fallback.
-> -
-> -For v1, `paint_down_to_common()` falls back to pure commit-date
-> -ordering via `compare_commits_by_commit_date`.  Because commit
-> -dates are not monotonic (clock skew, rebases, etc.), the queue
-> -may visit commits out of topological order.
-> -
-> -This disables the optimizations that depend on generation ordering:
-> -
-> -  - *Single result*: the first merge-base candidate found may not
-> -    be the shallowest, because a deeper ancestor with a higher
-> -    commit date can be dequeued first.
-> -
-> -  - *Side exhaustion*: one paint side can appear to drain from the
-> -    queue while commits from that side are still waiting with lower
-> -    dates, causing premature termination.
-> -
+Changes in v2:
+  - Add a testcase that demonstrates the bug fixed with alternate loose
+    object maps.
+  - Rename the "inmemory" bakcend to "in-memory".
+  - Clarify some commit messages.
+  - Link to v1: https://patch.msgid.link/20260724-pks-odb-create-on-disk-v1-0-3b3d265d979b@pks.im
 
-Nice seeing all the date-ordering stuff get ripped out.
+Thanks!
 
->  Related documentation
->  ---------------------
->
-> diff --git a/commit-reach.c b/commit-reach.c
-> index b50b0e4e47..85bda146e6 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -89,9 +89,9 @@ struct paint_state {
->         size_t parent1_count;
->         size_t parent2_count;
->         size_t mb_candidate_count;
-> -       int gen_ordered;
->         timestamp_t min_generation;
->         timestamp_t last_gen;
-> +       timestamp_t topo_ceiling;
->  };
->
->  static void paint_count_update(struct paint_state *state,
-> @@ -166,8 +166,7 @@ static struct commit *paint_queue_get(struct paint_st=
-ate *state)
->
->                 /* one side is exhausted */
->                 if ((!state->parent1_count || !state->parent2_count) &&
-> -                   state->gen_ordered &&
-> -                   generation < GENERATION_NUMBER_INFINITY)
-> +                   generation < state->topo_ceiling)
->                         return NULL;
->         }
+Patrick
 
-Good, together with the setting of state->topo_ceiling, this fixes the
-GENERATION_NUMBER_V1_MAX issue.
+---
+Patrick Steinhardt (6):
+      loose: load loose object map for the correct source
+      setup: detangle loading of loose object maps
+      setup: handle ODB-related environment variables in `odb_new()`
+      setup: defer object database creation
+      odb/source: introduce function to map source type to name
+      odb: make creation of on-disk structures pluggable
 
->
-> @@ -187,9 +186,13 @@ static int paint_down_to_common(struct repository *r=
-,
->                                 enum merge_base_flags mb_flags,
->                                 struct commit_list **result)
->  {
-> +       /*
-> +        * Generation ordering is required for the side-exhaustion and
-> +        * single-result early exits, which rely on topological traversal
-> +        * order (children visited before parents) in the finite region.
-> +        */
->         struct paint_state state =3D {
-> -               .queue =3D { compare_commits_by_gen_then_commit_date },
-> -               .gen_ordered =3D 1,
-> +               .queue =3D { compare_commits_by_gen_then_commit_date }
->         };
->         struct commit *commit;
->         int i;
-> @@ -198,10 +201,9 @@ static int paint_down_to_common(struct repository *r=
-,
->
->         state.min_generation =3D min_generation;
->         state.last_gen =3D GENERATION_NUMBER_INFINITY;
-> -       if (!min_generation && !corrected_commit_dates_enabled(r)) {
-> -               state.queue.compare =3D compare_commits_by_commit_date;
-> -               state.gen_ordered =3D 0;
-> -       }
-> +       state.topo_ceiling =3D corrected_commit_dates_enabled(r)
-> +               ? GENERATION_NUMBER_INFINITY
-> +               : GENERATION_NUMBER_V1_MAX;
->
->         one->object.flags |=3D PARENT1;
->         if (!n) {
-> @@ -229,8 +231,7 @@ static int paint_down_to_common(struct repository *r,
->                                  * descendant of this one.
->                                  */
->                                 if (!(mb_flags & MERGE_BASE_FIND_ALL) &&
-> -                                   state.gen_ordered &&
-> -                                   state.last_gen < GENERATION_NUMBER_IN=
-FINITY)
-> +                                   state.last_gen < state.topo_ceiling)
->                                         break;
->                         }
->                         /* Mark parents of a found merge stale */
-> diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-> index 6bf17cb7b6..445449a458 100755
-> --- a/t/t6600-test-reach.sh
-> +++ b/t/t6600-test-reach.sh
-> @@ -381,7 +381,7 @@ test_expect_success 'get_merge_bases_many:infinity-bo=
-th-sides' '
->                 git rev-parse pi-B
->         } >expect &&
->         test_all_modes get_merge_bases_many &&
-> -       test_paint_down_steps 5 4 5 5
-> +       test_paint_down_steps 5 4 5 4
->  '
->
->  test_expect_success 'setup mixed finite/INFINITY topology' '
-> @@ -414,31 +414,26 @@ test_expect_success 'merge-base --all commit-walk s=
-teps' '
->         >input &&
->         git rev-parse commit-9-1 >expect &&
->         run_all_modes git merge-base --all commit-9-9 commit-9-1 &&
-> -       test_paint_down_steps 81 9 57 81
-> +       test_paint_down_steps 81 9 57 37
->  '
->
->  test_expect_success 'merge-base --all with clock skew (side-exhaustion)'=
- '
-> -       # Verify correct merge base under clock skew.  se-D (the
-> -       # merge base) has a higher date than its child se-C.
-> -       # Generation ordering ensures se-C is visited before se-D,
-> -       # so P1 paint propagates correctly and se-D is found.
-> +       # Verify that the merge base is computed correctly even
-> +       # when commits have non-monotonic commit dates.
->         >input &&
->         git rev-parse se-D >expect &&
->         run_all_modes git merge-base --all se-A se-B &&
-> -       test_paint_down_steps 6 4 6 6
-> +       test_paint_down_steps 6 4 6 4
->  '
->
->  test_expect_success 'merge-base --all with clock skew and redundant ance=
-stor (side-exhaustion)' '
-> -       # Verify correct merge base when clock skew could cause a
-> -       # too-deep result.  MB1 is the correct merge base; MB2 is
-> -       # its ancestor.  A reaches MB2 via E (high date) and MB1
-> -       # via C (low date).  Generation ordering ensures C is
-> -       # visited before side-exhaustion fires, so MB1 is found
-> -       # and remove_redundant correctly discards MB2.
-> +       # Verify that the correct merge base is found even when
-> +       # non-monotonic commit dates could cause a redundant
-> +       # ancestor to be visited first.
->         >input &&
->         git rev-parse se2-MB1 >expect &&
->         run_all_modes git merge-base --all se2-A se2-B &&
-> -       test_paint_down_steps 8 6 8 8
-> +       test_paint_down_steps 8 6 8 6
->  '
->
->  test_expect_success 'reduce_heads' '
-> --
-> gitgitgadget
+ loose.c                       | 25 +++++++++++----------
+ loose.h                       |  1 +
+ odb.c                         | 21 ++++++++++--------
+ odb.h                         | 17 +++++++++++++--
+ odb/source-files.c            | 19 ++++++++++++++++
+ odb/source-files.h            |  4 +++-
+ odb/source-inmemory.h         |  4 +++-
+ odb/source-loose.c            |  2 ++
+ odb/source-loose.h            |  4 +++-
+ odb/source-packed.h           |  4 +++-
+ odb/source.c                  | 19 ++++++++++++++++
+ odb/source.h                  | 29 ++++++++++++++++++++++++
+ repository.c                  |  3 +--
+ setup.c                       | 51 +++++++++++++++++++++----------------------
+ setup.h                       |  4 ++--
+ t/t1016-compatObjectFormat.sh | 18 +++++++++++++++
+ t/unit-tests/u-odb-inmemory.c |  2 +-
+ 17 files changed, 169 insertions(+), 58 deletions(-)
 
-The code and tests look good, my main issue is that the documentation
-and code are not consistent at patch 08/10, so we need some way of
-correcting that.  I don't know whether that means splitting the code
-differently in patches 8 & 10, or splitting the documentation
-differently or something else.  Thoughts?
+Range-diff versus v4:
 
-Anyway, nicely done overall, this is nearly ready to merge; it just
-needs a few small touch-ups.
+1:  40ca0d1345 = 1:  3a0fbf9498 loose: load loose object map for the correct source
+2:  d18ddec5dd = 2:  7ba250f4d7 setup: detangle loading of loose object maps
+3:  9b6fbc510f = 3:  fbe755388b setup: handle ODB-related environment variables in `odb_new()`
+4:  f27f8d45a4 ! 4:  4d7a12e3cb setup: defer object database creation
+    @@ setup.c: static int create_default_files(struct repository *repo,
+      	baselen = path.len;
+      
+     @@ setup.c: int init_db(struct repository *repo,
+    - 	 */
+    - 	read_and_verify_repository_format(&repo_fmt, repo_get_git_dir(repo), NULL);
+      	repository_format_configure(&repo_fmt, hash, ref_storage_format);
+    --	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+    -+	if (apply_repository_format(repo, &repo_fmt,
+    -+				    APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+    + 	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+      		die("%s", err.buf);
+     -	startup_info->have_repository = 1;
+      
+    @@ setup.c: int init_db(struct repository *repo,
+      
+      	if (repo_settings_get_shared_repository(repo)) {
+      		char buf[10];
+    +
+    + ## setup.h ##
+    +@@ setup.h: enum apply_repository_format_flags {
+    + 
+    + /*
+    +  * Apply the given repository format to the repo. This initializes extensions
+    +- * and basic data structures required for normal operation. Returns 0 on
+    +- * success, a negative error code when the format is not valid as determined by
+    ++ * required for normal operation. Returns 0 on success, a negative error code
+    ++ * when the format is not valid as determined by
+    +  * `verify_repository_format()`.
+    +  */
+    + int apply_repository_format(struct repository *repo,
+5:  1c0afb893f = 5:  6bb4ecc76d odb/source: introduce function to map source type to name
+6:  387fe6e204 = 6:  806f399c63 odb: make creation of on-disk structures pluggable
+
+---
+base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
+change-id: 20260710-pks-odb-create-on-disk-ae8757861c69
+
