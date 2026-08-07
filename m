@@ -1,328 +1,140 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A2E45C6FA
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 22:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6A82EEE90
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 22:16:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786140454; cv=none; b=hii/kFr4mw4s6Q2cGyOTt/glBPiJhVOUYTMpdZjmQX6VkJBKK+dv/ujWtKyES8HOqj2hZA7C0qdHDeahX73OIEgarB8DUSo2oVDAiGX1/h9NvmKXEJwOKHcfbLHJKokkhjZZ/ST3k7JNuNQ2Nfi5saqC7cRJZAbRC5a/xbgXEPo=
+	t=1786140976; cv=none; b=mBZdqTqNrQhlmXhfR58o/XeNNFlm3fUp1At3ZDAmXcnxFGNtfE+uV1ZxpPXd7ziVZ5N6f3Ez2OywBx1Kna2VE2een0KbCKaqo8DHs7c2vZAmfd9tQ0Pl377T5hG8k5T/KXaxep/VPHvHmiyWCQil9LBRMga8mwCzwj3qhLDedQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786140454; c=relaxed/simple;
-	bh=agUH9gahwLhT+X/qaaWBe/LpHXY6/1oaSOQ7j8A3tyQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=p0yBhIRgHEgar0dymBx9cU5uc5soQmxnK/no/3aR9lne8ptpB0abh0JsZjgPb4+KvpFdVz6eLVGCzH5KDNSSo9V5tKbqaI58p4Qei6ctSq9EpwGbo0gFSXM+DDN6y+vo4vq5n+6TJLH9XIImnE+UF1nNCHXmVsshpL/F5naDKQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dpH4xaoe; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786140976; c=relaxed/simple;
+	bh=qNPYD7d8uSph+ad829QHD19J1juqWzynUpmZwGolTOI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=a/nWRmdIPPdPGATqGTNYD91Fryjd9JDHkrYMUHIJF94ZHgO0k6vNclwPV2GTUtacPhQrVpklO7U0gyYfSlNI6vQA83oAKS3cwYBWzjWGr8+hELJuzoPkGh7L7ydjR6pKIwynOJVpbSdadUnCvIRBa8Zdmb1iiMQHQzNxIvj9wnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GmcbJSJh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jvMWMeMW; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dpH4xaoe"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-495437bb891so234625e9.1
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 15:07:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786140451; x=1786745251; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=D2dm1kfHdv+HjccmvDED6fAnJOsIiHpsJ5EF1M1dKew=;
-        b=dpH4xaoeovHMDlALNCH0XldyZHrBPuD0YnjC4WZ6e2G4skC13OsBnl5xfJitZwnIdg
-         tA9PKKxgejlJS2UWYlyAeN2JZgYER1YINFN+J6MbyvId05vFe72Ge6wioT8txyp1mlFU
-         MOR4cjDDMQUON+COfI6le8HvNcdQ5269L1Us4JCE9ofmHFslFy5Xpf2PGq8U/pRTmwhC
-         yR4NBe1Bt1QqpM9+Sf76dWucwjcax6JKgk8eBCyo44VTIjfIhLtvAPJuBJMY5oqER5wB
-         ycVOGqFgDWKZGoEL7alls26S9/O5depUpE8TwQagze7UXx22fVprd5MpAIQ0ehlSSyMB
-         d0qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786140451; x=1786745251;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=D2dm1kfHdv+HjccmvDED6fAnJOsIiHpsJ5EF1M1dKew=;
-        b=VoVkcERmcfocCX9kJXkRBDhcwruVcde+Fiw6A4xJZiFD23nxkDiqKJbW5WacETbZ38
-         UzO0xwU6n3S7twgw0JTDPy6c01MF4FlI2z24z/rYUNuTFbRgoydjPHsgzrxW2FRNd4w9
-         c3oD2RfzD5kdrQSMJD8nRvQ8WPDgNbPNgbnX2J3V5+QNj7I2XwiEwveGi9qvFWZxH52L
-         JaWahqZbC1ZWp3tt/WVzKnpy6wk8IFOkXEAT4poptp8Ieh4bqH6iKran2pAY6yqnx985
-         61TYkTfsuBa8RNf2UVionJ8DvQfBba+yDtfDgClZ6k0oqplOZ5srDpP2PymOuj7/6ArK
-         tvhQ==
-X-Gm-Message-State: AOJu0YzqTsYUGGQjWhcFTnFDmx1d/6i11UlnaStAOXXO5MYCUBQ2zPLH
-	bNPHhxcKkd8Clyty9+VBsa0Vh1nFmd7YoKTfGmYLAxUy6rpSTxYQajT7tuw/DD9r
-X-Gm-Gg: AR+sD13bxnkGmjd+uOESyyGdt08d0x3qGKYbnhcG+xrO+lA7VqnX0HUWp2MWRS81wT/
-	LpmmUrSk1Ql4CpHbc9FYDP9/KZb2BaqvyugPsElhuAudjvDsbFXwV3KEWKMfTAzFTE9AufLfQST
-	pNB63x43ClxG9UCmRkXapW7ht+uQpX0NnNvkD1ytTmlT6p/WIDmwY3ZJ9U2L5jA/Nc1u92H1Vpi
-	4heFUEVqDuFLB/04J1YAltUNKyX52NdidS7JpeYPqVF+DxUpXc6g2prElIfq3SvHd9jTG9zsKDc
-	QvJeuRK2RW6im9tIBwQzSFvviRawezt7MMX+y3v5QdX1uRVzXgZnz0x9lpUU4k8tvonYtWG5hJI
-	lQJrXR035xII9JvDJ9prTWt+pKX2VFOdWjD0/A7gtYlkY5OzI2cg3xlbQTd4iiaGZnekm4S0ny1
-	5rNDQiMHj0T9L5XimUwRSLeQ4OOxDOJ8tosa+GBzVb3biXk5+NNqISsTs0IU2r8CDPJU2LnrX9+
-	BQuIXODyIZeV7tZFRvtF2y1mwTMiCD6tYT0pt2Ccj+buQAhwgS6Cj9wZGFTdfiqSuciNmGOJdvU
-	MhurF9VCQoir0Q9/h4PsJv6p9J4Vf7v4TVA7siNGU4kdM4KV13z85IHmNbSGJwVd0W4o2BEIHFB
-	cJvZljEbLmBlFyKObsHLs+b70QinRMG58V3l3wzmZcDUidSFH0qtTIj2SXmZ8G+6fjaPp
-X-Received: by 2002:a05:600c:3154:b0:495:3bc6:d381 with SMTP id 5b1f17b1804b1-49962453c45mr15693685e9.2.1786140450572;
-        Fri, 07 Aug 2026 15:07:30 -0700 (PDT)
-Received: from 1.0.0.127.in-addr.arpa (183.red-79-149-223.dynamicip.rima-tde.net. [79.149.223.183])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4995c7b4499sm69478545e9.3.2026.08.07.15.07.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2026 15:07:30 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Sat, 08 Aug 2026 00:07:05 +0200
-Subject: [PATCH GSoC v5 10/10] cat-file: unify default format
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GmcbJSJh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jvMWMeMW"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DA1577A0166;
+	Fri,  7 Aug 2026 18:16:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 07 Aug 2026 18:16:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786140970; x=1786227370; bh=XW2PVCLWaY
+	gb8nBb6at+ifZtd7Rmuv8bsOxGB6p3Cb0=; b=GmcbJSJhIyoRnwMpTJOynVY+5O
+	tIvKrznIWTtaXBUZUNnH8RAKCk7R7e6QqIZNEG8ydxM0cqunP2D1WsfB5mIcfCuD
+	rztsXfHEkJ/L1xpVZb1zam2sxoEAIajUAnWP6vfuroqgL6JVzNynLbx0O3uSMrwO
+	VZWJm7ltzeKoDkbFN4YSA3gNyZy7EBYI8rv4VprtTzaQwQ+A3IVAGwnJrfqYS81f
+	wbpa+xPlfl4cbKIsWHiBHwNfIpZZqSXF4OiPt6XVzuxjWaI+IPJ7+eFoTURIHcc9
+	BkZT9d4UdMRf+hk5FYlaQQx8zDe4q9jduxtJGLYydiP4e9xBoeAUw6u/3w3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786140970; x=1786227370; bh=XW2PVCLWaYgb8nBb6at+ifZtd7Rmuv8bsOx
+	GB6p3Cb0=; b=jvMWMeMWRf9ZXujNMwntIhuqvfla6ttYAjP3b0xgTv5qinoW6Cj
+	oMtgSlUovpyI2vbSd2wu6NxkCiW2q0pRi7nf56cbqttuixbJNVh1MS/7YN4ijfxn
+	zss9B4G2EaOCfdVlIQNyAdfHElSFlGlKwhhhsOYvr22T8NIZJbaZnIbyZFYNURcq
+	nHx3pAwptBBuDLCWhuXV71g3m2RSzQgv2YoNW0grOajnP0BdbnR/uUpaHeEFyJSU
+	1Bo7XaQMGf3oQwFHdB9jDSA25Ey5Ykp+FtEq8IOGodT+a1bq8++943RLN+3WSsDg
+	m48HosQv2qrfJLWv4Pqxq8IBJ7lMg974Q0Q==
+X-ME-Sender: <xms:Kll2avq3YYha_zXJJUbgCf6znp_3WA6n8CCEAbzdT3X_0XQA9qc5HQ>
+    <xme:Kll2agqyjKaF-LgqrtID7BBcWvtNBNW1E-eR7NZ3XkPwfGEXfV3Mqt8SotNM0xV1p
+    Z20A5Nx2bZcoz8EupvpfKsNLtueCbnUgxulXpt0_GTnDhvmZzwUag>
+X-ME-Received: <xmr:Kll2ahPY_ozmU5K73d1Mwmsd0vCCTCgy42iZC2of0mhpCknFCX5nLrban3E8JNirOEie5h81gJ8AazgkFZXMuucLPSEbvTIj-A>
+X-ME-Proxy-Cause: dmFkZTGJ/tLSGOW2qpOZksQnToJQc5JGasp1Zg1U+5uocC+v4BTMhOYbB8xnhzfHOl4AiW
+    k4cJJlqZV1Did2wGqSZhoC0tIWcOhUl9Sv7P/EAbN/iSw/eDAEPY6v5p7Ho9aAq26djLzi
+    3HA7aUqIWgf9iIOyLRXaidGzF3B5ildYyQFZvwU7HkgY9znlL779GUS9ubUXyWfgYLj1ve
+    8suDmn0VIzMimPcUhMpzV3RbkzOKTaBhktf5U9zkPNoimL1abVSpe71nrYsYxmLWbKs6ln
+    7Szd7bjaIvBrl3MBrdPDTmW3RHyZcDGZsCiMAfyYUvsEkuz7XuyUCqFn0YFZ0X4Ddk/MX0
+    xOdpigtzGJsyFBdAqUrnBtXpd9RqpjzehgPinoFhYb5D8+zWzo6zhDpW4L4YA1rHkLA+Pl
+    wKSpEi8b0M6U6d3pImsT6c+DEhCODSL+yepSC81HXRdA5S+gbK5oKB5Icj2l21wQzaomrw
+    ky6nS3Ned/6PJFfpGQ9UG/afyHfeSJB2wcXXoBK83QAGyrrqzU7PKcAo6uxxWTwOTn3FTw
+    Pxw7tenClk+HZq73PshwVpEX8onkhk/XwgwKyRVqSz3kRdXWgzGYt2f1s+7cP8A+PS6roX
+    2qJJTg/M42Nx1QPHs/MrawxjkCsoimaJ8a5aYpO6felaFAA84pzzJzpxG7gQ
+X-ME-Proxy: <xmx:Kll2ahwgR4NIY66DF0jmy9ilc0Hgf0v_dCOZQL50HMPqTYPQEsI4mg>
+    <xmx:Kll2aqsJM1vdGuRAmMhrYANRHiClDjOjb-lRqzK3M2P4EWNtY5L3gA>
+    <xmx:Kll2aq4NpTF-UEjb8sYSemwbeEBayn-XO6Eh-BQVCSAWiL65M1FSrA>
+    <xmx:Kll2apQ65HW_J4QDHzW0mRvsSmcvZK5YrXGDEfmbFUAeFnPpcHHG2A>
+    <xmx:Kll2amlngFcvEnXWzSfAY7oHA-Fcpuw_FyDWslKaqRB9HxnmayWnC1Es>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Aug 2026 18:16:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Tim Wiederhake via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Tim Wiederhake <twied@gmx.net>
+Subject: Re: [PATCH] gitk: add user-defined custom commands
+In-Reply-To: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com> (Tim
+	Wiederhake via GitGitGadget's message of "Tue, 04 Aug 2026 21:43:59
+	+0000")
+References: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com>
+Date: Fri, 07 Aug 2026 15:16:09 -0700
+Message-ID: <xmqq7bm1d1au.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260808-objecttype-support-v5-10-86f22bec04b2@gmail.com>
-References: <20260808-objecttype-support-v5-0-86f22bec04b2@gmail.com>
-In-Reply-To: <20260808-objecttype-support-v5-0-86f22bec04b2@gmail.com>
-To: git@vger.kernel.org
-Cc: chandrapratap3519@gmail.com, karthik.188@gmail.com, gitster@pobox.com, 
- peff@peff.net, Pablo Sabater <pabloosabaterr@gmail.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain
 
-%(objecttype) is supported both by the client and by the server.
-Change the temporary default format to the unified version that the
-other commands use.
+"Tim Wiederhake via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Update documentation to remove %(objecttype) from the caveats of
-remote-object-info and show %(objecttype) support.
+> +    set len [string length $cmd_template]
+> +    for {set i 0} {$i < $len} {incr i} {
+> +        if {[string index $cmd_template $i] eq "%" && $i + 1 < $len} {
+> +            set next [string index $cmd_template [expr {$i + 1}]]
+> +            if {!$blame_computed && ($next eq "b" || $next eq "l")} {
+> +                set blame [get_blame_origin]
+> +                set blame_id [lindex $blame 0]
+> +                set blame_line [lindex $blame 1]
+> +                set blame_computed 1
+> +            }
+> +            switch -- $next {
+> +                "%" { append cmd "%" }
+> +                "i" { append cmd $id }
+> +                "t" { append cmd [lindex $commitinfo($id) 0] }
+> +                "a" { append cmd [lindex $commitinfo($id) 1] }
+> +                "d" { append cmd [lindex $commitinfo($id) 2] }
+> +                "c" { append cmd [lindex $commitinfo($id) 3] }
+> +                "D" { append cmd [lindex $commitinfo($id) 4] }
+> +                "m" { append cmd [lindex $commitinfo($id) 5] }
+> +                "M" { if {[info exists markedid]} { append cmd $markedid } }
+> +                "b" { append cmd $blame_id }
+> +                "f" { append cmd [get_diff_file] }
+> +                "l" { append cmd $blame_line }
+> +                default { append cmd "%" $next }
+> +            }
+> +            incr i
+> +        } else {
+> +            append cmd [string index $cmd_template $i]
+> +        }
+> +    }
+> +
+> +    if {[catch {exec sh -c $cmd 2>@1} output]} {
 
-Now that type is supported and the default format unified, update the
-tests to expect the new default format.
+What do various members of $commitinfo field have?  I presume that
+title and message are pretty much free text under control of anybody
+who can write to the repository and entice you to run this command,
+so running with "sh -c $cmd" would require $cmd to be quoting the
+payload properly, or you'd be opening yourself to be an arbitrary
+command execution, no?  With template "echo '%t'" you thought you
+are just printing the title but if the title has "title?'; echo no'" in
+it, wouldn't cmd end up being 
 
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
----
- Documentation/git-cat-file.adoc        | 17 +++++------
- Documentation/gitprotocol-v2.adoc      | 18 +++++++++---
- builtin/cat-file.c                     |  7 -----
- t/t1017-cat-file-remote-object-info.sh | 52 +++++++++++++++++-----------------
- 4 files changed, 47 insertions(+), 47 deletions(-)
+	echo 'title?'; echo no''
 
-diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
-index ac3b528c6f..514bfc0032 100644
---- a/Documentation/git-cat-file.adoc
-+++ b/Documentation/git-cat-file.adoc
-@@ -348,15 +348,12 @@ newline. The available atoms are:
- 	after that first run of whitespace (i.e., the "rest" of the
- 	line) are output in place of the `%(rest)` atom.
- 
--The command `remote-object-info` only supports the `%(objectname)` and
--`%(objectsize)` placeholders. See `CAVEATS` below for more information.
-+The command `remote-object-info` only supports the `%(objectname)`,
-+`%(objectsize)` and `%(objecttype)` placeholders. See `CAVEATS` below for more
-+information.
- 
- If no format is specified, the default format is `%(objectname)
--%(objecttype) %(objectsize)`, except for `remote-object-info` commands which
--use `%(objectname) %(objectsize)` because `%(objecttype)` is not supported yet.
--
--WARNING: When "%(objecttype)" is supported, the default format WILL be unified,
--so DO NOT RELY on the current default format to stay the same!!!
-+%(objecttype) %(objectsize)`.
- 
- If `--batch` is specified, or if `--batch-command` is used with the `contents`
- command, the object information is followed by the object contents (consisting
-@@ -453,9 +450,9 @@ scripting purposes.
- CAVEATS
- -------
- 
--Note that only `%(objectname)` and `%(objectsize)` are currently
--supported by the `remote-object-info` command. Using any other placeholder in
--the format string will return an empty string in its position.
-+Note that only `%(objectname)`, `%(objectsize)` and `%(objecttype)` are
-+currently supported by the `remote-object-info` command. Using any other
-+placeholder in the format string will return an empty string in its position.
- 
- Note that the sizes of objects on disk are reported accurately, but care
- should be taken in drawing conclusions about which refs or objects are
-diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitprotocol-v2.adoc
-index 7bf62014c3..dd52fd8110 100644
---- a/Documentation/gitprotocol-v2.adoc
-+++ b/Documentation/gitprotocol-v2.adoc
-@@ -558,14 +558,17 @@ object-info
- 
- `object-info` is the command to retrieve information about one or more objects.
- Its main purpose is to allow a client to make decisions based on this
--information without having to fully fetch objects. Object size is the only
--information that is currently supported.
-+information without having to fully fetch objects. Currently only object size
-+and type are supported.
- 
- An `object-info` request takes the following arguments:
- 
- 	size
- 	Requests size information to be returned for each listed object id.
- 
-+	type
-+	Requests type information to be returned for each listed object id.
-+
- 	oid <oid>
- 	Indicates to the server an object which the client wants to obtain
- 	information for. They must be full OIDs.
-@@ -580,11 +583,18 @@ space.
- 	info = *PKT-LINE(attr LF)
- 	       *PKT-LINE(obj-info LF)
- 
--	attr = "size"
-+	attr = "size" | "type"
- 
- 	obj-size = 1*DIGIT
- 
--	obj-info = obj-id [SP [obj-size]]
-+	obj-type = "blob" | "tree" | "commit" | "tag"
-+
-+	obj-val = obj-size | obj-type
-+
-+	obj-info = obj-id [SP [obj-val *(SP obj-val)]]
-+
-+The values in `obj-info` appear in the same order as the corresponding `attr`
-+lines, with exactly one value per requested attribute.
- 
- If the server does not recognize the OID, the response will be `<oid> SP`
- regardless of the number of attributes requested.
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 8502020083..011acdec09 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -821,15 +821,9 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
- 	char *line_to_split;
- 	struct fetch_object_info_results results = FETCH_OBJECT_INFO_RESULTS_INIT;
- 	struct oid_array object_info_oids = OID_ARRAY_INIT;
--	const char *saved_format = opt->format;
- 
- 	if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
- 		die(_("remote-object-info command too long"));
--	/*
--	 * TODO: Use the default format once %(objecttype) is supported.
--	 */
--	if (!opt->format)
--		opt->format = "%(objectname) %(objectsize)";
- 
- 	line_to_split = xstrdup(line);
- 	count = split_cmdline(line_to_split, &argv);
-@@ -881,7 +875,6 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
- 		data->is_remote = 0;
- 	}
- 	data->skip_object_info = 0;
--	opt->format = saved_format;
- 
- 	free_fetch_object_info_results(&results);
- 	free(line_to_split);
-diff --git a/t/t1017-cat-file-remote-object-info.sh b/t/t1017-cat-file-remote-object-info.sh
-index 190c45eefc..e2919aa061 100755
---- a/t/t1017-cat-file-remote-object-info.sh
-+++ b/t/t1017-cat-file-remote-object-info.sh
-@@ -139,10 +139,10 @@ test_expect_success 'batch-command remote-object-info git:// default filter' '
- 		set_transport_variables "$daemon_parent" &&
- 		cd "$daemon_parent/daemon_client_empty" &&
- 
--		echo "$hello_oid $hello_size" >expect &&
--		echo "$tree_oid $tree_size" >>expect &&
--		echo "$commit_oid $commit_size" >>expect &&
--		echo "$tag_oid $tag_size" >>expect &&
-+		echo "$hello_oid $hello_type $hello_size" >expect &&
-+		echo "$tree_oid $tree_type $tree_size" >>expect &&
-+		echo "$commit_oid $commit_type $commit_size" >>expect &&
-+		echo "$tag_oid $tag_type $tag_size" >>expect &&
- 
- 		git cat-file --batch-command >actual <<-EOF &&
- 		remote-object-info "$GIT_DAEMON_URL/parent" $hello_oid $tree_oid
-@@ -152,7 +152,7 @@ test_expect_success 'batch-command remote-object-info git:// default filter' '
- 	)
- '
- 
--test_expect_success 'remote-object-info does not change the default format of info' '
-+test_expect_success 'remote-object-info and info can be mixed using the unified default format' '
- 	(
- 		set_transport_variables "$daemon_parent" &&
- 		cd "$daemon_parent/daemon_client_empty" &&
-@@ -162,7 +162,7 @@ test_expect_success 'remote-object-info does not change the default format of in
- 		local_size=$(strlen "$local_content") &&
- 
- 		echo "$local_oid blob $local_size" >expect &&
--		echo "$hello_oid $hello_size" >>expect &&
-+		echo "$hello_oid blob $hello_size" >>expect &&
- 		echo "$local_oid blob $local_size" >>expect &&
- 
- 		git cat-file --batch-command >actual <<-EOF &&
-@@ -209,10 +209,10 @@ test_expect_success 'batch-command -Z remote-object-info git:// default filter'
- 		set_transport_variables "$daemon_parent" &&
- 		cd "$daemon_parent/daemon_client_empty" &&
- 
--		printf "%s\0" "$hello_oid $hello_size" >expect &&
--		printf "%s\0" "$tree_oid $tree_size" >>expect &&
--		printf "%s\0" "$commit_oid $commit_size" >>expect &&
--		printf "%s\0" "$tag_oid $tag_size" >>expect &&
-+		printf "%s\0" "$hello_oid $hello_type $hello_size" >expect &&
-+		printf "%s\0" "$tree_oid $tree_type $tree_size" >>expect &&
-+		printf "%s\0" "$commit_oid $commit_type $commit_size" >>expect &&
-+		printf "%s\0" "$tag_oid $tag_type $tag_size" >>expect &&
- 
- 		printf "%s\0" "$hello_oid missing" >>expect &&
- 		printf "%s\0" "$tree_oid missing" >>expect &&
-@@ -448,10 +448,10 @@ test_expect_success 'batch-command remote-object-info file:// default filter' '
- 		server_path="$(pwd)/server" &&
- 		cd file_client_empty &&
- 
--		echo "$hello_oid $hello_size" >expect &&
--		echo "$tree_oid $tree_size" >>expect &&
--		echo "$commit_oid $commit_size" >>expect &&
--		echo "$tag_oid $tag_size" >>expect &&
-+		echo "$hello_oid $hello_type $hello_size" >expect &&
-+		echo "$tree_oid $tree_type $tree_size" >>expect &&
-+		echo "$commit_oid $commit_type $commit_size" >>expect &&
-+		echo "$tag_oid $tag_type $tag_size" >>expect &&
- 
- 		git cat-file --batch-command >actual <<-EOF &&
- 		remote-object-info "file://${server_path}" $hello_oid $tree_oid
-@@ -467,10 +467,10 @@ test_expect_success 'batch-command -Z remote-object-info file:// default filter'
- 		server_path="$(pwd)/server" &&
- 		cd file_client_empty &&
- 
--		printf "%s\0" "$hello_oid $hello_size" >expect &&
--		printf "%s\0" "$tree_oid $tree_size" >>expect &&
--		printf "%s\0" "$commit_oid $commit_size" >>expect &&
--		printf "%s\0" "$tag_oid $tag_size" >>expect &&
-+		printf "%s\0" "$hello_oid $hello_type $hello_size" >expect &&
-+		printf "%s\0" "$tree_oid $tree_type $tree_size" >>expect &&
-+		printf "%s\0" "$commit_oid $commit_type $commit_size" >>expect &&
-+		printf "%s\0" "$tag_oid $tag_type $tag_size" >>expect &&
- 
- 		printf "%s\0" "$hello_oid missing" >>expect &&
- 		printf "%s\0" "$tree_oid missing" >>expect &&
-@@ -618,10 +618,10 @@ test_expect_success 'batch-command remote-object-info http:// default filter' '
- 		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
- 		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_client_empty" &&
- 
--		echo "$hello_oid $hello_size" >expect &&
--		echo "$tree_oid $tree_size" >>expect &&
--		echo "$commit_oid $commit_size" >>expect &&
--		echo "$tag_oid $tag_size" >>expect &&
-+		echo "$hello_oid $hello_type $hello_size" >expect &&
-+		echo "$tree_oid $tree_type $tree_size" >>expect &&
-+		echo "$commit_oid $commit_type $commit_size" >>expect &&
-+		echo "$tag_oid $tag_type $tag_size" >>expect &&
- 
- 		git cat-file --batch-command >actual <<-EOF &&
- 		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid $tree_oid
-@@ -636,10 +636,10 @@ test_expect_success 'batch-command -Z remote-object-info http:// default filter'
- 		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
- 		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_client_empty" &&
- 
--		printf "%s\0" "$hello_oid $hello_size" >expect &&
--		printf "%s\0" "$tree_oid $tree_size" >>expect &&
--		printf "%s\0" "$commit_oid $commit_size" >>expect &&
--		printf "%s\0" "$tag_oid $tag_size" >>expect &&
-+		printf "%s\0" "$hello_oid $hello_type $hello_size" >expect &&
-+		printf "%s\0" "$tree_oid $tree_type $tree_size" >>expect &&
-+		printf "%s\0" "$commit_oid $commit_type $commit_size" >>expect &&
-+		printf "%s\0" "$tag_oid $tag_type $tag_size" >>expect &&
- 
- 		batch_input="remote-object-info $HTTPD_URL/smart/http_parent $hello_oid $tree_oid
- remote-object-info $HTTPD_URL/smart/http_parent $commit_oid $tag_oid
+and a more creative type can use something other than "echo no", to
+have a process run under your name and do more interesting things,
+right?
 
--- 
-2.54.0
-
+Note that I no longer speak Tcl (even though I admit I used to), so
+if there is some "magic" that makes use of $cmd in {exec sh -c $cmd}
+safe, the above may be missing the mark by a mile.
