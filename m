@@ -1,140 +1,113 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6A82EEE90
-	for <git@vger.kernel.org>; Fri,  7 Aug 2026 22:16:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453652609FD
+	for <git@vger.kernel.org>; Fri,  7 Aug 2026 22:27:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786140976; cv=none; b=mBZdqTqNrQhlmXhfR58o/XeNNFlm3fUp1At3ZDAmXcnxFGNtfE+uV1ZxpPXd7ziVZ5N6f3Ez2OywBx1Kna2VE2een0KbCKaqo8DHs7c2vZAmfd9tQ0Pl377T5hG8k5T/KXaxep/VPHvHmiyWCQil9LBRMga8mwCzwj3qhLDedQE=
+	t=1786141622; cv=none; b=OthKQW36RRsd47Hcpql9+L3hhQm64wQl9//A9iOXTiamQebJFrVQeGZ7vaQARzLWAODIpVnp7+82IiJKbPDXpSuKq0ssMW8SjQK6ltAx8vThFhJ0/Lxhma0O5hBfE76Xr+FqM31Fc7jrv6T3ReZoz0Me4ttT4L+Gi3h5p/kfLK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786140976; c=relaxed/simple;
-	bh=qNPYD7d8uSph+ad829QHD19J1juqWzynUpmZwGolTOI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a/nWRmdIPPdPGATqGTNYD91Fryjd9JDHkrYMUHIJF94ZHgO0k6vNclwPV2GTUtacPhQrVpklO7U0gyYfSlNI6vQA83oAKS3cwYBWzjWGr8+hELJuzoPkGh7L7ydjR6pKIwynOJVpbSdadUnCvIRBa8Zdmb1iiMQHQzNxIvj9wnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GmcbJSJh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jvMWMeMW; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786141622; c=relaxed/simple;
+	bh=RR7pw3cbPhzvBK9Vt4lwJSFPh1PD3JYFY0deiIKYIiM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=BZL3Q62+SISj8clPs9jfN/ZyfAX2V4UEA29GnHWmQ/JLr5dlXKBR/ZwpjmPHandYu2UbGtTOguZP3FO59Vtfi4kt25nCGeAb93NJvF8+yZW2QFur0C9gxztJzhRBX4OHLGUxK7MuO+DJZNOV/UVUBJima3WL38KDH+ukMIVOsDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iC0QLyVG; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GmcbJSJh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jvMWMeMW"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DA1577A0166;
-	Fri,  7 Aug 2026 18:16:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 07 Aug 2026 18:16:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786140970; x=1786227370; bh=XW2PVCLWaY
-	gb8nBb6at+ifZtd7Rmuv8bsOxGB6p3Cb0=; b=GmcbJSJhIyoRnwMpTJOynVY+5O
-	tIvKrznIWTtaXBUZUNnH8RAKCk7R7e6QqIZNEG8ydxM0cqunP2D1WsfB5mIcfCuD
-	rztsXfHEkJ/L1xpVZb1zam2sxoEAIajUAnWP6vfuroqgL6JVzNynLbx0O3uSMrwO
-	VZWJm7ltzeKoDkbFN4YSA3gNyZy7EBYI8rv4VprtTzaQwQ+A3IVAGwnJrfqYS81f
-	wbpa+xPlfl4cbKIsWHiBHwNfIpZZqSXF4OiPt6XVzuxjWaI+IPJ7+eFoTURIHcc9
-	BkZT9d4UdMRf+hk5FYlaQQx8zDe4q9jduxtJGLYydiP4e9xBoeAUw6u/3w3A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786140970; x=1786227370; bh=XW2PVCLWaYgb8nBb6at+ifZtd7Rmuv8bsOx
-	GB6p3Cb0=; b=jvMWMeMWRf9ZXujNMwntIhuqvfla6ttYAjP3b0xgTv5qinoW6Cj
-	oMtgSlUovpyI2vbSd2wu6NxkCiW2q0pRi7nf56cbqttuixbJNVh1MS/7YN4ijfxn
-	zss9B4G2EaOCfdVlIQNyAdfHElSFlGlKwhhhsOYvr22T8NIZJbaZnIbyZFYNURcq
-	nHx3pAwptBBuDLCWhuXV71g3m2RSzQgv2YoNW0grOajnP0BdbnR/uUpaHeEFyJSU
-	1Bo7XaQMGf3oQwFHdB9jDSA25Ey5Ykp+FtEq8IOGodT+a1bq8++943RLN+3WSsDg
-	m48HosQv2qrfJLWv4Pqxq8IBJ7lMg974Q0Q==
-X-ME-Sender: <xms:Kll2avq3YYha_zXJJUbgCf6znp_3WA6n8CCEAbzdT3X_0XQA9qc5HQ>
-    <xme:Kll2agqyjKaF-LgqrtID7BBcWvtNBNW1E-eR7NZ3XkPwfGEXfV3Mqt8SotNM0xV1p
-    Z20A5Nx2bZcoz8EupvpfKsNLtueCbnUgxulXpt0_GTnDhvmZzwUag>
-X-ME-Received: <xmr:Kll2ahPY_ozmU5K73d1Mwmsd0vCCTCgy42iZC2of0mhpCknFCX5nLrban3E8JNirOEie5h81gJ8AazgkFZXMuucLPSEbvTIj-A>
-X-ME-Proxy-Cause: dmFkZTGJ/tLSGOW2qpOZksQnToJQc5JGasp1Zg1U+5uocC+v4BTMhOYbB8xnhzfHOl4AiW
-    k4cJJlqZV1Did2wGqSZhoC0tIWcOhUl9Sv7P/EAbN/iSw/eDAEPY6v5p7Ho9aAq26djLzi
-    3HA7aUqIWgf9iIOyLRXaidGzF3B5ildYyQFZvwU7HkgY9znlL779GUS9ubUXyWfgYLj1ve
-    8suDmn0VIzMimPcUhMpzV3RbkzOKTaBhktf5U9zkPNoimL1abVSpe71nrYsYxmLWbKs6ln
-    7Szd7bjaIvBrl3MBrdPDTmW3RHyZcDGZsCiMAfyYUvsEkuz7XuyUCqFn0YFZ0X4Ddk/MX0
-    xOdpigtzGJsyFBdAqUrnBtXpd9RqpjzehgPinoFhYb5D8+zWzo6zhDpW4L4YA1rHkLA+Pl
-    wKSpEi8b0M6U6d3pImsT6c+DEhCODSL+yepSC81HXRdA5S+gbK5oKB5Icj2l21wQzaomrw
-    ky6nS3Ned/6PJFfpGQ9UG/afyHfeSJB2wcXXoBK83QAGyrrqzU7PKcAo6uxxWTwOTn3FTw
-    Pxw7tenClk+HZq73PshwVpEX8onkhk/XwgwKyRVqSz3kRdXWgzGYt2f1s+7cP8A+PS6roX
-    2qJJTg/M42Nx1QPHs/MrawxjkCsoimaJ8a5aYpO6felaFAA84pzzJzpxG7gQ
-X-ME-Proxy: <xmx:Kll2ahwgR4NIY66DF0jmy9ilc0Hgf0v_dCOZQL50HMPqTYPQEsI4mg>
-    <xmx:Kll2aqsJM1vdGuRAmMhrYANRHiClDjOjb-lRqzK3M2P4EWNtY5L3gA>
-    <xmx:Kll2aq4NpTF-UEjb8sYSemwbeEBayn-XO6Eh-BQVCSAWiL65M1FSrA>
-    <xmx:Kll2apQ65HW_J4QDHzW0mRvsSmcvZK5YrXGDEfmbFUAeFnPpcHHG2A>
-    <xmx:Kll2amlngFcvEnXWzSfAY7oHA-Fcpuw_FyDWslKaqRB9HxnmayWnC1Es>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Aug 2026 18:16:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Tim Wiederhake via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Tim Wiederhake <twied@gmx.net>
-Subject: Re: [PATCH] gitk: add user-defined custom commands
-In-Reply-To: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com> (Tim
-	Wiederhake via GitGitGadget's message of "Tue, 04 Aug 2026 21:43:59
-	+0000")
-References: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com>
-Date: Fri, 07 Aug 2026 15:16:09 -0700
-Message-ID: <xmqq7bm1d1au.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iC0QLyVG"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2cfff5f88dbso1018975ad.3
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 15:27:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786141620; x=1786746420; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=BmCsqCQkYHvTCIfzE/w+eG7Vyur5ov/iZynhX0Y5w/k=;
+        b=iC0QLyVG1kWFi5XodIn3M69lmPF6eIQtrtmI+1lBq+tmdZq2lQcmNABGMUuZXUIggF
+         sdS9Y6upi6Pje509MaxRiUjp/eaGbxL9K/MWJFWZwo+EWsncoz9AYHOSBZwe/gSn88Z+
+         CrL17ku2GqTNiKqnyBXlTKXNgyku3W38ErVH+Yb/aFliDZRjZmjSw/yol9jabD8AfWbo
+         ZP4BNHIPZxI7PJMCD2CD4HJkXPex2/AsqUueUp6uqkTokvZBcUdOYlvWvBl3H7o0WZOf
+         WxSzeRPc2x84TTc7IlLdtuLwt4vTiwcGRyyk/AqXuOtWkUnkg/I9qJQvCO+MpaJygiCu
+         kcEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786141620; x=1786746420;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=BmCsqCQkYHvTCIfzE/w+eG7Vyur5ov/iZynhX0Y5w/k=;
+        b=AR8rbg1vUW9JDlUmv6ySJHjmisNGVETFWa2TOJsos4pei3drxFqxulHV1yTbi2Vdwt
+         fFjaakxYGN/5D2p4DINigToBH1p6BGii+DugxX8INhb0yd8cZkyAypJCQJ18e9miDFy9
+         I1OxXVyPlYvLHxYHSDNBpWYkPzaIMtjU3ZPydhL+I2UeH2DoIMTx9L0HKbhli/E44u/d
+         BO99T+C4sa5VUSMqsYNT+hqIOcCpxJp61P9bCNMGB0PE9bVHk9tuquUOiI9kTVTPZfWz
+         5IVmlKfvIe5V+QmwFXq9zDZIZWa+kO0ZEH3OLwtRaXKFs3B66sgQtf80JAa+UnrRPZfs
+         y5lA==
+X-Forwarded-Encrypted: i=1; AHgh+RqsDcl/EvLCQJgTT8lQh1KGliShyRKh8X2k+xrIxDklTs355HYQ83XeiVUAxvt1nFCjjJc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyH+QUE+H0q+jDMSaZvsZX4FxrA6R7QApqvdsgjnDphBhAwcUdX
+	nqpg6uoY7bXjbUFpLGdDI8CAX5NAHJL8kzth8GjvjpXQ3YbLds9zcwAS
+X-Gm-Gg: AR+sD10qDmGhInF0B/CE+DplDgMZZbgWDCJrH4xMQukxVVtIcWA35HStnR3zuYW/gG6
+	RBR4IcdZlCiBxJnmTtV+VvKBEsM0UVoMIbMHg6StUZgwhhCeTzWAhMZJ4yueUG59/Y6pyjKV6Cb
+	wigwesT/7FuUyyFV1fprBXf0WA9ZIMPjRjaj+O5HuPqHNC7dfLDUkTZaztM8TALUfB6LBL2yjRo
+	hykBuOH8aCd3lXTZymEI9oE63xIrNQZP+W9ytxoBzNstYw7gPfqwhIPfL/cyXo6HPpyxva+ISuP
+	2W8BJPL+ewqKz22TI/L4KibVzB6RQJK/dVj33Y3kmUVS4sSII/nBQt+ZTf6gni1yxzScwV70aPx
+	S3P0SiOd37bYY8ySXqxrKMwG4bQ7e29DRP7dlMASnTPt/jZQrbuN1O+dWl6IsreP3cT8IFgn1F5
+	Kk+K9zHJ/KOJdgmeeG5a6TG+xlUJXp/bK8iSj6a7x09YcWi73o5oiCV++LWJGgU6msxx+I
+X-Received: by 2002:a17:902:e84b:b0:2c9:b396:1a55 with SMTP id d9443c01a7336-2d0ca76a3bamr287031675ad.12.1786141620535;
+        Fri, 07 Aug 2026 15:27:00 -0700 (PDT)
+Received: from localhost ([2600:1010:b0e6:697b:e126:8129:8b75:2bca])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-315bec2ec20sm13113683eec.28.2026.08.07.15.26.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Aug 2026 15:26:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 07 Aug 2026 15:26:57 -0700
+Message-Id: <DKJ2CZKJC6P0.VHLMCUDH6Z44@gmail.com>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>, <git@vger.kernel.org>,
+ "Phillip Wood" <phillip.wood@dunelm.org.uk>, "Elijah Newren"
+ <newren@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v3] sequencer: honor --empty when a fixup!/squash!
+ empties its target
+From: "Farid Zakaria" <farid.m.zakaria@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Farid Zakaria"
+ <farid.m.zakaria@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260711-fz-autosquash-empty-v3-1-d227b63eb511@gmail.com>
+ <xmqqh5m494yh.fsf@gitster.g>
+ <7a1e5111-185e-4390-afa1-c19908c9bd86@gmail.com>
+ <DJXL4KSUEAD4.1EE4ERHJZ00TR@gmail.com> <xmqq8q6jhtws.fsf@gitster.g>
+In-Reply-To: <xmqq8q6jhtws.fsf@gitster.g>
 
-"Tim Wiederhake via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu Aug 6, 2026 at 1:32 PM PDT, Junio C Hamano wrote:
+> "Farid Zakaria" <farid.m.zakaria@gmail.com> writes:
+>
+>> Let me know if you have any more comments. I suspect not much will
+>> changes logic-wise once I rebase it onto 'next'.
+>>
+>> For clarity, is the f85a7e6620 commit the 'next' branch ? I would have
+>> thought to just rebase ontop of 'next' and I'm a bit confused with this
+>> commit hash.
+>>
+>> If there is anything else I should be aware of, I would appreciate a CC
+>> if you can remember :)
+>
+> It has been quite a while since you received a reply from Phillip to
+> the quoted message above.  Has there been any progress to share?
+>
+> Thanks.
 
-> +    set len [string length $cmd_template]
-> +    for {set i 0} {$i < $len} {incr i} {
-> +        if {[string index $cmd_template $i] eq "%" && $i + 1 < $len} {
-> +            set next [string index $cmd_template [expr {$i + 1}]]
-> +            if {!$blame_computed && ($next eq "b" || $next eq "l")} {
-> +                set blame [get_blame_origin]
-> +                set blame_id [lindex $blame 0]
-> +                set blame_line [lindex $blame 1]
-> +                set blame_computed 1
-> +            }
-> +            switch -- $next {
-> +                "%" { append cmd "%" }
-> +                "i" { append cmd $id }
-> +                "t" { append cmd [lindex $commitinfo($id) 0] }
-> +                "a" { append cmd [lindex $commitinfo($id) 1] }
-> +                "d" { append cmd [lindex $commitinfo($id) 2] }
-> +                "c" { append cmd [lindex $commitinfo($id) 3] }
-> +                "D" { append cmd [lindex $commitinfo($id) 4] }
-> +                "m" { append cmd [lindex $commitinfo($id) 5] }
-> +                "M" { if {[info exists markedid]} { append cmd $markedid } }
-> +                "b" { append cmd $blame_id }
-> +                "f" { append cmd [get_diff_file] }
-> +                "l" { append cmd $blame_line }
-> +                default { append cmd "%" $next }
-> +            }
-> +            incr i
-> +        } else {
-> +            append cmd [string index $cmd_template $i]
-> +        }
-> +    }
-> +
-> +    if {[catch {exec sh -c $cmd 2>@1} output]} {
+Hi Junio,
 
-What do various members of $commitinfo field have?  I presume that
-title and message are pretty much free text under control of anybody
-who can write to the repository and entice you to run this command,
-so running with "sh -c $cmd" would require $cmd to be quoting the
-payload properly, or you'd be opening yourself to be an arbitrary
-command execution, no?  With template "echo '%t'" you thought you
-are just printing the title but if the title has "title?'; echo no'" in
-it, wouldn't cmd end up being 
+Sorry I let this slip. I was waiting for the work to be accepted to
+avoid rebasing on top of a moving target -- I am still a little new to
+mailing list workflow & I have been using b4 (recommended from Linux).
 
-	echo 'title?'; echo no''
+I will pick this up again soon.
 
-and a more creative type can use something other than "echo no", to
-have a process run under your name and do more interesting things,
-right?
 
-Note that I no longer speak Tcl (even though I admit I used to), so
-if there is some "magic" that makes use of $cmd in {exec sh -c $cmd}
-safe, the above may be missing the mark by a mile.
