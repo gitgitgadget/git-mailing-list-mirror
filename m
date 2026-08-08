@@ -1,81 +1,82 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119183290A5
-	for <git@vger.kernel.org>; Sat,  8 Aug 2026 07:25:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45A11AA1D5
+	for <git@vger.kernel.org>; Sat,  8 Aug 2026 07:25:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786173937; cv=pass; b=fRwMZhE+yocwK+M9x2iD5YJSGIjS6Eg+H5kGleBCZYzqiQWl1BtFws/q7XU5vSU7mjHT87EPGidNnX1h1cbd4pfG7X16TQgxL02JoN0Ir/U791CmcO9beWkutdYH0PRHYJv0GyyanetuwIRpf+jGYE1gZLjO6lskyA8rPEAxFWo=
+	t=1786173947; cv=pass; b=bboSBpv3YajSDy9QCnwYJywG0J3TUTyhnNYoyCjRhGZ7elthANFEzwSckQgHQXntRcKkWFlm6c0LBJ1ok+3qtOiFSXtkWEGwbkCFw4pUaaqjPkJaTqotlYoA4lcEVzr/xQtuJHRcM/hFdIH2H55x+iFs/4B5UyL5W5HcScPvdPs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786173937; c=relaxed/simple;
-	bh=4VQAx2KXa70ZM5ry4RpoBX430uBUiUgj7GReD5iOpOg=;
+	s=arc-20240116; t=1786173947; c=relaxed/simple;
+	bh=RutLOovQMir3+84HDDkU96AQ3hBzqLVxOKTn4H7x4jA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GuSrWDv/8wUscJUWvFZT6u2e1njOkuGIB4DDRf8niutog7cvgqV7B6/njMWSji2EICpSJXpFmc/YKBLxC+BPYjuN3eEi6r0zwZxcllnYimobpQ4+bI9VKQKwWtEjwt/Le+H4LkX7RKZEsVMocHvNaR4eWirP7QTuUAwYlDSbnpQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kF3THuYa; arc=pass smtp.client-ip=209.85.167.170
+	 To:Cc:Content-Type; b=YNpgkXoeOKBst4ZPWX5Pz0Fmk8TIprmcA7u9Aqp+JSR1rzlmDuydM6yRBsLJhEITQr+v9tU4mTzwf7XQHjHcukMVOAHhlbSfkmhLVTuQx5BkKmtvceQukynA4VaTNwnufBVgl7a1S4lpQ1JXurEUZ8Vb3PGRUOvCgFASxF6gzMI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FS+OYWf6; arc=pass smtp.client-ip=209.85.167.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kF3THuYa"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-49c38a4f110so190815b6e.1
-        for <git@vger.kernel.org>; Sat, 08 Aug 2026 00:25:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786173935; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FS+OYWf6"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-48a0ca07c38so190174b6e.2
+        for <git@vger.kernel.org>; Sat, 08 Aug 2026 00:25:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786173944; cv=none;
         d=google.com; s=arc-20260327;
-        b=MA2iV31Iq556ysVzLoSluCpUjZ8oGDPbhD5VVOtp3erf6tHE6xSkPIgdZPI6CKjl4V
-         AZqkQCkmDuxT+ot7BfHdm2Jy0W1x5dVsbawLdcTrIye+Nii0u+dwE0mBkuHwbywOhFlz
-         E+SIdUwr5TeCsc0rAzlKY2GeTH6uNH/sbMZpAZf99rQDquVlGj38JjcDx+ZDUzaAieOl
-         MikVSEBF/al1sbwkewtRjl6MWaCK/1ePm25ZncxwGd5RHWGu+vyqSVBTvxF2mZDQhVoq
-         6Cy8Cs6/JXUpz/clyzUCu6DX4lBn18U29IfM7xrv0zu8YqbTivFqNQMs5shWyfCnzQmx
-         4lAQ==
+        b=D7pN0KEsFMzX3ZsGNDcT4k/jUJfmS5mOg4gaWccCN3F7KQkpwitlZZOChuMqjks/x4
+         k6k4CsWMqk/VE5XJM9dmvzndQPcrogbEfzTnDqA+021Ad7KIidgJQH5Bpv8P1laLbiH9
+         4oyBxIrH0F6JGs+9KAua51BkoW8oZ/VLSCw2vyd57YIr3SKYUra1bN//totoXuqITFav
+         erQzu4YogxKjhCG2W0raupsHnlGSBaa0Az1tT0GM9kAkcEzNsvJAmRsGAUPMaOhbeYQy
+         Mv8IMc5zEaYO9Sx6gRnaIew6lhOeH9GJYxmKN4e99n9gMMnfEuLCJYA9GvuC0P542UNa
+         WREQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=LXHDZpzQFoxRB66+I6uiT8lflMsmuOQU/CF54SXaJ08=;
+        bh=KyfYAP7wjzFEN2qG+GU1nNJUpnJmTU73WBG+ynKSYY8=;
         fh=dzZik3sWO5Hm7VdeOg6TogxYFNxNltXRHvX8714ZSR8=;
-        b=sq5ojdhTjHz/MJZoVHHu6GnWxKRXDC/goRAtVpu+us9q8ByFlyAm88MIZrXUykwaKl
-         LfeSUa1nEBkEcBElu6BWP5vTGdd9Y52hD4QzLD+UfPQtq/j49xTivDlQXGR8BUEuJR2A
-         sJ9se5688JN5N96b272EOuTTFVdDMFPHPEltMnPHLOWfkZKqdO2Cs9lMgY2x/qAY7+AZ
-         N7LkUoIRGSoHX0k7N2z6QFyA6fKWafx3trms5qdJU/L5+K8bnlw4Hujj/cCf2wyKqIp2
-         Q7+uzVNukKatbZAv8wxcUvG2q9KG5bimHB/tllovCeeHYNO/5jU9gxW5M5ckNVnVNMlx
-         gzlA==;
+        b=Ho9N4AT4zL31mbeYcNlV4rmXpRman+c75gH8LwiIymvlmDrS3ePvsQqOrRiYHQhv/0
+         37vAg8Ausv+MFXstRA1lEfgVJUQkEe1N5ttzj/PJ32yreaDGDXUPcS08LfhIZRbLr1AK
+         vCtWd5qMuf0CsSC/gM6gLUZZdBVPAr5D2vLxLAaYSfrYRo6q/Dlw8eqSiXjfuM74lCJD
+         jF0GhZU0t0Y4t7ZJqi/ldc6KA15jl+o383+ZUJyy0+Ddv5VVggqRF8MeIlyxFPAIXaWa
+         t47gT/1HQQuVbUZ4At5c8ng6+XP6bzxnXupY8rj+KmlvLXkmzOA1S/u2kD6TpeCPOp3i
+         TvXA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786173935; x=1786778735; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786173944; x=1786778744; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=LXHDZpzQFoxRB66+I6uiT8lflMsmuOQU/CF54SXaJ08=;
-        b=kF3THuYariGU0ikAyOzAybfvxn/u8drhN/xuRAEe6YWvBGN5HWysy7GGcksFr3DvpC
-         0vU8RxLJH4zjn4kwbaZ9B2zzyAo9GhI1DdKgPAMOLy5hkcls9q3RNbhl2FakTYKPeRxA
-         RpLuey0uybhL4RlWdRMpxoYcT4mycU5XsqoVcRcAIWwoSe41QYV2sn8dRKgIgLnzcRcU
-         LzwppZsxHfGDjnUypvsfWZNlMbRqiapTDn6TUI6zurzSZcGOHyIiu/l6cQ3J/dD6qHgk
-         /tP/Up92dAxSK4SPsdjg697IFB+ejmg9pZLoaACOEOcs9PFrK8O0+tCWPxCeZFRBOYXs
-         aVPQ==
+        bh=KyfYAP7wjzFEN2qG+GU1nNJUpnJmTU73WBG+ynKSYY8=;
+        b=FS+OYWf6KFtcQSFzyMI2BE684JF6yhHwJsdXlDFKw7zHQzttptdXApPam2ac1FGReU
+         pMgcRRWNvh0Y34xMVclWIi+SFbyuUOo2aM0uB38eW+DRd4MIYBzjyENo+0qNoBX/2ddC
+         0MWwN41vZYOvppy5HgHNf90OHOxjwpBFBr8LUH6+z+ukMbu7Pyay591+yclXgaK2UjMY
+         oTHc49TbZLNciJCqwBmc+Vh18ixjkZlXWq8uoDNhC/Zklm6hIzgH5slDd0zwFrhmWJSB
+         flsfbmVZ4VJ56i8THiCAXzC8LSNn4guy9Wd7RcKuCY9OK+VITznuEj03ZTNUfNcryJTh
+         usYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786173935; x=1786778735;
+        d=1e100.net; s=20251104; t=1786173944; x=1786778744;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=LXHDZpzQFoxRB66+I6uiT8lflMsmuOQU/CF54SXaJ08=;
-        b=Ix0eOlQkTjS77UI0ek71K7zekz4j25WFvSLdyVaGbqYc6SbyZgwOVAUQRt+gKgwmvH
-         kkYmsYn9I1V0b9HkhSD7gb4IN1/9RA3rBbXSNqIcUMny5ks6y5fUyT0U9yGSvNb5dfq1
-         RSYHgLpA3OudOwW5NdfZzZpfKeU3kelDe799RqVX92gihqPPJKb4D3y2k65a2m1FzVEt
-         tgJARs7WuEWGwql840OzAbq+bd4Tt5MW6XIiKRdZ7c9+PAH4G/c6PAu7zSaEMIRwvF6y
-         55v5suRSCWydoOt+yZHifJQTBLvlbeEDOmMfq6fPQDRmGMZREBiuoYzUIUc6kDmDd601
-         md9g==
-X-Gm-Message-State: AOJu0YyW1Vgk5kmxNqrpTppbve8oJPnTsZ6vKzxKyOrfAhJnCb/d5GBN
-	10rXyiJ1kjhvYYn5q+bzawCI5/Ql90oay2TKUNo9PO7lNbLNxPT3xOGdEeEb1bzrlqOsXujeGr1
-	WglpSMrAATlqnDqxJ/xp96Kt7zMuW8f0=
-X-Gm-Gg: AR+sD10Zg3Q2OHIguVD0RFp+yn+z0uBZhPUM1hfewGY99d1xTc3S0OOY6NfnBSlgDZe
-	MDFbyKDMomE3eyD9h/W4d9LC9cBGScrcED9kI6cupcvIAdLQlh5xlQKNrnEK5Leej8o4CgYs2Qj
-	FWFKivFH0vdFCsHZMabOgt52RCBTJsY5OwHM91SOjNijQgFjUHpQ5Uep66a9DruyQDFzHbI5Y2c
-	q9wTdQCSDHxQCZDSDciEY3hlQDrHeM229dh1U5M4G/xIrg0AN8EaLuyZFaAVYZzJmaHbVYFkthC
-	nqFAvnd9LQ808TJW3MIUKufrOFT0ggbqG6om+Haj/GeZyQpx/9lP4Qq3xTproq4Mv0B5KwdoXUb
-	QprAl4s6tpJhIJm/m+78LuTxjZ+CE5p1dCWTZZVoU2QHZrHhC0j1v5YKdTJ2xZdg=
-X-Received: by 2002:a05:6808:1785:b0:496:11f1:f2b3 with SMTP id
- 5614622812f47-4b1a107dfc1mr5912030b6e.20.1786173934836; Sat, 08 Aug 2026
- 00:25:34 -0700 (PDT)
+        bh=KyfYAP7wjzFEN2qG+GU1nNJUpnJmTU73WBG+ynKSYY8=;
+        b=RWOfCA1UtG5kssv0FyT50pQyTy/Z48y1C86fNyFwHXrVLANRsKQHJj6867Jm7WDFU4
+         WPe8ikNFRXFH8EZMQ2HEpgs9IPivKeKlLrl/fEbVTfzfXSt1E5WLx5l2xJYhIw8lR6lF
+         Y9U1Ty4UPoQoXFjzbUbq4OFLMmPsZYW3VS3vQJL+gCYRINPrSb/OhDEZ2y3+Nu03Ufz7
+         mFaVdTc156mvzptu621zp+9JUQpy+l0fSCAy202WgTmHFhzVcvNBaCicgqeO8qM4+6pn
+         gxOIWaCSKIum3Qz+jI+7dGogfSHfjqju1wXmRnORpo16pa8dQ80bgDR9P5HIrOeDwQ1s
+         mXFA==
+X-Gm-Message-State: AOJu0YzeOe1O+dAr/2VVmYet9Xkzbp6ZzuwbVhCSi6QvT0N9CsJNqcuf
+	Ycmkm0UgTr36/5K9tggGzxOPwTuR5WDWJPzoV5yVDyBGLrMtGksQOy/S4hGd2SE0O6kqcqMtLbE
+	o4CG1vRF+Q6ajYTSS3xZ9+bb89kpqDes=
+X-Gm-Gg: AR+sD10IiQGnjZhx6LAdgSLL/0naafoEPj4iphi0m7I7N8SWl1aVtkmNA7nN1nQENQQ
+	Gr7d4BeXH20fLhle2uoTMMQC7V54ZDiXb0y4ueJahkuGkaXg1EnrgBfxMf8DzTmYAPzbRLyXmfY
+	VvKW31QVBlmHtpuoLbtMZggz7RxUsB70r0HcMAaWgMkzDpV4TnFt29MHDtkmg8vFZgqQq5Xwghm
+	s7ve2/U4GpW540uSKKf9PeVLZCrDr0wNUobCLqzULYpjc6VzspYB1A5zfeXLFLvSibIiqzp2keO
+	LAA0lgDpvFxBqKIqFU3hBbOeD3YaTxPO4INKReiWHExgF8DrNSIdflBQfgXEZDww+G4dXzk9qN+
+	WfQhHZkNwfwf5t6DxapZho8slyb5dIvZaw+y/e+qS2szJzDdhWBSVRnEgmZSNpOzlmUomvMkN0w
+	==
+X-Received: by 2002:a05:6808:1910:b0:495:f519:70f0 with SMTP id
+ 5614622812f47-4afae01bf6emr16839085b6e.19.1786173944607; Sat, 08 Aug 2026
+ 00:25:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,13 +84,13 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260716165517.433849-1-christian.couder@gmail.com>
- <20260804100355.1299498-1-christian.couder@gmail.com> <20260804100355.1299498-3-christian.couder@gmail.com>
-In-Reply-To: <20260804100355.1299498-3-christian.couder@gmail.com>
+ <20260804100355.1299498-1-christian.couder@gmail.com> <20260804100355.1299498-8-christian.couder@gmail.com>
+In-Reply-To: <20260804100355.1299498-8-christian.couder@gmail.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Sat, 8 Aug 2026 00:25:22 -0700
-X-Gm-Features: AUfX_mx93AL9fG8rIb4MwYzZe2uhAB7-tMsAAZ17jWXLf-6LwUxoxasWuAzYJgw
-Message-ID: <CABPp-BGfeF1t+siEUuYgTtDG5LtfL5iskSHferbGwFj8axA+tA@mail.gmail.com>
-Subject: Re: [PATCH v2 02/12] api-parse-options.adoc: document per-option flags
+Date: Sat, 8 Aug 2026 00:25:33 -0700
+X-Gm-Features: AUfX_my2Z6fucSqrrioTuzsSam6fTots9FWEWtGJyjr4TYVEFxVfbONwOlxte-8
+Message-ID: <CABPp-BHoxLkYJmoJ1N5owJ5-S+yr-4JkuectxSVG8oa6PESkWA@mail.gmail.com>
+Subject: Re: [PATCH v2 07/12] fast-import: introduce 'struct fast_import_state'
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
 	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
@@ -100,112 +101,22 @@ Content-Transfer-Encoding: quoted-printable
 On Tue, Aug 4, 2026 at 3:04=E2=80=AFAM Christian Couder
 <christian.couder@gmail.com> wrote:
 >
-> The "Flags" section in "Documentation/technical/api-parse-options.adoc"
-> documents the flags that can be passed to parse_options() itself. It
-> does not, however, document the flags that can be set on individual
-> options through the `flags` member of `struct option` (and through the
-> `OPT_*_F()` macro variants).
->
-> These per-option flags are used throughout the codebase (for example
-> `PARSE_OPT_HIDDEN` is used to hide an option from `-h` while still
-> showing it with `--help-all`), but a reader currently has to dig into
-> "parse-options.h" to find them.
->
-> To remediate that, let's add an "Option flags" subsection to the
-> "Data Structure" section, just before the list of option macros.
->
-> Let's also make it explicit that these are distinct from the
-> parse_options() flags described earlier, and let's describe the `-h`
-> versus `--help-all` behavior for `PARSE_OPT_HIDDEN`.
->
-> Signed-off-by: Christian Couder <christian.couder@gmail.com>
-> ---
->  .../technical/api-parse-options.adoc          | 61 +++++++++++++++++++
->  1 file changed, 61 insertions(+)
->
-> diff --git a/Documentation/technical/api-parse-options.adoc b/Documentati=
-on/technical/api-parse-options.adoc
-> index 880eb94642..fb4580e755 100644
-> --- a/Documentation/technical/api-parse-options.adoc
-> +++ b/Documentation/technical/api-parse-options.adoc
-> @@ -150,6 +150,67 @@ Data Structure
->
->  The main data structure is an array of the `option` struct,
->  say `static struct option builtin_add_options[]`.
-> +
-> +Option flags
-> +~~~~~~~~~~~~
-> +
-> +Each option can carry flags in the `flags` field of its `option`
-> +struct. These are per-option flags and are distinct from the
-> +`parse_options()` flags described above; they are usually set through
-> +the `OPT_*_F()` macro variants (see below) rather than by hand. They
-> +are the bitwise-or of:
-> +
-> +`PARSE_OPT_OPTARG`::
-> +       The option's argument is optional, i.e. both `--option` and
-> +       `--option=3D<value>` are accepted.
-> +
-> +`PARSE_OPT_NOARG`::
-> +       The option takes no argument at all. Using `--option=3D<value>`
-> +       is rejected.
-> +
-> +`PARSE_OPT_NONEG`::
-> +       Disable the automatically generated negated `--no-option`
-> +       form.
-> +
-> +`PARSE_OPT_HIDDEN`::
-> +       Hide the option: it is omitted from the usage shown by
-> +       `git <cmd> -h`, but is still shown by `git <cmd> --help-all`.
-> +       The option is parsed as usual either way. This is meant for
-> +       deprecated, advanced or otherwise uncommon options.
-> +
-> +`PARSE_OPT_LASTARG_DEFAULT`::
-> +       Use the default value (`defval`) when the option is used
-> +       without an argument, even for an option that normally requires
-> +       one. Only the last argument on the command line takes effect.
 
-Is this accurate?  Sufficiently precise?  parse-options.h says
+> -static void note_change_n(const char *p, struct branch *b, unsigned char=
+ *old_fanout)
+> +static void note_change_n(struct fast_import_state *state, const char *p=
+, struct branch *b, unsigned char *old_fanout)
 
- *   PARSE_OPT_LASTARG_DEFAULT: says that this option will take the default
- *                value if no argument is given when the option
- *                is last on the command line. If the option is
- *                not last it will require an argument.
- *                Should not be used with PARSE_OPT_OPTARG.
+A really minor comment, but you've taken several lines (some of which
+were already too long) and made them much too long.  This wasn't the
+first or the last, but at 118 columns it was particularly far from the
+80 characters per line guideline.  Could we change to
 
-If you want to reword that, maybe something like:
-
-        The no-argument form is only accepted when the option is the
-        last token on the command line; used earlier, it still
-        requires an argument. Should not be combined with
-        `PARSE_OPT_OPTARG`.
+static void note_change_n(struct fast_import_state *state,
+              const char *p,
+              struct branch *b,
+              unsigned char *old_fanout)
 
 ?
 
-> +
-> +`PARSE_OPT_NODASH`::
-> +       The option is a single character without a leading dash, such
-> +       as the `+` used by some commands.
-> +
-> +`PARSE_OPT_LITERAL_ARGHELP`::
-> +       Use the argument help string (`argh`) verbatim in the usage
-> +       output instead of surrounding it with `<>` or `[]`. Useful when
-> +       `argh` already contains a hand-formatted description.
-> +
-> +`PARSE_OPT_FROM_ALIAS`::
-> +       Internal flag, set on options that were expanded from a
-> +       configured alias. It should not be set by callers.
-> +
-> +`PARSE_OPT_NOCOMPLETE`::
-> +       Do not offer this option for completion.
-> +
-> +`PARSE_OPT_COMP_ARG`::
-> +       The option's argument, rather than the option itself, is what
-> +       should be completed.
-> +
-> +`PARSE_OPT_CMDMODE`::
-> +       The option is one of several mutually exclusive "command mode"
-> +       options that share the same variable. Using more than one of
-> +       them at once is rejected.
-
-Thanks for adding this table; looks helpful.
+The actual substance of the patch looks good.
