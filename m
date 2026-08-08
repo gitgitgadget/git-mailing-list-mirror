@@ -1,70 +1,71 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1291F16B
-	for <git@vger.kernel.org>; Sat,  8 Aug 2026 00:02:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3123B76026
+	for <git@vger.kernel.org>; Sat,  8 Aug 2026 00:02:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786147354; cv=none; b=GNvtL3EN+Y0p/gdI772Vsnp9YEVo1i74PrF8vQj30sO58zcjQ/IO7Qs60SfrICLPBrZjgCq0hcgb5p7MlMJcwn+OPPSyG2Y8pObmCz1chqoPHaGWZs2mSBGms3jmxSuXnyP+lh2yfUuztWBPUXcHYhwBMVlZAaFVoR15JrqNSLk=
+	t=1786147355; cv=none; b=DgAXEZJNURFA22SD8QE0Xh1wz2ziRYcu3hOnC963WHYN4KOTCOz8Aruy21Qrx0omjejA66wpVBptVHKV0BBNoto58W+9X1w70azb+L2se1EM0zSXWMA8Ufz+jK9X152M1VUgJP+8CCZ31WywhMgqd4xoTE9dLC1/FF4LgDlL0Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786147354; c=relaxed/simple;
-	bh=Q+7O6O2/lUozzK2MnHJsmRJVYAiIRFoatAWoGsbmb5U=;
+	s=arc-20240116; t=1786147355; c=relaxed/simple;
+	bh=M07/+AqfIR8b3Qw886wpi/b03waDmuatO9YmsjhqoaA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WFAF/u7gkTq+SkAVHSuhXjZggtEnPWQOIcNr/Hp7rj4LfFZ5AxZPc11PbJ9ngPBBgj0sdifUS69HZHTWXAunOFbCirQNKvEqyjD07L7/HgEa57IliZD0J524xjHhK7bC6h3lhvAV8tIPM2j4ZQ+mXrW/zOd9izc5+3Iazj+a3sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jb69/AzE; arc=none smtp.client-ip=209.85.128.45
+	 In-Reply-To:To:Cc; b=grxABlx/+h4IE/NMKJOA2Hg90z5xNfaj4V8PkfMXXwp47+k96eSfxFGOuiTmJxn4wGnAqX/zx1mf+7JvyvxyRAs0zvSWNDCLY3iyKQY7rbaUVPxgnlOK88L3FMqSuDOHlEj3hCVi1/rXgxuVK9zCeoFvkEmdmHqPCamjP+qhqys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ktUNJCrV; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jb69/AzE"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4994c49f588so827345e9.0
-        for <git@vger.kernel.org>; Fri, 07 Aug 2026 17:02:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ktUNJCrV"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4980fe6b3beso19436935e9.0
+        for <git@vger.kernel.org>; Fri, 07 Aug 2026 17:02:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786147351; x=1786752151; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786147352; x=1786752152; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=zs67nYU7TXUCfHtK6D61IdjgktU8zAibXvoVMPdVLK4=;
-        b=Jb69/AzEDWr1ViXUtV/wYgVJ2Ny14+nEWLGa6IIFI3V1L71NyC54iS/2WDLWVS2Jf+
-         6xrEwKdagKRRgW9BeEyMcF+/3CIEt1W1nCMsAWSk8zlfuVcGrO89B/VMxtWOER15nKGU
-         FhO4J9EC/yZdxtlxfPKEZZvsrIfuyyWrRAFBiq+yKGigExUvcTGhjmcHoeuzYAkx1rK0
-         E60OZyxPB7GXLgM+OZm3fivyCRQn1SlMzMTt6BRV/opiTorA6StTQ0d8PHgpKfvJihR9
-         eGPld4QA7SrHQRpEbjq+z4km+auhqI2wGa0eosevXWfpoOuS6qiHb76dlwZ83akLdQdl
-         qZ8Q==
+        bh=0qcz57JL1z6mNZ39aCKpjk9p+7WX1SNeZrHeHLAkSY8=;
+        b=ktUNJCrVThhlBF7VHchiNqAIk+iaBpzrBooHBVwkRPvT8LsXR2rbpSjbywx7cynYDS
+         HiTOcjcJY1aanPVoIXLgKyS/1WdJ8eykOpTAZiq2ucVcSvrDVdh+efZaumeRlYCYMa8j
+         JTfmSOMY21WoV/LXQfDae/BvSI8JeTyGiVs6j7JKBX3iLCoOywaOfq/KAv/eH1ZYFOKC
+         iI3HBvaZQK1lQMWFzhrxVWgUAHufQO2P7nFbyap5dfgNsiQbj7I/uoE4wfUTXSaSXWhb
+         ueWUsvRtygotUJ8QU8hfZnmnLSIs9mDRKSZfXIhVAzhMWMPY8X5qrtyF8DLMsGYP2jct
+         9gYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786147351; x=1786752151;
+        d=1e100.net; s=20251104; t=1786147352; x=1786752152;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zs67nYU7TXUCfHtK6D61IdjgktU8zAibXvoVMPdVLK4=;
-        b=OnkTFbrYz6r61Qn+DqwppafA1w2PPxADajGGNB2DrJ71aNX/DMgq+ypjyXDJBj/XAz
-         3oaeFTFpROyCYuTxMawBnbyIIXB3DdEAxxt85JsS61yqzRxErZXHs6l9c0AfW1jLNSDX
-         45TmuPxKHRNEEwApK15BLdGfFjTGJfphoMveg/0z6ESWRNI4H7QkHnfOvN8Wquw5ZAgx
-         TX0HvOfRzwDM37PZaLy/8qiI65SJoW9JLa1WIv3Tq/j+B3JIEUIcI7yBzffVEEVXazAp
-         XkzRSYijifkhep7f98xzafDUXBUdDjspuh0qvROQJd7ciExWgQl9E2esOgollaQEmUNR
-         058A==
-X-Gm-Message-State: AOJu0Yx+hNwywCek2nqLexoM6Y6HoNvDhTIyxjV8aKANvdilwM0/p4K0
-	ezL8kli91upLc2eDF3LwBqHPox8YMJopf2mjl/emrIDzWDDd/CncFG1d
-X-Gm-Gg: AR+sD13U4QoAdQoAcuIGaKbpn/ZJhH89x6TP5GL6JKM5LUdThO8DHTRLiKpG1LlPbi7
-	OUCsCHZdcBFWQZyfaxDqzWTCxRPj1+7LGZhXhzw9jHrh2f/xw3ctjAp/OF0n5x02liq8LD0hGTC
-	NdxQYrurdfbT+6GAa0VtfYFpKLNaCw++cmh9UPEXk2fKdwmKYDtwHV09aPgr8Y+pndSlQ14bBJ7
-	OiAlrueXF5SABGk/DvkqPar93df6AqnuEwOHj/QqPJM5No+6Ch+acem2QMyxem/2Rd3SSHoj0VA
-	CGU/97RFXv1A4Ffj6nPAfPUzRDAVm9v24vuOpLMZv5D0k2Q4/r3pIr49we8a0EEGBKMMG1Vgdru
-	oJ0F/mSpwxg+WoRb26cxL2YPYegwbdPANZU/YxrmrjtEwkvFNw3yqXP33klFk3r+8TWcfyNlUNH
-	lxVL4Wv/Ew1ydwyilswWPA9TSw0qAL1Vu2SWKNnc6fLJq+lW8GvQLfsIpWWIQhmGkNffdh6vydU
-	cBgkxtWmYGTZvLE4jFKkjI8oou+pwQz8roCV+C3rvXZuPz/Hd96THn0CAnfaPpy5Ovf1e8lCeXy
-	XzqgK3quMwT2SWsC9REb6x4L4v4k10b/bESUlAOIxml39WjdCkseZSDXzn0HEaJw4YpV8M3XSLJ
-	EFE61iEvheNeRCk9/X8Lv3NEjCJCBe9Mv2JHvfN29IO0uxDzTpa8r4zR6mZ97y/JBoksR
-X-Received: by 2002:a05:600c:4e8e:b0:497:ff5a:38b9 with SMTP id 5b1f17b1804b1-4996247e640mr19560345e9.9.1786147351137;
-        Fri, 07 Aug 2026 17:02:31 -0700 (PDT)
+        bh=0qcz57JL1z6mNZ39aCKpjk9p+7WX1SNeZrHeHLAkSY8=;
+        b=JF5cFq2WqYQjU+3JacKNzdYeORnpvUWuqy23FBRukg8CQLywougsRXBCuPggdoztnm
+         X8/bqCBC30Zl/jmy1D4tH5ACvaxBe+nBRErK+RkqmzrGa439HW3V4XvFnh/2zrr5W1AG
+         rPQQyfpjktwM3kTbqkDXOMF9TNcoFzC6a8ljHicmnYr2d1V/zc4LMekvmTOzsd+l1EOs
+         7oPHLVqDF3TlXCaOs49XAX+oeUZciM8DEx+g6c5jYIgFA6BCKR0RHQAAsluo7zDdLM5w
+         TSRwBrSVqS+5dNKR2ql0K6OjwvmwaByVuqADV9gcfqwPHsty5vU1R76LpjYsIpagFrR8
+         JEGg==
+X-Gm-Message-State: AOJu0Yzphxz+eJZd6nf5CLL9cf9XC97O1z//G/0QHF2u6Pa5QVa0MpZW
+	fKBZqN07VPlRc9cImhlR/hrjeriNc4YDN99LUhhm7+GcbOqyTvqozng6
+X-Gm-Gg: AR+sD117XP36QWodCrt8RxuRD747x6oBhbVMzI2R7LizmyKAf904NwdoZ00bVU+3wKF
+	9juyGaS4uktor7aqA52tUT0D5ilsZVloPsCOMqduuL76ysXXki6W30+rUZ0frFCjC8ZGsMshlXa
+	zgcopc0BndzoswXbos/mZkuxIixxU0B2Q/eH+fVU6OCJyGpVE2j3HEnOvDEuFkhALMZtMbBrtOT
+	f03jEL78WTaFeRA5f0oF7RawMgz+DgxWX/Lejh/Y6i+4l5qNqf6tmMVePtEv0iBpHgptQSi/aHP
+	MgUBKnqMQf2jRiFGYJ+/c6EpurTg+7NO9NmwrbW5Y94DMlUgKeasWBHOdoL11aJ1tmdzb79A3rp
+	M8t2JxnBbVKd4/ogKcDbdftG6a9NOKd3kaOjUScAW0/PRAol9hwTjwusiQKnZRvewsex9FrDF6A
+	JS84viFgdclKNduRHNH2MVMYAJRkmLm7IvTXxQjATtiWRpq3xElxkYxVNX16F6AkO29atQnJn9t
+	lW42tpPB3eVBNw/hHqarfnVg8Zq++vssQTl3NcM3de27gfOZEa2J07agDgI23pxjq+V/79uIjhs
+	CzUDYKYaxRa2hw6Hdkgb/ftAFUfk+VcuGjV1200dnmwbUujXLkojvAZyBRcePF0KQfVizewikUY
+	yGb9sXAwUx5yMiaFA85Q9Qurjy52vIO+rDiHtXSMxU9YTGEXy67YcrYgnzGkTaYH5l4df1vowWd
+	rZDfo=
+X-Received: by 2002:a05:600c:3b10:b0:495:3a52:71b1 with SMTP id 5b1f17b1804b1-49962462c19mr18843475e9.5.1786147352392;
+        Fri, 07 Aug 2026 17:02:32 -0700 (PDT)
 Received: from 1.0.0.127.in-addr.arpa (183.red-79-149-223.dynamicip.rima-tde.net. [79.149.223.183])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4995c69c8ffsm72424525e9.2.2026.08.07.17.02.29
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4995c69c8ffsm72424525e9.2.2026.08.07.17.02.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2026 17:02:30 -0700 (PDT)
+        Fri, 07 Aug 2026 17:02:31 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Sat, 08 Aug 2026 02:02:20 +0200
-Subject: [PATCH GSoC v6 05/10] fetch-object-info: die() on the remaining
- error path
+Date: Sat, 08 Aug 2026 02:02:21 +0200
+Subject: [PATCH GSoC v6 06/10] transport: drop remote object-info fields
+ from transport struct
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,7 +74,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260808-objecttype-support-v6-5-e5cdaf27a49c@gmail.com>
+Message-Id: <20260808-objecttype-support-v6-6-e5cdaf27a49c@gmail.com>
 References: <20260808-objecttype-support-v6-0-e5cdaf27a49c@gmail.com>
 In-Reply-To: <20260808-objecttype-support-v6-0-e5cdaf27a49c@gmail.com>
 To: git@vger.kernel.org
@@ -81,115 +82,215 @@ Cc: chandrapratap3519@gmail.com, karthik.188@gmail.com, gitster@pobox.com,
  peff@peff.net, Pablo Sabater <pabloosabaterr@gmail.com>
 X-Mailer: b4 0.15.2
 
-Every failure in fetch_object_info() dies except one: a short read while
-parsing the attribute lines returns -1. That -1 is then passed through
-fetch_object_info_via_pack() and get_remote_info() up to cat-file, only
-to die() with a generic message.
+From: Jeff King <peff@peff.net>
 
-Die in fetch_object_info() instead, consistently with the rest of its
-error paths, and make fetch_object_info() void.
+A remote object-info request needs three things: the transport for
+contacting the remote, the list of oids to request, and a place to store
+the output.
 
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
+Rather than take these as function parameters, we take only the
+transport object, and expect the caller to have placed the other two
+into special fields in the transport struct. But this doesn't make much
+sense. The set of oids and results are really only valid for one
+request. There is no reason the transport would need to hang on to them
+outside of the single function call.
+
+Even though we save a few lines passing the parameters around through
+the various vtable functions, the result is harder to understand (for
+example, who is responsible for cleaning up results, and when should it
+happen?). It also opens up the possibility of a subtle bug. A caller is
+likely to point those fields to stack variables which could go out of
+scope, and the transport struct would be left holding invalid pointers.
+
+This is mostly harmless now, as we disconnect the transport immediately
+after the sole caller of transport_fetch_object_info(). But conceptually
+we could keep the transport open and make multiple fetch calls (and
+reuse the same connection to the helper, to a remote HTTP server, and so
+on).
+
+So let's pull these out of the struct and pass them as function
+parameters. It's a little more verbose, but I think more clearly
+illustrates the intent. I've also tweaked a few function signatures to
+mark the input oid array as const, since it is purely an input to the
+function.
+
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- fetch-object-info.c | 19 +++++++++----------
- fetch-object-info.h | 14 +++++++-------
- transport.c         | 12 ++++++------
- 3 files changed, 22 insertions(+), 23 deletions(-)
+ builtin/cat-file.c   |  6 ++----
+ fetch-object-info.c  |  4 ++--
+ fetch-object-info.h  |  2 +-
+ transport-helper.c   |  7 +++++--
+ transport-internal.h |  6 +++++-
+ transport.c          | 14 +++++++++-----
+ transport.h          |  7 +++----
+ 7 files changed, 27 insertions(+), 19 deletions(-)
 
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index e1650b2921..8dcad2f5eb 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -724,10 +724,8 @@ static int get_remote_info(int argc,
+ 		goto cleanup;
+ 	}
+ 
+-	gtransport->smart_options->object_info_oids = object_info_oids;
+-
+-	gtransport->smart_options->object_info_results = results;
+-	retval = transport_fetch_object_info(gtransport);
++	retval = transport_fetch_object_info(gtransport, object_info_oids,
++					     results);
+ cleanup:
+ 	transport_disconnect(gtransport);
+ 	return retval;
 diff --git a/fetch-object-info.c b/fetch-object-info.c
-index 5f53dbd6b9..4db879c2dc 100644
+index 4db879c2dc..fe26bf4bbc 100644
 --- a/fetch-object-info.c
 +++ b/fetch-object-info.c
-@@ -47,13 +47,13 @@ static int parse_object_size(const char *s, size_t *res)
- 	return 0;
- }
- 
--int fetch_object_info(const enum protocol_version version,
--		      const struct string_list *server_options,
--		      struct oid_array *oids,
--		      struct packet_reader *reader,
--		      struct fetch_object_info_results *results,
--		      const int stateless_rpc,
--		      const int fd_out)
-+void fetch_object_info(const enum protocol_version version,
-+		       const struct string_list *server_options,
-+		       struct oid_array *oids,
-+		       struct packet_reader *reader,
-+		       struct fetch_object_info_results *results,
-+		       const int stateless_rpc,
-+		       const int fd_out)
+@@ -11,7 +11,7 @@
+ /* Sends object-info command and its arguments into the request buffer. */
+ static void send_object_info_request(const int fd_out,
+ 				     const struct string_list *server_options,
+-				     struct oid_array *oids,
++				     const struct oid_array *oids,
+ 				     unsigned ask_size)
  {
- 	unsigned ask_size = 0;
- 	int size_index = -1;
-@@ -89,7 +89,8 @@ int fetch_object_info(const enum protocol_version version,
- 		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
- 			check_stateless_delimiter(stateless_rpc, reader,
- 						  "stateless delimiter expected");
--			return -1;
-+			die(_("object-info: expected %" PRIuMAX " attributes, got %" PRIuMAX),
-+			    (uintmax_t)wanted, (uintmax_t)i);
- 		}
+ 	struct strbuf req_buf = STRBUF_INIT;
+@@ -49,7 +49,7 @@ static int parse_object_size(const char *s, size_t *res)
  
- 		if (!strcmp(reader->line, "size")) {
-@@ -156,8 +157,6 @@ int fetch_object_info(const enum protocol_version version,
- 		    (uintmax_t)oids->nr);
- 
- 	check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
--
--	return 0;
- }
- 
- void free_fetch_object_info_results(struct fetch_object_info_results *results)
+ void fetch_object_info(const enum protocol_version version,
+ 		       const struct string_list *server_options,
+-		       struct oid_array *oids,
++		       const struct oid_array *oids,
+ 		       struct packet_reader *reader,
+ 		       struct fetch_object_info_results *results,
+ 		       const int stateless_rpc,
 diff --git a/fetch-object-info.h b/fetch-object-info.h
-index 9f72e91155..97ee5314c9 100644
+index 97ee5314c9..10cf9f5f63 100644
 --- a/fetch-object-info.h
 +++ b/fetch-object-info.h
-@@ -24,13 +24,13 @@ struct oid_array;
-  * attribute is not available.
-  * Release them with free_fetch_object_info_results().
+@@ -26,7 +26,7 @@ struct oid_array;
   */
--int fetch_object_info(enum protocol_version version,
--		      const struct string_list *server_options,
--		      struct oid_array *oids,
--		      struct packet_reader *reader,
--		      struct fetch_object_info_results *results,
--		      int stateless_rpc,
--		      int fd_out);
-+void fetch_object_info(enum protocol_version version,
-+		       const struct string_list *server_options,
-+		       struct oid_array *oids,
-+		       struct packet_reader *reader,
-+		       struct fetch_object_info_results *results,
-+		       int stateless_rpc,
-+		       int fd_out);
+ void fetch_object_info(enum protocol_version version,
+ 		       const struct string_list *server_options,
+-		       struct oid_array *oids,
++		       const struct oid_array *oids,
+ 		       struct packet_reader *reader,
+ 		       struct fetch_object_info_results *results,
+ 		       int stateless_rpc,
+diff --git a/transport-helper.c b/transport-helper.c
+index b109fbd8c3..e729a097de 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -784,11 +784,14 @@ static int fetch_refs(struct transport *transport,
+ 	return -1;
+ }
  
- void free_fetch_object_info_results(struct fetch_object_info_results *results);
+-static int fetch_object_info_helper(struct transport *transport)
++static int fetch_object_info_helper(struct transport *transport,
++				    const struct oid_array *oids,
++				    struct fetch_object_info_results *results)
+ {
+ 	get_helper(transport);
+ 	if (process_connect(transport, 0))
+-		return transport->vtable->fetch_object_info(transport);
++		return transport->vtable->fetch_object_info(transport, oids,
++							    results);
  
+ 	die(_("object-info requires protocol v2"));
+ }
+diff --git a/transport-internal.h b/transport-internal.h
+index 60db0bedcd..a10b27cc81 100644
+--- a/transport-internal.h
++++ b/transport-internal.h
+@@ -7,6 +7,8 @@ struct ref;
+ struct transport;
+ struct strvec;
+ struct transport_ls_refs_options;
++struct oid_array;
++struct fetch_object_info_results;
+ 
+ struct transport_vtable {
+ 	/**
+@@ -51,7 +53,9 @@ struct transport_vtable {
+ 	 *
+ 	 * Uses object-info capability of v2 protocol.
+ 	 */
+-	int (*fetch_object_info)(struct transport *transport);
++	int (*fetch_object_info)(struct transport *transport,
++				 const struct oid_array *oids,
++				 struct fetch_object_info_results *results);
+ 
+ 	/**
+ 	 * Push the objects and refs. Send the necessary objects, and
 diff --git a/transport.c b/transport.c
-index b0e29124d1..35acdf71a2 100644
+index 35acdf71a2..25e2c14a7b 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -448,12 +448,12 @@ static int fetch_object_info_via_pack(struct transport *transport)
- 	data->version = discover_version(&reader);
- 	transport->hash_algo = reader.hash_algo;
+@@ -433,7 +433,9 @@ static int get_bundle_uri(struct transport *transport)
+ 				     transport->bundles, stateless_rpc);
+ }
  
--	ret = fetch_object_info(data->version,
--				transport->server_options,
--				transport->smart_options->object_info_oids,
--				&reader,
--				data->options.object_info_results,
--				transport->stateless_rpc, data->fd[1]);
-+	fetch_object_info(data->version,
-+			  transport->server_options,
-+			  transport->smart_options->object_info_oids,
-+			  &reader,
-+			  data->options.object_info_results,
-+			  transport->stateless_rpc, data->fd[1]);
+-static int fetch_object_info_via_pack(struct transport *transport)
++static int fetch_object_info_via_pack(struct transport *transport,
++				      const struct oid_array *oids,
++				      struct fetch_object_info_results *results)
+ {
+ 	int ret = 0;
+ 	struct git_transport_data *data = transport->data;
+@@ -450,9 +452,9 @@ static int fetch_object_info_via_pack(struct transport *transport)
+ 
+ 	fetch_object_info(data->version,
+ 			  transport->server_options,
+-			  transport->smart_options->object_info_oids,
++			  oids,
+ 			  &reader,
+-			  data->options.object_info_results,
++			  results,
+ 			  transport->stateless_rpc, data->fd[1]);
  
  	close(data->fd[0]);
- 	if (data->fd[1] >= 0)
+@@ -465,11 +467,13 @@ static int fetch_object_info_via_pack(struct transport *transport)
+ 	return ret;
+ }
+ 
+-int transport_fetch_object_info(struct transport *transport)
++int transport_fetch_object_info(struct transport *transport,
++				const struct oid_array *oids,
++				struct fetch_object_info_results *results)
+ {
+ 	if (!transport->vtable->fetch_object_info)
+ 		die(_("remote does not support object-info"));
+-	return transport->vtable->fetch_object_info(transport);
++	return transport->vtable->fetch_object_info(transport, oids, results);
+ }
+ 
+ static int fetch_refs_via_pack(struct transport *transport,
+diff --git a/transport.h b/transport.h
+index 6948b65db9..39193d0077 100644
+--- a/transport.h
++++ b/transport.h
+@@ -57,9 +57,6 @@ struct git_transport_options {
+ 	 * common commits to this oidset instead of fetching any packfiles.
+ 	 */
+ 	struct oidset *acked_commits;
+-
+-	struct oid_array *object_info_oids;
+-	struct fetch_object_info_results *object_info_results;
+ };
+ 
+ enum transport_family {
+@@ -317,7 +314,9 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs);
+ /*
+  * Fetch the object info from remote
+  */
+-int transport_fetch_object_info(struct transport *transport);
++int transport_fetch_object_info(struct transport *transport,
++				const struct oid_array *oids,
++				struct fetch_object_info_results *results);
+ 
+ /*
+  * If this flag is set, unlocking will avoid to call non-async-signal-safe
 
 -- 
 2.54.0
