@@ -1,115 +1,134 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193DF397B0B
-	for <git@vger.kernel.org>; Sat,  8 Aug 2026 17:08:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6472F39C7
+	for <git@vger.kernel.org>; Sat,  8 Aug 2026 17:32:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786208884; cv=none; b=AbuTkdKKXlAewjYd6eP6iS6ZgSiPf3s/Ahq5LJ53r797iQ5R/AdcJGpZ9l962PFJtnJ/lUi3+n4XxWyG1Gfp2NOkLoBroyKP57v/OHT/uNRXqEwJ5i6g0Imf/lcFyPI32xzaD8O9nAwWOY8GN8rNuM2Av4Ej7TWed+O6zzkFbm8=
+	t=1786210323; cv=none; b=FG3mknV8i1hQde1YdBTKH9eSEHFtvsI1SS+tX2O/kG0vBV+0dbVXbnxVhJLYvHYZS8SbqeEHFHr5T+9mmnaBQDYe+88IQg3UnuDfpUqy7wcDBhLpYANSFIOc7NthMt1NZlr6Yu3qqgtnIy6NS2GMJAJ6EMDpdFQqGw/T+iF6rco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786208884; c=relaxed/simple;
-	bh=7EhYwsWhh4hGQVx4QBVq1LLZOwofKe3I67InKKEYw+0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a1VrIhzWCqCw7KcVhMKsItSgy9Ry6ltTlybdoPDf8GZEeVwbDfhLRnn1DNG6KFA8nAp8QGq+QuJlr723dBr4QoUEDFIoxUm4sezq32o+F6ZQZ4KBtMa9c2oGigQNlcYGw1eybMvkpUq1WAuY6p8YU2UTuvcMxUG/5UiZdCB6h/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OuvpJfZv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i4KaEcmp; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786210323; c=relaxed/simple;
+	bh=tzIZHd3GlGTqqv64CLWUh8xfR9amcnRicWU/xuDNzo0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n93y4gFdjMUHZTBHoVcYtqUq14pMpKqx6IpJ1CZB+jcDJvvh3gJjRx7ONqhEVrCxog5dG2uwIzJeN5syEKYxhZer8g6LKCz8rO9VdV2HBZxGRACkyjMawPjNp93mabuNTMi/L/gxTtb/Bv3ircK7rpHv7oOM5jpkjfZ0sJ+AVpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QiaIDMS/; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OuvpJfZv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i4KaEcmp"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1F0001D000AB;
-	Sat,  8 Aug 2026 13:08:00 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 08 Aug 2026 13:08:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786208879; x=1786295279; bh=7EhYwsWhh4
-	hGQVx4QBVq1LLZOwofKe3I67InKKEYw+0=; b=OuvpJfZvM/a7dRI4MCCOIeECyS
-	VkkVD83ZQtz3BNgWTLr94fvAB1da3H7ZXTYFgu6ILd7ii4mFUd2SEp8GVj7EHBvf
-	n0bBa5o6MJSkN2dFSw48dDsxF6ctMGveNrd3tOKRUwi3vPnFzUPioEXLLVcCIpnB
-	geMGWMCniRVfAQ0fSTuA0zZuwL3SjVToiScWEMpqMqMJj9ZOjNsb5VhL/WkhVRrg
-	WG+U044mhnPWHDM1uyO9wUoqyEBVrwoj+irY+CFEz1qBu7pwiC25gbp2Se6btJqX
-	Dyu0bXJnEWFObEMw2Hzi7Tas8J0OksxZSe1ygOGPo+3LZcECHwRqsmQ98jTw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786208879; x=1786295279; bh=7EhYwsWhh4hGQVx4QBVq1LLZOwofKe3I67I
-	nKKEYw+0=; b=i4KaEcmp9o3gkH6UaRrNQNdn4LVUTAU6mMEY9wonWw2U62ByJ6i
-	oe/R7MOYo4NB7JuFYx2IFgMi6V6tVrNnNdN185mvltMyrpZFov2a4RgNG3wsYgr8
-	Q8X4wxijNxM0ZLmsHtU9hFNyLjdyXnVQhOx02/vRP5A1iFl4m+dM0bUm1QReoOAY
-	DKXW04FxViD46Nft8JJL8Pus6LSbXKJwLZlTwEXHgjW+VAOkbw1gSA8O9TrzIKBq
-	hX38wwR4IaEInAgNHS1ETrEdMQe98O2Rb93fYf3M2si+V+iNPCrZTHG0WkEjtTZ7
-	ZH57b8t6w8r4szb+h20jMZwdLA3OoEloWLw==
-X-ME-Sender: <xms:b2J3aoMCgy4wzEqUwDq9-5n5EGOH50GZNXUgiO22OYSHa8hBo8dDKA>
-    <xme:b2J3aioFP2QCBDZUnCCiVh_nvRN98cGTPgokGn6FpYWlKO37MuJHt3HKFzS5rKw_G
-    h_Ho-5mnGprUcQLiA5r1cCVKsT0TjVSl1zPsBVgdhOPZFi3IOun1g>
-X-ME-Received: <xmr:b2J3apFJ9MR0580udUvqPHBDLQj_WuCEJ3bW73lgcTnR1B3_TxVJDWHEDygDGl35cPXgCDmfomLYswvwu5TTTbK8_zzETj4WsQ>
-X-ME-Proxy-Cause: dmFkZTF6AUlcD2bOe4t+7Hk1N2Z1+ROdpN4Cch9Vuuuux2x9H5E8YAOBIwH5vUZ4lkYK8o
-    RLHxdmQbgsFZjPAiTVHknUFtO9k6F6Mx38qSXttppHUcJjDmYbPQC1sIquedh2F5KiEf7N
-    SFbnuX0MFFAKVCEVx6Urn6/Y0hmDjtgXsdWJn644hIRMhFi5a6GK8cf7lYTbsqEnPqoFJX
-    qk86XpBIfETA6IonHLWusbYBsrGxAZvOfndRCU3X2MvsESirMVnfZgzHh3SRGXjFrM2K4H
-    xpgw4+ROnBCBf8m0pAiqzNleTl6lI9gO8ZsB8PwfDcTHFJielcLWId53FqDgUwiCOf38ax
-    JxVz4GD3o2nKKa2QcxQvOnunpzAq43/fQyoT6kc8A5A8MpyrpHF7X6W7I6O4218Maretbi
-    FhQcfdnhGm+FedmEg+QvLhxn9OcZMMIeZnMkJQ2JawqwSZONhKLzyd3ZNQu/BVWx50g3Jw
-    reDTU/ZMfLHIhB1gWyNfAQdRXXdmDf0ZHYBpTvG0N/co+sMl0J2UgM5G+Rk7F/uYF5udh+
-    6mQm/EUMP6KVGC8MheGXINOnTWWbG7d3iPth117OLzJqijWalAQZRYpb5diwiEtgZgspqE
-    cUban7W3sfRLfdjneOVyCNgol1gIBgHMwlbSM7yhhGiq6gyHcZQHMGqnmC1Q
-X-ME-Proxy: <xmx:b2J3anoItckkeRp-_45IleHNrJgkzlbEx2pfBogSQorehPBoZZHBKw>
-    <xmx:b2J3aiYHoIo7w0_oFFjYxFlei1V0diawoP1cyDoeUvHe3fHMXavsLA>
-    <xmx:b2J3agVOx-ZJ7Oj0xoL5RykUKBkiTQI0ryEAjzXb1ntehbMhiLJpqA>
-    <xmx:b2J3ar8smaOPWEHPe2xYrN3wBynUMtKv86tNLyCAqGmMYQ298m_BOA>
-    <xmx:b2J3arIyIU7dWVtTs7prlQh7OYH17YNLvrdDn_fLAP0aYP2iVrPupTmT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 8 Aug 2026 13:07:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Gusted <gusted@codeberg.org>,  Jeff King
- <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 6/6] last-modified: keep per-path Bloom filters for
- wildcard pathspecs
-In-Reply-To: <20260807-toon-speed-up-last-modified-v2-6-7d87bbdeaf9b@iotcl.com>
-	(Toon Claes's message of "Fri, 07 Aug 2026 20:26:52 +0200")
-References: <20260807-toon-speed-up-last-modified-v2-0-7d87bbdeaf9b@iotcl.com>
-	<20260807-toon-speed-up-last-modified-v2-6-7d87bbdeaf9b@iotcl.com>
-Date: Sat, 08 Aug 2026 10:07:57 -0700
-Message-ID: <xmqqtsp4a6c2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QiaIDMS/"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c2022323c37so67697666b.0
+        for <git@vger.kernel.org>; Sat, 08 Aug 2026 10:32:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786210320; x=1786815120; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9aNLElRTdCbJJpCk/R7Ba0sXVk03CQAfGG1PwLjxNhw=;
+        b=QiaIDMS/dgq2hXsZkg0yErd7P39jyWyyt+Z/5YnLdaf5w7QPrEYpi2zQGugI8RS7cZ
+         VFzRQtj8iEZknYLMa2blcwrawb+DiyAckljWcjWU5xrwL8buwcvLkjN7K2PsbTDwZ3n9
+         NIq8dd5QYfVDUsFG6ikXU35xdDWkzK33BUrevVP5ST6ifFaq7GOlSe5JQdfUBjTFar99
+         G1G9UvI/vS+kaGQXsHf1NBCTyCblcAp6OxeJ/EZn1lQMKV9vSzi5Fkpwhs63JxQ1CFNY
+         iqN5z9Cvb0Hpm2czEvS4w8on/5tgHGwFHwkwkkq29EVG8MzbQah/qskcgaxtRz5+BTGv
+         QQMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786210320; x=1786815120;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9aNLElRTdCbJJpCk/R7Ba0sXVk03CQAfGG1PwLjxNhw=;
+        b=U3uLfZA9JTOmm8nNTN6bphcbJNUwnLTT9aPophNgPhUE1BCT1pu/eeLVCaMT2rYmet
+         hnY5GiQ1ydHx2axt24rYw+n7i+uMRgAuW9y1SejmYsyDhK6NBe53+V5RYi0UuZvFKG90
+         PJjoRG8TBfOyKkbKFOAZBua40nsyDJlZpnsFnr1yYTlq079qsS2cq7YotRStxmmA3XUP
+         OKeAC+CG1ll19j8QbBk3rmS4qO97FdMX81+Ye3YG2XtKeODGbt3JQs7MmNNmmrQJfGR9
+         qQnSGTpSYz3/NoiueMm3FD8XxqrJyuZjja/0JMZzIuWieRROF9HNDIEpYS14ZbtTUBsx
+         K+MQ==
+X-Gm-Message-State: AOJu0YwzJXL8o5KfEU7Y20v4SBbY5r/lFR5KuBMqKObF+jTt90jRHRFm
+	t9akbN7QUa+b0LiyIxIakxbGyQKDJbtVHBzcY92xJX1nCKrpwdl/o7gWPr2M4w==
+X-Gm-Gg: AR+sD10SRwgYcgQp6XwYKMVnLUmG+I7799qyiVQE19ynvJ8kxH/MesP+IxE8TgieJzl
+	oORtRUVnzx3hyRi6nV0QjKF1tt008jDPBUDaD3xZpzA3hy/wMlMc6JPyUJaimQCXkjO68P3XEPW
+	lPppYHnzgvUwN7N3z6X4kzz36fFRYob8a6x/qDpGWKUYN4+uKAFtWbSf6yTjlwB1yGG4dAB9/pu
+	qMZ12GP2mGSXHLJtzsIj6CyDUPRKbvmuBm2yYfKJdtlf2n4fFXGHVRj0MRb4b6Ms1Vn6AX5+dLv
+	PIeV6xL5vhZHdkoKPaGSCPYu3BUByAjOaURUb5rjuAsqOKN5/2Xj9eEF0NBZwiicQvWZ8DzvTDT
+	tPGE3WtICGmg6Z7sVuFfjBdzMTIWlyDaL+1dxpPxbXV4auLAeXyVD4wRaY1DtAQNgZ2V9vgmZyK
+	ogXRRRc4Y09xE5Czrw+W1jpgGApDitcwxolD+iaEOhLkwf7N6ddJqxDFT7hinqt6OIZ5amnnH8J
+	6oDvGpFgBI85GKTBdQC
+X-Received: by 2002:a17:907:9623:b0:c12:e178:9e68 with SMTP id a640c23a62f3a-c2073364351mr836713866b.19.1786210319581;
+        Sat, 08 Aug 2026 10:31:59 -0700 (PDT)
+Received: from localhost (84-236-109-190.pool.digikabel.hu. [84.236.109.190])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a1e7d48f8dsm1911539a12.17.2026.08.08.10.31.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 08 Aug 2026 10:31:58 -0700 (PDT)
+Date: Sat, 8 Aug 2026 19:31:57 +0200
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, tnyman@openai.com, Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] ci: bump ubuntu image version for static-analysis job
+Message-ID: <andoDRDn5RvgNHrl@szeder.dev>
+References: <20260726083254.GA3528497@coredump.intra.peff.net>
+ <20260726083905.GB3529069@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260726083905.GB3529069@coredump.intra.peff.net>
 
-Toon Claes <toon@iotcl.com> writes:
+On Sun, Jul 26, 2026 at 04:39:05AM -0400, Jeff King wrote:
+> We recently ran into a case[1] where old versions of coccinelle ran very
+> slowly, but newer ones are fine. The version we use in GitHub's CI was
+> the old slow version, leading to timeouts of the static-analysis job.
+> 
+> We get the old version because we ask for the ubuntu-22.04 image. That
+> has coccinelle 1.1.1, but the "fast" improvement is in coccinelle 1.3.0,
+> specifically their 58619b8fe (break up envs for e1 & e2, 2024-08-18).
 
-> The last-modified builtin expands the pathspec to a set of literal paths
-> and builds a Bloom key for each. During the walk it looks those keys up
-> in the commit's filter to decide whether the commit is worth diffing.
-> These lookups need `bloom_filter_settings` for the key hashing.
->
-> prepare_revision_walk() runs prepare_to_use_bloom_filter() to build the
-> pathspec key vectors. For a pathspec that cannot be turned into a Bloom
-> key, such as a top-level wildcard like "*.c", that function gives up and
-> clears `bloom_filter_settings`.
->
-> Restore `bloom_filter_settings` after prepare_revision_walk() so the
-> per-path check keeps working for wildcard pathspecs.
+I've built Docker images of various Coccinelle versions [1] years ago,
+and seeing this issue I've updated those images with more recent base
+image and Coccinelle versions.
 
-Should a new test or two cover a case where a pathspec with a
-top-level wildcard is supplied, and ensure that this restoration
-kicks in?
+Using these to run 'make coccicheck' on 630cf86933, i.e. 'seen' on or
+around 2026-07-14, which contained a024a5818c (branch: add
+--delete-merged <branch>, 2026-07-14) with those problematic loop
+counter variables I got the following results:
 
-The machinery should work correctly with or without Bloom filters.
-Without trace instrumentation, such a test might not exhibit any
-behavior difference even when the filter is not restored.
-However, the failure scenario is specific enough to make a good
-test case.
+  - 1.1.1: 1437.78user 56.66system 2:10.29elapsed 1146%CPU (0avgtext+0avgdata 223896maxresident)k
 
-Thanks.
+  - 1.2.0: ctrl-c after 2.5h.  The bulk of the work was done in about
+           10 minutes, but processing 'builtin/branch.c' seemed to
+           hang forever.
+
+  - 1.3.1: 6532.81user 106.75system 9:35.04elapsed 1154%CPU (0avgtext+0avgdata 635592maxresident)k
+
+So my Coccinelle 1.1.1 didn't hang, moreover, it was about 4.5 times
+faster than 1.3.1.  I got similar runtime differences between 1.1.1
+and 1.3.1 when checking e.g. v2.55.0 or current master; in these cases
+1.2.0 didn't hang, but took about the same time as 1.3.1.
+
+Am I doing something wrong?   Or is everyone else is doing something
+wrong? :)
+
+[1] https://hub.docker.com/r/szeder/coccinelle/tags
+
+
+On a somewhat related note, for a while now we've been unnecessarily
+installing all the dependencies of the "build and test" jobs
+(compiler, build systems, apache, p4, jgit, etc.) for the various
+static analysis and the 'documentation' CI jobs as well.
+
+I think this is because 707d2f2fe8 (CI: use "$runs_on_pool", not
+"$jobname" to select packages & config, 2021-11-23) started installing
+all those dependencies for jobs using 'ubuntu-latest', including the
+'documentation' job as well, though this side-effect was not mentioned
+in the commit message.  The 'StaticAnalysis' and 'sparse' jobs were
+not affected at the time, because they were using a specific Ubuntu
+version, but then 0178420b9c (github-actions: run gcc-8 on
+ubuntu-20.04 image, 2022-11-25) came along and changed the pattern
+matching $runs_on_pool from 'ubuntu-latest' to 'ubuntu-*'.
+
+
