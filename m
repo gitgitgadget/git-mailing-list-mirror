@@ -1,146 +1,103 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131B8416D17
-	for <git@vger.kernel.org>; Sat,  8 Aug 2026 14:55:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0DE2D8379
+	for <git@vger.kernel.org>; Sat,  8 Aug 2026 16:21:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786200958; cv=none; b=I543dyzVsj8uIS6DtTlWhGxtamlbOzMoSe3qsoBigzNGWSC/1gIzYyo74D4zen/o8onuQMwi9wScMclJdsHqkNR4w6HkJdK/4ygDLd21WkDxFvtbcFN0Oc0yWSmGouN4r+YjUopK+hcM+eWt8f5oyJgQ3zQ+sCIh/zKihg60Zwc=
+	t=1786206091; cv=none; b=Yl8UfQoxDBwD88zLwvm3KSGgVFmdqq9wfA1hzVTzTYXfWYlDqgWFvl4xnAGq0aOchwLksYapB8qTCct5KPncA4MjTDIvOPu7doh69gRFkQjv0xVVjpG4JhEGbTox0aKmsgsJySEtUdffs45/x6Mg1r6lyRD/IiGLdUwxT0uhkic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786200958; c=relaxed/simple;
-	bh=NaQ1yMZXnfuUqQTJaoGl/wfxre+TxQ/J9mtRO21luBc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rLH5NqlOzMQ5jfkc+MfYwt751Mh40zo2u+6YYHl2m09aidlDzC20sgw8/oG3izpEccUVOclDocaSIX9FrLgzSAtRtUB0QjTiiMNqENIqgI1edDYydplYqg93jYCz6Ied43a/jFEtHso05EaSQ7PhTc9J34Ivd7xy+5dp+Y0yQ1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=paqHcRVu; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786206091; c=relaxed/simple;
+	bh=GMiJtcK57PBFkxVG6RuiFWVpsnt0JRLX+nd0EdFVKpY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=raR2uReLrjreuM2NvZJDTMiFaAMrnh6/MMNXqpRmtz6amFMiaSMt8U7O2JGJyU/JoDQF3a3AYX5CAtDMRskv3GkhIjt+6JtT3Zg4OUJkgkzVTfATFgt5azxwBKvDBSco8ZYmoA4OhW3UARsLp+mNdychAmxFRkvKw3qhMNoAqsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hPcwb878; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q2pPdWNB; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="paqHcRVu"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-9087fb771d3so2121116d6.0
-        for <git@vger.kernel.org>; Sat, 08 Aug 2026 07:55:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786200956; x=1786805756; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IzXA101kV4dfw4oL7R1WM4TKM0V9FzNZy8DJk44PSxE=;
-        b=paqHcRVuPyLcHSsOzahh91o2WpHBZB8wTP4NqZC5LR/zf/MDo+xpA4qPylY6fi/UID
-         8/xrFnmj3N9mQaABGhaL/emrh7JBdOvOXfRtV7uQdLuGFUwNMRheNMLOouwH5r5gcRff
-         2XaIK87gf+lI3K1RyTod8gA3KItCWhrknG5fW4h4ohhDu3yWhxOvIm69FPP1ZpQdOW/F
-         3rtrecA5lZ4K7EDA0am57DzPWGmMTblX3YJW/tgXr6aen10k56Cmn7RdRrrGxz2u1ELj
-         1Q3AZE4tjc/Yi7STvGXGBns4P/w5t7ZNAPGOk8IP5DQ66PhjFZ7BS9IDEAdJolcEUBnK
-         fM0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786200956; x=1786805756;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=IzXA101kV4dfw4oL7R1WM4TKM0V9FzNZy8DJk44PSxE=;
-        b=EbdIMWe+uwBB4znrdZuh9QA4u2uhsIQEA+vOBCjPkO3V+qNKl35enaVw7hc9xfmtsU
-         4klTkwPxpeQVqn+eMBcUP2eOEaJQk78ElYAHTuaySWUs7/NXHEYQ78oG0otnmdsAQuxp
-         4aIlAcJMSlzjKHXXxp5yLLwKf5u/hraf5tUjyLNHN7APLbUAaHuuHOlXkXQUzBeExhHi
-         GrGwJX5zXnkllVeKI9oshOmhFr3CAbnkXaQOYOjPZig03hVpnOm5fXb2LopsDFOg89s7
-         YtAX6smJ326/+dGpWSZ6uvdJC7U9MNZz+nDXoNtQaIpGxrUa1WrfYT4vF68DYEAxoZCT
-         ZIpQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpjkXb5G9FzGb81hyWSD/2Qup2mWr428gyO+tKpndmnJ0NuaKItryllFr5e5PJT+iWOl/w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxNlRdBLFOlRwZCwp2QLuqqxaA0fF/mh047+Ze5yRfMt2naMj8
-	Dgky74yO2fbe9MNkPPUe1x2hKpbQOtl76cOdZetO3Wn06+5GebiKdCEI6nixdg==
-X-Gm-Gg: AR+sD10EoEB20PXLPj2+/GXmT7FChwy25LH/z3B2puyh5HXVeFynJSlyeR0Xx4j0BGf
-	okY29jQVIchuFsIVunmvY7jBhFh4no3w6bPjC0dLwHMBOlBuxz3cNz3gQesBKHyQdO9G9M0Fleh
-	Vgnsk+6wOwRNOBfA1fuYxZgxV2VofIfIEqzVi1TS9xjr9is3s3QA9/fNGv7xs6XoIafKV8hEEXd
-	uDr5o2E+xq90DHGzZBEj+3byidhIsPdygp2K/XqW/hFoqEC+jCKCUMaUTqWT9NDmIs+8iPyXgs7
-	q3oQYszo7Z1rwSmWj31ttfN+N6d+Zbfl9u6s11r4LBWI8DDoCSnY94qbcqTdCr4d6VBeBgKoezf
-	kXMmnaZzGWPSFqwAOvv4dOjsq22coTxT3FnjU/Fc4lpccd5ZVh1BjyJrZwjngY5LpSNCn9UUhoZ
-	okGCl+BaMhMUrIDUQX3/dSfJTRz+5jChtO/ix3UoKlloIRoOMpfJNXrPCxMhrbWjkvgmWkIV60U
-	rWlT/wKew2+NVvilCW/DJlR3NvqP9u1zztd
-X-Received: by 2002:a05:6214:3012:b0:8f0:6a92:b90e with SMTP id 6a1803df08f44-90881381835mr344820076d6.25.1786200955891;
-        Sat, 08 Aug 2026 07:55:55 -0700 (PDT)
-Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-908a934e2fasm31914746d6.46.2026.08.08.07.55.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Aug 2026 07:55:55 -0700 (PDT)
-Message-ID: <433a3e74-c66e-40a3-9971-c8cb9692967d@gmail.com>
-Date: Sat, 8 Aug 2026 10:55:52 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hPcwb878";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q2pPdWNB"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C2A6C7A0064;
+	Sat,  8 Aug 2026 12:21:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Sat, 08 Aug 2026 12:21:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786206088; x=1786292488; bh=GMiJtcK57P
+	BFkxVG6RuiFWVpsnt0JRLX+nd0EdFVKpY=; b=hPcwb87872CdIGr7a4wheOwGIk
+	xHymXR4sIcbABgl6FCi7AJAoW/mCn9c/H+W/u26s708Px+dzVSm+eYYAvlHriaEf
+	QQx4VSbzl8rWs8PHkpj5VBvr5cjn/lE3dNilDu5Fsw9Sn7q3IGvZXg4vRI/sslcu
+	uSMJkR+EVnt7WAI2/6JDw52Svom5zMfvHPLudkzmtvlTj11pb1tNhm/X43ToEpWg
+	UOz0ETWyiqUgsxa6p1nq0UpJgGm0MaoT9M3CJ8nOaOlOHFtVr9W0VLsoO2YgCGjn
+	yN8+fzUm5+LRGWnbDppspJdZ3n2PZey7roh1/INO60ZHkanzoAnCaD6VK3sg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786206088; x=1786292488; bh=GMiJtcK57PBFkxVG6RuiFWVpsnt0JRLX+nd
+	0EdFVKpY=; b=Q2pPdWNBR2EeOuPpk7ajXylAWfjh7X+bYvY2v6FtV5i++em7yhS
+	B72gVyoAjXVunPl4dCLRxpNPECDODbcMy9M6XE9CaWUUELOR0LrUEhoK/kNtI1v3
+	s86XP1ONyshZmzGOWCTVBY/NB8omVvON1bw0PG1XFhQFyRGcMRpwVJR1ENA821oW
+	WLDIRy22scBIw4V9fFKRxS0anz9SP9SQKg9gsCJnFtzr0IqNhcgdROtoLi6JAEeF
+	UmOaXdeBrWLeK2XfSPsje04OZrEPZFHM284gTFkvw2v5LGyojR/vNSrkaE9UmIst
+	MYyQzu4lkHlW0/HULdshMqrasbYeuGfBIJg==
+X-ME-Sender: <xms:iFd3amxsqetAfvTMcB_2aQqJmPDKIuHSbdPtesLsukfW9-Br84CUOQ>
+    <xme:iFd3akg26ijxhO4GlgN8O5GO9gDZJlzWK0xyTM5V_sPfp4RtHwiv1g0W990SG217t
+    9JSgK0ZavjVoGtXGvhvesurbFURTt_NdiqZP6kYpoOKyRpmd9gj7Gs>
+X-ME-Received: <xmr:iFd3aqmoIT5Q-luzQ3FhJAnvay6GJW_DDLkVGiWwUhfdVSk64Sg02ivccApo6omo0BWtvmdn9E-ef7VySBjqPlrzh-UOnhsbjw>
+X-ME-Proxy-Cause: dmFkZTFi64WnGPkNZjBgSFQKL0eptdVGXBvYEg7LXi3bTeOVlg7mzDFSbmPUihfZzsGEtc
+    cfXqgxis3VAJs+s6py6X4mZruYArXsC+PxRZ0Zcd9XZUkNGBwkvOSl4zADJsub3KPPdoVb
+    869mpfy+RLMrvpDtKEVWOoR7p/e4S+I31D73DL/IaQaEx/a7SmOeY2rkQ1Pf3W2ITcpMva
+    zDeZ0de0pwmn0V2itWXPGH1bDxAFGmemX+ae0qQ3j4TKpKL7qCX/MAXBLjXg62TkbH7axS
+    wVYo4auP7Ado665qCB/GQ0hRf1UsPBZWJV5CeaRkefjznt2/hDEH6Tq+hMrmGZG6Tg/nbe
+    jOsH6JAmwyJs34umJI7Kzw+x3Tro0D3+NXj6RDGIKzbwXR0Lsv3L6GfHxMLFpbzm7oTYJX
+    Ls3HMXxLsRYCHkNESA0xSG7VNu/aQi/0UDtlzSz8+mWtNl4yXK0rGdNB7Qsve5iFrLfHT4
+    gWJtOXAuCwBqYUIFzVLxFBSp9zWqbsyPShrytCAM6Hlp9n+jXKfgvwHGHLdfzXIOK8i582
+    3UpGMCoUJ0G1m+mFcp0p9hi+tm4BqTCTSBCNrNx04k2igqrCMxD26iQS5Ejgud5wykiQaM
+    Ki0r9BxlBQtF/hLe5Lq7klhZ7agGbrgqwWon1vz1u9vteBbNyXOuRDLUNBvQ
+X-ME-Proxy: <xmx:iFd3aigUWEqfJ0zBNV08G5Wb_BIr2FLBTLc5qOT_ON2uRUJDuhAC-w>
+    <xmx:iFd3am1ZMVZFrLpMtfTX-KnTt2V-tW9MIzP8ppqIGFwh0dDbHCFKKw>
+    <xmx:iFd3ajJhJFJnpn5cDj2QHXbyh1OrXvr-f-ovv3UE3qlk_AiszQ-_0g>
+    <xmx:iFd3auypwhI7Tx4_mgLU7N5ByPNLGQGjirulu_UioSPcsQ8Up1FEvQ>
+    <xmx:iFd3amkaQldugBJsxozgTQNQ-dVb5Oy4NkTY6awHb9pM_zMd-QqK0ORP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 8 Aug 2026 12:21:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org,
+  chandrapratap3519@gmail.com,  karthik.188@gmail.com,  peff@peff.net
+Subject: Re: [PATCH GSoC v6 06/10] transport: drop remote object-info fields
+ from transport struct
+In-Reply-To: <20260808-objecttype-support-v6-6-e5cdaf27a49c@gmail.com> (Pablo
+	Sabater's message of "Sat, 08 Aug 2026 02:02:21 +0200")
+References: <20260808-objecttype-support-v6-0-e5cdaf27a49c@gmail.com>
+	<20260808-objecttype-support-v6-6-e5cdaf27a49c@gmail.com>
+Date: Sat, 08 Aug 2026 09:21:26 -0700
+Message-ID: <xmqqmruwbn21.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] gitk: avoid constructing dialog titles from text
- pieces
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Johannes Sixt via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
- <1e1bcfaf5bbe66fac364d5b7d3a7ebdc5f37531c.1785998419.git.gitgitgadget@gmail.com>
- <f25e5fe8-cf6a-4d87-9c46-bf5b7490434d@gmail.com>
- <b1d397e1-ab2d-439e-ba45-0ade2c216afa@kdbg.org>
-Content-Language: en-US
-From: Mark Levedahl <mlevedahl@gmail.com>
-In-Reply-To: <b1d397e1-ab2d-439e-ba45-0ade2c216afa@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
+> Rather than take these as function parameters, we take only the
+> transport object, and expect the caller to have placed the other two
+> into special fields in the transport struct. But this doesn't make much
+> sense. The set of oids and results are really only valid for one
+> request. There is no reason the transport would need to hang on to them
+> outside of the single function call.
 
-On 8/8/26 6:00 AM, Johannes Sixt wrote:
-> Am 07.08.26 um 16:37 schrieb mark:
->> This with the prior patch should help translation due to use of more common idioms and
->> complete phrases rather than jargon. Good.
-> "Complete phrases" and "jargon" are words I need for the commit
-> messages! Thank you :-)
->
-> Now, with a fresh eye, I see that we have text like this:
->
-> 	Diff: old lines background
->
-> This looks more like an assemblement of words and jargon than a phrase
-> in natural language. Any suggestions for improvement? How about
->
-> 	Background of old lines in diffs
->
-> Sounds a bit clumsy.
->
-> (In this case I prefer to say "diffs" rather than e.g. "patch text",
-> because we are looking at differences between versions, "diffs", and not
-> patches. Also, we already have "diff" in multiple other places in the UI.)
->
-> -- Hannes
->
+Thanks for injecting some sanity into the mix.
 
-I'm ok with using "Diff" as a common identifier for this here. gitk is parsing commit
-diffs from git, showing each hunk separately. I'd also rather not use patch. The UI
-already shows "new version" and "old version", so using new lines and old lines is consistent.
+With this fixed, are we happy with the entire series by now?
 
-But, one thing missing, hinted at by your suggestion "Background of ..." is that the clear
-definition of what is being affected is poorly expressed. A complete description of each
-item would require a paragraph, probably with an example image. Trying to compress into a
-few words will always exploit context and presume some common language we expect a
-git/gitk user to understand or be able to learn in context.
-
-Maybe some extra words and categorization would help. Consider using a longer category
-description to provide common information, for instance:
-
-  -General Canvas Area
-                           Background
-       Marked Lines Background
-                              Main Text
-                        Selected Text
-                              Link Text
-    -Commit Differences
-                          old line text
-                        new line text
-             -old line background
-       etc.
-
-etc, where the lines beginning with "-" are just separators and do not have an associated
-color selection button.
-
-Mark
-
-Mark
-
+Thanks.
