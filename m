@@ -1,72 +1,72 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCEB4B04AF
-	for <git@vger.kernel.org>; Sat,  8 Aug 2026 19:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5292D7BF
+	for <git@vger.kernel.org>; Sat,  8 Aug 2026 20:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786218381; cv=none; b=F2zu8/aoplFRBeqeCNcGUGzhNPxY5purGzAZGy27YanPqXK//G7y4KuZEWpQNTd72vBMnaSGAbKHKu8fdlrurVKqV06OiUxYSeJNm1o5VrUzV9EfOXo0D927P91eLGZIzNtemPQilciP8H1mMqnsQCMB/CvfF2vOTGqnI+9++10=
+	t=1786219325; cv=none; b=CcaHh6S0CemM+TPk2LlRtTfL+G+ndneS7imQc1E7Wso3D7pwG/4IkovVRuIgUG4JkI36J1qEunJkGmIjGLI39vpuSrqjFhLh2xnt35vhxNNKdGDORwd4/Lle4seXSCA3NI49MbR30t5ebc02GtY2BhEz9XVsWSx0hqRzD0ABGfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786218381; c=relaxed/simple;
-	bh=eguhJxYft7f51j2Fprh/q96pYaIRj9SJA9tqY20fr50=;
+	s=arc-20240116; t=1786219325; c=relaxed/simple;
+	bh=kKrCK2z2QML1EiGCgWhxmGK0OyMWHI7S9Ksqp23XeBc=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=qgCCmCRq4dEqVo/q+9pVURexNoqinCW7Vmfb+bICXrZTbZCKCptdiFMoVjJaUaxLBiiTozeu0U609Q11DNA62lDQQn2W/mtHN8V0bhF467olCXVOfE49UeuT4Q74SK/bMZbboXybACLDb95sfjTKoJrdItqO1fBVKO7Bow8Lig8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=AtTo0hOD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Stb044mq; arc=none smtp.client-ip=103.168.172.145
+	 Subject:Content-Type; b=CInP5ohydzS/p1E4s+rhVu1NCUBkhrCYAL38OSRAqeRNm3zhjCCBPNE50ZlH4TAtVCE21IG6+FNQOHANwYX44ldWDJ2ujtggSEOy9tsvDfIuFG6lDf3i9ys2Q1lS+nalyX47S1v7b8uzsmIh+ldfzv+jomI2bqcsFnIab5tSyeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=V8ESNxBm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ef4FYBqi; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="AtTo0hOD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Stb044mq"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="V8ESNxBm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ef4FYBqi"
 Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.phl.internal (Postfix) with ESMTP id 46230EC010E;
-	Sat,  8 Aug 2026 15:46:18 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 741B3EC00A4;
+	Sat,  8 Aug 2026 16:02:02 -0400 (EDT)
 Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Sat, 08 Aug 2026 15:46:18 -0400
+  by ams-compute-01.internal (MEProxy); Sat, 08 Aug 2026 16:02:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786218377;
-	 x=1786304777; bh=3atqRFYH8JIgT/nUSOLPbm7UxNV0OCSNtF/rp8S3DQE=; b=
-	AtTo0hOD21ALz4vq7ACvJKoO1pCSLvC604BblHXHVscTvTgr85Mk6weyaFYJc/bf
-	XTLB2xZGOtThXtFdmCWXU4q2boO/2YYhJ8X/6RfoVj+TP7i6DKWKzKkPa5E/ofJ7
-	GzOV1k1B2mv09D0hIfAxVziQ6/Sy3/Tg9YumzqRx1iz1xOr9RqjSBUYJPnuC6iiJ
-	81w9mU7Kt0HsaC9Se7dXdE4pvAMqOI1JqW4qSZHtTuCX2S6HQ+gz8gymkoeFV7QZ
-	SmL4LBxEj2wNQ0Ma+vjh8hB99M6hxI4JtHJKevvvU2RTXLQLHiifLUJ/MhIQyHWi
-	MKTCEL+4NFRkphUo/2kBhA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786219321;
+	 x=1786305721; bh=kKrCK2z2QML1EiGCgWhxmGK0OyMWHI7S9Ksqp23XeBc=; b=
+	V8ESNxBmpFxRESFc4QAvWsSBHWSjh4pRzpOPBa0uGHQ0YEZT33nm42OOozmI/oAD
+	hpfXmRQSuLy6ZKgs9C3ZaR4Qk7X1/oTnjTV38Jm/SCNO8MYkslL1NZ8KGIVZPzPo
+	3ecqRk422uLOhrIbmAdSglmnNRAAtPHWF11DhW+WipG04tCupgrGkVKj4iWP7NXk
+	HNZq65LsuNIUxve2Wl1TJojXprveAK7vtTtcJmXrlUxOtTzLlezs0bMOWA7ErXh9
+	NH647WUnHi/o2LVZjgavRHUas7pjfOjEnbgQSwoOrVG3KEmB9DnMV9daVBqFSoog
+	zEc1V6H/B69lEumAL9cPsw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786218377; x=
-	1786304777; bh=3atqRFYH8JIgT/nUSOLPbm7UxNV0OCSNtF/rp8S3DQE=; b=S
-	tb044mqifegWargiivTIuhF9V6MLa6uRUWD0qzS+xp0ou/MQI096LNa8bJ8UbUfH
-	WTwGkeVkgt1NtpscEfCy8TJeythM2TmkNI2f4o4r8LWi40WFouXk9ppnJ8kVusz3
-	Q+3g8ktcQbB79JMiBTon5eEN6VWfHCBTuLOPbve/Z99bMA9dNMYl5+Vw857UIpLy
-	onSZa0ST72vn+MXIcB6yKvPe+mWZ9QjhyoFUwXHtiyrQqunXiNvykPZk734ZusIt
-	yYJH8MmM6fw/3ITUY6R4MhmEs8gYnoHnJ+WGMpT650N+Z+l2T7S+31dcD4MXi/X9
-	/UvC5P4UFPWAbI7RrlGiw==
-X-ME-Sender: <xms:hId3agVG0liWNUdvOFx0pEjMoGClZb8wIoLmTYl8L48Idb2wwUVb9_g>
-    <xme:hId3avYhm3rixQHnTo9anyvAqi6J83PKIOty_PbTxB5qAicQ9Rv_PY60_LlPHH283
-    20nvn_3fuhq2IrsvTtYC98ulrmyFx9gBKH7nG9FOQ7QBmKKPmWVjw>
-X-ME-Proxy-Cause: dmFkZTFRkTBlhCMpREA8/qoPacqlmJFyJlHb3BW/H7scNlPJZFJJPFvASE4U/q5iH70dUh
-    bupRSYoFsc9y3CgV4VEcoVuRSZTy9ql7uCIazCbsF/clnQz5ygncwYfx2tCYkN6J0YsC+i
-    2RLKKLfj3uEt00ZcXF++6C7FHuHQfJfyZQD28oOev4t5y/5khLOte3wW4fas4k0FXx8N72
-    hKInUmyUe0NK4+geHSDqgzaEoT9/LVRqB0wHLqiilxqdYnslu5I3fB6fxdod9mpA2RGYFp
-    F20xqhRIXWo2izN+KKeMfd21EMGIR+zfJ+sD0vW1qR6NZqc+S4jQJyYIAF6sefVDHE/Lt9
-    hTD7cv1lKyqmYVUgue4uG9ih1Mls/RRvS+22Gmlu0nKoy8qc6BrfKqJ2hYVfiLHpuI7P9Y
-    M5MHBxgAMt3sMBLIGdg3bLU1qcBAxIE/bPjMFyG67qK5VAql75Gct488cGubyAjxVDI5gJ
-    bsBQnvUV1vzXf2hZdnwAfGa7bjAI0gh9hsLLdDVDfEu+FxgVc3ntc0Alq5oLhlXlWpwyX/
-    TTkw/Vv46yIzhz+XPbK5BDc8FZyH6pIkCf+Uy49U8y1vEMyxnmYvpGyjNTAjznxpjDybJp
-    AqcfBedF5R0ZiGZtF94khonSfVuFTSb15lOwRBp5505Mz+GyZFQTnA49C3dQ
-X-ME-Proxy: <xmx:hod3aos5X8FViVFyQ6t-eqon3Athw_RqXDKqxBethRnjArtZOEwx1g>
-    <xmx:hod3amLQEQiip0jzFwMAbNmmU6YvuGbLi25A5l-DGDXiUCd6SKjVcQ>
-    <xmx:hod3ah-a2s4ABAEMA0qXUBEMBPGO6dp_4Imoo43eBqXFAMQtNzTS2A>
-    <xmx:hod3avzYbML-gHpwrvDd41_yfjczCyqznyMWVaMuqtZv8UKrh_ZpjA>
-    <xmx:iYd3anHOOtXorLEY3-LeCrAmSA87Gtea3YhGEqtmj1ZWSgzHWBINJxPr>
-Feedback-ID: i83a1424c:Fastmail
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786219321; x=
+	1786305721; bh=kKrCK2z2QML1EiGCgWhxmGK0OyMWHI7S9Ksqp23XeBc=; b=e
+	f4FYBqii/68U1PMUJjk+w4P2iixY0REIOihA+P9r58Bn/xYUQ16TS6f9HWrn0eQL
+	zTMCk5z78dbcW7fg+i/DCQT5nF61agA2E7X02ORsqr/QZlOHLoQXMIoeJ0rOfvOJ
+	PrUkCH7dXPM/QOg4Bo2ZO2Os5+/KAXlnG4XF9W/GOqCayL5kBg2IjH98Zq7Ticq2
+	xVl6pidiIZLdoQed3X06qMD+Ckq5L99K1S4TuDNSVLlBFAFX+fWarO98BT30ON+E
+	j1etnmWe2NoMzu5kDF+g/LC8HXA7cAHXuZTYa30xmyN9iNg/QPCF4W/Q7QxQd1ly
+	Ls5y+v2NbW1sfknMIQisw==
+X-ME-Sender: <xms:NYt3arKOSIx4o5lB59NG9QViXocsuNfVYozdsWT5sYC94b8bfFBTaW0>
+    <xme:NYt3ap-Bv65qo9-yVK68kFB0fEXcAhfdzvQyW1MFs4ivVac_HDVfkweRf4FtkZgt6
+    6srpHjktc4rlYv3VmSPgOtsz8g1Lu1i9Qf2yl6mnmgRHOuvFMlmzj8>
+X-ME-Proxy-Cause: dmFkZTF4fK/f8ZUblzg1CA2KDOBaVaWbxmSfpEE1A8yMVx7Fz38ULlWgLsOvUZZEgmelGe
+    UN3twzgD8dKU68oqAe6lTdLXp0JRjdPFTTZEAFVamJhiUhQItn3SDJEkOLzroB18qrjlX6
+    NPE4PKdferbRiIanHrjruZl3Rsu+vQT+IEEvHDPDlZAtbVd41xd43VdG1G/IenY1kM53IJ
+    mizRWYALEmJ6EmQatbyjrTbbJaCn894Se8NhnP0ujFs9SAXm7ANGkozQ6DaWcWSCN1GeNz
+    Mi1e5sE9sL6bS3Ldy8xjRcr78DrtW2zaCfl4BrpHHm6SAUhpnqKki53RiIUXfFRe7fpgi0
+    IduSvH472hf4tYLkiQyxQJ9Cg4JCxCKqx4NoBrFJVfWa6adnq6RcDscfcePYekI8M5r2P7
+    L/UN4qXDnZ2I0Le3uggtRZVF89JkIksGsPxhk9URqx9+8V8xQZYaUY6QK40Oas3ZVp0I8h
+    24Cnfi1av+bEXR6uFST3yc3X89GW/P786uj/G4+YAZ2a9XoWFEVqhrZWrs2LRfaHVuJzqI
+    r3kzvaZTJivIRP0w6B5YDY/KsLihc87N7y/3ME601txZMIoLQXx5Rfrq0VU2hnuF2mETIm
+    xSCF8kNHYK8r+O610XUucbIBeXdIT+/oW3wNLYoe71XPdsyAWdB2cMXjeX/Q
+X-ME-Proxy: <xmx:N4t3avBehsU9bEN0hrU59_So-evPDq8ceLHf9CLdCrcMHxJM6n7pQA>
+    <xmx:N4t3amN6cQd2o4qtg9J0ih_MhTFMJqds2aVrCvjJbkgT8mTrk0u8hw>
+    <xmx:N4t3aoziPhSKkf0AMFyAwPbzpKzW7CwyVLKA8VWu1BH03prwVnrSrA>
+    <xmx:N4t3amWdrbH5Sz9zSW3aKUyQ7U2IFWP5lpvKHqbig3viaZGRHOezfg>
+    <xmx:OYt3ao4RlsFs75v1m5sco9TIoUSnIog9fThLEG6CSl8rAv_oja2KGzue>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id A980022C0070; Sat,  8 Aug 2026 15:46:12 -0400 (EDT)
+	id 913EC22C006F; Sat,  8 Aug 2026 16:01:57 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,59 +74,59 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AUgMtfrvVkyR
-Date: Sat, 08 Aug 2026 21:45:49 +0200
+X-ThreadId: AdJf8Qpl78Hc
+Date: Sat, 08 Aug 2026 22:01:38 +0200
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
 To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Git <git@vger.kernel.org>,
- "Christian Couder" <christian.couder@gmail.com>, jackmanb@google.com,
- "Linus Arver" <linus@ucla.edu>, "Matt Hunter" <m@lfurio.us>,
- "Junio C Hamano" <gitster@pobox.com>
-Message-Id: <b9cac360-ec97-4715-b176-7850a40ff433@app.fastmail.com>
+Cc: git@vger.kernel.org, "Christian Couder" <christian.couder@gmail.com>,
+ jackmanb@google.com, "Linus Arver" <linus@ucla.edu>,
+ "Matt Hunter" <m@lfurio.us>, "Junio C Hamano" <gitster@pobox.com>
+Message-Id: <9422d16f-0bf5-42be-9248-38fd3d0f7b1b@app.fastmail.com>
 In-Reply-To: 
- <CALnO6CB_0ucqnAowrNcPmsXmxxDfJQZPVGkbsHVuya7NLR4dsg@mail.gmail.com>
+ <CALnO6CAmM4r2uiuBFJcciR_94KPRSJoCOsuNKeqTQ0Bt=Puvyw@mail.gmail.com>
 References: <CV_doc_int-tr_key_format.533@msgid.xyz>
  <V4_CV_doc_int-tr_key_format.ae2@msgid.xyz>
- <V4_trailer_comment_lines.aed@msgid.xyz>
- <CALnO6CB_0ucqnAowrNcPmsXmxxDfJQZPVGkbsHVuya7NLR4dsg@mail.gmail.com>
-Subject: Re: [PATCH v4 11/11] doc: interpret-trailers: document comment line treatment
+ <CALnO6CAmM4r2uiuBFJcciR_94KPRSJoCOsuNKeqTQ0Bt=Puvyw@mail.gmail.com>
+Subject: Re: [PATCH v4 00/11] doc: interpret-trailers: explain key format
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 6, 2026, at 13:52, D. Ben Knoble wrote:
+On Thu, Aug 6, 2026, at 13:55, D. Ben Knoble wrote:
 > Hi Kristoffer,
 >
-> On Thu, Jul 30, 2026 at 5:22=E2=80=AFAM <kristofferhaugsbakk@fastmail.=
+> Apologies for not returning to this for a while! I haven't read the
+> whole v4 in detail, but I reviewed the final diff and output.
+
+Your reviews, in whatever timeframe, are very much appreciated.
+
+> On Thu, Jul 30, 2026 at 5:18=E2=80=AFAM <kristofferhaugsbakk@fastmail.=
 com> wrote:
->>
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
->> Comment lines have always been ignored but this is not documented.
->>
->> The primary motivation here is to reasonably complete in the
->
-> "to be"?
-
-Thanks. I keep staring at the text but in the end you need someone else
-to read it as well.
-
 >>[snip]
->> Notes (series):
->>     v4:
->>     =E2=80=A2 Msg: rewrite motivation for documenting this. The motiv=
-ation is
->>       not super solid, but it reflects my own ambiguity on the matter,
->>       so to speak; I think we ought to be very thorough about
->>       documenting the format, while making sure to not use the main t=
-ext
->>       to exhaustively lay it all out. The information should be
->>       somewhere in this doc. But not in your face.
 >
-> I agree we should be thorough but not in your face, esp. based on the
-> work Julia Evans has done in the past around Git documentation.
-> Thanks!
+> A few places we use an inline list syntax ("=E2=80=A6 (i) stuff =E2=80=
+=A6 (ii) more
+> stuff =E2=80=A6"). In the added example about ASCII trailers it is use=
+ful
+> because we make reference to (ii); in the initial part of the manual,
+> I don't see any references to the delimited items, so I'm not sure if
+> it's worth numbering them.
 
-Thanks. I=E2=80=99m glad that I was able to communicate that. ;)
+I did adopt that Roman numeral inline list style for the example based
+on the existing one.
+
+I=E2=80=99ve always read it as a stylistic choice. So not for the abilit=
+y to
+reference them. You have that ability, but I have the impression that
+most inline lists like that are not used to reference back to the item.
+
+This existing inline list goes back long before this series. Changing it
+would mean adding another change to an already long series. And I=E2=80=99=
+m not
+sure that it should be changed in the first place. So for now at least I
+am not going to pick up on this topic.
+
+I will wait at least a day for any more comments and post a new version
+with that fix to the commit message.
 
 >
->>[snip]
+>[snip]
