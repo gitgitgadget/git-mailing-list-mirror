@@ -1,24 +1,24 @@
-Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE4A205E02
-	for <git@vger.kernel.org>; Sat,  8 Aug 2026 09:33:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1971532B130
+	for <git@vger.kernel.org>; Sat,  8 Aug 2026 10:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786181604; cv=none; b=XI6GFIOhpj8sOY8SMZO9Gqm9L8IaEQDNNfNC+6mrCKzjxtcDuceMasCtsB++T/BmCzT/udvFcVK7Vx4R8E+ZFU4PRHA1nVEpW2Cm/nYSjp+pFJaR1gpZYRXeE0cl65CDUxSYypOCUL3XIbJ+FUten+O+89n/4tLUob718o7K+6A=
+	t=1786183229; cv=none; b=FsP+XKWiGKFEOSdJ3L22rqe32QgDmCMfkm3OFysnhIRN9x0yTI7vJEayF/Mt7ustnjPkeRI5uzZYckxv+6k0pN1yB0GHorx/4idpR059Qu0ilHI1JzD2ijPRsIy+Ofl/vgSDVg2McC+uV4V4ooyBKY2Z+k7DUpyXyEdsru22Eo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786181604; c=relaxed/simple;
-	bh=EJy4ksn+OXN3x+XeTjKNCEA63ngD1l2H9j8fbLdkldM=;
+	s=arc-20240116; t=1786183229; c=relaxed/simple;
+	bh=WVRTXXnSLnwDe0YSNeOA/kyc+o1OiZ08B4DBEy0Ub/I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=IPDsNO1TAc0GSR2dhVt0oI+JOfx49bDuTRmuZkrbwWy7lPvPvafHEIYZcUCD6kHt9sE8eOoNvxKjYcZsiCtrE8NLX5Pl7hFmE+DYUeO9LNinl8N0HcIHCa0Cg27UxON+6b/LH7OAg1w8twaE+pyfuZtywbOcfP4px7IBunvYsjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+	 In-Reply-To:Content-Type; b=fHdKA2ZCSeluOGbmNKynCTMe3NCnEYXnAPIPWRIPcjy3349Kb4k/H8IyIiQ0FNKSx9gWsC3jPzIDSyIKBW2NsazClK8WqYNuLinfSGkKE2SGW+2jbNECkSLK/spjs5eW82U+J20WHnvZCLnrP37ncYUsVSnKPuSzGlAXFhpdSWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
 Received: from [192.168.1.102] (unknown [89.144.223.124])
-	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4hHG602hpszRnlL;
-	Sat,  8 Aug 2026 11:33:12 +0200 (CEST)
-Message-ID: <39f99016-8ac4-42f4-9a61-7f20b5431c1c@kdbg.org>
-Date: Sat, 8 Aug 2026 11:33:11 +0200
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4hHGjH0828zRnD7;
+	Sat,  8 Aug 2026 12:00:18 +0200 (CEST)
+Message-ID: <b1d397e1-ab2d-439e-ba45-0ade2c216afa@kdbg.org>
+Date: Sat, 8 Aug 2026 12:00:18 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -26,40 +26,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] gitk: show color preferences on the button instead of
- the label
+Subject: Re: [PATCH 5/5] gitk: avoid constructing dialog titles from text
+ pieces
+Content-Language: en-US
 To: mark <mlevedahl@gmail.com>
 References: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
- <0428a92efc4657d2da1e968ebe45038cd186b055.1785998419.git.gitgitgadget@gmail.com>
- <eff19bf1-a8a8-4de0-9fc1-cea4b3d0f1a6@gmail.com>
-Content-Language: en-US
+ <1e1bcfaf5bbe66fac364d5b7d3a7ebdc5f37531c.1785998419.git.gitgitgadget@gmail.com>
+ <f25e5fe8-cf6a-4d87-9c46-bf5b7490434d@gmail.com>
 From: Johannes Sixt <j6t@kdbg.org>
 Cc: Johannes Sixt via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
-In-Reply-To: <eff19bf1-a8a8-4de0-9fc1-cea4b3d0f1a6@gmail.com>
+In-Reply-To: <f25e5fe8-cf6a-4d87-9c46-bf5b7490434d@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 Am 07.08.26 um 16:37 schrieb mark:
-> But, the colored buttons do not stand out to my eye as much as in the prior approach.
-> Perhaps use -borderwidth 2?
+> This with the prior patch should help translation due to use of more common idioms and
+> complete phrases rather than jargon. Good.
 
-I agree. -borderwith 2 does help emphasize that these are clickable
-buttons. I'll also insert a small space between the buttons like this:
+"Complete phrases" and "jargon" are words I need for the commit
+messages! Thank you :-)
 
-@@ -11868,9 +11868,9 @@ proc prefspage_colors {notebook} {
- 
-     foreach {uielem colorvar idx label title} $coloruielems {
-         ttk::label $page.$uielem -text $label
--        button $page.${uielem}btn -padx 40 -pady 0 \
-+        button $page.${uielem}btn -padx 40 -pady 0 -borderwidth 2 \
-             -command [list choosecolor $colorvar $idx $page $title]
--        grid x $page.$uielem $page.${uielem}btn -sticky w
-+        grid x $page.$uielem $page.${uielem}btn -sticky w -pady 1
-     }
- 
-     grid columnconfigure $page 2 -weight 1
+Now, with a fresh eye, I see that we have text like this:
 
+	Diff: old lines background
+
+This looks more like an assemblement of words and jargon than a phrase
+in natural language. Any suggestions for improvement? How about
+
+	Background of old lines in diffs
+
+Sounds a bit clumsy.
+
+(In this case I prefer to say "diffs" rather than e.g. "patch text",
+because we are looking at differences between versions, "diffs", and not
+patches. Also, we already have "diff" in multiple other places in the UI.)
 
 -- Hannes
 
