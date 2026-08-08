@@ -1,83 +1,84 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0DE2D8379
-	for <git@vger.kernel.org>; Sat,  8 Aug 2026 16:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFB9339395
+	for <git@vger.kernel.org>; Sat,  8 Aug 2026 16:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786206091; cv=none; b=Yl8UfQoxDBwD88zLwvm3KSGgVFmdqq9wfA1hzVTzTYXfWYlDqgWFvl4xnAGq0aOchwLksYapB8qTCct5KPncA4MjTDIvOPu7doh69gRFkQjv0xVVjpG4JhEGbTox0aKmsgsJySEtUdffs45/x6Mg1r6lyRD/IiGLdUwxT0uhkic=
+	t=1786206219; cv=none; b=OLa27NQ/Su/j9/+08YBxB9XF3fuyFJ/cBXEQwjmIR3IokQMdpm8NdWyGibTSNGOQOBVukPnHXuEuaqbsCqV+JowNF2K+7mm2haWgcJbfncplLJw4jDnVBdG5RKrjI6UQbdzPExfg6f2Tdj0k4zgOFQlLvakW3TcaelJ/6UgAaYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786206091; c=relaxed/simple;
-	bh=GMiJtcK57PBFkxVG6RuiFWVpsnt0JRLX+nd0EdFVKpY=;
+	s=arc-20240116; t=1786206219; c=relaxed/simple;
+	bh=Duyva9Ia6T41YAgxse/t2aP0qLbn1gXaNF6FQV8XteI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=raR2uReLrjreuM2NvZJDTMiFaAMrnh6/MMNXqpRmtz6amFMiaSMt8U7O2JGJyU/JoDQF3a3AYX5CAtDMRskv3GkhIjt+6JtT3Zg4OUJkgkzVTfATFgt5azxwBKvDBSco8ZYmoA4OhW3UARsLp+mNdychAmxFRkvKw3qhMNoAqsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hPcwb878; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q2pPdWNB; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=mS7U19i7UQ1wQf91qyx1pMoRbV+VCS6AcrhvQl/VpXHMsVT4UyifhMvLnSVFTHL4gDLZN/BYVL28PlJ6PacP6/8QeNOkPez+DvblSZnFhFr5l3PnWwG1zJE4wKs4euOOrdQN3rSfZHLg9usLm0mfD5yzdsTjS5GkK2k8cEwY1Ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YHQamAP4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BFrMkWzX; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hPcwb878";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q2pPdWNB"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C2A6C7A0064;
-	Sat,  8 Aug 2026 12:21:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YHQamAP4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BFrMkWzX"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 83E1D7A0050;
+	Sat,  8 Aug 2026 12:23:37 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sat, 08 Aug 2026 12:21:29 -0400
+  by phl-compute-03.internal (MEProxy); Sat, 08 Aug 2026 12:23:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786206088; x=1786292488; bh=GMiJtcK57P
-	BFkxVG6RuiFWVpsnt0JRLX+nd0EdFVKpY=; b=hPcwb87872CdIGr7a4wheOwGIk
-	xHymXR4sIcbABgl6FCi7AJAoW/mCn9c/H+W/u26s708Px+dzVSm+eYYAvlHriaEf
-	QQx4VSbzl8rWs8PHkpj5VBvr5cjn/lE3dNilDu5Fsw9Sn7q3IGvZXg4vRI/sslcu
-	uSMJkR+EVnt7WAI2/6JDw52Svom5zMfvHPLudkzmtvlTj11pb1tNhm/X43ToEpWg
-	UOz0ETWyiqUgsxa6p1nq0UpJgGm0MaoT9M3CJ8nOaOlOHFtVr9W0VLsoO2YgCGjn
-	yN8+fzUm5+LRGWnbDppspJdZ3n2PZey7roh1/INO60ZHkanzoAnCaD6VK3sg==
+	:subject:to:to; s=fm2; t=1786206217; x=1786292617; bh=l/ehOTb5t0
+	C64YAwQM56QtVYsUSBYUAo3gTOtQsXnck=; b=YHQamAP4WgnjMSLpCukwAuI5/M
+	DlQzy1KDt042H6wPZV0b5yEtQIO+N7Asy1oVcsKzhU7DXQcLxaimU1qqgfwyQecq
+	FmXRNvYA4UWND2+zBh96rKwUWVAqu5TtbhARkJ69P0UBbvNCkjjtFMHwOUr4wYa2
+	jSeIgGAQgsqyCHb3wbc+UjOHEyYNPH9r0zr8mnq1eGNiTq5X33nCbuOVJ7/sCpq5
+	XbxPsZ8SCSrFep2oLbYhyl8hXKHiIgRj/QhzuHvOkvWMpiYLZQ6kxwYiICpXu555
+	gWvXy7eeE5bWMPG9Mn7WOxrAzeNSH5uWf1ahEY2TNJ58yZT+od7B18yPBXew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786206088; x=1786292488; bh=GMiJtcK57PBFkxVG6RuiFWVpsnt0JRLX+nd
-	0EdFVKpY=; b=Q2pPdWNBR2EeOuPpk7ajXylAWfjh7X+bYvY2v6FtV5i++em7yhS
-	B72gVyoAjXVunPl4dCLRxpNPECDODbcMy9M6XE9CaWUUELOR0LrUEhoK/kNtI1v3
-	s86XP1ONyshZmzGOWCTVBY/NB8omVvON1bw0PG1XFhQFyRGcMRpwVJR1ENA821oW
-	WLDIRy22scBIw4V9fFKRxS0anz9SP9SQKg9gsCJnFtzr0IqNhcgdROtoLi6JAEeF
-	UmOaXdeBrWLeK2XfSPsje04OZrEPZFHM284gTFkvw2v5LGyojR/vNSrkaE9UmIst
-	MYyQzu4lkHlW0/HULdshMqrasbYeuGfBIJg==
-X-ME-Sender: <xms:iFd3amxsqetAfvTMcB_2aQqJmPDKIuHSbdPtesLsukfW9-Br84CUOQ>
-    <xme:iFd3akg26ijxhO4GlgN8O5GO9gDZJlzWK0xyTM5V_sPfp4RtHwiv1g0W990SG217t
-    9JSgK0ZavjVoGtXGvhvesurbFURTt_NdiqZP6kYpoOKyRpmd9gj7Gs>
-X-ME-Received: <xmr:iFd3aqmoIT5Q-luzQ3FhJAnvay6GJW_DDLkVGiWwUhfdVSk64Sg02ivccApo6omo0BWtvmdn9E-ef7VySBjqPlrzh-UOnhsbjw>
-X-ME-Proxy-Cause: dmFkZTFi64WnGPkNZjBgSFQKL0eptdVGXBvYEg7LXi3bTeOVlg7mzDFSbmPUihfZzsGEtc
-    cfXqgxis3VAJs+s6py6X4mZruYArXsC+PxRZ0Zcd9XZUkNGBwkvOSl4zADJsub3KPPdoVb
-    869mpfy+RLMrvpDtKEVWOoR7p/e4S+I31D73DL/IaQaEx/a7SmOeY2rkQ1Pf3W2ITcpMva
-    zDeZ0de0pwmn0V2itWXPGH1bDxAFGmemX+ae0qQ3j4TKpKL7qCX/MAXBLjXg62TkbH7axS
-    wVYo4auP7Ado665qCB/GQ0hRf1UsPBZWJV5CeaRkefjznt2/hDEH6Tq+hMrmGZG6Tg/nbe
-    jOsH6JAmwyJs34umJI7Kzw+x3Tro0D3+NXj6RDGIKzbwXR0Lsv3L6GfHxMLFpbzm7oTYJX
-    Ls3HMXxLsRYCHkNESA0xSG7VNu/aQi/0UDtlzSz8+mWtNl4yXK0rGdNB7Qsve5iFrLfHT4
-    gWJtOXAuCwBqYUIFzVLxFBSp9zWqbsyPShrytCAM6Hlp9n+jXKfgvwHGHLdfzXIOK8i582
-    3UpGMCoUJ0G1m+mFcp0p9hi+tm4BqTCTSBCNrNx04k2igqrCMxD26iQS5Ejgud5wykiQaM
-    Ki0r9BxlBQtF/hLe5Lq7klhZ7agGbrgqwWon1vz1u9vteBbNyXOuRDLUNBvQ
-X-ME-Proxy: <xmx:iFd3aigUWEqfJ0zBNV08G5Wb_BIr2FLBTLc5qOT_ON2uRUJDuhAC-w>
-    <xmx:iFd3am1ZMVZFrLpMtfTX-KnTt2V-tW9MIzP8ppqIGFwh0dDbHCFKKw>
-    <xmx:iFd3ajJhJFJnpn5cDj2QHXbyh1OrXvr-f-ovv3UE3qlk_AiszQ-_0g>
-    <xmx:iFd3auypwhI7Tx4_mgLU7N5ByPNLGQGjirulu_UioSPcsQ8Up1FEvQ>
-    <xmx:iFd3amkaQldugBJsxozgTQNQ-dVb5Oy4NkTY6awHb9pM_zMd-QqK0ORP>
+	1786206217; x=1786292617; bh=l/ehOTb5t0C64YAwQM56QtVYsUSBYUAo3gT
+	OtQsXnck=; b=BFrMkWzXhcKDoTkbi4Ko7DKlqcyWNuT9M5Oi75fKu/+anQrEYQm
+	XRVxSOFnwY743/0tfmgIFiIQqrR6qhHyKEO/+KBFefUN5/YOKb3olRw/tCi7r/2M
+	+9ue+lUTb9eRbYtFwziXqjHkMG0wmyKbV+hL0j/fghyIb47e5XSg3yYV15TcGgw3
+	/1Cptzvf4s8ouENwJ+KE8wLCXasyonmqXZxtiD8kcIh4ApJMms27f1OsjsPXLxYi
+	z1shkz/oXM+boBRwWGfEZTth0KAozT0wnrQhEfYq3hjH1L0aL3IHYwo77fdesI8a
+	jMqf4dDYdGyjpS3B38bz5Py8bdHs7EwbKXA==
+X-ME-Sender: <xms:CFh3aofJ9IP9DL5rsqwlEZsDugcRoBfMXkkTIKHHNQ8EcgSCn3ZUtw>
+    <xme:CFh3anHt2n3oCJAk1z6SAKcVjAWGEGpNC_p2w6X-r9T0ZwFnE8ypygBsjbiIH3oBV
+    qxQ0dQeCJ7WMDteUDUSWV9H93bJv_iuukY2yWHAbrKSyyaJDGirMtA>
+X-ME-Received: <xmr:CFh3apRUQzfmZAj6-BCRnn9WdGAfEJ_qcMmQhvITvb9jZ23qbiaI5Q9-2eiunUnf4pCfHEnDsGLjtt3PhalFH50Y48HJFckUDw>
+X-ME-Proxy-Cause: dmFkZTFqHz7fY+8jJVlw6Hke6mOQmR3QO1IgcHz26m0sXJeyv0eRENsKqMR5xK1FZ2NgsV
+    25oaSopW7DCIS9KJjP9gAIFA+ltuQv8dWygyOytdtYShSdOwXAoloAjDqj5W+HweYZr/Yp
+    O8V+D+vFKGxI10xN2pEFRTRZ2pMvCB5ha1zz1XXehbrQCbrzVrKM/x7Ct+nqjpwUw2MrwX
+    Va/R8LZxd2dTxZEv+9ybgufVB4RcCtnDROWdCK8Xuoi11Fckk5gjYnYdade7uQR079ofX0
+    hm487arh+nj8Xqmwjd65h8A1Dam7ieHWcXnw/btRII11+dQ+fbD8uqGi1m7EKqtrthfUEQ
+    nDhmmc02mV4DXSJvY6bXDhcuQO9ddVAkIFrFPGh5AzOac5BEtHZo2XaNpOwwbNiAqczfx1
+    d7Et4M78JqJidaTq64kh7WDoWVJyc41HBcphBezyjpRmaX5aoo14ifJzuCPQYAk88pBWQP
+    EpIFrxJeqEAbnJUwmSFS5oYZInpuj1z8FQJApqDPVD8KS33BLm27iqKoSeIKekoCuSEgK7
+    kvAyqk/dcKYT+NZWEEklOzVj3pM7heyeQm4V3N+iA04EoUNDRsD0/04IYSJL87Vf+8CRNB
+    VIZvPE2PbbgHoBje7vFxTw5FMP8iC43ikWoC8VhXFR0uRXqHjpL0SqfjCfog
+X-ME-Proxy: <xmx:CFh3atYqmNcOhEk2UKkitQss8yXzSYRX-9mXsThDWxCSs1gEG-tVvw>
+    <xmx:CFh3ak03MKUISxq13-MCOVeKNl2eyqVm-Ht9lgYD39MZAC7fPwn4Ow>
+    <xmx:CFh3agq2OTHi6g_VhxJ75JVTnnYZ8DAjzm3Ps9ehvBIa5C94pAPSFQ>
+    <xmx:CFh3ajNlI8SkAvy8YSHuoCbh39oxLX_swDUkInR-4upWrtodTXJzUQ>
+    <xmx:CVh3as3hADyDc76RM3hSKVqLrXEnYO5geAVPJH5Q2kM0JkDZGPp7bLYg>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 8 Aug 2026 12:21:28 -0400 (EDT)
+ 8 Aug 2026 12:23:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org,
-  chandrapratap3519@gmail.com,  karthik.188@gmail.com,  peff@peff.net
-Subject: Re: [PATCH GSoC v6 06/10] transport: drop remote object-info fields
- from transport struct
-In-Reply-To: <20260808-objecttype-support-v6-6-e5cdaf27a49c@gmail.com> (Pablo
-	Sabater's message of "Sat, 08 Aug 2026 02:02:21 +0200")
-References: <20260808-objecttype-support-v6-0-e5cdaf27a49c@gmail.com>
-	<20260808-objecttype-support-v6-6-e5cdaf27a49c@gmail.com>
-Date: Sat, 08 Aug 2026 09:21:26 -0700
-Message-ID: <xmqqmruwbn21.fsf@gitster.g>
+Cc: Ted Nyman <tnyman@openai.com>,  git@vger.kernel.org,  me@ttaylorr.com,
+  ps@pks.im,  karthik.188@gmail.com,  sandals@crustytoothpaste.net,
+  avarab@gmail.com
+Subject: Re: [PATCH v6 0/6] packfile URIs: support concurrent downloads
+In-Reply-To: <20260801140255.GC2041176@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 1 Aug 2026 10:02:55 -0400")
+References: <cover.1785047139.git.tnyman@openai.com>
+	<cover.1785111375.git.tnyman@openai.com> <xmqqcxw5o4m8.fsf@gitster.g>
+	<20260801140255.GC2041176@coredump.intra.peff.net>
+Date: Sat, 08 Aug 2026 09:23:34 -0700
+Message-ID: <xmqqik5kbmyh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,17 +88,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Rather than take these as function parameters, we take only the
-> transport object, and expect the caller to have placed the other two
-> into special fields in the transport struct. But this doesn't make much
-> sense. The set of oids and results are really only valid for one
-> request. There is no reason the transport would need to hang on to them
-> outside of the single function call.
-
-Thanks for injecting some sanity into the mix.
-
-With this fixed, are we happy with the entire series by now?
+> On Wed, Jul 29, 2026 at 02:41:51PM -0700, Junio C Hamano wrote:
+>
+>> Ted Nyman <tnyman@openai.com> writes:
+>> 
+>> > Changes since v5:
+>> >
+>> > * Split the existing double-close fix, HTTP 416 handling, generic
+>> >   concurrent-download fix, and Windows sharing fix into separate
+>> >   patches.
+>> > * Replace the FIFO-based concurrent HTTP 416 test with a standalone
+>> >   completed-partial test. Besides simplifying the test, this covers the
+>> >   non-concurrent interrupted-download case directly.
+>> > * Keep the final production code unchanged.
+>> >
+>> > Each patch passes t5550-http-fetch-dumb.sh. The final series also passes
+>> > t5702-protocol-v2.sh, and the overlapping-download test passes 240 runs
+>> > with 12 parallel stress jobs.
+>> >
+>> > The v5 discussion is at:
+>> >
+>> > https://lore.kernel.org/git/cover.1785047139.git.tnyman@openai.com/
+>> 
+>> Is everybody happy with this new iteration?
+>> 
+>> The design of the re-download feature itself, as far as I
+>> understand, was favourably accepted from the earliest iteration, and
+>> now the CI breakages were corrected with the latest iteration of the
+>> tests, so we should be in pretty good shape, I presume.
+>
+> Yeah, sorry, I hadn't had time to look carefully. I just did so, and it
+> all looks good to me. v6 splits the patches in a way that (at least to
+> my mind) make the trickiest parts of the logic easier to follow.
 
 Thanks.
+
