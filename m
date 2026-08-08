@@ -1,96 +1,94 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA60327204
-	for <git@vger.kernel.org>; Sat,  8 Aug 2026 07:25:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAB51AA1D5
+	for <git@vger.kernel.org>; Sat,  8 Aug 2026 07:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786173951; cv=pass; b=S85NI+mQSWgUULhJGvcQT0fvRopem3qima7PH5Wze0N2o8kwYsRt03ucioWM8lGczXuuEN39owZ0N6YRHERZIlkUZyfOppjRlPYQVxn7wMkm1faONeXcd5pGuNbZYJ6Dtro8DqtU7uJzhh1tcS/hNlAdTzHPzj5qVDEwp/O18SY=
+	t=1786174031; cv=pass; b=sW0yrowP+7X9VyMbXp0obXtGK9gPpjdud79svfXGaJhtVcdVC2/4nUsXzv7O9Flxc3OMjcH3ctv+WgIcqiwnw5XeVM6sVqwA9vm7fMDEbYHjUVrdxATm+gBRhAkilVr6dooWX+acGTjYiG4zK7VFYJp+zBkh2l5ZJAwy9tJXG1Y=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786173951; c=relaxed/simple;
-	bh=1DTrmA6XEwNTfUdd91R+xJFuRqi9z05tENNdIJlmXms=;
+	s=arc-20240116; t=1786174031; c=relaxed/simple;
+	bh=zyR9TpZrW/9Oy+0WLwBOUbBndLeBbExgBZJ2Ym5r8gg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NI6aFN69X/36ynOlYWF6ul+FyeZ8IJ7yRM8kwJLNVlnze5Q5y3BV4UPDlcxUmb9HeAGKeWio7VH2A+8Ft6/5QQy3/f0KN7SAGFLxmaKYgp5SKkoTTJCa2ifzPHCqXp2HmuzpnL9KlTdKVGWVSAAM1vOOR+cthpDUfpBtGW/X4UA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I4QknvnW; arc=pass smtp.client-ip=209.85.167.172
+	 To:Cc:Content-Type; b=pO2UkwVqkGuBAGoGyxAeqo5kluFpREc34PyxgT9hBVCeciX/PM7vxH4m3MB97q8Cai3R205w5INXD9DlLuJboyYolYWYz7jXCymFb12vUEnGTf3B/mfFa7bUi5h/wqSTlqanNhZiA1LjzbxCb8KNw9blqrCTz0OHzetfRC8bWzo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eRNBwVag; arc=pass smtp.client-ip=209.85.167.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I4QknvnW"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-4ab70b882c5so146064b6e.2
-        for <git@vger.kernel.org>; Sat, 08 Aug 2026 00:25:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786173949; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eRNBwVag"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-49c38a4f110so191262b6e.1
+        for <git@vger.kernel.org>; Sat, 08 Aug 2026 00:27:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786174029; cv=none;
         d=google.com; s=arc-20260327;
-        b=XciURNa8PQONW4iUdeWLWFCja5VblHY9ghvna8dYVZdCct/fa8CVpbzgzeixVasSTZ
-         clWv7eWMfgPd46kI3sfilKg/q+uMcrBgLQbGFSoW26hzku30qhbAwbkaio9nJz7heDAy
-         3hfcm21a47jRKUzfDtT+G4/TkYnLUwXGcHSOC35Lwib15qOPvwJ3Ok6XJCOindd4dxsm
-         0UKbvqAL2qU6tT5SHWK4E5ABbe/HYDgTmnUAw5l299VSHrcFsqQu2aM5f3WkOXLDn4IU
-         yZ/+oODBcbxBkfTWw61HJWQrwL/5GZTSiUTWyRoPUnozAdnveuuvCmfcScfnJgnWVLbK
-         /Vfg==
+        b=ZdjioL71FE75+cCqc2uewp/4NpYZULX0n2KcgaoFDB9YCuLvXUumdhLafF1+ezjvS0
+         GjU7mG+a0QAZhwClYfNRzsmb/BwBY/hnuQqGBGqwIY8+v68m4/c/H7Ab037+xwOQQbGJ
+         0vQ7zsFWShoiNOg+Z3Zqc8c3tYvMBXyYYq9ek52ThHd24SVz3iH6xFqPv/bZrp4VDHNo
+         dhg3UfVLUwjgCe6BlA4jdjvLgcsGOrIcknSp2/FWKxknpD4Hw158Sli94FZDZah6043F
+         ypsdV/HCcCx3ooEpPXcYvshq1HRE9BfVnPiGTNWTOFU4Y226q5xJKsynuLPcGTippL4h
+         utcQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=gopXJGC+F7F0lswtQUxidagtboo03YxaXAezr+Qqj5Q=;
+        bh=WLTh/E9GWn0SdhR6/vfIIZ+AKhFMJmv9AXfCWD8JcZg=;
         fh=dzZik3sWO5Hm7VdeOg6TogxYFNxNltXRHvX8714ZSR8=;
-        b=eX4NExDZzIcq8meM9sy1Bo4wyolBB91AiSxDCA4tGRXnhvE8LflTDRTe1uoTIpbDWM
-         fZ4FXg8S+2libI6DzYL4qT5tX4ZTkdn6hznZDxIdQlKwa9y4eWVA4sws+vTMJjclK1UQ
-         iFjckM2npIlk8RXVNPdOVRq4Pmq4uiUv5SxL97Vs9m7Hr6rYjwgzzsfTTM9lRWklqNPP
-         dZ4oo+KarH6GmMKAs+gM51LSyuWTZ7vUWHto5WCjl5/4Orhg/pHwE0gxYQ5m3/WbCgUK
-         yRD1GpHZuE0Qb4k0u5T7I23M2jgsDgCesu2oR6I9wpBDk5+z/HkYUUqCZksU48F2zbc/
-         0AOw==;
+        b=RI2sFu6e+SxGPVdER3X9T7fKVmsIXSlO4RPTMBt8rWWfpyXrmsGQDoPx6QAOEkah7U
+         BVxVaBgOpXzrS6kD0TfhyJRDz8UxZ1kNRrywyT4M8GtBmIJ994qmZwe7uYtjUUYmC32u
+         oyRY4Ppjd64ypj8IGRGwo/xPYxBL5tZ0qhIm8clmtekigy1qtldqtxX66Udadd1PLrtr
+         Q7lILdphclROh3+R25lc7ogoHI85IJY9iNiuIQZI3fUNwd4upVrDMv1qA0AuDP6tcN/S
+         Vme4ow+HQTiwcBqfwnfqsAxBoIJMRkmuqhToRqdtn9pCulrHqV8mKz4atuZ5g/Sumken
+         AHCQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786173949; x=1786778749; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786174029; x=1786778829; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=gopXJGC+F7F0lswtQUxidagtboo03YxaXAezr+Qqj5Q=;
-        b=I4QknvnW8Rvz6dUGO7DdFzeJdmSZ0Q6zR9qjOoct1rxDRToq7pJkuSyB1R/n8lAfv8
-         svKYmS+BCbW+89C+qsRO65dtRpIoDqMogX2doTjBqUnnpbR3vJVB1A2aZgkeoOWXi6F5
-         cczdG+H6QN7nu5WjkntbicqIp4+aipdHTwIT/6f2Fs0uXpqnP327Q6D5GP4YL5XPtMyP
-         EThHhkdyeUPvrY+81fjM5ayRTpJkhx5nr+bZIdyX1Xm1I1sXniaDeBFz+TT4EF1NRQY5
-         +RWKEnNGCcfacE1CRFjumcsN1lGlhVOTJSeqVh4AJ8RHCbmCf6MU80rXGrm4+gNFKdjf
-         I+pA==
+        bh=WLTh/E9GWn0SdhR6/vfIIZ+AKhFMJmv9AXfCWD8JcZg=;
+        b=eRNBwVagEbA+vbWz5/izGzXl10/OiBdq68hc/UsHI7DmjKiJz7pMyY42F0R3NT18Kq
+         LSiJ4LDP8QK/Ld1VtbxvIy+a1pNZfdlrD1LXRiABOufo3SFtyet4jRAK4RqFpmaj7THP
+         d3+GmpmFsf09ywyD5BpUJ5+ZXx5/cMko7EPZytsp3V9CAI2rPn4BbmUMyhgk6QIlI9l2
+         EFqAtA+nsh0wnKKz43nQcQX7Yv76XUV0PQYEmmV4RLRXYhz8NM1lafJpVMliF+B5nd46
+         DFxl6S8GNCsTNcVuiQzEssRR/nNoxfEiVF8syGikxorievhIvH+wdE4bDZFspffv9BQb
+         6xOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786173949; x=1786778749;
+        d=1e100.net; s=20251104; t=1786174029; x=1786778829;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=gopXJGC+F7F0lswtQUxidagtboo03YxaXAezr+Qqj5Q=;
-        b=ZQBr/Yg6VGPQF9o+j/5EOvl8Nj4awfE5Dxfb5PwJIkr/nbswSrVVAaVdvizr3/qdUG
-         YP2Jts1E91ZWbPLLav2kKTrV7rgN6hGzzuxkH7NX+uUp4pXsAoKMZ3ssbVk9VF12pSsw
-         xiu+VExU4znnBcpJ/qxK05Yx2fp4PV/qbpzbKNgxIFG7ZP0KbUCuFkbKJR0MFBawdto3
-         6lkE56GPsPiSwYdFH4ikmq/BJQqG4XIa3TryIu+tKyMmloMdYxGqgwTm4lPxJhKj7qy6
-         zsnRpeeDnlN7xXKFDOGUa0IumJKKQ2RxKrVFwtS0O3UQZN0RqYfz14eq/O0y//l19kfg
-         TWqg==
-X-Gm-Message-State: AOJu0YyyfvRct5MR9Ak9Gnjpl42YzNEhAcaCCX36y4oCSHm+ueDgcS4x
-	mnzKKLHc12G0Y5NLvNxaC1lZRlVbhyGsnLMF7YWvUc524MR/aclW7rmWBeV9eJgxypVZdSDThGs
-	NOila02HvOamkaGKheekAvyQATHf5Hsk=
-X-Gm-Gg: AR+sD13djI+i0g8T1B64I1/2HK2ibaJWkkjRWoWVzYpiGDZxmYm1tLQxdO1p2VG2Z1W
-	TdlPc0IEA7twsx4wNw/IhRZIFFix8nT7xWkgxd+WdzlZzPSGQAFzH3+fLcsKiDRt9Ex2+EbFEQ0
-	ABU3lFWGrPOZQCFowY7Er0yyANawBaxTpitOabUN//y1Hs7wX8zJb0ldVr/xiD3iPI0WvzKk13e
-	RRJtwSEkKEiQn/7FYfKtplyMJqFGAmtbAnExF+3c4KawUT1531YEc0zpZXyoHaGNqsJtttwmggv
-	ygBmus6M+FY4mg1Afla6xkbxdfW3jF/fuMpe8z5x9ZulO0qMPnxVMokS+0PGNodiMekyS9CEyr2
-	saWDr5D033FSyZCfH1KjyRcaNDk2KdKdkse6AtGq9QtnoRyz7a3pdtXWWMaPWygw=
-X-Received: by 2002:a05:6808:d4d:b0:497:8f1:df07 with SMTP id
- 5614622812f47-4afadf2fd74mr15376226b6e.7.1786173949583; Sat, 08 Aug 2026
- 00:25:49 -0700 (PDT)
+        bh=WLTh/E9GWn0SdhR6/vfIIZ+AKhFMJmv9AXfCWD8JcZg=;
+        b=JIcj3QU9pgdNPxig+Q/yaGHMY8vjjzIsrTyhUtVsrpCZR4hRRtd6jIlyw52aJQdRup
+         mE4Zd1cpv3FPspdcQvSjWMaPZn2PBB/nRGP0ZQQ7kb5Pof2zfa3bS+VXm0ygJV8ppOh2
+         js4fGEWxwsjoDBBBal/rvZWOGjhszKUfgv/Wf8EQfwXWjzEZGYQluZMwwjgRva31uCAC
+         3BxbwdCFRZdD3csDsavUz5S3aQIihzsDrVXcHIYmcoGYz2hJZLXATHRtz74QoV145yOe
+         5E+K6MftvDALRb6J5ygh2jqBw4Q2wcWMKbds6tHtVk86VteGb2HtVOXGXcJpivm8QMr1
+         Hkrw==
+X-Gm-Message-State: AOJu0YxE+saw7b7KS4VoLZfPtNDdcunWPMOXm8SXOPdiih3oSP2aaGcw
+	W+Ggl0mDlQUnNNcm8woOgSbBJqCtoogZnRHgINpGz8UGPiZhA6YqplpW4PNyNUEFiOigcYIhqD2
+	vRj5hHajdJxg3NSmylMVta2tMrAw9zaI=
+X-Gm-Gg: AR+sD11a3E7zb/YrGZNVOUusPUxrYMh6LXWPXeYiQQLnmta0OmzEMVUUnRfoidXwZxw
+	gv04f/jqDlldfLIZ15bJNKGdyOs8Sea7Wr33Hh1WQPk5im/kN3JPg7ZIMW1vMnON1MWpF3RVgBb
+	9eFk75cIIVwYC5Sev+Bk70/tFEeHfhgZE/bR3or+KwxJsrnUw1UHthYRAPWy5jCX0JCI7/tr8xT
+	O/XZh/hpY9WAIM5VqkDkbzJn4/cRQqO5jWMYroGhWYJ6LJ5uv/Kw5Q73bzZmMY0uLmN7wkd8/Zx
+	U1h9u+v7Btkle61yz+AMEPtSumGJIE6Fm2fYvzZA8rw2lxZd95n9lUMkG4nXDos0llOdD/AZLiG
+	3AQEMa/1muDBTTIIM/3eWn66BaZihOujrZmHynT3Q4LKABRcw8VnTDx0BjV1Me4g=
+X-Received: by 2002:a05:6808:4f68:b0:4a4:c623:4c0b with SMTP id
+ 5614622812f47-4b1a0bcbee4mr5399043b6e.4.1786174029103; Sat, 08 Aug 2026
+ 00:27:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260716165517.433849-1-christian.couder@gmail.com>
- <20260804100355.1299498-1-christian.couder@gmail.com> <20260804100355.1299498-12-christian.couder@gmail.com>
-In-Reply-To: <20260804100355.1299498-12-christian.couder@gmail.com>
+References: <20260716165517.433849-1-christian.couder@gmail.com> <20260804100355.1299498-1-christian.couder@gmail.com>
+In-Reply-To: <20260804100355.1299498-1-christian.couder@gmail.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Sat, 8 Aug 2026 00:25:37 -0700
-X-Gm-Features: AUfX_myfJUktvGk5o6mYc1xI31vhwvS90iwTFMk-a1Y_zJXzqGA4J3K-9HH29kA
-Message-ID: <CABPp-BFfF+Vd6RY3pG=FVUH_93YZULfhcXdWCv6zcRSABfGBQQ@mail.gmail.com>
-Subject: Re: [PATCH v2 11/12] fast-import: use parse_options() for command
- line options
+Date: Sat, 8 Aug 2026 00:26:56 -0700
+X-Gm-Features: AUfX_mxOVMIk_mks8DiiF2BCwUBdXKFva9lKUdjvPwsA7_LgaT4ZmdYE26BIYto
+Message-ID: <CABPp-BE_gVtCF+Y0AAyXSXnJ2hUK0pJiWqEhkD8kVc4S8-y7kQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/12] fast-import: standardize usage string and SYNOPSIS
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
 	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
@@ -101,107 +99,27 @@ Content-Transfer-Encoding: quoted-printable
 On Tue, Aug 4, 2026 at 3:04=E2=80=AFAM Christian Couder
 <christian.couder@gmail.com> wrote:
 >
-> Previous commits have started to use the parse-options API to display
-> output from `git fast-import -h` and `git fast-import --help-all` and
-> to prepare for parsing the command line options using this API.
+> The goal of this series is to improve on `git fast-import`'s usage
+> string as it is obsolete in many ways.
 >
-> Let's now actually use the API to parse command line options.
+> As it appeared that a good way to reach that goal was to make
+> `git fast-import` use the parse-options API, this series also achieves
+> this secondary goal.
 >
-> This brings a number of changes that are mostly beneficial:
+> Along the way it modernizes "builtin/fast-import.c" mostly by using
+> `struct option`, by starting to remove global variables and libify
+> that command, and by introducing a new `OPT_HIDDEN_GROUP` macro.
 >
->   - The `--alias`, `--get-mark`, `--cat-blob`, `--ls` and `--notes`
->     options are no longer accepted on the command line. They were
->     previously accepted as no-ops because parse_argv() fell through to
->     parse_one_feature(). They are not documented in the OPTIONS section
->     and are only meaningful as in-stream feature assertions, so
->     accepting them on the command line was an accident of code sharing
->     dating back to 9c8398f0c9 (fast-import: add option command,
->     2009-12-04).
+> There are still many global variables left, so it's left to future
+> work to finish on that direction.
 >
->   - Abbreviated options like `--dep=3D5` now work since parse_options()
->     allows unambiguous prefixes.
+> Anyway the usage string is standardized and consistent with the
+> SYNOPSIS in the docs, so that the command can be removed from
+> "t/t0450/adoc-help-mismatches".
 >
->   - As `--cat-blob` is an abbreviation of `--cat-blob-fd`, using the
->     former on the command line will fail with "option `cat-blob-fd'
->     requires a value" unlike the other four options that are not
->     accepted anymore on the command line (see above).
->
->   - The error messages for some options might differ a bit.
->
->   - The code is shorter and more standard.
+> Using the parse-options API also enabled some code standardization and
+> simplification.
 
-I think the list might be missing three behavioral changes:
-
-1) A bare "--" (or a trailing "--") is now accepted and the command
-reads the stream normally, whereas the base treated it as a usage
-error:
-
-        printf '' | git fast-import --   # before: 129 (usage), after: 0
-
-The old parse_argv() broke on "--" and then did "if (i !=3D state->argc)
-usage_with_options(...)"; parse_options() instead consumes "--" as the
-end-of-options marker and returns just argv0.  Harmless /
-conventional, just unlisted.
-
-2) Value-taking options now also accept the space-separated "--opt
-value" form (e.g. "--depth 5", "--max-pack-size 1m", "--date-format
-raw"), not just "--opt=3Dvalue".   Also expected parse_options()
-behavior and a nice improvement.
-
-3) The handling of "--allow-unsafe-features" has changed and might
-trip users up.
-
-Because the "feature" lines at the top of the stream are processed
-before parse_argv() runs, cmd_fast_import() does an early scan just to
-learn whether unsafe features are permitted:
-
-        for (int i =3D 1; i < argc; i++) {
-                const char *arg =3D argv[i];
-                if (*arg !=3D '-' || !strcmp(arg, "--"))
-                        break;
-                if (!strcmp(arg, "--allow-unsafe-features"))
-                        state.allow_unsafe_features =3D 1;
-        }
-
-That scan (a) matches only the exact spelling and (b) stops at the
-first token not starting with '-'.  In the base that was fine, because
-the old parse_argv loop was equally strict (exact spelling,
-"--opt=3Dvalue" only).
-But now that parse_options() also accepts unambiguous abbreviations
-and space-separated values, the two passes disagree.  With an unsafe
-feature line in the stream:
-
-    # (A) old-style spelling, still fine:
-    printf 'feature import-marks-if-exists=3D/nope\n' |
-      git fast-import --depth=3D5 --allow-unsafe-features
-    # -> exit 0
-
-    # (B) space-separated value, newly accepted by parse_options():
-    printf 'feature import-marks-if-exists=3D/nope\n' |
-      git fast-import --depth 5 --allow-unsafe-features
-    # -> fatal: feature 'import-marks-if-exists' forbidden ... (128)
-
-    # (C) abbreviation, newly accepted by parse_options():
-    printf 'feature import-marks-if-exists=3D/nope\n' |
-      git fast-import --allow-unsafe
-    # -> fatal: feature 'import-marks-if-exists' forbidden ... (128)
-
-In (B) the early scan breaks on the bare "5" (it can't tell "5" is
---depth's argument) and never reaches --allow-unsafe-features; in (C)
-the abbreviation isn't recognized by the strcmp().  Yet in both cases
-parse_options() itself accepts the option ("git fast-import
---allow-unsafe" alone exits 0), so it's only the in-stream feature
-that gets rejected.
-
-This errs on the safe side (it refuses an unsafe feature rather than
-allowing one), and it's a minor inconsistency, but it might surprise
-users.  At a minimum, it should probably be documented as a
-shortcoming or TODO or something.  One possible solution is a
-dedicated parse_options() pass for just --allow-unsafe-features;
-another might be just requiring --allow-unsafe-features to be the
-*first* argument.  Thoughts?
-
-
-Anyway, other than the above list of three additional behavioral
-changes, the rest of the patch looks right.  Thanks for tackling
-modernizing this command.
+Thanks for doing the cleanup.  I read through the series and I'm
+pretty happy with it; I only found a few minor things to comment on in
+three of the patches.
