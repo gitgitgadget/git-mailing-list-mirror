@@ -1,119 +1,146 @@
-Received: from mail.aegee.org (mail.aegee.org [144.76.142.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BE84B04B0
-	for <git@vger.kernel.org>; Sat,  8 Aug 2026 14:39:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.142.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131B8416D17
+	for <git@vger.kernel.org>; Sat,  8 Aug 2026 14:55:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786199953; cv=none; b=NC0ZQGqaL7PE1qAOQS64j44VfrlWKPg8obQXXDQQ3Lyw1jimMV4R6JObPZ8adgn4urWaf5h3y+aLU8QNbE+8dc5KuujjSyAkrk3JSfBzaV+2keerC1Nbl4ohwI5e8na+Eswo88w89NpsEYPwGiWb4WZ5cZqzSyo52rlHQ8lSnNk=
+	t=1786200958; cv=none; b=I543dyzVsj8uIS6DtTlWhGxtamlbOzMoSe3qsoBigzNGWSC/1gIzYyo74D4zen/o8onuQMwi9wScMclJdsHqkNR4w6HkJdK/4ygDLd21WkDxFvtbcFN0Oc0yWSmGouN4r+YjUopK+hcM+eWt8f5oyJgQ3zQ+sCIh/zKihg60Zwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786199953; c=relaxed/simple;
-	bh=3P5bmkRFCFjrLJP8bxC+4VP15UiIlmCEF3eq3uNl8lQ=;
-	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=hwc38n77lOM9NWdzkB10Hz+1USpuUihfH/GW9cxF/UJs4Ibl4BTLd6OTXeuCsfTvoOqogyu09NrWYtp0j0mqG4xFwtQEZb8r9R8LrWvVDyES8sxPqsERlrlhm8apA+W7waWqmc1A5nOovS5gTT7vl4thrZ4Xik3DYX1lIamwHc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org; spf=pass smtp.mailfrom=aegee.org; dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b=Wds6wA27; arc=none smtp.client-ip=144.76.142.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aegee.org
+	s=arc-20240116; t=1786200958; c=relaxed/simple;
+	bh=NaQ1yMZXnfuUqQTJaoGl/wfxre+TxQ/J9mtRO21luBc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rLH5NqlOzMQ5jfkc+MfYwt751Mh40zo2u+6YYHl2m09aidlDzC20sgw8/oG3izpEccUVOclDocaSIX9FrLgzSAtRtUB0QjTiiMNqENIqgI1edDYydplYqg93jYCz6Ied43a/jFEtHso05EaSQ7PhTc9J34Ivd7xy+5dp+Y0yQ1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=paqHcRVu; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b="Wds6wA27"
-Authentication-Results: mail.aegee.org/678Ec0gw1839603; auth=pass (PLAIN) smtp.auth=didopalauzov@aegee.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
-	t=1786199881; i=dkim+MSA-tls@aegee.org;
-	bh=3P5bmkRFCFjrLJP8bxC+4VP15UiIlmCEF3eq3uNl8lQ=;
-	h=Subject:From:To:Date;
-	b=Wds6wA27tFXA6jt4l1AUoBf/wSnGvxtzmXv8LzIryC/YmNnP1Nn/5xOINn+snxZc5
-	 4GSA7gZyAJiDDp/pj+90YSSdTh4fbHWmLoIasJZt8OuHIp8ZQJEUm39VKNX8sxOoio
-	 wwj7GWM9YNPCBUUuq4C+lc+5tc/5uNmsxk4vVBs48n623qGZbeOAfZAlsaGPKFt99j
-	 q5yjqBON7dJ4BqkfiRrECJvmRJwOCwJcds8nrB7bv7DKBqImOh551S0M8YfWDV2nBN
-	 ecafLWv1AZ1cnC65c0iDCduW4jev3PVO/ySkAD8xvgCpnez7H2jYgbvgGV/MQNe1/r
-	 w55t6mJkv/lBUTFEyta9iuldG9hpaLzH1GJ7RuMPI5ct7DH318vix3tnwjAAdtfnpC
-	 t4ftZNz6mqEQYEDDRElZR4HcNlvItg8EjlBzIey8PQnr2iyGAsjjRU+PJ97IW4FnV5
-	 dMivPVU2FtFWxwjdZy4JLEQIGy0Fi9TLFZseQrDaTgOEGMlzC9M2A2XjvsDFDdjiL2
-	 UIjotDXUP9wd9NJtsAu3S331aucerRJkEVK6Sm3clXutpJV6nBMDQ3UzwT+Bjg6LrS
-	 w17xwU/THgykjuZU+fyctNa9dpwhL5eXl3Oa+DkK0mV2BO5WYXPTQqyhCZZKV+EMDC
-	 peNorlw0TrmnO3fdSUh/guAA=
-Authentication-Results: mail.aegee.org/678Ec0gw1839603; dkim=none
-Received: from [192.168.0.199] (95-43-114-153.ip.btc-net.bg [95.43.114.153])
-	(authenticated bits=0)
-	by mail.aegee.org (8.18.1/8.18.1) with ESMTPSA id 678Ec0gw1839603
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 8 Aug 2026 14:38:00 GMT
-Message-ID: <3b7ac61c368f5b0f188929862a451b9944879567.camel@aegee.org>
-Subject: Why option `-s` for `git commit` makes no sense
-From: =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
- =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?=
-	 <dilyan.palauzov@aegee.org>
-To: git <git@vger.kernel.org>
-Date: Sat, 08 Aug 2026 17:38:00 +0300
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.61.3 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="paqHcRVu"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-9087fb771d3so2121116d6.0
+        for <git@vger.kernel.org>; Sat, 08 Aug 2026 07:55:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786200956; x=1786805756; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=IzXA101kV4dfw4oL7R1WM4TKM0V9FzNZy8DJk44PSxE=;
+        b=paqHcRVuPyLcHSsOzahh91o2WpHBZB8wTP4NqZC5LR/zf/MDo+xpA4qPylY6fi/UID
+         8/xrFnmj3N9mQaABGhaL/emrh7JBdOvOXfRtV7uQdLuGFUwNMRheNMLOouwH5r5gcRff
+         2XaIK87gf+lI3K1RyTod8gA3KItCWhrknG5fW4h4ohhDu3yWhxOvIm69FPP1ZpQdOW/F
+         3rtrecA5lZ4K7EDA0am57DzPWGmMTblX3YJW/tgXr6aen10k56Cmn7RdRrrGxz2u1ELj
+         1Q3AZE4tjc/Yi7STvGXGBns4P/w5t7ZNAPGOk8IP5DQ66PhjFZ7BS9IDEAdJolcEUBnK
+         fM0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786200956; x=1786805756;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=IzXA101kV4dfw4oL7R1WM4TKM0V9FzNZy8DJk44PSxE=;
+        b=EbdIMWe+uwBB4znrdZuh9QA4u2uhsIQEA+vOBCjPkO3V+qNKl35enaVw7hc9xfmtsU
+         4klTkwPxpeQVqn+eMBcUP2eOEaJQk78ElYAHTuaySWUs7/NXHEYQ78oG0otnmdsAQuxp
+         4aIlAcJMSlzjKHXXxp5yLLwKf5u/hraf5tUjyLNHN7APLbUAaHuuHOlXkXQUzBeExhHi
+         GrGwJX5zXnkllVeKI9oshOmhFr3CAbnkXaQOYOjPZig03hVpnOm5fXb2LopsDFOg89s7
+         YtAX6smJ326/+dGpWSZ6uvdJC7U9MNZz+nDXoNtQaIpGxrUa1WrfYT4vF68DYEAxoZCT
+         ZIpQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpjkXb5G9FzGb81hyWSD/2Qup2mWr428gyO+tKpndmnJ0NuaKItryllFr5e5PJT+iWOl/w=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxNlRdBLFOlRwZCwp2QLuqqxaA0fF/mh047+Ze5yRfMt2naMj8
+	Dgky74yO2fbe9MNkPPUe1x2hKpbQOtl76cOdZetO3Wn06+5GebiKdCEI6nixdg==
+X-Gm-Gg: AR+sD10EoEB20PXLPj2+/GXmT7FChwy25LH/z3B2puyh5HXVeFynJSlyeR0Xx4j0BGf
+	okY29jQVIchuFsIVunmvY7jBhFh4no3w6bPjC0dLwHMBOlBuxz3cNz3gQesBKHyQdO9G9M0Fleh
+	Vgnsk+6wOwRNOBfA1fuYxZgxV2VofIfIEqzVi1TS9xjr9is3s3QA9/fNGv7xs6XoIafKV8hEEXd
+	uDr5o2E+xq90DHGzZBEj+3byidhIsPdygp2K/XqW/hFoqEC+jCKCUMaUTqWT9NDmIs+8iPyXgs7
+	q3oQYszo7Z1rwSmWj31ttfN+N6d+Zbfl9u6s11r4LBWI8DDoCSnY94qbcqTdCr4d6VBeBgKoezf
+	kXMmnaZzGWPSFqwAOvv4dOjsq22coTxT3FnjU/Fc4lpccd5ZVh1BjyJrZwjngY5LpSNCn9UUhoZ
+	okGCl+BaMhMUrIDUQX3/dSfJTRz+5jChtO/ix3UoKlloIRoOMpfJNXrPCxMhrbWjkvgmWkIV60U
+	rWlT/wKew2+NVvilCW/DJlR3NvqP9u1zztd
+X-Received: by 2002:a05:6214:3012:b0:8f0:6a92:b90e with SMTP id 6a1803df08f44-90881381835mr344820076d6.25.1786200955891;
+        Sat, 08 Aug 2026 07:55:55 -0700 (PDT)
+Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-908a934e2fasm31914746d6.46.2026.08.08.07.55.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 08 Aug 2026 07:55:55 -0700 (PDT)
+Message-ID: <433a3e74-c66e-40a3-9971-c8cb9692967d@gmail.com>
+Date: Sat, 8 Aug 2026 10:55:52 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] gitk: avoid constructing dialog titles from text
+ pieces
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Johannes Sixt via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
+ <1e1bcfaf5bbe66fac364d5b7d3a7ebdc5f37531c.1785998419.git.gitgitgadget@gmail.com>
+ <f25e5fe8-cf6a-4d87-9c46-bf5b7490434d@gmail.com>
+ <b1d397e1-ab2d-439e-ba45-0ade2c216afa@kdbg.org>
+Content-Language: en-US
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <b1d397e1-ab2d-439e-ba45-0ade2c216afa@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hello,
 
-git commit -s inserts particular text in the commit message: Sign-off-by: e=
-mail-address. According to the documentation of git
 
-> The meaning of a signoff depends on the project to which you=E2=80=99re c=
-ommitting.
+On 8/8/26 6:00 AM, Johannes Sixt wrote:
+> Am 07.08.26 um 16:37 schrieb mark:
+>> This with the prior patch should help translation due to use of more common idioms and
+>> complete phrases rather than jargon. Good.
+> "Complete phrases" and "jargon" are words I need for the commit
+> messages! Thank you :-)
+>
+> Now, with a fresh eye, I see that we have text like this:
+>
+> 	Diff: old lines background
+>
+> This looks more like an assemblement of words and jargon than a phrase
+> in natural language. Any suggestions for improvement? How about
+>
+> 	Background of old lines in diffs
+>
+> Sounds a bit clumsy.
+>
+> (In this case I prefer to say "diffs" rather than e.g. "patch text",
+> because we are looking at differences between versions, "diffs", and not
+> patches. Also, we already have "diff" in multiple other places in the UI.)
+>
+> -- Hannes
+>
 
-In practice the Sign-Off-By line is always supposed to indicate that the su=
-bmitter owns the copyright (right to submit) for the creative work, changes=
-et, patch, and the copyright is transferred to the project, towards which t=
-he patch was addressed.
+I'm ok with using "Diff" as a common identifier for this here. gitk is parsing commit
+diffs from git, showing each hunk separately. I'd also rather not use patch. The UI
+already shows "new version" and "old version", so using new lines and old lines is consistent.
 
-The copyright appears, when some patchset is published, it is in general at=
-tached to the person who published it, and the copyright expires with the d=
-eath of the person, when there are no heirs.
+But, one thing missing, hinted at by your suggestion "Background of ..." is that the clear
+definition of what is being affected is poorly expressed. A complete description of each
+item would require a paragraph, probably with an example image. Trying to compress into a
+few words will always exploit context and presume some common language we expect a
+git/gitk user to understand or be able to learn in context.
 
-When a published patch fixes a bug, the publisher does not insert a Signed-=
-off-by: line, and a project insists to accept only changes with Signed-off-=
-line:, then the publisher of the patch can effectively prevent anybody else=
- from fixing that bug. There are nuances here, as when the bug is eventuall=
-y fixed in a completely different way, then there are no copyright violatio=
-ns, but sometimes there is only one reasonable way to fix a bug. If in such=
- a case somebody published a fix without Signed-
-off-line:, then nobody is authorized to fix the bug in a very similar way, =
-without violating copyrights, until the publisher dies.
+Maybe some extra words and categorization would help. Consider using a longer category
+description to provide common information, for instance:
 
-Sometimes published changes consist only of deleting something, like deadco=
-de, no-ops. Can deleted code be copyrighted? Some people say =E2=80=9Cyes=
-=E2=80=9D. This is insane!
+  -General Canvas Area
+                           Background
+       Marked Lines Background
+                              Main Text
+                        Selected Text
+                              Link Text
+    -Commit Differences
+                          old line text
+                        new line text
+             -old line background
+       etc.
 
-Having one person, who publishes a patch without Signed-Off-By line, anothe=
-r person who adds a Signed-Off-By line to the very same published change, a=
-nd then the latter change is integrated in the upstream source code (becaus=
-e it has Signed-Off-By line), is nonsense. The copyright still belongs to t=
-he person who published the change, irrespective of records in the history =
-of the source code. In a similar discussion elsewhere a pragmatical approac=
-h was taken:
-https://github.com/eclipse-xtext/xtext/issues/3687.
+etc, where the lines beginning with "-" are just separators and do not have an associated
+color selection button.
 
-If a project insists that some text is inserted in contributions, like =E2=
-=80=9CBrum-Brum=E2=80=9D, or some really very long text, people will insert=
- the text in order to make/see progress. It does not mean they have read th=
-e rationale why adding =E2=80=9CBrum-Brum=E2=80=9D is required for that pro=
-ject; it does not mean they understand the language, in which the rationale=
- is written, sufficiently good. The last argument also implies that piiple =
-who donot anderstand the lenguage of the agriment sufisiently gut canot pub=
-lish
-objection in the wery same lenguage that they see zero husage in inserting =
-Signed-Off-By/Brum-Brum linez. From people, who do not understand English s=
-ufficiently good to interpret contribution agreements in open-source softwa=
-re, cannot be expected to admit this fact.
+Mark
 
-Some people are paid to insert Signed-Off-By lines in open source software,=
- while others are for exactly the same work not paid. If I am paid for the =
-sole work to insert that line, in order for something to make progress, I w=
-ill be willing to insert it, too, in order to receive the money.
+Mark
 
-Insisting on Signed-Off-By: line can lead to inclusion of additional text i=
-n the version history: https://github.com/podman-container-tools/podman/com=
-mit/056917c223f054bd0b4526fce .
-
-Kind regards // Dilyan
