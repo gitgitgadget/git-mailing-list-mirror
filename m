@@ -1,73 +1,73 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC484B0493
-	for <git@vger.kernel.org>; Sun,  9 Aug 2026 20:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A2B2777F3
+	for <git@vger.kernel.org>; Sun,  9 Aug 2026 20:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786306235; cv=none; b=o8EBbWyv4swcvnCPEL+2OOJKGE5XTQk5hn3CJRjw3D14hvUQy/JdkdgjZD1nRaovJx7GiyXYS4m3wshOsNVQDV49LmwuZmQrhiaJYYnC1DOh/7jnW9emeE8pCam+dKABlSMyPBzcQ2oMt798VaE8zvbOkGtPzKSbF9i52gaL3EM=
+	t=1786306255; cv=none; b=RPM2nQ/XvcTKgzOB5I07cRei5GnCT8vwS7wuadTLYGPDYAG43unOLAiMcSBgVN4p7V+JOfA00XC8+Rp7lKA5BaAZQ+72R08goZSb7QNEw98dxJ7WHZq5fL+KQM906tYz8L57Emrl58AZrbT3tPnZ7Z42swcGbyDUYhNiP6sXiE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786306235; c=relaxed/simple;
-	bh=8uDOqRzGYropzwEDYlFG9sZSc4hCQedakQl/G9cFhC4=;
+	s=arc-20240116; t=1786306255; c=relaxed/simple;
+	bh=9xFhKo1GYkJNAqvBmUodo1Y5bArYxaFHj+2btZyzvoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mTX3vkLR+MPqkeuJajKOl3+Atl7wNDOvkUcnfSU0LhcCKPYniHbz1wQ+B+6b08bR1aOvFDLgxXdQM8Pt1yqDp5BCJnDh0vlY/nAauc6WwF5HPk3c/O+GEjGoNq2L6jGw3YxPEgsteba4RtloPcne2oLVchw1zERvCShLZ9paVX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Js249ots; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EfkDWu5M; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=Hw/x0D+YBmim6YyABgwiVfrO6C6DkHF9MLlb3tOAw7GGoy6FIWRMJoORNV/miu0wq7GDxwcA9LZNB2oozs9IcFfd695VqvNQPPBYNn6zWuyRZV0TRIQVqh1gbMC+TFP4+zol4+XtpsvF7dEQhgInpB0Y0w+JFgee5L0eeIKazCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ad1ma22q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b6sUBVpY; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Js249ots";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EfkDWu5M"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 046B71D00049;
-	Sun,  9 Aug 2026 16:10:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ad1ma22q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b6sUBVpY"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 109631D0005C;
+	Sun,  9 Aug 2026 16:10:53 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Sun, 09 Aug 2026 16:10:33 -0400
+  by phl-compute-03.internal (MEProxy); Sun, 09 Aug 2026 16:10:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786306232;
-	 x=1786392632; bh=7Gn/sYEL9Bm0T5+kwc2CD6zbXbTQ83y3BcalQvGREVE=; b=
-	Js249ots4HnSc9j8+M4iEXHsbH9bYBzd4wd/qS/B42FTEM4uLjGOwHQmIgftj+Dz
-	LdmsFkbfy10xEmg1yf9VebYU6WzRguVSF+qkjCKRxh0zzoA4QAEBFlBBMaX9AIQ3
-	dkI44R2/+KM8dUwW6nQjmNQRizDjODfFToMv1JkkQKc76/nsRCDQUdhPm0D5mIoC
-	gY1fSI0mx7kVbOu2DKDo2nwWYvLM5zzEWazNDgCaFLNJgIo4aLICE5cdo3AGD5+f
-	WR+BNlAnItm4EA4LLIOxAzGpuRHFJ3lqEujhckLDLaGVIWKhQ1b8r0Mu3nt9UDzG
-	cSDPpbCiVRmPB0bbT4cbQQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786306252;
+	 x=1786392652; bh=CSEHhwNfNB0RXCwyN9a94FXTg9PZMERLFR2mS4DOvvk=; b=
+	ad1ma22qht5dLttIiE+HYFil6yu40rzhGLRfUwxu9/hzp02M5jbkV62i0clY0XWR
+	meEim/z7ZoPU/SnRjFUbSNdW2Hex94Uq7otmMuHGuMfGJh5ZVFv9jHnllJ+2XRdb
+	HzjS8XZlrO5hH8zpOEwMNtrQfbK17+Z8/uHCeR1qmJKJ2CZbpfbg6UfgMHc5XpBb
+	5uSvHpgbaYfAPXOR9cZ0t8zSKfVRWl50uIGva2yTaQW9Q6Hh2Cp47kGyW+WlScKP
+	NCO9nGqCcqNWfteZOeQYfbkOxzMjd7zkzaGrS468e26vYnq+FK4bV4jD/pChLIpq
+	FfgMeMFndpEXDmr6CwzxPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786306232; x=
-	1786392632; bh=7Gn/sYEL9Bm0T5+kwc2CD6zbXbTQ83y3BcalQvGREVE=; b=E
-	fkDWu5MU7+wW43hgE5q91tfrjQumjA/VxTo+Fv7oX31oM1Ra5spyqm5ros/NA4Bb
-	VvubCGMjGVFgnd1kz0rqX26uFPvpiiyJoo508b7xr1T6XaTxYPvGWXTyk/HKgRLy
-	tLEKaQ832IBgqRElrEIZ0SItb1nohk/0v9bAFLHp0ZyJHkvrGiEA8rMt4PlKNuPT
-	B3xbU1SjqkIGWj+6BbMz9cErsqfojB9w50hCV3eGr7VgEwu7tylhuvE0c37isPmP
-	s6bTy18ENS5g0psOwBSxUTc0/hbCnBFOACspCXkRTHXcfO5XUFve+G72n6RLxIB9
-	VLPJmeQpq3l5aTDeGZYPg==
-X-ME-Sender: <xms:uN54avjXKDbQen4xe9JZ-rcwsAnI0D-X8zdN7UX2AYMJlyykf2wXb78>
-    <xme:uN54arG_dXi_TlMd4MKt7kpHYCATEl3rNlAGNBjA1NtkACF5xkW6AGK4P9ZFzElJ3
-    UUi5uVjD6niIFpP8kZHSB4pCnTP9wTZLIfgj4YdKKoxKt-iZt8YwME>
-X-ME-Received: <xmr:uN54alRiFN3rNpkN8q4MWVdYWC40sIdP11ZlCMtA_0lJNToeh34r-VTjV2cPqxp336IZLFcpEn03E5kx2x8Nv0F8FTc9esqVSzTrZXgf8AcQY6s8bPyA7fg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786306252; x=
+	1786392652; bh=CSEHhwNfNB0RXCwyN9a94FXTg9PZMERLFR2mS4DOvvk=; b=b
+	6sUBVpYEHXg79Vo7syQLgdAO7Moxw3fa0NZx1x16MuPaVaZVVX0MlWsmxImpDRkI
+	k7z5CqtFJ2gxXa5/qHgrSH2NGyaxsJnWUfLtBTqTgheborHmF0pcjWxT8sI3Dm4u
+	gATeBa9+JBkZvn3KKVrDvskGRX0CgLMkQvVrp58dFTDd8iI1/zFyvHqX675Vbx3R
+	s+iDsB96SUZdPhLr18Zadii3wHtMDYz3sCZuRgC1dqCrIu0ue/LeVfaY5aQXGFam
+	d50oQRW5rn+uOdEV3YlUk3NT4dM8K22gMopVViSd28e+7V7d8honJera5nkxcpnU
+	8rVv6GA8+uO5kykPaP/RA==
+X-ME-Sender: <xms:zN54agF9o20fHu9JPLX3LQPQRexS01hTE0CiujXstc2eFkv9x8Uob-0>
+    <xme:zN54aoYaQDqGXl37jRywb8e1K8DdxMP8ep3cqrNwOITCLsL-iSS0mBpeIe8v4BXfy
+    jk_2jqomQFlQpNHcuUBPjEZx-q0P8thbYM5AW_VxnrPhXqYb4B_TQ>
+X-ME-Received: <xmr:zN54agVtNKA4n6kl8MgCcxL_HAZc9Y5flswHQqHrODcQmnGnV7RxVH0CFiJ-33ku3rUr5iciSob74lsFpZ3xrt8Pni82UzFqNTnZJd4iVaqKGh2ZNwoSjNU>
 X-ME-Proxy-Cause: dmFkZTEcdI7FD+6TWE4ETRG7ILyNt0FJmLCkf4B7Rh7bvO9LDSLJTh+a8sSGJMVUTrqw4H
     t+TcTQVn0225EKdTVhRDBQrL3gn3hH52gWv+bGIdmXvmIP18dxA6walyfMaaYln20G1xoF
     kRKdLe8RsVLgQpNI5NFqcuau5PlG11BgHlUCxZ0O5jphPzlOd3qmyr13Ux4UWy+vN/oWHF
     50/FAfD9zQHH9iGUl2Xc/1q2la1VviA1N0mKCTbiLbIiGg1/ZCTG3pL2DaODFhu8wNIiUr
-    9P3zZ85qGs2o7yRcd1dFb7Azn2UrkJrazICMpJpdxrrQnz7x8H+iHPqNcRNEv9rHIIH1is
-    J+3CdM57MQDkJ+5+Rw1acruv/qdMXB7cNUdUk8PDX5GVHFQV3QE4nQHPHV2562dmQ5F8Ms
-    lBcaaCOC0hxn9HX+s/i9/9KydTvh81DS9nqiIbbRMjDrae1GrBz/d3S/VXes3zaFw/HeIV
-    u3F6cwPB/6qxQb3JKKQat9BuCctXL9UqpUbjt9jdxVB3ctOItC1Y0eiRzcY9LVq2JEMG2i
-    SfPDHl9lZPAEQRA8nu3iSbH4mqku1oQ9MRxTt69BmbhV0C6Hm9QZnZxkj1gTbrh+zF/XvZ
-    ktxcGHI+JdXfKDzhbO1lyW50a/S91TP4xHKKM/AXzomZ6+mpo+G6EVTtGVjg
-X-ME-Proxy: <xmx:uN54aoxzXmTlv8g-hKmD3JDEYzjK4Unn2_Buryn_7l14HKClyJ0SVg>
-    <xmx:uN54aheJVa2dAsBQAI9BlpRCX4I7tvUzjN93ShEpxP1fqV8Vgp_fag>
-    <xmx:uN54arMGgtot4NEUH7heVtExFiSIAze2Ek_IquDnOTBSM4aHoatMZA>
-    <xmx:uN54asv8KMUAkRBER66PO6ZL0jRKkJpj-wZq1TfVKyVydpI96pIEdw>
-    <xmx:uN54ao_cIfqVq6ujRMY95Jn6KXJXQixcAcp-XypADARbeRN1PQtZrEph>
+    9P3zZ85qGs2o7yRcd1dFb7Azn2UrkJrazICMpJpdxrrQnz7x8H+iHPqNcRNEv9rHIIH1Gq
+    RgMkkq861QPEdJNWI6LkMIJNTMz33C1Z4/mx4aog/8gGlGcle1o6/mJ3Feq4aHBJG1+B0o
+    djLOgj2umsNmuKzvLKUZmuWSetBP2MNUHuaK/nP8Tr5uOisW3fr2uR0IqX0u5l5T74kj6T
+    jquQ2DDcOUi/hEnjGxi5lZPJoMR1CxhAl4x5HWLS3Gf50HBaZvfI+4YPmMYNlOLejH52vS
+    bB4DKnD6qOHxfwkzpb+29ixJeEcj0k/D9uJQPu84ynb6hU+kcJZEFOKE4DU7mzi1ik4sbp
+    ox1YaTD0GAQbuAzBbXU7XhjdNDxg1m0ii4IlfKSISBcWxegNqzRV6kr/Wbcw
+X-ME-Proxy: <xmx:zN54aukGypvktnxMJPmOK3Rp3hkD0_SS-J8CUAnTVmi-N3P3BkWxBQ>
+    <xmx:zN54arDVRGz11yXac7kszQHIkQp0lVEVE8evpvWyUtKTRoj75ycABA>
+    <xmx:zN54atgZQ3DILIFynZoGFV3_MeLfvwVKG8PBwDRjhisOkikD6o38IQ>
+    <xmx:zN54aoxhrbv6neUHfpWEpaePDWhIfiI6Z4RZ_MMMFj9Z52ryGFuBGg>
+    <xmx:zN54asAsuwI4txoLQO898OKKqLFZsDD_zsbB6Fz_e_DdFTG4otyW7AEm>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 9 Aug 2026 16:10:30 -0400 (EDT)
+ 9 Aug 2026 16:10:50 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -77,9 +77,9 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	"D . Ben Knoble" <ben.knoble@gmail.com>,
 	Matt Hunter <m@lfurio.us>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 10/11] doc: interpret-trailers: rewrite new-trailers paragraphs
-Date: Sun,  9 Aug 2026 22:06:34 +0200
-Message-ID: <V5_rewrite_new-trailers.b30@msgid.xyz>
+Subject: [PATCH v5 11/11] doc: interpret-trailers: document comment line treatment
+Date: Sun,  9 Aug 2026 22:06:35 +0200
+Message-ID: <V5_trailer_comment_lines.b31@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.22.g9e26862b904
 In-Reply-To: <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
 References: <CV_doc_int-tr_key_format.533@msgid.xyz> <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
@@ -94,96 +94,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Two commits ago we moved new-trailers paragraph next to each other.
-But there is something curious about two of them:
+Comment lines have always been ignored but this is not documented.
 
-    By default the new trailer will appear at the end of the trailer
-    block. [...]
+The primary motivation here is to be reasonably complete in the
+documentation of how trailers are parsed; this is after all the only
+documentation page that documents this format. However, and going beyond
+that point, we could imagine that someone would want to use this format
+outside a commit (or tag) message context, like say in Git notes.
 
-Then a source block and a paragraph later:
+On the other hand, it seems far-fetched that someone would be caught
+off guard by this considering that comment characters/strings are not
+likely to be alphanumeric,[1] which would mean that these comment lines
+would be treated as non-trailer lines if they were *not* detected and
+removed as comment lines.
 
-    By default, a `<key>=<value>` or `<key>:<value>` argument given
-    using `--trailer` will be appended after the existing trailers only
-    if [...]
-
-Why are there two paragraphs that talk about how “By default” a trailer
-will be appended?
-
-We can make these paragraphs flow better, and with a more distinct
-character each, by dividing the flow like this:
-
-1. Declare that we are about to talk about `--trailer` appending
-2. Explain the default behavior
-3. Explain how this affects the trailer block
-4. Then discuss what each trailer line will look like
+† 1: A notable exception is that Jujutsu VCS uses `JJ:` as
+     the comment string
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    v4:
-    • Simplify “This is how the new trailer” paragraph: drop “More
-      concretely,” since it is misleading (this is not a “more
-      concretely continuation of the preceding paragraph(s))[1]
-    
-      🔗 1: https://lore.kernel.org/git/xmqqcxxyt4op.fsf@gitster.g/
+    v5:
+    • Msg: add missing word: s/to/to be/[1]
+      🔗 1: https://lore.kernel.org/git/CALnO6CB_0ucqnAowrNcPmsXmxxDfJQZPVGkbsHVuya7NLR4dsg@mail.gmail.com/
     
     ---
     
-    v3: [new]
-    • Based on draft: https://lore.kernel.org/git/fc1f8149-98c2-48e5-9725-08cc21696cb2@app.fastmail.com/
-    • See msg:
+    v4:
+    • Msg: rewrite motivation for documenting this. The motivation is
+      not super solid, but it reflects my own ambiguity on the matter,
+      so to speak; I think we ought to be very thorough about
+      documenting the format, while making sure to not use the main text
+      to exhaustively lay it all out. The information should be
+      somewhere in this doc. But not in your face.
+    • Msg: Add “(or tag) message”. See patch “not just for commit
+      messages” where trailer support for tag messages are mentioned.
     
-          Two commits ago we moved new-trailers paragraph next to
-          each other.
+    ---
     
-      This commit here might fit better one step back. So that it
-      becomes the commit right after. But I can deal with that commit
-      movement if this change is accepted. For now I didn’t bother.
+    v3:
+    • Msg: finally fix area
+    • Demote this point to its own “other rules” section, out of the main
+      running text. It is not important enough for the main text.
+    • Since writing this I have realized that we can go into that long
+    
+         # ----- >8 ----
+    
+      Commit message separator scissor line, maybe other things. But I stop
+      short here. These things are even less likely to become a problem for
+      anyone. And maybe we’ll add them later?
+    
+    v2: [new]
 
- Documentation/git-interpret-trailers.adoc | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ Documentation/git-interpret-trailers.adoc | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index a1adab20fef..ac59ef51f80 100644
+index ac59ef51f80..b4988d39eab 100644
 --- a/Documentation/git-interpret-trailers.adoc
 +++ b/Documentation/git-interpret-trailers.adoc
-@@ -60,10 +60,18 @@ are applied to each input and the way any existing trailer in
- the input is changed. They also make it possible to
- automatically add some trailers.
+@@ -117,6 +117,16 @@ key: This is a very long value, with spaces and
+   newlines in it.
+ ------------------------------------------------
  
--By default, a `<key>=<value>` or `<key>:<value>` argument given
--using `--trailer` will be appended after the existing trailers only if
--the last trailer has a different (_<key>_, _<value>_) pair (or if there
--is no existing trailer). The _<key>_ and _<value>_ parts will be trimmed
-+Let's consider new trailers added with `--trailer`.
-+By default, the new trailer will appear at the end of the trailer block.
-+Also by default, this new trailer will only be added
-+if the last trailer is different to it.
-+A trailer block will be created with only that trailer if a trailer
-+block does not already exist. Recall that a trailer block needs to be
-+preceded by a blank line, so a blank line will be inserted before the
-+new trailer block in that case.
++OTHER RULES
++-----------
 +
-+This is how the new trailer is added: a `<key>=<value>` or
-+`<key>:<value>` argument given using `--trailer` will be appended after
-+the existing trailers. The _<key>_ and _<value>_ parts will be trimmed
- to remove starting and trailing whitespace, and the resulting trimmed
- _<key>_ and _<value>_ will appear in the output like this:
- 
-@@ -74,12 +82,6 @@ key: value
- This means that the trimmed _<key>_ and _<value>_ will be separated by
- "`:`{nbsp}" (one colon followed by one space).
- 
--By default the new trailer will appear at the end of the trailer block.
--A trailer block will be created with only that trailer if a trailer
--block does not already exist. Recall that a trailer block needs to be
--preceded by a blank line, so a blank line will be inserted before the
--new trailer block in that case.
--
- Existing trailers are extracted from the input by looking for the
- trailer block. A trailer block is a group of one or more lines that (i)
- is all trailers, or (ii) contains at least one Git-generated or
++What was covered in the previous section are the rules that are relevant
++for regular use. The following points are included for completeness.
++
++This command ignores comment lines (see `core.commentString` in
++linkgit:git-config[1]). This is for use with the `prepare-commit-msg`
++and `commit-msg` hooks.
++
+ OPTIONS
+ -------
+ `--in-place`::
 -- 
 2.54.0.22.g9e26862b904
 
