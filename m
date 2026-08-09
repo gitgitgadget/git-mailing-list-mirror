@@ -1,24 +1,27 @@
-Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C8B23393E
-	for <git@vger.kernel.org>; Sun,  9 Aug 2026 08:33:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF7A12B94
+	for <git@vger.kernel.org>; Sun,  9 Aug 2026 08:48:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786264412; cv=none; b=dRVi1p5tO9HaYv2ZhTb8jbDuuzLm4iZS92FO2z4DI5n3YbumVCwmmQLhD0PI1+IpycFhoqiT0CrhEHPnBhTui54hDIfoJ/2NKQJJnh3HZj9eXTPqhOxVXVlbl4xyEPLlcR5fwScN9G5swoPaInZVleu07tcZ74qxJqAzW1PlixQ=
+	t=1786265301; cv=none; b=cnKEnGtwwbSHH+O7ke8G7wolRqs60tpi+7Wq8h5LiZNCWvosg7b6xsWOql7+hTMhowauqCbOJJZsHoyxxToTRkMUmRAPwi4qZC2j9rjA53cM2KTCc2hWwBrIukTXPPz9wHWOuCNVzZY1KmXHDsUX77c5Keq3MGFWi418SKfxApQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786264412; c=relaxed/simple;
-	bh=jXIDUUJlprW8n4UuazhxVUTPRvYbHCYyRxq1dT1FvYM=;
+	s=arc-20240116; t=1786265301; c=relaxed/simple;
+	bh=65RzQDSBQ4gxk33/JPluwceUwpDfeUXQmLdcxymmYcA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RhHvb+uypB6gaT44kcbDmOepax/KquR92SDXGRvbibOTzLHDQY8A5EGb2xpI08rt8+XYqtwrDckApwaa2L04UdYg748F10o9mmdkoCQl7BRsRDZ9HC7aQJANyLPiT8gHpPN+5cmUIAmAzZdLen6KgHeRHhextGsqqCao+r/HWL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+	 In-Reply-To:Content-Type; b=ec1DJgiXcIGmXovubUoZYPWNI5inMnZPC6seRPJrgUd+dDsRjq25G2kGDpZrBSqCzmtrtGhUQ2HN/tyjkOb4XBe3aJ+t+zf7uXC6wsAQ8IK89Aj2fNOxawpqhp9OMZuRrvsD6r1JcZVXbzjmCL6Vap81mgPA4qlghGkk2qyswCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.107])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4hHs3Z5DnDz7QgNF
+	for <git@vger.kernel.org>; Sun,  9 Aug 2026 10:48:10 +0200 (CEST)
 Received: from [192.168.1.102] (unknown [89.144.223.124])
-	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4hHrkZ5k1bzRnlL;
-	Sun,  9 Aug 2026 10:33:26 +0200 (CEST)
-Message-ID: <00ed1592-b2cf-4844-8174-fb087fe0b0fe@kdbg.org>
-Date: Sun, 9 Aug 2026 10:33:26 +0200
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4hHs3N5N3mzRnCw;
+	Sun,  9 Aug 2026 10:48:00 +0200 (CEST)
+Message-ID: <ac611c48-4f95-4bf1-addd-bdc4344e80f3@kdbg.org>
+Date: Sun, 9 Aug 2026 10:47:59 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -27,63 +30,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] gitk: add user-defined custom commands
-Content-Language: en-US
-To: Tim Wiederhake <twied@gmx.net>
-Cc: git@vger.kernel.org,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Tim Wiederhake <twied@gmx.net>,
  Tim Wiederhake via GitGitGadget <gitgitgadget@gmail.com>
 References: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com>
- <82e59e71-5cb0-4a7f-9fc1-e66b367670f0@kdbg.org>
- <76636876b815ac4aaac77eb7b772e2e55234e11a.camel@gmx.net>
+ <xmqq7bm1d1au.fsf@gitster.g>
+Content-Language: en-US
 From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <76636876b815ac4aaac77eb7b772e2e55234e11a.camel@gmx.net>
+In-Reply-To: <xmqq7bm1d1au.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Am 07.08.26 um 23:39 schrieb Tim Wiederhake:
-> If I had proposed a patch to this effect, I am sure it would have been
-> nack'd as too niche, wrong tool, or any other reason. But having the
-> possibility to define custom commands allows users to adapt gitk to
-> their workflow instead of the other way round. I am very open to
-> suggestions on how to put this in the commit message without resorting
-> to (contrieved) examples.
+Am 08.08.26 um 00:16 schrieb Junio C Hamano:
+> With template "echo '%t'" you thought you
+> are just printing the title but if the title has "title?'; echo no'" in
+> it, wouldn't cmd end up being 
+> 
+> 	echo 'title?'; echo no''
+> 
+> and a more creative type can use something other than "echo no", to
+> have a process run under your name and do more interesting things,
+> right?
 
-The reason why you were unable to sell the change better is that your
-change is a large set of features in a single commit. If you started
-small, it would be much easier to get off the ground.
-
-For example, start with "I notice in the diff that a change is not quite
-right. Let me start an editor with the file loaded." That is a feature I
-can understand is useful.
-
-Next, let the editor start with the cursor at a particular line! That's
-quite useful, too, but need not be part of the first step.
-
-Then proceed to a use-case that needs to call `git rebase`.
-
-But when it comes to author, committer, dates, or blame information as
-potential substitutions, you will have a much harder time to argue that
-they are useful. Move these features in their own patch. If you do have
-a use-case, mention it.
-
-The gist of it is: make this a patch series that starts small and works
-its way forward with additional features in new commits. Don't add
-features just "because we can".
-
-> Regarding the use about AI: I used Claude to produce the initial
-> implementation. I do not write Tcl, and frankly, this patch has not
-> changed that. I have reworked the code - using Claude - until it was
-> effectively the Tcl version of code I would have written myself in
-> Python or C or any other language that I actually understand. Does that
-> pass the bar?
-
-I am not 100% sure. I take it that you understand what the added Tcl
-code does (that should not bee too difficult even if this is your first
-time doing Tcl). However, the Git project's guideline says:
-
-> It’s not yet clear that this can be legally satisfied when 
-> submitting significant amount of content that has been generated by
-> AI tools.
-So,... Any advice from the Git community would be appreciated.
+A very important observation!
 
 -- Hannes
 
