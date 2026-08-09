@@ -1,73 +1,73 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A913AEB29
-	for <git@vger.kernel.org>; Sun,  9 Aug 2026 20:09:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D30D4B0493
+	for <git@vger.kernel.org>; Sun,  9 Aug 2026 20:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786306155; cv=none; b=eKoSNeC/ZENk217gOiZsAo+Z8l0LdGEZpU2Z7AqcoKUC1skAoMRwuvcJUz+6ugAIVymCorAnMrmce788lrNdv1CAE3Yq/wC4GC46KCcR4fW6qDT0IEHochDw+mqnBSUc1PoMXw9SWbEfl6I3QVX/6EyxLh+sdEsPk0k1MdDkT+w=
+	t=1786306175; cv=none; b=fDRjkbGPmdyqLa2pIa8EVi2uNceoQPpy9uPkavZ1dopFchJ/lvfK3abPwHS+iFAAhrHUq2rJD0GDQavGkgMCa9uhd/ubUrXyuQfZ2Hct5lV78Pmagd1oRMuJHg7ibyod/J/VofmzNKSmSp5gy0qhK9411fZWT9r6PPoeb10Ii3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786306155; c=relaxed/simple;
-	bh=6bk9+isX6J6bNb7H2Nijd/CjyDWqFdDLgxcFaOMh4lE=;
+	s=arc-20240116; t=1786306175; c=relaxed/simple;
+	bh=ZVvRWSFLkCOvbjBFPdl8ErtlpNfEpeDnFYMRFFma+qQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QVG8aeC0deR8CRCF2Jv0iGAllvOrgv7KbSPY4Dkyr5lpmzkbb/COiYAOlQNFU9eXj9d+RexHf3uAkhsq4UmWBlwfWOZepyP9JG19k36VKAq7P3n1+wjrZFa66ZT+o5YQZq9Oc+O9KSr7RZesCAxSx9aG8ESh+T25BiamRpcLc1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=AVPKS6Zy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CnpJ3U8C; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=TRcTRqKNLAWR7T7z0VgTG44fA2VrTDk33QAa+BmUmh4JH7egpflKiFwFslDuBnKFKLtIwlUPcsrSXEGvFkIvAJkS19Ca+l4NJOboZmvuvgYb4E3gj8NihqUtdl3+o2jE2qZE61lzr4XiZX+3ELAHQ7MS7oXKXqkM7P2fUQXXFQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LB/UbWpk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VE9PxWVb; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="AVPKS6Zy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CnpJ3U8C"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 69ADB7A0147;
-	Sun,  9 Aug 2026 16:09:13 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Sun, 09 Aug 2026 16:09:13 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LB/UbWpk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VE9PxWVb"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 11B691D00028;
+	Sun,  9 Aug 2026 16:09:33 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Sun, 09 Aug 2026 16:09:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786306153;
-	 x=1786392553; bh=R2SdBQIkFOdAz4KtOvDLt9ZtoM0TdUaEgdCYHkCgDcU=; b=
-	AVPKS6ZyuLyoTk6s0Gh/jAv4WM27h0hnNes14mmdGXc0qzhq8+wSHibNsYDv4jeO
-	oLnNOzQLoBI3Xu8JmQ8kMlH9Yg0s421FNoQCkJTWvbjLcSz3hRZ7XUJDPEI1X/0f
-	XoU8tZfwjTosC+C9xDx+H50G8c3Ihy3vTe0v/7Isk6ovrirvIN1x8cXEBhzQDNOt
-	FjHItX2CxEW2b/UmIr6S81ZjSvl5yege2P4jTnfHze7NMbyWrSFxpIv8RKT5zV5D
-	lVygtsquNEfTUNs7G+SpVPOCVaT5vRA5sx0a07rw2NDV81dE6ORD+Co2ZDyBOi+O
-	BzPqguRtNsNYPAalWAJe2A==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786306172;
+	 x=1786392572; bh=g95CV+b6TgiXhzUmZbFP81/c8WX2kKWmyPL0aZHO9Ug=; b=
+	LB/UbWpkWco3R8GyWp0wuM374TV9Qn49Up1vVUE79EYKt5PpVg5zJI+JFC6Hmeu5
+	nZEePKoUT7eQJ17v2cPN1en6Up6Z2YU5vKKwAFdOQF7ndA68COF6Gj/Xo+jlmJhG
+	wmE6i/YjgmycbxeOVb2/g9OsjyLt7w91CRw6BuNfhvzXpOAAaehwlLcdrbl8tfNH
+	07PYSy/TkaPNClh6vIRgzTF920PYmC7kPoaze+mCx7YafEKw8YPE+tsqaP0cgBNo
+	nryf3BctS5fYVC6eZLmXQ07lpteA4iJOw+adIe2BoBg9eLaXnQGgT2uUmCm9dMuW
+	iA1PK/ChcowkQgkQsl5l0w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786306153; x=
-	1786392553; bh=R2SdBQIkFOdAz4KtOvDLt9ZtoM0TdUaEgdCYHkCgDcU=; b=C
-	npJ3U8CRxA59iycoE1joFANqXvLWWmyE5ZPLhLKy4abk6O/vsj+ylvXseHSuSij6
-	hCEYEjRd5h2T+QRZ5s3gG+TN9lPPD03gYOLv3TY/vU6gvD7BrrFh9MWtVL784I4X
-	xMnx8oC4K5NeSfogbBFboCJmnV+jqkOg7T7UIucVUF6W1VjV2BPVSEjYIRD23OqC
-	ikyDTl0q1DNPUp6nRwYOxQPWSimtK7AqcWdH5sh4ROVOUvzg7afAQ2nrMjMEbq8x
-	PyfgAKn42BJ8LPXpS9GH6ino3Rt8sTt1n4eaE9mXqZX75msZsS36bg0YWwBU4gpL
-	MPihXwOPF0JBan2Db1UxQ==
-X-ME-Sender: <xms:ad54aoSuKugk6qi7x66s8dtsZXO8Oagcov4umVKQ3E3gSUJLcUZpVH0>
-    <xme:ad54aiq7xBPYNBXnVRpvc2J3ikK6X9BQX9MS8vF-_qvv02oI6Bu7ZWKn5PfIC4FU0
-    F5e8rHUeKKQBQ8eNcM0rxKUZ2tLqrtQS9_xL4YYXBL-_VfzzvCApw>
-X-ME-Received: <xmr:ad54alkiMC9en4UIrne2PVwb8oI31qcqVVdPOMZWsytGV_2PZIQPM0Yd9Qca4YbonZIOTnPVWuYFXVReRCjoAMxGw6Az1ki8rPQ_CDYZtB2xADUyYq4QohU>
-X-ME-Proxy-Cause: dmFkZTEP/LelQ0EwybSPCfvWHdaccRMlsXYgA7Sv69s6JpBWYIo4rp5C+5TH+ZteGuixm+
-    XpH8a9JNVfKgSq1+v9atvn5e85j9ir4ARALZAYueOFZMMFWLqREeTgLxGOK5R7SQrA+FiE
-    LfNDGIoqGMkjl6Jvno+Nu7VUkcCIDj+Ro7QzSKm+gzscRkqf364tzHIu8kzfLpOfvmUl/M
-    DcDkwY63OZHVLx26VIFTyFxueHkaLyobJ8c4wuFj8/cxZkpIVaspF0Ps8Towva+SpjPq+n
-    MlDzbDYJHhBIyOAZ+UqYJjngFbVyooohUtVCijd19AQUewaxoEJKvdOLF9GdJvSwTRx8hR
-    nrhpMHJyAd+Ovvkzb2Zf5UtvXBhLF/dy064Hkmq2mGNW13u15Vy9So4KDz/cS+fa+DA3n5
-    sw55sdk26rWhQsj9pzrmZfQpakTkyaoDy+A5YsuDHM73+kOQ/1focy6R8a1amGbc0abCIj
-    s4pAbxxRLRchUmxIC6T9mI7inhLNfPJqu2kZjKei+tMFKox6NRZkNtiRjGAtOwIO0PiKW4
-    HBFO1Z97rpCsjn5mQslk2CYd4E5VzB8wKCYEcXRefCkEULsLQAJs8bPb3KcQl2lfdGLSH9
-    SGidlayjXmCQVbD1WMoEeKTfYoMXDyA9Zs3cmD7X0lNoUwL8iv6AHRyu8klw
-X-ME-Proxy: <xmx:ad54arfF5q90vLJg1VI6uGh0KS5UlueKjwmaRg-eUoGzpQQNf_tFEQ>
-    <xmx:ad54ahpPOkNYqmre3igtISNP9KlkoQPVVRHH3_mdtkhGKEqS-apnng>
-    <xmx:ad54alMG5EPw6-44TTQOwljC-jndvukJIonheZT1st6cx5Ud1r3Wfg>
-    <xmx:ad54akgqFQxwVZjvjdp_auSLxoRFLbDOHti0nKCdBKiXPmArO8D2sQ>
-    <xmx:ad54anUTnF306V-uQx8RUWTyYPAGTNZzVavjO7UwmzOfcqsWSTobKln_>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786306172; x=
+	1786392572; bh=g95CV+b6TgiXhzUmZbFP81/c8WX2kKWmyPL0aZHO9Ug=; b=V
+	E9PxWVbnT3I6eUeOtrRfpDgpeAXxiJrv9WV5eSK1Lmnvxq6d01yUJ+cbWmZtG71S
+	j8/I7YqlEDIQIHvMPhLGlZoUnNBbBF8iKsGTvaiSESu0PEmm4lwrAChddFdkVzDx
+	gTkOiJlWQKIYuzpWZmPemIQWvovjxeIhpNBJTq13RvIM7v9LhR5ClRJ53xP4cmZf
+	k+uAYRVrxPy0k7dWbg4Z6s4avgJ5L0iN14Idd2G0hs3BWQyF+fE5OE2p7cUfEjq4
+	Cmxcpjnv9v0ViS4nK7IlLa07Z/s5B8mnDQMVW/+NAgDRwdlZiiw9GYfX8WFwhZBJ
+	NZ8n8cpBTTN6D0XRi4Igg==
+X-ME-Sender: <xms:fN54apqq8M-HsQdeLN5ihXw_Up9M3i-TVabfM2K9vSvCwaSe1foHiyg>
+    <xme:fN54aqv6HyP2v8FK99grI_BTJenWU_rXRSIN7yNwMlHMzXeALDo5hoLm6ZMG3PkCR
+    WNgys5ucPLT0iPs0ew67ZKBXBYzXjB53J3ToSpvaAmh5sZfdZ5lSA>
+X-ME-Received: <xmr:fN54asYaBKPbyvUgxko-aOnxx7hwM4DinXcOxaZl6H4-WHg_YynnbU7QoosOOWAzoKTrquyNuXPLoDEEPRAZ8FsIkWfwN1aGGmy6FeiU-sX7TL5QxSyd4Aw>
+X-ME-Proxy-Cause: dmFkZTGDgrJ11887wtahT2bOh7OYHsQUBgHnp9OycZqCDEYNX5Ufjd0PxPUgc93BAA44II
+    4K3JRUK1n8IGY3QHnIosZnp+TKJiHUC3HOsCfTBgty9wfQwVRAj8BcVCtpdQi8RC5673Az
+    RwlFGzPD8HVQuhjfthfHqTn9ng8YBO+NA1cUY6G7k74yuCagrr2gUe50/jCZjzfzptmS05
+    td8pBKp1QKamNnJ1jFU+YZ+bN8W5Q8gJDQeRlu7rp3dczGUnNahSqgfh+rN9l2NjXUq6HF
+    UEEiPcsIQkA45TEwZiJj4fqDyM1u+4fxM4QCyl5fNuziPGAG1B0cjqT5uyOSEMuwJLvOb6
+    kgrowmICC/370vMmX5bHIt7geK9IGiOZb+HTg/fCbqImYSJtFIMcKWRqwTJiAGxkceQeC4
+    L0vNa6ZdYIPBbfzJSArcNqiOQT8ugOGgY7BtAII+0NBiF2JexhdCUbFyqRZlFPuQxaHrKV
+    en5Qsie1Ws3RnEkn0SrqR8rjFZk5nySLN0Y39m9+AzZ0Fh1Ol5KROMOtM4CiVMSCPnQW6R
+    wxuqRwu+tZVD+8YOkIHnIXOKxXD/JKhNZmT2J1mD0uZ3ISWVAEzAS9w/GVyyuK/caAZcHG
+    7Ldmyu+gO7qqcSsBfs12+0Eo8miL5pHm7YVO0JtcEJ6rgejedyA4MX3SJeeg
+X-ME-Proxy: <xmx:fN54ahZoPvAkfYD4teTyjWkxBKUYE18svtXtsMjIB26mQy_yKgFCKA>
+    <xmx:fN54atmjnIzB6HVbx568ndMpjMz99emy5O_FH5GfOFKcQV9GiNJBsA>
+    <xmx:fN54ak23qrTa4wlXt9zBIdd6mVvPE8RvTEJoUtpMl9w6Ki3ns3eFrQ>
+    <xmx:fN54al2KHpG6v1oNW45BjQbqBNcI4ELklk77qdV8j94m-I5RIpCrLQ>
+    <xmx:fN54auPx_NA9OOIvsKZAKup-AYK6OtqvutIMN8Iqaw_NKKnFmlCM6yGU>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 9 Aug 2026 16:09:11 -0400 (EDT)
+ 9 Aug 2026 16:09:31 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -76,11 +76,10 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Linus Arver <linus@ucla.edu>,
 	"D . Ben Knoble" <ben.knoble@gmail.com>,
 	Matt Hunter <m@lfurio.us>,
-	Junio C Hamano <gitster@pobox.com>,
-	Brendan Jackman <jackmanb@google.com>
-Subject: [PATCH v5 06/11] doc: interpret-trailers: explain key format
-Date: Sun,  9 Aug 2026 22:06:30 +0200
-Message-ID: <V5_trailer_key_format.b2c@msgid.xyz>
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v5 07/11] doc: interpret-trailers: add key format example
+Date: Sun,  9 Aug 2026 22:06:31 +0200
+Message-ID: <V5_trailer_key_format_example.b2d@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.22.g9e26862b904
 In-Reply-To: <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
 References: <CV_doc_int-tr_key_format.533@msgid.xyz> <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
@@ -95,47 +94,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-A trailer key must consist of ASCII alphanumeric characters and
-hyphens *only*. Let’s document it explicitly instead of relying on
-readers being conservative and only basing their trailer keys on the
-documentation examples.[1]
+All of the examples speak of the Happy Path where everything works
+as intended. But failure examples can also be instructive. Especially
+for explaining again, by example, the key format (see previous commit).
 
-The previous commit provided us with an appropriate paragraph to
-describe the key format.
+This also allows us to demonstrate trailer block detection with a
+concrete example.
 
-† 1: Technically they would then miss out on using digits in them since
-     all of the example keys just use letters and hyphens
-
-Reported-by: Brendan Jackman <jackmanb@google.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    v2:
-    • PS: Reported in https://lore.kernel.org/git/CA+i-1C1DM0CHoFJ0A5CchQg=qDVLi_SSiZqcd0dxsay-Y94WTQ@mail.gmail.com/
-    • Remove the “paint by numbers” reference after review (unclear)
-    • Add apropos footnote
-    • Tweak the paragraph about how we now have a context to describe
-      this format
-    v1: [had a note about code spelunking (isalnum(3))]
+    v4: Fix doubled word “to to”
+    
+    v2: [new]
 
- Documentation/git-interpret-trailers.adoc | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/git-interpret-trailers.adoc | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index 109059f11ed..fb503cbe952 100644
+index fb503cbe952..a0f7ed6fdd9 100644
 --- a/Documentation/git-interpret-trailers.adoc
 +++ b/Documentation/git-interpret-trailers.adoc
-@@ -18,7 +18,8 @@ Add or parse trailer metadata at the end of the otherwise
- free-form part of a commit message, or any other kind of text.
+@@ -405,6 +405,29 @@ mv "\$1.new" "\$1"
+ $ chmod +x .git/hooks/commit-msg
+ ------------
  
- A _trailer_ in its simplest form is a key-value pair with a colon as a
--separator. A _trailer block_ consists of one or more trailers. The
-+separator. The _key_ consists of ASCII alphanumeric characters and
-+hyphens (`-`). A _trailer block_ consists of one or more trailers. The
- trailer block needs to be preceded by a blank line, where a _blank line_
- is either an empty or a whitespace-only line. For example, in the
- following commit message
++* Here we try to use three different trailer keys. But it fails because
++  two of them are not recognized as trailer keys.
+++
++----
++$ cat msg.txt
++subject
++
++Skapad-på: some-branch
++Hash-in-v6.11: 45c12d3269fe48f22834320c782ffe86c3560f2c
++Reviewed-by: Alice <alice@example.com>
++$ git interpret-trailers --only-trailers <msg.txt
++$
++----
+++
++Recall that a trailer key has to consist of only ASCII alphanumeric
++characters and hyphens, and this does not hold for the two first
++supposed trailer keys. And now none are recognized as trailers because
++the candidate trailer block has at least one non-trailer line, even
++though `Reviewed-by` is a valid trailer key. Recall that a trailer block
++has to either (i) be all trailers, or (ii) consist of at least one
++Git-generated or user-configured trailer (and some other conditions).
++And (ii) is not satisfied since we have not configured any trailer keys.
++
+ SEE ALSO
+ --------
+ linkgit:git-commit[1], linkgit:git-format-patch[1], linkgit:git-config[1]
 -- 
 2.54.0.22.g9e26862b904
 
