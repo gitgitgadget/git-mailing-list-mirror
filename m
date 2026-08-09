@@ -1,83 +1,89 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879241E515
-	for <git@vger.kernel.org>; Sun,  9 Aug 2026 07:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C8B23393E
+	for <git@vger.kernel.org>; Sun,  9 Aug 2026 08:33:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786261539; cv=none; b=dLSCG8pZQdn6STW0MypWjoqHpZnrz3HsnW7TOW3o7hn68guLume/59cjldZTfA/99jgfhxMiXc3pvQj8c3yO54iGvYtVI81Ebxy2lujKSN6NwIwUvMDmNR7MRI+APz16FN+a/RwUZYj88PzMYKgoKZrXDQD+2CH+9tDPwvbKRTU=
+	t=1786264412; cv=none; b=dRVi1p5tO9HaYv2ZhTb8jbDuuzLm4iZS92FO2z4DI5n3YbumVCwmmQLhD0PI1+IpycFhoqiT0CrhEHPnBhTui54hDIfoJ/2NKQJJnh3HZj9eXTPqhOxVXVlbl4xyEPLlcR5fwScN9G5swoPaInZVleu07tcZ74qxJqAzW1PlixQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786261539; c=relaxed/simple;
-	bh=3L4n7C5IdfLGUEobcJFx3k28dIeApBURVAoraFFpRQE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0hNf3MPboNcnQrqJHL9MHzOcO4/dTLseDb7gE/wBS79trE568zXhylDwsqfKWWiVPRkDZgc5dltsZcdoKO0o0ILVRxzEYMQ4PcRW3lwNb8l4J963tjWGOdJNpfvf0iNnhbwfK6jHh3++P+sy1tMAW6VhTGyR8i6bH4K3xZv5+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZD7noSIR; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZD7noSIR"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-39f75e0a2f1so4779331fa.2
-        for <git@vger.kernel.org>; Sun, 09 Aug 2026 00:45:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786261536; x=1786866336; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3L4n7C5IdfLGUEobcJFx3k28dIeApBURVAoraFFpRQE=;
-        b=ZD7noSIR7GN0cxl19qynS5M9jm4FcEOiKd342qMydTOIe8GK6/IuNLFEHOlnq9bKNm
-         bQ1WriJ5iBGttdgdRMng6lRc7JTMaWTH//KF1rDwkCFOW2srvLuTpP1PdFd3xpItGIPD
-         1ya4DONyemO6kege5L09i+uQEJWk6Wpa3ze28yZ2nq8rwUqUEw6kxHTf+NYIb2J2+pgD
-         Js3fBrOzBdvSQYathJrCEZIpUkfOvcBfDpv8Os11kyv7uOBOfiBI+Tl7JOuiV+8K3OXj
-         qRq0ebKRtcGT8rH/smh/cbAB9/YCuNeEmT4vVowA2pjoDOfSAdbUK8FxnrX9q3pbzy45
-         5mHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786261536; x=1786866336;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=3L4n7C5IdfLGUEobcJFx3k28dIeApBURVAoraFFpRQE=;
-        b=WjkBtWDOt8B2YXhZGJs8WDnokxMjG3yM/VnAFrD/NkzQtVCsqO/9bWUPfFUf1lLY6B
-         O2U21GuIVtFLVD9h/Bm8ALOxdP6IbqitPq+YrjA5SZ/Y9J/gUUGOqdrsdE4Bg3uSZMOE
-         ijopQgBFX+d1d65lr8mAqd1M+/EJng2AWcijClkHHaxF8/M7Yfh/Age+jNMwcREIN8lj
-         g+D6lIlU8t0vmkDGNOOs0ejLs1Trr16jcsy6tC7p4pxu32nsxTXwxV0cDHcC1h1/YMjJ
-         u4pfJKcA2nkI1pLPTFPmmPi0ciGySIy4BXFDnvghkdK/x0nQk80M0yprBgF9OKTziHKV
-         xqzA==
-X-Gm-Message-State: AOJu0YxrnHf/iKVkkz5LEDXKTsdyKcOK7hDBLWzhvDo1QXTgow/pmxCu
-	NvSsWA3M2Lizpkg2/mNSJHrbAy26tYRJjsFZ5yt+UNm9pn5oB/1oLwDW
-X-Gm-Gg: AR+sD12SUYh4GQ8cJAC9bJa6eHH6CdLG67HzKCDmrxrCXbWu73owgj1sio8PC/LLmV4
-	3UF5PEvS4igMN7d04yRjSTDVw6JjZ3/dzopGGEe/iutXA0jLqJr4bvO8ZYLl6SeVtSFKWc/zGip
-	U9Qz9crOHonIeK49mwDn10zD8PRUOwnZXjDdT4lc5xagn6E2HIvj3BCY1pPPvw+GHabLamyd7Bf
-	/sdUjnPmiBmV2rJjlALve22WS8hYmqZwyJyTSP92TFUyLfvJ6qbn9SDggsdqSo/n4HMX7WtYLIw
-	8duajgaXJvAitBfOPhxpLICD2GOHs05xvp2VHyXwejNi9jMdlqdlf6igQfB5HJ+pHu/5O9HcjtN
-	BnrGgSjSxaVfDNT6Fn0J3Sr/xzV52DDod+yxeYKvdyPqQr4Xq4e2qZeKatp9p4hIVkm54GlP14u
-	IE49HrCbn3dJCtvI/Fk/Hg8a+klrYR8FqX80xBbTGKy6o+378mYT4hHU4iWINsczT4bzCDi1akD
-	pTFEEV1QzCdb4cDDyfX5fwFr914qxhOcZrKi61Jftb9H1KJ44+OBQKNgW+zZRRzopuyJ0E=
-X-Received: by 2002:a2e:bc20:0:b0:39f:bc94:eba0 with SMTP id 38308e7fff4ca-39fbc94ec95mr41331671fa.14.1786261535358;
-        Sun, 09 Aug 2026 00:45:35 -0700 (PDT)
-Received: from Haralds-Air.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39fddd861f0sm15252661fa.40.2026.08.09.00.45.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Aug 2026 00:45:34 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	yoichi.nakayama@gmail.com
-Subject: Re: [PATCH] worktree add: improve message for ambiguous remote branch name
-Date: Sun,  9 Aug 2026 09:45:28 +0200
-Message-ID: <20260809074528.5189-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.55.0.500.g5a936bcb93
-In-Reply-To: <xmqqo6fc9swz.fsf@gitster.g>
-References: <xmqqo6fc9swz.fsf@gitster.g>
+	s=arc-20240116; t=1786264412; c=relaxed/simple;
+	bh=jXIDUUJlprW8n4UuazhxVUTPRvYbHCYyRxq1dT1FvYM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RhHvb+uypB6gaT44kcbDmOepax/KquR92SDXGRvbibOTzLHDQY8A5EGb2xpI08rt8+XYqtwrDckApwaa2L04UdYg748F10o9mmdkoCQl7BRsRDZ9HC7aQJANyLPiT8gHpPN+5cmUIAmAzZdLen6KgHeRHhextGsqqCao+r/HWL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.1.102] (unknown [89.144.223.124])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4hHrkZ5k1bzRnlL;
+	Sun,  9 Aug 2026 10:33:26 +0200 (CEST)
+Message-ID: <00ed1592-b2cf-4844-8174-fb087fe0b0fe@kdbg.org>
+Date: Sun, 9 Aug 2026 10:33:26 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitk: add user-defined custom commands
+Content-Language: en-US
+To: Tim Wiederhake <twied@gmx.net>
+Cc: git@vger.kernel.org,
+ Tim Wiederhake via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com>
+ <82e59e71-5cb0-4a7f-9fc1-e66b367670f0@kdbg.org>
+ <76636876b815ac4aaac77eb7b772e2e55234e11a.camel@gmx.net>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <76636876b815ac4aaac77eb7b772e2e55234e11a.camel@gmx.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is an interesting idea!
+Am 07.08.26 um 23:39 schrieb Tim Wiederhake:
+> If I had proposed a patch to this effect, I am sure it would have been
+> nack'd as too niche, wrong tool, or any other reason. But having the
+> possibility to define custom commands allows users to adapt gitk to
+> their workflow instead of the other way round. I am very open to
+> suggestions on how to put this in the commit message without resorting
+> to (contrieved) examples.
 
+The reason why you were unable to sell the change better is that your
+change is a large set of features in a single commit. If you started
+small, it would be much easier to get off the ground.
 
-Harald
+For example, start with "I notice in the diff that a change is not quite
+right. Let me start an editor with the file loaded." That is a feature I
+can understand is useful.
+
+Next, let the editor start with the cursor at a particular line! That's
+quite useful, too, but need not be part of the first step.
+
+Then proceed to a use-case that needs to call `git rebase`.
+
+But when it comes to author, committer, dates, or blame information as
+potential substitutions, you will have a much harder time to argue that
+they are useful. Move these features in their own patch. If you do have
+a use-case, mention it.
+
+The gist of it is: make this a patch series that starts small and works
+its way forward with additional features in new commits. Don't add
+features just "because we can".
+
+> Regarding the use about AI: I used Claude to produce the initial
+> implementation. I do not write Tcl, and frankly, this patch has not
+> changed that. I have reworked the code - using Claude - until it was
+> effectively the Tcl version of code I would have written myself in
+> Python or C or any other language that I actually understand. Does that
+> pass the bar?
+
+I am not 100% sure. I take it that you understand what the added Tcl
+code does (that should not bee too difficult even if this is your first
+time doing Tcl). However, the Git project's guideline says:
+
+> It’s not yet clear that this can be legally satisfied when 
+> submitting significant amount of content that has been generated by
+> AI tools.
+So,... Any advice from the Git community would be appreciated.
+
+-- Hannes
+
