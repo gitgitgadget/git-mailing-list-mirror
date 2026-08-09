@@ -1,73 +1,73 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696324B0493
-	for <git@vger.kernel.org>; Sun,  9 Aug 2026 20:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26E04B0493
+	for <git@vger.kernel.org>; Sun,  9 Aug 2026 20:08:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786306096; cv=none; b=bSOUOTUtFHqgYPovonunb2EqxOApcAhgEs9Pri9/OwXZn3/DKcDLd93qc+5EIyEkr+8//NUX2OSXDie6YRtCIuLWZo7voycBp6BXM3UMTUompWXhBFOzyiIJST0VAxgf/AS6EIJxKUmo3x705WdTq828hvYn6ZF3OPmjG6d1HKM=
+	t=1786306116; cv=none; b=JqyXaFHrG2jBwa+cPnNhJ3LAHJfhei0/OzJMYhJtR3IaJfcVfyOa2GFW5OQJge3w5MmfeQD5losNYe8lBJ1YbrErC2fVD+/6ocaimB5LiI8021zxOEqaJ32wNkkhoxW0apyjb+gA5HMA3ZOYFIjh7OcsHJT1eMHjcELu/clSGC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786306096; c=relaxed/simple;
-	bh=67V3WXRFDFhJfMB2tBRGE6tNePIak36ec6k/0KO5Ymk=;
+	s=arc-20240116; t=1786306116; c=relaxed/simple;
+	bh=jrvzBSQQJa0OZjY+b6jlWKIMAGJcXYmF8hH9nGC8uN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HP6jvD7DlF4MYz1IEbrVn7RcrjFxS9RkCAivom/09Ghy2eMS4ydYMmvm6RJ9isAhPPuOPCV9Du0SijCTNxIqwWgZSzUH5Ms1da+kx0jIUlc4x3ULh2xartgZBOjTzq7OE3hbb+arDB+O87kcvxL3xXhLOxjnltcNNiuKj28g2QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=eBWlhjFN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ccHPuObj; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=kSDrn1At7z8rW9yKyy68iFqm3KeLOFmHWaWI49S62u34vkd5ul+KRyeUbhpfhcHqCJSymNZjjISXmlGDZcvIzUODrv7VORtGbU7yFedwg7SfIe/dE8bVlqTdQ00dh3LGHxuX3kWqhCeXI3SqD3lbjjsh13Mt9EeLeH2hgwimgPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dQcMlV2G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c8sdarID; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="eBWlhjFN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ccHPuObj"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 55E667A014C;
-	Sun,  9 Aug 2026 16:08:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dQcMlV2G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c8sdarID"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 01A101D00028;
+	Sun,  9 Aug 2026 16:08:33 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Sun, 09 Aug 2026 16:08:14 -0400
+  by phl-compute-10.internal (MEProxy); Sun, 09 Aug 2026 16:08:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786306094;
-	 x=1786392494; bh=O7f15Ts2O8N2gHo9x59jPskd9V4Z4bm7Jv6Mu5LCL0Y=; b=
-	eBWlhjFNs43ZxZEQ3/FIKfJAUjzd/MlgLMi8MNa2M3M9RgaxFoOtGQV2GUwYn1Un
-	ZYD89zN6JNKNyxIK4xecAyUjk85bAX0IPFw2L07JqimND25zSfj4DWTZctmdyjB2
-	dKlcoNvNBOY8qZowl5FRToS7g7HglkMHT+kexikGlrQ44adhBjb0IKQ8Zas8nt9f
-	1V6qFrLftRL+S6is3vi/A4WkuzjrQnKxJj5EsaL6uBRcff9ADZ/ZFT/+LDkre7G6
-	eKKub73NBM+/J3I5tA/CMMkBuOlqsYrFpLneI1FkRKtZDPetoNFUMUs6K6TaerkB
-	LojNGO21Y/saswKr0gZziQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786306113;
+	 x=1786392513; bh=TlLDZxv7cRW+e0ioz5NAVcTpXwFtDG3WORhNaALehks=; b=
+	dQcMlV2GdK/szWxvJzqvYKIWnfD/zm8PMv/ocDO3TqZ7byjXBeFKMWmesfk9WGMZ
+	/G/J/Zft/PpzFzwRJeBYC5ZqPKRST+wds9rFTGvnIaY98es0qDhbU8XVoXgt5COx
+	nUsoaxlHXEEGdZTeTG53PZI7iwzPSG8kH+AqAHfrMvs20JNo07V5i7p8qcIomB3x
+	4OAoMgLEIlTtN8s01s1Aa8x/L+XiGpm2z0PRMgHgAPh7eK6Nqoaw4oYXS/rFBoxz
+	nykq/Ro8YGLt7ZpAyz+yLAFPaDYGSoDDjcXcy1zL7VPaFye2RV80OUGMRt6WjaDW
+	Q9d7wafkkxHlcSaDchAN6A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786306094; x=
-	1786392494; bh=O7f15Ts2O8N2gHo9x59jPskd9V4Z4bm7Jv6Mu5LCL0Y=; b=c
-	cHPuObjmChUx+e3cVxdmvlRidDJDLsREt3RtodqftpCGoKlA4HQ8uSIhyzamDj9l
-	eLTdS2nd8J6l6oUevgN4prg5e03RagHs/qtqQa/Ws8nzcnXl+8aY1h66+BsVFXC8
-	13NwoIPodetp1FsUkRpdvxLVVilcR4oqHZuLaJE6R/x0dozlOWjVfK+H20PnJhDP
-	im8erpBNzuDOvz4I4l1iaEF2eYl2kc6Wp5tvqW/f2NsQGY2xwikI8wVQEEnxpN+k
-	AkMgC/bKyOxQLD8TZXYTVheqFuqgQ25Fah6EkKns5jU+JlZgMRSoP0jV70CJ2q12
-	j6vlvHPtuMOZrFbEQDFpg==
-X-ME-Sender: <xms:Lt54aupC53zUqvzbC1nLETWV_De2U2SoqCa5_Cw05ceEM8t1AY50A2E>
-    <xme:Lt54aru0th7yFcvcx9JDXtmrsI4DzOjfWoO_pwYfcHW1UdpS_drYCoMaLpTz3NL6S
-    YswTLDEcw9ETeOYRebHMKAFTS70XECA1LspqunIDDebmpQt9jnBLpg>
-X-ME-Received: <xmr:Lt54apazG5QTwlTkxVsP0-Tdtt4ddUfFv0ojdqpgHqOFMkyz9PDi--erkw83UkJ0P77mkeDn-6vJ-usM7qjBi5t-_0dWRNKgOOJ7rUTg6amjGuQs0GdWKgo>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786306113; x=
+	1786392513; bh=TlLDZxv7cRW+e0ioz5NAVcTpXwFtDG3WORhNaALehks=; b=c
+	8sdarID8pgPV5O8QibASq6mhq7cfzLxmzKE5lGoy0TpznhVOJvg2XEZjQxhtcAzT
+	IkLhFBy1qqIJ5vpbS8Ezqv+1A9puFkFzb6qEjVUa9UbkREUjJGuRNFz9+vxLAeQq
+	d4X4K0orih0r4qeNitw4kRf4Hjr2++ghzlCarfArNMM2b0myWCtBeBKQBVhRHgzM
+	TKsIAM3O57j6RWeDBYq9B2RIBDZUCUJ4sPEi/4DZHlb1jRV7hfRMhpkTxSH5/ULZ
+	qDFEKS9WCZ1k1uaoBPMaZ9HK5/XR2GU8OlkfYy2CVafxCj6X1Qc5Hg0oefmlCaHI
+	tmhF/zuP2abxD3QWcE9bQ==
+X-ME-Sender: <xms:Qd54audyp5sTunInA7wCgS85nXaCcEhcJ6iekElONwFP4R-XBwOSSAw>
+    <xme:Qd54anRx5IQhne3mEUqSJuzv6uCzUP-DDBPYMRQ_a4h9tXqdsSzbM2StONc5tvF1v
+    3Eieea4od29fBBKhYBgBZMcRUjcMSyA5uE0y6T26Jyi6i56Qmnmqw>
+X-ME-Received: <xmr:Qd54altEr5XzwZkUsV7QehaYkLphN11BPCYIDr24N2z8OtNaB1VrSrlTQNFFLTbZI5lsWLsLUsrDZqUh_FaonJHjrZGbmSEEgXhytG5aGfNPTA68p9kmJLY>
 X-ME-Proxy-Cause: dmFkZTGDgrJ11887wtahT2bOh7OYHsQUBgHnp9OycZqCDEYNX5Ufjd0PxPUgc93BAA44II
     4K3JRUK1n8IGY3QHnIosZnp+TKJiHUC3HOsCfTBgty9wfQwVRAj8BcVCtpdQi8RC5673Az
     RwlFGzPD8HVQuhjfthfHqTn9ng8YBO+NA1cUY6G7k74yuCagrr2gUe50/jCZjzfzptmS05
     td8pBKp1QKamNnJ1jFU+YZ+bN8W5Q8gJDQeRlu7rp3dczGUnNahSqgfh+rN9l2NjXUq6HF
-    UEEiPcsIQkA45TEwZiJj4fqDyM1u+4fxM4QCyl5fNuziPGAG1B0cjqT5uyOSEMuwJLvOO8
-    JZAtZ1qovJUH9EXoh5bZ/uHukAB9s3sLpDDxW3Nsl4xONlRwNgcrsyLpYW5qKROOUYzKL2
-    Biw/6CISEQ/JcGjvhVGJCqfK0EtqmYF941gZzNFxWGNVjY0ihjsbPES2KCAe4IkI+kYB1A
-    mG+IVdmk4z3+RtOaC0st57Ap3QiZ6ujR7xKvqlLvcfyK06uGeKsS7u04z+OoQHnW9wYBa+
-    EBui+14QKAHhtSeD3BOphXM7DM/OrmV3fW8XtrVJxb8XJOgc4z5vVVkQZZ1yuV2aZdLAuy
-    ALz5LIt8gMX4/VVb+aNNp84haBrMzA7Z0D9PXtpftjJgN0SA10hDU2e9eIGQ
-X-ME-Proxy: <xmx:Lt54aqZYVQoYQN-STNIFeX3H1FllNydZ6mg6iLex-6Me_Z9_IBysWQ>
-    <xmx:Lt54ailxQum7WqMvVwtLiOGFNCfsxTu_ZHAZlPC2X_a5wOLqZoVIMQ>
-    <xmx:Lt54al0CecPyT2mrTAW4DolEUs5UF9yr2ZuXkAvJngrFChn9A3Hq4w>
-    <xmx:Lt54ai3gJEkpTaiM2eRI1Z3gQRRn4lyxmzKSh2H1TitFJz3CCPsTfQ>
-    <xmx:Lt54atEIhn_YIxikauoe9BFvyUE2ttea4aNU1BH1BYk92RIP-3_xOKpH>
+    UEEiPcsIQkA45TEwZiJj4fqDyM1u+4fxM4QCyl5fNuziPGAG1B0cjqT5uyOSEMuwJLvOqL
+    3F7YA8PJI0r9luDET+bq+C8Com3D00mI4EYr67qj+SL2hXm6EgnPdboLtHLkk1yD7nnLBM
+    SxyVYwRhUel4jb9ML1wl82DwX03Fl0ks+fVhVuY6njBKts3C81f5mi6bnSTNS2IH59Fl8m
+    f4rZvrV7xYC1YSvDzZcD4cV68ibP9H7+kPxdHSpHGMA71uSFwH/qwo+qYHEjetDIZrlGO1
+    4cj3EEPNjsAgiqmelWHvzA42lPLXsf2sJ9A0i3fnOtdBV5TyffdSdawLPZLLdQ5oyG32NM
+    R/mz8TMy0aZDgTPDLvx+ZxeBpej41vqkh8mWAkwxeESNK5ASxTK3wID0WG0g
+X-ME-Proxy: <xmx:Qd54aof61pXDRbIHmgjBmH7b7z9NfH8291fJ1YIW0YtxoBeYr_0rtQ>
+    <xmx:Qd54avaDUCCusOn72kgdWp6kPNTPNnk_z9uTN1tMeqROijUKQFOfsA>
+    <xmx:Qd54aqYxV_S-io9oi3SKJYqyW4ucz6rydKklccCb3p4m4gzwzTvSgA>
+    <xmx:Qd54akKYhpsxQkOIGVY3DbMRq9q1onwPlkQ2KxxwZPMlX7sUJgadJQ>
+    <xmx:Qd54ahatUwrDwSMpHNTjYZovcBkpOTirulXBr2a6RtzlA5IMSyiuesiY>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 9 Aug 2026 16:08:12 -0400 (EDT)
+ 9 Aug 2026 16:08:31 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -77,9 +77,9 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	"D . Ben Knoble" <ben.knoble@gmail.com>,
 	Matt Hunter <m@lfurio.us>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 03/11] =?UTF-8?q?doc:=20interpret-trailers:=20use=20?= =?UTF-8?q?=E2=80=9Cmetadata=E2=80=9D=20in=20Name=20as=20well?=
-Date: Sun,  9 Aug 2026 22:06:27 +0200
-Message-ID: <V5_metadata_Name_section.b29@msgid.xyz>
+Subject: [PATCH v5 04/11] doc: interpret-trailers: not just for commit messages
+Date: Sun,  9 Aug 2026 22:06:28 +0200
+Message-ID: <V5_cmt_msg_or_other_texts.b2a@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.22.g9e26862b904
 In-Reply-To: <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
 References: <CV_doc_int-tr_key_format.533@msgid.xyz> <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
@@ -94,47 +94,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-We now since the previous commit introduce the format as “trailer
-metadata”. We can replace “structured information” with “metadata”
-in the “Name” section to be consistent.
+This command doesn’t interface with commits directly. You can
+interpret or modify any kind of text, even though commit messages
+are the most relevant.
 
-While “structured information” does emphasize that the data is not
-loosely structured, we also say that this command adds to or parses
-this format. I don’t think that we need to emphasize that it is
-structured since clearly there is some structure there.
+The git(1) suite also isn’t restricted to only direct commit support
+since git-tag(1) learned `--trailer` in 066cef77 (builtin/tag: add
+--trailer option, 2024-05-05)
 
-Both “metadata” and “structured information” can convey the same
-information. But “metadata” is shorter and easier to deploy since
-it’s just one word.
+Now, we already introduce the command in the “Name” section as dealing
+with commit messages as well. That is fine since that intro line needs
+to remain pretty short.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    v4:
-    • Msg: s/trailers metadata/trailer metadata/ (knock-on effect from
-      change in the prevoius commit)
-    
-    ---
-    
     v2: [new]
 
- Documentation/git-interpret-trailers.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-interpret-trailers.adoc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index c8950d3babc..5e776f0059a 100644
+index 5e776f0059a..ab3627c2cba 100644
 --- a/Documentation/git-interpret-trailers.adoc
 +++ b/Documentation/git-interpret-trailers.adoc
-@@ -3,7 +3,7 @@ git-interpret-trailers(1)
+@@ -15,8 +15,8 @@ git interpret-trailers [--in-place] [--trim-empty]
+ DESCRIPTION
+ -----------
+ Add or parse trailer metadata at the end of the otherwise
+-free-form part of a commit message. For example, in the following commit
+-message
++free-form part of a commit message, or any other kind of text.
++For example, in the following commit message
  
- NAME
- ----
--git-interpret-trailers - Add or parse structured information in commit messages
-+git-interpret-trailers - Add or parse metadata in commit messages
- 
- SYNOPSIS
- --------
+ ------------------------------------------------
+ subject
 -- 
 2.54.0.22.g9e26862b904
 
