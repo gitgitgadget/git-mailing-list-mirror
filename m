@@ -1,73 +1,73 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DAE4B0493
-	for <git@vger.kernel.org>; Sun,  9 Aug 2026 20:09:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE90F4B0493
+	for <git@vger.kernel.org>; Sun,  9 Aug 2026 20:10:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786306195; cv=none; b=L+/eBEMMoDEPY6dh9wEThOCIRY2yIoeilEv87ZtnGPj6J7RbanXHbpd3OZUzSTGwxphltB/W12+NPtFVEPqT9cCAEo27feC7leWx5eu8wh6LTMpqE1AA1U4Hzh8w0cop064XHWXS2tVSeKblDZuxMWsd4s2fek1nh+a0sgFaOo0=
+	t=1786306215; cv=none; b=en/lJpzUbq+10f/kw5QFWvgkWRccwQbYNBhMKvGBl4V4rBwoSgPNhLBL0vjueUBOO1L+Ndux0CxrGxqjVoTUwu4wZ5dIr9m7b1R+m4vcURBXdUtVIPO6jL9tPcbEHuTkv/qI96C0j+CbH/uoMzsY9VTuyEuZd/QJ7b7Tu2gwqpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786306195; c=relaxed/simple;
-	bh=lJAiJnX/QZWF9DGc14FSYJUxkq4oFshbX64WXY6Ezww=;
+	s=arc-20240116; t=1786306215; c=relaxed/simple;
+	bh=nAHWpw9SW5Pyj/jgCdOR0z1EaH3UeH1BBCshaNSbc9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BHe94Z3zle5c6c2nsl/FrlNRJMFmeKQAFMUxzd4Zu8fKuJaF3IfYFok9QKRDHccH5/qv6EHxevQPGly8cjod/UQeuqKCQdU5VYYndz1Dd/t34NkLBBgyxBHZNFXIf4mvEYwJRS0eUv+r2/IqHdvUGn0FmmUJY8uZTsi0y9hwqgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=hkF75OLf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EW3rkvSb; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=SKmD3aF09ppFBPyj/g6/1plrMq1xQSnbJC9CUhRIGUONXYOfhm5/Ylh2GgOzoaFcA+NxiTwLp4ltc99MXwzdVFKHKxVpVh+6GKEIDe2ScZFWyiwZVtzgrhtBErQ2ZLHD8X/D1Mlh4DRscFi9xORhoDSAhDLj5fKzVxgYIesiZ5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=IC+MT8Ru; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YCpxpSxQ; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="hkF75OLf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EW3rkvSb"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id D75E91D00128;
-	Sun,  9 Aug 2026 16:09:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="IC+MT8Ru";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YCpxpSxQ"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C57FC7A003A;
+	Sun,  9 Aug 2026 16:10:12 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Sun, 09 Aug 2026 16:09:53 -0400
+  by phl-compute-04.internal (MEProxy); Sun, 09 Aug 2026 16:10:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786306192;
-	 x=1786392592; bh=M3FliLxcIiFaQCQMmzQ7/NuGEYeA79nZeJuEHNnHv+w=; b=
-	hkF75OLfU+UiZWn21H9LjHWICsU1kvou1H3YLwYznyp49iHl4UORUFKw3zRVQMQD
-	meQXw9wfs+zZjdEs9+YjQ0Zit63mO3J8tUR1T6lFhpzKyP6o9j14bIz20VncXmV9
-	8nWoJgpyS8ldvK8DHw4jHtNBiNxWvClbkV2Z0Qbptgz1SQbWL5JEt/KBOKZ9TrFK
-	XkCmaDY+6SlmiFH0XxYzWh7OSvno/L64/9TwaaQw3n6GNlkdNWAJe1/JZ2O7jjVb
-	oXR2HtqPrP5VBZcHdNWEM1iBUxr4RXRarPFzZuQpum7uodGlS73Fgzw4laBfsOEu
-	eTVLn1p0bR4k71nFUDqU6Q==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786306212;
+	 x=1786392612; bh=QnFi4vyuvXlBJnKLyrS71tWtt+mpZyg41vkn2EqhOxs=; b=
+	IC+MT8RuxTGfSl7q9QSxgo96WNK6gW4Vz4/PHTVTuR1FWPLynCObtNKARQxX6a5t
+	lX7ihSL3GjuEEsywpYgE86VDeUaUe0Xn32X2oN8Nqn+L2XMkj0SxDcmSHdqHQqM5
+	JUe6nL4qilff1znD7r2Jz/E0BWzIQlpHt4Fm0NKGngP6rdtGiDA/224e043CO0G7
+	NaUDdxjwVtf1lXQkWSil9kFiz1dfch431z/qvJzphlZvlLICxltM1R5rtxmMig3G
+	GwkNJGYuD0lZjgsBnhDBD+SoLWfcg7tMo9EXj132JsxguuvDaqgCFSJR1AurZNa1
+	T3dEGOuMzP7Ax7hVn6AYKA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786306192; x=
-	1786392592; bh=M3FliLxcIiFaQCQMmzQ7/NuGEYeA79nZeJuEHNnHv+w=; b=E
-	W3rkvSbL2DN62TcL0UDhLbh3H0JCez9OtOTNtjf91ZT3OYplnpBDEC/R/dcG6h2Q
-	X1BXcTvEbUTqOm+DZysg1S3M56ga1pjRuoT3xhtBk0Z4zJuC4ihIuJznx0PpyUvH
-	t1i5ThcCte5ly2JNxootJp+ThHz4Ste/vM40+sWjVmmyEBVok/PALrBdTcjqogNU
-	CepR8Pfm/XhTjk2iNnpnAApuuaIORZfDWz+0tjD7zpSxXbjLRF9V3s64UXSNDxNn
-	/yphEZLw/eWZeTl262gyRjs0GM44AbL1eM05Lw+8PDUjdIVH7TjXF9W+sfh6XZrt
-	keS1YGBzjaJKSHENh6ECg==
-X-ME-Sender: <xms:kN54avJ2-AE2kKndSRZmVvuw6xl-i8gwzNoZruAVOUaP_YvsaVwdc9U>
-    <xme:kN54alvxc8dGX7EF6Gt7MApQ4wGQll3vIT3v-KaVfn_EWBtCpcwTx60IOJleMLwkA
-    Pn1x3QOKy84aa7xSqyk9dHslTg9dUtVHeSAOGsdw8Ve3jJ2jE1o1g0>
-X-ME-Received: <xmr:kN54arVaNwhRTh25uByrRzXXlKQHijCc3jBKEnn2VoB6Aj8HzTkfBoVJbGqqkU2AjhapLplSZN4lYoD88eNvUVYMYWKd7HL67vzkjTII9jgYDoue3w147WA>
-X-ME-Proxy-Cause: dmFkZTFYpW11HwjhE/ELhIAn3xyag768DLpRbdbKwLUZljyM6zSmZyLMo/EQnZq4bjpg2l
-    ZivuapzoFoxxHSn92aDoaJXbke0qlSpZR8N4cMetpIsTO+1jL+j9SUKUdHDy/d5q75kX+M
-    diHKgcntiaboyb4GCkiueekV2dAmZa6VSSdZl4sqBRT7HRyPeUL46B1uTJoJaMJRcrnf7U
-    di+tp7/wrOX7PEk7AmJn0jWDbY8t4uvWebKWC3wUvtchBYyzIYUCjEl0EMTWYWEBMaFcjP
-    qLrbwBGJWAUBKD8k/C+r9lZNN48OhUnE7siVElLLCm4E9w3w2VPlTP21HgzY1cRukEUCQr
-    0rLfZfz10UlmGfWQ4PyZIUgupslyj9RLD0h4Qc7QJFiiaWdqAFucEtkxmg9fkxlMisVjKA
-    MJPjQIRyHViSqlzr1CSuQl81Z8jiFBKPs6XflU2oShdZrTNbpLlxIrlukrtpNY6v8gchKD
-    AXIF30oDGNtj5q+XszviBpWCBe680kjD0a/CMReiZOgF2d6oNO3t3iE4bZ1IWUaKdYrvQe
-    8x72DSAgNjESqwvs/n0kv0hK4SQ5JQMGDvudUgB3fBlJmDRrjbMYV4g2Nfxd7sP7CrXIEu
-    3DUA2/T7jyKpSFXcyKjXkpDl3hkFPLq2sOhhMsSImqYHzP+Mn3cItZK9AAIw
-X-ME-Proxy: <xmx:kN54aojyeN060R94eV0Hxd-AEgk_hjXNvL-RLeiz-WXx2Dsif-TyRw>
-    <xmx:kN54arqjRf3TPiAh2gSrGGElYzpoMcZRbHkAgHQhMHh4AuoveptLYw>
-    <xmx:kN54amGI2bRr6MUO0o3xcjtBqtDhjfNQ9Ceu3AqL_Hbgum0TsWj3rw>
-    <xmx:kN54ao4zmRENBWfTRuIbP-womRt2zXLK3w5fyus6xuhavZZfTyz8cA>
-    <xmx:kN54amFoNIM5TKXpIUT6PkeXUb1EbeGV4KmhRhzsHgWALOC2jt7DTuXV>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786306212; x=
+	1786392612; bh=QnFi4vyuvXlBJnKLyrS71tWtt+mpZyg41vkn2EqhOxs=; b=Y
+	CpxpSxQJCeOoPELJd1dotFcgDtYJyU6kRUK0L27AVy4QposKV9QSTSaNmLG9IcDt
+	2ZlZoz4hq7vZyyRf6U+aRSk33HyZkuzcAhpZ/RKIPx6Hon6qJYS9yG2dweIZKjn3
+	vaq2eHgOc4TF98b3xjhDch6iR4TIXgJyQAIWMbZmPl2NuSTMq+WkXTnqsKwE4dm0
+	qv9c1SjTAp726+BnnTeNYR3pwGWX+54gUdP3TA7B862D6zDdY9OVKyqMLp2dtoT3
+	eWxds+yBRGnCaA4RbGr4Rcb7EhB/J3W5odJGrZ7uKeSfAbUj1EyNhQjxNevmXg5S
+	e+qDbM6jNV6H4gL99uUmw==
+X-ME-Sender: <xms:pN54aoL3BDfIu1hhPNgW5fzyOlLfLA7-RDChxPTo2zXhBdCJ6stJD1Q>
+    <xme:pN54anMpvVmIim2Lui-1EXsBEWLQC_yTGu8BPErMUnrU41M51vUs2cq-kq2IeIwKp
+    2Rk3VSeOUd71Rc3N2ZuAywIlf4DiORwMqzkHwkeC1118BAipEDTOw>
+X-ME-Received: <xmr:pN54au61WKzYxQsI0ZlYXT7TzpEFrdRBzhuP9_mUfPqNjSoQZpIUAmj8_dYmE1KnVGvQ-yozppA5hlT6jcbqoQXh8d63InUc0S52j2tNyoK_GbnnAeAtehE>
+X-ME-Proxy-Cause: dmFkZTEcdI7FD+6TWE4ETRG7ILyNt0FJmLCkf4B7Rh7bvO9LDSLJTh+a8sSGJMVUTrqw4H
+    t+TcTQVn0225EKdTVhRDBQrL3gn3hH52gWv+bGIdmXvmIP18dxA6walyfMaaYln20G1xoF
+    kRKdLe8RsVLgQpNI5NFqcuau5PlG11BgHlUCxZ0O5jphPzlOd3qmyr13Ux4UWy+vN/oWHF
+    50/FAfD9zQHH9iGUl2Xc/1q2la1VviA1N0mKCTbiLbIiGg1/ZCTG3pL2DaODFhu8wNIiUr
+    9P3zZ85qGs2o7yRcd1dFb7Azn2UrkJrazICMpJpdxrrQnz7x8H+iHPqNcRNEv9rHIIH1HL
+    ysT9dn0mzc+yMKEb5pcxLxqvbLKZbnvtVgaxgVNyNjboDYKEMR7Rvs6VqcyRyf33oLwX8H
+    9hocPgI2Llx+x/n/UqBwXMeTULkyPpcaVSWxORuJ7qYMpRS+i/uN1WYoKkzDrdPf5hlNQy
+    gctTzyzkH/orZyvsgKDpTZqWTsMqHec6Od+2A+HxGMVTQ47cNSBpFKri9aiBAQfebN5zi7
+    razEYSeNbM+BZ5Ps5r6J42n+FZ6Ziz5+beKFnw0oQ84w1wxeYH8DLLSBJPkN5Ed/heoFyo
+    AT3epwuVTgosJ7joj4GHsvaav+emmcKM7//yyBAy7EA1ov9Q7Knu/h40CzNw
+X-ME-Proxy: <xmx:pN54ah5oiqUkT7UtZigKm_972m7epVDMfYQMUV-4S8Bn4AFhcAzbOw>
+    <xmx:pN54akHXX_1wwoBMDDCx8jfGi5lQapCOZXPYN-KyHwb7y5qYvFovlQ>
+    <xmx:pN54apUK16tPMCp0phqvJTVzG7itY7fZCvL-K8IJ91X2DNzqYDQ9ig>
+    <xmx:pN54agWwMNhWwXfh-3Ylt6T8u7SOHCUYk9r4OY_gfC35uF33Xc4w7A>
+    <xmx:pN54aikvHbhGw82uYx7w40Nf2vI01-HfX4EgydjiWgp0P2OFRCpfjMc0>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 9 Aug 2026 16:09:50 -0400 (EDT)
+ 9 Aug 2026 16:10:10 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -76,11 +76,10 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Linus Arver <linus@ucla.edu>,
 	"D . Ben Knoble" <ben.knoble@gmail.com>,
 	Matt Hunter <m@lfurio.us>,
-	Junio C Hamano <gitster@pobox.com>,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>
-Subject: [PATCH v5 08/11] doc: interpret-trailers: join new-trailers again
-Date: Sun,  9 Aug 2026 22:06:32 +0200
-Message-ID: <V5_join_paragraphs.b2e@msgid.xyz>
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v5 09/11] =?UTF-8?q?doc:=20interpret-trailers:=20commit=20?= =?UTF-8?q?to=20=E2=80=9Ctrailer=20block=E2=80=9D=20term?=
+Date: Sun,  9 Aug 2026 22:06:33 +0200
+Message-ID: <V5_trailer_block_term.b2f@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.22.g9e26862b904
 In-Reply-To: <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
 References: <CV_doc_int-tr_key_format.533@msgid.xyz> <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
@@ -95,113 +94,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-There are three paragraphs that talk about how a new trailer is added.
-But the first one is separated from the other two by two paragraphs
-about how `key-alias` can make using `--trailer` more convenient. This
-short how-to does not follow thematically from the previous paragraph,
-and can wait until we have fully described how a new trailer is
-added. So let’s move the three paragraphs about the new-trailer topic
-together and move the how-to paragraphs after that.
+We chose to introduce the term “trailer block” into the documentation a
+few commits ago.[1] It is used in the code though, so it is not a newly
+invented term.
 
-***
+That term was useful to explain where the trailers are found (they
+*trail* the message). But it is also useful here, where we explain
+how trailers are added to existing messages, how trailer blocks are
+found (beyond the simple case in the introduction), and how the end
+of the message is found.
 
-Let’s now review the history of the document. Even if the document
-is not quite correct in its current state, just doing the apparently
-obvious edit without considering the history does not respect the
-effort that went into changing the document in the past.
+Also note that we simplify the “blank line” point. The text says:
 
-These three paragraphs were originally next to each other, in the first
-version of the doc.[1] But extra sentences about this how-to topic was
-added to the first paragraph nine years later:[2]
+    A blank line will be added before the new trailer if there isn't one
+    already.
 
-    [...]
-    `': '` (one colon followed by one space). For convenience, the
-    <token> can be a shortened string key (e.g., "sign") instead of the
-    full string which should [...]
+But this isn’t quite coherent. The previous sentence says “If there is
+no existing trailer”, so we are in one of these modes:
 
-And then it was split into it’s own paragraph a little later.[3]
+1. discussing trailer blocks in general; or
+2. discussing creating a new trailer block in particular.
 
-This evolution shows, in my opinion, that this how-to never followed
-thematically from the existing topic. Which means that there is nothing
-that was potentially lost to time that we need to restore or respect.
+If (1), then we shouldn’t add a blank line before the new trailer if
+there exists a trailer block already. And if (2), then the “if there
+isn’t one already” is redundant.[2] So just talking about the higher-
+level “trailer block” simplifies the text, since we don’t have to worry
+about the different contexts that *trailers* can find themselves in.
 
-† 1: dfd66ddf (Documentation: add documentation for 'git
-     interpret-trailers', 2014-10-13)
-† 2: eda2c44c (doc: trailer: mention 'key' in DESCRIPTION, 2023-06-15)
-† 3: 6ccbc667 (trailer doc: <token> is a <key> or <keyAlias>, not both,
-     2023-09-07)
+† 1: in commit “explain the format after the intro”
+† 2: Note that non-trailer lines don’t matter here; if you have a
+     trailer block consisting of `(cherry picked from commit <commit>)`,
+     then you still shouldn’t insert a blank line before the new trailer
+     since that would create a new trailer block
 
-Suggested-by: D. Ben Knoble <ben.knoble+github@gmail.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
     v4:
-    • Msg: Fix word-confusion: s/There are three trailers/There are
-      three paragraphs.
+    • Tweak “blank line” reminder (“Recall that”) by dropping
+      “specifically” since it is redundant based on [1]. Well, I
+      thought I understood the feedback here but reading it again
+      today I was confused. @Junio, did I understand it correctly?
     
-      🔗 https://lore.kernel.org/git/CALnO6CCg4ubVz_VJuFjn7tvXqADR40AdjCFJ6xfRcms9a+GQWA@mail.gmail.com/
+      My thought process: This “recall that” is similar to other
+      “recall” phrases added in the series. They add some redundancy,
+      similar in spirit to 74522b6b (Documentation/git-update-ref.txt:
+      discuss symbolic refs, 2024-10-21) :
     
-      I knew that I was going to fix this when I started on
-      version 4. But you would not believe how many times I
-      went over the commit log without seeing that I had
-      neglected to do this part.
+      | Add a paragraph which just emphasizes that the command without
+      | any options does not support refs in the final arguments.  This
+      | is clear already from the names `<new-oid>` and `<old-oid>` but
+      | the right balance of redundancy makes documentation robust
+      | against stray interpretation.
+    • Msg: Editing the above I noticed that the previous (before this
+      change “blank line” explanation isn’t (quite) coherent. I want to
+      explain every meaningful point of change in the commit message, so
+      I dedicate some “also” paragraphs to that change.
+    • For [1] again: s/Concretely, that/A trailer block/ since it flows
+      better
+    • For [1] again: Fix mangled “The trailer block is by definition”
+      sentence and make sure to use “commit message”. We use “commit
+      message” throughout the doc, not just “message”. But just use
+      “message” in the next sentence since it is clear that we are
+      still talking about *commit* message.
+    • Msg: Reflow existing paragraph
+    
+    🔗 1: https://lore.kernel.org/git/xmqqcxxyt4op.fsf@gitster.g/#t
     
     ---
     
-    v3: [new]
-    • Suggested here: https://lore.kernel.org/git/CALnO6CBiRefHNT6tjskCQRUOj5Y--K3okR_RFPmth6O7s1_VKQ@mail.gmail.com/
-    • Msg: Now *this* might definitely make for an *overly verbose* cmt msg[1]
-    
-      🔗 1: https://lore.kernel.org/git/xmqqpl1zsv8s.fsf@gitster.g/
+    v2: [new]
 
- Documentation/git-interpret-trailers.adoc | 26 +++++++++++------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ Documentation/git-interpret-trailers.adoc | 26 ++++++++++++-----------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index a0f7ed6fdd9..616f479a367 100644
+index 616f479a367..a1adab20fef 100644
 --- a/Documentation/git-interpret-trailers.adoc
 +++ b/Documentation/git-interpret-trailers.adoc
-@@ -74,19 +74,6 @@ key: value
+@@ -74,19 +74,21 @@ key: value
  This means that the trimmed _<key>_ and _<value>_ will be separated by
  "`:`{nbsp}" (one colon followed by one space).
  
--For convenience, a _<key-alias>_ can be configured to make using `--trailer`
--shorter to type on the command line. This can be configured using the
--`trailer.<key-alias>.key` configuration variable. The _<key-alias>_ must be a prefix
--of the full _<key>_ string, although case sensitivity does not matter. For
--example, if you have
+-By default the new trailer will appear at the end of all the existing
+-trailers. If there is no existing trailer, the new trailer will appear
+-at the end of the input. A blank line will be added before the new
+-trailer if there isn't one already.
 -
--------------------------------------------------
--trailer.sign.key "Signed-off-by: "
--------------------------------------------------
--
--in your configuration, you only need to specify `--trailer="sign: foo"`
--on the command line instead of `--trailer="Signed-off-by: foo"`.
--
- By default the new trailer will appear at the end of all the existing
- trailers. If there is no existing trailer, the new trailer will appear
- at the end of the input. A blank line will be added before the new
-@@ -101,6 +88,19 @@ The group must either be at the end of the input or be the last
- non-whitespace lines before a line that starts with `---` (followed by a
- space or the end of the line).
+-Existing trailers are extracted from the input by looking for
+-a group of one or more lines that (i) is all trailers, or (ii) contains at
+-least one Git-generated or user-configured trailer and consists of at
++By default the new trailer will appear at the end of the trailer block.
++A trailer block will be created with only that trailer if a trailer
++block does not already exist. Recall that a trailer block needs to be
++preceded by a blank line, so a blank line will be inserted before the
++new trailer block in that case.
++
++Existing trailers are extracted from the input by looking for the
++trailer block. A trailer block is a group of one or more lines that (i)
++is all trailers, or (ii) contains at least one Git-generated or
++user-configured trailer and consists of at
+ least 25% trailers.
+-The group must be preceded by one or more empty (or whitespace-only) lines.
+-The group must either be at the end of the input or be the last
+-non-whitespace lines before a line that starts with `---` (followed by a
+-space or the end of the line).
++The trailer block is by definition at the end of the commit message.
++The message in turn is either (i) at the end of the input, or (ii) the
++last non-whitespace lines before a line that starts with `---` (followed
++by a space or the end of the line).
  
-+For convenience, a _<key-alias>_ can be configured to make using `--trailer`
-+shorter to type on the command line. This can be configured using the
-+`trailer.<key-alias>.key` configuration variable. The _<key-alias>_ must be a prefix
-+of the full _<key>_ string, although case sensitivity does not matter. For
-+example, if you have
-+
-+------------------------------------------------
-+trailer.sign.key "Signed-off-by: "
-+------------------------------------------------
-+
-+in your configuration, you only need to specify `--trailer="sign: foo"`
-+on the command line instead of `--trailer="Signed-off-by: foo"`.
-+
- When reading trailers, there can be no whitespace before or inside the
- _<key>_, but any number of regular space and tab characters are allowed
- between the _<key>_ and the separator. There can be whitespaces before,
+ For convenience, a _<key-alias>_ can be configured to make using `--trailer`
+ shorter to type on the command line. This can be configured using the
 -- 
 2.54.0.22.g9e26862b904
 
