@@ -1,69 +1,70 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B7523D7FF
-	for <git@vger.kernel.org>; Sun,  9 Aug 2026 19:01:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEF433F58B
+	for <git@vger.kernel.org>; Sun,  9 Aug 2026 19:01:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786302075; cv=none; b=neN0efGJ63NbJDb3Sg8KLQYx62i7Zs9/RYc7l/nUAP1P5y8yKqBXugE9XxlUrB8+CRrVED/hIm4BuTmKz+w/UiiA2Y3jQeoc2vsaZCKaCercmjVc9sTlP7Ki1/yhvoY/z/kwF5DMOyAy4UnJCY+ksODhcVdVoLSRSOfyaiKUoko=
+	t=1786302076; cv=none; b=mZSlgJ1bAihtEekhMEuuuWKurRA755YV8vZXUvOuQ4Se4n4Q0WLRpgFznZeLkGBHBQlCvLKMnFxdShNcTHJQdnEeZ3T6W+eqJIxzq9Y2xXBLnKhha/HYEAqxacBjSYM5F4SFSakWErpHqCZcdOOEuZOpkPQc2uCW/W6FG/wOdPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786302075; c=relaxed/simple;
-	bh=0CwjAQGjanquUTS4iD16uDzJ+55QqBwIRUha1fdGuns=;
+	s=arc-20240116; t=1786302076; c=relaxed/simple;
+	bh=2x+cLqx1Con3bPx7b6pE2PDNv2r4etIf2lLWHrVYFUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KdN9yTY+V3azoVicACr5LGZ/++Gkuv9CIb7Z/2G2YxNF2pN99kxXtUBzLw4bKXkZdsrmOxS/VvpQoqDBNvVHlOYTt7xlJhI9sXOrcF61xEDBbD04LubKlhK77tfdZa0xOLDZu5lCSPNat5oRwZPhqh2JQpMcYT/At3vhcHTIH1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A7hpE47/; arc=none smtp.client-ip=209.85.167.173
+	 MIME-Version; b=XdXXROS2RVkmoh5bKlRmaWgeaFDsqHq4c7fib18WbEVJNdG7jQyfbD9z3D41eQYtfpXpj+W4etHAFh3+rOf5aO/G0kGdsU5ygKhwI9RgAaz/6KqhLi0XV5w4eNJC1/eUjm/GyK6/VsBmCNPQykLMy8nBoZ39zgH2JX+ojA9EhSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Em06IDyv; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A7hpE47/"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4a46a53abc9so713496b6e.3
-        for <git@vger.kernel.org>; Sun, 09 Aug 2026 12:01:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Em06IDyv"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-4591f35aff3so432803fac.2
+        for <git@vger.kernel.org>; Sun, 09 Aug 2026 12:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786302072; x=1786906872; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786302073; x=1786906873; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=B+r2wYdl5bDXiF1nNp13TYLf/6VlIdTz3Ah7Z5Yv/+c=;
-        b=A7hpE47/Vx6mMIvHp3b0eTUAmGqetgQIsbLR1NY09kZCDvgAVkVw6z/hvjUh/IwGkI
-         TtPEi05YvXJDYzQvMsDcFM/Cu5ZOzY4jSZTIv+aujypMu+bAsEWP00Wl/0ldqvC31v2l
-         wvzmLOtpCEU+1gSSGg+CwrBWPC/v2jzKvBHKSDeLobsx0HB8/e6jgilQSnoS66eLQG3m
-         jYEZ33ef8IArROuYGMc6Fbuudb+hKfv7BIH5UpdNWYkeJt/q9DNhD7vfI48iUSASNb/I
-         xZGd/BXnC1O8pUX0FZj/dAariP+naM7eVynFzS7oW+loFiOZ/zPfAWfgiCVACghTPVaU
-         GFbg==
+        bh=JF1xBHR+pFqGbdGbKgcgvNIrjbGmqVDmb6bS3YLzQvE=;
+        b=Em06IDyvFlnJI92MynxJR743adVzaj4yxUkVacgI9w6UNDVWmjDIoujaO4gG2bmHgL
+         McfGvbMBONfuOvXFUw8T4XsD/pNx2OL1KbeeJwH5h0ZRRfCYc9SLW/lwPOXwpHkxO6ra
+         gcvO53hXK7LXXnCosGyi5ATfW+f8gxK2B5Nf+w0SCtSD+zyhlD2iYIMIT8pgRbExcxMY
+         VwaacMtfYSbnFsUasCwV3C1Gx/BDHfKtN4eYhj2tDLq/E7RRA84LEsO/0w4t8n9mFspD
+         shN+Gk+dfm1m9uTn/8CD/RRZQKTUcySaMRFaweMJIQON1ISEZZxXyTt1d/KdZOnPAd8I
+         p7SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786302072; x=1786906872;
+        d=1e100.net; s=20251104; t=1786302073; x=1786906873;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=B+r2wYdl5bDXiF1nNp13TYLf/6VlIdTz3Ah7Z5Yv/+c=;
-        b=fsL4PbKAmv1rC1EnAkoiYXZD8i4uFOMXexXnECBAL1oYS1H31BMuKuIPDjsk/zkjlu
-         9dcOQEH8BhDIXakF4zVVAMr6gLpABLQCZ+Id6jJqQWUirIOnYCscIW5wb44uQV10cc1b
-         h727BMcYS0TV7AaIhpcmDw3Hv+KIOX2lsqM8bL9BQKnhh8/I0Z/774TpTGCx0cbWALKT
-         fvbrId9lZ74i6ImXEQAkPcAnoaRAmO9QYTfADDGJBfmEKB4uoseob6mT5c5Ml5XJtDWJ
-         Sf5f9+Il4TCE/tGV6O7BQb+uarSWrhWRvVL+iQC8UYTjI7/sA/1LFD4+EZrOTvhbKukA
-         KGGA==
-X-Gm-Message-State: AOJu0YxxTZKcTc+i2focl8s2a/n/BcE6ZqTf/zb+f2jruqe83S/Wyie2
-	FslqcY0I5WbWxNHRir7g2tNdVHpZ4Y/mN0rABtPxtRNNCS19iMb2ZI9f85dHqw==
-X-Gm-Gg: AR+sD12OguxZlGvcVbyjxqMjHboJn60OiZqiiAXgfOH8aB0wRfIzY+Js6TxWROD+x3b
-	CH2GQD1OI+1HLKHbw2WTypBGXshSwtZbvlClY7yBqqOcr145Ggyu6sG2A863mWIr4fxSh7Fc4GG
-	ZvEkh9Tw8pNZddqX9MoADQoVLcvkkmELtNPVXy7eObgmMg4WsZkRgNhZRybCsFFz9MJJnUraXSs
-	56I+kDXzoh1xhSz23ZR3a52Si4t8VrZbzgJInrckQaxe1P4mseqe0il/qaOwrElCy+4z0EGpwF3
-	QMZnbPxA0UpflSvdT83Mqqc3yW11JhKmL0RQpGIgv9hUWAgHzXEH3MM0JcyTjEqIs01IZBLeZoI
-	QwYW3izD7H2q1Jh7jmIBs9oQ0MSw0Z7oWvolrMFPhvMoL5+tBXOVXbt4+9HORlU6bYHy1fysYd1
-	wjCaCIhlVoifbK3naIA296C9RB1NFv9YXlC/VySAc8TnTGdk5seJW7u3hnM/RbC7kSnWeL
-X-Received: by 2002:a05:6808:2507:b0:495:eb85:fc2b with SMTP id 5614622812f47-4b133476122mr13152264b6e.10.1786302072663;
-        Sun, 09 Aug 2026 12:01:12 -0700 (PDT)
+        bh=JF1xBHR+pFqGbdGbKgcgvNIrjbGmqVDmb6bS3YLzQvE=;
+        b=If4jlYQ6S0d9/YYn3kZuRsCxze+Kzb17vrbegQLZYRwneTqWTCvcUQCdg25dKO2bwk
+         BfFxXoR1uvet8CuQ1iDgGCN9OquVB9uaWhEWZ+ytyeOXudIyKM5FaROXHzUD0NOT0X98
+         06VsTNhSS+yZArb+0y1x688tlI6ZFZC5PfgiK7JJfpJAGTKNj8EO6CXK4Kkw7tbyoKbE
+         oWAc/joTKTouhgIB3pF7NHHtkLMffKWUJZsZUIPL9MJPcZOm4P41xLZMihHZPDEjGMFW
+         vy7QR8GgUot065ZV/rLYh3yR3Ie/mkadjTskb5nVFry16w0TTFr0lxi4AMZMrld4qgAf
+         EZIw==
+X-Gm-Message-State: AOJu0Yzg7dWoFTFQeIe+Xe872arcOqPPTJu0+OeawvBwIiEdqhTA50UU
+	82IM6XXb7A0rUdnS573elsvApmKwJ8ClNFgiGdpuFUlG1hP5NihIjSjj6r6DBg==
+X-Gm-Gg: AR+sD11/DEkl1j+jjOR/hGMjrfZJ083SyBviw9igdq/QGvDsafyDtDV6X6ReF5HRxGv
+	ZLFbATWtf0QPon3OgD0CTxZEvA08zy/iuCRf/tGY01JIKr+6Y5cvBkDgXitGTcFLU7h7F8EtvLe
+	eHd5czb/NzZoKoGcrWYBwkNA/t9PCdVlJ3idQNTvHhvH6LlsdqmawZRlaGue38KxMwRU+ySJ0ud
+	4oIPEdvW9vKqUsR6jqOSP0U2CSccQRGYmRX8WfS0azzrPf90zGeukyiKpyw3XD74O3c/ln1J0Dd
+	sufAa6ERQDCjNBzeXFArs0xvQid2+kLTt7Uir/e2Hkna+RhCW6G3CMMZmWYbBxq+HsgqcXl/aBQ
+	U/hsPqzj7H+18/Yw8kdZ6rUqh+a54xf398AxO/VjSiBYC6YmcMaYK7+VJNfqv137CRV6f/nNf3+
+	oxW4qOjHN2NTRpXFhKCO/imCN49673R6l/N/srDAVQZkN9Zid9teC6SpOnIRHxwdScXSTLvT+6S
+	Pne1lM=
+X-Received: by 2002:a05:6808:144e:b0:497:d252:d609 with SMTP id 5614622812f47-4afadecc57cmr20155002b6e.4.1786302073350;
+        Sun, 09 Aug 2026 12:01:13 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b1af5e7b77sm4872188b6e.10.2026.08.09.12.01.11
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b1af5e7b77sm4872188b6e.10.2026.08.09.12.01.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Aug 2026 12:01:12 -0700 (PDT)
+        Sun, 09 Aug 2026 12:01:13 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 2/7] builtin/receive-pack: pass shallow file explicitly
-Date: Sun,  9 Aug 2026 14:01:01 -0500
-Message-ID: <20260809190106.1565882-3-jltobler@gmail.com>
+Subject: [PATCH v2 3/7] builtin/receive-pack: read unpack limit config lazily
+Date: Sun,  9 Aug 2026 14:01:02 -0500
+Message-ID: <20260809190106.1565882-4-jltobler@gmail.com>
 X-Mailer: git-send-email 2.55.0.424.g13c7afec21
 In-Reply-To: <20260809190106.1565882-1-jltobler@gmail.com>
 References: <20260806213859.816157-1-jltobler@gmail.com>
@@ -76,134 +77,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If shallow information is provided during `unpack()`, a temporary
-shallow file is created and stored in global state. In a subsequent
-commit, the `unpack()` logic is moved behind a generic ODB transaction
-interface to handle writing packfiles and thus can no longer rely on
-such global state. Lift the setup of the temporary shallow file out of
-`unpack()` and wire it through to its call sites explicitly.
+In git-receive-pack(1), the `receive.unpackLimit` and
+`transfer.unpackLimit` configuration decides whether an incoming
+packfile should be exploded into loose objects or kept as a packfile
+on-disk. In a subsequent commit, the logic to write the incoming
+packfile is made ODB backend agnostic and moved behind a pluggable ODB
+transaction interface. Consequently, whether to explode a packfile is a
+detail of how a particular backend stores objects and should not be a
+part of the generic interface itself.
+
+In preparation for this, instead resolve the unpack limit lazily inside
+`unpack()` by reading the configuration directly. The now-unused unpack
+limit globals are dropped accordingly.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/receive-pack.c | 38 ++++++++++++++++++++++----------------
- 1 file changed, 22 insertions(+), 16 deletions(-)
+ builtin/receive-pack.c | 44 ++++++++++++++++++++++++------------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 8720281250..78d2911c00 100644
+index 78d2911c00..5264d70467 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -86,7 +86,6 @@ static const char *head_name;
- static void *head_name_to_free;
- static int sent_capabilities;
- static int shallow_update;
--static const char *alt_shallow_file;
- static struct strbuf push_cert = STRBUF_INIT;
- static struct object_id push_cert_oid;
- static struct signature_check sigcheck;
-@@ -2334,8 +2333,8 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
+@@ -62,12 +62,9 @@ static enum deny_action deny_delete_current = DENY_UNCONFIGURED;
+ static int receive_fsck_objects = -1;
+ static int transfer_fsck_objects = -1;
+ static struct strbuf fsck_msg_types = STRBUF_INIT;
+-static int receive_unpack_limit = -1;
+-static int transfer_unpack_limit = -1;
+ static int advertise_atomic_push = 1;
+ static int advertise_push_options;
+ static int advertise_sid;
+-static int unpack_limit = 100;
+ static off_t max_input_size;
+ static int report_status;
+ static int report_status_v2;
+@@ -157,16 +154,6 @@ static int receive_pack_config(const char *var, const char *value,
+ 		return 0;
+ 	}
+ 
+-	if (strcmp(var, "receive.unpacklimit") == 0) {
+-		receive_unpack_limit = git_config_int(var, value, ctx->kvi);
+-		return 0;
+-	}
+-
+-	if (strcmp(var, "transfer.unpacklimit") == 0) {
+-		transfer_unpack_limit = git_config_int(var, value, ctx->kvi);
+-		return 0;
+-	}
+-
+ 	if (strcmp(var, "receive.fsck.skiplist") == 0) {
+ 		char *path;
+ 
+@@ -2333,6 +2320,30 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
  		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
  }
  
--static const char *unpack(int err_fd, struct shallow_info *si,
--			  struct odb_transaction *transaction)
-+static const char *unpack(struct odb_transaction *transaction,
-+			  const char *shallow_file, int err_fd)
++static int get_unpack_limit(struct repository *repo)
++{
++	static int limit = -1;
++
++	if (limit < 0) {
++		int receive_limit = -1;
++		int transfer_limit = -1;
++
++		repo_config_get_int(repo, "receive.unpacklimit",
++				    &receive_limit);
++		repo_config_get_int(repo, "transfer.unpacklimit",
++				    &transfer_limit);
++
++		if (receive_limit >= 0)
++			limit = receive_limit;
++		else if (transfer_limit >= 0)
++			limit = transfer_limit;
++		else
++			limit = 100;
++	}
++
++	return limit;
++}
++
+ static const char *unpack(struct odb_transaction *transaction,
+ 			  const char *shallow_file, int err_fd)
  {
- 	struct pack_header hdr;
- 	const char *hdr_err;
-@@ -2354,10 +2353,9 @@ static const char *unpack(int err_fd, struct shallow_info *si,
- 		return hdr_err;
- 	}
- 
--	if (si->nr_ours || si->nr_theirs) {
--		alt_shallow_file = setup_temporary_shallow(si->shallow);
-+	if (shallow_file) {
- 		strvec_push(&child.args, "--shallow-file");
--		strvec_push(&child.args, alt_shallow_file);
-+		strvec_push(&child.args, shallow_file);
- 	}
+@@ -2360,7 +2371,7 @@ static const char *unpack(struct odb_transaction *transaction,
  
  	odb_transaction_env(transaction, &child.env);
-@@ -2427,14 +2425,14 @@ static const char *unpack(int err_fd, struct shallow_info *si,
- 	return NULL;
- }
  
--static const char *unpack_with_sideband(struct shallow_info *si,
--					struct odb_transaction *transaction)
-+static const char *unpack_with_sideband(struct odb_transaction *transaction,
-+					const char *shallow_file)
- {
- 	struct async muxer;
- 	const char *ret;
+-	if (ntohl(hdr.hdr_entries) < unpack_limit) {
++	if (ntohl(hdr.hdr_entries) < get_unpack_limit(the_repository)) {
+ 		strvec_push(&child.args, "unpack-objects");
+ 		push_header_arg(&child.args, &hdr);
+ 		if (quiet)
+@@ -2652,11 +2663,6 @@ int cmd_receive_pack(int argc,
+ 	if (cert_nonce_seed)
+ 		push_cert_nonce = prepare_push_cert_nonce(service_dir, time(NULL));
  
- 	if (!use_sideband)
--		return unpack(0, si, transaction);
-+		return unpack(transaction, shallow_file, 0);
- 
- 	use_keepalive = KEEPALIVE_AFTER_NUL;
- 	memset(&muxer, 0, sizeof(muxer));
-@@ -2443,13 +2441,14 @@ static const char *unpack_with_sideband(struct shallow_info *si,
- 	if (start_async(&muxer))
- 		return NULL;
- 
--	ret = unpack(muxer.in, si, transaction);
-+	ret = unpack(transaction, shallow_file, muxer.in);
- 
- 	finish_async(&muxer);
- 	return ret;
- }
- 
--static void prepare_shallow_update(struct shallow_info *si)
-+static void prepare_shallow_update(struct shallow_info *si,
-+				   const char *shallow_file)
- {
- 	int i, j, k, bitmap_size = DIV_ROUND_UP(si->ref->nr, 32);
- 
-@@ -2489,12 +2488,13 @@ static void prepare_shallow_update(struct shallow_info *si)
- 	 * command. check_connected() will be done with
- 	 * true .git/shallow though.
- 	 */
--	setenv(GIT_SHALLOW_FILE_ENVIRONMENT, alt_shallow_file, 1);
-+	setenv(GIT_SHALLOW_FILE_ENVIRONMENT, shallow_file, 1);
- }
- 
- static void update_shallow_info(struct command *commands,
- 				struct shallow_info *si,
--				struct oid_array *ref)
-+				struct oid_array *ref,
-+				const char *shallow_file)
- {
- 	struct command *cmd;
- 	int *ref_status;
-@@ -2513,7 +2513,7 @@ static void update_shallow_info(struct command *commands,
- 	si->ref = ref;
- 
- 	if (shallow_update) {
--		prepare_shallow_update(si);
-+		prepare_shallow_update(si, shallow_file);
- 		return;
- 	}
- 
-@@ -2705,11 +2705,17 @@ int cmd_receive_pack(int argc,
- 		if (!si.nr_ours && !si.nr_theirs)
- 			shallow_update = 0;
- 		if (!delete_only(commands)) {
-+			const char *alt_shallow_file = NULL;
-+
-+			if (si.nr_ours || si.nr_theirs)
-+				alt_shallow_file = setup_temporary_shallow(si.shallow);
-+
- 			if (odb_transaction_begin(the_repository->objects, &transaction, ODB_TRANSACTION_RECEIVE))
- 				unpack_status = "unable to start object transaction";
- 			else
--				unpack_status = unpack_with_sideband(&si, transaction);
--			update_shallow_info(commands, &si, &ref);
-+				unpack_status = unpack_with_sideband(transaction, alt_shallow_file);
-+
-+			update_shallow_info(commands, &si, &ref, alt_shallow_file);
- 		}
- 		use_keepalive = KEEPALIVE_ALWAYS;
- 		execute_commands(commands, unpack_status, &si, transaction,
+-	if (0 <= receive_unpack_limit)
+-		unpack_limit = receive_unpack_limit;
+-	else if (0 <= transfer_unpack_limit)
+-		unpack_limit = transfer_unpack_limit;
+-
+ 	switch (determine_protocol_version_server()) {
+ 	case protocol_v2:
+ 		/*
 -- 
 2.55.0.424.g13c7afec21
 
