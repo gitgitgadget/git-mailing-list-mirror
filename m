@@ -1,64 +1,64 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212F0431E6E
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 17:41:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDA8431A5B
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 17:41:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786383674; cv=none; b=dGoVTfbJD77H15NkRVdEKrL2s1qK5Ps8ym7G/eDFcvCJzLeCO/R02qG4DX4uv7Qx4Vn3D9E1YOEOqzmxNMp9KypccI77Y+RBP1wZ4Y8MBTHTn74pSW6x3stXoIOAStlDsLdFLiKHtWjPOqx5jCw2WLH9T/folvkLl554v9lyqfc=
+	t=1786383679; cv=none; b=oluCuWtky4ouPDq6JRNdzwTuQ+y1CYCRHNiay/PqBae3VSpHGwRApwJCk/C/dHVyH1zkx0nDSp2FFdP5GHFG0And1J2JXjq3L4yCWZvsFFgA+L7zAzfZ6gJKTboRBo0tH48HUJ+lBXHXCmMKdzHJIGRVnx6ZBsfrWn3VWWC4WZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786383674; c=relaxed/simple;
-	bh=c7Es31idI8En5Ybvr5toWK/1R/LPEAAfCAcN6wI7lhY=;
+	s=arc-20240116; t=1786383679; c=relaxed/simple;
+	bh=73bH0MiODiQL/EeHkddlbHF9SACFGPZsjuaqPnJbIWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dk7Sd+6jHzp0rJ5uWZPYJDqx1z9OXfpmkay3Wnm8UOWDWXi+AxeHLzITWdaHDjTSdAI0n5eLX/Hq0Y6JTNnfs82r5uCo4EgSFEOMIh+gyInCHSJCgtDNwEXb2W39lZ1f9eDq+BNO39uZIa9tsbN383lU0jFLjr7rfr0tz0PQncA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SdnFIiMl; arc=none smtp.client-ip=209.85.210.178
+	 MIME-Version; b=nQac01ToomQ83g9yL0NKfa6+20zin4IDl8u6zY2Xwe9nFsPtAamSiAmhzMVit4BbxO6gIbDwkBEvhFFHkclJPEr0EoJ0QQhb/VkEVodGTRKsd7r+6h9IapeOQ82USH5mhBnDy/G2/JIp1PXUDkkOcvmgrvAAQV/CeWGGFDJB19g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hIh6aC8N; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SdnFIiMl"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-84536ecfc5bso2207632b3a.2
-        for <git@vger.kernel.org>; Mon, 10 Aug 2026 10:41:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hIh6aC8N"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-ca80d708489so105812a12.1
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 10:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786383672; x=1786988472; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786383677; x=1786988477; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=JhjmlNM3GXLYo2/3ZE6lej1m3GkMQxDy3HuHP3MafAc=;
-        b=SdnFIiMlp4L69XAYH2qPrCOsS+/uhzEgOa5DLkJQf1yRE3q32gHaGyCM45UEaOy7hJ
-         0U2Z0TaDoWQaJXPSvZJWyoro4UXQZXRcsR+3tZPUs+4Fru8TlzQwHZPPGVxQC/Dsvmn+
-         8PepE9UrETogp69HXqd9w1IU6T8kIzFCQDdwVSm93ac30AEyXOnGkrDGkqpbgI+E1Gw4
-         k7zM5+EUY1I/eMaFmIk+ZW/GnEVIzaS4yWZS2yte3+akMY1RAaAdmJYttzfawdd9fNtD
-         KCaJdfE4nJ2hM1v54OMO6cWasBfoqeUwGjwcIwPM/O6liuzxEGGBRFmO01F3gJOXY8Vt
-         he0Q==
+        bh=2Cg6cZdSF9f8VVfLqRonYhMdW2NhQaOydkDst5gPhxA=;
+        b=hIh6aC8NdBW2ddHad7YikFyMdQaPqyco4lgpVtblskV97FEN8/kP3ob88PatNFZHqs
+         ygkZrur5oe/PITmOPI4SBPZNvCfD0nGM39zDREecX+Chg115H3YCjCvDWxPVIuhTqR2N
+         ttGiuKrJwKY8a3ahKXmqRoxNuf6N7QoouA7bRfAt/gF+jZLCnUZuqxJL10iy5KM7GTKP
+         JQVUlcL++sDax3yXfkCg8sdRehdeFgigN3kNE0rvRPaNcF8U9oik4mfSj8eyf3gepw/w
+         XoBvTBpwpu13LtHmlHDNhJFMPgBo/oV8S5Lx8Ua0zchIF97DbTM0PS+2nWPqBc8j671/
+         AHtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786383672; x=1786988472;
+        d=1e100.net; s=20251104; t=1786383677; x=1786988477;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=JhjmlNM3GXLYo2/3ZE6lej1m3GkMQxDy3HuHP3MafAc=;
-        b=MDL9jZwDDx5XEOLuh0oBnM+7fnpTyF0jDxl2fsWkmLF0wx4iFfH2jTh15ONgT7MQlM
-         dAE+gAL8QBcqpYwB/L1+7xGiygTVZak+2lDTVw6WoEdD0lj+VqDaXnpdsOmFRbYjD3dn
-         2Wu2h4lzFU9nlNyH19wsKEeg8wF4zA26Loj/vPzNrxYzAQd6+NO8UD16R5c45VJSfw2N
-         vijS/M0F8E2ItgerffVjOQ7K/+BiHFRRziIphsHBHRyUq18Hh81sQj29LMTSNWS7EQLm
-         IP3ZBrk9aYvS09xlgvz2YH4Yf+z0BcnF8LU/vFtGbkdGSvYFhDWFR47DJpvKgkT2KxZS
-         cqBg==
-X-Gm-Message-State: AOJu0Yz89CPIW5ZWosoGzehgIJjQbummvvq+KzfUObp9Z7QsKlvxGAaY
-	gch0nF12j3lh4tU51K+01hCSSx+D8MTyNoyfyoXz+SWvWFYmrNsOSzqZJXGmHiPz
-X-Gm-Gg: AR+sD11d1P1qmLiiSzdfUKm3i+nIL21zOZSz7q1b447Av4rqOC52rhT47KZbpMrBCr5
-	qsBYxyre9ZGD/BNnVnSWtA3j91KbAhb+iVgUP3bde8c9eGl+Sqw81oLfLdTkSlNdMZFMX/TU5AP
-	W6sNhNLYk1rFHg45kNHZqJiPwZwqGoiZZhYyAXS0AgemA+oweDlxQ1q1Lx0nlZbbO+d+x3TJTTA
-	TfGysUa3U5D97ol+pPpYLUA99/m8FX9ZZJycyHcMNO4xLYyJXrZUujNuTU8shumKWUKLYqNHkmh
-	NG85AkQpjgv27FPTDtkb3ZgyIt8FydYEwzXcX9bqQwobzs+fMgMv8bEMqX05ctGCm4yB9i4ItCK
-	2Z33J5xkB9ko0hDP3jSau5bVWX2VStD3rwspMOrXzVrGuchdnLVWl93fm7PpJx3yw3X0meG3eYF
-	UnhL92MB2o7CuZSzhraznltgqLXhlJvLlkQZ95zKjMik87rHxCA1ThgrQnduZB8g7tdxuDEfTg/
-	8ZLAtTjIlc4mw/BQcPox15X8d6Sdoyo0ZYShJaVWPGxK9uTuYuA6TVbAcjnSwo5zHJ7oDflLjXk
-	11DUNdjj66alRw3XNtdEeg==
-X-Received: by 2002:a05:6a21:1193:b0:3c3:7fa2:9618 with SMTP id adf61e73a8af0-3cbce9e8db5mr27014683637.37.1786383672037;
-        Mon, 10 Aug 2026 10:41:12 -0700 (PDT)
+        bh=2Cg6cZdSF9f8VVfLqRonYhMdW2NhQaOydkDst5gPhxA=;
+        b=H6Ky1EgroWZl7GnYAd4PkU03qch7fcZ2sMA9q7cQ7pqr/XiMyaUvqIzUcD/7sZ8TMw
+         bK1dBzgZg7bSTKu9QvkSwAHAxQr2nP4Mt1vWS/8dzVoHqQZX4Eskrze0JBJYXKePq/Kh
+         FxaEbH7lI7/ffCr5vNimwVVOAuQioEtAwdLVCH7jwX4NxGBPxgDcRg0tBfWtvnw3O8PV
+         iiUYx0eJ+S5jgL60l8DNrQ15gsXgU4BQiUEIgdBmez+DQd7bq+aTNQGx+eeRZUA47flT
+         X9DJNOiBdoiGbVLpJ7eDDL6goIptDdAbs2JyqNksEFb+cMqcPYrvnZG4DaalqwKzpLgj
+         4uTQ==
+X-Gm-Message-State: AOJu0YyxHCbdBxFcgr3yeHHEFRHIfSCWvaC//rAiTGQ8YoYXFyQmjAEA
+	GSLfJHayo0aZUUEVFe8lC1WLqz5gOmZNNjUQmqHbJ4h0df8jIDVu6PGUSudOksUt
+X-Gm-Gg: AR+sD10EvPO+LNodOF8tfeVE/6kFqP/mYhwMmX87u8iV388txtOEa7p8T+MX5MwU9N4
+	2ku7urCiDuuuu6X7cBem/TeqE2ZVXiEkRRfID8Uu+n0C98qUcmtf7gj0C3QTwHgcL0YQRke86aw
+	7qYW2VE0qyCt9JfkgGsNdFzctBPEsxnPjD5gsxk0s62NhWzwQ/w0XNbXmqcQGJr75Uj0m1OVHCk
+	i4vrblmjGXX27ms543hvjBOyoihv6kZrhXElzJOrU54KFdHS9XwSqsEkI0Id0bogYyKyHgIUmDS
+	qKCh2NS95nikTIbAcJkqHK5e2rgKIgb5g10kPs2VWVzmM2W2cuBC6tX8fSYGUPFn3HvLCYvdt6F
+	42CjEtvzuZ9DLA3N9Co5PHr2xZ9pP2m+Gl0oRkQ8/LoKIQCj6QGFuQUv/3g6258fpB2pbS9mNwz
+	Zs/Z44i7w61nkVfk5oxxFOO0fXqBTQ3JfcriPYdNxY9d/IHV1eWpzRdVChBwNIObHvvKQL49EHY
+	BqrG7rA9+UMCaUf8EfzvK0AH3kQyTAW65jtynoXP0NXNr00x12nDQcSOM1TSpodRtueLjGAp0/K
+	bT03J94E/SGm/5tQD8Wjmw==
+X-Received: by 2002:a05:6a20:c996:b0:3c3:80bc:1540 with SMTP id adf61e73a8af0-3cc22d6e107mr191885637.3.1786383677333;
+        Mon, 10 Aug 2026 10:41:17 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:5026:8db8:20aa:c615:9a47:206a])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14101b7b39bsm36865585c88.14.2026.08.10.10.41.07
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14101b7b39bsm36865585c88.14.2026.08.10.10.41.12
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 10 Aug 2026 10:41:11 -0700 (PDT)
+        Mon, 10 Aug 2026 10:41:16 -0700 (PDT)
 From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -69,9 +69,9 @@ Cc: gitster@pobox.com,
 	johannes.schindelin@gmx.de,
 	l.s.r@web.de,
 	r.siddharth.shrimali@gmail.com
-Subject: [GSoC PATCH v4 1/7] builtin/repack.c: add --drop-filtered and --dry-run options
-Date: Mon, 10 Aug 2026 23:10:41 +0530
-Message-ID: <20260810174047.6524-2-r.siddharth.shrimali@gmail.com>
+Subject: [GSoC PATCH v4 2/7] list-objects-filter: add list_objects_filter__filter_oidset()
+Date: Mon, 10 Aug 2026 23:10:42 +0530
+Message-ID: <20260810174047.6524-3-r.siddharth.shrimali@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260810174047.6524-1-r.siddharth.shrimali@gmail.com>
 References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
@@ -84,244 +84,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add two new command-line options to 'git-repack':
+The existing filter entry point, list_objects_filter__filter_object(),
+is built around the object-walk path: it expects traversal context and
+provisional omit sets, and is meant to be called as objects are
+visited during a walk. A caller that already has a set of OIDs in hand
+and only wants to know which ones a filter would select has no usable
+entry point into the filter API.
 
-  --drop-filtered: intended to eventually delete objects that match
-                   the filter specification. Requires --filter and -a,
-                   and is incompatible with --filter-to.
-  --dry-run: show which objects would be dropped without making any
-             changes. Only meaningful with --drop-filtered.
+--drop-filtered is exactly such a caller: it collects promisor blobs
+into an oidset and needs to know which of them exceed the filter
+threshold, without performing an object walk.
 
-Keep --dry-run as a separate option rather than folding it into
---drop-filtered (e.g --drop-filtered=dry-run), to stay consistent with
-the --dry-run option other Git commands already provide and to leave
-room for it to describe other repack behavior later. A
---drop-filtered=<mode> form can still be added later if more
-drop-specific modes are needed.
+Add a helper, list_objects_filter__filter_oidset(), that takes a set
+of OIDs and populates an "omitted" set with those that would be
+filtered out by the given filter options. Only blob:limit=N filters
+are supported for now.
 
---drop-filtered also requires a promisor remote to be configured, since
-dropping objects without a remote to fetch them back from would be
-permanent data loss.
+This helper does not actually reuse the existing filter machinery.
+It reimplements the blob:limit size check directly. That machinery
+is tied to the object-walk path and cannot easily be driven
+from a plain oidset. A NEEDSWORK comment marks this so the helper can
+later be refactored to reuse the real filter logic instead of
+duplicating it.
 
---drop-filtered is incompatible with bitmap writing: filtering breaks
-the "all objects in one pack" closure that bitmaps require. Detect an
-explicit -b/--write-bitmap-index on the command line with a dedicated
-option callback that sets a "write_bitmaps_given" flag, so it can be
-distinguished from a repack.writeBitmaps configuration value even when
-config already enables bitmaps. An explicit -b is reported as a conflict,
-while a config-provided default is silently disabled for the duration
-of the command.
-
-These options currently only perform validation. The actual enumeration
-and deletion will be added in follow-up commits.
+OBJECT_INFO_SKIP_FETCH_OBJECT is passed when reading object info so
+the helper never triggers a lazy fetch.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Siddharth Asthana <siddharthasthana31@gmail.com>
 Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 ---
- builtin/repack.c                | 74 +++++++++++++++++++++++++++++++--
- t/meson.build                   |  1 +
- t/t7706-repack-drop-filtered.sh | 55 ++++++++++++++++++++++++
- 3 files changed, 127 insertions(+), 3 deletions(-)
- create mode 100755 t/t7706-repack-drop-filtered.sh
+ list-objects-filter.c | 45 +++++++++++++++++++++++++++++++++++++++++++
+ list-objects-filter.h | 16 +++++++++++++++
+ 2 files changed, 61 insertions(+)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index db504d673f..19b26ca723 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -14,6 +14,7 @@
- #include "promisor-remote.h"
- #include "repack.h"
- #include "shallow.h"
-+#include "list-objects-filter-options.h"
- 
- #define ALL_INTO_ONE 1
- #define LOOSEN_UNREACHABLE 2
-@@ -28,11 +29,15 @@ static int use_delta_islands;
- static int run_update_server_info = 1;
- static char *packdir, *packtmp_name, *packtmp;
- static int midx_must_contain_cruft = 1;
-+static int drop_filtered;
-+static int dry_run;
-+static int write_bitmaps_given;
- 
- static const char *const git_repack_usage[] = {
- 	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
- 	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
--	   "[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]"),
-+	   "[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]\n"
-+	   "[--filter=<filter-spec>] [--drop-filtered [--dry-run]]"),
- 	NULL
- };
- 
-@@ -111,6 +116,21 @@ static int repack_config(const char *var, const char *value,
- 	return git_default_config(var, value, ctx, cb);
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index c912ff3079..6a2e9d5b24 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -828,3 +828,48 @@ void list_objects_filter__free(struct filter *filter)
+ 	filter->free_fn(filter->filter_data);
+ 	free(filter);
  }
- 
-+static int option_parse_write_bitmaps(const struct option *opt, const char *arg,
-+				      int unset)
++
++/*
++ * NEEDSWORK: this reimplements the blob:limit size check rather than
++ * reusing the existing filter machinery in
++ * list_objects_filter__filter_object(). That machinery is currently
++ * tied to the object-walk path and cannot easily be driven from a
++ * plain oidset. It would be nice to refactor the filter code so this
++ * helper can reuse it instead of duplicating the size check.
++ */
++int list_objects_filter__filter_oidset(struct repository *r,
++	struct list_objects_filter_options *opts,
++	const struct oidset *in,
++	struct oidset *omitted)
 +{
-+	int *value = opt->value;
++	struct oidset_iter iter;
++	const struct object_id *oid;
 +
-+	BUG_ON_OPT_ARG(arg);
-+	if (unset)
-+		*value = 0;
-+	else
-+		*value = 1;
++	if (opts->choice != LOFC_BLOB_LIMIT)
++		return error(_("filter_oidset: only blob:limit filters are supported"));
 +
-+	write_bitmaps_given = 1;
++	oidset_iter_init(in, &iter);
++	while ((oid = oidset_iter_next(&iter))) {
++		struct object_info info = OBJECT_INFO_INIT;
++		enum object_type type;
++		unsigned long size;
++
++		info.typep = &type;
++		info.sizep = &size;
++
++		/*
++		 * Use OBJECT_INFO_SKIP_FETCH_OBJECT to avoid triggering
++		 * a lazy fetch while inspecting candidates for removal.
++		 */
++		if (odb_read_object_info_extended(r->objects, oid, &info,
++				OBJECT_INFO_SKIP_FETCH_OBJECT) < 0)
++			continue;
++
++		if (type != OBJ_BLOB)
++			continue;
++
++		if (size >= opts->blob_limit_value)
++			oidset_insert(omitted, oid);
++	}
 +	return 0;
 +}
-+
- static int option_parse_write_midx(const struct option *opt, const char *arg,
- 				   int unset)
- {
-@@ -194,8 +214,9 @@ int cmd_repack(int argc,
- 		OPT__QUIET(&po_args.quiet, N_("be quiet")),
- 		OPT_BOOL('l', "local", &po_args.local,
- 				N_("pass --local to git-pack-objects")),
--		OPT_BOOL('b', "write-bitmap-index", &write_bitmaps,
--				N_("write bitmap index")),
-+		OPT_CALLBACK_F('b', "write-bitmap-index", &write_bitmaps, NULL,
-+			        N_("write bitmap index"),
-+			       PARSE_OPT_NOARG, option_parse_write_bitmaps),
- 		OPT_BOOL('i', "delta-islands", &use_delta_islands,
- 				N_("pass --delta-islands to git-pack-objects")),
- 		OPT_STRING(0, "unpack-unreachable", &unpack_unreachable, N_("approxidate"),
-@@ -231,6 +252,10 @@ int cmd_repack(int argc,
- 			   N_("pack prefix to store a pack containing pruned objects")),
- 		OPT_STRING(0, "filter-to", &filter_to, N_("dir"),
- 			   N_("pack prefix to store a pack containing filtered out objects")),
-+		OPT_BOOL(0, "drop-filtered", &drop_filtered,
-+				N_("delete filtered out objects (requires --filter)")),
-+		OPT_BOOL(0, "dry-run", &dry_run,
-+				N_("only show which objects would be dropped")),
- 		OPT_END()
- 	};
+diff --git a/list-objects-filter.h b/list-objects-filter.h
+index 9e98814111..56a2d87aa0 100644
+--- a/list-objects-filter.h
++++ b/list-objects-filter.h
+@@ -94,4 +94,20 @@ enum list_objects_filter_result list_objects_filter__filter_object(
+  */
+ void list_objects_filter__free(struct filter *filter);
  
-@@ -252,6 +277,49 @@ int cmd_repack(int argc,
- 	po_args.depth = xstrdup_or_null(opt_depth);
- 	po_args.threads = xstrdup_or_null(opt_threads);
- 
-+	die_for_incompatible_opt2(drop_filtered, "--drop-filtered",
-+		!!filter_to, "--filter-to");
++/*
++ * Given a set of OIDs in 'in', populate 'omitted' with those that
++ * would be filtered by 'opts'. Currently only blob:limit=N is
++ * supported. Objects that cannot be read are silently skipped.
++ *
++ * NEEDSWORK: this reimplements the blob:limit size check rather than
++ * reusing the existing filter machinery. See the matching comment in
++ * list-objects-filter.c.
++ *
++ * Return 0 on success, -1 if the filter is not supported.
++ */
++int list_objects_filter__filter_oidset(struct repository *r,
++	struct list_objects_filter_options *opts,
++	const struct oidset *in,
++	struct oidset *omitted);
 +
-+	if (dry_run && !drop_filtered)
-+		die(_("--dry-run only takes effect with --drop-filtered"));
-+
-+	if (drop_filtered) {
-+		if (!dry_run)
-+			die(_("--drop-filtered doesn't work without --dry-run yet"));
-+
-+		if (!po_args.filter_options.choice)
-+			die(_("--drop-filtered requires --filter"));
-+
-+		if (!(pack_everything & ALL_INTO_ONE))
-+			die(_("--drop-filtered requires -a"));
-+
-+		/*
-+		 * Only blob:limit=<n> is supported for now. Reject other
-+		 * filter choices early, before walking the object database.
-+		 */
-+		if (po_args.filter_options.choice != LOFC_BLOB_LIMIT)
-+			die(_("--drop-filtered only supports --filter=blob:limit=<n> for now"));
-+
-+		/*
-+		 * an explicit -b on the command line is a conflict we have to
-+		 * report, a bitmap setting from config is silently overridden
-+		 * for the duration of the command
-+		 */
-+		if (write_bitmaps_given && write_bitmaps > 0)
-+			die(_("options '%s' and '%s' cannot be used together"),
-+				"--drop-filtered", "--write-bitmap-index");
-+
-+		/*
-+		 * Without a promisor remote there is nowhere to re-fetch the
-+		 * dropped objects from, so dropping them would be permanent
-+		 * data loss.
-+		 */
-+		if (!repo_has_promisor_remote(repo))
-+			die(_("--drop-filtered requires a promisor remote"));
-+
-+		write_bitmaps = 0;
-+	}
-+
- 	if (delete_redundant && repo->repository_format_precious_objects)
- 		die(_("cannot delete packs in a precious-objects repo"));
- 
-diff --git a/t/meson.build b/t/meson.build
-index a25f37d2f5..92352e43c4 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -964,6 +964,7 @@ integration_tests = [
-   't7703-repack-geometric.sh',
-   't7704-repack-cruft.sh',
-   't7705-repack-incremental-midx.sh',
-+  't7706-repack-drop-filtered.sh',
-   't7800-difftool.sh',
-   't7810-grep.sh',
-   't7811-grep-open.sh',
-diff --git a/t/t7706-repack-drop-filtered.sh b/t/t7706-repack-drop-filtered.sh
-new file mode 100755
-index 0000000000..f27b09a30e
---- /dev/null
-+++ b/t/t7706-repack-drop-filtered.sh
-@@ -0,0 +1,55 @@
-+#!/bin/sh
-+
-+test_description='git repack --drop-filtered option validation'
-+
-+. ./test-lib.sh
-+
-+# checks for options validations before any promisor walk
-+test_expect_success 'setup plain repo for validation' '
-+	git init plain &&
-+	test_commit -C plain initial &&
-+	git clone --bare plain plain.git &&
-+	git -C plain.git repack -a -d
-+'
-+
-+test_expect_success '--drop-filtered requires --filter' '
-+	test_must_fail git -C plain.git repack --drop-filtered --dry-run -a 2>err &&
-+	test_grep "drop-filtered requires --filter" err
-+'
-+
-+test_expect_success '--drop-filtered cannot be used with --filter-to' '
-+	test_must_fail git -C plain.git repack --drop-filtered \
-+		--filter=blob:limit=1k --filter-to=./filter-out 2>err &&
-+	test_grep "options .--drop-filtered. and .--filter-to. cannot be used together" err
-+'
-+
-+test_expect_success '--dry-run only takes effect with --drop-filtered' '
-+	test_must_fail git -C plain.git repack --dry-run 2>err &&
-+	test_grep "dry-run only takes effect with --drop-filtered" err
-+'
-+
-+test_expect_success '--drop-filtered requires -a' '
-+	test_must_fail git -C plain.git repack --drop-filtered \
-+		--filter=blob:limit=1k --dry-run 2>err &&
-+	test_grep "drop-filtered requires -a" err
-+'
-+
-+test_expect_success '--drop-filtered fails with --write-bitmap-index' '
-+	test_must_fail git -C plain.git repack --drop-filtered \
-+		--filter=blob:limit=1k --dry-run -a -b 2>err &&
-+	test_grep "options .--drop-filtered. and .--write-bitmap-index. cannot be used together" err
-+'
-+
-+test_expect_success '--drop-filtered rejects explicit -b even when repack.writeBitmaps=true' '
-+	test_must_fail git -C plain.git -c repack.writeBitmaps=true \
-+		repack --drop-filtered --filter=blob:limit=1k --dry-run -a -b 2>err &&
-+	test_grep "options .--drop-filtered. and .--write-bitmap-index. cannot be used together" err
-+'
-+
-+test_expect_success '--drop-filtered fails without a promisor remote' '
-+	test_must_fail git -C plain.git repack --drop-filtered \
-+		--filter=blob:limit=1k --dry-run -a 2>err &&
-+	test_grep "drop-filtered requires a promisor remote" err
-+'
-+
-+test_done
+ #endif /* LIST_OBJECTS_FILTER_H */
 -- 
 2.54.0
 
