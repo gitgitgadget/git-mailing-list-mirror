@@ -1,64 +1,64 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31244424D65
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 17:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00453431A5C
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 17:41:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786383701; cv=none; b=Ycv20Tfu7tEUyt7aXp1uNpnTifm5/xgX28czAlN3fYc13qgtw1vE3fJgVS690QfYTXhzgB038LInirqglkSQSK3VzsH2UE17MTpD/zxxBf69dUElwSRMfYwZsBs0X8dqPk16ZXDvp3czs594CH7YkP77QAdClSXPUtWnvBYZp5o=
+	t=1786383708; cv=none; b=OCT2OV0tf1MFqa1boh2Bj1nGCdk/wIN0dSl3rLsgqDZuYha4poDgg/U/wwGA3kTricrJ6mUPiAuwWG+FdNz9QpAelgbaCTsCO2hhkOekQAk5+TNVPnTej9uGrkhiPgJvd9hJGYN3LvlPcTcvHiIGOnmwKkP8WqVVPplQExNrXYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786383701; c=relaxed/simple;
-	bh=w2Etn8n9MMa0gY9GpNjZ3z+BQb+6jP+u70f0Rl4lfGE=;
+	s=arc-20240116; t=1786383708; c=relaxed/simple;
+	bh=UyB2fV5Nr6z4fQi5vLLQ97Wtxf0IAySVBgjYdpHzb6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nf+B43BLmd/gDlrBKuqUbxRubgCHbEF1oqBzQ9HU3tTbCoToibGZOqQ3XVmRYQxmAVZ4819Qye7NuQ9s1JZQOXLZpf/Z/JO8XTo0UEvkdVinplrJHYsU97ZyOZBs9mb4N0sx1qqoY7DW4ZIIazMvmBjIi76cxJDnv+xdLvaFR9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iD3NCWTD; arc=none smtp.client-ip=209.85.216.47
+	 MIME-Version; b=rs23xoHtEx/IDjG+6pc9OxgFYUyEjCsRb3ELy0Ezq3ScbEdnggdAMO+Wyf15cKMZuWDLXYE71Xd/1CfpVpqhWfITPFXFqZI02noIQ3xkz2YcHKOeLDnBclnCu2fw7m65us3MmlzNXhoc10L4IAjmw7tZK3ueLV4JCXlNn0Gfbm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G8XYEPg8; arc=none smtp.client-ip=209.85.216.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iD3NCWTD"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-38a0c7e841fso2787250a91.2
-        for <git@vger.kernel.org>; Mon, 10 Aug 2026 10:41:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G8XYEPg8"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-38e58034d05so2260937a91.2
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 10:41:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786383699; x=1786988499; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786383706; x=1786988506; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=0fJW469RKRDzqft4Wns+rgn+GUqzC7cWrje4bYTvyP0=;
-        b=iD3NCWTDcgb0kyQW/BgTk0ZG7o8G4T4DPkXKIWQQKfxH1DYTemWrX4c4gQto8STJKV
-         Yo9sT6YA8znthUUnHm5Qz5sP595QZf6kgROxcfCysfZQrfXqC5SwTAbE2b/yzcST+vLg
-         VhUZ/eC2s1Crs3hViEPhlV5rX7/EpeubzOzURtRefAEoqqe1O8jGD/XP/AgcYBfTlX/t
-         Mz3dPsn4XwAUAu6GsnmlXu2kvtAf0+bRtkXknxmegI9+BoXSWkoJYn6C273areY6054L
-         Fc4O1M5Peb71zDZh+/cNEbvgiTilF9vUd3Guc6pCslMIo8iCPzVHtwi66KXtLXV1PxhZ
-         KoGQ==
+        bh=60BgxIYJ9Vv04BejjAcADp/34/M+w474krhaB6xJu6s=;
+        b=G8XYEPg88A9x9Sa5Kj58NRIIA+g1IgCujLv43cMrP5h9dTnervwTBhzkrBlDb6tkXi
+         qk6b+gLIPasmwUkvAB2IiflUZuClE15BOTVorSfODsf/Skvg0dlVp8P1maJBuIEEGGfU
+         YEuZn9bEgl/5zUw+/EzB8OPLAXG3n/FvUFef8Man2HdAOf02hqJrJMJbENj/j71dII3o
+         CRGaGew1DLII5cz6uS5ff0ScqZzDy3mYd9h1RAzw0uFQIrjgMEiVbEKsQpZ7V44QOgZW
+         iktaRX9fTJ0fC8AWadPNxFFJkAh1a7M5ogmFc2E8jfEOq4wAan7L+hH/7tNQ+mPeFWnY
+         roqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786383699; x=1786988499;
+        d=1e100.net; s=20251104; t=1786383706; x=1786988506;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0fJW469RKRDzqft4Wns+rgn+GUqzC7cWrje4bYTvyP0=;
-        b=KXZSLsu3mI2g8eGv0nd8gU0mjSgnIrNHXNwa0BdgJRn5T4Vbg6CVkNv4vtcCXw8lz7
-         S9G+UtNjay7hp4worotDwwxO4oTYX1GD7DrbFqTZHTK1j1ggb+VM1Cr2OVIv1dgXkjBD
-         CbGuEQfQhQAExDERhEN9A1SWwX7l5i2YxWefINDymUntM+uI5bY5NjMc/i2oALke69Sd
-         46JIptGyeltQ0PlzbiuMKXuf0W56NFch8CmAi8aVLn4AT9aLjNyrk4KidSSUi6JvEMJk
-         dXahkOMudQG1SlosFu0KB9MmGtO530g9uvJqe1WrhUcskrBuOIMJBFh225FwQ7LGk4vL
-         /j5g==
-X-Gm-Message-State: AOJu0YzO8RgfiUCCiW1RsLvfD7mYo0/Iccu5arQ+iOEhR86LG78Ahc+h
-	TctKNgoP2TA/Ux/6Bue7G0yDZMsjy256C3ZE5AnlxcnhAeonphgVuxtWPPGywDV3
-X-Gm-Gg: AR+sD13FGOFUewcXV1CcuSGq7fFPH9EAwj9DuXyOrkUsismn1UEnHKrv+RzCENgWlxg
-	5VGIY6bGmrzoDc3YSLN5bqb4vwLpN932dOlnYwg1Xi8bkOqqFJOGFdONClYlCtyZ1TrveHpiYR9
-	SjcCEPHKiF9gP+TO61A7NFh+9m/ryn0eD8YNFHsMVDF60souA9xuC6JFoCM9BVZOQgNXRlLZd9r
-	PKH/ZbWbPNrC0wpqkXhX7e5MBesxd+Uw/v81F5Tj9Wf28LFhEyRT8A9bnGrCU2vgW/9iQpf42IO
-	Nq7i5M9c5mVJ32dDwI08C1gtVaf9GlcVQBrYSKIcyxsDfz1FtEMCQ4Y8FzXPkS2elH3e5Ra70PP
-	IPKj9Cq/Rs53Lur1K36RPz2vcN7KRTiRKqLxKbAvHyU/TbWZaDKbEMQC03FknP2a2fqQLW+dWKS
-	m3H4V0+aOTcwqheadY9cHuiqRyVcojA3TTlNhvvV/WUyQBmun1c8i/HRdAl3G4c7my+P227u9Ug
-	mLlvTWwU4zmAFjQ6ba9bC6HWLfbh8SoE3MRLxw50wy4i7uoiKsrIXfqQKt/VLxl+76tfsvIGCBu
-	ztT889+9Uc4PSUX5Acq2Vg==
-X-Received: by 2002:a17:90b:35c3:b0:390:b41a:b92b with SMTP id 98e67ed59e1d1-39261f71c58mr27467505a91.4.1786383699402;
-        Mon, 10 Aug 2026 10:41:39 -0700 (PDT)
+        bh=60BgxIYJ9Vv04BejjAcADp/34/M+w474krhaB6xJu6s=;
+        b=rQOwT44fPZhfaLKWJs8zce4Kz8cvKcG5PB+gyR6WRy+Pk9dc9sd2vzMyAQH2llTzJp
+         vQ/CWatta1BgCzgUDA0o2Oy5mc2x2Xl+Rcm0IX94wxWl8lLjndl+N4en57y17SZjTqyb
+         sI9f/xdZ8Etcj+4UELRtNq6xV0wF86s/uKXw21plIBFoawVRrY3Oorunz6KKKQYGQNXY
+         OGoqPYdxMXUe+Btb70DH5q1n4tb+TPLURGKZqwk1NxhOUVT2JXcfByXI0w2QkRtkXfSV
+         /vidnHctHvoUnmIKFnBf+0qhHIEiyXXizAYz6JkD82zQLojtzMBxVhi+KN+kFnghWsJa
+         Tmyg==
+X-Gm-Message-State: AOJu0YxRlskJZ4+ko8RfZgeO5qe79cpXrBvDE3/1EXXAzs1/z5CfhDwW
+	bYBiiL8DBE5MYp7Wo5QUREv/mGOIrVqANo2/gG+lkMNFSYvdA8D0M+OSVW9vqgvJ
+X-Gm-Gg: AR+sD13bg1MSv5+4p66t+xG9ay4zC+rh6L/NSwWRsDdm05jAHE9t6MjV0XgzVSrmgdO
+	cqZeATqxZSZ8fkrEihgBQE+9xPK8mvCdsLRJ0/UiepW522Pds5A86fPy/GbS8sQ6rmWdanr8Lwq
+	AQ4wot2XPJuquJ9uPCi6OtjjXnoUzq80FFbY1gsLH8Xfi1johuYT266on82IVbIuC1dtcYS93V0
+	7Wy0GUI/OjvAKmoSUyP6gXHSH0CF5JRzQrYoaaj/wC9G5CpFfGi8HKuGy6Agi2Co9iLVtyv/XXk
+	xE7zGrTLbkkn/XJeRQ/zEODQFrseOmiQI+Av2gwnCOfcY+VdQGpWweeD6BsFFuluzkdV0mDB8H1
+	V7dmR7Kly9iWr9TGPX79mf7xz7FHgLo8BZ+L9uypfRFdXCgktjwjobBV8F1kZ69ayoQVA4GBhmJ
+	SFQzddoQVoCqTUss+WkfBc5PpI+QU+D3RvnOOKkodWXenfRPNoeoscPR/Lwb+wxLbkbooNtEHym
+	wrDzQOEt/ERVGvE35e+jj1WOkbnav+PYLHXcQ7W3GV7zG8OD/dV1etBjs9jjuKaFl9rEpkiXgDr
+	ltvg14wOKskXSfsDLzbagw==
+X-Received: by 2002:a17:90b:264c:b0:36d:9e0b:3801 with SMTP id 98e67ed59e1d1-3903c59936cmr47574389a91.8.1786383706163;
+        Mon, 10 Aug 2026 10:41:46 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:5026:8db8:20aa:c615:9a47:206a])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14101b7b39bsm36865585c88.14.2026.08.10.10.41.34
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14101b7b39bsm36865585c88.14.2026.08.10.10.41.39
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 10 Aug 2026 10:41:38 -0700 (PDT)
+        Mon, 10 Aug 2026 10:41:45 -0700 (PDT)
 From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -69,9 +69,9 @@ Cc: gitster@pobox.com,
 	johannes.schindelin@gmx.de,
 	l.s.r@web.de,
 	r.siddharth.shrimali@gmail.com
-Subject: [GSoC PATCH v4 6/7] builtin/repack: add guards for --drop-filtered
-Date: Mon, 10 Aug 2026 23:10:46 +0530
-Message-ID: <20260810174047.6524-7-r.siddharth.shrimali@gmail.com>
+Subject: [GSoC PATCH v4 7/7] Documentation/git-repack: document --drop-filtered and --dry-run
+Date: Mon, 10 Aug 2026 23:10:47 +0530
+Message-ID: <20260810174047.6524-8-r.siddharth.shrimali@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260810174047.6524-1-r.siddharth.shrimali@gmail.com>
 References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
@@ -84,149 +84,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
---drop-filtered removes local promisor blobs. That is only safe when the
-repository is not mid-operation and when the blobs are not actively in
-use, so add two guards, both skipped for bare repositories which have
-neither a worktree nor an index.
-
-First, refuse to run while a merge, rebase, am, cherry-pick, revert, or
-bisect is in progress. During these operations the working tree and
-index are in an intermediate state, and rewriting packs and deleting
-objects underneath a half-finished operation is unsafe.
-
-Second, refuse to drop a blob that the current index references. Such a
-blob is needed by the working tree, so dropping it would only cause the
-next command that touches the worktree to lazy-fetch it straight back,
-reclaiming nothing. The offending path is reported so the user can see
-why the drop was refused.
+Describe the new --drop-filtered and --dry-run options: what they do,
+only blob:limit filters are supported for now, a promisor remote is
+required, --drop-filtered requires -a and implies -d so the redundant
+packs are actually removed, its incompatibilities with --filter-to and
+bitmap writing, and the safety guards that refuse to run mid-operation
+or to drop index-referenced blobs.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Siddharth Asthana <siddharthasthana31@gmail.com>
 Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 ---
- builtin/repack.c                | 49 +++++++++++++++++++++++++++++++++
- t/t7706-repack-drop-filtered.sh | 36 ++++++++++++++++++++++++
- 2 files changed, 85 insertions(+)
+ Documentation/git-repack.adoc | 37 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index e90016a33e..6ef4973038 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -17,6 +17,8 @@
- #include "list-objects-filter-options.h"
- #include "oidset.h"
- #include "hex.h"
-+#include "wt-status.h"
-+#include "read-cache-ll.h"
+diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
+index 72c42015e2..63943b078c 100644
+--- a/Documentation/git-repack.adoc
++++ b/Documentation/git-repack.adoc
+@@ -12,6 +12,7 @@ SYNOPSIS
+ 'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
+ 	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
+ 	[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]
++	[--filter=<filter-spec>] [--drop-filtered [--dry-run]]
  
- #define ALL_INTO_ONE 1
- #define LOOSEN_UNREACHABLE 2
-@@ -317,6 +319,30 @@ int cmd_repack(int argc,
- 		if (!repo_has_promisor_remote(repo))
- 			die(_("--drop-filtered requires a promisor remote"));
+ DESCRIPTION
+ -----------
+@@ -182,6 +183,42 @@ depth is 4095.
+ 	`objects` and `objects/info/alternates` sections of
+ 	linkgit:gitrepository-layout[5].
  
-+		/*
-+ 		 * refuse to run while another operation is in progress. A
-+		 * dropped object would just be lazily re-fetched when the
-+		 * operation resumes, but triggering a network fetch in the
-+		 * middle of a half-finished
-+		 * merge/rebase/cherry-pick/revert/bisect is a poor
-+		 * experience, so this is a UX convenience rather than a
-+		 * safety measure. Bare repositories have no such state, so
-+		 * the check is skipped there.
-+		 */
-+		if (!is_bare_repository(repo)) {
-+			struct wt_status_state state = { 0 };
++--drop-filtered::
++	Delete the local objects that match the `--filter` specification
++	instead of keeping them in a separate packfile, reclaiming the
++	disk space they occupy. This is intended for partial clones,
++	where the filtered objects are promisor objects that remain
++	recoverable from the promisor remote and are lazily re-fetched
++	on demand when they are next needed.
+++
++Only large blobs are supported for now, so `--filter=blob:limit=<n>`
++is currently the only accepted filter. Because dropped objects must be
++recoverable, this option requires a promisor remote to be configured
++and refuses to run otherwise.
+++
++This option requires `-a`, and implies `-d`: the objects are dropped by
++rebuilding the promisor pack without them and then removing the now
++redundant old packs, so the redundant packs must be deleted for the
++space to actually be reclaimed. It is incompatible with `--filter-to`
++and with bitmap writing (`-b`/`--write-bitmap-index`), since filtering
++breaks the single-pack closure that bitmaps require. A bitmap setting
++coming from configuration is silently disabled for the duration of the
++command.
+++
++As a convenience since dropped objects remain recoverable by lazy fetch,
++`--drop-filtered` refuses to run while another operation
++(merge, rebase, am, cherry-pick, revert, or bisect) is in progress, to
++avoid a surprising network fetch mid-operation, and refuses to drop any
++blob that the current index references, since such a blob would only be
++lazily re-fetched by the next command that inspects the working tree.
++These checks are skipped in bare repositories, which have neither a
++working tree nor an index.
 +
-+			wt_status_get_state(repo, &state, 0);
-+			if (state.merge_in_progress || state.revert_in_progress ||
-+			    state.rebase_in_progress ||state.bisect_in_progress ||
-+			    state.cherry_pick_in_progress ||state.am_in_progress||
-+			    state.rebase_interactive_in_progress) {
-+				wt_status_state_free_buffers(&state);
-+				die(_("--drop-filtered cannot be used while another operation is in progress"));
-+			}
-+			wt_status_state_free_buffers(&state);
-+		}
++--dry-run::
++	Only meaningful with `--drop-filtered`. List the objects that
++	would be dropped, one object ID per line, without rebuilding any
++	pack or deleting anything.
 +
- 		write_bitmaps = 0;
- 
- 		/*
-@@ -332,6 +358,29 @@ int cmd_repack(int argc,
- 		if (ret)
- 			goto cleanup;
- 
-+		/*
-+ 		 * refuse to drop blobs that the current index references.
-+		 * such a blob would only be lazily re-fetched by the next
-+		 * command that touches the worktree, so dropping it reclaims
-+		 * nothing. This guard just avoids that churn. bare
-+		 * repositories have no index, so the check is skipped there.
-+		 */
-+		if (!is_bare_repository(repo) && oidset_size(&drop_oids)) {
-+			struct index_state *istate = repo->index;
-+			unsigned int i;
-+
-+			if (repo_read_index(repo) < 0)
-+				die(_("could not read the index"));
-+
-+			for (i = 0; i < istate->cache_nr; i++) {
-+				const struct cache_entry *ce = istate->cache[i];
-+
-+				if (oidset_contains(&drop_oids, &ce->oid))
-+					die(_("cannot drop '%s' (%s): it is referenced by the current index"),
-+						ce->name, oid_to_hex(&ce->oid));
-+			}
-+		}
-+
- 		if (dry_run) {
- 			struct oidset_iter iter;
- 			const struct object_id *oid;
-diff --git a/t/t7706-repack-drop-filtered.sh b/t/t7706-repack-drop-filtered.sh
-index ba00239c9d..05d58fa456 100755
---- a/t/t7706-repack-drop-filtered.sh
-+++ b/t/t7706-repack-drop-filtered.sh
-@@ -146,4 +146,40 @@ test_expect_success '--drop-filtered removes the promisor blob locally' '
- 	test_grep "$SMALL" present
- '
- 
-+test_expect_success '--drop-filtered refuses when a merge is in progress' '
-+	test_when_finished "git -C repo merge --abort || :" &&
-+
-+	# creat a conflicting merge so wt_status reports it
-+	git -C repo checkout -B mergebase base &&
-+	echo one >repo/conflict.txt &&
-+	git -C repo add conflict.txt &&
-+	git -C repo commit -m one &&
-+
-+	git -C repo checkout -B mergeother base &&
-+	echo two >repo/conflict.txt &&
-+	git -C repo add conflict.txt &&
-+	git -C repo commit -m two &&
-+
-+	test_must_fail git -C repo merge mergebase &&
-+
-+	test_must_fail git -C repo -c repack.writeBitmaps=false \
-+		repack --drop-filtered --filter=blob:limit=1k --dry-run -a 2>err &&
-+	test_grep "in progress" err
-+'
-+
-+
-+test_expect_success '--drop-filtered refuses to drop an index-referenced blob' '
-+	# create a large blob, add it to the index and make it a promisor object
-+	# so the index references it and enumeration picks it up
-+	test-tool genrandom idx 4096 >repo/tracked-big.bin &&
-+	git -C repo add tracked-big.bin &&
-+	OID=$(git -C repo rev-parse :tracked-big.bin) &&
-+	printf "%s\n" "$OID" | pack_as_from_promisor >/dev/null &&
-+	delete_object repo "$OID" &&
-+
-+	test_must_fail git -C repo -c repack.writeBitmaps=false \
-+		repack --drop-filtered --filter=blob:limit=1k --dry-run -a 2>err &&
-+	test_grep "referenced by the current index" err
-+'
-+
- test_done
+ -b::
+ --write-bitmap-index::
+ 	Write a reachability bitmap index as part of the repack. This
 -- 
 2.54.0
 
