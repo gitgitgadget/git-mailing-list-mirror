@@ -1,110 +1,141 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C6334B1A7
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 21:09:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786396173; cv=none; b=B6pp3H3bCFQJUP+xASLaRjufDks3HOpm0Za+/tg/badHIIfhJBSTmGhCoKKT/XkoMwJh+YJCvADpIRwY9AzephwhlI5b4+PbjaoWeTlNy9qIYvysCU7uvvvaWur0m8mt/JzaEJCWdjGnxGkAsUtnPdk2YeEOn+teDCSQKlnttjw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786396173; c=relaxed/simple;
-	bh=1XcOcOSuGZeYvIrF2dGb10Bj79VWMFia1e0sB/4CCrE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Aev6skfAn1W2l58QW/JecL0hLtIdNUNIUuq2A4G+h+w3fWcaEmEbRm/m59kSUP7zl58/ut7EoTy251Y4IUVOv8vT1LWULT3KkVIvaMPNR7/gfVdVMxel+DJd3av6lpr702KiSRmPmbUZOGLB8CknsMeI3BqzV66rMW92cPTSCBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZtDZUGwo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mZXZPX5y; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A152EEE6E
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 21:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786397793; cv=pass; b=IWPTBGaDXEzEjpnm0eQ4UjUTEtCXHZjTJQEzS/2fTp76SaWI7NVOH94jkT8i7uyQnkDMJ9EO6cea8NbEFOTEtnDHMtZjyiCHvEI6THhDsydZEviLmInbuCUVGhi/3mX6zWzxnUZXP5NRqdYkU7d3704mRueiv8JD/U8R6lkNBE4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786397793; c=relaxed/simple;
+	bh=WTcoB8yNCyiErVQ8hKqVPI5TYTyZxBe/aH7zieSplAk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qp1Pafxa/rhD16yGK+WUjlpvhuIKp7SUuAkaw1nN4v1Vlgo5hivdBUIeB5m/mjCSm+7BF4nXJ4RGV2WUP+v7PfV+a9n1BcEWrVf0Rp+jXY95xrA8xuubZJZ0zILAewyn4mGDEB3sKTjCqOSF61jW/jTsg+SNkRYZftFHXWOcl/k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F8IT20l5; arc=pass smtp.client-ip=209.85.219.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZtDZUGwo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mZXZPX5y"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 36226140015D;
-	Mon, 10 Aug 2026 17:09:30 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Mon, 10 Aug 2026 17:09:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786396170; x=1786482570; bh=5uuN4C4ZOj
-	C/XZtP46DDikQcFGd7k7DWbz0tbxWosLc=; b=ZtDZUGwosYGHQMF5bKWyGWhVUw
-	KNgAnkpySn7+6RMNr1YoOQgpPMWLI48HqxQChsDSa/EQSK0dWg47PnbjtwwX4kxY
-	jeYLQhhLzT97KAq+5Jw+BIulkty6pakkPOHoXcHRwmgFwjEVVY55rcJiLk157Kfl
-	sdqx5YyNjbNd6CbX3I2Cc6joKXP//fxBYG1Ki4Dt4qTkN9gZcc2vhAL3Rc+RjYPW
-	KMzNZ6lR75vY2j3jEwpuXaFarEYW1/tiKMEq2aphQJxfsdOSAcjsgKcHaaYN1jTH
-	4IjgOZURd8vDNqd2nwCKTM8dw1m0+fJySlIBMYVNQToM66AhmURb8ISuSrsA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786396170; x=1786482570; bh=5uuN4C4ZOjC/XZtP46DDikQcFGd7k7DWbz0
-	tbxWosLc=; b=mZXZPX5ypWJ+lS397U5w0k9MCkf+HWdnBNKA+LgEPqXEJmHY37l
-	R9+rzcb6OrDrN2vZh2It8XvtSdrqFYW52hjcYKp4mqRmBuXh//sBoqTAq9u/I/SG
-	xhNoL2pkWEulkwngGXd6J+mHfrSLPMnmD5WMHYLKhtXKVm6wSDUWBsdIGr2KlB+P
-	9+q0GCISLow4HSxbyMmIZDlFaVJNkYe1gpaK1mU3TRWOwMucz+pSuTTAOnGigbG3
-	mz4KBy3djXpaYem5ZSYBiey66LW3s7tUrHNwfWxwFgW7gStIIUiniHVCFyb4swG5
-	3fNwWVnmN2zP7kB1jgy33C6SjSU2wppFABA==
-X-ME-Sender: <xms:Cj56atoJ8cX-bkjfWeGVqltWNZlRw4KNBjTrEVtyebkTuTEfiIXjQA>
-    <xme:Cj56amrOoVpEJgnhbUzBJyCGVjh8AWimMePWIEJtSh3gR9aLnSAal9vtEch90q_1J
-    W_kncKbuCDhqxMRrJQ1p1XMNlN2zO7kZjiuY0deetDpWpdjqa7C5A>
-X-ME-Received: <xmr:Cj56avMs-pkSq_De8jwLm_MnngCD7XS4E8BA5TMXKtbeG7EwsCv9F4E-4ePcIq7P0_4fKUz_4qhABzFnNnzlfq6CJIAaTO6NFA>
-X-ME-Proxy-Cause: dmFkZTEx5LhtjbndhgFw+bB1iJbXxv/mR/nFJkjz7e5o7JX0LraoAmmA1bq2umju14Nj5R
-    71vVSzqtah5L8P4kyJ3w+sOVQo966H5wFIcFnzS6yDeAhy9a7xliPVpGS5eZeLQST8SFFf
-    syc7bMVsCWwOz/QWeNTCe6JUv+A2fkcq661O7lLLDonYUh4q/cnzG7WXyvTX6wiOs6yrQj
-    njzsQR2S3fBlkh/MWczzy1NJHCvpyJquCUU71HPku2xoikT5H3rW8i5LjzkFZb8VKohTWN
-    +FpQ0l3LRa0vGY4rzvqVmUToXZxe95Vy7OAmbWJIl85vtFVYw+T8MJ+dwezjut+BV7RVa9
-    mb62rEV/2ud17h9MKRdUvRF+tI+lzjIDggQKGyWuujfLaMGuaWf0YQJwpq6HQ01Q/p576L
-    3GbLlNrpQRSwr/YqOU33mERRbIx4iPAVlcVwShrdfXpCxdbVsKaW27CpYt2KkSiy/8np3r
-    WB5cxlF11gdS3rmU57E7ppUmaYhB4Ag6vsaSV04g6nTbg6fN5lDyidii9Ka+rfSLlYgKSa
-    /dH85B4oRK32eLJWvQgszeiBBTIiSDPwI0Yyz+8B8A8Rg/PD9RIgKcMK5Xnc1Mz0UMdMk0
-    D+o1x6O7BF1xAHWakRz0bAvDMt6hw5yQqmVq+nb9zzA90FxVGSIgoVGKYKPQ
-X-ME-Proxy: <xmx:Cj56anyDC1cBQgMjF6gapLxuAeyPvZ5GovhrgW7A5rDfAdySHjI9ow>
-    <xmx:Cj56aouZmdNKD-pgI0uZXDPo1pkWuC9xi6iVrEgJs4E_ZBAdSuPBVw>
-    <xmx:Cj56ag6QE33waTkPA7Ay4OqomUaBB8Ae2sRnRoJ35yjSj4p5ayapnQ>
-    <xmx:Cj56anT9k00Dd03XkCf7lK0ZzAR5H8dd7ScsEczXCXbzXSZqRc0YTw>
-    <xmx:Cj56auvgaBdanr7AJZNPtjfNPEyRFHloJhHlLqDDGcqzdvJzudhs4qSZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 17:09:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v2] send-email: clarify missing subject error
-In-Reply-To: <pull.2375.v2.git.git.1786384412423.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Mon, 10 Aug 2026
-	17:53:32 +0000")
-References: <pull.2375.git.git.1786267394375.gitgitgadget@gmail.com>
-	<pull.2375.v2.git.git.1786384412423.gitgitgadget@gmail.com>
-Date: Mon, 10 Aug 2026 14:09:28 -0700
-Message-ID: <xmqqtsp165tj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F8IT20l5"
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-8efec2c28f8so14675656d6.2
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 14:36:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786397791; cv=none;
+        d=google.com; s=arc-20260327;
+        b=kGwuJeF4H9sbS70p96T/2HYwxlwaDJoN8WebGgxgCGyROserdpJKCTlVFWi1d9TYgh
+         iGMCrcijdBbjBO6xV6eKtAdRPC5woy97w5iY6sFUAqp0dt67LFCsFd/uOACDN5nddYZi
+         FTMxiGlzbTe2vaVUuCkxItcg/+j3MMywTrHP+5x07muoVy4ZZz/hD6bzscGqBH+/iElU
+         Jcxr0TdyUuU026BhjuDP8TmsQFjAXryP6Drw1nnB0Z6UMbPPh1kwv1TX5asGY+ZgDMQa
+         Z5UmvCQj6Fiaibipv4iP5SIU/3KYrUAySMNKrAXZBmmdSEO88Y3OjwbqoJy8VK2QgIA8
+         OOXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=WXw9yPf6U88cNOiH7end3RJbD8+Vbq0Jv7JRz7pDyBc=;
+        fh=Je+Ogu0BJZp1fAN3c+gBvp3co2X9r1YC0xXVFNYi8W4=;
+        b=dsOtVDYB7sF1hCBpN2xh2TKRpayBSdc71wzrslS3pVVpG4MQMXa/aAZjwU2lDyTvJA
+         2rUGRr2GlpnjSWBH1XaWXW/Jv0/qfYUqBcjUXSCu0oRT4ZZfcvnDdSlcsDPtWwn8wHhi
+         7w24QzvGKMkZb3/Iicir+YgE9sp12XuJ+AxqpV6CjxJFkhiwWua6x+deeqUEAO+SizQY
+         SQyhsPTIwHfVR4GyiWOrhWQucFse07hhNUKribTG61BRGPAW0/eVpDq3QoPHL0rrLAbw
+         I0fQpNmdFxpcP0Ozq2guZo9aZK2a/sl66of2U4LvkBlqnUPWuJzMQnan13k5RY7dcEzn
+         b8JQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786397791; x=1787002591; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=WXw9yPf6U88cNOiH7end3RJbD8+Vbq0Jv7JRz7pDyBc=;
+        b=F8IT20l5ZHGNn8i0hrO/+kWNmDCV1QRKVBboG+FrRhvIpAeG7blwLF7BGXKHwE+Xen
+         URFCxsrAhRsBihJPxX4P9VM+IGSQ63NGAx5Vm1wa5arV0XIzDqfP63k2MfeHCAcrMfmX
+         hTUbBzUR4+jdR4UEwZG2LJQpxcpLcF9E17oNcWt7Hsfn3UrY/qbIDrpNUBbehT0iDJDH
+         lqlx/hiBr6vym24acCn2/aOnHpd/LMNZRJHzZJ0NL5l8HZzEU9rq8O4nO5emIVgne5or
+         Ritbkd5dmMtRTYXb5AdoqzpB+nUEp01C5wB8nC59YRm0YGDCTTqlicH+hG82W8Tkfu08
+         cNJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786397791; x=1787002591;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=WXw9yPf6U88cNOiH7end3RJbD8+Vbq0Jv7JRz7pDyBc=;
+        b=MvM8YBcUl33n0nDF9TikKjbHSy+VuWf6z608ntB9kGEKXalfuQbfEfjtCFQxeNAe7e
+         1kkP0aR3a623HbUmHO40kGDBPerwdMGIEfi2UmLfuU8R45Z1wD5lvLsI2XSozgkQmycE
+         1zWPGtgFg1IQTcULEs3icprFPr/1gdC1JVdxhEmTaoT8FVwQzFko8+OCH3teZYAnDkO4
+         U9O2CuauTxpSwNKkrwrsVTtHUJFCx7LrdAcHULcWqkm3iH3T66tQ/mCLdqGGDtRIHLG1
+         RD13ObqQ+53dk0/6BWDEj6CBndMjhyatnDlnV05CU4B7gcdHgYTt2EsC2pbm9TU+v0uL
+         YsLQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpFkF2QBfKH4w8MdDrml2KJITukX2Vz2QItimRxVup9/mMSC6P+MaqxZlj7PIsckvFL8K0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5At/eC+7vbxTSMSM/HcncIMxvZklgxWUQgD7twYY2C03rEd3n
+	q4jyt1HPKc+7srlsz+6/Mp/pTMPHIlK3oZRGZpOfdhz61lJt8ChGl23Sv+X29Mb5QYr2O3W1NeF
+	UkckulbcTEIgVG1vd+XmGVM2xJTQE850=
+X-Gm-Gg: AR+sD12XX3MFGM4dAOjlJXOeMcmImoyVH8xV0PyyqOQ5OBKkuQqCXxpj52n4XXU0O/x
+	VR1SXj1K/haWyjIcOcl/l0EeHo2GMAXulZiSag2ou2uwTCe8LSAFUki9691q523iSO7DGuPqaiy
+	AoRN3MfS57dXhU/poHRGerlZ1Co2111UTmu0RwlxYtysG/Sm4yiDvsnDUFko8Mm9jzehRUl1VVr
+	7a5YhPWbzavf3e98RsJ9HpDX2NMZe4JdQdrzmS0px13w3BJVhWHUh5XXdnJ4Mmz36CPISNaadxt
+	Xngg+ETT/SZcHsUZ0pcPc2XdSHqnEBCA+c7RgSQCeh25dQcvtdcd9vznyvn6uTgDpzLepZrY5Xj
+	EBQ==
+X-Received: by 2002:a05:6214:2585:b0:907:b32f:9b79 with SMTP id
+ 6a1803df08f44-908a6f63efbmr289923186d6.6.1786397791154; Mon, 10 Aug 2026
+ 14:36:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com> <CALnO6CAdr0ft8KFgGCFX9ueKUdX9-2DwB+SNs3Q8ykw4ne=54Q@mail.gmail.com>
+In-Reply-To: <CALnO6CAdr0ft8KFgGCFX9ueKUdX9-2DwB+SNs3Q8ykw4ne=54Q@mail.gmail.com>
+From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Date: Tue, 11 Aug 2026 06:36:19 +0900
+X-Gm-Features: AUfX_mwS2TyPtnzcp01QvAPqjn9oTSw_sh1su2LrMFuBWtQ_agBveZkj4K4sR0A
+Message-ID: <CAF5D8-u23Z=f02vF1yAHGKRED8DY-v5=BNf7w-yY3vEDmJChDg@mail.gmail.com>
+Subject: Re: [PATCH] worktree add: improve message for ambiguous remote branch name
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Aug 10, 2026 at 10:08=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.co=
+m> wrote:
+> > -static char *dwim_branch(const char *path, char **new_branch)
+> > +static char *dwim_branch(const struct add_opts *opts, const char *path=
+, char **new_branch)
+> >  {
+> >         int n;
+> >         int branch_exists;
+> > @@ -781,8 +791,14 @@ static char *dwim_branch(const char *path, char **=
+new_branch)
+> >
+> >         *new_branch =3D branchname;
+> >         if (guess_remote) {
+> > +               int num_matches =3D 0;
+> >                 struct object_id oid;
+> > -               char *remote =3D unique_tracking_name(*new_branch, &oid=
+, NULL);
+> > +               char *remote =3D unique_tracking_name(*new_branch, &oid=
+, &num_matches);
+> > +               if (!opts->quiet && !remote && num_matches > 1) {
+> > +                       if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_RE=
+MOTE_BRANCH_NAME))
+> > +                               advise(_(message_advice_ambiguous_remot=
+e_tracking_branch));
+> > +                       warning(_("'%s' matched multiple (%d) remote tr=
+acking branches\n"), branchname, num_matches);
+> > +               }
+> >                 return remote;
+> >         }
+> >         return NULL;
+>
+> I suppose the extra warning won't hurt anyone's workflow :) so that's goo=
+d.
 
-> +test_expect_success $PREREQ 'missing subject omits Perl location' '
-> +	cat >no-subject.patch <<-\EOF &&
-> +	This is the body.
-> +	EOF
-> +	test_must_fail git send-email \
-> +		--dry-run \
-> +		--from="Example <nobody@example.com>" \
-> +		--to=nobody@example.com \
-> +		no-subject.patch 2>actual &&
-> +	cat >expect <<-\EOF &&
-> +	No '\''Subject:'\'' line in '\''no-subject.patch'\''
-> +	EOF
+I removed the change (advise and warn) here in the latest patch. But I am s=
+till
+wondering what I should do. I think a warning would be excessive if
+there is no match,
+but the user might want to know if there are multiple matches.
 
-OK.  We require the message to exactly be this one (not starting
-with this substring), which makes sure we are not getting the line
-numbers from die.  Good.
-
-Will queue.  This round looks perfect.  Let's mark it for 'next'.
-
-Thanks.
+Thanks,
+--=20
+Yoichi NAKAYAMA
