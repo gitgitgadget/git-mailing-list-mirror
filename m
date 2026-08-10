@@ -1,85 +1,84 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9FB1C5D59
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 05:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0E91FE471
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 05:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786340326; cv=none; b=HtWD2+yay19wQ3OanpL/Kh6FBL4OvdpXlBTZrMhqrd5mBlMinDHhKBcVtfXhp+xT2J2k8Qq+HfUpaAMntM1JC/AY3mxowIVsS909IQZhLssXtd3mcJvDjVqV8XYgkSjidw34Ytw7ufoznZv1Tbo6WcPIzK+Pc38kM4Si9ZhU+yQ=
+	t=1786341066; cv=none; b=L6R0t2maGir/AzTJTSso53gFLuhZA6p8FYghLJwTUTSXH+GTyfXw3uCR5wmtCt9wx246glCYAMQ12YfZbvIEgnxuemoYIs37LEtXXXtMvimeZnAbYhjdJyn+yMgtBYyjmVxt2HNBlCbo1ZwZUCSAEYV5PxDLzpOxgEWtGoeilqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786340326; c=relaxed/simple;
-	bh=7WHdMb0MM2sCBRHYXgPiH3gq7W5IKpJEOIXKDv42AqM=;
+	s=arc-20240116; t=1786341066; c=relaxed/simple;
+	bh=hT5Z7JwdAcdhtRX0oiiE/UckUnsreX9rLiKNSNIdXr0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HtxNMtsODrcaGyPmCx4Mgoy0RFAGxs2Tb4GxTjjghZq6zqBVC16Xe+do8Yl8Uufc7Umg8iOvXC/YcwcqjM1HCSuQ41AFpsjULloi+rb23pdC6fYL+7H0EDAsEzPBB9JLGAGEmokVT0t3DynpF4wcFitgQuR0Gddkh+82Dq6nxoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S6cQvT2K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A73EiBgg; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=jzw7/hh1Vw0ZvODS6xgPt9XuyrjUdK4W+3eKz8tWOPLQVV/8WFTRHae0ldlt06hwQm3D/XqqXsI01lwKv3M1yq8YUWqWDUOWBLU5dXqCWdagSnPdqOg0nqyWgtyREZZlx1lvnIHjhePKO2mlMg01pez+k49ZV0KexJWbzkfoW88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Z0Duobxt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e93Aw8I+; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S6cQvT2K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A73EiBgg"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7EA19EC00A9;
-	Mon, 10 Aug 2026 01:38:44 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 10 Aug 2026 01:38:44 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Z0Duobxt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e93Aw8I+"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9C7CBEC00B4;
+	Mon, 10 Aug 2026 01:51:03 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 10 Aug 2026 01:51:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786340324; x=1786426724; bh=CMRTSVn7qF
-	Fbr7FvwiE3KeepXrwhPIr/bq0nynWoiUc=; b=S6cQvT2Kp4JPAcZEpBC/LNFDAi
-	hnROGDyOdMLUHWt1B+v+TsG2pRP0g3u4fAT6esqPASFdxqazr6xQvmRGfJmh19SE
-	jIYAJJ2Qbmi+HK7ZMehmsmyPpXdjFGwi/CSWe0BJkh+oUlXq4VEQ76/aO9JpV7me
-	3/iLK768yTZlEiqotWtcOzy6KmUxkr5RU7KrAMArXks/cmJNLT3lpOWYpT3HGFes
-	ga9TPGoR4YZSHXlfpak4RQB/hRb8wUMb6rhxUw56OBvc5fqIiJWS80LdPPFAZj1J
-	M20BPxkzeDkPCMs2FU0ci0Ceh+zoKMIjAbPlIotmhtayfEprvQ6PBv6lJTYQ==
+	:subject:to:to; s=fm3; t=1786341063; x=1786427463; bh=d07AZkvsqw
+	LrUIaBC6K8i94y7bE3Fs8BlUV/7eQOYHA=; b=Z0DuobxtIEabRDNuBeK/GdYoH0
+	Q10YSQsJZHIT5HVu57l9BHBjRPuxAYBEEHSdvXxZmQgr0kwPVs85iSKe+XKcR6eB
+	sLXEt+40mZXodd2i5d152sF95D0Ym3FVeq+mhDN5fUhyp0W2CunORq84AJs24/Am
+	luMJbAco4x6NZSo9+Lpz3+1mD9KxWHdXNjzEvuELIHbHCCbom7+qcb6zIuS+vEw8
+	zH1CtfZ7fp6rQZrXWI9dHLaA0KPoxBIAieyp0KlyrVaerjc/+1OviANFSvlOlIVW
+	0Icw7RTdu0+Src5r7nBJrkGONbvqSZl9KqmJnxjwDTME1a1PjgISWEPjZLAA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786340324; x=1786426724; bh=CMRTSVn7qFFbr7FvwiE3KeepXrwhPIr/bq0
-	nynWoiUc=; b=A73EiBggexhc8OV+BpSkdO7qlYwBG7mDtdyQvH4jPD52IbH7leK
-	4jF2LMncZC1A4sABBq+uPzz+yjRsR0aTqM7TBiD/k04fSu0xlw9Iy9ACblrA1c0Y
-	+Xfr/8R671Ov7xRsp9FHv3QEig9SGhg3mrQOWgPYbA3rnVexEzJGgU6Z2cPWON13
-	cb+PG4ndBNXJ8DWwG3WJAyLn0/0iAYfpP8XXNbr6h78akBViZ706MD2tlDTn/pyv
-	Kalk4H+RUypc0xFuvrhptGVffMxeTPN7nRaEnrW1LxBdaKVAsqsvbqSQELrMWQbp
-	b7OvBebIIC2oBNmnMftUNcsLzGFIuypgf0g==
-X-ME-Sender: <xms:5GN5ascRgtHkdelq5IC5Qt7GuKdqjc7kKQE8CayexeGZHacf1jIanw>
-    <xme:5GN5ah6dP_3k7QQ9KfSnUgbAAKDSTXqM2kUBzUr4FVHLzsS-7SHXh26Pr2Oap1SqI
-    OuYLu19GMXE24Ff215L-8Hdxk0OBPH0hnm-AlirYdtOSOovthOfy-o>
-X-ME-Received: <xmr:5GN5anU0qh-HbQJxYvAUir4TKHdBtDjvKx1styjkIckgIukobteIAAhdFIUQ4OR4n7QI_dJwVJn4inaFhcsF6AlGg3HVhpR2IZV-MgOREg>
-X-ME-Proxy-Cause: dmFkZTG2f6u/9xCRZBrQy6DmUYK8Rd1PqSQjKV8RRLMENNDR10DVHjE4TQAyOqehCn6WdB
-    vA9nh1WkDDNTheaV6CKcpX8RvM7Eo2rwlj967HnGBAqvzLo0UCgvcY/bkOWOyORl9Ecdd7
-    j/nR+y4VfK/S1tBPDPmjhLLaptH2F1cs45adOkzlzvJ6mPrK5Fe6w2XuoSuYPiOiVDaYQo
-    HTRU4bqRYZcoMuRMLzjCl9mfhUdzmpPuo4jXjxc1VHyJdxOyor1dLSLhN8lBnLlI4OORxs
-    DPq2pyIksBw6xnODbVbJ+jC8JpJEtIWQ0Z7PgqY81UylGITHqfgFs+AdDiBqs5v6T8EPPu
-    CSSE7r885DvbRoE/QCde4KzvuXyBHQt6woUkCN0dzLBifA9OLG/xCu4RyBBmW4BSt2R/N+
-    yIzUxpTghGQ4hTLtw4oWGeLPhyAU+JOTzvLMLk5XyKd9E2q13cua94vtC0XoeOLDzvshTU
-    xt5Qw9bONFrA8Yx0/k8diCTxv4wOJAbvJxKfm1MeYRqrKF+H4U5I3pZmrE22DksAZ+lbFM
-    5cbJAx+7c3RRgC8qIV5dhIBjX0g1irKeQjR2flMDVrL84l8pEMSKazzTtjPTahrKYWFrBI
-    iBM7c38bap/r7LW1FY+R85YsUFInuekrcsQRgN/W4jYxQsKXxM/nMaCzmk/Q
-X-ME-Proxy: <xmx:5GN5ao7jYhyvJXH_tb7_20sgR_zMOYxPXYvu7eAcV3T_3g1DYVyunA>
-    <xmx:5GN5aqpG6j8c2eZMdp6_1Qs15RspUGH-86aos5N-2-lR75ADyaWMqQ>
-    <xmx:5GN5ajnxJNKbBDDnxyCpVfZNzTJsROpOTqkrX-OLI4fYYKOKPL68cg>
-    <xmx:5GN5auNhCIdBl_U52ehw7htQh45csSQQoa4i5W66MUJhekvIHKVXjA>
-    <xmx:5GN5arW-an2Xc9VdMrnQu_E2nMWZrke5U-e8KZd9D0CDf0QDaFmEwtfr>
+	1786341063; x=1786427463; bh=d07AZkvsqwLrUIaBC6K8i94y7bE3Fs8BlUV
+	/7eQOYHA=; b=e93Aw8I+UhdHldrRmsEK7JZgKOoYxBjUTCO9SlQhitlSeeNysEC
+	CZy9iriO6GfAbNbLbz/2l3yckJmlRwJjCDBhdUvlPJJB3d4DrIHxnXxA8Lm2wUYh
+	wp09QqQdMZfYV0A3o3mJqHh51emLU/T+WZJdIGxruYD9DJde0BlBVzMHKuNxjfS8
+	WzqzQw+yoT+TfBUxkzNeIkWkGbsxbRSKhiGAw0ugcC86RqRSzc6r2QkKM9rdtnFV
+	mu7cZs7yGrc6L9TXz7n9m+j7VnMq6J3wzs910b6FB9pbpTqoljfbuNJ8mHweZB4e
+	MJqZDTp8U5D1hftRBJaMqt8qZzBe0UjmPkQ==
+X-ME-Sender: <xms:x2Z5al9xJRQ5VxA4p24Pv77ySq4k_IGkBmgStrMfyFse9CFdP7td9g>
+    <xme:x2Z5ahKXMs-gDhzMf8eHSGjI3pNnBvmTrPjDA97ab-ViHd51GprZxX-gae6kwA7Gu
+    M6igdiSbY83w3lPSzvI-e-1wznlgvSPA2OZwMem_OP4FwzDIjMAgGI>
+X-ME-Received: <xmr:x2Z5agaHWsEZcvJBYxS7M7zJ3sAAIyWO30rM2gKlEoI7eXuCCH_baWvGA0sRcJ4Ad8_PdQOSm5c2X1wrtT1cHh1h2lkXRfCw7NVPi7YZPw>
+X-ME-Proxy-Cause: dmFkZTERQi+x03YzTyJR/t5dFxQU4YAUNzzc6W5OawDIRRgH7uW1Q4q7L3WS92DYoF8N9X
+    r/UBBclgCkHUK8ordgxQdTSK13etDBig6mpxwbgsT+acX7jK5pqQ9DhdCMxdUxc6AgNikt
+    X30HegqpaMjyq+GohpKOuabsz4xPJHcdo4py5RlZA+tLBlNJIwJv3FvpJdhtiADaJ/7n95
+    /8oi7LidQWM3q/KlHwJPyfO6od/dqAuarSHY7JrhbqmIOq3Wg5Yv591zXSpY4P3cTrv0Cx
+    bN66Wmbn/NfkHx5OnjYzYgzKQAdiFZATZnD/Y7a3oBuTVDNaFQcEWBE9fTKrj/r/ELG8aX
+    iSuQ9h8fQSJZhiympXmh+h7whj2TqlpLZE6C83vOwTn7VwPOQv+zqjjsGUJUWZCHx9n7E0
+    gliVUp6TkV+A7afPHaX/Rhot2CdiaqV2qrcHWC49mAf7D4jUEcBBLbQ2Rny28xOjAzfQ1k
+    ENaVeKrx0c6YGX/pQsg3mNuJF8e87Qulx2pv9QwCHkIfT84OjoowcSPXoZ7/m0Vni1wfNq
+    /GWr/L5ulaDo0w7lEQRUaHCizJ+Cl9NlUHES0ss44syQOIDlcquBBb6CDw7oijpAamqAAy
+    QlfrRxnPRA3IJMqbJKmNEVYSy/k3EhPVFFicTqACjkCVtDb4x+NvaTVt4M2g
+X-ME-Proxy: <xmx:x2Z5ajJlLT_DqACQTRo9www5OYGAnF8io2mxvjgf1TN3w55-eKDSEg>
+    <xmx:x2Z5auB9uL_YHmuSd5C-mq-JcmvA375cleaJYvB6Qy4Gro7lkljnOg>
+    <xmx:x2Z5aopZtrfVCqZku9Dt3hnNjedmgBM5AtX56g-Wud1WL0fkD3CY0w>
+    <xmx:x2Z5apglIbI3xb67XzH2C8_myEbbnE3Be4u6gR9jJYcaSDoc8Co17Q>
+    <xmx:x2Z5aj1na1iKqn9QOzQRO7RZ19rcsnqFbH1zWeLbhWK1d9nfFpxNQbJw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 01:38:43 -0400 (EDT)
+ 10 Aug 2026 01:51:02 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 16b6b932 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 10 Aug 2026 05:38:41 +0000 (UTC)
-Date: Mon, 10 Aug 2026 07:38:38 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 07135112 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 10 Aug 2026 05:51:00 +0000 (UTC)
+Date: Mon, 10 Aug 2026 07:50:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, tnyman@openai.com,
-	Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/2] ci: bump ubuntu image version for static-analysis job
-Message-ID: <anlj3kdAfOh8OnNR@pks.im>
-References: <20260726083254.GA3528497@coredump.intra.peff.net>
- <20260726083905.GB3529069@coredump.intra.peff.net>
- <anWyV9Q4Cmsa5AoT@pks.im>
- <xmqq8q6hgb2m.fsf@gitster.g>
+Cc: Tian Yuchen <cat@malon.dev>, git@vger.kernel.org
+Subject: Re: [PATCH v3 0/3] environment: clean up repository config handling
+Message-ID: <anlmwaEtwcCPse1N@pks.im>
+References: <20260805115342.3939931-1-cat@malon.dev>
+ <20260807085932.3958759-1-cat@malon.dev>
+ <anW7wHfUxYj9cj0P@pks.im>
+ <xmqq1pc9eivn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,51 +87,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq8q6hgb2m.fsf@gitster.g>
+In-Reply-To: <xmqq1pc9eivn.fsf@gitster.g>
 
-On Fri, Aug 07, 2026 at 09:16:49AM -0700, Junio C Hamano wrote:
+On Fri, Aug 07, 2026 at 02:11:08PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > They'd of course require a bit of a deeper look, but that could be
-> > another way to speed up Coccinelle for us. Even though I cannot say for
-> > sure by how much, I didn't give it a test.
+> > On Fri, Aug 07, 2026 at 04:59:29PM +0800, Tian Yuchen wrote:
+> >> Hi all,
+> >> 
+> >> This series contains several cleanup patches for repository configuration
+> >> handling.
+> >> 
+> >> No functional changes are intended. The patches make the related code
+> >> more consistent and easier to maintain by improving documentation,
+> >> formatting, and the organization of repo_config_values.
+> >> 
+> >> RFC:
+> >> If there are other small cleanups in this area that would be useful to
+> >> include, suggestions are welcome.
+> >
+> > Somewhat unrelated to this patch series, but I was wondering whether you
+> > plan to drop the limitation in `repo_config_values()` that requires that
+> > the passed-in repository is `the_repository`. This limitation is
+> > starting to create problems as more and more of our infrastructure is
+> > migrating into `struct repo_config_values`, so using a different repo
+> > than `the_repository` is starting to become harder and harder in our
+> > codebase.
+> >
+> > Thanks!
+> >
+> > Patrick
 > 
-> Another benefit is that it would reduce the programmer's burden, as
-> it is not immediately apparent which rules are still relevant.
-> 
-> I wonder if we can easily define the exit criteria when we introduce
-> a new rule and document them, immediately next to the rules.
-> 
-> You said "refs, object_id, the_repository, ... all look like we have
-> long done with the migrations"; in retrospect, would it have been
-> easily doable for those who introduced these rules to describe how
-> we would declare "now migration is done"?  If so, perhaps a good
-> step forward may be to update tools/coccinelle/README to add such a
-> rule.
-> 
->     ... goes and looks ...
-> 
-> The readme file clearly states that transformations needed for
-> migrations are *not* regularly run.  Is it possible that we have
-> these rules you mentioned misclassified?
+> Hmph, that is an interesting point.  What is our plan to really
+> enable the use of repository instances other than 'the_repository'
+> here?  They of course need to be initialized with repo_init(),
+> but is that enough to sensibly use the embedded 'repo_settings'
+> and 'repo_config_values' structures?  (By the way, it is not
+> entirely clear to me why we need both and how we sift variables
+> between them.)
 
-For all I can see, both our Makefile and Meson simply take all
-Coccinelle files we have, concatenate and run those rules against our
-whole codebase. So I don't see any kind of classification at all?
+Yeah, this split is adding to the confusion indeed. I think that we
+should make it a goal to unify those going forward.
 
-Ah, no, you're right. We have the ".pending" suffix that we do treat
-special. We only have a single one of those with "config_fn_ctx".
-Arguably, many of the others should've been classified as pending, too.
-But I think it's quite easy to miss that we even treat these kinds of
-files special.
+[snip]
+> In any case, all of that has little to do with this series, I
+> suspect, unless we are redesigning these configurations and
+> settings in such a way that they are not necessarily tied to
+> any repository instance.  While I do not know the exact details,
+> I can imagine a hierarchical system where system- and
+> user-wide sets of setting values are known independently of any
+> repository, only to be overridden by per-repository settings
+> using a last-one-wins strategy at lookup time.
 
-Taking a step back, I do have to wonder whether the Cocci files have
-been adding any kind of value in the first place. I myself introduced
-some of them in contexts where I made sweeping changes to our APIs, so
-that any in-flight topics can be trivially adjusted via Coccinelle. But
-I very much doubt that anyone ever used those to adapt their in-flight
-patch series at all.
+I've been wondering for a while whether we're operating at the wrong
+level here. Both `repo_settings` and `repo_config_values` indicates that
+we're operating in the context of a repository, but as you mention that
+may not even be the case.
 
-So maybe we should just not do that anymore?
+I don't think the approach is inherently flawed though. From my point
+of view, the best way forward is to merge those two and then generalize
+them into something like `git_config_values` or `git_settings`,
+depending on which of both variants we want to retain. We would then
+have two levels:
+
+  - One on the repository level as we have it today.
+
+  - One truly global variable, because that stuff in fact _is_ global.
+
+We'd then adapt `repo_config_values()` so that it knows to populate
+either of those variables depending on whether or not the user passes a
+valid repository, and returns a constant pointer to the respective
+structure. Callers MUST NOT modify that structure -- if they want to,
+they'll have to make a copy and pass it down the calling stack.
+
+The last part about not modifying that structure could be quite a bit
+painful though, as it would mean that we might have to adapt call chains
+to pass down a `struct git_config_values` instead of a `struct
+repository`. But arguably, that's the right thing to do anyway for at
+least some subsystems that are independent of repositories.
+
+As you say though, none of this is really related to this patch series
+at hand, and I don't think we need to resolve this discussion before we
+can merge it. I just want to make sure that we have a plan for how to
+get rid of `the_repository` instead of only shuffling stuff around.
 
 Patrick
