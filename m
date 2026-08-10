@@ -1,116 +1,114 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0093E3B8944
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 12:51:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927513D9DB0
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 12:53:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.48
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786366271; cv=pass; b=VkWheaGwhO7CGvzvcTc0QPaj+y10DZdCRQ5DS1CmrHVx57jz57Z6ifXDYluLgXp5CTRkIvcwzi+3PECAhCNefTIiceTu/hcL2ce0DXewar8C7jlr0+2BdtohXg+t2tFRxrIdyeF1ERtv9+s14nCxL69swDvEwvQWpYtlSjpIsck=
+	t=1786366384; cv=pass; b=ZLW8vjNR9kN/oieVzSfnCAakELumtlDEHcYmfYaizM37mE+MFHdjwUtWyyBAA9OVpV22a0aLkbKyZBaL/0z5Np+iEEFHaD3h1Omr0Sra7KF6Gx5k7xTL4CI9TeJ8XCKvmcae/WHpYVFSR1I26Y3GvFPXrWRqk7fz/zQAPUkJc/I=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786366271; c=relaxed/simple;
-	bh=h8fGAxRX42tbo9ixBO0Lga6/NfMfMM+Rf440ZWXnI2Y=;
+	s=arc-20240116; t=1786366384; c=relaxed/simple;
+	bh=1Yv0faOQTv79ofJNQnefXuefaklxltGCQqegiG39u54=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XH6VncsCsRKRMZMhnnDcoCn6ZoVFWyet85mIEzE/4yEPPtmfqNuKPne+O2XlVu2XGfZa1LYYYEJq9PgSluotbBHJil6/NvUXerptUhpjeF5Dx8mL15MDo3QQ9zJaq+pVilwaW61k510wn423bsxBInAUxMU47fEoV1CWnJQJMJw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IhBlqKBC; arc=pass smtp.client-ip=209.85.215.178
+	 To:Cc:Content-Type; b=Ft2/RUGM3NDdClfc5vwNGXcCt5Mw2y0qo50j7EXMxAfa5xz0P6hFFPYBzkGhHfJJVKGLjVs7oMoA7Aht8DxWljkMpOMKxmyDzSV10KhBhM1/0HxYY65OZ2Aw9lPIgt/4ev3JaXhJlT+pH7BXv+4se+4q5li1YPolIhuUxNTkD8w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X6pMyfLa; arc=pass smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IhBlqKBC"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-cbe6295f05bso3043304a12.1
-        for <git@vger.kernel.org>; Mon, 10 Aug 2026 05:51:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786366269; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X6pMyfLa"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-38dfe910e9dso1828518a91.3
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 05:53:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786366382; cv=none;
         d=google.com; s=arc-20260327;
-        b=QMXFkx1vMKgunfPM+l8ofHyGf+NgVNa9OeUEvfkUVXqZLmCS4aYmOGQfNWGtUSX73H
-         RHPlD67Pta+UDxOxLeFdmM6Tx3DmIcp+q3JUKYvxXwO1V+YKTVK8x7gCO+ZPGhJ5PGFE
-         5QqrtxZOhvWFIPVUyA5wSPRP1BmQ4H8VVTodWHyWUBpJJgz+LFhaFNGOTtK6qMygTo1E
-         WxLMx9C79XvQeGA9uUvNci37m9/9JJy5g8dNPQi4euWlN+K72FX7VIkv62BYgl8cxOby
-         +T1af+yWdGeRbWAzXYF22LzxhJ4DRcoJqpLlEM1qowx94POXv1DLmyrXHpMbFrhhTgsF
-         SYXg==
+        b=F2JCIsrJE4oMtyHS6vczcb/Dp4M8DgDDR5VBJRLxLptKIQ2gPI0pjDmPNwOGt3CjDs
+         nx1F1c55x4zNEHRWrgAkdsx8rLD1FRbOSxbXgkDnqHEH4ho8JVpcTMO3V5N32usWjJWV
+         wwXrdMOrChTEi2rsbWqke8dEJ8d+Yi5K3sWe6c7xCjzs1JdEVHOLWERzKmxZ5nHdFTrP
+         9VgxWG2nc/YrAR4xcQ4FF1TljDyPm5c1kBl2hvGq2na5SXTbRNkio/Fa4tTA8TMWd7rP
+         uNSBu78g3BKISLRLGfIujW4//KxamC0YkCOV/w9KvVd/sIuRGnqU9lOYHaaIhJLs++Ju
+         KkYg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=qwga4SZuRPeHhTKVaJowFmIyPNcBlGHzSLHRgfJneEQ=;
+        bh=93+woh1Fa/ICnud7ERSAgnwA/PaSAn3Rqo1UxFKS9dA=;
         fh=H6lokUr+VJOb8K/s4/XQEDUqD1mgPN6Wv/mJsHIkuwU=;
-        b=SR9lA2Mf5vbegKCMRi74tctO8v3rI4G04P1+/t/ZEApwo2bzJf8TOy8A9FoBOg3ebY
-         o8qEQAvx22ta8c/NKPKw11T0pkAzgk0nRyG+D3Lzyb45b6Zjo5P8OQqCBsF/GBAA+vRf
-         vwmXtBCCY0IUN9jACgjEXYWsoEACZk9N1v1wLpe2tIjUi0GMKc9iGSTjrUP7vhtRtyBC
-         ENVHKKqiK51DgE6fO2uloJdC6x9zxZH/pjurwio4g3rP3Fn0rNMBJNoyMJ2Nx83nUvuk
-         bDJrdTcfBvQQhZm1viaOR4qPv3wymoHX7BvMVo3iHMKONIEBbM6Tuyzy22gFocRidpoB
-         PO+g==;
+        b=Oyo/XEj1QJ85avTQnJN2QnpY94f6HrE8tzJNGgti6TB9avOFxduokSMtql3tcgbyMm
+         vpg6HNtNXAP/+NpynaRQCvo/E7rjd70o6rwDrJh9F5R1o9MWZwaGn3XiPxeGVHS1dH4a
+         UjsmaIyarrhqLUWNQN1PWvQxjRxuRdrArbCM4vSxUjBO0DfkPe6GwVVheevNLcDqmuXo
+         xfgSe3ERc4rW97svsbAeZyoGjeY9YGliz6SbmfGOtLMKW9lSjOj12OLvfNcPKGG5DWIQ
+         mg3xbs4+idnE2PIwZMSy5SPtxw2/KdJg65zVUf2TUUIjP5l5MVaFEZj+LBe3HEaKl7v8
+         vqQQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786366269; x=1786971069; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786366382; x=1786971182; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=qwga4SZuRPeHhTKVaJowFmIyPNcBlGHzSLHRgfJneEQ=;
-        b=IhBlqKBC2bVOx4/r1JCpq8UMgPpADXzOH/P+vHRttNQUg3gt1P2TC415OeTLmpjhya
-         aKwLg8g+LS8UFPaBKmAkCuZz51pJ8Gy14O/myOcQIE9xVbKyoD/6NFFWV7WYGww3fx71
-         zloUwB4LMeyJ+0anDfzspzCvRxPLu/1vYpxRSj+ylcK6UlhSF5d9EDA/dcusnNt05HLW
-         w5CCelZMOICa6CH21ZYztc/Hr+cSyATNHuJ9D+1yYlA+jWX5Yqm8VtJ/7Er5LBwqz0cR
-         GW/io0Dp+qP16+vu8RyeQubrSYdmo5k9CG1ueXeFjSbeTBw1nG0KdP5OStJNAlE57l5d
-         uvDA==
+        bh=93+woh1Fa/ICnud7ERSAgnwA/PaSAn3Rqo1UxFKS9dA=;
+        b=X6pMyfLa0OavdMuQEUh1SdTvpcBK3AdVQnYVMuZ2mRJkyFxDD1BBrSM5zuDiql7oHq
+         dStrnLj+QAXzlf38SWfRAKWchM45dc7EQ6upg/E3EX9D/OVbvhLEIZjp3DmuoWMwqeOC
+         fAjarATsat2bUHgC8OU7JusRuWMEgbvGE1xf+DYZV2qApohG1oLNN/9HEmMyw3pKSoSO
+         ksB8pZUuk/3GtSLFgohcFh3GAymcHLffRr0dgB+eoAULfcltmeCZtINYpKxOur5/+cXC
+         aR7Fl81gTd9YblSxdzTK+I5qXiZ/HJIdRJ7nQfeOfqdyts/+cdMUXwYjxU+Og7xLXCNp
+         a2PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786366269; x=1786971069;
+        d=1e100.net; s=20251104; t=1786366382; x=1786971182;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=qwga4SZuRPeHhTKVaJowFmIyPNcBlGHzSLHRgfJneEQ=;
-        b=qs0Cae7axC7LzxKmfLa0ZuwHqqEhMVZbILZfkru0D5GBe56ITwVgChXFFORDiTBxL3
-         La+fuysOcUAI2Vq+PExDuPz6Fo6leqh1F/NQW1Fr3NznQgILREhQSWG+wctCCoChl0Sv
-         l9yo/mkoBFqJCznUYNRnzcPmEweDIrwirW2Xa2oQk6pBmq/RshQaoKvW6k9RoLtZLFQe
-         cbPzLHBiFCy3CZVkTsxgGhGq27eV+Mko2kndEXoakoHvx0zfgofUIQV4M/b2QgXqyD6j
-         0si8s/P/mCX311X5zUGixHIwbfQZ8ViYn4zHG+Za12rY8QjawGc1TXyV2DfQaoB1pZwX
-         0DBw==
-X-Gm-Message-State: AOJu0YyOyVt8of5M6P46+e7+67OgPJtzolndW+T3KdvpV2evdaLwXhpq
-	Y7LDEwCJUJ07VkLPg5Pg0sJTr8/GCYcNVZ5A51vkkLx59knn+FID63EJo7MOz0wWwFpOP3wieF1
-	u07n6NQFvB+HVyVWZDLeua2SSn9cdhcpWGNCtaJ8=
-X-Gm-Gg: AR+sD10Z4ZTWhqlekSmTUa9azD5qo2Zz7m4CSUjL9V7Gh5wQMXXswkE1+MLHWmQfq7X
-	dhu+Z+cXjYo+ePusUTwW4LQKOVphYzhGG7gYZgrF02g7S4NhxykH/bK1mpdwfN/j0OVuYq2L/te
-	M4NRL1zjyQBTEC3GfNJZZDhGpQs0Nf+k9PwPU9B5DWbNqc9mN1UNjqWIwXCHMw9nJX0B7K7MOer
-	iAsi0pNKbkgQRE0a3oh0UV7jg3kvJu2PzNj3qgkaNZqKAkt3PZewJLmL2YkKcopG4j0dfa0BwQ8
-	+WIVB6yLH4p/jaHxRbZbqiay44oqdi0QX2RHsG2+rTv1V8JEL5hWkMY2yeaZ85lmRHMMm2Sd8S3
-	GLhcSz6mttbJTRFa2RkT6WMdRulQaZiGf4FHSSX/HU+uMolQ9VMmqtDEl/iaXzg8XOTzyjYJ03U
-	D2Jx8v3BohCPp1vjW0oN4=
-X-Received: by 2002:a05:6a20:da17:b0:3ba:d7b0:fcac with SMTP id
- adf61e73a8af0-3cbd388aa24mr21174610637.5.1786366269167; Mon, 10 Aug 2026
- 05:51:09 -0700 (PDT)
+        bh=93+woh1Fa/ICnud7ERSAgnwA/PaSAn3Rqo1UxFKS9dA=;
+        b=J8N9xsTIRhhzJEVsEMeoV1QuZCGXnEcfn/FbT4TZO7UNay9SmjbEpR1wvs47roIHSS
+         FkdlP9D8I9UVwL2cxTvNeYLmnELs+hU3h2BC3SYmVRhQB6f8Wlwky7Zvf1G4KYEu5Uk6
+         QKHxi6RSZ08OBRdbYPOayodTuI5z3yD6om7WKCLjwLMQQTH8msX6AlhlX+daR4xnNYNt
+         5hCBVJC25T1qHcoU35QrBkB9Z+VJaPUKk+ZWb7qgoF7BJXs3T4IknOwHpEiaMujU+rCI
+         NviaxcUB+pLLl2usCPGB5QRUhDvtQQEnblb4NypMJmvYKZCJ5gMJe5Rtm/fH3ogr18bD
+         yDBg==
+X-Gm-Message-State: AOJu0YwyCd7LJ/wewE4mLuXErgEBZ2Nhnse1hUTbhhfukaOgyjR0Kpu+
+	IR/mrKZu0vNWNu+sVCrLY3ivBNTDJzKy66bKNzk/vq7wFbEmFLC3tNiTp6Bvd0sB1U4TprGnl+d
+	xg+IWOeREMFboPaUkcRRd4rXNT62+HeI=
+X-Gm-Gg: AR+sD109l0HqPmqYcpt1YKTdAQaYvz3PxqkJFKov+EyI9Fc2l40x45qG0lmdGGBS8VO
+	BIMPnOGdBJ/VeqsW3uw4iMFaVWKxsysKmyZ0FGC2pRxfcCNusMKKF0YmLjA4NR7RygaZoWJa/1a
+	4UHe4zP4tL7u62UfgO9Lkq1bXe4QSQStBzV5UcBVYvwtkA5tgDlD1h2rGo3uLHBL4B6YCIKaUDU
+	Y3DKa70GbgWp3GV420xKCQkpkX9CsGn1xnW7tcnCyUmZy6NNiVjqeiRKtOuxxheajyNN0xssnkK
+	aUtYFlKMBVZy2eTwGAakI5NIrIgx65QlFBnaeV+zg7bRy2oKime8mxdhkSSLZahXIkq+OtKpQwK
+	qR84SD6RLty1vLk/FKowOJW8Cw4ugq1pDNTMx1t4RFmS+LwIUmJggcpwEjjiRR3tViKbSFfpy5u
+	0l+VBv/87qo3XKj+RI1hA=
+X-Received: by 2002:a17:90b:3bcb:b0:392:c868:35af with SMTP id
+ 98e67ed59e1d1-392c8683878mr2818551a91.20.1786366382492; Mon, 10 Aug 2026
+ 05:53:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260806-history_autocompletion-v2-0-7e60f52a1c20@kernel.org> <20260806-history_autocompletion-v2-2-7e60f52a1c20@kernel.org>
-In-Reply-To: <20260806-history_autocompletion-v2-2-7e60f52a1c20@kernel.org>
+References: <20260806-history_autocompletion-v2-0-7e60f52a1c20@kernel.org> <20260806-history_autocompletion-v2-3-7e60f52a1c20@kernel.org>
+In-Reply-To: <20260806-history_autocompletion-v2-3-7e60f52a1c20@kernel.org>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 10 Aug 2026 08:50:58 -0400
-X-Gm-Features: AUfX_mxV3mQJCDhWsrJ2VakTcbapvdtfNXv3osszD-sWbr2VgD5DcyuytPm03QU
-Message-ID: <CALnO6CAssyDe7uOK+G8eZPzu1S6iyn8EiSQGqUHtWgdPcD65xw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] completion: complete 'git history --empty' values
+Date: Mon, 10 Aug 2026 08:52:51 -0400
+X-Gm-Features: AUfX_mzwJsW4xuxbNy_sZ2mKrdxL4xJStRXmzV1t1pNo1q2aq3-M6g0Xst0EU5I
+Message-ID: <CALnO6CDZURfK3HFQF_LYrSz0KWtamUguVWK3-cnVUCeA+oVBHQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] completion: complete 'git history --update-refs' values
 To: Vincent Mailhol <mailhol@kernel.org>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
 	Philippe Blain <levraiphilippeblain@gmail.com>, Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-One other thing, sorry
-
-On Thu, Aug 6, 2026 at 4:36=E2=80=AFPM Vincent Mailhol <mailhol@kernel.org>=
+On Thu, Aug 6, 2026 at 4:37=E2=80=AFPM Vincent Mailhol <mailhol@kernel.org>=
  wrote:
 >
-> The "--empty" option accepts "drop", "keep", or "abort" for the "drop"
-> and "fixup" subcommands. Complete these values.
+> The "--update-refs" option accepts either "branches" or "head".
+> Complete these values.
 >
 > Although the synopsis only documents the:
 >
->   --empty=3D<value>
+>   --update-refs=3D<value>
 >
 > form, parse-options also accepts the value as a separate argument:
 >
->   --empty <value>
+>   --update-refs <value>
 >
 > Support both forms to follow the parser.
 >
@@ -120,42 +118,33 @@ On Thu, Aug 6, 2026 at 4:36=E2=80=AFPM Vincent Mailhol <mailhol@kernel.org>=
 >
 >   - New patch.
 > ---
->  contrib/completion/git-completion.bash | 13 +++++++++++--
->  t/t9902-completion.sh                  |  5 ++++-
->  2 files changed, 15 insertions(+), 3 deletions(-)
+>  contrib/completion/git-completion.bash | 5 +++++
+>  t/t9902-completion.sh                  | 6 +++++-
+>  2 files changed, 10 insertions(+), 1 deletion(-)
 >
 > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
 git-completion.bash
-> index 7372e2919b..fe5223b8ec 100644
+> index fe5223b8ec..6f1ba96763 100644
 > --- a/contrib/completion/git-completion.bash
 > +++ b/contrib/completion/git-completion.bash
-> @@ -2171,8 +2171,17 @@ _git_history ()
->         fi
->
->         if ! __git_has_doubledash; then
-> -               case "$cur" in
-> -               --*)
-> +               case "$prev,$cur" in
-> +               --empty,*|*,--empty=3D*)
-> +                       case "$subcommand" in
-> +                       drop|fixup)
-
-This feels a bit "inside out" to me, especially when reading the other
-completions. I think the usual pattern is to check the subcommand
-first and dispatch if necessary. Thoughts?
-
-> +                               __gitcomp "drop keep abort" "" \
-> +                                       "${cur##--empty=3D}"
-> +                               return
-> +                               ;;
-> +                       esac
+> @@ -2181,6 +2181,11 @@ _git_history ()
+>                                 ;;
+>                         esac
+>                         ;;
+> +               --update-refs,*|*,--update-refs=3D*)
+> +                       __gitcomp "branches head" "" \
+> +                               "${cur##--update-refs=3D}"
+> +                       return
 > +                       ;;
-> +               *,--*)
+
+Contrary to my comments on 2/4, this seems like a reasonable place for
+--update-refs, since that applies to all current git-history commands.
+If that ever changes, well=E2=80=A6 we'll deal with it then I suppose.
+
+>                 *,--*)
 >                         __gitcomp_builtin "history_$subcommand"
 >                         return
->                         ;;
 [snip]
-
 
 
 --=20
