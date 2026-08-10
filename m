@@ -1,134 +1,114 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE633A7F4A
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 08:45:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786351541; cv=none; b=H0W91fj4JXRZmI7Gr8SI7tgwIwKnjK5o5M2XwZ4u+8rcR+ydEFEA9LfL1CQ5xOrsOgvay0E6awvXT2fXyAUhM1n4J1RGdnH+APK0MYOXdj8bKXJ3jaMeBT+WVA+zRd4XbPPpswETp0fnYMCkbLI4yeDbLrPr66wge8dQ17F/Aqs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786351541; c=relaxed/simple;
-	bh=9BwdmE0WmPfz2gsTQs5LiGlUVwTLf5xwmxO00sEh8i4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RpsKZCSu4Ai2B352RWEARy6FC9Gwosof4/GlgBcPP5vRtbHv6IAEz1l2VTqMsBJGqrXsQqUh8+F9tKP0S2j55fqX68s81SOy/0eAADEahSNFmdOtspaZkLGvpVIVu2lCGscpcshJlsGmokXmF9Jad+quN1lj73VotvFeDgIDYK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aQ+NAPtL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R5fH+bVK; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76CE3AFCFF
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 09:48:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786355328; cv=pass; b=BxC2zprszKU5lF8NtaGQHyFkAozyJ5CR6RpvfkehKa7zNIsJTKDHcv3lLxW0OPoD/nc+4n4zGN+CvLc+vMT/ZGbQjOIruDRZgC0jZrAnzyx/UcsOUzdzFwRAs9+uoim0BG+pOfAi4PC8k04pTp5rZ4JnHsT/yb0xpEzml+autiM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786355328; c=relaxed/simple;
+	bh=ccIwK6hkr1IkniBaLG85Dj9qdJZBSIGcb4zkHkRVAHA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mElQGX1sDFdRb5+o431RIFHWb0ivArT7clkPAn4qzFldJGv2M7YrOIcLxG/aGnmFyttBUSh+38QUdEl1gDzIUjJeY6f1ASzqENQ8gco9qOKJTu3ZW5WuJ9mpD6oc8VVhEpvoRTRkV7PsHBSFRG0XoByTSxXu8fyX23zQAKhc3Mc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pgFds/Sn; arc=pass smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aQ+NAPtL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R5fH+bVK"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5202A1D00224;
-	Mon, 10 Aug 2026 04:45:38 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 10 Aug 2026 04:45:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786351538; x=1786437938; bh=TG1Q6gV9qq
-	Gq9iX1aF9XNKg0Qk8WRTMECWZoIIvOLb4=; b=aQ+NAPtLDEGMHGXFn1DhTNf2Z7
-	Em05OBg0Juqi0NcbJhOBllzTIEOf1G5f5XG07ADwE+nE+FWS78L5WFhPsCIOnsyR
-	8/EVnqYuDr739ziB0j4lF9XNQZjoy2rqQKyLWLlMwB16/l/NylJNHRLQuwBi1c7P
-	/ZSMPstZU1eAZzWYRC2Glgl6BBEQnFgCvGrSmvWPOhxgXgp6PJVxD+JKTEPJbXsy
-	zuxZc1tnpObD8BOy68WSGQ+Ox1ufdugUZrJvfFc1neVqCI5VhfHLinJ982ceXJ5M
-	6F8Rf2z1MZCvHLfWBHDNR2Re8mLqrNr/vDQvTtz5iazW/LomAsDbLdlNWTtg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786351538; x=1786437938; bh=TG1Q6gV9qqGq9iX1aF9XNKg0Qk8WRTMECWZ
-	oIIvOLb4=; b=R5fH+bVKm1JixkmuefStcbcx+QP8jdEJZQltwEzYFTRFvONS87T
-	H0otnrBRREXbeT/gAodgLwDy7sKO4MQJ2Zx+/gf/UKg22CBfRZg2Ol8EXDr3CuBP
-	UECV9Nsx+gCer/NXV8A8SAdlG0wPE56yzU+r1eHcYpxHYXJWWMyP9VQEpQGAHztG
-	ogoNiZjTByYRw+2wPbZgjwblFQE8V59Cokmg0BAwySBeUdF4MX/DuARv2icWp4BX
-	++DVDzuBHBtwyy0y68W9EmMPKjLSEmEVsy1j2G1uf6F+dd/ewmP7Vq3neKmJwx0c
-	ZdPPm2WDyVH93LGJFbBGysTwgDABs2fHw1w==
-X-ME-Sender: <xms:so95as8aexW7u4OSYYuQZ0HJUhKSg1U5PoMBKdEj8xrjY3KWn6TYaQ>
-    <xme:so95aoalxe9w9u3Z7YDlMVuU2Iuq4qeegY_aL7AH10RpR--OiAbyEVIB2lroW4CPN
-    6V3igdualhDK-Dzhy7AadCwx3XPjGrRIclKSVNKdQmWFPYLvT4tsg>
-X-ME-Received: <xmr:so95ar04Kb72VfvUmNVsB6EXfdod7IO6LvokXjh6NorQS-oNm-EjZrb718UrajHai96TwzyqC82B5FsIzB3DFf3_W58QPXMm89GXXqHiJw>
-X-ME-Proxy-Cause: dmFkZTFcAafjabdGFy9Drut3rfaTk/MieoXZ573U5U2Dw2m3RF4IklI/0ebQk5noycnxRB
-    ndmCAdF9JI5F9OLWBHTRxABMVdFsRCUGmfbzTlZ3YLu/6zKZFNHEPldCwNSJ3tZDC0bk3G
-    3wgiftcoDzvk7A3+RZEKNzw0FGUv0ZnQCPfhgtIzq4yqrDi1n3/KcGr5NcbIw7biNR3LHA
-    Qb4w9NyjIBniGurj6N/KbS+joWDNAKsmW/h1W1nuWfxn8wMsX5NLHZ8zy63QI7CGHvKCbe
-    ojVpqR8MZTgDOZYSi5CUovSu+uwOOTRw3Py2w86QKpLgUcD2ea5HFJXKo1jqnG/gFGNgrk
-    zXDq8Bmk/mY4hze5QYjVeo4QAcmT5s/9jBK3mcwu7YiooEyXPy5utr1vQ91eMpXFk/Jmef
-    iTb5u60B3clh8SqvYI8/WTVenoDWsHoeZm0LP1Z2+cV0yjaM2YlNk0D6z2I7GGpZ1LRXmQ
-    +Y+bouag+ux9tyq2BG8nMr1KOiEoUwZPf/lqotBXTJ97BnOl3oA1LZ8dhlUYnsOuJcBMBG
-    OWxLPCCDrA+i/xsChRJMSYssD31KjZaRuaKWATNVnbAo3XS2I/27rJPmOLzuPMgtZLcrJk
-    9SwB+PXg+1O9FynM5oZ2tdCe2BAaYxzHLwx+3ET+KVTsIgESQ/8nDKGnR3/w
-X-ME-Proxy: <xmx:so95ajZmsBj0XJRTEnNKd75WgjKiYPoGnO_eLDKgLYPZWqP8lpJLMQ>
-    <xmx:so95ajLYLXNIGl3Mmov2npcQ5eLYDv-PjuHy0vB-qj07HnfasLPjzA>
-    <xmx:so95aiEYCnQiU2hr4aLo721gguitkfUX5SiXHOgwntxw8tz6ZeG2gg>
-    <xmx:so95aqtibmRX8rE58HyaZ3yRtwPanypDoGQIdspL2BujTVlhSpznpg>
-    <xmx:so95atrLj_QgV7zSv4vszHFVJOrHS7RdVaTvjY3bAXaFVf-L6KTOSSGf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 04:45:36 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4efecc57 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 10 Aug 2026 08:45:35 +0000 (UTC)
-Date: Mon, 10 Aug 2026 10:45:31 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Stefan Haller <lists@haller-berlin.de>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>,
-	"schacon@gmail.com" <schacon@gmail.com>
-Subject: Re: Can we do better than "git checkout/add -p"
-Message-ID: <anmPq_WN33chIEhL@pks.im>
-References: <xmqq8q6ih924.fsf@gitster.g>
- <CALnO6CBu8ZBDk9YwLW2jVJtBUk1=pvai5QHiLN6XLOOL-3KA=g@mail.gmail.com>
- <xmqqfr0qexps.fsf@gitster.g>
- <anlpmNSjBUJ8p9RL@pks.im>
- <26c2f7e0-03ef-4c45-8175-adcc2e0395ac@haller-berlin.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pgFds/Sn"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6a17c04563fso1766434a12.3
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 02:48:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786355325; cv=none;
+        d=google.com; s=arc-20260327;
+        b=gnY/DrXmPVKFREV/s09YI04Vz/hqOXZus6NC5p6Va8xM+LsJZpf+7K+s4KCJG97Ev6
+         VBix2IC4gF8fl55sg6IPnmQ047lWERCfJ6w2XPdgTwL/02skLyA3SY/wQlbSv37Cjx9C
+         ZEv2NLZ3jr5QH7YDkAebaXlpdlGuhAebQ7F7Ceg8egZhqwSD/L/PT7gQBlN3UfM3R7dm
+         dg4bwgtfJU8N7QOVyxy+u5m/c49zuvBzxS538LfvtFA+BYOQ2ImwiIY1KrTrmJJut3my
+         mUHVXvvgBMpu6sb+G4kcRWWGALl8vH73Qe9LYV1J3kqeNBWEimsM3+DP4NFXxWSAdA2G
+         hdlA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=gzpgF0aZAp8gLSiQwISNZ6STjkny3i+AhMotIBM0KtI=;
+        fh=BwjL3dnRd6Xt9GSm4xS7LTk8/YtFdaVx5ckRo5St4W0=;
+        b=JGS0ebrcFXMi3fxG7+lwGAA2Bn3z5LThZAd5QOQz8ypW7XTWbWyzSK30WCj/5N7BlR
+         Hp+8nayf57SkDGhuYUDFxLJbd6EtPdqMdLafO4otvgqYgVxzBS4ZmnFvNJBkS8cjLFNE
+         GLlSDAQrHtSe0virgI3V7vmkEjUMr084bS2ynqLeonwGziw8LIuDn0X75drQmJho+b9p
+         +Uu5haByWkD12/gYbJqaX+R3fovaVAn5VfQDhgd1jjdCXyuKw1iLnH30T0rL75ao4c62
+         rOBSrJIzpDRl+Gr+7qJ0mcNFv+i2VqMPUdas55Ss7X4QA5qd+XN46oIMFhQhbyffy9Q4
+         63ew==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786355325; x=1786960125; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gzpgF0aZAp8gLSiQwISNZ6STjkny3i+AhMotIBM0KtI=;
+        b=pgFds/SntzXe+aRlF3fduLhyO7PoXCbs/VeHJVXLgFISpEjLENLD72ZMfa1lQWdhh7
+         6UM5o8kHA7fTKGSLYAQeSNZTpIhPM66iiuyVSGEMf4+lD660ACfVVYppOXhvwNG6azP3
+         woXhNNxrvbNbdFMthP7MDChoTenFAXUq43oB/rOudacgXf8EqBqk+wMdM2tDN8UeVFke
+         p8m8BaknbbMJ6PUY0PQENf4W1y0CYhx2skXG197wJ7ifq3VvxXN2LmEnd6bRJkC/V4nd
+         nlBF0gJmoxFklYGsvaemyGJ9VZALpTRwi6+5eo5T900gWD2hbi8sk1mU7th3Ci4l+ufF
+         SltQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786355325; x=1786960125;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=gzpgF0aZAp8gLSiQwISNZ6STjkny3i+AhMotIBM0KtI=;
+        b=SS2yonQwzPqhSXu5zo86truEJFc0iybK/p+McMEKMPxFkkwbh76H5+ql+IJQSK7F/6
+         vsnOq1yKx6vPWVFUDB4jBhU+8EoPMwejuKb0D6JYkimlJjVY34xUpfhkDKqm32kyMkrJ
+         M6trs8cF+nEcD2gLr3+YSwqggwcBFk4jTW3zwmSZqPSn+CyJfXBjShr/cMgtxQyD2Lc8
+         rkqyz3cWpocX5knX8gbFcreqSIsIuhlC1Hy8/NT1W4itTQOatk3hVUjgkqTwbJn2Gfwp
+         fP3cmwBpriDxpXb2rQJSjg13knLVUcMYIE+4Z/KjCukaX5RqX+f2L51HJEfRZ+p7OWQv
+         9IYA==
+X-Forwarded-Encrypted: i=1; AHgh+RplPEMFW5MZDy7eB0WwnqmzHOLnjr7dRz0N78DDoktNRehB/ijCBN50aikt7a6ijappogY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw97Z9MX02xJW63GZRZJuZne4X3WuhAjOy5h+XBPbzVqnxspfXO
+	lTyhjCwFvwi+wwiRlaO/TFr4H3YwYLzJoIxYKZ0GaBEbbWRHC7xwD743UwVnLpf3IzQsx3uiwim
+	tOI0shcub818UoQtEWlim8Dex3ppTaN/UMnrj
+X-Gm-Gg: AR+sD11wRPBd3H0vpDvWFBwEp16SwAH8paaAckCDDYoDYOYoRtDG92pdjQrKnpcstN2
+	lzrVIvdWrtMsTSYLJzPk2PLm53ANf+ieY+FewBuvGtwW2Wm5MjYoAUJTIhx2dWdULK7hfhPUPWW
+	wvZNcHp5GvrpctHh780muad1+YmuM6kuTGi4JNvwQ37/TKtwKcO5/iLEhDjdw9COUfCNLcEbAO7
+	vZyDXgcz5BOOGriqRd+dSsP2q8cCyJM5sRpiFUyi+4rA0Fv3Zcz82YrPr4v71w4gFf/9RtTybux
+	U15laTCopFVIVrbAC/5uRYG031bBd0xdK6zCKeCyCkOL
+X-Received: by 2002:a05:6402:321b:b0:6a1:faf4:eb38 with SMTP id
+ 4fb4d7f45d1cf-6a1faf4ef69mr6718694a12.2.1786355324670; Mon, 10 Aug 2026
+ 02:48:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <26c2f7e0-03ef-4c45-8175-adcc2e0395ac@haller-berlin.de>
+References: <pull.2375.git.git.1786267394375.gitgitgadget@gmail.com> <xmqqo6fb85v7.fsf@gitster.g>
+In-Reply-To: <xmqqo6fb85v7.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Mon, 10 Aug 2026 11:48:07 +0200
+X-Gm-Features: AUfX_my26mj-st0IzNtVTSRnpzR8F6Ap1jlbWDwuCM6B_YgiFXQixHSkF7FMpvw
+Message-ID: <CAHwyqnVWgNThSPnPBVwOb11S9MSjD0R3BRg1ci6yEQR+Vn1kXg@mail.gmail.com>
+Subject: Re: [PATCH] send-email: clarify missing subject error
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Aug 10, 2026 at 09:26:55AM +0200, Stefan Haller wrote:
-> On 10.08.26 08:03, Patrick Steinhardt wrote:
-> > I've been playing around with the thought of introducing ncurses-based
-> > interfaces into Git. I've been mostly thinking about git-history(1) here
-> > so that you can just move commits around, squash them together, drop
-> > them and so on. But I think fancy stuff like TUIs can also be applied to
-> > other parts of Git, as well, to make things a bit more visual to our
-> > users and, as a consequence, easier to use.
-> 
-> That sounds a whole lot like lazygit to me [1]; it does all those things
-> in a rather intuitive way, including Junio's original use case of
-> selecting a hunk and staging or discarding it.
-> 
-> Is it really worth adding such functionality to core git? I like the
-> idea of tools specializing on what they do well; core git on providing
-> the core functionality, GUI tools on presenting it in a UI.
-> 
-> [1] https://github.com/jesseduffield/lazygit
+> An input file to the 'git send-email' program is often the output
+> of 'git format-patch'.  Such a file begins with a UNIX 'From '
+> line, followed by email headers such as 'From:', 'Date:', and
+> 'Subject:'.  The 'Subject:' line cannot be the first line of
+> the file in this case, yet it is a valid input.
+>
+> The only condition that this subroutine flags as an error is when
+> the file lacks a subject line.  "No 'Subject:' line in '%s'\n" is a
+> clear message to display and is an improvement over the original.
+>
+> However, the fact that the first line does not start with
+> "Subject:" is irrelevant to the basis of the subroutine's
+> decision to issue an error, I think.
 
-I think it depends. There are lots of users out there who use core Git,
-only, and we often hear complaints from this class of users that Git
-makes common workflows way too complex. I certainly think that we should
-up our game and try to make such common workflows easier to wield. Tools
-like JJ demonstrate that there are a bunch of improvements that we can
-do, and many of those aren't even that hard to implement.
+Yeah, that makes sense, so maybe we don't need to focus on it being
+the first line, but Subject needs to be there somewhere before the
+body.
 
-So If we see that there are use cases where core Git itself is lacking
-and where the consequence is a bad user experience for common workflows
-then I think that we should plug that gap in core Git itself.
 
-That being said, I don't think we should get into the business of
-building a full UI, as that feels like a can of worms indeed. Adding
-something like a user interface around hunk selection certainly feels
-like core functionality that I think should be in scope for Git. Whether
-a full history-editing user interface should be part of core Git may be
-a different question though, as this is getting significantly closer to
-a full UI.
-
-Patrick
+Harald
