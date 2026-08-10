@@ -1,89 +1,86 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAC823D283
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 06:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763D53644CA
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 06:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786342018; cv=none; b=Tbldo/VtbBnWT9V4M7+x6yoZUXEEx9/fpB05xBN+syV3Rcz10fbf107kOguz6e4U7/amVjj8inNTap4499sSge5HfadhEmPou+n6MMOVPddVw/FfpTp7FLxFKKN1UhsqhIuyzxMRsmnc4E5bscKhHhBk2jG/QaogvQ6msa5cnPk=
+	t=1786342682; cv=none; b=jPzBXE2CpR5O+gEwU0sRVuhvTSCVYGAWtHr8Vs2t2K/0OVdgp4aI/pc9i/SpRNxcVDaQXWfp94unw8dst80FiE5wEsAJ3vlPtaUBo69pgt0NfXEuY0LdbH2wEzt/KqOlBHSRSNVcsCEoZifT1qAL8yPhprTB112hcnmPlwPZN3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786342018; c=relaxed/simple;
-	bh=j7BhhX/8aLkRAt1PZiiPDGBqFyA2vXiUVR8zOJGR7ls=;
+	s=arc-20240116; t=1786342682; c=relaxed/simple;
+	bh=5aVd0th4gCpbleihFCPf7xfKIR83lnt8H7nMs+kNbjE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nR+mXQdaXNS6HGSKQFOWCCgTpHJWIYZsN43TOoFtzREAD91atTknvcPoT6KGInHfF2pXn/8VWE+GP0AGzqoCeA+cSOy6AsWX+WWRY5lbIVMovRhJIlEHq5/GFBXKZGG5eoNcCiZolKplh1geXYf/gxblSLDCITv5qyPJGC40C7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A/J+Ezb1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jhoWDHuQ; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=oLAKwNRbCMHJJrb7EqYuLdGVVDEIqQJZdqeQO3hyStVUCYMhkj+b71s0lAkw2lMLPH2TRizixX9bojfeREvKdRqN3g6KqrHciTuHQDIDmELwRNpP2rlUVPrHcHMiFbJHQrlHpr4W7dV/K7NVcb3KknYr3RkYM0OJUyHC2La2ycY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SriIVcWj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KViY2Gm5; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A/J+Ezb1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jhoWDHuQ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CB2F7A0190;
-	Mon, 10 Aug 2026 02:06:56 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 10 Aug 2026 02:06:56 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SriIVcWj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KViY2Gm5"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 91D5A7A01DA;
+	Mon, 10 Aug 2026 02:17:59 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 10 Aug 2026 02:17:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786342016;
-	 x=1786428416; bh=CRgF0htbd6SEwhGPCEWc3EL9xiXuWhKkFMA/RP/dZwk=; b=
-	A/J+Ezb1thrXLhdH3oUSDtwMaivcOziAhnqIZMPlX2pnrJYqSYisc/G5vjMU3Rpi
-	0CS/2Uk+7oRvAQebgmNVjCapAEwwp8mu+talqhzF8cj3TO4mi3Cq3o9ww0qzVuOc
-	CK4GENVHsKIMqWKO+AAYLChWXVnc3vkNCM7BtU8WsFcOy/wpr2iDZ4pEZ1L35itI
-	DKj/HNwkY0HwPMTwertp/Wzps5uozdTkDzFloAlw/n6SKXuwbCfohyw1SvV3EWhq
-	/dxUW/+vgzDZQgLbPd6niEYGv5h/6fGOZDBt+PPT4tjx9CEuFHKKSCc0D9X3I/gq
-	FQM1otQvResKQKODpCOGDA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786342679;
+	 x=1786429079; bh=QGkccLP6rk53CAs5/e/J6YVcbmAVeGLxMwe5nMCYxc8=; b=
+	SriIVcWjLVLxedaMBcoekylmYWyBT/H5IOwbthOHQbz+/0n9rmN2dFxNXFSATRRY
+	SdmQsFt3/izSkhBmmOhhhXKDt4RvstuWC1xR8GKlNHyuWKDYlUWquzM69Wthd3aQ
+	vV9ePM26hsA6Etqaoy9rlppi1EDVp3nmuoW4zwFoMucviPPV/K3SI+8OFYztTN1W
+	f1nMWUFsK/qNheAC9JTrbrZ40ov7YrH8Keihyys5eAeuyHzCq+hG0CJLRywjlLzl
+	vIYqRhSaParAhiHVIPuY/6ujbNfmTp0Z+25GCeEaeH0ku0fZypjbsBwD9NgNUUQt
+	tgz5Z+TSNPnJRNvlpdjxAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786342016; x=
-	1786428416; bh=CRgF0htbd6SEwhGPCEWc3EL9xiXuWhKkFMA/RP/dZwk=; b=j
-	hoWDHuQ4jneUf5alMyld9mW+n0S5gcmFmafSdiZK4jKMmgxJlC61w+mOnyP+Ek6+
-	ydjnY5EjXHGuygCVXU2uk6zx0SU23o0wzrtzKqlH58lKYbWJBo4JepiRvRn9Vwsu
-	mZuy5C0FCe+cIcDm6VJUm9w+KY1gvSFtyDdTLfGOQt/ygzaYEtgFlGjDn6DHKyEo
-	IIzGTAUBg/8Ucwa2VmfBNHzFv0jyMXgI2cokhMr493V2wyTsRekQru0aUmzyYIbe
-	OntnVOyLYYanyBUzw7y5th5J30DZTuaiokkGJWkmp1WjhC6waR+yGeCsXYGarAaC
-	wRRewJlyfErdEYTZDVR+w==
-X-ME-Sender: <xms:gGp5aikZVKY0CBa7OPZuluduTHkxT-3Zn352hExXWorwlgJxVv93jA>
-    <xme:gGp5ahSEB9JC4rMVm6eDGACM9AcTqEnuZHtpOtYtg4BXtoYXvlRVonzt-y4utPJSe
-    ocBNvVITEIgphO4uKW9oGzsoimjdiVCACxvP1o_FaiKF8C-ocp4UA>
-X-ME-Received: <xmr:gGp5auA8y3y2LPFQpnoPl8KxsAdnqRj-SwuBuuSNqiTieLV01McdkL2kAQgwoHnK7dvzAXyY5vBK6SwMWVqf0LzB8uFQHDJ13gKVT1e4Yw>
-X-ME-Proxy-Cause: dmFkZTGr+7OLeImki5hFuEwZ+2xXj6pdHP5eQRpmBjNLejT3hVvCpx5gCTjbpkV+bJCs/K
-    VVCglAnVIIJZIlroS4oSarkMfLYsGVpV0NujMDVeZ2PaZ8JUYoHdTvutf7vNmJ/BC5b/bZ
-    Y2KgBWWlRGGD4mAkciOKZ3UPojeRWtzu7C/NF+CMEEr09MfBj+iVYNJHtWuSNaxwjwHttY
-    DHBGCC/t5LFg5nLWYAxKRCBAGwGaFdznYRvAWwXELYdqKO8ZbN51Awb7cFYmbKhDxCC9C1
-    oAXkqcGjuLSkOre0EvSjM/aXGazORjv9Lg1+kSXNfEquDbn+djKJtEHDCVt7H2SENhYtHC
-    DWEsR4ViKeTEGn/CsRtAY6IbVe4U/ClTOtSpA92/u/E3oOuuWTDmTJgKHWE9WXQbkfGhjH
-    EN5PM7ECCrsTsH2zG/pcv/DKX9WtXjcOZd6/Wdz6P+DCMjuRCSIniKuEgjz9ybAowLkVvu
-    f32b8AQeuHa2z143yKDl27KGJLPAK5beyipiUeUOYQ32nrmodn+M0VSPLj7uRtd0ZjEzbO
-    URsanVqGRaoDofi8Mgn06fv/iTQ0smc92Gw581QQl8ZHSFbduQgM6H/KWh9GtZBOJzq18M
-    EvN2pISm4DN6rE6NefXHCA39m2ZHqsTZt9CJuezMD/hjZUO0m0TkTsTqkysA
-X-ME-Proxy: <xmx:gGp5agSvhAJuxPg-ID-SgIkt8LNP7SyPG5D3WkYA1HyOFbJD1Zki8w>
-    <xmx:gGp5akqYzYFUVKnzkVoKKRYh7gJTFv1RZYRdxh1BpRZ0HFUgzFBe-w>
-    <xmx:gGp5aqzUJZaS0HaMOfmLsj0AWb3h4wZa-OW0IO3sF6VF7kpQfirw7g>
-    <xmx:gGp5ahIfkY_OHWmDCNRibX_8EAxbjlMPWZh43dqvGBrVAfXlt99KLQ>
-    <xmx:gGp5apt9lhkaYhq2kfGjlPbIsAxvdht_vCIzZEUhmZvs5vGdcuBaEZOI>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786342679; x=
+	1786429079; bh=QGkccLP6rk53CAs5/e/J6YVcbmAVeGLxMwe5nMCYxc8=; b=K
+	ViY2Gm59Su33lnuzMQpg8k6IuaEhy/zMQHoLAX7QtluPTj2RvzRDDJhb+Ocu6gyA
+	e/eL/GASIrUfegVa/mFXCN/oAKmFYEgqFcOwvhyozBVPsgymMk4te5/Mfa5F4XBR
+	5a+FvmdCIpykEhtOcmkmVa2111rZBNNnZXoSicvvr71i3cg1RPcw0MvhbJjhe28D
+	fFeGOC71DiB6/i/DO/nwb8FNBNtIaevLEJM0bneEn2fhJPf3Z5UKd6cwCjmLs5n1
+	lZG5Ns1iZUzbDMFtfM2MyaVEMCBJ1HShfmxSVr+a2eZmvbgiNv1EZzyAdN8uxCVH
+	oFh/lOyJDCWTgzOIvP9qA==
+X-ME-Sender: <xms:F215atn9xuNujkPypUwYNvtvQkgX7812msKw-Covc3364gZOyaBjbQ>
+    <xme:F215avvxAxE-mCSagFVHMeJ-1k8thww5oOg842Ow3aQUpJANq77-rjrxL4Z4yp4QT
+    vTsuRkiajuQ8wEsvXh8mHnfcnoyvGgEFq-TlkPnzZ6wUR2qMXjZA14>
+X-ME-Received: <xmr:F215ar8cjCqPD9L8OKbAq-o4tFf2RECbSuasXzPcSUwNjgSguQY_HCiwIFuQohn5gwJHtVqC8pzKLry_cFiIerlEvW_zCrMrfVK5vQxtdg>
+X-ME-Proxy-Cause: dmFkZTGJe4aKHrYe3Wl2uXB7MZBOT5BhfdMPN+PNAdcXaPC6hYk0D5Cw3T/7UiGizXBTB6
+    EQq1EaU9uv15Bcu8lQjIVJaQcpU1/I999k5QHWduykSWN8uUcEQhUYyO+H0d3MABjMjq5Z
+    UKHcPjZWHnQgwWt4XykwtrWXzRu4ydt9Bpff0RQcjmDdoP5+f4BQvM/j3fznAbZsjsqjHd
+    01Fx9eqWwYDl6tsIovWVuSqTEoeq1TliAQc5Dt94nsD/rPQfIUgLSTshVXAtM4bc9o8Y/y
+    1FU2IVgZt0XNeKLXrEUAO2W3ZY1MK/LuXt7keOuTvYSvnrf5Vq4ajYUyt/QB8/0P/bIWUu
+    0jeYC2tpig/iHsCzP004UO4lRN3Hh0vZ/feOTt6J8Iuc12YxFSHx+QcNfmJuhn9K6BojTR
+    WFqIeluZB/40II+iQPyrp5e02G0K3XHFvTBWyWStbLQqEmgCdUzfzYCfe8ML6oWhsFGxrI
+    hWZkAwaHAZ2bDYpNoNxPlw/9ApUKVhKPNxLQG4n36ljFz/MtPAJKi0pNy70LwtghPbW74h
+    i5Dlzz0tEdwpf8opNEIRl+fxDd1moNGg9XpPgBl7RaPAxP6TnMOrSld3o8v/LU1epFxMfr
+    A5o72T6Px5FtG1keJTeQSztQMI7W+kciadDrC7HCz/SI4qizyJiqKMDnTXng
+X-ME-Proxy: <xmx:F215apMBMacryA2cSoin_o3PmuXlowhao3kjRtGpeOP9xSi3HpEOEw>
+    <xmx:F215apF64Vm_Xuuy7raSOgWQNBOkVEGBq5c6kWfR1-MC9HDsFZMdWQ>
+    <xmx:F215anTPx5gFQIzl_2flqgjS91BEir_4xqoZSf8qDGkFBlsk_7epmw>
+    <xmx:F215amvUnr4msixXeBD5EdUDU1gJIHPXTI1YalqJtmjJd-CJp3hjRg>
+    <xmx:F215au185q3nbuoER6diOQBxUYWvQSHuDvG6kUm5FivTvNVhABRLmwxL>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 02:06:55 -0400 (EDT)
+ 10 Aug 2026 02:17:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1485b686 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 10 Aug 2026 06:06:54 +0000 (UTC)
-Date: Mon, 10 Aug 2026 08:06:50 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 93010678 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 10 Aug 2026 06:17:55 +0000 (UTC)
+Date: Mon, 10 Aug 2026 08:17:52 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Michael Montalbo <mmontalbo@gmail.com>
-Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] t/README: document writing concurrency-safe
- helpers
-Message-ID: <anlqeshH0FXaLvF5@pks.im>
-References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
- <pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
- <f158e1f92e9c586fca34faecaef23f9581d65478.1783704657.git.gitgitgadget@gmail.com>
- <anGcx4lRyy3jyS1D@pks.im>
- <CAC2Qwm+Jni+xU=gaef1AWCMj9+GUQhMrCWX9DFpS3y757pxv=Q@mail.gmail.com>
+To: Shlok Kulshreshtha <diy2903@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
+	Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v2] object-name: avoid use-after-free in
+ get_oid_with_context_1()
+Message-ID: <anltEAohp3F9Jbx5@pks.im>
+References: <20260808200832.24313-1-diy2903@gmail.com>
+ <20260809194212.77439-1-diy2903@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,38 +90,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAC2Qwm+Jni+xU=gaef1AWCMj9+GUQhMrCWX9DFpS3y757pxv=Q@mail.gmail.com>
+In-Reply-To: <20260809194212.77439-1-diy2903@gmail.com>
 
-On Fri, Aug 07, 2026 at 09:51:34AM -0700, Michael Montalbo wrote:
-> On Tue, Aug 4, 2026 at 1:03 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > >
-> > > +Writing concurrency-safe helpers
-> > > +--------------------------------
-> >
-> > Nit: this paragraph is quite specific to lib-httpd, so it would make
-> > sense to mention it in the header here. E.g.
-> >
-> >     Writing concurrency-safe lib-httpd helpers
-> >
-> 
-> Originally, I did just have this as a blurb in t/lib-httpd.sh. I ended up moving
-> it here and trying to make the advice apply more generally, though the only
-> other existing example I could find in another domain was the
-> make_symlink() reference. My intention was to make sure someone working
-> on a test helper with concurrency didn't skip over the section just because
-> they saw "http" and thought the advice didn't apply to their use case.
-> 
-> I'm inclined to make the language in the section more http-agnostic rather
-> than changing the title to be specific to http, but I do not feel very strongly
-> about it. If we were to frame this as http-specific advice maybe it should go
-> back to t/lib-httpd.sh instead of t/README?
+On Mon, Aug 10, 2026 at 01:12:09AM +0530, Shlok Kulshreshtha wrote:
+> diff --git a/object-name.c b/object-name.c
+> index 83efba0ba6..bffe795830 100644
+> --- a/object-name.c
+> +++ b/object-name.c
+> @@ -1803,13 +1803,16 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+>  			    memcmp(ce->name, cp, namelen))
+>  				break;
+>  			if (ce_stage(ce) == stage) {
+> +				int ret = -1;
+> +
+> +				if (!reject_tree_in_index(repo, only_to_die, ce,
+> +							  stage, prefix, cp)) {
+> +					oidcpy(oid, &ce->oid);
+> +					oc->mode = ce->ce_mode;
+> +					ret = 0;
+> +				}
 
-Dunno. I'm not sure there's much value outside of httpd, so I'm still
-inclined to make it httpd-specific. And if so, moving it into "t/" would
-make sense.
+The function only ever returns `-1` or `0` itself, so we could've
+written it this way:
 
-But I don't feel overly strong about this, either, so I won't complain
-if this section stays as-is.
+
+	int ret = reject_tree_in_index(repo, only_to_die, ce,
+				       stage, prefix, cp);
+	if (!ret) {
+		oidcpy(oid, &ce->oid);
+		oc->mode = ce->ce_mode;
+	}
+
+	free(new_path);
+	return ret;
+
+But I won't insist on that change, this is already a clear improvement.
+
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index 4140c4d8ef..e88946c254 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -1357,6 +1357,17 @@ do
+>  	"
+>  done
+>  
+> +test_expect_success 'relative path to a sparse directory' '
+> +	init_repos &&
+> +
+> +	# A ":<stage>:<path>" argument whose path is relative is resolved
+> +	# into a heap-allocated buffer, and a sparse directory found at that
+> +	# path is reported through it.  Cover that combination, so that the
+> +	# reporting does not read the buffer after it has been released.
+> +	test_sparse_match test_must_fail git show :0:./folder1/ &&
+> +	test_sparse_match test_must_fail git rev-parse :0:./folder1/
+> +'
+
+Yup, this test indeed catches the bug:
+
+    --- sparse-checkout-err	2026-08-10 06:13:59.698011294 +0000
+    +++ sparse-index-err	2026-08-10 06:13:59.703981906 +0000
+    @@ -1 +1 @@
+    -fatal: path 'folder1/' does not exist (neither on disk nor in the index)
+    +fatal: path '�[UU?' does not exist (neither on disk nor in the index)
+
+Overall this looks good to me, thanks!
 
 Patrick
