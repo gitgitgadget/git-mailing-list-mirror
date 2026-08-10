@@ -1,121 +1,155 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BAD242D74F
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 16:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA71431E73
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 17:41:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786381118; cv=none; b=jRjMJ6x3TujQEFCA8cDF4mgsy4geeIvKTl9ltAhxaqLwOV5LdfchatwoAuUGzspxoixb8/F/4EcWgZXIJsnf3cp/+RtX5Nsnc+LYwhDLAJ2JG6j/y3UAYE+fmL9/aMgkvsar0L7ECL7UCGUeNsSVtOao2V7Pr5eSMnZbinDy1fY=
+	t=1786383669; cv=none; b=YpzCp6ktQCxlvBTX0wTVqsLZnzwSje+TFuocKy/O21RsQ/7KiWQPktwn7JKRz0/BS99QzkxHaTuIA6aMR1Wz8V99lqO7GbZf3vO2MRLStAyMLqJBzwwmyGqBHl4YhQQPlieuYMZsHxZLds0fWOEeuqWtwpxjKvSWAKjaP4RVHZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786381118; c=relaxed/simple;
-	bh=0jTmqsUkMCAFT2jFNDV9xpR8EyGfKX7NnhCKcvUF7dM=;
+	s=arc-20240116; t=1786383669; c=relaxed/simple;
+	bh=LlqoZAKJHtbUJqY3aboQkIEnrZlYtibc3GYzzAKJh6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UP0UjYRVzOSlHM8A54q4JqBmtAfx+r4ml8UkfZ7ZHNdOmMBlpqMm3mJdXcGtyin35Jd/h4p6Oeq3tdFJHNIB+1HRF5i7Xxc9sfxYoX2I8huFL69piSgROdHwOFVO3z7HbNMxzIgKbLVatigdRworMXOyIduE6+k+tBhNYscxiDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=T4ajOjdz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ctk7B38I; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	 MIME-Version; b=MXhOXraFEx/CHhuv7UHnX7HYa8hKHqkzKq20Q/tdbAUs2ZX1I9JqPnzomF3e+i1RjMbAR3Ui2e9UYIoLIO5Tx8BXh0m89PZXVbiekaR9emiXADPDr0pPvJN1atrOYKMt/ufNjXeAmrWRGeHstYh+1he+vEqVgxJzwbauoF0iup4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QMPcp4Dc; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="T4ajOjdz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ctk7B38I"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 57F92EC0143;
-	Mon, 10 Aug 2026 12:58:35 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 10 Aug 2026 12:58:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786381115;
-	 x=1786467515; bh=LVi5MyvnnsbST7Q6N/v17lYwTnAX+nuMLCRAZhu4Dp4=; b=
-	T4ajOjdzkJ0sUnQjrnrLDMyc2jby1MiR04x7u8YzQgSvayoqoVFD4PmvLC2xzXp5
-	Mei2rw2OXufJZinyVaKSFME+S7HXO5spSEBsughGSI028f21vCjx1y9aRxpgAC5i
-	NSZv60yXABz1VmltN05CYRVskYvkVVpPQWUuHEDHrbINgIefiOw2NlvWrP7zIxpO
-	NJuKcU2QTQMYfSg8h8A0Vo0VCXyyuHsUyWCDB35UdcJVR1o+wjQujH3E0wktSMhJ
-	D1Q+eeNVKmXU5uLe2fmGuTLgmMB4Yuf6XT2CPNMwegaZF37TSaBxCyx0v14fJ6NL
-	OfeztMB81q8wM9dU4dti6Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786381115; x=
-	1786467515; bh=LVi5MyvnnsbST7Q6N/v17lYwTnAX+nuMLCRAZhu4Dp4=; b=c
-	tk7B38IGZJnFT64R5lTHzN8lYROaqP9YpKR5NBOZyB1q8yhHq79wJ0sy10cB2l/K
-	2//JoRlEL9FIVMCwao08W3cZHXPllZNFhQanFN5NFp6WfHKxDE0mlfbBs5uT8Lpo
-	1Ubs/D3KNfEGWaXxaM/dQzDNsyl+M+NatsMdPusmt0w2uHy0x7vIjkyG9Mf58Tc3
-	OS8uzYoF9gFwpCrwsKXJ10XXd4zIKR1bA1LUvp8tDgL71j4NFcmLyDgS4MECLJ5+
-	PuAqOIOA0SD0BVCl3ciM2iGbcpK//U/cpxFJvPJRmy8gY72pJJAt9ShONkBagDoY
-	M+JRlf7p247VhgbYGLgSQ==
-X-ME-Sender: <xms:OwN6aodenBOjnhETDrl0rkKKd05p3c0OVZ3PjTIKUq4ScjTpU3Di48g>
-    <xme:OwN6agMpieVmf2iogifhK_HhGiK4btG4c5JE0B39UMdMevVTfyBTE7CX8YHddMkq5
-    QAqCUwldrZxEAN8ixme8f9xtylnDQE4VhLUB6dMbHdIDYAFD2CZdA>
-X-ME-Received: <xmr:OwN6anIeTJPZkNGMqbViCSdgYwJQbphOhf6nUvPtZGO_K4aQ1v_wDfHnDn3jO2Yv8RbjvMP0c3xDGp3MWz06lxDE6CVCSbAsFsaPqhG341CGaEobvO3OWgI>
-X-ME-Proxy-Cause: dmFkZTGI3WFoBLFdQftS13LmYTOJakgH2QTQ5dGfVvhd14S6wwQPoiBHkIlXjVgQRhU2aW
-    m4Bz8rH8jhSq7ALs8PmV0AhNm6rZSEQUiigBQJw699cxGiR17imDJ5B1MxGe2UU9MaeQCY
-    1Eld3M3HsKByOK2mrhuCPgq9+YOntfGPEGEbMfvbxAluGw+twTRuV5gOsAbw2EBQB2Nwjt
-    wmnvl0d5erLZcRdWgmul6mFOq2xcEph4NNxs+bDIZm+LEhuIrEoUkW4FEkNT3jRyH8Naju
-    kijMj9HJGBJ/p5TAffoyHRAnsBxh1C/6FixVeAJC5OdmpIHvGnXs+3k4Nyv4wVXoMq1pFa
-    Wz7J3VmoR2oOMrt5keWOXe9yAVnwIvMe0slaQAXUvDA44sk20laznWKcF7/aJqrzBHCXUg
-    O5dTEDZQLXnsi2gbFx32sVhTU6N7dFRJpkQG2WlXKgls4RN4eV7jjy31P/IkIuNZEViFD/
-    qOzPhpp6LyOjA/1bwdvnUWqkW4xlL402vkBft2TNQ2Jf9FOXwLvdHzsnuQIecZ29CcKaqE
-    HK9HlYCUEThMADELXQ2QWGh7rdF7oreL0Csumg3Vv2ihdu+S5VKBpCHRMc0LzNI2p60iH3
-    Q+/8WG1bqNg/lQjf5m0E3qDDAfScfGzC+wmC1885ajz1Md8eepCXbh/rXaAg
-X-ME-Proxy: <xmx:OwN6apGrtS-7Sk6VBa8D_t4Le1IcxrPVAiefpu6WliKj544oJQCvcQ>
-    <xmx:OwN6anTQ8FnJWo3-WF5mbkP1LAtSRN8RBUPSTl0TdV8p3rXDWXtVyg>
-    <xmx:OwN6atHkWAffFZ15vrrGfX1xIPusBmaYTzaromEtR8FX08Zh0l3JNQ>
-    <xmx:OwN6ar_lrQgwFblZY8g2JiWyjKtHx_O2fhXPorEkUp4cnnPlWha7NQ>
-    <xmx:OwN6aj08fsg6TPpcPQsLHzCvKM5LN3k4XSqCmmCDUkG9Kalida9q7vJx>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 12:58:34 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QMPcp4Dc"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-cbb8b54fcf8so13539a12.0
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 10:41:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786383667; x=1786988467; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=dkevkXmZJ5IF3FzrYSkH2V0Y1oRIUHSLYva6JVXoEyA=;
+        b=QMPcp4DcQzCpFx0vBA3spJKlK/DgYDFzMD/5UuSNO6HmKmwzxIj4dPx1qEBDbGWLT2
+         7ttfBwNn3/XuLLB0PxQOR9tLzyVrXMEvJHUwxP/62GyIKq6jehWnH/8jb2G8zh8HPt02
+         9eZPc6xTBK7mRqjNOsxeKPuML6wpiniffLU1HBQq14cxFSd7QoJnUKmpMqYFyRHRaVww
+         xf7J99ohdTGnM5d5FbFInXCMWZ3+J8bBY/LUsvtbQqyZOmaTF6xJoqVcPLiqxx3kuK68
+         V88ehL/hCIasUEBC4M4jYnXUG9p0SPDxLPLtrMNzH/vRxoR6w0DzpaVhSpx0c2+Zwxaj
+         Oilg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786383667; x=1786988467;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=dkevkXmZJ5IF3FzrYSkH2V0Y1oRIUHSLYva6JVXoEyA=;
+        b=C7QSLfGzPl2tWJL0zP35YcEqfiJvwIZtWF/rLKGz0h1G4FU6QkJnbsjHctmQ9GlFEw
+         ZELLJfo8bx4C1HRb/V/qY6fmFS0askzMrYOlAjaNEJfSIXSCScjPd281f4N1xp+/n6Eb
+         y4/+g6sSbbYLt7dPhM8956brLuKXv13t3Pg8zLvcQPC9VLW5fkKWprostHPW4cHfT/Vf
+         qD5+rJ7NIk1E41Ib8fVzsLjXSkbM4h/g/UFQUgaGJlsC6TX3frocqt1rXUEaM8NvT57M
+         r6Rqv6U+C0go/LC+WXd6mnyWvxuWBMQOSE5htl9VIZyqEWQIpReHxdCOmXwM+0IKGRk3
+         giTA==
+X-Gm-Message-State: AOJu0YysOyMGoaXOs2N+3XBHtAVTsv3MscffzJL7gbAND9yCRBjN9p2f
+	Njsic9fsgWr+UCSTxUwU8pdNBbSTgKC36mZRsDqg05SPiPHvT0YOvvVCPwUA5Bna
+X-Gm-Gg: AR+sD120yrbiYeQ0c2dPw2j0pML1Mh1Z/bQ9M7Eql+gdpMg1ppty6dAss0ULhJRTmfp
+	Rm5MhrohxElU6XPNYgDspq2iOkpK3LTVBu0vN229KnwVs2/vf8jyIcWjnYOYgsv+kRtepoilGDj
+	xtCw2x7IRySx67CfjMf3KFbH4+HIGYakbdojyXZK3tAszuobBzLyTF8+ScGtBjTmJopfrJ4MIUU
+	D/wwjEHcafO1T0CTBlTf8hxj0hL78ku4d6JoqGC9w8pKIZp+4c+avfOGCK3tWjA3CjszCtMIIWy
+	tFcyL8qY+3kdgzOc6+IuGIY4gLXtYtcOmj44K67JaC1LEOky6YbLR+E0pUGw3wj8tjpfwaEBnVw
+	LBD36ce7AhuTWVWTje5uCvfzZyGyz1hqs+hETyXYnGGILY8Rv6a6qOk3OafZyAjXagppjFZ1JuZ
+	bQduWbuYWD+e7DCjz47KTVpsBPSt1YRcK7mcjQHQr6Ro7VqH430+33QmDEUuZyf0LaCjd7KWx2w
+	gCdUksI4B3GuToGAQn04WdVrssITOxXGI+0o/OA2jLnSS38EhOQ/uYlEKBkWiC8G2DPtK2c00zV
+	itYX5W867LKWd+4yLgWBhA==
+X-Received: by 2002:a05:6a20:6a03:b0:3cb:82de:b952 with SMTP id adf61e73a8af0-3cb85de816cmr40354383637.2.1786383666835;
+        Mon, 10 Aug 2026 10:41:06 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:5026:8db8:20aa:c615:9a47:206a])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14101b7b39bsm36865585c88.14.2026.08.10.10.41.01
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 10 Aug 2026 10:41:06 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH resend] doc: format-rev: use [synopsis] on code block
-Date: Mon, 10 Aug 2026 18:58:05 +0200
-Message-ID: <synopsis_block.b37@msgid.xyz>
-X-Mailer: git-send-email 2.54.0.22.g9e26862b904
-In-Reply-To: <synopsis_block.af9@msgid.xyz>
-References: <synopsis_block.af9@msgid.xyz>
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	siddharthasthana31@gmail.com,
+	ttaylorr@openai.com,
+	ps@pks.im,
+	johannes.schindelin@gmx.de,
+	l.s.r@web.de,
+	r.siddharth.shrimali@gmail.com
+Subject: [GSoC PATCH v4 0/7] repack: add --drop-filtered to reclaim space in partial clones
+Date: Mon, 10 Aug 2026 23:10:40 +0530
+Message-ID: <20260810174047.6524-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
+References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+This is v4. v3 was at [1].
 
-This code block uses the placeholder `<subject>`. Let’s highlight this
-placeholder properly by using the `synopsis` block definition which was
-introduced in a34d1d53 (doc: convert git-show to synopsis style,
-2026-02-06).
+Partial clones let you work with large repositories without downloading
+every blob up front. Missing blobs are lazily fetched from the promisor
+remote on demand. Over time these accumulate locally and there is
+currently no safe, built-in way to reclaim that space short of
+re-cloning. This series adds that reverse direction: enumerate promisor
+blobs over a size threshold, drop them locally, and rely on the existing
+lazy-fetch machinery to bring them back transparently when needed.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+How it works:
+  * Enumerate promisor objects directly (ODB_FOR_EACH_OBJECT_PROMISOR_ONLY)
+    and select the blobs exceeding the filter threshold. Every enumerated
+    object is a promisor object, so it is recoverable from the promisor
+    remote as long as the remote still has it, the same assumption the
+    rest of partial clone relies on.
+  * Rebuild the promisor pack without the selected blobs, reusing the
+    existing repack machinery, so the drop is crash-safe (write, fsync,
+    install, then delete the old pack).
+  * --dry-run lists the candidates and changes nothing.
 
-Notes (series):
-    Topic name: kh/doc-format-rev-1
+The guards refuse to run while a merge, rebase, am, cherry-pick, revert,
+or bisect is in progress, and refuse to drop a blob referenced by the
+current index. Dropped objects stay recoverable via lazy fetch, so these
+are a convenience (avoid pointless re-fetch and a surprising
+mid-operation fetch) rather than a correctness measure. Both are skipped
+for bare repositories.
 
- Documentation/git-format-rev.adoc | 1 +
- 1 file changed, 1 insertion(+)
+Changes since v3:
+  * fixed the git repack -h usage string to include --drop-filtered and
+    --dry-run, so it matches the SYNOPSIS in the documentation (t0450
+    was failing - caught by Junio)
+  * converted a bare grep in the test to test_grep (test-lint error -
+    caught by Junio)
+  * removed a stray bracket in the documentation SYNOPSIS
 
-diff --git a/Documentation/git-format-rev.adoc b/Documentation/git-format-rev.adoc
-index 505a52feccd..836ba4b0c24 100644
---- a/Documentation/git-format-rev.adoc
-+++ b/Documentation/git-format-rev.adoc
-@@ -96,6 +96,7 @@ The mode `--stdin-mode=text` replaces each object name with the
- formatted commit, i.e. the format `%s` would transform some commit
- object name to `<subject>` without any termination. Like this:
- 
-+[synopsis]
- ----
- Did we not fix this in "<subject>"?
- ----
+To do:
+  * remote verification: verifying against the remote awaits the
+    "remote-object-info" cat-file protocol command
+  * recency: a "don't cull recently-fetched objects" rule as another
+    selection criterion alongside size
+  * drop log: introduce with the error-path change that reads it
 
-base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+[1] https://lore.kernel.org/git/20260806112202.75067-1-r.siddharth.shrimali@gmail.com/
+
+Siddharth Shrimali (7):
+  builtin/repack.c: add --drop-filtered and --dry-run options
+  list-objects-filter: add list_objects_filter__filter_oidset()
+  repack-promisor: allow excluding objects from the rebuilt promisor
+    pack
+  builtin/repack: enumerate promisor blobs for --drop-filtered
+  builtin/repack: actually drop filtered promisor blobs
+  builtin/repack: add guards for --drop-filtered
+  Documentation/git-repack: document --drop-filtered and --dry-run
+
+ Documentation/git-repack.adoc   |  37 +++++++
+ builtin/repack.c                | 151 +++++++++++++++++++++++++-
+ list-objects-filter.c           |  45 ++++++++
+ list-objects-filter.h           |  16 +++
+ repack-filtered.c               |  82 ++++++++++++++
+ repack-promisor.c               |  15 ++-
+ repack.h                        |   8 +-
+ t/meson.build                   |   1 +
+ t/t7706-repack-drop-filtered.sh | 185 ++++++++++++++++++++++++++++++++
+ 9 files changed, 533 insertions(+), 7 deletions(-)
+ create mode 100755 t/t7706-repack-drop-filtered.sh
+
 -- 
-2.54.0.22.g9e26862b904
+2.54.0
 
