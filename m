@@ -1,158 +1,102 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00453431A5C
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 17:41:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9DE390987
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 17:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786383708; cv=none; b=OCT2OV0tf1MFqa1boh2Bj1nGCdk/wIN0dSl3rLsgqDZuYha4poDgg/U/wwGA3kTricrJ6mUPiAuwWG+FdNz9QpAelgbaCTsCO2hhkOekQAk5+TNVPnTej9uGrkhiPgJvd9hJGYN3LvlPcTcvHiIGOnmwKkP8WqVVPplQExNrXYk=
+	t=1786384346; cv=none; b=AeGm9phMHgJ55nKS0/HobFuJWAjd3gPWGhqGmKzNGRchIRkuff9YNTSzKUJf9NukoI8eKMZUAli8RTzZ79eXvt8l86YJzYdABQay0QVsH4xuBfwJnJvcy8J16shKE4v+e831/SlUpFqkCJ57odYlnvUfsLAQn9ARn5qcG0jed3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786383708; c=relaxed/simple;
-	bh=UyB2fV5Nr6z4fQi5vLLQ97Wtxf0IAySVBgjYdpHzb6Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rs23xoHtEx/IDjG+6pc9OxgFYUyEjCsRb3ELy0Ezq3ScbEdnggdAMO+Wyf15cKMZuWDLXYE71Xd/1CfpVpqhWfITPFXFqZI02noIQ3xkz2YcHKOeLDnBclnCu2fw7m65us3MmlzNXhoc10L4IAjmw7tZK3ueLV4JCXlNn0Gfbm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G8XYEPg8; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786384346; c=relaxed/simple;
+	bh=4QXg1OKSSxYFnIlOGOqL9aT56rRXTQpHbtJEXcDYfUg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pK6QN4ruzcELIkttSSu+lDqyYX7STHu0BDD+7sU3XoVO5c2ksSGbGeeEnUk3Ztlw3iE+M5LmI5ysYwQGb+uNKBQUQSEDHzzsYKxthN0vjl9DLHeTSK73Tvp5ABq9FKuFx5oTgiRguJ7jKjjQQy5EJQRfSxkhFTtam+P0eBqZitQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fgi3r+rR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ROYLyP0v; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G8XYEPg8"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-38e58034d05so2260937a91.2
-        for <git@vger.kernel.org>; Mon, 10 Aug 2026 10:41:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786383706; x=1786988506; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=60BgxIYJ9Vv04BejjAcADp/34/M+w474krhaB6xJu6s=;
-        b=G8XYEPg88A9x9Sa5Kj58NRIIA+g1IgCujLv43cMrP5h9dTnervwTBhzkrBlDb6tkXi
-         qk6b+gLIPasmwUkvAB2IiflUZuClE15BOTVorSfODsf/Skvg0dlVp8P1maJBuIEEGGfU
-         YEuZn9bEgl/5zUw+/EzB8OPLAXG3n/FvUFef8Man2HdAOf02hqJrJMJbENj/j71dII3o
-         CRGaGew1DLII5cz6uS5ff0ScqZzDy3mYd9h1RAzw0uFQIrjgMEiVbEKsQpZ7V44QOgZW
-         iktaRX9fTJ0fC8AWadPNxFFJkAh1a7M5ogmFc2E8jfEOq4wAan7L+hH/7tNQ+mPeFWnY
-         roqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786383706; x=1786988506;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=60BgxIYJ9Vv04BejjAcADp/34/M+w474krhaB6xJu6s=;
-        b=rQOwT44fPZhfaLKWJs8zce4Kz8cvKcG5PB+gyR6WRy+Pk9dc9sd2vzMyAQH2llTzJp
-         vQ/CWatta1BgCzgUDA0o2Oy5mc2x2Xl+Rcm0IX94wxWl8lLjndl+N4en57y17SZjTqyb
-         sI9f/xdZ8Etcj+4UELRtNq6xV0wF86s/uKXw21plIBFoawVRrY3Oorunz6KKKQYGQNXY
-         OGoqPYdxMXUe+Btb70DH5q1n4tb+TPLURGKZqwk1NxhOUVT2JXcfByXI0w2QkRtkXfSV
-         /vidnHctHvoUnmIKFnBf+0qhHIEiyXXizAYz6JkD82zQLojtzMBxVhi+KN+kFnghWsJa
-         Tmyg==
-X-Gm-Message-State: AOJu0YxRlskJZ4+ko8RfZgeO5qe79cpXrBvDE3/1EXXAzs1/z5CfhDwW
-	bYBiiL8DBE5MYp7Wo5QUREv/mGOIrVqANo2/gG+lkMNFSYvdA8D0M+OSVW9vqgvJ
-X-Gm-Gg: AR+sD13bg1MSv5+4p66t+xG9ay4zC+rh6L/NSwWRsDdm05jAHE9t6MjV0XgzVSrmgdO
-	cqZeATqxZSZ8fkrEihgBQE+9xPK8mvCdsLRJ0/UiepW522Pds5A86fPy/GbS8sQ6rmWdanr8Lwq
-	AQ4wot2XPJuquJ9uPCi6OtjjXnoUzq80FFbY1gsLH8Xfi1johuYT266on82IVbIuC1dtcYS93V0
-	7Wy0GUI/OjvAKmoSUyP6gXHSH0CF5JRzQrYoaaj/wC9G5CpFfGi8HKuGy6Agi2Co9iLVtyv/XXk
-	xE7zGrTLbkkn/XJeRQ/zEODQFrseOmiQI+Av2gwnCOfcY+VdQGpWweeD6BsFFuluzkdV0mDB8H1
-	V7dmR7Kly9iWr9TGPX79mf7xz7FHgLo8BZ+L9uypfRFdXCgktjwjobBV8F1kZ69ayoQVA4GBhmJ
-	SFQzddoQVoCqTUss+WkfBc5PpI+QU+D3RvnOOKkodWXenfRPNoeoscPR/Lwb+wxLbkbooNtEHym
-	wrDzQOEt/ERVGvE35e+jj1WOkbnav+PYLHXcQ7W3GV7zG8OD/dV1etBjs9jjuKaFl9rEpkiXgDr
-	ltvg14wOKskXSfsDLzbagw==
-X-Received: by 2002:a17:90b:264c:b0:36d:9e0b:3801 with SMTP id 98e67ed59e1d1-3903c59936cmr47574389a91.8.1786383706163;
-        Mon, 10 Aug 2026 10:41:46 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:5026:8db8:20aa:c615:9a47:206a])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14101b7b39bsm36865585c88.14.2026.08.10.10.41.39
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 10 Aug 2026 10:41:45 -0700 (PDT)
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	christian.couder@gmail.com,
-	siddharthasthana31@gmail.com,
-	ttaylorr@openai.com,
-	ps@pks.im,
-	johannes.schindelin@gmx.de,
-	l.s.r@web.de,
-	r.siddharth.shrimali@gmail.com
-Subject: [GSoC PATCH v4 7/7] Documentation/git-repack: document --drop-filtered and --dry-run
-Date: Mon, 10 Aug 2026 23:10:47 +0530
-Message-ID: <20260810174047.6524-8-r.siddharth.shrimali@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260810174047.6524-1-r.siddharth.shrimali@gmail.com>
-References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
- <20260810174047.6524-1-r.siddharth.shrimali@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fgi3r+rR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ROYLyP0v"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0E6CC1D00116;
+	Mon, 10 Aug 2026 13:52:23 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 10 Aug 2026 13:52:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786384342; x=1786470742; bh=4QXg1OKSSx
+	YFnIlOGOqL9aT56rRXTQpHbtJEXcDYfUg=; b=fgi3r+rRAWAHrVQceNf/CJDLBY
+	YwQpa2bBW3mQg7blJXO4HHkpmuDcMRsWWfpurK5dP90opSfx+yFEEeBRUrjkZm6U
+	CX/CRIQHX4Gq2Fxe7St074Hin7FDHqNNFekE8KErbGwfWCt6f7dSDe59Lyk+SKzD
+	sGHcGbm6iEEW6Cw7nUnTpNWZkuwzATvBnfQIEfCWfSqpCw5IBRuaAyXiZdW/miM8
+	xG00RYB1dnmfOUyP++FaQwE1YPogj4Yl6YLLrh3LEqGzN9pyxS51SW0ygzaiQSCJ
+	m5DDGv07oro4We5suMrVHyOUNMts5/wYKJ3mW9uE/qWh8SmzwCRpk2NOLNnA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786384342; x=1786470742; bh=4QXg1OKSSxYFnIlOGOqL9aT56rRXTQpHbtJ
+	EXcDYfUg=; b=ROYLyP0vgCNQG118G3JYbVAp/iFldv8Xxqgcys2G3NIHL9fzQGo
+	GoZnH3hSI+0LxBEAv0KNyAOJ4vgrw9S+Mt4hMk2Lpcn9FU8D+UYVitEWy5PRnqCc
+	g4kBbuaqdfw8muyaeRwedi5ZuyMG0Hy01TPInUC051iFBgBgVeWKVVUNqiS4Yvuz
+	Fq9FaGBCkO95ixGwZc8mVbkOdk54pLH0VvbPWUkY8Rauq2WhrjSe0veBbs1aAEpk
+	CCIuTAy6sAE7LQU8mLND5l+H/lmxaUNIOZQjuE0xZmi3bvED4f4eGTvfUB0qG3RG
+	TvMrah9JOi231jKjZVyiFLAeFUe4CZYmYJA==
+X-ME-Sender: <xms:1g96aiFOa9a34dh2838swTJ0rCUdXkYGiNvKVR8Q8AA1GwHCR_EJZg>
+    <xme:1g96alnuG1eyjAVua0FQovYjb_cmhGyvW2tC9QX2hOFViy5okOEmvvOGRlcMlzQ8N
+    yUdn1ItZgVfz_aczl0ujye5dIgaggav0NeUtrFMJlUq_skmt6jWXg>
+X-ME-Received: <xmr:1g96auZNWAJP00ZuYog6W4v9WSR3F_-kNZdHyxolx1U1x3YRFhul6QKP54uJmlm4T8x_1Z5OkX0tyyqaGA2HPbDBGP-t-F_ykQ>
+X-ME-Proxy-Cause: dmFkZTEvnbW4YSqD4QgSGB7s6aFmqt98KsKPGxOm4r+0u/3FnChjqX90+ytKFNXuzWmpIR
+    IIq4CJjvrwYdA8DbMaXLKtb1ewZ0+WDVxE9ZriyplCB2JG72myR5m0QSVhHvrDoT9wJWud
+    x38gUJpHl54otyGU2Jkij0STFAcslVrZsXd3UKFCpL+D4GeVfExBxnOObU9a7kqarCjRXG
+    XUIZUY98hPoPybzex9/VYQls1dAmYX9zxYaa6TCPHk1TKEzF2UXqzVCgoomiNtZ08v+lJ2
+    tWC3ahPlyGD3q5ytIH0ayVpLB/Jl4gD6/nGupk1W848NOuPvVZ+cHu1LKItrEF7SXotPNx
+    4o9DQXxH1RbhPhwgK3LPG/c697CGj90Hu79Up3Rt4r4sEc5hv32LzYca5ZQaDjeG/Cre9C
+    XIKtru9faWGLeq8XqkuHvVYqklEYxhgi2tGVNkXsCZzc8Mo1ZWahigwUr+f+Hx1mmZiihJ
+    48ow4+dxRDakI20f2nSdoZH7yp9kSFW7BM2Cog8J60IIpF0YqCV2X9dWa0rEskL0XxJ32Z
+    uvTLO9CyudiDn6pvqX9mcIIqq+SnFGfCEB2C4ag4F/DQkogryBsIkldMA1nOVQTIF+C8sf
+    3hO8ftLSqvyqvYQtXz68nOrIPMI67+5Iq/iPHviJTuRBCr+nh8xMr4EVYrpw
+X-ME-Proxy: <xmx:1g96aiE9TSi-QEyNo-zm92r1Hzf8cRGFHeW64OILjmW08D6tNgCM1w>
+    <xmx:1g96anKB781jYTVhDkpiOEc_N4Fw6mjqxs_Fgvrs1Ft1S-u6VPCL_A>
+    <xmx:1g96alPpq2CEdF3bhbA5XkFjDhmmONAgUoMSC4Qey3O7QpvRiKcnsg>
+    <xmx:1g96avlFMSNHtS7DgDQjAqVhDLkJTh64TQ1FB5RtfH8DSDjjSa9L4A>
+    <xmx:1g96atK8G_DIyr9rjsj5DvBP1xDFeOJX4MBQnsI1Fout2hTojaHgsM0r>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Aug 2026 13:52:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  tnyman@openai.com,
+  Taylor Blau <me@ttaylorr.com>,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] ci: bump ubuntu image version for static-analysis job
+In-Reply-To: <anlj3kdAfOh8OnNR@pks.im> (Patrick Steinhardt's message of "Mon,
+	10 Aug 2026 07:38:38 +0200")
+References: <20260726083254.GA3528497@coredump.intra.peff.net>
+	<20260726083905.GB3529069@coredump.intra.peff.net>
+	<anWyV9Q4Cmsa5AoT@pks.im> <xmqq8q6hgb2m.fsf@gitster.g>
+	<anlj3kdAfOh8OnNR@pks.im>
+Date: Mon, 10 Aug 2026 10:52:21 -0700
+Message-ID: <xmqq7blx7tii.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Describe the new --drop-filtered and --dry-run options: what they do,
-only blob:limit filters are supported for now, a promisor remote is
-required, --drop-filtered requires -a and implies -d so the redundant
-packs are actually removed, its incompatibilities with --filter-to and
-bitmap writing, and the safety guards that refuse to run mid-operation
-or to drop index-referenced blobs.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Siddharth Asthana <siddharthasthana31@gmail.com>
-Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
----
- Documentation/git-repack.adoc | 37 +++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+> Taking a step back, I do have to wonder whether the Cocci files have
+> been adding any kind of value in the first place. I myself introduced
+> some of them in contexts where I made sweeping changes to our APIs, so
+> that any in-flight topics can be trivially adjusted via Coccinelle. But
+> I very much doubt that anyone ever used those to adapt their in-flight
+> patch series at all.
+>
+> So maybe we should just not do that anymore?
 
-diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
-index 72c42015e2..63943b078c 100644
---- a/Documentation/git-repack.adoc
-+++ b/Documentation/git-repack.adoc
-@@ -12,6 +12,7 @@ SYNOPSIS
- 'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
- 	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
- 	[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]
-+	[--filter=<filter-spec>] [--drop-filtered [--dry-run]]
- 
- DESCRIPTION
- -----------
-@@ -182,6 +183,42 @@ depth is 4095.
- 	`objects` and `objects/info/alternates` sections of
- 	linkgit:gitrepository-layout[5].
- 
-+--drop-filtered::
-+	Delete the local objects that match the `--filter` specification
-+	instead of keeping them in a separate packfile, reclaiming the
-+	disk space they occupy. This is intended for partial clones,
-+	where the filtered objects are promisor objects that remain
-+	recoverable from the promisor remote and are lazily re-fetched
-+	on demand when they are next needed.
-++
-+Only large blobs are supported for now, so `--filter=blob:limit=<n>`
-+is currently the only accepted filter. Because dropped objects must be
-+recoverable, this option requires a promisor remote to be configured
-+and refuses to run otherwise.
-++
-+This option requires `-a`, and implies `-d`: the objects are dropped by
-+rebuilding the promisor pack without them and then removing the now
-+redundant old packs, so the redundant packs must be deleted for the
-+space to actually be reclaimed. It is incompatible with `--filter-to`
-+and with bitmap writing (`-b`/`--write-bitmap-index`), since filtering
-+breaks the single-pack closure that bitmaps require. A bitmap setting
-+coming from configuration is silently disabled for the duration of the
-+command.
-++
-+As a convenience since dropped objects remain recoverable by lazy fetch,
-+`--drop-filtered` refuses to run while another operation
-+(merge, rebase, am, cherry-pick, revert, or bisect) is in progress, to
-+avoid a surprising network fetch mid-operation, and refuses to drop any
-+blob that the current index references, since such a blob would only be
-+lazily re-fetched by the next command that inspects the working tree.
-+These checks are skipped in bare repositories, which have neither a
-+working tree nor an index.
-+
-+--dry-run::
-+	Only meaningful with `--drop-filtered`. List the objects that
-+	would be dropped, one object ID per line, without rebuilding any
-+	pack or deleting anything.
-+
- -b::
- --write-bitmap-index::
- 	Write a reachability bitmap index as part of the repack. This
--- 
-2.54.0
-
+We still do catch when somebody writes "if (a == NULL)", no?
