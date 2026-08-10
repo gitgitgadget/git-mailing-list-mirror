@@ -1,83 +1,85 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3877E3242BC
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 05:25:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9FB1C5D59
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 05:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786339554; cv=none; b=UaUqSRR2wOi19kvOofX+G0dO2u6BHrFPMF/zr7HPr8DJn8ScpMFLwllO3kNIzDt8+A/v+ZUt80BCtNmHUiSb4xab0AVRxwmVvgdTtzTAqtHe2wFS1b5amFtehLvw2arkN3Y1nn6FkjWF5TIYLwTOSAl6WjOMJCOv71DLG30SwRM=
+	t=1786340326; cv=none; b=HtWD2+yay19wQ3OanpL/Kh6FBL4OvdpXlBTZrMhqrd5mBlMinDHhKBcVtfXhp+xT2J2k8Qq+HfUpaAMntM1JC/AY3mxowIVsS909IQZhLssXtd3mcJvDjVqV8XYgkSjidw34Ytw7ufoznZv1Tbo6WcPIzK+Pc38kM4Si9ZhU+yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786339554; c=relaxed/simple;
-	bh=jDha6PKeO6vshY8fOepBtL0MtkH451jXt6yoH0MKcfk=;
+	s=arc-20240116; t=1786340326; c=relaxed/simple;
+	bh=7WHdMb0MM2sCBRHYXgPiH3gq7W5IKpJEOIXKDv42AqM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DfxVr3ItDIHD3DD9fkEwlrk29E5uYUltyNBGzDZD6VFhTJFM+6UYyLWghh3iBS7APCDLsC7ANkt+byomCMCzC+HyEa6523HPw/jKZYefkl6k7XkHk6n+m/dudMsQ0KaGVXwNnUFTVqShUU815QlDjKzso3L0sMET+Xftbh6oY3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YCFnMWLN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kvm/L8dv; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=HtxNMtsODrcaGyPmCx4Mgoy0RFAGxs2Tb4GxTjjghZq6zqBVC16Xe+do8Yl8Uufc7Umg8iOvXC/YcwcqjM1HCSuQ41AFpsjULloi+rb23pdC6fYL+7H0EDAsEzPBB9JLGAGEmokVT0t3DynpF4wcFitgQuR0Gddkh+82Dq6nxoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S6cQvT2K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A73EiBgg; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YCFnMWLN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kvm/L8dv"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 47CBA140002C;
-	Mon, 10 Aug 2026 01:25:52 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 10 Aug 2026 01:25:52 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S6cQvT2K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A73EiBgg"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7EA19EC00A9;
+	Mon, 10 Aug 2026 01:38:44 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 10 Aug 2026 01:38:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786339552; x=1786425952; bh=WCaVveOzOQ
-	XzsgkPsDRIvRL50KKM4+UJ3HYthEcRxCo=; b=YCFnMWLN6IGMEfGFTbTB+p+Puv
-	Z50JpSxxsBk3a1tVqf74u9jaL8SHlyzEnpByEALDNdX+6Kugv8p2KR1pwxkQbxC0
-	cowMZVLX8dWqtSI8XgKIdmfF94F4NSIQGJMudbuzCbPuRAdC2TIrkKNmi16Rfe+p
-	pJplwPTQ6is60HIe1GfGoQ1KU5MRG2bRoD4bZ5iCCb5TJbXm3cikCTGw1vyHzWM9
-	w/qT217yo7G0ljsfWx3XWRMeZUZmu2PqKZrnxggmEQl3H1isMcz+PJFdkynaDdEc
-	0faVvn+KWvcbVmlFvcHTLAd0heoq9g0o7Hr4mxUJ7Z4glgdQp9vpbekWr4vw==
+	:subject:to:to; s=fm3; t=1786340324; x=1786426724; bh=CMRTSVn7qF
+	Fbr7FvwiE3KeepXrwhPIr/bq0nynWoiUc=; b=S6cQvT2Kp4JPAcZEpBC/LNFDAi
+	hnROGDyOdMLUHWt1B+v+TsG2pRP0g3u4fAT6esqPASFdxqazr6xQvmRGfJmh19SE
+	jIYAJJ2Qbmi+HK7ZMehmsmyPpXdjFGwi/CSWe0BJkh+oUlXq4VEQ76/aO9JpV7me
+	3/iLK768yTZlEiqotWtcOzy6KmUxkr5RU7KrAMArXks/cmJNLT3lpOWYpT3HGFes
+	ga9TPGoR4YZSHXlfpak4RQB/hRb8wUMb6rhxUw56OBvc5fqIiJWS80LdPPFAZj1J
+	M20BPxkzeDkPCMs2FU0ci0Ceh+zoKMIjAbPlIotmhtayfEprvQ6PBv6lJTYQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786339552; x=1786425952; bh=WCaVveOzOQXzsgkPsDRIvRL50KKM4+UJ3HY
-	thEcRxCo=; b=kvm/L8dvGGe9ItBw/HCkxXzvu5+001+Ug4PH9LDXHQglBYt9qwW
-	o7jSTbzEsmndPKLpSHIfXjtwsi7Y0tWkxCcL/2D3IkaBPAlVULZb/+A9vIQ4oc0o
-	AE7WcIF/DZb2kBjGeNWZQcfG8DFNmD5dU3qYn5E9Yw4EL0NToDBr59Fb0zEtuLpt
-	/OmXGGdkVCfCUKoVQksF9RPtyWHQBWo0qvjNT4Cv/pEaCvbtDZeCdoOTjbv8mzSH
-	AS7A5uq+hVBH83Tj5alRuSlBTiLGh0Lx0tvj4cGh3JtIEVi2Ebw1BtTKf2cYI8SO
-	l71VPkUc//vLb9DILbR1OTABPF1Zp1S+D/g==
-X-ME-Sender: <xms:4GB5amBabhtkt7GAUDmyn8SUFg1-2eKWoUw_6jkCWMvEQHu2QQX4bg>
-    <xme:4GB5anh73cacge1tLcx9OzimUfrM8xrIbyQq_i4IpDpluiw7AOpBJn1_hGsUZjFw6
-    54BAtL24fgl1wTTVN0wJTy0hg2vSbpezmMbJMTRhbeWeVlZvSNkq4E>
-X-ME-Received: <xmr:4GB5aulvxfk5hjkKMbPKK-V4P8l2xY1pjyTAPyWY97cwLAZJZwfNW2zWRhL_uJLqXJONw9vUbSfj3KEcoLarmwul40faid-QSAs9IJF-wA>
-X-ME-Proxy-Cause: dmFkZTFYwsiVYVCDzkAszyWtI+H9nr+s5G4QHs8mvZAsN4gl1tEkzSL6nv++IL36CDOSO2
-    H5lVgJG8VgZf/WQnO584Ie1J3UVm1WbhrhRM/7pPS0Fbn76pnSS28YdMhsTppGdZ9Fe0q4
-    bfWDNdZerscZ7aW2gr5PZlKHdGsPv/irPFHjeGZXtUnn/qITWWnpqG9qY7GkdqJV/045/f
-    sQ5ao/WzsjKKk4p+N6TcSo+vDt8RGqznnOREXDIIk/e5PtfDqqapB4i58fY8nBeMDLKsoV
-    2CCDXB5322+2vA9RixcHqvkk3G7I/2OdC6heFJP4fhTKF+fUY6D2/UOrxUzdxM5Ff87gT6
-    zCo4BOHmxnVxBJLbL/ukzXhJ77sO8m9sHY9xDQxMhYV6KAR+8eW9qJZTD19LhqpwNJ+Oj8
-    ao7pfVqS5JzlO59oikhxBbopD6HvO6B3M2TwnbHXjDir8QdSBpQqKBUOvx5DkXyS2l/cRp
-    A5OrjeWlvymSIFYeIE/zuhqzYIn8o6faAhqPcetrlZh67i89V7RuKO7qvDQYOoZpN64cC6
-    PVic3zWWik2xWpIAPE367o2UjLPpzeOmrYBkJYeHdNiRoC2R5cOC27h5s5RUBWw/XIRvO0
-    I6QcgNO384Jk4M0SR+weHuqUDtEc9gUzgdkMZrB3rkOgyBJD5S4yyZ18QviQ
-X-ME-Proxy: <xmx:4GB5ajoKiM1NDYTq4Xax5tlGAXPtInO3aOHZfZCYszOEj2gH3BAWRg>
-    <xmx:4GB5anGs1SKScn1XkQfsttt7hYMyocEGaSWjp1RvUFGO3Dgx91sT4w>
-    <xmx:4GB5avw_qhJ-XE5iQGknd2Z2GRBI4Y9We33jwAZSAbTCqRG3ndlbVw>
-    <xmx:4GB5asq5NPSe1xJMisvo72tNHyC758zSf-ApPQ2z4-sjg1XmhzwQ1Q>
-    <xmx:4GB5aohQxoR9My3B1AG-C0aB9EN-RUdimbwPH-XquMURq_1NYt2vb707>
+	1786340324; x=1786426724; bh=CMRTSVn7qFFbr7FvwiE3KeepXrwhPIr/bq0
+	nynWoiUc=; b=A73EiBggexhc8OV+BpSkdO7qlYwBG7mDtdyQvH4jPD52IbH7leK
+	4jF2LMncZC1A4sABBq+uPzz+yjRsR0aTqM7TBiD/k04fSu0xlw9Iy9ACblrA1c0Y
+	+Xfr/8R671Ov7xRsp9FHv3QEig9SGhg3mrQOWgPYbA3rnVexEzJGgU6Z2cPWON13
+	cb+PG4ndBNXJ8DWwG3WJAyLn0/0iAYfpP8XXNbr6h78akBViZ706MD2tlDTn/pyv
+	Kalk4H+RUypc0xFuvrhptGVffMxeTPN7nRaEnrW1LxBdaKVAsqsvbqSQELrMWQbp
+	b7OvBebIIC2oBNmnMftUNcsLzGFIuypgf0g==
+X-ME-Sender: <xms:5GN5ascRgtHkdelq5IC5Qt7GuKdqjc7kKQE8CayexeGZHacf1jIanw>
+    <xme:5GN5ah6dP_3k7QQ9KfSnUgbAAKDSTXqM2kUBzUr4FVHLzsS-7SHXh26Pr2Oap1SqI
+    OuYLu19GMXE24Ff215L-8Hdxk0OBPH0hnm-AlirYdtOSOovthOfy-o>
+X-ME-Received: <xmr:5GN5anU0qh-HbQJxYvAUir4TKHdBtDjvKx1styjkIckgIukobteIAAhdFIUQ4OR4n7QI_dJwVJn4inaFhcsF6AlGg3HVhpR2IZV-MgOREg>
+X-ME-Proxy-Cause: dmFkZTG2f6u/9xCRZBrQy6DmUYK8Rd1PqSQjKV8RRLMENNDR10DVHjE4TQAyOqehCn6WdB
+    vA9nh1WkDDNTheaV6CKcpX8RvM7Eo2rwlj967HnGBAqvzLo0UCgvcY/bkOWOyORl9Ecdd7
+    j/nR+y4VfK/S1tBPDPmjhLLaptH2F1cs45adOkzlzvJ6mPrK5Fe6w2XuoSuYPiOiVDaYQo
+    HTRU4bqRYZcoMuRMLzjCl9mfhUdzmpPuo4jXjxc1VHyJdxOyor1dLSLhN8lBnLlI4OORxs
+    DPq2pyIksBw6xnODbVbJ+jC8JpJEtIWQ0Z7PgqY81UylGITHqfgFs+AdDiBqs5v6T8EPPu
+    CSSE7r885DvbRoE/QCde4KzvuXyBHQt6woUkCN0dzLBifA9OLG/xCu4RyBBmW4BSt2R/N+
+    yIzUxpTghGQ4hTLtw4oWGeLPhyAU+JOTzvLMLk5XyKd9E2q13cua94vtC0XoeOLDzvshTU
+    xt5Qw9bONFrA8Yx0/k8diCTxv4wOJAbvJxKfm1MeYRqrKF+H4U5I3pZmrE22DksAZ+lbFM
+    5cbJAx+7c3RRgC8qIV5dhIBjX0g1irKeQjR2flMDVrL84l8pEMSKazzTtjPTahrKYWFrBI
+    iBM7c38bap/r7LW1FY+R85YsUFInuekrcsQRgN/W4jYxQsKXxM/nMaCzmk/Q
+X-ME-Proxy: <xmx:5GN5ao7jYhyvJXH_tb7_20sgR_zMOYxPXYvu7eAcV3T_3g1DYVyunA>
+    <xmx:5GN5aqpG6j8c2eZMdp6_1Qs15RspUGH-86aos5N-2-lR75ADyaWMqQ>
+    <xmx:5GN5ajnxJNKbBDDnxyCpVfZNzTJsROpOTqkrX-OLI4fYYKOKPL68cg>
+    <xmx:5GN5auNhCIdBl_U52ehw7htQh45csSQQoa4i5W66MUJhekvIHKVXjA>
+    <xmx:5GN5arW-an2Xc9VdMrnQu_E2nMWZrke5U-e8KZd9D0CDf0QDaFmEwtfr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 01:25:51 -0400 (EDT)
+ 10 Aug 2026 01:38:43 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 65d3cec9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 10 Aug 2026 05:25:49 +0000 (UTC)
-Date: Mon, 10 Aug 2026 07:25:46 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 16b6b932 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 10 Aug 2026 05:38:41 +0000 (UTC)
+Date: Mon, 10 Aug 2026 07:38:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Taylor Blau <ttaylorr@openai.com>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/5] odb: make packfile generation pluggable
-Message-ID: <anlg2rThlBLavyU8@pks.im>
-References: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
- <xmqq33wpej49.fsf@gitster.g>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, tnyman@openai.com,
+	Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] ci: bump ubuntu image version for static-analysis job
+Message-ID: <anlj3kdAfOh8OnNR@pks.im>
+References: <20260726083254.GA3528497@coredump.intra.peff.net>
+ <20260726083905.GB3529069@coredump.intra.peff.net>
+ <anWyV9Q4Cmsa5AoT@pks.im>
+ <xmqq8q6hgb2m.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,44 +88,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq33wpej49.fsf@gitster.g>
+In-Reply-To: <xmqq8q6hgb2m.fsf@gitster.g>
 
-On Fri, Aug 07, 2026 at 02:05:58PM -0700, Junio C Hamano wrote:
+On Fri, Aug 07, 2026 at 09:16:49AM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > Hi,
-> >
-> > this patch series makes packfile generation pluggable.
-> >
-> > Note that this series only makes those parts pluggable that are required
-> > for the transport layer. The other parts that relate to packfile
-> > generation as required by our repository maintenance is kept as-is, as
-> > there is a bunch of options there that are way too specific to the
-> > "files" backend to be portable. This should ultimately not be much of a
-> > problem though, as maintenance itself is already pluggable in the first
-> > place.
-> >
-> > It's a bit of a shame though for git-pack-objects(1), which still isn't
-> > usable with alternate backends. I tried several times to find good
-> > solutions for making it fully pluggable, but due to the backend-specific
-> > options it's an utter mess. I want to eventually address this though:
-> > same as with git-refs(1), I want to introduce git-objects(1) to care
-> > about all things ODB. And as part of that command we can also introduce
-> > a command that generates packfiles in a generic fashion, without all the
-> > cruft that git-pack-objects(1) has. This is part of a future patch
-> > series though.
-> >
-> > The series is built on top of 2c78326f81 (The 11th batch, 2026-08-05).
+> > They'd of course require a bit of a deeper look, but that could be
+> > another way to speed up Coccinelle for us. Even though I cannot say for
+> > sure by how much, I didn't give it a test.
 > 
-> With "--no-ref-delta" thing in flight, this will not play well with
-> what is in 'seen', though.
+> Another benefit is that it would reduce the programmer's burden, as
+> it is not immediately apparent which rules are still relevant.
+> 
+> I wonder if we can easily define the exit criteria when we introduce
+> a new rule and document them, immediately next to the rules.
+> 
+> You said "refs, object_id, the_repository, ... all look like we have
+> long done with the migrations"; in retrospect, would it have been
+> easily doable for those who introduced these rules to describe how
+> we would declare "now migration is done"?  If so, perhaps a good
+> step forward may be to update tools/coccinelle/README to add such a
+> rule.
+> 
+>     ... goes and looks ...
+> 
+> The readme file clearly states that transformations needed for
+> migrations are *not* regularly run.  Is it possible that we have
+> these rules you mentioned misclassified?
 
-Ah, dang, you're right. I'm not quite sure about the status of that
-series -- there's been a discussion around whether it is the right fix
-in the first case with Peff, and there wasn't an answer since Peff's
-last mail.
+For all I can see, both our Makefile and Meson simply take all
+Coccinelle files we have, concatenate and run those rules against our
+whole codebase. So I don't see any kind of classification at all?
 
-Taylor, could you maybe share what your plans are? If you want to pursue
-it further I'm happy to add it as a dependency and/or wait a bit.
+Ah, no, you're right. We have the ".pending" suffix that we do treat
+special. We only have a single one of those with "config_fn_ctx".
+Arguably, many of the others should've been classified as pending, too.
+But I think it's quite easy to miss that we even treat these kinds of
+files special.
+
+Taking a step back, I do have to wonder whether the Cocci files have
+been adding any kind of value in the first place. I myself introduced
+some of them in contexts where I made sweeping changes to our APIs, so
+that any in-flight topics can be trivially adjusted via Coccinelle. But
+I very much doubt that anyone ever used those to adapt their in-flight
+patch series at all.
+
+So maybe we should just not do that anymore?
 
 Patrick
