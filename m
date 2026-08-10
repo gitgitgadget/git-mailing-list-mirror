@@ -1,123 +1,205 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D97403B13
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 19:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14274334C5
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 19:28:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786389392; cv=none; b=f+A6xMZj3AngOPvRVqWIMM8JLcA9tlBQLFt+erVp9lOf3z7cLCPtyNVK1LJ2dVt8IceJDxK+Lal6rrGWyjFr6zJx8LK7tAYRKiFo5LnzEZACHIbI/BEsv0FN88oHvDGpWbk2XBnWiZb9jSP+DPqfchb4ulP6B0iC9HxxMiJ1Eww=
+	t=1786390094; cv=none; b=g0rvfWhPFkatumw2Aqwku5N9EUltlSQt3icqcAnSxx70mGyNYuLBG4Gz2uls/ECi8LpQsi9axr+BwekYCc+ozzfJa04yGnxZXnHY/H5zT0wyVm3TEhnGi4U6/eL9941sgE6jBKfI5eYsS5mF6tix2J32SnNztd38G3aJH4L6wWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786389392; c=relaxed/simple;
-	bh=Z1tZZYgwOlQ1eiWReG22tPtNoejHG4uBS8ov2TLHCNo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rRiZTP0Kn2pGP1mrrtc9b9BvI6ibZWPImNdjSdph1ZW5l4iueHPuHK+zTVERwTNbck22PvMpivPKQ/JMEk9/S6qphFvRM7YWhl9t8UNsl7Sh7AeXsvvInl7xelGNf/8w46eygsAF2knFLctByOJ9lrTuUydzOitZMrYXLk6ulkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YBYBl8DK; arc=none smtp.client-ip=209.85.210.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786390094; c=relaxed/simple;
+	bh=wc28/zNwyvd4dgPrTzh8uF2BKmreG4qSYBhxUMZMOVs=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=uHipGbtOgoCCe6ncT+Ee31Qn4yid4Z5RrghkjtbKxu6HWzFgpk2qQhbzFnFwLsPl17fH5ols5GWDv+WFxyP823BNLmRxdO/G0dBtt8XLlsbJVrZ+Uccr0oceaZ/5ACFw+QeN/XI/pZvMUtKI1Pn1w+VvAL84v/MP5q+4IWpNzJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=twied@gmx.net header.b=tR+8VfAv; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YBYBl8DK"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7e9ecb1e13cso2354024a34.3
-        for <git@vger.kernel.org>; Mon, 10 Aug 2026 12:16:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786389390; x=1786994190; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=98v8fS6nFYymsNuMSGV0DPitNB0vZOHFWQCv3dcZ16o=;
-        b=YBYBl8DKbBLdUW682JzrShh/BHCS9YEyYU+31mpYElB+KwMZfRrYGqDFTqWpdal7Br
-         cbmA9BPeedECux3rfwIKb4N0zGTF/SUu6FEbJml1XUGKp8Rju9t8BrX3EtsVkpEDGPVx
-         R1IyiqWYH6I7RrMhcqectAYCeLH/Y/GezCE7XsSmnWLoIv5VxwPF4amKlqIWlW3G+f6R
-         xchHqVDTc0/XJTN7rjOOCryi1U5Tc/W3IlxgRbHQznUIMe6ZqVWh/FGYMcFPvPthHmHY
-         37CSrTNVL6lqFDDrv9jRYwT9oKrlDtNT4MMSksTVoPmMRJz6e1Juva86w8hI0qF15iOe
-         EUmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786389390; x=1786994190;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=98v8fS6nFYymsNuMSGV0DPitNB0vZOHFWQCv3dcZ16o=;
-        b=BZtegnzfbxak9YteHRqGoJwXPRPaORXC9skOpZWU1QsgvkE8nJqZWy6TbuBLKjRygE
-         O+YvcSeXPffl0NeNsmFVFJMxvJdgN5KK8wUyveQRnk9x0a0oQCsQtiGKoGz3oFpLZySg
-         NexUfSF1Z5+WN6tfI27aY4+Ef+aGQFTLE9XP857s1OxBaW1IhnMGt7QJ179zB4nRYeyW
-         q1c16wnt+gO9DKcPawi8PwWcI+i15DTIUg7HLwn9hM/W79PTa5w04MZFKPMRTE5IiXI8
-         lfUJ2h2MQeXkFrcBy9tzxinckIkeZJiKz4SaWstGsP5OUpF2sFZAik73lmeJh2c+BRLe
-         VXAQ==
-X-Gm-Message-State: AOJu0YwHXoB76tvRCW/wHapOSVlnZ1/WsF1BGnOr3qp6woYtq3MfH99m
-	SP2E1yiXcCH1eAOYM5IC89Q3zAvO5xDl0ICj6jylUAl9dweuSxl4WYKJ
-X-Gm-Gg: AR+sD10yAicwf1B2AAW2MK1cXIpnfybsli3YF0KPelwdOVxwFkjf1UMp2JTcUggGXuw
-	BFOMcrcUAKy4jF52YekAE1V/mKFfZOFbM+TTKfhcwQYg6owlKFOrH+/QYEUfUCGGou86TwKZ3WB
-	FVbCU3Cd6uIZZklt5r4e/BzGTZku2uY2fGzlihU9aIcAHTObJe8QnvxK3V3WvNiUusR1F24Xyf/
-	BxtB3g4/JMns2Ajd01DFXOQlxGHouK524Kv6X1sBVtIvFIfDT7mWvtHMCj0HE7ZS9rKkAxc0GyE
-	CChCq0zd/d+1uI3pYQq19dc4C1BHEUPCmwBA5BRZO50WuB5XH9SIM+f7LKnCCddmVNulncUIu9d
-	Mzm7ip+UwTViFo2H//MKBGqKdccpSdDvkwdCS3TjmEJht+N4p/8Tj32Sgxj0EATMdCEiHlq6PI6
-	Rhh+W6o/ynIyJhLB17CjbejjuaICE+IbPRUbcPx0aAQT3WlVKtMClmDRY=
-X-Received: by 2002:a05:6830:7306:b0:7dc:c4ae:a679 with SMTP id 46e09a7af769-7f39a940fe4mr2561741a34.9.1786389390100;
-        Mon, 10 Aug 2026 12:16:30 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f35b5a7616sm8498745a34.8.2026.08.10.12.16.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2026 12:16:29 -0700 (PDT)
-Date: Mon, 10 Aug 2026 14:16:29 -0500
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=twied@gmx.net header.b="tR+8VfAv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+	s=s31663417; t=1786390086; x=1786994886; i=twied@gmx.net;
+	bh=wc28/zNwyvd4dgPrTzh8uF2BKmreG4qSYBhxUMZMOVs=;
+	h=X-UI-Sender-Class:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
+	 References:Content-Type:Content-Transfer-Encoding:MIME-Version:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=tR+8VfAvB2a3uqvJHOPIRLSfgo7qh7DmK8y9XBNTQw3Qv7Lmk4xm/0dnubhtdXyL
+	 eV34cESgd9xkXDtvtMJvp+Z1yuww+p716FchwYA0g70Dsap5Tm0SJ8ln/uwD7IdEf
+	 wcDJ9pHoqVB9MmsBF0Pp0uHz9jpkWXe54w173VRQVgWifJFnS2qkCh3qDa9Mh268+
+	 FbLYrrS+lAkniLVgoTauZBtjkaVlDTo2mnsbu2rQiRnA6dLeRYLQnKV0o72F2Fhz1
+	 H97f64MMnFScsy1abEssR6TbZL7WtZhK9rYNJoYv1dKsVcA+4XcsOHJSqOhVrtY7Y
+	 VYHYcHzA5AP4Oxgwew==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M1psI-1wrJoE14Ke-005IAF; Mon, 10
+ Aug 2026 21:28:06 +0200
+Message-ID: <f3b73531581a6f94410d863339c5683ae8d63e0d.camel@gmx.net>
+Subject: Re: [PATCH] gitk: add user-defined custom commands
+From: Tim Wiederhake <twied@gmx.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v2 3/7] builtin/receive-pack: read unpack limit config
- lazily
-Message-ID: <anoi42_kmpc13Axd@denethor>
-References: <20260806213859.816157-1-jltobler@gmail.com>
- <20260809190106.1565882-1-jltobler@gmail.com>
- <20260809190106.1565882-4-jltobler@gmail.com>
- <xmqqzeyt6ets.fsf@gitster.g>
+Cc: git@vger.kernel.org, Tim Wiederhake via GitGitGadget
+	 <gitgitgadget@gmail.com>
+Date: Mon, 10 Aug 2026 21:28:05 +0200
+In-Reply-To: <xmqq7bm1d1au.fsf@gitster.g>
+References: <pull.2371.git.git.1785879839766.gitgitgadget@gmail.com>
+	 <xmqq7bm1d1au.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.56.2-10 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqzeyt6ets.fsf@gitster.g>
+X-Provags-ID: V03:K1:sAQq3LueLiGyiT+PeAmOZ1SxDyNr7JzuODR6BvXV4MM3iE0RJdI
+ 6+uCI+gIH7PGRBr31TVQh5wTlbxXvYiDCtjtBF9kU+knn+wSL+t1ZNopDG/TcB3b+BfIi+b
+ GyEoQBeLUumBAWZq+J5Vi66ZlHi3jw0SNzC6gG7m0KSduyMHymmGatpBR3oyWOeLtarAc2w
+ Z2i2C8YMKq5WyDGInoJyw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Z/+1AHCynWs=;GySwhNHVV6GFtEC4/nnFI/XldOR
+ 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
+ =
 
-On 26/08/10 10:54AM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > +static int get_unpack_limit(struct repository *repo)
-> > +{
-> > +	static int limit = -1;
-> > +
-> > +	if (limit < 0) {
-> > +		int receive_limit = -1;
-> > +		int transfer_limit = -1;
-> > +
-> > +		repo_config_get_int(repo, "receive.unpacklimit",
-> > +				    &receive_limit);
-> > +		repo_config_get_int(repo, "transfer.unpacklimit",
-> > +				    &transfer_limit);
-> > +
-> > +		if (receive_limit >= 0)
-> > +			limit = receive_limit;
-> > +		else if (transfer_limit >= 0)
-> > +			limit = transfer_limit;
-> > +		else
-> > +			limit = 100;
-> > +	}
-> > +
-> > +	return limit;
-> > +}
-> 
-> I am not sure whether this is progress.
-> 
-> A function that defines a 'static int' internally and sets it only
-> once is akin to using a global variable.  I wonder whether it would
-> be too much work to add a new member to either 'repo->settings' or
-> 'repo->config_values' to make the setting truly per-repository.
+T24gRnJpLCAyMDI2LTA4LTA3IGF0IDE1OjE2IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToK
+PiAiVGltIFdpZWRlcmhha2UgdmlhIEdpdEdpdEdhZGdldCIgPGdpdGdpdGdhZGdldEBnbWFpbC5j
+b20+IHdyaXRlczoKPiAKPiA+ICvCoMKgwqAgc2V0IGxlbiBbc3RyaW5nIGxlbmd0aCAkY21kX3Rl
+bXBsYXRlXQo+ID4gK8KgwqDCoCBmb3Ige3NldCBpIDB9IHskaSA8ICRsZW59IHtpbmNyIGl9IHsK
+PiA+ICvCoMKgwqDCoMKgwqDCoCBpZiB7W3N0cmluZyBpbmRleCAkY21kX3RlbXBsYXRlICRpXSBl
+cSAiJSIgJiYgJGkgKyAxIDwKPiA+ICRsZW59IHsKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IHNldCBuZXh0IFtzdHJpbmcgaW5kZXggJGNtZF90ZW1wbGF0ZSBbZXhwciB7JGkgKyAxfV1dCj4g
+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBpZiB7ISRibGFtZV9jb21wdXRlZCAmJiAoJG5leHQg
+ZXEgImIiIHx8ICRuZXh0IGVxCj4gPiAibCIpfSB7Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIHNldCBibGFtZSBbZ2V0X2JsYW1lX29yaWdpbl0KPiA+ICvCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgc2V0IGJsYW1lX2lkIFtsaW5kZXggJGJsYW1lIDBdCj4gPiArwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHNldCBibGFtZV9saW5lIFtsaW5kZXggJGJsYW1l
+IDFdCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHNldCBibGFtZV9jb21wdXRl
+ZCAxCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCBzd2l0Y2ggLS0gJG5leHQgewo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCAiJSIgeyBhcHBlbmQgY21kICIlIiB9Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgICJpIiB7IGFwcGVuZCBjbWQgJGlkIH0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgInQiIHsgYXBwZW5kIGNtZCBbbGluZGV4ICRjb21taXRpbmZvKCRpZCkgMF0gfQo+ID4g
+K8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAiYSIgeyBhcHBlbmQgY21kIFtsaW5kZXgg
+JGNvbW1pdGluZm8oJGlkKSAxXSB9Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+ICJkIiB7IGFwcGVuZCBjbWQgW2xpbmRleCAkY29tbWl0aW5mbygkaWQpIDJdIH0KPiA+ICvCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgImMiIHsgYXBwZW5kIGNtZCBbbGluZGV4ICRjb21t
+aXRpbmZvKCRpZCkgM10gfQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAiRCIg
+eyBhcHBlbmQgY21kIFtsaW5kZXggJGNvbW1pdGluZm8oJGlkKSA0XSB9Cj4gPiArwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgICJtIiB7IGFwcGVuZCBjbWQgW2xpbmRleCAkY29tbWl0aW5m
+bygkaWQpIDVdIH0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgIk0iIHsgaWYg
+e1tpbmZvIGV4aXN0cyBtYXJrZWRpZF19IHsgYXBwZW5kIGNtZAo+ID4gJG1hcmtlZGlkIH0gfQo+
+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAiYiIgeyBhcHBlbmQgY21kICRibGFt
+ZV9pZCB9Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICJmIiB7IGFwcGVuZCBj
+bWQgW2dldF9kaWZmX2ZpbGVdIH0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+ImwiIHsgYXBwZW5kIGNtZCAkYmxhbWVfbGluZSB9Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIGRlZmF1bHQgeyBhcHBlbmQgY21kICIlIiAkbmV4dCB9Cj4gPiArwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCB9Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBpbmNyIGkKPiA+ICvC
+oMKgwqDCoMKgwqDCoCB9IGVsc2Ugewo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYXBwZW5k
+IGNtZCBbc3RyaW5nIGluZGV4ICRjbWRfdGVtcGxhdGUgJGldCj4gPiArwqDCoMKgwqDCoMKgwqAg
+fQo+ID4gK8KgwqDCoCB9Cj4gPiArCj4gPiArwqDCoMKgIGlmIHtbY2F0Y2gge2V4ZWMgc2ggLWMg
+JGNtZCAyPkAxfSBvdXRwdXRdfSB7Cj4gCj4gV2hhdCBkbyB2YXJpb3VzIG1lbWJlcnMgb2YgJGNv
+bW1pdGluZm8gZmllbGQgaGF2ZT/CoCBJIHByZXN1bWUgdGhhdAo+IHRpdGxlIGFuZCBtZXNzYWdl
+IGFyZSBwcmV0dHkgbXVjaCBmcmVlIHRleHQgdW5kZXIgY29udHJvbCBvZiBhbnlib2R5Cj4gd2hv
+IGNhbiB3cml0ZSB0byB0aGUgcmVwb3NpdG9yeSBhbmQgZW50aWNlIHlvdSB0byBydW4gdGhpcyBj
+b21tYW5kLAo+IHNvIHJ1bm5pbmcgd2l0aCAic2ggLWMgJGNtZCIgd291bGQgcmVxdWlyZSAkY21k
+IHRvIGJlIHF1b3RpbmcgdGhlCj4gcGF5bG9hZCBwcm9wZXJseSwgb3IgeW91J2QgYmUgb3Blbmlu
+ZyB5b3Vyc2VsZiB0byBiZSBhbiBhcmJpdHJhcnkKPiBjb21tYW5kIGV4ZWN1dGlvbiwgbm8/wqAg
+V2l0aCB0ZW1wbGF0ZSAiZWNobyAnJXQnIiB5b3UgdGhvdWdodCB5b3UKPiBhcmUganVzdCBwcmlu
+dGluZyB0aGUgdGl0bGUgYnV0IGlmIHRoZSB0aXRsZSBoYXMgInRpdGxlPyc7IGVjaG8gbm8nIgo+
+IGluCj4gaXQsIHdvdWxkbid0IGNtZCBlbmQgdXAgYmVpbmcgCj4gCj4gCWVjaG8gJ3RpdGxlPyc7
+IGVjaG8gbm8nJwo+IAo+IGFuZCBhIG1vcmUgY3JlYXRpdmUgdHlwZSBjYW4gdXNlIHNvbWV0aGlu
+ZyBvdGhlciB0aGFuICJlY2hvIG5vIiwgdG8KPiBoYXZlIGEgcHJvY2VzcyBydW4gdW5kZXIgeW91
+ciBuYW1lIGFuZCBkbyBtb3JlIGludGVyZXN0aW5nIHRoaW5ncywKPiByaWdodD8KPiAKPiBOb3Rl
+IHRoYXQgSSBubyBsb25nZXIgc3BlYWsgVGNsIChldmVuIHRob3VnaCBJIGFkbWl0IEkgdXNlZCB0
+byksIHNvCj4gaWYgdGhlcmUgaXMgc29tZSAibWFnaWMiIHRoYXQgbWFrZXMgdXNlIG9mICRjbWQg
+aW4ge2V4ZWMgc2ggLWMgJGNtZH0KPiBzYWZlLCB0aGUgYWJvdmUgbWF5IGJlIG1pc3NpbmcgdGhl
+IG1hcmsgYnkgYSBtaWxlLgoKWW91IGFyZSByaWdodCwgdGhlIGNvZGUgaXMgdnVsbmVyYWJsZSB0
+byBzaGVsbCBpbmplY3Rpb24uIFRoZSBmaXJzdAp2ZXJzaW9uIHdhcyBjYWxsaW5nIHRoZSBjb21t
+YW5kIGRpcmVjdGx5LCBzbyBubyBlc2NhcGluZyB3YXMgbmVjZXNzYXJ5LgoKSSBhZGRlZCB0aGUg
+InNoIC1jIiB0byBmYWNpbGl0YXRlIHByb2Nlc3MgZm9ya2luZyAoIiYiKSBhbmQgc2ltcGxlIGV4
+aXQKY29kZSBtYW5pcHVsYXRpb24gKCJjb21tYW5kICYmIGV4aXQgNDIiKS4gQnV0IGJ5IG5vdyBJ
+IGhvbmVzdGx5IGFtIG5vdApzdXJlIGFueW1vcmUgb24gd2hhdCB0aGUgYmVzdCBzb2x1dGlvbiBp
+czogY2FsbGluZyB0aGUgY29tbWFuZCBkaXJlY3RseQphbmQgaGF2ZSB0aGUgdXNlciB3cml0ZSBh
+IHdyYXBwZXIgc2NyaXB0IGlmIG5lY2Vzc2FyeTsgb3IgYWRkIGNvZGUgdG8KcHJvcGVybHkgZXNj
+YXBlIGFsbCBkYXRhIHJlYWQgZnJvbSBjb21taXRzIGFuZCByZXRhaW4gdGhlIGNvbnZlbmllbmNl
+LgoKT3BpbmlvbnM/CgpUaW0K
 
-Ya, as Patrick mentioned in [1], making it static probably isn't even
-really required because in practice we just check the unpack limit once.
-For now, it may just be sufficient to fetch the unpack limit value on
-demand.
-
--Justin
-
-[1]: <anlegs6zfUysbx0C@pks.im>
