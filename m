@@ -1,82 +1,82 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDC23C1D7C
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 13:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEDB3A8722
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 13:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786367107; cv=pass; b=LoJkT2/g7f4nweEC2P+O6N0a0O8jYfbDqsWt2XKowdg4bfhtxUWstEql3xhOYglJKWM/b4RMJ+fqGM57gTmhf9S0g4mCiAemFO1PEOczUQfcokozbh0rdtvSEucmEnqmDA1cPKzbqPiO9YellgA4Qq2ZxmryP/NL3Ec8YnMU9eg=
+	t=1786367291; cv=pass; b=E5VVOD0d7te4407is+l0xT8uzsqldkPa0Ips0mHUrlP+T2vwxVQdQy+Fqbl67uNfmnl4CxCe/ZU7CCLZiRVLVFtu11I4j1F2PVMoYf7v6V2ZvBZr6AzNWLmcfrxLwkJem/9lx/RWHGFnzmtmqvlWZ8ySy5lnzVjiC0yldCSeffs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786367107; c=relaxed/simple;
-	bh=+umQucTXR0B+tMNBZuVrs6c4qiEH7qveEGnvk3EWme0=;
+	s=arc-20240116; t=1786367291; c=relaxed/simple;
+	bh=2NtZVAOHDbiKKOXUghGyW83Ps7YIvjQrnetW5nA8Ig0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kI2r2+D1p1M2IQHtrnuGEne/guy5jZdZszJRdTdOzup0zCIL4OgWLUZ6dCvG8tY0HY8TXlQp2ijDvYkCkyF/XTRdPRoY8lwtJFAT3qTFJF4xecmHCYvAZSyBUac6t7OMXOgN7J9KqEnaIH1VqSyAnsDUezTMFnk4RJNQmDsyE7w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tG2Swx5k; arc=pass smtp.client-ip=74.125.224.51
+	 To:Cc:Content-Type; b=omn+IskU3ZOjuOdL8MG8f8BTvhyJ/761bbORBQFP3N8ZqAJ1xvIsb6rJBDHm1e7k9SidxktY2ylshFNfm5jzPz1ftt9MmONJk7TBoXJDcqWMiLcojXriDxFRh7E8WsrjHULBZq8wFhRo1iG12KJeb7tvQWtJW4ouR7aj0ByNT34=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lCR6wKa8; arc=pass smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tG2Swx5k"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-66807ba2f0fso2765659d50.3
-        for <git@vger.kernel.org>; Mon, 10 Aug 2026 06:05:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786367102; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lCR6wKa8"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-38dc4553f62so1982794a91.0
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 06:08:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786367290; cv=none;
         d=google.com; s=arc-20260327;
-        b=jzehJ+qTMA6bbGfknqrgBoui/Wywg/aLHCFSSuBqQOmKnfD7xWm9cHBrM4JI0m6+Re
-         EWMNHlsIGtVVk/2KC78grxr8T8Xt+EIpBGwCZsk/obGuWHwUzK8wlNyRS6MvJW9OKZ61
-         6joQfoMw5q+rNjhYJeTnyJWK8nTYQDXgCVJtcN/fGiBYkUomhYyKx2uv7PEmn2XuqkPI
-         LfNJIB0iv458/sveAhyyoTMN/qA47uLiaOeqennMIngdmqb43neGw7m5X42LiNIPnuZp
-         AUeTdnPTehAhhOtw4GaDJlKby9+u9BsN9ExyYQXYjnlYMshwH4UwbONvyWM7RW3rqPEt
-         tWzQ==
+        b=WJkdqxxRt27z/e8XBH6sbGuziiKIj/386GE0g61jjwXBSTHsxBp1Skt6VsnaGTf5L+
+         AdlRxTXCiHOBqcSYf8kwE19LVbepzEQGD6ellWSsu9D3VQUtnyrR1kaJ7efRTeEIOWfj
+         3SKZNi1h95CQWlj8mYTuxPNZwiP6TlF4Bz5lt4yi3rC2MEbOk3eUutNnHHvMvVXaLyrO
+         oOagWrqGYpxJUCOJstbvRbEOLdLl42+HSDY90qMl1jRNou5P1OClUmFkbHR85x4O1+Ki
+         xp1YYHkSsQ1wnHSy+eQQLJLNdAFu1BHo7/tWOfuzeMe8jkArHCXmpVypeNYI6KB3Zn7L
+         Xp/g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=/905uZzNmpUeruCBubvPoO8SxSEjA9Zivmh5qsMeFXE=;
-        fh=VebkeG72JfpKtbHNwMs0LxNQ4+sJM/jslP9O3LDZlrQ=;
-        b=Btmc0tHUMVytVzZcn+L5Gs6VAjSKIwM17gvRQOaFFQdBtw0qizXwozVl9wVPayRTy9
-         gkFJSbpwGR+U/eQwgFZz2rWK2JsEZfFY5+jmI88yiBYUUrMq4g/rVbx/NLiFm4Jpn8fO
-         TfyfYwFTCZXbX3V6eyGcJZYh4f/VlH6mBUx/Owjk3deOs6lxFqmhiqousqpTUYBIlVKj
-         +JNSbWmrWm2norSbviqTVgpT+hMmrKCIiDQaWITLYkXAJUNM7c2Kyrk966Mge4YbU0D/
-         jAsLSTX0Py5U+zAbKNtbWT47V2QnEKXC3oOp6WBu9FGnoZncODPEMr9qxRVVey0GTfpq
-         hDWA==;
+        bh=ykY5nxyc3zVITOzubRQE6LzPp2+Jfu+Cfk3kHJP9/AQ=;
+        fh=GSIW2gQmy4n7ssjEGJL4D066cv47dR5bl0yoQvPJYj8=;
+        b=XF/cLDg8WuG4WvGQC9j2OEeMJh5KXz9GlL6sdYck0kUsZxcTE3wwe8uQYre8OyPgwG
+         hEy2yE2Mif3toC/GfGAaybDFOzOqu4q5Fv5i1Eng18nnqOR9ZzMnYc5yDSSbc691KJHy
+         G4hJMfzvUY2EpMKh2DUvjU6ibC+kwm5APr/iBVbnFlS6skhVHvuj/omVsXt+/6jwbUkv
+         iMUixMEgZzkTErLaN7W2TmPKTUMuWy2+FtfIX0ON3f9haoGwPyVjIfghvj7BbaxcWYuI
+         Z9TnEuesYwcj5XKSsxm8gsuoIof8cFXRtlfDUGicr8EJoS3x8oyN5RNEBJokzBynVhn3
+         zrZw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786367102; x=1786971902; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786367290; x=1786972090; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=/905uZzNmpUeruCBubvPoO8SxSEjA9Zivmh5qsMeFXE=;
-        b=tG2Swx5kXLZ6mG3+XBHTGa5n0n3xmbtPPweOurf8kdRX7ko7e4Jn7BNNc/JOlOAGC2
-         PoRiXovVpb8WWzhG9SyxXkh2Cwu7BRb7hFnThZ5r8GePb92r9W/6hYp/UTiISq5JjwZM
-         WzLlRq65yB96cQ4kviPx7C2f3XdrBOpemyxORo5lPoH8cFIyNuOaTwZHCojd9SWwAyQz
-         wcZoBbkdDtwkZtE2fL+1n1w5wA9qy+RUBVKM9bwJEUVCRKxVhiCU10yfkM3X9uOoG7Ya
-         J56nDN//ZXV3YUMmgvfskVRfABRrc/yTMA2ohKTiPUU0uJ7rFbQ9/CmxQzHUvapEYdtS
-         QZuQ==
+        bh=ykY5nxyc3zVITOzubRQE6LzPp2+Jfu+Cfk3kHJP9/AQ=;
+        b=lCR6wKa8NQohxksHDZOin0hZKUIIRnDJ7Wakt0rBG0x+SJe1G/YSE12HwzC3oybYTm
+         Ubi+JpEnj3pZw58f9cS28DQVxtgiULl/yPAvw4OaCgn5BLWVE40Hs+hHMHSd73t3gb1p
+         fstknMIhZ9EY2ijJjepMZcuT1ZPEvaRTIre9nZ1PgyjIY1e5A3ELMty3dGli/fFSunGk
+         2u5crbdwg9uL/lxST9v6cNrBBncd0Ui2Cwtd9phzYycsdSmia5Uulvs4rPp7k4mh9/PL
+         0dHf3vx4V6rxM5Qjz/eZNsE9Xw7l+jHxwqcsdufOPN7R0H7WH8JV9Wikyd+UMgrpZY3R
+         eFQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786367102; x=1786971902;
+        d=1e100.net; s=20251104; t=1786367290; x=1786972090;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/905uZzNmpUeruCBubvPoO8SxSEjA9Zivmh5qsMeFXE=;
-        b=UoxcYNI5eo7SEQ0OVgzL01htjd6e4BY8h7kPa/3H63EZX3FKa8gvDC5DAuDcYwBwV5
-         j/7dTtVtnLH7N/UzfxSxasLIdYAkGU7dNtsuUJkF6O4CmHOO100nZVZPP1YLEMsqbNsh
-         210KVvQQo+uz0LWzkex4rlmKh4TKXeseYRTst488ldP33h1+laGvZrBGrtG7Z5LREFui
-         55cBaW/wBM6OnQSNxlT1UU8fVjtm8fZLQphuKd9TLJ4LbzrT7KZBB3G7YDNLxA5BpZpr
-         pMsR3HNh6JR5FCKW5fpIeA5EhZouZObpkv7d343RofvHDul7zOXQbPEvTq6vo2EN+cZ7
-         CDNg==
-X-Forwarded-Encrypted: i=1; AHgh+RqfQ5iEeBKyJ/rkAxH+sxCqkZkSx6L1+tnwvnlGNK6BlH8NXy4q6YjmnRmaZaUcuLPpRhc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YytM+ihJBDl6oJ/6MtJeV3g5cd5ceJP/2zZ8pEkYgXAppPa+KWo
-	kBDBmcvBMGEnDNgQB7d8I6oY06hfL0m7VHbVLCFIyuxlhwNKy68yqRI6hWbmunh/TKO/BAcpmvy
-	oBXk7J2JGncKIMgOS6lCJHTuH1QYz7fI=
-X-Gm-Gg: AR+sD13OovCwm2TqCwtzpCKXUl5btmnFHLnCC+OHJeeGgfXMOHK7+V0njEL+s68c1ye
-	/tmEVR0XClxl2I7y5JvhtswdE2WACbIQgGxX7z8fsjMxvbR5zX4Z9gbqdOdZ9RvYIoHpUPOQZEr
-	PbGB2in3adEKVMuECtC9NN/8Rbrm15FFGr7QA74S3UCBu4Y00KABtrvOd58H/TN+BaMDuABoYBr
-	Aq61WkECmc5iUiioFRIaBMLQ75qakIMoQluqD0XtVtFxW7eNmsSBUWByr6O6EnfQCRBSiuRETOq
-	FZSkwBzZ3CN7ZWKw1pJ/Rv58wgaD4tY0Fyq6bSYRzvQilvC+YxuGTXLfI/Vsp9ieV2VBJjNQY2k
-	rq/3N5HAHsp5lkmOpfW5+6zeKEw1Z/idRXQ==
-X-Received: by 2002:a05:690e:4842:b0:664:c535:ee36 with SMTP id
- 956f58d0204a3-66ad73550cemr8275102d50.41.1786367102230; Mon, 10 Aug 2026
- 06:05:02 -0700 (PDT)
+        bh=ykY5nxyc3zVITOzubRQE6LzPp2+Jfu+Cfk3kHJP9/AQ=;
+        b=CIEvdczsbbzgmqV319I7E1YAEmk5C+bYrdjsWKWLGpbgmprRvQy6R9HYzpnpxWLcK4
+         p1JnszRrNjdqK6Brtjjg1SmFCPaqT3QnIyVoEMOvQ81S1bPf1wht5dIOoaOwPviXwZKy
+         UwgTcu8MrJr9ZwupmgHizHU1d2yOA4pK4G15my2Nuh4johwTknKAOJ5rIwDk5lwriigc
+         rJO10WGaEdLNSSVasaKo6L+dRb0FCu+8oe7wsou4Gwd2XSE+PngpW1g4o/ZrlEopoUtU
+         ENmpAMMYfyw0ZdBRowjCeaZQ6F8aZ4KUdbDfbr8izgfzhzVFfdZuAhv96/OuO/8DhVT1
+         h1XQ==
+X-Gm-Message-State: AOJu0YwJeaMAzmDXLDedQtEV7IBDBrqcLEFd82fGWy6fP4SBlgXmVP0d
+	MkxB2vqmXaK3vL5mYMAhdjkPeHlufE5bhJmTqGBt9CuZfkblN81ZzHSRoXnYJbsJo+L110MoJEO
+	e+4UeRKdClkFKHejaj+x/5ho+ujZovKI=
+X-Gm-Gg: AR+sD12+8alxCHSg4eJgoJdOKUOVLEnO6RK76gj+49Ajdqj3CgE3oXcBMyrL90L4yhq
+	9lyQd2Qin6cO400ihhLI3Hvbl90XSyP7IIyVUTlqVkPGAwSxgITgTi5/5AWn6PtPJYy/1Wmc4sA
+	89NB03ogYpVH0VXcg26l9HKwFMTuwglmXmLnWv0Yb2IhVh6Yfm7PzSyynf/ebq9eCDm/Es80Rn1
+	bfxh8PxmRZDZv7WrGMsbRPEv0u3QJeT2iYxib5An3EPvoH7oJkb7avYE6YmNYyjFMec6LCyl5B4
+	wMLlOCOwTdBLdlMOUtPoGZ2I8c9G02U0X8pS8BnQOtFSgaxO9aEbtBPGALEExj3GjtoUEdLlz61
+	+HgxcwObuwXALbHewDASmtt/fxQd70vezP8ZEkxl7NHwGjpt+MOZTMAhLXgQcoRQsCJYOUb40MI
+	ztZidHyZmPzYUnZZp9iv4=
+X-Received: by 2002:a17:90b:578f:b0:38e:6a30:4bbc with SMTP id
+ 98e67ed59e1d1-392ccad6e4emr1460861a91.21.1786367289598; Mon, 10 Aug 2026
+ 06:08:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,95 +84,107 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
- <xmqqzeywa6ol.fsf@gitster.g> <xmqqo6fc9swz.fsf@gitster.g>
-In-Reply-To: <xmqqo6fc9swz.fsf@gitster.g>
-From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Date: Mon, 10 Aug 2026 22:04:50 +0900
-X-Gm-Features: AUfX_mz3y88beeqMZcoHPb2BkbPdYVAp5SoQ23Lfh_1Dm7hZJCu2g7ep3H88DGY
-Message-ID: <CAF5D8-vEwG=3rr99F4TW2WMJksts5BOZ+hoN0=kNkT6dUwqr1w@mail.gmail.com>
+In-Reply-To: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 10 Aug 2026 09:07:57 -0400
+X-Gm-Features: AUfX_mwVulz_IrhkKFJnqHzij-C4KA6pYDy_8R5B8BkamAnMXvnnW3IqqrjNVkU
+Message-ID: <CALnO6CAdr0ft8KFgGCFX9ueKUdX9-2DwB+SNs3Q8ykw4ne=54Q@mail.gmail.com>
 Subject: Re: [PATCH] worktree add: improve message for ambiguous remote branch name
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+To: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, Harald Nordgren <haraldnordgren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Aug 9, 2026 at 6:57=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
+Hi Yoichi,
+
+On Sat, Aug 8, 2026 at 4:21=E2=80=AFAM Yoichi NAKAYAMA via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Junio C Hamano <gitster@pobox.com> writes:
+> From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 >
-> >> +static const char message_advice_ambiguous_remote_tracking_branch[] =
-=3D
-> >> +    N_("If you meant to create a worktree from a remote tracking bran=
-ch on,\n"
-> >> +       "e.g. 'origin', you can do so by fully qualifying the name:\n"
-> >> +       "\n"
-> >> +       "    git worktree add <path> origin/<name>\n"
-> >> +       "\n"
-> >> ...
-> >> +            char *remote =3D unique_tracking_name(*new_branch, &oid, =
+> Display a descriptive message when DWIM fails.
+>
+> Add advice on how to work around this by specifying the fully
+> qualified name or by setting checkout.defaultRemote.
+>
+> Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+> ---
+
+[snip]
+
+> -static char *dwim_branch(const char *path, char **new_branch)
+> +static char *dwim_branch(const struct add_opts *opts, const char *path, =
+char **new_branch)
+>  {
+>         int n;
+>         int branch_exists;
+> @@ -781,8 +791,14 @@ static char *dwim_branch(const char *path, char **ne=
+w_branch)
+>
+>         *new_branch =3D branchname;
+>         if (guess_remote) {
+> +               int num_matches =3D 0;
+>                 struct object_id oid;
+> -               char *remote =3D unique_tracking_name(*new_branch, &oid, =
+NULL);
+> +               char *remote =3D unique_tracking_name(*new_branch, &oid, =
 &num_matches);
-> >> +            if (!opts->quiet && !remote && num_matches > 1) {
-> >> +                    if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMO=
+> +               if (!opts->quiet && !remote && num_matches > 1) {
+> +                       if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMO=
 TE_BRANCH_NAME))
-> >> +                            advise(_(message_advice_ambiguous_remote_=
+> +                               advise(_(message_advice_ambiguous_remote_=
 tracking_branch));
-> >> +                    warning(_("'%s' matched multiple (%d) remote trac=
+> +                       warning(_("'%s' matched multiple (%d) remote trac=
 king branches\n"), branchname, num_matches);
-> >> +            }
-> >>              return remote;
-> >>      }
-> >
-> > The worktree.guessremote configuration is set.  dwim_branch() is
-> > called when "git worktree add A/B/X" is run with a single argument
-> > "A/B/X", which comes here as "path", and that is munged into the
-> > branchname "X".
-> >
-> > We used to pass NULL as the second parameter to unique_tracking_name(),
-> > so we were only interested in the case where we have exactly one
-> > matching remote, and if there is 0 or multiple remotes with the
-> > named branch, we returned NULL from here.
-> >
-> > The patch does not change that, but using the branch name, we try to
-> > see if there are multiple matches, in that case, we give the advice
-> > message to say "hey, don't be so lazy, as X appears in more than one
-> > remote, so tell me which one you mean".
+> +               }
+>                 return remote;
+>         }
+>         return NULL;
+
+I suppose the extra warning won't hurt anyone's workflow :) so that's good.
+
+[snip]
+
+> @@ -904,10 +920,16 @@ static int add(int ac, const char **av, const char =
+*prefix,
 >
-> Stepping back a bit, I think what I find lacking in the proposed
-> warning message is not that we lose what the user gave us, such as
-> '-b <branch>' or '-t'.  While this loss makes it impossible to
-> simply copy and paste to reproduce what the user may have intended,
-> it is not the end of the world.
->
-> What disturbs me more is that the code holds back information only
-> it possesses, which would immediately help the user if we shared it.
->
-> The reason we got this error may not be that the user did not know
-> exactly how to spell out the necessary information (such as which
-> branch to use from which remote) on the command line.  It may be
-> that the user did not remember some of the necessary details (such
-> as which remotes have the branch they have in mind).  Displaying
-> the command line and advising them to use the fully qualified name
-> might not be the best approach in that case.  Telling them that
-> they may have meant 'origin', 'upstream', or 'home' (all of which
-> are remotes with the named branch, though we could not guess which
-> one of the three to choose) may be much more helpful.
+>                 commit =3D lookup_commit_reference_by_name(branch);
+>                 if (!commit) {
+> -                       remote =3D unique_tracking_name(branch, &oid, NUL=
+L);
+> +                       int num_matches =3D 0;
+> +                       remote =3D unique_tracking_name(branch, &oid, &nu=
+m_matches);
+>                         if (remote) {
+>                                 new_branch =3D branch;
+>                                 branch =3D new_branch_to_free =3D remote;
+> +                       } else if (num_matches > 1) {
+> +                               if (!opts.quiet && advice_enabled(ADVICE_=
+CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME)) {
+> +                                       advise(_(message_advice_ambiguous=
+_remote_tracking_branch));
+> +                               }
+> +                               die(_("'%s' matched multiple (%d) remote =
+tracking branches"), branch, num_matches);
+>                         }
+>                 }
 
-I realized that instead of placing a burden on the user, we should
-present a solution.
+We would now die() here where we didn't before. I'm not suggesting
+that is wrong (I haven't given it much thought), but I was surprised
+to see it in the code without mention in the message, which I've left
+quoted above. In particular, the proposed log message talks about
+giving new advice, so I wasn't expecting us to abort.
 
-When a multiple match occurs, the only decision the user needs to make
-is which remote to select.
-For everything else, the hint should give a specific command with
-arguments that achieve the same
-behavior as when exactly one remote matches.
+Now, it may be that this case already causes an error later on (I
+haven't analyzed that), in which case dying early with a better
+diagnostic is definitely helpful. If that's the case, it would be nice
+to spell that out for the rest of us :)
 
-Rather than presenting a list of candidates, I think it is preferable
-to explain how to generate that list.
-This allows users to process the list e.g. by piping it into a command.
+If not, I would want to know why we can die() here without bothering
+anyone's workflow that is expecting us to carry on.
 
-I'll submit an updated patch.
+Thanks!
 
-Thanks,
 --=20
-Yoichi NAKAYAMA
+D. Ben Knoble
