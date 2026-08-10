@@ -1,170 +1,204 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F721A38F9
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 19:54:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8DB440A3A
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 20:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786391668; cv=none; b=OdOvcSkJEvmyHdaU1H28Onxxr/Mmf8NBxb9Lst5F9Z7azpsTmr/1/dM8BG+CWyqQef4oPO9ZAWxvpIe8EpRtRYjYP0orHBvxzPHHiJ/W3jF0Lg9+NkD3Q5zWk5HXroPyBJoJ7IQm11i8fNskCaF7DSVUN+AyzBJOJocmKniAFBM=
+	t=1786395309; cv=none; b=an+d76HpKNHdpb6YfSY4NNh72BbA5BfBRnJ9b3tLKUhREKjvO2Bxl+7Fq7tIOeL9pZtVeimRPLzAs3ZYFFmGLu6MUX7WsfShrBUSfQ6N1X0Xcr1V65ESSZYoErJ6q3giIhzTteqvv4HaM7aedXQT6M4HSspLyR1eGYpYBMsCbSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786391668; c=relaxed/simple;
-	bh=mmzSBoCFBYmpFkwxS2jbfcx79xw2KadmeibD8OHH61g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VoVeGrkpc8O5tQHqvyq8NIAqXyaw0uJHH25l3U+2HA0EhD87xEsUfOpiPVil0RHwmCj8xEaB2RYQbzg5BagjOwIXi5opDS/dkG3Kuvibv5U5hTulhV5hKOHf0qjehsC3qVfOrHR9xaibc4+Dlx/19wFk50DZe54KuulbbbvuV0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OoDt30pC; arc=none smtp.client-ip=209.85.161.46
+	s=arc-20240116; t=1786395309; c=relaxed/simple;
+	bh=JT65yxbgcHYfxxUtv9l17oqH4U9WLSDZSqD1V0ZPg4g=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=anrW2qNbg1QJMBIHb4PIjJ/LkhfH4aLinKJIa2SA1aAoa5JoTjWFO7egBWFVgMAtgPTJnecgjqjq3cxzpZBM/vPlh6/CMiwHJrkaeh/r8qTouynYgj7/cVSvEHTnueAn/JY6S5xG4jE4hTH510bFouN0Fc5QEURr+rAft3H7/S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dGOx58ss; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OoDt30pC"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-6aea94f96c4so1305617eaf.2
-        for <git@vger.kernel.org>; Mon, 10 Aug 2026 12:54:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dGOx58ss"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38e08baf860so2299356a91.2
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 13:55:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786391666; x=1786996466; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=z89RZFK/EiiaD47kLgunTfC4ATToKUuqcIYC9IyVVCo=;
-        b=OoDt30pCNvMZuEm3Td0vAE2SsNKeEajry7nxGyiRUtpaTeTnVROvfY7uOVg00ToTGs
-         GUtA5Ys2WQ/OjTIKuAbGfsDbI9fal8mp67aDo+jwwkKH6iNQjGAeIpKNRyFH+AYZmVrV
-         t0PG0pLcW8/9QWWsgy2YVtMXjBglVp4ebOM06iPTTDPNcLXmAWN09fFoojvx0u/hr9GP
-         JloYWBveR3aCIy4w7dGd/mCInZU2/2Gv4XIEbC3y0oLW/DKI38DcJzCOY7GMmJjjpn48
-         1y2dqYJwqyb48mDSY12oYvDt5FHfqmJQcLkZ2b0Dgxtlee4VqORD2RF6HO/TBN+HyXvA
-         5kXA==
+        d=gmail.com; s=20251104; t=1786395308; x=1787000108; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ZfA7eu30Ywj6/Zx4i80Sm3J+YHj1dOAFGG+qvBl7xkM=;
+        b=dGOx58ssRVleHjxZNxole3eFcYIqEVIb840wW5aZFgWIJUV4JkEcKHfLZqAMJiXwOs
+         odI45Idcttr7k+RHnaKW48OvSMcqPgjBPEIsXlIr4RTvyPo6e+mna3W4o6rQCLw7+mMr
+         RSpqE027+/nEvzr8WqD46oJL9gBrWsxdIGLa5TxrbV8kT5pczKLNHmb8N3sg9yyBlYnl
+         X2ikxuEWgDwTcQNjDPJiTiIXKdBV+/4C4nriJzn07FjdVjJn/haZKmbJhOYJWNF4/dM5
+         4fI6aBuQ8ePZyeJLMMNctGem4/n16cYI9UQfEpdLMJeVlh9PHOdOPv4Ry5vS9jPZrFO5
+         tKig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786391666; x=1786996466;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1786395308; x=1787000108;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=z89RZFK/EiiaD47kLgunTfC4ATToKUuqcIYC9IyVVCo=;
-        b=rB5OqlKMCJpX1lMEvCMBkrSGuZQQKyT6yDq1NLXwH2uqPegs/wrt7baeuaXiyfzorR
-         jsWR9/zmtma/VobP1ie0Udu3d64wajo7fzkDLRmUZ+rFhPECGgRQMpCwrIyuah+Lbn+9
-         EwSoEoRt4pIPvtZg1tJVv1Jq0P3cb8xfo0xNCf+lFt0ckrXtzrKJYXYoGAxvLLM0ukcb
-         gDte9/UaBF0Tx3ioukx5Eyilj7UmFqpQPwVQ9L+6uLAyUowqDbEz2Fcv96BWpHTfjPRT
-         qabEx/3AGUhOhG/xdF5Hfl0LX17ULZWeiCq+BeTtcTR8M2TswK2bIqeckBYRsrWFy8ez
-         cuOQ==
-X-Gm-Message-State: AOJu0YxT8X/Mu4pUKfoWIIKz538JTOYIR60IKqW5qxR9zPW1PL4Nhrco
-	WkkjJ5dA86Gbk+7/XhkOJU6SNgwZMhrm/cIboeuTx0yVhsCoJstPdJ1NdQKguQ==
-X-Gm-Gg: AR+sD10JpJCirTQlMT1G//FMBpbKVPKI53B30cMWxQAZPfcV44P7pGicGE6IPK85mbs
-	S4DF3YedGjeQRH5EN3WkiuC9RmSvjZCYhAt/klF+oNEWqFA5SsDWv/HPppTLV4ZK8nGva9aVbB5
-	+w6XLp8V9NzZ4wos93FcaqJB38XpgEV6Xi6Yb6Bt/TGT/43Boszq/WRFNlECnwH/RuOFcfAve9g
-	3wXbpFGmzxMMtRf5fTzdk5FrYCUgk7c6b6yJQGaiM2ElBnK29HlcZTh8XLhWHWlge1LtMaQDYBy
-	fVY9TY3lL1S9MmygRYP2TvMS/0OlQmhpA8x4SKrM3WDDqw0VbNsGU1zskh5dgijcjt3xhhFdNoc
-	/Cz0pgK8fnG7cX9vqjqdkVThhVoflX+oie3u2xrGXpjS2Ir+jDVnD4kLVKpt/Fwz89ThqE2cEAy
-	VR9UIpjvpdlW2Kgk2/zKwBRT8rjVzwgx0yhuRYiHMlVFVkaiXxAsI0rQ==
-X-Received: by 2002:a05:6820:4b89:b0:6ac:8e23:3078 with SMTP id 006d021491bc7-6b0904c0cdamr2393180eaf.5.1786391666099;
-        Mon, 10 Aug 2026 12:54:26 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f35b7c4ba7sm8081639a34.23.2026.08.10.12.54.25
+        bh=ZfA7eu30Ywj6/Zx4i80Sm3J+YHj1dOAFGG+qvBl7xkM=;
+        b=sQITd/+4QfH7DasqeFM1NMHrzl0Hi0pcq7tviM5SAzdRJ0x9n5iVIbxe3JX4br42u8
+         t908jb3BbLm0U2xh/in78UjlJqCflsbxJL3Lggkhv3FOAqnAH+1t7G0VcIob/hyIwqUs
+         hg5jTxadqOrJ6YRiYao7z7v10Ff1OuaKzqIhRDHB4PzyagR1yoeHUKDnlWduODnnB7ly
+         ASh/qN8eVoS5z420+eb67DztRZuffUvQ2SlYaBQW3WKr6H7037EvLkrbSoKbV+ks2404
+         x755KTkfFiu9nQHA3nbATGpfbHDJH+Xbi2kM0mpS8J+IHc0QG3QnbZkJYEmw8C5vPME1
+         B9KQ==
+X-Gm-Message-State: AOJu0YyfyLRSjDUR2U5+TPFHLAzIbni0qeWRd4vHf4G9cXIueLU2lapS
+	tAuGcAGccsJ3FsHz8SN1XuzahfKdST3Owv7CZBdrMyq1B/osfL3mER9Ul3ILVw==
+X-Gm-Gg: AR+sD13f3AqR10uLhw+GEPCvHbm5LBuamb5BwJCNExHv65T/SQTAWOnmX5HWklZx/On
+	93QMJMOST+a21uobdDQPTPSPSJn403L7bbpArTBnNMykZbIbrNIJAddl4W2rLYNHKQQMk/ygtqY
+	iz11UA7JGa2WfiehUYu7ZIKY46Zc36iA37si+k5WoVyXuxOj94gqzBDzhwfQHOkgOdeiFMsf/8j
+	UiNaER1gHGjF73AKm2PWFoAvLKMUUGZPEtCCPMHGoUzLohArWcMFhs0//Ri0Dq0UhhM0lD+QjqR
+	Xpkc0GldIjEmAI4q/Qh2BaIP1GSrm5Up8pxnT/JnwGDJLH9HRpFIVCIJOkK68j9Ja0CbmYDzx3d
+	tdefCvrWPZ65sk4vTFq1ahDf+VhWy30IhR1br/YRRpn/RRSQ9iggCax446XPSbfpiYJnIMS5hXi
+	FtC/ApguIWLdyMBgc4HVx1Vnaujr8QXVwbS34JPmKD9G7VA1n/4eVPiCywgf/QKHDS
+X-Received: by 2002:a17:90b:2b50:b0:38e:67e1:15b with SMTP id 98e67ed59e1d1-392cc905a96mr4451345a91.6.1786395307569;
+        Mon, 10 Aug 2026 13:55:07 -0700 (PDT)
+Received: from [127.0.0.1] ([52.159.243.170])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-392d5381dd3sm933223a91.16.2026.08.10.13.55.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2026 12:54:25 -0700 (PDT)
-Date: Mon, 10 Aug 2026 14:54:22 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v2 7/7] odb/transaction: add transaction interface to
- write packfiles
-Message-ID: <anomr5jpSGlrTX2m@denethor>
-References: <20260806213859.816157-1-jltobler@gmail.com>
- <20260809190106.1565882-1-jltobler@gmail.com>
- <20260809190106.1565882-8-jltobler@gmail.com>
- <xmqqwlty7hdz.fsf@gitster.g>
+        Mon, 10 Aug 2026 13:55:06 -0700 (PDT)
+Message-Id: <pull.2197.v3.git.1786395305884.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 10 Aug 2026 20:55:05 +0000
+Subject: [PATCH v3] worktree add: improve message for ambiguous remote branch
+ name
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwlty7hdz.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Yoichi Nakayama <yoichi.nakayama@gmail.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-On 26/08/09 09:02PM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > .... Note that a packfile
-> > written via git-index-pack(1) is kept in place by a ".keep" lockfile
-> > that must be retained until references are updated. To faciliate this in
-> > an ODB backend agnostic manner, the "files" transaction backend takes
-> > ownership of these lockfiles and removes them post-commit through its
-> > release callback.
-> 
-> The above is confusing and I am lost.  Care to explain a bit more?
+From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-It should say "finalize callback" instead of "release callback". The
-idea here though is that ".keep" files are likely an implementation
-detail of the "files" backend, but we still need a way to clean them up
-after a transaction is committed and reference updates have been
-performed via the generic ODB transaction interface.
+When the user runs 'git worktree add x y' command that does not
+exactly say which remote they want to work with, and there is no local
+branch named y, we try to guess which remote by passing y then create
+a new branch named y which tracks the remote branch.
 
-So after `odb_transaction_commit()`, the ".keep" files are tracked by
-the "files" transaction and only removed once
-`odb_transaction_finalize()` is invoked. It would be up to callers to
-ensure that reference updates are performed as required prior to
-finalize being invoked.
+If there are multiple remotes that have branch named y, we silently
+gave up, leaving the variable branch intact.  This later causes
+creating local branch and worktree not happen, and we end up with
+passing an non-existing branch to lookup_commit_reference_by_name(),
+triggering "invalid reference" error and die.
 
-I'll try to explain this better in the next version.
+To resolve this issue, display a hint and a descriptive error message
+and die immediately when multiple mathing branches are found.
 
-> > +		status = start_command(&child);
-> > +		if (status) {
-> > +			strbuf_addstr(err_msg, "index-pack fork failed");
-> > +			return -1;
-> > +		}
-> > +
-> > +		lockfile = index_pack_lockfile(repo, child.out, NULL);
-> > +		if (lockfile) {
-> > +			ALLOC_GROW(transaction->pack_lockfiles,
-> > +				   transaction->pack_lockfiles_nr + 1,
-> > +				   transaction->pack_lockfiles_alloc);
-> > +			transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
-> > +				register_tempfile(lockfile);
-> > +			free(lockfile);
-> > +		}
-> 
-> Here we add the .keep file to the list of lockfiles.  We have
-> finalization step laer in odb_transaction_files_finalize() that
-> deletes the tempfiles when we are done, which comes after
-> the transaction is committed.
-> 
-> But isn't the odb_transaction_files_commit() where the migration of
-> tmp_objdir_migrate() happens?  Everything in the quarantine directory
-> including these .keep files are "migrated" (either link-to-the-new
-> followed by unlink-of-the-old, or rename-old-to-new) there.
-> 
-> And then ...
-> 
-> > +static int odb_transaction_files_finalize(struct odb_transaction *base)
-> > +{
-> > +	struct odb_transaction_files *transaction =
-> > +		container_of(base, struct odb_transaction_files, base);
-> > +	int ret = 0;
-> > +
-> > +	for (size_t i = 0; i < transaction->pack_lockfiles_nr; i++)
-> > +		ret |= delete_tempfile(&transaction->pack_lockfiles[i]);
-> > +
-> > +	free(transaction->pack_lockfiles);
-> > +
-> > +	return ret;
-> > +}
-> 
-> ... we do the deletion of tempfile but has anybody migrated the path
-> to these files recorded in the lockfile structure?  How are we
-> removing the .keep files that were "migrated" when the transaction
-> was committed?
+Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+---
+    worktree add: improve message for ambiguous remote branch name
 
-The filepath recorded by the ".keep" tempfile structure is _supposed_ to
-be the final path of the ".keep" file post-commit that way it knows its
-location after its been migrated and can remove it. The path is
-generated by `index_pack_lockfile()` and is supposed to use the real ODB
-source path and not the transaction ODB source path... but this is not
-happening anymore now that we are using ODB transactions in
-git-receive-pack(1) which reorders the ODB source list order when the
-transaction is applied...
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2197%2Fyoichi%2Fimprove-worktree-add-error-message-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2197/yoichi/improve-worktree-add-error-message-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2197
 
-This is a bug and needs to be fixed. The fix itself should be fairly
-straightforward, we just need to tell `index_pack_lockfile()` the
-correct ODB source it should be using. I'll send a patch later today
-correct this.
+Range-diff vs v2:
 
-Thanks,
--Justin
+ 1:  1bc57ce497 ! 1:  1b9364da7e worktree add: improve message for ambiguous remote branch name
+     @@ Metadata
+       ## Commit message ##
+          worktree add: improve message for ambiguous remote branch name
+      
+     -    Display a hint and a descriptive error message when DWIM fails.
+     +    When the user runs 'git worktree add x y' command that does not
+     +    exactly say which remote they want to work with, and there is no local
+     +    branch named y, we try to guess which remote by passing y then create
+     +    a new branch named y which tracks the remote branch.
+     +
+     +    If there are multiple remotes that have branch named y, we silently
+     +    gave up, leaving the variable branch intact.  This later causes
+     +    creating local branch and worktree not happen, and we end up with
+     +    passing an non-existing branch to lookup_commit_reference_by_name(),
+     +    triggering "invalid reference" error and die.
+     +
+     +    To resolve this issue, display a hint and a descriptive error message
+     +    and die immediately when multiple mathing branches are found.
+      
+          Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+      
+
+
+ builtin/worktree.c      | 23 ++++++++++++++++++++++-
+ t/t2400-worktree-add.sh |  4 ++--
+ 2 files changed, 24 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 654d27c3e1..b29c3a3755 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -64,6 +64,19 @@
+ 	"\n" \
+ 	"    git worktree add --orphan %s\n")
+ 
++#define WORKTREE_ADD_AMBIGUOUS_REMOTE_BRANCH_NAME_HINT_TEXT \
++	_("Matched multiple remote tracking branches, you can list them by:\n" \
++	"\n" \
++	"    git branch -r --list \"*/%s\"\n" \
++	"\n" \
++	"If you meant to create a worktree from a remote tracking branch on,\n" \
++	"e.g. 'origin', you can do so by:\n" \
++	"\n" \
++	"    git worktree add -b %s %s origin/%s\n" \
++	"\n" \
++	"If you'd like to always prefer some remote, e.g. 'origin',\n" \
++	"consider setting checkout.defaultRemote=origin in your config.")
++
+ static const char * const git_worktree_usage[] = {
+ 	BUILTIN_WORKTREE_ADD_USAGE,
+ 	BUILTIN_WORKTREE_LIST_USAGE,
+@@ -904,10 +917,18 @@ static int add(int ac, const char **av, const char *prefix,
+ 
+ 		commit = lookup_commit_reference_by_name(branch);
+ 		if (!commit) {
+-			remote = unique_tracking_name(branch, &oid, NULL);
++			int num_matches = 0;
++			remote = unique_tracking_name(branch, &oid, &num_matches);
+ 			if (remote) {
+ 				new_branch = branch;
+ 				branch = new_branch_to_free = remote;
++			} else if (num_matches > 1) {
++				if (!opts.quiet)
++					advise_if_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
++							  WORKTREE_ADD_AMBIGUOUS_REMOTE_BRANCH_NAME_HINT_TEXT,
++							  branch, branch, path, branch);
++				die(_("'%s' matched multiple (%d) remote tracking branches"),
++				    branch, num_matches);
+ 			}
+ 		}
+ 
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index 87b926728a..5c105cf252 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -624,12 +624,12 @@ test_expect_success '"add" <path> <branch> dwims' '
+ test_expect_success '"add" <path> <branch> dwims with checkout.defaultRemote' '
+ 	test_when_finished rm -rf repo_upstream repo_dwim foo &&
+ 	setup_remote_repo repo_upstream repo_dwim &&
+-	git init repo_dwim &&
+ 	(
+ 		cd repo_dwim &&
+ 		git remote add repo_upstream2 ../repo_upstream &&
+ 		git fetch repo_upstream2 &&
+-		test_must_fail git worktree add ../foo foo &&
++		test_must_fail git worktree add ../foo foo 2>error.actual &&
++		test_grep "matched multiple (2) remote tracking branches" error.actual &&
+ 		git -c checkout.defaultRemote=repo_upstream worktree add ../foo foo &&
+ 		git status -uno --porcelain >status.actual &&
+ 		test_must_be_empty status.actual
+
+base-commit: 010afd3166ddc64c9863b1506f12cbcdda0d4ea1
+-- 
+gitgitgadget
