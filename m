@@ -1,233 +1,150 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D813955C4
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 11:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786360634; cv=none; b=coCdSEWVtTfGXcsv8B57GZcggsI/Y7kKHePel6YY8u3dsLzAGKzEmhbScli0a35dbhb7idsU7DFKVHM9BuUWiUqBrniqhg3wg0NRryLw5rSH6Q9Rl010Z/nFH4TWoT7O8gEn320t3BeZqZMVbyQF9OlKYD1IzT5NpwHp5nrSoX0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786360634; c=relaxed/simple;
-	bh=0JDEnysb73jJfMBQDkutY3q+7/vf03qN3P70bo6a5xw=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=Z4r5Tb6EVV1bGvIQQrXP5rGNZKzqkCF2xBZoG/afDxXoDd0dS2YXPakZHzmYjJCVOqsFiNy1FVrIgKX9hwhzyo6S0ZqSNrPYiRGVbU9ICvjO2DQgrZFRL1mNNkTbYkwJKSVM99HMPp+j6ROiN2diQ/Jeetf4xc0Wv/Dq8F4yoPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VkcgSUNz; arc=none smtp.client-ip=74.125.224.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A977737DAAD
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 12:27:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786364879; cv=pass; b=u2niLSRMblcj+DAHtbogzrlXdsbVEaNtLkIZsSN45jwEnoK5Vb9LxaD9NmbYXscq3fb3zo84YFCmPRa9WU7TLZhSsTDuEm9ioR9aSmLwDJIS0VdDcKMe4KQYCCiBEzr8D1zpCl8qMgETjK6Zb8ZPo3ghRvyHAun6BMYqmdc/o5w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786364879; c=relaxed/simple;
+	bh=WokVm6wO9l/7W/2LuD2A40X+h0gF5nqCn/JrS8Zq0zM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YatSPCV6FRCvsVl7Juf2IxiylcqJ2TI7iKOUgtfjb3LW3chbqhlN+OSNZQWn/wJ1aiyEn3sHVixML74e9Sb4DfbZVCM9szlVEOw/a9uad/UOKXIzMXwL/4VTwKh7o4AEea4+2GpHYjUM0qwdqDeWVfZUvX9jil3/iMw0eoxA7oM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o6pDNzAH; arc=pass smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VkcgSUNz"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-66896892b6cso2456710d50.0
-        for <git@vger.kernel.org>; Mon, 10 Aug 2026 04:17:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o6pDNzAH"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2cea3004256so22049505ad.0
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 05:27:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786364878; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Q0oZeMBNUOBBaRDECSuTlvqGEIqp7ZV9bnhFnzw/OvqnZoGYeNi/fzPrmBx4qHVbWm
+         JvDdtHsb2M9BFZwCIy8wGbzoR8KvJ/AvCjgbONKdU3OpSGLHILqIcYSInFnUZoUYtG06
+         E6oXdyNEq7dPtZgMOSRRyZc8qrzWyYDpUklKnuzeUaeEwzvyRkqcNhTQvg0e6SmJA0K3
+         Srghd6IKJYFqXZJfRcggkaDz9UUVUEXLNDvX95jgS9273kQjCLRZuIQ3PksbulheX6Pf
+         NKHwpUOvZPHsppXQJzcLJvm0O8CZjVy0w5eOjB1G//7ZGIyQyaeKn1cK53/2UDloH96k
+         ng2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=X/NClb79ZSs7I6mtD0/TeuhuRiRQUYabQMsnzpCt/nU=;
+        fh=aV4r8oKbJ9F0Y8vkQT74TqNr0JVf9ADeC03IcTyMr6o=;
+        b=rEMDodvdd12biAVCF0Nz3EibpicGNcBDeiS8cESHoEsauFdP7yIDyR/FpSTkI2cdHo
+         IXy3fFK2HuIhrzQj1xwpCWMf4AumH4+6ft2a+dyj2fQOyFH7bFNrdGtvjD0261zXlVb+
+         qgmQDeRyri8Y+2IAjM1jWm+wb4fxl40CeQQYITy9MqriKAGvHjJMhau79WH7LJzF2Esn
+         wh39m8TALBsi/ix86vshWuAlL3B/X0P02AwvGX4kj41UC3vSCiSbm7SR7jVUOovorvsT
+         jfpmsEa22yjxWxdFQh6lbY6pyUT0M93Kp56PDD8YSBUjS6mQcwbOuhTXQmJitYm0TwAt
+         lpLQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786360632; x=1786965432; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=tsiVLjXESU8/TRsfSIFKbqlpntS6M1OeKUEfY5SeZG4=;
-        b=VkcgSUNzrIml35Wp0ppT9BNQzJFOnQpnGSjXRj7twATNMdFwz+1K7ppesnkJcjWC3Z
-         oienu8NgKqhfSe0mbR+oL/bZU8RLePtaOeIJN/j5oIPHahcwXtygItgfrZDD9nH4SnMg
-         VGpLYoISP0r097IGeClrSOZF0u2/XgnF5YXIpEGH0QkcY+ht8H9RvczCyD4dscsaJkgW
-         VATMmbEgQAduosg7+QEnZsw1HFb/zcvmKtptVf8faXYLi3XIvhDlYfIbPCLUEF7pTSPV
-         C9d9yMoP2L9g53Ajhhs2WQ+SiPLaHAbmEKXrxNOKm7U7MYfWq4k84IgaE0s3PZvi/wI9
-         0i9Q==
+        d=gmail.com; s=20251104; t=1786364878; x=1786969678; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=X/NClb79ZSs7I6mtD0/TeuhuRiRQUYabQMsnzpCt/nU=;
+        b=o6pDNzAH7ipGsBLg066xSIeqnYsnPhWENg5oc5loRv/MUAHPWdWIIB0cw7pbWhkCNq
+         Yp0hn4lK2qI0IFQw/gBGKX/a+cKVYse4ekzo+48Gjpk8AZ6NJzcITE9Avl+7/JOQK2JB
+         e+h1T9bhUL6NwCi9kAJwAPXUBCEzna9faH4XiTlNxUnSBdmw13MZRuw/1I1Xyt8fAIoA
+         ff5rwFt6Rhm36BgBiRLsa1pE8pHfeH21f5VO0SyORW9rMROOrfjrgJJzUlv1f0q6qd5o
+         QnWUawxjeoYV6mDiQ1Fn8UWRz4n5djTnfOw5R9O7S2iR2PMJsZHgB0ru3lqtBpAI/scF
+         g47g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786360632; x=1786965432;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
+        d=1e100.net; s=20251104; t=1786364878; x=1786969678;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tsiVLjXESU8/TRsfSIFKbqlpntS6M1OeKUEfY5SeZG4=;
-        b=c3wbAAwf+cc0HX55Bqq+rQ3HWtLXhD2QZX/3vqtfnwUtF5dCCLBSNBtDPT48fKwSnT
-         wLu2p6rOvQ/uUm/jEuPFlTN6Ve5liHePomFqk0A1mc/wjSuxTza0EaEqKp0e0vCzcBVQ
-         SvnAEygiTYEjI3+rkcp9aowelZEeoZJwh+88k32nLnXBixLBE9vdQJM6kqeY02OQ/Ch2
-         psT5DzcftP/QXdwS0gveDOFYg7xyY+yNWZvvhzJoTecOmk7tbsVw0S3rUvA7+v8Pi2Cq
-         zdZMSPWPuWzZ/MYMtNdRjWT1k5cWOpF/YsP6nRus4DEygVgGPfEv+x6j8YiiHqNrh/Lx
-         /tHQ==
-X-Gm-Message-State: AOJu0Yyj0+Klxm15sB4ePrKSz9FdJ9l01V6t5pe9PhrtVN42BaYBm2Mm
-	/FwwD79bLa+wsClxuW7gCar2H0P9XyFrKtxuq8oRAH99vmoQDrNXuCOTNLuV+GvXyZ8=
-X-Gm-Gg: AR+sD13Y2TDgzZPV2Mvgk9fj0KR1apO3Pu17OQDTsi7gMFZ4ZdBbIh8JQaXujpzsiW/
-	acbV9Y6QOADivc1FAxRHI7UEd9gTwaelZ1AVoP9yruaQkbIpqr0F8OdKJK9lfQp+RFCrE9V2cnp
-	7J65psJy7UXkUZjjGTFy4wrq4p6KWc190co5ibo3l+yfRLLs8s5Ar3sNG6HYTdUqJnevWAz3pT9
-	FxvLn58NVlx9CUxFrBiV3TweUVJY4BUNQLL5nP0ROKEr5zzDZePAFJhSeQV6dJTuMFIWXS3MnM2
-	g1O2uOkZiSzfO2YxOEGhMjnW4rQPtQG1+e8hWs629h34+8fzweCBy5ldFXcg0+f6XfalLm416jS
-	Bql5A6XLsjXLV8kTaWk7++8SniSGy7V5HhdzFRBTRxnEivlVvTpm4VsaUbZYK23cGCK7okhwabZ
-	OIsY64VQj1mQ9d6qRp+ys2CK0j9GqvmCMldPlsHJNLnNe1L6z2DKeczJ5RDuSt9rik03ESVAXGk
-	979fqgGP/kDTFBAz68sgKRW6r9BBY8nLgtqtzekdR0MqM92dLo/JJf3k0JWiHd1Ebh6Svj5lYeJ
-	OGAyqdGb9pFVZe2fNejnJBucPKa/9rzSe4wY
-X-Received: by 2002:a05:690c:892:b0:81e:79f0:48b8 with SMTP id 00721157ae682-82d29d0a3afmr3248067b3.7.1786360631976;
-        Mon, 10 Aug 2026 04:17:11 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:c44:77d0:325f:ec73])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-823efbf208esm53756617b3.10.2026.08.10.04.17.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2026 04:17:09 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=X/NClb79ZSs7I6mtD0/TeuhuRiRQUYabQMsnzpCt/nU=;
+        b=Idwr+PpPNMiIBwU8PEuo/nglWbJxEYWjL7vh36OgAutrw60YGhnvUKQc8B5YbaTDv1
+         OVIekZjIKPZdNdsS45WxN3tGpAGCD55eLS0Xoe6GBGywvoP9NG80qTkc9vzWCrOdJcX7
+         C2QdRCgtwDGIplGswl+/6CxYydRiHxVTXq0Azqqz2I/VElAK1PXMMVYx9Gy3F1JAsM0y
+         MPRGc9Q4SonFJom62Dpnok0j/K/xomOtr5iMYTFRr3rlV7WkvR4CcDC0Y2z7/D4h8UBx
+         eXVoLufXpmgll22hIr/Jx6EIYYu9Ck6wihS9krIMXrC7rdjfX0k2pTpdUSkOh3pPE2oP
+         /hjg==
+X-Forwarded-Encrypted: i=1; AHgh+RqsMdPx3MSEIaR94bCeAk+RbXQDbrNImn8jykcH+A0BmCti5wEa3QjT1rFBkGr5/mR8pNc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPu+x1MgWyjI23ri4TL+A/2B19lQ8CuxsI6IMe/eRc6eUc+IzN
+	27+iYQ6DNe5xTolNRFF5pUnyxRK9v5kMD2H89BW3rsVKeWbeMsN3K+ZLdFiQnU1iWW2OfjgRrBx
+	tiQzbp3wcuwfgD47AfVIqmw/IDQebUDg=
+X-Gm-Gg: AR+sD13gfbLZ56JQqpLHm+pETHiIoeDQnAok2b2WZWDx2SjEk+zMnvVkBTbVGKRiHqq
+	AtDKxmJrMTOUrjNoQ2A/ahFe43tVZv5nL4b3TApXf0rWyN/bEbiYqSOVr6RHfXrxcYPwhWgsZyq
+	zRV5CNUtGmWOTgmZ7KVh2MaYLMF9TgfXtGRvWkYuo4FXApA1OZD9nflRd2uXlQMwmrHEGh/nvzY
+	3Vag218yREJy+A+vrCgh4Au6o9RazbRWwQ9OrA41dmRPYSIPB3GdSurF8f+6+RqFnAFF63s4agO
+	aHMBaH2zbqTQNXMAuS+p1WX6F80dWqjgSJHvuKhIKf8WEe0llzBP7Q97NV+nOasNGp9lcLQIwW5
+	xYZPhjpnmChvXGJRJC0057RvoQBkWZ9Cc/zLbjdu/1FNdLUbSqKfc+Io3IdPWy0nOmubeeUyReq
+	J9imW2tQwj5Pa74fxdhOR86b3bILMPKQ==
+X-Received: by 2002:a17:903:18d:b0:2cc:9179:32e with SMTP id
+ d9443c01a7336-2d0ca759b87mr460432285ad.10.1786364877728; Mon, 10 Aug 2026
+ 05:27:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v5 00/11] doc: interpret-trailers: explain key format
-Date: Mon, 10 Aug 2026 07:16:56 -0400
-Message-Id: <0687D60D-DF6B-4547-868C-FCFC5B27ECAF@gmail.com>
-References: <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
- christian.couder@gmail.com, Brendan Jackman <bhenryj0117@gmail.com>,
- Linus Arver <linus@ucla.edu>, Matt Hunter <m@lfurio.us>,
- Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
-To: kristofferhaugsbakk@fastmail.com
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+References: <cover.1786103607.git.ben.knoble@gmail.com> <dbbd96d50811e4c2decb6f754b56dc1f7ee0944a.1786103607.git.ben.knoble@gmail.com>
+ <xmqqv79ld40c.fsf@gitster.g> <andZ2eIe6RXifor4@szeder.dev>
+In-Reply-To: <andZ2eIe6RXifor4@szeder.dev>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 10 Aug 2026 08:27:46 -0400
+X-Gm-Features: AUfX_mwPnixht07c84KbuJSXP6HXZ60221R5GJrq1KZosgl3-kqjlnjn3RlQ-sQ
+Message-ID: <CALnO6CBqJT6uHTXvgffB9rW458THr5LjzL=NZSt81PPfBATPyA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Tian Yuchen <cat@malon.dev>, 
+	Todd Zullinger <tmz@pobox.com>, Patrick Steinhardt <ps@pks.im>, Olamide Caleb Bello <belkid98@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Sat, Aug 8, 2026 at 12:31=E2=80=AFPM SZEDER G=C3=A1bor <szeder.dev@gmail=
+.com> wrote:
+>
+> On Fri, Aug 07, 2026 at 02:17:39PM -0700, Junio C Hamano wrote:
+> > "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+> >
+> > > Racy Git problems persist today, manifesting themselves in the
+> > > performance of commands like "git diff" in new worktrees [1]. We have
+> > > long had a build knob "USE_NSEC" to tell Git to use in-core nanosecon=
+d
+> > > precision when available, which mitigates most if not all racy issues=
+,
+> > > but most builds we know about it don't use it. In part, that's becaus=
+e
+> > > someone distributing Git can't safely enable it at compile-time if th=
+ey
+> > > don't know exactly what platforms their distribution will be used on.
+> > >
+> > > [1]: https://lore.kernel.org/git/CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoS=
+EuPUh-yoeK9TseQ@mail.gmail.com
+> > >
+> > > These days, most platforms are likely to be safe for the USE_NSEC cod=
+e.
+> > > Regardless, we want to give users the ability to benefit from it. Thi=
+s
+> > > requires exposing the compile-time gated code as a runtime option.
+> > >
+> > > In addition, update the Racy Git documentation and other mentions of
+> > > USE_NSEC in the code.
+> > >
+> > > Best-viewed-with: --ignore-space-change
+> >
+> > Don't do this.  It probably is helpful to have something like that
+> > below the three-dash lines, though.
+>
+> Including this hint in the commit message could be useful for anyone
+> who stumbles upon this commit in a couple of months or years time.
+> Whether it should be a trailer or not is another question.
 
-> Le 9 ao=C3=BBt 2026 =C3=A0 16:07, kristofferhaugsbakk@fastmail.com a =C3=A9=
-crit :
->=20
-> =EF=BB=BFFrom: Kristoffer Haugsbakk <code@khaugsbakk.name>
->=20
-> Topic name (applied): kh/doc-trailers
->=20
-> Topic summary: Explain the format of trailer keys (alphanum and
-> hyphens). This is important to keep in mind so that metadata is not
-> lost to simple syntax errors. Also replace some terms and define the
-> important ones upfront.
->=20
-> Here one change lead to another in order to make sure that everything
-> stayed coherent. So here=E2=80=99s a linear overview of the changes (as of=
- v4):
->=20
-> =E2=80=A2 Patches 1=E2=80=933: remove RFC 822 mentions, =E2=80=9Cmetadata=E2=
-=80=9D term
-> =E2=80=A2 Patch 4: This command is not just for commit messages
-> =E2=80=A2 Patches 5=E2=80=937: Explain the format in the simplest case, ex=
-plain
->  the =E2=80=9Ckey=E2=80=9D format, and add a new example
-> =E2=80=A2 Patch 8: join some existing paragraphs that are about the same t=
-heme
->  since that makes the text flow better
-> =E2=80=A2 Patch 9: Also use the =E2=80=9Ctrailer block=E2=80=9D term intro=
-duced to the doc in
->  patch 5 later in the doc
-> =E2=80=A2 Patch 10: Rewrite new-trailer paragraphs (relates to patch 8)
-> =E2=80=A2 Patch 11: document line comment behavior
->=20
-> Thanks to everyone who has been reviewing these so far. I understand that
-> these eleven changes are very incremental and piecemeal (see =E2=80=9Cvery=
+Yep, the trailer is a force-of-habit for me. I'll move it into the
+commit message body in the next version.
 
-> cross-referenced commit messages=E2=80=9D). And the commit messages can be=
- quite
-> long, just to explain (again) very small changes. See for example patch
-> =E2=80=9Creplace =E2=80=9Clines=E2=80=9D with =E2=80=9Cmetadata=E2=80=9D=E2=
-=80=9D in this version, where I explain why to
-> write =E2=80=9Ctrailer metadata=E2=80=9D instead of =E2=80=9Ctrailers meta=
-data=E2=80=9D. But right now I
-> feel like prose sometimes needs all this ceremony. With code you get
-> restraints like coding style, then you have all the years of looser rules
-> about when to use certain data structures, when to make helper methods,
-> etc. But with prose it seems that you bring much more of your individualit=
-y
-> to it. That means more choices, and many of them are not obvious to the
-> reader of the document, which means that you need to explain it in the
-> commit message. Then you also have to consider the writing history of the
-> document, and this one is twelve years old at this point; see the history
-> review in commit message =E2=80=9Cjoin new-trailers again=E2=80=9D, after t=
-he thematic
-> break (***).
->=20
-> =C2=A7 Changes in v5
->=20
-> Patch =E2=80=9Cdocument comment line treatment=E2=80=9D: commit message: a=
-dd missing word:
-> s/to/to be/.
->=20
-> =C2=A7 Apologies for very cross-referenced commit messages
->=20
-> (see v3)
->=20
-> =C2=A7 Cc
->=20
-> (see v2)
->=20
-> https://lore.kernel.org/git/V2_CV_doc_int-tr_key_format.613@msgid.xyz/
->=20
-> I have also added a new email since the email jackmanb@google.com bounces
-> for me. There is a Brendan Jackman who has posted messages under a Gmail
-> address. Hopefully it=E2=80=99s the same person.
->=20
-> =C2=A7 In-reply-to: v1
->=20
-> The recommendation to reply to the first version/cover letter is from topi=
-c
-> ps/doc-recommend-b4, which is in `next` right now.
->=20
-> =C2=A7 Link to v4
->=20
-> https://lore.kernel.org/git/V4_CV_doc_int-tr_key_format.ae2@msgid.xyz/
->=20
-> [01/11] doc: interpret-trailers: stop fixating on RFC 822
-> [02/11] doc: interpret-trailers: replace =E2=80=9Clines=E2=80=9D with =E2=80=
-=9Cmetadata=E2=80=9D
-> [03/11] doc: interpret-trailers: use =E2=80=9Cmetadata=E2=80=9D in Name as=
- well
-> [04/11] doc: interpret-trailers: not just for commit messages
-> [05/11] doc: interpret-trailers: explain the format after the intro
-> [06/11] doc: interpret-trailers: explain key format
-> [07/11] doc: interpret-trailers: add key format example
-> [08/11] doc: interpret-trailers: join new-trailers again
-> [09/11] doc: interpret-trailers: commit to =E2=80=9Ctrailer block=E2=80=9D=
- term
-> [10/11] doc: interpret-trailers: rewrite new-trailers paragraphs
-> [11/11] doc: interpret-trailers: document comment line treatment
->=20
-> Documentation/git-interpret-trailers.adoc | 88 ++++++++++++++++-------
-> 1 file changed, 64 insertions(+), 24 deletions(-)
->=20
-> Interdiff against v4:
-> Range-diff against v4:
-> 1:  2419b1a6863 =3D  1:  2419b1a6863 doc: interpret-trailers: stop fixatin=
-g on RFC 822
-> 2:  859ab42ac41 =3D  2:  859ab42ac41 doc: interpret-trailers: replace =E2=80=
-=9Clines=E2=80=9D with =E2=80=9Cmetadata=E2=80=9D
-> 3:  ab5b4af970e =3D  3:  ab5b4af970e doc: interpret-trailers: use =E2=80=9C=
-metadata=E2=80=9D in Name as well
-> 4:  b79ddf3b13e =3D  4:  b79ddf3b13e doc: interpret-trailers: not just for=
- commit messages
-> 5:  e7101eb1fcb =3D  5:  e7101eb1fcb doc: interpret-trailers: explain the f=
-ormat after the intro
-> 6:  557b5b5564a =3D  6:  557b5b5564a doc: interpret-trailers: explain key f=
-ormat
-> 7:  eee81fc99fa =3D  7:  eee81fc99fa doc: interpret-trailers: add key form=
-at example
-> 8:  cd3e47459c7 =3D  8:  cd3e47459c7 doc: interpret-trailers: join new-tra=
-ilers again
-> 9:  c50b6d25170 =3D  9:  c50b6d25170 doc: interpret-trailers: commit to =E2=
-=80=9Ctrailer block=E2=80=9D term
-> 10:  c11a116605e =3D 10:  c11a116605e doc: interpret-trailers: rewrite new=
--trailers paragraphs
-> 11:  7d20cb7528f ! 11:  cabbb05a1c4 doc: interpret-trailers: document comm=
-ent line treatment
->    @@ Commit message
->=20
->         Comment lines have always been ignored but this is not documented.=
+I do find it helpful when the author of a patch---who presumably knows
+the changes best---provides some guidance on making sense of the diff.
+In this case, some code is re-indented as '#ifdef's change to runtime
+'if's, so ignoring whitespace changes makes it easier to see there was
+no change there.
 
->=20
->    -    The primary motivation here is to reasonably complete in the
->    +    The primary motivation here is to be reasonably complete in the
->         documentation of how trailers are parsed; this is after all the on=
-ly
->         documentation page that documents this format. However, and going b=
-eyond
->         that point, we could imagine that someone would want to use this f=
-ormat
->=20
-> base-commit: 5361983c075154725be47b65cca9a2421789e410
-> --
-> 2.54.0.22.g9e26862b904
-
-I=E2=80=99m trivially satisfied with the range-diff (note again I=E2=80=99ve=
- reviewed primarily the end result, not the per-commit history).
-
-Best,
-Ben=
+--=20
+D. Ben Knoble
