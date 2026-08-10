@@ -1,128 +1,186 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755253D902E
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 12:44:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786365854; cv=none; b=Dev0HCVOE4kNmRwlyFxgc4E/Mo2zs6UCcSCekMck6lIxVpPxhpRL+WQCaxa9XJ7BF/NOty+ueRvx/HcgwP5iM7XFCmXKSihX2xXRiKguf3hn3f4AXHG7veIBWB2zUFcN0c9sLW6pm0dlE4mniWEU1Zt71pSDGIOEGrMaveBAV44=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786365854; c=relaxed/simple;
-	bh=Uc+phyGyyBGweOVGYaz1OCRfPiOvnWcJg8u1V4Vm4kc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=czNyyBMpmr5X/XbhgNjWeAmcCvPtHPs7hvEcifuX+JAK/eRwXsI52h9vnYU6AWIK7geAR+AQRHce3n0aJscTZAX+16mt2edkr876haD3OTvY/ufbBE8BAlKUDPRduYZQGY0MsEr6v7LZhYMRB7n5bn7qNcFV+Kam1c0ISyUgQEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mVOn1MS5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JlELojd6; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390DA39CCE5
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 12:48:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786366133; cv=pass; b=QhgkNmFTouq9ehNOdVBttxunXJJVRW3p7o86KykXG58zc1RDyaOEOcsrEdqkl1EmRp0R5mysSkft/eCTnFzzqQtRN5/KijaI1WO5R+9nV8bgl3aWak7YXVUpr9PjSp0pf9F5fqAjep6pwK7u+AcjD9Iil4AtqWexBZ4I8bxAYBA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786366133; c=relaxed/simple;
+	bh=PYZongLqWvO5ZkLBYViGo/pvargWkpuX0XjF2XZSAcA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gP73MvJNxFXQg5gKlSigAHhbGlNo2sVfLWMUJYtkIZgFZOD9053qQnAIJW7xKS99cKInuQlnQLpzpHyKJgi0H9W5NKncX6GnnVHp5ywtr4U4bKRriqWv65uv7bKLOgRLri37FMhSHgyenNv5JiFvPyfnRBojmo5lTTtXgRjA04Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jO2eAxFO; arc=pass smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mVOn1MS5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JlELojd6"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 86997140009B;
-	Mon, 10 Aug 2026 08:44:11 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 10 Aug 2026 08:44:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786365851;
-	 x=1786452251; bh=/9E4C7VjmTy0Du3c7TRRoBI3GKYFyAGQgmHdya15kws=; b=
-	mVOn1MS5VN3p1OAqqvlDAH8mDJlU8b9lT0OLrQqSQ0E1vWAwkEU8ERisGCbPqmFx
-	ZGDo9etf/dI08gw7vx2HPz7DWKla7Uajg2ZjWEij+sB3wmjedPJpF99yekzJTcjI
-	FnOhwEfgKI46wet46RkZlZssUWQ9QtmCB8vytn05HWf1AGjQWlN9ixr5heprhMea
-	duR7NoWKBwEXzNQBErd4RzDP+d0LvkJyhzjkHVYXF94IC5fA8QhMjsM9XrQBhiMh
-	E6GYKPtwQq2H4hjY8xqJz6PvDfRSYnT8wR5UTHG2YTyjo8BBqAT21U5/qMwkzJPB
-	fUKkNUKUrexzkSDZLDmtxA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786365851; x=
-	1786452251; bh=/9E4C7VjmTy0Du3c7TRRoBI3GKYFyAGQgmHdya15kws=; b=J
-	lELojd62tL1rn4dINp01cPdOP4Bs6YcRwtE+RVMVsdRJIy1Wwn/ESIt7sqTMEny2
-	8QjjOPTqzOEPOCtgk5pFs/Oqaj0ecZHD4AxK8h+7MUWbuo3Fpnj5bQnVHFnfjcJP
-	knXJNPEeMrzNrpL8ihKaTCUEaMMqIedDuLhGN/qf1QHs5pxIdprAYy/djNfcG5LR
-	SXAvB1out2Aqhes7KoWnggljlZ6gpL4AifF9lgDMxEgwHqb02V3PsR9uac8YzjHX
-	w4mdvZufQv4PBScWnszab2QdZlZmAf5Po27eEK8ZCpk66Clt4m6njCk4Md/2NmhV
-	2FC9GS81MSS32aH5gk+rA==
-X-ME-Sender: <xms:m8d5aqPOJPk6oqFZvOGJDyRBGgaXjQs7aVdfbLod1PSAhUigP67Dpg>
-    <xme:m8d5asquB_aCky_mNGTSYyZXzjtWWSRUuZwpOZjtgFN2_i2VwV3T4JftZ4a6qfmw8
-    47ni8XrXbYQJbjKIXq-Mdif-USQuosoIsLfV1EqrsXqfrFMCEEMHZs>
-X-ME-Received: <xmr:m8d5arFCSj_rP4G2cuaLDnlg8DUrOpyLaxpN2aPKDrZXXfVI5hsXM36IPasc2JqACyWic74smy_fxd6HacNQI2NVYJjpmIKNFZuXVebKKw>
-X-ME-Proxy-Cause: dmFkZTFR3znwB3352mJkmlTy/SwW2rp/I5Ex3bYqlpFnE1ojEhCUQfPKh6SIdwQKkz8LSV
-    0v7xqAyZh87vusqKyRAU9xXs0O8ocV7wdG2orRhNGPpNxS5TnJtL4aOZH4wIUNyGSBCJdV
-    xPtw4j26k1LhTMem1mNI5c/i9frxe169jSE99kwarUEizVe+JSutaFyq6pjgfVCgZ0iK//
-    g7KPhC3no1nPAZsWnAsz1OsifDGMMJLAJOSZiKP6eV9jLvpMRutdzZmc/CXZYo0ydeFxpd
-    VnKP5mGDoN7xknRsZoyZoM8JhKKr7H4xfKsSxp0KJBYFSYX1B+zabXvOJ8xHOYQix+tYqa
-    9xen7lvuKuKwXhFXbxLarG5zVP94MbLpzmtffvDVbVpdRiGve/oQGwFrxUcUpKSu3e95tg
-    LWcAqhjlfvBC1/Rfk7Ca/wH62aOP7BsWeigm8OWvVZes81uJjm4dLvTQIRED3i2JPPFC3S
-    shLMVNOfeWCCi6LKRC4PT37s4QnauY7gl6tKLomjYKqnfV91Q5olMpXyi1wo2elz2oGe8B
-    cVi8OdObiIRb/xt2ZKiWsW4dS8GLTWs3gQcEmrZ9AGtzIatuyIooUyZeU6gANdkq4QY+XD
-    ky93+Fr2b46Pe1SPruuZv18xCYl1OBgK2GHgDsOjeK71z55gdZYlCUqu5DfQ
-X-ME-Proxy: <xmx:m8d5ahrbooda1JjPM8YeouD-gCVee8yWoEuMcmtspgpgPvf_oP6hnw>
-    <xmx:m8d5akZ1nv8xfJFGqyPUprcx7yTAAXQ1KUZ8NbFqXNLy9ikz7eld1Q>
-    <xmx:m8d5aqXxjJM17A2GQK_50QvYPNsn9T1jKkk0YLsNKvcbmtscBopM4A>
-    <xmx:m8d5at-XQVwx2iuXkYu29L-p40E38i1atXU0Tc68L0eB5Shy_oSWww>
-    <xmx:m8d5ak45-7gyjNePQZSHIDXHsfcFpUpnoA1fLn_etlwEb31xdc8X6FbV>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 08:44:09 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 022b39b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 10 Aug 2026 12:44:07 +0000 (UTC)
-Date: Mon, 10 Aug 2026 14:44:04 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Tian Yuchen <cat@malon.dev>, Todd Zullinger <tmz@pobox.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH 3/3] core: convert build-time USE_NSEC into runtime
- core.useNanosec
-Message-ID: <annHlFwu4NKwmcLr@pks.im>
-References: <cover.1786103607.git.ben.knoble@gmail.com>
- <dbbd96d50811e4c2decb6f754b56dc1f7ee0944a.1786103607.git.ben.knoble@gmail.com>
- <xmqqv79ld40c.fsf@gitster.g>
- <CALnO6CBm4g27mWBvD9m6yL0e5YZu3M9_zcUeLZk7QwTgnxMLQA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jO2eAxFO"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2cad8076b01so19962725ad.2
+        for <git@vger.kernel.org>; Mon, 10 Aug 2026 05:48:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786366131; cv=none;
+        d=google.com; s=arc-20260327;
+        b=QQOHyfTd7TXzTFLd3eKqHQU7WhXHhRvz9H5jZ3Sxd9DYYIlmlNX0HMiqec3tnuTgZo
+         quNziV4fBLl/RmI6QHl7SfClsJVoEFng1xHB1M02G1X5NJ/kMURVYOA2TZKCcPoWKp8U
+         Cnw3zyaEoHMeiToIaAY5C+2famyLnoQSc3WBOQgPHmeeGuu66ZsJR7HL1hInuMP4ZMaX
+         66Hh8EfX9DvRlDtvY4kKZX/1YlkxFWtykytcCX3FWLajiq3JCWXN4ZmVxB5Xr8MZDONc
+         6F5buykCkVsEnrXdnb0E6l6NQPF9HBR4kgVzG4i7E3uZZHGq7JVmfuQK79VGnNifkAIo
+         09pQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=3dr9g63ZmiBUQizmo+FGieL4TrCU/UDrBHJhbaDSLQc=;
+        fh=H6lokUr+VJOb8K/s4/XQEDUqD1mgPN6Wv/mJsHIkuwU=;
+        b=EigDa68vK6XUAvytt7uM+tLYBsHj1h5Gz4o8cyNQDvMkpbGDY/DIIgXnzVk/WaIH4q
+         cqegKcdJ9mdUrXC4aUSDhA2OUCxaU2JzxFJgfoUP04a9Dd2YXopbhUEjdi09Do81FBje
+         u4WvaJRbF1oMKnmsFoev4W88KKnOO2kDJQ+o2ZG25cT9enHtZC2GSj9aDIlS/a6MT3K1
+         7E6NkfGezBYlbBjC2oAC73Pjl8Qehv4/X1ZMpjcN89EcVSKTdY//7fm7ziwipfx6Trgr
+         LroH0pCjLRhRqUD7PPP9oaOq8mXMzS34fm/l8CfaHaIYBLrcyv3eMvp67raf8s1whFN3
+         uAVg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786366131; x=1786970931; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=3dr9g63ZmiBUQizmo+FGieL4TrCU/UDrBHJhbaDSLQc=;
+        b=jO2eAxFOKs+4Wlm8UGGcl9edpiaFsbfkGo9J2vRdZSz62CFBQW1KQRPYKjsML0d7aS
+         K/IQ7i9yokhrwcXAWjsEwIcCTfLhLwQXGXbbjIlED9Yrv6Ph8dysDgM00cXyqJgUvRVK
+         O00q+MEGagT2O4tpypaKwTrOt1TXYyGRb6ESNFa3nBe/pPAuNfMxqT4F8GOM4Q3CMWu3
+         OGCmYfXF6RhUosyQqBjU9KA361RjvbeRHXYxoopNkfXIzV+EomP44YWC91/ZCTgPOFAF
+         k3Dq5tpE/JD4oHFSn1VkO9ipFj0z077RhD2drvVrxSiAM4hcnFkSc2PWxH8H1BpOH1CN
+         hMSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786366131; x=1786970931;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3dr9g63ZmiBUQizmo+FGieL4TrCU/UDrBHJhbaDSLQc=;
+        b=EpVsVG5t2/c24GDpLGoirFCAwfejbMnUy5+PmnlHi3+8r7NVyjsPChwhBU8hSZg7B0
+         UU6xnZhW/dSLzjdkB9RO/hKgWZxL90yReJsn1RpmdW9lI5T4NnxhXSHU7888pgpFP+xU
+         9Szj8VF4FD046yJZ/WuVnlk2PAtJNmt6f/jbTk6WQPiuCHe1LETGPcy03HBuzwkX/KEs
+         SWhKzrsjvRAk+vha7fiqszhe9A9DpKLdX3aoG+5TrMQpssUeDHVZpDNgE5Xk/O5O/sg4
+         SFRav4o7C+zUEUYW4kql+mm/ox9JRthImKhN3rs798oltY+Q2mUAJhEfd7fn/bzVWpDY
+         Y80Q==
+X-Gm-Message-State: AOJu0YyPpmXkS74y4y95SpnLHaYVp7tqlnuTbATGdV9db+wEcHoeyWa3
+	44yYjn05dshxY+dVRg4AwBg5qX/tiOXmhTqFyBA3zI5UiyOiTdyKXSyq6fXGn3GEZmiBQrtBgsL
+	VCE+dGCYsfJ36NWWsx9kykUbuWcwrJbYQ8xV/kp8=
+X-Gm-Gg: AR+sD101+uKh+U0kMv4Fe290n19lZhxbcuRKtlnf/FjUdBDdgrAvtBKWCwr9YVXaHWW
+	5NBHQWXJ34j5RPtfQHRUN/tVWM3NBl+DJqyqKG9bcnKPyJV3MTFhaBNUTA+qKvzc5Gs3DRIj2Z2
+	MCddXVH9La6UGH8niyqHkHojW9B0Q8dx/sHRjOCI6SJYioe2D856LMso0ztwGRq1zXaoZJ/dLyi
+	WBpLT5eEcZ1Uwk6HbDwQuGgxhSykSenKdsMrmEteRpOFLhXSq/DBS5WUVZXWaGLPMlBtJJ/GgRg
+	xqk/VMd07qiOvaZiCrrEXCDNdcw0Hp4JDwSReiOOLtWTQAzzB29WYHXwbexExG3ZsAeli0IZdDY
+	WEdUYnHEozm+fUg6fRHuSs5naxwsKnNhE4sQLOR7heItrWlU+6v6PKU+VhlXy5NB8HWMfQ5vL4o
+	Mx/B5hZZIHKCoXhkrZaoc=
+X-Received: by 2002:a17:902:d54b:b0:2ca:caa5:9c04 with SMTP id
+ d9443c01a7336-2d0caa0eaeemr538834035ad.23.1786366131326; Mon, 10 Aug 2026
+ 05:48:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CBm4g27mWBvD9m6yL0e5YZu3M9_zcUeLZk7QwTgnxMLQA@mail.gmail.com>
+References: <20260806-history_autocompletion-v2-0-7e60f52a1c20@kernel.org> <20260806-history_autocompletion-v2-2-7e60f52a1c20@kernel.org>
+In-Reply-To: <20260806-history_autocompletion-v2-2-7e60f52a1c20@kernel.org>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 10 Aug 2026 08:48:39 -0400
+X-Gm-Features: AUfX_mwssbvlEOUIhRVy1yq7mDVMQrvUwPMU9lMr8GS6xbVXZUfUlUVuTxRIHV8
+Message-ID: <CALnO6CCCG0xcZtAKQdNsKxNJ2Nyq5HztLaz_7QXjfQsN-q-xgA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] completion: complete 'git history --empty' values
+To: Vincent Mailhol <mailhol@kernel.org>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Philippe Blain <levraiphilippeblain@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 10, 2026 at 08:27:51AM -0400, D. Ben Knoble wrote:
-[snip]
-> Back down to being on-par with original code. So that's good. The next
-> version will include some variant that reads a struct member instead
-> of going through repo_config_get_bool().
-> 
-> But which? Reading the private_ member is obviously wrong; I suppose
-> I'm supposed to use repo_config_values() there. Or, rework the series
-> to put this member in repo_settings. I think I originally assumed that
-> struct is for things that are settings that aren't configured by
-> git-config, but… now I'm not sure. Looking at prepare_repo_settings()
-> shows lots of repo_cfg_*() calls. So I think I see how to adapt to
-> using repo_settings,
-> 
-> Patrick, Junio, and Tian had a brief discussion in
-> <anlmwaEtwcCPse1N@pks.im> about the split creating confusion. I don't
-> really want to wait for it to settle to land this change, but we might
-> want to work together on identifying the best path forward for
-> core.useNanosec :)
-> 
-> I don't suppose it really matters to me which struct I put the member
-> in. As I said, v2 will definitely fix the hot path lookup here. Just a
-> matter of input on which struct we want to use this time, I guess.
+On Thu, Aug 6, 2026 at 4:36=E2=80=AFPM Vincent Mailhol <mailhol@kernel.org>=
+ wrote:
+>
+> The "--empty" option accepts "drop", "keep", or "abort" for the "drop"
+> and "fixup" subcommands. Complete these values.
+>
+> Although the synopsis only documents the:
+>
+>   --empty=3D<value>
+>
+> form, parse-options also accepts the value as a separate argument:
+>
+>   --empty <value>
+>
+> Support both forms to follow the parser.
 
-I think `repo_config_values()` is the modern variant that we're slowly
-migrating stuff into. But that struct only works with `the_repository`,
-so the question is whether we ever use "core.useNsec" for a different
-repository. My hunch would be yes, for example when recusing into
-submodules, but I'm not sure.
+Comments on 1/4 apply here, too. I don't mind supporting both, but I
+wonder if we should be consistent with gitcli(1) and just go with the
+stuck form.
 
-Patrick
+I can only find one hit for the pattern "--[[:alnum:]-]+[^=3D],?\*" (use
+"git grep -E") in the completion code, and it's "--no-*)", so I'm not
+sure if other commands support completing the unstuck form? For
+example, "git commit --cleanup <tab>" doesn't complete the mode
+argument, but "git commit --cleanup=3D<tab>" does.
+
+>
+> Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+> ---
+> Changes in v2:
+>
+>   - New patch.
+> ---
+>  contrib/completion/git-completion.bash | 13 +++++++++++--
+>  t/t9902-completion.sh                  |  5 ++++-
+>  2 files changed, 15 insertions(+), 3 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
+git-completion.bash
+> index 7372e2919b..fe5223b8ec 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2171,8 +2171,17 @@ _git_history ()
+>         fi
+>
+>         if ! __git_has_doubledash; then
+> -               case "$cur" in
+> -               --*)
+> +               case "$prev,$cur" in
+> +               --empty,*|*,--empty=3D*)
+> +                       case "$subcommand" in
+> +                       drop|fixup)
+> +                               __gitcomp "drop keep abort" "" \
+> +                                       "${cur##--empty=3D}"
+> +                               return
+> +                               ;;
+> +                       esac
+> +                       ;;
+> +               *,--*)
+>                         __gitcomp_builtin "history_$subcommand"
+>                         return
+>                         ;;
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 5ccb38c751..52a036a1ad 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -3126,7 +3126,10 @@ test_expect_success 'git history subcommand option=
+s' '
+>         test_completion "git history fixup --ree" "--reedit-message " &&
+>         test_completion "git history split --upd" "--update-refs=3D" &&
+>         test_completion "git history split main --dry" "--dry-run " &&
+> -       test_completion "git history reword main -- --d" ""
+> +       test_completion "git history reword main -- --d" "" &&
+> +       test_completion "git history fixup --empty=3Dke" "keep " &&
+> +       test_completion "git history drop --empty ab" "abort " &&
+> +       test_completion "git history reword --empty=3Dke" ""
+>  '
+>
+>  test_expect_success 'git history revisions' '
+>
+> --
+> 2.54.0
+>
+>
+
+
+--=20
+D. Ben Knoble
