@@ -1,82 +1,83 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A94A220F2A
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 03:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF9A156661
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 04:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786333100; cv=none; b=CU55mUMZsScdb34uJTrYyEut29v0qjW4VV4iCrtZnHkiK2ECw2bJgSvNmzJwqJV8MMUq8YlnYhHPoyf+6Km/AhJz/0uswhxGCPynSKqilUcmlnGTjJ/M+V9Pcu8v5XVH+UQgfOxOovFBPIgiShr14xhjJOzWMPQJr230YaPO/SA=
+	t=1786334525; cv=none; b=rYEjJupUXXDE4tznckd4r1C2ILCbalEVReqCjdI6GZEQIDSbZNvdspE3JTi4tHx2lIp6yYS5cdPW7pRxTEAhim/j7vos2lPe/Ei6nE7zYTF3RvXbfIGjn3tiu/I5bi6HOp0IlvEUK49oRI0vX9QjXLOI1q6uxewv1LVpGOhml4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786333100; c=relaxed/simple;
-	bh=sg0KJU7UEsz/gGkRmjKPsYI0PB8ZIu3W+WABMm2IlxU=;
+	s=arc-20240116; t=1786334525; c=relaxed/simple;
+	bh=KLI5/nvBsBmrP9QHfT2bRV36VC0NpeuDxPeyLNpcaAI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pFnPnE+v4jBHTW5wMoe7YvB5GaGpPErebuM339VLpEBlCa4xLqDDceuRsa2oNamhnExNFTyAGTNILyh114iQwXNqj+aFtCgZMnOL6MGGI6mfUn/T5nbcTRack4vr0eGLeNIehfy6AJj3+8IjeOomhAURjZ/e7puF/2rex0BPiqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nJSrU7ay; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VHUhcJF5; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=DGYZHuF6O1iZ9+s6kp8dzj8yNaEpYrwpIlkvINZtdFka5Fb1l8BISDzPhhjZbZLrXOymAoCrV3blhj/PsCTWC9sVRrQnwy2xZ9BVamFsdNAjXsk0ZMO6dljHEd74NVGpCp6oc1mP7/p75UqRK6Uf4JeTB4LFur8dkweStms04Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M8+ZNYNL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hhbhLLT4; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nJSrU7ay";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VHUhcJF5"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 71519140004E;
-	Sun,  9 Aug 2026 23:38:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M8+ZNYNL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hhbhLLT4"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 73C1C140002B;
+	Mon, 10 Aug 2026 00:02:02 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Sun, 09 Aug 2026 23:38:17 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 10 Aug 2026 00:02:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786333097; x=1786419497; bh=gLWGA0XdFr
-	vyifCE7dvtiHzOL2TcABOGxr71lEW0+v0=; b=nJSrU7ayTEMv41kG8EbtNtJQJT
-	lwfKAZpDq7SnUTz9/htzBv0OTBuVUIxVe1A93kKe8rBgQFinkzK2DZ8JkMmi8qLg
-	YdRsq4TzD/0vspan5zoTN24NnPgQNdEtbd1thk8TEq5zMRCnfg1FHMG7IxVxEQTD
-	RhMWRJaklPhBjpBVhQc8sEY15+iF5zgr7iuy9RKogoz5o1tdTa5hcs2afAmb8ejg
-	ZMi3BVcQEmChekBWC5x/4YXUulkznFCGQeDI28jJ10ngxBVDIonP7W9PYpmzNahR
-	aDzM27F7YB3FHgez2CdigYA/5ljPL7iILaRmoaYzlAbUN8irOZDhIXbDvnQQ==
+	:subject:to:to; s=fm2; t=1786334522; x=1786420922; bh=tyUjb9GJYf
+	wCnIGo8WIapgMQmmQXMGSiu090+fWY0Bs=; b=M8+ZNYNLTJ+yjHFqOTwyLD5a7z
+	eEeeZ1r//aOsXRRG7xMwO1PlRf9cTQ7rsBsSAWVD8YyNmWV689dWmJTuuA1S/cAF
+	CGi47E6HZ/LcnbwuIpoLCNPcam9N0nQvCwJ/Rm6p5ZU+kWGGGJqsTi+8Gn/mxy9w
+	HLCyUnnpYtiegOWvIvl3/1WZOYKw/9YIue1Auwc9GeqHLGHt2gcMxycFBwwBhGG9
+	8EoXNyhsnrJ9oBRRGUTck5TNzfQcmWMAUcXeh5vehl66pdWbI5gPREKoxMQbu6Lr
+	TV00yP3lMaiX0zz6EceSPx9Llus/jt/PQzoSgucR/744w2nuzjBQiTuM0NgA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786333097; x=1786419497; bh=gLWGA0XdFrvyifCE7dvtiHzOL2TcABOGxr7
-	1lEW0+v0=; b=VHUhcJF5qz3sIvm8M56BXjNrN4G/gpYor/k2DWJtJWfYrY3Aq8u
-	+osuAn85lOVI2507ZC/94Y/plaXviGcrqlzLjLd4Pd1sM62gyXeAR35a/cS8nVt3
-	XnLLf4HiO40BBvNxFH/3RAGgItElo4HAWbeQBspEtWzjnVM2mdySiPa5dQHyMypD
-	g089qNTuDGh6Fy//OhC5qyxMhRItJvvRqQxcQ1TeBDDZIRvtG2gHTxFRymIJrl7O
-	0pjA3GC9U04ND7yvcxzwlyrSQIy7YwgtYwrxSnwI75u7VU0YJ1ZsoKl0MWDfASgi
-	EjlCdKQTSZN+fnmrxhDPXp8AZYtBVzduWcQ==
-X-ME-Sender: <xms:qUd5as1tgJWbZ40FadZZVsm6mvq8WTjxXXR8yyGORXDWTEaxd5bugg>
-    <xme:qUd5auGuf2zMRJNrWRca1LfW6VDiA5PxbWO_NBKHfA3PGy_zsQbtwiZbIUQrBd0Ol
-    gz0PeGwJGAVPekTNoQOYPcqz8V_cm3IBPJIXEyWSigBHfbh8Ie64A>
-X-ME-Received: <xmr:qUd5ap6p0azs4refQgl6UjgPsYBISlBBOia5-l13Qnbm01ixPIvmeS7GNfYt_ZMwFvY4ImUrMcLZYy6whtMX8tchfFJq_lxXPg>
-X-ME-Proxy-Cause: dmFkZTEvVM0FvUz6NQhe5pa9EeBnkq4BheeQRPGL6BO98fwMIr8bJNLX3IrHsBeVyebiKu
-    ugodUA1MAql8PTTqn8jE2ubeTmMrxsFszUI5dVVLLTwpdcduwBKyXR3461X0zN+4VDlbna
-    LgTjYQqKBUMe5dakpWh/2OqDJHEL3NVJupwveHSowOfwc4QqQf5njY7Ll8SzDNWgJfgoO8
-    PI2SmZkuuRSFGj/WG+F8gDghOBZz18cjn8H51Ds1oy+oWPPNJlDdik1G3Kzk8VMRm10xUv
-    hQ4Rb3MfjL0pjLQJzJZnrAJ2nVMwxzmW8Qq2zsb82Sk42qgCuNzRFp6jrVo3BQ2eReHJAQ
-    u09WYuy++cmHzWfNvr9ylkMNaOpPe7zDc/fcKPJimJWq2P+YQ4DKc5kYFusuC4hlWG2zut
-    mPwZiNt68pQMfkjkMgusGObXzhQCB/agUi7/odlyz54cy+Z7IkJpxou6v89AdPCpqeHtxL
-    T9dY/NGtT3yPiUTfPnm0xKVT94hEWOTyiVuyvrUFoLUx8Je+vbKWpHvvJ8kz4uH/ENfqgv
-    IfovFs7L9YClmQQh0k8DPwXk7Fu4j3CBi9JoFTocV5T2fmX2o58m+h4DceaEVqqkBVTHWN
-    N8ITdy0obIWeDDsLVIlPVv6Ft0NPXnLprcwK9+IOYV1cvSZupW/INp8eR+jg
-X-ME-Proxy: <xmx:qUd5aks6cS6vjM7-QggV_loHVmyf1RfT1HUvtmwAV5ju-yAMGPv68g>
-    <xmx:qUd5aq5p-vTF2VlLeutlzbDNiC5pYRhU_wRrE-g0ZK8HFG4YEEkJ3g>
-    <xmx:qUd5avWgj-i0UvsCze8Ll5xUhyn_N_uReoOAqHYHIQN0VQTOnTkIww>
-    <xmx:qUd5as-5im8FPUhAYfBHbScCpRZnyxmi2_5cyGxUL80lNKFKGG_Xeg>
-    <xmx:qUd5albBL3Zpy3Cmn5PWZcI8SyfpkJzyg2S2xwC-uMFu8PtrPIf54rOq>
+	1786334522; x=1786420922; bh=tyUjb9GJYfwCnIGo8WIapgMQmmQXMGSiu09
+	0+fWY0Bs=; b=hhbhLLT4X/Roqamme+kZxGRqmJTrm92dox0F7iHQCGPFtO3Wmoo
+	1LzRgi+y/qmQtZdTOamirEIaAonviyxYByMC+GrP4uNsZaru0WLssfHl3smy7Nl0
+	kGT59+DyuTfVHS52sGFlZ9IeGYyRXmYGtHA5r0BRtFeIyyTMz2pbnRQZjfVqiG5e
+	sIqdvf/cxas2QFUUcWe6QxSSyN4hqOuGmMB4iIXdUEPHcNg8nPjvosHMUp7u6KOL
+	hwAwxSwDjj6UN0qLu895VgBgPVKH4mVh/LsUZgboTlhbSFb1TXSzsspbO+vbCO4s
+	CK+1ng9IRI5EY20EIOEmpbFyxUHZ6pJhJpQ==
+X-ME-Sender: <xms:Ok15auTIorKDvOUxQGG_xbCxUgGYTxl9gSiLy8ruadgKYhLY1hQ8qA>
+    <xme:Ok15aqwhK53ccU3N8YKTT-mYYy7h9lcLo9NFnrhjd2rl6aBFddT3-GY-i4-StACUc
+    j4TlIqaXhSg8zQ8io9OASY1Fba8hnL7Gyrqs9JXZZj4i-CyuBOiCg>
+X-ME-Received: <xmr:Ok15ag3sF0whrokjKwMkOExjcVcj9zn3i4yrgDG0K_o9kvNEEEMYary7ZJPeWiT6nDmqX2FXDRlMh7JiAKDVKeEEvxwbrlopBw>
+X-ME-Proxy-Cause: dmFkZTFbEreCc9yOEHrJXFgQYifDReW/se18Gyg3dqukVGvgHKSL6m07O9TrfxFJwD+Yjn
+    SGrKo7AzUb8jTXTYojeJO/Y2kQev/1Qgw1dArwxYotmVWgHMx5hcQNZWLgDKB7bdCIiW6O
+    ye7CE1SW69QYHLIFKmBmJvSGfowVeMMlWDxTABjKhUe8C4wBB32h0/9JZLUkPuLlpP76p5
+    +XziufGmlkFGLnqJBr2C+6kgHAcNJpjWXKpkoW3JrYc+hdPBE/xvCcXkv7h1AEbMQhwoZ7
+    JZ/OXjllKR47S9tx3jnXvhGcRZ47KNb1RsZd5cRxX0QyeG3WoAVmH7n3PUnpP8G2kSRKHm
+    4Ft/koKr2+nQB3PQMpgdvgzpq9/u0SDuwKeMvDB8GLNY9d1gxVj4QFF54fTRozlSTjGmgQ
+    g+DVptaNZBc6e+zsWM2MFe9H35b1czNbB2+oRD4LHmgZxBj3hs8z0H6TbSOA0eX8BkQD4c
+    m2pIcKpXcwsABAPxDXkC8nmqda1VSMKdu7yniAttxHDpMkX739i5RrKMI+sO68+yMe4cyk
+    RZoJgVOoJk2cQTVMi54eETf5HwtUX+bqKiKTJ5Z7X+2AVDHas4zC6vHR+dOGkjosO/YPfn
+    6Ts9k6n0FupiJanxMsWqi5xMD+ckW6UvvHjJz1TsssWuXk6emYVbM8o4aeUA
+X-ME-Proxy: <xmx:Ok15ao49X59VJvd39MxMqOui04LfuXZxNM0rAOUGSbet297_kC7WSw>
+    <xmx:Ok15ajX_A_0CUU7lhhlbR77b0MqlMxWL2zRu-hk-fhk7kmTESiNEdA>
+    <xmx:Ok15anCVb9tIRCjKekwc5DIuKRSkD9CrQY2MWhsyTve8oqqepUvb7Q>
+    <xmx:Ok15ai5U8Bm-NKM6jNgPuywoj6SmJmesBUBrSOVuMRBNBKeG__oi0g>
+    <xmx:Ok15atiovzfJ4EdvvCtK_yQkLIio2v7E3ORkWQ4UoQTxZGV4l29N_9HS>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 9 Aug 2026 23:38:16 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Aug 2026 00:02:02 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v2 1/7] odb/transaction: add transaction finalize interface
-In-Reply-To: <20260809190106.1565882-2-jltobler@gmail.com> (Justin Tobler's
-	message of "Sun, 9 Aug 2026 14:01:00 -0500")
+Subject: Re: [PATCH v2 7/7] odb/transaction: add transaction interface to
+ write packfiles
+In-Reply-To: <20260809190106.1565882-8-jltobler@gmail.com> (Justin Tobler's
+	message of "Sun, 9 Aug 2026 14:01:06 -0500")
 References: <20260806213859.816157-1-jltobler@gmail.com>
 	<20260809190106.1565882-1-jltobler@gmail.com>
-	<20260809190106.1565882-2-jltobler@gmail.com>
-Date: Sun, 09 Aug 2026 20:38:15 -0700
-Message-ID: <xmqq33wm8x20.fsf@gitster.g>
+	<20260809190106.1565882-8-jltobler@gmail.com>
+Date: Sun, 09 Aug 2026 21:02:00 -0700
+Message-ID: <xmqqwlty7hdz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,53 +89,61 @@ Content-Type: text/plain
 
 Justin Tobler <jltobler@gmail.com> writes:
 
-> diff --git a/builtin/add.c b/builtin/add.c
-> index 60ffbede2b..501e114ed5 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -393,7 +393,7 @@ int cmd_add(int argc,
->  	char *seen = NULL;
->  	char *ps_matched = NULL;
->  	struct lock_file lock_file = LOCK_INIT;
-> -	struct odb_transaction *transaction;
-> +	struct odb_transaction *transaction = NULL;
->  
->  	repo_config(repo, add_config, NULL);
->  
-> @@ -610,5 +610,6 @@ int cmd_add(int argc,
->  	free(ps_matched);
->  	dir_clear(&dir);
->  	clear_pathspec(&pathspec);
-> +	odb_transaction_finalize(transaction);
->  	return exit_status;
->  }
+> .... Note that a packfile
+> written via git-index-pack(1) is kept in place by a ".keep" lockfile
+> that must be retained until references are updated. To faciliate this in
+> an ODB backend agnostic manner, the "files" transaction backend takes
+> ownership of these lockfiles and removes them post-commit through its
+> release callback.
 
-There is only one non-local exit between transation-begin and
-transaction-finalize, which is a call ot report_path_error()
-followed by exit(128).  Will _finalize() stay to be just freeing
-memory and nothing else?  It may be conceptually cleaner to jump to
-the bottom to make sure the clean-up sequence will always happen.
+The above is confusing and I am lost.  Care to explain a bit more?
 
-The same comment applies to other codepaths to which this patch adds
-_finalize() calls.
+> +		status = start_command(&child);
+> +		if (status) {
+> +			strbuf_addstr(err_msg, "index-pack fork failed");
+> +			return -1;
+> +		}
+> +
+> +		lockfile = index_pack_lockfile(repo, child.out, NULL);
+> +		if (lockfile) {
+> +			ALLOC_GROW(transaction->pack_lockfiles,
+> +				   transaction->pack_lockfiles_nr + 1,
+> +				   transaction->pack_lockfiles_alloc);
+> +			transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
+> +				register_tempfile(lockfile);
+> +			free(lockfile);
+> +		}
 
-> diff --git a/odb/transaction.c b/odb/transaction.c
-> index dab7da6a9a..9e9a982778 100644
-> --- a/odb/transaction.c
-> +++ b/odb/transaction.c
-> @@ -33,6 +33,20 @@ int odb_transaction_commit(struct odb_transaction *transaction)
->  
->  	ret = transaction->commit(transaction);
->  	transaction->source->odb->transaction = NULL;
+Here we add the .keep file to the list of lockfiles.  We have
+finalization step laer in odb_transaction_files_finalize() that
+deletes the tempfiles when we are done, which comes after
+the transaction is committed.
+
+But isn't the odb_transaction_files_commit() where the migration of
+tmp_objdir_migrate() happens?  Everything in the quarantine directory
+including these .keep files are "migrated" (either link-to-the-new
+followed by unlink-of-the-old, or rename-old-to-new) there.
+
+And then ...
+
+> +static int odb_transaction_files_finalize(struct odb_transaction *base)
+> +{
+> +	struct odb_transaction_files *transaction =
+> +		container_of(base, struct odb_transaction_files, base);
+> +	int ret = 0;
+> +
+> +	for (size_t i = 0; i < transaction->pack_lockfiles_nr; i++)
+> +		ret |= delete_tempfile(&transaction->pack_lockfiles[i]);
+> +
+> +	free(transaction->pack_lockfiles);
 > +
 > +	return ret;
 > +}
-> +
-> +int odb_transaction_finalize(struct odb_transaction *transaction)
-> +{
 
-Curiously no callers added by this patch checks the return value
-of this function.  Intended or just sloppy?  If the former, perhaps
-this wants to return void instead?
+... we do the deletion of tempfile but has anybody migrated the path
+to these files recorded in the lockfile structure?  How are we
+removing the .keep files that were "migrated" when the transaction
+was committed?
 
-The same can be said for _commit(), by the way.
+Puzzled and confused...
+
