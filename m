@@ -1,84 +1,85 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0E91FE471
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 05:51:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCF425771
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 06:03:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786341066; cv=none; b=L6R0t2maGir/AzTJTSso53gFLuhZA6p8FYghLJwTUTSXH+GTyfXw3uCR5wmtCt9wx246glCYAMQ12YfZbvIEgnxuemoYIs37LEtXXXtMvimeZnAbYhjdJyn+yMgtBYyjmVxt2HNBlCbo1ZwZUCSAEYV5PxDLzpOxgEWtGoeilqA=
+	t=1786341793; cv=none; b=NSsLwgjfWvSvLC/h4Te17T+SOZRD3etf5wB97xWTOT8GpKPNGXBIuLSjn9fkoz/zQd7J0UvzBBZ4Cyf76EAq923x+jYajOc2EW+4CqJNviLnllyNYIXQFBQRtZU5j6pigSf4o75SDvJrvNe4cGCfVDyxh6r/ZSdfhyo8lV+QGSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786341066; c=relaxed/simple;
-	bh=hT5Z7JwdAcdhtRX0oiiE/UckUnsreX9rLiKNSNIdXr0=;
+	s=arc-20240116; t=1786341793; c=relaxed/simple;
+	bh=L/nk+dHFNYXdVUSJrOqpADoS5dWTZG6q0+qL2rTFHtY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jzw7/hh1Vw0ZvODS6xgPt9XuyrjUdK4W+3eKz8tWOPLQVV/8WFTRHae0ldlt06hwQm3D/XqqXsI01lwKv3M1yq8YUWqWDUOWBLU5dXqCWdagSnPdqOg0nqyWgtyREZZlx1lvnIHjhePKO2mlMg01pez+k49ZV0KexJWbzkfoW88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Z0Duobxt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e93Aw8I+; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZCfPudStPS/61Zu0VfIDAraJ+Q4+q1MmrO3VVHJrwuz+zRl29zeNsSVA20+MRxtu0KiTT8wCkd0BXvVa9k36YJVbZQ+HRzVO7tOrjlUwIKssnil1sT9wPsptc7IWhhZRYCjOHXm6iQ1FtOdZEBOAl7LUMUiO1uech/vKTrgEqo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oTw79h+8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gok1pRpS; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Z0Duobxt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e93Aw8I+"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oTw79h+8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gok1pRpS"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9C7CBEC00B4;
-	Mon, 10 Aug 2026 01:51:03 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id A46791D00226;
+	Mon, 10 Aug 2026 02:03:10 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 10 Aug 2026 01:51:03 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 10 Aug 2026 02:03:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786341063; x=1786427463; bh=d07AZkvsqw
-	LrUIaBC6K8i94y7bE3Fs8BlUV/7eQOYHA=; b=Z0DuobxtIEabRDNuBeK/GdYoH0
-	Q10YSQsJZHIT5HVu57l9BHBjRPuxAYBEEHSdvXxZmQgr0kwPVs85iSKe+XKcR6eB
-	sLXEt+40mZXodd2i5d152sF95D0Ym3FVeq+mhDN5fUhyp0W2CunORq84AJs24/Am
-	luMJbAco4x6NZSo9+Lpz3+1mD9KxWHdXNjzEvuELIHbHCCbom7+qcb6zIuS+vEw8
-	zH1CtfZ7fp6rQZrXWI9dHLaA0KPoxBIAieyp0KlyrVaerjc/+1OviANFSvlOlIVW
-	0Icw7RTdu0+Src5r7nBJrkGONbvqSZl9KqmJnxjwDTME1a1PjgISWEPjZLAA==
+	:subject:to:to; s=fm3; t=1786341790; x=1786428190; bh=ARcTLmiYQM
+	Xf31Rrbtqn3IzxBrylkBwUt2fc8lJNvAY=; b=oTw79h+8W3W3uThvcKaE9miVSn
+	t1e93ppkgtk6F8QKaKtGmip4vpNSDY2cj+vaN+PJ0KlO5rv3b5149Omn8K2yMc7o
+	IhhjGSWygUEtmHV849sLcSBGAuRkPilL5WvcSdzXDSTbS+2AXr7CLXFb70WqwU9r
+	gat07FV6dMIqtw9o2W8E+BGnckmo4bhP9V9gGIht9RSSyF4rM+iqFFedCerzTiGP
+	ga+mX8rEAX6RPu2XHBiUf+1IoPHHm8fjBCC7P4J8W/jzuqtpYU6qpCRC8aQDvZ1I
+	+pff6DKAYNm09bX1uCA6w+KapSrASTrljJzBjwvIarVttikXG+Zap/h5KENw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786341063; x=1786427463; bh=d07AZkvsqwLrUIaBC6K8i94y7bE3Fs8BlUV
-	/7eQOYHA=; b=e93Aw8I+UhdHldrRmsEK7JZgKOoYxBjUTCO9SlQhitlSeeNysEC
-	CZy9iriO6GfAbNbLbz/2l3yckJmlRwJjCDBhdUvlPJJB3d4DrIHxnXxA8Lm2wUYh
-	wp09QqQdMZfYV0A3o3mJqHh51emLU/T+WZJdIGxruYD9DJde0BlBVzMHKuNxjfS8
-	WzqzQw+yoT+TfBUxkzNeIkWkGbsxbRSKhiGAw0ugcC86RqRSzc6r2QkKM9rdtnFV
-	mu7cZs7yGrc6L9TXz7n9m+j7VnMq6J3wzs910b6FB9pbpTqoljfbuNJ8mHweZB4e
-	MJqZDTp8U5D1hftRBJaMqt8qZzBe0UjmPkQ==
-X-ME-Sender: <xms:x2Z5al9xJRQ5VxA4p24Pv77ySq4k_IGkBmgStrMfyFse9CFdP7td9g>
-    <xme:x2Z5ahKXMs-gDhzMf8eHSGjI3pNnBvmTrPjDA97ab-ViHd51GprZxX-gae6kwA7Gu
-    M6igdiSbY83w3lPSzvI-e-1wznlgvSPA2OZwMem_OP4FwzDIjMAgGI>
-X-ME-Received: <xmr:x2Z5agaHWsEZcvJBYxS7M7zJ3sAAIyWO30rM2gKlEoI7eXuCCH_baWvGA0sRcJ4Ad8_PdQOSm5c2X1wrtT1cHh1h2lkXRfCw7NVPi7YZPw>
-X-ME-Proxy-Cause: dmFkZTERQi+x03YzTyJR/t5dFxQU4YAUNzzc6W5OawDIRRgH7uW1Q4q7L3WS92DYoF8N9X
-    r/UBBclgCkHUK8ordgxQdTSK13etDBig6mpxwbgsT+acX7jK5pqQ9DhdCMxdUxc6AgNikt
-    X30HegqpaMjyq+GohpKOuabsz4xPJHcdo4py5RlZA+tLBlNJIwJv3FvpJdhtiADaJ/7n95
-    /8oi7LidQWM3q/KlHwJPyfO6od/dqAuarSHY7JrhbqmIOq3Wg5Yv591zXSpY4P3cTrv0Cx
-    bN66Wmbn/NfkHx5OnjYzYgzKQAdiFZATZnD/Y7a3oBuTVDNaFQcEWBE9fTKrj/r/ELG8aX
-    iSuQ9h8fQSJZhiympXmh+h7whj2TqlpLZE6C83vOwTn7VwPOQv+zqjjsGUJUWZCHx9n7E0
-    gliVUp6TkV+A7afPHaX/Rhot2CdiaqV2qrcHWC49mAf7D4jUEcBBLbQ2Rny28xOjAzfQ1k
-    ENaVeKrx0c6YGX/pQsg3mNuJF8e87Qulx2pv9QwCHkIfT84OjoowcSPXoZ7/m0Vni1wfNq
-    /GWr/L5ulaDo0w7lEQRUaHCizJ+Cl9NlUHES0ss44syQOIDlcquBBb6CDw7oijpAamqAAy
-    QlfrRxnPRA3IJMqbJKmNEVYSy/k3EhPVFFicTqACjkCVtDb4x+NvaTVt4M2g
-X-ME-Proxy: <xmx:x2Z5ajJlLT_DqACQTRo9www5OYGAnF8io2mxvjgf1TN3w55-eKDSEg>
-    <xmx:x2Z5auB9uL_YHmuSd5C-mq-JcmvA375cleaJYvB6Qy4Gro7lkljnOg>
-    <xmx:x2Z5aopZtrfVCqZku9Dt3hnNjedmgBM5AtX56g-Wud1WL0fkD3CY0w>
-    <xmx:x2Z5apglIbI3xb67XzH2C8_myEbbnE3Be4u6gR9jJYcaSDoc8Co17Q>
-    <xmx:x2Z5aj1na1iKqn9QOzQRO7RZ19rcsnqFbH1zWeLbhWK1d9nfFpxNQbJw>
+	1786341790; x=1786428190; bh=ARcTLmiYQMXf31Rrbtqn3IzxBrylkBwUt2f
+	c8lJNvAY=; b=Gok1pRpStJXza+VbWRsQHs5NukBwR4VYeyuPEs7BfYKAclaTU0i
+	OCgmVOtmZqvhWR+iKn5wtMjdPJbRCwMJtLr49LP9JQcPHcehqZmRWpfG90tmOL8c
+	6No7ubGet3mQiQ6XOezJos4am/Rr8t12+Q6MPi5Kd3obU2F0Fsflp2N6Cfpfz4n4
+	YY5qOq0fZ+OgH9WKJ+i6k4KiBerDcClS8C1xqb7+i64nXQG2F2ZepZooQS2Lzka3
+	mdQK8X3v5iirV6uN5+RVqpiPsHV/YR6gjOpPDawfAsYH5OVUO/D2Bzv7ufl3IIBf
+	TAqOKGTI2IHxKv0MEaCdkYiJ0zF+SyeKUdg==
+X-ME-Sender: <xms:nml5arH4hwl2i8coO9MwcHvtIvF7bnTZ4My6Nc-hqbUGhX7SakY5hA>
+    <xme:nml5avPPrBSQxd0PPv5Ps5s8CBFrodgpsbw2xPK7Tu0p8pwB3IqDXoEYbE4awknde
+    3bB266SP4pzcDgxFTAJXtNDgKvexWYNzyudnobCHttOo_RlqfGjG14>
+X-ME-Received: <xmr:nml5aldvfyFOz9rvSHGM_GrEZtKvXPa6Q3UaMMYWsFILyg1H62mFRg_qEShMOb7evtQMRxp6bGKPikqw60QLbI4L9KiU9e30W3mmadErcA>
+X-ME-Proxy-Cause: dmFkZTEfwHlsAUGClsrAxHtzg2goZqopnmVJowJwQPfY+5CTK90kBMPKgOm9WzhtYol9Vv
+    /uzUkBT1E3TQFaYBNC2OO8KiQAYwKilPA+v+ZW1O3evVLpf3AR2ISx6o2PVcNi3CNYlgTr
+    E5sOGNTWuRC1Og4dlI+8RSOGhGsMBVDIWI4J1TemvfOH69yad24IjpZcA2dqj7D4wsMeRV
+    05Dia/5GZkq668KpSpx1gm77o+xGv6qejAqxVx4bRykI/1CGTHtzOPD15tly4hOUauGKgj
+    /5GmAhN6m9rMhpZCtdyUG28jrGEko0DY3A2XMBjD3WR0EUCDUAdk8rCyfz/7LI9SnUmgdT
+    mod3IFH8dTI82c7lGBCy/XkT/HC2/4YrZSk70Ir0+6t3Dq9PeAY2VLgk7cw0I+4KQySmH4
+    /JLs2hNlrOzAaG3Pp2SqpZ9K+OgD7cyMBm8U1krMWoTAKJEJs4H77NbcjWpObe0N14P3aw
+    auQDNe1dq16iekXxxLt71xTEYHhVX9lW4fVuonnBdcVaj5VXfyr92h33H5oQ6zgCMlJRVl
+    o0x07OUNbx+4dHiETNxYfzSz45wIXgVLvu+VfzmqxYz8j6h9G6abVbJ6u/M4ddKqEo7ooI
+    L5rCLnKoEZpljFRSPbK9Zoi+tPBK9GH7MiMd4zVO1K0mugOa068s+8AANUvw
+X-ME-Proxy: <xmx:nml5aku8H11TYDgnskn8Sd59IM5nlQFjwghZIP0aZlfcvMeqGCxHNg>
+    <xmx:nml5aulK6P1ACfuYKnyTHG5GD5rsheLrMGnA1qD-kuEvAboresd2zw>
+    <xmx:nml5auyU_e8q02S1sBbL6eW4xPUbGhKwkMdWezgO6MrGtClzjHoJCg>
+    <xmx:nml5aoO4jUqN5kE8O_4VEcuEKarjw0KBSvLlRUyL-gy4NEnYzVSE3A>
+    <xmx:nml5aj9KfbXX5nCZmqPgOVGea5ktmaI6rBdKJ_miV3az7YMi8DZFpiis>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 01:51:02 -0400 (EDT)
+ 10 Aug 2026 02:03:09 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 07135112 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 10 Aug 2026 05:51:00 +0000 (UTC)
-Date: Mon, 10 Aug 2026 07:50:57 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 79a76f62 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 10 Aug 2026 06:03:07 +0000 (UTC)
+Date: Mon, 10 Aug 2026 08:03:04 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Tian Yuchen <cat@malon.dev>, git@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] environment: clean up repository config handling
-Message-ID: <anlmwaEtwcCPse1N@pks.im>
-References: <20260805115342.3939931-1-cat@malon.dev>
- <20260807085932.3958759-1-cat@malon.dev>
- <anW7wHfUxYj9cj0P@pks.im>
- <xmqq1pc9eivn.fsf@gitster.g>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>,
+	"schacon@gmail.com" <schacon@gmail.com>
+Subject: Re: Can we do better than "git checkout/add -p"
+Message-ID: <anlpmNSjBUJ8p9RL@pks.im>
+References: <xmqq8q6ih924.fsf@gitster.g>
+ <CALnO6CBu8ZBDk9YwLW2jVJtBUk1=pvai5QHiLN6XLOOL-3KA=g@mail.gmail.com>
+ <xmqqfr0qexps.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,88 +88,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq1pc9eivn.fsf@gitster.g>
+In-Reply-To: <xmqqfr0qexps.fsf@gitster.g>
 
-On Fri, Aug 07, 2026 at 02:11:08PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Aug 07, 2026 at 08:50:39AM -0700, Junio C Hamano wrote:
+> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
 > 
-> > On Fri, Aug 07, 2026 at 04:59:29PM +0800, Tian Yuchen wrote:
-> >> Hi all,
-> >> 
-> >> This series contains several cleanup patches for repository configuration
-> >> handling.
-> >> 
-> >> No functional changes are intended. The patches make the related code
-> >> more consistent and easier to maintain by improving documentation,
-> >> formatting, and the organization of repo_config_values.
-> >> 
-> >> RFC:
-> >> If there are other small cleanups in this area that would be useful to
-> >> include, suggestions are welcome.
-> >
-> > Somewhat unrelated to this patch series, but I was wondering whether you
-> > plan to drop the limitation in `repo_config_values()` that requires that
-> > the passed-in repository is `the_repository`. This limitation is
-> > starting to create problems as more and more of our infrastructure is
-> > migrating into `struct repo_config_values`, so using a different repo
-> > than `the_repository` is starting to become harder and harder in our
-> > codebase.
-> >
-> > Thanks!
-> >
-> > Patrick
+> > I raise this as the kind of interface we could learn from: emulating
+> > it might be a bit heavier (a full TUI?), but is certainly more
+> > convenient to use than the prompt-loop over hunks.
 > 
-> Hmph, that is an interesting point.  What is our plan to really
-> enable the use of repository instances other than 'the_repository'
-> here?  They of course need to be initialized with repo_init(),
-> but is that enough to sensibly use the embedded 'repo_settings'
-> and 'repo_config_values' structures?  (By the way, it is not
-> entirely clear to me why we need both and how we sift variables
-> between them.)
+> Yes, the 'one hunk at a time' model was easy to implement and start
+> using, but its limitations are apparent.  Users want to be able to
+> jump around, starting in the middle and returning to the top later,
+> for example.
+> 
+> It is more or less orthogonal to the reason I started this
+> discussion, though, which is that limiting the direction in which
+> modifications flow restricts the workflow, burdens the user, and
+> makes the process error-prone.
+> 
+> When I see a hunk, I can immediately tell if it is one of three
+> kinds (i.e., those we want to add, those we want to leave in the
+> working tree, and those we want to discard from the working tree).
+> But with 'git add -p' (especially with the original version of the
+> feature, before the 'e' (edit) command was introduced), the third
+> kind must be treated the same way as the second.  Then, after I am
+> done with 'git add -p', I must go through the remaining hunks, sift
+> them into two categories (those we want to keep in the working tree
+> and those we want to discard), and run 'git checkout -p' to deal
+> with the latter.
+> 
+> We should be able to improve this workflow without deviating from
+> the 'one hunk at a time' model.
 
-Yeah, this split is adding to the confusion indeed. I think that we
-should make it a goal to unify those going forward.
+I wonder whether we can take JJ as inspiration. For commands like
+jj-split(1) it has the ability to interactively select specific hunks
+via `jj split --interactive`, too. But instead of looping through stuff,
+it uses a full TUI that:
 
-[snip]
-> In any case, all of that has little to do with this series, I
-> suspect, unless we are redesigning these configurations and
-> settings in such a way that they are not necessarily tied to
-> any repository instance.  While I do not know the exact details,
-> I can imagine a hierarchical system where system- and
-> user-wide sets of setting values are known independently of any
-> repository, only to be overridden by per-repository settings
-> using a last-one-wins strategy at lookup time.
+  - Gives you a list of all files that have changed. On this level you
+    can select/deselect the complete file.
 
-I've been wondering for a while whether we're operating at the wrong
-level here. Both `repo_settings` and `repo_config_values` indicates that
-we're operating in the context of a repository, but as you mention that
-may not even be the case.
+  - Also allows you to expand files and then select/deselect individual
+    hunks and lines.
 
-I don't think the approach is inherently flawed though. From my point
-of view, the best way forward is to merge those two and then generalize
-them into something like `git_config_values` or `git_settings`,
-depending on which of both variants we want to retain. We would then
-have two levels:
+I found that model to be quite a bit superior to Git's own interactive
+mode.
 
-  - One on the repository level as we have it today.
-
-  - One truly global variable, because that stuff in fact _is_ global.
-
-We'd then adapt `repo_config_values()` so that it knows to populate
-either of those variables depending on whether or not the user passes a
-valid repository, and returns a constant pointer to the respective
-structure. Callers MUST NOT modify that structure -- if they want to,
-they'll have to make a copy and pass it down the calling stack.
-
-The last part about not modifying that structure could be quite a bit
-painful though, as it would mean that we might have to adapt call chains
-to pass down a `struct git_config_values` instead of a `struct
-repository`. But arguably, that's the right thing to do anyway for at
-least some subsystems that are independent of repositories.
-
-As you say though, none of this is really related to this patch series
-at hand, and I don't think we need to resolve this discussion before we
-can merge it. I just want to make sure that we have a plan for how to
-get rid of `the_repository` instead of only shuffling stuff around.
+I've been playing around with the thought of introducing ncurses-based
+interfaces into Git. I've been mostly thinking about git-history(1) here
+so that you can just move commits around, squash them together, drop
+them and so on. But I think fancy stuff like TUIs can also be applied to
+other parts of Git, as well, to make things a bit more visual to our
+users and, as a consequence, easier to use.
 
 Patrick
