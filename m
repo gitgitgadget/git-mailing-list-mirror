@@ -1,145 +1,130 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCF425771
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 06:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAC823D283
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 06:06:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786341793; cv=none; b=NSsLwgjfWvSvLC/h4Te17T+SOZRD3etf5wB97xWTOT8GpKPNGXBIuLSjn9fkoz/zQd7J0UvzBBZ4Cyf76EAq923x+jYajOc2EW+4CqJNviLnllyNYIXQFBQRtZU5j6pigSf4o75SDvJrvNe4cGCfVDyxh6r/ZSdfhyo8lV+QGSM=
+	t=1786342018; cv=none; b=Tbldo/VtbBnWT9V4M7+x6yoZUXEEx9/fpB05xBN+syV3Rcz10fbf107kOguz6e4U7/amVjj8inNTap4499sSge5HfadhEmPou+n6MMOVPddVw/FfpTp7FLxFKKN1UhsqhIuyzxMRsmnc4E5bscKhHhBk2jG/QaogvQ6msa5cnPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786341793; c=relaxed/simple;
-	bh=L/nk+dHFNYXdVUSJrOqpADoS5dWTZG6q0+qL2rTFHtY=;
+	s=arc-20240116; t=1786342018; c=relaxed/simple;
+	bh=j7BhhX/8aLkRAt1PZiiPDGBqFyA2vXiUVR8zOJGR7ls=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZCfPudStPS/61Zu0VfIDAraJ+Q4+q1MmrO3VVHJrwuz+zRl29zeNsSVA20+MRxtu0KiTT8wCkd0BXvVa9k36YJVbZQ+HRzVO7tOrjlUwIKssnil1sT9wPsptc7IWhhZRYCjOHXm6iQ1FtOdZEBOAl7LUMUiO1uech/vKTrgEqo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oTw79h+8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gok1pRpS; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=nR+mXQdaXNS6HGSKQFOWCCgTpHJWIYZsN43TOoFtzREAD91atTknvcPoT6KGInHfF2pXn/8VWE+GP0AGzqoCeA+cSOy6AsWX+WWRY5lbIVMovRhJIlEHq5/GFBXKZGG5eoNcCiZolKplh1geXYf/gxblSLDCITv5qyPJGC40C7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A/J+Ezb1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jhoWDHuQ; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oTw79h+8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gok1pRpS"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id A46791D00226;
-	Mon, 10 Aug 2026 02:03:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A/J+Ezb1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jhoWDHuQ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CB2F7A0190;
+	Mon, 10 Aug 2026 02:06:56 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 10 Aug 2026 02:03:10 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 10 Aug 2026 02:06:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786341790; x=1786428190; bh=ARcTLmiYQM
-	Xf31Rrbtqn3IzxBrylkBwUt2fc8lJNvAY=; b=oTw79h+8W3W3uThvcKaE9miVSn
-	t1e93ppkgtk6F8QKaKtGmip4vpNSDY2cj+vaN+PJ0KlO5rv3b5149Omn8K2yMc7o
-	IhhjGSWygUEtmHV849sLcSBGAuRkPilL5WvcSdzXDSTbS+2AXr7CLXFb70WqwU9r
-	gat07FV6dMIqtw9o2W8E+BGnckmo4bhP9V9gGIht9RSSyF4rM+iqFFedCerzTiGP
-	ga+mX8rEAX6RPu2XHBiUf+1IoPHHm8fjBCC7P4J8W/jzuqtpYU6qpCRC8aQDvZ1I
-	+pff6DKAYNm09bX1uCA6w+KapSrASTrljJzBjwvIarVttikXG+Zap/h5KENw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786342016;
+	 x=1786428416; bh=CRgF0htbd6SEwhGPCEWc3EL9xiXuWhKkFMA/RP/dZwk=; b=
+	A/J+Ezb1thrXLhdH3oUSDtwMaivcOziAhnqIZMPlX2pnrJYqSYisc/G5vjMU3Rpi
+	0CS/2Uk+7oRvAQebgmNVjCapAEwwp8mu+talqhzF8cj3TO4mi3Cq3o9ww0qzVuOc
+	CK4GENVHsKIMqWKO+AAYLChWXVnc3vkNCM7BtU8WsFcOy/wpr2iDZ4pEZ1L35itI
+	DKj/HNwkY0HwPMTwertp/Wzps5uozdTkDzFloAlw/n6SKXuwbCfohyw1SvV3EWhq
+	/dxUW/+vgzDZQgLbPd6niEYGv5h/6fGOZDBt+PPT4tjx9CEuFHKKSCc0D9X3I/gq
+	FQM1otQvResKQKODpCOGDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786341790; x=1786428190; bh=ARcTLmiYQMXf31Rrbtqn3IzxBrylkBwUt2f
-	c8lJNvAY=; b=Gok1pRpStJXza+VbWRsQHs5NukBwR4VYeyuPEs7BfYKAclaTU0i
-	OCgmVOtmZqvhWR+iKn5wtMjdPJbRCwMJtLr49LP9JQcPHcehqZmRWpfG90tmOL8c
-	6No7ubGet3mQiQ6XOezJos4am/Rr8t12+Q6MPi5Kd3obU2F0Fsflp2N6Cfpfz4n4
-	YY5qOq0fZ+OgH9WKJ+i6k4KiBerDcClS8C1xqb7+i64nXQG2F2ZepZooQS2Lzka3
-	mdQK8X3v5iirV6uN5+RVqpiPsHV/YR6gjOpPDawfAsYH5OVUO/D2Bzv7ufl3IIBf
-	TAqOKGTI2IHxKv0MEaCdkYiJ0zF+SyeKUdg==
-X-ME-Sender: <xms:nml5arH4hwl2i8coO9MwcHvtIvF7bnTZ4My6Nc-hqbUGhX7SakY5hA>
-    <xme:nml5avPPrBSQxd0PPv5Ps5s8CBFrodgpsbw2xPK7Tu0p8pwB3IqDXoEYbE4awknde
-    3bB266SP4pzcDgxFTAJXtNDgKvexWYNzyudnobCHttOo_RlqfGjG14>
-X-ME-Received: <xmr:nml5aldvfyFOz9rvSHGM_GrEZtKvXPa6Q3UaMMYWsFILyg1H62mFRg_qEShMOb7evtQMRxp6bGKPikqw60QLbI4L9KiU9e30W3mmadErcA>
-X-ME-Proxy-Cause: dmFkZTEfwHlsAUGClsrAxHtzg2goZqopnmVJowJwQPfY+5CTK90kBMPKgOm9WzhtYol9Vv
-    /uzUkBT1E3TQFaYBNC2OO8KiQAYwKilPA+v+ZW1O3evVLpf3AR2ISx6o2PVcNi3CNYlgTr
-    E5sOGNTWuRC1Og4dlI+8RSOGhGsMBVDIWI4J1TemvfOH69yad24IjpZcA2dqj7D4wsMeRV
-    05Dia/5GZkq668KpSpx1gm77o+xGv6qejAqxVx4bRykI/1CGTHtzOPD15tly4hOUauGKgj
-    /5GmAhN6m9rMhpZCtdyUG28jrGEko0DY3A2XMBjD3WR0EUCDUAdk8rCyfz/7LI9SnUmgdT
-    mod3IFH8dTI82c7lGBCy/XkT/HC2/4YrZSk70Ir0+6t3Dq9PeAY2VLgk7cw0I+4KQySmH4
-    /JLs2hNlrOzAaG3Pp2SqpZ9K+OgD7cyMBm8U1krMWoTAKJEJs4H77NbcjWpObe0N14P3aw
-    auQDNe1dq16iekXxxLt71xTEYHhVX9lW4fVuonnBdcVaj5VXfyr92h33H5oQ6zgCMlJRVl
-    o0x07OUNbx+4dHiETNxYfzSz45wIXgVLvu+VfzmqxYz8j6h9G6abVbJ6u/M4ddKqEo7ooI
-    L5rCLnKoEZpljFRSPbK9Zoi+tPBK9GH7MiMd4zVO1K0mugOa068s+8AANUvw
-X-ME-Proxy: <xmx:nml5aku8H11TYDgnskn8Sd59IM5nlQFjwghZIP0aZlfcvMeqGCxHNg>
-    <xmx:nml5aulK6P1ACfuYKnyTHG5GD5rsheLrMGnA1qD-kuEvAboresd2zw>
-    <xmx:nml5auyU_e8q02S1sBbL6eW4xPUbGhKwkMdWezgO6MrGtClzjHoJCg>
-    <xmx:nml5aoO4jUqN5kE8O_4VEcuEKarjw0KBSvLlRUyL-gy4NEnYzVSE3A>
-    <xmx:nml5aj9KfbXX5nCZmqPgOVGea5ktmaI6rBdKJ_miV3az7YMi8DZFpiis>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786342016; x=
+	1786428416; bh=CRgF0htbd6SEwhGPCEWc3EL9xiXuWhKkFMA/RP/dZwk=; b=j
+	hoWDHuQ4jneUf5alMyld9mW+n0S5gcmFmafSdiZK4jKMmgxJlC61w+mOnyP+Ek6+
+	ydjnY5EjXHGuygCVXU2uk6zx0SU23o0wzrtzKqlH58lKYbWJBo4JepiRvRn9Vwsu
+	mZuy5C0FCe+cIcDm6VJUm9w+KY1gvSFtyDdTLfGOQt/ygzaYEtgFlGjDn6DHKyEo
+	IIzGTAUBg/8Ucwa2VmfBNHzFv0jyMXgI2cokhMr493V2wyTsRekQru0aUmzyYIbe
+	OntnVOyLYYanyBUzw7y5th5J30DZTuaiokkGJWkmp1WjhC6waR+yGeCsXYGarAaC
+	wRRewJlyfErdEYTZDVR+w==
+X-ME-Sender: <xms:gGp5aikZVKY0CBa7OPZuluduTHkxT-3Zn352hExXWorwlgJxVv93jA>
+    <xme:gGp5ahSEB9JC4rMVm6eDGACM9AcTqEnuZHtpOtYtg4BXtoYXvlRVonzt-y4utPJSe
+    ocBNvVITEIgphO4uKW9oGzsoimjdiVCACxvP1o_FaiKF8C-ocp4UA>
+X-ME-Received: <xmr:gGp5auA8y3y2LPFQpnoPl8KxsAdnqRj-SwuBuuSNqiTieLV01McdkL2kAQgwoHnK7dvzAXyY5vBK6SwMWVqf0LzB8uFQHDJ13gKVT1e4Yw>
+X-ME-Proxy-Cause: dmFkZTGr+7OLeImki5hFuEwZ+2xXj6pdHP5eQRpmBjNLejT3hVvCpx5gCTjbpkV+bJCs/K
+    VVCglAnVIIJZIlroS4oSarkMfLYsGVpV0NujMDVeZ2PaZ8JUYoHdTvutf7vNmJ/BC5b/bZ
+    Y2KgBWWlRGGD4mAkciOKZ3UPojeRWtzu7C/NF+CMEEr09MfBj+iVYNJHtWuSNaxwjwHttY
+    DHBGCC/t5LFg5nLWYAxKRCBAGwGaFdznYRvAWwXELYdqKO8ZbN51Awb7cFYmbKhDxCC9C1
+    oAXkqcGjuLSkOre0EvSjM/aXGazORjv9Lg1+kSXNfEquDbn+djKJtEHDCVt7H2SENhYtHC
+    DWEsR4ViKeTEGn/CsRtAY6IbVe4U/ClTOtSpA92/u/E3oOuuWTDmTJgKHWE9WXQbkfGhjH
+    EN5PM7ECCrsTsH2zG/pcv/DKX9WtXjcOZd6/Wdz6P+DCMjuRCSIniKuEgjz9ybAowLkVvu
+    f32b8AQeuHa2z143yKDl27KGJLPAK5beyipiUeUOYQ32nrmodn+M0VSPLj7uRtd0ZjEzbO
+    URsanVqGRaoDofi8Mgn06fv/iTQ0smc92Gw581QQl8ZHSFbduQgM6H/KWh9GtZBOJzq18M
+    EvN2pISm4DN6rE6NefXHCA39m2ZHqsTZt9CJuezMD/hjZUO0m0TkTsTqkysA
+X-ME-Proxy: <xmx:gGp5agSvhAJuxPg-ID-SgIkt8LNP7SyPG5D3WkYA1HyOFbJD1Zki8w>
+    <xmx:gGp5akqYzYFUVKnzkVoKKRYh7gJTFv1RZYRdxh1BpRZ0HFUgzFBe-w>
+    <xmx:gGp5aqzUJZaS0HaMOfmLsj0AWb3h4wZa-OW0IO3sF6VF7kpQfirw7g>
+    <xmx:gGp5ahIfkY_OHWmDCNRibX_8EAxbjlMPWZh43dqvGBrVAfXlt99KLQ>
+    <xmx:gGp5apt9lhkaYhq2kfGjlPbIsAxvdht_vCIzZEUhmZvs5vGdcuBaEZOI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 02:03:09 -0400 (EDT)
+ 10 Aug 2026 02:06:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 79a76f62 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 10 Aug 2026 06:03:07 +0000 (UTC)
-Date: Mon, 10 Aug 2026 08:03:04 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 1485b686 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 10 Aug 2026 06:06:54 +0000 (UTC)
+Date: Mon, 10 Aug 2026 08:06:50 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>,
-	"schacon@gmail.com" <schacon@gmail.com>
-Subject: Re: Can we do better than "git checkout/add -p"
-Message-ID: <anlpmNSjBUJ8p9RL@pks.im>
-References: <xmqq8q6ih924.fsf@gitster.g>
- <CALnO6CBu8ZBDk9YwLW2jVJtBUk1=pvai5QHiLN6XLOOL-3KA=g@mail.gmail.com>
- <xmqqfr0qexps.fsf@gitster.g>
+To: Michael Montalbo <mmontalbo@gmail.com>
+Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] t/README: document writing concurrency-safe
+ helpers
+Message-ID: <anlqeshH0FXaLvF5@pks.im>
+References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
+ <pull.2171.v2.git.1783704657.gitgitgadget@gmail.com>
+ <f158e1f92e9c586fca34faecaef23f9581d65478.1783704657.git.gitgitgadget@gmail.com>
+ <anGcx4lRyy3jyS1D@pks.im>
+ <CAC2Qwm+Jni+xU=gaef1AWCMj9+GUQhMrCWX9DFpS3y757pxv=Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqfr0qexps.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAC2Qwm+Jni+xU=gaef1AWCMj9+GUQhMrCWX9DFpS3y757pxv=Q@mail.gmail.com>
 
-On Fri, Aug 07, 2026 at 08:50:39AM -0700, Junio C Hamano wrote:
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+On Fri, Aug 07, 2026 at 09:51:34AM -0700, Michael Montalbo wrote:
+> On Tue, Aug 4, 2026 at 1:03 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > >
+> > > +Writing concurrency-safe helpers
+> > > +--------------------------------
+> >
+> > Nit: this paragraph is quite specific to lib-httpd, so it would make
+> > sense to mention it in the header here. E.g.
+> >
+> >     Writing concurrency-safe lib-httpd helpers
+> >
 > 
-> > I raise this as the kind of interface we could learn from: emulating
-> > it might be a bit heavier (a full TUI?), but is certainly more
-> > convenient to use than the prompt-loop over hunks.
+> Originally, I did just have this as a blurb in t/lib-httpd.sh. I ended up moving
+> it here and trying to make the advice apply more generally, though the only
+> other existing example I could find in another domain was the
+> make_symlink() reference. My intention was to make sure someone working
+> on a test helper with concurrency didn't skip over the section just because
+> they saw "http" and thought the advice didn't apply to their use case.
 > 
-> Yes, the 'one hunk at a time' model was easy to implement and start
-> using, but its limitations are apparent.  Users want to be able to
-> jump around, starting in the middle and returning to the top later,
-> for example.
-> 
-> It is more or less orthogonal to the reason I started this
-> discussion, though, which is that limiting the direction in which
-> modifications flow restricts the workflow, burdens the user, and
-> makes the process error-prone.
-> 
-> When I see a hunk, I can immediately tell if it is one of three
-> kinds (i.e., those we want to add, those we want to leave in the
-> working tree, and those we want to discard from the working tree).
-> But with 'git add -p' (especially with the original version of the
-> feature, before the 'e' (edit) command was introduced), the third
-> kind must be treated the same way as the second.  Then, after I am
-> done with 'git add -p', I must go through the remaining hunks, sift
-> them into two categories (those we want to keep in the working tree
-> and those we want to discard), and run 'git checkout -p' to deal
-> with the latter.
-> 
-> We should be able to improve this workflow without deviating from
-> the 'one hunk at a time' model.
+> I'm inclined to make the language in the section more http-agnostic rather
+> than changing the title to be specific to http, but I do not feel very strongly
+> about it. If we were to frame this as http-specific advice maybe it should go
+> back to t/lib-httpd.sh instead of t/README?
 
-I wonder whether we can take JJ as inspiration. For commands like
-jj-split(1) it has the ability to interactively select specific hunks
-via `jj split --interactive`, too. But instead of looping through stuff,
-it uses a full TUI that:
+Dunno. I'm not sure there's much value outside of httpd, so I'm still
+inclined to make it httpd-specific. And if so, moving it into "t/" would
+make sense.
 
-  - Gives you a list of all files that have changed. On this level you
-    can select/deselect the complete file.
-
-  - Also allows you to expand files and then select/deselect individual
-    hunks and lines.
-
-I found that model to be quite a bit superior to Git's own interactive
-mode.
-
-I've been playing around with the thought of introducing ncurses-based
-interfaces into Git. I've been mostly thinking about git-history(1) here
-so that you can just move commits around, squash them together, drop
-them and so on. But I think fancy stuff like TUIs can also be applied to
-other parts of Git, as well, to make things a bit more visual to our
-users and, as a consequence, easier to use.
+But I don't feel overly strong about this, either, so I won't complain
+if this section stays as-is.
 
 Patrick
