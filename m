@@ -1,36 +1,36 @@
 Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4D938889D
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 07:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DEA49620
+	for <git@vger.kernel.org>; Mon, 10 Aug 2026 07:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786346822; cv=none; b=ZyUTvc09tl/vMFkkDLHlA48Y01TJZW6WhjfW3TD7S88fPNrkowQP7oZwa/7XdbZKYRa5hn5gsI8/jSAEC54lbmrJ4u3j6qcKWAROvKYFC3xINk1Q0737OssftYCDHnh0yfBEFI46/rhvfUiDUsKPF+2u/EAOQwLmA4+4YBg5ayw=
+	t=1786347426; cv=none; b=eLN+l2rlVBG7AheDPVxgfZ52ZY//pCtAntOUX2Jta5kcVX3LyFoZLRlxLUVUIIOYPNIEXZDRdMRATRPlfP6q0E9JPwMFX41+4j2nkW/v4mlaDKAxuaTebuMc++mbcw9wXJ/UvstzDk2WA3eqygwrp4tQDuLK/2l6MQxjYxGyUkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786346822; c=relaxed/simple;
-	bh=3u9MYFFOIOpD6StsNDpneUtzynqQhIsP0bYy2JNr/8M=;
+	s=arc-20240116; t=1786347426; c=relaxed/simple;
+	bh=q+svhHNcwLRvAVErhNdNUrQ2lJ/tIy5Lt5ZV5Y6gjg4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F1ir7cF2VqEZdBYT9fwGazNfNM0iRdnhg6uG1ksXLd4QW8fcEHWM5VtdGWBiQPnuqFI8aFAM+yT0AqtqW5qsZgYS7cDlnACr9YA16rDOAr7CaEkmzjdNmWVz6DTRxYYjpcb0ceoZkxrxalpCLGJuR0nXSDRj4svtorCsC5L3EfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=U9obBZuz; arc=none smtp.client-ip=85.13.153.21
+	 In-Reply-To:Content-Type; b=OdGVcpjyOd/WWbaWTqS+5HM0eGEBt1E3wjNUfbmHpK32x5Na414QQQlupcNFFHjz+qzmxIO5ycTtKRxvgRwrkMsWKEXeITjed/kLTP3xx+0TXeO0VUm/YbBBwzsPWGQt0gIwZXeqBJy20roqCCpPSI4hUNj6MYBl4bW7TtYj44c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=myS+9tHK; arc=none smtp.client-ip=85.13.153.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="U9obBZuz"
+	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="myS+9tHK"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
-	s=kas202608070029; t=1786346816;
-	bh=3u9MYFFOIOpD6StsNDpneUtzynqQhIsP0bYy2JNr/8M=;
+	s=kas202608070029; t=1786347422;
+	bh=HmnxmXhqSa6dBzqiArO4O4LTTlz5tpNpR2u/r+eTA+s=;
 	h=Date:Subject:To:Cc:From:In-Reply-To:From;
-	b=U9obBZuzqsBxtE+Dp6YNoVq2H1E8CyTVW7bCCZCDazhIOHU3B3g5BDbVoE7Rucs4V
-	 BNWCh7RmyPDm1uOhvHz88n6Hg+QGaYhZ6FVWHR/yi7XBIqoFJ63C6ZE/G7YwVIt61l
-	 MWBSrarsii5nhkBNPJiAQXXI5K0zNPqVbxkGbWAR4s2yahyDgJK1sZb54GdN8rgZ0v
-	 VM6zG8DV7R7UEQ1uLbLaDCTr044JXnVD9eyzUiXR42yr4+SlxCUngTtDfexsQ0o84v
-	 kzwwpelQS/Fwf57FN8K2W8wf07Ztg+2q3gwyIfZ6vUh7tf5DZIz/kawCLEJP1mUHWH
-	 5xy2gNw24WZCQ==
+	b=myS+9tHKCL4aoivPBxEYGnRqHzCXc7u+VyNJ8riY4eMt0SEFaU7mGn0zRJwVxxZgp
+	 dW68u9N/yToHnhIvkhJAPXoIvxiVGWaSB6NcTWet/fZx/1pkjKrZ9H06nlkS01DRCI
+	 tzzEt7MZCSAwmZFprfMVNdnID8SJDo5zOWXOW/I1TShgOx5S6yr6RJ0PdtnNQic9VM
+	 abJiHvEl4DwZHcNPAYIc0tMAj8o0qFCYQfp8hUoD3ulRX7KdyhxdhJRNDT+tTPfqaM
+	 aFPY6RiI5XP18pt7arH2bUd0fmVsyJfbamFO/AZ4KdC8QEoBpKKZgH1MtM2uyNlZHc
+	 cInoDaHhrDI4A==
 Received: from [192.168.42.64] (66-97-142-46.pool.kielnet.net [46.142.97.66])
-	by dd36226.kasserver.com (Postfix) with ESMTPSA id 02F233C3662;
-	Mon, 10 Aug 2026 09:26:55 +0200 (CEST)
-Message-ID: <26c2f7e0-03ef-4c45-8175-adcc2e0395ac@haller-berlin.de>
-Date: Mon, 10 Aug 2026 09:26:55 +0200
+	by dd36226.kasserver.com (Postfix) with ESMTPSA id D75393C3C68;
+	Mon, 10 Aug 2026 09:37:01 +0200 (CEST)
+Message-ID: <801031d7-f219-4410-a863-7410cff7952f@haller-berlin.de>
+Date: Mon, 10 Aug 2026 09:37:01 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,35 +38,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Can we do better than "git checkout/add -p"
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org,
- Christian Couder <christian.couder@gmail.com>,
- "schacon@gmail.com" <schacon@gmail.com>
-References: <xmqq8q6ih924.fsf@gitster.g>
- <CALnO6CBu8ZBDk9YwLW2jVJtBUk1=pvai5QHiLN6XLOOL-3KA=g@mail.gmail.com>
- <xmqqfr0qexps.fsf@gitster.g> <anlpmNSjBUJ8p9RL@pks.im>
+Subject: Re: [PATCH 1/8] t: fix races caused by background maintenance
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+ Taylor Blau <me@ttaylorr.com>
+References: <20260220-b4-pks-maintenance-default-geometric-strategy-v1-0-faeb321ad13b@pks.im>
+ <20260220-b4-pks-maintenance-default-geometric-strategy-v1-1-faeb321ad13b@pks.im>
+ <17d460c0-564e-45fd-830e-548f60e01e01@haller-berlin.de>
+ <anlfk0P7UillhlUd@pks.im>
 Content-Language: de-DE, en-US
 From: Stefan Haller <lists@haller-berlin.de>
-In-Reply-To: <anlpmNSjBUJ8p9RL@pks.im>
+In-Reply-To: <anlfk0P7UillhlUd@pks.im>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spamd-Bar: +
+X-Spamd-Bar: /
 
-On 10.08.26 08:03, Patrick Steinhardt wrote:
-> I've been playing around with the thought of introducing ncurses-based
-> interfaces into Git. I've been mostly thinking about git-history(1) here
-> so that you can just move commits around, squash them together, drop
-> them and so on. But I think fancy stuff like TUIs can also be applied to
-> other parts of Git, as well, to make things a bit more visual to our
-> users and, as a consequence, easier to use.
+On 10.08.26 07:20, Patrick Steinhardt wrote:
 
-That sounds a whole lot like lazygit to me [1]; it does all those things
-in a rather intuitive way, including Junio's original use case of
-selecting a hunk and staging or discarding it.
+> Git commands should just work with concurrent maintenance, and if they
+> don't then it's worth to have a deeper look at why it doesn't.
 
-Is it really worth adding such functionality to core git? I like the
-idea of tools specializing on what they do well; core git on providing
-the core functionality, GUI tools on presenting it in a UI.
+That was my point; in lazygit's test suite I was getting errors when
+executing simple commands such as "create a bunch of files, git add,
+git commit". I had cases where the commit fails with
 
-[1] https://github.com/jesseduffield/lazygit
+  error: invalid object 100644 50d5612... for 'file09.txt'
+  error: Error building trees
+
+> The reason why it's not fine for the Git test suite is that in lots of
+> cases we assume a lot about the on-disk state of the repository. We are
+> often reaching into internals to verify that it looks as expected, and
+> that is of course racing with concurrent maintenance.
+
+Yes, I understand why git's test suite has reasons to disable concurrent
+maintenance. My point was that lazygit doesn't have any such reasons,
+and shouldn't have to disable maintenance just so that the commands it
+invokes don't error.
+
+Stefan
