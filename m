@@ -1,167 +1,151 @@
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69D54052D0
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 09:51:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786441902; cv=pass; b=B4E7Zl+DxFPmVdDjjF3E6UCte/E946WM0SgqXwG7Oz9EE5n9S7KUXf6KISe1vIwK4+QAKhYE68xdPBQLN7OyZjoN8mT9zJsTRnPund5FkbXkTnB+ZBtOC+XF/mRCEY/B2TB+sZ7fyus0naMR+AOYJbKLHU+PAHCU7/wLijy2FKA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786441902; c=relaxed/simple;
-	bh=c0fsPgjMc123BoEjBuZ3se92qSGxedYfHx2Tear4VMw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dhuzZkxoX+qluZdHXlEGGlHwuW6kqd1ExENJPQJDbKNshyngibXDY680DwkFDX05DJrNecEBscc3Tf3EDtMm0GjiNIj2qEsabZq4nBY1PZTMTfI6xe2czKOM7wcmtAJzZudQ42XjBCtPpWEdK5kYxBZCMfATU5M4jC10/KvDB3c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n4Dg9/1H; arc=pass smtp.client-ip=209.85.221.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A18642F702
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786442496; cv=none; b=rtW9r5RFBgSd832AvGfZKdEmxwY1UGmLwmto5nAAXpLI4Y4iXLImkMOcURatS13cEGIXnZvpgCfdidrKYXYgJoGSOxdOl9GBUqJdKzuIqgC+fiDD9RCMxJMj1oJSBGJJ2T1EwFncVcmqWvvSAkiVhhdICfMn15utwdmL1D3Top4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786442496; c=relaxed/simple;
+	bh=8Q8fFEIyZxiW3to0aBhso7dGrTEF9a8yqclFAFshmAM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HITcew+Jy5EdxJYNyaOlvj/MZPVDCoOcF5N1w1s5Vr5aF7d1YE3kfp6QzwF3fO1xMxdCx8uWgjr+bFXR96RmDVihYU18/bBJNZnJuJRicSG3y6dz5c1Chb1VKnEhDxB/EI+0zV4ewZySv2fQrMinFElw1JtpNkH9nNkqvfJIl/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ix2dxBdq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DzUn+sOe; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n4Dg9/1H"
-Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-5c3fabe908eso175606e0c.0
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 02:51:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786441899; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NT17tEwKp1t6GFzQL/ove+I3lz3cAkHoPdONv8Av05Wg0J1urLUL4eCsqsB7SpSJWo
-         +lfO9cpPiP2iAYeohjkdv4kZbOJKHrkZDOrfM7OklJp1bgO5tXLYnqCPQJeBiiaSDFrk
-         R7nRLv6CdYOOQu2py2cG9MIx/2yOMU67QxBjIMaNgd7EIdSx+tPx9r095Vz6mnCUJvqn
-         A90t1NhL/kFOYHW4vvpxL9zcGwoUpKuvS4dfs5lIIBj/q+DwiMjC5aaEEjGk6FkSdOi/
-         ypTvWyyDlxlOTKPs3+ZaLSzruX6Dalc25PHbSe+0Rb38XvXgxlIYBnAw8l+3uYw3BRp0
-         UJgQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=IgGN61JlpqKj+CNkfImXMg7BxyOAZLtrQi8r/+ig1HE=;
-        fh=P5ztB4uqeh4ShOoL2vKFmnO8dGt9mUBUXB+KdCHlsL0=;
-        b=fya+1YQi4X8CbejfypwjJeCO4wSFnCqVqXdTvijxH7Cp7RToDkJvA99inQmLDa2GOA
-         CbssKV57g2GWlW97bAuTdUwy8xwRhFXwYsvhjJCqfE8B6n9Xjlj4HrqwwKrpH3zEsBGT
-         JE8ifdZUqfLr8PneHOF+59RLrQd9Hm3uDuHu6uP71EnweHd0rDZdkxAC5FAvcD+vYxVG
-         V1WqyhoMQMGVsHuTB2q6oZfCWwsgI67WADugg858ivsJzyIGz0d31p0iv6z5uRjYRDAj
-         1mKG0Tp5TxxV40L1ba19/UfExvWlUggWHmG1PExBP9Su7J0bb1F4skB5VD5e/u6tzp+c
-         kOkQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786441899; x=1787046699; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IgGN61JlpqKj+CNkfImXMg7BxyOAZLtrQi8r/+ig1HE=;
-        b=n4Dg9/1H4N//lkxbnm4a8w/m5wDBiIyHO0ylTxii8o/tCh8QPf+q2HaTOhbd2LePzJ
-         nqzTBuH8ayfDpypjCOzcY5/B79SwXXfpW3Po0ulL6AQhXe5I0YM3kBfAld9AehpIDdn/
-         FVYS/yNKmi4x7v15SsXiipwdOcKRyWTJkVefB5BF+ZpnjsQD3ZX7jjCopcPF3fP21w5y
-         bpyJJH1+i45wPsSoImBDguXuucB2mdepECaEvUqdA65uals6FITOjs27lyjd5ywP/KAW
-         cIf/Jk1OBppajRbaFw9WCXBfdqKjTa0pEbDzdsaJdfxdiQsBDqO0SIp3B9pMaYAC6DTy
-         voyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786441899; x=1787046699;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=IgGN61JlpqKj+CNkfImXMg7BxyOAZLtrQi8r/+ig1HE=;
-        b=hm6SgOecVYhDsHacnMcv6E9+wMDLAOv0f4MvdTX+cbOfgGY7du3zHgfDxdjuU7Xyhj
-         VvuL73UQN0r4nJRwkMkSDwpRxoeH/BKn3gkQuD7PUYAaqWhLyYEsG5v0iPW+YMFn/O19
-         phjB6aU0nKyyPvz3V/QCbf74vrfY8MRcPqvx5Ip3mmwi9jOZI+V5M7kgKIdVQJdbfIwL
-         oGZ31npg5wKJjmN5y8Z7KdA6YS118lPnjTzdj23poWt1C2du/y/oK0xD0vdYes53Z8Y9
-         kfZkqvYUDy1GYucig1vvxgU0IZ1FO/ZGE9eznD+ZNKTLDqepg2kYbsPzC6plpXPyfKHs
-         R+XQ==
-X-Forwarded-Encrypted: i=1; AHgh+RoDwaEr28WNpAlyd0ZyajqstCDvnBZ6f6Vm3Ss7PBHQ/6p+wPnKK6/WBqfyJxcDcvLFHeA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yws9AVG8kyqaMn1BSUYRMZDNo1h9nRQ8Wm7Z3rz0Kf7mBfOPhhG
-	f/SOjvAZXOqOu6suWJQdHOc78TURjLK/hVtrxYdSIx4IdeR3WT9PtsYA4sspZOIaWyjr9v103RP
-	g0j/2WPqfCtXGe57vG4P7tHOCduJwqL8=
-X-Gm-Gg: AR+sD1301JlskW5xkc37wlipPPlqmLdoC3GUbaHCzV8Zs08lNc9m7FyOrcai2jy7u8j
-	E/qoEganA52QmK9pUe22ydeSon/RoKDjwzsqMXFkf/vMpWEmG8Lf+KmvHONTBOJu6UhwADR7E7J
-	5UzFPf4N44brSvujkubI63byOH6tx4tRNbhrER/ViNtbmO0JPBbLxIS9Pm4ktDp6AQmJNd4kv4x
-	Y+Ji0lujwYTujw4FAHw5RgXrkYmhdPcyGozYoT8eGpj5YqjrTmH56UwLZWc6IWQDLMFJrS0qvWe
-	hLFpcQLLwlYpDui6Nr4f/g33OzNd2czSgHRoxefQXNndhb2TvPnn7DNlmHizFhXvRFtyoiJYypc
-	9Cna+WUEzWZwM1q4QPt33CBRSbXGdGMAXZco3mtM00hEauA==
-X-Received: by 2002:a05:6102:4b1c:b0:738:9bf0:f80c with SMTP id
- ada2fe7eead31-76b576c23c9mr452273137.9.1786441899492; Tue, 11 Aug 2026
- 02:51:39 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 11 Aug 2026 05:51:38 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 11 Aug 2026 05:51:38 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260805-pks-odb-stream-unification-v2-1-b8c369564641@pks.im>
-References: <20260805-pks-odb-stream-unification-v2-0-b8c369564641@pks.im> <20260805-pks-odb-stream-unification-v2-1-b8c369564641@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ix2dxBdq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DzUn+sOe"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id ACFD614000B6;
+	Tue, 11 Aug 2026 06:01:30 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Tue, 11 Aug 2026 06:01:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1786442490; x=1786528890; bh=4EmvGANLt8
+	tuGI4TpR61Y0kC6RIEpRQeD3gmw3CjKKs=; b=ix2dxBdqTUuTT08JaXC2a6VqwS
+	iUcWXsQJ3tCWRqVdQ5W/iyvewzWlpHVTNdCh+H2xL3lHzwtnOBh0TvITKdVIxJKU
+	lWficCb6nr3i7y7GY2W8GZlmYRgXCaHkEogXBsNjDuLojpmc0pZyxTylS76+vO7h
+	h6NGoHWoN2vCbUSz+JeX/Z+RzqnIE78jWXI65ED5N5+ppyfdnLZaM03RN10p2e/c
+	YdlClkVWpIA2OYQyZDHOXiZLyGrnFaEa5lAPSvSNP1JHeZv+Qm1zLusOwS/rDflO
+	YeT0jj6gSnam9lvfdMoaZsK7h/2XRpsAz+vvFp+jfTuPU11tSm8HXVZsaR8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786442490; x=1786528890; bh=4EmvGANLt8tuGI4TpR61Y0kC6RIEpRQeD3g
+	mw3CjKKs=; b=DzUn+sOeunTEoP5zIxqJhUaIHaIQZFMjm0f7YbBIblwpQdc+cRR
+	99+ZzEdQORLtDBfQn42x1ieWfJXsmq8yMjyMDQYHFshUW8I1KZAmCuLII2JrLfrt
+	jIFpNwK+5TN14GQ+6SHUHTwj85TAipQ0phW+vmS3QF+YGUq7az8TqN7YCA4PmVst
+	7zCNzRUSit2hov5bbvWygMrytuv1QQVxbeu2Rx0+KogJUOFVwPosHGW8DGyRwSwN
+	HNUXr7tzOOidKAjEvS+EjsNYNxRlQ/zFalIxLW3JU4gfodLKsWABbwHay0AO/fpO
+	TcR7Sy2b9tIkd4EwL+w+v+YKFXnZM7yhofw==
+X-ME-Sender: <xms:-vJ6akJ0q4FeYOY9DrRQYdztJpGxKaUb3NgvQj5hQmHurGYOyZ4NwA>
+    <xme:-vJ6arCyeMS8oeFmBoHbc18jCrH-UpqFHmft7NOEipqjAjJHaGfcq3RzBYfNZTFGt
+    k-C_KSNl_HSJBQV-SMxjaQGwCNlxEVPWwrq_0hKrGhP_imEegXhUg>
+X-ME-Received: <xmr:-vJ6atDHQBXKjwZrZMmQ0mobR-6NizN9K9McAXkZik9623bbXLErwQQJU-1lX9kLk6iNVfLF9049Y9fHvVCuyMwe1YB54orJ8_8CWcoRtg>
+X-ME-Proxy-Cause: dmFkZTF+dbHj7b986zNcsh5GwpHvbMQ9JPFiFFgTS/Y49lCoAc1X9MMXK//9BUwKZ8W2TE
+    /tv+B+YOsq9K1rKXL3XOtFKnEnRixaKk/vyMpzE5AN469oayBwNMlZ6UXu/X4Y75/4LPKl
+    dJyMfcRNuCTm7QfuVsrA/J1FyGrh2YaC0NlNdyOj9+wR066XEEjuph6MPT6BGMH1HhZ47P
+    ajtwgEnziNrGNi/ERQWo8qEBoHDTtrhQckeJkevb+sRcR4g66r/G12hCD5kGq9X6tnq7uv
+    ReFkNMRH0gUCgj/wjJwguBrmJ7jH/RSWf+/HuNh/twYSLrCmQZwZQhih9tEOBu5ymNc2P4
+    SeDVshXVqGtp0Cf0KHJg9nBDOQgKZ1BD0qdtFd7eRuYnVX0HtUMGIr1gojpRDzk7PeiKXk
+    OLP57AHjP/naWaO8z3plBrb5u/Q0FMCFvjZof+9CiV3/MXQKm0aa3S18unFVblCEbP9ytb
+    34vd34quFY8pH+mvKLZbNjKF21hfCwaH5lus150VuYquST4RBqsXZaTq5UMNiv/SSmR/Fj
+    umxBZ+pIW2q+Rt8So8OxwEKHXgUVu25vOhnZKaRm33Vs+o3H7ceLwd21Z2eEusM+SHz2Rw
+    xSHuTZ6VMC+3IcuE4dxVEVPrvarwWQ7KvZ7vp6yunvHzfgyrWgYOa7taXCHA
+X-ME-Proxy: <xmx:-vJ6atAde1kBTCtSGmilf7Ezq4x9oZ4VDUJ5kr295BE99vzsTtqn4A>
+    <xmx:-vJ6aopOCsceC4-hL72ImVR4lpygSHmdkgiGHmVEy8tJ9J4azJep4g>
+    <xmx:-vJ6annGJxlbqu5WkLgeCNA50w-va00phL3r2OTgbMbNIEvHdplc5g>
+    <xmx:-vJ6aox_Ba6v0ZlcJKgqhpkw9mFWSmWhGchQOL4fRAz3_rIqGG8hvg>
+    <xmx:-vJ6atglFb4YFPEYTr0uqQ2HanUKJOaURKZI_d7uJK1l6J5GZRPrvxGs>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Aug 2026 06:01:29 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id aa77a141 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Aug 2026 10:01:27 +0000 (UTC)
+Date: Tue, 11 Aug 2026 12:01:23 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <ttaylorr@openai.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Ted Nyman <tnyman@openai.com>
+Subject: Re: [PATCH 1/2] maintenance: account for promisor pack geometry
+Message-ID: <anry8wAbkxNfVgfh@pks.im>
+References: <cover.1785902237.git.ttaylorr@openai.com>
+ <a9de123b43efb58c53c99c71eb7e34f29e075071.1785902237.git.ttaylorr@openai.com>
+ <annqJGFJPviEyfEC@pks.im>
+ <ann0nnSGfSJ7y7YK@com-79390>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 11 Aug 2026 05:51:38 -0400
-X-Gm-Features: AUfX_mzOPOMCG-CqWA7LVV5YoGYRTTt-TaIRwLSgOmvwVMqkmZGmttfNNNDln98
-Message-ID: <CAOLa=ZTHaiARd2F7BL+uwN8ANNb6=ovfZ5v4=dMkgCY=N6qa7Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/8] odb/streaming: track write stream size in the structure
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000d4e2a00658c26a2a"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ann0nnSGfSJ7y7YK@com-79390>
 
---000000000000d4e2a00658c26a2a
-Content-Type: text/plain; charset="UTF-8"
+On Mon, Aug 10, 2026 at 10:56:14AM -0500, Taylor Blau wrote:
+> On Mon, Aug 10, 2026 at 05:11:32PM +0200, Patrick Steinhardt wrote:
+> > > Check both progressions before choosing the repack mode. If either
+> > > leaves a pack above its split, geometric repack still avoids rewriting
+> > > that pack, whereas the all-into-one fallback would rewrite it. Use the
+> > > fallback only when neither progression leaves a pack behind. That
+> > > preserves the reason for the fallback: let the all-into-one repack
+> > > handle unreachable objects when it is not rewriting more packs than the
+> > > geometric repack.
+> >
+> > Okay. The consequence of the status quo could be that we perform an
+> > all-into-one repack more frequent than really desired because the set of
+> > non-promised packs is small, and thus even writing a small set of new
+> > objects could cause a full repack.
+> 
+> Right. I stumbled on this after a few colleagues had reported that their
+> geometric maintenance task didn't seem to be doing anything. When
+> looking into it, I found that they had many promisor packs, but the
+> non-promisor packs were already in a geometric progression, and thus we
+> did an all-into-one repack.
+> 
+> > This might create the reverse situation though, where we don't perform
+> > the all-into-one repack at all anymore. We could come up with a clever
+> > solution here, like for example considering both sequences together and
+> > repacking when we cross a certain combined threshold. But I'm not sure
+> > it's worth it for now, and we can still evolve the strategy as needed.
+> 
+> The change in this patch means that we will perform a geometric repack
+> when doing so would result in a new geometrically-repacked series of
+> promisor packs, in addition to non-promisor ones.
+> 
+> Is your concern that the non-promisor packs might be in a state where we
+> should compact them into a single pack, but that the sequence of
+> promisor packs would prevent us from doing so? In that case, we will
+> perform a geometric repack on both sets of packs independently. If the
+> non-promisor packs should be rolled up into a single pack (i.e.,
+> "geometry.split == geometry.pack_nr"), then the geometric repack *will*
+> produce a single pack, as if we had performed an all-into-one repack on
+> the set of non-promisor packs.
+> 
+> So I am not sure that I understand your concern here, but please let me
+> know if I am missing some aspect of it.
 
-Patrick Steinhardt <ps@pks.im> writes:
+The concern is that it's quite unlikely that both the geometric and
+non-geometric sequence will merge all packs together at the same point
+in time. Consequently, we'll never hit the case where we perform an
+all-into-one pack to prune unreachable objects, and that may cause us to
+never prune objects at all.
 
-> When passing around a `struct odb_write_stream` we typically also have
-> to pass the number of bytes that the stream will yield. This is required
-> because the object header itself contains that size, and consequently we
-> cannot write the header without that information.
->
-> Move this information into the stream itself so that it becomes self-
-> describing. In addition to that, this also brings the `struct
-> odb_write_stream` a bit closer to the `struct odb_read_stream` so that
-> we can eventually merge both stream types.
->
+So what I'm wondering is whether we should be a bit more clever about
+that and perform an all-into-one repack under a new condition, like for
+example when the objects we're about to repack exceed a certain
+percentage of the repository size.
 
-Okay, so this will be similar to `odb_read_stream.size`. Makes sense.
+Hope that clarifies it a bit :)
 
-[snip]
+Thanks!
 
-> diff --git a/odb/streaming.c b/odb/streaming.c
-> index 20531e864c..38c2f6687c 100644
-> --- a/odb/streaming.c
-> +++ b/odb/streaming.c
-> @@ -336,5 +336,6 @@ void odb_write_stream_from_fd(struct odb_write_stream *stream, int fd,
->
->  	stream->data = data;
->  	stream->read = read_object_fd;
-> +	stream->size = size;
->  	stream->is_finished = 0;
->  }
-> diff --git a/odb/streaming.h b/odb/streaming.h
-> index c023671780..4d7d31b5aa 100644
-> --- a/odb/streaming.h
-> +++ b/odb/streaming.h
-> @@ -55,6 +55,7 @@ ssize_t odb_read_stream_read(struct odb_read_stream *stream, void *buf, size_t l
->  struct odb_write_stream {
->  	ssize_t (*read)(struct odb_write_stream *, unsigned char *, size_t);
->  	void *data;
-> +	size_t size;
->  	int is_finished;
->  };
->
-
-Okay so this is the main change. Looks good.
-
-[snip]
-
---000000000000d4e2a00658c26a2a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d94e1912aa7855a4_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1wNjhLZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNFJZQy85MkJuNDluOG5PUTJmRStvTklMWFFaREtXWgpwMmJpakFCM2Er
-Y2xzQldCVTdMdVZGNmNBdUhGSHhFdUlsUVBORzhnWVhpeGJ5ZTVsWTRMQnhtMXBXLzNzSXVpCkpC
-OGhGYUcxdk56bmlqamZFYUtrUGc0MXBwM1RkaGlqV1lPbFdnd1FROE1MdUVsUklsT1cvQnJVOE5n
-Q1pqdXAKQlhldnZUSlJMdncyeWJUL3ZpM0hDZExRd2F4bTJ6VlJpTXZaN0dSOHE4MXVXME11QlJW
-NWQ4ajdyUTFrZFIxagpiNVZreTJ0OHc0UUM0V3h0QWtONUVocDgxZGcyWnFpVWg0VStTN21abVhz
-cXlEUTlNUXRTczJkdVpHQWJVNWFoCjBOSEJkRFdwWk4ra1lRekNGOWRKcEk1czJFbXBRUDVBZWdi
-d3VYQXNqRTNJMFBqaEVjcG9xblNmWHJYY2hkTEsKVFpRZDdoRzdzVEdpQ1pvRTY2dTFXVDZrVDZR
-R0lrTGYycHJJdGdKMjcvNTlKVnA1UUV2Rmg0MjhtUUxSR3JUbApveHVoWkZSb2V5bXdVZVpCQ0Fn
-V2Iya0lHM01HTnlaRkdYQkRoVjQ0MzZMMGFnYjgyRVkxTTFDdWxCZDBWWlNBCndYaWNlWEdaNFpW
-aSt6bVBleWVHbmFpYlhFMjJtcitPTXNhTUppVT0KPXlYcisKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000d4e2a00658c26a2a--
+Patrick
