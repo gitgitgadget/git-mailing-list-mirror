@@ -1,91 +1,129 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1243BB11A
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 20:10:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786479003; cv=none; b=QoOPIK3NpLJAPgApoemjuYpC9JW4xRIq4QEk91wOCvVYCiLz3TH5DtQ3NsmbtXDzNLuAaYQFGXaWYoa9hweIihFGSU9DgiY+0m7f523De4OPMVcxKyJCgonMiqwCHccSwiph+9NJKT3tEG2PgPbnAfR4yQra2UlqWSgmLVdy6Zo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786479003; c=relaxed/simple;
-	bh=L4kGor+CwV3LlqYu/bhsUMdDC1qtFzgsU1EZUc64Zmw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bquemHV3zVilQSTKadG+rs0O4IvkDmoFSJNyMnKaegUK8Jk1Yh4CxhAzgjFlNxtyfd09t7Rixy3+OeZ1HZ+XVWzGaNqraHjW18LgeaDPxGlVXYlPGBQLhZ8erUriXvOx3qTjW3DQwqzlaDvr42Cjx4O2jEVt07dtCgpEax58vcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SpsgE9fP; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809743403E1
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 20:27:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786480022; cv=pass; b=Fk3lT96hoHt/MpuMtvZ3vz0U7DJ89NYBxSLhSllI0ZNEByoV1USHpXT9FjjBVspkgpKjuEnnM+5jIJIP1Q8RlorPvR6ONqZVdClKns+DFAnSEn8jQ8gz7BfTACoclh4Y1Ipti751ByW3v/DifVpAYIjcVeKOAlrywWuw3YFY04I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786480022; c=relaxed/simple;
+	bh=bQQ0QOhw4RspgKEFhCtrSFEQ75oU/14ucIQumzPofpU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=SowT990Dh1K74CyDnxFgxfP9uQPExqobNwMwxstLnf4gl069qH2PfraLgEBPjgwVS0ye8ymrOn5w/4zW+PHMFTz+OEfzXp/DNgpb1rN4TZTXp9FsfCMDq3KBb5zJyUEkZ8gbfGxh9Sl9/Zb2K/pGFcOpM+9WVEJTz80cqDKOpsE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KowpL3VU; arc=pass smtp.client-ip=74.125.224.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SpsgE9fP"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-6ae9b721927so196695eaf.0
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 13:10:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KowpL3VU"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-66b32bb75beso165382d50.2
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 13:27:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786480020; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YWA9mgVRuyOEyqn4EE/gV37BOYt8dTh3I54aswxIvNFV2wM1OARmQ7cEhbSbjXrryH
+         O2PaRnqwHqveA14vxCwtsLLged49rUbuCt6m0nLknZS5nsP1xolpNcpM47pDnR6EsHOf
+         wWJhzxIxpz9r+ACyfpRZXtql9+mut6eK3JQuphOiKP0E1erqxhIy+Kvct751iDZefQ3E
+         d3HNGCIkAA+vWsDIg1InQE8ZMn+cqIKPoT5wrzJlQEXOVQ4sLRCy08hb5hnRv7qbtb+v
+         kr3edBQXFbs8rTubuBj1oLNEPNP7ZJCv1VvwGC2kBZE8dY344ABWR3GjSTr59ht4ww4g
+         mlKg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=bQQ0QOhw4RspgKEFhCtrSFEQ75oU/14ucIQumzPofpU=;
+        fh=n7rwVXjC4KAPWZpCO5dMuw0DyczDQ6ZOyrWkVuRiKrs=;
+        b=Sqh0enB0/bc3Nf1p1fX2QcZCScHMs9Lo4wb9AEYrxTsQ+6kcay8nDpqgW2i+SKFRzm
+         swhNt4JlTG+oCISXiFdNgwCafjZh7vVNfGZfa300J2Je3u2XcgNKmzZO+da3m3shqN3d
+         cRD57Fm4hHzNgVPC6Q9GmBdIYGr9pIfeXB62Af1Wai0Oqx23+JN/akz6CD77h23ECoUN
+         0QMjOtOMDxioZDfzlosgsTyJB212PRF2OAU4qej1ufEq77/PxYJQZJfSobVYCXQjhnfb
+         VA6SrA9xG6MVBdm9hInFz/UmITWxhbRfwsyyqptXdB2b86JiaEAUGpagqP4NlJfTSWTs
+         MQ3A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786479001; x=1787083801; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=FEdVKSsKECdF0cbkg6CSu3uDGx0eo8pPXlNp9BPskIQ=;
-        b=SpsgE9fPOrSZKZvCCEjx0GW9nnCA9XMmrzyGDkgfAO9yZ9D6ArsQMXlK4STSk6l6+b
-         XaDyI2Io0reDPTuL4tTq+6jxZ85WKvWRgmh01zAzi+LQobjDqKSzW5hGdNFmyhQCIggH
-         8L3BvE3Et0N86U7w7aYC8gC/4g+77hJmD9S7ciWycTnAy3DolriHBqqtTWB6ISlyUSwa
-         BilzJKyPLiUGUNF1AzSqCek8jdnqCBQwGpr6iGfWVnG8a3b7YTKsS8+2ROBs+JoWVr/+
-         CAOf1fzEL+gTkumavbkDuYB6TN0wE8mXaAwoNkKtsQTKY3M2z22bfIM7Sax+n9xz3n4/
-         Rx/g==
+        d=gmail.com; s=20251104; t=1786480020; x=1787084820; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=bQQ0QOhw4RspgKEFhCtrSFEQ75oU/14ucIQumzPofpU=;
+        b=KowpL3VU7yG/vgILmHuMyqfotHrKEDgvQIaX6/oGYZRoDyeyCgaMJiacBLOmFnX2ej
+         DA6qzI6cOXxIlv+ZpvZrkJBiGlfaOozTKacktJo/YdiNibwR0nm4/GiTNdW31HUR3390
+         f1k2GqbBILqvvvZEjyxc8ro2P5ht+KywDezwj/KxavMtYN4RrCVn0uHKQkXV36q8wbaa
+         TpXEmtmVMg6Ny5EeOgq47qvO1Ya7qpYSMaJTLESfWQLxUHGyD96ToNoKVgWMgMHfMSnv
+         FurclrKw9sdbDXqxV6gH3Fl40RbuoqogqUXov5Svio7hFKzQWE8P86OvSZ3HgX0tVAMO
+         Nxgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786479001; x=1787083801;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FEdVKSsKECdF0cbkg6CSu3uDGx0eo8pPXlNp9BPskIQ=;
-        b=KY06iYCFcgPGcyU78snxe4pWerujabrTZsQOrjR3A4leVXFzP1Ta71hWNRviv4qQuu
-         4evhtUtB9UG/ZGRsWu7iQZ4jZdGf4h1qowRIFgSDG1KMNTQX0AvA7hqR3AVmQtc2bLu5
-         2XgbTM1stkn8xl6vDwEi5cUnXOj77ANIRE2EQOojJPFHEHCcx/Pu5z2IanLHcNl56L99
-         xLP7Yl7txhk5jOdTH5WruBJRl//GRDTX5HQaX9dnK0hX37dgdZI8RivthsXm76218jP6
-         /dGeFYaT0OkVVUX7MEQu90pHLdtY0aovari9Pm6cQRKh9dXePN4kQBzQXE2J0TbozPJp
-         ejrw==
-X-Gm-Message-State: AOJu0YxPvK/7Vh4OqtQV8dY3XSX7mfFGfCbxSCtnfQJnDkG1/JnufK9V
-	j4CLN+Wfy7+N9hmGIdw3ckhl/EgNUPh1IwrmwwIiIRR8X0X7niNboXyf
-X-Gm-Gg: AR+sD13neGCEewwbB/qZpIQA9Es/FnZSxZHd1rm7O58woYC7Ias0sDgyVSoJ3emMwas
-	Pb7UwP4PRYBU9JisSuaOdg8vq2Iwiw+TZer06tWCkoJNn6gEE/Dyn4s0/1ARjABeLtOyuq3l34Y
-	t3vOWNlPlNv1vIrJ+MRHhjEYFjLU1Wx6Ev5NLVVREYQlW9BDB59AKdiGZi8xGKtRnNSe3WEqT3i
-	2KwziW4pQhhVew6HCpD4gFIvxSP48gOy3VVlmi9umfu5WVP0Kt2kamtlEtwHgCg9K4Syrd34Oti
-	b/mPdy2g7tYe3Xz9o5qv2QCdD632B6QtY9SGztBHIFdNU/PgWOhE3YA/Vbx12Ndj767zdlrEP7Z
-	mwN3WcD5pQkAszbjOqkJ93JF0Heyq35P530etoDszfFE4S2zFInT74Jy/YpL9LPNFuDdqO2YRib
-	3ewlOSftAxosLUydFuj4KtM17LM2LKVLIWQbiWyJt28difjTGlMIrHzw==
-X-Received: by 2002:a05:6820:4c14:b0:6ae:871c:e3f2 with SMTP id 006d021491bc7-6b0a330fbbemr4252219eaf.29.1786479001351;
-        Tue, 11 Aug 2026 13:10:01 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b0ad671bc2sm595885eaf.11.2026.08.11.13.10.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 13:10:00 -0700 (PDT)
-Date: Tue, 11 Aug 2026 15:09:57 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/8] odb: unify read and write streams
-Message-ID: <anuBdm29ye_qV_Rq@denethor>
-References: <20260804-pks-odb-stream-unification-v1-0-86d70e82345e@pks.im>
- <20260805-pks-odb-stream-unification-v2-0-b8c369564641@pks.im>
+        d=1e100.net; s=20251104; t=1786480020; x=1787084820;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=bQQ0QOhw4RspgKEFhCtrSFEQ75oU/14ucIQumzPofpU=;
+        b=YhjZyTo1iacBwyaHvwpGcy1+Zv+CcZkSx09cWVWTYG/w/w2wEUrOtiTZcDGaNdalKp
+         bMojvyCuXlDasXLlvgqTvNhaZUhexrbASvWRyhACxhZU6e3LrnSNg6xaxlMFGRUGCnBD
+         MWvmdFjxl2VshrodA3rv/bRzF0gJax8/w1F+weINdg5pqylcxqSPVavUhrwiJM9HBDU9
+         iqNIeYYComwY85X5jCrwadNNqMG9FYitpaskozecdLYxwQpVAUDqLGKBtVWq8zcjI3TA
+         3M4F79PQctp77oetBNBMvuGLnvGtPCvTf+uGvEo+O1GT4kNj0kAjNyDXZMg4O8Tp2dgh
+         PatQ==
+X-Gm-Message-State: AOJu0YwOpp22N2J1J/EO55V4K4ln72EtQqYJuPB+yMIX8ZrRW5VUOJD8
+	k+XDA1JoQz3N565qVRPY9NUb/yAMjnRwrU1KVO5rEMDEDcs6NCYDMzhA4szQPYtN+8Gh4KJF6nE
+	Oxe9nUsaCbwn03tGdPa7Tu3vl5iYrSqc=
+X-Gm-Gg: AR+sD12V1Rz0ZUnYxQYoqQ+iyJSic1ctH4KM+3KaNWl2cXUKgJ6v5czNdJBt+VF0tsM
+	JJW0lZdCUh/H+t/eG6oes/UCRjR4rx3pSUM41KjbvrffijdfIJxLWXNBCWq3gqOkz07sbU1vI+x
+	z9PzQU03aWy+d7FoZ/popGQyHT8v4N87iFvXxI7nr+BGh0dNxmKg1QtIXXoESi4/E5KwKPKWoTd
+	mu5j8or69aLBgczYGpxxBVCeV1F6D34qEIqVRBmAP7i7JBrvbUdNYPOSltvCpVShmHQMPvnrXdE
+	+AcCr7IDL/mKZzgSaxxutRLuLoVRhJkiS7w0A21Z4JQ9dJEfEbY16vnIrFnnucs1inN4LEgknWA
+	=
+X-Received: by 2002:a05:690e:b89:b0:667:f217:bf8b with SMTP id
+ 956f58d0204a3-66b33d1118fmr4579d50.0.1786480020410; Tue, 11 Aug 2026 13:27:00
+ -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260805-pks-odb-stream-unification-v2-0-b8c369564641@pks.im>
+From: "<Alexander G. Riccio>" <test35965@gmail.com>
+Date: Tue, 11 Aug 2026 16:26:23 -0400
+X-Gm-Features: AUfX_mysETW998J4ZgXhaBZEnhIvn2DHrdE3GdCiegumkgbty3nFBzWstiPgWBU
+Message-ID: <CAN3N+zmzKBt75Gue--FbGWDxFY7HKfmRXX6O0FmtMRNyEfCjog@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] worktree: add lifecycle hooks
+To: gitster@pobox.com
+Cc: git@vger.kernel.org, domen@cachix.org, cdwhite3@pm.me, 
+	phillip.wood123@gmail.com, ps@pks.im, sunshine@sunshineco.com, 
+	avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 26/08/05 09:44AM, Patrick Steinhardt wrote:
-> Changes in v2:
->   - Use the correct object type when hashing in-memory objects.
->   - Remove a stale comment.
->   - Adapt a commit message to mention that renames will follow in
->     subsequent commits.
->   - Add another commit to rename `struct input_zstream_data`.
->   - Link to v1: https://patch.msgid.link/20260804-pks-odb-stream-unification-v1-0-86d70e82345e@pks.im
+(Apologies for replying out of thread -- I have never commented on the
+git mailing list before, and I found this discussion in the archive
+while looking into options for my own worktree hook needs)
 
-This version of the series addresses all my previous feedback and looks
-good to me. Thanks.
+I have a concrete example of a motivating workflow, indeed using
+agentic development and proliferous worktrees. I figure it's worth
+writing in to add support for this - I'm sure I'm not the only one out
+there bumping into this problem in this current era, but git
+developers can only know about it if we volunteer the information!
 
--Justin
+For me, I have disk space issues that relate from the interaction of
+XCode derived data and worktrees. It apparently uses the absolute path
+of the worktree for the per-project build state cache by default, and
+of course it by default stores a lot of this data out-of-worktree. I
+think I can change this configuration, but it's worth also noting that
+about a half dozen other related tools do similar things, and none of
+them have any way to know when the concomitant worktree is removed or
+pruned. When I remove a worktree manually, I already have a dedicated
+shell script to do cleanup like this, my script does a lot of very
+useful things when it gets used!! The root problem remains, that we
+cannot reliably count on agents to remember to do things we tell them
+to do.
+
+Currently, this means many gigabytes need to be cleaned up manually or
+agentically every day, which is annoying, time consuming, and wastes
+SSD writes.
+
+Sadly, it seems like none of the third party tools will emit events
+when someone or some-thing calls `git worktree remove` or `git
+worktree prune`, so there's no solid way to implement this outside
+native hooks expansions.
+
+Sincerely,
+Alexander Riccio
+--
+"Change the world or go home."
+
+If left to my own devices, I will build more.
