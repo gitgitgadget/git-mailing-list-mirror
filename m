@@ -1,567 +1,274 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazolkn19010021.outbound.protection.outlook.com [52.103.33.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F5532824B
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 15:03:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786460612; cv=none; b=V3ZBx6PAaJ0tVSdhkX/7DT2+BvEY94C5lHL9f8PTNug7SfhSB3lMHOHqtHpOurL9KO2SZ1BWxCj+N1+sJWfV+tbfrYooXVMvrxVXb4q06V6vozSoJUc1DMjlk1OHo+Mg5ZWhnmqz1/+WmyIVMslQpLO2XoIxom11At8lhlhKRLw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786460612; c=relaxed/simple;
-	bh=reHUPDRgmeecSawCvlppmrwuMlLvvLA6vTYWaew7TGk=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jYtWe54X3++4h7EB3Qekogtoqj8hT4b9wAWzZ8qLygaEc57vss3cN0LaiASxWxKKr35sHxms1VCU5U8LMO0KG0JXYsCFXRPyCKylePMPhJ7KFIBsm6sKSl8Qb3qvjKZdUkEaphQBLIdNEDH2vWcg6sJ3UgQg8l1OXKYb3NQZu5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T+Nb1Yfa; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7CD358381
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 15:06:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.21
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786460795; cv=fail; b=LQBh6E7EjmGkK3tuweJDvuLsnX9mOYyBiMvfzbU4jM93qs0Ocn0B+hrVM+SydB2qjOXTwbTObN7fFcXQEDbLa+U025MOpyw/noSMgtwyG7hjcIWMX1uSFAoBvAEtIyjAn7djYyDgJW5KEXrPge095n42zEHxBWR2rQ811qfdzAM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786460795; c=relaxed/simple;
+	bh=kMz99VLaDdUgbFC4VLH0PSW5isdWei0CsNEDj1edpRo=;
+	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=WEvuSnrmQd7FZQLXZEQpuxxSaeWVxGwfcnUYw4eEg7wdopZnncXyXMLt4pznXuYZjVycLAqWJKaCrjnD5z/GJaHNhvVoABiPz3mJEg1f7aXDSXmgEVggag6vVu9eA8ATL6eBpbVvjhbjOso8wvqTbEiKnpzNs68Awi6yusILW5c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=trkrMXIU; arc=fail smtp.client-ip=52.103.33.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T+Nb1Yfa"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-456f7012050so741199fac.0
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 08:03:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786460608; x=1787065408; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=nISK1xdUmTsSqtcg3QzclVLV7JAn3Kb+dncjKbp0g+M=;
-        b=T+Nb1Yfa1P1IaBHBUQrqdoVcojdUf3S6SzXLo2UVVO+AI2CNCk9qiQyqKvHLGGWRUB
-         iXJaMR37Y4lRinjj3CGdgiP4t2NsbsCuN4jqtuvbxMJJRdz4/59Ua7SWTcQNdH5AD1wh
-         x+O9hJryu60nsfDw5kljowbm7hOECWmLLgFcoD8bVKfwpeVC+/tTwL/NWEngpwlRttLk
-         iBCNcWyi4nobQ4TDyFMtNcRBlM7RWaG+a3l6Gz+N+zXevIFdTnDlNFbgn8H9LsVoV+5P
-         r9sfvJi4pZPhyhpjd1GfA7LpdrT4MwmIN8Qb2Xt0zWb6jXxXHK8pq4eD4aWnDLNm/Sb6
-         H90A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786460608; x=1787065408;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=nISK1xdUmTsSqtcg3QzclVLV7JAn3Kb+dncjKbp0g+M=;
-        b=CeLWLibV/iSOQ/7NL0QkzG84WwP89rQ61TbQA7rVHmvA1W1zGdUnCoFRBqdT7jqSWH
-         iVeKaCKwZLy5ZPFOHmeFwXY1M6uZDxusEameOvAmPE2Z8eCLzy+WL50fTw45Tk5e6PyL
-         fpLx7GeEZtS6UB7PZxj3svM7nZYye/VwcOO63tB3SxIgVTzj/1OI4MKHD22rM5X36iWl
-         w5gHqmByq5w9XxRk9UnuDrs4l1Qm9lB2vxrlE4xHtGtwhnMItUcunRsyOTn9otgEhZT/
-         ymrMKX3wTds01TJ8RScwmhv71Du9TAmkw0qJtSYsUyq9M8v/ivBseuVqF1aWz18eiFh7
-         pVwg==
-X-Gm-Message-State: AOJu0Yzzk8peUrVLajUYZRn9LpUqoCSNWxSVOMP8+7gZIFbJRosoOi08
-	sgOfB7SCYilYPWuew4vtfniaQP4+6AKnreXdlbNjVTVcG1x64J1YgG0MlsqAFw==
-X-Gm-Gg: AR+sD10HVJXqn9I64faSsqnvhNzKFtXKqziSmKW6UQHMeJ7i6bJWo3eidnnexvuGo3L
-	qWPS1YrxTiQ3UzW7HHHibRhe9/H/mMEKOGcO01yWSRTVkI6sn+CgU7sCKGuV6ArArmWWrYOl+nC
-	Lj9h09gQ2VYdayHoM0levmjABGKLsVgciMGFz0xcg5LSX7YcwBJXpup6/kjkcqo0a7AA/K+7utm
-	Nj2Xvu7+i4v7HzQrQsT2No4yYxzTTLzAShhle0xm8SZ3CDL0XKTVt3S54T13BI8ECFKB060wZHK
-	uIFxEnMwdhDtW0xLiq1cDLvtkI4hALRu3fDIcswMkNsQfVGQcmG4QwXQx6f4kRBvWYchb3NzC/b
-	caA9s5Cp4OJh94MioFxGaJRKOWeszUWNhe6h1go3vVYYgB1Wdrbboue6apJlRWlHbFPPrbl/Xto
-	a8PfOu+fGdw6rDx/0StPS4ifgGyPKwaTEpk1FLoA4dJCA96ohmJEV9pTPlGXN36TfAde7QTqnD
-X-Received: by 2002:a05:6808:2444:b0:495:ce6d:7d48 with SMTP id 5614622812f47-4b209744a40mr168058b6e.9.1786460607832;
-        Tue, 11 Aug 2026 08:03:27 -0700 (PDT)
-Received: from [127.0.0.1] ([57.154.6.41])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b200133de5sm910547b6e.9.2026.08.11.08.03.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 08:03:27 -0700 (PDT)
-Message-Id: <pull.2380.git.git.1786460606222.gitgitgadget@gmail.com>
-From: "Vlad Petric via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 11 Aug 2026 15:03:26 +0000
-Subject: [PATCH] copy: prefer reflinks for file copies
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="trkrMXIU"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cTH3bk1OFUnnbcNaWrF5uKm5KpkVqaPO9wNRwLgIjV+QKcRUHTszseYMirD1mvZZvMFgvmtJ2Y0xUP+XiANLeitgbqmKSvN3rhClmF3abmW9MyAEMrbhcxK2TsQSm0XEjJLtCQ7MiaRXW+aPu/ly9qTB2KmSZqD3wWZFn+NZs8nfR3Ye/Gw6Zf3zkSPMB1NMafRozAoNp+NrhobEDLZ7GkWOUG8mcDkMfDyiABd6CmHsdBkelRliO4dFq/NIKtEKhD30J6fVH8ewtymvtEdq4H0TH0pl9/PqOmhwZPo4XslWvulWmZWUUuYUfoSvhgx5Rmm+QhVw3bsyLnpdP5slYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kMz99VLaDdUgbFC4VLH0PSW5isdWei0CsNEDj1edpRo=;
+ b=RdiCCT3D3T3RMjpyZM2CsKzQtz97v30AWlZADsrs1cd6ZsJbchWE2veMX4cbP9maaFGgEApnCjU3CiaTs6nDlSwV8h9ikgea5s2J5DPNFWQM90SVgEeIW2q9Dyy2EcPcAcYXU5DWR3lttFBaVTJNMuyiO5iiG7lpHrtfQrxht48q1nvbfph2zod5wNfNfBifHq+kYgi/WsO0OmYDtSMz6fYutQAl7u8iwiURAd9uLg0H14iVri5aX5+4tk7eSziYULQSAW/oVO4JI5bK3iCRyyCZURfCMAWyjtj06baxTv0cv/t5f3ADNxpFUeKv2Zjsfdoc7XfEm8TeRG9frLPNqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kMz99VLaDdUgbFC4VLH0PSW5isdWei0CsNEDj1edpRo=;
+ b=trkrMXIUGS6eqBixkoQl3JzwjYL6iOW7N4KrPwoELZqdNwDMplp/nsCnzNreKLLC5oXLbLCClJAbq5SuPd7ECNoFl/BYtWOyFvU2JL/zmaWFNVLLnuFCtQETqFvQzGeIEptq/84Z9uWzsAuzL8aaNNXsp/Yfm5STV95Ylxsm74uhaL/IB90YuqL7y7Dc9fwNMBg8hCQLiOab/FRYl+pSOCJA24eb+NJoTm68+klJXFob0aYqemcm/RrjJ7rnPwQmchWfoAKCnwDAQScjd6QCPS1VvQh8I6qf1A3JvhTCnXPyuWoj1fzAbXqzOMV9NyZD3orYleVrdS0H/e7GVuWutA==
+Received: from AM0PR02MB4450.eurprd02.prod.outlook.com (2603:10a6:208:f4::27)
+ by AS8PR02MB6965.eurprd02.prod.outlook.com (2603:10a6:20b:2e0::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Tue, 11 Aug
+ 2026 15:06:30 +0000
+Received: from AM0PR02MB4450.eurprd02.prod.outlook.com
+ ([fe80::3b82:1ad3:b24a:7baf]) by AM0PR02MB4450.eurprd02.prod.outlook.com
+ ([fe80::3b82:1ad3:b24a:7baf%3]) with mapi id 15.21.0292.024; Tue, 11 Aug 2026
+ 15:06:30 +0000
+From: Skybuck Flying <skybuck2000@hotmail.com>
+To: Git <git@vger.kernel.org>
+Subject: Re: AI Textconv filter misconfiguration on Windows leads to silent
+ corruption of diff output (ongoing investigation)
+Thread-Topic: AI Textconv filter misconfiguration on Windows leads to silent
+ corruption of diff output (ongoing investigation)
+Thread-Index: AQHdKSpeW10CNT+9OEuLP9VqvpTkMLaYG2wMgAAB2zCAACCveYAAtQjx
+Date: Tue, 11 Aug 2026 15:06:30 +0000
+Message-ID:
+ <AM0PR02MB445092119D0BA1921E2BAADFB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
+References:
+ <AM0PR02MB445096594555DAD1D9EE1505B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
+ <AM0PR02MB445083767BAE669D4656CA6CB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
+ <AM0PR02MB445013B3CDAAAD361FD93A86B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
+ <AM0PR02MB44501AFB0A97E2E097B8795AB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
+In-Reply-To:
+ <AM0PR02MB44501AFB0A97E2E097B8795AB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM0PR02MB4450:EE_|AS8PR02MB6965:EE_
+x-ms-office365-filtering-correlation-id: 0bab15d7-0368-44ca-2594-08def7ba1fc5
+x-ms-exchange-slblob-mailprops:
+ the5UDfP+Sp8y9OjyMUjT+C7wrdybQnyyPeDCrDovvyyGCfOvZV2lECLN1+NE97h0ppCwXQwUn+jIOneBPAiqQ9HK/egV1f4i9lFp7j/V7Nfb0QNtio2u9mx2DO04wgFqOTPh9ZwSmBOJXZ/PyCHEi5X5X9l+ivXRkPQr3uV7pAX0yoQrDyzSBr8FtlnqkH3T7wVgNHaVOx6qsZbCM/8IZqoDbFPbcddtrXiqiex1iS6FMFZwIE4FE9yfaYtOiQFncrXYaeS43QXCvHhM3/HIW7hjP6TreA4Xs8W+pAcMpt2yjJUoldD9suzgw+5tgnAUpsn1SCgbU11pxZbtB7C6ATHzGMcHHQxajMpldg/WbNByKhBArcxUttfC1n5Uz6E7oYURFyMzllLRBdO8fi3axXOPVbAYrvARTd72iWpIaothWEZer6wMfh5P1HkMI4imf1z4ayHIG7XT523PjT70ieoPrASnGyWMbUlJiLdK9oU3muWnGuK98mmMqqtYYGPjD3fXEO2B5ggsLuOktmSPCYB/YeFQFLFNPH9XlhC8OyJGJz/QpExahCpfdmFWJ5RZpWlkjqXAl96ZxQh4yyiA0DDqzT+3uFpPWDftwc9y4+tcGCcl9I1UNlSY3pw5xUAjaKxd2WpR90p+7ASFZGqJQ+Mehysu/9DEuIqFVPrbk+hJwWV+zv84BbN5tGnG2+A1eX0VY687AnQ8yqMsh9GnhG35pJK98dDaR0UYNxjYg4lKQobJbMhD9jDnfkr4G4ex+WDwu7ucmjzfDpB4W9478l8oeozc3QzFsG7wTZBIsV2x9hM0ZaZx4J9uZkSsHcE+l6+ZtiKsPmy5vXrlJxysMiotndnkXmZu3TIHUWQyNQ=
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|8060799015|31061999003|8062599012|19110799012|12121999013|15080799012|15030799006|55001999006|51005399006|24021099003|37011999003|25010399006|10035399007|40105399003|2607281247196008|31101999003|102099032|440099028|3412199025|26104999009;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?L3FLUVBvRUswODVaTUh5Yjc0alg5T1UxZ3hWNHgzbFZkMlQ1SmFZRVlaeEhQ?=
+ =?utf-8?B?dnk5TCt3dzBueGhqY0pETlpCRXlDeU9URzU5VFh3ZVdQM2FXcWsrcEFtQ05q?=
+ =?utf-8?B?bFBSbXQ1d0tTRFBlYzdFK3lLSWN3UEdMbjRYNG1KQjZnUE42b2pQVWwyZzl2?=
+ =?utf-8?B?aHRFSWliMXZJZzY5d1h6STNmTDhDMjJwUDZLa1JHTlk1NkpLV3ZkNlZQM0FQ?=
+ =?utf-8?B?N2ZyZmVkNytnRCt0QkVYSGNZT01Hb1c5QWptbkNOU0I0cWpCTVBKa3RLdGlJ?=
+ =?utf-8?B?TmRxNVBsYWVPUWtsclk3ZzBmczRTTUZEZmtQVjlJVWRjUnMzek5JYzlZVmJK?=
+ =?utf-8?B?N1hYOTV2RUt2VldBOUFFWGdJQnhFaXpBczhSN2UvQlFzUUw2SmVKVGpCSlcy?=
+ =?utf-8?B?Z1pEWVA0VnhpNncwSkg1SlhBTnNmU0VmZm9rMDFsdjJLc09DTFJKbVg3ZXlE?=
+ =?utf-8?B?ODFXRnNnbHhiRmR3WmVzc2JGVVM0NklvZW5oTC90QmxJTWdtQ3dteEQ3dUlt?=
+ =?utf-8?B?b2tUeUp2eFpXMmdzR2M1dGtmWElKR3dUZzkrakcwaEN5UXU1dmdIbVJYTEwr?=
+ =?utf-8?B?YzQwanQ5eGoxbmFUZTVCU2t0N0ZIK3lCYlZYeVVxcVVSTnN4YUY5Z2Zpay9w?=
+ =?utf-8?B?ZFp1OUVhUkIrVXlUQ1lCV0dTZzBzVVc2azl0UjVsN3psb2RQWE9GMWxFZGFD?=
+ =?utf-8?B?Z2MzSDZBb25YcmdjcjltdlVkaHhldmhRa1pNczhMdnU2WjBrWnk1dlZsTWRs?=
+ =?utf-8?B?UXM2V1RiMTdZQWErMVZaUUVwMnNzbjVOS0JUK29LczJwK3c1SEdGOEp6aW9I?=
+ =?utf-8?B?UlQ5WnMwc0oxcE1ndnovcldhNXQvNzN2UkQ4Z09rNWhURXkrRlpud2hmWlZm?=
+ =?utf-8?B?aGZOWTFaM0lmZEhqRHFWNjVQTFVybXBXU0RuNFQzQVBHc0o0Y0VsejBLNExy?=
+ =?utf-8?B?SzNvZDRvTDlhOUYxMnR4Zzc2QnRUY3F3YjhuT1V4c2lHYkM2M0N0TE4vR2U5?=
+ =?utf-8?B?WWx4STNGd1FHSTM2UTlDaUljTnhNZGUyWU9GbHEwS2RhVHF6VHlwZHErRWJU?=
+ =?utf-8?B?Y01SdUVIT0FhRm9RM2lRTEVXc3RWdkQxMlZmNlVCRzVRL2x4ekw2aE1KTGdp?=
+ =?utf-8?B?alF4UWdOUzdxb1Y4USsrOGV0YkczQ3p1L1hNM2tac3FUZmpYQ0V6R0RHS2ZB?=
+ =?utf-8?B?ZEk3aGhrTHkzMVltTytRM1ErejVpUnBCb25YM3QxZUlZWW4zNG5pQnJwcyts?=
+ =?utf-8?B?LzVQNkh5NnFhc0RJalR4NHVaRHNiMkJFdTNPSzBkTmVSQ0ViK0F3RE5hZlpP?=
+ =?utf-8?B?Q3J5Tlh4eHlKeTA3WVJmMFNwbmhpMGQ4VERCZFk4Y1VjT0R1NzFmMitWOFJn?=
+ =?utf-8?B?dnhlZmQrMWwvUkduWTFsTXlnSWlqNFY4U0hpcVVCZFBwdUwvd3hTL3RXYjYz?=
+ =?utf-8?B?cjZlUDBXRDFuZHFqR2l0QzJoT3ZLa1BURUU0dlp3PT0=?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?WVBOaUpmUUdiVm1qZEhIMk10UGZ1VHM4VzZ0aUUrQ2hkLzd6cy9uOWFYT0sx?=
+ =?utf-8?B?UGdzSVV1WGtRSkhMRDJrVkZ3SnpVdVFHSGttVWNoZ1pXSmVYRDBmdDhsaE8v?=
+ =?utf-8?B?MU9sN0kxMFFIVjVzeDI1WlJMVEE3MVpVTEJTRTlheFVYcVhpZGEvNGhiNy80?=
+ =?utf-8?B?OXlGdEJSbWVYZzRrYWg4TFhyMjFwT1RIeUY3NHBIMjFzNXFMYXBzclZiQzNm?=
+ =?utf-8?B?dVFBZHVDc2dGSE1nSjRGZDhKUmQ5UC9OczFYOUhVOXR4Nk4wRC9oRHFNeCtE?=
+ =?utf-8?B?K1NUSlRlWTREUXg0TGEyWFhzbm5BT0UzN2VGZzNtcFlENlU4ZkVRSE5CaFFy?=
+ =?utf-8?B?Y25US0NsVkdtTmhTcnRhZ0xENnAwclZ6Q0Z5b3p0WnV2eXkvTFB4OVZBYTl1?=
+ =?utf-8?B?dU5Hb0hpVzIxQkU2aGF5T3lJendvVXJOakhZQUc3TE0ySVJUZ2Z3RktMWGpq?=
+ =?utf-8?B?bzQwUFRJMW5pRTJmNkNXeW5nMlZ6WkhxMDQxNXZaLzg1cmwwc2ZvZnhDTEtL?=
+ =?utf-8?B?UGJ1Y05IcHY5SEdkVzM4ZmVNOTAxZjAwbkFGQTkvSTMyMXdtK2JENDNDeGFS?=
+ =?utf-8?B?VUZncTcrWXRpRTJYYTN6RHcrbW5rS2dub0J4c1VTOG9DZ0hjOWNEaHdIV3FQ?=
+ =?utf-8?B?SnpLSjlicXY4SHVUU1hZQ2FadzIrMmVzalhBbFJzekRSWGl1V2xKTjA3bElL?=
+ =?utf-8?B?YWZ0aGI5YXM4SEFzSEI5VGdadm96L2tiVjFNSFZsRThmRDF2RUdCaURwMGRC?=
+ =?utf-8?B?Y0EzK2JzREVnYmxocmRaSXcyNkhKN05udXZXa0RrdlBLMzh0NWhFc1J3T1Ft?=
+ =?utf-8?B?VzlneWlzZFBHRGlzdnZNOG0wRmFyRFV4VjJzb1VlZ1RxcWV2c0k3MmVnZFVC?=
+ =?utf-8?B?UkZsazNBcWtkZm53RXc4ZGNUeVNVKzBzeDBuVlliQ3RDS2JJSEgwNml6Wi9C?=
+ =?utf-8?B?T3RYT2gwaWZYcWttNGY5bjd2YU8zaDAxcEZkRktlWnNabWdVYVgyTlZDQWoy?=
+ =?utf-8?B?VGZvS3ZoV1hVcHJwRFd4cVRwclMyZjVmN0VqRWJuM1IySWVycy9IeWxYWnFN?=
+ =?utf-8?B?TGZJZnlSRGFtNmwyLzY3R3BlK3JkNmZDL3NrSHlqSFdBL05Id2wyRGIycFlP?=
+ =?utf-8?B?cFhNOEJKMnErRy92NkVvb2dRWitEMFQvRFA2c2ZtZU5EVmRtMkZNV1BlTzN4?=
+ =?utf-8?B?N2RvUk96UjR2SFoyRHZNWm1XbGQrRVI2NjdsNS85R09NQTdxU3BVVnhWaHFu?=
+ =?utf-8?B?ZWhBTG1jZStQdXB2Y2Y4NXJPMytqaHRpMXE1V3FrMlEvTWJWK1JFbXFKZlhl?=
+ =?utf-8?B?MVlMcXFmVnQzZHlLOXZnMUQvZGtEc280aEVKVk1BQnQvRVF2MS9OZWppcjlC?=
+ =?utf-8?B?N3JXZ2VEQkZkT2NaTTRoaFJ2OVNIQ2EwRVo4VW1tdWJlMXp4a0tEb09aaDRw?=
+ =?utf-8?B?L2dPVUg4ZHpDM0hKcHd3TTJsUkRIK0czRGtXVFV2bnhhVms5TWN2SEVTNlAx?=
+ =?utf-8?B?SndlMndMQlkxMEc4T2FrZU5TWTZyUVo0OHhCVlNEYU0rcGk1RjlRV2FSZVJD?=
+ =?utf-8?B?eDNVSDFhNllWSHQrbHBkb09PMVptZUhOZkFkNTJGNzJTdjJaOHpEVFl3a2hi?=
+ =?utf-8?B?dlVIMGpWcGJIWmY3anVZMnUrQWNuRURuZmxUVEdmWEc2RzdVblNaMllzeHM3?=
+ =?utf-8?B?c3NDTDN4cFJLYWxzTkxXaWdFd0tjem5kU1hDYm9wM2h1TzEzNkFkbVZjS1pS?=
+ =?utf-8?B?M1BZNWczT1hBY09TN1I3NThNM3NGRkVINGFZTUN1NEtrM1BhaTh5bnZmVkpM?=
+ =?utf-8?B?VFhLYk5DSFJ4TGlNQUV1c2VHdnJIUkttVGh3OXhuYWQxVk1LbjcwQklYUG9o?=
+ =?utf-8?B?WlVqWS9Hd3NVK0hVK1RJRG8yY3MxSmVOZU1pU2V2N1cyeTNjNFVUSnFpSERi?=
+ =?utf-8?Q?AIEw5PjOyQb45fYjP7PbUsj+R5FYOy+p?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Vlad Petric <vlad@drpetric.com>,
-    Vlad Petric <vlad@drpetric.com>
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-9f624.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR02MB4450.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0bab15d7-0368-44ca-2594-08def7ba1fc5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Aug 2026 15:06:30.2131
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR02MB6965
 
-From: Vlad Petric <vlad@drpetric.com>
-
-Git currently copies files byte-for-byte through copy_file(). Local
-clones separately try to hardlink object files before falling back to
-copying them.
-
-On filesystems that support copy-on-write cloning, a reflink can share
-the underlying storage without making the source and destination names
-refer to the same inode. This provides most of the space and I/O
-benefits of hardlinks while allowing either file to be replaced or
-modified independently.
-
-On Linux, try FICLONE before performing a byte-for-byte copy. Treat
-reflinking as an optimization: if the ioctl is unavailable or fails,
-remove the partial destination and use the existing copy path.
-
-For local clones, try a reflink before the existing hardlink path. The
-resulting order is therefore:
-
-  - reflink;
-  - hardlink, unless --no-hardlinks was requested;
-  - byte-for-byte copy.
-
-Preserve source timestamps when reflinking local object files. This
-matches the previous hardlink and copy behavior and is important for
-the expiry decisions made by prune and gc.
-
-Add an LD_PRELOAD-based test helper that can force FICLONE to succeed,
-report EOPNOTSUPP, or report another error. This exercises the reflink
-and fallback paths even when the test filesystem does not support
-reflinks. Cover generic file copying, local clones, --no-hardlinks,
-hardlink fallback, byte-copy fallback, object integrity, and timestamp
-preservation.
-
-The focused tests pass on three independent filesystems:
-
-  - ZFS at /home;
-  - ext4 at /tmp;
-  - tmpfs at /dev/shm.
-
-The complete Git test suite also passes on all three filesystems with
-no unexpected failures.
-
-Signed-off-by: Vlad Petric <vlad@drpetric.com>
----
-    copy: prefer reflinks for file copies
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2380%2Fvladpetric%2Fvp%2Freflink-copy-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2380/vladpetric/vp/reflink-copy-v1
-Pull-Request: https://github.com/git/git/pull/2380
-
- Makefile                     |  1 +
- builtin/clone.c              |  3 ++
- copy.c                       | 96 +++++++++++++++++++++++++++++++-----
- copy.h                       |  4 ++
- t/helper/meson.build         |  1 +
- t/helper/test-copy-file.c    | 13 +++++
- t/helper/test-fake-reflink.c | 72 +++++++++++++++++++++++++++
- t/helper/test-tool.c         |  1 +
- t/helper/test-tool.h         |  1 +
- t/meson.build                |  1 +
- t/t0094-reflink.sh           | 89 +++++++++++++++++++++++++++++++++
- t/t5605-clone-local.sh       |  4 +-
- 12 files changed, 272 insertions(+), 14 deletions(-)
- create mode 100644 t/helper/test-copy-file.c
- create mode 100644 t/helper/test-fake-reflink.c
- create mode 100755 t/t0094-reflink.sh
-
-diff --git a/Makefile b/Makefile
-index fac3e8879c..802c0e9a37 100644
---- a/Makefile
-+++ b/Makefile
-@@ -814,6 +814,7 @@ TEST_BUILTINS_OBJS += test-bundle-uri.o
- TEST_BUILTINS_OBJS += test-cache-tree.o
- TEST_BUILTINS_OBJS += test-chmtime.o
- TEST_BUILTINS_OBJS += test-config.o
-+TEST_BUILTINS_OBJS += test-copy-file.o
- TEST_BUILTINS_OBJS += test-crontab.o
- TEST_BUILTINS_OBJS += test-csprng.o
- TEST_BUILTINS_OBJS += test-date.o
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 5b25cca510..cd83093ec9 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -309,6 +309,9 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
- 
- 		if (unlink(dest->buf) && errno != ENOENT)
- 			die_errno(_("failed to unlink '%s'"), dest->buf);
-+		if (!copy_file_reflink_with_time(the_repository, dest->buf,
-+					  src->buf, 0666))
-+			continue;
- 		if (!option_no_hardlinks) {
- 			if (!link(src->buf, dest->buf)) {
- 				struct stat st;
-diff --git a/copy.c b/copy.c
-index 6074132050..da8a285c1e 100644
---- a/copy.c
-+++ b/copy.c
-@@ -5,6 +5,12 @@
- #include "strbuf.h"
- #include "abspath.h"
- 
-+#ifdef __linux__
-+#include <sys/ioctl.h>
-+
-+#define FICLONE _IOW(0x94, 9, int)
-+#endif
-+
- int copy_fd(int ifd, int ofd)
- {
- 	while (1) {
-@@ -33,19 +39,9 @@ static int copy_times(const char *dst, const char *src)
- 	return 0;
- }
- 
--int copy_file(struct repository *repo,
--	      const char *dst, const char *src, int mode)
-+static int finish_copy(struct repository *repo, const char *dst,
-+		       int fdi, int fdo, int status)
- {
--	int fdi, fdo, status;
--
--	mode = (mode & 0111) ? 0777 : 0666;
--	if ((fdi = open(src, O_RDONLY)) < 0)
--		return fdi;
--	if ((fdo = open(dst, O_WRONLY | O_CREAT | O_EXCL, mode)) < 0) {
--		close(fdi);
--		return fdo;
--	}
--	status = copy_fd(fdi, fdo);
- 	switch (status) {
- 	case COPY_READ_ERROR:
- 		error_errno("copy-fd: read returned");
-@@ -64,6 +60,82 @@ int copy_file(struct repository *repo,
- 	return status;
- }
- 
-+int copy_file_reflink(struct repository *repo,
-+		       const char *dst, const char *src, int mode)
-+{
-+#ifndef FICLONE
-+	(void)repo;
-+	(void)dst;
-+	(void)src;
-+	(void)mode;
-+	errno = ENOTSUP;
-+	return -1;
-+#else
-+	int fdi, fdo, status;
-+
-+	mode = (mode & 0111) ? 0777 : 0666;
-+	if ((fdi = open(src, O_RDONLY)) < 0)
-+		return fdi;
-+	if ((fdo = open(dst, O_WRONLY | O_CREAT | O_EXCL, mode)) < 0) {
-+		close(fdi);
-+		return fdo;
-+	}
-+	status = ioctl(fdo, FICLONE, fdi);
-+	if (status) {
-+		int saved_errno = errno;
-+
-+		close(fdi);
-+		close(fdo);
-+		unlink(dst);
-+		errno = saved_errno;
-+		return -1;
-+	}
-+
-+	return finish_copy(repo, dst, fdi, fdo, 0);
-+#endif
-+}
-+
-+int copy_file_reflink_with_time(struct repository *repo,
-+			 const char *dst, const char *src, int mode)
-+{
-+	int saved_errno;
-+
-+	if (copy_file_reflink(repo, dst, src, mode))
-+		return -1;
-+	if (!copy_times(dst, src))
-+		return 0;
-+
-+	saved_errno = errno;
-+	unlink(dst);
-+	errno = saved_errno;
-+	return -1;
-+}
-+
-+static int copy_file_contents(struct repository *repo,
-+			      const char *dst, const char *src, int mode)
-+{
-+	int fdi, fdo;
-+
-+	mode = (mode & 0111) ? 0777 : 0666;
-+	if ((fdi = open(src, O_RDONLY)) < 0)
-+		return fdi;
-+	if ((fdo = open(dst, O_WRONLY | O_CREAT | O_EXCL, mode)) < 0) {
-+		close(fdi);
-+		return fdo;
-+	}
-+
-+	return finish_copy(repo, dst, fdi, fdo, copy_fd(fdi, fdo));
-+}
-+
-+int copy_file(struct repository *repo,
-+	      const char *dst, const char *src, int mode)
-+{
-+	if (!copy_file_reflink(repo, dst, src, mode))
-+		return 0;
-+
-+	return copy_file_contents(repo, dst, src, mode);
-+}
-+
- int copy_file_with_time(struct repository *repo,
- 			const char *dst, const char *src, int mode)
- {
-diff --git a/copy.h b/copy.h
-index 1059b118d6..4c603756a7 100644
---- a/copy.h
-+++ b/copy.h
-@@ -6,6 +6,10 @@ struct repository;
- #define COPY_READ_ERROR (-2)
- #define COPY_WRITE_ERROR (-3)
- int copy_fd(int ifd, int ofd);
-+int copy_file_reflink(struct repository *repo,
-+		       const char *dst, const char *src, int mode);
-+int copy_file_reflink_with_time(struct repository *repo,
-+			 const char *dst, const char *src, int mode);
- int copy_file(struct repository *repo,
- 	      const char *dst, const char *src, int mode);
- int copy_file_with_time(struct repository *repo,
-diff --git a/t/helper/meson.build b/t/helper/meson.build
-index 3235f10ab8..90b57fb86a 100644
---- a/t/helper/meson.build
-+++ b/t/helper/meson.build
-@@ -7,6 +7,7 @@ test_tool_sources = [
-   'test-cache-tree.c',
-   'test-chmtime.c',
-   'test-config.c',
-+  'test-copy-file.c',
-   'test-crontab.c',
-   'test-csprng.c',
-   'test-date.c',
-diff --git a/t/helper/test-copy-file.c b/t/helper/test-copy-file.c
-new file mode 100644
-index 0000000000..fee14b60b6
---- /dev/null
-+++ b/t/helper/test-copy-file.c
-@@ -0,0 +1,13 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
-+#include "test-tool.h"
-+#include "copy.h"
-+#include "environment.h"
-+#include "repository.h"
-+
-+int cmd__copy_file(int argc, const char **argv)
-+{
-+	if (argc != 3)
-+		return 129;
-+	return copy_file(the_repository, argv[2], argv[1], 0666) ? 1 : 0;
-+}
-diff --git a/t/helper/test-fake-reflink.c b/t/helper/test-fake-reflink.c
-new file mode 100644
-index 0000000000..9afc4c14d4
---- /dev/null
-+++ b/t/helper/test-fake-reflink.c
-@@ -0,0 +1,72 @@
-+#define _GNU_SOURCE
-+#include <dlfcn.h>
-+#include <errno.h>
-+#include <fcntl.h>
-+#include <stdarg.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/ioctl.h>
-+#include <unistd.h>
-+
-+#define FICLONE _IOW(0x94, 9, int)
-+
-+static int emulate_clone(int dst, int src)
-+{
-+	char buf[8192];
-+	off_t pos = 0;
-+
-+	for (;;) {
-+		ssize_t nr = pread(src, buf, sizeof(buf), pos);
-+		if (nr < 0)
-+			return -1;
-+		if (!nr)
-+			return ftruncate(dst, pos);
-+		if (pwrite(dst, buf, nr, pos) != nr)
-+			return -1;
-+		pos += nr;
-+	}
-+}
-+
-+static void log_clone_attempt(void)
-+{
-+	const char *path = getenv("GIT_TEST_FICLONE_LOG");
-+	int fd;
-+
-+	if (!path)
-+		return;
-+	fd = open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
-+	if (fd < 0)
-+		return;
-+	write(fd, "FICLONE\n", 8);
-+	close(fd);
-+}
-+
-+int ioctl(int fd, unsigned long request, ...)
-+{
-+	static int (*real_ioctl)(int, unsigned long, ...);
-+	va_list ap;
-+	unsigned long arg;
-+	const char *mode;
-+
-+	va_start(ap, request);
-+	arg = va_arg(ap, unsigned long);
-+	va_end(ap);
-+
-+	if (request != FICLONE) {
-+		if (!real_ioctl)
-+			real_ioctl = dlsym(RTLD_NEXT, "ioctl");
-+		return real_ioctl(fd, request, arg);
-+	}
-+
-+	log_clone_attempt();
-+	mode = getenv("GIT_TEST_FICLONE");
-+	if (!mode || !strcmp(mode, "real")) {
-+		if (!real_ioctl)
-+			real_ioctl = dlsym(RTLD_NEXT, "ioctl");
-+		return real_ioctl(fd, request, arg);
-+	}
-+	if (!strcmp(mode, "success"))
-+		return emulate_clone(fd, (int)arg);
-+	errno = !strcmp(mode, "unsupported") ? EOPNOTSUPP : EIO;
-+	return -1;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index b71a22b43b..51012fa46c 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -17,6 +17,7 @@ static struct test_cmd cmds[] = {
- 	{ "cache-tree", cmd__cache_tree },
- 	{ "chmtime", cmd__chmtime },
- 	{ "config", cmd__config },
-+	{ "copy-file", cmd__copy_file },
- 	{ "crontab", cmd__crontab },
- 	{ "csprng", cmd__csprng },
- 	{ "date", cmd__date },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index f2885b33d5..7565cceb86 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -10,6 +10,7 @@ int cmd__bundle_uri(int argc, const char **argv);
- int cmd__cache_tree(int argc, const char **argv);
- int cmd__chmtime(int argc, const char **argv);
- int cmd__config(int argc, const char **argv);
-+int cmd__copy_file(int argc, const char **argv);
- int cmd__crontab(int argc, const char **argv);
- int cmd__csprng(int argc, const char **argv);
- int cmd__date(int argc, const char **argv);
-diff --git a/t/meson.build b/t/meson.build
-index a25f37d2f5..a6575b8b9a 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -126,6 +126,7 @@ integration_tests = [
-   't0091-bugreport.sh',
-   't0092-diagnose.sh',
-   't0093-verify-cache-df-gap.sh',
-+  't0094-reflink.sh',
-   't0095-bloom.sh',
-   't0100-previous.sh',
-   't0101-at-syntax.sh',
-diff --git a/t/t0094-reflink.sh b/t/t0094-reflink.sh
-new file mode 100755
-index 0000000000..25e989d272
---- /dev/null
-+++ b/t/t0094-reflink.sh
-@@ -0,0 +1,89 @@
-+#!/bin/sh
-+
-+test_description='reflink-first file copying'
-+
-+. ./test-lib.sh
-+
-+FAKE_REFLINK=/tmp/git-test-fake-reflink-$$.so
-+test_atexit 'rm -f "$FAKE_REFLINK"'
-+
-+test_lazy_prereq FICLONE_PRELOAD '
-+	test_have_prereq !MINGW &&
-+	test "$(uname -s)" = Linux &&
-+	${CC:-cc} -shared -fPIC -o "$FAKE_REFLINK" \
-+		"$TEST_DIRECTORY/helper/test-fake-reflink.c" -ldl
-+'
-+
-+test_expect_success FICLONE_PRELOAD 'generic copy accepts reflink success' '
-+	printf content >source &&
-+	GIT_TEST_FICLONE=success \
-+	GIT_TEST_FICLONE_LOG="$TRASH_DIRECTORY/generic-success.log" \
-+	LD_PRELOAD="$FAKE_REFLINK" \
-+		test-tool copy-file source destination &&
-+	test_file_not_empty generic-success.log &&
-+	test_cmp source destination &&
-+	test "$(stat -c %i source)" != "$(stat -c %i destination)"
-+'
-+
-+test_expect_success FICLONE_PRELOAD 'generic copy falls back when unsupported' '
-+	printf fallback >source-fallback &&
-+	GIT_TEST_FICLONE=unsupported \
-+	GIT_TEST_FICLONE_LOG="$TRASH_DIRECTORY/generic-unsupported.log" \
-+	LD_PRELOAD="$FAKE_REFLINK" \
-+		test-tool copy-file source-fallback destination-fallback &&
-+	test_file_not_empty generic-unsupported.log &&
-+	test_cmp source-fallback destination-fallback
-+'
-+
-+test_expect_success FICLONE_PRELOAD 'generic copy falls back after reflink error' '
-+	printf error-fallback >source-error &&
-+	GIT_TEST_FICLONE=error \
-+	GIT_TEST_FICLONE_LOG="$TRASH_DIRECTORY/generic-error.log" \
-+	LD_PRELOAD="$FAKE_REFLINK" \
-+		test-tool copy-file source-error destination-error &&
-+	test_file_not_empty generic-error.log &&
-+	test_cmp source-error destination-error
-+'
-+
-+test_expect_success FICLONE_PRELOAD 'local clone prefers successful reflinks' '
-+	git init source-repo &&
-+	git -C source-repo commit --allow-empty -m base &&
-+	GIT_TEST_FICLONE=success \
-+	GIT_TEST_FICLONE_LOG="$TRASH_DIRECTORY/clone-success.log" \
-+	LD_PRELOAD="$FAKE_REFLINK" \
-+		git clone --bare source-repo reflink-clone &&
-+	test_file_not_empty clone-success.log &&
-+	find reflink-clone/objects -type f -links +1 >hardlinks &&
-+	test_must_be_empty hardlinks &&
-+	git -C reflink-clone fsck --no-dangling
-+'
-+
-+test_expect_success FICLONE_PRELOAD '--no-hardlinks also prefers successful reflinks' '
-+	GIT_TEST_FICLONE=success \
-+	GIT_TEST_FICLONE_LOG="$TRASH_DIRECTORY/no-hardlinks-success.log" \
-+	LD_PRELOAD="$FAKE_REFLINK" \
-+		git clone --bare --no-hardlinks source-repo no-hardlinks-reflink-clone &&
-+	test_file_not_empty no-hardlinks-success.log &&
-+	find no-hardlinks-reflink-clone/objects -type f -links +1 >hardlinks &&
-+	test_must_be_empty hardlinks &&
-+	git -C no-hardlinks-reflink-clone fsck --no-dangling
-+'
-+
-+test_expect_success FICLONE_PRELOAD 'local clone preserves hardlink fallback' '
-+	GIT_TEST_FICLONE=unsupported \
-+	LD_PRELOAD="$FAKE_REFLINK" \
-+		git clone --bare source-repo hardlink-clone &&
-+	find hardlink-clone/objects -type f -links +1 >hardlinks &&
-+	test_file_not_empty hardlinks
-+'
-+
-+test_expect_success FICLONE_PRELOAD '--no-hardlinks preserves byte-copy fallback' '
-+	GIT_TEST_FICLONE=unsupported \
-+	LD_PRELOAD="$FAKE_REFLINK" \
-+		git clone --bare --no-hardlinks source-repo copied-clone &&
-+	find copied-clone/objects -type f -links +1 >hardlinks &&
-+	test_must_be_empty hardlinks &&
-+	git -C copied-clone fsck --no-dangling
-+'
-+
-+test_done
-diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
-index 156362f145..b3ab4d6faf 100755
---- a/t/t5605-clone-local.sh
-+++ b/t/t5605-clone-local.sh
-@@ -58,10 +58,10 @@ test_expect_success 'With -no-hardlinks, local will make a copy' '
- 	! repo_is_hardlinked w
- '
- 
--test_expect_success 'Even without -l, local will make a hardlink' '
-+test_expect_success 'local clone copies the complete object database' '
- 	rm -fr w &&
- 	git clone -l --bare x w &&
--	repo_is_hardlinked w
-+	git -C w fsck --no-dangling
- '
- 
- test_expect_success 'local clone of repo with nonexistent ref in HEAD' '
-
-base-commit: 010afd3166ddc64c9863b1506f12cbcdda0d4ea1
--- 
-gitgitgadget
+KEkgYW0gbm90IHlldCBkb25lIHdpdGggeW91IG10Zi1lcnMpOgoKSSBmZWVkIHRoZSBjcmFzaCBs
+b2cgaW50byBDby1QaWxvdC9BSSwgaXQga25vd3MgYWJvdXQgaXQ6CgpUaGUgc2hvcnQgYW5zd2Vy
+OiAqKnlvdXIgY3Jhc2ggY29kZXMgaW5kaWNhdGUgYW4gKmFjY2Vzc+KAkXZpb2xhdGlvbiogaW5z
+aWRlIFdpbmRvd3MgVGVybWluYWzigJlzIHJlbmRlcmluZy9jb250cm9sIERMTCoqLCBhbmQgdGhl
+IHNwZWNpZmljIHNpZ25hdHVyZSB5b3UgcG9zdGVkIG1hdGNoZXMgYSAqKmtub3duIFdpbmRvd3Mg
+VGVybWluYWwgYnVnKiogdGhhdCBvY2N1cnMgZHVyaW5nICoqdGFiIGRyYWfigJFtZXJnZSBvcGVy
+YXRpb25zKiosIG9mdGVuIHdoZW4gc2Nyb2xsYmFjayBidWZmZXJzIGFyZSBsYXJnZS4KCi0tLQoK
+IyMg8J+nqSBXaGF0IHRoZSBjb2RlcyBtZWFuIChkaXJlY3QgaW50ZXJwcmV0YXRpb24pCgotICoq
+RmF1bHRpbmcgYXBwbGljYXRpb246KiogV2luZG93c1Rlcm1pbmFsLmV4ZSAgCi0gKipGYXVsdGlu
+ZyBtb2R1bGU6KiogTWljcm9zb2Z0LlRlcm1pbmFsLkNvbnRyb2wuZGxsICAKLSAqKkV4Y2VwdGlv
+biBjb2RlOioqICoqMHhjMDAwMDAwNSoqIOKGkiAqKkFjY2VzcyB2aW9sYXRpb24qKiAoaW52YWxp
+ZCBtZW1vcnkgcmVhZC93cml0ZSkgICBbY2xvdWRzcHJlc3MuY29tXShodHRwczovL3d3dy5jbG91
+ZHNwcmVzcy5jb20vaG93LXRvLWZpeC1lcnJvci1jb2RlLTB4YzAwMDAwMDUtb24td2luZG93cy0x
+MS8pICAKLSAqKkZhdWx0IG9mZnNldDoqKiAweDJDOTI0IOKGkiBUaGUgZXhhY3QgaW5zdHJ1Y3Rp
+b24gaW5zaWRlIHRoZSBETEwgd2hlcmUgdGhlIGNyYXNoIG9jY3VycmVkICAKLSAqKlByb2Nlc3Mg
+SUQgLyBzdGFydCB0aW1lOioqIEp1c3QgaWRlbnRpZmllcnM7IG5vdCBkaWFnbm9zdGljCgoqKjB4
+YzAwMDAwMDUqKiBzcGVjaWZpY2FsbHkgbWVhbnMgdGhlIHByb2dyYW0gdHJpZWQgdG8gKipyZWFk
+IG9yIHdyaXRlIG1lbW9yeSBpdCBzaG91bGRu4oCZdCoqLCB0eXBpY2FsbHkgZHVlIHRvOgoKLSBO
+dWxsIHBvaW50ZXIgZGVyZWZlcmVuY2UgIAotIFVzZeKAkWFmdGVy4oCRZnJlZSAgCi0gQ29ycnVw
+dGVkIGludGVybmFsIHN0YXRlICAKLSBNZW1vcnkgcHJlc3N1cmUgY2F1c2luZyB1bmV4cGVjdGVk
+IGJlaGF2aW9yICAKLSBBIGJ1ZyBpbiB0aGUgbW9kdWxlIChpbiB0aGlzIGNhc2UsIE1pY3Jvc29m
+dC5UZXJtaW5hbC5Db250cm9sLmRsbCkKCi0tLQoKIyMg8J+noCBXaHkgdGhpcyBzcGVjaWZpYyBj
+cmFzaCBpcyBoYXBwZW5pbmcKCllvdXIgY3Jhc2ggc2lnbmF0dXJlICoqZXhhY3RseSBtYXRjaGVz
+KiogYSBkb2N1bWVudGVkIFdpbmRvd3MgVGVybWluYWwgaXNzdWU6CgotICoqQ3Jhc2ggZHVyaW5n
+IHRhYiBkcmFn4oCRbWVyZ2UqKiAgCi0gKipGYXVsdGluZyBtb2R1bGU6KiogTWljcm9zb2Z0LlRl
+cm1pbmFsLkNvbnRyb2wuZGxsICAKLSAqKkV4Y2VwdGlvbjoqKiAweGMwMDAwMDA1ICAKLSAqKk9m
+ZnNldDoqKiBzYW1lIHJlZ2lvbiAoMHgyQ3h4eCkgIAotICoqVmVyc2lvbjoqKiAxLjI0LjI2MDUu
+MTIwMDEgIAoKVGhpcyBpcyBjb25maXJtZWQgaW4gdGhlIFdpbmRvd3MgVGVybWluYWwgR2l0SHVi
+IGlzc3VlIHRyYWNrZXI6ICAKLSBJc3N1ZSAjMjA0MDYgZGVzY3JpYmVzICoqaW50ZXJtaXR0ZW50
+IGNyYXNoZXMgd2hlbiBtZXJnaW5nIHRhYnMqKiwgd2l0aCB0aGUgKipzYW1lIHZlcnNpb24gYW5k
+IHNhbWUgRExMKiouICAgW0dpdGh1Yl0oaHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC90ZXJt
+aW5hbC9pc3N1ZXMvMjA0MDYpICAKLSBJc3N1ZSAjMTkzODMgc2hvd3Mgc2ltaWxhciBjcmFzaGVz
+IGluIGVhcmxpZXIgdmVyc2lvbnMsIGFsc28gZHVyaW5nIHRhYiBtZXJnZSBvcGVyYXRpb25zLiAg
+IFtHaXRodWJdKGh0dHBzOi8vZ2l0aHViLmNvbS9taWNyb3NvZnQvdGVybWluYWwvaXNzdWVzLzE5
+MzgzKSAgCgpUaGUgbWFpbnRhaW5lcnMgbm90ZToKCi0gVGhlIGNyYXNoIG9jY3VycyAqKmluc2lk
+ZSB0aGUgY29udHJvbCBETEwqKiwgbm90IHVzZXIgY29kZS4gIAotIEl0IGlzIHRyaWdnZXJlZCBi
+eSAqKmRyYWdnaW5nIGEgdGFiIGZyb20gb25lIHdpbmRvdyBpbnRvIGFub3RoZXIqKi4gIAotIExh
+cmdlIHNjcm9sbGJhY2sgYnVmZmVycyBvciBtZW1vcnkgZ3Jvd3RoIChSQURBUl9QUkVfTEVBS182
+NCkgaW5jcmVhc2UgdGhlIGxpa2VsaWhvb2QuICAKLSBBbGwgVGVybWluYWwgd2luZG93cyBkaWUg
+YmVjYXVzZSB0aGV5IHNoYXJlIGEgc2luZ2xlIHByb2Nlc3MuCgpUaGlzIGlzICoqbm90IGNhdXNl
+ZCBieSB5b3VyIHN5c3RlbSoqLCBkcml2ZXJzLCBvciBSQU0uICAKSXQgaXMgYSAqKmJ1ZyBpbiBX
+aW5kb3dzIFRlcm1pbmFsIDEuMjQqKi4KCi0tLQoKIyMg8J+UjSBXaGF0IDB4YzAwMDAwMDUgbWVh
+bnMgaW4gZ2VuZXJhbAoKV2luZG93cyB1c2VzIDB4YzAwMDAwMDUgZm9yICoqYW55IGlsbGVnYWwg
+bWVtb3J5IGFjY2VzcyoqOgoKLSAqKjAqKiDihpIgaW52YWxpZCByZWFkICAKLSAqKjEqKiDihpIg
+aW52YWxpZCB3cml0ZSAgCi0gKio4Kiog4oaSIGludmFsaWQgY29kZSBleGVjdXRpb24gIAogIFtj
+bG91ZHNwcmVzcy5jb21dKGh0dHBzOi8vd3d3LmNsb3Vkc3ByZXNzLmNvbS9ob3ctdG8tZml4LWVy
+cm9yLWNvZGUtMHhjMDAwMDAwNS1vbi13aW5kb3dzLTExLykKCkluIHlvdXIgY2FzZSwgdGhlIEdp
+dEh1YiBpc3N1ZXMgc3Ryb25nbHkgaW5kaWNhdGUgYSAqKm51bGwgcG9pbnRlciBkZXJlZmVyZW5j
+ZSoqIGluc2lkZSB0aGUgdGFi4oCRbWVyZ2UgbG9naWMuCgotLS0KCiMjIPCfm6AgV2hhdCB5b3Ug
+Y2FuIGRvCgojIyMgMS4gQXZvaWQgdGFiIGRyYWfigJFtZXJnZSBmb3Igbm93ICAKVGhpcyBpcyB0
+aGUgZGlyZWN0IHRyaWdnZXIgaW4gdGhlIGtub3duIGJ1ZyByZXBvcnRzLgoKIyMjIDIuIFJlZHVj
+ZSBzY3JvbGxiYWNrIHNpemUgIApMYXJnZSBzY3JvbGxiYWNrIGJ1ZmZlcnMgaW5jcmVhc2UgbWVt
+b3J5IHByZXNzdXJlIGFuZCBjcmFzaCBsaWtlbGlob29kLgoKIyMjIDMuIFVwZGF0ZSBXaW5kb3dz
+IFRlcm1pbmFsICAKQ2hlY2sgZm9yIGEgbmV3ZXIgdmVyc2lvbiB0aGFuICoqMS4yNC4yNjA1LjEy
+MDAxKiouICAKVGhlIGJ1ZyBpcyBrbm93biBhbmQgdW5kZXIgdHJpYWdlLgoKIyMjIDQuIElmIHlv
+dSB3YW50IGRlZXBlciBkZWJ1Z2dpbmcgIApZb3UgY2FuIGNhcHR1cmUgYSBkdW1wIGFuZCBpbnNw
+ZWN0IHdpdGggV2luRGJnOgoKLSBgIWFuYWx5emUgLXZgICAKLSBDaGVjayB0aGUgY2FsbCBzdGFj
+ayBhcm91bmQgdGhlIGZhdWx0IG9mZnNldCAgCi0gTG9vayBmb3IgcG9pbnRlciBkZXJlZmVyZW5j
+ZXMgaW5zaWRlIE1pY3Jvc29mdC5UZXJtaW5hbC5Db250cm9sLmRsbAoKQnV0IGJhc2VkIG9uIHRo
+ZSBHaXRIdWIgcmVwb3J0cywgeW91IHdpbGwgbGlrZWx5IHNlZSB0aGUgc2FtZSBzaWduYXR1cmUg
+YXMgb3RoZXJzLgoKLS0tCgojIyDwn6etIElmIHlvdSB3YW50LCBJIGNhbiBoZWxwIHlvdToKCi0g
+QW5hbHl6ZSB5b3VyIGNyYXNoIGR1bXAgIAotIEV4cGxhaW4gaG93IHRvIHVzZSBXaW5EYmcgc3Rl
+cOKAkWJ54oCRc3RlcCAgCi0gQ2hlY2sgd2hldGhlciB5b3VyIHNldHRpbmdzLmpzb24gbWlnaHQg
+YWxzbyBiZSBjb250cmlidXRpbmcKCkp1c3QgcGljayBvbmUuCiIKCgpNZToKIgpIYXMgYSBuZXcg
+dmVyc2lvbiBvZiB0ZXJtaW5hbCB3aW5kb3cgYmVlbiByZWxlYXNlZCB3aGljaCBzb2x2ZXMgdGhp
+cyBidWcgPwoiCgoqKlllcyDigJQgYSBuZXdlciBXaW5kb3dzIFRlcm1pbmFsIGJ1aWxkICpoYXMq
+IGJlZW4gcmVsZWFzZWQgdGhhdCBzcGVjaWZpY2FsbHkgZml4ZXMgdGhlIHRhYuKAkWRyYWcgY3Jh
+c2ggeW914oCZcmUgZXhwZXJpZW5jaW5nLioqICAKVGhlIGZpeCBsYW5kZWQgaW4gKipXaW5kb3dz
+IFRlcm1pbmFsIDEuMjQuMTE5MTEuMCoqLCByZWxlYXNlZCBtaWTigJFKdWx5IDIwMjYsIGFuZCBj
+b25maXJtZWQgaW4gbXVsdGlwbGUgc291cmNlcyBhcyBhZGRyZXNzaW5nIHRoZSBkcmFn4oCRbWVy
+Z2UgY3Jhc2ggeW91IGhpdC4gICBbTlQgQ29tcGF0aWJsZV0oaHR0cHM6Ly93d3cubnRjb21wYXRp
+YmxlLmNvbS9zdG9yeS93aW5kb3dzLXRlcm1pbmFsLTEyNC1hbmQtMTI1LXVwZGF0ZS1yZWxlYXNl
+ZC1idWctZml4ZXMtYW5kLXYxMjYtZGVsYXkvKQoKLS0tCgojIyDwn5+iICoqRGlyZWN0IGFuc3dl
+cjogWW91ciBjcmFzaCAqaXMgZml4ZWQqIGluIDEuMjQuMTE5MTEuMCoqCgpUaGUgTlQgQ29tcGF0
+aWJsZSByZWxlYXNlIG5vdGVzIGV4cGxpY2l0bHkgc3RhdGU6CgotICoq4oCcS2V5IGZpeGVzIGlu
+Y2x1ZGUgcmVzb2x2aW5nIGEgdGFi4oCRZHJhZ2dpbmcgY3Jhc2gu4oCdKiogIAotIFRoaXMgZml4
+IGlzIGluY2x1ZGVkIGluICoqV2luZG93cyBUZXJtaW5hbCAxLjI0LjExOTExLjAqKiAoc3RhYmxl
+KSBhbmQgKioxLjI1LjE5MTIuMCoqIChwcmV2aWV3KS4gICBbTlQgQ29tcGF0aWJsZV0oaHR0cHM6
+Ly93d3cubnRjb21wYXRpYmxlLmNvbS9zdG9yeS93aW5kb3dzLXRlcm1pbmFsLTEyNC1hbmQtMTI1
+LXVwZGF0ZS1yZWxlYXNlZC1idWctZml4ZXMtYW5kLXYxMjYtZGVsYXkvKQoKVGhpcyBtYXRjaGVz
+IHlvdXIgY3Jhc2ggc2lnbmF0dXJlIGV4YWN0bHk6CgotIEZhdWx0aW5nIG1vZHVsZTogKipNaWNy
+b3NvZnQuVGVybWluYWwuQ29udHJvbC5kbGwqKiAgCi0gRXhjZXB0aW9uOiAqKjB4YzAwMDAwMDUq
+KiAgCi0gT2Zmc2V0OiAqKjB4MkM5MjQqKiAgCi0gVmVyc2lvbjogKioxLjI0LjI2MDUuMTIwMDEq
+KiAgCi0gVHJpZ2dlcjogKipkcmFn4oCRbWVyZ2luZyB0YWJzKiogIAogIChDb25maXJtZWQgaW4g
+R2l0SHViIGlzc3VlICMyMDQwNikgICBbR2l0aHViXShodHRwczovL2dpdGh1Yi5jb20vbWljcm9z
+b2Z0L3Rlcm1pbmFsL2lzc3Vlcy8yMDQwNikKClRoZSBmaXggaXMgZGVzY3JpYmVkIGFzIGNvcnJl
+Y3RpbmcgYW4gKipFbmFibGVQYWludGluZyB2aWV3cG9ydCBkZXN5bmMqKiB0aGF0IGNhdXNlZCBj
+cmFzaGVzIGR1cmluZyB0YWIgZHJhZ2dpbmcgYmV0d2VlbiB3aW5kb3dzIG9mIGRpZmZlcmVudCBz
+aXplcy4gICBbTlQgQ29tcGF0aWJsZV0oaHR0cHM6Ly93d3cubnRjb21wYXRpYmxlLmNvbS9zdG9y
+eS93aW5kb3dzLXRlcm1pbmFsLTEyNC1hbmQtMTI1LXVwZGF0ZS1yZWxlYXNlZC1idWctZml4ZXMt
+YW5kLXYxMjYtZGVsYXkvKQoKLS0tCgojIyDwn6epICoqSW1wb3J0YW50IG51YW5jZTogU29tZSAq
+b3RoZXIqIHRhYuKAkWRyYWcgY3Jhc2hlcyBzdGlsbCBleGlzdCoqCgpXaGlsZSB5b3VyIHNwZWNp
+ZmljIGNyYXNoIChmYXVsdGluZyBpbiAqTWljcm9zb2Z0LlRlcm1pbmFsLkNvbnRyb2wuZGxsKikg
+aXMgZml4ZWQsICoqbmV3ZXIgcmVsYXRlZCBjcmFzaGVzKiogd2VyZSBsYXRlciBkaXNjb3ZlcmVk
+OgoKLSBDcmFzaGVzIHdoZW4gZHJhZ2dpbmcgYSB0YWIgKipvdmVyIHRlcm1pbmFsIGNvbnRlbnQq
+KiAobm90IG1lcmdpbmcpICAKICDihpIgRmF1bHRpbmcgaW4gKipXaW5kb3dzLlVJLlhhbWwuZGxs
+KiosIGV4Y2VwdGlvbiAqKjB4YzAwMDAyN2IqKiAgCiAg4oaSIFN0aWxsIHByZXNlbnQgaW4gMS4y
+NC4xMTkxMS4wIGFuZCAxLjI0LjI2MDcuMTAwMDEgIAogICAgW0dpdGh1Yl0oaHR0cHM6Ly9naXRo
+dWIuY29tL21pY3Jvc29mdC90ZXJtaW5hbC9pc3N1ZXMvMjA1MTIpCgotIENyYXNoZXMgZHVyaW5n
+IHBvaW50ZXLigJFtb3ZlIGV2ZW50cyBkdWUgdG8gYSByYWNlIGNvbmRpdGlvbiAgCiAg4oaSIE51
+bGwgZGVyZWZlcmVuY2UgaW4gYFRlcm1Db250cm9sOjpfUG9pbnRlck1vdmVkSGFuZGxlcmAgIAog
+IOKGkiBQcmVzZW50IGluIDEuMjQuMTE5MTEuMCAgCiAgICBbR2l0aHViXShodHRwczovL2dpdGh1
+Yi5jb20vbWljcm9zb2Z0L3Rlcm1pbmFsL2lzc3Vlcy8yMDQ3NykKClRoZXNlIGFyZSAqKmRpZmZl
+cmVudCBidWdzKiogZnJvbSB5b3Vycywgd2l0aCBkaWZmZXJlbnQgZmF1bHRpbmcgbW9kdWxlcyBh
+bmQgZXhjZXB0aW9uIGNvZGVzLgoKKipZb3VyIGNyYXNoIGlzIGZpeGVkLioqICAKKipPdGhlciBk
+cmFn4oCRcmVsYXRlZCBjcmFzaGVzIHN0aWxsIGV4aXN0LioqCgotLS0KCiMjIPCfm6AgKipXaGF0
+IHlvdSBzaG91bGQgZG8gbm93KioKCiMjIyAxLiBVcGRhdGUgV2luZG93cyBUZXJtaW5hbCAgCklu
+c3RhbGwgKioxLjI0LjExOTExLjAqKiBvciBuZXdlcjoKCi0gTWljcm9zb2Z0IFN0b3JlICAKLSBg
+d2luZ2V0IHVwZ3JhZGUgLS1pZCBNaWNyb3NvZnQuV2luZG93c1Rlcm1pbmFsYCAgCi0gR2l0SHVi
+IHJlbGVhc2VzCgpUaGlzIHVwZGF0ZSBjb250YWlucyB0aGUgZml4IGZvciB5b3VyIGV4YWN0IGNy
+YXNoLgoKIyMjIDIuIElmIHlvdSBzdGlsbCBzZWUgY3Jhc2hlcyAgClRoZXkgbWF5IGJlIG9uZSBv
+ZiB0aGUgbmV3ZXIgWEFNTCBkcmFn4oCRYm91bmRhcnkgYnVncy4gIApUaG9zZSBhcmUgc3RpbGwg
+dW5kZXIgYWN0aXZlIGludmVzdGlnYXRpb24uCgotLS0KCiMjIPCflI0gV2FudCBtZSB0byBjaGVj
+ayB5b3VyIGV4YWN0IHZlcnNpb24gYW5kIGNvbmZpcm0/ICAKWW91IGNhbiBhc2s6ICAKLSAqKkNo
+ZWNrIG15IFdpbmRvd3MgVGVybWluYWwgdmVyc2lvbioqICAKLSAqKkV4cGxhaW4gaG93IHRvIHVw
+ZGF0ZSBXaW5kb3dzIFRlcm1pbmFsKioKIgoKQXQgbGVhc3QgTWljcm9zb2Z0IGZpeGVzIGJ1Z3Ms
+IHRoaXMgd2FzIGEgcmVhbGx5IGJhZCBvbmUsIGdvaW5nIHRvIHVwZGF0ZSBteSBXaW5kb3dzIFRl
+cm1pbmFsLCBvciBhdCBsZWFzdCB0cnkgIQoKQW1hemluZyBob3cgdGhlIEFJIHdhcyBhYmxlIHRv
+IGZpZ3VyZSB0aGlzIG91dCBhbmQgeWVzIGluZGVlZCBpdCBzdXJwcmlzaW5nbHkgdG9vayBkb3du
+IGFsbCBjbWQvY29uc29sZXMuLi4KClRoaXMgY291bGQgYmUgbmFzdHkgZm9yIGJsb2NrY2hhaW5z
+IG9yIGxlbmd0aHkgc2V0dXAgb2Ygc29mdHdhcmUuCgpTbyBkZWZpbmV0bHkgYSBtdXN0IGZpeC4K
+CkJ5ZSBmb3Igbm93LAogIFNreWJ1Y2su
