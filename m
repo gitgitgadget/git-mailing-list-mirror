@@ -1,71 +1,71 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C9535BDB2
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:54:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A54933556D
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:54:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786470867; cv=none; b=RPUIhC4Y3TbTAJYBgEclU9gEKy7rIdPgwit65wldf0FnWDqyuMZXRG2Jx166OYYFdbKWNg/xjdM5FPrZb6cy13R0ej4ieMS23kWfz7eMBedNLAHGevygSrwB/iYwNt5/ZQsU6r1pVgftLAz179YVJC4jJAme2iE+SPwB5tMgdz0=
+	t=1786470868; cv=none; b=poa5si7LTF32FTZlNC3SMddEYozNHFYIb4cpw/WPYT+yxASDKzqPfQzg688XDJ1XPYUCanNSSFihTX9N8liSWmhtHAxRgmexSzi4u2ZYRPwxR4i/G/ZX7F0gxrxnsfQFE2SiM3BWK80x8A5xgyACwaTa6hInTjilpxpdZ0H5vmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786470867; c=relaxed/simple;
-	bh=A3F65QhehYwBXnCUUY7ARMhnOCrt4XdPqCGYEJMMHSM=;
+	s=arc-20240116; t=1786470868; c=relaxed/simple;
+	bh=w19Zm1XBRwzZ4F5NgsFWvfCoCgAYBsHrghg4ar0vwyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBiM5VQD2sJbLtaVjUixu7nG+j5qf6DborDcjNLhzJ91xen6EBDhtIuITBK++OEaT7q880OEfJUzjCbiqthsfwgY4vJ+mruI7yluJVbaMujQgJdjnDMAF4op63TAqr8hlgups+Ltv8M0k8NX04WwiHH99Ko5WlLMfbY73CWExgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GXS1TKgO; arc=none smtp.client-ip=209.85.167.171
+	 MIME-Version; b=ttqZt3cGna7MliIsHw8Nq8dbt3lw7e2/Byg06+SCN2r4nVCsaQxUynSHSMSNR20VBTL5U+a+ue1bheiZtqdE+4XcIj8hyI6b9aM1RUoC4veDkpLIxdV0FiXrkSvNXeyibtRRCafYYcSWKeGH2vtzcaqYstd8uLbfRVOOsSzn4lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kASU83wI; arc=none smtp.client-ip=209.85.167.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GXS1TKgO"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-4864ebb6268so101485b6e.3
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:54:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kASU83wI"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4a40bcc8d69so90485b6e.3
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786470864; x=1787075664; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786470865; x=1787075665; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=vJ6twJHPpCkLHfwkWKVbD0JnUAXzov2te+EFAW8cRC0=;
-        b=GXS1TKgOcSopOVHEqXilHrIJvNVcFN/eV3cKnP2lAOp39KXmZSyyqYkkHjh/bQqs/b
-         MlZnGnQAPqaKDD6U5ZA19JTH5r5ZDfzgFT+TAu/U7tgx126NPh0v4CYA92bc4wfDDcvC
-         ZA0P+YWGLdc6SyOks+V1olNHeU71HNRE5Zt3eiQxMivgqamFd7wlc1iuuUhD+UXNyHXr
-         X4NxwrR5lcJiSnpGYAd/xIerrSiSTUbfcpoHk2SUbwfTgU1y/cVEkGQDkvOhVp9tlR9i
-         hhfch7a1BLcKpmZrkJiG5vsWClZhaXO/f5n66BP21RePSkA1cpg2basRTKOhQHFo3qcV
-         oDOQ==
+        bh=tRsV31MRtIvpSeplN/BzqvYmVWkqZPGKB8JtrFMWzkw=;
+        b=kASU83wImKtF4xzAAfrpY8eFA+hNi3OBjetUDTERis5sI+4R8t7iKrJIGh4EtB0OCM
+         6BtIyIDWDdksraukEymvEj1piKNKAsfsgXjwq4sjGUIAA/2winwffrlpF6jC5EgW7U15
+         PG/2ky6Vq8p67E1ibU/L51FaV8zDmLjY79E75VrE5B7LEYzQgR+LARGIbKRceR1V+TFa
+         BPOyGw/s/I1n+dFPORnlUNUZ1QBoYuPOqALzp8B64oPrSJWNfbj0vVQF3k+++jdAQJpY
+         +7V03mzH++rOq3pFYmrARYcaNvulMDiSYKbM8Razu+huwnp7OhA5dEhYisikoBtRPJR9
+         LxTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786470864; x=1787075664;
+        d=1e100.net; s=20251104; t=1786470865; x=1787075665;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=vJ6twJHPpCkLHfwkWKVbD0JnUAXzov2te+EFAW8cRC0=;
-        b=k2rtaymbM0grCjN5xlYndV3SLjM1+kaIzndGAK7e0H0d72+umWWUKai415AnR7ARWb
-         Rac04tKjZ/TMSy6/iRmq8ceVSCnbVE/aAnQwDtpQiXPOCISK8bTI75RW9mrBwfSJXH0l
-         +PlwGENqBnlt4wvME+LqBDDBDrDR0l+aXKcEmVujYhfZQHUGdWTMgfvfuyOSnKtdWBjd
-         YXmn2TVaNVhs8QzlhLhktFQJcgz8XAS3CBYoy+VMmFuohncPebCdyLI1pBgAw7K9pfH3
-         4mlRJGmYJT8tGg9lh3ZaE5lZGeoda5XYtvi1eazIqWGlaVYWo+Sve0aaRyhcMjJM602O
-         Qp/Q==
-X-Gm-Message-State: AOJu0YyP6Whzpgreag69n24s9/0we+OZZaSzlx+2mXZOcoWUjobwdRpf
-	B5YrwrFC/7rsv9CgWooM8o70hY+VwifCqTdXYhN+dcdltQUWNE8RhKsx7Ycjhg==
-X-Gm-Gg: AR+sD12ioSRNx4qk5x50IRwHaeC7jaMQX3U265T1loCdW60flejhWI7n8+I4KPQas9J
-	ielial0Lon0lbY0uHcWFrFXTCzHp7EL46yi5VvwT4qxO1EwydkgZRvR4MK/hVRBcHTlfa7+haGV
-	MJrfHVjrqkwyLZ4KWs1aChL1H/L4fVWPbTh3Dxhf1RZcONDEb6r0ZV6UyX9DsLtRtxV2/JFG+TN
-	4hjEL3MxBNZ8/vtyvCVxqQyENfkmqxd72zIFoxfmUQ4bWnOAQDbulbFU83aOoqkkFym1XJ2ACLi
-	t5lwhDnIFn/oPvewH/FLsp87OPw5p69b6AhL8U6ZDPnOTZCTI8z+AIFpiou/KtI32A041sy+DNF
-	+4Dqyw0hZVfq5gzzFClO9HhjyngmIo6/DuSDZqXqGzjcq7CS8W0ysGnFiKYeWpUo+LHiawU6tX6
-	klzNKAWiLwzD9P34tlcJiGML8A2kTmIWTBgJ66Ko3v06ivekIqOsggrZZw07wviC6En2XAiHQlK
-	CH2ec/2
-X-Received: by 2002:a05:6808:19a8:b0:4a3:3108:866a with SMTP id 5614622812f47-4b1fd915af5mr3811134b6e.17.1786470864052;
-        Tue, 11 Aug 2026 10:54:24 -0700 (PDT)
+        bh=tRsV31MRtIvpSeplN/BzqvYmVWkqZPGKB8JtrFMWzkw=;
+        b=BknwmEpCabbq0PoJisMZe+PdBlaK2q6SruRsySSzTMtISI6q/wr3o+HyQl2uFh9EWV
+         8khIlJV0m3l2Ng/8T2oMJ8k9ndT/8bM9ZvGUaD1ipMmv2sEnyKgf3DX67mefFYvypr1l
+         0BoU5YNd+bCmVDqm0UYJOLzpeYRjC5R0gJael9MbKDQqdUdX9GrAx9bOVh9ivvuatipt
+         RJzR7sLSfjqoGvYNoE839YpSgUJNNR+IRDq/0BgrfgQQrvjwCOrAvXIDr7+4DreMSlfO
+         L1axOeA9fy6TZG4Dr6A3infTCoYLQPhC77zZB2ZKwggQxsbyyK4fvu/NdyRgUv8YpeSZ
+         jKfQ==
+X-Gm-Message-State: AOJu0YwGxRSORAa/GCwE2QSnoKE+XjuJuY5FFS2TMRIDY8w5mnixLHiU
+	tAXi7wcWM1HDz9QRQQ9X7zkTI3KBmIfOQKFCp6W2ntm9tegR5C/O2gze0Sf8eg==
+X-Gm-Gg: AR+sD10s8GOw6g9SZ5jkLk31om9R5Inh/qo1gn3xX+h8bqgWZGWubw7SW02Mg7Q7ZT4
+	EUEyePvpteyC6yX3p/6hzVmwW5RysJpw8pVJA32XX+KK6HjtNaREPX6QyHzJb0roVV9hX/TddRU
+	wttjXTKSi9DLl00W9Rx+8CHgIcsT6Of/cBUGn2jt30z4Bpm3CG32ZxM/bL9l4sVrEil3WHEChnS
+	77+kE/S5+4jLdJy0q/OBO9KwyIYVXVHESuncMfyX6HN3BWX2NG8BvJRuRz2nYLGDuFumrZijcQm
+	jaxRcLBA0aM90y+d1zrwOzSxOAHYa9fH4deY4b1bF/py0JoERjfYhxop7yBDP9OIbL0uJAT25wl
+	+8j5agQP3P4vuUSdA/IWppIaAHVOeejW/t41yqU0pmom16gtkS4HbSVIJ7kOe76zZnc/UEOv7HP
+	VtLZBTt4GBGrqxpQ/VFSq1fFdq5xraBksV482OYw6ZYtvFDzB16RnNsjNqE2HrzKhwSnN2nN8fU
+	VK0RkA=
+X-Received: by 2002:a05:6808:1a04:b0:48b:5dcb:85ab with SMTP id 5614622812f47-4b209b388a5mr1184101b6e.8.1786470865126;
+        Tue, 11 Aug 2026 10:54:25 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b2001331d2sm1241489b6e.11.2026.08.11.10.54.23
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b2001331d2sm1241489b6e.11.2026.08.11.10.54.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 10:54:23 -0700 (PDT)
+        Tue, 11 Aug 2026 10:54:24 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	gitster@pobox.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 1/9] builtin/receive-pack: properly clean up keep files
-Date: Tue, 11 Aug 2026 12:54:07 -0500
-Message-ID: <20260811175415.2044235-2-jltobler@gmail.com>
+Subject: [PATCH v3 2/9] odb/transaction: add transaction finalize interface
+Date: Tue, 11 Aug 2026 12:54:08 -0500
+Message-ID: <20260811175415.2044235-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.55.0.424.g13c7afec21
 In-Reply-To: <20260811175415.2044235-1-jltobler@gmail.com>
 References: <20260809190106.1565882-1-jltobler@gmail.com>
@@ -78,147 +78,217 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When git-receive-pack(1) stores an incoming packfile with
-git-index-pack(1), a ".keep" file is written alongside it to hold the
-pack in place until the references have been updated, and is removed
-afterwards. The path used to remove it is derived via
-`index_pack_lockfile()` from the repository's primary object directory.
+When committing an ODB transaction via `odb_transaction_commit()`, the
+staged objects are made visible and the underlying transaction is freed
+at the same time. Coupling these two steps does not leave room for any
+post-commit transaction operations to be introduced though. Such a
+capability is useful if an ODB transaction backend needs to hold on to
+lockfiles after transaction commit until references are updated, as is
+the case with the existing "files" backend in git-receive-pack(1).
 
-In bdee7b3013 (builtin/receive-pack: stage incoming objects via ODB
-transactions, 2026-07-10), git-receive-pack(1) started using the ODB
-transaction interfaces instead of managing a temporary directory
-directly. When starting an ODB transaction, the sources list is
-reordered to insert the newly created transaction source first as the
-primary to ensure writes are routed to it accordingly.
+Stop freeing the transaction in `odb_transaction_commit()` and introduce
+`odb_transaction_finalize()` to explicitly clean up the transaction
+accordingly. Note that the finalize interface also provides an optional
+callback for any backend-specific deferred cleanup. In a subsequent
+commit, the "files" transaction backend will use this to remove ".keep"
+files generated for packfiles received via git-receive-pack(1) after
+references have been updated. In preparation for this, the
+`odb_transaction_finalize()` call site in git-receive-pack(1) is made
+after the reference updates are finished.
 
-Prior to using ODB transactions, git-receive-pack(1) would only set the
-temporary directory as the primary source for the child
-git-index-pack(1) and git-unpack-objects(1) processes it spawned and the
-parent process would set the temporary directory set as an alternate
-only. By using ODB transactions, the ODB source list is also reordered
-for the parent process which results in `index_pack_lockfile()` deriving
-the ".keep" path relative to the temporary directory instead the actual
-main ODB source path. Consequently, this prevents the ".keep" file from
-being properly removed after being migrated into the main ODB source
-post-commit.
-
-Update `index_pack_lockfile()` to operate on an ODB source explicitly
-provided to it and update call sites accordingly to pass the expected
-ODB source.
+All other callers commit a transaction and immediately finalize it with
+no work in between and cannot meaningfully recover should either step
+fail, so introduce an `odb_transaction_commit_and_finalize_or_die()`
+helper that performs both and dies on error. Call sites are updated
+accordingly.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/receive-pack.c     |  8 +++++++-
- fetch-pack.c               |  2 +-
- pack-write.c               |  7 ++++---
- pack.h                     |  4 +++-
- t/t5547-push-quarantine.sh | 14 ++++++++++++++
- 5 files changed, 29 insertions(+), 6 deletions(-)
+ builtin/add.c            |  4 ++--
+ builtin/receive-pack.c   |  1 +
+ builtin/unpack-objects.c |  2 +-
+ builtin/update-index.c   |  4 ++--
+ cache-tree.c             |  2 +-
+ object-file.c            |  2 +-
+ odb/transaction.c        | 14 ++++++++++++++
+ odb/transaction.h        | 23 +++++++++++++++++++++++
+ read-cache.c             |  2 +-
+ 9 files changed, 46 insertions(+), 8 deletions(-)
 
+diff --git a/builtin/add.c b/builtin/add.c
+index 60ffbede2b..ad418a5952 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -393,7 +393,7 @@ int cmd_add(int argc,
+ 	char *seen = NULL;
+ 	char *ps_matched = NULL;
+ 	struct lock_file lock_file = LOCK_INIT;
+-	struct odb_transaction *transaction;
++	struct odb_transaction *transaction = NULL;
+ 
+ 	repo_config(repo, add_config, NULL);
+ 
+@@ -600,7 +600,7 @@ int cmd_add(int argc,
+ 
+ 	if (chmod_arg && pathspec.nr)
+ 		exit_status |= chmod_pathspec(repo, &pathspec, chmod_arg[0], show_only);
+-	odb_transaction_commit(transaction);
++	odb_transaction_commit_and_finalize_or_die(transaction);
+ 
+ finish:
+ 	if (write_locked_index(repo->index, &lock_file,
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 86933d8d7e..d74b787148 100644
+index d74b787148..ed1edcbe93 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -2412,7 +2412,13 @@ static const char *unpack(int err_fd, struct shallow_info *si,
- 		if (status)
- 			return "index-pack fork failed";
- 
--		lockfile = index_pack_lockfile(the_repository, child.out, NULL);
-+		/*
-+		 * The lockfile filepath is expected to be the final location of
-+		 * the ".keep" file after being migrated to the main ODB source.
-+		 * This ensures the lockfile can be found and removed later
-+		 * after the ODB transaction has been committed.
-+		 */
-+		lockfile = index_pack_lockfile(transaction->source, child.out, NULL);
- 		if (lockfile) {
- 			pack_lockfile = register_tempfile(lockfile);
- 			free(lockfile);
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 922a9b2581..6df5813b33 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1075,7 +1075,7 @@ static int get_pack(struct fetch_pack_args *args,
- 		die(_("fetch-pack: unable to fork off %s"), cmd_name);
- 	if (do_keep && (pack_lockfiles || fsck_objects)) {
- 		int is_well_formed;
--		char *pack_lockfile = index_pack_lockfile(the_repository,
-+		char *pack_lockfile = index_pack_lockfile(the_repository->objects->sources,
- 							  cmd.out,
- 							  &is_well_formed);
- 
-diff --git a/pack-write.c b/pack-write.c
-index 24033a9101..85674e4b72 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -469,10 +469,11 @@ void fixup_pack_header_footer(const struct git_hash_algo *hash_algo,
- 	fsync_component_or_die(FSYNC_COMPONENT_PACK, pack_fd, pack_name);
- }
- 
--char *index_pack_lockfile(struct repository *r, int ip_out, int *is_well_formed)
-+char *index_pack_lockfile(struct odb_source *source, int ip_out,
-+			  int *is_well_formed)
- {
- 	char packname[GIT_MAX_HEXSZ + 6];
--	const int len = r->hash_algo->hexsz + 6;
-+	const int len = source->odb->repo->hash_algo->hexsz + 6;
- 
- 	/*
- 	 * The first thing we expect from index-pack's output
-@@ -489,7 +490,7 @@ char *index_pack_lockfile(struct repository *r, int ip_out, int *is_well_formed)
- 		packname[len-1] = 0;
- 		if (skip_prefix(packname, "keep\t", &name))
- 			return xstrfmt("%s/pack/pack-%s.keep",
--				       repo_get_object_directory(r), name);
-+				       source->path, name);
- 		return NULL;
+@@ -2720,6 +2720,7 @@ int cmd_receive_pack(int argc,
+ 		use_keepalive = KEEPALIVE_ALWAYS;
+ 		execute_commands(commands, unpack_status, &si, transaction,
+ 				 &push_options);
++		odb_transaction_finalize(transaction);
+ 		delete_tempfile(&pack_lockfile);
+ 		sigchain_push(SIGPIPE, SIG_IGN);
+ 		if (report_status_v2)
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 4263edfbec..d6a2d616d9 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -603,7 +603,7 @@ static void unpack_all(void)
+ 		unpack_one(i);
+ 		display_progress(progress, i + 1);
  	}
- 	if (is_well_formed)
-diff --git a/pack.h b/pack.h
-index 1cde92082b..68dcf08cf3 100644
---- a/pack.h
-+++ b/pack.h
-@@ -3,6 +3,7 @@
+-	odb_transaction_commit(transaction);
++	odb_transaction_commit_and_finalize_or_die(transaction);
+ 	stop_progress(&progress);
  
- #include "object.h"
- #include "csum-file.h"
-+#include "odb/source.h"
+ 	if (delta_list)
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 241abd4332..b25d4ecb10 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1156,7 +1156,7 @@ int cmd_update_index(int argc,
+ 			 * a transaction.
+ 			 */
+ 			if (transaction && verbose) {
+-				odb_transaction_commit(transaction);
++				odb_transaction_commit_and_finalize_or_die(transaction);
+ 				transaction = NULL;
+ 			}
  
- struct packed_git;
- struct pack_window;
-@@ -105,7 +106,8 @@ off_t write_pack_header(struct hashfile *f, uint32_t);
- void fixup_pack_header_footer(const struct git_hash_algo *, int,
- 			      unsigned char *, const char *, uint32_t,
- 			      unsigned char *, off_t);
--char *index_pack_lockfile(struct repository *r, int fd, int *is_well_formed);
-+char *index_pack_lockfile(struct odb_source *source, int fd,
-+			  int *is_well_formed);
+@@ -1224,7 +1224,7 @@ int cmd_update_index(int argc,
+ 	/*
+ 	 * By now we have added all of the new objects
+ 	 */
+-	odb_transaction_commit(transaction);
++	odb_transaction_commit_and_finalize_or_die(transaction);
  
- struct ref;
+ 	if (split_index > 0) {
+ 		if (repo_config_get_split_index(the_repository) == 0)
+diff --git a/cache-tree.c b/cache-tree.c
+index d92f513286..a220372a42 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -538,7 +538,7 @@ int cache_tree_update(struct index_state *istate, int flags)
+ 	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
+ 		       "", 0, &skip, flags);
+ 	if (!inflight)
+-		odb_transaction_commit(transaction);
++		odb_transaction_commit_and_finalize_or_die(transaction);
+ 	trace2_region_leave("cache_tree", "update", istate->repo);
+ 	trace_performance_leave("cache_tree_update");
+ 	if (i < 0)
+diff --git a/object-file.c b/object-file.c
+index ec35c318bc..4d03c167d5 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -965,7 +965,7 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+ 								  xsize_t(st->st_size),
+ 								  oid);
+ 			if (!inflight)
+-				odb_transaction_commit(transaction);
++				odb_transaction_commit_and_finalize_or_die(transaction);
+ 		} else {
+ 			ret = hash_blob_stream(&stream,
+ 					       the_repository->hash_algo, oid,
+diff --git a/odb/transaction.c b/odb/transaction.c
+index dab7da6a9a..9e9a982778 100644
+--- a/odb/transaction.c
++++ b/odb/transaction.c
+@@ -33,6 +33,20 @@ int odb_transaction_commit(struct odb_transaction *transaction)
  
-diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
-index 0798ddab02..400a597606 100755
---- a/t/t5547-push-quarantine.sh
-+++ b/t/t5547-push-quarantine.sh
-@@ -70,4 +70,18 @@ test_expect_success 'updating a ref from quarantine is forbidden' '
- 	git -C update.git fsck
- '
- 
-+test_expect_success '.keep file is removed after push' '
-+	test_when_finished rm -rf keep.git &&
-+	git init --bare keep.git &&
+ 	ret = transaction->commit(transaction);
+ 	transaction->source->odb->transaction = NULL;
 +
-+	git -C keep.git config set receive.unpackLimit 0 &&
-+	test_commit foo &&
-+	git push keep.git HEAD &&
-+	pack="$(ls keep.git/objects/pack/pack-*.pack)" &&
-+	keep="${pack%.pack}.keep" &&
++	return ret;
++}
 +
-+	test_path_is_file "$pack" &&
-+	test_path_is_missing "$keep"
-+'
++int odb_transaction_finalize(struct odb_transaction *transaction)
++{
++	int ret = 0;
 +
- test_done
++	if (!transaction)
++		return 0;
++
++	if (transaction->finalize)
++		ret = transaction->finalize(transaction);
++
+ 	free(transaction);
+ 
+ 	return ret;
+diff --git a/odb/transaction.h b/odb/transaction.h
+index 4cb2eafcbf..6ed39b3d0e 100644
+--- a/odb/transaction.h
++++ b/odb/transaction.h
+@@ -22,6 +22,13 @@ struct odb_transaction {
+ 	 */
+ 	int (*commit)(struct odb_transaction *transaction);
+ 
++	/*
++	 * Optional ODB source specific callback invoked when the transaction
++	 * needs to perform any deferred cleanup after objects have been
++	 * committed. Returns 0 on success, a negative error code otherwise.
++	 */
++	int (*finalize)(struct odb_transaction *transaction);
++
+ 	/*
+ 	 * This callback is expected to write the given object stream into
+ 	 * the ODB transaction. Note that for now, only blobs support streaming.
+@@ -75,6 +82,22 @@ static inline void odb_transaction_begin_or_die(struct object_database *odb,
+  */
+ int odb_transaction_commit(struct odb_transaction *transaction);
+ 
++/*
++ * Finalizes an ODB transaction, performing any deferred cleanup and freeing it.
++ * Must be called for every successfully started transaction. Note that, if the
++ * specified transaction is NULL, the function is a no-op. Returns 0 on success,
++ * a negative error code otherwise.
++ */
++int odb_transaction_finalize(struct odb_transaction *transaction);
++
++static inline void odb_transaction_commit_and_finalize_or_die(struct odb_transaction *transaction)
++{
++	if (odb_transaction_commit(transaction))
++		die(_("failed to commit ODB transaction"));
++	if (odb_transaction_finalize(transaction))
++		die(_("failed to finalize ODB transaction"));
++}
++
+ /*
+  * Writes the object in the provided stream into the transaction. The resulting
+  * object ID is written into the out pointer. Returns 0 on success, a negative
+diff --git a/read-cache.c b/read-cache.c
+index 6c449f393d..0cd0ef85ec 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -4049,7 +4049,7 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
+ 		odb_transaction_begin_or_die(repo->objects, &transaction, 0);
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+ 	if (!inflight)
+-		odb_transaction_commit(transaction);
++		odb_transaction_commit_and_finalize_or_die(transaction);
+ 
+ 	release_revisions(&rev);
+ 	return !!data.add_errors;
 -- 
 2.55.0.424.g13c7afec21
 
