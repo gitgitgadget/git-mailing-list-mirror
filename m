@@ -1,220 +1,171 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16D6418360
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 08:34:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B7B4248C5
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 09:05:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786437254; cv=none; b=cjeOgyXxNrStxzGtQ+z5q0yV9uJAZy2kURXraM0m+3+AM1g3/KlaTdV18UNKGUbvir5GxH6FQhIKchE/PlnU7GF0ynLkyd7JCgOjBHr1o7Rv5ilUnoRKqujFUj0Pv3OgXTGsUWCVSPhwqEznohEqN3l3m83Ww/q80XaxBmZ4Q98=
+	t=1786439109; cv=none; b=I5YRVBkNmYk2c+I6X1OcwD9NjDeF4PGqySoHRitjiFxM6n8muEB+UiHjKo4I6chjaZ9eGAwlFR4N2pI8WO2ko28pQ5iGX+12bfUG5B+X3sRp+6P+fF5CFZ0tWKyiUPLEtmAQ7arTO7ZRLmA+8ZmgjH27Xsia3th7wFaMrdgsV/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786437254; c=relaxed/simple;
-	bh=zQWkvCpfUlABcEM19GFc1OqEy5eC3L6wWNI+FPZEsao=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgShHyHVKnbVn+GydDbe438xzxm+GRhnK208rYbac9xhLJFWVO/7+cD/ZFR5PHXu3O8kgr6yJDU7yC8sBWpMWgtyBKX7GWZbTiIyCfYi4xv+/ApjGf51Xf1sSB+LNMzt0oQXYCHMXIr16Jo694XsOiomxqLmAdGv1SEMGzi21Y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VE2K9vkk; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786439109; c=relaxed/simple;
+	bh=sIx7Nsu2ZeMMyc8MahRIDqS7ErbUok1trhEimusygPM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=kNBN+VHYIGc0ZnQ1OIieV0GlWa5hJlZPRQOYC9hqkxsjp6poZ64sskp79Mij0JHYrTtqwWtFNWpQT4Xs/KviHC+WIpe+v/p+Ozbb0DUzcui2/5yCX9O5WGsG6BHoNdn2rkCBteB/DCqPn3NwH63X6aXIk9DWZbfVTchHgSzJB9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RW/bpC2K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BiD86i89; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VE2K9vkk"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-49554ebb87dso26381325e9.3
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 01:34:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786437251; x=1787042051; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=M+ayxE7ebOw3oHGwqgeqsw61oZGJlISLMiFIqwh2ZcU=;
-        b=VE2K9vkkdiXrUbQ/fuey5LWmRIt9R0mJoJJdiqgb3LI1oxnqTjPH0BLv7SizfkAx9M
-         qehVBJX1xUgwGa+qBKvYfcdq6wk9tDyCCLE5V2scDjyCICKn0ZKlWWwgeQvpSbHdnIuN
-         v+jp2MuBsSW/ovZ0I62gpl2OFzsZMg4mjaO8m6XqSsqwCF3+wWwGB2OCLga62BrYkYuo
-         obbRBckeSAJ2OX4QMgYBfAWKj/TV2oNmL5FhI/Y8fW84sLtI3h0K1Zf+jwaCdTd3wGyW
-         2DNnmQS3vBz6qjsiNLtt6ngfnQS1aLwWAb5TwyOlh4UMhuIynLd2tiDp5WmRvmDGH+0R
-         M8MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786437251; x=1787042051;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=M+ayxE7ebOw3oHGwqgeqsw61oZGJlISLMiFIqwh2ZcU=;
-        b=e/J8aNN1J8tDy+F5wuYyDRB1k5kobQOcPv3O6qgYlMV+7S3dCHo410WQmksXlt2pCu
-         fDhdBnF69cmHpXi5BYDoe98lsiVljd5tLg7PXS8gI+Yp9JP4WUs5GFPRz8pMolWKlY10
-         iL51QcIAh1GC11msc2/OijE6oH/nAsHn+uzG9xCSG8e7ynWovrWJonVqML/mL9BX/8ps
-         1Yf02kqmIVaWvNaKIun+n7IkVEJASTRLESOn+s9F7/H871ww7cQYeU6OtoWRyhYzA/Ax
-         0S7bMk3NecVohSlG153L2L4G2rDjjEY746L3AAawqT8fr+RtlzQWJo7ShC0G4H99b/vX
-         H3NQ==
-X-Gm-Message-State: AOJu0YwynSB2D/hLvWIBRao0WKnohrpxCSWby+eT4VcLXzoMtqRpbGWl
-	yo/YGpYG494mFWMgGVF9DGcequ2XcSf+kyTEve1AuXSyQ1kVKtKt7XucqKbe6A==
-X-Gm-Gg: AR+sD11njgls9c0b9Ci67w76OjaKoOOvApJgaB1vJmcZu6bBdDuDFkIXkNDY5Mk5ktL
-	WWWZSFPRvJMuJEi4I0kXDPnnjVGWYen980/vGqAbokSa2f7NcHbIt7In93FrHzG+H/q6lkquMPR
-	muza1pw92RTyWqD69Nx8Iyp4Hns+lbwoPu/781fdttSa/ytKPiF1SKykUG3OfL7PswrCt3bOWmn
-	zsn1kAEbx+645G5ucqnRjhd2om95URwwQbSOsp7ugit6CsvtirHbcEElhIAPrZsGkrB3NVY4ZPH
-	mQadPoi9ZhAnPyYHry9cteMCKBPkiWJxxJg/cL+REGTvMeBwne2/1VkbrXzidxgoaIMY1l1+jaT
-	ZQCalWIyIWHUkeBOVv9QGChaZcUCGBOiDOVgPSRdLqij0g1EYud2YUKdscsoow0Sn54Ms7PCdp5
-	APdt7ilPxPnZ9wNJ1QwEK/fVytFdHyxWoGbsVXQr53/6u6LvaJC8EDhRVN+pw7to/CEkl45iTh1
-	zHmQiST6sOOxCupATIOoKvk4mdRlfG/pbnkoyrRObQUUBt81UGoRMgRViGFpAQuThSZPYyTz/UB
-	Ddo=
-X-Received: by 2002:a05:600c:1f83:b0:499:521d:bff1 with SMTP id 5b1f17b1804b1-4997840c242mr28420025e9.2.1786437211345;
-        Tue, 11 Aug 2026 01:33:31 -0700 (PDT)
-Received: from christian--20230123--2G7D3 ([2001:863:5c3:4d0d:8be2:b2d7:3667:a5fd])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4997889c302sm18728075e9.1.2026.08.11.01.33.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 01:33:30 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Justin Tobler <jltobler@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 01/12] parse-options: introduce OPT_HIDDEN_GROUP
-Date: Tue, 11 Aug 2026 10:33:03 +0200
-Message-ID: <20260811083314.2023489-2-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.55.0.530.gdb3615d990.dirty
-In-Reply-To: <20260811083314.2023489-1-christian.couder@gmail.com>
-References: <20260804100355.1299498-1-christian.couder@gmail.com>
- <20260811083314.2023489-1-christian.couder@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RW/bpC2K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BiD86i89"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2F9F9EC0118;
+	Tue, 11 Aug 2026 05:05:06 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 11 Aug 2026 05:05:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1786439106; x=1786525506; bh=XPVqlQO4QD
+	xzx6VWnk46GLZ/JHep2lJVmYVFnd07Tfc=; b=RW/bpC2KcNgi+6teLP96/1EACg
+	6yADhVHmjFoUdIMX0fT3VuP5fDgavVTCjvoPfAqtXlHehQszs7fszvX07YZYkdJ9
+	JHPQjGlzSmCWABwR4HSTA0vYMY8r3ubpcqnM4kQyeHQqbAUIcOqLo9Uz8TI+bAv2
+	IdbXT3KtYSDYe99/Cn0NHX8MQ5M80Hto6w07Sa3gMoA/tbmBxndEWKbrbZ2xtRKf
+	NZ5YKU2pIpamdYhAaKQwGysZA2ySX8W64NexRKv4xy/eaBlSbR9WSMlQ5eIYpMRQ
+	Qfbr5Hhr6AKH4wAUPr9O2VvamBCVTRTc84cBmclRrkEFS/Sx0hWoIGPSlnSQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1786439106; x=1786525506; bh=XPVqlQO4QDxzx6VWnk46GLZ/JHep
+	2lJVmYVFnd07Tfc=; b=BiD86i894vY6cbWRCmrMkPjYtej6XxmGw4oT+CC7YCmh
+	FtrVidl2GsJc2p3yOZMYxKza8kWKbgHOcvyzis+sjDYx0FVG+U+2RLzYI3+RdBjz
+	eLLKRlA1NXUpV4w9eayALy9eWsnLnzL9R1NokXz3PiEZ8ns/jgNmPHxuLvBIqh5b
+	XRpBLbZ8wVHBiUsJnZCQymNsM4PHpcVyfv/9aPgvAlQB+m94Ux8RWzJHcLpT1jTn
+	RrSoreSxOUX6A4C0+CebFysc1+YEUYiOoRgVOfxTB7j29CZaNj+W20Qzxh7gukNe
+	uoO1UvwYKDH55Jt3yKcdno5kfDDW7+/gIMxrwhuIAQ==
+X-ME-Sender: <xms:weV6at0PBBGJmIk7PHCSlIBgN9Q78nevT-q0zjPa8kcRcixqiuBu3g>
+    <xme:weV6aqHuSgOgbzrVE-CX46PNIHWglIL8mjeKwtzSpL5sswYgz5OBY2H_9hv3bLkZ0
+    cThEQFKd7DoGAHNB0xIxU7XGyMvYIkvz1xPIt9vRVg3PHV3JIljvQ>
+X-ME-Received: <xmr:weV6arg2AYgeey3ssuPJE3Ys3z0yq3MzwhrPLce1HTR8zDBFcPZfTx41dae1_QzctZtfve2sp5KfHzw4iRHJDDAkK4W5oI4MvL6D-MfxbA>
+X-ME-Proxy-Cause: dmFkZTGfyUzunEJEWVdCITqnyQEjSEAto8PF0pI7RRCTdUmUBhad6cg52pZFUFOsClP1uu
+    0O+b4Pqs4/Wj7F1ySsDNh8aRVcc6HXQgE1AFAJ+O+AAHJQfX0675VBeP6FGVHG4CpYiy4d
+    FMLuDxMfeDrjxx5bLt09/1qPQyvstx1w//6wBUtE3rcrQWu07ib1J5Tg94k/fP0e9Z3rTE
+    zwy93FPw1S5KQu9mdqUTP+XnQnF8xCFIksBWDHGA9/CyFSDx1y7VJmyBMi2CGtid3i7WVv
+    TteokyfRr+7gI1NLGG+S0TyxFXDAJrSfmL02p3+VtlqR2cg0iZkCqMDCH+vsYY7mO5MAgT
+    ZjdRnZtR98wfNdMOoyJdi4SolSfos1I6QblyGq+oRQOpwdKfWcy45UjbxhAOALGXYZtUdT
+    EqXGAkG4F1BA5irh1LKDxVC7/lWZLBx5es4hKq5r3vEJV7RUY3bn6ysyzIJs7ctFiVh9OS
+    CutiX5ib6zXb7kEgfz4g5WQkLnVYdB9F5YP9JWo/GgJ2Yo+GUtejqV8Gsz1Gj5JwRXTijJ
+    gG4opYmoTg3b/qP5HEleJXyDf4rBv8xo5cuLUVmzHKB8cyogtfXu77lJDUpaGqQHDOteKH
+    5M7gwYL99FgOe64iadmpTSghYFW0039pgTb5ciQaLP9hxokjDuLcrPoobYkw
+X-ME-Proxy: <xmx:weV6al_lJyn8j_kvAhu2NN_1m37EtS7F2jhtu7-JTWa1Uz0N3wsvPg>
+    <xmx:weV6aiqBah0aQlf-zhjRVWYsa01OlOQSQTXavU74ao-R8ECX_wpilQ>
+    <xmx:weV6ak-mtFJEooo4n2Md_2Hsqlj-IHQUh49jQYA_UPRDSZGe6WFgyw>
+    <xmx:weV6amV8vjIPW0wdviS0cNx6o8EVDyiC1PFoK9foSIf5wHQPmrUweQ>
+    <xmx:wuV6aihel2CpU4xgUdI4ohJ7PExoEN2es2aTTlqEPBf8bPgvbhNV7BAc>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Aug 2026 05:05:05 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 9e83364b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Aug 2026 09:05:00 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Tue, 11 Aug 2026 11:04:48 +0200
+Subject: [PATCH] odb/files: be less aggressive with geometric repacking
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260811-pks-geometric-maintenance-reduce-frequency-v1-1-7a54c42355ac@pks.im>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNwQ6CMBCE4Vche7ZJC2rUVzEeyjLgaii4bY2G8
+ O5WPU2+y/wLRagg0qlaSPGUKFMocJuK+OrDACNdMdW23tuDs2a+RzNgGpFU2IxeQkLwgWEUXS7
+ TKx4Zgd9mx46P27phtA2Vw1nRy+sXO1/+jrm9gdO3QOv6AUBJ+VmOAAAA
+X-Change-ID: 20260810-pks-geometric-maintenance-reduce-frequency-5c1c9423ceb3
+To: git@vger.kernel.org
+Cc: Stefan Haller <lists@haller-berlin.de>
+X-Mailer: b4 0.15.2
 
-Hidden options are not shown by `git <cmd> -h`, but are still shown by
-`git <cmd> --help-all`. If there are a lot of hidden options or if they
-don't belong to the same categories as other options, there is
-currently no way to properly group them.
+When performing auto-maintenance with geometric repacking we have two
+conditions that may trigger a repack:
 
-Using `OPT_GROUP("Foo")` means that "Foo" will always be shown which we
-don't want if that group contains only hidden options.
+  - Either the geometric sequence of packfiles is invalidated.
 
-To provide a way to have groups shown only when hidden options are
-shown, let's implement an OPT_HIDDEN_GROUP macro.
+  - Or we have too many loose objects.
 
-To test this new macro, let's also improve `test-tool parse-options`
-and test its output with `--help-all`.
+The first condition shouldn't trigger all that often: it may be hit when
+we fetch a new packfile, but users tend to not do that all the time. The
+second condition is what typically triggers more regularly though, as
+every command that ends up writing new objects may cause us to cross the
+threshold of loose objects. It is thus preferable to not be too
+aggressive here, as otherwise we may end up repacking objects quite
+often.
 
-Signed-off-by: Christian Couder <christian.couder@gmail.com>
+For the geometric-repacking strategy though we have a default of 100
+objects, only. As we're approximating the count of objects by only
+reading the "objects/17/" shared, we'd only need 2 objects in there
+before we perform a repack by default, which is quite aggressive.
+git-gc(1) on the other hand has a default of 6700, so it is quite a bit
+more conservative here.
+
+Being this aggressive is also causing problems as reported by our users.
+When running lots of concurrent writers, those writes will constantly
+end up spawning maintenance jobs that end up repacking objects. As we
+also prune objects, a concurrently running process that tries to write
+an object may see that the sharding directories get removed under their
+feet. While we try re-creating such leading directories, we only do so a
+single time, and it may happen that the directory vanishes again before
+we had the chance to create the loose object. This is not a new problem,
+but it is exacerbated by us running maintenance this aggressively.
+
+Improve the status quo by reducing the frequency at which we pack loose
+objects to the same frequency that git-gc(1) uses.
+
+Reported-by: Stefan Haller <lists@haller-berlin.de>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- parse-options.c               |  4 ++--
- parse-options.h               |  5 +++++
- t/helper/test-parse-options.c |  4 ++++
- t/t0040-parse-options.sh      | 25 ++++++++++++++++++++++++-
- 4 files changed, 35 insertions(+), 3 deletions(-)
+Hi,
 
-diff --git a/parse-options.c b/parse-options.c
-index 08c21d9fc0..4519ead9dc 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1414,6 +1414,8 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
+as reported by Stefan at [1]. Thanks!
+
+Patrick
+
+[1]: <4f6a96ac-d993-4872-b3c4-30d899f61ca9@haller-berlin.de>
+---
+ Documentation/config/maintenance.adoc | 2 +-
+ odb/source-files.c                    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config/maintenance.adoc b/Documentation/config/maintenance.adoc
+index b578856dde..da8be9f812 100644
+--- a/Documentation/config/maintenance.adoc
++++ b/Documentation/config/maintenance.adoc
+@@ -101,7 +101,7 @@ maintenance.geometric-repack.auto::
+ 	there are packfiles that need to be merged together to retain the
+ 	geometric progression, or when there are at least this many loose
+ 	objects that would be written into a new packfile. The default value is
+-	100.
++	6700.
  
- 		if (opts->type == OPTION_SUBCOMMAND)
- 			continue;
-+		if (!full && (opts->flags & PARSE_OPT_HIDDEN))
-+			continue;
- 		if (opts->type == OPTION_GROUP) {
- 			fputc('\n', outfile);
- 			need_newline = 0;
-@@ -1421,8 +1423,6 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
- 				fprintf(outfile, "%s\n", _(opts->help));
- 			continue;
- 		}
--		if (!full && (opts->flags & PARSE_OPT_HIDDEN))
--			continue;
+ maintenance.geometric-repack.splitFactor::
+ 	This integer config option controls the factor used for the geometric
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 5a68af7d84..555e466145 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -521,7 +521,7 @@ bool odb_source_files_optimize_required(struct odb_source *source,
+ 		};
+ 		struct existing_packs existing_packs = EXISTING_PACKS_INIT;
+ 		struct string_list kept_packs = STRING_LIST_INIT_DUP;
+-		int auto_value = 100;
++		int auto_value = 6700;
+ 		bool ret;
  
- 		if (need_newline) {
- 			fputc('\n', outfile);
-diff --git a/parse-options.h b/parse-options.h
-index 3ec8ba5cc8..d7f896a933 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -237,6 +237,11 @@ struct option {
- 	.type = OPTION_GROUP, \
- 	.help = (h), \
- }
-+#define OPT_HIDDEN_GROUP(h) { \
-+	.type = OPTION_GROUP, \
-+	.help = (h), \
-+	.flags = PARSE_OPT_HIDDEN, \
-+}
- #define OPT_BIT(s, l, v, h, b)      OPT_BIT_F(s, l, v, h, b, 0)
- #define OPT_BITOP(s, l, v, h, set, clear) { \
- 	.type = OPTION_BITOP, \
-diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-index 68579d83f3..f181f0c02d 100644
---- a/t/helper/test-parse-options.c
-+++ b/t/helper/test-parse-options.c
-@@ -209,6 +209,10 @@ int cmd__parse_options(int argc, const char **argv)
- 		OPT_GROUP("Alias"),
- 		OPT_STRING('A', "alias-source", &string, "string", "get a string"),
- 		OPT_ALIAS('Z', "alias-target", "alias-source"),
-+		OPT_HIDDEN_GROUP("Hidden options"),
-+		OPT_HIDDEN_BOOL(0, "hidden-bool", &boolean, "get a boolean"),
-+		OPT_INTEGER_F('k', "hidden-integer", &integer, "get a integer",
-+			      PARSE_OPT_HIDDEN),
- 		OPT_END(),
- 	};
- 	int ret = 0;
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index a22533f9ed..449fff4d34 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -7,7 +7,7 @@ test_description='our own option parser'
- 
- . ./test-lib.sh
- 
--cat >expect <<\EOF
-+cat >expect-part1 <<\EOF
- usage: test-tool parse-options <options>
- 
-     A helper function for the parse-options API.
-@@ -41,6 +41,9 @@ String options
-     --[no-]string2 <str>  get another string
-     --[no-]st <st>        get another string (pervert ordering)
-     -o <str>              get another string
-+EOF
-+
-+cat >expect-part2 <<\EOF
-     --longhelp            help text of this entry
-                           spans multiple lines
-     --[no-]list <str>     add str to list
-@@ -67,12 +70,32 @@ Alias
- 
- EOF
- 
-+cat >expect-noop <<\EOF
-+    --[no-]obsolete       no-op (backward compatibility)
-+EOF
-+
-+cat >expect-hidden <<\EOF
-+Hidden options
-+    --[no-]hidden-bool    get a boolean
-+    -k, --[no-]hidden-integer <n>
-+                          get a integer
-+
-+EOF
-+
- test_expect_success 'test help' '
-+	cat expect-part1 expect-part2 >expect &&
- 	test-tool parse-options -h >output 2>output.err &&
- 	test_must_be_empty output.err &&
- 	test_cmp expect output
- '
- 
-+test_expect_success 'test --help-all shows hidden group and options' '
-+	cat expect-part1 expect-noop expect-part2 expect-hidden >expect-help-all &&
-+	test-tool parse-options --help-all >output 2>output.err &&
-+	test_must_be_empty output.err &&
-+	test_cmp expect-help-all output
-+'
-+
- mv expect expect.err
- 
- check () {
--- 
-2.55.0.530.gdb3615d990.dirty
+ 		repo_config_get_int(repo, "maintenance.geometric-repack.auto",
+
+---
+base-commit: 010afd3166ddc64c9863b1506f12cbcdda0d4ea1
+change-id: 20260810-pks-geometric-maintenance-reduce-frequency-5c1c9423ceb3
 
