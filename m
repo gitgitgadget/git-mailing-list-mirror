@@ -1,633 +1,172 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B6A373BEC
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:54:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E83368D70
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:58:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786470875; cv=none; b=AijAZVAee5pQhKp5z0XjohQz7qiWIuqhudXPnbZFpjFHXfKB++lQdNWFyFRfsEMb64G4MUbT06Q/z+1ABckvrxpIS59J8BcD8VTevlUZtDZ3krwSvBI+yjKbQ/rqyf2OWRg8W4zdqi6kbyjYhVU/fReKnUwnNeMcZceoyXpq7TM=
+	t=1786471121; cv=none; b=VZYxjsBFtdolquOS5DyrSTvkUHLwTIj456LIZuHtwzqknkhmyAh/WtwDOVSz+97U+5rkfwMoJpGfX/zdUIECO91g8qyy2dJRyJ1FemQggVjiwVwK8Iy7jpKtHQ4aDU0eGBE3fQvlIm2eOUB3h/0qlamleo1seUfws3kGhxp2OTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786470875; c=relaxed/simple;
-	bh=imI64BwxT8nZgIwoti++UcF11UXYowhgmv9lKy50jk4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5ryI96lrHuk1VP5fAsOs9UkUvezB0RGa8hV+S7KPvwcuxezA7Fka5GlG3vOWj5p2QPNJUp3lfYvcWm/fuNh3aP+8O3V1HbP/ZCxBFbNIkHQA7TjFU4lEWYttaxO/iBottKqU/ytq+/bH+FRQVM7LLMAStICfatoTC/Sx20VUyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BzGhi3VM; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786471121; c=relaxed/simple;
+	bh=JmxG6sUTpPVptrLzst+WEDwQR5ZF/HQ8MNHGz1uf8yY=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=TEwORt3RkeFIE3Jpp1YArufNOuRx1uLj0zPukl1f7bCnTuOEg7itUVPsJbA+gYZ7I0bpkmxhwJi4twgte/FqCW+plLTCGQF4mK62h9LFDiwbk1d7M/G4YIZ3wVCJoM7YV7xw/6sT1iaO3XRIbaQTRHNxgZOPek5OvqYYtx9vqYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=iDxVgkrt; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BzGhi3VM"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7eb1dc6bd53so123229a34.2
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:54:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786470872; x=1787075672; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=4+u+vd/nBjBp4Abh9xR+72BhelqC3CfHEF/zJXSvk6k=;
-        b=BzGhi3VMkX/lW17RrOzI6v+/I/khEP+zKDA1GZZ3FCbBHFKrrQKgP0x9OuBuAYzknt
-         3BwPUMHgM5+RFw8Bw8/XwdLRgd/dlak+XZSJTaNDpXebjzR8b9yxEfpjS6Uj19tqY4Ne
-         MXfTVDI3HG6pinGDynoYGFgn6gs04u+MUXuX37qJDVZDjS7o0W/U30UClIYlAOhBi1P/
-         sWABASdF2ZaeCFkhz9DCX8toHaD7ux/VF3Z8vXKFZXj03NFL1Ebu8K/nHPZzdZN9qIch
-         LJOOWaZux49huC/dW92jsNvkN8xw0g68xHdlL7wPISs+LjULk0LhGH37YlC+U2Z7Frre
-         wmeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786470872; x=1787075672;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4+u+vd/nBjBp4Abh9xR+72BhelqC3CfHEF/zJXSvk6k=;
-        b=cmx9OP1xCNBHHRFGRrqVBE/JlL+kBNw1vSqJ0HtRZRCFCAtIX4/9qF6792z+PUGW/b
-         ipWPyq3AuBfOY6Hq85QAR12G8mnKazeg6G9Z4xKOWbfz8a2U0WG5oZ8PuvFvX/9YfXW4
-         bos3SOt1i6oGWg2nz/TGXqhbYgzf7s/wXQ4XGd+gsZQa37tYxaMPj0ShKmeuyxzBYbm4
-         zx2Z0+YZBqxFgRqxVpAHUWJwF7Ert0NcOVMQEfyr7lzTomn4fFmbA3gRXUkjmGpetp9d
-         ycLl24p75I4rt40HYn/3h/YoTOVq39HHQnlX+U6XWQJL/B4C9195225pWGYhHhFRe+wA
-         p5wA==
-X-Gm-Message-State: AOJu0YwnsACyrfKG8KMzTgsmTmZW8ShiLTC2kqVyO8nLJ3E+xvmXa/Co
-	XgUrX1TPzC8JFjm7olabSSx+t+QbCL2SuuX8NSNh7KPKRk7EG/HzA1U3h73jeA==
-X-Gm-Gg: AR+sD13sSbteU/ay8ajb+Z6o9RPYtu9BS7uQvmCosvvNkMZDHsEM6Ki9ntsmQ2znAR4
-	AIuEr5w8+c6K0FuYFipy9JivfryVqGX2YkxSPyQ1WhfdANmVJ/SW8S3/tEIjwLJCD9EAfrOOC0d
-	bPCW6u8csauxzbvcWlFxY4RydtOiOjdY1YdrdWRCmDzJspqOLA9JPNBQboDTuIVGoK6X71tLIEp
-	M1sauzZjPn5MewY9mN72GbsHpEUHhTH+DmWeq7ni47Qfw5cv6T7VGK2z7h2X+s6X3HErB1jomqF
-	RMQ5COlSKpd6TpzwKzftpFJJoHtyievqmHVO9Ev+RBpTvhO/Vtb8liWJdXhJY08xEzRQBvTtiWz
-	dR7V3DQeB9FOj4bFxYN88ugNG7Be6GFiOf4TM2bQcvzTpHuG/48pvSsDmLuG1WTyAoapmmh37wa
-	54L+hmE75/ldutb/bEEu4HJtpDUehPImQ7JKYwI1pEdyZc70mYT4h26JzR27lsoXq0Z88U
-X-Received: by 2002:a05:6808:1481:b0:486:4892:d553 with SMTP id 5614622812f47-4b1fd2406d1mr4169628b6e.0.1786470872450;
-        Tue, 11 Aug 2026 10:54:32 -0700 (PDT)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b2001331d2sm1241489b6e.11.2026.08.11.10.54.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 10:54:32 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	gitster@pobox.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 9/9] odb/transaction: add transaction interface to write packfiles
-Date: Tue, 11 Aug 2026 12:54:15 -0500
-Message-ID: <20260811175415.2044235-10-jltobler@gmail.com>
-X-Mailer: git-send-email 2.55.0.424.g13c7afec21
-In-Reply-To: <20260811175415.2044235-1-jltobler@gmail.com>
-References: <20260809190106.1565882-1-jltobler@gmail.com>
- <20260811175415.2044235-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="iDxVgkrt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1786471116; x=1787075916;
+	i=johannes.schindelin@gmx.de;
+	bh=Lqmosas5zSvZ/Gah73OiySyKq1twPNm/6FmZyizmsgk=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=iDxVgkrttVnSlRdfS0SSh9VsS2q3WV2nTnYtU7K3pGAo3MX9PEZOuKPohULz9HlP
+	 XvtZwZeC//qCKl+7PCkQILMzSqWrn8VOT0lmQgLN+s3uxYd1/j2eM3eDUIjsrVoFM
+	 I3PWs7WETw0yKk+fj/PXeapzRsmpFvA9DkNyjM/Ya8F01S7iaBxEec5ZInyZy3NPM
+	 QFKcsJpTNMAr+zD4lLLkNi1H6vWSI95vkYEx16P84VnP2MMwzJmO0egbcLm2WmXrg
+	 la1aSUGGUVZYGRhQVbT+Ua7CNtVw8OCsYKvAe4oTcz5bP/vBHVptyIXYvuOPNznd0
+	 bx3TlqppbjbXu8skyQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvK0R-1xBF6b1SxF-00yCha; Tue, 11
+ Aug 2026 19:58:36 +0200
+Date: Tue, 11 Aug 2026 19:58:35 +0200 (CEST)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.55.0(4)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Message-ID: <1MPog5-1wWyPX1fBD-00Ju4C@mail.gmx.net>
+X-Provags-ID: V03:K1:s67JICASUrhDkmZB2kN4czRgi5LOkZe6B+FUMLuBCPMm2UFYy+S
+ 8GJBPXzAP0XPE9+xj7dTBK7FM2J2z62V2nqWOd0CKt/Bphm3tbKBtQDkxX4j/VlWGcWY9E2
+ FqFIESNs7+9Fq+U59n+/klWlW8f23YFDnyfy6u/IOjF8goG1auPHlj9DzcH40ROsXEq/NGP
+ gSQkgYKBmStiCzzMPaXjQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:xqcAIPqUU2I=;2PESMqwvY78FKF9wDLGSXXAG+1u
+ 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
 
-In git-receive-pack(1), the incoming packfile is written to the ODB via
-`unpack()`, which spawns git-index-pack(1) or git-unpack-objects(1)
-directly. With pluggable object databases, an alternative backend may
-need to handle writing packfile data differently though.
+Dear Git users,
 
-Introduce `odb_transaction_write_pack()` as a generic interface to
-handle writing a packfile to a transaction and use the logic from
-`unpack()` as the "files" backend implementation. Note that when storing
-the objects as a packfile, git-index-pack(1) also writes a ".keep"
-lockfile next to it to prevent a concurrent repack from removing the new
-pack prior to reference updates being performed. The "files" transaction
-backend is responsible for managing these ".keep" files and removes them
-post-commit once the transaction is finalized.
+I hereby announce that Git for Windows 2.55.0(4) is available from:
 
-Call sites in git-receive-pack(1) are updated accordingly.
+    https://gitforwindows.org/
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- builtin/receive-pack.c | 160 +-------------------------------------
- object-file.c          | 172 +++++++++++++++++++++++++++++++++++++++++
- odb/transaction.c      |   7 ++
- odb/transaction.h      |  62 +++++++++++++++
- 4 files changed, 244 insertions(+), 157 deletions(-)
+Changes since Git for Windows v2.55.0(3) (July 14th 2026):
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index b369466783..e6e54ba55f 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -15,7 +15,6 @@
- #include "gpg-interface.h"
- #include "hex.h"
- #include "hook.h"
--#include "lockfile.h"
- #include "object.h"
- #include "object-file.h"
- #include "object-name.h"
-@@ -23,7 +22,6 @@
- #include "oid-array.h"
- #include "oidset.h"
- #include "pack.h"
--#include "packfile.h"
- #include "parse-options.h"
- #include "pkt-line.h"
- #include "protocol.h"
-@@ -2292,162 +2290,11 @@ static void read_push_options(struct packet_reader *reader,
- 	}
- }
- 
--static const char *parse_pack_header(struct pack_header *hdr, int pack_fd)
--{
--	switch (read_pack_header(pack_fd, hdr)) {
--	case PH_ERROR_EOF:
--		return "eof before pack header was fully read";
--
--	case PH_ERROR_PACK_SIGNATURE:
--		return "protocol error (pack signature mismatch detected)";
--
--	case PH_ERROR_PROTOCOL:
--		return "protocol error (pack version unsupported)";
--
--	default:
--		return "unknown error in parse_pack_header";
--
--	case 0:
--		return NULL;
--	}
--}
--
--static struct tempfile *pack_lockfile;
--
--static void push_header_arg(struct strvec *args, struct pack_header *hdr)
--{
--	strvec_pushf(args, "--pack_header=%"PRIu32",%"PRIu32,
--		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
--}
--
--static unsigned int get_unpack_limit(struct repository *repo)
--{
--	unsigned int limit = 100;
--
--	repo_config_get_uint(repo, "transfer.unpacklimit", &limit);
--	repo_config_get_uint(repo, "receive.unpacklimit", &limit);
--
--	return limit;
--}
--
--struct unpack_opts {
--	const char *fsck_msg_types;
--	const char *shallow_file;
--	off_t max_input_size;
--	int fsck_objects;
--	int reject_thin;
--	int err_fd;
--	int quiet;
--};
--
--static int unpack(struct odb_transaction *transaction, int pack_fd,
--		  struct strbuf *err_msg, const struct unpack_opts *opts)
--{
--	struct pack_header hdr;
--	const char *hdr_err;
--	int status;
--	struct child_process child = CHILD_PROCESS_INIT;
--	int err_fd = opts->err_fd;
--
--	hdr_err = parse_pack_header(&hdr, pack_fd);
--	if (hdr_err) {
--		if (err_fd > 0)
--			close(err_fd);
--		strbuf_addstr(err_msg, hdr_err);
--		return -1;
--	}
--
--	if (opts->shallow_file) {
--		strvec_push(&child.args, "--shallow-file");
--		strvec_push(&child.args, opts->shallow_file);
--	}
--
--	odb_transaction_env(transaction, &child.env);
--
--	if (ntohl(hdr.hdr_entries) < get_unpack_limit(the_repository)) {
--		strvec_push(&child.args, "unpack-objects");
--		push_header_arg(&child.args, &hdr);
--		if (opts->quiet)
--			strvec_push(&child.args, "-q");
--		if (opts->fsck_objects)
--			strvec_pushf(&child.args, "--strict%s",
--				     opts->fsck_msg_types);
--		if (opts->max_input_size)
--			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
--				     (uintmax_t)opts->max_input_size);
--		child.no_stdout = 1;
--		child.in = pack_fd;
--		child.err = err_fd;
--		child.git_cmd = 1;
--		status = run_command(&child);
--		if (status) {
--			strbuf_addstr(err_msg, "unpack-objects abnormal exit");
--			return -1;
--		}
--	} else {
--		char hostname[HOST_NAME_MAX + 1];
--		char *lockfile;
--
--		strvec_pushl(&child.args, "index-pack", "--stdin", NULL);
--		push_header_arg(&child.args, &hdr);
--
--		if (xgethostname(hostname, sizeof(hostname)))
--			xsnprintf(hostname, sizeof(hostname), "localhost");
--		strvec_pushf(&child.args,
--			     "--keep=receive-pack %"PRIuMAX" on %s",
--			     (uintmax_t)getpid(),
--			     hostname);
--
--		if (!opts->quiet && err_fd)
--			strvec_push(&child.args, "--show-resolving-progress");
--		if (err_fd)
--			strvec_push(&child.args, "--report-end-of-input");
--		if (opts->fsck_objects)
--			strvec_pushf(&child.args, "--strict%s",
--				     opts->fsck_msg_types);
--		if (!opts->reject_thin)
--			strvec_push(&child.args, "--fix-thin");
--		if (opts->max_input_size)
--			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
--				     (uintmax_t)opts->max_input_size);
--		child.out = -1;
--		child.in = pack_fd;
--		child.err = err_fd;
--		child.git_cmd = 1;
--		status = start_command(&child);
--		if (status) {
--			strbuf_addstr(err_msg, "index-pack fork failed");
--			return -1;
--		}
--
--		/*
--		 * The lockfile filepath is expected to be the final location of
--		 * the ".keep" file after being migrated to the main ODB source.
--		 * This ensures the lockfile can be found and removed later
--		 * after the ODB transaction has been committed.
--		 */
--		lockfile = index_pack_lockfile(transaction->source, child.out, NULL);
--		if (lockfile) {
--			pack_lockfile = register_tempfile(lockfile);
--			free(lockfile);
--		}
--		close(child.out);
--
--		status = finish_command(&child);
--		if (status) {
--			strbuf_addstr(err_msg, "index-pack abnormal exit");
--			return -1;
--		}
--		odb_reprepare(the_repository->objects);
--	}
--	return 0;
--}
--
- static int unpack_with_sideband(struct odb_transaction *transaction,
- 				const char *shallow_file,
- 				struct strbuf *err_msg)
- {
--	struct unpack_opts opts = {
-+	struct odb_transaction_write_pack_opts opts = {
- 		.fsck_objects = (receive_fsck_objects >= 0
- 				 ? receive_fsck_objects
- 				 : transfer_fsck_objects >= 0
-@@ -2463,7 +2310,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
- 	int ret;
- 
- 	if (!use_sideband)
--		return unpack(transaction, 0, err_msg, &opts);
-+		return odb_transaction_write_pack(transaction, 0, err_msg, &opts);
- 
- 	use_keepalive = KEEPALIVE_AFTER_NUL;
- 	memset(&muxer, 0, sizeof(muxer));
-@@ -2473,7 +2320,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
- 		return 0;
- 
- 	opts.err_fd = muxer.in;
--	ret = unpack(transaction, 0, err_msg, &opts);
-+	ret = odb_transaction_write_pack(transaction, 0, err_msg, &opts);
- 
- 	finish_async(&muxer);
- 	return ret;
-@@ -2748,7 +2595,6 @@ int cmd_receive_pack(int argc,
- 		execute_commands(commands, !!unpack_status.len, &si, transaction,
- 				 &push_options);
- 		odb_transaction_finalize(transaction);
--		delete_tempfile(&pack_lockfile);
- 		sigchain_push(SIGPIPE, SIG_IGN);
- 		if (report_status_v2)
- 			report_v2(commands, &unpack_status);
-diff --git a/object-file.c b/object-file.c
-index db63587f6d..a957bc126f 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -10,6 +10,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "git-compat-util.h"
-+#include "config.h"
- #include "convert.h"
- #include "dir.h"
- #include "environment.h"
-@@ -26,6 +27,7 @@
- #include "packfile.h"
- #include "path.h"
- #include "read-cache-ll.h"
-+#include "run-command.h"
- #include "setup.h"
- #include "strvec.h"
- #include "tempfile.h"
-@@ -488,6 +490,10 @@ struct odb_transaction_files {
- 	struct odb_source *quarantine;
- 	struct transaction_packfile packfile;
- 	const char *prefix;
-+
-+	struct tempfile **pack_lockfiles;
-+	size_t pack_lockfiles_nr;
-+	size_t pack_lockfiles_alloc;
- };
- 
- int odb_transaction_files_prepare(struct odb_transaction *base)
-@@ -1291,6 +1297,170 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
- 	return 0;
- }
- 
-+static const char *parse_pack_header(struct pack_header *hdr, int pack_fd)
-+{
-+	switch (read_pack_header(pack_fd, hdr)) {
-+	case PH_ERROR_EOF:
-+		return "eof before pack header was fully read";
-+
-+	case PH_ERROR_PACK_SIGNATURE:
-+		return "protocol error (pack signature mismatch detected)";
-+
-+	case PH_ERROR_PROTOCOL:
-+		return "protocol error (pack version unsupported)";
-+
-+	default:
-+		return "unknown error in parse_pack_header";
-+
-+	case 0:
-+		return NULL;
-+	}
-+}
-+
-+static void push_header_arg(struct strvec *args, struct pack_header *hdr)
-+{
-+	strvec_pushf(args, "--pack_header=%"PRIu32",%"PRIu32,
-+		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
-+}
-+
-+static unsigned int get_unpack_limit(struct repository *repo)
-+{
-+	unsigned int limit = 100;
-+
-+	repo_config_get_uint(repo, "transfer.unpacklimit", &limit);
-+	repo_config_get_uint(repo, "receive.unpacklimit", &limit);
-+
-+	return limit;
-+}
-+
-+static int odb_transaction_files_write_pack(struct odb_transaction *base,
-+					    int pack_fd, struct strbuf *err_msg,
-+					    const struct odb_transaction_write_pack_opts *opts)
-+{
-+	struct odb_transaction_files *transaction =
-+		container_of(base, struct odb_transaction_files, base);
-+	struct repository *repo = base->source->odb->repo;
-+	struct child_process child = CHILD_PROCESS_INIT;
-+	struct pack_header hdr;
-+	const char *hdr_err;
-+	int err_fd = opts->err_fd;
-+	int status;
-+
-+	hdr_err = parse_pack_header(&hdr, pack_fd);
-+	if (hdr_err) {
-+		if (err_fd > 0)
-+			close(err_fd);
-+		strbuf_addstr(err_msg, hdr_err);
-+		return -1;
-+	}
-+
-+	if (opts->shallow_file) {
-+		strvec_push(&child.args, "--shallow-file");
-+		strvec_push(&child.args, opts->shallow_file);
-+	}
-+
-+	odb_transaction_env(base, &child.env);
-+
-+	if (ntohl(hdr.hdr_entries) < get_unpack_limit(repo)) {
-+		strvec_push(&child.args, "unpack-objects");
-+		push_header_arg(&child.args, &hdr);
-+		if (opts->quiet)
-+			strvec_push(&child.args, "-q");
-+		if (opts->fsck_objects)
-+			strvec_pushf(&child.args, "--strict%s",
-+				     opts->fsck_msg_types);
-+		if (opts->max_input_size)
-+			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
-+				     (uintmax_t)opts->max_input_size);
-+		child.no_stdout = 1;
-+		child.in = pack_fd;
-+		child.err = err_fd;
-+		child.git_cmd = 1;
-+		status = run_command(&child);
-+		if (status) {
-+			strbuf_addstr(err_msg, "unpack-objects abnormal exit");
-+			return -1;
-+		}
-+	} else {
-+		char hostname[HOST_NAME_MAX + 1];
-+		char *lockfile;
-+
-+		strvec_pushl(&child.args, "index-pack", "--stdin", NULL);
-+		push_header_arg(&child.args, &hdr);
-+
-+		if (xgethostname(hostname, sizeof(hostname)))
-+			xsnprintf(hostname, sizeof(hostname), "localhost");
-+		strvec_pushf(&child.args,
-+			     "--keep=receive-pack %"PRIuMAX" on %s",
-+			     (uintmax_t)getpid(),
-+			     hostname);
-+
-+		if (!opts->quiet && err_fd)
-+			strvec_push(&child.args, "--show-resolving-progress");
-+		if (err_fd)
-+			strvec_push(&child.args, "--report-end-of-input");
-+		if (opts->fsck_objects)
-+			strvec_pushf(&child.args, "--strict%s",
-+				     opts->fsck_msg_types);
-+		if (!opts->reject_thin)
-+			strvec_push(&child.args, "--fix-thin");
-+		if (opts->max_input_size)
-+			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
-+				     (uintmax_t)opts->max_input_size);
-+		child.out = -1;
-+		child.in = pack_fd;
-+		child.err = err_fd;
-+		child.git_cmd = 1;
-+		status = start_command(&child);
-+		if (status) {
-+			strbuf_addstr(err_msg, "index-pack fork failed");
-+			return -1;
-+		}
-+
-+		/*
-+		 * The lockfile filepath is expected to be the final location of
-+		 * the ".keep" file after being migrated to the main ODB source.
-+		 * This ensures the lockfile can be found and removed later
-+		 * after the ODB transaction has been committed.
-+		 */
-+		lockfile = index_pack_lockfile(base->source, child.out, NULL);
-+		if (lockfile) {
-+			ALLOC_GROW(transaction->pack_lockfiles,
-+				   transaction->pack_lockfiles_nr + 1,
-+				   transaction->pack_lockfiles_alloc);
-+			transaction->pack_lockfiles[transaction->pack_lockfiles_nr++] =
-+				register_tempfile(lockfile);
-+			free(lockfile);
-+		}
-+		close(child.out);
-+
-+		status = finish_command(&child);
-+		if (status) {
-+			strbuf_addstr(err_msg, "index-pack abnormal exit");
-+			return -1;
-+		}
-+
-+		odb_source_prepare(transaction->quarantine,
-+				   ODB_PREPARE_FLUSH_CACHES);
-+	}
-+
-+	return 0;
-+}
-+
-+static int odb_transaction_files_finalize(struct odb_transaction *base)
-+{
-+	struct odb_transaction_files *transaction =
-+		container_of(base, struct odb_transaction_files, base);
-+	int ret = 0;
-+
-+	for (size_t i = 0; i < transaction->pack_lockfiles_nr; i++)
-+		ret |= delete_tempfile(&transaction->pack_lockfiles[i]);
-+
-+	free(transaction->pack_lockfiles);
-+
-+	return ret;
-+}
-+
- static int odb_transaction_files_env(struct odb_transaction *base,
- 				     struct strvec *env)
- {
-@@ -1314,7 +1484,9 @@ int odb_transaction_files_begin(struct odb_source *source,
- 	transaction = xcalloc(1, sizeof(*transaction));
- 	transaction->base.source = source;
- 	transaction->base.commit = odb_transaction_files_commit;
-+	transaction->base.finalize = odb_transaction_files_finalize;
- 	transaction->base.write_object_stream = odb_transaction_files_write_object_stream;
-+	transaction->base.write_pack = odb_transaction_files_write_pack;
- 	transaction->base.env = odb_transaction_files_env;
- 
- 	transaction->prefix = "bulk-fsync";
-diff --git a/odb/transaction.c b/odb/transaction.c
-index 9e9a982778..c9144e6cd6 100644
---- a/odb/transaction.c
-+++ b/odb/transaction.c
-@@ -59,6 +59,13 @@ int odb_transaction_write_object_stream(struct odb_transaction *transaction,
- 	return transaction->write_object_stream(transaction, stream, len, oid);
- }
- 
-+int odb_transaction_write_pack(struct odb_transaction *transaction, int pack_fd,
-+			       struct strbuf *err_msg,
-+			       const struct odb_transaction_write_pack_opts *opts)
-+{
-+	return transaction->write_pack(transaction, pack_fd, err_msg, opts);
-+}
-+
- int odb_transaction_env(struct odb_transaction *transaction, struct strvec *env)
- {
- 	if (!transaction)
-diff --git a/odb/transaction.h b/odb/transaction.h
-index 6ed39b3d0e..8cb06c1191 100644
---- a/odb/transaction.h
-+++ b/odb/transaction.h
-@@ -4,6 +4,50 @@
- #include "gettext.h"
- #include "odb.h"
- 
-+/*
-+ * Options controlling how odb_transaction_write_pack() ingests a packfile.
-+ */
-+struct odb_transaction_write_pack_opts {
-+	/*
-+	 * Optional fsck severity configuration to apply when incoming objects
-+	 * are verified.
-+	 */
-+	const char *fsck_msg_types;
-+
-+	/*
-+	 * Path to an alternative shallow file describing the shallow boundaries
-+	 * to honor while ingesting the pack.
-+	 */
-+	const char *shallow_file;
-+
-+	/*
-+	 * The max size in bytes of the incoming packfile allowed. No limit is
-+	 * enforced when set to 0.
-+	 */
-+	off_t max_input_size;
-+
-+	/*
-+	 * Whether the validity of incoming objects should be verified.
-+	 */
-+	int fsck_objects;
-+
-+	/*
-+	 * Whether to reject an incoming packfile if it is "thin".
-+	 */
-+	int reject_thin;
-+
-+	/*
-+	 * Optional file descriptor for reporting progress and errors. Set to 0
-+	 * for none.
-+	 */
-+	int err_fd;
-+
-+	/*
-+	 * Suppresses progress reporting.
-+	 */
-+	int quiet;
-+};
-+
- /*
-  * A transaction may be started for an object database prior to writing new
-  * objects via odb_transaction_begin(). These objects are not committed until
-@@ -40,6 +84,15 @@ struct odb_transaction {
- 	int (*write_object_stream)(struct odb_transaction *transaction,
- 				   struct odb_write_stream *stream, size_t len,
- 				   struct object_id *oid);
-+	/*
-+	 * This callback is expected to ingest the packfile readable via
-+	 * `pack_fd` into the transaction. Returns 0 on success, a negative
-+	 * error code otherwise. On failure, a human-readable description is
-+	 * appended to `err_msg`.
-+	 */
-+	int (*write_pack)(struct odb_transaction *transaction, int pack_fd,
-+			  struct strbuf *err_msg,
-+			  const struct odb_transaction_write_pack_opts *opts);
- 
- 	/*
- 	 * This callback is expected to populate the provided strvec with the
-@@ -107,6 +160,15 @@ int odb_transaction_write_object_stream(struct odb_transaction *transaction,
- 					struct odb_write_stream *stream,
- 					size_t len, struct object_id *oid);
- 
-+/*
-+ * Ingests the packfile readable via `pack_fd` into the transaction. Returns 0
-+ * on success, a negative error code otherwise. On failure, a human-readable
-+ * description is appended to `err_msg`.
-+ */
-+int odb_transaction_write_pack(struct odb_transaction *transaction, int pack_fd,
-+			       struct strbuf *err_msg,
-+			       const struct odb_transaction_write_pack_opts *opts);
-+
- /*
-  * Populates the provided strvec with the environment variables that a child
-  * process should inherit so that its object writes participate in the
--- 
-2.55.0.424.g13c7afec21
+Following the MSYS2 project, on which Git for Windows is based, Windows
+8.1 support will be dropped after Git for Windows v2.55.
 
+This is a security fix release, addressing CVE-2026-62960.
+
+  * CVE-2026-62960, Git for Windows: Attacker-controlled servers may
+    advertise bundle URIs that point to network shares, causing Windows
+    to transparently perform NTLM authentication and disclose the
+    user's NTLMv2 hash. Since NTLM hashing is weak, the captured hash
+    can potentially be brute-forced to recover the user's credentials.
+    This is addressed by limiting the bundle URIs that git clone
+    respects by the same protocol.<name>.allow rules as usual, which
+    excludes file:// URIs by default.
+
+Git-2.55.0.4-64-bit.exe | 0cbc0b34a74b3aff3ace0910328549155a770e228331b19cb1498218a120e7ff
+Git-2.55.0.4-arm64.exe | 8d358f4d53a5a475570edca3124dc0d4f1a020321594984f58e6b04f86f50ec4
+PortableGit-2.55.0.4-64-bit.7z.exe | 016e84230a3767f0c6b3788e79ba0c58a17377086801719d46700fca4f7b36b5
+PortableGit-2.55.0.4-arm64.7z.exe | d69d0c6a3c5445553565ef74f1d9e22a9869f57c246111db347dd96c252b4da5
+MinGit-2.55.0.4-64-bit.zip | 4e03f94c2ffbf70be337e005cee02661c732dbfc81031a078bda9299b9a7d644
+MinGit-2.55.0.4-arm64.zip | 033eb6b927d804558ae479a6ae6c6ed86da42cabc0d424844a3e108c780a58cc
+MinGit-2.55.0.4-32-bit.zip | 01bd8fc4cf00df3e278e09a036a003c698b512b68508a1163404ef138ed4ef93
+MinGit-2.55.0.4-busybox-64-bit.zip | 255a8d6f43e330817ae1eb2599e153835383cdfb17759c5251318242b03ad3db
+MinGit-2.55.0.4-busybox-32-bit.zip | 308e0a24c77fe72d466d2db1e23aea52ee2e4b6dc92f18db04020a9113171ea0
+Git-2.55.0.4-64-bit.tar.bz2 | 5c22d52d59bc5d46a47ef5bd3d071723ee014eed219fb6337444acd0dcb8b910
+Git-2.55.0.4-arm64.tar.bz2 | 7cc28b4431c9448c310d0093fbba5646517cd702690a9b965014d7df85319ad9
+
+Ciao,
+Johannes
