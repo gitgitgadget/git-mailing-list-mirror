@@ -1,221 +1,150 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF1040D564
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 06:36:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786430170; cv=none; b=EOk5h8ifSVGl8GDRLE6IE78riOVeX79//slF/zcFY47uvc2n58Ecic2n4qjzD7DVuoUv+nWFcCCpEStj84gpLHc2ZyaDvIkl4s3+02dL9lpzPb8LC6Sa7Yj1J4gRGUtQ1R2OLJjRiMzaDZlGhM9rIVypGPJImJf6QmJUNVAKUT8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786430170; c=relaxed/simple;
-	bh=oAY8yf20uwBajUmqrYKKLcVo8w8yExzz+A5KboK52cU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lBStFGm1kiXgNeor/i4pERc8bp6/GlFNNgLnUTD/4Q48men00IyMjg9lKYkrjzIZ80YpRD1E3YNeWAMMo5BF20gP1d5kYRUbRDztAY+TZJ8OpS62Tb308K3Jy/ksqALoL5UZHClabfK8k8lmYl4m2Greu+7XnOXH29ifByx3Oag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TtVUkpoG; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9830338B7DC
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 07:43:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786434195; cv=pass; b=rhxgcR+iTt1uDqFAjzPNmGINBExPrWgzIu0ZkJjVQXPeUG75TT3tbevrR9FaPfo7ikL/Om18SVxrVxczw9FxQfdtWqXyuIzE/ms/fXMAFFpxBmjcIlUToHUOO6KxVg/hJG3DZ4SyVeHCEXq3A1/Um80vHl4+52LFXTivaIqAxDE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786434195; c=relaxed/simple;
+	bh=swdXb21JvVRlJG9c7kQAQ/rUTkXd6XeIUko9oAi/ZRM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=k0jTaIOm9FLsw9r/TUI6zIZMxXl18rClwUVuTYSYbXu7/2/gMNeLulaauVnovrJPNOepPmg5d44X9VAdtneSgwhk3d8gjZP6p2Td3hIWHNXIDS6bvdzuvdD1BJccasVNWVwfJoGa/i0GbTixFTpcgeoOAkNEAs0nuhtyNsdSk/4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Amn3UqCj; arc=pass smtp.client-ip=209.85.221.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TtVUkpoG"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-92e65e18969so46294785a.1
-        for <git@vger.kernel.org>; Mon, 10 Aug 2026 23:35:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Amn3UqCj"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5c2c0df0b45so138534e0c.1
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 00:43:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786434193; cv=none;
+        d=google.com; s=arc-20260327;
+        b=hM3+GQxefX0zlmRberd35THVV1CML+JCcjUm98bW9C4jmuUomG4aTgTvS7BklADTWO
+         MQWb3ZVnrvRA+0nf/ud/2Q7crJpLaOAzWsG2i5qr/km4L03G4vzw+87PUq+HQRvRQczt
+         bTbAJeBxQVMSrGt48AYOon8Job+/hSsI5LRGX+0qv3tJXX4+XN7aIZjnKEgvrif1GFXK
+         +S2HTP6rv32JkSdKPEJA8Co/CktzMG3EugXCqW3jncR4FTWPWKlkP4LymPqpkUZDyfV+
+         o8H4DoEL7HLL829l736+yRVIciu/kBxz5r19C0LMiM5dJYXbNgJztATk083cja3qZWlJ
+         qnkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=swdXb21JvVRlJG9c7kQAQ/rUTkXd6XeIUko9oAi/ZRM=;
+        fh=MxtPRp44vRwMzl/tDueRpRdFl5yTY2vDLf3uXCpGbK8=;
+        b=QFxfgRqbcpVdrsMVrhOWXgThfX3Hh5oWcn+pb5soPKPPajkpWIMY/NC4VuVPszPT/C
+         5QOGYaGlx9GuL5ud0Pf85QuyvDqp1sGjMIo+Y0SI/Lg7XjpWyGV/NM/SCgtQDmYkLgsG
+         XV0qGeA4FNnbv36nR+vhSQt4nZmRWxNkDhq4Z+l/S5iSoRExOfvXpvAI9iChPwY37vuQ
+         ImeRBo/uvi9fA0tjfnV2/w4YRvL+SPdHJdYyXd9eJNgOPouLVTlZ51NCkqbKN6V0th4b
+         Djln7C2fWSpHQHBQZdk9A45ybmxtIWL6+/7Y4/TEuz9GkP9ecgFKgY+Zc6yiS4pU+/bs
+         fyMQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786430157; x=1787034957; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=uZ8OjUX4bTwhteasIe1Rr4W8BHlSoE0rpdqPEnqRpr8=;
-        b=TtVUkpoGPVOTXPKtnXy+PuH3XB3triFmNUrtCcCG+ThpSprqti4RDY6wNCPDnTc1jU
-         MkiQdC0wvMbR8OnzU69jiolRheYlQVgQq5vYTBM4ICAdfp/uzZCyiK7FNJlG8ym8pDR5
-         xLXLlYG5ArNyipVbCM+AjzdBdQMUShb1jtrAPbCkdS9Fu8QJiAGSwS0K2mIfNdObzSsL
-         mdbtOkFkMwkqsYfkhKzvb18a1C20HMLkhfs8sUh400N9+FsNf9AYiBABvlYPXnmdOEPK
-         WLbAFN2KuqqRcelDU+OAq8CGFHJMRqJcJetLqSRb1UJIXnSsLczUaOmj+OeHc7XnRQDC
-         XMmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786430157; x=1787034957;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1786434193; x=1787038993; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=uZ8OjUX4bTwhteasIe1Rr4W8BHlSoE0rpdqPEnqRpr8=;
-        b=IiTlp9wzuVvkFawTxxmV3ybRGnB4gSiq85Qh2pBoq5QSShOUY+9RX1ZCdfyROBGL68
-         /cfch5nI8m/l26GWtk9+MvHQzhfOy/VrOOPMASIzt68WBmHsruykmOZteq0f8oKlO4OM
-         rqn1V1ugTicH9lgA5b28nsApYV8N69T2/fT9h2dCwoYl3xaePpqimlO+REvvopDpEGR7
-         Zvc6zMWIuqH6L4m22WK6EK9P9EdwuuyeHIvTGiqpXdAufdwkqOXFpC9EsbfwZc4EoQdv
-         7HCOZFu/DNLAfaf/EcBK0nbrBYBk2GYggk2Z37I9fn2rKWygKmqUVr7ieNB92WIcrJkR
-         ZVcg==
-X-Gm-Message-State: AOJu0YxWbUJIV+hFr1Q/36t1xAK1n39ZHbphdI2JjEtf/Dn7PF+STTGT
-	mdoOCTv+M6esMMhpeJd/iTTB8ggwBRJHVF21VFMfISFJNrfw8l4qBGLmmnM0fA==
-X-Gm-Gg: AR+sD11Befo+QCb1VDfB3xRiVaNlUvopUr/Y2s3p/aD4NQgYGBwEjj2eW0yh2tVf2vJ
-	bGFtKSooorahu0yHEcmJQYBPiCCE5WEuZ1AOUAR8CG/VCBzszGjx0HGX9bKiu8o4kKb/uFxkW9E
-	RmhrpL2OoWFRSbe6r+3dsIV+8fGfZ7HUcJHMDZ3d2k1DTs2mwDjBIJvPqJoWbrNYRVVfaJWuARX
-	Lly3Vhehd1jZGZ+HLFVcvNPimmN7fBrXjwZkbVCLv3H7wQ5v1ymoo6sUfLqYMQQw/ADEL93+T4M
-	rQdmAWUI3CedRxJ9M656U/wfz7ZlDDSfDSQcnGWOKwHyMFdgfjj827AeRtuC4nbAFyd0haB8Xpt
-	mOObxEkXcgMYeRVyG/IB9kG6rz+RaJ1In+RI4waVz7Tq0dx4s/g/lBS+1kt0zI5K9FYrxsJmB8K
-	NbhA1i0cA0BONRT6EQ929lXG7UvS0Wx8sSbEf1zVnFSaumMuXBeUWh+Iwg7lvR/BhBtIceGzAvD
-	w==
-X-Received: by 2002:a05:620a:7002:b0:915:5216:e5bf with SMTP id af79cd13be357-936a96079c3mr48228385a.22.1786430156966;
-        Mon, 10 Aug 2026 23:35:56 -0700 (PDT)
-Received: from [127.0.0.1] ([9.234.151.83])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-936a85fab4bsm45792485a.41.2026.08.10.23.35.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2026 23:35:56 -0700 (PDT)
-Message-Id: <pull.2197.v4.git.1786430155244.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
-References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
-From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 11 Aug 2026 06:35:54 +0000
-Subject: [PATCH v4] worktree add: improve message for ambiguous remote branch
- name
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=swdXb21JvVRlJG9c7kQAQ/rUTkXd6XeIUko9oAi/ZRM=;
+        b=Amn3UqCjVDxoZNLsAUN1Sii66pwiTbNAHjOfmiXMK4zsoTT5iU5rcNkx9loHzp+KWm
+         qUNZdQP94qm2bk5cmSw6pxlikbvW9JSkTzPE8j4QtfENgzwy0GVrO68IJ4SOmGwLG2Jc
+         mT+3PBhXw21nAXE6P2bxdCJn2+iKSUzASIrU5CBm5/0jckqnA5zgbQ8No3SF4VRbtEU+
+         vgwaQzRkATL4u5u2pGbDYBMbDpwzcdTMbqQBKeJQZyBYIaZMUTa6fHeE7cbPLDE49gtS
+         1KL5uOC7vkkEeNqCAt5LuNhuA5zwmvD0J7FitwhZccqWftpognxv55tD2PfFIsTYqqpK
+         peug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786434193; x=1787038993;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=swdXb21JvVRlJG9c7kQAQ/rUTkXd6XeIUko9oAi/ZRM=;
+        b=DGItPU+TFEchb+Ob1qejcCatwVtjZs3t3SD8qr7ELM7H6JPZFgZCVx0HFmEW4hgipI
+         oP7pIAq4hQhfwdkK+IvmU5PxNoFXzqW/x0wL1SoWs6e6rCQWbKje3vkYOnb6wZfvWiNN
+         fqBFmlT5VNmZv5jcODf9I9sp980MNLydOsgKvH65nb5tTJH+Pzvop30sdIfqRQK48iTZ
+         wZSl6vdhJzSTPS9/GZXfzjLCkHcUjk1vNoBshb8Al8ukZR+mFjNvJgAb7amRwyGEarVM
+         cPyLOOaP0s4Av1cUgq0DPR8M9/J37OAzRySaDj9QC32ikVzirHQvL8agfFruzJStqBSy
+         JkMw==
+X-Forwarded-Encrypted: i=1; AHgh+Rq+HTiF3kjvGdpWFgYR9MIs5b+OptDVAKfpBrpGipjD1+6tUN8perD91ymzhfb3ASpYsRI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzt3VhbjR1KWm07IEoan8/Rnb4GMvIbaqckowci9ZSztjBjLLTw
+	OOih7G02QsuQMY7uGElpV3sRKBmoxkcxkggzDY5MOCviyzOvq8FAGo02Z6K0gJugcMhkb9jfJEr
+	8IHDYoxyqdHZSTRnuiWD1Mse20lbyHX0=
+X-Gm-Gg: AR+sD12PnBLJJ5L9wNScu8k7RkKYr64iQS6GAvRCGB2QLsTTkVCJN5tkke+s+irLg+D
+	+5EQgUqRxo6zqn0WtAmmuBf77olcjwieBL+9RlLqJgH4fnJNFHeB4cakcLpmNuQyhgC/4gqgatD
+	HS2FeUnYKib0+kB8cMoiqprSA60XOfALwYaUvj7svQ0Ro88ovrd4Kz5B0FPtYOPc7yGwZ/tpLgh
+	yyyuP6Eksmd/itFKGrngBzSDPO8/7gnbh5lEaR+gZQDcjxj4dYohKHCgYi/w8cXGhH4n8ymlSaG
+	7a+7yalMHcN0S79FAgDclJr1nhDU59hxiZ6VNS85Kh/lfKkYIihdnMso938bRcubUxM3AtFWKun
+	iQaoUGR6bHWva/ebEVZF+gAKFPgzt/2sHIw==
+X-Received: by 2002:a05:6102:1614:b0:739:918a:16c5 with SMTP id
+ ada2fe7eead31-76b5527d158mr347445137.3.1786434193466; Tue, 11 Aug 2026
+ 00:43:13 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 11 Aug 2026 00:43:12 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 11 Aug 2026 00:43:12 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CA+J6zkR5ZkUc8c=xiXgKiAYmbgcoyGfwpgm6aaG0Gog8OVmOjw@mail.gmail.com>
+References: <20260808-objecttype-support-v6-0-e5cdaf27a49c@gmail.com>
+ <20260808-objecttype-support-v6-6-e5cdaf27a49c@gmail.com> <xmqqmruwbn21.fsf@gitster.g>
+ <CA+J6zkR5ZkUc8c=xiXgKiAYmbgcoyGfwpgm6aaG0Gog8OVmOjw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Yoichi Nakayama <yoichi.nakayama@gmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Date: Tue, 11 Aug 2026 00:43:12 -0700
+X-Gm-Features: AUfX_mzFrl4_-Bc4bHdk7ZxiGoLLoiTTl9nLSG3bOhdYDtJCbW58mJHLpGzQjmA
+Message-ID: <CAOLa=ZTrf_WHiRHTjBGAus+YbRsUkbR3dzsW=fgCK0jit6fYzQ@mail.gmail.com>
+Subject: Re: [PATCH GSoC v6 06/10] transport: drop remote object-info fields
+ from transport struct
+To: Chandra Pratap <chandrapratap3519@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000008442740658c09f52"
 
-From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+--0000000000008442740658c09f52
+Content-Type: text/plain; charset="UTF-8"
 
-When the user runs 'git worktree add ../foo-dir bar-topic' command
-that does not exactly say which remote they want to work with, and
-there is no local branch named bar-topic, we try to guess which remote
-by passing bar-topic then create a new branch named bar-topic which
-tracks the remote branch.
+Chandra Pratap <chandrapratap3519@gmail.com> writes:
 
-If there are multiple remotes that have branch named bar-topic, we
-silently gave up, leaving the variable 'branch' intact.  Then we
-entered the conditional clause 'if (!opts.orphan &&
-!lookup_commit_reference_by_name(branch))' and triggered "invalid
-reference" error.  This error message did not contain enough
-information to resolve the issue where the remote could not be
-guessed.
+> On Sat, 8 Aug 2026 at 21:51, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>>
+>> > Rather than take these as function parameters, we take only the
+>> > transport object, and expect the caller to have placed the other two
+>> > into special fields in the transport struct. But this doesn't make much
+>> > sense. The set of oids and results are really only valid for one
+>> > request. There is no reason the transport would need to hang on to them
+>> > outside of the single function call.
+>>
+>> Thanks for injecting some sanity into the mix.
+>>
+>> With this fixed, are we happy with the entire series by now?
+>
+> Just went through the series and everything looks good to me, but I've had
+> the same opinion for the last couple of iterations as well.
+>
+> Thanks,
+> Chandra.
 
-To improve the situation, we display a hint and a descriptive error
-message and die immediately when multiple matching branches are found.
+Same. This version looks good to me too :)
 
-Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
----
-    worktree add: improve message for ambiguous remote branch name
+--0000000000008442740658c09f52
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 285080545ac1e6d6_0.1
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2197%2Fyoichi%2Fimprove-worktree-add-error-message-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2197/yoichi/improve-worktree-add-error-message-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2197
-
-Range-diff vs v3:
-
- 1:  1b9364da7e ! 1:  f7c413b588 worktree add: improve message for ambiguous remote branch name
-     @@ Metadata
-       ## Commit message ##
-          worktree add: improve message for ambiguous remote branch name
-      
-     -    When the user runs 'git worktree add x y' command that does not
-     -    exactly say which remote they want to work with, and there is no local
-     -    branch named y, we try to guess which remote by passing y then create
-     -    a new branch named y which tracks the remote branch.
-     +    When the user runs 'git worktree add ../foo-dir bar-topic' command
-     +    that does not exactly say which remote they want to work with, and
-     +    there is no local branch named bar-topic, we try to guess which remote
-     +    by passing bar-topic then create a new branch named bar-topic which
-     +    tracks the remote branch.
-      
-     -    If there are multiple remotes that have branch named y, we silently
-     -    gave up, leaving the variable branch intact.  This later causes
-     -    creating local branch and worktree not happen, and we end up with
-     -    passing an non-existing branch to lookup_commit_reference_by_name(),
-     -    triggering "invalid reference" error and die.
-     +    If there are multiple remotes that have branch named bar-topic, we
-     +    silently gave up, leaving the variable 'branch' intact.  Then we
-     +    entered the conditional clause 'if (!opts.orphan &&
-     +    !lookup_commit_reference_by_name(branch))' and triggered "invalid
-     +    reference" error.  This error message did not contain enough
-     +    information to resolve the issue where the remote could not be
-     +    guessed.
-      
-     -    To resolve this issue, display a hint and a descriptive error message
-     -    and die immediately when multiple mathing branches are found.
-     +    To improve the situation, we display a hint and a descriptive error
-     +    message and die immediately when multiple matching branches are found.
-      
-          Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-      
-
-
- builtin/worktree.c      | 23 ++++++++++++++++++++++-
- t/t2400-worktree-add.sh |  4 ++--
- 2 files changed, 24 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 654d27c3e1..b29c3a3755 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -64,6 +64,19 @@
- 	"\n" \
- 	"    git worktree add --orphan %s\n")
- 
-+#define WORKTREE_ADD_AMBIGUOUS_REMOTE_BRANCH_NAME_HINT_TEXT \
-+	_("Matched multiple remote tracking branches, you can list them by:\n" \
-+	"\n" \
-+	"    git branch -r --list \"*/%s\"\n" \
-+	"\n" \
-+	"If you meant to create a worktree from a remote tracking branch on,\n" \
-+	"e.g. 'origin', you can do so by:\n" \
-+	"\n" \
-+	"    git worktree add -b %s %s origin/%s\n" \
-+	"\n" \
-+	"If you'd like to always prefer some remote, e.g. 'origin',\n" \
-+	"consider setting checkout.defaultRemote=origin in your config.")
-+
- static const char * const git_worktree_usage[] = {
- 	BUILTIN_WORKTREE_ADD_USAGE,
- 	BUILTIN_WORKTREE_LIST_USAGE,
-@@ -904,10 +917,18 @@ static int add(int ac, const char **av, const char *prefix,
- 
- 		commit = lookup_commit_reference_by_name(branch);
- 		if (!commit) {
--			remote = unique_tracking_name(branch, &oid, NULL);
-+			int num_matches = 0;
-+			remote = unique_tracking_name(branch, &oid, &num_matches);
- 			if (remote) {
- 				new_branch = branch;
- 				branch = new_branch_to_free = remote;
-+			} else if (num_matches > 1) {
-+				if (!opts.quiet)
-+					advise_if_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
-+							  WORKTREE_ADD_AMBIGUOUS_REMOTE_BRANCH_NAME_HINT_TEXT,
-+							  branch, branch, path, branch);
-+				die(_("'%s' matched multiple (%d) remote tracking branches"),
-+				    branch, num_matches);
- 			}
- 		}
- 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 87b926728a..5c105cf252 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -624,12 +624,12 @@ test_expect_success '"add" <path> <branch> dwims' '
- test_expect_success '"add" <path> <branch> dwims with checkout.defaultRemote' '
- 	test_when_finished rm -rf repo_upstream repo_dwim foo &&
- 	setup_remote_repo repo_upstream repo_dwim &&
--	git init repo_dwim &&
- 	(
- 		cd repo_dwim &&
- 		git remote add repo_upstream2 ../repo_upstream &&
- 		git fetch repo_upstream2 &&
--		test_must_fail git worktree add ../foo foo &&
-+		test_must_fail git worktree add ../foo foo 2>error.actual &&
-+		test_grep "matched multiple (2) remote tracking branches" error.actual &&
- 		git -c checkout.defaultRemote=repo_upstream worktree add ../foo foo &&
- 		git status -uno --porcelain >status.actual &&
- 		test_must_be_empty status.actual
-
-base-commit: 010afd3166ddc64c9863b1506f12cbcdda0d4ea1
--- 
-gitgitgadget
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1wNjBvMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM0dKQy80eTFGTVZWTy9VWnBlS21NdEZ4dHdZR0F4VwpOWG9jaG95bUdU
+Tk5YenZ1cUNkcUpCd3ZmRnp5c2huMFI4Q25KeTVwbC9hSllzVW5mWURVOFBuV0c3NEllT2FDCmk2
+MUpDZ2I3bDQvbzg4cW9FVXdzMW11T3RCMmxzU0RYSmFTa2NmMXNLaGdUbTVkRStoZXlLSWlkbDBr
+VHM3WUcKcFloOTRtV3FoaUhRQ3R6ZTdvVk52M0NKZEpOQ1FnY2lGazExS1k0V2lWSnRoVUpUaUpS
+TlBFK2RWY1JUc0JMYwo0blBuYmpSWlJIMGlaL0tEdStNVG9MNFQzdW5QYk1ZNUdFWGg4T2tXNHdY
+R1dnR2xxSWQ4cG9tQlR4N2ZqYy85CjBMdkhUVVpPSU9pNE5yQ0toL3Frajl5TmpXSTUzUXh6aXJx
+RjRVRzc3Q2ZRdWN2enh0d2lna0ZjTXFYOWpXOTIKY0FyTzBjL2lYTG5SajhYWEc1dGxkK0VjTDhW
+bVN2S204U2E1QTh6R3RDdG9xQVBsL0NBQ3R2RjhwT3hDZHpMUgp2eXd4QThXMG1IY2tyTzNJR2JH
+S214NElIMC9KT2dsKzFqYjI4b2Y4aEVHUFgwd3JibzV6WWptVjRHWXNJZklzCjlrZW9WeC9vNTVC
+T3BhVGhqT2czVEUvN2N5Tlc1akRyaEJlV2Vobz0KPXRoaWIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000008442740658c09f52--
