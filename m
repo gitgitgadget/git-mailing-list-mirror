@@ -1,154 +1,124 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707493C3438
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 16:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D269C3C4167
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 16:26:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786465425; cv=none; b=IQb4mihkvAw7nGs17sS1gKggKwauTMm/k55Priey7+MFUS4L/lOGNXfNp+oEdSaH/av8AV2M+od/rx3dxriBp9nhXZZRYIfTt3XrfPXIbz62HCEba2XDjkB3oHhyXWWnWxxztwzLeuq7YYIB6bIaXnw09pl1tC9UMQYrwB9WQI0=
+	t=1786465619; cv=none; b=FTmftNBhkPDZ8Ep81gfuNsD3UXwftClXrCioDSSx5vr7BkKxanDkCvbNrHtLfgAlENW+m9sGVuUBeCpswp4TMbyseq278FaZsd9gYsl7tKYGBYYGiD+LRcV9b32OMvleYh1I3WgBSTqZPb4HQ1XHnMaUUBPg+vILxfJ1s9CF6oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786465425; c=relaxed/simple;
-	bh=r76l119c6MeCxZYDEH/15PLXet6qjJnKcxHp1WSzLXA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Zjqz+voqaikROpBkt1AiRTAyw/qNAo5RYG4IE4SgOFhOQCD44Kq5Avie8piPeaVP0OrVy7vBttf43B0seq4o4H1eUkNHiZlBzeQt7E8BmLvOsxpS6sI7SwDZ6zJ2Waxp8Llf4pY/FX6iGwQqzTmuwq63izsvC1waYilq9znLk50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=c96tJka1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PZ6d57Hw; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1786465619; c=relaxed/simple;
+	bh=lgk+d1rJuHyl+v5UBJDeUkSvoqAWhqn7VeIjLEnuddM=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=BjWiRRjQUmqCnvSnZ9SnyxLh4NNbcFoNqR2NUsZZM5YAyM/VwvB1ERABavKvZkS+kU2mZPAvP873W5T/IBZyT7borVFfCNgW5LJzriEjr+IHnHBMTeZXQbhydUnu+WIcLuzmZor3x0HbGxhkvfUqG43G0vF32FzfglF9JXTA8mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=orcCCWog; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="c96tJka1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PZ6d57Hw"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 487E07A0065;
-	Tue, 11 Aug 2026 12:23:42 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 11 Aug 2026 12:23:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786465421;
-	 x=1786551821; bh=fU8L5Wb/A5HoY+GWUq99eWh8PpdJVf1sQq0lLK9/eXM=; b=
-	c96tJka1ifBbRQEOnHGFoj3pHNNDJbbNTLEBPI4Sec7SYobKhVl1h4yUAWpmzEvG
-	G3pI5xLAMqqg01ve1rwJHA+rOFGE0faQYb1RGY0ebS92zLS/HFWI1YO/uvLES2ut
-	kQVziPweoDiARXjDh45JgH9rVyQG2mpiiSUeTBQI36m0Sd4AZc45eq2U3K4ZLZM4
-	gJGk7gO9hdTlgoVm69TZCBiacctehrRbRgtCzTy4Y26ZI0d2nDKKAmH+Jqinl6cL
-	GhNx++Xoux9FwirVqm5xh1XqIsztO8cYecLP2qbewhb2dFlQEtkLwUTNl4PGclE3
-	PMiVpyff57x6t/aXJqeipQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786465421; x=
-	1786551821; bh=fU8L5Wb/A5HoY+GWUq99eWh8PpdJVf1sQq0lLK9/eXM=; b=P
-	Z6d57Hw0IABF4WXuwwhZzdS+wd/Se4U/bftobjzjFb8UgNdbT/L4vBn8QOi4qS4Q
-	COOMcUJHkinOvZT5mnAJ/2sdwJ1PhtTwSXIaI8O7VJC5c/nWPUXil6JLBKi7WRW9
-	RyStHsE2xLUVLAsKMgFo27z6fS6VR6lwL4nOh08+Kt/wmLAwfma+qOfMq3sjS1vz
-	36jPkQItZrr0XgXhEKVsqJp7GbXBmhoeMGMMJwhvKI+TwW9Z3v/qVbz/Q1JsugAo
-	PNkHXwBuB3tFS4eAQ4fK3db887vrDqJrFeNlFtIN8aiL6cWOkhRrFMeuYmz5iQxi
-	XJDVDt9GsPIMPYExlKj9g==
-X-ME-Sender: <xms:ikx7akhNB9Hd_yKUzZFm3LYrGPlF-DgEz9tqls_RlCeb2nRk6ao-bBM>
-    <xme:ikx7an1reRkOTvNvci5akKj4TF8GD7mxV4RLBtm_B1iZcEbGfPVIyCumhNgg1vaMQ
-    eXb9YBmJ9hTM2kVZCQlksrC0zvQ8bA3kokXAam_nOZANZutaD8L>
-X-ME-Proxy-Cause: dmFkZTFc2wlHfR0vTC/o5wJXeMu4PCAvC5/JynHyD/2S171pRHqI6kcvFngYDxMBlXqPik
-    ttesdEHoTydddlvqLlGdCxxMaSuO1BMYo/WInMRWSGvP6AI7xOnXJtc6ADjB7vK57pm/xd
-    wKpkAFvtCLwpN6+cVRlrLu9FWCCNg26dce/PxSqPRMmHgg01zYCQxSo7xe3nh+wFOtL6+j
-    U5dIHdSg8eVt9QDLcggQjM1Nr804RKpg7rbTmlFB0v+1FIEV86qjMKo1jCzaCfKjaa18T0
-    +BVE6290FbteSLUO5sPqvTfkEsildPqcNOcSHr0R93PsROlYNw4usgAw5/SJvmJ3fIHlQK
-    9TCZfYJGBzAjyMQSmwUkeLgQMsji/wgE6pfEloRHvSBBZn5rT2y5Y1ou/mnylhIDLO/D2C
-    VU4q6muZ4nY0P76jKe7iSKvNIh7UpUucA+TU068Je+/S9bJmkJc9WkB6b9s9wcTFNBl6pW
-    bLeRSLfWlLcvD0BEE746A3x9KmC6RrYj8IG3m0N/w/jXL4TEgYd2zHi9MSISiMax92tf+n
-    TyIpgZx54qSBw8kG1CmRCfl8OlTHnVRA+DkAA5jMbFCbrM3pLuNEdShxQJaVwXIAuLCHNT
-    zKbPluVEMBD1tkxOsFOEpGS3YLoQ0Y3acnGv4TkgTyDd65GnUzNhru4rBPtA
-X-ME-Proxy: <xmx:i0x7anOWXyHVRbRY9onRdXAmhsARB-raSdiYiPMG_5O0CxM2xMF5LQ>
-    <xmx:i0x7av6pvKq8u0okEfPwHedKcudYxdGNm-xKyFX2dO_sB_5FGGQNuw>
-    <xmx:i0x7at0S_RYeYLJOmXoAZ7VfHhi-DCEkyJtgodKZj1lb4dkUsv6KNw>
-    <xmx:i0x7aoaBB9Dc1aXJXXx1ghq_mAFmq9u6XNRecC9rvrTWv9DtE881fQ>
-    <xmx:jUx7askfIrCuMwPW4UWjQQPVZjkwVF3ZgeSILkmHYfMS4IZ7eA9MZ-4B>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 677BA22C006F; Tue, 11 Aug 2026 12:23:38 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="orcCCWog"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-81ed2a00f12so45888057b3.2
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 09:26:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786465614; x=1787070414; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=lgk+d1rJuHyl+v5UBJDeUkSvoqAWhqn7VeIjLEnuddM=;
+        b=orcCCWogwsT9GJ1gVgDWYOEj2ph+fOhqTaHpuzYmHe9Mhjk8apcIJRfhDZC94hNh4+
+         B+6yBlZ/dGs9dSLxAll6Y60YknaABIWCtrsv+7ioBQ3EXNkU2EbCjEwhwngUKiqxGTJe
+         PTEO0a2JI9OErzpW7dmTguch0KQz97VBPxwBvU1vkScKJlMnlEN3NcoR6D+8a1a47w+0
+         3h/Gs+rq9s0Dbw8l1YHFSqSWB3UdQzkhZ3OgDjUfWMNzK3AaxFxvkuienRZvfZ7nLSFO
+         +lOp5IKvm2pClIu3rp+Cuj3Q80MFIqlVPrDL6XaidEjWLe7B0kqq2WMye80SUTRpiaOI
+         DxNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786465614; x=1787070414;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lgk+d1rJuHyl+v5UBJDeUkSvoqAWhqn7VeIjLEnuddM=;
+        b=nCJH5QkapFwypsF+hEMFGz7l/eHh8kejDcEom+cbVJCXgWwrKMky2UvoGd7xBOcaKj
+         kTdFF3Gfr0leYCAJ7+/eiohRCesFVzVAmb9nAdeYc/HfZpplcvTkcRa8RRqwYZMUJt3I
+         NfeBb4Sr+nTgeNpfxuO3YakUOYkZE19MZ8S/N7bWG1i/7GGgOacWXdQoCxDxtsv7XZDb
+         3NsV0K80JoYlhrsSdmQ+/6FRu6DJym8PfVlJLGp9VzurtCsmHXAuBbTK9zT7ETrAB3YW
+         UVwN+Yfh8G6y4gCIEGxHV/tQ9lxozvb1TnS2Y7Cfg9E9Xbw2ljB60abTatVv4ikEWdvI
+         tH/A==
+X-Forwarded-Encrypted: i=1; AHgh+RoPiW+3e0cNouZCv2U/hB8A7s2I/HqJFZqYNPlceMgISMc1v8JSY9OOnsbHCv+/8V6WgCM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywk84SXTtIF+/8/D8Mnc2ySgXCWexR1/3eN8jiUlUlvsD/uQa7o
+	5KsovalBGUakkUFHbzOsbf1krfRvDZdQts5DlLbB5GQwyAfVH45QT+8d
+X-Gm-Gg: AR+sD11Ynb4o/uod9B+4GEwOmG99qE2G5sd9IPhzk7Ej+l/pD6B/reWTbNddlEBPYX7
+	Wh1cQhpzCT0DX90/KYU0Q3SvMeEn181dUUCOEdzhhRmA1oTvluT+3VcJX2i3i4lu+F8qj98wJeV
+	i8F/0rGwEZHQYr6b3qJwq1U9UNe+dIoZeAMbeD86MAWjIVr4MSeXxhxwc70Y0cZ5L61tcYCX+Eo
+	0zVl3ZWoxmSKkEmgiX3MNyDkxgNLi1H6A2hKVH88DdWfuy8nxDOBnLuMSyBUFODUdLgajK938ep
+	bI3TXfG6x6hyrb1tlI6ggqDG4dtO9aAhQ3e+JutVcFLgQun8bMFWNiI3f+0WYlllPz7uHEWoY0L
+	xrHa2RcqSKoCncqoPO5MjKI/Bwc7SmvgKPyGHGRWuRO2GOQdRt5GFnpQfezZl+QrPwy2hKwVh5U
+	fNuBjMDjma7CaKUjk/Zn8wTDSnP754EiUyKzAQrKd38/v3eRuQBJ4mGb1e/U00hoGI69g2Xlgm9
+	mtqvuRnWRu/o4fG9BU4KmCmr9n4frMMpu1J52FH4BzsQzOpC1MK4zzeXpyta5CyEU7+BwrwhO2l
+	RkNH2ocQbl7Ks8F/3GALv5gCi9ia5txF1w54Iw==
+X-Received: by 2002:a05:690c:e1d4:20b0:820:1014:526a with SMTP id 00721157ae682-83042f82e8dmr10481447b3.29.1786465614083;
+        Tue, 11 Aug 2026 09:26:54 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:556d:681f:9688:f449])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-82ec3902275sm12269747b3.23.2026.08.11.09.26.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2026 09:26:53 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: AzsVqDuXP2Wg
-Date: Tue, 11 Aug 2026 18:23:18 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org
-Message-Id: <a495b0d8-b735-4ae4-8cbe-56fd42bbbd3f@app.fastmail.com>
-In-Reply-To: <ansWZxZ6lB0tYIJD@pks.im>
-References: <synopsis_block.af9@msgid.xyz> <synopsis_block.b37@msgid.xyz>
- <ansWZxZ6lB0tYIJD@pks.im>
-Subject: Re: [PATCH resend] doc: format-rev: use [synopsis] on code block
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
+Date: Tue, 11 Aug 2026 12:26:42 -0400
+Message-Id: <59E4039A-C9BA-4EFD-8022-77C73EB51ED0@gmail.com>
+References: <annHlFwu4NKwmcLr@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ Yuchen Tian <cat@malon.dev>, Todd Zullinger <tmz@pobox.com>,
+ Olamide Caleb Bello <belkid98@gmail.com>
+In-Reply-To: <annHlFwu4NKwmcLr@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: iPhone Mail (23D8133)
 
-On Tue, Aug 11, 2026, at 14:32, Patrick Steinhardt wrote:
-> On Mon, Aug 10, 2026 at 06:58:05PM +0200,
-> kristofferhaugsbakk@fastmail.com wrote:
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
->> This code block uses the placeholder `<subject>`. Let=E2=80=99s highl=
-ight this
->> placeholder properly by using the `synopsis` block definition which w=
-as
->> introduced in a34d1d53 (doc: convert git-show to synopsis style,
->> 2026-02-06).
->
-> I'm not particularly knowledgeable in AsciiDoc, I only picked it up
-> because nobody else did. So please consider me even more clueless than=
- I
-> typically am :)
 
-Thanks for taking a look.
+> Le 10 ao=C3=BBt 2026 =C3=A0 08:44, Patrick Steinhardt <ps@pks.im> a =C3=A9=
+crit :
+>=20
+> =EF=BB=BFOn Mon, Aug 10, 2026 at 08:27:51AM -0400, D. Ben Knoble wrote:
+> [snip]
+>> Back down to being on-par with original code. So that's good. The next
+>> version will include some variant that reads a struct member instead
+>> of going through repo_config_get_bool().
+>>=20
+>> But which? Reading the private_ member is obviously wrong; I suppose
+>> I'm supposed to use repo_config_values() there. Or, rework the series
+>> to put this member in repo_settings. I think I originally assumed that
+>> struct is for things that are settings that aren't configured by
+>> git-config, but=E2=80=A6 now I'm not sure. Looking at prepare_repo_settin=
+gs()
+>> shows lots of repo_cfg_*() calls. So I think I see how to adapt to
+>> using repo_settings,
+>>=20
+>> Patrick, Junio, and Tian had a brief discussion in
+>> <anlmwaEtwcCPse1N@pks.im> about the split creating confusion. I don't
+>> really want to wait for it to settle to land this change, but we might
+>> want to work together on identifying the best path forward for
+>> core.useNanosec :)
+>>=20
+>> I don't suppose it really matters to me which struct I put the member
+>> in. As I said, v2 will definitely fix the hot path lookup here. Just a
+>> matter of input on which struct we want to use this time, I guess.
+>=20
+> I think `repo_config_values()` is the modern variant that we're slowly
+> migrating stuff into. But that struct only works with `the_repository`,
+> so the question is whether we ever use "core.useNsec" for a different
+> repository. My hunch would be yes, for example when recusing into
+> submodules, but I'm not sure.
+>=20
+> Patrick
 
->
->> diff --git a/Documentation/git-format-rev.adoc b/Documentation/git-fo=
-rmat-rev.adoc
->> index 505a52feccd..836ba4b0c24 100644
->> --- a/Documentation/git-format-rev.adoc
->> +++ b/Documentation/git-format-rev.adoc
->> @@ -96,6 +96,7 @@ The mode `--stdin-mode=3Dtext` replaces each object=
- name with the
->>  formatted commit, i.e. the format `%s` would transform some commit
->>  object name to `<subject>` without any termination. Like this:
->>
->> +[synopsis]
->>  ----
->>  Did we not fix this in "<subject>"?
->>  ----
->
-> Hm. I was always under the impression that `[synopsis]` is used as
-> exactly that, so it surprises me a bit that you want to use it for a
-> random block that doesn't look like one at all. But going through our
-> docs (like for example git-blame(1)) I see that we also do this for
-> other non-synopsis-like blocks, so maybe this is fine?
-
-To be clear, it=E2=80=99s not this kind of [synopsis]:
-
-    [synopsis]
-    git blame [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w]=
- [--incremental]
-
-This [synopsis] is for a code block to highlight <subject> just like how
-<subject> is highlighted in running text when using (_) or (`).
-
-> There's probably a good reason for this, but can't we instead just use
-> backticks to make `<subject>` render the exact same as four lines abov=
-e?
-
-It=E2=80=99s a code block and the literal text is supposed to use quotat=
-ion
-marks.
-
-Well. I wrote the text to mean that subject is supposed to be quoted. So
-perhaps I should have written `"%s"` instead of `"%s"`:
-
-     i.e. the format `"%s"` would transform some commit object name to
-     `"<subject>"` without any termination. Like this: ...
-
-;-)
+Thanks. I=E2=80=99m working on control-flow analysis to see what kinds of re=
+po values end up there. Of course I=E2=80=99ll also run the test suite and s=
+o on with the repo_config_values change. But the analysis will take some tim=
+e.=20=
