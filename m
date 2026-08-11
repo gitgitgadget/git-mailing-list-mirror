@@ -1,70 +1,70 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8EC372EDD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCAA372B3B
 	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:54:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786470874; cv=none; b=J+tJWtGrEk8jSlKuRnrVBcK4nT+7lKMe1h/JTtb9XH07EPP1q7Vpq2aqzYKAOiuP66If36kBM0cuh3UxlcV0znAHB7TkGIIhHwViiJ1NJWvGqYScpAErUr0A7atuZPSakimKrNAIcmRrW1vWbAfksYnsnjftlm008pxtSpo2zQY=
+	t=1786470874; cv=none; b=hHfJeHSd5g1sQ4fSMPKryoNeqDWtW+CFUfVsjDNuy/jsjk7kpY01LkPj3Y+lpXAipK6SggElKTi8B+ITO79C9prhxG8IDHeYqgtcyahi6+L9k9Lj5kmVlLzmVEEwZHFmsltUIcdEuq/kecJHmEs50f9OrWweA5sw+1JRiiq3fm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786470874; c=relaxed/simple;
-	bh=hp7hL9GUO92/tuyKC18WbeZrEg8SBY1JEoT/czKR/As=;
+	bh=mdZB7D9kOGGF60uk7ZSWYhL/XTX1DDOZg3/eZMtBBD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RlcWUUJjSC3LtZQAjcUCGecORcMwBxDBg9EKJCsNcgQ8/t76cIWxTMqsAGAsKb/67557RlB295lcMZpDbMoKQaoKWY+rqHSvnxUeLUeaqaL174FfFFqJvSGleIs98sIQpO3NaLJdiZ3ZI24HNym86zvychqIyN7buTv/Cwwxwqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CbuE6fss; arc=none smtp.client-ip=209.85.167.175
+	 MIME-Version; b=YQKmH2bmzDgcA3B4omA4Uh0Ll+2957IBbuFZhZIs+voYQ7nv0x4p258nKCoYpbCGOa1531i8owcxpHp0/9iOJJhhUcYvaSK0O6DJudWv5bsyKAs60tTypWHF/GG6gfERbCeseIgA+14THVjtYTAroGn/fpIbUwOhg/G5GKr6V2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c44XZ9HL; arc=none smtp.client-ip=209.85.167.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CbuE6fss"
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-48a0ca07c38so102698b6e.2
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:54:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c44XZ9HL"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-4ab70b882c5so88323b6e.2
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:54:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786470872; x=1787075672; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786470871; x=1787075671; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Jrten55U9ibjP+63dt73FqGe9Ka9VRkz9SFsCtTd2tw=;
-        b=CbuE6fsswUm4NglqWBvPnxNY9IJJcen5Hnkyjkk8/l7cHFN0uB2oIA0p/jPiZ5B6Pi
-         zjDFNdSOPwz3oUrm2UHwvxyETCTgJLncw/H6uO5zLsAmWMh2GrFT0eA7ZLEjk/DzNfno
-         6JDyqzEeNqP1olHzzNCVfrn/BWZaqc4utosME5iesJ60KZggXkOIc4a/u3oemnMJ1MHS
-         hhUimVBd/ApWDmzDBTojIHcO4kzV3F8PF3IVg06XYAQGHYq8z0wv28xXuy9oozF+1089
-         av0Do3wcbLq60Crx7ZL5ob6yUSIWTSX8V3VyWShVdpolz6+KQg+Gnk+gAJxNEKJpYOE+
-         mwKQ==
+        bh=3XEpiN/PgbrSK3k5Row5H0tIA0GjrBj5Rwt4GEwE59E=;
+        b=c44XZ9HLOGHsI9NKK+V9pYHwPo5/ZtujaBov3w8DsxlXFrC+relWxrWskQDUDltqLj
+         8sfUsnMkbY8yarU8XCCasHawMtyeeEaUBrlgCCU8FoGiu12VtMH+Lk/s99zLHx+NDxYD
+         XNTyGMTDoqdGja5jfUVkg06bioJjPQe9nKmgCc+4qDKKMSlC8VIsIdWnO1ZeGePCC4sk
+         QL9N9nJhDz1WLuydl/VssNoC0DW3EK3s3jgzj34av5mwjIN/aMudbD42HpVXRwTksi3y
+         Ut9CFcevqHD/WAipDTzrxSa3NcZmlMtHBtxQD1viAu8kWzXRygzog9Oxkx/aZXHamBgI
+         mESA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786470872; x=1787075672;
+        d=1e100.net; s=20251104; t=1786470871; x=1787075671;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Jrten55U9ibjP+63dt73FqGe9Ka9VRkz9SFsCtTd2tw=;
-        b=Y0ueniKtQxQTQYCb8F2PaeIrLUnVuRc1BDd5BAnrO0ZMUtibVHlTDLHcpezbE0ZfMr
-         xxxPNFA8m4P8borgc1fbRLT4tiLNiRC6ZDbYBOO2n2D32KYkOyZjVEoML+4nyMaN1uif
-         OT5BjHWub9qGQWPpQv+RtWIYxhrCCL6R1SegZReT3ZjxTK5ExN2VrTmsz739GR9HKaQs
-         nh8/U2JqqYvwCIFExq9wfKNn81IoIvvKRnptdxY8wW0v6cjn2FhcLgsfMKzJ3u4znim6
-         lmHFgKTaMypxEoRogAag4rsV3tbYoEUINB26ewbrWkjYOGBJJsO/h8Shnco10nfi9B1T
-         foIQ==
-X-Gm-Message-State: AOJu0YxltXmeSC4ZeRSmQW+MLyDR3BbATuoxH4/qldJzDgSz3ti9FTW2
-	CXA+DjjkW+AJhvt5eU2rOchBlOlxg5JllWmeWEDL73JNWtSWhZ5/1fA38xVdJw==
-X-Gm-Gg: AR+sD11UewRMS8t9hax7H08sMoRkJ+Y4Yin3T1HojallTt0u+Ig1tFXHngrQYnQxqzD
-	sBP3Ue133Adr3PWV0Xuz6ZWb/nHI6kS6q4AqXOYADSCQiG/BAPFmmjQvFoc1OE68w0G3Iwhwa2C
-	eXegxyauT9QJ2w3kY2HMkm/STxjsWJSR5/qTgGLsueYhxOfIrklaDkcAXZPx2J5eIfkTioHUEvv
-	lJlAl6eKdr5mvRuMToJnChuzhErKgX8mLx3zCPtOQu64KCIdWrqubExq4KX3wlcCKO61/drYRxA
-	la5lBCF9o0Sf2R25TyLfUJZkvgXtQSispmxfJPzucAzjEOLcBynjdXBW/2c6TLJBm9Va+SyoCBq
-	+CsCawmNqEXi8pfO/uekZuXPmGIKqU01Mr8QKehht9MDPDW15uCAaiOIae1Jwn1LLp4c5oDAOJl
-	xreYyZWgEfTvSoPEneqDo56qLNjA6ge2jjEPGDaFf2XF1JvhswaPggNoHt2dEylHkDer73
-X-Received: by 2002:a05:6808:4feb:b0:492:3ed0:9073 with SMTP id 5614622812f47-4b209a4e473mr1445530b6e.4.1786470871677;
-        Tue, 11 Aug 2026 10:54:31 -0700 (PDT)
+        bh=3XEpiN/PgbrSK3k5Row5H0tIA0GjrBj5Rwt4GEwE59E=;
+        b=cHeKbJoYA3GqG1rQkRev7bgTnFbHwTACAGV6VYKLGBDS2uP1OvFoqMj+jdKw+OR0nA
+         QKOXWFo322XeocF3J9wctgjJtXS/K7fwcxg6/XvRdT4xEh+x3IisPyURHiMwNt2HrXW9
+         JMhyudhK7CoLoMSHWajNwdRFpR+ZW/WGv6zjk5MEpdqIfFnj3eh+ngBrewoSUNnFOb1N
+         /X5WrUll81qgk0OKYESBUpkVu8PiS57OrueAdB4HjGGlzGI48zueUAErJNcahT1HWBRT
+         MCpjJKAMaP+gSQT+7mBn1wzj8zb+rX64QPGO55LOSMIkkEh/A5gjFb6OCaJiLLIN4GMP
+         tzWA==
+X-Gm-Message-State: AOJu0YzCRDjhnF3U+G8YUHp2xcWlLjg+Uf7fUrfT3EMzYlDv0gWfY8ZV
+	Tq59VUfEfEU/eHEfGERblFebi8CUUPzOOSINcvhu2r58/8tsSD+c3tAUK8DOig==
+X-Gm-Gg: AR+sD10zkDqISbD0fcWP3PCJrdfFmfGdNtU6IPDBdaUXjPuna1RcrR6WaBuutS+Y15k
+	Dx/JjPW70IjaDQkl4ZwwnSzl9wceHKJboDJe7+Gs8MRUvhgyGsnyPfzwWnxrskQCr426tCjyqsT
+	FT/FG1hkX2/slPXVMSPUD4ayu5wygJbv19DiumCg50gWFIid8JVFldCenswp/flX81vMB+hfUIA
+	V6kgwIwUlmYFowqYa2k5sUwn1D+X4/1HKGdy48IDrgCGZdb/6HkSnQ3WyIdzEJUCGem1Ha3kv9D
+	wUZwCGVTzT0xHnY08NbzDKF7iExYO/Cy1TKy0t0KkhPOcABHDmTFyVrpSWtCRL674g16BSriFKs
+	Q2vrVRetjN2g4JTsN49b/24nTSCczpD5Q8LJ3X1uUbVPtXNtFmikXJ6ilXUTHErtjlI09Ve5Ib5
+	OIHxK30jnD2jCUTOmWU6RQWlbrF0na9gY5Gc0K3ZGN/JrUI7WCW3/XAQu/0Au3nuo/gcft
+X-Received: by 2002:a05:6808:221c:b0:490:315d:e0d5 with SMTP id 5614622812f47-4b1fd8bbe19mr4274407b6e.16.1786470870960;
+        Tue, 11 Aug 2026 10:54:30 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b2001331d2sm1241489b6e.11.2026.08.11.10.54.31
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b2001331d2sm1241489b6e.11.2026.08.11.10.54.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 10:54:31 -0700 (PDT)
+        Tue, 11 Aug 2026 10:54:30 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	gitster@pobox.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 8/9] odb: return temporary ODB source when set
-Date: Tue, 11 Aug 2026 12:54:14 -0500
-Message-ID: <20260811175415.2044235-9-jltobler@gmail.com>
+Subject: [PATCH v3 7/9] builtin/receive-pack: explicitly pass packfile fd
+Date: Tue, 11 Aug 2026 12:54:13 -0500
+Message-ID: <20260811175415.2044235-8-jltobler@gmail.com>
 X-Mailer: git-send-email 2.55.0.424.g13c7afec21
 In-Reply-To: <20260811175415.2044235-1-jltobler@gmail.com>
 References: <20260809190106.1565882-1-jltobler@gmail.com>
@@ -77,132 +77,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When invoked, `odb_set_temporary_primary_source()` installs a temporary
-object directory as the new primary ODB source. A caller that wants to
-operate on the ODB source of the open transaction must assume that it is
-the first entry in the ODB source list which is a bit awkward and
-fragile.
-
-Instead, return the newly installed source directly and report the
-previous primary source via a new `prev_source` out parameter. Propagate
-the installed source through `tmp_objdir_replace_primary_odb()` and
-start storing it in the "files" ODB transaction so a subsequent commit
-can easily access it without relying on the ODB source list ordering.
+When processing the incoming packfile in git-receive-pack(1), `unpack()`
+assumes it should always read it from stdin. In preparation for
+`unpack()` logic being moved behind a generic ODB transaction interface,
+update the function signature to take the an explicit fd provided by
+callers to read the incoming packfile from instead. Call sites are
+updated accordingly.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- object-file.c | 3 ++-
- odb.c         | 9 +++++++--
- odb.h         | 6 ++++--
- tmp-objdir.c  | 8 +++++---
- tmp-objdir.h  | 6 ++++--
- 5 files changed, 22 insertions(+), 10 deletions(-)
+ builtin/receive-pack.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index 4d03c167d5..db63587f6d 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -485,6 +485,7 @@ struct odb_transaction_files {
- 	struct odb_transaction base;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 6df872697b..b369466783 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -2292,9 +2292,9 @@ static void read_push_options(struct packet_reader *reader,
+ 	}
+ }
  
- 	struct tmp_objdir *objdir;
-+	struct odb_source *quarantine;
- 	struct transaction_packfile packfile;
- 	const char *prefix;
+-static const char *parse_pack_header(struct pack_header *hdr)
++static const char *parse_pack_header(struct pack_header *hdr, int pack_fd)
+ {
+-	switch (read_pack_header(0, hdr)) {
++	switch (read_pack_header(pack_fd, hdr)) {
+ 	case PH_ERROR_EOF:
+ 		return "eof before pack header was fully read";
+ 
+@@ -2340,8 +2340,8 @@ struct unpack_opts {
+ 	int quiet;
  };
-@@ -507,7 +508,7 @@ int odb_transaction_files_prepare(struct odb_transaction *base)
- 	if (!transaction->objdir)
- 		return error(_("unable to create temporary object directory"));
  
--	tmp_objdir_replace_primary_odb(transaction->objdir, 0);
-+	transaction->quarantine = tmp_objdir_replace_primary_odb(transaction->objdir, 0);
- 
- 	return 0;
- }
-diff --git a/odb.c b/odb.c
-index caf1d0f542..8afcb6b637 100644
---- a/odb.c
-+++ b/odb.c
-@@ -226,7 +226,8 @@ struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
- }
- 
- struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
--						    const char *dir, int will_destroy)
-+						    const char *dir, int will_destroy,
-+						    struct odb_source **prev_source)
+-static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
+-		  const struct unpack_opts *opts)
++static int unpack(struct odb_transaction *transaction, int pack_fd,
++		  struct strbuf *err_msg, const struct unpack_opts *opts)
  {
- 	struct odb_source *source;
+ 	struct pack_header hdr;
+ 	const char *hdr_err;
+@@ -2349,7 +2349,7 @@ static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	int err_fd = opts->err_fd;
  
-@@ -250,7 +251,11 @@ struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
- 	source->will_destroy = will_destroy;
- 	source->next = odb->sources;
- 	odb->sources = source;
--	return source->next;
-+
-+	if (prev_source)
-+		*prev_source = source->next;
-+
-+	return source;
- }
+-	hdr_err = parse_pack_header(&hdr);
++	hdr_err = parse_pack_header(&hdr, pack_fd);
+ 	if (hdr_err) {
+ 		if (err_fd > 0)
+ 			close(err_fd);
+@@ -2376,6 +2376,7 @@ static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
+ 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+ 				     (uintmax_t)opts->max_input_size);
+ 		child.no_stdout = 1;
++		child.in = pack_fd;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+ 		status = run_command(&child);
+@@ -2410,6 +2411,7 @@ static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
+ 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+ 				     (uintmax_t)opts->max_input_size);
+ 		child.out = -1;
++		child.in = pack_fd;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+ 		status = start_command(&child);
+@@ -2461,7 +2463,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
+ 	int ret;
  
- void odb_restore_primary_source(struct object_database *odb,
-diff --git a/odb.h b/odb.h
-index fca67e8253..bdfcb9509a 100644
---- a/odb.h
-+++ b/odb.h
-@@ -199,10 +199,12 @@ struct odb_source *odb_find_source_or_die(struct object_database *odb, const cha
+ 	if (!use_sideband)
+-		return unpack(transaction, err_msg, &opts);
++		return unpack(transaction, 0, err_msg, &opts);
  
- /*
-  * Replace the current writable object directory with the specified temporary
-- * object directory; returns the former primary source.
-+ * object directory and return the newly installed primary source. The former
-+ * primary source is reported via `prev_source` when non-NULL.
-  */
- struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
--						    const char *dir, int will_destroy);
-+						    const char *dir, int will_destroy,
-+						    struct odb_source **prev_source);
+ 	use_keepalive = KEEPALIVE_AFTER_NUL;
+ 	memset(&muxer, 0, sizeof(muxer));
+@@ -2471,7 +2473,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
+ 		return 0;
  
- /*
-  * Restore the primary source that was previously replaced by
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index d199d39e7c..e633d97e0e 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -327,11 +327,13 @@ void tmp_objdir_add_as_alternate(const struct tmp_objdir *t)
- 	odb_add_to_alternates_memory(t->repo->objects, t->path.buf);
- }
+ 	opts.err_fd = muxer.in;
+-	ret = unpack(transaction, err_msg, &opts);
++	ret = unpack(transaction, 0, err_msg, &opts);
  
--void tmp_objdir_replace_primary_odb(struct tmp_objdir *t, int will_destroy)
-+struct odb_source *tmp_objdir_replace_primary_odb(struct tmp_objdir *t,
-+						  int will_destroy)
- {
- 	if (t->prev_source)
- 		BUG("the primary object database is already replaced");
--	t->prev_source = odb_set_temporary_primary_source(t->repo->objects,
--							  t->path.buf, will_destroy);
- 	t->will_destroy = will_destroy;
-+
-+	return odb_set_temporary_primary_source(t->repo->objects, t->path.buf,
-+						will_destroy, &t->prev_source);
- }
-diff --git a/tmp-objdir.h b/tmp-objdir.h
-index ccf800faa7..81eb927413 100644
---- a/tmp-objdir.h
-+++ b/tmp-objdir.h
-@@ -64,8 +64,10 @@ void tmp_objdir_add_as_alternate(const struct tmp_objdir *);
- /*
-  * Replaces the writable object store in the current process with the temporary
-  * object directory and makes the former main object store an alternate.
-- * If will_destroy is nonzero, the object directory may not be migrated.
-+ * If will_destroy is nonzero, the object directory may not be migrated. Returns
-+ * the newly installed primary source.
-  */
--void tmp_objdir_replace_primary_odb(struct tmp_objdir *, int will_destroy);
-+struct odb_source *tmp_objdir_replace_primary_odb(struct tmp_objdir *,
-+						  int will_destroy);
- 
- #endif /* TMP_OBJDIR_H */
+ 	finish_async(&muxer);
+ 	return ret;
 -- 
 2.55.0.424.g13c7afec21
 
