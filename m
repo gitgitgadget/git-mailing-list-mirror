@@ -1,106 +1,109 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF4A344052
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 15:27:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424B93B7759
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 15:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786462059; cv=none; b=oKSOqDLboXIxQiLGU5LO5Jg3JE5ZXajfV4a/hB0EYqNSHwbKhiDWzYpDPvMOkK+yKmjWzjaYzn+YfLkfgVu3CnAtAUt2zcI2ZVGhA4fkJjgNv7pccgRcBm25zjlGkvyWiR/CZ8cEJRQq5EVnN7ZGToY50hc8cKhY0kHathBC/UQ=
+	t=1786463400; cv=none; b=VWIfsiaAjfD4EXZVRXGCk9v0XaR8J3/sx3dGbCN3Z7CXL/Vx3ifNZCPT7PnKUuIM8ATUYgpSxqCzMQriepTGZ87CCZm0yMKoCVeRp3nEHlU2QdEbEF+oM9XioRYBX10U1TZ8J92maP1kxGcPEtWHg5uepBdTYsz7ifLq1oCF3xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786462059; c=relaxed/simple;
-	bh=kowk9kvLm1tolY700WoblEM1gR8i7FkHWnxEeTQxrW0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aafr4MPRq9iuMZrhSnvSsvmN7z69NpZGSoTOHztZckOMYExXHoLOSRL4xOeE+IvthqnSlCEq99nwn7vMvM1zKE7GCp/NRVuTS0eD8vr+dsqAVvmI2wtyazXyqWqY/242sO04xnMnTiKZoju3SYFqAFz9sjzb6aF5wiZjGX21jDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LF8eBYiv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YMvMlS2O; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786463400; c=relaxed/simple;
+	bh=RNTMRsvhUr03tko2tAhIRIZgh8O+HU3dSRXAHJMW3AE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MSzavRdxARyUqM4GcBwgF7DWS/PgpNvTfm+KIk06uf1aGcPfHh1y6fg8UlueeIPY6t1HUqP3B9eMGpZmzX+04oV9Uqpi8QV7Trh/IDuspNj/R6lL2ggt3XNHYAZCYlWkLuTw/57btcP4hMmCsFV1PikmsJ6yF1ZVs1npmqR9OlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=U3HXbQMS; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LF8eBYiv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YMvMlS2O"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 04D65EC0212;
-	Tue, 11 Aug 2026 11:27:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 11 Aug 2026 11:27:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786462057; x=1786548457; bh=bsh2dz0Yge
-	1SrfTfjf/J05TmRTMR6kzmPPzXZsAoSmY=; b=LF8eBYiv1GIgGdOY5ZzYvS9m+E
-	PZh4DdHQAPnd1DbJVMiaeBd4iVwZ69xNN/3Xi4Wv7UJKzdvl2GSD8g8pMePcaBlX
-	/bQVJxSQ+erDfPw41K+nkRV0492lB3pRDxvuOxKEWPnMdmq0ehnRUWAq9Iafm7Am
-	W0BdVK3G6B2mQ8kwccb4CQ7PBKD3dtDXNvcZAaV5x/vfOVyvPrx3z0Dzgia04+jw
-	eSVravw9jFUSdMX2CYIhSb/8xRfeSCmMxG+ZhhLX34HNjCYMe2G6x+BwP7mGlpnp
-	jXc7/cv/VOqro0cPvxc3G8wD8uButUmpzI2QXz/sySzyEGC0OD2KQqpGmMww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786462057; x=1786548457; bh=bsh2dz0Yge1SrfTfjf/J05TmRTMR6kzmPPz
-	XZsAoSmY=; b=YMvMlS2OWEJdtcfsWfYwZQJ7+eC0HEoLFB+iE0OMRcExB3cKM9a
-	+xqxHs84GsRTuxwuUuDblSdQkEbdOyZL64l9fMC3JrwL0mxKBuXsN5ZGOeW676UE
-	59cPNfA+x+kjVpMZQUlekz44ZZxnwl1Qmm+CR7+ISQZ8Gvl2gtgyx9FgeFL5YJdi
-	xBPPvN1JEUaeeYy5sn0+0xcii4mHEb7WoWi7FP1MKWSojAMh0gubd8a3rcf0kIZi
-	HvWt0zJnkmQAZ+I1khp/E0Hz7ToF1rCc2hC2TcFevdjhGACL9uC8Mk2Te/5k8dxD
-	wWIpIWhEVuu3bL0asMG15bjalfMBZL/rFWA==
-X-ME-Sender: <xms:aD97ao08px4w4hVtlIl4x_3OV5-wUIY8acC6pMDcMsZav74VvMjC3w>
-    <xme:aD97aqE2xshHPRPS45yFvaLiAWmZQoCvh1XNrFtwsxHvr8vvbFUuYyry0ubSrefGg
-    7o1t7DaNhbJiR_PFySsos8fK12nM7Bb4qC8KuuOVWZuorwNzYgb>
-X-ME-Received: <xmr:aD97al72z_lS2rWxkXUP5Sxc0YzASp9Yn-XiW2aEAbf_JthdmNz4LiroEP-Z0caKTMLofCAumPWpetJpuQXmkrhgxUxIYl_ZLw>
-X-ME-Proxy-Cause: dmFkZTGqPddLI1O7i2sY1egqp5Y4iYHh+LCFRFB8WQJabBh92782KlkLg59JwMcn0eRFkm
-    yoIrZVckz+ZAC2Ganx2i0duq9VHaX/facaXedloW99r9qHHES8+4mQ0c95YNd4A8n1KL8K
-    aVUGmrTIkGIbegbtNfLpfAQXt3E9HX9nx/9sy3qkSun5Ib9X29ycqox3w0Kqhk5gfLLGbk
-    V+eAAKqBl9MEJg2Y9Ik9y3vN4mXCr+nuJRyRKuNr0TG3r3jOJtZ0mokZb3q1dmX9j6R1lS
-    FnFhFpVG1w3ENO4XXDp3AWfbEJ9DOwEfVgrGPY/O+WlJWn6+kHMmnuzHQ110PyUdqdrvZf
-    msMVMSAt15E6vUlxD/2q6HqyEaWg2GJBNyIWhgUJ6nOHpbolcGpS2+wfqgCmZPhSu8EJgM
-    7EQ5A4LMWHr1Lh/fYoeQOzlfxQUuGA40IseBA4cEnhgmhHhUjgwQeUAjfIgavKk6tJAkBV
-    6AqihJHSsY++X1uuPVQXRXIbdNBIBeGhfDyN+tTiDzkRDz49JZEjV6aRU64WbtFB35SNOO
-    vrXv7niCZw1RyDlULlEwMa8JMFe4VbncWzVWXquq5HwxLVWWnt60PLaDRI9eBaT+M23Ux7
-    EbEOQ3NAqlYg4WxfL4XCRQWTc28547rFAziwNstou1E69UXd+A93VOaWqivQ
-X-ME-Proxy: <xmx:aD97agtorLA9dB_WqNpnx-MP1jXCW7smjSCy_ZC7aAJvJRx098K1bg>
-    <xmx:aD97am5kR0BkQlFO81RrsNdX3dShGFEk31aqriugDoXo2mtENbbxoQ>
-    <xmx:aD97arXknspZ8fHFIuM1vs4mJ9kE9-g9nPeMzsOjKsvP37jP1BEtMg>
-    <xmx:aD97ao8S6VtA_mO3uGWXNpN4tJvaffqF0VnqmRAgzovop56UOuHT6A>
-    <xmx:aT97agYVyXQUxGBHh_Icl1XZTAVbBxcb4WMFO6E4DVWcxHXBiIMW2fTY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 11:27:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Vlad Petric via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Vlad Petric <vlad@drpetric.com>
-Subject: Re: [PATCH] copy: prefer reflinks for file copies
-In-Reply-To: <pull.2380.git.git.1786460606222.gitgitgadget@gmail.com> (Vlad
-	Petric via GitGitGadget's message of "Tue, 11 Aug 2026 15:03:26
-	+0000")
-References: <pull.2380.git.git.1786460606222.gitgitgadget@gmail.com>
-Date: Tue, 11 Aug 2026 08:27:33 -0700
-Message-ID: <xmqqtsp03cey.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="U3HXbQMS"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-81f3b227a4aso47909037b3.1
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 08:49:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1786463398; x=1787068198; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=RNTMRsvhUr03tko2tAhIRIZgh8O+HU3dSRXAHJMW3AE=;
+        b=U3HXbQMS++xoGc6PHJjmqzWSzzgAjbNEIvp+0Pa87iL6iDky8e55sSqDAy+iChYHXp
+         waM+nN6FqAMzZXQnOZWWZ1u7QHaUsZxNnUWDCneOtH4QgMnevQnsFtQOSi4yQ4lSzHTu
+         mN2e1FwtLfeeQ46+3kXf67eF3niRQaP8vfghU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786463398; x=1787068198;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=RNTMRsvhUr03tko2tAhIRIZgh8O+HU3dSRXAHJMW3AE=;
+        b=C8PBgJCRTyVtqEzv8C1JCK8kPFUa05wTPjOxD96nbvVlF45smNlNnLMWz5TyR7zYYl
+         r0GSuORmfMy9axl5BHvOdmJe4jvT5RD+NWYsJH+pMucR9sDBC1iAFQkBtsnHpS/olGJm
+         gypLbqHgvpoNYTgdGDDTdbGP0oKxKiZA5aBy5smtaUQiwdecV2INTCj4JR7kDhAZGZeO
+         KlZ1QYfml99zf+SYJKJ+4NSIpG3xdvBR/sTI+vbIrPPtn82Ypq0MUL00O+20dqbMrxZR
+         Zhym+NypJFUXDQkCKEX8Ja4gkuvLL9W/3+FyPPsIb4+uVcIwgkriq1lg4Se+RR/1B7mW
+         Ia+g==
+X-Gm-Message-State: AOJu0Yxy+AxhHy9yXv35BLJ/QEYvB3VcP63WkPSCt6qKCOJ9xPGz8bPe
+	6KY7BzuodgNis+/+dET8F4aBqfiVe35km7fV7zTvDa4fJ1Xe2/GDzGzqWjftSrq5xdc=
+X-Gm-Gg: AR+sD11hGb3NCwR8/9cpR6wsn+W2fx1w8YNGPBIjZtWRnsT4o8QLz4hgkDP1euWfIB3
+	BmmKU4WjgzMZAmCV171MkkJKOrgFP24etUuDQ7TAaL3VDcohO4GGLLJgwYq4LjC2MYGtvtpfw4z
+	rM21+VR4EnOsBKRgTk5sZeFXsb7SrD/T9rLrTBSsKI/X0CGum1sWDJ/I5QrKjmW6ipm8xxOdnqP
+	toA9Q6OtfhNscsbEQhkEIK63eeS3LHvKo/l9gEZqL6hXK/8svKmWiEBK0O/mYr4CKj598MfYaUC
+	mSAezYY9LhrXncHYIWT0bYIcjw8aykFDZ0JA6H5c+OWkGyn1zeighD3IvCYvGgzU19xjYsyab1n
+	WiF24p2kL4FjZ0z+xClxpGglSFowCUCQ/qs50Fc/vxu+RDiwDc3ucIBUtV6im91bZ5LZzmy9Lq2
+	KbzCCaVQz2438eeOX+i4/zZM89HEXRJ36QdDSXip4QTsxiAyjK8y4I0CRcQhyifec96L5ah5OGb
+	O8nk5HfCvy8xDRy578K5s7BJRDbUrIu0bA8iLAd14aMdA==
+X-Received: by 2002:a05:690c:7308:b0:82d:aaf8:b263 with SMTP id 00721157ae682-82f2a13d902mr31995667b3.10.1786463398060;
+        Tue, 11 Aug 2026 08:49:58 -0700 (PDT)
+Received: from com-79390 ([20.98.136.114])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-82ebe151ec6sm12109257b3.16.2026.08.11.08.49.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2026 08:49:57 -0700 (PDT)
+Date: Tue, 11 Aug 2026 10:49:49 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Ted Nyman <tnyman@openai.com>
+Subject: Re: [PATCH 1/2] maintenance: account for promisor pack geometry
+Message-ID: <antEnTVfHFEGQQZ_@com-79390>
+References: <cover.1785902237.git.ttaylorr@openai.com>
+ <a9de123b43efb58c53c99c71eb7e34f29e075071.1785902237.git.ttaylorr@openai.com>
+ <annqJGFJPviEyfEC@pks.im>
+ <ann0nnSGfSJ7y7YK@com-79390>
+ <anry8wAbkxNfVgfh@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <anry8wAbkxNfVgfh@pks.im>
 
-"Vlad Petric via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> For local clones, try a reflink before the existing hardlink path. The
-> resulting order is therefore:
+On Tue, Aug 11, 2026 at 12:01:23PM +0200, Patrick Steinhardt wrote:
+> > So I am not sure that I understand your concern here, but please let me
+> > know if I am missing some aspect of it.
 >
->   - reflink;
->   - hardlink, unless --no-hardlinks was requested;
->   - byte-for-byte copy.
+> The concern is that it's quite unlikely that both the geometric and
+> non-geometric sequence will merge all packs together at the same point
+> in time. Consequently, we'll never hit the case where we perform an
+> all-into-one pack to prune unreachable objects, and that may cause us to
+> never prune objects at all.
+>
+> So what I'm wondering is whether we should be a bit more clever about
+> that and perform an all-into-one repack under a new condition, like for
+> example when the objects we're about to repack exceed a certain
+> percentage of the repository size.
+>
+> Hope that clarifies it a bit :)
 
-If copy-on-write works in situations where hard links are not
-available, using it as a fallback might make sense.  However,
-we are talking about object files that are immutable.  You have
-no reason to update them to trigger copy-on-write at all.  The
-only changes you would make in the destination directories in
-the new repository's '.git/objects/' are removal or creation,
-never modification.  Therefore, I do not understand why anyone
-would want to use the above order.  Could you elaborate?
+Ah, I see what you're saying. We should still be OK here as the goal of
+geometric repacking is to converge both the promisor and non-promisor
+packs towards a single pack, at which point we would do an all-into-one
+repack.
 
-Thanks.
+If the two are perfectly out of phase, then this change would prevent us
+from running all-into-one maintenance. But that does not seem like a
+likely scenario, and the behavior here should be a strict improvement in
+the meantime otherwise.
+
+Thanks,
+Taylor
