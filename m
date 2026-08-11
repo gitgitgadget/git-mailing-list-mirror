@@ -1,70 +1,70 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2095371041
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:54:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5356435B65D
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786470870; cv=none; b=TFsUyf63G3wnt/JuJkWlG4YOZFKf/7v41/OKvTnDuY2E6iQwk8hcmjPjg5qQFA1COo5rrN3P78awjpK4bHwHIWcF9vW0vuDQh/g9sfSg8gcw0uBDnHy0iBKUDFZ76WmM91LouRsXlqj0L3vvOznbV6/Xl6iI2xwVmIKMtn663dc=
+	t=1786470871; cv=none; b=P/CVama9IbGS+RYmm/8GEuZKyXlI2eW5U/bJsncM5OE4lso85e2mywbc0h6zyZS5xXt5YgGJ1y0/OIFBi2zcGffpbCJt8gkBZEffNQGa8WtlBpHZPYJR5YKWL2gW0EfAdGtcc/TA6WbhshFDDNCyk2DIyabI9SDZ75WSaaKLVlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786470870; c=relaxed/simple;
-	bh=PYItGzANjsYtk+6gIMikaF4Akhpe7NI/4EscT4//8nc=;
+	s=arc-20240116; t=1786470871; c=relaxed/simple;
+	bh=6esPZhfhBJ/pPmhtRbHwkxmsO/ueCzCM5ah5wC47u4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tLFIixHo0h3SxZTvCfmKB3lsQU7QSg0wX30f0EmIsnRoy25whpHh9Bp1LZpVAukdQ3OEauhNKgD3rOi+VPgOMMGtvJzW2yQMQsNMZhPcKErOm4KkNPkxvqz9iHLLRAQM6Z7tnVR98S5ksi9HAJ2GX6BjpHRolr3CRIzHpAnMfbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AcoqzITx; arc=none smtp.client-ip=209.85.167.177
+	 MIME-Version; b=mPj/G+cjtstR2hyhZ+Oa0EZxUqq1UvB9ggHDLU+MZTfNJQdHd6YksJJtsrTm98X5mw0mAfCcGv9/C+LSnnSnYefzsWvht/7Eg1NaD3MFHZpfLEhSIlEed8ihBJ53DS9lxqjoUdJJTCTzDAwmdp1H4EIry5bRFGSbmQ8iEEIPqgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VzQAKQ5b; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AcoqzITx"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-495b27007d0so94192b6e.1
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:54:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VzQAKQ5b"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-4513435cdd2so10111fac.2
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786470867; x=1787075667; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786470869; x=1787075669; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=I9GoL/ooUBoRYGEIhwSnNMm2DsI8VnFlflvKEOYbUuU=;
-        b=AcoqzITxjCzNhUPSLrHZKwmwyMfWaReyGt00lNB2GEdMYreOAGOFgVeTyaD2/E63VB
-         5tSa6vRT9W49ebpg98rnIUOqWjDdK2KnwMOyNHBIpplWyDIguveN1WvrOoG91SYBxzGb
-         zfSyhUrOuLz9VxHq5wCEcvqpRhe5laogRct8wDa0xekswSx/Mpxddc+5MFo+CanUQoWA
-         BQPTUYxeboCNzHJU30XctJbnRaz6sOTQLUZ8UZhcX5m7KT1Dw3AECDvAbolQhv0mbo+V
-         0xDOqbNCNJSJqhpzlVvdg0bUVxeq9kV4V3CZFknKy1rQvt/UY6w4FdvIFkvzLvg/YhIQ
-         Kw2g==
+        bh=xWUDkIUnTdPELypxsRrdem7faCnjLouHaKzyxQxPqaE=;
+        b=VzQAKQ5bR3l/u1qN5AFNdKcMNVYZv/DzRtJEMdREhV2T2SWKO576dT+enhGhZWZMMt
+         a4ayAyjy/cWS7JEQgOGsIA1O2fs4x3t4X50uC9Pbz4FivVoBQK/hlo7wQH3q2wM7/JZL
+         MCeRdRwL1oUiMPS984xT0976+2ehY5ykWgXMwj4sIHwWLRQlX2k7TEI+KnvxzvUaqbTJ
+         iH33vyxOf58NLlNFv/ctC5+g/2XRy6rDEglA3u5/S9doQLAFcq/yPRJRyynGFqFDFWEx
+         tQMwPpMm1YgIydFV/nJf7uCbOqJIiVzKY8douVLB9s7heD9Wrsi57YKi/eAsc4mKwjGM
+         aPiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786470867; x=1787075667;
+        d=1e100.net; s=20251104; t=1786470869; x=1787075669;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=I9GoL/ooUBoRYGEIhwSnNMm2DsI8VnFlflvKEOYbUuU=;
-        b=COmXqe7kb/6w3W9UiiZp1nKxL2tfLId5N3PqPUSRFKNry/XXrvTZSBBj3WfZ+twFb6
-         SrRvngM87vV1hdoUw3/CznKTEbZNa9ZJ6baV3QgwV4P1CI1wbWPQKORP/T3vNTjzkLHk
-         ojPVzHeLEnZr5kScOpTUf7+YvvbIPNQy61XU3r0K078q4R1OWRZLKKZuKFxGBsi2JpQF
-         6H2axQ0t50uvqFDGzOR5p8hnBJymChQEhmNquwCWf82efxpirIDCo3OstrDWlTkQ7q73
-         X5iE3uiH05pXdStIDMiZgMKjBWhn+AaY1JKj1g4UPbT6waFrjO0zrZAp1J05i21EMLhx
-         eMJA==
-X-Gm-Message-State: AOJu0Yy6O9dZBm00jbHABqWTN9vw0PI60uRjm+ol9IpUcQzGkNWn6t2N
-	3TdJoF4AhQIQ7sl6FO+gGLIk8XIo4JeMqQN88NdhSg1mBVMpavNyz5Qv19ylrQ==
-X-Gm-Gg: AR+sD13XnkFj/Ob55XXqCBBmI0Hv2dZnbcttyJAJZMjsRdgXOepWmWksC8aEOBu4Soh
-	HZdi3FJPyee57OxPWkq3jGdplnuoTfGn6f/hDcQSIm+6A28TaWZl1sYLnPAkVHuoK6DdhczdH51
-	yDy5/T8u04cP3/cbdtvuOcYSMrtxnaybvn3Lc9lzbfLn7MGAu6w2O2t/nKRM0Jt3I65H7z/Zkb/
-	Vrx+podE6PfjxijyZoANrZ2FEiwaDKe7Y0PCgerPLRzzE6qFhqvJu7QeJ3EdNRvDG+DhKMmpmwP
-	bffbYh+Zx9L1tQD6lGj8bmfjFLoN9y2zulYd23ISyneM4fALWq4pBkA9Sb7DHcxj97VCosg2FKp
-	CQbGuAbdrg1mT4WweIMg65lVnMmfGJcbfhARJmhSooDnM06yZyL06fZyRvUsfXVz0A+BYi31VdF
-	N+PHE4AXDvp2h3ZBRFYowGJd9atDxPLTTbl7/xRKDlGC/pYqhqMmd5ARWIHxJ1l8Pe6YY5
-X-Received: by 2002:a05:6808:c2d3:b0:497:df42:1e05 with SMTP id 5614622812f47-4b1fd77f304mr3494386b6e.8.1786470867504;
-        Tue, 11 Aug 2026 10:54:27 -0700 (PDT)
+        bh=xWUDkIUnTdPELypxsRrdem7faCnjLouHaKzyxQxPqaE=;
+        b=K3PyRZkjvMA4nGbvPeN2LSQiJGsDNiTIIvlQuGoQgsJpCzVueDlQkwcSHQF9cpgjbj
+         Ef6FgkSxhmyXopgqtnu4dJoXmPZ2rN7gVusOzCHii8W5N1iUkAAEb6dqTRBZy+a4pLQh
+         wYAdcRA2RnHPJZke12HcDQxNYVavwoXdWpyi/N1d5xyPtGtcJW1fskX9gPHfnlrzPjZK
+         RoTdoLWDI128xD5oT0w7opUBDm8fYWAXuj6nwh7odxoSxFkWWoYDo7jNphnMu5pRpWNM
+         jv45QsYJy3NP2urrpyHLv/82TzAds50rNtqUthEAlSxFcLmUM3od8INM7/DVCq5G/ARf
+         RRrQ==
+X-Gm-Message-State: AOJu0YwyYZ1MbUYfHNHxyyp2mrHons417hK3Q41ddQlognDY/pKgMOIV
+	wALNaVd8Y6vsUezfHGkVI1QrHiWMbKHf1tds7K6WVK3iMfC5mY9cw1g+5sQu1g==
+X-Gm-Gg: AR+sD132LVMnRAjIstfCzvr09kIsiOVrXsCZJ+uKT/wyoThBVBJul+2/dlobBVBjzjz
+	8XTukYI2i5uPHN+rUnNFRvr6JkfCHw2R5ArIMuE8ZHri1rzQBqTE6/6zNQs+06G0Kbkr10chg6r
+	48yCeMwdv42cshYhB6I0DDY0IMQLnnOH5xDwmJ5nsbzZ6HSOLh1zE/O9pkwinsdnoIEcfj0ZyRU
+	QVgBfu8XRpYu3iUQiR5P/WSe9J+YT2WiGrKfIncy0jQLELJpqCTlrBOtjrtHKQ/fO7CDYbiCRJk
+	HGwXK0Vos9kS7bCFLm5dIXOmg/EhpL7wvE6lkeHvvFWeE1CPbVg2c89NaEJdUGSnU8iq2wUhKXs
+	dD0r6P795CgF09I6OzS9uSJP2qZcBNKDvkI9PfzKhdeHKXBOFoaslnnzQGCdWwAa0G2oLgu1p0g
+	N4H0aQkfGX1hhlGuTllZh6VeOId+8fSTqXmMTaHfFaZjkbi4EdycqzRECq9t0JzvO5EnLY
+X-Received: by 2002:a05:6808:181a:b0:495:eb86:6e8f with SMTP id 5614622812f47-4b209f954e6mr994723b6e.14.1786470869077;
+        Tue, 11 Aug 2026 10:54:29 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b2001331d2sm1241489b6e.11.2026.08.11.10.54.26
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b2001331d2sm1241489b6e.11.2026.08.11.10.54.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 10:54:26 -0700 (PDT)
+        Tue, 11 Aug 2026 10:54:28 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	gitster@pobox.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 4/9] builtin/receive-pack: read unpack limit config lazily
-Date: Tue, 11 Aug 2026 12:54:10 -0500
-Message-ID: <20260811175415.2044235-5-jltobler@gmail.com>
+Subject: [PATCH v3 5/9] builtin/receive-pack: lift global state out of unpack()
+Date: Tue, 11 Aug 2026 12:54:11 -0500
+Message-ID: <20260811175415.2044235-6-jltobler@gmail.com>
 X-Mailer: git-send-email 2.55.0.424.g13c7afec21
 In-Reply-To: <20260811175415.2044235-1-jltobler@gmail.com>
 References: <20260809190106.1565882-1-jltobler@gmail.com>
@@ -77,96 +77,149 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In git-receive-pack(1), the `receive.unpackLimit` and
-`transfer.unpackLimit` configuration decides whether an incoming
-packfile should be exploded into loose objects or kept as a packfile
-on-disk. In a subsequent commit, the logic to write the incoming
-packfile is made ODB backend agnostic and moved behind a pluggable ODB
-transaction interface. Consequently, whether to explode a packfile is a
-detail of how a particular backend stores objects and should not be a
-part of the generic interface itself.
+In git-receive-pack(1), writing the packfile to the transaction is
+handled via `unpack()` which relies on global variables to decide how to
+invoke the underlying git-index-pack(1) or git-unpack-objects(1) child
+processes. In a subsequent commit, the `unpack()` logic is moved behind
+a generic ODB transaction interface to handle writing packfiles and thus
+can no longer rely on these globals.
 
-In preparation for this, instead resolve the unpack limit lazily inside
-`unpack()` by reading the configuration directly. The now-unused unpack
-limit globals are dropped accordingly.
+Lift the global state out of `unpack()` by instead storing this state in
+a `struct unpack_opts` that gets passed to the function explicitly.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/receive-pack.c | 30 +++++++++++-------------------
- 1 file changed, 11 insertions(+), 19 deletions(-)
+ builtin/receive-pack.c | 63 +++++++++++++++++++++++++++---------------
+ 1 file changed, 41 insertions(+), 22 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 135105deae..971dc3f52e 100644
+index 971dc3f52e..f062b93b8d 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -62,12 +62,9 @@ static enum deny_action deny_delete_current = DENY_UNCONFIGURED;
- static int receive_fsck_objects = -1;
- static int transfer_fsck_objects = -1;
- static struct strbuf fsck_msg_types = STRBUF_INIT;
--static int receive_unpack_limit = -1;
--static int transfer_unpack_limit = -1;
- static int advertise_atomic_push = 1;
- static int advertise_push_options;
- static int advertise_sid;
--static int unpack_limit = 100;
- static off_t max_input_size;
- static int report_status;
- static int report_status_v2;
-@@ -157,16 +154,6 @@ static int receive_pack_config(const char *var, const char *value,
- 		return 0;
- 	}
- 
--	if (strcmp(var, "receive.unpacklimit") == 0) {
--		receive_unpack_limit = git_config_int(var, value, ctx->kvi);
--		return 0;
--	}
--
--	if (strcmp(var, "transfer.unpacklimit") == 0) {
--		transfer_unpack_limit = git_config_int(var, value, ctx->kvi);
--		return 0;
--	}
--
- 	if (strcmp(var, "receive.fsck.skiplist") == 0) {
- 		char *path;
- 
-@@ -2333,6 +2320,16 @@ static void push_header_arg(struct strvec *args, struct pack_header *hdr)
- 		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
+@@ -2330,18 +2330,24 @@ static unsigned int get_unpack_limit(struct repository *repo)
+ 	return limit;
  }
  
-+static unsigned int get_unpack_limit(struct repository *repo)
-+{
-+	unsigned int limit = 100;
-+
-+	repo_config_get_uint(repo, "transfer.unpacklimit", &limit);
-+	repo_config_get_uint(repo, "receive.unpacklimit", &limit);
-+
-+	return limit;
-+}
++struct unpack_opts {
++	const char *fsck_msg_types;
++	const char *shallow_file;
++	off_t max_input_size;
++	int fsck_objects;
++	int reject_thin;
++	int err_fd;
++	int quiet;
++};
 +
  static const char *unpack(struct odb_transaction *transaction,
- 			  const char *shallow_file, int err_fd)
+-			  const char *shallow_file, int err_fd)
++			  const struct unpack_opts *opts)
  {
-@@ -2360,7 +2357,7 @@ static const char *unpack(struct odb_transaction *transaction,
+ 	struct pack_header hdr;
+ 	const char *hdr_err;
+ 	int status;
+ 	struct child_process child = CHILD_PROCESS_INIT;
+-	int fsck_objects = (receive_fsck_objects >= 0
+-			    ? receive_fsck_objects
+-			    : transfer_fsck_objects >= 0
+-			    ? transfer_fsck_objects
+-			    : 0);
++	int err_fd = opts->err_fd;
+ 
+ 	hdr_err = parse_pack_header(&hdr);
+ 	if (hdr_err) {
+@@ -2350,9 +2356,9 @@ static const char *unpack(struct odb_transaction *transaction,
+ 		return hdr_err;
+ 	}
+ 
+-	if (shallow_file) {
++	if (opts->shallow_file) {
+ 		strvec_push(&child.args, "--shallow-file");
+-		strvec_push(&child.args, shallow_file);
++		strvec_push(&child.args, opts->shallow_file);
+ 	}
  
  	odb_transaction_env(transaction, &child.env);
- 
--	if (ntohl(hdr.hdr_entries) < unpack_limit) {
-+	if (ntohl(hdr.hdr_entries) < get_unpack_limit(the_repository)) {
+@@ -2360,14 +2366,14 @@ static const char *unpack(struct odb_transaction *transaction,
+ 	if (ntohl(hdr.hdr_entries) < get_unpack_limit(the_repository)) {
  		strvec_push(&child.args, "unpack-objects");
  		push_header_arg(&child.args, &hdr);
- 		if (quiet)
-@@ -2658,11 +2655,6 @@ int cmd_receive_pack(int argc,
- 	if (cert_nonce_seed)
- 		push_cert_nonce = prepare_push_cert_nonce(service_dir, time(NULL));
+-		if (quiet)
++		if (opts->quiet)
+ 			strvec_push(&child.args, "-q");
+-		if (fsck_objects)
++		if (opts->fsck_objects)
+ 			strvec_pushf(&child.args, "--strict%s",
+-				     fsck_msg_types.buf);
+-		if (max_input_size)
++				     opts->fsck_msg_types);
++		if (opts->max_input_size)
+ 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+-				     (uintmax_t)max_input_size);
++				     (uintmax_t)opts->max_input_size);
+ 		child.no_stdout = 1;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+@@ -2388,18 +2394,18 @@ static const char *unpack(struct odb_transaction *transaction,
+ 			     (uintmax_t)getpid(),
+ 			     hostname);
  
--	if (0 <= receive_unpack_limit)
--		unpack_limit = receive_unpack_limit;
--	else if (0 <= transfer_unpack_limit)
--		unpack_limit = transfer_unpack_limit;
--
- 	switch (determine_protocol_version_server()) {
- 	case protocol_v2:
- 		/*
+-		if (!quiet && err_fd)
++		if (!opts->quiet && err_fd)
+ 			strvec_push(&child.args, "--show-resolving-progress");
+-		if (use_sideband)
++		if (err_fd)
+ 			strvec_push(&child.args, "--report-end-of-input");
+-		if (fsck_objects)
++		if (opts->fsck_objects)
+ 			strvec_pushf(&child.args, "--strict%s",
+-				     fsck_msg_types.buf);
+-		if (!reject_thin)
++				     opts->fsck_msg_types);
++		if (!opts->reject_thin)
+ 			strvec_push(&child.args, "--fix-thin");
+-		if (max_input_size)
++		if (opts->max_input_size)
+ 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
+-				     (uintmax_t)max_input_size);
++				     (uintmax_t)opts->max_input_size);
+ 		child.out = -1;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+@@ -2431,11 +2437,23 @@ static const char *unpack(struct odb_transaction *transaction,
+ static const char *unpack_with_sideband(struct odb_transaction *transaction,
+ 					const char *shallow_file)
+ {
++	struct unpack_opts opts = {
++		.fsck_objects = (receive_fsck_objects >= 0
++				 ? receive_fsck_objects
++				 : transfer_fsck_objects >= 0
++				 ? transfer_fsck_objects
++				 : 0),
++		.fsck_msg_types = fsck_msg_types.buf,
++		.max_input_size = max_input_size,
++		.shallow_file = shallow_file,
++		.reject_thin = reject_thin,
++		.quiet = quiet,
++	};
+ 	struct async muxer;
+ 	const char *ret;
+ 
+ 	if (!use_sideband)
+-		return unpack(transaction, shallow_file, 0);
++		return unpack(transaction, &opts);
+ 
+ 	use_keepalive = KEEPALIVE_AFTER_NUL;
+ 	memset(&muxer, 0, sizeof(muxer));
+@@ -2444,7 +2462,8 @@ static const char *unpack_with_sideband(struct odb_transaction *transaction,
+ 	if (start_async(&muxer))
+ 		return NULL;
+ 
+-	ret = unpack(transaction, shallow_file, muxer.in);
++	opts.err_fd = muxer.in;
++	ret = unpack(transaction, &opts);
+ 
+ 	finish_async(&muxer);
+ 	return ret;
 -- 
 2.55.0.424.g13c7afec21
 
