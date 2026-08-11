@@ -1,83 +1,85 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E629823AE87
-	for <git@vger.kernel.org>; Mon, 10 Aug 2026 23:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C69B1714AA
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 00:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786403761; cv=none; b=d9aBh7V9dI/pRU1mabUN7Ye9BOlqKSmPoXS7ExM3sV/x5G/9oSR2K7DuGrzIDvYL2Jc9TVkSDiDK1ucPWOF4SFYVJbYi0S48zSc3VPW2bcIbLbsX4rH/xQoNQfRCFj+mJnAD1ZzpjolLSZ2ZtShcFEC5x1QtIDZo0qdTTY1PArg=
+	t=1786406644; cv=none; b=SANJzvfYNdkZZdVWKJmwaHFJHEd/YkKJ/xTppelEKR+nQim2UR7pRUJGgBcNVNo7IFF0+nHEGkE22FW+7GNbnB9qITlkj60e74XUQxraW0pZ89JOL7txL0h8a/CEj4Jz4NR3Z25syxgnbdZBrurrQeBUkJfgM9HQ48MsJqLDrPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786403761; c=relaxed/simple;
-	bh=KINnzRE6LbCvPbTd4ePMgcLEziYe1MLzEKLJGzwXWc4=;
+	s=arc-20240116; t=1786406644; c=relaxed/simple;
+	bh=nCqA5NOCP4QRg6IX7FovwuU3maxUkHlTGfEsM1m5vRI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SXIdGloHRTVOebQpLYnwTJ/KjyMPuB68TDSbfU//hJCGitBinNS6OyDhzKlpV5B4A1G5INs1QNGufmEl9H8m3Sdy7cbor1GL199NtB52ZUwK1j5fLcy/wKSRU/A6Z9Qb37B7XJjr5uvMuI4ZapCBM5aLxCwW/IPmGeTEGOv7I5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IuL6YaKx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AYMYUIAy; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=SUMeAwbcqmd56fT4P+0cW729ocMZ2jOne8sNBbgPqKgCpw25L2nKimn7dpTL9FevO0VW6VHXyWXMFagjQDxqZuTHHVG/nEGjn98hFXHwRCze+bGobCusCqbAwEFAIhqvZIDo8KGunShb5sFtOVy5N/BLsMtwSYwDFQRX/CYjUNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tXWXEHI5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tgpvw1Au; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IuL6YaKx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AYMYUIAy"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0D642140013E;
-	Mon, 10 Aug 2026 19:15:59 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 10 Aug 2026 19:15:59 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tXWXEHI5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tgpvw1Au"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E0A2D1400170;
+	Mon, 10 Aug 2026 20:03:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 10 Aug 2026 20:03:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786403759; x=1786490159; bh=7cEhfGYt8V
-	slX7iFWd70lrw0FNNt9yshhN3XcF7Mm8s=; b=IuL6YaKxwCF7HshknjUythNm2l
-	yN1czKc+nxE+/xHt4sNv/PoWdIVfmV4NF5p2dq/zBrYp89w7OSBsQXQ0hoBuuc51
-	5eQ8Qsn68HjKSXlMNQisurTvjm37XPErk76EvKK5fvdNCCPSzhKPyw8mApDqQZRA
-	BEZU7YSFO7thFqh/2RKzLmsRGkLDwOfyIe5dBs1hgEXz5PSjs4CyPHarQpjJPkDy
-	3sctzpBSMxYKN+xql26ct52wVBDCdgTmlZb/yKN5yIh0SW1qBimhOFWViSFiQQd2
-	l0dCZC+/tsUzMMIkF/kuszCSNIZ41qlhE/3cTZUDCshviVVBfHA8jiLCpdoQ==
+	:subject:to:to; s=fm2; t=1786406639; x=1786493039; bh=a6ca0Nx1Fs
+	bk8m/mPSEWYch7BK0YWNydvMcDz1d8AxI=; b=tXWXEHI5gU96r88aR9m+23fn/O
+	L9VP1fgY+lklUg/QLUL0BMMENzwlQHt4h5feMLQuBwBDmFqBMBsmzZ+agaYuHLX2
+	Qm+72G4KN6Djicb3XDDwhZ6aUaCs9KlpvnfVcXC2CmB+eyRGZFdx4yLFNUtQQDkv
+	xCSHOJb8gqmhoWl1bxtVdJjw7LmQwf3+/YFznW71YhcfpAOtgKvbOvWf7YCBcvmk
+	SOLOVoXT/PsiAp9IHjmeHym2dCZrfsGKbTk0BaBC3KamMSC2Km10CdBYC/mT72nY
+	p7x8DZDmgBWsPHFkyuFwZ3i3KIIHEEb++j6B1TNGNvjYG1SWJxTh33+DVBLw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786403759; x=1786490159; bh=7cEhfGYt8VslX7iFWd70lrw0FNNt9yshhN3
-	XcF7Mm8s=; b=AYMYUIAy7ITqtHzE8ExW2axQlcT0Plky48uBX7nnTJdzJIy+3ni
-	MieQ5FBnm5ul5dWegvR1PbKaVCghhp5Uaai1le6n+2gutYQGyOYB7T4BA5splXAH
-	5gTaze0stCat6R0l6yVEgPSmeYU0FsgcVlL8qRVPU0ONjL861AxpJkwIt1vMD/bh
-	Sfcl+8/3Usda7Ww7T5cXAJuzed4oTCQO5ujBJrmPo0naNDO2hA+dqgeHrnNbT7k5
-	8wA9SGieX600QCPLGPH/cCy6rNaqi5LNtHHJxDr+rxJ7vBSvW+TjXgka8w9PCko0
-	c3qE5OqsRl0cxsE7NFc4DyU89m6emhjnYXA==
-X-ME-Sender: <xms:rlt6aqKMcqm10NpyICUjjlkQGReB8fjgfxLkg3bpbyN1MYja0SUE1Q>
-    <xme:rlt6apBTpEz_JamOtoBV1T0Tp0umS4MEalwDstL0nz_oIuLdrJsScbQLOnLABShkZ
-    -aEuITvoPV0pIEz7YeJZ_UFPRo_nViwAoTbg2bzGIoetPHAEbyjUKw>
-X-ME-Received: <xmr:rlt6ajCH3dDNk1I_NdsDsWSI3CB7AK5sscuIcO49vY2M75FlwlPW8QNj5FMS5Ft6c_fBwktajMfMOG8Rry-9SNcjikt7SR4swQ>
-X-ME-Proxy-Cause: dmFkZTEJ7jMbYF9eAcWFZ9QabU4AvGdZMB5K/pibEzuX06SO7t3M1lNH3fYFAfTk4jFSxI
-    s1xOLTJubopP9SGouzrh4p5K9rCD8UMqIdkNrMStgun+V2ixHvz9aWVXQ2JS0LAKwdAU5e
-    AHhr9p2qfKJN7KTBumMJzhQadLh81mlJF1bH05rVZLHZzwOUTI0zCv8ABaWDreBK5ZV+zp
-    g2yH16XoQoExPbsakxbPEA6xhwgJozWhxYQ6lj04rAiKTaaOsMc+rVa4Ix30gF7DWC4h7Z
-    bRYwYStylSZkQr6OOfFDLi7lrTxEPGjAVi+mgXtYv0e8/DT+LbhEKfhXVY8vidcq7fQ3Pd
-    dOs9Rn9Nww8nICmmVWZh3pM7mFcFrFNo3GSjpJeh/3Hbo1Dhc8w+902hqh4+Cy2tGFj9B5
-    eoq8Uip5Ad6FqQUGgyj0Oh97MfrotUrY+YL2MnmQnypt75VcD5a5DtEQIhEm8Q/01mBvdk
-    8E6Jw4ugl1QzqR3fuTHnqIGKLJy/DpBWRMRDnpsZtAOGn9suL1dqRaS1UfZsmltoU/SuOr
-    xgYkU90JKziElvfpION3zesgeQ/zyTsDRyPbZ+C7jOGQjoZAwidOEcf3KxGuoilJOcjjF8
-    rf2j74n+W0w+EDnorlnRhjC8NSoJv8aoEnqsWXYXgE3E/ITEkS32SuqueWBw
-X-ME-Proxy: <xmx:rlt6arDZqLtAoCosNroaMPEvltqL0wvofFJaf70nnkx1vsYZhwbCXw>
-    <xmx:rlt6auqMzh2u2Kw3a_Hn55yAS25lS_XQnqQO0S8ItS0ExBv0XU_jnQ>
-    <xmx:rlt6almVQBsAQRTQcV5pmaqFO8ysqcvdmFjlRwJhTAODVHLRdjFHAw>
-    <xmx:rlt6auzU8tLhZK2TbWtxZR_Y2iN9-yOYVxGqeEgYgfl9ZxNaeUUDyw>
-    <xmx:r1t6ahaMSM-EDGjL0jYa6eMqIVx2wRq8bnRk8LJEsMbBM1OtIOXKRW0N>
+	1786406639; x=1786493039; bh=a6ca0Nx1Fsbk8m/mPSEWYch7BK0YWNydvMc
+	Dz1d8AxI=; b=Tgpvw1AuAWuaWcxKK6GY/KgHhqsUQgq3w79784XXC7Gb8KxdU3d
+	aZACXL6VwwAe/tzaj9DWdZpOBmRuTknXKDQcRH6xY9bUH38GrvMO3bbz0JAWPSvl
+	Qy5xJcJez2oylNVTiITzvFi14I58Hz1juWr8upJRj7Ecsfq1m7HgEzuurc/BUOFS
+	A1UVSyRj2RHFdnz9MLPk0j/XgXUUPyNPe0A4HpsUkv+9RDkmpvjgdwtJmLkboJGe
+	T9zeqaPvwbb2+Ep9L81YflpNjxIGsm+2HgQGlgEPgevgTuC/uY7BQto3yARYYA6Z
+	7lL0XS7n7iOjfuE1IGaTnQbNVSzdJ6HRGqQ==
+X-ME-Sender: <xms:72Z6aoEKVFmN82N08fySU1y-DoZoejkjvyJpexcjES_kjr16XZ2d5A>
+    <xme:72Z6alCglQ41KSNlN9NYbkvbFh62ilNaGKWbKqAIRpAg43xRkGFXxAKinjdDD5Mmh
+    tVz900EKdJKRbffED94e4pm8cQ5iiDlmn5zgJycC85A4-WGUMKuEAI>
+X-ME-Received: <xmr:72Z6ar98QBYGwJjVizB_AwywPS-QoyKE_Zwf0xvNi_jt5qEYvNqsMWa3_N9TvSpsT6XFNsCPzRPHp3ar-Y9L_jN2Pwgh7Gbz0Q>
+X-ME-Proxy-Cause: dmFkZTGSZx+RO73uBzx7EWdBv5gzSsbtbhDXKnKHrL8jdTNkMamAr5s15OWEjHsIoQvci+
+    1CuVJa2MGsidvooNSww49+wNBJLvSGez33LQs1F+mFYf5ptRG7O67zhjrIJsa0b06FuEVi
+    W/KG/SlJW44Ep+FwVpqCtcwaO8WuWGE8acUgk6IDGBosExGUCL4rYaE3qzo1qXTmBfPYRM
+    B0afIdtlMZbKEshBOaC4wtvAvFnnSCZKb0E3PZ4Tfn7bIcislh/0E7Pvx/rIVf2zFkWzjm
+    Am/NmY4EbJtiaHBGzY+Bo22j6GjPzNQXhRIlqWF7SgRsEsVokLFHa1vB4sKQvRi+Jp9TnN
+    XthfomLDbCiTLQs4zcC8Sz+7nv348aUwWQpnHdltOMtt3xPtevanxQeLKa5uZ/ILO989dP
+    yty1o65za3ncM32JcTFCHE8QFSSnRPoppapYxME58zABFjshxIyNS9qz9oLVUOY5g1R1Dy
+    DBZQqrjfwyu+6U90450j2jSlnjCi37IU73jikC+UdS1LWXPWQgvR+CqDJKC4ZjPKCHWFC5
+    1IMmCEVcxzHm07rnu4sB3THPV0rdaXJXmOFb+TWKUw3EdhL4j4gN+fqGaLUDWhjgKCwbq/
+    sVyFj2ffSVJaJerqZzftQ11IUsIwhxImMia6LCmw8NX3YKLv6aFXRWnOSN2Q
+X-ME-Proxy: <xmx:72Z6ahAniu-Z4wRb7VlTC1znJQkHs9alcP-e2NoRMN1mgerifrXFxA>
+    <xmx:72Z6agTRIGbPleyIlnurfOPpVyieuCQ5SwHzvPqLlWAcFmqsu0PpLQ>
+    <xmx:72Z6aou1oq5D0PPxcUhsq_Nmm1rNAFiNJFWb9GHOzyQ5AlCI4jpZdw>
+    <xmx:72Z6as2kjn7YsbjE87lWBclfSAAxWb99sOjZs10wlYedyiiI2PR5cg>
+    <xmx:72Z6aipiNMLGWqYnjIq9Xgkex-QzTL17W3-Pa_B8bQrHttu2UJ1yO8KT>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Aug 2026 19:15:58 -0400 (EDT)
+ 10 Aug 2026 20:03:59 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/12] Next size_t stop: pack-objects/delta
-In-Reply-To: <anQmffJEhKxttUjO@pks.im> (Patrick Steinhardt's message of "Thu,
-	6 Aug 2026 08:15:25 +0200")
-References: <pull.2175.git.1783615780.gitgitgadget@gmail.com>
-	<pull.2175.v2.git.1785946479.gitgitgadget@gmail.com>
-	<anQmffJEhKxttUjO@pks.im>
-Date: Mon, 10 Aug 2026 16:15:56 -0700
-Message-ID: <xmqqjypx5zyr.fsf@gitster.g>
+To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,
+  Yoichi Nakayama <yoichi.nakayama@gmail.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>
+Subject: Re: [PATCH v3] worktree add: improve message for ambiguous remote
+ branch name
+In-Reply-To: <pull.2197.v3.git.1786395305884.gitgitgadget@gmail.com> (Yoichi
+	NAKAYAMA via GitGitGadget's message of "Mon, 10 Aug 2026 20:55:05
+	+0000")
+References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+	<pull.2197.v3.git.1786395305884.gitgitgadget@gmail.com>
+Date: Mon, 10 Aug 2026 17:03:57 -0700
+Message-ID: <xmqqecg55xqq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,24 +89,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Wed, Aug 05, 2026 at 04:14:27PM +0000, Johannes Schindelin via GitGitGadget wrote:
->> Changes since v1:
->> 
->>  * The return value of sizeof_delta_index() is now included in the unsigned
->>    long -> size_t work.
->>  * To assign correct values to the now-widened max_delta_cache_size, a new
->>    pair of helpers are introduced and used: git_parse_size_t() and
->>    git_config_size_t()
->>  * There are now two references regarding the provenance of the
->>    deflateBound() formula in the corresponding commit message.
+> From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 >
-> This addresses all of the comments I had. Thanks!
+> When the user runs 'git worktree add x y' command that does not
+> exactly say which remote they want to work with, and there is no local
+> branch named y, we try to guess which remote by passing y then create
+> a new branch named y which tracks the remote branch.
 
-OK.  Shall we then mark the topic for 'next'?
+I used x and y as placeholders.  The readers would be helped if you
+used a more plausible sounding names, e.g., naming directory as
+something like foo-dir (the point being 'dir' somewhere in its name)
+and naming a branch as something like bar-topic.  If this were 'git
+worktree add', it is probably more than likely that the destination
+directory would begin with ../ to have the new worktree next to the
+primary repository we are running in, no?
 
-    ... goes and looks ...
+> If there are multiple remotes that have branch named y, we silently
+> gave up, leaving the variable branch intact.  This later causes
+> creating local branch and worktree not happen, and we end up with
+> passing an non-existing branch to lookup_commit_reference_by_name(),
+> triggering "invalid reference" error and die.
 
-Hmph, some leftover unsigned long assignments I noted in my [07/12]
-review still disturbs me, though.
+"This later causes" part still seems a bit too sketchy to help a
+totally new reader, even though I've stared at this code long enough
+so it would be sufficient for me personally.  But these logs are not
+about helping me, but helping other developers, so...
+
+> +#define WORKTREE_ADD_AMBIGUOUS_REMOTE_BRANCH_NAME_HINT_TEXT \
+> +	_("Matched multiple remote tracking branches, you can list them by:\n" \
+> +	"\n" \
+> +	"    git branch -r --list \"*/%s\"\n" \
+> +	"\n" \
+> +	"If you meant to create a worktree from a remote tracking branch on,\n" \
+> +	"e.g. 'origin', you can do so by:\n" \
+> +	"\n" \
+> +	"    git worktree add -b %s %s origin/%s\n" \
+> +	"\n" \
+> +	"If you'd like to always prefer some remote, e.g. 'origin',\n" \
+> +	"consider setting checkout.defaultRemote=origin in your config.")
+
+Instead of throwing the problem back to the user with four extra
+lines of message telling them how to run 'git branch', I would have
+expected this patch to teach unique_tracking_name() to optionally
+return the list of remotes with that branch name, and to use that
+result in this message.  However, if the goal is simply to provide
+something better than 'invalid reference', we do not even need to
+go that far.  Just stating that branch 'y' appears on multiple
+remotes and asking them to clarify which one they mean might be a
+sufficient improvement.
+
+Could the original request be aiming to create a new worktree with
+the HEAD detached at the commit pointed at by the remote-tracking
+branch, instead of creating a local branch forked from it?  I am
+just wondering if "-b %s" is too specific to one possible
+interpretation that may contradict to what the user actually wanted
+to do.
+
+Thanks.
+
