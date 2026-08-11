@@ -1,93 +1,84 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B67A442FB9
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 12:16:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0DE2AE68
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 12:32:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786450571; cv=none; b=s5g2kRL7Bg1Wmge2R0oYGspl2jVgytmKVJ3K07RXXBYp6B9TXU0uqxocVZhI7nAe54LZRwU0Lel+YsGHmNFrHgPhePQUwhVFCI8AbSPB9r0ZbZmBAJSbY+KLe9xEb0eBtQ8iu3jpR9yABvngkS9IbUCE6fX2n+vKQCXfbqpC6zo=
+	t=1786451568; cv=none; b=uK1AvX6ttyRqVoFxN/g3Pf1HtlwbKhrxFoOauDqqNc4BniQonXNyfI8pC8E6Y8maarJ0iMpBUUQT3d2FwABFuClT+mAyZtfTmma7OWUnQejjGOuVRmEoLnVc+fckAEx79LdvX3yv+g5i+h7cCTK8fCQanSH8sW3FkflnZ+B3DMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786450571; c=relaxed/simple;
-	bh=SQ705QwVMBdOa60CF4nwYvx68tMpsm7ogaApxTa64qo=;
+	s=arc-20240116; t=1786451568; c=relaxed/simple;
+	bh=QUsHOh5YxXHQBZG45IuMH/U0ijEMYF3Bm6a/l7bl8Cg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nEOxxAjTw5mGdTXqZZfMc7naBHwqLCdmTEP+TwFFeP7ezGf0X38C1pMdXz868rIc6EQuk/SYSSjceqTbgw6ax2rWUbSUeDcLzvx3fTBMjiF8x5VoIZaZIkpe8/F8dVlMMgxbzrSEdJQJsHSRrbtN65rQBchz/ouXfU6kSNIOpmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kDtOZ6s1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WlpkyL97; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=aBkguis1pxLpeVspEd2Jj3H/A8F96QXKzvxrzGSCq4yJJRrQaQsHQk+LfHGD0xBKXRGOY6EQf8jMkLnb0DUkxOetx3ySwekWdsaGQ2Wqjv4CBS2Gmhlv4BB6ATz8A/J/ENQkuI0PcYyMFhDTYs0WisWoE96A6E9FFEy5yTsPZT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Cmn2Sp35; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XUEyIqWE; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kDtOZ6s1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WlpkyL97"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6F8D114000A9;
-	Tue, 11 Aug 2026 08:16:09 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 11 Aug 2026 08:16:09 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Cmn2Sp35";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XUEyIqWE"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 63164EC01C5;
+	Tue, 11 Aug 2026 08:32:46 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 11 Aug 2026 08:32:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786450569;
-	 x=1786536969; bh=FmWsX3upFQVFfbnCoiBa4F++xU0ERW1BBHecldXPUjA=; b=
-	kDtOZ6s1JQT4ZrNp3P95oZ527jTHC6ZZTSlWk/S09CCf1skYjXb4BENcXCAiTKnh
-	jStWzCZWpF42hWHLE2FIHBgqWTezMdGhrSh5ddm3w1/9AGRpsmQSd0TcSuWC7Uxw
-	QIkjr9EqRpFDXciI+uNie25GTxNFCOriT7TNE+H+PT9xZ9yLEJEri5I9h0ZsagIs
-	OGBf7a/11Qa6urw/bzcuz3JpHlk41GosEGLAhjai0pQiNtL/ulNbRoK+oP0obXx5
-	P/6i2aPjZC2J2CD4AEOmFW0PgTb2RUS3R8rKwddIvyHGK4Y5ZtiUaRwHBaSeHzUZ
-	Txj4UDA51Qm19nLlok7uuQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786451566;
+	 x=1786537966; bh=51hEtbQZkP7/kgHsD7/7dBWLz3rre8FRSY2SH2f8GT8=; b=
+	Cmn2Sp35ZVfosVILR1zAG+q6cnmSXX938BQkoqHrkoPj6YrvWh5e4Vp69dmKV78h
+	1IYtJhbz9AtD2aIAsrwxEy3Rbn1lIFQnEXA4cFPP244AkI14ernjbfAQWvR9Uc4E
+	QjtF/BPNOX3LtBA/8jrDIy0lam3y/Nkpi250quVAZH0IWD/TE1N0cuosvgIdaylb
+	a+ajTeTDe5HFLd9uAxnmm+wSPxInXjzy6pQxuCQz51CTwz3IoQgEJh9eJS/yT5SX
+	ffJUGso4w/iYRdyEU+gg5G8YL19Fg942Q0f3CuI8xUoI6lC03YxgbGxgT5Oci4XC
+	H0zv+71ywflN2+V2RY4G+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786450569; x=
-	1786536969; bh=FmWsX3upFQVFfbnCoiBa4F++xU0ERW1BBHecldXPUjA=; b=W
-	lpkyL97Fvn7DkG+zMZd6fXD+jqjBxrCZx6JWGLELlAeT3hyxGXL8SrnloGX2Fh1T
-	xEss/j5nAqCF8NplftmqVm0BeFdWj5iLVGla4tJlhyCzK1EEje7pgyDkD9/aWJJC
-	pt0uoodkdU/IfjO7QU+57uFSsvKrn/DVIDRsW+zBXl/8fhARJ2KnGgG4Tq8Yzhst
-	z6JPuB9GoIeY4StwdK7g/n/pcU4efB2cF6hGg2oYdgzoZDH3gJJtgjzg+9cBHZTS
-	9JOAzA5FrjKRa21Y+NQ9hcUS/8Zv9cATS+KxYfGtr8ZDkSuEpq6IsG+LFjoeL1Ec
-	yT+fjNCg4ajS0rBOllF4Q==
-X-ME-Sender: <xms:iRJ7asqvzzbE1S7mCAiyO3ezQdE3X0Tky26NYa96GWoBQRqmIaG5HQ>
-    <xme:iRJ7aspyfp1KnZhNyQrVjCbL0Mg07XXjeNR767Up80rrjho17mmeFeQdjdzWxTsr3
-    xfveSbxv70voCoQiowOunuRpaUqjkdkOQmSzgjrYyUPD4TWQW-r>
-X-ME-Received: <xmr:iRJ7an3qbtCwBgevVxHCYOQmnSBKczBZHTraia0MMOyWywT5CwynDhCvyoMkKtqijidr0x9kakLi8R8vcQ0ROM0bC7YNU6IbqkxjsutvGw>
-X-ME-Proxy-Cause: dmFkZTFNokYn+VjKEfid7txtx6qPZWSmejZPLZU/I4/HtTDQ0Drd1y+0HBqoibQKTTJXZz
-    i7yIobb3xL2qO+Uss8Q1nJBHQeTATeZrWEfPOF7Vut0R6eJO/LFOPXUanBp04Pl03rwmSH
-    ohGhsC93rxvTTNREuk1ebGiD+mFSVSiF8GsLmkCzPw6o7/YTnWydForLD52c2Kf0YDbFJk
-    KSLAUKYND531p1h+ROHis4eKJmCxNYcTUXRIay1wK/oABBJrA/akMVslk5jrUg4uJ2dsfh
-    Mc6/OJybcGHmaNrKOI1twvEy+Nj6VYvNOdiwS0fQEM/bbgoAaACI2z2h2CZsdJjY18A3Sw
-    1Cjt4iUr7VoC9fHjVzhhrM62F+YJ5Tu8+sNpnyuU7xXfK7cRuvdmsJxhyyl73jLA8XXw97
-    6z+HjrnCAAwcQFIku18LDhpvJ2ofhNdKyaTDzS0vXpHXRuABSZJWHAaWVNhlMic0mzxdOB
-    TKNiNevmQx//Dn3y8inkb8gi3vobXxDmdvLPB8N9q7bQu+Tl+zgZY2SWDgmsKx2pPh/lqU
-    +k0OGDFMy4jfMXSzgWIt8vBnDFlsAI1hwgGowxX4qNSiiWbQ2Ux0zsJsXBOsoNSrK6SMMS
-    tZiuVyBY8EfPNEnWBduNNYDlx42hJtK1DDMDWSZR7VeaFYJc3nQ5BPAPXR7w
-X-ME-Proxy: <xmx:iRJ7aiEj2tfXS8vftrMbOudk4ofNfWGoM9hUwsySmEBhJ6u_PIbLIQ>
-    <xmx:iRJ7aqHrn2Z3pOn0WGWCDr97dnJt6i1QRchQ9enYrcxnm70V6y9w-w>
-    <xmx:iRJ7at7Z6WjkfayLQM56Q0DRpXxcZJm9THiFzg9L3_qBJiZT9ZTz4w>
-    <xmx:iRJ7anwMFamEq5MLxbaSAndan8FJYbu4TgHFW4EB3klAkuAeBR4Jzg>
-    <xmx:iRJ7ag7p_S6r1713jPmnEpKrdGDxAvD9S7YxZR0QLxtt-pNpyYe8c2BI>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786451566; x=
+	1786537966; bh=51hEtbQZkP7/kgHsD7/7dBWLz3rre8FRSY2SH2f8GT8=; b=X
+	UEyIqWE0zrYpHeBDGp3rqyfsu9Aktx8Ko9693zT2ZFY02DZvjsA8MAiUUmBrrxiA
+	XnhpRO9TqHmRh5ftUC8gE2cRvu1+KAvDhq4IQJn8ZjO2/H95Z0J6TJfLluIkMRo5
+	wh11BrJJR2wCRZxmNFODBnuoBx1bd4KZ2iERZGrJoloJSOU9v4KEuRo+dX7UT+sZ
+	B75RVqAlM7vbg0N/bDZrUUfKGInQJhIWlacDT/XkeSinxoQen4srkIP/5o3UMSmS
+	arbwfgFAfP5tL4/ogKNKSp8Y/z2aNBE61r/tw9nTQNFmEnkCLYjohL2KjRFNIzoA
+	EXA6QKtC9HFMECXmk3bEA==
+X-ME-Sender: <xms:bhZ7al1Lpjq1rVmYeoon7omA_aKcGBIomBXjdHRO2hOrtkqwsaZP8w>
+    <xme:bhZ7ajicETLdYWDlX98hJUN0a5u0g8WbOSG_BY-8C4RXHla3T0gIAvIcM0R0GSZuS
+    XaA48MdZs1_qGwL3Wr3DwSQ6yj6OZbDvmzGDrHpr_1bQbA3z8Wd1g>
+X-ME-Received: <xmr:bhZ7ajTc9-v3u0FIczTlU_QhciSlx1MPqlXHIC844TmAqksnjgkZu-yYeQ5rCdKLULRHRLQTft3f2FS01zXipiKERfc1CprwbfJrDxHa_A>
+X-ME-Proxy-Cause: dmFkZTGOQqpdjSskk+2a4rf0EVdYNhJgcUtbvtyp1mtlw94RyU27oct5NmzcNoOgC2/lHf
+    iViDkwi7ZnE+3jpHEp6pZOMhQnPU3AsTKBqcxNzpgPmqbyv+ALQawGqW2+zCQCpNWvwqmR
+    kVYDAFZ7OfMlev5SWv2T4HXBZD1MZu57Gx/+4yvbDXKroFW4NHygnWuiPlIJHN24HPigZe
+    jiK5z5DPXpbajbvoL8QlqXtXQBorPLTO+JEWTqukexazNQyif4k8Dc5v4aYXc/+u4icUlm
+    BRKqUnurrH8BWn/EK+5GgU0DXjtyifLsLvhQYN6FAR0GJHOF1BrWfOzQOe8lCLqXPINZj8
+    +tvIvLa6rdEGOqB+DlEfPvU8tPWags0biCrPwkQ4glUYJftjohb7TJV4XpxFnxjbShdxpa
+    S7WMziJGt8y/g5vsLjdM/WZ2QHxQjqfXfeyCreq10cS7VmWkw82WCS/6LFotFpHd2PriBV
+    T9ZxzjD4K2AjAoqByyyO+IEZvI39RnaTmclMqN6Ff8xp4cUhlKCEyukqfbOm2JcC4ofrsd
+    7R+lakdbKj9Lkh+F8cNMWVooBrilPkXcmSuWlMDWD0iMgFvPm233JvcxefsxWDx6cUWXZ0
+    42Z8zn4HeRiClfCYmcC9RIjYrysRjSow67p4dcTENOenNypKKzxuxcHzjm0w
+X-ME-Proxy: <xmx:bhZ7asj9GSk4wNS_B2ohQUFAZty10htE60B8audckN9DWvZ88Wq46A>
+    <xmx:bhZ7ar451KidDAkuXyXpwXTauBpoMcS-hW36CTo8E6gYZq5HdFXRhA>
+    <xmx:bhZ7ahDL9pds0DOEs82fyLyg78-Kz99tgbhMxqOfTybsYzNPEMJveQ>
+    <xmx:bhZ7aqbfF-8fMVFDOwxAQiKb6Z-P5jj-1pgeg4WxXsNlUeJ8i9txfg>
+    <xmx:bhZ7ajqGJw8sEhe8Iv4VWVJdaFe5h3WdAOBWKoZa2EQCcWgZCsGSERf4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 08:16:07 -0400 (EDT)
+ 11 Aug 2026 08:32:45 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 765d259c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 11 Aug 2026 12:16:07 +0000 (UTC)
-Date: Tue, 11 Aug 2026 14:16:03 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0e799a9f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Aug 2026 12:32:43 +0000 (UTC)
+Date: Tue, 11 Aug 2026 14:32:39 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH RFC v3 2/2] Move libgit.a sources into separate "lib/"
- directory
-Message-ID: <ansSg4qsPwh5FcR9@pks.im>
-References: <20260701-pks-libgit-in-subdir-v3-0-5e4860056094@pks.im>
- <20260701-pks-libgit-in-subdir-v3-2-5e4860056094@pks.im>
- <alR9GDNTbdjWB4dq@szeder.dev>
- <2d455ecf-972e-e3ce-54bc-683050c04282@gmx.de>
- <xmqqjyqpb96n.fsf@gitster.g>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH resend] doc: format-rev: use [synopsis] on code block
+Message-ID: <ansWZxZ6lB0tYIJD@pks.im>
+References: <synopsis_block.af9@msgid.xyz>
+ <synopsis_block.b37@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,75 +88,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqjyqpb96n.fsf@gitster.g>
+In-Reply-To: <synopsis_block.b37@msgid.xyz>
 
-On Mon, Jul 20, 2026 at 03:14:24PM -0700, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, Aug 10, 2026 at 06:58:05PM +0200, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 > 
-> >> > My own (obviously subjective and biased) take is that the tradeoff is
-> >> > worth it, as these issues are a one-time cost while the benefits to
-> >> > discoverability will be permanent.
-> >> 
-> >> It is not a one-time cost, but will be an ongoing burden.
-> >
-> > It is maybe drawn-out, but it is a one-time cost. It's not like we're
-> > going to mass-rename source files to move them to `lib/` every two weeks
-> > from now on.
-> 
-> Since the topic was posted, I have dealt with the fallout from it at
-> least twice a day (which, when we are lucky, is not a huge time
-> sink, as I have mostly automated it by now), and again every time a
-> new topic is posted that touches the moved files in substantial ways
-> or adds new files that ought to be moved.  The latter is the most
-> time-consuming to handle.  This will continue until all contemporary
-> topics, as well as the topic in question, graduate.
-> 
-> If that is not an ongoing burden, I do not know what is.
+> This code block uses the placeholder `<subject>`. Let’s highlight this
+> placeholder properly by using the `synopsis` block definition which was
+> introduced in a34d1d53 (doc: convert git-show to synopsis style,
+> 2026-02-06).
 
-I guess the argument is rather that it's a burden now, but once it's
-merged and the dust has settled it's going to become less so.
+I'm not particularly knowledgeable in AsciiDoc, I only picked it up
+because nobody else did. So please consider me even more clueless than I
+typically am :)
 
-> > And this statement neglects to acknowledge that the lack of clean
-> > organization of source code files is an ongoing burden _right now_, and
-> > would be at least partially addressed by the move.
-> 
-> At least, Gábor does not seem to think that the lack of clean
-> organization is so severe as to warrant a massive code churn like
-> this.
-> 
-> I value stability much more than prettiness.  If we had started out
-> with almost nothing at the root level and almost everything in
-> either 'lib' or 'builtin', I would have strongly preferred to keep
-> that structure.  But since we have been using a layout that has all
-> built-in commands in 'builtin', with subsystems like 'refs' and
-> 'odb' in their own directories, and everything else at the root
-> level, I would prefer to keep that organization until a substantial
-> subsystem update wants to carve out a new location for itself, just
-> as past updates to create 'builtin', 'refs', and 'odb' did.
-> 
-> Compared to those past moves, the proposed change looks more like
-> churn for the sake of moving things around, without achieving any
-> real organizational improvement.
-> 
-> I must say that I, too, remain skeptical.
+> diff --git a/Documentation/git-format-rev.adoc b/Documentation/git-format-rev.adoc
+> index 505a52feccd..836ba4b0c24 100644
+> --- a/Documentation/git-format-rev.adoc
+> +++ b/Documentation/git-format-rev.adoc
+> @@ -96,6 +96,7 @@ The mode `--stdin-mode=text` replaces each object name with the
+>  formatted commit, i.e. the format `%s` would transform some commit
+>  object name to `<subject>` without any termination. Like this:
+>  
+> +[synopsis]
+>  ----
+>  Did we not fix this in "<subject>"?
+>  ----
 
-My main motivation isn't prettiness though, it's newcomers to the
-project. Git is not an easy project to get started in, and the root
-cause of that of course isn't our file layout but probably rather that
-Git has been growing organically for 20 years. But the file layout
-definitely doesn't help newcomers to find their way around in the
-product.
+Hm. I was always under the impression that `[synopsis]` is used as
+exactly that, so it surprises me a bit that you want to use it for a
+random block that doesn't look like one at all. But going through our
+docs (like for example git-blame(1)) I see that we also do this for
+other non-synopsis-like blocks, so maybe this is fine?
 
-So I'd say main motivation isn't prettiness, it's discoverability. And
-sure, that's a property that regulars on the mailing list are unlikely
-to care about as they already know their way around the project. But I'm
-sure that folks who are new would appreciate it if they could see at a
-glance what parts the project is made of to help them find the right
-files at the right time.
-
-Anyway, as I've said already: I'm totally fine if the result of this
-discussion is that we don't want to do it. It is churn, and that churn
-has of course does have a cost.
+There's probably a good reason for this, but can't we instead just use
+backticks to make `<subject>` render the exact same as four lines above?
 
 Thanks!
 
