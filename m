@@ -1,142 +1,505 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAEC1B4F1F
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:50:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C35A353A95
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:54:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786470629; cv=none; b=qtmfH+h7noCvgrdGczRvQ/3GG3TgzzZep7MuCMRl/s8oUsnJa1FWanN8Gwd3ldO5vWb+do0WHSDlgLlJDxaIfl0ZS+nQL6zzjTGvliGmhaIJgAeC5owqbHwiUGYZ5b77/ylGcHi/lILr4REno+MkTST6nB/EUyFbPBCyT+252bc=
+	t=1786470866; cv=none; b=BDBc8zS5wnPMA/Xui/VRR5cK01C5CDjAppizPUD7Z3QnAbpGemmUHQzJV2PUw51t6elDIxzKQkeF+8G5xMUWJAVtBK9/vV1SNkrPifdhslksQLhvY0YceEcQZaPJ8i68deMFNv+GzzVsSbmNpLKQP1NngILiEv6QorxvlJ0dYKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786470629; c=relaxed/simple;
-	bh=inEQeMSo3gY8jT9plWQr6LNqiY3CPb3l8OSsqLR3OTg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P38Xed8R+qmpKWl/mkRSiHUgLjwemaHeswobvymMGCivTJDi0TnHuSZGrxZPEEzhAK3nxCpGInZncs25a1Mv+P+J6qDNqZh1WbJFop3o1ZFF0eajgFFYbpX8iQTo/SHLnDmf+AcEHVLqStRNd04ZXF8jawhy0AGHwdtqDQqmUZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=t4gqZdkR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M+73Oku1; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786470866; c=relaxed/simple;
+	bh=lj/I0BHJXO8Y/J/xVNSgIHGhoPpRrXdGTZY/Ljmla4Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=a3Tsg0x1XZo5ta0PflDgzWldMeI3LXYa61tHxBT42iJNU1P5YLSOwK7monqOdxgk6p25bL+uyvog/s8/mKVXrmpVgkWAJazJhfa/r4Wi8XmeMZxZUAX5aOeEjShezikjyGcd75+3sF26YMtS7oJiqgtrx6TYsaZLH2u+lrMTE+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kXjGpY24; arc=none smtp.client-ip=209.85.160.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="t4gqZdkR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M+73Oku1"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0E3DBEC0256;
-	Tue, 11 Aug 2026 13:50:27 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 11 Aug 2026 13:50:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786470627; x=1786557027; bh=0GTPLWJF+t
-	H5RmJBsoSgua0sTEhWhGn7mYlvWA8DyCA=; b=t4gqZdkRg+3wjhWJVHHx8fDV6K
-	8WJ1YP8yE7DltwA0I7wmf9mAgwY2C3ahG1TAaGNKqpW6Lt1Cb9EfaIjPCRBWdBTH
-	6KhWfg1UgTQbJ+W0RifjUgrnINkpazIKB6PoXXyqq+L1t3pSwjefA4IMs4AgI03G
-	A4c9FauxOeAvWlWrzfH68yTOaVqcwI/saEaMWwexapGDyLCtC5xXbA8cHwhBw0pU
-	lEj4Bjk3lezU0PENkopy2ZksN5FlS5MpC7c6k+Eikra12rECYIqXj2povdNo4s8L
-	Dki3Jv1uEgeylqMFPg4IhfstJRirJQgIaUNa6Lrs8ICMZnOE85NpCSro9Duw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786470627; x=1786557027; bh=0GTPLWJF+tH5RmJBsoSgua0sTEhWhGn7mYl
-	vWA8DyCA=; b=M+73Oku1Fof9Iv+IJltmPEERHJwndgeWnht18VLRUrKl/cwTMjm
-	WGStPhVUD8JpOs5yKJL0KaGf3WJL987ov3wH1OvrZrwY2QxDFgUaL7A50/KKkDW+
-	M7TPVgNY13TZY6O9Qql8c6UXrRSemZzQ4LCgRhTOon99yqmTmLHtuDzOYhnezxAg
-	XHWkxt87s90RZyHqUsG0zDzX6k7cCuH+P12ERVzNg1liD62jKanRTkswZFlRsiD0
-	ag7RPsIpqUbu/CDGfuejO3UxC8j4mT1Kn7IXu/vXYBeC7FKL1q4IHWtdurVe601I
-	uEe5I5vPT6L9Tk9nNdMafUXcZpLO6usYnmQ==
-X-ME-Sender: <xms:4mB7akXfZ-A_AkeE6IlK5Rnw6Fbzbij7RB5r8pX2yoii0xdHXuPIyQ>
-    <xme:4mB7arLuIbs1KUJShHQsvzoXK_EyyT09Fmmk5K-cOnInSm7vIdt5Yv-gBLML-eKSQ
-    k70bYIWPdRPnFyQQzU_joHU_ZUxL8EVFiuqys6uTZVGJBgkcms23Q>
-X-ME-Received: <xmr:4mB7asBiHBn6M2JXdzULTFhOne5Chz5Grl97PNwFZWKQfJ08gOd32d7hvww6JBCULkF2IOdJj-4nMkwaNZ4UasB6swugbDVGKg>
-X-ME-Proxy-Cause: dmFkZTGD890Eq69Aqkd21HnzxPEAta51Zh4aFt0x6vdcnZGyNPng+AWkUe9PEuqe2tQklI
-    PMsPYxT0KwEKm1LeBdWvNKb6thnA6SPe2y87zuvg9N3exhRU7YYaCgxavWx5HGnzLKuuqe
-    ICyTe7WINAPp8YE4Z+SV/eBBMl0Znb46WUukRGU1eBePxWDopo6nKpayYZjOR9Pg0dyu5o
-    MqhknEajmy7YgJPZYS1i9f7f4xNVosc+VBXEUn0OoE58gmF3CmMyc6fm3/yiU27Mknr0pI
-    nFGSWE/NMmJazAya0y3VsXC+Uw39Cty7Oq+3VXGJakpztIUpxiZjk2uqd1j43Pp6N+QIHf
-    wU6J5MB6Kuf1wXhe4efJV20YzFO7+N8Wd83BI06ytIenG8hsBAfUh0lR/QD0pyEDdEKYC4
-    /yPRC88oak4ejB23tFAQGmW17AmOy39bhdcdC/mhFwDLmmK9VOPnYKsBEFpwAbaHFzc0P5
-    G0sW8RsW+Tq8ARKrY4zcaV6DXU4lT5VSEQE0FWheRh1iMERJKCKIEhM4Hm91yJoC+TmyB/
-    M3FxmH9ZuVyfxBXauFfT2skjlRsyeoGPDa3JIjmmu/f5bSvK6spkMA1YKZkFBuGdt5PqzN
-    jbmmm2xRK8b3eQdf/41tchfb8xcvlQqbVdoZhEqeI3veXEFyWAGm5jfXcntA
-X-ME-Proxy: <xmx:4mB7ajdBW8gB0qwZuHJjLX_BH5rSr74WxiCXb9qIy8_ZkZnzdcoSmA>
-    <xmx:4mB7aj1epp18oH67p1E5JYLIDbknbbhFqJr4mvxSasBq7ZJ4NbrrYA>
-    <xmx:4mB7aiikXnBjFY0IgVNoI4MwNiTnMeWRNcWfxoCCz5SaF3DcYoffKA>
-    <xmx:4mB7aknRrq3b61rSYABaGRT0eqHErpH9S43lVW4Jzt9O1SWwz2mbiA>
-    <xmx:42B7apce-cKsg0SmgJrn9_bIt63iTxmO3pBza_bip8KSLQOMylooLpYu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 13:50:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  siddharthasthana31@gmail.com,  ttaylorr@openai.com,  ps@pks.im,
-  johannes.schindelin@gmx.de,  l.s.r@web.de
-Subject: Re: [GSoC PATCH v4 0/7] repack: add --drop-filtered to reclaim
- space in partial clones
-In-Reply-To: <20260810174047.6524-1-r.siddharth.shrimali@gmail.com> (Siddharth
-	Shrimali's message of "Mon, 10 Aug 2026 23:10:40 +0530")
-References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
-	<20260810174047.6524-1-r.siddharth.shrimali@gmail.com>
-Date: Tue, 11 Aug 2026 10:50:25 -0700
-Message-ID: <xmqq7blw35su.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kXjGpY24"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-44cb057311bso27536fac.0
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:54:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786470863; x=1787075663; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hNhJ9/j9bomucNM0CfmwFcfBaRfDvCxwupieHGtGNt4=;
+        b=kXjGpY24H7T2rRFB11fDq1VodsJUWY49G75wQfhxqR9dSh2yStItEzqzhlulDkTRjI
+         vMHi3jLw2Tz36lgEkbDQmGrLLUlIdoyi20nFU9lrgH0K+lSQUT3b7Nhc5LMeDuD9OzzI
+         Y0mDRg+2wYvqcbvVXbRQ3HTjSVrgZbbmPOpqepfXeTtlkqwmANgD1EAslVn0dzDlu0IG
+         tjbcvs1HJfjcV/cWNyH4VzkLwmV5FnYL/zOHmEKgkzo6vAzzR9W2vBHowh4cuJl6Q5gA
+         74LNaTxGuxkWS9DRKzlYTyU5x/wRGTRhMk9zf4vwXk2GWJpzeB5XQKtPvgr6rfTRDxfo
+         TAnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786470863; x=1787075663;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=hNhJ9/j9bomucNM0CfmwFcfBaRfDvCxwupieHGtGNt4=;
+        b=NoN6wiHF+WVLKMp0lizElXjqrpZg9IsxXyvY37dHTo6YZ5BEF8W4vRExC4BQNc2Rvq
+         YBb5N9ph1DvEFn0Nt5pu4t4WUjIep2LXuepl1FVpCZrPvTN9ed0fwzNNot359UlHOFWA
+         4L9jKPJNoE0FWkulOJS3Hl2XwzkgQj0qkAp6PvI8qaPqT4nQ4sUw73lbObLCDTy22Md3
+         loIByzoTJvMh/U7VVXfiMi14LZcnZHBc9gL/j7/zFdCF2Fr7RFl4xxhqjqwjYK9GH0oE
+         jcWp4olMuH7stz3XoluRKjZCJQ6HJQJGklz7CUvYAWP/xhHg3JHSRezUeI6nAfdHtLfT
+         tZ/Q==
+X-Gm-Message-State: AOJu0YyGIlnU591uzGoXw/4Hku1KoZT1IPM39cEJU3xf2c/Hiolbx+Ot
+	xcvcqcxIUwu8lvLbqx56cHyDg+UTvny4tJ2dCfDw4aQ8EeynrSwPttsfehzIvQ==
+X-Gm-Gg: AR+sD11QLF/oSrJo1OZvx6Fpx8IYj95VgEA+QNxUKhKk65U0+mz+ByqLgB/aB0WNcK8
+	FLN287qz6qt2HGtprKc1lnnMcjxgT+G+eDkrxtc2abbOQhiMIDBRAv6/3sSQxjY/26MExV21Aj3
+	t1PrlY3VIDrnjTWyKYWfL1TjtlGXnD96kIICL2dcTRjc4XbeLo7KFeNAEjGq0KD0CY+4LTf2gHR
+	2uTy5AjG4PZlXrIqqmO9CLEHGJnmeDK1CiQVVwDTJdvAbc1xmdGtaeVMAH/bQQLMwCiPc5AglB5
+	ns1+u4odKh2iUgm0aV5P3XULnArmGhrwPSj24uB9X5+we5SSGf6wZjFp2zJCwjB0Bxl+osnYgDl
+	ALfpkPiEYZ2xA8knZIke2FA0n4WkqvxgcdIdZv9OuIHJCeZM4qoI2kBjimt7WPqNala0xOc/6jl
+	ZVY8GvNhhOzex7P0zugPJ9dbnQHAqDrjeM0FG8Tlii50XYsVLLJOnxNHVblhKVHQmhrQUwac7ag
+	cc6hwI=
+X-Received: by 2002:a05:6808:1996:b0:495:f74a:b572 with SMTP id 5614622812f47-4b209aa84c5mr1297847b6e.5.1786470863126;
+        Tue, 11 Aug 2026 10:54:23 -0700 (PDT)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b2001331d2sm1241489b6e.11.2026.08.11.10.54.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2026 10:54:22 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v3 0/9] builtin/receive-pack: support pluggable packfile writes
+Date: Tue, 11 Aug 2026 12:54:06 -0500
+Message-ID: <20260811175415.2044235-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.55.0.424.g13c7afec21
+In-Reply-To: <20260809190106.1565882-1-jltobler@gmail.com>
+References: <20260809190106.1565882-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Siddharth Shrimali <r.siddharth.shrimali@gmail.com> writes:
+Greetings,
 
-> Changes since v3:
->   * fixed the git repack -h usage string to include --drop-filtered and
->     --dry-run, so it matches the SYNOPSIS in the documentation (t0450
->     was failing - caught by Junio)
->   * converted a bare grep in the test to test_grep (test-lint error -
->     caught by Junio)
->   * removed a stray bracket in the documentation SYNOPSIS
+With bdee7b3013 (builtin/receive-pack: stage incoming objects via ODB
+transactions, 2026-07-10), git-receive-pack(1) started using the ODB
+transaction interfaces to stage incoming objects. While this brought the
+command closer to being ODB backend agnostic, the underlying
+git-index-pack(1) and git-unpack-objects(1) processes used to actually
+write the objects to the transaction are still fundamentally tied to the
+"files" backend.
 
-These three match what I locally fixed for the patches from the
-previous iteration, so they are good.  I do not know if there needs
-other changes to the patches, though.
+This series aims to address this by introducing a generic
+`odb_transaction_write_pack()` transaction interface to handle writing
+the incoming packfile to the transaction. The existing logic in
+git-receive-pack(1) that spawns the child processes to write the
+packfile becomes the "files" backend implementation of this interface.
 
-> To do:
->   * remote verification: verifying against the remote awaits the
->     "remote-object-info" cat-file protocol command
->   * recency: a "don't cull recently-fetched objects" rule as another
->     selection criterion alongside size
->   * drop log: introduce with the error-path change that reads it
+Changes since V2:
+- Added a patch to address a bug causing ".keep" files from not being
+  removed.
+- Started handling errors at transaction commit and finalize call sites
+  instead of ignoring them. We also make sure
+  `odb_transaction_finalize()` runs after every successful commit
+  callsite to ensure proper cleanup.
+- Updated the code handling lazy loading of unpack limit configuration
+  to not longer cache the value.
+- Added a patch to begin explictly tracking the ODB source used by the
+  "files" transaction to avoid relying on the ordering of the ODB source
+  list.
+- Updated some commit messages to improve clarity.
 
-Are these "planned for longer term, material for separate sets of
-patches to come on top, after this series graduates"?  Or do you
-mean "v5 and later rounds need to do these three things before the
-series can be called complete"?
+Changes since V1:
+- Changed the "release" interface name to "finalize" and updated it to
+  return error codes.
+- Marked some function parameters as const.
+- Unpack limit configuration is now resolved in the ODB transaction
+  backend instead of wiring it through the interface.
+- When writing a packfile to the transaction, now only the transaction
+  source is prepared.
+- Updated some commit messages.
+- Updated some code formatting.
 
-Thanks.
+Thanks for the review,
+-Justin
 
->
-> [1] https://lore.kernel.org/git/20260806112202.75067-1-r.siddharth.shrimali@gmail.com/
->
-> Siddharth Shrimali (7):
->   builtin/repack.c: add --drop-filtered and --dry-run options
->   list-objects-filter: add list_objects_filter__filter_oidset()
->   repack-promisor: allow excluding objects from the rebuilt promisor
->     pack
->   builtin/repack: enumerate promisor blobs for --drop-filtered
->   builtin/repack: actually drop filtered promisor blobs
->   builtin/repack: add guards for --drop-filtered
->   Documentation/git-repack: document --drop-filtered and --dry-run
->
->  Documentation/git-repack.adoc   |  37 +++++++
->  builtin/repack.c                | 151 +++++++++++++++++++++++++-
->  list-objects-filter.c           |  45 ++++++++
->  list-objects-filter.h           |  16 +++
->  repack-filtered.c               |  82 ++++++++++++++
->  repack-promisor.c               |  15 ++-
->  repack.h                        |   8 +-
->  t/meson.build                   |   1 +
->  t/t7706-repack-drop-filtered.sh | 185 ++++++++++++++++++++++++++++++++
->  9 files changed, 533 insertions(+), 7 deletions(-)
->  create mode 100755 t/t7706-repack-drop-filtered.sh
+Justin Tobler (9):
+  builtin/receive-pack: properly clean up keep files
+  odb/transaction: add transaction finalize interface
+  builtin/receive-pack: pass shallow file explicitly
+  builtin/receive-pack: read unpack limit config lazily
+  builtin/receive-pack: lift global state out of unpack()
+  builtin/receive-pack: report unpack errors via strbuf
+  builtin/receive-pack: explicitly pass packfile fd
+  odb: return temporary ODB source when set
+  odb/transaction: add transaction interface to write packfiles
+
+ builtin/add.c              |   4 +-
+ builtin/receive-pack.c     | 211 ++++++++-----------------------------
+ builtin/unpack-objects.c   |   2 +-
+ builtin/update-index.c     |   4 +-
+ cache-tree.c               |   2 +-
+ fetch-pack.c               |   2 +-
+ object-file.c              | 177 ++++++++++++++++++++++++++++++-
+ odb.c                      |   9 +-
+ odb.h                      |   6 +-
+ odb/transaction.c          |  21 ++++
+ odb/transaction.h          |  85 +++++++++++++++
+ pack-write.c               |   7 +-
+ pack.h                     |   4 +-
+ read-cache.c               |   2 +-
+ t/t5547-push-quarantine.sh |  14 +++
+ tmp-objdir.c               |   8 +-
+ tmp-objdir.h               |   6 +-
+ 17 files changed, 376 insertions(+), 188 deletions(-)
+
+Range-diff against v2:
+ -:  ---------- >  1:  58569303f9 builtin/receive-pack: properly clean up keep files
+ 1:  10efcc22e4 !  2:  dba9696866 odb/transaction: add transaction finalize interface
+    @@ Commit message
+         `odb_transaction_finalize()` call site in git-receive-pack(1) is made
+         after the reference updates are finished.
+     
+    +    All other callers commit a transaction and immediately finalize it with
+    +    no work in between and cannot meaningfully recover should either step
+    +    fail, so introduce an `odb_transaction_commit_and_finalize_or_die()`
+    +    helper that performs both and dies on error. Call sites are updated
+    +    accordingly.
+    +
+         Signed-off-by: Justin Tobler <jltobler@gmail.com>
+     
+      ## builtin/add.c ##
+    @@ builtin/add.c: int cmd_add(int argc,
+      	repo_config(repo, add_config, NULL);
+      
+     @@ builtin/add.c: int cmd_add(int argc,
+    - 	free(ps_matched);
+    - 	dir_clear(&dir);
+    - 	clear_pathspec(&pathspec);
+    -+	odb_transaction_finalize(transaction);
+    - 	return exit_status;
+    - }
+    + 
+    + 	if (chmod_arg && pathspec.nr)
+    + 		exit_status |= chmod_pathspec(repo, &pathspec, chmod_arg[0], show_only);
+    +-	odb_transaction_commit(transaction);
+    ++	odb_transaction_commit_and_finalize_or_die(transaction);
+    + 
+    + finish:
+    + 	if (write_locked_index(repo->index, &lock_file,
+     
+      ## builtin/receive-pack.c ##
+     @@ builtin/receive-pack.c: int cmd_receive_pack(int argc,
+    @@ builtin/receive-pack.c: int cmd_receive_pack(int argc,
+     
+      ## builtin/unpack-objects.c ##
+     @@ builtin/unpack-objects.c: static void unpack_all(void)
+    + 		unpack_one(i);
+      		display_progress(progress, i + 1);
+      	}
+    - 	odb_transaction_commit(transaction);
+    -+	odb_transaction_finalize(transaction);
+    +-	odb_transaction_commit(transaction);
+    ++	odb_transaction_commit_and_finalize_or_die(transaction);
+      	stop_progress(&progress);
+      
+      	if (delta_list)
+     
+      ## builtin/update-index.c ##
+     @@ builtin/update-index.c: int cmd_update_index(int argc,
+    + 			 * a transaction.
+      			 */
+      			if (transaction && verbose) {
+    - 				odb_transaction_commit(transaction);
+    -+				odb_transaction_finalize(transaction);
+    +-				odb_transaction_commit(transaction);
+    ++				odb_transaction_commit_and_finalize_or_die(transaction);
+      				transaction = NULL;
+      			}
+      
+     @@ builtin/update-index.c: int cmd_update_index(int argc,
+    + 	/*
+      	 * By now we have added all of the new objects
+      	 */
+    - 	odb_transaction_commit(transaction);
+    -+	odb_transaction_finalize(transaction);
+    +-	odb_transaction_commit(transaction);
+    ++	odb_transaction_commit_and_finalize_or_die(transaction);
+      
+      	if (split_index > 0) {
+      		if (repo_config_get_split_index(the_repository) == 0)
+     
+      ## cache-tree.c ##
+     @@ cache-tree.c: int cache_tree_update(struct index_state *istate, int flags)
+    - 		odb_transaction_begin_or_die(the_repository->objects, &transaction, 0);
+      	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
+      		       "", 0, &skip, flags);
+    --	if (!inflight)
+    -+	if (!inflight) {
+    - 		odb_transaction_commit(transaction);
+    -+		odb_transaction_finalize(transaction);
+    -+	}
+    + 	if (!inflight)
+    +-		odb_transaction_commit(transaction);
+    ++		odb_transaction_commit_and_finalize_or_die(transaction);
+      	trace2_region_leave("cache_tree", "update", istate->repo);
+      	trace_performance_leave("cache_tree_update");
+      	if (i < 0)
+     
+      ## object-file.c ##
+     @@ object-file.c: int index_fd(struct index_state *istate, struct object_id *oid,
+    - 								  &stream,
+      								  xsize_t(st->st_size),
+      								  oid);
+    --			if (!inflight)
+    -+			if (!inflight) {
+    - 				odb_transaction_commit(transaction);
+    -+				odb_transaction_finalize(transaction);
+    -+			}
+    + 			if (!inflight)
+    +-				odb_transaction_commit(transaction);
+    ++				odb_transaction_commit_and_finalize_or_die(transaction);
+      		} else {
+      			ret = hash_blob_stream(&stream,
+      					       the_repository->hash_algo, oid,
+    @@ odb/transaction.h: static inline void odb_transaction_begin_or_die(struct object
+     + * a negative error code otherwise.
+     + */
+     +int odb_transaction_finalize(struct odb_transaction *transaction);
+    ++
+    ++static inline void odb_transaction_commit_and_finalize_or_die(struct odb_transaction *transaction)
+    ++{
+    ++	if (odb_transaction_commit(transaction))
+    ++		die(_("failed to commit ODB transaction"));
+    ++	if (odb_transaction_finalize(transaction))
+    ++		die(_("failed to finalize ODB transaction"));
+    ++}
+     +
+      /*
+       * Writes the object in the provided stream into the transaction. The resulting
+    @@ odb/transaction.h: static inline void odb_transaction_begin_or_die(struct object
+     
+      ## read-cache.c ##
+     @@ read-cache.c: int add_files_to_cache(struct repository *repo, const char *prefix,
+    - 	if (!inflight)
+      		odb_transaction_begin_or_die(repo->objects, &transaction, 0);
+      	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+    --	if (!inflight)
+    -+	if (!inflight) {
+    - 		odb_transaction_commit(transaction);
+    -+		odb_transaction_finalize(transaction);
+    -+	}
+    + 	if (!inflight)
+    +-		odb_transaction_commit(transaction);
+    ++		odb_transaction_commit_and_finalize_or_die(transaction);
+      
+      	release_revisions(&rev);
+      	return !!data.add_errors;
+ 2:  e1903ac32f =  3:  09bc00a070 builtin/receive-pack: pass shallow file explicitly
+ 3:  e4950c0abe !  4:  2586ea4041 builtin/receive-pack: read unpack limit config lazily
+    @@ builtin/receive-pack.c: static void push_header_arg(struct strvec *args, struct
+      		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
+      }
+      
+    -+static int get_unpack_limit(struct repository *repo)
+    ++static unsigned int get_unpack_limit(struct repository *repo)
+     +{
+    -+	static int limit = -1;
+    ++	unsigned int limit = 100;
+     +
+    -+	if (limit < 0) {
+    -+		int receive_limit = -1;
+    -+		int transfer_limit = -1;
+    -+
+    -+		repo_config_get_int(repo, "receive.unpacklimit",
+    -+				    &receive_limit);
+    -+		repo_config_get_int(repo, "transfer.unpacklimit",
+    -+				    &transfer_limit);
+    -+
+    -+		if (receive_limit >= 0)
+    -+			limit = receive_limit;
+    -+		else if (transfer_limit >= 0)
+    -+			limit = transfer_limit;
+    -+		else
+    -+			limit = 100;
+    -+	}
+    ++	repo_config_get_uint(repo, "transfer.unpacklimit", &limit);
+    ++	repo_config_get_uint(repo, "receive.unpacklimit", &limit);
+     +
+     +	return limit;
+     +}
+ 4:  c9b4ff73ba !  5:  adf325095e builtin/receive-pack: lift global state out of unpack()
+    @@ Commit message
+         Signed-off-by: Justin Tobler <jltobler@gmail.com>
+     
+      ## builtin/receive-pack.c ##
+    -@@ builtin/receive-pack.c: static int get_unpack_limit(struct repository *repo)
+    +@@ builtin/receive-pack.c: static unsigned int get_unpack_limit(struct repository *repo)
+      	return limit;
+      }
+      
+ 5:  7be990c2c2 !  6:  29f407bf36 builtin/receive-pack: report unpack errors via strbuf
+    @@ builtin/receive-pack.c: static const char *unpack(struct odb_transaction *transa
+     +			return -1;
+     +		}
+      
+    - 		lockfile = index_pack_lockfile(the_repository, child.out, NULL);
+    - 		if (lockfile) {
+    + 		/*
+    + 		 * The lockfile filepath is expected to be the final location of
+     @@ builtin/receive-pack.c: static const char *unpack(struct odb_transaction *transaction,
+      		close(child.out);
+      
+ 6:  742c724943 =  7:  b85f5e868c builtin/receive-pack: explicitly pass packfile fd
+ -:  ---------- >  8:  620eafe035 odb: return temporary ODB source when set
+ 7:  7743cf242a !  9:  2e75a8bd6c odb/transaction: add transaction interface to write packfiles
+    @@ Commit message
+     
+         Introduce `odb_transaction_write_pack()` as a generic interface to
+         handle writing a packfile to a transaction and use the logic from
+    -    `unpack()` as the "files" backend implementation. Note that a packfile
+    -    written via git-index-pack(1) is kept in place by a ".keep" lockfile
+    -    that must be retained until references are updated. To faciliate this in
+    -    an ODB backend agnostic manner, the "files" transaction backend takes
+    -    ownership of these lockfiles and removes them post-commit through its
+    -    release callback.
+    +    `unpack()` as the "files" backend implementation. Note that when storing
+    +    the objects as a packfile, git-index-pack(1) also writes a ".keep"
+    +    lockfile next to it to prevent a concurrent repack from removing the new
+    +    pack prior to reference updates being performed. The "files" transaction
+    +    backend is responsible for managing these ".keep" files and removes them
+    +    post-commit once the transaction is finalized.
+     
+         Call sites in git-receive-pack(1) are updated accordingly.
+     
+    @@ builtin/receive-pack.c: static void read_push_options(struct packet_reader *read
+     -		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
+     -}
+     -
+    --static int get_unpack_limit(struct repository *repo)
+    +-static unsigned int get_unpack_limit(struct repository *repo)
+     -{
+    --	static int limit = -1;
+    +-	unsigned int limit = 100;
+     -
+    --	if (limit < 0) {
+    --		int receive_limit = -1;
+    --		int transfer_limit = -1;
+    --
+    --		repo_config_get_int(repo, "receive.unpacklimit",
+    --				    &receive_limit);
+    --		repo_config_get_int(repo, "transfer.unpacklimit",
+    --				    &transfer_limit);
+    --
+    --		if (receive_limit >= 0)
+    --			limit = receive_limit;
+    --		else if (transfer_limit >= 0)
+    --			limit = transfer_limit;
+    --		else
+    --			limit = 100;
+    --	}
+    +-	repo_config_get_uint(repo, "transfer.unpacklimit", &limit);
+    +-	repo_config_get_uint(repo, "receive.unpacklimit", &limit);
+     -
+     -	return limit;
+     -}
+    @@ builtin/receive-pack.c: static void read_push_options(struct packet_reader *read
+     -			return -1;
+     -		}
+     -
+    --		lockfile = index_pack_lockfile(the_repository, child.out, NULL);
+    +-		/*
+    +-		 * The lockfile filepath is expected to be the final location of
+    +-		 * the ".keep" file after being migrated to the main ODB source.
+    +-		 * This ensures the lockfile can be found and removed later
+    +-		 * after the ODB transaction has been committed.
+    +-		 */
+    +-		lockfile = index_pack_lockfile(transaction->source, child.out, NULL);
+     -		if (lockfile) {
+     -			pack_lockfile = register_tempfile(lockfile);
+     -			free(lockfile);
+    @@ object-file.c
+      #include "strvec.h"
+      #include "tempfile.h"
+     @@ object-file.c: struct odb_transaction_files {
+    - 	struct tmp_objdir *objdir;
+    + 	struct odb_source *quarantine;
+      	struct transaction_packfile packfile;
+      	const char *prefix;
+     +
+    @@ object-file.c: static int odb_transaction_files_commit(struct odb_transaction *b
+     +		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
+     +}
+     +
+    -+static int get_unpack_limit(struct repository *repo)
+    ++static unsigned int get_unpack_limit(struct repository *repo)
+     +{
+    -+	static int limit = -1;
+    -+
+    -+	if (limit < 0) {
+    -+		int receive_limit = -1;
+    -+		int transfer_limit = -1;
+    -+
+    -+		repo_config_get_int(repo, "receive.unpacklimit",
+    -+				    &receive_limit);
+    -+		repo_config_get_int(repo, "transfer.unpacklimit",
+    -+				    &transfer_limit);
+    -+
+    -+		if (receive_limit >= 0)
+    -+			limit = receive_limit;
+    -+		else if (transfer_limit >= 0)
+    -+			limit = transfer_limit;
+    -+		else
+    -+			limit = 100;
+    -+	}
+    ++	unsigned int limit = 100;
+    ++
+    ++	repo_config_get_uint(repo, "transfer.unpacklimit", &limit);
+    ++	repo_config_get_uint(repo, "receive.unpacklimit", &limit);
+     +
+     +	return limit;
+     +}
+    @@ object-file.c: static int odb_transaction_files_commit(struct odb_transaction *b
+     +
+     +	odb_transaction_env(base, &child.env);
+     +
+    -+	if (ntohl(hdr.hdr_entries) < (unsigned int)get_unpack_limit(repo)) {
+    ++	if (ntohl(hdr.hdr_entries) < get_unpack_limit(repo)) {
+     +		strvec_push(&child.args, "unpack-objects");
+     +		push_header_arg(&child.args, &hdr);
+     +		if (opts->quiet)
+    @@ object-file.c: static int odb_transaction_files_commit(struct odb_transaction *b
+     +			return -1;
+     +		}
+     +
+    -+		lockfile = index_pack_lockfile(repo, child.out, NULL);
+    ++		/*
+    ++		 * The lockfile filepath is expected to be the final location of
+    ++		 * the ".keep" file after being migrated to the main ODB source.
+    ++		 * This ensures the lockfile can be found and removed later
+    ++		 * after the ODB transaction has been committed.
+    ++		 */
+    ++		lockfile = index_pack_lockfile(base->source, child.out, NULL);
+     +		if (lockfile) {
+     +			ALLOC_GROW(transaction->pack_lockfiles,
+     +				   transaction->pack_lockfiles_nr + 1,
+    @@ object-file.c: static int odb_transaction_files_commit(struct odb_transaction *b
+     +			return -1;
+     +		}
+     +
+    -+		odb_source_prepare(repo->objects->sources,
+    ++		odb_source_prepare(transaction->quarantine,
+     +				   ODB_PREPARE_FLUSH_CACHES);
+     +	}
+     +
+    @@ odb/transaction.h
+     +	 * The max size in bytes of the incoming packfile allowed. No limit is
+     +	 * enforced when set to 0.
+     +	 */
+    -+
+     +	off_t max_input_size;
+     +
+     +	/*
+
+base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+-- 
+2.55.0.424.g13c7afec21
+
