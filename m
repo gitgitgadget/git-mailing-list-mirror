@@ -1,169 +1,165 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BC3441612
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 12:14:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9A5442FB9
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 12:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786450500; cv=none; b=PLCMysx9BfOhG32FdpTY81LC0i9byXdrZ5GM96s4uw9tt7D6UoUsmzMaxcPxLynXhnTYxYh2ilbYOnM6Smuni3RWE+dav74pHxqkXfwjJN4TPsD9Vb5NmxltyStzQGBKrEJxdUa/cuI3Iqu24rNK66G7NyOCerzwOWREoE8/BYY=
+	t=1786450568; cv=none; b=phjRRBAF/5gR+kEYr3D0ViEhrDA3KzGqed7vIf9qws3CzPvw2D7//2tXsTYhj0xrX1QQeznQM6Gse1G/mRFEMTZyXcsw/2BVfMeqg/McyBw7NHR188NzESr0yGrn6u+K7ULOL24ETA0lQfMpR3OxAMdlOve6xf167Da1UGsRQxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786450500; c=relaxed/simple;
-	bh=J+jDwEemeLpVeY5wbqnfTOQ6eslGzypwJLb1mIXsSSs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AM6sbsFXrWGkVoDF+aIBYC5Hd7eT6PpABlZjbHra3QrBaV1x/Wkdqguusird2vy9vIROPc2kvmTTAOMC6GYwaAh3K9hr+F3TG8oJ/UjcQU7/5IQKih5PrnIG9+pcBYEC9oNp8wKVkawcfvlMv/eNaHI8fqF8QTh4xU7F1Hxruyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bSZ/OiGS; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786450568; c=relaxed/simple;
+	bh=Sj1s9IbSamzxSqGYqKYTmF6G9DAID8msgFwICtVp3tw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MFXdwVzBZ05w7HNMRtNIVg7OAcH1DS/68krCiaHMjSvx/WwNuBupRYbAcUn9d4aqIw6NHO3a1kgQl9D+lWP7YixxzFhHGNyDjC4+CMF6NfI/7TWIFxgWixxXTy0UFhbxlIJOzoJo/QYjNBwsbeOMne05cxX2+V0iMZZmqY9+Cmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G0ksNqvL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q/EbFNYo; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bSZ/OiGS"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-47de0093c42so2170420f8f.3
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 05:14:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786450497; x=1787055297; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=h2tKAC7GtCOMpGQyLnNyJ6LiOBS1c1suC/XDv632/jU=;
-        b=bSZ/OiGSO+yyzxFSMVh1OW280KD164aYMqgxFxB/uNZXe2J9bvDt/m1VmOcEE5IXbm
-         K4MAc8BL0VRdrNaQYluGtgTj8T1jK9BvQP0uzrxunYnDCSDp5hfzWHuiS+NyXZSfL/FO
-         +7F2Jr7hNteFwcoB+Gc9GIF57GuoWVXie5gogkmG2+d69PqrYM0MwZ/7RVNmjriD8dUq
-         WKqxTQS32EzcZ2zUsWumFSGpNW8HBDQjCgEPEgarxksbxTfhqSCrc2wwd4zsdHlVi16H
-         ao9LFIeR5z/guGguDl/m4c1/kp5c3dw0Ujo6TcjeIwZMaK7bBVbQGnOQRNQNRBnYGoRx
-         q6Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786450497; x=1787055297;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=h2tKAC7GtCOMpGQyLnNyJ6LiOBS1c1suC/XDv632/jU=;
-        b=eLLRpLuP+S7RbnKbt3nxALoupyVWxWs6XTDnH4XBdbp2CPL+TSGjePg4MC7JJ6sAb3
-         jJwUfdM4JmkCBUtJWw0q/kGR2kgO75pfQNbB1iv2L66CjGMINhgCGe5X1LBYPwVHepeY
-         hRYshJSmqtY4b9bNa1MfItnX3kqa9TqvYOBUVeCaA6RFJrSoce8q4U0Yfx2O98C5yP69
-         Jza50vlBEoXjLlpQty52Q127cjx3O0TAcmZKhUY0b9VBR1AWjkncjKxD9A55UoLeG0zc
-         fcfKAYz94aZua4FAN0qGRNUsUrpoYIIn27JQ/LeDzubWM7a9F8vhuW27ozzHV35C3SIh
-         n1bA==
-X-Gm-Message-State: AOJu0YwyYICoO3oS/2LtEi2k0TUF6oX51A/Yaif0NyXiU9KlflA3okQX
-	Z/12pfHNt4FvuA2VwgqLRlivAlbeWpxfLzW5hh2LMrce4CCv40bBKTrjV3ibZA==
-X-Gm-Gg: AR+sD10ev2mSBIrgP52s/pe/TUXecGQglgUf7IVjhyTZThqvYZCQJV5//DVBY/Wrc5z
-	algAMI5hT4HIJ5BMIlGAYcYPc5JWuSejrI/DfiF9cYbTfwe2U8e6M4nrzBroK33wd+UVyWo4q+k
-	aeZ5b/iv5rDKvtlcJJPJoArC8go3bR0HDEJXN3v3Xdl5tC74lTy1HyXNMRyWf3rWEdV93qXmlj4
-	OEqhHyJuaLpYyjBcWqkzym6HsCsig6CeFq/be2vw6swOWcuB2QgD5b0p0JlEAiSnO5wBUUPdGWc
-	mSZvkR0JGwdnClQMpkTUrt+qpG6E2gW2UxCGz4E8XZg4EUTfzEHewt4kEHxX9p2s54eQVVoVMgs
-	G7eixtOr8k3kJ6UGhZ6bLzZTi6jZIeFFpKR8RoPrVs2p1bq+paYtQPteDkZsYdWYgwHR25g0MBm
-	4ErQQKoiwXQjPutCiYkEFT083VWkSus5uzZjE6mHz985nvMIf/ObfQ90fGdjAA8XULKmof5nINc
-	w8OtSrK2qiPGFMHBx0LMZqdq9/Om8+11ouY5LsaxltI8jq5XeWKbLjYssxKLIIDsQSbCbXyBf7+
-	AbN1qoJELH+u0Q==
-X-Received: by 2002:a05:6000:401f:b0:47f:c648:e274 with SMTP id ffacd0b85a97d-4814ad82dd9mr4679594f8f.5.1786450496590;
-        Tue, 11 Aug 2026 05:14:56 -0700 (PDT)
-Received: from christian--20230123--2G7D3 ([2001:863:5c3:d4af:d54e:6668:f481:32d8])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4814a72cea1sm4553257f8f.37.2026.08.11.05.14.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 05:14:55 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G0ksNqvL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q/EbFNYo"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C9116140008C;
+	Tue, 11 Aug 2026 08:16:05 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Tue, 11 Aug 2026 08:16:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1786450565; x=1786536965; bh=uCrVIWl/y+
+	IxCLsf6g8UgLb1D1SFYqgndHqohvvQ/Yg=; b=G0ksNqvLVzICwn/HslbOYstInq
+	Ss7dLkYnNdqpa1X0A43ppfhWde00zrcRATUWTL2Y5nUZljMD6OM7B+Yl2bCwc8j4
+	RhWP0Pkd8mA4LeHrq7yAgqwxkez7OFifHQi2fjBQ2lDv09K5czhIIr7F2ZnSi6VF
+	iR1O4sPrf49PS298ZoAs/VClC7k+VgwMMdFikLwyA5x/Y4Sr8CgQPo/BVceXpilo
+	p+T3EpKPpq4ERclU1eTOMjrkgrxM0M3Jaw7eX59b8hdrP2Ny0YCHpWc2KHzPxkTi
+	ah6SpRFuJ3sRUeIKZxLYIkAZNHafyygef7u3f9Jb3Ne//YMHORMv9ClHHLdw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786450565; x=1786536965; bh=uCrVIWl/y+IxCLsf6g8UgLb1D1SFYqgndHq
+	ohvvQ/Yg=; b=Q/EbFNYoHBSRKHLAU+CyDppLruiC7BSPAPc1bx+LjOeMzI80Vby
+	QxkXsEf8LYFGkFd/Xf8e9jh0e+IDWK/o/ZagN4HVGlgZUEwdGGkKUn3/jh8h0gIt
+	vaVBJr83Rm9Pjzy/VQvOquWnsVYThSd6XO0s2QmtHKwpcn65oa3vMEs9GLMgmnG1
+	Z4IAwAi35bM8oNdu56jYUdu/9/RAo6NIML6Clmc9lSZpwvSpTUsguBf3jhk6zwz9
+	ECkiHfH/DAISwW359Cic/8ChuXL5Y6dqvm6I4A5Mt+j8BL8SjbDBx0JwgFp8AnnG
+	y1Putfw1v2GQXuuxrvc36BAx21Fzw5Z0oOQ==
+X-ME-Sender: <xms:hRJ7apOeJm4BPltfmr3SA4BvgkkYX1Ah5BcV9deDOinFQMx_nfPUPQ>
+    <xme:hRJ7ag5M-k9KHiaooBMo8DRipl0Lew5MSRqR-dTxMMZMZDbVtcaJING8AR0Mcg08r
+    clAO2XYkRhrajwn3ZEvptQH9vZwD3776sYJF-pUZA2elzJuiuBX>
+X-ME-Received: <xmr:hRJ7asglT7CgPorqm4vzfuc9wz5EMG2qKx_5W-3E9NZBRGdQf0IiTfuDrhJmiYrHbF2e_Bi1ZnXB1Fmi4amqyEt-P71JKrGatx639Lzz6w>
+X-ME-Proxy-Cause: dmFkZTGNZSUG8x6t9D95fk5LSwpnBJRbjlSVjjIhV5agQdPIn+S8RNV8CNlZ2dkMHPbufS
+    7kjSc9RigUNZSQh3BgeoFiffXoDMX9adklSFotvS21Bia9troBC0uEGl5criU7i4QT9nmv
+    dGOYK8OrkgGZu6mddzx4/EbeEGayg0lzKLyIiUYtYBmsK261pP5d5+gjVp9ggaT0+fOhRF
+    zeUl0V6CwLsvL04hRTiQZpnZtPkX7rD7zXypdHdOmu1tSSGED2QDRY0DG1UT3zzpE82uwB
+    0cxKbIKl2cnyD3Iq163Owx7KoLC3KXY/5bcXPtFEDv3koVgj0jT6YJNPtPNKJP4PDFALnl
+    LpS5wfDFeri/LV9+YX2TU1/HK9i+aKZ0u1B+6p3p+ihLYV76m3VvRFEICIWrd21x+RcURA
+    nNFvnCXfCycKWeS4NOWWSwszvBYPSNlNToqDP9MLkUL/UKNF+x8yRBeHzRXUDIkrSIFQrf
+    8nPxcc9Vu++pJVISU+PDYfUqUIzomDOqRQ76xeaD6OuQcdCqpNm1z2NyjxNlVFnGMWuLv/
+    v1wG0uxBum0l48s9wVWD+2vVJwVwAwuwvzV/tB8xU1geA4TYwcceA6So45N/hMrUWJG/Hu
+    IVXOQh2aYzDTKZ85UOVF4JhqEgD0YNVMZN1YskZwBsHSXJo+G1Eo8/wJcBJQ
+X-ME-Proxy: <xmx:hRJ7ald8poPc8uxDuUbYUEohzYin25OyDI1cW_wk3jkdd-LkLN4VGQ>
+    <xmx:hRJ7akwX1HztCT55mPiu1lLri4DKlOeLO7WTvEbGesVm-0edM6o5dA>
+    <xmx:hRJ7ak0aGI1TnN_Rg8Aqx7Ub-MpWHK4tTomYUNXtEtoF9K0AoCKlLg>
+    <xmx:hRJ7aqyZhjNrOFqsKxVQeT4d6-iuGXxwd0LfXXyLUw-fmIRigF-JDQ>
+    <xmx:hRJ7ahea14d3L0NFZHXohqLsmeO7ww3kUVV1Ou7HNQW0EQ3Q73JDwLbw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Aug 2026 08:16:03 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 04a7aa88 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Aug 2026 12:16:01 +0000 (UTC)
+Date: Tue, 11 Aug 2026 14:15:57 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <ttaylorr@openai.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Justin Tobler <jltobler@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] git: avoid segfault on "git --shallow-file" without a value
-Date: Tue, 11 Aug 2026 14:14:46 +0200
-Message-ID: <20260811121446.2080190-1-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.55.0.540.g010afd3166
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH RFC v3 2/2] Move libgit.a sources into separate "lib/"
+ directory
+Message-ID: <ansSfYBPm6lZc7jB@pks.im>
+References: <20260701-pks-libgit-in-subdir-v3-0-5e4860056094@pks.im>
+ <20260701-pks-libgit-in-subdir-v3-2-5e4860056094@pks.im>
+ <al6Yz_QMlyU1GETv@fruit.crustytoothpaste.net>
+ <xmqqqzkx9t95.fsf@gitster.g>
+ <al6yCTDjBRn2HGq0@com-79390>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <al6yCTDjBRn2HGq0@com-79390>
 
-In "git.c", the other `handle_options()` options that take their value
-as a separate argument, like `--git-dir`, `--namespace` or `-C`, check
-that such an argument actually exists before using it, and error out
-with a message and the usage string otherwise.
+On Mon, Jul 20, 2026 at 06:40:57PM -0500, Taylor Blau wrote:
+> On Mon, Jul 20, 2026 at 03:43:50PM -0700, Junio C Hamano wrote:
+> > I do not think we want to do this in a single large change.  If we
+> > were to move everything to 'lib/' only to then need to further group
+> > them into subdirectories of 'lib/', it would subject us to multiple
+> > rounds of disruption.  I suspect it would be far less disruptive if
+> > we migrated one subsystem at a time, directly to a new directory
+> > immediately below the root level.
+> 
+> I agree.
+> 
+> Though it may seem *more* disruptive to do it piecemeal instead of all
+> at once, I think it would be preferable to avoid having a single
+> subsystem have to move multiple times.
+> 
+> That said, I am not sure that I completely understand the motivation
+> behind such a change to begin with. The second patch in this series
+> claims that:
+> 
+>  - "The Git project is not exactly the easiest project to get started in
+>    [...]", because in part:
+> 
+>  - "[..] finding your way around in our project's tree is not easy.
+>    Doing a directory listing in the top-level directory will present you
+>    with more than 550 files, which makes it extremely hard for a
+>    newcomer to figure out what files they are even supposed to look at."
+> 
+> I am not sure I understand how moving ~700 some odd files into "lib" makes
+> the project easier to navigate. I understand the patch's latter point
+> that:
 
-The `--shallow-file` option doesn't perform that check. It blindly
-advances past the option and then dereferences the next element of
-`argv`, which is the NULL terminator when no value was given. So
-`git --shallow-file` segfaults:
+I guess the motivation is still not clear enough then. My maint intent
+isn't really to make individual files in "lib/" more discoverable.
+Ultimately, I agree with you that they're not really becoming magically
+more discoverable themselves, except...
 
-  $ git --shallow-file
-  Segmentation fault (core dumped)
+>  - "It is not obvious at all which files are part of "libgit.a" and
+>    which files are only linked into our final executables."
 
-Let's fix that by checking that a value was given, in the same way and
-with a message worded like the ones the other options use.
+... that it's becoming clearer which files are part of libgit.a and
+which are not. And that to me is already a benefit by itself.
 
-While at it, let's also set the environment variable before advancing
-past the option, instead of advancing first and using `(*argv)[0]`, so
-that this option looks like the other ones.
+But what I care about is to make everything else more discoverable. We
+have a bunch of files and directories in our toplevel that are relevant
+to developers, and especially newcomers will have a hard time to even
+discover them when they're looking at 561 files.
 
-Note that all the in-tree callers passing `--shallow-file` to a `git`
-subprocess always pass a value after it, so they are not affected. In
-`upload-pack.c` that value is an empty string, which is still accepted.
+> But don't see how this distinction will help newcomers who are likely
+> not yet thinking about which files are part of libgit.a and which are
+> not.
 
-Signed-off-by: Christian Couder <christian.couder@gmail.com>
----
+They're not. But they'll care about there being a README.md,
+SECURITY.md, a conde of conduct, a license, installation instructions,
+build systems, and the various subdirectories that we have. All of these
+files are currently getting completely drowned out by the noise.
 
-While working on modernizing `git fast-import`, I noticed that
-`--shallow-file` was handled differently than the other options that
-take an argument in "git.c", and found this segfault.
+> My other thought is that I worry that "lib" might itself be somewhat
+> misleading, given that many of the files being moved are not especially
+> amenable in the current form to being linked against as external
+> libraries.
 
-I have started working on a better way to handle such options not only
-in "git.c" but also in other files. For now though, I think a small
-localized bugfix like this is the simplest solution.
+Fair, but they still result in "libgit.a".
 
-Not sure if "t0041-usage.sh" is the best place for testing this, but I
-couldn't find a dedicated one.
+Thanks!
 
-CI tests all pass, see:
-
-https://github.com/chriscool/git/actions/runs/31478034826
-
- git.c            | 10 +++++++---
- t/t0041-usage.sh |  7 +++++++
- 2 files changed, 14 insertions(+), 3 deletions(-)
-
-diff --git a/git.c b/git.c
-index e5f1811b6b..96df15b5cd 100644
---- a/git.c
-+++ b/git.c
-@@ -304,11 +304,15 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			if (envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--shallow-file")) {
--			(*argv)++;
--			(*argc)--;
--			setenv(GIT_SHALLOW_FILE_ENVIRONMENT, (*argv)[0], 1);
-+			if (*argc < 2) {
-+				fprintf(stderr, _("no file given for '%s' option\n" ), "--shallow-file");
-+				usage(git_usage_string);
-+			}
-+			setenv(GIT_SHALLOW_FILE_ENVIRONMENT, (*argv)[1], 1);
- 			if (envchanged)
- 				*envchanged = 1;
-+			(*argv)++;
-+			(*argc)--;
- 		} else if (!strcmp(cmd, "-C")) {
- 			if (*argc < 2) {
- 				fprintf(stderr, _("no directory given for '%s' option\n" ), "-C");
-diff --git a/t/t0041-usage.sh b/t/t0041-usage.sh
-index 51af7cc030..2a9c5eafca 100755
---- a/t/t0041-usage.sh
-+++ b/t/t0041-usage.sh
-@@ -107,4 +107,11 @@ test_expect_success 'for-each-ref usage error' '
- 	test_grep "usage" actual.err
- '
- 
-+test_expect_success 'git --shallow-file without a value' '
-+	test_must_fail git --shallow-file >actual 2>actual.err &&
-+	test_line_count = 0 actual &&
-+	test_grep "no file given for " actual.err &&
-+	test_grep "usage" actual.err
-+'
-+
- test_done
--- 
-2.55.0.530.gdb3615d990.dirty
-
+Patrick
