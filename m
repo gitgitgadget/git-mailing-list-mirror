@@ -1,111 +1,128 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2514713B5B3
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 16:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CBA361972
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 16:32:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786465861; cv=none; b=KWeFst/nsKqBBd0Z0oX0mea7LlunbUHMRhxZCLrHy0wBlzU5ydphunhbxxSlQ7NETNjOaQyc6Hh2YXHpVkFxXT/xTpl3o1frxNd6MyQCS3wfgnwlVmf5+2V6rb4A4DbGkU8gbl8RCLmcLUOSlrHG9kAZ4pAY7p8A/qy7lFtIAzo=
+	t=1786465939; cv=none; b=G50SNQQYCkM+zVnqhsT6SGXQzK2UBTHO49OmjR2P5ucqBLAwkzl9pEyHM7+fq9gHxB0+sB4ILRPw4L/sJhszPmIjvdyCX5HrUvkRGz7B+yTBwFXSNn2zKyYHAD8N+jajVSb4hLtdH8pWIOPb3sqM5fPEIzwQrVR7LoszNt4u3sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786465861; c=relaxed/simple;
-	bh=RdkDsvYyq81cwPhAc32FwOxVRetqVDpT9kkZ3QNqK9Y=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=uaEYP7rFk7XxABAc33vTx1mSPmLAqxiD+DbU3HuZC8pFs8ksJptFLdeDWvnjG8WFkuEGqVZ6KBiBuyevqv9UsClGbUSCoYd7z/UkVgj8Ce132b47FlIqLFK0fhN0FZHnehun9kAPdtYxAe3X+GL6Cg2WmkfXAy3QB7hkvCPXbQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=HByraLkz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G2UhVweX; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1786465939; c=relaxed/simple;
+	bh=CwgDthQi/WPCAKyRrgt4/OoCPq8tHJfu1PP3CXLiXVE=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=QNlI8M/mFi2UEWNtKOIVsrOF/2txCU0ccLIZp1AJF40H1yt0/Fq+ViWDJUfYYHvhu5nOz5twGB/46zcqMOch8IjIFMJ8PnevPL0NzVSOBx4padIU4hXqHFvZ04Wayae2lh0eHxQmBw8ZwZRPIfHgMdk2whVGBq8sW4Tnycv3ksk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TtBhFimK; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="HByraLkz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G2UhVweX"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3B76E1D0013C;
-	Tue, 11 Aug 2026 12:30:59 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 11 Aug 2026 12:30:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786465858;
-	 x=1786552258; bh=CSvvUk65HU/qQICC0FYNPQC6SFcBTFTXZpNbnRF6oqA=; b=
-	HByraLkzNi/regN8Ri/+YDzgBAvMtomdb0pG5C4SPZcjBtndR6wWwb2R37VcxnbO
-	otdT4VKy8b9bU8U7R1J1OfkWLG/YXZM/qB9U/ouPB8B6tUeaCxchnoDt+tPKxNXQ
-	4+hGp5Sbe+Cdyc3Oq++xIoijg2piYwmsSiOVpY13WgCyEZ3r8MA5diFVkFv3UzFX
-	lmzYh2Qnb3OqPfoqlt8ScYmUbAJHPuhAwEF9d4b++YDbsTvckgjIYg/REfn5WCX3
-	GhUVQHEoGnlv0vgaBCnGpBy2H7ZnGFaWEFTxenHSThSh8WXuCpNO9DzPBOX6DIcA
-	9bcTUyvTlPZ+aUBru55qQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786465858; x=
-	1786552258; bh=CSvvUk65HU/qQICC0FYNPQC6SFcBTFTXZpNbnRF6oqA=; b=G
-	2UhVweXsZgEGk2IcsuPZZEyKQ8JDJYTIAh62I/mzs9LXoxcdmdx2YZp2nNa/r01C
-	eAWUPb7cOvWOUQuUs7YxvBlXqSzOnUaBBtHzU9ydhNGX6DrccfpFFsAwxWApItqE
-	QFPPYazdPCwcOxkdU7sFhC/sHk1hTzlCDahz04FMugNdfHoEHPB+Sez5SSpu+nSm
-	eFTHWG/4+afclHaNXMPjBJbIfwAlx6nh4OLtKmGww6tV3aRiQINJg07vcAnNK7G9
-	Ptgy5FRNJli2VN8OJqDX7qoBa3znBnTUyPLK5c2WqzztJTjuCPLxudV8POdCg62u
-	mOsmVKKdsQLsun0Qj3eZQ==
-X-ME-Sender: <xms:P057aqYsxva5M8NLWHaH3YTbcnFUcrsleLpdB2ysiHjx306NuO7UO6Q>
-    <xme:P057aoP6FBeYDNOTmA5wrEuCz71qYyHYm9AtODwz-o4W-kupWputZEe9596YAwVbu
-    -wMebydAMfqyF42t_9282Br99G_ekcmDef79NHCEq6lKx0Qczlf>
-X-ME-Proxy-Cause: dmFkZTEx0ykU6OyRGQ9n83ju25nNhbwyMXNd0d0w3fOOMcBUdGuaaFrsuB/vwbcK4TioAB
-    CXns29iJ8CMBvjviV65K70w8U0AsDYmKxcf2L79UackcuPpirXW0cyMZAFrIf/Qi9vMuyf
-    XJzjHbypR437RfFWAWiVGMmtqKHgfPW2uF4xr/JSlWCqE5NSxfzu+AfNdK3xnkZpwb49TI
-    lwJteBk1wo+rU5YxQq6tIXhj2o9rgrGr40Bwv3ym9w6WgpHZjXxSUecN6OfszbFASGu96Z
-    FFnyUIr/D5gid+K+XGCB401iruNvbuuuqF+b50vu0coqN7HSwjF9bIVko+QeYfHbv+x5Zu
-    6TAtLrrJ6UP64ZBN0r0eT4kFKQEFCutyQgeZMVMqTVVdpfChELjeqtLRuXjsA0JOQL5nAx
-    3QA7CRuNUl2xM429YN4KmT6YINbIcM1vDJ82ry5ZE7bDM+mWWKi9tCtWc64QqO0nepM5yh
-    oPIsXxnYOUiD44im0ergzcRlod3RlIyGU9P6zRFHpS20Nf3oN5CxaE+pLtyKGVqMBS2bUK
-    +eqBUd8So0wreT+9/RMWthWlHojaEzIhVh/aWqNaoHPgt6e+HMEBKctS3RYyHlTzXGLf5Z
-    H5UN5kZqBalmcAxwgDtM0Erxiinw7Bl0ZGT7rlnKB60APyrQtm5cbdnZUerg
-X-ME-Proxy: <xmx:QE57alEJLauv5zuU4viydjh0Y_nujS5W_Gb6CkCec7V2ObUbP84f5Q>
-    <xmx:QE57aoQGElUES7SbEGQ5RCyku3ocCBEKDi5tg027ZUam5gVcCDsXSQ>
-    <xmx:QE57auvb_c10z1-8_jn_MQ-3W-OGPPniPFaeqjQJix_6g-9bpapXyg>
-    <xmx:QE57anyw5-wFrqfipeTkaSraehZeYnX-0B39XvScryKVMmJk_zofwA>
-    <xmx:Qk57au9qPp6HawS8rJhEVp7BNvCnMDsZhpj3-XxZ1S1c0FeXidCcsIaQ>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id C3ABB22C006F; Tue, 11 Aug 2026 12:30:55 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TtBhFimK"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-81ea0b7d137so25443237b3.2
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 09:32:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786465937; x=1787070737; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=FUr+nMrLJcfzcZsVfWjSwb/cxhN7c7MgM3O82EHjMxQ=;
+        b=TtBhFimKnw17dXs08r7HzeSC2dpk0UUiMO0sLc6G7LQp5ys+GqzqWVdp3nL8WlRfqe
+         Oz5M38z1+vMIEm/E0lq36E0lq44T2Vb9M1vmA9au6odIX7U8QMbJS7B5X85NH6MS/K8z
+         JsYP2ru2pPaJ1Ra4w73f8gPjtVRayLSc11gmj14eJkL47nXOULXIySHjeNhvLvPjFffS
+         qCGNhs08hfiUz+j1h+l5+KO5YIdJqWT38G9rK2fTtMGV3kaOjsuBD/qhY/8nx4pMnAvl
+         pRwMH1K0Uls9+xhJcb9y7I+bNiI51bXbqnNrk/wehTJ1P8LKL1OXrusOwlPGWH4YX2Yy
+         0bRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786465937; x=1787070737;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FUr+nMrLJcfzcZsVfWjSwb/cxhN7c7MgM3O82EHjMxQ=;
+        b=f35kaDUH5UndpjmkR4WZz8jfVyLUcQlGkebdP/uAGaDxOGo6PbcaiEBSkR7/wUsVTV
+         VZtvw/wU9tS2/gD6bvGSO5vKfBhPEP37sDryIOmXu1zQFXToo8UnHhIaa3mVUHc/lEgx
+         QjEWMBTyFTAKz3URhiBwG0xyaBjD8F44cLfmD6naLsxU6Ifpn3mT+FlCWgtd1i3I8+V6
+         zf2GhCeiwjV/ZRykNjNFQInkZLCxew54/Nhq4uTqs2NAUMuiPdaFGZchq9eMUr3CqhDS
+         KWg8nw5KNuguDL2si9Cz8wiJQDE+e4KArgVyXJsDjZNoA4R3J4NV1dXTCCe0wkpfyhM3
+         JqKQ==
+X-Gm-Message-State: AOJu0Yx1bfkavjKaouuDIkkW7bX88Vq2meKr+6+xakqLNnCdOJIo8hAT
+	Bfp6/k1uZxbTl6H9iYT8xrq6AKd7ufvZUDD5r3V/uEGotnXLfbpqx9QE
+X-Gm-Gg: AR+sD123/Nopgj3TwQEPAVyjQ+FSUeNGDHT78TQfHjogT2TQ/IL64Oxpmc1M7Ma7iSz
+	SNt8zcqvEASXtFwB4FTQf2oDfXPcW6ZjrWAxoCxj3b0yUrBf/DcSHxtW/QqftqNK2SA0ZZGWLOX
+	Tg7oODcn0CMD8oAgivzKfwgHyOZkhFOSx7vZAIPT3Oh5TGmN0hXZmhsd+1QHo2urQ1kWM2oT7mm
+	f4hqCzQU1b8fs+T8FcOmuxSQ2z3X4+YoT4qQcLnhDQGnNW8Ex3Zl181w0KTpIylZwXqfOCoAtZW
+	Yq5E3Wqn1q86y5aw4IhzMNLdysJn04cQmV35FtqXaVIoNb4ptjwoBbKq+QjQljpgowSmlGx1di0
+	d04BpxioDNV3RuMMtbwo0xrtnEKR84uxIw6Pvwl0zZf5h7b4+97/tjp5rnW+hESZVgiXvtEA+YF
+	ogF45/XIEVYk1WIk1uq9Xy+DNV7/1WpMK8MXEtd3Ydz3t4f90JiaShVEb0NvO5iOQsM1Xq7u6Hg
+	zog7tDrgi78XnwHc6y8U6+wx3giRcjHYg6BB4lYGbJ45zO7N7y9h84RyvVPwjfIHgYF+bh1nuxb
+	0ldw5wwOemLKlaUN8xObLcQXQrWmMGaUyF0hYw==
+X-Received: by 2002:a05:690c:892:b0:81e:abe2:9a3b with SMTP id 00721157ae682-82f28ccf52amr33751217b3.10.1786465936812;
+        Tue, 11 Aug 2026 09:32:16 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:556d:681f:9688:f449])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-82ebd0cea6fsm12576627b3.3.2026.08.11.09.32.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2026 09:32:16 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: AzsVqDuXP2Wg
-Date: Tue, 11 Aug 2026 18:30:35 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org
-Message-Id: <d81d6e3a-8489-4aba-ac1b-d678daac5ee3@app.fastmail.com>
-In-Reply-To: <antNhDECvV5Kynsy@pks.im>
-References: <synopsis_block.af9@msgid.xyz> <synopsis_block.b37@msgid.xyz>
- <ansWZxZ6lB0tYIJD@pks.im>
- <a495b0d8-b735-4ae4-8cbe-56fd42bbbd3f@app.fastmail.com>
- <antNhDECvV5Kynsy@pks.im>
-Subject: Re: [PATCH resend] doc: format-rev: use [synopsis] on code block
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 2/2] completion: complete tracked paths for "git checkout"
+Date: Tue, 11 Aug 2026 12:32:05 -0400
+Message-Id: <834FE315-FB34-47B7-9ACF-FC8194FBE8D5@gmail.com>
+References: <xmqqmrut4a1l.fsf@gitster.g>
+Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>,
+ Leo Kerin Britton <britton.kerin@gmail.com>,
+ Elijah Newren <newren@gmail.com>,
+ =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>,
+ =?utf-8?Q?G=C3=A1bor_SZEDER?= <szeder.dev@gmail.com>
+In-Reply-To: <xmqqmrut4a1l.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (23D8133)
 
-On Tue, Aug 11, 2026, at 18:27, Patrick Steinhardt wrote:
-> On Tue, Aug 11, 2026 at 06:23:18PM +0200, Kristoffer Haugsbakk wrote:
->> On Tue, Aug 11, 2026, at 14:32, Patrick Steinhardt wrote:
->>>[snip]
->> <subject> is highlighted in running text when using (_) or (`).
->
-> Ah, so we have different kinds of synopsis depending on what it applies
-> to?
 
-Yeah, that must be it. To be honest I had neglected to consider that the
-command description part uses the same syntax already... x)
+>=20
+> Le 10 ao=C3=BBt 2026 =C3=A0 23:21, Junio C Hamano <gitster@pobox.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BFWhen completing arguments for "git checkout", _git_checkout()
+> delegates to __git_complete_refs(), which only completes revision
+> references.  This is good, as mixing revisions and paths in a single
+> list from which the user can choose is confusing.  However, if no
+> reference matches, or if "--" is given, _git_checkout() leaves
+> COMPREPLY empty.  Bash then falls back to the default filename
+> completion in $PWD.
+>=20
+> This fails when "git -C <path>" is used, as $PWD is not the target
+> repository.
+>=20
+> Update _git_checkout() to use __git_complete_index_file() when "--"
+> is present, or when revision reference completion yields no matching
+> candidates, so that tracked paths are offered as candidates.
+>=20
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> contrib/completion/git-completion.bash |  4 ++++
+> t/t9902-completion.sh                  | 27 ++++++++++++++++++++++++++
+> 2 files changed, 31 insertions(+)
+>=20
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/g=
+it-completion.bash
+> index 38dec1cabe..bd4b6e9247 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1780,6 +1780,10 @@ _git_checkout ()
+>            ;;
+>        esac
+>    fi
+> +
+> +    if [ ${#COMPREPLY[@]} -eq 0 ]; then
+> +        __git_complete_index_file
+> +    fi
+> }
 
->>[snip]
->>
->>      i.e. the format `"%s"` would transform some commit object name to
->>      `"<subject>"` without any termination. Like this: ...
->
-> Makes sense, thanks!
-
-Thank you.
+Assuming the prior step was purely mechanical, which I did not validate, thi=
+s looks reasonable to me.=20
