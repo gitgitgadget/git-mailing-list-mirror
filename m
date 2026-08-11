@@ -1,128 +1,128 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CBA361972
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 16:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC8D3911DF
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 16:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786465939; cv=none; b=G50SNQQYCkM+zVnqhsT6SGXQzK2UBTHO49OmjR2P5ucqBLAwkzl9pEyHM7+fq9gHxB0+sB4ILRPw4L/sJhszPmIjvdyCX5HrUvkRGz7B+yTBwFXSNn2zKyYHAD8N+jajVSb4hLtdH8pWIOPb3sqM5fPEIzwQrVR7LoszNt4u3sg=
+	t=1786466015; cv=none; b=quDEMMBlHS0GYb5FL0FUb9VKsT1qPkVLS/J6KbwzvU1jWQ4pMbPauREK7Gu/+hrESozOh/8mIUY6Po2OkQGUqt6lcQzkv52XdecpXzep4yBr3bqMp6lBWnD8zlpP7HCIZcUh+rPQ/3nzrPIvTm9O8PlPI5f3p6q6f8EzX996WV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786465939; c=relaxed/simple;
-	bh=CwgDthQi/WPCAKyRrgt4/OoCPq8tHJfu1PP3CXLiXVE=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=QNlI8M/mFi2UEWNtKOIVsrOF/2txCU0ccLIZp1AJF40H1yt0/Fq+ViWDJUfYYHvhu5nOz5twGB/46zcqMOch8IjIFMJ8PnevPL0NzVSOBx4padIU4hXqHFvZ04Wayae2lh0eHxQmBw8ZwZRPIfHgMdk2whVGBq8sW4Tnycv3ksk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TtBhFimK; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786466015; c=relaxed/simple;
+	bh=Bp08/a0pEKsODSnBRB+BkWvJ7fUM40FrHHg56OW3tK0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uOuoyG3GIvaEv86LK6rifnAipmBKGMd7uwK8Bf+2QR36KwQTEieUj710v9exf0ZSb7TwFcLTqBMb3fvCSQmqqWpv/bPog4heT9VDfHZrYe4UXUu7Doi4AbfCsIZdo3t3GloSr8EMtmtRozxZs5S4CehsI8nGV1azVe3bL3BggtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KL4sIMET; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QFl3sCFg; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TtBhFimK"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-81ea0b7d137so25443237b3.2
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 09:32:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786465937; x=1787070737; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FUr+nMrLJcfzcZsVfWjSwb/cxhN7c7MgM3O82EHjMxQ=;
-        b=TtBhFimKnw17dXs08r7HzeSC2dpk0UUiMO0sLc6G7LQp5ys+GqzqWVdp3nL8WlRfqe
-         Oz5M38z1+vMIEm/E0lq36E0lq44T2Vb9M1vmA9au6odIX7U8QMbJS7B5X85NH6MS/K8z
-         JsYP2ru2pPaJ1Ra4w73f8gPjtVRayLSc11gmj14eJkL47nXOULXIySHjeNhvLvPjFffS
-         qCGNhs08hfiUz+j1h+l5+KO5YIdJqWT38G9rK2fTtMGV3kaOjsuBD/qhY/8nx4pMnAvl
-         pRwMH1K0Uls9+xhJcb9y7I+bNiI51bXbqnNrk/wehTJ1P8LKL1OXrusOwlPGWH4YX2Yy
-         0bRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786465937; x=1787070737;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FUr+nMrLJcfzcZsVfWjSwb/cxhN7c7MgM3O82EHjMxQ=;
-        b=f35kaDUH5UndpjmkR4WZz8jfVyLUcQlGkebdP/uAGaDxOGo6PbcaiEBSkR7/wUsVTV
-         VZtvw/wU9tS2/gD6bvGSO5vKfBhPEP37sDryIOmXu1zQFXToo8UnHhIaa3mVUHc/lEgx
-         QjEWMBTyFTAKz3URhiBwG0xyaBjD8F44cLfmD6naLsxU6Ifpn3mT+FlCWgtd1i3I8+V6
-         zf2GhCeiwjV/ZRykNjNFQInkZLCxew54/Nhq4uTqs2NAUMuiPdaFGZchq9eMUr3CqhDS
-         KWg8nw5KNuguDL2si9Cz8wiJQDE+e4KArgVyXJsDjZNoA4R3J4NV1dXTCCe0wkpfyhM3
-         JqKQ==
-X-Gm-Message-State: AOJu0Yx1bfkavjKaouuDIkkW7bX88Vq2meKr+6+xakqLNnCdOJIo8hAT
-	Bfp6/k1uZxbTl6H9iYT8xrq6AKd7ufvZUDD5r3V/uEGotnXLfbpqx9QE
-X-Gm-Gg: AR+sD123/Nopgj3TwQEPAVyjQ+FSUeNGDHT78TQfHjogT2TQ/IL64Oxpmc1M7Ma7iSz
-	SNt8zcqvEASXtFwB4FTQf2oDfXPcW6ZjrWAxoCxj3b0yUrBf/DcSHxtW/QqftqNK2SA0ZZGWLOX
-	Tg7oODcn0CMD8oAgivzKfwgHyOZkhFOSx7vZAIPT3Oh5TGmN0hXZmhsd+1QHo2urQ1kWM2oT7mm
-	f4hqCzQU1b8fs+T8FcOmuxSQ2z3X4+YoT4qQcLnhDQGnNW8Ex3Zl181w0KTpIylZwXqfOCoAtZW
-	Yq5E3Wqn1q86y5aw4IhzMNLdysJn04cQmV35FtqXaVIoNb4ptjwoBbKq+QjQljpgowSmlGx1di0
-	d04BpxioDNV3RuMMtbwo0xrtnEKR84uxIw6Pvwl0zZf5h7b4+97/tjp5rnW+hESZVgiXvtEA+YF
-	ogF45/XIEVYk1WIk1uq9Xy+DNV7/1WpMK8MXEtd3Ydz3t4f90JiaShVEb0NvO5iOQsM1Xq7u6Hg
-	zog7tDrgi78XnwHc6y8U6+wx3giRcjHYg6BB4lYGbJ45zO7N7y9h84RyvVPwjfIHgYF+bh1nuxb
-	0ldw5wwOemLKlaUN8xObLcQXQrWmMGaUyF0hYw==
-X-Received: by 2002:a05:690c:892:b0:81e:abe2:9a3b with SMTP id 00721157ae682-82f28ccf52amr33751217b3.10.1786465936812;
-        Tue, 11 Aug 2026 09:32:16 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:556d:681f:9688:f449])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-82ebd0cea6fsm12576627b3.3.2026.08.11.09.32.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 09:32:16 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KL4sIMET";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QFl3sCFg"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EC3911400157;
+	Tue, 11 Aug 2026 12:33:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 11 Aug 2026 12:33:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786466012; x=1786552412; bh=RAgeanq8RQ
+	HHY9SSpim3sqc7QpmFrrg0QUL4/3IaUYE=; b=KL4sIMETk92aKzrMvtI0MzUb9T
+	NTPleVf9309mVikMxKjw5YfrkpHPS8E1SSP7b9nAOy135vZgZW8tZN/3LK81jEKL
+	YcBsdzWjKTJ0tGnW6REZ62dL0BbmoyXeFiq4PN71pYYFa7L8mDaq8+qIPa+YMN47
+	8qnkNIGPYYZYaxOj+aO8KFexwTmh6B6z8Xu6CNdVZ8fTMedrl5grhVj/boIomKSM
+	HrO2TCBsijiGuo4HEznRqQza3uHbNrXz3qUUeRgfhmh52UKh8bCpnJhRh0fDXwEr
+	tmvzu096TFHyBLBwkkgs0lM+WqaCpQN+ydG6oy78RRppF5w74Ezdv65Ls0aw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786466012; x=1786552412; bh=RAgeanq8RQHHY9SSpim3sqc7QpmFrrg0QUL
+	4/3IaUYE=; b=QFl3sCFgDQ2n+tqQPB4Kw27UfV5VerHnYL9YyrJcFYcb6l2qhZy
+	Z3stRNSPC7QtlGa1ZMF4HUEdAlGuMgrrS21Sw07bzbDkePCjFAGlGWf07xHErCUC
+	acRH7ssLn4oESp09CIFfKGpauNxwxRIINUpOdv4yr8F7vPY+5erVG6dzJPPMDH2T
+	XjK8F6xgpnF+MFvrpQFBgZmWh++PTD40+oGijIEv6mmLOV+VOUh1C8Fxjlwnf6jS
+	S+fjH+hZ9vyFzNB6vHQmhqetyenJ9XOuPk5vlsaHSY0onUYUNOa91LTmzsTH+zAC
+	gockyiRXc/UI1CcGAfELWoZYTz9hafPrtqQ==
+X-ME-Sender: <xms:3E57aptnEW5GEuggiZzNt_dDmz9MR3EAzhS6T-xRPMIyCIMiZoOqAQ>
+    <xme:3E57anYU73pY2MjsW4alh0FQ065rfQysF0gIl1pNDbVkHyqub07vAPiD7we1UE-dS
+    FivkIpAuzwwRGrNoiIYNtgarI4Dx2QkL7qz6HWvpfjrQOZ7sClo-Q>
+X-ME-Received: <xmr:3E57ahDqddZTWKHizNt14SY6KaUMCmas_1Am_jV6DlIHyDutG2HezCgMhCToI6mMTK7BIWdMnsrv_j2jKOwmEiv8X2FX4-LAhw>
+X-ME-Proxy-Cause: dmFkZTFHJZjEogZd4XtNuOM3dULxj3Hoj1YbS9urCz63AjKoEw5RrnbeTeHpqe3TzJlIQM
+    9zEBjtX7S3ZHVzj+EfOuJRRFUfl+IAugr3TmEdRR2IiRb/GlpiRy+M2EF5cusWC29kAzZs
+    CX+qFbH1dn+0p+g+vQ+whcKU735YeYxYhXUI8ggwUD1zJ3tSbIK5NWqookj16n8w1vlQVd
+    r78nz+qz3XI/E3kMRXwwPlaJQiwTbENJ4sKMz2uO5Bk2idn81dcq+gJBzi9Kc942l6rGxz
+    5BOlvJc9CRZPx1p0FeTLGUf2Af2lsjVp9HtSSEyS2KexOWp5pg3x7MPW0Ta/t9m6i5BPlu
+    HASzB0tHFuBXvGQwB+d4lG1B+9GhlF/GeIxgf4VbpiM2eGBFd6/1I2+SygZWkwl6aSvXAB
+    Ds3stexz+u8Nk+qUC3ZUyb7dXBhmoH8C6bgpMAivD6b8dDIKYJU7eNSuitsdr1S6D1psfF
+    +uNRMFyKH1cceAqgpavGAgBF1Wkfn4HbHrr+e5nV2SBE0lNhr8/KmZGgj8MsyvzFjvOfp+
+    EOELvoHQyCOzcZvr/G2d/G5i4/6VpehfsGM/VPDzd+Pr6XS+n9Qp2X2fBu5ZTFQZ0wJ1Q/
+    7tYDaSu19W7TS/TgWAH+NwD+CgNesbun6PClrH60OujfQNA3tf8kBQXZmllA
+X-ME-Proxy: <xmx:3E57av--4PiK04wIks7Eu7F1UZzs28rqTFsyzGPmiewRyDSe1umkvg>
+    <xmx:3E57atRoZeHNfgbMoW54J6OHGDDbMww_gQ_SvuOVG0-vNTZ1Cwd8Ow>
+    <xmx:3E57ajUBmAf0bx8CtE091tUwSQU0aWnLIS3_jEgS5zx8apqIfhp3pw>
+    <xmx:3E57anRaUFMA4lMxACo9YrNPjdbWtrF2hW9t6SAyaMgl3hrwr_9_4g>
+    <xmx:3E57ao5_ZDFgVIt2HFIZRZEs-gJ8MsaW3BnqQ_xJZzfvz2U5hOc5FEGy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Aug 2026 12:33:30 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor?=
+ <szeder.dev@gmail.com>,  git@vger.kernel.org,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Elijah Newren <newren@gmail.com>,
+  Derrick Stolee <stolee@gmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH RFC v3 2/2] Move libgit.a sources into separate "lib/"
+ directory
+In-Reply-To: <ansSg4qsPwh5FcR9@pks.im> (Patrick Steinhardt's message of "Tue,
+	11 Aug 2026 14:16:03 +0200")
+References: <20260701-pks-libgit-in-subdir-v3-0-5e4860056094@pks.im>
+	<20260701-pks-libgit-in-subdir-v3-2-5e4860056094@pks.im>
+	<alR9GDNTbdjWB4dq@szeder.dev>
+	<2d455ecf-972e-e3ce-54bc-683050c04282@gmx.de>
+	<xmqqjyqpb96n.fsf@gitster.g> <ansSg4qsPwh5FcR9@pks.im>
+Date: Tue, 11 Aug 2026 09:33:29 -0700
+Message-ID: <xmqqpkzo39d2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 2/2] completion: complete tracked paths for "git checkout"
-Date: Tue, 11 Aug 2026 12:32:05 -0400
-Message-Id: <834FE315-FB34-47B7-9ACF-FC8194FBE8D5@gmail.com>
-References: <xmqqmrut4a1l.fsf@gitster.g>
-Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>,
- Leo Kerin Britton <britton.kerin@gmail.com>,
- Elijah Newren <newren@gmail.com>,
- =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- Patrick Steinhardt <ps@pks.im>,
- =?utf-8?Q?G=C3=A1bor_SZEDER?= <szeder.dev@gmail.com>
-In-Reply-To: <xmqqmrut4a1l.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
->=20
-> Le 10 ao=C3=BBt 2026 =C3=A0 23:21, Junio C Hamano <gitster@pobox.com> a =C3=
-=A9crit :
->=20
-> =EF=BB=BFWhen completing arguments for "git checkout", _git_checkout()
-> delegates to __git_complete_refs(), which only completes revision
-> references.  This is good, as mixing revisions and paths in a single
-> list from which the user can choose is confusing.  However, if no
-> reference matches, or if "--" is given, _git_checkout() leaves
-> COMPREPLY empty.  Bash then falls back to the default filename
-> completion in $PWD.
->=20
-> This fails when "git -C <path>" is used, as $PWD is not the target
-> repository.
->=20
-> Update _git_checkout() to use __git_complete_index_file() when "--"
-> is present, or when revision reference completion yields no matching
-> candidates, so that tracked paths are offered as candidates.
->=20
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> contrib/completion/git-completion.bash |  4 ++++
-> t/t9902-completion.sh                  | 27 ++++++++++++++++++++++++++
-> 2 files changed, 31 insertions(+)
->=20
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/g=
-it-completion.bash
-> index 38dec1cabe..bd4b6e9247 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1780,6 +1780,10 @@ _git_checkout ()
->            ;;
->        esac
->    fi
-> +
-> +    if [ ${#COMPREPLY[@]} -eq 0 ]; then
-> +        __git_complete_index_file
-> +    fi
-> }
+>> ... built-in commands in 'builtin', with subsystems like 'refs' and
+>> 'odb' in their own directories, and everything else at the root
+>> level, I would prefer to keep that organization until a substantial
+>> subsystem update wants to carve out a new location for itself, just
+>> as past updates to create 'builtin', 'refs', and 'odb' did.
+>> 
+>> Compared to those past moves, the proposed change looks more like
+>> churn for the sake of moving things around, without achieving any
+>> real organizational improvement.
+>> 
+>> I must say that I, too, remain skeptical.
+>
+> My main motivation isn't prettiness though, it's newcomers to the
+> project. Git is not an easy project to get started in, and the root
+> cause of that of course isn't our file layout but probably rather that
+> Git has been growing organically for 20 years. But the file layout
+> definitely doesn't help newcomers to find their way around in the
+> product.
 
-Assuming the prior step was purely mechanical, which I did not validate, thi=
-s looks reasonable to me.=20
+What I gave as good examples were not motivated by prettiness,
+either.  Moving things around to lib/ as a whole ball of wax without
+further classification would mean readers, whether new or old, would
+not benefit from neatly classified set of files that gives readers a
+concise and easy to understand rules like "you can visit builtin to
+learn about individual command implementations".  To achieve a layout
+that makes it easier to find our way around, you'd need to move
+things again after moving everything into lib/.  Moving to lib/ by
+itself does not add much value, if any.  It certainly does not add
+any discoverability.
+
