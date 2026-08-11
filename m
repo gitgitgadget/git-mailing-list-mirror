@@ -1,274 +1,265 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazolkn19010021.outbound.protection.outlook.com [52.103.33.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7CD358381
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 15:06:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A089F3911DF
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 15:22:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.177
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786460795; cv=fail; b=LQBh6E7EjmGkK3tuweJDvuLsnX9mOYyBiMvfzbU4jM93qs0Ocn0B+hrVM+SydB2qjOXTwbTObN7fFcXQEDbLa+U025MOpyw/noSMgtwyG7hjcIWMX1uSFAoBvAEtIyjAn7djYyDgJW5KEXrPge095n42zEHxBWR2rQ811qfdzAM=
+	t=1786461762; cv=pass; b=rthGEaFOJLcmDUlo+zdkb3A9nTj/J0+FcdO55V5k2BzhZX5KxrAAQl/PkOLEQMEfG6Tu91VuJPgSUw4cQoWMwEMOHi8IH6uy+M0tBTiGvqeN1Ynj7lXtAvADsOrULK/Cl8pmyrxjzOaGITaKz5xDvx03n1M8UBoHCGfSPrr42Dc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786460795; c=relaxed/simple;
-	bh=kMz99VLaDdUgbFC4VLH0PSW5isdWei0CsNEDj1edpRo=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=WEvuSnrmQd7FZQLXZEQpuxxSaeWVxGwfcnUYw4eEg7wdopZnncXyXMLt4pznXuYZjVycLAqWJKaCrjnD5z/GJaHNhvVoABiPz3mJEg1f7aXDSXmgEVggag6vVu9eA8ATL6eBpbVvjhbjOso8wvqTbEiKnpzNs68Awi6yusILW5c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=trkrMXIU; arc=fail smtp.client-ip=52.103.33.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	s=arc-20240116; t=1786461762; c=relaxed/simple;
+	bh=K96aRWjyP00mCvpk9hvqIpIBpvvKT7xz9qCKI3eW7vM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cQwBZ6MKDL250WJFO8G/ve6gHaKGj551402VFuq0d3hg7XzPyMYRDXoGvw3FzEGYaJ3zdd80z+azUi53MoESorLIbSLxB2vsAEKgPmk1AM8iVRfAb4AAnZw0XZEf9i510W2JrmbJgFz67gx8E7gbseStbhF67fF+ioLGsgksl3U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rUCAANXD; arc=pass smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="trkrMXIU"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cTH3bk1OFUnnbcNaWrF5uKm5KpkVqaPO9wNRwLgIjV+QKcRUHTszseYMirD1mvZZvMFgvmtJ2Y0xUP+XiANLeitgbqmKSvN3rhClmF3abmW9MyAEMrbhcxK2TsQSm0XEjJLtCQ7MiaRXW+aPu/ly9qTB2KmSZqD3wWZFn+NZs8nfR3Ye/Gw6Zf3zkSPMB1NMafRozAoNp+NrhobEDLZ7GkWOUG8mcDkMfDyiABd6CmHsdBkelRliO4dFq/NIKtEKhD30J6fVH8ewtymvtEdq4H0TH0pl9/PqOmhwZPo4XslWvulWmZWUUuYUfoSvhgx5Rmm+QhVw3bsyLnpdP5slYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kMz99VLaDdUgbFC4VLH0PSW5isdWei0CsNEDj1edpRo=;
- b=RdiCCT3D3T3RMjpyZM2CsKzQtz97v30AWlZADsrs1cd6ZsJbchWE2veMX4cbP9maaFGgEApnCjU3CiaTs6nDlSwV8h9ikgea5s2J5DPNFWQM90SVgEeIW2q9Dyy2EcPcAcYXU5DWR3lttFBaVTJNMuyiO5iiG7lpHrtfQrxht48q1nvbfph2zod5wNfNfBifHq+kYgi/WsO0OmYDtSMz6fYutQAl7u8iwiURAd9uLg0H14iVri5aX5+4tk7eSziYULQSAW/oVO4JI5bK3iCRyyCZURfCMAWyjtj06baxTv0cv/t5f3ADNxpFUeKv2Zjsfdoc7XfEm8TeRG9frLPNqw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kMz99VLaDdUgbFC4VLH0PSW5isdWei0CsNEDj1edpRo=;
- b=trkrMXIUGS6eqBixkoQl3JzwjYL6iOW7N4KrPwoELZqdNwDMplp/nsCnzNreKLLC5oXLbLCClJAbq5SuPd7ECNoFl/BYtWOyFvU2JL/zmaWFNVLLnuFCtQETqFvQzGeIEptq/84Z9uWzsAuzL8aaNNXsp/Yfm5STV95Ylxsm74uhaL/IB90YuqL7y7Dc9fwNMBg8hCQLiOab/FRYl+pSOCJA24eb+NJoTm68+klJXFob0aYqemcm/RrjJ7rnPwQmchWfoAKCnwDAQScjd6QCPS1VvQh8I6qf1A3JvhTCnXPyuWoj1fzAbXqzOMV9NyZD3orYleVrdS0H/e7GVuWutA==
-Received: from AM0PR02MB4450.eurprd02.prod.outlook.com (2603:10a6:208:f4::27)
- by AS8PR02MB6965.eurprd02.prod.outlook.com (2603:10a6:20b:2e0::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Tue, 11 Aug
- 2026 15:06:30 +0000
-Received: from AM0PR02MB4450.eurprd02.prod.outlook.com
- ([fe80::3b82:1ad3:b24a:7baf]) by AM0PR02MB4450.eurprd02.prod.outlook.com
- ([fe80::3b82:1ad3:b24a:7baf%3]) with mapi id 15.21.0292.024; Tue, 11 Aug 2026
- 15:06:30 +0000
-From: Skybuck Flying <skybuck2000@hotmail.com>
-To: Git <git@vger.kernel.org>
-Subject: Re: AI Textconv filter misconfiguration on Windows leads to silent
- corruption of diff output (ongoing investigation)
-Thread-Topic: AI Textconv filter misconfiguration on Windows leads to silent
- corruption of diff output (ongoing investigation)
-Thread-Index: AQHdKSpeW10CNT+9OEuLP9VqvpTkMLaYG2wMgAAB2zCAACCveYAAtQjx
-Date: Tue, 11 Aug 2026 15:06:30 +0000
-Message-ID:
- <AM0PR02MB445092119D0BA1921E2BAADFB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
-References:
- <AM0PR02MB445096594555DAD1D9EE1505B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB445083767BAE669D4656CA6CB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB445013B3CDAAAD361FD93A86B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB44501AFB0A97E2E097B8795AB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
-In-Reply-To:
- <AM0PR02MB44501AFB0A97E2E097B8795AB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM0PR02MB4450:EE_|AS8PR02MB6965:EE_
-x-ms-office365-filtering-correlation-id: 0bab15d7-0368-44ca-2594-08def7ba1fc5
-x-ms-exchange-slblob-mailprops:
- the5UDfP+Sp8y9OjyMUjT+C7wrdybQnyyPeDCrDovvyyGCfOvZV2lECLN1+NE97h0ppCwXQwUn+jIOneBPAiqQ9HK/egV1f4i9lFp7j/V7Nfb0QNtio2u9mx2DO04wgFqOTPh9ZwSmBOJXZ/PyCHEi5X5X9l+ivXRkPQr3uV7pAX0yoQrDyzSBr8FtlnqkH3T7wVgNHaVOx6qsZbCM/8IZqoDbFPbcddtrXiqiex1iS6FMFZwIE4FE9yfaYtOiQFncrXYaeS43QXCvHhM3/HIW7hjP6TreA4Xs8W+pAcMpt2yjJUoldD9suzgw+5tgnAUpsn1SCgbU11pxZbtB7C6ATHzGMcHHQxajMpldg/WbNByKhBArcxUttfC1n5Uz6E7oYURFyMzllLRBdO8fi3axXOPVbAYrvARTd72iWpIaothWEZer6wMfh5P1HkMI4imf1z4ayHIG7XT523PjT70ieoPrASnGyWMbUlJiLdK9oU3muWnGuK98mmMqqtYYGPjD3fXEO2B5ggsLuOktmSPCYB/YeFQFLFNPH9XlhC8OyJGJz/QpExahCpfdmFWJ5RZpWlkjqXAl96ZxQh4yyiA0DDqzT+3uFpPWDftwc9y4+tcGCcl9I1UNlSY3pw5xUAjaKxd2WpR90p+7ASFZGqJQ+Mehysu/9DEuIqFVPrbk+hJwWV+zv84BbN5tGnG2+A1eX0VY687AnQ8yqMsh9GnhG35pJK98dDaR0UYNxjYg4lKQobJbMhD9jDnfkr4G4ex+WDwu7ucmjzfDpB4W9478l8oeozc3QzFsG7wTZBIsV2x9hM0ZaZx4J9uZkSsHcE+l6+ZtiKsPmy5vXrlJxysMiotndnkXmZu3TIHUWQyNQ=
-x-microsoft-antispam:
- BCL:0;ARA:14566002|8060799015|31061999003|8062599012|19110799012|12121999013|15080799012|15030799006|55001999006|51005399006|24021099003|37011999003|25010399006|10035399007|40105399003|2607281247196008|31101999003|102099032|440099028|3412199025|26104999009;
-x-microsoft-antispam-message-info:
- =?utf-8?B?L3FLUVBvRUswODVaTUh5Yjc0alg5T1UxZ3hWNHgzbFZkMlQ1SmFZRVlaeEhQ?=
- =?utf-8?B?dnk5TCt3dzBueGhqY0pETlpCRXlDeU9URzU5VFh3ZVdQM2FXcWsrcEFtQ05q?=
- =?utf-8?B?bFBSbXQ1d0tTRFBlYzdFK3lLSWN3UEdMbjRYNG1KQjZnUE42b2pQVWwyZzl2?=
- =?utf-8?B?aHRFSWliMXZJZzY5d1h6STNmTDhDMjJwUDZLa1JHTlk1NkpLV3ZkNlZQM0FQ?=
- =?utf-8?B?N2ZyZmVkNytnRCt0QkVYSGNZT01Hb1c5QWptbkNOU0I0cWpCTVBKa3RLdGlJ?=
- =?utf-8?B?TmRxNVBsYWVPUWtsclk3ZzBmczRTTUZEZmtQVjlJVWRjUnMzek5JYzlZVmJK?=
- =?utf-8?B?N1hYOTV2RUt2VldBOUFFWGdJQnhFaXpBczhSN2UvQlFzUUw2SmVKVGpCSlcy?=
- =?utf-8?B?Z1pEWVA0VnhpNncwSkg1SlhBTnNmU0VmZm9rMDFsdjJLc09DTFJKbVg3ZXlE?=
- =?utf-8?B?ODFXRnNnbHhiRmR3WmVzc2JGVVM0NklvZW5oTC90QmxJTWdtQ3dteEQ3dUlt?=
- =?utf-8?B?b2tUeUp2eFpXMmdzR2M1dGtmWElKR3dUZzkrakcwaEN5UXU1dmdIbVJYTEwr?=
- =?utf-8?B?YzQwanQ5eGoxbmFUZTVCU2t0N0ZIK3lCYlZYeVVxcVVSTnN4YUY5Z2Zpay9w?=
- =?utf-8?B?ZFp1OUVhUkIrVXlUQ1lCV0dTZzBzVVc2azl0UjVsN3psb2RQWE9GMWxFZGFD?=
- =?utf-8?B?Z2MzSDZBb25YcmdjcjltdlVkaHhldmhRa1pNczhMdnU2WjBrWnk1dlZsTWRs?=
- =?utf-8?B?UXM2V1RiMTdZQWErMVZaUUVwMnNzbjVOS0JUK29LczJwK3c1SEdGOEp6aW9I?=
- =?utf-8?B?UlQ5WnMwc0oxcE1ndnovcldhNXQvNzN2UkQ4Z09rNWhURXkrRlpud2hmWlZm?=
- =?utf-8?B?aGZOWTFaM0lmZEhqRHFWNjVQTFVybXBXU0RuNFQzQVBHc0o0Y0VsejBLNExy?=
- =?utf-8?B?SzNvZDRvTDlhOUYxMnR4Zzc2QnRUY3F3YjhuT1V4c2lHYkM2M0N0TE4vR2U5?=
- =?utf-8?B?WWx4STNGd1FHSTM2UTlDaUljTnhNZGUyWU9GbHEwS2RhVHF6VHlwZHErRWJU?=
- =?utf-8?B?Y01SdUVIT0FhRm9RM2lRTEVXc3RWdkQxMlZmNlVCRzVRL2x4ekw2aE1KTGdp?=
- =?utf-8?B?alF4UWdOUzdxb1Y4USsrOGV0YkczQ3p1L1hNM2tac3FUZmpYQ0V6R0RHS2ZB?=
- =?utf-8?B?ZEk3aGhrTHkzMVltTytRM1ErejVpUnBCb25YM3QxZUlZWW4zNG5pQnJwcyts?=
- =?utf-8?B?LzVQNkh5NnFhc0RJalR4NHVaRHNiMkJFdTNPSzBkTmVSQ0ViK0F3RE5hZlpP?=
- =?utf-8?B?Q3J5Tlh4eHlKeTA3WVJmMFNwbmhpMGQ4VERCZFk4Y1VjT0R1NzFmMitWOFJn?=
- =?utf-8?B?dnhlZmQrMWwvUkduWTFsTXlnSWlqNFY4U0hpcVVCZFBwdUwvd3hTL3RXYjYz?=
- =?utf-8?B?cjZlUDBXRDFuZHFqR2l0QzJoT3ZLa1BURUU0dlp3PT0=?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?WVBOaUpmUUdiVm1qZEhIMk10UGZ1VHM4VzZ0aUUrQ2hkLzd6cy9uOWFYT0sx?=
- =?utf-8?B?UGdzSVV1WGtRSkhMRDJrVkZ3SnpVdVFHSGttVWNoZ1pXSmVYRDBmdDhsaE8v?=
- =?utf-8?B?MU9sN0kxMFFIVjVzeDI1WlJMVEE3MVpVTEJTRTlheFVYcVhpZGEvNGhiNy80?=
- =?utf-8?B?OXlGdEJSbWVYZzRrYWg4TFhyMjFwT1RIeUY3NHBIMjFzNXFMYXBzclZiQzNm?=
- =?utf-8?B?dVFBZHVDc2dGSE1nSjRGZDhKUmQ5UC9OczFYOUhVOXR4Nk4wRC9oRHFNeCtE?=
- =?utf-8?B?K1NUSlRlWTREUXg0TGEyWFhzbm5BT0UzN2VGZzNtcFlENlU4ZkVRSE5CaFFy?=
- =?utf-8?B?Y25US0NsVkdtTmhTcnRhZ0xENnAwclZ6Q0Z5b3p0WnV2eXkvTFB4OVZBYTl1?=
- =?utf-8?B?dU5Hb0hpVzIxQkU2aGF5T3lJendvVXJOakhZQUc3TE0ySVJUZ2Z3RktMWGpq?=
- =?utf-8?B?bzQwUFRJMW5pRTJmNkNXeW5nMlZ6WkhxMDQxNXZaLzg1cmwwc2ZvZnhDTEtL?=
- =?utf-8?B?UGJ1Y05IcHY5SEdkVzM4ZmVNOTAxZjAwbkFGQTkvSTMyMXdtK2JENDNDeGFS?=
- =?utf-8?B?VUZncTcrWXRpRTJYYTN6RHcrbW5rS2dub0J4c1VTOG9DZ0hjOWNEaHdIV3FQ?=
- =?utf-8?B?SnpLSjlicXY4SHVUU1hZQ2FadzIrMmVzalhBbFJzekRSWGl1V2xKTjA3bElL?=
- =?utf-8?B?YWZ0aGI5YXM4SEFzSEI5VGdadm96L2tiVjFNSFZsRThmRDF2RUdCaURwMGRC?=
- =?utf-8?B?Y0EzK2JzREVnYmxocmRaSXcyNkhKN05udXZXa0RrdlBLMzh0NWhFc1J3T1Ft?=
- =?utf-8?B?VzlneWlzZFBHRGlzdnZNOG0wRmFyRFV4VjJzb1VlZ1RxcWV2c0k3MmVnZFVC?=
- =?utf-8?B?UkZsazNBcWtkZm53RXc4ZGNUeVNVKzBzeDBuVlliQ3RDS2JJSEgwNml6Wi9C?=
- =?utf-8?B?T3RYT2gwaWZYcWttNGY5bjd2YU8zaDAxcEZkRktlWnNabWdVYVgyTlZDQWoy?=
- =?utf-8?B?VGZvS3ZoV1hVcHJwRFd4cVRwclMyZjVmN0VqRWJuM1IySWVycy9IeWxYWnFN?=
- =?utf-8?B?TGZJZnlSRGFtNmwyLzY3R3BlK3JkNmZDL3NrSHlqSFdBL05Id2wyRGIycFlP?=
- =?utf-8?B?cFhNOEJKMnErRy92NkVvb2dRWitEMFQvRFA2c2ZtZU5EVmRtMkZNV1BlTzN4?=
- =?utf-8?B?N2RvUk96UjR2SFoyRHZNWm1XbGQrRVI2NjdsNS85R09NQTdxU3BVVnhWaHFu?=
- =?utf-8?B?ZWhBTG1jZStQdXB2Y2Y4NXJPMytqaHRpMXE1V3FrMlEvTWJWK1JFbXFKZlhl?=
- =?utf-8?B?MVlMcXFmVnQzZHlLOXZnMUQvZGtEc280aEVKVk1BQnQvRVF2MS9OZWppcjlC?=
- =?utf-8?B?N3JXZ2VEQkZkT2NaTTRoaFJ2OVNIQ2EwRVo4VW1tdWJlMXp4a0tEb09aaDRw?=
- =?utf-8?B?L2dPVUg4ZHpDM0hKcHd3TTJsUkRIK0czRGtXVFV2bnhhVms5TWN2SEVTNlAx?=
- =?utf-8?B?SndlMndMQlkxMEc4T2FrZU5TWTZyUVo0OHhCVlNEYU0rcGk1RjlRV2FSZVJD?=
- =?utf-8?B?eDNVSDFhNllWSHQrbHBkb09PMVptZUhOZkFkNTJGNzJTdjJaOHpEVFl3a2hi?=
- =?utf-8?B?dlVIMGpWcGJIWmY3anVZMnUrQWNuRURuZmxUVEdmWEc2RzdVblNaMllzeHM3?=
- =?utf-8?B?c3NDTDN4cFJLYWxzTkxXaWdFd0tjem5kU1hDYm9wM2h1TzEzNkFkbVZjS1pS?=
- =?utf-8?B?M1BZNWczT1hBY09TN1I3NThNM3NGRkVINGFZTUN1NEtrM1BhaTh5bnZmVkpM?=
- =?utf-8?B?VFhLYk5DSFJ4TGlNQUV1c2VHdnJIUkttVGh3OXhuYWQxVk1LbjcwQklYUG9o?=
- =?utf-8?B?WlVqWS9Hd3NVK0hVK1RJRG8yY3MxSmVOZU1pU2V2N1cyeTNjNFVUSnFpSERi?=
- =?utf-8?Q?AIEw5PjOyQb45fYjP7PbUsj+R5FYOy+p?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rUCAANXD"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-39ca0a30148so137301fa.3
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 08:22:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786461759; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LyRsndx4EzRqspF54u+1ROF9CuoG37pHv4QiOIsd4TaFetShlfbQZvhRnYLjMlbVG9
+         a/GGjta5p2eThfNrptZrUWXMv5L3as36ujprhwcG9fhME++mrwuP78dkiEv0PayEgJoV
+         t+gwXYI+efb3C6SF8yoUBdMPkAQ+zmKYODAP4JJG6Uv5crbHDaC7QwhA2yvnuZo8+4bI
+         W14mcLACL8x89pNNc19wE6pX60vSz3+KC+8p6w+NRobtVC7vIZ/sXEkEgHqM0Pb9GH7N
+         60stZwSbS0eKPlsuKg4gv67gJMfeHzgvgw+BogAoihztWXD9B9gYY3s/YfzIiuC7JTN8
+         7jKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=S5/hnT5dDkfBhmIrIepITlnQSpLxXa2Wg3VnbfM+v1Q=;
+        fh=Cc1QAY/lqSqLHUUWWo19PrvfUiGowsOMgKPJQ9CIkE0=;
+        b=mUmrqqr+vZbH6DOS+bqz8MxY1RfycqtSezGoZJ/PDeBmhzCbGMJcmcrxcz4t1JYS6o
+         8gN+JVjLNcpW+rwa+FY797GwxiCcn1G8V2847GfgqAfqd59fW4TSNa6rOUf0wCpU1bWm
+         ZP5fbFK+lzGx5XsuBFosBMpH5usZdKB18EzmFYog2Wr8+Zaw3quhhifxDeMsMNp81DIS
+         gf8Aey680O0xZ/6NR9MkxbzieNUdWYAZXB+jBnOZHp8yZuPQ6OmjTv9zrHVX4N7z5Z4u
+         LG0pcaC34IbiV2sXen1rrnqXHgq/UwozwNc1otgeXiiREztZGKIXlXEMe+DFq3xzqZ7b
+         IwAA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786461759; x=1787066559; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=S5/hnT5dDkfBhmIrIepITlnQSpLxXa2Wg3VnbfM+v1Q=;
+        b=rUCAANXD293zfRvrre5xTgWQ9xBLcGOsbMcaQfv6AqwE9f0DSSz4QMFtYigisHfWE9
+         icwDGWGZw+aQnR6cgE+OWibfFJvgHm1DCKkfLdyoA3ibZ/n0tkOxD4E30yXRunfYs5x2
+         aDkW7Ue81n1hL0GDEbIPIkxSfaAlbCwcgXdJAxkwlYZVVSIX8eg7d1OHXFSvIrcVeEiP
+         A7KbUHuYprzONz7DnGUed2oSEtls1g2aggbPDkjnLfWvQeCWKjs1zwYznKb67KpnbfQS
+         NLRby78ow0FRXEv+oa8NxnxZY/3yMS3Gy/Mo2Hq5Rsr0yEH+sXnKktPk5zQ8k7Dt9qa/
+         kFJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786461759; x=1787066559;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=S5/hnT5dDkfBhmIrIepITlnQSpLxXa2Wg3VnbfM+v1Q=;
+        b=VSq1h/oWFl+LX4rYiLWn3CY4h2eHTW5CzwNWOI893EV9McnTRlmCByM4GIB0wJzMXX
+         oUKR8RahMHRKrtYlNyXZseULdwnRyi2Z7SyQeSWmrdBfWiu82veLwOcl/YwDkEmScPr4
+         j+gAqIIhucWirWrpi2kk1sgKtO0egBNzkfBmb34uTstGbvnSWl3ewxQ8LhQdPP9leLR/
+         60qG1+rj+0NC4gBM700kA1n1YeMLBkUCL30dE5U/CzM0VNZSds39TQ2IGPWGF2vXB5tt
+         yy4jhFqBcEYUoYJEGw3U/HyU3aTLlDDJtqK7EdLvW+dQkqd0h+SKB9hQycKCoOZp0v3E
+         0bOQ==
+X-Gm-Message-State: AOJu0YzHuY4QWMHdmVUFy07mQlk6LUVvWQkWmtCKqxzj+yVZqSqmsI8q
+	KGvQgREJ+JhbVzqU5/AFb2TghLp1stqs++RtmiByiUCPkKgG6myL+iQuUNIcxP+KpnJGOcVMF2A
+	Y6u9GBcepsVo2LXq3Qo8xNpvvvyqe/5o=
+X-Gm-Gg: AR+sD11hAl1OVnVEUI2Qre3AUFH7FjCdU+Ol2TbAZGIUKfb0OECZsIDI4TpdftgR3kt
+	wmh+g3erRQpEna/13gNsDK7Mbumi9bhHsXW2p74MoEvK18qAZzKa6oly0a4/dR59+yU85lBLYD8
+	+3h5X77nSkUlsv+BeaMHIUMYgw6djnE36kG2wGpc3rgXZ6S4kkoyaI1/RxxGKHbFJ6jQX6Rzyyx
+	UuWfBlzhe8+C19Qo2f487uItLHNWcoLHQesJDeXhZI7PwxZgvNMpDudtYxwSvQKNeOQSZ2H/pFW
+	oTxduLe5moW4zYKcdB5qN3QzQSk/W8c2HrXZ28Wc1RhZuEeyJ94Gca1HqhJfkHHQTPXyEkJB9qh
+	MJydmsO3xvle8s9CMiUQF435ghhIxOhVQBRODQcSSLC4OZN/K2Xss85FOGw==
+X-Received: by 2002:a05:651c:510:b0:39a:e9c1:5809 with SMTP id
+ 38308e7fff4ca-3a0f8c4a2bamr5906111fa.3.1786461758325; Tue, 11 Aug 2026
+ 08:22:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-9f624.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR02MB4450.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0bab15d7-0368-44ca-2594-08def7ba1fc5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Aug 2026 15:06:30.2131
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR02MB6965
+References: <20260721-fsmonitor-darwin-cookie-flush-v1-1-357dc5e32040@gmail.com>
+ <anLtSOKqgcCrrNHo@pks.im>
+In-Reply-To: <anLtSOKqgcCrrNHo@pks.im>
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Tue, 11 Aug 2026 11:22:01 -0400
+X-Gm-Features: AUfX_mxFbnHGLX5OUChfkqfmzyfk-DeAq9uQHaMBr_6KC_0ROwDVHjsxu-UeC9I
+Message-ID: <CAJ-ks9=+4rxxx8+7fOF1aLFW67=hdxjhQsHqse1GGBLwZUh2BQ@mail.gmail.com>
+Subject: Re: [PATCH] fsmonitor: flush pending FSEvents before cookie wait
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>, 
+	Paul Tarjan <github@paulisageek.com>, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Koji Nakamaru <koji.nakamaru@gree.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-KEkgYW0gbm90IHlldCBkb25lIHdpdGggeW91IG10Zi1lcnMpOgoKSSBmZWVkIHRoZSBjcmFzaCBs
-b2cgaW50byBDby1QaWxvdC9BSSwgaXQga25vd3MgYWJvdXQgaXQ6CgpUaGUgc2hvcnQgYW5zd2Vy
-OiAqKnlvdXIgY3Jhc2ggY29kZXMgaW5kaWNhdGUgYW4gKmFjY2Vzc+KAkXZpb2xhdGlvbiogaW5z
-aWRlIFdpbmRvd3MgVGVybWluYWzigJlzIHJlbmRlcmluZy9jb250cm9sIERMTCoqLCBhbmQgdGhl
-IHNwZWNpZmljIHNpZ25hdHVyZSB5b3UgcG9zdGVkIG1hdGNoZXMgYSAqKmtub3duIFdpbmRvd3Mg
-VGVybWluYWwgYnVnKiogdGhhdCBvY2N1cnMgZHVyaW5nICoqdGFiIGRyYWfigJFtZXJnZSBvcGVy
-YXRpb25zKiosIG9mdGVuIHdoZW4gc2Nyb2xsYmFjayBidWZmZXJzIGFyZSBsYXJnZS4KCi0tLQoK
-IyMg8J+nqSBXaGF0IHRoZSBjb2RlcyBtZWFuIChkaXJlY3QgaW50ZXJwcmV0YXRpb24pCgotICoq
-RmF1bHRpbmcgYXBwbGljYXRpb246KiogV2luZG93c1Rlcm1pbmFsLmV4ZSAgCi0gKipGYXVsdGlu
-ZyBtb2R1bGU6KiogTWljcm9zb2Z0LlRlcm1pbmFsLkNvbnRyb2wuZGxsICAKLSAqKkV4Y2VwdGlv
-biBjb2RlOioqICoqMHhjMDAwMDAwNSoqIOKGkiAqKkFjY2VzcyB2aW9sYXRpb24qKiAoaW52YWxp
-ZCBtZW1vcnkgcmVhZC93cml0ZSkgICBbY2xvdWRzcHJlc3MuY29tXShodHRwczovL3d3dy5jbG91
-ZHNwcmVzcy5jb20vaG93LXRvLWZpeC1lcnJvci1jb2RlLTB4YzAwMDAwMDUtb24td2luZG93cy0x
-MS8pICAKLSAqKkZhdWx0IG9mZnNldDoqKiAweDJDOTI0IOKGkiBUaGUgZXhhY3QgaW5zdHJ1Y3Rp
-b24gaW5zaWRlIHRoZSBETEwgd2hlcmUgdGhlIGNyYXNoIG9jY3VycmVkICAKLSAqKlByb2Nlc3Mg
-SUQgLyBzdGFydCB0aW1lOioqIEp1c3QgaWRlbnRpZmllcnM7IG5vdCBkaWFnbm9zdGljCgoqKjB4
-YzAwMDAwMDUqKiBzcGVjaWZpY2FsbHkgbWVhbnMgdGhlIHByb2dyYW0gdHJpZWQgdG8gKipyZWFk
-IG9yIHdyaXRlIG1lbW9yeSBpdCBzaG91bGRu4oCZdCoqLCB0eXBpY2FsbHkgZHVlIHRvOgoKLSBO
-dWxsIHBvaW50ZXIgZGVyZWZlcmVuY2UgIAotIFVzZeKAkWFmdGVy4oCRZnJlZSAgCi0gQ29ycnVw
-dGVkIGludGVybmFsIHN0YXRlICAKLSBNZW1vcnkgcHJlc3N1cmUgY2F1c2luZyB1bmV4cGVjdGVk
-IGJlaGF2aW9yICAKLSBBIGJ1ZyBpbiB0aGUgbW9kdWxlIChpbiB0aGlzIGNhc2UsIE1pY3Jvc29m
-dC5UZXJtaW5hbC5Db250cm9sLmRsbCkKCi0tLQoKIyMg8J+noCBXaHkgdGhpcyBzcGVjaWZpYyBj
-cmFzaCBpcyBoYXBwZW5pbmcKCllvdXIgY3Jhc2ggc2lnbmF0dXJlICoqZXhhY3RseSBtYXRjaGVz
-KiogYSBkb2N1bWVudGVkIFdpbmRvd3MgVGVybWluYWwgaXNzdWU6CgotICoqQ3Jhc2ggZHVyaW5n
-IHRhYiBkcmFn4oCRbWVyZ2UqKiAgCi0gKipGYXVsdGluZyBtb2R1bGU6KiogTWljcm9zb2Z0LlRl
-cm1pbmFsLkNvbnRyb2wuZGxsICAKLSAqKkV4Y2VwdGlvbjoqKiAweGMwMDAwMDA1ICAKLSAqKk9m
-ZnNldDoqKiBzYW1lIHJlZ2lvbiAoMHgyQ3h4eCkgIAotICoqVmVyc2lvbjoqKiAxLjI0LjI2MDUu
-MTIwMDEgIAoKVGhpcyBpcyBjb25maXJtZWQgaW4gdGhlIFdpbmRvd3MgVGVybWluYWwgR2l0SHVi
-IGlzc3VlIHRyYWNrZXI6ICAKLSBJc3N1ZSAjMjA0MDYgZGVzY3JpYmVzICoqaW50ZXJtaXR0ZW50
-IGNyYXNoZXMgd2hlbiBtZXJnaW5nIHRhYnMqKiwgd2l0aCB0aGUgKipzYW1lIHZlcnNpb24gYW5k
-IHNhbWUgRExMKiouICAgW0dpdGh1Yl0oaHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC90ZXJt
-aW5hbC9pc3N1ZXMvMjA0MDYpICAKLSBJc3N1ZSAjMTkzODMgc2hvd3Mgc2ltaWxhciBjcmFzaGVz
-IGluIGVhcmxpZXIgdmVyc2lvbnMsIGFsc28gZHVyaW5nIHRhYiBtZXJnZSBvcGVyYXRpb25zLiAg
-IFtHaXRodWJdKGh0dHBzOi8vZ2l0aHViLmNvbS9taWNyb3NvZnQvdGVybWluYWwvaXNzdWVzLzE5
-MzgzKSAgCgpUaGUgbWFpbnRhaW5lcnMgbm90ZToKCi0gVGhlIGNyYXNoIG9jY3VycyAqKmluc2lk
-ZSB0aGUgY29udHJvbCBETEwqKiwgbm90IHVzZXIgY29kZS4gIAotIEl0IGlzIHRyaWdnZXJlZCBi
-eSAqKmRyYWdnaW5nIGEgdGFiIGZyb20gb25lIHdpbmRvdyBpbnRvIGFub3RoZXIqKi4gIAotIExh
-cmdlIHNjcm9sbGJhY2sgYnVmZmVycyBvciBtZW1vcnkgZ3Jvd3RoIChSQURBUl9QUkVfTEVBS182
-NCkgaW5jcmVhc2UgdGhlIGxpa2VsaWhvb2QuICAKLSBBbGwgVGVybWluYWwgd2luZG93cyBkaWUg
-YmVjYXVzZSB0aGV5IHNoYXJlIGEgc2luZ2xlIHByb2Nlc3MuCgpUaGlzIGlzICoqbm90IGNhdXNl
-ZCBieSB5b3VyIHN5c3RlbSoqLCBkcml2ZXJzLCBvciBSQU0uICAKSXQgaXMgYSAqKmJ1ZyBpbiBX
-aW5kb3dzIFRlcm1pbmFsIDEuMjQqKi4KCi0tLQoKIyMg8J+UjSBXaGF0IDB4YzAwMDAwMDUgbWVh
-bnMgaW4gZ2VuZXJhbAoKV2luZG93cyB1c2VzIDB4YzAwMDAwMDUgZm9yICoqYW55IGlsbGVnYWwg
-bWVtb3J5IGFjY2VzcyoqOgoKLSAqKjAqKiDihpIgaW52YWxpZCByZWFkICAKLSAqKjEqKiDihpIg
-aW52YWxpZCB3cml0ZSAgCi0gKio4Kiog4oaSIGludmFsaWQgY29kZSBleGVjdXRpb24gIAogIFtj
-bG91ZHNwcmVzcy5jb21dKGh0dHBzOi8vd3d3LmNsb3Vkc3ByZXNzLmNvbS9ob3ctdG8tZml4LWVy
-cm9yLWNvZGUtMHhjMDAwMDAwNS1vbi13aW5kb3dzLTExLykKCkluIHlvdXIgY2FzZSwgdGhlIEdp
-dEh1YiBpc3N1ZXMgc3Ryb25nbHkgaW5kaWNhdGUgYSAqKm51bGwgcG9pbnRlciBkZXJlZmVyZW5j
-ZSoqIGluc2lkZSB0aGUgdGFi4oCRbWVyZ2UgbG9naWMuCgotLS0KCiMjIPCfm6AgV2hhdCB5b3Ug
-Y2FuIGRvCgojIyMgMS4gQXZvaWQgdGFiIGRyYWfigJFtZXJnZSBmb3Igbm93ICAKVGhpcyBpcyB0
-aGUgZGlyZWN0IHRyaWdnZXIgaW4gdGhlIGtub3duIGJ1ZyByZXBvcnRzLgoKIyMjIDIuIFJlZHVj
-ZSBzY3JvbGxiYWNrIHNpemUgIApMYXJnZSBzY3JvbGxiYWNrIGJ1ZmZlcnMgaW5jcmVhc2UgbWVt
-b3J5IHByZXNzdXJlIGFuZCBjcmFzaCBsaWtlbGlob29kLgoKIyMjIDMuIFVwZGF0ZSBXaW5kb3dz
-IFRlcm1pbmFsICAKQ2hlY2sgZm9yIGEgbmV3ZXIgdmVyc2lvbiB0aGFuICoqMS4yNC4yNjA1LjEy
-MDAxKiouICAKVGhlIGJ1ZyBpcyBrbm93biBhbmQgdW5kZXIgdHJpYWdlLgoKIyMjIDQuIElmIHlv
-dSB3YW50IGRlZXBlciBkZWJ1Z2dpbmcgIApZb3UgY2FuIGNhcHR1cmUgYSBkdW1wIGFuZCBpbnNw
-ZWN0IHdpdGggV2luRGJnOgoKLSBgIWFuYWx5emUgLXZgICAKLSBDaGVjayB0aGUgY2FsbCBzdGFj
-ayBhcm91bmQgdGhlIGZhdWx0IG9mZnNldCAgCi0gTG9vayBmb3IgcG9pbnRlciBkZXJlZmVyZW5j
-ZXMgaW5zaWRlIE1pY3Jvc29mdC5UZXJtaW5hbC5Db250cm9sLmRsbAoKQnV0IGJhc2VkIG9uIHRo
-ZSBHaXRIdWIgcmVwb3J0cywgeW91IHdpbGwgbGlrZWx5IHNlZSB0aGUgc2FtZSBzaWduYXR1cmUg
-YXMgb3RoZXJzLgoKLS0tCgojIyDwn6etIElmIHlvdSB3YW50LCBJIGNhbiBoZWxwIHlvdToKCi0g
-QW5hbHl6ZSB5b3VyIGNyYXNoIGR1bXAgIAotIEV4cGxhaW4gaG93IHRvIHVzZSBXaW5EYmcgc3Rl
-cOKAkWJ54oCRc3RlcCAgCi0gQ2hlY2sgd2hldGhlciB5b3VyIHNldHRpbmdzLmpzb24gbWlnaHQg
-YWxzbyBiZSBjb250cmlidXRpbmcKCkp1c3QgcGljayBvbmUuCiIKCgpNZToKIgpIYXMgYSBuZXcg
-dmVyc2lvbiBvZiB0ZXJtaW5hbCB3aW5kb3cgYmVlbiByZWxlYXNlZCB3aGljaCBzb2x2ZXMgdGhp
-cyBidWcgPwoiCgoqKlllcyDigJQgYSBuZXdlciBXaW5kb3dzIFRlcm1pbmFsIGJ1aWxkICpoYXMq
-IGJlZW4gcmVsZWFzZWQgdGhhdCBzcGVjaWZpY2FsbHkgZml4ZXMgdGhlIHRhYuKAkWRyYWcgY3Jh
-c2ggeW914oCZcmUgZXhwZXJpZW5jaW5nLioqICAKVGhlIGZpeCBsYW5kZWQgaW4gKipXaW5kb3dz
-IFRlcm1pbmFsIDEuMjQuMTE5MTEuMCoqLCByZWxlYXNlZCBtaWTigJFKdWx5IDIwMjYsIGFuZCBj
-b25maXJtZWQgaW4gbXVsdGlwbGUgc291cmNlcyBhcyBhZGRyZXNzaW5nIHRoZSBkcmFn4oCRbWVy
-Z2UgY3Jhc2ggeW91IGhpdC4gICBbTlQgQ29tcGF0aWJsZV0oaHR0cHM6Ly93d3cubnRjb21wYXRp
-YmxlLmNvbS9zdG9yeS93aW5kb3dzLXRlcm1pbmFsLTEyNC1hbmQtMTI1LXVwZGF0ZS1yZWxlYXNl
-ZC1idWctZml4ZXMtYW5kLXYxMjYtZGVsYXkvKQoKLS0tCgojIyDwn5+iICoqRGlyZWN0IGFuc3dl
-cjogWW91ciBjcmFzaCAqaXMgZml4ZWQqIGluIDEuMjQuMTE5MTEuMCoqCgpUaGUgTlQgQ29tcGF0
-aWJsZSByZWxlYXNlIG5vdGVzIGV4cGxpY2l0bHkgc3RhdGU6CgotICoq4oCcS2V5IGZpeGVzIGlu
-Y2x1ZGUgcmVzb2x2aW5nIGEgdGFi4oCRZHJhZ2dpbmcgY3Jhc2gu4oCdKiogIAotIFRoaXMgZml4
-IGlzIGluY2x1ZGVkIGluICoqV2luZG93cyBUZXJtaW5hbCAxLjI0LjExOTExLjAqKiAoc3RhYmxl
-KSBhbmQgKioxLjI1LjE5MTIuMCoqIChwcmV2aWV3KS4gICBbTlQgQ29tcGF0aWJsZV0oaHR0cHM6
-Ly93d3cubnRjb21wYXRpYmxlLmNvbS9zdG9yeS93aW5kb3dzLXRlcm1pbmFsLTEyNC1hbmQtMTI1
-LXVwZGF0ZS1yZWxlYXNlZC1idWctZml4ZXMtYW5kLXYxMjYtZGVsYXkvKQoKVGhpcyBtYXRjaGVz
-IHlvdXIgY3Jhc2ggc2lnbmF0dXJlIGV4YWN0bHk6CgotIEZhdWx0aW5nIG1vZHVsZTogKipNaWNy
-b3NvZnQuVGVybWluYWwuQ29udHJvbC5kbGwqKiAgCi0gRXhjZXB0aW9uOiAqKjB4YzAwMDAwMDUq
-KiAgCi0gT2Zmc2V0OiAqKjB4MkM5MjQqKiAgCi0gVmVyc2lvbjogKioxLjI0LjI2MDUuMTIwMDEq
-KiAgCi0gVHJpZ2dlcjogKipkcmFn4oCRbWVyZ2luZyB0YWJzKiogIAogIChDb25maXJtZWQgaW4g
-R2l0SHViIGlzc3VlICMyMDQwNikgICBbR2l0aHViXShodHRwczovL2dpdGh1Yi5jb20vbWljcm9z
-b2Z0L3Rlcm1pbmFsL2lzc3Vlcy8yMDQwNikKClRoZSBmaXggaXMgZGVzY3JpYmVkIGFzIGNvcnJl
-Y3RpbmcgYW4gKipFbmFibGVQYWludGluZyB2aWV3cG9ydCBkZXN5bmMqKiB0aGF0IGNhdXNlZCBj
-cmFzaGVzIGR1cmluZyB0YWIgZHJhZ2dpbmcgYmV0d2VlbiB3aW5kb3dzIG9mIGRpZmZlcmVudCBz
-aXplcy4gICBbTlQgQ29tcGF0aWJsZV0oaHR0cHM6Ly93d3cubnRjb21wYXRpYmxlLmNvbS9zdG9y
-eS93aW5kb3dzLXRlcm1pbmFsLTEyNC1hbmQtMTI1LXVwZGF0ZS1yZWxlYXNlZC1idWctZml4ZXMt
-YW5kLXYxMjYtZGVsYXkvKQoKLS0tCgojIyDwn6epICoqSW1wb3J0YW50IG51YW5jZTogU29tZSAq
-b3RoZXIqIHRhYuKAkWRyYWcgY3Jhc2hlcyBzdGlsbCBleGlzdCoqCgpXaGlsZSB5b3VyIHNwZWNp
-ZmljIGNyYXNoIChmYXVsdGluZyBpbiAqTWljcm9zb2Z0LlRlcm1pbmFsLkNvbnRyb2wuZGxsKikg
-aXMgZml4ZWQsICoqbmV3ZXIgcmVsYXRlZCBjcmFzaGVzKiogd2VyZSBsYXRlciBkaXNjb3ZlcmVk
-OgoKLSBDcmFzaGVzIHdoZW4gZHJhZ2dpbmcgYSB0YWIgKipvdmVyIHRlcm1pbmFsIGNvbnRlbnQq
-KiAobm90IG1lcmdpbmcpICAKICDihpIgRmF1bHRpbmcgaW4gKipXaW5kb3dzLlVJLlhhbWwuZGxs
-KiosIGV4Y2VwdGlvbiAqKjB4YzAwMDAyN2IqKiAgCiAg4oaSIFN0aWxsIHByZXNlbnQgaW4gMS4y
-NC4xMTkxMS4wIGFuZCAxLjI0LjI2MDcuMTAwMDEgIAogICAgW0dpdGh1Yl0oaHR0cHM6Ly9naXRo
-dWIuY29tL21pY3Jvc29mdC90ZXJtaW5hbC9pc3N1ZXMvMjA1MTIpCgotIENyYXNoZXMgZHVyaW5n
-IHBvaW50ZXLigJFtb3ZlIGV2ZW50cyBkdWUgdG8gYSByYWNlIGNvbmRpdGlvbiAgCiAg4oaSIE51
-bGwgZGVyZWZlcmVuY2UgaW4gYFRlcm1Db250cm9sOjpfUG9pbnRlck1vdmVkSGFuZGxlcmAgIAog
-IOKGkiBQcmVzZW50IGluIDEuMjQuMTE5MTEuMCAgCiAgICBbR2l0aHViXShodHRwczovL2dpdGh1
-Yi5jb20vbWljcm9zb2Z0L3Rlcm1pbmFsL2lzc3Vlcy8yMDQ3NykKClRoZXNlIGFyZSAqKmRpZmZl
-cmVudCBidWdzKiogZnJvbSB5b3Vycywgd2l0aCBkaWZmZXJlbnQgZmF1bHRpbmcgbW9kdWxlcyBh
-bmQgZXhjZXB0aW9uIGNvZGVzLgoKKipZb3VyIGNyYXNoIGlzIGZpeGVkLioqICAKKipPdGhlciBk
-cmFn4oCRcmVsYXRlZCBjcmFzaGVzIHN0aWxsIGV4aXN0LioqCgotLS0KCiMjIPCfm6AgKipXaGF0
-IHlvdSBzaG91bGQgZG8gbm93KioKCiMjIyAxLiBVcGRhdGUgV2luZG93cyBUZXJtaW5hbCAgCklu
-c3RhbGwgKioxLjI0LjExOTExLjAqKiBvciBuZXdlcjoKCi0gTWljcm9zb2Z0IFN0b3JlICAKLSBg
-d2luZ2V0IHVwZ3JhZGUgLS1pZCBNaWNyb3NvZnQuV2luZG93c1Rlcm1pbmFsYCAgCi0gR2l0SHVi
-IHJlbGVhc2VzCgpUaGlzIHVwZGF0ZSBjb250YWlucyB0aGUgZml4IGZvciB5b3VyIGV4YWN0IGNy
-YXNoLgoKIyMjIDIuIElmIHlvdSBzdGlsbCBzZWUgY3Jhc2hlcyAgClRoZXkgbWF5IGJlIG9uZSBv
-ZiB0aGUgbmV3ZXIgWEFNTCBkcmFn4oCRYm91bmRhcnkgYnVncy4gIApUaG9zZSBhcmUgc3RpbGwg
-dW5kZXIgYWN0aXZlIGludmVzdGlnYXRpb24uCgotLS0KCiMjIPCflI0gV2FudCBtZSB0byBjaGVj
-ayB5b3VyIGV4YWN0IHZlcnNpb24gYW5kIGNvbmZpcm0/ICAKWW91IGNhbiBhc2s6ICAKLSAqKkNo
-ZWNrIG15IFdpbmRvd3MgVGVybWluYWwgdmVyc2lvbioqICAKLSAqKkV4cGxhaW4gaG93IHRvIHVw
-ZGF0ZSBXaW5kb3dzIFRlcm1pbmFsKioKIgoKQXQgbGVhc3QgTWljcm9zb2Z0IGZpeGVzIGJ1Z3Ms
-IHRoaXMgd2FzIGEgcmVhbGx5IGJhZCBvbmUsIGdvaW5nIHRvIHVwZGF0ZSBteSBXaW5kb3dzIFRl
-cm1pbmFsLCBvciBhdCBsZWFzdCB0cnkgIQoKQW1hemluZyBob3cgdGhlIEFJIHdhcyBhYmxlIHRv
-IGZpZ3VyZSB0aGlzIG91dCBhbmQgeWVzIGluZGVlZCBpdCBzdXJwcmlzaW5nbHkgdG9vayBkb3du
-IGFsbCBjbWQvY29uc29sZXMuLi4KClRoaXMgY291bGQgYmUgbmFzdHkgZm9yIGJsb2NrY2hhaW5z
-IG9yIGxlbmd0aHkgc2V0dXAgb2Ygc29mdHdhcmUuCgpTbyBkZWZpbmV0bHkgYSBtdXN0IGZpeC4K
-CkJ5ZSBmb3Igbm93LAogIFNreWJ1Y2su
+On Wed, Aug 5, 2026 at 3:59=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+>
+> On Tue, Jul 21, 2026 at 05:04:56PM -0400, Tamir Duberstein wrote:
+> > 56cef9cb1a (fsmonitor: use pthread_cond_timedwait for cookie wait,
+> > 2026-04-15) limits the cookie wait to one second so that a filesystem
+> > which never delivers events cannot hang fsmonitor clients. A client tha=
+t
+> > times out receives a trivial response and scans the entire index.
+> >
+> > FSEvents can defer delivery while it batches notifications and does not
+> > guarantee that its queue is drained in one latency interval. A loaded
+> > macOS system can therefore time out even though the event stream is
+> > working.
+> >
+> > On an Apple M4 Max (16 cores, 128 GiB RAM) running macOS 26.5.2, two
+> > worktrees with a 1,001,178-entry index timed out 484 of 545 and 297 of
+> > 365 fsmonitor requests. One status call performed 934,519 lstat() calls
+> > during a 47-second preload and took 52 seconds overall.
+> >
+> > Ask FSEvents to flush pending notifications after creating the cookie
+> > and before starting the timed wait. Use the asynchronous form because
+> > the client handler holds main_lock, which the listener callback also
+> > acquires. Keep the timeout and the behavior of the other backends
+> > unchanged.
+>
+> I cannot really say much about the FSEvent interfaces, but to me it
+> feels quite reasonable to flush the queue when we are waiting for events
+> to be delivered. And that's exactly what `FSEventStreamFlushAsync()`
+> does: it basically overrides the latency we have configured (which is
+> 1ms) and asks the kernel to flush stuff immediately.
+>
+> > diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+> > index 4161dd8282..8e32b5ae5e 100644
+> > --- a/builtin/fsmonitor--daemon.c
+> > +++ b/builtin/fsmonitor--daemon.c
+> > @@ -206,6 +206,9 @@ static enum fsmonitor_cookie_item_result with_lock_=
+_wait_for_cookie(
+> >       close(fd);
+> >       unlink(cookie_pathname.buf);
+> >
+> > +     /* The listener callback takes main_lock, so this must not block.=
+ */
+> > +     fsm_listen__flush_async(state);
+> > +
+> >       /*
+> >        * Wait for the listener thread to observe the cookie file.
+> >        * Time out after a short interval so that the client
+>
+> Okay, so we've unlinked the cookie file and the next thing is that we're
+> waiting for all events to have been processed. As said, it feels
+> reasonable that we're flushing all events before we start waiting for
+> them.
+>
+> What I find surprising though is that this is supposed to make a
+> difference at all. The latency we pass to `FSEventStreamCreate()` is
+> 1 millisecond, and we wait up to 1 second for the cookie event. I would
+> have expected that batching events for 1 milliseconds should be totally
+> fine when we're waiting for a full second anyway.
+>
+> So given that I cannot verify this at all and that I have no clue about
+> the FSEvent interfaces... do you have any explanation why the flush
+> seems to help regardless?
+>
+> I _think_ you're already hinting at this in the commit message, where
+> you say that it's not guaranteed that the queue is drained in a single
+> latency interval. Is there any documentation that tells us what the
+> provided guarantees are?
+>
+> Other than that the code changes look sensible to me, thanks!
+>
+> Patrick
+
+The following was generated by my coding agent and fact checked and
+edited by me mainly to address you in the second person.
+
+Your question was already answered by the original Git implementation
+- and you yourself predicted this exact regression before it landed.
+
+In March 2022, Jeff Hostetler introduced Git=E2=80=99s fsmonitor cookie
+protocol in commit b05880d357. Its commit message explicitly says
+macOS =E2=80=9Cdoes not guarantee that the kernel queue is completely drain=
+ed=E2=80=9D
+after one FSEvents latency interval. That is precisely why Git
+originally waited until it actually observed the cookie. Original
+cookie implementation
+(https://github.com/git/git/commit/b05880d357c6dadba8d1d7943f4782fc25e06999=
+)
+
+Regression timeline:
+
+1. February 2026: Paul Tarjan proposed replacing the indefinite cookie
+wait with a one-second timeout to prevent hangs on Linux filesystems
+that never deliver events. Junio questioned whether one second was
+appropriate and warned about expensive full-scan fallbacks. Junio=E2=80=99s
+initial concern
+(https://lore.kernel.org/git/xmqqzf4w8r20.fsf@gitster.g/); Junio=E2=80=99s
+full-scan warning
+(https://lore.kernel.org/git/xmqqfr6mt9uk.fsf@gitster.g/)
+2. Paul=E2=80=99s assumption: He argued that the timeout would trigger only=
+ on
+broken filesystems that never deliver events, while working
+filesystems would respond promptly. Paul=E2=80=99s explanation
+(https://lore.kernel.org/git/20260227063118.9069-1-github@paulisageek.com/)
+3. March 4: You (Patrick) asked: =E2=80=9CAre we sure this is always enough=
+ on
+a loaded system?=E2=80=9D Paul responded that even if a timeout occurred, t=
+he
+fallback would simply involve some additional work. Patrick=E2=80=99s earli=
+er
+warning (https://lore.kernel.org/git/aafifU-befdZW4O0@pks.im/); Paul=E2=80=
+=99s
+response (https://lore.kernel.org/git/20260304181745.25673-1-github@paulisa=
+geek.com/)
+4. April 15: The one-second timeout landed anyway as 56cef9cb1a.
+Accepted timeout change
+(https://github.com/git/git/commit/56cef9cb1a083c47b12b88548bf2126af8bfb263=
+)
+5. July 21: My (tamird) measurements disproved both assumptions: 781
+of 910 requests timed out on functioning macOS worktrees, and one
+fallback caused 934,519 lstat() calls and a 52-second git status. The
+result is this patch.
+
+Summary:
+
+The 1 ms value is not a delivery deadline:
+
+- Apple defines it as the delay the userspace service should apply
+after it hears about an event from the kernel. It says nothing about
+kernel backlog, service scheduling, callback scheduling, or complete
+queue drainage. The installed SDK spells this out in
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Framewor=
+ks/CoreServices.framework/Frameworks/FSEvents.framework/Headers/FSEvents.h:=
+763.
+
+ *    latency:
+ *      The number of seconds the service should wait after hearing
+ *      about an event from the kernel before passing it along to the
+ *      client via its callback. Specifying a larger value may result
+ *      in more effective temporal coalescing, resulting in fewer
+ *      callbacks and greater overall efficiency.
+
+- Apple explicitly describes notification latency as =E2=80=9Cinherently
+non-deterministic.=E2=80=9D Apple=E2=80=99s FSEvents programming guide
+(https://developer.apple.com/library/archive/documentation/Darwin/Conceptua=
+l/FSEvents_ProgGuide/UsingtheFSEventsFramework/UsingtheFSEventsFramework.ht=
+ml)
+- Apple=E2=80=99s kernel independently implements a 10 ms event-batching
+timer, demonstrating that the userspace 1 ms parameter is not even the
+only batching interval. This does not itself explain a one-second
+delay; it disproves treating 1 ms as an end-to-end guarantee. Apple
+XNU FSEvents implementation
+(https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d375=
+211650a4c1ff8ca1ea/bsd/vfs/vfs_fsevents.c#L1479-L1525)
+- Git=E2=80=99s original Darwin implementation chose 1 ms because 100 ms
+caused dropped events in a 100,000-file stress test=E2=80=94not because App=
+le
+guaranteed delivery within 1 ms. See
+compat/fsmonitor/fsm-listen-darwin.c:437.
+- FSEventStreamFlushAsync() requests delivery of pending events
+without blocking. A synchronous flush at the existing call site would
+deadlock because the caller already holds the mutex needed by the
+callback. See builtin/fsmonitor--daemon.c:247.
+
+Hope that's helpful.
