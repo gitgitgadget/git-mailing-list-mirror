@@ -1,230 +1,298 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F95D40B373
-	for <git@vger.kernel.org>; Tue, 11 Aug 2026 16:45:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786466744; cv=pass; b=AnxUwgy2YFDAhWzxZkW58wk1kyCMwTjbO8ACyVIZirQeiDgwrX7uPHoJYMcz40vvTQB5R4P7s8i95eFUs/jZtgOwIyK0v9htfGvRbR4YwdtzFUV2huMmA/0DJFflfWLGQbYqHX2/9EkCIGRj+rIF4afltJ53G/gVA0IcK360chQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786466744; c=relaxed/simple;
-	bh=dQKYbK5tVFUE8Em0RKA4/It6oBx15kP+EQFN83LQV8M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IL0yO65xp46IxoUf19XwrTEt/s6i/BOpzbaSdDWTJ0QK34hZSy79Mx7rsUndxC0EdBN6j4Vd5RuDFHqVZU9Xh6HqLr6L9O5eSrORG7bQz954r3TKal1z+Xw3Ghkdan89kGNzjHu+oQ9wkue+f9R0m7ZOoHHVJwgeOd1xAUzkKxk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iz3RaBAb; arc=pass smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD1E453A58
+	for <git@vger.kernel.org>; Tue, 11 Aug 2026 17:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786467727; cv=none; b=Vf7u92d9QiLXKFAvnFQieYmPymOkRDrorVntajd8MiHcLnBHyq4EKRa7/i5y1GWCcOk4DbXHoVucRQ9acH2Zz8/rygl3fBKsvcB4ZJqvDcZbB6VeCOR4YSgwbOOAlpOhVeJudfx7Eb9PwgipdbSbwD7vDxvgHkE7Hu98bsphIB4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786467727; c=relaxed/simple;
+	bh=qOu5yam1ZAn4KGPkegUCYgTFAR9eyG/nkrIJALTzjx8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=o7LisFaecHunXXab+hDRIbvQDhC0gVfKqRYVUtnuAgciI4p65+BJ5TP0IqhmTBfCVsV68FT+nf5sL7z9YJInIUypWzpdZigSezyzaFRqlDZVbv5ijqkpHq9VRmVobQAqRkfVnpSW7//i0xgv5C38UmBRpMfMLoNf786lfhNv98Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nE539nfn; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iz3RaBAb"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-39c74722e27so1416791fa.0
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 09:45:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786466740; cv=none;
-        d=google.com; s=arc-20260327;
-        b=EE3lsn4w5iUrnGgvsTQgT+5bHBmi0gFzecFWXxOOpPB5X8F8QeuvBdATKqvJqvShoE
-         /YW1HjA+Yu59fojamw99WMoRTyXS2xELNEQuoJ5gPE90yomgDqrzFY7GO4DGqa6Ze66t
-         8yaLEdWDB/KhClMZSn4ku40a2y8f1iA9IHHyNXHRMCyu4Ggf8bFWDB3edR27n1xesLmI
-         IaLbC5HWAHFL/BAc39GtgevqRszsbRTKmcVSARAT4Q6sWIeAM0w68vqog1lDqpDQV1yw
-         SZcjplip/fh/Q3X6lNcs5AhLgBXfb/bFZJa9PYuY1+9MG6pQTuQtyZz9hk4Z+MrPnNVh
-         aaxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=TgNpJXuIVOW6CVieEPWzhi1nUJnFnaIUIaMQ7A2f6pU=;
-        fh=Cc1QAY/lqSqLHUUWWo19PrvfUiGowsOMgKPJQ9CIkE0=;
-        b=AFyT6cQ5urGzzH8h360L0Pw72WvGefbzf3KFggfRF7HGlGOPfePJc1BklibJHln4S2
-         LHxpSyB5JLGIezz1Y5+eltnw4Qd1Gjh+fPGn3jCf0BX8dbMSXqq7MHxHST/yRJ6ePq4Y
-         fyKiUknjAXtk7ZhrafF0k9buPT6nj4yf/j5TTQEFMT4uGJiYjPVYTkBn4PjCWLuBoZLK
-         DVIGtpnnGOh5HzYynE8PIQ2GYv7F8sW8EP8637vdwhx8Ak2FRZkurRvdKGvaKPUCBTjx
-         kO9XzPASKmJ3yHaP43nq61VEP1pfTXv5rKbYoqFz37o4hSxab+0DOKP1g2BErItw8W3B
-         C/wQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nE539nfn"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7dbcb505578so28307277b3.3
+        for <git@vger.kernel.org>; Tue, 11 Aug 2026 10:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786466740; x=1787071540; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=TgNpJXuIVOW6CVieEPWzhi1nUJnFnaIUIaMQ7A2f6pU=;
-        b=iz3RaBAbJ2axb3z1qH+2c2dMM/mTbBvMB192t0fjg/sRHluUmvR/Sfyl0CTumfKtJA
-         E30lBuxEKtTd7CQ/WH4NHfo98GNwgXV6KkSAFtZKt8bb6BcBLcf6TFELHmVTCwjVfedl
-         qCCWfN6VW6To+jf2xXzV85UcE1tc9UG6LvV6IB/HXVs8VcSg5cvpjiPHIaoc0C3j+7cM
-         MA1EPIy2h650exJjWUM3/wSK+x1FDFDvJNviPq8yMv7/rdKD32tw4XAP+vv7+vQFZC/c
-         I34sp66Coy74ej2Yjo0TiR8C6cRqVGKDy6f7bksj2nGxjitP9OLD9DxiiBWlIPzZUQYX
-         nRcA==
+        d=gmail.com; s=20251104; t=1786467724; x=1787072524; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=v5lJESSdtO5t/XRlHreTHNKSgWkmq7xIiEHXWT1vymI=;
+        b=nE539nfnQ9OZKuv5j3UC9y67d51b1a3QKf5Kb6Zx8UQRrWGLzk0CWL80mEhMUN1294
+         oEaXcYG4jeRgdfsJjsN0vVTu0YcDnGwrN4DA5fSWTMukRdLxhh1qhN5wk4PE7IARmxSB
+         cr8nkv1diRJeCaIqPoqReN1FbyKvIqgeUXXuGHM+aFn47/LgY/uIj6iqB673picoXeTy
+         HKFFcklLYt4gX4b+xoaPs/VVr5HgFLqjQVRspK59jhRFdmANoLZ93+HKmu9V3VKA1D1Q
+         GhV1jWtinxx4oKf1TsnMT/S66LKtG5zAGq7oV2/EGYAks+YUIMZxG1NXkZnmZFlBrjYi
+         e7+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786466740; x=1787071540;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TgNpJXuIVOW6CVieEPWzhi1nUJnFnaIUIaMQ7A2f6pU=;
-        b=YSd3xOF4RNYCQqUXWL9f9pW0EBTFwyGyWT8urkuz6hBrsEnopy7fwRBlNHbtL9yYgj
-         lsV60CTZYlAexcKvnziuGj9oKTrWwEe8UigSRCS3pROzVHHlleXqMGcrb6d068bp9fp5
-         ZHtONu4vru39eWvaAXf0jNskPqvxTUdXeV5ccVtiDSIosiDCPLQYzxxRokaHoOfsiDlD
-         SJwNHChjsMHQhXEa8vBWWxa+hTEB6/UMV8k3J2rztaPQuVKu0C0sy3QzeMZ4o/m/vT2d
-         ESsovaC8Mpu0NX3wWeJqMfEkZZK7eDXfGLKhV1e8rg5gSWvYPvWxze/4gjLDqXV1gvET
-         UWtg==
-X-Gm-Message-State: AOJu0Yx30BAoNAvBQamw0fisuEyE7a5n/0/EsMemMg468xrJ8Q3ZC/5e
-	6O0IzJsW+c7ratO/4vF9nPjV5Fd6ihI6u2HW3e1YLlDwJ3pQyWQuwYOJ9ZFZXcDOS4soa/H0C2a
-	S6nq0QPT39HfuT3Ay1rPiO73OEtS5ZYCfLI5n+X59uA==
-X-Gm-Gg: AR+sD10yhaGmKej1CV2s09AeA0//7z8fX9xkBi7jiGPaaqxxtkfS4ovit8KeQvxFHZg
-	wjmmy5fn8UMKfQ3SScrtSxfjG0NqMFKLbdahRS1ko2twuCJphTNEHOJm2MsHSVz551FHS038mmL
-	QMoizLftN+gp+Oo2Jgzv3HRbCtYyY3Yrsg+rR195AniAwWPm4oMSMKW9EAcYyMD/L31xwz9u7MT
-	3dF/sh4PSwNP9vTqyG3g2yuiUQsr5f3gEchGsALhFvr8AzdcNgsFopyi+fe7smXX0XZVFmCBDV4
-	kgqqUF7K2hfm4NCpG+KFkBmnOsk0vo75FG3TDBpcyAzZc4zkBYvRF7Svp0+BSHAzg+JOO2rYrou
-	BnqDvm864APjPH43pkrGVA+bYtIqgbTWJprc8cIFdmQXkn0WKtiucokxdkg==
-X-Received: by 2002:a2e:a9a2:0:b0:39b:11f9:6132 with SMTP id
- 38308e7fff4ca-3a102a5d000mr2426511fa.1.1786466740144; Tue, 11 Aug 2026
- 09:45:40 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786467724; x=1787072524;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=v5lJESSdtO5t/XRlHreTHNKSgWkmq7xIiEHXWT1vymI=;
+        b=kG+DoRbX0YPXck1ukexaKj+dItiUa4kTGg2oaHjFIRXOKqUEJ6G56GZJgRz5foSxZL
+         P48FUf2+HacwFHospPWA0UjfqU2/rVWn2Q7I0ob/uvHThZr9hRWIvqSfPKpXp/AK9wBS
+         tQg+Q840HwX25gq8AJl1sMhZ7S3CFqL2WJt1K8vxdxVCVyI58eGXzQ3VO+hSqb1KRRsA
+         aSc3JU2IgL3huUHLaGx94VeWmdfE8QCnytyvJ1SDivC7BxIKUxSB0hNGW10sTHa2r5YI
+         LFnqFC+Pl7gQYbwita7Kq6oDJ4RlpumdHXvjJ/4FRRg7SyDUtBVujfIVoRBEh6Njln0A
+         vkaQ==
+X-Gm-Message-State: AOJu0Yy7t9WClinI/JZLJSMHJSiXXg0ocVMrfNBly1+Rq/LQ3Iemn1p+
+	1a+qvVn/XE6TuQY/XwckzttdUIbSRGliOW4RsVebS1f6xZiaXJ1GNr5jY3p4shF9V0w=
+X-Gm-Gg: AR+sD11rODxg9B4nS9vGcOEKTT+Yf8BTnmJrhHVxEU4BVSTgddodtGSkWBy8K4H22yx
+	sqROrPHzS9YgX6pKrfaeHzHMoxp5NtOu7NWrUMY7QWf3QW/LU5vVCPr2Ba9xbuE/GBNlt9YqK8D
+	uybtEqb+mIFiB2HkcZC3KCf+cwz3178f84tvjOtHDdMjOyIu+292bTPYBwofhLgfVHZ5omXaKdM
+	vqx94V3+V65VrQlmKUs9bsRV/Pq+TQz0vYhjOf/Y1QiQJNegWjesnRo68wgpjnzvwjcvB5WLgVW
+	JoFX+omxnvkrakAdQv++bna57fsb5v6kAo5niPfAO4xdSLeqhCWd+n5gcueybS8mMPka2kL23sI
+	dLgYHS6VKzB1c9OkZbybmc8PrR6R3wQWBiC4lYpCUknp8cTWS2x6Ibu23FVk3l3pe+eSrfRsvWd
+	a9P5voUWT59JAZmVUsA4j00qJQEOdX6nOhgUQNBhEvBLoO7uMSRQ1vHPTADUPVLBej3Xbtpo/li
+	5gjRfkj5GYh2vlDFFlJdyPgyw8vRzyS8dH6lnlKeeFjYw==
+X-Received: by 2002:a05:690c:7207:b0:80c:b92c:77a9 with SMTP id 00721157ae682-82f271b2e7emr36964627b3.6.1786467724177;
+        Tue, 11 Aug 2026 10:02:04 -0700 (PDT)
+Received: from ggordon--20250919-QJQMF.attlocal.net ([2600:1700:1d40:f4c0:c43c:c606:d461:4f02])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-830a443927dsm297957b3.15.2026.08.11.10.02.03
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 11 Aug 2026 10:02:03 -0700 (PDT)
+From: graysongordon-gl <graysongordon1@gmail.com>
+X-Google-Original-From: graysongordon-gl <ggordon@gitlab.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	peff@peff.net,
+	avarab@gmail.com,
+	ps@pks.im,
+	Grayson Gordon <graysongordon1@gmail.com>
+Subject: [PATCH] http: add http.sslVerifyStatus to check stapled OCSP responses
+Date: Tue, 11 Aug 2026 13:02:00 -0400
+Message-ID: <20260811170200.43097-1-ggordon@gitlab.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260721-fsmonitor-darwin-cookie-flush-v1-1-357dc5e32040@gmail.com>
- <anLtSOKqgcCrrNHo@pks.im> <CAJ-ks9=+4rxxx8+7fOF1aLFW67=hdxjhQsHqse1GGBLwZUh2BQ@mail.gmail.com>
- <antMfAYVSPX9QAk1@pks.im>
-In-Reply-To: <antMfAYVSPX9QAk1@pks.im>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Tue, 11 Aug 2026 12:45:03 -0400
-X-Gm-Features: AUfX_mzHzx3L4R1YAzOQBTuL6w-xMPW4-jB38PFmUtnilKkzFMzc2lS0OVh_2iI
-Message-ID: <CAJ-ks9=oV4SQSjTHNEOGBaQb8Rb4xBqVSp4wYum6yzU-zx3YtQ@mail.gmail.com>
-Subject: Re: [PATCH] fsmonitor: flush pending FSEvents before cookie wait
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>, 
-	Paul Tarjan <github@paulisageek.com>, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Koji Nakamaru <koji.nakamaru@gree.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 11, 2026 at 12:23=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
-te:
->
-> On Tue, Aug 11, 2026 at 11:22:01AM -0400, Tamir Duberstein wrote:
-> > On Wed, Aug 5, 2026 at 3:59=E2=80=AFAM Patrick Steinhardt <ps@pks.im> w=
-rote:
-> > > On Tue, Jul 21, 2026 at 05:04:56PM -0400, Tamir Duberstein wrote:
-> > > > 56cef9cb1a (fsmonitor: use pthread_cond_timedwait for cookie wait,
-> > > > 2026-04-15) limits the cookie wait to one second so that a filesyst=
-em
-> > > > which never delivers events cannot hang fsmonitor clients. A client=
- that
-> > > > times out receives a trivial response and scans the entire index.
-> > > >
-> > > > FSEvents can defer delivery while it batches notifications and does=
- not
-> > > > guarantee that its queue is drained in one latency interval. A load=
-ed
-> > > > macOS system can therefore time out even though the event stream is
-> > > > working.
-> > > >
-> > > > On an Apple M4 Max (16 cores, 128 GiB RAM) running macOS 26.5.2, tw=
-o
-> > > > worktrees with a 1,001,178-entry index timed out 484 of 545 and 297=
- of
-> > > > 365 fsmonitor requests. One status call performed 934,519 lstat() c=
-alls
-> > > > during a 47-second preload and took 52 seconds overall.
-> > > >
-> > > > Ask FSEvents to flush pending notifications after creating the cook=
-ie
-> > > > and before starting the timed wait. Use the asynchronous form becau=
-se
-> > > > the client handler holds main_lock, which the listener callback als=
-o
-> > > > acquires. Keep the timeout and the behavior of the other backends
-> > > > unchanged.
-> > >
-> > > I cannot really say much about the FSEvent interfaces, but to me it
-> > > feels quite reasonable to flush the queue when we are waiting for eve=
-nts
-> > > to be delivered. And that's exactly what `FSEventStreamFlushAsync()`
-> > > does: it basically overrides the latency we have configured (which is
-> > > 1ms) and asks the kernel to flush stuff immediately.
-> > >
-> > > > diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemo=
-n.c
-> > > > index 4161dd8282..8e32b5ae5e 100644
-> > > > --- a/builtin/fsmonitor--daemon.c
-> > > > +++ b/builtin/fsmonitor--daemon.c
-> > > > @@ -206,6 +206,9 @@ static enum fsmonitor_cookie_item_result with_l=
-ock__wait_for_cookie(
-> > > >       close(fd);
-> > > >       unlink(cookie_pathname.buf);
-> > > >
-> > > > +     /* The listener callback takes main_lock, so this must not bl=
-ock. */
-> > > > +     fsm_listen__flush_async(state);
-> > > > +
-> > > >       /*
-> > > >        * Wait for the listener thread to observe the cookie file.
-> > > >        * Time out after a short interval so that the client
-> > >
-> > > Okay, so we've unlinked the cookie file and the next thing is that we=
-'re
-> > > waiting for all events to have been processed. As said, it feels
-> > > reasonable that we're flushing all events before we start waiting for
-> > > them.
-> > >
-> > > What I find surprising though is that this is supposed to make a
-> > > difference at all. The latency we pass to `FSEventStreamCreate()` is
-> > > 1 millisecond, and we wait up to 1 second for the cookie event. I wou=
-ld
-> > > have expected that batching events for 1 milliseconds should be total=
-ly
-> > > fine when we're waiting for a full second anyway.
-> > >
-> > > So given that I cannot verify this at all and that I have no clue abo=
-ut
-> > > the FSEvent interfaces... do you have any explanation why the flush
-> > > seems to help regardless?
-> > >
-> > > I _think_ you're already hinting at this in the commit message, where
-> > > you say that it's not guaranteed that the queue is drained in a singl=
-e
-> > > latency interval. Is there any documentation that tells us what the
-> > > provided guarantees are?
-> > >
-> > > Other than that the code changes look sensible to me, thanks!
-> > >
-> > > Patrick
-> >
-> > The following was generated by my coding agent and fact checked and
-> > edited by me mainly to address you in the second person.
-> >
-> [snip]
-> >
-> > Hope that's helpful.
->
-> Sorry, but that's not quite helpful. The questions I'm asking are to
-> verify whether you understand the consequences and subtleties around the
-> code area that you're proposing to change. If I wanted to only learn
-> about this myself then I could simply ask an agent myself, but that's
-> not really the intent of a code review.
->
-> So what I'm looking for is _your_ explanation, not the explanation of
-> AI. Your explanation may of course be informed by AI. But if so it's
-> your responsibility to double-check its assumptions, build your own
-> model and then share your informed opinion with us.
->
-> Right now I don't yet have the feeling that you understand why this
-> fixes the underlying issue.
+From: Grayson Gordon <graysongordon1@gmail.com>
 
-Got it. I agree with you that the flush call feels unnecessary under
-the interpretation that passing 1ms to FSEventStreamCreate is the
-equivalent of asking it to flush every 1ms. Empirically, though,
-that's not the case, as described in the commit message.
+git asks libcurl to verify the peer certificate and the hostname, but it
+never sets CURLOPT_SSL_VERIFYSTATUS, so the "Certificate Status Request"
+TLS extension is never requested and any stapled OCSP response the server
+does send is ignored.
 
-There's more precedent for this technique (found by agent, sorry):
-watchman fixed a similar issue here:
-https://github.com/facebook/watchman/commit/d1795de4ecab33672a89802318fe6f0=
-122462194
-and the documented it here:
-https://github.com/facebook/watchman/commit/2f80886991ce81585ac0679c2b019fa=
-0e4d9e9dd
+On an OpenSSL-linked build this is silent. OpenSSL hands the stapled
+response to the application and takes no view on it:
+SSL_CTX_set_tlsext_status_cb(3) says the callback "should determine
+whether the returned OCSP response(s) are acceptable or not", and libcurl
+only installs that callback when CURLOPT_SSL_VERIFYSTATUS is set. So git
+will fetch from a server whose own staple says its certificate has been
+revoked.
 
-I agree this is unsatisfying.
+A GnuTLS-linked build behaves differently, and the difference does not
+come from curl. GnuTLS consults a stapled response inside
+gnutls_certificate_verify_peers(), so the failure surfaces through the
+verifypeer branch of curl's GnuTLS backend (lib/vtls/gtls.c) whether or
+not CURLOPT_SSL_VERIFYSTATUS was ever set. The same git, against the same
+server, therefore enforces revocation or not depending only on how its
+libcurl was built. That difference is documented here rather than papered
+over: this option turns the check on where the backend needs asking, and
+setting it to false does not turn the check off on GnuTLS.
 
-Does that help?
+Add an http.sslVerifyStatus boolean that sets CURLOPT_SSL_VERIFYSTATUS.
+Because http_options() is the collect_fn of a urlmatch config, the
+per-URL form works with no further changes:
+
+    git config http.https://example.com/.sslVerifyStatus true
+
+It defaults to false, and has to. The option is fail-closed: libcurl fails
+verification when the server staples nothing at all, so turning this on
+globally would break every remote that does not staple.
+
+Leaving the default to libcurl is not an option either. The same
+complaint was raised there in https://github.com/curl/curl/issues/15483
+and closed as intentional ("Marked as enhancement since this was done on
+purpose"), with the observation that stapling is expected to see less use
+as Let's Encrypt drops OCSP support. If the check is to be reachable at
+all, the lever has to come from the application.
+
+If the TLS backend cannot check the staple, curl_easy_setopt() returns
+CURLE_NOT_BUILT_IN. Fail loudly there rather than carrying on, since
+silently not checking is precisely what this option exists to prevent.
+
+CURLOPT_SSL_VERIFYSTATUS has been available since libcurl 7.41.0, well
+below the 7.61.0 floor documented in INSTALL, so no version guard is
+needed.
+
+The new test exercises the fail-closed path, which needs no CA and no OCSP
+responder: lib-httpd's server staples nothing, so enabling the option has
+to turn a working fetch into a failing one. Verified against an unpatched
+build, where exactly the two assertions that depend on the new option fail
+and the three controls still pass, and against OpenSSL, GnuTLS and
+mbedTLS-linked builds of libcurl.
+
+Signed-off-by: Grayson Gordon <graysongordon1@gmail.com>
+---
+ Documentation/config/http.adoc  | 17 +++++++
+ http.c                          | 21 +++++++++
+ t/t5567-http-verify-status.sh   | 72 +++++++++++++++++++++++++++++++
+ 3 files changed, 110 insertions(+)
+ create mode 100755 t/t5567-http-verify-status.sh
+
+diff --git a/Documentation/config/http.adoc b/Documentation/config/http.adoc
+index 792a71b413..40b849bf7f 100644
+--- a/Documentation/config/http.adoc
++++ b/Documentation/config/http.adoc
+@@ -196,6 +196,23 @@ http.sslVerify::
+ 	over HTTPS. Defaults to true. Can be overridden by the
+ 	`GIT_SSL_NO_VERIFY` environment variable.
+ 
++http.sslVerifyStatus::
++	Whether to check the revocation status of the server
++	certificate using the stapled OCSP response supplied during
++	the TLS handshake ("OCSP stapling"). Defaults to false.
+++
++This is fail-closed: if the server staples no response, verification
++fails. Set it per remote, e.g.
++`http.https://example.com/.sslVerifyStatus`, rather than globally.
+++
++What it changes depends on the TLS backend libcurl was built against.
++An OpenSSL-linked build ignores a stapled response unless this is set.
++A GnuTLS-linked build consults the staple during ordinary certificate
++verification, so it already rejects a revoked certificate under
++`http.sslVerify` alone, and setting this to `false` does not disable
++that. Where a backend cannot check the staple at all, git fails with an
++error rather than continuing unchecked.
++
+ http.sslCert::
+ 	File containing the SSL certificate when fetching or pushing
+ 	over HTTPS. Can be overridden by the `GIT_SSL_CERT` environment
+diff --git a/http.c b/http.c
+index 5f0f42fb18..c1a66988e7 100644
+--- a/http.c
++++ b/http.c
+@@ -44,6 +44,7 @@ static CURL *curl_default;
+ char curl_errorstr[CURL_ERROR_SIZE];
+ 
+ static int curl_ssl_verify = -1;
++static int curl_ssl_verify_status;
+ static int curl_ssl_try;
+ static char *curl_http_version;
+ static char *ssl_cert;
+@@ -400,6 +401,10 @@ static int http_options(const char *var, const char *value,
+ 		curl_ssl_verify = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp("http.sslverifystatus", var)) {
++		curl_ssl_verify_status = git_config_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp("http.sslcipherlist", var))
+ 		return git_config_string(&ssl_cipherlist, var, value);
+ 	if (!strcmp("http.sslversion", var))
+@@ -1131,6 +1136,22 @@ static CURL *get_curl_handle(void)
+ 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2L);
+ 	}
+ 
++	/*
++	 * Ask the TLS backend to check the certificate's revocation
++	 * status via the stapled OCSP response. libcurl defaults this
++	 * off, and no backend except GnuTLS consults the staple on its
++	 * own, so without this git will happily accept a certificate
++	 * whose own staple says it has been revoked.
++	 *
++	 * Off by default because it is fail-closed: a server that
++	 * staples nothing fails verification outright, so enabling it
++	 * globally would break every remote that does not staple.
++	 */
++	if (curl_ssl_verify_status &&
++	    curl_easy_setopt(result, CURLOPT_SSL_VERIFYSTATUS, 1L) != CURLE_OK)
++		die(_("http.sslVerifyStatus is set, but the TLS backend of "
++		      "this libcurl cannot verify certificate status"));
++
+     if (curl_http_version) {
+ 		long opt;
+ 		if (!get_curl_http_version_opt(curl_http_version, &opt)) {
+diff --git a/t/t5567-http-verify-status.sh b/t/t5567-http-verify-status.sh
+new file mode 100755
+index 0000000000..c9167a05c2
+--- /dev/null
++++ b/t/t5567-http-verify-status.sh
+@@ -0,0 +1,72 @@
++#!/bin/sh
++
++test_description='http.sslVerifyStatus'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++LIB_HTTPD_SSL=t
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++# The test server staples no OCSP response, and that is what makes this
++# testable without standing up a CA and a responder: http.sslVerifyStatus is
++# fail-closed, so turning it on has to turn a working fetch into a failing one.
++#
++# lib-httpd.sh exports GIT_SSL_NO_VERIFY for its self-signed certificate. In
++# libcurl the status check is independent of peer verification, so it still
++# applies here.
++
++test_expect_success 'setup repository' '
++	echo content >file &&
++	git add file &&
++	git commit -m one
++'
++
++test_expect_success 'create http-accessible bare repository' '
++	git init --bare "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	git push public main:main
++'
++
++# A TLS backend that cannot check the staple makes curl_easy_setopt() fail,
++# which http.c reports with a distinct message. Skip in that case rather than
++# reporting a failure that really means "this libcurl was built differently".
++# Any other failure leaves the prerequisite satisfied on purpose, so a broken
++# server makes the tests below fail loudly instead of silently vanishing.
++test_lazy_prereq SSL_VERIFYSTATUS '
++	git -c http.sslVerifyStatus=true \
++		ls-remote "$HTTPD_URL/smart/repo.git" 2>err
++	! grep "cannot verify certificate status" err
++'
++
++test_expect_success 'ls-remote succeeds with http.sslVerifyStatus unset' '
++	git ls-remote "$HTTPD_URL/smart/repo.git" >actual &&
++	test_line_count -gt 0 actual
++'
++
++test_expect_success SSL_VERIFYSTATUS 'http.sslVerifyStatus=true fails without a staple' '
++	test_must_fail git -c http.sslVerifyStatus=true \
++		ls-remote "$HTTPD_URL/smart/repo.git"
++'
++
++test_expect_success SSL_VERIFYSTATUS 'http.sslVerifyStatus=false is a no-op' '
++	git -c http.sslVerifyStatus=false \
++		ls-remote "$HTTPD_URL/smart/repo.git" >actual &&
++	test_line_count -gt 0 actual
++'
++
++test_expect_success SSL_VERIFYSTATUS 'per-URL configuration applies to a matching URL' '
++	test_must_fail git -c "http.$HTTPD_URL/.sslVerifyStatus=true" \
++		ls-remote "$HTTPD_URL/smart/repo.git"
++'
++
++test_expect_success SSL_VERIFYSTATUS 'per-URL configuration is not applied to other URLs' '
++	git -c "http.https://example.com/.sslVerifyStatus=true" \
++		ls-remote "$HTTPD_URL/smart/repo.git" >actual &&
++	test_line_count -gt 0 actual
++'
++
++test_done
+-- 
+2.55.0
+
