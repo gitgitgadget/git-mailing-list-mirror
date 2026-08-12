@@ -1,71 +1,70 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCBE44A739
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 13:16:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA0144CAD4
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 13:16:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786540597; cv=none; b=YxgasLLUcwNTMPGt0j3flX+DVfrI06ZbQFM6RAZZuRFh1rpcJqzm0f4ZbdAAM5icwnOVLDVh5VSgMtBTs8185BtddThpOobpGYzWUQzJ3ZhBox+PZq+TFkJ257X5eCsUDAgBr0BFkSCDPZ+4/pgYvS32WMn6Dk1JVsFuSbKKQBU=
+	t=1786540598; cv=none; b=iMOIKubGOUhzsE/WZNkskgubL2eENOHHnXDW+wC6AZzmhw9dd838w3VyVq6v3JtUyNynFk6u+hmQsKhCJY5zYJpuaBymrTde2PIlqHgvuucCMGgcz20+5BAy3x29cwhJ8q4DOB0j3kV/lPTOraRsc9bsVgCakfaT1xUYXzUrBuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786540597; c=relaxed/simple;
-	bh=qI9JhmwbfF8RQFa6HBXO6w0XX4HUNLyaBjtgEOAlHiQ=;
+	s=arc-20240116; t=1786540598; c=relaxed/simple;
+	bh=Fv/Sk5mv44HU/Wbsc0b/CezLF6onMO4CV2fj3qJY6+s=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Uxvfy9JykpnLEHaAIe/+BquTOeJ9atpZtH26ciOm+31i+WsbWr+TJb8CJibEkZ7dlgqPi8Yz8By9BFTtgpicQGz/XzxUOQIZSY/fj9B7AIYxkNqmkmTbZUwOsXIZc/wDknDz/nTExRNzq9uk5ttvtVHgQzi9SG47tv0au/77BkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q4jRJniZ; arc=none smtp.client-ip=209.85.161.46
+	 MIME-Version:To:Cc; b=Mu09Pie3XEuC1Uq2QxY+ln8inlo/AhzpFPAl1b8uF13xQwy7qL/xGSj3lC9ZoHqtpjQrpmiURsxFpZT/EgVacmCaYuw+2YvNlZDCwXvl7gkLiBiDSlLxF6TDsEq2mvUH1MivABU9pQUWpEkhfPfXvuVP6BcYkzmMBCEVCNq4PVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UagpJC3+; arc=none smtp.client-ip=209.85.167.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q4jRJniZ"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-6b057877851so694923eaf.0
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 06:16:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UagpJC3+"
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-4b1fcd3b1a9so431235b6e.0
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 06:16:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786540594; x=1787145394; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786540596; x=1787145396; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=qA+pCraz0XaBpQDNjpUMiwBNFCLz8r6WiiRH/RSpxrY=;
-        b=Q4jRJniZdG/udLglgdB/tgXayIYhm/u1xVjQyvDbDWgYn+0U87Twz8xGfKTxjj1XQa
-         6A1dYtOdYIy4qDFaUbC6K92R7TkhrpsLGHBJiF1OlF9lHk3ToFMCDtBB6p5ozU+g1Fn+
-         lFm0t/tgNRoqVtonVVyilIEmwsk3xBHErfv0RCDcBJwNvTJEJxTvI7pH8tHKac0RWO6v
-         2PduYQuYZhf9MSIhwqsLeDsICp1z/oABAmhS1SOI2Rjm+n71TY9twmj37eueaOdatyQH
-         pswp4rtFlbOBT3U+ZAbVTxMPElYi1URZjWTNkLP5V3m1SUU9JKg+UGmWnp5v/BD3AzAD
-         IEfA==
+        bh=d8OZhz0sfxcdAJImXLujPVDjTcSuOgKZL2nnmu7S5ds=;
+        b=UagpJC3+v0LWyEc1+z/7jyiOGTN1+KT4rZsdHvcmO6SL07GuRpzPjzCfcy/DBYYC1A
+         VMQ7zztzqutv1jPVggu9/1XGAwLQ9pyf6yC0fC+HY0N3bFJHs7JY0WW3WfJitgU5ijJJ
+         GNztLVnu5laywgfOm4sG9pQGQWJ8yfAJPu+WldCSi5a/RbkGI4vbA/5qOwwjnkppxylw
+         iZeqAA3rAY90JICRk9WewnBBjzNjMfiSxBO4lfVyKXjPAdDuObXR2kMsNA5YYgYWpyLJ
+         D0HOYB0WFLLQIgqOZwEPOYliFcD4i5TCHADWPYV3IMnZTHlSil06ealnbR9CKGSPXbls
+         jwKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786540594; x=1787145394;
+        d=1e100.net; s=20251104; t=1786540596; x=1787145396;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=qA+pCraz0XaBpQDNjpUMiwBNFCLz8r6WiiRH/RSpxrY=;
-        b=JvGOgHPV2oh779HLkBg5zO7JeBeFA8Rd6d/mqJZI/hHG/ZGvmcrsfZIgi14sXuNxlB
-         iK9+oEjyv/3eghhJ5pbkItfdro5NuquXY+C95gDIikTJkitDG0oeiboRrtMsVSXSqJA9
-         qSY2k4EhBxip6KHAXXyxn0Se1T7sJvusb67KhYyk94OsMOFcdcn85Y1kk7sKfhIt1kiH
-         yoJB4EVAOMP5exBzQALpajACIGmqDiT7Ho1fWX/BzxC+pjUyU8/qpmJ35OdNgMJrFMsU
-         312YDr6VDdkZQr0TZLXaXAZUxPgid9w1+iOxZoX3w7iL84rjqdHT1idiFO+OWVJBvYob
-         pgaw==
-X-Gm-Message-State: AOJu0Yy/yz5Z9/1E7ZBF//ExkucKgPfBhRm0NM3RMUwFmHgL/e0+xEe8
-	YyLfg3+z4qMj+tAc2sTfIqJ3KP5xgXkakt0oUhqEXD1lcXhLkhutkOxk+a5zrQ==
-X-Gm-Gg: AR+sD10aabDv24wYSgmPcovC+2pzcQzBirxV0aEIz9e9Y/PCf/ZnMTJ/x4TGTM1Ka89
-	vyhSQG8okfgwD0/sTQ4Pq3/3A48HzWWKv5qLmbI7b4S/2Grxg9J+5cm0mYYH8mBsjBnYNXfihCV
-	CUnmxoLqko4GROCP+p63zqIVOQSNobGuT/No5POqqx7YqrvyW6Yc4Wlxq+sBWshGONBLipEHXkc
-	i/xFK1dGwRJEGwurJZ0C8DT85s2U/37+jjEEieMViH0aOPDpSLKAfA3eJnkrDfXOwVheN3aRl0o
-	QvehIEfuEgMiBkRgsbeQb8iXsPYLw7VIysUDVqomfJtDBNnwWlWEZ53FCKY8BYIh6ggCJ0sdkwf
-	qrW0keA+N7XWZ1sccltzgSKf2HNMPd2Re0J1bA5d+LzIvZOIVC6qk1Ow29Am0Ivc3AIKGRCbHZ/
-	tdU/s6bXpDHPkhSyJU4BOYV6UwJselke8vJaX7ziX/kFEqkyWsjJPUUiXSb5KXsuHB/AJd
-X-Received: by 2002:a05:6820:16a7:b0:6b0:4302:f587 with SMTP id 006d021491bc7-6b0b2c1c1aemr3421467eaf.31.1786540594506;
-        Wed, 12 Aug 2026 06:16:34 -0700 (PDT)
+        bh=d8OZhz0sfxcdAJImXLujPVDjTcSuOgKZL2nnmu7S5ds=;
+        b=SUVFjXa7w6e2iTgNSy42zE86egPF7Hw+59VVQZrh9B4PdsozChrxeO7apk5DJSSGpJ
+         sNMsaNV+f9Osnk5k18SV9VZCAxipPSPqo2kdB1cgv2MG6+U5hTbwsvj95Duu+P4gqFQy
+         Q4c2wP2rO6Ok/5Jbt0C/0mEER0nuzGrtAjFESRwOc0+gUVy6nWV9tEdax43y92wn4q3p
+         HOU0kYmjXHbRL5Big4XzqsMLUQLmvhOnt56UFGUZYBjF+MuBlLFuWLDVlSGt4SeIE+sX
+         wcMshdg86C99lWTzqMPjEu+s7piKifm6vXmY+aXlZltrGAijcr1xIwWPx4fhF5KFxb9z
+         L9Rg==
+X-Gm-Message-State: AOJu0Yzi+OJUxq82OCGhzES/boGO0hucQ39rVr8Q5jCDZ1iCB1mWKdE/
+	EZpaVZkvFyJMlO22tVJKaBG83aSZcvbk/Mj5d59LadTm0Twg5QtEj6n/rok1xA==
+X-Gm-Gg: AR+sD11hXqngy07w9c0hKhv10fOfqqgaUAto3rZpmLCOKAzkdSvIdJmUgmow1NCcAHu
+	U8FGay1GA0FKnLpIs4BNUrWQlxml6Nt37aeeiM/DAqnRkMihl6oRwIp2WHYT88NwFzIVfzoQ16R
+	4wl22epBsc+aH+Ss2lI6KjTrfNsNUeaLIzkumqlX1E4IsALvNttFX8ShcJ4mVup2IAhNNLgC4ap
+	VK6+uppu6OtAE5Y3zV3u35RaaSm9uoOszEJ++XhC4Ga//HGlDSkW/0EQFi2Tb/Y1q1BPQwD1mZK
+	fxmeXq9p9KYla4ui1G/xy466WFf6xBdtyiIG0b8Hka+Z6qG0tBwl5dafmitj/tbXtibdmjLSqmz
+	O/q6q3BdT+cKjyslgV/QtPHMXJOlUrpDrYM5R37VfD3Ls1kGpMeNo4lkRJGtlIhgTFjpEg/fWvU
+	hSZLHDfRizTRk4cWynmiOFMOsmdePwo6FUz//zst9ZYSaS8idwkLnMvQd2HTIqY3Y=
+X-Received: by 2002:a05:6808:179f:b0:4af:88b7:94ab with SMTP id 5614622812f47-4b2109e9f2amr5131634b6e.7.1786540595777;
+        Wed, 12 Aug 2026 06:16:35 -0700 (PDT)
 Received: from [127.0.0.1] ([52.173.237.38])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b0ad4c6b04sm2669107eaf.4.2026.08.12.06.16.33
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b1fff65619sm3090465b6e.8.2026.08.12.06.16.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2026 06:16:34 -0700 (PDT)
-Message-Id: <697159c20e9903dc720d8afdd6535007e61fa095.1786540582.git.gitgitgadget@gmail.com>
+        Wed, 12 Aug 2026 06:16:35 -0700 (PDT)
+Message-Id: <36590e857d3c9a83b17f32b5790df2bd6c1cb588.1786540582.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2194.v2.git.1786540582.gitgitgadget@gmail.com>
 References: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
 	<pull.2194.v2.git.1786540582.gitgitgadget@gmail.com>
 From: "Johannes Sixt via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 12 Aug 2026 13:16:20 +0000
-Subject: [PATCH v2 5/6] gitk: avoid constructing dialog titles from text
- pieces
+Date: Wed, 12 Aug 2026 13:16:21 +0000
+Subject: [PATCH v2 6/6] gitk: move UI for generic colors above diff colors
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,80 +81,47 @@ Cc: mark <mlevedahl@gmail.com>,
 
 From: Johannes Sixt <j6t@kdbg.org>
 
-When the user clicks a color preference, a color selection dialog is
-presented whose title is provided in parts by the caller. The dialog
-implementation must supply the rest of the title. This is unfriendly
-for translations. Provide the full title by the caller. Rewrite the
-texts to be more natural language.
+The selection and link colors apply not only to the diff panel, but also
+to the the commit list. Move these right after the generic background
+and text color options.
+
+The color for marked lines is only used in the diff panel, hence, leave
+it below the diff color options.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- gitk-git/gitk | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ gitk-git/gitk | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/gitk-git/gitk b/gitk-git/gitk
-index c0ab55845b..d4c229a3c0 100755
+index d4c229a3c0..9506739c50 100755
 --- a/gitk-git/gitk
 +++ b/gitk-git/gitk
-@@ -11836,34 +11836,34 @@ proc prefspage_colors {notebook} {
-     set coloruielems [list \
-         bg          bgcolor {} \
-                     [mc "Background"] \
--                    [mc "background"] \
-+                    [mc "choose background color"] \
+@@ -11840,6 +11840,12 @@ proc prefspage_colors {notebook} {
          fg          fgcolor {} \
                      [mc "Main text"] \
--                    [mc "foreground"] \
-+                    [mc "choose main text color"] \
+                     [mc "choose main text color"] \
++        selbg       selectbgcolor {} \
++                    [mc "Selected text background"] \
++                    [mc "choose background color of selected text"] \
++        linkfg      linkfgcolor {} \
++                    [mc "Link text"] \
++                    [mc "choose color of link text"] \
          diffold     diffcolors 0 \
                      [mc "Old line text"] \
--                    [mc "diff old lines"] \
-+                    [mc "choose text color of old lines"] \
-         diffoldbg   diffbgcolors 0 \
-                     [mc "Old line background"] \
--                    [mc "diff old lines bg"] \
-+                    [mc "choose background color of old lines"] \
-         diffnew     diffcolors 1 \
-                     [mc "New line text"] \
--                    [mc "diff new lines"] \
-+                    [mc "choose text color of new lines"] \
-         diffnewbg   diffbgcolors 1 \
-                     [mc "New line background"] \
--                    [mc "diff new lines bg"] \
-+                    [mc "choose background color of new lines"] \
-         hunksep     diffcolors 2 \
-                     [mc "Hunk header text"] \
--                    [mc "diff hunk header"] \
-+                    [mc "choose text color of hunk headers"] \
+                     [mc "choose text color of old lines"] \
+@@ -11858,12 +11864,6 @@ proc prefspage_colors {notebook} {
          markbg      markbgcolor {} \
                      [mc "Marked line background"] \
--                    [mc "marked line background"] \
-+                    [mc "choose background color of marked lines"] \
-         selbg       selectbgcolor {} \
-                     [mc "Selected text background"] \
--                    [mc "background"] \
-+                    [mc "choose background color of selected text"] \
-         linkfg      linkfgcolor {} \
-                     [mc "Link text"] \
--                    [mc "link"] \
-+                    [mc "choose color of link text"] \
+                     [mc "choose background color of marked lines"] \
+-        selbg       selectbgcolor {} \
+-                    [mc "Selected text background"] \
+-                    [mc "choose background color of selected text"] \
+-        linkfg      linkfgcolor {} \
+-                    [mc "Link text"] \
+-                    [mc "choose color of link text"] \
      ]
  
      foreach {uielem colorvar idx label title} $coloruielems {
-@@ -12014,11 +12014,11 @@ proc choose_themeloader {prefspage} {
-     }
- }
- 
--proc choosecolor {v vi prefspage x} {
-+proc choosecolor {v vi prefspage title} {
-     global $v
- 
-     set c [tk_chooseColor -initialcolor [lindex [set $v] $vi] \
--               -title [mc "Gitk: choose color for %s" $x]]
-+               -title "Gitk: $title"]
-     if {$c eq {}} return
-     lset $v $vi $c
-     set_gui_colors
 -- 
 gitgitgadget
-
