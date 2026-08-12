@@ -1,101 +1,108 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85B747D927
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D228346774
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:29:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786555586; cv=none; b=gR2SWVk9k84m7yRJyZM7H88j61+qjbNlDQNPtpj62rk8xYM0CNIWO7HFu17n0D7GwLYcWE809OZdOgSbPefZR2iTptOuPlvsxOOkuJPWKuSn0IjcSXtUTzb6QxoQIVwkWfmmx2Oc07eRpjxVpTlmWq9Ie92NnkymaPPSDzlwliw=
+	t=1786555777; cv=none; b=rG536P9Vz59rA/q7frsQEWF2fGjvpCLJrG/stm71atLSD2xk6dHSaNO41pTLuPOxtJBEJ4Zhu1+HaRgDZfKMeKLqlKhkhJCp3Jt1sVwvl+ywfZMZyMjq/qf014zdVNCuD6f8+1gd2JjqVfJA9UGSRd0XnbFa5n6qEs9P6tocy+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786555586; c=relaxed/simple;
-	bh=egU98ImFXfzGHtJu0v7UAktzhxcKyvbXA5QqiDP0KLA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SLgxcF0HjQcnggZyp1JtzOSc8P17vevkKcKQurLoqpPaiBBm5Qtl/f1dFYG1NP0aEkTNdzLSAvMrg2WfVAO+Bt4zozzbubgKbOKFDMInyE25PsWYAXVKSCuIHWoYsyd1Vl4DW9oVBn/VjBDhcWBRQluEWtpXhUfnOVmW37iGDOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qDuzAdPF; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786555777; c=relaxed/simple;
+	bh=SHurWVsJc/AJqrD2ewEMDIgRthRpwPn+8EvIT/trHOQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WXGPB00TY5FFnXN1QhGNQOGVSoPYU8BFPaxOz4z34BWt8UWoiKyjpxGa50XCLqIoKODqDmAvf+HCs5WoDaCBeTN+trmUwPyyFoi3XxQby+Qjhu8H5bcp9+PYfGtXaQVj1cNzPvxuxl3BtSXF8AG/5ILVemjT3KEJ/FatTW35JOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HTG79RSm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HFQuDbEA; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qDuzAdPF"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4995b0343c1so11191355e9.3
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 10:26:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786555583; x=1787160383; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=egU98ImFXfzGHtJu0v7UAktzhxcKyvbXA5QqiDP0KLA=;
-        b=qDuzAdPFqPcVemyQlRkAADeOrTGkep5dOHbuw52CNKgntLPB5P/nfghsBD/lDu33e1
-         2xilD/mmTpsFAJ+dgpUShXaJqf4Cls1gUl2uA+uBpGRTawj80O4jHNFItBF1phrf/AhK
-         NUl3XThESGINA729z/FvkVK3IH4fubHWp6Q/VRRzBOOW4MciGxdgNaBZPuA92hs4qjHa
-         M3LEWdGq6n8ULoyhMtlD72ysJgAg+2rpxxTL4IN1N6nRc/xw0E5gJ6rMCortJEJskSx7
-         66swEA/XD33Z/8ppk8+QYGY0rgQBRXs0ynjaP3d3sa9xOv6PxGGVUL2Fr029ZKB9s+Eg
-         cjNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786555583; x=1787160383;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=egU98ImFXfzGHtJu0v7UAktzhxcKyvbXA5QqiDP0KLA=;
-        b=mCKCO0xQ/kIWxcxXrZdwI7LhkeA+XNzSPiJcJR2uq2+40wX8INhXgcyDdDCXO7nqsT
-         xjnXCWB1XJuDxBi907bWue/dRjqtn5OKFE/jIXjmvAoj9E8DY42QmylqkjyPa7EZZxoz
-         Zby5Or4gY3MJ5GbatdD6ee7ka4TybHJ66823K2nYhf9j5s4Hs3uwnfIj3uIZR78qu9it
-         22uuKP9Rlzq1cJemG6X9i3ccgk5aak7nGYXAbGIZX96c1gpr7mSP389fLJBHCEd5kR7q
-         QaVUba5UYgm7ubwczDOaFf9tmdJ58Mn1/Df167LZhJ4cMV2pdr3AiKTNPiTTqWS/5d2c
-         fEwg==
-X-Forwarded-Encrypted: i=1; AHgh+Rq2Ro5CzLsl3SG2pmlUnLJQgst14ebTUPJc8IC+lSEjkNGwxYTPlLFHampLy8/DXrQXuyE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwR73wnxWlgtZXeSks7w8Kvu5V2/1dmvSSUWzXhXgeVkcgJry4E
-	4OQcYFQicivTEWeN/8SX0AtGIHk5x+z5mnk720Ushs/ljK7SB3iJPi1+
-X-Gm-Gg: AR+sD11KbAdCO2PnkTrNeM2xr0AsGDnzmeudDWMNqziOc5GU5pTohOhsrSVj9fgj/66
-	EFQhbjG7f881YMnjyk9HuGclpa4mHjxE2XdeKe/vc76MFHYoUmO557fWVi9ZzFXIjInImokKNVp
-	qlizpEt4h8YAnKcYDtLsQGDzolE3nxWLslyo+hBTR/4hbVZpc6RA5TnluhPyKjbvNzfwaQN7PqM
-	6B/bgHi3pOjSwn190pidueWN8M9AbqE8yAMCsMdZIdcngYyR2THE+GRDpmziHStsAJt1LZKJlRf
-	P5ww7c0ortEjce2q3maERxKZVUZn0FedZBaYfuZj7fFWyZ6zpLeGy2HHIvCuLsTyoH1f3Yq42El
-	ZBriest4cnaPwb6m8UbKJzGzoCKDTg13V5/Ot8MYdHTa/5AKYvAQzQdN9vPnVi9Zo9msy93bBwt
-	QcAQi18WOlkQMxsqBBsZNRe+wn+UuNYoDC5rDHwULJI1UXtJAkIcjaaxvF7LXuruGRzKbH+sdhv
-	MW0mKUOds7G9RM=
-X-Received: by 2002:a05:600c:4443:b0:499:7a19:408b with SMTP id 5b1f17b1804b1-4997c13870emr68318065e9.11.1786555582764;
-        Wed, 12 Aug 2026 10:26:22 -0700 (PDT)
-Received: from [10.0.1.15] (85-71-82-202.rce.o2.cz. [85.71.82.202])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4997c93b362sm25659765e9.3.2026.08.12.10.26.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Aug 2026 10:26:22 -0700 (PDT)
-Message-ID: <ab3a0ca8-82e9-4387-b363-2f851760a946@gmail.com>
-Date: Wed, 12 Aug 2026 19:26:20 +0200
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HTG79RSm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HFQuDbEA"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8B2FA14000B7;
+	Wed, 12 Aug 2026 13:29:35 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 13:29:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786555775; x=1786642175; bh=HMKsgbCuQx
+	BznGkyhutWFyV1NT4/aqKO0GZkv62jg1E=; b=HTG79RSmwP1qeV4gUwTCco4iby
+	TktIPXFDYlcF+szdLIIiYvqN3b+2LYKkwLUaqDUDXUCKUco6cxCP1noERfOtNMX5
+	dfKMV04nF2g4FSvzKbu7UGCpgMhXsicebK/46ZfxhBSlBMHhcx7UxekC+W09OuJJ
+	9dyXInwCZ+TyeYP/EEUJec1HMQbTNHmEDKVywPqgcUSa3Rxc2Dw3WLVEZU9vm+35
+	6V3FTcUJSGpYKDMPuJJJJMfqJXYMxGEIowbbZdEHoFHqao7aje52nN7iWquDk2NJ
+	lzYA6pYk1T2afsRwy5hp9IjZlYrV8M4lOQk28+akkCXXvDH+saTXsmqFUMzA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786555775; x=1786642175; bh=HMKsgbCuQxBznGkyhutWFyV1NT4/aqKO0GZ
+	kv62jg1E=; b=HFQuDbEAz2PoccWjSTz4LWFDmnM0pygUMN/W846WnfLcvN+mzwu
+	dAPWHIPRUSdcxaiBGW2c1yPRj6OMHBAnliK67pJxvH5gZZLd51/58ENuHLs8IpuC
+	Cq2l4mzachkSSrc31BFeOJlMwl07KsKYerSc0qS3oBpTCMnjO6PxZ3jv3oUjH8Gt
+	0SoZvjISWOj0cZUIISUxadrpg1Xzio5Qr5u7NecSQq6JrJjleVSJo6C9JR1ssHR6
+	3rE4R/uDUXvYo/r7rBbq3GnWvh1QO3mDVVHy1FmUmKx6rFFGQyBEhGdE0bSVUYRn
+	DTn/5DvyB6f/NoWxKwaxZDLu+y0JSfGSezQ==
+X-ME-Sender: <xms:f618ah9hJWwcKIEoQE_onHErks8uXpnM4qVJ5HtXjrkaX3U9esg6ZQ>
+    <xme:f618apZ1MQP7jL5UEV2tMiw8bjbFn3AWa2QdSTnzGR5euLP9nK-vUY89VPUTPaPiW
+    tm8rNgJnaQ0Cpb69z6BIGvHYCVkZi4R75fN5haeUkBChBJ3hrsqGg>
+X-ME-Received: <xmr:f618ao0vv47BdMjqMvN6NuDif0DKkg2jw2u5zCu9XAh7lKf1aWwZH95YaCUctdVIyTqdqGC0-Q_Op1zVhcRV4TlZBibo25R-fw>
+X-ME-Proxy-Cause: dmFkZTG3VRmfTkGe4YEbw6ujyj9QNpTN7qcrpg7jrq5vJrQFLEO1m7JiwPmrhVlPfM87pK
+    cle12LXxk57rNYe0bACJmW61y5exTGeeA3XfGU1gfECxcAB+ElIZg4YYzcCTFz9sPDs3Eq
+    hE7tVEBAKsL/BFl15TST2iYc0Fb0vSaqEz+VxH41P55RzPzcWJz77Uyaw8o99vnWQNSIoJ
+    KYm3Q/uNiqDIHwzHBsgBTMAXaf0eVNTmwxRVegYDaNwjP+B+IVRrNCCoAQgV1Pfbjuk6/E
+    bJ0uZYHSpa878TwDA+GKg0lvBbTKrLOc8Qro2gyWH18kXrF8SoG01kzpmsn6OTA00ZxzAc
+    uedbXst3btdRVmOgC6HD4mSD3PKNpnrJoae9nhTs5epJmEN6USx6YaMRwAqSIkdMFpbrpg
+    2Cdn9U81DKbfe8JhgBdzqCivex25vj7PAxYoq7/kSh0XGu8BmVv9O2zOjVZMSgNDZrd2mV
+    U0zWzmI7skvfYtEgqWc1s3oGITkWGW23TFKE28pcgU4H5RFirkhwMAQjw/byKAtAx4vRDW
+    l0esbSHy/CFPTwOASiT/A3I1HD2lFaLkd6fuDQF4vOuhn7d6j8UVO8gIeQ9TwlgzolXoBP
+    A38CZoUtgTL8w3nsq8b5d1oT6/eH22yeepKYOCZHjEws4yroAc/0EMK3KQOQ
+X-ME-Proxy: <xmx:f618asZcCYycW_eMCyOsbTGRQ40E_ZPM7uNPrY830TNMaBCWSnj6cw>
+    <xmx:f618aoIzVKr_5il-WGvwus0XfRk3WHSCogaPlwi_htbvyH5rIElvbA>
+    <xmx:f618ajHZKPPGuUoLBwXeF-dq9UUBm5CGrwJm6_tacaKs2j6yMq5thQ>
+    <xmx:f618anv2ugDbIPkHhSecHixTqd0vRrB1NBAI3atKOxbS9sZA-xIg_w>
+    <xmx:f618avHq2uqsOdVVj7EdHEB_2GmVLx1vzLCCJC3o2JtCsmlGOlJdFS8u>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 13:29:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Jeff King
+ <peff@peff.net>,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 00/12] coverity: fix unchecked returns
+In-Reply-To: <pull.2179.v3.git.1786521801.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Wed, 12 Aug 2026 08:03:08
+	+0000")
+References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
+	<pull.2179.v3.git.1786521801.gitgitgadget@gmail.com>
+Date: Wed, 12 Aug 2026 10:29:33 -0700
+Message-ID: <xmqq5x1fxn5u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Bugreport
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-References: <a7899757-9c3d-4735-b7ab-469808707e61@gmail.com>
- <8fe70f89-89a8-426f-bab9-21284722c58d@app.fastmail.com>
- <f4e39b04-b6dd-4b83-9103-8a1c98019dce@gmail.com> <xmqqik5fxobr.fsf@gitster.g>
-From: =?UTF-8?Q?Marcel_Svitalsk=C3=BD?= <marcel.svitalsky@gmail.com>
-Content-Language: en-US, cs, en-GB
-In-Reply-To: <xmqqik5fxobr.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 12/08/2026 19:04, Junio C Hamano wrote:
-> Marcel Svitalský <marcel.svitalsky@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> This is the next batch of fixes in response to issues reported by Coverity.
 >
->> I see, thank you. Is this a new feature? I've been using this command
->> for years
->> and today is the first time I am seeing this. Also, is there another
->> flag instead of
->> `--all` that would just include the actual commits only?
-> --branches
-> --tags
-> --remotes
+> Changes since v2:
 >
+>  * Added a new commit to handle block-writer initialization errors (instead
+>    of ignoring them).
+>  * The bw->zstream attribute is now also deinitialized in the error case, as
+>    suggested by Junio.
+>  * The commit message of "reftable/block: check deflateInit() return value"
+>    was rephrased to stop suggesting that silent corruption by zlib would be
+>    possible before that patch: This turned out to be provably incorrect.
+>  * When aborting the bisect because dup2() failed, a left-over saved_stdout
+>    is now also cleaned up.
 
-Thank you, I actually want stashes included in the log so I chose the
-`--exclude='refs/notes/*' --all` solution suggested by D. Ben Knoble.
-
-MS
+Everything looks sensible.  I am fine with declaring victory, but
+does anyone want to second it?
