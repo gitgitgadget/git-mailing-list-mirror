@@ -1,252 +1,168 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A1C43078B
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 15:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E7937E5EF
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 16:08:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786550161; cv=none; b=R5UlfNG6jt1aSebamHSK95S6QDgyILI7HbLTng/qwzQdTziGPvK60EeukvT2CwxjvL0SgDm9Y3Qc+/bHA2iYdd/vu50XaSNjVnXSk0BLmUdEDAkamTvB8SfJqYXt95ITb5xcWMGtPXfhJAlKeeO1RgVoE6uuWO5bJwBd8DVZWas=
+	t=1786550883; cv=none; b=ppXFlINSZOACOAFBxCpRq5OcFFIU0YA9eWJFAJyN5z1EaB6grhjQeCNyXpH0tRgUBx3B+glZJia+8+mFVMvWSPIqfExQGJZ9JBroTL6cpU9VYefIFXgu2q+IrXWv6XbZkcWkluhCsipvuww2p5IWb639/bnxCJX2fhpMx8/R+CE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786550161; c=relaxed/simple;
-	bh=sc0+AXK5NbU53QDybQIbwCJwPWzMsyUAY94EOErvyPU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fWZKEZniBjW6P2FVF7ejuNLlLsF1VkRSe+r3QfGDZKAHbPwj5B/JygjcZgdlCdtluUeUpMiKEWFuXEeGq2S1HUdQ0z7VuCSs/V+fqG3WkCa3d1X+zJZyWxyoJma8HzWYm1Mqw+coHptj5LnEEIZj0Ey0N/sxFHvzWXithOudKCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E0Q5sQm5; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786550883; c=relaxed/simple;
+	bh=ua4iBTFBo8HXyaui69hd8s9TqDC7/CYL9TzKMrfdSEU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NkVqt3xGmaBy6bvLSNq20a2P+CyeRTCKzg7c2dqFleoypldKEnyvwZxBKYs9+D2h/4/8Jgdw3HEh//V49z0Y0JI7PULfBwPGIjgDTchScGN0JVKVu07693IX44SZv0TQ/L6Ez8opghNXZDHeHWj4a/vAy6J5CZ5MQqNQnzRiLBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kIeWiiKy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PRSTI/CN; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E0Q5sQm5"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6aa9606ddadso871582eaf.0
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 08:55:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786550159; x=1787154959; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=j4XEnlPGULEBjMHkX/mA9qMxToN2YnE3C8OICYtH3T8=;
-        b=E0Q5sQm5YpIyxiEshQqqkc2pdOdHQzOaVjxJ1BirrTZfB4JgXNgrGNMNe95eBWs+c0
-         LplB07TnvXdR/Qd9B/zWvHsymQakEJLj2xDBXrjI+VNvmfq/z4bxg+ecvRlV8Jb2mWT+
-         4jbcJ2Tt3KVJiwXiXVdtMT97Om2hG33iSRnVLXzVfmrvuIi6vCPnIVyOl+hgUceVEL6c
-         auIYJXA4p4Yun8GQXx6AcjCHJwV/aDB1OWXH/buxn1FrJCOAI1TAGdro0j5p/JKTJMCj
-         /T1OtlpofOy4F4KrZ07+U7kNlgOU/44BSKddpqQ/jHUOjn7V5T4itJNF0ahmOmdat7Iq
-         v36A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786550159; x=1787154959;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=j4XEnlPGULEBjMHkX/mA9qMxToN2YnE3C8OICYtH3T8=;
-        b=HnDLXBuWrGcf/DBPw7/HIjiGD8RUWtNZIwop0c00mxLWg/h54C3GlEOQ5mh+bewhY5
-         HV5fzLt58o8aZr6j4CoTC5+dSMO9UtTajfleIzWpBVfrPvMswR6M5WbxUG0bAm6klqei
-         0OK8WLdBHc4Xig4V/nN3TWrRLUTV/mLt7bWHsbr3bDxTT41jc6sGQMYuAnZ6jrnZqsjt
-         LVt0J42GhJzhkM70fu7jZuqqL3hNvbeXECrWpGwYiWFyzHYiCpBxB4VcKKDRT6SgjmXq
-         bUl3LhVQr7Sj8mqf0QlxMRIUJGoubzXqVGnTMkPod9X+nMbi50LHe+r0dZFvvqmFKi2v
-         Bggw==
-X-Gm-Message-State: AOJu0YyufhXIgJo1KlehatxisMJgHKsIqko2/4fCh3HvIfrUBCBQJrem
-	gGtNXUFHIzrwKiFEtzLvwNmUCc6oZAMV9zvfBD/4xsxUjmYuU2d5hIDrDYnSfw==
-X-Gm-Gg: AR+sD137cPab6DNibXAYAkteoLm+9GZTRyKgIresvG1had0JHfMODK5FfMcarv3m3qs
-	ILP9mKKEpAVpFDo8uuEBZBSzuBrvrsbl7VbMw/lIxzkr9cf3CdeQQNJsyl9+BdRTbtEICd+bbwp
-	zRD/09RvvdiDDdgroWk6KksYffoGi/O4Jv39z6mKHZIxzVQ6omPNJiL9DaxvIglmOb2hClxSw+Z
-	gtHIjPlj6DwTSVBUc/rizjWeRDaNVdaHVrQRhil7nTA1HVR8D1BXtgOdjA1RRcPEP4B93SH4jx7
-	aGaIj6fH5CPS3e1G1KhSxF35g4/4CIOVON6bShPwvXd1Fh+xA55FbKhQY/s8sf6hptjAGZ3tT45
-	ZH3+n/UBNR5tSy8LcKRlNaT+4D/yQ/QrULqXs0nJDCjJNIyQ5toSjOoeYpQzGPzczo3GGpQA4U0
-	l2xpiwiAmXDgo+80YTB0t3p52+UqbaRMpMN2hxQLHiwLFVOcbmW8jto0RsK0L1IQ==
-X-Received: by 2002:a05:6820:200d:b0:6a3:f522:7656 with SMTP id 006d021491bc7-6b0b2c34da6mr5312982eaf.20.1786550158729;
-        Wed, 12 Aug 2026 08:55:58 -0700 (PDT)
-Received: from [127.0.0.1] ([52.176.18.40])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b0ad6d3895sm3027134eaf.14.2026.08.12.08.55.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2026 08:55:58 -0700 (PDT)
-Message-Id: <pull.2200.git.1786550157424.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 12 Aug 2026 15:55:56 +0000
-Subject: [PATCH] bundle-uri: refuse advertised URIs by protocol
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kIeWiiKy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PRSTI/CN"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 14BCE140011B;
+	Wed, 12 Aug 2026 12:08:01 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 12 Aug 2026 12:08:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786550881; x=1786637281; bh=M+H/T1/1Zz
+	Bq8p/rBI/qZ5hd3einw/GEX85LdMDlSGU=; b=kIeWiiKyJRUvDqsI/8O7mxadAd
+	VSZYfhXQiasrsyu7SWatpPrlPF3UuLPKKFvnSYPSI+TbNpzfOoKuphxPNTnbXxEk
+	eI9p1J6wWnJ1syxcpJCIHYjn2jmHeb/sWqsq8p1UvX86BpmOxwO0zA+TUjSt5Fk6
+	ozzejezdqfkCgGcGm3JgJNSd+ayhEp9E2dULT9BCmUfSrAvVBSWj3eN9ki++gGwz
+	gjTopD/mv0gB9QRN6NFBI4xqy4GW9N5YveaqUjaggiAFZgdy6wntp7y3XDDNjQzN
+	c8yiRgPaBxPvDbk65YKJPp4QAkvTvOCF2tP46BS5ZL29Z3GJT0Aqku6cfeYA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786550881; x=1786637281; bh=M+H/T1/1ZzBq8p/rBI/qZ5hd3einw/GEX85
+	LdMDlSGU=; b=PRSTI/CNzyt9Sul6WkKQi30KP4N59DQjr1WwR5i2gDiHklY9HUS
+	jn1Lu77g+DFg2fKqwS0XWYtTJAISeKIf0wNkmJ6Ap+lV3+dyHp/SfVpzDnlnTK48
+	NpXDQnh7FSyjnrsqUC+n37IhQX1irlBMSpy0v0qiHhGE06txhvJt9oq4XfaOBoWK
+	5s6MTNr+CUQdUigcWuS3tsoKAFunjxzCX8+iKyVironEIsY6X+SOglxQ2LnyEtlJ
+	ZxYj8IYnx3meQeSTyjKIufDLVzlfXQ/0bgadBDxV+utZ6Vd0cRTB0zsTFFjcdOxZ
+	9ixAnpiTuQVUJ/icppjaZkoTWY04/tDc1MA==
+X-ME-Sender: <xms:YJp8akkxqet_0DXRCNRUoMwVWIEQGwjtG2DOvZNpUlOjymoT-WGXXA>
+    <xme:YJp8aq1SzHk5_tfTOn19dJuskYAq1y015CVAYpcsPjSXMBhaxrTox0khLKguNaNl3
+    5skUBB2fZjuGE_U90FJcSVsN0_LYbAzF-SzeH_-VV2jwKexZACTeA>
+X-ME-Received: <xmr:YJp8anqvrBk16j6kL43uQLFGMBjTF51uyiwEBg-H-Z0d_Bsqa9HqlsRUjZ6CYC0VQsgmO9UJ5SfITO_Nc0ZlOJ2MQOwgEB4ggw>
+X-ME-Proxy-Cause: dmFkZTED7OhH15clFfNYKhkOllCvEjRW/jJzRG5VFlXYVdttfp+E2X4EmV0zSIR+nKOOI6
+    Bvp/IZBUOkWojl4vX3snjpVZooDFiY4brA5Jllf4pUn6sDMU/7bwFqchWqxKvTgdrqp6/N
+    R7+9eSyvJeQjzOgYH/M1Jy5GdkQK6GN87AnbXWt2nM69BhZFo4qn1ibp3u/AnM1FLEu5P9
+    JlEmk0TCJuIt8kqnW+dxOo14KwaEPs7La1k7OCMdMrHJyh9KQr6MGrrarg+ejjKOVS+mdo
+    62WFGO7SwJBbIYOA0Tbt/RcHD7D26ZlYVhOxCrawPJ6Oizj8f4EkK9UwLsc/BaNBlbkNY3
+    Ro7RSPleKlj/RGwj8Fotxl4ua0A3ksdsB9JldlzdtvEPC+SJT6P4RwQ71RIViUVDBLlecM
+    cgn9kovZ+SQJB6Lf2GvkPORvMMHHIBv9rXQcs7NFI53MoEMjXr8yUPFRg2sQj1EsYUVhrL
+    GHXH8joPaAP456pK0+a+/tP7tXD+oGxud0dh584VSSzjy9hA/yCU8FJVz0Wh7oEpmzt+AI
+    GsL/XMpzh+5heWUpx5VZIm5+wSCZPzX4bGhhcVnyhgHFtYVbzysY7Jj/QBY1CwRqB8VySz
+    ejOw3vFHf3jEY4l+x5a/WYA6MXGNjzYqqGv24guD9sYvlMIMu+6hrHSIxRag
+X-ME-Proxy: <xmx:YJp8avdgxn3Dqo7bww8msvIh12KOX446eiFyS2UGSfTBqjH4rMMRYg>
+    <xmx:YJp8aupoigvMy6yWRgU2FUoiK9sV1Lo0OceUVLMhPU3r48lhquB5zw>
+    <xmx:YJp8aoE1fzboD5R1mgEJzgXqtBSuKb9KZ4OVyicRybPwS0Kv9sv9ag>
+    <xmx:YJp8amvBEjcn3_ODhynx6gDvhpk5wslkpY4PThyG0pMpRCwUat96dQ>
+    <xmx:YZp8alC931_8p4bTj5kzd6aLausur1aGq_eFJcaRVGhPfi3Ko-Izoy7F>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 12:08:00 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] sequencer: release the ODB before spawning git commit
+In-Reply-To: <pull.2198.v2.git.1786528498689.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Wed, 12 Aug 2026 09:54:57
+	+0000")
+References: <pull.2198.git.1786388689444.gitgitgadget@gmail.com>
+	<pull.2198.v2.git.1786528498689.gitgitgadget@gmail.com>
+Date: Wed, 12 Aug 2026 09:07:59 -0700
+Message-ID: <xmqqqzk3xqxs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Servers may advertise bundle URIs that are not HTTP(S);
-copy_uri_to_file() then opens it as a local path. On Windows that can be
-a UNC path like `//attacker/share/x`, i.e. a clone can be manipulated
-into making an outbound SMB connection that leaks NTLM credentials
-(CVE-2026-62960).
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> As of 4557f1add261 (rebase--helper: add a builtin helper for interactive
+> rebases, 2017-02-09), continuing an interactive rebase uses the builtin
+> sequencer, which spawns `git commit`.
+>
+> The child may trigger auto-maintenance, which may need to replace files
+> for which the sequencer still holds resources. See
+> https://github.com/git-for-windows/git/issues/6315: on Windows, this
+> produces unlink retry prompts that cannot succeed while the sequencer
+> waits for the child.
+>
+> Resources such as file handles or memory mappings must be released
+> before spawning a command that may run auto-maintenance, as established
+> by 28d04e1ec197 (run-command: offer to close the object store before
+> running, 2021-09-09): release the ODB file handles and memory mappings,
+> so that auto-gc can repack (potentially deleting existing packfiles in
+> the process); If the sequencer needs to access the ODB afterwards, it
+> will gracefully (re-)open the ODB.
+>
+> Release the sequencer's ODB before spawning `git commit`. The regression
+> test uses the legacy-delete trick introduced by 69ed0e35a754 (mingw:
+> optionally use legacy (non-POSIX) delete semantics, 2026-05-07) to
+> trigger the failure on modern Windows.
+>
+> Assisted-by: GPT-5.6 Sol
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>     sequencer: release the ODB before spawning git commit
+>     
+>     This fixes https://github.com/git-for-windows/git/issues/6315
 
-Subject advertised URIs to the usual protocol allow-list
-(`protocol.*.allow`), which drops "file" (and bare/UNC paths) by default
-but keeps http/https/git/ssh. Do it in fetch_bundle_list(), the
-clone/fetch consume path, so ls-remote still lists everything; each
-skipped URI is reported. A user-supplied `--bundle-uri` is unaffected,
-and `protocol.file.allow=always` re-enables an advertised file URI.
+Thanks.  Let me mark the topic for 'next'.
 
-Assisted-by: Opus 4.7
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    bundle-uri: refuse advertised URIs by protocol
-    
-    This is the security fix released with Git for Windows v2.55.0(4). Due
-    to the transparent NTLM authentication ("SSPI"), the vulnerability
-    affects only Windows. The patch has been sent to the git-security list
-    on June 26th, 2026, but only received reviews in the PR in
-    https://github.com/git-for-windows/git/security/advisories/GHSA-xrpg-8j9v-v282's
-    private fork (which had to be deleted so that the advisory could be
-    published).
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2200%2Fdscho%2Frespect-allowed-protocols-in-bundle-uris-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2200/dscho/respect-allowed-protocols-in-bundle-uris-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2200
-
- bundle-uri.c                 | 50 ++++++++++++++++++++++++++++++++
- t/lib-bundle-uri-protocol.sh | 56 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 106 insertions(+)
-
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 2bb2eb99e4..92a36ca0ab 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -15,6 +15,8 @@
- #include "remote.h"
- #include "trace2.h"
- #include "odb.h"
-+#include "transport.h"
-+#include "url.h"
- 
- static struct {
- 	enum bundle_list_heuristic heuristic;
-@@ -890,11 +892,59 @@ cleanup:
- 	return result;
- }
- 
-+/* protocol of 'uri', or "file" if it has none (bare/UNC/relative path) */
-+static void bundle_uri_protocol(const char *uri, struct strbuf *out)
-+{
-+	const char *p = uri;
-+
-+	while (is_urlschemechar(p == uri, *p))
-+		p++;
-+	strbuf_reset(out);
-+	if (p > uri && starts_with(p, "://"))
-+		strbuf_add(out, uri, p - uri);
-+	else
-+		strbuf_addstr(out, "file");
-+}
-+
-+/* Drop advertised URIs whose protocol is not allowed (see protocol.*.allow). */
-+static void sanitize_bundle_list(struct bundle_list *list)
-+{
-+	struct remote_bundle_info **skipped;
-+	size_t nr = 0, i;
-+	struct remote_bundle_info *info;
-+	struct hashmap_iter iter;
-+	struct strbuf proto = STRBUF_INIT;
-+
-+	ALLOC_ARRAY(skipped, hashmap_get_size(&list->bundles));
-+	hashmap_for_each_entry(&list->bundles, &iter, info, ent) {
-+		if (!info->uri)
-+			continue;
-+		bundle_uri_protocol(info->uri, &proto);
-+		/* advertised URIs are not user-provided */
-+		if (!is_transport_allowed(proto.buf, 0)) {
-+			warning(_("skipping bundle URI '%s': protocol '%s' "
-+				  "is not allowed"), info->uri, proto.buf);
-+			skipped[nr++] = info;
-+		}
-+	}
-+	strbuf_release(&proto);
-+
-+	for (i = 0; i < nr; i++) {
-+		hashmap_remove(&list->bundles, &skipped[i]->ent, NULL);
-+		clear_remote_bundle_info(skipped[i], NULL);
-+		free(skipped[i]);
-+	}
-+
-+	free(skipped);
-+}
-+
- int fetch_bundle_list(struct repository *r, struct bundle_list *list)
- {
- 	int result;
- 	struct bundle_list global_list;
- 
-+	sanitize_bundle_list(list);
-+
- 	/*
- 	 * If the creationToken heuristic is used, then the URIs
- 	 * advertised by 'list' are not nested lists and instead
-diff --git a/t/lib-bundle-uri-protocol.sh b/t/lib-bundle-uri-protocol.sh
-index 794478ae19..889e673a44 100644
---- a/t/lib-bundle-uri-protocol.sh
-+++ b/t/lib-bundle-uri-protocol.sh
-@@ -237,3 +237,59 @@ test_expect_success "test bundle-uri with $BUNDLE_URI_PROTOCOL:// using protocol
- 		>actual &&
- 	test_cmp_config_output expect actual
- '
-+
-+# Advertised bundle URIs are subject to protocol.*.allow; "file" (and bare or
-+# UNC paths) is denied by default, so such a URI must be skipped, not fetched.
-+advertise_uri () {
-+	test_config -C "$BUNDLE_URI_PARENT" bundle.version 1 &&
-+	test_config -C "$BUNDLE_URI_PARENT" bundle.mode all &&
-+	test_config -C "$BUNDLE_URI_PARENT" bundle.payload.uri "$1"
-+}
-+
-+ignores_advertised_uri () {
-+	rm -rf victim &&
-+	advertise_uri "$1" &&
-+	git -c transfer.bundleURI=true -c protocol.version=2 \
-+		clone "$BUNDLE_URI_REPO_URI" victim &&
-+	git -C victim for-each-ref refs/bundles/ >refs &&
-+	test_must_be_empty refs
-+}
-+
-+test_expect_success "create bundle to advertise" '
-+	git -C "$BUNDLE_URI_PARENT" bundle create "$PWD/payload.bundle" main
-+'
-+
-+test_expect_success "ignore non-HTTP(S) bundle URI with $BUNDLE_URI_PROTOCOL://" '
-+	ignores_advertised_uri "$PWD/payload.bundle" &&
-+	ignores_advertised_uri "file://$PWD/payload.bundle"
-+'
-+
-+test_expect_success "protocol.file.allow=always honors file bundle URI with $BUNDLE_URI_PROTOCOL://" '
-+	rm -rf victim &&
-+	advertise_uri "$PWD/payload.bundle" &&
-+	git -c transfer.bundleURI=true -c protocol.version=2 \
-+		-c protocol.file.allow=always \
-+		clone "$BUNDLE_URI_REPO_URI" victim &&
-+	git -C victim rev-parse --verify refs/bundles/heads/main
-+'
-+
-+# same path via a UNC administrative share (cf. t5580-unc-paths.sh)
-+if test_have_prereq CYGWIN
-+then
-+	UNCPATH="$(cygpath -aw .)"
-+elif test_have_prereq MINGW
-+then
-+	UNCPATH="$(pwd)"
-+fi
-+case "$UNCPATH" in
-+[A-Za-z]:*)
-+	WITHOUTDRIVE="${UNCPATH#?:}"
-+	UNCPATH="//localhost/${UNCPATH%%:*}\$$WITHOUTDRIVE"
-+	test -d "$UNCPATH" && test_set_prereq ADMIN_UNC
-+	;;
-+esac
-+
-+test_expect_success ADMIN_UNC "ignore UNC bundle URI with $BUNDLE_URI_PROTOCOL://" '
-+	ignores_advertised_uri "$UNCPATH/payload.bundle" &&
-+	ignores_advertised_uri "file://$UNCPATH/payload.bundle"
-+'
-
-base-commit: 11c6700f10234578d10523faf35656ca491425c9
--- 
-gitgitgadget
+> diff --git a/sequencer.c b/sequencer.c
+> index 57855b0066..83952d96e3 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1127,6 +1127,7 @@ static int run_git_commit(const char *defmsg,
+>  	struct child_process cmd = CHILD_PROCESS_INIT;
+>  
+>  	cmd.git_cmd = 1;
+> +	cmd.odb_to_close = the_repository->objects;
+>  
+>  	if (is_rebase_i(opts) &&
+>  	    ((opts->committer_date_is_author_date && !opts->ignore_date) ||
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 58b3bb0c27..8f81c80fd4 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -65,6 +65,24 @@ test_expect_success 'setup' '
+>  	test_commit P fileP
+>  '
+>  
+> +test_expect_success MINGW 'rebase releases object database before committing' '
+> +	test_when_finished "rm -f .git/hooks/post-commit repacked packs" &&
+> +	git switch -C repack-rewrite primary &&
+> +	git repack -ad &&
+> +	write_script .git/hooks/post-commit <<-\EOF &&
+> +	git repack -ad &&
+> +	>repacked
+> +	EOF
+> +	(
+> +		set_fake_editor &&
+> +		FAKE_LINES="reword 1" GIT_TEST_LEGACY_DELETE=1 \
+> +			git -c core.commitGraph=false rebase -i HEAD^
+> +	) &&
+> +	test_path_is_file repacked &&
+> +	ls .git/objects/pack/*.pack >packs &&
+> +	test_line_count = 1 packs
+> +'
+> +
+>  # "exec" commands are run with the user shell by default, but this may
+>  # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
+>  # to create a file. Unsetting SHELL avoids such non-portable behavior
+>
+> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
