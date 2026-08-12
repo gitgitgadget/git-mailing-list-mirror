@@ -1,98 +1,141 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6622347BAF
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 20:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786565919; cv=none; b=d9665d0KdZuWjX8INHzCNQRHni/HmRKFufkCeF+n+2yCRBdwc9DydEytKQ9+BbCxNgfGzxM8RnJpdb9JFkjw8JeJ1/DJnVW9/jmHlQ/mzvsxPw1hWtgtmss9FAjwiJPVNokSKwJbea2a6X/WPVSddUKyRwgoDTV2y2dZUS5V0tE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786565919; c=relaxed/simple;
-	bh=tp2Y+mt2bK6507NqXuwEJHPbqSNEZcz85TKrl8Hdo1U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=byyQNpDUWSKM8p29xLz0I4v36aenekzQPSTzPm/xhuqpVjlRjZ6tEcSEsFUwApMdVWdN7LL+/cdAgoLxzEejCKttUSypZuo8tfU0jHIqwJyXhD55OHNqyoPXapH76A4DE/2B5sFCw/7YO9UAuauRoERKZanYmLXDNSt3davRK+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sdq8Wk/1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cfHdAe0n; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A252B397689
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 20:30:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786566605; cv=pass; b=dVkburbiiiQcz7xTLDWHl8qoj+b/b6R881iLLrlf9DrRrt/GewEm4RyFcCuwDpeG/yR8dGeiJUaOIl59ZRZhmTtfBr2FltQQkzIK8v+7jf+GVejWBKJ0M993ZRg5CL5j4B6hJz6oN3gqsVZvNJeGi5dY1KyryUhiRcbaVX3epvQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786566605; c=relaxed/simple;
+	bh=T5HHi5kU0LpgM2ipseB9XmWFRTLZ9l0aKlbA2MTcRTM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M0WprUav9pf56mAcYVEs5/Nx0v/Zz/t5MR6gM0+i6qY2Jpj3ZgEAu6bQpPuUx/TUjI5GW4KtEuPiA/VWVyi43nFp3+qjr50GavbgxA/1JC0aHYFO9afmTkAFM6c5LBmTLnt/e7RIcpr5Ee639hwVEUxQ3B34zoFk6wdbVjUTbL4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DIqkYCSK; arc=pass smtp.client-ip=209.85.160.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sdq8Wk/1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cfHdAe0n"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 113027A017F;
-	Wed, 12 Aug 2026 16:18:37 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 12 Aug 2026 16:18:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786565916; x=1786652316; bh=tp2Y+mt2bK
-	6507NqXuwEJHPbqSNEZcz85TKrl8Hdo1U=; b=Sdq8Wk/1Efm74k3DeHXaJ89Y32
-	94yhnANYaOP113yAOVtyCfsXjdzinVyav3W/VmXWBMC8CDhXAUg/GMtgSidu1z4c
-	EvnHFVh8zgHB7L7Tk9jbzBRfR3j3d3NliCPiQWBZWdXMAamPnFhJxHSuf+sExcWu
-	1uk9i5/vJaHWviD3Dn9cxIUfZWspQK+hvdYJjC8EfVz98RfaMWt31H+fznFLgIic
-	HdhYE+IxI9N70NyiZQ74fFDuYnw2XXgOL7YyokFKNo7GTtL067XBv9Lzy/EnN5vF
-	mpOX97sIZeRoWs/qrPy0hbsZKU3jFF/XWKY/7bZ5AljSc0y3ibD+wbJ0LzRw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786565916; x=1786652316; bh=tp2Y+mt2bK6507NqXuwEJHPbqSNEZcz85TK
-	rl8Hdo1U=; b=cfHdAe0n9LKlomPm8O0tPN6XFpgMyhE01UIg5AYAYn8eOqMu/TY
-	F1EeAbevMO6/jTGgmtpBp2BizthL1WJuiTiEcS5zTu+MstLw1y2lrAGL+PIO8vkX
-	VaGPGH208twsgtPDqtM7fOdwOosaIHSRoGziMcwBcndQnnUMqkw6idsUQ3D/TfBg
-	ZCElN3CT9tXB8SmtRu9IJNe3TncNmC1GR7ddECTTZMA5UIEW7LZGSxoK3z7OSpOQ
-	jxdAd2PamA58Bj8/P7ohUPexspy25zkaleRBhZ6jaYeRBd+7uSuAtQ4mrOukifga
-	Q7rK2XhYbBVmYS8XnmkA9sOvB4qu0rb/V9g==
-X-ME-Sender: <xms:HNV8asUhlJnuI45oZxx30LYftmtab8i5i2_zYCrZVv3ZqvOdb1hoLg>
-    <xme:HNV8aoBW1yM0P1V6yuvD31jaeuZIN_vHyVUdP55cDQFM67RJtcynrCyKqmhKeZWn-
-    vK-YPFoXul2v8d23sK01YF2F7SgSi0zbf9Oeh9LgYBif8HyElW-wnE>
-X-ME-Received: <xmr:HNV8atzc5Kyso0EEHjQUfnXm-y1K-7OghiDA6xIh0cyWXiXF5-IUBzu-GlgBGf6U-nlOUUQu-UgwnYG6LqCYG2KPMc00W0LVLw>
-X-ME-Proxy-Cause: dmFkZTEVYybkaHROUkitGnwAyZRO6qTQUcUjRCEelVhjrGYr+0UolnC55ocRHt2UNUYt6b
-    UExEdx7ykpK4Y3L9Q2WfWPD9+tZNYA/Q2JFKuh67bK0IBUxDnoKBJQeoDfQzOyp2t6Kwfx
-    zEveiHCGDSJL4CN6HXG005EWM3dd6ScWZPDVZBuysBIEs3zTqfMBnHEP3uQmZcwQtmZUSP
-    zRaBRY9o1RLoCjHc9AMXNzaqzP8RY+69TKUJ1/4eQ66hEGaelnzKU5mqVAdQtT9CB4vDYd
-    aAh1A1R2YoO9HwnRxogyEn/aY7x5QWoIwfzgTPy0e8sdom4TQ1v9mIhhQQdeuXoQPL6vAf
-    Tetz+SQX8rq+Mi1eLZfE8LtaqZc2th6QWff31iy/H5BmmWqSksenLHWxcVpepEMwX624UT
-    YUSTNELJtccgv03/XSuWPPD1BaSg8EERiTlVj2CbhrtoDe5Iy5NcMOWDHipHUE0zPeFAfK
-    t10ndtIVEqWfOcNgJW589u0RgfCkIJjWHA3Y7fpAvQaCM/xJkVUUSNcNeC1dyNlAXCk6fE
-    hdgrKRx2Pf6/dB7oKtjyTS+1VuJIXTL7qeI5I9GsINfAgM6MhC4HTO18hYKCkB7RKnqrKC
-    7Iuz1J87ZtCPOuylFehk22bPQuFQRw3F7+Xb4D0GB6/KXr3X77BqzxvbvGcQ
-X-ME-Proxy: <xmx:HNV8alA1eoeFSeoIuO8-4uvP4BTIUrTbwZ_oGNCfBzdy0gnoH879Kw>
-    <xmx:HNV8aqYOEGsK9hJuh1CnvxUzDkBrrgdy-qSPO9ghmHNFgtCxCBrPNw>
-    <xmx:HNV8atjhmIL4PigjQn5EppZj83FJrXwEllagu0-XQPMkM4Tw0-S7nA>
-    <xmx:HNV8as5C8-aX4caU3mglrSI5WwZSCGvRGlyGkSUqrYXbkScc7jO6XQ>
-    <xmx:HNV8asAgogWpWSjtgecsWkmOulCvgjHEGd8SiEWskypDBe-dVVQ9J3r6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 16:18:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] completion: 'git checkout' completes untracked
- paths as a last resort
-In-Reply-To: <CABPp-BFv4uf0F1PxVYRuQDbJQWw-YFDNbr1QRUVZxadsexbu5A@mail.gmail.com>
-	(Elijah Newren's message of "Wed, 12 Aug 2026 12:57:10 -0700")
-References: <xmqq7blx5oor.fsf@gitster.g>
-	<20260812164846.2236221-1-gitster@pobox.com>
-	<20260812164846.2236221-4-gitster@pobox.com>
-	<CABPp-BFv4uf0F1PxVYRuQDbJQWw-YFDNbr1QRUVZxadsexbu5A@mail.gmail.com>
-Date: Wed, 12 Aug 2026 13:18:35 -0700
-Message-ID: <xmqq7blvw0ro.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DIqkYCSK"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-455ca262ccbso34429fac.1
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 13:30:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786566599; cv=none;
+        d=google.com; s=arc-20260327;
+        b=CETlTIIdAtFRngniKSAl30FsVFzmKLMn9fSnMJBAjXO+bJs5SyyDGK6K5hjwm8RGrV
+         x6ixM4MdM3nDG6hS3C7HGdwoPeTeXl2eor4htfdiVkECBs1v2CC/ilZ6WV5NhkiO1LRx
+         o1jrd+ZAUEf10jxh8JF2RX/D2wk6PHbRYqKGALlLzcgki9xPxTA7q15Snk2g3AXibovh
+         9p66se9ULF5J7y1/CIIXnanTqg+rvCfi14lGHJ4dP/1pyU3lrxtXHhfXpC6I7r08geWO
+         JgiHidMT/WpO5/97CAYatFeX9qvpcrYFcdGX0zjjQvp7K+bKkNVAiwz82DaQM3EckdSP
+         GSwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=0JcyTKnO/KJxlEXVYdRSUWFTObY8LDbXRlG1Lop/nac=;
+        fh=dzZik3sWO5Hm7VdeOg6TogxYFNxNltXRHvX8714ZSR8=;
+        b=gG9CvWoAKS17bDQUXyG36tYHDK5hjmhOgqBSxKfsp9wpflc0iv5bGyi7JGoAmEXtPQ
+         LAeXgKtSIg3g5p6kpOQRhxJFVVmWEG8dEbnnJAfsARFVdw9sBxyQ13u1CL8qT6EeQIUW
+         VFw2gWgxSCegSjQXbcqbxrZdjynzR4bRyw/iP3iKP05wYIHGrr05xn/njeEYh1Km91mX
+         grkQgwiW03ZtA56kmbJoemlnqBt3YivP5P/XGFKG91781acs571t7igkvJ3othGfXGoo
+         PEWoSGiuoXw+0FiG8szB/lSzKplpUocgSHenmMW0QEJ5P2XK77FoICuvcnBe0zZbD8ZB
+         PeGw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786566599; x=1787171399; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=0JcyTKnO/KJxlEXVYdRSUWFTObY8LDbXRlG1Lop/nac=;
+        b=DIqkYCSKARCqW6YbYHgaK25+M7LQ55UYdgOMwbdrj3WFok0JV6YzU6+BLX6WDV5JaL
+         sTpjcav6ko9N2NCRdWTM4/bROGICELyenicW7+6lXR0nX4091jEalAk/LPKEaJvUeikY
+         convAlCrMUiGI428pZwBTXevWkJ9Am2K/qNaja8duurzI7WRfdXWXVgVBbr12ewkR2NM
+         EKR7bFVSrWrRVMVfsV68WD3qLR/u/Ihh4YeVcR0bQ69MYmEPhKyKOFnabavruz/3pGkO
+         Qa3rH8NNjFdDtz9clC3/AQ3LU3qLVsfFNgJxgEAkhfIzTiftls/zdaCbnDdsIaxKzX//
+         Fbcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786566599; x=1787171399;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=0JcyTKnO/KJxlEXVYdRSUWFTObY8LDbXRlG1Lop/nac=;
+        b=LN1q0zk6W1Lry2NlYb92T07CfiPjRA8YyulpdyoERTrwAMb4JhN7GdaicR772GFnqw
+         bRoa1ckWbegMBZsBosbBlB42LI1rXW1l8VgaCTmID9gsc6N4cWO81T+IqwZzBNRvzcVV
+         SvVSN8AD7k1wq2oOlqCHlPLqZnlcGi1epIPyqY+HkWzB8PQIEqgscVcu3UTGO3JNcV3B
+         cyZd22zRb12MtG1E9O7f+Qqapaab01o8flStvfkDqD8mWP6GbpgVFNXysLixwEbu4ZoG
+         oBJheQJFFlFTWvVC7QblsgBBarWcvaNaxsnF4AN05ixOyui+faVHXCdqgX2NS8XOgPNq
+         0zAA==
+X-Gm-Message-State: AOJu0Yy9lGFwz+ynPmQcy5XQwiTWOmlqTV1C1n+BjPqJR5RoDGsEzTpi
+	YJUsMyOZgjEELX6VUq+5bRsQDVdaxjSZgdK6A8HZxxAVKitkBPez6rAsg7FFEJP6x0tJ1xEFiqJ
+	a0vUd9a+kMCnDoio5Rg/pSmOY1DFr+h8PEg==
+X-Gm-Gg: AR+sD11bnVSS5c6wK/xzGlCf4ZEB8H5DMCN+KpErYdpAyB8wMQVVGYZcWUQFI3cKk/X
+	XyWfWhbZ5c3+FUCeMn6Z45gWgCxUIy7wBSfvWCbmxlTpNxiafzqkXN1x0JyWxcPIWqQAqzzbUYm
+	eHWT/G0iHImySDqK0L+pv8cNhzmwy3EeMaIh7FvXTS2U3jINwt0I5CUGOmwsTJlPdx+PqdaRsG3
+	4dLoDSW8d3QEb/hKCmV1y4fEU54DVsecmTImRfmoERlJupkTiJd0OG+4GKUp59/yN1X4FGXn4K8
+	H8fmWmoSEgfsEwiDSPvnvzArGM4vpn4Xdcnmu4YJN2nMGRfYHfQdardr9UOF8QBOZ2TMbpelv2p
+	vSjWwdgz3SGVzN0JBsqmX78++BQI+lKb9QzBojCDWZnxdZwgrU8g0jzYOxnXhP3k=
+X-Received: by 2002:a05:6820:f010:b0:6ae:a950:9fb4 with SMTP id
+ 006d021491bc7-6b0c461db5amr942631eaf.33.1786566598650; Wed, 12 Aug 2026
+ 13:29:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260804100355.1299498-1-christian.couder@gmail.com> <20260811083314.2023489-1-christian.couder@gmail.com>
+In-Reply-To: <20260811083314.2023489-1-christian.couder@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 12 Aug 2026 13:29:47 -0700
+X-Gm-Features: AUfX_mz9YImzBudfiHqjglfJrQkxZtVMteaK2Ba8myoxw5RyQ6cHAiDvZb_4uqo
+Message-ID: <CABPp-BH4MmEL5vZv7ZoUufT8quk4vCq==Ef_XAfxjj9U-WBsEw@mail.gmail.com>
+Subject: Re: [PATCH v3 00/12] fast-import: standardize usage string and SYNOPSIS
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Justin Tobler <jltobler@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Elijah Newren <newren@gmail.com> writes:
+On Tue, Aug 11, 2026 at 1:33=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> Changes since v2
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Thanks to Elijah for reviewing v2 and Junio for reviewing v1.
+>
+> The series has been rebased on top of recent master at 010afd3166 (The
+> 12th batch, 2026-08-07).
+>
+>   - Patch 2/12 now describes `PARSE_OPT_LASTARG_DEFAULT` the way Elijah
+>     suggested, which matches what "parse-options.h" says, and mentions
+>     that it should not be combined with `PARSE_OPT_OPTARG`.
+>
+>   - Patch 7/12 now wraps the function signatures that grew too long
+>     when they gained a 'struct fast_import_state *state' argument, with
+>     one parameter per line. Patches 8/12 and 12/12 have been adjusted
+>     accordingly, as they touch two of these signatures again.
+>
+>   - Patch 11/12 now also lists two other behavior changes that Elijah
+>     spotted: value-taking options accept the space-separated
+>     `--opt value` form, and a bare or trailing `--` is now accepted.
+>
+>   - Patch 11/12 also documents, both in a NEEDSWORK code comment and
+>     in "Documentation/git-fast-import.adoc", the third behavior change
+>     Elijah spotted about `--allow-unsafe-features`: as the early scan
+>     for that option only matches its exact spelling and stops at the
+>     first non-option argument, it disagrees with parse_options() for
+>     command lines like `--allow-unsafe` or
+>     `--depth 5 --allow-unsafe-features`. This errs on the safe side,
+>     as unsafe `feature` commands from the stream are refused in that
+>     case.
+>
+>     I plan to work on a follow-up series that will improve on this by
+>     teaching the early scan about the options that take a value. It
+>     looks like the parse-options API could provide some helpers for
+>     this, which might benefit other commands like `git` itself (see
+>     handle_options() in "git.c") that need to look at some options
+>     before the actual option parsing.
 
-> It's probably not a big deal either way, but might be nice to include
-> "--directory" here for consistency with your diff series, and because
-> it'll be a bit more performant.
-
-Thanks, will do.
-
+Thanks, this version addresses all my feedback on the previous round,
+and I spotted no new issues introduced.  Looks good to me.
