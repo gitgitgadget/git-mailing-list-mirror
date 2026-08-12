@@ -1,187 +1,123 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E688384CF5
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 09:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A651358399
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 10:07:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786528503; cv=none; b=KiVOMWIdre1bmYSHoPsZf87SbMRAMlLM+2WGkapptEPnKP6wjxXq+26l0MeFc2oITere98JnAl20wD/BpWBVV2i4eBtj5f0QPv5mjBWpqt1S88QFWdCx8kIs4uXDYKL99KP6J66WDzrT6o3F7eWC9Vdw5ACAPD3k7UJfVp1WVFQ=
+	t=1786529252; cv=none; b=opvHdHoKOubjIYTZt2z2KIywoj/Hz/VMtSEA/S+Pg39+BKnTtE9LJoEUn4izMKQDVCg/0Ch6B7bK3gNcgTsl0ctRkOhzBKY/qblAWmLnuzJQR3+b2gBuDRx1+fr+OHDKODN7XliUL2eD/oPl/54t3rcU11yWr1731kWwuSBkZK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786528503; c=relaxed/simple;
-	bh=TZpPlgqYqyY7uSwvHcxdZnh4NP12weq46KUc2hRnYz4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gWqdFk0HgZWG1mb528rzawO8Hg8avvyHakg+GW12J9E/9BQXOGFeyS4pI8e06RBomt6h0+WrZMJRqF9vBYN+HLywIKzAT9ysSc9iCo7mhBO7kDigv1FEq2WJ7fStzb3yx5OzhdyiAjaiDJ1GnuC1aDxBGuVXaBRufa2xHjPsawQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PxLLc30A; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786529252; c=relaxed/simple;
+	bh=ED2LXA1pm+4R/17+/6TLbayyheE4CONYAqupzme3tIE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P2wYd6D1eWXtjByRV7tkceTaKAHUtBsQrDem+3oN+eB19racsZ6hbK8vAI2m7KU0kCOW99qAm58vvx2kKCrQnfSWY9hC42JisrkV1rdNI1iq9bPbZFQbzr9RJgQ4wKW2d1WzAD/odpdLTjl9KYjjZNGOHPBXFadVG228Jm/2Ofs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kHFrLYTK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SW09splU; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PxLLc30A"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6aae90e595fso306253eaf.1
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 02:55:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786528501; x=1787133301; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=EwX/i7prZ76896VSKk6VK6yVKok97pZX2ib0SL9YLzU=;
-        b=PxLLc30A1rnzdq1NysKbEAQOChWwUP+KcSZ9rW3Pi3APM6bxuaHrVHt7o6ZFVo+Lp9
-         6ysIkOUbOORQMvmIAw4BjzbcFgPT4vbugXkk7rb8+oH0Tp0b5EE7ZMNJuY2UPoLav/rD
-         HwKyLF/FdjQ+1pDny1sjR9yidAOHym3AIeUZS5sg7QfwMNl9/txx8qv6dEYp9FoUIthL
-         TcRkxcfDqPYEblYnW4fUIwVXihq6nJLQ0vf5II+5Ojw2O1gNFhSdVq5cmeEN65RwpbqG
-         fuQsh/ExyMmOvF+6vSOuCGm94dxz4jInBVhGh/byD3IEHg8TtfETtNjjIKpcTO8OzNM9
-         zaLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786528501; x=1787133301;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EwX/i7prZ76896VSKk6VK6yVKok97pZX2ib0SL9YLzU=;
-        b=AZYgfqnusbcTEGG51Hptbj+fr+ydE5xkKgMlsKKIA/9frv+Ad6M5Vdk0Aspz8XLzMz
-         YkJ5LUMW+46yZbkVZDytAE5pCQOPC2T9YdZHbCUN5sGTY+my7/sG23RxIye///8+HBz9
-         PgCeyra8YsBmtekYXvILsYg8Q/qIBRoku72mMdkmIM6cWNAMA+t6QJLXLY/IDnaPMJN5
-         qwKK1KI8ZMn4jnBxymWnOEkLY0v5E1R/3feAbzFGskxjUCP6eyPLYo3X7Qz9hHfCLpdN
-         oR5rOY/nFTBoDOLWNpeNFHWJKx9a8YWzVVQtnRFDFMUB9ujmYAg4keBv/tKzrQIDwXYi
-         hC8A==
-X-Gm-Message-State: AOJu0YxgVBhOmOvO5iVylVC4GKLeqbXFDTAPpNP+Uh0RarnRXfzpelM4
-	xKcwj8845hRacT4vasIpRmeQc7wGL44MKfgBM+gv7Al3jgZCzYlpafI+bxkXtA==
-X-Gm-Gg: AR+sD10BgHtOCBHocQ2SodSmgt1rCGE8DKSBWVZaZmBiCFuDOT90ipJGSF3YrrOxtbO
-	YX/TJxhSYMSgh/0Y6mLJZNjQdS6S13YLF/jQ97mqo9bUnFEEsAWdMIvh05YjTz3flH2kDtwOlgi
-	f8v3K1VZ2fpTmv7yFx0wGuE4V27H/U2IpHibHqbpwG+HbuaFHnv3tKSkbhsQZ3zf5UC0XdLgBDB
-	vlBKPQldo986jdMAEK1qLnoX/gOXKqLj5OfOfA1T6rydp3BHACp/IQujgscbgHA74SSXdx6nOYw
-	8vhkXp/rd0fZH2Qg1P4a8DhKAFj77ZS4s4RbMy/2mIN44GUzd/i0PjEuobQzPQ34zFKx8e/Oci6
-	YKG2ytbOC2nyrxPgqqDu2xn6a4l4X+ncfH9SKI9jD+DFfLOHQZV/e8GzMaF7fTNCfJfAnxkFXWH
-	ou8YkEDiBje0C2umRznde41ZCc/q9Et1t9vHzLFNsX7a17NwByLb+BhOlvDOAKofI9
-X-Received: by 2002:a05:6820:169f:b0:6a1:22cd:8ffd with SMTP id 006d021491bc7-6b0b2861f97mr2817955eaf.34.1786528500845;
-        Wed, 12 Aug 2026 02:55:00 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.135.131])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b0ad4c6b04sm2283522eaf.4.2026.08.12.02.54.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2026 02:54:59 -0700 (PDT)
-Message-Id: <pull.2198.v2.git.1786528498689.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2198.git.1786388689444.gitgitgadget@gmail.com>
-References: <pull.2198.git.1786388689444.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 12 Aug 2026 09:54:57 +0000
-Subject: [PATCH v2] sequencer: release the ODB before spawning git commit
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kHFrLYTK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SW09splU"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 229F3EC01A6;
+	Wed, 12 Aug 2026 06:07:30 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Wed, 12 Aug 2026 06:07:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1786529250; x=1786615650; bh=dhadoO63es
+	lrJsPjVmNJ+t8z5jXkyDWgS9bOSem6Jtk=; b=kHFrLYTKFOwKPHx3jPLSnoW9CB
+	j9NVikZ2LGt4Qf8tSQAtI7xPQkR8VP79Y1lBWRi/ajbKzAXzABGstpwBBhWz46mi
+	kCj5EC8Ln2Dg9Gs2FICHD1dBZjvegIzD/0MR50hey41Cwpk7yMPQtPKc5+YV9svV
+	kNyqwBaQR9TJruTBY+4X+Mq6j7uyHpQaXoe+v/lNurVNh5ulKarqoO/7bzJxTAhS
+	9k13NJOVldpyimp6uKooS+h/8tucEQMC/ujwlm4wYcRvM0hJpM2YlVvpSm2bvT+J
+	dYGZMdBEMbIYwhUXU5xNN/Cq3ix2jJ0uy+40TMjmj3oDO/sJRM/hxBiejTUA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786529250; x=1786615650; bh=dhadoO63eslrJsPjVmNJ+t8z5jXkyDWgS9b
+	OSem6Jtk=; b=SW09splUojcsWQ/cHveaxkDIVCsAnYbimCoDLNfBcCQro3Hb73q
+	O5tY4pvrziW7TDMl8BoMgBmO0/3upktgPLsYrtatzmDviNRULuJk5z2zO1phb35D
+	O748VQ7YxRdXAL4O5UeRVcXw4asvYEyOtP4+i67KLSUK1hsbVnCfv7aQ04lHYO3r
+	ddzbYnlB3TBnS/OmqUzfYvKOdKXEIGX80xphWH2vLbuO7qBRJcrNgGGcBLAcvbMZ
+	sbByyJUAQ8ZsptherTOqGrK0H8pTLRTCG5qniDh/vcMPQA+p7iBpzCD/nrl7S1xb
+	p+IM5hcr44lfnHRGXm21BPimYwcyOCI0ijg==
+X-ME-Sender: <xms:4kV8aquuQqOHWODyFnhJUlCfOVvMAEVJbnHejvmazONe8p8OzyLUWg>
+    <xme:4kV8alegiZSAp-1KpnAYctUuh3tYgj6H8cRdVAKpWt6mwza5o71ySlwNzSEuEcuQX
+    HfaNYG4sDSr6-EpzBz2AJJvJIZkXflkk4NqNn--zNSfIoY74Z_hGA>
+X-ME-Received: <xmr:4kV8ajZlJFvdv2fzISoC7nIyIoMUpEiyorH_E8pl8DwN3cfUQZKpTuwbciiVVxch6O9JdTP13zgOalszn1iw8IudiVC4B-9WwvTw1Mh0Yw>
+X-ME-Proxy-Cause: dmFkZTEqHxMvoEq+W0hKH0zgk0LG4//poLE2jmasl3ma3fJ+s1bCPitYMNsoZ0lCt+/3Xj
+    1inSb41nL0I+RUjPyMc2E3dmi+Fz9MqUr6xZRHdAsLOLxYJy1GmwDsThaVL5dv+qx6euJz
+    WVYqQiOpUqsJ4DEwVp3rTOjg0e0/ehJTT77RgmKxm3aWRF9lD/06GYHSwMs5v6+biv7+HO
+    uSAzj7HNd6PwdIRuICOeXWBiuQ+77jJxyynJAaEvhhOUYr5sapJyyBSGzDaYghiv6gf79p
+    GJ8gMlXD3c+WoQYzCvXOCBQKjRak6SeoasgxeYLu7t7P61MslPOdBKJbOzbKIV70H6mxjB
+    G+nmqPO+ZIj30yqT2d5DU116PoN7uZRSu/Q77epMIVy/WU1R//D7UEo1PAVFabMuc1pjYY
+    vTzcW0TXBJSwsNjrQK3rYFRkdmFm6Edmq584Wa8CbY/yOQjUYKbsqGzNRlwUXE1asg9mw0
+    OZAlhPtiteU4BL/A6xPNMhy3mcWGlhEYkTM2W3w7wPjZ3OpC/LhYBSBSzM/tYe0rKWAFBi
+    dJc8DnkVnoEjG0HWHcgg0sGElY8YkkJEJLVTNYluXUvAMGgeDq9gsG9lSjLMOn5UtuAyY+
+    2CBtSuDkd3AhwMco/7jGXAvewSCEfpPYpmZp8Wdmwq3pk6n1q+yMxEaWkk4g
+X-ME-Proxy: <xmx:4kV8agXlD8uBU5kU6dw9h5JErYoAR8OhXRax2EBygaonZEmXWO56BA>
+    <xmx:4kV8ath-6R29q6FYsPZoLWdFdm_4PPZPMYPOYvKZgoYPwEL5_gy0cw>
+    <xmx:4kV8amX9GGFNC9xYhEFmUCXgMNUHHishY3kawdDh6_gMN9tS8G4E-Q>
+    <xmx:4kV8asNU_dXhgpVRizwbOcsYCJ2HIq3b_IfamIaBVxGtgcl3mstoRg>
+    <xmx:4kV8aldcZ9mUEw6Vr9T4M5ixa-dsIqKQ9sf_uc0b9JmQV4AroUkUwBpL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 06:07:29 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f86d4ded (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Aug 2026 10:07:27 +0000 (UTC)
+Date: Wed, 12 Aug 2026 12:07:19 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] t7900: adapt some tests to use a throwaway repository
+Message-ID: <anxF0P0KVizediDg@pks.im>
+References: <20260807-pks-t7900-fix-flaky-test-v1-0-08d0ea0fbbc5@pks.im>
+ <20260807-pks-t7900-fix-flaky-test-v1-1-08d0ea0fbbc5@pks.im>
+ <CAOLa=ZTAV=JqOvE0xkE4zmHMm=xx40_3g42ob9RDBRXmw3u6_g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZTAV=JqOvE0xkE4zmHMm=xx40_3g42ob9RDBRXmw3u6_g@mail.gmail.com>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Aug 12, 2026 at 01:19:13AM -0700, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> > index 4238569b68..6735a9e082 100755
+> > --- a/t/t7900-maintenance.sh
+> > +++ b/t/t7900-maintenance.sh
+> > @@ -67,41 +67,57 @@ test_expect_success 'run [--auto|--quiet] with gc strategy' '
+[snip]
+> >  test_expect_success 'maintenance.auto overrides gc.auto' '
+> > -	test_when_finished "rm -f trace" &&
+> > +	test_when_finished "rm -rf repo" &&
+> > +	git init repo &&
+> > +	(
+> > +		cd repo &&
+> >
+> > -	test_config maintenance.auto false &&
+> > -	test_config gc.auto 1 &&
+> > -	GIT_TRACE2_EVENT="$(pwd)/trace" git commit --quiet --allow-empty -m 1 &&
+> > -	test_subcommand ! git maintenance run --auto --quiet --detach <trace &&
+> > +		git config set maintenance.auto false &&
+> > +		git config set gc.auto 1 &&
+> 
+> So we change from using `test_config` to `git config`, I assume this is
+> because earlier since we used a shared folder, we had to undo any config
+> changes made. Now that's no longer needed. Nit: This is okay, but
+> would've been nicer to call out.
 
-As of 4557f1add261 (rebase--helper: add a builtin helper for interactive
-rebases, 2017-02-09), continuing an interactive rebase uses the builtin
-sequencer, which spawns `git commit`.
+The issue with `test_config` is that it executes `test_when_finished`,
+and that function cannot run in subshells. So we have to use `git config
+set` instead, but because it's a throw-away repository it doesn't
+matter.
 
-The child may trigger auto-maintenance, which may need to replace files
-for which the sequencer still holds resources. See
-https://github.com/git-for-windows/git/issues/6315: on Windows, this
-produces unlink retry prompts that cannot succeed while the sequencer
-waits for the child.
-
-Resources such as file handles or memory mappings must be released
-before spawning a command that may run auto-maintenance, as established
-by 28d04e1ec197 (run-command: offer to close the object store before
-running, 2021-09-09): release the ODB file handles and memory mappings,
-so that auto-gc can repack (potentially deleting existing packfiles in
-the process); If the sequencer needs to access the ODB afterwards, it
-will gracefully (re-)open the ODB.
-
-Release the sequencer's ODB before spawning `git commit`. The regression
-test uses the legacy-delete trick introduced by 69ed0e35a754 (mingw:
-optionally use legacy (non-POSIX) delete semantics, 2026-05-07) to
-trigger the failure on modern Windows.
-
-Assisted-by: GPT-5.6 Sol
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    sequencer: release the ODB before spawning git commit
-    
-    This fixes https://github.com/git-for-windows/git/issues/6315
-    
-    Changes since v1:
-    
-     * Clarify in the commit message what the strategy introduced in
-       28d04e1ec197 (run-command: offer to close the object store before
-       running, 2021-09-09) is all about.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2198%2Fgit-for-windows%2Frebase-release-odb-before-commit-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2198/git-for-windows/rebase-release-odb-before-commit-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2198
-
-Range-diff vs v1:
-
- 1:  904d65e8cb ! 1:  039fd29039 sequencer: release the ODB before spawning git commit
-     @@ Commit message
-          Resources such as file handles or memory mappings must be released
-          before spawning a command that may run auto-maintenance, as established
-          by 28d04e1ec197 (run-command: offer to close the object store before
-     -    running, 2021-09-09).
-     +    running, 2021-09-09): release the ODB file handles and memory mappings,
-     +    so that auto-gc can repack (potentially deleting existing packfiles in
-     +    the process); If the sequencer needs to access the ODB afterwards, it
-     +    will gracefully (re-)open the ODB.
-      
-          Release the sequencer's ODB before spawning `git commit`. The regression
-          test uses the legacy-delete trick introduced by 69ed0e35a754 (mingw:
-
-
- sequencer.c                   |  1 +
- t/t3404-rebase-interactive.sh | 18 ++++++++++++++++++
- 2 files changed, 19 insertions(+)
-
-diff --git a/sequencer.c b/sequencer.c
-index 57855b0066..83952d96e3 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1127,6 +1127,7 @@ static int run_git_commit(const char *defmsg,
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 
- 	cmd.git_cmd = 1;
-+	cmd.odb_to_close = the_repository->objects;
- 
- 	if (is_rebase_i(opts) &&
- 	    ((opts->committer_date_is_author_date && !opts->ignore_date) ||
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 58b3bb0c27..8f81c80fd4 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -65,6 +65,24 @@ test_expect_success 'setup' '
- 	test_commit P fileP
- '
- 
-+test_expect_success MINGW 'rebase releases object database before committing' '
-+	test_when_finished "rm -f .git/hooks/post-commit repacked packs" &&
-+	git switch -C repack-rewrite primary &&
-+	git repack -ad &&
-+	write_script .git/hooks/post-commit <<-\EOF &&
-+	git repack -ad &&
-+	>repacked
-+	EOF
-+	(
-+		set_fake_editor &&
-+		FAKE_LINES="reword 1" GIT_TEST_LEGACY_DELETE=1 \
-+			git -c core.commitGraph=false rebase -i HEAD^
-+	) &&
-+	test_path_is_file repacked &&
-+	ls .git/objects/pack/*.pack >packs &&
-+	test_line_count = 1 packs
-+'
-+
- # "exec" commands are run with the user shell by default, but this may
- # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
- # to create a file. Unsetting SHELL avoids such non-portable behavior
-
-base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
--- 
-gitgitgadget
+Patrick
