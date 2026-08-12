@@ -1,130 +1,141 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B377A7404E
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 19:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786563969; cv=pass; b=KP71LBMEiDVJbldgMtuaXhWHnigcFrf94+MDCM3bk8u0lFiucuT53jmTdeJkp6GbVwVM8l5SUSWzCxYhnLQm6RBIzAFExv9rTVxdDYpYarkLUIBW5M1cRnDZRNxpVmYoIzEO8sQG+vlijVPt1RRB5mEwu4Mb00dFPRsqQzLIkJI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786563969; c=relaxed/simple;
-	bh=2wvBbLeGDZ4Vm9sjyYw02Axu/zYV5+loFbydKCErA7o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DjduR8wZXjiXHbhFeMqFVA6YC0l1WEBLa740PtkHNKG1LmsxVJm4+wNc903qU7JEgs14ApfnN+0Y0mfuC36VFKTgfKdjCG80mwXg1syBYY98+/pd66O5ACqwW9ofXXeyQDvGbxK0vk7bMQoaKFK3sX6FHlA6KYoaQAJDVvINlpI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g2Y36OON; arc=pass smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5025236896D
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 19:51:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786564294; cv=none; b=TMTjGPO9vzZ/oXFtk5aZh2RUQUN0pjxYwFgCs52yyz6LL/jpDAz1ZvwuJRFpyNIzLHuOQOQIAqH1bAu3ualZ9hd065mveFxsoUmjY3UTnoXsmT7BKRhF7SuVN8AtQJPkhYoDgN19CgYykv9tu3ih4lLwmpHk5f+Bhy9mgkMuPNQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786564294; c=relaxed/simple;
+	bh=VN4NK0sf+fPRVMXxoI46xg5AoUq7IF5NGjzRYIPrIm8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QCo6szil4G3BSbHBRr726GsEvtN32sinQbhLBRbtYEiNoO1E9ndEvny/WT7y3txmjRyOz7eyHxJIrQjgK11SEwd6/O1LfR1MpTlvGV+7ttxSdW6F0gGvNXJuZhFEagbIiCO7rajbC5AOa4KzYCOXBIGV6Pq/gX2skp9lqr03I0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ipnayLjB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bjNxwElw; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g2Y36OON"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-84847482584so231593b3a.0
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 12:46:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786563968; cv=none;
-        d=google.com; s=arc-20260327;
-        b=IME9e2KCHB0m8QyKLXqBB3CuJiML8ndVhN4uHX2LDiRI6lSyG25JFFSRA8jRhWdzfw
-         DXgyUO7TJphLoNWYfAiUqtlafcTUgHx11s/6FUoQWPyMBL7CfuZoBcd4RVIWDcLSDX67
-         coPwR4HsjWar5BGyQ8Watc0TT0ljk/31njb/fOGK5ItkzNsq2efyZP8uL8Hf98XoBugQ
-         eJ6VALvoERlDkcR8tbZgLfxpsb+xEcF8/NgQlZcX1J+oM8zoxATL7gjDe754fDTwUGBB
-         65gA5ByNW0lRSZmcEDsfqZhveIlS6cvlXGdAVaL0TQXQTF399yfJBqwZZn9wkM8z1oxb
-         VoTg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8cDUPDa/vmq6ohK7cdytJS7/NKCxupnH2OR799cZjtY=;
-        fh=0NBmgmGV5gJiFi5dDhg9k8OYNW299nWQxMWbNj01jYo=;
-        b=WJCCTaU3BiVAti4iDv1oXDsJ313jb+z6dZ3WufhkIQRJTprqYO0c9g3kJW3y+zzdsJ
-         KIfILi/Pj0VZplL4SOn0f3asPzTDP67BoePAE7tRWQvJpVNlW0T4IJegYiWmFTWf2emY
-         TydBmxyuCIAw5idtiVOULnXYIfKvdpo46dpj9YkxAbUXJgYp/e6U2BFOraBSXgRhqY3s
-         66R5hWOPxo2a2WyhVjW2M8PrGDaqzKA49GsK3+9T9EDk1Ne0kIWZTgqOP8HAVonp0b3J
-         xTUwicOgwRrl9yD1tRhsY0A9ks53J0UPE8DyWfyuDrdWv0pgnhZJZ/w9+oN3R3DKqFyW
-         zwzQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786563968; x=1787168768; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=8cDUPDa/vmq6ohK7cdytJS7/NKCxupnH2OR799cZjtY=;
-        b=g2Y36OONdx3ArtM9d6/Kf7q4iwTDRlETD/OJ3dc8CoJkRZlzy1/uor5BFqnsOIo0xZ
-         UObVCYiRwbW7ffOUEITeSDMP5YQhJox8UU8hSVMXgNnLLbakoqgda/6Ckp3t2WvlTMSX
-         PrNa9ks/Gi0tyNyi8JF6gXjTn1Zm/SfgvQZRepy2iDs32HR5PfEgbCW+KgBdgJefkjnB
-         FpulBIc/EUtrQ3myxJ/4suOQicU+uRPU2Aie1/uCPXJB2FYk3CsRvwX7+VRtnrIofl/7
-         +kUcZpZhowzoBV0Kek2ya/69RG+bEM4sUjjhxflq5A8UcX9LSyGsYjMcdt4x7Jwwdxle
-         f7wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786563968; x=1787168768;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8cDUPDa/vmq6ohK7cdytJS7/NKCxupnH2OR799cZjtY=;
-        b=XUUfg8LfKGegvcTwrPuSig1Qqf7fx5CDtW1aKfY4ogC8jJS4zz87zp9pPWpsKJygFd
-         wNeSy3Vxna9HbxmtiuFyEApQecBQszzLF8g2wejXP9zGvofndzr16IcS3OogMiZA7rJX
-         mX/EUptelN8ZI3j3x01UMlgAy7OubNDA9bJuzqP29xICwNsVDqxzid3edPm0uHq1XT6E
-         3CjdKpMNK02jvaJRKy7LbGLDgYjFIWU0vxu3yt6/h2MVGGcRg460JTMgjBNbRQpqXVRw
-         Xe+Eiymnjvs1U0u2gs036AcxNCnN1a4KC07Yga6qBr+n2nRd1SaSHmdg+gEBpUrJtU8b
-         EiXA==
-X-Gm-Message-State: AOJu0YwlmuongaIKqFz2kNRzvMqVWvrwbdPJVw+Qv3yIuPFJPkaYWLIw
-	8rp2BjNRlNGl2cXo1kEl3TetQDBmZzYj9J2s27LHWcixC7ypIGLAGem8HWkAy1HVa4NvZ/VmB5S
-	hR5RRil1qc7x20cPXbW+/Ix2mKR5s4Lw=
-X-Gm-Gg: AR+sD13IR2EjFCVzi9vZeHgGbbRqzu+3TP9+FVTtOs6M8LEgww+2EwyJzfKUHdM3qgN
-	9TQ32EJSUAmWttXEcL7pawZIKGMzal0wvZYkUb/eXGPDH5icYm9E3Yy4lYLuyxpnHxPMjsAFmLB
-	2aJa7KpG4h3p0a9HG2+LDouOKT+7IurxtkTlWU0jVdkXWSgK+HZrHVKF3BEkzuzMpDQS1/3c0Qu
-	jAbI+w3U2l9xqD/idUU3vTf+bsbt5CA8PlcVMUVtTxYYfBzBlwCpqNqVVr+fX47P0QP6AI11KGa
-	y4E5jG4T1KPYA/N1G3AM8H6bAd7GLrq8kErYYw8+Ecr4ttz8CodsXlR/VEMDeZ6TO1W4ZTeSCfk
-	i8K8B/XSxmyYp8nADN/VDkSy3RK7mA0mMNLGGVT7+Xwz9AsQGZhMWbU6g5h0xbv/s
-X-Received: by 2002:a05:6a00:3a0b:b0:848:7bcf:9a9a with SMTP id
- d2e1a72fcca58-84fc803daa6mr27521b3a.1.1786563967894; Wed, 12 Aug 2026
- 12:46:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ipnayLjB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bjNxwElw"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 55E411D00144;
+	Wed, 12 Aug 2026 15:51:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 12 Aug 2026 15:51:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1786564292;
+	 x=1786650692; bh=W6kKAinFVrj9/GFC/ZFh/AYtzx8zZHsNYDUQpyqGg1A=; b=
+	ipnayLjB4LwuVJ+FBnEyrQ+9flrvB+QPx1FFz3WbV3OgYsyYMwD0PdHDeelnRunN
+	j0NUyrY1iFf2367HgVPBYA4gYKX1RIBSULJ9sTr4XXDZOebPNdnakSMAVQCotRdp
+	x6ywIzAEsbUSjRSQ9HVN4VImrupfqiAzU1MlnLPl4FjQu33iw9rcV4/cPyePTq6t
+	3m6tEhXQXUO3zxBAGsw65jNtMTyr3VoTKc3BShDuvpRXtTMeW+Hy9PSW8TlyNHqS
+	mofCvhvn5v1goz0YZqn1s/mYzEATFEE7XLDNQNfIBBXfuAPiTd9Swy4Z0V0O6Eks
+	ZosmG8m2QV1pxEqNslDYLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786564292; x=
+	1786650692; bh=W6kKAinFVrj9/GFC/ZFh/AYtzx8zZHsNYDUQpyqGg1A=; b=b
+	jNxwElwGsOE0ioVSO2Jg/mn/2XNX2txLQkORahqkA3lJIUsydb6AJAyeUv+gPKle
+	iTX1GuB5gTqTf5FGn1UIltsh5/JBdTwBwykgaApvTZSTRFa6DGQJOKANDxxVJwHz
+	uRMaakBMEORMzNDNUG+sv5TpW+WBz1mCg40e9Ge7Lj8QYtzA88301V27UoudyG8L
+	AUJB4AfP1DhbmbkkvJuy4YDwyyhhEtKJlY0G6T/kf2gpryMZifwprniXv96zMaTe
+	Fm+Z2q0UkGjoUq+aiK+9kt4MfsoqrbOLAwpaYEmKCMmZJy7gYeYzmN1KzywejOV0
+	pqbTkyaKjAm++4SyuYCbw==
+X-ME-Sender: <xms:xM58ao2PjBBmnkuJIAy05lYqCbkLyGXjyUW4h9gNld3F-JhyAddWqA>
+    <xme:xM58ap-z-gsZC_GIOjuxsuBiKsU30gqs8dvNhBkGRKeUG7UGjCaMOaG7xVB44LNxv
+    id6h7ULExMdnhcoJjtRmxSLyeCaknYZOsM2tMt6jzDqwusKt4PGwLo>
+X-ME-Received: <xmr:xM58apPnxXKA_XcC4wXQxDQsN8CdTSJ-AVWiaXy62nJ0wgNbh_bNQLSDoTFt-3dPHAqh_-5iDis2lRwQrhKJAp_nw8y4IQ971g>
+X-ME-Proxy-Cause: dmFkZTGvRKZxnM06Kpj4Fh49GxtCvthOX5w6fdpK4xu98CJWKHu1903HCSOd+RusFtJG30
+    rtlKlkv8drpjQ/Yyxi7KbkaODfC8Jh61E8OlFSdnNaBibnG/0T7almEePN30MpBTtZASaC
+    aGVzQiWzPhh9V6I775PbJPmTSMBaki7KetD0IlZ+9zk/waCL1P2lEdj4nzk2Zs6GAtIQGU
+    X9gckRxNVW49LKIF2MGzV0hkOOpV8RlCAbFgf5ohOYfmusVgDV9qEbBfTMVrFEMBdPg9kb
+    72lYPUMm6GrwFL+dnO1sX3lklbCYn2NaL9xGOO30Phc3SKW4YL4kQdiyr3frZoZ1BG+AHY
+    L3tufEVuhQduitBO37iDfgOpozaUm5NfLXltYhzk7mab4NCZx72D3unmZe4xDn0z0TdwqI
+    skG1Tn49FR5pU9WiSPRTa/OSlMpaKoiv0QRZRhV9MDTpxMolBmadP8q0VZWTWcdPSDE5+U
+    iQbUxPDUExKmWQxyP3RiufkV/E+VuMUcM1oOR3Y6dpiSgSCfJaeSxEZrCSbG6mli/DnamV
+    15ir7nnKjel8sesyFl5lOEQzmKAKHet7huV06gL6F4DoRKMNkL9HOymjyBvHRiwTl1wVx5
+    tlkbWStWZ+2CFHi6Mrbg6xhbr9SRjfrLXqF7Rj5uTQpHD4Nx3M4jTgX2qCWQ
+X-ME-Proxy: <xmx:xM58atfVdidWcXhdIWnJ4DV4qjOk69F2ZDRtgpKPsK59V98XnbRhEg>
+    <xmx:xM58aoXzAVsBRm4T4L2MulCXIUx_ANHDDqzpiUrFXq_7L4qjcbUkTg>
+    <xmx:xM58aliHNlkuQtPpWafpDIx59YeLBiUHg9RVy107n-Gis0B-YRoyGQ>
+    <xmx:xM58an_4KWXvR5sTpmHH9dJL9jC-0HO85gFu9T-rxhHZrI7ikXcbqw>
+    <xmx:xM58ar0mbJUZ2Uq5lFwhmNDViogiH99aHukOMj0KaX-EYCJcfBwiEo3Z>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 15:51:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] packfile: fix perf regression with many packs
+In-Reply-To: <pull.2202.git.1786561870638.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Wed, 12 Aug 2026 19:11:09
+	+0000")
+References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com>
+Date: Wed, 12 Aug 2026 12:51:30 -0700
+Message-ID: <xmqqfr0jw20t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
- <20260810174047.6524-1-r.siddharth.shrimali@gmail.com> <20260810174047.6524-7-r.siddharth.shrimali@gmail.com>
- <CAP8UFD2ii8C77jWpyHRYG=H7y4t-PFtR5FQB3on4bmB5FQyG4A@mail.gmail.com>
-In-Reply-To: <CAP8UFD2ii8C77jWpyHRYG=H7y4t-PFtR5FQB3on4bmB5FQyG4A@mail.gmail.com>
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Date: Thu, 13 Aug 2026 01:15:30 +0530
-X-Gm-Features: AUfX_mz35G1avMZGTayptEhkl0rwn1o5SaYe0DgYw2WENATluTuWla4xeu1EyMg
-Message-ID: <CAGWgyh8Azg1SKyPGtjai-FLbV5Ngn+dC3kxZgU+0FYFdDoOEVw@mail.gmail.com>
-Subject: Re: [GSoC PATCH v4 6/7] builtin/repack: add guards for --drop-filtered
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, siddharthasthana31@gmail.com, 
-	ttaylorr@openai.com, ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hey Christian,
-On Wed, 12 Aug 2026 at 23:11, Christian Couder
-<christian.couder@gmail.com> wrote:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> In one reported use case (https://github.com/microsoft/git/issues/970),
+> N equals 37,815 and caused a slow-down of a simple `git rev-parse
+> --short HEAD` (which is regularly executed as part of `GIT_PS1`) from
+> 0.4s to 4.5s. In another, heavily exercised CI scenario, clone times
+> increased from under 2 minutes to over half an hour.
+
+Face with Rolling Eyes (1f644) 🙄
+
+As we grow older, more and more extreme use cases that we initially
+thought were simply crazy become reality.
+
+> Let's fix this by establishing a fast path for known-new packfiles.
+
+As long as the caller reliably knows that the pack it has is new and
+cannot be on the list, there is no reason to cycle through all the
+packs in the ring to attempt removing it in vain.
+
+Clever and clean.
+
+> diff --git a/packfile.c b/packfile.c
+> index 0eee45055f..f80f05a1fe 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -781,7 +781,7 @@ void packfile_store_add_pack(struct odb_source_packed *store,
+>  	if (pack->pack_fd != -1)
+>  		pack_open_fds++;
+>  
+> -	packfile_list_append(&store->packs, pack);
+> +	packfile_list_append(&store->packs, pack, 1);
+>  	strmap_put(&store->packs_by_path, pack->pack_name, pack);
+>  }
+>  
+> diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
+> index af173a7b73..4221f9dd70 100755
+> --- a/t/perf/p5303-many-packs.sh
+> +++ b/t/perf/p5303-many-packs.sh
+> @@ -141,4 +141,8 @@ test_perf "load 10,000 packs" '
+>  	git rev-parse --verify "HEAD^{commit}"
+>  '
+>  
+> +test_perf "abbreviate with 10,000 packs" '
+> +	git rev-parse --short HEAD
+> +'
+> +
+>  test_done
 >
-> On Mon, Aug 10, 2026 at 7:41=E2=80=AFPM Siddharth Shrimali
-> <r.siddharth.shrimali@gmail.com> wrote:
-> > +                               die(_("--drop-filtered cannot be used w=
-hile another operation is in progress"));
->
-> Nit: I wonder if something like die_if_some_operation_in_progress()
-> from builtin/checkout.c could be used to improve on the error message.
-
-die_if_some_operation_in_progress() does check the set of in-progress state=
-s,
-so it is a good fit conceptually, but it is currently "static" in
-builtin/checkout.c
-and uses the_repository, whereas the repack guard works on an explicit
-"repo".
-If we want to use it, we could extract it to a shared location(wt-status.c)=
-,
-make it non-static, and take a "struct repository *", which does not feel
-like a part of this series.
-
-So for v5, I will keep the explicit repo-based check but improve the error
-message, and we could do the extraction as a separate follow-up by first
-creating a new patch, and then use it with the othr future changes, if
-that sounds
-good :)
-
-Thanks,
-Siddharth Shrimali
+> base-commit: 11c6700f10234578d10523faf35656ca491425c9
