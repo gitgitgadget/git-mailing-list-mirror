@@ -1,81 +1,82 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD98441F349
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 22:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E595B412C15
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 22:35:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786573908; cv=none; b=g1M7wySZ5K9jc9a/t5e8tEy62dF1wMPogCXj4NN+HxIMS935d8XPWqmrjHR8qqNW9w3DdZ0suFSm2+cKf1utiMRZLMHv5+1xyiU3mudQwt/PveL9gHyAL2XXmza0HWucQeIDLtrAMs0s2Kqs34/ziTgrxVG9lRJXShYqNYhg69c=
+	t=1786574128; cv=none; b=aJ1VT19DvIXsm9WZCiZ0unXpBm/eAFSa5wtxa8kn9VuNcHk3Hth8op4gQFlOzjt6aYxsmMT77k/zfdcMy+nDTKgY4FSMTlj5b6bvGCHRK6wJPlKikUwtFWAndgDLKt6HdoUuALLXnYGydHBHdPG3D1npby9rUrecstNQR2YLjDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786573908; c=relaxed/simple;
-	bh=Zfkwe6O/jxogG7Iwx39ZXrWitYNjHtfUM5L3RBhA5YY=;
+	s=arc-20240116; t=1786574128; c=relaxed/simple;
+	bh=PAPlruMP9aDYhFVpFLtPjKZ/PwmM3/Qr2EFMdu0Z290=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nrGe7YzrMdhxek2V5alG4SPA0BZ+K/V20AWjATKLyFa/pxSaES8jgqUrITtUCuC/YolhnP3Um6AkV2sB3To83TL+CoIu4vnOIQ/ATmTW5/DXw1j8cva7/o6QMmt4i+3ES+rxgHUfstUZ8iPC8SrpLOw639r/+qqVxyOCWQP74so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JtApoLB1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZM8Wo8DK; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=ZVWDXlBBvgtiM7Q2QhlJIrPBbI+L1B4bAA3RLh+OBPp2bnR3Mb1VDHt961gwKHGpP2I6LloDDnCAF3RvtolShrigZYjBMbde2NLaJwWuNrKNs70LFQxUsWtq0WmqaeB6Aauw4VDvgaDk6cmfM8LFiGIhk7mqofDJWVuspZwW+g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cbGVpZtV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Iz5miEPL; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JtApoLB1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZM8Wo8DK"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4639E7A004D;
-	Wed, 12 Aug 2026 18:31:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cbGVpZtV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Iz5miEPL"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 35F9A1D001A8;
+	Wed, 12 Aug 2026 18:35:25 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 18:31:43 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 12 Aug 2026 18:35:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786573903; x=1786660303; bh=4u52ZSO9sS
-	3cSa3z0a8APaYXqFHpZkz+pWhM2RGX69I=; b=JtApoLB1KsOiRSV8DOF7KCjl3N
-	DxB1NjjOLAVGyjAMBqDynXxkNarHnp7Sd6Dfxzx2fQMIK3Puq/QYg5JZeT6M2jJI
-	7Ykb4r43lVZ/VDZhwY8Y0fOTwcKyoVUUWhP4zHBw/w9ZMQlR4cZwZlPRnGgbSe5L
-	xDCQn/aMbahtjbNiWqIIrkChgmacDYmMIaGrAJMoST4ihV63epYo9yIzYl4d/ymg
-	RdgW3AhvIVA8QYz2LKfgGqa0DPkITYJWETRO5qgRUESfaJubjLnSUaK9sSNAzH5E
-	9pJZaWixtZKZGNVJgfsZvhp3jAbeufCAoj69qOCkHHswTepNagzmBhnr6vsQ==
+	:subject:to:to; s=fm2; t=1786574125; x=1786660525; bh=MSSNnN0IVR
+	mQCIDM9qYdVAQ4OOGPFpIZ8iN2kbZV8SQ=; b=cbGVpZtVEwC4Jq2sDUQFpOphD3
+	GMA+LOxdhQxpjuThskyKm3Dwqt9fP+UC2fr7TH6g8XmbFu9yLld4haBylWPXrAxh
+	yMWMXdflmFKyZLkCDGyphOHMnV3MgNJ3VNz03MiYl/pWV+Zkpuzric2Q9+CPOlUn
+	FVcntCp5M5fzb/sRoixQVXkuqocC4PtpHepIN6pEnz9Yy+dNTDivG09h97ecvim8
+	OYiaVF8g2VX7izk9/7/ZZr3jnYU7u1oEZw/7ygv2z7f9123wztPoEp3+yXzr3Kzl
+	5jTlit8zkJ4WkZXq0AW3ENLLhPIWygY9JGN1x38aSCjC1UwLMCatq12vXG5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786573903; x=1786660303; bh=4u52ZSO9sS3cSa3z0a8APaYXqFHpZkz+pWh
-	M2RGX69I=; b=ZM8Wo8DKbGTp/5DDh7nhrHw3WEP59sTNs6XhSC+TZOCqft0t8u8
-	fHBLrTyqDEb0HZYZ0K+QTfga/vHaZ6ANbdhLKAZuedoH1bUXal/iXjlrY28Bjh+x
-	lyEsH5XFs29ZHE/L+TgJnOfArInjmNu9qTiatEkXOb6XxVq7RJbwf+ern9JnIXY6
-	LA+I8eWXndKBVokJtsSGtPEo/c4yaCkg7NybjRDMzRZ2h1PdH9gUtq5S0VSLTc8U
-	Mq0+yvJIm56u44ImhqCo1ZHF+MWccHoFEM5bZms/+tRoNDCt4jUtC5Snd/mHZfhD
-	08K/jKjL/3i6MTg9jFFBEo0LR4tFYGA8P5w==
-X-ME-Sender: <xms:TvR8an1nNIOHP3TqiC6zZg8z1S9JZ1QbR96yETNVWdAeE4-PVJSlTQ>
-    <xme:TvR8athVWHH3DEXmDnT072JcNni6GxGMLGpXXY4AsCjpUrDPyR4Hxe4tO85dPhxfb
-    PggCppew1OZu6S5liz6RgmegbFQa_Cb4Wo1IO8QM64PbFg4p4kI7w>
-X-ME-Received: <xmr:TvR8alSlWkd19-rvgA5BHEr857IEa81O4iZnMcYNpkaL98uMbZaHMt91tJYSOePrPAtDapxftZy9iqalj3z0z6pZmqSROzzfNQ>
-X-ME-Proxy-Cause: dmFkZTEMWkzJauUFxsWydDoFx0Ogt3JMXeugQens522MAr9fXl8eLU0dU/iTtU4GEaj2D+
-    H8SgOrGrmnCbw5RDDKZjiuCEqU//tl1gc+mVqw4x74fiaVObtuO0jOLKk9V/W5wpaw/jhB
-    0P2lTvNzYzFzFb1e6yA+PuvUFf4JbuDAa2P+iSXRJMT/dZaHeortYRCYDWEt1SRPxN4DQ4
-    49wja9IuX1D4sPzHxL5WMvfmzJAclJP83QxTZK31Z6qUIRugMNPKhD7NCPmuww5+KBojmE
-    I1WRgXGNhlKyOZhb652QgITIzUZ7hrWy7kVFTiCrT56V2+4VLFQA+uXxm5CZ0ZlLU8LEYL
-    zZCXxT5g2Yctn1/s+T5DbR9OYxR6rDqV7U2DlH28wa18U2s0zDl721fyJXebXHHOXAafaa
-    C78mJEv+mHfdOKRydIGEVtS0UGoix0XOWof3MFRxO7wYI0wkSO7JTl/7wDFdlxg+nToBBm
-    NtPuA7+Vnv4W8K+V6qQkMKZYEyHCWMfEv64S4VT5G5C3erQSsfiJyWtGXSEfw6fvrxLxkX
-    HZjBJitDmp/5V6mBXD97AkCpN+moM0n55KlWGwix3gw0vCh9HH/snT9zw9j5YLDCEP0hMl
-    cIDfeFjjVPkK0u7sZXyV91lzV35+KdbTQ1z1J5waj3Xuo2g0uAkASfPOB86g
-X-ME-Proxy: <xmx:TvR8amhgXPxYYsA2fmWlrnZlD2NAUj3_RZAD4GQhGcfxnMNSGl7FFw>
-    <xmx:TvR8at73M-xug1Q2uHc_l7H1vQ1aJ4ckWhhwP4PkpOPs4Uawp78hwg>
-    <xmx:TvR8arB-C1JV5udekHjxMr21ECvX6V_12ZKucMRLRfwmI4uxll_vKQ>
-    <xmx:TvR8asYayhqLuEmMe1m3krUGYLaPvmbNiqv0Hco-nNJJAVeDn4jCuw>
-    <xmx:T_R8aoFvcYM4gDHIp9tPXyy1SYM1HcYVUrOHCqrYBOyZBWEcqdSOb7AA>
+	1786574125; x=1786660525; bh=MSSNnN0IVRmQCIDM9qYdVAQ4OOGPFpIZ8iN
+	2kbZV8SQ=; b=Iz5miEPLwlcgAQkOvC5axJ2IGfZD+DVFtuU1QeKricIdAr1+Mv6
+	/xRSoM1YWqoM/FpjAvPlEzd5aAU8GcrDwzBCybrQXOBihYR0bnC4dtdOg45k9nAx
+	rXlXeObVR79/Y/d1HwZfwU5zzrcmE3NH0H4iu7Fs4ti/glNfM9ewCt7bMleVYM4I
+	F4/4btVczRq1dwUBDykWrxVxuQifUkkKOtcFg7jaJmoBth3EuDMsx1n3XLulsl9c
+	7IsY7KSlu8Tz2W/ECYHHJUmM3qjoNIetvZsKEK5w47E+zB8/hlTb0aQBnrU89ko4
+	uoY7Lgkc8ibvOBpf6qDU3DTMpbQZOf/mTuQ==
+X-ME-Sender: <xms:LPV8atikyeaARnC6h_j8_SkisCQvE1g4Hlqw1ybg6ew-oDpiPpF-jQ>
+    <xme:LPV8apAARBgbOeEv78poYCLCq84v-dn_uWwUKE_8mLkwzfgKaOnqFOGkZpHicmmcu
+    YTv8HKYMavBqUrADZ5prhGCqKAR6egreku9q2oTgFRyXRdtnO9fWqE>
+X-ME-Received: <xmr:LPV8aiGrH0BUJu-hYXOuTUoyPrHTyu37q0aIyfhmMS9okU8PnelsfMJRJ5E9Pku6kPydQKaZrXzEHt8d6AcdtgVtcOX53yRfMw>
+X-ME-Proxy-Cause: dmFkZTG23VWlKIzduh0g0BWZeTVWQyZ4/LfJcAlIyYV9SZLZ8GmGDEkTs9P7i4Z9odvTJx
+    xF9AsOrCiXbLNFMdiV6jMjXF+X7T/nlFJx8QFepw85skB2492AT0Or4LDwakiioqh+pVcq
+    mv1Ew5lGID3nfyD7oRCeWS6hN+6+Z2MsGc3ICHtxcx1oDTpT7zO5vIWpwNlJ6teeamzx5v
+    r5LUPtpGrqL1zH9r6joPT0SnJgMCxNUXOmllcAu5hXv5Rx2MoMe+CIzkt5KrW4XusgP5Vd
+    Mj27Bku9ULeOOaPUONz7dIzHun2Wsxrg0eJk27HgrCm18nlG9gpPxNehbWna6pVrWAueg1
+    1ZYhj9IZy1LuJFlQ5FnuYwCVPUtR/aImvhUY8Hy9l/CmkossAv5kTkWwYhcHTTyFtq7UJ7
+    X+zt73Nqrg79Gv0hd63t2PZvlu2TfavdV0nlk4JCPZaeipdhet8+3V4yncfLiaT9SDYtU/
+    /gT9l9pNYHMaPaygrmpiTmKbdx+5zXd+GnS2d6JMF5VmjGjkG0EK7nCbAtfCGSSwdkZ3Z+
+    GH0/HwEQFBOmT9Qd1HWKmymkdHXizjGPRik0GvBTsJX3eAZsy/ypDB1ksKOOt3JQKxR3Y/
+    MoxQOyHxPhivYWwZo7fq49U/Au2UL95O+lZKX+T3vAlhT/O3lYHlG11eR5hQ
+X-ME-Proxy: <xmx:LPV8ahKRx_qN1M4YBMaKyvggSyuSSzJOeStHpOJMigyMaoESVEbUlQ>
+    <xmx:LPV8amkmKBl-t35gM8B0hEHt41W6MD5nlEi3_tBJRKXMl0AFdHbVwQ>
+    <xmx:LPV8apT-_I1Px0GFMjw6outDrSqYd0hJcwa60HzoOb9OxmxQpJFBsw>
+    <xmx:LPV8aoJwzFEspBUPUdUrbw4pATL4vLWt7SBRWwPJ1-r-Di9S3ncL8Q>
+    <xmx:LfV8aqTCRroHuHIPIxxWP1MkWfTkk0Lilsb0WwHmkgOyT5w0gBm1zAyP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 18:31:42 -0400 (EDT)
+ 12 Aug 2026 18:35:24 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
 Subject: Re: Can we do better than "git checkout/add -p"
-In-Reply-To: <21db84ba-3894-23e9-9f17-ceeafb1990c2@gmx.de> (Johannes
-	Schindelin's message of "Wed, 12 Aug 2026 10:40:08 +0200 (CEST)")
+In-Reply-To: <20260812214403.GD152730@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 12 Aug 2026 17:44:03 -0400")
 References: <xmqq8q6ih924.fsf@gitster.g>
 	<21db84ba-3894-23e9-9f17-ceeafb1990c2@gmx.de>
-Date: Wed, 12 Aug 2026 15:31:41 -0700
-Message-ID: <xmqqse4jug1e.fsf@gitster.g>
+	<20260812214403.GD152730@coredump.intra.peff.net>
+Date: Wed, 12 Aug 2026 15:35:23 -0700
+Message-ID: <xmqqo6f7ufv8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,62 +86,14 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
->> My current workaround is not to use "git checkout -p" and instead
->> (e)dit an undesirable hunk into a no-op hunk.  This is serviceable,
->> but with two caveats:
->> 
->>  - The underlying 'apply' machinery does not see a truly no-op,
->>    context-only hunk.  You'd need to pretend removing an existing
->>    line and adding the same line back.
->> 
->>  - (e)dit applies the edited hunk right away without giving the user
->>    a chance to proofread and approve or reedit.
->
-> I, too, often find myself in exactly that kind of need. That's why I was
-> *so* disappointed when
-> https://lore.kernel.org/git/20260325075055.354709-1-luizedc1@gmail.com/
-> was shot down unceremoniously. I still think that would be a good
-> addition. I even opened https://github.com/gitgitgadget/git/issues/1828
-> and sketched
-> https://github.com/git/git/compare/master...dscho:git:add-p-stash-mode to
-> the same extent.
->
-> Maybe it is time to revisit that verdict, and see whether there is really
-> no way to accept that clearly needed functionality.
+> I see I am quoted in one of them as "it's a little weird for add -p to
+> change the working tree", but I want to make clear that I _don't_ oppose
+> a feature like this. I think it would be super useful. We may find a way
+> to avoid that "weird" property (e.g., by putting the "combined"
+> stash/add mode under a different command's "-p"), or we may just accept
+> it.
 
-I agree that functionality to cover the "classify three kinds of
-changes in the working tree files, update both index and working
-tree files" is a good thing to have.
-
-I did not, and still do not, think "git add -p" is a good place to
-add a feature to munge working tree files, though.
-
-IOW, what I am lamenting is that we have add/checkout each having
-"-p" options, and as separate commands, the user cannot handle three
-kinds of changes in the working tree files without switching between
-these two commands.
-
- - changes that we want to add to the index for the next commit
-   (you tell [y] to add -p)
- - changes that we want to leave in the working tree files
-   (you tell [n] to add -p)
- - changes that we want to get rid of from the working tree files
-   (you tell [y] to checkout -p)
-
-The ancient patch deserved to be discarded, simply because "if we
-are adding it to 'add -p', what about 'checkout p'?" is a valid
-question.
-
-But the need to have a single command that can deal with the three
-kinds without exiting does exist.  It might be beneficial to widen
-our horizon to also consider if it would help us to include stash
-into the mix.  It may give two choices to handle the second class of
-changes, making them into four categories, i.e.
-
- - changes that we want to add to the index for the next commit
- - changes that we want to stash away from the working tree files
- - changes that we want to leave in the working tree files
- - changes that we want to get rid of from the working tree files
-
+I guess our messages crossed ;-)  I do agree that it would be very
+nice to have a feature like this.
