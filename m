@@ -1,220 +1,161 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1395F30CD82
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 06:23:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786515784; cv=pass; b=JKYbz5CR0KmXCxijk16YEljQEEmOsUXe46VTwqBPz3qGX/xRKDnSdkIhdTvjbxg9ltpBxwZ4xhJIc9jJBg5NnqxZjFqKS9xUFvPbhF230oFZzpRo5cFBOuUdx6LWtnsM06IwqddY1tpFe4+FkzIEplDfd/+7Wc88xF4kHGON1+c=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786515784; c=relaxed/simple;
-	bh=SKLjBvRuUqQhZL4hK052jhFO4aDsl/yv+7v7V8+CdIY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dCAZnPnBg9xZQam2xvWrphpAZRzfRBK/xCCMRo4xnXhGVcqJC1Ijha0iLDK9f1wiEYDQWhjgPpws1Igpcg1dLdCnT4tAALuOcTUy5/VLxPb8VwXCCut8Qw//YYhonEABFtny8VggcNv2HSBDPNgeptPqovDcv44iA9MA/OoXtOE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=doXD3LS9; arc=pass smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099EC39479F
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 06:25:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786515943; cv=none; b=ezRPA8sPdn29JpfzWE8dm+2uTU24/rMr4PoDqDL1IrVXkQbbrugXSUtF/hoAWoDg6iix2LBEupBwy9upGmETN7q+I8EhS0GMYrv47Aa++/NcATfuCL+uMwXlFNh5AZGJ2+wK5hUbgMZ3gmbtO9oH6qcn+szjjR4Zfzpk1BInHY8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786515943; c=relaxed/simple;
+	bh=3P4VR4hUlfBSL/4nhkYP1RW23pe5MQM/vIGNffLytmg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OSZTgkycLIvgpYsOxzxyN/30/PiUS5pNEAwVc9r8KvEfl/hhkWeD9YEAJADAqfRcOckYt7i+yQjrzbC4xxqJHXtMw6varRYAafkty7S9sRwizxYDbiKBKjUb7JP12NvMbmJsz+uPh2KCt0BG1C007NX1SaG9VLXLBVlJARTZ0DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JM/zWSjl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E8eU2o7C; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="doXD3LS9"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4af81963f35so207449b6e.0
-        for <git@vger.kernel.org>; Tue, 11 Aug 2026 23:23:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786515782; cv=none;
-        d=google.com; s=arc-20260327;
-        b=pYHSd2mC/x4qBlU6AXyCxPbmRg4e1MjDBj2fwDEiPNXXV+6Iifxmj2Y6JoL/LrEQ+E
-         rG4PoR+DGf3oPNLJU4h4Soj4zPpJOZ2lmdsguuslHxpDVXgwiwn2UiN3EsWtuuuDvR4g
-         4z20URh3sUBc1vBxxX0ZZkpMS3MJnEk3EOFCr2chn47O9F0r5K3eeJdod7TcRe+aoLow
-         XtrGDm8z8Z37OHDorL0rJhpXMsOezjX438DDkxADZ/1//JNRRr8fDTUsm6/wbasZg3Vi
-         yJnLMhsCiP5n/SyVVkK61yyNWT2ePKf5BYFKh0k+CafuJ60F6J3XOYUDZfZFs3fkHS3X
-         R3zA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=wC+Y7uWjXYaFjub1F/qARJTEkBBo4a35y1i73xU9z+Y=;
-        fh=PdGuLsJN9JVZy5BHY9bPXqzeWCeYFKwbJ2iGslXTO1Q=;
-        b=PXkd5jPBoKHmsY3Hy6QMcRIdrR2fa8xfoRX91XWTsfocgC9XqyVqOspLWRjNwrxpKJ
-         M4UQPdFd+6Hohe43RCQNmvMQnYGydbAYsvMacoJ01E4wX/rcWMlXqUy7bx1MifT0UE+N
-         bt0by7f/nlhBQuxHzUrANwhternWnGDau+l4nH98qZt+IyDBHfiI+4n+0sbLIbePFVDQ
-         /q7Y1o/1kWsXXuhMV14mukQevNh5q/x6lTjAjBGCOlJAQJV3fhwNegtgPrkzIdfeiEI6
-         NP/PjojJ3wCmWdTSGTHwGCzMP80nbrKELCOsjqyDNh38uraJk14Gin2N+Nf81q8VAOrD
-         8Pvg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786515782; x=1787120582; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=wC+Y7uWjXYaFjub1F/qARJTEkBBo4a35y1i73xU9z+Y=;
-        b=doXD3LS9kp+Ob0robIarpodhk5fUo1nIvA02+BsrbuYpMs3kx10zY/L36YJKeDUK76
-         6PtgYDuznep4/+lNaDHR8ZyGGTlfW1OLw5G20CleXGeH6vF5f0Pk8WSV6o9o1xnegdRx
-         13op7xilApYt54yQyeF8jFg8z5Xnn+Cz2OMwPIe1K6hr6fIlP8pkJDtTNAAga+GGhNBK
-         090c5PIj+GldSCK1WPQFPf3gpkx3hoDINU8ofOny0uuIiZvCpkQepbcMh8q97ZFrD1bl
-         1Q9ukhObKDEaKJDKA1s8KKbzqgi1xEmD9yRRBvbLITnfB/FzwAbEH2Q0gd+ajTWm6qVT
-         oVOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786515782; x=1787120582;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=wC+Y7uWjXYaFjub1F/qARJTEkBBo4a35y1i73xU9z+Y=;
-        b=EKw0HNSXTBVUgu5lvai9QNUHvGaH3QWtLfrCbNfWoal2305fS0NpS+p/wmbycIlgo6
-         ozIIQm1tCwAZvvDqsMKU3UNtrrGkxfVkdSmBU86q5lJCEiiJMlUVwK4D5FXRRJxzEUK8
-         Pvo2NfCVqj19ureAVovwIH51G+mxoZHFkBlC74LT09rtNfKEiffV1HV6PsuHo/ohGokB
-         n8E8bZCcC40/ANNYcPfWQ13TUVwr066Ue24coObv/VdxPuSwa4NNWJ85DvLKTDrRW7/5
-         kIv5WCJ3kB/nflBvLGm2Diwa+CBnbDhgFnqMcajdutJxpV8//mKiq4EgjBL80mwnRWrO
-         VdPA==
-X-Gm-Message-State: AOJu0Yxfjwh6eBw1Fw83d6BjOvLPmqH9LduRdQEiaTSVwpZ7t9UPY7PK
-	eNPjrJTf7BjlN0GcOXGvXGdqhznCCIhHQI+TGdha9Zavcem+6E8XRO4y9aJTbPXVlffkxlHSrCi
-	4ZUGayuBzSGGrg0VR82FtXgqqXvGwlQeNNA==
-X-Gm-Gg: AR+sD13u/tQ+mih5x5HNtPjsEIV5dF7DzjbzT7xPz0TSYSnyvez+J1pgQawS8nJYgvN
-	DiwOFFaNWcZ0eiDuPJwIbcmIpNA9h1pYnfRNuGevcfCa9TDC8YMOX7CsfhLIFwV3tLg6JzQS7/Y
-	SppwMPeFeUdkpjq+AnEwCdhh5vd2GPDn5BfIzPTOSj1G1SMqZ3L2pV2lfhTcVmCegDaIoBLmGm1
-	4jLYHpCtgnAgW5F37qLIPBrqntiASYrl7/eM/6Ny73M3BsR1iajCsG9qKJqIRgBU2nY0vsPuCXl
-	vVnQannXQIvjJE3yJ7bqZQC58GyLPxqeWaU189/tqoc4zKbe00qNrIeKvnDuaAVhS4Zlpng88cg
-	hJgJXvARgYsRSWY5M9IT0MkN/Ym+r19VbMAazKV4Nl4wHTWXQTf4xr2vdVBL5mdE=
-X-Received: by 2002:a05:6808:180b:b0:4a3:ff0a:e407 with SMTP id
- 5614622812f47-4b210bb8bc6mr2278829b6e.15.1786515781864; Tue, 11 Aug 2026
- 23:23:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JM/zWSjl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E8eU2o7C"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 95008EC01E1;
+	Wed, 12 Aug 2026 02:25:38 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Wed, 12 Aug 2026 02:25:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1786515938; x=1786602338; bh=Sd4GEhfiF1
+	I0nx6icdYw0wLeARgntxyrKKbE9b8wPuc=; b=JM/zWSjlyKLQKPJTe0hHJzkCNL
+	tgNQLmy0LRHyebB95oOxauuMN/YOzSokWqMwafuj+zse5dpknu3g2SoXggddDOI/
+	rBkIzpUitQa8YkJMr/oHUBj9x+sW5hV1wUKoPoUwKEoQ/iaxq6fykS7Oyugv8j7B
+	thDsK9JQIoO0mBQAPa6rVVocGmNnAka2Hh79MwjqhOMewkllHhR1IM4v6nD7F4Y4
+	bwSWJ+hD0YJUm7sp6erdRq+7RLmBPo5wRwAVV0rFO3/ENjJQxozQsg5AJVxsNg91
+	DcKgfTf6NZq/r/cmIwJixey5FN+bbAwHrOqMBaGejFcv6ebK4NzzOwsxM+Jw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786515938; x=1786602338; bh=Sd4GEhfiF1I0nx6icdYw0wLeARgntxyrKKb
+	E9b8wPuc=; b=E8eU2o7CqbMAuJy/iNWGkr5ZtssqvP3DUV6ovuWpq+jxf5XQcDQ
+	D2rruitJ89zsDFE14D0njPw8D9tp0JYwUJc728XIqABqX2OSyiImGYwwEPe9oMPu
+	TAuy6t56BHCrUUAsQV4wjRiTBp/bywSqd/6psahSGWvDGFn1e44N98qZuRy7uQ/a
+	glU4TcUyncYpW3DfpgbB25SXSS7YFMsZ72lD9vILyJ3l1YGoG/K7qx1/03CbAiPs
+	cpLyaW4HrDe1VMiUZs2MhGSkyPd77s7aC+eBgzbcJl2LSUGhiKPFtey3PtZfXBV3
+	AAIqwvPtDxuMICNY3mWHyRGni2SXwtD23rg==
+X-ME-Sender: <xms:4hF8auXqWyBJXRzhYopWgovFf1U_MvuIqRWhsP95yr4LGElZbOpJSA>
+    <xme:4hF8aheodZgtTnlfgUhbOY9H8AS_uklYGr7HWN1FRyyEZhEnPApHtCCsDNWMJpJ4i
+    xqCt8soTdJXix_Kl7f_ZZ_fHRS_TJpAfI1mR7aTp1Tci7fHYc4IRg>
+X-ME-Received: <xmr:4hF8aqvOYykrLurodAT2IzJshjrII-Wu5kmd1krHsQJf2G3v01qg7pdIbYQw9eGgAp276IgE4Ltbl7UjcHiWpoqg7kvR0_bFGivmWN26RQ>
+X-ME-Proxy-Cause: dmFkZTE2MAtyZiknTXCr+t+/zs+lp66ByCh/jlQ08DUTC8aH7jNINpYY8MwHMvIG6FBzWO
+    c90TOOd2+I4AENKsWrTzKcCJ05LmCgofkDeHIcK2Ibarm37pXrezbdD+NbQ5LRSrXy4Jsu
+    LRdG6FvRxeH+pLvumdB6voQ5KzGdOZ0jUQCbB6moqTG4Q1X1+/IAYikZtdNk3A+a/GmIzq
+    K2UyEONB6pb0rQjGGRo5j5owxp0VnEGWVoFYrjfAxlwaZjnALry0p+FZP9fpwQGSBbhMJt
+    m22kKPmBvldyo0q5kQ9cIEwwEoOdzeE7CXa98dBAjISSPG9fpJ+ffl6goX1gHuSmT3leEa
+    X6FSuTs+mRLMmsdQgO0nKmrWFTmmMae6db0PRhqSGQ9MrfwId08LBra45dSUcaV4MuFGan
+    CdBZKT/8txyPEiVhEbddWHh2L/8NSirFDLM8kglGMQSwg0gZ1n/yzNXu7rPQ3olhayxC8o
+    Mqn+EzzFIASV9JNSJv+1AyK1WufZy5QHd/rVJSd3E326f2rKb7tTKCP+PlACWhUVdwVh3J
+    TA18QTwYvgRbqW/yKwS/+LrkEv52opj8CRqxushAZolTRAZc3Zgh9KrHY+nc9d9ImZ3S/3
+    6vGBWKZxTVZsba7V8STM9mC/BoyFYSOUYte3j2pkHUocs/T+zppD3BFIJnLg
+X-ME-Proxy: <xmx:4hF8ag_LcaDxrjlFUgrX_eN5KI3RaAmy-gc65NtXQlyCukRWnp85zA>
+    <xmx:4hF8al2szPU7l5U5UMXbvqziDEzAaxLn4NXvkaJWCA1yPfx8Y9nVAQ>
+    <xmx:4hF8alBLuRpzvmPIdPMTk-BP1qgN4WwuiBE-8Zd27iXDjpPTL1E8tA>
+    <xmx:4hF8ahc5iP6LVNpjiHSn3qbNtcJmhKPxPlCyxzu_nPZDTK9is_3fSQ>
+    <xmx:4hF8arfYPMEBXA2PdSXUkJL9VstjZwYEkfLumzygYPlnqV5PNVu5urrH>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 02:25:37 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 687eb408 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Aug 2026 06:25:35 +0000 (UTC)
+Date: Wed, 12 Aug 2026 08:25:32 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: graysongordon-gl <graysongordon1@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net, avarab@gmail.com
+Subject: Re: [PATCH v2] http: add http.sslVerifyStatus to check stapled OCSP
+ responses
+Message-ID: <anwR3Inkf-9nLmYm@pks.im>
+References: <20260811170200.43097-1-ggordon@gitlab.com>
+ <20260811204407.52471-1-ggordon@gitlab.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.git.1781951820.gitgitgadget@gmail.com> <pull.2149.v8.git.1786440533.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2149.v8.git.1786440533.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 11 Aug 2026 23:22:49 -0700
-X-Gm-Features: AUfX_mwkEQR6Is3bLlOgt6ls0PIBLrQ2TARdOKn4qYF8jRVi6Box_ATC6VDlO8g
-Message-ID: <CABPp-BENLi7kBBu9QsN87aQY5C0kamzsKpXZTKYcHZk+WX11ng@mail.gmail.com>
-Subject: Re: [PATCH v8 00/10] commit-reach: terminate merge-base walk when one
- side is exhausted
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260811204407.52471-1-ggordon@gitlab.com>
 
-On Tue, Aug 11, 2026 at 2:42=E2=80=AFAM Kristofer Karlsson via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Changes since v7:
->
->  * Moved topo_ceiling from patch 10 into patch 8 where the side-exhaustio=
-n
->    gate first needs it, so V1_MAX saturation is handled correctly at ever=
-y
->    commit in the series.
->
->  * Renamed "finite/INFINITY region" to "ordered/unordered region" in
->    documentation and in general tried to tighten up the documentation aro=
-und
->    this.
->
->  * Added code comment explaining why termination conditions must be check=
-ed
->    before decrementing counters in paint_queue_get().
->
->  * Minor wording and formatting fixes in commit messages, test comments, =
-and
->    the t6099 ASCII graph.
+On Tue, Aug 11, 2026 at 04:44:07PM -0400, graysongordon-gl wrote:
+> From: Grayson Gordon <graysongordon1@gmail.com>
+> 
+> git asks libcurl to verify the peer certificate and the hostname, but it
+> never sets CURLOPT_SSL_VERIFYSTATUS, so the "Certificate Status Request"
+> TLS extension is never requested and any stapled OCSP response the server
+> does send is ignored.
+> 
+> On an OpenSSL-linked build this is silent. OpenSSL hands the stapled
+> response to the application and takes no view on it:
+> SSL_CTX_set_tlsext_status_cb(3) says the callback "should determine
+> whether the returned OCSP response(s) are acceptable or not", and libcurl
+> only installs that callback when CURLOPT_SSL_VERIFYSTATUS is set. So git
+> will fetch from a server whose own staple says its certificate has been
+> revoked.
+> 
+> A GnuTLS-linked build behaves differently, and the difference does not
+> come from curl. GnuTLS consults a stapled response inside
+> gnutls_certificate_verify_peers(), so the failure surfaces through the
+> verifypeer branch of curl's GnuTLS backend (lib/vtls/gtls.c) whether or
+> not CURLOPT_SSL_VERIFYSTATUS was ever set. The same git, against the same
 
-I am quite pleased with how this series has turned out.  Not only does
-it provide nice speedups, I think the structure of the series is
-particularly nicely set up in a way that helps guide the discovery of
-the idea behind the optimization for others to read, documents and
-tests everything logically and thoroughly, and was a pleasant read.
+Nit: this is arguably not the same git, as it links against different
+libraries. It is not exactly unexpected that using different
+dependencies may cause different behaviour, even though we should of
+course try to minimize the differences.
 
-I brought up several issues in previous versions, and this round
-addresses them all.
+> server, therefore enforces revocation or not depending only on how its
+> libcurl was built. That difference is documented here rather than papered
+> over: this option turns the check on where the backend needs asking, and
+> setting it to false does not turn the check off on GnuTLS.
+> 
+> Add an http.sslVerifyStatus boolean that sets CURLOPT_SSL_VERIFYSTATUS.
+> Because http_options() is the collect_fn of a urlmatch config, the
+> per-URL form works with no further changes:
+> 
+>     git config http.https://example.com/.sslVerifyStatus true
+> 
+> It defaults to false, and has to. The option is fail-closed: libcurl fails
+> verification when the server staples nothing at all, so turning this on
+> globally would break every remote that does not staple.
+> 
+> Leaving the default to libcurl is not an option either. The same
+> complaint was raised there in https://github.com/curl/curl/issues/15483
+> and closed as intentional ("Marked as enhancement since this was done on
+> purpose"), with the observation that stapling is expected to see less use
+> as Let's Encrypt drops OCSP support. If the check is to be reachable at
+> all, the lever has to come from the application.
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
+Okay. One could make the argument that we shouldn't add support for OCSP
+either if it's being phased out now. But I assume there's still going to
+be enough servers out there that do use it.
 
+The big question to me is why we want to have this change in the first
+place. It doesn't help to address the behaviour difference between
+GnuTLS and OpenSSL: if set to "false" OpenSSL would continue to ignore
+OCSP, whereas GnuTLS would still honor it. If set to "true", OpenSSL
+would fail closed, whereas GnuTLS would still behave the same as before.
+So nothing really changes here, unless I misunderstand something.
 
-But, I just have to comment on a few things individually...
+We don't really gain security, either, because the setting is disabled
+by default and can only be enabled host-by-host. I doubt anybody out
+there is really going to do that though, and consequently we haven't
+really made the world a more secure place :/
 
->      @@ Documentation/technical/paint-down-to-common.adoc (new)
->       +
->       +When the commit-graph has generation numbers v1 and no
->       +generation floor is specified, topological ordering
->      -+(via generation numbers) is disabled.  Topological levels are
->      ++(via generation numbers) is disabled. Topological levels are
->       +correct but unbalanced -- ordering by such generation numbers
->       +can sometimes cause the walk to detour too far before finding
->      -+merge bases.  Commit-date ordering typically reaches them in
->      ++merge bases. Commit-date ordering typically reaches them in
->       +fewer steps -- see this change for more details:
->       +
->       +   091f4cf3 (commit: don't use generation numbers if not needed,
->      @@ Documentation/technical/paint-down-to-common.adoc (new)
->       +of both worlds and do not need this fallback.
->       +
->       +For v1, `paint_down_to_common()` falls back to pure commit-date
->      -+ordering via `compare_commits_by_commit_date`.  Because commit
->      ++ordering via `compare_commits_by_commit_date`. Because commit
->       +dates are not monotonic (clock skew, rebases, etc.), the queue
->       +may visit commits out of topological order.
+So is there any specific use case that you're after? Who exactly is this
+new feature for?
 
-Don't think for a second that I didn't notice you murdering these
-double spaces.  You villain!  ;-)
+Thanks!
 
->   3:  f857577e0c !  3:  6208bcf3b3 t6600: add test cases for side-exhaust=
-ion edge cases
->      @@ t/t6600-test-reach.sh: test_expect_success 'setup' '
->       + #   ps-T1   ps-T2
->       + #
->       + # where ps-T1=3Dmerge(ps-Z,ps-B), ps-T2=3Dmerge(ps-W,ps-B), so
->      -+ # merge-base(ps-T1,ps-T2) =3D ps-B. During the walk, ps-X transit=
-ions
->      ++ # merge-base(ps-T1,ps-T2) =3D ps-B.  During the walk, ps-X transi=
-tions
->       + # to (PARENT1|PARENT2) via ps-Z and ps-W before ps-B is dequeued;
->       + # then the STALE-walk from ps-B transitions ps-X to
->       + # (PARENT1|PARENT2|STALE).
->      @@ t/t6600-test-reach.sh: test_expect_success 'setup' '
->       +
->       + # Build a side topology that lives entirely outside the half
->       + # commit-graph and has non-monotonic commit dates, to exercise th=
-e
->      -+ # INFINITY-gate in paint_down_to_common. With both tips outside
->      ++ # INFINITY-gate in paint_down_to_common.  With both tips outside
->       + # the graph, generation is INFINITY and the queue falls back to
->       + # commit-date order, which here is non-monotonic.
->       + #
->      @@ t/t6600-test-reach.sh: test_expect_success 'get_merge_bases_many'=
- '
->       +
->       +test_expect_success 'get_merge_bases_many:pending-stale' '
->       + # Exercises the (PARENT1|PARENT2) -> (...|STALE) transition path =
-in
->      -+ # paint_down_to_common(). See the topology comment in the setup t=
-est.
->      ++ # paint_down_to_common().  See the topology comment in the setup =
-test.
->       + cat >input <<-\EOF &&
->       + A:ps-T1
->       + X:ps-T2
->      @@ t/t6600-test-reach.sh: test_expect_success 'get_merge_bases_many'=
- '
->       +'
->       +
->       +test_expect_success 'get_merge_bases_many:infinity-both-sides' '
->      -+ # Exercises the push-time INFINITY-gate in paint_down_to_common()=
-. See
->      ++ # Exercises the push-time INFINITY-gate in paint_down_to_common()=
-.  See
->       + # the pi-* topology comment in the setup test.
->       + cat >input <<-\EOF &&
->       + A:pi-X
-
-...and now you're just toying with us.  :-)
-
->   8:  391fa07783 !  8:  4a6603731c commit-reach: terminate merge-base wal=
-k when one paint side is exhausted
-[...]
->  10:  b655b24dc0 ! 10:  677e25077c commit-reach: remove commit-date order=
-ing fallback
-[...]
-
-Okay, my last two range-diff comments were just jokes, but more
-serious now: I think you did a nice job on the re-splitting.  Thanks
-for doing that!
+Patrick
