@@ -1,99 +1,97 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E595B412C15
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 22:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716FD45A2AE
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 23:41:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786574128; cv=none; b=aJ1VT19DvIXsm9WZCiZ0unXpBm/eAFSa5wtxa8kn9VuNcHk3Hth8op4gQFlOzjt6aYxsmMT77k/zfdcMy+nDTKgY4FSMTlj5b6bvGCHRK6wJPlKikUwtFWAndgDLKt6HdoUuALLXnYGydHBHdPG3D1npby9rUrecstNQR2YLjDs=
+	t=1786578075; cv=none; b=HpudgRKBWatlAenD1mlNNyvLwuuf0etLAjyJwmM3OdD/CBRHbOu6pW+jjONfTs3DnMBd7h8++Z8E8xTjWRU8ySLRuCfLdvcv6hBbXSpRz+beWaz1bfH0/CgQxGgheVSGankVPZMlCeb7Fy8SnaVZtja+Xny1ozvG3v7pmiSIP+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786574128; c=relaxed/simple;
-	bh=PAPlruMP9aDYhFVpFLtPjKZ/PwmM3/Qr2EFMdu0Z290=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZVWDXlBBvgtiM7Q2QhlJIrPBbI+L1B4bAA3RLh+OBPp2bnR3Mb1VDHt961gwKHGpP2I6LloDDnCAF3RvtolShrigZYjBMbde2NLaJwWuNrKNs70LFQxUsWtq0WmqaeB6Aauw4VDvgaDk6cmfM8LFiGIhk7mqofDJWVuspZwW+g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cbGVpZtV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Iz5miEPL; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786578075; c=relaxed/simple;
+	bh=6fKmG3NdA4fguTJD4hdG9xbvHQ5xh31678Tqv3yITCU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ni1DTgJ1+fuhVSJrHk3+ZqWXAm4azTqxJoGLgVZyUCvH2rdXldHzPzhtlTXZsDu4Fo5rkNnHthJeXIL7lmvebCigT7c+nLqwaBkWAuu496oRjZY0UxvSWqM9eeCH0J6Ww34+BdV1ZpvE3woHxB03ZwQbgTrT9C2UwNKF78+FYyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=fICOC7HR; arc=none smtp.client-ip=74.125.224.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cbGVpZtV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Iz5miEPL"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 35F9A1D001A8;
-	Wed, 12 Aug 2026 18:35:25 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 12 Aug 2026 18:35:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786574125; x=1786660525; bh=MSSNnN0IVR
-	mQCIDM9qYdVAQ4OOGPFpIZ8iN2kbZV8SQ=; b=cbGVpZtVEwC4Jq2sDUQFpOphD3
-	GMA+LOxdhQxpjuThskyKm3Dwqt9fP+UC2fr7TH6g8XmbFu9yLld4haBylWPXrAxh
-	yMWMXdflmFKyZLkCDGyphOHMnV3MgNJ3VNz03MiYl/pWV+Zkpuzric2Q9+CPOlUn
-	FVcntCp5M5fzb/sRoixQVXkuqocC4PtpHepIN6pEnz9Yy+dNTDivG09h97ecvim8
-	OYiaVF8g2VX7izk9/7/ZZr3jnYU7u1oEZw/7ygv2z7f9123wztPoEp3+yXzr3Kzl
-	5jTlit8zkJ4WkZXq0AW3ENLLhPIWygY9JGN1x38aSCjC1UwLMCatq12vXG5Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786574125; x=1786660525; bh=MSSNnN0IVRmQCIDM9qYdVAQ4OOGPFpIZ8iN
-	2kbZV8SQ=; b=Iz5miEPLwlcgAQkOvC5axJ2IGfZD+DVFtuU1QeKricIdAr1+Mv6
-	/xRSoM1YWqoM/FpjAvPlEzd5aAU8GcrDwzBCybrQXOBihYR0bnC4dtdOg45k9nAx
-	rXlXeObVR79/Y/d1HwZfwU5zzrcmE3NH0H4iu7Fs4ti/glNfM9ewCt7bMleVYM4I
-	F4/4btVczRq1dwUBDykWrxVxuQifUkkKOtcFg7jaJmoBth3EuDMsx1n3XLulsl9c
-	7IsY7KSlu8Tz2W/ECYHHJUmM3qjoNIetvZsKEK5w47E+zB8/hlTb0aQBnrU89ko4
-	uoY7Lgkc8ibvOBpf6qDU3DTMpbQZOf/mTuQ==
-X-ME-Sender: <xms:LPV8atikyeaARnC6h_j8_SkisCQvE1g4Hlqw1ybg6ew-oDpiPpF-jQ>
-    <xme:LPV8apAARBgbOeEv78poYCLCq84v-dn_uWwUKE_8mLkwzfgKaOnqFOGkZpHicmmcu
-    YTv8HKYMavBqUrADZ5prhGCqKAR6egreku9q2oTgFRyXRdtnO9fWqE>
-X-ME-Received: <xmr:LPV8aiGrH0BUJu-hYXOuTUoyPrHTyu37q0aIyfhmMS9okU8PnelsfMJRJ5E9Pku6kPydQKaZrXzEHt8d6AcdtgVtcOX53yRfMw>
-X-ME-Proxy-Cause: dmFkZTG23VWlKIzduh0g0BWZeTVWQyZ4/LfJcAlIyYV9SZLZ8GmGDEkTs9P7i4Z9odvTJx
-    xF9AsOrCiXbLNFMdiV6jMjXF+X7T/nlFJx8QFepw85skB2492AT0Or4LDwakiioqh+pVcq
-    mv1Ew5lGID3nfyD7oRCeWS6hN+6+Z2MsGc3ICHtxcx1oDTpT7zO5vIWpwNlJ6teeamzx5v
-    r5LUPtpGrqL1zH9r6joPT0SnJgMCxNUXOmllcAu5hXv5Rx2MoMe+CIzkt5KrW4XusgP5Vd
-    Mj27Bku9ULeOOaPUONz7dIzHun2Wsxrg0eJk27HgrCm18nlG9gpPxNehbWna6pVrWAueg1
-    1ZYhj9IZy1LuJFlQ5FnuYwCVPUtR/aImvhUY8Hy9l/CmkossAv5kTkWwYhcHTTyFtq7UJ7
-    X+zt73Nqrg79Gv0hd63t2PZvlu2TfavdV0nlk4JCPZaeipdhet8+3V4yncfLiaT9SDYtU/
-    /gT9l9pNYHMaPaygrmpiTmKbdx+5zXd+GnS2d6JMF5VmjGjkG0EK7nCbAtfCGSSwdkZ3Z+
-    GH0/HwEQFBOmT9Qd1HWKmymkdHXizjGPRik0GvBTsJX3eAZsy/ypDB1ksKOOt3JQKxR3Y/
-    MoxQOyHxPhivYWwZo7fq49U/Au2UL95O+lZKX+T3vAlhT/O3lYHlG11eR5hQ
-X-ME-Proxy: <xmx:LPV8ahKRx_qN1M4YBMaKyvggSyuSSzJOeStHpOJMigyMaoESVEbUlQ>
-    <xmx:LPV8amkmKBl-t35gM8B0hEHt41W6MD5nlEi3_tBJRKXMl0AFdHbVwQ>
-    <xmx:LPV8apT-_I1Px0GFMjw6outDrSqYd0hJcwa60HzoOb9OxmxQpJFBsw>
-    <xmx:LPV8aoJwzFEspBUPUdUrbw4pATL4vLWt7SBRWwPJ1-r-Di9S3ncL8Q>
-    <xmx:LfV8aqTCRroHuHIPIxxWP1MkWfTkk0Lilsb0WwHmkgOyT5w0gBm1zAyP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 18:35:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
-Subject: Re: Can we do better than "git checkout/add -p"
-In-Reply-To: <20260812214403.GD152730@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 12 Aug 2026 17:44:03 -0400")
-References: <xmqq8q6ih924.fsf@gitster.g>
-	<21db84ba-3894-23e9-9f17-ceeafb1990c2@gmx.de>
-	<20260812214403.GD152730@coredump.intra.peff.net>
-Date: Wed, 12 Aug 2026 15:35:23 -0700
-Message-ID: <xmqqo6f7ufv8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="fICOC7HR"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-667bae10ba3so1592017d50.2
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 16:41:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1786578073; x=1787182873; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=6fKmG3NdA4fguTJD4hdG9xbvHQ5xh31678Tqv3yITCU=;
+        b=fICOC7HR5fFIbLc9UdeWtxngJoNy70JgFBdlKrysgPgBIj3uARJcPeXbrpGmeyIYLi
+         l5BB8/S3c3Wj0H2NGzCOMQBbX/pqqgI7/v0dEafjpTR6KXXIf8cKyrmpXhlQaxoOlgaW
+         4zllXdDwdLOtmiS3+kdjyqyh8FZgIIexiaMnw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786578073; x=1787182873;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6fKmG3NdA4fguTJD4hdG9xbvHQ5xh31678Tqv3yITCU=;
+        b=Peyq+Pj/T7eWe/RZYgLH+Y6Ce5v5kITFW3RPTucrvEBpHXbxwuparx3hRrMiZCKpnQ
+         RjnoR/oftqPmLQUYKcZX9CsEHUD9etzbWv6GF66BIrJycxpnpyx1tuone/Xl6SvNIfSz
+         XrI3PwEfrSidL99WMo84ffGfgaVqPjBU3zf7vZdNbb5HrzPAtFSvYdAs5RJ/ZnVH0yxo
+         //GxjbYkDc4gby4PJ10nGGkm5SwUqttwCNCH7bbFlaXIxlqyV3+LT/LiwU72K5sBbTtF
+         bvdxpR1HO1jjLrWl8dzZLxnvv6gDef1goQykSkh0i7rxhc+M/76DNhftN553pkXFZrYs
+         X1Gw==
+X-Forwarded-Encrypted: i=1; AHgh+RoFU4byF7E9E82vOeYu4IThO2K+2ZK0U1HA73Vv0cl4Dn6Fp7203wXcmFhLaRAKKTil64w=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwAtsyR+6s2frTUsT+g1h0yXu2sXs4avF7GsPeJt6FND45o7AC9
+	2Be7/Di8O9HJQb9cdCrkLjhFID3E5caskLer8GJpwr6UutAnHIxPoddNAWIe90sZwqGChIMJXMA
+	eC14y+0k=
+X-Gm-Gg: AR+sD11dfRcGN9YpfnLDQRbIW/h5ZmIeZmq0/WKWTH7FuwjgBUoDYEEXI4k3Ih/2vhm
+	1MXH3q+BRm/2EaVCbOABS3PQxuZOYs4qfcbWqZzLPFBRaOauPpM80kxFP/ZPbOC+frumr0Urpsq
+	/9Ns98RsM+kFfxuCIBHp4iWKnUaphNqyn2n/fkCKVHNERAUzh+LHKrdVE8MMJUjyt9AZj0uezDM
+	Ln3+7XXxyfBPB54Xtea+lSui044fxw1ToZrfIrN5I8hEjvUuq+lHM0SZ8r11ZC9ezXL8nwDI9Ny
+	Km/d46aRTRBzMa26eDvdfWv9URcUkjGl32yigAS22sOoAVLFThfuUCtNOCBip4fdl8fzphy0pSj
+	qYOQ33cUlWwoaX6QcRF0bRt97KXb8W4vZFdbSnyrQ2DqL8jbP/jT7WwRLCFu6DGqj6OgfD3JEJ3
+	O9hpkXu7wc/TfTpJgA2/2yrKS7dglRxRLc1zFeowVYZLLYt6qSZNQWcts3n2C3yRz3ZUJHo9eqW
+	bn1jnClDDxk8UKstIKLDTKnrBdGql9BBPx4bpFw/dwFIA==
+X-Received: by 2002:a05:690e:1598:20b0:668:8dfd:8c88 with SMTP id 956f58d0204a3-66c516375dfmr680814d50.32.1786578073099;
+        Wed, 12 Aug 2026 16:41:13 -0700 (PDT)
+Received: from com-79390 ([20.98.136.114])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66c56e22894sm108767d50.1.2026.08.12.16.41.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Aug 2026 16:41:12 -0700 (PDT)
+Date: Wed, 12 Aug 2026 18:41:04 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/5] odb: make packfile generation pluggable
+Message-ID: <an0EkMZGEbg6LERc@com-79390>
+References: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
+ <xmqq33wpej49.fsf@gitster.g>
+ <anlg2rThlBLavyU8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <anlg2rThlBLavyU8@pks.im>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Aug 10, 2026 at 07:25:46AM +0200, Patrick Steinhardt wrote:
+> > With "--no-ref-delta" thing in flight, this will not play well with
+> > what is in 'seen', though.
+>
+> Ah, dang, you're right. I'm not quite sure about the status of that
+> series -- there's been a discussion around whether it is the right fix
+> in the first case with Peff, and there wasn't an answer since Peff's
+> last mail.
+>
+> Taylor, could you maybe share what your plans are? If you want to pursue
+> it further I'm happy to add it as a dependency and/or wait a bit.
 
-> I see I am quoted in one of them as "it's a little weird for add -p to
-> change the working tree", but I want to make clear that I _don't_ oppose
-> a feature like this. I think it would be super useful. We may find a way
-> to avoid that "weird" property (e.g., by putting the "combined"
-> stash/add mode under a different command's "-p"), or we may just accept
-> it.
+Still something that we're working on, though I think that it's fine to
+kick this out of 'seen' for the time being.
 
-I guess our messages crossed ;-)  I do agree that it would be very
-nice to have a feature like this.
+Thanks,
+Taylor
