@@ -1,181 +1,251 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D4F4418EC
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 13:14:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786540488; cv=pass; b=qRN7hJgX6RERlbWFZV+kzldYmeiu8iJsYvVRBanSPX+1Zbo78pB9BH0MKI+ei0JORSZIamk8Wj+ap0YYEcJ3MdMtVc6cUm0i7wRPaZw55WFbKcupD9oEQ1JxPcfBx2pfudd/6r8KzAAUdtTa/fcxiCMwjUHulP3emvLPPZVwHGI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786540488; c=relaxed/simple;
-	bh=TapP6vMDG/tHYbF9hveIdKhpUjfOt78kScoILpgTRSE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B0MvoptcJq9cKDfaRKIQYOpKiDn1LMVYxTqulZU6meApWrewVZ2/Q7C3ZZPAtSdZ9iEU5wVCFbjkG24/svPigaWdaE0crUKUdgYRX104cWQ1KnV8DxVhi0Gu7JfFDX9YstoJLE5lRJY4Af355MASjHR7cEirbHtoOx3/CinZKWE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dZEqvkbB; arc=pass smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8770444B694
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 13:16:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786540588; cv=none; b=HIo+Z3bddP1/xCMQ3yRgb5eqjZvQtAOmrpWbvCkKvn7Sw45FLB2KL12qtYFca/PhHondaZFC3s5NsJsEtjon+yalEaVhzfwPBEBueGTO/53pnl6SGsf+1pIT4ErurKSHQ6uMO9C0N0DCX1w4QGwd2C5bAQJqRRQcoIufhFP0IHw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786540588; c=relaxed/simple;
+	bh=nQuagaAsUbwSgBLehRYsEb7MAAoZl4Nd34xZ7rHqHG4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=BG0/ZkFMfIpdd2QnHd7jzOI77QHQTyOe4tPmUdR43gEwBCcbXtxB/+DDPWmkXPp1e9nxE+t3I0snTU7IH19xvdanCWpIQEVgu+CctjCZt7izF6bCrxf/FZYyz+pA5j81yLM11u/Uo65e4OPa2vFbVNXWa7kXEEy2XuyNJ7B+YmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G0afmcUe; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZEqvkbB"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-51c0cea8883so8206331cf.1
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 06:14:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786540486; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mQaltOUFd/SJnyn0Kj4AOVpMaFrSvyxokgDVeWP7Kn1D5JtclDVf5xtwWA9Gn4JFqk
-         HbjvVJ+5Tfs6YJ4FeiJ+FxzvedqgqV/NOeHww5mUpPCHsSQTgaBGkPMNEvZJM1lCAifq
-         MJT6RVNw1XAaOYvyX7ZS2xO4dM8NmLR7WkrcagEtZAcrNe7SimPmX58JAVFLeLiaYQaR
-         gtgOMLPtnteGAL20DsKqOlwmdhsB4FySEN5HotRQ5mJYDbo/iVbOR9sNLzCqSiLUY0A9
-         9NQ+gEQk8CDVvuPUtFt2XRE/fvvhrIn6s5zG7i2VPxIfYKoLn0OHK93qEXIhIcMnwXHF
-         +HJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ieT0530/KWWlUsitu4HYUxS/afQhB2cOrueVo5/BgQE=;
-        fh=T/S4RnY6IyeqSt+MF6uqNhiHrI4SBMcwowJwxxouMj0=;
-        b=BkO043BiUFrjqzot7ssBQB3VCoLCD1+Rtd2fnGc0FpjHJV3bydTUvBvyLridQ5zXJw
-         lNspPMrDFGCUcXBqkxfbr0ELNx95cADUia0RwZiSOVrACR7b5hNJzNagxLPOm/WVRG7T
-         NhGuAwBEEPsgLyGE/81gpvUB8VdxgjwH4y8n0R708sO/wnnmOaUFjMLKCJhe7Xbml2z4
-         8Kn6q5UNS3MkOWfz+cNs/eS30dQUO4p6lyTV0p4s9N9tCZFTufxDrhvplW7NxF9aR1De
-         hFtYxX+9pMocRyYI29ywLFdxw1/beE8wprWpdwDfhjymHU29x6HNfML261/Sk7PwStxU
-         zRjg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G0afmcUe"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7f0167e59a3so551349a34.0
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 06:16:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786540486; x=1787145286; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ieT0530/KWWlUsitu4HYUxS/afQhB2cOrueVo5/BgQE=;
-        b=dZEqvkbBxqA0kEqUdYazMeBMXxH4Bn5Pc06VuC65akLNjzb0OX/tJphhkNw67P8zbH
-         sUTxZLEsYm6oqWlXB0fZxhX1sXBJ2gCEwPrYmfdrzI3Dc9N3Tul3V8spxSXakhmkVYeu
-         W5nkewGKpX1AneFeZ7tZak4kWNVmqf4l1NC5GtVD2qgWTZYbFhHmIm/MmYzQQ+GoUx8J
-         6Vt1iUCo01SYuPbDwUYKqgQa5KjjleWkQ3Ha5bg6fedVEsD/FIfymt8DpO6IpxKLOaP8
-         +mTVtT8i+9t6CsInk2axqKWSH8i9tEt/pmxJ1piFa2Ms3RnqHrNqYwvF71S6Q1qNx+F2
-         Wgfg==
+        d=gmail.com; s=20251104; t=1786540585; x=1787145385; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=+2nD7kiZVHIdGB2Kpt7dcf/CyT86RmlJpoyvD0oPN+4=;
+        b=G0afmcUeq9uNFRYIutGIqO5cVv9ZhPk9LLdAUwjtXLbmwjVpiEVglM9Kex6IbsVrV7
+         mjKx0dNjx+GaD2u1Izq6LOm9ybXh6lBzbXGEVa/Nb3znXVmmBNq4L6d/1PLyteWc1fOq
+         VeM5HKZ1JbsEDPL9/zl7FnKoTc1ZxL704Z9WNsJHFRK5vQ7yXAagjkeYQPv5CDrUZ4b+
+         Q+l7FZVmssVwlJEiKc0qeJvALCWpB9fQtqtQVwrPmI5Hy6Jf0WnvMRCHI/CGZku6hs9M
+         +9Qdkk2fiaxz/tvFAkYiZunSmjvnuZeeh1QcROAJiWuYBbUu2G+b9rI6Vr/PEhGlMd7M
+         523w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786540486; x=1787145286;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1786540585; x=1787145385;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ieT0530/KWWlUsitu4HYUxS/afQhB2cOrueVo5/BgQE=;
-        b=CJk05G0zK3vhboQsEQXAJt/a/MHpo23wm/NpuQEazF+m4BO+5cCZcQBeI7c/nVwJ+7
-         BahVZC8rsdoMcEk5avsi9/IPiDbdw16Ky9OuutanLhfdAz9xW8YR5420hYJRcOLjvThS
-         2W37YCnXx/xppFHMKzmKry0CO9EtCDnvhzyZZzCbIhT6SZxyqCSWuU6YEnGrt0vDBgnd
-         5SNoDbCcvgVjOgHe1YR4ACVmdexXrVZnckEasnHZaXF//yfqqpO6BMBVN87dgNMItzRt
-         QPDWbKsBvlNFJAXHsK1etA0O7B8sZWtTgmxIu56PPGJ8xP7H9YtbN7ilNsJytsggl/WT
-         43WQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rr/oYqogk8IjkIkK5bZHKVQNYWvqwbtlllb41GgG7Qkp2KmUX+jU1m7ciWy/WoTm/6RlGc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTk0ism3x5in+CFKvnOx7Ez54dQQ3hw3M5m9rXP6cxkJrYwWe4
-	TE6DAzVIXVMBTdSFu78zge8lt5SnHpS+2OxG1H70J0OKmCoLWQNgQQdZOMONIUmbfLXo8KVRMnw
-	hBtvY17G0EHaAxGflr7M5PInOrjMezvs=
-X-Gm-Gg: AR+sD10ypaJ0e1HZU1J7cTUnun/iX1Ygggg4VmBx4DfBsDTq6ougJsKmI3wCqBzSKEa
-	tEnSNCV7zyFGxOnavaqcvWV6aV01CqAXawBe4oRiKSA3fZew9GCMMKncN+CKXI6Oy/GqbjggCbE
-	xp9n93aL6KlhHLwxKonAB8m1Ki5ZapTisGm8mJSy4rC0avwdfrmTB6a6GlxTZJEAw2V1dTnLxWI
-	RZA19LDYNKc5z75saN7fkp/xikwep2/UQzsEh68kBXew0nWrEQZEm2XIir1YK0w+9rOlriXEfk4
-	3MMRwn/x9z8uEMIthEjLaRT7QB+SBD2NeaDfyfz/VEfPRIvhIrX1+6bIkVr0fhGuobM2y0Eq9pk
-	UISvEKkBOXJCzWQ853PGkU08GAbCwaMo8
-X-Received: by 2002:a05:622a:4816:b0:517:146d:2cb5 with SMTP id
- d75a77b69052e-52d603623c4mr70339701cf.20.1786540485767; Wed, 12 Aug 2026
- 06:14:45 -0700 (PDT)
+        bh=+2nD7kiZVHIdGB2Kpt7dcf/CyT86RmlJpoyvD0oPN+4=;
+        b=mqa0rHody8Ohk7eQh1DmEx2nxAGHPObdZ7nHEfd/3jJnIzUarYXP49M/w1PcWvMHYl
+         C1+qSJxd71u5TjCdKRMYaqHR19aH03U8O2V5sXIDE2KAduuSNpDKWmmsvtrnBIu57Qvn
+         bdZGZDpDuJe5GeXHTDx3+PSy3XkV11iN4+3IkkTvocZoMhM/LjfK2J5l66/5GfO7kTIq
+         2lyiQfhdIgat3ZbSISD3GWYq9OePozoXbLg7ayii/7YwbW6y+EMYHnpJqS6tntnYKS5k
+         TfD81ncHzjoDk62hXaEeGKx17WvQEM+xINFXkXwRVbiUk2M6ds8h2wBkJ6WsG9Mn6BAs
+         5mAg==
+X-Gm-Message-State: AOJu0YxjnN+FbbDxeWGPr3btF0/Ps0ssak/SHfuV9Cqfpcho0ROYez3q
+	Oo0lAHoFHtIrKYQEMkgl9j9VTgTwiLPdbNWlCR/+VLoPPqNYz3Yd6evoriAryg==
+X-Gm-Gg: AR+sD12gzmal78OoNpB/6s3wMGwg1tffY2fa/X31PJA4WXD36zA6XEYGXWRRi1pQZmn
+	2vNLzfdNydeA2xY8E87MBBU+kEvG8hFPtnX3UuwSL9GQnMFJgxbfM0jeV7P2JpLbs5XGyGZeG8X
+	WW/BKGpI2rwaWn3IbkIqZmM6mMtsj+7Px0zdKccFu687RaQaBZc4uE58odMk2NLNdKgqtiJ+QBk
+	xAgzTXCSIuSJwqmAj1SWwlcpL6F0bPodc/9OJ/v9WzxxcdINWEzgpJ7Pp2ZG6IjygKa9/vOoIzC
+	dV1OiLVqSl1GHM0slQuCQBzn28auPuQcD0Pr87opvxgZ3HCk2x3Oqe4yVjJl8dGmugguqLrHdoA
+	wirXF9CnjVcmbq5V15ooSuxwt76cflhmBaN/LnLl1S31gnBivSECq5Su5oxacmYq0PsIPFDov8i
+	4DA15JeJVJZNRx8N5Ti/aYz5/18pDeUnSV0TaKJCj5wDwKu8PmSBa7ihHP1T7iPLU=
+X-Received: by 2002:a05:6830:3c90:b0:7e6:cfd0:42de with SMTP id 46e09a7af769-7f3b7a0e4b9mr4786155a34.15.1786540585355;
+        Wed, 12 Aug 2026 06:16:25 -0700 (PDT)
+Received: from [127.0.0.1] ([52.173.237.38])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f3b31c8857sm2868472a34.2.2026.08.12.06.16.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Aug 2026 06:16:24 -0700 (PDT)
+Message-Id: <pull.2194.v2.git.1786540582.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
+References: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
+From: "Johannes Sixt via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 12 Aug 2026 13:16:15 +0000
+Subject: [PATCH v2 0/6] gitk: make color preferences visually more pleasing and better usable
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAF5D8-u23Z=f02vF1yAHGKRED8DY-v5=BNf7w-yY3vEDmJChDg@mail.gmail.com>
- <DCB65C9B-5E9F-4FF5-A8EE-27C9442119DC@gmail.com>
-In-Reply-To: <DCB65C9B-5E9F-4FF5-A8EE-27C9442119DC@gmail.com>
-From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Date: Wed, 12 Aug 2026 22:14:34 +0900
-X-Gm-Features: AUfX_mxeXPLXwDSw4RGcJWrITMs7UuyFJzdFiFG0W0n7ztfMdlF6eCMahhX78-Q
-Message-ID: <CAF5D8-vVA31Ci+=+kJk+Lk6E4KvgA319hm5d1HZXgmSdNSgwnQ@mail.gmail.com>
-Subject: Re: [PATCH] worktree add: improve message for ambiguous remote branch name
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Harald Nordgren <haraldnordgren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: mark <mlevedahl@gmail.com>,
+    Johannes Sixt <j6t@kdbg.org>
 
-On Wed, Aug 12, 2026 at 1:38=E2=80=AFAM Ben Knoble <ben.knoble@gmail.com> w=
-rote:
->
->
-> >
-> > Le 10 ao=C3=BBt 2026 =C3=A0 17:36, Yoichi Nakayama <yoichi.nakayama@gma=
-il.com> a =C3=A9crit :
-> >
-> > =EF=BB=BFOn Mon, Aug 10, 2026 at 10:08=E2=80=AFPM D. Ben Knoble <ben.kn=
-oble@gmail.com> wrote:
-> >>> -static char *dwim_branch(const char *path, char **new_branch)
-> >>> +static char *dwim_branch(const struct add_opts *opts, const char *pa=
-th, char **new_branch)
-> >>> {
-> >>>        int n;
-> >>>        int branch_exists;
-> >>> @@ -781,8 +791,14 @@ static char *dwim_branch(const char *path, char =
-**new_branch)
-> >>>
-> >>>        *new_branch =3D branchname;
-> >>>        if (guess_remote) {
-> >>> +               int num_matches =3D 0;
-> >>>                struct object_id oid;
-> >>> -               char *remote =3D unique_tracking_name(*new_branch, &o=
-id, NULL);
-> >>> +               char *remote =3D unique_tracking_name(*new_branch, &o=
-id, &num_matches);
-> >>> +               if (!opts->quiet && !remote && num_matches > 1) {
-> >>> +                       if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_=
-REMOTE_BRANCH_NAME))
-> >>> +                               advise(_(message_advice_ambiguous_rem=
-ote_tracking_branch));
-> >>> +                       warning(_("'%s' matched multiple (%d) remote =
-tracking branches\n"), branchname, num_matches);
-> >>> +               }
-> >>>                return remote;
-> >>>        }
-> >>>        return NULL;
-> >>
-> >> I suppose the extra warning won't hurt anyone's workflow :) so that's =
-good.
-> >
-> > I removed the change (advise and warn) here in the latest patch. But I =
-am still
-> > wondering what I should do. I think a warning would be excessive if
-> > there is no match,
-> > but the user might want to know if there are multiple matches.
-> >
-> > Thanks,
-> > --
-> > Yoichi NAKAYAMA
->
-> Sorry if I was unclear: I don=E2=80=99t know what hits this particular co=
-de path offhand, and I don=E2=80=99t think adding the warning is wrong! I m=
-eant =C2=AB as opposed to dying, a warning won=E2=80=99t break anyone but w=
-ill let them know of potentially unintended consequences =C2=BB, maybe.
->
-> I=E2=80=99m not particularly invested in how we signal ambiguity, but if =
-we don=E2=80=99t have a documented policy for resolving it in a particular =
-way then I agree we should signal it.
+I find the user interface to set the color preferences a bit ugly for these
+reasons:
 
-Thank you for the additional information. I think the intention behind your
-comment was clear. The reason I was wondering was simply that I hadn't yet
-found a clear direction for what I should do.
+ * The color samples are not clickable as one would expect who enters the
+   dialog. Instead, the description is the button that must be clicked.
 
-The `git worktree add --guess-remote ../foo` command (without <commit-ish>)=
- is
-designed to successfully create the worktree even if the guess fails.
-If we are to
-issue a warning and advice, we need to indicate what to do next, given that=
- the
-worktree and the branch has already been created. It would be something lik=
-e
-    git -C ../foo reset =E2=80=93hard origin/foo
-    git -C ../foo branch =E2=80=93set-upstream-to=3Dorigin/foo
-but they are too complicated. So I now think it is a valid choice to
-interpret the
-behavior as normal and refrain from issuing a warning or advice.
+ * Since the descriptive texts are different for the preferences, the width
+   of the buttons are different, too.
 
-Thanks,
---=20
-Yoichi NAKAYAMA
+ * The descriptions themselves are not always natural language (read: they
+   are nerdy) and use abbreviations.
+
+This series makes the descriptions static text and turns the color samples
+into the clickable buttons. It also makes the descriptions and dialog titles
+more natural language.
+
+Changes since v1:
+
+ * Apply a thicker border to the buttons and some vertical distance between
+   the lines.
+ * Remove "Diff" from the labels, because they are sufficiently unambiguous
+   without.
+ * Fine-tune the wording of the labels for better English.
+ * Move selection and link colors above diff colors.
+ * Tweak the commit messages.
+
+This is the dialog before the change: Screenshot_color_buttons_before
+[https://github.com/user-attachments/assets/910a647f-4e56-47b0-b4c4-e6e7bc966e9c]
+And this is the dialog after the change: Screenshot_color_buttons_after_v2
+[https://github.com/user-attachments/assets/9c0fae28-727a-4bdd-9d76-36e276217322]
+
+Johannes Sixt (6):
+  gitk: set intitial colors of swatches using the available helper
+  gitk: condense repetitive code around color buttons into foreach loops
+  gitk: show color preferences on the button instead of the label
+  gitk: use more natural language for labels of color preferences
+  gitk: avoid constructing dialog titles from text pieces
+  gitk: move UI for generic colors above diff colors
+
+ gitk-git/gitk | 123 ++++++++++++++++++++++++--------------------------
+ 1 file changed, 59 insertions(+), 64 deletions(-)
+
+
+base-commit: a97fcc37c2bc6340a8d7ce78dedf227aac4e9aa7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2194%2Fj6t%2Fgitk-prefs-color-buttons-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2194/j6t/gitk-prefs-color-buttons-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2194
+
+Range-diff vs v1:
+
+ 1:  ab16ec6276 ! 1:  e7e62f428b gitk: set intitial colors of swatches using the available helper
+     @@ Commit message
+          gitk: set intitial colors of swatches using the available helper
+      
+          After the user has selected a color in the Preferences dialog, the
+     -    helper proc prefspage_set_colorswatches is used update the colors shown
+     -    in the Preferences dialog. Use this proc also after the Preferences
+     -    dialog is constructed to show the initial colors. This keeps the
+     +    helper proc prefspage_set_colorswatches is used to update the colors
+     +    shown in the Preferences dialog. Use this proc also to show the initial
+     +    colors after the Preferences dialog is constructed. This keeps the
+          procedure that gives the UI elements their colors in a single place.
+      
+          Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+ 2:  edb567608e = 2:  52dacc4924 gitk: condense repetitive code around color buttons into foreach loops
+ 3:  0428a92efc ! 3:  75202a52d7 gitk: show color preferences on the button instead of the label
+     @@ gitk-git/gitk: proc prefspage_colors {notebook} {
+      -        label $page.$uielem -padx 40 -relief sunk
+      -        ttk::button $page.${uielem}btn -text $label \
+      +        ttk::label $page.$uielem -text $label
+     -+        button $page.${uielem}btn -padx 40 -pady 0 \
+     ++        button $page.${uielem}btn -padx 40 -pady 0 -borderwidth 2 \
+                   -command [list choosecolor $colorvar $idx $page $title]
+      -        grid x $page.${uielem}btn $page.$uielem -sticky w
+     -+        grid x $page.$uielem $page.${uielem}btn -sticky w
+     ++        grid x $page.$uielem $page.${uielem}btn -sticky w -pady 1
+           }
+       
+           grid columnconfigure $page 2 -weight 1
+ 4:  ce417701a8 ! 4:  45d5b05281 gitk: use more natural language for labels of color preferences
+     @@ Commit message
+          gitk: use more natural language for labels of color preferences
+      
+          The labels used to be clickable buttons. These would have looked funny
+     -    if they carried long texts. For this reason, abbreviations and "nerdy"
+     -    texts were used to keep them short. Since these labels are now static
+     -    text, bring them closer to natural language.
+     +    if they carried long texts. For this reason, jargon and abbreviations
+     +    were used to keep them short. Since there is no button frame around the
+     +    labels anymore, the texts can become longer without becoming ugly.
+     +    Bring them closer to natural language.
+     +
+     +    Remove the prefix "Diff" from labels, because the remaining texts are
+     +    sufficiently unambiguous that they are about diff text.
+      
+          Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+      
+     @@ gitk-git/gitk: proc prefspage_colors {notebook} {
+      +                    [mc "Main text"] \
+                           [mc "foreground"] \
+               diffold     diffcolors 0 \
+     -                     [mc "Diff: old lines"] \
+     +-                    [mc "Diff: old lines"] \
+     ++                    [mc "Old line text"] \
+                           [mc "diff old lines"] \
+               diffoldbg   diffbgcolors 0 \
+      -                    [mc "Diff: old lines bg"] \
+     -+                    [mc "Diff: old lines background"] \
+     ++                    [mc "Old line background"] \
+                           [mc "diff old lines bg"] \
+               diffnew     diffcolors 1 \
+     -                     [mc "Diff: new lines"] \
+     +-                    [mc "Diff: new lines"] \
+     ++                    [mc "New line text"] \
+                           [mc "diff new lines"] \
+               diffnewbg   diffbgcolors 1 \
+      -                    [mc "Diff: new lines bg"] \
+     -+                    [mc "Diff: new lines background"] \
+     ++                    [mc "New line background"] \
+                           [mc "diff new lines bg"] \
+               hunksep     diffcolors 2 \
+      -                    [mc "Diff: hunk header"] \
+     -+                    [mc "Diff: hunk headers"] \
+     ++                    [mc "Hunk header text"] \
+                           [mc "diff hunk header"] \
+               markbg      markbgcolor {} \
+      -                    [mc "Marked line bg"] \
+     -+                    [mc "Marked lines background"] \
+     ++                    [mc "Marked line background"] \
+                           [mc "marked line background"] \
+               selbg       selectbgcolor {} \
+      -                    [mc "Select bg"] \
+ 5:  1e1bcfaf5b ! 5:  697159c20e gitk: avoid constructing dialog titles from text pieces
+     @@ gitk-git/gitk: proc prefspage_colors {notebook} {
+      -                    [mc "foreground"] \
+      +                    [mc "choose main text color"] \
+               diffold     diffcolors 0 \
+     -                     [mc "Diff: old lines"] \
+     +                     [mc "Old line text"] \
+      -                    [mc "diff old lines"] \
+      +                    [mc "choose text color of old lines"] \
+               diffoldbg   diffbgcolors 0 \
+     -                     [mc "Diff: old lines background"] \
+     +                     [mc "Old line background"] \
+      -                    [mc "diff old lines bg"] \
+      +                    [mc "choose background color of old lines"] \
+               diffnew     diffcolors 1 \
+     -                     [mc "Diff: new lines"] \
+     +                     [mc "New line text"] \
+      -                    [mc "diff new lines"] \
+      +                    [mc "choose text color of new lines"] \
+               diffnewbg   diffbgcolors 1 \
+     -                     [mc "Diff: new lines background"] \
+     +                     [mc "New line background"] \
+      -                    [mc "diff new lines bg"] \
+      +                    [mc "choose background color of new lines"] \
+               hunksep     diffcolors 2 \
+     -                     [mc "Diff: hunk headers"] \
+     +                     [mc "Hunk header text"] \
+      -                    [mc "diff hunk header"] \
+     -+                    [mc "choose hunk header color"] \
+     ++                    [mc "choose text color of hunk headers"] \
+               markbg      markbgcolor {} \
+     -                     [mc "Marked lines background"] \
+     +                     [mc "Marked line background"] \
+      -                    [mc "marked line background"] \
+      +                    [mc "choose background color of marked lines"] \
+               selbg       selectbgcolor {} \
+ -:  ---------- > 6:  36590e857d gitk: move UI for generic colors above diff colors
+
+-- 
+gitgitgadget
