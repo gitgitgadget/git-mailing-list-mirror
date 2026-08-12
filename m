@@ -1,132 +1,194 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD00147CA67
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:13:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786554802; cv=none; b=VNsI5lYZdbj3sALtMXiq0HemDcU5dpaPVO8RI+M5NUOK9densYaGupGnENROzo2Be/YnLO6h5anH25Lho/kwOu4B+4cpjL/I2sFQTLGUaXlb0vNFHLlD0PyR1dJCCoTKkZ6UDqe1a6OtL1JB6JQUwWPIcGaKNpsT2SewubpKio0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786554802; c=relaxed/simple;
-	bh=mJcNzPFpe4BLfNA4VuA+xkmO3S3bxwuKxbeOye99Ess=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GBtQ8J1yNyyNA5ITlL5gnqufSd/Ea8NXwtIdk4DeDxng4WB+lgRVz6a/q4FHvsAnmmIByFQYIHjmdVRrJzjsbPuw9igGmxHCj0L0Y52nPsKDb8abEuCBGgp2t2iLQS2cc4HMKXsUWuspgIkdlFbssj/+jY0vch+7nSOIiLY8258=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V7lDYan8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X1ojuWLH; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83B9335081
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786555311; cv=pass; b=VwSRdYZcUVAe0Lv7MhwTVUhy1AUx8c/fo+njFO4UqWKiVgAD0SOLDQwl7lghzMqjrpyTyy1Lo4JfLnY7AoPtRyKW6RnxZeGn2x7QsSFBxKBePkA0QSof2o/I+A/ogF3kLxdj8roTa3rJe2ayiuQqavw99ReaouyRD4mvuLD8LCk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786555311; c=relaxed/simple;
+	bh=paPy3eX173nhzyFMtOS+ru3avHUT/baQRJI0UZYBNWQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dJJ0pY/v9k+tfnJAMt58Nu/lRPFd7T7cL/kh2v2YbC76zGcOTjVzgNqg1jWOuJ/QUfaXZBjAyU3tPLceEKrFow5IkUxzP6cUX5c8eIk6fYnwtxlH5m0lTNxhz9VyRyDoS+8FOwzX7+lcko7vRFqOauE12BzonPzt0OXoxfXyXww=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NbXjeGMd; arc=pass smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V7lDYan8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X1ojuWLH"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E85A21400098;
-	Wed, 12 Aug 2026 13:13:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 12 Aug 2026 13:13:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786554799; x=1786641199; bh=IUCJSoJQML
-	E03wjnYFS1sK5x+v1CrWcH7YAfZmAa2jQ=; b=V7lDYan853Mq8PlJke5sgDOnGL
-	Rpw0/Jn4IcyZMMzI7ZPE4euyiltQCIean4mUHxiL8OIlavKoOnWz23LNkIkfoH0v
-	/P6HLIXoDJiaKaZng0Ki+V3CKxVNhGsPGJXkxk4W4HUMtd4/1Fx2Lb4W0CizkUsx
-	57yzmGzkrpAtm7cBq8eOUBLNUFOfNlr3CgCGKRwVqAZ7BswL2KGM8NjCT3xCQXql
-	TXKeprYNlOZgOhhkOPLJvX7ZUeCmoaoIoumPbBh3g84VLH8mDxg8u4rUTztlFZgZ
-	gDI1sOPF1FLlgPn+KjXU9BRhZyaPLUtH+wNNu/Q1q84CdgNbYWV22aD+ijXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786554799; x=1786641199; bh=IUCJSoJQMLE03wjnYFS1sK5x+v1CrWcH7YA
-	fZmAa2jQ=; b=X1ojuWLH6FKZs4mdO8HBCT4iXTakoaT3//wo5JS8xExEfLIi3kH
-	ZUECPRbQQIW67VrIeemG2gZftLZCdVfPkzN4nEh+MGuYyZAAKQlQUM0p/v7/Uctm
-	cJBX6aVu5+Aela1Xa8IpjUgX9m6ZCAP4Sy5sP5g4mroU4FjSUm2thlhvHr0FaN0A
-	3c2a7tsuhYSO46Z2S3CjJR1a8EbG5h10JGRysOrMtFGKeCid2AeCfFnV1a2wyJPj
-	ueSKmiGJE7JeU/XEIrhZM3WbCGG+2EZHLU1CSJMzZNrr00J7Z0YwjGNyTyDF9iVP
-	oX3yJHFriG/VbFp6Tabs0q2N19fE4OGxdJw==
-X-ME-Sender: <xms:r6l8aukWD_SqTkEtRtxqp-PaKiLTvViqTxmJi9nqbOF3HscAk1S6JA>
-    <xme:r6l8aivs6yyqnStvH2VfD1XBjzsmntp-2_UllKESB_JyMmmu47kV_K3FL241K2QsZ
-    ru0G2GQNrq0EYR4Sg7e5Y8a4a0wd9fWqlzmW8n7ah_LZypD33beXw>
-X-ME-Received: <xmr:r6l8asbl0iXqG_O2hT5z5-yc3ofXEyP3w2huncjTOlsBAvevkD0kf85bEHBeYVuYpDSuap4KeuJ66vuX3g8dFW4h3FD6hCmV7w>
-X-ME-Proxy-Cause: dmFkZTEw6CnMyY4w34JMtF/zJqVBa+8zbRo8rSBvWBKLiRTvQQs5b1/xBX+wVzoeIb7ypN
-    JAUAxV7qQft/w+fyxaz+HSW03nhXuE4SeiQPIueKdA0Wl7MOsSd6o2o8g1CIxyg8UO95Op
-    OajRCi+6Z2ril55Rx9NehKf7EBsmrrgxqcfw7nQ9paB/27YGevLAj8w4BcO9EZp2vPK4nG
-    pDu3ENpQDR/wxpcQzSj8EOdoRRAUraWWsLYHJiWj7IR8ekWm0acMDWfNewwR1gc+n9DpgZ
-    0RN4MKGi+8gbGmieaoskatTnJ7cgEsW10KkDtB0fzdscCVr4velsayd097cUTLzCWMLHrz
-    uX3fsctWsHAPNhyou6CWdcKSWSBU7mVuXFmoempkhJFYZ9IhVGu2DvvQ5r9cN2kIklbeHg
-    qw7alWpfG72k+9T06pzNcQtC5gqBmDlYUzJrR1DuLOTSmuK8u+Siek5xuEtpcV9fI4McW5
-    UbvXkCzezhd6bPvEAdTcwe/JGgoObFlAIVxPDMpXzDz/dU3RUmEo8efNQd2JB0Ds1GomlF
-    29o517FPyhSstqC6ARG98zLTpEP98p0Du4A4KS8ydipxRpNI3yqMTn6mARnKBAL8J8Behi
-    5IAzrbAU4UVh+SncMZRtbpEzhzaPla8yENA6dsJFtSkj8vGBdFwFjnSi2BNw
-X-ME-Proxy: <xmx:r6l8aiDpQ50PtQ5TKqSWwpXHkJn-zQ96SGKuM2LICZAwdFuV2iHmKg>
-    <xmx:r6l8as-4frTWc4kWvlko9aTu8u_IaqwzxBPWN0FaDIEqyu0l6HDAyA>
-    <xmx:r6l8amSm2V18MyC_wIn4kWfWAH4mYd7H3zj32ShtEZhzMj8Ef3QmNA>
-    <xmx:r6l8aoWXJRVW0Nqz0iFpWHl_4aoo2G98CvV2bJnNvvFs-9ls5wqgYg>
-    <xmx:r6l8auV9qulCofh3N8ehPjnOJz6TNXGWbfSrhXGL_3zxDH3bSp40oCq_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 13:13:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH] git: avoid segfault on "git --shallow-file" without a
- value
-In-Reply-To: <CAP8UFD1BoXTo-bNyaQeWeC1QhrpdBAOOW4BwXCi9XYMr7aRuZw@mail.gmail.com>
-	(Christian Couder's message of "Wed, 12 Aug 2026 18:15:42 +0200")
-References: <20260811121446.2080190-1-christian.couder@gmail.com>
-	<xmqqcxvo1n8w.fsf@gitster.g>
-	<CAP8UFD1BoXTo-bNyaQeWeC1QhrpdBAOOW4BwXCi9XYMr7aRuZw@mail.gmail.com>
-Date: Wed, 12 Aug 2026 10:13:18 -0700
-Message-ID: <xmqqecg3xnwx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NbXjeGMd"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-cbe6295f05bso80180a12.1
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 10:21:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786555309; cv=none;
+        d=google.com; s=arc-20260327;
+        b=TPtywer/QzyIYTwhmqoQo5JL55GposSzyjWM21/OdG0B1jeKIm1NsFjUYtGuTwLrj2
+         MBVW9DRJycfuPTLid8+c4Qf77NohqVXYUD84oR4q+8ANVEzSBbVwW0f90RpzARJhgLFB
+         1t7q3KoCOp6lwTZZMF5IoEeQXUgzofTi0UfAo2/RzIC4jrjQL9UMuYYpwOug30TQVc5m
+         Z8CRPpzc9W2UpypE9W3Hga9v06Hi2BeQB41rRr72iaZlUuyJqKuFY0z5hyoHPb5uBdm5
+         kB+Lb2bgk8LfKZrdBAf9Xw2btPjVMX5jrTsDoLBYEpQZj7PAviaJs9adX79EOQ+ZfiRQ
+         nVww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=37NKsZQ1WQPPPMuZYa2TgAM+LJBvpbLpV80qSgkPX50=;
+        fh=pN7wu1zwD+xcQsXWuh1aXLiVhMCtwuxgzoUDjuwgVME=;
+        b=KInSRJ5O+9P7s1PnA6HQ+SuQE4CYONTFYVT8P4c0hjDbENNSGC19gKs3skC4dS5amd
+         TZ07HIAT/4KmX0y1bPOkmBHDVgNyLMTOx2qOkg9W3Dm/UXy3jVqJvBNVTqtheUxv4Yut
+         ++5Eq4AYIUSDUGZKoEo/V0RVbkvQXKTFUIlgVYJqcvwICtbBxJVisJiQBsyDuLK0LAYh
+         auZb1T6dSBMFBA5G5kT1jHqjFnfNZeJbkk1bVjjUMMOLULQ6jnyfU3R3Tlx+em0TpMoR
+         tCQUI2FoCKVLjTD0Plas5t6YYXT5H+5xUk6nGS1r6QGJxkFPnt88pww5EVTVN0znfaf+
+         sYtQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786555309; x=1787160109; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=37NKsZQ1WQPPPMuZYa2TgAM+LJBvpbLpV80qSgkPX50=;
+        b=NbXjeGMdJj/NjpJLj3W3jH/VGGhoYobGhJJ2BwerJ6/qz3CENIO5GhrcgZ+NAOFvPY
+         gf4g8Q0OyUxrgbkA20XemnoQAIXYx19nsiMn9n+tq3LCB5ctSjx9ykyzUCU3yy6GOWBz
+         VneRe6jnBCsYD/SnBP1HeoDNVLTXSWMyCTrfatrTS2fEBTGnzVGyZSDZD9AyFXGRehWr
+         sXtqd/SVHOBt2wj3O/f4bKmiznVgF3E3mk9NGIej5XT91KIN++CcxyaxaYGQyehzDzul
+         oGDIQAf49qBUj9lYdi6mTFvpFCFruY8LMuGtSpHLksb9es2ompefztekgHGVWGruxomO
+         n+TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786555309; x=1787160109;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=37NKsZQ1WQPPPMuZYa2TgAM+LJBvpbLpV80qSgkPX50=;
+        b=Qse4a9wh9c8p4CDnIhkQ/jUOY4apxMVBDluGLM9gAEFXwzzYAu1TPTv9cTUZBwOW4v
+         vGTYPOLLBU6lmn7PdA+H5fq0H06nuOh/ERQHb6M6ZdCoIfnhi87fNJz0LK1k2CGPwmkG
+         5GZpeKIFA4Erl4tsRAX92EunPkyU46r60h8WE6VCcEm9LqKRksGEJdMeJz+He3Z+vUpp
+         V9I7WwDhO+ZsRk5QlajioyYoDmr8HAiFOrwRFeUIt3wyD5QM8iMgRWIUgqF4vlG7tzNK
+         KxzuxmryN4MrgGubsLv1XqqQMP7w/mDepHV5icuxGv362AdKJ+DvvbUpRJXJNVSOjgxZ
+         dXZg==
+X-Gm-Message-State: AOJu0YxFObJmzlPvnQLdbX0k1G2PBt6PjZJECV0rkxwJ1e2kEGFjShOl
+	YXrRKW38Q/8QglMSDevX/3RtXV3Crr4gHpen2XdZxObGetr1QiTn+hAjm9xWsrDBTlWoEYmcvkM
+	3zJp/5Rjc68+sFM7npeFlrpPahF272UdyyKHD
+X-Gm-Gg: AR+sD11+K0ALcqbeEBpFxDMklXkme/kmcJ1LEo+liuiZ05JrBt+6iJ5cXuwkfbG5xkU
+	iomDRHoJpN1OhyWlDz00/7GiqHngsgA2VeBc0t95sArV6eZJa6wN7N9MuycKmdWw97YIqZIHAbU
+	SQ6MNZ+5KstSaManCXbyFZOvo36i8iCVFMVvmf3ZAd1w+QyPc/ZE9H28Z/8GbAIsR9vE7vCyQpQ
+	WO2yopcutme4/mc9dMbZj6ABGxI+nSynpgA5MxeTqk7TSflgYgqLI4YVPsuHCuJIwmbLWP+xRdA
+	nSs0+wrWwbs7Lf+EwhBVWMNonzu95KzxFMdTeDHVjTq5AbbPdA2dhIxsJHDab7jtOHf5A+xR7HO
+	3w9e8aMXpEDmm+8QroTqzriYN4VcFjkw=
+X-Received: by 2002:a05:6a20:9f46:b0:3c3:750f:3cf9 with SMTP id
+ adf61e73a8af0-3cc53125f55mr1007248637.11.1786555308858; Wed, 12 Aug 2026
+ 10:21:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
+ <20260810174047.6524-1-r.siddharth.shrimali@gmail.com> <20260810174047.6524-5-r.siddharth.shrimali@gmail.com>
+In-Reply-To: <20260810174047.6524-5-r.siddharth.shrimali@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 12 Aug 2026 19:21:35 +0200
+X-Gm-Features: AUfX_myMQnAoncmeJ7xQdpIHgvoLZWh5-IvfEXn4eiG4E95uKo3ll6Uzugg5un4
+Message-ID: <CAP8UFD3fF+Ka0Sqs3BSstur_HdqU3s==3ash91Ewwi_F-t2oDA@mail.gmail.com>
+Subject: Re: [GSoC PATCH v4 4/7] builtin/repack: enumerate promisor blobs for --drop-filtered
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, siddharthasthana31@gmail.com, 
+	ttaylorr@openai.com, ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Mon, Aug 10, 2026 at 7:41=E2=80=AFPM Siddharth Shrimali
+<r.siddharth.shrimali@gmail.com> wrote:
 
->> Just being
->> curious, because (1) if there are, this addition belongs there, not
->> here,
-> ...
->> and (2) if there aren't, this addition may not be needed, and
->> (3) if there aren't or if the existing coverage is incomplete,
->> perhaps we should give a more complete coverage while at it.
->>
->> With (3), I mean something along the lines of ...
->>
->>         for opt in -C -c --git-dir --work-tree --namespace --config-env
->>         do
->>                 test_expect_success "git $opt without a value" '
->>                         test_must_fail git $opt >actual 2>error &&
->>                         test_line_count 0 actual &&
->>                         test_grep usage error
->>                 '
->>         done
->>
->> I do not mean to say that (3) is my favorite among these three,
->> though.
+> +int enumerate_promisor_blobs(struct repository *repo,
+> +                            const struct list_objects_filter_options *fi=
+lter,
+> +                            struct oidset *to_drop)
+> +{
+> +       struct oidset all_promisor_blobs =3D OIDSET_INIT;
+> +       struct collect_cb_data cb =3D {
+> +               .repo =3D repo,
+> +               .set =3D &all_promisor_blobs
+> +       };
+> +       int ret =3D 0;
+> +
+> +       /*
+> +        * The caller (cmd_repack) is responsible for validating that a
+> +        * blob:limit filter and a promisor remote are present before
+> +        * calling this function.
+> +        *
+> +        * Walk only promisor objects. every object visited here is a
+> +        * promisor object, so it is recoverable from the promisor remote
+> +        * as long as the remote still has it, the same assumption the re=
+st
+> +        * of partial clone relies on
+> +
+
+The sentence that ends with "of partial clone relies on" should be
+finished with a full stop. And the next line should have a "*" as it
+is part of a code comment.
+
+> +        * We do not use write_filtered_pack() here because git repack
+> +        * routes promisor objects through repack_promisor_objects()
+> +        * before the filter machinery runs, so the filtered pack never
+> +        * contains promisor blobs. Direct enumeration via
+> +        * ODB_FOR_EACH_OBJECT_PROMISOR_ONLY is the correct approach.
+> +        */
+> +       ret =3D odb_for_each_object(repo->objects, NULL,
+> +                       collect_promisor_blob, &cb,
+> +                       ODB_FOR_EACH_OBJECT_PROMISOR_ONLY);
+> +       if (ret)
+> +               goto cleanup;
+> +
+> +       /*
+> +        * Apply the filter to find which blobs exceed the threshold.
+> +        */
+> +       ret =3D list_objects_filter__filter_oidset(repo,
+> +               (struct list_objects_filter_options *)filter,
+> +               &all_promisor_blobs,
+> +               to_drop);
+> +
+> +cleanup:
+> +       oidset_clear(&all_promisor_blobs);
+> +       return ret;
+> +}
+
+[...]
+
+> diff --git a/t/t7706-repack-drop-filtered.sh b/t/t7706-repack-drop-filter=
+ed.sh
+> index f27b09a30e..453053cc18 100755
+> --- a/t/t7706-repack-drop-filtered.sh
+> +++ b/t/t7706-repack-drop-filtered.sh
+> @@ -1,9 +1,36 @@
+>  #!/bin/sh
 >
-> I am fine with (2) or (3), but they don't seem much better to me than
-> the test already in this patch.
+> -test_description=3D'git repack --drop-filtered option validation'
+> +test_description=3D'git repack --drop-filtered enumerates filtered promi=
+sor blobs'
+>
+>  . ./test-lib.sh
+>
+> +delete_object () {
+> +       local repo=3D"$1" &&
+> +       local obj=3D"$2" &&
+> +       local path=3D"$repo/.git/objects/$(test_oid_to_path "$obj")" &&
+> +       rm "$path"
+> +}
+> +
+> +# pack the objects into a promisor pack inside "repo". it is a pack
+> +# accompanied by an empty ".promisor" marker file. objects
+> +# in such a pack are treated as recoverable from the promisor remote.
 
-I think this is the case between (1) and (2), there is not much
-coverage, and there is no coverage specific to "git potty" options.
+Here and in other places in this and other patches, code comments
+would read better if they were proper sentences starting with an
+uppercase letter (and ending with a full stop). Like:
 
-The 't0041' test is a suitable place if we eventually aim for more
-complete coverage such as (3), instead of piecemeal tests, such as
-'test --config option with other config-related things in t1300' and
-'test --shallow-file option with other shallow-related things in
-t????'.  So I think the patch is fine as-is.  I will just leave a
-'#leftoverbits' comment here to remind others to consider whether it
-is worth extending the test to cover more 'git potty' options for
-completeness in the future.
+# Pack the objects into a promisor pack inside "repo". It is a pack
+# accompanied by an empty ".promisor" marker file. Objects
+# in such a pack are treated as recoverable from the promisor remote.
 
-Thanks.
+> +pack_as_from_promisor () {
+> +       HASH=3D$(git -C repo pack-objects .git/objects/pack/pack) &&
+> +       >repo/.git/objects/pack/pack-$HASH.promisor &&
+> +       echo $HASH
+> +}
