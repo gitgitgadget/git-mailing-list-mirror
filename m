@@ -1,118 +1,138 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F5A2F6188
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 01:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35A74B04B7
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 05:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786499164; cv=none; b=fPJYIjwCqpfZJB+pIOp/Hx7ZIsqdoT2L8ugv1ITtwxaDYtdDmQ5tRTMd6ALpYrlYzh9yl15k9tm9mhMWIhkC97BwsnIgm0eYIisrHcroCu2bt1Les9sa+M6ZDlPCDY6mW40baaSYSwl+WEwCjQIN5SFiq+QPyK6S/SkZHS5fT4M=
+	t=1786513161; cv=none; b=H/8iVYphlP7kJnDFIX1wwBKUftTfZRdW4s+GNrWBSGKKRMYfvzOvYMQmL3Y0ZAjFInuJy4FUM4Z8274d7ZB+1RGwMevQzocwUrESvRSQYKu2zE1wG9HdE40fRTBAN5g9LAXHQlb9EIJAfyiOajxWww17NZ6eyyuog2KALKNAItw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786499164; c=relaxed/simple;
-	bh=Ue9Q1A+Tqa5GhWJUvlITpmlo8Eo+kd1DghJi+WfMz3U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LvcXqrfqgd7KGnV2d6ofCYmlZT1xi4E1LlI+FYKrlQQ6szHb7255qlKDbUcOVOBnv5pyOD0A31Icnin3Avy2lPwf/9ueXXUL63Ezy/pOPDrngUbXu0wcNJCOiIDYOeLN6g5TYwSCAdfVtIfec9eeAWLe5zOCZDrdpFFALBfDILI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e+RhtS80; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YABHwQjY; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786513161; c=relaxed/simple;
+	bh=OwdP2b+2rR338807fA46TxFinbZ4DVH6/ekKiWYjn9k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fMIIwy/TigMleS1DJzdW3QGgmboS4v52uStL3Vtt5MN+21BGH6rnHTaHfDpCgqnhAHMXsLRWP/BG1jZ2gcEKRt0g54Q5mnV8oHxw7UyO5OfYO/5+32ZdIYongLtxTebTUVep7vJ7s1jOhNwl6juLUsbAycER0YHT5dyeV+M+uDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EIX3+mYt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CMCHEojo; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e+RhtS80";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YABHwQjY"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E0EA87A0142;
-	Tue, 11 Aug 2026 21:46:01 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 11 Aug 2026 21:46:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1786499161;
-	 x=1786585561; bh=26XxVlDxs55XbXjJapCpcbu8RFVprkFRl9qLLWgsNsc=; b=
-	e+RhtS80hprsnUpMmCSJ2+lpxeTqRDkJyMUbyegG/fIxvXAmIfxm7SLD7WHAlNyJ
-	biaTjbQYo7BR4WHSsaEMO9cZnBRffyjBDMPs4ZMQa0yLV35iCbfLl/xphZbz8QqO
-	NNYoUQalpy6YNfNIQR0hzFWnyiqbZG4cwKVNCqAuuIMH2IFPSG3/WeIOmMLrsU7J
-	QqeCGVpq+wVnTmXUCfGQW/FhbEQpZoZiRH5lKTQn23ODAbaOAt+x/15512TK+Rui
-	6sdFYR5VVzgUQnax11Q6Yqvbk5Fv/08RvXJ5/YMZvz4NXE5fx1gYHpjX9aJOrtcc
-	bvyTpbXTQVYCuKFnOBhP0w==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EIX3+mYt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CMCHEojo"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id D03C3EC01C6;
+	Wed, 12 Aug 2026 01:39:18 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Wed, 12 Aug 2026 01:39:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1786513158; x=1786599558; bh=wQTuV0Husn
+	sJ+snA1uZtp+VvBwTgV47n8fV0ZVYGkwY=; b=EIX3+mYtNpiOnvQ21SjYpCtX/Q
+	9aody/WCdM1hFTi07RjxnorlJhBP4JE3qAl9DMkzm9y0WB5S2IQMs7jPv73X7MBs
+	FsVo9rqH0CL4mMECIZAaK9Y4i+p5zLTaovKoLT5EwE+cHYrUuZh8i9xCQBIRJZ2E
+	GGSeCzFvEWoRiWgbc1pHjlHskHD1OuqsbcSguaSwBRTvbLqdQRVtrnWLG8skdd7Y
+	vuOfw+ZKMEkZUENMPgQWEJUeI/KrwFdNe93JXedrfAbjyWg1f3ugdnaTi6LQMcbN
+	avI7WthlwRbVqCswHRDzOwh5Wg64gY5OQEx6j6akbc6KGk8IOGjoZLfpY9vw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786499161; x=
-	1786585561; bh=26XxVlDxs55XbXjJapCpcbu8RFVprkFRl9qLLWgsNsc=; b=Y
-	ABHwQjYKfB1ifmuZuS1HhhJjKNqdMR5fXEo7tfi6Fi4i7Y/YfFx/8zITSG//2CtL
-	kpyPcqIFeFjAwzhr9fvesFTNw6yYxWQBSHKhze+6q7EF5P3acGMlKe1KtBfFCPwD
-	Q8h+wFBKDVb5c6nH2GxPg6fMMRAYxbH5VmRF8rp9rB3RxH7up+qaohXhIUhSk0pZ
-	/gdfarwDxkP9JAN0xhzatBcMNJWQxCyb5/Zf8nBe8riHBZU4/LaMSnDyF1/1FZgG
-	pJGwS2UDiZW5vZYbXUxRLPQA7CUGlQqKc/Sv2/EhteKEjLG3Q9w273cstMIYHrXm
-	cQHQU/hhTmi6NrHY4l+lQ==
-X-ME-Sender: <xms:WdB7aklZhKNuZi_fcLtrc0eYN39qoIqNcmDOFSS06cL59ZiWtADWJg>
-    <xme:WdB7amZ6kVeC3tbym_j9AKIytTHvMBHUl9vTlGsC6-8bP5x9bZ1IlF-3jYGApe8Vb
-    4T7p4siNfGfbHxSkbj4hr5OcEreQWh8v_EX1bAtGuPKzDHV9TgP2w>
-X-ME-Received: <xmr:WdB7amSWDs4qtmivA0cM__qqpVzmikjejASpilL7fy0DoOcpOfe1lkdp_Ya2ctrOnADCd3jSeIKzuO0NJioi95OSTTxoNJQqIQ>
-X-ME-Proxy-Cause: dmFkZTEf6wPXOQ7TRKpF4mRG7WXS5peblZHjoxKBXnWFJgoD5HV2I7750O/BRgEhKBvob2
-    X8XBsltlGdrhCg+eJtKLsDes3w3boNiOLyV0HJwSEo9xQolBSAzvkZgSGEXp/oBbsl1Gm6
-    nRAbxZnBFr/UL/nTSJrrSObDlbUjJ1O+JzTZ4KpDJrxcIOXiXkhxyZZ1iZpPle3S8ojreP
-    yugBU6PhPZmBWrUHZIVVTGqoQ7lDrqKxTVC0lfZKaLhRc2RwkLNazjPtgkyFBwMBURe/WC
-    2ldZA7TEE2w1ulZSkrYiEJPNeVeNNmMdzvxvgioWe0OiZVWxjzHSBsovza1Y2UBAq7WGje
-    /c1lH5oultxzgCHB3tQMra2TY/CSye2ZrX6BrzcO4n/Zb+xY0dkzlK618igk8SQm5mVAe3
-    L755lFNyK/6fqarrgcgqFqWD50DtVrEH/9ssRgBKM6DLPL8i26cNli0w9hv3MnX29I0KfK
-    w82S2veFNqVi+4vUqO/BnIj8XKDRkcY0BsBNhLhaVarz1EIp9yhSHYFY6tyUOhsvRHPjLB
-    aWq29RnuKFCsopNW3n4q59bM7kuzB08/4UCB2mkX5BVZSuKQvyU6XjMt+mYZSFaBnrbAHb
-    QH7Gwa3vM6eQ3bSlqDGtZ2LAG+FuvD0/7bnxRmYXaDD+vXNWnlF2fLqEfg3g
-X-ME-Proxy: <xmx:WdB7aguWEEGyOCbTncmqlssl_FaGp1Vpgdet1eeCzuKqkWskLtma7Q>
-    <xmx:WdB7aoH0gfgX7MWIN4BCwTmbz7PSwyxV1LOf2nyF4a9xL1fEWo4ERQ>
-    <xmx:WdB7ahy3juebeE7Xero7R5ZNdhHIPmH9TEhjGqbexxbVJ3vfSKjN-g>
-    <xmx:WdB7ai0bHq9s_HlKRvdAU8F8e8qS0rt3nXfUzXqbrgw9lsW5dNsnRw>
-    <xmx:WdB7akiqauRAZIH9OCR1tCUuLpyOMw6E3kDOGpZiqbY30cOW72vCCmyu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 21:46:00 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org,  Philippe Blain <levraiphilippeblain@gmail.com>,
-  Leo Kerin Britton <britton.kerin@gmail.com>,  Elijah Newren
- <newren@gmail.com>,  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-  Patrick Steinhardt
- <ps@pks.im>,  =?utf-8?Q?G=C3=A1bor?= SZEDER <szeder.dev@gmail.com>
-Subject: Re: [PATCH 0/2] completion of 'git [-C <dir>] checkout'
-In-Reply-To: <B79E6047-CC44-42D0-A9CA-BF7B8D2C8B93@gmail.com> (Ben Knoble's
-	message of "Tue, 11 Aug 2026 12:33:53 -0400")
-References: <xmqqcxvp481b.fsf@gitster.g>
-	<B79E6047-CC44-42D0-A9CA-BF7B8D2C8B93@gmail.com>
-Date: Tue, 11 Aug 2026 18:45:58 -0700
-Message-ID: <xmqqpkzoyuuh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786513158; x=1786599558; bh=wQTuV0HusnsJ+snA1uZtp+VvBwTgV47n8fV
+	0ZVYGkwY=; b=CMCHEojo4lsh7bZDXo8BarlGuoGIRNYS4vv+CdBKC1buCcw20ZD
+	7COfL5MZmSQIQAlFcC+3O2asqOh2OjtdvS4bvA0bm0d/5t6oQ7WzQNt18ubK34iP
+	hTCPd9v6msde2nV0mLrC4MCvNPSLCQ6cjfGyLoSEdzEtVdlKjCabm+qLlJwpvknT
+	ZfavP5i7jPmFYKJ3TDIowbrz7xtnuqEsQbteJ6dZvcZnTQRd2VZ4Bd1W1Ou/FUXU
+	iA+YQxvGYr1yDRxLZDOTQ0i3uW4WFUi5TUGsHPJyObLVPhkfbvi4n8Ri7oGCIG4y
+	W86W+kMTiBCxpWhXTF4PY+Nly3wXruhpYHQ==
+X-ME-Sender: <xms:Bgd8am_g60y-TohYzLhxC29-UV0eAwWcPKZKQce3qmiMGV1e2vZMyg>
+    <xme:Bgd8asvo-awrzmB8wHy9dei53FTZyQNzZBfvIKzgSeRy76fW3zK0KLDG_ZYYS8dv4
+    4k8ud5sN0-0ph7ZroUk-hgTHfLB891SqznUAJPGsMD7VrrjzpaSC1g>
+X-ME-Received: <xmr:Bgd8app2-waIohj1TSs4hj8gcPjugZfMZx-fhbrNq0qfBeuSWLRv63AyRaqbTLGO2488Kdr_m9UCoksEWMPISpzS7yf0cq-oQNu_OUylJw>
+X-ME-Proxy-Cause: dmFkZTGr9ssf0/cMkN7fp9OZbDCNscLG3zZlA/yjmd+tbvzYvdMaKES5AdHFCYV4Ek7uYV
+    9yDz+hADhEkZTT1WG8fBE3NgN+MScdedDTuF7WgTwHCFQ8+sB4kSGQSZSsxCIa1zipJne9
+    /pPHNHBBKe/JI+o0/L3sqO77LwdN3Bdq/kl4HC8SasJ5RpaLc2AiBomdasGIuTPcFJo8oS
+    eE7Y/1pkhfOLrxfdzAwiQziU1sY3JuRhv+pD2z3qNEy2M9dFISatkjuSvezbW/yG2u1iVp
+    Egorg2Ca7lxPUfMrowWzWJzum06DVT1b9QPvYwwDdfFkp4LCXMY3ii2A8IKYhq7wUQNMdH
+    QfBN2qPN9qZHYfQZNfihp8CkP36S7rLw+XAopexv/OMPmmomRLP09kOCF2BPw32LEdWJHs
+    GS98caUdVu5EvxkkCDTrfbXvJTKTCOCEvcyYpi6CEKjPeX/LnwB1mG8mWlUedrJko9EyFm
+    he1v4Wx3wsI4bFnRF2hsULeqEA/O/o4vvuUwae7pyQJRIuMKSPAD30SIrX2QLQiYp7YjDi
+    O6ZunosYQHpUPoz0bpi8p/HyX+bbQpH7fwKF58SGqdGK5o5f+LweSH3S/Hf877ZbQo0PED
+    8mV63kYQAutKzaHF0KLIKvfrTMjXYI9acSMobxFU+6sRiwUR6UIstSrbpVlA
+X-ME-Proxy: <xmx:Bgd8apkkcu_oPtG4b0LHhb7m3rC7o6OhBNIeU42syTIkoQ2l47rjsw>
+    <xmx:Bgd8atyITdVZ1gq41MVZX_iwJCoQ-3GMLdm4fERNcdexXvY_IjMdDA>
+    <xmx:Bgd8ahnZYAt1UI2Ooi0VrEEnWDK2fxV_2JRndy4UFUs2EfsfacGrHQ>
+    <xmx:Bgd8ameY6YeHQXahI3rrgTapb9Mdiu4mdNGc2tG9xB356UXK8PzLyw>
+    <xmx:Bgd8alsK37bqnSa2IYBUUSAfIBXoqPSAGyl5r7B4Y2mXYDBzeFj0se__>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 01:39:18 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3a95d6e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Aug 2026 05:39:14 +0000 (UTC)
+Date: Wed, 12 Aug 2026 07:39:11 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/4] odb: decouple source path comparisons from
+ `the_repository`
+Message-ID: <anwG_yIy0eNsZi2n@pks.im>
+References: <20260810-pks-odb-eagerly-prepare-alternates-v1-0-f0fa4a4004e1@pks.im>
+ <20260810-pks-odb-eagerly-prepare-alternates-v1-1-f0fa4a4004e1@pks.im>
+ <anuP0Mh9aBz9VdBK@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <anuP0Mh9aBz9VdBK@denethor>
 
-Ben Knoble <ben.knoble@gmail.com> writes:
+On Tue, Aug 11, 2026 at 05:04:58PM -0500, Justin Tobler wrote:
+> On 26/08/10 03:33PM, Patrick Steinhardt wrote:
+> > When registering alternates we deduplicate object database sources by
+> > their path so that the same source won't be added twice. Ever since
+> > cf2dc1c238 (speed up alt_odb_usable() with many alternates, 2021-07-07)
+> > this duplicate check is backed by a map keyed by the source's path,
+> > using `fspathhash()` and `fspatheq()` as hash and equality functions,
+> > respectively.
+> > 
+> > These functions are problematic in this context for two reasons:
+> > 
+> >   - They implicitly depend on `the_repository` instead of the
+> >     repository that owns the object database.
+> > 
+> >   - They derive case-sensitivity from `repo_ignore_case()`, which
+> >     returns a default value in case the repository's configuration has
+> >     not been parsed yet. Object database sources may be registered
+> >     before that is the case, so the answer may flip depending on when a
+> >     source gets registered.
+> 
+> Are alternates currently always registered after repository
+> configuration has been parsed? Or is this an existing bug?
 
->> Le 11 août 2026 à 00:04, Junio C Hamano <gitster@pobox.com> a écrit :
->> 
->> I did not, however, find any readily usable machinery in the
->> 'git-completion.bash' script that allows completing a path within an
->> arbitrary tree.  If such machinery were available, 'git checkout
->> other-branch foo<TAB>' could capture the output of 'git ls-tree -r
->> other-branch' and offer paths that begin with the given prefix.
->> 
->> Regardless, implementing this is beyond my 'git-completion-fu' right
->> now.  As I mentioned, I barely managed the 'diff' completion as a
->> monkey-see-monkey-do patch series, and I would welcome others
->> building on top of this once the dust settles.
->
-> I do not know where it lives (and it may be Zsh-specific) [partly
-> because I haven’t looked while on mobile], but I think there is
-> support for completing « path » in « git show <tree>:», so there
-> might be something to build on there.
+They are, because of the lazy-loading. So this is not a bug, we merely
+have to ensure that we retain this behaviour.
 
-I know where treeish:path<TAB> support is.  The thing is, it is not
-a reusable machinery for "git checkout treeish path<TAB>".
+> > Overall it's quite debatable whether all of this complexity really is
+> > worth it, or whether we should just linearly search through all sources
+> > to find duplicates. But the mentioned commit cares about cases with
+> > thousands of alternates, and a linear search would of course regress
+> > performance quite a bit. This doesn't really feel like a reasonable case
+> > to care about though, but I don't feel comfortable regressing it anyway.
+> 
+> Ya, my first though here was also whether all of this song and dance is
+> really needed for alternates. There may be someone out there with tons
+> of alternates I guess though. Probably good to be on the safe side.
 
-Thanks.
+cf2dc1c238 (speed up alt_odb_usable() with many alternates, 2021-07-07)
+mentions a repository with 100k alternates in total, but that's an
+artificial testing setup. I doubt you can get any kind of reasonable
+performance out of such a repository, regardless of whether on not
+parsing the alternates is going to be fast.
+
+For now though I didn't want to remove this infra. It feels overblown,
+but it's not an unmaintainable mess, either.
+
+Patrick
