@@ -1,86 +1,88 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E4C42AFB7
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 11:22:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A73F40B108
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 11:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786533752; cv=none; b=e9HufGfos/PZ5WaxkXB7cg9B7RmhEacW54trb39traP6OvtB1i4apRax5pSq1VrkQxL2p2GFC761OHI7q4rbuU0EwfPBDUxUtbPKmM7YGsL1aMN5MaNcq2ReVTe+tE1Z4ADzeUXguPvuWvUyN8/2KL3PtaB3tr3/UT9xlZZqjII=
+	t=1786535825; cv=none; b=N81qVat2GW8R8KLQwOM/SW0WEvokxseRatSu0yggDJ+1lMWZkLzXfb4b617WkNAwI6bYk6YAEVmfUSyejL/+rKPIe0eW/AaMruH/A3U5fLnt346DvAv2BGTwqHz0dN+SeGls2lzyGmIzo/jlPJrGhbPQtvFhWRwmohDgSLlcxuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786533752; c=relaxed/simple;
-	bh=eYNQ5a0LpGFEasaPtT6VUjBxnBqbgu4JawShbkvrWe0=;
+	s=arc-20240116; t=1786535825; c=relaxed/simple;
+	bh=cL0gmdcejRqv04G0GlwMVh42lsgWZEzOLfgWzRYN+Xs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R2jM0vrl0/2oUfbNbI2dRfwZora+LfFLl9TvpR468pDPLMw6cSKDEb74YmBZis96e0ZfqOCza3hxCLqRusBVSBq6pfYrozokij0haMu4qReKUU6YgXtGJLi//9PfPHdbu5x5C8ZtDnxDSdN9J1yjk/4aWEQeUjQ928MMDwp55F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ho3p3ngF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M2R9VMhR; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=aVZ/6pU0/KZWO8SPUK5af6xiKxRdvX6d7ZJd8/jeHoZWvJeH3BDPHtGHbB1HqQ02z4AY/Wf+09pcfwdd8FiZAYSZU1oTSYt4rERh+D2ewSjtf1n2Aga2LJW6DJwyNi80/3vXdEdHc9bEsWczwIWM35znghL263akQ6C5siYxUv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GxDYRZR1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lAIk0xKu; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ho3p3ngF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M2R9VMhR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B5DAB140017E;
-	Wed, 12 Aug 2026 07:22:29 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 07:22:29 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GxDYRZR1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lAIk0xKu"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6DA33EC0209;
+	Wed, 12 Aug 2026 07:57:02 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Wed, 12 Aug 2026 07:57:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786533749; x=1786620149; bh=rPKs/D19C1
-	HHcDXX6eQCm/uAbSlgNHlEh1cq7/Kn0pk=; b=ho3p3ngFWcOD0DXpMFSyy5D2Ln
-	GuYAe1J0+eu+68IdQrR5Ir7jnt//lHi4KRj28Ir8PtdVxDcOP8ZvIn2gdLG9A2HI
-	msnATr0bnosKKeJYdlxpG2M6BKaPvZr8fQ3oxM+yJiHlxSjoFOf6aKe0J1+/i5hy
-	q2MbgMDiFhVY6qAnltnbmFTD0qxzSApwfydjOUGBytt8uu3VvZ9FlM+/52PMRh8b
-	39Q/s97YUeqVJYbuJhiKmvczEleD1vMaewobSpw1eKiMPLuz1fYyGELax86QxOoJ
-	pg4/2jK+1Mm1Wp3uIf24phQZtwQKhCDQKVD7rOyskqF24SmZC45ZFkh5Qm3g==
+	:subject:to:to; s=fm3; t=1786535822; x=1786622222; bh=7/XerJSO+n
+	QsSERhZ6LHrjz3J/BVaB6+qu0Azp/wKXI=; b=GxDYRZR1eQXXzHDLQisij/xOO/
+	JXKcc05bsY1nfLynPNYz1B8Xbk16L/DYXP9lBUyzihQWXVotCKdiH4ySdJpY0fQL
+	DetpuQekk9T8NF8dUFlDqfunegZ+KG36Z8jg3Q3FrY7eEHvYwBiwirHeNL1/FfCh
+	O/84deH2v22ZPDorDajATo6f8yH3M+l8yOI8rJtu7mhRHG5p8EeyHGZHmhFUpIIV
+	lgEtE80AeSI1BEvpkXWG+mX7lJ+jrrGBh91p5ZTomWkmyORPjvSpm6GhJMRlbW1T
+	lmYyokJD744QpAReWKOpN/kV2GzNqiz0aII99kNgP6KIPpBSHWYmx+BH87Aw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786533749; x=1786620149; bh=rPKs/D19C1HHcDXX6eQCm/uAbSlgNHlEh1c
-	q7/Kn0pk=; b=M2R9VMhRRYMZiJ0MwAavWTjwlew4oRQ/bYbaQNxv94761EaHEwB
-	Pl4P7ztqGGr3Vje4OEZxX8/1J+L9xLdL9CFZI89jLaKbNgrhdfgQyKsk2eYOjvVn
-	p0dNCCGyoSZaFxDpGuczYGY+WPpR5yItDCK7PVZG3cDY5qZkiMDvyM0E0UHPb88X
-	IyXmwpA+/U1olGbgm7njKH9WhSZX37EjiOEWgGLr+skajh42+YEvfL6FvyWcbpaX
-	ZJx+m0addwDI+l5/L1B8tCr4sTsBy2FxCcFNbp8EbnKKpk1kAlgN2lYyfvNDIts3
-	kvDCb25+7h58eqdN+Ubs7JwMSgSVbAvx2aQ==
-X-ME-Sender: <xms:dVd8ambszRErUMXoexBAfjGCPHOoyGVWPkq95b7X8q3eFu1H59XtZw>
-    <xme:dVd8aodGgofFrzrcJ6xSTS26mwiVhRwGgDj1D0m5oO2rwRGsiHipsoXP72-gx9Hdj
-    MioThucwmRfzFYXFUwOKPDeT9PjGy-rIdchLqQLDfTRtGex_OOnXw>
-X-ME-Received: <xmr:dVd8anIP1mfrzEnVxaXTX0pt42U21FoUaV-ZVcYtVK8bzIDy9eBXtuAGJk-z2DyeA0i79FSmoMijaIXHkiKNcr-B2JMZk7gnzFPQHTXdhw>
-X-ME-Proxy-Cause: dmFkZTEEy1SJvtGvGqdHAvSopJwdXeU8qfKVib7N2tSQcb2d+b9IdPaE3gq1tl4PjRQ5wL
-    Ee824K79ESzYbfX3n+jimeOajicV5EAAnn2iGEf6nVIU6hW1udw4MY2dW3mhf0U+hbhf0b
-    3YhICaN95U6bE9kuFGWpEQGimpvuAbx25HXnuS2iWOmhRODl/zf19aa+QsCLYDiLAu2eX7
-    mHvjCpWV7aLW0OpZGepmP2QyDqY41jlQH1AV4AxlDuJm/mM0gN/OE/4P1WuDs3jMh4a734
-    5Zm2T1+CUzlePisXbjx3jAShPsMaKC2d5CBEDccXyvfjsO9cy5YUQAFlpaMe7hAhJH+6Y/
-    x6j+J8013WVDS255ivYmvg2q5ZhM3Izr/8o3nvcUI+IKMgA9bOvGTty1Alw7a4JMXDAPM1
-    EtxhTF/7Oz1wnxAJYJOydP+U6TRroufqdTCCLzeiSy+pMwzea4pz9wUhLIltzD08laKyR0
-    j3MU9lRj/gajVvxJk7g7ScOTmKhqtmw+zIiyz46ZaydCGe0a8UczY7w6Sig5S81SeyzaqV
-    MqeoTUh3il7GmuDIzANGGLu0aTYs02cTURfcSUENJCwaXwNl4bD4b4yRvMpJdjYrwxlMPt
-    BqIyJ/sWAuUbcC2blTuk3JTgusb/vN0b5Nv4mof3tlm2G9SGcXlCmwvmyuNA
-X-ME-Proxy: <xmx:dVd8alIdBhZFFSZbmnfBPsxTd4CY9zTv6oStGj1HPMBJ43hqje7xxQ>
-    <xmx:dVd8amW2yCp6-YzHYj0LVGgIcjKl60qFWXv2FdGkXs87818Hf686lQ>
-    <xmx:dVd8aulkKCfuvqmCw-GBmPhAxVULB5HFygfdiPHhkvywl_YwYBO98w>
-    <xmx:dVd8asmda46qIcrZjY6OIVa5G3XMsOOTsuGuJwYJFOxlM6xQPTn-cw>
-    <xmx:dVd8aglqjK06x6GywmDHiyDVu2G5hLory9VLPk_GtzRaiQBc3rk7bzT8>
+	1786535822; x=1786622222; bh=7/XerJSO+nQsSERhZ6LHrjz3J/BVaB6+qu0
+	Azp/wKXI=; b=lAIk0xKuwUVysYkGfMG5KJ38rBMoIGXle/C+jfVnHC28uMxkajl
+	wZjtyYQQ5ZWx3Doc6r1av2I/gMiBxr20TSJu9Zj/NrhQdspy5iefRNRIu0OgcjVH
+	AhUCYDp9DYCd1GOvGRx7KluXs+6UWqMlI43QmwaF5kkUnD12/3C+Sv9IYFqqXceH
+	G9vIVsmVm1Db5MoXQyfhZsjK5KYmFhKQPdJVKT4kqymrzm9y40+CjNuYhwOdTaIM
+	rgG9YAlU9zlsXTMaXKWB3BvmOZidRvD24qYbnchYc6dIXUVpYsGn7iFWpkFPwD+X
+	FpIMewe6zP8ytaq7aeuxSJ0N9yCB7PD87iw==
+X-ME-Sender: <xms:jV98aisBrECFcsti0EBmqTbuoFUjNHEwLZvobrSPGEfA4C14mbbObw>
+    <xme:jV98apslu25g4aRFkweZ5QTbQl7wrVx2MVzt3pqCDg1A9j3m8YX92rJF3U0j0soQ-
+    pCCN-FiwYjMJNuQZcS9tsAcsdZBIR_lrsULKiC260Qxmr727LfqLA>
+X-ME-Received: <xmr:jV98agAhoEmkc-NLDSg7FAILTSOfaQjFDS7DY5QXhHXhvXVPjHF2VTPsKk69fnb7aYrwnH2grVlIsbSmNIUlBOQs6FkAqUqYLyj7Vyczpw>
+X-ME-Proxy-Cause: dmFkZTFZ04j+ycE7SjpgNQjbPf3966jO7yR3/3hd8CrV58WH5ARAXjQ9KSyH7FUckn1o/f
+    IghP46j/Int11qpRviBZU7DDBDbZmZbWnyvaCBjtTqwPYpcMfOmiTY85QCyevJCb0SISeB
+    l1QTGdREfh95c8HJ3GvFZZGrYujvyNRQIehkQrOFfTbO04cQ81XNEGTPYF1zRINnRTcaKa
+    jB5Ub1Z48Z59iHZ5V6Au9t3oQ6RD4HDhXQLMbrA78pKHtiPm11ET9NiuhmT582LQRV1MYK
+    VnCsrkpKDyHdCFWXeSUteQms4Jxyc7uKI75rIaBWfjN4vlrcGHBukPsT6s9D7UfGTp9ENI
+    oOf72cw5RF7xaHDugL/1yc6lT9Z/umG3wl2imU3zL7BOHjYIX4fEVF9lDyPOAk6Z8ehXyM
+    9E1v+snVSkw801ycCwqsSpx9BwBiJ1TNbQmPpwSLc6lgB5Qz58dZDC8hudpOZsd25PIPXi
+    BEMgY1isXYqmo64q/3F2MzRLodeuTv1aX702oNsBDRFqBEIuDN50+yGCt1xTJyO8Em79O7
+    61WSLZttSpzIC/u+58LvqVBtshqGTn2aeUsF3DOd4wOxgKZQuw99KAnBFrchq26mqQV4DI
+    L2NCRm/eY8ITiE3UhFhGP6t3Ihh9q6YFf1D1U63mycXw9z0Zo58BWgmyqy6w
+X-ME-Proxy: <xmx:jV98ajN7gzEXg1XHkTga_JmF7EKNBFOTih1bdVTiM3hZrQf0-v64Lw>
+    <xmx:jV98ahwbZEoaQlZ9meyLEceAZ1brfC_z-NMJiV91geL8xa74TKSxzw>
+    <xmx:jV98arUSGDV4eJxnINGwszoPHvUZm-yiYNK383fUBZJD4JVObg5eng>
+    <xmx:jV98arPwxOQXFsCNnmGWC3xqlestpo2U2huwfm75Op1IOg6I6PWFvQ>
+    <xmx:jl98aqRI_EIp5nVIXC3DpuUMEIzbbyB53oUhTQm6U83dVuCa6VhKDLGJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 07:22:28 -0400 (EDT)
+ 12 Aug 2026 07:57:00 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1de8cc1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Aug 2026 11:22:25 +0000 (UTC)
-Date: Wed, 12 Aug 2026 13:22:22 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 406a5d3a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Aug 2026 11:56:58 +0000 (UTC)
+Date: Wed, 12 Aug 2026 13:56:50 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH] git: avoid segfault on "git --shallow-file" without a
- value
-Message-ID: <anxXbnuRt4I4uPdI@pks.im>
-References: <20260811121446.2080190-1-christian.couder@gmail.com>
+To: Ron Nazarov <ron@noisytoot.org>
+Cc: git@vger.kernel.org,
+	Stanislav Malishevskiy <stanislav.malishevskiy@gmail.com>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stanislav Malishevskiy <s.malishevskiy@auriga.com>
+Subject: Re: [PATCH] config: add http.sslVerifyHost option
+Message-ID: <anxfgvcDkV6k1BLb@pks.im>
+References: <20260807153315.9586-1-ron@noisytoot.org>
+ <ansYP7cDvtNWueIz@pks.im>
+ <7b833cd4-bad3-462a-9860-a8153d4f6b0d@noisytoot.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,31 +91,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260811121446.2080190-1-christian.couder@gmail.com>
+In-Reply-To: <7b833cd4-bad3-462a-9860-a8153d4f6b0d@noisytoot.org>
 
-On Tue, Aug 11, 2026 at 02:14:46PM +0200, Christian Couder wrote:
-> diff --git a/git.c b/git.c
-> index e5f1811b6b..96df15b5cd 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -304,11 +304,15 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
->  			if (envchanged)
->  				*envchanged = 1;
->  		} else if (!strcmp(cmd, "--shallow-file")) {
-> -			(*argv)++;
-> -			(*argc)--;
-> -			setenv(GIT_SHALLOW_FILE_ENVIRONMENT, (*argv)[0], 1);
-> +			if (*argc < 2) {
-> +				fprintf(stderr, _("no file given for '%s' option\n" ), "--shallow-file");
-> +				usage(git_usage_string);
+On Wed, Aug 12, 2026 at 04:31:59AM +0100, Ron Nazarov wrote:
+> On 11/08/2026 13:40, Patrick Steinhardt wrote:
+> > On Fri, Aug 07, 2026 at 04:33:14PM +0100, Ron Nazarov wrote:
+> > > This allows for disabling host verification without completely
+> > > disabling TLS certificate verification.  This is useful when using TLS
+> > > in a decentralized way (similar to how one would use SSH), where the
+> > > remote endpoint has a self-signed certificate that does not
+> > > necessarily have a valid CN (or any CN at all), and you set
+> > > http.sslCAInfo to that specific certificate.  Without such an option,
+> > > it is impossible to use a certificate with a non-matching hostname
+> > > without completely disabling TLS verification, which is insecure.
+> > 
+> > Arguably both options are insecure, this new option just pretends to be
+> > secure. If we accept arbitrary certificates for an endpoint, then it
+> > becomes trivial for somebody to perform a man-in-the-middle attack
+> > against you by simply swapping out the certificate against a self-signed
+> > one. And man-in-the-middle attacks are basically what we want to protect
+> > against with TLS.
+> > 
+> > [...]
+> > 
+> > Maybe I'm missing something obvious. But if so, I think both the commit
+> > message and the documentation would need to be amended to document that
+> > gap and state that yes, this is still insecure.
+> > 
+> 
+> The intention is for this to be combined with setting sslCAInfo and/or
+> sslCAPath to the specific self-signed certificate used for the remote
+> (rather than to something like a public CA where anyone can easily get a
+> certificate signed by it).  If used on its own (with the default CA
+> certificate store) it is of course insecure.  The commit message already
+> states this ("and you set http.sslCAInfo to that specific certificate",
+> although perhaps it could be made more clear that if you don't do this it is
+> insecure), but the documentation currently does not.  The specific use-case
+> I am currently using this option for is a private git server accessible over
+> a public IPv6 address using a self-signed certificate which does not have a
+> valid CN (or a subjectAltName) at all.  I have something like this in my
+> .gitconfig:
+> 
+> [http "https://[2001:db8::1]/"]
+>         sslCAInfo = /path/to/cert.pem
+>         sslVerifyHost = false
+>         sslCAPath = /dev/null
+> 
+> where /path/to/cert.pem is the specific certificate served by the git
+> server, which I have verified externally to belong to the owner.  This
+> provides the same security guarantees as using SSH with the server's
+> fingerprint in my known_hosts file.
 
-Should we maybe condense this into a single line?
+Okay, that's a whole lot more reasonable then. You essentially pin the
+certificate that you expect from the server-side, and as a result noone
+can intercept the traffic unless they have the private key. We should
+definitely update the documentation then to highlight how users can
+securely use `sslVerifyHost` so that they're not on their own to figure
+this out.
 
-    usage(_("no file given for '%s' option\n")), "--shallow-file")
+> (Also, this is unrelated to your review, but for some reason my original
+> email containing the patch is missing from lore.kernel.org.  I don't know
+> why, since people not in the CC list are replying, it presumably must have
+> been sent to the list.)
 
-I think that also printing the usage string is only distracting and
-doesn't really give the user a lot of extra context.
-
-Other than that this patch looks good to me, thanks!
+Hm, curious. No idea why that is -- hopefully, v2 will land just fine.
 
 Patrick
