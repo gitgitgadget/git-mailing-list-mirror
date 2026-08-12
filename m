@@ -1,70 +1,71 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F013AFAE4
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 08:03:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7433AE71C
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 08:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786521824; cv=none; b=E7AGHZJj/R9HzUxfQ+yb25RcLfSi6zykU6N5O6MsUwrzICiiHVSxTEMD295P3Vk8nSvAskl8B+YvULxea7gH2QKT1teQgN1BjBplczmcdyrleVz/lUCla7fZl8O07yOATSwI0lnpCoQIoZiuBhySQbsRaIf3u9LFMA9UoQYfONU=
+	t=1786521824; cv=none; b=ZQfmqpiP6/gEx6HxRGF+Tn1G4kLch3ONNAvDmXU/55hhhcOl42T5423Z7986T497reA6p1TNSXvoWFrpHus3pwywoBvvSorC5pLGsKCA2fM6gzCY0+xSQuOPWd93Mkwm7z6I8lLNgltQUPPuXWQTAMrjYltICb7WRGOqQn+BOgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786521824; c=relaxed/simple;
-	bh=My6xMcWiSQRC21O7e03KbFzyG+Lek3st4bEshLposLE=;
+	bh=jb1+5zh525lJx2yTH4w9R1S975YJtAmBtoDENblHSJY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Nv7VDa5hx06sfXczQ68qu6+DOwbYeG27bwg/LbL8GuREFs9Vn4V7rBWeFw/ShqeJGS08oGOwbr3oQUsQh0pecghwPyaA5VQID/RnTKDblWiRPLNjUIlF7s/G7LbNtuLDgt7g5KYNjg2k/EsmqT3UZLYeSbyhLjEcplVvQfw2LOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JcSNt/hL; arc=none smtp.client-ip=209.85.215.179
+	 MIME-Version:To:Cc; b=n51JZjlM6ASpURvC7DH0jP+v4yoqFugeF4MKKMQeZUh5clKZEdrTZPSDqE2muu525FF9ASWgbG+bAuTnjE5tFeQRXFiY+Yvero7qox+CVHAQihOgPmQgbbE8zwalWrFXK+bed7aOZAqKPdMsob5swoFkqZiZ2r6pdYPwKOPjlUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P/NYsf7h; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JcSNt/hL"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-ca7c1176317so524064a12.1
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 01:03:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/NYsf7h"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8487b7b3fc8so774876b3a.3
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 01:03:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786521819; x=1787126619; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786521822; x=1787126622; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=czqKAQJUC/S5g5U+hEUPK7DNG0qtNEtNKLR4YJglJmY=;
-        b=JcSNt/hL6ML7igjJeRdMIbx4fJz/a/6vIHyzE/eabwWFfo5P6SCtnl9k2yDqmbePzR
-         fyYlEYxDEg7uK1cqs7qA8RCo0V+1LWAmoN0jGArd0WBjKEBh5zoAmt8++QwKewnOUIbQ
-         21CntfPlRkQLoyywl2EaabeRo6xtGqk/F5WUEMGG+Z5qcov8v3LjD2iaXAYmT71Q//bx
-         TTSgroEflY29VDxAvQ/ECkfoPy/ZFpw7lcUcDOtOv3swYq5Wn3mjESS10SqntGKhutbu
-         OV9HAGULh8G0HlZ93c7pkAyRbWOFWfSG143XKtqIyX3VXOrFnPVgRxN7Ke0OrHhtBeil
-         jCtQ==
+        bh=fRccCIDR+jTMBT4usvw0ZbAZlpjVniL2pBi2VJhyIow=;
+        b=P/NYsf7hYupoIqxInl6DmQ2vL5+pvewc/uUoL28PPsXKQJVwiIzTJsVVoHVSfYp/0g
+         lR4L5HOmsx8usx1NHGFWxQ3yos95KIx0J7nJ/BoQ1V+yAwC5XVqB80/Uem2pf093Tm/C
+         t/yZKtZYvqvpxwELtYuDhi/4dS8ojlkJpbBnJ47Hb+9ehkoZqv2vgn5jaUhyq/Dd23ri
+         jtImKoN4uoKiWOPJn8mMNDZAUJwlrvLFKvQT7GE7DU+Jgy6cdRcMWgx10A1AGcODLz56
+         SgwT0wx3fZLssNvXwQhAdcQocDp7PmguVE6p6V6QUax38O1YWWMRcnXe02zhozVSgufW
+         v4qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786521819; x=1787126619;
+        d=1e100.net; s=20251104; t=1786521822; x=1787126622;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=czqKAQJUC/S5g5U+hEUPK7DNG0qtNEtNKLR4YJglJmY=;
-        b=ZARpOI7SrrnSFdVUXypLdTHA6RN5jZOqTWCmhanJq75QBLvNsIUJPJ6lkfdijkU+d2
-         FTeSQVZ3HKRDkGR+iJf6c7FIwRULRIHCSiJVDAnWObrkU63JKSD/FKLgoJ9qfIL3d5vW
-         RUNG/23KyacdFRqyrQ3udxopCqQGRGD8dPp1rtLsXkOLjDrDZBhnkdRxw40/ZO33dSa+
-         HC8nDcDLNuw87jB7e1gyso+3TvcA1r1PlyYwWRLyEDRfhDZ1o+5bKRl8IhNAjD0BgQG9
-         WoLX369FNuVdAPVh+KDR1ciBoFLPYXLApqNpHhQKJhC7iITZMd7TCvJRoc+TCOX6SwCp
-         Dy/Q==
-X-Gm-Message-State: AOJu0YzozXd+SuovHiqA6ailr2IvTVcTS+8Jjr2++VUwPaRB1PkxxtlE
-	kAY68gxMuPpBUqb6B5/uED0PYQenSk/d3sGWpFYcHLUDyVAeLHZnPAf7DLycOQ+u
-X-Gm-Gg: AR+sD11xmtQmQ87M7QA+SsKMNpd60wxu+ir+O2lV7oZ3OjS0FpxX1EqY/9EqfMVi6ou
-	Je9cNYT2HZ5lgP+6pL+FNxoFoMHYB/41o07o5GBlfOZ4w7NGdEOFkcBh+JMD5ELZ4SCSG4mhTDT
-	uluYbws+Z5jSV8QXux1ttVR6zR92fm2dyI1GDSAMBeNABQQEECcSlCKfIjjJoF++j7PPWSXV/dS
-	r2REbhFyrtiLKAvwNFUGwrfuYGVzgymlIM8h/bTJjXlz9+S9toevQjVK51OL+r5lJ4tCDZrOULO
-	pL0gHZkXGbEROAhzkRi93FknMtslThz60k4kkjYB7gt8tb9zOJt95VK1fcZa6/IZ6Bdbz2BqeH1
-	0t/peK2nmwtLa2u9bXjGKohlPMFECshVPP94fERiMOJkZrC31kHfIVMszHA4aETTurGnED16eNx
-	jftcfau1CN2XuxK+gn6lfK28cms+AzD7sxirhA3vqUPwdIiSjNQvv01FP8/yXz6w==
-X-Received: by 2002:a05:6a21:698:b0:3bf:5539:f93 with SMTP id adf61e73a8af0-3cc3f89b6e3mr3680180637.38.1786521818875;
-        Wed, 12 Aug 2026 01:03:38 -0700 (PDT)
+        bh=fRccCIDR+jTMBT4usvw0ZbAZlpjVniL2pBi2VJhyIow=;
+        b=q7aUL/Bm30bAKmVDnw8ZnziWRH8JjmDy7vSmuB8Ypfhd/6wAQS/u6b7XcgRaUeV3o7
+         q79TUB6ne8SRz0oymhHqglVFBsvL2TqVQueDe7qyFKkhs2AY+3F8g92FDVadu4/sUe68
+         QplifOvQWf+Udi2SHXfMP+/tN5WpEeg4FJzr07sGUcsvlDGHxPrumLYUn1HAU9k9h3cf
+         wMO77SQ0jrysPN7YCyP6dDRfSHEdLEUr5LCUigi5QH5BaofvEbTrojcl7Y+m7XqmMvxy
+         vzN0u0PbV/u+FHM7dKmSJfUskbMKiBD3TMiA95vMcL/rqABSPivr8N53OFhr7TwXQHoK
+         sRhQ==
+X-Gm-Message-State: AOJu0YzpQUqpPal9kIoOivzdHE84G3cFG4oXB6HJmBlf1fUdN0pfFNKN
+	EvBzjjvULi5v4lOJO2ugU2V7WpjAvXTHM4UMLN7/iyZyzaIyab2Sjya+yaE2eg==
+X-Gm-Gg: AR+sD119rqxWtfEPojkIdJP0Ov2NdSuUnSWgMJQQvUllTdg4AZUCoXDDEaenDy77vn9
+	M3gpZmj45Qzq3+Ynl+aHZL3YOO7ZPad9m1+wFWjpf9uohUj20asUuB7AexA4KSg9gfApSvEGtnX
+	g2TsAShIopnHws4WoNC2gqxD+ROLTjJpt4xUB3jhyUa+SGUEGIQuZy4cI/d/CQZdpoegSChZDzW
+	oyrbRoBKybQzczMNcnoAqbmFlC5qBwASfkDAyaD1um/KKpP0UaVqOt6VigI/IAB52TV5ISyP8cU
+	7eM6vYQGkcrG0vgBv/8psvKE23u8ZDVSwH9Ko8BCHMfx3kZ6m01RXuf8/eK80ZOj4sDzREE5V/5
+	ZxbxAUl9Hxgh0sjPgh/ZDHPPy5tD+QZpTDokgUWt5+DG2MmaRHcaQHdyV6y/5UL6m8TkLJ6hNZT
+	I2wEkGA4mIH4p39yn1ofBDbyBiWjp2I7dfhnWfQWDfrw8rkG0XmKjcTIW/iUwfklNagvbgnTAo
+X-Received: by 2002:a05:6a00:8f07:b0:847:7ffd:ce35 with SMTP id d2e1a72fcca58-84fb53c14c9mr3610806b3a.8.1786521822470;
+        Wed, 12 Aug 2026 01:03:42 -0700 (PDT)
 Received: from [127.0.0.1] ([134.33.71.70])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbee7d15328sm312997a12.15.2026.08.12.01.03.37
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84fb1d24ec8sm680344b3a.21.2026.08.12.01.03.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2026 01:03:37 -0700 (PDT)
-Message-Id: <6e2295b8f039ccbc3d4432d1e37bd1414b7facbd.1786521801.git.gitgitgadget@gmail.com>
+        Wed, 12 Aug 2026 01:03:41 -0700 (PDT)
+Message-Id: <ad6ea197374f48f0837a40993588ae0cf69affc6.1786521801.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2179.v3.git.1786521801.gitgitgadget@gmail.com>
 References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
 	<pull.2179.v3.git.1786521801.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 12 Aug 2026 08:03:15 +0000
-Subject: [PATCH v3 07/12] compat/pread: check initial lseek for errors
+Date: Wed, 12 Aug 2026 08:03:17 +0000
+Subject: [PATCH v3 09/12] transport-helper: warn when export-marks file cannot
+ be finalized
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,39 +83,42 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-git_pread() saves the current file offset via lseek(fd, 0,
-SEEK_CUR) and later restores it. If the initial lseek fails
-(e.g., the fd is a pipe or otherwise non-seekable),
-current_offset is -1. This negative value is later passed to
-lseek(fd, -1, SEEK_SET) at line 16, which sets the file position
-to an unintended location (or fails with EINVAL on some
-platforms).
+When push_refs_with_export() finalizes a successful push, it writes
+the fast-export marks file to a .tmp sibling and rename()s it into
+place. The return value of rename() is currently ignored. If the
+rename fails (permission denied, full disk, or an antivirus product
+locking the destination on Windows), the .tmp file is left behind
+and the existing export_marks file remains stale; the next
+fast-export operation that resumes from it then silently operates on
+inconsistent bookkeeping.
 
-Check the initial lseek return value and return -1 immediately
-if it fails, consistent with the error handling for the other
-lseek calls in the same function.
+The push itself succeeded by that point, so promoting this to a
+fatal error would be inappropriate. Emit warning_errno() naming both
+paths so the user can recover manually, and keep returning 0.
 
-Pointed out by Coverity.
+Flagged by Coverity as CID 1427723 ("Unchecked return value").
 
-Assisted-by: Claude Opus 4.6
+Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/pread.c | 2 ++
- 1 file changed, 2 insertions(+)
+ transport-helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/compat/pread.c b/compat/pread.c
-index 484e6d4c71..ac7d058cb8 100644
---- a/compat/pread.c
-+++ b/compat/pread.c
-@@ -7,6 +7,8 @@ ssize_t git_pread(int fd, void *buf, size_t count, off_t offset)
-         ssize_t rc;
+diff --git a/transport-helper.c b/transport-helper.c
+index 31883b244e..ed0543f1ad 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1184,7 +1184,9 @@ static int push_refs_with_export(struct transport *transport,
  
-         current_offset = lseek(fd, 0, SEEK_CUR);
-+	if (current_offset < 0)
-+		return -1;
+ 	if (data->export_marks) {
+ 		strbuf_addf(&buf, "%s.tmp", data->export_marks);
+-		rename(buf.buf, data->export_marks);
++		if (rename(buf.buf, data->export_marks))
++			warning_errno(_("could not rename '%s' to '%s'"),
++				      buf.buf, data->export_marks);
+ 		strbuf_release(&buf);
+ 	}
  
-         if (lseek(fd, offset, SEEK_SET) < 0)
-                 return -1;
 -- 
 gitgitgadget
 
