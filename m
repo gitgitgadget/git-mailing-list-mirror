@@ -1,83 +1,82 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B22360EC9
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 05:39:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638E84B04B7
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 05:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786513172; cv=none; b=igYocL3TMaAUuk7fQOOpK+XCHZ5tKDJSaQ77nQJxFH8hoN7t0d8aOEo2oT2/X/ri8Eq/FBtShe0tYY/hOkyEVH9ekff5UgbAh+mjzbnjYKX+XT+thClehNLQYo3W2PkUMVEwtP+N8sNBhuVJPif/V2WOoo8lYI1LOatH1n1KiDE=
+	t=1786513487; cv=none; b=Yo7plM/8Mh93E5Dk7qhT9F5xBGt0jdrt5R6+4MS4dyoyfb/EIajm38rsHeXkX4ZoeVLNjxvCBtMbcr76+h2uBgwPH7e6u/5TByEY7yUoVAKegtAGquyE4eECcdmRSvoSGxK5DplTGPP2TuQ1RcZyv+is5w4ZgFZ5Rp8+AGvhTgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786513172; c=relaxed/simple;
-	bh=fi1O3ircmSon5jSNshphGMXtbOcjCMN/Fx1OvVZMWsE=;
+	s=arc-20240116; t=1786513487; c=relaxed/simple;
+	bh=uJ22qfLPoTmJrSvPYcUC4vMXvTHcgbODKnYPvzEzyp8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tV8oc0Lv1fzakr9kajHUiVQ5IY8n8miOyqtkXMjxO9uwOim2pINTIDajcdkOO34LVgoggdKd502G/nh085eTJMHvTtc1vPqnXsCsC0vmvHuhqls9r/KKPmist74t75T7oPE6zszBOGMwvFVhCTXL5oGm3L38YeUloYWaqONDKQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hb4jmm4N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HA/WRTvU; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=MCL03sNpVYUOfa4OMIq8nRvHnqfXkvOelR5NL0/BJ07GQquOFQCDdMEGE1T2BGaUz6AuOPAuoa1Xd/Y2ctJF/VT+ypB51Abof8ie9QLf7e2XFOILAxyERhf/OT46zo+pA2X35+k/mvp7kz8z74ZJKvD1NgaxDAF+lJcTrTIq8FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GpoYf7Tb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l9azx+ZL; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hb4jmm4N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HA/WRTvU"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id D6996EC0214;
-	Wed, 12 Aug 2026 01:39:29 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 12 Aug 2026 01:39:29 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GpoYf7Tb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l9azx+ZL"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 650FB140004C;
+	Wed, 12 Aug 2026 01:44:45 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Wed, 12 Aug 2026 01:44:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786513169; x=1786599569; bh=0OA+waPSlQ
-	4XVoDxuYzNXu532QlvB7pj3+2ZEnAojq8=; b=hb4jmm4NGDLJrFuqDONL6QwhDc
-	MYdm2tM6fituoDYOlasE42GjWrKG+WGpN4JaYNAsQuVy6vca2a9+WePoDRc7Gopu
-	qeglQnE+UMT1MnSE6/uUF3EAqfEO3u3exIJk5d/jWBKW7ETs0MgnjhJVESsPLCuW
-	9YPuqkAW25pa2qXaJnW5EzlpkY9ytymW05h0N8B80W/w/0fU0/mKtdo3TtVq33Y1
-	8f5fFGxtZPzEjTp2pKjdy/WRZIuqOPwu8ZhUhbev4jsNzZ60JkbRzhFwPopBLAyd
-	5SuB3uGTi0cguoNN7HvNyAERqw630RxPCSoDlIyRQJUXTbB76ETj8BZWcU4Q==
+	:subject:to:to; s=fm3; t=1786513485; x=1786599885; bh=ExCOJHTK+x
+	DyVKdD8rrhd4eETaw5l8eiHzBKAz1A/v8=; b=GpoYf7TbZh3tPSj6cCC/sLYja3
+	Zl7AVVnNBRD+MS3sD+6URw/gCHkHDxqjFhn4IpjFl7VtHY26tYizYEL9LBkWyzhA
+	5O+bgvWRkXj8fjLpcvRiqxlkL8o75A+S26PmcwQT9vnrWPeaUwbyh5Q6VRLzeyMn
+	ybOoV997CgPgYaR3HwNP8Smwo5BbNhZ0V218JJ2Zd/k0B3vU6Jw9yrp8+bsheSrz
+	fiQqHIxQy8SS9o9UPe79XqkwOZoQbB62FVqICT2h1dvzy4u4NtC4NLyrYCpSIfpr
+	/boN7Xo6mG+kAhw6JvTpByTFSIvtoq/Bi+7oFi8gcBiyzKMDBwWJu6Zgvd2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786513169; x=1786599569; bh=0OA+waPSlQ4XVoDxuYzNXu532QlvB7pj3+2
-	ZEnAojq8=; b=HA/WRTvURR6JzP5HB5KkCS2dGLOp74W65eu7dccZiZtUQRmS1V8
-	PMrDzGkKxly9ynYv1tvjwLe/I4Dh3T2i8DBHNAjb2+w+CWp3JOjUdMdYmAiT9IIS
-	pg494q2RUXiizTNpUNqg3fMDp9NjigCZZQPf9Dyjgc4wwRtpva3+NcxpOLlW11Qm
-	1ZOBqdyiAPTsuts7P/RF+Qw4XjrVe3cRN+hTn/qD2VbXvDuK+C1zgVNWfBWtz9Bi
-	ljZHXXHOnd2qRya87Sp9m/m2l7aBYBASX6kiiJOtpJ1MCSTvjzGVz4ptl5HjvcUa
-	zh2mWCUJ3lhBoLyPjLeLXX4Na1jAe8/AqNg==
-X-ME-Sender: <xms:EQd8agj5FV4uYAvYG6Ljy5MD3jLyWd4dya6kmTZFUQHSzca-4RkD9A>
-    <xme:EQd8avDXCyloL0nmyo8hR70OhqmNDjR6IvhpXZ3PKopGzpLjF1OeoYtMMBv6AWPYQ
-    vmfqObONO50bIqqS5emISbE-Wo0ShpL8QPIyfO7V63w8wX7rubumA>
-X-ME-Received: <xmr:EQd8aluHlYMZegGjRUvc725E00hjDrqpYJLulfyZrvv2le6j77tNzwwAPZ9fFHbkBpozmZo58hnBWE1Aa_3CglpL_-BxfGR_1LR_FufXJQ>
-X-ME-Proxy-Cause: dmFkZTGr9ssf0/cMkN7fp9OZbDCNscLG3zZlA/yjmd+tbvzYvdMaKES5AdHFCYV4Ek7uYV
-    9yDz+hADhEkZTT1WG8fBE3NgN+MScdedDTuF7WgTwHCFQ8+sB4kSGQSZSsxCIa1zipJne9
-    /pPHNHBBKe/JI+o0/L3sqO77LwdN3Bdq/kl4HC8SasJ5RpaLc2AiBomdasGIuTPcFJo8oS
-    eE7Y/1pkhfOLrxfdzAwiQziU1sY3JuRhv+pD2z3qNEy2M9dFISatkjuSvezbW/yG2u1iVp
-    Egorg2Ca7lxPUfMrowWzWJzum06DVT1b9QPvYwwDdfFkp4LCXMY3ii2A8IKYhq7wUQNMgG
-    adHSXPEDQxZX+/LdDOpKFKZSSn8dUiuHjakUfmC3RqEJSpmeDf0Ha2p7GhkafxkUwjwVCC
-    VUHeaABX37fkgTU1R3vbtsTOGmeO9TMlbtVT+Y8g9yxSNvQHSejzc2nS0D72zNU76V/qqC
-    3inIk8QN3PwD1cfbcWJ6iDIN/TgGSw82NZooYHU96yVMP3sRkwYIaPJVKjEU8t5RRInaxM
-    0fPWY1amw6J6UREX46uLNDsX8hksrapcEBfwwFPeK88l2UrJJCjF1t5dnfvHQJPoL7UH6q
-    bPzhrrOHIKQKlB1B/Rct5dUZ9yYn5yAULEBEMNrJdbuuS+Vi28B8mZ2eBH9g
-X-ME-Proxy: <xmx:EQd8asasBDgSZLtYVI0lHSL8zOMLz78zklWnAPk2CnkKDT-zwsXirA>
-    <xmx:EQd8agXyhfGJvzGjs47b4nLOIxivrEiMqOWCLKiOrLotRmEiRRyKEw>
-    <xmx:EQd8ao51rD2nyCLRCK4H9VN0D0fDctVl13ru94sf59I-IDXLkUAwcA>
-    <xmx:EQd8ajhUiJJfW0D-2tl1gab_XYlpaHv3PECSpFgbVY2TVAie_uuKfg>
-    <xmx:EQd8aoREZySd8eVQBwnQSuRPRUBif9JxWF3a9E_26HSFYNGH6PTUj5hG>
+	1786513485; x=1786599885; bh=ExCOJHTK+xDyVKdD8rrhd4eETaw5l8eiHzB
+	KAz1A/v8=; b=l9azx+ZLTzxcsb5cLMKqcfAHe7yIq2gXqVAzbxC8SmjeKeUfOSi
+	h7L5xyCxrwTafLL8Fgm/1DFyHQIBNo17GJGxNRBcyBkhXbmsl1d92v19zNBe+w9/
+	UdtUAWBKWyNcc1zVp6wJwJpqkodRIrKPy3bOVSpgsces6m5FboK33IPQtT+Iw1hU
+	MbQrBlny3kDkPJI0G9qsAoDxHSo3Xfp9w0rAic2j5uJ7yfAaB74IaqBfD3xLlX3v
+	kWlrLLA2U+En/zefOaiigU4XwZ/SMtrYwrPa9aggcSgAdzTIY9JtIJES0ZYapB+Y
+	/T+HhETtmRhQuYlK1t5O0owvQmzUg07OnKA==
+X-ME-Sender: <xms:TQh8akKB4YmIUR2Xj5sxDEQhA_dPE3Oc0K43P6MVP3f7_7fVCMEscw>
+    <xme:TQh8arlMz2V91IqLPqvncmNe6Wz82txHSwecb75g0S9TRojUN1lNipgSMQtY-zyup
+    8lkhvCNKgbXUBFsxG_4X7Qih8YJpted6dFXV1lKmJpZmcN6mnUJsg>
+X-ME-Received: <xmr:TQh8aiHpO_WZKvkTLyqFXdUtE-iw58OtQ05x3plSj6kyGqae6uUYG3RDIfiRB97UtJsdVf2pIpQpUmVc4tDmu7z3tdwaCPJbMnlebX0RVA>
+X-ME-Proxy-Cause: dmFkZTFWrJzqry5EKpZ2xleEsL0Gcn2PHUZtRotX7iyyotc73B7jT6I/VESenw4R05dLUX
+    P18wEsekhAxJQ0gLvx6nQK4sysQ+eu8xWha6gSYPUvuVuDiytq0j/njJylWR9deyL3wN8B
+    uT0h/HQkdiKj4omUaWfnqWGzQM0LqwxUp/zyZbZ3SmFyYVWweyf1oxeHWhKJByYBFdnXNg
+    vpis957+HjZhDWzBgd5qyCPCObg3mTEVXyE43eJdJ2jxVQFcNsyryqSXZlxM2TyEITYz21
+    3YJ2yx5jylVvBUbZTQ5bLcMRRF1ejRouyTTaqMvt/4LYhvl33RePPBglyX7K4EFMZpeAXS
+    IAmUYeWhShMEsN2w9tu1I1DVRbjht6K+Hf8GWBvWln7MmIiL5BC6YDSFdo+MCNtdg/sauH
+    0agxxxB+dllRjm3298Ra1vQzpaGAfv6kIcnlApoifhmBols0vHYBPm8GooWr36ClWBXKNi
+    StmJodRJ7nVttN0JtXPvPS9E5B4EMkYFF8wuAVcmpWCN+HYG7f7kZnkgc0Y7kdf2gu/Nk/
+    SWD6JBNN+t7FJYGh2UVMte5gW+sOMDr7yw6ulELgCnwrMm9ORWAZIlJBvionYEHsBmuVVf
+    oto+32d6dz/K6PtWQVdeYbxB/9rKNVAg8iUkxf8wwY64QS1yHQO04UamAeLQ
+X-ME-Proxy: <xmx:TQh8arFsLK-NjHIauVj4HEWMYPb17SXXrwQbxdYZjgJMTGY8ijS6Nw>
+    <xmx:TQh8avPIHptG0nTaYcf_g4m3XVCrJEPS9ZaA0uDA1mDj6Upw2DFQsg>
+    <xmx:TQh8aqFiO7nuaG39iLpZHAACNeOqfdprv77DxtTOorbqW4ieuEoW3g>
+    <xmx:TQh8amOuJDEg2A44SBOWhGultoDRoxi7ZWy8XSyiqzYzOH8vkvLokg>
+    <xmx:TQh8akTHnCWXmtwdA6q6GkxmKCQpKUxRWigWrIEXC515tWtgxJXOOZGm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 01:39:29 -0400 (EDT)
+ 12 Aug 2026 01:44:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 16b34b17 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Aug 2026 05:39:28 +0000 (UTC)
-Date: Wed, 12 Aug 2026 07:39:25 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 41696b06 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Aug 2026 05:44:42 +0000 (UTC)
+Date: Wed, 12 Aug 2026 07:44:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/4] odb: drop `alternates_db` field
-Message-ID: <anwHDe5PfAaT1k9W@pks.im>
-References: <20260810-pks-odb-eagerly-prepare-alternates-v1-0-f0fa4a4004e1@pks.im>
- <20260810-pks-odb-eagerly-prepare-alternates-v1-4-f0fa4a4004e1@pks.im>
- <anug-cxSSsy45swy@denethor>
+Cc: git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>
+Subject: Re: [PATCH] odb/files: be less aggressive with geometric repacking
+Message-ID: <anwIRuuaYG3AgG1m@pks.im>
+References: <20260811-pks-geometric-maintenance-reduce-frequency-v1-1-7a54c42355ac@pks.im>
+ <anuFzZluJEU21MB0@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,42 +85,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <anug-cxSSsy45swy@denethor>
+In-Reply-To: <anuFzZluJEU21MB0@denethor>
 
-On Tue, Aug 11, 2026 at 05:31:17PM -0500, Justin Tobler wrote:
-> On 26/08/10 03:33PM, Patrick Steinhardt wrote:
-> > The `struct object_database::alternates_db` field tracks the value of
-> > the "GIT_ALTERNATE_OBJECT_DIRECTORIES" environment variable and is
-> > used in `odb_prepare_alternates()`. It's not necessary to store it as a
-> > separate field anymore though, as we stopped lazy-loading alternates.
-> > Consequently, we can simply pass it to `odb_prepare_alternates()` via
-> > `odb_new()` now.
+On Tue, Aug 11, 2026 at 03:44:12PM -0500, Justin Tobler wrote:
+> On 26/08/11 11:04AM, Patrick Steinhardt wrote:
+> > When performing auto-maintenance with geometric repacking we have two
+> > conditions that may trigger a repack:
 > > 
-> > Do so and remove the field.
+> >   - Either the geometric sequence of packfiles is invalidated.
 > > 
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> [snip]
-> > @@ -1126,7 +1126,7 @@ void odb_prepare(struct object_database *o, enum odb_prepare_flags flags)
-> >  	 * the lifetime of the process.
-> >  	 */
-> >  	if (flags & ODB_PREPARE_FLUSH_CACHES) {
-> > -		odb_prepare_alternates(o);
-> > +		odb_prepare_alternates(o, NULL);
-> >  		o->object_count_valid = 0;
-> >  	}
+> >   - Or we have too many loose objects.
+> > 
+> > The first condition shouldn't trigger all that often: it may be hit when
+> > we fetch a new packfile, but users tend to not do that all the time. The
+> > second condition is what typically triggers more regularly though, as
+> > every command that ends up writing new objects may cause us to cross the
+> > threshold of loose objects. It is thus preferable to not be too
+> > aggressive here, as otherwise we may end up repacking objects quite
+> > often.
+> > 
+> > For the geometric-repacking strategy though we have a default of 100
+> > objects, only. As we're approximating the count of objects by only
+> > reading the "objects/17/" shared, we'd only need 2 objects in there
+> > before we perform a repack by default, which is quite aggressive.
+> > git-gc(1) on the other hand has a default of 6700, so it is quite a bit
+> > more conservative here.
 > 
-> Naive question: is the reason we don't need to wire the
-> `GIT_ALTERNATE_OBJECT_DIRECTORIES` environment variable here because
-> they have already been added as sources? IOW, when we invoke
-> `odb_prepare_alternates()` after the initial set up, we only really care
-> about re-reading the alternates file.
+> Ok IIUC, the reason two loose objects can potentially trigger repacking
+> is because the heuristic used to estimate the number of loose objects
+> only counts objects in "objects/17/" and multiples it by 256 (the
+> maximum number of directories that are fanned-out). That makes sense and
+> indeed seems like it could lead to repacking processes be spawned more
+> frequently than desired.
+> 
+> My first thought is whether the heuristic itself should be updated to
+> capture a more accurate estimate for the number of objects. That would
+> of course require looking up more objects and thus be more expensive. If
+> the goal here is just for a very rough estimate anyways, maybe it
+> wouldn't be worth it though.
 
-Yes, exactly. We set up alternates exactly once in `odb_new()`, and we
-don't expect the environment variable to ever change in a running
-process. And as `odb_prepare_alternates()` only adds but never removes
-any it's fine to ignore those here.
+That wouldn't really solve the problem though. The problem is not really
+that the estimation can be wrong, it's rather that even if it was always
+correct we're still being too aggressive with packing the loose objects.
+Because ultimately, a 100 objects is a comparatively small threshold,
+and leads to 67 times more repacking compared to git-gc(1).
 
-I'll add a comment.
+> Increasing the loose object threshold here to be more conservative seems
+> like a reasonable approach. I'm not sure exactly why 6700 was chosen
+> here. 6700 / 256 ~= 26.2 which means "objects/17/" would have to contain
+> at least 27 objects before repacking is triggered. That is certainly
+> much more conservative. I see that 6700 has also been chosen else where
+> in the codebase as the threshold too. It might be nice to explain the
+> reasoning a bit more in the commit message though.
+
+Hmm, don't I already do that? In the paragraph you're responding to I'm
+saying that git-gc(1) already had that default forever, so I'm adjusting
+our heuristic to match that.
+
+Thanks!
 
 Patrick
