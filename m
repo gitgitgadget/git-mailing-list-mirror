@@ -1,108 +1,229 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D228346774
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:29:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786555777; cv=none; b=rG536P9Vz59rA/q7frsQEWF2fGjvpCLJrG/stm71atLSD2xk6dHSaNO41pTLuPOxtJBEJ4Zhu1+HaRgDZfKMeKLqlKhkhJCp3Jt1sVwvl+ywfZMZyMjq/qf014zdVNCuD6f8+1gd2JjqVfJA9UGSRd0XnbFa5n6qEs9P6tocy+Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786555777; c=relaxed/simple;
-	bh=SHurWVsJc/AJqrD2ewEMDIgRthRpwPn+8EvIT/trHOQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WXGPB00TY5FFnXN1QhGNQOGVSoPYU8BFPaxOz4z34BWt8UWoiKyjpxGa50XCLqIoKODqDmAvf+HCs5WoDaCBeTN+trmUwPyyFoi3XxQby+Qjhu8H5bcp9+PYfGtXaQVj1cNzPvxuxl3BtSXF8AG/5ILVemjT3KEJ/FatTW35JOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HTG79RSm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HFQuDbEA; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8D831A807
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:41:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786556488; cv=pass; b=iJ8o4P6BMTyYzKwJtfG2IZAf3+n4qIiehIP3AYtgs+dL6u16lpS9N6rTJLg+MOs+vZgQbtDSmg+HCYTNytyussbkxBOxWm2U5f0pYB9ZXKj7ppuDdLJ76yF43pLaS/c5R/SlqNPQHB+ify7idopHWXcBE3ob+jfNU8R0I36W6wU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786556488; c=relaxed/simple;
+	bh=+kFsc7VvXd23cus1PPxHEbZst0IX8sfZaSAG5Ch0FBU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BztRhdoURr1kppABh8QEvXK8pPGKp0RmCLCYqRaq55nzeAc5zmBqXSSgCFwgJe5xD1TNp/IudnEk28DL6GChVl87fsNGpWRHEmsZ6octpjfhEMDbOpI/nup5Bup0LeCUxTQTUNdXRvs+eexC6xCM4J2ZonqQrP78YgEf4wbCrkE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fc6/gBR7; arc=pass smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HTG79RSm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HFQuDbEA"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8B2FA14000B7;
-	Wed, 12 Aug 2026 13:29:35 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 13:29:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786555775; x=1786642175; bh=HMKsgbCuQx
-	BznGkyhutWFyV1NT4/aqKO0GZkv62jg1E=; b=HTG79RSmwP1qeV4gUwTCco4iby
-	TktIPXFDYlcF+szdLIIiYvqN3b+2LYKkwLUaqDUDXUCKUco6cxCP1noERfOtNMX5
-	dfKMV04nF2g4FSvzKbu7UGCpgMhXsicebK/46ZfxhBSlBMHhcx7UxekC+W09OuJJ
-	9dyXInwCZ+TyeYP/EEUJec1HMQbTNHmEDKVywPqgcUSa3Rxc2Dw3WLVEZU9vm+35
-	6V3FTcUJSGpYKDMPuJJJJMfqJXYMxGEIowbbZdEHoFHqao7aje52nN7iWquDk2NJ
-	lzYA6pYk1T2afsRwy5hp9IjZlYrV8M4lOQk28+akkCXXvDH+saTXsmqFUMzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786555775; x=1786642175; bh=HMKsgbCuQxBznGkyhutWFyV1NT4/aqKO0GZ
-	kv62jg1E=; b=HFQuDbEAz2PoccWjSTz4LWFDmnM0pygUMN/W846WnfLcvN+mzwu
-	dAPWHIPRUSdcxaiBGW2c1yPRj6OMHBAnliK67pJxvH5gZZLd51/58ENuHLs8IpuC
-	Cq2l4mzachkSSrc31BFeOJlMwl07KsKYerSc0qS3oBpTCMnjO6PxZ3jv3oUjH8Gt
-	0SoZvjISWOj0cZUIISUxadrpg1Xzio5Qr5u7NecSQq6JrJjleVSJo6C9JR1ssHR6
-	3rE4R/uDUXvYo/r7rBbq3GnWvh1QO3mDVVHy1FmUmKx6rFFGQyBEhGdE0bSVUYRn
-	DTn/5DvyB6f/NoWxKwaxZDLu+y0JSfGSezQ==
-X-ME-Sender: <xms:f618ah9hJWwcKIEoQE_onHErks8uXpnM4qVJ5HtXjrkaX3U9esg6ZQ>
-    <xme:f618apZ1MQP7jL5UEV2tMiw8bjbFn3AWa2QdSTnzGR5euLP9nK-vUY89VPUTPaPiW
-    tm8rNgJnaQ0Cpb69z6BIGvHYCVkZi4R75fN5haeUkBChBJ3hrsqGg>
-X-ME-Received: <xmr:f618ao0vv47BdMjqMvN6NuDif0DKkg2jw2u5zCu9XAh7lKf1aWwZH95YaCUctdVIyTqdqGC0-Q_Op1zVhcRV4TlZBibo25R-fw>
-X-ME-Proxy-Cause: dmFkZTG3VRmfTkGe4YEbw6ujyj9QNpTN7qcrpg7jrq5vJrQFLEO1m7JiwPmrhVlPfM87pK
-    cle12LXxk57rNYe0bACJmW61y5exTGeeA3XfGU1gfECxcAB+ElIZg4YYzcCTFz9sPDs3Eq
-    hE7tVEBAKsL/BFl15TST2iYc0Fb0vSaqEz+VxH41P55RzPzcWJz77Uyaw8o99vnWQNSIoJ
-    KYm3Q/uNiqDIHwzHBsgBTMAXaf0eVNTmwxRVegYDaNwjP+B+IVRrNCCoAQgV1Pfbjuk6/E
-    bJ0uZYHSpa878TwDA+GKg0lvBbTKrLOc8Qro2gyWH18kXrF8SoG01kzpmsn6OTA00ZxzAc
-    uedbXst3btdRVmOgC6HD4mSD3PKNpnrJoae9nhTs5epJmEN6USx6YaMRwAqSIkdMFpbrpg
-    2Cdn9U81DKbfe8JhgBdzqCivex25vj7PAxYoq7/kSh0XGu8BmVv9O2zOjVZMSgNDZrd2mV
-    U0zWzmI7skvfYtEgqWc1s3oGITkWGW23TFKE28pcgU4H5RFirkhwMAQjw/byKAtAx4vRDW
-    l0esbSHy/CFPTwOASiT/A3I1HD2lFaLkd6fuDQF4vOuhn7d6j8UVO8gIeQ9TwlgzolXoBP
-    A38CZoUtgTL8w3nsq8b5d1oT6/eH22yeepKYOCZHjEws4yroAc/0EMK3KQOQ
-X-ME-Proxy: <xmx:f618asZcCYycW_eMCyOsbTGRQ40E_ZPM7uNPrY830TNMaBCWSnj6cw>
-    <xmx:f618aoIzVKr_5il-WGvwus0XfRk3WHSCogaPlwi_htbvyH5rIElvbA>
-    <xmx:f618ajHZKPPGuUoLBwXeF-dq9UUBm5CGrwJm6_tacaKs2j6yMq5thQ>
-    <xmx:f618anv2ugDbIPkHhSecHixTqd0vRrB1NBAI3atKOxbS9sZA-xIg_w>
-    <xmx:f618avHq2uqsOdVVj7EdHEB_2GmVLx1vzLCCJC3o2JtCsmlGOlJdFS8u>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 13:29:35 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Jeff King
- <peff@peff.net>,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 00/12] coverity: fix unchecked returns
-In-Reply-To: <pull.2179.v3.git.1786521801.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Wed, 12 Aug 2026 08:03:08
-	+0000")
-References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
-	<pull.2179.v3.git.1786521801.gitgitgadget@gmail.com>
-Date: Wed, 12 Aug 2026 10:29:33 -0700
-Message-ID: <xmqq5x1fxn5u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fc6/gBR7"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-84862b0d5f8so1198171b3a.3
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 10:41:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786556487; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WdhOZwPj9cyfSYuD5VQbNqoHTN0uUDpA3jV6TrueA61Fx2b2F0EajiEqsvP+ugt8hT
+         FYzTKmEirsXQuRqe0oMD/iO81oXl0XWGJ9l+o6fRiCJ8HvHq5Dk5zdRSyBCr8wdZQyE6
+         DPyxBFi3ABCBjtti+Tv1yNVMg2t3qCjXB3j6sFgi1kZyBFXVTXMTW6PHCcuh+6tXxzpZ
+         4ULi+v6b3w4fLj0CsgR5pSTPqOHp2JtsddXjsJhlxkmNMrM7PHdIBQLg4q0d+iET0zLg
+         4FgaSSc2Hr583IIAp00x394uKhcT0ELALxBlP9idjuhxF2P2PGczPxaOqTwEpKGXOBt4
+         bPNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=A5kFl+fFqjctNxjAzG0Pfa8+orE7hA5oMwcqoiVHuCk=;
+        fh=pN7wu1zwD+xcQsXWuh1aXLiVhMCtwuxgzoUDjuwgVME=;
+        b=G7QJecuSzUvO0HJKLLPZI6BEULfpv4KXctX8gsQYp0cY1i245djcasHbwZHN04FXCw
+         DKDtkODglsQMvrtpSKYTfgiTQnLaoaN3cSH1NjFm93TFzV3DiK9ThUjH2/vKhk465Ye7
+         0yHZMu75joby9q4xKbwswjQBzSudj7Q7d3K/ZOK8eg3estMZuFd+cHe6HhjuI42MaABM
+         BLaqCRG+g6WtGN4hoyQBpZg5ErUzFLxIT8kCnUxcRmoZaR17CR0ZDO7n4KvlyAxr0gbL
+         SYkSRw0cmRQist/YYs0DTPrlj+Wsja4v1vmtAv2afjrc6mUDT9cW4uT9FRcxvP1K5bkJ
+         AO2Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786556487; x=1787161287; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=A5kFl+fFqjctNxjAzG0Pfa8+orE7hA5oMwcqoiVHuCk=;
+        b=fc6/gBR7GBisPYrP4S9/WiBkH5UP5O83uj32Ns5ZgbTkKbxBjXEjh2pXxt30yalWFx
+         LjHBCCzkBGJTe+RDXO3IbFyDXuGi+vwm01za5gCyoKctdxGSLAotNzRh0jgFJ+yx4/gw
+         XkkEiYJU96LGdJyl9uUo8QpF/ah6YQ+Y92B8RcEWdnLCKlD3KvELBkVQJnkywA3o9n4e
+         VXiEiZeNd0FIfDxSdvJGEklf6fWCNDrdvGWo2kloInNM8KT3CkHSyvJcqT+ebcXu9mLW
+         BdfGs7smaI57oxLLF9jbAO/yNZSme06QylDmiAGGdN+jlnQXKCSWkGtK+3/w26LUfdIH
+         dq1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786556487; x=1787161287;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=A5kFl+fFqjctNxjAzG0Pfa8+orE7hA5oMwcqoiVHuCk=;
+        b=LENLP2vJ+GmkkE+Z44Xh+bPHN/VhtqCf8d1EJbqhIpbIs5s+lsv0X98hmQFxcQhyG1
+         zlJUo9B/DfzlOwONDwtm3EjUf7qKpmfXmOOGnkEIuI9ChJD3tJhp3lRU7z9pVg5oV5hL
+         iL/RAprVwB48ceKeJKmgc1IbH1EUojtW0Q0sKAPl+xvz3v1jL3ocA8lwgcNzkmiRORye
+         lTcB+T7MzEIaQnPhayxCfhWcE+w5kyGjAc44TxCicQZFbwj83L6/BlDrajPSf4n9ChNG
+         8Qf8HJtt9ejOU/kaMBIZMZvTabGtMz5qXprazhPhSGgBOdYYlXCU8bmSNAEk5O8EYGAi
+         rkUQ==
+X-Gm-Message-State: AOJu0YwgNjTJ4ufb/SDie+O1R9T+cxxSIjXK3W/PLbYdtg3VVfyMREYb
+	tP5aeD9mmt0KLKRCxjw5jsMoxMJ0KmheTldqOUYvhpdOVSNQ4oP+byHXLcuxxIWG1ObY3yM25md
+	xoujiJQX8yGIXEsxPtHc3Cc4Z4OvOExKIADkY
+X-Gm-Gg: AR+sD12MvM07+boxn5YzRzJXqVAY7j1cCF3zuWaDMiQYe88+rL3/rwDD4nJdbMwQ6Tj
+	Dci+Ko5fxqD1/ygUmH9nCdRTcD7QEoC8zTWVqZg5YBjtfXrYaqnuA2/KaJ3X8hSxFtFjSOc+54g
+	TJv3xGa/zPMXa66dpR9LZPC68kawWDjtyo6rFXurNWJg+aQvEfJG7D4Td+o/y21+7DVzWzC5cpX
+	BG2yTeebvZA/DGRxv//WRLeQSL9MY5i0aJR7gKdTCo9LLwyOEeTMjoORm7F+++lOmIt06tuIaxN
+	f2+n6iclhDs18LHU+8SOhlJPszkQGqyIqL3o9jz4sFibKxW8VvdDSAzGIlJPWWq6HSJoTSZ50tM
+	R5RgpEc/LXJJ03eqW2aCSHibUmOBgXsduwlCeF1dVHzf7IHgm7mooBCrLAEtkLefIJPCESScz
+X-Received: by 2002:a05:6a21:3a48:b0:3c3:7ecd:72df with SMTP id
+ adf61e73a8af0-3cc5547c7d5mr24034637.30.1786556486740; Wed, 12 Aug 2026
+ 10:41:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
+ <20260810174047.6524-1-r.siddharth.shrimali@gmail.com> <20260810174047.6524-7-r.siddharth.shrimali@gmail.com>
+In-Reply-To: <20260810174047.6524-7-r.siddharth.shrimali@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 12 Aug 2026 19:41:15 +0200
+X-Gm-Features: AUfX_mysVyUBjHVSTvqqMXnEa9Ye1scU9D9Ec0R0uES9hZzcP0SJuCxNy001vEA
+Message-ID: <CAP8UFD2ii8C77jWpyHRYG=H7y4t-PFtR5FQB3on4bmB5FQyG4A@mail.gmail.com>
+Subject: Re: [GSoC PATCH v4 6/7] builtin/repack: add guards for --drop-filtered
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, siddharthasthana31@gmail.com, 
+	ttaylorr@openai.com, ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Mon, Aug 10, 2026 at 7:41=E2=80=AFPM Siddharth Shrimali
+<r.siddharth.shrimali@gmail.com> wrote:
 
-> This is the next batch of fixes in response to issues reported by Coverity.
+[...]
+
+> @@ -317,6 +319,30 @@ int cmd_repack(int argc,
+>                 if (!repo_has_promisor_remote(repo))
+>                         die(_("--drop-filtered requires a promisor remote=
+"));
 >
-> Changes since v2:
->
->  * Added a new commit to handle block-writer initialization errors (instead
->    of ignoring them).
->  * The bw->zstream attribute is now also deinitialized in the error case, as
->    suggested by Junio.
->  * The commit message of "reftable/block: check deflateInit() return value"
->    was rephrased to stop suggesting that silent corruption by zlib would be
->    possible before that patch: This turned out to be provably incorrect.
->  * When aborting the bisect because dup2() failed, a left-over saved_stdout
->    is now also cleaned up.
+> +               /*
+> +                * refuse to run while another operation is in progress. =
+A
 
-Everything looks sensible.  I am fine with declaring victory, but
-does anyone want to second it?
+s/refuse/Refuse/
+
+> +                * dropped object would just be lazily re-fetched when th=
+e
+> +                * operation resumes, but triggering a network fetch in t=
+he
+> +                * middle of a half-finished
+> +                * merge/rebase/cherry-pick/revert/bisect is a poor
+> +                * experience, so this is a UX convenience rather than a
+> +                * safety measure. Bare repositories have no such state, =
+so
+> +                * the check is skipped there.
+> +                */
+> +               if (!is_bare_repository(repo)) {
+> +                       struct wt_status_state state =3D { 0 };
+> +
+> +                       wt_status_get_state(repo, &state, 0);
+> +                       if (state.merge_in_progress || state.revert_in_pr=
+ogress ||
+> +                           state.rebase_in_progress ||state.bisect_in_pr=
+ogress ||
+> +                           state.cherry_pick_in_progress ||state.am_in_p=
+rogress||
+> +                           state.rebase_interactive_in_progress) {
+> +                               wt_status_state_free_buffers(&state);
+> +                               die(_("--drop-filtered cannot be used whi=
+le another operation is in progress"));
+
+Nit: I wonder if something like die_if_some_operation_in_progress()
+from builtin/checkout.c could be used to improve on the error message.
+
+> +                       }
+> +                       wt_status_state_free_buffers(&state);
+> +               }
+> +
+>                 write_bitmaps =3D 0;
+>
+>                 /*
+> @@ -332,6 +358,29 @@ int cmd_repack(int argc,
+>                 if (ret)
+>                         goto cleanup;
+>
+> +               /*
+> +                * refuse to drop blobs that the current index references=
+.
+
+s/refuse/Refuse/
+
+> +                * such a blob would only be lazily re-fetched by the nex=
+t
+> +                * command that touches the worktree, so dropping it recl=
+aims
+> +                * nothing. This guard just avoids that churn. bare
+
+s/bare/Bare/
+
+> +                * repositories have no index, so the check is skipped th=
+ere.
+> +                */
+> +               if (!is_bare_repository(repo) && oidset_size(&drop_oids))=
+ {
+> +                       struct index_state *istate =3D repo->index;
+> +                       unsigned int i;
+> +
+> +                       if (repo_read_index(repo) < 0)
+> +                               die(_("could not read the index"));
+> +
+> +                       for (i =3D 0; i < istate->cache_nr; i++) {
+> +                               const struct cache_entry *ce =3D istate->=
+cache[i];
+> +
+> +                               if (oidset_contains(&drop_oids, &ce->oid)=
+)
+> +                                       die(_("cannot drop '%s' (%s): it =
+is referenced by the current index"),
+> +                                               ce->name, oid_to_hex(&ce-=
+>oid));
+> +                       }
+> +               }
+> +
+
+
+> diff --git a/t/t7706-repack-drop-filtered.sh b/t/t7706-repack-drop-filter=
+ed.sh
+> index ba00239c9d..05d58fa456 100755
+> --- a/t/t7706-repack-drop-filtered.sh
+> +++ b/t/t7706-repack-drop-filtered.sh
+> @@ -146,4 +146,40 @@ test_expect_success '--drop-filtered removes the pro=
+misor blob locally' '
+>         test_grep "$SMALL" present
+>  '
+>
+> +test_expect_success '--drop-filtered refuses when a merge is in progress=
+' '
+> +       test_when_finished "git -C repo merge --abort || :" &&
+> +
+> +       # creat a conflicting merge so wt_status reports it
+
+s/creat/Create/
+
+> +       git -C repo checkout -B mergebase base &&
+> +       echo one >repo/conflict.txt &&
+> +       git -C repo add conflict.txt &&
+> +       git -C repo commit -m one &&
+> +
+> +       git -C repo checkout -B mergeother base &&
+> +       echo two >repo/conflict.txt &&
+> +       git -C repo add conflict.txt &&
+> +       git -C repo commit -m two &&
+> +
+> +       test_must_fail git -C repo merge mergebase &&
+> +
+> +       test_must_fail git -C repo -c repack.writeBitmaps=3Dfalse \
+> +               repack --drop-filtered --filter=3Dblob:limit=3D1k --dry-r=
+un -a 2>err &&
+> +       test_grep "in progress" err
+> +'
