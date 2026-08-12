@@ -1,173 +1,116 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB35633A014
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 16:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3433F2F3C19
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786553337; cv=none; b=m0XYAU58uGBnImyYQc/xvlrMRBkeC2I7VijGsJkPLeTbocp5f0cGI/jrP6K9n1/cSx4rp+n48oBchOiYOk6pqS4lg3xBpDR+0wKZV//V8jB3dwc1plRcOUIcFOBuB/WbVFf8hX83s4zzm4h25q6IkGjlsU8UOPY98cvh/VrXsko=
+	t=1786554205; cv=none; b=Batr1TFGfn+rJikalJkiBD7dqQcAIH16EMdlhLDE7ZzuL9hWBaPxXdBeX2MWqsQxUeYwtkTPJjydhBUva2HR5ZnKr7rXfqdMdqdc6CD+EPe2LQ0XTJkSNXrHekaOmAr/NeohW2R/uobuBPLR0I15cWSf4+oAmumE5TBqGlvtpZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786553337; c=relaxed/simple;
-	bh=j5hExFLz/Nxkt9sf+gT+v0+U9BwUBaTtDTbI2iiYlSM=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRuAhB/Ogm5jb79dxb+yEhKtDPu8zLx6pp5twBWSL/aWJNPMc/bvRBWE0leZQv9ZETnj7SB3cDDMLIBG72jSl4DH8y9yTvy3CsArEwsg6To9eV1u0Ud3nRQ0F2vD2mb62UK07XsDuW8qFaCbrQAUgSl8r/08oV1tIJfvVn7cx6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0FrF3yWm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PJzGHKW4; arc=none smtp.client-ip=103.168.172.153
+	s=arc-20240116; t=1786554205; c=relaxed/simple;
+	bh=pJABEjlNa9ITwFhHVDrC4x7rIAVlduV8fnf6veDY4BI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rVd33SjP5UXZAavbVfHogs7pM/fgkoNdYzZhf/rocMnN8ySBHJ32FyG+h4lGybKLYlpOk1/OK0I6fzem1QXu8USE5cdoqehBxJxMEYOUmsmeCPhyXCmpvaA5dm3PA6O7YRqVaefRuQkM3BcWbT9Yjie9F3txXAFqkXn0VxfUogM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Bu4YwvdZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K27huyap; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0FrF3yWm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PJzGHKW4"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bu4YwvdZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K27huyap"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6F18C14000F6;
-	Wed, 12 Aug 2026 12:48:54 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 12 Aug 2026 12:48:54 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 293DB1400082;
+	Wed, 12 Aug 2026 13:03:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 12 Aug 2026 13:03:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1786553334; x=
-	1786639734; bh=ZUbK9hzhgrsFtjZuGofimnbuehxsvkli8437VvGIli0=; b=0
-	FrF3yWmzOahJoyxbB0/cKj6y074kAfF387Pt+wlrRCTui3GqUdZTbkVUSkZT2McQ
-	wJfkEfAyMJSSqsO9i0xZPL0H5CW7ETVSdOSBgvpuE2o0Bq4csi8thXJn3Dm/EKAt
-	Gi1o8mz+cTdCOjktkV/PQQGI7Bz7jA+pB5dJEFGDgtvvmDYlTnZj+kbCsY++Uwbg
-	UnCRyQ0ZDwCL9wEMgw1QgM0nX7LJ53Kw9J8UWh0vYsfdWf7d1mYoqXbcZHOxioNS
-	bdfZxd0h8d3nrc+0Z1quG45W8+miO3qg2Z0D3UaV5iES523eELj6xW9kUZyhuWNk
-	usL03PlY31rKjBuWD6rSA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1786554203;
+	 x=1786640603; bh=6XBFrvA4xdvYNlkknAhJmUSZe8wdSH/Y8opmkLvhZyk=; b=
+	Bu4YwvdZi/hljYgXYM4FXHIlIqc1nY8pYLW3Q64udxwTZ00jswbqNJqjkfvETPJV
+	QM4PdyobkXzbhEd9GVuI1JGIxegLN2zQkF16tu/lLADQmDiFWwfHYh4pF3I42/rK
+	KZxAu3E9c8uXRc2/gYTIQuhrtK9BPM4ijvewbsjRn44a4lflyvPiK1xyHnkrNQG4
+	VdPycEFUJESWip0jGSoIZWFxx4Yxl91g7MwutcHKa8M2mj7SaHHbmVEfCTejxEA3
+	LQFfxC4GewwTq+RGLipAj6xFWKXA2IL5DA4S+4n0ZJ6Sj5bGTpQLcue8Vx0qD06x
+	nKzB7/dEOkI6s/2afGGMmA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1786553334; x=1786639734; bh=ZUbK9hzhgrsFtjZuGofimnbuehxs
-	vkli8437VvGIli0=; b=PJzGHKW4fs/SM3tE8eceadWZJQhvOPy9+eUv99zJ59wX
-	bvlIqRjyeZHBCqaraLbxolCxptiz//Xkoe4APmx7STdMGGVuxkhyzhyPgElbczfn
-	qK/iVxp71Y8HO81wlxYXorYB1HCpiXTZne1B1Ua5TKiWD4JRmwlmf+W5NDAeNmRB
-	lVID+/E4g5oYUwcXYi7RrsGAkK1l0CZuFfx0oeRnLfxgD4s7z2KKf/71IbYBV2k2
-	XBbRSAgNthwfX3eY/59Z0IGJs/6n5lL3JHvAnSVQ7fp/ZCtGF195B1nsr1xo8OoF
-	DgnQWj6IQgTysXBNphfl3Eg4XT9QtF/J6CdMfQao8Q==
-X-ME-Sender: <xms:9qN8arRUqTufWpDnco1Ox6eoq1DWMQdOuQ-05TbuKLLKvb2uV_iCDw>
-    <xme:9qN8aixoto86QL0E7lGqLA5Ht7157lh80HeX7aIZjA7ehiDkdGrpHmNW76HbQ5pGL
-    OOezEB6FgShaDOAEzOo0WeJwHZXob9loIhSmRb-pb1osNjsrKZ_MA>
-X-ME-Received: <xmr:9qN8aufYGnfQA91r_Tdvz3Fa48KrrjlJR8ZKmBgKoWMLrQMCEFhLl4UzkyKHPWFgiV9KIgDxsxiHFLGymd7E4ocYbokTiVcEaA>
-X-ME-Proxy-Cause: dmFkZTGbcGMnreNzUhovU1JHNbOQQAcr1IH07N1gMlNTXpRddP5CnwwPu/+ceMOh3NJeDg
-    YMUhqjJyTfW5iB3PdXoE6SyePkR3aSlnfVemmbXL/p+LQJ1UaRNUdhna0fSeFIotbMBXXB
-    95aca/RSXBas2r9asOD8G4/n2Z0nXIwCuvo11SzdCN8Jg45He3BRrJCoJhTuhBSRKhbefE
-    f2DmN6bOUvHUifQzUbDVLg4JFhw7fdVweAs8Yp79re15IsPnZqhhRsJBraMpdyf+JO3Xy0
-    UtixG9JlpUE5cCoeaQ5CA6pWZTBCCUN0hlnGHVciH0PVAmmmfE68bWJLI2Znl2rPlcEMlh
-    Jx3mVXduF2x1vVEYa+KYafBopGTlbZ8jUGBI5kldKDEAxKpRlsTGQqUtEy+tJ5YhURSZII
-    OBDJFqJiX/FdUOKSAzMd0t9L0B0Gw/53Zt7n3kz5mrFkIY2SGY2KQrbkMz/0DGj8pHQgC1
-    B+5g3tFsVSRRIzV7x0+g+6aZlzSUYDTqbW7UQKM+BAYar5ddWOk3JShWE+SVGQ3ZVUKaCw
-    Fbkres3BVJaxJZDn8VV13ECEI+A6TwwA4Tbw0zPtKRv7jVVA7Xc/s/h2tAGRYQB+E7W6up
-    czLMztZK7vTUjUATLYqxoVeEA6aA0DFR91iUz/p/ODWoO+1vLPLY9xVctN5A
-X-ME-Proxy: <xmx:9qN8amItHERlIj4T1JZiUJWL_22PeORVMWl3GeQkanmvXpVktaOjFg>
-    <xmx:9qN8anHc4wxBKi4m7NQY_FeVG1_h4W0egHGLTJi8kA42Art-cekb6A>
-    <xmx:9qN8aopN1ghQd6yzVAt0oiLRwE1wfPwQTnFO7gLATlgskfwTeUiIxw>
-    <xmx:9qN8aoSytU-hgBIP_hEGktRp91Xkk_4gHezRt4nBv8LQn_912sKQHw>
-    <xmx:9qN8aurM6mMOvCsb_f82V3kLGDlrfmKW0dmVwXz3Nj2MHSDp9cU08FZb>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786554203; x=
+	1786640603; bh=6XBFrvA4xdvYNlkknAhJmUSZe8wdSH/Y8opmkLvhZyk=; b=K
+	27huyapk7muwMUCkncsPXMz+SegLZZpl7qvoGQA7WAEQUH4A6WVgERsW1rDFcBwC
+	XhY8OVS7xYcxPNeIhVm4uAFY0QB0MNBAGn12nuCFBcpfHjFcVLSCKUXA8Mg0sC8n
+	ii0+Gwrpu9mPvie6I27TeCK2HGYcTz+vy/K08ghbHJSkmUNmCvqwP2XuQsFQsm0s
+	w+QxIpIWrWkxmSv4Cmki/6gdXQQz9YLamsm1OL+5NmdmPBH875cAdjDwi5KJcOtZ
+	B/3QGb6XbsEkg48FO+Uvaf+L9YWsRflX1kAX9iuSoIQzdueDiyYXdeYOuhv2c4wA
+	XqcvIEYp2jGhY/74vtpAA==
+X-ME-Sender: <xms:W6d8aqFBudGuf2CP8wPUwhS0ctIQ4RU1wEvWDfGJR7EuBaC5ky7kjA>
+    <xme:W6d8aiVYcj4ZHuBkoweo8rRGtGGPKQIfhJqOEDaOmsjOZ4APWt6dGIAQA8KAzVg1Q
+    4TwXd3AWiYgXd_k3p-JKCkwx6KyWwyzgaVYlwhnO_26207Hg-Jb1I4>
+X-ME-Received: <xmr:W6d8apLT5hdiYvxv4gZNADNtmquOQV0RYrg3A860t-taLI36mUX7CDtLDGrfGsSMCn3iTpxbIXWWt_d-RMv7hpx-LuaDE7hL4g>
+X-ME-Proxy-Cause: dmFkZTGZF4i1ZGgrToXW9pp+IbUC6b8BtPBHRv7gxRV7YNPk8Fbv6tb9Jhycd8/cQPf7vC
+    ikOX8QXo03XAmCfuW3Q33g9h/QZt3KtEN/LmheHfcSVKtYH04KZKEI6o6vQ7o+QSCliitA
+    pj1AalqLaoQjap0bc2FTPE1V8mQmGCyqF7pQr7NjTU2jtFiVvNeljev3kBz+sMFUdlOb01
+    QFHeixXyg+k2HdjbL0nQBSmqm7m6nSieTC/gjUX6/FGESB0IRWD7q1TxkUhQlFnSrVbk+E
+    fEiXyvTY6O2sLB6J+hVNT1jFX1t05tWiR3CAVP/YsEFMc7qPHt8Nang9W9CSAxuZCc5+fr
+    1vJIpi2PC8oe74jydMLFjuQwpkdQWB9hfJv8qUqEkVYaeyR18Bp68AWJ7NV/Zhj+FrbFj7
+    CRoij/mx7a+0DiOMtuXpb9BZgtH8VQf1WKQm/14dzOB87hhOOTGzcOS8dHdbQPsscghBXv
+    pCtkqs5MVJw6PT7kLwqsOW+7ZdgqxsLlTKtnZnpbQCqiSx72urieJ1sAyDtQuUXqG01NlF
+    cWaxSow+jBZ2HCKca5IIDacErcV6gwC8nOIowPxilq7OPNs1Ph8ZpV1n0IBFdNHksleV6p
+    Jh2fU/2RcPQHFJxoeKp9lfEbv+Sfi6L1Zsg1E6m8QSyY3KtQIqxYwgpDxNDw
+X-ME-Proxy: <xmx:W6d8ai9PFQ9fg2MgP4KPNpC7BNaAZZRLzBksWphLL6MhrhZiqf89hg>
+    <xmx:W6d8asImzP-s6TnKW1UkxZoplzl6l3rf-JW1ppI7VZhWS75uz_Pixg>
+    <xmx:W6d8ankaLZrS5qZLxMnu3e2RJb65bgAftivgdncPjkRmeicycuzBSw>
+    <xmx:W6d8agMPdAi0P92bh0lGcHoNiaDLYIXGKNFVNOxNpnfPTKLUVQ-aJQ>
+    <xmx:W6d8akpkLdWvPsjWQAlvA3zd7o2u_6N3gLeZLffe53AGlzpGIoXcJDT9>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 12:48:54 -0400 (EDT)
+ 12 Aug 2026 13:03:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v2 3/3] completion: 'git checkout' completes untracked paths as a last resort
-Date: Wed, 12 Aug 2026 09:48:46 -0700
-Message-ID: <20260812164846.2236221-4-gitster@pobox.com>
-X-Mailer: git-send-email 2.55.0-721-g26b8014fc4
-In-Reply-To: <20260812164846.2236221-1-gitster@pobox.com>
-References: <xmqq7blx5oor.fsf@gitster.g>
- <20260812164846.2236221-1-gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: Marcel =?utf-8?Q?Svitalsk=C3=BD?= <marcel.svitalsky@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: Bugreport
+In-Reply-To: <8fe70f89-89a8-426f-bab9-21284722c58d@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 12 Aug 2026 14:54:29 +0200")
+References: <a7899757-9c3d-4735-b7ab-469808707e61@gmail.com>
+	<8fe70f89-89a8-426f-bab9-21284722c58d@app.fastmail.com>
+Date: Wed, 12 Aug 2026 10:03:21 -0700
+Message-ID: <xmqqmrurxodi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-We taught 'git checkout' to first try to complete revisions (unless
-'--' is present on the command line) and, failing that, to complete
-tracked paths.  If this yields nothing, it lets the Bash default,
-which offers paths in $PWD, kick in.
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-Teach it to complete untracked paths before giving up and letting
-the Bash default kick in.  With this change,
+>> They are not graphically connected with the actual commits, they just
+>> sit there over them. No other graphical
+>> tool (Sublime Merge, IntelliJ Idea) displays them.
+>
+> They are Git notes. They form their own connected graph. That’s why they
+> are not connected with the “actual commits” like from some branch.
+>
+> The `--all` will include all refs, including Git notes like
+> `refs/notes/commits`.
+>
+> This doesn’t look like a bug.
 
-    $ git -C another-directory checkout un<TAB>
+Wow, I 100% agree with your conclusions, but it was unexpected even
+to me that "git log --all" crawled anything outside branches,
+remote-tracking branches, and tags.  I can sort-of understand why
+the "rev-list" command at the plumbing layer may want to include
+everything under refs/ hierarchy, but it is unexpected for the
+end-user facing "git log".
 
-finds the 'untracked' file in another-directory and offers it as a
-completion candidate.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/completion/git-completion.bash |  4 ++++
- t/t9902-completion.sh                  | 21 +++++++++++++++++++--
- 2 files changed, 23 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0eecfcbf8b..22c53697ab 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1784,6 +1784,10 @@ _git_checkout ()
- 	if [ ${#COMPREPLY[@]} -eq 0 ]; then
- 		__git_complete_index_file ""
- 	fi
-+
-+	if [ ${#COMPREPLY[@]} -eq 0 ]; then
-+		__git_complete_index_file "--others"
-+	fi
- }
- 
- __git_sequencer_inprogress_options="--continue --quit --abort --skip"
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 13fa5c65c3..e8418f069b 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2727,9 +2727,19 @@ test_expect_success 'git checkout completes tracked paths when no refs match' '
- 	EOF
- '
- 
-+test_expect_success 'git checkout completes untracked paths, too' '
-+	# ufile is not tracked and there is no ref that begins with u
-+	test_completion "git checkout u" <<-\EOF &&
-+	ufile
-+	EOF
-+	test_completion "git checkout -- u" <<-\EOF
-+	ufile
-+	EOF
-+'
-+
- test_expect_success 'git -C <path> checkout completes paths in specified repo' '
- 	# otherfile is tracked, oops is not
--	# lostfile is tracked but lost
-+	# lostfile is tracked but lost, ufile is untracked.
- 	test_when_finished "rm -rf repo-for-checkout" &&
- 	git init repo-for-checkout &&
- 	echo content >repo-for-checkout/otherfile &&
-@@ -2738,6 +2748,7 @@ test_expect_success 'git -C <path> checkout completes paths in specified repo' '
- 	git -C repo-for-checkout add lostfile &&
- 	git -C repo-for-checkout commit -m otherfile &&
- 	echo untracked >repo-for-checkout/oops &&
-+	echo untracked >repo-for-checkout/ufile &&
- 	rm -f repo-for-checkout/lostfile &&
- 	test_completion "git -C repo-for-checkout checkout o" <<-\EOF &&
- 	otherfile
-@@ -2748,9 +2759,15 @@ test_expect_success 'git -C <path> checkout completes paths in specified repo' '
- 	test_completion "git -C repo-for-checkout checkout l" <<-\EOF &&
- 	lostfile
- 	EOF
--	test_completion "git -C repo-for-checkout checkout -- l" <<-\EOF
-+	test_completion "git -C repo-for-checkout checkout -- l" <<-\EOF &&
- 	lostfile
- 	EOF
-+	test_completion "git -C repo-for-checkout checkout u" <<-\EOF &&
-+	ufile
-+	EOF
-+	test_completion "git -C repo-for-checkout checkout -- u" <<-\EOF
-+	ufile
-+	EOF
- '
- 
- test_expect_success 'git diff completes tracked paths when no refs match' '
--- 
-2.55.0-721-g26b8014fc4
+Not that we want to or we can change it this late in the game,
+though.  I wonder if "git log --all -p" also goes through the stash
+refs as well as notes.
 
