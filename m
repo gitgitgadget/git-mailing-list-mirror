@@ -1,184 +1,140 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9985E46EC64
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 15:42:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE49476071
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 15:42:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786549334; cv=pass; b=iw0NCFw6zhqgDIsyFn4oA7tIEayiZEwvtWSbeoVVvU9N/eNkxoJYwr+4aXq2iC8oPiwwlS5ylbvx5P84CSxwIQKh8to/cFv2Z/7asByDGagNDA7qAsBPD81JoFMLtG9R3KbadS50FMIv3yAsi7cF1a4ROpjIUFRn7YkfgH4K/JE=
+	t=1786549341; cv=pass; b=TbB7bMdEJxXnaztDZMzhmdt0P6L9bh4ANImpawi5FqxMaO3rKsvTyeduXI9v3cpaw9jt/GJzraz5/Zp5ocqayEI4S7aMayD0+taPNSOhtRmRbdks1b6UaqLMb5vqzcOa1QdFNymyh5DNVM3YrphUagspkekfJtVKNYLlJuAg6To=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786549334; c=relaxed/simple;
-	bh=fFSSslifti7EWEHIMvY3FDAJ558KSPebJjltr0NXnlU=;
+	s=arc-20240116; t=1786549341; c=relaxed/simple;
+	bh=uv83jlln7i02aLn2OrDZfw0Y79oScInXA5Lj3k3s/+U=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g3fnjl9Eo7LwmQ9UARp+gY9omKvHWxkHHsuJS/AdRUiXd0Hi85hxWh71PDuObj/2qwowY1UfdOcxVgXf0WfxHXLV9hXuvgfv4BMq4s5pokfP4UGb+z4Mmp7GbPElILCeqXGXFWX/4lx7BevdhtyosNk2Wt2AqX6Xdz3jw7u+ZNA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhKGKWuU; arc=pass smtp.client-ip=209.85.214.169
+	 To:Cc:Content-Type; b=jEg5ZR605knnC2HmnmJURj5uNzXYDl7KNi1LRyLhiOJgtUfEiT1utCQe4rYEqtgJZr3CENFIOX5GXZnIXzpTR2vSJ3YlNvCMvFshNuYLPcDdGzoIGYMBFkcTkWw0dwjTzB552x+4WPTN9Es+JnjDlTCWxstkj2fIeYqPHTG50Ew=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J8TlQF7s; arc=pass smtp.client-ip=209.85.161.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhKGKWuU"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2cacf197759so22828755ad.2
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 08:42:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786549332; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J8TlQF7s"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-6acbbcd3798so965191eaf.3
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 08:42:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786549338; cv=none;
         d=google.com; s=arc-20260327;
-        b=ETPZDf+arWq/DtHKbXYtPL+cnItinfNEiMYN1DOKieXmlnmU5WCxXW3p7OXGQilmLv
-         v2Fvs3Rh5EPVaxycgOtbeOF/dwRSJbkHlseBcA8X01va/yi0RDr+6r6gxplsyVnd5MLQ
-         lTnO9aRjX/H7pzC7WXh2OQrTZX2b9OZCk+7SNY18CwRBz217xqSGHSZ/tap7OyxI/5je
-         GsbxR0PKSLc6612HUJJ5UAO5AIAjBTbdg+a+M7kEdnNVmZduZlg4S4dvF8RGKa+7Hpwi
-         cS5te9PQwqgOGloTFuWkdVSPkHqWh/YaqgWMiFwztN6teQncNmb8VrHPM5gnXSiRy7N8
-         cW1g==
+        b=i5BikBd35nCNxzwT+cx7QMVjVjuNtgwa8Nq4smJDyYG/gsPqNW3clowDGJCSCknn/B
+         WxH3qMJ43GRFHxrnvht6rJpCeO8phtiTQ6bsYG75HqpdMmAcATxTCak0a6ZnEt3U0MKE
+         vO1uS8p8aKVXeKm3lRpzuoBWLJMuQN4VnuVb5QCJJcMK/Kviwm3PBj3AKGi2oDjvyXKh
+         IPYzZLx2fMIVf4FNeFLhVFfB/7Lv8gDGLNlH6e2k0UXcIlSFv7zUQ6GcARbfvNytnh1s
+         iPw1y7A25r3Yy9YCkGwwB+JaAJ2h+rZMlIfg2mf+FlrxjevMiL07DUfn5aOFsY/qqX8Z
+         ZTJQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=boi3x6gZDeGl3IyBZ4FNzJr15OaJp52C4OA1aMlKy6o=;
-        fh=GAAKa9LguZDAG5QbThFIPuaXJI5pNTddj1MZ09WV46E=;
-        b=eQrwu4LmCp/icOXAD6PGGEnYW7RsyWSry70ZRpFW11gEj3KgS0hXts44TEIDZiMgzs
-         FT5VKVQzMLCg6xCVgc+LQBXttq0V3czrl3tYC3fnsPVtsxSY5OZmaUcJQ+jVBxenFSiq
-         GhOdHLTRPKw72QYsdLw48ezOsAMXQlHaLroeDBUYKMrioYBOXkrDZLn8XRw5lIH7jnJi
-         TH90GEWWNIBQDfVDG/J3SkN5oA7oUNv697dEJhr/L4T4PKAvHtru97f5xieL/oupa/AC
-         U5rjDgUHRsCBxRA6yzM10LO2Me2992gwPQwjO2odrvJ7Kv9GofBwqJECdpRST25h7Fgp
-         IXyg==;
+        bh=4fz7p6do1KoplvaVuagA/3HPKgQTBFfHpWResmTHPHM=;
+        fh=4eFNDgGlp4EV62Kb5J4R0JRVrx6ApYCcIhqFuX7aESc=;
+        b=CRCvB3IGICRnNTDnap7ASsXho3fgw15++z9eWStLKg48733r+NWx9/fJnIaM9JZ1HU
+         CLoUKvYExJJPAbgJdMv4GgG8B3wiwWF0f61l2w0BNWhaIolyifK0KDv27YDEYnTyAIu+
+         BhyubgUdLraSelGpjJwD4aYnw/NTlfOm5+7qy85JmAcDWA7xbL8w0gWISy1uP9z3Q+pB
+         DXgAGHC933LsFdEbfe/r2mn18N5sXyanB2FRl6dk6L2K3BSIkIi48+BG7Lgs9k+iUgZi
+         xBIELLMnGE2RBqVgty2cytkbVJU+wmWEeqONQAUD5AMJRjELgwVUlg5j2LZzg3sYL56T
+         M4dA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786549332; x=1787154132; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786549338; x=1787154138; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=boi3x6gZDeGl3IyBZ4FNzJr15OaJp52C4OA1aMlKy6o=;
-        b=MhKGKWuUMq+YdyobtWbMDW/9Wn3tkoYQlsfdLEsDMx1DHIDNp5fY4xng7swZeHqxmo
-         zMmCMLBC9UlmEQ4rSt4pxgKiliN2JPCEBRc82/iQ0d04GYQTvRej7le2GXAFX+pyOR+S
-         4XxhYzuSXl133RCwSwzSchEovm1K0PyFUhslmCfnP1wb3B1QHCzbkcKHgt9Kf31DfEWg
-         UjADRK3YKbeZrWm0FL5FDAikD36UfJtYyMlRqs/te1+wFNk8mgD9xMddxJnKHsoqxul2
-         l97AkALPFwsbnso59I6d8BVjTdZyuoIxH4F7uVtl3QcEt8CYtbh4zFk+qaVzVy/flk+I
-         /JSg==
+        bh=4fz7p6do1KoplvaVuagA/3HPKgQTBFfHpWResmTHPHM=;
+        b=J8TlQF7sHAWMuh4J80frEpqquiReidGDe/fGU4FCgdSjO2Wd/x+jd31o2zCr54QKHz
+         noQjvZTz0PoYX3lP/Tm8RKa/odbalGDpLA8L6QILfTXtweLohTQJ/kn4w+XRXzhbjEYe
+         cCk0tDV0hO6eAsSErm18j/OZXwustfLLutaY0tkgDbaTAZ2KJZFCu3pBfXNa3qO8kLF9
+         fki0o36PKkI7KQ9jqlTXt2QpYwHKlgMvBObIP0Y+oEH/WNGs78k06/2n+F/wk/IXU33i
+         /FePs2zzJrOeMZ6oi9Xdn8OeNSHI5P28nQw/3m0qkAd3H0RjMG9cYJRdZF48tGfyQ0h0
+         98qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786549332; x=1787154132;
+        d=1e100.net; s=20251104; t=1786549338; x=1787154138;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=boi3x6gZDeGl3IyBZ4FNzJr15OaJp52C4OA1aMlKy6o=;
-        b=FiezQvEsFP6HpfcT6v1/2yYhhak+gquPQhsWaTZ0Fw2ZNaCjlwNeEGYC/T3wRChdEh
-         Nbxp03zR5hZKEEbSPwcrll0KFTkNY+sKDRk3GSmDj+Y2xrjVf9Z2GgWr06GDD7eHKsbQ
-         usp0OGUm/F2kC1ivFjkcuNNE2OXyviZynl+q9GSTmbI1H/Px+n0fF58Exzzz2zC72KxJ
-         Df+bXIxojlMoWPa5Vd2W812IAI2mN2gSphpPsojTAtjkZe6nmaZP4cHarkZvWXHRUw7V
-         BLn15YU5vYOwS/3uPnI0MfPVeV2gxxxctyhCIug462k5io4rvsnKPYr2oaDstImMw96k
-         AOXg==
-X-Gm-Message-State: AOJu0Yz7v1wtCLB6vFTSR9V0NZGtkyjWkrSpf6NluCt60zMh8AL2p4ap
-	cpw/eOqfi430ktbWkR6LoJ45AznGKlgRaoYcmGeNcNorkKRU3laS8mCSWncRuLBfgIPRLeRMerR
-	AnjDlCmn9EHGITO3WCZbxcDztHX8z8uQ=
-X-Gm-Gg: AR+sD12efchFOqZxRWlupkohrkNOraR348fnFYKmnrc0XNKiGb1mBTRz5/k8L0X0/zE
-	R9tf49Pjf2KQwa+icIvTSexeWiJUpjEOqCXQnvCRL/pCrI9frQCWMOjL0ssy0K8WQREVGJwdxT6
-	XC9iHO56wAa/2/uKMyROi4USQZtSzt3yeFeBP8XQQD9xrSzVwoIUgFer8MKmj9QuHL9trs+/q1D
-	YVmEVlZHyBKETx8cmUmVeXt2lyo2tyD4LN1jMcOZ2LK5AcQPPlSd6a5ch9tKdOVZhXzxKC40ZEr
-	dcyGR2Iwgsu0/01kN1S7ECKCOxwMkhFA2TE6GB6R8DXgq77G2koLdLOahS2nz44p7BaVGr2CMMv
-	dVl/Nbo7dRPCUCLYlY9KRrsZRpl0Wv+B+G6XOXRS321EM4BIcT8v9RuIS5rTVxWPTLe4p5ykL
-X-Received: by 2002:a17:90b:2783:b0:38e:64b0:8bce with SMTP id
- 98e67ed59e1d1-393014b0169mr7523538a91.20.1786549331622; Wed, 12 Aug 2026
- 08:42:11 -0700 (PDT)
+        bh=4fz7p6do1KoplvaVuagA/3HPKgQTBFfHpWResmTHPHM=;
+        b=TKjh+coJFnjVxvM00XaBgIbWWGbR7ze7CyzrZrcU8hsoQdriY0tZ0alxkIIbUIK8DZ
+         S4KPq4E2/SB5n+Xic9jvMwVm9TXGZr5DMwmy6tQxBQTrTt789Qp+/scfG07NBnSDHQL9
+         gMjc/NnPhw0Rh5pXICXyYdPVTVKhaiyyeoLED1eMwljXU18UW9uGGyda9Pi7Y2OU0+9Q
+         vhV048G81LjXTTGA78WiYz0S8vMDozZLNiiZo75TiJcXwuufxCD132Aad9zWRaI6Oft+
+         MG6+jzyZlRQ1NdSyH/ygEQb+iQc2aSB3T7bZdtczImmMFfOErkUxLWeqztXlacv2ExCc
+         DpZA==
+X-Forwarded-Encrypted: i=1; AHgh+Rr6NFM4voiAqrQCuboP37oJpaocmMv+/EDtmWK3bB5hn1E/qJEXHS7K8z5YW8a9f3wzchc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwnoBCT8SIQea7g5jEXnGeWTxeExCg8+IUWwiFQnLPVbmu1Vlrj
+	iCPg+HGfAMvN8FxR9yHymerewYjzV5NSQq95kqjPYaNpPhUzhug+JNmJKMwexN6aToQlnRFLXMS
+	pXpHgAvQ14OTSjoT+JxndfIkWj3RKEVk=
+X-Gm-Gg: AR+sD10oK1l9YfJ7Zp817TMl4ZD4tIgS+4cJRa4vyDEMuFGztBP3TkJL/HXpv5cF364
+	iNh2e/sWmZyJRkkZ2DOYJZmEVmo2TOR0RxgglVsw/l6IS5wYQoogwf/CmRPTuLPrsQ0chbgLxnq
+	dJ+9TfXhq/DzuJUESaddyhMOb1O6md9ZDE3bMba6O+6d6hmWoQFTs7ZC7n7aGu/ViY6tQnMpEvY
+	NATd4m531hR40G9NvAhfZtHC1gLRx+Vlk4Bt2x05EGFJcyxHj/JeoraJXigoAY85c+hqFKhgXro
+	/4DzuRe//ryKJrfQkGX0NKiTFVUvq07frWYSffuqgJdsbsGDHi0s51GN6EyNj6IVElpsSqW8SBi
+	FjWye9qFTP8NTlYjZoHucyMNJeJtf53ieuTjCa/JL4Ti0Kqa9A7X2lxtWX/JT8XDsklt/hirneA
+	==
+X-Received: by 2002:a05:6820:1f0f:b0:6b0:566b:b8c1 with SMTP id
+ 006d021491bc7-6b0b2cdbee7mr4674813eaf.28.1786549338469; Wed, 12 Aug 2026
+ 08:42:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260811121446.2080190-1-christian.couder@gmail.com> <anxXbnuRt4I4uPdI@pks.im>
-In-Reply-To: <anxXbnuRt4I4uPdI@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 12 Aug 2026 17:42:00 +0200
-X-Gm-Features: AUfX_mwL6GnxVmxn4N1FFaYnlXWGjqjVBPu1ZhbwHGXTT0bh29x3eNpNbLcxJeM
-Message-ID: <CAP8UFD1XMY6N3UD5FhK_oeQDX7banP1e0oKM1WHUPhPv_vzbsQ@mail.gmail.com>
-Subject: Re: [PATCH] git: avoid segfault on "git --shallow-file" without a value
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Justin Tobler <jltobler@gmail.com>
+References: <pull.2035.git.1786516958048.gitgitgadget@gmail.com> <xmqqh5kzzadm.fsf@gitster.g>
+In-Reply-To: <xmqqh5kzzadm.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 12 Aug 2026 08:42:06 -0700
+X-Gm-Features: AUfX_mxRTX4YGJvuImwhy7mIkTBjm8LdAFpvvQRIDG4V6iwlYRbvq73cp30S8bM
+Message-ID: <CABPp-BF_iHPxc_uAZBCiOsRMqFBzJtEQU62GTyPOdut_bar7Qg@mail.gmail.com>
+Subject: Re: [PATCH] diff: avoid misleading statement about -l option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 12, 2026 at 1:22=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Wed, Aug 12, 2026 at 7:22=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> On Tue, Aug 11, 2026 at 02:14:46PM +0200, Christian Couder wrote:
-> > diff --git a/git.c b/git.c
-> > index e5f1811b6b..96df15b5cd 100644
-> > --- a/git.c
-> > +++ b/git.c
-> > @@ -304,11 +304,15 @@ static int handle_options(const char ***argv, int=
- *argc, int *envchanged)
-> >                       if (envchanged)
-> >                               *envchanged =3D 1;
-> >               } else if (!strcmp(cmd, "--shallow-file")) {
-> > -                     (*argv)++;
-> > -                     (*argc)--;
-> > -                     setenv(GIT_SHALLOW_FILE_ENVIRONMENT, (*argv)[0], =
-1);
-> > +                     if (*argc < 2) {
-> > +                             fprintf(stderr, _("no file given for '%s'=
- option\n" ), "--shallow-file");
-> > +                             usage(git_usage_string);
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Should we maybe condense this into a single line?
+> > From: Elijah Newren <newren@github.com>
+
+Oops, I had author !=3D committer (and author !=3D signoff).  I'll fix
+that up and send in a .mailmap entry too.
+
+> > In commit 6623a528e00b (doc: clarify documentation for rename/copy
+> > limits, 2021-07-15), the wording around rename limit options and config
+> > variables were updated to point out that only the quadratic portion of
+> > rename detection (or "exhaustive portion of rename/copy detection" as
+> > used in that commit) was limited by these options, because exact rename
+> > detection and basename-guided rename detection (which both run in time
+> > linear in the number of files) still run before this limit is checked.
+> >
+> > However, the short help message wasn't updated at the time; update it
+> > too.
 >
->     usage(_("no file given for '%s' option\n")), "--shallow-file")
->
-> I think that also printing the usage string is only distracting and
-> doesn't really give the user a lot of extra context.
+> However this is an end-user facing message.  Can we make it more
+> easier to understnad by being less precise?  "limit to exact
+> rename/copy if ..." or something?
 
-The goal of this patch is to fix the bug by using the same code as the
-other options that can be passed a value like "--git-dir",
-"--namespace", "--work-tree", and so on. Now all these options use the
-same pattern for the error message:
+Maybe if we replace "exact" with either "cheap" or "linear"?
 
-git grep -A3 'if (\*argc < 2)' git.c
-git.c:                  if (*argc < 2) {
-git.c-                          fprintf(stderr, _("no directory given
-for '%s' option\n" ), "--git-dir");
-git.c-                          usage(git_usage_string);
-git.c-                  }
---
-git.c:                  if (*argc < 2) {
-git.c-                          fprintf(stderr, _("no namespace given
-for --namespace\n" ));
-git.c-                          usage(git_usage_string);
-git.c-                  }
---
-git.c:                  if (*argc < 2) {
-git.c-                          fprintf(stderr, _("no directory given
-for '%s' option\n" ), "--work-tree");
-git.c-                          usage(git_usage_string);
-git.c-                  }
---
-git.c:                  if (*argc < 2) {
-git.c-                          fprintf(stderr, _("-c expects a
-configuration string\n" ));
-git.c-                          usage(git_usage_string);
-git.c-                  }
---
-git.c:                  if (*argc < 2) {
-git.c-                          fprintf(stderr, _("no config key given
-for --config-env\n" ));
-git.c-                          usage(git_usage_string);
-git.c-                  }
---
-git.c:                  if (*argc < 2) {
-git.c-                          fprintf(stderr, _("no directory given
-for '%s' option\n" ), "-C");
-git.c-                          usage(git_usage_string);
-git.c-                  }
---
-git.c:                  if (*argc < 2) {
-git.c-                          fprintf(stderr, _("no attribute source
-given for --attr-source\n" ));
-git.c-                          usage(git_usage_string);
-git.c-                  }
+   "limit to cheap rename/copy detection if the number of rename/copy
+targets exceeds this value" ?
 
-So I don't think it makes sense for "--shallow-file" to not be
-consistent with these other options.
+That would also tie in with the documentation for -l:
 
-I could perhaps add a patch to the series to convert all of these to
-something like what you suggest, but it could also be done in a
-separate patch series by someone else.
+`-l<num>`::
+    The `-M` and `-C` options involve some preliminary steps that
+    can detect subsets of renames/copies cheaply, followed by an
+    exhaustive fallback portion that compares all remaining
+    unpaired destinations to all relevant sources.
 
-Anyway thanks for reviewing this patch.
+Since there are two cheap preliminary steps -- "exact" and
+"basename-guided" rename detection -- using "cheap" correctly covers
+both.  Does that sound reasonable?
