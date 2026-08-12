@@ -1,166 +1,132 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D81474267
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:09:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786554566; cv=pass; b=moeYSECJPfCWLzYOnT0xb7269ONkwenKU+JU9ask9l/sVJT531lpcOzN26h5cpGVSGDGlv+Gk4Pv6tRIVAi8jHQGRpySRfyq9Mn+yYwM8t71GIKiVsBh/0LDC/s/6aW4gl+9mtR0mi0yChcb0dzCtp1KbwNUIoeo5COFdHmgJD4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786554566; c=relaxed/simple;
-	bh=U7+QIkT9YyEt8qOd7CkVjZ1L4voY4RE5lW2LhbDcj/U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VPzCY19Y7NcqOSJt224Wdnpt7m/RY7i1IlXTg1Vau709b2eloCd9WuvwyIOQA2i3F3MyyUSEAt3XQj5n5RVLs7P2YjjOSELhDSYv5Au/xKzoy907ta71gmBdZgkBr/pLFDE6LHLRqksNUKWR5DPMnncxJ6fD/2qTFF4qE67JbHU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=p1zkSsBq; arc=pass smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD00147CA67
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:13:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786554802; cv=none; b=VNsI5lYZdbj3sALtMXiq0HemDcU5dpaPVO8RI+M5NUOK9densYaGupGnENROzo2Be/YnLO6h5anH25Lho/kwOu4B+4cpjL/I2sFQTLGUaXlb0vNFHLlD0PyR1dJCCoTKkZ6UDqe1a6OtL1JB6JQUwWPIcGaKNpsT2SewubpKio0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786554802; c=relaxed/simple;
+	bh=mJcNzPFpe4BLfNA4VuA+xkmO3S3bxwuKxbeOye99Ess=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GBtQ8J1yNyyNA5ITlL5gnqufSd/Ea8NXwtIdk4DeDxng4WB+lgRVz6a/q4FHvsAnmmIByFQYIHjmdVRrJzjsbPuw9igGmxHCj0L0Y52nPsKDb8abEuCBGgp2t2iLQS2cc4HMKXsUWuspgIkdlFbssj/+jY0vch+7nSOIiLY8258=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V7lDYan8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X1ojuWLH; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p1zkSsBq"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-381b831d535so2105455a91.0
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 10:09:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786554564; cv=none;
-        d=google.com; s=arc-20260327;
-        b=e1OezcJq6V4S4uA2MXIKIGyIxw3Rreh0VN9gQYZEzT9hog8R9rdDeqh1uDCqVyfYzI
-         HOQAd493TG+o813EbfD+Qr/sFNdrwJJwl9AG1gZIZY1gUS3/2KjI3wbga/3blHTEQvo+
-         CnG16QdDe1XLZ+RI7Q/EMI9j6exuO3E1nSQtb0POWHoYf0YovWKFxeAlWEll/Bn9wkJD
-         Zue6ai2co6rSi/3PJOSAvGOWi35V30Q5u5sQf+M8ZHJCh4PfGmFmawTS0JjEQR14zWEz
-         QsBzDa1k1wpXIWQyYmcG/OkDFV5f5o3G+UIfKTiq7+xzetsfsaXTGNej3WwV3QVG180+
-         MW/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=1/RTcVCtso/zWUhYrP6JihybQaRFrMSou9IPlKzoeSA=;
-        fh=pN7wu1zwD+xcQsXWuh1aXLiVhMCtwuxgzoUDjuwgVME=;
-        b=MnJw10cjtQNXQp8rbpGTXStgZitORxs2FfzA9+kjRZvavnLJSCoKgdPAd4JOOXBQeT
-         gI4OU11CEbQbeEcasd057FyiQMQ9FewaHGnA+mDuLjy/GR2HlYb7a6kcn73sOUnA2lQr
-         elVK1+vmOjXEssoCxbaOGvQtVvxw4B5U9898hHhOHWLULmgAC3jzjKz5TclaWxqGiqVg
-         XKbSxI2Vs3DcjkdAkTwrvgTYWJrZeE8oDP5U07MMmpGKcqYruvJw57nM3wbXkML+TgW6
-         sgKuzw6b91S1NqE7aXV31oiRv0nIVZXe7hrPhjYsaezz30m2vIlfr4ks75Mnffd0A+lf
-         Ag7A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786554564; x=1787159364; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=1/RTcVCtso/zWUhYrP6JihybQaRFrMSou9IPlKzoeSA=;
-        b=p1zkSsBqQ9h73P3XKKbnO9kPRRAAXlwDf0MM7Daaps7Eq0F9Alp1i0ENuJJg1Gej0F
-         F8nv2IH/yU23/wM++zLgeMjrtD6uw91F8rnN5Nqnbp2C6K2c7KpiKDFxV4gLFgbHiU7q
-         GJIhpJKu4YcBh9b7fNrVF8NaUlbjyhl6vPUu44D/rfqXaqpYS5fdS2AEXeXqKUYLc4rO
-         Nrs+I9n8CCl4xHDMJBoR+vzToFzKVUG5D2KbKHgamWg2cUo838KIOq6Sh7lBQKpKqntt
-         e6t/OTc06kcg5r5KzRL2qvN+m69MpgOBGuz3iQe+Qpoi+nltB38eQGv5Tzl8e1x7Rtyy
-         2YSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786554564; x=1787159364;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=1/RTcVCtso/zWUhYrP6JihybQaRFrMSou9IPlKzoeSA=;
-        b=bkhq5X9AzZg2M455deCXnLm5ChIPouulfF3J83S4JVUx5nTJaXL5wq0Vd8BMijKSgr
-         Fccu39yvUw72nbg7QMOrup03gnHfWx9U66YBaX6AkvQzk0T0XAK0ZA4MYdG/VGFUhbpA
-         OOX49KHBbGWVSOlGfbzbWG5j7S1JcYkTxP1brrmcIncqNZ/WMPMy00eWG59/Z//s/0Yh
-         +0L284kO4RQaWgTWslUGxwaJaHwRhMapP8AQRSJ59NBmF7Ut3gj3xBGP/oOdBUHxTnE9
-         OmIK8+tA+gI3Zhrg2DAulciQndQfUF5VtdHwu7tgSy+chK+b67Ld9u4yaB4MRJTA91qd
-         Lgdw==
-X-Gm-Message-State: AOJu0YzCpjk8t3L2N4zgtuKCWLxPlfCjUiPO7vNR5MnLkI1EFS3mQnZR
-	rooSolFjsi+SHkolYTLNi73Iwakhp3kcAuusOJqKBaCP3g5FWEknhLLVoz80Kt9KIrSrcuf1ds1
-	7U0IWVU0oBpS7VbvdQI3/gTFcYqZBNnI=
-X-Gm-Gg: AR+sD12K5pq9VXTDYIJp7j3o5Qx0g04LAM54fkTmPrete8RjL5UELDJ1LV8WbrkTjjB
-	FJrIRVTu8M8KxkscojFUYAcaNI5QM/9xoD/6vyVZyvqw4UT5FxPOWu7r83D/dI3JLhvqBUN5bMB
-	HJLQGUNhRcQBMSMZO+Sw/D0TIllbYbYJE7fCKQHhOpP0JpnqLF1NrnYWK28UJlaKXDOMkZ3R6y5
-	qxPP5Hfl4pC9QpoKZBqg8RTk71iMDWfsmA6jCSbAdXyKrjuFrZajuJp8VB7l3WZCxr7i7yf47OE
-	rD4+p7fosYyMZTBQi95n57MAA0VV189VTD3qB5tJO/rtt+C/tBqVs43uRX6F16XHOypo+rt7bpN
-	V1hHTsALPj84sPsugPKN78o7KlFjG3GI=
-X-Received: by 2002:a17:90b:3807:b0:38d:f096:a1dc with SMTP id
- 98e67ed59e1d1-393013e58ecmr7761558a91.11.1786554564035; Wed, 12 Aug 2026
- 10:09:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V7lDYan8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X1ojuWLH"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E85A21400098;
+	Wed, 12 Aug 2026 13:13:19 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 12 Aug 2026 13:13:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786554799; x=1786641199; bh=IUCJSoJQML
+	E03wjnYFS1sK5x+v1CrWcH7YAfZmAa2jQ=; b=V7lDYan853Mq8PlJke5sgDOnGL
+	Rpw0/Jn4IcyZMMzI7ZPE4euyiltQCIean4mUHxiL8OIlavKoOnWz23LNkIkfoH0v
+	/P6HLIXoDJiaKaZng0Ki+V3CKxVNhGsPGJXkxk4W4HUMtd4/1Fx2Lb4W0CizkUsx
+	57yzmGzkrpAtm7cBq8eOUBLNUFOfNlr3CgCGKRwVqAZ7BswL2KGM8NjCT3xCQXql
+	TXKeprYNlOZgOhhkOPLJvX7ZUeCmoaoIoumPbBh3g84VLH8mDxg8u4rUTztlFZgZ
+	gDI1sOPF1FLlgPn+KjXU9BRhZyaPLUtH+wNNu/Q1q84CdgNbYWV22aD+ijXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786554799; x=1786641199; bh=IUCJSoJQMLE03wjnYFS1sK5x+v1CrWcH7YA
+	fZmAa2jQ=; b=X1ojuWLH6FKZs4mdO8HBCT4iXTakoaT3//wo5JS8xExEfLIi3kH
+	ZUECPRbQQIW67VrIeemG2gZftLZCdVfPkzN4nEh+MGuYyZAAKQlQUM0p/v7/Uctm
+	cJBX6aVu5+Aela1Xa8IpjUgX9m6ZCAP4Sy5sP5g4mroU4FjSUm2thlhvHr0FaN0A
+	3c2a7tsuhYSO46Z2S3CjJR1a8EbG5h10JGRysOrMtFGKeCid2AeCfFnV1a2wyJPj
+	ueSKmiGJE7JeU/XEIrhZM3WbCGG+2EZHLU1CSJMzZNrr00J7Z0YwjGNyTyDF9iVP
+	oX3yJHFriG/VbFp6Tabs0q2N19fE4OGxdJw==
+X-ME-Sender: <xms:r6l8aukWD_SqTkEtRtxqp-PaKiLTvViqTxmJi9nqbOF3HscAk1S6JA>
+    <xme:r6l8aivs6yyqnStvH2VfD1XBjzsmntp-2_UllKESB_JyMmmu47kV_K3FL241K2QsZ
+    ru0G2GQNrq0EYR4Sg7e5Y8a4a0wd9fWqlzmW8n7ah_LZypD33beXw>
+X-ME-Received: <xmr:r6l8asbl0iXqG_O2hT5z5-yc3ofXEyP3w2huncjTOlsBAvevkD0kf85bEHBeYVuYpDSuap4KeuJ66vuX3g8dFW4h3FD6hCmV7w>
+X-ME-Proxy-Cause: dmFkZTEw6CnMyY4w34JMtF/zJqVBa+8zbRo8rSBvWBKLiRTvQQs5b1/xBX+wVzoeIb7ypN
+    JAUAxV7qQft/w+fyxaz+HSW03nhXuE4SeiQPIueKdA0Wl7MOsSd6o2o8g1CIxyg8UO95Op
+    OajRCi+6Z2ril55Rx9NehKf7EBsmrrgxqcfw7nQ9paB/27YGevLAj8w4BcO9EZp2vPK4nG
+    pDu3ENpQDR/wxpcQzSj8EOdoRRAUraWWsLYHJiWj7IR8ekWm0acMDWfNewwR1gc+n9DpgZ
+    0RN4MKGi+8gbGmieaoskatTnJ7cgEsW10KkDtB0fzdscCVr4velsayd097cUTLzCWMLHrz
+    uX3fsctWsHAPNhyou6CWdcKSWSBU7mVuXFmoempkhJFYZ9IhVGu2DvvQ5r9cN2kIklbeHg
+    qw7alWpfG72k+9T06pzNcQtC5gqBmDlYUzJrR1DuLOTSmuK8u+Siek5xuEtpcV9fI4McW5
+    UbvXkCzezhd6bPvEAdTcwe/JGgoObFlAIVxPDMpXzDz/dU3RUmEo8efNQd2JB0Ds1GomlF
+    29o517FPyhSstqC6ARG98zLTpEP98p0Du4A4KS8ydipxRpNI3yqMTn6mARnKBAL8J8Behi
+    5IAzrbAU4UVh+SncMZRtbpEzhzaPla8yENA6dsJFtSkj8vGBdFwFjnSi2BNw
+X-ME-Proxy: <xmx:r6l8aiDpQ50PtQ5TKqSWwpXHkJn-zQ96SGKuM2LICZAwdFuV2iHmKg>
+    <xmx:r6l8as-4frTWc4kWvlko9aTu8u_IaqwzxBPWN0FaDIEqyu0l6HDAyA>
+    <xmx:r6l8amSm2V18MyC_wIn4kWfWAH4mYd7H3zj32ShtEZhzMj8Ef3QmNA>
+    <xmx:r6l8aoWXJRVW0Nqz0iFpWHl_4aoo2G98CvV2bJnNvvFs-9ls5wqgYg>
+    <xmx:r6l8auV9qulCofh3N8ehPjnOJz6TNXGWbfSrhXGL_3zxDH3bSp40oCq_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 13:13:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
+ <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH] git: avoid segfault on "git --shallow-file" without a
+ value
+In-Reply-To: <CAP8UFD1BoXTo-bNyaQeWeC1QhrpdBAOOW4BwXCi9XYMr7aRuZw@mail.gmail.com>
+	(Christian Couder's message of "Wed, 12 Aug 2026 18:15:42 +0200")
+References: <20260811121446.2080190-1-christian.couder@gmail.com>
+	<xmqqcxvo1n8w.fsf@gitster.g>
+	<CAP8UFD1BoXTo-bNyaQeWeC1QhrpdBAOOW4BwXCi9XYMr7aRuZw@mail.gmail.com>
+Date: Wed, 12 Aug 2026 10:13:18 -0700
+Message-ID: <xmqqecg3xnwx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
- <20260810174047.6524-1-r.siddharth.shrimali@gmail.com> <20260810174047.6524-3-r.siddharth.shrimali@gmail.com>
-In-Reply-To: <20260810174047.6524-3-r.siddharth.shrimali@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 12 Aug 2026 19:09:11 +0200
-X-Gm-Features: AUfX_mwYeldCzWgNbqOoXNdRXW-1r-3yW1J8bEWi5VKv7q4AEWl0BLfgV2J5rhc
-Message-ID: <CAP8UFD0i6zo1pLLeKS4oGismNvadZ2Xc_QC1tt_9KuJiMJq40Q@mail.gmail.com>
-Subject: Re: [GSoC PATCH v4 2/7] list-objects-filter: add list_objects_filter__filter_oidset()
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, siddharthasthana31@gmail.com, 
-	ttaylorr@openai.com, ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Aug 10, 2026 at 7:41=E2=80=AFPM Siddharth Shrimali
-<r.siddharth.shrimali@gmail.com> wrote:
+Christian Couder <christian.couder@gmail.com> writes:
 
-[...]
+>> Just being
+>> curious, because (1) if there are, this addition belongs there, not
+>> here,
+> ...
+>> and (2) if there aren't, this addition may not be needed, and
+>> (3) if there aren't or if the existing coverage is incomplete,
+>> perhaps we should give a more complete coverage while at it.
+>>
+>> With (3), I mean something along the lines of ...
+>>
+>>         for opt in -C -c --git-dir --work-tree --namespace --config-env
+>>         do
+>>                 test_expect_success "git $opt without a value" '
+>>                         test_must_fail git $opt >actual 2>error &&
+>>                         test_line_count 0 actual &&
+>>                         test_grep usage error
+>>                 '
+>>         done
+>>
+>> I do not mean to say that (3) is my favorite among these three,
+>> though.
+>
+> I am fine with (2) or (3), but they don't seem much better to me than
+> the test already in this patch.
 
-> diff --git a/list-objects-filter.c b/list-objects-filter.c
-> index c912ff3079..6a2e9d5b24 100644
-> --- a/list-objects-filter.c
-> +++ b/list-objects-filter.c
-> @@ -828,3 +828,48 @@ void list_objects_filter__free(struct filter *filter=
-)
->         filter->free_fn(filter->filter_data);
->         free(filter);
->  }
-> +
-> +/*
-> + * NEEDSWORK: this reimplements the blob:limit size check rather than
-> + * reusing the existing filter machinery in
-> + * list_objects_filter__filter_object(). That machinery is currently
-> + * tied to the object-walk path and cannot easily be driven from a
-> + * plain oidset. It would be nice to refactor the filter code so this
-> + * helper can reuse it instead of duplicating the size check.
-> + */
-> +int list_objects_filter__filter_oidset(struct repository *r,
-> +       struct list_objects_filter_options *opts,
+I think this is the case between (1) and (2), there is not much
+coverage, and there is no coverage specific to "git potty" options.
 
-I think this could be "const" like "const struct
-list_objects_filter_options *opts," which could avoid a cast in a
-following patch...
+The 't0041' test is a suitable place if we eventually aim for more
+complete coverage such as (3), instead of piecemeal tests, such as
+'test --config option with other config-related things in t1300' and
+'test --shallow-file option with other shallow-related things in
+t????'.  So I think the patch is fine as-is.  I will just leave a
+'#leftoverbits' comment here to remind others to consider whether it
+is worth extending the test to cover more 'git potty' options for
+completeness in the future.
 
-> +       const struct oidset *in,
-> +       struct oidset *omitted)
-> +{
-> +       struct oidset_iter iter;
-> +       const struct object_id *oid;
-> +
-> +       if (opts->choice !=3D LOFC_BLOB_LIMIT)
-> +               return error(_("filter_oidset: only blob:limit filters ar=
-e supported"));
-> +
-> +       oidset_iter_init(in, &iter);
-> +       while ((oid =3D oidset_iter_next(&iter))) {
-> +               struct object_info info =3D OBJECT_INFO_INIT;
-> +               enum object_type type;
-> +               unsigned long size;
-> +
-> +               info.typep =3D &type;
-> +               info.sizep =3D &size;
-> +
-> +               /*
-> +                * Use OBJECT_INFO_SKIP_FETCH_OBJECT to avoid triggering
-> +                * a lazy fetch while inspecting candidates for removal.
-> +                */
-> +               if (odb_read_object_info_extended(r->objects, oid, &info,
-> +                               OBJECT_INFO_SKIP_FETCH_OBJECT) < 0)
-> +                       continue;
-> +
-> +               if (type !=3D OBJ_BLOB)
-> +                       continue;
-> +
-> +               if (size >=3D opts->blob_limit_value)
-> +                       oidset_insert(omitted, oid);
-> +       }
-> +       return 0;
-> +}
-
-... as opts is only used to check `opts->choice !=3D LOFC_BLOB_LIMIT`
-and `size >=3D opts->blob_limit_value`.
+Thanks.
