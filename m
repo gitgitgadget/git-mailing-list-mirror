@@ -1,159 +1,142 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEE22ED141
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 12:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE32E33B6D6
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 12:55:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786537909; cv=none; b=Yv/KvP1zBKcyVgeNWt1L1LHDD/qdsrQ7c2/C+kNjP0S7yEd40RwrX+G6RMHSkpSGy/JFtkRDv6q05mOiVOumtk3c4kl0XBKtBLLanqXUK8bXyMaYBzI0c3yzIm/TkBdB/WofzP8v4cMceE7irni9/kLUOSsUZhDhg8VEWOAS2nc=
+	t=1786539314; cv=none; b=rUKgk5n78DYrSW6PKkceimQQHfyk/yq0HUR6Go+Lw0EgGM/Wo4yzUCtNbYIpDLa/Z/G+KDNeCC/YnuQ6zCdNzEB2hK8/zFn+lkHnAP6xfH55IMFCqv4Pqp9Dzqqt7moVGuopPAwYUHiCdCOHaOhjmU9JkZcaIBuckBEHFb7P51g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786537909; c=relaxed/simple;
-	bh=X9POO+r2NIZ3ERt4xUt+ooxqZGg55OzW7nPXm8pDR2A=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=mRz+bY4TexFdvthNoTZoK1cZOWRYW+CXT7+LVxEa2YDKBAABA7IJ5Br56bOdph832mbtICet0a9IVwnwwxJpIDYm2NuPwxzWyZ0xvhDzJLQafnLMoLDYfo2I///exNQx0UW7LdQqpX4s/37+QxirFxsLmBE7iIXF+AmDwNkdko0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NWBE0tEt; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786539314; c=relaxed/simple;
+	bh=2jsz9d/e9yeTWrI97FpDszyYb4KHVZFuAP7RqXDfdIM=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=qkMcpJE9rrgzPm0Y+QTGVqmzlJ2L8lD2Hhi5zcEpFN0bIUMVa1z5i9uo6Kz4ywqelVJXOqeB5AMZoD2LYqQf6km0CnJKd2Es6nQj7QR51FewJKcdbJSoFC6Vtwt3a5DrfC2M6hn2dQi6EzXjmpVn7Ez4yUU/YPDekjRVmE2v7MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=od4dQc9D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jqchks8m; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NWBE0tEt"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-472326ca506so498021f8f.2
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 05:31:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786537907; x=1787142707; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:subject:to:content-language
-         :from:user-agent:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=OLIivRaWRvYZ1F/mlsHL3WjlnuLimmhFXMTSKchfy3A=;
-        b=NWBE0tEt8syC0C4peCIijdksL1jml7wpBf4xLaZ6EVQKg1289nrSG9Kk3oc9BP6oei
-         5QLlNm5iTYEcPAWldwTUXgsdR5Iegi4AUjHnra0xkV6waK0flYpSbjoq+tKpnSjgfwNy
-         LW9vna22oVVTX8WvZfx3OSnTJ1ZN/4+cz4E+YRVRn/2uGIsc6sloQC1ezmmiW4EugVwH
-         eK8o4IG/W2Md+4zikgK/ois4l5w46lEIYPs8wsCkiXLJ3VI6PPDyyquCivyShcaahZqt
-         Nkcf2VOf/GRuBQDpv8jbpZ0VUQQfGPpZbtm/rGRq6jGfYuWk6+kqUZj9etnOHkQfVEk8
-         Nvqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786537907; x=1787142707;
-        h=content-transfer-encoding:content-type:subject:to:content-language
-         :from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OLIivRaWRvYZ1F/mlsHL3WjlnuLimmhFXMTSKchfy3A=;
-        b=UkC96P1LEXQqhlotDL7Sqvv6ph3f0TJaGxxK0NQzZ8beStetZ9iYeWkfbtJecd6gbh
-         F/VGuT+97fZNe1safpo18UY6uyiBCWuNa2jaLYBZtAPB9mTiS900jVZLmUAYyqe4tYIy
-         wych9bQYS63CO+i4Iwb536VZXwpN1T8UmTCsyXAQClxFiBEKPp/g1quYa/sMpW16ggT3
-         aj+CJcywq5ZExQTi2nNHh+8fUoj3qRszaoynxZwnEyF1ACTTN6/wMGQ55auiy2cnTjtS
-         Ps8bSLrr8j/b8qP3MmPDRCeoHn+SNb7mmvHj3buKLBXnIBns6OeWnJ3HnNncg6eXH9c6
-         L1sA==
-X-Gm-Message-State: AOJu0YwBp4YMwa+gqkV3/CVIl3XYqB8IZQEJ5dyeprVJR6PSfobZV45o
-	Sy0VnpUppFBOJ3rA4eB+IH62OvNSCfCcvODpuZPBW8PKRXv5eDoNUuW/qNKOvA==
-X-Gm-Gg: AR+sD10WcQ7oyM6a7BRXKVtDN77D1/+uPP7DfHxQQ9dWYLIExGz1R9ymv1rXO+Wd3rf
-	rvsmtf3jwVZGxGZuAtas0pMJjS1a3S1HQGamgpO0VQmv/Xetm+YkHrIyJi1LBJ07q37MOHAh05X
-	FykdMLkS02IpQ1oIWXziW1rOzSkGTeRyaIvbRP2ssDYU9cvY6umzI5yMZg4z8Q1iMEHaBnOKz92
-	89E2aFXGZvEy84daVo/dBssU0ptrRCTxjtDoY7WExl4QHzwJ6BXJtqap59KYRe9L2PnmrPwxVWK
-	pRVAFxXWqJXQn3nT5N4eukhc0Ac6ckCQjAjHWhsV/gHK8R11S83ZaJR/2wU+dXoAObEpa0QtDMV
-	ZNlyk1un9r82Y8N2ZjWA4V28OW/bTCGGTuKEQvzBXmLSqmO9oxgeWLpp+d0S+sC75eO3jPY4fhT
-	oXB4AUeyDjPHjlChD8F+NpsRCFWzYr39vFjzWoG0xGSO+CsXzdfo7bWymfyUfgmwYe6LNHRBPaX
-	jQ23BZw9iFxE3iu
-X-Received: by 2002:a05:6000:29d2:b0:481:568e:d6ed with SMTP id ffacd0b85a97d-481568ed7b7mr1438645f8f.15.1786537906580;
-        Wed, 12 Aug 2026 05:31:46 -0700 (PDT)
-Received: from [10.0.1.15] (85-71-82-202.rce.o2.cz. [85.71.82.202])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48150d72141sm7200574f8f.36.2026.08.12.05.31.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Aug 2026 05:31:46 -0700 (PDT)
-Message-ID: <a7899757-9c3d-4735-b7ab-469808707e61@gmail.com>
-Date: Wed, 12 Aug 2026 14:31:45 +0200
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="od4dQc9D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jqchks8m"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 145071400174;
+	Wed, 12 Aug 2026 08:55:08 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Wed, 12 Aug 2026 08:55:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786539307;
+	 x=1786625707; bh=JowMDW4Yw93+gIwZsydy2AShKC5Zox+LqwqedecBT+s=; b=
+	od4dQc9DiuOM/YH7VAwv9XCfSkODzd5oJ+UdSByjgI/Yo/9pmMvqAyJ/TcMJDEtp
+	c9gYZhbyhUOqxYxjW44oXif8oJI8QyyPIE+RCLPozg54u4oM6g99MLoqmRwcpcrx
+	i+C1N+wCo9vRsGXcKAnko68Ym+B1IbWnqGgtMDmQi85ytAz6X1ZQkmHMftt2a9oW
+	v2AdOSJSxhH7ZTiyX3U0gl5awRNMnQn4vfy7scPOc6HZdF16ednZGPZw9DF/G6mB
+	w/nmukO0/pvofeBGJu8xB8DSAiIBBlghw4B8N7+bIumatl4VGz3kcdGMIH3/yLyA
+	WW6Gd0e8nL+tiI31/YLyYw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1786539307; x=1786625707; bh=J
+	owMDW4Yw93+gIwZsydy2AShKC5Zox+LqwqedecBT+s=; b=Jqchks8mlAI6wAtrv
+	guvpbbqtGgZpU93F9UoVdcuECGGV8vNlWQNxb4f6aXikUI5NNPOURKzXJhvThljN
+	motmLSo5xQIZLwal1XAecbsD+N6kfYE1DWRGrdPYxNCdmfH2TFczH2OHCf1BTOZN
+	S07q7qEM4k07um7HoNOWyUmTcr9acyt24fmcvPJbdc5qV2nO5Xn5COsliwAbZQM+
+	F40U1qlsCaAOLi0TPuJq5WnPupGdtg0ANgmfI4eg537EEhxtRxZXB46qHQbW/TcW
+	7chrfx3VBG2hyeouV8RfsZ/LeVYLHd35+k45JMIvgPSDHUQYF7vF7i0AYBRi/Gd+
+	wXcnA==
+X-ME-Sender: <xms:KG18asprKLqO0OU-e3nXEThJTTb7KxP9T2YifF91iZOisG39d8g0O5w>
+    <xme:KG18atc01Pm4KPVeT0Ipu4ra3RnFQqgSYjbmgqgxaAhAZT6hY4rGOZieMrY7u9fCL
+    Q0MAH8LNO3hWthfjQFb8rfUAkgH0PcHQAoqVfGu8dezhQeFqyAM_z8>
+X-ME-Proxy-Cause: dmFkZTEOqTfapDULNhAFtox4S36V5ps6oPn3tp9bLtpvDNtWWXLIuFoK3YCJlROwGhYHDS
+    c0MvQl+kn/jWf0+VX2AlS1mV9tA2oJne4tRDydz791+TPm/EwtiPFL4TmqbX0d1T6rkAM3
+    rHbYMRgVzQhZKkg0ZcH5Ob/HULGluZRkkDY7JXQ5TvSMDt0hrVdjy2a+Sy5q0j8FYuA8pg
+    kEVFmVXaBcBm+A/PPaR5oWon//22s34EE1ZmKiCaJ6/7qCnilozCjnXrX/ThIZr6sEVROO
+    lSQLKejO8XkRPLTqp96/Fn6JDfAoMF8gYC59ue5oyz27nXieO6nQYa8dChFEnuh7Ehx/An
+    NyRuZkmCu+A3g/Gyei9t10FbyzhXLCra8yo9npRGhqzGmRa1jPKJf3gni6hV7RsFda8FDp
+    QnEAmp+65srLpvUgv/k99MvKXbDK4AsC0uMkf5RDaHRBn2iQ4hjepCu1Owi7K74seEoaHP
+    VFtYnLIbER9ImqA5SoGZzZV9sj05uA5YJc/n2989FPOqtWHNgTqQPT2veTWVe/CmZM1uqR
+    EkBPNXR0X3iT41O4QQv0rrY70LG9LUbwp2yQtjN4+LoqSoigEtcY05ilcpii81btb2cQOV
+    bIYF57kO4+TxmXjyFbgsGW4xdKgfBy4v1XwUYkJnWvAVUz8fsMsBeiSDDGgw
+X-ME-Proxy: <xmx:KW18anVZ7Sdxup2Jx40ft0EN1GsBh8ftx0T809gtO1fgDeCAAeY5_w>
+    <xmx:KW18ath9JFTKbDnRZeLYubaI-Tl26BOD63SozW3CG1N-WQSj8r6XMg>
+    <xmx:KW18aq8igNnR0SoaoYa1hGLsMmaCNmCxtMmiqgJd_mgK_R5ws4x80Q>
+    <xmx:KW18avDpoxNxdvb4BjvZzpVeuC5pltFkF7OMvOC0WFiCD7nM1RSAeg>
+    <xmx:K218ai4vA5ZHqbIGtincA0KfztSDx0i2MyoMkZeRwQTIxNj97JUstvFJ>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id C892122C0070; Wed, 12 Aug 2026 08:55:04 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Marcel_Svitalsk=C3=BD?= <marcel.svitalsky@gmail.com>
-Content-Language: en-US, cs, en-GB
-To: git@vger.kernel.org
-Subject: Bugreport
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-ThreadId: A2-b0hDR4pQ7
+Date: Wed, 12 Aug 2026 14:54:29 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: =?UTF-8?Q?Marcel_Svitalsk=C3=BD?= <marcel.svitalsky@gmail.com>,
+ git@vger.kernel.org
+Message-Id: <8fe70f89-89a8-426f-bab9-21284722c58d@app.fastmail.com>
+In-Reply-To: <a7899757-9c3d-4735-b7ab-469808707e61@gmail.com>
+References: <a7899757-9c3d-4735-b7ab-469808707e61@gmail.com>
+Subject: Re: Bugreport
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-I called `git lg` command to display git graph log in my terminal. The 
-command is defined in my
-general gitconfig file as follows:
+I have only skimmed this.
 
-# double liner with hash, time, branches and tags on first line and the 
-message on second
-lg = "!f() { num=15; if [ \"$1\" != \"\" ] && ( echo \"$1\" | grep -q 
-\"^[0-9]\\\\+\\$\" ) ; then num=\"$1\" ; shift ; fi ; [ $num -eq 0 ] && 
-num=999999999 ; git \"$@\" log -n \"$num\" --graph --abbrev-commit 
---decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold 
-cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold 
-yellow)%d%C(reset)%n'' %C(white)%s%C(reset)' --all; }; f"
+On Wed, Aug 12, 2026, at 14:31, Marcel Svitalsk=C3=BD wrote:
+> What did you do before the bug happened? (Steps to reproduce your issu=
+e)
+> I called `git lg` command to display git graph log in my terminal. The
+> command is defined in my
+> general gitconfig file as follows:
+>
+> # double liner with hash, time, branches and tags on first line and the
+> message on second
+> lg =3D "!f() { num=3D15; if [ \"$1\" !=3D \"\" ] && ( echo \"$1\" | gr=
+ep -q
+> \"^[0-9]\\\\+\\$\" ) ; then num=3D\"$1\" ; shift ; fi ; [ $num -eq 0 ]=
+ &&
+> num=3D999999999 ; git \"$@\" log -n \"$num\" --graph --abbrev-commit
+> --decorate --format=3Dformat:'%C(bold blue)%h%C(reset) - %C(bold
+> cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold
+> yellow)%d%C(reset)%n'' %C(white)%s%C(reset)' --all; }; f"
 
-What did you expect to happen? (Expected behavior)
-I expected to see git graph log with the project commits.
+Note the `--all`.
 
-What happened instead? (Actual behavior)
-On top of the project commits were added these four pseudo-commits made 
-by some Git component(s).
+> What did you expect to happen? (Expected behavior)
+> I expected to see git graph log with the project commits.
+>
+> What happened instead? (Actual behavior)
+> On top of the project commits were added these four pseudo-commits made
+> by some Git component(s).
+>
+> * f7b611ce - Wed, 12 Aug 2026 09:26:03 +0200 (5 hours ago)
+> |=C2=A0 Notes added by 'git notes append' - rewrite-analytics
+> * 1a7605bb - Wed, 12 Aug 2026 09:26:03 +0200 (5 hours ago)
+> |=C2=A0 Notes added by 'git notes append' - rewrite-analytics
+> * c2a05d79 - Wed, 12 Aug 2026 09:25:03 +0200 (5 hours ago)
+> |=C2=A0 Notes added by 'git notes append' - rewrite-analytics
+>  =C2=A0\
+>  =C2=A0 * 01c630e0 - Wed, 12 Aug 2026 09:13:00 +0200 (5 hours ago)
+>  =C2=A0 =C2=A0 =C2=A0chatter: initialize notes ref - chatter
+>
+> They are not graphically connected with the actual commits, they just
+> sit there over them. No other graphical
+> tool (Sublime Merge, IntelliJ Idea) displays them.
 
-* f7b611ce - Wed, 12 Aug 2026 09:26:03 +0200 (5 hours ago)
-|  Notes added by 'git notes append' - rewrite-analytics
-* 1a7605bb - Wed, 12 Aug 2026 09:26:03 +0200 (5 hours ago)
-|  Notes added by 'git notes append' - rewrite-analytics
-* c2a05d79 - Wed, 12 Aug 2026 09:25:03 +0200 (5 hours ago)
-|  Notes added by 'git notes append' - rewrite-analytics
-  \
-   * 01c630e0 - Wed, 12 Aug 2026 09:13:00 +0200 (5 hours ago)
-      chatter: initialize notes ref - chatter
+They are Git notes. They form their own connected graph. That=E2=80=99s =
+why they
+are not connected with the =E2=80=9Cactual commits=E2=80=9D like from so=
+me branch.
 
-They are not graphically connected with the actual commits, they just 
-sit there over them. No other graphical
-tool (Sublime Merge, IntelliJ Idea) displays them.
-Originally, when I opened the project, only the first (chronologically) 
-commit (by chatter) appeared,
-and those by rewrite-analytics seem to be added with actual commits in 
-branches, each for one branch.
-Sometimes after more commits or merges they disappear and after removing 
-(`git reset --hard`) those new
-commits/merges they re-appear (I played with it a little).
-They are not always on top, sometimes when a new commit in a branch is 
-made it gets on top and these
-pseudo-commits sit beside (to the right) of the graph log, still 
-unconnected.
+The `--all` will include all refs, including Git notes like
+`refs/notes/commits`.
 
-What's different between what you expected and what actually happened?
-Those pseudo-commits.
+This doesn=E2=80=99t look like a bug.
 
-Anything else you want to add: The terminal is tmux running on 
-mate-terminal.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.55.0.559.g11c6700f10
-cpu: x86_64
-built from commit: 11c6700f10234578d10523faf35656ca491425c9
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: enabled
-feature: fsmonitor--daemon
-gettext: enabled
-libcurl: 8.21.0
-OpenSSL: OpenSSL 3.6.3 9 Jun 2026
-zlib: 1.3.2
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Linux 7.1.6-1-MANJARO #1 SMP PREEMPT_DYNAMIC Mon, 03 Aug 2026 
-10:34:01 +0000 x86_64
-compiler info: gnuc: 16.1
-libc info: glibc: 2.44
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-
+>[snip]
