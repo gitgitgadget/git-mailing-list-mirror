@@ -1,224 +1,206 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5AD3EC2D1
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 08:46:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786524378; cv=pass; b=nk/1+uQVfAwxWsXKAXyJMm2e0uiptTxfWMMwKHrjMYg+Bkqiyh+5ROIdJ4+X/fZ12T9XZZZ78W+bl2Sr05iBx6JhvoQnrPQcZfj000EVCJ/LuIJQ8i5xwT3WmH9Ud+0PRDTlCWPf7VTx1doirisHOquXyzCxrgoCwowePhqkia4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786524378; c=relaxed/simple;
-	bh=O4H5Q70xdXHrCQ0eC9NpsZeVXjYnDwt/QTLlOpN2nbo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=hAB+gtMPg6UXBxvK3HkWYDcgiZntmZ0GhT4JgRq6BsCZMkZ23JKBdaIVKJOO9zcG1r5Z+fVjOOU5R6kR9lcd+aQsVcVbv7Td7bGvCx+zpP3my/93FZbIjXOdCtLQNcBpDO/ZyJRzzNosVFIuC17xCfIM2iOmk+BVaHkWJUwqcTQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lzIH51el; arc=pass smtp.client-ip=209.85.217.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79658220698
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 09:14:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786526052; cv=none; b=LBHRV0XTgx+g6DLxf2JkK7Ta1rVi5veGwnFh4w6VJ05obcLBTYV96a8Fx2Ft8JLA7LlsZelFHvmlZD5icmere2uiVkwReI5NkfXPPZA+obyc+yDNCiee9UujFQoohV97ImoWJ++zR5niwfAoDDj0EVtWnvHBTeo4wH6iJZhZ9E8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786526052; c=relaxed/simple;
+	bh=uNkQ0x3l1c1xxMBniBnpyMYPJBWA9yZJ2q8UdHLrN2I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=CgitPc6bUBsbYyO6f2TzxEoEuSMVkvuBEnOEhL9RhgwWdTvZ7/NOMIy4v/8DQh3q7Z0h1mV6iJYPxgJ3FShoMiELQO47ine1O5HJgbTiZVfXX8ZZ4P5fllBSxyz2B7rwr9skiMJT3mu1NThRa12DPWrJWRyCnoa5Gi2AOWmEKVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KDLmndRj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L9oejJZr; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lzIH51el"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-7466771f1caso204735137.0
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 01:46:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786524375; cv=none;
-        d=google.com; s=arc-20260327;
-        b=F3T2f9WV60olGCSksrY2kROB94W5E/azEMfm9Xx6Az0tpWCBkSLocmd5sBGxjLDflX
-         3b+CzwO4lt+8FA8IeHPZNY8rX4VdulvvOOAapD/ftIHrLfTC616G/W4g/9RaWKA4X4t1
-         OTGljg2+Yubujl8GP80w1/FVa/UKoX8HVymU1+6X/fWIUbOjOFc9vpYFFbxUxxzc6l2K
-         kU7WVhAQjz2JIpxQ5PAhWdjIzdtwnVZiVLBxUhJmHWso0LBvBAYVbjtFwK3zEm1o9PfI
-         nlJP2talqLymLcOqwa6iIEmsmUbnR4+oHeUjU9jtUCxiigK0xkWPBTT63j7QmLyiSq8p
-         BncA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=FtL3CqIDb+shpL52H75cy93iLEFPzMjlYADL+o1MaUc=;
-        fh=tp6zkf4qVrQwAoy1knVTTSGRNDemWT6r83zQEIP8H9Q=;
-        b=jYnzPm7FKPn7WRQt2kzUGhUmljcfxDQKUR7hXUjFbtSblQzytDrYXYza0B7rwCHaHP
-         l9zXzEQ3vHxoF5+gjJLoMZLjj29VFqEzkg8l78Ub2d8uU6qtXYEMLqoBZ8TArPH1FARA
-         cqQ/eF1jkumEcE/DwApUoQiTGOrTU2OjpWbVY7zsNVZFjtkiCA7WHStnYdAB7gJnhMGo
-         1FEOLV4TPTgiemufbPm5KxPcub89SMe0N5wDlmKDXpWKzTTfn0MM7UDmMGkz+Wpk9Lz3
-         FkVLwzZZQt/hjodsJcG7p27bUyCEpdIveLi4UlAnj0XJcjlDC2NyKOC0I58D0AUhPOYs
-         fvwQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786524375; x=1787129175; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FtL3CqIDb+shpL52H75cy93iLEFPzMjlYADL+o1MaUc=;
-        b=lzIH51elM6dFRfwsol0x38WXg1oFg3wVVfo9jtxKoaHKTwGcoFEu8KW3qj2TJrU9iw
-         yVgaPlNAp1CbDvLX+3GsBd6YTpepz3OHwZRnh9nzmFdos1H3RdLvWDs1PO0PSBfyj3l7
-         EJpFAop1xbdZFwi2obpbGPpXEQUp2PEhiKj18xq0hlvFCbdHBszdV3TNGMEcpMq/3d8M
-         Ixf35Ib+CAKOJ1x/MkSyBVI40Mrd1LU6NJ815/V1NY+LJEsCZOQSwRjEN9z/yymMvnhf
-         uHe1Wl2uz230qRikiv8QcLiAKcf4G90BVX1SeufllGRTOtXwAqG2dVk5w8iIzboCFh8/
-         9jkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786524375; x=1787129175;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FtL3CqIDb+shpL52H75cy93iLEFPzMjlYADL+o1MaUc=;
-        b=FuVWADVbV+jr3AxXrCLjMJNAfPiSsSTNWe0zK1H+ovjdqAYup9qHK0O5v3exDASzic
-         f5Q0vS4pVziqo9RGmt1U6ysOKe+/rDog01UyMMutT8o8geRDMYRdKp1kHdngDEgc/Wpl
-         UFh3APyb2fCDBoH3puxn8T4QkSeHW+2gk1xF2CXN9dzImllkQAmkkTWAkXLYfOcLqA4+
-         nHB1JdIttveMWQAjfWC0GG/Av3v5aQxWLtIpoIn/K9al6/erhPHwyE8cssnsi9vzsw2A
-         7K74q2DVhwtOJSV6uUUIDnhegBGxF7jP6wVJRxptEoXe62zoNLOxkTe1V8l7xvAt+yNA
-         c/BA==
-X-Forwarded-Encrypted: i=1; AHgh+Rqfjc+MLlCj9fQAowISpxLwEhACQHWu358uE1jyHk/Y86rx+38Qg3/Wtlp+5xJ+2jPvQnM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6WsrXP3DZehqpI5ctRfz9v7Cj4WDQYuCFkWHY2v5zN4mNVR1N
-	4gUkwhZCexmQxNuXHGFaskNqcDeyAyzhcwVIJ6oDNT15z2ad+aG6aZSrMk310GeyjJNYooFBklh
-	yVeWPFcVfPWehdgDA+6+/0nwqAyhUpCFifXKL
-X-Gm-Gg: AR+sD13VE3qDzvxbYfNgbf4xs5mxSaKMm5Ha3oMrdHFeF5+zFIC+S7f0ssqzV9Mcv7x
-	cyALTkjJgIgVUXNZ/R9QjabYRcTUc8M8C5utxyeMY31oT4azdnUufzz9WEFtyisaBqTnvUz3pxR
-	b6Bp9uVrL5kOImiw3yjYM0eM1EU7yh7FkXrPVhxPUKCT97rNckinFiA30I+j5Q2oD3AcmPoj5VL
-	v8eAgjYJrvpPdz788WvMqjNGG5u/XudRxvf9Cg2Wy6CmNkcPlqGXABY14hjIbEH1R3UdJJrImNs
-	2mHNxsCn+TTGVLYNPVXiS3iK9Gs/bgnlp9nmiunCQ6ji7gHgFGxZIZxNbsAfOJP9M6VWbUEPCaw
-	9oC8OF5tYl26PM+dfvV3n7bGINJycGoaM3jk=
-X-Received: by 2002:a05:6102:2b85:b0:738:9c30:2baf with SMTP id
- ada2fe7eead31-76c8c5e610bmr594468137.2.1786524375379; Wed, 12 Aug 2026
- 01:46:15 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 12 Aug 2026 01:46:14 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 12 Aug 2026 01:46:14 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260807-pks-t7900-fix-flaky-test-v1-2-08d0ea0fbbc5@pks.im>
-References: <20260807-pks-t7900-fix-flaky-test-v1-0-08d0ea0fbbc5@pks.im> <20260807-pks-t7900-fix-flaky-test-v1-2-08d0ea0fbbc5@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KDLmndRj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L9oejJZr"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9114314000FD;
+	Wed, 12 Aug 2026 05:14:09 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Wed, 12 Aug 2026 05:14:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786526049;
+	 x=1786612449; bh=gK9RLsYes2MTX+uD5gub5N/709/yOJdGCODeijiTNuo=; b=
+	KDLmndRjJ5cQ/3pLiplJyZ0UNsE9hUOQCSliSqhQXSGZkuXE/vqwU7NDtRUmICyT
+	jSVHJG0ow8bsAk2SBrdmLs+ToBJ8VM/jDDDPN9IcVuJYNX6TBPplZX68AEDN1syN
+	oZteeokgUeUTMPfq+oRfwcN4efuEqkCjNs5fRGzy84VD4OhDIcffOEuGWZuYBCGl
+	ode+CQKTi89DuoeoD8tqacHwoHucDjY1Y3JaLniTcs/TXB1741cwUwkx/MsYwjR5
+	2BjKtXrUA0d3/e4xCp8P4+SA61+Htn91TCHNowZI6LR/F4fmVFgtgQ0uEZ1cgMK6
+	/xS0y86MazpKPh620161DA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786526049; x=
+	1786612449; bh=gK9RLsYes2MTX+uD5gub5N/709/yOJdGCODeijiTNuo=; b=L
+	9oejJZr3whdXebsdvuI74LQlMqDIHAr28ntdf8Ddq65GJIUGs3rMsSGmfj/Sl+dZ
+	f8Gl5pCWXL2jPH11qEcREFc2BM68AUb56vaI0HDW+ci2TpVTO9RsBV3jEsNlpIqi
+	b1FbP6avF+tZ/RsixzBivSzM246lO+QteVj9dbDvKPYFZyO1Q9EcE5KqwNVKyVFW
+	JImrS6eyyJfMhipWTiloWc4yXdj5/b2XQU7ATweS3VM9gUo68QhdhqbZx6KI+saJ
+	BofAT5xIbxLyzT7D8aMLHKS7K//z1goRUu7DrfvFHaq1+ThnuLBIFDggDIgOMDbX
+	l909sfjvXH3y8dP+9iaPA==
+X-ME-Sender: <xms:YTl8avQBewMcuIF044t7FfxEierzXVyCIwBYh1XOFpPhl-Ui4A_u9A>
+    <xme:YTl8amyspDzg62-jzrTX7s2dhjLRsKx8Py_jY5LtvrWchOytsni9uVpSWC0_5oFqB
+    uutAv50OcMAiI49jUb2J3j-6neMN_m5Mym3u01Uz3z35IqFF_nk>
+X-ME-Received: <xmr:YTl8aido35QhzTiQTaf1po8Tdl7xvNBjzs1l-vwyiyteWBNOWq4l0hLBWPN6Um7L6yFyoG3vzvYRFkZ48WQyzJWlhiDoxQWqWHO3ReLBXA>
+X-ME-Proxy-Cause: dmFkZTFKI3oCTf0qLVJDBltgF8InAfSJB3lZfltaF5p1kE3ZuLR5PsAt5u3/aq5MxYBl6k
+    weazdimRAoDi6a3AGYoffx4OTctgaJyuJhZa+nqG79+r8nEw36Uh+sweikga0OjZPSaMmu
+    b1RT0ln59+3GRbUAWPmQigsTwQQ/twsYfAIQKrywcETjKt5xwRH+ugeUq/Vxu+YTo5kq8T
+    YMMlZUln2XRInnGvRpJFNziVJl8a2EF0knEZl2RIgZPCbwMBdGqAyjw/8F5FbTPH77SEzh
+    bNQBXjns5/om5sVVhaR3u5tN1Vb5W5DecYTCdqd0/zkcXPdDEqJuwlp2UUzUg/L9Ta4+VV
+    7wSvYNHIiu7ch0LBIUJ5xq7tb143uBxdc3OGK6RIOZE0a1liIHvZ7OtJhSqZq0wEIDxOcA
+    D2VhMj0yfjtz8P5aP/nmPnpT8WiMjTyo7h+n3+srlS+w1u3lmL1ofP7MhyGO3f0YolA8ls
+    XH3URU+NgSJi4u3oIYyPcZjYeWK4bvgSSxTgH9XGnH3uuyRKWDO+0b1nsBW1n6w/ulDYOF
+    aAQuCaB2s5OPluinLhx7l6ZBnkh6wGpu39caC05w1tHRIu+w4BMKDTXQI7lXxUUBtYs3JL
+    IxE8AYtQsy0G/FtzA8ixajg0w2EiDeLNJNC4elOtCufTlDFRxOoGx8+TyIpg
+X-ME-Proxy: <xmx:YTl8aqKrgBjAxUUpzPLHM6HGQK1Zl_m_PwdTY-HhNFivhnsJ9cUIeQ>
+    <xmx:YTl8arEdG6gzKaYLWaSjPXp70eV6Bhag-AHmxKyrJJIQMw_8Yn6YZw>
+    <xmx:YTl8asqV_GrBXd6XyXhch2oHSKXP26CiszowSdBNh2J9wffKrLiv3w>
+    <xmx:YTl8asT165nUC2dOJMywUFPMO9SWLpDmqOXpmhvKkD2zHncQhblnrQ>
+    <xmx:YTl8agAgtQZ7mnR2t9-gA8nO2xkrJY1bm5vQ6FXkP6FAbCW8bfk3RyAl>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 05:14:08 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c86b506d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Aug 2026 09:14:05 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/4] odb: eagerly load alternates
+Date: Wed, 12 Aug 2026 11:13:56 +0200
+Message-Id: <20260812-pks-odb-eagerly-prepare-alternates-v2-0-522b9a5bc1ea@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 12 Aug 2026 01:46:14 -0700
-X-Gm-Features: AUfX_mxlhpfLPQTP-ZLgbh-weeAI2-_ZNhAiHr5bAWhnQPnsSmCE2ybqjhUylQ4
-Message-ID: <CAOLa=ZSW+Ta5ktauamTUvp+fmjC4HHDpKOQ0sri+pBfLGq6mOg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] t7900: fix flaky "maintenance.strategy" test
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000c712540658d59eef"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42OQQ6CMBBFr0K6dswUGkNceQ/DYqBTrCKQTiUSw
+ t0t6AFcvuTNf7Mo4eBZ1DlbVODJix/6BPkhU82N+pbB28Qqx/yEJRoYHwKDrYGp5dDNMAYeKTB
+ QFzn0FFmgYFcjFSWjtSoNJcX59x65Vl+WV33nJm7Lm3HzEocw719MevN+QY3/BCcNCA4dGTKIh
+ vUlHR39U1Xrun4AiItGDeMAAAA=
+X-Change-ID: 20260804-pks-odb-eagerly-prepare-alternates-3efb0a38e0dd
+In-Reply-To: <20260810-pks-odb-eagerly-prepare-alternates-v1-0-f0fa4a4004e1@pks.im>
+References: <20260810-pks-odb-eagerly-prepare-alternates-v1-0-f0fa4a4004e1@pks.im>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+X-Mailer: b4 0.15.2
 
---000000000000c712540658d59eef
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Patrick Steinhardt <ps@pks.im> writes:
+when initializing the object database we only eagerly initialize the
+primary object database source. If the primary source has alternates,
+those alternates are only initialized the first time we really access
+the object database.
 
-> One of our tests for whether "maintenance.strategy" is being respected
-> in t7900 is flaky in our CI systems:
->
->     + GIT_TRACE2_EVENT=/tmp/test-output/trash directory.t7900-maintenance/repo/trace2.txt git -c maintenance.strategy=incremental maintenance run --quiet
->     + test_maintenance_tasks trace2.txt
->     + cat
->     + sed -ne s/.*"region_enter".*"category":"maintenance\([^"]*\)".*"label":"\([^"][^"]*\)".*/\2\1/p trace2.txt
->     + test_cmp expect actual
->     + test 2 -ne 2
->     + eval /usr/bin/diff -u "$@"
->     + /usr/bin/diff -u expect actual
->     --- expect	2026-08-07 06:20:51.388322602 +0000
->     +++ actual	2026-08-07 06:20:51.388322602 +0000
->     @@ -1,2 +0,0 @@
->     -gc foreground
->     -gc
->
-> When running with the "incremental" strategy, we expect two git-gc(1)
-> tasks to have been executed, but sometimes the test simply doesn't
-> execute any of those tasks.
->
-> A first hunch may be that maybe the disk-state is sometimes different
-> and thus we decide not to run maintenance. But git-maintenance(1)
-> doesn't run with the "--auto" switch, so we should execute those tasks
-> regardless of the on-disk state.
->
-> But there's a second condition that may cause us to not execute tasks,
-> namely when the "maintenance.lock" file exists due to a concurrently
+When introduced in ace1534d6f (Introduce SHA1_FILE_DIRECTORIES to
+support multiple object databases., 2005-05-07), alternates were
+originally only loaded when a given object wasn't found in the primary
+object database. This was also reinforced by later optimization, for
+example in 693d2bc625 (Attempt to delay prepare_alt_odb during get_sha1,
+2007-05-26), where we tried to avoid loading alternates in even more
+cases. But as Git has evolved, we eventually started to eagerly parse
+alternates all over the codebase, including on every single object
+lookup, and consequently deferring this operation does not really buy us
+much anymore.
 
-Nit: s/a//
+The result of this is that we have calls to `odb_prepare_alternates()`
+cluttered all over the code base. This is somewhat awkward, and as
+almost every Git command ends up reading objects at it doesn't even buy
+us anything.
 
-> running tasks. We usually disable auto-maintenance from detaching in our
-> test suite to avoid exactly these kinds of race conditions, but in t7900
-> we unset "GIT_TEST_MAINT_AUTO_DETACH" and thus enable the auto-detach
-> logic. The intent of this is to exercise git-maintenance(1) closer to
-> how it would run in a real-world scenario, but it does cause us to race
-> when the detached maintenance job that was triggered by `test_commit()`
-> lives long enough.
+This patch series thus gets rid of the lazy-loading. Besides simplifying
+the codebase a bit, it also prepares us for moving alternates into the
+"files" backend as discussed in [1].
 
-GIT_TEST_MAINT_AUTO_DETACH when set to true enables auto-detach, but
-also the default value when unset is true. That's why unsetting it
-enables auto-detach. That's a bit confusing.
+The series is built on top of 010afd3166 (The 12th batch, 2026-08-07)
+with ps/odb-make-creation-pluggable at e927cfeb21 (odb: make creation of
+on-disk structures pluggable, 2026-08-07) merged into it.
 
->
-> We could trivially fix this race by disabling auto-maintenance for this
-> specific test. But that doesn't fix this class of races in this test
-> suite: while I haven't seen any of the other tests fail in the same way,
-> a bunch of them have this race, as well.
->
-> Instead, let's retain "GIT_TEST_MAINT_AUTO_DETACH" and only unset it as
-> required.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/t7900-maintenance.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index 6735a9e082..5fbb16f0f0 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -7,9 +7,6 @@ test_description='git maintenance builtin'
->  GIT_TEST_COMMIT_GRAPH=0
->  GIT_TEST_MULTI_PACK_INDEX=0
->
-> -# Ensure that auto-maintenance detaches as usual.
-> -sane_unset GIT_TEST_MAINT_AUTO_DETACH
-> -
->  test_lazy_prereq XMLLINT '
->  	xmllint --version
->  '
-> @@ -71,6 +68,7 @@ test_expect_success 'maintenance.auto config option' '
->  	git init repo &&
->  	(
->  		cd repo &&
-> +		sane_unset GIT_TEST_MAINT_AUTO_DETACH &&
->
->  		GIT_TRACE2_EVENT="$(pwd)/default" git commit --quiet --allow-empty -m 1 &&
->  		test_subcommand git maintenance run --auto --quiet --detach <default &&
-> @@ -90,6 +88,7 @@ test_expect_success 'gc.auto config option' '
->  	git init repo &&
->  	(
->  		cd repo &&
-> +		sane_unset GIT_TEST_MAINT_AUTO_DETACH &&
->
->  		GIT_TRACE2_EVENT="$(pwd)/default" git commit --quiet --allow-empty -m 1 &&
->  		test_subcommand git maintenance run --auto --quiet --detach <default &&
-> @@ -107,6 +106,7 @@ test_expect_success 'maintenance.auto overrides gc.auto' '
->  	git init repo &&
->  	(
->  		cd repo &&
-> +		sane_unset GIT_TEST_MAINT_AUTO_DETACH &&
->
->  		git config set maintenance.auto false &&
->  		git config set gc.auto 1 &&
->
-> --
-> 2.55.0.679.g6767b8d81c.dirty
+Changes in v2:
+  - Add a missing word to a commit message.
+  - Explain why we don't have to handle GIT_ALTERNATE_OBJECT_DIRECTORIES
+    when re-preparing the object database.
+  - Link to v1: https://patch.msgid.link/20260810-pks-odb-eagerly-prepare-alternates-v1-0-f0fa4a4004e1@pks.im
 
-So instead of unset everywhere we only do it selectively. Looks good.
+Thanks!
 
---000000000000c712540658d59eef
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5c500fb827458705_0.1
+Patrick
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1wOE10UVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMUdRREFDa1I3cjRoMmpscWJ0K0RpZEpia21GeUxPSwpWaDF6QU42N1FE
-LzJyNnNvcWhrWTFFVmtkN0NvVWQ4bmE2ajUyNWw3UTl2M001Z2tqMUJ4QXlzN3NqelhiWmdoCjVr
-RmxYVVZ1SkZyMk9BQW1YL0E2VnZFT3dsY2FOTW85MkVML2dkUVpFbEwzMzAyMTR4Rys0NytDc2wx
-OXJHaHcKbG5MWFdhOGJEbXZRV1RieHJjMFJETDJXRjM3RDdPMGFkMW40OEE2YUtSaWRtZmZBU0Rt
-RW9uL0hTVjVZL05hdwpZZDA1T3JVbGNrZitFOGluRWR6TWN0cytRMkdObnhjSkx1eStDZ0lDbi9K
-akFDQUY4MGhUejREZS9HTC9lTktoCkFaQ2Qvd2ZXdVFUUHhleWhXS2gyLzJ4enYyRkt4UkdjYUs0
-anBBNmNDcXNXNkhySDJYV0tveFZkVGFrOGhheU8KbDYvTlA3ZDhYRzI0ZitNYmtQOWU5SlZpMkw2
-M28xVjBZYW00T1VkVXFzWlpRUE00Y2tHUFR1cysxc2ljVTllRApVMFJCSXdyWVhTRFpNeUt1bGJP
-Ny81RFc2dSsxVzdOc2FVcWF0a2U5OXkzeVo1b3FCNmRIZENWaHlRbWplb2hFCjlsRS85cGMxajRG
-dzBLSklLblJNNEF2RWJENDBtWGo5cmlGaWNSZz0KPWRQblMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000c712540658d59eef--
+[1]: <amLgMqkqxR8mKIbT@pks.im>
+
+---
+Patrick Steinhardt (4):
+      odb: decouple source path comparisons from `the_repository`
+      odb: eagerly initialize alternates
+      odb: drop `loaded_alternates` field
+      odb: drop `alternates_db` field
+
+ builtin/fsck.c         |   3 --
+ builtin/pack-objects.c |   3 --
+ commit-graph.c         |   4 --
+ loose.c                |   1 -
+ object-name.c          |   1 -
+ odb.c                  | 109 ++++++++++++++++++++++++-------------------------
+ odb.h                  |  22 +++++-----
+ odb/source.h           |   7 ++++
+ odb/streaming.c        |   1 -
+ pack-bitmap.c          |   2 -
+ packfile.c             |   1 -
+ packfile.h             |   2 -
+ 12 files changed, 70 insertions(+), 86 deletions(-)
+
+Range-diff versus v1:
+
+1:  25802adffa = 1:  721907c60d odb: decouple source path comparisons from `the_repository`
+2:  1e73b730d8 ! 2:  3b2c23566c odb: eagerly initialize alternates
+    @@ Commit message
+         many calls to `odb_prepare_alternates()` cluttered around the code base
+         whenever we are about to iterate through the sources.
+     
+    -    This lazy loading doesn't really add much value: the moment where read
+    -    any object we _have_ to load the alternates anyway. So given that most
+    -    of our commands would access the object database this optimization is
+    -    not really buying us much in the first place. Quite on the contrary, it
+    -    makes the code harder to understand and is a potential source of bugs in
+    -    case any callsite forgot to prepare alternates before we iterate through
+    -    the sources.
+    +    This lazy loading doesn't really add much value: the moment where we
+    +    read any object we _have_ to load the alternates anyway. So given that
+    +    most of our commands would access the object database this optimization
+    +    is not really buying us much in the first place. Quite on the contrary,
+    +    it makes the code harder to understand and is a potential source of bugs
+    +    in case any callsite forgot to prepare alternates before we iterate
+    +    through the sources.
+     
+         Historically though there was a reason why we deferred lazy-loading: it
+         may happen that the repository has "core.ignoreCase" configured, and we
+3:  2ca1aa2a37 = 3:  df5d7df91d odb: drop `loaded_alternates` field
+4:  1e97c93bdf ! 4:  50a37ef385 odb: drop `alternates_db` field
+    @@ odb.c: void odb_free(struct object_database *o)
+      	pthread_mutex_destroy(&o->replace_mutex);
+      
+     @@ odb.c: void odb_prepare(struct object_database *o, enum odb_prepare_flags flags)
+    - 	 * the lifetime of the process.
+    + 	 * Reprepare alt odbs, in case the alternates file was modified
+    + 	 * during the course of this process. This only _adds_ odbs to
+    + 	 * the linked list, so existing odbs will continue to exist for
+    +-	 * the lifetime of the process.
+    ++	 * the lifetime of the process. Consequently, we don't have to
+    ++	 * reprocess GIT_ALTERNATE_OBJECT_DIRECTORIES here.
+      	 */
+      	if (flags & ODB_PREPARE_FLUSH_CACHES) {
+     -		odb_prepare_alternates(o);
+
+---
+base-commit: f6ad67a7977439ad8351d42e6ccfd11f714db765
+change-id: 20260804-pks-odb-eagerly-prepare-alternates-3efb0a38e0dd
+
