@@ -1,161 +1,106 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F99D446058
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786557089; cv=pass; b=Fq6mPgpQmugv7fVjwwUgWq7QNlR30MOBQiGJuKOkyvHJRoPUFebYphLRmyXIFcKVAf4yACmkWOpuJkSN4AVqLxzra9BjucjPMlQwchs0yVtKvlgwAaONc++0vLki2Vat8oP30Oec1Y7GVCZDbf/9ITzohWeWyoKUHONKUWfYWbU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786557089; c=relaxed/simple;
-	bh=3vc/Q35N7lJrAEuWVDgWIw1evAH0+OQiNXrmNheqdi8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L2AzWuSa4c38tG0FuSLjLBIiIeX//LpmFfG88fsZJVAcbNZGX19SY2IORbv+ZF6lrelX4VkQTx3ufU5PFY0ehsgmVe/hVGfxsvRlUPePsO+7hBLY0ftNz4zzhm77MPGxrb5UVhpl9O0zyBSSgtkXMd4+6r3MEkywUo7ZJ7GwUN0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nyd2Bra9; arc=pass smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D06A48094F
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 18:00:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786557604; cv=none; b=YeD82PoC4r5lkeE+W8rudg1IDm2emo3onkBPRIdT7lCvZzau+8OI3+atuj6rMkP/m3pvRLD0Opg7SFbAN5k8PZIQAxSE0xOE6eLDqHdtpugxqwBLF5rEB1EG1QFK0xOpZPAM7Jmfj+9qDngpnhdOKzo8lrKapMNjvFyR1rEeZk8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786557604; c=relaxed/simple;
+	bh=h6LuXs54pMSsekmvT3jikECK8fWntqIsmqeGq3TvaGE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=dMawj38NXb+sacnsp3E57qYFzcJgrXgyb/Xd9x69EkoyvaYE8pshXhY+SUmP15X4udaOx3mbx/TffcHas2OAfxaEJYtKOFmCtm8vly/o1xULMMLc2uLa0NHdcVtKaMBfuV9RAIb/oSefT0TvPMOWcVUXJKKbQWlW5QYZrF1So5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TwOhz0j1; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nyd2Bra9"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-84faf87d19dso1506146b3a.3
-        for <git@vger.kernel.org>; Wed, 12 Aug 2026 10:51:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786557088; cv=none;
-        d=google.com; s=arc-20260327;
-        b=kHAXs3I7rnmbKtJ7pPx59W3T6iZrJEcr1j9WNjyYgAwvvodPgEamGMp0Ewf/w9AGy6
-         FQ7SQPeYcVtQ3p8lnyuyO+tP9zbxoUpsXa0pUr8wP/j+qsq+LyWzDc5Q00zHh6yz1yJp
-         z6Fk2hZVSXU59aSokpl+eKTZVlOOIwfz+FpwArvlTOblTDH+CUVNdRsgfnIgNFla36Lk
-         Z5jq/iDRfnu2+m3ajyDr0ejFpsja74/NCoOU20JY7tg0bCNhhbpOVexc0V+DkRnmSeEF
-         XN3gkFxfl4exTgVCwxCieRUYV1h11/RKBXixywgt/+XZ9UldTSj4j/90UmZ26B85fz7i
-         +ANg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=fOAzPZqfARfvsen5KNZCT0dbuEdiR1rO+/R5RHMT6CM=;
-        fh=pN7wu1zwD+xcQsXWuh1aXLiVhMCtwuxgzoUDjuwgVME=;
-        b=lX0JRXf00yS8t9+2wi7B2DcLARL7sFRssTowCjsTrjBkrwV2FFmMrlYjBgIdrrKjyX
-         H83HOkjjOxQmuEQxa84AfQhtuGbLhe6SGwQb5CmuVLD5m29VBSrPpKJHn+fHUQciR9Gv
-         RHbe8D5WvXRrkf8Yuuy8l9lkxll52IO7i/HUMdDzUAvdnAbk6/gnnLVFFZ4aZN284Nk1
-         yyGvrvQ+peK4KOatBNMwhF2dtQSOXsltP/ANjhytOjLC3jsBKlXDAZD9oGa2hvwgLijy
-         XBvI7pQf9rvrVdr816s0ZPCqXrbjUV9rQrdb2aCi5QU+72BRo1+6kgyfZpM6XoukoXaP
-         T5fg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TwOhz0j1"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-92f03daaa97so84082685a.2
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 11:00:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786557088; x=1787161888; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=fOAzPZqfARfvsen5KNZCT0dbuEdiR1rO+/R5RHMT6CM=;
-        b=nyd2Bra9MTtn/BCfX0f2KpH6tERZ/PCZKBk5lBL6jLw+kUIP7zhJ2gECG2COQmYjyp
-         M1YhkyDNKFecYuAu9EWeLxdmh6HGjq6G5tSV7GPFB4XMFEZIvgb7u/V2/7bkPWFIrEwi
-         yAkGmZIDSnQNUWugnCXy+hnAMvRN/vr61Wo6DNyg5Q+KSCtc4SN3ulfbr8Ra+plEynY9
-         Hk2eAEkRUUW3wfZo+HCSq/qAWC5oNVQd4ioLzIllYbMwQsV53XEjjAKPFKCzHr8YE0Wr
-         gO1101TRUVi7ysug67xbi5zBULnOh3vdkgMRWkd2Hn6S1Lc1Y7HAg8qM/1GRTRJ1k/EW
-         b3AQ==
+        d=gmail.com; s=20251104; t=1786557601; x=1787162401; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=mM7ivQ/asZAQyoQr+1Fxp1/XIRVB8NEjjH4JU9Uu0UY=;
+        b=TwOhz0j1AoUPWWEAB4X1sR6AUC2iARwXCz/YST5kR5WoPbmjypt1ZARMrLbAJg5KPC
+         gUCj8/ckfzxyVpupTRgoj7vgiq5uFA6rUHg9eZOI/GnoapNjQTVkl+Uvk2AktADHFPJR
+         Hp4Xr5Jlci7uS0MkgSRXvONllSxNrL47IuEILegxSu6NyxXg7O0FFlVmZeeBQSWjWHJt
+         V7HjZfwEGnVSVp9y9oR6fVQ6sauSjoHuVdcBDol4KIS4o1HFV/GNscVV+mY//wKdZ+Rg
+         hsHEPG5stwiXdhl/iqfb1NrL4BBh6opZatX4JxC7Y1O08ISEsxEmbhKJ8/SeNAsoxexM
+         2LTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786557088; x=1787161888;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fOAzPZqfARfvsen5KNZCT0dbuEdiR1rO+/R5RHMT6CM=;
-        b=OhFkNdjK8pPlJ83jIkn4mcskBd47Nh/F4YgrdWjsMKA88qZF4ZirBLZTWo28pr4Ok7
-         2NapI/R/GWZakM4DVuBTqsLfxM2vG0GvavSdJd6a/3SJlFcF/PUtmHzV0KHaRVgwtC1e
-         o3mBpV8WJOEusP7ICHPoISyjh45OZPG8r8dNvhsl5rKUqCUDHVadSMcheYxi8U0iQN8K
-         OcMMx0ojoFCv3tLo+B7BmegTgT5uPG2HKZD1+B00ZQb93XY33cFsPhCaziqeHgiMbKix
-         ZO42LgiJEJnxNFDhOZKW5vsIXxdPbcI0vpxYKgNNjtCaXmbZJEPqOPTsAO00EhnWbhgA
-         NhLQ==
-X-Gm-Message-State: AOJu0YyTBseeVMh1s6RSFPUY7aXJOKCuaKGNahoZgWPayRI9MQSwxxjQ
-	+7pStaoV+BDfMuMnzTjxWZPsG0dB1y993oeeDXGKcl9GQEedsLkIgNGtoVWqMrhRGUUonVXhjJW
-	tqNFtAE3oCg9JxXpABz+RfDu29k6Eh+A=
-X-Gm-Gg: AR+sD13piipcPk4/WV292IRFNgSjN+M6q5GqRL6bSW5EeCpdp5/Ebkluvwfm/3Ut6g3
-	/H1DToSyef2Grz1U263Xaa/jfuL8syukrLKwAiFRSPia0HH0hXE2eBFIchIXiEMzXgGyFerD0MK
-	64cIQU23z/lgNHhstrEIJNffpN//c4OLzvvh1A+00S4jwAT8yNUrVW8XertWaT++IF+vta1JVXt
-	BTbf239M1+NHgxPPNErcbKFqGxK3b2Ko5IVHQB0VuyfLayBCZ7+TtahrGSu6JtfdJh6GNAk1fkH
-	ndLxwBsvjfFCcqSatWkbAW/JWJyfHSC5zcxzK4PN6gHvgcObTq+wXtJpsBKj0YJEOwSl9/HWDDa
-	fC6Jmx2ry/0jbn1syorrLZRIR+A4ZONI6/H8txThmx+PX9G8w9UwHd9sr8n1IZg==
-X-Received: by 2002:a05:6a21:6e93:b0:3c3:8255:8c4a with SMTP id
- adf61e73a8af0-3cc5524466dmr208960637.17.1786557087674; Wed, 12 Aug 2026
- 10:51:27 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786557601; x=1787162401;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mM7ivQ/asZAQyoQr+1Fxp1/XIRVB8NEjjH4JU9Uu0UY=;
+        b=VJYLmpOnBdgD93kHNHNkTDTbnfXJv0oamuIr2qL30lfEsHW2z7vaaMbCU302fZDjtU
+         IuWfb5CX9Y3Pir67M6agTB+GHvkfT8aVWrMDFhKz6m3Itz6GZGyCpQfRhNfuwKGxSz9q
+         DFXj5O8513Ux1zIzaanhY0zeYxia0q5XGWzxp/euEwlUQm2TIBG6yePICVBg3ohTAB8g
+         dKsrFhnWXCgx29xRj2FRYsdsACh8AqNgV4/Y97aZ1roH7zOCl6SV/6bZ86Gx0HOrcu4Z
+         9j5yE52PlSBfangAoPM+HJdm6JuvHI0u6pJKSH0JCbLIsnLN6bCZttBYN8v50PAc5yoo
+         98Eg==
+X-Gm-Message-State: AOJu0YwywzS1199IMotcsQ3Ddct6AbUmwcu2xoSlXRB8dtfdBq83txi5
+	gdD9KLa8un65E6Qiaoi9yR6Kor1ZMdNXAga406DyW6E8lBAaYM5F9tgLCriknD7K
+X-Gm-Gg: AR+sD12vtuktvgYLQZsbQIvtfe1EQyQhWB4nJ21WQw+SlBm/BAKgbBYtldLmwsrPWkf
+	oiT0MFbor5Z+pJn3ndt5KAgYA4HrCyPZYjW2xxD4pn8r1y20QmuKX0Laz1QT8DB2NJeiQY9CQb0
+	r9G2NCUNbx/O7g8SVK6zDtZKBuZdetyAHfvI6h+vY/L9AKRADw0u0NunOQU3m4IfnQOOa/0AsNN
+	ZsphUtqF6kxGgAtM/r9jYNzuKF2ztCR6yq9PQCnA6+wvvctNauajRJshl8qOlcGoO5pf5D16Okq
+	M1wDbGThAB3TdE2kwXl/B3cjSaRcFybdFWySeritIi1FOM9Z7BMHZ/KYnPu7+WbHZzazZZjgxSO
+	E+eRTPhccCqqN8UM487MkZT5PXzF0DhuXXJjCx5gScR5GTj0c2tljeldhugEnYTeW0ifcDL3ieH
+	YO5YtEP+TqO07a72FA4LVBbFJxe/08Qj9uiE2sv0+LgE5JpaQubPM1KhHI8dS1
+X-Received: by 2002:a05:620a:319a:b0:92e:e3eb:de54 with SMTP id af79cd13be357-936b3a344b5mr594263185a.11.1786557601422;
+        Wed, 12 Aug 2026 11:00:01 -0700 (PDT)
+Received: from [127.0.0.1] ([20.94.54.84])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-936b5f720eesm180971785a.47.2026.08.12.11.00.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Aug 2026 11:00:00 -0700 (PDT)
+Message-Id: <pull.2201.git.1786557600355.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 12 Aug 2026 17:59:59 +0000
+Subject: [PATCH] mailmap: map Elijah Newren's current and previous work
+ addresses
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260806112202.75067-1-r.siddharth.shrimali@gmail.com>
- <20260810174047.6524-1-r.siddharth.shrimali@gmail.com> <20260810174047.6524-8-r.siddharth.shrimali@gmail.com>
-In-Reply-To: <20260810174047.6524-8-r.siddharth.shrimali@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 12 Aug 2026 19:51:14 +0200
-X-Gm-Features: AUfX_mwyW9UT06TZmW5Ysz4YukqSIyQmF0LQ9koqSGjko2KmFs6CJ8hWr68S6GA
-Message-ID: <CAP8UFD3Zvm1rCy6iaviK4jjAXuL4Rkkr7yCTEv-pCdaJYgL_Nw@mail.gmail.com>
-Subject: Re: [GSoC PATCH v4 7/7] Documentation/git-repack: document
- --drop-filtered and --dry-run
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, siddharthasthana31@gmail.com, 
-	ttaylorr@openai.com, ps@pks.im, johannes.schindelin@gmx.de, l.s.r@web.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-On Mon, Aug 10, 2026 at 7:41=E2=80=AFPM Siddharth Shrimali
-<r.siddharth.shrimali@gmail.com> wrote:
+From: Elijah Newren <newren@gmail.com>
 
->  Documentation/git-repack.adoc | 37 +++++++++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
->
-> diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.ado=
-c
-> index 72c42015e2..63943b078c 100644
-> --- a/Documentation/git-repack.adoc
-> +++ b/Documentation/git-repack.adoc
-> @@ -12,6 +12,7 @@ SYNOPSIS
->  'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
->         [--window=3D<n>] [--depth=3D<n>] [--threads=3D<n>] [--keep-pack=
-=3D<pack-name>]
->         [--write-midx[=3D<mode>]] [--name-hash-version=3D<n>] [--path-wal=
-k]
-> +       [--filter=3D<filter-spec>] [--drop-filtered [--dry-run]]
->
->  DESCRIPTION
->  -----------
-> @@ -182,6 +183,42 @@ depth is 4095.
->         `objects` and `objects/info/alternates` sections of
->         linkgit:gitrepository-layout[5].
->
-> +--drop-filtered::
-> +       Delete the local objects that match the `--filter` specification
-> +       instead of keeping them in a separate packfile, reclaiming the
-> +       disk space they occupy. This is intended for partial clones,
-> +       where the filtered objects are promisor objects that remain
-> +       recoverable from the promisor remote and are lazily re-fetched
-> +       on demand when they are next needed.
-> ++
-> +Only large blobs are supported for now, so `--filter=3Dblob:limit=3D<n>`
-> +is currently the only accepted filter. Because dropped objects must be
-> +recoverable, this option requires a promisor remote to be configured
-> +and refuses to run otherwise.
-> ++
-> +This option requires `-a`, and implies `-d`: the objects are dropped by
-> +rebuilding the promisor pack without them and then removing the now
-> +redundant old packs, so the redundant packs must be deleted for the
-> +space to actually be reclaimed. It is incompatible with `--filter-to`
-> +and with bitmap writing (`-b`/`--write-bitmap-index`), since filtering
-> +breaks the single-pack closure that bitmaps require. A bitmap setting
-> +coming from configuration is silently disabled for the duration of the
-> +command.
-> ++
-> +As a convenience since dropped objects remain recoverable by lazy fetch,
-> +`--drop-filtered` refuses to run while another operation
-> +(merge, rebase, am, cherry-pick, revert, or bisect) is in progress, to
-> +avoid a surprising network fetch mid-operation, and refuses to drop any
-> +blob that the current index references, since such a blob would only be
-> +lazily re-fetched by the next command that inspects the working tree.
-> +These checks are skipped in bare repositories, which have neither a
-> +working tree nor an index.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    mailmap: map Elijah Newren's current and previous work addresses
 
-I think this patch could be squashed into patch 5/7 ("builtin/repack:
-actually drop filtered promisor blobs") except the above paragraph
-which could be added by patch 6/7 ("builtin/repack: add guards for
---drop-filtered").
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2201%2Fnewren%2Fadd-newren-mailmap-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2201/newren/add-newren-mailmap-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2201
 
-Thanks.
+ .mailmap | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/.mailmap b/.mailmap
+index 48c34797b9..e3fab1df9d 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -66,6 +66,8 @@ Derrick Stolee <stolee@gmail.com> <dstolee@microsoft.com>
+ Deskin Miller <deskinm@umich.edu>
+ Đoàn Trần Công Danh <congdanhqx@gmail.com> Doan Tran Cong Danh
+ Dirk Süsserott <newsletter@dirk.my1.cc>
++Elijah Newren <newren@gmail.com> <newren@palantir.com>
++Elijah Newren <newren@gmail.com> <newren@github.com>
+ Emily Shaffer <nasamuffin@google.com> <emilyshaffer@google.com>
+ Eric Blake <eblake@redhat.com> <ebb9@byu.net>
+ Eric Hanchrow <eric.hanchrow@gmail.com> <offby1@blarg.net>
+
+base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+-- 
+gitgitgadget
