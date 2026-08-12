@@ -1,135 +1,101 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D59038E8BA
-	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:24:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85B747D927
+	for <git@vger.kernel.org>; Wed, 12 Aug 2026 17:26:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786555457; cv=none; b=QesT6uNPHz2eygtw/13NOPvWoySf/inSPIO+kWNlu3UcJjfDlklYqkeiSsialvWbm1O2AzUjC/mPsxcQy/k2eOfGg0i9zqLgZ+/pZ5eePy/IJGKuB5lMpdXS12wYXTbQ0pSKDsPGMz152Fh174iEFzg/n4Zd0ORTPJ6i9iAZFh8=
+	t=1786555586; cv=none; b=gR2SWVk9k84m7yRJyZM7H88j61+qjbNlDQNPtpj62rk8xYM0CNIWO7HFu17n0D7GwLYcWE809OZdOgSbPefZR2iTptOuPlvsxOOkuJPWKuSn0IjcSXtUTzb6QxoQIVwkWfmmx2Oc07eRpjxVpTlmWq9Ie92NnkymaPPSDzlwliw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786555457; c=relaxed/simple;
-	bh=VWHFSnA9UzUQRuZ9QcAlEkxauTvxJxdmqi4uSEIv+1c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WN5N/WAoETUgCcIIUhsjJ4q6H1lO5edh15syj77I71ICohyofrvBWYv/u7wAsNJgfEF3Ill3PA+QKQkaciWdmVXyu6Mp8PYKsShmyJU2LHDsOIImZ2+dBFWs3sCK95SMBkVXuRRdBuApYuDT1GCgGyCxepaGzoJPZAM95da1FCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=THq+2ppR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q5F8LYLO; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786555586; c=relaxed/simple;
+	bh=egU98ImFXfzGHtJu0v7UAktzhxcKyvbXA5QqiDP0KLA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SLgxcF0HjQcnggZyp1JtzOSc8P17vevkKcKQurLoqpPaiBBm5Qtl/f1dFYG1NP0aEkTNdzLSAvMrg2WfVAO+Bt4zozzbubgKbOKFDMInyE25PsWYAXVKSCuIHWoYsyd1Vl4DW9oVBn/VjBDhcWBRQluEWtpXhUfnOVmW37iGDOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qDuzAdPF; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="THq+2ppR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q5F8LYLO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 24E47EC0248;
-	Wed, 12 Aug 2026 13:24:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 13:24:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786555455; x=1786641855; bh=gq5lVbQZZv
-	vMTiIiiGje72QcPwicNlluei/zPAIFZf8=; b=THq+2ppRiEEwGDzddJLCJj4Xa4
-	cq9lepyADXKfhqkbR/e+ygeU8YAWSI0S0ImjqB8q7hQB1QHNu5/grNpQTIynQG5b
-	qr7wD6QetEqrDI0VPYqSMaANAQWRLEN64TyyCR1fqWobN7n8sfegjatquVmuAto3
-	4hKExaOLpgUkvCFlETyfpgusquqUxyo2OHEAOLhmNF5Q0f96fKHxcYFIZiZTUb4w
-	E7jxaTkigO79u8qMBJID4I/+mivF9dKq+nkVSuDyhvpYh2adI37DghwxIJxYzJSQ
-	Zk1s/NrqG6RaWx2Cj6x7t7bynHNCHxKjeVdteoU4W6vnslwUhCfc2EdP6Fpg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786555455; x=1786641855; bh=gq5lVbQZZvvMTiIiiGje72QcPwicNlluei/
-	zPAIFZf8=; b=Q5F8LYLOTrchP7mTWIqtD4xWbC71lUs6v+FOyonlyWq7h7Qb1EC
-	vDxNIFGntAwR1t8D5yINqW9c6M5Hdvi05YU0gjKAwyxzsGK1nrdbl97se4+rYAHM
-	fLtL3kAkiGhjKSLGOIqZOyPnaAxHMoo88u3r4I0oKo8L2TO3Iixn+Mv4wxxP1VEt
-	jEEBOzvWEJVN2oLbOhpLGdnp/HzCrt8/54oinxTqYIvSuaPcB7+Qud0rmRqcgDuZ
-	gBr2RFYp3zaCofl+H+UGInCk/Ut6VT+5kYZMi4Upczzs+K1Y5Au72YT0Q+RDg96R
-	zMKYp9plFDY1/Bohev4wcH8BnEy28SAgtaQ==
-X-ME-Sender: <xms:P6x8apl_8SEr7LM7q88toh5OT_jW--ZGdig-W9BWlh2JlXjCtLxDqQ>
-    <xme:P6x8ar2KsR6JSpXnS_0gg0Z2JPdIQvk2ZMXTMoYk0BQEIZ1vOkGGTWjkS9RBvLiPv
-    xA27rXmvUjtVMKVqvKHPmfvHTf1w_PwT3q3PbrY7ccNSnuTXV4a3E8>
-X-ME-Received: <xmr:P6x8akruY84pPvoB6aig9uJcDPlx1CloxaDg7DRWcISTn3UiWT_kl14artcshs0q6D47RiwF1hxCgxJRsjiqi2pqOWERXQGCvg>
-X-ME-Proxy-Cause: dmFkZTEPp56guMwFBSl2w7r8BQQhED+BMOp1sFGJsbTNp713tNC1aCCKRYFU6ncUeuEdri
-    2fFOgmU/t0kf0PRjZ674X438Bn0cjLvuvOQbHOu7W/o9Re1EpBH1ZQkkSdVJW2LQr6Ys5o
-    eIXajv3gEL6ETIX6Wl4YcdK1Mvy6heLcHtyZwDqnnp2IS63ogWwJTkVviOt/V9Fo0Ms5t9
-    nMAEJ5wgVPvFmRc0beK2i6W++tb0K/Z5q2n6927yQD/SoaboPb8rCXs6D0BnL/0AUUJaJh
-    VXr8nhdYVHAzrGfXI2E/Ru9EkfHD4Jt9f/QocqxgqgaQ1KpsRrm6zir9hDAf226k71jhav
-    74mjSlQb+F1kKrGRHOKoMuaDlhU7a1GqICVKhs9Q20tZSuKPzClOs3pybySOd721YX73Bg
-    kSlKakfcHL1VAobMoiiNP1h+H0Hp9K7KurSY7E5bdMGt5dH2TnLrmxqGbrL8HEIz3pOdx7
-    5XZkUyn29GAHOq2RP5diYmpA5Xo8IaXF5i95IfzkZUPPUg6AtTAVYbWj+BDKSVVLnuVV5u
-    FS1SzRwkyoTv9UBkQ9X/lnyOk4RaeJhnNu6BAyAJG37TtOO0SYiR/jZJ3my+iXjToiW0Ps
-    hrcFMKa33KHVTUGQeVbSs0ArXt6s9wHEXFgV6Jsm6BND+1+wBp/M4RK9b7mw
-X-ME-Proxy: <xmx:P6x8aof_-lmXmQCsKyH1wWC62CKgaBtio4SJ5arcJwaOgxUkzr35LQ>
-    <xmx:P6x8ajpMJyEQsDPNT1gFEYRpXGEjK_Wk885amSDuaKekPyWNp4IXgg>
-    <xmx:P6x8apHeRUyzxEmWcVij1OEsGALM9YHyOZy7pDc9WLDlCKv6ljUUZQ>
-    <xmx:P6x8ajsdTbM6guefkqCDL-fb4tgoNXIiZoo16iRYoZ6zQu6Wo_tkPQ>
-    <xmx:P6x8ahE8S5IlSzNCI8AC_xMtiFeI59jDFB8TfYEw7XbyPPUfwlDkUPAR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 13:24:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] sequencer: remove unnecessary variable setting
-In-Reply-To: <pull.1922.git.1786516959130.gitgitgadget@gmail.com> (Elijah
-	Newren via GitGitGadget's message of "Wed, 12 Aug 2026 06:42:38
-	+0000")
-References: <pull.1922.git.1786516959130.gitgitgadget@gmail.com>
-Date: Wed, 12 Aug 2026 10:24:13 -0700
-Message-ID: <xmqqa4qrxneq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qDuzAdPF"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4995b0343c1so11191355e9.3
+        for <git@vger.kernel.org>; Wed, 12 Aug 2026 10:26:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786555583; x=1787160383; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=egU98ImFXfzGHtJu0v7UAktzhxcKyvbXA5QqiDP0KLA=;
+        b=qDuzAdPFqPcVemyQlRkAADeOrTGkep5dOHbuw52CNKgntLPB5P/nfghsBD/lDu33e1
+         2xilD/mmTpsFAJ+dgpUShXaJqf4Cls1gUl2uA+uBpGRTawj80O4jHNFItBF1phrf/AhK
+         NUl3XThESGINA729z/FvkVK3IH4fubHWp6Q/VRRzBOOW4MciGxdgNaBZPuA92hs4qjHa
+         M3LEWdGq6n8ULoyhMtlD72ysJgAg+2rpxxTL4IN1N6nRc/xw0E5gJ6rMCortJEJskSx7
+         66swEA/XD33Z/8ppk8+QYGY0rgQBRXs0ynjaP3d3sa9xOv6PxGGVUL2Fr029ZKB9s+Eg
+         cjNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786555583; x=1787160383;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=egU98ImFXfzGHtJu0v7UAktzhxcKyvbXA5QqiDP0KLA=;
+        b=mCKCO0xQ/kIWxcxXrZdwI7LhkeA+XNzSPiJcJR2uq2+40wX8INhXgcyDdDCXO7nqsT
+         xjnXCWB1XJuDxBi907bWue/dRjqtn5OKFE/jIXjmvAoj9E8DY42QmylqkjyPa7EZZxoz
+         Zby5Or4gY3MJ5GbatdD6ee7ka4TybHJ66823K2nYhf9j5s4Hs3uwnfIj3uIZR78qu9it
+         22uuKP9Rlzq1cJemG6X9i3ccgk5aak7nGYXAbGIZX96c1gpr7mSP389fLJBHCEd5kR7q
+         QaVUba5UYgm7ubwczDOaFf9tmdJ58Mn1/Df167LZhJ4cMV2pdr3AiKTNPiTTqWS/5d2c
+         fEwg==
+X-Forwarded-Encrypted: i=1; AHgh+Rq2Ro5CzLsl3SG2pmlUnLJQgst14ebTUPJc8IC+lSEjkNGwxYTPlLFHampLy8/DXrQXuyE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwR73wnxWlgtZXeSks7w8Kvu5V2/1dmvSSUWzXhXgeVkcgJry4E
+	4OQcYFQicivTEWeN/8SX0AtGIHk5x+z5mnk720Ushs/ljK7SB3iJPi1+
+X-Gm-Gg: AR+sD11KbAdCO2PnkTrNeM2xr0AsGDnzmeudDWMNqziOc5GU5pTohOhsrSVj9fgj/66
+	EFQhbjG7f881YMnjyk9HuGclpa4mHjxE2XdeKe/vc76MFHYoUmO557fWVi9ZzFXIjInImokKNVp
+	qlizpEt4h8YAnKcYDtLsQGDzolE3nxWLslyo+hBTR/4hbVZpc6RA5TnluhPyKjbvNzfwaQN7PqM
+	6B/bgHi3pOjSwn190pidueWN8M9AbqE8yAMCsMdZIdcngYyR2THE+GRDpmziHStsAJt1LZKJlRf
+	P5ww7c0ortEjce2q3maERxKZVUZn0FedZBaYfuZj7fFWyZ6zpLeGy2HHIvCuLsTyoH1f3Yq42El
+	ZBriest4cnaPwb6m8UbKJzGzoCKDTg13V5/Ot8MYdHTa/5AKYvAQzQdN9vPnVi9Zo9msy93bBwt
+	QcAQi18WOlkQMxsqBBsZNRe+wn+UuNYoDC5rDHwULJI1UXtJAkIcjaaxvF7LXuruGRzKbH+sdhv
+	MW0mKUOds7G9RM=
+X-Received: by 2002:a05:600c:4443:b0:499:7a19:408b with SMTP id 5b1f17b1804b1-4997c13870emr68318065e9.11.1786555582764;
+        Wed, 12 Aug 2026 10:26:22 -0700 (PDT)
+Received: from [10.0.1.15] (85-71-82-202.rce.o2.cz. [85.71.82.202])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4997c93b362sm25659765e9.3.2026.08.12.10.26.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Aug 2026 10:26:22 -0700 (PDT)
+Message-ID: <ab3a0ca8-82e9-4387-b363-2f851760a946@gmail.com>
+Date: Wed, 12 Aug 2026 19:26:20 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: Bugreport
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org
+References: <a7899757-9c3d-4735-b7ab-469808707e61@gmail.com>
+ <8fe70f89-89a8-426f-bab9-21284722c58d@app.fastmail.com>
+ <f4e39b04-b6dd-4b83-9103-8a1c98019dce@gmail.com> <xmqqik5fxobr.fsf@gitster.g>
+From: =?UTF-8?Q?Marcel_Svitalsk=C3=BD?= <marcel.svitalsky@gmail.com>
+Content-Language: en-US, cs, en-GB
+In-Reply-To: <xmqqik5fxobr.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 12/08/2026 19:04, Junio C Hamano wrote:
+> Marcel Svitalský <marcel.svitalsky@gmail.com> writes:
+>
+>> I see, thank you. Is this a new feature? I've been using this command
+>> for years
+>> and today is the first time I am seeing this. Also, is there another
+>> flag instead of
+>> `--all` that would just include the actual commits only?
+> --branches
+> --tags
+> --remotes
+>
 
-> From: Elijah Newren <newren@gmail.com>
->
-> revs.pretty_given is only ever read in builtin/log.c, and nothing from
-> builtin/log.c is ever called from sequencer.c.  So setting this variable
-> cannot do anything.
+Thank you, I actually want stashes included in the log so I chose the
+`--exclude='refs/notes/*' --all` solution suggested by D. Ben Knoble.
 
-Thanks.  I'll mark the topic for 'next'.
-
-> This was introduced in commit 62db524779 ("rebase -i: generate the
-> script via rebase--helper", 2017-07-14), which used `git rev-list` even
-> though its commit message describes the logic as having been based on
-> `git log`.  Because of this, I am guessing this line was copied or
-> ported from part of builtin/log.c without recognizing that this line was
-> not doing anything and could be removed.
->
-> It's certainly not doing anything now, though, so remove it.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->     sequencer: remove unnecessary variable setting
->     
->     Random thing I noticed a few years ago, I believe while investigating
->     our tangled web of revision fields and parsing. Either way, it's still
->     valid and I'm finally sending it upstream.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1922%2Fnewren%2Fsequencer-remove-unnecessary-setting-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1922/newren/sequencer-remove-unnecessary-setting-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1922
->
->  sequencer.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 83c3849205..a0abcc69ce 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -6277,7 +6277,6 @@ int sequencer_make_script(struct repository *r, struct strbuf *out,
->  	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
->  	revs.topo_order = 1;
->  
-> -	revs.pretty_given = 1;
->  	repo_config_get_string(the_repository, "rebase.instructionFormat", &format);
->  	if (!format || !*format) {
->  		free(format);
->
-> base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+MS
