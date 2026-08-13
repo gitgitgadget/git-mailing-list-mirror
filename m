@@ -1,114 +1,80 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E0E415F07
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 05:48:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EAAA381AE5
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 06:07:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786600087; cv=none; b=GCypeQzqRC91Im0GE/v58wTMgU/mSBzL6I9ZkSzWYM2DPhRAIOI4BXAqgAbbMWv7BznuS9OFpT1D3UJC6z//DYhexfam22ID4AMynb73iYQhbYIqTCu3lRBRq11PjSnljXMJyxfJWqMS0l2FWcF+kXmBKSmfgIeZsKqCUjRdY5Q=
+	t=1786601264; cv=none; b=LlgVvMdM9pSSVsSt3RUcQouDq2y3jVuh91qAXrnVEaVTeoZ91pcXNGMU43Jz4Kwq2sG4u7ghgHAK7RS8STJUbxiHsuWBGRlDH7OUdm1IH9FITxGk/xMHEiiJsuUjyrAi7QGcG1ykt9F/q8lGzCC8lUMu1Kt1EtYe7wZosAT3ZhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786600087; c=relaxed/simple;
-	bh=BXoMjld/l4n5CKelz4o2WyvTxvVLNZxfdzYtT47mV5k=;
+	s=arc-20240116; t=1786601264; c=relaxed/simple;
+	bh=vdW2VFXZMPbi8Hy4t2WiJti9THxsJw1zM0CCqv7CtyY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eExSJynndMXXUyfwC2D/ozFlAGtxEU+3xMR2pZa7U2v1j3xvJ5Uh0WzElH3YTVp7ys1py/XvV7WqGtQ8yrAZcPFZaIinwCQ7WSpjzXJug7Nta2rYl2Bd+6Rfg6lWf7RZxc+joqhH2xCRD+gDlw4i2zQcuNDZNOfO3qHhELA730M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VkfYbPwu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fxAs2lcT; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=cr1zepi/cInU7yPdpp+s9UHzx0w1j5hsgd8B1woq76vw2KdnXaaqpmuDJU/JCKHuppvpkzTf8Iuk1h27aC/jBdGp6k9RVzsnOM5RcMn7/axVq+ue11HGfqMcDoWG8feon8zlMeVH4z0ixrQckFb+ffVOyVUhXuaOGClzHV3dAvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=eToGN1+J; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VkfYbPwu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fxAs2lcT"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 35DD7140013D;
-	Thu, 13 Aug 2026 01:48:03 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 13 Aug 2026 01:48:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786600083; x=1786686483; bh=QGx7U5Oqtl
-	JrTSe5cNHU45uT1bzfYgBwN2R+npw0kbM=; b=VkfYbPwuJTbiy9B5jCgrp+g4J4
-	lvhpYuirb9JWbJSP87ghzmlV0gUIoq2LORVHd26uP6VcrYVV3XjpimD5y77b4jgQ
-	g4ltqXfacztCssLyxCMqH6YvL/cA3kB9ez2D94GGt9gEsPfRb600HSDbTwFguhUn
-	x9KN8uHMp2H6Oo2Y4FJ11KXP4nZ93dCDmOCyPY9Ezjl7dUPAVyvRYxcqTEPgn9Nq
-	uBo54zGMZkJDGDliFQCGaUedRlUzBylPjGI/B5xn1IlT0HSDPruGh8vkx+QXqmEi
-	/F9+mQMdRYuVO6xGvys6cKt5SM2L+6zJMlKpp6lHgnuCdl18LSmdhkaalsIw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786600083; x=1786686483; bh=QGx7U5OqtlJrTSe5cNHU45uT1bzfYgBwN2R
-	+npw0kbM=; b=fxAs2lcTzL+Uw9icshNQRtfq7eC4uFabmP/qgl9JxgKahXEUjuc
-	GBhYuShCQQv30+hzmwC5QWivj7kdF0NfTUaIcq12knYsUql6WBLlZ6YCmsIqVgtT
-	cmd/RusiSN86KWTsRwUwDD7lhMzS8/UEnxRQcpLVV0nscJO6i+oITvdgH+1/7KPB
-	8HHUH4vwczP1VbqAkv6MgkGoDaoYZESmxdlWP8XavqvCJ2PfNe5zPmO2Tt9BYy/p
-	L2QEoS2kYRAP1mXPNHyhIw8ogkGswXgLDM504beg8DM86hZpNMAzMKIsn2dbifXh
-	NWNqU73DMOjwcE1Vl01JMuKE/htb26H8jbA==
-X-ME-Sender: <xms:k1p9apapE9sdGkV1CPpQ7ADwemjpkY8Ya7phoJ83RiZnFliqXmNloA>
-    <xme:k1p9ana5Mr9S-n19XndPxl59Yt7_BHS_SLbV5x5xQ_WEiH8GQU8wYLypMfodmke5e
-    nGvSLFDKSrPub3kwCb1QuxtOiMk5R09xAn7j1eIQVYOnt3Yn0DlqrM>
-X-ME-Received: <xmr:k1p9ag8J67WEFP-s7XDcOAQ80faw3UIaDalhgh6Z-Ibf-HRnbosh-b5NgIjcYyXndo6QFJR_yAiHIlXronX74csFm2ORY65lZMM_ByKSp1yS>
-X-ME-Proxy-Cause: dmFkZTFrI7IDr9tUbscT3NVIlZotbcQDqDbXki6SSu4OqwR52VwB7QnScaVY7mVzqxrKMb
-    fr0YpBUCVbSSZV9g+AfbwGb1S8dQj7Z6rD53N92uOriBsIzrpdmEtZpmqqU5Gx76Mp6JKT
-    t7zqb2HYBfMfYw/ul5kDcoO5PSWhuKoMnIz8DZGOigqj9SsKCc5bbnvL1LfxiKP48xo1fD
-    LSsY0IYb/ukVSii4NlBVvRjO15cui+eH8aBok4Rqs2j4fRjegdE2a4aWXpgx7/mZZRg6K9
-    Ln2scACGKGQChgmcMjCIjkqzGEoKyrsHNSY5NmnIy02HZLYeOn2OD91CXu/sdvCi+ZCiSC
-    xVRpsZR8gwUwsw0t5p0m0H46khfQUTwe91+3PJCgJg6ElSLIixHfGl3Y7TDyVfH2tmatqz
-    CnmlS16SFFgtT4ixMsYog36US8aAFbPUhKyDXRKLrge5w8o2oFSCKdbP6frQbgVOz/6l3u
-    SMGgeWRHYO5PCa3EphSLOK1SF5mtQJuNW+KkuBhPBFOSwTTCbT5HS+CGRJg2gF6NMQi5kZ
-    SBIoSlDLAx9/vV+PG7aXXFyuGOcKGcCh4Kclex3XOZBR+vxIkoP2/nppw788cPZnY/Un9g
-    JgHaGs6+jP7ZZhIKH16my4VBicKLmGlBHcZry1EyWnKsW6ZcLPfT72pdlSDg
-X-ME-Proxy: <xmx:k1p9amhjKtSuRTmPoex-CEfNtR9XeCPhUTOvziTG6Kt6-OazvEkEUQ>
-    <xmx:k1p9agf5fOyZdcG-pc7QyeFRDJkR_WjJI9jLjyaZZ8If73OKLMAo9A>
-    <xmx:k1p9atqf_OtH42qb26v7k-xmAvSh4askX_fNPcOOHGLhZRyE0NmlVw>
-    <xmx:k1p9alD_EGMta8dMY3dRf0Lpm8iwQ2xbl8l62-b5JTvwsxZ1vhmP5Q>
-    <xmx:k1p9au5DvG-_n8xIuThE-0WFAGkKN5JASnZ4wFR2ducFr2jtC9taxLqa>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Aug 2026 01:48:02 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8d314383 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 13 Aug 2026 05:47:59 +0000 (UTC)
-Date: Thu, 13 Aug 2026 07:47:56 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/5] odb: make packfile generation pluggable
-Message-ID: <an1ajMjVRUsfu-lv@pks.im>
-References: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
- <xmqq33wpej49.fsf@gitster.g>
- <anlg2rThlBLavyU8@pks.im>
- <an0EkMZGEbg6LERc@com-79390>
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="eToGN1+J"
+Received: from MacBookPro (unknown [4.194.122.162])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 65B7820B7168;
+	Wed, 12 Aug 2026 23:07:16 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 65B7820B7168
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1786601237;
+	bh=GjKwf2sSmQZGxQrA6TYzRnVZO+SIlG1yFqP4U1zDzzk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eToGN1+JL4vbLXpxElr9clVhZbzp8u3tyaBz532mLYathF2M5kpvDOHGwQmzLIs8W
+	 R74SKin07A0LOvG5mZdISXl8dFX+mgqsiiW7vkwqZNoGagudq4sIGGUf9EBaLOgVTe
+	 bGnXt98CQkV9zcbjS0iQbU3QNKOTPIf/7H/HWRuA=
+Date: Thu, 13 Aug 2026 16:07:08 +1000
+From: Delilah Ashley Wu <delilahwu@linux.microsoft.com>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Nils Fahldieck <nils@fahldieck.de>, 
+	git@vger.kernel.org
+Subject: Re: [BUG] git config --global: doc and behaviour disagree when
+ ~/.gitconfig and XDG config file coexist
+Message-ID: <an1dekUM_fsM_l8d-delilahwu@linux.microsoft.com>
+References: <xmqqo6fojkds.fsf@gitster.g>
+ <336EEC18-98D3-4068-8C5C-476749959814@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <an0EkMZGEbg6LERc@com-79390>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <336EEC18-98D3-4068-8C5C-476749959814@gmail.com>
 
-On Wed, Aug 12, 2026 at 06:41:04PM -0500, Taylor Blau wrote:
-> On Mon, Aug 10, 2026 at 07:25:46AM +0200, Patrick Steinhardt wrote:
-> > > With "--no-ref-delta" thing in flight, this will not play well with
-> > > what is in 'seen', though.
-> >
-> > Ah, dang, you're right. I'm not quite sure about the status of that
-> > series -- there's been a discussion around whether it is the right fix
-> > in the first case with Peff, and there wasn't an answer since Peff's
-> > last mail.
-> >
-> > Taylor, could you maybe share what your plans are? If you want to pursue
-> > it further I'm happy to add it as a dependency and/or wait a bit.
+On Fri, Jul 31, 2026 at 09:14:07AM +1000, Ben Knoble wrote:
+>> Le 31 juil. 2026 à 05:35, Junio C Hamano <gitster@pobox.com> a écrit :
+>> ﻿Nils Fahldieck <nils@fahldieck.de> writes:
+>>> 2. The reading claim is outright wrong.
+>>> 
+>>>   The docs say --global reads from BOTH files.  The code reads from
+>>>   ONE.  git_global_config() selects a winner and frees the other
+>>>   path.  There is no code path under --global that reads both files.
+>> 
+>> The documentation needs to be corrected, I think.
 > 
-> Still something that we're working on, though I think that it's fine to
-> kick this out of 'seen' for the time being.
+> Agreed based on recent thread <20260720113402.0dc16abe@frustcomp.hnjs.home.arpa>
+> (subject « git config: unintuitive behavior with - -global and - -no-includes »
 
-Awesome, thanks for the update.
+A previous thread [1] said this behavior could be a bug. So, last year,
+I submitted a patch series [2] to align behavior with documentation,
+changing `git config` to read from both files. We gave time for the
+community to comment on whether we should change the behavior or the
+documentation, but there weren't any strong opinions [3]. The only
+responses were a correction to my cover letter and a technical review of
+my patches.
 
-In that case, Junio, could you maybe kick out that topic and merge this
-one here into seen instead? Thanks!
+Since then, I've addressed most of the review feedback. I have a draft
+v2 series [4] almost ready for reroll. I only work on it during "side
+project time" [5] at my workplace, but I'll try to have v2 ready soon
+for further discussion/review.
 
-Patrick
+[1] https://lore.kernel.org/git/xmqqmt5lezi3.fsf@gitster.g/
+[2] https://lore.kernel.org/git/pull.1938.git.1760058849.gitgitgadget@gmail.com/
+[3] https://lore.kernel.org/git/xmqqtsysfakt.fsf@gitster.g/
+[4] https://github.com/gitgitgadget/git/pull/2196
+[5] https://en.wikipedia.org/wiki/Side_project_time
