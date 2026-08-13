@@ -1,87 +1,83 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462E643CEED
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 21:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571DE1E0DE8
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 22:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786657979; cv=none; b=qWWFkUFiaFZNI6kVs7uQZfUaJFO/O4M63UuA+rYa2MdKshk5bkl4kucnJBbl1uNURY44lHhYyzIekXzX0ij3FAhplQytgNE8vmHTiTkoJp1l2MOmrHcmAL0M2lw3B1f+V5r8ArGkt7WO6ktAm4PKdbOkXoQfPJp35h4B8onXXXw=
+	t=1786658810; cv=none; b=tFeO0B1UOmVuUCw9YVqS8t50ySWn63TMjZMaaME/0O+ZgJopqxI2z8u5FHRWyooTzRBZ2Io/bCgBlRwAhAi6Gve+Qwml1Dlkct5QQrSncPW5t50ooNzxT+tsHQ1scSVQSb2iZi0Qd4REeuweGjSvof3doUiG40YNv4HsogGrpA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786657979; c=relaxed/simple;
-	bh=zJLRLCRg+tFs/hw+8fpGgCdEpqSM7yA3ebl8KlkDgR8=;
+	s=arc-20240116; t=1786658810; c=relaxed/simple;
+	bh=I5itW+J5chjIgXbWwEfa2H47kZHC0gX3rlg/PSiPQBc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qDRdwjuCRqmtPaqobNJi0IhN5GNWeoUat0aFilP+fE70NyA+EOAYyi6e1+6M5m3Rh5F+yFIwxp8+i1pWhSLoIoO344XIWzEnIkD595t5ZpgNv7OWsj56MUX9N/8IqAYWOFtpKpWf8jcFAlPMxmy6LoPqueLw1iCOpFHXDtCfes0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wt6ydXOg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N0bxyGJU; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=GyKKnlUz8E3h2a5QkI0kxa5WjBPJurWjfikLjS5ZicFvKFKqKapMR4FvL8wy5/hgkn3pg1F9tlzzn1K2ebKmtBqKiUaNg7LKZNXyTBC47Et3xNiERI0ey21TL9fXAFsC3wZW6EgwftCDXvig32qPTVBoFL67H0Zq0QL7kvB+Kzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aj6ubqpy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PbfMbd5Y; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wt6ydXOg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N0bxyGJU"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 41EE3140020F;
-	Thu, 13 Aug 2026 17:52:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aj6ubqpy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PbfMbd5Y"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5C4F41400114;
+	Thu, 13 Aug 2026 18:06:48 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 13 Aug 2026 17:52:56 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 13 Aug 2026 18:06:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786657976; x=1786744376; bh=THkR4ldXyX
-	9vf23t2snv6PROZbbUsPlY1qF1THUVfJY=; b=wt6ydXOgv7Qry/1c39c5+y6pCQ
-	eFHKKloVrEGM0x+foJtbJ11+80BjRrGSlClG2H3F8uAWb4GblLTl7wVgSsqJUayL
-	UniJHBGGQturuiIg5yqlZi06PucRJlnRb7ElrnNWgNYW/Wkf9pMxW16Dugx8DRHQ
-	KE5iazxITIiSbHYggncpqAhZRJvxoB96wna/X/xLSZ1dYi98WyNWkvYUX/AOOdFJ
-	PoeVe6N2cXBEHBmLi+SuG4WAWYw84DZIHzmbWFCcTXUMkS7Nuug5DuXM1U9a2zRM
-	RIzPs2ceousHDL37i+rkA6oH7OLwb+mTeZ7u4JrkZJ2ytOAC19VUVRdtIh4A==
+	:subject:to:to; s=fm2; t=1786658808; x=1786745208; bh=DeT1eleU+S
+	clSM61JPsKU3Y1cXf93eX2XAKjnU9ytiY=; b=aj6ubqpy5UlS9d3FwMD75fyvvS
+	kF1izHCT4vN7bS0HV9f2/kuU86/cIwSRdMzJw4v9UqZi3qWdGs/oSRC38Uf0lm9Q
+	8Sw6EQvG9tooUDzewOduWtQohyNSqZPQIXXtoFTfbPEDXK8Zys1/+uYB+IMtE5bg
+	FRGBvp+k+b02/PQYm3u4sVLJ0KhvTG81fQGq/ps2CYlHgb9ZK6qAsgXD6VAFHvzg
+	7ZPZslpUE3KdScWDuE7mY6G+hghDFOwTh7c1Mjc0tlIAeIYskeFSCuTibXwsAXLD
+	S3oQhrFgbwqkSeG/YjnxKzF2MFCbScMaIUVTbX3hjFDMXZMwl+RVY93igggA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786657976; x=1786744376; bh=THkR4ldXyX9vf23t2snv6PROZbbUsPlY1qF
-	1THUVfJY=; b=N0bxyGJUY0VBFJDLjG4bztBJkYabwbAypJrL55Nw2iBDJvd8NJn
-	oEHxXCNWQRe2OJkSX7KLDNLmS9mNzBdF7yZyldkVkjeXuPRpkbnr8iQmRSY2NHwQ
-	34iW7t1V1IH0GhDGvNdm6M+K0PIeV+Wx+qYkMxcN4SqiArctCUqNVZltIRAkgoy9
-	kD5fePV1H6MtGHUGwH1CDnZDx+jIhSUCzVL3pbSw62EM1fT+YCF53CnnqvKNNEKy
-	YiRays79yOkNqOH1/sZA03HryhXVZ/yuxhALTwPfDjbDRpeFg5yQlTj2D+0x3Evt
-	X+VUbJxk4hlcEeEY0TPyuCL6w9zCJ4lHmag==
-X-ME-Sender: <xms:tzx-asPYS7r1ebhaSEEkRAoB7vmY1IcV7kFabOK8NXunqAOXGjVT0w>
-    <xme:tzx-alhdgpfdieDuTvtVJGdtUco8T9kHKii8DcGLe2GMdCS3J31KpQgRL5-xfu83d
-    m7m3F9HiJ8ASMiHfyphkcfam44AjFj1LLeA9JnfbOOLG4Lp16iSzg>
-X-ME-Received: <xmr:tzx-am6jnIYQCJ5u8INVO5tONrH-QCKNSCwzjdq48hwt3gfQRbM2AtkixC-Vx3zgSK1PlIvPyGkvkxdM41twiqEA3HwOYaTaEA>
-X-ME-Proxy-Cause: dmFkZTFALtHIAsK9ZrcjBpq9CoA44B896D1E2oOnMsdvpnOuBlnoM2d0V7EpwJbILzjf31
-    Ax+7cgptr4TyFNbarpOCThcN2S6U041qeeJBHBPWtHHfs6bpa38y6vmUEpofmJA/0UfsLi
-    fG2kFuIkffi/HrS72b0DiCaUqJtOcP678Cr2jVHDpNy0M2HgHuDo8p9+F1aD9rT2bv9jU/
-    VULZGr+EL01QkmJDa9Gydw7fWmCnaBq9mwMfroP4pu5MOWfpfXe2DS9lwl8xlRc4CwddqX
-    DVVWTEHVMecnmiKVs9BgD6Uf7tiW2PXMUX4yv9nJXpfTMtiVtyyYnXSwqQqNjjB8Qb5zso
-    SRrVJfuoVHs9zG3dzW24FFt/tbSJkWGrJAZhvJLU3ORhdkU/BM6d8ZFhWOPoL3Bljn8e2K
-    Ha5DeTBvol0ahBRozbwK0H8EcSQEvT4mZHwawyIh2H/T3tusq3cWkxJYm0/nPrDHs4qvkw
-    vYrNENHHuBMYbCOT2aSoHjbhTXITZwHcYeaYMJIz7mX2XGgJM1ln1+vi49iPPfgra2PlXj
-    4EP5v3DvbUIsli3jBySJsLW1Z+Zc6kCg0vfl5uSOBKvnmBOazEkhTzbB7NNZZZEgaaFBv3
-    uQ1y0bQXwVoAZ/X/Q9Ocp0iUtSiy4X2U8lcDu+NNlRcdF7giih2wOfNb4DCA
-X-ME-Proxy: <xmx:tzx-ak0feybJDnYoA-Fd3gqj4tAJZF6t9lJsjTKxqk2CEdHuY6HHgQ>
-    <xmx:tzx-apuxByNDMA-dPnGjNrBeb92D3sHzVDjd7gcjV5lyPfXqHRYBaA>
-    <xmx:tzx-ai6XXQpxg02Mlxm0od1vOoaw0UIrFE1A3XZgItxdoeRcIbEjcA>
-    <xmx:tzx-ateuG4szMqSpOcFsU-3zehOIOeFsI9V_30ZRlSq5AIWsGROpEQ>
-    <xmx:uDx-anE5r9lscOp4gTY7kGO48McXGZnQArFedclDkdQ9YYfMuc21FO-J>
+	1786658808; x=1786745208; bh=DeT1eleU+SclSM61JPsKU3Y1cXf93eX2XAK
+	jnU9ytiY=; b=PbfMbd5YkdhyApRUtHuH7gAqLWXrJdbfexhoPYebzhU8mtvq33A
+	9HnYwQYbbnl/XGVpUnZk9IIK0Xc5peDlsXBD2lkIngNOeZpwphDrYTniQhP7hc2l
+	2/7Gx/RTHYN+o2OQgvjFKKfdIOJp7IkQeF1mZwS1wzRAlJ4XtZoQScEjvGcGlaCU
+	h6mwgjmDrQWIuvu0CEZrp5IR40Dt+FiDX2vPSSdpP6CK2ZxBqzJNRjCmumfnPW8t
+	epcaLVNWEU0pMfXrBV7mKm6YAK95sh4F7ESCv7h1w5JQ7uojmMJc29H6jJ609aVa
+	jTvqNFVFrahZ32nipe+PZbIB3CmFfuwZAQQ==
+X-ME-Sender: <xms:-D9-aqJEuI8aK3TKUBC_0tRPsDZs2Bji75JJpDfTmiZK3SnUi1fgnA>
+    <xme:-D9-apKFpeOIm4gKOMASC7gTcA-e3Prd5Nn79WCio2VjUJjWLX-3w8jC2hsC5iM3-
+    eUez0d8A_nMDpTrY7Y3q0c0cqa-OM3qFsZh8csN6ZokpIewPG53pg>
+X-ME-Received: <xmr:-D9-avsY_c-rCSJBh3CwPvjsXYgJ9qzRNUyfEeEZFKza21g-iV6IIvQ4kMY6Nwftn65c6IRSsoHSX9-JoMg9Fjvx0HuL4fgHUA>
+X-ME-Proxy-Cause: dmFkZTFgyAPH4P1tRLAOFgbIqaK4u76sCRGD+mXCXHVcDtOPgNe/wUmRk6t+C69KlOFzRX
+    jkZZH5WadafXlfgmxTyZZS8fL38jzax06KpTQj6d2jQoE7/Rh7VJYjAQMYq1oFmZ+M48xl
+    0JoR+XNfG0Xr2gyl1k3dNUqtFtdmDGx8ZrdiEpAfFv9paAdxMzaf9EZFkwyaqL2+FQZAIj
+    OwKMaBb1eD0ud/taiJQ8Vz0dVMmrBj6RbBmCXhZaBW4B+j9LpaAZChMqiMEJrXTfPEnWqR
+    iqWjDR+1luMPh4q7tJ1DZqmdBEz9+uywchlhlRubGclv+LsvMHKAJFGi5fUbtc5fV4K+LM
+    8DG+uj/okmlmy00CJ1FQG9oBViy7Vx60yN0OUw87KYqf96kar3xxMw82c6qiz7L6VxHUFO
+    prxYlp7Ah/4vmFrKIEFhADDJfjqxSMhVt7P1L02L7Wnn+ab6gziA+2MeHGbCY1HKG0lZWA
+    XnE3DjQh9T635RStt6N6Wd2TKOELEjDlk98fKEE+Lxu350iSV86rMW2wL84ETs73xqOTJB
+    iKJ+twXXDHuCCG35a5EUNfcKD3pTQ38ivMeq9gKxBhlzpdzhQ+o/7QtdSv/3Ii3zc44OQn
+    1WxO22wKItYtSNPGlexvSMqBMFyUeViA2NXTNerDdJjRzVRQ5uWHz40DHRfg
+X-ME-Proxy: <xmx:-D9-auQyuX2oJGwivObsA4a1uozYw5Wrr-glcA7sdZTE8VCkuGFoTA>
+    <xmx:-D9-atO4BDuZ-CpwvsM37uixvlHsSrTYNJOLYyuc-y16K4E2Ce6DYA>
+    <xmx:-D9-araRKgq4BF1DkTNE62YgKUf7RmxwSLayScMtsNRRAgi14SKQJw>
+    <xmx:-D9-avyhvEKa23ecBy_hOuWgf7MD79RwT7dxZs4TMWWGthZphPPZ2Q>
+    <xmx:-D9-apm0-SixEkLPxgg28CKrefWSY0qMy446C-xHeHUlwlEg8ECNtoKl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Aug 2026 17:52:55 -0400 (EDT)
+ 13 Aug 2026 18:06:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Matt
- Hunter <m@lfurio.us>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v13 7/8] history: create squashed commits without editing
-In-Reply-To: <xmqq4igyszeb.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	13 Aug 2026 10:28:44 -0700")
-References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
-	<pull.2337.v13.git.git.1786088371.gitgitgadget@gmail.com>
-	<8b3551d0d4ecb360775ea29507ee262c7bf9cd42.1786088371.git.gitgitgadget@gmail.com>
-	<xmqq4igyszeb.fsf@gitster.g>
-Date: Thu, 13 Aug 2026 14:52:53 -0700
-Message-ID: <xmqqtsoxr8lm.fsf@gitster.g>
+To: Michael Montalbo <mmontalbo@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [RFC PATCH v7 10/10] diff: consult oid-only hunk providers via
+ diff.<driver>.process
+In-Reply-To: <20260801174156.2998808-11-mmontalbo@gmail.com> (Michael
+	Montalbo's message of "Sat, 1 Aug 2026 10:41:53 -0700")
+References: <pull.2120.v6.git.1785091889.gitgitgadget@gmail.com>
+	<20260801174156.2998808-1-mmontalbo@gmail.com>
+	<20260801174156.2998808-11-mmontalbo@gmail.com>
+Date: Thu, 13 Aug 2026 15:06:46 -0700
+Message-ID: <xmqqmrupr7yh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,70 +87,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Michael Montalbo <mmontalbo@gmail.com> writes:
 
-> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> +test_expect_success '--no-edit uses last "amend!" message without an editor' '
->> +	git reset --hard three &&
->> +	write_script editor <<-\EOF &&
->> +	exit 1
->> +	EOF
->> +	test_set_editor "$(pwd)/editor" &&
->> +	echo fix >file &&
->> +	git commit --author="Fix Me <fix.me@example.com>" --fixup=HEAD -a &&
->> +	git commit --allow-empty -F - <<-EOF &&
->> +	amend! $(git rev-parse --short HEAD)
->> +
->> +	The first reword
->> +
->> +	More detail
->> +	EOF
->> +
->> +	git commit --allow-empty -F - <<-\EOF &&
->> +	amend! three
->> +
->> +	The second reword
->> +
->> +	Extra detail
->> +	EOF
->> +
->> +	test_commit WIP &&
->> +
->> +	cat >msg <<-EOF &&
->> +	amend! $(git rev-parse HEAD^ | tr a-f A-F)
->> +
->> +	The third reword
->> +
->> +	Excruciating detail
->> +	EOF
->
-> Care to explain why you need to (1) eat the exit status of the 'git
-> rev-parse' command and (2) munge the commit object name by piping it
-> into "tr"?
->
-> When another in-flight topic is in effect, this test will break due
-> to "amend!" followed by a string that is *not* an object name, as
-> the other topic declares that uppercase letters are not valid in a
-> hexadecimal string.
+> +static long blob_line_cap(struct repository *r, const struct object_id *oid)
+> +{
+> +	unsigned long size;
+> +	struct object_info oi = OBJECT_INFO_INIT;
+> +
+> +	oi.sizep = &size;
 
-In the meantime, I've queued the following on top of the series
-before rebuilding 'seen'.
+This breaks the build on platforms whose ulong is narrower than
+size_t since June 21 due to c6a4629e32 (odb: use size_t for
+object_info.sizep and the size APIs, 2026-06-15), which changed the
+type of the '.sizep' member of 'struct object_info' from 'ulong' to
+'size_t'.
 
+Tentatively, I'll pile this on top of your series before rebuilding
+'seen'; I do not know if there are further fallouts, though.
 
-diff --git a/t/t3455-history-squash.sh b/t/t3455-history-squash.sh
-index 591463cb86..d21e9d9fc4 100755
---- a/t/t3455-history-squash.sh
-+++ b/t/t3455-history-squash.sh
-@@ -309,7 +309,7 @@ test_expect_success '--no-edit uses last "amend!" message without an editor' '
- 	test_commit WIP &&
+diff --git a/diff-process.c b/diff-process.c
+index 121903a6c8..d28f9cf973 100644
+--- a/diff-process.c
++++ b/diff-process.c
+@@ -325,7 +325,7 @@ static int validate_external_hunks(const struct xdl_hunk *hunks, size_t nr,
+  */
+ static long blob_line_cap(struct repository *r, const struct object_id *oid)
+ {
+-	unsigned long size;
++	size_t size;
+ 	struct object_info oi = OBJECT_INFO_INIT;
  
- 	cat >msg <<-EOF &&
--	amend! $(git rev-parse HEAD^ | tr a-f A-F)
-+	amend! $(git rev-parse --short HEAD^)
- 
- 	The third reword
- 
--- 
-2.55.0-758-g31b934252d
+ 	oi.sizep = &size;
 
