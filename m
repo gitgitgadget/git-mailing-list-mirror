@@ -1,69 +1,71 @@
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B3447D47D
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:55:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416CF481FA8
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:55:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786632957; cv=none; b=hpm1iQMPDXYVJvgGPOv7isyxIXDRThgjO1in4y6uvh6XoDRimGk1J1Is6g9K5+qYi/iMQwNColoTTWhEYpFzzrqCteaRa7VNu5wnURzPeUcuDX5lcC9jxZum9i6gQFLpmqVHzGVk/1zecY8iHr9Ng/stfyTJSD3/T91OpfR3FTE=
+	t=1786632958; cv=none; b=HCN3kDtgYoBKRXmYrt0PZSIZVQeNLF+CgrykOIxtFYvwlhNQBhkvxpxoFrqS1OZILeSH5CZ//Leq7p060bmnX18JsjMwwPSPhIdLaLcrXiDpkjmFeDcCq4/puLLNqk/NFWP9WLls5jpSABgp3pTerRGa6FPZKKXj6eYZu96fK8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786632957; c=relaxed/simple;
-	bh=nYDRxAyHlsFYCtj43+qzvE+T9JnBvcNmamiLVlbPI4o=;
+	s=arc-20240116; t=1786632958; c=relaxed/simple;
+	bh=XBD/7nxptagjs5H2PpX5CLiH2Z9YzMUXPv/q39eA2BA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tJD+omFK+InR77OY8EncEHFIUhX9pBKpWNsFSNh8oDhNwpjrglix2apuJMPr9LWHUaVJCG6iZE7JnrwQZBVMRLF0e3Shr8J6jZ6BMpXkmArbB7RZNdFsIFkp+ghALtRg7iHHhEbqDvg71hn8roL7YbCIgzQUwKAxctXzw3B0rCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iaTqod+H; arc=none smtp.client-ip=209.85.161.47
+	 MIME-Version:To:Cc; b=A1yigpMNalA2vSYqxkdg5JKTfv20Ch4Ahk7fy8xItGTU2kIbZRPIWOUbV8uawJC2P22+kBSqhFNXc9sw2IEpn22Gep1RWCpwzB6gXFVc+bwhGXHKnY7qM2O68Zp1luFSGsFUzlS84H8N8btsTnlXsWjoe1garl46z0O5D16vrqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rZ0iBJLW; arc=none smtp.client-ip=209.85.210.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iaTqod+H"
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-6a168dc590cso12787eaf.0
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 07:55:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rZ0iBJLW"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7e9d7464b71so15279a34.0
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 07:55:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786632954; x=1787237754; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786632956; x=1787237756; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=RrJK4dZyzwvrgi0UVXYskeNW8qIaeh0CR2dM+eMr4XI=;
-        b=iaTqod+HklA1w0214e97yDxS1LgEumppjz478nSK26hy1iD8mEZQxftRlo2+oxRsuK
-         5JY+g6/cmb6G+koqizwgmzTeQTmoEDvybMtdSgCafVl3tI0CZRsae2qtWiruly3NvWM4
-         KJBE55lgyrfO/66ahBBbBM7oMcIuS5byViGqJUtfptvqN8rPLOUNdin79gwwj1QlA3g8
-         pzmxaIpVhiOrVPRAoBAU24l0yrI+4YX0ou9RqdgI2LneeVvv+/gQkZKazDO4RJXq670s
-         pt73OTGM4ZB5muoNyqXHiPVzUq4hctkMcPIkO5jVNh+bz2cDB6eoFNjgyHuM2dI47f16
-         LkWQ==
+        bh=xB9c5ioOsoU7YRqllaZjae3d00lxOg3IiwEUaaVOg2M=;
+        b=rZ0iBJLWR3E+SnmkDzqi2dtUhGFQRLx1W50/dmqDWA9jGaKdNvflqMv+WY5CZLovPM
+         U/oYe3raCdAeUv2PU7zf4iumXcaPSka5ofIF4TYAIdgxRT7uiBqpQrtq7H93KA7mjktF
+         OlSKRH1bSzGRyY9wgAPNvBVlLRvgJ27IlNR28uRlyhPmfOv3pG3gZBSELVyAAmLkpWx3
+         CaZgnLFfFqpsoFgf9hN/txgiEnLSipSnsSYNjCmL10FTrKHyGvBq4vYEtUzu0rYufc5Z
+         FGJGJmuOCiV/+OroI0pOGKHOakxcrJTRDJ+pZ5tUDrs48sFQKpvBwRtlswkZWzsmXrAa
+         DBCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786632954; x=1787237754;
+        d=1e100.net; s=20251104; t=1786632956; x=1787237756;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=RrJK4dZyzwvrgi0UVXYskeNW8qIaeh0CR2dM+eMr4XI=;
-        b=ECr+pTUWegxDjb/iZwTnov4bD9or4F74JMZy/x+oTu0b2+tKBPFD2LwFqeGDAGi69f
-         XTo8JQhod1Jb4Jze6d/e2GdL2QQL/nrn50ZMP88IdXhVEgj+zm69fQ1bGIvI/FL+vAl8
-         W0apnulV6UgyRKfooZR6u15bJJ3/jpmXhV+0zDcNHWDs+QfZ2SN/Vtqi2wI9CDIeOc8Q
-         DB9KxlPGON0xeMq0Q5QK2WgB6SsD0VpjYGLUd1xzNayMUriCaoAMuZ2uYI+0V3dtopJI
-         5i4G2OYBO4W9E0BgIWpTCD+oNsv+LL5Pyg0+ECvFwua9Q4ItuD/bOhoB3NLKztBVvMrD
-         XKhA==
-X-Gm-Message-State: AOJu0YxzcYD8AGhTfpbHsZXk7Gzceju36H6zPeTge8/205FGCv0hVYYU
-	aAhdbDttMy6RopmLXQ48uXTN2CM6lgxDGO47Qw1fREeSSYpk6irFdHS6wzO/dg==
-X-Gm-Gg: AR+sD12MrnFxFd+8ZtCmcP/z/hzyD9RG7Fo58kge7TseeBBJGIkwgZiAwKkk361KlsB
-	/8r13Dz0mOGTmzCYm9LAGhnBNQdrW45Pn/U2JTJiRizmhap9PdvckPxALeL4LeX7KyhbCuwW8sK
-	jwrstKG/MJCqrMGqwJQCQHf91PDtJoqRbi+M1APHKi867ue9sY5ZWGEDF0UmFG6N1hJ0W2Ob9cr
-	cRA0hQP3knMTkY3+q55h2ivZECuzMMoNcCHM1GAFa8XVko94QHzjv20HPrWK7KED8YwwT1qDReV
-	YAXs3sBZPGnbIpehQcIVNfHwYfbLccxiJRNb0nqOSA7JbGoIH2MZiagjqCexl2mz4d1BDMCezVH
-	JCn4pY6SKGI7lBXm+sQc565PqgNMDlQ/b2+9l35XMq03/33NoY4Fh6t417lDLDlMI7KiQDvcnhN
-	l5aqoXogPhhUASCV/dawEWsDuh0HKLwUNg0eJedMXw4AspvRohzEsQCQQFMx/NOYdG
-X-Received: by 2002:a05:6820:4c11:b0:6ac:ba90:2e9b with SMTP id 006d021491bc7-6b0c4220d22mr5331771eaf.12.1786632954260;
-        Thu, 13 Aug 2026 07:55:54 -0700 (PDT)
+        bh=xB9c5ioOsoU7YRqllaZjae3d00lxOg3IiwEUaaVOg2M=;
+        b=IPocQ++qVUebRUigMICW4onpJwGunoSR3bOumlXURmdAlNFUi2QdF1qC8xcBRlS3VS
+         vZeQ2JdybZeGbhK+8QU4FCfVBmz5Xv082/i9zRi0+8d5ilbIptTTg97Krd6PmX48dZfc
+         UJuzGUqq2Hk1Tx3Z5knIA2tEdhtnnBHgzttYEm7knSNeTL2IUR96mBiXnrdHdulJ4IQE
+         7hSfqvJpPC2SkznQQVhSzVeVjXBSADMX0zUfXdlCl8b9YowMlBxcw2m8Tkdr13W6Xez4
+         yuw5jPA9eVnerCs6v/BUXsphPXE10AynZn3w6/tr2wzgLl/D/jEXGTvtp1jo3+ndPivL
+         GZ4w==
+X-Gm-Message-State: AOJu0Yz6AWzaM91rCCyQyOTBjvajZYQCUDyyLL7llgcBmpE5vAEUE9lx
+	e2Jc8J99OWJm1YIWCe7GZ7D/MS6gywvuVbtDNbto52B20nL3YoPwuyccsvbnnA==
+X-Gm-Gg: AR+sD12KHsih8rAKaSHvtY/Le3lPaHIvRLLXzJxO5/WB78bXvZ4plaTyvVsJERZxIEI
+	3ho+QXgfsWGt8njVGzWVXwNCuf7UjvRH1h3fGCJdXiRUd6Pah5+wYVB9I2NKvFuyYublFRboycN
+	8LGzoYdJgSYSsfNcwXIOM3j6lTfx4ftbMrRKgcjZdXI1hsAcq9SlyaCtTBaNfPKLwss8hbKAXPN
+	XItwQkFQ5AGsZAL6mctDKIQBrHjjEW0X5pfNIP3MFup0EXa/X9cW9TeAVPszWkNSrpd6PBGg8bY
+	RjY4zdd+UAalvjlYb75OT+hhGxJsf7uGm4MTAL7LR6kiiQgYQZaOIfogzPhmiMUUjjQKI+loeWx
+	MC8GHAoeVTmm5HDZWZgcHB+94uQoeA3pgOua0BkxQfuwTM5akeAaDRFgHaAHCe4PevlyxZfJSzm
+	JAW/rPBT3mnteMkBfw02f+xcYsCuQ7ZUW6YDvIeknnP1bMiPEuCucZFYJNpZRm55XQ
+X-Received: by 2002:a05:6830:6111:b0:7e6:c9eb:535a with SMTP id 46e09a7af769-7f3ca659be2mr6672438a34.6.1786632955755;
+        Thu, 13 Aug 2026 07:55:55 -0700 (PDT)
 Received: from [127.0.0.1] ([128.24.160.250])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-45e656a9a33sm1719619fac.14.2026.08.13.07.55.53
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f3c99c63c0sm2179645a34.6.2026.08.13.07.55.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 07:55:53 -0700 (PDT)
-Message-Id: <pull.2175.v3.git.1786632952.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2175.git.1783615780.gitgitgadget@gmail.com>
+        Thu, 13 Aug 2026 07:55:55 -0700 (PDT)
+Message-Id: <0012c1007bc5d0e6ab143a0ab8201456e4f33a24.1786632952.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2175.v3.git.1786632952.gitgitgadget@gmail.com>
 References: <pull.2175.git.1783615780.gitgitgadget@gmail.com>
+	<pull.2175.v3.git.1786632952.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Aug 2026 14:55:38 +0000
-Subject: [PATCH v3 00/13] Next size_t stop: pack-objects/delta
+Date: Thu, 13 Aug 2026 14:55:39 +0000
+Subject: [PATCH v3 01/13] diff-delta: widen `struct delta_index`' size fields
+ to `size_t`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,110 +77,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
     Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch series continues the effort to stop using unsigned long where
-size_t should have been used in the first place. This makes a difference on
-64-bit Windows, where unsigned long is 32-bit.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-With these fixes, the pack-objects machinery works as intended on 64-bit
-Windows (and any other 64-bit platform where unsigned long isn't 64-bit).
+Preparation for widening the delta-encoding API to `size_t` in
+subsequent commits, which is what lets pack-objects drop the
+`cast_size_t_to_ulong()` shims that 606c192380 (odb, packfile: use
+size_t for streaming object sizes, 2026-05-08) had to leave behind in
+`get_delta()` and `try_delta()` because their downstream consumers were
+still narrow.
 
-Changes since v2:
+The struct is private to diff-delta.c, so widening its fields in
+isolation is a no-op at runtime: the values stored continue to fit in 32
+bits on Windows because the public API around it still truncates.
+Splitting it out keeps the API-change commit focused on caller updates.
 
- * Now zlib_cap_buf() is also widened in this patch series (I had left this
-   for a later one, originally).
- * The unpack_object_header_buffer() function is now also widened in this
-   here patch series.
+Since the `memsize` attribute is returned by the `sizeof_delta_index()`
+function verbatim, that function's return type is adjusted, too.
 
-Changes since v1:
+Assisted-by: Opus 4.7
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ delta.h      | 2 +-
+ diff-delta.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
- * The return value of sizeof_delta_index() is now included in the unsigned
-   long -> size_t work.
- * To assign correct values to the now-widened max_delta_cache_size, a new
-   pair of helpers are introduced and used: git_parse_size_t() and
-   git_config_size_t()
- * There are now two references regarding the provenance of the
-   deflateBound() formula in the corresponding commit message.
-
-Johannes Schindelin (13):
-  diff-delta: widen `struct delta_index`' size fields to `size_t`
-  delta: widen `create_delta_index()` parameter to `size_t`
-  pack-objects: widen delta-cache accounting to `size_t`
-  pack-objects: widen `free_unpacked()` return to `size_t`
-  pack-objects: widen `mem_usage` and `try_delta()`'s out-param to
-    `size_t`
-  delta: widen `create_delta()` and `diff_delta()` to `size_t`
-  packfile, git-zlib: widen `use_pack()` and zstream avail fields to
-    `size_t`
-  archive-zip: widen `zlib_deflate_raw()`'s maxsize local to `size_t`
-  diff: widen `deflate_it()`'s bound local from int to `size_t`
-  http-push: widen `start_put()`'s size local from `ssize_t` to `size_t`
-  t/helper/test-pack-deltas: widen `do_compress()`'s maxsize local to
-    `size_t`
-  git-zlib: widen `git_deflate_bound()` to `size_t`
-  packfile: widen `unpack_object_header_buffer()` to `size_t`
-
- archive-zip.c                |  2 +-
- builtin/fast-import.c        |  6 ++++--
- builtin/pack-objects.c       | 32 ++++++++++++++++----------------
- config.c                     |  9 +++++++++
- config.h                     |  3 +++
- delta.h                      | 14 +++++++-------
- diff-delta.c                 | 14 +++++++-------
- diff.c                       |  6 ++++--
- git-zlib.c                   | 18 +++++++++++++++---
- git-zlib.h                   |  6 +++---
- http-push.c                  |  2 +-
- oss-fuzz/fuzz-pack-headers.c |  2 +-
- pack-check.c                 |  4 ++--
- packfile.c                   | 12 +++++-------
- packfile.h                   |  6 ++++--
- parse.c                      |  9 +++++++++
- parse.h                      |  1 +
- t/helper/test-delta.c        |  2 +-
- t/helper/test-pack-deltas.c  |  7 ++++---
- 19 files changed, 97 insertions(+), 58 deletions(-)
-
-
-base-commit: f85a7e662054a7b0d9070e432508831afa214b47
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2175%2Fdscho%2Fsize-t%2Fpack-objects-delta-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2175/dscho/size-t/pack-objects-delta-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2175
-
-Range-diff vs v2:
-
-  1:  0012c1007b =  1:  0012c1007b diff-delta: widen `struct delta_index`' size fields to `size_t`
-  2:  75500c5abb =  2:  75500c5abb delta: widen `create_delta_index()` parameter to `size_t`
-  3:  5b54041baf =  3:  5b54041baf pack-objects: widen delta-cache accounting to `size_t`
-  4:  9850de1a91 =  4:  9850de1a91 pack-objects: widen `free_unpacked()` return to `size_t`
-  5:  c301958284 =  5:  c301958284 pack-objects: widen `mem_usage` and `try_delta()`'s out-param to `size_t`
-  6:  cfbf6c9567 =  6:  cfbf6c9567 delta: widen `create_delta()` and `diff_delta()` to `size_t`
-  7:  ca928b4579 !  7:  e4528f9034 packfile, git-zlib: widen `use_pack()` and zstream avail fields to `size_t`
-     @@ builtin/pack-objects.c: size_t oe_get_size_slow(struct packing_data *pack,
-       	if (e->type_ != OBJ_OFS_DELTA && e->type_ != OBJ_REF_DELTA) {
-       		size_t sz;
-      
-     + ## git-zlib.c ##
-     +@@ git-zlib.c: static const char *zerr_to_string(int status)
-     + 
-     + /* uLong is 32-bit on Windows, even on 64-bit systems */
-     + #define ULONG_MAX_VALUE maximum_unsigned_value_of_type(uLong)
-     +-static inline uInt zlib_buf_cap(unsigned long len)
-     ++static inline uInt zlib_buf_cap(size_t len)
-     + {
-     + 	return (ZLIB_BUF_MAX < len) ? ZLIB_BUF_MAX : len;
-     + }
-     +
-       ## git-zlib.h ##
-      @@
-       
-  8:  9f379ee7aa =  8:  4521a41ff6 archive-zip: widen `zlib_deflate_raw()`'s maxsize local to `size_t`
-  9:  ff103a0ee1 =  9:  f0765f6ed6 diff: widen `deflate_it()`'s bound local from int to `size_t`
- 10:  c701d2f9b2 = 10:  c91b4d7a7e http-push: widen `start_put()`'s size local from `ssize_t` to `size_t`
- 11:  e6175d2d87 = 11:  f4f2fa75f4 t/helper/test-pack-deltas: widen `do_compress()`'s maxsize local to `size_t`
- 12:  762e716afe = 12:  b4004b1067 git-zlib: widen `git_deflate_bound()` to `size_t`
-  -:  ---------- > 13:  bc4a58336a packfile: widen `unpack_object_header_buffer()` to `size_t`
-
+diff --git a/delta.h b/delta.h
+index eb5c6d2fdb..ab0279168c 100644
+--- a/delta.h
++++ b/delta.h
+@@ -28,7 +28,7 @@ void free_delta_index(struct delta_index *index);
+  *
+  * Given pointer must be what create_delta_index() returned, or NULL.
+  */
+-unsigned long sizeof_delta_index(struct delta_index *index);
++size_t sizeof_delta_index(struct delta_index *index);
+ 
+ /*
+  * create_delta: create a delta from given index for the given buffer
+diff --git a/diff-delta.c b/diff-delta.c
+index 43c339f010..9e1f9e6f95 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -125,9 +125,9 @@ struct unpacked_index_entry {
+ };
+ 
+ struct delta_index {
+-	unsigned long memsize;
++	size_t memsize;
+ 	const void *src_buf;
+-	unsigned long src_size;
++	size_t src_size;
+ 	unsigned int hash_mask;
+ 	struct index_entry *hash[FLEX_ARRAY];
+ };
+@@ -140,7 +140,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	struct unpacked_index_entry *entry, **hash;
+ 	struct index_entry *packed_entry, **packed_hash;
+ 	void *mem;
+-	unsigned long memsize;
++	size_t memsize;
+ 
+ 	if (!buf || !bufsize)
+ 		return NULL;
+@@ -302,7 +302,7 @@ void free_delta_index(struct delta_index *index)
+ 	free(index);
+ }
+ 
+-unsigned long sizeof_delta_index(struct delta_index *index)
++size_t sizeof_delta_index(struct delta_index *index)
+ {
+ 	if (index)
+ 		return index->memsize;
 -- 
 gitgitgadget
+
