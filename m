@@ -1,142 +1,133 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5EF429CDA
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 20:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063BB36A004
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 21:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786654247; cv=none; b=AY2eHG+FaL36j1d5qptuGdJoIRdvVM3tynW6UthHnKRzaBN9mxoQzqP+rVaWbA6ZTBVYPbd9DRJfn/KKUknKMawYJrmykJOaFWdBPgjWO5p089DPzJm6LiMMhkLV9X9hF5m4+j86Y4bPQYbGsNucu+gGCc5trn+QkOp1YAwdyF4=
+	t=1786655558; cv=none; b=uVE+zD4q17qqFZjaujOgutFjsWuzM7ogSTlHSriA6F1Vw2ex56U4T+tPQmtk6o4jD68RecyR+XnUGZRh2zsTR+VeFzro1EwTMIbsIokOA026eszgYpdBKtpwOKh5wpC46tCi7+RER56DQJV6o0eeStpR1QkdbKJF/e6v5ZSmU54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786654247; c=relaxed/simple;
-	bh=SgpPtzieOMObWpy4/v8vAl45fPySHR0Qpj060vfx4s4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sYHAP91AfVP9SnEwFKF/EXKaxZ2pvRoQWQVslvNkrt8SgUVw7sQ4Xea+NzBLCIKOBhVYjvF5yWfmVcFVcvGbPxwhN89NEY5Nfa5Wy1m2fsbRmC5THfbatUmd7SaYRCp32hvXUPD/Fa+gVKprftzbyOam+gdYZzk1Kww7dIrXUqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=e5Gxs8Gu; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	s=arc-20240116; t=1786655558; c=relaxed/simple;
+	bh=dld4TDTAsBTiqaPOdeV7CfFlF3CxpgPfGsr6OKAp0co=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=dY5ptWLiTjrYW+JU+FQdB5CHAH/LBPevn2KV5Tpy0aSxiP3WgD7i+lzcRXPHypcKlCg+4YjDX0WtUvix59+yafM9yRJWY2jytpuU/EqfKvu3CFoVQT4GJgv5k0FqK1ypPWpEcyA0miEZRtjoOakYVJBX7unpgN5sMPh/5VJlrbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dmBguYLy; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="e5Gxs8Gu"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-836c8bde2dcso5014457b3.0
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 13:50:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dmBguYLy"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-936cda0e3fbso29266585a.3
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1786654245; x=1787259045; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=6a1wSCqjDUAsmlO4awX3PdX9Ah4ctJ2mM7Hr2HmvHIs=;
-        b=e5Gxs8Gu/Wg05Aai3cAbf394o/gZwzXUdf0sDOQvR4krr02yRvM6x2CIAQMfGKoMeC
-         2Yahl62H2Hw9peumcXGmE+Pj3jpg6p1S4Uk0pRTtViBTMuNtbZeIU2xDY2UVvYwnFwJe
-         HOcVkkQCzioNdaC3AuOLEA71B+55vdCwIJVk4=
+        d=gmail.com; s=20251104; t=1786655556; x=1787260356; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=OM+tm+2NHaGMsmrFua+FXeB/HVODi/rKiOpHq0O/QrI=;
+        b=dmBguYLyiLMXYwNntTxB5UE4kBM1FhBAm5e7tjniKwVig/4q1LuRA5auvLld0hz/ob
+         57An8D6A/O+jV4F9LToL7718BabHkYvbsY2JZVJKbWo4aBNhc1rqvYJ9dnFLHiRagHlV
+         vF6rF5HG4GCy3Wv+sYkb4uNpd6vCQSrq2SwVpGx60h4J/H2N6nqN59hTlp93oMwmWOPr
+         /qS7k2MxfF/xrPYbLw7VJkid0Nx/l/RdntJ5//z9t9X1LBbk7WFpSDceQKKQj7c8LOS5
+         j6etvf3MfDfht8iGv7/+ABhIVIC6iepGgcf8i6GiEnbEuA5sIEojChOWKnjB1AhUerGE
+         2KNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786654245; x=1787259045;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6a1wSCqjDUAsmlO4awX3PdX9Ah4ctJ2mM7Hr2HmvHIs=;
-        b=iwmEFCwd/lzhqIWlXMpXebPLF67zya4uKhBqnj0dEvE+0y63laD19zRjTrJsbPOh2u
-         dbxarxypBxBBrYwoNv7VVdjdzLxCb7BqSI7eE5uxA4uKCHQDUo2BDxuc5/V8LXRLLsQJ
-         glgYxchP2TXWklDzPhHh42WcruiGZdpVuXGp4yYATBfdLcMMul+mkX4R6ocDZ5pe3mPt
-         eO/xwq4xMVrGaNRBb7glvlKZwjQC7LMbHecFE28CfeSYZdtHdsFkCGlzehVA+Y2Oa5IV
-         F2fjLiQflAxcX6doacwDBktzLPIRnhWyz6kno3XvBQQf5f5KN+j8TIh/LEnNOqHszjHm
-         Lrlw==
-X-Forwarded-Encrypted: i=1; AHgh+RottzxlMdRhKTvFDUtljbjnA+hP9WYDPS6v2/NhbIhHKzXHYSPtrDevQTS7rbJ4WJo5RXQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxZEY6iqo8cDg/2MtuzKyl1n0F45inJ/ngif4lz45otQW3W82H8
-	FRIrO/oOyn3Zaek5+HPaJFw79Ogx08R13RThl5Xtq/u6aZHM4cX0fz27lamc8ihSS4ER1yNV4cY
-	XzpfQ0Bk=
-X-Gm-Gg: AR+sD10spnO7E9ChD6kf4aK0fPX8l2kYfG1NfaaRTbj+PZ8QXJD/5rogjXqt1tw2JMY
-	8gnGbvI1OnOIzU6Q6astRxb2SlKUmtSbtlVT452ukGsxiru++Ii74BSTnrY8GuHwpnmTtnUQk33
-	7ipfPEfGmrWTZNauMCJxVerHDnQAEJaX+wi0ZYso6iZW66qgAW1xjvBdvkWr4kY3l0hxr7SGyMg
-	GHseGuRJ0Tkpb/mUX1J/HaYtKJT5mXhHYD7D0r3uZjH5LYmXJvhrXo5lp5V3wGd8SL19ZgUDLzg
-	UsXa7NxzXBK3sEHm1pNcHr2++n6thY2/k8mg0aYC0i986WTz3YccwTw21LF9AAw+pnlpIL+WDJv
-	2JHnmaQxcPZIJ3kXx+UaK2Ss2wEKzV/6wbQ79dwFviDns/T691l/f9YI7glusP6iLJgkXgSF8m9
-	BZdufRCM285iDuGsOu1zI6MxRySCdvN7rVXo/zkvbNI+2IjxJitHP/OfWKWftnMJWoaa6g8ap5s
-	90kKqy/l2KI6bqnpAz2OvSBfa/g/ZDH7+2UMGOMQfqntA==
-X-Received: by 2002:a05:690c:e197:20b0:81e:eebb:8e4a with SMTP id 00721157ae682-8370d215f92mr4053597b3.12.1786654244604;
-        Thu, 13 Aug 2026 13:50:44 -0700 (PDT)
-Received: from com-79390 ([20.98.136.114])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-836c1f43e82sm4653107b3.30.2026.08.13.13.50.43
+        d=1e100.net; s=20251104; t=1786655556; x=1787260356;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=OM+tm+2NHaGMsmrFua+FXeB/HVODi/rKiOpHq0O/QrI=;
+        b=sjXJP5Sdg4YU5peL8I3TOuOoAkjAJoXBk8JiHj4C+9x0IlKgPmTJq9oCChHLS7goM1
+         cGC1Hbqlsl8Tg45SDKuqmkYkdJ2tC0ncQMEySGqwzTpVJnzP3ydR8WniO69gtCjZkeFt
+         NYhAFcaNlc3YCM1MoUXFDqH5ED329fJJqxJPvZV8qAj1Ck2ueBlshLDBQJbIMUpVsId+
+         GcPv/+lLsesBj1kt2s8QzG456rl3xk29ONxupyB90G49vRScl5TtKLS7Ij7wRglEmkYS
+         yyT/T96YEkoz+a3lYJb0YbP0kLYofn2mlr6/oDp8B3sUCHXQtOPFMNGHNAcUvnyFRNol
+         nC8g==
+X-Gm-Message-State: AOJu0YwcDsuYveJSQ3U2aNBeNjzk2ypz+aaYgDOJceL7UrsBIwO4yduV
+	2sC3y8P+8kbYPBd2vMyCTruqoBA2JAQT+Lnn0zIjoyu6VjZMeud7TPI0UV/SJQ==
+X-Gm-Gg: AR+sD10aHfceWHppmctty4DEKfkhyGNBnBWM/4+9Geqmfr2ez9acrX8yDV2Qjpgc6Qj
+	KcCUGNg1oIt8RW6YUb+/Vsnbe+3Zq/mmRtmMh8BJE+b7kd9xeGxOdo9TLi6/ZATLq1oLVYYEqdy
+	WpiXMQVb+yHoBdpNmN88FfMmAxprKxM/26sUOb7j9UjOGGJSDDiBtFkWrIgISsG8GZtI+SsDrQJ
+	6WZ0X1AO5/TW6Ot9RYW8VECcuTWCGvZn209TqS6NynSHCqvdEj6+78m76fwD4N2/21UVFxLa5oa
+	COoDWwq6PZmPkYileoKFHcA9t/RJ/K1Nnz3Jh7aLxcnc/6kuPujHWPXkzoSe1PMoweGoEvEmobR
+	4ArijupXCcYHj0oAQn8VkNboP+RmpYVS5U4WqonqRiFWzRqS6CpI1l9CDuliS9oVOzgQ1Mlqh8v
+	wrO0dJuhl4vi0jD+7BIBuW+X5dEMxZRRjPdhQwP7fDGb+N5FWKwqvssqqfO9mL489d6yej4KSFh
+	z+kng==
+X-Received: by 2002:a05:620a:2b4c:b0:936:9bc3:e10f with SMTP id af79cd13be357-936d1fd6c4dmr91993985a.5.1786655555929;
+        Thu, 13 Aug 2026 14:12:35 -0700 (PDT)
+Received: from [127.0.0.1] ([172.208.127.199])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-936ce24564asm76680385a.40.2026.08.13.14.12.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 13:50:44 -0700 (PDT)
-Date: Thu, 13 Aug 2026 15:50:41 -0500
-From: Taylor Blau <ttaylorr@openai.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 3/3] midx-write: include packs above custom incremental
- base
-Message-ID: <an4uIQA09rDCwwBp@com-79390>
-References: <cover.1781294771.git.me@ttaylorr.com>
- <7bf7c87b60532a90c04c4a2404449a9d8ea21214.1781294771.git.me@ttaylorr.com>
- <an2FAWvyfX2LuGsG@pks.im>
+        Thu, 13 Aug 2026 14:12:35 -0700 (PDT)
+Message-Id: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
+From: "Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 13 Aug 2026 21:12:33 +0000
+Subject: [PATCH] t1401: test symbolic-ref exit codes on a non-symbolic ref
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <an2FAWvyfX2LuGsG@pks.im>
+To: git@vger.kernel.org
+Cc: Nikolaus Schuetz <nikolauspschuetz@gmail.com>,
+    Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 
-On Thu, Aug 13, 2026 at 10:49:05AM +0200, Patrick Steinhardt wrote:
-> On Fri, Jun 12, 2026 at 04:07:14PM -0400, Taylor Blau wrote:
-> > diff --git a/midx-write.c b/midx-write.c
-> > index aa438775ebd..c50fdb5c6d1 100644
-> > --- a/midx-write.c
-> > +++ b/midx-write.c
-> > @@ -133,8 +133,17 @@ static uint32_t midx_pack_perm(struct write_midx_context *ctx,
-> >  static int should_include_pack(const struct write_midx_context *ctx,
-> >  			       const char *file_name)
-> >  {
-> > +	struct multi_pack_index *m = ctx->m;
-> >  	/*
-> > -	 * Note that at most one of ctx->m and ctx->to_include are set,
-> > +	 * When writing incrementally, ctx->m may contain layers above
-> > +	 * the selected base MIDX, which must be included in the new
-> > +	 * layer.
-> > +	 */
-> > +	if (ctx->incremental)
-> > +		m = ctx->base_midx;
-> > +	/*
-> > +	 * Note that at most one of m and ctx->to_include are set,
->
-> Is that true? With "--stdin-packs --incremental --base=<foo>" I'd expect
-> that we have both set now.
+From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 
-That invariant holds for `ctx->m`j, but not for the local m after the
-assignment above. With '--stdin-packs', `write_midx_internal()` leaves
-`ctx->m` unset, but can still set `ctx->base_midx` for an incremental
-write.  Once we assign `m = ctx->base_midx`, both `m` and
-`ctx->to_include` can indeed be non-NULL.
+git-symbolic-ref(1) documents that reading a name that is not a
+symbolic ref exits with a non-zero status, and that --quiet does so
+silently rather than printing a diagnostic.  This was not tested.
 
-The filtering still does the right thing: packs covered by the selected
-base are excluded, and the remaining packs are checked against the stdin
-list. But the comment is wrong, so I'll fix it.
+Check that querying a non-symbolic ref exits 128 with the usual
+"is not a symbolic ref" message, and that --quiet instead exits 1
+with no output.
 
-> Okay, previously we were always checking against `ctx->m`, so we
-> would exclude packs that are contained in the current MIDX. And that
-> includes the case where parts of the current MIDX are supposed to be
-> thrown away because we want to write a new layer that excludes all
-> layers starting at the base.
+Signed-off-by: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+---
+    t1401: test symbolic-ref exit codes on a non-symbolic ref
+    
+    git-symbolic-ref(1) documents that reading a name that is not a symbolic
+    ref exits with a non-zero status, and that --quiet does so silently
+    rather than printing a diagnostic. This exit-code contract was untested.
+    
+    This adds two tests: querying a non-symbolic ref exits 128 with the
+    usual "is not a symbolic ref" message, and --quiet instead exits 1 with
+    no output.
+    
+    Test-only; documents existing behaviour, in the spirit of 919eb8ace
+    (t1402: check for refs ending with a dot).
 
-On the non- '--stdin-packs' path, yes. With '--stdin-packs', `ctx->m` is
-`NULL` and the old code already checks `ctx->base_midx`. The problem
-appears when the previous patch starts honoring '--base' on the ordinary
-write path. Since `ctx->m` still refers to the entire existing chain, it
-excludes packs from layers above the selected base.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2204%2Fnikolauspschuetz%2Fns%2Ft1401-symbolic-ref-quiet-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2204/nikolauspschuetz/ns/t1401-symbolic-ref-quiet-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2204
 
-> This is fixed by instead always comparing against the base MIDX in case
-> "--incremental" was passed. When the user passes "--base=none" we don't
-> have any base, and consequently we'd include all packs. Otherwise, we'll
-> exclude all packs that are already covered by our base, but include all
-> the other ones.
->
-> That feels sensible to me.
+ t/t1401-symbolic-ref.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Exactly.
+diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+index a2a7e94716..602db6d080 100755
+--- a/t/t1401-symbolic-ref.sh
++++ b/t/t1401-symbolic-ref.sh
+@@ -38,6 +38,16 @@ test_expect_success 'symbolic-ref refuses bare sha1' '
+ 
+ reset_to_sane
+ 
++test_expect_success 'symbolic-ref reports a non-symbolic ref with exit code 128' '
++	test_expect_code 128 git symbolic-ref refs/heads/foo 2>err &&
++	test_grep "is not a symbolic ref" err
++'
++
++test_expect_success 'symbolic-ref -q is silent and exits 1 on a non-symbolic ref' '
++	test_expect_code 1 git symbolic-ref -q refs/heads/foo 2>err &&
++	test_must_be_empty err
++'
++
+ test_expect_success 'HEAD cannot be removed' '
+ 	test_must_fail git symbolic-ref -d HEAD
+ '
 
-Thanks,
-Taylor
+base-commit: 745601a9a94110d74769ab605ccd4f61339758d2
+-- 
+gitgitgadget
