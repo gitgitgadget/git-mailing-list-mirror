@@ -1,185 +1,373 @@
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1806236196E
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 12:08:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD0935C6BB
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 12:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.173
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786622895; cv=pass; b=blSULFG2lT3E6EfOzrXTJoomZem5WAstsu1gvu2Q7RXN5B8S6rVyx9NmUfi2Xh2AraPWpntsalnIoA1CaNoxkOSEnTsTBkxyIeth4VMSr81v4VowN9Ld/K1nENkmW6qUNU0+ZMmPz+uygONcwj5zHlvHL1l4+K77cUuVAMV1n4I=
+	t=1786623824; cv=pass; b=EcjuwIC6hwoITGAtg0F0zsv4fUC7Hbj5pZvvkSGSwgAlIE1TrWFrL/5wC3J9oRLuxOJqYQwox6wQFdhTL2/4ESG2QU+2oyDaDCBt2/gc0vxDbCR4OaGiil/6r+LJ5AIwVaME1Iu5SKh72CH/hPN4uSaBFDga0/3u6ba9m/sLoZU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786622895; c=relaxed/simple;
-	bh=ByLJZT1T99pUHg1R1zjDhQ4Zipq0nhLyRbw8cVJD6YU=;
+	s=arc-20240116; t=1786623824; c=relaxed/simple;
+	bh=ZR6KCrERa2z/IG2KQzf59S+FKTBuoHGcE27qzD2S9Kk=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=Ky/BlAFF7bPyaY+SPmwv1+0Zkc7lAOv5dFFchTWmPYVFY026M4Acr1WeAoUN2/oEPETbebibaN3i8agYIfeApBaofim+QgQehz0zHTQesd7wdJlnf5G3NKyo+VNsv/5U67zvZF2htvOyAKUGEgIUCIvyklTFJV7h4CRVcHfhsj0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z3SyfGeo; arc=pass smtp.client-ip=209.85.222.45
+	 To:Cc:Content-Type; b=JR2as05B9KQuX86ugU31F1TsIiLdwLqOmqcWS5VNhugxgdZVXA4z9BFdT+YLJJdCmhE5cDNKteEX9lC30oU0HibDg5iF5jLJqWzjW60ARHIfhxZGMl9zDrsH4fl2NHNSZE2oD/ZQlNHf6HLkoVRMD39oq4O6AvCcsJooPaqVPKE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bWSml8L0; arc=pass smtp.client-ip=209.85.221.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3SyfGeo"
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-966e7380109so1449630241.3
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 05:08:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786622893; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bWSml8L0"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5c3fabe908eso683927e0c.0
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 05:23:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786623821; cv=none;
         d=google.com; s=arc-20260327;
-        b=k4EvSZjpRHe9bxxqEd+uTscPZNpcals39HnuK5XKb74BwTiADE9iHjOy1ZuOp6MMn/
-         rij7edp44TV+APhRkazfcFbe0LGS3PFks95yBuRMMerpJfu3MA9PVN+VoF1N06/Kjt7q
-         ytZpG7/xVNSTSBt17A9wxpJmZlBQ/OSUbUjEOg5398FsNrmOH2YFBOM2NEg0TvHOBzpH
-         vujaZBw50azIe8JH+a0+XEx+1iL28kSxCjBWQOQwDi3Pzp68T7hES5YlEkwhynPKlV/6
-         gaHuMgLymmTLvF1Ymh20D888Q08gksfxJD/dozIbQxgkXfDIyfMZn/mHOuVDd4reEeYu
-         nNfg==
+        b=LyOsE+8o0gEmHlwsrcfiPCsnWUUr00rId3ynxvX2JOr+Q7AaXJacEUA8C1rISDCXEb
+         8C2XodFPc6Ai2MLDYRC4oHaYvPsKm2ZTI1dVgdUpAArRBt0Ja81pf7BEmOX78Fiyap2w
+         dRGaPWpoeHpeKGtYOUxBL6zGsWgg+fJEi0O8tJySWRnn9ur62iVAFTQAFzg20rPaMDw8
+         JTKnOy8x6lYBm/89cUESLG88s7fPrnPUjIq33pEHoLvyUg0AnzOeqXDQ25jabXd503v2
+         xOJ1e9nYWibWy82cl5fjurMgh4x/+99YG9eURYvrhFkBWZJC+ULQHI4XEX6l1luGRPcV
+         BqtA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=YDtRIyotdc3MwTOwsPfGno867TJxuNELOA0nlEE7b6E=;
-        fh=GeSn4VSJTj6EACUlm7/KYQY3t2gvAdfFkaGxLTTXRIQ=;
-        b=Ra5WH76uhP14FVrfokDTcMxXEWoKrkWAUdrjVveZkm99THZOl8rDWGNk0q45HpVWQx
-         kh+tWQdjv+EXwmmuxMeX7YVu/1MejAVJ1raTRucVr2exwJowSGZB1c0uzPEYKdBV0D0w
-         pk/AY+G+Qe0mFF7nlYsAyUUkHdKOByCjs0cf3GyL1hQBxR2/EaevTDufOiJ5rJBAWMvl
-         ca1jYTJhpkn8JJ+PCramb2rhw7dL1OQiAiSATep3h1kML/S7iyIo7jN73sbf5DLpER+r
-         MEI8GbLH3JEpxD4VSp78jyz2TtF6TAhVC6M26pCNBFV9GeyKaMQ+xyUF7Fo/O5ZqukH1
-         sPDg==;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=/JKr8AMALR7jJTA8PpiKZ4JI/GJ5cmVOG0msAYT0UOs=;
+        fh=470YvqdvdPIC5vvZdldOIk9ej58PQXX0lKHQBGEgDyE=;
+        b=NH7lmtR71omkEc/1kJFS8sPG2Kj+yGGQWKfZ2KB7S7sBLhuWSRIJS07S39nSbFh44w
+         S21257BvA0NI9qPBMl15N+Yty6bcTsW4wJSyqMpTCxMiQ4oYcaV88p/JmeC6b0Z07co0
+         lvjTcvJcelrWsLRaavoPyi3NXWgL/NFvxrzo2XjRv13S96NS4Nv99m+A3pmSEDC2aVkA
+         BruQMO7H9zCLNu8UQtb3MRECjN1vFdGGMeVT9cpe1TaQZUmps5+god0QOY9T9vykq9o4
+         vcgE6N8DGlrEP2SwqTI9yl3pD+7Emw+DvV/wCc/G3VlzbPdcNRgU8c+yqduUzJUmonYg
+         GeQQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786622893; x=1787227693; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
+        d=gmail.com; s=20251104; t=1786623821; x=1787228621; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YDtRIyotdc3MwTOwsPfGno867TJxuNELOA0nlEE7b6E=;
-        b=Z3SyfGeorjjv68CDvhmcsYUkfxlVhDiDQnE+Uj8eecxW+DJ3EBcQkluU7+EHShADm9
-         15zTIpRK9d4gMzsu1oD1TEn3srtH+qtpBNMplZgWzQYtgoT59lM/OnmfjLEcjUSqov0c
-         Z9d95ZvZ3d9DEiCKNzTE0C6CdcyG/SMb9EjTHI7WnDrVmPMg/zSXVkX9ab/i3a/HKDho
-         OEc1VtvoszRzUEfMusc5Qje8L7BIh2ppM4VNFQiEcUwUTMmk+OpvD5v+CfX/CX7LR+zH
-         gEqmvl5B+WP4B0L9ghvzlctqLtmSK7KQLKHJXJKR4ozWKLsysz8hc3iFGaB0JmyDv0xH
-         tyVQ==
+        bh=/JKr8AMALR7jJTA8PpiKZ4JI/GJ5cmVOG0msAYT0UOs=;
+        b=bWSml8L0bqVp+ieSnCgYMkTaVFARej3+YYxNyvFsFSxMJQFFtm12GY6ZbT8vHQvwG6
+         ec3r4vWLG88xrcQpByHA6UbcGw7y3J5Fwss/HGmyfFMAxCwrRX4VWNdHttJO9Xpp//Bn
+         h9eoAFWofdpmi6U2Zhw5V54bv5UswrmW4VNnXirDVIGf9SFE09jZG02JFuGSAN0UdkI+
+         Hu0fL6jy0CI43VbRbUEvrgeFiXeGgo/OVLhvgchU54+HiIhzcAV9pOlDvH7KkuO07O/K
+         hoSR2kVYSKK/mjhcyTCroenu1tzBSVPrKIOrHqUxavSxBLNPyMZvttWZWtJnBvs2z/O6
+         xKYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786622893; x=1787227693;
-        h=content-type:to:subject:message-id:date:mime-version:references
+        d=1e100.net; s=20251104; t=1786623821; x=1787228621;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=YDtRIyotdc3MwTOwsPfGno867TJxuNELOA0nlEE7b6E=;
-        b=CDmW2WsNW2+AT6RxTCkQcDmHkKfqmUOsEquwwa84V4r+zNI0uk9Nx71lgs830Ggc4s
-         H0rNFoRCbHDV+RUmmfjbJayaPNWe17zoIg9RKkpDE5gESjRkdYlRVYHgd38GpKkG8Vnh
-         cMmceIgmt0Qb/jRNZdwC81kPh3FfhIsftyXbQTVu4bcErrCJjVY5+Yod9kOATtSS+fR5
-         bt+sPKYbj1ZZs8DRbVM1x6wqXWxTc1034Shb3LQeFrHYa5cZjgZg3xHpU7oVJHa8oL57
-         us1Soz+xi5+OTznl5QkH4ogyrzMZ2NydE7uYe3+TzINOC9oIC4GPqRV2ocNo8zOhGW+A
-         p+gg==
-X-Forwarded-Encrypted: i=1; AHgh+RoYBmAODW7r96CX+Poc+TO+6lKwM1tTQijZiZJVFWB5NRhg4GKrJ7bYgILPUdeBzDWSw7Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyd+7dSR+ujXSaOWq5KdFO5SFjBh0f8JNsVh3fqxTwl/av8xluZ
-	ALnFNE1g1LNnuAtgVt6+D9xTFfByLeFXoqAm83fAJOlRNQ2yzcaiweDb5I9UbvqyRXf5TLZao+W
-	rya0Qe561UHI4pw82nyAWvjk7thNQ0xE=
-X-Gm-Gg: AR+sD11KVTsKG7ax+abt1++wDx7zdZrrGDVrLDgQyp34hpDtDGuWP4wkXE+3TMQTFNO
-	NAz/1XH5Wla6hnK3yYU8XickllHKwDriASkR3xAoQyn2FJReGgsWIJnjruGLc/p0wKpQK49RFue
-	SztFCgIUUTBiEvaCRrz1m/M49dYfWi2ERsjlQLcIL+t5beGVDoSUHOmHQkHE+lVKa6indLAM/W2
-	XNi9/L3aoXa2qjMeIig9CQM8Hj6+DGjXG3unVo9+OSHSARC8quc1770+QGFq/Ir7qi/wSveeHON
-	5OA1WhKoO3hBUTtsTlJ5PRfVDCTuH5bbYq8I9bzHkDr7zj2f3pkez5wNvMd97h6kFvv1BofBIF4
-	rrCRpUG34A9v8VaqDqtWSlkb5NWcPK4z7K54=
-X-Received: by 2002:a05:6102:2929:b0:737:783d:1912 with SMTP id
- ada2fe7eead31-76db8871be8mr1555063137.12.1786622892846; Thu, 13 Aug 2026
- 05:08:12 -0700 (PDT)
+        bh=/JKr8AMALR7jJTA8PpiKZ4JI/GJ5cmVOG0msAYT0UOs=;
+        b=Q0if/YX+ZkDHJbbIx+O68XQKbxFbQeFdHQPMOYx8vhPomt7Q4OevmX4cSn9Fk/ZbsW
+         XwwrhVFXnvCeC5KZ+8nAECDoMfq+COT0AGFrXnk3gBE8wiAE9mYnuRxQM9dwUGQdrepL
+         O7/w3MXm1B5sCUMYIL0rCFrZ6hvXQvyeJLZzNwvyiepq7w+LLd6hAjhlXrVNOl77PYCy
+         NFMFli7KkLkR53YyxkQ0vo5DXHI61EBw5whA1ZjZVNE16wINoWj0RNWMgFOm1TUyZ1n0
+         rEf1pozamaLpJm3FzTcHG3+w0hMrhmlW0RyZmyyeVFEIMtJmGEa7EEXLNyXJzQ6Pgnni
+         IdbA==
+X-Forwarded-Encrypted: i=1; AHgh+Rp4ZGN5fWLu6fIUS7wiFygbCL/R30flfNiZJOpEgFBtpUzdTxCmdRlE9SX1UKnAxzKLkE4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx53eGpi1Gc7Hw3p7HaNugSVa4KPwMGgQKbzBtVlyiiFhwn4w+G
+	ue+t/+dqSopNSzXwzKALeFaII7WfVBgnFoXpfHIx59dy8c4Fg+1ujK4vArxuIKsjB4l5Sz7fq+P
+	9Y0hsXDuowPwbzC+G1hel6SOpR+fA0sU=
+X-Gm-Gg: AR+sD12q86W/4Y90WR7mlUTkbkQ4Olga4kqbxykfgiQ6zD5W0lJwJI82vmyyzrvYGjh
+	qsSOSgsMA6wUdJpDidc2g81oFy8jLJgEmTFA6U46Th/KhrfpkV2gUDqJbM9h6rYs//ZeAQpuJVM
+	u5dPZBABtDRZLpt6LFX7xm2r+1W62TrCtk+he/XbHuB0z9o+Gny6no3j4kqKE5xb9ywL8GZJeIc
+	I0RdQ250zsZrK1wClLwqpqiVhxYicGfk+rM+eHyPjmsMP7EL6/+ueFcKhmVvPXaH64xn08rSUzl
+	+3cz02+6m1rDUWreB8lcKOgqpmuDFcqhAnCD5fPcE2DH6HGWfPWAGSENxNMBPJb7viRNOXQ9VBY
+	xvwaBfAaQkUux4v15QHM1Q71JodrSEql/e9U=
+X-Received: by 2002:a05:6102:94f:b0:74c:9177:35bc with SMTP id
+ ada2fe7eead31-76db527e3d4mr1261342137.2.1786623821253; Thu, 13 Aug 2026
+ 05:23:41 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 13 Aug 2026 05:08:12 -0700
+ HTTPREST; Thu, 13 Aug 2026 05:23:39 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 13 Aug 2026 05:08:12 -0700
+ HTTPREST; Thu, 13 Aug 2026 05:23:39 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260812-pks-t7900-fix-flaky-test-v2-0-9ea0e1ac0edd@pks.im>
-References: <20260807-pks-t7900-fix-flaky-test-v1-0-08d0ea0fbbc5@pks.im> <20260812-pks-t7900-fix-flaky-test-v2-0-9ea0e1ac0edd@pks.im>
+In-Reply-To: <20260812-pks-odb-eagerly-prepare-alternates-v2-1-522b9a5bc1ea@pks.im>
+References: <20260812-pks-odb-eagerly-prepare-alternates-v2-0-522b9a5bc1ea@pks.im>
+ <20260812-pks-odb-eagerly-prepare-alternates-v2-1-522b9a5bc1ea@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 13 Aug 2026 05:08:12 -0700
-X-Gm-Features: AUfX_myYloeTRdN-9owiADSynEpc927I6FEa0UF8pM_8efJGf8zIPXiX7YkFQOk
-Message-ID: <CAOLa=ZQmZ0spmdPOzCZe36i24nQh+o7d4fSz5dcJS7+O3p2skg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] t7900: fix flaky "maintenance.strategy" test
+Date: Thu, 13 Aug 2026 05:23:39 -0700
+X-Gm-Features: AUfX_mxNmzBAL0adIy6vL14rKYHSR26fFqL35Viooe36qxbIOg3uRdUHbEMpGug
+Message-ID: <CAOLa=ZTsumAT6U8+pJQmNjYL6Rt=JkvTJ0V7KQ7MvLYkThTFYA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] odb: decouple source path comparisons from `the_repository`
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000e044e90658ec8e21"
+Cc: Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="00000000000036b2910658ecc66f"
 
---000000000000e044e90658ec8e21
+--00000000000036b2910658ecc66f
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Hi,
+> When registering alternates we deduplicate object database sources by
+> their path so that the same source won't be added twice. Ever since
+> cf2dc1c238 (speed up alt_odb_usable() with many alternates, 2021-07-07)
+> this duplicate check is backed by a map keyed by the source's path,
+> using `fspathhash()` and `fspatheq()` as hash and equality functions,
+> respectively.
 >
-> I've recently noticed that t7900 is flaky, see for example [1].
-> The root cause of the flake is the auto-detaching logic of
-> git-maintenance(1), which sometimes causes us to skip maintenance
-> altogether when the foreground process is racing with background
-> maintenance.
+> These functions are problematic in this context for two reasons:
 >
-> Changes in v2:
->   - Perform some word smithing on commit messages.
->   - Link to v1: https://patch.msgid.link/20260807-pks-t7900-fix-flaky-test-v1-0-08d0ea0fbbc5@pks.im
+>   - They implicitly depend on `the_repository` instead of the
+>     repository that owns the object database.
 >
-> Thanks!
+>   - They derive case-sensitivity from `repo_ignore_case()`, which
+>     returns a default value in case the repository's configuration has
+>     not been parsed yet. Object database sources may be registered
+>     before that is the case, so the answer may flip depending on when a
+>     source gets registered.
 >
-> Patrick
+> Fix this by making the comparison self-contained in the object
+> database. Instead of using `fspathhash()` and `fspatheq()` we resolve
+> "core.ignoreCase" manually and then use the correct comparison function
+> based on the result. This requires us to migrate to a `struct hashmap`,
+> as the khash interface does not give us the ability to change these
+> functions.
 >
-> [1]: https://gitlab.com/gitlab-org/git/-/jobs/15762975482
+> Note that we can unconditionally use `strihash()` to compute entry
+> hashes regardless of case sensitivity: a hash function only needs to
+> guarantee that equal keys have equal hashes, and a case-insensitive
+> hash satisfies this requirement for both case-sensitive and
+> case-insensitive equality.
 >
+> Overall it's quite debatable whether all of this complexity really is
+> worth it, or whether we should just linearly search through all sources
+> to find duplicates. But the mentioned commit cares about cases with
+> thousands of alternates, and a linear search would of course regress
+> performance quite a bit. This doesn't really feel like a reasonable case
+> to care about though, but I don't feel comfortable regressing it anyway.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
-> Patrick Steinhardt (2):
->       t7900: adapt some tests to use a throwaway repository
->       t7900: fix flaky "maintenance.strategy" test
+>  odb.c        | 63 ++++++++++++++++++++++++++++++++++++++++--------------------
+>  odb.h        | 15 ++++++++++++++-
+>  odb/source.h |  7 +++++++
+>  3 files changed, 63 insertions(+), 22 deletions(-)
 >
->  t/t7900-maintenance.sh | 76 ++++++++++++++++++++++++++++++--------------------
->  1 file changed, 46 insertions(+), 30 deletions(-)
+> diff --git a/odb.c b/odb.c
+> index bd02d8ad54..51da386f22 100644
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -2,11 +2,10 @@
+>  #include "abspath.h"
+>  #include "commit-graph.h"
+>  #include "config.h"
+> -#include "dir.h"
+>  #include "environment.h"
+>  #include "gettext.h"
+> +#include "hashmap.h"
+>  #include "hex.h"
+> -#include "khash.h"
+>  #include "lockfile.h"
+>  #include "loose.h"
+>  #include "midx.h"
+> @@ -29,8 +28,32 @@
+>  #include "trace2.h"
+>  #include "write-or-die.h"
 >
-> Range-diff versus v1:
->
-> 1:  10521f07ad ! 1:  1f3f8aa538 t7900: adapt some tests to use a throwaway repository
->     @@ Commit message
->          tests more neatly self-contained and allows us to trivially modify the
->          environment in the next commit.
->
->     +    Note that we adapt calls to `test_config ()` to use git-config(1)
->     +    instead. This is because on the one hand we don't need the auto-revert
->     +    logic of `test_config ()` as we're using a throwaway repository anyway.
->     +    On the other hand it's not possible to use `test_config ()` as it uses
->     +    `test_when_finished ()`, which errors out when we run it in a subshell.
->     +
->          Signed-off-by: Patrick Steinhardt <ps@pks.im>
->
->       ## t/t7900-maintenance.sh ##
-> 2:  71cb84a4a7 ! 2:  ba1fbb27f9 t7900: fix flaky "maintenance.strategy" test
->     @@ Commit message
->
->          But there's a second condition that may cause us to not execute tasks,
->          namely when the "maintenance.lock" file exists due to a concurrently
->     -    running tasks. We usually disable auto-maintenance from detaching in our
->     -    test suite to avoid exactly these kinds of race conditions, but in t7900
->     +    running git-maintenance(1) process. We usually disable auto-maintenance
->     +    from detaching in our test suite to avoid exactly these kinds of race
->     +    conditions by exporting `GIT_TEST_MAINT_AUTO_DETACH=false`. But in t7900
->          we unset "GIT_TEST_MAINT_AUTO_DETACH" and thus enable the auto-detach
->          logic. The intent of this is to exercise git-maintenance(1) closer to
->          how it would run in a real-world scenario, but it does cause us to race
->
-> ---
-> base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
-> change-id: 20260807-pks-t7900-fix-flaky-test-160abfcef65a
+> -KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
+> -	struct odb_source *, 1, fspathhash, fspatheq)
+> +static int odb_source_paths_cmp(struct object_database *o,
+> +				const char *a, const char *b)
+> +{
+> +	if (o->source_paths_icase < 0) {
+> +		int icase = 0;
+> +		repo_config_get_bool(o->repo, "core.ignorecase", &icase);
+> +		o->source_paths_icase = icase;
+> +	}
+> +
 
-The range diff and this version looks good. Thanks!
+Nit: couldn't this be simplified to
 
---000000000000e044e90658ec8e21
+if (o->source_paths_icase < 0)
+   repo_config_get_bool(o->repo, "core.ignorecase", &o->source_paths_icase);
+
+> +	return o->source_paths_icase ? strcasecmp(a, b) : strcmp(a, b);
+> +}
+> +
+> +static int odb_source_by_path_cmp(const void *cb_data,
+> +				  const struct hashmap_entry *entry,
+> +				  const struct hashmap_entry *entry_or_key,
+> +				  const void *keydata)
+> +{
+> +	struct object_database *o = (struct object_database *)cb_data;
+> +	const struct odb_source *source = container_of(entry, const struct odb_source, by_path_entry);
+> +	const char *path = keydata;
+> +
+> +	if (!path)
+> +		path = container_of(entry_or_key, const struct odb_source, by_path_entry)->path;
+> +
+> +	return odb_source_paths_cmp(o, source->path, path);
+> +}
+>
+>  int odb_mkstemp(struct object_database *odb,
+>  		struct strbuf *temp_filename, const char *pattern)
+> @@ -58,8 +81,8 @@ int odb_mkstemp(struct object_database *odb,
+>   */
+>  static bool odb_is_source_usable(struct object_database *o, const char *path)
+>  {
+> -	int r;
+>  	struct strbuf normalized_objdir = STRBUF_INIT;
+> +	struct hashmap_entry key;
+>  	bool usable = false;
+>
+>  	strbuf_realpath(&normalized_objdir, o->sources->path, 1);
+> @@ -76,20 +99,18 @@ static bool odb_is_source_usable(struct object_database *o, const char *path)
+>  	 * Prevent the common mistake of listing the same
+>  	 * thing twice, or object directory itself.
+>  	 */
+> -	if (!o->source_by_path) {
+> -		khiter_t p;
+> -
+> -		o->source_by_path = kh_init_odb_path_map();
+> +	if (!hashmap_get_size(&o->source_by_path)) {
+>  		assert(!o->sources->next);
+> -		p = kh_put_odb_path_map(o->source_by_path, o->sources->path, &r);
+> -		assert(r == 1); /* never used */
+> -		kh_value(o->source_by_path, p) = o->sources;
+> +		hashmap_entry_init(&o->sources->by_path_entry,
+> +				   strihash(o->sources->path));
+> +		hashmap_add(&o->source_by_path, &o->sources->by_path_entry);
+>  	}
+>
+> -	if (fspatheq(path, normalized_objdir.buf))
+> +	if (!odb_source_paths_cmp(o, path, normalized_objdir.buf))
+>  		goto out;
+>
+> -	if (kh_get_odb_path_map(o->source_by_path, path) < kh_end(o->source_by_path))
+> +	hashmap_entry_init(&key, strihash(path));
+> +	if (hashmap_get(&o->source_by_path, &key, path))
+>  		goto out;
+>
+>  	usable = true;
+> @@ -172,8 +193,6 @@ static struct odb_source *odb_add_alternate_recursively(struct object_database *
+>  {
+>  	struct odb_source *alternate = NULL;
+>  	struct strvec sources = STRVEC_INIT;
+> -	khiter_t pos;
+> -	int ret;
+>
+>  	if (!odb_is_source_usable(odb, source))
+>  		goto error;
+> @@ -184,10 +203,11 @@ static struct odb_source *odb_add_alternate_recursively(struct object_database *
+>  	*odb->sources_tail = alternate;
+>  	odb->sources_tail = &(alternate->next);
+>
+> -	pos = kh_put_odb_path_map(odb->source_by_path, alternate->path, &ret);
+> -	if (!ret)
+> +	hashmap_entry_init(&alternate->by_path_entry, strihash(alternate->path));
+> +	if (hashmap_get(&odb->source_by_path, &alternate->by_path_entry,
+> +			alternate->path))
+>  		BUG("source must not yet exist");
+> -	kh_value(odb->source_by_path, pos) = alternate;
+> +	hashmap_add(&odb->source_by_path, &alternate->by_path_entry);
+>
+>  	/* recursively add alternates */
+>  	odb_source_read_alternates(alternate, &sources);
+> @@ -1056,6 +1076,8 @@ struct object_database *odb_new(struct repository *repo,
+>  	o->repo = repo;
+>  	pthread_mutex_init(&o->replace_mutex, NULL);
+>  	string_list_init_dup(&o->submodule_source_paths);
+> +	hashmap_init(&o->source_by_path, odb_source_by_path_cmp, o, 0);
+> +	o->source_paths_icase = -1;
+>
+>  	if (flags & ODB_NEW_HONOR_ENV) {
+>  		primary_source = xstrdup_or_null(getenv(DB_ENVIRONMENT));
+> @@ -1094,8 +1116,7 @@ static void odb_free_sources(struct object_database *o)
+>  	odb_source_free(o->inmemory_objects);
+>  	o->inmemory_objects = NULL;
+>
+> -	kh_destroy_odb_path_map(o->source_by_path);
+> -	o->source_by_path = NULL;
+> +	hashmap_clear(&o->source_by_path);
+>  }
+>
+>  void odb_free(struct object_database *o)
+> diff --git a/odb.h b/odb.h
+> index 8eb4e85d64..71af7450a9 100644
+> --- a/odb.h
+> +++ b/odb.h
+> @@ -1,6 +1,7 @@
+>  #ifndef ODB_H
+>  #define ODB_H
+>
+> +#include "hashmap.h"
+>  #include "object.h"
+>  #include "oidset.h"
+>  #include "oidmap.h"
+> @@ -54,7 +55,19 @@ struct object_database {
+>  	 */
+>  	struct odb_source *sources;
+>  	struct odb_source **sources_tail;
+> -	struct kh_odb_path_map *source_by_path;
+> +
+> +	/*
+> +	 * Map of object database sources, keyed by their respective paths.
+> +	 * This map is used to detect the case where the same source is
+> +	 * registered multiple times.
+> +	 */
+> +	struct hashmap source_by_path;
+> +
+> +	/*
+> +	 * Whether source paths shall be compared case-insensitively, as
+> +	 * determined by "core.ignoreCase".
+> +	 */
+> +	int source_paths_icase;
+>
+>  	int loaded_alternates;
+>
+> diff --git a/odb/source.h b/odb/source.h
+> index 4bc037b8d6..82cda8ad75 100644
+> --- a/odb/source.h
+> +++ b/odb/source.h
+> @@ -1,6 +1,7 @@
+>  #ifndef ODB_SOURCE_H
+>  #define ODB_SOURCE_H
+>
+> +#include "hashmap.h"
+>  #include "object.h"
+>  #include "odb.h"
+>  #include "odb/transaction.h"
+> @@ -50,6 +51,12 @@ struct strvec;
+>  struct odb_source {
+>  	struct odb_source *next;
+>
+> +	/*
+> +	 * Entry in the object database's map of sources, keyed by this
+> +	 * source's path.
+> +	 */
+> +	struct hashmap_entry by_path_entry;
+> +
+>  	/* Object database that owns this object source. */
+>  	struct object_database *odb;
+>
+>
+> --
+> 2.55.0.679.g6767b8d81c.dirty
+
+Apart from the nit, this patch looks good.
+
+--00000000000036b2910658ecc66f
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 8bbc054d7e24b17c_0.1
+X-Attachment-Id: 13519d6cab70f5a8_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1wOXM2b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOUJoREFDWFR4RTB2WGVsTDZKQTE4Rno1Zi80eUo3LwplMkpFcStodjRX
-bmNURWNBYUViczIwaHhBaW5WN2RRQUFDRlQzcWpHSGtsN3hmYWw4OHRTSi91T2psUVFtaW9tCnI1
-ZVVyMTdMYUJsdFNzeFNIT3RpL05aQ2FTaEdsWlRNa1RqRHJZejhMZ2gzVStybjFYbG0yZzUrQ1pH
-eHdrbngKRWlmT0dpY1R6Umc5WlBWSnVnV2lJWVdiVDVRTGFoSzUrc1prdjM2UFJxbk1ldkR5NGdF
-dHB1QW9oalo1Y0w1VwpjekhIdS92Ym1yendlaXF1aTNuZWRLaWlKaXlqbWxVbWY3a0MxanYyR2x2
-ZkN0Z25tSnFjYzNWUExtLzVrV0owCndZU3NOS280cW00VXVCdmY4L0FZdHRIYVdGbTdtQm4zdG9M
-ZlFUNTArMTZZQUZKQnFXazFKajV6U2xka3dxVlgKVFdqV0E1ckNFN3dXNDJ0QXk5bnk0d25uUkZG
-aitzRUMwalpuamRSaE5OVUova1FzeXJlMnZFREYxTXk1WmxQZQpVeXlXZ0k1TTc3c0k2V3VyQVNt
-SElYejRlUzFMMUtkWnFvQ294YVBNdUxrZ2Zsc0NkZWtIVmJhdVh1ZGdTVTBnClVPK3FaQUNKUHVj
-Nms0eXJtYUo5MnpQcGI0SUtmTWwraWNiTmRIRT0KPWNzSE0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1wOXQwa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOVhEQy80cTJTVTl3bnlzRTJpZ0h0VVVpTWErdnlNTwp2VU5NcTVoOUth
+amdzeFo3Qll2TWpxa0Y4dExzb2p1RmJUdHFqRWRLRWRkbVRUTERVYmJ6ZTZpTEp6VEUrTHI2CkhV
+V1pZUW5hc21vZklOS05CRFVpa2ZlR0hrZndBbWY1eXZEeWdJcU9xdTh0Q3FhSHdIVUF6ZTN1eFFi
+bGxGUUgKenlmOUpCMlhXQWNuZFgyWUYreDhndjNacDF6R1gyaW9mOCtscHRIdFVpdHFwUE9HRyti
+S2xRbDdBVkVvVmRBZQpxb3JBMnlnMnI5WS8xbXVLeHlRK3N2dkFuWnlrZ01vekJxYnNTemdJQjNC
+alprbk9RTG5pdnlCaVJnWnNWaWJsCmxQSlZRWm1oUVZCRmZxc2YwVGs5Q1Y4eXBLNE5tOUVkeCta
+Q3NlK1p6MnZaSE5yelJhVGhTbHVVWlZtazA3OXkKU2k5N1JjTHpuWjF5dGRoVXVHcUxPMFlPS2dZ
+RHlQNW9qU3dRazJtZEJ2c2dESHlUTzlkbnQwRVErOGoyRFRwMQpKamRwT3B2VEM2NEtDNDVPeE5s
+U0FFMFYveDdpMTB5UWJjV3Nub1NabkZST2NWNzFBWTZ4NzNTMEd2R0pzWExhClhGSEZnam82K2ph
+Qlc2VFFYRHA3cHpYc1BNVXBqV2MzaWkyY3Q1Yz0KPVBKc0MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000e044e90658ec8e21--
+--00000000000036b2910658ecc66f--
