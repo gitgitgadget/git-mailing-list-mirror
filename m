@@ -1,199 +1,475 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AC23E49D8
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 09:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD9B2F39C2
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 09:20:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786611895; cv=none; b=l3B8DPflGy6ejcmMK8jIzVjYbJ23ScDcnI6E8KbsRDHKgMBTasVdblbBxfdpnnaLf+yKhHaq//Np2rGueDdx6+KM9HShEUYpy3D5aE2lycr0QixbmTXFVJD6A2rEHIFX6N6u8+GMeNWei4LnhMIOd80MS+sRsbbb9fFKlEJVp24=
+	t=1786612820; cv=none; b=oKnQMXEPIra7fkoicTFcaKlSNIqweszZ3uJu1IgvNr+cVMH5S4A1D1ovi9wu8O50/FdzSxDKTtXTly1KRqtI/kSij7KRL2MRWXi0024y2IH4PdqS1tXE8QciaVn0R2yx4W12p3IslhXewlenzIHVwjc3iaKxGFhWg6jAtF3C/ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786611895; c=relaxed/simple;
-	bh=Z4R/TYQ19RqRMpx3v9U34bZNspbS//8axOfyhi6wsoo=;
+	s=arc-20240116; t=1786612820; c=relaxed/simple;
+	bh=PR2hGfNMJkn5OXZn1P9ChIi1oyyG8gsPn+INYaqo5GA=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=tutXi963yCjx7Zj+gwVJbyQSLSa94DjCQSKZTMucmL2+zBZGVG5tzf4SR34si6pzIHdBJT7K7WK4agJeZU6XxfxlR2pnAY3tyZp3ciYiBJxNrKZ/4pCTE63q7MZ5vHqpfQb4AoaAiUMjMknPgMD49GUCDqG5sz/AxZMUac1d4JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=XGqRwkGH; arc=none smtp.client-ip=212.227.15.18
+	 MIME-Version:Content-Type; b=Ig+jnUwHQwk25OAw8cB/knEVphttNiBUYQn/RpSHQQ7BLKBXtXWtJNEqyVfCkhYp9zTNQ/EUigkqzPOhLloZ7swAYDE2AxTgSKtr2OgZVoD4jIb2EheaRep8Yzy7gwAMDJnKbXNBua+wKKlnJsvd019au689+8E2z4DjZB3ZxLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=orKRGS2C; arc=none smtp.client-ip=212.227.17.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="XGqRwkGH"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="orKRGS2C"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1786611888; x=1787216688;
+	s=s31663417; t=1786612815; x=1787217615;
 	i=johannes.schindelin@gmx.de;
-	bh=OQg7gRHG8f5fn5u4ufuOZnjbX1ENyl8h59rDdLVFVts=;
+	bh=lhTvI3dKHAguTOKowy0LC1tshmPD5LoSENe2tRF3TJE=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
 	 content-type:date:from:message-id:mime-version:reply-to:subject:
 	 to;
-	b=XGqRwkGHd/1zXHe8d7QF7x+XlJsXGUEGjSnu+1sLPfzq5Evdz+MDhsN2mZ+wuywa
-	 paUkZFlCqUMbZfaNP2sWQV0lbtjnFg6fNtK/hC7RDr3mqQmaIFkR5EQ1E6IzIxCFd
-	 FE8fgkSMjRtfFf+spGAT/mX4kDNuRd/Evg0111pW2xVUqO5hl2o0YTONCSbQOxsON
-	 bvJEBPUSHIfvvqMuyc0BhYP0d8jxEa9w7n8CgBkZN3oLV/9VArwJ/3AtJpwVd75E0
-	 BgTKZt2LY4dvm+LWIF8Jgrlwbjm+Rq8C6ikjekqrAhSEA6uPbf/yDZNeWDm6MR2hN
-	 PtPp6eXiEeK1A8rspQ==
+	b=orKRGS2CmwWzYAJNceNc1G7KSUxTXe3YsEqDPoxkSTJuWB/8CciTLkUANSJ+L/OS
+	 pJXLrGXr3S9NldrmmetN6yyDGnt6bnC5OA1GhcRZnPFIWjZy4R3qOGPuLRrbuWGKw
+	 7kqrTTfC5tIQVpCQ/RfTYzAhTWWGZ3t1ZP/d/PS9ufnYOPBR7EGxOZDzEak/eaq6e
+	 TVJKdJpSGc5aRE4pTPA3N6dSrCFm2FZseSjQXUMzJkDo2cKBiL4e4TqPTja8SV2Sy
+	 lMfydwUnmCdr5iZWo9eego83EK+7BZ9SeyE+B62T+23zgeInCiNeQnBggcm3lquJV
+	 YZhcqDsEawQ+SIXWLA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N2mBa-1wztv137vQ-0151VV; Thu, 13
- Aug 2026 11:04:48 +0200
-Date: Thu, 13 Aug 2026 11:04:46 +0200 (CEST)
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mj8qj-1xNkDb3cbV-00lQ1h; Thu, 13
+ Aug 2026 11:20:15 +0200
+Date: Thu, 13 Aug 2026 11:20:11 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Ben Knoble <ben.knoble@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
 cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+    git@vger.kernel.org
 Subject: Re: [PATCH] packfile: fix perf regression with many packs
-In-Reply-To: <6EA76E66-E80C-4F19-8806-FAE8294ACFB7@gmail.com>
-Message-ID: <704409ee-0319-7493-cdc9-8cdb0fea1ace@gmx.de>
-References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com> <6EA76E66-E80C-4F19-8806-FAE8294ACFB7@gmail.com>
+In-Reply-To: <an1zz02GNqDu-0Oz@pks.im>
+Message-ID: <b4860540-6114-2a7b-e266-d1fc2f0041b9@gmx.de>
+References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com> <an1zz02GNqDu-0Oz@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary=832332967075484217866118881863
-X-Provags-ID: V03:K1:rQ45IECMFNdyR54zygXK+KYQizXXT/jvJ6qIeXe5PcpnoPmErK0
- Ov0yABSB552mK0/qRh5WT/Cvr3faYQTIH5EzwyALgnDGIpI5xkAoXqIwwu4Gi981YYJLFcc
- R0XZzd1irJYNLztHHJjlCZ46figdNPuP2pXW0FufvfWwEuUUmSqsXdV7BHO6mhcjHBm1NE4
- KmaXTAqYHla0FsZvDHhBg==
+Content-Type: multipart/mixed; boundary=8323329109017051117866128151863
+X-Provags-ID: V03:K1:9ZQkiek0EoJVwggCUAw9L/sUNbSTIndJGp4zzjUpte25c9jlYce
+ sR4yg8glgxY2Qdj+d6e1uSbvyC+WlBbXxMJw0tal82z+TPmis1ZzCJ6nlt0zpac2L+UxXJ4
+ otYWJAkka4Vr4QUAJPF1MFTT7eRLWRp1aFe2UfVEDgAoXWXEVwbqxtiN24wvlHNKXBYc995
+ LfD5D3glH/qc6jKf+Ju6Q==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:gWPNJnoWJOk=;OwFWqnWJacQBCPqRc6A40u6/41W
- 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
- sa+XGnxEvKiXL2Bx9hG2lii73DbI=
+UI-OutboundReport: notjunk:1;M01:P0:M4sFSzGO8sE=;BYVWFBj+zz89E06X8wchQ00tbLb
+ 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
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---832332967075484217866118881863
+--8323329109017051117866128151863
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Ben,
+Hi Patrick,
 
-On Wed, 12 Aug 2026, Ben Knoble wrote:
+On Thu, 13 Aug 2026, Patrick Steinhardt wrote:
 
-> > Le 12 ao=C3=BBt 2026 =C3=A0 15:15, Johannes Schindelin via GitGitGadge=
-t
-> > <gitgitgadget@gmail.com> a =C3=A9crit :
+> On Wed, Aug 12, 2026 at 07:11:09PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >=20
-> > [...]
-> >    packfile: fix perf regression with many packs
-> >=20
-> >    This issue was spotted by a Microsoft Git user with the massive
-> >    amount of packfiles typical of an average, long-running monorepo
-> >    checkout.
+> > Since 589127caa730 (packfile: move list of packs into the packfile
+> > store, 2025-10-30), there is a performance regression when many
+> > packfiles need to be loaded: `packfile_store_add_pack()` now calls
+> > `packfile_list_remove_internal()` to detect whether the packfile was
+> > _already_ in the list, if if so, move it to the end of the list. This
 >=20
-> As a different kind of intermediate solution, would turning on
-> maintenance for that user=E2=80=99s checkout help? (Not sure that would =
-help CI
-> clone times unless the server repacks, of course.)
+> Nit: s/if if/and if/
 
-I should have clarified that the issue is a _Scalar_ clone. And
-specifically a _Microsoft Git Scalar_ clone.
+Thanks, will fix, along with dropping the claim that the CI clone was
+fixed by this patch.
 
-This matters because, for various reasons that I don't want to elaborate
-on because today I'm in need of lifting up my mood, a substantial part of
-Microsoft Git failed to get upstreamed to core Git.
+>=20
+> > function linearly scans the existing list before every insertion. Newl=
+y
+> > loading N packs therefore has complexity O(N=C2=B2).
+> >=20
+> > In one reported use case (https://github.com/microsoft/git/issues/970)=
+,
+> > N equals 37,815 and caused a slow-down of a simple `git rev-parse
+> > --short HEAD` (which is regularly executed as part of `GIT_PS1`) from
+> > 0.4s to 4.5s. In another, heavily exercised CI scenario, clone times
+> > increased from under 2 minutes to over half an hour.
+>=20
+> Wow, 38k packfiles is a lot.
 
-One of these is the "shared cache repository", i.e. a bare repository that
-is established as an alternate of the actual clone, and into which the
-actual scheduled fetches go. For full details, see
-https://github.com/microsoft/git/commit/55226d12ed36 (scalar: do
-initialize `gvfs.sharedCache`, 2021-05-03).
+Yes.
 
-Now, maintenance _does_ run, usually, on that shared cache repository
-(being careful not to inadvertently drop objects merely because they're
-unreachable within the shared cache repository). So theoretically, you're
-right that maintenance should help this issue.
+> > Let's fix this by establishing a fast path for known-new packfiles.
+> >=20
+> > The keen reader will note that there is currently only a single,
+> > "known-new" caller of the `packfile_list_append()` function, and wonde=
+r
+> > why not simply remove this check whether the packfile already exists i=
+n
+> > the list? Originally, when above-mentioned commit introduced that logi=
+c,
+> > there was a second caller in `prepare_midx()`, which would have requir=
+ed
+> > that check, but that caller was removed in 6aff1f25a046 (packfile:
+> > always add packfiles to MRU when adding a pack, 2025-10-30). Still, th=
+e
+> > function is declared in a header file, and to avoid any problems with
+> > in-flight or downstream callers, it is safer to extend the signature t=
+o
+> > be explicit whether or not to skip that check.
+>=20
+> Quite conservative, but fair enough.
+>=20
+> > diff --git a/packfile-list.c b/packfile-list.c
+> > index 01fb913abf..1379ab3a4f 100644
+> > --- a/packfile-list.c
+> > +++ b/packfile-list.c
+> > @@ -57,11 +57,12 @@ void packfile_list_prepend(struct packfile_list *l=
+ist, struct packed_git *pack)
+> >  		list->tail =3D entry;
+> >  }
+> > =20
+> > -void packfile_list_append(struct packfile_list *list, struct packed_g=
+it *pack)
+> > +void packfile_list_append(struct packfile_list *list, struct packed_g=
+it *pack,
+> > +			  int is_new)
+> >  {
+> >  	struct packfile_list_entry *entry;
+> > =20
+> > -	entry =3D packfile_list_remove_internal(list, pack);
+> > +	entry =3D is_new ? NULL : packfile_list_remove_internal(list, pack);
+> >  	if (!entry) {
+> >  		entry =3D xmalloc(sizeof(*entry));
+> >  		entry->pack =3D pack;
+>=20
+> I wonder whether we should slightly reformulate this and rename `is_new`
+> to `accept_duplicates`. Because ultimately, that is what we're doing
+> now: instead of ensuring that the packfile is unique in the list, we
+> just don't care and just append the entry to the list.
 
-For reasons (which I don't have the time to find out, but I suspect that
-maintenance simply takes too long and does not finish by the time the
-machine is shut down for the day), it is still not exactly rare to find
-setups with five-digit packfile counts. And since we _can_ handle this
-more gracefully, we should ;-)
+Hmm. I don't quite agree, we're _not_ accepting duplicates. We know that
+those packfiles _cannot_ be duplicates.
+
+> An alternative would be to use a hashmap here that tracks the packs that
+> have already been added. It has the advantage that it also covers the
+> `prepend()` operation and that callers don't have to be aware of this
+> mechanism at all. Furthermore, moving preexisting entries to the back or
+> front could become O(logn) if the list was doubly-linked. We do this
+> operation quite often to re-sort entries in the list when looking up
+> objects.
+
+Indeed, that was my initial reaction, too. I was well on my way to start
+writing a hashmap-based fix when the AI assistant pointed out that no
+duplicates could possibly exist yet.
+
+> Overall though I'm not quite sure whether the added complexity would be
+> worth it, see below patch.
+
+Wow, you got a lot further than I did! And yes, I agree that we do not
+(yet?) need to deal with the added complexity.
 
 Ciao,
 Johannes
 
---832332967075484217866118881863--
+>=20
+> Thanks!
+>=20
+> Patrick
+>=20
+> diff --git a/http-push.c b/http-push.c
+> index 94a1fac9ab..52b00e7c95 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -1729,6 +1729,7 @@ int cmd_main(int argc, const char **argv)
+>  	const char *gitdir;
+> =20
+>  	CALLOC_ARRAY(repo, 1);
+> +	packfile_list_init(&repo->packs);
+> =20
+>  	argv++;
+>  	for (i =3D 1; i < argc; i++, argv++) {
+> @@ -1992,6 +1993,7 @@ int cmd_main(int argc, const char **argv)
+>   cleanup:
+>  	if (info_ref_lock)
+>  		unlock_remote(info_ref_lock);
+> +	packfile_list_clear(&repo->packs);
+>  	free(repo->url);
+>  	free(repo);
+> =20
+> diff --git a/http-walker.c b/http-walker.c
+> index b58a3b2a92..541437e52d 100644
+> --- a/http-walker.c
+> +++ b/http-walker.c
+> @@ -325,6 +325,7 @@ static void process_alternates_response(void *callba=
+ck_data)
+>  					warning("adding alternate object store: %s",
+>  						target.buf);
+>  					CALLOC_ARRAY(newalt, 1);
+> +					packfile_list_init(&newalt->packs);
+>  					newalt->base =3D strbuf_detach(&target, NULL);
+> =20
+>  					while (tail->next !=3D NULL)
+> @@ -609,6 +610,7 @@ struct walker *get_http_walker(const char *url)
+>  	struct walker *walker =3D xmalloc(sizeof(struct walker));
+> =20
+>  	CALLOC_ARRAY(data->alt, 1);
+> +	packfile_list_init(&data->alt->packs);
+>  	data->alt->base =3D xstrdup(url);
+>  	for (s =3D data->alt->base + strlen(data->alt->base) - 1; *s =3D=3D '/=
+'; --s)
+>  		*s =3D 0;
+> diff --git a/odb/source-packed.c b/odb/source-packed.c
+> index 0890704e76..082c2494cb 100644
+> --- a/odb/source-packed.c
+> +++ b/odb/source-packed.c
+> @@ -835,6 +835,7 @@ struct odb_source_packed *odb_source_packed_new(stru=
+ct object_database *odb,
+> =20
+>  	CALLOC_ARRAY(packed, 1);
+>  	odb_source_init(&packed->base, odb, ODB_SOURCE_PACKED, path, local);
+> +	packfile_list_init(&packed->packs);
+>  	strmap_init(&packed->packs_by_path);
+> =20
+>  	packed->base.free =3D odb_source_packed_free;
+> diff --git a/packfile-list.c b/packfile-list.c
+> index 01fb913abf..d3c4843d8d 100644
+> --- a/packfile-list.c
+> +++ b/packfile-list.c
+> @@ -2,6 +2,28 @@
+>  #include "packfile.h"
+>  #include "packfile-list.h"
+> =20
+> +static unsigned int packfile_list_entry_hash(struct packfile_list_entry=
+ *e)
+> +{
+> +	return memhash(&e->pack, sizeof(e->pack));
+> +}
+> +
+> +static int packfile_list_entry_cmp(const void *data UNUSED,
+> +				   const struct hashmap_entry *h1,
+> +				   const struct hashmap_entry *h2,
+> +				   const void *keydata UNUSED)
+> +{
+> +	const struct packfile_list_entry *e1, *e2;
+> +	e1 =3D container_of(h1, const struct packfile_list_entry, ent);
+> +	e2 =3D container_of(h2, const struct packfile_list_entry, ent);
+> +	return e1->pack !=3D e2->pack;
+> +}
+> +
+> +void packfile_list_init(struct packfile_list *list)
+> +{
+> +	memset(list, 0, sizeof(*list));
+> +	hashmap_init(&list->seen, packfile_list_entry_cmp, NULL, 0);
+> +}
+> +
+>  void packfile_list_clear(struct packfile_list *list)
+>  {
+>  	struct packfile_list_entry *e, *next;
+> @@ -12,6 +34,20 @@ void packfile_list_clear(struct packfile_list *list)
+>  	}
+> =20
+>  	list->head =3D list->tail =3D NULL;
+> +
+> +	hashmap_clear(&list->seen);
+> +}
+> +
+> +static struct packfile_list_entry *packfile_list_lookup(struct packfile=
+_list *list,
+> +							struct packed_git *pack)
+> +{
+> +	struct packfile_list_entry key =3D { .pack =3D pack };
+> +	struct hashmap_entry *ent;
+> +
+> +	hashmap_entry_init(&key.ent, packfile_list_entry_hash(&key));
+> +	ent =3D hashmap_get(&list->seen, &key.ent, NULL);
+> +
+> +	return ent ? container_of(ent, struct packfile_list_entry, ent) : NULL=
+;
+>  }
+> =20
+>  static struct packfile_list_entry *packfile_list_remove_internal(struct=
+ packfile_list *list,
+> @@ -38,20 +74,33 @@ static struct packfile_list_entry *packfile_list_rem=
+ove_internal(struct packfile
+> =20
+>  void packfile_list_remove(struct packfile_list *list, struct packed_git=
+ *pack)
+>  {
+> -	free(packfile_list_remove_internal(list, pack));
+> +	struct packfile_list_entry key =3D { .pack =3D pack };
+> +
+> +	hashmap_entry_init(&key.ent, packfile_list_entry_hash(&key));
+> +	if (hashmap_remove(&list->seen, &key.ent, NULL)) {
+> +		struct packfile_list_entry *e =3D packfile_list_remove_internal(list,=
+ pack);
+> +		if (!e)
+> +			BUG("corrupt packfile list");
+> +		free(e);
+> +	}
+>  }
+> =20
+>  void packfile_list_prepend(struct packfile_list *list, struct packed_gi=
+t *pack)
+>  {
+>  	struct packfile_list_entry *entry;
+> =20
+> -	entry =3D packfile_list_remove_internal(list, pack);
+> -	if (!entry) {
+> +	if (packfile_list_lookup(list, pack)) {
+> +		entry =3D packfile_list_remove_internal(list, pack);
+> +		if (!entry)
+> +			BUG("corrupt packfile list");
+> +	} else {
+>  		entry =3D xmalloc(sizeof(*entry));
+>  		entry->pack =3D pack;
+> +		hashmap_entry_init(&entry->ent, packfile_list_entry_hash(entry));
+> +		hashmap_add(&list->seen, &entry->ent);
+>  	}
+> -	entry->next =3D list->head;
+> =20
+> +	entry->next =3D list->head;
+>  	list->head =3D entry;
+>  	if (!list->tail)
+>  		list->tail =3D entry;
+> @@ -61,13 +110,18 @@ void packfile_list_append(struct packfile_list *lis=
+t, struct packed_git *pack)
+>  {
+>  	struct packfile_list_entry *entry;
+> =20
+> -	entry =3D packfile_list_remove_internal(list, pack);
+> -	if (!entry) {
+> +	if (packfile_list_lookup(list, pack)) {
+> +		entry =3D packfile_list_remove_internal(list, pack);
+> +		if (!entry)
+> +			BUG("corrupt packfile list");
+> +	} else {
+>  		entry =3D xmalloc(sizeof(*entry));
+>  		entry->pack =3D pack;
+> +		hashmap_entry_init(&entry->ent, packfile_list_entry_hash(entry));
+> +		hashmap_add(&list->seen, &entry->ent);
+>  	}
+> -	entry->next =3D NULL;
+> =20
+> +	entry->next =3D NULL;
+>  	if (list->tail) {
+>  		list->tail->next =3D entry;
+>  		list->tail =3D entry;
+> diff --git a/packfile-list.h b/packfile-list.h
+> index 1b05e2aa36..bfb7017852 100644
+> --- a/packfile-list.h
+> +++ b/packfile-list.h
+> @@ -1,17 +1,22 @@
+>  #ifndef PACKFILE_LIST_H
+>  #define PACKFILE_LIST_H
+> =20
+> +#include "hashmap.h"
+> +
+>  struct object_id;
+> =20
+>  struct packfile_list {
+>  	struct packfile_list_entry *head, *tail;
+> +	struct hashmap seen;
+>  };
+> =20
+>  struct packfile_list_entry {
+> +	struct hashmap_entry ent;
+>  	struct packfile_list_entry *next;
+>  	struct packed_git *pack;
+>  };
+> =20
+> +void packfile_list_init(struct packfile_list *list);
+>  void packfile_list_clear(struct packfile_list *list);
+>  void packfile_list_remove(struct packfile_list *list, struct packed_git=
+ *pack);
+>  void packfile_list_prepend(struct packfile_list *list, struct packed_gi=
+t *pack);
+>=20
+
+--8323329109017051117866128151863--
