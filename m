@@ -1,139 +1,128 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E62337BB8
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08A4404BFF
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786631075; cv=none; b=UE4Ynpkdzf6pn9M7Bv9CJ3fXcHSfmRBbAOZWd6RtNewIEHTtR7hpVTI3pg2wTPi2CNODMcYKKbS6jCg8WjzjO9TmSUZuRkBJhd1ku4oFvMmA5n9d3oEy77tg9Ew4G/AIxZ/VcIXPREw0fpAl6gvEE/CZpqnnqCPikkJbkzy2xjc=
+	t=1786631245; cv=none; b=eW53JurufM0wH4RWL4FuQHSdoyFWvdUl4Bp+T9lChsJZ37o9ilqs+szUWeuT3Ix5AqKpxXQNP5OX10T/OdZ13hshbL7aHot26Sa05JGtGiPcrctokUcYlPAgSab+MAx8TQxcuwEOTfm29vpS62TJ6o0waF8LGA0+z0zS+6S+Y8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786631075; c=relaxed/simple;
-	bh=K/AIQCv5AjKXlaIBLwr1c6hyn665b6jTcJJvK1nEgvI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pGFW13CLILwCzSPj1I/HNTgXfJISkRE6fVNhf1n9DM+7pM0xdCsmxpk1/ma7pYN41bbPOoubIZKdFy74ZVXyzRI6Iqa+BxiVhKbHLHrLlkPyG+WHjT4WK1PBM/vAf5tSYJWaite0llRe4uaXhBFSxHvCfP0ApWS8kE1KNUpHAs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=k/IOxOsX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c6Z+7wMb; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1786631245; c=relaxed/simple;
+	bh=My1suMmkXnfUI06EDtSh36EyUcb9z4HDB4OuKyk2VJ4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rMkaTFtep9uOd5gtLPpqC9enLXMtc1vQUQXdfMXassY4xm45xPHbbC5u3pZfNW8euOrWQOgL2pxF3KhiKUCUpL2CYYCiXOTT0g4uH+rUZVQCpTwGuGvgEYF8gHwCRUYP7yzSJzQIaB1a1j6hUDAFxJmcQs9D81TmvDKv2+MfzVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ezVF6948; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kuK0MY2W; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="k/IOxOsX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c6Z+7wMb"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B53C8EC0285;
-	Thu, 13 Aug 2026 10:24:33 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 13 Aug 2026 10:24:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786631073;
-	 x=1786717473; bh=lrFq1XGMuungupOT27TjdfRFwGbEEXLb18tvYso+E00=; b=
-	k/IOxOsXSpTBwQqvWd5G+CDqp39pJ+J2LLBi2pJC8aPZIVBGLqYTftAHROubQQy9
-	imo77qV43c1xN/JkKOwEBaFKj0isewUxccPpYQUx8HxZJz2U8chR4SdjV1B3r0Wr
-	Tw+TM7/LyQfie1rw/NixmOLOe/pTgsNEVR4KwbKm4XswgZ/hC5dWXIsblKlKMke5
-	iYzIZVuIuWcDUs8dZ0DzlgcbyEph7reWRiU61D2lANV6gi9qsN5TOzttbdp8MM0t
-	c59yRna04Pc/8UqrXyH/y7Vt6aYvH5t+buPgTEYUba8B/yKyCVryVDaqDMQXeHup
-	9d9ohchd8I4gs4CaqlfkCQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ezVF6948";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kuK0MY2W"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id CF880EC0280;
+	Thu, 13 Aug 2026 10:27:23 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Thu, 13 Aug 2026 10:27:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786631243; x=1786717643; bh=JpIl0T5hcd
+	aSch6NmOCFsiE6fCErHnzgvpx8V5mkGNI=; b=ezVF69483zHRYUEIYlvm7QVxi/
+	lxpaz5+EElN+3dWjgTEC/UZFQRc5qfP9dEMtVxw5TtLNUg4MvZAi/+ynsim2RdfO
+	hKs5mX+vyBGSqhhvnFFUf/kwsvTKqDf84oByRByjkPpVZxo3wNCTnQXmIDl5hzPU
+	fvPY3qk2QTMeZV3P8cirhdNSmZpp3/JXLEZzMtjd0xMDeUVrFiLv6BqdAJi2y1jN
+	Vu8kGux8eSZkBPsTSsTehonkJ8xF+ywfgOfen6xNbsUankaZF4TymjxEPTtR+2sb
+	j+zUiwL33Wka0YS74LtmYc3Tk0NVsu2aoGmtkvJ+vLCU1z+z4Pw9Fpmd1/fg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786631073; x=
-	1786717473; bh=lrFq1XGMuungupOT27TjdfRFwGbEEXLb18tvYso+E00=; b=c
-	6Z+7wMbe13h7C3u08xWd/HIQwF+EsB//QDrKyhE3ZwDd3wRpktDydUPVAAflZp+e
-	VG774w/jtzYi24bpwxO/CUG/3ajb+Qy942omW4a40ujQc6uplXQ/mWKx+UHIQxnJ
-	+afQX9ZqInK3swF9Rdiw+AHhNqia/WG7G36Nq4L3C6pvud5nFH/8Pt+mb0RIZyGs
-	QTHGQCPUnVkyszg5KyQ4QycChbY6nwDCK04ymb0FQw8zxL+jXCzNhNP4aRKcpNRX
-	QdlPbO/qyWE7sW1LYhmM1QOcORgm8ojqxptzhVn8V6wL8PefSRMccfdrgHRK2GxI
-	J69bjORxNShb+MMSVXIxw==
-X-ME-Sender: <xms:odN9anNHQ2HLqa3MYUjSPvPJvp9JX0SmP0u-gZPB6tXBu4Hxnbx7UdE>
-    <xme:odN9ao9-CddIqz079OISySJFeQNeP457F8R168BEIP5sJLGvjI4kZcgDKtbeMmSwj
-    NyiA_jVg0LfFBggpYcZFE_Ip3OfR2phMOkvXTMPabDMqOHdBCUH5AA>
-X-ME-Received: <xmr:odN9arRqfTJoZk56LB_av5HalEmV4qiczqASB8HvWPuAxcJfnfT-38XsWszmfLrIBFmXVxOZUy-VKwY-LkXRrEjPjfrR4npIuRlxEjw5oGN4b1m7gQ>
-X-ME-Proxy-Cause: dmFkZTFxb1vDiiJVsTxnnMT4JeGcT/LTxcqf8saTTK6TYmFccLeAmYAmRs0RussylGrhnB
-    36JBcgASYCkSo4Bq/Lbuu74bBPXnQXxO3Ms/lHylOTqWPH/efLScHqQgRi02xPtLXGcm2r
-    L8cuY3gWrZvENzK/sOUTAtqh9ZMlkvwUUh7QXovYRGviqArfwkI6AQ8wju8bvbAvBZHA6A
-    FU8j67iSVsadOF0dP7UlVJ7UhaGwFbdDYaWNkX5f50G3U7Bu5BTHYbb5XKby8JN0z1W0Wf
-    RpilK3uDTdSPsolufTqrnxhC1MrZ62yaqsP3ifAHt7hWUszsZcfMqi681ogiGA0ZZUW3JR
-    uNlCg/XU99SB5twRWPP+KYknCQ2xKMIRPBrptUdmsI2tx73hG7CiV4q/Fmj7vgG13LMF4G
-    le/bh5jcwygbp3+pUweMhDGSJyNLhtoXc2YtpMjPGbTY6HN/qOFwLbbXbq8DMNMVYdnzdJ
-    KnkwBWcci2tFm7qCT3y9u+SyJa8mq982jMayy1UXoG6F1M3lrylcoXg/HSsuj4Y5NHcl9I
-    YVKyrioVtU13duj/weD/A8UhrNpydIA+eEk4B4JNFZPK9fOZwVIk34eqyc1IVQmxBg4rpH
-    ShcTccdH1e6mqiRdTllEGUjd/7FLSK+Vn6BkciU6RpqzNNmrsi8Xxl1p0+zQ
-X-ME-Proxy: <xmx:odN9aqk0VHyHWINzzLWShcG9_K5-l0dKJumifSdRY7miVkc1l3h_jg>
-    <xmx:odN9arR3N17ilvQYNuUQc6FH2eYNzFiJUKE3z-sBlC5E_dZEVBvqzw>
-    <xmx:odN9aoP9r7MDvkNuVbLQ0VEl8_WRPYdTeQ1uX7HCy_0I5hl3tKwXdw>
-    <xmx:odN9akW2YXYqc7swE1ahCzQC2e8w5lo-h7gdhZdE7ENvhi9sfo0oFA>
-    <xmx:odN9asMgI5c5bXbHGoldBuVHDdM3hqqLq__u-BOb_rVeqljtpucg-gts>
-Feedback-ID: i8b11424c:Fastmail
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786631243; x=1786717643; bh=JpIl0T5hcdaSch6NmOCFsiE6fCErHnzgvpx
+	8V5mkGNI=; b=kuK0MY2WOLCeSQyFPn90yxDNJ7udqQngDPzH1y6a0H3fzIfl03I
+	1stEEGZ4hoM63nk1shiAmBm7uzmFI6IcJNY47NlDNVRRbV8A7oEzQnHQS+QCFG3f
+	u9HlukXRICTbhghcEEVgJLmbIFA6mGp9WeUDu0uP3+68iRpObR5SLaTt38oiTIvR
+	dF6cupterKw+cMgUxREMUz5sOsWykuiaEztidSrrA/SB4jU92umGBsH/W2yjujfL
+	h+lU24RwWLgwWs1QtOAs3LtkX/TXzEz1hwmiaWdsfdaJVWwPvSFYTkFIDSSPc3Nw
+	OwYXeRohk0dRh5VpSFjInXMGg/AKpeRPTmQ==
+X-ME-Sender: <xms:S9R9ar9JJlAggYeR8mTwcMm49YRrme3XhMXGFKq1H0piduj4oP6GTQ>
+    <xme:S9R9asq1LzJwPIEhXglk8LiLgUZ0l10xkwf6YzStu_-PfZuyvwG6BLYgnHjwJ6Zbd
+    _aXFC2C5U_bUoSs_LGpN-lp4UjBDfNX3mHiYyJsb0QA92K-tyKpsw>
+X-ME-Received: <xmr:S9R9atQSXH9rTIn0Nc4mQDaNaipqvZF5kEnPYxfkCYtTYfgrX2lqtXb2Uf8Xt5YHuuyW2j4OC-c8BxU1c83nuZd_LL35WfVOjg>
+X-ME-Proxy-Cause: dmFkZTGPkRJnZ0qhJH/zZIV24up61BVAhYG9wf/GPGSwEVKJakW9tMn77qyqyWfxy9y37+
+    HFirJumZpSDp1pGRb143Q5edBrQ46qk1jCiaa7UVyDWuQ1LY3Rei6j14wE7JTqMvMy7mAC
+    mpMowCvLsoPiLF0+jfnE3bsOSKyELdsEti/kJLE3U1h7JHjuxONvhsZtRlf7fEMQLpIVF0
+    lKDQ4M7tMKSN8lkV0Xx3iiWLVY51POwB3+l4JlQKUonehV6ZrRDw/zUjJE+ZFscc2GBnqj
+    cF4Ohv6TfhUNVDHC7ZH/Rjz0+KMZHXllm5Sl5Dkfnwl+92RNLkW8nsanNFb5eXcP455Tq7
+    Fx+TnuMFQDSqfbgfVY1bCTWP0pD1B7NZZzWyJiU8ZB0EmYGwThgjSW/CBgE8XVzrZig+hy
+    4901GPWMXdsqyI7IyAL1QoSROcR9aDmsuWVULMBWGLRFdJzXgtsdfBJjwvpWIWg31PmYWg
+    Q3T/LUs5+57y3xeUWBix+gURpkejpcTY4xKhHwHwLTxprQ7GM/flNbTnwEzBewX1/Pcyc7
+    n9aC4l2qdHeirsB/+VAWJMqKhe+B1QZwlBrRIGfl3KgB5V1S3RiRS9LtC/PmY8Jx0AJNGQ
+    23rH8zymJ/4bK7Zm4e4oLwOh8SpWvjD0Pnvtnh1wQFpNMrbV4fuDhG0fpNDQ
+X-ME-Proxy: <xmx:S9R9anMyMDhtZFriDRPyiUBQzZ23BmbDLb3iylSE5u95JPkqmEW1sA>
+    <xmx:S9R9ajjJ4z5zrzbyAKiyTXhrkvTHfkDBdN_R2aMJw_k8A8ASL0-80w>
+    <xmx:S9R9asnjMPV9acDujh56kT_bhBwR9o3G0LE9os5S-3NeMpL5Dgc8SA>
+    <xmx:S9R9anjLaREZabgoEELqBWlwwNlRtgaYU9yBzeEke5YqJVYpRF6VRQ>
+    <xmx:S9R9auIIQJ64HKZJJxhFzrpZSSsgLxoGL_t_ml5sVBHoOL65xA-G6lD9>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Aug 2026 10:24:32 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Patrick Steinhardt <ps@pks.im>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH v3 2/2] doc: format-rev: use [synopsis] on code block
-Date: Thu, 13 Aug 2026 16:23:46 +0200
-Message-ID: <V3_synopsis_block.b66@msgid.xyz>
-X-Mailer: git-send-email 2.54.0.22.g9e26862b904
-In-Reply-To: <V3_CV_synopsis_block.b64@msgid.xyz>
-References: <synopsis_block.af9@msgid.xyz> <V3_CV_synopsis_block.b64@msgid.xyz>
+ 13 Aug 2026 10:27:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Patrick Steinhardt <ps@pks.im>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
+ <szeder.dev@gmail.com>,
+  git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Elijah Newren <newren@gmail.com>,  Derrick Stolee <stolee@gmail.com>,
+  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH RFC v3 2/2] Move libgit.a sources into separate "lib/"
+ directory
+In-Reply-To: <693a61b6-e762-d864-d25b-348485ec039e@gmx.de> (Johannes
+	Schindelin's message of "Thu, 13 Aug 2026 11:34:18 +0200 (CEST)")
+References: <20260701-pks-libgit-in-subdir-v3-0-5e4860056094@pks.im>
+	<20260701-pks-libgit-in-subdir-v3-2-5e4860056094@pks.im>
+	<alR9GDNTbdjWB4dq@szeder.dev>
+	<2d455ecf-972e-e3ce-54bc-683050c04282@gmx.de>
+	<xmqqjyqpb96n.fsf@gitster.g> <ansSg4qsPwh5FcR9@pks.im>
+	<xmqqpkzo39d2.fsf@gitster.g> <antWRHPHHES4a1KT@pks.im>
+	<693a61b6-e762-d864-d25b-348485ec039e@gmx.de>
+Date: Thu, 13 Aug 2026 07:27:21 -0700
+Message-ID: <xmqqqzk2t7sm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This code block uses the placeholder `<subject>`. Let’s highlight this
-placeholder properly by using the `synopsis` block definition which was
-introduced in a34d1d53 (doc: convert git-show to synopsis style,
-2026-02-06).
+> Of course, it would be even nicer if `lib/` was split up further, but
+> then:
+>
+> 1) You've got to start _somewhere_. As we saw with so many things on this
+>    list, they never materialized because reviewers asked for too much and
+>    weren't happy to get incremental improvements first.
 
-Yes, note that code blocks since commit a34d1d53 can, on synopsis-style
-docs like this one, be immediately preceded by `[synopsis]`, just like
-the command synopsis is:
+That is why moving everything to 'lib/' and thinking about the rest
+later will not work.  Instead, moving a specific component to a
+specific subdirectory (not 'lib/') would be a reasonably
+self-contained first step.  Consider 'builtin/' as an example:  it
+is focused, and anyone can easily tell what the criterion is.  If
+it is the top-level cmd_foo() implementation, it goes there;
+otherwise, it does not.  Then, you can proceed to the second step,
+and then the third.  Iterate enough times, and the top level will
+become thin enough that you can either make your final step a
+no-op and leave the remaining files there, or create one last
+group to house the hodgepodge of leftover bits and move them there.
 
-    [synopsis]
-    (EXPERIMENTAL!) git format-rev - [...]
+> 2) Naming is hard. As we saw with _many_ refactorings (I am thinking about
+>    the low-level merge stuff as well as the ODB stuff, for example), it is
+>    unlikely to get the origanization right the first time. So I'd think
+>    that first moving the bulk of the library code to lib/ is a good start,
+>    and worth merging, leaving later contributions to chop off further
+>    parts into subdirectories of lib/.
 
-Cf. verse-style:
-
-    [verse]
-    'git name-rev' [...]
-
-Acked-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    v3: add Ack: https://lore.kernel.org/git/an2Wwe4ytilGoyHz@pks.im/
-    v2:
-    • Add a paragraph to contrast synopsis code blocks with synopsis
-      command description after talk with Patrick on v1[1]
-    
-      🔗 1: https://lore.kernel.org/git/ansWZxZ6lB0tYIJD@pks.im/
-
- Documentation/git-format-rev.adoc | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/git-format-rev.adoc b/Documentation/git-format-rev.adoc
-index 19241837345..d6c2e4aec1a 100644
---- a/Documentation/git-format-rev.adoc
-+++ b/Documentation/git-format-rev.adoc
-@@ -96,6 +96,7 @@ The mode `--stdin-mode=text` replaces each object name with the
- formatted commit, i.e. the format `"%s"` would transform some commit
- object name to `"<subject>"` without any termination. Like this:
- 
-+[synopsis]
- ----
- Did we not fix this in "<subject>"?
- ----
--- 
-2.54.0.22.g9e26862b904
-
+Again, this is because you are trying to do everything at once.
+Instead, come up with one clear concept, name it well, move the
+related files there, and then iterate.
