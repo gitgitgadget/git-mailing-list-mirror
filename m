@@ -1,115 +1,105 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611EF38C427
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 17:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D9238BF8D
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 17:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786642543; cv=none; b=WY4AO5HPyHvfYImj09i7QoXjzWAET0GL9dhxLl5CWCp8mJnUYNPla7hv2kyODx6Xm+XLuuKSHzIfen6QqNIwlSrtWFMfgGoljJLXUHs8g85JpjioLMwvShlEd/hzCjDw3de/n9e2KSn9LtK1I4/CwB+tOyNTibnJqKMiJSKS43c=
+	t=1786642545; cv=none; b=NNORogXiMrKQ9fXkb4HedmeuM7JmypVZ5YDWDYUC0VcY85deLPC6y002TCV611K5MVl7uvYWEGFobcZtrGPIgb3culPBNq/uPZniiW33BbE75fGK0dH0ZJinfscuQ5Kh7W4jVpQe8AG46Fwcn2hlRXHJj7mWTh4GjXylFcgJDkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786642543; c=relaxed/simple;
-	bh=X0flJQspJimdZVA4Fh52gdCjJvPYiqOejX8jcWkYFxI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JgokYz+grF76JiHIqXP9wMWkIU+i2BKESzO/UdqbexBIcMcKAOgQzZI3qEZj1ZBLahOVE/ADI7EzcB6KxUwTnwTPtwZvDWC4rViYYRnWisSsmpVfOOm2WsmOKRcL6FGqHpTBM2KUrFaaa0A0WpRg06FnpmGd56zCLSn6dtxFibQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HRxbcFTn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KZFFRUq1; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786642545; c=relaxed/simple;
+	bh=93Mq68UMF4OS3lTTXidpYVI4L4nZVLpSOHlrQEVTeBE=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=QgHIUN3sCMC2kQ38J28cGuKpirv5Aqyo0wLlZJiPG+zABPIYuNl+qNh6YyxUHS0aVNRVGQRk4W0269DpaTKC0Tk+7PsKDUPUaZswlkOinQcnWwk9ZAM7QePQLmNcwkK5/6CkCJWd1/ByRJEudOJ7bzD/ezgXOlO7Pxs/HzhCPmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ehlU8Olj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KxtiFLDE; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HRxbcFTn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KZFFRUq1"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 497F01400066;
-	Thu, 13 Aug 2026 13:35:41 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 13 Aug 2026 13:35:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786642541; x=1786728941; bh=40Hv9AP5eB
-	BdG49WRaXCDmjrnrscGfc8fqkOeBxfXRw=; b=HRxbcFTnfjItGYm7RoHCNOMLa3
-	01vWdRZWfAOw4CCqEm52XcA9HboyPNWLXwoEuqWal2kgduoSyrar3dxCz4BeU8yp
-	mSSdW7uly2sZySQv0TYMsfvlNpRmG+Bl6NrNOb/XooBA7YfuWlCgwUpP1/DrXSJ4
-	c7821WMIC4bMYFhiRNd4UW5fxylC+Z7fJghYnF314Gs2R2c6D8hK5GpbS08laY8P
-	aYBkMOW24jjs5cT8k2geMPl0EEYJDjEmnl5O/3oufMiGGqfeHMGpdEs87FYiHsa3
-	7Q2kdqqpGmEa91+9NDuO/NlkCz5yqs/2Y6QkbhSFOVreBN7CbK7KyeUYQD7A==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ehlU8Olj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KxtiFLDE"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 843E1140009B;
+	Thu, 13 Aug 2026 13:35:42 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Thu, 13 Aug 2026 13:35:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786642541;
+	 x=1786728941; bh=ZxkmhB2r/Q4voNtJu7AKu0bIoMmMwXXB0ClCwyjIWsU=; b=
+	ehlU8Oljc+SN+Z7E48/w7Z2Rkzq0gbWTxTdG45QA46BdCgSd4d/qtv3S7SYlHouQ
+	naL4AT+dn/bq2ev8EkRBBmMbXLKom/oH/pVkbQCEcZkKCOzvEsg3aimF5U2j58KZ
+	CzkM5jS3DElEZNazL2p4wNFZ3jJaNsymzrCWsQJshbFqf+HI5mN/qRWRBxKpDhxF
+	j+XQQw5h1r+NIicN+p2j8avuZKId8xHtKurxqB/dOfVCyRKm4Knw6wXy21AYmgHT
+	zi53Zdw9GO/sLxUFIyO9AUJiOY3YftbM9C5OcruNesiFF4iJF8qPzFD6/rSRt57c
+	6iPaAfEdNFSERa3wZqLJtg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786642541; x=1786728941; bh=40Hv9AP5eBBdG49WRaXCDmjrnrscGfc8fqk
-	OeBxfXRw=; b=KZFFRUq16ipInBVRuYCFi4dqHLXYWv0ImiD+eKnaAxx19kaGyeC
-	HBp0Wm9O9a7EdAuSD++w39wGW3lniCZemHU+yKyEGtTR7gwrhl24VEJ5wiU+oCb6
-	afBSpmHrx20wsP0VP1Sb1Yonz1PYBAq7t5J57oO3xrcG356rjN5BuE/rB94MgLhU
-	QtZTE2J4xGzcJV7pgxuLUuJQJ4ksg49nrB7IbQN931n0Qb5DWxFpaLppGPwkYpwh
-	dqh35onliuK4e4v8Te2TOkHlzMvvMfGlzEyOEoFOxq1gWlsj54uebi/XP/4gu5CZ
-	FSXtyvOnpWuYyeF9VUh0Afmk71KN8d87wlg==
-X-ME-Sender: <xms:bQB-ah9BI74kYJTxZyuivR8vkE5duCISLK3uYiNbMwxHGPmd3FcEig>
-    <xme:bQB-asl6RadlXlA9dx2P20cJnAMhE9ztYejWP06nptkZK_C7yVqEnYgCKXbgXTxUJ
-    kcYBs1m1iUy9x8aXaorMRYlzB6o59ofg0MlDc5uNCfBq87XoL_BGw>
-X-ME-Received: <xmr:bQB-anVwRMeDWg77nsNr_6SPrFfAQyR_t4R65bcvY1Gk8n1VRAe-ah8heKnRxXw_h19nl3IogNHhs0SopKD-PKRh7YTt6B7dhQ>
-X-ME-Proxy-Cause: dmFkZTGOjmhcM5WZDwE4XsMf0QnrALFKXBDUBiEIRUjSa0IWO3JvqsyeIwgDUPSMPwf7GQ
-    1uH1sxNW7HXH7R0hM/0hxnAMoef8riO9V6riG12P1LuaCH7ZuYbaSJOofdzrYi6cpCDjvi
-    c5BBmrg2cDrk5tm/6MzmbDg5pRVqAgxd4YZVdVFBfXPalvfHMKE8jUaygEXJgk1M4+ZmM6
-    ODAlSptJ6uCXSU7naTSCAf1lXBy9hVrX1Eo1llgRjUibhxtAgFW6i1WFDYMqhmj+OYVRes
-    HH5SxjZq8+ASV8gPsenbLPiOY9zzCmdk8UVXplZ3IBWIaU91ejHxq6DnWB9n71WFjmotWy
-    TI9XdDhFMjqOPrxE/eMkTPUk28FIO5/wYSMcBJgg0NpiGuArsV1M8rEjPCYwq14+rvKWAb
-    IJ8uOCwKrLcSiliu2ve5uQWCC7UgWsyDRcf4tKz/YPuFsyheMat+WYOiGB3OBRoLNSoJgM
-    0weZLctKz+akZWmkPjubnLOUgTzeY1OXFXBFtJzx9CFIOQcBaRHbvirtjispKS5dzJhHXX
-    sN5jV2PPeac6qufAsnmJLk4+gO35sIqQ8EHh4KvLRd9i18VK+fxcvgKUZz4uuOD6fMvYdl
-    H/yZtkczFh5AGZW7T3SkAT33V2NNAd7WVBltM8mgWgrgca14tXKIer9Vuhng
-X-ME-Proxy: <xmx:bQB-ahEqqvxYMpFI7Vee9LFXo5nlsRSn20RltMJCOAkFxkjcdEzuOA>
-    <xmx:bQB-ajfsADG-Os177vbKxCBtpUyC9nKzJlGW6S-3rQTtb8hhM1a_iQ>
-    <xmx:bQB-aiJXTiowDLhKZs2c5bpuODKcNULt7EV_aT3bn4iS5Db4ZR4BNg>
-    <xmx:bQB-aoHtNIsnVzag-mKRUQwW4fyfPeufih5Y59cvcfOlcdxUUTNS8Q>
-    <xmx:bQB-anm804DCi9ryoU4-ClCdikQcBRyaqY_mRM0EPg6ajpDNDNvQM5DJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Aug 2026 13:35:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <ttaylorr@openai.com>,  git@vger.kernel.org,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH 0/5] odb: make packfile generation pluggable
-In-Reply-To: <an1ajMjVRUsfu-lv@pks.im> (Patrick Steinhardt's message of "Thu,
-	13 Aug 2026 07:47:56 +0200")
-References: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
-	<xmqq33wpej49.fsf@gitster.g> <anlg2rThlBLavyU8@pks.im>
-	<an0EkMZGEbg6LERc@com-79390> <an1ajMjVRUsfu-lv@pks.im>
-Date: Thu, 13 Aug 2026 10:35:39 -0700
-Message-ID: <xmqqzeypsz2s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1786642541; x=1786728941; bh=Z
+	xkmhB2r/Q4voNtJu7AKu0bIoMmMwXXB0ClCwyjIWsU=; b=KxtiFLDEccSS72nEb
+	wLdbF/Un0h03AMsEnICl4Wc/KyHJlkAK4FgnAPiD6cKImpm1jnKXdmgWRk0QBX0a
+	2K74rnkPOPzi2bxvqkRMYlajO9h2rdLYmtMIoXCJ5LXBFMkFo8dJtdAOqL0Qp01i
+	qInuwfXM1esUyO6XbGfHyPGZ+PminTj87PCmIiVm3COHLj645rjZJxdx6lxnXKNG
+	ETCCzTuo/reX4zfzmUoL7jVnu+mivH4QMpkBDMdWlbMAUDK0ycSX9al+AS4WPwOz
+	3AJhWIEbc/lBDHvUn9g83vEBi7AYHcds+FlELVlKlamlTM0KNOZ2kCS8KPHboee5
+	A6kIg==
+X-ME-Sender: <xms:awB-aiTncd9a9JtgABrnvkH66e8K7UwdbEJpsgtHuU_uajxzqcuVC7k>
+    <xme:awB-aimW6KHcfCEKNSCy8x_H0L94d9sjwyWR8JO7D1pUb56QvA0LUzaXCNLC28rTM
+    -_TvCcp8ghlWwEOFQFOXjoocxU5WdWFsu6zPy1WDAjEIoEs93lex0Y>
+X-ME-Proxy-Cause: dmFkZTGRqRPUaiGo1TwOSjb35155twQhzQOaY4kXP3ayOHCxHcjD/Uq2R6ZsA6v2HI6XdG
+    pKOhROnuytS57HUfsOHnjxrC1d2z1y1jzAckNXwpC4JkAjCkvdlUybO1VJ2l1YKV9IOlCo
+    sSOjpPfQq2ohzgAjJSkBzIAk6f7vvp3tXwVtIWti3Ep+LCPDjZzzxJtLhhkC7CBfxsGnBq
+    7Hh41nyr6oA0uTJAWvMUjH4nsIXFAhg3h1coKTFCuL5cyzi3AqE42O5MbpF2aPRxRie8RH
+    fnYWO3PqWrCzksKJIN50spTYqWui8VjhO59kXxsdbZGAomeaGeg8nuIv90t65JQmZD9SRP
+    X1fpX0OMjK+R4W3N3T61JGiSD5h5aNqdIQK0k4neVghau5cgrYyiekNyF5fpxu0sDPbJL4
+    sEP6+9Qm7DsuZ+CXnlacvaasgcvVcP2AsZd186D54+9kr262kYmDZPow9sDbBvWcyU3HL0
+    Zi/3hnMakLWPHCW7Jh/vh3ivlGe4QoEDapPHGCeskIdOqFSuK5ajenXy0EywYYz9c/Nbdr
+    +KvEw59FdAQ0fImRYrTgOSvk5FuxIPvGQmC8xoVSqAbhMejOKE5JL25Zse5HSqZ7giI39Q
+    dKr18Q8BZ27PoH20lm8ay+R3iasVrvDZlrT7LLCbTerwtekQ508TzXp46M+w
+X-ME-Proxy: <xmx:bAB-ak9fVNfLWWYMFgPWTOy-9o71zv4GxezaJe0JjAAtMVC2F3njkQ>
+    <xmx:bAB-aqrXOwNLY2K22EghY9JvxnUWC5j7p0XwZbkczqmGsawaQqLr0g>
+    <xmx:bAB-ahkNvEr8hjeLSZWl5KxcB4n5KqrgsbjkZYeYejJigeP7Vp1uBg>
+    <xmx:bAB-ahL1eSSoc80S38reZIcqNVMpCH9yZ4oQGRnyF-wpp3xklM2KHg>
+    <xmx:bQB-arXwAA5FNRGJSiKu8BlUWzLoHfcjY6dVrKana3OBYspBJeVidPDM>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 2CE5722C0072; Thu, 13 Aug 2026 13:35:39 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Thu, 13 Aug 2026 19:35:18 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <6e990986-2d7e-492f-aa40-d26cca4f58f4@app.fastmail.com>
+In-Reply-To: <xmqqcxvmvda1.fsf@gitster.g>
+References: <xmqqcxvmvda1.fsf@gitster.g>
+Subject: kh/trailers-no-urls
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Wed, Aug 12, 2026 at 06:41:04PM -0500, Taylor Blau wrote:
->> On Mon, Aug 10, 2026 at 07:25:46AM +0200, Patrick Steinhardt wrote:
->> > > With "--no-ref-delta" thing in flight, this will not play well with
->> > > what is in 'seen', though.
->> >
->> > Ah, dang, you're right. I'm not quite sure about the status of that
->> > series -- there's been a discussion around whether it is the right fix
->> > in the first case with Peff, and there wasn't an answer since Peff's
->> > last mail.
->> >
->> > Taylor, could you maybe share what your plans are? If you want to pursue
->> > it further I'm happy to add it as a dependency and/or wait a bit.
->> 
->> Still something that we're working on, though I think that it's fine to
->> kick this out of 'seen' for the time being.
+On Thu, Aug 13, 2026, at 06:45, Junio C Hamano wrote:
+> * kh/trailers-no-urls (2026-08-02) 2 commits
+>  - trailers: stop recognizing URLs as trailers
+>  - Merge branch 'kh/doc-trailers' into kh/trailers-no-urls
+>  (this branch uses kh/doc-trailers.)
 >
-> Awesome, thanks for the update.
+>  The trailers code has been taught to avoid mistaking a line that has
+>  '<token>://' at the beginning as a trailer line.
 >
-> In that case, Junio, could you maybe kick out that topic and merge this
-> one here into seen instead? Thanks!
+>  On hold, waiting for the base topic.
+>  cf. <20260803152025.GA189075@coredump.intra.peff.net>
+>  cf. <xmqqmrv42lrg.fsf@gitster.g>
+>  cf. <xmqqtspbz00x.fsf@gitster.g>
+>  source: <URLs_not_trailers.b13@msgid.xyz>
 
-OK.  Let's see how it goes.
-
-Thanks, both.
+The status of the topic kh/doc-trailers is =E2=80=9CWill merge to 'next'=
+=E2=80=9D. I
+will wait until that topic is in `master` and send out a new version of
+this topic then. Thanks.
