@@ -1,119 +1,132 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFC747F2FA
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 13:52:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B49E32BF4B
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:23:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786629157; cv=none; b=RZPpuSyScYED/5Wi4QCAqa8wBk23hF4OpdTNZGruaTZ2NFfhSz4V1R1+CUl0RWGaTl3rW3kGhYXC3zr67HaPi20W/c3Xu+8Us8rRfCbLQa/lCLd3ux1h7LV7bmd6Rger2ozTijX2G+P9J8R+MUSEB4ohRYn5MNlnRmaluf70M3Q=
+	t=1786631040; cv=none; b=lg7ymA1XxtWNDESkmZjNV16ok3ecinJbD5Tjsz6fnOIob4pqRXU3PozHjgzchX9wpdGPkTUzkOa4km0yaJ3bUnjNmvdVm31mk1Fz5oUVViSSqtoRruJt13XzxAUjYiFrk777ljUpWXgnNnF5XqkreHeBAeaWPh065swBPZLq5SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786629157; c=relaxed/simple;
-	bh=6WTKosmwGUU9PrL+rPLee/+ff1u8X1kMzFffLlzCqoc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FvS9rs3D3GZE+Epw8j8d+pOlnaqnNF4lTahgn6Wq3DGpvAzpklpe9ojOzOs/KB7XohwMdRzii6kjZbQTSyk+yIP42GRejlZTmSbajJgcB/++qbMcbqdQBvZ0ZRN4MZGNRm0tlTSpxW7wLlX2UEmqjpiIio6eVyTScCm9ja6uuG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PgKpSkFl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dajyhd3u; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786631040; c=relaxed/simple;
+	bh=FYjwtVbhkvFw+h79q37MgxVGx+T7tS3YQxvZtnR2HvU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CWhqQUUYEhcLhBr41Ni4DeUE7tQlIxVpVLzMdkcl+Z05eIYzG67TfWVMwcbbfyjD1+Tv/dun/08WxOPLoEH+5j9dVZ5m4LPeQVJuNrPO8C1ixpf/n4MPcj22drKKKKqRnhL6xfm05E9mW/jfl/or/RZokLVBhVLSdrd29qH74aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Kb9Lmw63; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HKfJYGmp; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PgKpSkFl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dajyhd3u"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 27762EC0224;
-	Thu, 13 Aug 2026 09:52:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Thu, 13 Aug 2026 09:52:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786629152; x=1786715552; bh=vNu1ZyfOW5
-	n31/7I3nXfc05m9xArMDtAmZ8pFvNSwNs=; b=PgKpSkFlcJAOZqV4ZMpWtCnxeP
-	hbc5mj9wkcUDYmtwyD6cRzHdvHYmmSYsthgXNzZLVwZcMDEDQJGE0lmxsCuWSJiE
-	UgKkENs/7OgXyC9UrmGfWWt+N+LSXST5d37jORj8BZjqPKntuKPM9udlGDm2JyCn
-	0HQs5PZTmJMqCW7xIM0a9D97o8PSvg8n1hG4qwyZgL2rH8igGHVfZHroI61jvTD6
-	2FY67s5N9Mtu1KWWlRhnj7ch386FOQKOO89eL4yqnLMcYIdwW6J0vWcq32UAs+fi
-	1cR/eTtmsMGH53Yd3MSYHNSo6xgVgROjkmNpijCM/l7I9i7vIq2mH64ni/jA==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Kb9Lmw63";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HKfJYGmp"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 236B814001BD;
+	Thu, 13 Aug 2026 10:23:57 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Thu, 13 Aug 2026 10:23:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786631037;
+	 x=1786717437; bh=KCK5Eu/MVWRwdGVhvl0qBVNTvm25KI/FK8+zhmXMp9Y=; b=
+	Kb9Lmw63DmMIUitDg4TYgs79DryMcto0942rYesCksnVYn7sNjHzbdHmbfzR8vIA
+	R2fNcddTLXFjmQbywHl36szgqdk0jxiZ9FBufocczjDoQgukkIPSdjt+3TlXlaGz
+	nl5RKbKX0gbMQPMFe8NAUJsLGWpQo7aXNSVxoQLUY1g9vKweB+/A+qGWZaweuS+e
+	6WtcUYRMgbfwr1uegM4TqKNLI4kI0cZV+5V9v4HfcDwQwQMIkXqoaj6HQ79y9Xy2
+	AeV5KVN9ZCJEbPMl5pKekntbq6OA4PSSlqpRMOAD37y72Xc5kjq+UPsCczZUeCtw
+	nN5uRQ1q91Hzg8LDZR/ayA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786629152; x=1786715552; bh=vNu1ZyfOW5n31/7I3nXfc05m9xArMDtAmZ8
-	pFvNSwNs=; b=Dajyhd3uquqA4GJOH+GBySVR5Qs78DGYEUQhBnZ/XSLbYvbw3iw
-	1UxXP/ZKRRQtO54XSUPDrK9FHHB0Z0drqT1RppU26Dr4D/n+182yk/gnwnW8NT1y
-	Dtd7KUWfN3we25isI/Jsalir37mKzAtjpmdRsps1OP9tnEwyv8ugrMmutOKVq1Mq
-	BAo6W/hAe+ldgEhFF8u+uLXiOxKhiLgBownTUIRpBDbLNkHqGwSKUSySr6eyYyj4
-	U9HgU13imDHPRnmzY7RqlotX5s2I+pebtq9ETCAijMFOJIwsiBDliFphaIi9N/UO
-	nq3hEcX9dSpkYXiAtcCohenylEa83Mpmj0w==
-X-ME-Sender: <xms:IMx9asoL4ZwtvuadZWL0nkERgKfBZGQznLrvOneOmSsGANJ5vh4yFg>
-    <xme:IMx9aphnziGI78JxjN0iXSeqYqcZhePqOBZoaKvJyFuzHcYGUhk_hfXxKXlXMPZ_D
-    dg7WhsiklR7tBbqfOyyWB-f9OEIXxx7pV2mV26PADslv_Ja76r-LwE>
-X-ME-Received: <xmr:IMx9apg-J8kcLTriuXI7OlIFlWsk-HkiNE51l9-sOhFK_q2Ajvq2wkq6IiOExr3EXf6kEeN6_yRw8rawVGOxHqzf92ruBrQJTw>
-X-ME-Proxy-Cause: dmFkZTGCEIigQaZz80MC3chy6qJPpejJHiJwJXTCBETIutsJpqv7jDehuilupQKjFNpwEn
-    p7T6vLumj0iJCVOqY2Jcnbb7u30n+usIUtLU9OwyA4GPlKsxlwGqbl/4mHL/r/n9Y9HtBJ
-    nAEiaV0OSPJR6pjhYWeK27pLcEXie5pkjQxLmlhOzkneObqLIQCIsthrtuBb+6PfEXos85
-    aqCSKOlsPivgQlH8BpR30Q2N7pgpgSAXTgcjLMkmr857rNr5kHBbEeXCUkfoTuDmkuQPwf
-    Kt6ECxYvTSDP6FEEE7mbs8D+ixYigvvuXyzuBXAWOi1Ya1VY/YowOA6ghrnMLElNbO8uW6
-    UH1kfYRVvmcdeh2yoO5dD8islqNSfL8xEA9RiU8rSsiWobCuzJfDzsQy98ifsnwhzXm8/v
-    Nj8bDChP6b1y+CfEkl4ErzYbVcgkw0207tP8m9nxeon4EFur4IepcHZ0LgKTr/nzUodQtC
-    PPjOpZY1cfsL1rXZ1rDwWHYKUhz7eJi4P0MCZOLJqDcgEAdAvSjTiTMSx0+S2gCtbwxzjS
-    BaYmMqxSXiElSUblsFw7g6LTEZ8yN8WucAga+axXmOAceT5G1tEQh5ewJwd4NBqh2MEdUe
-    /EDMBdeUaDfb4XT5il/gtl+Sh0XG51lLOfboXnc7hHq22ghq6TeERNM+PG8w
-X-ME-Proxy: <xmx:IMx9avhgs_G4_3MLgVo2R-4sUuhwItzUZuHDqoIGNK0lyHRnM4hM3Q>
-    <xmx:IMx9apLWNLzE4OvrDBozd5KcV_PqCO8s_89aoKqbMAH8icf1Ap8MBA>
-    <xmx:IMx9auHh2gli7kMtzWmpNKvHwhs8LLzOwXiZMncKK_b2hVrk1NBeHw>
-    <xmx:IMx9atSax4hDgXzuHnWqm4d2Do9Db9QOu8IN8DGdNOfi1zXmmzKCVA>
-    <xmx:IMx9al7foAp31YmVY8jmrY7xWjBvciOraXej85OdEs-SSKLuV_buo9Z0>
-Feedback-ID: if26b431b:Fastmail
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786631037; x=
+	1786717437; bh=KCK5Eu/MVWRwdGVhvl0qBVNTvm25KI/FK8+zhmXMp9Y=; b=H
+	KfJYGmp66OWG2F0nSTkHe4xHysfs8sgTt5XPR4GAr8Qf0nzm299FVtw3s9E6CzAV
+	TQg67/xmv7QjfsK2mRqdScshmnBimKKxlwjpb2vjk6JUqDvTIVkcpc3+CfUwlQSQ
+	bpDWf1M4DZ+6m37jt9dciB9ad4Bl0FM7SRZxGcQ3N3/Y92LcCDeiPw9HphOICuIw
+	Z1vA7RruFlvDuT2aiqtj59a2YGMisXiIiniGyyXWSwjgwuRBDAwYhLu26Uex1q7Z
+	Ex8AEbN1KnGYaE3aiO1wkE9PpXXRvRyy7ij+zECkwSq/FPMn6BXe1/NTuyYJ+El7
+	d+fZ/JHJTLtpq4QoV+yVw==
+X-ME-Sender: <xms:fNN9ajEsdhmm2uOBVkrxTvpb6oPSNrvtVGTfmnm_GDwzRYW4G3kdirk>
+    <xme:fNN9anWXX6En9-d5qo_7hvm4PcCGUTX5r_FLSnZV6g4G8qmMiuEH0fzSHgGfog6v2
+    shb1DbHelDLAydTRvN1NimvWkvsO-Go_XQl1RZZWHILxuM9VCI2Uw>
+X-ME-Received: <xmr:fNN9aqKojBv540YtWpmC7IWMKftUDKuM7uaZEgvGtFgPUZTEWhcuj7gk0pBXMsYI4xCYJdfJ4vEtiXi7M24Ypxseg-SImId4oFP30v4EQqDKBN-JJA>
+X-ME-Proxy-Cause: dmFkZTEy2s7uQW/AQx5Qe1I6Q2Y3Ih+1QauI/B8AA0jEl+1+6jJIS9pBKFeGc7Jy3X5Arc
+    86D5hH2l5nhC942V8TWRpWrV0YbGHJV2TBNcUFQBBnC9k0lGfGrTDEJd9eCZmWWdPBZoW4
+    umA59SRNAn92nflHkiMrusoklFUoIlhUKfJZLFEdjQeziXv1MdsX+suI7gVXNkNai+gJ+N
+    kRA/9yPyrf7bBy/ogFBvqzm6Fcl7J7a7cK7lbix4VG5fRPG3Sho7SZ28T1+SxlGwYRGWWC
+    72jqMdCcyzUV+Ax1s2APYKTYXp/DzOKn/BFTBvqm8fkJkVno7IaIFA9tCtL2JWdXN1rZlE
+    mlT0WQlWdey+omIgw2ZpOnDQgmlyxATMCdKjaIuVY+Gtylgc8upUXAbJdvcFr8eoITuPty
+    /aLT/1FUmU+Bqt0Q13Oj7Sh/1agSmANJ4F3+wovPAoZOzN7jWJzScQK/8ZQBUS6b+opoY0
+    YR/DvFUUPIcBPsNl7J62DxJVRVHhqRb2MZqeD/43Gg9ThLeBRhuxlEfexzMhyIIUR8hxQm
+    kwpuzZ4CCpOEKZQeeSW31kV+guAcMCXpojtMSb59udBaWTGu5MVvI+twQsHIXJGTjFp3gg
+    DECaEEWPKSicfbdNd8CPgY5SwuQr7G/hZoGIBGNUcJaaHKH/WV98eb7YRfpw
+X-ME-Proxy: <xmx:fNN9av9m3eTuBrXjGVAuYI8WUTGeMbb8yh06Mo2gRNjoxFLUVRO0jg>
+    <xmx:fNN9alIqIx_find4LtQ16A9S7JLVyXx48dqyW_fB8Iqm2SWG6WxaSQ>
+    <xmx:fNN9asn-LEimSjJ2N8p2OMor3wh742Af36xwI9WLX-xg579eGFua0w>
+    <xmx:fNN9ahMlSN_wffhGl57F5Wwne-bTdj7tXmvciVXii2fbGdwqoYQiuw>
+    <xmx:fdN9alG6lY0dDj27HXij29bTRXd-fuoThWaQvoMw_GBHT7yNhTxThO-j>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Aug 2026 09:52:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] packfile: fix perf regression with many packs
-In-Reply-To: <an1zz02GNqDu-0Oz@pks.im> (Patrick Steinhardt's message of "Thu,
-	13 Aug 2026 09:35:49 +0200")
-References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com>
-	<an1zz02GNqDu-0Oz@pks.im>
-Date: Thu, 13 Aug 2026 06:52:30 -0700
-Message-ID: <xmqq33wiunz5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 13 Aug 2026 10:23:55 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Patrick Steinhardt <ps@pks.im>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH v3 0/2] doc: format-rev: use [synopsis] on code block
+Date: Thu, 13 Aug 2026 16:23:44 +0200
+Message-ID: <V3_CV_synopsis_block.b64@msgid.xyz>
+X-Mailer: git-send-email 2.54.0.22.g9e26862b904
+In-Reply-To: <synopsis_block.af9@msgid.xyz>
+References: <synopsis_block.af9@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
->> -void packfile_list_append(struct packfile_list *list, struct packed_git *pack)
->> +void packfile_list_append(struct packfile_list *list, struct packed_git *pack,
->> +			  int is_new)
->>  {
->>  	struct packfile_list_entry *entry;
->>  
->> -	entry = packfile_list_remove_internal(list, pack);
->> +	entry = is_new ? NULL : packfile_list_remove_internal(list, pack);
->>  	if (!entry) {
->>  		entry = xmalloc(sizeof(*entry));
->>  		entry->pack = pack;
->
-> I wonder whether we should slightly reformulate this and rename `is_new`
-> to `accept_duplicates`. Because ultimately, that is what we're doing
-> now: instead of ensuring that the packfile is unique in the list, we
-> just don't care and just append the entry to the list.
+Topic name: kh/doc-format-rev-1
 
-I had the same thought.  The current callers might have been vetted
-thoroughly, but the next caller might not be so careful, and for
-that matter, the code paths to reach current caller may change in
-the future to break the promise of ever throwing a new pack at
-packfile_list.
+Topic summary: Use '[synopsis]' on code block in order to highlight
+placeholder properly. Also quote the subject consistently.
 
-Is it well understood what bad things it will lead to to have
-duplicated entries on a packfile_list (other than it would make it
-even less efficient to prove the non-existence of a pack on it, and
-possibly a bit more efficient, depending on where duplicates are, to
-prove the existence of a pack on it?)
+§ Changes in v3
+
+• Patch 2/2: Add Ack
+
+§ Cc
+
+(See v2)
+
+§ Link to v2
+
+https://lore.kernel.org/git/V2_CV_synopsis_block.b4a@msgid.xyz/
+
+[1/2] doc: format-rev: quote subject placeholder before and after
+[2/2] doc: format-rev: use [synopsis] on code block
+
+ Documentation/git-format-rev.adoc | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+Interdiff against v2:
+Range-diff against v2:
+1:  c82aec7969f = 1:  c82aec7969f doc: format-rev: quote subject placeholder before and after
+2:  f528d7e9dcd ! 2:  b9a93c83c88 doc: format-rev: use [synopsis] on code block
+    @@ Commit message
+             [verse]
+             'git name-rev' [...]
+     
+    +    Acked-by: Patrick Steinhardt <ps@pks.im>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Documentation/git-format-rev.adoc ##
+
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+-- 
+2.54.0.22.g9e26862b904
 
