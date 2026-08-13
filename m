@@ -1,177 +1,217 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAA943F0B4
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 08:25:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F382136728F
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 08:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786609536; cv=none; b=LgCqdWVhXsg4npTsISiWj4qzJ3eqadMrdJg5xURV/X/LqlCykmpwGr9CTF3BuXbhzzifxJ5vXSs5bEMPxi4RMDhRd1jly0RVjXbhvxgeYrIzfKpvl3MBaGs3RjqKNFXOJrxI4ySwsWrpvXbYj37PawZ4TIsFWRNb4BdOSvHjSUk=
+	t=1786609611; cv=none; b=GPRy2PJ4O9kWW+P8vOgdQrJgCAFnowy7zRSvgviYi7rltHFU+Mrs9+XbZRTHyWRprmp+qG5XONosxwjiUvU+fJNTj2lk4iaJR7U4eaiLbMo6Ect/mOH3FXyUg3mW4Jiw8hwSJJgoM3y1yrjrDJPE3b6zw7SHrY9GzIBAjXG50Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786609536; c=relaxed/simple;
-	bh=AaNcimAS6SeLXGEV1UB3ekaAZwJQtjZfzsrp1/Yn4SE=;
+	s=arc-20240116; t=1786609611; c=relaxed/simple;
+	bh=ojQC2J+nr0Y1oiJ29anaC4NsKhFv+1NQ9OxdijOAg4o=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=ZfgunPKphd8jI0YV2XZALen3eUg+nyt8uXuaQ86BIZPQAC7yD0BHQzorI2dELqv+wTnP6CTwcMU5zcj7HuBbfEMiRqgqus/pgxb0Erejua69b42ISKg6ms02LNmjZuCdDhSI3ysqBPCObGouSNt5dk76efQSyB3itYIV+LZwvkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=EhMDpbjK; arc=none smtp.client-ip=212.227.15.18
+	 MIME-Version:Content-Type; b=sbvVEtWyquEkApT63mUoxz82nSWWE3/cQRf+6UHZ+sjfPgF1TmwpCh6EIYxAxqrE0cELiVqubaSqfxoG3LwNoN8069924rRDCIw1Vj2Ja5KYacbmEXNlqMsufWj1diI86Sb9870Gzm2LnbN+59OdhAAWKh3BoBiOT4G9a53P2QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=toHlk270; arc=none smtp.client-ip=212.227.15.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="EhMDpbjK"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="toHlk270"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1786609529; x=1787214329;
+	s=s31663417; t=1786609602; x=1787214402;
 	i=johannes.schindelin@gmx.de;
-	bh=/kVFn3FdXRZ/u+B51kFJrbrLrfn3icEj7pdbW98IpDA=;
+	bh=bIk/NsOvtvriYuR1JWERyimfS+Bsfk1n+v6EDB7gus4=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=EhMDpbjKlIlNt0eFUL5fIOZ5PQFiEFUHmh6rbuxgAkJKdfOUWCk5K0vsYY9/lFxB
-	 YiFAkCvXE3dgrWuKMTGSxlzYoWg3+WlhirP+YZpV/CYE95jZQjmfY5pVB24Z6xWiQ
-	 oBYBTxd4Pv/ZdoGgXgb2R0mQPr+vDj+gZEOj4j30RpPwDnldMojrcxGNYENUc+U4h
-	 Goc/w7NV/oP6Rcv3K2BXiqSvioyqMd10Lr8jrCNIdgbGQL0HnygfOzMIvnoljgvi7
-	 yNwvTV6manKsA2JrL5TYrNwDNFyPzBVuy9Ba0TaaMLw0Kk/pUjtcmPW2+YRPnxwiT
-	 eWEBpZjrUXMyPhGU5Q==
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=toHlk270MbbMgTolQMhrzGP2nKK+63WHUdxfVJrW00jCOUXVM/ufkkI3vDqtP934
+	 WRlrZDw5tfT65OaA2p3BbOzmpm0HEGZC2sApZRRuq3+NNxVjdcavD8ZCD8nJkIJEa
+	 YzO7QhGMEZSfwwigo5QgnWpknWMbafUNwn0EjvPi4ll2oroWqAAH/cimf3IhsbYjf
+	 DuZl9qAxiBBNu2cNKOCc2mNjp1OqGah5ve/I8O0GD3UuV9MiLyjHsoAienYdniex/
+	 0zs+P7+ZKiwwCYHdP3UwPZm0ohB/MVl48HvzwbOatUlIaR3b2+emJ1NlCft3eJj+i
+	 x/PySHlB8SOS/cbkig==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M59C2-1wtKI82J7M-007ViS; Thu, 13
- Aug 2026 10:25:28 +0200
-Date: Thu, 13 Aug 2026 10:25:25 +0200 (CEST)
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MK3W0-1wZzwd3DsU-00NVbc; Thu, 13
+ Aug 2026 10:26:42 +0200
+Date: Thu, 13 Aug 2026 10:26:40 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-cc: Junio C Hamano <gitster@pobox.com>, 
-    Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+To: Junio C Hamano <gitster@pobox.com>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
 Subject: Re: [PATCH] packfile: fix perf regression with many packs
-In-Reply-To: <20260812212955.GA152730@coredump.intra.peff.net>
-Message-ID: <ed5c651f-648f-f58c-bbd3-3db295515913@gmx.de>
-References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com> <xmqqfr0jw20t.fsf@gitster.g> <20260812212955.GA152730@coredump.intra.peff.net>
+In-Reply-To: <xmqqfr0jw20t.fsf@gitster.g>
+Message-ID: <14489f51-fa34-a354-47a5-be64da968835@gmx.de>
+References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com> <xmqqfr0jw20t.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Provags-ID: V03:K1:1xWsT8KEegCNycGInozbKME5NB5vF+KYmqMipy6kQY7MX8kpz1T
- T8/VYlyjcrDeYZ4r3UIGLi1SRLaIEOv2C6CDcuN5F5fWLLkB154XtMPoxhInunDSI2/V9I6
- qWp4kKwLONu2ya+2pEZtESfdnp3qAqw1s8aqkThoHoDnEFoVrAOA4zUIxW+c5V4vuuP2Cwp
- bIS/6Rvv1r9V5pEE5382g==
+Content-Type: multipart/mixed; boundary=8323329172337173817866096021863
+X-Provags-ID: V03:K1:e1Ccq8cQN1axaK2UV7kW5ui4tEcumLkSDFXJs2zdc0GOlkZq9PA
+ aP7vdS1Z0QFWYzFKvBahEPfsjgn9MIPqm22orVRStfT7qXPOEImsxyQqDv9CO3+0p82X54G
+ u5uthUMXjdP0Dg/LwFeFK4/EB6/rt46XiSz33cQJqztg1Vus7XDC4RRj2Frih77xSYLat42
+ 8ue+p8rV1DrV+kKTGE0nw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:rZOe0Kc3Ois=;RN34MY1xaNPA71yUzoYwvghT4W9
- 0plYhYPnlxo5L83mn3yvg4tUZyZ9InJE+uPKZUR7tWDejXJr9Z82n6zIBVE+zwtzGBfCQC/I5
- tWDvhFpO9/29qsvNAh4chPWSTAxZsztkHO6rKTY9f1GinCb4DM+7NqnSPWFKJ5nhuTVh0YpEE
- wjYC0ftn+yAEWvt/uAZD4KD0HjyAjzrYxmuE4n6vrNKFPxOY1uIxLgyPrBdNr5BGqPH3KN/UA
- sGKIp4gV1gC0POPqtK4F+dxXB46At6wMei/wYrQ8clekmX0tnXiozE1GEijscwpnAvWKj5FYq
- 8NtvbNnugXbHKbVhgq601dpNSxou/s806pD8v55FWlAUKneC9LX6xYXH54dR1cS2mnPPXgzj2
- A4czPsGOeRKxhn8j1LiVsMoAwa0/VhrEXfqG5iGYCEqOpytA8KsYRIvXbbgYPqBWZUVAME7aZ
- enaJtML7r3ORdfAJ7PL66hgWa/fmjG/HeayFxb64XlNzMF3vCtFz65roTkLuCXu/rB5sfgTiJ
- hajIJNVlyawWIFUROnUk3nHoZaFfEoirKjPxmgM4o8CNihJr4zvcHgGJaC5ylT2nniwEl7t8l
- FOyuZznRUpQ4/C0B/ubbOMbUht7iXnPpwsRTjTSmGs+RG7iQw0jOo1q3B8d38FhNR3ru8aeQu
- ZjwJ6LpzCRe2OVOGyZA7AsOcq4TL48UbtnIq2VZsyn9cNo+Rc6UIYlymmrXA3HxYzkWC54BJm
- G7JpJrXd/WNPrtZceP8lcD6acop/Kh65+h4RyL4Us6ZtatGHTDQMf5HyypAG4T2uFK/zpyQas
- GIJVoHx/XCcgLTa6mxJzFqruafmQ3vh362uIDR1At6FD8d85r4R/bgWAkQLPJj/Nmwnf1m/X3
- Ln2PDEUqDfBUDFSOE/w2CSvnsDE7/5LReoTJBQzKUsbCa38oP1MMTPcyfQCJMjZS55vVu4KJP
- LlD+16PoeEDM8l+f95ssR3Sa6o2LUAW8XeUTm/Vee1SXMbVGvwbpkFi/gKSI5o3nxtKvIUGJX
- iFwu14mCyh53MKY1OE247aDjho/NHmvTsgMpG2vdl/xn0R7UyLJToV+cshh+21ZpOoD556j2l
- 77YHhzM7Ze/rhPuITqT0bFhj3iLkDpqUgsSmEKDZAITO7EF6YpI1k3U4KCmeGqAKqUeoAZuj8
- gfXjOnsTLhpVv1HbsgtkCuE8F0v/nOKtddeVwA4dFnoWvR0JdA1+WMgcz4Lvlbqiahg7JXTWk
- 5kU5IWkWKiS0OKFst9QvRkdASnezfFVK0btEMIzn3FNSBhO4JMDwm8roo2eCp3pcYKB2Elsot
- dPKHqqsIt6H5kCc1oc9d1Iszp/sc2IdYzryc6hTPgpORSm97NpK1VOGf/D4r3BCh/KVIvEh+x
- YKy83zGIyQqLjmMo2dm8UpfJ7wzydNvnWPWb23bM/8Bv8bLJs0yN+2vLivxgj7G+Kqu9zFvMk
- DPXN95ls15hUToMM5CrhSHvlVB9xN1WnD8K+SbHc6gGuaTJKbzpSHiOtgd6MMzZytnTjwMmk9
- Rjc1jJmtAhXGJ9np0VTOXQUHQ3cSbw0Ih9NxZ0ZPyZ+Kc/p3vIA3iSXp0sjjLpjtEmJB5S6TO
- 3bvdhGmz3oJoCQkjoAkuKAXgLnWcfVJNlHa3lDTVq7MrRT3+aoTMH7k0TZT5ggxlTJ5S6WYqT
- IRw9e+H8cyBCgDN5xp0kgpFJXJCcrEiwuvrAnpRs1DbZery0mD5T4dD6EOKkMYSyZbFegcN8j
- sYDOEYKJwWXH4ETwPwfofBNOOBKURa3ZMKTK7mI+ND4xoumSPMwXZvhn01wvrO/GQfUJlXtL2
- M/TLD35e09YFuGDXSH57hY5M1XVyT8HcqU+U893xrQl8tWBi+pPrqeZzKiiTcKgyPrQD59o62
- hdMFGBTygUnNLiY4gTtcHtoJU6yUvhvfJurwqBQ7rQFZwL5c2xIQRLtlzJ9BKXGwbTq4l/xoC
- CGY/Ah4RQ6yzNwugsHT6f4JzccJE8P2lt+6ZZ3ySk1+P0s9meuaa3P8wYfUgH3m9pDnfRsiyV
- yQnG8v1yRZ73gMRFb5IQ7DJqIhfRo1T38PfD95WQvG16dy6hHahXm8eJAOjVnTPwVTNQXsJgk
- tanH652Xh7o+y2eynC7qBRjh3BdyewnG/RZnSKnERO15Qrp17+IU3l1UpcxPXMXlVOSglYMT2
- E6Z6NYmNnGlapk3u0a9Xvatoa2vUa2wh9KQjPXjpHoSN9G6yeysntA2RHzO1OlJnaHtBhgHys
- G7A8tcdkbGfZDAIV0pPR7yTkPgLr3koo8dqRk/71ObHNLNPrUfcSDdTG+2BfkigmB1Ui2fxgE
- l0E8g/kZ8Giq6d5sDKx8URtA6ZTXcxHyUu87eFHwTYcjw7jB8D7wIthjxGDj5lelxLK6W9NWB
- KlFTxgqAJZCME10UVXYIqRMFEzxmVbPnWJJTrX2meKcJY/gHTaoinWwq1xXb2vixG4avlh8Gu
- R0BlBXK9ulgpRAcCbKQyEnWhOpt6qZhXQB3y+AF7CH19ar1gsQ8RRlkKWQ+gQXq29OR3QvcEk
- YPTyx7gxSbevmybZ5Je1FcDIVaQO6Zyz74/IMCrgHqX1sx60Oka18uAooXVa59fgfmVwiOYZC
- +wzYaEC+vyoFVsWRBNL6ICbUP7OnKn/cplPBJhr5VXKnj7Pa9sBoz4pOjLI2EQb4N4EOYbD0l
- 9WnA7+W5mMlLR5fFPJ4A29iOlLq4uia2Y7PQGdgODouRHckGEqWaGlbRWpV5+FUZ3VKPkl4Sm
- nEfHZIfZi2umGDsR42/PVNUKLZj9M8dRm04oerntv+446SDKuFELz7M3PhlxFiK7Wci0Ay5uw
- JL8LCtV2MXadOOKpCQuqhyP6PImdUs4ApoJmy5FeO4HC4l9uzAk9as66gpXRUsVsEhJ90jym1
- AqtMWZPvGgXq9uk/7iPCP1CwSBxNcsZdqRyyt2XOKHJRsD7yk4Bdhl5V2cSTeY/xN/a83Ar/y
- 8qc4hDS9MayredN3dAroV0DQEadK0KBkZTYQ1E3vxmhYfUWsFpF7eqZCycCeyCSpqSmDGulAF
- dajIVp7QDv+lg6omfaUSfiUH/2anPb/XP1nJ0veIoPaYatyRLRzhZXCyClIRCwAmbvh15+S7g
- otn3RaIpnXYcJHCm6XZlrLkLw6nVku2EM0opA7zWW72cxgD/gBddn0E8G8+7TQAPUAj9dyFoe
- x6T4AdSSdaJ0rQgWMvlellF3rWJjPZzrVnzPMzXm5bsUT6M1qBmQDYvXbI5HaUOcqJE7nMQOm
- jutcCA3/UKZ4B16+Q4sQ8/0KMytzC9lXGdBuG/plK+TCYG/l1QZI2yuwNDvOso6XD1HBIp81d
- qGNgtjsJ6yLn0qm5XACBDcomdmyNQwr89v3iu3g8elnT0iJsI6sQ3oWXYIFPw2TwzkaZFhsG6
- 4EwvnSkhdgiDE6Ac0CLGsg+SaFZD4f6LYClFS7hyKAg3CEQqPhp6QZjXO2Wu54vir6SEH77gw
- q+HS0msLAL4oDkl8+YHQcFN4NyfryyQln/l4oX03cMoSEV53y7HN6ra64A8TIiX+wvWaAftw4
- +X3Lza1rAnfajcgR7h/RzqVldbYPPrMBweBLiBYtyMv+CAAbmewp/WFLO02RsNc6t3rLRYdX8
- WZZ8PaDsB4hb4mAeGDM02NCPt9BI8teGh2ss9zfLeN7SsqxGWMoJiLKDOFNOFCpVZTVddcj39
- SXW7vA49s+/ITGAw5JWSL4w5TRBBnk+odbdG/0gvRUfgX2vP1VAt8Vx9K63/oj4a2hwEPa1+1
- C9l2XdLF/ZRa2y9fp8cuzMmrO0Cc20YYEimegJ4k/8EDLxQAnwiwTfRNcpYgu5DfL+MqB4X13
- b6T7zXeL5bw6tlUgUIEQfDN4LBxVpSjxIoN2Rc8dYh+7c2tPQfbY+Twfp2o60uxZenkBbFAPI
- dnhjdcG8ujgEwcPE0Un2kLYPSGRCnjKxamLpIZVMP4f9x6CR8JBAilhuME6gUZCKboDImddhO
- Ld9vF0G6HuqT/sSX9ft8hqQcU6mQt59FCxeaJ5qKXAsIXZhuj3B/bYNJzIMQ7ap3bCnUYv0rw
- WkZ50aojsLBuS9O9gSb0cVouHpCWAJ8EfDeevOE61eKTU4av6vtWvNfbfKzhCfreKzvcn7XoC
- QrcAbQ6xW7D6hZ5Irl4saVf8Av2+oBYDvC2Vxe+AcNdGgKlendi4weE/JQOMvgQKkzQEwjay8
- N59GyRSepxFmPXphjX/ex7BRKqhKwX2KTG3jM8XOMfitAu7qEMjh3V+EtWXN7Pstv7OsBwE1Y
- 5Bs78pL52chrOzb9p7O3rSKUUGB+fPO12eS+/f9bOP5WctFxo4Xu3cxNL4J9RvZ5+pfbzuPVh
- 0mPpyOHnks9JxfD3T43rSi4avF2F1mZiWwH4rWLNTBRdSyNG9KITJWGIakptq6LScIfxgI2t+
- 9HmB3p+GWHmpRfGUGgRnYq/ChlWObIlNLUTpeGp+3jbfYCQO2tbvwXaQcA4rnS+eWaHf9dDqQ
- 4L07SOOcjfD8VBv+SAdm9xvClY8xvDyVVw9mAJAU+RZ8x2Tu2n+Avju5kl16vfdWU61nULQ9L
- Jcc0ZoWiaA21nK+oET/s+ziair89RE0dRjltja5TX1pdnt+V4LCVI5iT1WXmQIPuT4f0vqR6h
- 9lcaTklik3E695OxkLc0c7YAv4FBKey1lYWW9uI//MclQxnjqPGLdShM+GZ1bgkYWT8cJp+w8
- unCg83Ji/+N/4wbSzVUmgDw3vFxBmQ8HKqD+3/6u/1E74rXOEdYIIqu9TFzBk5C1vBWaFTWZx
- sAgybBqbXcmVI9X4Zvz/C/7BMsKvpUJOAvS9zVikBCJ/aAuuEsN+1oG0K15eldGulf4NgGWvY
- bzcwYZ6BBQbcMoyX6W46c1K6NLpVPSpucaTz+yXXOdWowbgfNG07T4MRboW5I0ao+0o6kBUWv
- 2nJpCLeSgR4IluH2FoGCMvZFC++4T6PvAlU0J5/zjreBSYlIiplpXHxkXcTrETxp4GQjD5xtz
- EGuhY9IHmZblUWVJydy5hHPQP+CmWVm1HYl4qtGtMgWWTNU/z58NQzr+Eheh4BdqQWwRQWdua
- EqPMOUJO/BDYstKxmPwam9PJ3ROu04D+FXPKYQQagDII/aawPVYtaYOz/58115Q1qLnMZc4J2
- lBZAxyE5FlQr69oDlWO7wn4x/6MORwrsLYRfI/TgZgotxxrtgoVH+KJJRJbHya1tND3aWDFD/
- 3JCqz2TfuVQb7LebvriFYyiVvtwPszzXjJxOiZqUC2wDo7WGo7EupfMdynkrdeEBoHqAF2PCU
- uYZv6a/V4VoQEhWytwHUiJN6dlD2U4w9QoRoZPomTOQJHli4au0pE7M9dmkYn04QtVbTScPPZ
- TS86R0O/Yr5R0/9phzUIDxeRI9EodMrnrH3m4HAAmtPYegDfrPrkS803dldmr7tHhWZS2LJlx
- WXPbDfotgRGUxbK/QMeJ3sVqq8IINmCiUSKt80vkkFubWEBafohWxwTpSr1h3EbEeXrL141WJ
- bsKzZHrtWXtsxH9qkT6cYEiWfgBkpBh2Ps1l1faffHBO2MsBTk/s8+bG+TF6GcLOXf2z/XUKF
- Wk9VvVpe7RJvgWkO2iGrykRzdWPqCa6mQTmSibpVw7gqU/zZlFUyCeUfrOW2ycz2iuB1IFNX0
- 7SMwgkMqfJWUlfSpcEgvoqDpie61WM7fKMg3SKC00GN8AxurKJOeiJBJ4VR/HaSN/DBp2IxhO
- bZbH5ZFbMNC8djsoVZOvXZnBSVCFYeYWFzIKzYN2h/Ckh+CiCVP/Zo5HI0R/8o9bpL1ymTHO/
- fU0MfHPtWYcnQh4A5VLF+JeRadnLcwPu47LtlMC4EPl1gDHUFxYh80DlPqPOLKYpk7P6BeGjz
- ZeB9qVmmdEm0JlMFLE5TiFfdjd/R/hm8mhyzFhcUtionTs/kjH2bGDwVh+6ZLvTuGjddZZ0IM
- 9Nowm2fC0c8sYcnulpf4e1Hd6umJU1I40VOwaElhZpF4EmzDPMFQLCJs4xk2U5HXXJCm5nkWK
- 265aL1OqxsMxwFaVU3R/wItuX3XZlsegUBts0=
+UI-OutboundReport: notjunk:1;M01:P0:xpSR8kfWMes=;qtS6Fkcn3u7t+8qIEwUjrjSOBbY
+ 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
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329172337173817866096021863
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Jeff,
+Hi Junio,
 
-On Wed, 12 Aug 2026, Jeff King wrote:
+On Wed, 12 Aug 2026, Junio C Hamano wrote:
 
-> On Wed, Aug 12, 2026 at 12:51:30PM -0700, Junio C Hamano wrote:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >=20
-> > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> > writes:
-> [...]
-> but...
+> > In one reported use case (https://github.com/microsoft/git/issues/970)=
+,
+> > N equals 37,815 and caused a slow-down of a simple `git rev-parse
+> > --short HEAD` (which is regularly executed as part of `GIT_PS1`) from
+> > 0.4s to 4.5s. In another, heavily exercised CI scenario, clone times
+> > increased from under 2 minutes to over half an hour.
 >=20
-> > > --- a/t/perf/p5303-many-packs.sh
-> > > +++ b/t/perf/p5303-many-packs.sh
-> > > @@ -141,4 +141,8 @@ test_perf "load 10,000 packs" '
-> > >  	git rev-parse --verify "HEAD^{commit}"
-> > >  '
-> > > =20
-> > > +test_perf "abbreviate with 10,000 packs" '
-> > > +	git rev-parse --short HEAD
-> > > +'
+> Face with Rolling Eyes (1f644) =F0=9F=99=84
 >=20
-> ...I wonder what value this is adding. It shows the same slowdown as the
-> existing test you can see in the context (and whose results I showed
-> above).
+> As we grow older, more and more extreme use cases that we initially
+> thought were simply crazy become reality.
 
-I do think that there is value in adding this. It not only directly
-reflects what GIT_PS1 runs, but it also exercises a subtly different path:
-`--short` has to look for the unique abbreviation, whereas `--verify` can
-stop as soon as it found the OID already.
+I have to take back the claim about the clone time, the hunt for that CI
+regression is still ongoing, and this patch does _not_ fix it.
 
 Ciao,
 Johannes
+
+>=20
+> > Let's fix this by establishing a fast path for known-new packfiles.
+>=20
+> As long as the caller reliably knows that the pack it has is new and
+> cannot be on the list, there is no reason to cycle through all the
+> packs in the ring to attempt removing it in vain.
+>=20
+> Clever and clean.
+>=20
+> > diff --git a/packfile.c b/packfile.c
+> > index 0eee45055f..f80f05a1fe 100644
+> > --- a/packfile.c
+> > +++ b/packfile.c
+> > @@ -781,7 +781,7 @@ void packfile_store_add_pack(struct odb_source_pac=
+ked *store,
+> >  	if (pack->pack_fd !=3D -1)
+> >  		pack_open_fds++;
+> > =20
+> > -	packfile_list_append(&store->packs, pack);
+> > +	packfile_list_append(&store->packs, pack, 1);
+> >  	strmap_put(&store->packs_by_path, pack->pack_name, pack);
+> >  }
+> > =20
+> > diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
+> > index af173a7b73..4221f9dd70 100755
+> > --- a/t/perf/p5303-many-packs.sh
+> > +++ b/t/perf/p5303-many-packs.sh
+> > @@ -141,4 +141,8 @@ test_perf "load 10,000 packs" '
+> >  	git rev-parse --verify "HEAD^{commit}"
+> >  '
+> > =20
+> > +test_perf "abbreviate with 10,000 packs" '
+> > +	git rev-parse --short HEAD
+> > +'
+> > +
+> >  test_done
+> >
+> > base-commit: 11c6700f10234578d10523faf35656ca491425c9
+>=20
+
+--8323329172337173817866096021863--
