@@ -1,437 +1,115 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EDB411FBB
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 06:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D33640F8DF
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 06:31:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786601501; cv=none; b=OOsDTejmHOTkQpe6HxM3bASRWyzc/33A/uaX+aHoOsN7G5VW8wAf4PVsEZyxhrIubi+67hC333QrwSgXFv8jI08osBHBegB3x9TBWdYw9UkSBU2tZkZy7xlJ04Nq85OUeugJ8ixqsqGUW7FAj4KTVWb3Z2JzDrCYaxMhn34M4oQ=
+	t=1786602690; cv=none; b=qLHj5J2Zgjc/xkNGoP+jsi0OTbIOeC4JOKUi6UpqEoqzHqJK5SNfAvVEx66aYLXw2lCc2STPeFPvk5uWDiw033efyBY9AAObO1NBE2d1FMYy/XnLtgc5/mdMvon/y2F4LDm7V/RiT4IJeTOa+KgfYsSdk9K5haELUjr/A5d3Opk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786601501; c=relaxed/simple;
-	bh=sEHN3DWoVGu43frqn4G0/ZCpds2wey5/jJsSGCTNsj8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DY+DZ4vahP413Cote7DJTM4wkj9dOxlYn11XPd4Z+eTK8N5PudhUxSRr7NEMqxpurAQ2Ru6bDI9/smVG9LfcBQZye5XEZz2BYJgnNm9a2kPFgR/HSmvuBURqpJltpQJ4uA76Y53ykjpZ3/bOLU6xOc06ZT65LpA7ZVeVDyVKfog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=Vz1A/X2Y; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=Po6V+rn6; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1786602690; c=relaxed/simple;
+	bh=Djkwb+tt6GSyjJ7cZMhf1AXdgaSz2jFvCcpwgICpUKc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NJy86eR2D8rbx77nIyWFcZ819dNo58xmlfZT3n788oIpaEwAPxoVya3RdBTxqYFzu6LC4qvONfzOzwG85ZHCmVeFjcPFx6CaciZ2XS6r9Rf32jqcrLqpfVgBC9iHSDXS+mz87oIF4NmQG3w3mWH7TXDQbT3L7MDs9fHMxQHrTDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L2++6WBs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y7lwgKVX; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="Vz1A/X2Y";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="Po6V+rn6"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=Vz1A/X2YDyEjfltS/78mO5khoWxfvckSof49uKnQdu3tlC0YM7SLnzlqxUz9Vd6VikHezTugbGPRx78XoA0lWUKymfxMJmlxkybI4lWkecuWPzRVL6rWWIriJZD0TppYWLnVuYqEU8TWRPdk6OStWOAHiCdnWxtI2UfToWiTMIRLwmD5soa+TfGWBzg7hGZU32L5zQAJ99lMU4saPtmAWUqM13QlQWFm0vpDWv7ph/q/tEpaazj/AxgoOJeb4Bj6zToOccjqVwTcv/7GlsLVXlwglwFRN4GQQJ8G7uKJ9jYeuonumWTFHM55ZW38jL/vrWVIZ6E62FjquOCG3Iy/dA==; s=purelymail3; d=malon.dev; v=1; bh=sEHN3DWoVGu43frqn4G0/ZCpds2wey5/jJsSGCTNsj8=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=Po6V+rn6KNbZAj3/zm+EbQrXbF5zuQsc61rCRfonT1zqVb7ykGb4htn18HZcjj+AhZyX4nd5LB6Bhep30hG4TGGzsbjrE3ijE68LiBKaNraPh940GEL29K0/VggdG1nNebMUz7mXWDfCmGlrSUOtz3YIp/gpJP7kipawRUosbokOP8VMusimtcCNoNqnowlAr1rUUqLBRk+6s+7Entq6LDx4F1Z7t8F0XZ4D2E280SAonbNCQ9Xvvddbf92k+HPOx8wqT1h0Hnssj1DQra3Xn7uHlkkWQh+8S8guB4+rbg8BtzJ3PGmGq8uRjxGyvOkuV8MmiiBBN4yL9wMhxgCmgw==; s=purelymail3; d=purelymail.com; v=1; bh=sEHN3DWoVGu43frqn4G0/ZCpds2wey5/jJsSGCTNsj8=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1796922752;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Thu, 13 Aug 2026 06:11:37 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
-To: git@vger.kernel.org
-Cc: Tian Yuchen <cat@malon.dev>,
-	Christian Couder <christian.couder@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v4] repository: move fetch_if_missing into struct repository
-Date: Thu, 13 Aug 2026 14:11:25 +0800
-Message-ID: <20260813061125.1089553-1-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260807094132.806165-1-cat@malon.dev>
-References: <20260807094132.806165-1-cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L2++6WBs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y7lwgKVX"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 250601D001AF;
+	Thu, 13 Aug 2026 02:31:28 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Thu, 13 Aug 2026 02:31:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1786602687; x=1786689087; bh=hGE0bJ7t8S
+	bMlTvHobtmWf7577xb315G4X/LApHC1P8=; b=L2++6WBsXf6ICSAdknaQcz82Ac
+	Iln4cz717+tx92GCh0BejtjoIhcLA3dN5ftRVWyNFgG8Rv5NxoKKNldWISou4sms
+	zLLEjjOyBUpdGyH/rd76ZrPleU0SRb0rjZnQTLU3sWuOWKxC3qIevqEhPi4ibv/U
+	VsumVjd9aZL1w2AWvjC5QskHaS5PTLDfSA7Z0tgLs8BmOOWFer8DaOfBPIGNYkCw
+	J09rdq+FlxJevv9gH1dVmRDAJaoU3/+rJlspCkVWYQ5QDESBG5VU20vYA7tiZgaZ
+	QCbzdmpUc59rfNp5s37dX6SiXVMLOmfd/PnWGjheHQafSXnSMuj3n3ZK288g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786602687; x=1786689087; bh=hGE0bJ7t8SbMlTvHobtmWf7577xb315G4X/
+	LApHC1P8=; b=Y7lwgKVXNlQHOTQXb7Ley6QiP6kFSfauvOaGoNpyg17ZgdcRdIH
+	YBzsLtzJgdMJJeQr0BTTeGRVQKnx4c9jagWDaE+aQxWconimGae4AzxuLkBrYPN0
+	q8RgHJPkeyeCAe4/AR9JHGqYYvyk6/TLgsJkwwk2G+Pji5raMXLbYifS/twlur3R
+	iHS6OpvZ8RYM5W6Y/artk5z09H06OOWX2wm33foMM9z8uQuzrhhCKczQGnTxFoNf
+	HChhuzV1BGYHcsPcw2CI4hWKVMChZ91RMUZyaA31Fg6h6KWqgwRWJHnRmgOxxlRA
+	bv7wP1rHJ25b3AFyTyzlGrZgn5RsZs8Ty2Q==
+X-ME-Sender: <xms:v2R9auDAfz5Pll2pksBBolI5Kc0H_1lD1lv8zNYO4IQDKpmWYYaA3w>
+    <xme:v2R9avgfXdUJ_McAeWmcBPhOKpqgaXAxd7nQleNNY-4wN5Y4EceqMs_SKP-F8eSt8
+    ddoNGYE-7_uqQNGWkj6c01Fyc8T4a6G5cz6wTiEOkpgvGTlZaiQu9k>
+X-ME-Received: <xmr:v2R9aml66XkoqecpWSF2TZcaA-oH4hzrDXTy0lYULUMYA-UXm1Krzsgru6MKPFLPNHdUe-MiJd3WWa0bj2ez4soyttrBBgTlCWWJ9ifsRmU_>
+X-ME-Proxy-Cause: dmFkZTGk+GmutG1m8vzeq94F3KxAI9+Fz1o3crIaSMlk21lm8g0uE9VTuRQSQldT2i1UME
+    sEYIUbB8uqUqG3Tjx80pWZmStp+qYKZ8eCElIz/jRUu0f4S7F5uFonFEpIblpJNf3n6JZ9
+    JIgULpWhkzlagobCQ56yFw7t5t/7Zx+zGuxxOtDRwxt+BepyHenCcB7sg9RJR2uWnevQ25
+    MIl/N+YODPIsPygir0ZtVB+JFaB2zMvsOlgAUR3PGU1UFJoVncGryPNhINeWI/FHIxSj8W
+    fuPg2WjZDnmFPf+PlWWdMdq9xDw97QvK2z1gGFfTrI8Zir4bYux5BlxhKC+MHCK3WIWGAu
+    b2Eb3MPJ7pGXkjUnAD7195U5g3jmgeqIRku4GnP07R9pfNQx2vfrcRwLd/5lfN88WvDR3A
+    5Mtua2NoiPpwoa6GrKJ0drVkEw4m7CWK0V0JbAJUJGjXl+JmtdR7v2/8BqziT4hlmzKvdP
+    Br7cI8gFHS1mA+L+adPAyJUExMm2bi/2Aal28KpHXsoNOHdas9XKaQv9xPbcKbvYgjc5yh
+    ZYkKdUmvvM3ZueQyvy59eaP93JzS1t7LBMLtBAFUqtfr0garDY/LlUzHCGjL34ILQg9X0t
+    B7gd5sphM7OLO6JfKSz5xoFzRJl8Nd9NUzqwDnHmx+H715vtQJDQli4nVRPw
+X-ME-Proxy: <xmx:v2R9arqCT2ysYzNUpEAZENvMOffO0flXsnzLl5MjXdQ_otAByExmPA>
+    <xmx:v2R9avH6BgpkxJQd1rJmGKKPHz2VrRUHtBPk4K7lARNLIO74LdikLA>
+    <xmx:v2R9anysLy2AMnoPP9Xozf-3K1--TKyYMZt-6k9zPfj0x6lArUBoYg>
+    <xmx:v2R9akrsfiTup01ORsyzf3TVgMU0ujcZiXf9HwAhFuJr0ePFQBABng>
+    <xmx:v2R9ahmejZyX-Vgct8vtXGOMf2f2G1Wng032nR_1wcyqoWMstxLhHiOx>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Aug 2026 02:31:26 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4d89f988 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 13 Aug 2026 06:31:25 +0000 (UTC)
+Date: Thu, 13 Aug 2026 08:31:15 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 09/12] transport-helper: warn when export-marks file
+ cannot be finalized
+Message-ID: <an1kpG_KA-iNgyAO@pks.im>
+References: <pull.2179.git.1784069325.gitgitgadget@gmail.com>
+ <pull.2179.v3.git.1786521801.gitgitgadget@gmail.com>
+ <ad6ea197374f48f0837a40993588ae0cf69affc6.1786521801.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ad6ea197374f48f0837a40993588ae0cf69affc6.1786521801.git.gitgitgadget@gmail.com>
 
-The global variable 'fetch_if_missing' controls whether a missing
-object check should prompt a lazy fetch from a promisor remote.
-In order to continue the libification effort, move it into
-'struct repository' and initialize it to 1 by default to keep the
-previous behavior.
+On Wed, Aug 12, 2026 at 08:03:17AM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> When push_refs_with_export() finalizes a successful push, it writes
+> the fast-export marks file to a .tmp sibling and rename()s it into
+> place. The return value of rename() is currently ignored. If the
+> rename fails (permission denied, full disk, or an antivirus product
+> locking the destination on Windows), the .tmp file is left behind
+> and the existing export_marks file remains stale; the next
+> fast-export operation that resumes from it then silently operates on
+> inconsistent bookkeeping.
 
-Note that in builtin/fsck.c and builtin/index-pack.c, when running
-related commands with the '-h' parameter, the 'repo' pointer is not
-passed in. To prevent null pointer dereferences, we defer
-operations on the repo until after parameter parsing is complete.
+One question here would be whether we should try to unlink the file
+instead if renaming it into place failed. But not doing so potentially
+gives the user the ability to fix that issue. So I'm not sure whether
+that's really a sensible thing to do in the first place.
 
-Additionally, update the partial clone documentation to reflect
-that this is now a per-repository flag.
+In any case, the post-image of this patch is a clear improvement as we
+now enable the user to act on the warning in the first place, whereas
+previously they wouldn't ever learn about it until the failed rename may
+cause errors. So overall I think this is okay as-is.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
-Signed-off-by: Tian Yuchen <cat@malon.dev>
----
-
-Changes since v3:
-
- - Use revs->repo in revision.c instead of the_repository.
-
- - Coordinate the other topics. Specifically, for common-init.c, use
- the_repository->fetch_if_missing in setup_environment(), etc. This patch
- currently does not conflict with seen or next.
-
- Documentation/technical/partial-clone.adoc |  2 +-
- builtin/fetch-pack.c                       |  2 +-
- builtin/fsck.c                             |  6 +++---
- builtin/index-pack.c                       |  8 ++++----
- builtin/pack-objects.c                     | 14 +++++++-------
- builtin/prune.c                            |  2 +-
- builtin/rev-list.c                         | 10 +++++-----
- common-init.c                              |  2 +-
- git.c                                      |  2 +-
- midx-write.c                               |  2 +-
- odb.c                                      |  4 +---
- odb.h                                      |  8 --------
- repository.c                               |  1 +
- repository.h                               |  6 ++++++
- revision.c                                 |  2 +-
- 15 files changed, 34 insertions(+), 37 deletions(-)
-
-diff --git a/Documentation/technical/partial-clone.adoc b/Documentation/tec=
-hnical/partial-clone.adoc
-index e513e391ea..18718a3840 100644
---- a/Documentation/technical/partial-clone.adoc
-+++ b/Documentation/technical/partial-clone.adoc
-@@ -159,7 +159,7 @@ and prefetch those objects in bulk.
- - `repack` in GC has been updated to not touch promisor packfiles at all,
-   and to only repack other objects.
-=20
--- The global variable "fetch_if_missing" is used to control whether an
-+- The per-repository flag "fetch_if_missing" is used to control whether an
-   object lookup will attempt to dynamically fetch a missing object or
-   report an error.
- +
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 316badd969..c5edd7b80f 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -67,7 +67,7 @@ int cmd_fetch_pack(int argc,
- =09struct packet_reader reader;
- =09enum protocol_version version;
-=20
--=09fetch_if_missing =3D 0;
-+=09the_repository->fetch_if_missing =3D 0;
-=20
- =09packet_trace_identity("fetch-pack");
-=20
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index a6c054e45b..8cfc0e8b26 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -1017,15 +1017,15 @@ int cmd_fsck(int argc,
- =09=09.ref =3D NULL
- =09};
-=20
--=09/* fsck knows how to handle missing promisor objects */
--=09fetch_if_missing =3D 0;
--
- =09errors_found =3D 0;
- =09disable_replace_refs();
- =09save_commit_buffer =3D 0;
-=20
- =09argc =3D parse_options(argc, argv, prefix, fsck_opts, fsck_usage, 0);
-=20
-+=09/* fsck knows how to handle missing promisor objects */
-+=09repo->fetch_if_missing =3D 0;
-+
- =09fsck_options_init(&fsck_walk_options, repo, FSCK_OPTIONS_DEFAULT);
- =09fsck_walk_options.walk =3D mark_object;
-=20
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index bc86925ad0..28f8d01e04 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1886,7 +1886,7 @@ static void repack_local_links(void)
- int cmd_index_pack(int argc,
- =09=09   const char **argv,
- =09=09   const char *prefix,
--=09=09   struct repository *repo UNUSED)
-+=09=09   struct repository *repo)
- {
- =09int i, fix_thin_pack =3D 0, verify =3D 0, stat_only =3D 0, rev_index;
- =09const char *curr_index;
-@@ -1903,15 +1903,15 @@ int cmd_index_pack(int argc,
- =09int report_end_of_input =3D 0;
- =09int hash_algo =3D 0;
-=20
-+=09show_usage_if_asked(argc, argv, index_pack_usage);
-+
- =09/*
- =09 * index-pack never needs to fetch missing objects except when
- =09 * REF_DELTA bases are missing (which are explicitly handled). It only
- =09 * accesses the repo to do hash collision checks and to check which
- =09 * REF_DELTA bases need to be fetched.
- =09 */
--=09fetch_if_missing =3D 0;
--
--=09show_usage_if_asked(argc, argv, index_pack_usage);
-+=09(repo ? repo : the_repository)->fetch_if_missing =3D 0;
-=20
- =09disable_replace_refs();
-=20
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 1ec5b6f206..9732b7947a 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4089,7 +4089,7 @@ static void add_unreachable_loose_objects(struct rev_=
-info *revs);
-=20
- static void read_stdin_packs(enum stdin_packs_mode mode, int rev_list_unpa=
-cked)
- {
--=09int prev_fetch_if_missing =3D fetch_if_missing;
-+=09int prev_fetch_if_missing =3D the_repository->fetch_if_missing;
- =09struct rev_info revs;
-=20
- =09/*
-@@ -4097,7 +4097,7 @@ static void read_stdin_packs(enum stdin_packs_mode mo=
-de, int rev_list_unpacked)
- =09 * walk is best-effort though we don't want to perform backfill fetches
- =09 * for them.
- =09 */
--=09fetch_if_missing =3D 0;
-+=09the_repository->fetch_if_missing =3D 0;
-=20
- =09repo_init_revisions(the_repository, &revs, NULL);
- =09/*
-@@ -4145,7 +4145,7 @@ static void read_stdin_packs(enum stdin_packs_mode mo=
-de, int rev_list_unpacked)
- =09trace2_data_intmax("pack-objects", the_repository, "stdin_packs_hints",
- =09=09=09   stdin_packs_hints_nr);
-=20
--=09fetch_if_missing =3D prev_fetch_if_missing;
-+=09the_repository->fetch_if_missing =3D prev_fetch_if_missing;
- }
-=20
- static void add_cruft_object_entry(const struct object_id *oid, enum objec=
-t_type type,
-@@ -4469,14 +4469,14 @@ static int option_parse_missing_action(const struct=
- option *opt UNUSED,
-=20
- =09if (!strcmp(arg, "allow-any")) {
- =09=09arg_missing_action =3D MA_ALLOW_ANY;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09fn_show_object =3D show_object__ma_allow_any;
- =09=09return 0;
- =09}
-=20
- =09if (!strcmp(arg, "allow-promisor")) {
- =09=09arg_missing_action =3D MA_ALLOW_PROMISOR;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09fn_show_object =3D show_object__ma_allow_promisor;
- =09=09return 0;
- =09}
-@@ -5345,7 +5345,7 @@ int cmd_pack_objects(int argc,
- =09=09=09=09  exclude_promisor_objects_best_effort,
- =09=09=09=09  "--exclude-promisor-objects-best-effort");
- =09if (exclude_promisor_objects) {
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
-=20
- =09=09/* --stdin-packs handles promisor objects separately. */
- =09=09if (!stdin_packs) {
-@@ -5354,7 +5354,7 @@ int cmd_pack_objects(int argc,
- =09=09}
- =09} else if (exclude_promisor_objects_best_effort) {
- =09=09use_internal_rev_list =3D 1;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09option_parse_missing_action(NULL, "allow-any", 0);
- =09=09/* revs configured below */
- =09}
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 55635a891f..a7e4678d11 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -194,7 +194,7 @@ int cmd_prune(int argc,
- =09if (show_progress =3D=3D -1)
- =09=09show_progress =3D isatty(2);
- =09if (exclude_promisor_objects) {
--=09=09fetch_if_missing =3D 0;
-+=09=09repo->fetch_if_missing =3D 0;
- =09=09revs.exclude_promisor_objects =3D 1;
- =09}
-=20
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 02818b81c6..40e62baa9f 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -509,25 +509,25 @@ static inline int parse_missing_action_value(const ch=
-ar *value)
-=20
- =09if (!strcmp(value, "allow-any")) {
- =09=09arg_missing_action =3D MA_ALLOW_ANY;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09return 1;
- =09}
-=20
- =09if (!strcmp(value, "print")) {
- =09=09arg_missing_action =3D MA_PRINT;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09return 1;
- =09}
-=20
- =09if (!strcmp(value, "print-info")) {
- =09=09arg_missing_action =3D MA_PRINT_INFO;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09return 1;
- =09}
-=20
- =09if (!strcmp(value, "allow-promisor")) {
- =09=09arg_missing_action =3D MA_ALLOW_PROMISOR;
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- =09=09return 1;
- =09}
-=20
-@@ -745,7 +745,7 @@ int cmd_rev_list(int argc,
- =09for (i =3D 1; i < argc; i++) {
- =09=09const char *arg =3D argv[i];
- =09=09if (!strcmp(arg, "--exclude-promisor-objects")) {
--=09=09=09fetch_if_missing =3D 0;
-+=09=09=09the_repository->fetch_if_missing =3D 0;
- =09=09=09revs.exclude_promisor_objects =3D 1;
- =09=09} else if (skip_prefix(arg, "--missing=3D", &arg)) {
- =09=09=09parse_missing_action_value(arg);
-diff --git a/common-init.c b/common-init.c
-index d26c9c1f20..4a3fa4d7be 100644
---- a/common-init.c
-+++ b/common-init.c
-@@ -47,7 +47,7 @@ static void setup_environment(void)
- =09update_ref_namespace(NAMESPACE_REPLACE, git_replace_ref_base);
-=20
- =09if (git_env_bool(NO_LAZY_FETCH_ENVIRONMENT, 0))
--=09=09fetch_if_missing =3D 0;
-+=09=09the_repository->fetch_if_missing =3D 0;
- }
-=20
- void init_git(const char **argv)
-diff --git a/git.c b/git.c
-index e5f1811b6b..f3ad3aad96 100644
---- a/git.c
-+++ b/git.c
-@@ -202,7 +202,7 @@ static int handle_options(const char ***argv, int *argc=
-, int *envchanged)
- =09=09=09if (envchanged)
- =09=09=09=09*envchanged =3D 1;
- =09=09} else if (!strcmp(cmd, "--no-lazy-fetch")) {
--=09=09=09fetch_if_missing =3D 0;
-+=09=09=09the_repository->fetch_if_missing =3D 0;
- =09=09=09setenv(NO_LAZY_FETCH_ENVIRONMENT, "1", 1);
- =09=09=09if (envchanged)
- =09=09=09=09*envchanged =3D 1;
-diff --git a/midx-write.c b/midx-write.c
-index 580724d21a..8537102254 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -865,7 +865,7 @@ static void find_commits_for_midx_bitmap(struct commit_=
-stack *commits,
- =09 * complain later that we don't have reachability closure (and fail
- =09 * appropriately).
- =09 */
--=09fetch_if_missing =3D 0;
-+=09ctx->repo->fetch_if_missing =3D 0;
- =09revs.exclude_promisor_objects =3D 1;
-=20
- =09if (prepare_revision_walk(&revs))
-diff --git a/odb.c b/odb.c
-index dabd481f57..110326f063 100644
---- a/odb.c
-+++ b/odb.c
-@@ -528,8 +528,6 @@ void disable_obj_read_lock(void)
- =09pthread_mutex_destroy(&obj_read_mutex);
- }
-=20
--int fetch_if_missing =3D 1;
--
- static int register_all_submodule_sources(struct object_database *odb)
- {
- =09int ret =3D odb->submodule_source_paths.nr;
-@@ -595,7 +593,7 @@ static int do_oid_object_info_extended(struct object_da=
-tabase *odb,
- =09=09=09continue;
-=20
- =09=09/* Check if it is a missing object */
--=09=09if (fetch_if_missing && repo_has_promisor_remote(odb->repo) &&
-+=09=09if (odb->repo->fetch_if_missing && repo_has_promisor_remote(odb->rep=
-o) &&
- =09=09    !already_retried &&
- =09=09    !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
- =09=09=09promisor_remote_get_direct(odb->repo, real, 1);
-diff --git a/odb.h b/odb.h
-index cbc2f9ced4..d3a1e378b6 100644
---- a/odb.h
-+++ b/odb.h
-@@ -15,14 +15,6 @@ struct repository;
- struct strbuf;
- struct strvec;
-=20
--/*
-- * Set this to 0 to prevent odb_read_object_info_extended() from fetching =
-missing
-- * blobs. This has a difference only if extensions.partialClone is set.
-- *
-- * Its default value is 1.
-- */
--extern int fetch_if_missing;
--
- /*
-  * Compute the exact path an alternate is at and returns it. In case of
-  * error NULL is returned and the human readable error is added to `err`
-diff --git a/repository.c b/repository.c
-index 651b0f6933..c2d954cf83 100644
---- a/repository.c
-+++ b/repository.c
-@@ -74,6 +74,7 @@ void initialize_repository(struct repository *repo)
- =09index_state_init(repo->index, repo);
- =09repo->check_deprecated_config =3D true;
- =09repo->bare_cfg =3D -1;
-+=09repo->fetch_if_missing =3D 1;
- =09repo_config_values_init(&repo->config_values_private_);
-=20
- =09/*
-diff --git a/repository.h b/repository.h
-index 3b467a2513..11f5c2ed10 100644
---- a/repository.h
-+++ b/repository.h
-@@ -184,6 +184,12 @@ struct repository {
- =09/* True if commit-graph has been disabled within this process. */
- =09int commit_graph_disabled;
-=20
-+=09/*
-+=09 * Controls whether the repository should lazily fetch missing
-+=09 * objects from promisor remotes. Defaults to 1.
-+=09 */
-+=09int fetch_if_missing;
-+
- =09/*
- =09 * Lazily-populated cache mapping hook event names to configured hooks.
- =09 * NULL until first hook use.
-diff --git a/revision.c b/revision.c
-index 526bcf3fb5..40cb1cc828 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2732,7 +2732,7 @@ static int handle_revision_opt(struct rev_info *revs,=
- int argc, const char **arg
- =09=09revs->ignore_missing =3D 1;
- =09} else if (opt && opt->allow_exclude_promisor_objects &&
- =09=09   !strcmp(arg, "--exclude-promisor-objects")) {
--=09=09if (fetch_if_missing)
-+=09=09if (revs->repo->fetch_if_missing)
- =09=09=09BUG("exclude_promisor_objects can only be used when fetch_if_miss=
-ing is 0");
- =09=09revs->exclude_promisor_objects =3D 1;
- =09} else {
---=20
-2.43.0
-
+Patrick
