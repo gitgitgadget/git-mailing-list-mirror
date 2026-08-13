@@ -1,71 +1,70 @@
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C57246AA7B
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D57C48424C
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:56:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786632962; cv=none; b=QC/mJ18/uHtk8EKP6wCv6IasWY4S2mHw1Kdc2Sdq/pV/W27PM//Llkcd+3GM8M6Y6NuiQnQ8EW+zhxNwLqR928K0vDFMUs/OGjsMRmYUbr3tWAtKJC+yw133ytsTbrMWa2GWAVQ/kJ2PRxe7KyY4hyzE8PoJAo3/UVH72it8m0I=
+	t=1786632964; cv=none; b=oy+axhnqhpcFxDpGazynVKz+CjtTmtkT85mVb6kRwXVjSdZIYomzTA7drUQ1fPIUaJOBva2uJbJAXzqiHDaLUi5WE43N6nYbPnR4PCArl8YSWfRv1iF8FI0I+TySmPq825nKInvml5tYUyR4QCQ81VIZhOtvrq127/mydrHjXDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786632962; c=relaxed/simple;
-	bh=YNGnyhvQ+aXZSnD9yxBIwF4sNWi7EWGl/SHmOLLRaTY=;
+	s=arc-20240116; t=1786632964; c=relaxed/simple;
+	bh=JTAut3VAw2pac211Lff/VJMgY4bg2Cq7BHwgawY/CZo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=NF3dWcSLxjBz6PvQC5xjvaur2uCxZLNjZBUxsGSj++v05cWZXteP0pWf4WfCUQOgp63ugVdnDefEN6Lf1GfvGJrgN88O3HyJsP/57QnMpN8xQtHGZacQuhf/R1A5cHsKaLkUzmT/T0BDRcr4ph6nEcyZ9xMAqya5AdjKIYuUcD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YD1Vw1lo; arc=none smtp.client-ip=209.85.160.51
+	 MIME-Version:To:Cc; b=VuhjEMbfnzvlcFk29kpl5vKM0eCw8owpMlfBq09BG7uCxl7U6OB5vW+fwC0guedzwpiWeMipW8X9GW/wSek/b0Zqzo3R0FJwiQtG7rLGLKtRmdBbwHnzUdEDX4WJZ6MYpsIY1uXI28fbuizm4fabB5P/eweKK7xJ39PeTc64xsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wpwh8On2; arc=none smtp.client-ip=209.85.210.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YD1Vw1lo"
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-4583b1703d3so373650fac.3
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 07:55:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wpwh8On2"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7e9f1f24cbcso1030961a34.0
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 07:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786632959; x=1787237759; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786632960; x=1787237760; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=NkN0X+fKhjqByZ/LMuLq95T9hx3OvhcZJG4a7lGfnkA=;
-        b=YD1Vw1loYto8isinJbxel/Uua7WFYpqRGIWlUKkGeuoNjo1BPYpqHV7qwOv0t9nqb6
-         o87HSxHXFuO20yek/pHx0cK9qknJYXg393LtJHu6AX5AyHDhMCGIq453QUPuBLLaGBpj
-         W2szHOXI+1r7m7Odg2P6STzRHa3Cl893utf0IiaVP5L+T+jpwwe3o6poSQDKr3scD0+5
-         q/z667awtdpi4BOAeCqlKe8UPka5yQjErgpZpf8x+4kHA407HdaCuMW4wxPa4Y7jR9kT
-         WL7dLGMY+cyBtTJPz9EiRiZMdTGZW6UhXoXUlOG7IStbaNq63+t0xeusds32hmxJyg2h
-         HCsQ==
+        bh=No9UgJ1nMZm4YSZxXW11S5ilQgAJMp5gjDDbRnDHSq0=;
+        b=Wpwh8On2Z/AEzpP8rLmB14CnSdsRmGrR4d9InbWQIVRlzTlOdbwmlOKYqtS9XcFaGN
+         L/LE/gxq7x4XbJMmk7NIuhExHrtk2xWhkF0Yt4d6eH2nN88IxuSJUoug/y2IWsauAHqn
+         9RVFfZn3/zl+9dJt9pkmlxfWFJyVtnvuAiXTbsf92rnlYp7eDnwwALUhTGuir3eJ0FG4
+         uBsr3MvRWOALGL55i7pMUqB6eaf0lLE8pgZrJPsBXDbZcH8MdP/YPn1G+5lKzQE5KWcp
+         mzgWHWuDeVGKVLVe5rIUhKw7W+e4GLWVmvA/R5eFzk8HVvDkda3oTM764jI8xU/x3StF
+         WgXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786632959; x=1787237759;
+        d=1e100.net; s=20251104; t=1786632960; x=1787237760;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=NkN0X+fKhjqByZ/LMuLq95T9hx3OvhcZJG4a7lGfnkA=;
-        b=BjH7bXi+lCrDkxVpYe+A2YDRCWwboXeZB/1+biSEPh5CU1VqXee/SzNHa3TFIxeXag
-         EYqY8CibdyMR728AZYXuWeW5guOGktsrC+e78YZgOR8LmMSFt2B+/tkOqs4ZjqZCCfvS
-         +41wDLYVUWRWCFcPbTdc6sx7I791cYWEH/52BFFkZiN791xhFVfhKeZHN3VKIWr0Kz2b
-         HqvOt9Ric1l9YKj+mQnesDOhFtdEk3wdcIvV4VluAaN+rq5LBj6NE8p1N3j8/yamyWu0
-         QlWcCC3QKdu1icvAShgxQv8j2+OsWV91Y73WyAHacsUJVKWR/edMgQo/f+KCb4/xnW1P
-         0oOA==
-X-Gm-Message-State: AOJu0Yxp3vS2bsUJkqWcN69iULeQOZkIDkH+TGWGhE4dF335+8BLMGck
-	22Xz1vuDP6FfhC4EvmWpkpA+1F5az09eT6qWEtCRAmNTaWPxGxuh3teRHpMpkg==
-X-Gm-Gg: AR+sD13dxCNHbtgXDza4kMj8hsCJoOg8CwIO6rmS2vOK1vJx9C54IVLrsJPkys8MPPA
-	l5177CqYFWLvcNtw9ubRMdgSkYFzBXP0gLM36mNHwE9zmvelMGAmiBHCEBJ7v4jgg0XW2pxP7ML
-	ZOx2+6Ntie34D9g+Dw+T3I4MlakduxC18lAtHSA5V+hPgLkhDPCZHkHup/KVgn03G9EgdDxtmFf
-	JKosLViumnJMXYEBXmHO1yVmlysGIWze2A82bDSOeK5QFaz3npXS9J+OWiGA1FVTDKQGT4V1nk8
-	waVuosFs9C8NnvMNujo267hWf2aLnMWMpReGg8XT/iNYXNvLLDxg3CZtDarCes6Z4+/nxm1ny2N
-	uOwWfYWBDz4QnAb1OrBwOMsrewlySg6VPfEfciuYehWK5FWtyUEHoZmC9GXF9uBN9DCigO9U4HL
-	TqZZ0iyGH7TtAd9LpAuoklIt5yZMRabdIHgjdAEpIdQYjJJsZ8CQPZMHMtfYOlQrNnXz6N0xFVC
-	/I=
-X-Received: by 2002:a05:6870:7083:b0:447:9474:df1c with SMTP id 586e51a60fabf-45e627e9da7mr5543817fac.14.1786632958631;
-        Thu, 13 Aug 2026 07:55:58 -0700 (PDT)
+        bh=No9UgJ1nMZm4YSZxXW11S5ilQgAJMp5gjDDbRnDHSq0=;
+        b=SYkuMRC1hCBxWumKmeACpFwOa+n/V73nq0+l0aelvqAaWrZdL4lvCsK5Kyjz5c4C2l
+         /OMWQJCznVja+WPQA+RDWHnXKzKEDhsdDlHiHxCJUs4NAv0whB+xga9A+ZgSr83iDsx+
+         EnVEnRQBB3X0DOHO752LnKRegjOCyjywrcZVhtxzYTYeuwoMthLtQFklG2IGfzo8uw3c
+         y/mMeFGfFLNUc2UZI02J8alAhXnVD0tSrS+f7MZotIFdiwANVh/q5E9qdnBRHavWhXyl
+         +j3j3e3UA04mhNaVxHYZHtPXuFrmidD2Aa5TFJKYrZLCTjm79LaMAhsdGgNTh6ZL9aZF
+         2E6Q==
+X-Gm-Message-State: AOJu0YxgmFyjoDUXMDC88DGWpBeja4rGjYdGowZ4tUm6EvAKBoo6NWeW
+	7/Q/Rv26o7VKIKfzJcY+P4BVsVaPtYB90qVvXGJKz8CZg0o+QyD+4vEp0+jyXQ==
+X-Gm-Gg: AR+sD11vRRDXEVzqx5F9JZEsjULQ+eI+S2iteQIlKpR3o3GDpFej+PE4yPsZh7JJkpk
+	fGgjwlDZdjVc+L2dXkugWjO736tvwdA4O0lPCHqYkML2jir8J4NbAvc3MUY+5ProdSNJm55P0oT
+	CNrq2II+wU2jrxO37ojqYAsSsqLwadzP+4hoIW4waVQxlOQzDyEAbn3bYA/NPxk6ObuNsulqcpH
+	a74peVQyfZ+q5XJK/mUaU8B4fiK/MLgHXBfzLPhLy3PBJciSh4ZDuMsniTATuYjAax4srMbx+Qh
+	er9MiO0NTq4OUKk0TddOqygCovUXlCeW5qOX6PT/B0M74C59D6aZXGSz41lvEx5a+/yiIOBa5d5
+	8mMdkLospet3ERS1HeDIcqKDDFpC2RyJ/GBRPfpvKYAJkO6MJXtLl8VP1VDXwsRwqpmPRloMz9l
+	4MMM3MpQkx7yJx2b9ZWqWd3r904y+aJvMqy/1s4RlSEX5nKLHTM0OM3vtKIZ434TTi
+X-Received: by 2002:a05:6830:6ac7:b0:7e9:da5e:93f5 with SMTP id 46e09a7af769-7f3cae642ccmr2368283a34.12.1786632960110;
+        Thu, 13 Aug 2026 07:56:00 -0700 (PDT)
 Received: from [127.0.0.1] ([128.24.160.250])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-45e64efd5d0sm1730672fac.4.2026.08.13.07.55.57
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f3c9e23b85sm2212342a34.26.2026.08.13.07.55.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 07:55:58 -0700 (PDT)
-Message-Id: <5b54041bafca1de826ddb4466b3d5d8fcceba3af.1786632952.git.gitgitgadget@gmail.com>
+        Thu, 13 Aug 2026 07:55:59 -0700 (PDT)
+Message-Id: <9850de1a91c826e673a1dd401c84a4c14c15c317.1786632952.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2175.v3.git.1786632952.gitgitgadget@gmail.com>
 References: <pull.2175.git.1783615780.gitgitgadget@gmail.com>
 	<pull.2175.v3.git.1786632952.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Aug 2026 14:55:41 +0000
-Subject: [PATCH v3 03/13] pack-objects: widen delta-cache accounting to
+Date: Thu, 13 Aug 2026 14:55:42 +0000
+Subject: [PATCH v3 04/13] pack-objects: widen `free_unpacked()` return to
  `size_t`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
@@ -83,136 +82,38 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-These three are a single accounting tuple (the globals tracking
-cumulative cached-delta bytes, plus the helper that compares them
-against an incoming delta size) and are latently 32-bit on Windows where
-`unsigned long` != `size_t`: a pack with many large cached deltas could
-wrap silently.
+`free_unpacked()` sums two byte counts: `sizeof_delta_index()` and
+`SIZE(n->entry)`. The latter has been `size_t` since the prior topic
+"More work supporting objects larger than 4GB on Windows" widened
+`SIZE()`/`oe_size()` to `size_t`, so accumulating it into an `unsigned
+long` return was a silent Windows-only truncation on a packing run with
+many large objects.
 
-The widening is internally consistent on its own: the additions and
-subtractions against delta_cache_size already come from `size_t` sources
-(`DELTA_SIZE()` returns `size_t`), and `delta_cacheable()`'s sole caller
-in `try_delta()` still passes `unsigned long`, which promotes.
-
-Prerequisite for dropping `try_delta()`'s `cast_size_t_to_ulong()`
-shims, which becomes possible once 1create_delta()` and `diff_delta()`
-are widened in a later commit.
-
-Note: since `max_delta_cache_size` changes data type to `size_t`, a pair
-of new helpers is introduced to parse config values of that type, too.
+The sole caller, `find_deltas()`, still holds its own `mem_usage` in an
+`unsigned long` for now, and therefore still truncates silently.
 
 Assisted-by: Opus 4.7
-Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/pack-objects.c | 10 +++++-----
- config.c               |  9 +++++++++
- config.h               |  3 +++
- parse.c                |  9 +++++++++
- parse.h                |  1 +
- 5 files changed, 27 insertions(+), 5 deletions(-)
+ builtin/pack-objects.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index e3760b3492..97246c69ae 100644
+index 97246c69ae..503ebbf091 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -260,8 +260,8 @@ static int exclude_promisor_objects_best_effort;
- 
- static int use_delta_islands;
- 
--static unsigned long delta_cache_size = 0;
--static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
-+static size_t delta_cache_size = 0;
-+static size_t max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
- static unsigned long cache_max_small_delta_size = 1000;
- 
- static unsigned long window_memory_limit = 0;
-@@ -2688,8 +2688,8 @@ struct unpacked {
- 	unsigned depth;
- };
- 
--static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
--			   unsigned long delta_size)
-+static int delta_cacheable(size_t src_size, size_t trg_size,
-+			   size_t delta_size)
- {
- 	if (max_delta_cache_size && delta_cache_size + delta_size > max_delta_cache_size)
- 		return 0;
-@@ -3701,7 +3701,7 @@ static int git_pack_config(const char *k, const char *v,
- 		return 0;
- 	}
- 	if (!strcmp(k, "pack.deltacachesize")) {
--		max_delta_cache_size = git_config_int(k, v, ctx->kvi);
-+		max_delta_cache_size = git_config_size_t(k, v, ctx->kvi);
- 		return 0;
- 	}
- 	if (!strcmp(k, "pack.deltacachelimit")) {
-diff --git a/config.c b/config.c
-index 6a0de86e3a..010a58d307 100644
---- a/config.c
-+++ b/config.c
-@@ -1268,6 +1268,15 @@ ssize_t git_config_ssize_t(const char *name, const char *value,
- 	return ret;
+@@ -2972,9 +2972,9 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
+ 	return m;
  }
  
-+size_t git_config_size_t(const char *name, const char *value,
-+			 const struct key_value_info *kvi)
-+{
-+	size_t ret;
-+	if (!git_parse_size_t(value, &ret))
-+		die_bad_number(name, value, kvi);
-+	return ret;
-+}
-+
- double git_config_double(const char *name, const char *value,
- 			 const struct key_value_info *kvi)
+-static unsigned long free_unpacked(struct unpacked *n)
++static size_t free_unpacked(struct unpacked *n)
  {
-diff --git a/config.h b/config.h
-index 31fe3e2961..b66dd08007 100644
---- a/config.h
-+++ b/config.h
-@@ -282,6 +282,9 @@ unsigned long git_config_ulong(const char *, const char *,
- ssize_t git_config_ssize_t(const char *, const char *,
- 			   const struct key_value_info *);
- 
-+size_t git_config_size_t(const char *, const char *,
-+			 const struct key_value_info *);
-+
- /**
-  * Identically to `git_config_double`, but for double-precision floating point
-  * values.
-diff --git a/parse.c b/parse.c
-index d77f28046a..266bbd539b 100644
---- a/parse.c
-+++ b/parse.c
-@@ -134,6 +134,15 @@ int git_parse_ssize_t(const char *value, ssize_t *ret)
- 	return 1;
- }
- 
-+int git_parse_size_t(const char *value, size_t *ret)
-+{
-+	uintmax_t tmp;
-+	if (!git_parse_unsigned(value, &tmp, maximum_signed_value_of_type(size_t)))
-+		return 0;
-+	*ret = tmp;
-+	return 1;
-+}
-+
- int git_parse_double(const char *value, double *ret)
- {
- 	char *end;
-diff --git a/parse.h b/parse.h
-index a6dd37c4cb..db742f35fb 100644
---- a/parse.h
-+++ b/parse.h
-@@ -4,6 +4,7 @@
- int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
- int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
- int git_parse_ssize_t(const char *, ssize_t *);
-+int git_parse_size_t(const char *, size_t *);
- int git_parse_ulong(const char *, unsigned long *);
- int git_parse_uint(const char *value, unsigned int *ret);
- int git_parse_int(const char *value, int *ret);
+-	unsigned long freed_mem = sizeof_delta_index(n->index);
++	size_t freed_mem = sizeof_delta_index(n->index);
+ 	free_delta_index(n->index);
+ 	n->index = NULL;
+ 	if (n->data) {
 -- 
 gitgitgadget
 
