@@ -1,111 +1,244 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD34485510
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:56:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C13417D99
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786632988; cv=none; b=rhbNSz8G9L1T3YQ36qtwRLDqaFIxVW5vQQ9DDlusN+PtZ3EYBMSYYmiM+osJK5zLpsqSUqT3w9GRg3mCHQ/mfk8zaSSrcU8sKij2Cqp95lndZaC94f9l733E/0qV3OOhWsUivt5X+2dTdcx0g761gvTVnqETkiuBxx6HJQbV/Sw=
+	t=1786633016; cv=none; b=mtIV1itKFVwtgYzKyBH4kIkb0XDLHI7NooOk7yxdyHER7MEmf9wrhbfSTXtqzFsTgw6sk42AAmc9gD4wZMDCK0DS1OUgcuxaTSZQ9w4uESi4z+/mO0SV2qpt9wyEybaExQh1TcI8kFWWX0t7QD7dXJ+NhXSgGdyDC0cNhdTelpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786632988; c=relaxed/simple;
-	bh=Us2cznKWTfG2jJFptMoS4fMFlf9ugXfM3DWKnR3iTtI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=UI9faHtq9lMVVr7s5TzZzjofao8WQB90PZSqWBpyW1rEdwTqMoiI+N4zTbsxgSMGTQ8vvJCZUgwA3T/ImIien4UZAXIxYHsshRFF9k6BpPRXkT8f7DtG7UxTxpVKALcs/qUfnl7S1+PBX9j4Fcf24NOWnQ9QfuwECYwe/ZbzdgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YK3UKJfL; arc=none smtp.client-ip=209.85.160.41
+	s=arc-20240116; t=1786633016; c=relaxed/simple;
+	bh=UBpj5jccLzbwg5igAWFVz9c2zfLEbnPBndSArQHaxnw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=pFxtaxkoT1bZiJaLlb4qFdssClIjTr6tJBLroKPII6uKxPwMxdmqOGJhbAzWgk1zD+1/PbFmpi77RpfDTwmoKPnKcg2l3hhtpRqERxMms5k9qD6GT35FYgiRMNbLmN2Wy7SWV9pEC6pTloS+t2jcJBItqS/nGvxAEHmLPgROQFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sfpncgUB; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YK3UKJfL"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-4513435cdd2so1376838fac.2
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 07:56:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sfpncgUB"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-930f618435cso41845085a.3
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 07:56:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786632970; x=1787237770; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+        d=gmail.com; s=20251104; t=1786633011; x=1787237811; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=78y+UXU8Pjw551aJ7/d3G2Co+yhJcCuhcOkF2xIMHxM=;
-        b=YK3UKJfLZnlLAGTD4XrDtCLY4M2HI8cY5WHI6mliu/fgTKg7FVvIKyvFMv+57QzMhT
-         pWfLgmfpvHiTwzgiPlyjXJZg62T9+RlfpOIk0gIyrrKRNK+Mnv1+6v1iH6p8hvMZqnKa
-         cqXDqk2MSOpyejflVR8EGzH/IJ0vOqify9EJ4GjVk+/JarmEjDOfG4NxufZ/WZB4HLGj
-         jcEwVtHLCWMbh6sP/uCR8Qqq0vz7GDaHCYOEN360YanwwL9RZEFnLYEp9R7Pw+cIQcGF
-         do9ODxgYwx7fBLyzfeKwQTp2M07+uCxJbBtuvzelxFSIduh02m3mYj/wIVm4wRaVpMdo
-         JYag==
+        bh=aqNC0XhcUqmtM0H1+O/mtxxEpXamw4fsLXnqy3SYCgw=;
+        b=sfpncgUB350P/U+LGlVUfIFK8DbU4MrkNPXuXFeaV1jzrWJ9+RhHpsDDTnLfsDTsKo
+         KFSS5n3V5fVpW9HpZKN2ibkAFEihRZINQTv/6QeLdrXrx//Q0e63VneXbP97nCa5JGTa
+         iZZGhJK+83So/FJqDFrUIIXk3wr+GcC5RJYsqq7Y1+9dJjwI0LsQZTXwvNYUrN8KaSpF
+         9q8KqwNrZJ2zNwenVZTDJcQBzCzBEHiOlBF/q3Vc/RmMvW/aTk8CnzrlfUdzA9vdRI6i
+         HjqKs2+TQORW+gzv3DOYxxZYAOeoFILZbY/Xtt+FnTKW6A3tQbPUwnfNYKiET9k87atb
+         uAHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786632970; x=1787237770;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+        d=1e100.net; s=20251104; t=1786633011; x=1787237811;
+        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=78y+UXU8Pjw551aJ7/d3G2Co+yhJcCuhcOkF2xIMHxM=;
-        b=PsrzZm5Zyb80IAKq1wugcGJGFCDROAE+ZTx1yNCrs58t5fiHslXrXyBSatHQjHX/Ke
-         KqxgN5vpwxM52Per7OXlVKKa8Te3w4rJ38o+RnaxFG2+VzfAyJF9fDwtOcLvQXjD2SHn
-         zV+DhC4YGCN+VzrH6vi+lTeKfr53aiQy5tA5n/A/v+9iOhQ+RQ6DnEIyoPOlmR1g5OwR
-         qg0Q/VOduJ69P1wSUD9OC6xoQchunbKPFY4dIXZ33JZtOqRW32/AH4uPvZYf6WH96nke
-         ouP0WNPFQW36g3a5KawtDeze4za2iAwZayr1IPsbtMFGPjV87myzMbVYHqUnHIM7oMgF
-         Mk7A==
-X-Gm-Message-State: AOJu0YzkCG1SALqbtMYezcbEXB0Ww8s7CKtojrpxeBDVvQ/3w7VHeLbY
-	sIwb8kfx+EffVbu1yvymKBJsvMEY44MhBR7qgJkMdE7qdFzKUWtT/jlrZRfr3Q==
-X-Gm-Gg: AR+sD11YsYNGhbex5rscBMAJF/f9xcm7Bnu+/rh6PeG3/ckZOf0SR7ATVjmPodjpjR1
-	wMITMcxFwSNGQQ1FJk1cNIz69B5E0EO8X6x7Ebqb2LyWBqJ0fk6LyfIRlfrwlSpmLYR7JjutkvY
-	zUQ+IyeImzwgmlqZN/fwJw95SLjyJUuVQYghFbI6fHfY+B2QmjBKG49dJMboxOJZvaO3QpkmE3Z
-	3bjlZsRRz9cQ/T9W70NFvDJGbKGP/M4088fo6DAZ+T5654CaFa/SEuFw8QSn23wqA/Po7AS1UvN
-	T360nrU3O1WSJJcqiQXVPtYRCeU6LDMvl0JKkJLKJfoWzxXIHE1aq2JGCpWWajcMgGdP1tkzHvc
-	6mm6u1drb31WrbgUQta9jre30dN+aidtUoydR2j4C+FftwXw/RO576JeO/Bcv1NZujHBcTv/1Yo
-	Ic7oamGMyHDFJcOLuDXKgn91HNrpbKshpshEDqjRRzk4tGnobAVSo7rieLxRpNuTUq
-X-Received: by 2002:a4a:ec4a:0:b0:6aa:48b4:63a3 with SMTP id 006d021491bc7-6b0c42f7be5mr5561056eaf.17.1786632970484;
-        Thu, 13 Aug 2026 07:56:10 -0700 (PDT)
-Received: from [127.0.0.1] ([128.24.160.250])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-45e64efc9adsm1751871fac.3.2026.08.13.07.56.09
+        bh=aqNC0XhcUqmtM0H1+O/mtxxEpXamw4fsLXnqy3SYCgw=;
+        b=fs82bltJtewPUGU4jtJaDw4jzJsWOBXRhQmB9iyplJoCAaIfE/62zf8k8FaHn7zaa7
+         YCNaZqSiasfEJOTIshpdqoaiYiyyNt625usj7quoZVIkYVKmCSieycr8wKuRsaiX1mr7
+         r8jI7dhTnTYMNpQjzbwSW3VMa+4OZI9bDREGd7tKqHQmbpueaMnZl9xATl56uecwVvpZ
+         bpQdE0poXIWsGIBDSKl676XAY1dj+hDzQjPC/WIyyGz76v+79BCZJcoprkZ3gtXKoC32
+         3fKyxzuoYSWUx3ZVuE8m4BZ7uPQA4nlS858J9geigWTHsYgqA+TOakkbAj1/9HZRUBek
+         WzYw==
+X-Gm-Message-State: AOJu0YzJ1Bpw/VLlaQ4ibipU44Nj449e9l+LAFwXFC3bwBEWQw/S44Td
+	7d+3PP22vW2SowwxG9ZUIFgibj3LhkOOI/A0voueCoEVzS0/MsZGcatDY2VYrQ==
+X-Gm-Gg: AR+sD11J19ufVJJ4pOAX7nVzAActtipygw9PpmyDCTHo7iHU1wLnWSZrTEZ7mzbRHip
+	saYKbbxKpTYe67EfZs6/uUGFd/1sEMSxxbvdNp2HwA6747l+1F1pVFPTgOTbUS277z+aHaDrgP3
+	n+lHMJyKitjmM7x7j3xkbnySBnIsFqJ3NxVg8m7J504cwNwlA2Yp2jzkq9PfB5PjG7I2HX+ugNW
+	Ho8lMufsyac5crKhUIsDUKjrweFIDB6lAlhWQKxFUgevEBxznTxRH2V8LDABjs24+HNeB7BXSV6
+	42RcSnvsJFOD0rerlXi4/s7bmxbLqyuK58YM/GFkTPYTG9rM8AnonYAJWzhWqViOtz0jVgoM+AB
+	TCtlc9BwrtbBQM7l6dCHaOIRD5IbpgiEjVvhXlazl2X4TiOkJ/0TrLT1DkfpAt3tY5wxj7xGUGv
+	4If2CVCteDheLRAh5cL1/82YCSaBvIJBi34fDQtAge3TQ4PPUoZU+Jtbky+9EbXWc=
+X-Received: by 2002:a05:620a:20c9:b0:915:a953:4b9c with SMTP id af79cd13be357-936bf87b0camr443407485a.3.1786633011147;
+        Thu, 13 Aug 2026 07:56:51 -0700 (PDT)
+Received: from [127.0.0.1] ([172.203.195.1])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-936c1b1235asm161858085a.24.2026.08.13.07.56.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 07:56:10 -0700 (PDT)
-Message-Id: <f4f2fa75f4814ccd67501d23743eb90fda35aae3.1786632952.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2175.v3.git.1786632952.gitgitgadget@gmail.com>
-References: <pull.2175.git.1783615780.gitgitgadget@gmail.com>
-	<pull.2175.v3.git.1786632952.gitgitgadget@gmail.com>
+        Thu, 13 Aug 2026 07:56:50 -0700 (PDT)
+Message-Id: <pull.2202.v2.git.1786633010179.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2202.git.1786561870638.gitgitgadget@gmail.com>
+References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Aug 2026 14:55:49 +0000
-Subject: [PATCH v3 11/13] t/helper/test-pack-deltas: widen `do_compress()`'s
- maxsize local to `size_t`
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Thu, 13 Aug 2026 14:56:49 +0000
+Subject: [PATCH v2] packfile: fix perf regression with many packs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
+    Jeff King <peff@peff.net>,
+    Ben Knoble <ben.knoble@gmail.com>,
     Johannes Schindelin <johannes.schindelin@gmx.de>,
     Johannes Schindelin <johannes.schindelin@gmx.de>
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Prep for the upcoming `git_deflate_bound()` widening to `size_t`. The
-local is only ever the return value of `git_deflate_bound()` and the
-`xmalloc()`/`stream.avail_out` sizes derived from it; widening it has no
-semantic effect today.
+Since 589127caa730 (packfile: move list of packs into the packfile
+store, 2025-10-30), there is a performance regression when many
+packfiles need to be loaded: `packfile_store_add_pack()` now calls
+`packfile_list_remove_internal()` to detect whether the packfile was
+_already_ in the list, and if so, move it to the end of the list. This
+function linearly scans the existing list before every insertion. Newly
+loading N packs therefore has complexity O(N²).
 
-Assisted-by: Opus 4.7
+In one reported use case (https://github.com/microsoft/git/issues/970),
+N equals 37,815 and caused a slow-down of a simple `git rev-parse
+--short HEAD` (which is regularly executed as part of `GIT_PS1`) from
+0.4s to 4.5s.
+
+Let's fix this by establishing a fast path for known-new packfiles.
+
+The keen reader will note that there is currently only a single,
+"known-new" caller of the `packfile_list_append()` function, and wonder
+why not simply remove this check whether the packfile already exists in
+the list? Originally, when above-mentioned commit introduced that logic,
+there was a second caller in `prepare_midx()`, which would have required
+that check, but that caller was removed in 6aff1f25a046 (packfile:
+always add packfiles to MRU when adding a pack, 2025-10-30). Still, the
+function is declared in a header file, and to avoid any problems with
+in-flight or downstream callers, it is safer to extend the signature to
+be explicit whether or not to skip that check.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-pack-deltas.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+    packfile: fix perf regression with many packs
+    
+    This issue was spotted by a Microsoft Git user with the massive amount
+    of packfiles typical of an average, long-running monorepo checkout.
+    
+    Changes since v1:
+    
+     * Fixed a typo in the commit message
+     * Dropped the claim that this patch fixes the CI clone perf regression
+       that's still being root-caused.
+     * Renamed the is_new parameter to the more informative skip_dup_check.
 
-diff --git a/t/helper/test-pack-deltas.c b/t/helper/test-pack-deltas.c
-index 5e0f726842..959705feca 100644
---- a/t/helper/test-pack-deltas.c
-+++ b/t/helper/test-pack-deltas.c
-@@ -22,7 +22,7 @@ static unsigned long do_compress(void **pptr, unsigned long size)
- {
- 	git_zstream stream;
- 	void *in, *out;
--	unsigned long maxsize;
-+	size_t maxsize;
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2202%2Fdscho%2Ffix-perf-regression-in-v2.53-with-many-packfiles-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2202/dscho/fix-perf-regression-in-v2.53-with-many-packfiles-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2202
+
+Range-diff vs v1:
+
+ 1:  3dfb305e58 ! 1:  b892964f7e packfile: fix perf regression with many packs
+     @@ Commit message
+          store, 2025-10-30), there is a performance regression when many
+          packfiles need to be loaded: `packfile_store_add_pack()` now calls
+          `packfile_list_remove_internal()` to detect whether the packfile was
+     -    _already_ in the list, if if so, move it to the end of the list. This
+     +    _already_ in the list, and if so, move it to the end of the list. This
+          function linearly scans the existing list before every insertion. Newly
+          loading N packs therefore has complexity O(N²).
+      
+          In one reported use case (https://github.com/microsoft/git/issues/970),
+          N equals 37,815 and caused a slow-down of a simple `git rev-parse
+          --short HEAD` (which is regularly executed as part of `GIT_PS1`) from
+     -    0.4s to 4.5s. In another, heavily exercised CI scenario, clone times
+     -    increased from under 2 minutes to over half an hour.
+     +    0.4s to 4.5s.
+      
+          Let's fix this by establishing a fast path for known-new packfiles.
+      
+     @@ packfile-list.c: void packfile_list_prepend(struct packfile_list *list, struct p
+       
+      -void packfile_list_append(struct packfile_list *list, struct packed_git *pack)
+      +void packfile_list_append(struct packfile_list *list, struct packed_git *pack,
+     -+			  int is_new)
+     ++			  int skip_dup_check)
+       {
+       	struct packfile_list_entry *entry;
+       
+      -	entry = packfile_list_remove_internal(list, pack);
+     -+	entry = is_new ? NULL : packfile_list_remove_internal(list, pack);
+     ++	entry = skip_dup_check ? NULL : packfile_list_remove_internal(list, pack);
+       	if (!entry) {
+       		entry = xmalloc(sizeof(*entry));
+       		entry->pack = pack;
+     @@ packfile-list.h: struct packfile_list_entry {
+       void packfile_list_prepend(struct packfile_list *list, struct packed_git *pack);
+      -void packfile_list_append(struct packfile_list *list, struct packed_git *pack);
+      +void packfile_list_append(struct packfile_list *list, struct packed_git *pack,
+     -+			  int is_new);
+     ++			  int skip_dup_check);
+       
+       /*
+        * Find the pack within the "packs" list whose index contains the object
+
+
+ packfile-list.c            | 5 +++--
+ packfile-list.h            | 3 ++-
+ packfile.c                 | 2 +-
+ t/perf/p5303-many-packs.sh | 4 ++++
+ 4 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/packfile-list.c b/packfile-list.c
+index 01fb913abf..d6d411823c 100644
+--- a/packfile-list.c
++++ b/packfile-list.c
+@@ -57,11 +57,12 @@ void packfile_list_prepend(struct packfile_list *list, struct packed_git *pack)
+ 		list->tail = entry;
+ }
  
- 	git_deflate_init(&stream, 1);
- 	maxsize = git_deflate_bound(&stream, size);
+-void packfile_list_append(struct packfile_list *list, struct packed_git *pack)
++void packfile_list_append(struct packfile_list *list, struct packed_git *pack,
++			  int skip_dup_check)
+ {
+ 	struct packfile_list_entry *entry;
+ 
+-	entry = packfile_list_remove_internal(list, pack);
++	entry = skip_dup_check ? NULL : packfile_list_remove_internal(list, pack);
+ 	if (!entry) {
+ 		entry = xmalloc(sizeof(*entry));
+ 		entry->pack = pack;
+diff --git a/packfile-list.h b/packfile-list.h
+index 1b05e2aa36..2b4b98b226 100644
+--- a/packfile-list.h
++++ b/packfile-list.h
+@@ -15,7 +15,8 @@ struct packfile_list_entry {
+ void packfile_list_clear(struct packfile_list *list);
+ void packfile_list_remove(struct packfile_list *list, struct packed_git *pack);
+ void packfile_list_prepend(struct packfile_list *list, struct packed_git *pack);
+-void packfile_list_append(struct packfile_list *list, struct packed_git *pack);
++void packfile_list_append(struct packfile_list *list, struct packed_git *pack,
++			  int skip_dup_check);
+ 
+ /*
+  * Find the pack within the "packs" list whose index contains the object
+diff --git a/packfile.c b/packfile.c
+index 0eee45055f..f80f05a1fe 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -781,7 +781,7 @@ void packfile_store_add_pack(struct odb_source_packed *store,
+ 	if (pack->pack_fd != -1)
+ 		pack_open_fds++;
+ 
+-	packfile_list_append(&store->packs, pack);
++	packfile_list_append(&store->packs, pack, 1);
+ 	strmap_put(&store->packs_by_path, pack->pack_name, pack);
+ }
+ 
+diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
+index af173a7b73..4221f9dd70 100755
+--- a/t/perf/p5303-many-packs.sh
++++ b/t/perf/p5303-many-packs.sh
+@@ -141,4 +141,8 @@ test_perf "load 10,000 packs" '
+ 	git rev-parse --verify "HEAD^{commit}"
+ '
+ 
++test_perf "abbreviate with 10,000 packs" '
++	git rev-parse --short HEAD
++'
++
+ test_done
+
+base-commit: 11c6700f10234578d10523faf35656ca491425c9
 -- 
 gitgitgadget
-
