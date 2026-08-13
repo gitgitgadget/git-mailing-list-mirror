@@ -1,121 +1,128 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EEE41C2FF
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 20:11:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211201AAE17
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 20:31:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786651875; cv=none; b=QCQrs+zdxPHelnfmmE49ARCdhfN2LvlRpx49ShE8I1B6cxHBX09QEpGxrC/qRYRG9Ky/ZE9cre0rg0gqJUN4g3kvYOSrBJvemlaEWhg2OJwRiwbsl7oObPRJas+0oVJwPBxpoUROwyhZkX6eAOU3tLmQDIfMpoi/Bf34xYdFBRQ=
+	t=1786653062; cv=none; b=sKLsDSzJY09IZHNxYxVWKH1VN4x7EEx3ZraHxUqeg+q5yykDPgBQddHvRF6629BKN001Y5DztMYDHaTRdPhl3xoF/ra8LqCEeTRVrxfg7Nn2XWuugmwW/Vthxx2Fplih3shdjc6Rf8xLY+tHJivRVrilq3qP9QLsrGsaqfNzicg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786651875; c=relaxed/simple;
-	bh=pZyIIO1/wHpMhI4AgQXGjCMdVdULud26sS0p5UH6uP0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=keJAAQyoOCatJX5g9jr7wYbNBE0wJdOlI7Sc9S2PyzbW8CRoTYef1wgka4IWJVZQb0J05ZSj/EFepBD79Ou6+awQCyktq1SN3AYwRkIPfRwTIt8ghGcfxbGDzxDFUH4ZmIbmsPlv4P469KkCdza89NAAqUr9mVLOg4e5GbR2oAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mzAHlDN4; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786653062; c=relaxed/simple;
+	bh=uilua2J92s8VO1GYUnoWZLpTx3Hbginz6cJYGq2utFo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uZWbTvrNyQurf35W/Z/llhSVZoJR4O/U08OUiCZWT/i808gBfliyEytP0jVUg5y/fLqdjPxbV7o/Mfzn8uDgzsfqDK872Jgu/8sMBIRETHYG5XGdi2UWaKpZjMF5UKsvXdbD7qj4syxRUUEMUM/KGRUZT8iGepvbvSAZp8qu+1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=UqPaBfAu; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mzAHlDN4"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c207cb16cf5so49633766b.1
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 13:11:13 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="UqPaBfAu"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-81ea0b7d137so3021147b3.2
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 13:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786651872; x=1787256672; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XKuvTq3lsQRChWB90+EOtoJWiwJSmpQeXz2snn51FX0=;
-        b=mzAHlDN4hL/YEOLYxQHJ2q4uPRGV4s847Cb6kqMi8cApToMuydlImfsD6DP5in3oPv
-         WYFEJdXI4qyNu439vWF+r19X+diTN1QKun0aTTE9Lecjrwwtap3FhdaFXX5vx+Htfkzm
-         m/ukFCBZ1a82fV5ysxdjAea3VfKnTi5o3J4NhqB0QS7dUkGQwGtPeH99LtpmFrpk6IVq
-         if770Z7dDJWyVh/Zm3lJdqywBIt+1uGwnIPD5WLjo8F4adWCsQoVbgjHW3epQegssoFg
-         Mn7x7EXg6eVUGKY6zTnxU/c8pjO3XUgBPSApoytCfERlZMgTe0D+VQmDZ2xkf61RGH5R
-         DNBA==
+        d=openai.com; s=google; t=1786653060; x=1787257860; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=mW0uX4Cl6Fm/VdaHwZZZRt8wLrUEDGvdRQIZOw3ap4E=;
+        b=UqPaBfAu1BxsGpKGYrP3Z5EuRkcLf3+amWLfiU0oUgg8wtGJbnFfi+o3Ffi2Q4YzOj
+         P52FivvjXvbq3d9gIAb54xe44fl9JB/1wSMTU60WJuKp6+KkrEzqv1N8HtElXmf1ieWy
+         Q3COsR44Gk9+S5hsH/brqG5KdtxNgL+Fp1+Mc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786651872; x=1787256672;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=XKuvTq3lsQRChWB90+EOtoJWiwJSmpQeXz2snn51FX0=;
-        b=AY05Ro4lxxGa4IGdl/FuOUHCIpFzyCNmbGnH5UrvQSNGcLyRs7hInYSjck9M10CDJw
-         kBa3EHSN9qaSNzVI1+0y8dRZu/JnBFTY7TAD39tp56whXSWGu5xK2Ayu5IbnKKtLx7In
-         I7f3ftQppxpXN5uKLaCAHSWfrZAbu4yYE9319muBm+OLu5bTLPKX8KRk4aGNYe0c2ovj
-         YyQYip3EdRScV3Ebmtm+KuddIfD1RNczx9HmdE/z7Lg7VH/f2zc/s3EfD5RtVOpNjJxR
-         V8W6mUulbr6JM0FzqyxrPvaPWORrhTpFx6GrPxZn6+xoro/S0lCz6bWeQMLCYkjpp0T2
-         gYCA==
-X-Forwarded-Encrypted: i=1; AHgh+RojKeKk3u68c6eKkk2Lkg2pxLt9TMgBAib0/MO3LkC3M/opoCmutLRL2/93rp2zy2j8AWQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfaSAqSEXLxTan8bbGKxEmBpAYL/nJo/nLUPXvD2gMz11Pmxiq
-	YvsElY6XkHCUuYb4KBOgcCxMI7Ytwvn+UHCHpaNs/rOmFnqkt6JoQvV1
-X-Gm-Gg: AR+sD10VsW32DF7pHQ6EBMwajP9INPyiblVyWh6JbK2uufLoYjKaXFzTPeFIPDM3h+G
-	7oLoocv5ArzFPuugAtqBqE7vDBvzHumgzxEXjKLuUcBBb+iYbnFn3NeLvdnxdKuzemrFEdGQymT
-	IxpYMv3Xmb9QYPduJD0b35crBAFpdup5DIbNG4hTZ0CELLQi1a8YM6+ozk8FssWRIYcDgK362Y9
-	fTvBCS3QSqn67bDpU87JFX+45iL0S02Bi1FrImvOIkMGTYQqvomiGGKdsJzBUqaS9NL2QVNclhM
-	gUqjD7+JIKBtNjRCk4n/+NYT8lmIQ5l7FEzPJCOwH/AylKrjQfzPjaD3t9rLH19xTW2azNxd+uJ
-	OQ5RYTnZbxV/w+lVPRJ/OjiFv+Ja789KelUu4+k6pyHWYjwsmbqJ7z9ZolVfhAuFMUC7Kpqg65l
-	cfhyXcLI8uJXKWh/f9Rq/wFjYJnuPUsSYt5KW81WeoJlpEzK9H6W/DO76zCr+I/X+iBYq3tHo2o
-	1U1/gtdGkbA/zMdx61ttYgMOfzkz0Cd+ExYRRdA6nlK4go=
-X-Received: by 2002:a17:907:a606:b0:c12:67d2:3d6b with SMTP id a640c23a62f3a-c212a2036f4mr37457366b.11.1786651871961;
-        Thu, 13 Aug 2026 13:11:11 -0700 (PDT)
-Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c21233a18b0sm27317466b.8.2026.08.13.13.11.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Aug 2026 13:11:10 -0700 (PDT)
-Message-ID: <6da65615-0870-402d-8630-9b486b512947@gmail.com>
-Date: Thu, 13 Aug 2026 16:11:08 -0400
+        d=1e100.net; s=20251104; t=1786653060; x=1787257860;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mW0uX4Cl6Fm/VdaHwZZZRt8wLrUEDGvdRQIZOw3ap4E=;
+        b=FEp8iKpAp3IFosOlI9CBTBmlE9ELPOThjM/w/Iq9E/rvd0zQU4Cfk+34pwLHjWy2Np
+         C+rhOMrYa51c4bUYP7VsZdckl35JKAawyB8VhoN3XiSuBbQNyxrXVcL7LGcGBnfBZxJ9
+         fdySS5QAQ3BrL1DShAWYbW1Sz97e/XhIVdSimhy26H82eg1tFlO4ShhVzeOGboT87ca0
+         532Bi0Us1WEU127j8j7q09RoKGkkhADhlow9Mn3ZNDhd+iCQHbxJrHEk6dZ05pmNWZCM
+         0oCqx0/eMraA9/DcTB7PzCBWkSpuMy2cz8+FZT17s/+1UiOKfBk1QYce48NOQFNfa6RJ
+         63Mw==
+X-Forwarded-Encrypted: i=1; AHgh+RpRvy2OmiFAU2xFNDg0YaE+jy9C3Hnzh9dbMg6YxRYqxsHUSO/+d5olb+W23vOqygJUSMM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTrxcPL8BABg/u2euWfz42x6NlQQ8wP//5e5bQhVWM4/0WV9/u
+	FaqvULFcmJa75zPHtXfvEYASl1gvs6ZmxKnk8YdJySszjmtVnE/JZO827hC1h9a0T+M=
+X-Gm-Gg: AR+sD12hztF0ZCKcjSNiVTjnqzsZiMq8Zl3hUSe5GlVIwnULkzF1BsPutM/lfELayVB
+	C9s6Ql4/iKcSm5E2Pn5n2A0EY+cUnsTpcjyXIA5eXhQqfn20NWjMOd8myCF4/IGVZd6sujf11xB
+	srQJ43hU2AjrwH9QkEbzwn2jgGITyX4K9PAfAf6AqrJwo1ECyC10U+n08ffUfTzpq0AUS8aANuP
+	p8P++LRt4WuNvLVevuDvqD2xDJcgSzRjw8t6HJZROeMipp5qMUOFjs+d2FBjVNw5ZHN6z1yTKwi
+	8tB9iAHGBxMuN0JGs5acZfYMyv8ANU3t6F+HQ2EOJecn1v9S/8wnXLBEcxNyHk35oLrHt7oOGOn
+	b6eTTyv8FiDrNhmJmIO9d9CGML4fJKzGj0Tf0cjIy5MY2lZ8baLui8P3RsB0SS0Nftze5Jx5YZ9
+	pxYFBbgMfiSuGEcR+GXQOAwB+jOh7bAhVXilk4X4OrT2UW9DkFvIK5/6qD+wVxJM8WSuAnUc7rg
+	Kpkd09oPmHHkp4X1aM3OxExr67EAX+SiJ5dj7fUl3UenQ==
+X-Received: by 2002:a05:690c:82:b0:834:fadf:6058 with SMTP id 00721157ae682-83710a8e789mr3962467b3.19.1786653059770;
+        Thu, 13 Aug 2026 13:30:59 -0700 (PDT)
+Received: from com-79390 ([20.98.136.114])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-836bb3e4747sm4656347b3.5.2026.08.13.13.30.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Aug 2026 13:30:59 -0700 (PDT)
+Date: Thu, 13 Aug 2026 15:30:53 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 2/3] midx: pass custom '--base' through incremental writes
+Message-ID: <an4pffUrCY4xhTH2@com-79390>
+References: <cover.1781294771.git.me@ttaylorr.com>
+ <4115ee0a9a09351e47d557a1283fc6ec4d633304.1781294771.git.me@ttaylorr.com>
+ <an2E_F_1DC4cPKG3@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] gitk: use more natural language for labels of
- color preferences
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Johannes Sixt via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.2194.git.1785998419.gitgitgadget@gmail.com>
- <pull.2194.v2.git.1786540582.gitgitgadget@gmail.com>
- <45d5b05281cd4f3f43290d128d631a47975225f3.1786540582.git.gitgitgadget@gmail.com>
- <787b9472-d9ac-4d1f-814c-f7be9318ff55@gmail.com>
- <d6754ded-89f6-48e9-9755-24c45c90845f@kdbg.org>
-Content-Language: en-US
-From: Mark Levedahl <mlevedahl@gmail.com>
-In-Reply-To: <d6754ded-89f6-48e9-9755-24c45c90845f@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <an2E_F_1DC4cPKG3@pks.im>
 
-
-
-On 8/13/26 3:35 PM, Johannes Sixt wrote:
-> Am 13.08.26 um 19:00 schrieb Mark Levedahl:
->> On 8/12/26 9:16 AM, Johannes Sixt via GitGitGadget wrote:
->>>          markbg      markbgcolor {} \
->>> -                    [mc "Marked line bg"] \
->>> +                    [mc "Marked line background"] \
->>>                      [mc "marked line background"] \
->>>
->> Not a new issue, but "marked line" is not a good description. What this actually controls
->> is the background color of commit message text found by search criteria in the gui, not
->> lines of text, and (as far as I can tell) never any text found in the patch text.
-> Actually, it is the background color of lines found via "Show origin of
-> this line" in the diff panel.
+On Thu, Aug 13, 2026 at 10:49:00AM +0200, Patrick Steinhardt wrote:
+> > Thread the parsed base through `write_midx_file()`, and update the
+> > repack caller to pass NULL for the new argument where no custom base
+> > selection is needed.
+> >
+> > This exposes a pre-existing problem in incremental writes with custom
+> > bases: the writer skips packs from the full existing MIDX chain, even
+> > when the caller selected an older base or no base at all.
 >
-> When reading this code for the first time, I thought it has to do with
-> the "Mark this commit" in the commit list, but it doesn't.
+> So as the "normal" write path didn't honor this option at all, I assume
+> this bug here then refers to "--stdin-packs" being broken?
+
+Yeah, that's right.
+
+> > @@ -128,19 +128,33 @@ test_expect_success 'write MIDX layer with --base=none and --no-write-chain-file
+> >  		--no-write-chain-file --base=none)" &&
+> >
+> >  	test_cmp "$midx_chain.bak" "$midx_chain" &&
+> > -	test_path_is_file "$midxdir/multi-pack-index-$layer.midx"
+> > +	test_path_is_file "$midxdir/multi-pack-index-$layer.midx" &&
+> > +
+> > +	echo "$layer" >"$midx_chain" &&
+> > +	test-tool read-midx --show-objects "$objdir" "$layer" >midx.objects &&
+> > +	test_grep "^$(git rev-parse 2.2) " midx.objects &&
+> > +	cp "$midx_chain.bak" "$midx_chain"
+> >  '
 >
-> -- Hannes
+> Would it make sense to also test for an object from the first MIDX layer
+> to be included? Otherwise we don't really assert that all layers are
+> included in the new MIDX.
 
-Sorry, yes you are right, I confused myself. 
-- Maybe "Marked line background"  should be something including "origin" hinting at the
-menu item triggering it, e.g., "Origin line background"?
+I don't think that is necessary in this case, but let me know if I am
+missing something below.
 
-The highlight color associated with the problem I noted (gitk highlights text found in the
-commit message, but not in the commits), is "foundbgcolor" in the config file, and is not
-on the config page. There are many colors in the config file but not on the config page:
-as long as no one is complaining, I'd leave that as-is.
+The new layer is written with '--bitmap', and '--base=none' means that
+there is no base layer from which the bitmap can inherit objects. Since
+1.2 is an ancestor of 2.2, writing a bitmap for the new layer already
+requires that it contain 1.2 and the rest of its reachable history.
+Otherwise bitmap generation would fail with the missing-closure error
+before we reached the assertion.
 
-Mark
+Checking 2.2 confirms that an object from the old tip was pulled into
+the new layer; the successful bitmap write already establishes that its
+objects from the earlier layer were pulled in, too.
 
-, 
+Thanks,
+Taylor
