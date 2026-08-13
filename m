@@ -1,197 +1,191 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0FE41C2E4
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 07:59:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0985943B6CD
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 08:20:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786607970; cv=none; b=JrQ3sF5pUHigtD238bAkQUdKowjtY0UF7Z48d+Mlhe/2Y5+OdBos8jQsSdlXFfKdPLoLccgQNS3bzihoAwODilvYdddPyppoWJOgoYrY/D5veg0pbmT7BL0LhbBOhaVOGrdh9iyej3rlgCk/WQK3QvVKW1KD5EfFUOokN6cwrBI=
+	t=1786609215; cv=none; b=QT7G607bYb3A1L40KaQTQEwz6X4VLbe/K+6L3qxO471us1aQpuKgPuU5jeP+cRQ4Vh8js+uarF2Irtjz6GEW0LLWDuNMwmLE9joaTW+sb8429Ua25wj0WTXd8Y2i/N8t/tDodC/d7oOZsbKgCfbfwPzRjmV/zT22mU9hZ+NDhnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786607970; c=relaxed/simple;
-	bh=x5saMQqW7dpbgZWsLIAFIlR+jj2nA7VaK4HjtL4gU5s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qcmm1kLQScsGmyu+hmkmhywatWiU1kpHFxTDWGYuCLQSGNagLXJoUOKQNUpZWop4EmVv8CrLZwJzlf4SLRKwTTPUCosWvl5PCvIiX1VjBIfsYIfrcX6AqI6u3ut1TpuG6y/YgMM/0t6uggrYA6DlKOh/0ffMJCFF0HlmLhkg1Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l7ZqBQ+c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lz55jZaC; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1786609215; c=relaxed/simple;
+	bh=jnjNMfyYbsp0a7r44e/rGmy20i9clb9/wY+on+RHwwo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A/EC4/xv8yCIBpJrvLJ4qdMCd0K5gwga2aEV6mOP1K4i2iFnah3CBlQfCexPXa42RuHDF6bgSoDBjNTDNPgIq069cjmrI9RE54nzl+laqF7ofa51FQfNdqwmTIzOycg1imfubmBJG+Zw5QANE7pdMubXuGZqjL920iIWD6J/Sis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AMFdACjD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l7ZqBQ+c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lz55jZaC"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8CF5F1D00156;
-	Thu, 13 Aug 2026 03:59:24 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 13 Aug 2026 03:59:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786607964; x=1786694364; bh=tldBmM3RWp
-	TUdUrJQxhFpbC9jumpYZHzSAGI+fRlr4s=; b=l7ZqBQ+cAJSMWi7hmukvH/NIHP
-	D9ULlximq8JdkCFh9oWQMS4D7/wZDQZ0BG7a/ng8j0vftiLK/1EOoQAt0dQgTHYy
-	ZH3QGEiZehaMWzNiJhHNUbUdTEZJm7cM5EQd7x+AkOAZnTf96/r/zdVkpbDz+Epd
-	XDol7OTnfG6aLJtFGGGxMKsryhh8ibs74Nsvvew3Gxhq3sSk+39Is1mzqlJGk1n+
-	V9TF/DVhC2fjOBfOtlHouMhmW6jZ/6ZgwXYsrfj1VZkBKuk2YeIb0leKLGPCZSZo
-	+Mz2+3824QT1YPsVtwr318BsLB8s264bjAdr7MAZoxADxnNETvj8z+yfdRsg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786607964; x=1786694364; bh=tldBmM3RWpTUdUrJQxhFpbC9jumpYZHzSAG
-	I+fRlr4s=; b=lz55jZaCrAwxt7Bxa/u2zkY4rxYy1JscbvRh21N+SV1mEJGx4QI
-	8ORZJkXVHPN8iUt0ttODjq/CcS711eALCMHnMe47MFd7i6VI2MuUHsXQE3gWuxss
-	cBjuQwQgZD6Z/fPRU6gMP/1Fkhi59CYdNwKEIvozWcqf8DlHt3hliKI62qrhJ/Sq
-	gkvbvigC7d79YZ51oQF42QspPBVKkD5yTEF7LumkVyRBBvwLJFEqhdS3JN4Rcfrw
-	RfOGWsNr1WSIVfJ5MXWqYjsWjdX2CwcWDVLjpPEmqnyO7eiqJYebD0Q9BBCfOyBh
-	kOVzr/cpy0wMuThYd2dqyZbGzFi09Wr7mMQ==
-X-ME-Sender: <xms:XHl9ajzrvM1qeaARlTK49J2IAvZ4S6RoiXfVL5j05U75XbCCjSj6lg>
-    <xme:XHl9ahSwqxCPwa5Gs2tCCPQU5QI-Pbl66Hgd4Efn35SAqQufzFAPEnLbsV72jS_WJ
-    1uXdt_j6CsfdgLM5GHdXtt3wZpXYIwDpuUGkChQvwxeCm1-KJwXjg>
-X-ME-Received: <xmr:XHl9aq_mBDjlmzEkgZWqqJgYJlopM0Qxu5fFOD1jgDGNHNU-cvEDeCpMTO638hTMpT0CcrbBFj4WDjYkZKp7p7fmdfdmkf19gYgjOvP-UJ3g>
-X-ME-Proxy-Cause: dmFkZTFEgMXvN+l8NhOZpQYviglG34aMDU5f/C/2JBW9mthR0DjwcVRR/Xp+pJmDjNuxFV
-    r/svXDvoX46LQyrqzk2mRJVigQf3cMWASCBG6WhJICWIAd4ppPG/4G+hbtqTrq0AFIw+OI
-    bWVRuyvxG3T26TFfndq4ghEHaaX3CTdrqNagHvQYKFHciKHhFJGAaiLZ29t0zInZDxJT1V
-    G0Pd9lOZKuMKiqcl9ZcrGMfrpCP9H2TZTuycy3xFP2xr7shDn/cTy0J2K4FLmH+LUsp4Dy
-    vcrC7zxxZw8f393TCZ7TWaRRHpCU0pJ2IkSGQJDNR3CEEUPsmLJn/94ObtSsPSsi1GvFqf
-    ZrZ7tcIeeKQ1jHFMWBczwj9quu2IgimCQ0+kfsPfguG2WT/VRuNDJyDzS9ShIem7A+6FQ9
-    aIFQLiV8IqEGc9sSyJ3JZKI1fVHIYFojQdtjNWdDccZFw7i7H522ob+F4rbqmNYrUq3I7N
-    ZSfLOtqEgVEpNd3puUjPzekEwWSKgr1LymSV/ix45a7WEouzL7JmUrvg2ing9AwySJr9HP
-    ShoaVbR5315S1NGsBdyF+7FCqI5v2BcxrBD4noLd9VQWw8x4jyGu+Nl0ZfcCr6dJoXO4NR
-    JQga1cAwIwCEgozODEjDSfX5twrwTnThDpIDSv8Cr8HCyQ7570jWt2DqK/3Q
-X-ME-Proxy: <xmx:XHl9aoq7hdSOMIw5QxBWQLGbLvVlLwVbVmOjf4O6XtuQ0I1AmhgkWw>
-    <xmx:XHl9anlTbRzMKYre8X36oYyhqIJZtKQM5Cqz0pMIg0JXeQ-M7spgzA>
-    <xmx:XHl9avIrr9JI0UzodRCBMoCpnz3agb_mkY9nIkCgO8E6nufSb0H09w>
-    <xmx:XHl9aszUvVCpHmIkMmqvLH-zkX0XlFqMy_a6cLUVJ-U6co2ooynI0A>
-    <xmx:XHl9anJHdDNaQR3qbRUSJEys3sgW0_TptqfZEgL8vR6AITq-4RNmlpIB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Aug 2026 03:59:23 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 303639b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 13 Aug 2026 07:59:21 +0000 (UTC)
-Date: Thu, 13 Aug 2026 09:59:18 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2026, #05)
-Message-ID: <an15Vvcfudlz69TM@pks.im>
-References: <xmqqcxvmvda1.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AMFdACjD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972761F000E9
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 08:20:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786609213;
+	bh=CditgxSPaHF9aJ1dSo0ICEiDLF0xwIXhTm/i1rR2ih8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=AMFdACjDif/0F/1rHtmgsctNzR3Z43gshsC4SPHLyumwSdCPXp1W6eaLFjIuKhPmX
+	 iuExPFP04A2PPXEM4uWIrkrHq8o3u5QtQh952st08Ugv7umAAh+c638fIXUBEnsEg0
+	 /ZEEHPD9sSmTHN+ZI9o1t3Ysj7JzGNW/G0KWvokPl53VtsGfdBLeTBa27y72Kkvwz/
+	 t1IjNV67R7I8SA6tqk6xFiTAUSTXFyC6sMEVAQU3Kp5dUtRnZB0PaEaKTo64rMS46K
+	 vJufww8j296L8oVQ5yWrFHnqRFlJEEiOS1hpBOsZY6tfYh0kLnaNidBpfquxic/ugr
+	 5mJc1W/NP6hXw==
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6a156627e22so1208487a12.1
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 01:20:13 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yxvl2gtFY1JG0E+Mh51MHWKf+xTi0djRa4jGmdggMa4I4i+N4gW
+	w1x68Pzr32FmMbML8hQvM962sEI+yK+RVBZpFmqujunfN3rg3XqzociYS69LmpSfkGwB0lUzjPt
+	xyRz7EY6Wfl5h+gc0r4Q+HAFrV1oFGXQ=
+X-Received: by 2002:a17:907:c28:b0:c20:61e0:e3ab with SMTP id
+ a640c23a62f3a-c2109e5c422mr146131566b.3.1786609212558; Thu, 13 Aug 2026
+ 01:20:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqcxvmvda1.fsf@gitster.g>
+References: <20260806-history_autocompletion-v2-0-7e60f52a1c20@kernel.org>
+ <20260806-history_autocompletion-v2-2-7e60f52a1c20@kernel.org> <CALnO6CAssyDe7uOK+G8eZPzu1S6iyn8EiSQGqUHtWgdPcD65xw@mail.gmail.com>
+In-Reply-To: <CALnO6CAssyDe7uOK+G8eZPzu1S6iyn8EiSQGqUHtWgdPcD65xw@mail.gmail.com>
+From: Vincent Mailhol <mailhol@kernel.org>
+Date: Thu, 13 Aug 2026 10:20:00 +0200
+X-Gmail-Original-Message-ID: <CAMZ6RqLAYMSwNK=w=Xh+O==46eQCS=wFgBoUEOtQoBbLrBqd_A@mail.gmail.com>
+X-Gm-Features: AUfX_mxpDjh34goFJFPHrxOc3c7zXh7pj4WwLk5k-GPOvpNpiskdEVN2TakqzJw
+Message-ID: <CAMZ6RqLAYMSwNK=w=Xh+O==46eQCS=wFgBoUEOtQoBbLrBqd_A@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] completion: complete 'git history --empty' values
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Philippe Blain <levraiphilippeblain@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 12, 2026 at 09:45:58PM -0700, Junio C Hamano wrote:
-> * cc/git-shallow-file-wo-value (2026-08-11) 1 commit
->  - git: avoid segfault on "git --shallow-file" without a value
-> 
->  The '--shallow-file' option of 'git' command requires a value, but the
->  code did not check the presence of a value and instead segfaulted
->  without one, which has been corrected.
-> 
->  Will merge to 'next'?
->  cf. <anxXbnuRt4I4uPdI@pks.im>
->  source: <20260811121446.2080190-1-christian.couder@gmail.com>
+On Mon. 10 Aug. 2026 at 14:50, D. Ben Knoble <ben.knoble@gmail.com> wrote:
+> One other thing, sorry
+>
+> On Thu, Aug 6, 2026 at 4:36=E2=80=AFPM Vincent Mailhol <mailhol@kernel.or=
+g> wrote:
+> >
+> > The "--empty" option accepts "drop", "keep", or "abort" for the "drop"
+> > and "fixup" subcommands. Complete these values.
+> >
+> > Although the synopsis only documents the:
+> >
+> >   --empty=3D<value>
+> >
+> > form, parse-options also accepts the value as a separate argument:
+> >
+> >   --empty <value>
+> >
+> > Support both forms to follow the parser.
+> >
+> > Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+> > ---
+> > Changes in v2:
+> >
+> >   - New patch.
+> > ---
+> >  contrib/completion/git-completion.bash | 13 +++++++++++--
+> >  t/t9902-completion.sh                  |  5 ++++-
+> >  2 files changed, 15 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+> > index 7372e2919b..fe5223b8ec 100644
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -2171,8 +2171,17 @@ _git_history ()
+> >         fi
+> >
+> >         if ! __git_has_doubledash; then
+> > -               case "$cur" in
+> > -               --*)
+> > +               case "$prev,$cur" in
+> > +               --empty,*|*,--empty=3D*)
+> > +                       case "$subcommand" in
+> > +                       drop|fixup)
+>
+> This feels a bit "inside out" to me, especially when reading the other
+> completions. I think the usual pattern is to check the subcommand
+> first and dispatch if necessary. Thoughts?
 
-This version looks good to me.
+The motivation is to have a single:
 
-> * en/sequencer-lose-pretty-given (2026-08-11) 1 commit
->  - sequencer: remove unnecessary variable setting
-> 
->  The setting of a now-unused member revs.pretty_given in the
->  sequencer machinery has been removed.
-> 
->  Will merge to 'next'?
->  cf. <xmqqa4qrxneq.fsf@gitster.g>
->  source: <pull.1922.git.1786516959130.gitgitgadget@gmail.com>
+  case "$cur" in
 
-Yeah, this patch looks sensible to me.
+statement.
 
-> * ps/odb-streams (2026-08-05) 8 commits
->  - odb/streaming: unify function names to create new streams
->  - odb/streaming: rename `struct input_zstream_data`
->  - odb/streaming: rename `struct read_object_fd_data`
->  - odb/streaming: consolidate read and write streams
->  - odb/streaming: rename `struct odb_read_stream`
->  - odb/streaming: support streaming arbitrary object types
->  - odb/streaming: drop `is_finished` field
->  - odb/streaming: track write stream size in the structure
-> 
->  The 'struct odb_read_stream' and 'struct odb_write_stream'
->  structures have been consolidated into a single unified 'struct
->  odb_stream' structure, simplifying object database streaming APIs
->  and enabling streaming of arbitrary object types.
-> 
->  Will merge to 'next'?
->  cf. <anuBdm29ye_qV_Rq@denethor>
->  source: <20260805-pks-odb-stream-unification-v2-0-b8c369564641@pks.im>
+After dropping support for the separated option-value form, this is
+what the code looks like if we check the subcommand first and the
+option second:
 
-Yup, I think this series should be ready.
+        if ! __git_has_doubledash; then
+                case "$subcommand" in
+                drop|fixup)
+                        case "$cur" in
+                        --empty=3D*)
+                                __gitcomp "drop keep abort" "" \
+                                        "${cur##--empty=3D}"
+                                return
+                                ;;
+                        esac
+                        ;;
+                esac
 
-> * js/coverity-unchecked-returns-fix (2026-08-12) 12 commits
->  - bisect: handle dup() failure when redirecting stdout
->  - bisect: check get_terms return at all call sites
->  - bisect: check strbuf_getline_lf return when reading terms
->  - transport-helper: warn when export-marks file cannot be finalized
->  - transport-helper: check dup() return in get_exporter
->  - compat/pread: check initial lseek for errors
->  - last-modified: handle repo_parse_commit() failures
->  - reftable tests: check reftable_table_init_ref_iterator() return
->  - reftable/block: check deflateInit() return value
->  - reftable: handle block-writer initialization errors
->  - config: propagate launch_editor() failure in show_editor()
->  - http: die on curl_easy_duphandle failure in get_active_slot
-> 
->  A handful of code paths have been corrected to check return values
->  from functions like curl_easy_duphandle(), deflateInit(), lseek(),
->  dup(), and strbuf_getline_lf(), resolving several Coverity warnings
->  about unchecked returns.
-> 
->  Will merge to 'next'?
->  cf. <xmqq5x1fxn5u.fsf@gitster.g>
->  cf. <20260812213438.GC152730@coredump.intra.peff.net>
->  source: <pull.2179.v3.git.1786521801.gitgitgadget@gmail.com>
+                case "$cur" in
+                --update-refs=3D*)
+                        __gitcomp "branches head" "" \
+                                "${cur##--update-refs=3D}"
+                        return
+                        ;;
+                --*)
+                        __gitcomp_builtin "history_$subcommand"
+                        return
+                        ;;
+                esac
+        fi
 
-I think this series should be ready.
+See the repeated 'case "$cur" in'. Note that it is not possible to
+have a wild card *) in the first switch case unless the
+--update-refs=3D*) dispatch gets duplicated. In the end, by using this
+approach, one part of the code will need to get duplicated.
 
-> * tb/send-pack-no-ref-delta (2026-07-12) 4 commits
->  - send-pack: honor `no-ref-delta` capability
->  - pack-objects: support reuse with `--no-ref-delta`
->  - pack-objects: introduce `--no-ref-delta`
->  - t/helper: teach pack-deltas to list delta entries
-> 
->  'git send-pack' has been taught to refrain from sending 'REF_DELTA'
->  encoded packfiles when the other side asks it to.
-> 
->  Needs review.
->  source: <alQ7WKITYDXfiVn9@com-79390>
+On the contrary, by dispatching the option first and the subcommand
+second like this:
 
-In <an0EkMZGEbg6LERc@com-79390> we've agreed that this series can be
-evicted for now in favor of
-<20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>, as Taylor
-still needs some more time to rethink the approach in there.
+        if ! __git_has_doubledash; then
+                case "$cur" in
+                --empty=3D*)
+                        case "$subcommand" in
+                        drop|fixup)
+                                __gitcomp "drop keep abort" "" \
+                                        "${cur##--empty=3D}"
+                                ;;
+                        esac
+                        return
+                        ;;
+                --update-refs=3D*)
+                        __gitcomp "branches head" "" \
+                                "${cur##--update-refs=3D}"
+                        return
+                        ;;
+                --*)
+                        __gitcomp_builtin "history_$subcommand"
+                        return
+                        ;;
+                esac
+        fi
 
-> * tb/midx-incremental-custom-base (2026-06-12) 3 commits
->  - midx-write: include packs above custom incremental base
->  - midx: pass custom '--base' through incremental writes
->  - t5334: expose shared `nth_line()` helper
-> 
->  The 'git multi-pack-index write --incremental' command has been
->  corrected to properly honor the '--base' option.  Previously, the
->  custom base was ignored by the normal write path; packs from layers
->  above the selected base were incorrectly skipped by the pack exclusion
->  logic, and reachability closure for bitmaps was broken.
-> 
->  Needs review.
->  source: <cover.1781294771.git.me@ttaylorr.com>
+we do not see the conflict and do not need to repeat any of the switch case=
+s.
 
-I'll try to have a look at this series later today.
+> > +                               __gitcomp "drop keep abort" "" \
+> > +                                       "${cur##--empty=3D}"
+> > +                               return
+> > +                               ;;
+> > +                       esac
+> > +                       ;;
+> > +               *,--*)
+> >                         __gitcomp_builtin "history_$subcommand"
+> >                         return
+> >                         ;;
+> [snip]
 
-Thanks!
 
-Patrick
+Yours sincerely,
+Vincent Mailhol
