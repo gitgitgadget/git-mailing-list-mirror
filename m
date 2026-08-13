@@ -1,139 +1,161 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E552F8E93
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 11:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786619945; cv=none; b=ZlP54dEV2f/I21V+LX/uRJjLB2GKjWCO++kVarv4MCmz1lNnKAV0Yv0+J/t3QO2LNNJjA9qs+OyMZCmfTUwLrGgd91RLYPVI63dGQICFNmuW2JE2OAZc0P/XKGMyO4DhOyuL2HPXfutPLAgSqDnSNbe/UW9UJBeTLp2QlHwLhxQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786619945; c=relaxed/simple;
-	bh=AobG3F98J7ueZXbPkCgDg24ykHpv18Dud8Q2dTq8Bi4=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=AsXSAIkgsQTRTOHREBnZxlZD735/YH+pqP7fjNc7BNXWdbReVuKNiCWM/xkL3OUd3EWK7sf+kZYO59KRnHWNlDzDseHJxSUkJ5lhvZYiMk4UN0lLyyf/GzZBBhYWD/oGqDmEFOcGqD2KzhVv0uBYIk4/OFdg6v2hw/Ca6F+kgjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WlNZThA1; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BFF345EAD
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 12:07:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786622846; cv=pass; b=jbq/kYxYht0qfOf3sdeu8ExrWixqjC9xpeCTnSo/rXs4pYLhFNjN7PSSy9bT9f0Lm1Q7vZ0cpQhYSlS4l7zsGOWpF2hWz9CeVJQAMOlDoV8u0/g3GBncFIK1Oe0V6c2wFIY0pPGHuI8p2TYEGzPsAwWhEfFwv7ObPov1X8vdFrw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786622846; c=relaxed/simple;
+	bh=9dul95jXw5M74Y9US+7IgLIFtgTEL/5vko5z0w71cFE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LBEiDo4kSuqGK2ZdOTtUjXIMIhb6lOAKXIfO6jnqQRMBXtJNUGMoP/Y/jG28QqFHmmaJRECgNCjJRXgp0Qh3p3e6fU4Wc6ZBoCN+V+m5z/m0AEeLfuzJ+jSNH3476AS3TqPGE2ZFqgAgAnWotoaXpjDbpHt6QotL7aLUBguQxRQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HHROgYHl; arc=pass smtp.client-ip=209.85.217.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WlNZThA1"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-8143daf89c7so20942377b3.1
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 04:19:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HHROgYHl"
+Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-74dce749cc5so405062137.3
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 05:07:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786622844; cv=none;
+        d=google.com; s=arc-20260327;
+        b=K2K5D/X4izFgLRWCQpPqZbfaBTlmHkPq1EYTCNzv9GO+DVRlIgRQj2QSlzC3r9LePo
+         3BbBaQU4urwuPwziZM7JA5sNY+0gbdTBI2odBFeFYFeX7rqDt8jK1QEmCQnpHqR/69a8
+         hwkaaR/2Ya4nRMwixmm2LWSmj+JDZ//TpZ6iVVWoWMsXgMV/o/ZFfuvg4B/pRTRfwoqo
+         1OlH6UnRVvMpBZ7hcJpw96J5bLOA/PEBGaGFfkQxsHOL4HjGMQObkadi9AxFnpnJ/n1f
+         yF9y7H9cExRPbPd1DcOa6YQYoQUeOjjjl8iFMrI/J4Wit5sM5lQFtymxn8b4yH3hf7Le
+         efRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=DkIb1L3rKTFm9LVBc+x1DDZU76EYhauAzb+vEDxuTqM=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=HeSCmjbWk5e6Y05Yd+CcC/59pHG5/TkE+k3uPD1L4Qs2azPAp4QYfl94FcKBzVR5w/
+         csPSRe+wfqgB1sSlMxjpa85c/0XNSZWtzbXrcafblhrWwTAKP8wk66Gn7yBXE4zjydbp
+         dJqbdC2RkUAoZI4CKPV8FmccNDINIACob4oBzSYdX/Yy31CbY/Y7h9hJZU1gskZL+DVr
+         XZ41WCW8R8mCNmPPaPjyH+RT5ttlNj/SxkfUcJ0Hr8K4pZ5+6V8qZhAgQ9rb4EzCa5OX
+         yG9eDX5U85ltvdGi9ccJta4BGI7o+ZFRbfLz1QaXPPWw4/VjrKjWrbs3ZhdU5e9+CZ0n
+         V27Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786619940; x=1787224740; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=J901EixYxDVMNRwL2bQg5LL8otJuo+C0YnEMKxfzLTs=;
-        b=WlNZThA1QJAtasWrvtkxyEVhbQOpxrjHVYD/ZXKvcAOFUMgD28HO5jREZblu+ch6kZ
-         Ocu2ZkrQxPrL8WMUK7Remkw6gTdDJZwPQaNtDps4GHPOHGxrwBa1LxypIQYTRj/+mH9D
-         DxObm5wVIxTE0KzfO586fStkAIQvmbbrxu8lsZgyfL1uquz25WkMqgzVce9qvVgQXoqs
-         kNaVpTsvLJV6RA9qPL1/3VwghAPRNSlQgUqfEqjanFLCzsb2yBp11FfISekwtsuKfj8g
-         nDd057YmFiX5+CN3Xx+zQtG+kJBG3HQfnZrNZNiitTNtaIdZqHkeJ1xc9bWMboo4r/5n
-         Fpvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786619940; x=1787224740;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1786622844; x=1787227644; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=J901EixYxDVMNRwL2bQg5LL8otJuo+C0YnEMKxfzLTs=;
-        b=mmmNdEi/AQYnmKxguDtNOjyWYtlwmEjNg/DXL8vwrbZhjoPON+lwQ2OzOUpfboyq7C
-         PzWtHApY31gasVfF260pgUQFcMVDlK8tqFSd6j13uG8kVQQhBt43SUhisSqs4vHkOEq2
-         gQgHibEtpPLQ0u7ETCCiXMwTKYfmP57OwcH4aUwQXk5WRZ4crS/3/ag4rMR1ZWWTLCzP
-         HsZx9THQ/Za4qjhTEc+g/n7baJL/7sXXCRiZzkh+7pQhdk+fjWX4AhUyk0YPSS3vNWKr
-         7bCo+MJkXRVKRpYd2bG20/PiTtI8DF2725mS1cnD6ZeSUeOLYZQ+Ya+jVI+JkI4A5UrA
-         cS/g==
-X-Forwarded-Encrypted: i=1; AHgh+Rp3OEuJJJ+8kpM3ik81ASFawhXViCBM/9fkLNVpbgk0kU6rz608IQLL6lTsAL9mcTPPiO4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUa8qjE0mRimD+V0b5Hiv+71yMpk+MfO8glfmhwoGg2evQZX+x
-	kFletaV2whNku8nNUsolL/ifPC+EvdZl7SRI5RYtER5c037kEuJele98
-X-Gm-Gg: AR+sD12X4wlg4IKteoO8AG0j9h8+RgvjNVyKk9aA0sU1C8AQY8/dC/rb9/uY9ew9hRQ
-	eB3/7dXBSoplzBNWAE19EtIO5nHqtMaPab7rzjZhjlrIH+4zyDWd3marixNdIaP18e237qHkaq3
-	Ohomsj3f/4mmzd8qr+vcWyTyywsk3Y4vX2Mx+fP0ETjKVkirfnpTzQtJpykd6CMrglmN7mgXIl2
-	+YBLhzhRW0gv1UGNTusX6udm4RdGnMjFWchC7YUTYV0XlEPr5wa9TyPbYx9zd4tivOjhAfi0LJR
-	bFQdyA9Kf6lgdULtqthWuX2Ck4qDgJmteJpB038qE/BF8RM+G+SMva3K2xLii/vjrr4DBhj18i3
-	ybcismDZfnmXa2L6/KYAb6RBDT6e3y5CsrvDF6POo5wDQt6LZBo64/usfglPJxM54lxNDWdN2+C
-	kvXhzvznga+DuPG5p6UspGgAJT7/cSRzBYCuHYBVutyW5MK70kw1Tzhd2EL/iGS7t74cuFf1f6e
-	7ZFttz/H3MNX9HSlC88Jaaj5Wu0otjO58tLaUM3jndH2Vg04rlzkM/4u8ohdZAGmLb1N9uCJQq4
-	hONIUncl5k4kyd6c505KxkXWcGydYqauh96h
-X-Received: by 2002:a81:8ac1:0:b0:803:6bb9:1753 with SMTP id 00721157ae682-834775bbf6fmr17044707b3.21.1786619940036;
-        Thu, 13 Aug 2026 04:19:00 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:40d:fe73:73b0:d337])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8346f704851sm8721407b3.48.2026.08.13.04.18.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 04:18:59 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=DkIb1L3rKTFm9LVBc+x1DDZU76EYhauAzb+vEDxuTqM=;
+        b=HHROgYHlZTOxvDEu/DoBfo0TxStiCbPvqn81ILsbd4zkR+kKmcTIKSIgT7ZtbS7EgD
+         nOCQlkvWYMO2m1Ro34KPlD2JvYVcKZpszcG4R75KEfyPKtiJSgaETYzNdph5zmNrTlZM
+         G40KT7uTlR/IUY6p6zXSZ7+Ti8sCGeyJ/S5ubJHPnCW5SkdtacIuPyFIcO6eg8QfsYfg
+         ULZ4CMVVE9so/5cAer34qSRpfjefyuhVonY2xhOydeOY7YB3E2xOpfJ35/cRTYYmGPJI
+         mXz1yCCa0kLPU1wVWUzh6Yr3M1UwgI7iuYRkbcAC3EI5pVRwSBlZQdRmp2jML2/9oXmb
+         3CRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786622844; x=1787227644;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DkIb1L3rKTFm9LVBc+x1DDZU76EYhauAzb+vEDxuTqM=;
+        b=ML+WCySg+jpSvdPDbgiWHJCC+Wu3cFItdsP3D3Fee7AfB2XfIrAJkRZGJ90Pkl2V9U
+         9pOuMUeRyPuc4Y+ORMUX7dbcAspCTBafeTI59IE1U+XQMcPaHkKNY0xbS+EDDJIjRue/
+         LitTIrMMsXfPWpLmf7t9O5GEByf7RuAIVtE01GGHP33/3ZDnsqdiuimC0F4Jqa7w4MZw
+         u5DyyTLbil04bEq3xVoTtUkUkubxqV1hLDjkqjFBArZU1a91C9bUPm+sL8sJUcmoqacs
+         RTV5RBAS1HX8wi+k1oygIJiJrgDHSADZjj0iCBD6rnwU4lhV2ZVMYFzT4C3ak5U3egxT
+         aAnA==
+X-Gm-Message-State: AOJu0YynzMzaI9hel6fQaitVhmRyhnMf2Lu3t9gdszxlc5TEDa4WGi/D
+	SOsaeErlFd/daiomqvJiVPCwMjPwat6m2Tew4COhGVl7oXZ0AcHchd++5MdmCVx3hz/E7n2jqwJ
+	Knmy/2WYMIs41DOrdFRQZL8TTaRF4fXLeO7/d
+X-Gm-Gg: AR+sD12ODkwdIXGYPveTLr39OCWRZRQKK1PBBgKhpa4tz5HNV1Ukr4Z0rtNcvyhtvFb
+	3Albdv1/AcarBnSg9ptMyN5qYC76IKDfouiHyCiPKOBSDsH/7Cj0qyl2/678iWzw9aEBXBHEXmA
+	PobmPwZG7F8NJdF3nPA3u2iwiYRsVlsb4/8uNch2nTQJ9dlKS1dpbQiDSG+1g5C+DVYwKqUlwDl
+	VP7JaVtAyLUkyrOZqgX2LcL3VbvIxQ7T0+dKpgZCJyX9WTDkMw/NqVI+fIo1KAmHINazYDf112y
+	53HveizoD0LbeHO5DZq6nIkSUJNbQvjW6hCwQQS4FwTXCzVHzHJPSaGrUYZiKgyuQPzO0wD1yZg
+	xlQ4s3+4BhigptF/M8dGg/Bwt60ugg7bV1XI=
+X-Received: by 2002:a05:6102:8090:b0:738:1fcb:f276 with SMTP id
+ ada2fe7eead31-76db527e124mr1234109137.1.1786622843724; Thu, 13 Aug 2026
+ 05:07:23 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 13 Aug 2026 07:07:23 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 13 Aug 2026 07:07:23 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <anxF0P0KVizediDg@pks.im>
+References: <20260807-pks-t7900-fix-flaky-test-v1-0-08d0ea0fbbc5@pks.im>
+ <20260807-pks-t7900-fix-flaky-test-v1-1-08d0ea0fbbc5@pks.im>
+ <CAOLa=ZTAV=JqOvE0xkE4zmHMm=xx40_3g42ob9RDBRXmw3u6_g@mail.gmail.com> <anxF0P0KVizediDg@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] packfile: fix perf regression with many packs
-Date: Thu, 13 Aug 2026 07:18:48 -0400
-Message-Id: <2CE87145-D86E-47DF-8761-8FBCFB774C51@gmail.com>
-References: <704409ee-0319-7493-cdc9-8cdb0fea1ace@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <704409ee-0319-7493-cdc9-8cdb0fea1ace@gmx.de>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Date: Thu, 13 Aug 2026 07:07:23 -0500
+X-Gm-Features: AUfX_mxBvbnLnUUQnmDtadj2uhUQVUsyoU3onpfQktUJIzvqiB_BsQ0_YqchQ2Y
+Message-ID: <CAOLa=ZRXoqtYfDYhTatXZt9ojP2_5WrtJY7exR_TEPHZVqEE2A@mail.gmail.com>
+Subject: Re: [PATCH 1/2] t7900: adapt some tests to use a throwaway repository
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000f2c4b90658ec8b2a"
 
+--000000000000f2c4b90658ec8b2a
+Content-Type: text/plain; charset="UTF-8"
 
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Le 13 ao=C3=BBt 2026 =C3=A0 05:04, Johannes Schindelin <johannes.schindeli=
-n@gmx.de> a =C3=A9crit :
->=20
-> =EF=BB=BFHi Ben,
->=20
-> On Wed, 12 Aug 2026, Ben Knoble wrote:
->=20
->>> Le 12 ao=C3=BBt 2026 =C3=A0 15:15, Johannes Schindelin via GitGitGadget
->>> <gitgitgadget@gmail.com> a =C3=A9crit :
->>>=20
->>> [...]
->>>   packfile: fix perf regression with many packs
->>>=20
->>>   This issue was spotted by a Microsoft Git user with the massive
->>>   amount of packfiles typical of an average, long-running monorepo
->>>   checkout.
->>=20
->> As a different kind of intermediate solution, would turning on
->> maintenance for that user=E2=80=99s checkout help? (Not sure that would h=
-elp CI
->> clone times unless the server repacks, of course.)
->=20
-> I should have clarified that the issue is a _Scalar_ clone. And
-> specifically a _Microsoft Git Scalar_ clone.
->=20
-> This matters because, for various reasons that I don't want to elaborate
-> on because today I'm in need of lifting up my mood, a substantial part of
-> Microsoft Git failed to get upstreamed to core Git.
->=20
-> One of these is the "shared cache repository", i.e. a bare repository that=
+> On Wed, Aug 12, 2026 at 01:19:13AM -0700, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+>> > index 4238569b68..6735a9e082 100755
+>> > --- a/t/t7900-maintenance.sh
+>> > +++ b/t/t7900-maintenance.sh
+>> > @@ -67,41 +67,57 @@ test_expect_success 'run [--auto|--quiet] with gc strategy' '
+> [snip]
+>> >  test_expect_success 'maintenance.auto overrides gc.auto' '
+>> > -	test_when_finished "rm -f trace" &&
+>> > +	test_when_finished "rm -rf repo" &&
+>> > +	git init repo &&
+>> > +	(
+>> > +		cd repo &&
+>> >
+>> > -	test_config maintenance.auto false &&
+>> > -	test_config gc.auto 1 &&
+>> > -	GIT_TRACE2_EVENT="$(pwd)/trace" git commit --quiet --allow-empty -m 1 &&
+>> > -	test_subcommand ! git maintenance run --auto --quiet --detach <trace &&
+>> > +		git config set maintenance.auto false &&
+>> > +		git config set gc.auto 1 &&
+>>
+>> So we change from using `test_config` to `git config`, I assume this is
+>> because earlier since we used a shared folder, we had to undo any config
+>> changes made. Now that's no longer needed. Nit: This is okay, but
+>> would've been nicer to call out.
+>
+> The issue with `test_config` is that it executes `test_when_finished`,
+> and that function cannot run in subshells. So we have to use `git config
+> set` instead, but because it's a throw-away repository it doesn't
+> matter.
+>
+> Patrick
 
-> is established as an alternate of the actual clone, and into which the
-> actual scheduled fetches go. For full details, see
-> https://github.com/microsoft/git/commit/55226d12ed36 (scalar: do
-> initialize `gvfs.sharedCache`, 2021-05-03).
->=20
-> Now, maintenance _does_ run, usually, on that shared cache repository
-> (being careful not to inadvertently drop objects merely because they're
-> unreachable within the shared cache repository). So theoretically, you're
-> right that maintenance should help this issue.
->=20
-> For reasons (which I don't have the time to find out, but I suspect that
-> maintenance simply takes too long and does not finish by the time the
-> machine is shut down for the day), it is still not exactly rare to find
-> setups with five-digit packfile counts. And since we _can_ handle this
-> more gracefully, we should ;-)
->=20
-> Ciao,
-> Johannes
+Right, that slipped my mind entirely.
 
-Thanks, very informative!
+--000000000000f2c4b90658ec8b2a
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d474a6417583a930_0.1
 
-What I actually meant, sorry if I wasn=E2=80=99t clear, is that maintenance s=
-eems likely to help the local (=C3=A0 la PS1) case more than the clone. But m=
-aybe it will suffer from the same =C2=AB takes too long =C2=BB problem, idk.=
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1wOXMzZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN2JNREFDY3hjeDVNVTA4QlNyTWVUUGVvckpTbGpvdgoyV3Rwc3dCd3dS
+WC9kTFh1WkpvU1NIUkJpMlhzakxnZy9JaktXeDhQZGZ6Sno1VkVDTmI1cXdXZTRoWkw4TS9GCnZG
+ekt1Zlc5SjBWd2cwTE8wZWJKVXpwM0tzajBUVWJrbS9HM1NmZE9xVkFQRU9xRDNyQUJDaFpWaU1v
+Z1c1YWQKa2czdHZlbDNPSHlnd1dpSUF5aStnODc4VGwxTTZNaUVnOEF5VzhxTUFxTUUrMTZxWDNi
+clFvcjZ5RFpMeE1BegpSL1FvVVpxMjEzSTFwRGhLVHhFU3lieldvRkNTaE56TW9NTGhQbVhNeXZW
+Z0xNV1ZST2o2THBaVDFoeUk3OUtuCjFsSkEvYlRVS0pTblhxSkxkdVNwY2ZoS3k5dVdhdzM5Lzdj
+OUcySDJBUFlBTWQrY0hLV2lwUnFBRmF1SzRERXUKVjU1Yk9EZ3d6cUlXempxbWh4WVhDV3FIVWRX
+R1BEUjNDZHRkNWR6b3VBK1ZGZk5SWW9QWTlQN05OalFhRWpuNwo0WGRyQ1cwUnhYVjFYY0lXZ1ZQ
+SkNUckpScm1JdFR5YTVzN2ZUbTRHUG9jTjlYeGZURjR1V0RMVjNjS0RuYVUrCitNUkJhOWszSXpE
+cGJlWC8wL0daa0NCOC9nWTBvU2tsTXNobTR0VT0KPUp1YTQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f2c4b90658ec8b2a--
