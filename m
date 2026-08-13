@@ -1,79 +1,79 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3765422540
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 19:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DE82F8E93
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 19:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786648362; cv=none; b=Ff+qvb3U5hecSOkRHYxEwvyjEY/oLW6BN0WvkBxoTuytsj3vrZli9Ft7ENMq/8ItVJR1z5qAEIPnuX6XbqSIbOcmC8UnIv6pLCZmFMGcBItNOjYI4mugF2/1gEqduK5G0TwiqjrfA3ZNLIuIOou2A1AV0XTj6FOrlz1W63nENbw=
+	t=1786648363; cv=none; b=osHJkzlHUwupEA9TNCvFILRUPERJNuE46tsCtBpCpunFE2j0vXZwwgBTkVTqu44WunR10LRk6S0ago2Lg+115ZJwdAW7ImnUSt3ETuQct2YYYVAZf0uH7gCC7D5CWKh7Pe2h6h+tn6Hml17ieNqO21QYtzlcErqx6Ju84pFa5I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786648362; c=relaxed/simple;
-	bh=KNXOeQ1CboUrTz3e3ym+xqty5HMz69c3R6D42VDwAig=;
+	s=arc-20240116; t=1786648363; c=relaxed/simple;
+	bh=OxlVO45XgAKxWGcABz/SAGnBowVmTDozevJErk7qRDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d3JvQginlVGHAOBxqNTxNOMFpcLZIYLvK0KKYywrEi6z4TIHXp6XX84B5NYo5mskEcDf+2lyGG4L/bocpJxwu/aY6j98FHeQ0NRjFq7UctCzSTj3Q3JnKi5yOLIjCYySbyQXhQ/0ChNNME9R3c3QNDA6dT4nTGLU1e+FWF9hFS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rQ1I/4YT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IkQWZUlW; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version; b=TdppRkt77h62BSXQ9CIvvULHS99QlO8v5hsoE8PnfiYe3rIpu/hhyo9MZrQOb1yaYmNCJepiE9LGaNvOfnfJc8G0rEW9hiXReJ5ePAY2NdE8+R90vuGDm13wLMuCGJIGhqPvOJm8XDtetpZ55nVefjq5Ezbt6VdQUuaxqYWCRbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rYa5PKrB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=koPwZnwy; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rQ1I/4YT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IkQWZUlW"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E00571400149;
-	Thu, 13 Aug 2026 15:12:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 13 Aug 2026 15:12:39 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rYa5PKrB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="koPwZnwy"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 64EDA1400156;
+	Thu, 13 Aug 2026 15:12:41 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 13 Aug 2026 15:12:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1786648359; x=
-	1786734759; bh=E+XzRN93WzpeE0XILCoZd1gmW9hAX/3/A2Lod4scisg=; b=r
-	Q1I/4YT3nUF5CvM9ITCICQBh2w6pNaG05pSI06vp7yjn6S0AKBOcEiExxwQDqXn+
-	nOy9h+VW9sQAlVaRCbswGK9XgKMLwqdS2g9jdPRmEx95An+d5HERf4Jia5rjuxEy
-	q+iU35jiYGEqhOvDJXSXVqwU4VZn5MCIFYZZPxyaA/k1YO8iyy5ChUUh04oadZ2U
-	g6eYhw8Xhwj6vEhpdEbWHzgjL6cK+xKFweHLl4eFvpbyVsyAkmET0d1XUc6NS8i6
-	4alwLH/1OoEYhcxmrbxT+IzG7sjBiYpYCPEbxVluzr1Ze88n7Kj8DWAOTJ5jU8rX
-	eP4b9pulSawxPFgxTadxg==
+	:reply-to:subject:subject:to:to; s=fm2; t=1786648361; x=
+	1786734761; bh=OPTJJWGFW8rfUSDqJr7+Vdt4LldfwHyBFnRFRinsAnE=; b=r
+	Ya5PKrBPBrMNIDLxm8F/bLUdeapSg0L5x8zrBDdO6XlY2vFG5aE6Qhfzi4jsNSN0
+	O0v//d7CvFpbsHgf/6ZhGw50BEEUAWRpUIqEUjJcAJZH8Sb00Etuu1lHDQCdND0a
+	6emEG4qMedXWwPiuXzScJxrlPKqkIYUyOUW1IzymD373hWYq1V95Kbc7BTSOvRS/
+	JyO9GI13ie9OlJSNOWJtSkIVWMTFNTR0XeHKWOC4ILplIHJsZB9TGjXOb047UbO0
+	a8uTMVKPAnB4rFger87pX/sgLJ28wJvVtc/SLnlYP6sUVSGwRBVoFD8nBupvntRV
+	nRqUtV2UYefhYUt+i0OHw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1786648359; x=1786734759; bh=E
-	+XzRN93WzpeE0XILCoZd1gmW9hAX/3/A2Lod4scisg=; b=IkQWZUlWgc7yggahB
-	9OD1/vIgml4JLRoqe+cYc2WvGLr+2ZNE3xlzPqvQCtiIBnkWQugxpK7iHswe24pF
-	HbBIlYNdj1PoHdub0ZT2VLg1qC/KfhYu+AybZgQNvRDkDPnaOJOFYWHT1S3D0A5/
-	1pr6NqTxnTrvTVQpQkzDcSDEOJV2uN7+jbh9Q8OugnNYgaINpZnqVr7Jg6Lu26Mr
-	wfCU1ew+TCKduOx1sOpXWqZNtTxTLjASvmw/mIAX77SK0P2nGTooo+3HCAgMRI5c
-	uNcvGoSram8+AFdm0pZ4fpDS5lTQAB9yAD51Evk9ezDuGKKUeZixSem6J+XCdvda
-	DusDg==
-X-ME-Sender: <xms:Jxd-ah7EfTQz6nGpHpzAv7sHHVtEVKc1wAc-Lp3FQHSKgRwUf7Ca6A>
-    <xme:Jxd-amVsOdl1X_SksW-2L5ri1DzKfR-8BGQ3SVHG0X1J1VwBI0lnTCIDp2N_CV1Wm
-    rI9Lyy9TDWfzubeoyN1ZKiJ6TGpft15tlPNDVvhfnWfB8g8nHblw3c>
-X-ME-Received: <xmr:Jxd-al3tb8yXZwXDgXvdTfCXHLG45X4LljqIpOjgS879c6IxD0dQba32z_s8hG8YLJ3UG5lmRLKFh4sRbcr1BZHOlDoR3i0POg>
-X-ME-Proxy-Cause: dmFkZTGVo/fISZo4Lx3HK5G8K/1BKX3rHaUfQ1GhyoRRdn6Nithie5qYTfeC9KFsFsj9IO
-    FfIQhTWNZReJIExNHeaNCqaGUYHXy0AzBu+O9KE2pAHOOVVYHIcLuLUH3VVk+vTyVQXZrH
-    iwFYVSjAus7MHuU0HHGX8CNfaUc4skXRllj61lrG0APnG1vXDhaQY4hAJT7T2PQyIshaMo
-    a1vMRS+lfCMDBPndDILWWaow50Mg0ab9BWmQ+AtT01rsr2Zm2thSQgFXM3Dr0rir7Qbi2s
-    6f/mtC25y1Fu8n3GWKoUoCLmuDqaHOsdT09qPtCRd3qbBx0YbGruOiVwWwn70VHy0sB9bv
-    y4zKMoS7fVM/GfBfCdXn5xE22IeLUNA2KFrCeC7Kfb6TCmT8G3z7WiipHuOjRGktLfGafM
-    xxZWIT2RcDe9RxbRCCqwwJR6ylfDDOvZxGOYJs+yfEknlKWiHKaKN27Gtrrw7k45yqs9Ik
-    eEwfpY8pzo5ArDHHfhf1OYSZVXg2Iz4OZsHV3UDLnhkE1sohppyn+HkC2omsDTiojULjhb
-    d9bSTtaXN+uSiJXl5WxLqOmZYXf0hwYqJtOqjjN2q7drlk9S9R6yoUUjL6mYjnAGS2jZ4O
-    rMxtgpcqy56Ka5cebn/O2LRvgY1/4Ez+F0CUTicHr5PKybBqoF37qzvysO+A
-X-ME-Proxy: <xmx:Jxd-aj0icPt2Oz-SamXlYHljmId7CSlMegQg0DCVQTVQXyiYsCNLIg>
-    <xmx:Jxd-ao_dHq4G5rr8agT1hhSSPtMIWCwCO6NnmM9gTT3cWd-5RNveyQ>
-    <xmx:Jxd-ag1RmCr-sQFAJ7eHeXQwRNTsJioBWTzl5lOyhyUcn5SRPFl_ew>
-    <xmx:Jxd-al86e2cczitYIfhv8CUQxL6UjakHZ6fSBq-Y-Mei_FndtxhRbQ>
-    <xmx:Jxd-auWmPxMjHugBPHh8ZK4utB-psilp6qjD3CC7MSMMnUY-8bb8-1I3>
+	:x-me-sender:x-sasl-enc; s=fm3; t=1786648361; x=1786734761; bh=O
+	PTJJWGFW8rfUSDqJr7+Vdt4LldfwHyBFnRFRinsAnE=; b=koPwZnwyRGKCtO8Ir
+	saBGkDS/Zz0StfYTfeMNDImQWkl0UiY836P2k1chq3ZXqKg+kkBv5O6qDyIZ9OK6
+	7I9SUQnCuSwDA2W0b5H7tPjhlElpkItKohG5czExsXkLq6dbGL+hHk7RxwoRCgMo
+	YTNmV9ZMQZNwzbGQ/68mvFwk55dWWsvcgbU57qpEbNRbknpRuo8m2lQclvyU9xBV
+	tinUtYI6NwQZi5KznAyyPbcL5+EXMXI0PsRwK9y+o0b3DhNyWKe29ar1lTrdFR73
+	LedpzYMPB8Fs1m6ARNaW9mcm0UkPkc3M0dMtAhSPLHERQHWLszdXKXI8xIZ5Cb8Q
+	7h4+w==
+X-ME-Sender: <xms:KRd-aimli4ZtzOQyPyRfqAmuezCc6rLM4WjwgD-e1x-EQxgi5cFF1g>
+    <xme:KRd-ahQgdkGGHNwUTGD3cCgJ3ZI1X10v3y1hWumr9glPSSnBTe_XHN98LgGsqKGYO
+    XPWcyE_nkg6ui7zLzXYKKv9j1QlubiSIT2W4d3ajNhOO9w-tC2c4g>
+X-ME-Received: <xmr:KRd-auCoCx_gALIu2uK0Yrx2_B--BYrpmpEWJ_8JzZ_1wevX5G-WoZt3CIk1oLhAvWJDqZlA4opG-wJfF-eYAduuiPDUJQrvww>
+X-ME-Proxy-Cause: dmFkZTFt2T4H0ql8unK31cAUawntRe4L9uhSWwbjsT2l3YnHK0SpRTGdxeOiiTih2AglYh
+    9ZbJWlVMoJkT9AfZqSmQy755715yF/fin9yw6MKrbDfyhbd8VHyRMC0ksORtZayNIwCjcE
+    ZVkNZSt8HpksrAROnfCq81Q6fUpaRBDUX/XKB0X+eTHnVlIiBOk7kAW/8pjQ9UMQPEp4R0
+    7pC3Gva76dCEO4jZRmv4U3g33uyZSwhFsoHQuj2A1+0TMm7zlse7pPag/ckYX7HYOOJdqD
+    RF3l1lmNbTVZJefxsGPE6b7njXw/YxF1HOgVXoknrLsE1/J16US2GVWRUrUzK2nEzqCOpD
+    EQXDhInwiJDwDzwfbMiUm7OZVLFQ3hJRTkR5GUrXC7o+N88sYYjNOWssO+nEeb//kBQOfY
+    8BPQcOeuytx6kX+/ndN6YU2fS7sO8apZMR8iHDixCkgWs6Dusdia7luo3INJqvE8DZIAbK
+    HP7eZXDlMHjUa+JItBZC1NsScdWSwxfmVayMQ1SdPwC5QZ1lTMxt3pZYAeGPKAW9t72RRb
+    4ocERPzuoBaAPGZsaQdoLAfQdzJ4Qp/7uE3LdqVONq3PITlOjLneUAJQv4m4jrZI+pqn+6
+    HZSbzq6s0aAZyKZoGPjJzwYQwYWoOUY7VgtdDBO+mEWE5BeYvfek2IXPIfCA
+X-ME-Proxy: <xmx:KRd-agSr-oiAV0eZc5ejp-cCRAvsQ7SRaiGvlQ5IQBVPNNfl5aT4rA>
+    <xmx:KRd-akrkcRLFBfV2aO8ftB1IWfG4pDDHLCNX6yHJrJwih4mmBCBDKg>
+    <xmx:KRd-aqwwYticlBrCMzmdOnrX0myLRjbl3TwjaRm7QZyxNTNt7XTAhA>
+    <xmx:KRd-ahJL7M1rt3gUeZFC9bTyBIUpuo9OqcuIEpf2iBqZc9aAXg4fsA>
+    <xmx:KRd-alQr8WNThY1C51JknLLmcyF6em2WmI8XnPyFzAhWEtUXzQDj2xu1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Aug 2026 15:12:39 -0400 (EDT)
+ 13 Aug 2026 15:12:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 2/3] completion: complete tracked paths for "git checkout"
-Date: Thu, 13 Aug 2026 12:12:33 -0700
-Message-ID: <20260813191234.1066662-3-gitster@pobox.com>
+Subject: [PATCH v3 3/3] completion: 'git checkout' completes untracked paths as a last resort
+Date: Thu, 13 Aug 2026 12:12:34 -0700
+Message-ID: <20260813191234.1066662-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.55.0-759-g9dcc51a0fd
 In-Reply-To: <20260813191234.1066662-1-gitster@pobox.com>
 References: <xmqq7blx5oor.fsf@gitster.g>
@@ -86,92 +86,103 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When completing arguments for "git checkout", _git_checkout()
-delegates to __git_complete_refs(), which only completes revision
-references.  This is good, as mixing revisions and paths in a single
-list from which the user can choose is confusing.  However, if no
-reference matches, or if "--" is given, _git_checkout() leaves
-COMPREPLY empty.  Bash then falls back to the default filename
-completion in $PWD.
+We taught 'git checkout' to first try to complete revisions (unless
+'--' is present on the command line) and, failing that, to complete
+tracked paths.  If this yields nothing, it lets the Bash default,
+which offers paths in $PWD, kick in.
 
-This fails when "git -C <path>" is used, as $PWD is not the target
-repository.
+Teach it to complete untracked paths before giving up and letting
+the Bash default kick in.  With this change,
 
-Update _git_checkout() to use __git_complete_index_file() when "--"
-is present, or when revision reference completion yields no matching
-candidates, so that tracked paths are offered as candidates.
+    $ git -C another-directory checkout un<TAB>
+
+finds the 'untracked' file in another-directory and offers it as a
+completion candidate.
+
+Note that this is of somewhat dubious value, as an untracked path by
+definition does not exist in the index, so checking it out from the
+index would not work well.  Even when used to check out the path
+from a different branch, it is still of dubious value because it is
+unlikely that a path tracked in another branch is lying untracked in
+the working tree, as switching from a branch with the path to a
+branch without it will normally remove the file in the working tree.
+
+A better behavior probably is to detect the tree-ish argument on
+the command line and offer paths with the given prefix as candidates,
+but there is no __git_complete_from_tree() helper readily usable,
+so mark this as #leftoverbits to wait for another day.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- contrib/completion/git-completion.bash |  4 +++
- t/t9902-completion.sh                  | 39 ++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+)
+ contrib/completion/git-completion.bash |  4 ++++
+ t/t9902-completion.sh                  | 21 +++++++++++++++++++--
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 38dec1cabe..0eecfcbf8b 100644
+index 0eecfcbf8b..e6dce62d3c 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1780,6 +1780,10 @@ _git_checkout ()
- 			;;
- 		esac
+@@ -1784,6 +1784,10 @@ _git_checkout ()
+ 	if [ ${#COMPREPLY[@]} -eq 0 ]; then
+ 		__git_complete_index_file ""
  	fi
 +
 +	if [ ${#COMPREPLY[@]} -eq 0 ]; then
-+		__git_complete_index_file ""
++		__git_complete_index_file "--others --directory"
 +	fi
  }
  
  __git_sequencer_inprogress_options="--continue --quit --abort --skip"
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index b889ec8c77..13fa5c65c3 100755
+index 13fa5c65c3..e8418f069b 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -2714,6 +2714,45 @@ test_expect_success 'git -C <path> checkout uses the right repo' '
+@@ -2727,9 +2727,19 @@ test_expect_success 'git checkout completes tracked paths when no refs match' '
  	EOF
  '
  
-+test_expect_success 'git checkout completes tracked paths when no refs match' '
-+	# file1 and file2 are tracked but file3 is not
-+	# there is no ref that begins with f
-+	test_completion "git checkout f" <<-\EOF &&
-+	file1
-+	file2
++test_expect_success 'git checkout completes untracked paths, too' '
++	# ufile is not tracked and there is no ref that begins with u
++	test_completion "git checkout u" <<-\EOF &&
++	ufile
 +	EOF
-+	test_completion "git checkout -- f" <<-\EOF
-+	file1
-+	file2
++	test_completion "git checkout -- u" <<-\EOF
++	ufile
 +	EOF
 +'
 +
-+test_expect_success 'git -C <path> checkout completes paths in specified repo' '
-+	# otherfile is tracked, oops is not
-+	# lostfile is tracked but lost
-+	test_when_finished "rm -rf repo-for-checkout" &&
-+	git init repo-for-checkout &&
-+	echo content >repo-for-checkout/otherfile &&
-+	echo content >repo-for-checkout/lostfile &&
-+	git -C repo-for-checkout add otherfile &&
-+	git -C repo-for-checkout add lostfile &&
-+	git -C repo-for-checkout commit -m otherfile &&
-+	echo untracked >repo-for-checkout/oops &&
-+	rm -f repo-for-checkout/lostfile &&
-+	test_completion "git -C repo-for-checkout checkout o" <<-\EOF &&
-+	otherfile
+ test_expect_success 'git -C <path> checkout completes paths in specified repo' '
+ 	# otherfile is tracked, oops is not
+-	# lostfile is tracked but lost
++	# lostfile is tracked but lost, ufile is untracked.
+ 	test_when_finished "rm -rf repo-for-checkout" &&
+ 	git init repo-for-checkout &&
+ 	echo content >repo-for-checkout/otherfile &&
+@@ -2738,6 +2748,7 @@ test_expect_success 'git -C <path> checkout completes paths in specified repo' '
+ 	git -C repo-for-checkout add lostfile &&
+ 	git -C repo-for-checkout commit -m otherfile &&
+ 	echo untracked >repo-for-checkout/oops &&
++	echo untracked >repo-for-checkout/ufile &&
+ 	rm -f repo-for-checkout/lostfile &&
+ 	test_completion "git -C repo-for-checkout checkout o" <<-\EOF &&
+ 	otherfile
+@@ -2748,9 +2759,15 @@ test_expect_success 'git -C <path> checkout completes paths in specified repo' '
+ 	test_completion "git -C repo-for-checkout checkout l" <<-\EOF &&
+ 	lostfile
+ 	EOF
+-	test_completion "git -C repo-for-checkout checkout -- l" <<-\EOF
++	test_completion "git -C repo-for-checkout checkout -- l" <<-\EOF &&
+ 	lostfile
+ 	EOF
++	test_completion "git -C repo-for-checkout checkout u" <<-\EOF &&
++	ufile
 +	EOF
-+	test_completion "git -C repo-for-checkout checkout -- o" <<-\EOF &&
-+	otherfile
++	test_completion "git -C repo-for-checkout checkout -- u" <<-\EOF
++	ufile
 +	EOF
-+	test_completion "git -C repo-for-checkout checkout l" <<-\EOF &&
-+	lostfile
-+	EOF
-+	test_completion "git -C repo-for-checkout checkout -- l" <<-\EOF
-+	lostfile
-+	EOF
-+'
-+
+ '
+ 
  test_expect_success 'git diff completes tracked paths when no refs match' '
- 	# file1 and file2 are tracked but file3 is not
- 	# there is no ref that begins with f
 -- 
 2.55.0-759-g9dcc51a0fd
 
