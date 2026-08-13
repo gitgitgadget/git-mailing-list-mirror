@@ -1,128 +1,184 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08A4404BFF
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B3447D47D
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786631245; cv=none; b=eW53JurufM0wH4RWL4FuQHSdoyFWvdUl4Bp+T9lChsJZ37o9ilqs+szUWeuT3Ix5AqKpxXQNP5OX10T/OdZ13hshbL7aHot26Sa05JGtGiPcrctokUcYlPAgSab+MAx8TQxcuwEOTfm29vpS62TJ6o0waF8LGA0+z0zS+6S+Y8Y=
+	t=1786632957; cv=none; b=hpm1iQMPDXYVJvgGPOv7isyxIXDRThgjO1in4y6uvh6XoDRimGk1J1Is6g9K5+qYi/iMQwNColoTTWhEYpFzzrqCteaRa7VNu5wnURzPeUcuDX5lcC9jxZum9i6gQFLpmqVHzGVk/1zecY8iHr9Ng/stfyTJSD3/T91OpfR3FTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786631245; c=relaxed/simple;
-	bh=My1suMmkXnfUI06EDtSh36EyUcb9z4HDB4OuKyk2VJ4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rMkaTFtep9uOd5gtLPpqC9enLXMtc1vQUQXdfMXassY4xm45xPHbbC5u3pZfNW8euOrWQOgL2pxF3KhiKUCUpL2CYYCiXOTT0g4uH+rUZVQCpTwGuGvgEYF8gHwCRUYP7yzSJzQIaB1a1j6hUDAFxJmcQs9D81TmvDKv2+MfzVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ezVF6948; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kuK0MY2W; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786632957; c=relaxed/simple;
+	bh=nYDRxAyHlsFYCtj43+qzvE+T9JnBvcNmamiLVlbPI4o=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=tJD+omFK+InR77OY8EncEHFIUhX9pBKpWNsFSNh8oDhNwpjrglix2apuJMPr9LWHUaVJCG6iZE7JnrwQZBVMRLF0e3Shr8J6jZ6BMpXkmArbB7RZNdFsIFkp+ghALtRg7iHHhEbqDvg71hn8roL7YbCIgzQUwKAxctXzw3B0rCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iaTqod+H; arc=none smtp.client-ip=209.85.161.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ezVF6948";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kuK0MY2W"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id CF880EC0280;
-	Thu, 13 Aug 2026 10:27:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 13 Aug 2026 10:27:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786631243; x=1786717643; bh=JpIl0T5hcd
-	aSch6NmOCFsiE6fCErHnzgvpx8V5mkGNI=; b=ezVF69483zHRYUEIYlvm7QVxi/
-	lxpaz5+EElN+3dWjgTEC/UZFQRc5qfP9dEMtVxw5TtLNUg4MvZAi/+ynsim2RdfO
-	hKs5mX+vyBGSqhhvnFFUf/kwsvTKqDf84oByRByjkPpVZxo3wNCTnQXmIDl5hzPU
-	fvPY3qk2QTMeZV3P8cirhdNSmZpp3/JXLEZzMtjd0xMDeUVrFiLv6BqdAJi2y1jN
-	Vu8kGux8eSZkBPsTSsTehonkJ8xF+ywfgOfen6xNbsUankaZF4TymjxEPTtR+2sb
-	j+zUiwL33Wka0YS74LtmYc3Tk0NVsu2aoGmtkvJ+vLCU1z+z4Pw9Fpmd1/fg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786631243; x=1786717643; bh=JpIl0T5hcdaSch6NmOCFsiE6fCErHnzgvpx
-	8V5mkGNI=; b=kuK0MY2WOLCeSQyFPn90yxDNJ7udqQngDPzH1y6a0H3fzIfl03I
-	1stEEGZ4hoM63nk1shiAmBm7uzmFI6IcJNY47NlDNVRRbV8A7oEzQnHQS+QCFG3f
-	u9HlukXRICTbhghcEEVgJLmbIFA6mGp9WeUDu0uP3+68iRpObR5SLaTt38oiTIvR
-	dF6cupterKw+cMgUxREMUz5sOsWykuiaEztidSrrA/SB4jU92umGBsH/W2yjujfL
-	h+lU24RwWLgwWs1QtOAs3LtkX/TXzEz1hwmiaWdsfdaJVWwPvSFYTkFIDSSPc3Nw
-	OwYXeRohk0dRh5VpSFjInXMGg/AKpeRPTmQ==
-X-ME-Sender: <xms:S9R9ar9JJlAggYeR8mTwcMm49YRrme3XhMXGFKq1H0piduj4oP6GTQ>
-    <xme:S9R9asq1LzJwPIEhXglk8LiLgUZ0l10xkwf6YzStu_-PfZuyvwG6BLYgnHjwJ6Zbd
-    _aXFC2C5U_bUoSs_LGpN-lp4UjBDfNX3mHiYyJsb0QA92K-tyKpsw>
-X-ME-Received: <xmr:S9R9atQSXH9rTIn0Nc4mQDaNaipqvZF5kEnPYxfkCYtTYfgrX2lqtXb2Uf8Xt5YHuuyW2j4OC-c8BxU1c83nuZd_LL35WfVOjg>
-X-ME-Proxy-Cause: dmFkZTGPkRJnZ0qhJH/zZIV24up61BVAhYG9wf/GPGSwEVKJakW9tMn77qyqyWfxy9y37+
-    HFirJumZpSDp1pGRb143Q5edBrQ46qk1jCiaa7UVyDWuQ1LY3Rei6j14wE7JTqMvMy7mAC
-    mpMowCvLsoPiLF0+jfnE3bsOSKyELdsEti/kJLE3U1h7JHjuxONvhsZtRlf7fEMQLpIVF0
-    lKDQ4M7tMKSN8lkV0Xx3iiWLVY51POwB3+l4JlQKUonehV6ZrRDw/zUjJE+ZFscc2GBnqj
-    cF4Ohv6TfhUNVDHC7ZH/Rjz0+KMZHXllm5Sl5Dkfnwl+92RNLkW8nsanNFb5eXcP455Tq7
-    Fx+TnuMFQDSqfbgfVY1bCTWP0pD1B7NZZzWyJiU8ZB0EmYGwThgjSW/CBgE8XVzrZig+hy
-    4901GPWMXdsqyI7IyAL1QoSROcR9aDmsuWVULMBWGLRFdJzXgtsdfBJjwvpWIWg31PmYWg
-    Q3T/LUs5+57y3xeUWBix+gURpkejpcTY4xKhHwHwLTxprQ7GM/flNbTnwEzBewX1/Pcyc7
-    n9aC4l2qdHeirsB/+VAWJMqKhe+B1QZwlBrRIGfl3KgB5V1S3RiRS9LtC/PmY8Jx0AJNGQ
-    23rH8zymJ/4bK7Zm4e4oLwOh8SpWvjD0Pnvtnh1wQFpNMrbV4fuDhG0fpNDQ
-X-ME-Proxy: <xmx:S9R9anMyMDhtZFriDRPyiUBQzZ23BmbDLb3iylSE5u95JPkqmEW1sA>
-    <xmx:S9R9ajjJ4z5zrzbyAKiyTXhrkvTHfkDBdN_R2aMJw_k8A8ASL0-80w>
-    <xmx:S9R9asnjMPV9acDujh56kT_bhBwR9o3G0LE9os5S-3NeMpL5Dgc8SA>
-    <xmx:S9R9anjLaREZabgoEELqBWlwwNlRtgaYU9yBzeEke5YqJVYpRF6VRQ>
-    <xmx:S9R9auIIQJ64HKZJJxhFzrpZSSsgLxoGL_t_ml5sVBHoOL65xA-G6lD9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Aug 2026 10:27:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Patrick Steinhardt <ps@pks.im>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,
-  git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Elijah Newren <newren@gmail.com>,  Derrick Stolee <stolee@gmail.com>,
-  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH RFC v3 2/2] Move libgit.a sources into separate "lib/"
- directory
-In-Reply-To: <693a61b6-e762-d864-d25b-348485ec039e@gmx.de> (Johannes
-	Schindelin's message of "Thu, 13 Aug 2026 11:34:18 +0200 (CEST)")
-References: <20260701-pks-libgit-in-subdir-v3-0-5e4860056094@pks.im>
-	<20260701-pks-libgit-in-subdir-v3-2-5e4860056094@pks.im>
-	<alR9GDNTbdjWB4dq@szeder.dev>
-	<2d455ecf-972e-e3ce-54bc-683050c04282@gmx.de>
-	<xmqqjyqpb96n.fsf@gitster.g> <ansSg4qsPwh5FcR9@pks.im>
-	<xmqqpkzo39d2.fsf@gitster.g> <antWRHPHHES4a1KT@pks.im>
-	<693a61b6-e762-d864-d25b-348485ec039e@gmx.de>
-Date: Thu, 13 Aug 2026 07:27:21 -0700
-Message-ID: <xmqqqzk2t7sm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iaTqod+H"
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-6a168dc590cso12787eaf.0
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 07:55:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786632954; x=1787237754; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=RrJK4dZyzwvrgi0UVXYskeNW8qIaeh0CR2dM+eMr4XI=;
+        b=iaTqod+HklA1w0214e97yDxS1LgEumppjz478nSK26hy1iD8mEZQxftRlo2+oxRsuK
+         5JY+g6/cmb6G+koqizwgmzTeQTmoEDvybMtdSgCafVl3tI0CZRsae2qtWiruly3NvWM4
+         KJBE55lgyrfO/66ahBBbBM7oMcIuS5byViGqJUtfptvqN8rPLOUNdin79gwwj1QlA3g8
+         pzmxaIpVhiOrVPRAoBAU24l0yrI+4YX0ou9RqdgI2LneeVvv+/gQkZKazDO4RJXq670s
+         pt73OTGM4ZB5muoNyqXHiPVzUq4hctkMcPIkO5jVNh+bz2cDB6eoFNjgyHuM2dI47f16
+         LkWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786632954; x=1787237754;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=RrJK4dZyzwvrgi0UVXYskeNW8qIaeh0CR2dM+eMr4XI=;
+        b=ECr+pTUWegxDjb/iZwTnov4bD9or4F74JMZy/x+oTu0b2+tKBPFD2LwFqeGDAGi69f
+         XTo8JQhod1Jb4Jze6d/e2GdL2QQL/nrn50ZMP88IdXhVEgj+zm69fQ1bGIvI/FL+vAl8
+         W0apnulV6UgyRKfooZR6u15bJJ3/jpmXhV+0zDcNHWDs+QfZ2SN/Vtqi2wI9CDIeOc8Q
+         DB9KxlPGON0xeMq0Q5QK2WgB6SsD0VpjYGLUd1xzNayMUriCaoAMuZ2uYI+0V3dtopJI
+         5i4G2OYBO4W9E0BgIWpTCD+oNsv+LL5Pyg0+ECvFwua9Q4ItuD/bOhoB3NLKztBVvMrD
+         XKhA==
+X-Gm-Message-State: AOJu0YxzcYD8AGhTfpbHsZXk7Gzceju36H6zPeTge8/205FGCv0hVYYU
+	aAhdbDttMy6RopmLXQ48uXTN2CM6lgxDGO47Qw1fREeSSYpk6irFdHS6wzO/dg==
+X-Gm-Gg: AR+sD12MrnFxFd+8ZtCmcP/z/hzyD9RG7Fo58kge7TseeBBJGIkwgZiAwKkk361KlsB
+	/8r13Dz0mOGTmzCYm9LAGhnBNQdrW45Pn/U2JTJiRizmhap9PdvckPxALeL4LeX7KyhbCuwW8sK
+	jwrstKG/MJCqrMGqwJQCQHf91PDtJoqRbi+M1APHKi867ue9sY5ZWGEDF0UmFG6N1hJ0W2Ob9cr
+	cRA0hQP3knMTkY3+q55h2ivZECuzMMoNcCHM1GAFa8XVko94QHzjv20HPrWK7KED8YwwT1qDReV
+	YAXs3sBZPGnbIpehQcIVNfHwYfbLccxiJRNb0nqOSA7JbGoIH2MZiagjqCexl2mz4d1BDMCezVH
+	JCn4pY6SKGI7lBXm+sQc565PqgNMDlQ/b2+9l35XMq03/33NoY4Fh6t417lDLDlMI7KiQDvcnhN
+	l5aqoXogPhhUASCV/dawEWsDuh0HKLwUNg0eJedMXw4AspvRohzEsQCQQFMx/NOYdG
+X-Received: by 2002:a05:6820:4c11:b0:6ac:ba90:2e9b with SMTP id 006d021491bc7-6b0c4220d22mr5331771eaf.12.1786632954260;
+        Thu, 13 Aug 2026 07:55:54 -0700 (PDT)
+Received: from [127.0.0.1] ([128.24.160.250])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-45e656a9a33sm1719619fac.14.2026.08.13.07.55.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Aug 2026 07:55:53 -0700 (PDT)
+Message-Id: <pull.2175.v3.git.1786632952.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2175.git.1783615780.gitgitgadget@gmail.com>
+References: <pull.2175.git.1783615780.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 13 Aug 2026 14:55:38 +0000
+Subject: [PATCH v3 00/13] Next size_t stop: pack-objects/delta
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+This patch series continues the effort to stop using unsigned long where
+size_t should have been used in the first place. This makes a difference on
+64-bit Windows, where unsigned long is 32-bit.
 
-> Of course, it would be even nicer if `lib/` was split up further, but
-> then:
->
-> 1) You've got to start _somewhere_. As we saw with so many things on this
->    list, they never materialized because reviewers asked for too much and
->    weren't happy to get incremental improvements first.
+With these fixes, the pack-objects machinery works as intended on 64-bit
+Windows (and any other 64-bit platform where unsigned long isn't 64-bit).
 
-That is why moving everything to 'lib/' and thinking about the rest
-later will not work.  Instead, moving a specific component to a
-specific subdirectory (not 'lib/') would be a reasonably
-self-contained first step.  Consider 'builtin/' as an example:  it
-is focused, and anyone can easily tell what the criterion is.  If
-it is the top-level cmd_foo() implementation, it goes there;
-otherwise, it does not.  Then, you can proceed to the second step,
-and then the third.  Iterate enough times, and the top level will
-become thin enough that you can either make your final step a
-no-op and leave the remaining files there, or create one last
-group to house the hodgepodge of leftover bits and move them there.
+Changes since v2:
 
-> 2) Naming is hard. As we saw with _many_ refactorings (I am thinking about
->    the low-level merge stuff as well as the ODB stuff, for example), it is
->    unlikely to get the origanization right the first time. So I'd think
->    that first moving the bulk of the library code to lib/ is a good start,
->    and worth merging, leaving later contributions to chop off further
->    parts into subdirectories of lib/.
+ * Now zlib_cap_buf() is also widened in this patch series (I had left this
+   for a later one, originally).
+ * The unpack_object_header_buffer() function is now also widened in this
+   here patch series.
 
-Again, this is because you are trying to do everything at once.
-Instead, come up with one clear concept, name it well, move the
-related files there, and then iterate.
+Changes since v1:
+
+ * The return value of sizeof_delta_index() is now included in the unsigned
+   long -> size_t work.
+ * To assign correct values to the now-widened max_delta_cache_size, a new
+   pair of helpers are introduced and used: git_parse_size_t() and
+   git_config_size_t()
+ * There are now two references regarding the provenance of the
+   deflateBound() formula in the corresponding commit message.
+
+Johannes Schindelin (13):
+  diff-delta: widen `struct delta_index`' size fields to `size_t`
+  delta: widen `create_delta_index()` parameter to `size_t`
+  pack-objects: widen delta-cache accounting to `size_t`
+  pack-objects: widen `free_unpacked()` return to `size_t`
+  pack-objects: widen `mem_usage` and `try_delta()`'s out-param to
+    `size_t`
+  delta: widen `create_delta()` and `diff_delta()` to `size_t`
+  packfile, git-zlib: widen `use_pack()` and zstream avail fields to
+    `size_t`
+  archive-zip: widen `zlib_deflate_raw()`'s maxsize local to `size_t`
+  diff: widen `deflate_it()`'s bound local from int to `size_t`
+  http-push: widen `start_put()`'s size local from `ssize_t` to `size_t`
+  t/helper/test-pack-deltas: widen `do_compress()`'s maxsize local to
+    `size_t`
+  git-zlib: widen `git_deflate_bound()` to `size_t`
+  packfile: widen `unpack_object_header_buffer()` to `size_t`
+
+ archive-zip.c                |  2 +-
+ builtin/fast-import.c        |  6 ++++--
+ builtin/pack-objects.c       | 32 ++++++++++++++++----------------
+ config.c                     |  9 +++++++++
+ config.h                     |  3 +++
+ delta.h                      | 14 +++++++-------
+ diff-delta.c                 | 14 +++++++-------
+ diff.c                       |  6 ++++--
+ git-zlib.c                   | 18 +++++++++++++++---
+ git-zlib.h                   |  6 +++---
+ http-push.c                  |  2 +-
+ oss-fuzz/fuzz-pack-headers.c |  2 +-
+ pack-check.c                 |  4 ++--
+ packfile.c                   | 12 +++++-------
+ packfile.h                   |  6 ++++--
+ parse.c                      |  9 +++++++++
+ parse.h                      |  1 +
+ t/helper/test-delta.c        |  2 +-
+ t/helper/test-pack-deltas.c  |  7 ++++---
+ 19 files changed, 97 insertions(+), 58 deletions(-)
+
+
+base-commit: f85a7e662054a7b0d9070e432508831afa214b47
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2175%2Fdscho%2Fsize-t%2Fpack-objects-delta-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2175/dscho/size-t/pack-objects-delta-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2175
+
+Range-diff vs v2:
+
+  1:  0012c1007b =  1:  0012c1007b diff-delta: widen `struct delta_index`' size fields to `size_t`
+  2:  75500c5abb =  2:  75500c5abb delta: widen `create_delta_index()` parameter to `size_t`
+  3:  5b54041baf =  3:  5b54041baf pack-objects: widen delta-cache accounting to `size_t`
+  4:  9850de1a91 =  4:  9850de1a91 pack-objects: widen `free_unpacked()` return to `size_t`
+  5:  c301958284 =  5:  c301958284 pack-objects: widen `mem_usage` and `try_delta()`'s out-param to `size_t`
+  6:  cfbf6c9567 =  6:  cfbf6c9567 delta: widen `create_delta()` and `diff_delta()` to `size_t`
+  7:  ca928b4579 !  7:  e4528f9034 packfile, git-zlib: widen `use_pack()` and zstream avail fields to `size_t`
+     @@ builtin/pack-objects.c: size_t oe_get_size_slow(struct packing_data *pack,
+       	if (e->type_ != OBJ_OFS_DELTA && e->type_ != OBJ_REF_DELTA) {
+       		size_t sz;
+      
+     + ## git-zlib.c ##
+     +@@ git-zlib.c: static const char *zerr_to_string(int status)
+     + 
+     + /* uLong is 32-bit on Windows, even on 64-bit systems */
+     + #define ULONG_MAX_VALUE maximum_unsigned_value_of_type(uLong)
+     +-static inline uInt zlib_buf_cap(unsigned long len)
+     ++static inline uInt zlib_buf_cap(size_t len)
+     + {
+     + 	return (ZLIB_BUF_MAX < len) ? ZLIB_BUF_MAX : len;
+     + }
+     +
+       ## git-zlib.h ##
+      @@
+       
+  8:  9f379ee7aa =  8:  4521a41ff6 archive-zip: widen `zlib_deflate_raw()`'s maxsize local to `size_t`
+  9:  ff103a0ee1 =  9:  f0765f6ed6 diff: widen `deflate_it()`'s bound local from int to `size_t`
+ 10:  c701d2f9b2 = 10:  c91b4d7a7e http-push: widen `start_put()`'s size local from `ssize_t` to `size_t`
+ 11:  e6175d2d87 = 11:  f4f2fa75f4 t/helper/test-pack-deltas: widen `do_compress()`'s maxsize local to `size_t`
+ 12:  762e716afe = 12:  b4004b1067 git-zlib: widen `git_deflate_bound()` to `size_t`
+  -:  ---------- > 13:  bc4a58336a packfile: widen `unpack_object_header_buffer()` to `size_t`
+
+-- 
+gitgitgadget
