@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E093741E6B5
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 19:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3FE41D200
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 19:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786647933; cv=none; b=sBY1S4Sm78RahLD9xHaTWN/Hb5bZaFpPDcURZ/9NKAW5f4a+QpD150ubordrXJjdq4Y/QtRts9z/k7OmUVU+h0NyXUaN+On1AQAEtpXLns/vniUR3QxrEObv43Cc7TFLAGgbBuQv+QGQppx7ycNYsZNmd9sYlqKXjpW3S/26n9c=
+	t=1786647935; cv=none; b=hQSaDlQ2OSf7+d2wHIagH+X4SgqKBEtU8u9NIFCMCuNxJCinhJxVSVHvyYNLOdle3BcMTKZftrtGdhSOKpJQTECks1Mb5oAWwiulagBI5o7g93E0K0QylhdBF7XpF97yinfxfCuIxVB7J0sWFxHSA62JJFSfLKHwitt/E81Vg+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786647933; c=relaxed/simple;
-	bh=62piJ6AlyF+gg+rP1lxaJl6FNcaVpLS7cNMkuREgAjc=;
+	s=arc-20240116; t=1786647935; c=relaxed/simple;
+	bh=f8d02eEPJiX07iXfsggiZW0Xd8C39kAnKLAZ/YkemrA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JVGx9vzZWr47JOQ5XX/sGIQn/4Czjem0fGMqg0QtCed0ZB7I+zVfCooAXedSOoG7lQBPgJUjV/EF6L6FBo+jUjUi7LL8brkxpjjXrsb3h333dPNVPyKZ8ArWhqWixfW9pq84D+/yY1JikrlC9VfQnDY+CyWT8vuZM5dF+4O4L1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DU5FXiQd; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=KW31gZ0iVYwkLjEPzYIlS39m5mSAljB5Xb5JgztFmheOLg3zUWwPczdob7F+2PT/SP8JuswntX54Yq7JvSJe7QfBm+Oo5iNUMw2WsJ2ThJBFiRwbmcSI0IfUYMhmJKPssESNIvxohlG4rD9ujHqSrNjvyb1z5e8I0QoRRleq6BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KNkdQ0aD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DU5FXiQd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30881F00A3A;
-	Thu, 13 Aug 2026 19:05:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KNkdQ0aD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A064D1F000E9;
+	Thu, 13 Aug 2026 19:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786647931;
-	bh=Xk366yZjOgAOYazcUVhvAacHHI8MdmFofAbPWvG2uac=;
+	s=k20260515; t=1786647934;
+	bh=b3sPK48AJeF5tWjV+A8fvX4bLTI12DqXIiKuIEuW62g=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=DU5FXiQdWzvylutD4ouYm9wR6OA23LLDVe/ylFs7oDUGds/5qONMY+RtFDWSW4luG
-	 ZHGBR/IRqJRSmoVrmb7H7cL9lcP3dfIIwSbFfBMoKCclILCjvI9O/fmejs2d8yxH/v
-	 XD2zEW/ySq9nRMxrxtG6f12HzcGsSbAC7+4nsWTa/u2TCzb+xH/pqVEsbHp0kAJ55l
-	 c4rq23sWjndhf7OSnRx5op+eNecDGzTKc+Doexpj2+8Q6DMolhBRKU5TdQol1FVuJn
-	 rkSzM1lAzuxODKTepYec+1zhk/rSGXqmsBjjBpuNnnLgpqzl7imQMS2TpA3hnx08/f
-	 iO/RYrfe9704A==
+	b=KNkdQ0aDP//xRIFQu2EoPkSsfstIk+VSTzF7V09ii9WpETIzn74gT2JyEIOLNG57G
+	 6RVkCoR/KzlfON2+0NOOFbiSmyPOMUHiH0w1nEmz2pITX0cGmxanHEyk5t6dMVfHy/
+	 bXRpZXSzQnn0+pul2qr+S2TgGTbyam1ff+aHsoaEs3Cb19b8tQlovyu5JKMPDzCKi5
+	 ZeqY+Ho/YMNg7bJFRoH+2ze1V66TljRszjlmmAe8HQVdgpxuKOhqJd9Zy7/N6WZHhN
+	 F9lBVTvl3uKcl9D+qfw4+AqJK+KUY+BAMCAb+3LAjpJTLnWMBu9nR91rfdayO7pvPI
+	 Djj6bpRwVV3sw==
 From: Vincent Mailhol <mailhol@kernel.org>
-Date: Thu, 13 Aug 2026 21:05:04 +0200
-Subject: [PATCH v3 3/4] completion: complete 'git history --update-refs'
- values
+Date: Thu, 13 Aug 2026 21:05:05 +0200
+Subject: [PATCH v3 4/4] completion: complete 'git history split' pathspecs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,7 +37,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260813-history_autocompletion-v3-3-69eed1cea93a@kernel.org>
+Message-Id: <20260813-history_autocompletion-v3-4-69eed1cea93a@kernel.org>
 References: <20260813-history_autocompletion-v3-0-69eed1cea93a@kernel.org>
 In-Reply-To: <20260813-history_autocompletion-v3-0-69eed1cea93a@kernel.org>
 To: git@vger.kernel.org
@@ -47,75 +46,74 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Patrick Steinhardt <ps@pks.im>, Ben Knoble <ben.knoble@gmail.com>, 
  Vincent Mailhol <mailhol@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1904; i=mailhol@kernel.org;
- h=from:subject:message-id; bh=62piJ6AlyF+gg+rP1lxaJl6FNcaVpLS7cNMkuREgAjc=;
- b=owGbwMvMwCV2McXO4Xp97WbG02pJDFl1okVSXYwMbyu3xUotDc1rSZurljWFtfjZbompzrdDB
- fiCDTQ7JrIwiHExWIopsiwr5+RW6Cj0Djv01xJmDisTyBBpkQYGIGBh4MtNzCs10jHSM9U21DME
- MnSMGLg4BWCqU5kZ/kowql5r4JQ+3e129MfW6HfiG59MdWfJkdgsZRVYG7vE+hQjw7S8RdcVLCP
- 5EnMc713w4XWJncu0ppNJNLiR44iUVUUxHwA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1673; i=mailhol@kernel.org;
+ h=from:subject:message-id; bh=f8d02eEPJiX07iXfsggiZW0Xd8C39kAnKLAZ/YkemrA=;
+ b=owGbwMvMwCV2McXO4Xp97WbG02pJDFl1okXrOdeqTvgjsdW/IYbD+mmE7/f7c9h1mSe4PbjXX
+ qDd+mt+x0QWBjEuBksxRZZl5ZzcCh2F3mGH/lrCzGFlAhkiLdLAAAQsDHy5iXmlRjpGeqbahnqG
+ QIaOEQMXpwBMdXEHw//Urc/fLNzpxXt4cSb77EeHWY+mfOj3+SnHsy2/Y+/9BdZHGf7X36n4sak
+ i2ujips1bdlzl8earPj2jilOyv+Ttt32isk7sAA==
 X-Developer-Key: i=mailhol@kernel.org; a=openpgp;
  fpr=ED8F700574E67F20E574E8E2AB5FEB886DBB99C2
 
-The "--update-refs" option accepts either "branches" or "head".
-Complete these values for the documented
-
-  --update-refs=<value>
-
-form.
-
-While parse-options also accepts the split
-
-  --update-refs <value>
-
-form, it is not documented. Omit it from completion as a trade-off for
-code simplicity.
+Arguments following the required revision of "git history split" are
+pathspecs. Complete them from tracked paths, including after an explicit
+"--".
 
 Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
 ---
 Changes in v3:
 
-  - Complete only the documented stuck form.
+  - No changes.
 
 Changes in v2:
 
   - New patch.
 ---
- contrib/completion/git-completion.bash | 5 +++++
- t/t9902-completion.sh                  | 5 ++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash |  6 ++++++
+ t/t9902-completion.sh                  | 13 +++++++++++++
+ 2 files changed, 19 insertions(+)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 7f3cabd595..19600940dc 100644
+index 19600940dc..6172b6182f 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -2178,6 +2178,11 @@ _git_history ()
- 			esac
- 			return
- 			;;
-+		--update-refs=*)
-+			__gitcomp "branches head" "" \
-+				"${cur##--update-refs=}"
-+			return
-+			;;
- 		--*)
- 			__gitcomp_builtin "history_$subcommand"
- 			return
+@@ -2194,6 +2194,12 @@ _git_history ()
+ 		__git_complete_refs
+ 		return
+ 	fi
++
++	case "$subcommand" in
++	split)
++		__git_complete_index_file "--cached"
++		;;
++	esac
+ }
+ 
+ _git_init ()
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 851be383e1..b225dd3800 100755
+index b225dd3800..194bca8d6c 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -3131,7 +3131,10 @@ test_expect_success 'git history subcommand options' '
- 	test_completion "git history fixup --empty=ke" "keep " &&
- 	test_completion "git history fixup --empty=drop" "drop " &&
- 	test_completion "git history drop --empty=ab" "abort " &&
--	test_completion "git history reword --empty=ke" ""
-+	test_completion "git history reword --empty=ke" "" &&
-+	test_completion "git history fixup --update-refs=branch" "branches " &&
-+	test_completion "git history split --update-refs=he" "head " &&
-+	test_completion "git history reword main -- --update-refs=he" ""
+@@ -3144,6 +3144,19 @@ test_expect_success 'git history revisions' '
+ 	test_completion "git history reword main m" ""
  '
  
- test_expect_success 'git history revisions' '
++test_expect_success 'git history split pathspecs' '
++	test_completion "git history split main -- --update-refs=h" "" &&
++	test_completion "git history split main -- --update-refs h" "" &&
++	test_completion "git history split --dry-run main file" <<-\EOF &&
++	file1Z
++	file2Z
++	EOF
++	test_completion "git history split main -- file" <<-\EOF
++	file1Z
++	file2Z
++	EOF
++'
++
+ test_expect_success 'git reflog show' '
+ 	test_when_finished "git checkout - && git branch -d shown" &&
+ 	git checkout -b shown &&
 
 -- 
 2.54.0
