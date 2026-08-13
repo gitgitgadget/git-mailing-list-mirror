@@ -1,188 +1,249 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7F03E49FD
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 21:40:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786657245; cv=pass; b=ty0lKBIJKthRWKoytih+P7bOLSIDR8n+KByPW9BzojItFzcLDUMhDImKpuW7z33oqV4VoKYYSsCZr1PW5D6LYtuy0LmvssEJqzJsv6pFgkLWDIBMTF5LcZ38tpkSgVa/NoSLeglOnMTTMzIN18V8IaRGDRdoK0CZm3uwhePW6Gg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786657245; c=relaxed/simple;
-	bh=bHTC/alK42t//7LY/H53X3K7mgmaBaCIkuMzMWJruCI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pMoRuDnMVj8Mn4ppDQR2OLGof6BbuajUHK6VJ61rizitKd5S2b9VoOV9fhbf4P7Q3ElkoQe9QQ+nFb7malKWRx7LY/jgH1Is2+KHYF6WUcXBe5NVpYLFJeRYBAtv3bJhXd0gOJD6BL3SNcNJn51O+iBdjeeJKLWY2LEC7AyTTwg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PWKGtDD/; arc=pass smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E63F42DA4D
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 21:45:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786657523; cv=none; b=LbbOjLSGgVfpS6sor0/768n93gtBhWVLJbZ4APF9goxoa2lhoxQqx/duzMbxrpBmvrWPtoO/k81Tpc+Th9uKE57yVQ+vITTwXh/cVwuiH2sdyTjn4FHUxBwvXOILwRUEU2BSF2BPcCL161NDZotrex4I5x57FTClh9V/zbQTDaI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786657523; c=relaxed/simple;
+	bh=2da04Le62efRgGdhFgXBvxcsO1CbyI/LLjyyg0RE95o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jBM5ptr3UbM+5nUwD7Eucrki5iwVXIjGCgRoOOMs0Le2NCGluXwiJoDzSkzvdFhcvaGqGDaLYUYyR1HXE/zAyaY8mg3i2VSBINb133WF8M3Ci6V0SjG4E/dTnKBq2HeQ85h3EbhDkSkk3O2Tn2jH+lyM0irGxp/c9blJGzvte1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Afj2LOGQ; arc=none smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PWKGtDD/"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2ceab75934dso5155645ad.2
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:40:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786657243; cv=none;
-        d=google.com; s=arc-20260327;
-        b=pSZ8Sfqs1gsk50qf1liy07UR0b1VjwTyxjur7oBfhy7Letz1Hol7RUXk3AYAN1Trbi
-         TOUs6bw4+BRzvmXGvaHpNyVVX3W0StMAPLTTA6Olvi3I9kEOz7cmAXay9hjrqGVuQg5N
-         x131zeVeeiNJ2Wpvr7uitvNegvfVTSdvEnnCrlBk8C2yTVKPBdbBvuV7GHimNtj7hWhS
-         mrxVOL0o+9lqivJPzvlhQBur1vN8CnmiSjqyjayiQATKj8kOEpZcGccCc7HBYoVujsnG
-         VtQ6VdW7X7Dxip5QthlCzV3KvugUnlEV/yyB/ZyZs0XwYrNGcx6tOswwL/t1WZbgGErf
-         3nwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=bHTC/alK42t//7LY/H53X3K7mgmaBaCIkuMzMWJruCI=;
-        fh=L/Q3/+SSNf2mBcOF000U6fnByE3XQW5Yj+lAfPuq9Dc=;
-        b=daUj3Sz9ZtjQRbcb3bD1eSpXq3GZE3F4yeGtCT8LdpTAaDlfwWXjOUSyUEdhZ2Xsbm
-         g2hfvRdO+UuP5KezILkyJKnnPCmJHHgvWmV8Zv44P2oeXtMpnCFQ33omyOUc5Mk4Q83D
-         uUvGNdV/K6XuMywIHZWNwy2nWA5ltkKUqOs4xMMzmvjqoyR+D3Y7YERAXsw6G5ezKCKx
-         mP/HrHlKiw7yjrdoo9NFaRM5dWgd1RfiJMISShat9wgtiCMPLgQYI5g+0ORY3WtQdtCi
-         5hSl3V80sbI4gwPiDao7yg/1TOc+MpJersL4l9UW2t70+h/QdhTXeAQEi9VT8KGcyXsZ
-         FEEA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Afj2LOGQ"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-451a49abd8aso227891fac.3
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 14:45:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786657243; x=1787262043; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1786657520; x=1787262320; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=bHTC/alK42t//7LY/H53X3K7mgmaBaCIkuMzMWJruCI=;
-        b=PWKGtDD/c7vFe+Oex3HKo7Aku66asD0w4aOsGyRwxa6Zanyh6SAxDcpLWyGJu9tUvE
-         QrwW9kFtgBAkELDHbN7IsTkcDxYxYOi43Zi8T0nRkwL5bJGlS96S6Yr2gQUO89L57vXS
-         GkmYj+yv8b3G2I4UHcs3fTqjCLxIY/HQDb2gL2qqMxprM6FkT80pscrKwAcIQYHU2GLW
-         Z/JZRvZBVIreZOpS6r9umZbuVudn8HuD/r6/lDsm4YVdKFxuFYmHh/c0tOQkxgKDiMkV
-         zzV4T1ZtFgFHU0bX2jeO4I46QHBDzf1uoHu32vnTZQIVj8i5ITJeyYRh+d5pb+IvWwgc
-         PYrg==
+        bh=bqn6bCCt7CRhR8MZpuTpvASp/O3WLIWtMxliAIBmGwY=;
+        b=Afj2LOGQUq+YcqC1AQoMcUDGz5/k57hXVQMNIm9o1pDBcILkdZD2lMDk/Ob/MPJtll
+         MWOuccnM0en2+z9dSKZVYPoTkKQeaHkip4Bhh8mBVi5EbFLjvEGngYFq6gwFGvQPGZjR
+         0rlEZxNMfl3MTFpv9RYJjBBJ5HwIoIYg6OzORlgvSB5z2ztBfnr86wuqKZjrP2MNMDmD
+         CAYmnG6A/h7MI/aY3JnNTozvB76AZpxkAzBUkE+RVDHVfoKoq114iiVwfMkN4k+xCTq3
+         m8gNzni4iwACAQkqrgrz1inSXL60sdEF+ulTXXfcHuXR9Mapo3yCvnM4XjedtFAo3SBZ
+         6nyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786657243; x=1787262043;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1786657520; x=1787262320;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=bHTC/alK42t//7LY/H53X3K7mgmaBaCIkuMzMWJruCI=;
-        b=COTygKghVtgjtDdfBMNzweweGJ6E1j0+jbFIOgyhm8FFj3LV1t+K0W1jMfE8J8IacG
-         qh+vvbGG02QeVVAb7haCWK26ouwFVwd6u0hVzRQ9FL2ttwzgewFKK9lmmJa3U6xdHIyC
-         v+g79RgpdmmtMTxM48SXt1KHres+ZD0+g7eeFY1atyd4sezAFTuUDe/dLyZStMmsqoYm
-         swL6zr3PL5wC1G8ZxGsTZunZHVAImDTlVA1B+0oeibwk7CXGzZF4kxPONuVyEximxPLo
-         8OJ/aedQP63/1NfMW2v95DtDf3zgWsKRFevD32HKAYbFd7s2BRE6U2eqxj06byFfstyA
-         8QiQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpvzdrMKBk/QFq1bWvWh27WbmnZbs8z2rteW5E3UdKmvqwhMtIDgkWEoYsigkKM7q9VmP8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKPAEteuKl3YNlRZwU1W332fo3W/R9AuYOBLZKeWCjW8wvCW9w
-	OpFgIRBbmSja1bmDmPnyPWuUmWmW01BqgMD/69ef9zj37miLZf7vfR9Z6MhQFnIT/YcZVyMGFH8
-	/LnE5zYQk5r0M2D84JhHzW6LPuhc6qLw=
-X-Gm-Gg: AR+sD10Wj8sVsTNyPXqWOahSS/UQSgo1MkTggFAkKhWCk0Km9pM4+n5vdBxJBOfZJRH
-	keeZMTsn3OMb58ZyUFlCSChT3iMIkgJgpnGPgRUgH/K99agHLShisWeM2O5qNgSWKJnbB+DA2lN
-	goe2ruDQSgV2o384DR84MQhLcGLwuTYWFlGQ8t1UkpuqEUAQVP+ByNUy+IO+lUHk5JFYPWOnmAf
-	H5Y51DUxFnUNrlnPGFMQa/4RF+cXfjb1FFoh90jTcNw2H/E5LlQIf6f3fDglWYDfD26DSMSu48m
-	8P/B0+HnW2o/PbsufjRmvU307P/jZbKzn9g82GK8Xi1QUEpg3yR4gOc7PhHQueHeo2fhz7ko2Jt
-	AZa4YB9JbA1IBVcWfiS4xbGEJ1dk0jF3yklpdvMvWGF0olOonfWYynjY6dV6sOKdKYRba0V6qBf
-	m5r5rvm1P0FApK4ITppGcgy9TKIyWmDg==
-X-Received: by 2002:a17:902:fd90:b0:2c8:248a:5dbb with SMTP id
- d9443c01a7336-2d3b0d16339mr10979105ad.7.1786657242808; Thu, 13 Aug 2026
- 14:40:42 -0700 (PDT)
+        bh=bqn6bCCt7CRhR8MZpuTpvASp/O3WLIWtMxliAIBmGwY=;
+        b=RtgTGZLtast/c1+f/3GxHeEcJFnjVElVc4ibwssanQoblVaEelxZSDWQIE7xrzkwOz
+         RP0oigTKfP0Bnes/nAcklzTZnekGgLPvGugUICaRV0ekq81/P8LUmg1J7Snb+zmeBXPu
+         CX7MWdeplLN008EHgcGpPlhr/HjNbhlbZOgcQubN//t0lcMuZvzVlNw7LjS6M399zroG
+         vCiGgU2nxB8ks8N49gH3k09AE67ZGFmgwhLLGCa4UxBrvzaDk6JVSXpTaxhqG5inoWZY
+         AlOWfNVxzU6cBbEa7qnt/iCTZG9+jFdDbLaW5PWV2605gp0wQjuNPoZwyiKi7pbOrPxe
+         Uwpw==
+X-Gm-Message-State: AOJu0YxniaxuzN+VB9PV4VlkTinyzkheSh0rCZUWaO2DWSHBwx0B4srZ
+	mjVX5CjXk6NYFTpC9HAcemOkpcxWzjnamEZmA12tLloimxzV/BgEc1pu
+X-Gm-Gg: AR+sD13nhCwu8c5YU6S37UkxDVlzaOE3mpVxsdpeMaDPR1If/BcE2oQDTRrUIL6O55N
+	6NlEK2nF01FA/1JWBOUrB0ZqA+JJ4BZr1Nh4iOPEuIT/xAwM3SvUJbgTBM1fWIZQwlyvhQC/mcT
+	s52Rj0OlD/lee3iHtauPIzYS0I/Ee5lEAfS/81HIHdykYhfapRwnJ/JEtqYZ0jT0GmMUjLUd5i7
+	XDnOwZZS2NztXPaPEXFjYNqtCuCEIeNlzrSqyeiC4sj+1EsHqZ+NJOt/MyDk9jHJ40XV3f3VoIF
+	HCmCY1BhwHlcVca+DCTojuJaWhhitDCcEEGyZf7QXFe0V9yUWbjgOv74p0uznbAoSOl1/y08YeQ
+	tK+xOBm1/lsSFOLjjvBDzfSbNOHvEw6YWfxDzhD/9XGQM85BUfh53BVWCx5JSXw4fWvcKpW3PfP
+	YX8WLU18wy1fhj1oQOXiL7zDO5GbqSywna/s9rh4CFqS4MUW4aRX66IQ==
+X-Received: by 2002:a05:6870:c273:b0:448:89e3:4c58 with SMTP id 586e51a60fabf-45e9233b0aamr1217901fac.18.1786657520262;
+        Thu, 13 Aug 2026 14:45:20 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-45e8f4e6bbesm736199fac.0.2026.08.13.14.45.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Aug 2026 14:45:19 -0700 (PDT)
+Date: Thu, 13 Aug 2026 16:45:16 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v3 1/9] builtin/receive-pack: properly clean up keep files
+Message-ID: <an41gSCa7EFGkB1r@denethor>
+References: <20260809190106.1565882-1-jltobler@gmail.com>
+ <20260811175415.2044235-1-jltobler@gmail.com>
+ <20260811175415.2044235-2-jltobler@gmail.com>
+ <anwNonpw5SZuHADv@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <annHlFwu4NKwmcLr@pks.im> <59E4039A-C9BA-4EFD-8022-77C73EB51ED0@gmail.com>
-In-Reply-To: <59E4039A-C9BA-4EFD-8022-77C73EB51ED0@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 13 Aug 2026 17:40:31 -0400
-X-Gm-Features: AUfX_my_VipciIRwgSqHeOTdBQJ7zbiuv8AcYHcp_shkmCofZOjbNoye4TY_qkY
-Message-ID: <CALnO6CA5LdL74SqC9V_wJWi=Pf7+cHBDkuUFAJ7jCOVWZjBOzA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Yuchen Tian <cat@malon.dev>, 
-	Todd Zullinger <tmz@pobox.com>, Olamide Caleb Bello <belkid98@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <anwNonpw5SZuHADv@pks.im>
 
-On Tue, Aug 11, 2026 at 12:26=E2=80=AFPM Ben Knoble <ben.knoble@gmail.com> =
-wrote:
->
->
-> > Le 10 ao=C3=BBt 2026 =C3=A0 08:44, Patrick Steinhardt <ps@pks.im> a =C3=
-=A9crit :
-> >
-> > =EF=BB=BFOn Mon, Aug 10, 2026 at 08:27:51AM -0400, D. Ben Knoble wrote:
-> > [snip]
-> >> Back down to being on-par with original code. So that's good. The next
-> >> version will include some variant that reads a struct member instead
-> >> of going through repo_config_get_bool().
-> >>
-> >> But which? Reading the private_ member is obviously wrong; I suppose
-> >> I'm supposed to use repo_config_values() there. Or, rework the series
-> >> to put this member in repo_settings. I think I originally assumed that
-> >> struct is for things that are settings that aren't configured by
-> >> git-config, but=E2=80=A6 now I'm not sure. Looking at prepare_repo_set=
-tings()
-> >> shows lots of repo_cfg_*() calls. So I think I see how to adapt to
-> >> using repo_settings,
-> >>
-> >> Patrick, Junio, and Tian had a brief discussion in
-> >> <anlmwaEtwcCPse1N@pks.im> about the split creating confusion. I don't
-> >> really want to wait for it to settle to land this change, but we might
-> >> want to work together on identifying the best path forward for
-> >> core.useNanosec :)
-> >>
-> >> I don't suppose it really matters to me which struct I put the member
-> >> in. As I said, v2 will definitely fix the hot path lookup here. Just a
-> >> matter of input on which struct we want to use this time, I guess.
-> >
-> > I think `repo_config_values()` is the modern variant that we're slowly
-> > migrating stuff into. But that struct only works with `the_repository`,
-> > so the question is whether we ever use "core.useNsec" for a different
-> > repository. My hunch would be yes, for example when recusing into
-> > submodules, but I'm not sure.
-> >
-> > Patrick
->
-> Thanks. I=E2=80=99m working on control-flow analysis to see what kinds of=
- repo values end up there. Of course I=E2=80=99ll also run the test suite a=
-nd so on with the repo_config_values change. But the analysis will take som=
-e time.
+On 26/08/12 08:07AM, Patrick Steinhardt wrote:
+> On Tue, Aug 11, 2026 at 12:54:07PM -0500, Justin Tobler wrote:
+> > When git-receive-pack(1) stores an incoming packfile with
+> > git-index-pack(1), a ".keep" file is written alongside it to hold the
+> > pack in place until the references have been updated, and is removed
+> > afterwards. The path used to remove it is derived via
+> > `index_pack_lockfile()` from the repository's primary object directory.
+> > 
+> > In bdee7b3013 (builtin/receive-pack: stage incoming objects via ODB
+> > transactions, 2026-07-10), git-receive-pack(1) started using the ODB
+> > transaction interfaces instead of managing a temporary directory
+> > directly. When starting an ODB transaction, the sources list is
+> > reordered to insert the newly created transaction source first as the
+> > primary to ensure writes are routed to it accordingly.
+> > 
+> > Prior to using ODB transactions, git-receive-pack(1) would only set the
+> > temporary directory as the primary source for the child
+> > git-index-pack(1) and git-unpack-objects(1) processes it spawned and the
+> > parent process would set the temporary directory set as an alternate
+> > only. By using ODB transactions, the ODB source list is also reordered
+> > for the parent process which results in `index_pack_lockfile()` deriving
+> > the ".keep" path relative to the temporary directory instead the actual
+> 
+> Nit: s/instead/& of/
 
-Ok, CI run: https://github.com/benknoble/git/actions/runs/31701945211.
-This demonstrates that nothing our test suite does across the many CI
-configurations ends up where with a non-the_repository-repository
-(ahem).
+Will fix.
 
-I have been working on control-flow analysis by hand in my Git time
-this week. It's of the form "Z calls Y calls X =E2=80=A6" until we can see
-what the repository that's (eventually) fed to repo_config_values()
-here in is_racy_stat() is. My notes are one node per line, which
-indentation showing callee relationships. Some lines are pointers to
-other nodes to avoid duplicating work.
+> > main ODB source path. Consequently, this prevents the ".keep" file from
+> > being properly removed after being migrated into the main ODB source
+> > post-commit.
+> 
+> Hm. Are the temporary packs written into the transaction-managed tempdir
+> now, or do they still end up in the main object directory?
 
-With that in mind, filtering out the pointer nodes, I've analyzed 214
-nodes in the graph. If I'm lucky, I'm approaching the halfway mark,
-but I somewhat doubt it.
+The packfile and associated ".keep" lockfiles are both initially written
+into the temporary directory managed by the ODB transaction. On
+transaction commit, they are then both migrated to the main ODB.
 
-But since CI shows things work=E2=80=A6 I'd rather not continue the analysi=
-s
-if we're satisfied for now. (Esp. since that will give me more Git
-time back for reviewing ;) It being outside-of-work time, I only have
-so much of it.)
+When registering the keep tempfile, we need to record the future
+post-commit location of the keep file that way it can be removed when
+`odb_transaction_finalize()` is invoked. This matches the original
+behavior prior to ODB transaction being introduced in
+git-receive-pack(1).
 
-A few other related things:
-- Some of the edges of the graph appear to be public libgit.a
-interfaces. That means we can't guarantee that only the_repository is
-used.
-- On a related note, I don't know how large the current "must only use
-the_repository" (e.g., via repo_config_values()) surface area is right
-now. Based on the partial analysis I mentioned above, this feels like
-it's introducing (or at least contributing to) a rather large surface
-area. So, this change might make it more critical to resolve the
-limitation mentioned in the other thread. OTOH, I don't think this
-change is likely to represent the only pervasive the_repository-only
-limitation, and I'm afraid it will never land if it must be
-the_repository clean (unless repo_settings is the_repository clean and
-we decide that's an acceptable place for this member).
+> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> > index 86933d8d7e..d74b787148 100644
+> > --- a/builtin/receive-pack.c
+> > +++ b/builtin/receive-pack.c
+> > @@ -2412,7 +2412,13 @@ static const char *unpack(int err_fd, struct shallow_info *si,
+> >  		if (status)
+> >  			return "index-pack fork failed";
+> >  
+> > -		lockfile = index_pack_lockfile(the_repository, child.out, NULL);
+> > +		/*
+> > +		 * The lockfile filepath is expected to be the final location of
+> > +		 * the ".keep" file after being migrated to the main ODB source.
+> > +		 * This ensures the lockfile can be found and removed later
+> > +		 * after the ODB transaction has been committed.
+> > +		 */
+> > +		lockfile = index_pack_lockfile(transaction->source, child.out, NULL);
+> >  		if (lockfile) {
+> >  			pack_lockfile = register_tempfile(lockfile);
+> >  			free(lockfile);
+> 
+> Okay. So previously, we wrote the ".keep" file into the main repository,
+> whereas now we write it into the temporary object directory? Is the
+> packfile itself also written in there?
 
-So, idk. If we're happy with the CI run + use of repo_config_values()
-overall, I can send a v2 shortly (in next 24h), I think.
+Not quite, both the packfile and keep file were written to the temporary
+directory and continue to do so.
 
-Thoughts? Strong opinions?
+Prior to bdee7b3013 (builtin/receive-pack: stage incoming objects via
+ODB transactions, 2026-07-10), the ".keep" files were also being written
+to the quarantine directory and migrated alongside the packfiles. The
+main git-receive-pack(1) process always kept the primary ODB as the
+first entry in the source list though ensuring that the "filename"
+registered for keep tempfile was the final location. With ODB
+transactions though, the source list order _does_ get changed and
+resulted in the keep tempfile not knowing about its final location.
+Consequently, it is no longer cleaned up.
 
---=20
-D. Ben Knoble
+> What I'm wondering is why we even need a ".keep" file at all anymore if
+> we're not storing it in the main object directory. It wouldn't help us
+> to avoid the race, because after committing the transaction the ".keep"
+> file would remain in the temporary directory, whereas the packfile would
+> have been migrated to the main object directory. So it doesn't have a
+> ".keep" file at that point, and neither have references been updated to
+> point to the new objects yet.
+
+The ".keep" file does end up in the main ODB alongside the packfile when
+the transaction is committed. The main problem here is that it is not
+being cleaned up because the post-migration path does not match what the
+registered tempfile tracks.
+
+> So I wonder whether instead, we'd have to:
+> 
+>   1. Start the transaction, creating the temporary object directory.
+>   
+>   2. Write the packfile into the temporary object directory, but don't
+>      create a ".keep" file.
+> 
+>   3. At commit time, first write a ".keep" file in the main object
+>      directory and then migrate the packfile over.
+> 
+>   4. At finalization time, prune the ".keep" file from the main object
+>      directory.
+> 
+> That would retain the current properties of the system, but as far as I
+> can see this is not what we're doing here.
+
+With this patch, this is effectly what we are doing already. The main
+difference is that we are creating the ".keep" file alongside the
+packfile via git-index-pack(1) and migrating both when
+`odb_transaction_commit()` is invoked.
+
+We could stop relying on git-index-pack(1) to generate the ".keep" file
+and instead generate it ourselves during the commit phase as you
+suggested, but I'm not sure that would really buy us anything right now.
+For now, I think it would be fine to keep the changes more minimal.
+
+I'll try to clarify the commit message a bit in the next version to
+better explain what is happening.
+
+> > diff --git a/pack.h b/pack.h
+> > index 1cde92082b..68dcf08cf3 100644
+> > --- a/pack.h
+> > +++ b/pack.h
+> > @@ -3,6 +3,7 @@
+> >  
+> >  #include "object.h"
+> >  #include "csum-file.h"
+> > +#include "odb/source.h"
+> >  
+> >  struct packed_git;
+> >  struct pack_window;
+> 
+> Let's add a forward declaration instead of including this header.
+
+Will do.
+
+> > diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
+> > index 0798ddab02..400a597606 100755
+> > --- a/t/t5547-push-quarantine.sh
+> > +++ b/t/t5547-push-quarantine.sh
+> > @@ -70,4 +70,18 @@ test_expect_success 'updating a ref from quarantine is forbidden' '
+> >  	git -C update.git fsck
+> >  '
+> >  
+> > +test_expect_success '.keep file is removed after push' '
+> > +	test_when_finished rm -rf keep.git &&
+> > +	git init --bare keep.git &&
+> > +
+> > +	git -C keep.git config set receive.unpackLimit 0 &&
+> > +	test_commit foo &&
+> > +	git push keep.git HEAD &&
+> > +	pack="$(ls keep.git/objects/pack/pack-*.pack)" &&
+> > +	keep="${pack%.pack}.keep" &&
+> > +
+> > +	test_path_is_file "$pack" &&
+> > +	test_path_is_missing "$keep"
+> > +'
+> 
+> This would feel a bit safer if we had a hook that verifies that we
+> indeed have the ".keep" file in the right spot before committing
+> everything.
+
+I'll try to set something up in the next version. Thanks.
+
+-Justin
