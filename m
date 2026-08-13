@@ -1,64 +1,64 @@
 Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51320374A17
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 15:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71C6377ECF
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 15:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786636132; cv=none; b=d8JeJ9J2XK17kiZWOsnwKRavTEpzCRVClC8/XYLjIagxFxZ6+EjmzIkdFgxgNLb5gSJ5wiWsPSB32ZRDUC6uv0RSBu1RftLSJPjTmEv/3oTYXh8tjtXF1j3IFohgY6MyFqfIgWSWTFUqRQDbg5c6ChOiBgWvodOHZJDJFaFIT0w=
+	t=1786636136; cv=none; b=SFa/SdjtGlBxaw70Bf0jItz/2k+HTZPXXDI8qNCxguI8hgntzo4JfLr8SX0dR86QGw/JrnYvleZuMsZQTlLInoDBhVKtzZwheFXz8aZeFsBglGdS5cDnkmbue+A2EN9dkqIX7QegNQkzzu/NphUR0sdPOQFrZjQhbhAZROt71k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786636132; c=relaxed/simple;
-	bh=ZdhJzlq7x/uqvhjDxVjKaTxRTuL99GLIcJxg2dJhIA0=;
+	s=arc-20240116; t=1786636136; c=relaxed/simple;
+	bh=eL/3ZW/77NZ4lnQ57HlYkrGHe48rbvY3zTpjIG9MGO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUCxBj3qvKGmtI6nkVUVNMeshaxdM4vF/ym2ipCM6XfsLSqUT2k0xV7RrCszCFcVe91Wz+8/7332vjkCFaliLtl/px7KVULLLqD9LkQlFEdzlIputS+fZmTthkXdOxLmutS03uzAE5CV+a5FrGTxdMxsmNZk/OT8AqfTPakG/Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iCfntCT4; arc=none smtp.client-ip=209.85.128.44
+	 MIME-Version; b=Xqp2tcCZGOJxOdITJxc9vzF1gd19N3ipRvdRG6ynUQFc/fpMdYvHQAWpQOFHMuULLz7+iZgAy/i4CIGbxEyogtZem79YMJoBwrMhOP/m+mRWaocey/uT7fBUWexJZikrRmUA0fbmZ5jkztJyfC1GC7FYfaHAyft1UaZNtC3kSYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=p8Ke/DH+; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iCfntCT4"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4998590d392so862505e9.0
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 08:48:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p8Ke/DH+"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4954d29264cso320555e9.2
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 08:48:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786636128; x=1787240928; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786636130; x=1787240930; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=lrurd5UTlOyQIz/0xsKKJ3ctHYFWkMQi8BRd4t+QyHc=;
-        b=iCfntCT4G52m7i3Fl+LBwM8wk+S1JaFwoBL2FBl1jpfXueWpa22G4/hhaTt171eZFS
-         IWSAJbi83wLXD+Ox/0CqPEJES5JVrq7BA6AsDDtsG1xbxab6EcjSGfdIooiAw8DJfkqN
-         iSBe9iRVeUmMKGn41xyqcp6yd1CsrqN8NrYiQrXtdfJf67XPp3pDiuMZUpS7jdg6pMFC
-         sI9bkgBVWKtW4niZMkONSjHYOczKfTY7lkF6Du8XsVfVYoTDa6Bw8Xt5MQoUFis67ddi
-         sg2cU1w1RkO+onxJlXXLh4AtNx4ykmMrKMuXk37MI/NY4WT+5aPjAiKSHKpoz5ssW3hm
-         SP7Q==
+        bh=nAPpuOLoaBKLdd3P0W/ZNaBom659IEKhJCJDzgKd1g0=;
+        b=p8Ke/DH+Bg+kZnzbneTWBjhdxwVQzr8Tbez9VwSW/1RmjVO1Ha159ojJfSjGL/ZVnK
+         fV+ivbSA2a0qx7zzQRqGERKHO4mfH9xuQRdKTifz8kIOvU55LmidO/xH6KS3jEWRByr4
+         ua3ItLXgaCa7Y/Vqc2v9pVW+SWvMAD9/lKtL4YCCMbUuWnYRrvteZlGRB5A684oWtEpg
+         AO6nsApm8QgR2bevgGVI0nY40UlNVwqDmH7W1KAczVXsyXoRUTl+d9XjG6MhEVWfnr85
+         r2NSG/gnRJ4aT4FtOkx8vdboBOWeZ+QBAtQ22F2o3ABpWulT2tJB9CRS5+xkRn8lI6mb
+         H/SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786636128; x=1787240928;
+        d=1e100.net; s=20251104; t=1786636130; x=1787240930;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=lrurd5UTlOyQIz/0xsKKJ3ctHYFWkMQi8BRd4t+QyHc=;
-        b=JChOWsQsHghQF90ha4QYgWXz6AFZ9APOygDLFFEjlBElpz1W29rkIW55jrH1WKCElC
-         4oUJ3bmFtRiZIxKtdvtyuOn2svysQmcKavjTENNNE1p76CxrxdH/h5iH2BjYaKtdzj5G
-         JkAELRVFwRMucKud8sywspCtzlAzalluWS7sn149QwBGGTBu7l2Nqbvjkt3rjaO0VXaQ
-         M1tRlUFnxXLOJ5IfYq0tiOjz9YNqve0zCMHGeYurHHOyhyem6mzR60cbuZtZWuVMlSml
-         LLiLCpHr0ymBJDdEIbZihNmjItll1h17kGMlEVXKOWmuyv9zKS1FYnrb/OD6EiIUNeyD
-         Bc6A==
-X-Gm-Message-State: AOJu0YwzgCoeTmNxEzigvdUYwEYjbyaNQHBjQMW4gZtLrwydi7HAjvsg
-	GVtk7dBqWgEHIRP7Ftww4WngEJ7QmbetcbPhSuFWyDogi6FExD2JDo11dshWfw==
-X-Gm-Gg: AR+sD10qYg9PdLK3lBNTH/p+c2xGcsZBHg2SX/ea+tkPNLb1ZDc+q3meFxliqDuzBuj
-	DLbco/9RPh8sPVp7AZ7wyEXIrSQbt6huuIGU4LytN06/XUsZJpg5teo0QLu2vKUygbqrVMiaytj
-	+0hhb5KQV41mO/P/sFKoBbnB+7OZ4LXtSL7rkk/sdIbZp3QVLDcoYYVBfPh/ZJw+cvBgHy2O41q
-	kHwAg+use2ASVVN6bHVm2r6nQ+hXrry0IleCS+j+5+u8ZUNMPA65RHqZqFuEPmixmsIY43css1w
-	swcHy3YR7S4v9MYzIVpRZeyFnrKzmddHtZbBFQ1q0I6iPthkfCM51seI1TR7SomNcECVHSIrRMc
-	5ruxfNZwJHe2U8kW3bfeHm6KYeKvgbppihouscW58SfEX5GX/08Zs/+S/XZMwHzAtC2c3gmI8zH
-	I89HTTOUyyb53R5NSAc/GYMzSRiIIlE68Q+SLHH/a9KKu8QYRu0SHq1qAYypE3mi3B8o3dSaUhw
-	/qyfImzKx+RT3qvknoKzGMhw8OvqmIOFrgdYC+1NnbloKUhXfYfo/djAiKTDJgDVybsyMZBoEVw
-	ic8Q
-X-Received: by 2002:a05:600c:6812:b0:499:48be:3189 with SMTP id 5b1f17b1804b1-49982180f58mr103816785e9.0.1786636127948;
-        Thu, 13 Aug 2026 08:48:47 -0700 (PDT)
+        bh=nAPpuOLoaBKLdd3P0W/ZNaBom659IEKhJCJDzgKd1g0=;
+        b=Bi7UqUZJKUO/x+PBW+qUMV/mb+8UQWD22bGkxt4i5iFXSQ0qwJfO9d/ZZCZw0IKg6p
+         RAWYNvfaT+NafkPdb2yKFs7Z3r+2KZQQz1dVL8vwpDKXLjX1PwLPIwef+O7PlXq1pjMG
+         Kq2l5t1Rc0LXuwEWkNeYnwXSaH3GD0KUf2my00tZYuJAY4rJj/D5Uw/Yczc8F6QLdzmm
+         lcrejYf9SuD5Q8BX3DcOq7j7UHYzbQdVTgwFLZl5yfT1K7by38vs3VjfJGsVS5zlje3+
+         CAcdFEn7t73nokl4yIZnZ0kXzxoP16vfbihwPmMRi4l7PlmOCV08yy89rmFcE3KPsbTS
+         YNNA==
+X-Gm-Message-State: AOJu0Yxp3GO4ynXbIAgHlXpvnReR7/6U6xSn7OvBPQzRgDm+MOtdSO5Y
+	jVb/bHpJJlDqsG7SHUqhrK9rDm/ud2VHCXJrNtkDUy+/IuD2Bf3qv7gzg/z08Q==
+X-Gm-Gg: AR+sD13sIhvxNaZegWa/DWZtGtw4CzSSbg7OW9NSPRLiTBS5eAx801ailFAx2hFWT3d
+	anLr/bH6uvf+wMDKW4dZcQaxvMoKcNvd5ij3/TW+Z2r8F/YNkhKlYZkIeXhvXWwb9m8PFuV1o3Z
+	8WJdRFHQ/SIwFALOYgSLCzE1PKWZjtPn2Y9UPEWaicXyYRwzUe1qdr/CC+gU/dn8yGK5qwMjfyq
+	oHFWQUX+UeH9mWnUwqr1z9c/uLxAgimvMKG9xzqoQYRTZPw8Xa6LbpxFmqY+Qn+InHMmyRdK65f
+	VLPPtqIzbAG00SQjkBMt6ZgYEuRIFxPs/ymyAAwILMAWLAi/KKSpzDhZa5SHKYviYUvJdHClcdd
+	q0ZNnUIyzIzXNH/ers72h9M/MIOc7CdIWUYHLdUDJntBMk1SiRq0xJ0Rrp5yTuuBcQtAU/th2ZH
+	hCUjRvHCjqx6X12d1nOp0Y3GHqK2on//Fv856FZXcIQjVDV+zBDQbilmFiKfpubRzHqYtEw4yyI
+	TXRV9HXEXsioHTRkV7ZeHanBAiZdYDVo3dzzG5As3kmRbx0hRPkYGj9+i5u7ITumjmkideJde3M
+	UpMeCgeEIh+xrw==
+X-Received: by 2002:a05:600c:6995:b0:494:596e:e8c4 with SMTP id 5b1f17b1804b1-499821bdcadmr93052705e9.17.1786636129725;
+        Thu, 13 Aug 2026 08:48:49 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([2001:863:5c0:e90b:439b:8502:172e:8dcf])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499821217acsm60633555e9.2.2026.08.13.08.48.46
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499821217acsm60633555e9.2.2026.08.13.08.48.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 08:48:47 -0700 (PDT)
+        Thu, 13 Aug 2026 08:48:49 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 4/5] upload-pack: read uploadpack.lazyFetchTrusted
-Date: Thu, 13 Aug 2026 17:47:47 +0200
-Message-ID: <20260813154748.2378747-5-christian.couder@gmail.com>
+Subject: [PATCH v2 5/5] builtin/upload-pack: set GIT_NO_LAZY_FETCH to 0 on trusted repo
+Date: Thu, 13 Aug 2026 17:47:48 +0200
+Message-ID: <20260813154748.2378747-6-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.55.0.547.gbb97bea608.dirty
 In-Reply-To: <20260807135511.1818458-1-christian.couder@gmail.com>
 References: <20260807135511.1818458-1-christian.couder@gmail.com>
@@ -82,97 +82,233 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Previous commits created and prepared the path_allowlist_apply()
-function.
+A previous commit added a new "uploadpack.lazyFetchTrusted" protected
+config variable that can contain an allowlist of repos, as well as
+functions to check if the current repo is in that list. But when the
+current repo is in that list, we currently do nothing.
 
-Let's reuse this function for a new "uploadpack.lazyFetchTrusted"
-configuration variable.
+Let's instead set `GIT_NO_LAZY_FETCH` to `0`, which allows
+`upload-pack` and its `pack-objects` child process to lazily fetch the
+objects they need to serve a client, for example when the filter used
+by the client and the one used by the server don't match.
 
-It allows us to:
+This allows server operators to properly control lazy fetching. It is
+their responsibility, not the client's, to decide if the served repo is
+trusted, as the main security issue is that lazily fetching runs `git
+fetch`, which may execute arbitrary commands specified in the
+configuration and hooks of the served repo.
 
-  - read an allowlist from that config variable,
-  - check if the current repo is in that list, and
-  - return the result from a new upload_pack_lazy_fetch_trusted()
-    function.
+As `GIT_NO_LAZY_FETCH` is passed down to child processes through the
+environment, this works for `pack-objects`, which performs the lazy
+fetch when serving a client, without any further plumbing.
 
-The new function will be used in a following commit.
-
-Note that the new config variable should be read only from protected
-configuration files.
+Now that "uploadpack.lazyFetchTrusted" is actually doing something,
+let's document it and reference it from GIT_NO_LAZY_FETCH's docs.
 
 Signed-off-by: Christian Couder <christian.couder@gmail.com>
 ---
- upload-pack.c | 37 +++++++++++++++++++++++++++++++++++++
- upload-pack.h |  3 +++
- 2 files changed, 40 insertions(+)
+ Documentation/config/uploadpack.adoc  | 42 ++++++++++++++++
+ Documentation/git-upload-pack.adoc    |  5 ++
+ Documentation/git.adoc                |  4 +-
+ builtin/upload-pack.c                 | 11 +++++
+ t/t5710-promisor-remote-capability.sh | 70 +++++++++++++++++++++++++++
+ 5 files changed, 131 insertions(+), 1 deletion(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index a52856d869..29e700e43b 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -34,6 +34,8 @@
- #include "json-writer.h"
- #include "strmap.h"
- #include "promisor-remote.h"
-+#include "setup.h"
-+#include "abspath.h"
+diff --git a/Documentation/config/uploadpack.adoc b/Documentation/config/uploadpack.adoc
+index 0e1dda944a..e960879c16 100644
+--- a/Documentation/config/uploadpack.adoc
++++ b/Documentation/config/uploadpack.adoc
+@@ -86,3 +86,45 @@ uploadpack.allowRefInWant::
+ 	is intended for the benefit of load-balanced servers which may
+ 	not have the same view of what OIDs their refs point to due to
+ 	replication delay.
++
++uploadpack.lazyFetchTrusted::
++	These config entries specify repositories that `upload-pack` is
++	allowed to lazily fetch missing objects for. By default,
++	`upload-pack` refuses to lazily fetch (see the description of the
++	`GIT_NO_LAZY_FETCH` environment variable in
++	linkgit:git-upload-pack[1]), because doing so would run `git fetch`,
++	which may execute arbitrary commands specified in the configuration
++	and hooks of the served repository. Listing a repository here tells
++	`upload-pack` that it is trusted, so lazy fetching from the promisor
++	remotes configured in it is allowed. This is equivalent to setting
++	`GIT_NO_LAZY_FETCH` to `0` for the matching repositories. An
++	explicitly set `GIT_NO_LAZY_FETCH` takes precedence over this
++	setting.
+++
++Note that this allows lazy fetching from any promisor remote
++configured in the served repository, not only from the promisor
++remotes that the client accepted using the "promisor-remote" protocol
++v2 capability (see linkgit:gitprotocol-v2[5]). The served repository
++is trusted as a whole, including its configuration, so the promisor
++remotes it configures are trusted too. It is the server operator's
++responsibility to make sure that the promisor remotes of a trusted
++repository are also trustworthy.
+++
++This is a multi-valued setting, i.e. you can add more than one
++repository via `git config (--global|--system) --add`. To reset the
++list of trusted repositories (e.g. to override any such repositories
++specified in the system config), add a `uploadpack.lazyFetchTrusted`
++entry with an empty value.
+++
++A repository is identified by its worktree, or its git directory for a bare
++repository, and the value must be an absolute path. Giving a path with `/*`
++appended to it will trust all repositories under the named directory. To trust
++all served repositories, set `uploadpack.lazyFetchTrusted` to the string `*`.
+++
++The value of this setting is interpolated, i.e. `~/<path>` expands to a
++path relative to the home directory and `%(prefix)/<path>` expands to a
++path relative to Git's (runtime) prefix.
+++
++Note that this configuration variable is only respected when it is specified
++in protected configuration (see <<SCOPES>>). This prevents untrusted
++repositories from tampering with this value.
+diff --git a/Documentation/git-upload-pack.adoc b/Documentation/git-upload-pack.adoc
+index 9167a321d0..90c2ba1194 100644
+--- a/Documentation/git-upload-pack.adoc
++++ b/Documentation/git-upload-pack.adoc
+@@ -71,6 +71,11 @@ This is implemented by having `upload-pack` internally set the
+ (because you are fetching from a partial clone, and you are sure
+ you trust it), you can explicitly set `GIT_NO_LAZY_FETCH` to
+ `0`.
+++
++Instead of setting `GIT_NO_LAZY_FETCH` to `0` in the environment, a
++server operator can allow lazy fetching on a per-repository basis by
++listing trusted repositories in the `uploadpack.lazyFetchTrusted`
++configuration variable. See linkgit:git-config[1].
  
- /* Remember to update object flag allocation in object.h */
- #define THEY_HAVE	(1u << 11)
-@@ -1378,6 +1380,41 @@ static int upload_pack_config(const char *var, const char *value,
- 	return parse_hide_refs_config(var, value, "uploadpack", &data->hidden_refs);
- }
+ SECURITY
+ --------
+diff --git a/Documentation/git.adoc b/Documentation/git.adoc
+index 8a5cdd3b3d..2e763d1f93 100644
+--- a/Documentation/git.adoc
++++ b/Documentation/git.adoc
+@@ -949,7 +949,9 @@ for full details.
+ `GIT_NO_LAZY_FETCH`::
+ 	Setting this Boolean environment variable to true tells Git
+ 	not to lazily fetch missing objects from the promisor remote
+-	on demand.
++	on demand. On the server side, the `uploadpack.lazyFetchTrusted`
++	configuration variable can control this per-repository. See
++	linkgit:git-upload-pack[1].
  
-+struct lazy_fetch_trusted {
-+	int trusted;
-+	char *repo_path;
-+};
-+
-+static int upload_pack_protected_lazy_fetch_config(const char *var, const char *value,
-+						   const struct config_context *ctx UNUSED,
-+						   void *cb_data)
-+{
-+	struct lazy_fetch_trusted *data = cb_data;
-+
-+	if (!strcmp("uploadpack.lazyfetchtrusted", var)) {
-+		path_allowlist_apply(var, value, data->repo_path,
-+				     &data->trusted, false);
-+		return 0;
-+	}
-+
-+	return 0;
-+}
-+
-+bool upload_pack_lazy_fetch_trusted(struct repository *r)
-+{
-+	struct lazy_fetch_trusted data = { 0 };
-+
-+	data.repo_path = real_pathdup(r->worktree ? r->worktree : r->gitdir, 0);
-+	if (!data.repo_path)
-+		return false;
-+
-+	git_protected_config(upload_pack_protected_lazy_fetch_config, &data);
-+
-+	free(data.repo_path);
-+
-+	return !!data.trusted;
-+}
-+
- static int upload_pack_protected_config(const char *var, const char *value,
- 					const struct config_context *ctx UNUSED,
- 					void *cb_data)
-diff --git a/upload-pack.h b/upload-pack.h
-index d6ee25ea98..b2212992c3 100644
---- a/upload-pack.h
-+++ b/upload-pack.h
-@@ -12,4 +12,7 @@ struct strbuf;
- int upload_pack_advertise(struct repository *r,
- 			  struct strbuf *value);
+ `GIT_REFLOG_ACTION`::
+ 	When a ref is updated, reflog entries are created to keep
+diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+index 32831fb879..8b531ca724 100644
+--- a/builtin/upload-pack.c
++++ b/builtin/upload-pack.c
+@@ -42,10 +42,13 @@ int cmd_upload_pack(int argc,
+ 		OPT_END()
+ 	};
+ 	unsigned enter_repo_flags = ENTER_REPO_ANY_OWNER_OK;
++	bool no_lazy_fetch_set;
  
-+/* Is this repo trusted for lazy fetching? */
-+bool upload_pack_lazy_fetch_trusted(struct repository *r);
+ 	packet_trace_identity("upload-pack");
+ 	disable_replace_refs();
+ 	save_commit_buffer = 0;
 +
- #endif /* UPLOAD_PACK_H */
++	no_lazy_fetch_set = !!getenv(NO_LAZY_FETCH_ENVIRONMENT);
+ 	xsetenv(NO_LAZY_FETCH_ENVIRONMENT, "1", 0);
+ 
+ 	argc = parse_options(argc, argv, prefix, options, upload_pack_usage, 0);
+@@ -62,6 +65,14 @@ int cmd_upload_pack(int argc,
+ 	if (!enter_repo(the_repository, dir, enter_repo_flags))
+ 		die("'%s' does not appear to be a git repository", dir);
+ 
++	/*
++	 * Relax the GIT_NO_LAZY_FETCH=1 default if the served repo is in
++	 * the "uploadpack.lazyFetchTrusted" protected allowlist and
++	 * GIT_NO_LAZY_FETCH was not already set explicitly.
++	 */
++	if (!no_lazy_fetch_set && upload_pack_lazy_fetch_trusted(the_repository))
++		xsetenv(NO_LAZY_FETCH_ENVIRONMENT, "0", 1);
++
+ 	switch (determine_protocol_version_server()) {
+ 	case protocol_v2:
+ 		if (advertise_refs)
+diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
+index 549acff23f..e6993f2761 100755
+--- a/t/t5710-promisor-remote-capability.sh
++++ b/t/t5710-promisor-remote-capability.sh
+@@ -173,6 +173,76 @@ test_expect_success "clone with promisor.acceptfromserver set to 'None'" '
+ 	initialize_server 1 "$oid"
+ '
+ 
++test_expect_success "clone with uploadpack.lazyFetchTrusted" '
++	# No promisors are advertised
++	git -C server config promisor.advertise false &&
++	test_when_finished "rm -rf client" &&
++
++	# The served repo is trusted for lazy fetching
++	test_config_global uploadpack.lazyFetchTrusted "$(pwd)/server" &&
++
++	# Clone without GIT_NO_LAZY_FETCH=0
++	git clone --no-local --filter="blob:limit=5k" server client &&
++
++	# Check that the largest object is not missing on the server
++	# This means the server lazy fetched it
++	check_missing_objects server 0 "" &&
++
++	# Reinitialize server so that the largest object is missing again
++	initialize_server 1 "$oid"
++'
++
++test_expect_success "clone without uploadpack.lazyFetchTrusted fails" '
++	# No promisors are advertised
++	git -C server config promisor.advertise false &&
++	test_when_finished "rm -rf client" &&
++
++	# Note: no uploadpack.lazyFetchTrusted config is set here, so
++	# the served repo is NOT trusted for lazy fetching.
++
++	# Clone without GIT_NO_LAZY_FETCH=0 fails
++	test_must_fail git clone --no-local --filter="blob:limit=5k" server client 2>err &&
++	test_grep "lazy fetching disabled" err &&
++
++	# Check that the largest object is still missing on the server
++	check_missing_objects server 1 "$oid"
++'
++
++test_expect_success "uploadpack.lazyFetchTrusted is ignored in repo config" '
++	# No promisors are advertised
++	git -C server config promisor.advertise false &&
++	test_when_finished "rm -rf client" &&
++
++	# The served repo is trusted for lazy fetching, but this is
++	# done in the repo config, not in protected config, so this is
++	# ignored.
++	test_config -C server uploadpack.lazyFetchTrusted "$(pwd)/server" &&
++
++	# Clone without GIT_NO_LAZY_FETCH=0 fails
++	test_must_fail git clone --no-local --filter="blob:limit=5k" server client 2>err &&
++	test_grep "lazy fetching disabled" err &&
++
++	# Check that the largest object is still missing on the server
++	check_missing_objects server 1 "$oid"
++'
++
++test_expect_success "explicit GIT_NO_LAZY_FETCH overrides uploadpack.lazyFetchTrusted" '
++	# No promisors are advertised
++	git -C server config promisor.advertise false &&
++	test_when_finished "rm -rf client" &&
++
++	# The served repo is trusted for lazy fetching
++	test_config_global uploadpack.lazyFetchTrusted "$(pwd)/server" &&
++
++	# But GIT_NO_LAZY_FETCH=1 disables lazy fetching, so clone fails
++	test_must_fail env GIT_NO_LAZY_FETCH=1 git clone --no-local \
++		--filter="blob:limit=5k" server client 2>err &&
++	test_grep "lazy fetching disabled" err &&
++
++	# Check that the largest object is still missing on the server
++	check_missing_objects server 1 "$oid"
++'
++
+ test_expect_success "init + fetch with promisor.advertise set to 'true'" '
+ 	git -C server config promisor.advertise true &&
+ 	test_when_finished "rm -rf client" &&
 -- 
 2.55.0.565.gc116661202
 
