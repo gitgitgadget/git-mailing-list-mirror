@@ -1,113 +1,119 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C547D47CC80
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 13:45:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFC747F2FA
+	for <git@vger.kernel.org>; Thu, 13 Aug 2026 13:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786628716; cv=none; b=Dy/0ahqTEk4puYynfI86vgPNH8VmtBqIim9NZygx5pmzTpZyoACliCn8+vVJiRx8dojUhlqmgTsUXtSWV6I9IWGyaVNG3/qg63L+RnSLoNdWxThCgrLy5tAkgdUIsLX5yJjnhIDZ2rVJIyV8tgKDq7okziML5j+p+eYBHP73OmU=
+	t=1786629157; cv=none; b=RZPpuSyScYED/5Wi4QCAqa8wBk23hF4OpdTNZGruaTZ2NFfhSz4V1R1+CUl0RWGaTl3rW3kGhYXC3zr67HaPi20W/c3Xu+8Us8rRfCbLQa/lCLd3ux1h7LV7bmd6Rger2ozTijX2G+P9J8R+MUSEB4ohRYn5MNlnRmaluf70M3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786628716; c=relaxed/simple;
-	bh=5Y5MXsSr85wVsQrT7rZSeQT7+z1Wzg/59QQLN3wr5gk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CsSXqK+jPEWg+4NMh1iakA2sL0wJjsa8ZNtBYm9UIxQmdScIAH70clDRk6C3uV9oPlV3zazkgLgLq5tkHJ7IJXlwVyTVBiew+38gbe+mpzDcGXbzTS9GpquE28blBSakqVw5b0OKHj8HghUGEV1Hmu/6FKcVUtmIaRnbmPaoKuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ePNHTHeP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786629157; c=relaxed/simple;
+	bh=6WTKosmwGUU9PrL+rPLee/+ff1u8X1kMzFffLlzCqoc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FvS9rs3D3GZE+Epw8j8d+pOlnaqnNF4lTahgn6Wq3DGpvAzpklpe9ojOzOs/KB7XohwMdRzii6kjZbQTSyk+yIP42GRejlZTmSbajJgcB/++qbMcbqdQBvZ0ZRN4MZGNRm0tlTSpxW7wLlX2UEmqjpiIio6eVyTScCm9ja6uuG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PgKpSkFl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dajyhd3u; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ePNHTHeP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1981F00A3F
-	for <git@vger.kernel.org>; Thu, 13 Aug 2026 13:45:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786628715;
-	bh=G2/u4LeydePazXsn7t0lVu7q+P+T6yoR8iKgrsdqt+c=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=ePNHTHePW0aSoyesZYu0b4U4undtxh8E5/ceu2gzs0nBbDzx1L/V5kKGcfyR2TW9v
-	 RS73L+6RQIz7RpmTFU4lt28Cw+PjLXrcxrLMtt+iHNz7WiKGuD2v+S7/I9EynwnO7j
-	 4Qj+z7PU3xXFuWjyC4Q5B72Z79+qF1jDg4UKe4iDp0GHebZAVbVc7G3SMp8j5b2K5T
-	 H7dnqGccefBfHu9FPHw1zZFhFfszb4LR7/O3qdmcGjYMqPIiBmXCxurU8LXQl4MH9w
-	 e6TufAczHiBnvwkF9M+G0CMMqMA5OnMoEteLopho0o5eZOewDKkFkpJIJdS0rSXWHv
-	 KokHd5zYcVcwg==
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c20fb91ed0fso240954966b.3
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 06:45:15 -0700 (PDT)
-X-Gm-Message-State: AOJu0YxE5rkDNy5AEMLFRi+8qoH6T7SfQX/z6DQA2vst+7qwHyAfitIF
-	pz+07IcZ0pxolIBjro9lc832XrGVklZ9TIzujK/7x5n/3laWaP2OuRmLU0EFs9QiKeGumoKpqSF
-	w/xuwKvotUQu5WL0X/wt8BqDCojSlomg=
-X-Received: by 2002:a17:906:fe0e:b0:c12:67d2:3d6b with SMTP id
- a640c23a62f3a-c2108e729abmr296121466b.11.1786628714537; Thu, 13 Aug 2026
- 06:45:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PgKpSkFl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dajyhd3u"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 27762EC0224;
+	Thu, 13 Aug 2026 09:52:32 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Thu, 13 Aug 2026 09:52:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786629152; x=1786715552; bh=vNu1ZyfOW5
+	n31/7I3nXfc05m9xArMDtAmZ8pFvNSwNs=; b=PgKpSkFlcJAOZqV4ZMpWtCnxeP
+	hbc5mj9wkcUDYmtwyD6cRzHdvHYmmSYsthgXNzZLVwZcMDEDQJGE0lmxsCuWSJiE
+	UgKkENs/7OgXyC9UrmGfWWt+N+LSXST5d37jORj8BZjqPKntuKPM9udlGDm2JyCn
+	0HQs5PZTmJMqCW7xIM0a9D97o8PSvg8n1hG4qwyZgL2rH8igGHVfZHroI61jvTD6
+	2FY67s5N9Mtu1KWWlRhnj7ch386FOQKOO89eL4yqnLMcYIdwW6J0vWcq32UAs+fi
+	1cR/eTtmsMGH53Yd3MSYHNSo6xgVgROjkmNpijCM/l7I9i7vIq2mH64ni/jA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786629152; x=1786715552; bh=vNu1ZyfOW5n31/7I3nXfc05m9xArMDtAmZ8
+	pFvNSwNs=; b=Dajyhd3uquqA4GJOH+GBySVR5Qs78DGYEUQhBnZ/XSLbYvbw3iw
+	1UxXP/ZKRRQtO54XSUPDrK9FHHB0Z0drqT1RppU26Dr4D/n+182yk/gnwnW8NT1y
+	Dtd7KUWfN3we25isI/Jsalir37mKzAtjpmdRsps1OP9tnEwyv8ugrMmutOKVq1Mq
+	BAo6W/hAe+ldgEhFF8u+uLXiOxKhiLgBownTUIRpBDbLNkHqGwSKUSySr6eyYyj4
+	U9HgU13imDHPRnmzY7RqlotX5s2I+pebtq9ETCAijMFOJIwsiBDliFphaIi9N/UO
+	nq3hEcX9dSpkYXiAtcCohenylEa83Mpmj0w==
+X-ME-Sender: <xms:IMx9asoL4ZwtvuadZWL0nkERgKfBZGQznLrvOneOmSsGANJ5vh4yFg>
+    <xme:IMx9aphnziGI78JxjN0iXSeqYqcZhePqOBZoaKvJyFuzHcYGUhk_hfXxKXlXMPZ_D
+    dg7WhsiklR7tBbqfOyyWB-f9OEIXxx7pV2mV26PADslv_Ja76r-LwE>
+X-ME-Received: <xmr:IMx9apg-J8kcLTriuXI7OlIFlWsk-HkiNE51l9-sOhFK_q2Ajvq2wkq6IiOExr3EXf6kEeN6_yRw8rawVGOxHqzf92ruBrQJTw>
+X-ME-Proxy-Cause: dmFkZTGCEIigQaZz80MC3chy6qJPpejJHiJwJXTCBETIutsJpqv7jDehuilupQKjFNpwEn
+    p7T6vLumj0iJCVOqY2Jcnbb7u30n+usIUtLU9OwyA4GPlKsxlwGqbl/4mHL/r/n9Y9HtBJ
+    nAEiaV0OSPJR6pjhYWeK27pLcEXie5pkjQxLmlhOzkneObqLIQCIsthrtuBb+6PfEXos85
+    aqCSKOlsPivgQlH8BpR30Q2N7pgpgSAXTgcjLMkmr857rNr5kHBbEeXCUkfoTuDmkuQPwf
+    Kt6ECxYvTSDP6FEEE7mbs8D+ixYigvvuXyzuBXAWOi1Ya1VY/YowOA6ghrnMLElNbO8uW6
+    UH1kfYRVvmcdeh2yoO5dD8islqNSfL8xEA9RiU8rSsiWobCuzJfDzsQy98ifsnwhzXm8/v
+    Nj8bDChP6b1y+CfEkl4ErzYbVcgkw0207tP8m9nxeon4EFur4IepcHZ0LgKTr/nzUodQtC
+    PPjOpZY1cfsL1rXZ1rDwWHYKUhz7eJi4P0MCZOLJqDcgEAdAvSjTiTMSx0+S2gCtbwxzjS
+    BaYmMqxSXiElSUblsFw7g6LTEZ8yN8WucAga+axXmOAceT5G1tEQh5ewJwd4NBqh2MEdUe
+    /EDMBdeUaDfb4XT5il/gtl+Sh0XG51lLOfboXnc7hHq22ghq6TeERNM+PG8w
+X-ME-Proxy: <xmx:IMx9avhgs_G4_3MLgVo2R-4sUuhwItzUZuHDqoIGNK0lyHRnM4hM3Q>
+    <xmx:IMx9apLWNLzE4OvrDBozd5KcV_PqCO8s_89aoKqbMAH8icf1Ap8MBA>
+    <xmx:IMx9auHh2gli7kMtzWmpNKvHwhs8LLzOwXiZMncKK_b2hVrk1NBeHw>
+    <xmx:IMx9atSax4hDgXzuHnWqm4d2Do9Db9QOu8IN8DGdNOfi1zXmmzKCVA>
+    <xmx:IMx9al7foAp31YmVY8jmrY7xWjBvciOraXej85OdEs-SSKLuV_buo9Z0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Aug 2026 09:52:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] packfile: fix perf regression with many packs
+In-Reply-To: <an1zz02GNqDu-0Oz@pks.im> (Patrick Steinhardt's message of "Thu,
+	13 Aug 2026 09:35:49 +0200")
+References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com>
+	<an1zz02GNqDu-0Oz@pks.im>
+Date: Thu, 13 Aug 2026 06:52:30 -0700
+Message-ID: <xmqq33wiunz5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMZ6RqLAYMSwNK=w=Xh+O==46eQCS=wFgBoUEOtQoBbLrBqd_A@mail.gmail.com>
- <00E5CBDB-7D2A-4117-9A52-FD5C64A9838C@gmail.com>
-In-Reply-To: <00E5CBDB-7D2A-4117-9A52-FD5C64A9838C@gmail.com>
-From: Vincent Mailhol <mailhol@kernel.org>
-Date: Thu, 13 Aug 2026 15:45:03 +0200
-X-Gmail-Original-Message-ID: <CAMZ6Rq+mBKHE=mNd9QQOWfpuDQwcMK7qZ2jn1tTPdFJEkUrGOQ@mail.gmail.com>
-X-Gm-Features: AUfX_mxu4F27FJbnb-Szu_vzaPlJFG7pjN7S75EA1rruSA5JSyh3thyrpxC8jAU
-Message-ID: <CAMZ6Rq+mBKHE=mNd9QQOWfpuDQwcMK7qZ2jn1tTPdFJEkUrGOQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] completion: complete 'git history --empty' values
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Philippe Blain <levraiphilippeblain@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu. 13 Aug. 2026 at 13:12, Ben Knoble <ben.knoble@gmail.com> wrote:
-> > Le 13 ao=C3=BBt 2026 =C3=A0 04:20, Vincent Mailhol <mailhol@kernel.org>=
- a =C3=A9crit :
-> >
-> > =EF=BB=BFOn Mon. 10 Aug. 2026 at 14:50, D. Ben Knoble <ben.knoble@gmail=
-.com> wrote:
-> >> One other thing, sorry
-> >>
-> >>> On Thu, Aug 6, 2026 at 4:36=E2=80=AFPM Vincent Mailhol <mailhol@kerne=
-l.org> wrote:
-> >>>
-> >>> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
-ion/git-completion.bash
-> >>> index 7372e2919b..fe5223b8ec 100644
-> >>> --- a/contrib/completion/git-completion.bash
-> >>> +++ b/contrib/completion/git-completion.bash
-> >>> @@ -2171,8 +2171,17 @@ _git_history ()
-> >>>        fi
-> >>>
-> >>>        if ! __git_has_doubledash; then
-> >>> -               case "$cur" in
-> >>> -               --*)
-> >>> +               case "$prev,$cur" in
-> >>> +               --empty,*|*,--empty=3D*)
-> >>> +                       case "$subcommand" in
-> >>> +                       drop|fixup)
-> >>
-> >> This feels a bit "inside out" to me, especially when reading the other
-> >> completions. I think the usual pattern is to check the subcommand
-> >> first and dispatch if necessary. Thoughts?
-> >
-> > The motivation is to have a single:
-> >
-> >  case "$cur" in
-> >
-> > statement.
+Patrick Steinhardt <ps@pks.im> writes:
+
+>> -void packfile_list_append(struct packfile_list *list, struct packed_git *pack)
+>> +void packfile_list_append(struct packfile_list *list, struct packed_git *pack,
+>> +			  int is_new)
+>>  {
+>>  	struct packfile_list_entry *entry;
+>>  
+>> -	entry = packfile_list_remove_internal(list, pack);
+>> +	entry = is_new ? NULL : packfile_list_remove_internal(list, pack);
+>>  	if (!entry) {
+>>  		entry = xmalloc(sizeof(*entry));
+>>  		entry->pack = pack;
 >
-> I now suspect this is why some use the =C2=AB case "$subcommand,$cur" =C2=
-=BB variant ?
+> I wonder whether we should slightly reformulate this and rename `is_new`
+> to `accept_duplicates`. Because ultimately, that is what we're doing
+> now: instead of ensuring that the packfile is unique in the list, we
+> just don't care and just append the entry to the list.
 
-IMHO,
+I had the same thought.  The current callers might have been vetted
+thoroughly, but the next caller might not be so careful, and for
+that matter, the code paths to reach current caller may change in
+the future to break the promise of ever throwing a new pack at
+packfile_list.
 
-  case "$subcommand,$cur"
+Is it well understood what bad things it will lead to to have
+duplicated entries on a packfile_list (other than it would make it
+even less efficient to prove the non-existence of a pack on it, and
+possibly a bit more efficient, depending on where duplicates are, to
+prove the existence of a pack on it?)
 
-is not very elegant. Sometimes, it is a good trade-off, but here, it
-does not seem to be the best solution. Of course, maybe some future
-changes in git history would make this a preferable option, but I do
-not have a crystal ball to predict the future.
-
-> Apologies for not thinking of that previously.
-
-No problem :)
-
-
-Yours sincerely,
-Vincent Mailhol
