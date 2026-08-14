@@ -1,148 +1,107 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6E845C709
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 11:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A51741A574
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 11:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786706979; cv=none; b=p7bltilZKNVe8AT5jpSoygCUpcWsrLczl19eThSG9WKfyQCREwzx3+ajEvnbEBASzGZgsqqMNvNh+VIrB+WkpWxrYKyk7fel41yA0azzuaer48jkB9RQ/RI7paTovxFh3wzO1Q6NBfdxCWTKJadZKdwu5BIa/XvvXh/fFD95dSo=
+	t=1786707286; cv=none; b=C/T3PkiShLsSDbedNHqGg98oU9UcrqhdIL4pcb2433KUaxsa/UuBHIk7lb+XksBEElb+MTSHTyYf71B8W5f1H4PkxBq+4Bp5hOf6yCh44ykqiiihTiDDr08dNYtx3RpJQKtfBNshh0I0N4OiwdCrV1pD2NofF+DnRqoU+h78UoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786706979; c=relaxed/simple;
-	bh=b59cE/tvc9VDQ9GpHlebL6e/hVyKd4VX7P2JiYKww4A=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=GNGWW5FldKjG5W3IgsrZqbM2ZyYlRYEzyyOiZKFyb/I8F6OeSGgFOImowNUqHR4SHefOcbS0nSIF0onis+mtAkvRy9MlrUs743Qj+ZGamm6uxjJeH/9draz3H58AmqOSGGBTKkfs+jiOqBK+P3VU2bJxxPJ7rNbR/MVXvAAgG2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LGXVv5Lk; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786707286; c=relaxed/simple;
+	bh=NG+e2SWja2oZJZPPBGkh2A0pVZ+oD4wKK+QMRldw5Gk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=a3fMG1a6gUEsmH8SMjYUXCb4/oTIBiqsGpywRTOYvUm1n4krUB4Rd/eu0erWglz61Hsf8c8h9P6rnmEgauyYA64n3CQO9eJ88NYqMzdHwDnroinVSK00fBlws0KXUndZ0rJbCbK+F13PknGo456v0xHJiUQzWUPFYujmM777j54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=b2cFrtOQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W9upTIX7; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LGXVv5Lk"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-836eac5682bso13164327b3.0
-        for <git@vger.kernel.org>; Fri, 14 Aug 2026 04:29:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786706974; x=1787311774; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=b59cE/tvc9VDQ9GpHlebL6e/hVyKd4VX7P2JiYKww4A=;
-        b=LGXVv5Lk4ViSZwnUPHuLqIZmFdNRcRdql6G29rSKf8wvNOkseiQYlZYf/mrs18Q2ve
-         ac2j0opHO0qh+thR291DwL1VMf+UehPZXstGIKCetqtveEQg6CqdP6/ZPzE+My0WCc0M
-         tXbO/Bfr8geG7+IzPHTR/CEmVE3EWyy8GOR/hMONmFlq2H2EfSFWKhcUWITazYOw6RBt
-         9BJJcZ5SDX/NDIvRNBrNDGPyW77O1rM4P6nqTflruiV5K8jUt/17xn6wt58qmW8212w/
-         5gBLA/ZgIiJ96dYV5bjQajDhhD9Jt9O5MhT2Yti+QH06MiJEENhHX5HJeRIph5LCh00c
-         7IEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786706974; x=1787311774;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=b59cE/tvc9VDQ9GpHlebL6e/hVyKd4VX7P2JiYKww4A=;
-        b=aOvTFtqmG9YxXoOjqIv5uvzPqeFvn1d1277m0538OgStCYoubQFIcd2ZhhTtaXRrDe
-         d5tS6gDBb6z3GSx+TlIvINBEvj+9Sw4PFhJVUy0vjGZjM7xL/mdwj53MrXxahz5MwGTI
-         ts46KV0FSlWSQ3WO0C6Re7jVN4SpWY5CaCLYp9Jegvd6JRUoMWiNy1A+c60QTjde6rAi
-         rYnVdy13QMpNMJvQqmskatorSp82IjGmtpyPk+oButBidTDVmqg55Y8Md4McvQF2TyPD
-         WsrUD4zz5PmCD3/k51tMOuw3DX9NFMoM1ybHOmioDsGV7nwkyp2B/JHR0quFGRPCK5T0
-         DTkw==
-X-Forwarded-Encrypted: i=1; AHgh+Rp+7Dl7/vVwZ2ummrnvU56UgX2BqJdOc0qmWGAqdLAUcylwI6jOcEzvmfmnYmZc9x570gk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzbl/W1unDHWxdfxQcgLfWmM1dWgm0W5HiWvU2xNbyWanOdtcmx
-	GfP1H5zrJxGtO9WZerx5sF8k75gOP/9uRuj7WYjG4A3nOjgrLpZhadI/
-X-Gm-Gg: AR+sD11ck0rnH0zPwpAu6YGQKG5f7pXyqEkaekDs4E7P3bqGAwph+7PvGLN+KpBca27
-	0ABJvlNJ0O4iP2N8r5GaDgpSGOicJNeMF1KAqoi7P07q4u0N6Y75pFlzBvksxUv0o50egBdkMGk
-	YQRU8vKZtV0MyxW9978VuWEkrYKOMuAslk+agb2pp2WDLsQ7SGUjKL4i5H38ZuJYjI8gPFzHs6T
-	HH684jnciEyCOdMziLk5o9IGAl1DQrSO0qiIv2vhjZX5Vz0ZNPO95DeFqk41MT/WKh/O35Fra3g
-	nW2CGC2QYxAaV0MF7lMVZB+R49bO6WwyuVkX3j4teiv3ihpq/wUgC+E+YGowtnswG0UQJIb1g7q
-	GppqNK2aht7noVFOXhcD9xw0pOQP07NS/drdf7Ij6Jb047NqgR2K/M+ZOSbbdEJJkVz0ddezLFb
-	YxNTI4VZoe3wS2N7lHjA4hEiGKYfi1Cu5oMiZrPY88Sit0TGooAguqQLGa+5oBmUT4YGmHPS3rg
-	okJkET4z8fhq3E+a61UoeNeiwPXJu5znpWteWu3M7pBd8jIUw8M+gQg5v8ExHrX7jeju1muOfZj
-	uxhP8XUNYuh3v4v0l/qVgWe+eIgb73byYhPWcw==
-X-Received: by 2002:a05:690c:c6cf:b0:82d:8dc0:9cf with SMTP id 00721157ae682-834880a9cccmr48312077b3.13.1786706973906;
-        Fri, 14 Aug 2026 04:29:33 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:7539:648:8ee9:1ad2])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-836c1777930sm11850867b3.31.2026.08.14.04.29.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Aug 2026 04:29:33 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="b2cFrtOQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W9upTIX7"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.stl.internal (Postfix) with ESMTP id 601311D00293;
+	Fri, 14 Aug 2026 07:34:42 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Fri, 14 Aug 2026 07:34:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786707281;
+	 x=1786793681; bh=NG+e2SWja2oZJZPPBGkh2A0pVZ+oD4wKK+QMRldw5Gk=; b=
+	b2cFrtOQQxLx0hJTTotxEDOrI3UMl3CwcQnPPafeAKGRnx70zxlUxlzr0zz7gWil
+	BTV1TPiMZ0BLAubC9Q7UB+8NJo6F7K3fCTHoHfoK6SZ6XGa6KOk764L63pPHBUbQ
+	x6jVenr2G4OsU5WP3aSeYukOUPBhApm/WGtTuTU5JkQEhnCCgycLKjmFVJvdayUz
+	++ACc8fixmGrEBWOHMbQQftXMfBik3+I6E4GAAcoswhovauMNYBQ1h14+ye+Q2y1
+	xCILyUij+RKznNhWEmQML9jwgxIbmeD4KsGpGYthaI8yXIBbNl4j8WPyjkOd4QYS
+	2ysMIIqepX54h84PNXSHfg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786707281; x=
+	1786793681; bh=NG+e2SWja2oZJZPPBGkh2A0pVZ+oD4wKK+QMRldw5Gk=; b=W
+	9upTIX7Os9ieameHFBR+tuZ1zTJmPASub6ML3cKhD6s2nyg8xqwG4xN5KZuOv7oH
+	D4awNpW1CehvoH6BMwUFaXV8rtzT3RjyiskUpIXXQHUMFTdZfaETbq2AvDMNZxuJ
+	jZT0zkx/0sG0KRGMZWkHzfwr3QR6TXxtgmK24oKiXro0cEaK73TGRMOr2jOUeKyb
+	MW+pzjb/pd6pWXdZP+dT/sYLDQG+sw3tOUv+LteGKq05UALJVRglJhXaj5/LMMOq
+	3UiZLIlUodWZfL7ubGM1XJ+FXLIuSkEX+inbFm8T41b00A1h92mFO2nO3Qz6b+3g
+	UNL+7WgQsujw98OYLXBlw==
+X-ME-Sender: <xms:T_1-arSE4NxBCzjF9sV3-g92qmLCUNEM3uZ3EyjldU_mV6jt6tDy8Qs>
+    <xme:T_1-ankMUQxEZYI2cUNVKC4Pymwp9lU17s_KgSph0OjjSeso8BAUer3QvoKhwlP4N
+    YNvPslal28xpHKV6r8_p5ZFNqZ79-MK9K8tW0dsvkEWbxZbsJcd>
+X-ME-Proxy-Cause: dmFkZTE7xo+O3Taf42oJ9h1kvM/OgYEnqirzzSsgeOHhkv/XYvhHBWrucgrvLfWquZoIW3
+    kdU2wrGZDCUwWH6nCDfdlAMlzXq23lQl054VAzYmaWhYpzNV2mA91/2eVJ6m4bwb8g/0X5
+    +nDyr9pkmPHYBmNLWQFB1AqvyPCMhrF3PZ3JBr413zGRWh5ZDifdUmB/CczxmnUlGYuOiV
+    jE/XzBeK47qJzdp/dVFxGB82JJwj+u5zx8fSHEMfmyZRI5RnDI9Z3jwWLhWKHr2GTzkXEF
+    bmTb9aQhxWHT7iSmlS3Nhdngdffc6APeA3BguVAVOJ7trraK/xXG3Chr8r4pcIsvbMi0Rt
+    wJmQicbwlx0vs0Yu1vYmTexnWxrhYwkCYIbaJl6s+dQEw4IsRTx0QUPIpz7RyFVzw1x7i/
+    hV8MmLpY20BMzCZzjKSpqfXfEE264iZEL8bmYzj1nR6/zEFJadLBQNb3bX0Jf4eSuDzXtM
+    towspyfp7mU8z0j6fFWhmRv5S0/ozARpQ9YeLsfpvIIl6048gn3B1inldTZ0WaTe7yMZ/v
+    5/rwB6F/qmIGBMfFRQarS0KzLu09IxwbP2jdXRKoaSsat8YKFQ8oVL5roHYfuFqkV0zVrX
+    bYU5XAwk+XyHVqVeij8CJKPi8bKvdZj7lH77gH0XbXMT1bJekQPQsU/AcJNg
+X-ME-Proxy: <xmx:T_1-at-A5XK2TE8X2AmuaJnNu3iCXJTaqLBqDr0wXLOkHJY5QDMHBg>
+    <xmx:T_1-avqB7nSp0nGUjWF_4sD-rOVzeeTnZdPVpxGyHGGFajzx23v8lg>
+    <xmx:T_1-ailxkppUz3TjvQxQHa5lnhQ8gMHXHbMgMg5VdPaqhIo0CRzyZg>
+    <xmx:T_1-auLvaN_p554YWo2FqSXaL4fR4Fsa6AxB6U-CKiMi7lTCdVnOzA>
+    <xmx:Uf1-agW-LBys_tk7JU3oWdpX1mry1Wq4xk2mxKBa4C5jR3NWsAQDaoSO>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id E662822C0079; Fri, 14 Aug 2026 07:34:38 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
-Date: Fri, 14 Aug 2026 07:29:22 -0400
-Message-Id: <6767F13B-622A-4988-AE61-373C25599F45@gmail.com>
-References: <an720tZnot07HYiK@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- Yuchen Tian <cat@malon.dev>, Todd Zullinger <tmz@pobox.com>,
- Olamide Caleb Bello <belkid98@gmail.com>
-In-Reply-To: <an720tZnot07HYiK@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+X-ThreadId: A4FwHZfX4lP-
+Date: Fri, 14 Aug 2026 13:34:03 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Peter Morris" <mrpmorris@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <b00dbcb8-8f83-46b9-9271-bb789994b262@app.fastmail.com>
+In-Reply-To: 
+ <CAOqWQbLEakpQEPsfw-GB70fdwbxW8EcdZ8EWzaN6ZAaHUU+jGQ@mail.gmail.com>
+References: 
+ <CAOqWQbKn88m=OBDF7W8bBPjeOxtRsvNmhsqNy9AryMKrOKtLUA@mail.gmail.com>
+ <7d0e9933-1a5f-4755-8bc5-fa4fea42f61c@app.fastmail.com>
+ <CAOqWQbLEakpQEPsfw-GB70fdwbxW8EcdZ8EWzaN6ZAaHUU+jGQ@mail.gmail.com>
+Subject: Re: [RFC] git worktree: use filesystem cloning where supported
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
+On Fri, Aug 14, 2026, at 13:12, Peter Morris wrote:
+> The PR says it only supports Linux and macOS.
+>
+> ReFS is available on Windows too.
+>
+> I believe that if the source and destination are on the same ReFS
+> volume, the Windows CopyFile API will use block cloning automatically,
+> so if CopyFile were used we would get this for free on Windows Dev
+> Drives.
+>
+>
+>> [snip]
+>> https://lore.kernel.org/git/pull.2317.git.git.1780685368.gitgitgadget@gmail.com/
 
-> Le 14 ao=C3=BBt 2026 =C3=A0 07:07, Patrick Steinhardt <ps@pks.im> a =C3=A9=
-crit :
->=20
-> =EF=BB=BFOn Thu, Aug 13, 2026 at 05:40:31PM -0400, D. Ben Knoble wrote:
->>=20
->>=20
->> Ok, CI run: https://github.com/benknoble/git/actions/runs/31701945211.
->> This demonstrates that nothing our test suite does across the many CI
->> configurations ends up where with a non-the_repository-repository
->> (ahem).
->>=20
->> I have been working on control-flow analysis by hand in my Git time
->> this week. It's of the form "Z calls Y calls X =E2=80=A6" until we can se=
-e
->> what the repository that's (eventually) fed to repo_config_values()
->> here in is_racy_stat() is. My notes are one node per line, which
->> indentation showing callee relationships. Some lines are pointers to
->> other nodes to avoid duplicating work.
->>=20
->> With that in mind, filtering out the pointer nodes, I've analyzed 214
->> nodes in the graph. If I'm lucky, I'm approaching the halfway mark,
->> but I somewhat doubt it.
->>=20
->> But since CI shows things work=E2=80=A6 I'd rather not continue the analy=
-sis
->> if we're satisfied for now. (Esp. since that will give me more Git
->> time back for reviewing ;) It being outside-of-work time, I only have
->> so much of it.)
->>=20
->> A few other related things:
->> - Some of the edges of the graph appear to be public libgit.a
->> interfaces. That means we can't guarantee that only the_repository is
->> used.
->> - On a related note, I don't know how large the current "must only use
->> the_repository" (e.g., via repo_config_values()) surface area is right
->> now. Based on the partial analysis I mentioned above, this feels like
->> it's introducing (or at least contributing to) a rather large surface
->> area. So, this change might make it more critical to resolve the
->> limitation mentioned in the other thread. OTOH, I don't think this
->> change is likely to represent the only pervasive the_repository-only
->> limitation, and I'm afraid it will never land if it must be
->> the_repository clean (unless repo_settings is the_repository clean and
->> we decide that's an acceptable place for this member).
->>=20
->> So, idk. If we're happy with the CI run + use of repo_config_values()
->> overall, I can send a v2 shortly (in next 24h), I think.
->>=20
->> Thoughts? Strong opinions?
->=20
-> No strong opinions from my side, other than that we should stop
-> converting everything to `repo_config_values()` until we have a plan for
-> how to make it work with repositories other than `the_repository`.
->=20
-> I don't feel like holding this series in hostage though, so if your
-> analysis and the test suite both say that this is probably fine then we
-> may want to pursue it. Or we just use a global variable for it for the
-> time being and then wait until the `repo_config_values()` dust has
-> settled.
->=20
-> Patrick
-
-Makes sense. I should have also mentioned that, of the nodes I=E2=80=99ve an=
-alyzed so far, they all terminate in a path that uses the_repository (some i=
-ntermediate nodes are also exposed, though, as written previously).=
+You must remember to Reply-All here. Thanks. :)
