@@ -1,187 +1,105 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C00C3EB7F4
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 19:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786734472; cv=pass; b=Gt4fP0Ihjpq4MRkQWNugsMW/jkJUPSCTlc7xobiQa1T7FaO1lClAGmOdpYENsp6lha3Nxv89jqkBj9nLmsp9IfB9YCkUVJOsA4OHBmp3TwJ1/PQTQ7NwIx9W2FVzKorRHesEHzINxB+qo+g5BQffBi7NSRW0W3JKkGIXocEp3ho=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786734472; c=relaxed/simple;
-	bh=U3g7bPsq2RcSFa26qr2oqzlHPPvGf77B/zsejR6U+SU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sSPYzezGDC1DkPpK2GEIEqkXkR9nivARyc3DkvyOXsb70gdnKLJs5LzI84RT13k6PIJ8e5R4sJPaUpkoGHBlps9rsYRE9PwqJp7/C0POKEOCb6xsoc7yPVWVdJjM3XAxiXFnFlrdF0gAUezSqHvRLS7kQ90WBU1GAYtvL9wJBb0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RZZs3CkM; arc=pass smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CBA494A02
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 19:14:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786734848; cv=none; b=jyumSUoZWVr3eZMYaHajffnk0VJXd3dF2eE1ftpA9DdOdlHbrEr3rsI93+K1eTcy9H766irA3uGzAhuL6+j5FsC9IGMYlnDjMe5M8altPaLhTtNyfrt/mjHb4NrS8SEymMWWcJa7wSCRltNFh6/O9CCsCcd6xrdWRWU7RJ4YhEM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786734848; c=relaxed/simple;
+	bh=59TQyDZcFmIL80o5Kvbeg4NhVHtXCCXITQuBYTAnkvw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KCJkTlFb+RiarNMUaqkTBZKqp3ZgPGZPm34cTbCL4sXGVNklq+7D3IJksa2zMcW3pXxUrTZCdGg5KyHnP1Bw/PsHRLxyRNk7N/F4rYzX/kya19b9bgpmTc2gTgJqQUfZRww7vy9UxyizOjmvht2Wfy5xhx30jpWtSGudtw1N+5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nAnQN48e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SMySEyun; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZZs3CkM"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d0407aedd6so17827305ad.0
-        for <git@vger.kernel.org>; Fri, 14 Aug 2026 12:07:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786734471; cv=none;
-        d=google.com; s=arc-20260327;
-        b=hWEdhbjpVM908q+SALNlakbLzzVfA+1+W032v5Q1PwsMEAmUH2mqrcNgLhVskg44B7
-         EHyOZp4hqUxlDb7Ode7xAsT1vL79kNfefuuXA13JvGBKae7L/UGZPPSTXDQ1vQKqVNtY
-         MS69s3YSpqb/xo0cMXYp+P/Mv7QcNSQxU7r9/ZKtASfGwnNCg9VWAJok1P+Y9e4mvrR/
-         UXKA/Py0jR+X6IyXuPvkrqo+qhLyub+FvoP8rpAe74BVFo7Oi/AybNTSWhXdWDiNv4bK
-         c5SW/Dun490lcvS+aG9TsaKMUA5jZHaMJKv+mFAxWNOyHifMdVEUipRvxPIbEi7HLOWQ
-         sHKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=J+XY6mZq8OEU/YGPPzctBIi95FIn05GiF6S6NppvyQo=;
-        fh=pdga0shfZOwETzJs5PSu+wgtpod8R/kvOftGT+m7x1Q=;
-        b=JV2Io6o4xNwys4+w/HEejVpaBzOtluXeKb2hKFtm6IHGa8SSbTpFwx7i1OQ131mANU
-         13RCPRHGgd84OBqhNTaK1c743U+Pnxs+KUDcY4LzXB4TMYtsd/yNZa4y8D/Stxsn620f
-         0qUBXwC46x48E/INTwbx3j+EOdfVUQX6o7EL/WeySub2E32bkLvuJyj98h2VS7BhjqOt
-         4oOCJqAwK0eAdRKTC370dQOR+iCguQg7fea4ZzWlT6v3PyMN13LSApDJH+walU/qOLph
-         R+xMS4ICwwqz2WB7h3ilq9feBbjmCHBC5yc/cpWcoTjjxC3AnA1WuRRht/mmuFuncvVe
-         BzQQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786734471; x=1787339271; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=J+XY6mZq8OEU/YGPPzctBIi95FIn05GiF6S6NppvyQo=;
-        b=RZZs3CkMmmGmiD/kE81nx5O5nOZ92s05tU/U6uwmnEuvye2665d3SdLzF06OWE5293
-         s/fuU+pl9v1Yv6gtjyZF8Pa/7N9B56eXuJeQbolZoZYWwpJaaWKYtVXPcvatlxGctmvM
-         AI8PCkGiGicWFZuMGUrkpmUHdP0JtWsWkvDbuELKLBPXiyiV6SdKxlb8OlAIH5kmUy00
-         zfGOOEl4pjxS5KZccBJHG/hbKipSKiEjfHL9qw5K8bOIOTycUsuTvGf82WqFy0TZBOoX
-         F5as+laA0m7OSamY3XGXoBW/j8lRNyao8NQc0aKG2/cAoIZ9Ot4n/Ey81aowqG/ZYnVl
-         e+6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786734471; x=1787339271;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=J+XY6mZq8OEU/YGPPzctBIi95FIn05GiF6S6NppvyQo=;
-        b=FjQGM6M2/mF9BOqNWXkKjySyNYUaBu3FfEmAXrA6X6E6Ql+pftt18S6xCOUqSJbT8a
-         paZeTgvDbyiT7eqiGOfd+xXVEfBPkhQ9DiT0GV5ukszXxV1PNZpnR9ZmvrktWlWJqnoB
-         pxyAfDesSi5nyUZFR4QYmc0JoFi6wo5aspw2zrlzMfYRE6GrsUV3JfUsW5iWQOA5G25M
-         bL2lFA1o27KXSFu30B+rBAhPCiM+JD+3dVQQA1WPhz52XQbeZbFIs8fC+fwdQdv7mkGs
-         PLF3IjwdOGhNnbDCjaVA/TLASVG8IvkcVX20rRvRjYHHUbMVbAxb54mEqAzsoRXyIhry
-         PQNw==
-X-Forwarded-Encrypted: i=1; AHgh+RrToFaD+bT13+cIl59UoEqRZDgI5Dbk9rgqcJKVdaACjkOK4huvTNQJuALHgY+4Yed2oC0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyc/thDu8TJ9l9CbAu53+Mzne1fF0Td2V4gqH/QkebdhO1RFWs+
-	cdnOJzt/o06SbzAggEu89heFppS0vTNkUhaWBes8brgzbWDqbJuYjTJBPyGhZrWEFd3CjHCPFPT
-	sojHsGe7nIAWXtnejdPcgoW5b/hfCeB89GLGCQsk=
-X-Gm-Gg: AR+sD10i1YmDDsKWWd8mAH3Wsge+dl2O4XRcIzOmPJfQbqbUJLq3lz+mqZ1fOXZsocr
-	Vyk2GGl5lOrJ/+bbm0d6SkMIfdyEwQVTftFqMsiN3xbhl+lUGE63qhqkbf1b3rcPipivRYwSqbb
-	Byp11TD9bAtmk09ClLLffC3USkh+MJImSq/SMRnvmjALG8zoJrmCl1anMwj/40nEz8T+jjFO7W+
-	olXSmuTcX2xiGw5rDPcON6pWp1BTRcjIOEsTxUh2yBtMBWgERa1gvUBpClGZeqGeeotmEefcNtR
-	SbAMd5ktzynOOsmfoPPShf5aj3TZSydFNTtMt/kf7VsJjDWjKaErfcLJPlaS8M5rISjzNMK+wJ6
-	Ar08iWouDJ3ycUXS0olOvJAzLB+oTlvmKXbsCzkrjeW56CAvMMobwdTFx1toXKCYMAYOwGYdo
-X-Received: by 2002:a17:903:1b4f:b0:2d0:cc92:f7b8 with SMTP id
- d9443c01a7336-2d3b0cdb79bmr105898685ad.2.1786734470588; Fri, 14 Aug 2026
- 12:07:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nAnQN48e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SMySEyun"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A6493140009A;
+	Fri, 14 Aug 2026 15:14:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 14 Aug 2026 15:14:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786734845; x=1786821245; bh=7nRr7R/NrZ
+	wbdmThbNNnUhWQXsqiurFB6jNfpkIMc+8=; b=nAnQN48eCYiXbl8CK4SThm8iwJ
+	vWlBFKfjfd2Va0aw5leuarsQR7iY3xhqks6ZAsS1P6A2/Iw4R9Aq33eO9qzyAZPq
+	UGe4o6f/JFFlqs0fLlmgvpNnu9OTIJjJOVP3sE2WPE8IBfR3+bjYklFjL4gqRjiN
+	JsCljbvXByBxzrLi+hC1tKpjcBYgt9AdEoowCQq5nGfIrAkBLPWT58NXVyLjIe7N
+	vNoW51GG4QHSS+PqUasHGsy+kyvoApq2kRszm9dc2XYn2GX4Y9AkjhU1RhYDVCmP
+	vlf9r4rofAeeG/YrEmxOvKRnzfj1oJ2GRw5kVBkNDriedj/8bW5EMVGvwnlg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786734845; x=1786821245; bh=7nRr7R/NrZwbdmThbNNnUhWQXsqiurFB6jN
+	fpkIMc+8=; b=SMySEyunp4S8jIVKUpAoRp+uu5uC9sYardWi3TlkJGSalh60gad
+	inBBXDyWm6aJ6Yf3Xy5/eymEhknqTyEXDgWTMv73J2g8FFwByhe65miWUT6kaigI
+	CTW7O/DBjup4go1emmCvExJs4emh41NL12qiWdNUiqecteojK3263+Nohv4lpDF5
+	w8XHTgTk9XSPNx6W2bW8qI/CAUyYR4UprBXT2h2TM3ryDQxnPDfQSyWZ8K6AfSbV
+	+rE6kHU1Es7ubHZ5FosA6IszMuKNHuEf0Qxv2i0RSAvDDfEucAf93PzpCJAXMA1o
+	SIpv0Eoi27eme4DQhBC2t2qINpwYIpYdLTA==
+X-ME-Sender: <xms:_Wh_alAzEaop_Q8S6TSUCwXuuGsphQPWm58X-fCmaYu76YcVz7e6wg>
+    <xme:_Wh_aqh5W-6kRGzhZpImiFHg7O4uVFAkeZWlqwSC6PpDXltre1tgfEcgHWdwT7r3V
+    yS3g1dJPLgcism5HkPav7l8s6w1rbv5pP7uE46vDX4vWrlzYD4ciQ>
+X-ME-Received: <xmr:_Wh_alnKCfFCdFLQlY8rzcGJmOdpreTyhsKsj1JifixvJwv8jT76RtMLYwq8DwKrzWQadeGnU4kF6qjnPV89ZTQtlWf1Hgfymg>
+X-ME-Proxy-Cause: dmFkZTEys2s9zcE8bCItMjyhbe404HQ96UEa1yAO3ISZ+FLFV9AajJf8nDf8qV7C+L0983
+    GKxhuBP7gVYaPwj7+3r1jOGZrxG6b24la5szEUe//h19b+RnjuH8VAQKYvsXi+5inasfWb
+    fwDBXVjyFzGuikTYDADWR5lILL7/rUbswNwC6ZpSxndGLJX8qDbZrq9dBqD5bhpMrI8x5c
+    6X8LoeAEL7cxoOTqwZxNES+55NGq5tcBW2/LA94VWR7mvIqINawcQXt3eRiqzWv9MX1E8x
+    LqDUSlI22SCqxDWLlCxO3+sRn+UglYhR0q82HinM97Ded0s2kIoNXwMAShYaY2aW2FD2nZ
+    s9dQGRsjnDvpLT0O6hSEiZPmw/auYMXZYGYvgWPoMp6C2xqBeb7PqtE/2NgYrc7Yz5NqmY
+    HrwzawcknYy8zobp2yCh2VZgB04yMnXe3az32g24axu/XCJ7uX7DMpKXl8N4PlXdEs7HTi
+    qBRkViQ78ZPJaKhZDeV3CSsbVldioHClcrpemSrWHgq+9GK9u75mwLgddCPwirZvW5PFVH
+    uxzFzozkFxP2SUzmHBSgo3uT4sfT353rx+oNE9T+ZG7YyGysC4A7LSaf9+2MLrA1pcVdwL
+    oZfLYayIy3HRRa01tbuarPmWT/Ep3aawv/5XBLisVSR3C7JyZw1l+XFMe9HA
+X-ME-Proxy: <xmx:_Wh_auorI_4vj7mxpW7k8N6lKdrsodaBLRofysrkOtlCv-1z-4FKTw>
+    <xmx:_Wh_amEkZ-O2VP7aBzDOl9BgjoUepT6IBFfmTD41tpTWZFMC4nUgww>
+    <xmx:_Wh_aizxm3Nd5LWwSdvJx-W044lwDBOjZgVMsRhM9SLXesRiG_-xKg>
+    <xmx:_Wh_ajpLjlh2NekwW29he5v2_7_OHGBP71rgjM6DcXmolNqcxW6vkA>
+    <xmx:_Wh_agl3RymH6CAjdbRfyTvEaRofja6IqbNjDBTS98VfZvpSMUhPQCTp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Aug 2026 15:14:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tilak Raaz <raaztilak07@gmail.com>
+Cc: Weijie Yuan <wy@wyuan.org>,  git@vger.kernel.org
+Subject: Re: [GSoC PATCH] submodule: warn on valueless active config
+In-Reply-To: <CABB4Jh1fUXKNn483FjD2S6U4cYVMEP6z+fjWMi8XRT+NQdNnYw@mail.gmail.com>
+	(Tilak Raaz's message of "Fri, 14 Aug 2026 23:34:54 +0530")
+References: <CABB4Jh3UUXvmAJpefaiP-xVRQfGRdTF2jW8GkdhbA1BXe6Okdw@mail.gmail.com>
+	<an9W4XwY8X4ZFHpA@wyuan.org>
+	<CABB4Jh1fUXKNn483FjD2S6U4cYVMEP6z+fjWMi8XRT+NQdNnYw@mail.gmail.com>
+Date: Fri, 14 Aug 2026 12:14:03 -0700
+Message-ID: <xmqqecg0ms5g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CABB4Jh3UUXvmAJpefaiP-xVRQfGRdTF2jW8GkdhbA1BXe6Okdw@mail.gmail.com>
- <an9W4XwY8X4ZFHpA@wyuan.org> <CABB4Jh1fUXKNn483FjD2S6U4cYVMEP6z+fjWMi8XRT+NQdNnYw@mail.gmail.com>
-In-Reply-To: <CABB4Jh1fUXKNn483FjD2S6U4cYVMEP6z+fjWMi8XRT+NQdNnYw@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 14 Aug 2026 15:07:39 -0400
-X-Gm-Features: AUfX_mwmapiSLlrX5I_LjKALFifEakawMUHqb2qRPMXFpbqBI4kAsu16dy-9hlQ
-Message-ID: <CALnO6CCDQBWS7dP7CZSbKE3f8rw4x=NAJhGyE7HCJRjJq_2dEA@mail.gmail.com>
-Subject: Re: [GSoC PATCH] submodule: warn on valueless active config
-To: Tilak Raaz <raaztilak07@gmail.com>
-Cc: Weijie Yuan <wy@wyuan.org>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Aug 14, 2026 at 2:05=E2=80=AFPM Tilak Raaz <raaztilak07@gmail.com> =
-wrote:
->
-> On Fri, Aug 14, 2026 Weijie Yuan <wy@wyuan.org> wrote:
-> > Thanks!
-> >
-> > However, my suggestion is that it would be better to place your patch i=
-n
-> > the main body of the email text rather than in the attachment.
-> > Please take a look at Documentation/SubmittingPatches
-> >
-> > And it also seems that the automated program 'b4' is unable to recogniz=
-e
-> > your patch, which may make the development process less convenient for
-> > the developers and the maintainer.
->
-> Hi Weijie,
->
-> Thank you for the quick feedback and for pointing me to the documentation=
-!
-> I apologize for using an attachment; I am still getting my mailing list w=
-orkflow
-> configured.
->
-> Here is the patch provided inline as plain text so that `b4` can parse
-> it correctly:
->
-> From 08a2f244efab6e4cf21638d87a721ca664ed9433 Mon Sep 17 00:00:00 2001
-> From: tilak-raaz <raaztilak07@gmail.com>
-> Date: Fri, 14 Aug 2026 22:50:11 +0530
-> Subject: [GSoC PATCH] submodule: warn on valueless active config
->
+Tilak Raaz <raaztilak07@gmail.com> writes:
+
 > The config parser previously threw a hard error if 'submodule.active'
 > was provided without a value, causing commands to abort.
->
-> Swap repo_config_get_string_multi() to repo_config_get_value_multi()
-> to parse valueless keys safely, and emit a warning to the user rather
-> than crashing.
->
-> This resolves a NEEDSWORK comment in submodule.c.
->
-> Signed-off-by: tilak-raaz <raaztilak07@gmail.com>
-> ---
->  submodule.c                | 16 ++++++++--------
->  t/t7400-submodule-basic.sh | 11 +++++++++++
->  2 files changed, 19 insertions(+), 8 deletions(-)
->
-> diff --git a/submodule.c b/submodule.c
-> index 5c92575888..b709c429ba 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -231,11 +231,7 @@ int
-> option_parse_recurse_submodules_worktree_updater(const struct option
-> *opt,
->  /*
->   * Determine if a submodule has been initialized at a given 'path'
->   */
-> -/*
-> - * NEEDSWORK: Emit a warning if submodule.active exists, but is valueles=
-s,
-> - * ie, the config looks like: "[submodule] active\n".
-> - * Since that is an invalid pathspec, we should inform the user.
-> - */
-> +
->  int is_tree_submodule_active(struct repository *repo,
->       const struct object_id *treeish_name,
->       const char *path)
-> @@ -261,14 +257,18 @@ int is_tree_submodule_active(struct repository *rep=
-o,
->   free(key);
->
->   /* submodule.active is set */
-> - if (!repo_config_get_string_multi(repo, "submodule.active", &sl)) {
-> + if (!repo_config_get_value_multi(repo, "submodule.active", &sl)) {
->   struct pathspec ps;
->   struct strvec args =3D STRVEC_INIT;
->   const struct string_list_item *item;
->
->   for_each_string_list_item(item, sl) {
-> - strvec_push(&args, item->string);
-> - }
 
-It's hard to tell, but I think (depending on _how_ you sent this patch
-with GMail) the indentation has become corrupted, and the patch won't
-apply.
+The standard helper to use is config_error_nonbool() when you need
+to report a section.variable defined this way
 
-Give the tips in git-send-email.io a try; especially with GMail, I've
-found the safest way to send patches is with git-send-email. (I reply
-to conversations from just about any mail client, though.)
+	[section]
+		variable
+
+without "= value", and section.variable cannot be a Boolean true.
+
+The patch seems to be heavily whitespace damaged, and cannot be
+used, though.
+
+Thanks.
