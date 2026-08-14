@@ -1,109 +1,185 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB743377ABF
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 10:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE533469EE
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 11:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786704900; cv=none; b=n6sZwA0vikpCjz9GjxS581Gb2lr5Lz693G5ov64oniXdMEW/T4vjaG8ZSIpV0nchzJcxDMytiN8rn1n2sL9XQNFjEz1Bql0AhDnku80g20wQMfKrpPFjF5iUlTDO906/4CAo5cqr0bhedulQ6JHCS7sD4BF5PL+Hcid4Mi239p8=
+	t=1786705634; cv=none; b=g33BysosvHjJZ4JfPM6RXZlDALhbtz6+HHpUqTgpUwjzoSMA/+suMncHomrpTFWAv4B8567tLgP4VLUVS0/LmceDvMPUd1JPaLvlSa9Y2IjGTwt0Wu7Qj1rx4nLdf4nL3N6ywPWnPNkxgVitVrhzwOsOxkHi0iWmcr6xqY/UPOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786704900; c=relaxed/simple;
-	bh=QzBonFSYOaQTDX33IvXfHp9cwbPYSla9f8ue/MlhNVQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=STQXmq9orNaVHgrQCyn+iNd9bcr4E6+rYQwPkxNpeNXN7BunV9HpZIbLfL+viKOWG4ZrHvXlW3y42sIdDIK7GQT5QWHI8ii6tI4ChTEuAmrgb5uGJ7bD59pMmnXcqriRjAVKGXdQ4ygdfdZshhepsZBA6NMnfpyWrLNqoFV5VGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=W6GJt75w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IE3NqRSG; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1786705634; c=relaxed/simple;
+	bh=ld9yVWvEADDjRbYkNwixG63moW1DinEi3pxONFHytQs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s+O8QZ4YUuUpWh6BuW00eX/fBXC9kxsHNmhvDuyG5MBob/wrqeHdtmkt6z+vZzuJSK1IEhXiKNedkeX9YPAP1Xb7QOUM7SsDxuOZyXwIYKu1/d873D/c6NdYhrY2kYAEVmVG29A8MWEJ1GXIe/7692W9Y/zbG/Ey5iN9afo7M7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZAXAb0tq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dqQj9Ylw; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="W6GJt75w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IE3NqRSG"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4B5901D002EA;
-	Fri, 14 Aug 2026 06:54:49 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Fri, 14 Aug 2026 06:54:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786704888;
-	 x=1786791288; bh=M/XEOZ8KvuRM4tfAI8hqvDyO8gqZTFqrw+Px0R4oCqE=; b=
-	W6GJt75wkcdUgsWqlIu8rEs9F2L9Pc+UvWBeIZnnIrHCM2nZBO4brF0Xfpy5akRu
-	B1N7CDrmxxosTZccYTsTztodPOcg/PxxtMa4ixwneY89z8ZxriF9MMXNxPxp06iS
-	2F0ZiArcCar7ap680H0+bEzsjXdJK9j5f3JgfYPwCqVFwxIlrYZT3VgOnPcuispg
-	eF6iUpX19i9El7bqxZgHwKvfwwZs6WYlvdfR3q8dcuvHmpzVTHUpH9X+UFUycAdB
-	2P8aITGPdHzy65FAxp7vqx19D4xmqo453CvsOOxbYHw6jGHBqXpfLuBeWUeTeXVd
-	5HuunClSyseQd4eIlTSovw==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZAXAb0tq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dqQj9Ylw"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 330551D0032F;
+	Fri, 14 Aug 2026 07:07:06 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Fri, 14 Aug 2026 07:07:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786705626;
+	 x=1786792026; bh=eFHXOswwlSZAatW46Vp+jbSU8o2P3eIxuuldMe8l/Fs=; b=
+	ZAXAb0tqXSjaK/d8lMnvxPyoECnd9GEkmA4oAagL2e5yRzn4uuez9ro97qKqtpcL
+	UT4EZlCDUdrFpnl97E3cYRKxyItf6PiP04flGIjqV58NDmbjXXKEW54wZt21Qmoe
+	q/xqw/AXHthAIOOMz1rKqunlBWI37+3tbjt/xHLfU73hj1gHiUiJ4ZsPCI+DC+gk
+	eRiOwUAzOO3623oOc7EPFV6cEY5TOxwYc2F0dHWtPdygGTh1rxA5q5TDXyt2tQRz
+	LPXfDHQiT2CpFRgayoAxAwETH/c/2m9M0vgga3gOGWSNPYCQG1be5QCpuq/Z4Yog
+	mWVpVR+EAgyxjrZv8fqAug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786704888; x=
-	1786791288; bh=M/XEOZ8KvuRM4tfAI8hqvDyO8gqZTFqrw+Px0R4oCqE=; b=I
-	E3NqRSGZBqRKIzfr+sCVPLYy48IYhPQQ65CPc1Vha9OMaCaOVuTcrzS7nIJbZ1T1
-	jYzJqnvLmWT/O2GItOWjUQ0xnzgIOWhsyUOc9wp7VT73ngN6o0GnR08jy8iKr4vQ
-	dduSVdvrdhstEX6sn1P+da2ez4rmlQKy07p2Y2N56vXL6Tm/Gnwc2tGlIRpGSfWQ
-	3a4PwqAgvFO+GH6qp2PhpT3l9psb3Uuwl5co1tGlVLdtJLLpCek2SIh1nRAcz16f
-	nFgM9Accmj13FU0vGDgECy54PsCfF0riQJJMBU8N56a5kGpUuJeHclz38cj8JbIz
-	5U8UQvEMhmDkFJTEcQslQ==
-X-ME-Sender: <xms:9vN-aghDMAeh03V1i5frb-G_Hm57z_nnYhAzEjx9zCHaaB0cRnFcVNE>
-    <xme:9vN-aj2OtAKSgAtFNq0cZaDA8y5PEc3zEs4tcmBw1r353KDtHZlc9d0713Ti8XTK8
-    NPXj4FAblkwV0sQ4bOBxAfnzKlVYWNyAdwRI2sqFS_nIk4jow>
-X-ME-Proxy-Cause: dmFkZTELLklBF980CZIbOEC9SBEjaTf1W2OJ3fQzLJHCNbv+QPdWl91TKjRmNKoyvR7jiR
-    4P511aoIgpXHZ+D1WePXxiSttj7y4h8PzAqKemNA8mGaAlNcVzy9gdQQAil8qgQP3E4QFq
-    TyK3ZEJO0eWBBYbgEd2gE5+moWhwmGMVITTQUxHtW5sZU37DXziMBvIRJYVi+d00n/tqsM
-    h93MRaGewHEw7201ohoMi20OlgSosia1LSdHGx2cO8sLQdlfIClVVkv3sN+b+ry2OsTBdp
-    VEQPJYJiGjg8vDlQYbbgthywIrZONbI4VqTXg/CXh+Fbt1IeAzlwHUlnsaKAKpY1gam/iG
-    pwFwVIR5g07XHt6VzduiJDD5mwFN3ANc+KHSrDQN8nC+de2xpCTwHNtU7PZcgUo5YZID1V
-    BY/6NvNaZb1jQmoshzM5pTpE+uqFtYME4xvO5sciCk0JpINxd8PM32rzZJrXAOC+w3ilLB
-    /hr2O83ICEkm36qIshW3DqzLMQxu9AcYPdHH1ae/355z52OqwLnUJZewiPNxlGI/ywXDWU
-    SGjoZUbXi0frsZAMOp50EO2+PPos7EeirIneohZIHa/rFWDvmb8AoDMdnAjw6tTZLhYZ5d
-    2O46BE69sWOB519+9XlMjLxqYlR7pQHm9GyBTxJEnhw0gbT/9t3//yPZxqqQ
-X-ME-Proxy: <xmx:9_N-ajN8sY7KeguCSjW53FW73zNRSTDvLsELqvTiodayOHgfmQoRGA>
-    <xmx:9_N-ar78BRiDm50KgLmRvQ4YVlZO1KxEqMyMX_F_1qJ8CQnv9ydgTQ>
-    <xmx:9_N-ap3OjUhGFcyLlIb3jdbH0OuBSYpp5evywIYHBUkVZAHUABKXOA>
-    <xmx:9_N-akbyVYiiMtmkG2DaBnrfgvERaMJLNmgBvDvZjFCnyY2VlcynOw>
-    <xmx:-PN-aokmSjJL3hd8LoDxFx90JpsmeGtLfBUla3DuG18b0LKMPWhTxsZi>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id B651822C0077; Fri, 14 Aug 2026 06:54:46 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786705626; x=
+	1786792026; bh=eFHXOswwlSZAatW46Vp+jbSU8o2P3eIxuuldMe8l/Fs=; b=d
+	qQj9Ylw8PQz1c2FR6MS4a0ce4EjDMbPKnCvEqvUUG4bOhTLoFVyOJevUB87QJfyg
+	NpyDBU8gItrc9BsVkb7f8iNoGT71TV4nHmDGCOWfGarkmh4q/UbAR6OZ74tApclf
+	iCnjLAU1Wmzxvle0USP7kmEA7YmDsV4XyWGjg0WA1RZrxSGWr5SzkvJyYptfS/gG
+	S8X1sw3RwpV9T06RjsGhjBM685YGgBbcSE+VdPumiRRQW4IuwueTWDYESxkw7J8a
+	eYWOrPIjocgImpuvh87GQ+Z/4DvgNEGTM5DwVgVnwH2a05nSQ1ARUTWcecKGxw1h
+	ZYz9rWYciYJDUzQ17UHgg==
+X-ME-Sender: <xms:2fZ-avgMq-6zclcvr-jgZKF0ZrbMhkShfJyRGMCO_JMSJQARW2ZCRQ>
+    <xme:2fZ-avuWjEjVKMImuyEyyE9VlHTx-T6RGX3bkmG5AoYjNF2bh2881miAhf6byGizy
+    j-XyCZXNTFucWCJuTEKEQI_mIBPmt4Lscx8cKL1fuDUm0cDNJMGphI>
+X-ME-Received: <xmr:2fZ-ao4lqVULSqdq86KJaWcCJazpUYugFA26BvunufSyONsdoOYfBzVZm2kCdtjWs23D9aFon0CTBzYvXUpysJKuwVt2shbO5dhZbInJbOM>
+X-ME-Proxy-Cause: dmFkZTE5Vobj8nwkf41n+wt2An+/XnDbizSH/pVPSHMG9joOUdRok1pA9C71DOjloCyhT3
+    vtfmktZLz7WfF/x7ZaY9+Mx71nWX9DLME+pVd7FLymNtFNCaFQHTWGYjwV/bwMwjefZRH+
+    K6iuQ9lvzl7IcKE3CF0TyXm72t6Y03gyNtbKFHCBFe/+Y5/0DHbgSOQNTBU9JbUDPBe6xE
+    DJ0wpd9rEj2h8ckatjTdOg8Lw85iNL7wVRKLgKuFyBgrDFP7dRAZI2hA/1vA4i16I3vAay
+    FCUesmJUhCnFO2mwRWLDlyKTr2JihxcupuflOo3LNntjyoq4BT5ec2xthiKeGZkQS5xylc
+    lBX3d24l19XC+KEESWH59chDIDvxfL968svBO1CnsfN0s/P6BXrsVItkXrLb52tkkRGWNS
+    CEUCJ/VnLwymgmfrWB4XjT5LWAJf96BI72vOF6kNQKr9NPfzbyi4mjbYnxfgqV/JX2JyqY
+    vJ62ErJP0N6W6jrQVjH9pMZJmvHPPJQa9/z/wxHSfAMhzZ5YSkXOwX8GztXfaxnLAwV/IX
+    +dkf2UozjEdBMehuAGiyakar17Ia0H8QX4FlbCmepKIFIAPDc6ouPhci2pJuCh3Pr5cNLV
+    Cv87e0Mdw0LFxRM5xRBoCBjeC+Mjbda8PRWMfTqzOW/2pdKDNAz5S80zOO6A
+X-ME-Proxy: <xmx:2fZ-ajMBmBcstRcOJfcwtvkVCHTrYsqyFFruUnB648zjVjSIi1_SqQ>
+    <xmx:2fZ-ausjRljbPOPxZcMKzLgB21BZbxGWQIrTWuMSpe6CEUr_LJj6HQ>
+    <xmx:2fZ-auaL9g-OY2Rbr9vmp8zcQfRHqbnrotoZ-zmcACZg_oXbBlwyyA>
+    <xmx:2fZ-aoyruseocmA67XWHmJSRgYgEuZbmsqNpSYPsa4Uvi5ktPm7bDQ>
+    <xmx:2vZ-aguZU1gmgrGkJLeibNbmJrwW6_6KsatUGp1TAxYFXrsdVWelJLe8>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Aug 2026 07:07:04 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 31c07956 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 14 Aug 2026 11:07:01 +0000 (UTC)
+Date: Fri, 14 Aug 2026 13:06:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Yuchen Tian <cat@malon.dev>, Todd Zullinger <tmz@pobox.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: Re: [PATCH 3/3] core: convert build-time USE_NSEC into runtime
+ core.useNanosec
+Message-ID: <an720tZnot07HYiK@pks.im>
+References: <annHlFwu4NKwmcLr@pks.im>
+ <59E4039A-C9BA-4EFD-8022-77C73EB51ED0@gmail.com>
+ <CALnO6CA5LdL74SqC9V_wJWi=Pf7+cHBDkuUFAJ7jCOVWZjBOzA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A6hr-oidoBr3
-Date: Fri, 14 Aug 2026 12:54:26 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <add02b44-8896-48af-9338-bb913e83ff82@app.fastmail.com>
-In-Reply-To: <xmqqfr0hswxm.fsf@gitster.g>
-References: <CV_format-rev_three_more_opts.b80@msgid.xyz>
- <factor_opts_into_struct.b82@msgid.xyz> <xmqqfr0hswxm.fsf@gitster.g>
-Subject: Re: [PATCH 2/4] format-rev: factor option variables into a struct
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALnO6CA5LdL74SqC9V_wJWi=Pf7+cHBDkuUFAJ7jCOVWZjBOzA@mail.gmail.com>
 
-On Thu, Aug 13, 2026, at 20:21, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>[snip]
->> -	const char *format = NULL;
->> +	struct format_rev_data data = {
->> +		NULL, NULL, 0, 0, STRING_LIST_INIT_NODUP
->> +	};
->
-> It will make it easier to maintain if you used designated
-> initializer here, i.e.,
->
-> 	struct format_rev_data data = {
-> 		.notes = STRING_LIST_INIT_NODUP,
-> 	};
->
+On Thu, Aug 13, 2026 at 05:40:31PM -0400, D. Ben Knoble wrote:
+> On Tue, Aug 11, 2026 at 12:26 PM Ben Knoble <ben.knoble@gmail.com> wrote:
+> > > Le 10 août 2026 à 08:44, Patrick Steinhardt <ps@pks.im> a écrit :
+> > > ﻿On Mon, Aug 10, 2026 at 08:27:51AM -0400, D. Ben Knoble wrote:
+> > > [snip]
+> > >> Back down to being on-par with original code. So that's good. The next
+> > >> version will include some variant that reads a struct member instead
+> > >> of going through repo_config_get_bool().
+> > >>
+> > >> But which? Reading the private_ member is obviously wrong; I suppose
+> > >> I'm supposed to use repo_config_values() there. Or, rework the series
+> > >> to put this member in repo_settings. I think I originally assumed that
+> > >> struct is for things that are settings that aren't configured by
+> > >> git-config, but… now I'm not sure. Looking at prepare_repo_settings()
+> > >> shows lots of repo_cfg_*() calls. So I think I see how to adapt to
+> > >> using repo_settings,
+> > >>
+> > >> Patrick, Junio, and Tian had a brief discussion in
+> > >> <anlmwaEtwcCPse1N@pks.im> about the split creating confusion. I don't
+> > >> really want to wait for it to settle to land this change, but we might
+> > >> want to work together on identifying the best path forward for
+> > >> core.useNanosec :)
+> > >>
+> > >> I don't suppose it really matters to me which struct I put the member
+> > >> in. As I said, v2 will definitely fix the hot path lookup here. Just a
+> > >> matter of input on which struct we want to use this time, I guess.
+> > >
+> > > I think `repo_config_values()` is the modern variant that we're slowly
+> > > migrating stuff into. But that struct only works with `the_repository`,
+> > > so the question is whether we ever use "core.useNsec" for a different
+> > > repository. My hunch would be yes, for example when recusing into
+> > > submodules, but I'm not sure.
+> > >
+> > > Patrick
+> >
+> > Thanks. I’m working on control-flow analysis to see what kinds of repo values end up there. Of course I’ll also run the test suite and so on with the repo_config_values change. But the analysis will take some time.
+> 
+> Ok, CI run: https://github.com/benknoble/git/actions/runs/31701945211.
+> This demonstrates that nothing our test suite does across the many CI
+> configurations ends up where with a non-the_repository-repository
+> (ahem).
+> 
+> I have been working on control-flow analysis by hand in my Git time
+> this week. It's of the form "Z calls Y calls X …" until we can see
+> what the repository that's (eventually) fed to repo_config_values()
+> here in is_racy_stat() is. My notes are one node per line, which
+> indentation showing callee relationships. Some lines are pointers to
+> other nodes to avoid duplicating work.
+> 
+> With that in mind, filtering out the pointer nodes, I've analyzed 214
+> nodes in the graph. If I'm lucky, I'm approaching the halfway mark,
+> but I somewhat doubt it.
+> 
+> But since CI shows things work… I'd rather not continue the analysis
+> if we're satisfied for now. (Esp. since that will give me more Git
+> time back for reviewing ;) It being outside-of-work time, I only have
+> so much of it.)
+> 
+> A few other related things:
+> - Some of the edges of the graph appear to be public libgit.a
+> interfaces. That means we can't guarantee that only the_repository is
+> used.
+> - On a related note, I don't know how large the current "must only use
+> the_repository" (e.g., via repo_config_values()) surface area is right
+> now. Based on the partial analysis I mentioned above, this feels like
+> it's introducing (or at least contributing to) a rather large surface
+> area. So, this change might make it more critical to resolve the
+> limitation mentioned in the other thread. OTOH, I don't think this
+> change is likely to represent the only pervasive the_repository-only
+> limitation, and I'm afraid it will never land if it must be
+> the_repository clean (unless repo_settings is the_repository clean and
+> we decide that's an acceptable place for this member).
+> 
+> So, idk. If we're happy with the CI run + use of repo_config_values()
+> overall, I can send a v2 shortly (in next 24h), I think.
+> 
+> Thoughts? Strong opinions?
 
-That is excellent. Thanks!
+No strong opinions from my side, other than that we should stop
+converting everything to `repo_config_values()` until we have a plan for
+how to make it work with repositories other than `the_repository`.
 
->[snip]
+I don't feel like holding this series in hostage though, so if your
+analysis and the test suite both say that this is probably fine then we
+may want to pursue it. Or we just use a global variable for it for the
+time being and then wait until the `repo_config_values()` dust has
+settled.
+
+Patrick
