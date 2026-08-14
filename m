@@ -1,84 +1,86 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531DC34E777
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 18:56:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0088048AE36
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 19:03:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786733766; cv=none; b=TwweWqqWMbo6DinbXyiuatvS+6UcF6WVvX0QkTookXPgRH2HuRprRgmpGwhD6BNpzEJJvnFfdW5wojG2WZpbBp/UvpELKQFwm/Jt9FT+K+SMbeiiS0Kq+hgFak5vl7aw4CP4ZXgm7d0Rst0gwRXGAcAt9J7DViBafs3uAN9iTJQ=
+	t=1786734227; cv=none; b=h84gyfpldESOZD1fyDLQ+X7tkOkgC3HuzjWcPQcqaeRMcZNsWkhSB7IYDss3qnYnRcmQRINdZhYkzQY0ua+zHruLCHdxmWl2fSHJB1t5GXm1mg4SLu+6EMpB2hyzW+J0UyVVWNn4dtIBfYghRJVX3y3KRrnPJkxXjjduT0sxADM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786733766; c=relaxed/simple;
-	bh=iFjvOurEPNmkpEgYfIO6zmbZMryPkGkQ1kAMYOp3Bu0=;
+	s=arc-20240116; t=1786734227; c=relaxed/simple;
+	bh=/pcpN50RPgBVda3rM06bhkqqoXBEl+TZjkQHPkNNuCA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MPx4LG5eluWaKKZE/e0CUx1QWvpfp5iJuRLVB1fXa1jBlRZd+fWCNDAm2OsjP3886ZVaJb4JAOMUi5WNcaecK17GZrQKjpmek99YWRSD8tRY9Z8FKz+fhYeecOXxIrw8WzixSnzs/c1FtIxd0OGZ7kPRW3Boknvj19OF1wHJevE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qrRW2X+9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OQB+/6Ty; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=uxke92kma5Gx9/zbP/SHcJEj/PhsKsDszBXpIimRvEoU4zoPP1NOFYNW4Bz2vN7QhUW8s9qo283lvM/BTXImRJaxCZFm2QmC5PZWIDoH6ogBETNV76qh7zsLNqe6LSDqQ5YTVcK1qVZiyX+STs1vNqzfctdThgXV2Zar/XBqffY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C+mJ1mBV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i7OMcOen; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qrRW2X+9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OQB+/6Ty"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 567C814000DF;
-	Fri, 14 Aug 2026 14:56:03 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C+mJ1mBV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i7OMcOen"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id F3692EC01E2;
+	Fri, 14 Aug 2026 15:03:44 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 14 Aug 2026 14:56:03 -0400
+  by phl-compute-10.internal (MEProxy); Fri, 14 Aug 2026 15:03:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786733763; x=1786820163; bh=SYmNrSKKxc
-	o86QZr5xVs35C+6u897SmBlwP1MNUcRM0=; b=qrRW2X+9lrrZpZFJHzNvouJ5Sw
-	HU8YAHcWGv6cc+6rc7xc14DGVUcLRISolJd+vxZzegBixE7vEuTSNaFZNnO2ApL3
-	vHG9kH3xkndOB9W88fbusnoPdevDDU8bQADEO4VddthOsmhJcwg2TNAehlD9i3PK
-	oB4i3Q0+Nm8BfglLZCHVLzE0YptjWp1OFE7tk/xikFh7fw1aU6yVhKWv6ELwGaPI
-	y6EadWFYMz+46FnOcOUvbODWRzNr47Hl+zKKtY06ALdmdd+IbnfjsNA4r7yP5T0p
-	9wD3WsAanZGwR8rdYS9+gcQwcbHol7Ks+fMxiRk6zgwA+pTg8azFgPrRtSXw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1786734224;
+	 x=1786820624; bh=fuWv+As0+FOCJfMy6VuRYOuEfk4UAbLc2GW8m2SpjLU=; b=
+	C+mJ1mBVdV6vZotSLKlrcrywRtwONy1FyeeWySZxUN2m7x2HxUZjYeJdGbCim4JY
+	0yZassxfjkCW3EOizBxKoYh3KCAaKq87vjUjOg0Om0Wq585DLKrcuI6nvpxPGLvJ
+	nFaU4iTGY+T4g43W6oH7RXNH2QeY0fU/V4sRBVF0LcBK5K0duOw/8n0mQ5S8GtGP
+	w39JlAyVK1br3NoXwUXd+5GMDLn/55FBqj7Am1fWLQfeP4+K8o1qwBE6SRj+ZyX/
+	bRcqWTFY3nLz5RjNRlBJPChDjBph8W++KsMkAl4NxdvYCMSRy05vCRtr9FIHynfd
+	Ws8/eVFki9gORu1b/89m9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786733763; x=1786820163; bh=SYmNrSKKxco86QZr5xVs35C+6u897SmBlwP
-	1MNUcRM0=; b=OQB+/6TyvvtI52qf99IkdRbAJHJqsK2fFYmo8MbF5ozfvDQy73z
-	jJuJcMVJ9ZnE++KF0ulN9N+tuHYfARKyIdsjuKcCJ4p3qONgumSiJWr8o3Mw5I91
-	hJNd5RP9+besbaiQzjWRJqO1hiofiAkvFSInj9jiMe7n7ARVkdeQQNTbY3uYEmg/
-	WQVEhedg5C6bPdIMDdg5SNw/iOwMrHOLMGRHqvQW4V405UKg1owy5zIfCLPVJQ43
-	IVBSQaCHa5QRM5cLS3ATGSNeapj9EoFdIdlUMUXCGa1x72C0ilBgTu+bzCLDedS9
-	gDbJhIg4cTv6ttKNubODs0HJPkvSx0yTmWA==
-X-ME-Sender: <xms:w2R_amzGEE140cWcUdYLYvL5V18KnXAJ5BHDlqNnx6u9d0vCtG2Ujw>
-    <xme:w2R_ahV_YgRNvUTvleiMVaLu6tv_lwWSAOPnGu292YiZFQ69-MbaZlyBz3yMB5u77
-    GbI2zPrhUw4MbyuCvJVznCWlCd90RAAh-BW04zoFdVkFvVepWRKFA>
-X-ME-Received: <xmr:w2R_aui3BU2ZVSX0BpJNfcCD-17REJW7gLPeLdLmv5bhsGa7G2w32MqGhctowKpaEXzTrJqANzKpqXkQMhluWz6FzcEHEqawtA>
-X-ME-Proxy-Cause: dmFkZTEdgAo9CR+ojqAJMry1ezMKyo1BtNEP7WOotfXZE5x1NGft9WCtqRwFb6dvB8DIZs
-    sbYpmroHMr5tbk+s1I4rSCwCZgXfckv3kGY2bNIU0Nc2BUeyanRmcCgOzRaZOrpaBrVvIY
-    s5FyyaoJ699JqiQLeGe9rOibyuVzG5iTwOF/Ra9kkheUWYs0mUVF9Pzg5qgXEYgEl9JkaE
-    KDGK5E54Nbm8WEV7R3T1ln1/LeiuDwY0UcHT/2uiATnCCABljmBUWxcBxnyKf8buMXdt2x
-    G+cdtqQI98T/yk9KK/D9oTyarDo6XQXp6Py0lwWe8zwdkB2AIim5zQIeZuU/YhixfobKW1
-    Zz0uKaw+E5F2Tu0zERGcqcVGStQ8OEZkz0BcJIcZ/Q6PTVgxE4G7CdFNCIU/S4q9wdzfzu
-    Ia243T/IA78s8D/Eg5XVRoKydXGVjkLo3/DI6SS2y82hanT2x/WrJt84hP8Q27KVl6RChn
-    35eZ0/XmgkVQBRLJYUSpEqmQM/zopOschJhBTuh19Pxyi734c+fXYRPz8ddRCuPA4QlJF8
-    WWmXhinbESkwn2PT/vfmrkWYOWI1kcoFcbxlQZgSxim6+YgDB0Y5Au5w9uSPYj6MA82uwn
-    DtTVhWu2id4xbIGhJNWuYE3/Eb/AGZ7GXq9uJuB3w3JoBehf0f7YFiArLiJw
-X-ME-Proxy: <xmx:w2R_apDbch0GSIjzD_PFEqmphVrDHxX9VuwviUKqbRywY3kEYHWnzQ>
-    <xmx:w2R_astqKSyakUU8B3EXJY8Zfc-r2mMIot5bTr_hMJThTFNeiUdp5w>
-    <xmx:w2R_alfYcGFyFE0IgyJ0tsb7HfUXI1pNaA2D6lzsucrTHoHssCLMfg>
-    <xmx:w2R_ap-XYUQqy_QIxBbZUnneaGQxSkE8VDTUh7J3TNYOqd_U8I7NqQ>
-    <xmx:w2R_am1qeJJtzIGxmy0ernQjmxUVF_a44tLviVBlvRT_xTMz9edx7wrA>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786734224; x=
+	1786820624; bh=fuWv+As0+FOCJfMy6VuRYOuEfk4UAbLc2GW8m2SpjLU=; b=i
+	7OMcOenC3VMlgxnn+Di4Juv5Z5b/+ATWI0PEvp+R27fuHg0soM9WXffWD4pP/I/u
+	TwippYgAfUB63nblIR5QtHAp2TigAi9x3SradzWS5Qfzz3FWQD1qWO9OVUqG3Zbz
+	y+N0d+/CHtFwHlzsKpj83XSYRQexfJ2H0MbAPk0mUvi4IFWYpNgy1ZzZTijV52+i
+	u3JyEvNksUD9AyMkPNsrq8OqxNROYf5uGQfvDPEJ/+G73crHuUo4MubvOd18Lzb1
+	ZqW0G91S6nalUHAH+1z0FrMxUVNfoHOQaigUFxbusEBcoNtoR2a3EGN3QyjsmBQG
+	qW25LsshP1wfxKvCNv1ZQ==
+X-ME-Sender: <xms:kGZ_ajabJ4tyh9aupLuc-rJpUafLkryRO5eWcV2a8eDjilUul6OQTg>
+    <xme:kGZ_apSARNry3sGyfabqQ6BEpNJD2qrenkIIrGnv_w3GXsdKDfZDpJ4M3OYbtHLEY
+    ulgBTF3mvgjlCC6Pkx48NnZbOOt7R-fY9tSS4IfM69jJA3v_4TgeBI>
+X-ME-Received: <xmr:kGZ_auRJMv5PO_6gpCx7fXrlMEJRTZkbcsVfjEa0zNp1xP3-roNahqpvooyLH2mOqPbsz24qKOIUALS5xjYSaebiWdRhMPf9uA>
+X-ME-Proxy-Cause: dmFkZTE7CLUv0Fv1HlDc0Oq9QWvw7t1notjfJ3FbPUAnR8D+vTStStWLIoyWHsGhOCa9fq
+    rZjz70TmspBwQhlfG68LF4GJflrlN31yFLV9/MdHcULjXZMY5be+6YcbCR+GaOA5EWPtB8
+    PGlQOTehs/ZxlDxwjKOliulvQTJkw/2rKl3T/bMDvyuY3f0Y3ac0Lmy7yzkfMFIVDcT32m
+    vVX4Ee2UCA3SUXuLBIR9Txe4cypR1EFtBfv8cX1oE2vCdM1mMTX3r/SsW1H5cRKaiOMBn9
+    T/K5Dlt/kGpVzyd+mLSY91uXHyf1pYM0u+fET8OGaXVyxnjLevwQHV6qIqReQcwDjhz4jP
+    IG5sJvFmOTnYBOcWK1RE+S87jQWgFJ0U8oLxQRm3ZQ4kjIlpqRSKJw+h+uKY+DBFXOIple
+    QateQkMNrNUQYtntwnutZlb4JyFtcI0z3gn7z8VwtYMcB/Evf8WVS7GFIOWsKVo05rBsee
+    qvchSxOau6y0/MUxEXyP+bi+H7rz//M/2/ikvYqTwlcjhRMGDNU44P7Eyih9M79WvJTnhQ
+    dscF4q0a+4frnWe+5U3liW4G0rwbfUBVTi3RWif6dZ28OCNv22jLop+NiE4LsUDhqhgNjC
+    m3jQLyIUGz7jewWa4wwTDA5aiIXKiUapXRNrnRsW870FoDnv/mfm3Z2wj08w
+X-ME-Proxy: <xmx:kGZ_alR4ncWuOfVaLlZK3_lYJ9TdwVffCcFWh9rKw_LHgfIn53ygVQ>
+    <xmx:kGZ_ar5wrZg4lTA-z0rU9kGH4XECrmWkAMus7aD7GCrtWIs0FO_cRQ>
+    <xmx:kGZ_ap0OSIx_oBw0ipVD0SloNrV2BRc42tRRyS0ZOhkfy-VkRGUiOw>
+    <xmx:kGZ_auCOxGyRUr55tWoUhnQrishKPZC4weeAKG9Q_GLm3HzHPNshwg>
+    <xmx:kGZ_atw5QM6AUoM_yPifqb5HDNMmudn7XaF89D4bO3hAWojzld0TP5nC>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 14:56:02 -0400 (EDT)
+ 14 Aug 2026 15:03:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Karthik
- Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v2 4/5] upload-pack: read uploadpack.lazyFetchTrusted
-In-Reply-To: <20260813154748.2378747-5-christian.couder@gmail.com> (Christian
-	Couder's message of "Thu, 13 Aug 2026 17:47:47 +0200")
-References: <20260807135511.1818458-1-christian.couder@gmail.com>
-	<20260813154748.2378747-5-christian.couder@gmail.com>
-Date: Fri, 14 Aug 2026 11:56:00 -0700
-Message-ID: <xmqqtsowmszj.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH v2 1/4] odb: decouple source path comparisons from
+ `the_repository`
+In-Reply-To: <20260814171724.GB2563235@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 14 Aug 2026 13:17:24 -0400")
+References: <20260812-pks-odb-eagerly-prepare-alternates-v2-0-522b9a5bc1ea@pks.im>
+	<20260812-pks-odb-eagerly-prepare-alternates-v2-1-522b9a5bc1ea@pks.im>
+	<20260814171724.GB2563235@coredump.intra.peff.net>
+Date: Fri, 14 Aug 2026 12:03:43 -0700
+Message-ID: <xmqqpkzkmsmo.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,107 +88,48 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Christian Couder <christian.couder@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Previous commits created and prepared the path_allowlist_apply()
-> function.
->
-> Let's reuse this function for a new "uploadpack.lazyFetchTrusted"
-> configuration variable.
->
-> It allows us to:
->
->   - read an allowlist from that config variable,
->   - check if the current repo is in that list, and
->   - return the result from a new upload_pack_lazy_fetch_trusted()
->     function.
->
-> The new function will be used in a following commit.
->
-> Note that the new config variable should be read only from protected
-> configuration files.
->
-> Signed-off-by: Christian Couder <christian.couder@gmail.com>
-> ---
+> How bad is a duplicate alternate? It's a minor performance issue, I'd
+> think. We would add its packs to the list (though hardly ever look
+> through them, as the "first" copy would satisfy most requests, and the
+> unused second copies end up at the back of the MRU list). You'd only pay
+> the extra lookup cost for an object which we fail to find entirely,
+> which is rare-ish (mostly speculative lookups for fetches).
 
-OK.
+There may be a future application to be written to go through list
+of alternates---enumerate all objects that exist in the first one,
+and then remove them as duplicates to other alternates.  Oops, there
+was a duplicated entry and we ended up removing the objects from the
+first one registered under a different spelling.
 
-I am not sure if the idea of configuration variable is truly sound,
-but if it were, I agree that this is a reasonable implementation for
-it.
+Oops (U+1F60F Smirking Face 😏).
 
-Thanks.
+> So I kind of wonder if we could just do away with considering case
+> insensitivity here at all. We'd err on the side of correctness in the
+> ambiguous cases, and this code complexity can just go away.
 
->  upload-pack.c | 37 +++++++++++++++++++++++++++++++++++++
->  upload-pack.h |  3 +++
->  2 files changed, 40 insertions(+)
->
-> diff --git a/upload-pack.c b/upload-pack.c
-> index a52856d869..29e700e43b 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -34,6 +34,8 @@
->  #include "json-writer.h"
->  #include "strmap.h"
->  #include "promisor-remote.h"
-> +#include "setup.h"
-> +#include "abspath.h"
->  
->  /* Remember to update object flag allocation in object.h */
->  #define THEY_HAVE	(1u << 11)
-> @@ -1378,6 +1380,41 @@ static int upload_pack_config(const char *var, const char *value,
->  	return parse_hide_refs_config(var, value, "uploadpack", &data->hidden_refs);
->  }
->  
-> +struct lazy_fetch_trusted {
-> +	int trusted;
-> +	char *repo_path;
-> +};
-> +
-> +static int upload_pack_protected_lazy_fetch_config(const char *var, const char *value,
-> +						   const struct config_context *ctx UNUSED,
-> +						   void *cb_data)
-> +{
-> +	struct lazy_fetch_trusted *data = cb_data;
-> +
-> +	if (!strcmp("uploadpack.lazyfetchtrusted", var)) {
-> +		path_allowlist_apply(var, value, data->repo_path,
-> +				     &data->trusted, false);
-> +		return 0;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +bool upload_pack_lazy_fetch_trusted(struct repository *r)
-> +{
-> +	struct lazy_fetch_trusted data = { 0 };
-> +
-> +	data.repo_path = real_pathdup(r->worktree ? r->worktree : r->gitdir, 0);
-> +	if (!data.repo_path)
-> +		return false;
-> +
-> +	git_protected_config(upload_pack_protected_lazy_fetch_config, &data);
-> +
-> +	free(data.repo_path);
-> +
-> +	return !!data.trusted;
-> +}
-> +
->  static int upload_pack_protected_config(const char *var, const char *value,
->  					const struct config_context *ctx UNUSED,
->  					void *cb_data)
-> diff --git a/upload-pack.h b/upload-pack.h
-> index d6ee25ea98..b2212992c3 100644
-> --- a/upload-pack.h
-> +++ b/upload-pack.h
-> @@ -12,4 +12,7 @@ struct strbuf;
->  int upload_pack_advertise(struct repository *r,
->  			  struct strbuf *value);
->  
-> +/* Is this repo trusted for lazy fetching? */
-> +bool upload_pack_lazy_fetch_trusted(struct repository *r);
-> +
->  #endif /* UPLOAD_PACK_H */
+I like the simplicity.
+
+> Alternatively, I think we could probably make the check more thorough in
+> a similar way. Always consider a pair of case-insensitive matches as
+> possible duplicates, and then for each possible duplicate use stat() to
+> check their st_dev and st_ino values. That keeps things cheap for normal
+> cases, and we pay only the stat() before de-duping. It's correct and
+> doesn't rely on the repo, though it is a bit more somewhat complicated
+> code.
+
+Hmph, I prefer not to trust st_dev and st_ino on platforms where
+case insensitivity can possibly become an issue, though.
+
+> [1] Even on a single filesystem I think case-sensitivity check is not
+>     completely sufficient either. We know that filesystems do more
+>     complicated one-way transformations than just case folding, like
+>     unicode normalization or even removing some funky code points.
+>     We'd miss those "equivalent" spellings.
+
+macOS?
+
