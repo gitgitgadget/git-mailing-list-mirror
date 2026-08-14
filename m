@@ -1,135 +1,146 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B37E3D4132
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 01:53:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786672422; cv=pass; b=GBYRMVx55Nu97ShxzbrPN1ir7EUNDqZrpO8Ya8irc6PhR9iDKwlk5zRyKh0XETDqcSEbz+4kUxgwCGpY5/MX8zABNS5oBfTU/V+QVKDzg/0iqeL8Dcp4BUQeIKZUVdw/AP5CtmfGLOPAcKqG2LawywTG/CmxvHqnMTgGUrIZr5I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786672422; c=relaxed/simple;
-	bh=2aJsaKxXyj2hGrWDsn0fPc6pBEN+pYeZMz375fH8+0A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mebo01kn0+5v7Hf7I982lFVs0jyxAk0EaH+7eRaQOlctxMzR/NyVcyT8PuoWoNc0hVWQiv/Nt3LoYhfNACb/mUiE5ClYzMMr2Ob8CpUioNOC/zkYfNeDi8ZgDhF7bod4DRRJHpLT+g47xPbGE72Vp8G5HMZxog646JCTViTOOy4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XUQ3h/03; arc=pass smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AD63644B3
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 02:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786673191; cv=none; b=ou8ukTEf1NQ8ag1UmzCjMc7MVxbXhK71T+UQhZ0Py8csUj9njFh6K++0Iv/AfwvUhaAHgkUufE/PzSfcze+0Q1AUXLMq8sYttsPSrPJWL7ZwGBSDzGyKcbSEZ/Gy0thIdtrOAyqqlRqQjj6BCw/0mALOUjWwSJUIu6UfV/yH8+0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786673191; c=relaxed/simple;
+	bh=/NO0WGCpEhTSdBmvVjuK7VsyOr7yWhoVGB0lG+mJG+Q=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Kk6FkglV3hwqcTDgjJz0lFtHV5dISKOJpsZiBZaHFPA1QCLrDFJCtbUS4+g7Q9aqF0OgfHpkIGmpeqzw/9TUg7NqCCpcH9pQB8qD4spFoQeHhI+PQFrRrIxgPVX07dG0QDaSpIVUe1y98N5Cf7apWegslvkOkvROECBMyg3JX/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kK+ywQo2; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XUQ3h/03"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-49c38a4f110so282164b6e.1
-        for <git@vger.kernel.org>; Thu, 13 Aug 2026 18:53:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786672419; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Zab31p/VK0wtyq2ADFFZjoYbWRQYC/432WffmaCzA4EdUYV+4kb0P+6+ew8PLMYa1A
-         FkPsfL9nHmtLcG0T1Qc1r2GqHtCCQ388DPV17UwCvBzN1w5ELCo18wh1oiO6YYC/ru4C
-         nLf/E4RCRgQ33uV8BRGsMQgKI8L+f6hooAstyGGLewXeP3b8q9004gNNF6j9ZsUyBGJf
-         TLXUTqs337bWyCpNf6q1jCVINheA+IFH/NHnDYj4VcPc5BbQ5ZBJWjprYmooC3gjN14A
-         DYWZ9nKdXFGpHVWGbZlGNyYJd89aFiALfXS9fwQqJZnTIdUETnrPF2bICzFhdHMJCi6C
-         bAuQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Gf2pndTxUAQhKRub9QORvrzGKvKBjuFNjVTqZpW9ES0=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=OaWQkrc/kB2rL1kA6gNhKndWnQMsNxlnLaLz9AuzbNdFtJNKxsDo1oMmV7H8htiZYS
-         GfoKF31xxmZskVuMjO2w5wYzL98yPabBGzyE+iwG41MjVZiiTsXAPGTJIS/Nz/ZuJl8D
-         e4vuFM9hTPCzXRAI2Wt29BzTA/YQ8XO9YlY2WpD0IDKkrbiY9AqZ9/JxguZSAD/+ispO
-         Wun1gReH+PHcXVFiIQ4LogvGyv4COJfshMn6daPBeDZ/7eebe7NBwwiISI9NwTsJ9Xgb
-         Qoto/sTymDdjxdJ5aiAqp7y4F3Loxdqd7ytszimWbxrd3xMMEpMXgINJp3raCUT8uqed
-         OTgw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kK+ywQo2"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2cc891373e0so8197665ad.2
+        for <git@vger.kernel.org>; Thu, 13 Aug 2026 19:06:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786672419; x=1787277219; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Gf2pndTxUAQhKRub9QORvrzGKvKBjuFNjVTqZpW9ES0=;
-        b=XUQ3h/035GodsER2o62e10UOS8IVtrZbC3AlVmIJlgfrSjH/y3JttTeVqqSmv4bL2t
-         G0BX6wH/jOfbq+pUSA3eeS33doXvHISi71TJhIToPWPu1Bh6RQHcShmMPImMiBsyzhGY
-         Y/8rmux0eumMYLpuhKy8IC+CJVphEzu44ukWwWFhOXTS9HAF0LZZL6B6CEf0xyVUDZnU
-         zN4C72VfjRG812ESrkdcYVS4pI5KPkHnL1MuWI0nYlyQw/GbGM8SSlq4GLd9Q4hC0vkm
-         cRI1e6DGHkOdr9PNiZj35h50hFOFrDcMArR82etc9SzzPpCSOXlpc+CnIqYxkj73VVWp
-         1cQg==
+        d=gmail.com; s=20251104; t=1786673189; x=1787277989; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=XZa00Wg+uYZvXSRJZR9d8XmeLOfclZfkMH7fwLGDIYg=;
+        b=kK+ywQo2StTPJPSKPffmNuinVx6x4/stOtrD37e4rc+TvxqAbNtaGAxpeu//6U+eFY
+         1tHa4tXELcLdB1WAaP7KN1WTRhWVZt9AL4SFMEFQ2VIbZkZD2lgoBYCQLy5zxbDp9+J2
+         YdZbDeiCdd5TYxBoy+Q8KqgzEPRu5MbVfC+UMdYfHAnaM9/JCgC453SVo1rZoSUxlEC+
+         DavLu/jmxCshs7qeLfQEjeum3QDHeP3wJ3faRy1tH7JqI47S1mhXFawEG0HU6azxPVnz
+         B0CglaAcWhypunO10UccKrd3RQ/XIV8fvMhQ7I2MiU5uPd5Mt7MaSttV2hpzpWukCft9
+         zN3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786672419; x=1787277219;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1786673189; x=1787277989;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Gf2pndTxUAQhKRub9QORvrzGKvKBjuFNjVTqZpW9ES0=;
-        b=k2xCc1j0w3M8AadEkRLpqBBn5gXqS+hi8Unl5qNeEOxOVIzRZtKaep1zi0kNyT8lRg
-         95ZRD59gddR+AWYSGMrbXUkIu46yPZtIeRl2u50ZxlWKHdFbovXu2sNl91oVnl+VPVpi
-         +fKYVXS+/B8tVTv+sPMpixQzPsU6wcf2ynZuq8enkBE4XmtaHrMPL4z+BwpeLkwYIzVC
-         rJQtmtBhIzqobb4c8JVwbK/9PEgQJzQzArcqTtsfzgsAshw8DuQjmx0UMk/8h1uu9dH8
-         lU9b16fvPBpsllLcCnt8GsGY6wWQGbCYk178T5MH8Bb1xXPWLcbBqW2x66SRUmz/U7Ct
-         HN5g==
-X-Gm-Message-State: AOJu0YzX/l/tpoBjOEmjwF27gB1RIomYVCDHY703V7F9W0hsfxlsBjxZ
-	IvmDuYOMRGkCRFmXoj38pfmBES9Z0UpAki5hwBtYKuTBjCiYehxVV2JYkMNnWwIP8XyjrUtjvA8
-	7sjD3NquBKNzcsJqD1aUVmI1+FKauIAtoVQ==
-X-Gm-Gg: AR+sD12ETKj0wOQ/BBNb9y/YNEb2t7HBiA9yAXg2mLknVnRu0wpua2X3Uco9SJmU3y3
-	DX4M0+cndjwuvUM31q17o8SG+orobzIHRPFcWAJkeeR4Qbi6bsj4ayIsd4KFNHPW7vO4ET0L7R0
-	WByks6HP5m+RlDIaEDXPopGSJ6QxJXuxbTQQVEFscf3oOOnQ+U4iLYy9qAnpS2VbB45wmxxFAdg
-	DZjCWBOQsumdPqhhPXQUujNXjUJ9L6inLI+x5FHIgenSfXp5e+wmv8h4TS4mF1ffaaUGJDrc3O1
-	NWQXuhIY/IDPGP3bXTRil15/K7vnfCZe4qtb8irh+UCGhOyMmtay/CHNaseD7Ct+bGoICT8OnyX
-	LtdMivKou3QuVvUW6PyGoW54y2DFuiSukDyJLtu9KmvsyRWSBlnkMW9Wqvgn6JIk=
-X-Received: by 2002:a05:6808:238b:b0:48b:1e49:24a8 with SMTP id
- 5614622812f47-4b241cbe2e6mr2164154b6e.11.1786672419165; Thu, 13 Aug 2026
- 18:53:39 -0700 (PDT)
+        bh=XZa00Wg+uYZvXSRJZR9d8XmeLOfclZfkMH7fwLGDIYg=;
+        b=IkSrvUw7fgS4K1zSCTTr0GJS/cxsUKZXRYdpfSHXJPCgWd9ZdG79uQtxg6jNl3AKsV
+         gXdqbkBB/WhVuiKwXfusvWffuRR6udmBNDaAtjH1mnVbkHSoe8kw2DRyy8gEH3DmdRuM
+         qDyZXUjaQIUAkWFRpp1uK7uLFfpA7F+6j2fMsWt+YcOMFNNIsU448YhPMhidLhc2TJOa
+         2N3nbWEfUHPrgNhKbXMb5LqL2MHgynqj1TESjgum5Ho4tunIkH3QTvgfwLr8sm+XMXGr
+         z4oH0qPdiBfpeo689idAqWQjWU3zq3hXobVqfEJM7vpV28Hk4jFOWoM1hcEoDFGv5ak4
+         2Jlg==
+X-Gm-Message-State: AOJu0YxDPVs1WIGkCugVf/0fWcPA0IHE8imiyLwdfXcMM5EWvamayu9L
+	ICKih2us/R9BT90kvdWTmSjYW1VwvVWDOHg/85+u5yAP+WiEBb7js6qzF8TTGA==
+X-Gm-Gg: AR+sD11MOuSjnXP37fVdkkCRPcIAhzRCb8+qrvzLpEWcbjHbcC6GzGpMNcix88EDdtU
+	rFrsdDgM1+QIY1HxSRLgTgpEUvN3YwMjPvMcl2F5opDdJPOBtQYGlsTH3uOMCVp6XJ68m0VCX27
+	conHPop+9eh3kyKJUta3wSAUh7A1o5IAV37jj0HaRkIkVDsflBneWmnZ+A+rrjByXGxZO/0WFMv
+	ZQ9YWyX/hErTjxE3ygiEYsMjkHz1MsACQf5JqBRnzXQsg7aMhOp2SvVZSbXNnYMOCcgnYbpaPnF
+	ERq1gBW5/OdgkKyGOmrGGXkbKypJoEYLoK/UkqJQF6TLg0vIa1kdD5XCH0YiluI9bPr6qhrnqyf
+	T3BQw4ioFQmooosl50t+dSplmbuqn9FGeYs5SDR/5ln+LeIh5V8XMAIUNNfeB2sVFbVbmaf11W7
+	DhXOZMgPwFG2GHMMTqPpZB6+z2mMoJJ674lgt1bB/78maAn0MaDTDsNnDW7QBEEA==
+X-Received: by 2002:a05:6a21:600e:b0:3cb:b2e6:9032 with SMTP id adf61e73a8af0-3cc71d55f44mr2461168637.8.1786673189427;
+        Thu, 13 Aug 2026 19:06:29 -0700 (PDT)
+Received: from [127.0.0.1] ([128.24.162.7])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31ebfc3ca41sm13069476eec.21.2026.08.13.19.06.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Aug 2026 19:06:28 -0700 (PDT)
+Message-Id: <pull.2035.v2.git.1786673186855.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2035.git.1786516958048.gitgitgadget@gmail.com>
+References: <pull.2035.git.1786516958048.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 14 Aug 2026 02:06:26 +0000
+Subject: [PATCH v2] diff: avoid misleading statement about -l option
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqq7blx5oor.fsf@gitster.g> <20260813191234.1066662-1-gitster@pobox.com>
-In-Reply-To: <20260813191234.1066662-1-gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
+
 From: Elijah Newren <newren@gmail.com>
-Date: Thu, 13 Aug 2026 18:53:27 -0700
-X-Gm-Features: AUfX_mwJ_q5ZBY0U43Z88g2CRLFw4TOwBK2pihng95CcID89I6q6OGBZQG5Lpyk
-Message-ID: <CABPp-BFeLStBR3OeTCJoBmC7cn_VXrn4RcvBg-WWGyz4LpJxsg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] completion of 'git [-C <dir>] checkout'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 13, 2026 at 12:12=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Continuing from the previous 'git [-C <dir>] diff' series, these
-> patches correct completion for 'git checkout [-C <dir>] path<TAB>',
-> with a fallback to complete untracked paths of somewhat dubious
-> value, primarily as a reminder for future work.
->
-> Hopefully this will be the small and final update to the series.
->
->  1/3: completion: no-op refactoring of checkout completion
->  2/3: completion: complete tracked paths for "git checkout"
->  3/3: completion: 'git checkout' completes untracked paths as a last
->         resort
->
->  contrib/completion/git-completion.bash | 88 ++++++++++++++------------
->  t/t9902-completion.sh                  | 56 ++++++++++++++++
->  2 files changed, 105 insertions(+), 39 deletions(-)
->
-> Range-diff against v2:
-> 1:  33d136ffde =3D 1:  33d136ffde completion: no-op refactoring of checko=
-ut completion
-> 2:  a28754cfd9 =3D 2:  a28754cfd9 completion: complete tracked paths for =
-"git checkout"
-> 3:  90aec6539c ! 3:  17880068c0 completion: 'git checkout' completes untr=
-acked paths as a last resort
->     @@ contrib/completion/git-completion.bash: _git_checkout ()
->         fi
->      +
->      +  if [ ${#COMPREPLY[@]} -eq 0 ]; then
->     -+          __git_complete_index_file "--others"
->     ++          __git_complete_index_file "--others --directory"
->      +  fi
->       }
->
-> --
-> 2.55.0-759-g9dcc51a0fd
+In commit 6623a528e00b (doc: clarify documentation for rename/copy
+limits, 2021-07-15), the wording around rename limit options and config
+variables were updated to point out that only the quadratic portion of
+rename detection (or "exhaustive portion of rename/copy detection" as
+used in that commit) was limited by these options, because exact rename
+detection and basename-guided rename detection (which both run in time
+linear in the number of files) still run before this limit is checked.
 
-This version looks good to me; thanks!
+However, the short help message wasn't updated at the time; update it
+too.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    diff: avoid misleading statement about -l option
+    
+    Changes since v1:
+    
+     * Fixed author to match signoff
+     * Simplified the wording a bit, along the lines of Junio's suggestion
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2035%2Fnewren%2Fdiff-l-option-doc-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2035/newren/diff-l-option-doc-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2035
+
+Range-diff vs v1:
+
+ 1:  6253e1dc96 ! 1:  58729a71ce diff: avoid misleading statement about -l option
+     @@
+       ## Metadata ##
+     -Author: Elijah Newren <newren@github.com>
+     +Author: Elijah Newren <newren@gmail.com>
+      
+       ## Commit message ##
+          diff: avoid misleading statement about -l option
+     @@ diff.c: struct option *add_diff_options(const struct option *opts,
+       			       PARSE_OPT_NOARG, diff_opt_follow),
+       		OPT_INTEGER('l', NULL, &options->rename_limit,
+      -			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
+     -+			    N_("prevent exhaustive portion of rename/copy detection if the number of rename/copy targets exceeds given limit")),
+     ++			    N_("limit to cheap rename/copy detection if the number of rename/copy targets exceeds this value")),
+       
+       		OPT_GROUP(N_("Diff algorithm options")),
+       		OPT_CALLBACK_F(0, "minimal", options, NULL,
+
+
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/diff.c b/diff.c
+index 589c1969e4..c593066592 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6186,7 +6186,7 @@ struct option *add_diff_options(const struct option *opts,
+ 			       N_("continue listing the history of a file beyond renames"),
+ 			       PARSE_OPT_NOARG, diff_opt_follow),
+ 		OPT_INTEGER('l', NULL, &options->rename_limit,
+-			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
++			    N_("limit to cheap rename/copy detection if the number of rename/copy targets exceeds this value")),
+ 
+ 		OPT_GROUP(N_("Diff algorithm options")),
+ 		OPT_CALLBACK_F(0, "minimal", options, NULL,
+
+base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+-- 
+gitgitgadget
