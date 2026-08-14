@@ -1,144 +1,168 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05ADF40E8E1
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 08:51:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786697498; cv=none; b=HU3nZAEGZ9qHCbLE1AALrahc32z9FpPIP+KYuZxPkQatQwppF47dC7GbpXt6cbBFw0ZcsXIpX2Qd8uPfV8P12QquC6Z8+QqKDcouB/lHgZpUZohSmGJTdo9EqwQ47Qz6D/ukdau6rzfmwLhDrh9zFA3gLH8SsZ7zYcXgMunlw4k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786697498; c=relaxed/simple;
-	bh=y35E3FpT3Okb8Q9N9jfDe3wWWhnJpVoaHIXRCVkQ1Sc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uI39ZUMUGB/FW481yZ2azGxUTbrERmQmKin7nM8HOLib0fMWUAk3etMipcwxRT6383yU/GZdQoeYBB7WW+yFHMWmg10YS7h1pMA0PJLcMzF7ZN/RFw2Wn2nBLGSChVpcLegVlXV5cwpaeLnhy3Vfs/iSghUhrD6ssr9+fjLr9AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lfxxKWpv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HcjiBDE3; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD379321457
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 10:21:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786702925; cv=pass; b=F72NhGIjhNYp2UEYYU/ycj/QCewww+1KuhVlKrC1z7dx+TJ/kWSBX4vDcNuc6dOov+bKH6SFQRMgghJRUCfCm9QSzHJZOo+PZTrKQ9rfToUc4BLt/VwodhZxYuqdRWa6EvnvsgmkhWxt71vDmImr9F0khMeoJj5ak56VoviK6eQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786702925; c=relaxed/simple;
+	bh=gx/iWMm3jnnuJwkKyZVt+9FIyxKAoI1cuToOCDXPUWs=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dTcHeFwQ4XmSdFz48L3KilOIQViAOKaH5hIwF6GxDfFD60fyvWFtJW10e46svB5yhVKLIzfPLj0H8oAt05rvzspcv+e2ESmh2CGKxPtm2Pi3oLpCz/4Zc3OZE/1Q+pDvrYniN1JLhngwJlVsfGeieo0hQB2Xj4ylBl90nvh2Yt8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QC+vyORk; arc=pass smtp.client-ip=209.85.217.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lfxxKWpv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HcjiBDE3"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B99C67A02EF;
-	Fri, 14 Aug 2026 04:51:35 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 14 Aug 2026 04:51:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786697495; x=1786783895; bh=e67uW0aeUG
-	20qjhxWhq+St6EiA8CTHSvaEz+b4N10rQ=; b=lfxxKWpvhbs4kSC4dGkejoj6AM
-	JRNIow4MZk8vzdsm9BrrcEFHI1cukXjzTl7ocrTG888zvX5QdGsbUZBPr5xzpv2P
-	cvq2PqipwV+pEiqhL4oMv1igvhbx7ZJb+ElEipCJjn7kRnhwYbPFulH4oCASDCsM
-	tgytWWLOt0TTL5bnxtWrrsPi2ocNlnA7zHzfIa2XQS6oqJhUEgJikZB3QVRxfUSt
-	Pm6cbz2qwE19/kxm+k29xwJFHnynxL/EluFbQ/ffdTRYFJpQv1zQuCPwa7+k2Cq2
-	NiFxC3C7kEj4bmOWoaqIXOdl/6/fWu4pAmQK2GcG2EozDEY7F9yivuRMgHQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786697495; x=1786783895; bh=e67uW0aeUG20qjhxWhq+St6EiA8CTHSvaEz
-	+b4N10rQ=; b=HcjiBDE3j5zb2Oz9XJLerZcbFfNP0tAE+Ijlz3amiiFCBhM/Vrl
-	fiQY/HAD1P0NnzwyXgXxlKe8HsyuWJAtBJu1ZDVBg60n9kgD7kENKAtJ+HuyAeco
-	yI9JM+AdJvxAWB/G3qhfEPtVwmlQcjHCuRptzQCRSPG+lDJqQ8dTpC6isIRuAV3F
-	tgGnAQ55+oGql203VA/ikdthPjjobcHuHVsef1a9Z8rMpms0p9cVIwHq632mKRZe
-	9pPg5IHGx7hpkAxWE2hOFWCx2fXQPHorGb3EjcJjaJAWvsBL/zufV5b47n5/N8aR
-	qP1M9y1DgCxDHGA6g7OUToGX7P4Sp+oRgLA==
-X-ME-Sender: <xms:F9d-aug3ogQvOCyUaPpMSH7mQ27AKNZfZGGFtF7A7tozD56HcZSNdQ>
-    <xme:F9d-amc1_iJ-ddmPst0r8T0sA7RzCg6iCzoOON0TNrKEW6QTSO01TrnVhgGX9d2ba
-    q20owoZabnfbmRrs7jmsdb2mMXtZFs0eLlOcGIGBGPmNyNca2BiaQ>
-X-ME-Received: <xmr:F9d-ajdPqQvtDiPU-6itett55cI3-FjLKY_EGBrUbU-4jrI8-XBxNq2VaWaNQtwLFS3Vx9sf_FfHZqpIDf_XJ_MKcpbycUzU0wQC6sSYRUo>
-X-ME-Proxy-Cause: dmFkZTG3zObUeNLVKvaVuT9NRLcWNA0fEaYghEiuaa/lqTwLUZPDs0nr6XQ5Lz0+yTKjQO
-    j1ZrPeTGEFuoeerzV2HpLmg4wZTUMciWHlPfTX4wbgFNSGRt+8UG0NIPSceZPoWAtH/gWC
-    dV1F1wFNsjy4W3AAGmLdR9ZKfr7M/VrDKwnBrFJCt3tHozUu7Au2IwYv0ZduvmIeafkTL9
-    lfsTvNi1Gx1ro0Pki6AaNt+qWS6Q/c1154ApMz64avkkoxexKtcyEP+UMKMratuZfNNM4W
-    lfqf9hjtWgDqSoBKiXkE4Lj98pALxKnqckHm4fDkyo3JVFVRCT0tQWNM6JVEAMvFoToPAf
-    ghrq6hlHYFsD4iRvPE6VpkcVdB1SqpPYBEnAFERNOB2Fx2UjBTJiqvHaqotwYdSIm/nMIa
-    aXtrIH802bxL/nZH9VY8kO4+Ac8Bxoi0CoudnjRHLf2uUoKJ8L6IUq+uxt98Q3qzOar2Uj
-    wBFpujvg98MPWEGeljnGz83TyLFrbWr4Gxc715djX4c00VGihai8wDnBhqEpJznRBe6/HD
-    TPHFBwpDTjsgeqPsa5313fHBNm0rQX72aNC2uoXLvD+70n6jTEnjPUNdVFJwwIa/OgRXqO
-    2PNOTxHYrXsZrHgsb6JPa1ch8m2wYlKurfe5vxp0lvhDb6mUXjnGoSP2/QGQ
-X-ME-Proxy: <xmx:F9d-ag-owLW2LMSOvBj5hc0VgNmqjx-8EOg6VHTAIz6BnfGUivtZng>
-    <xmx:F9d-avmDOtSvxwy5W724OS9zgcJjBhmk88ZJNGk7fFezJRuh7lq5lQ>
-    <xmx:F9d-ai9omZE9vyfJqR6GSdkLe2aGHPiRnCU7NykTdnwansNzpUzfLw>
-    <xmx:F9d-atmfEg0lKGMjuA62PiUtwUzS62J1Vs9AI5s3qQenDgYSZEjeWg>
-    <xmx:F9d-amcGN0mMRzls310hPsupwQmLQKaIEUOqYAKs3U9WBbXna4lb8GbA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 04:51:34 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 99959718 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 14 Aug 2026 08:51:32 +0000 (UTC)
-Date: Fri, 14 Aug 2026 10:51:24 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v3 9/9] odb/transaction: add transaction interface to
- write packfiles
-Message-ID: <an7XAyQr7PrPlAGO@pks.im>
-References: <20260809190106.1565882-1-jltobler@gmail.com>
- <20260811175415.2044235-1-jltobler@gmail.com>
- <20260811175415.2044235-10-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QC+vyORk"
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-76b3036d2d4so435635137.2
+        for <git@vger.kernel.org>; Fri, 14 Aug 2026 03:21:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786702915; cv=none;
+        d=google.com; s=arc-20260327;
+        b=eNLKHmAU6Mv/6h8taxE6Kp92eUonYkROsMvn4/js7wJ6bGKmAZa1XUbYaV8EgS1bhG
+         GEqv7as7yYALy0F+rXZAvrP4bh9KFAC2Gzo8PZ4tavQcan4be7zJHmOl3IrNIA+Vebm9
+         Uq5cO3EmE/xetIsKXb4lXX/bqqibTGCb2BLHocoT0rJpFmnU84vL9d/Iaenz2HbLwF4S
+         OvA8op86pmDHkdO7zGjYT46WZK5LgUKXJ3xhLEbTEj3m1ZwnXnamcQx2vm4kzqvzDt6b
+         XhjooBCYWQuqyrKtKCIk0Lt2m00XQiNDAco2g8pzuVP+nbt7LO6omCavKewCL5Z/TaE9
+         7d1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=cpuNaKo05siq9X9KzkpCtKDPehkQXR6UfwijAkxguZE=;
+        fh=v/V76+LuF2RGp6DmUGFhUkrKk8VeK7EKgDv/LZJenA8=;
+        b=rWowASx+ZzoHSHDIG/9K0LP17N8D706DC7HaBqzoHv1urjIahKOZKZzp9lCjQpG78v
+         PzO+haW2maZfaNqlBImKqBoYDxGz748zdBCgc2qzNquBvhJU5jENZ6JPoJbugG92wVgH
+         DvyyA/vRRqajr69sAvoeOPJkYUmWr0T4I+ZyIhoIfOY2UnqKFS91upaBXCqBdEKrBB1w
+         oKowd06ZVun56T8BGvWEnOxj2iSgwzloe0s6QORyqIWpw8DK503Ld8ura5U/wji34Jlp
+         UW6xEB4KiPF6vUYmfnZmlfzlmY4ylp0NZCqfYtNQcaiCcYfzHjXLFBGcyRCFuNjzqZ2s
+         zUMg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786702915; x=1787307715; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=cpuNaKo05siq9X9KzkpCtKDPehkQXR6UfwijAkxguZE=;
+        b=QC+vyORkfClyZvJI3zYHc9LRgXHLnBTZOUJYHgdCZ6S5bpQRjy5p7nYBkXlKO4u7TX
+         A97GwZqBHfFT+6dBybRqLd58Cc0IN3ZWFbMTXAzMXFdfqHw9TiU/5XwaP5frqKF88Dge
+         xpZ7LWWmkKPE9hEUINiTNq6pVRc6Ku4rqSFu9Rl5OHxuqF91wt68O7sk5mv1au+V0t1Y
+         wWLAi/GDbjNhz5HgkCW/gnlxcQ990st8p01NgToebaBBrvL8JUanYyK8lRADtQu2mPW/
+         +CdRydOHzAg3Nl0WcTLbmTbpPoX06l3Wu4D8aD7gPgqvdusRn2Bru2l8pXIaiCnybHjf
+         bVKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786702915; x=1787307715;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=cpuNaKo05siq9X9KzkpCtKDPehkQXR6UfwijAkxguZE=;
+        b=ikI6OYiipvSad19QQEaGBt4l9+3NJaVg3Q2P+PaAov5BjQ4M0hAe28MkkChS9eQAW7
+         7UColUSCIZKXr4BUG2GfJYAiBJoQY3qKoO+tmjNQ7Z8cRUmQBqy2xQF/sdSKEnxDvXMO
+         VsddNvFFqWh4sbpWQFBgGcvb28zcN9WyOaAsFBWF1Yv/rEzLZlz5EYYQDShWB3hNv6v+
+         MkhzYH+Bh5RDXn1FNC8tyjKpp5pMxM1moxqtT61Vi6ycCn/XZB+BZF+KbVWmFlAf+db7
+         10SddDS1r3NKZDnl68VRPceyeN2zMZBya4jZaKhRDU//tqvi84BO+jXqnabYd3P+T2vC
+         5Lzw==
+X-Gm-Message-State: AOJu0Yybz8DBoVbmBuJVVyglAO2RUfYY45f7zIGVB+QhnN4SQlbLCnOM
+	rprGnGWesFNqE2Cr1/9r6Backpvu58r2huIpPfvu8+UrghC8XGgzAFDEmZkziemkxzaQ0WHESv5
+	x+wRH3uCFMc6cPed/NFHaf97JpL2Wne8=
+X-Gm-Gg: AR+sD12fjfY/gt+/qUhIEXoxKwkMSmVdIExWWw8ae0kMW5kC21Huac3JbcgxXWEfLcf
+	wpITcu5DLShaaQrT0pppHwnq4KBUwsZie99lh4Atm5XisM772h6sEXwVa5TgtkzWF6BhmWy+BUp
+	Z/rzBQriUyigitsKepOPLYIbtBLqhs7z+lbxKdmgBEZ7yIrwHD/BvYmSD2zTQVndtcRdm0hUbIv
+	Z07By+lxrz1GnZMjF5K0nSL7UILxLOFxfI8awEGQvFRaGAk8jJS0moTsPr7Cl/UIm2JAYpV/Evq
+	E/7L1bohUVrgTo8WKap5fhxjvb1gTBwwbYKRQAvZzfbdhqd4DN/XpTS7yD7LuoSUh+KFbSwKI4U
+	zOshwSNbWL9Vw1XzKaWEC97/al9zatY9Nrg==
+X-Received: by 2002:a67:e70d:0:b0:739:5cfb:50f4 with SMTP id
+ ada2fe7eead31-76f2e0997b2mr935657137.11.1786702914859; Fri, 14 Aug 2026
+ 03:21:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 14 Aug 2026 03:21:54 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 14 Aug 2026 03:21:54 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <an3DzPKAFqygOS65@pks.im>
+References: <20260812-pks-odb-eagerly-prepare-alternates-v2-0-522b9a5bc1ea@pks.im>
+ <20260812-pks-odb-eagerly-prepare-alternates-v2-1-522b9a5bc1ea@pks.im>
+ <CAOLa=ZTsumAT6U8+pJQmNjYL6Rt=JkvTJ0V7KQ7MvLYkThTFYA@mail.gmail.com> <an3DzPKAFqygOS65@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260811175415.2044235-10-jltobler@gmail.com>
+Date: Fri, 14 Aug 2026 03:21:54 -0700
+X-Gm-Features: AcwNN1VEsKufbMWGqs_gj3wTWEdRZc2mkU7jCO1cuZTgNpuDnypzs5j0kjOAKLo
+Message-ID: <CAOLa=ZQARq2eoVegh1BsnKrvd9MuraNFJ3htKDxQ5H25WJUs1w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] odb: decouple source path comparisons from `the_repository`
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000008f4abb0658ff30ee"
 
-On Tue, Aug 11, 2026 at 12:54:15PM -0500, Justin Tobler wrote:
-  			report_v2(commands, &unpack_status);
-> diff --git a/object-file.c b/object-file.c
-> index db63587f6d..a957bc126f 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1291,6 +1297,170 @@ static int odb_transaction_files_commit(struct odb_transaction *base)
->  	return 0;
->  }
->  
-> +static const char *parse_pack_header(struct pack_header *hdr, int pack_fd)
-> +{
-> +	switch (read_pack_header(pack_fd, hdr)) {
-> +	case PH_ERROR_EOF:
-> +		return "eof before pack header was fully read";
-> +
-> +	case PH_ERROR_PACK_SIGNATURE:
-> +		return "protocol error (pack signature mismatch detected)";
-> +
-> +	case PH_ERROR_PROTOCOL:
-> +		return "protocol error (pack version unsupported)";
-> +
-> +	default:
-> +		return "unknown error in parse_pack_header";
-> +
-> +	case 0:
-> +		return NULL;
-> +	}
-> +}
-> +
-> +static void push_header_arg(struct strvec *args, struct pack_header *hdr)
-> +{
-> +	strvec_pushf(args, "--pack_header=%"PRIu32",%"PRIu32,
-> +		     ntohl(hdr->hdr_version), ntohl(hdr->hdr_entries));
-> +}
-> +
-> +static unsigned int get_unpack_limit(struct repository *repo)
-> +{
-> +	unsigned int limit = 100;
-> +
-> +	repo_config_get_uint(repo, "transfer.unpacklimit", &limit);
-> +	repo_config_get_uint(repo, "receive.unpacklimit", &limit);
-> +
-> +	return limit;
-> +}
+--0000000000008f4abb0658ff30ee
+Content-Type: text/plain; charset="UTF-8"
 
-One thing I noticed just now: as the intention is that `write_pack()`
-will be called for more use cases than only git-receive-pack(1) we'll
-have to add a way to tell the callback what scenario they are running
-in. I still think moving the unpack limit into the backend is sensible,
-but now we're not givint it enough information.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Patrick
+> On Thu, Aug 13, 2026 at 05:23:39AM -0700, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > diff --git a/odb.c b/odb.c
+>> > index bd02d8ad54..51da386f22 100644
+>> > --- a/odb.c
+>> > +++ b/odb.c
+>> > @@ -29,8 +28,32 @@
+>> >  #include "trace2.h"
+>> >  #include "write-or-die.h"
+>> >
+>> > -KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
+>> > -	struct odb_source *, 1, fspathhash, fspatheq)
+>> > +static int odb_source_paths_cmp(struct object_database *o,
+>> > +				const char *a, const char *b)
+>> > +{
+>> > +	if (o->source_paths_icase < 0) {
+>> > +		int icase = 0;
+>> > +		repo_config_get_bool(o->repo, "core.ignorecase", &icase);
+>> > +		o->source_paths_icase = icase;
+>> > +	}
+>> > +
+>>
+>> Nit: couldn't this be simplified to
+>>
+>> if (o->source_paths_icase < 0)
+>>    repo_config_get_bool(o->repo, "core.ignorecase", &o->source_paths_icase);
+>
+> Not quite, as that wouldn't handle the case where the configuration
+> isn't set. So we'd retain it as -1 and do the config lookup every single
+> time.
+>
+> We could rewrite like this:
+>
+> 	if (o->source_paths_icase < 0 &&
+> 	    repo_config_get_bool(o->repo, "core.ignorecase", &icase))
+> 		o->source_paths_icase = 0;
+>
+> But I'd argue that this is harder to read.
+>
+> Patrick
+
+Ooh, yes, makes sense. It's better as is :)
+
+--0000000000008f4abb0658ff30ee
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d7e28f37dc9899e0_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1wKzdFQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMmRwQy85THd0Zi9DT0xTQ2RvSkZBSzVOYkVWWTFYKwpERWpmMjVJTDN0
+QkhZY0gwWHJGdTBMQ2lYdDB0U0ZOS0VraEpaMEhWSytTeENBYUZhWDVQTTZoVnE1T0hHbytwCmFz
+Tit5cHpPTHFkalppSW9MZWpoYjJZaTN5N2NpWjdsQk5YcXdRNTk5L2lJWHZWeUZzSU13S2gyRVJv
+eVFsTFMKd25PYnBWNGVYZlJ3QTMvNTZiT0EzMHNmKzVJandDcG9rOE9FaG0vbGNxZFdlK2RKbzJN
+QlFQd3o3TTU0Y2FoZwpLcXlBRVlnYlowTk9uakJ0SVlOT1Q3aWlqSTBsUDFaRDNqNEswWlNqaldU
+TnlUWTV1U0VhU1RZRkVtOHJVelN5CmJlTDczTjFBYjc2ZzhjR0MxYzh6MGhWSGV0ejQyQllWS0Zx
+Ynd3L3dFWWJoZ3UyT3V6RjJnNGRNSmJGbklEN3kKc0s5aCtOdndmREF4NXFYM3k1ME0vQTF6cklZ
+R1FNSFY4NXhsOWdjMjRyemF6VmF5OCtTL3V1emV5SDBqWVB4UAoycWVpSFB4SG9sZVhWaU40VUNR
+bnJqVGdWMzl1QnAwL1VIWjk0NVk0bTRZQmNhZS9IMk4xTVdRUnZ3S2dEazBFCldlUVdwN0VvNmFF
+cys3a3V0TUROSWZLZG0ranVBWnRGSExwSnB1ND0KPVpyK0UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000008f4abb0658ff30ee--
