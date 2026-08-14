@@ -1,104 +1,126 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5693C9EE9
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 20:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87B83D5643
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 20:42:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786739788; cv=none; b=Bd1OI8xat8UGB7vX4AH0V664dURhySnQ1nSXKL1kGGvG+Ghx9Jfa3zG0ZYgkjTI1eEoZ2cndsr1zpVgBnygg+nA9l8TlqW4QOe/rFZn0ZiAqxRvmLJU5gdL8I/mf+O30WBZN3J7XaWPxcjLt9NTpypRPHKM9CfEn6woSmUjbkZA=
+	t=1786740178; cv=none; b=JTtTfLj5sTGm5KPp72+HuZ7WiJZuDAXLtJqFldEiQmDOpqeEy0Lm6B3iR8/+/x9/h8xCikqkHaGK45ETCDlU9lEfILeBK1QqxGKHAgLrGZMfePRNDDJHgHB1IenhLip1s+1+73xL6pY+56wIgeGw/OTEg1hTd8zetz7ZwOhGzpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786739788; c=relaxed/simple;
-	bh=/0EYtrOiEnk36IQzlBn5WmikIqBCL3Ouv0lneoaWHcE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HiH2OY/Rin3QfhtHX02LGh6o0SaFX5CXHGy1ibtL+zdEfqbWU0dTyPj+Jiub5c46D65Yrc/tIOVdK29Wvuoy0kMqldLDvmGvmkABF3goUsWsKpx0AHctc2Q2RSHALssHmgCqUvD+YcilznBen0gF6UoRQ7B73BcNpGMmKURnLIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=BGvpBpUN; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1786740178; c=relaxed/simple;
+	bh=QztX1+2kET/tE+I/mPMxY77upvepnv3bAOh+e0lsVNQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OPFUlu3EzSxhcoPawp9+20X3BMXkJK2MzhCjVe5G/ScdMLK/7rckTGU13WF4MG8VLAsCvyrokpA0OC9owDWmtTgLS9gjs2NjnBqUNBjis4tM2yAeQx2dmTPYamY+EMoCsUkJjuBF5yxZf+LbD6wltXQAxAf/52Jd8+5I6v8ilvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G7nhHeM8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hsOGz13s; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="BGvpBpUN"
-Received: (qmail 61750 invoked by uid 106); 14 Aug 2026 20:36:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/0EYtrOiEnk36IQzlBn5WmikIqBCL3Ouv0lneoaWHcE=; b=BGvpBpUNfeZsqdbNpN7RJXtiHVgbezU2AS8k1I+VIuvxHQXqn/e9QjD0rzMRAzEwlfpfNtSO4HuRH4nZmSIvAs0R0Zn3TZwyjm2kw3QXEfNMTBlXR/FvNsnvaRggvOgsZcYCMkrwqsE/H0Z44FlSupVDS/+OoYBzXk+eCmjA64R4PCHpbQZqR76E8oAquDQMOj7Uq+Ra6EJQelOfTP7VU4qjsA0PoR0cCEk1trU351booDlKLWT0Ae002FrxhjvXk1O76hzmOyTG1Owr1F9riqp25GsluT6tohOYGZefxc/bAaQ+sBWg6BNK3JXNvLnDWhk1ENrshhzm6wrJmrwGjw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Aug 2026 20:36:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 61933 invoked by uid 111); 14 Aug 2026 20:36:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Aug 2026 16:36:25 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 14 Aug 2026 16:36:24 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 1/4] odb: decouple source path comparisons from
- `the_repository`
-Message-ID: <20260814203624.GC2575854@coredump.intra.peff.net>
-References: <20260812-pks-odb-eagerly-prepare-alternates-v2-0-522b9a5bc1ea@pks.im>
- <20260812-pks-odb-eagerly-prepare-alternates-v2-1-522b9a5bc1ea@pks.im>
- <20260814171724.GB2563235@coredump.intra.peff.net>
- <xmqqpkzkmsmo.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G7nhHeM8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hsOGz13s"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id DE58EEC014C;
+	Fri, 14 Aug 2026 16:42:55 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 14 Aug 2026 16:42:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786740175; x=1786826575; bh=DA67CCyBYU
+	otxC7IilbzyHYsG5sRVlDyq1+SdBfU1pY=; b=G7nhHeM86cxme/Dzp6xMkmpQ3T
+	XzcO6bjRWthI0obKg6ROrB28atGGYkbCqI6Xj+mKA4mtE+n/uL9ZPsOFVuCQUOsc
+	enJ6aDadDMY2zHJJ3Bvx2KKDsJ0uW5hax72EOW/I9/RlTfMtFz/aufHmSGLIKnP6
+	siwsED3haTTH9lsIlbrFsKdU37qY2xzKS1ZZFUh4F/2PCgMLv6KlrTX3GNMsnfpK
+	JrcYfg8eFW+QguvGNmr7bUM0c9nFvqzDpo5N7xv/IOPlpnBnLudIw4yKg/0bDtlc
+	prwU07vNhYc1kMwhaP1Em8BvyLsHF7PDMS8f68u+tM3VRpf32xu6x3WiGzVQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786740175; x=1786826575; bh=DA67CCyBYUotxC7IilbzyHYsG5sRVlDyq1+
+	SdBfU1pY=; b=hsOGz13sGpaZLp7ph6t/K4Ms19MoBsegHpAxGvXFb6GxT6wvhJA
+	WvdrvOnGbTuFnfEsfkCoqgtnDTz5rolq6hR+GntMF03MzKN81+pvMGaEA0L76Tzs
+	eV93DNZC3tFr/mxoTswmV+l0SuamLwdXZ3+XS/Wd6FNj+WhmErR7C+ZPS1PexCzX
+	w7BVTe+VnIoh3dWG8EbEuqOP+an/s7+2QaAgIJqryoQkj0gulgtMTYgqFITSr/Bf
+	cRgl5UWffyn8jGCaVWvNfKyqvnr7MXFCAnnd+JvnnW/V0LJJBj9Z2R9udLEG6wTG
+	3NjDQ3zZgz85z+1a5OMkFBn81kI1t8JV+iA==
+X-ME-Sender: <xms:z31_aqCajjDofZb_AvBHyH54MQ4nbWkPMmLyulla0kuGU4KypyoUSg>
+    <xme:z31_arZ8UDLKF11z_xGDULEOfa3anA-IIfyi25K2xQsl0qqb5y2JwB44cZW_g8cYc
+    FNVsh29nMBT4-j2wuNZ6QSZ32eIkoIMtXcXBuKPOU4PWzWKUKpp>
+X-ME-Received: <xmr:z31_al4wKytCSUvcTF6LFJrEAzkU3T1VL3qzXspb9YrXzEQUejGD3hIA2dpTCzcBit4wx-dK8zj25K8jNNV-sN2RzmPrb8O2xQ>
+X-ME-Proxy-Cause: dmFkZTF7zBlBVqZTct9ycdaRpNc1586O2NSk2pgTEBFBoZSe055l8oPg/xXBzTfVdjX1mW
+    Zmg/AbJB/XfzlaLupRC6Gscltajw+qh1Cz7l4j/FHG/xw69t07B/Yhf4dcLM4hJIrp52am
+    2FKXFz++hpyq4AxuWp1xOhJ8nhpowqx4a1IYCKz9UqKbC1cTQCmHSkYvfN/xUKh6qe5+Lc
+    +lqiZQFMa9F9Q0V1tuCutBmADscBUiWlGiNSYK4KgQrJEZYsWk4lNMmELN+1y7JoKMrnit
+    VyDUsk+EMgq8TwDYhGffORgOHwbvOJf4ecIBDt1h+MF6trmXkM86t4SiH31TVaHnQWTffl
+    ySxhboOUl9LxTjQLiJMFY8ku/g+Q0y45kmlI4cV4MnBH7ZztN7fPucC+r393pmQ9FOjj22
+    OdW7aP9IrYzktt38IN0YeIlDadGhlZ5XdT0belr2o3cdLX57sEC4YGVAqi5kjEMnR5e8zo
+    vUTrz1CnnQLVaeaNJij1ygCEqTheQbh1bo6R/hNl/5vtuU1/GwGLB+hAE3NMUKImakTrhO
+    uJlm4MQc24qe/LfQF7m7Oef91A4SdF8h+qq4QsiFoVURaFAa4K9bCb4Rhxw4HzdCK6tDsQ
+    DLbsMlZ7QsgHbVyB4vEqRA37Qrg7IybCEcyxXc1ubhjoK9yXkNDH86X9EtBQ
+X-ME-Proxy: <xmx:z31_akY2Ic86XUtxGEr2SP_FGpJtt8j8ARt-n01l422sytEn9g0ICA>
+    <xmx:z31_asi8hPniRk41ZIMCfTGQdw_d9KNpfKfAfmbKUmceV9SuPgQt5Q>
+    <xmx:z31_at9qfPuY04u0MweCdXwDBLMm5V3x1FYIStTkUpdoRMFYHYmWuw>
+    <xmx:z31_avoiyxm2n53bTG8CmnDS1lH3V2kfYPka20jIJXUVRmxnrVT4Xw>
+    <xmx:z31_ao72TMJ154EaAAXdZKLWieSABkO59KZtUd_dbpduJIBuDXbdDc5M>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Aug 2026 16:42:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Colin Hinton <colinlewishinton@gmail.com>,  Patrick Steinhardt
+ <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH] chdir-notify.h: Removed unused param 'name'
+In-Reply-To: <20260814203100.GB2575854@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 14 Aug 2026 16:31:00 -0400")
+References: <20260814193849.1538-1-colinlewishinton@gmail.com>
+	<20260814203100.GB2575854@coredump.intra.peff.net>
+Date: Fri, 14 Aug 2026 13:42:54 -0700
+Message-ID: <xmqqwltsl9gx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpkzkmsmo.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Aug 14, 2026 at 12:03:43PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > How bad is a duplicate alternate? It's a minor performance issue, I'd
-> > think. We would add its packs to the list (though hardly ever look
-> > through them, as the "first" copy would satisfy most requests, and the
-> > unused second copies end up at the back of the MRU list). You'd only pay
-> > the extra lookup cost for an object which we fail to find entirely,
-> > which is rare-ish (mostly speculative lookups for fetches).
-> 
-> There may be a future application to be written to go through list
-> of alternates---enumerate all objects that exist in the first one,
-> and then remove them as duplicates to other alternates.  Oops, there
-> was a duplicated entry and we ended up removing the objects from the
-> first one registered under a different spelling.
+> I think this makes sense. It is often helpful in cleanup patches to
+> summarize the history in the commit message. And then we can be sure
+> that the unused field is OK to be removed, and it is not simply a bug
+> that nobody is passing in the value.
 
-Yeah, that would be dangerous. You _might_ even be able to trigger that
-now with an object directory that points to itself as an alternate, and
-then doing "git repack -adl" or similar. I don't recall offhand whether
-we normalize the names or if we'd be fooled by symlinks. Or for that
-matter if we are even careful about comparing alternates to the main odb
-directory.
+Thanks for mentioning this.  I also was curious when we lost the
+users of "name", as it is hard to believe that we introduced name
+that nobody uses from day one.
 
-I hate to be cavalier about conditions that could cause data loss, but
-at the same time...it kind of feels like you'd have to be _trying_ to
-shoot yourself in the foot to create such a situation.
+> I think ultimately the reason is that the only user of the "name" field
+> was chdir_notify_reparent(), when it produced trace output. That went
+> away in 5bf546755c (chdir-notify: drop unused `chdir_notify_reparent()`,
+> 2026-06-25).
 
-> > Alternatively, I think we could probably make the check more thorough in
-> > a similar way. Always consider a pair of case-insensitive matches as
-> > possible duplicates, and then for each possible duplicate use stat() to
-> > check their st_dev and st_ino values. That keeps things cheap for normal
-> > cases, and we pay only the stat() before de-duping. It's correct and
-> > doesn't rely on the repo, though it is a bit more somewhat complicated
-> > code.
-> 
-> Hmph, I prefer not to trust st_dev and st_ino on platforms where
-> case insensitivity can possibly become an issue, though.
+OK.  That is fairly recent.  The reason why we used to need reparent
+but we no longer do is because...?
 
-Yeah, I would prefer not to go down that road, either. There are a lot
-of complexity and portability headaches. I offered it mostly as a "you
-probably _could_ do this super-carefully" option, but my take is that we
-don't need to be super-careful.
+    ... goes and looks ...
 
-> > [1] Even on a single filesystem I think case-sensitivity check is not
-> >     completely sufficient either. We know that filesystems do more
-> >     complicated one-way transformations than just case folding, like
-> >     unicode normalization or even removing some funky code points.
-> >     We'd miss those "equivalent" spellings.
-> 
-> macOS?
+Ah, because the files backend of the refs subsystem started solving
+the issue it used to solve with _reparent() differently in the same
+series, losing the last caller of the _reparent() API.
 
-Naturally. :)
+Makes sense.
 
--Peff
+> So those other patches were preparing for that world, though I think the
+> ordering is somewhat confusing (and I won't be surprised if there was
+> some intermediate state where turning on tracing might have caused a
+> segfault).
+>
+> So AFAICT the patch itself is good, but it might be nice to give some
+> explanation in the commit message.
+
+Yes, that would be very helpful.
+
+Thanks.
