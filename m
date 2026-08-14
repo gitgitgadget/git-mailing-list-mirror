@@ -1,126 +1,164 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87B83D5643
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 20:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B908C388E68
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 21:24:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786740178; cv=none; b=JTtTfLj5sTGm5KPp72+HuZ7WiJZuDAXLtJqFldEiQmDOpqeEy0Lm6B3iR8/+/x9/h8xCikqkHaGK45ETCDlU9lEfILeBK1QqxGKHAgLrGZMfePRNDDJHgHB1IenhLip1s+1+73xL6pY+56wIgeGw/OTEg1hTd8zetz7ZwOhGzpM=
+	t=1786742683; cv=none; b=n0q+SQOnr3o5CrjubFXWFpQF3DRfGfZGQbd++HSNQR50+CWvTu3BTaQMyFFzUz3HRrmg7/VC8qBdVMjP/v1rx4X3Xv1gw8F3PpVHdBbOPXSEYfKw0or37q7e18+2U/eVl8ziEtumCNOqUuBgtjNBPpSv3ScQevgbD/vM2/a1so8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786740178; c=relaxed/simple;
-	bh=QztX1+2kET/tE+I/mPMxY77upvepnv3bAOh+e0lsVNQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OPFUlu3EzSxhcoPawp9+20X3BMXkJK2MzhCjVe5G/ScdMLK/7rckTGU13WF4MG8VLAsCvyrokpA0OC9owDWmtTgLS9gjs2NjnBqUNBjis4tM2yAeQx2dmTPYamY+EMoCsUkJjuBF5yxZf+LbD6wltXQAxAf/52Jd8+5I6v8ilvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G7nhHeM8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hsOGz13s; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1786742683; c=relaxed/simple;
+	bh=EYBpCI7YxqnVeqHTp9g8Q8EUYe7usVC8fMw1uv27+QY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MG45JSvmB2bSAERYhyDJgHm7FGWP98yEx1mTcI9kFgGH/BPPJHFKZXkTDEKihMY3ZzNHi4cbko9uv1fmbH6gmvAlzLm2XR2zFQXAsajI6qgRfethT/Pdb9bS/lrLwzMdsZkk77CLwrj1gX9kWrae8zz7KlrrDx1klcE80K5ijdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iMWvIo69; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G7nhHeM8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hsOGz13s"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id DE58EEC014C;
-	Fri, 14 Aug 2026 16:42:55 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 14 Aug 2026 16:42:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786740175; x=1786826575; bh=DA67CCyBYU
-	otxC7IilbzyHYsG5sRVlDyq1+SdBfU1pY=; b=G7nhHeM86cxme/Dzp6xMkmpQ3T
-	XzcO6bjRWthI0obKg6ROrB28atGGYkbCqI6Xj+mKA4mtE+n/uL9ZPsOFVuCQUOsc
-	enJ6aDadDMY2zHJJ3Bvx2KKDsJ0uW5hax72EOW/I9/RlTfMtFz/aufHmSGLIKnP6
-	siwsED3haTTH9lsIlbrFsKdU37qY2xzKS1ZZFUh4F/2PCgMLv6KlrTX3GNMsnfpK
-	JrcYfg8eFW+QguvGNmr7bUM0c9nFvqzDpo5N7xv/IOPlpnBnLudIw4yKg/0bDtlc
-	prwU07vNhYc1kMwhaP1Em8BvyLsHF7PDMS8f68u+tM3VRpf32xu6x3WiGzVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786740175; x=1786826575; bh=DA67CCyBYUotxC7IilbzyHYsG5sRVlDyq1+
-	SdBfU1pY=; b=hsOGz13sGpaZLp7ph6t/K4Ms19MoBsegHpAxGvXFb6GxT6wvhJA
-	WvdrvOnGbTuFnfEsfkCoqgtnDTz5rolq6hR+GntMF03MzKN81+pvMGaEA0L76Tzs
-	eV93DNZC3tFr/mxoTswmV+l0SuamLwdXZ3+XS/Wd6FNj+WhmErR7C+ZPS1PexCzX
-	w7BVTe+VnIoh3dWG8EbEuqOP+an/s7+2QaAgIJqryoQkj0gulgtMTYgqFITSr/Bf
-	cRgl5UWffyn8jGCaVWvNfKyqvnr7MXFCAnnd+JvnnW/V0LJJBj9Z2R9udLEG6wTG
-	3NjDQ3zZgz85z+1a5OMkFBn81kI1t8JV+iA==
-X-ME-Sender: <xms:z31_aqCajjDofZb_AvBHyH54MQ4nbWkPMmLyulla0kuGU4KypyoUSg>
-    <xme:z31_arZ8UDLKF11z_xGDULEOfa3anA-IIfyi25K2xQsl0qqb5y2JwB44cZW_g8cYc
-    FNVsh29nMBT4-j2wuNZ6QSZ32eIkoIMtXcXBuKPOU4PWzWKUKpp>
-X-ME-Received: <xmr:z31_al4wKytCSUvcTF6LFJrEAzkU3T1VL3qzXspb9YrXzEQUejGD3hIA2dpTCzcBit4wx-dK8zj25K8jNNV-sN2RzmPrb8O2xQ>
-X-ME-Proxy-Cause: dmFkZTF7zBlBVqZTct9ycdaRpNc1586O2NSk2pgTEBFBoZSe055l8oPg/xXBzTfVdjX1mW
-    Zmg/AbJB/XfzlaLupRC6Gscltajw+qh1Cz7l4j/FHG/xw69t07B/Yhf4dcLM4hJIrp52am
-    2FKXFz++hpyq4AxuWp1xOhJ8nhpowqx4a1IYCKz9UqKbC1cTQCmHSkYvfN/xUKh6qe5+Lc
-    +lqiZQFMa9F9Q0V1tuCutBmADscBUiWlGiNSYK4KgQrJEZYsWk4lNMmELN+1y7JoKMrnit
-    VyDUsk+EMgq8TwDYhGffORgOHwbvOJf4ecIBDt1h+MF6trmXkM86t4SiH31TVaHnQWTffl
-    ySxhboOUl9LxTjQLiJMFY8ku/g+Q0y45kmlI4cV4MnBH7ZztN7fPucC+r393pmQ9FOjj22
-    OdW7aP9IrYzktt38IN0YeIlDadGhlZ5XdT0belr2o3cdLX57sEC4YGVAqi5kjEMnR5e8zo
-    vUTrz1CnnQLVaeaNJij1ygCEqTheQbh1bo6R/hNl/5vtuU1/GwGLB+hAE3NMUKImakTrhO
-    uJlm4MQc24qe/LfQF7m7Oef91A4SdF8h+qq4QsiFoVURaFAa4K9bCb4Rhxw4HzdCK6tDsQ
-    DLbsMlZ7QsgHbVyB4vEqRA37Qrg7IybCEcyxXc1ubhjoK9yXkNDH86X9EtBQ
-X-ME-Proxy: <xmx:z31_akY2Ic86XUtxGEr2SP_FGpJtt8j8ARt-n01l422sytEn9g0ICA>
-    <xmx:z31_asi8hPniRk41ZIMCfTGQdw_d9KNpfKfAfmbKUmceV9SuPgQt5Q>
-    <xmx:z31_at9qfPuY04u0MweCdXwDBLMm5V3x1FYIStTkUpdoRMFYHYmWuw>
-    <xmx:z31_avoiyxm2n53bTG8CmnDS1lH3V2kfYPka20jIJXUVRmxnrVT4Xw>
-    <xmx:z31_ao72TMJ154EaAAXdZKLWieSABkO59KZtUd_dbpduJIBuDXbdDc5M>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 16:42:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Colin Hinton <colinlewishinton@gmail.com>,  Patrick Steinhardt
- <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH] chdir-notify.h: Removed unused param 'name'
-In-Reply-To: <20260814203100.GB2575854@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 14 Aug 2026 16:31:00 -0400")
-References: <20260814193849.1538-1-colinlewishinton@gmail.com>
-	<20260814203100.GB2575854@coredump.intra.peff.net>
-Date: Fri, 14 Aug 2026 13:42:54 -0700
-Message-ID: <xmqqwltsl9gx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iMWvIo69"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38dc4553f62so2029620a91.0
+        for <git@vger.kernel.org>; Fri, 14 Aug 2026 14:24:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786742681; x=1787347481; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=MylusCtB93l2onAStPKINfwXIZYMaPsu3U3ed+NvB8U=;
+        b=iMWvIo69JBFSuL5JcGmKdfY4NUZJ0ryXi45W4Yeb70tqHFfeW0XW8r772SoiMK/49A
+         8mYAQp5D7P8YXfxf/kkX4JM1c/2r/RVQcWjO8BNAFVx6iQinEMZofVqOTE91OgxdYdtc
+         O1SfBk9uckpfvlS6kuBsuC/6QV5zG4W7sCh69LYDB96bBgSkscMTARZiL3fXD1vGG27S
+         F1IL7vBo1N7rInNPJ33SZdlE4F5d7sq3TJYk2gokGqBTEZbe9lW0EIJx4KHJl30Tzosr
+         Ts29tBUbfDWYI220LWmbHsh7lYwHSdR/HUvjt1UtBrlvTwqAbY/CCGCzbPko6DAayVGM
+         H+1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786742681; x=1787347481;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=MylusCtB93l2onAStPKINfwXIZYMaPsu3U3ed+NvB8U=;
+        b=DQn34eLJ+lYaGYI3cXfBPXvbrs+FXTlV1JPjsPfdkj+zwwcQjqEperGkgACqYHwPab
+         XTvQ6bc5kxZ/8HWOQrp2wXa7X1UstHzZSn34o0RXBLmm6Q6e3qOK8W/0frX0AmbdH9Ta
+         pJsSks6OlDlmfRm3yvPe9HbMfMa12STldpOGwFh97FSTr4f4FKrQT/DIhFpk62uILI2B
+         t+8w3Gf9b97THRqlNkz42FdqZPPv9K4/eRGfjBnVEgyvm4H/QbxsSy4jOQ+b7tip+uM8
+         X1ty9o6uYrszlXyo1MfV7hL8grC43isR9smMsa7gMunJMF7O77knLWxMEGXwwDzbDMRy
+         wHIA==
+X-Gm-Message-State: AOJu0YwZbxNiDT/9d5+cRgYc1/VkyUHR4QBQ7ZXxNOWnBles9/+1EgbU
+	ElcH7klzF12jGKPW6r+GCwSXUd9aR1ZswOZzrP7JZFWka9uoNjVyBVoPIxEZmA==
+X-Gm-Gg: AR+sD11PEuikoSXBxasMDmKITzwK0YkURXsJV3cQ/JA7AfuBRL4G4pLHNowPhkgEsPW
+	iorm4ec4xZoXqk5KJFmwKR/BWe3dcpj3xPLZ7+Po6qMegv5u+WH+NXUlVI2aLdhmb05aFkTRm6z
+	5N4D4zUuu67r+R6mUN6jzyeJKL7yxCc3AKmnW4iw1DhSMd82S9pvBCdSeFpVxWg6jgDAB8U3Tma
+	pwvrLVb9Q8psUOBTDBro8972+S3JqCsTHFa9Qh6X2Hwpe8+r6pj/T2Z7ztswyvCPfutUT5b4q1/
+	yIPhyfPIG8wOUH+ceFC5Mn9aoOWj+ozTReMyr7l6erajlrAP+/6ke0NBCRlL9wpfiOOZ8VGuGdU
+	N3bKsonk8kWTe4hgW866Qf+lY0RuvJo7ZU/NxYa+x2ovNxLhrmqHBk/SBygfIJCyphXr1GlDf61
+	FxpbUKoVfF8+dafGPz9GbcH50fkAB/4FbCsUlnYcNk2MqmrF0tZFT6SG2PPtLA10UOqVKo2gWZT
+	h5ilV6lI6QYInWwquNNQOqmH/Bq5A==
+X-Received: by 2002:a05:6a20:d48c:b0:3c3:7ac4:dac0 with SMTP id adf61e73a8af0-3cc71b8a6f7mr11472071637.13.1786742680926;
+        Fri, 14 Aug 2026 14:24:40 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:3130:d601:284f:52df:cf2b:6eed])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-320d5bd918fsm7953749eec.2.2026.08.14.14.24.37
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 14 Aug 2026 14:24:40 -0700 (PDT)
+From: tilak-raaz <raaztilak07@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	wy@wyuan.org,
+	ben.knoble@gmail.com,
+	tilak-raaz <raaztilak07@gmail.com>
+Subject: [GSoC PATCH v2] submodule: warn on valueless active config
+Date: Sat, 15 Aug 2026 02:54:30 +0530
+Message-ID: <20260814212431.43626-1-raaztilak07@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <CABB4Jh3UUXvmAJpefaiP-xVRQfGRdTF2jW8GkdhbA1BXe6Okdw@mail.gmail.com>
+References: <CABB4Jh3UUXvmAJpefaiP-xVRQfGRdTF2jW8GkdhbA1BXe6Okdw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+The config parser previously threw a hard error if 'submodule.active'
+was provided without a value, causing commands to abort.
 
-> I think this makes sense. It is often helpful in cleanup patches to
-> summarize the history in the commit message. And then we can be sure
-> that the unused field is OK to be removed, and it is not simply a bug
-> that nobody is passing in the value.
+Swap repo_config_get_string_multi() to repo_config_get_value_multi()
+to parse valueless keys safely. Use the standard config_error_nonbool()
+helper to emit a warning to the user rather than crashing.
 
-Thanks for mentioning this.  I also was curious when we lost the
-users of "name", as it is hard to believe that we introduced name
-that nobody uses from day one.
+This resolves a NEEDSWORK comment in submodule.c.
 
-> I think ultimately the reason is that the only user of the "name" field
-> was chdir_notify_reparent(), when it produced trace output. That went
-> away in 5bf546755c (chdir-notify: drop unused `chdir_notify_reparent()`,
-> 2026-06-25).
+Signed-off-by: tilak-raaz <raaztilak07@gmail.com>
+---
 
-OK.  That is fairly recent.  The reason why we used to need reparent
-but we no longer do is because...?
+Thank you Ben and Weijie for the guidance on git-send-email. I have 
+properly configured my terminal to prevent the whitespace damage caused 
+by the Gmail web client.
 
-    ... goes and looks ...
+Junio, thank you for pointing me to the correct helper function. 
 
-Ah, because the files backend of the refs subsystem started solving
-the issue it used to solve with _reparent() differently in the same
-series, losing the last caller of the _reparent() API.
+Changes in v2:
+- Use config_error_nonbool() to report valueless submodule.active.
+- Add a regression test for the valueless configuration.
+- Fix whitespace/indentation issues from v1.
+ submodule.c                | 12 ++++++------
+ t/t7400-submodule-basic.sh | 11 +++++++++++
+ 2 files changed, 17 insertions(+), 6 deletions(-)
 
-Makes sense.
+diff --git a/submodule.c b/submodule.c
+index 5c92575888..07d1fc63e9 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -231,11 +231,7 @@ int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
+ /*
+  * Determine if a submodule has been initialized at a given 'path'
+  */
+-/*
+- * NEEDSWORK: Emit a warning if submodule.active exists, but is valueless,
+- * ie, the config looks like: "[submodule] active\n".
+- * Since that is an invalid pathspec, we should inform the user.
+- */
++
+ int is_tree_submodule_active(struct repository *repo,
+ 			     const struct object_id *treeish_name,
+ 			     const char *path)
+@@ -261,12 +257,16 @@ int is_tree_submodule_active(struct repository *repo,
+ 	free(key);
+ 
+ 	/* submodule.active is set */
+-	if (!repo_config_get_string_multi(repo, "submodule.active", &sl)) {
++	if (!repo_config_get_value_multi(repo, "submodule.active", &sl)) {
+ 		struct pathspec ps;
+ 		struct strvec args = STRVEC_INIT;
+ 		const struct string_list_item *item;
+ 
+ 		for_each_string_list_item(item, sl) {
++			 if (!item->string) {
++				config_error_nonbool("submodule.active");
++				continue;
++			}
+ 			strvec_push(&args, item->string);
+ 		}
+ 
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index eefdecb0bd..74c26f6630 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -1549,4 +1549,15 @@ test_expect_success 'submodule add fails when name is reused' '
+ 	)
+ '
+ 
++
++test_expect_success 'warn on valueless submodule.active' '
++test_when_finished "rm -rf empty-active" &&
++git init empty-active &&
++test_commit -C empty-active initial &&
++git -c protocol.file.allow=always -C empty-active submodule add ../empty-active sub &&
++git -C empty-active config --unset submodule.sub.active &&
++printf "[submodule]\n\tactive\n" >>empty-active/.git/config &&
++git -C empty-active submodule status 2>err &&
++grep "missing value for .submodule.active." err
++'
+ test_done
+-- 
+2.50.1 (Apple Git-155)
 
-> So those other patches were preparing for that world, though I think the
-> ordering is somewhat confusing (and I won't be surprised if there was
-> some intermediate state where turning on tracing might have caused a
-> segfault).
->
-> So AFAICT the patch itself is good, but it might be nice to give some
-> explanation in the commit message.
-
-Yes, that would be very helpful.
-
-Thanks.
