@@ -1,75 +1,74 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B908C388E68
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 21:24:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534003E3169
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 21:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786742683; cv=none; b=n0q+SQOnr3o5CrjubFXWFpQF3DRfGfZGQbd++HSNQR50+CWvTu3BTaQMyFFzUz3HRrmg7/VC8qBdVMjP/v1rx4X3Xv1gw8F3PpVHdBbOPXSEYfKw0or37q7e18+2U/eVl8ziEtumCNOqUuBgtjNBPpSv3ScQevgbD/vM2/a1so8=
+	t=1786743750; cv=none; b=O7Q2CcgTvj3DlWRkEso00q3+0tVWVbIflNYL97VW5u0vhuix9ZS/FZdh6ch+/yt72IRs/u3mBxKP1elcDJxSVc/uEFtAx/KmY5C7cHmh+B5BlK/tih0gyHCm25FzMy2qDb8dmTDOwy/C+3Z1oNf2jmeyDawQCZ2GB+sbuAoky0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786742683; c=relaxed/simple;
-	bh=EYBpCI7YxqnVeqHTp9g8Q8EUYe7usVC8fMw1uv27+QY=;
+	s=arc-20240116; t=1786743750; c=relaxed/simple;
+	bh=3ywdv+6cTJirEqGnJQDtH6fb+npwITjNRvF/soPAckY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MG45JSvmB2bSAERYhyDJgHm7FGWP98yEx1mTcI9kFgGH/BPPJHFKZXkTDEKihMY3ZzNHi4cbko9uv1fmbH6gmvAlzLm2XR2zFQXAsajI6qgRfethT/Pdb9bS/lrLwzMdsZkk77CLwrj1gX9kWrae8zz7KlrrDx1klcE80K5ijdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iMWvIo69; arc=none smtp.client-ip=209.85.216.52
+	 MIME-Version; b=lG186q8fxup787pb2gZ/f08yzZbCDReQEon5ggNFl7cjoCZwF0FpTN5oe0mFFgIjimJzm0thGuCRAwIEwU6dgqUuPlJFlvGr0fm8lXeiqF2qSahLu465ln658UThpb6frBXcwWdhRF7UtrLnBdDuYN0Sr5YUqHEePwbEf/MW9m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TsLqAbmS; arc=none smtp.client-ip=209.85.215.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iMWvIo69"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38dc4553f62so2029620a91.0
-        for <git@vger.kernel.org>; Fri, 14 Aug 2026 14:24:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TsLqAbmS"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-cbb7926836eso1076139a12.3
+        for <git@vger.kernel.org>; Fri, 14 Aug 2026 14:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786742681; x=1787347481; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786743749; x=1787348549; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=MylusCtB93l2onAStPKINfwXIZYMaPsu3U3ed+NvB8U=;
-        b=iMWvIo69JBFSuL5JcGmKdfY4NUZJ0ryXi45W4Yeb70tqHFfeW0XW8r772SoiMK/49A
-         8mYAQp5D7P8YXfxf/kkX4JM1c/2r/RVQcWjO8BNAFVx6iQinEMZofVqOTE91OgxdYdtc
-         O1SfBk9uckpfvlS6kuBsuC/6QV5zG4W7sCh69LYDB96bBgSkscMTARZiL3fXD1vGG27S
-         F1IL7vBo1N7rInNPJ33SZdlE4F5d7sq3TJYk2gokGqBTEZbe9lW0EIJx4KHJl30Tzosr
-         Ts29tBUbfDWYI220LWmbHsh7lYwHSdR/HUvjt1UtBrlvTwqAbY/CCGCzbPko6DAayVGM
-         H+1A==
+        bh=BCqZl3aA6GzorYQPf1V+T/iBKhSSnUGvhf0X7jUNbGE=;
+        b=TsLqAbmSPEhIVixVOGiPtURa4ZbbnXplXGRp/jpXThaPrL/oxg6VWx6/5sehvWmr8u
+         qgyDGVCubdkhdgkiimzT1YySa4RTmXQ5T+W56e72dbebhICWvGCqWGNHACg/TfoH1YKd
+         yxAftBpbNo9E/ZcUHMA6DL7VhRadcrcVUm1mubA2KZQksV3Tr3lri7+YIEWqWyg6bXw8
+         1QiyvMecaXj5xsdDlIAOaZz0CF9ytV2zpVlwxUqGwM2U48yGH/7BhCzQ5uZuhyt8UCKz
+         SVNOIe3v7+JdJLDFXoE5Zna/YydsvCkfENUFNaGLfgEyvY+P5fSbudn3ZlGtSv3Ava4Q
+         zceQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786742681; x=1787347481;
+        d=1e100.net; s=20251104; t=1786743749; x=1787348549;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=MylusCtB93l2onAStPKINfwXIZYMaPsu3U3ed+NvB8U=;
-        b=DQn34eLJ+lYaGYI3cXfBPXvbrs+FXTlV1JPjsPfdkj+zwwcQjqEperGkgACqYHwPab
-         XTvQ6bc5kxZ/8HWOQrp2wXa7X1UstHzZSn34o0RXBLmm6Q6e3qOK8W/0frX0AmbdH9Ta
-         pJsSks6OlDlmfRm3yvPe9HbMfMa12STldpOGwFh97FSTr4f4FKrQT/DIhFpk62uILI2B
-         t+8w3Gf9b97THRqlNkz42FdqZPPv9K4/eRGfjBnVEgyvm4H/QbxsSy4jOQ+b7tip+uM8
-         X1ty9o6uYrszlXyo1MfV7hL8grC43isR9smMsa7gMunJMF7O77knLWxMEGXwwDzbDMRy
-         wHIA==
-X-Gm-Message-State: AOJu0YwZbxNiDT/9d5+cRgYc1/VkyUHR4QBQ7ZXxNOWnBles9/+1EgbU
-	ElcH7klzF12jGKPW6r+GCwSXUd9aR1ZswOZzrP7JZFWka9uoNjVyBVoPIxEZmA==
-X-Gm-Gg: AR+sD11PEuikoSXBxasMDmKITzwK0YkURXsJV3cQ/JA7AfuBRL4G4pLHNowPhkgEsPW
-	iorm4ec4xZoXqk5KJFmwKR/BWe3dcpj3xPLZ7+Po6qMegv5u+WH+NXUlVI2aLdhmb05aFkTRm6z
-	5N4D4zUuu67r+R6mUN6jzyeJKL7yxCc3AKmnW4iw1DhSMd82S9pvBCdSeFpVxWg6jgDAB8U3Tma
-	pwvrLVb9Q8psUOBTDBro8972+S3JqCsTHFa9Qh6X2Hwpe8+r6pj/T2Z7ztswyvCPfutUT5b4q1/
-	yIPhyfPIG8wOUH+ceFC5Mn9aoOWj+ozTReMyr7l6erajlrAP+/6ke0NBCRlL9wpfiOOZ8VGuGdU
-	N3bKsonk8kWTe4hgW866Qf+lY0RuvJo7ZU/NxYa+x2ovNxLhrmqHBk/SBygfIJCyphXr1GlDf61
-	FxpbUKoVfF8+dafGPz9GbcH50fkAB/4FbCsUlnYcNk2MqmrF0tZFT6SG2PPtLA10UOqVKo2gWZT
-	h5ilV6lI6QYInWwquNNQOqmH/Bq5A==
-X-Received: by 2002:a05:6a20:d48c:b0:3c3:7ac4:dac0 with SMTP id adf61e73a8af0-3cc71b8a6f7mr11472071637.13.1786742680926;
-        Fri, 14 Aug 2026 14:24:40 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:3130:d601:284f:52df:cf2b:6eed])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-320d5bd918fsm7953749eec.2.2026.08.14.14.24.37
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 14 Aug 2026 14:24:40 -0700 (PDT)
-From: tilak-raaz <raaztilak07@gmail.com>
+        bh=BCqZl3aA6GzorYQPf1V+T/iBKhSSnUGvhf0X7jUNbGE=;
+        b=Iv5hheCACPV5XkKqGFivhV0ATt7WGK/y4wo/T10aDErwgnwShdCX4iP+hfAyVV4jpY
+         DRvcZce5+TBN5wv0UUY6jOcPKsDo/eYnQAeNUjw7nSEtwEBti/GQwmxWshohA7Mf8YBK
+         u5n7mmhlj38WrcfFJ8FTZvJVxSmnJx15UmmiP7me6FbhZVbrkE2HGsqwJMUSVbP7bO62
+         bXDG9b42c3AwtABnfUlCa6L0E7ksk5jci7PvDEN+J0xxlqXHE38Ebicn8SXHbSG24fEr
+         1nJFAusEQuttnhL0kMvfx0IhKix96H7QIiOo5Uqh2k2W9eFGcnoNwKtRbN3iz9tab7Fi
+         FgIA==
+X-Gm-Message-State: AOJu0YyfvdLWs2k/WUhbeeMyFlBXaNITOBg4kCWjeeoCFRBuZTs59yua
+	pZyMC57mZq2w6HKCOOosBUkEjpMgMffXBXWMR9TzPN/6hsWJIPzpnh5fWAGtYaNo
+X-Gm-Gg: AR+sD129iZLHkJYx1ICd0fLl9Hq/ES9Fvn0gtPPwUdCl/6mmFzx0GYsigKkfAsfX70A
+	oX0WSWd1yFas9Boeh8OIlEzgOct/vwKwIzWCNEX5w+akHt5/7QnEAFWeAzMNC0hsy2G6ydsEiPN
+	Lz8a9k094mrxPvJDZXdC4dii1ajKdhBTPPVBH+crUcbsOdv0wFfLt2PTe9IqRqx8DMXNcJYPWXo
+	IfTY4VyrLvx2qRDSAB7/sDIUVtibUrLD/Jy0EyC97sVAXbARRubMauzXzmhl0aH8M8JKa15GKRY
+	PWAsbET5EOJKDholMEUObnR2xAuL+AEhCEc6UirYEU7uVAQL8qDKPCZY091eoTtu9ynltBuJ0UU
+	8RKJYWAmcPzutesnE1tz7VM715G6G5p//fRiFg6FNbm6vru7HfgoqGjmW1NzkLohN+4PruPx/dG
+	fj0S8LBEhcXj7bSs0eETs0ti5jhwj6YSD3hYIwL/4XIbJLXffMMPWBXPNzzJY722ccTtQxIQOZh
+	9URTIP4cdqB
+X-Received: by 2002:a05:6a20:4325:b0:3bf:7eb5:9459 with SMTP id adf61e73a8af0-3cc71fa8cd1mr10278605637.20.1786743748406;
+        Fri, 14 Aug 2026 14:42:28 -0700 (PDT)
+Received: from Velociraptor ([172.88.119.157])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1413889bca5sm18109247c88.12.2026.08.14.14.42.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Aug 2026 14:42:27 -0700 (PDT)
+From: Colin Hinton <colinlewishinton@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	wy@wyuan.org,
-	ben.knoble@gmail.com,
-	tilak-raaz <raaztilak07@gmail.com>
-Subject: [GSoC PATCH v2] submodule: warn on valueless active config
-Date: Sat, 15 Aug 2026 02:54:30 +0530
-Message-ID: <20260814212431.43626-1-raaztilak07@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <CABB4Jh3UUXvmAJpefaiP-xVRQfGRdTF2jW8GkdhbA1BXe6Okdw@mail.gmail.com>
-References: <CABB4Jh3UUXvmAJpefaiP-xVRQfGRdTF2jW8GkdhbA1BXe6Okdw@mail.gmail.com>
+Cc: peff@peff.net,
+	gitster@pobox.com,
+	Colin Hinton <colinlewishinton@gmail.com>
+Subject: [PATCH v2] chdir-notify.h: Removed unused param 'name'
+Date: Fri, 14 Aug 2026 14:42:10 -0700
+Message-ID: <20260814214210.1625-1-colinlewishinton@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
+In-Reply-To: <20260814193849.1538-1-colinlewishinton@gmail.com>
+References: <20260814193849.1538-1-colinlewishinton@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,87 +77,356 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The config parser previously threw a hard error if 'submodule.active'
-was provided without a value, causing commands to abort.
+The `name` parameter in `chdir_notify_entry` was only ever used by
+chdir_notify_reparent() to produce trace output. That function was
+removed in 5bf546755c (chdir-notify: drop unused
+`chdir_notify_reparent()`, 2026-06-25), which left `name` with no
+remaining consumers.
 
-Swap repo_config_get_string_multi() to repo_config_get_value_multi()
-to parse valueless keys safely. Use the standard config_error_nonbool()
-helper to emit a warning to the user rather than crashing.
+Prior to that removal, most callers had already stopped passing a
+meaningful name, switching to NULL in 1f43ff2c7e (refs: unregister
+reference stores from "chdir_notify", 2026-06-25) and 0de2467e6c
+(odb/source-packed: start converting to a proper `struct odb_source`,
+2026-06-17).
 
-This resolves a NEEDSWORK comment in submodule.c.
+Since no caller has populated `name` with real data for some time,
+and its last consumer is gone, drop it from chdir_notify_register(),
+chdir_notify_unregister(), and the callback signature to simplify
+the API.
 
-Signed-off-by: tilak-raaz <raaztilak07@gmail.com>
+Signed-off-by: Colin Hinton <colinlewishinton@gmail.com>
 ---
+ chdir-notify.c          | 12 ++++--------
+ chdir-notify.h          |  8 +++-----
+ odb/source-files.c      |  7 +++----
+ odb/source-loose.c      |  7 +++----
+ odb/source-packed.c     |  7 +++----
+ refs/files-backend.c    |  7 +++----
+ refs/packed-backend.c   |  7 +++----
+ refs/reftable-backend.c |  7 +++----
+ setup.c                 |  5 ++---
+ tmp-objdir.c            |  7 +++----
+ 10 files changed, 30 insertions(+), 44 deletions(-)
 
-Thank you Ben and Weijie for the guidance on git-send-email. I have 
-properly configured my terminal to prevent the whitespace damage caused 
-by the Gmail web client.
-
-Junio, thank you for pointing me to the correct helper function. 
-
-Changes in v2:
-- Use config_error_nonbool() to report valueless submodule.active.
-- Add a regression test for the valueless configuration.
-- Fix whitespace/indentation issues from v1.
- submodule.c                | 12 ++++++------
- t/t7400-submodule-basic.sh | 11 +++++++++++
- 2 files changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/submodule.c b/submodule.c
-index 5c92575888..07d1fc63e9 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -231,11 +231,7 @@ int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
- /*
-  * Determine if a submodule has been initialized at a given 'path'
+diff --git a/chdir-notify.c b/chdir-notify.c
+index 1237a45e2e..55773c24c9 100644
+--- a/chdir-notify.c
++++ b/chdir-notify.c
+@@ -7,25 +7,22 @@
+ #include "trace.h"
+ 
+ struct chdir_notify_entry {
+-	const char *name;
+ 	chdir_notify_callback cb;
+ 	void *data;
+ 	struct list_head list;
+ };
+ static LIST_HEAD(chdir_notify_entries);
+ 
+-void chdir_notify_register(const char *name,
+-			   chdir_notify_callback cb,
++void chdir_notify_register(chdir_notify_callback cb,
+ 			   void *data)
+ {
+ 	struct chdir_notify_entry *e = xmalloc(sizeof(*e));
+-	e->name = name;
+ 	e->cb = cb;
+ 	e->data = data;
+ 	list_add_tail(&e->list, &chdir_notify_entries);
+ }
+ 
+-void chdir_notify_unregister(const char *name, chdir_notify_callback cb,
++void chdir_notify_unregister(chdir_notify_callback cb,
+ 			     void *data)
+ {
+ 	struct list_head *pos, *p;
+@@ -34,8 +31,7 @@ void chdir_notify_unregister(const char *name, chdir_notify_callback cb,
+ 		struct chdir_notify_entry *e =
+ 			list_entry(pos, struct chdir_notify_entry, list);
+ 
+-		if (e->cb != cb || e->data != data || !e->name != !name ||
+-		    (e->name && strcmp(e->name, name)))
++		if (e->cb != cb || e->data != data)
+ 			continue;
+ 
+ 		list_del(pos);
+@@ -64,7 +60,7 @@ int chdir_notify(const char *new_cwd)
+ 	list_for_each(pos, &chdir_notify_entries) {
+ 		struct chdir_notify_entry *e =
+ 			list_entry(pos, struct chdir_notify_entry, list);
+-		e->cb(e->name, old_cwd.buf, new_cwd, e->data);
++		e->cb(old_cwd.buf, new_cwd, e->data);
+ 	}
+ 
+ 	strbuf_release(&old_cwd);
+diff --git a/chdir-notify.h b/chdir-notify.h
+index 36b4114472..e4ae38e12d 100644
+--- a/chdir-notify.h
++++ b/chdir-notify.h
+@@ -33,13 +33,11 @@
+  * $GIT_TRACE_SETUP. It may be NULL, but if non-NULL should point to
+  * storage which lasts as long as the registration is active.
   */
--/*
-- * NEEDSWORK: Emit a warning if submodule.active exists, but is valueless,
-- * ie, the config looks like: "[submodule] active\n".
-- * Since that is an invalid pathspec, we should inform the user.
-- */
-+
- int is_tree_submodule_active(struct repository *repo,
- 			     const struct object_id *treeish_name,
- 			     const char *path)
-@@ -261,12 +257,16 @@ int is_tree_submodule_active(struct repository *repo,
- 	free(key);
+-typedef void (*chdir_notify_callback)(const char *name,
+-				      const char *old_cwd,
++typedef void (*chdir_notify_callback)(const char *old_cwd,
+ 				      const char *new_cwd,
+ 				      void *data);
+-void chdir_notify_register(const char *name, chdir_notify_callback cb, void *data);
+-void chdir_notify_unregister(const char *name, chdir_notify_callback cb,
+-			     void *data);
++void chdir_notify_register(chdir_notify_callback cb, void *data);
++void chdir_notify_unregister(chdir_notify_callback cb, void *data);
  
- 	/* submodule.active is set */
--	if (!repo_config_get_string_multi(repo, "submodule.active", &sl)) {
-+	if (!repo_config_get_value_multi(repo, "submodule.active", &sl)) {
- 		struct pathspec ps;
- 		struct strvec args = STRVEC_INIT;
- 		const struct string_list_item *item;
+ /*
+  *
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 5a68af7d84..c12e2795ba 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -22,8 +22,7 @@
+ #include "tree.h"
+ #include "write-or-die.h"
  
- 		for_each_string_list_item(item, sl) {
-+			 if (!item->string) {
-+				config_error_nonbool("submodule.active");
-+				continue;
-+			}
- 			strvec_push(&args, item->string);
- 		}
+-static void odb_source_files_reparent(const char *name UNUSED,
+-				      const char *old_cwd,
++static void odb_source_files_reparent(const char *old_cwd,
+ 				      const char *new_cwd,
+ 				      void *cb_data)
+ {
+@@ -37,7 +36,7 @@ static void odb_source_files_reparent(const char *name UNUSED,
+ static void odb_source_files_free(struct odb_source *source)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+-	chdir_notify_unregister(NULL, odb_source_files_reparent, files);
++	chdir_notify_unregister(odb_source_files_reparent, files);
+ 	odb_source_free(&files->loose->base);
+ 	odb_source_free(&files->packed->base);
+ 	odb_source_release(&files->base);
+@@ -763,7 +762,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+ 	 * paths in the primary ODB source in some user-facing functionality.
+ 	 */
+ 	if (!is_absolute_path(path))
+-		chdir_notify_register(NULL, odb_source_files_reparent, files);
++		chdir_notify_register(odb_source_files_reparent, files);
  
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index eefdecb0bd..74c26f6630 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -1549,4 +1549,15 @@ test_expect_success 'submodule add fails when name is reused' '
- 	)
- '
+ 	return files;
+ }
+diff --git a/odb/source-loose.c b/odb/source-loose.c
+index ef0e919277..6a594a6458 100644
+--- a/odb/source-loose.c
++++ b/odb/source-loose.c
+@@ -1006,8 +1006,7 @@ static void odb_source_loose_close(struct odb_source *source UNUSED)
+ 	/* Nothing to do. */
+ }
  
-+
-+test_expect_success 'warn on valueless submodule.active' '
-+test_when_finished "rm -rf empty-active" &&
-+git init empty-active &&
-+test_commit -C empty-active initial &&
-+git -c protocol.file.allow=always -C empty-active submodule add ../empty-active sub &&
-+git -C empty-active config --unset submodule.sub.active &&
-+printf "[submodule]\n\tactive\n" >>empty-active/.git/config &&
-+git -C empty-active submodule status 2>err &&
-+grep "missing value for .submodule.active." err
-+'
- test_done
+-static void odb_source_loose_reparent(const char *name UNUSED,
+-				      const char *old_cwd,
++static void odb_source_loose_reparent(const char *old_cwd,
+ 				      const char *new_cwd,
+ 				      void *cb_data)
+ {
+@@ -1023,7 +1022,7 @@ static void odb_source_loose_free(struct odb_source *source)
+ 	struct odb_source_loose *loose = odb_source_loose_downcast(source);
+ 	odb_source_loose_clear_cache(loose);
+ 	loose_object_map_clear(&loose->map);
+-	chdir_notify_unregister(NULL, odb_source_loose_reparent, loose);
++	chdir_notify_unregister(odb_source_loose_reparent, loose);
+ 	odb_source_release(&loose->base);
+ 	free(loose);
+ }
+@@ -1053,7 +1052,7 @@ struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
+ 	loose->base.write_alternate = odb_source_loose_write_alternate;
+ 
+ 	if (!is_absolute_path(loose->base.path))
+-		chdir_notify_register(NULL, odb_source_loose_reparent, loose);
++		chdir_notify_register(odb_source_loose_reparent, loose);
+ 
+ 	return loose;
+ }
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+index 0890704e76..8d028971cd 100644
+--- a/odb/source-packed.c
++++ b/odb/source-packed.c
+@@ -786,8 +786,7 @@ static void odb_source_packed_prepare(struct odb_source *source,
+ 	packed->initialized = true;
+ }
+ 
+-static void odb_source_packed_reparent(const char *name UNUSED,
+-				       const char *old_cwd,
++static void odb_source_packed_reparent(const char *old_cwd,
+ 				       const char *new_cwd,
+ 				       void *cb_data)
+ {
+@@ -816,7 +815,7 @@ static void odb_source_packed_free(struct odb_source *source)
+ {
+ 	struct odb_source_packed *packed = odb_source_packed_downcast(source);
+ 
+-	chdir_notify_unregister(NULL, odb_source_packed_reparent, packed);
++	chdir_notify_unregister(odb_source_packed_reparent, packed);
+ 
+ 	for (struct packfile_list_entry *e = packed->packs.head; e; e = e->next)
+ 		free(e->pack);
+@@ -853,7 +852,7 @@ struct odb_source_packed *odb_source_packed_new(struct object_database *odb,
+ 	packed->base.write_alternate = odb_source_packed_write_alternate;
+ 
+ 	if (!is_absolute_path(path))
+-		chdir_notify_register(NULL, odb_source_packed_reparent, packed);
++		chdir_notify_register(odb_source_packed_reparent, packed);
+ 
+ 	return packed;
+ }
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 1cc20aa486..71628550f2 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -111,8 +111,7 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
+ 	}
+ }
+ 
+-static void files_ref_store_reparent(const char *name UNUSED,
+-				     const char *old_cwd,
++static void files_ref_store_reparent(const char *old_cwd,
+ 				     const char *new_cwd,
+ 				     void *payload)
+ {
+@@ -182,7 +181,7 @@ static struct ref_store *files_ref_store_init(struct repository *repo,
+ 		packed_ref_store_init(repo, NULL, refs->gitcommondir, opts);
+ 	refs->store_flags = opts->access_flags;
+ 
+-	chdir_notify_register(NULL, files_ref_store_reparent, refs);
++	chdir_notify_register(files_ref_store_reparent, refs);
+ 
+ 	strbuf_release(&refdir);
+ 
+@@ -234,7 +233,7 @@ static void files_ref_store_release(struct ref_store *ref_store)
+ 	free(refs->gitcommondir);
+ 	ref_store_release(refs->packed_ref_store);
+ 	free(refs->packed_ref_store);
+-	chdir_notify_unregister(NULL, files_ref_store_reparent, refs);
++	chdir_notify_unregister(files_ref_store_reparent, refs);
+ }
+ 
+ static void files_reflog_path(struct files_ref_store *refs,
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index b9b04b7010..a73fc6aca7 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -217,8 +217,7 @@ static size_t snapshot_hexsz(const struct snapshot *snapshot)
+ 	return snapshot->refs->base.repo->hash_algo->hexsz;
+ }
+ 
+-static void packed_ref_store_reparent(const char *name UNUSED,
+-				      const char *old_cwd,
++static void packed_ref_store_reparent(const char *old_cwd,
+ 				      const char *new_cwd,
+ 				      void *payload)
+ {
+@@ -248,7 +247,7 @@ struct ref_store *packed_ref_store_init(struct repository *repo,
+ 
+ 	strbuf_addf(&sb, "%s/packed-refs", gitdir);
+ 	refs->path = strbuf_detach(&sb, NULL);
+-	chdir_notify_register(NULL, packed_ref_store_reparent, refs);
++	chdir_notify_register(packed_ref_store_reparent, refs);
+ 	return ref_store;
+ }
+ 
+@@ -293,7 +292,7 @@ static void packed_ref_store_release(struct ref_store *ref_store)
+ 	clear_snapshot(refs);
+ 	rollback_lock_file(&refs->lock);
+ 	delete_tempfile(&refs->tempfile);
+-	chdir_notify_unregister(NULL, packed_ref_store_reparent, refs);
++	chdir_notify_unregister(packed_ref_store_reparent, refs);
+ 	free(refs->path);
+ }
+ 
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 028f0211af..08a75fb328 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -391,8 +391,7 @@ static const struct reftable_be_write_options *reftable_be_write_options(struct
+ 	return opts;
+ }
+ 
+-static void reftable_be_reparent(const char *name UNUSED,
+-				 const char *old_cwd,
++static void reftable_be_reparent(const char *old_cwd,
+ 				 const char *new_cwd,
+ 				 void *payload)
+ {
+@@ -465,7 +464,7 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 			goto done;
+ 	}
+ 
+-	chdir_notify_register(NULL, reftable_be_reparent, refs);
++	chdir_notify_register(reftable_be_reparent, refs);
+ 
+ done:
+ 	assert(refs->err != REFTABLE_API_ERROR);
+@@ -492,7 +491,7 @@ static void reftable_be_release(struct ref_store *ref_store)
+ 		free(be);
+ 	}
+ 	strmap_clear(&refs->worktree_backends, 0);
+-	chdir_notify_unregister(NULL, reftable_be_reparent, refs);
++	chdir_notify_unregister(reftable_be_reparent, refs);
+ }
+ 
+ static int reftable_be_create_on_disk(struct ref_store *ref_store,
+diff --git a/setup.c b/setup.c
+index 95909e9603..671f88201d 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1057,8 +1057,7 @@ static void apply_gitdir_and_environment(struct repository *repo, const char *pa
+ 	strvec_clear(&to_free);
+ }
+ 
+-static void update_relative_gitdir(const char *name UNUSED,
+-				   const char *old_cwd,
++static void update_relative_gitdir(const char *old_cwd,
+ 				   const char *new_cwd,
+ 				   void *data)
+ {
+@@ -1086,7 +1085,7 @@ static void apply_and_export_relative_gitdir(struct repository *repo, const char
+ 	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
+ 
+ 	if (!is_absolute_path(path))
+-		chdir_notify_register(NULL, update_relative_gitdir, repo);
++		chdir_notify_register(update_relative_gitdir, repo);
+ 
+ 	strbuf_release(&realpath);
+ }
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index d199d39e7c..520df2df8c 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -37,8 +37,7 @@ static void tmp_objdir_free(struct tmp_objdir *t)
+ 	free(t);
+ }
+ 
+-static void tmp_objdir_reparent(const char *name UNUSED,
+-				const char *old_cwd,
++static void tmp_objdir_reparent(const char *old_cwd,
+ 				const char *new_cwd,
+ 				void *cb_data)
+ {
+@@ -67,7 +66,7 @@ int tmp_objdir_destroy(struct tmp_objdir *t)
+ 
+ 	err = remove_dir_recursively(&t->path, 0);
+ 
+-	chdir_notify_unregister(NULL, tmp_objdir_reparent, t);
++	chdir_notify_unregister(tmp_objdir_reparent, t);
+ 	tmp_objdir_free(t);
+ 
+ 	return err;
+@@ -155,7 +154,7 @@ struct tmp_objdir *tmp_objdir_create(struct repository *r,
+ 		    repo_get_object_directory(r), prefix);
+ 
+ 	if (!is_absolute_path(t->path.buf))
+-		chdir_notify_register(NULL, tmp_objdir_reparent, t);
++		chdir_notify_register(tmp_objdir_reparent, t);
+ 
+ 	if (!mkdtemp(t->path.buf)) {
+ 		/* free, not destroy, as we never touched the filesystem */
 -- 
-2.50.1 (Apple Git-155)
+2.55.0.windows.3
 
