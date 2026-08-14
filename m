@@ -1,168 +1,143 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD379321457
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 10:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09EC3A759C
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 10:40:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786702925; cv=pass; b=F72NhGIjhNYp2UEYYU/ycj/QCewww+1KuhVlKrC1z7dx+TJ/kWSBX4vDcNuc6dOov+bKH6SFQRMgghJRUCfCm9QSzHJZOo+PZTrKQ9rfToUc4BLt/VwodhZxYuqdRWa6EvnvsgmkhWxt71vDmImr9F0khMeoJj5ak56VoviK6eQ=
+	t=1786704051; cv=pass; b=Nr1td1FNZrJJcc9Q2qEPblfjMquuG6ISk7MIwL3vF+UG72HQAXmg/vqvzgoVnIQ3bQH46drLFyNZ3i7UtWNH7SDUbfCORUhT4FeE4FGBcHodCpb0J4/X1s4AvNurwMrwU2b+L1W/HeVQY+IUfjGX9Mf8fyePvS/Das14/tgyhT0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786702925; c=relaxed/simple;
-	bh=gx/iWMm3jnnuJwkKyZVt+9FIyxKAoI1cuToOCDXPUWs=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dTcHeFwQ4XmSdFz48L3KilOIQViAOKaH5hIwF6GxDfFD60fyvWFtJW10e46svB5yhVKLIzfPLj0H8oAt05rvzspcv+e2ESmh2CGKxPtm2Pi3oLpCz/4Zc3OZE/1Q+pDvrYniN1JLhngwJlVsfGeieo0hQB2Xj4ylBl90nvh2Yt8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QC+vyORk; arc=pass smtp.client-ip=209.85.217.48
+	s=arc-20240116; t=1786704051; c=relaxed/simple;
+	bh=4vx0YjTOOJg6QipJ2nDZauxLYxOhvlw4X1rrFeE9sA4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=eJpQoKK4nsR4PrZXz8JorX0ELWjmvcEVlx0bIwt0xj9w1Q7oQZyax8TyURpWh+yzNQMHUHGgKn7qpX2Ub4hzUOV6/oXnBWtLbrkM4EgJEjXPXhDKa7K+ZyCxZPMM/pg1p1yOX8gJ0fo73wrJnW/sR/dABbudy2sRgitWc016fHk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tMIHgst+; arc=pass smtp.client-ip=209.85.210.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QC+vyORk"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-76b3036d2d4so435635137.2
-        for <git@vger.kernel.org>; Fri, 14 Aug 2026 03:21:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786702915; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tMIHgst+"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7ec3b429a3aso630107a34.1
+        for <git@vger.kernel.org>; Fri, 14 Aug 2026 03:40:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786704043; cv=none;
         d=google.com; s=arc-20260327;
-        b=eNLKHmAU6Mv/6h8taxE6Kp92eUonYkROsMvn4/js7wJ6bGKmAZa1XUbYaV8EgS1bhG
-         GEqv7as7yYALy0F+rXZAvrP4bh9KFAC2Gzo8PZ4tavQcan4be7zJHmOl3IrNIA+Vebm9
-         Uq5cO3EmE/xetIsKXb4lXX/bqqibTGCb2BLHocoT0rJpFmnU84vL9d/Iaenz2HbLwF4S
-         OvA8op86pmDHkdO7zGjYT46WZK5LgUKXJ3xhLEbTEj3m1ZwnXnamcQx2vm4kzqvzDt6b
-         XhjooBCYWQuqyrKtKCIk0Lt2m00XQiNDAco2g8pzuVP+nbt7LO6omCavKewCL5Z/TaE9
-         7d1w==
+        b=Gn8z9q127ThPcKZKKdfi+Pf0URlMOdUL7zeY/L8HvCd2n78Dr34jC1x9Z+5zjQlXpX
+         tTxrpsgWDaAosWtNk9+YKtKDixfpsGyGtcmrdpLAp203tvmASw9dgwtas0ZDi13SDDVb
+         AXSB7sTxRd9VAU3NQRMeoNEMvBWyPB7rPqlmV2++CRPnmY3qE7nVrurloqiVux8/0SxN
+         khm9621+515HSm8FPkUnmHyo/LYITjzdnKGAzlwhXXPqMl8q3tq134xsBDzbjyjqtne0
+         KSO8BduYlvXW5DaT3FS6lLq7zqSLxajYBoFuG9h0pa+Bcu/i387Q4s9jlPM928EChtVz
+         Mrmw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=cpuNaKo05siq9X9KzkpCtKDPehkQXR6UfwijAkxguZE=;
-        fh=v/V76+LuF2RGp6DmUGFhUkrKk8VeK7EKgDv/LZJenA8=;
-        b=rWowASx+ZzoHSHDIG/9K0LP17N8D706DC7HaBqzoHv1urjIahKOZKZzp9lCjQpG78v
-         PzO+haW2maZfaNqlBImKqBoYDxGz748zdBCgc2qzNquBvhJU5jENZ6JPoJbugG92wVgH
-         DvyyA/vRRqajr69sAvoeOPJkYUmWr0T4I+ZyIhoIfOY2UnqKFS91upaBXCqBdEKrBB1w
-         oKowd06ZVun56T8BGvWEnOxj2iSgwzloe0s6QORyqIWpw8DK503Ld8ura5U/wji34Jlp
-         UW6xEB4KiPF6vUYmfnZmlfzlmY4ylp0NZCqfYtNQcaiCcYfzHjXLFBGcyRCFuNjzqZ2s
-         zUMg==;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=4vx0YjTOOJg6QipJ2nDZauxLYxOhvlw4X1rrFeE9sA4=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=Sl7IQ6dGwxyB+7aue1XU/trDxhX05Lps8qVXU9dQKfvCEs7aXhImktH7p5DnG7up5l
+         ZICPLcJnfh9ABpryR9XtV9b7L8eo0MMpkTXNSLa+XS2WACSO7y/LLAr08Hg0ReY8anbr
+         TxkeEPV966cTPcMkDhJqDK28sw4arkI3M+9IYEmI0AT3PqcuKswJemHJIKcQNojpLX73
+         lk5dG6JafNpmDfrk8DpSFhd06KWeic3JWEZn72zcPMqygRLFKGsvlvLxb4Pc6TP7SmUJ
+         f+krcXyreEwJsqO4KguCUe9aZ8IMxyeaEKRHigktx+Kn3b8M/CUrE6eMCkv5w2MJTZp+
+         rh9w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786702915; x=1787307715; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=cpuNaKo05siq9X9KzkpCtKDPehkQXR6UfwijAkxguZE=;
-        b=QC+vyORkfClyZvJI3zYHc9LRgXHLnBTZOUJYHgdCZ6S5bpQRjy5p7nYBkXlKO4u7TX
-         A97GwZqBHfFT+6dBybRqLd58Cc0IN3ZWFbMTXAzMXFdfqHw9TiU/5XwaP5frqKF88Dge
-         xpZ7LWWmkKPE9hEUINiTNq6pVRc6Ku4rqSFu9Rl5OHxuqF91wt68O7sk5mv1au+V0t1Y
-         wWLAi/GDbjNhz5HgkCW/gnlxcQ990st8p01NgToebaBBrvL8JUanYyK8lRADtQu2mPW/
-         +CdRydOHzAg3Nl0WcTLbmTbpPoX06l3Wu4D8aD7gPgqvdusRn2Bru2l8pXIaiCnybHjf
-         bVKg==
+        d=gmail.com; s=20251104; t=1786704043; x=1787308843; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=4vx0YjTOOJg6QipJ2nDZauxLYxOhvlw4X1rrFeE9sA4=;
+        b=tMIHgst+XW0qqUSERcayl7cC6Rng39qWXqGNLf6uy6cOFBRd5OBBm0vIaWCJ47+rtT
+         Zd0jw2pKFoHmEOw6veGvPSvTl7p+6DXTIMnmJ1yc708yQW+O6SHAc4OzIxhXVX4ElTGl
+         e3oVFG1Q72Vz0aZgKVwANlWFtK7DRoEszkwcG2UfmabLgPGr5ZZkaXeH6rVofqUGzkbd
+         PoipetDJxGs117aXRXjlAUJG8cHdBs0/96lS/BEYl6w73Xb5c4DQqn09IOdTlmbFenz6
+         8ffY4QHYV1ti064cmjGc7TBfnbr9imO60gCnmBKXu4CZAGxTpaVAGyDFXCJkum/ORa24
+         lBDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786702915; x=1787307715;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=cpuNaKo05siq9X9KzkpCtKDPehkQXR6UfwijAkxguZE=;
-        b=ikI6OYiipvSad19QQEaGBt4l9+3NJaVg3Q2P+PaAov5BjQ4M0hAe28MkkChS9eQAW7
-         7UColUSCIZKXr4BUG2GfJYAiBJoQY3qKoO+tmjNQ7Z8cRUmQBqy2xQF/sdSKEnxDvXMO
-         VsddNvFFqWh4sbpWQFBgGcvb28zcN9WyOaAsFBWF1Yv/rEzLZlz5EYYQDShWB3hNv6v+
-         MkhzYH+Bh5RDXn1FNC8tyjKpp5pMxM1moxqtT61Vi6ycCn/XZB+BZF+KbVWmFlAf+db7
-         10SddDS1r3NKZDnl68VRPceyeN2zMZBya4jZaKhRDU//tqvi84BO+jXqnabYd3P+T2vC
-         5Lzw==
-X-Gm-Message-State: AOJu0Yybz8DBoVbmBuJVVyglAO2RUfYY45f7zIGVB+QhnN4SQlbLCnOM
-	rprGnGWesFNqE2Cr1/9r6Backpvu58r2huIpPfvu8+UrghC8XGgzAFDEmZkziemkxzaQ0WHESv5
-	x+wRH3uCFMc6cPed/NFHaf97JpL2Wne8=
-X-Gm-Gg: AR+sD12fjfY/gt+/qUhIEXoxKwkMSmVdIExWWw8ae0kMW5kC21Huac3JbcgxXWEfLcf
-	wpITcu5DLShaaQrT0pppHwnq4KBUwsZie99lh4Atm5XisM772h6sEXwVa5TgtkzWF6BhmWy+BUp
-	Z/rzBQriUyigitsKepOPLYIbtBLqhs7z+lbxKdmgBEZ7yIrwHD/BvYmSD2zTQVndtcRdm0hUbIv
-	Z07By+lxrz1GnZMjF5K0nSL7UILxLOFxfI8awEGQvFRaGAk8jJS0moTsPr7Cl/UIm2JAYpV/Evq
-	E/7L1bohUVrgTo8WKap5fhxjvb1gTBwwbYKRQAvZzfbdhqd4DN/XpTS7yD7LuoSUh+KFbSwKI4U
-	zOshwSNbWL9Vw1XzKaWEC97/al9zatY9Nrg==
-X-Received: by 2002:a67:e70d:0:b0:739:5cfb:50f4 with SMTP id
- ada2fe7eead31-76f2e0997b2mr935657137.11.1786702914859; Fri, 14 Aug 2026
- 03:21:54 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 14 Aug 2026 03:21:54 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 14 Aug 2026 03:21:54 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <an3DzPKAFqygOS65@pks.im>
-References: <20260812-pks-odb-eagerly-prepare-alternates-v2-0-522b9a5bc1ea@pks.im>
- <20260812-pks-odb-eagerly-prepare-alternates-v2-1-522b9a5bc1ea@pks.im>
- <CAOLa=ZTsumAT6U8+pJQmNjYL6Rt=JkvTJ0V7KQ7MvLYkThTFYA@mail.gmail.com> <an3DzPKAFqygOS65@pks.im>
+        d=1e100.net; s=20251104; t=1786704043; x=1787308843;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4vx0YjTOOJg6QipJ2nDZauxLYxOhvlw4X1rrFeE9sA4=;
+        b=De/oxk2CZRxqt257W8QH9xIgu9BYPpaxoyOeS4FaUE/5Cw9afZQPDR7wBbNz6Z8N/9
+         gY+cwhrEBcnlpLSoo+g53eWA8HLmXQWD1aCmgVt0yzp0TUlxPacpkG8bcLKBj8iV2LTr
+         T1ItKWzlJNZQSURNKl0NNGRaI57tFvlnDaSBR7UendPLt0xdmyg8iG9R0KqwVS174ydB
+         1+Ad0YNy1sQsJB1NIEaabS8hFp6Q+vZQ2NTfkbmXUVsRv1d1MCcvA+FwdV8AV6vZf3Bf
+         0uO7VGf5u7Gt20ZqPYZu/94nDveTPwPFpHLYnv75hFCpVSc6G3yLCo2vzB0J9iFexxuY
+         9t5A==
+X-Gm-Message-State: AOJu0YyA028sg8MfvxscK8QoES5oCLtqFJMrt7ne0VAXovTKqm4ZGhY2
+	uGpbRwJyhoPmyGdPrlRa0l+5KANGTlU2p1YDUo1H4feN/heo4W3X3bwPiKeAWKOkmhQImOEy1OF
+	rWOyMHt5VXzFMNIUvj7hvQZU9XeM+tA5dgs4m/2A=
+X-Gm-Gg: AR+sD11fcP2un4aPYsP4uAVMxDA5t4TJEoQRfI77oLUpvm1Rkaieju17zljmHFrefWX
+	sTrfBJGUhinJQPqoRiVjw0s1RmFGglA5xzybnAET2p5z7ScYd4dna10I8hQtqbIy+FqTTUsj0M9
+	rzCVJZN7KurEGvMX+NJvcrm0pswiceld1P3GytR0TOg0UJbydCQA5ii4sclBnssUH3mgL7ukOGY
+	rP1wESAn4u4iN7rc5SfnvvoVc9OS7Ce3qgqGk4dJIvUGDJPVkMIryNiwNYcfxHed+gDf9EDzVNZ
+	toVoIdCLJW1JPE40/tNd6IvEkpczhJwE7RHtwfEdPhTlv/TfhBphgjTE2AD0wB8cXC3jgeqv+va
+	S2mE=
+X-Received: by 2002:a05:6820:4b8b:b0:6a3:1e40:6329 with SMTP id
+ 006d021491bc7-6b0d61ba765mr4340079eaf.13.1786704043007; Fri, 14 Aug 2026
+ 03:40:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 14 Aug 2026 03:21:54 -0700
-X-Gm-Features: AcwNN1VEsKufbMWGqs_gj3wTWEdRZc2mkU7jCO1cuZTgNpuDnypzs5j0kjOAKLo
-Message-ID: <CAOLa=ZQARq2eoVegh1BsnKrvd9MuraNFJ3htKDxQ5H25WJUs1w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] odb: decouple source path comparisons from `the_repository`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000008f4abb0658ff30ee"
-
---0000000000008f4abb0658ff30ee
+From: Peter Morris <mrpmorris@gmail.com>
+Date: Fri, 14 Aug 2026 11:40:30 +0100
+X-Gm-Features: AUfX_mwKG0aWqdYWVcSTLxwY3w-NAxLIRl59FVJL8qG7aqJcjGaf01uouC_-z04
+Message-ID: <CAOqWQbKn88m=OBDF7W8bBPjeOxtRsvNmhsqNy9AryMKrOKtLUA@mail.gmail.com>
+Subject: [RFC] git worktree: use filesystem cloning where supported
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi,
 
-> On Thu, Aug 13, 2026 at 05:23:39AM -0700, Karthik Nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> > diff --git a/odb.c b/odb.c
->> > index bd02d8ad54..51da386f22 100644
->> > --- a/odb.c
->> > +++ b/odb.c
->> > @@ -29,8 +28,32 @@
->> >  #include "trace2.h"
->> >  #include "write-or-die.h"
->> >
->> > -KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
->> > -	struct odb_source *, 1, fspathhash, fspatheq)
->> > +static int odb_source_paths_cmp(struct object_database *o,
->> > +				const char *a, const char *b)
->> > +{
->> > +	if (o->source_paths_icase < 0) {
->> > +		int icase = 0;
->> > +		repo_config_get_bool(o->repo, "core.ignorecase", &icase);
->> > +		o->source_paths_icase = icase;
->> > +	}
->> > +
->>
->> Nit: couldn't this be simplified to
->>
->> if (o->source_paths_icase < 0)
->>    repo_config_get_bool(o->repo, "core.ignorecase", &o->source_paths_icase);
->
-> Not quite, as that wouldn't handle the case where the configuration
-> isn't set. So we'd retain it as -1 and do the config lookup every single
-> time.
->
-> We could rewrite like this:
->
-> 	if (o->source_paths_icase < 0 &&
-> 	    repo_config_get_bool(o->repo, "core.ignorecase", &icase))
-> 		o->source_paths_icase = 0;
->
-> But I'd argue that this is harder to read.
->
-> Patrick
+I'd like to suggest a change to how git worktree creates files.
 
-Ooh, yes, makes sense. It's better as is :)
+# Problem
+git worktree add creates a new working tree containing copies of the
+files from the existing working tree. This is normally fine, but it
+can result in a lot of unnecessary data being written to disk.
 
---0000000000008f4abb0658ff30ee
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d7e28f37dc9899e0_0.1
+This seems increasingly relevant with AI coding harnesses. These often
+use Git worktrees to let multiple agents work on the same repository
+concurrently. If several agents are working on a large repository,
+each worktree can result in another copy of a large number of files
+being written to the SSD.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1wKzdFQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMmRwQy85THd0Zi9DT0xTQ2RvSkZBSzVOYkVWWTFYKwpERWpmMjVJTDN0
-QkhZY0gwWHJGdTBMQ2lYdDB0U0ZOS0VraEpaMEhWSytTeENBYUZhWDVQTTZoVnE1T0hHbytwCmFz
-Tit5cHpPTHFkalppSW9MZWpoYjJZaTN5N2NpWjdsQk5YcXdRNTk5L2lJWHZWeUZzSU13S2gyRVJv
-eVFsTFMKd25PYnBWNGVYZlJ3QTMvNTZiT0EzMHNmKzVJandDcG9rOE9FaG0vbGNxZFdlK2RKbzJN
-QlFQd3o3TTU0Y2FoZwpLcXlBRVlnYlowTk9uakJ0SVlOT1Q3aWlqSTBsUDFaRDNqNEswWlNqaldU
-TnlUWTV1U0VhU1RZRkVtOHJVelN5CmJlTDczTjFBYjc2ZzhjR0MxYzh6MGhWSGV0ejQyQllWS0Zx
-Ynd3L3dFWWJoZ3UyT3V6RjJnNGRNSmJGbklEN3kKc0s5aCtOdndmREF4NXFYM3k1ME0vQTF6cklZ
-R1FNSFY4NXhsOWdjMjRyemF6VmF5OCtTL3V1emV5SDBqWVB4UAoycWVpSFB4SG9sZVhWaU40VUNR
-bnJqVGdWMzl1QnAwL1VIWjk0NVk0bTRZQmNhZS9IMk4xTVdRUnZ3S2dEazBFCldlUVdwN0VvNmFF
-cys3a3V0TUROSWZLZG0ranVBWnRGSExwSnB1ND0KPVpyK0UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000008f4abb0658ff30ee--
+SSD storage is expensive, and SSDs also have a limited write lifetime.
+It seems wasteful to physically write the same data to disk several
+times when the filesystem may be able to avoid doing so.
+
+# Proposed solution
+Where the filesystem supports copy-on-write or block cloning, could
+git worktree use it when creating the working tree?
+
+For example, Windows Dev Drives (which I use) support ReFS block
+cloning. A file can be cloned without physically copying all of its
+data, with the filesystem sharing the underlying blocks until one of
+the files is modified.
+
+If Git knows that the destination file will initially contain exactly
+the same contents as the source file currently in the folder, it seems
+like a good opportunity to use this facility.
+
+The normal behaviour could remain unchanged on filesystems that don't
+support this or when the existing file is modified or a different
+version from the one that will be checked out.
+
+# Why
+This would potentially:
+
+* reduce SSD writes when creating worktrees, extending my SSD lifespan
+* reduce physical disk space used by multiple worktrees
+* make creating worktrees faster for large repositories
+* be particularly useful when AI agents are creating multiple
+worktrees concurrently
+
+I'm not suggesting that Git should become dependent on ReFS or any
+particular filesystem. I'm wondering whether there is a suitable
+abstraction for filesystem-level cloning, with
+platform/filesystem-specific implementations where available.
+
+I'd be interested to know whether this is something that would fit
+with the future plans for Git, and whether there are technical reasons
+why this couldn't work for worktrees?
+
+Pete
