@@ -1,82 +1,85 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171713BF66B
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 14:26:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77326477E4D
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 14:38:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786717612; cv=none; b=YzyUM2/oBx350aHIa1V65GddCvbDfoGlYmfHNkm+mc1RaWwq3oLUjpCUABRPtMZZfKHvBeePyRF1lchcVBHyOanc1oVCyxOTyZmbIqTMa2blQe/WEIpC5oXnWoucwi499JO/8NdpX/nsYDcNPozM2Yh00S1nR/MOTjPr9/vXJT0=
+	t=1786718331; cv=none; b=pJr/zAifTHkR8ZPfgZeRZOAje0QfUKQTTvtmzoxMo9pgw4EejDWDepUzJ/9VZ2FIvSDUMhqeQm7Ft3tNHhcAa0symkvzGkMQjjWbHs/RuiDpYUe9LqTUq2AnJLJ4HC8wCm/EU6avIszsnvLjyP5hQlypkvf4/2SHxJeRl1CCjcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786717612; c=relaxed/simple;
-	bh=fETwkVmXdeIa4xkVC1/2nUGoKgyvtNkU1tDp1FHtPhU=;
+	s=arc-20240116; t=1786718331; c=relaxed/simple;
+	bh=I4wEVWtQodhV741SR2gZIpkRoLtCqq88qVV8MusUjJ0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Kv8p4H8d11WtmvsKa2k92fKhc28OENwAF85ewSlr7Ddo/4kbkn+5t9pmpdlUJd4twIZBCXH44064T2QhCUzk+IF0tuT7nGQa75KnKZKAfYih2EwK6zdYSsW2uJZn8Pg8AaS8Tln8+kZGhwlIMXcGkI+2ViuJcp/ovWM49Vgs05Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U2HEjCvU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lNxSBRgT; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=e1DInNuooKAr+SOwNm0E5gk3iIBzt+TOCasMqeojT9d8jclTG/IVWQNk7+BzD3nDATnqtKL1//Hz7nbWrNqXWDG3v+iqlNS6xAARAleHWrL1dM6ti0kfdR9tagrDDIU/OVvZYvfOxxePf7HZv6MJpfldZucH1g83I/gdUzQEPuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DAgRhRKG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZCm7vGNv; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U2HEjCvU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lNxSBRgT"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 990141400013;
-	Fri, 14 Aug 2026 10:26:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DAgRhRKG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZCm7vGNv"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id D1DE8EC009E;
+	Fri, 14 Aug 2026 10:38:40 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 14 Aug 2026 10:26:43 -0400
+  by phl-compute-09.internal (MEProxy); Fri, 14 Aug 2026 10:38:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786717603; x=1786804003; bh=GJk6f/IHe0
-	TWiwVq248ObtIzkUT7hNQ/XNDOdupRAbI=; b=U2HEjCvU9M7LZbc1nXIYrPuGae
-	OV/ahOQOuIaoTePoMjCA7u6OOvl5WfrSV/MHt/u5a+4PMRghdlQSoBkVNBfY3SOc
-	4mjPzVJnLsczyFvJoW/g5HwnAEgbQXUIgqEeQMJPB1VlVOnO5x+h4Eop1anaRDAW
-	Q4dQsdkrkuRpqTVCcr37df0Zui3W/cNUkPTkEf5HEtMHKyEK/6XAe/32MSPk2ahS
-	H+9qp4SoMG3cL0xSudSfPn1ME2CXjG5H17zaCPv2I3apfDJAw3AwGxi91Nsg1xA0
-	fgNe6vWa1G0p2K09sJLDu5tpXyR1G148Rh9/LBQqPgcYqBHR8L4w7wr42uPw==
+	:subject:to:to; s=fm2; t=1786718320; x=1786804720; bh=i+5m6iL5EW
+	F88muTArvwlhe55OLJfgcYvIR/czOv+E4=; b=DAgRhRKGFyBh5x7Mvo6NUVWCwA
+	b8R1CbaSJBCQvsUSXR1HbPU4iPMQ2zjqCyYO4y2WjCZf7CziiucWBsHztXJ7PSDt
+	xRHj9k0rphHoCLhbvU1C2+cTvQRYWjATRfX+ZjuCGCrSUJwhYXOAY4dKuvAvvqI/
+	UBKFu2qjLOIpizgjizOCE9g9Pf3fZyr4mXpCRxyBZvYdGUsqZen5ldJgWLG2cPwv
+	yDeLni1E8kze99xaG0XqwBFgxudP0b61dkr5HlAtudM8W4+7ATKxZUfTFvc82FIA
+	AYgSTSbnc8g0f73goknvOqE4qtJkqq2giHqkrjRpY80jpntVWqCMIkMueaJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786717603; x=1786804003; bh=GJk6f/IHe0TWiwVq248ObtIzkUT7hNQ/XND
-	OdupRAbI=; b=lNxSBRgTMbb0MGawqfRM8B5Ak7NI2nkYJfJ5nx9Webz9f9zlRKc
-	I+5PMbK6B6QWhWCuWB66BjCfQ17GKvw1+pK5Zeo+PYuG8EsbshffchiYcNFHKLm5
-	F3ZfDn4yERJybiR6OE1/dWVT/Sajx61KitxrG1Oq2TN6FZ8IzgiE2imi28Fz3li9
-	Yhpb3+1oqnYa3JAgWkN6AEEY5QJ5w5sWnI7zHB1ufoJcXkaC2OT6gtnQT7d/tJfU
-	EO/3jwyNe9fiUio5z3K/yqY4zBRoclFqMn2dIWL+rdy8e7KhJXlG+I2Plt+SXEgR
-	Wipb41/4Mf7dMbJD+q0DBtxbBFKgFT/loeg==
-X-ME-Sender: <xms:oyV_apBGPOwuEm7iJq2Y5Mg5WYaT82dnf33c1pOqMHiFzuKU1Me5Sg>
-    <xme:oyV_augr_gyX3J1guiZVkJcubFurtWoZWK8KZzoaRCo4yA8NepGpfWvKjqYEzyOqW
-    seK3ApNzD6_Fgs25DeV22wwow-i_Kz8vz6oQlezcAUVXkJ3uPlUn8Q>
-X-ME-Received: <xmr:oyV_apkvdfsGsBMJo01UGo15ySRZwF1SsisRI-rAaPPpPMgN4OfBv5AswS6sMrEajL96yu93f5cER_uCdCO8ZGzsw5ZkJC797w>
-X-ME-Proxy-Cause: dmFkZTEYz9oFOrUJWqIoCFBxF/YrJiHvJdCe56nkgcufBNZ7czH2MfXePhxcA7LxMmQl2d
-    v8hMVgixx53Aii192gEON/+3fN+zZCqJpQL8sQvRRnUagpLXmFPe4Y4QS354C5Nihlc1Vp
-    NXh5xpCrjO15AiJ4xXjJ7CHFuMiqU6XJK4n3WQ1aZkN80v4OwhIRHbIeCOSXc94mSJWyFq
-    oskU3yJImZNL+MXdr4f1f1of5PQvakEpr3IAGPuv0QHB62gGYW+beMcuK9qle+k7lc7KjF
-    aXB/2eeYgowX6nJWRttjajDi43zz3Ok15HA4ryvHVA8SB3NmAeDbXHzRaHcrNJumq7JqPN
-    rtohV11k/qdNEPb80xmyPG+W06RbVQEsEBhKoUaUrZ39ThTNOVXlCkH+nP4yq6EM7WatMI
-    PXKlROuxb2n7KQ+2V+tgdp6pt8HfqTu2d3bhdi5AVdZPFWCs/V+0pX9RWktl3n5RfLWNES
-    sTEwupG5kBYjWcU1umYZwWXc3awmXakKh8JdqNjaE3rJWk6ahgsaUgdmoFywpMzyLyzbGd
-    F3UQaQ3BYdpfx0fppiysLpbBPqrZwJbIpnePKQQsNcMITTpRFyNxDFt8M23OF7WOiWJodu
-    qFFU+qNep/bBtgF8CY5tnCQQDDO+vt6j2PwSEMz+MAfC8TAbzLDKjxe1LgMw
-X-ME-Proxy: <xmx:oyV_airI1MHAYS-jJ1iiv1YtcE2CbdY4Lbgi7hoeeprX_c_a1YYfLA>
-    <xmx:oyV_aqEraFMVwuR1OIMX87P5E0BZ3tJLUOl4Y_diwAu_VU89vFYAYg>
-    <xmx:oyV_amyHjz_xZq11OzZsREPYnjQ8VAAtT9hyDhL1PIv8rfOY48LhfA>
-    <xmx:oyV_anrEQgs_3rMhTmwKFmNuHFLr_GnOT0_AUq2edaVjNsxXruvUPw>
-    <xmx:oyV_ahFvXcnhWtU7mxQ5RMD4v5S7r4typKB7JqL6w2gso9yonAVPWx0H>
+	1786718320; x=1786804720; bh=i+5m6iL5EWF88muTArvwlhe55OLJfgcYvIR
+	/czOv+E4=; b=ZCm7vGNv65D/rDPG+prPxTh1szHk/qa/z5+3TH1JC2unPrdIpET
+	FXKuiBMriV8W0FI9BPhYfxvqkOqUx5Pr9IPvqEz9FJwlGlSe1GjbaBb/ODoepJU1
+	Kx0SZzXJvPHc1zwnnFYlCHd4xOjQdixN6OZ2v6ENs4DGd/KLO4L2TtWXr+sGYgN3
+	ChQQGH0Ja0jgVFkjvGC9c06ygo7pNwXj3k/HmQ652kB+hQ9oLKJVHiahM2GGzHt4
+	zWuHwtU0tdAUJU+/YTxGRCJpV1rFLHqToTTVKSvs0hzNa7V9DUwWRi9+LTOuCcRy
+	8EdFPalGjraCuA4JjvkxVQDvsK1/gTewwxg==
+X-ME-Sender: <xms:cCh_apD5ZRh4hAzzJiaJ5_s_S5ilP5iP7c5UC1_G0YcLCNGpjJ1nsA>
+    <xme:cCh_arPj0-lIHKBII3eJSv1X2i2TG4wgFSCCthUWZFM0QnBi8Vn-ictFpshc-BJiZ
+    uSYl5ZNzlaRdjNOhQOUM57MK74Jq19w7II5ZLTgs9GEGTMaVHCpkC0>
+X-ME-Received: <xmr:cCh_auYfkllNa_INsxCqrM3qqCk3Pj0tsdG_KIGAFCO5j9rV6ULQ8RgRrtnoddzZbfkp-8gagleUOKJlay-2Fk8mUdHf5a8_dg>
+X-ME-Proxy-Cause: dmFkZTEnchuyiLgHHH0Ex1rT4zDKckFg/JiLYd6gXirSXqiqdkEMf3owgoM/8ZKHsI1U/n
+    Jbshh7/hozjLCRSvHYlE7zj1hmzbNGPCj5EvnUDkkQ36n6GujV4Lyc8WyD1UrL35qjOAHj
+    6r1LkA20i8c64Qht5tAABrgAUOAcne5opSWD88LRHRjAC7j+XA3piXpAjF/NWfDKHK6GEt
+    QzYdarYILiz5gNI5+H+hSF/PE/rc97plnCn/qoDclYYtMwGLpGjo/fh0dsaVz4DPxOQdfw
+    tMjL4tU3t54GhiiNVVsS5FQ7W9+ViIbKxbCTwqOU96jrkFE3WnnhSiTmJA4GfCqOFG6/Tm
+    HJpTGJuw3Y8Qe/QfPO4bWvVDlDZkROnEII1NwABb+KzjYeW7SWsTR25shrQljBme+SUnB/
+    HqyataOVD0k85g9HnRJXhxRid5AvstSZePc9eyw6S5ZHlAwjxCf+cbU+TqHswW7Rd1NPH3
+    v3P5tbvCziRensTaVCf4MgtUenj8a8q4NSiwR2zX++BDxdy5xMzciGa5WD3lgVaLTAWsAX
+    JQ0hGGDP8dJi4GslpOmjhY47XE3Vds2twOLDevZ8Rzp+oQRU7P1OawVcrvnGcxYk0JLRJq
+    dDcTlFoirOoZvf9g2+n/LK8D9SUV5xjWvhbeJxvPWoFh5w9uYEUFQ5HZqXKw
+X-ME-Proxy: <xmx:cCh_aquo1SuMVqV6FwzukFODPg5ML6d6edQSKrPhhrh2y6rZdKriNA>
+    <xmx:cCh_agNCnM2UBWn8WNvRuEqnV1CsUW4nFt4OMsj1jbs3fQctycUM5A>
+    <xmx:cCh_ah7syvIGxMSSV-q4CvQqJ7cc80C1J5HFgmZNSr3gtY7GH666UA>
+    <xmx:cCh_amTzOW7SL7ntZVTQ-QbdK4Wka0fKmCVf0BU29RoBEfDaEsT9hg>
+    <xmx:cCh_amOkpQNUBOogkoVsG2snRfuhid2aSRF4u6K9oSWCudnnnkMI6SLy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 10:26:43 -0400 (EDT)
+ 14 Aug 2026 10:38:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2] diff: avoid misleading statement about -l option
-In-Reply-To: <pull.2035.v2.git.1786673186855.gitgitgadget@gmail.com> (Elijah
-	Newren via GitGitGadget's message of "Fri, 14 Aug 2026 02:06:26
-	+0000")
-References: <pull.2035.git.1786516958048.gitgitgadget@gmail.com>
-	<pull.2035.v2.git.1786673186855.gitgitgadget@gmail.com>
-Date: Fri, 14 Aug 2026 07:26:41 -0700
-Message-ID: <xmqqbjb4rd5q.fsf@gitster.g>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>,
+  Ayush Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
+ <belkid98@gmail.com>
+Subject: Re: [PATCH v5 1/2] pack-objects: give fetch_if_missing call sites
+ access to 'repo'
+In-Reply-To: <20260814072419.1666358-2-cat@malon.dev> (Tian Yuchen's message
+	of "Fri, 14 Aug 2026 15:24:18 +0800")
+References: <20260813061125.1089553-1-cat@malon.dev>
+	<20260814072419.1666358-1-cat@malon.dev>
+	<20260814072419.1666358-2-cat@malon.dev>
+Date: Fri, 14 Aug 2026 07:38:38 -0700
+Message-ID: <xmqq7blsrclt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,28 +89,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Tian Yuchen <cat@malon.dev> writes:
 
-> diff --git a/diff.c b/diff.c
-> index 589c1969e4..c593066592 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -6186,7 +6186,7 @@ struct option *add_diff_options(const struct option *opts,
->  			       N_("continue listing the history of a file beyond renames"),
->  			       PARSE_OPT_NOARG, diff_opt_follow),
->  		OPT_INTEGER('l', NULL, &options->rename_limit,
-> -			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
-> +			    N_("limit to cheap rename/copy detection if the number of rename/copy targets exceeds this value")),
+> 'option_parse_missing_action()' is registered as an OPT_CALLBACK, so
+> its signature is fixed and cannot easily gain a 'repo' parameter of
+> its own.
 
-That is still a mouthful and it does not help that rename/copy
-appears twice, but that trait is shared with the original, so let's
-leave it outside the topic to improve it.  If somebody is inclined
-to, he or she can do so later.
+Is that true?  OPT_CALLBACK takes (short, long, value, arghelp,
+help, callback), but the value parameter, which typically receives
+the location to store the parsed value in, is NULL for
+"--missing=<...>" option, like so:
 
-Will mark it for 'next'.  Thanks.
+		OPT_CALLBACK_F(0, "missing", NULL, N_("action"),
+		  N_("handling for missing objects"), PARSE_OPT_NONEG,
+		  option_parse_missing_action),
 
->  
->  		OPT_GROUP(N_("Diff algorithm options")),
->  		OPT_CALLBACK_F(0, "minimal", options, NULL,
->
-> base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+And "value" does not have to be the exact location; we can pass
+the address of the repository instance there, and the callback can
+dereference it to reach repo->fetch_if_missing member to make an
+assignment, if it wants to.
+
+Am I missing something?
+
+> Let it only record 'arg_missing_action'. Instead, apply the
+> side effect right after 'parse_options()' returns in
+> 'cmd_pack_objects()', where 'repo' is available.
+
+When I review a new iteration, I first apply and look at the
+difference from the previous iteration before reading the new
+iteration of patches or their proposed commit log messages, and I
+did notice this business about "arg_missing_action" and wondering
+what it was about (which by the way is precisely I read the patch
+before the log message to ensure that the log message explains what
+I find unclear in the code).  Thanks for describing this.  But if we
+use OPT_CALLBACK() to pass the location of the variable, this may no
+longer be necessary, no?
+
