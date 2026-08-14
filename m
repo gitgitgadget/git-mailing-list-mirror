@@ -1,107 +1,205 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A51741A574
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 11:34:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D9A459AED
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 12:34:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786707286; cv=none; b=C/T3PkiShLsSDbedNHqGg98oU9UcrqhdIL4pcb2433KUaxsa/UuBHIk7lb+XksBEElb+MTSHTyYf71B8W5f1H4PkxBq+4Bp5hOf6yCh44ykqiiihTiDDr08dNYtx3RpJQKtfBNshh0I0N4OiwdCrV1pD2NofF+DnRqoU+h78UoU=
+	t=1786710866; cv=none; b=eFXfVyuznGCzaPadljPqxlvKOVqgGW25Y8fT05tLolWYr4iZqqikzhLvnwrIDihoq/KqCr1R5xl75x5ysJ+RVXDW4hHzNHaBPlulmwNq0gKY98DDoRSuhXLQLPGk6rp9ZRre/IAYppD2Ais2onIbYq239Ug+d+y1Yz2hZprzedo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786707286; c=relaxed/simple;
-	bh=NG+e2SWja2oZJZPPBGkh2A0pVZ+oD4wKK+QMRldw5Gk=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=a3fMG1a6gUEsmH8SMjYUXCb4/oTIBiqsGpywRTOYvUm1n4krUB4Rd/eu0erWglz61Hsf8c8h9P6rnmEgauyYA64n3CQO9eJ88NYqMzdHwDnroinVSK00fBlws0KXUndZ0rJbCbK+F13PknGo456v0xHJiUQzWUPFYujmM777j54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=b2cFrtOQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W9upTIX7; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1786710866; c=relaxed/simple;
+	bh=8AJclBLL4eLF7ZzcRWmplRkghu20lfMCQc57P7+EXug=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=norf+JCfAvd8a4TAMWIXVCH4Fcp+OzJim98M8TznGs2i4XeZW2yxveApCBQhX+1d7NlcZVI8LEnytACSf3FBVjKTlw6uNevjsVXkl1zDyPKZDSgUKab8OFQW0+WxAXCgh5qsWoDIWySwaC6NABze3CejxVYz/gsrOvr2K2nzhN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=egu9lv8s; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="b2cFrtOQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W9upTIX7"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.stl.internal (Postfix) with ESMTP id 601311D00293;
-	Fri, 14 Aug 2026 07:34:42 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Fri, 14 Aug 2026 07:34:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786707281;
-	 x=1786793681; bh=NG+e2SWja2oZJZPPBGkh2A0pVZ+oD4wKK+QMRldw5Gk=; b=
-	b2cFrtOQQxLx0hJTTotxEDOrI3UMl3CwcQnPPafeAKGRnx70zxlUxlzr0zz7gWil
-	BTV1TPiMZ0BLAubC9Q7UB+8NJo6F7K3fCTHoHfoK6SZ6XGa6KOk764L63pPHBUbQ
-	x6jVenr2G4OsU5WP3aSeYukOUPBhApm/WGtTuTU5JkQEhnCCgycLKjmFVJvdayUz
-	++ACc8fixmGrEBWOHMbQQftXMfBik3+I6E4GAAcoswhovauMNYBQ1h14+ye+Q2y1
-	xCILyUij+RKznNhWEmQML9jwgxIbmeD4KsGpGYthaI8yXIBbNl4j8WPyjkOd4QYS
-	2ysMIIqepX54h84PNXSHfg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786707281; x=
-	1786793681; bh=NG+e2SWja2oZJZPPBGkh2A0pVZ+oD4wKK+QMRldw5Gk=; b=W
-	9upTIX7Os9ieameHFBR+tuZ1zTJmPASub6ML3cKhD6s2nyg8xqwG4xN5KZuOv7oH
-	D4awNpW1CehvoH6BMwUFaXV8rtzT3RjyiskUpIXXQHUMFTdZfaETbq2AvDMNZxuJ
-	jZT0zkx/0sG0KRGMZWkHzfwr3QR6TXxtgmK24oKiXro0cEaK73TGRMOr2jOUeKyb
-	MW+pzjb/pd6pWXdZP+dT/sYLDQG+sw3tOUv+LteGKq05UALJVRglJhXaj5/LMMOq
-	3UiZLIlUodWZfL7ubGM1XJ+FXLIuSkEX+inbFm8T41b00A1h92mFO2nO3Qz6b+3g
-	UNL+7WgQsujw98OYLXBlw==
-X-ME-Sender: <xms:T_1-arSE4NxBCzjF9sV3-g92qmLCUNEM3uZ3EyjldU_mV6jt6tDy8Qs>
-    <xme:T_1-ankMUQxEZYI2cUNVKC4Pymwp9lU17s_KgSph0OjjSeso8BAUer3QvoKhwlP4N
-    YNvPslal28xpHKV6r8_p5ZFNqZ79-MK9K8tW0dsvkEWbxZbsJcd>
-X-ME-Proxy-Cause: dmFkZTE7xo+O3Taf42oJ9h1kvM/OgYEnqirzzSsgeOHhkv/XYvhHBWrucgrvLfWquZoIW3
-    kdU2wrGZDCUwWH6nCDfdlAMlzXq23lQl054VAzYmaWhYpzNV2mA91/2eVJ6m4bwb8g/0X5
-    +nDyr9pkmPHYBmNLWQFB1AqvyPCMhrF3PZ3JBr413zGRWh5ZDifdUmB/CczxmnUlGYuOiV
-    jE/XzBeK47qJzdp/dVFxGB82JJwj+u5zx8fSHEMfmyZRI5RnDI9Z3jwWLhWKHr2GTzkXEF
-    bmTb9aQhxWHT7iSmlS3Nhdngdffc6APeA3BguVAVOJ7trraK/xXG3Chr8r4pcIsvbMi0Rt
-    wJmQicbwlx0vs0Yu1vYmTexnWxrhYwkCYIbaJl6s+dQEw4IsRTx0QUPIpz7RyFVzw1x7i/
-    hV8MmLpY20BMzCZzjKSpqfXfEE264iZEL8bmYzj1nR6/zEFJadLBQNb3bX0Jf4eSuDzXtM
-    towspyfp7mU8z0j6fFWhmRv5S0/ozARpQ9YeLsfpvIIl6048gn3B1inldTZ0WaTe7yMZ/v
-    5/rwB6F/qmIGBMfFRQarS0KzLu09IxwbP2jdXRKoaSsat8YKFQ8oVL5roHYfuFqkV0zVrX
-    bYU5XAwk+XyHVqVeij8CJKPi8bKvdZj7lH77gH0XbXMT1bJekQPQsU/AcJNg
-X-ME-Proxy: <xmx:T_1-at-A5XK2TE8X2AmuaJnNu3iCXJTaqLBqDr0wXLOkHJY5QDMHBg>
-    <xmx:T_1-avqB7nSp0nGUjWF_4sD-rOVzeeTnZdPVpxGyHGGFajzx23v8lg>
-    <xmx:T_1-ailxkppUz3TjvQxQHa5lnhQ8gMHXHbMgMg5VdPaqhIo0CRzyZg>
-    <xmx:T_1-auLvaN_p554YWo2FqSXaL4fR4Fsa6AxB6U-CKiMi7lTCdVnOzA>
-    <xmx:Uf1-agW-LBys_tk7JU3oWdpX1mry1Wq4xk2mxKBa4C5jR3NWsAQDaoSO>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id E662822C0079; Fri, 14 Aug 2026 07:34:38 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="egu9lv8s"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-836cb2fa1bcso13446417b3.1
+        for <git@vger.kernel.org>; Fri, 14 Aug 2026 05:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786710863; x=1787315663; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=r4WwwQKfbJN/Ocdg9DCVO0lAif6w4E4oIvrwYwAzT6w=;
+        b=egu9lv8seBbW2AWoSgccX15fw2c/myM1+2UqkQN8689SvPi9FULID2dCf1DsqN9JZL
+         /tCusJwvH3sdwrURdQnbN6SThtkxa1XwX23uQATqa3dkpTIjcEYI9roR9BRayeKqoJtG
+         iV1b41mlw9cgRVOiB1y3tiQAXVUn2OOtC08adUU5FuSbNNUdnsAcBteJnDhyWFprT9zs
+         hmV1FYfm1E35IEPbu4zdo+5VxWsKP/4wX7GuUrOhCIEq9xExvyz4rlFy0oak9OVn6K7o
+         dxtpslG5MSdYZrma6MH0zuJ4mFHV4lzfOTtREllXA9yiP4tshKB1WnkNE9/Suv4BCTQp
+         Mq4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786710863; x=1787315663;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=r4WwwQKfbJN/Ocdg9DCVO0lAif6w4E4oIvrwYwAzT6w=;
+        b=WPHewUEVhtQR9WqOwAT223m9kCxbxGLJnKD5QPddy4PvJXPCjrAxEDXIwa5dSgjzH6
+         CS1RGSFlfY9DIGBf6B5Nd+1rVRaD7YWCbReIAuaLdl2WdykawfgUUxg++RUv4XgKsSuU
+         J29pQxom8S3H9qy1jRloRRqiQaz4PjblA6jqEhweCyjxl8h9OE0N9W4U2ipwksePcUHp
+         xk5EZ1578UKxwfkFgGh+p+iy9oxGr2P1oxJ8J/ddr+IRQB3WEY8b3/5fErpz5t3GApA5
+         Ym0dCNE7aWmA65xZKeVbiZobMfVc79dGrDcmq+T0Mdai6yJT7Hl0rgbpjlNCwZjSHX6l
+         srHA==
+X-Gm-Message-State: AOJu0YytLFgaz7XpPKN1PzLXIrz9bRLAC84IiqdrsLVnaJPEYdAqtPGg
+	Mg9M41xuBJ6I7avzIFXx9SOvjRYBHsaHC7jCfbrtKVIQ2tWM9WrSOVemQguPcW6aW68=
+X-Gm-Gg: AR+sD11H7m0SRwhrhtL/UH/oxP84lK5yF76eYFRa8qZcWzu793WPoRQcqC2anyzU20B
+	GOgs8rV5roDUQnqVN/cZMEzxVjKm1dNv4Bh8tbbQ6IFQTAMcY2ZrqmIJDAQxdXtIyJ64qlewNgL
+	KmHGefUzhNsqagBrugqYeaD75GyJMQwXYqnB15g7MJ4SjGg0I/89XHMz5w2mpEKjRxPbZz9s/aV
+	tgIPjNHzUpaIxNRY0lJuxIwW0bnsS0F1Pmuyjzo5RDj48xNSir9y5nb9+G2KPI+r7l2NW5unmsd
+	6x5CB2ZCUVQLCXWwgDnuB5Z23PW3BPsl/2yzGrXntImBnq+y2ZeVi9Vb53eQEHPvHPuyzJgbwn8
+	tml9y3Z5hHKzRHKsgAP/qqtLMMBG5Paw+gVuNL6IvnFENZ65y2Q/gEJyZUInrLxgMmgtkrhC4hz
+	OvT5YnP4Y8/umCk0eWehK5t8zcQtU6VsEakdHz/gfI5ZdCp1WaQxSCx+W/PXZ1WamMY2UPA4r76
+	+lVyIALObG6B0VaWWA2DVU3aNh61fs69fU2sZ52utZTamp1qRwHwS73NO5yoUqZgMU3aAVt2IKD
+	cMxKZeywI8o=
+X-Received: by 2002:a05:690c:2701:b0:81f:64e8:d86a with SMTP id 00721157ae682-83712ac20bemr24176877b3.30.1786710863308;
+        Fri, 14 Aug 2026 05:34:23 -0700 (PDT)
+Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::7])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-836c21409eesm12428357b3.33.2026.08.14.05.34.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Aug 2026 05:34:22 -0700 (PDT)
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: [PATCH v2 0/3] Convert USE_NSEC to runtime config
+Date: Fri, 14 Aug 2026 08:33:59 -0400
+Message-ID: <cover.1786710807.git.ben.knoble@gmail.com>
+X-Mailer: git-send-email 2.55.0.699.gb54405d56f.dirty
+In-Reply-To: <cover.1786103607.git.ben.knoble@gmail.com>
+References: <cover.1786103607.git.ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A4FwHZfX4lP-
-Date: Fri, 14 Aug 2026 13:34:03 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Peter Morris" <mrpmorris@gmail.com>
-Cc: git@vger.kernel.org
-Message-Id: <b00dbcb8-8f83-46b9-9271-bb789994b262@app.fastmail.com>
-In-Reply-To: 
- <CAOqWQbLEakpQEPsfw-GB70fdwbxW8EcdZ8EWzaN6ZAaHUU+jGQ@mail.gmail.com>
-References: 
- <CAOqWQbKn88m=OBDF7W8bBPjeOxtRsvNmhsqNy9AryMKrOKtLUA@mail.gmail.com>
- <7d0e9933-1a5f-4755-8bc5-fa4fea42f61c@app.fastmail.com>
- <CAOqWQbLEakpQEPsfw-GB70fdwbxW8EcdZ8EWzaN6ZAaHUU+jGQ@mail.gmail.com>
-Subject: Re: [RFC] git worktree: use filesystem cloning where supported
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Aug 14, 2026, at 13:12, Peter Morris wrote:
-> The PR says it only supports Linux and macOS.
->
-> ReFS is available on Windows too.
->
-> I believe that if the source and destination are on the same ReFS
-> volume, the Windows CopyFile API will use block cloning automatically,
-> so if CopyFile were used we would get this for free on Windows Dev
-> Drives.
->
->
->> [snip]
->> https://lore.kernel.org/git/pull.2317.git.git.1780685368.gitgitgadget@gmail.com/
+Topic name: dk/use-nsec-runtime (applied)
 
-You must remember to Reply-All here. Thanks. :)
+Topic summary: Expose USE_NSEC as a runtime configuration, since
+build-time is too early for distributing Git [1]. As a result, common
+index-related options, like git-diff, are less likely to hit "racy git"
+problems on supported filesystems.
+
+[1]: https://git.github.io/rev_news/2026/07/31/edition-137/
+
+Built on master (2c78326f81 (The 11th batch, 2026-08-05)).
+
+Changes in v2:
+
+- move Best-viewed-with trailer into message body as descriptive
+  text.
+- read core.useNanosec through struct repo instead of parsing
+  config strings. The test suite passes locally this way, though that
+  skipped 151 tests.
+    - CI run: https://github.com/benknoble/git/actions/runs/31701945211
+
+Original cover letter:
+
+Hi all, this series follows up on the previous racy Git/USE_NSEC
+conversations.
+
+- The first patch is a mostly-unrelated documentation fix for Meson, but
+  it came out of something I spotted while reviewing the outputs of the
+  final (main) patch.
+- The second patch is a preliminary no-op reorganization of
+  repo_config_values_init.
+- The third patch is the meat, converting USE_NSEC into core.useNanosec.
+
+There is a small textual and semantic conflict with
+'ty/repo-config-cleanups' in 'seen', since that branch removes the
+comments in 'struct repo_config_values' which this series adds to. (The
+semantic conflict is that, if we drop those comments, we should probably
+not add them to repo_config_values_init like I do in patch 2.)
+
+Todo: I haven't touched any tests; I saw a bunch of hits for "git grep
+racy t" but wasn't sure how to fit this particular change in, especially
+since it won't be equally valid on all systems? Advice welcome.
+
+Todo: I wonder if "useNanosec" paints us into too much of a corner; that
+is (slightly more abstractly), we are using *extended precision* in the
+index. Maybe the name and documentation should reflect that, so we
+aren't too committed to "nanoseconds"?
+    - Some platforms could offer extended precision that is not as
+      precise as nanoseconds
+    - Some could offer precision _beyond_ nanoseconds
+idk.
+
+v1: <cover.1786103607.git.ben.knoble@gmail.com>
+
+[1/3] meson: expose knob for xmlto relative links in manuals
+[2/3] environment: align repo_config_values_init with struct declaration
+[3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
+
+ Documentation/config/core.adoc        |  6 ++++++
+ Documentation/meson.build             |  7 ++++++-
+ Documentation/technical/racy-git.adoc | 11 ++++++-----
+ Makefile                              | 12 +-----------
+ builtin/update-index.c                |  2 +-
+ compat/posix.h                        |  1 -
+ configure.ac                          |  6 ------
+ environment.c                         | 25 ++++++++++++++++++-------
+ environment.h                         |  1 +
+ meson_options.txt                     |  2 ++
+ read-cache.c                          | 16 ++++++++--------
+ statinfo.c                            | 14 +++++++-------
+ 12 files changed, 56 insertions(+), 47 deletions(-)
+
+Diff-intervalle contre v1 :
+1:  d612de6c2d = 1:  d612de6c2d meson: expose knob for xmlto relative links in manuals
+2:  5693baa992 = 2:  5693baa992 environment: align repo_config_values_init with struct declaration
+3:  dbbd96d508 ! 3:  2d1424732a core: convert build-time USE_NSEC into runtime core.useNanosec
+    @@ Commit message
+         In addition, update the Racy Git documentation and other mentions of
+         USE_NSEC in the code.
+     
+    -    Best-viewed-with: --ignore-space-change
+    +    Due to the conversion from #ifdef to runtime check, using the flag
+    +    "--ignore-space-change" may be particularly helpful when viewing changes
+    +    from this patch.
+     
+     
+      ## Notes (benknoble/commits) ##
+    -    Repeating the benchmark from my original mail [1] shows an improvement
+    -
+    -    # git worktree add -d ../perf-test HEAD
+    -    # hyperfine -N --warmup=10 './build/bin-wrappers/git diff'
+    -    Benchmark 1: ./build/bin-wrappers/git diff
+    -      Time (mean ± σ):       3.8 ms ±   0.4 ms    [User: 4.7 ms, System: 4.4 ms]
+    -      Range (min … max):     3.2 ms …   5.6 ms    780 runs
+    -    # (pushd ../perf-test && hyperfine -N --warmup=10 $OLDPWD/'./build/bin-wrappers/git diff')
+    -    Benchmark 1: /home/benknoble/code/git/./build/bin-wrappers/git diff
+    -      Time (mean ± σ):     217.5 ms ±   2.9 ms    [User: 202.1 ms, System: 23.4 ms]
+    -      Range (min … max):   213.9 ms … 223.3 ms    13 runs
+    -    # (pushd ../perf-test && hyperfine -N --warmup=10 $OLDPWD/'./build/bin-wrappers/git -c core.useNanosec=true diff')
+    -    Benchmark 1: /home/benknoble/code/git/./build/bin-wrappers/git -c core.useNanosec=true diff
+    -      Time (mean ± σ):       3.8 ms ±   0.4 ms    [User: 5.3 ms, System: 4.2 ms]
+    -      Range (min … max):     3.2 ms …   6.9 ms    541 runs
+    -
+    -    [1]: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
+    -
+    -    Passing CI: https://github.com/benknoble/git/actions/runs/31104581195
+    +    Related benchmarks: <https://lore.kernel.org/git/CALnO6CBm4g27mWBvD9m6yL0e5YZu3M9_zcUeLZk7QwTgnxMLQA@mail.gmail.com/>
+    +    CI: <https://github.com/benknoble/git/actions/runs/31701945211>
+     
+      ## Documentation/config/core.adoc ##
+     @@ Documentation/config/core.adoc: core.trustctime::
+    @@ read-cache.c: static int ce_match_stat_basic(const struct cache_entry *ce, struc
+      static int is_racy_stat(const struct index_state *istate,
+      			const struct stat_data *sd)
+      {
+    -+	int use_nsec = 0;
+    -+	repo_config_get_bool(the_repository, "core.useNanosec", &use_nsec);
+    ++	int use_nsec = repo_config_values(istate->repo)->use_nanosec;
+     +
+      	return (istate->timestamp.sec &&
+     -#ifdef USE_NSEC
+
+base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+-- 
+2.55.0.699.gb54405d56f.dirty
+
