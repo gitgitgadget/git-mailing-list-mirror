@@ -1,146 +1,192 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED40B34E777
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 18:55:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531DC34E777
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 18:56:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786733742; cv=none; b=hUi30GeVeEg8vSdZcX/9nj7fpQnVWoittDfHIElNsuGNBX7ptnIqO+SCniAAfQE443auzuS7rbjAPVnOVklr9E8i9PdqQ7ncHtVzKEmyS9iTtUIA3nRuShu1ohQhXcD13nmpAsLS3aZaEeQQwGggZH67E8geqpxvTew4nR6GwtM=
+	t=1786733766; cv=none; b=TwweWqqWMbo6DinbXyiuatvS+6UcF6WVvX0QkTookXPgRH2HuRprRgmpGwhD6BNpzEJJvnFfdW5wojG2WZpbBp/UvpELKQFwm/Jt9FT+K+SMbeiiS0Kq+hgFak5vl7aw4CP4ZXgm7d0Rst0gwRXGAcAt9J7DViBafs3uAN9iTJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786733742; c=relaxed/simple;
-	bh=qBccR9OxnMPSy1WKyGToEtQYmC1TXpYyDctc0Xq/Sec=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=hU7MbVHJyt0c2e9RAHNZVUf37o5vgPRXDronQbna4TFBaT4TbjBm9cU7rgTdbGt4KrNvJn3apt1uLT3Rq9XRqA7Fu4aWQXm8sb1IPAYWBQIDCpYX7GkP3p9un6fdvkvX/3O88rWKh1yE9jwoBj+4LkaX0XHspQ4TCy45LAwM6D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r7A9U5Fp; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786733766; c=relaxed/simple;
+	bh=iFjvOurEPNmkpEgYfIO6zmbZMryPkGkQ1kAMYOp3Bu0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MPx4LG5eluWaKKZE/e0CUx1QWvpfp5iJuRLVB1fXa1jBlRZd+fWCNDAm2OsjP3886ZVaJb4JAOMUi5WNcaecK17GZrQKjpmek99YWRSD8tRY9Z8FKz+fhYeecOXxIrw8WzixSnzs/c1FtIxd0OGZ7kPRW3Boknvj19OF1wHJevE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qrRW2X+9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OQB+/6Ty; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r7A9U5Fp"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-47f611b3af9so148843f8f.3
-        for <git@vger.kernel.org>; Fri, 14 Aug 2026 11:55:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786733739; x=1787338539; darn=vger.kernel.org;
-        h=content-disposition:content-type:mime-version:message-id:subject:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2KguesrHYWSGgqpf8xr3vzjbLl1c99AyxWbbB7uGUjw=;
-        b=r7A9U5Fp6v+McragmMa7QnwPtTzOmy49q/yoe1kWXQzDfG8ZkygsW+ubkKRCD0XzGJ
-         iRlNsVBL4Z2cHZsI/0290qBjeLBrQsvInnLYOdSNNKFlj7OVjz3lCzYsqva74gJhSZmm
-         bDUAG/1by2MMtQHeCGBl5yDRWVlwDObferYUQhhDpulUoTBny0s2bdAW3V/IvBA5RM8L
-         zoBoiI2ZE8W8S/whbFJ9rrhlVFLo+CMQzeN9arZawz27pl4yrMU8vQRLyNbDG4PJL3f2
-         cbDySjnA9BVMQ+fH7SErp7qh63TiINDxdb38ZHeoeyqRX9p+RnpHRkAGZyURAYNJQloE
-         W1qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786733739; x=1787338539;
-        h=content-disposition:content-type:mime-version:message-id:subject:to
-         :from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=2KguesrHYWSGgqpf8xr3vzjbLl1c99AyxWbbB7uGUjw=;
-        b=QAj47lpMm5LlCV9XJXwfl4Qjk84AI2le0+q1e5jS42yCcBPBsEU0VK5hN/0MlnFZ0N
-         dX/238gfQq3XJjDfUDKYXMAEuMXWajp8a7NnJRl5jNrHRrlJyEV290qURdDE/krtQTI3
-         P3a+/hzUoqFyl31OOsSy+etaUAPFOycCTgqXt/as3Fi6ZHwo21MNHQVMmoBbro12pGeQ
-         yQdssdm5K6AuixI8d6NkZvL/LgSDvGM6/Du+NdyuErAJmuTkdGQ+Oe/msNXgdbfD3TOs
-         CY480b7IVdv9dtYoE5NqiWcNOmIILCKAgesV1JRGJt9+eYFT+vceZ8OWBNdMA4VbdRKw
-         LJ0A==
-X-Gm-Message-State: AOJu0Yz8Xc3Cskzp/XMRGB9uvI5Gb1yBBKhrqLVudE4vf6JM1A4LxsO3
-	dkKvXFhLU3osXYasppYSd9zwJVDWt+Z/PY37tDFdqf7jfqi7OeCd5c1+wfYcbDBYfHE=
-X-Gm-Gg: AR+sD118dsPX8ymcPMlz1p5fVxJAkPegI/yOvuSfFJ2Gw7yJrC6RYtAWh2OlgTnfjNn
-	2UMbu6x7Wi4tovQ5hcli647+JRpMjIg5Rf978ffTbMLshtOrr6mOKjdDzmiaBLLBgr7e2S4JszG
-	0y3zknD6agUpwWVGpIUsaBmfTpWvECIyWaTzpPqCTMZQHoZlrZMLXMmOXpzm4hhQ1Ebbs+RTGM8
-	NpJjVsXN1yMzHm+E0rA/gcXeN53YvT8NOOtipRaUzX7nOhWcuj+o8RxgUwBgDIrINE54krE+40g
-	YCkTKllYd9nqpBaPuM8aHUn5F8S9wwJJkFw2D/B6bho8cXv4nlWGvks66go+XWVgtwF1ppewOay
-	/Yh/4Dus7RUC21aHXYAIXGGhp54rP/rwceFphfm3LcXDOBV0ZuzjrLnHNHAuTvp+VP7wz6ZBi5C
-	9FmSTukDxBO2RGO5Pb9DEjY83O/o2CN3HMkz1yau1ScwFlG0FVcrcV4oJewk3ny9kJ
-X-Received: by 2002:a05:6000:2603:b0:47f:9256:52c0 with SMTP id ffacd0b85a97d-4816075e57emr5402869f8f.3.1786733739069;
-        Fri, 14 Aug 2026 11:55:39 -0700 (PDT)
-Received: from desktop ([194.127.199.11])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4815f2c07d2sm10553060f8f.30.2026.08.14.11.55.37
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Aug 2026 11:55:38 -0700 (PDT)
-Date: Fri, 14 Aug 2026 19:55:36 +0100
-From: Matthew Hughes <matthewhughes934@gmail.com>
-To: git@vger.kernel.org
-Subject: Bash completion very slow in large repo
-Message-ID: <an9iXOqOOvFfyN4A@desktop>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qrRW2X+9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OQB+/6Ty"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 567C814000DF;
+	Fri, 14 Aug 2026 14:56:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 14 Aug 2026 14:56:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786733763; x=1786820163; bh=SYmNrSKKxc
+	o86QZr5xVs35C+6u897SmBlwP1MNUcRM0=; b=qrRW2X+9lrrZpZFJHzNvouJ5Sw
+	HU8YAHcWGv6cc+6rc7xc14DGVUcLRISolJd+vxZzegBixE7vEuTSNaFZNnO2ApL3
+	vHG9kH3xkndOB9W88fbusnoPdevDDU8bQADEO4VddthOsmhJcwg2TNAehlD9i3PK
+	oB4i3Q0+Nm8BfglLZCHVLzE0YptjWp1OFE7tk/xikFh7fw1aU6yVhKWv6ELwGaPI
+	y6EadWFYMz+46FnOcOUvbODWRzNr47Hl+zKKtY06ALdmdd+IbnfjsNA4r7yP5T0p
+	9wD3WsAanZGwR8rdYS9+gcQwcbHol7Ks+fMxiRk6zgwA+pTg8azFgPrRtSXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786733763; x=1786820163; bh=SYmNrSKKxco86QZr5xVs35C+6u897SmBlwP
+	1MNUcRM0=; b=OQB+/6TyvvtI52qf99IkdRbAJHJqsK2fFYmo8MbF5ozfvDQy73z
+	jJuJcMVJ9ZnE++KF0ulN9N+tuHYfARKyIdsjuKcCJ4p3qONgumSiJWr8o3Mw5I91
+	hJNd5RP9+besbaiQzjWRJqO1hiofiAkvFSInj9jiMe7n7ARVkdeQQNTbY3uYEmg/
+	WQVEhedg5C6bPdIMDdg5SNw/iOwMrHOLMGRHqvQW4V405UKg1owy5zIfCLPVJQ43
+	IVBSQaCHa5QRM5cLS3ATGSNeapj9EoFdIdlUMUXCGa1x72C0ilBgTu+bzCLDedS9
+	gDbJhIg4cTv6ttKNubODs0HJPkvSx0yTmWA==
+X-ME-Sender: <xms:w2R_amzGEE140cWcUdYLYvL5V18KnXAJ5BHDlqNnx6u9d0vCtG2Ujw>
+    <xme:w2R_ahV_YgRNvUTvleiMVaLu6tv_lwWSAOPnGu292YiZFQ69-MbaZlyBz3yMB5u77
+    GbI2zPrhUw4MbyuCvJVznCWlCd90RAAh-BW04zoFdVkFvVepWRKFA>
+X-ME-Received: <xmr:w2R_aui3BU2ZVSX0BpJNfcCD-17REJW7gLPeLdLmv5bhsGa7G2w32MqGhctowKpaEXzTrJqANzKpqXkQMhluWz6FzcEHEqawtA>
+X-ME-Proxy-Cause: dmFkZTEdgAo9CR+ojqAJMry1ezMKyo1BtNEP7WOotfXZE5x1NGft9WCtqRwFb6dvB8DIZs
+    sbYpmroHMr5tbk+s1I4rSCwCZgXfckv3kGY2bNIU0Nc2BUeyanRmcCgOzRaZOrpaBrVvIY
+    s5FyyaoJ699JqiQLeGe9rOibyuVzG5iTwOF/Ra9kkheUWYs0mUVF9Pzg5qgXEYgEl9JkaE
+    KDGK5E54Nbm8WEV7R3T1ln1/LeiuDwY0UcHT/2uiATnCCABljmBUWxcBxnyKf8buMXdt2x
+    G+cdtqQI98T/yk9KK/D9oTyarDo6XQXp6Py0lwWe8zwdkB2AIim5zQIeZuU/YhixfobKW1
+    Zz0uKaw+E5F2Tu0zERGcqcVGStQ8OEZkz0BcJIcZ/Q6PTVgxE4G7CdFNCIU/S4q9wdzfzu
+    Ia243T/IA78s8D/Eg5XVRoKydXGVjkLo3/DI6SS2y82hanT2x/WrJt84hP8Q27KVl6RChn
+    35eZ0/XmgkVQBRLJYUSpEqmQM/zopOschJhBTuh19Pxyi734c+fXYRPz8ddRCuPA4QlJF8
+    WWmXhinbESkwn2PT/vfmrkWYOWI1kcoFcbxlQZgSxim6+YgDB0Y5Au5w9uSPYj6MA82uwn
+    DtTVhWu2id4xbIGhJNWuYE3/Eb/AGZ7GXq9uJuB3w3JoBehf0f7YFiArLiJw
+X-ME-Proxy: <xmx:w2R_apDbch0GSIjzD_PFEqmphVrDHxX9VuwviUKqbRywY3kEYHWnzQ>
+    <xmx:w2R_astqKSyakUU8B3EXJY8Zfc-r2mMIot5bTr_hMJThTFNeiUdp5w>
+    <xmx:w2R_alfYcGFyFE0IgyJ0tsb7HfUXI1pNaA2D6lzsucrTHoHssCLMfg>
+    <xmx:w2R_ap-XYUQqy_QIxBbZUnneaGQxSkE8VDTUh7J3TNYOqd_U8I7NqQ>
+    <xmx:w2R_am1qeJJtzIGxmy0ernQjmxUVF_a44tLviVBlvRT_xTMz9edx7wrA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Aug 2026 14:56:02 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Karthik
+ Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH v2 4/5] upload-pack: read uploadpack.lazyFetchTrusted
+In-Reply-To: <20260813154748.2378747-5-christian.couder@gmail.com> (Christian
+	Couder's message of "Thu, 13 Aug 2026 17:47:47 +0200")
+References: <20260807135511.1818458-1-christian.couder@gmail.com>
+	<20260813154748.2378747-5-christian.couder@gmail.com>
+Date: Fri, 14 Aug 2026 11:56:00 -0700
+Message-ID: <xmqqtsowmszj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
 
-Hi,
+Christian Couder <christian.couder@gmail.com> writes:
 
-While working in a repo with _a lot_ of directories I've noticed a painful
-slowdown in some of the bash completion for git. Specifically, for any
-completion that calls `git ls-files` and needs to iterate through the
-file-system (and not just check the index), e.g. `git add`. Has anyone run into
-this? Are there existing solutions or workarounds?
+> Previous commits created and prepared the path_allowlist_apply()
+> function.
+>
+> Let's reuse this function for a new "uploadpack.lazyFetchTrusted"
+> configuration variable.
+>
+> It allows us to:
+>
+>   - read an allowlist from that config variable,
+>   - check if the current repo is in that list, and
+>   - return the result from a new upload_pack_lazy_fetch_trusted()
+>     function.
+>
+> The new function will be used in a following commit.
+>
+> Note that the new config variable should be read only from protected
+> configuration files.
+>
+> Signed-off-by: Christian Couder <christian.couder@gmail.com>
+> ---
 
-I first ran into it when running something like
+OK.
 
-    $ git add ./<tab> # hangs for a good second or two
+I am not sure if the idea of configuration variable is truly sound,
+but if it were, I agree that this is a reasonable implementation for
+it.
 
-For reference the number of files/directories in the actual repo I work with:
+Thanks.
 
-    # this many files
-    $ git ls-files | wc --lines
-    367628
-    # this many directories
-    $ git ls-files -z | xargs -0 dirname | sort --unique | wc --lines
-    58404
-
-See below for a reproduction and my logic, but I conclude this is because e.g.
-in the case of `git add` (with no other args) git will need to look through
-every directory in the repo to discover if there any untracked files at any
-level.
-
-I'm not sure about potential fixes. Hacking around on it the best I could come
-up with was a workaround: add an env var to skip index completion during bash
-completion, so the completion falls back to the default Bash file completion
-(i.e. complete any time), here that is (just for demonstration):
-
-diff --git i/contrib/completion/git-completion.bash w/contrib/completion/git-completion.bash
-index e875787710..7b412e5b74 100644
---- i/contrib/completion/git-completion.bash
-+++ w/contrib/completion/git-completion.bash
-@@ -727,6 +727,10 @@ __git_index_files ()
- # The exception is --committable, which finds the files appropriate commit.
- __git_complete_index_file ()
- {
-+       if test -n "${GIT_COMPLETION_NO_COMPLETE_INDEX-}"
-+       then
-+               return
-+       fi
-        local dequoted_word pfx="" cur_
- 
-        __git_dequote "$cur"
-
-For reproduction: here's a roughly similar setup of a repo, with many
-directories at the root:
-
-    $ git init .
-    $ for i in {1..25000}; do echo dir_$i/sub_dir/; done | xargs mkdir -p
-    $ for i in {1..25000}; do for j in {1..12}; do echo dir_$i/sub_dir/file_$j.txt; done; done | xargs touch
-    $ git add .
-
-With that setup I see slow completion e.g. on `git add ./di<TAB>`. Debugging
-the completion script I see it hangs for a while on:
-
-    git -C ./ -c core.quotePath=false ls-files --exclude-standard --others --modified --directory --no-empty-directory -- 'di*'
-
-(via `_git_add->__git_complete_index_file->__git_index_files`)
-
-And running that through `strace` (on my Linux/AMD64 machine) tells me for each
-directory there is (among other syscalls):
-
-* ~100_000 calls to `getdents64`
-* ~75_000 calls to `openat`
-* ~50_000 calls to `fstat`
-
-So that explains the slowdown. 
-
-Thanks,
-Matt
+>  upload-pack.c | 37 +++++++++++++++++++++++++++++++++++++
+>  upload-pack.h |  3 +++
+>  2 files changed, 40 insertions(+)
+>
+> diff --git a/upload-pack.c b/upload-pack.c
+> index a52856d869..29e700e43b 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -34,6 +34,8 @@
+>  #include "json-writer.h"
+>  #include "strmap.h"
+>  #include "promisor-remote.h"
+> +#include "setup.h"
+> +#include "abspath.h"
+>  
+>  /* Remember to update object flag allocation in object.h */
+>  #define THEY_HAVE	(1u << 11)
+> @@ -1378,6 +1380,41 @@ static int upload_pack_config(const char *var, const char *value,
+>  	return parse_hide_refs_config(var, value, "uploadpack", &data->hidden_refs);
+>  }
+>  
+> +struct lazy_fetch_trusted {
+> +	int trusted;
+> +	char *repo_path;
+> +};
+> +
+> +static int upload_pack_protected_lazy_fetch_config(const char *var, const char *value,
+> +						   const struct config_context *ctx UNUSED,
+> +						   void *cb_data)
+> +{
+> +	struct lazy_fetch_trusted *data = cb_data;
+> +
+> +	if (!strcmp("uploadpack.lazyfetchtrusted", var)) {
+> +		path_allowlist_apply(var, value, data->repo_path,
+> +				     &data->trusted, false);
+> +		return 0;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +bool upload_pack_lazy_fetch_trusted(struct repository *r)
+> +{
+> +	struct lazy_fetch_trusted data = { 0 };
+> +
+> +	data.repo_path = real_pathdup(r->worktree ? r->worktree : r->gitdir, 0);
+> +	if (!data.repo_path)
+> +		return false;
+> +
+> +	git_protected_config(upload_pack_protected_lazy_fetch_config, &data);
+> +
+> +	free(data.repo_path);
+> +
+> +	return !!data.trusted;
+> +}
+> +
+>  static int upload_pack_protected_config(const char *var, const char *value,
+>  					const struct config_context *ctx UNUSED,
+>  					void *cb_data)
+> diff --git a/upload-pack.h b/upload-pack.h
+> index d6ee25ea98..b2212992c3 100644
+> --- a/upload-pack.h
+> +++ b/upload-pack.h
+> @@ -12,4 +12,7 @@ struct strbuf;
+>  int upload_pack_advertise(struct repository *r,
+>  			  struct strbuf *value);
+>  
+> +/* Is this repo trusted for lazy fetching? */
+> +bool upload_pack_lazy_fetch_trusted(struct repository *r);
+> +
+>  #endif /* UPLOAD_PACK_H */
