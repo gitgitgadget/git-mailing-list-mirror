@@ -1,143 +1,96 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09EC3A759C
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 10:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786704051; cv=pass; b=Nr1td1FNZrJJcc9Q2qEPblfjMquuG6ISk7MIwL3vF+UG72HQAXmg/vqvzgoVnIQ3bQH46drLFyNZ3i7UtWNH7SDUbfCORUhT4FeE4FGBcHodCpb0J4/X1s4AvNurwMrwU2b+L1W/HeVQY+IUfjGX9Mf8fyePvS/Das14/tgyhT0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786704051; c=relaxed/simple;
-	bh=4vx0YjTOOJg6QipJ2nDZauxLYxOhvlw4X1rrFeE9sA4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=eJpQoKK4nsR4PrZXz8JorX0ELWjmvcEVlx0bIwt0xj9w1Q7oQZyax8TyURpWh+yzNQMHUHGgKn7qpX2Ub4hzUOV6/oXnBWtLbrkM4EgJEjXPXhDKa7K+ZyCxZPMM/pg1p1yOX8gJ0fo73wrJnW/sR/dABbudy2sRgitWc016fHk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tMIHgst+; arc=pass smtp.client-ip=209.85.210.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C7C4611C2
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 10:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786704883; cv=none; b=kXZi6XO94rDR0rBUEd92aQSXcOw84WV7jGT/3vczyCtMlCk8DlOidREREMBkkFr69FjNx0rUSSuT6t6nMkpazCtyHRGNC7gKMg4dx8PmQ9hDGLBSuU4tRgFgolvOcd5SoEVtgY0saJtDSTcDMnw13Ec3catO1i7ECtplz5Px2so=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786704883; c=relaxed/simple;
+	bh=MWJiN+GcDksB8JSfShhUhqsl2WvIgaZYpW/UT4HhcuA=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=LQZvDu45LxSe8opeQtnlwBKwsztxv+W6W3RVn1GH7wF94OGR0zVYgFT8LzeDMcopFnoODTksOfxbS9Kk4tRWlMHLkcVGf9S435LDACxFE6SJ2iww0BFopz5FAFOxqKpWq1b4ZSmyz6tFO/MfpXHdyqBUdbfF0PkQmWTC8j8bbO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=KB65YdmV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CDpEVf4Y; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tMIHgst+"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7ec3b429a3aso630107a34.1
-        for <git@vger.kernel.org>; Fri, 14 Aug 2026 03:40:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786704043; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Gn8z9q127ThPcKZKKdfi+Pf0URlMOdUL7zeY/L8HvCd2n78Dr34jC1x9Z+5zjQlXpX
-         tTxrpsgWDaAosWtNk9+YKtKDixfpsGyGtcmrdpLAp203tvmASw9dgwtas0ZDi13SDDVb
-         AXSB7sTxRd9VAU3NQRMeoNEMvBWyPB7rPqlmV2++CRPnmY3qE7nVrurloqiVux8/0SxN
-         khm9621+515HSm8FPkUnmHyo/LYITjzdnKGAzlwhXXPqMl8q3tq134xsBDzbjyjqtne0
-         KSO8BduYlvXW5DaT3FS6lLq7zqSLxajYBoFuG9h0pa+Bcu/i387Q4s9jlPM928EChtVz
-         Mrmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=4vx0YjTOOJg6QipJ2nDZauxLYxOhvlw4X1rrFeE9sA4=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=Sl7IQ6dGwxyB+7aue1XU/trDxhX05Lps8qVXU9dQKfvCEs7aXhImktH7p5DnG7up5l
-         ZICPLcJnfh9ABpryR9XtV9b7L8eo0MMpkTXNSLa+XS2WACSO7y/LLAr08Hg0ReY8anbr
-         TxkeEPV966cTPcMkDhJqDK28sw4arkI3M+9IYEmI0AT3PqcuKswJemHJIKcQNojpLX73
-         lk5dG6JafNpmDfrk8DpSFhd06KWeic3JWEZn72zcPMqygRLFKGsvlvLxb4Pc6TP7SmUJ
-         f+krcXyreEwJsqO4KguCUe9aZ8IMxyeaEKRHigktx+Kn3b8M/CUrE6eMCkv5w2MJTZp+
-         rh9w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786704043; x=1787308843; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=4vx0YjTOOJg6QipJ2nDZauxLYxOhvlw4X1rrFeE9sA4=;
-        b=tMIHgst+XW0qqUSERcayl7cC6Rng39qWXqGNLf6uy6cOFBRd5OBBm0vIaWCJ47+rtT
-         Zd0jw2pKFoHmEOw6veGvPSvTl7p+6DXTIMnmJ1yc708yQW+O6SHAc4OzIxhXVX4ElTGl
-         e3oVFG1Q72Vz0aZgKVwANlWFtK7DRoEszkwcG2UfmabLgPGr5ZZkaXeH6rVofqUGzkbd
-         PoipetDJxGs117aXRXjlAUJG8cHdBs0/96lS/BEYl6w73Xb5c4DQqn09IOdTlmbFenz6
-         8ffY4QHYV1ti064cmjGc7TBfnbr9imO60gCnmBKXu4CZAGxTpaVAGyDFXCJkum/ORa24
-         lBDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786704043; x=1787308843;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4vx0YjTOOJg6QipJ2nDZauxLYxOhvlw4X1rrFeE9sA4=;
-        b=De/oxk2CZRxqt257W8QH9xIgu9BYPpaxoyOeS4FaUE/5Cw9afZQPDR7wBbNz6Z8N/9
-         gY+cwhrEBcnlpLSoo+g53eWA8HLmXQWD1aCmgVt0yzp0TUlxPacpkG8bcLKBj8iV2LTr
-         T1ItKWzlJNZQSURNKl0NNGRaI57tFvlnDaSBR7UendPLt0xdmyg8iG9R0KqwVS174ydB
-         1+Ad0YNy1sQsJB1NIEaabS8hFp6Q+vZQ2NTfkbmXUVsRv1d1MCcvA+FwdV8AV6vZf3Bf
-         0uO7VGf5u7Gt20ZqPYZu/94nDveTPwPFpHLYnv75hFCpVSc6G3yLCo2vzB0J9iFexxuY
-         9t5A==
-X-Gm-Message-State: AOJu0YyA028sg8MfvxscK8QoES5oCLtqFJMrt7ne0VAXovTKqm4ZGhY2
-	uGpbRwJyhoPmyGdPrlRa0l+5KANGTlU2p1YDUo1H4feN/heo4W3X3bwPiKeAWKOkmhQImOEy1OF
-	rWOyMHt5VXzFMNIUvj7hvQZU9XeM+tA5dgs4m/2A=
-X-Gm-Gg: AR+sD11fcP2un4aPYsP4uAVMxDA5t4TJEoQRfI77oLUpvm1Rkaieju17zljmHFrefWX
-	sTrfBJGUhinJQPqoRiVjw0s1RmFGglA5xzybnAET2p5z7ScYd4dna10I8hQtqbIy+FqTTUsj0M9
-	rzCVJZN7KurEGvMX+NJvcrm0pswiceld1P3GytR0TOg0UJbydCQA5ii4sclBnssUH3mgL7ukOGY
-	rP1wESAn4u4iN7rc5SfnvvoVc9OS7Ce3qgqGk4dJIvUGDJPVkMIryNiwNYcfxHed+gDf9EDzVNZ
-	toVoIdCLJW1JPE40/tNd6IvEkpczhJwE7RHtwfEdPhTlv/TfhBphgjTE2AD0wB8cXC3jgeqv+va
-	S2mE=
-X-Received: by 2002:a05:6820:4b8b:b0:6a3:1e40:6329 with SMTP id
- 006d021491bc7-6b0d61ba765mr4340079eaf.13.1786704043007; Fri, 14 Aug 2026
- 03:40:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="KB65YdmV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CDpEVf4Y"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.stl.internal (Postfix) with ESMTP id 967481D000E4;
+	Fri, 14 Aug 2026 06:54:31 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Fri, 14 Aug 2026 06:54:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786704871;
+	 x=1786791271; bh=MWJiN+GcDksB8JSfShhUhqsl2WvIgaZYpW/UT4HhcuA=; b=
+	KB65YdmV98YefZFTGSAIoGAs7DQufxl//CnKsCAdV0wsri/qINk4EA1rJeXLEcDz
+	ZVgYoy18w695uir9lkfN9aFywUitikUDlT/hf+f0ehL+Hd097HpAXLZtZANfmNst
+	kZKCJIGhHrdUy4B7Uj2vjfwyKYnSbWrk2VJthJWANDMygQnU9cukyK8/IoZ6IJvZ
+	3PKwGpJnvF40kNd2wigDK4NDV/IVUlD9nbho5c0lg0lIR0wiM6M5SPK9u/fxgTc9
+	Q4E3jdIcPTFJQUiHLdjJEl15uy5YJPKBVBErGDH9Cy1xhMtlF4VXchrLUqZz2Psm
+	U5uFH25jhtu8XRX4EJF4bw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1786704871; x=1786791271; bh=M
+	WJiN+GcDksB8JSfShhUhqsl2WvIgaZYpW/UT4HhcuA=; b=CDpEVf4YTvBfJrIVh
+	RtYpDzoywNw3mqwYXc259f5mowfGX2/8R3/D+Uc07ilqw8UKmRAlS39fiOGTbLY1
+	RFVeqL+g5w0ZHItzj/+V/3gdRwYeqLeNbbrnYlOGbJelz0Jo1ig1f3BwBfWsl3fS
+	HOGvDE9p2Vee52TeRpWwyzT90wo/lV14/twEqImrl/PDlxMUicDyAibtcpqw+r/a
+	cL8m+7rZ6s/ihbiAnhIosX5v0bZv3RcLhAaP0MXssO/fW5kyx4y09IW13nmVO0qz
+	KumHDiFtLEZ7Hh+gqKMCUEYFxotPgf2nzXinJVomRafyzYI9rMs3lxrvaKLQi+f8
+	taUnA==
+X-ME-Sender: <xms:5PN-an43i_MI1EzFp7Ny2BUELHy0X-TjUGgZxkH3ediQz6prondAc1s>
+    <xme:5PN-anuo2A1dXar53flTn2yqheTDIWt14ac_FB7-2FtfFK3CtOX1qEm1cupu7Uyzu
+    CFpNqx2rZJBOcwv9D97vvNnEv_-bDiGj1zahpbpSYTbTG2XcI0>
+X-ME-Proxy-Cause: dmFkZTFsuUdVHDG/Lgengkn+smQj4Nq8SreKVHI/EXSDWJuwuAjpFOL1mn441kk9F8jEsb
+    4g/zaHYc4s26UCHnSz33El8JHs+fPFczmCFza3tETAHjafQ5VXzCvffTosuZbBbi/DI6M4
+    uVeN0sOX3b1zqlexBxToY8gihpZSGtHXDDmJTlfTM8t7BHsjg1Ot4PdylzSB25v5gB875c
+    4YUCbuwuGP8us6972O8l+8XxhQe2t9R1NEbAtAb9c3uihH5pMbf8Ii+2foIu31TR/LbPKf
+    S7O41nralLOFiSseLqG+H6o5GycR90JmPtWoTxjHO7DdPoQae4J2hKn1GEz45Dp1QBujev
+    0tTEXS1La0bSyA6djaIgXs+Ez/UM6C7q/bvREla/mSs9fcXORWU8LkloJWouvPEaO5YX8q
+    wXwv6JtNlTJaZ9Ht4tg3gTg0Gp3ZTZwzZbdc0e4iBPohQ/PX6yUcj5gbGbTT6XoWRL2nNQ
+    OYnS4JD+JgmdYOVtGBwDV/Ty1rtFcnzmq9PLoBbcMn8r2OJeyr8jHpv/6/V8kvrIaNfR5O
+    GY09H3MQDMkMLzqBkwPvlA7Op03a+PsXFJ6E5TJoneZh32lnp9e9KxdSIik5XnmQ5p3YkY
+    m0i9DoeiAKigP42/hZDYcuKic/PKjuGrKfcW7sZVkc5pHWTgp5hor2B6Aumg
+X-ME-Proxy: <xmx:5fN-ail6Kk2c_ZQYMVzQDqlMPnwR0QHfz0taMIRScCWoHMSlt1TZoQ>
+    <xmx:5fN-anwifVhWDnoCAwe-WaQEq7SJDjMvQX4BfbXR2Axn4VazeN5jFg>
+    <xmx:5fN-aoOUWVYnYi9KnR70xeEw165GSN4IN6JSCLyuCQYwLF25PaSGsQ>
+    <xmx:5fN-ajTZ7V_FYJr1EXwCR27Rbx6CYYaSsNgzyxr9yOvLTV8RjAIIzg>
+    <xmx:5_N-aoewjJci4seY8bmLGFNTnd8RX1lgXPZSwIcURDhaoWV9hQxgQ_bn>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 5EB1022C0077; Fri, 14 Aug 2026 06:54:28 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Peter Morris <mrpmorris@gmail.com>
-Date: Fri, 14 Aug 2026 11:40:30 +0100
-X-Gm-Features: AUfX_mwKG0aWqdYWVcSTLxwY3w-NAxLIRl59FVJL8qG7aqJcjGaf01uouC_-z04
-Message-ID: <CAOqWQbKn88m=OBDF7W8bBPjeOxtRsvNmhsqNy9AryMKrOKtLUA@mail.gmail.com>
-Subject: [RFC] git worktree: use filesystem cloning where supported
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: A4FwHZfX4lP-
+Date: Fri, 14 Aug 2026 12:54:02 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Peter Morris" <mrpmorris@gmail.com>, git@vger.kernel.org
+Message-Id: <7d0e9933-1a5f-4755-8bc5-fa4fea42f61c@app.fastmail.com>
+In-Reply-To: 
+ <CAOqWQbKn88m=OBDF7W8bBPjeOxtRsvNmhsqNy9AryMKrOKtLUA@mail.gmail.com>
+References: 
+ <CAOqWQbKn88m=OBDF7W8bBPjeOxtRsvNmhsqNy9AryMKrOKtLUA@mail.gmail.com>
+Subject: Re: [RFC] git worktree: use filesystem cloning where supported
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On Fri, Aug 14, 2026, at 12:40, Peter Morris wrote:
+> I'd like to suggest a change to how git worktree creates files.
+>
+> # Problem
+>[snip]
 
-I'd like to suggest a change to how git worktree creates files.
-
-# Problem
-git worktree add creates a new working tree containing copies of the
-files from the existing working tree. This is normally fine, but it
-can result in a lot of unnecessary data being written to disk.
-
-This seems increasingly relevant with AI coding harnesses. These often
-use Git worktrees to let multiple agents work on the same repository
-concurrently. If several agents are working on a large repository,
-each worktree can result in another copy of a large number of files
-being written to the SSD.
-
-SSD storage is expensive, and SSDs also have a limited write lifetime.
-It seems wasteful to physically write the same data to disk several
-times when the filesystem may be able to avoid doing so.
-
-# Proposed solution
-Where the filesystem supports copy-on-write or block cloning, could
-git worktree use it when creating the working tree?
-
-For example, Windows Dev Drives (which I use) support ReFS block
-cloning. A file can be cloned without physically copying all of its
-data, with the filesystem sharing the underlying blocks until one of
-the files is modified.
-
-If Git knows that the destination file will initially contain exactly
-the same contents as the source file currently in the folder, it seems
-like a good opportunity to use this facility.
-
-The normal behaviour could remain unchanged on filesystems that don't
-support this or when the existing file is modified or a different
-version from the one that will be checked out.
-
-# Why
-This would potentially:
-
-* reduce SSD writes when creating worktrees, extending my SSD lifespan
-* reduce physical disk space used by multiple worktrees
-* make creating worktrees faster for large repositories
-* be particularly useful when AI agents are creating multiple
-worktrees concurrently
-
-I'm not suggesting that Git should become dependent on ReFS or any
-particular filesystem. I'm wondering whether there is a suitable
-abstraction for filesystem-level cloning, with
-platform/filesystem-specific implementations where available.
-
-I'd be interested to know whether this is something that would fit
-with the future plans for Git, and whether there are technical reasons
-why this couldn't work for worktrees?
-
-Pete
+https://lore.kernel.org/git/pull.2317.git.git.1780685368.gitgitgadget@gmail.com/
