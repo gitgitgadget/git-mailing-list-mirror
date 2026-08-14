@@ -1,84 +1,84 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747E5480DED
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 17:49:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422524908BE
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 17:56:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786729787; cv=none; b=X5TpAjS9eaJyyvacESXRKinaDmmHpEI03A96pUKiapv06MdE3M4376c046TxNLZojvbuR+Ao3FWKPk6ZAGQJPpOQn34SvtkCSCCNfnhMkV3JQr+KRcVZc1Utns/qKmycbCSbrezIS91dWIjBbz+lXhHFjlVvl07eTYvN5sZUUxQ=
+	t=1786730185; cv=none; b=K4EAf+LADCawh7927RshCKpUIft2xSBjfWfihu2+HdX4gAPtrvwX1qwuctawCIarIYKjdkDvA831MsQQ+VvZV07l0tWMRk1AY3H92B2h8iuUscxSpFKNL8dOGBcwQShHeac1k6v5P5ZpuNY8dP1BtcDsid3L5nKlbaNxvb59V9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786729787; c=relaxed/simple;
-	bh=+eyZJI3bNnp8G43YGlOKem9REMObcg8WBwwAvBaGX3Y=;
+	s=arc-20240116; t=1786730185; c=relaxed/simple;
+	bh=ZM8KajEM/hvDsX/apbIA+D3HditY3K3G9WSNYQV/6G4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KKZFF4M6Ok+y9heLNa3MhHABcQ5tVGFbxsMypjcdfUQGwrMqpe653k7BsP1gDN7vhCLG5pWr87jcTRPAybyiuPP7tPsJyB7F1bzurVrbx7ZJCIh+6134c9Oczjr5I8lOHbAklpeLynzJL6Pvu50IG4NRQ+/iBxMg0noG275Osw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tFTzLvKw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QBoZ5Pkm; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=npIa+qMrONhKivGCnixH6zYvgYf7FDqqqmKKTlotIZMGZ5FQOh2ZLf/pFIcF1VY7lS5a4JygULCL2CNkOgC2QBhlK1J7G7GFYRynleG8YIOJIhCx2cs1ihuT3FZoBVhT3av2v7pf2NhTsbsSuO5O8i1pxujCnOJSaz6DZRJzipk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J/9TwELe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HfWJmsnz; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tFTzLvKw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QBoZ5Pkm"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J/9TwELe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HfWJmsnz"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8D74DEC010C;
-	Fri, 14 Aug 2026 13:49:44 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 442EB14000F3;
+	Fri, 14 Aug 2026 13:56:23 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 14 Aug 2026 13:49:44 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 14 Aug 2026 13:56:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786729784; x=1786816184; bh=j815/KxwpX
-	05nXTdMchdrM0k6QVaaBtuSk6TI2m44ro=; b=tFTzLvKw2P6IjZBmJ/o49FnirJ
-	lb+17+Me9nk+n+KH95zNu8s6/i4GLZJOQSlslVi5zX+QnLBTxWLjri8Pq7xGILC3
-	73l9K+PIFRL6+0E2xaM0F1/v6cWvPZJgYYc15S2wWhUshU/4HgqiZSfIC4QhUoCS
-	UKdpP3ilMBIIdlbOnBymJt5dvbs+28Eg9KhC52klFfu2HseGKyGeapNvtT04Ds2m
-	3BD2fzt6L9IQM3Cah0LUurWiz+ofo5dP4v08Ern1tmoAAXJY6IKuCacJmyxJMMxX
-	j11Ql4kl/E5o2tv4t5nzB0bQEKMr1zYCSNdfgsiQvBKvHjLYa/CyreZMlQpw==
+	:subject:to:to; s=fm2; t=1786730183; x=1786816583; bh=IMZQ9Rw92k
+	3xpjtskBwFcVvwkT+lCpH6i4NxdkVyWhQ=; b=J/9TwELemA5kcHVG96UboYDKM1
+	L2m1hiR7/AOEYEsIdsiqvRUMRGoLTnZUJchIxG9DbxcqFVOMsewkYnYPOheD3crd
+	Bl+Wa99kMTFWN6mJGE37h9a3mhEI8cic+zcm84eQO1ICiPTd1QPjDNW6hEkbKKJT
+	6b1IkMz54LrpW5vKSUh350AK30Y7bnmgZdLN8IJbllV/jkxVcgR4zLNI0mIonK2u
+	6STlTMYKuAL+T9OoYv5i60se/gDHNMOUUHsW5CXmOoIxHMPi/2l5YBCQ2XZvdeLp
+	opzFL+4++F8EioN0ddN8fJlSPEI5c0f276fCDAf6Q57OlJTXhzE5lOPXkK5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786729784; x=1786816184; bh=j815/KxwpX05nXTdMchdrM0k6QVaaBtuSk6
-	TI2m44ro=; b=QBoZ5PkmmbvllX3sH2yxJSRv1WEGynOL6Dh9ttxIgaPb38+jXn+
-	GCWoNUqOSYlaelr/UwyqOBdmdaoTfR3xSP9icyPEsSUpDfwoErM2A2pXoWFd5Zcm
-	tD0LWtEvw9wKFhZ9yQZvf1iUNNQqsHsb2OiEfnrjAhc9TjN5ggnKxzfwMncUWdGM
-	0JdsPU/QbaD95Wzd9cDWs3HZ2hU0jfxGTS+dRNlXwqm1lehcUZkx+RsVcYOYnk2c
-	Gczo2XT83M8SXQ9yHUvhkRRXulSDHs6v+luUBlXNnPW3tSHUABxTtARj6+YkCDkP
-	s2KonZAVYBeGdD7f1nkiYzZFcT07rR2bw0w==
-X-ME-Sender: <xms:OFV_asUVJ-368zAGqLIYIjx-mbdOqQ5cJDvkpxehEaOqkpdaJ4D5sg>
-    <xme:OFV_atgAXJIUCQ5SQkUZItRCh43lhiZH8BfkX7un2mopEK-zKj10M_3WZDz-zWnNj
-    v6DR8NvZ8gt5rbUuVnNk0xCnkgpT3oHpePj_kwaFMSp4SB6EmcU>
-X-ME-Received: <xmr:OFV_asCJ94VMadOoT09LrEOKbNpeLvvH4h_skm-4PFm9Z3OcnrWLXfsBWu8rEerdX0Z8WOcpg-j5zjAOb-cIwYFn8wjCSljt0g>
-X-ME-Proxy-Cause: dmFkZTFXwUOUdc+SqKmsPMQLDOEQMxamfZmMoxEpxgsjQ4JpFMJcnVvUYqd+jZFajh6kpl
-    PzycJci9rDR3YOV8hsLfhHYRagD53m3u1BMrhTPMsI746WiAjgU2eeKfBYXN0DetjJV2r1
-    OG/7LqyYMDBHfV5Vb+exIW5xmyRBsVl39ekyWAWFZ+RtH9bqT+TxTg0tQCV/4KyWENyAgC
-    qjRjgAHUPXyL09ZihGGl4JQ8h435Ncu+EGkdMmnMAou3Wz5CjYEsEc9y9N3BPoFBpNgx7s
-    nRKNlf7aCGNCW7TX9bOldmkzOMh3aNr1e0Ym7AO2i/4vad3dNGLV2pvCBEFK09yN/+w9C6
-    7oz5sGx0ZTid+NOPlPLkBI7sPPLnkjpUPLxDT42e86sMAmJBJ/r9jNIU5C49pRR4IyF4Bx
-    H0+qzz1ia1QcZmAvfgE+hFbEtXQz+AfnIQFe78ricdcY/aqO3PqJbIDnD1CTey2DzEat9/
-    V9CMKxBUPnEbDn/YheyXm+gQkkhHcazGKyvdPA1p1X8Ce6QKVQG8qGUwQO/yYhuPKrAvfY
-    RPccEzsDXRaI5Zp+MbOSMWrwUseimOrGma6NHSrm3JjUBQ6T1SVnIX7gh8HNE1FOAmznOD
-    0CUr19J2FEv0CSwJrc9912UioT7haWQsKd2XkWH4C3aZqbwKi8gns41HGQXg
-X-ME-Proxy: <xmx:OFV_aju1ZhX9xotR4C7i08RoygCfQU5uG_7WQWmOo5nwmM2jIyXXhw>
-    <xmx:OFV_agcqqoAQ59y5SAAdeYZWYcLAupc4VGPUVNqpEw1wxystNWlbWA>
-    <xmx:OFV_ao9_bf00u7BBDtoEhXJeKuHrZ6sanZ2edHyUqg63WNA36N5rPw>
-    <xmx:OFV_ajSqwRQPQLn-jrWTKundYFRzt8iDSH651Q6Vq1Qpea2xz5zANA>
-    <xmx:OFV_aonHGJb4r0rGnLxloNca9sPvVg5O-YnPr0xOk-Kb4_x9WRUSZbLv>
+	1786730183; x=1786816583; bh=IMZQ9Rw92k3xpjtskBwFcVvwkT+lCpH6i4N
+	xdkVyWhQ=; b=HfWJmsnzJ1nxelkYpWVGirQMOicOnuVk6EPIvu3bGQ1MPHuXwXN
+	4qk7EVaSRMplmQjE8naBgQ+SDddob5LiLRJQ1Vu5F4mbBgImSHXa+ulFbMZlcSZJ
+	vX+SIfiElJgCEMLADSBqbhPEZhrOP0DuSyzbC1u45KxxubRhxQXhXalRuZx2we0W
+	JqtneMjUmxWPMZDbA5+fgyWdKCoKEnQQCo0jd3ShSAgMp4j6ZiYAbq0WC8HFkby6
+	lEek7yk++i1CKwpxEFFe54VhC8O9zmWbntlKoh+ZnTDjAQ0KKz15uDx1dSiuervG
+	Af03e+LFnB2DvF5FMJgywkfvC5mLq5grEpw==
+X-ME-Sender: <xms:x1Z_atme0SCB5wLlmWYtWOk3D9cGm31g7kGx37uQ3RWoti5TCrJsVA>
+    <xme:x1Z_an6TbHrCSbiRhhw2maFHs1Pe5x78RMzVCc3s7XB0aD4p0ZJILrZtDCMyC0TZo
+    HRQ5Rb-JfQoS-mqPoTKPVJMGk_XpH8WlZcup3Ib1cI2TsQK-70>
+X-ME-Received: <xmr:x1Z_ap2-cnwIuKwNslq99v20wXM3FACOd6ZqzCE6mIXEDIxUUjXDKWlmYUykm2dvhPkNiMDgWwPHd74owIQjXlfkdz_tnUhYAA>
+X-ME-Proxy-Cause: dmFkZTEydkasrU9tno5NPaAtjum9x0BPMLyPuL/TS/H0SaGyXxaHgVTeFRgfRayx94a1nz
+    yJyxh3yXbhfjNhussUoRwUEb5DIEr72Ue8a6G0yUBYDGA8J7zZA1Dx+Q1yuY25a1XNv5R9
+    LFWN1AUTXktk3fLJ3x1YZxoTtIJipAQAPiQvX3jJegvwLuIuyaNzAVfsnYib2VAsgZTOo3
+    1ckZFSo4id0WCnkayPyJcRdhl10TLWmebznF6sdP5NSBV49fdLu71b7Pkd3mYaf2mVANZS
+    zxcJLQ/m1bpQZ5Yj4xqatUEL+xvrf5oIPJT7MqS5vGLkMXcIEwJtpKaU6F/DpmbQ8p5uiA
+    RcJMqFi4Ht7iS/2TxzygOE6tVCG9MM3vDZBiL7hWpqS3bH05QVQykox1XPyX88yqHYStoH
+    jJl1rp9t+GWXeGImpeCZLTOp7QEjpRE0ZFG4wMI28glchk/OaCqlwGeQsOt8ZWV58kV4Qu
+    hSKlPtzzQFk+BiUOUz3G/0+xqDQehJyxK13lwVaeVpRqhkj53c/FSUXmSRfT8ORvgFViNC
+    hEgOvkgdG66JX2n8txFB6aa7rvSPvbeVoUzwYc6gVUr2axexXNSV6njHMy7d3jDZXpC8Sw
+    CeFiNIfZ+cJH6k3+vOajIyBRjFIg14/1no9eVu+w9Ih9qqvxw0TndKchhOMA
+X-ME-Proxy: <xmx:x1Z_aqFUwWeEzsjxyU8xYgyPH40VxwktCEBJv9c68-0n_21NgwILOA>
+    <xmx:x1Z_agg9BKoM1yMfADn4mCaQtt-ybtlfN4eE4no19x9WtzNKACI-nA>
+    <xmx:x1Z_alAqu0Y_yyhiHpILMZsA4e-8ZqeblvUIELckxT3cqRaI5MgzqQ>
+    <xmx:x1Z_aqQ0OCqK1tn_mDpQvBJhezWhGP4yMIZRegXJcOp5iGAZYXIgZw>
+    <xmx:x1Z_aiqkyUaYYT3b4YBcGr0KCxK9BWv9mWPMIwzbNaLm2GWbnmMs0ICx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 13:49:43 -0400 (EDT)
+ 14 Aug 2026 13:56:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org,  "brian m . carlson"
  <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Karthik
  Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,  Elijah Newren
  <newren@gmail.com>
-Subject: Re: [PATCH v2 1/5] promisor-remote: factor out lazy_fetch_objects()
-In-Reply-To: <20260813154748.2378747-2-christian.couder@gmail.com> (Christian
-	Couder's message of "Thu, 13 Aug 2026 17:47:44 +0200")
+Subject: Re: [PATCH v2 2/5] setup: extract path_allowlist_apply()
+In-Reply-To: <20260813154748.2378747-3-christian.couder@gmail.com> (Christian
+	Couder's message of "Thu, 13 Aug 2026 17:47:45 +0200")
 References: <20260807135511.1818458-1-christian.couder@gmail.com>
-	<20260813154748.2378747-2-christian.couder@gmail.com>
-Date: Fri, 14 Aug 2026 10:49:41 -0700
-Message-ID: <xmqqjypsoami.fsf@gitster.g>
+	<20260813154748.2378747-3-christian.couder@gmail.com>
+Date: Fri, 14 Aug 2026 10:56:21 -0700
+Message-ID: <xmqqecg0oabe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,71 +90,95 @@ Content-Type: text/plain
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> +/*
-> + * Return 'true' if all the objects could be fetched, 'false' otherwise.
-> + */
-> +static bool lazy_fetch_objects(struct repository *repo,
-> +			       struct object_id **remaining_oids,
-> +			       int *remaining_nr,
-> +			       int *to_free)
+> In a following commit we are going to check whether a repository is
+> part of an allowlist specified in a config variable.
+>
+> To prepare for that let's extract existing code from
+> safe_directory_cb() into a new path_allowlist_apply() helper that will
+> help with such checks.
+>
+> While at it let's make the helper's code simpler and more generic.
+>
+> Signed-off-by: Christian Couder <christian.couder@gmail.com>
+> ---
+>  setup.c | 107 +++++++++++++++++++++++++++++++-------------------------
+>  1 file changed, 59 insertions(+), 48 deletions(-)
+>
+> diff --git a/setup.c b/setup.c
+> index 95909e9603..39dfa1cc5f 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -1339,6 +1339,64 @@ static int canonicalize_ceiling_entry(struct string_list_item *item,
+>  	}
+>  }
+>  
+> +static void path_allowlist_apply(const char *key, const char *value,
+> +				 const char *target_path, int *is_match)
 > +{
-> +	if (git_env_bool(NO_LAZY_FETCH_ENVIRONMENT, 0)) {
-> +		static int warning_shown;
-> +		if (!warning_shown) {
-> +			warning_shown = 1;
-> +			warning(_("lazy fetching disabled; some objects may not be available"));
-> +		}
-> +		return false;
+> +	char *allowed = NULL;
+> +	char *normalized = NULL;
+> +
+> +	if (!value || !*value) {
+> +		*is_match = 0;
+> +		return;
 > +	}
 > +
-> +	promisor_remote_init(repo);
+> +	if (!strcmp(value, "*")) {
+> +		*is_match = 1;
+> +		return;
+> +	}
 > +
-> +	/* Try accepted remotes first (those the server told us to use) */
-> +	if (try_promisor_remotes(repo, remaining_oids, remaining_nr,
-> +				 to_free, true))
-> +		return true;
+> +	if (git_config_pathname(&allowed, key, value) || !allowed)
+> +		return;
+
+The inversion of the polarity from the original here is a nice
+touch.  We no longer have to look at deeply indented block to tell
+immediately that nothing will happen when the configuration variable
+is not set.
+
+> +	/*
+> +	 * Setting the config variable to a non-absolute path makes
+> +	 * little sense---it won't be relative to the configuration
+> +	 * file the item is defined in.  Except for ".", which means
+> +	 * "if we are at the top level of a repository, then it is
+> +	 * OK", which is slightly tighter than "*" that allows
+> +	 * discovery.
+> +	 */
+> +	if (!is_absolute_path(allowed) && strcmp(allowed, ".")) {
+> +		warning(_("%s '%s' not absolute"), key, allowed);
+> +		goto end;
+> +	}
 > +
-> +	return try_promisor_remotes(repo, remaining_oids, remaining_nr,
-> +				    to_free, false);
->  }
+> +	/*
+> +	 * A .gitconfig in $HOME may be shared across different
+> +	 * machines and the config variable entries may or may not
+> +	 * exist as paths on all of these machines.  In other words,
+> +	 * it is not a warning worthy event when there is no such path
+> +	 * on this machine---the entry may be useful elsewhere.
+> +	 */
+> +	normalized = real_pathdup(allowed, 0);
+> +	if (!normalized)
+> +		goto end;
+> +
+> +	if (ends_with(normalized, "/*")) {
+> +		size_t len = strlen(normalized);
+> +		if (!fspathncmp(normalized, target_path, len - 1))
+> +			*is_match = 1;
+> +		goto end;
+> +	}
+> +
+> +	if (!fspathcmp(target_path, normalized))
+> +		*is_match = 1;
+> +
+> +end:
+> +	free(normalized);
+> +	free(allowed);
+> +}
 
-Perhaps writing it this way would make it easier to tell what is
-going on.  We try the preferred ones first, and then fall back to
-the other ones.
+The name "is_match" somehow feels a bit awkward.  How about calling
+it 
 
-        return (try_promisor_remotes(..., true) ||
-                try_promisor_remotes(..., false));
+    *matches = true/false;
 
-But more importantly, I wonder if keeping the list of missing object
-names in memory will later turn out to be problematic in real-life
-applications.  Without knowing much about how the current code for
-bulk dehydrating promisor objects is structured, I expected an API
-that looks more like:
+instead?
 
- - bulk_download_begin(): performs the early part of
-   fetch_objects(), sets up connections to the promisor remote(s),
-   and calls start_command() on the child process.
-
- - bulk_download_this(): after calling the _begin() function above,
-   it runs around and collects missing objects that it needs to do
-   its work.  For each such missing object it discovers, this
-   function is called, which sends the object name down the
-   '--stdin' file descriptor.
-
- - bulk_download_done(): tells the child process that we are done
-   feeding object names.
-
-but that is not what I am seeing.  I guess the current arrangement
-cannot be avoided, because we are going to fetch from more than one
-promisor remote.  Under such constraints, the way to deal with a
-massive number of missing objects will not be "streaming" like I
-imagined above, but needs to be done differently, like spooling to a
-file or something silly like that.
-
-In any case, except that this avoids checking the environment
-variable multiple times, I can see that it is a no-op refactoring of
-the existing code.
-
-Nice and cleanly done.
-
-Thanks.
