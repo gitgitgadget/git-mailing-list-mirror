@@ -1,153 +1,187 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8207648AE17
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 19:04:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C00C3EB7F4
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 19:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.169
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786734248; cv=pass; b=OsnlLRkgw71KoTblxUZWaK/gS953xar/d9CxD5mLHxGciqp5Iaie7VJfQLr068qaj8JISbGSdgYW4a7TtDd6V3sd3LFWRuMjMkDQma1JoPu/9E8P+cOPvM8FIBGfgaop2EqXukzioWwXOIv0SZ/XeKht4dzNboegoRl0zAtDIu0=
+	t=1786734472; cv=pass; b=Gt4fP0Ihjpq4MRkQWNugsMW/jkJUPSCTlc7xobiQa1T7FaO1lClAGmOdpYENsp6lha3Nxv89jqkBj9nLmsp9IfB9YCkUVJOsA4OHBmp3TwJ1/PQTQ7NwIx9W2FVzKorRHesEHzINxB+qo+g5BQffBi7NSRW0W3JKkGIXocEp3ho=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786734248; c=relaxed/simple;
-	bh=MarlxUM/iT9Mzziu32Oye03iT8tlE1Z81OgYAmeR1kQ=;
+	s=arc-20240116; t=1786734472; c=relaxed/simple;
+	bh=U3g7bPsq2RcSFa26qr2oqzlHPPvGf77B/zsejR6U+SU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H6jsb8Y/FxdUrwtnUEzqedidI49zFCZMAOPvMfVQbLyM/KjOx/GhIpyA+v5qFAmwCsP/mm06ibS6Nt5CmCHYUq8sDC3FQoloRu36UfsooavHYYTKbH0Q+y5grycGmyTDbFi+HcRQEiGXFTatmCeptEbKpox14q5asfa1QaMPWhU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mckYr+0c; arc=pass smtp.client-ip=209.85.216.46
+	 To:Cc:Content-Type; b=sSPYzezGDC1DkPpK2GEIEqkXkR9nivARyc3DkvyOXsb70gdnKLJs5LzI84RT13k6PIJ8e5R4sJPaUpkoGHBlps9rsYRE9PwqJp7/C0POKEOCb6xsoc7yPVWVdJjM3XAxiXFnFlrdF0gAUezSqHvRLS7kQ90WBU1GAYtvL9wJBb0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RZZs3CkM; arc=pass smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mckYr+0c"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38101f85591so2379344a91.1
-        for <git@vger.kernel.org>; Fri, 14 Aug 2026 12:04:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786734247; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZZs3CkM"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d0407aedd6so17827305ad.0
+        for <git@vger.kernel.org>; Fri, 14 Aug 2026 12:07:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786734471; cv=none;
         d=google.com; s=arc-20260327;
-        b=QJGMhSK/7coStCzLChZxWKSY4QAp4IA82uNQQL7U9VPmxUhdtakbZLW2BjOHXDKPQN
-         6tPucdfyrSLXxYWW7qial/S/z5fMaorCA/ZnKZJghytDKHhingFcn6wveMCSnCpkVBAs
-         QjoA0Rf0ACfR3p+txa6iVNtxoi8y86fP4kusdpLy1e2rayDg9/8o6CUG3a47bkcO7sr+
-         6Pgid2itZ/JzMYuJAX8267Yz2hNhXEiDY5nkJiHia6rTC0HVc7Wk9+ymrveEeHqJJBUZ
-         zRnJ1TGIW2u/EnvDwhZQrmxNmgLP87PR7fdeoXuae5wa18DygMs0FGAwCnt7O354L4G2
-         1PEQ==
+        b=hWEdhbjpVM908q+SALNlakbLzzVfA+1+W032v5Q1PwsMEAmUH2mqrcNgLhVskg44B7
+         EHyOZp4hqUxlDb7Ode7xAsT1vL79kNfefuuXA13JvGBKae7L/UGZPPSTXDQ1vQKqVNtY
+         MS69s3YSpqb/xo0cMXYp+P/Mv7QcNSQxU7r9/ZKtASfGwnNCg9VWAJok1P+Y9e4mvrR/
+         UXKA/Py0jR+X6IyXuPvkrqo+qhLyub+FvoP8rpAe74BVFo7Oi/AybNTSWhXdWDiNv4bK
+         c5SW/Dun490lcvS+aG9TsaKMUA5jZHaMJKv+mFAxWNOyHifMdVEUipRvxPIbEi7HLOWQ
+         sHKQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=flIBGhUI1878pAHzNQn7bKVsitFh618ZHJ5Oyx51vu0=;
-        fh=7D8fZI4fKKMmTXXbgX9IL3PYOy16poSgwXx+m4r6Hp8=;
-        b=nlny0Iy+N0klsaIaLnAiTxh9u4m5U5tYCqjpn4pA8k9rrzoz/Btdrkerf4cBu/pHFP
-         WNd1IExwDeVA6tTMGEyZX8pa6vcvzAvpMF8bElkK7ZAj4WnbInTuZK1aATS6j3zLPgdS
-         QvCNSOYi9XSlByvy5ZQqk/xrEykG3v2gvswX4VyBiA6BELFufENyAtbHYBWqb854822I
-         rxizfm9+qiYyKqsyUPjsvx0LH91i2qFt5fV2d/VyVyAEktOrXa12dZDZhYALL15W5Bou
-         M6k28YD26QHdYujw9U9sGlA87apYuIxAysE8u+0ymGVWC0gn9elLIz7TkYsfUgMpHkV1
-         vKfw==;
+        bh=J+XY6mZq8OEU/YGPPzctBIi95FIn05GiF6S6NppvyQo=;
+        fh=pdga0shfZOwETzJs5PSu+wgtpod8R/kvOftGT+m7x1Q=;
+        b=JV2Io6o4xNwys4+w/HEejVpaBzOtluXeKb2hKFtm6IHGa8SSbTpFwx7i1OQ131mANU
+         13RCPRHGgd84OBqhNTaK1c743U+Pnxs+KUDcY4LzXB4TMYtsd/yNZa4y8D/Stxsn620f
+         0qUBXwC46x48E/INTwbx3j+EOdfVUQX6o7EL/WeySub2E32bkLvuJyj98h2VS7BhjqOt
+         4oOCJqAwK0eAdRKTC370dQOR+iCguQg7fea4ZzWlT6v3PyMN13LSApDJH+walU/qOLph
+         R+xMS4ICwwqz2WB7h3ilq9feBbjmCHBC5yc/cpWcoTjjxC3AnA1WuRRht/mmuFuncvVe
+         BzQQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786734247; x=1787339047; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786734471; x=1787339271; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=flIBGhUI1878pAHzNQn7bKVsitFh618ZHJ5Oyx51vu0=;
-        b=mckYr+0cBnifYtLIW3kI9kQpqexo4LKE8uWsIjnX6HKIaYC/PVn1aqso6eausUDR25
-         9cmf7Ri7Ms2F0mTcSbzWBMS0xo2L9b3jP/mhLwb/f+qWcYUui7IF/fB5Y6ePqnXzEcT0
-         L5NTOfKYp0jBIbxxHA3SLkHgpHeldAVv9LH5fKR/ctcHud7dse6Efr14Koso+8AfnaJ/
-         KGDsx5IgskjUzw8O7hW6jgEMeQOpHfMgjLYAlDlJArQkc9/rWm8xZAJAMEdgGN1olNSF
-         5NH1yBsvMUiM4R+d/CHfkkyX2+SOkD845kRylOTRpLgqLXwm6EJwg6I+9MhOMEgpfuyy
-         UsnA==
+        bh=J+XY6mZq8OEU/YGPPzctBIi95FIn05GiF6S6NppvyQo=;
+        b=RZZs3CkMmmGmiD/kE81nx5O5nOZ92s05tU/U6uwmnEuvye2665d3SdLzF06OWE5293
+         s/fuU+pl9v1Yv6gtjyZF8Pa/7N9B56eXuJeQbolZoZYWwpJaaWKYtVXPcvatlxGctmvM
+         AI8PCkGiGicWFZuMGUrkpmUHdP0JtWsWkvDbuELKLBPXiyiV6SdKxlb8OlAIH5kmUy00
+         zfGOOEl4pjxS5KZccBJHG/hbKipSKiEjfHL9qw5K8bOIOTycUsuTvGf82WqFy0TZBOoX
+         F5as+laA0m7OSamY3XGXoBW/j8lRNyao8NQc0aKG2/cAoIZ9Ot4n/Ey81aowqG/ZYnVl
+         e+6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786734247; x=1787339047;
+        d=1e100.net; s=20251104; t=1786734471; x=1787339271;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=flIBGhUI1878pAHzNQn7bKVsitFh618ZHJ5Oyx51vu0=;
-        b=WwLci7wtAJ8SBqinZ0cixqJaH+m8Z9G9rD3MCsnwj4d+4/48t7tUxhnUPl9MoBssVq
-         BoGiMhCD1FHWw07wP0DJpp4QmwPgy1EEIYKWvftsujz53qYb4s4wQIp7V0tK4E5wkf+x
-         3BBEXwp5TlHB5JbpNC4hiSujfnK6/iWLdgW9cIi8+GGzhTAqyD7gZUzpHhwsiExEEDSD
-         JpmSFLfgDgf7jWhB7uIDQni615tzKaXR9rLUR2nxIM30gaIS2MNToFSK9xxeSfiRQ140
-         gQNR/wEtcYGk3jMo94rZu9u8lybavd64zP0itU7vsvsVeClm1Eig2Ji87a4SE3yiL+Lo
-         JxlQ==
-X-Gm-Message-State: AOJu0YxmjWjdfHV5NXB9Bj7vZZSondvV3wVFy59H+/PHArlQ4oa+3fj+
-	qewkgLBiF9vVj3Y3+oW0is8heP1qj9pHYP6lRP8aEcaNm7j6psT039CFDB1yWlb2rvVWSRsp7dh
-	lNw0o8oAVLwJ2e6un0yMOujEmfqJ/pjY=
-X-Gm-Gg: AR+sD100uACOMvrAxxsJDr1ar7cg0hg4du9lYG9f2Sk8CMtp/UDJCyS3ZsBk5udrM2E
-	DcHSPdgqPOH2QR106OfcHFm8SGAwlFqRFi6ebIkgf7UFcnAsqB+43oBxuc35bVeCz1HPbkBmbRP
-	yYqJ8B7yaXV0SRSiQhJx8iuBUMY6yd36GCdL8dL1mAkLlSMqhLnX69Vjxj7nx5CUifPq+OmBr8p
-	rLoWqhnnogEkUo7pWFkwwt32aMpCfVIc4aVF+TqW0mhJ1LZ23zH6lkNQgqrwHyMN2BdRgljy5/S
-	5JYsbRL6NXLqUVQ001wvlwn4sor+ZUObFlhKpHK6iCJQwNC5mOEDd2ZtB4iJ79iPYiM7g+4jlXE
-	eTmKgbeO5VFw0gdDM89LYzBCEYELedWqcCFVC8BF/Cx+mDf/Mg6R6TPGgSUCOUJ0t6ziKoI6N
-X-Received: by 2002:a17:90b:38d1:b0:38e:4e61:c9e with SMTP id
- 98e67ed59e1d1-3933b168bbfmr5550525a91.21.1786734246673; Fri, 14 Aug 2026
- 12:04:06 -0700 (PDT)
+        bh=J+XY6mZq8OEU/YGPPzctBIi95FIn05GiF6S6NppvyQo=;
+        b=FjQGM6M2/mF9BOqNWXkKjySyNYUaBu3FfEmAXrA6X6E6Ql+pftt18S6xCOUqSJbT8a
+         paZeTgvDbyiT7eqiGOfd+xXVEfBPkhQ9DiT0GV5ukszXxV1PNZpnR9ZmvrktWlWJqnoB
+         pxyAfDesSi5nyUZFR4QYmc0JoFi6wo5aspw2zrlzMfYRE6GrsUV3JfUsW5iWQOA5G25M
+         bL2lFA1o27KXSFu30B+rBAhPCiM+JD+3dVQQA1WPhz52XQbeZbFIs8fC+fwdQdv7mkGs
+         PLF3IjwdOGhNnbDCjaVA/TLASVG8IvkcVX20rRvRjYHHUbMVbAxb54mEqAzsoRXyIhry
+         PQNw==
+X-Forwarded-Encrypted: i=1; AHgh+RrToFaD+bT13+cIl59UoEqRZDgI5Dbk9rgqcJKVdaACjkOK4huvTNQJuALHgY+4Yed2oC0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyc/thDu8TJ9l9CbAu53+Mzne1fF0Td2V4gqH/QkebdhO1RFWs+
+	cdnOJzt/o06SbzAggEu89heFppS0vTNkUhaWBes8brgzbWDqbJuYjTJBPyGhZrWEFd3CjHCPFPT
+	sojHsGe7nIAWXtnejdPcgoW5b/hfCeB89GLGCQsk=
+X-Gm-Gg: AR+sD10i1YmDDsKWWd8mAH3Wsge+dl2O4XRcIzOmPJfQbqbUJLq3lz+mqZ1fOXZsocr
+	Vyk2GGl5lOrJ/+bbm0d6SkMIfdyEwQVTftFqMsiN3xbhl+lUGE63qhqkbf1b3rcPipivRYwSqbb
+	Byp11TD9bAtmk09ClLLffC3USkh+MJImSq/SMRnvmjALG8zoJrmCl1anMwj/40nEz8T+jjFO7W+
+	olXSmuTcX2xiGw5rDPcON6pWp1BTRcjIOEsTxUh2yBtMBWgERa1gvUBpClGZeqGeeotmEefcNtR
+	SbAMd5ktzynOOsmfoPPShf5aj3TZSydFNTtMt/kf7VsJjDWjKaErfcLJPlaS8M5rISjzNMK+wJ6
+	Ar08iWouDJ3ycUXS0olOvJAzLB+oTlvmKXbsCzkrjeW56CAvMMobwdTFx1toXKCYMAYOwGYdo
+X-Received: by 2002:a17:903:1b4f:b0:2d0:cc92:f7b8 with SMTP id
+ d9443c01a7336-2d3b0cdb79bmr105898685ad.2.1786734470588; Fri, 14 Aug 2026
+ 12:07:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1786103607.git.ben.knoble@gmail.com> <cover.1786710807.git.ben.knoble@gmail.com>
- <2d1424732af6af9c82c775e8256ea914204e8e43.1786710807.git.ben.knoble@gmail.com>
- <xmqqzeyoodxk.fsf@gitster.g>
-In-Reply-To: <xmqqzeyoodxk.fsf@gitster.g>
+References: <CABB4Jh3UUXvmAJpefaiP-xVRQfGRdTF2jW8GkdhbA1BXe6Okdw@mail.gmail.com>
+ <an9W4XwY8X4ZFHpA@wyuan.org> <CABB4Jh1fUXKNn483FjD2S6U4cYVMEP6z+fjWMi8XRT+NQdNnYw@mail.gmail.com>
+In-Reply-To: <CABB4Jh1fUXKNn483FjD2S6U4cYVMEP6z+fjWMi8XRT+NQdNnYw@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 14 Aug 2026 15:03:54 -0400
-X-Gm-Features: AUfX_mzTfeTZOoJmdO659xrnuYVD2qK-9HOxyeIKE8QIbdGUwzIqez5W4sUc17s
-Message-ID: <CALnO6CA96y0g9iy+GRMV1v86zk3eKpCKxeJWid=097sFNXEknA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>, Tian Yuchen <cat@malon.dev>, 
-	Olamide Caleb Bello <belkid98@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Date: Fri, 14 Aug 2026 15:07:39 -0400
+X-Gm-Features: AUfX_mwmapiSLlrX5I_LjKALFifEakawMUHqb2qRPMXFpbqBI4kAsu16dy-9hlQ
+Message-ID: <CALnO6CCDQBWS7dP7CZSbKE3f8rw4x=NAJhGyE7HCJRjJq_2dEA@mail.gmail.com>
+Subject: Re: [GSoC PATCH] submodule: warn on valueless active config
+To: Tilak Raaz <raaztilak07@gmail.com>
+Cc: Weijie Yuan <wy@wyuan.org>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 14, 2026 at 12:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
+On Fri, Aug 14, 2026 at 2:05=E2=80=AFPM Tilak Raaz <raaztilak07@gmail.com> =
+wrote:
 >
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->
-> > -#ifdef USE_NSEC
-> > -     if (cfg->check_stat && sd->sd_mtime.nsec !=3D ST_MTIME_NSEC(*st))
-> > -             changed |=3D MTIME_CHANGED;
-> > -     if (cfg->trust_ctime && cfg->check_stat &&
-> > -         sd->sd_ctime.nsec !=3D ST_CTIME_NSEC(*st))
-> > -             changed |=3D CTIME_CHANGED;
-> > -#endif
-> > +     if (cfg->use_nanosec) {
-> > +             if (cfg->check_stat && sd->sd_mtime.nsec !=3D ST_MTIME_NS=
-EC(*st))
-> > +                     changed |=3D MTIME_CHANGED;
-> > +             if (cfg->trust_ctime && cfg->check_stat &&
-> > +                 sd->sd_ctime.nsec !=3D ST_CTIME_NSEC(*st))
-> > +                     changed |=3D CTIME_CHANGED;
-> > +     }
+> On Fri, Aug 14, 2026 Weijie Yuan <wy@wyuan.org> wrote:
+> > Thanks!
 > >
-> >       if (cfg->check_stat) {
-> >               if (sd->sd_uid !=3D (unsigned int) st->st_uid ||
+> > However, my suggestion is that it would be better to place your patch i=
+n
+> > the main body of the email text rather than in the attachment.
+> > Please take a look at Documentation/SubmittingPatches
+> >
+> > And it also seems that the automated program 'b4' is unable to recogniz=
+e
+> > your patch, which may make the development process less convenient for
+> > the developers and the maintainer.
 >
-> This is iffy.
+> Hi Weijie,
 >
-> If you have core.usenanosec=3Dtrue in a networked $HOME/.gitconfig
-> mounted on both USE_NSEC-capable and incapable platforms, what would
-> ST_CTIME_NSEC() yield on the latter?
+> Thank you for the quick feedback and for pointing me to the documentation=
+!
+> I apologize for using an attachment; I am still getting my mailing list w=
+orkflow
+> configured.
+>
+> Here is the patch provided inline as plain text so that `b4` can parse
+> it correctly:
+>
+> From 08a2f244efab6e4cf21638d87a721ca664ed9433 Mon Sep 17 00:00:00 2001
+> From: tilak-raaz <raaztilak07@gmail.com>
+> Date: Fri, 14 Aug 2026 22:50:11 +0530
+> Subject: [GSoC PATCH] submodule: warn on valueless active config
+>
+> The config parser previously threw a hard error if 'submodule.active'
+> was provided without a value, causing commands to abort.
+>
+> Swap repo_config_get_string_multi() to repo_config_get_value_multi()
+> to parse valueless keys safely, and emit a warning to the user rather
+> than crashing.
+>
+> This resolves a NEEDSWORK comment in submodule.c.
+>
+> Signed-off-by: tilak-raaz <raaztilak07@gmail.com>
+> ---
+>  submodule.c                | 16 ++++++++--------
+>  t/t7400-submodule-basic.sh | 11 +++++++++++
+>  2 files changed, 19 insertions(+), 8 deletions(-)
+>
+> diff --git a/submodule.c b/submodule.c
+> index 5c92575888..b709c429ba 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -231,11 +231,7 @@ int
+> option_parse_recurse_submodules_worktree_updater(const struct option
+> *opt,
+>  /*
+>   * Determine if a submodule has been initialized at a given 'path'
+>   */
+> -/*
+> - * NEEDSWORK: Emit a warning if submodule.active exists, but is valueles=
+s,
+> - * ie, the config looks like: "[submodule] active\n".
+> - * Since that is an invalid pathspec, we should inform the user.
+> - */
+> +
+>  int is_tree_submodule_active(struct repository *repo,
+>       const struct object_id *treeish_name,
+>       const char *path)
+> @@ -261,14 +257,18 @@ int is_tree_submodule_active(struct repository *rep=
+o,
+>   free(key);
+>
+>   /* submodule.active is set */
+> - if (!repo_config_get_string_multi(repo, "submodule.active", &sl)) {
+> + if (!repo_config_get_value_multi(repo, "submodule.active", &sl)) {
+>   struct pathspec ps;
+>   struct strvec args =3D STRVEC_INIT;
+>   const struct string_list_item *item;
+>
+>   for_each_string_list_item(item, sl) {
+> - strvec_push(&args, item->string);
+> - }
 
-Perhaps "if it hurts, don't do that"? This config is definitely about
-exposing the underlying system's capabilities to Git, so if you cannot
-confidently do so globally, you probably shouldn't. That might limit
-the usefulness of the optimization for folks that share filesystems
-between multiple machines in this way, I suppose. Or maybe it will
-incentivize folks to be nsec-compatible in more places ;) Either way,
-users that can benefit from it will have the option.
+It's hard to tell, but I think (depending on _how_ you sent this patch
+with GMail) the indentation has become corrupted, and the patch won't
+apply.
 
-> I wonder if cfg's
-> '.use_nanosec' should be force-disabled in NO_NSEC builds, or
-> something similar?
-
-This does, however, make some sense to me:
-
-- Git today with NO_NSEC doesn't bother with the USE_NSEC paths, since
-we #undef USE_NSEC in that case.
-- Git "tomorrow" should probably say "I was built with NO_NSEC, so I
-will (continue) ignoring platform-specific nanosecond optimizations."
-
-I'll queue this change locally until I send out the next version,
-unless someone objects.
-
---=20
-D. Ben Knoble
+Give the tips in git-send-email.io a try; especially with GMail, I've
+found the safest way to send patches is with git-send-email. (I reply
+to conversations from just about any mail client, though.)
