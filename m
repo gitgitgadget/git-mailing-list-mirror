@@ -1,147 +1,219 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70D741D23B
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 07:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503B242903E
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 07:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786693583; cv=none; b=V028sY/xC/SSyrARq3BeIGXMGqLyUhEoUw4n7EhiKOYZN/AXp6YNQMh6MGQuAExVCGL39rYVYODkD5sKjhDYs0e5MNfEt4rlj4yh41Tw8EIMHFzcFFoZYMjlNsg15yxgqWxV49Zv/7sScN2SFZRuAWiIwOjyRgzYDA3EG5LPvko=
+	t=1786693629; cv=none; b=msuLHb2fnMU8WsuP4N5gYpVP7XooJ32yJrKbVbxv8hyZ+kyjHRz//d0ACUa9qfWibAbs4BSIXLQZk5VSzyIesHBt2jS9qoZJMQPOOAPLoYEKETtP26+r/i1gNHoU8u6J4izufULlHkj7XrwG6An7G3jIFWTIRjYI0g6HIV+nlm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786693583; c=relaxed/simple;
-	bh=BRnltEBhFu1gtvMG/He5GW+D3CPA1u4U55d+wFpYuA0=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=BHZqDQLMEfjcvUNDMIULZvgR8TPAn6h8/ILicsdxSb1GjKZ02d5hsX0KULhkKRQdqUF2fcBR6XYUiYMr1DRBdY8TMbB9kxF5yL0JreRG/AB+1TpF/8MpwQmx9peKRxlcGQk26OFuIrh7FRsZ9wq7diYw+9LgR6KVDWyay/Uz6W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Fu6JMP2T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TYtugvQ5; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1786693629; c=relaxed/simple;
+	bh=RTsi48FEa2BfStjP67zGjEWTFNbI+BHK/hJ3Kktbis4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AepYszlKGoF7FYvM+hhOIr+vnFUbDDVCuqD+PscYFbmSBZ/TUsgMs0Bqj0pmFlDGOinDDPKTndhT7WSFQYTs39hBpuSzOsQAP138tPCu5gsAtNb5eQJbgUPVfiPDm5TW/DEw5ee9ozyjKHS2cjp//3tpRggZxCmKknrg3JPxva0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j+ZKfQVg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hzXTfvl5; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Fu6JMP2T";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TYtugvQ5"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.stl.internal (Postfix) with ESMTP id 71B411D002E6;
-	Fri, 14 Aug 2026 03:46:14 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Fri, 14 Aug 2026 03:46:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786693573;
-	 x=1786779973; bh=Z8ExsTiniYL1u5P2PPF8zlANSkb/UT+2P7830Qxb8y8=; b=
-	Fu6JMP2TsZ6yu0+gB0FBH3+8WFckODqmdFw1J7RwkrfiReMe8KevUKq8hY39OP0p
-	D4oTNLMojdubJ7JPJXrm+nafkqZadCLVmWOYIl4kZB+47+aILrMCvISK41uiTg06
-	Jwc0und9c2r9ndJYDQ/egbpEvMjQAVMYNSJRUDz0PnMUByJ66h8SlSxr2IEgoZS1
-	GpRkMr2fMEpRUZW/FLVMpCZKNLx70+cfGMDbfyCAbhzfN0arZKzCf/QPcJTNA86G
-	/3BfVqus8bx4l/dXZwV3n3bG1F49cnXGs0NZBLJw/854cQulEyXnTYLv5/QgUNNW
-	7bWqWvh9L7yI0ed5rEzYPg==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j+ZKfQVg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hzXTfvl5"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0DA721D002E5;
+	Fri, 14 Aug 2026 03:46:39 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 14 Aug 2026 03:46:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1786693598; x=1786779998; bh=OKWVH8rmlQ
+	kLeEMS36DE1GfDM8+FkiC0VMKruXIKiag=; b=j+ZKfQVgzyX2QSukLLflkiYsFE
+	6vRioevpAd7LSVtHlmgfbPVDAgFeQOIW+G8pJZ/lJ9jLT+EwWP5X0d5tBw0KgdYA
+	C2eDFXuHomYTwshE0ZO3Vka1qwS5mWrf2Bl2+bayMWVmenIHfgtFfpAkO1IbxMMJ
+	ceoEOwnv46BKAeHJf5/VfX0GZ43kGZRQTw1D5u7RqDrddvAGcsR1WQADFNfWUE06
+	Ery1R3yZHMqm0uNu55fRnsk/lloX/ByIh/N2aNp6XjddZLO3CUvfZRr4ZXGMLRWh
+	Cl/RoIiEaQ34dZDmh/T9r07MhfVqTdMQoq/32wNb9DWhlMAdYtB2V10ppZMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786693573; x=
-	1786779973; bh=Z8ExsTiniYL1u5P2PPF8zlANSkb/UT+2P7830Qxb8y8=; b=T
-	YtugvQ5q5gJ8eg2Ngm+Qbz4ONLTrK7EQlGX1MscjfEAn7lWlj+HN8BjFN5oBZ8XB
-	6GYW0rO/+HB3SDIGzOno5uSNW98mDhzik3f44g5xdTys1ylfVov12cmDC/cmi8ei
-	W/jV4Oo2CNH0RdGHdOLy70+VzrNqARdbTrfmTU0J4nLDYpDyfkosxuu01Ynkj7Xf
-	UAAF66uyAORvxFEe/T4bXuuEwcqT8vsOdCRpK6k4HUr27hoirz6m32FHZp2A5EkO
-	tOg894oYJIREqSEbk5B951axMYibrJ7xSxpb7a8JbkjLxKLFVSydgBhWaqtTOQMx
-	Pdell1EvBCIhyeD5r5pTA==
-X-ME-Sender: <xms:wcd-apcgD3oFgyFey0cul8dXqI13xKg89NBR7vhUynBi0-la1wG1Fb0>
-    <xme:wcd-aiBee2jP3m_RUdBHSpu3MSSMLTPL-RHMf7wRzr-Xyd2exN8XVcEaIoz3Mlx_h
-    oddok9zOeMH2VmlWb1dGFxUcAcYxuuxCOEFNvHbrsYETicPUZeehQ>
-X-ME-Proxy-Cause: dmFkZTFGZllbr40L9eXyKi7LLyLeS32OIlXbUEr9edFGMMf8KWTzSQ6/RLiTY8wI6VKZkV
-    ZjJvLZ5Ceaaj/dBQHhguGLDdWnz/J7RSptIfDlXFiCnOEskSo6/Zcq90uOCgIxdDNNre3t
-    e+gSyfLK8S4UQ0K0EId6V3dXFrXrU12pYlF80INg72Y41nah+doHvD+mmsp1VI5qOVNcAW
-    wKMjTzbCJNX67LU2lnRqUpuYqcAN6a4kyeO1U/rxDQMN6L6yjLFDBWuWl1uthGiODhCpMb
-    6+NKRhpe2dxJ2e/J4PwijgEOKbZ7QUnAkppXtTj6rz0LQ2M2OGwtHBZkKGwiyXXDRwr6aw
-    QFypM/or1Uqs0tQXl3E/K9F9rPQesf9ADapx9iBnELNYgl+JrPAvOX+xwOkdX+5g+WpRlN
-    CG1QW0Snulb/DV+1a863kRWBISPNkdiVROhwKCEMDQtosGLDJglvksOH8WfK3LK6s+GEbB
-    OzX511EnudmB8dGqWDrshiosV9MC3c3rL9TLVYZGCLhyJPrfGrG6WJWLM7pVd8i1uw5KZD
-    mY6/z29Myd+vnInZQ8YjualpWe/R89HQZNGNA7XDf0srIBvjNGe33bFEjo2153gfpFKi1u
-    zDap5pb+f7UohqZb0eHxvAJvhPsV9K2PP6KHGHqYJ4vFGOjsw3xkvXrsSqJA
-X-ME-Proxy: <xmx:w8d-asBjLk8LWyliqYA-mI9tHI6GPBADG1RqOTvzXqUViWW1ReorBQ>
-    <xmx:w8d-agAjAF-OzYKFP_Gc8Qr59wDWqNr1CuRRDvN4fdopEYfE5LpOQg>
-    <xmx:w8d-avqjlgsCFEzsHKkbnu99D0XNso_XSXvnrpxMM7M4Qb9guVbIuA>
-    <xmx:w8d-ainH6kBJSFLr9PLAVWFsVl2FG_b3RK-h9705HRORd5YZwpL6hA>
-    <xmx:xcd-ap0rifR9mhwAgHO3X6A-5vSUei-JXg3OVF4qdUHAAi-LBanenxwz>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id ABE2822C0078; Fri, 14 Aug 2026 03:46:09 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786693598; x=1786779998; bh=OKWVH8rmlQkLeEMS36DE1GfDM8+FkiC0VMK
+	ruXIKiag=; b=hzXTfvl5elpxtqHHWzvCLtlLjARrdZcoVkmSsF8/6gYLRG1ijPl
+	Cpf63NMm6ySk7zEznFIRgzmSDhjfozp74oVoDx4+N01JsSkV+IPT4Ssmihacq21v
+	nWR8BC71vDVFSBJsud1hByC1dCpFJARjwjmLeyUOa7iRr7Hk3N6WK+OsGcP2Xqg8
+	pvFne1HZWmHXye2h5a0os4IiOd27mPqmxrCsTxY9HEXmvHvWT4G28oFc+zWrXOP9
+	q1Q7uHzppOcP22wqU2C9vHsFircZOk12nwF8kxVTJYIPub6vLkr7xnDmxldt7TY6
+	LD3NTjiqGu39Q3BOyeLZLMyFfv52WQvn1xw==
+X-ME-Sender: <xms:3sd-aiNjhnkuR1w9pYWk9OYEIEGQeNd0rMwdTn0bQN32_zoKEBd2xA>
+    <xme:3sd-aoafX-uidLygZlH_QP0cBEiMWQbEgmY86bQjc0cc97VYulxAPfe7FnIbS3lPb
+    e5Ab5oFfp5EbvR3Gfr0sei8ezq2IxHl5HoPPnF84u57Q5vKjkgJsA>
+X-ME-Received: <xmr:3sd-ampYD5kesF-4KMsO7vcUHR2HB2XEq6wmYXATHbGj_YwFlnF6JjNU3HCe_vSmoZ6v4mD4EW-ROrN0aPfJiRRrjfWgzsbFYFdhUOrX7G0>
+X-ME-Proxy-Cause: dmFkZTE4AoYsRxqXsaKYH7zD0ToD1n5s9y/yGhzqtSZje39VMcbDWa585XnB60l85b/OBL
+    WtT74rFs9ZsZDxPg1IWz1B89zgjaxNwDhLzVXKwO+Isa8iYUhSCdUlwsl73psuQlpPYi24
+    Dyb3KFKwSezrEKsejLH/x6FhbnZdlhQYk0JjyD6IJ466YjTaPwO4mOHW2fSj8GKm8gwtt0
+    sFAet79EsHDRZCRQMHNV0fi644xme13t08R8XaaIUZIGH3GhAcBo9duyAZNHEXRl3gDpl7
+    N4JLjOjLRA1mWOQ+OvwkSNPxCJlJaEYrEwgO0Ul3F6g6H9glp0/fHTRe+tctMTkt44eTLl
+    RQJ/Xd7mVeHQTUlqXQ+7HWhzX4PGXVDDEm2O/ZOQdvUchXlGQdGgzoNgW9ZfrvCcpssC+6
+    y54NDazvWP8WINncip5Rr1aoiGhZsb2D1nEuA66eZjcdV0RmXARo91AHL3xlqwqDVCiJvt
+    MmvhOtMBRVPfCSldwORQsgReeT3lQFErm+2fQrL8s+GNx+maRxGA4nvEcYDvq/hLGWoshg
+    V5QL0FfOTVtYKYJqGRkdKymQE4F9MBREzZoP0ZHTxwK2AyA3EEj5hl/ePqhsfCI+MbNIPK
+    OgjIm6XOK/HxBHBDiSapo2RpJVVdnpsJ34pYrnXehLghQG+/1zY/YZk/OovQ
+X-ME-Proxy: <xmx:3sd-asZkekugU8FgO1m1BZs8IFQ29qmYxgWI9hSxw9OszfDEgl7-4Q>
+    <xmx:3sd-auRHkB5YrYizzrnbpHHb5tWN32d4TuK0eGzcxlc4fVnUTLgXGA>
+    <xmx:3sd-aj71xqzxYlKT0At114e5gXJhB-fT1DfCXbf8TRZYNHjJBIZ2Ug>
+    <xmx:3sd-ajwpB5i1g8aFXXfmW0xbgekK7vm9C7G2KdkloROMbGPG0ooe6g>
+    <xmx:3sd-akatNzYAsVDhaK0oTB_Zdr-HaVrMqM5gmji7RebxS8xE-rGugGbM>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Aug 2026 03:46:38 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 96d943d9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 14 Aug 2026 07:46:36 +0000 (UTC)
+Date: Fri, 14 Aug 2026 09:46:32 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v3 1/9] builtin/receive-pack: properly clean up keep files
+Message-ID: <an7H2C3JKqEdbGXQ@pks.im>
+References: <20260809190106.1565882-1-jltobler@gmail.com>
+ <20260811175415.2044235-1-jltobler@gmail.com>
+ <20260811175415.2044235-2-jltobler@gmail.com>
+ <anwNonpw5SZuHADv@pks.im>
+ <an41gSCa7EFGkB1r@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AzsVqDuXP2Wg
-Date: Fri, 14 Aug 2026 09:45:49 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Patrick Steinhardt" <ps@pks.im>,
- =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <ef8ee6fb-ef3d-4a83-b8fc-121448d58e53@app.fastmail.com>
-In-Reply-To: <xmqqfr0hqzvl.fsf@gitster.g>
-References: <synopsis_block.af9@msgid.xyz>
- <V3_CV_synopsis_block.b64@msgid.xyz> <V3_synopsis_block.b66@msgid.xyz>
- <xmqqfr0hqzvl.fsf@gitster.g>
-Subject: Re: [PATCH v3 2/2] doc: format-rev: use [synopsis] on code block
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <an41gSCa7EFGkB1r@denethor>
 
-On Fri, Aug 14, 2026, at 03:01, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
->> This code block uses the placeholder `<subject>`. Let=E2=80=99s highl=
-ight this
->> placeholder properly by using the `synopsis` block definition which w=
-as
->> introduced in a34d1d53 (doc: convert git-show to synopsis style,
->> 2026-02-06).
->>
->> Yes, note that code blocks since commit a34d1d53 can, on synopsis-sty=
-le
->> docs like this one, be immediately preceded by `[synopsis]`, just like
->> the command synopsis is:
->>
->>     [synopsis]
->>     (EXPERIMENTAL!) git format-rev - [...]
->>
->> Cf. verse-style:
->>
->>     [verse]
->>     'git name-rev' [...]
->>
->> Acked-by: Patrick Steinhardt <ps@pks.im>
->> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
->> ---
->
-> Has this been tested with both AsciiDoc and AsciiDoctor?
->
->
-> https://github.com/git/git/actions/runs/31751206776/job/94617158587#st=
-ep:4:4886
->
-> Curiously, it does not fail for me locally (by default my builds use
-> AsciiDoctor).
+On Thu, Aug 13, 2026 at 04:45:16PM -0500, Justin Tobler wrote:
+> On 26/08/12 08:07AM, Patrick Steinhardt wrote:
+> > On Tue, Aug 11, 2026 at 12:54:07PM -0500, Justin Tobler wrote:
+> > > When git-receive-pack(1) stores an incoming packfile with
+> > > git-index-pack(1), a ".keep" file is written alongside it to hold the
+> > > pack in place until the references have been updated, and is removed
+> > > afterwards. The path used to remove it is derived via
+> > > `index_pack_lockfile()` from the repository's primary object directory.
+> > > 
+> > > In bdee7b3013 (builtin/receive-pack: stage incoming objects via ODB
+> > > transactions, 2026-07-10), git-receive-pack(1) started using the ODB
+> > > transaction interfaces instead of managing a temporary directory
+> > > directly. When starting an ODB transaction, the sources list is
+> > > reordered to insert the newly created transaction source first as the
+> > > primary to ensure writes are routed to it accordingly.
+> > > 
+> > > Prior to using ODB transactions, git-receive-pack(1) would only set the
+> > > temporary directory as the primary source for the child
+> > > git-index-pack(1) and git-unpack-objects(1) processes it spawned and the
+> > > parent process would set the temporary directory set as an alternate
+> > > only. By using ODB transactions, the ODB source list is also reordered
+> > > for the parent process which results in `index_pack_lockfile()` deriving
+> > > the ".keep" path relative to the temporary directory instead the actual
+> > 
+> > Nit: s/instead/& of/
+> 
+> Will fix.
+> 
+> > > main ODB source path. Consequently, this prevents the ".keep" file from
+> > > being properly removed after being migrated into the main ODB source
+> > > post-commit.
+> > 
+> > Hm. Are the temporary packs written into the transaction-managed tempdir
+> > now, or do they still end up in the main object directory?
+> 
+> The packfile and associated ".keep" lockfiles are both initially written
+> into the temporary directory managed by the ODB transaction. On
+> transaction commit, they are then both migrated to the main ODB.
+> 
+> When registering the keep tempfile, we need to record the future
+> post-commit location of the keep file that way it can be removed when
+> `odb_transaction_finalize()` is invoked. This matches the original
+> behavior prior to ODB transaction being introduced in
+> git-receive-pack(1).
+> 
+> > > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> > > index 86933d8d7e..d74b787148 100644
+> > > --- a/builtin/receive-pack.c
+> > > +++ b/builtin/receive-pack.c
+> > > @@ -2412,7 +2412,13 @@ static const char *unpack(int err_fd, struct shallow_info *si,
+> > >  		if (status)
+> > >  			return "index-pack fork failed";
+> > >  
+> > > -		lockfile = index_pack_lockfile(the_repository, child.out, NULL);
+> > > +		/*
+> > > +		 * The lockfile filepath is expected to be the final location of
+> > > +		 * the ".keep" file after being migrated to the main ODB source.
+> > > +		 * This ensures the lockfile can be found and removed later
+> > > +		 * after the ODB transaction has been committed.
+> > > +		 */
+> > > +		lockfile = index_pack_lockfile(transaction->source, child.out, NULL);
+> > >  		if (lockfile) {
+> > >  			pack_lockfile = register_tempfile(lockfile);
+> > >  			free(lockfile);
+> > 
+> > Okay. So previously, we wrote the ".keep" file into the main repository,
+> > whereas now we write it into the temporary object directory? Is the
+> > packfile itself also written in there?
+> 
+> Not quite, both the packfile and keep file were written to the temporary
+> directory and continue to do so.
+> 
+> Prior to bdee7b3013 (builtin/receive-pack: stage incoming objects via
+> ODB transactions, 2026-07-10), the ".keep" files were also being written
+> to the quarantine directory and migrated alongside the packfiles. The
+> main git-receive-pack(1) process always kept the primary ODB as the
+> first entry in the source list though ensuring that the "filename"
+> registered for keep tempfile was the final location. With ODB
+> transactions though, the source list order _does_ get changed and
+> resulted in the keep tempfile not knowing about its final location.
+> Consequently, it is no longer cleaned up.
+> 
+> > What I'm wondering is why we even need a ".keep" file at all anymore if
+> > we're not storing it in the main object directory. It wouldn't help us
+> > to avoid the race, because after committing the transaction the ".keep"
+> > file would remain in the temporary directory, whereas the packfile would
+> > have been migrated to the main object directory. So it doesn't have a
+> > ".keep" file at that point, and neither have references been updated to
+> > point to the new objects yet.
+> 
+> The ".keep" file does end up in the main ODB alongside the packfile when
+> the transaction is committed. The main problem here is that it is not
+> being cleaned up because the post-migration path does not match what the
+> registered tempfile tracks.
+> 
+> > So I wonder whether instead, we'd have to:
+> > 
+> >   1. Start the transaction, creating the temporary object directory.
+> >   
+> >   2. Write the packfile into the temporary object directory, but don't
+> >      create a ".keep" file.
+> > 
+> >   3. At commit time, first write a ".keep" file in the main object
+> >      directory and then migrate the packfile over.
+> > 
+> >   4. At finalization time, prune the ".keep" file from the main object
+> >      directory.
+> > 
+> > That would retain the current properties of the system, but as far as I
+> > can see this is not what we're doing here.
+> 
+> With this patch, this is effectly what we are doing already. The main
+> difference is that we are creating the ".keep" file alongside the
+> packfile via git-index-pack(1) and migrating both when
+> `odb_transaction_commit()` is invoked.
+> 
+> We could stop relying on git-index-pack(1) to generate the ".keep" file
+> and instead generate it ourselves during the commit phase as you
+> suggested, but I'm not sure that would really buy us anything right now.
+> For now, I think it would be fine to keep the changes more minimal.
+> 
+> I'll try to clarify the commit message a bit in the next version to
+> better explain what is happening.
 
-Nope. :/
+Thanks for the explanation, this helped a lot!
 
-My change uses a code block:
-
-    [synopsis]
-    ----
-    ...
-    ----
-
-But the ones in `pretty-formats.adoc` use open blocks:
-
-    [synopsis]
-    --
-    ...
-    --
-
-I=E2=80=99ll do some better testing next.
+Patrick
