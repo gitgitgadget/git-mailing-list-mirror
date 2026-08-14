@@ -1,104 +1,112 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3C6427FA6
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 07:50:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0633E42AF8D
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 07:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786693823; cv=none; b=JnslUBGb5/zJGPLmVyQjK5SnGMTL5uukd5O0pXD83RmDE4KreLmzIRvVI94Nygnsh/Rzuj5L7KNaQXCr09qREB0TMe42Y7ER+w7qV/Ho9pwJal1eGfcJDcmKCqyNCV9jJiVyiidviyXplh1lkDnWXciU9kC2gp0VLF+YtIqeDp4=
+	t=1786693852; cv=none; b=os9ZfGrgsFb86sYIa3s5YdiaDHJrBbEgbN8rhdlM5oeltpqUeRRmnMSkKrSAS7lFxbIzeY2gg2ECJ67pqxQuRrfcbqoHDRW9NxjQD0JSc2l3VsEqF5BmbdbwEQAnvYdDRHtPThMLT/dJn/JKtzUEwL5WI5s6+q63iNaXUFsG3HE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786693823; c=relaxed/simple;
-	bh=NbA8ckRVscmW8v8SlEWghiPFbRi5Ci0FqaZWEFJMCWk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PXIvkepFyysMhEKHVBCf05+gDeCFZ4fpP+RbYuRiUTbR1WefxzG1HdfcnAaoZvPoGTpDbY3sMRUnEF3r3LwLiILxojcRDNh4klfJDjogKmhsMjdSlW+EF10bBAphbZEjhSkd4Ve8AqpTRb/73k+IimHmVnb6wsh9APMYxZf/DDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mBpMubhV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CZ7+Zk2M; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1786693852; c=relaxed/simple;
+	bh=qXGTT8ZtuDAGoN2/eQEyiZhYoWzpgWzXx8FUmOWpJiY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=YCYGfONrMCoMZ/0eDHzar7LN8z3mbnWDwkZX+r+YaUntMQWfeHsFGgUp9OqEh3HAFApEtaEOd04Ogna/8dci0HeAJbEvbjXM+eKD9Twe+iftQXD0lT7L3fLgjHHJSeMfSVGqgDJfr6WoWjVuox0pzgOZB+aCAW4yyn6DFvdDwdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=BfdQaWe5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XFLQfnDq; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mBpMubhV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CZ7+Zk2M"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BEDFE7A00E4;
-	Fri, 14 Aug 2026 03:50:18 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 14 Aug 2026 03:50:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786693818; x=1786780218; bh=8P9hpdTZQu
-	onQK0i18XGtTS9wk9lqz6s9gOt6fXORZI=; b=mBpMubhVe6dG5cARNoN4VcC6fs
-	wLow/OFBlj0ik571wgHF0uw8OT2CLUSh/NgF64pX2fjeRSHtnJo9/j0b8IlSOWWB
-	PcnJd3rOtKe5/wZoSzDwpm3Ed8N6JUE0CBmo3PAg8mRKrc15TjOPp3mBZUS/GGJL
-	Tgymeck9oOGrHwHt8SOwBc0aRBfQV1YE/uSOSTvGVbBHMN/1P0XRtz0janZ86fVR
-	Ad5noLXCxhp/vwI+1HNIlux+x/pCfkhgQaQ+7df0pSGZz3SI1kZI7yO9BWkhEgZn
-	LRaefxikagMVO/Xo0uJLquuPuE5s1yxSqJvkNFQpQwaZnD6okI+/i6J3oJwA==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="BfdQaWe5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XFLQfnDq"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.stl.internal (Postfix) with ESMTP id F21B51D00347;
+	Fri, 14 Aug 2026 03:50:46 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Fri, 14 Aug 2026 03:50:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786693846;
+	 x=1786780246; bh=qXGTT8ZtuDAGoN2/eQEyiZhYoWzpgWzXx8FUmOWpJiY=; b=
+	BfdQaWe5WSMZ2yf8iwK2ksa98rgJwzapTtDL8yIgQlKXxxcNtPwce7UeXJD8fJhd
+	96R6ulYjz35HG/mf+ZIaWwGW32likvI7caTYK3zpNwhNT7GIJfOlzHsqPeSP9EPT
+	XbBcIaMc2MNcjWsHv7vkNWeQcoYBfIaBGcfxAnFHqrA47yNXSJVu+C4rr8PyxTbD
+	seGTJHWOnEVznKLpYVTxV28TSmttkzOVyM2V24m7v1ozbSuBUNCPh5c62uPW/s02
+	iYp4kiJ7dQwl9VfeNlb36N4n7OD5qj3gg5S8udAWfzBH63N1U2wuCK1kPaeVT1m2
+	2rY8NfvLOu9u4SafD8+NNQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786693818; x=1786780218; bh=8P9hpdTZQuonQK0i18XGtTS9wk9lqz6s9gO
-	t6fXORZI=; b=CZ7+Zk2MhbC4ZWEk41Uh1+LFsSt8rcf+pqme0HyK8FIYHZmAMIN
-	sy4Z36vqU0J21DE+eT8YokhONb+mr1KxpZDoPz8eEZ8iHFVkXzPQuZGgcPbovJD3
-	pCJGgZldqMCVm1gTip5VvPzVAO2ESvRdC63zTX/lEWZdLuT+dC0NFHR6U4PRoSyP
-	/fyv6v8h7hAiFavZXe6rVAm1Kb3a/N8j/ZV7t4aLWRLXyp38Fnem95fRA03n8RK0
-	sj8oSvlcmspMArbD6SrohOUzVb9cCDeY8/B5uVbA6Gea0KoaB0IBRPdKCvlFF0hm
-	CfCrtKt9OlPUjnVy/plB1Z816h3rx1yUb2g==
-X-ME-Sender: <xms:ush-alHZ67sfmrHEAeQUVnKriYQXV7bVKhpWEyKzs-2Ea4p0AacSNg>
-    <xme:ush-ahM0g5iy_WXsuhkblLxx3UmXcTO4wwnYOCahbRyI-GjgXxS11QK_Dp1fnRWzL
-    h-A_XZ8h9fjq87NXDwqd4pTqulJhp04FLmZ1SUAOYbXyWUjZ-P7XA>
-X-ME-Received: <xmr:ush-avfQPO_oDkiFbfkNr9DTqymP9PH9kIV-_gNX5ZczCXIde-zTeiYuCdeBcqw2PMYunv0kzuPzhTP39duGQIi9alwd09ueLk6n4I3Cfbg>
-X-ME-Proxy-Cause: dmFkZTElrfebw7WXXUI/6KjedN74Vo2BRX5n8aU6YYop926r+Tgj1OPAUaiODVciv6f/Qw
-    IJ3Pvk7w3Up/IBzOLpTyCx7CSy1WvaMFZOvgNgoWcvDstE5fGB8QJY2X1zXL1OVohh4jzt
-    vIrMrX1yW0slxhLQhLVPoRHgfgsU5wP9tBw2B0vGmooYVq5W4CY/hgEnZJkS9sGm4yHRnr
-    u0KPFV7wj8V/t0Obn6B5Fs53jZcV73cDWGJn/7fHenUd4050fJpp2HtdnDL7tZzB6BfBZh
-    WD092+nl7Ey4w2Je7ABs42tV0yFDTEGrO63mFbAm7AGSBLesNDSyet+VTNX89gdAb+nKTV
-    dVilbduxnuCu37boc2joU7ywvoDeDZKx8hLTNsdq7+MS4SrbwMss5x+zyoJMuIyPEGu3vb
-    aiE0tOb0ZXWREl+Ygch0zApXbAgIgho8D973dsPiApZWhf3O5W/Sc6d/0V95YNHW2aZFie
-    AMKvKWt4jMnkzzRl2sAK5ZOtL9XXa3582zCQX7z7IS/+uT9vyEKOhsfd1YcuH/aiDFNejw
-    tckHwrJ+iswFN2aRM7YppovfSKRIJ7MMhLVlqWRULdtUGAr0+GzFleLnmimmqG3RfZjZhC
-    0e0otJ7I2oMO+G77lSTk1bZO1Gmt0IWjTaUTxzjFJuPmLZlRL2IIr8aF9Ecg
-X-ME-Proxy: <xmx:ush-amsN-NtajApJbYkkQHRXYy8mL6KVJ1YylPt6asIb3ZOpb5hWCA>
-    <xmx:ush-aomVZeKAQLmtun8HJUpqx21L3az0vawntZfQH0FBD99KDX7d-A>
-    <xmx:ush-agwb4lWvCdyhK8Vpnvbxz-FKXu1qE05azi7U1QeMZbyBMlz_KQ>
-    <xmx:ush-aiOU22Lm_KPEX_LbmZtkX2v3fWUNQmP04-MrFf9PJkOSDhgBBw>
-    <xmx:ush-ajLl9BAmTO-QrqZqVPkoEWIjqLi7EiPTzBUK8HUwvf_F_272zwV3>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 03:50:17 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 09da8cfc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 14 Aug 2026 07:50:16 +0000 (UTC)
-Date: Fri, 14 Aug 2026 09:50:13 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] packfile: fix perf regression with many packs
-Message-ID: <an7ItVYrKZFXg2ci@pks.im>
-References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com>
- <pull.2202.v2.git.1786633010179.gitgitgadget@gmail.com>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786693846; x=
+	1786780246; bh=qXGTT8ZtuDAGoN2/eQEyiZhYoWzpgWzXx8FUmOWpJiY=; b=X
+	FLQfnDqmC7YpgOX+FDN/jAkipfMdZJfvGzSP2dFJkeU9KxuvLPw5v2+BktjwT6uM
+	oEF2CPhxBK1v+SIjNDqb1KIXoV7Uhd8H9Nwj3nw/jIt0/09blrf06A3Y/unGkzMp
+	/6z28IvztV/dv3hU1cP+nlaUNH0KFrP7rVZblFrUaNxSY6OW8LIbzHt1YOHBdvQv
+	98VaMcX1ci0+4t1YpYpgIbOteq/RHt2II16WLLqlmPknJtwpBHG+Gh2jtOfLHUPf
+	vF8l00Ieihy7JQs7vReYS9naxoC3fcw7a18s48Y9AFLgsumkrGJLbUx9TDphVhH6
+	/il9+LcZTzHV6ekImfgVg==
+X-ME-Sender: <xms:0sh-aoV4JsUsVSm-KhOz0IpB4Pfsg2usXATaz-PjvvPdk1IKpLiYLwg>
+    <xme:0sh-anai082wgF_VRrFWs0aqfFjalOEyKhq22BdYP1jzophXDLVJWy4qlEqH-WsUs
+    bElO9BShpHyl-xtddV2HB012M6AyVgjIzL_lVMvtLQ0jBqo_aoFDmU>
+X-ME-Proxy-Cause: dmFkZTGxbMXTEJz3HGhp6ratK3mQzAD4rDTmOxq7EZAb2ZPZcMirKf3FtynF7tdNcoKtLs
+    wXe3RU2yQTgb9ApxkVWCdZgXzeG2rsay/xyzH5SwBxVpfOeb5ctB1/BCAwHYmhhDFRKSHQ
+    sregLc3ht9nvU5t50szw3hE51Mw7BHiWbKYvsPqbMaRtiSsOZHnwMNWqKgxD9eGrh6mt84
+    rmSnizn4CuJ4bfjF3/KqPkqnrtxtcmmvPvpT6NMzaelSjEzNvcppSwoyk3f34c7rZNz2FK
+    MvHIp2W9ipVOQDsvIe8ctRRGEZ7SOQiG3OwrjmzpkSP9EYirX04VWGlFNVRr08gEJky1sD
+    8nI+nxYUj5wdvd3cflHbD5EduPI+Djx8/2D/ut2OSAak17+8w+afr6RqRK+XMnGZ3oP+H3
+    GmkQWf9jfnH4sR7VpTrHpfcHn6wsXsgB4hUiPqQ1Z6PCSyvrIsMWGj3ySip1j3aVYqG+T/
+    +OjIe8nok1U4dSSPXPaVXymkpJaz8r30VkxkhAEB9ak/BgdTGnHAa0E9b1zaIsvE/VQHtG
+    we1PMgxE8zGEpKA91iskqq+4Yq2Ntjhu1E8nH1Yzv8QwkYMj7BV111F7KxNHo/08KjxdMT
+    9kVO4M2EobG5ylPePZ+82veabIyxOLrXKK8etisZfdTJbdy2KsCJFU8r4I/A
+X-ME-Proxy: <xmx:1Mh-amC_ymgpx7r1yqLfsoDpEguEBwqDyajLXbXoiAMwS-rI13aalg>
+    <xmx:1Mh-ap0rsVYti0yh5A-YcTwq4x_EjXvaqEdq7ufObXV5mhkgAGfIeg>
+    <xmx:1Mh-ag1v0Nf0TCNJYPTvPv1F8xQHe7bNSAgNQI28KrRgnYMF_1sS0w>
+    <xmx:1Mh-amAVsVylwPK3I-9XxU0BXv5bkqddH3jnG8zkd-IKIL4zI0xJsg>
+    <xmx:1sh-ar2RJlOMWzkzHuacXPQAXhVN29aMVYum-2owC5dIyakYlEBtnlln>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 7026222C0075; Fri, 14 Aug 2026 03:50:42 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2202.v2.git.1786633010179.gitgitgadget@gmail.com>
+X-ThreadId: AzIdpI2gmJpk
+Date: Fri, 14 Aug 2026 09:50:22 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Vincent Mailhol" <mailhol@kernel.org>, git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+ "Philippe Blain" <levraiphilippeblain@gmail.com>,
+ "Patrick Steinhardt" <ps@pks.im>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Message-Id: <7dd74cba-2149-4d31-9d45-2c355137bf0d@app.fastmail.com>
+In-Reply-To: <3d0e8944-c17b-4665-88e0-2f955d52e8e9@kernel.org>
+References: <20260804-history_autocompletion-v1-1-6f7459ffb677@kernel.org>
+ <20260813-history_autocompletion-v3-0-69eed1cea93a@kernel.org>
+ <bd3707a8-70ad-4308-bc93-5aad84e028d6@app.fastmail.com>
+ <3d0e8944-c17b-4665-88e0-2f955d52e8e9@kernel.org>
+Subject: Re: [PATCH v3 0/4] completion: add support for 'git history'
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 13, 2026 at 02:56:49PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->     Changes since v1:
->     
->      * Fixed a typo in the commit message
->      * Dropped the claim that this patch fixes the CI clone perf regression
->        that's still being root-caused.
->      * Renamed the is_new parameter to the more informative skip_dup_check.
+On Fri, Aug 14, 2026, at 08:25, Vincent Mailhol wrote:
+>[snip]
+> As you guessed, b4 removed the line starting with #3. I didn't see this
+> coming. From now on, I will stop using # in the description.
 
-Thanks, I'm happy with this version. We can still iterate on the other
-patrs of the discussion after this patch has landed, as needed.
+You have a new enough Git (2.54.0) that you can use `core.commentString`
+if you like. And with that you can set it to a string that you would
+never type yourself.
 
-Patrick
+That=E2=80=99s more of an assurance than `core.commentChar` which was li=
+mited to
+one ASCII character.
+
+>
+> Should I send a v4 with the fixed cover letter, or is it OK as-is?
+
+No, no new version necessary. It wasn=E2=80=99t my intention to make a r=
+eroll
+out of a molehill.
