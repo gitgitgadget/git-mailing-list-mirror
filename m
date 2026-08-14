@@ -1,135 +1,147 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6169416854
-	for <git@vger.kernel.org>; Fri, 14 Aug 2026 07:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70D741D23B
+	for <git@vger.kernel.org>; Fri, 14 Aug 2026 07:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786693312; cv=none; b=ujI77CbuGg72zKW9MdS206wKwImBVBQUYk6PENy7IwQaQ6KJvzwjO6/1cmOJn4OPwTAhokiNo0K6SEGu9Du5fURZNyvcnn+FUWnnQgnE7kdPu8wCbjT/gC1XFQPungP2SSje5BxU/hhtoZxnCrZ3aOPMh757lCy1RXKgjvAJJP8=
+	t=1786693583; cv=none; b=V028sY/xC/SSyrARq3BeIGXMGqLyUhEoUw4n7EhiKOYZN/AXp6YNQMh6MGQuAExVCGL39rYVYODkD5sKjhDYs0e5MNfEt4rlj4yh41Tw8EIMHFzcFFoZYMjlNsg15yxgqWxV49Zv/7sScN2SFZRuAWiIwOjyRgzYDA3EG5LPvko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786693312; c=relaxed/simple;
-	bh=7zrn5NYclveAh80R4CSLvxvTu7pKoiuZXnX5Gco3Xqw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RcFN6le2rg81nIBnBx/KQE1FCBfAbX0v5YjCbhD+E1A3Uxo+xoWk7mOryWlNw2FOZ6IznB5rLJAFQZQILRfkrBhh1c6pkDdC5TxSkWsEuXZ8lwjlGcW+7YZklxvaFxGlFm/Jgq7fvCoNjLUfAv/rFrC0nXpf5rfuEQEPRhQ7GUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UHG1Wnbi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fcDS5ak/; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1786693583; c=relaxed/simple;
+	bh=BRnltEBhFu1gtvMG/He5GW+D3CPA1u4U55d+wFpYuA0=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=BHZqDQLMEfjcvUNDMIULZvgR8TPAn6h8/ILicsdxSb1GjKZ02d5hsX0KULhkKRQdqUF2fcBR6XYUiYMr1DRBdY8TMbB9kxF5yL0JreRG/AB+1TpF/8MpwQmx9peKRxlcGQk26OFuIrh7FRsZ9wq7diYw+9LgR6KVDWyay/Uz6W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Fu6JMP2T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TYtugvQ5; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UHG1Wnbi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fcDS5ak/"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id ED8AB1D0034B;
-	Fri, 14 Aug 2026 03:27:51 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 14 Aug 2026 03:27:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1786692471; x=1786778871; bh=KdPZzdtkuC
-	gG8lKF0+KmeA4eqgy+dr7AXPcnWvjAB9k=; b=UHG1WnbiH+zDFHN7Z4kgn3hqbN
-	P5Oey7x3amIBrLVOeiMBvNuDW5+wM6odFBzrsJk3zCS+k3amhFmDB9SsD9MQDXI2
-	coGf3tGHHV+bMkcvxSwnnlLCjMnfHOnvy29XA/N2G0uBDjfGZWtFhbmzU8goEHXQ
-	jszYXjaSdayhK2Y3x+brkzlRfCmEcopk6M3lozRjvDFGe/rgyzLNit84s8DZSvwf
-	N+68M0iyFlyzL9CDcIal4vXKyTjSlwYutYTq5vPZ+I83apnSh5BoeJsqh6mV6QWa
-	n6dd3TiRgFEOZu6k5bynU7FxNhwLgbtnXX2Lafpwsn3k1Sp6Lbg2gXw31CCA==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Fu6JMP2T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TYtugvQ5"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.stl.internal (Postfix) with ESMTP id 71B411D002E6;
+	Fri, 14 Aug 2026 03:46:14 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Fri, 14 Aug 2026 03:46:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1786693573;
+	 x=1786779973; bh=Z8ExsTiniYL1u5P2PPF8zlANSkb/UT+2P7830Qxb8y8=; b=
+	Fu6JMP2TsZ6yu0+gB0FBH3+8WFckODqmdFw1J7RwkrfiReMe8KevUKq8hY39OP0p
+	D4oTNLMojdubJ7JPJXrm+nafkqZadCLVmWOYIl4kZB+47+aILrMCvISK41uiTg06
+	Jwc0und9c2r9ndJYDQ/egbpEvMjQAVMYNSJRUDz0PnMUByJ66h8SlSxr2IEgoZS1
+	GpRkMr2fMEpRUZW/FLVMpCZKNLx70+cfGMDbfyCAbhzfN0arZKzCf/QPcJTNA86G
+	/3BfVqus8bx4l/dXZwV3n3bG1F49cnXGs0NZBLJw/854cQulEyXnTYLv5/QgUNNW
+	7bWqWvh9L7yI0ed5rEzYPg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786692471; x=1786778871; bh=KdPZzdtkuCgG8lKF0+KmeA4eqgy+dr7AXPc
-	nWvjAB9k=; b=fcDS5ak/xPQoJMWzFnjq6Sr02QNqkytl0prFuhcb9kvD5zPyD9G
-	40+uW6V7g3dLWltP+UwcnQpEp+FTt0wBVwieJq8lo54z4wj5Rd98cMDeIngLfM/G
-	dd5up7C4o9wjaRaKPuAzTgAgmvz26Y0aA8X3qGvaQgtIxjwtE7n/RY5XS9L4AU4h
-	+fKLuW6AoCQVIkd5NZCfPWt+OKvK2p7I4Wi14LdWx/hNJKjUSbiakn/+z9hnN9zE
-	/QuAGfHi8edqZbl7OHstpkDbgPQUtWGw+RhR2uP/UEue/iAtfjVrXbHjY483ypqH
-	SO6Ba3JRDgDnGDOaflIpy/ysItt2K/hZO4g==
-X-ME-Sender: <xms:d8N-avqk0OMmsJKx7oun-xNV-aCRfhSFn51i4-80LP7gxdgEr7nMbA>
-    <xme:d8N-ar7eVFXJyeDP56leL_DYrTyL4v46LqKNkHwzPPeXfKIJibpq7RtcHWPdBIB4p
-    T8BdQUyu1J6Wn2ChnfVSn9l786CPhic_XHoi7sLxYGFerFymx3uJHA>
-X-ME-Received: <xmr:d8N-audmrZvlo2vkQZioEtU1YJLmORACEnZsjEzaAoiYXy76toAVQyBhe0L9zlYw2aCIEhHSMO11KI9fMC5YI3MxhI8UVLW1KHGK65W_fZs>
-X-ME-Proxy-Cause: dmFkZTE3itlpFNUlyUroRVCo14rTJulh1TInroVxwL6COOeUL0oEZ5LTHxVaUOw9BqQMi/
-    WJKJE8haO0EsoGgUMOiP3sP1t8X8/QsuucxE9KbWjpHNt0GkyokQ6FgqQVr4H/dq0CzoLz
-    hEfeYJiTTXOY6tT1uU2HsN0od2oZdBwVOgF5nFlE6MJ7rgzABf6etiSiQtyVusIKlGvu8r
-    1FdNpMldC2fXrIZrYh9e0fmEyWoNfjfUvq82BmvrANCt0+Mcr2Le5u/b0kidxl+dgWqzdP
-    3OAoLOEFvbw2yJ03J3igCE6gO0FRA/I8dbiO/OI5yoXSo6JghzCNDYyoWIeb2famobEicS
-    E8wcLEu5GaFcRTthAHJEtLGYi4vZu/f+IGWu0eewsgu5WfjCB69GMXZlTo4ldTLj09cpL0
-    ZwDeO7G+pWdQSV2O1LnrRUxFdNV+1F0qD5PpZwnLSmtVcqp5+JuLqX1ZVqxaBa0TVpJzEo
-    5kUb70FXkdwTgt5yBVLG7jBVebal8Cwsv+M/frFAAcu0dvktDkIZ7yWjKz2YRIJYZgOOc5
-    qQXjy2fk7ghq0hnjg6Pm3WaSEnI4oW15+Mm+i16X6qry3P9o2hvePezzza4a53jO1TWtaH
-    H64661Ztm4Vhp5XEHetwcA2cFYtagtKEDikJgISJoLWZuqhwM9nNH1vO8XVw
-X-ME-Proxy: <xmx:d8N-ao7I69CgcrGM6moOMxS-GB1hijg4Txi-xQmblJrVsamKss_WYw>
-    <xmx:d8N-atvMMBljbCv0aNqqxUOSFdffcm4t-cMFEOkqslIh0L6FxJhb4A>
-    <xmx:d8N-aghbBaiKqfbMBBn0s4D6S-WOK7-p04USKEOnbB2agwf6-bSerw>
-    <xmx:d8N-agpOS6nLsmNGXQCHRwa05nERDIo2d0mrbjk80UOu5b144cLTFg>
-    <xmx:d8N-ahcabEY5TUgApVJrlzS6jRJ_45OdAKXXcgbpFZTCm3NjeMJFGas_>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 03:27:50 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c818eb32 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 14 Aug 2026 07:27:47 +0000 (UTC)
-Date: Fri, 14 Aug 2026 09:27:44 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 2/3] midx: pass custom '--base' through incremental writes
-Message-ID: <an7DcGwWwjbq-C5a@pks.im>
-References: <cover.1781294771.git.me@ttaylorr.com>
- <4115ee0a9a09351e47d557a1283fc6ec4d633304.1781294771.git.me@ttaylorr.com>
- <an2E_F_1DC4cPKG3@pks.im>
- <an4pffUrCY4xhTH2@com-79390>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786693573; x=
+	1786779973; bh=Z8ExsTiniYL1u5P2PPF8zlANSkb/UT+2P7830Qxb8y8=; b=T
+	YtugvQ5q5gJ8eg2Ngm+Qbz4ONLTrK7EQlGX1MscjfEAn7lWlj+HN8BjFN5oBZ8XB
+	6GYW0rO/+HB3SDIGzOno5uSNW98mDhzik3f44g5xdTys1ylfVov12cmDC/cmi8ei
+	W/jV4Oo2CNH0RdGHdOLy70+VzrNqARdbTrfmTU0J4nLDYpDyfkosxuu01Ynkj7Xf
+	UAAF66uyAORvxFEe/T4bXuuEwcqT8vsOdCRpK6k4HUr27hoirz6m32FHZp2A5EkO
+	tOg894oYJIREqSEbk5B951axMYibrJ7xSxpb7a8JbkjLxKLFVSydgBhWaqtTOQMx
+	Pdell1EvBCIhyeD5r5pTA==
+X-ME-Sender: <xms:wcd-apcgD3oFgyFey0cul8dXqI13xKg89NBR7vhUynBi0-la1wG1Fb0>
+    <xme:wcd-aiBee2jP3m_RUdBHSpu3MSSMLTPL-RHMf7wRzr-Xyd2exN8XVcEaIoz3Mlx_h
+    oddok9zOeMH2VmlWb1dGFxUcAcYxuuxCOEFNvHbrsYETicPUZeehQ>
+X-ME-Proxy-Cause: dmFkZTFGZllbr40L9eXyKi7LLyLeS32OIlXbUEr9edFGMMf8KWTzSQ6/RLiTY8wI6VKZkV
+    ZjJvLZ5Ceaaj/dBQHhguGLDdWnz/J7RSptIfDlXFiCnOEskSo6/Zcq90uOCgIxdDNNre3t
+    e+gSyfLK8S4UQ0K0EId6V3dXFrXrU12pYlF80INg72Y41nah+doHvD+mmsp1VI5qOVNcAW
+    wKMjTzbCJNX67LU2lnRqUpuYqcAN6a4kyeO1U/rxDQMN6L6yjLFDBWuWl1uthGiODhCpMb
+    6+NKRhpe2dxJ2e/J4PwijgEOKbZ7QUnAkppXtTj6rz0LQ2M2OGwtHBZkKGwiyXXDRwr6aw
+    QFypM/or1Uqs0tQXl3E/K9F9rPQesf9ADapx9iBnELNYgl+JrPAvOX+xwOkdX+5g+WpRlN
+    CG1QW0Snulb/DV+1a863kRWBISPNkdiVROhwKCEMDQtosGLDJglvksOH8WfK3LK6s+GEbB
+    OzX511EnudmB8dGqWDrshiosV9MC3c3rL9TLVYZGCLhyJPrfGrG6WJWLM7pVd8i1uw5KZD
+    mY6/z29Myd+vnInZQ8YjualpWe/R89HQZNGNA7XDf0srIBvjNGe33bFEjo2153gfpFKi1u
+    zDap5pb+f7UohqZb0eHxvAJvhPsV9K2PP6KHGHqYJ4vFGOjsw3xkvXrsSqJA
+X-ME-Proxy: <xmx:w8d-asBjLk8LWyliqYA-mI9tHI6GPBADG1RqOTvzXqUViWW1ReorBQ>
+    <xmx:w8d-agAjAF-OzYKFP_Gc8Qr59wDWqNr1CuRRDvN4fdopEYfE5LpOQg>
+    <xmx:w8d-avqjlgsCFEzsHKkbnu99D0XNso_XSXvnrpxMM7M4Qb9guVbIuA>
+    <xmx:w8d-ainH6kBJSFLr9PLAVWFsVl2FG_b3RK-h9705HRORd5YZwpL6hA>
+    <xmx:xcd-ap0rifR9mhwAgHO3X6A-5vSUei-JXg3OVF4qdUHAAi-LBanenxwz>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id ABE2822C0078; Fri, 14 Aug 2026 03:46:09 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <an4pffUrCY4xhTH2@com-79390>
+X-ThreadId: AzsVqDuXP2Wg
+Date: Fri, 14 Aug 2026 09:45:49 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
+ "Patrick Steinhardt" <ps@pks.im>,
+ =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+Message-Id: <ef8ee6fb-ef3d-4a83-b8fc-121448d58e53@app.fastmail.com>
+In-Reply-To: <xmqqfr0hqzvl.fsf@gitster.g>
+References: <synopsis_block.af9@msgid.xyz>
+ <V3_CV_synopsis_block.b64@msgid.xyz> <V3_synopsis_block.b66@msgid.xyz>
+ <xmqqfr0hqzvl.fsf@gitster.g>
+Subject: Re: [PATCH v3 2/2] doc: format-rev: use [synopsis] on code block
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 13, 2026 at 03:30:53PM -0500, Taylor Blau wrote:
-> On Thu, Aug 13, 2026 at 10:49:00AM +0200, Patrick Steinhardt wrote:
-> > > @@ -128,19 +128,33 @@ test_expect_success 'write MIDX layer with --base=none and --no-write-chain-file
-> > >  		--no-write-chain-file --base=none)" &&
-> > >
-> > >  	test_cmp "$midx_chain.bak" "$midx_chain" &&
-> > > -	test_path_is_file "$midxdir/multi-pack-index-$layer.midx"
-> > > +	test_path_is_file "$midxdir/multi-pack-index-$layer.midx" &&
-> > > +
-> > > +	echo "$layer" >"$midx_chain" &&
-> > > +	test-tool read-midx --show-objects "$objdir" "$layer" >midx.objects &&
-> > > +	test_grep "^$(git rev-parse 2.2) " midx.objects &&
-> > > +	cp "$midx_chain.bak" "$midx_chain"
-> > >  '
-> >
-> > Would it make sense to also test for an object from the first MIDX layer
-> > to be included? Otherwise we don't really assert that all layers are
-> > included in the new MIDX.
-> 
-> I don't think that is necessary in this case, but let me know if I am
-> missing something below.
-> 
-> The new layer is written with '--bitmap', and '--base=none' means that
-> there is no base layer from which the bitmap can inherit objects. Since
-> 1.2 is an ancestor of 2.2, writing a bitmap for the new layer already
-> requires that it contain 1.2 and the rest of its reachable history.
-> Otherwise bitmap generation would fail with the missing-closure error
-> before we reached the assertion.
-> 
-> Checking 2.2 confirms that an object from the old tip was pulled into
-> the new layer; the successful bitmap write already establishes that its
-> objects from the earlier layer were pulled in, too.
+On Fri, Aug 14, 2026, at 03:01, Junio C Hamano wrote:
+> kristofferhaugsbakk@fastmail.com writes:
+>
+>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>>
+>> This code block uses the placeholder `<subject>`. Let=E2=80=99s highl=
+ight this
+>> placeholder properly by using the `synopsis` block definition which w=
+as
+>> introduced in a34d1d53 (doc: convert git-show to synopsis style,
+>> 2026-02-06).
+>>
+>> Yes, note that code blocks since commit a34d1d53 can, on synopsis-sty=
+le
+>> docs like this one, be immediately preceded by `[synopsis]`, just like
+>> the command synopsis is:
+>>
+>>     [synopsis]
+>>     (EXPERIMENTAL!) git format-rev - [...]
+>>
+>> Cf. verse-style:
+>>
+>>     [verse]
+>>     'git name-rev' [...]
+>>
+>> Acked-by: Patrick Steinhardt <ps@pks.im>
+>> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>> ---
+>
+> Has this been tested with both AsciiDoc and AsciiDoctor?
+>
+>
+> https://github.com/git/git/actions/runs/31751206776/job/94617158587#st=
+ep:4:4886
+>
+> Curiously, it does not fail for me locally (by default my builds use
+> AsciiDoctor).
 
-I think that's a bit roundabout, as it simply tells us that the bitmap
-was generated correctly, but not that the MIDX contains the objects. It
-of course should if the bitmap was generated properly, but I would have
-preferred if we verified the property directly.
+Nope. :/
 
-Anyway, this is not a huge concern, more of a nitpick. Thanks!
+My change uses a code block:
 
-Patrick
+    [synopsis]
+    ----
+    ...
+    ----
+
+But the ones in `pretty-formats.adoc` use open blocks:
+
+    [synopsis]
+    --
+    ...
+    --
+
+I=E2=80=99ll do some better testing next.
