@@ -1,102 +1,106 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26703230BE9
-	for <git@vger.kernel.org>; Sat, 15 Aug 2026 19:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7033438BA
+	for <git@vger.kernel.org>; Sat, 15 Aug 2026 23:07:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786823572; cv=none; b=TPbv47CXch0tws1pwOYaOmrX+HvIB5Kx3HnmhI3MYK3hKGUL4lr6zqNjJ85Lm9db/hkHpOMDgyahqc8Kr7foZRUR8k5nuzejcIB4DZADuoAxTIFFVIG3UaZVBW7PjSwXvBn3+3QdBMfiFU+qNMu4sgMJr2julaT9KS1d+TAAKfw=
+	t=1786835221; cv=none; b=kcKqrsYG24YBcu8oMJew2h9oUC4Xw/ERnu546FCIc32v7RtTkWL1gHvsqrP6bLKMwclnSBw6bwO16135xsGrarR+bF/fYsq/DXrgDGnrZwcZ0fHiJcK4eYMKdi+Px19x6EaeOrb8nEFERjt0BiXPcySBcWrSiWyYkKrvE5OnU50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786823572; c=relaxed/simple;
-	bh=PQm2J2U3tSlX0v6sQioV9VbDj6OAdW9kRnOXytwQw3Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rV22jRP3vCEE33/6MrSFgM2YM55rbQl8n2D8RMS+K5Dg5OISSg2Sqy6x0LRz9WT3ux3ryTBcpI+n6nLjqXOUIfC7jlwdx000EUA//5qN8hzXLr5Xw3DTsDJxbF8yVFm/jI7WJNLcFBbcEUSwWQBGXLxaf68tseR7KXTYeRHQiLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DgCbF9+M; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1786835221; c=relaxed/simple;
+	bh=aNx8SfXSPBMFEoS5XWOFJhPYwrYEzs6lkpm28Hl7hGQ=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=aPzujXXVKB5e5c552X9aMokvRiuaWNkOv+tbKrA4D7/m5FdUyn/g3fVp21/FyymRDDZ2bU/pRDZKVenzzwC2Xg3upX+jTGoC/zYb6lgerytyQtw9xPrZ/rQqPmMdmeNyPikffN9dYHvSxdjKkd8/OmKke2wkQp1qzqE8PPt4lCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IcEPjS22; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DgCbF9+M"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4954a2dba6cso1956365e9.1
-        for <git@vger.kernel.org>; Sat, 15 Aug 2026 12:52:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IcEPjS22"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e041ea211so2307110a91.0
+        for <git@vger.kernel.org>; Sat, 15 Aug 2026 16:07:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786823569; x=1787428369; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=PQm2J2U3tSlX0v6sQioV9VbDj6OAdW9kRnOXytwQw3Y=;
-        b=DgCbF9+M70oHGd5JtWc/Rp33SF3etrs83V2Lpz2w3szfrfmzXrxLRdO14Ko0G5D/dG
-         a47oiJCZxuphYw1U+E7COtnjj0ThloTz5zv86w3FonBS1BbRzeroRNQ/gPB/PpjK0b6C
-         pHKx2wGLBF1OULRA/vDEg1fQzZQuo2H6k42f2cyyKWmnhRt+PCROtRnxxql7kgal0Cli
-         IrVLLRLEp8WMXw0wnuasE7c3z3E687QF1QZ5pjnGEsvAhTF2jWPrxhHL6gToWFvv8PLR
-         VgRW/hewuovdoAM0MjJdYlP7AxBmXWNVojBvaZwTRQbcCG8eGAaMp0mXZHXhQRHFKYaK
-         wDXA==
+        d=gmail.com; s=20251104; t=1786835219; x=1787440019; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:content-type:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=0/PM9Yf61UvwYuUkHACW2B2ehG3TdjJYn5cwgzU6X84=;
+        b=IcEPjS2294I12Pk4Xg9OMD/ScXpRMc5VkLDu3v+HvgywdrDCVS5LFXirMUPmh2XR9U
+         n+OXZI2NA0DwYIyZ8tvlKmkXZh20hCr0v+DQt6dOBDqg1Tj+kQxlIZk88fh9HmmvJ06E
+         Ctumek28eRsU5T8NVck4IgqrHx+UxkqaGEj+hhuV20iAuo8iVPTmXSQhDxIebzAR5rM1
+         h0FIaWGlvQtRTfmPKHpg8Q8R90xr5jNeQQXcyiLKpeG05N7B9lekFG8VN5HXme9ZUXpn
+         G5/TIPwIl4ybVea82TYUTyXAfF5xBEJfcsMKGaqerDwi9WK0T/1iFORk0a8NdwBBS4/L
+         igrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786823569; x=1787428369;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1786835219; x=1787440019;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=PQm2J2U3tSlX0v6sQioV9VbDj6OAdW9kRnOXytwQw3Y=;
-        b=mlmUeEuntkklfo+l1M2Z87nwHnhteh278nfCjsP8/BrCHqPwGAXMbngKkWRM1AdUS8
-         RkkvVYlkZQXuieK31D0HrYlN66VQwBF/xrQlK8way1sg+1kb/YGn1NGsozzc7lpnKO5t
-         NaIkzGGRLtEq7CUhm2qHnmOqg96vIcxqnRfdZie+geoOx+P748dbOfX+9ww/9wprkmBV
-         rfB57a7W4GZJ3fCsRwfPYZ8ynUjBJ/VtIJlEjBr4FfcUzUSGgTrNEJmSUxOMmdULj0vw
-         b+cKHy2TwgRDfDAUGyQvSDCK1BsqiA0YWxK/HOXS7FxLQN7umH/BYRTlPbfjUeZHWLBZ
-         nEAA==
-X-Gm-Message-State: AOJu0Yw9C63FG65vtCn6tZPXvNb1xFTatwic4x7YiVbmCrwqkp+9JhRq
-	epLRHVAOMaZRDtMGdXMMZBKVHwXEPk0Q+wKVvCQeFaQPERr24jJuJXk4
-X-Gm-Gg: AR+sD11mM76N0W96wjOs5Kuvy6xJ23bIC/8vsA3Pqz0e7hQOu1Ml3xltZBgNyO7ZLPH
-	5daCPDU4XuOpQp4WZ1uuQYwWJCeUMiCCmVpmzvKQlFspLaL9L/Xb4nyA8nao1tTv4afEmSKEg7j
-	AW9jsaNmD4vRdY+vFDN4qbHiQ41QoZ6BNnv51Hky0QBGA2+GM5YGmyj+PXd2lG7hn3bu5XpplDb
-	4DVnaWbtuNGxJbEwdHtjnW2BMv/adgPZcrBRI47z6dgedTsOpMyR2nG4a9QKBU552vyk6/zecvo
-	O4upzupeh+GMP6awaq7e53Gvs9kfgbWIb/HmwTGSYeKgqZrXQdBX5TbooAFofQA1Np3hS9QJlC8
-	Eh3743xofLCcGqaQST5im4wxdC96sN6koUEK8VN7casHG70oTjfaTcP+DYvtLvCUY2MQOcE1X1p
-	w6eE3GzQ8FkuMFxoGE/E5hOcf9uSfWqqLG+g92PxdCXk+0rov0rweOYTTN9ZQ/P6zn8w==
-X-Received: by 2002:a05:6000:2585:b0:46f:7d90:8124 with SMTP id ffacd0b85a97d-481607738d1mr10501689f8f.2.1786823569092;
-        Sat, 15 Aug 2026 12:52:49 -0700 (PDT)
-Received: from desktop ([194.127.199.110])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4815f2c46besm18747527f8f.31.2026.08.15.12.52.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Aug 2026 12:52:47 -0700 (PDT)
-Date: Sat, 15 Aug 2026 20:52:46 +0100
-From: Matthew Hughes <matthewhughes934@gmail.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Bash completion very slow in large repo
-Message-ID: <aoDB9roVjgoTeG5l@desktop>
-References: <an9iXOqOOvFfyN4A@desktop>
- <CALnO6CAWA4szRqq_=1kAjB_y6WqA5zSyyMZzPmgnV7KGb+AS7Q@mail.gmail.com>
+        bh=0/PM9Yf61UvwYuUkHACW2B2ehG3TdjJYn5cwgzU6X84=;
+        b=OR0fJwfRqOtxmlR2hYcyIcFk5iKSWRQW5DpJ+KcqlkSJjLaIRuFfG8B7CSHZtlMwou
+         1u06EOoV5vyN9vvCzcPKFjr1hM6BM42tdC1+15jpUFKvXWAYVF7IFT9OnnZR8aXhkQNP
+         m4pQxE5uOPxXf35vWDRuocWFQqUBwxLIyruKKslZZo1OobwT6IQB929D6aQJVknzeycN
+         9yKTxmSXfbDQlWGW//HNLQDT1+KTDfSJKmBidlqrwtrdU4NcBQU4pFWnjKD2XaYDYf/9
+         jg2LF5GABGm28hD/xi8KjIzJDSRbvxRZuPoGb0s8DcE8gpj8k3BM1GPOwcJ6OFSrb3eb
+         TNAQ==
+X-Gm-Message-State: AOJu0YzqSTlgbcn0DCs9lmMyquNVS98a4mmARa5AUM+BY8bwMNUOwPM2
+	Rn7/5Tccp20RUsTo22K7vz0m1G29b0VrvaSSPEOxhQNM437GVWmf39YG
+X-Gm-Gg: AR+sD10BwPZjZPpder164Wr6oR+JDfaD2MZRMws0OFoyVRKz834MfieTJBBa2b1LPcf
+	sZgWu4lIC4WB3OCAJfELqSX4Ho9D/IOAqcOkE3QPntRuAI4L4X/XzIL5UzpVbaJ63g/rBzU09xj
+	FZTRqMl3GXZIFDgxAZs9xH1yvPGhBupiU7iin1WG3B+IM5bhnMUuXkQb+4pX7rd2BIph/AxlkCe
+	PwcSpZzaGzvBPobXu6IICEtjsNNqJ9NdvAd7EcVBHjOrhn9Dzi3pfuENEQO0xnU62oUoGQz5tW1
+	cO0oAHK8tOo56tLkavy6FP93RGGT2p0xRCiepSijqLoT9CvS2DHbPwn0c0jsR+8DHCAdhV3m02d
+	aVcKCikOeYAULJe7OeG9Oy3CeW9uVKg5yiRsT3gCxn/0b5gFRrW7S0PQWkF5d2E2OQ2n3e0fRrs
+	3X1NTwqGO237pqx4eCEPidunz7ATsv/ssR8+bD7zhzI8S27rUjqNw8+JPWb5Mz9zP9syVHajLXV
+	JY6R+ojZMF0Dn+ybGUCzhEzhh76
+X-Received: by 2002:a17:90b:1850:b0:37f:bfd6:8b40 with SMTP id 98e67ed59e1d1-3933b751fecmr16661314a91.5.1786835219488;
+        Sat, 15 Aug 2026 16:06:59 -0700 (PDT)
+Received: from smtpclient.apple ([177.33.87.130])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-320ea90010bsm20486254eec.30.2026.08.15.16.06.57
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 15 Aug 2026 16:06:59 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALnO6CAWA4szRqq_=1kAjB_y6WqA5zSyyMZzPmgnV7KGb+AS7Q@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.700.51.1.1\))
+Subject: Re: [GSoC Patch 1/7] repo: add path.toplevel with absolute and
+ relative suffix formatting
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <20260716012138.6714-2-jayatheerthkulkarni2005@gmail.com>
+Date: Sat, 15 Aug 2026 20:06:45 -0300
+Cc: git@vger.kernel.org,
+ jltobler@gmail.com,
+ Junio C Hamano <gitster@pobox.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <749F5FAC-5803-4E7A-AEC8-BA653D329EE2@gmail.com>
+References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+ <20260716012138.6714-2-jayatheerthkulkarni2005@gmail.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+X-Mailer: Apple Mail (2.3864.700.51.1.1)
 
-On Sat, Aug 15, 2026 at 10:17:19AM -0400, D. Ben Knoble wrote:
-> Hi Matt, have you tried turning on "feature.manyFiles"? That enables a
-> few things (like the fsmonitor) that might help in large repositories.
 
-Ah, thanks for calling that out: I should've mentioned this is in a repo that's
-already configured via `git-scalar(1)`, so it sets that specific option off,
-but justifies:
+> 
+> +test_expect_success 'path.toplevel absolute and relative' '
+> + test_when_finished "rm -rf repo" &&
+> + git init repo &&
+> + (
+> + mkdir -p repo/sub &&
+> + cd repo/sub &&
+> +
+> + ROOT="$(test-tool path-utils real_path ..)" &&
+> +
+> + echo "path.toplevel.absolute=$ROOT" >expect.abs &&
+> + git repo info path.toplevel.absolute >actual.abs &&
+> + test_cmp expect.abs actual.abs &&
+> +
+> + echo "path.toplevel.relative=../" >expect.rel &&
+> + git repo info path.toplevel.relative >actual.rel &&
+> + test_cmp expect.rel actual.rel
+> + )
+> +'
 
-> feature.manyFiles=false
-> This disables the "many files" optimizations grouped under this feature config.
-> The expectation is that all valuable optimizations are also set explicitly by
-> Scalar config, and any differences are intentional.
-
-Though also testing in a fresh repo with no scalar but that option on I didn't
-see any significant performance change.
-
-I'm also not sure e.g. `git ls-files --exclude-standard --others --directory`
-knows about things like `fsmonitor`/the untracked cache, like e.g. `git status`
-does (disclaimer: I'm not at all familiar enough with the code to justify that
-claim, it's based purely on my qualitative experience, I'm also not sure if it
-_could_ benefit from such things)
-
-Cheers,
-Matt
+Question: why not use `test_repo_info_path` here?
