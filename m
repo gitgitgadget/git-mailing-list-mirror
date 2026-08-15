@@ -1,71 +1,72 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F7640A92E
-	for <git@vger.kernel.org>; Sat, 15 Aug 2026 07:01:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A45635F609
+	for <git@vger.kernel.org>; Sat, 15 Aug 2026 07:18:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786777295; cv=none; b=MXvLNbWAw5QLxEsz8GPFhg1deaBFdfJdGN2OPkup4TnaE73SqaZy4Pbhaom/aJVepwUAncH/BN2jrtD6UyAn5YTzdeD6eeXfrw1D3GYPlJdczLMIUW20ZTPgmc7pFiSZjvVXBOgE70RxOPNRYCnxjtKZlqFjKUPsNEuNFantsko=
+	t=1786778321; cv=none; b=mG9mcWA9qsTAN6IIYlvs8MOWysBn1udeAPlXHUgpsxbYafhJflCV6QQg7rS7CWWn+x2O/rJpR5jgO+LsqdHEvRlimWeR7Q2ahV/fYZVLW1JaZZQoOUqhwkbQCTmpnGWWYsQne3nyAc+Zr1wFEMVaJBH5qMOlWeiNIeT7Qi77IHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786777295; c=relaxed/simple;
-	bh=wfhzD755enGK5guv6MKmFag5AsNbVX4m1I1wrA92BnA=;
+	s=arc-20240116; t=1786778321; c=relaxed/simple;
+	bh=GSjbj7R7NH3EEBz6s+d+NRKisRkxsXLdsyn4gwWBZAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oEjNUyc1q1CR35xIwXB2fMrZDATUqaCaR3wKVOwHUws9WZcf8bkeGZqWLKwooRsmPjMbmdKYk9oP34CGrPd6li6KaoZIntdnBao3MSmmeACZG4cpkyfCuT+pFf2L7PsC66+P40DuStJuLpaNxcQeK1PPx9LYjFWQTgXFVporoRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ack//QRN; arc=none smtp.client-ip=209.85.216.46
+	 MIME-Version; b=P01RuxQizODJrcUZJGU3RGeGxGCpWmrugpogxcSkg36DroSpVgCaJbfMS1EQISR+HjGV72wZxR2Y5RpduORiqkoT4QWyLIjVstQOg9zXfYZnYK9JTWlZ6MON1Ao1CKR2xMihh9n8EMY1f0XryjAEXdmQrflZljSarfVG7YzwnuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rX21brTn; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ack//QRN"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38de840f2f0so1546121a91.0
-        for <git@vger.kernel.org>; Sat, 15 Aug 2026 00:01:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rX21brTn"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2cf27856f9cso17405425ad.2
+        for <git@vger.kernel.org>; Sat, 15 Aug 2026 00:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786777292; x=1787382092; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786778319; x=1787383119; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=1Up0rE7Q4qQy1EOQRcbu5kGdbHcDEfJgVGFXPUeKEPM=;
-        b=ack//QRNAvU2K6bD1L5wP+Kp6AtTFTDu7XkI5fpusJkp36hNj7sgmczGJAKqgOIixO
-         CQZb7+q21yohdN+Xy777gskFnLplHfJuUNKD4PXqoLwvGglDy3JiXPMYb2BQFKV5P8Ii
-         YhTrOny2CXPbjO7AJmGDkd3CiYy0WvVqnxEKtm7/TrsVQc7oqzYkSdXM3btynAehI6Os
-         q/p5Z3+7lHj6jZnnTrBseC1jSrvw1fv3v4bmN+P0Os23dGYU5LiSHDQAT3rOB+RIx7Bc
-         SCnleNQbPqo6g1HAhXyKQjboW5jq6QBXup9Uz46oAiECbH2MNr9nNUrwmbav9sw1l5hL
-         5xqg==
+        bh=eqbgRbUaTmz1F5keNWWycRdi48iZ7RRdDFzODPsC9+w=;
+        b=rX21brTnbRlIUF7dtiqanJRm5OK87BOQUVAQCwR8J+BSHC7DlR9BN9eAr/zSMhWkwq
+         yGv7TeRROBdhguSdTR0y5QaDaSsAVKau2Ha3Qf2tnYa3RJQGf4+8abu+Z5FKpJfblcNx
+         uv8ab3SMyiS8d9DHn+pnKQcTCQIuP3DBo4Y6VPMjlzozptKKaOEjeE6bvXTGXFVC9MFk
+         MS0dKHKa9atYwy53D1kXGHfoCPreLuRMVs8h4iVZCFruCcYREDJA8l8LEtgyrLWnxu9w
+         stQb3gLe/SclZUL4tYenqTdYwgsxN0OKwmN/89n5axD34X/Vx4gvy3vwTwEl8DbhjpXl
+         /3Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786777292; x=1787382092;
+        d=1e100.net; s=20251104; t=1786778319; x=1787383119;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1Up0rE7Q4qQy1EOQRcbu5kGdbHcDEfJgVGFXPUeKEPM=;
-        b=M0ifKdyRULYLsRURwXigxZI8LvGvx9Entyq44AzoYcz3s08CTvlHVdU0ih0Hy/7a7X
-         OdqVUqgmnjdt/r6nEdtJ5qNqBW66nLW8DhCWsquapCmMWu/vOrgV8QJKGPxRTEcv7LCL
-         KX5pMYpUOjHyaXsduoMjXfr8PUOnXt/LCXyjFiIBSUwDtEj6c5b6tbgmDZmH+/JrthwC
-         KwIgfmJ3jTCT//DSk2Bfrr0t6NoHEf0okvZvbL7VPVigHE2nJ6pT/s4vWzSyXzMb95Yr
-         9jV2J/hSLWH9n8WO2AP7oiyAtv21l+KakM/a5YP/usAfxDaTzU+Tu9idibfnTlmSBgk+
-         qhvg==
-X-Gm-Message-State: AOJu0YxxttIbvkKJsvJTR1c5rPdcC5UJWefiyMLGEEgOUVpuKBgYc0ft
-	N4TVl7mr2LmAkecvfjaFsjfgTZgvuoB2yQdTdke453JV/KTPZF0cqMS8G4w6Bg==
-X-Gm-Gg: AR+sD10+TBrFxWK+7LEVc8kA6nMbtgyNj2HNZofZAO3OndqAkWBUYfX+rxUs2BvdNAC
-	yg0mqEbGIs5M0eW3h1Rs1mwLuzbmURZv98+4gWQTSKAefJcYt4leEx11NKQLlVNG/VeM8n8ST6l
-	UulMdW/FoebiXwQEvt4QOry7oU51ODr4kcCcvF2N4r0zSkYXpf4kA2P7tdF0x898q6DPTqcatiY
-	UXhnxt/UZD+ssUNb96N07N05daqtW9HI62Rgf9JrY0axvpL+dxuND87Wg2ytn2wY+l8jNo3L4in
-	egOQVSQeKULvPoFRA0wJtQLT2iGzrSDu+oeVNxfNQak6gD0hi+1EvWwtQdG+VUWIDgHEetyulE6
-	MLuL7o7QqzMF+zheGZ8dfSC7KBsf2zjNtwe+6K76wheKbgH8AvwS4HCkvrkbsDQRMgCWcJ2PSuf
-	BCozZS9KF4X0OggwmcNPm8aCHnHsaNBWTAi2yK7N7M+G8kI3oTyKtEFwtbFKnY6qAstUntTXdBY
-	oq65SSUQD7lMn8tpnD0uiSshyNQTw==
-X-Received: by 2002:a17:90b:2d92:b0:36b:77b9:5c8c with SMTP id 98e67ed59e1d1-3933babae61mr13390334a91.17.1786777292009;
-        Sat, 15 Aug 2026 00:01:32 -0700 (PDT)
+        bh=eqbgRbUaTmz1F5keNWWycRdi48iZ7RRdDFzODPsC9+w=;
+        b=ZHbwcR49idAAsElkOvYQJSQT75yrB3OPQ1a88aRhsf5m3Atq2pLEUn8uQAe86m2lBi
+         w1FrrmhDyQO3VF28icqW+Hev5oF0auYAK3B2MUcb/3Sr/CPiwdChbqlcTWC2td96LwW6
+         uMRg0t+hDcIivgacrUWfQ/xvszSCJdOemElBGHaQUpBNuhusg6V34CzGkF0t8dbwmGYz
+         1d9ul3x/NLlWRcJ0bWxLXdd2OTlIufzKDw29p2m6KOEeT+QbXliv+ny76L0w5gFRR1AA
+         Ce74ymD+9/lP7W0SrSnDB6wjM9v3vD9vOMszTAV9VKdoSpTEZ01NVq//EJ3CCJfjIhKM
+         uBYw==
+X-Gm-Message-State: AOJu0Yx6CI2B2X7ij3jTDmuodQLi0oHDx1UMvB55rLWt3Jcx1hhwc/15
+	SuVijX3mQzQIm8ZHLsW5lBazbLOJzSu9243kGxzHMeERyoAZAm+gLenKESTASw==
+X-Gm-Gg: AR+sD10yE78g7urLLKLTS1qeELBCXiSwgTDjE1tL2Yms5JhFuNV4AKxVo0ztoL1+ACQ
+	sAtb8xBJQFFM6Zh1JpRnWZ5GpgF3MlvsbfwbU99JD2ac+5qUyJb1jjXSSePK/u7o5fqdg1iY0gA
+	rVlKUCVspFomWT+SQ6iaIrLi5+NYWNvp8ZNFfzJBZy0kZwbZ6pGLvptATfpfAZI8y0Mv3lvSCAq
+	FPDPqgemxmbiYNyTktsZDk7RPo8KHDhRzsqZ9Ic4Lhpb5QO9H0V1JXPhd+NowyRdJrkUcVLRQs1
+	H1/oYR+ckGKOAs76Wld36i2IfwxFEmeED2k5Yl0JHVfNqR/dX4uNd8UZQKebc2649Gz4yv1URCT
+	Jnz1DArwA1LQx02w1bW8kTMKP09OcSEuwi8PfBfS71zmYxhkJlT805UVm1FGyutz7czAadwC6cd
+	fIE6bGP7HvuCG6wgsRw4I1hWyPccEvulYpOOnIi7ogg3AmrPKoiTnzG+QIhnTAhEUECVPdRyEVJ
+	QAY2ZDtFWKYC9ZLoicPwt74sapBXg==
+X-Received: by 2002:a17:903:3c4c:b0:2cf:9cf2:3533 with SMTP id d9443c01a7336-2d3b0cbcd4bmr139916185ad.18.1786778319148;
+        Sat, 15 Aug 2026 00:18:39 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:313a:bee1:6c01:e931:89fc:1f80])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-320ea2fe8f1sm12455193eec.23.2026.08.15.00.01.28
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3218d3f398dsm12472234eec.22.2026.08.15.00.18.36
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 15 Aug 2026 00:01:31 -0700 (PDT)
+        Sat, 15 Aug 2026 00:18:38 -0700 (PDT)
 From: tilak-raaz <raaztilak07@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
+	wy@wyuan.org,
 	ben.knoble@gmail.com,
 	tilak-raaz <raaztilak07@gmail.com>
-Subject: [PATCH v3] submodule: warn on valueless active config
-Date: Sat, 15 Aug 2026 12:30:04 +0530
-Message-ID: <20260815070004.17538-1-raaztilak07@gmail.com>
+Subject: [PATCH v4] submodule: warn on valueless active config
+Date: Sat, 15 Aug 2026 12:48:29 +0530
+Message-ID: <20260815071829.22190-1-raaztilak07@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <MESSAGE_ID_FROM_JUNIOS_LAST_EMAIL>
 References: <MESSAGE_ID_FROM_JUNIOS_LAST_EMAIL>
@@ -77,11 +78,11 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The config parser previously threw a hard error if 'submodule.active'
-was provided without a value, causing commands to abort.
+The config parser throws a hard error if 'submodule.active'
+is provided without a value, causing commands to abort.
 
 Swap repo_config_get_string_multi() to repo_config_get_value_multi()
-to parse valueless keys safely. Use the standard config_error_nonbool()
+to parse valueless true safely. Use the standard config_error_nonbool()
 helper to emit a warning to the user rather than crashing.
 
 This resolves a NEEDSWORK comment in submodule.c.
@@ -89,13 +90,19 @@ This resolves a NEEDSWORK comment in submodule.c.
 Signed-off-by: tilak-raaz <raaztilak07@gmail.com>
 ---
 Junio, thank you for the review and guidance on the terminology and tense.
+
+(Apologies for the noisy v3; I botched my --amend and accidentally left the commit message in the past tense. This v4 corrects the commit message.)
+
 Regarding causing the command to fail on a malformed config: I investigated returning an error code here, but is_tree_submodule_active() is evaluated as a boolean predicate by its callers (for example, if (!is_tree_submodule_active(...))). Since -1 is truthy in C, returning -1 would cause callers to treat the broken submodule as active.
+
 To avoid changing the existing caller semantics or introducing process termination from this helper, I kept the continue behavior so the malformed entry is skipped after being reported with config_error_nonbool(), while valid entries continue to be processed.
+
 Please let me know if you would prefer a different error-propagation approach.
-Changes in v3:
--Updated the commit message to use present tense.
--Updated the commit message to use "valueless true".
--Fixed the whitespace and indentation in the t7400 test script.
+
+Changes in v4:
+- Updated the commit message to use present tense (fixing the omission in v3).
+- Updated the commit message to use "valueless true".
+- Fixed the whitespace and indentation in the t7400 test script.
 
  submodule.c                | 12 ++++++------
  t/t7400-submodule-basic.sh | 11 +++++++++++
