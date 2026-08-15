@@ -1,114 +1,102 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EC82405EB
-	for <git@vger.kernel.org>; Sat, 15 Aug 2026 18:09:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786817354; cv=pass; b=LWqnK17ocpM+ScVH0hE7AFln/xLT69dnvvUsPA6n9R3Y3tfv44MK+v9NdQLHCAiNuKgzWcSdLkus+IWdoKMLiqwzS6LkJeeu9r9QpkOD9vTyy+NVJXEKDc34kuBpMTVwugyiO8WHlijYPDhCXDFy3UmWo+pkTYlw0x9cc1M9IVg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786817354; c=relaxed/simple;
-	bh=/eoVV3mE7u3bhU7DFzk+dJwbCzFWxsXUIwWrikWlEKM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=F5MsH8xYCz1DPJo/P+QTdjdD2gs6vT3vSbQkBsxQ8WgKRdegMj82GFVugKvSKx1NIW5ChkBpV3wETIZlBxvafM8akfnl4WLF4J/77PUC1Bbn9KPGSWdptNN5+m2Ik8Mfw8R8HKjVoEbJ8FImdGYrtmN9waMMJG0wnOoQ2/gKLug=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h3t1j9We; arc=pass smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26703230BE9
+	for <git@vger.kernel.org>; Sat, 15 Aug 2026 19:52:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786823572; cv=none; b=TPbv47CXch0tws1pwOYaOmrX+HvIB5Kx3HnmhI3MYK3hKGUL4lr6zqNjJ85Lm9db/hkHpOMDgyahqc8Kr7foZRUR8k5nuzejcIB4DZADuoAxTIFFVIG3UaZVBW7PjSwXvBn3+3QdBMfiFU+qNMu4sgMJr2julaT9KS1d+TAAKfw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786823572; c=relaxed/simple;
+	bh=PQm2J2U3tSlX0v6sQioV9VbDj6OAdW9kRnOXytwQw3Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rV22jRP3vCEE33/6MrSFgM2YM55rbQl8n2D8RMS+K5Dg5OISSg2Sqy6x0LRz9WT3ux3ryTBcpI+n6nLjqXOUIfC7jlwdx000EUA//5qN8hzXLr5Xw3DTsDJxbF8yVFm/jI7WJNLcFBbcEUSwWQBGXLxaf68tseR7KXTYeRHQiLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DgCbF9+M; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h3t1j9We"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6acc74fee76so1214340eaf.3
-        for <git@vger.kernel.org>; Sat, 15 Aug 2026 11:09:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786817352; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mOiQ98yvvU4GG6maaxI55efp9XEZWFR+UeY5kNQoTQatDEl9FHCxVawHo5/pu1wo74
-         KnKkGjIn5DK4Uw08Cd4hRApjvXQ+kdQOBMN+CxEpBUB+T7ubw4DFodN3NlbABdDWFO7+
-         rgSDjkziCBpFYLyvEJD8T8K54RI0G7IQpDI6DMwI6IXwPH0C8dyZhRbLGiVuj6XxWycA
-         T33JGPrFxyKmna2zuiLLGf8pI6v+qXsYwQCUEeIz4ZGbGGLNNsxWHpAgs14lIx8oXI3/
-         JvYkmMSRQmhjA/kLgtoWKlmebk44LNz8KHOIWWt6/4e3L4g6CA01ixxWaYc8jOIyxb3U
-         E8Dw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=i2lj6+X55pSjX27BZ6G4Ba4qq2F0Y7ILclRmWOUwegg=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=eOTIZnGe/i13PWrAf/SOR007lEuvca/SuwbwslsyDo0AzrbUwMuxC44eIF3uKTDR8s
-         RoCiHQWPRq4fMvt0JZfFBDpiPdQncJw+eCu5QzWOeTMEVnCiiWWTkEgJKpsWV2cKcu62
-         BDYWNdBG8+k14aePg5IQpFcJD+aENpzgPQ7REKj/qmULmAST9dATqT8qGEAa0+Rj2LZV
-         te8jGqVTFxsR58MBY2dt3rCSDcI2RR0s3SoNkrAZfFq+yupulmrfj6/mVw7nzMtt8c+8
-         lm9wcw34E+C+MyTlPKMWB5zSIdRfM9Or6+JigUSSh20JBZPbFAFb7kdBl1ez9gBwqaER
-         0Eyw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DgCbF9+M"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4954a2dba6cso1956365e9.1
+        for <git@vger.kernel.org>; Sat, 15 Aug 2026 12:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786817352; x=1787422152; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=i2lj6+X55pSjX27BZ6G4Ba4qq2F0Y7ILclRmWOUwegg=;
-        b=h3t1j9WeXG4G2TvRH2zYvAo3ieSkpF2aPc8JYfpgL05WFSfFOI2dGa9wlDXdKfQ53c
-         fJZn3tO/y+aBB+BH5ep5fhvCDMAKAeUk8L9XhaN5wVj5gSPD4i6jGsNPEo4+OFNAsXqu
-         s3mnW1GCq/CfHj/RKhQx3i137dykD0rbCU6RGLs1ICyyaMuZc0o70f9RtECShivZScu0
-         mw+f3nSnYS8F+8uTHuut/cgis+PhhOjRDD6aMsa8rIGqVNQX1EWvcue/K91v0ABIpgUy
-         U6b9EOMsCOB8WRjJaK8Zfl5XwywOLSAgNR0OQEKRUtsPg92K1BxcHSUHQcMxOMXHxdjO
-         BCeg==
+        d=gmail.com; s=20251104; t=1786823569; x=1787428369; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=PQm2J2U3tSlX0v6sQioV9VbDj6OAdW9kRnOXytwQw3Y=;
+        b=DgCbF9+M70oHGd5JtWc/Rp33SF3etrs83V2Lpz2w3szfrfmzXrxLRdO14Ko0G5D/dG
+         a47oiJCZxuphYw1U+E7COtnjj0ThloTz5zv86w3FonBS1BbRzeroRNQ/gPB/PpjK0b6C
+         pHKx2wGLBF1OULRA/vDEg1fQzZQuo2H6k42f2cyyKWmnhRt+PCROtRnxxql7kgal0Cli
+         IrVLLRLEp8WMXw0wnuasE7c3z3E687QF1QZ5pjnGEsvAhTF2jWPrxhHL6gToWFvv8PLR
+         VgRW/hewuovdoAM0MjJdYlP7AxBmXWNVojBvaZwTRQbcCG8eGAaMp0mXZHXhQRHFKYaK
+         wDXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786817352; x=1787422152;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=i2lj6+X55pSjX27BZ6G4Ba4qq2F0Y7ILclRmWOUwegg=;
-        b=L8FMqbWhwA9YVydsHfTYMouOINH6h4HvuU+IRmHO3wJwdFJZmQTi4kG/iC/5f5PhQ5
-         l5fKmfA7ftVS3C/jPWnEkIvDuhi8QHiLigr8QMGNuMF6vWwQKoYjYdvZwjygU6LFir40
-         iRVZrUBSY7UyemSY3iwyZJCtRkk0d5MWJGDJVtSf5CoQbVDZDazN1swYoQdbOWdcQK0W
-         se77SpLWMX1hrpzb9hZ8F7ZzjNDRo1UE+ARzabUxKAEwqQiv8Z8Qy8IYMyks0E+SYbP9
-         SumEam/qHLKYLL8vtbahG/hSkxi6Lv2RBuN9SPrP1EUlwmAIIDmNCkXFdt0GG578XHv3
-         PUYg==
-X-Gm-Message-State: AOJu0YwG+FrHVmyJYPUNxkzVH/KwrrKZzaTsh+jIe07BKHlV2lTb4wEP
-	xp5ogj5HecH5xIKGR13lKKHHdCbmBgDgnJOWdrmar06NTbhQPMUcNJf6e9vrgYrorOcfWBggjWq
-	9hkPhOdv97zK0ge3MmRB+hwIVr5a8zBm2ICGK
-X-Gm-Gg: AR+sD10fFTLXL6eINl7UK/pQ9g33AHk3pTcu2fSAO0NOhGYeO7PfMF0uj1cR9ew3OMu
-	1cOlrCZtsjGslGR1F1AspR/9W3mEdC8oxhvePvP29KBAYqQT2gLcN7CGLdpraZ2G04MhSKzYP05
-	eXCQ1b7IKKBzgmBttD6C0BOc4R4KyyR5sa2PFKgjipo7SGXQRfFx8SDUWga9xlJaG3eDkVkKF1q
-	RU1Vcun/4iuPl//32b6j1JiucD0RDp9Www+wNl3+tthcT3a10yrfrOxhalpKhy111sNm9/72bXC
-	tYR4PSOh7ENhr+MTq/wHi89Gu970/mUQmoM4c3wu2t2HfGOhhjRU/j6X6iiEjBVPwY7TpH1YYg=
-	=
-X-Received: by 2002:a05:6820:188c:b0:6b0:ab1f:ec11 with SMTP id
- 006d021491bc7-6b0d690ae32mr12608237eaf.29.1786817351798; Sat, 15 Aug 2026
- 11:09:11 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786823569; x=1787428369;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PQm2J2U3tSlX0v6sQioV9VbDj6OAdW9kRnOXytwQw3Y=;
+        b=mlmUeEuntkklfo+l1M2Z87nwHnhteh278nfCjsP8/BrCHqPwGAXMbngKkWRM1AdUS8
+         RkkvVYlkZQXuieK31D0HrYlN66VQwBF/xrQlK8way1sg+1kb/YGn1NGsozzc7lpnKO5t
+         NaIkzGGRLtEq7CUhm2qHnmOqg96vIcxqnRfdZie+geoOx+P748dbOfX+9ww/9wprkmBV
+         rfB57a7W4GZJ3fCsRwfPYZ8ynUjBJ/VtIJlEjBr4FfcUzUSGgTrNEJmSUxOMmdULj0vw
+         b+cKHy2TwgRDfDAUGyQvSDCK1BsqiA0YWxK/HOXS7FxLQN7umH/BYRTlPbfjUeZHWLBZ
+         nEAA==
+X-Gm-Message-State: AOJu0Yw9C63FG65vtCn6tZPXvNb1xFTatwic4x7YiVbmCrwqkp+9JhRq
+	epLRHVAOMaZRDtMGdXMMZBKVHwXEPk0Q+wKVvCQeFaQPERr24jJuJXk4
+X-Gm-Gg: AR+sD11mM76N0W96wjOs5Kuvy6xJ23bIC/8vsA3Pqz0e7hQOu1Ml3xltZBgNyO7ZLPH
+	5daCPDU4XuOpQp4WZ1uuQYwWJCeUMiCCmVpmzvKQlFspLaL9L/Xb4nyA8nao1tTv4afEmSKEg7j
+	AW9jsaNmD4vRdY+vFDN4qbHiQ41QoZ6BNnv51Hky0QBGA2+GM5YGmyj+PXd2lG7hn3bu5XpplDb
+	4DVnaWbtuNGxJbEwdHtjnW2BMv/adgPZcrBRI47z6dgedTsOpMyR2nG4a9QKBU552vyk6/zecvo
+	O4upzupeh+GMP6awaq7e53Gvs9kfgbWIb/HmwTGSYeKgqZrXQdBX5TbooAFofQA1Np3hS9QJlC8
+	Eh3743xofLCcGqaQST5im4wxdC96sN6koUEK8VN7casHG70oTjfaTcP+DYvtLvCUY2MQOcE1X1p
+	w6eE3GzQ8FkuMFxoGE/E5hOcf9uSfWqqLG+g92PxdCXk+0rov0rweOYTTN9ZQ/P6zn8w==
+X-Received: by 2002:a05:6000:2585:b0:46f:7d90:8124 with SMTP id ffacd0b85a97d-481607738d1mr10501689f8f.2.1786823569092;
+        Sat, 15 Aug 2026 12:52:49 -0700 (PDT)
+Received: from desktop ([194.127.199.110])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4815f2c46besm18747527f8f.31.2026.08.15.12.52.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Aug 2026 12:52:47 -0700 (PDT)
+Date: Sat, 15 Aug 2026 20:52:46 +0100
+From: Matthew Hughes <matthewhughes934@gmail.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Bash completion very slow in large repo
+Message-ID: <aoDB9roVjgoTeG5l@desktop>
+References: <an9iXOqOOvFfyN4A@desktop>
+ <CALnO6CAWA4szRqq_=1kAjB_y6WqA5zSyyMZzPmgnV7KGb+AS7Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOqWQbKn88m=OBDF7W8bBPjeOxtRsvNmhsqNy9AryMKrOKtLUA@mail.gmail.com>
- <7d0e9933-1a5f-4755-8bc5-fa4fea42f61c@app.fastmail.com> <CAOqWQb+YzvVeqS85qYjQKK8jrUqDwV01eKqC8i1jgT886ixCwA@mail.gmail.com>
- <CAOqWQb+XY_u2OUNnBJ9GBGBz8B73ocHWp+V1tDBS-4a5-OviYA@mail.gmail.com> <aoB4pOTtJ65PjwPA@fruit.crustytoothpaste.net>
-In-Reply-To: <aoB4pOTtJ65PjwPA@fruit.crustytoothpaste.net>
-From: Peter Morris <mrpmorris@gmail.com>
-Date: Sat, 15 Aug 2026 19:09:00 +0100
-X-Gm-Features: AcwNN1UyWB9u2nAYcv83sjekVYFHLLbz8qp8hoQnFIDj3Kbmdqcjasq1JNoEhu0
-Message-ID: <CAOqWQbL24ZsLfDnc8pzCAdwaumWuoNaJOGz01PNSPxSkw6ZCqw@mail.gmail.com>
-Subject: Re: [RFC] git worktree: use filesystem cloning where supported
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALnO6CAWA4szRqq_=1kAjB_y6WqA5zSyyMZzPmgnV7KGb+AS7Q@mail.gmail.com>
 
-> ReFS has serious defects in its implementation.  If the data has been
-> written but not flushed to disk, the resulting copy will be corrupt.  I
-> just saw this come in with Git LFS[0] and I described it to a colleague
-> as "horribly broken".  I definitely don't recommend adding support for
-> this to Git until only fixed versions of Windows are publicly available.
-> [snip]
+On Sat, Aug 15, 2026 at 10:17:19AM -0400, D. Ben Knoble wrote:
+> Hi Matt, have you tried turning on "feature.manyFiles"? That enables a
+> few things (like the fsmonitor) that might help in large repositories.
 
-Windows CopyFile API opens the source file shared-read deny-write, so you
-cannot write to the file whilst it is being copied or you cannot copy
-the file because
-someone already has a write handle open.
+Ah, thanks for calling that out: I should've mentioned this is in a repo that's
+already configured via `git-scalar(1)`, so it sets that specific option off,
+but justifies:
 
-So this wouldn't happen on Windows.
+> feature.manyFiles=false
+> This disables the "many files" optimizations grouped under this feature config.
+> The expectation is that all valuable optimizations are also set explicitly by
+> Scalar config, and any differences are intentional.
 
-On Linux and Mac it seems they don't do the same. Linux FICLONE is supposed
-to be atomic so no problems if that is used, and for MacOS I can't see anything
-that would enable this to work.
+Though also testing in a fresh repo with no scalar but that option on I didn't
+see any significant performance change.
 
-So it would be Windows and Linux only.
+I'm also not sure e.g. `git ls-files --exclude-standard --others --directory`
+knows about things like `fsmonitor`/the untracked cache, like e.g. `git status`
+does (disclaimer: I'm not at all familiar enough with the code to justify that
+claim, it's based purely on my qualitative experience, I'm also not sure if it
+_could_ benefit from such things)
+
+Cheers,
+Matt
