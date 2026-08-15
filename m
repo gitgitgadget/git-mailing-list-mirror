@@ -1,80 +1,80 @@
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC6564AA4
-	for <git@vger.kernel.org>; Sat, 15 Aug 2026 18:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EC82405EB
+	for <git@vger.kernel.org>; Sat, 15 Aug 2026 18:09:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786817006; cv=pass; b=nCeMYCJlEY2ucCjKXVKZ7Hh7N9CWiuFRZ0xEaWNpwkc2ZsC9og3KMmI8exWqEFfJ7z/oba9ggHuqYtWwWCLmhssZGi+TKJTN8yLixIhMqdNikFCVLWqL4VlVw9ZINnYmiw+ton1+IgbZhpWXVV2QGZL7PaU6anmTnIP0rCtaluk=
+	t=1786817354; cv=pass; b=LWqnK17ocpM+ScVH0hE7AFln/xLT69dnvvUsPA6n9R3Y3tfv44MK+v9NdQLHCAiNuKgzWcSdLkus+IWdoKMLiqwzS6LkJeeu9r9QpkOD9vTyy+NVJXEKDc34kuBpMTVwugyiO8WHlijYPDhCXDFy3UmWo+pkTYlw0x9cc1M9IVg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786817006; c=relaxed/simple;
-	bh=clPHFpzT4AJvg2oKnK0xFQlXib/yN/yduXEoDwb9Nn0=;
+	s=arc-20240116; t=1786817354; c=relaxed/simple;
+	bh=/eoVV3mE7u3bhU7DFzk+dJwbCzFWxsXUIwWrikWlEKM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=m9yIe/L/Kd+BjgSG3GleBN9IsSjvso7Fga1W0HHOD73ToU7An+YNIF17jAxcuIW9HF5CrFWoJcKsSJZtCJwPBqoJRWqXmk7sgExQKN7AkhzlI9Ri+iTIdyO7Tr+GY5laIzOSfDExA9VN7HmgL6E2hTwNrin/wGtDC+ZpO9c1U4Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RwoeFOFB; arc=pass smtp.client-ip=209.85.160.51
+	 To:Content-Type; b=F5MsH8xYCz1DPJo/P+QTdjdD2gs6vT3vSbQkBsxQ8WgKRdegMj82GFVugKvSKx1NIW5ChkBpV3wETIZlBxvafM8akfnl4WLF4J/77PUC1Bbn9KPGSWdptNN5+m2Ik8Mfw8R8HKjVoEbJ8FImdGYrtmN9waMMJG0wnOoQ2/gKLug=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h3t1j9We; arc=pass smtp.client-ip=209.85.161.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RwoeFOFB"
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-448b89f700fso1457314fac.2
-        for <git@vger.kernel.org>; Sat, 15 Aug 2026 11:03:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786817004; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h3t1j9We"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6acc74fee76so1214340eaf.3
+        for <git@vger.kernel.org>; Sat, 15 Aug 2026 11:09:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786817352; cv=none;
         d=google.com; s=arc-20260327;
-        b=m6OD1q3u4iREGrYC0TLJlAD+IfS4HjgCgAdjSSc18yc6YSSKy8HVgIVyH3Nx74MIoW
-         Ew2bHTfikRRL62q5RTZ3bCwRo9Drr5GCU1KrmOT4xXDMqxtaKggjIKErbOXQc1vRn30e
-         vInRgJW8gRYQJAhXgVEhFtAwjc2VBN/ApBzGxCiCTGkAzE5ZIkfJ+Ap2YNwuyoOXrvon
-         oVz/PvVpv/RVplIEvVG/qKhtZmiKGPDwHVngLZeWmO11tQcUP+BEsuFfqc6cu225NbFD
-         PT1Givju8Il80yrCUJxMi0GwmTJjT3mohlA5rNafDhyF8EM4G31S1sHJC5TjUG0bZ6Y/
-         mNNA==
+        b=mOiQ98yvvU4GG6maaxI55efp9XEZWFR+UeY5kNQoTQatDEl9FHCxVawHo5/pu1wo74
+         KnKkGjIn5DK4Uw08Cd4hRApjvXQ+kdQOBMN+CxEpBUB+T7ubw4DFodN3NlbABdDWFO7+
+         rgSDjkziCBpFYLyvEJD8T8K54RI0G7IQpDI6DMwI6IXwPH0C8dyZhRbLGiVuj6XxWycA
+         T33JGPrFxyKmna2zuiLLGf8pI6v+qXsYwQCUEeIz4ZGbGGLNNsxWHpAgs14lIx8oXI3/
+         JvYkmMSRQmhjA/kLgtoWKlmebk44LNz8KHOIWWt6/4e3L4g6CA01ixxWaYc8jOIyxb3U
+         E8Dw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :dkim-signature;
-        bh=clPHFpzT4AJvg2oKnK0xFQlXib/yN/yduXEoDwb9Nn0=;
+        bh=i2lj6+X55pSjX27BZ6G4Ba4qq2F0Y7ILclRmWOUwegg=;
         fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=FnwTvrJsXYQCF841XXQtozLhux062vqllcAQHsxJrDQgfi66DihKz1VB03VnAkEhIK
-         5JH1HAb1di7a5dZMmRC17e4qvV5gjewpJYfd9/ZE/QKVM82ery6ZUmsxlwZsbqRWnnS2
-         cHCnBDcptqzSWJ0lxwn8Wcqn3uDiOtylp6RQxZ5dpVNU0z/Ruep8QRZo2If7rSQkgrYM
-         tRiyFbIMkhz/K17v75e0/3ULn3iD/MCnnHcNmA52Lg912fTnybsJ0QYAobtAEqwR9CBj
-         R+CFaF0SZM26Em1j0IHE0JrM1E8gR1YWTtClRh/6JXkonhC08tcOsqBOR5EhGZArtrYL
-         eA3Q==;
+        b=eOTIZnGe/i13PWrAf/SOR007lEuvca/SuwbwslsyDo0AzrbUwMuxC44eIF3uKTDR8s
+         RoCiHQWPRq4fMvt0JZfFBDpiPdQncJw+eCu5QzWOeTMEVnCiiWWTkEgJKpsWV2cKcu62
+         BDYWNdBG8+k14aePg5IQpFcJD+aENpzgPQ7REKj/qmULmAST9dATqT8qGEAa0+Rj2LZV
+         te8jGqVTFxsR58MBY2dt3rCSDcI2RR0s3SoNkrAZfFq+yupulmrfj6/mVw7nzMtt8c+8
+         lm9wcw34E+C+MyTlPKMWB5zSIdRfM9Or6+JigUSSh20JBZPbFAFb7kdBl1ez9gBwqaER
+         0Eyw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786817004; x=1787421804; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786817352; x=1787422152; darn=vger.kernel.org;
         h=content-type:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=clPHFpzT4AJvg2oKnK0xFQlXib/yN/yduXEoDwb9Nn0=;
-        b=RwoeFOFBA+uFnRxuJCA2WuFsWKq9BpaD96orUl9ZPR+yrq1d42/6CRvMXFaTYCPmaP
-         IbBDL3UA1hs72IO9FnNhxsF+YBoQ5Rb2B9CsVvn5vtxyhJB6mqS9SSRfb8mUleKiVVtF
-         COuUWxNu7twBLI6fgD7+fe9BFnifSC+mj/6adaIqCjC+9stTO1Wd7BJP/6zBV7k7AJp2
-         /b/O3mEIJIf/F50uyKGxlx20sYEZfZCaubv/7gYpM560sG1oGfZSf/RGYWMoVXQJS4h6
-         rx45aPbQh1nAVN73EsbFp6S/Y/l3pNAiIK8miFYnKch60Dja39lDaDGO1k1/SGy/KJuz
-         joeg==
+        bh=i2lj6+X55pSjX27BZ6G4Ba4qq2F0Y7ILclRmWOUwegg=;
+        b=h3t1j9WeXG4G2TvRH2zYvAo3ieSkpF2aPc8JYfpgL05WFSfFOI2dGa9wlDXdKfQ53c
+         fJZn3tO/y+aBB+BH5ep5fhvCDMAKAeUk8L9XhaN5wVj5gSPD4i6jGsNPEo4+OFNAsXqu
+         s3mnW1GCq/CfHj/RKhQx3i137dykD0rbCU6RGLs1ICyyaMuZc0o70f9RtECShivZScu0
+         mw+f3nSnYS8F+8uTHuut/cgis+PhhOjRDD6aMsa8rIGqVNQX1EWvcue/K91v0ABIpgUy
+         U6b9EOMsCOB8WRjJaK8Zfl5XwywOLSAgNR0OQEKRUtsPg92K1BxcHSUHQcMxOMXHxdjO
+         BCeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786817004; x=1787421804;
+        d=1e100.net; s=20251104; t=1786817352; x=1787422152;
         h=content-type:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=clPHFpzT4AJvg2oKnK0xFQlXib/yN/yduXEoDwb9Nn0=;
-        b=PaEDZ2L1dQFDFm/nODyWWUO9SDHil9ZuitbHb6EY24yFQarHKeU3kLkLUChP3UftFB
-         FHYWyT4G5SEEM2udQhEDwH0XFOOvQ1+0HchXe4H5ko217d/rF4gTTqZExSeO6lpdyjx2
-         sYFTb6Qx6j18LiwE0KOFKteZR13ymfcgZ6toeu7slwe9mfI+yXK7WxlGzwIRtt4vbB2m
-         R280URqeMOKLGBrsEkexcJmVsiwTdW57KehpUsQ1Ko2xhnrXMN/r8wd2IlQ19/1FDNve
-         CIRLu9mMeJTBeklXnSYRM7l1irAavGYiLNIfVzY5Tct576lJddRf7Kvf8okRI6gOfxx3
-         MqNA==
-X-Gm-Message-State: AOJu0YxiWPxPqOSoABh/lAHMuR75VyO7ERhlm3C5amlqaxWEFPMGj0kv
-	pi3PLMfVFf+pi5v/WHHx4IcQLKiv3PkKqa9ipVjqpR+96/tgvIByzNw4VAeQ/wK36W4G3yXEOah
-	USsbgBScQtbWMrDxRAmZLB3j4/AmPTZnI5DwVokE=
-X-Gm-Gg: AR+sD13Vx4B02+LUofEl2LL/ASmzWQfwiVDJAWxdwhYC2pqRFmbYKDi2kd0DzQmj+qX
-	rOHApBkinaMMKCOKWVKvye0N8HlSTrx4qqy/2tMjHm+f48erAR9+1T5GXxgLbiniEQFTxsTouvr
-	2uJKgso9omDl8nYYaGLcKNcBsUzTjlQmuP2ZJcpJEYjpFSyIHvc7i+xJ65RJAfj4lffcenLDPxC
-	P8p/C/MIwNKcHDlKWEdpMukFib/aDTysjsygJzwlxU2Ny8JVAHbKaZsoqhmz0vwOACMRBCCr3g4
-	wYrSl/I7MGoGQO4gpdUbTSdqXEH0MFNRErJHKZyLgz6iGKkCYL7mn50Wlz0Rub5i236Lc2siA2C
-	aMBQ=
-X-Received: by 2002:a05:6808:2f0c:b0:496:559d:5474 with SMTP id
- 5614622812f47-4b2414f5f25mr12883307b6e.8.1786817003633; Sat, 15 Aug 2026
- 11:03:23 -0700 (PDT)
+        bh=i2lj6+X55pSjX27BZ6G4Ba4qq2F0Y7ILclRmWOUwegg=;
+        b=L8FMqbWhwA9YVydsHfTYMouOINH6h4HvuU+IRmHO3wJwdFJZmQTi4kG/iC/5f5PhQ5
+         l5fKmfA7ftVS3C/jPWnEkIvDuhi8QHiLigr8QMGNuMF6vWwQKoYjYdvZwjygU6LFir40
+         iRVZrUBSY7UyemSY3iwyZJCtRkk0d5MWJGDJVtSf5CoQbVDZDazN1swYoQdbOWdcQK0W
+         se77SpLWMX1hrpzb9hZ8F7ZzjNDRo1UE+ARzabUxKAEwqQiv8Z8Qy8IYMyks0E+SYbP9
+         SumEam/qHLKYLL8vtbahG/hSkxi6Lv2RBuN9SPrP1EUlwmAIIDmNCkXFdt0GG578XHv3
+         PUYg==
+X-Gm-Message-State: AOJu0YwG+FrHVmyJYPUNxkzVH/KwrrKZzaTsh+jIe07BKHlV2lTb4wEP
+	xp5ogj5HecH5xIKGR13lKKHHdCbmBgDgnJOWdrmar06NTbhQPMUcNJf6e9vrgYrorOcfWBggjWq
+	9hkPhOdv97zK0ge3MmRB+hwIVr5a8zBm2ICGK
+X-Gm-Gg: AR+sD10fFTLXL6eINl7UK/pQ9g33AHk3pTcu2fSAO0NOhGYeO7PfMF0uj1cR9ew3OMu
+	1cOlrCZtsjGslGR1F1AspR/9W3mEdC8oxhvePvP29KBAYqQT2gLcN7CGLdpraZ2G04MhSKzYP05
+	eXCQ1b7IKKBzgmBttD6C0BOc4R4KyyR5sa2PFKgjipo7SGXQRfFx8SDUWga9xlJaG3eDkVkKF1q
+	RU1Vcun/4iuPl//32b6j1JiucD0RDp9Www+wNl3+tthcT3a10yrfrOxhalpKhy111sNm9/72bXC
+	tYR4PSOh7ENhr+MTq/wHi89Gu970/mUQmoM4c3wu2t2HfGOhhjRU/j6X6iiEjBVPwY7TpH1YYg=
+	=
+X-Received: by 2002:a05:6820:188c:b0:6b0:ab1f:ec11 with SMTP id
+ 006d021491bc7-6b0d690ae32mr12608237eaf.29.1786817351798; Sat, 15 Aug 2026
+ 11:09:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,36 +82,33 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <CAOqWQbKn88m=OBDF7W8bBPjeOxtRsvNmhsqNy9AryMKrOKtLUA@mail.gmail.com>
- <7d0e9933-1a5f-4755-8bc5-fa4fea42f61c@app.fastmail.com> <xmqq4igwpswr.fsf@gitster.g>
-In-Reply-To: <xmqq4igwpswr.fsf@gitster.g>
+ <7d0e9933-1a5f-4755-8bc5-fa4fea42f61c@app.fastmail.com> <CAOqWQb+YzvVeqS85qYjQKK8jrUqDwV01eKqC8i1jgT886ixCwA@mail.gmail.com>
+ <CAOqWQb+XY_u2OUNnBJ9GBGBz8B73ocHWp+V1tDBS-4a5-OviYA@mail.gmail.com> <aoB4pOTtJ65PjwPA@fruit.crustytoothpaste.net>
+In-Reply-To: <aoB4pOTtJ65PjwPA@fruit.crustytoothpaste.net>
 From: Peter Morris <mrpmorris@gmail.com>
-Date: Sat, 15 Aug 2026 19:03:12 +0100
-X-Gm-Features: AcwNN1VzV-q6RKBGdEcJ4E-rHuwWjZqleFad1ZFpACBzBeoB98AQsRj2Ux-Bv10
-Message-ID: <CAOqWQbKuD_u5d8XbZ=6x9qc61EXNj9hDQjRfe=XE1FkWCp45bg@mail.gmail.com>
+Date: Sat, 15 Aug 2026 19:09:00 +0100
+X-Gm-Features: AcwNN1UyWB9u2nAYcv83sjekVYFHLLbz8qp8hoQnFIDj3Kbmdqcjasq1JNoEhu0
+Message-ID: <CAOqWQbL24ZsLfDnc8pzCAdwaumWuoNaJOGz01PNSPxSkw6ZCqw@mail.gmail.com>
 Subject: Re: [RFC] git worktree: use filesystem cloning where supported
 To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-> On Fri, 14 Aug 2026 at 17:29, Junio C Hamano <gitster@pobox.com> wrote:
-> In that thread, Brian makes a good point that you cannot "copy"
-> dirty working tree files from an existing worktree, and also that
-> you cannot have the same branch checked out in multiple worktrees at
-> the same time, to avoid making other worktrees out of sync when a
-> commit is made in one of the worktrees to advance the branch tip.
+> ReFS has serious defects in its implementation.  If the data has been
+> written but not flushed to disk, the resulting copy will be corrupt.  I
+> just saw this come in with Git LFS[0] and I described it to a colleague
+> as "horribly broken".  I definitely don't recommend adding support for
+> this to Git until only fixed versions of Windows are publicly available.
 > [snip]
 
-Hi Junio,
+Windows CopyFile API opens the source file shared-read deny-write, so you
+cannot write to the file whilst it is being copied or you cannot copy
+the file because
+someone already has a write handle open.
 
-Thanks for the detailed reply. That makes sense, and it's useful to
-know that the approach is technically viable.
+So this wouldn't happen on Windows.
 
-I'm afraid I'm not sufficiently familiar with Git's internals to take
-this on myself, but hopefully someone with more experience in that
-area might be interested in implementing it.
+On Linux and Mac it seems they don't do the same. Linux FICLONE is supposed
+to be atomic so no problems if that is used, and for MacOS I can't see anything
+that would enable this to work.
 
-I've seen lots of complaints about Solid State Drives dying due to
-worktree use. I personally have a repo containing over 80GB of images
-that never change, so currently worktrees just aren't an option for
-me. I hope this will change in the near future!
-
-Pete
+So it would be Windows and Linux only.
