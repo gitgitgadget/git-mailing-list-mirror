@@ -1,64 +1,64 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7033438BA
-	for <git@vger.kernel.org>; Sat, 15 Aug 2026 23:07:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0736737E5E2
+	for <git@vger.kernel.org>; Sun, 16 Aug 2026 00:54:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786835221; cv=none; b=kcKqrsYG24YBcu8oMJew2h9oUC4Xw/ERnu546FCIc32v7RtTkWL1gHvsqrP6bLKMwclnSBw6bwO16135xsGrarR+bF/fYsq/DXrgDGnrZwcZ0fHiJcK4eYMKdi+Px19x6EaeOrb8nEFERjt0BiXPcySBcWrSiWyYkKrvE5OnU50=
+	t=1786841645; cv=none; b=fJZO1dOP/rOq/3PTNJtPS88WhC3ci8sM6LgAX9qYteD//8LISwAyGKgf3OuvAzkyBvAxQzbAEZX74Eq6Vrp/PRpHux4j+YsrEakr45nmcFSn8/xazRMWexTk5mSmbKGX54FXCxNq/31b9I1xg+KkzGgIDqCaj5xVXbj0HO5HfJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786835221; c=relaxed/simple;
-	bh=aNx8SfXSPBMFEoS5XWOFJhPYwrYEzs6lkpm28Hl7hGQ=;
+	s=arc-20240116; t=1786841645; c=relaxed/simple;
+	bh=2nuqteX2QXtvYUIKUvzlTkIsTcoM5JJPcDVolafYPOg=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=aPzujXXVKB5e5c552X9aMokvRiuaWNkOv+tbKrA4D7/m5FdUyn/g3fVp21/FyymRDDZ2bU/pRDZKVenzzwC2Xg3upX+jTGoC/zYb6lgerytyQtw9xPrZ/rQqPmMdmeNyPikffN9dYHvSxdjKkd8/OmKke2wkQp1qzqE8PPt4lCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IcEPjS22; arc=none smtp.client-ip=209.85.216.53
+	 Message-Id:References:To; b=NEIe6MVtyG04rx10wsE0qLoSXILMlMKOymRFxINp3OwkyATMAKY1mySv8z8WCfSyPOzQpenMREdUF7T094p/e8yV4sOZb99DD7PwQPxoJN9AhAdhP2PskA9kTjDaLEmgmjWo9o9jNMRy65dEzv0zuBT6P45oFq71I8QimAKzBno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yti/sBAe; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IcEPjS22"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e041ea211so2307110a91.0
-        for <git@vger.kernel.org>; Sat, 15 Aug 2026 16:07:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yti/sBAe"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2d5655cc850so3852555ad.3
+        for <git@vger.kernel.org>; Sat, 15 Aug 2026 17:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786835219; x=1787440019; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786841643; x=1787446443; darn=vger.kernel.org;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:content-type:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=0/PM9Yf61UvwYuUkHACW2B2ehG3TdjJYn5cwgzU6X84=;
-        b=IcEPjS2294I12Pk4Xg9OMD/ScXpRMc5VkLDu3v+HvgywdrDCVS5LFXirMUPmh2XR9U
-         n+OXZI2NA0DwYIyZ8tvlKmkXZh20hCr0v+DQt6dOBDqg1Tj+kQxlIZk88fh9HmmvJ06E
-         Ctumek28eRsU5T8NVck4IgqrHx+UxkqaGEj+hhuV20iAuo8iVPTmXSQhDxIebzAR5rM1
-         h0FIaWGlvQtRTfmPKHpg8Q8R90xr5jNeQQXcyiLKpeG05N7B9lekFG8VN5HXme9ZUXpn
-         G5/TIPwIl4ybVea82TYUTyXAfF5xBEJfcsMKGaqerDwi9WK0T/1iFORk0a8NdwBBS4/L
-         igrg==
+        bh=j7WD57Hb6yfbte2Dznk3DTRnBiMbCvbsFgGbm+yDGDU=;
+        b=Yti/sBAe/x7ZSNPiDi0HRWp9IReWQnubSQiQvg/mRlV50JRvde52ZL79xtsitv38cm
+         T271Yk6/NvF+J+W8YL+KyoWbAvOCCW7bXCIhzIwdWu/XZsllseGtzqr+1wbla08rQ/YD
+         HNJ7CdNFgkhDtzCY2tt+xDn+PB/6sBjFlMns1OtdnOwJG/qzxYR+bm/vn2zEEFgInZcT
+         iUhRFc84DEFyY/uBomRoQoSUgWtziiABbZp00wuKL4a9sPMIWl/zYCmDAbIGKHweuvWv
+         QLPbswNOUfOagzDU7m7CEb/sY5PvBDhlh1DVsNW9mHm2OO5wFWA4QXkANKMP2IkIfp8I
+         Oo6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786835219; x=1787440019;
+        d=1e100.net; s=20251104; t=1786841643; x=1787446443;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=0/PM9Yf61UvwYuUkHACW2B2ehG3TdjJYn5cwgzU6X84=;
-        b=OR0fJwfRqOtxmlR2hYcyIcFk5iKSWRQW5DpJ+KcqlkSJjLaIRuFfG8B7CSHZtlMwou
-         1u06EOoV5vyN9vvCzcPKFjr1hM6BM42tdC1+15jpUFKvXWAYVF7IFT9OnnZR8aXhkQNP
-         m4pQxE5uOPxXf35vWDRuocWFQqUBwxLIyruKKslZZo1OobwT6IQB929D6aQJVknzeycN
-         9yKTxmSXfbDQlWGW//HNLQDT1+KTDfSJKmBidlqrwtrdU4NcBQU4pFWnjKD2XaYDYf/9
-         jg2LF5GABGm28hD/xi8KjIzJDSRbvxRZuPoGb0s8DcE8gpj8k3BM1GPOwcJ6OFSrb3eb
-         TNAQ==
-X-Gm-Message-State: AOJu0YzqSTlgbcn0DCs9lmMyquNVS98a4mmARa5AUM+BY8bwMNUOwPM2
-	Rn7/5Tccp20RUsTo22K7vz0m1G29b0VrvaSSPEOxhQNM437GVWmf39YG
-X-Gm-Gg: AR+sD10BwPZjZPpder164Wr6oR+JDfaD2MZRMws0OFoyVRKz834MfieTJBBa2b1LPcf
-	sZgWu4lIC4WB3OCAJfELqSX4Ho9D/IOAqcOkE3QPntRuAI4L4X/XzIL5UzpVbaJ63g/rBzU09xj
-	FZTRqMl3GXZIFDgxAZs9xH1yvPGhBupiU7iin1WG3B+IM5bhnMUuXkQb+4pX7rd2BIph/AxlkCe
-	PwcSpZzaGzvBPobXu6IICEtjsNNqJ9NdvAd7EcVBHjOrhn9Dzi3pfuENEQO0xnU62oUoGQz5tW1
-	cO0oAHK8tOo56tLkavy6FP93RGGT2p0xRCiepSijqLoT9CvS2DHbPwn0c0jsR+8DHCAdhV3m02d
-	aVcKCikOeYAULJe7OeG9Oy3CeW9uVKg5yiRsT3gCxn/0b5gFRrW7S0PQWkF5d2E2OQ2n3e0fRrs
-	3X1NTwqGO237pqx4eCEPidunz7ATsv/ssR8+bD7zhzI8S27rUjqNw8+JPWb5Mz9zP9syVHajLXV
-	JY6R+ojZMF0Dn+ybGUCzhEzhh76
-X-Received: by 2002:a17:90b:1850:b0:37f:bfd6:8b40 with SMTP id 98e67ed59e1d1-3933b751fecmr16661314a91.5.1786835219488;
-        Sat, 15 Aug 2026 16:06:59 -0700 (PDT)
+        bh=j7WD57Hb6yfbte2Dznk3DTRnBiMbCvbsFgGbm+yDGDU=;
+        b=iozwafqnmVovr55ZqXJDawtNiMRooDI9rAweBuNS4yA+L817ZjKcyFphdhBnfOF5kz
+         QlosVk+eWW+MsRa9feRbTi8/tpvGKCoaPlE2HUcvK0TNPatgzMdKW21yda744xSsT0o3
+         9i7WjH9xPW5jVco7BP1wyk3LXVCAwtcP8yEfu06gDKxHVu3Ea6FiYMfDII6kkVvWEk7D
+         dydqQXJ8wu1Q/MOGn5CZkxhv38WuCd4UfKrt+WSdF8UZ2eyy6p6pAJMjqJNAeRkmPtYI
+         pvWtP7Z+95nnsqXfzoc5ZHl1WNZ2qKH/KivOIJcXUQ8k+ZP398xgAujnbj+LGrTmvRKw
+         5tGg==
+X-Gm-Message-State: AOJu0Yy7dHB0Z+gwTYl0IH36/f5OtTB9uZfEXhhM1Jffrd5xaPJ5ZJ9z
+	Dwn3x4cenLjli7YKVbtw7kaBZeu1ENDhiahj5mQzHNDhS/thgw1UR3Tb
+X-Gm-Gg: AR+sD10YGdohoxZnxA+JYg5ZJ1NCt9+bzuyOspO5xAauMNzoWLNPMvVH2fWOM83dElu
+	0hJurhvivNF9+xuRv1jewOYtEx8Z3e8U8onsfBWLhGMECubyL6a0WQhrA22ulet57T55h9F7hTs
+	HSB60KQF48QGoRmqy13WmWTlh1g1+4Io7NzUYSItH9/wX29tW9zc/PjCnZE1Ef4sfKmH7Z+/oLJ
+	d1AJ1k9ENPdf8sWOV7upX1VpQc7MBdrWoMrOSaFXIA/VhZXUYcezQGiO/76ekUruDiO2E7uBiwH
+	mRk34eCtJAWRd04gDHqyS9BUXhXQnsfFmlSZDhIx8v8vO+M4xb10l+Kvt6Tc2ySzqyJ84aH3qJx
+	K3j0+4NfwtSmyHBY9gT2feYrLeFPsf772px4I1aUOwX2zUeVmgGVqBsZ8M/Ua3C3s5pJR9/nWTe
+	YjyiPV7YSutTgIZjERoq707Kndja5EAbmx+5sdqQba1avW3vd7W8U8V5/FoRUQAClLSkrwJqc65
+	+CkKc1IgZivOWnA1w==
+X-Received: by 2002:a17:903:37c7:b0:2c7:f2c6:89e0 with SMTP id d9443c01a7336-2d3b08053b6mr193161255ad.4.1786841643240;
+        Sat, 15 Aug 2026 17:54:03 -0700 (PDT)
 Received: from smtpclient.apple ([177.33.87.130])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-320ea90010bsm20486254eec.30.2026.08.15.16.06.57
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-320ea90010bsm21152920eec.30.2026.08.15.17.54.01
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Aug 2026 16:06:59 -0700 (PDT)
+        Sat, 15 Aug 2026 17:54:02 -0700 (PDT)
 Content-Type: text/plain;
 	charset=us-ascii
 Precedence: bulk
@@ -67,40 +67,28 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.700.51.1.1\))
-Subject: Re: [GSoC Patch 1/7] repo: add path.toplevel with absolute and
- relative suffix formatting
+Subject: Re: [GSoC PATCH v4 6/7] repo: add path.git-prefix
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <20260716012138.6714-2-jayatheerthkulkarni2005@gmail.com>
-Date: Sat, 15 Aug 2026 20:06:45 -0300
+In-Reply-To: <20260806101556.162940-7-jayatheerthkulkarni2005@gmail.com>
+Date: Sat, 15 Aug 2026 21:53:49 -0300
 Cc: git@vger.kernel.org,
  jltobler@gmail.com,
  Junio C Hamano <gitster@pobox.com>
 Content-Transfer-Encoding: 7bit
-Message-Id: <749F5FAC-5803-4E7A-AEC8-BA653D329EE2@gmail.com>
+Message-Id: <6E2B0ADE-2101-47AC-B11B-315897AC2AF9@gmail.com>
 References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20260716012138.6714-2-jayatheerthkulkarni2005@gmail.com>
+ <20260806101556.162940-1-jayatheerthkulkarni2005@gmail.com>
+ <20260806101556.162940-7-jayatheerthkulkarni2005@gmail.com>
 To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 X-Mailer: Apple Mail (2.3864.700.51.1.1)
 
 
-> 
-> +test_expect_success 'path.toplevel absolute and relative' '
-> + test_when_finished "rm -rf repo" &&
-> + git init repo &&
-> + (
-> + mkdir -p repo/sub &&
-> + cd repo/sub &&
-> +
-> + ROOT="$(test-tool path-utils real_path ..)" &&
-> +
-> + echo "path.toplevel.absolute=$ROOT" >expect.abs &&
-> + git repo info path.toplevel.absolute >actual.abs &&
-> + test_cmp expect.abs actual.abs &&
-> +
-> + echo "path.toplevel.relative=../" >expect.rel &&
-> + git repo info path.toplevel.relative >actual.rel &&
-> + test_cmp expect.rel actual.rel
-> + )
-> +'
+> Scripts sometimes need the path from the repository's working tree root
+> to the current working directory. While this information can be derived
+> through existing Git commands, `git repo info` does not currently expose
+> it as a scriptable key.
 
-Question: why not use `test_repo_info_path` here?
+Even though I understand that this is a relevant info, it seems
+to me that it's a little bit out of place here... This is
+a "current directory information", not a "repository information".
+> 
