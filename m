@@ -1,161 +1,122 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF5143B3FF
-	for <git@vger.kernel.org>; Mon, 17 Aug 2026 14:49:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF606442B3B
+	for <git@vger.kernel.org>; Mon, 17 Aug 2026 15:24:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978174; cv=none; b=LC+dqTHSkU0sNOyTFpt27jx58iXqiejMX+3EgkrO72B3ucPotWr59s9lzgWwEp2bpAnNACT0S7HVr/9RbYKRERbI10/GXE+E67NVVB8vDzqwsKlAQmp5RumgEa8CzYrrVljs0bt6ofo2X4IU9slpRJXF/URueTXwBQu7s+6PVJY=
+	t=1786980281; cv=none; b=csZXa0Zr2lzOP77JVhxE/Umf9ueigEBQ/lcekSJsaKmM5JhdsdYHhYtECSAQfDBN1OLdk0DP0DlmU6nBpIamrcHtZnLM8dnHvOJprQre6+9cy/oTol05ZBNxGyX71SQSrErm5hfc2t0mRxThHEWMaOJaoY6Hfk/HlLm5RQCOk34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978174; c=relaxed/simple;
-	bh=Iu4XkOP5ogezgJgXIdy5MCe+x8AWC+SILlMDQ8z+lF0=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=YeB/duA//U/mjQ8LTbIFo6bY1TQJ91atTYmGInTIqp8p14aVmqkLYNTxBEI/9G9D//mulf68qUijBmFbWINJyMjwRXDQc0JO92GztgpICg3pqIQEYHNf/ioMcGD7jNeAB5zeKTHqdSRvH7cME0iBZS+Ou1KBvfAvnlQYm3ytxoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ZFlwm0t1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lqElL7xo; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1786980281; c=relaxed/simple;
+	bh=O0RkHKcTAiB8eZdJTGGqf3PrwLrhvj7DInj6FpK5Z+0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rNA2p1LdA7ao8+CTmLXgfkSGZMV1DyM79WTsAh4ftS++s5BLyhPsjSvq5VBKM4dYwGzoxGCFdfrZvUVDPV20p4O/jE5xUjkMv68+SrfgmvFBIHSF8OAD8BwBEw1YYb4R2h9MgiIKUk7z63horTY3e5JMIg+Ih1H9on8KvX8kOsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=o6FtRgXi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NtFeXeus; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ZFlwm0t1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lqElL7xo"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EFA371400128;
-	Mon, 17 Aug 2026 10:49:23 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Mon, 17 Aug 2026 10:49:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786978163;
-	 x=1787064563; bh=PR6/KBCbK8VEb78uB+sYwvehBFV9e+eXnOTO5gzkpL4=; b=
-	ZFlwm0t17vjEF1BRAdSr5fxbOwg9dH8wx1E7hS4Aeu+/LNX7nitv6Keg0/XL3wT5
-	HvUuOVAaW4sY4OGVJxCypYt3xajiE/NwF49KkbHCLBQbijQkhDhxXSIniIBqdtAm
-	OVssdKSDvV9nVeFr3L5lw+dnNrBWCPkosX130gOd/q95+W7uqeMLmLxLab3gLpn8
-	hsP25zaLLMltQ8pamPfs4h0iu8pZVWsDSViymesQDvU3Y8xhCpGmsPyydnHw4Par
-	Gbj9XAXUcGqjTXKscMdvUt9wmlXPche7RYjDTYRWdF2gyxX+cFmIRObPBkymUDsP
-	3Et//8P7z06jp6c8SMaupA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="o6FtRgXi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NtFeXeus"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id C1C16EC0032;
+	Mon, 17 Aug 2026 11:24:38 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Mon, 17 Aug 2026 11:24:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1786980278; x=1787066678; bh=f9jmpX4wJQ
+	Okw1BwuE3AotM8qHFvILFRPHWByOH3XM4=; b=o6FtRgXiXBylzrGXkUjdP60u7N
+	+q1u5KLyODsp1fbpjyd3LvKKG9+nyN50ZSpdxPL0uoY0knWXYnG/jy9CHBUQmmt7
+	6WQFHkRbKy4DKmPNCAdpwotxMarhwfXkSuiTAjE9p7ZU4J/xIVj3zxoAeic8xw4Q
+	PgMdx8aN2dFDRhfWz19vTXr+JbdyssPgMuUIhcRgzgoeQ3zPhgBBc5SHQ+H9ovpg
+	JlBTGGcS3IPZhgcBTeGxEqL6WX5LjQ+IxALdXxTzoIW2MVWnBg43KJ/hdCGY2UwP
+	DHkXyV6JvmReCLC5QYd7fDNoP0N7dmtQx5l7O/i6C2/7AkWen8bSbe0dWD9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786978163; x=
-	1787064563; bh=PR6/KBCbK8VEb78uB+sYwvehBFV9e+eXnOTO5gzkpL4=; b=l
-	qElL7xoOPLb1tES1T/83neH7mYd4JmBV64O+gb2NvtJN7WFN5mJOBSyyY+RPfZra
-	oCH2A1QQDcf+gyZZZ5r933FAWjKhXhnJKF2jirTHkDjzti3+HF3r786Pjaxza5En
-	qx1UA5fEhbYMNZAq2UzxSyNP4fRcH2++EfBBB636kkm3BlRamG1vrD9iTTg0qJ4X
-	+JkwHwyYCBp5LuOiLNODJM8VuqQONHryqEAebUQdYlfHkPBxVpJntunOB9azhDvU
-	iqR4s7q6gyJe0keXjO5fjpYMoY01H1YUMq9PL4EtOn/XxJp42A7ItyNN84X8hOCz
-	n2QtFOdOG/4JD3t9vbQ6w==
-X-ME-Sender: <xms:cB-DaphdlyHn3vPaFrSx8eD_njtuJqlWQ7NNzzr5ArHd7E2TjO4tW4w>
-    <xme:cB-Dao09OD_dZlJfxkujE3D7xV2e5xXFs-AXeEHuD69V1LyW_sL8_1zBrdz0dLWgl
-    K99gZxePNN9Z5jl1WBse2cVhhr4mqzHV6HNQUjoIgi2mIdYi_JJSbo>
-X-ME-Proxy-Cause: dmFkZTEhA4J2a+kSTxrc9TkwLt46cyhXWiLWgLsCZHbtEd8lROnfAYjFtrR/ci+K14YL2r
-    ulVc3ZdhUpCVd8zi46WQgtDQ6E7MdThCXFnH9md+6w+lNglyaJJDNSRAo18+S6fVUukqw5
-    uuzX18v+vmzz+AYrZFZw48Bo50vosFDgmBlTwVKMws+5o8Btbk/BvBUFzRcqlXR2t9ZFDU
-    hz01hdHdBoXtD32gQ4++J26GIqgPgqIWVAhP3gvonsNf++eURH8Cj2pQE44YgZwCyXWrHG
-    xnS4sBGAIjTchcvHge1/yFMmIXboXQhfeXtyB90JJrq7HjqHWxGMU0XOSsQ9+RPwb9TlKW
-    tscfTlduUnoSl3VuzXoYHx/gFlUMYsDN1PL5p8EZUtv6qwMNaLnUtkoEpfucaq4o+pNdDY
-    5gmqJZApahLdAHjdYNj0KhUzx6MpiMBeU51JG97F/Q0v0WruvafkUMecnlp9PphzhESmrd
-    6Eqnce8M8j+rNdZbEU4BKehpHi9ZX0uwLXqw/JDgYs56y0BundZ8Al/dGiZEtSlrqmDG4b
-    ajNxHNLJxwuMdgbyXxjLoDzV5zbQfb3vJKqopE/9NtLWj+J9G8AEhEBiFC3qlHxFNIWNf/
-    6un87YHzvif0W02BqiGQexqEdiETMZ2RkPp+lcgRCt1Bwxm1cZzY55gFu9AQ
-X-ME-Proxy: <xmx:cR-DasNaVBr_3XjeQMkfiJ-wjqjfu9hyIrEBuBbmBJTVSwlsD8r54g>
-    <xmx:cR-Dag4gFO3poHg8LYhJdiw1Y4Qelc2Y8RRjVGrTpvDDuIo8iYgx2Q>
-    <xmx:cR-Daq23DKEM8TXwQ0ME4qvYV3dAerqms_SYJMo8NeplDDw8fYUZCg>
-    <xmx:cR-DahaOg_aqfI4cMOJfd41fHh_8Wa5G-b_bnwrkYi916aTxHiaOzA>
-    <xmx:cx-DatkcZQGGYgVr9-aoJsB1n3NS2ssiouPRLvl2WVZljFS4GcePtGHJ>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id A917322C0077; Mon, 17 Aug 2026 10:49:20 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1786980278; x=1787066678; bh=f9jmpX4wJQOkw1BwuE3AotM8qHFvILFRPHW
+	ByOH3XM4=; b=NtFeXeusIzgXP3uXwBTJ/40c5uMYp4w+xVQntMhnxytluYwbG8i
+	32bNY2xwre/m/8WCLu05y3i1NYyOjVu9/SR0srnre4EQolTJSXhwuJsmrw1cC+SY
+	cy80jiDaj9N24/DUo+aZf7uZ4N0qtPL1d/ztj/i7+R4k6BqEBqwl1k8eKUCMcRND
+	Wfb5QhrEX7di/FKkYaBmxtQ0FwnJq8fdf3W1i7IKjM+jIPnuk4Mbqo/FUz7m5VdZ
+	+mACQxyL1tZpk1cWz5RmrYXHAmEUS4IPGxnJ1jK6K/LlHkkIAQYmcu2FcnLpQdBc
+	SzyWz9ryPpNam1h10yr6F2aehOuvXA0O7QQ==
+X-ME-Sender: <xms:tieDagamD6Ae3rFANJ8fCD43y9yi4uKSMdYWWZqniWxkKsvzWujAag>
+    <xme:tieDan_7Ju8iIt6tUG_AnuR-rC8MU7oB1I7d5DfiNLj2HLEoDIML8GC0Qvhl8zvsc
+    gRSttrCXmvFUvJGBJrUtMnPRTmr4OUmbdUfCM2j3U51uz7ymykTAZE>
+X-ME-Received: <xmr:tieDavZnR0jH9oKBjzYIfpGBEZzYVwYMx6eTTC75WuRIni5Zab9L2pZWHzICp9XIO05EATr-8rUbvnrSiFFAPvYMWHaU_pd0aQ>
+X-ME-Proxy-Cause: dmFkZTEysG+oZE4gz6hZvpqa4duZG8BWD/PZF6ynaiL1Uu49/tGnoKXAI+cTN73LRFlZ6m
+    8FOcNe9BF2DOfOW9JIZHVjXqDtl2P9zbndQ3XJVkLFRyGSsgxVZ0xLxPXIttn+p0PqBUeD
+    q1A7a5wPmKYxVLomQqtmDO8UpxdPAJlileKeuJW2cGySCNNlGwPakIzNm072YfDK36zoZQ
+    QObD1YQn9heMvEE+ooVUevrrTH+biYI0sVbNAw10UoJCbE578c3fxlWVaYblMTVNmNLOtu
+    lmmYCjx6T8zzgqg/6MNm44ugLm6/aOFPiFFa/3yJSMVlnuMVso5g4KMOYN9DWdmjyLV3U3
+    yngcOUh8on2h7gqBpK+DWIe+rjQ/168oSsSYFdhRGSYTrFR/dLfEyTcIfyL8WXBsbag2b7
+    4VF1+UHW9ZuPUjbqGp3iOFgo+KbymPiV4DnwThOqJt7hfEQN47CYYMQZ7gXvzNYMW4v22B
+    87rQHV2z3P0w1lxK+65JQrUIeoNQdAuoWnWWwNvCebwLIsR2bbifd/01o0sBcy9E9/RduV
+    K55UcwzfTsTzTe+uOGsExKsLj3tblki2lnn5xjKhYRXNxS8HR50tOgqobnnybOyVjjfZTp
+    5ZH8UDP6I26yOk6+XSpJGJ/SHgq769ghxYfMKw48Z6HK5njGsJ4KgVFJCRQQ
+X-ME-Proxy: <xmx:tieDahdJC0mlGorAg8HpbexfSzJrPd4obYxKysdQEikfmeg33GpieA>
+    <xmx:tieDasmgyux2m2nKmuHkl9AxGhUX-OOWe-dJ9BjdytwdssCJVMCRVg>
+    <xmx:tieDah2DCT9IDSjR78HHeyvspvsVBmCGcXclnDtAbe2QQKpSr48n_w>
+    <xmx:tieDaldKVfsCHy5wX4ljRfqpRnvll3QEQQ9MWymn4S9khxLfnCRGNg>
+    <xmx:tieDauqy47yHWhEHpSxoV4Y1tozXiKyYMP2SwGd795JMq3rdf1DowQkv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 17 Aug 2026 11:24:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>, "brian m. carlson"
+ <sandals@crustytoothpaste.net>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Matt Hunter <m@lfurio.us>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v13 7/8] history: create squashed commits without editing
+In-Reply-To: <f34669ad-9157-4f13-a3c1-c0abbc660497@gmail.com> (Phillip Wood's
+	message of "Mon, 17 Aug 2026 09:26:43 +0100")
+References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
+	<pull.2337.v13.git.git.1786088371.gitgitgadget@gmail.com>
+	<8b3551d0d4ecb360775ea29507ee262c7bf9cd42.1786088371.git.gitgitgadget@gmail.com>
+	<xmqq4igyszeb.fsf@gitster.g>
+	<f34669ad-9157-4f13-a3c1-c0abbc660497@gmail.com>
+Date: Mon, 17 Aug 2026 08:24:36 -0700
+Message-ID: <xmqqbjb07osr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ATNgFX32rXbk
-Date: Mon, 17 Aug 2026 16:48:54 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <0bd9c642-9e88-4c82-81ee-20fdeb3c2797@app.fastmail.com>
-In-Reply-To: <xmqqbjb4ktz5.fsf@gitster.g>
-References: <CV_format-rev_three_more_opts.b80@msgid.xyz>
- <format-rev_three_more_opts.b84@msgid.xyz> <xmqqbjb4ktz5.fsf@gitster.g>
-Subject: Re: [PATCH 4/4] format-rev: learn --abbrev, --color, and --date
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sat, Aug 15, 2026, at 04:17, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->
->> +static int date_cb(const struct option *option,
->> +		   const char *arg,
->> +		   int unset)
->> +{
->> +	struct rev_info *data =3D option->value;
->> +	parse_date_format(arg, &data->date_mode);
->> +	data->date_mode_explicit =3D 1;
->> +	BUG_ON_OPT_NEG(unset);
->> +	return 0;
->> +}
->
-> This BUG_ON_OPT_NEG(unset) is a bit curious and confusing to me.  If
-> the caller could pass unset=3D=3D1 (e.g., "--no-date"), option->value
-> would be NULL, and we would already have dereferenced data->date_mode
-> when preparing to call parse_date_format().
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Well spotted.
+> It's piped into "tr" to check that
+>
+> 	target = lookup_commit_reference_by_name(s);
+> 	if (target && istarts_with(oid_to_hex(&target->object.oid), s))
+>
+> uses istarts_with() so that we accept uppercase object ids.
 
->
-> On the other hand, ...
->
->> +		OPT_CALLBACK_F(0, "date", &data.rev, N_("date"),
->> +			       N_("date format"),
->> +			       PARSE_OPT_NONEG, date_cb),
->
-> ... because we mark the option entry with PARSE_OPT_NONEG,
-> "--no-date" would not cause date_cb() to be called with unset=3D=3D1.
->
-> I guess, from existing uses of BUG_ON_OPT_NEG() elsewhere (like
-> apply.c), that the intention is to notice when this callback
-> function is broken by future changes, i.e., somebody careless makes
-> the calling parse_options(), or an additional side caller that calls
-> this callback directly, pass unset=3D=3D1 and option->value=3D=3DNULL
-> combinations.  But then the assertion should come before the first
-> potentially problematic use, i.e., in this order:
+You should check in with brian about istarts_with() that is used
+here, as I suspect he missed it in his effort to declare uppercase
+hexadecimal literals invalid.  In the meantime, '| tr' must be
+removed if this topic wants to play nicely with the
+'bc/restrict-hex-to-lowercase' topic.  In my fixup patch, I changed
+it to use 'rev-parse --short' to test at least the "starts with"
+aspect of this code.
 
-This is totally a monkey see and moneky do situation. Mirroring
-parse-options flags as `BUG` statements. Down to the outright wrong
-assertion/BUG placement. So this needs to be changed
+> I've just had a quick look at that other thread, it would be more 
+> convincing to me if there was some explanation of the security issues 
+> that accepting uppercase object ids causes. While I appreciate brian may 
+> not be able to talk about specific vulnerabilities in particular 
+> products, it would help to outline the security issues in general terms.
 
-I have these same statements on the existing callback, for `--null`:
+True.
 
 
-    static int format_nul_cb(const struct option *option,
-                             const char *arg,
-                             int unset)
-    {
-            struct format_rev_data *data =3D option->value;
-            data->nul_input =3D 1;
-            data->nul_output =3D 1;
-            BUG_ON_OPT_NEG(unset);
-            BUG_ON_OPT_ARG(arg);
-            return 0;
-    }
-
-But this does not have the `NULL` deref. problem since we just
-unconditionally set two boolean values. Still, for readability it=E2=80=99s
-better for these two statements to go at the start. Since they are
-preconditions. I will add this as a patch/commit to the series.
-
->
-> 	struct rev_info *data =3D option->value;
->
-> 	BUG_ON_OPT_NEG(unset);
-> 	parse_date_format(arg, &data->date_mode);
-> 	data->date_mode_explicit =3D 1;
-> 	return 0;
->
-> or the assertion will not trigger before the code segfaults, no?
+Thanks.
