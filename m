@@ -1,239 +1,171 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423AF3C277B
-	for <git@vger.kernel.org>; Mon, 17 Aug 2026 08:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D51F3B101C
+	for <git@vger.kernel.org>; Mon, 17 Aug 2026 08:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786954900; cv=none; b=DHTNCLZKlzSczFu/B7ATH4J7oKg2nH5hpPvp8pc9wp6/N598ZF4Pa1E3Mv20lum/XgZaJJPvmn7jRRT0dTMCKX1dsxunZ6aaJitegLoSjuo+Fy/st2DoqUBy/vZnZ49jwGoALm1PucK7NREZFNVKAxdYyN+YO4THIctpSQhNgOE=
+	t=1786955209; cv=none; b=E8g/ejk3D8A/6ZU067kDcUD/YVH6lOnUTTunNjVy5l/Uu/vUuLvXC3yke3wiVc6JtSeW+1if6J+XUe11U5t7nvbpnr5rh2oCVLHOJz15+5f9XkUkAciFMILi2WkgEn9I83qmnY1S7pLzdqfzFJDx53NuGwzNFJmYYDN+yeisf6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786954900; c=relaxed/simple;
-	bh=KMM8yJTEhOsnbm54Q/45ossXEjTo9gT4ZjXjcdNEIQU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C39LtkpwWgX+LWd5BHYpoFeHH3PZbNtdnMDeMmZlahH/6Kth6u+rS/YrN9PQK7VFLNZNR0lpuBSkASXr6TU3IYl6FS8+OQ89a1cShxUtc+wgnQbzxasxLd3Cq+7+cJSzf7MLvNTws0df2nPXr8UVoZKswUb/X0ukOpTral4wW24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D2Qq3mEP; arc=none smtp.client-ip=209.85.215.174
+	s=arc-20240116; t=1786955209; c=relaxed/simple;
+	bh=MHx/ubSjlVPtjCLuWNfzF7z6pBFPPTJj88zcvGOa9nw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DeELHAnCVRbLutzHLakAyur7EUH1A/9J0M3d1LqQjAM5otTmhNiQJhxbT62Q24/1pNv7nfW7ZKs74uvq1T6M+fxEOOcaAMzCmLiWcKagnTZuj7rny17vqT3D8yXkalSG3chF7y/hppX++z6joqdtU6Lih9at3LzfL6iIuojM3CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RaWGxGg5; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D2Qq3mEP"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-ca12086c06eso2272693a12.0
-        for <git@vger.kernel.org>; Mon, 17 Aug 2026 01:21:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RaWGxGg5"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-495757ccbc1so27847685e9.2
+        for <git@vger.kernel.org>; Mon, 17 Aug 2026 01:26:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786954899; x=1787559699; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jKaTCDHrS2j/pwT6XStGIFO3LnxpIbZvm9w2yATj1JI=;
-        b=D2Qq3mEPm5qRS8XqQ/7LIbpmLFB8B0jYKeqocUeIwKtuxHxxbQcP4MkFd3jImrD2Ht
-         XekbszZAKLI1Mc2CwPWkZzotW8hoPEOKHReJ4c6mfcOxpP7yHD43M4KIH/uOjs9Op3af
-         nxdHI8kIEKgM3rUdpG3VWWuV+YdTIcjQCjDfGPwGv3SKvqgawZMtIZn8NcPK2qH/AOQZ
-         YDaI9+b28jVkdRcgUaqi/ncpRF0rjzoX/g4MnvmlJNWiJNR5S1j3m2MlIPMDZSN5Qz7B
-         NfshilYXpYwvdnZVdSMuG9/JrC8wJM1OS5ZYBKh436Pk/lYzGbBsWBPH1BfNCZ37D6vQ
-         sEYw==
+        d=gmail.com; s=20251104; t=1786955206; x=1787560006; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=zaaEoK1OMA5fzJjR8fxDO1t3QS8Gy8Ch3qN0G3d1xWs=;
+        b=RaWGxGg5NtO+aP+WHyzHpnZiRnmS7DrqsRwJtusD+ouDURrJKrLLwodl0jn+KbyQYx
+         IU4G102jV+46h3EiJXzATgwdiL/nUkOxHYMBH78YEN9smMJN1+za6MzpvH4FbwvcTvd0
+         mM+cHGdH1a4DT6GfyrnN+AUuW2j/SGEAgdNdgFrj2zYe2UfEv8UwdvNNQMmq0pHkMovC
+         tcn7u2Nhh8X04p677Orv5/AcW/++FBvsa6hykcjT4I+46Qddx3BglHYkbw+tIDtxYuvr
+         1VC2M6oIpsQ6ARnvLpySd+4qW/brxFK31YcRlrNEII81HaHF+F3PeThq1YjQ1w3J1lyF
+         kkHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786954899; x=1787559699;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=jKaTCDHrS2j/pwT6XStGIFO3LnxpIbZvm9w2yATj1JI=;
-        b=p4SKiLBrzbolMtXpbNpT7/2WyqCQJVLqPK6Ba1a10w96KzCFwgudO37n2yDBHywO/2
-         tW14AZ0DVZpd6RdnXiktT8E1VUTaEHi0UWr6CmSa98tnbHXbK0VAnTujpbECu6pzQeHZ
-         8bGoR5e0bUcFk0oh9cAdKK8SQwv6m9EU8frRdlyHN4eSxhzTH+8TzXtP1G1qkezgS7At
-         TWykSeOtucSyl1prDjJLFtq9mLOxE3emGqI2rlc1Gnw8THTfxTBfsu3fIDkkO5lwDJK/
-         24tEvI1wqA76xlP5EFdowGDEs7DQhJ6F1+PzGPhFFyT3uakuOmNxTKDQExo1RUwN7a5u
-         DrfQ==
-X-Gm-Message-State: AOJu0YxlwouqHPzQb/YsC6Ad0F1HS7FtJuHnZEYNInlZE0682vx5R3Hi
-	ggAhpCCy2xAjPpB9JYyzsEm+VcdpcGMpBErgeZIJduCxvEoNPdx35tayAFeloMcF
-X-Gm-Gg: AR+sD13NiKm7ArPh349lkhZ2P9nPFsmhLEs/4UEXqvae8oNen4vbCCusBdd9RLSt7lk
-	LjIa9dt9v25XD1wRs7VMVierYzMh5CeMLi++KfZ4Z4ZREdFEedh3nfXT+NmUSP7acbJZ+3W7K+v
-	Jvf6aCNDDyfunU40R2rjyv2J947XMvdrg+Ub8+UFF+ttY+Z45h4AqqQjPd22N1QBqnkgpiX0XFe
-	VXfkaCUwFcZsg7344Nk/j2n8EaZGBW462jAc5sidYZ2S7hSuptXri4tx73w1cR0XfUz4IUqoT/3
-	7j26rCqm9rNjkp6CqUD8C4+RwJL49BxyJOyaUQve5QBuMk6odc9TyWVx6qfP7dA68SzdKHMEpxj
-	JTRvHtJPaoZILvvH+TjmWppVFCUYgLVf6TserS1rFWV90hvap1UG2KMHBn1p1rcQrpcXI/9WOY1
-	uT3kL6rXDwsq5gCmQbczKU6t/S3eZoX/VniS/Z4Ei4d36bQbbNMge4H1qOLi33tfNVb0yAWVLOX
-	yeS74dTryWr/Q==
-X-Received: by 2002:a05:6a20:94c8:b0:3c3:a9ad:a747 with SMTP id adf61e73a8af0-3cc71ddaabdmr22136523637.26.1786954898566;
-        Mon, 17 Aug 2026 01:21:38 -0700 (PDT)
-Received: from localhost.localdomain ([14.141.116.242])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14153043d24sm3486649c88.3.2026.08.17.01.21.35
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 17 Aug 2026 01:21:38 -0700 (PDT)
-From: Shlok Kulshreshtha <diy2903@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	l.s.r@web.de,
-	Johannes.Schindelin@gmx.de,
-	ps@pks.im,
-	Shlok Kulshreshtha <diy2903@gmail.com>
-Subject: [PATCH v3] object-name: avoid use-after-free in get_oid_with_context_1()
-Date: Mon, 17 Aug 2026 13:51:27 +0530
-Message-ID: <20260817082127.81132-1-diy2903@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <anltEAohp3F9Jbx5@pks.im>
-References: <anltEAohp3F9Jbx5@pks.im>
+        d=1e100.net; s=20251104; t=1786955206; x=1787560006;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=zaaEoK1OMA5fzJjR8fxDO1t3QS8Gy8Ch3qN0G3d1xWs=;
+        b=FiwlSzC1xA6EOg2hw8loNkJDKMUNG+1LT2P+IFBzt6Yql3Ac0ReezTW/bPd/rKiED4
+         YhEwCsGG6EEWDFemr/QCKGztYGZMuDiVVSgShh1NLrTahYgGYEVzGmLI76TyFDtCJutw
+         ExePjI8VSVchmGBRCslelp6ycNZ/m3QPpe9Fb2qa2e5YDCSYt8bPpTNtj2xtRe03Johe
+         sH+br9X8H2vqHoFxvPUB2CFsZM14grJGxR2RJAnSXHHHv9RPsXExf/Pk0doQdKZ7v7ws
+         aRgzetBUHa8d0bJ1rP5bhPlDQv9E0miBGntKiY/CVZ28gpWoqtGMk0wJWTAULLclRH2d
+         Vnig==
+X-Gm-Message-State: AOJu0YyepaJJmrU64STtDfBtJBs58HaUmgq2dVNG/6eEsXF9rLpuh5wa
+	7M/i+l1bISEpHyv9P00dEDtTLE32XpkZizQ3IfA0YGuYttcvQ/VXcDoy
+X-Gm-Gg: AR+sD13KdP8n2u2fVHEk7O0InCqpiEm3IWztpROPwPi+2WQgSPnnFqikmwJ4QYU6Uyo
+	4VUlN/TjOTaPFyXatyv4qc8h3dy5Fhc3sPSCVyv5e6vdyZeeC18igPktDaMFhKphSbN1KDA9uW0
+	n3x5LrmtLVweZBIWZCzdBfgw+E+hwUjtH2L1Tr5Bz1C/V9xzfOiHU55tRElKXqCwA3VnECbgabL
+	/Gvza4aIyuoXiYRvQsVHFJPHZfLi7x7imwwMpKeSNN+7iV+WtXRSxb6/flTTZxo9RxVFmOLyJgL
+	rYfiSvUkmzbQhCblj1AYTdJ2h8mSv7AspKQaFzY2y9Fj7AGnk5BVbzJcr6ltyE1fdykqdwL1cUF
+	RkSHUGR2rbjo3i/YPrLXqUn5qiOlnYjjRw/v0WhquQ5uZfZhck11byiEHtoP7GD8kGIUz+c6e+N
+	WGo09iwMhiMv0Tm+ol9UwELsdd2k5m2/hza7pKC9e3dEfASVhN8TWO/obu0oT5Mm1DgWTSEhBmA
+	/ldwpsiwfWezlZdIMLfVQ/U+OxbErgv8dTONQ1NJ4U=
+X-Received: by 2002:a05:600c:6088:b0:499:7219:122f with SMTP id 5b1f17b1804b1-4998792adf6mr418488515e9.4.1786955206440;
+        Mon, 17 Aug 2026 01:26:46 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4999d063a68sm19940465e9.2.2026.08.17.01.26.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Aug 2026 01:26:45 -0700 (PDT)
+Message-ID: <f34669ad-9157-4f13-a3c1-c0abbc660497@gmail.com>
+Date: Mon, 17 Aug 2026 09:26:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v13 7/8] history: create squashed commits without editing
+To: Junio C Hamano <gitster@pobox.com>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>, Matt Hunter <m@lfurio.us>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
+ <pull.2337.v13.git.git.1786088371.gitgitgadget@gmail.com>
+ <8b3551d0d4ecb360775ea29507ee262c7bf9cd42.1786088371.git.gitgitgadget@gmail.com>
+ <xmqq4igyszeb.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqq4igyszeb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-When a ":<path>" argument names a relative path, resolve_relative_path()
-returns a newly allocated string and "cp" is pointed at it:
+On 13/08/2026 18:28, Junio C Hamano wrote:
 
-	new_path = resolve_relative_path(repo, cp);
-	if (!new_path) {
-		namelen = namelen - (cp - name);
-	} else {
-		cp = new_path;
-		namelen = strlen(cp);
-	}
+ > "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+ >
+ >> Inspired-by: Sergey Chernov <serega.morph@gmail.com>
+ >> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+ >> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 
-From there on "cp" and "new_path" name the same allocation. Later the
-memory location that "new_path" points to is freed.
+Thanks for the Helped-by: trailer, but this and several of the other 
+patches are missing my sign off from the fixup patches I sent. My sign 
+off should come above yours to reflect the chain of custody.
 
-	free(new_path);
-	if (reject_tree_in_index(repo, only_to_die, ce, stage, prefix, cp))
+>> +test_expect_success '--no-edit uses last "amend!" message without an editor' '
+>> +	git reset --hard three &&
+>> +	write_script editor <<-\EOF &&
+>> +	exit 1
+>> +	EOF
+>> +	test_set_editor "$(pwd)/editor" &&
+>> +	echo fix >file &&
+>> +	git commit --author="Fix Me <fix.me@example.com>" --fixup=HEAD -a &&
+>> +	git commit --allow-empty -F - <<-EOF &&
+>> +	amend! $(git rev-parse --short HEAD)
+>> +
+>> +	The first reword
+>> +
+>> +	More detail
+>> +	EOF
+>> +
+>> +	git commit --allow-empty -F - <<-\EOF &&
+>> +	amend! three
+>> +
+>> +	The second reword
+>> +
+>> +	Extra detail
+>> +	EOF
+>> +
+>> +	test_commit WIP &&
+>> +
+>> +	cat >msg <<-EOF &&
+>> +	amend! $(git rev-parse HEAD^ | tr a-f A-F)
+>> +
+>> +	The third reword
+>> +
+>> +	Excruciating detail
+>> +	EOF
+> 
+> Care to explain why you need to (1) eat the exit status of the 'git
+> rev-parse' command and (2) munge the commit object name by piping it
+> into "tr"?
 
-But here the reject_tree_in_index() passes "cp" to
-diagnose_invalid_index_path(), which calls strlen() on it, looks it up
-in the index, and formats it into its messages, allocating as it goes.
-All of this reads memory that has already been freed.
+I chose to put the command substitution in the here doc, rather than 
+move it out and use a variable because it was more convenient and it 
+clearly shows what's going to be in the subject line. To me the benefits 
+of that outweigh the minute risk that we'll miss a bug, that's not 
+triggered elsewhere in the test suite, where "git rev-parse" produces 
+the correct output but does not exit cleanly.
 
-Collapse the two exits into one to ensure a single free() that happens
-after the last use.
+It's piped into "tr" to check that
 
-Three things have to coincide to reach this:
+	target = lookup_commit_reference_by_name(s);
+	if (target && istarts_with(oid_to_hex(&target->object.oid), s))
 
-1. The path has to be relative, or nothing is allocated and "cp"
-still points into the argument.
+uses istarts_with() so that we accept uppercase object ids.
 
-2. The entry found has to be a sparse
-directory, which needs a sparse index.
+> When another in-flight topic is in effect, this test will break due
+> to "amend!" followed by a string that is *not* an object name, as
+> the other topic declares that uppercase letters are not valid in a
+> hexadecimal string.
 
-3. The argument has to get past the check in die_verify_filename() that
-skips a leading ':' followed by a non-alphanumeric, so ":0:./dir/"
-arrives here where ":./dir/" does not.
+I've just had a quick look at that other thread, it would be more 
+convincing to me if there was some explanation of the security issues 
+that accepting uppercase object ids causes. While I appreciate brian may 
+not be able to talk about specific vulnerabilities in particular 
+products, it would help to outline the security issues in general terms.
 
-Add a test to t1092 that covers the combination. It fails under
-SANITIZE=address without the change to object-name.c.
+Thanks
 
-This was reported in [1], and the shape used here was suggested in
-review [2], but that series was not rerolled and the fix never landed.
+Phillip
 
-[1] https://lore.kernel.org/git/cf6bcdb43e5b4abab464c30a914d64dc8e7a9925.1655336146.git.gitgitgadget@gmail.com/
-[2] https://lore.kernel.org/git/xmqqy1xxw7rc.fsf@gitster.g/
 
-Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Original-patch-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Shlok Kulshreshtha <diy2903@gmail.com>
----
-Changes since v2: apply Patrick's suggestion to assign
-reject_tree_in_index()'s return value directly, since it only
-returns 0 or -1, which is exactly what this function needs to return
-too. No change to the test. This reduces redundancy.
 
-The three conditions make this awkward to reach by hand, so here is the
-recipe:
 
-	git init sparse && cd sparse &&
-	mkdir folder1 folder2 &&
-	echo a >folder1/a && echo b >folder2/b &&
-	git add -A && git commit -m init &&
-	git sparse-checkout init --cone --sparse-index &&
-	git sparse-checkout set folder1 &&
-	git show :0:./folder2/
-
-Without the change below, no sanitizer is needed to see it. On 2.52.0
-the buffer has already been reused by the time the message is formatted,
-so the path printed is whatever now sits in that memory, and it differs
-from run to run:
-
-	fatal: path '' does not exist (neither on disk nor in the index)
-	fatal: path 'M-6?:xM-@M-:M-L??X' does not exist (neither on disk nor in the index)
-	fatal: path '?M-*JM-^M->M-YM-tn?H' does not exist (neither on disk nor in the index)
-
-Still without the change, built with SANITIZE=address, the same command
-reports
-
-	ERROR: AddressSanitizer: heap-use-after-free
-	READ of size 3 at 0x607000002a20
-	    #1 diagnose_invalid_index_path object-name.c:1653
-	    #2 get_oid_with_context_1      object-name.c:1807
-	    #3 maybe_die_on_misspelt_object_name
-	    #4 die_verify_filename         setup.c:216
-	    #6 setup_revisions             revision.c:3103
-	    #8 cmd_show                    log.c:694
-	freed by thread T0 here:
-	    #1 get_oid_with_context_1      object-name.c:1806
-	previously allocated by thread T0 here:
-	    #5 prefix_path                 setup.c:149
-	    #6 get_oid_with_context_1      object-name.c:1784
-
-With the change, the message reads "folder2/" every time and the
-sanitizer stays quiet.
-
-"git diff" and "git rev-parse" reach it the same way, and so does "../"
-from a subdirectory.
-
-Re-verified against the current tree: the t1092 test still fails
-without the object-name.c change and passes with it, under
-SANITIZE=address.
- object-name.c                            | 14 ++++++++------
- t/t1092-sparse-checkout-compatibility.sh | 11 +++++++++++
- 2 files changed, 19 insertions(+), 6 deletions(-)
-
-diff --git a/object-name.c b/object-name.c
-index 83efba0ba6..026ff8c6dd 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -1803,13 +1803,15 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 			    memcmp(ce->name, cp, namelen))
- 				break;
- 			if (ce_stage(ce) == stage) {
-+				int ret = reject_tree_in_index(repo, only_to_die, ce,
-+							       stage, prefix, cp);
-+
-+				if (!ret) {
-+					oidcpy(oid, &ce->oid);
-+					oc->mode = ce->ce_mode;
-+				}
- 				free(new_path);
--				if (reject_tree_in_index(repo, only_to_die, ce,
--							 stage, prefix, cp))
--					return -1;
--				oidcpy(oid, &ce->oid);
--				oc->mode = ce->ce_mode;
--				return 0;
-+				return ret;
- 			}
- 			pos++;
- 		}
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 446c1776cb..05b54062b3 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1405,6 +1405,17 @@ do
- 	"
- done
- 
-+test_expect_success 'relative path to a sparse directory' '
-+	init_repos &&
-+
-+	# A ":<stage>:<path>" argument whose path is relative is resolved
-+	# into a heap-allocated buffer, and a sparse directory found at that
-+	# path is reported through it.  Cover that combination, so that the
-+	# reporting does not read the buffer after it has been released.
-+	test_sparse_match test_must_fail git show :0:./folder1/ &&
-+	test_sparse_match test_must_fail git rev-parse :0:./folder1/
-+'
-+
- test_expect_success 'submodule handling' '
- 	init_repos &&
- 
--- 
-2.52.0
 
