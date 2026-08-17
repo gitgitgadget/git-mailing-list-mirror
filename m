@@ -1,122 +1,172 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834943AEF36
-	for <git@vger.kernel.org>; Mon, 17 Aug 2026 22:39:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95103ECBED
+	for <git@vger.kernel.org>; Mon, 17 Aug 2026 23:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787006366; cv=none; b=bysmrtE3EwzgwttOZ8us/VFcoKL8YAymkPsQOWeKrniB0H4sh2u26/N95s8VXtxyIlz/VmULJZfJYirRRrEevc8rI4JdmPzdK6c2pwPM1lBBB+/VSyV5wVKAmo4Pd2z/cnd9X4LWy4IrB4+IEmBfyNmtMH8HF4QmdyDyNjVD61Q=
+	t=1787009959; cv=none; b=gB3LVnTSVVJcqYGqala7JIv9inusNtaD+ajD0dMDHwJHkKvFd7Fv0fKfFh3TwNy4H708MY72y3whI4RWUWQDmRpL9Br1M1uV7e/k5XzyzsSfCkjzeDhyp6lT/jaJxfYb6G/NhgKzDTwBjoLyb9zpRw0L/S5FrZUpfK3AAAwHY4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787006366; c=relaxed/simple;
-	bh=rJ8vE7Bg7oHyOB7M+w7UicqoKRmEIQvNLqtV0hcBSOI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dzm3Xn6zvfLbRViIayJW3pdWxBqSr4ozUClnpPQDrTKgJbhgQRKXXjfqInqyhiURkldPZjQeyQtmg/MbU2iZxhM7vkUzPeDLIkbEaw6reOvaLvypIJn8A/IaBXULcCf4sivPLHWf60t8LTABBvjgWqmUxBtLGPp/mQSomvxuVv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HzQ9MnTo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fCRTWfJY; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787009959; c=relaxed/simple;
+	bh=EeTCbpr6r3KS+1qAbErhOjXUquaRcqM99LoRlROhHaE=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=la/fKXtavqEfr84zfF51ybvhOhA70G6ZZadJ2loUMHMg4e3Z9vLlLAvDPiFDG2k++46na/n+8OIe679RHzUESkZwIWBJO3RO+HgB178w4lJLd7QUC/Y0VdwuumcU7am0P35mdhconG2ACnaS9ZvddnFhWw3JTmMEUmeQsZBdSx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=SIvyI2A/; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HzQ9MnTo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fCRTWfJY"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C21D87A0147;
-	Mon, 17 Aug 2026 18:39:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 17 Aug 2026 18:39:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787006363; x=1787092763; bh=nixq/ZgPx5
-	1OwCbVmpuaYYpZ4KKW8cmt1PWxLaEjXRk=; b=HzQ9MnToHhrxXrh2tqiNEw57yH
-	04ByHzust4y8MmRZ+3wlyJMCvhZLdfYfUcNFK7e6e1XgBeyT7jpnOTV7OsswZRTx
-	DENPlhIKlsGksiDAdLVl2162+eVY12colD0bwV1GxKOlXx/RQLwmiw6jDSpMKNOs
-	kMNDs9PZy8jGlet1XNpvKvQa6q6ZzwYXZlzYemVqzXbCCoAf6E9aRRppA7XpFhW0
-	Ws5OzDQ+QLtBxSvL1uZn+Ke5BapsJsT1iTCta8CwoYcyHo0hLDGNL5N7X8wuWLQT
-	UVjb3AdbV7JH4MpNOw9pHSUYibrHpVmWzerxXn4r4ey1KCIaNdZKjTIYLZ5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787006363; x=1787092763; bh=nixq/ZgPx51OwCbVmpuaYYpZ4KKW8cmt1PW
-	xLaEjXRk=; b=fCRTWfJY5pcwhtCvP2bkB7tq9n72tGTO4FhISkHS5chf9V66Asg
-	PzjMHe0pDOzD/DvufT8w9vSn0y1lUA9xHiKIUkTmJO+a2oYIiN+bgA8VWm+B7aHc
-	N4SJVE1edBa4zPEohmf2q5qYjgKVTuJCC7lF8/jg1ydyLXFRMySYEzi4/7HStqAX
-	LRM9gEuDoZZtwhu4LBHMXeiLMjmWaUBSgQURgKRRAIubP1t/SH5vGR1fTh/u/bO1
-	oVgB53RgGjIAjlwsSD7Ge8kVtrHOVwYacglplHQBNIqn0M2LCch+IE0TTLRhvOUr
-	yV7/YBAhAK1Ke5v8Dsh7liXgOCfRH2iTylQ==
-X-ME-Sender: <xms:m42DaobLhwMzXeS6spoQJPv3Jd0OGNYs_XNcRAGDU51_zd2vEZ4ygQ>
-    <xme:m42DaqTyYHACyja30s7ZeDGFoOsxuLUNe_cS0BEDCK-N3cgDP5h3RgyKJwQbFfT0Q
-    yBFs0BZejsrFnTQdvE30kSwUMMDUFe3a9QPYSNYMIKhrahWcqULyg>
-X-ME-Received: <xmr:m42DarQ6iX0HKkAZbICHT383IK8xNvf4FhFQFoV2zNl65G8cn1N_vYLjjSLErNki1Cgq4_5Re6nreXAVVDvX6DjMOVqt7o3nCw>
-X-ME-Proxy-Cause: dmFkZTF/SwtBfv60NzBX6HCYF1K8bj9p5vFKjGOTCE6ox8zLnmR1L6PDkWtThriLeU5JYK
-    T7ls/Blr3DJym4IajDQ2q4OlX40AbZrNqLPYdeOMlF2nvui9GlEh2Tia4Jrp5FroqUl6I+
-    PP1JDsXOcFZrU44qhkafRkPV6aGwAnZ+rN4JWuvn82ome2E7pNo6ehd4e6oB3dv999Qc7f
-    1LYhMyowMQOoVxlpJPSMG8jSpbsvWE4tZsWjdY+nQkUHz1ZLwYI1yKLtgZ+N/j3c8McMQ+
-    riuXOvEl4oPNXM6QlUKlCBdypHEaEq4wWs2j0Pt7R2sVKB6azqNunYkU4qbh0PJsGPtzUW
-    b3CQ7RleO/VEQTjM5CMQx6Era1Ieuh4XdA5syC1yySEzP0heRJWjuhZA6Czo+eBKnEfQqG
-    mZRJHazR+STJMNFkZjpIUsn9xG+slwW8x9Ndw0VgAb/k0tpvoVju4EpnimXnC4SuVRzBgo
-    5oliATjAeQLDl2ZQEn9rJbTdoko1E21IhAMO2gxpNfOr6sliDichVA2UnzxlpTuB5Vwi3v
-    XwR9HNjdhfh4vHIIvgr7mJ9/x6mbF+mSYHcCXs0cv5glS0dMoMHY9xwj1vBVSq5Q3qlCoE
-    J2fB+WmDuRsq4f/ySydpurzkA31F6dtNWTj3xaIQ7EIB/Tb0YgWpj6IoZNHg
-X-ME-Proxy: <xmx:m42DauTgvHm-GEUIiUaYr-NPAuLXAelu56MOqFLpn7e44G9HxBD2Ew>
-    <xmx:m42Dag5WvsYUsvuqZ8Zxayd3CRJejCXUwUtw5_VLXY-FFYaakrO3Uw>
-    <xmx:m42Daq2RPx3mzo-MsWLfFX3Mndt2_aYtGWS3WIaaGgBYJt4TQqK6Jw>
-    <xmx:m42DarC8pzhZA7fgpFF5NLt4yJnSIGXOdbzbVFPyzFCXIkSOcV6-sQ>
-    <xmx:m42DapuctWBkdGrNseu6Y6m8yj2xnG-QQ5XYZCT96dzTDzN5xzfEnWo0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Aug 2026 18:39:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kenneth Lorber <keni@his.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>
-Subject: Re: [RFC PATCH 0/1] config: surface editor failure in exit code
-In-Reply-To: <20260817211936.2943278-1-keni@his.com> (Kenneth Lorber's message
-	of "Mon, 17 Aug 2026 17:19:32 -0400")
-References: <20260817211936.2943278-1-keni@his.com>
-Date: Mon, 17 Aug 2026 15:39:21 -0700
-Message-ID: <xmqqse4c2wyu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="SIvyI2A/"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-92f03daaa97so228723685a.2
+        for <git@vger.kernel.org>; Mon, 17 Aug 2026 16:39:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1787009957; x=1787614757; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ppYM4AefGz2maTWbufd1Bux9vGDWcBt4rHEV7yRpHLU=;
+        b=SIvyI2A/ixG5/tfO3VjcmL1HiEsRr7jAUqbzB33kv1GKa3V/soiBRIxLTgrmfFZWkJ
+         Mlx6v07nmixE+hnMS17daDZng5GQdkKSQ0DJcReUIzwXXee1JVYryQqJcFB3UfpUNji3
+         NdG0TtuOkIn3fYum035o1smIgiIwRX4FkKqtk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787009957; x=1787614757;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ppYM4AefGz2maTWbufd1Bux9vGDWcBt4rHEV7yRpHLU=;
+        b=iyS0SC8v5f0UduxeplNIQdC6MwGXx//YmMbA49cUS/+LvSNMCAs5vLj9UoYHlkUjSF
+         eRE1w+scHVdeVuFs/APfYcD+vrUY1B5vOhYd5LbNeCtKiT8FVUgg/fbjDPcxUUfFw57f
+         m+IHQ54eBDDQNxbZOAEDBQr87EXgO4+k/ckd6qSQoU97ULW3JZd1dTCg5+5LE6YYTGAw
+         9p+lGbSSUYeH8F5GB9WDJgVSPFaO6BhejMvfeZCHid3GHZ0f1wCjzxBymKM0e8EgTofw
+         COw35T9WRVoumsz5n96dV/e45ESCn4X9bMSERBXnAyjOj2UCydskBB8eNWe3TepQdz9+
+         gHiA==
+X-Gm-Message-State: AOJu0YzuQUjVIddBK3js8M9WQE7pMnkNOZpMb9bfBggeH+lcMdf9dR89
+	msKVUvqFcyppyUlkollOj1IzgRIysJ/bTIL8H5VNR138lPgsiYuH8mBZc9UNLtvRX0ALtfxGMBE
+	S555Cq2w=
+X-Gm-Gg: AR+sD10sDxrXeZ46Ywkn1bNY1+1MgJzTqL9uXZblu1Wra4D7bwA3gFV01K1h4Zvf/3D
+	KEe17k9Il3O2jZR1IJjNLxtOcTuVjeDtVKV/dhtdpDZ6/51Okex9TiKsiWg6PxWBE7qyUZYCZUa
+	PYBUV74xM6VW2aXu3L4IULqkwFu9w8+2wrLwhYu0ssJ3hShr5IgUpXEksfd6A0bYZ7avV/zgkyl
+	92WCItpkxqPCB1yn8a+WLWhSwr7f6fxp9/GRp/NT3CogKqYDncQlYKnkFtdJdPlre1ocTa1Oit9
+	frb8Dz8pQwRQARHCnIVyxkscuCsujIR1AvMTBBU82A31KH8xc3eq+EbJIe6F2I8tN0OMdz9fSlr
+	qWEVWm44Awc0cMU/uAMSYVDc4L/wHKtKtPPNsxpsiZd/zq9CE4LuRHEU3KXN98OtFHlziiny2jn
+	Y0eVWSXI7dA6ZTTq6gDyUflwyo6OJE0PxVnfPlaAX1ms0bfrHdJEzKbX6k6XReFhkPXatN0bErp
+	VtmCbWfJnfi+dQr4JcpDXeT8yU=
+X-Received: by 2002:a05:620a:1235:b0:932:fd59:3e57 with SMTP id af79cd13be357-936d233ca52mr2388997385a.41.1787009956577;
+        Mon, 17 Aug 2026 16:39:16 -0700 (PDT)
+Received: from com-58127.corp.openai.org ([199.47.143.15])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93703429b4bsm155937385a.43.2026.08.17.16.39.15
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 17 Aug 2026 16:39:16 -0700 (PDT)
+From: friel@openai.com
+To: git@vger.kernel.org
+Subject: [PATCH] pack-objects: trace pack bytes written
+Date: Mon, 17 Aug 2026 16:39:15 -0700
+Message-ID: <20260817233914.8740-2-friel@openai.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Kenneth Lorber <keni@his.com> writes:
+From: Friel <friel@openai.com>
 
-> When the editor invoked by 'git config -e' fails (crashes or calls exit(3)
-> with a non-zero value), git notices and give an error:
-> 	editor.c:launch_specified_editor()
-> 		return error("there was a problem with the editor '%s'", editor);
-> which is then lost:
-> 	builtin/config.c:show_editor()
-> 		launch_editor(config_file, NULL, NULL);
-> which results in git always calling exit(0).  Note that the value is
-> not explicitly thrown away with "(void)", so this may not have been
-> intentional.
+We want to measure how compression settings affect push performance on
+the client. Different settings can produce different-sized packs from
+the same objects. Trace2 records the object count, but we also need the
+pack size to compare those settings.
 
-I do not intentionally exit my editor with a non-zero status myself,
-but what I hear from others who do is that they do so to affect the
-invoking 'git' command, e.g., to stop 'git commit' from creating a
-commit.  They somehow realize they botched the edit, and they want
-to prevent 'git commit' from committing, signaling that by exiting
-their editor.  A cleaner and more modern way to do so, by the way,
-is to empty the editor buffer.  In either case, 'git commit' itself
-exits with a non-zero status.
+Add a write_pack_file/wrote_bytes Trace2 datum alongside
+write_pack_file/wrote. Count packs written to stdout or disk, including
+each pack's header and trailing checksum. When pack.packSizeLimit splits
+the output, report the sum of the pack sizes.
 
-It might have been more consistent if 'git config -e' exited with a
-non-zero status when it noticed that the editor exited with a
-non-zero status, in that sense.  But we have never done so, and that
-is probably because we did not care ;-)
+Signed-off-by: Friel <friel@openai.com>
+---
+ builtin/pack-objects.c |  7 +++++++
+ t/t5300-pack-object.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
-In any case, I am not sure whether there is much value in making
-'git config -e' start behaving that way.  Even if it can notice a
-failed editor, the damage to the file is already done, and there is
-not enough information to undo the damage even if you wanted to when
-detecting such an error.  This is quite different from when an editor
-edits the 'COMMIT_EDITMSG' file and fails.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 1ec5b6f206..bbf1adb437 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1337,6 +1337,7 @@ static void write_pack_file(void)
+ 	uint32_t nr_remaining = nr_result;
+ 	time_t last_mtime = 0;
+ 	struct object_entry **write_order;
++	off_t bytes_written = 0;
+ 
+ 	if (progress > pack_to_stdout)
+ 		progress_state = start_progress(the_repository,
+@@ -1347,6 +1348,7 @@ static void write_pack_file(void)
+ 	do {
+ 		unsigned char hash[GIT_MAX_RAWSZ];
+ 		char *pack_tmp_name = NULL;
++		off_t pack_bytes;
+ 
+ 		if (pack_to_stdout) {
+ 			/*
+@@ -1389,6 +1391,8 @@ static void write_pack_file(void)
+ 			display_progress(progress_state, written);
+ 		}
+ 
++		pack_bytes = hashfile_total(f) +
++			the_repository->hash_algo->rawsz;
+ 		if (pack_to_stdout) {
+ 			/*
+ 			 * We never fsync when writing to stdout since we may
+@@ -1419,6 +1423,7 @@ static void write_pack_file(void)
+ 				write_bitmap_index = 0;
+ 			}
+ 		}
++		bytes_written += pack_bytes;
+ 
+ 		if (!pack_to_stdout) {
+ 			struct stat st;
+@@ -1510,6 +1515,8 @@ static void write_pack_file(void)
+ 		    written, nr_result);
+ 	trace2_data_intmax("pack-objects", the_repository,
+ 			   "write_pack_file/wrote", nr_result);
++	trace2_data_intmax("pack-objects", the_repository,
++			   "write_pack_file/wrote_bytes", bytes_written);
+ }
+ 
+ static int no_try_delta(const char *path)
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 9dabb3615a..aac139e6a0 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -33,6 +33,30 @@ test_expect_success 'setup' '
+ 	} >expect
+ '
+ 
++test_expect_success 'pack-object traces bytes written to stdout' '
++	test_when_finished "rm -f pack.trace pack.pack" &&
++	GIT_TRACE2_EVENT="$PWD/pack.trace" \
++		git pack-objects --quiet --revs --stdout >pack.pack <<-EOF &&
++	$commit
++	EOF
++	bytes=$(test_file_size pack.pack) &&
++	test_grep "\"key\":\"write_pack_file/wrote_bytes\",\"value\":\"$bytes\"" pack.trace
++'
++
++test_expect_success 'pack-object traces bytes written to split pack files' '
++	test_when_finished "rm -f split.trace traced-pack-*" &&
++	GIT_TRACE2_EVENT="$PWD/split.trace" \
++		git -c pack.packSizeLimit=3m pack-objects --quiet traced-pack <obj-list &&
++	test 2 = $(ls traced-pack-*.pack | wc -l) &&
++	bytes=0 &&
++	for pack in traced-pack-*.pack
++	do
++		pack_size=$(test_file_size "$pack") &&
++		bytes=$((bytes + pack_size)) || return 1
++	done &&
++	test_grep "\"key\":\"write_pack_file/wrote_bytes\",\"value\":\"$bytes\"" split.trace
++'
++
+ test_expect_success 'setup pack-object <stdin' '
+ 	git init pack-object-stdin &&
+ 	test_commit -C pack-object-stdin one &&
 
-So, I dunno.
+base-commit: 18e66859d87fb4b76599f73460b54f0848c76b16
