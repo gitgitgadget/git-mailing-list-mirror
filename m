@@ -1,44 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867573B4E9F
-	for <git@vger.kernel.org>; Mon, 17 Aug 2026 07:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FBB3B7B76
+	for <git@vger.kernel.org>; Mon, 17 Aug 2026 07:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786951283; cv=none; b=tUlHwkrUsGBshf/dj6rCAdb0HKTbUTO/CfnLYt8TsPojXm7zyVWqnAlWoYzj37/NlHgnN2QDyWq+iLIMvGYlot7OjCjEmdNmYOovzTJU8FZOWZG1j+TW9PwxaLVf763BcMunY5WGdjciIA6GmAd9pLF51yQ40JWoxu6rlwtM+Go=
+	t=1786951724; cv=none; b=mUmL7E4r2BF5tyP2+pkGMTaz4yaE8COH59jC1IlR3hTg5swOhlMADev35dfd/rM/bdpG4VCIDGuHbTJ7Bki4aHWEIFD+131GrPhS8K8d+JEqhc20vYsk3TJIy2JW2wAEtF48xk0qk4lonWM7k+f7Gr6m6+Cjsg3U9rvEaNmP4do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786951283; c=relaxed/simple;
-	bh=sV8Kj+jZEIrgcfgJHpEWfC5VWAVKnpjUWfRnfce76Ls=;
+	s=arc-20240116; t=1786951724; c=relaxed/simple;
+	bh=YBi+R68Rlvgh2TrJnvNLlXUZT3IeTJfTIdwajw96DyQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XZ8JY0/uj6NDYy5JKy6zcVVnvXwYW64oAMzItHK86J2ZYmP+g2BIhyxuJl6yDn9GvG7xC95locLDzpGSQ1spNkusam/3ruujxDIJkiIwawww3yYAlKoVhEobj7nl52RpIreOS4gxT7Jx0kzSj6TCSH4pWgay2U1oTYoG/ikDKZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Q+8Oi+cY; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=PPnpajDl566/a9JSQbaWx6RX/CZJwYGrxT3LGfDCCXsONymPUzQ3smjhBakDbaaJm56+YPZI9g0MdP9LCVdQzg0THFxlZbwF5oIcSs9b28JKNeYQUy85/BiYr2v70VREmkj6v6s2V9Jr/xtmFdM8zK8xl+fGUsLL4ogy/lEF/ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=RtIH2NWN; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Q+8Oi+cY"
-Received: (qmail 73152 invoked by uid 106); 17 Aug 2026 07:21:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=sV8Kj+jZEIrgcfgJHpEWfC5VWAVKnpjUWfRnfce76Ls=; b=Q+8Oi+cYc41fevXjxZR8iUCxHsq9ZESfDVbQDQTm187lItLOqX+y/vllQn3lqfSbSwSgtTNKeXLlgmmAS4k5x9LhbB/C8Uzcct5vUHpJIowNkgqoDGvl8F9lVZezYiZnA/c7mSxUAAf2sEJnOd4YRzLJKbUqyJwIpvkzHxfAm4BSpnTat7b7fFjLnFCUNW/32tHfescXNMIz2Jp6ItDnJBTLPL01D1flGw7HHWBCV9CoiSSsWmz+1skCLBf4TTNHJVLm+kz0xNnBwaItbc9e51NYOH5SrxVa+XUHIAJ/8mtQoX65X6XkCJdcC9ks1xQO0qWSgUKgtFY12n5GHdSHwg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="RtIH2NWN"
+Received: (qmail 73166 invoked by uid 106); 17 Aug 2026 07:28:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=YBi+R68Rlvgh2TrJnvNLlXUZT3IeTJfTIdwajw96DyQ=; b=RtIH2NWN+TOe2HEyfAKkl1/O+HJ+fL41DoKuWkdp6hVnBCZePDFisyrhFm0keDe1q4bCbVjjc+lmFSNnHpbUEpU3tIX9LW7iG7/A2Qxy8aq/BnhoAIo+BGMqqbgO0UM6lUBJ3iYI7XgtBNRH1i/pkLTEfas8uQpoBIo8I2HBohuLUyX+pbwbGlmi6Bkp3PgLTQlFRCkqoliWYt5ocdoIDCv+fL1vRVuS5GmGV58aN+nDyYaJ6z7jckVkEdOJkZ8Bn/6W5IYsk1Vq6Pb7IY04y1pGR25SFPCcr0m3VchuCkkfvsg9GqWLu/XGIiwohISFobgWNPsqeOg8h5pRIw4Qwg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 17 Aug 2026 07:21:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 17 Aug 2026 07:28:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14968 invoked by uid 111); 17 Aug 2026 07:21:18 -0000
+Received: (qmail 15027 invoked by uid 111); 17 Aug 2026 07:28:45 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Aug 2026 03:21:18 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Aug 2026 03:28:45 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 17 Aug 2026 03:21:13 -0400
+Date: Mon, 17 Aug 2026 03:28:40 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] packfile: fix perf regression with many packs
-Message-ID: <20260817072113.GA690018@coredump.intra.peff.net>
-References: <pull.2202.git.1786561870638.gitgitgadget@gmail.com>
- <an1zz02GNqDu-0Oz@pks.im>
- <20260813161525.GB1386479@coredump.intra.peff.net>
- <an7IhgES-reCzQMr@pks.im>
- <20260814165546.GA2563235@coredump.intra.peff.net>
- <aoKZvxE8oP5B6O_4@pks.im>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 1/4] odb: decouple source path comparisons from
+ `the_repository`
+Message-ID: <20260817072840.GB690018@coredump.intra.peff.net>
+References: <20260812-pks-odb-eagerly-prepare-alternates-v2-0-522b9a5bc1ea@pks.im>
+ <20260812-pks-odb-eagerly-prepare-alternates-v2-1-522b9a5bc1ea@pks.im>
+ <20260814171724.GB2563235@coredump.intra.peff.net>
+ <aoKeeQMps50rjhWi@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,72 +44,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aoKZvxE8oP5B6O_4@pks.im>
+In-Reply-To: <aoKeeQMps50rjhWi@pks.im>
 
-On Mon, Aug 17, 2026 at 07:18:55AM +0200, Patrick Steinhardt wrote:
+On Mon, Aug 17, 2026 at 07:39:05AM +0200, Patrick Steinhardt wrote:
 
-> > The map protects more than just adding to the list; it avoids all of
-> > add_packed_git(), which allocates and does a bunch of stat() calls.  So
-> > it couldn't just be a check in packfile_list_append(), but would have to
-> > be a separate existence check well before that.
-> > 
-> > That's not impossible, but it would be a lot easier to see what
-> > generalized pattern would be most useful if there were more than one
-> > caller of packfile_list_append(). ;)
+> I also had the feeling that case insensitivity is quite a bit lacking,
+> too. What we're really after is whether two directories are actually the
+> exact same path. And whether the path is case-insensitive is only one
+> part of that equation, so it's an imperfect metric by itself already.
 > 
-> We only have a single caller that appends, but we have some more that
-> use `packfile_list_prepend()`. And there we basically have the same
-> problem.
+> Ideally, we should probably use realpath(3p) to at least also resolve
+> symlinks. Unfortunately, it's not guaranteed that this function also
+> knows to canonicalize casing.
 
-Ah, indeed. I see prepend calls sprinkled in some rather hot code paths,
-including the MRU adjustment from find_pack_entry(). That is a possible
-candidate for Dscho's clone slowdown[1].
+Yeah, exactly. I don't think we have a completely robust way of doing
+that check.
 
-But I don't think would not want to pay the cost for a hash de-dup
-there. We are not adding a new pack at all, but just adjusting the
-placement, and that should be a quick O(1) if we are using a
-doubly-linked list.
+> > So I kind of wonder if we could just do away with considering case
+> > insensitivity here at all. We'd err on the side of correctness in the
+> > ambiguous cases, and this code complexity can just go away.
+> 
+> You will of course be able to craft edge cases where that would be a
+> significant regression. But if your alternates file looks like this you
+> may be holding it wrong:
+> 
+>     /path/to/alternate
+>     /PATH/TO/ALTERNATE
+>     /pAtH/tO/aLtErNaTe
+>     /PaTh/To/AlTeRnAtE
 
-It's harder to construct a synthetic test for prepending because of pack
-locality. If two subsequent requests both try to move pack A to the
-front of the list, the second prepend()'s removal operation will find
-the pack at the front in essentially constant time.
+Agreed. The more likely case to me is that repo "A" points to "B" and
+"C", then "B" also points to "c" (lowercase). Or you can imagine other
+tree structures that converge.
 
-But we can spread the history across packs like this (I recommend
-running on a ram disk, otherwise the checkpoint sync() makes it take
-forever):
+I don't think you could ever get there with standard Git commands,
+though. We only ever insert a single alternate via "clone --shared", so
+they always form a chain. To get multiple entries I think you'd have to
+create the alternates file manually.
 
-  git init
-  for i in $(seq 10000); do
-    echo "commit refs/heads/foo"
-    echo "committer <none@example.com> $i +0000"
-    echo "data <<EOF"
-    echo "commit message $i"
-    echo "EOF"
-    echo
-    echo checkpoint
-  done |
-  git -c fastimport.unpackLimit=0 fast-import
+  You could also have a chain that forms a loop, but I think you are
+  probably beyond screwed at that point anyway. And also probably
+  impossible to do with "clone --shared", as the parent repo must
+  already exist.
 
-And then timing "git rev-list --count foo" is interesting as the number
-of packs grows:
+So yeah, I'd be highly surprised if anybody outside of specialized
+alternates-tweaking scripts (like the ones that forges use) would ever
+construct a situation where duplicates even mattered, let alone their
+case. In the case of GitHub's scripts, they were always boring and
+one-level anyway (forks point to a shared repo).
 
-  -   500:   18ms
-  -  1000:   34ms
-  -  2000:  103ms
-  -  4000:  374ms
-  -  8000: 1648ms
-  - 16000: 6351ms
+IIRC talking to kernel.org folks long ago, they had some kind of tree
+structure that matched the filesystem (so foo/bar/baz.git borrowed from
+foo/bar.git, which borrowed from foo.git). I don't know if it was a
+strict tree, though, or if that system ever even saw production use.
 
-You can see the quadratic growth taking over around 2000 packs. But I'm
-not sure that is proving anything about list management. Lookup across
-packs is linear, so this situation is inherently quadratic. I think you
-could probably make an argument that the list management follows exactly
-the same quadratic patterns, and thus the MRU optimizes the removal from
-the prepend, too.
+> Hm. Weren't there filesystems where `st_ino` and `st_dev` aren't set at
+> all? I think that's the case on Windows, which is unfortunately also the
+> one where we see case insensitive filesystems by default. So that makes
+> it way less effective, as it only works on systems where we typically
+> aren't case-insensitive in the first place (except macOS maybe).
+> 
+> So if we want to go down this path I'm inclined to just unconditionally
+> use case sensitive matching and not introduce any secondary machinery.
 
-Still, it seems prudent for these MRU updates to use a constant-time
-movement within the list, rather than an explicit duplicate check and
-removal.
+Yes, that's my preference, too.
 
 -Peff
