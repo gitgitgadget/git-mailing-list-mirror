@@ -1,81 +1,90 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807724322E4
-	for <git@vger.kernel.org>; Mon, 17 Aug 2026 16:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775B2456E1C
+	for <git@vger.kernel.org>; Mon, 17 Aug 2026 16:53:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786985278; cv=none; b=i2kSSLFgq7zJ5CkoOYYwbQuRgHpapu0wHO98sbWgGbR9G0HsMVPGGlhXvNeso/3LrgvCGuJE0MjndHV7schJ25MINlIbeA6IVny/gmrVJE/SDLj07M1b1FkqB6qG0n0F1v42a4k0/E26NGr5YkmZ7ICEltFaHcStuI72BRMcKbU=
+	t=1786985633; cv=none; b=sGdaAVAnD9BpXMcjPnlhSkXo76j6S0FWXUy1nf9SutpzdobDdzg8n4MnU7pf8NfK74mXKuYOHx04q9bsONgXGvOs1WfDiaXfcOiOx39qdKb9ldbQfjkB+BLSFdLB+wqKL4O2pVQ11T8CQyf8sGkBVywE9owQad2b8EtEbIzzbig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786985278; c=relaxed/simple;
-	bh=hOHr36fxj6rwu8zLxHcb8xgrufxvDWuPNrm/uBdxcD0=;
+	s=arc-20240116; t=1786985633; c=relaxed/simple;
+	bh=kxCBQUDE2N4GV8QxDjaTJCHyxJJmY0uElRR0tqFl6Cw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SpFY+k9Ajh2chhrxkvWvdAIXkNKmPh8U/a4lXNPYd/7uPN4hIXHs6q68YrRZnOlOpXkGI7bnXurvco+AxobdCjR04YwOHeEe7QG/VaDIECvHJp8kI9P9yB5EwJZ7YQVBN2OQ4fJIxYICZNkF8BwS5Qgv2Rpmw1yH5vQmKa40VCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FLPlD0aY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GyJLEPDF; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=R7OhTmQg31O61uZLaKCpk/zVbR2zt4X3j1pleM02jr3YGUyjvfo+MgSfmo1GadmNzEquybKwMjJiVA3b0JDj+hxksoliOBm+IBtHGStiR6p6tQAF/j8MPM5/9JAZdAOF1OtcGA57oPs38qE4d/1FHcPdXccG0qhJAq3xbq+GTac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D/1F3dGT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LVxGcd6S; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FLPlD0aY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GyJLEPDF"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6D5C214000ED;
-	Mon, 17 Aug 2026 12:47:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D/1F3dGT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LVxGcd6S"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 719F1EC020B;
+	Mon, 17 Aug 2026 12:53:43 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 17 Aug 2026 12:47:55 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 17 Aug 2026 12:53:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786985275; x=1787071675; bh=FhuhxT+oBR
-	woWUp4mK/4Y7STgy+ff32SI6921JVH7bU=; b=FLPlD0aYGm9kY5JVN6e1Veaztf
-	M9K6OsvfRnyQUqDit0CFlNDPB+bn7bSry994YUkjRAt6AKkj/X7EAvbx+fgVpS8J
-	oWJoxRP8YgetFwEBndBKQh3r75PHNCt9FFmJhHghJqhHKy06BZrCYfw1CDRjxzTa
-	C5ZUsOUezBHY+xxXC5RAYbFpRTOJl6SrdMdlnsjtiCiuH4iY6g03QfM0oLrzGNMr
-	fhfTGnl+COc24+oK3vHdS3FWGSGepM02P83yFrznrmUJnIUG6riOSH+9PvrKJ/o7
-	ara4vNRSoAlx3TNDdSkxjQW+8MyJOoXoZJh37gX/fe3CUqv4n1hKEnhHW+ow==
+	:subject:to:to; s=fm2; t=1786985623; x=1787072023; bh=3oQoHWwI+c
+	06BroZYWy+nxz4Bn5UGS6Rv99tmAM3ZpE=; b=D/1F3dGTpPHrbkYS2+0ytnCoyg
+	oeHUsqUGb17gz2AP1qGCxI6TanRwGGTy6LiocC/BnJ3L7vV7g5JgAEXiK/JjMQQN
+	Fa6khuJfMOCFu+x9pWAwddbtBHgOnUiXfsshMO27c9yxzyFxvQydhTOrckRkcSc7
+	h2A6SJfzAO3CqvIyvHg5lplnxz1t8k7Dl/i211zHHA2oAUYe+rduEWKDBaEKbUO4
+	BwKG2yjFu9WAuQSpziutEwMIV/B7RgyhZ9HfbcaJC3MbLAZMtqtLc48lxsQCqprq
+	5DHu5NeVGkMOHA7F78TdESM5AbCYKPa6IOm2s+nWhWLK2RDb5NB2QddEz5wA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786985275; x=1787071675; bh=FhuhxT+oBRwoWUp4mK/4Y7STgy+ff32SI69
-	21JVH7bU=; b=GyJLEPDFZK1K0JHjILE/rATDAwL8M16Xg5c8okkCvxM9A6vwbCm
-	d9gGqyQgKsGlkcblMcMB64ZUK+95Ve1IvPW9p5TKUBCX/elKwReQDyH55DHc6Wfp
-	vLAiJzy2nNfB3Tqzxp/gELTL6RLcC2AaF7X2zVMvd3gFOYe4AVmP/PG/BQsZgVpp
-	ALiEOkeCSolCJeB0T0XPy+bW3vY6rXqKNyQEDeiGGmuz+vfvwsRpajaLiZ5bdGng
-	CjhO3+RCS509BJZJGNUnuah3WOONRAF6HFlXXM+n2gtgPRWtOqAbxCXT5bbZ9C2J
-	vHnq+qtZqMQUMTZfHooq6C8gHh8ZHsGgP6A==
-X-ME-Sender: <xms:OzuDajb10t-bDfJTucRLEjQyMKa6d3V_o9unM6chbl3h1Z8butvf3Q>
-    <xme:OzuDap3jumisYqd9DIEXjURLiWKy806JGDy3GkGOxjsDF7tCS_FwIQ4qK7szaX2xg
-    Rjyx0Wur-ogiLgwuI0E4yHcsIqCeuLYUAv2m4dhJD0gC28ZCJyIMw>
-X-ME-Received: <xmr:OzuDajUATK9-EnO0EVXuCV01p4hPX4MWUp4nt80RDmfCPfOQLLsV-c3989CMB2GpcWeXnl1-_pv_3tq_XRC6ABBfs6w-b9hf2g>
-X-ME-Proxy-Cause: dmFkZTEir9VA5zv8eixXDTjt/yqBkWV61eKXj96gKTbYvG1tMgK93Hhp9TSZk2EwhdO3xA
-    x55KEjC/3fd7hl5o2BCzud2U67AeCJ40x0yoayVmd318oxmK4KWcZTTlgOw5l3IrXvk1L5
-    dMRkSin9CYThIa/21GLDp9cZ+V8nsbyp3ZNu1tHQW87o0Iuh8vT940bL+J69WWXs/bukmv
-    13stjtaXobmjz8rsuzf8aO8mKztQQUlDt8C8/yQW9brMBmhAYsSJsxH5VS2AP2TpLNxtqt
-    DwxSOkoBLSqvNFAThmEMBXbrRvxy2TzkDsYHB4gUYmGcAX0Iw3PVPCxRUwd3WwhJi6MnJP
-    UqmBcduu5BNo0AxJSupPm8SA0/UJypriJpRubj5wDn/NCMH4NxU7Wd2bF9uqtFmCSVwEBa
-    JyHlsfwiADeypViJFU6Th4MrxGxwADJ71PSoMlHJIf+zdWJO81FGcB4GlfUPtJ1HCgXmAh
-    aHKS4/mhWrnlUB9lJe7Cuowen1pd7uBkfhSIkRX9G9WgIZD8mNgmGskS+YLPqrhBfoYIyj
-    vpqEuoCe1cwZTVl/FonugcK390jxll1h8IeqocelQBGi+Up+PxUfGumtLe4ck7wi7KMGef
-    IwURTolQaLlKBKI8TejW5IfJDD+eOqylgT9XexFGW16Jn4mWyyHdUeAO6kIQ
-X-ME-Proxy: <xmx:OzuDajU4MvuOd7eG4VMP4mp2x8Gc2ei_wk9XPC3y2FGK7-SvC0zawg>
-    <xmx:OzuDaicIH0R0xaOpmBcA8ksAI-APpACIuxBKWauo7Wm5TdIgtF2lcA>
-    <xmx:OzuDasUDD0O1uWaue0QU9Q73iAvSswImU_0urfiIQaUOZNEYgEnOdw>
-    <xmx:OzuDareiNsj3mqdsbSFaqEhZ-ojR-jnfvepF-rjw9D-kdaye5hnNHQ>
-    <xmx:OzuDah9kiZ7l00W_KgEQoJzn6LMDxQ3Gj_6AJZjUByNsxSFhmUCiWwOb>
+	1786985623; x=1787072023; bh=3oQoHWwI+c06BroZYWy+nxz4Bn5UGS6Rv99
+	tmAM3ZpE=; b=LVxGcd6SbNp0Y2vSDi15Tq+Jixa3NRkCSSxMox5tN5xrt8feHD6
+	g/j79VGK/aBMQE7Ptd1riAi7lfCjfGTrjBkIj4KPLGZg13vnkuW8Zg+r5kZrA1IS
+	YemPp/4bFvRp7+7A4zuWcdJMFngYgSLVmj2iHHwprULwJrW6QASRjThx8KH1CoqV
+	JVMqLv0YMr2VpR3vNESoIn01xPdO2APfWY29a3xc7es2xa/n4u1o40+DACKu1f/u
+	yMMlBSVaui49FteVzUWg4HWB38eNOUVVL19XJyXscU+C+i8oEP90nZo0/J1li00n
+	NsGmPO4FpikOwSUF7/9mzjDepM+v+cYn6qQ==
+X-ME-Sender: <xms:lzyDaqRiZ0-x09Ad3xPS48PtidK2-R7fOINHxUcnWJS3ob7xnJl_SA>
+    <xme:lzyDasU-oFAArivMJyDkEi3fRTeLMCZ5LDwvPzkvYj7hys_ynCQ1yHq_icDqqpmvw
+    mI4AR25MliOLK6jsrPCvlf4kuXzjOCy_d7pf5HSYRiSXUWLIgsrmt8>
+X-ME-Received: <xmr:lzyDasTw4XOhVFne16WRK2FDYAPdYSTjOLftlRoUH86dwEZ--UWUaBzQ73zV37VcTY7S84b0VhRpAUHUAXQbfQFY1AADQWsmOQ>
+X-ME-Proxy-Cause: dmFkZTFlZqwVTHNHJ80kEHg7D6umrnLgUEmIsRhQXFSs6iURupRcMj7njOpOYS8as+PO5L
+    7QtFq4a8JDhEZTQFOpU8PiDXCGPEDDl7E/t+Af8mNiNVWGO3OWDDgJlBlnvcjAXs1t5blD
+    sAd2NIFNdPTBNH4xZKcee4UyL6qWrSg6a1m7hU4XvYgKeftP6Chhq92YIICvmYwk+rThiU
+    bSZa/KCKaRLE6K6R0i8EhIhLA6H3FhtKf0IQ59LeDlq7hdiGXELxYC5QhnZCC9/CiSp5cT
+    rLbnJuc2FSX3DnBiRxmGIWPVbopLpz/0buyPHpdasw3WrZO2fNprlTM1rLqEWW+E+kUmKP
+    3mVshLLVg81kHaHqTyDkoEd/xelVix8SXqWaLcS7Lu7krcBBRG0R2+4hSn8NuK3CSd1A80
+    DK/cANud2TboFsLQoMmTbrbEReHkaR8F+ed9j03j6K0Svj2E3TkuW0EwQ/Nwc/AMnxvv/e
+    vpiEyNtemtT5Nxqllmnl038Ea9QT9OQeIbVQQ6FELNooKnTLw2jjegbcLN2Jm5v/mFKfrc
+    Fn4ZR4NvVQQKT7ESZVtXiDXqeIYUBn7TTV4P/Z9uMRMTrtfasDskHl0xuXRq3nwc+M4Bv8
+    9IL1CF0l2Ji4RNQzHLhrksg1nUOo70z9lgS0+81kjPBw1SQO+nN92QIB2lKw
+X-ME-Proxy: <xmx:lzyDas2cqHIumVdjJEiP8gGf4pHaWnG-kSxzcK03F8fwU-GPRqgmrA>
+    <xmx:lzyDakfJxP2s4FapKrBCw7lnWTzadUf9zPBIiwoTKR9zaUnnrRWQ6w>
+    <xmx:lzyDasP0FdLp9tC8uGiBkzp1YrU_sn27HB0nx_Vb8Ayh-rzCRQLoww>
+    <xmx:lzyDagXSxH4fVcR5LCWvgNWUoHTi9lVC3Eq29AdwQPJSBKGtLkmj4A>
+    <xmx:lzyDamig0A6n5d2pd5H21oO1XDJ19J9SlJTOMMW70brhpvuSpD6qoC49>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Aug 2026 12:47:54 -0400 (EDT)
+ 17 Aug 2026 12:53:42 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 5/6] bundle: get (mostly) rid of `the_repository`
-In-Reply-To: <20260817-b4-pks-odb-generate-pack-v2-5-4c8a96ccfdb3@pks.im>
-	(Patrick Steinhardt's message of "Mon, 17 Aug 2026 07:39:46 +0200")
-References: <20260817-b4-pks-odb-generate-pack-v2-0-4c8a96ccfdb3@pks.im>
-	<20260817-b4-pks-odb-generate-pack-v2-5-4c8a96ccfdb3@pks.im>
-Date: Mon, 17 Aug 2026 09:47:53 -0700
-Message-ID: <xmqqik5866di.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Harald Nordgren via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Matt
+ Hunter <m@lfurio.us>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v13 7/8] history: create squashed commits without editing
+In-Reply-To: <xmqqbjb07osr.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	17 Aug 2026 08:24:36 -0700")
+References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
+	<pull.2337.v13.git.git.1786088371.gitgitgadget@gmail.com>
+	<8b3551d0d4ecb360775ea29507ee262c7bf9cd42.1786088371.git.gitgitgadget@gmail.com>
+	<xmqq4igyszeb.fsf@gitster.g>
+	<f34669ad-9157-4f13-a3c1-c0abbc660497@gmail.com>
+	<xmqqbjb07osr.fsf@gitster.g>
+Date: Mon, 17 Aug 2026 09:53:41 -0700
+Message-ID: <xmqqecfw663u.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,50 +94,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Refactor "bundle.c" so that we don't depend on `the_repository` anymore.
-> This conversion is trivial for most of the part, as we already have a
-> repository available in all calling conexts.
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 >
-> The only exception is that we use `get_log_output_encoding()`, which
-> implicitly depends on `the_repository`. Add an `extern` declaration for
-> this function so that we can drop `USE_THE_REPOSITORY_VARIABLE` and not
-> accidentally introduce more uses of `the_repository`.
+>> It's piped into "tr" to check that
+>>
+>> 	target = lookup_commit_reference_by_name(s);
+>> 	if (target && istarts_with(oid_to_hex(&target->object.oid), s))
+>>
+>> uses istarts_with() so that we accept uppercase object ids.
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  bundle.c | 32 +++++++++++++++++++++-----------
->  1 file changed, 21 insertions(+), 11 deletions(-)
->
-> diff --git a/bundle.c b/bundle.c
-> index b64716f252..a9330bf0d3 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -1,4 +1,3 @@
-> -#define USE_THE_REPOSITORY_VARIABLE
->  #define DISABLE_SIGN_COMPARE_WARNINGS
->  
->  #include "git-compat-util.h"
-> @@ -21,6 +20,13 @@
->  #include "connected.h"
->  #include "write-or-die.h"
->  
-> +/*
-> + * NEEDSWORK: this function implicitly depends on `the_repository` and is not
-> + * available because we dropped USE_THE_REPOSITORY_VARIABLE. We can remove the
-> + * declaration once it's accessible via `repo_config_values`.
-> + */
-> +extern const char *get_log_output_encoding(void);
-> +
+> You should check in with brian about istarts_with() that is used
+> here, as I suspect he missed it in his effort to declare uppercase
+> hexadecimal literals invalid.
 
-Doesn't this defeat the whole "drop #define USE_THE_REPOSITORY_VARIABLE
-as a mark that we are done with this file and no longer need to
-worry about it going forward because we won't be able to compile if
-somebody adds a new use?" premise?  
+Ah no, no, no.  This is a new code introduced by this series.
 
-We want to omit the above two hunks, even though the rest of the
-patch look perfectly good.
-
-Thanks.
-
+And as I said, I do not see why we want to be case insensitive with
+this comparison.
