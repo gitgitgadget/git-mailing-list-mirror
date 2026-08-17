@@ -1,123 +1,140 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC3F3A6EEE
-	for <git@vger.kernel.org>; Mon, 17 Aug 2026 20:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFC73C1D79
+	for <git@vger.kernel.org>; Mon, 17 Aug 2026 20:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786997299; cv=none; b=ppJXOb2zldJRDxWmkPYpwmkd9j79uM7LO4ipdz7gsfv0AntLA2aOGlUxlHVbHummFzuokHNRLhGdFCFu5pE8/K/pgOzDdpXnbgutx7sABt5+vkLkmWAxY6/wPTXUXSxLfAcaHcezCM8NeZgwX6/8FsxTleIbxtQVcZkAtr1WJ+Y=
+	t=1787000312; cv=none; b=XF+GnRSu/8FqQwAX/nGtQGzlc95QYvJ11Gp/n/IQg3UK/SUj3MBXIkq+uh4HIePfI/TQ+Y2yhN5sSDM+OEbgtv3BqMWo8RKmvJiEAAJOToJUW0JXhiCtVTswzGMoIKpK6AKvx1JJuZGzOVI7fViLb1fi19b9ryVLMSyWTMwxfkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786997299; c=relaxed/simple;
-	bh=+2NQ9NbqTm3NDip6qeJrOpomVoNl0yixTSPUOIEjWt8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=hSMpYOupW6Q2id27u3eZowQGdsMZWmVZpXqT4rG53yJBIyBn/aFLhBbzBXbckNmH2W2iVWLhY9OMxlPrDma5Y+SdasS6LEiTtUxDcTz9raM+IbfeZ/joF8dqb4MzW6fFb1S70QE+2WoonK31riU7czE7Zt8Li+rPydSuVXezo8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Pqx96pcv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FgkkXntr; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1787000312; c=relaxed/simple;
+	bh=b4sR1xi/pbT1IfVYIgwMkVDfffPTAlccIiDkHc72jN4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kAwyRLVsTsJwrGN7KNVLARjYtKD0MK06bw9Fv12GhugpG4rDRJnh2a+leuOCTlZDwbAe7BOKf1iCMckI6uof1nqwh80c92BXa7CGG9xvQCavdV+1rjASBY4bLaYHytSF68KrVwghnTUS9ToxVKKBCPTIbK78Uf/W54JxoQwm410=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vrIYgrFZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fdwzGmTl; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Pqx96pcv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FgkkXntr"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 08FE97A016E;
-	Mon, 17 Aug 2026 16:08:15 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Mon, 17 Aug 2026 16:08:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1786997295;
-	 x=1787083695; bh=EaUeP+2SlKWXyCy9ih0ChwrUOCg79yvHetdOBD9gpuA=; b=
-	Pqx96pcvRRTia1zYbh/8xVocEMnOJ/rCMaM+qlMI2wMJjixiuEj63TH839WaMOjr
-	Wg+trf/PW461mAxRvZ54ZIKHayLXGo4Tc0DjZ2h3zMH8eeJRaxPMtO7mJUkSCZNG
-	6glakhK0Jvryy0ZFjcsUtTC2Y9CheBnMC5cH1JpEXs+bh/WKDm8VvdpZy+mIDfG0
-	5edF+VjwnaeI2Rxaw40R5jXffKlIAabfm5CToeWwHKM3AtJoppp6LZZ9zJKk/zbv
-	sNjLQC35bqagMilg9TSaU4cWJZTx7t4Y6S/EA6u7ReDsMBAuFPNScypBCO83tnKC
-	nmfqZzDJTQJ6zBdHtY/21w==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vrIYgrFZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fdwzGmTl"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A7C3D7A007B;
+	Mon, 17 Aug 2026 16:58:29 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 17 Aug 2026 16:58:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787000309; x=1787086709; bh=nfQfJaGyg7
+	+de3DVFDOutgz/EBMGROUufvWxkHuuPqU=; b=vrIYgrFZUYD0JnH281P4hxHDAs
+	+GZcl3PqLw7DG7sBBqj6eX0HaF3DjlKmpxTv1vclqEnKUDs8BW6p5UqVIQ7vuCJH
+	8FQhTq6Nq5E3z3dG88nUBKF8/MV4zRuLWifB0I25uX2FX71Tbky2cSYeCCqqpciA
+	SC9cXSbMzptEgpJxYdoxE8sP44HZwdd1qW1jkbZBoGZ2UYV6OHcOHB7UJ68nhtAG
+	K8ik+so6KpHRGQ4BZU69LcFVpa9FFgcxumuz8FKuZ50/2Kg0AVrqSyRS2SzkKkGU
+	rLr++CiS4vSHKxwtZLE5g4FOvUQr6csCXsc2LkBzkM2m2XV/k35MD6OhFC1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786997295; x=
-	1787083695; bh=EaUeP+2SlKWXyCy9ih0ChwrUOCg79yvHetdOBD9gpuA=; b=F
-	gkkXntrKwPcDMQwpiG+udxuZv2kT7QY4rjTodCWCWydqYQL1yLvnm2mu3OHn3XSD
-	HOpLmPZ7c8EGHIjBVK0HcIUmRzIcgGR42LV2IuI3lHQoqrOUTj2gQ/jxVvCTP9LT
-	VDvJeRbyTMWVRSBTSfMbACqd51zZMkr0bBxbgdO8/UUU8SY0cCxVeXLrivaLIEEK
-	Sbc2pmpiYhBsFsDOtmXos03FKieWfv8415Qg5CsOn2KxhVzMXvsasPlzgmlEdyLB
-	/C6QfW1DgZly5m0VE2tNlcGE8fGqZkhBL3hJ/PM6n5GE3UN+/fwEp5lhAqcquOjb
-	fTFUnw/yi32OrfzuzoGAQ==
-X-ME-Sender: <xms:KmqDahZEKYyM_O6O4KYHEdkbCjK_H84jXiqyYg6Ho-zNjzB0zzqJUmY>
-    <xme:KmqDajOVlHQFbAr3WaOKSPzZ_JrIab0HpEoqMSKg9LH6pYDLwe1B2dJzsPszu-O6r
-    1bj0g-ADjOk20CCtyJxvXvmutuwmVmCZ2EswXR2L8EYjFD35PN2xA>
-X-ME-Proxy-Cause: dmFkZTFpcRRDbCm8k8wdBsl+eWKineHhvKhRsvl7mWe6inYCaqMHUOFCnhi3ZTgTWPprPM
-    BvlpPC5kVzsYx7E1SM/g9Kpt3ssOp4DJpnfxbYNH3YVTJRfyYMGJFMB9LI1bPgxvBvtHhs
-    iaEfkyNMPLn+ivmDrnWjKg/PoX4pLXGW8YNRVYQXJOAX5Qk3G+zffp6NW1sLQrbFZ51BlA
-    XaocpqNku0IWHRhFqUWTyUAFTH7+v0ID0NUrEWh/HN6AVTdv4PKRctRkZ0QIymG6QQIIVs
-    X1IYTFDJ037h9wH8VuKdD6yBj/SvZJZhwF5bvWEDWgvENeJy7hxpK9riWN7iph5d38u4HI
-    f2ZnB+fClOP6M8c3Dop9Gvft0I59NPFJP5gIEhTV3paXuV1NNvr6jfFKRWb9lJAivgt9BX
-    IKGDioSFcT3dCOC1ZiqyH9146B5XFZky6xK+6xzCclLl01k32kqkAFY/5KPU07CJaHxYqe
-    hmzzqAtmL0BjbDVs3pkFUcSEOsDtXbWnRq6u+Lja0jzr1LR7lmSrnRH5orn6ih7bhdU9tU
-    dblxkuh63ZlF/xQEQU5ucpbWZXh3OYUwC7huJansFdFROxi9Ff6d3hbImJtvr8+rBB6GDy
-    p5Gt8PTP7Re0LJGY6BkpJeZVTY4N2VLQ/ym7S1l4imwRIq+1mSSNNRvl+H1g
-X-ME-Proxy: <xmx:LGqDarZTqYGK5iceYnPdJ87N5ep7eqvDaP3yE0bqLK6clb4DI42oiQ>
-    <xmx:LGqDamYmzjbdo0xanuZSBvqxNXeYIaCQIu8bNPJEBgMR6hxCdsiCPA>
-    <xmx:LGqDagJOEem8smYNa9Da2qPAmiz1hW5zIQReXgfY7ysu0NWJe-Y-BQ>
-    <xmx:LGqDaivj_6CE-zHSC8wqPhnq7pp5GoBdlmKhd_wZD0qVztJWt928sQ>
-    <xmx:L2qDahOVPoWDXFb4Da3fXFxf6O7obJgeSGR90-KyUa5pMycsk9ttQRkI>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id ED67322C0075; Mon, 17 Aug 2026 16:08:09 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787000309; x=1787086709; bh=nfQfJaGyg7+de3DVFDOutgz/EBMGROUufvW
+	xkHuuPqU=; b=fdwzGmTls/L9q5LySxw76O/eF0UHEddmnYEEIMh8SCegm1Z+iUI
+	UgTq59Vs1qB13RBP5ZhhCICeYNrHcW0BmveVpMm4m/K3XRvWKa5fFhnoNZrmCGEz
+	BJILgnTgz6dG8YANDuqIh2p1ODCbX+3FU3/0JubNhHOFn7HE93uN9jyRXz1BZ4nr
+	ambOb1mm/cTXUu7+8DWdYbCpNnkevuHS6XjMg0Xv+KmEKzPxbFXOQWeXUQwFuRwH
+	vtYPUVNQk/cY+dpEdCEe9t22ssHIXQ7wgsSAEfb5JJ9Zu3ZBAV9khbASgNGVFKGT
+	YGNg7uIVqNGq7weo2MkU5+U0A3q+LMXR6XA==
+X-ME-Sender: <xms:9HWDatzgGW7wd5W-PvgOWgmlbv7J1GXvvevZrRz0NN2BAWqRdRSg3g>
+    <xme:9HWDagVnT2QbvEfwtwaH2BheeGMdjgZRrmEjgofVL1elitYuLrAFm1YiSpmuCM1Ql
+    v4E9hlYoL1IOBnBoeZXyECmNKv9qVc_fjcTSIoMvv6N1ONBwyzHG88>
+X-ME-Received: <xmr:9HWDah8zF7f7ZbpIh0e4pal_OVc_qcHMDsNysvHUSZvActxivy128VnNfzxfBYfY3JGyhISnWZl-g-6bwrczHudbCR8bPKh6aw>
+X-ME-Proxy-Cause: dmFkZTGsubJBatbvRgdPCKIgt/vpgJuxPnU9DCC/d+XYLmQeYObmrLmwo8GLp4eFbpveuh
+    CYm8uRjAHgJ9jNpVLKK1uKRZLLvPAt1IHBG77TySVElPquhi9fQA7Qbj/9sq1/KI5FAxLT
+    fUM6xFIGb6TEsg6llDWrle13QDoUAwai7W5EnC+wHj9J3GAYAvPd6VQhEftiwQjiyAkRyv
+    7qMM0c4M115lElrAnfcAMQct9U7J4rcngL82x9uv/i4imK9fLvB2PTGiOosQkHPK7tYn/L
+    CR5/pZ6gDL9soQ5GlpiIICdhQLQad2O6w449c3TxZWNWEUhDquv0/tN7xwYyc3+3iAzTEe
+    qao8sIi7VwvL18fiPYYmrGzoP2gl0Oec95CdJ0q8lPXA8DpCbMzAYAdxbdFOkLe8XgOPSn
+    K5YoYyhfGGCGe3i933AGUJtR/AfSN9XOtrK9EpedBL/PTnF9EYbBjFBGj53FgAvfWJYk76
+    nBo+7ZBfRUWpKB7GiZPwj8d7J0CO6agneG5NB9vwUAkyFKcIQhDFaEj/HBh2FpvrXtkD5B
+    w8YGzA/WtrRydA6WJgEllFX89KOwtM6beocsDEk1sSfOlwP6uO8FdjwBpmF3p0z4Z/I/rd
+    4ELrTvuMGkcYcrx26OONNP6i4H/RPYFfSXQx/wmCnwNdpJitC/1svkg3Bmdg
+X-ME-Proxy: <xmx:9HWDarsVZaj3sEMrCgzskQwdAu7vdILVF-oH3CaPzwrgTmdU8stZBw>
+    <xmx:9HWDap2rtEokhYL2rn1LvL0X_v_YYFLIkHTz007Gr0WoPRh-DM13zA>
+    <xmx:9HWDaoQwSj4GkmeAv0cCRYLZEwz3jEFF67tB4L08QRfkVGggLZ1gXA>
+    <xmx:9HWDalcCWOiZqnUPEKETg7Ykjx4kPX4VhalbrjQnpDUYSBbSB2XbBw>
+    <xmx:9XWDaia-E7da9t9lWpXKj0jk-08oLpdmyMaLmnE24uSAyWtGr20IvZ2d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 17 Aug 2026 16:58:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Michael Montalbo <mmontalbo@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt
+ <ps@pks.im>,  SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+  git@vger.kernel.org,
+  "brian m. carlson" <sandals@crustytoothpaste.net>,  Elijah Newren
+ <newren@gmail.com>,  Derrick Stolee <stolee@gmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH RFC v3 2/2] Move libgit.a sources into separate "lib/"
+ directory
+In-Reply-To: <CAC2QwmKs-TV2f=2BhBNQGtVA4vzciN-Vkh95RkGcVKe=6zwwRQ@mail.gmail.com>
+	(Michael Montalbo's message of "Thu, 13 Aug 2026 12:04:52 -0700")
+References: <20260701-pks-libgit-in-subdir-v3-0-5e4860056094@pks.im>
+	<20260701-pks-libgit-in-subdir-v3-2-5e4860056094@pks.im>
+	<alR9GDNTbdjWB4dq@szeder.dev>
+	<2d455ecf-972e-e3ce-54bc-683050c04282@gmx.de>
+	<xmqqjyqpb96n.fsf@gitster.g> <ansSg4qsPwh5FcR9@pks.im>
+	<xmqqpkzo39d2.fsf@gitster.g> <antWRHPHHES4a1KT@pks.im>
+	<693a61b6-e762-d864-d25b-348485ec039e@gmx.de>
+	<xmqqqzk2t7sm.fsf@gitster.g>
+	<CAC2QwmKs-TV2f=2BhBNQGtVA4vzciN-Vkh95RkGcVKe=6zwwRQ@mail.gmail.com>
+Date: Mon, 17 Aug 2026 13:58:27 -0700
+Message-ID: <xmqq7blo4g7g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 17 Aug 2026 22:07:48 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Harald Nordgren" <haraldnordgren@gmail.com>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
- "Koji Nakamaru" <gitgitgadget@gmail.com>, git@vger.kernel.org,
- "D. Ben Knoble" <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>,
- "Matt Hunter" <m@lfurio.us>
-Message-Id: <29d56a3e-6bde-49a2-b7b2-3eeb4c439e01@app.fastmail.com>
-In-Reply-To: 
- <CAHwyqnXVepLAsNZHZe_qqXbqYjBt6RpDXVQUP3s7vPwbEg2FXw@mail.gmail.com>
-References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
- <pull.2337.v13.git.git.1786088371.gitgitgadget@gmail.com>
- <8b3551d0d4ecb360775ea29507ee262c7bf9cd42.1786088371.git.gitgitgadget@gmail.com>
- <xmqq4igyszeb.fsf@gitster.g> <f34669ad-9157-4f13-a3c1-c0abbc660497@gmail.com>
- <CAHwyqnXVepLAsNZHZe_qqXbqYjBt6RpDXVQUP3s7vPwbEg2FXw@mail.gmail.com>
-Subject: Re: [PATCH v13 7/8] history: create squashed commits without editing
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Mon, Aug 17, 2026, at 19:38, Harald Nordgren wrote:
->>  >> Inspired-by: Sergey Chernov <serega.morph@gmail.com>
->>  >> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->>  >> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
->>
->> Thanks for the Helped-by: trailer, but this and several of the other
->> patches are missing my sign off from the fixup patches I sent. My sign
->> off should come above yours to reflect the chain of custody.
+Michael Montalbo <mmontalbo@gmail.com> writes:
+
+> Pointing forward, merging today's root .c files by that measure until
+> cohesion drops below the carved band proposes these groups, with no
+> hand-picked list [1]:
 >
-> Got it, should I use both headers?
->
->     Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->     Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->     Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+>   6.9  connect.c fetch-pack.c remote-curl.c send-pack.c transport.c
+>        upload-pack.c
+>   6.8  diff-lib.c entry.c read-cache.c unpack-trees.c
+>   6.6  commit.c log-tree.c ref-filter.c revision.c sequencer.c
+>   6.3  diff.c diffcore-rename.c merge-ort.c
+>   6.0  delta-islands.c pack-bitmap-write.c pack-bitmap.c
 
-In general swapping the first and second makes more sense.
+We need to be careful about situations where a source file has to
+include a header file only because a definition of one thing it uses
+happens to be included in an otherwise out-of-place header file, and
+moving such an out-of-place definition to a different header file
+may affect mechanical groupings.  But with that caveat out of the
+way, it is good when mechanical groupings match intuition.
 
-    S: PW
-    H: PW
-    S: HN
+And the earliest one in the list above actually does.  They form the
+"transport" group.
 
-Because as a chain of custody this says: Phillip
-signed off, then Harald said that PW helped him,
-then Harald signed off on what he got from PW
-with perhaps his own changes mixed in.
+The other groups in the list may not be so clear-cut, but this is an
+interesting thought experiment that yielded a good, concrete result.
+And as I said, we do not need to wait until we fully classify the
+remainder.  When a conceptually clean group is identified, just as
+when we created 'builtin/', 'refs/', or 'odb/', we can carve out a
+new directory for it, and we will have moved one step closer to a
+better place.
 
-sent from mobile
+One tangential question is whether we can separate bisect and
+revision machinery in such a way that bisect stands on its own,
+without stronger ties to the revision machinery than other users,
+such as 'rev-list' and 'log'.  "git rev-list --bisect" was a
+historical accident that happened only because, back when "git
+bisect" was a shell script, there was no good place to put the
+logic, not because it was the best place for it.
+
+Thanks.
