@@ -1,138 +1,115 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E61046A61C
-	for <git@vger.kernel.org>; Mon, 17 Aug 2026 17:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786987286; cv=none; b=V38HmO3xaxsdZnJ7sXIQs5uiRUF5R2yh8GVvDR3LVY890WQe8ccB73lvKX/37znfq4CKF9csBObTJKE3Q+qouHAjvo/cxH8/WveksepRrVgGcbqR3Yz02cGewGcU1r0TSrnE3tiRpbtZVSZ/6FRRfb1qw/B9qte8ZVsOd7alQW0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786987286; c=relaxed/simple;
-	bh=yZGvovAnp3nqUaKGb+jOQrQ9rs/9K1zGbZQCtpdnYtI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KPM/TqxITKunArnp7hSddQmQOCXRI7Zl8TfTy1vj3iwt6s43LIk5uHh5SUNIINuhZtl/bAMNDsHLUIxfT1wvcFLk8kR93cxjHE2AsxmwqAkZuz0VMjQRITGtvch0qpV623tm6S07Y5JxhlPppT86ZDJRfHyKjRMdo28YaXfjY+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NYzCVR2E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E2GBgFwb; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B97141A931
+	for <git@vger.kernel.org>; Mon, 17 Aug 2026 17:38:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786988325; cv=pass; b=TeU8AP2oGY3ElqKHMtfNmfVugVojmAdr+iTVcPL+3pG+mAd4t5QsfJ1aLy9iktyvkdAoSC1Yk2wJVqOUgC2tFg2dmHeHEfW1HXYOce/uOm5tNqpIsc03u9Z6y7XCtNZX71tbwZONGnxDHn00WdCeYcu9BBFT8JH62Jcm1Ikixoc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786988325; c=relaxed/simple;
+	bh=xal0JbO4swuGZ+bNGtgiu2fbUA4ASeuMiy14oJK1Is4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Xn9vYDm5riHgWfPBO6bH2GV0T9GOThuZea4vLcYAwYzmaiVLSZJ/cC7LVjbrsEp705UHxVYL480TmHhgUiIY1yoIMxlvgxQ5BmwUaVTKxuWOoOLMLWTfRNblc7KIu3wg0X2i7Tjbz+jhsmElfWPn3UUK3KHVLobtexiazYTEHR8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BSER70ft; arc=pass smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NYzCVR2E";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E2GBgFwb"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id B888AEC025F;
-	Mon, 17 Aug 2026 13:21:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 17 Aug 2026 13:21:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1786987283; x=1787073683; bh=A8Dfq7bo8E
-	OQQ8qj97YUIM+9eHp4rSELfQ0LCFK+QkA=; b=NYzCVR2EWFbzqXqL5+fOdog3zo
-	D9m05v4qjXO24YVRk+z3lwJCK8oZt/iB3gFKZZTAiCj8l8SCe6FjTH3DAvZOOcnA
-	Muuo2nN0P6QVf9mzDDfPY7no+CMqAoKAPXEU/qNtO3Igs+lhxkDMIotPYRxi71QI
-	6IP5JqaVoU1wamxApe7xFLP5GtuZNqRxaE6cCsi/C2NvwxCxYFbcqAqAEuoM8bwi
-	D/Z4surYcQTebAl9excEBJ2GY7xRnME6qwphyLEmeP7NS32o1v6Fbd+LdwV2sp2Z
-	S+McTTJbsYhsisMWeYaP2RRNDh4V/Uq0siuwgOHUIg7oEqNCga1Ld9WtD2vQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1786987283; x=1787073683; bh=A8Dfq7bo8EOQQ8qj97YUIM+9eHp4rSELfQ0
-	LCFK+QkA=; b=E2GBgFwbCyAEE6pDAU3ZeuOnzsMGad2WSpEsnnw08iGSwzYmGAN
-	NXVz3joeUXIpqa7REFh4THql3+KkgRI8Ha//ejHO2P3u+r89HflxtrsM5gwxngN4
-	z7zCPit7hun4Y4uHe0FJSwKjip2My+wYVOENL0eUQSms8D9/9QA6p1PMcLQjpWvW
-	/ijTY8lmGnwc0cylI6N3VJGw+r/jpjIjBtGTppTdHYZioLTTa6xGOCZjWJjfBETy
-	EhedS3f+NqDsoxm3vWJ92md94/49KO5rytLVIuygOlkWzSNafQjz9V89khdEthp2
-	hRASccnnsM2hQLP+96LNrt2W6qzyft4ZUag==
-X-ME-Sender: <xms:E0ODaoeGNtigaGJYQPe5ToykMh6VHc4Yjm3kMUeaYKNysiWYDMPdIg>
-    <xme:E0ODahNSt4VtFA5I19RFcPjS-AXY7dMkL0IdaBotMsmUxUz605o06SGNK_RvW89YU
-    YG__KvqDK5J3H2SbKSfucNukpccZUQyu2ztD6V2556SItw-FeWJWwM>
-X-ME-Received: <xmr:E0ODaugROTTzUoX8Rf4EqioulUonH4FKSEAV6GWOjmrXHMX2sX8BXNePzqyHm8F0-oL5E5xEtRVmZyrgRC-bLjNvY5lSYdqKLg>
-X-ME-Proxy-Cause: dmFkZTErR7mw4vZmu/5U+D3okxFxuBYruoWDu6pUEkLU4bDV/gV4IztpGR0oMYxs6oUmSC
-    LXtHIr3TCCEqfIwU+yso3JJMePCy76CPG0jyr4IHKljOXaO3EM5x8IlrfdXGU6sqZRKRet
-    3JO/lAoCZBBHWpbH6MvkElLq1telDn09YlBUcmbnOBOxWASdwjaEuhrEXmxfHTk4h/pkmR
-    1mZH1ugogT4Ck1UWxG3Ou05DonFxchaIXS2AUKcozTHJUc0yLd6i5fuRdE2Xorpn/KVNZI
-    LEa5R0QRVc1wQ2OExCJ+3fAAhvsn3b/Pp3GNDC7sXZf7Olc3XHoIWlBD06IqNH2XRldHiT
-    LGbAUwSLW6Fc2gwS+ENCYPS/Dgw+BGA6yTDUB2wtTz6JzSZiivmk0cOLLs/2UG5yvHY0ih
-    Go5JTmbU1Zq+0wgNuSctslqr8GO8NXtLSMg+lffZNdwf+aNcCRODaV4q3CaHII0hBXih4Z
-    4CF5oh/93LqzbD9UoCPNm1+i9rSttOj4MsOZZxTmRAaD7rB5rtlHek5DySzgsPsRlLpyqQ
-    MiGck+hNFV1RFlJpJybPnFQQC20FLyTp3P9M6QPnWb09FvtssqVljQRwlhVWul2ogjE8EF
-    7s4tBDqbBXRiY66ZFymmYV7Na0SU+jun36huO8yCYVxB30rfGPmlgf1jyNaA
-X-ME-Proxy: <xmx:E0ODas0dYw0Pdj8B3sOsjblFTHQvquygulsXfGm1Yjuxb47_l-o8iQ>
-    <xmx:E0ODaggUN6xBqqFg7cFofKXVIyPH8WwwEDAitgQCvNnTEdNIKmH1-Q>
-    <xmx:E0ODakcFaYW9v8UQFqIxvvVQwr45XFjYCgPiZBbww7lG7A5BcrI2DQ>
-    <xmx:E0ODarkc1B9PcQNoX2W54QEeBUXbc5eUolWIC_sQqCEd2Ht6r804rw>
-    <xmx:E0ODatetp7en78LnNslcj52FgAYnDd0i6dAj74aWOs4i6ZVzc4in2VvH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Aug 2026 13:21:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-Subject: Re: [PATCH] worktree repair: detect relative path in .git file
- correctly
-In-Reply-To: <pull.2205.git.1786799480344.gitgitgadget@gmail.com> (Yoichi
-	NAKAYAMA via GitGitGadget's message of "Sat, 15 Aug 2026 13:11:19
-	+0000")
-References: <pull.2205.git.1786799480344.gitgitgadget@gmail.com>
-Date: Mon, 17 Aug 2026 10:21:21 -0700
-Message-ID: <xmqqwlto4q9a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BSER70ft"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6a0c8283146so5192844a12.0
+        for <git@vger.kernel.org>; Mon, 17 Aug 2026 10:38:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786988321; cv=none;
+        d=google.com; s=arc-20260327;
+        b=rHypUE44aOBEvDifukJH0V4C67ANk5PLH76cdJtPLjHpvxy6T2LgH7b1N/nnIa/sX0
+         g5W+Ly9IeX0LzBt7mw2Pf/mBMVh/vrjJf/LxdGEAHOXDBHb8iU6xi6yHLcOYGsYbTsQT
+         x7t3NE89R6jRXV3M19gt6TKnugc6uwkeakY3W7iAOqJHzRbJQo5rDFQ3WRHdOX06KpPm
+         Kz3D3tFmLsZIHsMkDknBH+g/5uE6l90MOylvCgrNN/x7bvxEziPhVWZ2Ksc438nGIRdp
+         TD+G3CZCoqkvhHjEi6U3h56qFUpYokr825/AkUYliDrRcGkTqmNq3PcegKY9HZxV3TKs
+         4O5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=ixfyvSmAWvCMCMGkw+x/ZKDUGqg+1o9N7Y0wbvrCCQQ=;
+        fh=28gejP4kX9uM1iU8tytMeFyepwfl4kgGd1Jnul80Swg=;
+        b=FNgM9gtU8rUR8/3xVQ2uXDrLxAz+mfCobzfvW578o54oDUhPcECq+xGwhUNn+gYJ+X
+         gae0bo6eqcVnxxAMmSZhp+W3EVJGOS3EJtz7y2C8LleTe3+gJ0jCGZCeLWs7bb5a14Wj
+         qejN/KfAFMzcD6quJh0R3lwWJcE74WA27Nd43pcFLo0IC9LA8okw8AkOBgj9rLtx8igJ
+         8b1m4u5ZGuQ5TiRGzGPYNi6zwzUGUEoFhZqRv9jdYtCErcWNmgAC6StWouJauNBnMn+W
+         TRZ8pvAqP/8KJ5ffddgg0pjOnvl3fnReDbqvv3RWD+0w2t28Jm4SzNhXvudDMnbc/NQG
+         IWrA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786988321; x=1787593121; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ixfyvSmAWvCMCMGkw+x/ZKDUGqg+1o9N7Y0wbvrCCQQ=;
+        b=BSER70ft5rF50DwZkU2IBFyZv5WAmUDf9Pa7s9Mej5/CoKNAH6sxa/BFXSn43nHNEu
+         dZ8cLVXfhXVswi1CRTh4FjPbGWahRFe+3n5PAeJ4oDhDPruKsi8ruk2g7t/jsT6upjUR
+         Fs1AotGVF39NmBu+gBxYRx4oQPdZ3f+ZVcmyitWHatFeZ+3Qtxe5JdNXA2Pa3TEenYhs
+         DhULid6h/4Ns5wYNuUXvGZfMlTDFcIF4eEMOP4oNkHikhxFrxsHe/7WbD1BWz0EBEELj
+         TSZQezyLpONccMTGL9+jTyhMAAElZxIA6IytlnEHS1g5tTZ63vyYAPkysZMfJ6SKtMkk
+         NI1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786988321; x=1787593121;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ixfyvSmAWvCMCMGkw+x/ZKDUGqg+1o9N7Y0wbvrCCQQ=;
+        b=ROcIxWAeptBvktl0Vg/UlBIjeXm6zPtuau67+kM2o3nd2UpDnBsQpLXoSlbBlNG5fg
+         EfiC/Nuypu/N4SOxwZjJNT99WgL11aDKZkrwi8+HgWERWbWb6eU37dN2Xd6oIceALGkJ
+         1FrPpWePAjwG0VO7DPGMyZ6O9/pvyZeLIkNT2v4w5vpfkxqDMOjzwg5B8zL3wI5sMPZJ
+         RSfssvja8hsoMijOSLayJwg6yMkRcDC64grNp7/97kXrPv6iNP223fGZVwN6WbkAwoGq
+         obWyE6iDH5Bdi1yrLlsjdQDRshEXAvG4reT+QtnWnDCxqoWuQJb9Wy6RiDEVs2AwEG5n
+         oGJw==
+X-Forwarded-Encrypted: i=1; AHgh+RoKrVlM8z6VdAssQjTlc4psL5xJDQ54zPsJTykrObBIeU/Z2J+cfmruRzJK97xdfXcuGlU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqeyVDkA1j5LTnmBEiudULhqu+xn8zO3mx+CkWuZPgIEdymNH6
+	+4YPtpPFN9bMcG4Vsm6myp8rAqWHmDW4YAWNrICl12/TYzvi/gxPtM/dKzFXpp45mFbeMHe8YxH
+	RAMhK2KLa61GzNa9lkSdQbk3sr/U6sKY=
+X-Gm-Gg: AR+sD12BK5sOypa5baUYczA/AjSxmKaOd9jLjTmxnK38AK4kktp8csAxj3xPYpKS4XZ
+	Ka+iSpbXGx53c9O6jPHfcejPpp3Eh8i/XN8PKQgQeRBpPh7QT7zWuTpPO7K7i9guHZSqYN2i6hu
+	T2VpeDM0cMbu9F/N96NtHt2Hm6HQMpbmQdeWUSOuq3vVxdkKNGWNPQOvIANVBFbiR3XkeeUCtFc
+	QZTqwWmPANJwfGDrEplwIvWI/PbfT12M+xKo2rtIk61TErliMutWwNNzk1ls1lt9OkG/9jaNqWf
+	aLdX/NsnsHAtiPgxE099NYUawJMjDwdb3T2Fq282I2DZcXnmxQ==
+X-Received: by 2002:a05:6402:360f:b0:6a1:284f:7891 with SMTP id
+ 4fb4d7f45d1cf-6a3e11feb31mr1040467a12.7.1786988321438; Mon, 17 Aug 2026
+ 10:38:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
+ <pull.2337.v13.git.git.1786088371.gitgitgadget@gmail.com> <8b3551d0d4ecb360775ea29507ee262c7bf9cd42.1786088371.git.gitgitgadget@gmail.com>
+ <xmqq4igyszeb.fsf@gitster.g> <f34669ad-9157-4f13-a3c1-c0abbc660497@gmail.com>
+In-Reply-To: <f34669ad-9157-4f13-a3c1-c0abbc660497@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Mon, 17 Aug 2026 19:38:05 +0200
+X-Gm-Features: AcwNN1VYjnq7WSclPEseWddVey5S-mmix0XD_vBq3EUhr3SbNWivJBuqBKpNKh4
+Message-ID: <CAHwyqnXVepLAsNZHZe_qqXbqYjBt6RpDXVQUP3s7vPwbEg2FXw@mail.gmail.com>
+Subject: Re: [PATCH v13 7/8] history: create squashed commits without editing
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>, Patrick Steinhardt <ps@pks.im>, Matt Hunter <m@lfurio.us>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+>  >> Inspired-by: Sergey Chernov <serega.morph@gmail.com>
+>  >> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>  >> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 >
-> Since read_gitfile_gently() always returns an absolute path, the
-> conversion from a relative path to an absolute path was not
-> functioning and dead code existed.
+> Thanks for the Helped-by: trailer, but this and several of the other
+> patches are missing my sign off from the fixup patches I sent. My sign
+> off should come above yours to reflect the chain of custody.
 
-This is ugly.  What problem is this really fixing?  What "conversion
-from a relative path to an absolute path" does the above refer to?
-What "dead code"?  Where in what file and what function?  Why does
-the caller even care if it is absolute or relative?  Shouldn't they
-work equally well as long as they point at the right location?
+Got it, should I use both headers?
 
-The proposed log message hides so many details to evaluate the claim
-that this is a good change, and raises many unanswered questions.
+    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+    Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 
-Yes, read_gitfile_gently() always turns the gitfile it reads into an
-absolute form.  Is there a caller A that wants the underlying
-relative form, and if so why?  Is it to compare with some other path
-that is relative?  How did the code B obtained the other path to be
-compared that is relative?  If that code B used the helper that is
-different from read_gitfile_gently() to obtain the other path that
-is relative, perhaps the caller A can be changed to call it instead
-of calling read_gitfile_gently() and the fix can be done without
-churning so many existing call sites?
 
-Stepping back a bit, why does "repair" even care if it is relative?
-Is it considered a semi-error when a gitfile records its target as a
-relative path?  If so, I wonder if a cleaner way may be to add a new
-READ_GITFILE_ERR_RELATIVE_PATH constant that is treated as non-fatal
-error by the read_gitfile_error_die() function?  If that approach
-works, that may be the cleanest, as I suspect that "was it recorded
-as an absolute path?" will not stay to be the only special case in
-niche applications like "repair", but we need to audit callers of
-the _gently() function and make sure they do not barf with the new
-return code.
-
-If not, perhaps introduce a separate function that returns the path
-it read without any conversion, i.e.,
-
-    char *read_raw_gitfile(const char *path);
-
-that "repair" thing can use, and have it do the relateve-to-absolute
-converaion itself, perhaps?  That function would be created by moving
-most of the code from read_gitfile_gently() and read_gitfile_gently()
-would become a very thin wrapper around that function.  Wouldn't that
-be the least invasive and cleanest solution, if it works?
-
-Thanks.
+Harald
