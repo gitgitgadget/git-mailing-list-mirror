@@ -1,79 +1,79 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BE4448D16
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 09:58:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44EE448CE8
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 09:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787047128; cv=none; b=Ed2fv+oo6ikv504GnHnjQUlNM/bh4SMFd9TvUPUM2bl66GSpEOx0enputbKSKQHWWqJ6GzuHgI//+vwWPm9hBy1gnC/kRqnf1u9WCo4hGaG/60UOQGIkQ1sUTY7JTuG8JFuWAKdUmk83JBjPyt3blAs1X0skmLPc/Tx7zStaTes=
+	t=1787047147; cv=none; b=KvSMTyD44ZPZqZcPLO5n8ddVXV/AlzCo09tP/2jLs9SoJzLztGC3JMmbTRZQiR4Tv50dMpPbOMc3cVqAjNw7mXt9YNwindCShzf7hHnDlFd2n817/a1CcikqAC7wqKst+Gtk6q1cK2zFjmGmW35MiWh95BiCGw8pJJz69MSBrnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787047128; c=relaxed/simple;
-	bh=rZMIiYScHk4B4MLd079TduX7/CrGUpMRddJnqsiwur4=;
+	s=arc-20240116; t=1787047147; c=relaxed/simple;
+	bh=gO6VUgbsjjh4Gr4Xxvy2npyVI3g9cXTcR10J2zdLYMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nm6T+MAPe2Z4CPzRt9JAnVHB+YtA9WgCNosfG5RAaIRxtdIOjwTqYmr1IcPveKlou6Bch2iJhue7Fri2X/1GrK9YjMxNErjiL1Zf2sZoraRG5SfI+TM4Po34iXWlkegnnTWuNA1DYldPOdlj4Q9lTp+3XO2FRWpjqUKPuLMmTbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cCrlmsGW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Biq7jCc7; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=duuPA8wE6KcNjNOAlcjBiCOkaxK2PCiOvaMXeoUL4B/nYp448FSBP3zUEO68gOOXbffcQD+V+X7jGLe/JCs+6j6k4L14RskHO7MEWli2RZRvnydfva7H30HJbSytAhAcEf967bfNPFP5W4kMEClnXY6r8xSgz8HSk/sNXNIXdds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ISCPQW2W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eJR5thUh; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cCrlmsGW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Biq7jCc7"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id DF1F1EC0271;
-	Tue, 18 Aug 2026 05:58:45 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 18 Aug 2026 05:58:45 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ISCPQW2W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eJR5thUh"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DA77B14000E5;
+	Tue, 18 Aug 2026 05:59:04 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 18 Aug 2026 05:59:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787047125;
-	 x=1787133525; bh=oexrzShbiZOpSoxQePSYjgd8Gm0sBsAXJHAZUyk2LzE=; b=
-	cCrlmsGWw4pUFP/htrq/hRt5Hf5qYsWxna3iZYm/i8pUpkO3PBd+BxkVVgb/RUXI
-	EmYeC3cEXK3Frn+DQ3BROV8oCMslSgh9pZnxotcFTsf0NjbqMv6MheEcaJBg6xJB
-	1u1TyXAHFh2c6OcwF3F2cbFi42vIjPctw6TkSASLylrert0taJB+jmFgXeGAsufV
-	PAt3uAw/3XvsH/zTsQPLNi5pm57sev84mX4GRGlIRxn4TrdVrlGpplXE6NLsS1jZ
-	WeFZXHzVpU2QZg6ON/R3RcHjcPbpzNjvSi8KEhsHGmMPafkRD+nPqVzvRQDOmNzF
-	HWjZSff8Ae0NXm07VUvpug==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787047144;
+	 x=1787133544; bh=jZJuK43p0uQ9OqP4qoJkqI/xs/RlsbQ18hwtBX1OVF4=; b=
+	ISCPQW2WU3TSnI08fkRJDKk5wVegqDsPa+vI1dl0sUG6Rtkvy13TbfWi24iQCSqO
+	63hCWeME9ffqAIxgpXhL16dmIQ3UEr7rWRJ8xAnZgJxzNDqTsJZRnb+sIeFP6efr
+	dAt6pwSLcyAgWkGX6Y1op2JZeLc4PbBNqas0zUTmPSIAFq8/S8eo6OX4gc387APO
+	2F3qwB9GcEfiAys0+IzgzMMnLs/QW8cQa5LLKCUalLuANxpMti1lmKXJgSv1z4BR
+	KXT7mGxe82vcxECynhNZZb26+cbG36gRWosZhe8QbG9dkPauEIuncsxo7+VpH7p7
+	1sL6xlthg0d0tpBXamT/0Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787047125; x=
-	1787133525; bh=oexrzShbiZOpSoxQePSYjgd8Gm0sBsAXJHAZUyk2LzE=; b=B
-	iq7jCc7HkemgMgGtyqmYO+Xj+88zLML5hHraEB8f6d0NzdBspK+v+ojOgNlBRsKk
-	VWb3HugidKX6KasycoWAcA2jIJ8vcjAeZu5gjz+I4t/ACjl9k228D1nCNc61B1O+
-	gLJN+lxM8U1fFsO1SkK0lPuEF+oidJqIbd38fQyrXp9ddtqOQ5pyz2mFV1YIqlci
-	1pTdf6nexrMvGYKHVQ1or5/mtZLehvTDuyGjiVKItcOV1rT79abnnETXBRTAt9E9
-	i/IJXqORp1WYRRUwWGdUyjQEbRCX9b19VnED/TK5qqx4pWdTDidsRL/vwa8+yWvS
-	cJ376vJOiWowjJoXhzbrw==
-X-ME-Sender: <xms:1SyEahBhDQhZoVwf_F2D8wUMorAbLC77umhR8p9YbdQ0RbR3uggSqFE>
-    <xme:1SyEalhTOqaC-XcFaSVHwoV9xyw8hMw15x9rmqEeXhq18N1jZDhp1ZtuDJKF3BGMB
-    rm1EHt7LqB5ned8n31GtyFICQgr6JKqJ1U8RgnrMn7o33xTW3k6F-c>
-X-ME-Received: <xmr:1SyEaqOCH4dPEfcJCZhMvCh9AbnWuRuVFFEK3hkObicmi2V5LAeNmJa-1vRgGQo2vpXmMZ09dobQYoa6UnuP6sxUWdEuu9Mjdysh5n8>
-X-ME-Proxy-Cause: dmFkZTFlvgAFv64nHdwnu1/4gI3X4PB12ymqvtb3q6flWXK6z0+d/GdTFIgYlB29MTaors
-    CNVfW3Hd8oh8+4DBNoV/4D2EbI3NviHjWQFPw3WvgY05wl1C6+059LKT/MKIeZ978jLdrX
-    gcEosVRIi2ogCYiCrFLr0WbcleZ7lc4MqwvFIzILh4kJ+d5mMQZp07zgU2JCuLXQ6XRwwf
-    DSXLf+Vxsl2xQUIRu7yRsdCwCtH5jEPUh27pjKG27J4/at0NXCRe4sXHMt8a616ITl98GM
-    /OshJU7HHZkDBd6loA769mMiV5J+mcNWy7Jeok3INQBaA02Pd5egZHd237ZivsK6IQ7tsG
-    VnB1S8DRCMDDsz/rV8PNHXniPc+3iXWW9D4mKZPf3IlIg3eFOK+2i5WX/7a814q1obDIu0
-    oe+E+c9zVS/HEFnDoOJLIIh+DWmIqYiVvBIAn8WNi7h6XFvqdZwW+X55czVAO8D0dk6oT5
-    14bnc5F7kf9G8SoE03MQkXZvXIKCASGrZ2irzCTfITDXLzAop8zrkgb9naLSbNEbS6viyc
-    gBs7cWnPjvvbgDVc5siNZMRsjeV7pMWKEBSUtuOaTJyQqAb7z+fM4pngH88wxV7sI1p8AP
-    4eVxTOpVDQ/38Wf2ztW332m3ZOEcWw4YyrdL1M2ngXLmQQJfx05VG+VnU3Kg
-X-ME-Proxy: <xmx:1SyEam5a58fTQgEP4LGkSZm_j8cEoXV4K8mZkTGX3F7Pi-LluRX9CA>
-    <xmx:1SyEao3S7qNQzMPIsnnMP46SsRbqwYs0__RFF1qb493TnB_MAcJQLg>
-    <xmx:1SyEanY_bludmEdvR0LV9gpBxT3JEBIlpnpUlEVUOHZr6byrpyZz1Q>
-    <xmx:1SyEagC8UauTHtpb_NlJCtLZ2wCeNhpd2w_O0Ig-fEpPbnHANAyhjA>
-    <xmx:1SyEakY3eDykaYFzV-L-wzCj0tcDozp5pNA1oNCLe-7mOlnNHktJVB4L>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787047144; x=
+	1787133544; bh=jZJuK43p0uQ9OqP4qoJkqI/xs/RlsbQ18hwtBX1OVF4=; b=e
+	JR5thUhgVteerqQbgalVvc5wdhh9XiyG3nnwYjGQuSVw5+N7aSYQlDplXZrbA1T9
+	K1uJQ3F0dwKQwDzdJmF/3vfDyzSGfo7U8XtIjioxkn14koq5xuaCw52TdOkq67CC
+	bk0MjPjhEMUV24oh1S2jVakK+shipMhpqZgVSm4xFtqF910QmnfDEEt5wu5sBRXP
+	PhMVtmzXtKU7bhnfK9HDrMNJgZBsqh08/rrEmCv0VZexfdYqdgaFkJX0DLDcsuUZ
+	yMNxWe9Bt38jy7yc7v3/ovWm/kLeFj7U96qrVTe1YpPCOhexlAXAMxoeEYoV5jxe
+	nDJxHrwe8578T83KlU5Xw==
+X-ME-Sender: <xms:6CyEal6MQLABblQx5BbcqwXGCWc_SpANUa4Gc1YE5ictVeq6aDmVK0Y>
+    <xme:6CyEao7X08yswjvyIcoEae7EgIwvddFe0gTKSMUT1KvodJ2cJXK8mRg3a4rX_T2Ra
+    UtJOmQu1BZv188zn30wmWNyRyMPuqnYiPUX8AQCcXzwmjmd1ao>
+X-ME-Received: <xmr:6CyEaqFRDZnx3BkLx-2gvX7j589_R_2pNVL_u6xrLu2XCs9nHttdVwtE0ACJ3ARnk-BE7wQfO2P3CPKM8jw88T9uwOtn3RSI8e_NRCM>
+X-ME-Proxy-Cause: dmFkZTExPi5WabwdQQgYKvaXXfH7L8duUlY9NjkKZZCelbhz6sg0wLbHY36Yjjpyx1M4G8
+    2fq90vOVY0iD+MXw9L5zQVvFnl+7LqMSkiEzO95rA/H19T4sH2CSUPdT1opWzgyYECiI77
+    uA2IA8ewjLR+xlhQ8dvSrU9WE6XLpl9NfdJ+sQeKeyGcShXLZkN2cYjV4715LLV50fLSU3
+    D5+qaeCdBIkIZ7AHWaBJ83hSe3PAUo01SBgkl0wgzhWOlb6a7YxZz/3IDqd5fqEkk74u7Y
+    yBgB8sD/xw67UR/H1P2EPq9rNXAKNJBrnN4b38J6hxDlREloPz845C7K1kjysFbWjM5zVf
+    lYveh6mLhB7c6D30n2dDA4jcj9ma1UoYV5FDIHZJVXqwxcmJNUJnqyD2+rOYTx8MkG3D9y
+    Sx411o8MNDwfR4zN/Fm0i3ofhgC0klT3mthRKGClIUzckutDRCfvYGuHDYfpQPC/KrcDbW
+    YQD+iA33ZE1IjmMgh6YiAb5LrrgTBYT03mOsDAV7HlNjzVlCOBsg9jz1v9M65vaLKuvS4r
+    XHU3XMFPeFZ4cOzvzUV4TKyLuKnQ34k/p54XOJiGsrBLl3vPJLm22y10l7b3F0DOwvNg4f
+    g4eDOTAzMImurr0gah3Xqek4bUGcyepaF1VfGIrEn8TVMd2D/auIhnX0Q0+w
+X-ME-Proxy: <xmx:6CyEapSwSCiN8oHiEXSsbtXe9ZPWBtO_K9wtzXFdSLWnVA4qU3J-yQ>
+    <xmx:6CyEarukzn8NQLCb_jMK3xN8Qb0aqx8PFADZZjEcSJm46LydoyVJWQ>
+    <xmx:6CyEagwR-Laq9eCb7jKPLQHOcOwsI0gvtEyU_Q7zf3MO4Q6m20d-gQ>
+    <xmx:6CyEat68lMFOJ-8-xxhsT4DesWHIvnoQ3TtyJQBX0Eg4pFwL3W2uug>
+    <xmx:6CyEapQh2aDWt9ZsTwZNxv7Z2dsAVKoRxYq-9HoJnSwyPJoJFAhrCb1s>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Aug 2026 05:58:45 -0400 (EDT)
+ 18 Aug 2026 05:59:03 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v2 3/5] format-rev: factor option variables into a struct
-Date: Tue, 18 Aug 2026 11:57:32 +0200
-Message-ID: <V2_factor_opts_into_struct.bd6@msgid.xyz>
+Subject: [PATCH v2 4/5] doc: rev-list-options.adoc: factor out --date alts
+Date: Tue, 18 Aug 2026 11:57:33 +0200
+Message-ID: <V2_doc_--date_alts.bd7@msgid.xyz>
 X-Mailer: git-send-email 2.55.0.13.g85d2d65e389
 In-Reply-To: <V2_CV_format-rev_three_more_opts.bd3@msgid.xyz>
 References: <CV_format-rev_three_more_opts.b80@msgid.xyz> <V2_CV_format-rev_three_more_opts.bd3@msgid.xyz>
@@ -88,142 +88,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-We will in two commits add three more options to this command.
-Let’s prepare for that by moving option variables into a struct
-so that we get less local variables.
+We will introduce `--date` to git-format-rev(1) in the next commit and
+will need to add it to the documentation. Let’s factor out the option
+alternatives so that it can be included in git-format-rev(1).
 
-This allows us to inline `format_nul_data` into this new
-structure. Let’s also rename `stdin_mode_arg` to `stdin_mode`.
-(We couldn’t use `stdin_mode` before because of the enumeration
-with the same name.)
+The initial paragraph of this option mentions things like git-log(1).
+We could make it fit in git-format-rev(1) while not changing it for
+git-rev-list(1) and related commands with some conditionals like
+`ifndef`, but writing a dedicated paragraph is simple enough.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
+ .../rev-list-option-date-alternatives.adoc    | 55 ++++++++++++++++++
+ Documentation/rev-list-options.adoc           | 56 +------------------
+ 2 files changed, 56 insertions(+), 55 deletions(-)
+ create mode 100644 Documentation/rev-list-option-date-alternatives.adoc
 
-Notes (series):
-    v2:
-    • Designated initializers: https://lore.kernel.org/git/xmqqfr0hswxm.fsf@gitster.g/
-
- builtin/name-rev.c | 44 +++++++++++++++++++++++---------------------
- 1 file changed, 23 insertions(+), 21 deletions(-)
-
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index d6686bbdbb9..c8cb2f2d520 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -772,16 +772,19 @@ int cmd_name_rev(int argc,
- 	return 0;
- }
+diff --git a/Documentation/rev-list-option-date-alternatives.adoc b/Documentation/rev-list-option-date-alternatives.adoc
+new file mode 100644
+index 00000000000..141570b1059
+--- /dev/null
++++ b/Documentation/rev-list-option-date-alternatives.adoc
+@@ -0,0 +1,55 @@
++--
++`--date=relative` shows dates relative to the current time,
++e.g. ``2 hours ago''. The `-local` option has no effect for
++`--date=relative`.
++
++`--date=local` is an alias for `--date=default-local`.
++
++`--date=iso` (or `--date=iso8601`) shows timestamps in a ISO 8601-like format.
++The differences to the strict ISO 8601 format are:
++
++	- a space instead of the `T` date/time delimiter
++	- a space between time and time zone
++	- no colon between hours and minutes of the time zone
++
++`--date=iso-strict` (or `--date=iso8601-strict`) shows timestamps in strict
++ISO 8601 format.
++
++`--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
++format, often found in email messages.
++
++`--date=short` shows only the date, but not the time, in `YYYY-MM-DD` format.
++
++`--date=raw` shows the date as seconds since the epoch (1970-01-01
++00:00:00 UTC), followed by a space, and then the timezone as an offset
++from UTC (a `+` or `-` with four digits; the first two are hours, and
++the second two are minutes). I.e., as if the timestamp were formatted
++with `strftime("%s %z")`).
++Note that the `-local` option does not affect the seconds-since-epoch
++value (which is always measured in UTC), but does switch the accompanying
++timezone value.
++
++`--date=human` shows the timezone if the timezone does not match the
++current time-zone, and doesn't print the whole date if that matches
++(ie skip printing year for dates that are "this year", but also skip
++the whole date itself if it's in the last few days and we can just say
++what weekday it was).  For older dates the hour and minute is also
++omitted.
++
++`--date=unix` shows the date as a Unix epoch timestamp (seconds since
++1970).  As with `--raw`, this is always in UTC and therefore `-local`
++has no effect.
++
++`--date=format:<format>` feeds the _<format>_ to your system `strftime`,
++except for `%s`, `%z`, and `%Z`, which are handled internally.
++Use `--date=format:%c` to show the date in your system locale's
++preferred format.  See the `strftime`(3) manual for a complete list of
++format placeholders. When using `-local`, the correct syntax is
++`--date=format-local:<format>`.
++
++`--date=default` is the default format, and is based on ctime(3)
++output.  It shows a single line with three-letter day of the week,
++three-letter month, day-of-month, hour-minute-seconds in "HH:MM:SS"
++format, followed by 4-digit year, plus timezone information, unless
++the local time zone is used, e.g. `Thu Jan 1 00:00:00 1970 +0000`.
++--
+diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+index fd831f0ec64..6e6093f4747 100644
+--- a/Documentation/rev-list-options.adoc
++++ b/Documentation/rev-list-options.adoc
+@@ -1132,61 +1132,7 @@ include::pretty-options.adoc[]
+ 	author's). If `-local` is appended to the format (e.g.,
+ 	`iso-local`), the user's local time zone is used instead.
+ +
+---
+-`--date=relative` shows dates relative to the current time,
+-e.g. ``2 hours ago''. The `-local` option has no effect for
+-`--date=relative`.
+-
+-`--date=local` is an alias for `--date=default-local`.
+-
+-`--date=iso` (or `--date=iso8601`) shows timestamps in a ISO 8601-like format.
+-The differences to the strict ISO 8601 format are:
+-
+-	- a space instead of the `T` date/time delimiter
+-	- a space between time and time zone
+-	- no colon between hours and minutes of the time zone
+-
+-`--date=iso-strict` (or `--date=iso8601-strict`) shows timestamps in strict
+-ISO 8601 format.
+-
+-`--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
+-format, often found in email messages.
+-
+-`--date=short` shows only the date, but not the time, in `YYYY-MM-DD` format.
+-
+-`--date=raw` shows the date as seconds since the epoch (1970-01-01
+-00:00:00 UTC), followed by a space, and then the timezone as an offset
+-from UTC (a `+` or `-` with four digits; the first two are hours, and
+-the second two are minutes). I.e., as if the timestamp were formatted
+-with `strftime("%s %z")`).
+-Note that the `-local` option does not affect the seconds-since-epoch
+-value (which is always measured in UTC), but does switch the accompanying
+-timezone value.
+-
+-`--date=human` shows the timezone if the timezone does not match the
+-current time-zone, and doesn't print the whole date if that matches
+-(ie skip printing year for dates that are "this year", but also skip
+-the whole date itself if it's in the last few days and we can just say
+-what weekday it was).  For older dates the hour and minute is also
+-omitted.
+-
+-`--date=unix` shows the date as a Unix epoch timestamp (seconds since
+-1970).  As with `--raw`, this is always in UTC and therefore `-local`
+-has no effect.
+-
+-`--date=format:<format>` feeds the _<format>_ to your system `strftime`,
+-except for `%s`, `%z`, and `%Z`, which are handled internally.
+-Use `--date=format:%c` to show the date in your system locale's
+-preferred format.  See the `strftime`(3) manual for a complete list of
+-format placeholders. When using `-local`, the correct syntax is
+-`--date=format-local:<format>`.
+-
+-`--date=default` is the default format, and is based on ctime(3)
+-output.  It shows a single line with three-letter day of the week,
+-three-letter month, day-of-month, hour-minute-seconds in "HH:MM:SS"
+-format, followed by 4-digit year, plus timezone information, unless
+-the local time zone is used, e.g. `Thu Jan 1 00:00:00 1970 +0000`.
+---
++include::rev-list-option-date-alternatives.adoc[]
  
--struct format_nul_data {
-+struct format_rev_data {
-+	const char *format;
-+	const char *stdin_mode;
- 	bool nul_input;
- 	bool nul_output;
-+	struct string_list notes;
- };
- 
- static int format_nul_cb(const struct option *option,
- 			 const char *arg,
- 			 int unset)
- {
--	struct format_nul_data *data = option->value;
-+	struct format_rev_data *data = option->value;
- 	BUG_ON_OPT_NEG(unset);
- 	BUG_ON_OPT_ARG(arg);
- 	data->nul_input = 1;
-@@ -813,31 +816,30 @@ int cmd_format_rev(int argc,
- 		   const char *prefix,
- 		   struct repository *repo UNUSED)
- {
--	const char *format = NULL;
-+	struct format_rev_data data = {
-+		.notes = STRING_LIST_INIT_NODUP,
-+	};
- 	enum stdin_mode stdin_mode;
--	const char *stdin_mode_arg = NULL;
--	struct format_nul_data nul_data = { 0, 0 };
- 	char output_terminator;
- 	strbuf_getline_fn getline_fn;
- 	struct display_notes_opt format_notes_opt;
- 	struct rev_info format_rev = REV_INFO_INIT;
- 	struct pretty_format format_pp = { 0 };
--	struct string_list notes = STRING_LIST_INIT_NODUP;
- 	struct strbuf scratch_buf = STRBUF_INIT;
- 	struct command cmd;
- 	struct option opts[] = {
--		OPT_STRING(0, "format", &format, N_("format"),
-+		OPT_STRING(0, "format", &data.format, N_("format"),
- 			   N_("pretty format to use")),
--		OPT_STRING(0, "stdin-mode", &stdin_mode_arg, N_("stdin-mode"),
-+		OPT_STRING(0, "stdin-mode", &data.stdin_mode, N_("stdin-mode"),
- 			   N_("how revs are processed")),
--		OPT_STRING_LIST(0, "notes", &notes, N_("notes"),
-+		OPT_STRING_LIST(0, "notes", &data.notes, N_("notes"),
- 				N_("display notes for pretty format")),
--		OPT_CALLBACK_F('z', "null", &nul_data, N_("z"),
-+		OPT_CALLBACK_F('z', "null", &data, N_("z"),
- 			       N_("use NUL for input and output termination"),
- 			       PARSE_OPT_NOARG | PARSE_OPT_NONEG, format_nul_cb),
--		OPT_BOOL(0, "null-input", &nul_data.nul_input,
-+		OPT_BOOL(0, "null-input", &data.nul_input,
- 			 N_("use NUL for input termination")),
--		OPT_BOOL(0, "null-output", &nul_data.nul_output,
-+		OPT_BOOL(0, "null-output", &data.nul_output,
- 			 N_("use NUL for output termination")),
- 		OPT_END(),
- 	};
-@@ -849,18 +851,18 @@ int cmd_format_rev(int argc,
- 		usage_with_options(format_rev_usage, opts);
- 	}
- 
--	if (!format)
-+	if (!data.format)
- 		die(_("'%s' is required"), "--format");
--	if (!stdin_mode_arg)
-+	if (!data.stdin_mode)
- 		die(_("'%s' is required"), "--stdin-mode");
- 
--	getline_fn = nul_data.nul_input ? strbuf_getline_nul : strbuf_getline_lf;
--	output_terminator = nul_data.nul_output ? '\0' : '\n';
-+	getline_fn = data.nul_input ? strbuf_getline_nul : strbuf_getline_lf;
-+	output_terminator = data.nul_output ? '\0' : '\n';
- 
- 	init_display_notes(&format_notes_opt);
--	stdin_mode = parse_stdin_mode(stdin_mode_arg);
-+	stdin_mode = parse_stdin_mode(data.stdin_mode);
- 
--	get_commit_format(format, &format_rev);
-+	get_commit_format(data.format, &format_rev);
- 	format_pp.ctx.rev = &format_rev;
- 	format_pp.ctx.fmt = format_rev.commit_format;
- 	format_pp.ctx.abbrev = format_rev.abbrev;
-@@ -868,13 +870,13 @@ int cmd_format_rev(int argc,
- 	format_pp.ctx.date_mode = format_rev.date_mode;
- 	format_pp.ctx.color = GIT_COLOR_AUTO;
- 
--	userformat_find_requirements(format,
-+	userformat_find_requirements(data.format,
- 				     &format_pp.want);
- 	if (format_pp.want.notes) {
- 		int ignore_show_notes = 0;
- 		struct string_list_item *n;
- 
--		for_each_string_list_item(n, &notes)
-+		for_each_string_list_item(n, &data.notes)
- 			enable_ref_display_notes(&format_notes_opt,
- 						 &ignore_show_notes,
- 						 n->string);
-@@ -934,7 +936,7 @@ int cmd_format_rev(int argc,
- 	}
- 
- 	strbuf_release(&scratch_buf);
--	string_list_clear(&notes, 0);
-+	string_list_clear(&data.notes, 0);
- 	release_display_notes(&format_notes_opt);
- 	return 0;
- }
+ ifdef::git-rev-list[]
+ `--header`::
 -- 
 2.55.0.13.g85d2d65e389
 
