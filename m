@@ -1,83 +1,82 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EA03812FB
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 14:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD453812FB
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 14:48:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787063469; cv=none; b=sBXWY2t6OhRtBERo/mzDHllm5kRfuBerb8pYuCqW67CG+8fLX3L6v86uAvlRBaIqLHKPD9vY94ztuaL3rtTk+1ZNV7mkzcZnH+ALPlUQiNS1z6Dp/pY9Bqwe7xG7/J9rshfGeer9wrz9FfxawrrThwOrfji7B4ssxnG8PvRdkzI=
+	t=1787064486; cv=none; b=uzNa7ocwrpDc0ZOtoEhGZllGvM2eJVqP7Gz1jUm348ZTksMcMg2kmzM+cN7F6dzRInBiFbq30fwRyWWE7OMuofao5uMdgnyXyxJN68zDj9kVTh02hiYXhmklxa69TanWydO+RRaTB0h6cYVz9tVYxAWrfgXhS3hpEe/d8GIHMZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787063469; c=relaxed/simple;
-	bh=fEEMgJTZnXLdBQZTQxTJ/CP6GTv7SNXdWeVi576YfyM=;
+	s=arc-20240116; t=1787064486; c=relaxed/simple;
+	bh=fZFI5p6s5nN+tXiryrQf4yBXpwoveyx8QMXM4TbibEQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oobBZK7r8mb41X97DM+2vfTNWaqbgwuSo4EF8whX/LJW0Du/7lLcxjIEZpiRQYRjBehPT8hGEC4bgCBT0ogybCkNRcQxBpCf2K5fk3/UPLmdAQPodwn3kPRKigPtCQhPQZe3eSq1R6mRxj/CTS37pzItYe7yK1cUoWVGt4tzdD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Dhy55TXx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RBrjD0es; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=i4DYFJb3tP7SVX6R1cMK6Urm4WpZAf8/nENR5kWOQAvRgcCTOFCabQmF8yCgUxXOY0O8DBbbRwZXnsUoNPBM1B0hx7aqvJi3mnAiE/01F0svtaxPFP4KkbjM3SXij+StP9Ze+H5CF8w5PXzUlLBdrGXejc8T8Uop6deMa6Bfxn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=im8sNHxB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EUb8x9vA; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dhy55TXx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RBrjD0es"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 26F9E1D000DC;
-	Tue, 18 Aug 2026 10:31:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 18 Aug 2026 10:31:07 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="im8sNHxB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EUb8x9vA"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2A6577A00CF;
+	Tue, 18 Aug 2026 10:48:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 18 Aug 2026 10:48:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787063467; x=1787149867; bh=4HOv12O4R9
-	r1E+VRuAILU7NOW6dMN0CdLwAZCNtVKA8=; b=Dhy55TXxPvFmz73hoD/8qtsA1P
-	ahEoV3ucODbzruRdA69U+0f8ivBbGoboIRDqxtLXCiWk1rFTjiL+keOFwK9u2wv5
-	jS2JX+yn77pOi/lvoQtOsJXRAUTExfrAC6YHK00orH3tvRkTKJ0M3c2fIv3jxEqF
-	hK29gDKeS88aZwfX9t/MPhwfTEyByEx1a/Ax+IMvL6d34ip52mSPfI+ZYw8nN2ql
-	S44RA539P5wtC8EworMqvrwyElEyKkly7Yr+50/9VY+So+jPvV+QwOHDeWRlc6Go
-	2j9hTolXsi17Ii1N/A3MWve905WVtBtBbYE5A5TyTM88/hUEaDhTZiEfkyTg==
+	:subject:to:to; s=fm2; t=1787064483; x=1787150883; bh=Q8ETKKD55K
+	1cOQqYASy7vTRIL+yR8cXncrw8VAV9S0M=; b=im8sNHxBGoT8hdvTaXaYtNhYZY
+	4oZI5Taf1Upg+Z5swE4zstsMLF6kFGc25eqnjGDDwwM2sHyR9pehqRSSAt7/x/Nd
+	TLBmLYcNOoWToW+D6+RhOGEcZkI5RZ3kn78EQzL/tKQ/wfK+pQtNOJ7lwkRuHOue
+	mpY0I6OTGx9UF6IzCQWRsgwOHHpSP8wA98VA7owfQAGA371XB9xnn1pO4liFD0wz
+	/1/83pjJoH6MuTBYIu8i2hQh+XohsWSeEIcc5xUS1SD9SEP+4e7BZ1QlMUou6LoU
+	nT+x18kQ8eupgeexKhHBZ4kfE2sSKBkpDcvge0LLclRtff1vyJeo0USQTmNA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787063467; x=1787149867; bh=4HOv12O4R9r1E+VRuAILU7NOW6dMN0CdLwA
-	ZCNtVKA8=; b=RBrjD0esanL8vNZi2RnoC1mKYlB6EA01/+AqNofrnGPREngACBM
-	5nRbXm/pKnbtOXHlwpsJStuhuk/PLLIn2E0cIMXipq/bBBraTUPuPz6U+w5J6PR9
-	oe+xWNI5shl2Lo3CatjDCzYm6fqHEXgF8Co0zPQMlrkFfVEr9WHWvoaVx66PC4Oi
-	EOP2M7SQ0XprLtir2pw8TOUHfIwTSoyc2cKSHvAKm/gDEJ5W6Rq/cClhB4ALV4pi
-	j4ilf7zNujdUvwLXxblBa7KnT+LHEVm8ssG+bgqN32u0h1RcASAdUZv7VvW7oOYa
-	6cpQJgeM2fFO+w055GVFyjdzy7DYUmdcxQw==
-X-ME-Sender: <xms:qmyEaq-pWvGZsu40HLozzASzbE7Dn3ogfhpsgX3pSxW9RBPi9Xt_Aw>
-    <xme:qmyEahlgjoKrqXEHkZUxO6lkTJCNNX3ZzqZxSdXIs12M29JYOJyqasB2DlUCI2jWG
-    Voj87KyXmsAEytQZflkjPb_2WfH1N8hjiTTZL2BoBK-iJxN5xhRcQ>
-X-ME-Received: <xmr:qmyEaoXzE2mIbynQ9HBCcuwR884f7nE2iWAuY1xd6Y4fbHOIh3zQmsIZAahwt2j8xS8Lnkc9-cIbww-hhflOFzqdnA4ifY5wvg>
-X-ME-Proxy-Cause: dmFkZTFeK7pYUB97d1yxIyEgHYvHvke3zOCHWLutA3QirpaAUEUsqDnk400IsvbOtlV8Gc
-    qJrNLtg3InlDgXXmq1BYcPMZCeXy167sm02baHiN4HYp+bZx86dzZy0CmRDSfAnsTDHqdY
-    xmcSbWfTmBRexSGK/5qt2wyee3pim+Q4kEeAZn19stq1VDHvXbdOT2a6Q1sWVF+p7v9yk2
-    tPiDUb6CWtodk52cKxniqoOpiGnUe/FhU7842vM0o9a6Sarm0A0wI37a0mFTPvNjzqgqQJ
-    rlvC46g9P+V3bMB5w6jqg40C2iSOIAtvYoI/9rivcewgc43Uc8RrqBJCLUrtiKLO+iKOFB
-    ylgYyELmyYQNAXWjlRMCdEIrTAHbeWL46VbkzxZV2k2+QuIuCAAZ5HetyyyCXRkcnJk7Vm
-    a7bq2djkFmNu8X5PEUBZXjzPetdxN/GX9jreDokwvdmXL7QC6v2a+A+4IXuDhLRKqqb1dg
-    uFetZ6XQMgz0zO+wgc4meniTOgvI2l3qaor6FRBmDiMw7OdPQZ/pOyMvp8UvfHg0Jq3zUE
-    5Znsd00XFhGUM0y4AH2Lvj5OQyxS3tEMJHizGFrKX2elAyH0L1lvhGYIm/6BI2vYTvPV3l
-    HjyHbQ/q5ZDgGScxyhJilIe46wCljqszoq50oTOvnQgrW0Kr1e0jo7tObwfg
-X-ME-Proxy: <xmx:qmyEauFXhQS6QPUyWFF5YglMWGzj5eqOpwcBuH6tBKY-ijPHjHSe6g>
-    <xmx:qmyEasdNPBCUz9yX7hXPs3ZaS4ntT-0ac9GG1-paGlIwxSbYfcTn_Q>
-    <xmx:qmyEanJB_mAn_iYVLlwIHOI5h_yLnPAStUMYskKIuJdKVfGxiiS1eQ>
-    <xmx:qmyEapGRX0JhLnPO0rWKW1Mb_BbhTXipytIv1slFW3Iohm_52nmfIg>
-    <xmx:q2yEakhd8OSyK4Evli14AnekbFS29wUzXgZDME1BaClm4GCKY2Jf-rh8>
+	1787064483; x=1787150883; bh=Q8ETKKD55K1cOQqYASy7vTRIL+yR8cXncrw
+	8VAV9S0M=; b=EUb8x9vAxWQwK/7jVqWF2dNvbyxjLqLCqG2LNDQCDLQwkKjWpPq
+	LBm/bAa//LUkiNWqt7uHkisVnRpe/aNQwkGGbIAi7DuHMEFOYGkwd3EToeHPg6co
+	+8LGWmZZhKdQj7Nk5ws2ArDqxCQ1q/NCRC7PJ2cZxmBLZ+uvQrrfou48e/krzSoN
+	RLBFMmEmmb+U45K5LKhaWht31JpxJps/Ukop4j3wsaSwOnln09S030biX3vPESAU
+	ihoBQiu7bB4sDi/GagFPUd7lG6UiLgs+AhZfxeLuPlrWZL7LiB1aMD7oLXrZB7yz
+	S7gSpzuAZaAsi7XVz1JhYt6oyM/PR/JqlCw==
+X-ME-Sender: <xms:onCEai9kjJISLpeoWunOHDEZ7bk7HrLvfjQ7RniPWGkpr1omCAsPLw>
+    <xme:onCEauN0L0h7emhAuqyyib9YRyRtKuFZfDw3BAPCrLK0bzblM6xejlimxeTE_aCgD
+    1AdlsNfNZsH3uv93b_qxKdkpgmLvTN7ly5fFWy5aVpZokmq_yLEXmI>
+X-ME-Received: <xmr:onCEaufgHYCuDrjdFlMBduy9Y_dfmOKeGfE7x8wOLZ59GWwrow7TQ1bCzdix-8jRKWAQoRParLxlYhWzliaDxNtiU5CTMe-vbQ>
+X-ME-Proxy-Cause: dmFkZTGrA+3bmzAMtmksxvHvB61OeXQY/r3orpWWDWc/np4Z83lBCNPF9rVGrNrW+nyiKM
+    VO3kHCZVKATMwYrHQSwuIPp6ga5HtA1ZnHd9c44LbvjuFlTV9LTyBWE9lKoEDWYlcqf9QF
+    diik5Z3mvWtuWnAHuVGqWtXdNv7okl4fq44IgJatzjF1cnM3JsmNiNu1s0Llr1dQ4NnxBA
+    qXFFisDvzcW7y0tOp0lKaBU8+mW0RE6uqjxfabjBEXfApHIU1EoZFBFm/LBX0t1ttqXqCM
+    PWXuhsYCj8ZcgWxbtqesgarmklrLeldfiu9aZS8pvF3UWZXiHV1KO/UcBIBMT5JneXGiN/
+    q7VOLGEkQumvOnAbFWt5WHiS93k3/ZKpHAFTSO5UcXYVbtWcUETdOf2OSF1iGhHtpA4SFW
+    Fi3iRUATi3Wwd2Z5pLKb5Os5vl97B+KyzmtDH7kuLzxdbo+PpKUJUIZ5HnfWmPsUYEi6DX
+    kDF5Q55ZjbLvAGWGAFvxpvaHOzngWkWwuD4t9+hLRQyzaujzlFX76JaqAjUahgCOnQxHam
+    gri5Ajh/uKfn/++NjpGEl2qZdmBT10EpOZzMJhy/KBNog/YP/gP3WZspvHa11XZs+Z4nLB
+    +cmFx5edxD4qA+qUtOVTY8tXcV8xyPh3r0aXA9FSDki1M7ZNrBN3RYJw27Vg
+X-ME-Proxy: <xmx:onCEalUJ0kCQ9Et859dDZN3UtHaSOJssKVYXWqXFQo42uNcgBGQPGg>
+    <xmx:onCEauiwKKK_3gjFuAAtv5C5wpSakeP0rdgxaItKvB4kA_xKd1h9jg>
+    <xmx:onCEas8KXTbwPvcv6qU6wq6KTOSdokS2lsVS3X8TuWyH9FVwlJg_2w>
+    <xmx:onCEaobVmC0TopMRGwkN9u_Ehv1NPJMJFr5xaD1wiqI0m1xii_9eBg>
+    <xmx:o3CEavSFk5aVwPQCO5ONvKi3UDtnTuZyb0it7cTOITj38RwZ0AOE2DoG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Aug 2026 10:31:06 -0400 (EDT)
+ 18 Aug 2026 10:48:02 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Kenneth Lorber <keni@his.com>,  git@vger.kernel.org,  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [RFC PATCH 0/1] config: surface editor failure in exit code
-In-Reply-To: <CAOLa=ZTykwSDcFaEmEJJ1PTnX5L9=2t+tkCWhF+hV4J9EPBwWg@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 18 Aug 2026 03:26:36 -0500")
-References: <20260817211936.2943278-1-keni@his.com>
-	<xmqqse4c2wyu.fsf@gitster.g>
-	<CAOLa=ZTykwSDcFaEmEJJ1PTnX5L9=2t+tkCWhF+hV4J9EPBwWg@mail.gmail.com>
-Date: Tue, 18 Aug 2026 07:31:05 -0700
-Message-ID: <xmqqecfv33h2.fsf@gitster.g>
+To: "Artur Bieniek via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Artur Bieniek <abieniek@antmicro.com>,  Artur
+ Bieniek <ar2rekb@gmail.com>
+Subject: Re: [PATCH] pull: add --hard mode
+In-Reply-To: <pull.2384.git.git.1787052873141.gitgitgadget@gmail.com> (Artur
+	Bieniek via GitGitGadget's message of "Tue, 18 Aug 2026 11:34:33
+	+0000")
+References: <pull.2384.git.git.1787052873141.gitgitgadget@gmail.com>
+Date: Tue, 18 Aug 2026 07:48:01 -0700
+Message-ID: <xmqqwltn1o4e.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,22 +86,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+"Artur Bieniek via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Wouldn't it be better to notify the user that something went wrong
-> rather than simply brush it off?
+> From: Artur Bieniek <ar2rekb@gmail.com>
+>
+> Add --hard as an explicit alternative to merge and rebase. After
+> fetching, require a single integration candidate and reset the current
+> branch, index, and working tree to it.
 
-If we were adding 'git config -e' today, absolutely.  The issue is
-not the comparison between signaling with an exit code and not
-doing so.  The question is whether the benefit or conceptual
-correctness outweighs any possible downside of changing the
-behavior existing users have grown accustomed to.
+There may be a population of users who *never* make changes to their
+history or working tree, and always want to "hard reset to the
+updated upstream".  Doing so would be safe for them because they
+create nothing in their tree whose loss matters.
 
-Having said that, 'git config -e' is relatively new, introduced in
-commit 3cbace5ee0 (builtin/config: introduce "edit" subcommand,
-2024-05-06).  The folks who may be affected are those who used
-'git config -e' in their scripts and carefully checked the exit
-status (or rather, lazily used 'set -e'), and did so in the past
-two years.  So the fallout might not be so great.
+Giving them a convenient and safe way to do so might be worth
+considering, but the behavior is already safely and explicitly
+achieved by running 'git fetch' followed by 'git reset --hard @{u}',
+so I am not sure whether it is worth adding another way to do so.
 
-So, I dunno.
+More importantly, throwing it into 'git pull' feels very wrong.
+
+The core purpose of 'git pull' is history integration.  The command
+is designed to help those who make their own changes and advance
+history.  Adding a destructive option to the command makes it easier
+for them to trigger it by accident, and unlike the main target of
+this new feature, they have things in their tree that they cannot
+afford to lose to accidents or mistakes.
+
+So, I am mildly against adding anything of this sort to 'git pull'.
+For that matter, I am generally against making it convenient to
+discard or destroy history.  I prefer to keep these destructive
+operations explicit, e.g., "fetch + reset --hard".
+
+Thanks.
