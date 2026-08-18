@@ -1,82 +1,82 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0A345199C
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 18:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2739D3033EB
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 18:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787076338; cv=none; b=exFVF/6JzfcW2dOd/8IQHN0Q+XgUFSVmNb4hr6vAKQxURwX/p8G7b7S28JL0qy4W3+39vavOvmLSksnEI2b4YoCfthcfhp8+wGw0rj3+p6w3LWpQV9ikMgDYlkrUqvbXBo4aMbABhHizdxt2DU56yMqBOrdrDNTceTpSsxcwjFY=
+	t=1787077071; cv=none; b=ZX29iW+JYetFgLuYPjhZuJsXjD5cUSCn/t6oXLyS5O/tnQIkSro07Nc+HdPkmomOJgSfxZXNva5/ORviW1lt0wfk+g3wU8nDq1tYbBjJZOJhUE5ob8SAw5d0pSPirj9hyj9l6wXitk1XOu0yqHu7shqbAOFbdz4TQ93ZHCKMOBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787076338; c=relaxed/simple;
-	bh=IVZb/5NZjWlJSEIULqcHPz9IkzZ2PPESkW620ixPE/I=;
+	s=arc-20240116; t=1787077071; c=relaxed/simple;
+	bh=IQFmsDxquasM1M3mul9n2gljN7uFa0GZcwrCr5Kc1xA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ugc1u4shCLkbGDxOXxiNNFMjnwBN3fk96qcH5gGgnm1dTVB6LGwVuPJjBnf76tQcZzL0B+qon1LnTEg7e8x5MjhP+N3GmyIpAiOlQfbt6s3hN0z0u5gjIPY9+IGj0h8ksWi3X35G/4rubyoRKPs99fdL4mD8jCWmlpe6y0eWcX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BYPziohJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hZ3SwS5Y; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=IiOYIAYxsJBu0SpmdYqvDRDwQUhuVxon1rGaGQxqlLPglWi9hjeZOtfIoIgyMB3zB1aT+bovrddQ9K6tvXzpJ2GEmC8TEGof5p3IOe6/iXHL3qCIiWGuhUOSjjhVYgK03rj/qjd1GOrPOTvIa0S3uDJ+k8SvoAGezXukWxLDs58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h4X2lrMf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qzf8NR/H; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BYPziohJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hZ3SwS5Y"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 76164140011B;
-	Tue, 18 Aug 2026 14:05:35 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 18 Aug 2026 14:05:35 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h4X2lrMf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qzf8NR/H"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 56584140016F;
+	Tue, 18 Aug 2026 14:17:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 18 Aug 2026 14:17:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787076335; x=1787162735; bh=A15xnvde73
-	eODHJWaIg0A91+0whHmx+HcSiaXoVIidM=; b=BYPziohJfhH79rnNZbJC5RZZNf
-	P9ofL+P6qmk9tLprYXjvMLsqJ3+kGltO2YnbrqWvH0zr4T8IIZbQn6Nz3EvZEwOK
-	gn0vSP00RsVzn57qo+Mm0VH+/NcEoJsadbiBIhLMOu03PmmSurAs2KJ6L3G6hVsX
-	YGPF295bCniMDzTl43hllSFldUQ4zaqACUcXchKt2z0HHWC+SuZusrgwj55B14mt
-	LkpElG0VJOUPpIlM17pjHcf0bsFINUArGt/vkmlgKBlDZpbKs3j/xBRmcS3YvZE7
-	Uqm24kCP8unDI6qnuPDbfswMILDJXpgFLMpaeg7WRt04wg0/DctXTcjZhC4g==
+	:subject:to:to; s=fm2; t=1787077069; x=1787163469; bh=kZDyJfOXDo
+	OMR85GkK/jKcnmo6tWuGEX/pfzjUOBiCc=; b=h4X2lrMfdXrdfmgZ4xr5GdOISs
+	7DTdy2fXpAViCNFdprH/YA/FaK5ElLy/oJJmk/Pjy/7FToesvL1xNyFIajfycSkc
+	WkxMFITd62Y0nRwlJ7t5QM+DC27CP4B2CSDwQjLgV5oY/TY/OT3t2ZldMyyO9l4w
+	H1MWHVjbKEgJK9XO7soRUSKlQLRHgTbioWzBLcnms2lavnKew81rBS6qXQo2vm+E
+	A63jkboBvjJjOznsE634dg4NBHiY2ebDV7i/HW6eUBssfpwamjx67O7aUiOPZAg1
+	islRgh/Fz39q5Wqhxn+Yvm3eGO5OeQB/lhOrEiSigO0qEKJl/P2Bqe7HC7JQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787076335; x=1787162735; bh=A15xnvde73eODHJWaIg0A91+0whHmx+HcSi
-	aXoVIidM=; b=hZ3SwS5YWtCak4PZ9v9T3/ei4e5Dyfu7cK8SrgpeWlopYbsr7Vg
-	AgJxPSH5NbHd4KXewIepGXv4bRR08q4VXSi35HFEc8zoYopo6VDkRek7AoMXK03k
-	7DQ2RoZLOIlVbvDwjJ7hYB+IVmkP77xOZ/ASFUaRGdnscxJP5Wj9V3Sb+P4PlEqo
-	Ub8V5qoqvx4sPudu5EEXost4z1CmTA0Vjyl9fHg7Nj5kpbKesavCUVbMZ3UcajP9
-	DD+FBXeuf0kOGyjxjDodqa5HJ8dRgWR4uc2+oxbpjxIj1G4GnV6saHKS+YpeC60y
-	zCk1i1BplnwIBX3tAcSsFrgbv+pZIrrv8Cg==
-X-ME-Sender: <xms:756EalpnYiGSu_aThvN_Mw-iIFJ5xmK_U1iadEKWbAdHfTtMn2nTyA>
-    <xme:756EavHUiqTuSVw8cAdaJKN7GNj6c2emmEBnp47gp6Bit9upGnkXeyzTCnyw8vxYv
-    AYrNTN4W70k5PACH73AuLOxerF6P1v0kCTYOsHBeerRmUQzRZN9CQ>
-X-ME-Received: <xmr:756Eavk4F0uqM8ci8TeteJ6fau1bcvAIDvtpsCZjMol-dyikwO-23y2FLxsmaEtwcmjcRGspKbOXGf4vmrY1Ljl82ZtzB4Wkkw>
-X-ME-Proxy-Cause: dmFkZTFo7XU9xlYDKaYcc5CqN7ZnJZR6kQ/LIaVmCXWnVAZ59AJN4N2JhOJNnmNue5c3lG
-    im9rRWQuontUryxaeDbGO6StRIYxY7Xoi0lJjtN/fGa1YCCpHLZrZBmWCCcQz+8ORvii4Y
-    AFFadDWUErSM7WH79PrW+N+NFWsVFH2M3DS3RiwTb+5y7uQjR1MJYK5eT0r0Hr6frHH9N6
-    CRCp2V//gDghUSeRxKU3l//hyHBnFIPTdtQIZtXKgLR5oDAZyyxmKvj0BvnWuBy7SYGH1Z
-    QQ4Xqb/nCoYHssXgM+ZGheGB39bTRFqo83t4AN0NZgoc5cUu7gl7s/GMFSrcNlcffoLOQD
-    91dp9Ki00bcQCQGH+Wgcsk2+3Qa4oZcebPENYF8O4DVxhWmguW9mhFgHU0ObAFk4t8Lwi8
-    e9XwVzTMXTUzWkzs55uo2RIRrN+Bo+IkHxzFkczjkJoLfzCU9XFaMXUi7zdvhuAwfeK4CS
-    Ay1HnSk4oboqeaNpqM0jcLPcsvGGwp6ZxsRtOvl1WiXHGMkl7BVjh8G9vUPaCX668kBfCo
-    MHL+02KlLesSp7mgEx2HJOjaAvUnjGZzOjKv8ZNrlCTDlBBIt+x9CnIXfL7bmWxT7E5SR8
-    MiVUOUOZP1SE7m6G6ArSD3ixxi3YTrRGqo6UuNzdoVveZouE8MxRqfATxSsA
-X-ME-Proxy: <xmx:756Eaql7aTLxTb53kiqFU9Hglt6M8Np001PK23RaWCW3wyqtFms52A>
-    <xmx:756Eaov4MDQ-pMcuIm5ES_ROhiB1KObNsFd7OhC796jQJrKApqp6DQ>
-    <xmx:756Ealk23OxRSnVfJ_9t0X11drSgCtupKRnGyIw9lueGm9-lSjMijg>
-    <xmx:756EarsjdmhmJqVYQ4D2Le-XO_GGwGI3yZLSwER1bG7RcscE73TSog>
-    <xmx:756EanOP8LNSg4nQcM1fmUvt0g7cw1TqzzEHqvzzxOWlXBJFoS3gQ_Mv>
+	1787077069; x=1787163469; bh=kZDyJfOXDoOMR85GkK/jKcnmo6tWuGEX/pf
+	zjUOBiCc=; b=Qzf8NR/HJN4r2/MXSBRKIpooQjKq5H/AwppnudSnUZPtKMufBC1
+	kcMh7esqif4AAWKQ4fcR9+e5dqDEo+0e7g/IqI8KRRiqQTPN3Lw43miC8lofiMpH
+	K58vEOt1JVER3DFw/YPU3UYaVqanflLRmjY1J/rt5QAwEYNjtUiozaVGN56dzm6O
+	oKHV2E3ZztPh4x5qmZVHwqHDMze+yHnrQ/c/tqukEHHdmSETtv1VGEtl95VgV7Pv
+	1S1SGGV6yIQJGs0R2kSq4ewueUtvNXr8sFiSH7IleeADxR6HchQC0Jla6VW1R4M7
+	bwtj2a0rKWfn6FAhf9vC2lamZdFdQHKGuTA==
+X-ME-Sender: <xms:zaGEal3YMOK0yablQEmTpmqlAfKci8p6oommnmUbq74x87pnJgKhPg>
+    <xme:zaGEajilvf6Aeu8nB_PCr-h8gPElUYuvbPz7hG4yEwSk4X-44UbM7cTXtgx39D8VW
+    PIt4bHbO_LT0E1RUKXQ2Ljor73ekHeJj_i0vmiDE2kmfwFvSq4DxQ>
+X-ME-Received: <xmr:zaGEajSxTe3PhB22k6H0zQdrglmg4jBFGjV4KesHmfxfvnmPkbQfbnnrGGVAOnAkI79hNYUaEvYfWgGMCtFV36ARdIsbnzDUwg>
+X-ME-Proxy-Cause: dmFkZTE7hqk2pkKxDMknYedVqQKbQ79Fy5PTaf1K+WXiW6YhDChKtpgZslc5HnbGIavWsE
+    GZqY0MLZcQat4f2dobSXHBIDsgZ4rOC1tvKLl7sTsk1PRE+1Jc+AaUqe2R++HaaXAgfoPs
+    NGTfd0hHE6iXDZIdke8XH84KmzwQreElCeb/w00/xgKyxjVrQhajl5anwwHxhKphER2G8b
+    N1lxALTB/H0pI2VxnGve5M0T4zc5Gn2P6O9c55+0LyH2/cHV/inUPG70A7ZTotXCGhtSa7
+    3zTVjNia88K+kO8Q9ObsAUITr7Qoqi517mq3X+qvxrpuAmGnQwdibje9tf41yCb7Zk84pR
+    i+iVOLAqKfjYg+S77Dab7s4Z/KpdjPWpriTx+UNzbKgbtQ323T15k+mIPRnqicix3jOgSr
+    zSlhPLVRMys3oQ14Dj6qQ1/7Yt8QAUAsvbazhCl/6Vwef3w8vWv9kuLh78zB4/uvPDWNoU
+    EHbEaidHAM+JI/P6WLYJBoT437LMqWYJU9QNSaJkCydErxqNRspe3zFVZ2cRMpOrMZ31BH
+    OCPCEcEB4X1TqenXNUhd49tStfhXquAgIdiLD/LtIxfAfiFH/dlykQvsUZOUAMuKfuWu1k
+    6JzApGodpuAZepbAHVTjinuFQ5ROxKX6dAn89NtuD4dU6pkewtGdBM4lvXog
+X-ME-Proxy: <xmx:zaGEasiuAzTFMDIXNLbrVgUUeHEwDfDiuEDqxxBlkOs5eybCKfTP3Q>
+    <xmx:zaGEar6WWm_N7HlMVXay8El62PHIVa48WJLWy_nG1lozQwPBxtDXiw>
+    <xmx:zaGEahBkupKyq5P-QkkPRhARTWUJ6LRtj1iKmhUznxk6sFDJxVPcMA>
+    <xmx:zaGEaqYE1nuUz9GeTohsC-wjpGvpBKh8Ya3NzCVBFMvyxQfbPZuCBw>
+    <xmx:zaGEajoPjPfDtMeYXocoEOoQDNGwOVGx-poav0R7_FaQdxdfRo-4X0Gk>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Aug 2026 14:05:35 -0400 (EDT)
+ 18 Aug 2026 14:17:48 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/7] odb/source-inmemory: signal missing objects via
- positive return
-In-Reply-To: <20260818-pks-odb-generic-corrupt-objects-v1-2-ec234567510f@pks.im>
-	(Patrick Steinhardt's message of "Tue, 18 Aug 2026 16:19:29 +0200")
+Subject: Re: [PATCH 3/7] odb/source-packed: flag known-bad objects as
+ corrupt and not missing
+In-Reply-To: <20260818-pks-odb-generic-corrupt-objects-v1-3-ec234567510f@pks.im>
+	(Patrick Steinhardt's message of "Tue, 18 Aug 2026 16:19:30 +0200")
 References: <20260818-pks-odb-generic-corrupt-objects-v1-0-ec234567510f@pks.im>
-	<20260818-pks-odb-generic-corrupt-objects-v1-2-ec234567510f@pks.im>
-Date: Tue, 18 Aug 2026 11:05:33 -0700
-Message-ID: <xmqqcxvfz4lu.fsf@gitster.g>
+	<20260818-pks-odb-generic-corrupt-objects-v1-3-ec234567510f@pks.im>
+Date: Tue, 18 Aug 2026 11:17:47 -0700
+Message-ID: <xmqq5x17z41g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,39 +88,42 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The in-memory source returns a negative value from its
-> `read_object_info()` callback when the object in question does not
-> exist. Adapt the callback to return a positive value for missing objects
-> according to the new calling convention.
+> When reading a packed object that doesn't verify we mark it as bad and
+> indicate to the caller that we failed reading the object despite the
+> fact that it supposedly exists. This matches the semantics we have now
+> established in a preceding commit, where we discern failure to read a
+> corrupt object from a missing object.
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb/source-inmemory.c         | 2 +-
->  t/unit-tests/u-odb-inmemory.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-> index 3e71611b8e..57183daf4d 100644
-> --- a/odb/source-inmemory.c
-> +++ b/odb/source-inmemory.c
-> @@ -66,7 +66,7 @@ static int odb_source_inmemory_read_object_info(struct odb_source *source,
+> What doesn't work yet though is when a call tries to read an object that
+> has already been marked as corrupt in a previous call. In that case,
+> `find_pack_entry()` will tell us that the object in question does not
+> exist, and consequently we'll not flag the object as corrupt but as
+> missing.
+
+Thanks for attacking this one.  I've always felt it awkward that we
+treat a corrupt/unreadable object as if we do not have it, and we
+even silently recover from it if we have another copy, making fsck
+practically the only thing that notices such breakages.
+
+>  int fill_midx_entry(struct multi_pack_index *m,
+>  		    const struct object_id *oid,
+> -		    struct pack_entry *e)
+> +		    struct pack_entry *e,
+> +		    struct packed_git **bad_pack)
+>  {
+>  	uint32_t pos;
+>  	uint32_t pack_int_id;
+> @@ -618,8 +619,11 @@ int fill_midx_entry(struct multi_pack_index *m,
+>  		return 0;
 >  
->  	object = find_cached_object(inmemory, oid);
->  	if (!object)
-> -		return -1;
-> +		return 1;
+>  	if (oidset_size(&p->bad_objects) &&
+> -	    oidset_contains(&p->bad_objects, oid))
+> +	    oidset_contains(&p->bad_objects, oid)) {
+> +		if (bad_pack && !*bad_pack)
+> +			*bad_pack = p;
+>  		return 0;
+> +	}
 
-Let's not define "any positive value means this single thing: it
-does not exist" and then return a mysterious and unspecified hard
-coded constant like this.  Instead perhaps something along this
-line?
+Hmph, so the idea is that if you have even one bad thing, you are
+marked as bad, because who knows what other parts of you are broken?
 
-    enum odb_roi_status {
-	ODB_ROI_SUCCESS = 0,
-	ODB_ROI_MISSING = 1,
-	ODB_ROI_IO_ERROR = -1,
-	...
-    };
-
-As I already said, I personally prefer to define MISSING also as
-a negative value.
