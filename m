@@ -1,433 +1,171 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C0840E8D3
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 07:56:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787039764; cv=none; b=LtqriCO2tqIcjc7QY2uNsem3Rsn1vblj4fhEqvfu6KGMNpa+5EbLEBB0s13q10GOW/6aBChjQpB/1YZQ4u7xEHgNTnGQTf74fXQ8eWdG4OuklwKeLTtOvpNLUMM22XI1YcXxLzr4IHRRQodEgsvSZzcH+OHMuH2NjE1myZQWPBk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787039764; c=relaxed/simple;
-	bh=IAYDsL1sd4o+4O8rFK0eMnlMAc1GX6jxwNKoDKzhu8c=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=NUAVRPqsZUtN3wmZULLouJjo/U9M88oGLsvgk4vp96MgqbFlGL2biNzpEDBDvlKsvbDPHmH8FY2UFHKeeelnGfnUo06oWnZX9Qm9sY7I4VG6YScH3PRpY74+CaI6unvUXNaBp5rdt/uU5LQ6FTRVB9EhfYv9a3T8SRxxHpX5iBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LH8G15kj; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02EE3630BE
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 08:26:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787041600; cv=pass; b=E+ZjCf8m7ypFdov/bbr5zbC4EAx5/s07LbaGhK0DERkDhO79nJgVEYauVGUG9pp8NMXfH1Dg2CeoZKZjVCR0of/SosFe7EjSKO4d1D48GX3dOTVh36HB8+siF22UZoGGdmRtA8wS1W/RWYrCYNdV5wF/Q+kjZjvdgWJKOH/nRlI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787041600; c=relaxed/simple;
+	bh=at/n2z+NyuuZevJud0uMt3zqEzRoidz7+C2ylEWWIEY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HDsd63ZwhzGV9i2kDpDkUC3OXuSR+zvYgCbw+f3yfoacTTEVXso1LYqlVFYTZzqF1ycDLuy25EycEuvHGACRb/hmYGxhNiWe7JgxoI1OdI2nh9OY0WIOwOAGTN+z4WE79VOIMlTlNPsZQbS0zVJcMJhbEk+DpvGC4qN9Hh6Jdto=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qzUO1nq3; arc=pass smtp.client-ip=209.85.221.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LH8G15kj"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4954a9e8490so4045255e9.1
-        for <git@vger.kernel.org>; Tue, 18 Aug 2026 00:56:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qzUO1nq3"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5c276bfce7eso3387265e0c.2
+        for <git@vger.kernel.org>; Tue, 18 Aug 2026 01:26:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787041597; cv=none;
+        d=google.com; s=arc-20260327;
+        b=hGqqkk0cUo3p8DkzPVyUjkbJ+rv4eTXSdJQr1Y5bhBdakSxlSCYAQXvrgAStawfENR
+         qK3yghhA4v1emo8y5dBm3/52/TiYLVq1RYFzj1rnOW+g5dbSCCr2YJ5BCZkv62nmlT6s
+         jCQYP8LrzeqfMa8LKd4VE5dh6abNdfO/1WmDhyfmREoRIFUdsPSElIkqPXNZeQJ/ws69
+         Uwydl+FBUCy6qWy9QyrgXpZGEAUu1MyHhAl+gDFefERka2iiKR3gHUrFLb3CS2UHQyJV
+         1tfhDkfz0VBit4oKdWIS/3U2SKsfQcKL827zoieb98qYs7tHCbqilkKtPTDqIyfHkFZn
+         O+jA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=+YynhsaKv6ONFSWKQULheRPgAc0PHa1TbivC2ti0lMg=;
+        fh=wVjIwmG4CjnEl0HZ1hxabp2nhYHURsyWwEWwCn/XbsA=;
+        b=VM8IoZP6c3EEPFL7SJlQOhl4I1wvO+NqqARTLgwyjQkeI+BvZviWyWJ911YbwsFdlP
+         vNuME3TUWAuA7OBjWj7cF6a1WrE1vWNpXy8b1L1I/pM+zvDvsLfjdkkOpEhSOUv9uxHI
+         +SCC+6Q2dnf65fj0NgnkHYIQHbnuCBFXLAiwJkistTFOUkfk115VN91o2T4Ot5K+o0mJ
+         Fv/747qeau2FgjaQhsbBR7zkmK9+XKMK1XFtgpgg/nQHM6RkPe0g4f1rg8TbVrTRFS1S
+         vM3DM930x2ExxlgAyFnGftfYHzbeH1v3Faw060EhQCk2/p3eBAfCdwcpskRVqzV/CGAF
+         8g8g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787039759; x=1787644559; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=6IZMhE4xq7VeWc8ZWi9sXtCSULqCiUzf+cZIEm+r5Bo=;
-        b=LH8G15kjxLkmJ63QhuCDlC0N6FoSPkCuNJknQRcRrP2+EZURJAjArYubFTWLwhCLyS
-         dsr5cx+ooRLoeV6wVCs3luxMBPWfXUVx04P7kM0a0xJsKWyRCLGMniDBW1Helmk+3Tqu
-         WTgBBgetNIe9xqKybuZLBJrokB/svY0ufcP1z2UQWJJN0pPQik2tJyZyeL/l9uicGNs0
-         YL9QfG20jaBfGiTGFG710rguvNhA671JD3w6dHHo2KPxWh0cQFzgDOFELPFP0V0YKzlY
-         PaIOppAQw1BGR13rZau2SiN/x4W4hOvTk1xueAO48KDaz12u8f1ddWRWKGeAev/jJHpe
-         Y/VA==
+        d=gmail.com; s=20251104; t=1787041597; x=1787646397; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+YynhsaKv6ONFSWKQULheRPgAc0PHa1TbivC2ti0lMg=;
+        b=qzUO1nq3USFrQKl5F53YFX0xRkQX1ZaaGNhWUlU+j9FfTCm8HElZPYKRT5/CoQ3cG8
+         Whgzf5TtK3HMxnEWoDZsgCflGBaLO+T+UtpGz8L4JH6eJxrcpA2SzPEx+v33sJMyBO7s
+         pZdo9gs74UQzpaORTSbGurVTylVAJjw+59kGtUqKKoXJOs1iTbO2ooyciwsBHdQePmoK
+         8E/+tAGAc1aF1u3j+nZPpJsI19mPUEmAntqAZsg/rxWqhlY1v1r1iH09SHVVWJZGYT+0
+         e4ySTruQVi4Vv07P7kNbXSpmTwx7ggkMk4Bhzq7MNQsHumNsZufTl1SNn1VlWRy53yEd
+         xXLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787039759; x=1787644559;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=6IZMhE4xq7VeWc8ZWi9sXtCSULqCiUzf+cZIEm+r5Bo=;
-        b=fdr/YgcBS06zYQmxAcCbN3Es7Ui6tiN77Jaey9Dqidx5TUmFThbwklvl4Wiv8PMpM7
-         l8g7bumgokWB90F5iyBI/vACZb09qKMvjdmmiz5MKjfgJ5qzPJo114SB4Zvkibl6hTDc
-         ggYG/WJCQLIyy+oN5khmXoi3OoGvzgJPTnlsvL+b9akAQn+ey4JwOzv8JZ1Ml7aTvpPY
-         bLefKZa1vz4ayFwIZ9/6IEyk0kVq7fBYTEaCaUZkqW6iYRtN7fBzw+2guJEtcbIsWKgp
-         PZNcKJWQdqevhBVHPVuOBLRPy7I2kGgkjpD2YCWMzXz0bkMT3a140bw2fJySnIw14cqN
-         zwQw==
-X-Gm-Message-State: AOJu0Yz0Of16lQZbsRTDMqMmDyFgs5Kl6RKsXH/oXPWAIuAOUeofZKk+
-	itqQ4dR/wOwDHelXpCNngaKvgwm07/5DoUhZD1K04RI1FpnkbVVv18zRe+qZ9yic
-X-Gm-Gg: AR+sD12HOcn7vtP++L6BElUnFuHDQ7x/jVI0fWpt5Zb1oRhR93rfTEvkrKLgI2ADtGf
-	jreWABk6nOaMWLAdrRWRzSqKdY/pN2mYD7gthDUOIhbaZIg+QTpxzZuirEy0yXLfYDGs/rws2Fi
-	V0VoOAfcdagxv/pb5gUHVEcCHJfUURP3HjRKxeD+MykC0laLWqrIdviQQWcywH8cf4DH4585Wgf
-	ad1Txs9hXtSdd2qe78nSlIhXedj4I4+6HYM8VhFMyehZjYJqwuuq959MNYVZhL1dWzU5ms3+KmE
-	8Rekg3C9IrR83ahM39whR8Y0HY0WU1Zc0IHlHBt52xfr/idWL4mzfMSQjaVzqivq2nX1glFzOXj
-	iaf4aWMVK1CdkjzdKM0Xfn+bGoss5n4s2xqclrhOMXkSyghGtnaKZHzcKaWpVrraz0g+J0yRKha
-	PYi+r9tY5SBG0LcHL1+ZqUWbV8X1AG1Dt3MatzTcgrwfJAQ2HGt/ZLOkM7bDFNG1gtKEJ2GXE6f
-	X3ppRaTHAhunsD90hKfcLdFRBc=
-X-Received: by 2002:a05:600c:8b10:b0:499:7f37:cb74 with SMTP id 5b1f17b1804b1-499a082c640mr83508215e9.1.1787039758590;
-        Tue, 18 Aug 2026 00:55:58 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:8f07:ec4e:fa07:f595])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482a5b81748sm10062200f8f.37.2026.08.18.00.55.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2026 00:55:58 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1787041597; x=1787646397;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+YynhsaKv6ONFSWKQULheRPgAc0PHa1TbivC2ti0lMg=;
+        b=BiqTEUAU0oESH9tlKzM1zLchA+qImJch1ieHV1vrPtvWjwKSi6KXt77m9aXzeaOanO
+         PlcjSGedCOe/m8YaE1Dhd+oyTTnvyNbT5gF7YRJyP/DxDdO9GS0mVGm+jBHLKLrY7sRj
+         /jZ76S0LXrjDpJmUJP6pC7NvP+6zEJRxtTK7uRIEBJz+Yj2mfAzHEiUk2rZYEPxRHsem
+         j2+Zjdt0nW1WnIneXZkF5kymOpDfG7X8omAnQXW6iIk+ETEc5LGEbEDbRerawYUVXKm9
+         Em0L2ro7JN8ahwyefPdwWGy46GwRNB3aPU4jG8T/LnlgLkjI1sgLjk0nOX2iYQA/hyVX
+         fV1Q==
+X-Gm-Message-State: AOJu0Yzz3LiJKQRhBpMdF0FQUwO+w0bmnlmwbfseLdIrATrQ7tCtQ2oI
+	fcjqfpwqYMJQkdeOjp5flphTaGCQrB0XCDyoy0SiC51aiTDEmwtiOFl0EECdQxGc4OTELyD583E
+	6+GnWQXhZ1IqNGkMalIVh3g9F6Paj+iQ=
+X-Gm-Gg: AR+sD12CE594bpRDDb0bVwFKqmZlTxYgq1XcJMLXHXxILGss6RsxXAsNy/Wll3+B3lL
+	5G+XkdGMCfiZ5X/gYYKVVp//311BTcdeLiNgxl896GVR27kC23E4GHB0nLwGlDMmVeVaE6n35Ex
+	TfoX7uLAmq2FU5UwVbV23eQb9llqGVw7bjkbVujJOTZ6cjwHAEI6vpW0X3p6+Ipds4pVrCLrX9j
+	j1tGjecF81/8XM+deuAvWxU6pJFqbpLyg9oT1F1OBn92HjGSwLcieDnqz551q7dAbGcO88M6QaI
+	oUeFWU8naFPkiyknuObhLLeccD4FmnM+UpAK23TM21BEQ2Gn5f1pXaXeSUTLzJK/3eTamOyp0Sr
+	HEsD0oDxsAy4dUn9AGzWPV9Orh4ZwQrMtxus=
+X-Received: by 2002:a05:6102:5794:b0:74d:cef6:af78 with SMTP id
+ ada2fe7eead31-76f2ca40261mr7445347137.7.1787041597440; Tue, 18 Aug 2026
+ 01:26:37 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 18 Aug 2026 03:26:36 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 18 Aug 2026 03:26:36 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 18 Aug 2026 09:55:55 +0200
-Subject: [PATCH] hook: introduce the report hook for git-receive-pack(1)
+In-Reply-To: <xmqqse4c2wyu.fsf@gitster.g>
+References: <20260817211936.2943278-1-keni@his.com> <xmqqse4c2wyu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMwQ5EMBCA4VeROZtEKyivIg5V0zUraaVFNhHvv
- sXxO/z/CZECU4QuOyHQwZG9SxB5BmbW7kPIUzLIQtaFEhKbSiG7LfhpN4Sz9wtWY6lta4VuSEE
- K10CWf8+0H17HffyS2e4TXNcf/RHG4HYAAAA=
-X-Change-ID: 20260812-758-introduce-hook-5b3af9f1a7e8
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11156;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=IAYDsL1sd4o+4O8rFK0eMnlMAc1GX6jxwNKoDKzhu8c=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqEEA0DHXAWKmz4sU7Kh80LTPxw7DfQERKvG
- AEFccW0MZKcaokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqhBANAAoJED7VnySO
- Rox/mi0L+warnRF1Nh5z+Hyk2FQYsvqQG9DElb8+3ewO9cS61ha+cyCUmaNeoQWZL4GWXTcyptz
- YaRZOCoIQmO67E/lahtcPVMC89JA30KLWjSKrqZK+Ul3TauzPDtM7vMRBQfb00/b9W0JMyriVeG
- RZJ9SBgmQsV0M47dgkHI5Nk42kEv+Xi5ClP3wGpZ4ACC4Ad9xJEyVOON1MVxJDKZTVUy8j0SF/c
- 7sL4Gls101z80Y279yzCdJWfIeEZbY7tJBRzY8oNMTy7QUiiOwCmkTgBkIh8kGBH4KyQKtzXcEe
- oHhu7ANZUvnLeYODabWs6/pUyd0Q+SxJGLiJYARzQs2E98fiktKEN/ZRp4cpR6MeaEue7gYiruI
- hg4kgUltO8uvH8yUbXptlCbSVDlwLdEZG5MvIBNpJrqlzAEGi35lIWpyCBN9QLlW0iU9wWZAdKh
- l3t/4Bycm/fU6Pm0uXGCjOqccXfvjkZoXpMJ7Jyon1Ic9Md+dznMosXl3AktSpbK1QS6nvq96g5
- Kw=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Date: Tue, 18 Aug 2026 03:26:36 -0500
+X-Gm-Features: AcwNN1XYRkmoobU80VDab1w29yIe9IYDyRHXI7fCI_YBHWa1m_zeTMdbbvoR9ho
+Message-ID: <CAOLa=ZTykwSDcFaEmEJJ1PTnX5L9=2t+tkCWhF+hV4J9EPBwWg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] config: surface editor failure in exit code
+To: Junio C Hamano <gitster@pobox.com>, Kenneth Lorber <keni@his.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Content-Type: multipart/mixed; boundary="0000000000009d6d8906594e0b69"
 
-When running 'git-receive-pack(1)', there is currently no way for the
-server to intercept and modify the status report before it is sent back
-to the client. This is useful for servers with custom logic that need
-to transform or gate the report based on the outcome of external logic
-post reference updates.
+--0000000000009d6d8906594e0b69
+Content-Type: text/plain; charset="UTF-8"
 
-Introduce a new 'report' hook which receives the pkt-line encoded
-status report on stdin and whose stdout replaces the report sent to the
-client. A non-zero exit status causes `receive-pack` to die and the
-client to treat the push as failed.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Similar to the 'proc-receive' hook, this does not use the config-based
-hook infrastructure. That infrastructure is designed for parallelizable
-notification hooks. As this hook is a bidirectional filter, it would
-require significant modifications to that infrastructure and this hook
-cannot be parallelized anyway.
+> Kenneth Lorber <keni@his.com> writes:
+>
+>> When the editor invoked by 'git config -e' fails (crashes or calls exit(3)
+>> with a non-zero value), git notices and give an error:
+>> 	editor.c:launch_specified_editor()
+>> 		return error("there was a problem with the editor '%s'", editor);
+>> which is then lost:
+>> 	builtin/config.c:show_editor()
+>> 		launch_editor(config_file, NULL, NULL);
+>> which results in git always calling exit(0).  Note that the value is
+>> not explicitly thrown away with "(void)", so this may not have been
+>> intentional.
+>
+> I do not intentionally exit my editor with a non-zero status myself,
+> but what I hear from others who do is that they do so to affect the
+> invoking 'git' command, e.g., to stop 'git commit' from creating a
+> commit.  They somehow realize they botched the edit, and they want
+> to prevent 'git commit' from committing, signaling that by exiting
+> their editor.  A cleaner and more modern way to do so, by the way,
+> is to empty the editor buffer.  In either case, 'git commit' itself
+> exits with a non-zero status.
+>
+> It might have been more consistent if 'git config -e' exited with a
+> non-zero status when it noticed that the editor exited with a
+> non-zero status, in that sense.  But we have never done so, and that
+> is probably because we did not care ;-)
+>
+> In any case, I am not sure whether there is much value in making
+> 'git config -e' start behaving that way.  Even if it can notice a
+> failed editor, the damage to the file is already done, and there is
+> not enough information to undo the damage even if you wanted to when
+> detecting such an error.  This is quite different from when an editor
+> edits the 'COMMIT_EDITMSG' file and fails.
+>
+> So, I dunno.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
-To give some context, we at GitLab are building a custom MVCC around
-Git. Each git-push would initialize a new version which is then
-committed as the default post some operations. These operations take
-place after the reference transaction and based on the output status of
-those operations, we want to propagate the status to the user. There
-currently exists no good mechanism to do so.
+Wouldn't it be better to notify the user that something went wrong
+rather than simply brush it off?
 
-Having a report hook which allows us to modify the report being
-propagated to the user, allows us to modify the report based on the
-status of our MVCC commit phase.
----
- Documentation/githooks.adoc |  23 ++++++
- builtin/receive-pack.c      |  41 +++++++++++
- t/meson.build               |   1 +
- t/t5412-report-hook.sh      | 176 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 241 insertions(+)
+I would be in support of the patch:
 
-diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
-index ed045940d1..7e6643ad89 100644
---- a/Documentation/githooks.adoc
-+++ b/Documentation/githooks.adoc
-@@ -527,6 +527,29 @@ The exit status of the hook is ignored for any state except for the
- status will cause the transaction to be aborted. The hook will not be
- called with "aborted" state in that case.
- 
-+report
-+~~~~~~
-+
-+This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-+`git push` and updates reference(s) in its repository. It executes on
-+the remote repository once after all refs have been updated, but before
-+the status report is sent back to the client.
-+
-+The hook receives the pkt-line encoded status report on standard input
-+and its standard output replaces the report sent to the client. Any
-+output written to standard error is forwarded to the client over the
-+sideband channel and will appear as `remote:` lines on the client's
-+terminal. To reject individual ref updates, rewrite the corresponding
-+`ok` lines to `ng` lines in the output report (with an explanatory
-+error string) and exit zero; standard error can accompany this to
-+provide a human-readable explanation. A non-zero exit status causes
-+`receive-pack` to die.
-+
-+Note that by the time this hook runs, all ref updates have already been
-+applied to the repository. A non-zero exit causes the client to see the
-+push as failed, but does *not* roll back any ref changes that were
-+already committed server-side.
-+
- push-to-checkout
- ~~~~~~~~~~~~~~~~
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 86933d8d7e..bc22b3ec31 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1004,6 +1004,41 @@ static int run_update_hook(struct command *cmd)
- 	return code;
- }
- 
-+static int run_report_hook(struct strbuf *report)
-+{
-+	struct child_process proc = CHILD_PROCESS_INIT;
-+	struct async sideband_async;
-+	int sideband_async_started = 0;
-+	int saved_stderr = -1;
-+	struct strbuf out = STRBUF_INIT;
-+	const char *hook_path;
-+	int code;
-+
-+	hook_path = find_hook(the_repository, "report");
-+	if (!hook_path)
-+		return 0;
-+
-+	strvec_push(&proc.args, hook_path);
-+	proc.trace2_hook_name = "report";
-+
-+	prepare_sideband_async(&sideband_async, &saved_stderr,
-+			       &sideband_async_started);
-+
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+	code = pipe_command(&proc, report->buf, report->len, &out,
-+			    report->len, NULL, 0);
-+	sigchain_pop(SIGPIPE);
-+
-+	finish_sideband_async(&sideband_async, saved_stderr,
-+			      sideband_async_started);
-+
-+	if (!code)
-+		strbuf_swap(&out, report);
-+
-+	strbuf_release(&out);
-+	return code;
-+}
-+
- static struct command *find_command_by_refname(struct command *list,
- 					       const char *refname)
- {
-@@ -2547,6 +2582,9 @@ static void report(struct command *commands, const char *unpack_status)
- 	}
- 	packet_buf_flush(&buf);
- 
-+	if (run_report_hook(&buf))
-+		die("report hook failed");
-+
- 	if (use_sideband)
- 		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
- 	else
-@@ -2592,6 +2630,9 @@ static void report_v2(struct command *commands, const char *unpack_status)
- 	}
- 	packet_buf_flush(&buf);
- 
-+	if (run_report_hook(&buf))
-+		die("report hook failed");
-+
- 	if (use_sideband)
- 		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
- 	else
-diff --git a/t/meson.build b/t/meson.build
-index a25f37d2f5..7056e31326 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -651,6 +651,7 @@ integration_tests = [
-   't5409-colorize-remote-messages.sh',
-   't5410-receive-pack.sh',
-   't5411-proc-receive-hook.sh',
-+  't5412-report-hook.sh',
-   't5500-fetch-pack.sh',
-   't5501-fetch-push-alternates.sh',
-   't5502-quickfetch.sh',
-diff --git a/t/t5412-report-hook.sh b/t/t5412-report-hook.sh
-new file mode 100755
-index 0000000000..47f20e8d67
---- /dev/null
-+++ b/t/t5412-report-hook.sh
-@@ -0,0 +1,176 @@
-+#!/bin/sh
-+
-+test_description='test report hook'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+. "$TEST_DIRECTORY"/t5411/common-functions.sh
-+
-+URL_PREFIX="\.\."
-+
-+test_expect_success "setup workbench" '
-+	git init workbench &&
-+	create_commits_in workbench A B
-+'
-+
-+test_expect_success "no report hook, push succeeds" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+	git init --bare upstream &&
-+
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-\EOF &&
-+	To ../upstream
-+	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "passthrough does not alter report" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+	git init --bare upstream &&
-+
-+	test_hook -C upstream --setup report <<-\EOF &&
-+	cat
-+	EOF
-+
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-\EOF &&
-+	To ../upstream
-+	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "non-zero exit causes receive-pack to die" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup report <<-\EOF &&
-+	exit 1
-+	EOF
-+
-+	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-\EOF &&
-+	fatal: report hook failed
-+	send-pack: unexpected disconnect while reading sideband packet
-+	fatal: the remote end hung up unexpectedly
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "hook is invoked and receives report on stdin" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	test_hook -C upstream --setup report <<-EOF &&
-+	tee raw
-+	EOF
-+
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	To ../upstream
-+	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
-+	EOF
-+	test_cmp expect actual &&
-+
-+	test-tool pkt-line unpack <upstream/raw >actual-report &&
-+	cat >expect-report <<-EOF &&
-+	unpack ok
-+	ok refs/heads/main
-+	0000
-+	EOF
-+	test_cmp expect-report actual-report
-+'
-+
-+test_expect_success "hook can modify the report sent to client" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup report <<-\EOF &&
-+	test-tool pkt-line unpack |
-+	sed "s/^ok /ng /" |
-+	test-tool pkt-line pack
-+	EOF
-+
-+	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-\EOF &&
-+	To ../upstream
-+	 ! [remote rejected] <COMMIT-B> -> main (failed)
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "hook can report a custom failure message" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup report <<-\EOF &&
-+	echo "push rejected: service X is down" >&2
-+	test-tool pkt-line unpack |
-+	sed "s/^ok \(.*\)/ng \1 service-x-is-down/" |
-+	test-tool pkt-line pack |
-+	tee raw
-+	EOF
-+
-+	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	test_grep "push rejected: service X is down" out &&
-+
-+	test-tool pkt-line unpack <upstream/raw >actual-report &&
-+	cat >expect-report <<-\EOF &&
-+	unpack ok
-+	ng refs/heads/main service-x-is-down
-+	0000
-+	EOF
-+	test_cmp expect-report actual-report
-+'
-+
-+test_expect_success "hook stderr is relayed to client via sideband" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup report <<-\EOF &&
-+	echo "hook-stderr-message" >&2
-+	exit 1
-+	EOF
-+
-+	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	test_grep "hook-stderr-message" out
-+'
-+
-+test_done
+  $ GIT_EDITOR=false git config --edit
+  error: there was a problem with the editor 'false'
+  $ echo $status
+  0
 
----
-base-commit: 11c6700f10234578d10523faf35656ca491425c9
-change-id: 20260812-758-introduce-hook-5b3af9f1a7e8
+As a user the expectation here would be a non-zero exit status.
 
+--0000000000009d6d8906594e0b69
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f84b44317d17fb23_0.1
 
-Thanks
-- Karthik
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xRUZ6b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mek1CQy80ejFxd0VXZzRGMjFDa2dPdm1UZFczeWlEagovTkEvK2lUbjM0
+L09lbnV4YnROOG1zbXMvaWRSMDNJalhvenNpZXp0eTRISnhTZyt0UStwRGxCUHZLTUhCbnZRCkRB
+WmRhTGErRUFnaGRKMEVlQ2Y5M0dXOU5EZ1pNQVhxOEo2d09UQ3pzTXRoREh1UHFuMVY3NDB1d1N6
+TjlXakIKeXJtTUl0ZkJ6ckVITnBhZ1dWZ1pJRzE0Y2lnd2JoKzRxTlVPR2kvTnZPSXlQRDhXdGNM
+MS9KMy9sOE9JSk1vQgpZQ1JrVzNsS3Z4ZE1QRVNYd3ZscTFSYlEvRzlNZ1BDNU94OUNCQlhXTDM0
+U2RPVkZLL3RIa0VHN2ducmM5dWtnCm9PcGFHbzF0b0Z2clNnaTBxYTlMTFA0aVF3NnVDamlncURT
+UWoxOEVpUzdUblBBMld0R2J6TVNpdUVaalNWNHEKRVNNa0lDUS9tZGRLQWRvWlR4eCtDTlRyQ2xQ
+YWFBd3RGOEVydkxqZmpIOHdVeFhVb3lHZ1J0LzFROVFZd09YZwprY0p6NHgweENqQnJ6UzdHSEFG
+M2NpRmhrMFUwaGJ2Zi8wNnl4Z3lYcHdiVEJsekJJNno3SEhqdmxIQVFQM29UCjIrSEI1dXg4cFhN
+SVk5OVBRWnlmS0VNTFlqeWpOOXZzVmNvLzlLcz0KPUgwbWEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009d6d8906594e0b69--
