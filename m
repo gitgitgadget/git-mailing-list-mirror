@@ -1,82 +1,87 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D377647D451
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 16:40:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7657F484235
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 17:09:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787071259; cv=none; b=d0pMPrvrWMo6/6MG3IsTUJcaNGl8MIlVgBUVH+IcF+vsp0aEY0JczoiaxBqGQ4epdPjJGrF4Zf1jUf1ML2ZcTdmjUK9zUsRohb0MwWNWay8dMcDlGvN47HIpFx+y8ghrpON7+cBWLrW9H6ixdvtJsqWQT/rBc3Cht6rN09qGxwY=
+	t=1787072981; cv=none; b=c4Eds3CpcbYnTofIMb1fHjCcOIxnJ657Am6jyWOqXtX6KaNaPB1tX7a9L+zwvkw1/5bOOtiVZ7iSzrj2ryVD6EKDYBMnqDyzZUVTIVqIKJMCtUoXzA6+wa7Ep6TkD8q1ua6KChgog71jsNPfcecgTT7+XHgY0fzaQ21hydCmhqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787071259; c=relaxed/simple;
-	bh=GCb8NbxncYNu+Kqx5VtBiud+X8DFeq8JVUkiur7x9aU=;
+	s=arc-20240116; t=1787072981; c=relaxed/simple;
+	bh=zmv374BeQMQYruDOJGEN6PMToH/i5YhQ6t5bFPxSA2Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZATI31xWe0Bd3osMVmsqehE6AbyFKI2LZBr6U3llrTirnZ4WEpxSe496ZwUuU4xwUcoLmZMQVSalERRkFIncwFzTMj4MqRRLuwOD1JEWqx7h9PmN6zr9Y2dB5Dcwdi1OH6tyVMse8NchMszZO6aaC2YkE2bK1XdkNmHmUVI0rUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UQBNkmYM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KslUnIVf; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=LtZUmYETTN23d+FQOu/10eg+wQ9BUQGzpy164nLGOMckt7736HrVYeTghSfOlJQ1CnqyUd78KqNK/fVNJPSiPLcPlF/4Pz+7YPyO6TCkYd3ukttBUv62qJFKa6RZEx3QPRy6N1JETgSAlaAtpaCkFbwnpeorrsus4ItfZ0AOOkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mf5mHKDz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b00OUN9z; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UQBNkmYM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KslUnIVf"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E54197A002E;
-	Tue, 18 Aug 2026 12:40:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mf5mHKDz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b00OUN9z"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 974DF1D00142;
+	Tue, 18 Aug 2026 13:09:38 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 18 Aug 2026 12:40:57 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 18 Aug 2026 13:09:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787071256; x=1787157656; bh=h9p4v3KN2n
-	Zfymxoy8H6/sYpJGaRGr+so4lINaqLuyM=; b=UQBNkmYMGlZ35GdrFov4pWw3B9
-	O9HqUFFdwp3liZ5M9OpgrlSQ9T34Jx0QJaYD78b9qoPKcmVaVgz49rMADIEqsGPw
-	Jv+wKx8llyhqjkvr2G5MYNL8h/1rO1jaZR0H69tK65AZzRLWAAu5jQYuNwJe8ViR
-	mHHy/c0zIN9z6kfmRfBCbud/9Iozz75cyqyWxHgbdx7tpQRytcNeUFf6f250ISl4
-	hIFpG/oiIWcN8uZ6L20aVvOX9ANHH7UbAgTAXy/+As8sEVN3mg14Kcqq6mHTlKOM
-	0KN0X1pHX4nkQM2Oj/QBxXUjCznv6qwMFmVmiDyMPEZrL6OTFfbz4QEsOCjA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1787072978;
+	 x=1787159378; bh=MSAukxnmFFyASn5m/KiFZNOYnUkNMVH0unDFCk5hLU4=; b=
+	Mf5mHKDzlExA1agXG6plH7GSTvpzkyQdjfDI2cV/x16HQtr5sDbyBW51w6KRnge9
+	XGRfNxglAXL0PzAS2jv6+24CjfeNYgL/BsPQIxblVU8TfpUb2gPyewhQk81H+XNK
+	BRKYuo0mSkLMEQMcSVeV4L6+4pI4bT++mYnwHOy1UXimWUQJxG20rYa9/KBMguBA
+	5kMBDH69fBhKmrUHKt0bR1+MYWH1wgUpyC57dIlXI+o5l4zCtdcjVFx7XplLFnZ7
+	JXc6g1b7OyAX8FZP4bJRpXliTUO/aZ17/Px0hvN0W5vy0mcNS43k5sr+wIGlgw0+
+	onv0d1WROys9fjjiuHdjpg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787071256; x=1787157656; bh=h9p4v3KN2nZfymxoy8H6/sYpJGaRGr+so4l
-	INaqLuyM=; b=KslUnIVfT7qSexcaiMOmZ9rQauQNKWRZvzf2ngYN1169O9I36t5
-	9pggjjnOvUt27KxGeOfMXn5KVGSb3TSe/Sv5+ixGcSjFYU/l/BKK7TI7zpeJJWrT
-	IpfURtPE0xa9hNKpx01cDRTxrsahgqMGl9wLmEi/UbB6N99jkU2cfsYSxcGsqRpu
-	4BOExQBodoGIZQf98AJFyGBFbyuWN5srEJ9CaF6q9RHdNqvpfbyVEtmXETNL1tr7
-	uPV6P/ZUqK4fs7R+3I8KCYG4K5e8EH/RbvGprj2V3XCV/K3QzrDVnSy46AAucD75
-	2cFmriux16kX3zxNAx50Xu79Nk9IE1UZ3gw==
-X-ME-Sender: <xms:GIuEasKOERB36pnR8amIRv6wMUZ8gWjjiFl6ZfI46mGKdjeFLkJ_hg>
-    <xme:GIuEajLVwtd-qyxLsno-pH1znOb6EoaRvV5gPfKW0bcJrXkNjhN94mb8v9yLyoKiy
-    idjTyqIGVIG15WbFAzIZIoX8sNbNyW2MtrjoqM5c_ExYoepIUCCKJY>
-X-ME-Received: <xmr:GIuEahvAgT1-FK3zr8cqRfYSnAfPoYji02EflAwwlLV76OHQP8a-Q5RrUof4f8EJEXTrPUrKoXOWk_bj3kfviqNrP4ZdSy8mCA>
-X-ME-Proxy-Cause: dmFkZTGhpQcejeo7rVR8er5CMbxC10HyWatSNVsy79eSHwp8Mn71B9AZQtMHDXXvpFAks1
-    uS88DmKoiB73XmGpsfAPk3VyEWdLdj5wwHfmEOLp6tAzyQiRm0CoHLIcztcQFfExPcOR0z
-    CDdU6k8MTE/QS59fRHyiD/w6dyHJw3jRDEpvX7wtQk58hEWnz2mzVokLbqgu/pAvpfrm7q
-    cm4CloQOgtEv7/hjqzjUzhjLMsYshLv90SVk+XSIa6kL23/JRiSiJt/epWElN1Id72dqBs
-    xI/WOdGtFoANLscs3bmZAI8NEJE+dB/eFq3QvrL+XQi5/aAC9NvLSnxPgaPMJAitKJHTqz
-    12roiNln4hGiuzzCwLuXppt64QgdM+Kk+SzfbzHgBiac8Ea1j3Gas4LlXEsZ5pWFQweNg/
-    XQ2/9MNFq5WxBjAbZh2ALMY2k+qVVDnPDSpK+ktDhgDOOY0pldblTOhwPjos+Q9xQoKmky
-    O7GNd+Y+w9EXq7989DNw89y9EsGDnvl6aelbg/RA7PUdRxdkCruLGf4JIYfIja25nGUOl4
-    3L8k5TCVXJnEZDB/YTPrhdcVmspitwrDoRptN/9gdjFZ5icFyckcNMS1a/2TRCSuNOwUEY
-    dUi3FT5rJmQnZ4OevHc3mUQfQDJG6uzW+jJfNRdPGYSaALIFoBckDcHeosxQ
-X-ME-Proxy: <xmx:GIuEaoQb2x5O1IGHBH4ROAhdye0gKiUyQ7bdBIXeK8lsm1XEQ_dPKw>
-    <xmx:GIuEavOE9IAhDkVDQOAfL987AfdtJFypTyh3p_PJtA_ARawZr5Chjw>
-    <xmx:GIuEalY7KTAYbMnO4y5PwQrQJ9r8DJ1GW6opM_BALRktafIz-JoSxA>
-    <xmx:GIuEahybEFwnh7G9VwUQCzaOVTcqIdqo5d-zgZ9r0qa2_gfK7aCeOw>
-    <xmx:GIuEahP20LxIoT4qMyY4k9XJ8oYYOtnKEgoSWWqUoEkLDboK-jmmebyJ>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787072978; x=
+	1787159378; bh=MSAukxnmFFyASn5m/KiFZNOYnUkNMVH0unDFCk5hLU4=; b=b
+	00OUN9zcYW+QCB6OAqCkplZydX/sMLFsCRMSvNpP4378WhmyERDonAgVrSdpJwTG
+	TSU8ct3x405/uXlroKb4QT12M1eXxBG7+gqed/XPkNNW9Zmi2ITiiBS++vQnCsss
+	MkI90CTgJAtUOmSI1DiuFXIOpwbsiMa1by4Zc5VHxyNBPnIubu3XNg8AV1v2kFBd
+	tkMKA2B42Hd/kL9/UCpSdINt/GPobP40piVQ6Yipn5lG3cJATFyk5LOkWN0loXkg
+	EfD5LwLz/EocYMNCDGZ9gWSfvLxp8kNMCKZt8xWWORaO/Q/Qiuwdmmgyf8jcdXfV
+	SeI/MpMuOpAYfyRZES7QQ==
+X-ME-Sender: <xms:0pGEauSkm5FZWosuwCPIk-pPj0l-_AfVCw2Kk4_XxMAnQ1iiBLFBTQ>
+    <xme:0pGEaqrzxqqEIW5To5YWDcxdn7lg84ZVelgWhHcFca8x6CgDYcLqCeMpvQAgy2MKY
+    oK7JIVK9Y3_AHeYNry0GbceZ7bxlaejhp_YaGPuN_lqNydzLD9DDRI>
+X-ME-Received: <xmr:0pGEakIOayX2gXx4wUfZJYOn7iBERGE8FhdWqeaYVv2NQ3JXmTfHtYT-eIsFj5ha4M1OnHWUaJIhlRce0_dNNAbLLmo1CToPsw>
+X-ME-Proxy-Cause: dmFkZTGuYANRo7Wc0hCHomihNdTRYUG2biZvM2RYM6YHH0coVl//g1uGYycnSFugBwkKpV
+    CXk2B/sflac1hDYSxdqwOVgEPok+oF5FLM3pGel1iDQ3s1gtSNMZ/Zffdlhr7YlGd8oddl
+    qs99gK4+Y2/ulzvCqrxNrDyXviWAmtoTEn7Q5Jwiin7eMIUwgB6ZVmpJJcqIKWx/z5vZQk
+    N7744v4AMoW7DUNosD9GJtHm132CNH3gCpIF+8BB8BNFiasspUhCUbaQeIU4swK0IugPYR
+    6YjCoxOAGsfTx4wb2I5+V6wIVxcyncy0bi87oihxwQ749eJbkGoBJhp2fiAKBF2AvH//qM
+    w8oG9pgM6IfUHAp3YX6SkLTouWlxZmw4ZA3rgdUfpm3ba0VnAuaJb7pj2mSsiNUUmO+N1C
+    DAbspn9XlOZxt/EaBjVCkMllguhZSNSJfXHFVXkpOfUQvr+8/qZ6IyYNXDa0nFNVirfL+s
+    Ny6K5KmyQ1kNXIEe8bKg9n3JAj0Wwi2HUb02P9tafUhQX2DyVVqZh25UKKo03V5auVm7Tf
+    4aa4wnHxr2fJ4K5qGh+vUJI43Aft9xl3sKtsjM3GFbzcFhLTZMupWUgdvg7TJKEObZxUXB
+    d5y3Awx8vWLko4koi+1wCJJvkY9ioGyukkV4+eS2UKcU02Eig09DUliWMulg
+X-ME-Proxy: <xmx:0pGEalqI3QPsb9QDsEql5nnGq1onFXXcK3WFzm4f83LdclHE5NzTTQ>
+    <xmx:0pGEakyn4aHE3iDZBVvs9zEKiPcw1DtY0D7_GZHa-nT7ZsTZpDq88g>
+    <xmx:0pGEahPdbs8nwIxKGbxbL8HInvr1CcVVKWt1NIzdOgyp1YMkwW32Yg>
+    <xmx:0pGEah57kIq6AFs4QAEuCuQhExQxuEbNRe3Aefl1KMaFzKgEwhtNPw>
+    <xmx:0pGEag4ffvMmufgZxP58gD3SmaYeSZK6pN7EecbBne569dY1vEdQJfgX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Aug 2026 12:40:56 -0400 (EDT)
+ 18 Aug 2026 13:09:38 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: graysongordon-gl <graysongordon1@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v4] http: add http.sslVerifyStatus to check stapled OCSP
- responses
-In-Reply-To: <aoQOxISPfEwh-ik2@pks.im> (Patrick Steinhardt's message of "Tue,
-	18 Aug 2026 09:50:28 +0200")
-References: <xmqqmruqt36l.fsf@gitster.g>
-	<20260817185242.22736-1-ggordon@gitlab.com> <aoQOxISPfEwh-ik2@pks.im>
-Date: Tue, 18 Aug 2026 09:40:55 -0700
-Message-ID: <xmqqecfv1iw8.fsf@gitster.g>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
+  jltobler@gmail.com
+Subject: Re: [GSoC PATCH v4 6/7] repo: add path.git-prefix
+In-Reply-To: <CA+rGoLfPJb_Pxjm_Bkqd2Ni0BA1vT2LEObwj4EjUaSRRNyRv-Q@mail.gmail.com>
+	(K. Jayatheerth's message of "Tue, 18 Aug 2026 22:03:05 +0530")
+References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+	<20260806101556.162940-1-jayatheerthkulkarni2005@gmail.com>
+	<20260806101556.162940-7-jayatheerthkulkarni2005@gmail.com>
+	<6E2B0ADE-2101-47AC-B11B-315897AC2AF9@gmail.com>
+	<CA+rGoLfPJb_Pxjm_Bkqd2Ni0BA1vT2LEObwj4EjUaSRRNyRv-Q@mail.gmail.com>
+Date: Tue, 18 Aug 2026 10:09:36 -0700
+Message-ID: <xmqqlda3z773.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,52 +89,42 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-> This is only part of the story though: GnuTLS 3.8 introduced
-> GNUTLS_NO_STATUS_REQUEST, and curl 8.10 started to set that option in
-> case of `!verifystatus`. So with new-enough versions of both libraries,
-> Git behaves the same no matter whether we use OpenSSL or GnuTLS as
-> backend. See also aeb1a281ca (gtls: fix OCSP stapling management,
-> 2024-08-20) in curl.
-
-Thanks for additional details.
-
->> Add an http.sslVerifyStatus boolean that sets CURLOPT_SSL_VERIFYSTATUS.
->> Because http_options() is the collect_fn of a urlmatch config, the
->> per-URL form works with no further changes:
->> 
->>     git config http.https://example.com/.sslVerifyStatus true
->> 
->> It defaults to false, and has to. The option is fail-closed: libcurl fails
->> verification when the server staples nothing at all, so turning this on
->> globally would break every remote that does not staple.
->> 
->> Leaving the default to libcurl is not an option either. The same
->> complaint was raised there in https://github.com/curl/curl/issues/15483
->> and closed as intentional ("Marked as enhancement since this was done on
->> purpose"), with the observation that stapling is expected to see less use
->> as Let's Encrypt drops OCSP support. If the check is to be reachable at
->> all, the lever has to come from the application.
+> On Sun, Aug 16, 2026 at 6:24 AM Lucas Seiki Oshiro
+> <lucasseikioshiro@gmail.com> wrote:
+>>
+>>
+>> > Scripts sometimes need the path from the repository's working tree root
+>> > to the current working directory. While this information can be derived
+>> > through existing Git commands, `git repo info` does not currently expose
+>> > it as a scriptable key.
+>>
+>> Even though I understand that this is a relevant info, it seems
+>> to me that it's a little bit out of place here... This is
+>> a "current directory information", not a "repository information".
 >
-> But... don't we still leave the default to libcurl? If
-> "http.sslVerifyStatus" is not set then we don't touch
-> `CURLOPT_SSL_VERIFYSTATUS`, either.
->
-> I might be misreading this though, as the whole commit message is quite
-> hard to digest. I'd assume that this is because it's generated by AI,
-> and it added a lot of the usual weird phrases to the message. It might
-> be a good idea to adapt the message to have a bit more of a human touch
-> to it.
+> I agree that path.git-prefix is technically current-directory information
+> rather than repository information.
 
-I too had trouble figuring out what the proposed log message really
-wanted to say, but I wrote it off, blaming the difficulty on a
-language barrier.  But as you said, perhaps it is because it was
-written by something that does not truly understand what it is
-talking about.  It may not have to explain things to readers as if
-they were 5 years old, but it is definitely necessary to explain
-well to readers as if they were humans with average intelligence
-;-).
+The same thing can be said about "git rev-parse --show-cdup"; you
+can complain that it is about the current working directory, but in
+reality it is about how to get to the root of the working tree you
+are currently working in, which means that it is very much about
+repository information, only given as a relative path.  Nobody would
+complain that you have 'path.commondir.relative' when you already
+offer its '.absolute' counterpart, saying that '.relative' is about
+your current working directory and not about the repository, right?
 
+The same story holds for 'path.git-prefix', I would think.  View it,
+and "git rev-parse --show-prefix", as the inverse version of a
+'path.root-of-the-working-tree.relative' (aka 'path.cdup') rather
+than as being about the "current directory".
+
+Oh, and if you are offering git-prefix, you should offer cdup as
+well.
+
+Thanks.
