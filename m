@@ -1,73 +1,73 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFC61DA60D
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 15:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C44E37E302
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 15:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787065230; cv=none; b=RnFoluYw3dcRPMwFzYAEr2m2vqiojbfVsNZto25l/CP4jzDWeHz8rcutZym22og1iWqXnybtyHT8sq+MLt8L64elJy3uSb/wHiBOexvFUsHSljb8qSTwq126gXmVosN1wkOHAYV0ClT2Mto+IwuVmUWjd9B+fxSeNLJizGEZT4M=
+	t=1787065233; cv=none; b=XSTip/ONJmWTdL4cqPiTOc3S9U2394mnsKVp/r0YDY3miSHSkJJ4PPWU/ZwSh0ewrDaR61AgKysaK/dryTX3qe2tgCmkvZcHCUT67W0Ufnq/o1nFQaC3ht4iBA9lQ4c0TbO3G1aTaOuSrs+/pyqRlWwtkcfjas4MvaiJqFchi6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787065230; c=relaxed/simple;
-	bh=qO3CU+W7z5AIzPx4uaDJ7XBT4wsqKQFTRqorFsMGnVA=;
+	s=arc-20240116; t=1787065233; c=relaxed/simple;
+	bh=sm/hciHZkBCP6uTWJsB37SGClWfq81zpR7WoHDy0460=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I19V+atrTZrUpIKWqy1uiToya4kIUfO0W+8yHMaVn/NjTqrw95MtnCIscSwjmMMLHOqrFh2zEIoIf+dFJQJc/eK3ghKpmxMWZQLAQcjGmg8b2MPcwVvmOqgcV3+E24XjzZQ6RLf58luW46r6t939fO3+M7v2mBT0ky/ARALuZLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c8mKKhwG; arc=none smtp.client-ip=209.85.128.173
+	 MIME-Version; b=iQY3kGaYeOphY5La6p4AkOyR/e5CqE+lYe0VxVSgr4RrwBVixnhEG8vAE918u6BIc2JQ2YmyOzJkm4GMNOjmfAY6sG06AOzp152qF+jM+h3vkhVTAwGleb8M3bXA1S3RhnXjZmPQ4uEsTAyD3yRanWl6dym+f3N0O0mNODIadBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QJw9DPFb; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c8mKKhwG"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-836c91bd782so66658957b3.0
-        for <git@vger.kernel.org>; Tue, 18 Aug 2026 08:00:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QJw9DPFb"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-81ed2a06b9eso41933547b3.3
+        for <git@vger.kernel.org>; Tue, 18 Aug 2026 08:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787065228; x=1787670028; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=pfWbbitrrFpkECN1lc190K5Biv61gMTnFAHWSnlT+DM=;
-        b=c8mKKhwGnIIMBG5d8WeZm2pzgbVh++KLpRmqrbfPh3xhUPQfHLSWHrOpOVok1OpmoA
-         v5Oyfl3pi7+8CEQXTdOm6BOwJJ0Om0s1gfPmwfvYPYeUX6T5talTEGWp1fHFdcOH2s0f
-         8DOMnrfik8fIZQe6wUw63OHR44giBnaIGgSYIf9hxWEwDnQ5FA7RZfCcjjLu1ebeoodK
-         C7XM3qffXxgyHiZZuu5ERquPKCsrVXX2SlBi7vNaE/wXs+OytE2jFTYhhWh5z56sS2xN
-         3+sDPyyKCwsR3nzwYJp7ufQryTidjYPqouQ1eKeEdd/atzZmO1yr6LWkK8N9TxrE6TVc
-         0n4A==
+        d=gmail.com; s=20251104; t=1787065230; x=1787670030; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=cXGp2UZKJoxWmCOMMmogL7kVyZ1ReMzh2MkiM2WhHEw=;
+        b=QJw9DPFbLIGbKsdsxlctQz2lRlv8rDCcHS+7q5AgAHZoyWDByvb8jCpko6nPrFOF86
+         qlzz+PrAGW2o+/t1F7JjdXMvi3/bmUkB9YavyEU1l9C3lmkX1EjGQBlBKdsVuk3ow34K
+         j6f7zqX9UaXJe/NSfx9HrvRUWC1j/xQC4XDd6x5ZHtH524RvdL9VQG7If+vztm5I8ZJ9
+         Lc1cXKoR9KOt5FY54CP5mGK6qTu5vRMGtXY7DO7cYZb1pPTerYTpMmjHxpXbTh9AHfu4
+         WTnsPxMu9HHnV0uwuxrdErA4VWJrYsSqMS/94A9AEy5DMLFxBPMG5yuFIigMt4q/AZFX
+         DTPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787065228; x=1787670028;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pfWbbitrrFpkECN1lc190K5Biv61gMTnFAHWSnlT+DM=;
-        b=F6lph4ar5ZIb+gVfiJYfnI3fMMs0pFgpLpIWN3lWkK6kUvl+dzTZBT5WiyB7tHzX3B
-         IBGGS+l18xjiRANPfhJW09mgZ2gCQ6/m+MwCs0QfHh5ulddAAjVhfwahf3ZtC/D6h+iZ
-         xwEHPp1bv5KcpiNYh8M+e0ZYuJ069at3oEV2C1HgIZ04MexT7/PKftVHlfil4GkZ3lH7
-         P2UmK4gZdhJhtZxx3uceKNRLNKT4td30pEvN3tzWcOgNS7C07okEM2DPY3C6xi9cj17k
-         HwjZPb0NW3qtMo3W6w+taapJoNVuM3u7FSw3GLALPhl4U0I8iwaZ43krVEj8Ylio3GJ0
-         M31A==
-X-Gm-Message-State: AOJu0Yzi12eOAIVW5iazxire50BAtblmiAIUHwq5bp5i2mR1OWZjH5vI
-	OatbcDWEwEW1HvcW7lr42ssQQOfgvMTgXkboQ5AIYt/f8qX5QuNPPVL02dSvo6dt
-X-Gm-Gg: AR+sD11tPMIk+dTWwjuGmN3gL8yVsCvvJJRXJP+zD3Ue1fUpgtYQehy1Sqh6jyx01Uc
-	gMA6fDc3uavaO3dqZ49jD4QYdOSKi3zL0k/DgJWgFXfAtUMJtfl5giYBDGUPoryUjhNhA+wO4Ph
-	kISqrGGGC0s4mN4kvuQi3W9INZw8Fum0k5PKzlEEx5sY/xQ8X03KpHMe6LJ1Yjh32DfanQ7p1vn
-	n5q+tMdxCu29xEcLrjPDTAp0EAirgcAHT7ee4M7XX9sno3DjqmiaHeXnLs9jDmbpqv/owautaLk
-	hD8op3oV8KFfBZzhdEARuWP+GfDVWO/0VqiWz9KbQK5jkyju03fd1cO3t04R2h++YxbKagmWXEy
-	nGor2Hg5kAHciEZs86WIgDKI2FHKLlM1uYwyG8MjfYv0WgXg3Ql30LBtbozjPppNuj1kf9jUEwx
-	NXkoLOXmWG9fKrIiWxHCfi9EnjJ1RKwin8bYd09DrPHoU1SIwLa1dUdAcPvG2iiPOE5vKMzoKch
-	Lris/jnxlsIRilOl4cQbzTLiGWrrv5Yff1b/VppY3sVPIKCPK4ztcPkRyShOZnspYyUW3Eu7DDq
-	jq7lpjuVPxhUNw25V9ni8w==
-X-Received: by 2002:a05:690c:6013:b0:81f:d3e6:82ea with SMTP id 00721157ae682-8370dfb3914mr135335897b3.5.1787065227959;
-        Tue, 18 Aug 2026 08:00:27 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1787065230; x=1787670030;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=cXGp2UZKJoxWmCOMMmogL7kVyZ1ReMzh2MkiM2WhHEw=;
+        b=Kmo0tilmiMQel/hr0CwTvl/9HkuOh3u0QOe7aSjvRzaFdXnS5i0mScOQciri4BXgZ+
+         JQjpxSOU5l8m4mRz/hXEdytgMuItjrR1cTbNH7oS8ZTY7lPLpyC8JxH2cDJjpQsVZjEj
+         POYWv3LYY6CXQ5VjG2Ca2qAWuVqfLKF66d7/0mWxr4wek/d1ENVXhsoWRGhXZZHF1I0d
+         Srct6iqYsh0+w07ptp+gKs9+6E6N2pIPdOsRjJtulkxIjno4ZrcsXV7SJd2KxtsfP10u
+         STKi7yvSTmauWzDisDGIQGVhxpzBmPwGPMhPcL2bJc/bj6pl+oyBtEPrc8LT1tBC7Mqe
+         lhXA==
+X-Gm-Message-State: AOJu0YzPSpvKu4ftDJgRzAYd21OFItfoM1kxvN4KvVlBX5QI6LtPx3+k
+	zm4cbqMRLiwzCV5SFGmr3KUku3ML9ebbzA0tcOdnKTP9LS6htI6DkS9wlDbW5GqT
+X-Gm-Gg: AR+sD10TxNzMCJASPhL/gwbMw8cvpqeTXhF9pYcgYsaQUYFrcfT+5yhNq6Co7hiHeKq
+	U4UbOZPam9M4MKQeHeZf2zSMPyZIuMazEHZ++kVLYtVnSzLPGr7sNyPusPW+qtQv/gCBL0LCgc5
+	yLf2hYnnNkdkolUj7c53UqyCyTQlIYVt/mOUYwQKXv9EWA1E3Pc47ZA2AeMHmNgMvCTJufQmxwS
+	VJ0dLOkLkfsUDY52U4Q6SIAAhE0y4/RvifJ/hpY8gxG4Ka1DGYnaPDoPWEtG91RvWTvPTooA3lu
+	V0pr3cSdKrux3YGzW9tlyoZa06//vti/4jxz9giX2jEfRP2IRrnf921tAAn30rWfbYmaypBAwpw
+	UNA+ufVtOX37KHh2Ydqyu/wLsDSyz/EHo1sAGEO0hNSKOSvvYBdZ19WCTjSUuyxQbS2zYPexwQH
+	tCFbqLk0Pw12iJBFLtngFV6ajUgrdVrDlTsumnvdaE2+kg68ZWM+v9vwdYkH4ATFT5s9M2KYz+Q
+	8ZCyKxYdMDC/ICh52P4oo3jV3H1wqad1hrGWp5ePZGFX4ovXc3iDxlbWqrjLRSBTciG+O1sQSXV
+	wNFKZlqxQd6g
+X-Received: by 2002:a05:690c:e295:20b0:81f:b410:b214 with SMTP id 00721157ae682-837124e9cc0mr84877967b3.27.1787065230000;
+        Tue, 18 Aug 2026 08:00:30 -0700 (PDT)
 Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::7])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-840f3d1fb12sm20201097b3.48.2026.08.18.08.00.27
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-840f3d1fb12sm20201097b3.48.2026.08.18.08.00.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2026 08:00:27 -0700 (PDT)
+        Tue, 18 Aug 2026 08:00:29 -0700 (PDT)
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 1/3] meson: expose knob for xmlto relative links in manuals
-Date: Tue, 18 Aug 2026 10:59:45 -0400
-Message-ID: <d612de6c2de615f368b5985f200c5ea8e3116c08.1787065125.git.ben.knoble@gmail.com>
+	Tian Yuchen <cat@malon.dev>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [PATCH v3 2/3] environment: align repo_config_values_init with struct declaration
+Date: Tue, 18 Aug 2026 10:59:46 -0400
+Message-ID: <5693baa9923afd20333c0eb016cc5949f8dfc423.1787065125.git.ben.knoble@gmail.com>
 X-Mailer: git-send-email 2.55.0.860.g4b6b3295ed.dirty
 In-Reply-To: <cover.1787065125.git.ben.knoble@gmail.com>
 References: <cover.1786103607.git.ben.knoble@gmail.com> <cover.1787065125.git.ben.knoble@gmail.com>
@@ -77,104 +77,64 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Makefile-based builds have had this knob for most of the project's life,
-since a479a564dc (Documentation/Makefile: allow
-man.base.url.for.relative.link to be set from Make, 2009-12-03).
+The order of assignments in repo_config_values_init is chaotic and hard
+to follow, especially when comparing with the struct definition to
+ensure all members are initialized. As new members will be added in the
+future, make it easier to validate changes by aligning the two.
 
-Meson, however, hard-codes the equivalent of $prefix/$mandir, which is
-not really where all the HTML docs are stored in most distro builds.
-Plus, this value is missing a trailing slash, so links come out broken,
-like this in git.1:
-
-        1. Git User’s Manual
-           /usr/share/manuser-manual.html
-
-Of course we can do better:
-
-1. Change the default to match Make: use file://$(htmldir)/ (with
-   trailing slash!) to form a local URL pointing at the HTML docs. This
-   is safe because all current uses of link:<relative> point at HTML
-   docs:
-
-      git grep 'link:[[:alnum:]]' Documentation | grep -ve html -e http
-
-   produces only a single result (Documentation/howto/howto-index.sh)
-   which can be ignored. Since nothing else [*] in the normal build sets
-   MAN_BASE_URL, this seems like the right default.
-
-2. Provide a configurable knob, just like the Makefile, so distributions
-   that build with Meson (like Gentoo) can decide where to make the
-   links if they need to. Those that set htmldir probably won't need to
-   tweak this any further, though.
-
-[*]: Well, Git's todo branch has a script dodoc.sh to build and archive
-     docs for kernel.org; these docs are pulled by Homebrew
-     installations, for example. It sets MAN_BASE_URL to "git_htmldocs",
-     so the equivalent note on macOS + Homebrew is
-
-        1. Git User’s Manual
-           git-htmldocs/user-manual.html
-
-     which is not functional either, but that's a problem for
-     downstream. In any case, users can recover the right path with
-     "git --html-path".
+Refactor assignment order with no behavioral changes.
 
 Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
 ---
+ environment.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-Notes (benknoble/commits):
-    This patch is mostly because I noticed the link I added in a later patch
-    didn't come out right.
-    
-    I did an internet search for "MAN_BASE_URL" and got no real hits, so I'm
-    not sure if any distros today actually use it, but that's not a proper
-    audit in that I didn't look at any distro _code_ besides Gentoo (which,
-    as noted, uses Meson).
-
- Documentation/meson.build | 7 ++++++-
- meson_options.txt         | 2 ++
- 2 files changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index f4854f802d..cfa9c67609 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -379,13 +379,18 @@ foreach manpage, category : manpages
-       output: fs.stem(manpage) + '.xml',
-     )
+diff --git a/environment.c b/environment.c
+index 76ee65e62b..6676e6f5ae 100644
+--- a/environment.c
++++ b/environment.c
+@@ -745,6 +745,7 @@ int git_default_config(const char *var, const char *value,
  
-+    man_base_url = 'file://' + htmldir + '/'
-+    if get_option('man_base_url') != ''
-+      man_base_url = get_option('man_base_url')
-+    endif
+ void repo_config_values_init(struct repo_config_values *cfg)
+ {
++	/* section "core" config values */
+ 	cfg->attributes_file = NULL;
+ 	cfg->excludes_file = NULL;
+ 	cfg->editor_program = NULL;
+@@ -756,20 +757,24 @@ void repo_config_values_init(struct repo_config_values *cfg)
+ 	cfg->autorebase = AUTOREBASE_NEVER;
+ 	cfg->object_creation_mode = OBJECT_CREATION_MODE;
+ 	cfg->apply_sparse_checkout = 0;
+-	cfg->protect_hfs = PROTECT_HFS_DEFAULT;
+-	cfg->protect_ntfs = PROTECT_NTFS_DEFAULT;
+-	cfg->ignore_case = 0;
+-	cfg->trust_executable_bit = 1;
+-	cfg->has_symlinks = platform_has_symlinks();
+-	cfg->branch_track = BRANCH_TRACK_REMOTE;
+ 	cfg->trust_ctime = 1;
+ 	cfg->check_stat = 1;
+ 	cfg->zlib_compression_level = Z_BEST_SPEED;
+ 	cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
+ 	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+ 	cfg->core_sparse_checkout_cone = 0;
+-	cfg->sparse_expect_files_outside_of_patterns = 0;
+ 	cfg->warn_on_object_refname_ambiguity = 1;
++	cfg->protect_hfs = PROTECT_HFS_DEFAULT;
++	cfg->protect_ntfs = PROTECT_NTFS_DEFAULT;
++	cfg->ignore_case = 0;
++	cfg->trust_executable_bit = 1;
++	cfg->has_symlinks = platform_has_symlinks();
 +
-     doc_targets += custom_target(
-       command: [
-         xmlto,
-         '-m', '@INPUT0@',
-         '-m', '@INPUT1@',
-         '--stringparam',
--        'man.base.url.for.relative.links=' + get_option('prefix') / get_option('mandir'),
-+        'man.base.url.for.relative.links=' + man_base_url,
-         'man',
-         manpage_xml_target,
-         '-o',
-diff --git a/meson_options.txt b/meson_options.txt
-index dc88f130d7..d590c21648 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -111,6 +111,8 @@ option('default_help_format', type: 'combo', choices: ['man', 'html', 'platform'
-   description: 'Default format used when executing git-help(1).')
- option('docs_backend', type: 'combo', choices: ['asciidoc', 'asciidoctor', 'auto'], value: 'auto',
-   description: 'Which backend to use to generate documentation.')
-+option('man_base_url', type: 'string', value: '',
-+  description: 'The base URL to use for relative links in manuals')
++	/* section "sparse" config values */
++	cfg->sparse_expect_files_outside_of_patterns = 0;
++
++	/* section "branch" config values */
++	cfg->branch_track = BRANCH_TRACK_REMOTE;
+ }
  
- # Testing.
- option('benchmarks', type: 'feature', value: 'auto',
+ void repo_config_values_clear(struct repo_config_values *cfg)
 -- 
 2.55.0.860.g4b6b3295ed.dirty
 
