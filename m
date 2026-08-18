@@ -1,81 +1,81 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C058627E07E
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 14:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B27344036
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 14:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787062791; cv=none; b=hVkUZV28sAiRavNn6mtfeqX5Hde24k+YTTGOvnUa85UweqLXlqgErb9EdhaxanlJJpu81kva9uuBeI6sTZN1BBl0Ffj2j2+7GnaL9DQ18IBwsIW/TgIQ+4kn2y9PyqBESo5oHRC0sH8x/tYWQWV57AutJhYB12E6U0cTAGwhSs0=
+	t=1787062793; cv=none; b=NW/qtA4W6YYeq6f1arTvFiEmNA+GLrvYbRS9vZjj2Y/vjlB1UbIelCFKn8uzydSR//J8EhTfAQwOnapqkPbKh8p4oj/OqCLoF1hvci92PbMdiXWRXRp1iQNp++qRBo2KLS0ppcIfIF9Dcfvn8f6Hpmgp9PjV0IIlcn4e5GHgpNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787062791; c=relaxed/simple;
-	bh=21iQa6wo08Pnha0KwScP853U4kGjem2LTV/Q8YZRP48=;
+	s=arc-20240116; t=1787062793; c=relaxed/simple;
+	bh=54YKCbhq7MpjdDOD58LooYlPVmLUyhAqOJuBbv+7FbE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YIdxtqqr4CVdACbThA9uUi+pof/xEUVEpeb9XsxbBpTy3GdmmHPRy2AP0KxfNOVzcX1Se+VBhZYl7TJfR5Fv3RFGtNVGylR54nqYUmbJMQXnxY1QkL/T6oUnkJ2A5PKKgs2NP2/a4zZzOD2Z4OArchQc9ZYaZZVGdkwgxvl4fmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HAUnFCy0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eGGIE+oU; arc=none smtp.client-ip=202.12.124.156
+	 In-Reply-To:To:Cc; b=kcDf/oFR00k2jVZByslNUJnA1U4tWAxih28kePnpfy+GISp2VInlass82J4ex7KKUqgLv7BIrvsGecdvVI+s3mYqr1Zsn8OWMUxEH4aDbTrUgnCLRqvHFL25x7PN3rm6GP3xpAxUYivmTZW1aAHmzyHQ8F8ndIumPERDFrCokxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RljnRBtv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IYlQcBNO; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HAUnFCy0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eGGIE+oU"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RljnRBtv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IYlQcBNO"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1DAA77A010D
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 10:19:49 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0A9847A013F
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 10:19:52 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 18 Aug 2026 10:19:49 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 18 Aug 2026 10:19:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787062788;
-	 x=1787149188; bh=/D3Cgt8yj8bxorVLvg7jP2hHpT7Y3Rt0ZyvWcrZ3bnc=; b=
-	HAUnFCy0Bui7WIQlsNy0kBjqJot64kSGax+8SMd0As7BmHttUUbGn53TKWjVjvX1
-	78KUL4XkgEb2OOFNqWW0e7VkT4hUnwG9QgzSJ2Ud9F+EvZn7N1H8SLh8iA1SSSK1
-	4a2appnC86O+lGidJ97tAzw7XmU58YRjr5v//amwlwI6LVjPFdYmDaXrV+GcZWiB
-	CVt1ZKNJvwaPqaUoMx0y1ZNT45WGMKchbyPVcDZWS0BI3n60KgfMmAQhtjq6xW5A
-	P5lqDrkKuIC1fxTcZj6EgLSD8Sx/g5LFsgAi6Txr4Z35c/vhOlYOXzRbB91kMy/H
-	M54il8OA8o/bOLXQUyLeAg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787062791;
+	 x=1787149191; bh=wNyKrE2vizerl0PfeFPcwU5C72c69kT4GjjnMXZmZ88=; b=
+	RljnRBtv9TqmjIenNeXbz6alU9Et8dqT3YGCjn0+2BO0KlhPd8LHLG4isyVy5dvk
+	ZJp08wXFd/d5HgC5SvlqqEBvPGd8yRKnYKrGBk1KLAFW2UZ+58oqHbk7uu6fgX3I
+	5FNyAOUQCXJ2oK0m5oSRHlNmmBWhRXalfcujpyvGo4O2JbqXGQC7TMpFz1k8+2bk
+	v4ezy5bh8ZQKGnbRbngFJNBSbVrbOT4TGr+W6giquL/zPXlChg5GlGBx5YKflB+T
+	R6rlAmWGPEOtXQvuqKjZ2QSRtC+g5ubzEL53XRKPtnxRLDRQiqpmZBmXY7T7BPmS
+	Fz8qvCYGX+sc7BqX0YxWGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787062788; x=
-	1787149188; bh=/D3Cgt8yj8bxorVLvg7jP2hHpT7Y3Rt0ZyvWcrZ3bnc=; b=e
-	GGIE+oUqhJXM0blB81WDFGz4MXVxeLg+2s9IIpoknmbaWBFGM0Zp8qtgYNDl0LIj
-	PA1cKQT9aCYsRU6JnMFX100TM/EgSrUQzBMQqV52IhgTvtCW1bAEqEbQkmsmUsYN
-	P4yeD7eiKwwg3SU2+oJ05WD0Ev7maU6d15F9Olw+38ovQzGXdNwUt78S5Iluz4tz
-	Ut5FwSJANd7CCt6YNylAxoYZjL/8ZegYuRLrRWQwOMVNpar6ToLZb/GjlcPeF6iZ
-	MexWEOXZuBPCU8r1bKZQgyREMdWnVUCT5BY8rqf/ho0WpRsgpjTnPXEqCc2sZARt
-	N2lXlLIsIqDswgtFVqZwA==
-X-ME-Sender: <xms:BGqEaqXakOp9ZJ837dVR_u7VW9m3rshHfasHY9IVxUrnFNY7rE_mkg>
-    <xme:BGqEathq2VD64thFxoXV0YKYQo18vwRg_rt5Vn3Zu6ZsHgYs7wPz5A2nvmynZC0M8
-    8dD_U_XBO_cdqjO7PvF1kdttoHiwNJmcYZsGQF4bcIFuFHKS-my1Q>
-X-ME-Received: <xmr:BGqEakD50g0uDcJX9zRz5qjxNFDkITluuMotywJjShGkNJduvZqMPrtgc-T8szO-bdLNEVjd6PoVA285Ee5hSn4p-d_Fz4bxSV-J-wQX>
-X-ME-Proxy-Cause: dmFkZTGSoJp7k8c0Cn+kkyI49yzacQKpkTxj0CYv6iZVkinoAl4hjDbQ4pKe6QO32cZZlg
-    ZLC+erVc3/aZNPlbelo8VxvwzwtJpCGw4RaR3KFLJjFqS+H7kSlUbiIalE8uVq39xM3xrM
-    oKlGhH8IJ3jjPdPWvZdyFwBJw/cKncFPYozfcBgmgSfBW0u5XNxAbImSnkleaD5p4tFswo
-    6llvEoBRy3ZLp0GlgZZLZ4fT2LGU/0JMQg7zLs7NiEN2BBeKMLYn4hbrvtc1XsLqyhlY5H
-    K2HBNYR7bnjg/4cqcVDJUoTt/V9RqevBQ+8RfA/4AiOJQZqXXhcBPl6edIVnuVDkrBj9JB
-    htGG81tflaVZtFPdQWx7pJN2RODaPXHIK6QqdiP/TLMzGzZd+qzicQSQq7x6dUIaPvC6/0
-    +R9UT728BS2l8tqXCzE97e9cRBpOIHkZw7nIkC4Fp+o9HnSXpvRuKDeAxmRG5UzDdRf+pf
-    ALkgok6jVQmC7FHeEMYj75K6NYZhaO8Rvik0RMnhRRdybBlp4EzXWeB6Wd5WkrOsgdZf5H
-    xVzESOFJlbMId0VuffM5RYarFSNCLeJBabcnBLzme6OXogFYgJ/CVQj9Cz87R3fkVqGn/G
-    dnuc9qqd57HQ4OfGhzDzgXkCSIH7CQgp/TRMyBXrSYeoR5OD48gyfm2C1Qvw
-X-ME-Proxy: <xmx:BGqEamchOR6tRaMFwcQEw60hRNAy55DjEz-Ro__NzS92FAhm08lmZA>
-    <xmx:BGqEake4bvCxWQl8wFmDpoIhFWTTYTo6Z3Arwc6RGOBXFgCAqpSATA>
-    <xmx:BGqEaigt0w3WhA8toZnyDgi834PYbW_kOorTv2TUFL_AkeTvFC05fw>
-    <xmx:BGqEaoQzW_1DZdtfrMTgKWNFwol7xanladl-vpLNttJb5l2YODsUJg>
-    <xmx:BGqEapmYZEO5IJxzVGshg5pa7wECo_TO6KOpYpUxbFY7TGB-A934amHL>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787062791; x=
+	1787149191; bh=wNyKrE2vizerl0PfeFPcwU5C72c69kT4GjjnMXZmZ88=; b=I
+	YlQcBNOgZ1veTQDolk6OybexcZQfQZBKE6JzI0Zvfk0ucLJ+KFxhBLZTyf00my+A
+	auzWGOeSdqpJUCQeUHu7AvtqHZNtRR/EiagH/1BdLoa5AlN4kP2iyOXwO5kECCKG
+	iR7MDL1Kpd/gMGycf4JugoqV4/m0Pilc9IzMpix+fyIn8IzPtCpe/29a9FxGyuF2
+	suSy7vkY8zueigY9quLZiOO1nt1g/dJlRD+Bkoe9QdwWfQhg4KbvofyX+fe7iZvY
+	4aNjtaLv+dz/bkGSO9vjU1gLk1+D0ZqkZsTCsexlGBKca+Ht6kuy38gWP4rhQOus
+	hYET4gO4RnxlWv33LRWaA==
+X-ME-Sender: <xms:B2qEamJLjiNW0-nztsjWoX1MiB6swQr1JVdaxJKN1Mo9_3kt_N7hzg>
+    <xme:B2qEalE5SBynJQfekE7sUewsAxlt9cAjTNoVz0A64-R9ivfbKKii8u93GF0aEglXq
+    B1RTbgkyZSj_bJFSIuBKUoIAvKaYfCH-bYMWsEv01JjJTRLeU5Jig>
+X-ME-Received: <xmr:B2qEasWYDX_1QbFS4V4XL0jJOOotlwFdj69zqlZeMOSounugejd3G0goItaHINQFJ4miPFStFq__0sn_G9eXRAXipXv-WOFM0YSKWAiz>
+X-ME-Proxy-Cause: dmFkZTFi9gTDGN5rU6v5bk4puH/TN6PnebWJZuvNiMPwE2cjL/TcvdlYqVaQ+lghmSk/qN
+    WCasTuwVGcAbpI1P2OnhaZi0kO9rwywa2//F8UO4KwrYPyqIVy8n3cjkIejGy2zTwRJWTO
+    2g4RZKKUqC/L0EQ1DOWFvX9CJk/85pj90zgi9yL3SAXHLijFYCUIGa9l2nu9m1z149jyrj
+    iVnndofBls0dTQZrLD/SJsERHbs2ZKG9wFCTkCpCcBmjHjSfmbQUtLdkHp0u/JktXsA4/v
+    2ltnMeFDVWCfVv6/ePXXwP1mhEgz1iDdYm09PKsAH+RLX1v7QmJBJ4XCDQs1kQLkCd/4jw
+    jnTZY8NZcCZZ9xyYXkZY9DzY5IYBZa5Gry5pGVwM6gZhJPHYQd/UsfIzy9szHmzW3Yt/b+
+    7i3e5uTQ/UV6ki2FnYyEzU6/hXJ491j5oxrr8CynVtBPidlDqAmZM9/emu4Wp//9H2PBo8
+    +jtT51NVTmGIyrQLzb6t2nYSpSrKK/PLkJ3eytlh4UUHdDJcam2DRLTcoFwoLXgJnd18a5
+    NJNBPAJ7MKGdpb2QWpIhuvutiBgCLDZVpqJEfIYmGcyPP7/3novPJptBdKrKEUr7EeT9mf
+    sSHYChleqLbOCd2AbVyjaMOYzDeb394TluOtVesmO2txk3HULuE3G5dv931Q
+X-ME-Proxy: <xmx:B2qEagiLHGRq9k0Y9EBlnhCayvBF2QYasYLOoRC8yup1yACj0sLkjQ>
+    <xmx:B2qEatRXlQEwhjjNp2Fj9vJa2BqwfpIrLfnFFhFabQU7hCoMCZeNJQ>
+    <xmx:B2qEajHKmWprjpMDQEHekY9KecE1s7MFuBJNlH8lI0_NF1v-Ts1h7g>
+    <xmx:B2qEalkmToEjnl5wokuXwCATqKL8crb_giltJI0GZhTbmMMwYht5rA>
+    <xmx:B2qEanqs6QXXuT8V58QmdsGz1vhDEmOtssDFK1eGaru4qgA5mOajoo6E>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 18 Aug 2026 10:19:48 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 18 Aug 2026 10:19:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 673b9092 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 9339d9ff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 18 Aug 2026 14:19:48 +0000 (UTC)
+	Tue, 18 Aug 2026 14:19:50 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 18 Aug 2026 16:19:31 +0200
-Subject: [PATCH 4/7] odb/source-loose: distinguish missing and corrupt
- objects
+Date: Tue, 18 Aug 2026 16:19:32 +0200
+Subject: [PATCH 5/7] odb/source-files: signal mark objects via positive
+ return
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,145 +84,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260818-pks-odb-generic-corrupt-objects-v1-4-ec234567510f@pks.im>
+Message-Id: <20260818-pks-odb-generic-corrupt-objects-v1-5-ec234567510f@pks.im>
 References: <20260818-pks-odb-generic-corrupt-objects-v1-0-ec234567510f@pks.im>
 In-Reply-To: <20260818-pks-odb-generic-corrupt-objects-v1-0-ec234567510f@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-The loose source returns a negative value from its `read_object_info()`
-callback both when the object is missing and when the object exists but
-cannot be read. Consequently, callers cannot tell apart whether the
-object does not exist in this source at all or whether it is corrupt.
-
-Adapt the code to return a positive value for missing objects according
-to the new calling convention.
-
-This also allows us to get rid of the separate `corrupt:` label, as we
-can now clearly distinguish between corrupt and missing objects in the
-function ourselves. This makes us handle failures to read loose objects
-more consistently, as not all failure cases were jumping that label.
-
-Note that there's one call to `die()` when the object type is invalid
-that should arguably be converted to an error, too. But adapting that
-call results in quite a lot of broken tests, so this is left as-is for
-now.
+The files source conflates all failures of its child sources into a
+negative return value, so callers cannot tell apart whether an object is
+missing or whether reading it has failed. Both the packed and the loose
+source have been converted to adhere to the tri-state return convention
+of `read_object_info()` by now, so all that is left to do is to
+propagate their respective return values.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-loose.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ odb/source-files.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index ef0e919277..e786560ad1 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -91,11 +91,16 @@ static int read_object_info_from_path(struct odb_source_loose *loose,
- 		struct stat st;
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 5a68af7d84..1124a18091 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -65,12 +65,26 @@ static int odb_source_files_read_object_info(struct odb_source *source,
+ 					     enum object_info_flags flags)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
++	int ret_packed, ret_loose;
  
- 		if ((!oi || (!oi->disk_sizep && !oi->mtimep)) && (flags & OBJECT_INFO_QUICK)) {
--			ret = quick_has_loose(loose, oid) ? 0 : -1;
-+			ret = quick_has_loose(loose, oid) ? 0 : 1;
- 			goto out;
- 		}
+-	if (!odb_source_read_object_info(&files->packed->base, oid, oi, flags) ||
+-	    !odb_source_read_object_info(&files->loose->base, oid, oi, flags))
++	ret_packed = odb_source_read_object_info(&files->packed->base, oid, oi, flags);
++	if (!ret_packed)
+ 		return 0;
  
- 		if (lstat(path, &st) < 0) {
-+			if (errno == ENOENT) {
-+				ret = 1;
-+				goto out;
-+			}
+-	return -1;
++	ret_loose = odb_source_read_object_info(&files->loose->base, oid, oi, flags);
++	if (!ret_loose)
++		return 0;
 +
- 			ret = -1;
- 			goto out;
- 		}
-@@ -113,9 +118,12 @@ static int read_object_info_from_path(struct odb_source_loose *loose,
++	/*
++	 * Reading the packed object may have failed even though the object
++	 * exists, for example because it is corrupt. Report this failure to
++	 * the caller in case neither of the sources was able to read the
++	 * object, and prefer the error of the packed source in case both
++	 * reads have failed.
++	 */
++	if (ret_packed < 0)
++		return ret_packed;
++	return ret_loose;
+ }
  
- 	fd = git_open(path);
- 	if (fd < 0) {
--		if (errno != ENOENT)
--			error_errno(_("unable to open loose object %s"), oid_to_hex(oid));
--		ret = -1;
-+		if (errno == ENOENT) {
-+			ret = 1;
-+			goto out;
-+		}
-+
-+		ret = error_errno(_("unable to open loose object %s"), oid_to_hex(oid));
- 		goto out;
- 	}
- 
-@@ -155,7 +163,7 @@ static int read_object_info_from_path(struct odb_source_loose *loose,
- 
- 		if (parse_loose_header(hdr, oi) < 0) {
- 			ret = error(_("unable to parse %s header"), oid_to_hex(oid));
--			goto corrupt;
-+			goto out;
- 		}
- 
- 		if (*oi->typep < 0)
-@@ -165,7 +173,7 @@ static int read_object_info_from_path(struct odb_source_loose *loose,
- 			*oi->contentp = unpack_loose_rest(&stream, hdr, *oi->sizep, oid);
- 			if (!*oi->contentp) {
- 				ret = -1;
--				goto corrupt;
-+				goto out;
- 			}
- 		}
- 
-@@ -173,21 +181,20 @@ static int read_object_info_from_path(struct odb_source_loose *loose,
- 	case ULHR_BAD:
- 		ret = error(_("unable to unpack %s header"),
- 			    oid_to_hex(oid));
--		goto corrupt;
-+		goto out;
- 	case ULHR_TOO_LONG:
- 		ret = error(_("header for %s too long, exceeds %d bytes"),
- 			    oid_to_hex(oid), MAX_HEADER_LEN);
--		goto corrupt;
-+		goto out;
- 	}
- 
- 	ret = 0;
- 
--corrupt:
--	if (ret && (flags & OBJECT_INFO_DIE_IF_CORRUPT))
-+out:
-+	if (ret < 0 && (flags & OBJECT_INFO_DIE_IF_CORRUPT))
- 		die(_("loose object %s (stored in %s) is corrupt"),
- 		    oid_to_hex(oid), path);
- 
--out:
- 	if (stream_to_end)
- 		git_inflate_end(stream_to_end);
- 	if (map)
-@@ -221,7 +228,7 @@ static int odb_source_loose_read_object_info(struct odb_source *source,
- 	 * second time.
- 	 */
- 	if (flags & OBJECT_INFO_SECOND_READ)
--		return -1;
-+		return 1;
- 
- 	odb_loose_path(loose, &buf, oid);
- 	return read_object_info_from_path(loose, buf.buf, oid, oi, flags);
-@@ -421,7 +428,7 @@ static int for_each_object_wrapper_cb(const struct object_id *oid,
- 	if (data->request) {
- 		struct object_info oi = *data->request;
- 
--		if (read_object_info_from_path(data->loose, path, oid, &oi, 0) < 0)
-+		if (read_object_info_from_path(data->loose, path, oid, &oi, 0))
- 			return -1;
- 
- 		return data->cb(oid, &oi, data->cb_data);
-@@ -439,7 +446,7 @@ static int for_each_prefixed_object_wrapper_cb(const struct object_id *oid,
- 		struct object_info oi = *data->request;
- 
- 		if (odb_source_read_object_info(&data->loose->base,
--						oid, &oi, 0) < 0)
-+						oid, &oi, 0))
- 			return -1;
- 
- 		return data->cb(oid, &oi, data->cb_data);
+ static int odb_source_files_read_object_stream(struct odb_read_stream **out,
 
 -- 
 2.55.0.822.g20453c30eb.dirty
