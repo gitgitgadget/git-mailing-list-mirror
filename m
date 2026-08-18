@@ -1,310 +1,108 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9799831B823
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 14:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EA03812FB
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 14:31:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787062799; cv=none; b=EXHy0eW+XdiPpvVNGU4cFIzkvZDMNXZh/y/ArAzM720lAXLwMiwN+4va1xMXBpn3nmYU+igBxtLRL+94X/iAA4lepaWO+r4Ij5iJD4HwGx1l7FCoxXm0Q+l/zZb85cEMpBpmOcKyh8vy/KZ8jHf1eiNco3SQCzwsHYYpmRh8jy0=
+	t=1787063469; cv=none; b=sBXWY2t6OhRtBERo/mzDHllm5kRfuBerb8pYuCqW67CG+8fLX3L6v86uAvlRBaIqLHKPD9vY94ztuaL3rtTk+1ZNV7mkzcZnH+ALPlUQiNS1z6Dp/pY9Bqwe7xG7/J9rshfGeer9wrz9FfxawrrThwOrfji7B4ssxnG8PvRdkzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787062799; c=relaxed/simple;
-	bh=xJ/f0DZKcDesSk4z31G/hxmY1dHk8cSTlZjewebO2+0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Tj0rTNRQ39CO2mtUZmFhsHFGTSRz3HKweSsbOYIvydT+WxtW7cUQOdVkYN61QEmIQGRnXMroDkKeSWybkqrpzrPEv2oz0IlOQBM72llPi4lJHxkQr/0yXbWoBXsodm4kBLvWhut07DwUQ6pavbGFPFQSEecxaAHXC6rGdQ406O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Drm/UcZg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JDSr+3MF; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1787063469; c=relaxed/simple;
+	bh=fEEMgJTZnXLdBQZTQxTJ/CP6GTv7SNXdWeVi576YfyM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oobBZK7r8mb41X97DM+2vfTNWaqbgwuSo4EF8whX/LJW0Du/7lLcxjIEZpiRQYRjBehPT8hGEC4bgCBT0ogybCkNRcQxBpCf2K5fk3/UPLmdAQPodwn3kPRKigPtCQhPQZe3eSq1R6mRxj/CTS37pzItYe7yK1cUoWVGt4tzdD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Dhy55TXx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RBrjD0es; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Drm/UcZg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JDSr+3MF"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E0A307A00CF
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 10:19:56 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 18 Aug 2026 10:19:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787062796;
-	 x=1787149196; bh=t6BC5o4DsTDW0n1le0XX26cu5O8LIQIasepgAd0IU74=; b=
-	Drm/UcZgoFeVPFLILK/vnXe13+QBQcx6ZJfynio/fh7VKevvcLcsT1W7p8BHTFaG
-	wb/xWZ0ngYTB8E/SL3KbxvAnMaU5odkAUY8RQegCpDzFI/K8vGGQh9pKW1x5Slfa
-	APZ8OJ4YzGp79D/h86dgPZ8XQsmn3xWe76rGkQz9kX2SiNEMgO2bKIPu2PiVGa0R
-	0mAA3su/xTlNAKWgBo1oNIi9NcaJ+suDqdEaD5N2S6u2g/lR+nesBQCO2mvfcazq
-	jRB9Klbf8fNHwLLOAPl3n2W8m+uJ/16jCqgm6mTtujuFuyhVd05wl7ui4Hieg8HU
-	104/3VaPpoV3AKT46iNHqA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dhy55TXx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RBrjD0es"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 26F9E1D000DC;
+	Tue, 18 Aug 2026 10:31:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 18 Aug 2026 10:31:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787063467; x=1787149867; bh=4HOv12O4R9
+	r1E+VRuAILU7NOW6dMN0CdLwAZCNtVKA8=; b=Dhy55TXxPvFmz73hoD/8qtsA1P
+	ahEoV3ucODbzruRdA69U+0f8ivBbGoboIRDqxtLXCiWk1rFTjiL+keOFwK9u2wv5
+	jS2JX+yn77pOi/lvoQtOsJXRAUTExfrAC6YHK00orH3tvRkTKJ0M3c2fIv3jxEqF
+	hK29gDKeS88aZwfX9t/MPhwfTEyByEx1a/Ax+IMvL6d34ip52mSPfI+ZYw8nN2ql
+	S44RA539P5wtC8EworMqvrwyElEyKkly7Yr+50/9VY+So+jPvV+QwOHDeWRlc6Go
+	2j9hTolXsi17Ii1N/A3MWve905WVtBtBbYE5A5TyTM88/hUEaDhTZiEfkyTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787062796; x=
-	1787149196; bh=t6BC5o4DsTDW0n1le0XX26cu5O8LIQIasepgAd0IU74=; b=J
-	DSr+3MFAmJrlQLAeEtjGOFAZ1/zOVDVawqyb2p9Q/yNxYYZyCrfbJVYo43kz21r+
-	ResUGjT9AvBZG8MHwhzH4l0JCJVAJ5cA3HK/FWOVtu63JL5J95JGXO7gEN35cGYb
-	v2m4BktrSBS38E+E5BsmXvILBD24CxytmnsE3PeO6J4+v9I4L/qXXCPzQ6dyH8xW
-	/r8bIEiCbgDnr3QZhfnPsrtY7Bpef6DyeT6j7R2rKVLfhU6M0Kfsou2vQSKRR+sZ
-	0Tosd8yV17Vbc14E9CwRJJZlzjXnSzI19HH10e+LMZhfcnXls0Z6C9DdA5DL71NC
-	lJIyZpOPUGhqFlgBl5vcw==
-X-ME-Sender: <xms:DGqEarurux_ADh5PxaJgvihUXxOK1I6nRwl1Te3_VSOCLM9N9MhT-g>
-    <xme:DGqEajY1NkAcjaKBu9aNiY4pshzW7p0jOuukjyOKQyHcu_zJ8BV9jRGScMCXfVHlh
-    pQbNG359kef2D4bdazny-zr7jy3F8RY2qNcye-bbX2rfziSJ7fu1hM>
-X-ME-Received: <xmr:DGqEakaXzWjKC6X2atTVBKUApTQBPaDSWlgQgv4N3Gj8UBeFNxI-02R4NAMRvCVhem2tcEanJH-nq4ldPmPc5FC1sawCmVRM7DS22t-o>
-X-ME-Proxy-Cause: dmFkZTGeWRQN3XJ+PCNWaJB6ek4wiuWITJp8nrJrFe5zUiT+9z6FJmBFXt58En+JFG8Ahk
-    FjnJhBE4mSzVmmsEUNOGAUwO4n39XmwHetw+P4ubGz9r6fdxcmxV9AxXxnusQdf37/Ioyy
-    +vomc7Z1xsgdsGhpzB0rjafSmXfqYlJuhx8Dc4CZDd4D2t/qMQ0uG/XePzmvsV/cy0+mAO
-    1OZ96+wlC1PFCPDB5t3rHq/W4hWDU2921Y6Fd2o5BroIviNd7EII2MiFRqIzRPfT3/6Nre
-    v95UyaPEJ3G03TtKwBh0h+fah1hzkAlz+PyRBiiYQ0EEy8oYXJ2mbqtI5fId0u8E9+RqHW
-    JZ9fIkmYDhPy/GAxxYRqhK+0ISGEKnimdvVdsSkY+qZjVLVu2aXn6C8Ys4I5M/CWJ7R34L
-    9RgseUNtDSN99ZbcA2905MTdMpTe1z5sTsIsy/HbJgD/hV1ShLatKhSIsCmqwh5worJMf5
-    1GmEhQw2jOtfHaUoQBzs7aHkNhfQh2xs7ODRukbu1qvaKUd/nHa5f7jx56+gWM+2w4/BvU
-    p9Svs0AD2+Z4dKLw3etKxr2nlfig679m6yA3+d8ojP/EDIBtvXYYvI3eYqjB1CD6bUKXPP
-    k26DVmi3rpOe/LYM8xtZyDJqmxlgmAbpoFhGcPtYnl6ehkCxmhF2hg29TqiA
-X-ME-Proxy: <xmx:DGqEavXNb-YCSEPoKfofEfHrTgM1tvg-ei_DMQ1HAF8_pOYYxkczHQ>
-    <xmx:DGqEar3EpYVYGMchydvBJ2U20yEwBn0n7SY356_DRJwUGEctIDhF1w>
-    <xmx:DGqEamZ_PdxStKqQToYsTD3yWnQgcWW5CAY5fklsbEapEPz5maQ8Kw>
-    <xmx:DGqEaurrq_uV5Y2o9euUVoJxzomnNcPQCNRT-r4P1R3M8HJVlUs8wA>
-    <xmx:DGqEaqeE9_Y1gNha2hN5fb0ZPa7lp42bOpKwQB4J39XZWO6QQX1ZsVSl>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 18 Aug 2026 10:19:56 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 86de90d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Tue, 18 Aug 2026 14:19:55 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 18 Aug 2026 16:19:34 +0200
-Subject: [PATCH 7/7] odb: handle `OBJECT_INFO_DIE_IF_CORRUPT` generically
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787063467; x=1787149867; bh=4HOv12O4R9r1E+VRuAILU7NOW6dMN0CdLwA
+	ZCNtVKA8=; b=RBrjD0esanL8vNZi2RnoC1mKYlB6EA01/+AqNofrnGPREngACBM
+	5nRbXm/pKnbtOXHlwpsJStuhuk/PLLIn2E0cIMXipq/bBBraTUPuPz6U+w5J6PR9
+	oe+xWNI5shl2Lo3CatjDCzYm6fqHEXgF8Co0zPQMlrkFfVEr9WHWvoaVx66PC4Oi
+	EOP2M7SQ0XprLtir2pw8TOUHfIwTSoyc2cKSHvAKm/gDEJ5W6Rq/cClhB4ALV4pi
+	j4ilf7zNujdUvwLXxblBa7KnT+LHEVm8ssG+bgqN32u0h1RcASAdUZv7VvW7oOYa
+	6cpQJgeM2fFO+w055GVFyjdzy7DYUmdcxQw==
+X-ME-Sender: <xms:qmyEaq-pWvGZsu40HLozzASzbE7Dn3ogfhpsgX3pSxW9RBPi9Xt_Aw>
+    <xme:qmyEahlgjoKrqXEHkZUxO6lkTJCNNX3ZzqZxSdXIs12M29JYOJyqasB2DlUCI2jWG
+    Voj87KyXmsAEytQZflkjPb_2WfH1N8hjiTTZL2BoBK-iJxN5xhRcQ>
+X-ME-Received: <xmr:qmyEaoXzE2mIbynQ9HBCcuwR884f7nE2iWAuY1xd6Y4fbHOIh3zQmsIZAahwt2j8xS8Lnkc9-cIbww-hhflOFzqdnA4ifY5wvg>
+X-ME-Proxy-Cause: dmFkZTFeK7pYUB97d1yxIyEgHYvHvke3zOCHWLutA3QirpaAUEUsqDnk400IsvbOtlV8Gc
+    qJrNLtg3InlDgXXmq1BYcPMZCeXy167sm02baHiN4HYp+bZx86dzZy0CmRDSfAnsTDHqdY
+    xmcSbWfTmBRexSGK/5qt2wyee3pim+Q4kEeAZn19stq1VDHvXbdOT2a6Q1sWVF+p7v9yk2
+    tPiDUb6CWtodk52cKxniqoOpiGnUe/FhU7842vM0o9a6Sarm0A0wI37a0mFTPvNjzqgqQJ
+    rlvC46g9P+V3bMB5w6jqg40C2iSOIAtvYoI/9rivcewgc43Uc8RrqBJCLUrtiKLO+iKOFB
+    ylgYyELmyYQNAXWjlRMCdEIrTAHbeWL46VbkzxZV2k2+QuIuCAAZ5HetyyyCXRkcnJk7Vm
+    a7bq2djkFmNu8X5PEUBZXjzPetdxN/GX9jreDokwvdmXL7QC6v2a+A+4IXuDhLRKqqb1dg
+    uFetZ6XQMgz0zO+wgc4meniTOgvI2l3qaor6FRBmDiMw7OdPQZ/pOyMvp8UvfHg0Jq3zUE
+    5Znsd00XFhGUM0y4AH2Lvj5OQyxS3tEMJHizGFrKX2elAyH0L1lvhGYIm/6BI2vYTvPV3l
+    HjyHbQ/q5ZDgGScxyhJilIe46wCljqszoq50oTOvnQgrW0Kr1e0jo7tObwfg
+X-ME-Proxy: <xmx:qmyEauFXhQS6QPUyWFF5YglMWGzj5eqOpwcBuH6tBKY-ijPHjHSe6g>
+    <xmx:qmyEasdNPBCUz9yX7hXPs3ZaS4ntT-0ac9GG1-paGlIwxSbYfcTn_Q>
+    <xmx:qmyEanJB_mAn_iYVLlwIHOI5h_yLnPAStUMYskKIuJdKVfGxiiS1eQ>
+    <xmx:qmyEapGRX0JhLnPO0rWKW1Mb_BbhTXipytIv1slFW3Iohm_52nmfIg>
+    <xmx:q2yEakhd8OSyK4Evli14AnekbFS29wUzXgZDME1BaClm4GCKY2Jf-rh8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Aug 2026 10:31:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Kenneth Lorber <keni@his.com>,  git@vger.kernel.org,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [RFC PATCH 0/1] config: surface editor failure in exit code
+In-Reply-To: <CAOLa=ZTykwSDcFaEmEJJ1PTnX5L9=2t+tkCWhF+hV4J9EPBwWg@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 18 Aug 2026 03:26:36 -0500")
+References: <20260817211936.2943278-1-keni@his.com>
+	<xmqqse4c2wyu.fsf@gitster.g>
+	<CAOLa=ZTykwSDcFaEmEJJ1PTnX5L9=2t+tkCWhF+hV4J9EPBwWg@mail.gmail.com>
+Date: Tue, 18 Aug 2026 07:31:05 -0700
+Message-ID: <xmqqecfv33h2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260818-pks-odb-generic-corrupt-objects-v1-7-ec234567510f@pks.im>
-References: <20260818-pks-odb-generic-corrupt-objects-v1-0-ec234567510f@pks.im>
-In-Reply-To: <20260818-pks-odb-generic-corrupt-objects-v1-0-ec234567510f@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.15.2
+Content-Type: text/plain
 
-When a lookup with `OBJECT_INFO_DIE_IF_CORRUPT` fails we want to die in
-case the object exists, but cannot be read. This flag is handled in two
-different spots right now:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-  - `do_oid_object_info_extended()` calls `has_packed_and_bad()` to
-    check whether the object is known to be corrupt in any packfile.
-    This function reaches into the internals of the packed source and
-    thus breaks the abstraction provided by our object sources.
+> Wouldn't it be better to notify the user that something went wrong
+> rather than simply brush it off?
 
-  - The loose source handles the flag itself and dies directly in
-    `read_object_info_from_path()`, which means that we die even in
-    cases where another source may still have a good copy of the
-    object.
+If we were adding 'git config -e' today, absolutely.  The issue is
+not the comparison between signaling with an exit code and not
+doing so.  The question is whether the benefit or conceptual
+correctness outweighs any possible downside of changing the
+behavior existing users have grown accustomed to.
 
-Besides being inconsistent, it also ties us to the specific backend used
-by the database sources because `has_packed_and_bad()` assumes that they
-use the "files" backend. Any other backend will instead cause us to die
-when calling `odb_source_files_downcast()`, even if the object was
-simply nonexistent.
+Having said that, 'git config -e' is relatively new, introduced in
+commit 3cbace5ee0 (builtin/config: introduce "edit" subcommand,
+2024-05-06).  The folks who may be affected are those who used
+'git config -e' in their scripts and carefully checked the exit
+status (or rather, lazily used 'set -e'), and did so in the past
+two years.  So the fallout might not be so great.
 
-In the preceding commits we've carved out the infrastructure to make
-this mechanism fully generic. On the one hand, all backends now tell us
-whether the object is missing or corrupt via their return values. And
-on the other hand, they have been tought to provide a readable error
-message to the caller.
-
-Adapt `do_oid_object_info_extended()` to use those new mechanisms. This
-means that we won't die immediately anymore when a loose object is
-corrupt, and we properly handle backends other than the "files" backend.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- odb.c                        | 46 ++++++++++++++++++++++++++++++--------------
- odb/source-loose.c           |  5 -----
- packfile.c                   | 17 ----------------
- packfile.h                   |  1 -
- t/t1060-object-corruption.sh | 18 +++++++++++++++++
- 5 files changed, 50 insertions(+), 37 deletions(-)
-
-diff --git a/odb.c b/odb.c
-index 6cb0a9534b..206988f39b 100644
---- a/odb.c
-+++ b/odb.c
-@@ -15,7 +15,6 @@
- #include "object-name.h"
- #include "odb.h"
- #include "odb/source-inmemory.h"
--#include "packfile.h"
- #include "path.h"
- #include "promisor-remote.h"
- #include "quote.h"
-@@ -551,8 +550,11 @@ static int do_oid_object_info_extended(struct object_database *odb,
- 				       const struct object_id *oid,
- 				       struct object_info *oi, unsigned flags)
- {
-+	struct strbuf corrupt_err = STRBUF_INIT;
- 	const struct object_id *real = oid;
- 	int already_retried = 0;
-+	bool corrupt = false;
-+	int ret;
- 
- 	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
- 		real = lookup_replace_object(odb->repo, oid);
-@@ -568,9 +570,14 @@ static int do_oid_object_info_extended(struct object_database *odb,
- 	while (1) {
- 		struct odb_source *source;
- 
--		for (source = odb->sources; source; source = source->next)
--			if (!odb_source_read_object_info(source, real, oi, flags, NULL))
--				return 0;
-+		for (source = odb->sources; source; source = source->next) {
-+			ret = odb_source_read_object_info(source, real, oi, flags,
-+							  corrupt_err.len ? NULL : &corrupt_err);
-+			if (!ret)
-+				goto out;
-+			if (ret < 0)
-+				corrupt = true;
-+		}
- 
- 		/*
- 		 * When the object hasn't been found we try a second read and
-@@ -578,11 +585,15 @@ static int do_oid_object_info_extended(struct object_database *odb,
- 		 * caches or reload on-disk state.
- 		 */
- 		if (!(flags & OBJECT_INFO_QUICK)) {
--			for (source = odb->sources; source; source = source->next)
--				if (!odb_source_read_object_info(source, real, oi,
--								 flags | OBJECT_INFO_SECOND_READ,
--								 NULL))
--					return 0;
-+			for (source = odb->sources; source; source = source->next) {
-+				ret = odb_source_read_object_info(source, real, oi,
-+								  flags | OBJECT_INFO_SECOND_READ,
-+								  corrupt_err.len ? NULL : &corrupt_err);
-+				if (!ret)
-+					goto out;
-+				if (ret < 0)
-+					corrupt = true;
-+			}
- 		}
- 
- 		/*
-@@ -605,16 +616,23 @@ static int do_oid_object_info_extended(struct object_database *odb,
- 		}
- 
- 		if (flags & OBJECT_INFO_DIE_IF_CORRUPT) {
--			const struct packed_git *p;
- 			if ((flags & OBJECT_INFO_LOOKUP_REPLACE) && !oideq(real, oid))
- 				die(_("replacement %s not found for %s"),
- 				    oid_to_hex(real), oid_to_hex(oid));
--			if ((p = has_packed_and_bad(odb->repo, real)))
--				die(_("packed object %s (stored in %s) is corrupt"),
--				    oid_to_hex(real), p->pack_name);
-+			if (corrupt) {
-+				if (corrupt_err.len)
-+					die("%s", corrupt_err.buf);
-+				die(_("object %s is corrupt"), oid_to_hex(real));
-+			}
- 		}
--		return -1;
-+
-+		ret = -1;
-+		goto out;
- 	}
-+
-+out:
-+	strbuf_release(&corrupt_err);
-+	return ret;
- }
- 
- static int oid_object_info_convert(struct repository *r,
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index 3cee012a6d..8ca5a78858 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -195,11 +195,6 @@ static int read_object_info_from_path(struct odb_source_loose *loose,
- 	if (ret < 0 && errmsg)
- 		strbuf_addf(errmsg, _("loose object %s (stored in %s) is corrupt"),
- 			    oid_to_hex(oid), path);
--
--	if (ret < 0 && (flags & OBJECT_INFO_DIE_IF_CORRUPT))
--		die(_("loose object %s (stored in %s) is corrupt"),
--		    oid_to_hex(oid), path);
--
- 	if (stream_to_end)
- 		git_inflate_end(stream_to_end);
- 	if (map)
-diff --git a/packfile.c b/packfile.c
-index 3cde39a01c..cd38be088d 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -985,23 +985,6 @@ void mark_bad_packed_object(struct packed_git *p, const struct object_id *oid)
- 	oidset_insert(&p->bad_objects, oid);
- }
- 
--const struct packed_git *has_packed_and_bad(struct repository *r,
--					    const struct object_id *oid)
--{
--	struct odb_source *source;
--
--	for (source = r->objects->sources; source; source = source->next) {
--		struct odb_source_files *files = odb_source_files_downcast(source);
--		struct packfile_list_entry *e;
--
--		for (e = files->packed->packs.head; e; e = e->next)
--			if (oidset_contains(&e->pack->bad_objects, oid))
--				return e->pack;
--	}
--
--	return NULL;
--}
--
- off_t get_delta_base(struct packed_git *p,
- 		     struct pack_window **w_curs,
- 		     off_t *curpos,
-diff --git a/packfile.h b/packfile.h
-index 3229a6ed47..573fe003d0 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -329,7 +329,6 @@ int packed_object_info_with_index_pos(struct odb_source_packed *source,
- 				      uint32_t *maybe_index_pos, struct object_info *oi);
- 
- void mark_bad_packed_object(struct packed_git *, const struct object_id *);
--const struct packed_git *has_packed_and_bad(struct repository *, const struct object_id *);
- 
- int has_object_pack(struct repository *r, const struct object_id *oid);
- int has_object_kept_pack(struct repository *r, const struct object_id *oid,
-diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
-index 502a5ea1c5..d2ef468b45 100755
---- a/t/t1060-object-corruption.sh
-+++ b/t/t1060-object-corruption.sh
-@@ -145,4 +145,22 @@ test_expect_success 'partial clone of corrupted repository' '
- 	test_must_fail git -C corrupt-partial checkout --force
- '
- 
-+test_expect_success 'corrupted loose commit can be read from alternate' '
-+	git init repo-a &&
-+	tree=$(git -C repo-a write-tree) &&
-+	commit=$(git -C repo-a commit-tree $tree </dev/null) &&
-+
-+	cp -r repo-a repo-b &&
-+	(
-+		cd repo-b &&
-+		echo ../../../repo-a/.git/objects >.git/objects/info/alternates &&
-+		corrupt_byte "$commit" 1
-+	) &&
-+
-+	git -C repo-a cat-file -p "$commit" >expect &&
-+	git -C repo-b cat-file -p "$commit" >actual 2>err &&
-+	test_cmp expect actual &&
-+	test_grep "inflate: data stream error" err
-+'
-+
- test_done
-
--- 
-2.55.0.822.g20453c30eb.dirty
-
+So, I dunno.
