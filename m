@@ -1,167 +1,144 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C34332637
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 20:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787086447; cv=none; b=HdM75WY57e5OswmqV/DHyNg76wiYU76hwDuwqf5DQFqjl35zJNbFGo+L7AQx5W2kZLHM2VFNQ+9Lg4UUl4QCPFso03AQC6z2TbI10ekAz4BgvP1bip461Go6dpfkUGwMIZwdLk3VMeX6jtS5HL4JIx/8OeYseeJ/5dxILfo4ueI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787086447; c=relaxed/simple;
-	bh=AlyETnW0z9FCw7MwFK8SgPnEvtFQgYxhESoIEVoWmJ8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=juOM00LrH/rDkwxQtTsVzBWXnyqG8fwnSteSntJa2CYuYwSkKNd1+/F8l4/rxDjptWh4tGIF69emMaDWREPufccOOtru43ShT/7WXZBaPR0uSApB7FHa2NMOjQzOpI3tPIpf5uJirttapPb8EP0Gwetyd2Fbh3DjBMBEfG5bEmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lGFPTmiE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LR6jc/Xo; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3F433A70E
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 21:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787088191; cv=pass; b=mAkQNbJzN61Kk2Y614O2kVthfRv3KGJ1vhAV4G7d4h4DaqCeR04CdqzboKyERV8EhONFiGxhvTT9uYZMQ0t/GHfuO1U67cIpWR8fPshMhFb+P4uluHCOTaPc39PpL4uYVgzgAAjiQp3n/Dv4s3Pv1VVKJvyRyU5eTN6yuueRxn0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787088191; c=relaxed/simple;
+	bh=CTwd9Oaol086X246o4S8rYxiQUfrlUqLwg18p2nNTi8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TSQCUQdAAy6xMXWorYFvVbGl1lX4YFU5JlkIjBCn2UhY1W1wLxMQ5rKhlQ33vrkuWEctzO0VQLOiSqaXHHbHJ5EE88PnYNLs7a3pKJ+0sc2GG9uGQ9rWdUsagLSqii02x0yji28tXnofy6p4PK6WdpXrzvkqiLgV35WJtp8yO4k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gh4ztUNX; arc=pass smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lGFPTmiE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LR6jc/Xo"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 531871400094;
-	Tue, 18 Aug 2026 16:54:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Tue, 18 Aug 2026 16:54:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787086444; x=1787172844; bh=nbpht/YMk2
-	jjm6LJ7eHd3IF2R0wkQcXOLiPi8Tw9iQ0=; b=lGFPTmiEJ9y7wX8k16valAw9V+
-	EmmIxBTyfY8jkytyocmGvUl5nwQaVBKV87ij/ACcksdgU4igocDvtJzQwdRg9gJP
-	TBZYyEbdPTIV+7zqFzHhKrD3fVyNU6bB/naNaejoy3LaVfbUKJHhFOhzTmLU7L9W
-	EOvb0JMjg3AT0ZhalOuIYbEHA5XTtmanyViXAesMhG+Ee9dd5ALRIfoBzR11bxu+
-	n52m/W/sy4TysA3/GhSDASyEOWiZM3gNtQdOvYagk1Zp+GquieNukE0v3iiITBLU
-	U9q0pFhZo0P+ZxXVjtrPIXMOgXtMDKq5favuB4Og943ywabLIPE5PQmgi27w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787086444; x=1787172844; bh=nbpht/YMk2jjm6LJ7eHd3IF2R0wkQcXOLiP
-	i8Tw9iQ0=; b=LR6jc/XoMGMqoXESrP5EBgdphw8/icLYJ/XX/LA7rgc/BdcsyvV
-	QTtKMZvZq2F6z0HPSqcuAJaG1QIsc0kzQz26JtM5oRSSwUQUKJPHwJsbPBcmZ7Ky
-	Rk9Lpcvo8pmhmNCyUtxIPYD+yQdX8ndnDatXFza+mK5ioZe6a+yh88tURX4cnBrP
-	IRq+6bcZH/d6umfOPHnPLSEv1tp7NcFoydnjlabbEiVxpo6qV3aeoOTsfb9cUbol
-	9OsooUHEiYiCbTjPqlFDfRLqjXE/KH0trAlEzAD4LDAfNmtn3CZbqAsizPKb+nLv
-	7no2BcJQ4R+zou3xZCkLfVkzm0m07i1nqNg==
-X-ME-Sender: <xms:bMaEajUur-PZrkRJRVuMoqlRdD257lDZ2Ohfw5ODQPCB92m_EiP59w>
-    <xme:bMaEajBCyJVuuagNNtBKJMRZ2ppfAPPrt4gmi0II-pTzwricVHs2jExh1x2mfMUAF
-    NHPBf_rVET0Bg7wcWfGnmwSiyQMzuER1-W00vA37J8FrPmel-4GOfs>
-X-ME-Received: <xmr:bMaEasxWeYp4GzGd5gPSNPnM-DR-F9Xh8-pAzTddcQNnZR-qZOdbEbo1zitHUSBQGLd6QyQOPNrAj_PzxTdhJfwl4wD5w52NVA>
-X-ME-Proxy-Cause: dmFkZTEs5WK5SG7gFP5YBtOB8YXpG1/1j/hIZXLagV/Ira0kX8r9G22cuDCSw+f90UrN50
-    ZxMOtvh61vL2i9WZPWtJrmEHZWvDbSBRa2KSqH1iMK/Kmi2uWxaxCwLGX7dso8//bChK5p
-    GJxIFrALPrN02Cy3NFQMIL0iRcfvWhbTWRbBFPGoKk275+5VWhTsermPip3Pw8F6gkalTJ
-    vCyhe50I9FCflW3FLxun7JKlwzCWEkm3J03q0TGR5pv+Wy2eBY3giiewNtPKKNOZHazOK4
-    LW7h7RZhkvZBYILzEdRMFBR3TR27ItrmKn78ZwKUVFS2HQlieHBRT5p3avPEg996oVwlII
-    xkukAHTojYkhl8nvjaHvk8iMesQiJN1bpMVIaxSpzv9vhIwIuQGix4OWGkocwvewXgNcTB
-    /Nf/Jd+FIiZak/lrhWmg1hmwyi+yLimwz42XekAJsXkdHJDO5PkRKcPYlcBsPKpNSkBFcB
-    5zrNl6n8aZgdxCegJDaqGx2ORuub/Aj4a7eUPIQZov0J01MZ2+uOmKDkiOIWfAXjrJanH6
-    +kMUEQQsFPomJR5Z6e1l1cqf5rEonCu0nPEJeBQQ230wZYf6YSOL8xcIGoCaWT5zZvZL0/
-    HmnG8BiLoiMDm+xGHuhxBCW7uws5N3SZIRw/lp0o02aafA+R5Q2Yx1FRwz9w
-X-ME-Proxy: <xmx:bMaEaoDAf87G4TdRcpQDPBpaO8DHOcPpkQNDxK4JRcicCdJpt-XB2w>
-    <xmx:bMaEahZyuZNG3X5srrX0FD6aqkwki5ZoJdFnx8zmqjmjwfw018U2JQ>
-    <xmx:bMaEaojYTs1JKkoqhFSyhnlH8J4lqCPbp3-mm1Ht4eCX1qCrEF6ITw>
-    <xmx:bMaEar5rTzwdZw2shGKfwBDVy7qMA543ux-IDyMro399Kq2vuc8zPg>
-    <xmx:bMaEanCI3FvcbirOkVxOIO4KC02K-79PVbnkfjfS9WzT36xad1-71_Tt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Aug 2026 16:54:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] hook: introduce the report hook for git-receive-pack(1)
-In-Reply-To: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
-	(Karthik Nayak's message of "Tue, 18 Aug 2026 09:55:55 +0200")
-References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
-Date: Tue, 18 Aug 2026 13:54:02 -0700
-Message-ID: <xmqqcxvfw3o5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gh4ztUNX"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5b2b92065ffso377084e87.1
+        for <git@vger.kernel.org>; Tue, 18 Aug 2026 14:23:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787088188; cv=none;
+        d=google.com; s=arc-20260327;
+        b=avcLG6Owjx4ofveYFNhDSN03rnU6ibDdnb+wwgGQG8ZDEisRsikEwzbvopdjbcghuc
+         j4rS/CY2BNDWd/x5Nl0oCuPFkTUjCljMH18ivDX1i/vJpqga8+MYCQfZanIoVEmWM1DJ
+         ZbadkhWChnXbrl0aHC3j4ZoLMBANLsd5Jr0W0ppr3DzQ2cJGlVQclrtjccdjJtiwI+rn
+         zy/JqyeDiSNrTj1SCdkD9p9iZ1yF2tEMYbUWE1Oc90fXs4TOU576ymZ0L7IILfyYneoN
+         ZfceN50m3mls5227+yVGsGairniGOVW2dtKPzN3uLphq9mgUlEsWpCPkArksnlsBcbZd
+         NPbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=X3oj8m3oldpEp9s8Q5rANriGo9jPYXUCLOomdURSNzY=;
+        fh=2+9D9XrHc+BqZ01z1xDvlFZuapUPgNsCu3EsPDN3Ewg=;
+        b=j+ar5VlKTqhrUCfdrR6O3JvSQQa51BXKYKT5VkVcChyIZf/cFVMw1XaNGh+0UrxbOs
+         lNGgwipSMrnTEnRtWi6XFlCWfurzpvoL/HIvRFE+YPBhZiIE09gWlW3mmtoX2pfiUj98
+         hDIslTjJc45eBNVAK4nVzXQz04nQge+qhbqOn/o0wJtJDa+2B3nz5FQOqSHKE5O22ykH
+         sOPcK1TqjtiPCLy5rkotgQPCjn/sIlDcVQ/ldVX56dCLTUSIEOUhhsoaC6eLOCjL+1dm
+         Fq80H7OKCZeToCpN34fpmvDIpnKMmhsCUFMYTDoLw3XeTxa96NHj6QGEcNQvbJ5z6MWI
+         ARVA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787088188; x=1787692988; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=X3oj8m3oldpEp9s8Q5rANriGo9jPYXUCLOomdURSNzY=;
+        b=Gh4ztUNXnG+FCRVCWPx6Q3akfzS+vcvYuDYmmQFI5VqhL0KHyoZ8cm9e/RrkIex7cu
+         /eK/JMcTx15vSumkd+IA+8BSMgNu0mU3hyv4GAGOSZRbWKDrR6c4slslY6buvzY5pbLo
+         DuV2Imhq3BzhZs4jxMcnGBJibuTydfJaxBwUINTSno1ltUPl6ctnVhRWspRx7evB9m8y
+         KRg1QMm5wiyAWJ/zeoMEHLa37WI47mnIsmjXxASTpQ2PC/8OIWZKK92b3/cFnNqSEamG
+         9rMJRAWzPl+1fCL7zBZxgwpjTdWepVa39Iit+CSichV6piuFxQeCIpQqAPHbyePdYmq3
+         rM2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787088188; x=1787692988;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=X3oj8m3oldpEp9s8Q5rANriGo9jPYXUCLOomdURSNzY=;
+        b=kjzk91XFy+LI7HxPQ31lIlPFRCxpaRiEKdfJcIciAb29J+fTjUdmaMQGGHReEHowO7
+         CTlY3j8CZ08Yel+0rPQdHE9KhBcImrk8PGu+BoTRuwOpoZI1hcF0MMtz7W6m/wvUfEXf
+         n/FM6goHIYa6OItqR8+H37V4vsCltiomwMjTMvp+pv590z1wLXw5zlCCIkHXk1gGsI0z
+         l9xDEnScnEg1Wy0AifnJBPxROkfBxXhGOkfAJMB23Mw0K72oCl4EsrGHw/mB4Fdmbh0t
+         JxqLJnJJ8QugmY9ntlbUuimGv3GkHVZFqCsn6lPgHBepY4Md00TC1rBu8WU7hf+mhc8v
+         woeg==
+X-Gm-Message-State: AOJu0Yy9QrIYfDY8cjrwzAWdZy+nSFwLTzDq3str/BmaWLL9VjFxhQBP
+	+sx3nWkc/HbKgvjKMa9vW4S+Oo2JieEkeow+8/9N+59rdUgi3HMorMP4XkghurqFvVx2Nq75H0m
+	5EjervIyjKSIZzOi1n/OGqCcX+3etm2SxcTsl3J8=
+X-Gm-Gg: AR+sD13oITOWwgdsibzXePPBMmB7YFfXa/BGHffVDJi0Xob6tmK00R24UkymLeXGOmp
+	AXcFK+CYmIoHrLfDsyknUhNba7AEyN7jrYGkUWrwf8zuWZ/ZnTW+SYnxrmlMUHJyO8aUgGYs1w6
+	p5yIM3czOpbpY/7eFmm8aD2ZjfaZ4rbabXrd39B4p35obsC2e/Il3rflaZ3f5LxfD/siAgNwCF3
+	OPZLAFvanQZDaOpeWKJsiVdRedgX5tJ3Dnr7xHe+3jZ3b8btIeiBPxf/arEIGmyiDISrT+u4jUU
+	1Vhe3XJeid13NjKcpXtN4RDcdzviwAtWjDlo9dQ4e8eM6WUlIXjQyDWZ8HYECARbwaQi5QC3Oci
+	Brbk=
+X-Received: by 2002:a05:651c:1442:b0:39c:9891:58b2 with SMTP id
+ 38308e7fff4ca-3a186e489f7mr1544811fa.13.1787088187511; Tue, 18 Aug 2026
+ 14:23:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqmruqt36l.fsf@gitster.g> <20260818193710.56955-1-ggordon@gitlab.com>
+ <xmqqo6ezw5l1.fsf@gitster.g>
+In-Reply-To: <xmqqo6ezw5l1.fsf@gitster.g>
+From: Grayson Gordon <graysongordon1@gmail.com>
+Date: Tue, 18 Aug 2026 17:22:55 -0400
+X-Gm-Features: AcwNN1U5K7hbl1gpSW5uJAs_b-fopBG9Pvk0FUzn0GUvKFsm6zr-sXvnktBogUw
+Message-ID: <CALgUfNg1yryPygp_UVp9cGFfiUe7_6Uqx3ExBt=10Qh+PKG2QQ@mail.gmail.com>
+Subject: Re: [PATCH v5] http: add http.sslVerifyStatus to check stapled OCSP responses
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, peff@peff.net, avarab@gmail.com, ps@pks.im
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Junio,
 
-> When running 'git-receive-pack(1)', there is currently no way for the
-> server to intercept and modify the status report before it is sent back
-> to the client. This is useful for servers with custom logic that need
-> to transform or gate the report based on the outcome of external logic
-> post reference updates.
+By "fail-closed" I was specifically referring to the case where no
+OCSP stapled response was provided. Failing open in this
+context would mean that, despite verifystatus being set, a
+response with no stapled response is ALLOWED.
 
-One sentence is missing.  The fact that there is no way for the
-server to customize the report is not useful, but that is how the
-above reads.  Drop "currently", as the introductory observation is
-always about the status, explaining what is missing to make
-readers realize why they may want the new feature introduced by the
-change.
+Maybe I'm just a very irregular human being lol.
 
-> Introduce a new 'report' hook which receives the pkt-line encoded
-> status report on stdin and whose stdout replaces the report sent to the
-> client. A non-zero exit status causes `receive-pack` to die and the
-> client to treat the push as failed.
+I'll update the adoc to be similar to what you provided.
+I refer to the edge cases/different behaviors that we talked
+about earlier in this thread with the older curl and gnutls
+versions in the commit message and keep the adoc
+as simple as possible.
 
-After getting asked to accept a push to three refs and receiving
-the object transfer, the hook can say "I'll let these two refs be
-updated, but refuse to update the other one" and return success by
-exiting 0.  What does the other side of the connection see?  Two
-successes with one rejection, I guess.  If the hook instead rewrites
-the report to say "all three ref updates were rejected" and returns
-success, then what does the other side see?  Failures on all three
-refs, right?
+- Grayson
 
-What should happen when the hook says "all three ref updates were
-accepted and they updated to point at objects X, Y, Z", but the hook
-itself exits with a non-zero status?  How does the other side tell
-if their push succeeded (as described in the returned report) or
-failed (as receive-pack(1) noticed the hook's exit status was not
-0)?
 
-How is the failure due to the hook's exit status propagated back to
-the other side of the connection?  Does receive-pack(1) hold on to
-the report until the hook dies, and if it dies with status 0 give
-that report back to 'git push'?  And if it dies with a non-zero
-status, then what?  Ignore the report and send a failure report
-generated on its own?
-
-The observation made in the preceding paragraphs shows that allowing
-the exit status of the hook to further affect the outcome is a bit
-iffy as a design to define what a "failure" is, unless it is more
-tightly described.  The hook can signal failure in its report
-output without exiting with a non-zero status at all, and if
-receive-pack(1) wants to allow the exit code of the hook to affect
-the outcome, it cannot stream the report back to 'git push' as it
-receives it from the hook.
-
-> @@ -2547,6 +2582,9 @@ static void report(struct command *commands, const char *unpack_status)
->  	}
->  	packet_buf_flush(&buf);
->  
-> +	if (run_report_hook(&buf))
-> +		die("report hook failed");
-> +
->  	if (use_sideband)
->  		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
->  	else
-> @@ -2592,6 +2630,9 @@ static void report_v2(struct command *commands, const char *unpack_status)
->  	}
->  	packet_buf_flush(&buf);
->  
-> +	if (run_report_hook(&buf))
-> +		die("report hook failed");
-> +
->  	if (use_sideband)
->  		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
->  	else
-
-OK.  The other side does not even hear the report if the hook
-aborts.  And lack of success report is what the other side
-interprets as a failure.
-
-Ugly, but may work OK.  Needs to be documented a bit more clearly,
-though.
-
-Thanks.
+On Tue, Aug 18, 2026 at 4:12=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> graysongordon-gl <graysongordon1@gmail.com> writes:
+>
+> > +http.sslVerifyStatus::
+> > +     Whether to check the revocation status of the server
+> > +     certificate using the stapled OCSP response supplied during
+> > +     the TLS handshake ("OCSP stapling"). Defaults to false.
+> > ++
+> > +This is fail-closed: if the server staples no response, verification
+> > +fails. Set it per remote, e.g.
+> > +`http.https://example.com/.sslVerifyStatus`, rather than globally.
+>
+> I do not see us describe a knob or setting that can stop the
+> operation depending on some condition as "fail-closed".  Can we
+> rephrase this for regular human beings?  Perhaps
+>
+>         Whether to refuse connecting to the server when its
+>         certificate has been revoked.  Default to false, allowing
+>         connection even when its certificate is not known to be
+>         still valid.
+>
+> or something like that might be a good starting point.  After all,
+> the "check revocation and/or validity" is *not* the primary
+> objective from the end-user's point of view.  Ensuring that they do
+> not talk to suspicious servers is.
+>
+> Thanks.
