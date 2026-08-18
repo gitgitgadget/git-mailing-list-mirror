@@ -1,214 +1,391 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA3841685C
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 12:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB95472F69
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 12:31:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787055196; cv=pass; b=tL4FeVgXzoCe8jiwi2xueioFwnkU6lF6j9v1F9W4hjPVBIAwCyi9VnQ7+7mLspS2L0GuTUgL6vTQ620ZHgSvfLLk5/ZRE+DkD7fRj4M3qXcfwFfIPaAXpMlBmB2zxO7TDznJF5SJ3z2/OtVREJMH6cMCKXmt2O9kKhLqqG/U0nc=
+	t=1787056287; cv=pass; b=uh//eAe9ncecA1RRXRH5CDkdhpfz17ohGEZ8N6HAWe7lCFjOBbS7q51uddBRRaJNUxS6UExTP/b2aq1iAM8d4gd065CN0+ugs0bItr7VD0r2TEINTxrYS/F5tuJmHX7Py2k7UObqszItfQCqi5ocMlzIZ6YEsl/UFOI6yjAUcfk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787055196; c=relaxed/simple;
-	bh=qVY/Icznbo5Hmg+U0YjWDpZrnG2rUscGQkopu1esGZs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r9/w6OGFVxiYtrWES9fUkZWmtuy16uiRdhLW8aFSF/wgV2WMwVzeOjaer+gV+TIk6p4PXb1bPSyeUHzLLH2zOzsaMlznBfRxZgHkEwXitR8fayBgPKTFBhnEgkzpeQu7qv1yi5Skvd+x4uNPawrpug0QMcDS8WhTQDGox3X1Ew0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LXv2C7pP; arc=pass smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787056287; c=relaxed/simple;
+	bh=3eiG0KfcF/gtuI85a5P1xRarUq8u32k3pACcsKxE/x0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=WnPiVyppqlpJMV38i1lBTT85CGgBNTw35E/XTcQLH7Z0WgLXnaAUsUeEGGiqrHN6DidAWyhRQ9swiK/mk+5K2VzJoR6NUmV53611hPdJsP7WMU8iAXZ8GcQSUeFKT0LvIkKwUF6BxH6zOPucUlWodDD3EmSAL84MkrJ62aYxOos=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=K1Sfno/y; arc=pass smtp.client-ip=74.125.224.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LXv2C7pP"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-84874b52eabso6038411b3a.0
-        for <git@vger.kernel.org>; Tue, 18 Aug 2026 05:13:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787055195; cv=none;
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="K1Sfno/y"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-66c70cff944so4039014d50.0
+        for <git@vger.kernel.org>; Tue, 18 Aug 2026 05:31:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787056282; cv=none;
         d=google.com; s=arc-20260327;
-        b=SzILI5WDOdMAEfs9rUWwZzNNT7JH/8VU7l2H8anet0Xwqt3C7ebCPyOa3XuRfde1sg
-         IXwwuUoBU0p4m0V2XK9vVz5xNHePGZJRzpDAt0sU3KhD99awjRU24k12gh7C1nWoqJyC
-         iWXbF7LbxuMJBck76LsIN8nc5mkCdsFBFRatbFM81SaEzP7Gvj/cXEtP9OLRjvZbFxMe
-         zPwvTjDqZnhtWNN1HnaWhjDZzvqtIi4WObA6BO7YslTnjEk6NWvnBi1jDktribAe8uW4
-         1vEY0RtPHRfaL7zVP0i8N9ukzo/Uj/JkqTigNDDMQOzKsptggbKCivpb1G8MuT1wrXa9
-         yK9w==
+        b=jGAuuwyrg1XQKs3LWy0XSNnXf2p8m0Kz6sTVsRwysoElhL+AXltqpZujzcIZGXBEIR
+         AfhaQUb04NH2L2k7v3eF9u206Kg3bUx5FvnldWoaWgr15fiJ1xEl5RhPxa+8jVHujkKH
+         KnkwR66JxkP1srV3FDzgQKMD46ZmVMt+7EAnsfMRwBqGYjuAIXIpZBk+M8RmE8bS+w8J
+         CxPlLcAovxeyOYzjEwijxlPouDDAg1LDeldPLF0J3UAGxFfWtQhwsfe6CeUJj0yw2xeL
+         wxfUxgtQhsL5Oa1dHgn6NjXgjXNFIaSMFl13vB2RgcqRnyGuHi1GQUrMKwB00KTmfxQy
+         jNmg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=uKWqO7D5l+aiPI2hmgJGbYKctAHV2WqxDPmn2hgZKmo=;
-        fh=DAUdOA0dQaXL4Mp2uUr7TUS//7tH8Sdbj3aEQ5r9sT8=;
-        b=KiMSAG+AKIOXwMKcr4KEmrK13+bYio6c3FQ/7uO/c8DsbPAeehDFOHZj7+TwgEjK0q
-         ZD4jGRd2O6qpdhHPtQDArSE02jjGfKT/qr5E5JGGVPomjrz6feS/EziZ6bbzTLKjmKmJ
-         dIsDommZkMKevnxMp/a9O3ik/KlrVNHC5ktM1S8xn2AnqQS9W8Jv23JDA9lMOgMZtAgu
-         3c9QLKZO4GLAG6x0nbe03RGFkh37I+/DiJEcVrars+ZNYFM3znH7ryUlW4Y/J/VlYCZR
-         L9gQmYliT/tjpNvplzGz3SqtgXweWLHjRZB99haczxYmp/6MqacrG3XbQOhI6tREfd9L
-         WZgg==;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=DbBW8SBL/dl6PzXoLPXXIKQUheRPziVWZISQvzhikhY=;
+        fh=7uiKd3Ud4uC5u8f1C5icixH8oiwEAB/Z4DkRm/FWngY=;
+        b=ZMdNwqrtmyUvbyrekzLQVD/Nz2cXG7hjLZ820t6QEi1AoiwOgd3viH6rXrgJDaWgM+
+         oQPmqc3iNAWwA2i/5qNEdYivkE/LjO276teKDay7JSKWW4ncOFcWznXZmECb7oLQdeKC
+         jnh7mYzCztJj/jx8GgFEfp+y4Bb/rgeYLYUYkN2NiJvVrad2kO4FwDLdoMleCI28qvsj
+         8xcPoE1E7+t1e5v4Y67yDggChWQjSNSOkC87d10NmmujLNwo2NoooP7lij7XiFYod3tk
+         GJm7zkZ7fkiKzQhEazy6+agYklxURP98SIu8H9aGztnYUN2FCD4xAp9I2YKAdeGApsHW
+         2K2A==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787055195; x=1787659995; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=uKWqO7D5l+aiPI2hmgJGbYKctAHV2WqxDPmn2hgZKmo=;
-        b=LXv2C7pPOARFB2fWpA4uELEtTRoQC7d5lAuHrW/ad9/OWkcAUztDXqHdN3xh4WTWSS
-         fjg+EJb7tdtdJbesJn+G2QHpQc7gu7FbZVmhSWUyJMGNaAQMfzpRD7TBr2iLSkvUguax
-         A8aNN/H78hkEcsUrANuIAxHbSyXBZZngxqZANCpw6izuAUBWwEtT7kjnt8Wy+wSi6Z8a
-         crpWWtPgqkmSZr564RIJhEs9Ni0BaWI4tSdb7QQxH1P2lN/mogku1dYru6yb6uwVT+tK
-         t0KsxUFgDsRwp33rxzo+n0XIwar8tCFrr/lSkOXs4q/Pq1vI6OouN2tUZIDfP5W0533U
-         rSXw==
+        d=spotify.com; s=google; t=1787056282; x=1787661082; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=DbBW8SBL/dl6PzXoLPXXIKQUheRPziVWZISQvzhikhY=;
+        b=K1Sfno/yYWxQX9cbaBtSksyZMZ9Nl19Ygtp7WBp49Zj1tX8ku67DXEjwvGorhfLceJ
+         L3EIct8rGEgQZY4AOua2ujWU1/DCQCItcuxlysXcfZDYOfNF2qxcCZmawIjC07VLIcyl
+         k1L3LsN1H/oBE9tQAoFHXb0rbEh24VWXbzXv4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787055195; x=1787659995;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=uKWqO7D5l+aiPI2hmgJGbYKctAHV2WqxDPmn2hgZKmo=;
-        b=HW9FrSzfviYBOEKniyHgBh1TqBAZijq7JCGJ3hY3NuZ0J95QcaGDQAjIZxtuDvOzmN
-         KWwj7l4j5yd2Vc+1POB9i8ZsrWr6P9MnLztr5ki1IIPNoT0avDCLVFGaFHcH08UGK/wt
-         RJl0NT1aaGPvTrSYxPaHgqD1Jm8m6bbrbssM3BXmvn+n9dq772FCOj8Gg9ancxE/3F7T
-         xNT60xhMcFDDaOu9Dc1/D79EGMha6iMT8MmCP2i8nC9fMG9O3xo+WKQTa+crZx1EMSg1
-         g0ZpkSZSt2tQGMFRu4chQ6ggTTMiGAwxJ8zR89cn1vQfSEaXz9ISaruZw9qXxHyb59rG
-         FApQ==
-X-Forwarded-Encrypted: i=1; AHgh+RoeFr1fb1h86DOdjdTMkeqI9yT2dXbDZABYiYZ6aCmXlJouiIboB7Mct68MsAAeJoSEK0g=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1ir65ISBZIJH6tCYqjqJn6CEEKYg8sJum7TRXycMv7bsZ+vGc
-	HFdlQL/8kx14celijiYzVofoKp6cpAoiGxNGMJHQ3lpbu/2Uzw+fhBD927910pEx76xTn6MWMsC
-	Eues54gzD5bBa44G8kHCyJmi8ycqJhJw=
-X-Gm-Gg: AR+sD1159Tn/IPs4f+GEyN77OYSIXijypZKMvdQgZpmtgm0HeRwJdD+SaGmGtThwxaT
-	vZSgqSaPOubkwtIgbb4WKepVuHbpyR2FR34uFSsTZHhmUj7oQLY75G3J+BqelsT8UPlWEZHX1Y9
-	Z+UrL1/yhp9wfQQ+ylEmtZaJExxn2G70rJpik/3EAtlMB8HI01t04ZnmFAR19p7YHmYfPRd3o98
-	1ikSMkUhFBAHu+elXcW6IgXkyN0/fk+wY/DyiFYxSgtYVAg2wXc4G7SFOLa+3+V9JRGYAavXdf+
-	96ifEBGoX2lkXqSkpX94HDpgW+rtuDvyRSU/fjHFQayuIHYeGEhrM855Mof7VcwSVtaMljjRuMr
-	zsWqI+4DBZHeKaHRg/HEJk5A7Q2Ug+DJ8nX21oUpfyh0fBYUzDGSH/o3wHz1smauGhT2L8HbQNF
-	usXPselUOQpcXpSvLLS4A=
-X-Received: by 2002:a05:6a00:2392:b0:848:56d4:3288 with SMTP id
- d2e1a72fcca58-84fddf92abamr33959745b3a.4.1787055194638; Tue, 18 Aug 2026
- 05:13:14 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1787056282; x=1787661082;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=DbBW8SBL/dl6PzXoLPXXIKQUheRPziVWZISQvzhikhY=;
+        b=MtkcX0+3FflS3tp35s+1xbALX8qnXOGPt+5aTMT4c0jDqR43+x/vgu4qlwIkGn5yCa
+         XOUeSkmpApZ/qP9Z1UlIiBWkxBDUMjAT7mZ25Nm6rJ/SfJFaOOoZ0nWNbmS8CM0c9lsd
+         qa9puzho4crnxC76xwrDt1Dl1kdVAcDpETZL1zqNtfsm1k4Qr4POdXXDjxefGpeP0unJ
+         zrrK55+oZk0mn9xm+AsZddm5GSWnvUmUwwFLEXQeFb6YCEAIz47xRuAuSz23CYs4hYID
+         ugjNFFvdr7WnAq9vEoQ6ey0H9TTQLzaVEezzwEZiCQLVyUFOjEu4umgyg2bBLrtbZGN7
+         9IyQ==
+X-Gm-Message-State: AOJu0YxCVxg5sTyLE+VLGq6eUwKiFellnLw2LJhXhu9wU35y6HcwrqLL
+	G8dcPIWC7uW+/h7fxPpzfAhiD2HiXTsiHskmJ7mhOaYaIGxEw6cQ3bMI12RCXZOh3fh4RqEH0/c
+	nGDcuT1N8UW9qtbhNJAbW0pqaCy4YlPgmsUa4bDrMDAawd+28K8znXjBm1w==
+X-Gm-Gg: AR+sD11ZSUX/5UnltkZQi175E5I16eUsgHVbnhvxG8iMFrOZ0ZEbTA2e4iBF0KX6D5E
+	85qvdmCWk7qve2y+yoPE8Y+FFKLwaaRjDw/2HnirefuJMb6BDl90Zv25Js0WXcM+gRMNoF1fMzB
+	kPNQ6PmsVlHNBB2TG22v5GS9VhmLPQQaMVUQ7K1yGP3l0LBrl4LyVFl98DVFmxCF/rjPhuxohZM
+	rklY7y24L6d5QpjMly6AsUc024sG5T6qMF/acaL52wynv6qjdESIngykjM2FSMygzng0lxFXlut
+	iCWLe2ldbID5vprDvTBuhgODiV4ZY64QkrfUX8N6NQsl
+X-Received: by 2002:a05:690e:1406:b0:66c:bbc4:9fb0 with SMTP id
+ 956f58d0204a3-66cbbc4a34fmr2065835d50.2.1787056281402; Tue, 18 Aug 2026
+ 05:31:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2155.git.1781710256081.gitgitgadget@gmail.com>
- <CALnO6CD9P4+e=YPdKaLfSBOk-H3_ir64pBP-qMKNNvzUNqunXQ@mail.gmail.com>
- <CALnO6CB1vJ7RtBzTUSJSfYtfH+W2MZCFEkqNWeBXbWJ2r3Pdyg@mail.gmail.com> <a6a9fe7c-e46d-462f-b3b0-7ae6c2d52fe4@app.fastmail.com>
-In-Reply-To: <a6a9fe7c-e46d-462f-b3b0-7ae6c2d52fe4@app.fastmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 18 Aug 2026 08:13:03 -0400
-X-Gm-Features: AcwNN1VWZkvN3GxmAbz2YkpO04_55FUjb8nnW47GQ33gJQC80Iwnf32LaL1V8cM
-Message-ID: <CALnO6CCWADaQycF7XcCFLDgCVtkTAsndKykAWzNhPqVAKWYGzA@mail.gmail.com>
-Subject: Re: [PATCH] completion: zsh: support completion after "git -C <path>"
-To: Lutz Lengemann <lutz@lengemann.net>
-Cc: Lutz Lengemann <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Tue, 18 Aug 2026 14:31:09 +0200
+X-Gm-Features: AcwNN1U4IFRJYlyE2ssJNXivwSVYqWZrfOV_DL4-naqADGvazJ9Ve_jUucX5DLY
+Message-ID: <CAL71e4Nf=-zCrfN7ghEVGq11irajJhtdxYZgKe0Ycux0qs1ZvQ@mail.gmail.com>
+Subject: [RFC] check_connected: toward incoming-proportional cost
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 17, 2026 at 3:29=E2=80=AFPM Lutz Lengemann <lutz@lengemann.net>=
- wrote:
->
-> Hi Ben
->
-> (Resending, my earlier reply was rejected by the list for being HTML.)
->
-> On Wed, Jul 15, 2026, at 00:34, D. Ben Knoble wrote:
-> > Any progress here? I just found my local copy of this patch and was
-> > briefly surprised to see it hadn't graduated anywhere (until I
-> > realized conversation had stalled at this point).
->
-> Sorry for the very late reply, I was on holiday and then other life
-> things got in the way of answering :(  I do have a v2 ready, which I
-> have just pushed to my fork, and which follows this message.
+Hi!
 
-No worries! Hope you enjoyed. (I didn't see v2 come in anywhere, but
-I'll keep my eye out.)
+The connectivity check (check_connected()) used by both fetch
+and receive-pack (and a few other call sites) can be expensive
+for repositories with many refs or large active trees, and I
+think that is worth optimizing.  I have a couple of ideas for
+how to approach that, but before I start sending patches I
+want to discuss the high-level need and align on the direction.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Doesn't it want to do something similar to what __git_main in
-> > git-completion.bash does at the beginning, namely, this part?
->
-> It does, thanks.  v2 no longer skips only leading -C options, but walks
-> the words in front of the command and skips over the global options and,
-> where they take one, their arguments, like __git_main does.
->
-> That also makes "git -p checkout <TAB>" and "git --git-dir=3D<path>
-> checkout <TAB>" complete the arguments of the command, which they did
-> not before.
+This follows up on Patrick Steinhardt's 2021 series [1], which
+explored a faster connectivity check.  I found that thread
+after independently trying a similar approach (and the thread
+was helpful for making me pivot away from it).
 
-Nice side-effect :)
+My key takeaway from that discussion was that making the
+check faster would be useful, but we need to preserve the
+connectivity invariant, and I think I found a way to
+achieve that.
 
-> Two related gaps are left alone, as they are bugs in the _arguments
-> specification rather than in the command lookup: -c is not listed there
-> at all,
+A few definitions I will use throughout:
 
-[no comment]
+  Trusted object (in the context of connectivity check):
+    an object whose complete transitive closure is known to
+    be present for the purposes of the connectivity check.
+    For an object with traversed references, this requires
+    those referenced objects to be trusted.  Objects
+    reachable from current tips are implicitly trusted by
+    the existing connectivity invariant.
 
-> and --git-dir and friends are spelled "--git-dir=3D-", which
-> accepts only "--git-dir=3D<path>", not the "--git-dir <path>" form.  I ca=
-n
-> send patches for those separately.
+  Boundary commit: a trusted commit at the edge between
+    already-trusted and newly introduced history.  More
+    precisely, a trusted commit reached while walking
+    parents from an incoming tip, where the adjacent
+    commit toward the incoming tip is not itself reachable
+    from any current tip.
 
-We were discussing this recently in some threads about Bash
-completion, and I think we landed on "gitcli(1) really prefers the
-stuck form, and so do completion helpers, so let's stick with that for
-now" ?
 
->
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->
-> > But we mark these local, so how do they propagate to the other
-> > functions?
->
-> zsh scoping is dynamic, not lexical, so a variable declared "local" in
-> __git_zsh_main is visible in the functions that are called from it, the
-> bash helpers included.  That is how __git_dir and __git_cmd_idx are
-> handed down already, and __git_C_args works the same way.
+Problem statement
+-----------------
 
-Thanks. I must have known that, but it's remarkably difficult to find
-spelled out in the manual. The closest I can find is the "LOCAL
-PARAMETERS" section of zshparam(1), which could really use an example
-to demonstrate that local is still dynamic.
+The current implementation delegates to a rev-list
+subprocess:
 
-> > We should probably note in the log message that the _directories
-> > completion will not account for previous -C
->
-> I added a note about this in the log message.
+    rev-list --objects --stdin --not --all --quiet
 
-Great
+feeding the incoming tips on stdin.  This reuses the existing
+traversal machinery, which is nice, but it performs work that
+depends on the existing repository size rather than the size
+of the incoming set.
 
-> > I think we could do _slightly_ better by using a state "->dir" or
-> > something, accumulating the current prefix, and passing that to
-> > _directories as a prefix with -W
->
-> I tried that and it works, but it changes what -C offers, which is more
-> than fixing the completion after -C, so I left it out; happy to send it
-> on top.  Two things to watch out for there: the accumulated path has to
-> be made absolute, as -W with ".." gave me the directories of "/", and
-> the accumulation has to stop before the word that is being completed.
+The rev-list operation can be modeled as two steps.
 
-A follow-up is fine with me if you decide to send it (and if not,
-that's fine, too).
+  1. Find the set of boundary commits, using graph traversal
+     seeded by all current tips and all the incoming tips.
 
-> > By the way, I've realized that "git -<tab>" has the same problem (a
-> > giant list of files after the other option completions)
->
-> That one is older than this patch: the file listing comes from the
-> fallback at the end of _git,
->
->         let _ret && _default && _ret=3D0
->
-> which is where the "use-compctl" and "globbed-files" tags in your
-> _complete_help dump come from.
+     The cost here comes both from the number of current tips
+     and the overall graph distance from the seeds to the
+     boundary.  As Patrick noted in the previous thread, this
+     becomes very slow with 880k refs.
 
-Thanks for explaining!
+  2. Verify the objects reachable through the trees of the
+     incoming commits.  This is implemented by first walking
+     the complete tree closure of the boundary commits,
+     marking all visited objects as trusted (UNINTERESTING
+     in the rev-list semantics).  This ensures that walking
+     the tree closure of the incoming commits can be pruned
+     efficiently and thus becomes cheaper.
 
-> I could not reproduce the repeated
-> description block with "zsh -f" and only the _complete completer, so
-> something in my setup or yours may differ there.  Either way it wants
-> its own topic.
+     The cost here is the initial marking, which effectively
+     visits all active objects.
 
-Yes, I agree that can be its own topic. I've been re-studying the
-completion system again recently, so maybe I'll be better equipped to
-debug my setup later=E2=80=A6 I do play with the tag-order style for Git
-completions, so I wonder if that's interfering.
+Since the cost is approximately proportional to both the
+number of local tips and the size of the active object tree,
+it can slow down local fetch operations and server-side
+receive-pack -- and I have observed this being one of the
+bottlenecks for servers with very frequent pushes.
 
-Thanks!
+The recent --skip-connectivity-check addition [2] lets server
+operators bypass the check entirely when they have external
+validation, which suggests the cost is a meaningful pain point
+for some server operators.
 
---=20
-D. Ben Knoble
+Ideally the connectivity check should be proportional to only
+the incoming set.  I am not sure if we can fully reach that
+for all scenarios, but it is possible for simple cases such
+as:
+
+  * pushing new commits on top of an existing branch
+  * force-pushing new commits that have been rebased on a
+    more recent origin/master.
+
+If we manage to optimize the check for most scenarios, we can
+reduce the overall load on git servers even if edge cases will
+still exist.
+
+The two steps (finding the boundary, and verifying commit
+trees) have independent scaling problems and I believe they
+can be optimized mostly independently.
+
+I start with step 2 because it seems like the simplest one to
+reason about, and I also need it to simplify the solution for
+the other problem (step 1).
+
+
+Proposal for opportunistic trusted-tree discovery (for step 2)
+--------------------------------------------------------------
+
+The current implementation eagerly walks the tree closure of
+the boundary commits and marks the visited objects as trusted
+before verifying the incoming commits.  Instead, I propose
+maintaining a cache of trusted objects while verifying the
+incoming commits.  A cached object does not need to be
+verified again; for a tree, this also lets us prune its
+entire closure.
+
+The cache is populated in two ways with different goals:
+
+First, every object verified during the walk is cached, so
+we never need to verify the same object twice.
+
+Second, we can introduce a heuristic for opportunistically
+populating the cache based on doing a parallel tree walk
+against trusted parent commits.
+
+Ignoring details like missing entries and type-changing paths,
+the core idea is roughly:
+
+    global trusted_objects = {}
+    def visit_tree(candidate_tree, parent_trees):
+      for parent_tree in parent_trees:
+        for (_, obj) in entries(parent_tree):
+          trusted_objects += obj
+      for (name, obj) in candidate_tree:
+        if obj in trusted_objects: continue
+        if obj is a tree:
+          parent_subtrees = parent_trees.map(_.get(name))
+          visit_tree(obj, parent_subtrees)
+        // verify obj itself
+        trusted_objects += obj
+
+This heuristic prunes verification to roughly the changed
+entries, as long as there are no cross-directory moves.  If
+there are moves, such subtrees would be verified instead of
+skipped -- we may lose some pruning opportunities, but that
+affects performance rather than correctness.
+
+This heuristic relies on parent-before-child processing
+order: all parents must already be known to be trusted before
+processing the child, otherwise entries from the parent side
+cannot safely be added to the cache.
+
+
+Proposal for finding the boundary (step 1)
+------------------------------------------
+
+This part is harder, but I think there are approaches that can
+speed up the common case.
+
+The simplest option: seed the traversal with a small set of
+likely-useful refs (the old values of the refs being updated,
+possibly together with a few other likely tips) and a bounded
+walk budget.  If every ancestry path from each incoming tip
+reaches a trusted commit within the budget, the boundary is
+closed and we are done.  Otherwise fall back to --not --all
+as today.  This should cover many common push workflows and
+is straightforward to reason about.
+
+If this finds a solution, it is not necessarily minimal.
+Walking from other refs could tighten the boundary, but this
+is still valid for correctness.  A non-minimal boundary means
+more candidate commits to verify, but with opportunistic
+discovery (Proposal 1) that extra work is typically cheap --
+those commits share most of their trees with their parents.
+
+A more ambitious follow-up could interleave lazy iteration of
+the refs with the graph walk, rather than enumerating all refs
+up front.  Each newly loaded ref adds its tip to a shared
+priority queue, and the walk budget is charged globally
+regardless of which ref's ancestry is being explored.  Refs
+would ideally be loaded in an order likely to close the
+boundary quickly, with a fallback to full ref enumeration if
+the budget runs out.
+
+One possible ordering mechanism would be a user-configured
+priority list of ref prefixes, though I have not explored that
+enough to argue for it yet.  The point is mostly that I think
+this is solvable, but I do not know exactly what the best
+solution would look like.
+
+For the prototype I used the simple option, but I am less
+sure that hard-coding that heuristic is the right upstream
+interface, and I would be happy to either flesh out the
+follow-up idea or hopefully arrive at an even better approach
+through the discussion here.
+
+
+Preliminary results
+-------------------
+
+It's too early for proper benchmarks, but I think it's useful
+to get a sense of what is possible.  My local prototype for
+both proposals speeds up the connectivity check for a large
+repository (3M commits, 200K refs, ~600K tree and blob
+objects reachable from the boundary).  Numbers are
+intentionally rounded to one significant digit since this is
+not scientific, purely intended as guidance for knowing if
+it's worth exploring further.
+
+  5-commit push, 45 changed files:
+
+  Current (rev-list --not --all):               1     s
+  Opportunistic discovery + bounded traversal:  0.03  s
+
+  1-commit push, trivial change:
+
+  Current (rev-list --not --all):               1     s
+  Opportunistic discovery + bounded traversal:  0.007 s
+
+
+On this workload, the opportunistic discovery is much less
+impactful than the boundary walk, but it is included here
+because I never attempted to combine the existing rev-list
+--objects mechanism with the new boundary search.
+
+The bounded traversal (seeded with the old branch value)
+avoids loading the full ref set, and opportunistic discovery
+reduces the object verification: around 100 objects walked
+instead of the full 600 000 tree and blob objects.
+
+
+Other approaches considered
+---------------------------
+
+I also explored using commit-graph membership as evidence of
+past trust: if a commit is in the commit-graph and in the odb,
+treat it as trusted and stop the walk there.  I initially
+hoped that GC's treatment of reachable closures might make
+this safe as well.  However, it turns out to still
+be hard to reason about what it means for an object to exist
+in the odb -- it may still exist in a pack that is retained
+because other objects inside are reachable.
+
+I gave up on that approach for now, but I am honestly not
+certain if it's fully a dead end or not.
+
+Feedback requested
+------------------
+
+I am primarily interested in feedback on whether this problem
+is worth solving and if the proposed solution is going in the
+right direction, but any useful insights or gotchas that break
+the idea are of course appreciated.
+
+I tried to keep this as high-level as possible and avoided
+discussing some of the edge cases -- some of my earlier
+email drafts were much too long and it was a struggle to
+condense it. That said, I included an appendix to present
+how my prototype handles those cases if anyone is curious.
+
+Thanks,
+Kristofer
+
+
+Appendix: special cases
+-----------------------
+
+Non-commit tips: tags are peeled iteratively until reaching
+a non-tag object.  Blob tips are verified for existence by
+the peel step itself.  Tree tips get full closure verification
+(no parent diff, since there is no parent commit to diff
+against).  This is correct but not optimized -- and tree tips
+are uncommon in practice (I think).
+
+Shallow clones: when a temporary shallow file is in effect,
+the listed commits are treated as roots with no parents.
+Their trees get full closure verification rather than a
+parent diff.  The parent-diff heuristic only applies above
+the shallow boundary, which is where incoming commits are in
+practice.
+
+Deepening fetches: the entire deepened ancestry becomes
+candidates, so there is no small incoming set to optimize
+for.  The implementation falls back to the current rev-list
+path to avoid the memory overhead of tracking millions of
+candidate commits in-process.  This could be optimized later
+if needed.
+
+Promisor remotes: the existing fast path that checks whether
+all wanted tips are present in promisor packs runs first,
+unchanged.  If that fast path does not cover all tips, the
+optimized verification path accepts any missing object
+(tree, blob, or tag target) that is a promisor object,
+matching the --exclude-promisor-objects semantics.
+
+Replace objects: the optimized path assumes the physical
+commit graph is acyclic.  Replace objects can violate that, so
+the implementation falls back to the current rev-list path
+when any replace objects are configured.
+
+
+[1] https://lore.kernel.org/git/cover.1621451532.git.ps@pks.im/
+    (Speed up connectivity checks via quarantine dir,
+    Patrick Steinhardt, 2021)
+[2] https://lore.kernel.org/git/20250507030249.4802-1-jltobler@gmail.com/
+    (builtin/receive-pack: introduce option to skip connectivity checks,
+    Justin Tobler, 2025)
