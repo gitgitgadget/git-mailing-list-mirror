@@ -1,398 +1,270 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EED3ACF0B
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 14:51:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787064684; cv=pass; b=s8zBu/+cswkboo9Vkue94xEFdnd++RALYE0hzthXqlnUzw2ehfDsfbjtB5Gk9BI8+yLwBectq6JAw+XVYZGq94E122lPRAnYYjbwimvRnrngIXl6wAybWm4L3VwbO+ewhCQ5URYa9H1N4sLVC9qW2hEPvd/VoBPxSvumkOBTtnA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787064684; c=relaxed/simple;
-	bh=wc2P14TRj42r2FpeONFkZuw2Hynn6ebhBwkDxqmR8GQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=orkrH8fibp0BqNA8+C0DC16rSmPhnixrMCU1SPZbyCxCSQGOimJ2PXYxWU4H06/O5VF70l8XCnaFhTBfPJdD1BAES+pC1blfEgsAHk4UI3FxgcnnZSeeaik8ONAPoecnp/XxLo1Tw2ymUBABmV3JqPSmpPskM9/fXLeNnEjvRqU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bn2t0Mfe; arc=pass smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D0F3AAF43
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 15:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787065224; cv=none; b=LGMHkXpqjRqc3zqiiqJVBnwL8+iNeXxa/zDWpXkcTke+NBFClbHXJ3iqSkFxKYX9WCH66lDJ/pmtLlJhgyunjIT16QX4e3GMx50JhKhSDgM3Vtx2e0HDtfTVB7XtR5tLO0GI/a4jC2c24AJO6hlntl4LFI7YcVk9cJeiKdEd2Kk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787065224; c=relaxed/simple;
+	bh=s87B2CIxnUeq3m/9TO+z5P3ZOfsTO81ffaNqgAA9lMQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=txaSL82Wgl2djKGpVlqZwMRJmpdr+s9O5aqGfRfikLbK17l50jfm3UDRGzDRCbTxhGWK1S3+AU4qHQ+JR1HqzLXMOPlZrlZ9MlVy9eeMWZls1GVQLyrbl1CGMyUSjS40mQb9DxP/Lbkre7ERG5kcQo3QukX7vGnZyqXmXU61o9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Il/Wn7Z5; arc=none smtp.client-ip=74.125.224.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bn2t0Mfe"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5aeb8c19017so6271858e87.0
-        for <git@vger.kernel.org>; Tue, 18 Aug 2026 07:51:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787064680; cv=none;
-        d=google.com; s=arc-20260327;
-        b=aJHF0msu4TCiPfTdfc5kOifBV7dWKfgGUlQ54/UOmTR/fUuU0xwwVQmEBvhN02qB6J
-         cexnPERdGT3VaFVOIUHsU03iWz+IpXb/pDp+k4/kTq/UxZe038uKOAGHN5UluT8sLRN9
-         yd1qQ0H1q8SoKwIKvumQ+rGEazVFnLRSgtmpWUoi4pv6JyuS3ri6azmf5Aw62VqPhR0s
-         YI3hEtM4nq3Obk9gTm7oUao30VeKyVWRY+nj4NpePl2j+SN7K5y9jcgbnS3RxFjEx45U
-         ahkWnc76aIJ+fA5uVoc9t9v8xGfTuGSMrJZV1QVTeatCD0vbUOzmTW1uy8Kur452QOJe
-         inZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8VpSKnkznlhXEvYZGj7zNORWNWjxRUdY7p8dbpr99ro=;
-        fh=VM3ifk780jYIigTY6U/ZeitZx1H4gC4fTZYROhN/Mr0=;
-        b=LFLuFG30oEE6z32CBI453Tg+PkST3H+HwYbGS21F0qWe2PD+4db+qPuFJwazkvxoYt
-         gLC4NcadQr+bHmr93aOe/U2O72TbibQ1/xAS32KC/pozf0oPGou9itLAImDQFO4x6zpC
-         txsmEwDbDHavcXXzu818c8pXUZXlE4Ck4e8CJwETWArd9APTOwQAdyPOoKjhRG2tVbt8
-         RA5Mxhd3ZTzMLVO/GbIUvOIr+fMT52X/O/jkJaxDN/wi8xh+QgnAaGzr9oXcrMVzx6gG
-         XNJC2FhKGTXsnaaiNwwcyV9K2lUPYGJLO9TsKnOmvkuBiWsjRj9KgudabQOg7opbAw1W
-         PJ3A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Il/Wn7Z5"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-66807ba2f0fso11913d50.3
+        for <git@vger.kernel.org>; Tue, 18 Aug 2026 08:00:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787064680; x=1787669480; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1787065221; x=1787670021; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=8VpSKnkznlhXEvYZGj7zNORWNWjxRUdY7p8dbpr99ro=;
-        b=Bn2t0MfeeXYQBz4oCeh5FJpxIZZn24tnoWuKoPIf6X+awOJoCJj3k484g4a6UE7XG3
-         iN8lIWzGYu8dT7zh8/8EZ3/IgLTEUvFJ+a1HvVSaAKrW8WH9SQHfSv8YnxdpmHIZ2ccH
-         GJ24Q0DYUNbw7bJKkKN+o5KPeQDEpGTPwjbzTny3pj2T8/bC0RDqmwjfUBffGTov3yQR
-         iw4WDz2CHHJxPVey9ew0HOA3wOAkS4oElNngxf3AmMZ1MQ8QJKbiWZgbpzkXVwY7IXSx
-         +0ljpIJ7rzpKOru5q8Bp7Qddc475euo5sutX5WBZUQ2YRsr75lUL4cgPqLbfpnNLwcF2
-         uNgA==
+        bh=6EPVmvllkvRCy7dtOrrx+so6gyZIRQzMbChAJy6fHk4=;
+        b=Il/Wn7Z5vktTLQaeg4QUmJ3KJBoUmUPMhOyJs5EFBSyJZORQdadZM4QxLzeuxkU+tA
+         f8beP8Y/6fIZHrIhLvbjpnD7WZJ2L3XzucelyR8uZ4Es8Mli3MYSbUxs1FoDlAaViFw6
+         k2+YElQyXX+H+soPYmZYK+5lu2EhBlbHUq2hYFt3V2b23rzphg1i2KU+CrQ11FS9LhnP
+         JmTtLrd1q3/rtgb2bzhPYMsAVyydiIQM/BaFFZaXcubnA8rSBV8RZJ4CzOE3dYyLCjG8
+         gmtccUJ5WDtpQu+6DgLOLxVf6kKJogzbzeNzhMRm80E58Z5E/g6Ha1JfDzFWfsR1CVln
+         bDiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787064680; x=1787669480;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1787065221; x=1787670021;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=8VpSKnkznlhXEvYZGj7zNORWNWjxRUdY7p8dbpr99ro=;
-        b=HUr9pujwbNCeBfDeTuD2rl0unevZW6J4ixRUGlFfLN+/PxmUTTO9g0KwQaGe1Axti2
-         GhBloh8sIpwx2RkrE2iAfNCEYvgfu3ES3Qo4PRVPNaiyZPBURL1TujcUjgpCIWbQ3Ewt
-         2cYtTi0+AHjXutFUIzNldtl6TPM4fWNB3+0iJWzAF1bwl8LxO/EUgkyXZ1Ojy8NQOt4D
-         fqeG29OmXzMRpdGwFkNVuFNYvUso44YvwNy3B1wEne6upxJsLK8rcrcbYbU7qt2uZwza
-         yaY2v/WXC0yIZeywUTLSw18TzKga32Y0ccR8AnbuDijg6tBS/ucm2+KISVKWb/ui66u5
-         FMLQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqKdVqkpqS0ljZdSun9BXHW87ISE88WkvOWgQM9VxKlb0vB7tQ8rwwRkZ7zXomwMJkzSIk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3i2U7qOJnB+td6bbZCMNKVX1VWxHKoWkepshKMYe7TTXuOkz1
-	9nwJm/GPP2EMD7pf883I4sqcXH+2nYEKoRcS82xhcizm3NyzaV2zKLbk/rTb9m6Dkwlb9gfLTPx
-	5weLLANfJ91jB8pLXGCNmKLS7jheCG6U=
-X-Gm-Gg: AR+sD11KDBdn2zOXwdssp0gDmjvgqvPUyDr0gp32LAfyHtz5sjburlQiSZqab/JtmC6
-	1YBAVFoaoxd77tTf9ezq1HqPQdHIkVVbqOeTrGBArgVEhbF+0KdmMuVXQs/0xoIYxe2a8f3STVf
-	TANZx+L7E0+JXvoAr7hU9Yj1ecnHGh4PLpkap+R00s9Y37HQZ8MbZwtoVgs3JmRTUGPQqvHvI39
-	mFdxtB2pSBSqtmaCF526OKmlPnVdHlZRq3ikda3LteF7zjoJwgHd4a21BJwscp+YayZyqhzkgEj
-	HIged0H1Bj7S18sTy3R+xvMmwS5ZLFa+oloEBJ+aYDFK+Vuef4cLfgIX/9Vdc0pXqCHr6uI+PZw
-	G8hc=
-X-Received: by 2002:a2e:bea8:0:b0:394:5c9a:f315 with SMTP id
- 38308e7fff4ca-3a1751fb822mr15860851fa.14.1787064680007; Tue, 18 Aug 2026
- 07:51:20 -0700 (PDT)
+        bh=6EPVmvllkvRCy7dtOrrx+so6gyZIRQzMbChAJy6fHk4=;
+        b=QRGknfkdGTqFu9d4j2KWYqo0GjGJVbQPw82AYzpxXgrw0NpSzu7ouo2tMRQ8SZc7TK
+         JSDCc4iS32KOam61wXqF2N0IG0AhGs64bfoxnLF9TsZGGe60d4EWIq+cMqNxbJfzgK8z
+         /2v3GftuEfl0RIdHLIEv0jjLTeyWpmsBc/sanJFUfAPAWGyxpSZrdgWb1cZzxMzOiB7N
+         GmFdcCl0hXZUYC704RowaQm/9MENCaDgBktzoAA3WNtgskJllapdbIWIj8k5VVrhGD3v
+         YTe93aOD5P79g0ZZlRyGMXcU7/PVH7hMr4wT03zVN4p5JvFAk0KNGhF+NQy8cMnu19n0
+         4Bkw==
+X-Gm-Message-State: AOJu0YzvLF6P5+piG4UUWZHpVMme1+cIooZAeB+wmRX40HxbO1U+fW/d
+	qFXvOCoEy8+hddclzzip4u6Mm8kV1M9jxSpSmSQp4CnZWdqwcWjJnJjcn6QTiCzB
+X-Gm-Gg: AR+sD10Zti0ZmIN9WjIHakqBwGSPazoRw6NENcPFfuO2NeRqcJHb/w+tXAaAJel73i9
+	xjLb9ZboIFHg8AxFinTXdHjLXOkGlUIVq5M2B8dL5WHTiCQ80wl4wzr89jO4VRswcP5JrDdEyTb
+	SmGIz4M/CrP9EspPeClA0ZGlMXygUdHqXWZYFAWIbLHNYqT7B4dzVbNFn1E4Zs0hXJI+MSixRlk
+	vURLkeumnCEXLzesTk6jt/yjYdRuzEXE6Ui64StRFLLhJMCzxztS4D2FSz4spMA21YlVa2F141y
+	Zb6P/U5rIy1rLLyXDoPb9HLgf/Kz8KrEEDZOQXRDotedlIcKVrAucigNGGgQlEQKOSDIsY4QfO3
+	+anFP3VzWHYXdIBUPjnpNZojlh9xNP9zLZ0aW/YgXXH9rPg+YMAft6JM7WHDUAQJR96G7AJJlhG
+	7NDOGxoiLj4Xashw59fcfBnW/QLPbcFex0NyYckYplErQ3usBUSmUMb25A4l9aiBbXb+F1IxYUP
+	5Tnwsh6yhM0cP29HXYsTMgiRCQ9meMu3njqkJoRIBf2OgEZ1l/r5Ux1YJ3IbPCKo7jcJvMBW75S
+	ugsV19HK+Fk=
+X-Received: by 2002:a05:690e:250:b0:668:2e0a:ba97 with SMTP id 956f58d0204a3-66c72b66e72mr8928857d50.13.1787065221246;
+        Tue, 18 Aug 2026 08:00:21 -0700 (PDT)
+Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::7])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-840f3d1fb12sm20201097b3.48.2026.08.18.08.00.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Aug 2026 08:00:19 -0700 (PDT)
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: [PATCH v3 0/3] Convert USE_NSEC to runtime config
+Date: Tue, 18 Aug 2026 10:59:44 -0400
+Message-ID: <cover.1787065125.git.ben.knoble@gmail.com>
+X-Mailer: git-send-email 2.55.0.860.g4b6b3295ed.dirty
+In-Reply-To: <cover.1786103607.git.ben.knoble@gmail.com>
+References: <cover.1786103607.git.ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqmruqt36l.fsf@gitster.g> <20260817185242.22736-1-ggordon@gitlab.com>
- <aoQOxISPfEwh-ik2@pks.im>
-In-Reply-To: <aoQOxISPfEwh-ik2@pks.im>
-From: Grayson Gordon <graysongordon1@gmail.com>
-Date: Tue, 18 Aug 2026 10:51:08 -0400
-X-Gm-Features: AcwNN1XhfBuViNJgkY_2owGfdoa47g2HwFq4TBZ8NDyGumcNgxJ68_vpKCKmlAs
-Message-ID: <CALgUfNhxLEeTK5xH9Dw9ZPBG+oPq9Fw1qDgt=wbXqrnuEetJyw@mail.gmail.com>
-Subject: Re: [PATCH v4] http: add http.sslVerifyStatus to check stapled OCSP responses
-To: Patrick Steinhardt <ps@pks.im>
-Cc: gitster@pobox.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Patrick,
+Topic name: dk/use-nsec-runtime (applied)
 
-Thanks again for the feedback. I'm going to break this into sections
-delimited by all caps headers to address each thing you mentioned.
+Topic summary: Expose USE_NSEC as a runtime configuration, since
+build-time is too early for distributing Git [1]. As a result, common
+index-related options, like git-diff, are less likely to hit "racy git"
+problems on supported filesystems.
 
-ON GNUTLS VS OPENSSL DIFFERENCES
+[1]: https://git.github.io/rev_news/2026/07/31/edition-137/
 
-I appreciate you including the extra context around GnuTLS 3.8's
-GNUTLS_NO_STATUS_REQUEST flag, and curl 8.10 setting it when
-"verifystatus" is false.
+Built on master (2c78326f81 (The 11th batch, 2026-08-05)).
 
-Fair enough, said another way, if either of these are true:
-Condition 1: curl is being built with GnuTLS version < 3.8. (There's
-no NO_STATUS_REQUEST flag to set.)
-OR
-Condition 2:  curl version < 8.10. (Curl's not using the flag.)
+Changes in v3:
 
-You'll see a discrepancy in cert verification behavior between the
-versions of git built with GnuTLS vs OpenSSL.
+- #ifdef out use_nanosec when NO_NSEC is requested
 
-While I appreciate the increased precision here, the purpose of my
-contribution was to expose the functionality that enables git users to
-set it if they so choose. As it stands today, this option is not
-presented. So while the discrepancy is what incited me to look deeper,
-it isn't the central reason I'm here.
+As I have heard no comments about the "Todo" lines below, which perhaps
+could more clearly be marked "RFC"/"RFH", I've added this line to call
+them out ;) and renamed them "Comments welcome"
 
-You had a section further down that said: "This information is not
-accurate because recent GnuTLS+libcurl versions
-handle this the same as OpenSSL, as mentioned above." I think that
-this response section suffices for both.
+Changes in v2:
 
-I didn't look into any other TLS backends, as curl's docs say that the
-verifystatus option only works with GnuTLS and OpenSSL
-https://curl.se/libcurl/c/CURLOPT_SSL_VERIFYSTATUS.html and the other
-backend options didn't apply to GitLab customers as it relates to our
-CNG charts. There may still be value in looking and capturing it in
-the git docs somewhere.
+- move Best-viewed-with trailer into message body as descriptive
+  text.
+- read core.useNanosec through struct repo instead of parsing
+  config strings. The test suite passes locally this way, though that
+  skipped 151 tests.
+    - CI run: https://github.com/benknoble/git/actions/runs/31701945211
 
----------------
+Original cover letter:
 
-ON DEFAULT BEHAVIOR AND THE COMMIT MESSAGE
+Hi all, this series follows up on the previous racy Git/USE_NSEC
+conversations.
 
-In reality we ARE leaving the default to curl without the flag being
-set, so my comment "Leaving the default to libcurl is not an option
-either." wasn't super precise either. A nit.
-Again the change that's being introduced here is an OPTION for git
-users to include the "verifystatus" flag.
+- The first patch is a mostly-unrelated documentation fix for Meson, but
+  it came out of something I spotted while reviewing the outputs of the
+  final (main) patch.
+- The second patch is a preliminary no-op reorganization of
+  repo_config_values_init.
+- The third patch is the meat, converting USE_NSEC into core.useNanosec.
 
-Sorry that the commit message feels a bit awkward to you, I can rework
-it to be a bit more direct and not spend as much time on
-justifications if that'll be easier to read.
+There is a small textual and semantic conflict with
+'ty/repo-config-cleanups' in 'seen', since that branch removes the
+comments in 'struct repo_config_values' which this series adds to. (The
+semantic conflict is that, if we drop those comments, we should probably
+not add them to repo_config_values_init like I do in patch 2.)
 
----------------
+Comments welcome: I haven't touched any tests; I saw a bunch of hits for
+"git grep racy t" but wasn't sure how to fit this particular change in,
+especially since it won't be equally valid on all systems? Advice
+welcome.
 
-ON DESCRIPTIVE ERROR MESSAGES
+Comments welcome: I wonder if "useNanosec" paints us into too much of a
+corner; that is (slightly more abstractly), we are using *extended
+precision* in the index. Maybe the name and documentation should reflect
+that, so we aren't too committed to "nanoseconds"?
+    - Some platforms could offer extended precision that is not as
+      precise as nanoseconds
+    - Some could offer precision _beyond_ nanoseconds
 
-Yes, I like this idea. We could give user's a much clearer error that
-way. I'll include that. My tests grep for the current string though,
-so I'll have to update that too.
+idk.
 
----------------
+v1: <cover.1786103607.git.ben.knoble@gmail.com>
+v2: <cover.1786710807.git.ben.knoble@gmail.com>
 
-ON COMPREHENSIVE TESTING
+[1/3] meson: expose knob for xmlto relative links in manuals
+[2/3] environment: align repo_config_values_init with struct declaration
+[3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
 
-I'll leave this at you and Junio's discretion. I worked with him
-earlier in this thread to avoid introducing another test file and keep
-the testing succinct.
-Right now these tests are just limited to parsing the config and
-applying it to the user-provided remote.
-We COULD do the full suite of tests that cover the full range of
-cases/behaviors:
-- The flag is set AND
-    - no staple sent (should fail)
-    - good staple (should pass)
-    - bad staple (should fail)
-etc.
+ Documentation/config/core.adoc        |  6 ++++++
+ Documentation/meson.build             |  7 ++++++-
+ Documentation/technical/racy-git.adoc | 11 +++++-----
+ Makefile                              | 12 +----------
+ builtin/update-index.c                |  2 +-
+ compat/posix.h                        |  1 -
+ configure.ac                          |  6 ------
+ environment.c                         | 29 ++++++++++++++++++++-------
+ environment.h                         |  1 +
+ meson_options.txt                     |  2 ++
+ read-cache.c                          | 16 ++++++++++-----
+ statinfo.c                            | 14 +++++++------
+ 12 files changed, 64 insertions(+), 43 deletions(-)
 
-We're going to need a lot of infrax for that though:
-- test CA.
-- test server certificate issued by that CA.
-- OCSP responder which knows the certificate's status.
-- a way for the TLS server to obtain and staple that response.
-- a way to control the response so you can test good vs revoked/invalid.
+Diff-intervalle contre v2 :
+1:  d612de6c2d = 1:  d612de6c2d meson: expose knob for xmlto relative links in manuals
+2:  5693baa992 = 2:  5693baa992 environment: align repo_config_values_init with struct declaration
+3:  2d1424732a ! 3:  48fceb4b57 core: convert build-time USE_NSEC into runtime core.useNanosec
+    @@ Commit message
+     
+      ## Notes (benknoble/commits) ##
+         Related benchmarks: <https://lore.kernel.org/git/CALnO6CBm4g27mWBvD9m6yL0e5YZu3M9_zcUeLZk7QwTgnxMLQA@mail.gmail.com/>
+    -    CI: <https://github.com/benknoble/git/actions/runs/31701945211>
+    +    CI: <https://github.com/benknoble/git/actions/runs/32137191115>
+    +
+    +    v3:
+    +        We could perhaps be cute in read-cache.c:is_racy_stat() by writing
+    +        the preprocessor directive like
+    +
+    +    		return (istate->timestamp.sec &&
+    +    	#ifndef NO_NSEC
+    +    			/* nanosecond timestamped files can also be racy! */
+    +    			use_nsec
+    +    			? (istate->timestamp.sec < sd->sd_mtime.sec ||
+    +    			   (istate->timestamp.sec == sd->sd_mtime.sec &&
+    +    			    istate->timestamp.nsec <= sd->sd_mtime.nsec))
+    +    			:
+    +    	#endif
+    +    			istate->timestamp.sec <= sd->sd_mtime.sec
+    +
+    +        but that seemed maybe too clever?
+     
+      ## Documentation/config/core.adoc ##
+     @@ Documentation/config/core.adoc: core.trustctime::
+    @@ environment.c: int git_default_core_config(const char *var, const char *value,
+      		return 0;
+      	}
+      
+    ++#ifndef NO_NSEC
+     +	if (!strcmp(var, "core.usenanosec")) {
+     +		cfg->use_nanosec = git_config_bool(var, value);
+     +		return 0;
+     +	}
+    ++#endif
+     +
+      	/* Add other config variables here and to Documentation/config.adoc. */
+      	return platform_core_config(var, value, ctx, cb);
+    @@ environment.c: void repo_config_values_init(struct repo_config_values *cfg)
+      	cfg->ignore_case = 0;
+      	cfg->trust_executable_bit = 1;
+      	cfg->has_symlinks = platform_has_symlinks();
+    ++#ifndef NO_NSEC
+     +	cfg->use_nanosec = 0;
+    ++#endif
+      
+      	/* section "sparse" config values */
+      	cfg->sparse_expect_files_outside_of_patterns = 0;
+    @@ read-cache.c: static int ce_match_stat_basic(const struct cache_entry *ce, struc
+      static int is_racy_stat(const struct index_state *istate,
+      			const struct stat_data *sd)
+      {
+    ++#ifndef NO_NSEC
+     +	int use_nsec = repo_config_values(istate->repo)->use_nanosec;
+    ++#endif
+     +
+      	return (istate->timestamp.sec &&
+     -#ifdef USE_NSEC
+    @@ read-cache.c: static int ce_match_stat_basic(const struct cache_entry *ce, struc
+     -		(istate->timestamp.sec < sd->sd_mtime.sec ||
+     -		 (istate->timestamp.sec == sd->sd_mtime.sec &&
+     -		  istate->timestamp.nsec <= sd->sd_mtime.nsec))
+    --#else
+    --		istate->timestamp.sec <= sd->sd_mtime.sec
+    --#endif
+    ++#ifndef NO_NSEC
+     +		/* nanosecond timestamped files can also be racy! */
+     +		use_nsec
+     +		? (istate->timestamp.sec < sd->sd_mtime.sec ||
+     +		   (istate->timestamp.sec == sd->sd_mtime.sec &&
+     +		    istate->timestamp.nsec <= sd->sd_mtime.nsec))
+     +		: istate->timestamp.sec <= sd->sd_mtime.sec
+    - 		);
+    - }
+    - 
+    + #else
+    + 		istate->timestamp.sec <= sd->sd_mtime.sec
+    + #endif
+     
+      ## statinfo.c ##
+     @@ statinfo.c: int match_stat_data(const struct stat_data *sd, struct stat *st)
+    @@ statinfo.c: int match_stat_data(const struct stat_data *sd, struct stat *st)
+     -	if (cfg->trust_ctime && cfg->check_stat &&
+     -	    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
+     -		changed |= CTIME_CHANGED;
+    --#endif
+    ++#ifndef NO_NSEC
+     +	if (cfg->use_nanosec) {
+     +		if (cfg->check_stat && sd->sd_mtime.nsec != ST_MTIME_NSEC(*st))
+     +			changed |= MTIME_CHANGED;
+    @@ statinfo.c: int match_stat_data(const struct stat_data *sd, struct stat *st)
+     +		    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
+     +			changed |= CTIME_CHANGED;
+     +	}
+    + #endif
+      
+      	if (cfg->check_stat) {
+    - 		if (sd->sd_uid != (unsigned int) st->st_uid ||
 
-I set all of that stuff up in my own experiment repo, emulating this
-with nginx in docker...
+base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+-- 
+2.55.0.860.g4b6b3295ed.dirty
 
-It's feasible, just need to know how you all would like it.
-
-- Grayson
-
-On Tue, Aug 18, 2026 at 3:50=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Mon, Aug 17, 2026 at 02:52:42PM -0400, graysongordon-gl wrote:
-> > From: Grayson Gordon <graysongordon1@gmail.com>
-> >
-> > git asks libcurl to verify the peer certificate and the hostname, but i=
-t
-> > never sets CURLOPT_SSL_VERIFYSTATUS, so the "Certificate Status Request=
-"
-> > TLS extension is never requested and any stapled OCSP response the serv=
-er
-> > does send is ignored.
-> >
-> > On an OpenSSL-linked build this is silent. OpenSSL hands the stapled
-> > response to the application and takes no view on it:
-> > SSL_CTX_set_tlsext_status_cb(3) says the callback "should determine
-> > whether the returned OCSP response(s) are acceptable or not", and libcu=
-rl
-> > only installs that callback when CURLOPT_SSL_VERIFYSTATUS is set. So gi=
-t
-> > will fetch from a server whose own staple says its certificate has been
-> > revoked.
-> >
-> > A GnuTLS-linked build behaves differently, and the difference does not
-> > come from curl. GnuTLS consults a stapled response inside
-> > gnutls_certificate_verify_peers(), so the failure surfaces through the
-> > verifypeer branch of curl's GnuTLS backend (lib/vtls/gtls.c) whether or
-> > not CURLOPT_SSL_VERIFYSTATUS was ever set. The same git, against the sa=
-me
-> > server, therefore enforces revocation or not depending only on how its
-> > libcurl was built. That difference is documented here rather than paper=
-ed
-> > over: this option turns the check on where the backend needs asking, an=
-d
-> > setting it to false does not turn the check off on GnuTLS.
->
-> This is only part of the story though: GnuTLS 3.8 introduced
-> GNUTLS_NO_STATUS_REQUEST, and curl 8.10 started to set that option in
-> case of `!verifystatus`. So with new-enough versions of both libraries,
-> Git behaves the same no matter whether we use OpenSSL or GnuTLS as
-> backend. See also aeb1a281ca (gtls: fix OCSP stapling management,
-> 2024-08-20) in curl.
->
-> > Add an http.sslVerifyStatus boolean that sets CURLOPT_SSL_VERIFYSTATUS.
-> > Because http_options() is the collect_fn of a urlmatch config, the
-> > per-URL form works with no further changes:
-> >
-> >     git config http.https://example.com/.sslVerifyStatus true
-> >
-> > It defaults to false, and has to. The option is fail-closed: libcurl fa=
-ils
-> > verification when the server staples nothing at all, so turning this on
-> > globally would break every remote that does not staple.
-> >
-> > Leaving the default to libcurl is not an option either. The same
-> > complaint was raised there in https://github.com/curl/curl/issues/15483
-> > and closed as intentional ("Marked as enhancement since this was done o=
-n
-> > purpose"), with the observation that stapling is expected to see less u=
-se
-> > as Let's Encrypt drops OCSP support. If the check is to be reachable at
-> > all, the lever has to come from the application.
->
-> But... don't we still leave the default to libcurl? If
-> "http.sslVerifyStatus" is not set then we don't touch
-> `CURLOPT_SSL_VERIFYSTATUS`, either.
->
-> I might be misreading this though, as the whole commit message is quite
-> hard to digest. I'd assume that this is because it's generated by AI,
-> and it added a lot of the usual weird phrases to the message. It might
-> be a good idea to adapt the message to have a bit more of a human touch
-> to it.
->
-> > If the TLS backend cannot check the staple, curl_easy_setopt() returns
-> > CURLE_NOT_BUILT_IN. Fail loudly there rather than carrying on, since
-> > silently not checking is precisely what this option exists to prevent.
->
-> Makes sense.
->
-> > diff --git a/Documentation/config/http.adoc b/Documentation/config/http=
-.adoc
-> > index 792a71b413..40b849bf7f 100644
-> > --- a/Documentation/config/http.adoc
-> > +++ b/Documentation/config/http.adoc
-> > @@ -196,6 +196,23 @@ http.sslVerify::
-> >       over HTTPS. Defaults to true. Can be overridden by the
-> >       `GIT_SSL_NO_VERIFY` environment variable.
-> >
-> > +http.sslVerifyStatus::
-> > +     Whether to check the revocation status of the server
-> > +     certificate using the stapled OCSP response supplied during
-> > +     the TLS handshake ("OCSP stapling"). Defaults to false.
-> > ++
-> > +This is fail-closed: if the server staples no response, verification
-> > +fails. Set it per remote, e.g.
-> > +`http.https://example.com/.sslVerifyStatus`, rather than globally.
-> > ++
-> > +What it changes depends on the TLS backend libcurl was built against.
-> > +An OpenSSL-linked build ignores a stapled response unless this is set.
-> > +A GnuTLS-linked build consults the staple during ordinary certificate
-> > +verification, so it already rejects a revoked certificate under
-> > +`http.sslVerify` alone, and setting this to `false` does not disable
-> > +that. Where a backend cannot check the staple at all, git fails with a=
-n
-> > +error rather than continuing unchecked.
->
-> This information is not accurate because recent GnuTLS+libcurl versions
-> handle this the same as OpenSSL, as mentioned above.
->
-> Also, it might make sense to convert the backend-specific information
-> into a bulleted list as we may add more items to it going forward. Do we
-> have any info how other backends like mbedTLS behave? Or do we know that
-> those all fail.
->
-> > diff --git a/http.c b/http.c
-> > index caccf2108e..94f8dd817a 100644
-> > --- a/http.c
-> > +++ b/http.c
-> > @@ -400,6 +401,10 @@ static int http_options(const char *var, const cha=
-r *value,
-> >               curl_ssl_verify =3D git_config_bool(var, value);
-> >               return 0;
-> >       }
-> > +     if (!strcmp("http.sslverifystatus", var)) {
-> > +             curl_ssl_verify_status =3D git_config_bool(var, value);
-> > +             return 0;
-> > +     }
-> >       if (!strcmp("http.sslcipherlist", var))
-> >               return git_config_string(&ssl_cipherlist, var, value);
-> >       if (!strcmp("http.sslversion", var))
-> > @@ -1133,6 +1138,11 @@ static CURL *get_curl_handle(void)
-> >               curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2L);
-> >       }
-> >
-> > +     if (curl_ssl_verify_status &&
-> > +         curl_easy_setopt(result, CURLOPT_SSL_VERIFYSTATUS, 1L) !=3D C=
-URLE_OK)
-> > +             die(_("http.sslVerifyStatus is set, but the TLS backend o=
-f "
-> > +                   "this libcurl cannot verify certificate status"));
->
-> Should we include the output of `curl_easy_strerror()` in the error
-> message? That'd cause us to include the following error message in case
-> we see CURLE_NOT_BUILT_IN:
->
->   case CURLE_NOT_BUILT_IN:
->     return "A requested feature, protocol or option was not found built-i=
-n in"
->            " this libcurl due to a build-time decision.";
->
-> So we could instead do:
->
->         if (curl_ssl_verify_status) {
->                 CURLcode error =3D curl_easy_setopt(result, CURLOPT_SSL_V=
-ERIFYSTATUS, 1L);
->                 if (error !=3D CURLE_OK)
->                     die(_("http.sslVerifyStatus is set, but could not ena=
-ble OCSP status verification: %s"),
->                         curl_easy_strerror(error));
->         }
->
-> > diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> > index 805bec025c..c11e96c1ac 100755
-> > --- a/t/t5551-http-fetch-smart.sh
-> > +++ b/t/t5551-http-fetch-smart.sh
-> > @@ -680,6 +680,35 @@ test_expect_success 'passing hostname resolution i=
-nformation works' '
-> >       git -c "http.curloptResolve=3D$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0=
-.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
-> >  '
-> >
-> > +test_lazy_prereq SSL_VERIFYSTATUS '
-> > +     test "$HTTPD_PROTO" =3D "https" &&
-> > +     test_might_fail git -c http.sslVerifyStatus=3Dtrue \
-> > +             ls-remote "$HTTPD_URL/smart/repo.git" 2>err &&
-> > +     ! grep "cannot verify certificate status" err
-> > +'
-> > +
-> > +test_expect_success SSL_VERIFYSTATUS 'http.sslVerifyStatus=3Dtrue fail=
-s without a staple' '
-> > +     test_must_fail git -c http.sslVerifyStatus=3Dtrue \
-> > +             ls-remote "$HTTPD_URL/smart/repo.git"
-> > +'
-> > +
-> > +test_expect_success SSL_VERIFYSTATUS 'http.sslVerifyStatus=3Dfalse is =
-a no-op' '
-> > +     git -c http.sslVerifyStatus=3Dfalse \
-> > +             ls-remote "$HTTPD_URL/smart/repo.git" >actual &&
-> > +     test_line_count -gt 0 actual
-> > +'
-> > +
-> > +test_expect_success SSL_VERIFYSTATUS 'per-URL sslVerifyStatus applies =
-to a matching URL' '
-> > +     test_must_fail git -c "http.$HTTPD_URL/.sslVerifyStatus=3Dtrue" \
-> > +             ls-remote "$HTTPD_URL/smart/repo.git"
-> > +'
-> > +
-> > +test_expect_success SSL_VERIFYSTATUS 'per-URL sslVerifyStatus is not a=
-pplied to other URLs' '
-> > +     git -c "http.https://example.com/.sslVerifyStatus=3Dtrue" \
-> > +             ls-remote "$HTTPD_URL/smart/repo.git" >actual &&
-> > +     test_line_count -gt 0 actual
-> > +'
->
-> Can we reasonably add tests that send OCSP information and verify that
-> enabling "sslVerifyStatus" makes this work as expected?
->
-> Patrick
