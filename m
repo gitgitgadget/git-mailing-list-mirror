@@ -1,362 +1,214 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5076546C831
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 11:34:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787052878; cv=none; b=CJevbph+7kxH7fZuuqDnDLd5RQrzMZOTg0PwnSYYzDf/cT+MFtV2n3gZ1IWutkYJfzUQipQJ3u/dokK56JJGDi3bZRoyPcZh1E6LlehFKIetqD5DN3lkSjAqVaPmJzLwHYxizV8aHbQZJCz8RGtLT27KbRrxZ8edL//a7L2AXjo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787052878; c=relaxed/simple;
-	bh=ii1z+Pfj5nsf7jNoDXldSnbFs7Xuva8A5Cj5gGgjDe4=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jBCGLEVqkCU3SHSLJRVSrRuCA/On8ryPz6sAjuhrje/X0haJM49s/wFBGRR6L9LuAW7PYHxsisR/vGoxt5tmLxfX7jhXCYFSKm6iyEL8PpKGcdcDFVQvCUym/iy1w0FFMSyPBnKRb427Bw2DNxRsXQnOrMFR6C/IuvdYBI9vE40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KtmtKy5S; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA3841685C
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 12:13:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787055196; cv=pass; b=tL4FeVgXzoCe8jiwi2xueioFwnkU6lF6j9v1F9W4hjPVBIAwCyi9VnQ7+7mLspS2L0GuTUgL6vTQ620ZHgSvfLLk5/ZRE+DkD7fRj4M3qXcfwFfIPaAXpMlBmB2zxO7TDznJF5SJ3z2/OtVREJMH6cMCKXmt2O9kKhLqqG/U0nc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787055196; c=relaxed/simple;
+	bh=qVY/Icznbo5Hmg+U0YjWDpZrnG2rUscGQkopu1esGZs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r9/w6OGFVxiYtrWES9fUkZWmtuy16uiRdhLW8aFSF/wgV2WMwVzeOjaer+gV+TIk6p4PXb1bPSyeUHzLLH2zOzsaMlznBfRxZgHkEwXitR8fayBgPKTFBhnEgkzpeQu7qv1yi5Skvd+x4uNPawrpug0QMcDS8WhTQDGox3X1Ew0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LXv2C7pP; arc=pass smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KtmtKy5S"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-51c4436d02cso15261021cf.1
-        for <git@vger.kernel.org>; Tue, 18 Aug 2026 04:34:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LXv2C7pP"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-84874b52eabso6038411b3a.0
+        for <git@vger.kernel.org>; Tue, 18 Aug 2026 05:13:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787055195; cv=none;
+        d=google.com; s=arc-20260327;
+        b=SzILI5WDOdMAEfs9rUWwZzNNT7JH/8VU7l2H8anet0Xwqt3C7ebCPyOa3XuRfde1sg
+         IXwwuUoBU0p4m0V2XK9vVz5xNHePGZJRzpDAt0sU3KhD99awjRU24k12gh7C1nWoqJyC
+         iWXbF7LbxuMJBck76LsIN8nc5mkCdsFBFRatbFM81SaEzP7Gvj/cXEtP9OLRjvZbFxMe
+         zPwvTjDqZnhtWNN1HnaWhjDZzvqtIi4WObA6BO7YslTnjEk6NWvnBi1jDktribAe8uW4
+         1vEY0RtPHRfaL7zVP0i8N9ukzo/Uj/JkqTigNDDMQOzKsptggbKCivpb1G8MuT1wrXa9
+         yK9w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=uKWqO7D5l+aiPI2hmgJGbYKctAHV2WqxDPmn2hgZKmo=;
+        fh=DAUdOA0dQaXL4Mp2uUr7TUS//7tH8Sdbj3aEQ5r9sT8=;
+        b=KiMSAG+AKIOXwMKcr4KEmrK13+bYio6c3FQ/7uO/c8DsbPAeehDFOHZj7+TwgEjK0q
+         ZD4jGRd2O6qpdhHPtQDArSE02jjGfKT/qr5E5JGGVPomjrz6feS/EziZ6bbzTLKjmKmJ
+         dIsDommZkMKevnxMp/a9O3ik/KlrVNHC5ktM1S8xn2AnqQS9W8Jv23JDA9lMOgMZtAgu
+         3c9QLKZO4GLAG6x0nbe03RGFkh37I+/DiJEcVrars+ZNYFM3znH7ryUlW4Y/J/VlYCZR
+         L9gQmYliT/tjpNvplzGz3SqtgXweWLHjRZB99haczxYmp/6MqacrG3XbQOhI6tREfd9L
+         WZgg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787052875; x=1787657675; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=N4vXU8AcXGOLSYyiyk8ygjYQrxQSD2KoarLhTUQcPJ8=;
-        b=KtmtKy5SCNY/KPUKslTzfoY2u6PlwvzVLNgWKv5WN+0FV+M9kLbFF9e1mKJqtc6lKq
-         S35UJE9bu4Nh57yn1EBkUKuch5I/drsRrQ/FQl6qD5NJVQOjeab478BTCWP6pX/cdGGD
-         clDiVVqvtMH0TQRCy7c6afpmTZYlmAGU+/QJyBAAM1tWFJMT3KRKvkRIkF9VDP8070pi
-         AyOBoyLqs4hP6q7HWChfv341aW6C2G8W1SqV5qswGP9403yISnkQGxSVxfDRNEoYWjKb
-         JBOSP8lXVJmAI8ejLlwQ2/cxjhT5DSBZolIRbJg1ZZE/feQ1pdEMIW8Q4jFpe+vy6j1c
-         2cBA==
+        d=gmail.com; s=20251104; t=1787055195; x=1787659995; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=uKWqO7D5l+aiPI2hmgJGbYKctAHV2WqxDPmn2hgZKmo=;
+        b=LXv2C7pPOARFB2fWpA4uELEtTRoQC7d5lAuHrW/ad9/OWkcAUztDXqHdN3xh4WTWSS
+         fjg+EJb7tdtdJbesJn+G2QHpQc7gu7FbZVmhSWUyJMGNaAQMfzpRD7TBr2iLSkvUguax
+         A8aNN/H78hkEcsUrANuIAxHbSyXBZZngxqZANCpw6izuAUBWwEtT7kjnt8Wy+wSi6Z8a
+         crpWWtPgqkmSZr564RIJhEs9Ni0BaWI4tSdb7QQxH1P2lN/mogku1dYru6yb6uwVT+tK
+         t0KsxUFgDsRwp33rxzo+n0XIwar8tCFrr/lSkOXs4q/Pq1vI6OouN2tUZIDfP5W0533U
+         rSXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787052875; x=1787657675;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=N4vXU8AcXGOLSYyiyk8ygjYQrxQSD2KoarLhTUQcPJ8=;
-        b=oRYK+/sTjZmadFFFxvb/1dMpH5ciqTfb6+/cRuI1aFPPQSRXat2gURNEB1CQnpJhUT
-         ti3F3/9D1iMLdT2Zbhpvg9Ux+G0XkYKwBLwwWf68TztOZh4/Lzkl7v9kfzTTzd2ufffQ
-         xO5iCXLjucRm3yr1pFewyEWQfhAR3wHv0ZVUp2L5glAb/GRE9ELIPBbr6clCVtyPs/xb
-         srFSJGO/CGtDx1YbtasNPnVeqx+8BnXn7/0Vyrms7NcD27huhhJrvRvT3MO/7rLbqoE0
-         HfzhuzZO6c1Rch51qRZIcJrWMsvi+HGLUZLodUYyBamMI5o/TpYMSSXEAzlQ7VUrfdK5
-         8cPw==
-X-Gm-Message-State: AOJu0Yz7cDIfEA/Jtn8F6Dimh8C1bcPWb0Q1c5CjUp1pn6vtUy8UICYn
-	nsZwJghZ7DnA3REA3iTH2LWiursM8vSe5x6l9rlakYS0EObMBO8ZY/cLRuh8RQ==
-X-Gm-Gg: AR+sD13Q2sAsaGmrLfoD31Kcl+vhogNbt1gToEDnpGRbdIpH4hoqWjC9yL/6L7w6h7Q
-	XqHdDuT/yWSaSmZUXkCM7rFJmHjcimIfBx2y/NjGCFlwZDCaz5FMxrPXbkNgfDz69oYQhJ1QHZo
-	BGZGbwt6B9lu9oyXuFej19HWpVxdnCAI9dw0s86JnRmKlxVeji3H7GL0kXgbj2feRkKrzlG+XHR
-	bPK3FwBiltRNcms1Zvh2DymOfI/iJD7ODxZY8vN+ub0NdE9XxoW+Qzhj+Y/OTOM7mx94Dr8Hec4
-	JXcEzTLb55oqQloN3vWJ/EfuayL/3T3XNnpH2G5xvH+XtZO2O55579CIuOBLodWuYkFhyhhrctr
-	5WivuKIzGLZAZoPV9rH4CYYg6uYWkA1mZDTKWVyiWeWVpvoxLCWNXltFe8XbK9kGSVYaAxCsGWE
-	bAIdlt8vEzDa/y08vnKmVNtVg4Jj7f+E2YyErdlHC77KJu4BMXU8IPqDjvKQcf
-X-Received: by 2002:a05:622a:4185:b0:528:3882:386a with SMTP id d75a77b69052e-52d8534fbbcmr399936491cf.11.1787052874845;
-        Tue, 18 Aug 2026 04:34:34 -0700 (PDT)
-Received: from [127.0.0.1] ([20.94.54.83])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-52db613ca70sm36238831cf.13.2026.08.18.04.34.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2026 04:34:34 -0700 (PDT)
-Message-Id: <pull.2384.git.git.1787052873141.gitgitgadget@gmail.com>
-From: "Artur Bieniek via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 18 Aug 2026 11:34:33 +0000
-Subject: [PATCH] pull: add --hard mode
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1787055195; x=1787659995;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=uKWqO7D5l+aiPI2hmgJGbYKctAHV2WqxDPmn2hgZKmo=;
+        b=HW9FrSzfviYBOEKniyHgBh1TqBAZijq7JCGJ3hY3NuZ0J95QcaGDQAjIZxtuDvOzmN
+         KWwj7l4j5yd2Vc+1POB9i8ZsrWr6P9MnLztr5ki1IIPNoT0avDCLVFGaFHcH08UGK/wt
+         RJl0NT1aaGPvTrSYxPaHgqD1Jm8m6bbrbssM3BXmvn+n9dq772FCOj8Gg9ancxE/3F7T
+         xNT60xhMcFDDaOu9Dc1/D79EGMha6iMT8MmCP2i8nC9fMG9O3xo+WKQTa+crZx1EMSg1
+         g0ZpkSZSt2tQGMFRu4chQ6ggTTMiGAwxJ8zR89cn1vQfSEaXz9ISaruZw9qXxHyb59rG
+         FApQ==
+X-Forwarded-Encrypted: i=1; AHgh+RoeFr1fb1h86DOdjdTMkeqI9yT2dXbDZABYiYZ6aCmXlJouiIboB7Mct68MsAAeJoSEK0g=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy1ir65ISBZIJH6tCYqjqJn6CEEKYg8sJum7TRXycMv7bsZ+vGc
+	HFdlQL/8kx14celijiYzVofoKp6cpAoiGxNGMJHQ3lpbu/2Uzw+fhBD927910pEx76xTn6MWMsC
+	Eues54gzD5bBa44G8kHCyJmi8ycqJhJw=
+X-Gm-Gg: AR+sD1159Tn/IPs4f+GEyN77OYSIXijypZKMvdQgZpmtgm0HeRwJdD+SaGmGtThwxaT
+	vZSgqSaPOubkwtIgbb4WKepVuHbpyR2FR34uFSsTZHhmUj7oQLY75G3J+BqelsT8UPlWEZHX1Y9
+	Z+UrL1/yhp9wfQQ+ylEmtZaJExxn2G70rJpik/3EAtlMB8HI01t04ZnmFAR19p7YHmYfPRd3o98
+	1ikSMkUhFBAHu+elXcW6IgXkyN0/fk+wY/DyiFYxSgtYVAg2wXc4G7SFOLa+3+V9JRGYAavXdf+
+	96ifEBGoX2lkXqSkpX94HDpgW+rtuDvyRSU/fjHFQayuIHYeGEhrM855Mof7VcwSVtaMljjRuMr
+	zsWqI+4DBZHeKaHRg/HEJk5A7Q2Ug+DJ8nX21oUpfyh0fBYUzDGSH/o3wHz1smauGhT2L8HbQNF
+	usXPselUOQpcXpSvLLS4A=
+X-Received: by 2002:a05:6a00:2392:b0:848:56d4:3288 with SMTP id
+ d2e1a72fcca58-84fddf92abamr33959745b3a.4.1787055194638; Tue, 18 Aug 2026
+ 05:13:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Artur Bieniek <abieniek@antmicro.com>,
-    Artur Bieniek <ar2rekb@gmail.com>
+References: <pull.2155.git.1781710256081.gitgitgadget@gmail.com>
+ <CALnO6CD9P4+e=YPdKaLfSBOk-H3_ir64pBP-qMKNNvzUNqunXQ@mail.gmail.com>
+ <CALnO6CB1vJ7RtBzTUSJSfYtfH+W2MZCFEkqNWeBXbWJ2r3Pdyg@mail.gmail.com> <a6a9fe7c-e46d-462f-b3b0-7ae6c2d52fe4@app.fastmail.com>
+In-Reply-To: <a6a9fe7c-e46d-462f-b3b0-7ae6c2d52fe4@app.fastmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 18 Aug 2026 08:13:03 -0400
+X-Gm-Features: AcwNN1VWZkvN3GxmAbz2YkpO04_55FUjb8nnW47GQ33gJQC80Iwnf32LaL1V8cM
+Message-ID: <CALnO6CCWADaQycF7XcCFLDgCVtkTAsndKykAWzNhPqVAKWYGzA@mail.gmail.com>
+Subject: Re: [PATCH] completion: zsh: support completion after "git -C <path>"
+To: Lutz Lengemann <lutz@lengemann.net>
+Cc: Lutz Lengemann <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Artur Bieniek <ar2rekb@gmail.com>
+On Mon, Aug 17, 2026 at 3:29=E2=80=AFPM Lutz Lengemann <lutz@lengemann.net>=
+ wrote:
+>
+> Hi Ben
+>
+> (Resending, my earlier reply was rejected by the list for being HTML.)
+>
+> On Wed, Jul 15, 2026, at 00:34, D. Ben Knoble wrote:
+> > Any progress here? I just found my local copy of this patch and was
+> > briefly surprised to see it hadn't graduated anywhere (until I
+> > realized conversation had stalled at this point).
+>
+> Sorry for the very late reply, I was on holiday and then other life
+> things got in the way of answering :(  I do have a v2 ready, which I
+> have just pushed to my fork, and which follows this message.
 
-Add --hard as an explicit alternative to merge and rebase. After
-fetching, require a single integration candidate and reset the current
-branch, index, and working tree to it.
+No worries! Hope you enjoyed. (I didn't see v2 come in anywhere, but
+I'll keep my eye out.)
 
-Preserve quiet and submodule recursion behavior, and reject options
-that cannot be honored by a hard reset. Document the destructive
-semantics and cover them in tests.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Doesn't it want to do something similar to what __git_main in
+> > git-completion.bash does at the beginning, namely, this part?
+>
+> It does, thanks.  v2 no longer skips only leading -C options, but walks
+> the words in front of the command and skips over the global options and,
+> where they take one, their arguments, like __git_main does.
+>
+> That also makes "git -p checkout <TAB>" and "git --git-dir=3D<path>
+> checkout <TAB>" complete the arguments of the command, which they did
+> not before.
 
-Signed-off-by: Artur Bieniek <ar2rekb@gmail.com>
----
-    [RFC] Add git pull --hard mode
+Nice side-effect :)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2384%2FArturBieniek4%2Fpull-hard-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2384/ArturBieniek4/pull-hard-v1
-Pull-Request: https://github.com/git/git/pull/2384
+> Two related gaps are left alone, as they are bugs in the _arguments
+> specification rather than in the command lookup: -c is not listed there
+> at all,
 
- Documentation/git-pull.adoc | 10 +++++-
- builtin/pull.c              | 68 ++++++++++++++++++++++++++++++++-----
- t/t5521-pull-options.sh     | 31 +++++++++++++++++
- t/t5572-pull-submodule.sh   | 18 ++++++++++
- 4 files changed, 118 insertions(+), 9 deletions(-)
+[no comment]
 
-diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
-index 88f4fd3926..3a103a1630 100644
---- a/Documentation/git-pull.adoc
-+++ b/Documentation/git-pull.adoc
-@@ -24,7 +24,7 @@ with no arguments this defaults to the <<UPSTREAM-BRANCHES,upstream>>
- for the current branch.
- Then it integrates that branch into the current branch.
- 
--There are 4 main options for integrating the remote branch:
-+There are 5 main options for integrating the remote branch:
- 
- 1. `git pull --ff-only` will only do "fast-forward" updates: it
-    fails if your local branch has diverged from the remote branch.
-@@ -32,6 +32,7 @@ There are 4 main options for integrating the remote branch:
- 2. `git pull --rebase` runs `git rebase`
- 3. `git pull --no-rebase` runs `git merge`.
- 4. `git pull --squash` runs `git merge --squash`
-+5. `git pull --hard` runs `git reset --hard` to the fetched branch.
- 
- You can also set the configuration options `pull.rebase`, `pull.squash`,
- or `pull.ff` with your preferred behaviour.
-@@ -119,6 +120,13 @@ unless you have read linkgit:git-rebase[1] carefully.
- `--no-rebase`::
- 	This is shorthand for `--rebase=false`.
- 
-+`--hard`::
-+	Reset the current branch, index, and working tree to the fetched branch.
-+	The pull must select exactly one branch. Local commits and changes to
-+	tracked files are discarded. Untracked files or directories in the way
-+	of writing tracked files may also be deleted. This option cannot be
-+	combined with merge or rebase options, or with `--append`.
-+
- Options related to fetching
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index db3ee0aab3..8324f06084 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -91,6 +91,7 @@ static char *opt_ff;
- static const char *opt_verify_signatures;
- static const char *opt_verify;
- static int opt_autostash = -1;
-+static int opt_hard;
- static int config_rebase_autostash;
- static int config_pull_autostash = -1;
- static int check_trust_level = 1;
-@@ -318,7 +319,9 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
- 	const char *remote = curr_branch ? curr_branch->remote_name : NULL;
- 
- 	if (*refspecs) {
--		if (opt_rebase)
-+		if (opt_hard)
-+			fprintf_ln(stderr, _("There is no candidate for resetting to among the refs that you just fetched."));
-+		else if (opt_rebase)
- 			fprintf_ln(stderr, _("There is no candidate for rebasing against among the refs that you just fetched."));
- 		else
- 			fprintf_ln(stderr, _("There are no candidates for merging among the refs that you just fetched."));
-@@ -331,7 +334,9 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
- 			repo);
- 	} else if (!curr_branch) {
- 		fprintf_ln(stderr, _("You are not currently on a branch."));
--		if (opt_rebase)
-+		if (opt_hard)
-+			fprintf_ln(stderr, _("Please specify which branch you want to reset to."));
-+		else if (opt_rebase)
- 			fprintf_ln(stderr, _("Please specify which branch you want to rebase against."));
- 		else
- 			fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
-@@ -346,7 +351,9 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
- 			remote_name = _("<remote>");
- 
- 		fprintf_ln(stderr, _("There is no tracking information for the current branch."));
--		if (opt_rebase)
-+		if (opt_hard)
-+			fprintf_ln(stderr, _("Please specify which branch you want to reset to."));
-+		else if (opt_rebase)
- 			fprintf_ln(stderr, _("Please specify which branch you want to rebase against."));
- 		else
- 			fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
-@@ -358,7 +365,11 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
- 		fprintf(stderr, "\n");
- 		fprintf_ln(stderr, "    git branch --set-upstream-to=%s/%s %s\n",
- 				remote_name, _("<branch>"), curr_branch->name);
--	} else
-+	} else if (opt_hard)
-+		fprintf_ln(stderr, _("Your configuration specifies to reset to the ref '%s'\n"
-+			"from the remote, but no such ref was fetched."),
-+			curr_branch->merge[0]->src);
-+	else
- 		fprintf_ln(stderr, _("Your configuration specifies to merge with the ref '%s'\n"
- 			"from the remote, but no such ref was fetched."),
- 			curr_branch->merge[0]->src);
-@@ -570,6 +581,23 @@ static int run_merge(void)
- 	return run_command(&cmd);
- }
- 
-+static int run_reset(const struct object_id *oid)
-+{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+
-+	strvec_pushl(&cmd.args, "reset", "--hard", NULL);
-+	if (opt_verbosity < 0)
-+		strvec_push(&cmd.args, "--quiet");
-+	if (recurse_submodules == RECURSE_SUBMODULES_ON ||
-+	    recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
-+		strvec_push(&cmd.args, "--recurse-submodules");
-+	else if (recurse_submodules == RECURSE_SUBMODULES_OFF)
-+		strvec_push(&cmd.args, "--no-recurse-submodules");
-+	strvec_push(&cmd.args, oid_to_hex(oid));
-+	cmd.git_cmd = 1;
-+	return run_command(&cmd);
-+}
-+
- /**
-  * Returns remote's upstream branch for the current branch. If remote is NULL,
-  * the current branch's configured default remote is used. Returns NULL if
-@@ -925,6 +953,8 @@ int cmd_pull(int argc,
- 			PARSE_OPT_NOARG),
- 		OPT_BOOL(0, "autostash", &opt_autostash,
- 			N_("automatically stash/stash pop before and after")),
-+		OPT_BOOL(0, "hard", &opt_hard,
-+			N_("reset hard to the fetched branch")),
- 		OPT_PASSTHRU_ARGV('s', "strategy", &opt_strategies, N_("strategy"),
- 			N_("merge strategy to use"),
- 			0),
-@@ -1022,6 +1052,16 @@ int cmd_pull(int argc,
- 	}
- 
- 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
-+	if (opt_hard &&
-+	    (opt_rebase >= 0 || opt_diffstat || opt_log || opt_signoff ||
-+	     opt_squash || opt_commit || opt_edit || cleanup_arg || opt_ff ||
-+	     opt_verify_signatures || opt_verify || opt_autostash >= 0 ||
-+	     opt_strategies.nr || opt_strategy_opts.nr || opt_gpg_sign ||
-+	     opt_allow_unrelated_histories))
-+		die(_("--hard cannot be combined with merge or rebase options"));
-+	die_for_incompatible_opt2(opt_hard, "--hard",
-+				  opt_append && !strcmp(opt_append, "--append"),
-+				  "--append");
- 	if (opt_autostash == -1)
- 		opt_autostash = config_pull_autostash;
- 
-@@ -1037,7 +1077,7 @@ int cmd_pull(int argc,
- 
- 	parse_repo_refspecs(argc, argv, &repo, &refspecs);
- 
--	if (!opt_ff) {
-+	if (!opt_hard && !opt_ff) {
- 		opt_ff = xstrdup_or_null(config_get_ff());
- 		/*
- 		 * A subtle point: opt_ff was set on the line above via
-@@ -1056,13 +1096,15 @@ int cmd_pull(int argc,
- 		}
- 	}
- 
--	if (opt_rebase < 0)
-+	if (opt_hard)
-+		opt_rebase = REBASE_FALSE;
-+	else if (opt_rebase < 0)
- 		opt_rebase = config_get_rebase(&rebase_unspecified);
- 
--	if (repo_read_index_unmerged(the_repository))
-+	if (!opt_hard && repo_read_index_unmerged(the_repository))
- 		die_resolve_conflict("pull");
- 
--	if (file_exists(git_path_merge_head(the_repository)))
-+	if (!opt_hard && file_exists(git_path_merge_head(the_repository)))
- 		die_conclude_merge();
- 
- 	if (repo_get_oid(the_repository, "HEAD", &orig_head))
-@@ -1090,6 +1132,16 @@ int cmd_pull(int argc,
- 	if (opt_dry_run)
- 		return 0;
- 
-+	if (opt_hard) {
-+		get_merge_heads(&merge_heads);
-+		if (!merge_heads.nr)
-+			die_no_merge_candidates(repo, refspecs);
-+		if (merge_heads.nr > 1)
-+			die(_("Cannot hard reset to multiple branches."));
-+		ret = run_reset(merge_heads.oid);
-+		goto cleanup;
-+	}
-+
- 	if (repo_get_oid(the_repository, "HEAD", &curr_head))
- 		oidclr(&curr_head, the_repository->hash_algo);
- 
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index 5e420c208c..31bb76b465 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -117,6 +117,37 @@ test_expect_success 'git pull --force' '
- 	)
- '
- 
-+test_expect_success 'git pull --hard' '
-+	test_when_finished "rm -rf hard-parent hard" &&
-+	git init hard-parent &&
-+	test_commit -C hard-parent base &&
-+	git clone hard-parent hard &&
-+	test_commit -C hard local &&
-+	test_commit -C hard-parent upstream obstruct upstream &&
-+	git -C hard-parent branch side &&
-+	(
-+		cd hard &&
-+		echo dirty >base.t &&
-+		mkdir obstruct &&
-+		echo untracked >obstruct/file &&
-+		test_must_fail git pull --hard --ff-only 2>err &&
-+		test_grep "cannot be combined" err &&
-+		test_must_fail git pull --hard -a 2>err &&
-+		test_grep "options .*--hard.* and .*--append.*" err &&
-+		test_must_fail git pull --hard origin main side 2>err &&
-+		test_grep "Cannot hard reset to multiple branches" err &&
-+		git pull --hard &&
-+		test_cmp_rev HEAD origin/main &&
-+		test_path_is_missing local.t &&
-+		test_path_is_file obstruct &&
-+		git diff --quiet &&
-+		git diff --cached --quiet &&
-+		git pull -q --hard >out 2>quiet-err &&
-+		test_must_be_empty out &&
-+		test_must_be_empty quiet-err
-+	)
-+'
-+
- test_expect_success 'git pull --all' '
- 	mkdir clonedmulti &&
- 	(cd clonedmulti && git init &&
-diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
-index 42d14328b6..f2df277b79 100755
---- a/t/t5572-pull-submodule.sh
-+++ b/t/t5572-pull-submodule.sh
-@@ -106,6 +106,24 @@ test_expect_success " --[no-]recurse-submodule and submodule.recurse" '
- 	test_path_is_file super/sub/merge_strategy_4.t
- '
- 
-+test_expect_success 'pull --hard honors submodule recursion' '
-+	test_commit -C child hard_recurse &&
-+	git -C parent submodule update --remote &&
-+	git -C parent add sub &&
-+	git -C parent commit -m "update submodule" &&
-+
-+	git -C super pull --hard --recurse-submodules &&
-+	test_path_is_file super/sub/hard_recurse.t &&
-+
-+	test_commit -C child hard_no_recurse &&
-+	git -C parent submodule update --remote &&
-+	git -C parent add sub &&
-+	git -C parent commit -m "update submodule" &&
-+
-+	git -C super -c submodule.recurse=true pull --hard --no-recurse-submodules &&
-+	test_path_is_missing super/sub/hard_no_recurse.t
-+'
-+
- test_expect_success "fetch.recurseSubmodules option triggers recursive fetch (but not recursive update)" '
- 	test_commit -C child merge_strategy_5 &&
- 	# Omit the parent commit, otherwise this passes with the
+> and --git-dir and friends are spelled "--git-dir=3D-", which
+> accepts only "--git-dir=3D<path>", not the "--git-dir <path>" form.  I ca=
+n
+> send patches for those separately.
 
-base-commit: 745601a9a94110d74769ab605ccd4f61339758d2
--- 
-gitgitgadget
+We were discussing this recently in some threads about Bash
+completion, and I think we landed on "gitcli(1) really prefers the
+stuck form, and so do completion helpers, so let's stick with that for
+now" ?
+
+>
+> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+>
+> > But we mark these local, so how do they propagate to the other
+> > functions?
+>
+> zsh scoping is dynamic, not lexical, so a variable declared "local" in
+> __git_zsh_main is visible in the functions that are called from it, the
+> bash helpers included.  That is how __git_dir and __git_cmd_idx are
+> handed down already, and __git_C_args works the same way.
+
+Thanks. I must have known that, but it's remarkably difficult to find
+spelled out in the manual. The closest I can find is the "LOCAL
+PARAMETERS" section of zshparam(1), which could really use an example
+to demonstrate that local is still dynamic.
+
+> > We should probably note in the log message that the _directories
+> > completion will not account for previous -C
+>
+> I added a note about this in the log message.
+
+Great
+
+> > I think we could do _slightly_ better by using a state "->dir" or
+> > something, accumulating the current prefix, and passing that to
+> > _directories as a prefix with -W
+>
+> I tried that and it works, but it changes what -C offers, which is more
+> than fixing the completion after -C, so I left it out; happy to send it
+> on top.  Two things to watch out for there: the accumulated path has to
+> be made absolute, as -W with ".." gave me the directories of "/", and
+> the accumulation has to stop before the word that is being completed.
+
+A follow-up is fine with me if you decide to send it (and if not,
+that's fine, too).
+
+> > By the way, I've realized that "git -<tab>" has the same problem (a
+> > giant list of files after the other option completions)
+>
+> That one is older than this patch: the file listing comes from the
+> fallback at the end of _git,
+>
+>         let _ret && _default && _ret=3D0
+>
+> which is where the "use-compctl" and "globbed-files" tags in your
+> _complete_help dump come from.
+
+Thanks for explaining!
+
+> I could not reproduce the repeated
+> description block with "zsh -f" and only the _complete completer, so
+> something in my setup or yours may differ there.  Either way it wants
+> its own topic.
+
+Yes, I agree that can be its own topic. I've been re-studying the
+completion system again recently, so maybe I'll be better equipped to
+debug my setup later=E2=80=A6 I do play with the tag-order style for Git
+completions, so I wonder if that's interfering.
+
+Thanks!
+
+--=20
+D. Ben Knoble
