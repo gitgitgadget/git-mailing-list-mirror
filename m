@@ -1,126 +1,135 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A3847DD74
-	for <git@vger.kernel.org>; Tue, 18 Aug 2026 16:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787070926; cv=pass; b=BocutP87b7sBvD0Y4MoRiWW3NnGUuAdh5oqtV0sLegyHr9K6tXEgVA9SgM9Rozqp+XINvcN92kf/14INrwPDPEzb67TGkr+9mncEUBsM7r0BneDCVHp2ZLz9K2UrnO2cTSMPjKEK4dhHKrTSLwDTJljAO2YqXIdbPnbLGse7QjY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787070926; c=relaxed/simple;
-	bh=yAcnzVm0I/VhlP+DEueaZm+SjIO1kCBSAaImHUh/UNc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nJTwqQiCDGAqAd1my/bg6bhfG93wyKGI/GSTpMtcTuuCMsfl2b6tbZ93k26L0zkCc0NqgoD9ztHjQOJfijoua9H9ilcTaH3K7NBp4PBeLaeSJt4kvSh0+k0jCjpTIk5X6a9G41SH/YezpU68Fwh1RZy/gfp/HqgVp9l8xm5c0S4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qETfqUb/; arc=pass smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D377647D451
+	for <git@vger.kernel.org>; Tue, 18 Aug 2026 16:40:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787071259; cv=none; b=d0pMPrvrWMo6/6MG3IsTUJcaNGl8MIlVgBUVH+IcF+vsp0aEY0JczoiaxBqGQ4epdPjJGrF4Zf1jUf1ML2ZcTdmjUK9zUsRohb0MwWNWay8dMcDlGvN47HIpFx+y8ghrpON7+cBWLrW9H6ixdvtJsqWQT/rBc3Cht6rN09qGxwY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787071259; c=relaxed/simple;
+	bh=GCb8NbxncYNu+Kqx5VtBiud+X8DFeq8JVUkiur7x9aU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZATI31xWe0Bd3osMVmsqehE6AbyFKI2LZBr6U3llrTirnZ4WEpxSe496ZwUuU4xwUcoLmZMQVSalERRkFIncwFzTMj4MqRRLuwOD1JEWqx7h9PmN6zr9Y2dB5Dcwdi1OH6tyVMse8NchMszZO6aaC2YkE2bK1XdkNmHmUVI0rUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UQBNkmYM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KslUnIVf; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qETfqUb/"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2ce87c7e3bbso449915ad.1
-        for <git@vger.kernel.org>; Tue, 18 Aug 2026 09:35:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787070924; cv=none;
-        d=google.com; s=arc-20260327;
-        b=rg/q3P7bXp1gtmRNkQCz46D5NvXt0URQogdDp0Ex+DPNrZGMGjmK1GDWABIFOXPwsr
-         +mtSMCttlxrdesICbDkyXbVqh6PjaQx42gcDFWObkeiopUFe7tsKRm9qRhV3w0RWVG2k
-         HnIz9jAwU3iRhXpGRfeJl+D1VzPYz80o1XA6eGPpdOHe6Q+hOSmFCGqfW2Wj4KYTAzf2
-         A5Ozf1oV/6OQomRAk0ZeWDO1aI4Dti5uuOwq62PfoN2PcEPnREYm06nOpQr2T3BcoqDi
-         eXY1iTJwmyUZJYaAtKetgpqL5ZOlU6KstEXuj5r+qztmhvr7cxQSqtHbaTO0aZ8/iGaO
-         VASQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=yAcnzVm0I/VhlP+DEueaZm+SjIO1kCBSAaImHUh/UNc=;
-        fh=9YGDSDUqJndd9otP3OBEHwa3g4KRiS3VXDAGgzLO0Jk=;
-        b=GSZTt724x5bOnQ2CQMkoXGTnBqFRLBd7Y7NxTgpg6BGLuXOa8x5UbMRnILUnUVDpCu
-         nsVMUXqlvKOj2EOphc+/0cprhrLzo0av+oqEhmUqAwGSF3d75reFvV/PA4dZFNkQW5Wu
-         XBPOVaNjE6Xj8SGFI6TLgEcgo5Nu8fBKAkaCJQNHUW0fXHBreiI7xHU7gyzGktV1Tt9v
-         Rx9XnNbanMVbw4gxOCoWOjhqDr2onP18kPP4ogx/Elubw5K4QZMlvg3ZjFVQDjagmmt1
-         SO5GY8256/tttK8R3I4AlL7FFx93tMwVbZOA602/2zPmA9o7gSmEsMXluu1PEegJoRmL
-         HkbA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787070924; x=1787675724; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=yAcnzVm0I/VhlP+DEueaZm+SjIO1kCBSAaImHUh/UNc=;
-        b=qETfqUb/tou0wye6Ng/y2Wn2/caCHKtQuSy+PSDbKVmx0miWlas7tLnYqDk6/n93uS
-         yUPWFKTAbMb6ch7DYtygvPyuCuVpDs2kGnZW1sAXY9M0pwW+I4Q2e5+sJlQQOYpXQN+F
-         bPElSzu/pWnjlGeXensyIQCaYcfWJIDQ41wTaqEExT4pYk0jLgnh7ah3bBOci/CkZVw8
-         dzNxKCcN4sRmWXtqqjy7GizgxQGFnnxs4au6Wf4IlJHXGpIZD5ip+z/OD44HBiExFQtN
-         TNXcLRQ7CJh4RyqpelE74xMAC3RWTsklmSE1FDkl+gFxKKo0shzknCGxXGsYvqmEHmVz
-         7aDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787070924; x=1787675724;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=yAcnzVm0I/VhlP+DEueaZm+SjIO1kCBSAaImHUh/UNc=;
-        b=MjT1ekUv6aa92McdvJy+apd6SPKABKWaUJgUoM7gSTOOvVad3+RrFLLf75icbyEo1l
-         8uEVeHlG+/xLUTiSn8xGcKA7+JzflbxhrjnJg5e3QYyeZu8RjlUcm5MVJVfPyxb8puUv
-         FsVUJ5y9fdZE3KPO8FiG+moFRiQqUnnh87flDOBCtgxuxxtxOulRi5YZe38ErVJz1TFT
-         AgWy514W+acwHAPRG3x2btijmWYsh/svQFzTfXgA8R3sik/7Oewqz/G0MUfsfF4uGkVP
-         mEOzA6wZruEdoQ7eZ5OS+M2FWt9IoEg9Q556jdjRziUh5XsMCwTsBkkn7W8mggvlDYyR
-         8S2A==
-X-Forwarded-Encrypted: i=1; AHgh+RoccweJw4CyFgjjRsABfDvwkASmiQm6yEjDfHbiAv8YObJla6ZDwCmqgZDkgwoV8TUkICE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5wmK9mKVjbZRhpPcL1T3v/N6HxlUzNbkCk3A8Ca6cBEtoT3/Z
-	0nrNRR9P3ObZVLZEPjbKUHSf1Bu5X3Qhs1ua/AagNczF3d3FpO9+qAe4Upds/igWBmGJBqKZQpL
-	Pj8pmsInVx25uq0sn5VB68t7Uis24aeo=
-X-Gm-Gg: AR+sD12fCeejQxFPdDmY6OPAaRCcf+np5ndh2x5n30dVs8qmqItS6fWJiTLZWzMIxEU
-	/ylDlRnKKviBAg773l+JJmCyvKWSifYCrArqHMm3G5Jlc1vRtKSV8hoeuI9YlokjtK260Ybgdo4
-	fZbMT04je76kPBTmDPQOea7UANiuhxkNTdzSutADChAV67UHFp1O9bbAzta65Y3F/prxb6VmRSE
-	4Ch7nrkMMrCIJ9d+QsUzH1qVDN82FCsqyV4Iw7qSG8flvPIHcAWIUr1iaviU587GZ9twa1f2YiN
-	/uvM/LpEOOPm6rhMlTvd4jOAId/PCFqO0rFISTy8s/mllUXwx8lFY2iXvMCU+zOi49XSSM5MyFZ
-	IG+uw4FhbBUobzFYvJp0ItLBwHnzNcpk/RZm2WDZtPb0u9EX2Wbe1W94z6r1kOqnmvDdxXt65Pm
-	DNf7b77dkhXGWD6pda+4k=
-X-Received: by 2002:a17:903:1b45:b0:2c9:deec:f564 with SMTP id
- d9443c01a7336-2d5c5381100mr142773175ad.13.1787070924127; Tue, 18 Aug 2026
- 09:35:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UQBNkmYM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KslUnIVf"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E54197A002E;
+	Tue, 18 Aug 2026 12:40:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 18 Aug 2026 12:40:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787071256; x=1787157656; bh=h9p4v3KN2n
+	Zfymxoy8H6/sYpJGaRGr+so4lINaqLuyM=; b=UQBNkmYMGlZ35GdrFov4pWw3B9
+	O9HqUFFdwp3liZ5M9OpgrlSQ9T34Jx0QJaYD78b9qoPKcmVaVgz49rMADIEqsGPw
+	Jv+wKx8llyhqjkvr2G5MYNL8h/1rO1jaZR0H69tK65AZzRLWAAu5jQYuNwJe8ViR
+	mHHy/c0zIN9z6kfmRfBCbud/9Iozz75cyqyWxHgbdx7tpQRytcNeUFf6f250ISl4
+	hIFpG/oiIWcN8uZ6L20aVvOX9ANHH7UbAgTAXy/+As8sEVN3mg14Kcqq6mHTlKOM
+	0KN0X1pHX4nkQM2Oj/QBxXUjCznv6qwMFmVmiDyMPEZrL6OTFfbz4QEsOCjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787071256; x=1787157656; bh=h9p4v3KN2nZfymxoy8H6/sYpJGaRGr+so4l
+	INaqLuyM=; b=KslUnIVfT7qSexcaiMOmZ9rQauQNKWRZvzf2ngYN1169O9I36t5
+	9pggjjnOvUt27KxGeOfMXn5KVGSb3TSe/Sv5+ixGcSjFYU/l/BKK7TI7zpeJJWrT
+	IpfURtPE0xa9hNKpx01cDRTxrsahgqMGl9wLmEi/UbB6N99jkU2cfsYSxcGsqRpu
+	4BOExQBodoGIZQf98AJFyGBFbyuWN5srEJ9CaF6q9RHdNqvpfbyVEtmXETNL1tr7
+	uPV6P/ZUqK4fs7R+3I8KCYG4K5e8EH/RbvGprj2V3XCV/K3QzrDVnSy46AAucD75
+	2cFmriux16kX3zxNAx50Xu79Nk9IE1UZ3gw==
+X-ME-Sender: <xms:GIuEasKOERB36pnR8amIRv6wMUZ8gWjjiFl6ZfI46mGKdjeFLkJ_hg>
+    <xme:GIuEajLVwtd-qyxLsno-pH1znOb6EoaRvV5gPfKW0bcJrXkNjhN94mb8v9yLyoKiy
+    idjTyqIGVIG15WbFAzIZIoX8sNbNyW2MtrjoqM5c_ExYoepIUCCKJY>
+X-ME-Received: <xmr:GIuEahvAgT1-FK3zr8cqRfYSnAfPoYji02EflAwwlLV76OHQP8a-Q5RrUof4f8EJEXTrPUrKoXOWk_bj3kfviqNrP4ZdSy8mCA>
+X-ME-Proxy-Cause: dmFkZTGhpQcejeo7rVR8er5CMbxC10HyWatSNVsy79eSHwp8Mn71B9AZQtMHDXXvpFAks1
+    uS88DmKoiB73XmGpsfAPk3VyEWdLdj5wwHfmEOLp6tAzyQiRm0CoHLIcztcQFfExPcOR0z
+    CDdU6k8MTE/QS59fRHyiD/w6dyHJw3jRDEpvX7wtQk58hEWnz2mzVokLbqgu/pAvpfrm7q
+    cm4CloQOgtEv7/hjqzjUzhjLMsYshLv90SVk+XSIa6kL23/JRiSiJt/epWElN1Id72dqBs
+    xI/WOdGtFoANLscs3bmZAI8NEJE+dB/eFq3QvrL+XQi5/aAC9NvLSnxPgaPMJAitKJHTqz
+    12roiNln4hGiuzzCwLuXppt64QgdM+Kk+SzfbzHgBiac8Ea1j3Gas4LlXEsZ5pWFQweNg/
+    XQ2/9MNFq5WxBjAbZh2ALMY2k+qVVDnPDSpK+ktDhgDOOY0pldblTOhwPjos+Q9xQoKmky
+    O7GNd+Y+w9EXq7989DNw89y9EsGDnvl6aelbg/RA7PUdRxdkCruLGf4JIYfIja25nGUOl4
+    3L8k5TCVXJnEZDB/YTPrhdcVmspitwrDoRptN/9gdjFZ5icFyckcNMS1a/2TRCSuNOwUEY
+    dUi3FT5rJmQnZ4OevHc3mUQfQDJG6uzW+jJfNRdPGYSaALIFoBckDcHeosxQ
+X-ME-Proxy: <xmx:GIuEaoQb2x5O1IGHBH4ROAhdye0gKiUyQ7bdBIXeK8lsm1XEQ_dPKw>
+    <xmx:GIuEavOE9IAhDkVDQOAfL987AfdtJFypTyh3p_PJtA_ARawZr5Chjw>
+    <xmx:GIuEalY7KTAYbMnO4y5PwQrQJ9r8DJ1GW6opM_BALRktafIz-JoSxA>
+    <xmx:GIuEahybEFwnh7G9VwUQCzaOVTcqIdqo5d-zgZ9r0qa2_gfK7aCeOw>
+    <xmx:GIuEahP20LxIoT4qMyY4k9XJ8oYYOtnKEgoSWWqUoEkLDboK-jmmebyJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Aug 2026 12:40:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: graysongordon-gl <graysongordon1@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v4] http: add http.sslVerifyStatus to check stapled OCSP
+ responses
+In-Reply-To: <aoQOxISPfEwh-ik2@pks.im> (Patrick Steinhardt's message of "Tue,
+	18 Aug 2026 09:50:28 +0200")
+References: <xmqqmruqt36l.fsf@gitster.g>
+	<20260817185242.22736-1-ggordon@gitlab.com> <aoQOxISPfEwh-ik2@pks.im>
+Date: Tue, 18 Aug 2026 09:40:55 -0700
+Message-ID: <xmqqecfv1iw8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2155.git.1781710256081.gitgitgadget@gmail.com>
- <CALnO6CD9P4+e=YPdKaLfSBOk-H3_ir64pBP-qMKNNvzUNqunXQ@mail.gmail.com>
- <CALnO6CB1vJ7RtBzTUSJSfYtfH+W2MZCFEkqNWeBXbWJ2r3Pdyg@mail.gmail.com>
- <a6a9fe7c-e46d-462f-b3b0-7ae6c2d52fe4@app.fastmail.com> <CALnO6CCWADaQycF7XcCFLDgCVtkTAsndKykAWzNhPqVAKWYGzA@mail.gmail.com>
- <43bc34ae-451d-4270-84a6-bbbf8de80115@app.fastmail.com>
-In-Reply-To: <43bc34ae-451d-4270-84a6-bbbf8de80115@app.fastmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 18 Aug 2026 12:35:12 -0400
-X-Gm-Features: AcwNN1VZqh-S__7cbi_egMwiEqAec6iiQPm-g1w5F2iS-RhygQvmqEamgz0qD3s
-Message-ID: <CALnO6CCFRAOouPALFdGhN1HjRuPhDj_inRBaWhebwCiD68R9AQ@mail.gmail.com>
-Subject: Re: [PATCH] completion: zsh: support completion after "git -C <path>"
-To: Lutz Lengemann <lutz@lengemann.net>
-Cc: Lutz Lengemann <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Aug 18, 2026 at 8:41=E2=80=AFAM Lutz Lengemann <lutz@lengemann.net>=
- wrote:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> This is only part of the story though: GnuTLS 3.8 introduced
+> GNUTLS_NO_STATUS_REQUEST, and curl 8.10 started to set that option in
+> case of `!verifystatus`. So with new-enough versions of both libraries,
+> Git behaves the same no matter whether we use OpenSSL or GnuTLS as
+> backend. See also aeb1a281ca (gtls: fix OCSP stapling management,
+> 2024-08-20) in curl.
+
+Thanks for additional details.
+
+>> Add an http.sslVerifyStatus boolean that sets CURLOPT_SSL_VERIFYSTATUS.
+>> Because http_options() is the collect_fn of a urlmatch config, the
+>> per-URL form works with no further changes:
+>> 
+>>     git config http.https://example.com/.sslVerifyStatus true
+>> 
+>> It defaults to false, and has to. The option is fail-closed: libcurl fails
+>> verification when the server staples nothing at all, so turning this on
+>> globally would break every remote that does not staple.
+>> 
+>> Leaving the default to libcurl is not an option either. The same
+>> complaint was raised there in https://github.com/curl/curl/issues/15483
+>> and closed as intentional ("Marked as enhancement since this was done on
+>> purpose"), with the observation that stapling is expected to see less use
+>> as Let's Encrypt drops OCSP support. If the check is to be reachable at
+>> all, the lever has to come from the application.
 >
-> Hi
+> But... don't we still leave the default to libcurl? If
+> "http.sslVerifyStatus" is not set then we don't touch
+> `CURLOPT_SSL_VERIFYSTATUS`, either.
 >
-> On Tue, Aug 18, 2026, at 14:13, D. Ben Knoble wrote:
-> > No worries! Hope you enjoyed. (I didn't see v2 come in anywhere, but
-> > I'll keep my eye out.)
->
-> I pushed the new change to my github repo, and then the PullRequest here =
-was
-> updated: https://github.com/gitgitgadget/git/pull/2155/changes
+> I might be misreading this though, as the whole commit message is quite
+> hard to digest. I'd assume that this is because it's generated by AI,
+> and it added a lot of the usual weird phrases to the message. It might
+> be a good idea to adapt the message to have a bit more of a human touch
+> to it.
 
-Ah, if you intended to send that to the mailing list, you'd need to
-/submit again, I think.
+I too had trouble figuring out what the proposed log message really
+wanted to say, but I wrote it off, blaming the difficulty on a
+language barrier.  But as you said, perhaps it is because it was
+written by something that does not truly understand what it is
+talking about.  It may not have to explain things to readers as if
+they were 5 years old, but it is definitely necessary to explain
+well to readers as if they were humans with average intelligence
+;-).
 
-> Would really love to see the change in git, makes me a bit proud that I
-> added something to the one application almost all developers use.
-
-Definitely understand that feeling ;)
-
---=20
-D. Ben Knoble
