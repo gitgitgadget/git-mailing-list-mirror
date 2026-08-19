@@ -1,66 +1,68 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B34392806
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 13:20:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD943921F1
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 13:20:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787145605; cv=none; b=qVFxiCm3VRQ0D8xOCF6UAicuUN/oib988gqrQ1U1CVkGcf5AhJMXfJ8bWIG+TmizLKAXGmNkaQWlybmyrvZfQgFFSv933fYVFfK+aTLcc3Fln/6BMSkxO2xZm6qeFipOcq6ZVI47lSZ33QlSw1XKin2w0XOKiBOClKnvvOs19pA=
+	t=1787145607; cv=none; b=iXkrfRY9dPa5g7xAEsQZa7CPPJcxsPmoJI9vn8RiRJ22x4903rDxpudBglEdVVfRSMH6MpXu7nbSS/2VDut75gTUjs4mqIsCUZKGpccfrvs89ZyYyg3GqqMZF68CPMiW4lAdafNapdZH6crzodGVPEqlrI3HcGXXXdmGs4iKFDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787145605; c=relaxed/simple;
-	bh=Na8ybHfM55CKgiqXSEIbwPsCZTVtZl8lotsUFwfUzyw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pZ7whZ6ZdMczCS2GgW/edp/SpyLxqLTb/Low88BNCIbmbfc905qjbTzXm0TEIKUaGsWumVnSK2fzK/wrD1wjH3rUHt0zznD5WhEYK/9cjDucDOJ6fltkAQyvVZUHAwmm2snGROcCYydQqMRVOFedE4f4var+/Iqvjvdii8z5ssM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IpLM1BMz; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1787145607; c=relaxed/simple;
+	bh=RsMdMmqtlo7WukQ6M999b3R9beHcmAC7mXpAm3yAWlc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=QRrm2BUKVKAiZmmiZbq4SwgmFzK7RgMVrBPjhCRQ5gxv8SfrtYJzzDYA6tIXFk934IXF2mbH76R86F6Ryl9SCqq/1uZ8eYT0syJPai9NKNpiLA0z013S8JX1ULp5eQ7Z3DMqsTUXhK7zD7c4XnnIOpe8CV5gjCqATywWEDZxqQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DAAwG7mJ; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IpLM1BMz"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-4813ea321cdso1441131f8f.1
-        for <git@vger.kernel.org>; Wed, 19 Aug 2026 06:20:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DAAwG7mJ"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-49556f97a9dso6902125e9.1
+        for <git@vger.kernel.org>; Wed, 19 Aug 2026 06:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787145602; x=1787750402; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=84kcllmlzQ2GGSsUhVVNvsq3Q4RjvuZH5cwVIkSpcY8=;
-        b=IpLM1BMzmDLlM3v50WQMTAisLReAE8iB0ymNK0fsZddd6Oo50Y9Z4qPC2M6ED7KkIG
-         mCRnqlXtykxU8b3nGa5KVLSja80O6M54f5Fn/qpA6r3yRwZdrQiJIMxFwk3TkbRsqDIl
-         Gqi0N/gFZXtzEIiYjRGqmlrmPhpZnbI/EGrwM+pyLASwoI6NDd9eShFExtqlEdsYLrtj
-         fjob5lx/9QOYu4X5pNolK4+Q7sSdHerzEIYeEc2O1zHAOl320YB2OD4eEb/bq5FsM/U6
-         N6cD7+YK4tpUgfq8ml3hkHPE6AalMbq+TrjhEh2k1v0qmX+PzSvVQ8J8iP17XxyEMjzx
-         7A2A==
+        d=gmail.com; s=20251104; t=1787145603; x=1787750403; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=wjngwiNSmaMrcAbYDBR0zVTsOc/G9S0O1rSyTUZSmYw=;
+        b=DAAwG7mJN/2Mg1OPguz0nvXaC9VKAPWapU+Hxlg9eJoVIPpBP43lNZVXfhnpWpbzIT
+         o/LKqpdn97V29s5LdJvD9AfbGnhXTSsiHkS/mBELmieUQ7KmiMYIckGzZDskYIug4TXu
+         y0b10BlX9GZdn4EsYAYbQRejnG7scWb+s+cpS9AY/a9HagIVoZPj2dhZyrBFR6Pp6Dua
+         IDfjX2n0tKTVSwUq+XTTR33zru3mFewYIBxg7G4NukwVzEyNwFTuDNcQl9B2tGhQhm5K
+         KUjH6soXkIuRn9Ty6QLHzPJ3wh+WV6N3v/Vjwo234dqutvN8G5NhSE4AcIAtK9JJ/Mw5
+         CLdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787145602; x=1787750402;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=84kcllmlzQ2GGSsUhVVNvsq3Q4RjvuZH5cwVIkSpcY8=;
-        b=jl+6VBUCQwe5DNHD20p0uFP46JAGuKrJKR5ggJGq4MixgPL9TKiSMqMbolwUWOmERh
-         BtOOtXJb5pIou6dm73nkFrnJDvJ0awtAcbyIOiFhgswYvAfBC24IMGTTb5C4hG20ws7C
-         piwM7aLzPzoRlVXrkr7fFAC8zXZBQeYLJiKt4gsE7XVmXbmzqHECoEOZicrCWqhMxBJh
-         GC220sZjnGp+Xh5uTLISf2T5rcrBYlPRt6ffuZoMGGUw6YucOQGOaDQZGLoBhFU0ClsH
-         c0G7SXGa5JhMtomoL8D17U1Yn3fjq65eVKYh0q/eQ4ghKSP01umQ8Ey4S7x2WW1smYIv
-         bF9A==
-X-Gm-Message-State: AOJu0YzvAktbfNqBp4cOsc9VFY0N+l5K9cV0cdGTwoSCI3dEkYjinEwA
-	9ys7IphgvScDkOdUCDadHUoKorL8yAyuWQV00O0QzUfbz3+Cjm+24fgiFQxA1kHx
-X-Gm-Gg: AR+sD11xVUQQhGvL5JRViEy2b4Jz4S2CXaHHHGSK/J2NleUcdIu7b7pOI7FZbVqegeo
-	Aa3DTqC84+HnFqY4/nh6zYnNnJApAOf9/GaJUkLgjN+02wV46U+ujhNFlRTMUVHtqh90abwCnII
-	ix93IJNopYvaheQ0x+BugstJyVNEKFBVv2A1vV76bx7VzH+HhLEM9n6SytDgLNltzEcndsn93yU
-	TUuDOVnOguQjQagJbzJFPoOVyd4C1W7cA5AQxaDORGCJ8dqbor/wDIdC8jGu0zeOp6xGomgrxDd
-	SPlQA/1B29kxIJ/9cnm3gANmVJpbWCreMJa4hUTBrf3NP38q3sp8Z4TkcyNG2kHimCUNpT5Hmn+
-	zfTb+1krYlCzahLn009DXTOdkW/mKah8yUM0oZD3Hi2AKUJWmdWhkzMP7TLv2CcR77VYItez003
-	AscQrjVtT654bHUD1NdsyDueDxzEaNVDFidpMlDIhqtdqgMq3BUc2zof9yaiAOcL7rm7wOOxppr
-	TGylTGyfjQNQGdTFuBE+HVvccvUvffRosdhAg==
-X-Received: by 2002:a05:600c:6308:b0:499:59fd:dbfc with SMTP id 5b1f17b1804b1-499aa0ab6b0mr77076225e9.1.1787145601775;
-        Wed, 19 Aug 2026 06:20:01 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1787145603; x=1787750403;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wjngwiNSmaMrcAbYDBR0zVTsOc/G9S0O1rSyTUZSmYw=;
+        b=Blt5XkFY61srQxk0QsYtW7klmIysga7+h0k/Z+K69jyNVbj9/VonJbOCEUlrvgkm+w
+         4soW/tIvdnxOy5yY6YPvoeCzuI1UTCvepwX6/+GSRR0iKvpVwmVxY72KjsrGaOnZllwS
+         353WuZ+SXvFoktErYk38Af3cWYfWKv+vE8xgrV7zlVVJDbbCfDCpJDjO4O7he3p2ZWoV
+         YzgjPAaRiaGIGsEsKPhjJIuBeJ88jSfSkUbVtfvkfUHdvBzB9eshVeywET7aNSe2blM9
+         IQuJKVEgOiGWw99s3dYqZMkjtlTuL5EUehKO8dVym7fgLRD8a8CibCf/nsJkDXqGvyJr
+         yWxw==
+X-Gm-Message-State: AOJu0Yxt32ith2Deyaj+j9RgbN6vXPia7iqdh0eusHRvJ9JpKeAxfM/a
+	B5ShM4TwUvLkRW2Y7IRYsH0dXLof+yvozcFGeehtalX7Qa3nXDP+ZY4jlepivuSl
+X-Gm-Gg: AR+sD10He9oX//9rkOSFAdh7TB0Z5ocICWfnvJN/Bnra5H43XVYiXqX71A1F2jEmJSt
+	qNkaG7gH/sVa6x4LTGoxTR1390iEFkJVJ2lS0YVvjHYpugnUTRyNGx/5NXXcLqvzQevwIEJA7Zb
+	YYpcu7LcXPBq7CBBoaVfVqBbKar72K2yXKaVRcuHPh721Ds5Tq2wfI9gP0TdMSrOjcpd3iAZOYj
+	bPMzkgcmht5Um6D5fKtdPKIkKWIvQBwdr8a4lhdhYoFKnm8TMIK3sqJoEyRfXYpqjkUsl/jlRG7
+	kXqziUckAqWz13oKNbhNLnxOHqUJ+/tgqD252Zl1F2pqfpagNjBFObwnEBwKn8soox+uHQHB9K7
+	jFlarRJ8oBjblVrTPnk2FEumTFZnimz1z3ATx6dvF7JXs38vJ04dLp4lsG5/Ol9KK9SH9PyGJ5f
+	GRelPOyF+DkSsG2lt/VoQmPDEYuEQwRmxIdMKISu6HztnLqyF7hrYh4aNg6lOYcK128u3puAD+V
+	EmAr8s7qx0h2lQVKhHdyU0yHH4=
+X-Received: by 2002:a05:600c:3f12:b0:499:7a4f:d13d with SMTP id 5b1f17b1804b1-499aa199777mr86888265e9.4.1787145603300;
+        Wed, 19 Aug 2026 06:20:03 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:15a6:881d:7fd4:eabb])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499a9ddee1esm37578955e9.2.2026.08.19.06.20.00
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499a9ddee1esm37578955e9.2.2026.08.19.06.20.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2026 06:20:01 -0700 (PDT)
+        Wed, 19 Aug 2026 06:20:02 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 0/3] reftable/stack: avoid reloading the stack when locked
-Date: Wed, 19 Aug 2026 15:19:36 +0200
-Message-Id: <20260819-740-optimize-reloading-the-reftable-stack-v1-0-6bf5305d4e43@gmail.com>
+Date: Wed, 19 Aug 2026 15:19:37 +0200
+Subject: [PATCH 1/3] reftable/stack: remove
+ `REFTABLE_STACK_NEW_ADDITION_RELOAD`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,86 +71,535 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNyw6CMBCF4Vchs3aSAfESX8WwGNopjGJL2mqMh
- He36PLLSc6/QJKokuBSLRDlpUmDL6h3FZiR/SCothgaao50rls8tYRhzvrQj2CUKbBVP2AeN7n
- M/SSYMps7uoPbs3XEZAjK31x2ff9a1+7v9OxvYvIWgHX9AqvYKnONAAAA
-X-Change-ID: 20260814-740-optimize-reloading-the-reftable-stack-f5f3adf0a0c0
+Message-Id: <20260819-740-optimize-reloading-the-reftable-stack-v1-1-6bf5305d4e43@gmail.com>
+References: <20260819-740-optimize-reloading-the-reftable-stack-v1-0-6bf5305d4e43@gmail.com>
+In-Reply-To: <20260819-740-optimize-reloading-the-reftable-stack-v1-0-6bf5305d4e43@gmail.com>
 To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
+Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2853; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=Na8ybHfM55CKgiqXSEIbwPsCZTVtZl8lotsUFwfUzyw=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqFrYCEHtqxzj9ALNSS6881N0w1EzrH1spVM
- uIC09Cqv0B6Y4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqha2AAAoJED7VnySO
- Rox/2NwL/RrtTcyfNM8StJrBu9HsAORHdGpA6FyyksYs5CgsjzoN7s0nEj9tkggEC5kChiLQAIP
- c1Oc1y+Uc7IXdI93qR2ActHp5L+EkBJHWfAm0Zo6TcfCb/kb3oL2eqnCiHky2Uflpnrk6kQ0CNO
- y0CiiMj/x1tjU5tUV2WBArSomvAUKCuXpijhz6yfliSLjzYHZ7y3yJqcnN0+c5U7Z0aD98R/6sP
- VaLbFqe6/5yK+/JTaYj2a0nWspZv36ixjxUe4ndNdpszrV9PNWI2G/+rQs9UsEr1P/2J6s3Q0hL
- +JGaGc5nNLpb8wLOncmYihUbWjjN7+cPDoORFDbID0R3XxJ/rg8Qf8cZoB7xGmnsKmDd8ibV1ef
- 9tLEpzNczblmC2VDiUhksjQoxxwHYDOLJ0mOfRgFEYNaL9eSgpiW/PyCOk9yk6hMknVHbhEJ/7h
- Q9NhVMsyfhwCJH8+ilGJUs0GfoMZlE1SsCjaXSn6RQ65+253mGO6cUuwSirCQPiwFrWAjw5dkJ6
- xM=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=19558;
+ i=karthik.188@gmail.com; h=from:subject:message-id;
+ bh=RsMdMmqtlo7WukQ6M999b3R9beHcmAC7mXpAm3yAWlc=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqFrYDD+zDbub7Z/kvlDsXZVTCo+3UbgHS94
+ yx48OsCX9PdMIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqha2AAAoJED7VnySO
+ Rox/aYwL/izuwTWo3yKGstA4Tjq80WE1FT9Wvft3BBftPODOJwpwGFJeC6s66q1RshI/bCOfxHR
+ oWdXyiKfrsnauemwGHLTaocX+reOdu0yZ4iFNLDDgcW428QjWLj5DePDizJNNMDArJEMj7OkddO
+ Xv/DRgqcMrDdLNKJm1xQb1zSY71SzF2d99r+Dy0YqMjRZZbzp7JD9kpweuGVd45bq7lg4u8nTmT
+ bdD7caTkONuZKnN1dVXJfVPX8MXmqoiAL0fuIzMZf559kbcwnVnz9MJ392elghyyuTbVikjPZ+e
+ k4SbxywaPwxZyJJcswGcRIR3MXXgGXcukBKJTXzgDwtLWgr63CXE+eWziarHt92tUToTufl8Anv
+ TaTdLPb6d8qVK5SsJd+TBg21fxH+m8Hpv/sT3Dt419JFzVjISVS7DHw6aGnnmLNmZY8925BPRDT
+ IplVCedF6MgcWZdTKmhCpOVWcAPqfjdl6QR6UouxwnhBmnQ3dMjRf/aDe694QP0vSwiEi2HtRf7
+ Rc=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-This patch series is based on the report by Jeff [1], where he noticed
-that when creating a lot of refs within a single reference transaction,
-the majority of the time was spent on fstat().
+In 80e7342ea8 (reftable/stack: allow locking of outdated stacks,
+2024-09-24), the `REFTABLE_STACK_NEW_ADDITION_RELOAD` was introduced so
+that callers of `reftable_stack_init_addition()` can also reload the
+stack if there was a concurrent update made before the lock was
+obtained.
 
-The issue stems from the fact that within the reftable library we do not
-track Git reference transactions, as such any calls within the library
-would potentially reload the stack to ensure that there are no
-concurrent updates made to the stack. While this makes sense outside of
-a reference transaction, within one, the stack is locked, so reloading
-the stack is a no-op. The only time we want to reload the stack is
-immediately after locking the list file, which is to catch any
-concurrent updates made to the stack.
+Then 16684b6fae (refs/reftable: always reload stacks when creating
+lock, 2025-08-12) updated all of the remaining call-sites to propagate
+this flag to ensure that we always reload the stack whenever there was a
+concurrent update.
 
-The first patch in this small series, cleans up the flow of reloading
-the stack by providing a flag explicitly. The patch argues that since
-all flows reload the stack, the flag can be safely removed. This
-simplifies the flow of when to reload the stack.
+As all calls to `reftable_stack_init_addition()` inevitably propagate
+the flag, it is safe to remove the flag and its associated code and make
+the reloading of the stack the default flow. This makes it easier to
+follow the flow and simplifies the logic.
 
-The next two commits move the lock variable to the reftable_stack
-structure and then use this information to decide if reloading of the
-stack is necessary.
+The only exceptions are:
 
-During benchmarking, I first tried to benchmark adding new references
-against HEAD. This kicks in the DWIM ref resolution, and we iterate over
-siz difference candidate ref names before settling on a match. Each such
-lookup reloads the stack. This happens before the reference transaction
-is created. I quickly realized that this would dominate the benchmarks,
-so the benchmarks in the third patch are against a static commit OID.
+  1. Unit tests, where we explicitly do not propagate the flag. These
+     tests are now modified with the new status quo.
 
-The benchmarks show a consistent 1-2% improvement in clock time for
-'git-update-ref(1)', but such low values could also be chalked to being
-within an error rate. However, the syscall counts show that now the
-calls to `newfstatat()` stay constant at around 55 calls regardless of
-the number of refs to be created. Before this would grow linearly with
-the number of refs.
+  2. `reftable_stack_clean_locked()`, which was propagating 0 to
+     `reftable_stack_new_addition()` but was then manually reloading the
+     stack after. Here the new flow will achieve the same, while also
+     allowing us to remove the manual reload.
 
-[1]: https://lore.kernel.org/git/20260629203527.GA1895313@coredump.intra.peff.net/
+This also makes two checks for 'REFTABLE_OUTDATED_ERROR' redundant, so
+remove them also.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
-Karthik Nayak (3):
-      reftable/stack: remove `REFTABLE_STACK_NEW_ADDITION_RELOAD`
-      reftable/stack: move list lock to `struct reftable_stack`
-      reftable/stack: avoid reloading the stack when already locked
-
  refs/reftable-backend.c         | 18 ++++-------
  reftable/reftable-stack.h       | 17 ++--------
- reftable/stack.c                | 69 +++++++++++++++++------------------------
- reftable/stack.h                |  7 ++++-
+ reftable/stack.c                | 37 ++++++----------------
  t/unit-tests/u-reftable-stack.c | 69 ++++++++++++++++++-----------------------
- 5 files changed, 75 insertions(+), 105 deletions(-)
+ 4 files changed, 49 insertions(+), 92 deletions(-)
 
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 028f0211af..5c87fd2d68 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1003,8 +1003,7 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
+ 		struct reftable_addition *addition;
+ 
+ 		ret = reftable_stack_new_addition(&addition, be->stack,
+-						  &reftable_be_write_options(refs)->opts,
+-						  REFTABLE_STACK_NEW_ADDITION_RELOAD);
++						  &reftable_be_write_options(refs)->opts);
+ 		if (ret) {
+ 			if (ret == REFTABLE_LOCK_ERROR)
+ 				strbuf_addstr(err, "cannot lock references");
+@@ -2010,8 +2009,7 @@ static int reftable_be_rename_ref(struct ref_store *ref_store,
+ 	if (ret)
+ 		goto done;
+ 	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg,
+-				 &reftable_be_write_options(refs)->opts,
+-				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
++				 &reftable_be_write_options(refs)->opts);
+ 
+ done:
+ 	assert(ret != REFTABLE_API_ERROR);
+@@ -2041,8 +2039,7 @@ static int reftable_be_copy_ref(struct ref_store *ref_store,
+ 	if (ret)
+ 		goto done;
+ 	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg,
+-				 &reftable_be_write_options(refs)->opts,
+-				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
++				 &reftable_be_write_options(refs)->opts);
+ 
+ done:
+ 	assert(ret != REFTABLE_API_ERROR);
+@@ -2424,8 +2421,7 @@ static int reftable_be_create_reflog(struct ref_store *ref_store,
+ 	arg.stack = be->stack;
+ 
+ 	ret = reftable_stack_add(be->stack, &write_reflog_existence_table, &arg,
+-				 &reftable_be_write_options(refs)->opts,
+-				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
++				 &reftable_be_write_options(refs)->opts);
+ 
+ done:
+ 	return ret;
+@@ -2499,8 +2495,7 @@ static int reftable_be_delete_reflog(struct ref_store *ref_store,
+ 	arg.stack = be->stack;
+ 
+ 	ret = reftable_stack_add(be->stack, &write_reflog_delete_table, &arg,
+-				 &reftable_be_write_options(refs)->opts,
+-				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
++				 &reftable_be_write_options(refs)->opts);
+ 
+ 	assert(ret != REFTABLE_API_ERROR);
+ 	return ret;
+@@ -2622,8 +2617,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ 		goto done;
+ 
+ 	ret = reftable_stack_new_addition(&add, be->stack,
+-					  &reftable_be_write_options(refs)->opts,
+-					  REFTABLE_STACK_NEW_ADDITION_RELOAD);
++					  &reftable_be_write_options(refs)->opts);
+ 	if (ret < 0)
+ 		goto done;
+ 
+diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
+index 5d22d84e80..5d224f8079 100644
+--- a/reftable/reftable-stack.h
++++ b/reftable/reftable-stack.h
+@@ -58,22 +58,13 @@ uint64_t reftable_stack_next_update_index(struct reftable_stack *st);
+ /* holds a transaction to add tables at the top of a stack. */
+ struct reftable_addition;
+ 
+-enum {
+-	/*
+-	 * Reload the stack when the stack is out-of-date after locking it.
+-	 */
+-	REFTABLE_STACK_NEW_ADDITION_RELOAD = (1 << 0),
+-};
+-
+ /*
+  * returns a new transaction to add reftables to the given stack. As a side
+- * effect, the ref database is locked. Accepts REFTABLE_STACK_NEW_ADDITION_*
+- * flags.
++ * effect, the ref database is locked.
+  */
+ int reftable_stack_new_addition(struct reftable_addition **dest,
+ 				struct reftable_stack *st,
+-				const struct reftable_write_options *opts,
+-				unsigned int flags);
++				const struct reftable_write_options *opts);
+ 
+ /* Adds a reftable to transaction. */
+ int reftable_addition_add(struct reftable_addition *add,
+@@ -93,14 +84,12 @@ void reftable_addition_destroy(struct reftable_addition *add);
+ /*
+  * Add a new table to the stack. The write_table function must call
+  * reftable_writer_set_limits, add refs and return an error value.
+- * The flags are passed through to `reftable_stack_new_addition()`.
+  */
+ int reftable_stack_add(struct reftable_stack *st,
+ 		       int (*write_table)(struct reftable_writer *wr,
+ 					  void *write_arg),
+ 		       void *write_arg,
+-		       const struct reftable_write_options *opts,
+-		       unsigned flags);
++		       const struct reftable_write_options *opts);
+ 
+ struct reftable_iterator;
+ 
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 308f9578f0..540f5e77ac 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -659,8 +659,7 @@ static void reftable_addition_close(struct reftable_addition *add)
+ 
+ static int reftable_stack_init_addition(struct reftable_addition *add,
+ 					struct reftable_stack *st,
+-					const struct reftable_write_options *opts,
+-					unsigned int flags)
++					const struct reftable_write_options *opts)
+ {
+ 	struct reftable_buf lock_file_name = REFTABLE_BUF_INIT;
+ 	int err;
+@@ -686,15 +685,11 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
+ 	err = stack_uptodate(st);
+ 	if (err < 0)
+ 		goto done;
+-	if (err > 0 && flags & REFTABLE_STACK_NEW_ADDITION_RELOAD) {
++	if (err > 0) {
+ 		err = reftable_stack_reload_maybe_reuse(add->stack, 1);
+ 		if (err)
+ 			goto done;
+ 	}
+-	if (err > 0) {
+-		err = REFTABLE_OUTDATED_ERROR;
+-		goto done;
+-	}
+ 
+ 	add->next_update_index = reftable_stack_next_update_index(st);
+ done:
+@@ -708,13 +703,12 @@ static int stack_try_add(struct reftable_stack *st,
+ 			 int (*write_table)(struct reftable_writer *wr,
+ 					    void *arg),
+ 			 void *arg,
+-			 const struct reftable_write_options *opts,
+-			 unsigned flags)
++			 const struct reftable_write_options *opts)
+ {
+ 	struct reftable_addition add;
+ 	int err;
+ 
+-	err = reftable_stack_init_addition(&add, st, opts, flags);
++	err = reftable_stack_init_addition(&add, st, opts);
+ 	if (err < 0)
+ 		goto done;
+ 
+@@ -731,17 +725,10 @@ static int stack_try_add(struct reftable_stack *st,
+ int reftable_stack_add(struct reftable_stack *st,
+ 		       int (*write)(struct reftable_writer *wr, void *arg),
+ 		       void *arg,
+-		       const struct reftable_write_options *opts,
+-		       unsigned flags)
++		       const struct reftable_write_options *opts)
+ {
+-	int err = stack_try_add(st, write, arg, opts, flags);
++	int err = stack_try_add(st, write, arg, opts);
+ 	if (err < 0) {
+-		if (err == REFTABLE_OUTDATED_ERROR) {
+-			/* Ignore error return, we want to propagate
+-			   REFTABLE_OUTDATED_ERROR.
+-			*/
+-			reftable_stack_reload(st);
+-		}
+ 		return err;
+ 	}
+ 
+@@ -843,8 +830,7 @@ int reftable_addition_commit(struct reftable_addition *add)
+ 
+ int reftable_stack_new_addition(struct reftable_addition **dest,
+ 				struct reftable_stack *st,
+-				const struct reftable_write_options *opts,
+-				unsigned int flags)
++				const struct reftable_write_options *opts)
+ {
+ 	int err;
+ 
+@@ -852,7 +838,7 @@ int reftable_stack_new_addition(struct reftable_addition **dest,
+ 	if (!*dest)
+ 		return REFTABLE_OUT_OF_MEMORY_ERROR;
+ 
+-	err = reftable_stack_init_addition(*dest, st, opts, flags);
++	err = reftable_stack_init_addition(*dest, st, opts);
+ 	if (err) {
+ 		reftable_free(*dest);
+ 		*dest = NULL;
+@@ -1840,12 +1826,7 @@ static int reftable_stack_clean_locked(struct reftable_stack *st)
+ int reftable_stack_clean(struct reftable_stack *st)
+ {
+ 	struct reftable_addition *add = NULL;
+-	int err = reftable_stack_new_addition(&add, st, NULL, 0);
+-	if (err < 0) {
+-		goto done;
+-	}
+-
+-	err = reftable_stack_reload(st);
++	int err = reftable_stack_new_addition(&add, st, NULL);
+ 	if (err < 0) {
+ 		goto done;
+ 	}
+diff --git a/t/unit-tests/u-reftable-stack.c b/t/unit-tests/u-reftable-stack.c
+index e6c1635940..c6254190e6 100644
+--- a/t/unit-tests/u-reftable-stack.c
++++ b/t/unit-tests/u-reftable-stack.c
+@@ -127,7 +127,7 @@ static void write_n_ref_tables(struct reftable_stack *st,
+ 		cl_reftable_set_hash(ref.value.val1, i, REFTABLE_HASH_SHA1);
+ 
+ 		cl_assert_equal_i(reftable_stack_add(st,
+-						     &write_test_ref, &ref, &opts, 0), 0);
++						     &write_test_ref, &ref, &opts), 0);
+ 	}
+ }
+ 
+@@ -168,7 +168,7 @@ void test_reftable_stack__add_one(void)
+ 	err = reftable_new_stack(&st, dir, NULL);
+ 	cl_assert(!err);
+ 
+-	err = reftable_stack_add(st, write_test_ref, &ref, &opts, 0);
++	err = reftable_stack_add(st, write_test_ref, &ref, &opts);
+ 	cl_assert(!err);
+ 
+ 	err = reftable_stack_read_ref(st, ref.refname, &dest);
+@@ -231,12 +231,9 @@ void test_reftable_stack__uptodate(void)
+ 	cl_assert_equal_i(reftable_new_stack(&st1, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_new_stack(&st2, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st1, write_test_ref,
+-					     &ref1, NULL, 0), 0);
++					     &ref1, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st2, write_test_ref,
+-					     &ref2, NULL, 0), REFTABLE_OUTDATED_ERROR);
+-	cl_assert_equal_i(reftable_stack_reload(st2), 0);
+-	cl_assert_equal_i(reftable_stack_add(st2, write_test_ref,
+-					     &ref2, NULL, 0), 0);
++					     &ref2, NULL), 0);
+ 	reftable_stack_destroy(st1);
+ 	reftable_stack_destroy(st2);
+ 	clear_dir(dir);
+@@ -260,7 +257,7 @@ void test_reftable_stack__transaction_api(void)
+ 
+ 	reftable_addition_destroy(add);
+ 
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st, NULL, 0), 0);
++	cl_assert_equal_i(reftable_stack_new_addition(&add, st, NULL), 0);
+ 	cl_assert_equal_i(reftable_addition_add(add, write_test_ref,
+ 						&ref), 0);
+ 	cl_assert_equal_i(reftable_addition_commit(add), 0);
+@@ -301,21 +298,17 @@ void test_reftable_stack__transaction_with_reload(void)
+ 
+ 	cl_assert_equal_i(reftable_new_stack(&st1, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_new_stack(&st2, dir, NULL), 0);
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st1, NULL, 0), 0);
++	cl_assert_equal_i(reftable_stack_new_addition(&add, st1, NULL), 0);
+ 	cl_assert_equal_i(reftable_addition_add(add, write_test_ref,
+ 						&refs[0]), 0);
+ 	cl_assert_equal_i(reftable_addition_commit(add), 0);
+ 	reftable_addition_destroy(add);
+ 
+ 	/*
+-	 * The second stack is now outdated, which we should notice. We do not
+-	 * create the addition and lock the stack by default, but allow the
+-	 * reload to happen when REFTABLE_STACK_NEW_ADDITION_RELOAD is set.
++	 * The second stack is now outdated, but it should automatically reload it
++	 * with the newer updates.
+ 	 */
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st2, NULL, 0),
+-						      REFTABLE_OUTDATED_ERROR);
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st2, NULL,
+-						      REFTABLE_STACK_NEW_ADDITION_RELOAD), 0);
++	cl_assert_equal_i(reftable_stack_new_addition(&add, st2, NULL), 0);
+ 	cl_assert_equal_i(reftable_addition_add(add, write_test_ref,
+ 						&refs[1]), 0);
+ 	cl_assert_equal_i(reftable_addition_commit(add), 0);
+@@ -363,7 +356,7 @@ void test_reftable_stack__transaction_api_performs_auto_compaction(void)
+ 		 * better control over when exactly auto compaction runs.
+ 		 */
+ 		cl_assert_equal_i(reftable_stack_new_addition(&add,
+-							      st, &write_opts, 0), 0);
++							      st, &write_opts), 0);
+ 		cl_assert_equal_i(reftable_addition_add(add,
+ 							write_test_ref, &ref), 0);
+ 		cl_assert_equal_i(reftable_addition_commit(add), 0);
+@@ -400,7 +393,7 @@ void test_reftable_stack__auto_compaction_fails_gracefully(void)
+ 
+ 	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-					     &ref, NULL, 0), 0);
++					     &ref, NULL), 0);
+ 	cl_assert_equal_i(st->merged->tables_len, 1);
+ 	cl_assert_equal_i(st->stats.attempts, 0);
+ 	cl_assert_equal_i(st->stats.failures, 0);
+@@ -418,7 +411,7 @@ void test_reftable_stack__auto_compaction_fails_gracefully(void)
+ 	write_file_buf(table_path.buf, "", 0);
+ 
+ 	ref.update_index = 2;
+-	err = reftable_stack_add(st, write_test_ref, &ref, NULL, 0);
++	err = reftable_stack_add(st, write_test_ref, &ref, NULL);
+ 	cl_assert(!err);
+ 	cl_assert_equal_i(st->merged->tables_len, 2);
+ 	cl_assert_equal_i(st->stats.attempts, 1);
+@@ -453,9 +446,9 @@ void test_reftable_stack__update_index_check(void)
+ 
+ 	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-					     &ref1, NULL, 0), 0);
++					     &ref1, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-					     &ref2, NULL, 0), REFTABLE_API_ERROR);
++					     &ref2, NULL), REFTABLE_API_ERROR);
+ 	reftable_stack_destroy(st);
+ 	clear_dir(dir);
+ }
+@@ -469,7 +462,7 @@ void test_reftable_stack__lock_failure(void)
+ 	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	for (i = -1; i != REFTABLE_EMPTY_TABLE_ERROR; i--)
+ 		cl_assert_equal_i(reftable_stack_add(st, write_error,
+-						     &i, NULL, 0), i);
++						     &i, NULL), i);
+ 
+ 	reftable_stack_destroy(st);
+ 	clear_dir(dir);
+@@ -513,7 +506,7 @@ void test_reftable_stack__add(void)
+ 
+ 	for (i = 0; i < N; i++)
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-						     &refs[i], &opts, 0), 0);
++						     &refs[i], &opts), 0);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		struct write_log_arg arg = {
+@@ -521,7 +514,7 @@ void test_reftable_stack__add(void)
+ 			.update_index = reftable_stack_next_update_index(st),
+ 		};
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-						     &arg, &opts, 0), 0);
++						     &arg, &opts), 0);
+ 	}
+ 
+ 	cl_assert_equal_i(reftable_stack_compact_all(st, &opts, NULL), 0);
+@@ -604,7 +597,7 @@ void test_reftable_stack__iterator(void)
+ 
+ 	for (i = 0; i < N; i++)
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-						     &refs[i], NULL, 0), 0);
++						     &refs[i], NULL), 0);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		struct write_log_arg arg = {
+@@ -613,7 +606,7 @@ void test_reftable_stack__iterator(void)
+ 		};
+ 
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-						     &arg, NULL, 0), 0);
++						     &arg, NULL), 0);
+ 	}
+ 
+ 	reftable_stack_init_ref_iterator(st, &it);
+@@ -685,11 +678,11 @@ void test_reftable_stack__log_normalize(void)
+ 
+ 	input.value.update.message = (char *) "one\ntwo";
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-					     &arg, NULL, 0), REFTABLE_API_ERROR);
++					     &arg, NULL), REFTABLE_API_ERROR);
+ 
+ 	input.value.update.message = (char *) "one";
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-					     &arg, NULL, 0), 0);
++					     &arg, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_read_log(st, input.refname,
+ 						  &dest), 0);
+ 	cl_assert_equal_s(dest.value.update.message, "one\n");
+@@ -697,7 +690,7 @@ void test_reftable_stack__log_normalize(void)
+ 	input.value.update.message = (char *) "two\n";
+ 	arg.update_index = 2;
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-					     &arg, NULL, 0), 0);
++					     &arg, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_read_log(st, input.refname,
+ 						  &dest), 0);
+ 	cl_assert_equal_s(dest.value.update.message, "two\n");
+@@ -747,7 +740,7 @@ void test_reftable_stack__tombstone(void)
+ 	}
+ 	for (i = 0; i < N; i++)
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-						     &refs[i], NULL, 0), 0);
++						     &refs[i], NULL), 0);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		struct write_log_arg arg = {
+@@ -755,7 +748,7 @@ void test_reftable_stack__tombstone(void)
+ 			.update_index = reftable_stack_next_update_index(st),
+ 		};
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-						     &arg, NULL, 0), 0);
++						     &arg, NULL), 0);
+ 	}
+ 
+ 	cl_assert_equal_i(reftable_stack_read_ref(st, "branch",
+@@ -801,7 +794,7 @@ void test_reftable_stack__hash_id(void)
+ 
+ 	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-					     &ref, NULL, 0), 0);
++					     &ref, NULL), 0);
+ 
+ 	/* can't read it with the wrong hash ID. */
+ 	cl_assert_equal_i(reftable_new_stack(&st32, dir,
+@@ -869,7 +862,7 @@ void test_reftable_stack__reflog_expire(void)
+ 			.update_index = reftable_stack_next_update_index(st),
+ 		};
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-						     &arg, NULL, 0), 0);
++						     &arg, NULL), 0);
+ 	}
+ 
+ 	cl_assert_equal_i(reftable_stack_compact_all(st, NULL, NULL), 0);
+@@ -908,7 +901,7 @@ void test_reftable_stack__empty_add(void)
+ 
+ 	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_nothing,
+-					     NULL, NULL, 0), 0);
++					     NULL, NULL), 0);
+ 	cl_assert_equal_i(reftable_new_stack(&st2, dir, NULL), 0);
+ 	clear_dir(dir);
+ 	reftable_stack_destroy(st);
+@@ -947,7 +940,7 @@ void test_reftable_stack__auto_compaction(void)
+ 		};
+ 		snprintf(name, sizeof(name), "branch%04"PRIuMAX, (uintmax_t)i);
+ 
+-		err = reftable_stack_add(st, write_test_ref, &ref, &opts, 0);
++		err = reftable_stack_add(st, write_test_ref, &ref, &opts);
+ 		cl_assert(!err);
+ 
+ 		err = reftable_stack_auto_compact(st, &opts);
+@@ -983,7 +976,7 @@ void test_reftable_stack__auto_compaction_factor(void)
+ 		};
+ 		xsnprintf(name, sizeof(name), "branch%04"PRIuMAX, (uintmax_t)i);
+ 
+-		err = reftable_stack_add(st, &write_test_ref, &ref, &opts, 0);
++		err = reftable_stack_add(st, &write_test_ref, &ref, &opts);
+ 		cl_assert(!err);
+ 
+ 		cl_assert(i < 5 || st->merged->tables_len < 5 * fastlogN(i, 5));
+@@ -1064,7 +1057,7 @@ void test_reftable_stack__add_performs_auto_compaction(void)
+ 		ref.refname = buf;
+ 
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-						     &ref, &write_opts, 0), 0);
++						     &ref, &write_opts), 0);
+ 
+ 		/*
+ 		 * The stack length should grow continuously for all runs where
+@@ -1303,7 +1296,7 @@ void test_reftable_stack__invalid_limit_updates(void)
+ 
+ 	reftable_addition_destroy(add);
+ 
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st, &opts, 0), 0);
++	cl_assert_equal_i(reftable_stack_new_addition(&add, st, &opts), 0);
+ 
+ 	/*
+ 	 * write_limits_after_ref also updates the update indexes after adding
 
----
-base-commit: 18e66859d87fb4b76599f73460b54f0848c76b16
-change-id: 20260814-740-optimize-reloading-the-reftable-stack-f5f3adf0a0c0
-
-
-Thanks
-- Karthik
+-- 
+2.55.GIT
 
