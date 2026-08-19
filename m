@@ -1,83 +1,82 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0B1312834
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 20:18:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FC242A96
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 20:22:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787170694; cv=none; b=lrPc4uh9vOrMhOxB6k8qSFOgbfnJsaK6+ZSJK2cnZ/1XffAAER/TVo1GspOfP/V6ojgEMi/p0uB2kCt8ZJzzFvTKv/9uSZVth/sEsCNaZJWvYp511tnCtblHUdKOVZ8b/risXA24UxgAEvma/GReDRko5RpmWvdFCE+eD2G8X40=
+	t=1787170947; cv=none; b=H80MOXELxtDSxXesb27ry3pbQqatRZ5Q/2v5vNCEGLBK8tXH22bfA8RjGApLB86FrqwZ1AfKWUn2RAB1BhZ2Xc9vnxhegjvKMusOqOWMQAs0xSOSbmrW0SHRrGMowial66phadABpdgmPGTlIkvKD+vL4p4Z8NTST7XWk/KC/hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787170694; c=relaxed/simple;
-	bh=9/vjgrvqVmtzoVpQ5leasrCbQEU2hSqrMDSG9dtierw=;
+	s=arc-20240116; t=1787170947; c=relaxed/simple;
+	bh=/B5WZ2IPoxXCjy0xKaVc8urVYLLSfivY1LZ8rwgtqos=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YsSqX1wxls38RFzBQK0VZJX388Si6DFo0FA0tNGHab+VClStvhzCdJEmXVOpxWlQJXrUVuxkQZmWNoScTgI9U7feRFiA5xeRn3ou8VLMwBt9LQTyRlZUTh9JiqB22u9vx0srcHcMCsqgf7BEuYTRUxp7i8BW6fmXK9jFFTEYvlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C2l2xHDb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k3ysELZP; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=n8Pm/CsKKj4cR9zVkB+IshYoTSoHziz9j079Yz+/Ujo8d9Uap/+AE69DK0HvelZfUnr0qso6Lo0uBOj55BgKgtdbaIHxyh72J4fUtExMTiRzDNzjXqTVXKSi5z9a9IucwvHIXgZfO2aKLq4LMYafAI4Alvlktn+zc//Ku1sAzbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y5AVhb0F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YeIGX+Km; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C2l2xHDb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k3ysELZP"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y5AVhb0F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YeIGX+Km"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 76B0C7A0184;
-	Wed, 19 Aug 2026 16:18:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 19 Aug 2026 16:18:12 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id 9CF061D00176;
+	Wed, 19 Aug 2026 16:22:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 19 Aug 2026 16:22:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787170692; x=1787257092; bh=Uyi9X8s2Gu
-	ckc/kwnHL1t2aUV/xqpR40YgwL2kx7gwc=; b=C2l2xHDbtB8gC7DZzDzhh8wsVd
-	CdW14/5pHexbak0sB+hs1RqPgM2JfEsU5399RZks4CA93xSzwTGLvOreUesZS8os
-	pPsUvABWFKQsG6RxK4YMfoXgjkXREkJ8k3uFDfUN01me+8YU7juDBbpcA9ptJduc
-	NsOgfBpm6ZGRv6k/tz0Y5kyRJ6GDeAl19yhPNRqcArocC0AzmvHH60zpPhNMqFJB
-	2RJwYGnSnNH1JMXf/kL2vUkTF7JWPeRglDENgvOPrH21zbdcVkOLr7LVYyZLFSro
-	g/rOQMGyleRyYnmdZZKGODT9Jb8HDenNUwuoYAXdP8I1TEou0k3H75vHW35Q==
+	:subject:to:to; s=fm2; t=1787170945; x=1787257345; bh=5dxWyiQB/F
+	OejNgkFtr1MDzjL6uw67kPC59ai6HhCtk=; b=Y5AVhb0FFbYFTEbsUFvqGedsh2
+	RLF4DZC1MgamdsiZtQy8Wl67q2hfjVlM/3sB6x9Ox+HShzFibm+mH2wNa9kavu+e
+	RpkwerAZplekUR05QpE9haC+Z9y+THvGHNGGNn/9poqg7NsGtJ6HiAsZi4S3ty82
+	YeaObQNW9389i3PRQHzjaeks4vOTn7VWzj0yFH3THckSL6usuKA60q/QjTwv7um5
+	6b0sEIxvNAkYhmq7AB44KN8ADkSyvLMYJgwpJrRyZW/Y3xXKNhOYgFBl9b5WebNj
+	vC5WLQU2XmJWvMdsCqcQ5+8ISUNE0jj/j0KpUxeqTspKpLlWikl+NcGjtvWQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787170692; x=1787257092; bh=Uyi9X8s2Guckc/kwnHL1t2aUV/xqpR40Ygw
-	L2kx7gwc=; b=k3ysELZPcW473BmO9sd+OoFIk9IcLO6K5z/0urXpBwD2UgBsWcx
-	DBGjYNmFXe8JMQjL3ezNha8CJzNuKVtjn1OWzDDctVqO4msTJyAiXr6SDOWLti9r
-	gQ0jMKSrYaY8mAvZ9ZT84L2q2FX0M6xMld4U5QP4MSJSpECrm7LYelf8XOxWBRUp
-	xPTH3vD4pnDGu5HaZW8MGX30ldPEeVDUm+a8W720D1C8D7vFIthy74zJXL+1mrQQ
-	7ke4E3z4ooIN9yh3r56tAfGC3RFgScfgECkWoN/cG6G3TR5vOxuULdTev04kKW/t
-	dpBAwAYvbzbGH+fyPpMhRHqJiaxhZSTi/Pg==
-X-ME-Sender: <xms:hA-GaoEgoBVi7TBmoofbxDfOvS1cpU_NcdTh2FlD618ZSspdtXKD6w>
-    <xme:hA-GalD-vt4liOMTKxJ8R9S0CE7c16ZrR3XRnrlqUdSRLigWo9YXQDdT6y1OioWpn
-    xn7vOmofqUchUGt2bDJMiLDvua3bTObchQuafVoc-dwbKjvtpk1cQ>
-X-ME-Received: <xmr:hA-Gar-CUYreIxSC4SpXYMQ6CRRxCcLKWHAt4eXA80bzr7aG9wXfYr5Uje9CIOYr9K_v6R8E9ErZB_wOTIOPynqOI6-sqHO6sQ>
-X-ME-Proxy-Cause: dmFkZTFP554062Bvr7o/vGbwCrk5a6xkWYTMwFarmGpqLD/8KDo6hrWp9fw2bZR/PeT83k
-    Kt1T7LtCJn/+RRflKO1x9uNTmo9ECK4whOc1/d06EaJkCeHg+qZUSAiaXChLNDdjZVCA/z
-    eK+0S+A051CA0qzVQQjW2Cu+wwCxIOPtO8SW3C5txOAx7WrEgO1gW0aXOeFT0702fm5FW4
-    YJHx+LsifvLF9pyyvMGUsqNdeOeQq0JZ3UgyQ5Ae+GWh8ROp9KwPo9E0CAdI9Wgr/uwMxf
-    O1fP6IpEdNt0Ilrx8a7l7uUfFUfMdYdKOUTo/uI+g9DvrrE6/tqJYYtBONoSGjSWIXRisH
-    24sSf0cVQuO6OkQpI9XPPPQRVniF8wcK/6zHksIAyI81QjT4IMC4c6cbffS37fCL75kkAe
-    NuqXa5eBZOJIeBpHYbSNoIR6lj+5y+b9RMYUc5iOZK3Qc2vfiivtWm6CRBcHPTCaQ4yiBR
-    3Xjg4q6Oz/FUWyfKl6F/I112MlSxtbkz9h7Txc4hNummIOkXl2wLkaUZG/O9viD876NNHh
-    HTWaqB6oh2dBP6yQfTEkr3uUXIZ3QmrNLPPh6SdkttS1j20qZAidgzRUJBN4pB5c6Npvl+
-    0yTujnulVaBvTPA4x0sqIaQnd9adtMbWWjfjfz8kb4LJj6A6AZcwIApUMRPQ
-X-ME-Proxy: <xmx:hA-GahC1LS7BDk-TWb0dwnw8pe5SvsRajBBsjXKrgijQ-xT3gYH54A>
-    <xmx:hA-GagRHWOu6N3Qoq6LbRRMYDYms_ffe7vlCMb065sWRa00SR1-FVQ>
-    <xmx:hA-GaovzQwPm4PdH7ADPYPAh-Umy-o6x6IMS1unY3rg1chR-zMy14g>
-    <xmx:hA-Gas0K6owYchdm0nTlEyT4BLHB8O0nWf8ypNAvlXauAPChZciG8Q>
-    <xmx:hA-GasDt3iqhWAAJtKZVXy4k-n7qBtW9K2iuwn_pVggKD-f2VIiGJCFZ>
+	1787170945; x=1787257345; bh=5dxWyiQB/FOejNgkFtr1MDzjL6uw67kPC59
+	ai6HhCtk=; b=YeIGX+Km3XpywfR+n2Znaml2Lo0hx8ybnLfOMyCeeQ3OZFBsaS0
+	4igyC0MFjghql/7jNGKol2xMCUofMilfUJBWqrDtalpkUfplr3WOInnYT9g/wr5R
+	ozjGX4HblS/ekWyGberX5MdOKVHG+Y3XFRx7pyl2suadD6EAaQTCaRjir6ynba/m
+	KZlAcMrJp64dqoG1XeSRhJ1nADF4IbjVRLI5xslH1SCxYojk4Mxu9A3p9KCbk/TS
+	dbRfV8c+09tOghNXCvN0uU33yBFRQ2cha6qwgNp1lL4NtQA/Qogsr9iQnTGxLz4l
+	Dp2VWoia+xC97H3nQ+nmDm6pA4pJKqcXLSQ==
+X-ME-Sender: <xms:gRCGam08BldvGmoFIFFJM_mJG1YZUwp6HOXkFUq-dtDt4jSejDE8OA>
+    <xme:gRCGav-Omv0ywP0Phy8CfCu7_25ZMNHyC5gOAzUa49ezuigjdacV1Xi6UMh6Rd1q0
+    ZfDHQCNwmP3dnEosZpz1Fl9u6KRJ8GxJ56UADssTCgQrraOKZMciQ>
+X-ME-Received: <xmr:gRCGanOPbm-AG_REoGXcany_Z3rog7pOnshgGkDhGxEttf8DVEj-6zGx7gSfd5oVOMR-eDBHlH9xN1wmZ2fdrMY2dHChE9H5PQ>
+X-ME-Proxy-Cause: dmFkZTEk1SruZln2HQvd3hiKYwsc0MDWES8+Rf3p1upWV0dKNNzLRI1Kc6X5j4lRvIwCJ2
+    p9yyVnrK/eXiGaNmz0+dHDHvbvnoxKBBAAQI9AmpM6JvkSWtxiRMZm4CQt8otiFNapX3n5
+    m1hRmLrYWEE1ihr0rfJ/qSLnItot23I0UvN6pPBZx118eHv7pTYRYtfh1SQzWUcvqeNNZm
+    GfvFEIMD4TlMvOAMz+Rd+ryFD/T/SvzPRpmUSrqySx+13QzGFYcFX9CL0ow/4PPqwlKCGR
+    dlfHdHmxICNkNVmwKDzMepNgI9TVl47gvqJ6+z9rfGUfjk5AvphYsfatWb/xWNFrufKGgS
+    ihHQKkoylBIrdTadH4WF9U+UEVkzLNmJ2oyUTeqWzL5QU90Y1vpy+tpPbEc5JfYlcqpm5U
+    J/GIlLIjfIVJAu0fBITS+RXC5BQE1J/sX4OUr3SyWHESxyqWx+Yl2xlLsWOLymNWZPeAOC
+    ZT1KzRTubi7P2qBm0uXZZFrzHRsXI2ihi+OY+IYU9SvqaA0RiXwhIM54T+4faySIcd+BtR
+    Cgc2RjiYTI59BmYjIdBKt8nSEXirmE14UXO/WpIuYvmvRWzfQO+h+8rzcQtjzen7hXPQMn
+    nXS7Z4k39KchiGZegzshyFWZRZxxNVN5qMV71gxVxIXG4PW7hLHCM+tAFZmQ
+X-ME-Proxy: <xmx:gRCGajeQmUTSKIjDlPKjAmGrTQg690fEC59zDcxWarQkxg5BNjRZjw>
+    <xmx:gRCGamWOvQbjKrykXRnH5doerv_gJVNvKH_Gc2S-jasvTzS6G5Ij0g>
+    <xmx:gRCGari4vAsa_0mjzq4HrjVaM0OjD-Slp4X-V1Ah01KWbzkU1rHoWQ>
+    <xmx:gRCGal8-Kb1_cfb-n4L0mCvzElfVM5dUc-Jac-WEJ9uWzTZ3rsu3tw>
+    <xmx:gRCGaiu9omhsyFL4L95iKiLEbiv5sECEpYRAWqEpzPPnJi8I1zOhLQDP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Aug 2026 16:18:11 -0400 (EDT)
+ 19 Aug 2026 16:22:24 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Vincent Mailhol <mailhol@kernel.org>,  git@vger.kernel.org,  Philippe
- Blain <levraiphilippeblain@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 0/4] completion: add support for 'git history'
-In-Reply-To: <aoWP3TYq5rNjUx7S@pks.im> (Patrick Steinhardt's message of "Wed,
-	19 Aug 2026 13:13:33 +0200")
-References: <20260804-history_autocompletion-v1-1-6f7459ffb677@kernel.org>
-	<20260813-history_autocompletion-v3-0-69eed1cea93a@kernel.org>
-	<aoWP3TYq5rNjUx7S@pks.im>
-Date: Wed, 19 Aug 2026 13:18:10 -0700
-Message-ID: <xmqqse49uanx.fsf@gitster.g>
+Cc: Nikolaus Schuetz via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+Subject: Re: [PATCH] t1402: test forbidden characters in refnames
+In-Reply-To: <aoWRZhO6BVy7uPLI@pks.im> (Patrick Steinhardt's message of "Wed,
+	19 Aug 2026 13:20:06 +0200")
+References: <pull.2203.git.1786653837190.gitgitgadget@gmail.com>
+	<aoWRZhO6BVy7uPLI@pks.im>
+Date: Wed, 19 Aug 2026 13:22:23 -0700
+Message-ID: <xmqqo6exuagw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,27 +88,70 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Thu, Aug 13, 2026 at 09:05:01PM +0200, Vincent Mailhol wrote:
->> Changes in v3:
+> On Thu, Aug 13, 2026 at 08:43:56PM +0000, Nikolaus Schuetz via GitGitGadget wrote:
+>> From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 >> 
->>   - Ignore the split "<option> <value>" syntax for options that take
->>     arguments. This simplifies revision detection and avoids hard-coding
->>     option names.
->>   - Test that options are not completed before a subcommand.
+>> git-check-ref-format(1) documents that a refname cannot contain a
+>> space, tilde, caret, colon, question-mark, asterisk or open-bracket,
+>> and that it cannot be the single character "@".  Of these, only "?"
+>> was tested as a character embedded in an otherwise-valid refname;
+>> "*" was checked only as a lone character or with --refspec-pattern.
+>> 
+>> Add the remaining forbidden characters in that embedded form, and
+>> check that "@" alone is rejected even with --allow-onelevel -- where
+>> "@" is otherwise a valid refname component, as "refs/@" confirms.
 >
-> I'm happy with this version and I think it's a good base to build on
-> going forward. Thanks!
+> Okay.
+>
+>> diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
+>> index cabc516ae9..bc1e878a0f 100755
+>> --- a/t/t1402-check-ref-format.sh
+>> +++ b/t/t1402-check-ref-format.sh
+>> @@ -51,12 +51,20 @@ invalid_ref '.refs/foo'
+>>  invalid_ref 'refs/heads/foo.'
+>>  invalid_ref 'heads/foo..bar'
+>>  invalid_ref 'heads/foo?bar'
+>> +invalid_ref 'heads/foo~bar'
+>> +invalid_ref 'heads/foo^bar'
+>> +invalid_ref 'heads/foo:bar'
+>> +invalid_ref 'heads/foo*bar'
+>> +invalid_ref 'heads/foo[bar'
+>> +invalid_ref 'heads/foo bar'
+>
+> This feels a tiny bit excessive, but I guess it does not hurt to enforce
+> this property, especially now that it's so easy to add new backends.
+
+"Why would we even care to check these insane cases?" was my first
+reaction, but I agree with you that these are to protect authors of
+new backends from stupid mistakes.
+
+> One thing I was briefly wondering is whether we could maybe have a
+> simple loop here, as this feels quite repetitive. We could for example:
+>
+>     for c in '?' '~' '^' ':' '*' '[' ' '
+>     do
+>         invalid_ref "heads/foo${c}bar"
+>     done
+
+True.  And c does not have to be a single byte. ".." can also be
+part of the repertoire.
+
+> By the way, one weird bit: is it intentional that all of these really
+> use "heads/something" instead of "refs/heads/something"? I guess it
+> ultimately doesn't matter.
+>
+>>  valid_ref 'foo./bar'
+>>  invalid_ref 'heads/foo.lock'
+>>  invalid_ref 'heads///foo.lock'
+>>  invalid_ref 'foo.lock/bar'
+>>  invalid_ref 'foo.lock///bar'
+>>  valid_ref 'heads/foo@bar'
+>> +valid_ref 'refs/@'
+>> +invalid_ref '@' --allow-onelevel
+>
+> This one certainly is a good addition, as these are quite a bit more
+> subtle.
+>
+> Thanks!
 >
 > Patrick
-
-Thanks, both.
-
-I'll prepare an evil-merge to rewrite the test to add 'squash' to
-the candidatesto adjust to the subcommand addition to another topic
-in-flight brings in when merging these patches to 'seen'.
-
-Vincent, this is strictly FYI.  You do not need to rebase on top of
-the other topic, until I and/or the author of the other topic ask
-you.
-
-Thanks.
