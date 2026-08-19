@@ -1,298 +1,323 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172623B6377
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 12:11:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787141483; cv=pass; b=oI8yQ/DTbUGDHPEC3AMGz1epGyJMhZms6rc2Uh0iw8U6kpAPwkDD53IhRgsaaNv1fDGNBefRpk0Ou40nYITorOQEKNzTha0zNz7y/bxk6sr9mcSmyqq7LBAGT6hsoohdOB+9Se0eIlvEbtqJXXMfD8umboqETLO1+qfwjRdpbak=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787141483; c=relaxed/simple;
-	bh=l10z1WaiFs2m7CBbQVEyB++/J/edju9r6dErKyLloJ0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=rSN50BgI3S9Ue7suoIUMa9EQEGLEm2zwfBg1u0N/zqnjsLQ9mbWfqFiRE5SC8ojKTjS0rKffxk4LuuBpK1UneWqfJddMIuiLzn5Q/eBCviOclSoREBviMvj1CPYYekHal+kfpm4I6kfl7GovHCAJpCCIh6VIc8ICDXuvt5Y9Dps=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMN7xdc3; arc=pass smtp.client-ip=209.85.222.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830E73CF039
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 12:17:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787141874; cv=none; b=UJ2bQOm9OUillU2MW8pS4lEPo9bwH+6BXE5XIVyjYBvo1XL+91DXIeQi9Ufy8oGWzcTB4+yskvpuDRoUuhCrTsIptEHy18+zgvtSXjgx1xF7M0MLakKKg3c0/37nf+SDTarW7hymetfUtqa1AEFywLBm/TFhmkNuV5WwMa5Pqvo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787141874; c=relaxed/simple;
+	bh=U5q3dS1pJwsRoKYew4bO8RZoJo5esWt4fqqb1qBhXbw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=kxG6y2m4H0Hg7Upfkpf7dSCCKQdT+v6mPBzk+XVTJnp6LipvZgceewZbEsPz+R76/fCr0OoPPymAq4oZoI32NScPw40ojHGMI+WJA9OicXVf1O2bD93632iui38q+DB8YhKQVWTf+0vhljVST96EktRS9UiUu71krvb72efo1oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=knF27nea; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IT7Q1Qm3; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMN7xdc3"
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-966e7380109so692988241.3
-        for <git@vger.kernel.org>; Wed, 19 Aug 2026 05:11:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787141481; cv=none;
-        d=google.com; s=arc-20260327;
-        b=UUvPuKimWAe46cEqKaM4NeYSphV0n9J2U+NwTi31ACFCcUcXW6PgBEJC2jdwjXE9Gf
-         kgbGMVq5px0jwGm3OUX0JK2pIyRbp+19dAYRbSs8hZl4zGcAg/CNbOz+HmRUGiwqjw43
-         P75K281E6+sPaSuOIZ0Igt8RbqmO8AiQ7rhWnQ3MJbMgaDRWsFZso27GccXYtHe0nmw2
-         Dqgo8ZC1XKvITpldZBKeQ0tcKn1jWDhBAn9o0zkmU8tD4+7TYRGtEp8clheS4BIf4jDu
-         +ElhbYSrq7xpPf21u3pOreS8BkKEtJ3JJpBsAscz7mnxy4PAp2jPkJMEvFxLV/k/FAhq
-         q7vg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=oA/l5PPWEfpXlY1GYFL3bnd5HL6qH1I3WHRluGs+a0Q=;
-        fh=397sm3eC/DEsAu0FHnC8E6joc58plR39iZHiFPXD6Nw=;
-        b=soXSxOlsRIEUT3ZjVvTUK03hNMU6XL8tqj3va5LLuD2CnEFCDpVdDI23r59n2R69l+
-         YshI1E5J0ZNoni8lKmgAN6EgSGBEg4woZf1ql8MZbJZg04fH8X+8+7b5yIuGAz5FXvrk
-         wAbUB5k3TzcZ/Pt1w16G5XjAUR+azHsjWnEK2UDhSSvqlC07H0jZEznr/h4WqX7Z6sLV
-         Xx5r1CxWMxi5/mjWXUrmTICOM2mDUlEt7SXcRLLvWfncfChdA+hQ7KrPWCDN7JHuN4aU
-         jr5tg60m7WyJ5z9P+qYxvTEEepXDHDjTFbV/dUboBhmMkVyXEB/sS2w3HQzmHsvwyPCW
-         gtFw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787141481; x=1787746281; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=oA/l5PPWEfpXlY1GYFL3bnd5HL6qH1I3WHRluGs+a0Q=;
-        b=VMN7xdc34sFnBOHJuHlT6Ju01fcJZRbQlLUz55o5OeCEcr9kn9L4Td3NLlnKHBpjOf
-         XdeibY0SqGtx6W50aEiHV3rGfvk4wMlF7CJ1SOXajoq1Com0ucb97totZFOwUrDUgL9c
-         RVRBEoxo16NZNZPtZRfUMa8EqgVgLP/Q3MYewIojuj8ompsY4ABQ+0T5aVu2VDQRYN01
-         9tBGjojvJZXijP8QFWH7/7t2K2q6rbL4JrjMSjJJz2GXV7xC612wUUe9cw92uwt8lgdm
-         kszNsBZpKpekJRsq9Pdj5H/swLdVRT4YGoXw533DOh3GTz7oz8qJ4Sipemhc9J9JN0rw
-         auQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787141481; x=1787746281;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=oA/l5PPWEfpXlY1GYFL3bnd5HL6qH1I3WHRluGs+a0Q=;
-        b=cVa4sk9r1kj4nLoIlGdzYJBmZzvijIgu2fZ3gyap5VVsUVjrT8WKo4WIOk/DQpgJzD
-         iIimv7zBmRMjUKAul5wqhYVnsDq1/+3XnLO7/wYQdxHFlxaja/Hx6/FiX2E/ZJxCSsFN
-         d23HPdPhqFlR6GIuspo3cgOyTUI/asbq33MNQOE+/aZRtkG7MmdLMPPNY3PeLlN2g6d9
-         VmkN5B2+txCqfknLTzi2nr6hDgwEBfLoce7xjMA6c+SKuGh0MWJEokI7cX/QhNKLS6PI
-         djo+GOw8V+8ARengQoLcolSm+FIT8ZoAnp1FdDekP1baJKPefkMpkBvS43sGvRQlrAG8
-         JfRA==
-X-Forwarded-Encrypted: i=1; AHgh+RqX7ZxR8S3sO2oFqvOyXrxjf7QMXiMXL78R22gVwuxSv4sNoQfrhn4nU2wd7wDWAOE/Wvg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzBlqA0QVzKa6yfogle7c9rV70oYItTupAMxG4tqonDEtWNaGjL
-	An23HVnb+ggGgYjtiXWcxscUT+Z3v2dFK9FBU/IM6R+ziUhxO6pbGrt8kh1qKRF1tSu4CFVRS+x
-	E89O/YGcL/z6yBQMUkKUddR+YSq2x7k1tHlGP
-X-Gm-Gg: AR+sD11vUwcB27Gs1lhwYTsLK910FZMXvD1gAetf7oApfF5j3jHv5UlX7m4YF2Wxejr
-	sl2oZpNolOUHe3XMOZcgTNzvCewMfTeC2fDeP8PTt0c37Nj8Po87UXzpf9Wlg/XsMny7S4aYwh4
-	M7uulzVUE2koy2Ybo9j0iVM+H9nHPHc4KMoypqP0ltKVxM7jdH1+OoAcvyDTkMBgep6iQcPvIn0
-	MUMMAWWaDsNcHs4kqYEEkYqyu5b1v56GqJNeKgvhd7zNKTOm/4D6/dw/AZqeMWACBRhYt1u4AUI
-	QyaLiTSk/YDQ0ZnXxSWHMRGQ3Z3islTsL9s5vJah9CXL6Koo81LDmbNGKAX/nEcauyaYlclDQjV
-	Wjs3BbMdY+v8bILMOuW7GsCCHECezpMNS7LY=
-X-Received: by 2002:a05:6102:fa5:b0:74c:11b2:a944 with SMTP id
- ada2fe7eead31-777fb5cf1e7mr1381167137.14.1787141480683; Wed, 19 Aug 2026
- 05:11:20 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 19 Aug 2026 14:11:19 +0200
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 19 Aug 2026 14:11:19 +0200
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <7dc975d2-324b-46a4-a389-9af96f4d5d57@app.fastmail.com>
-References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com> <7dc975d2-324b-46a4-a389-9af96f4d5d57@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="knF27nea";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IT7Q1Qm3"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id BB63CEC0175;
+	Wed, 19 Aug 2026 08:17:51 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 19 Aug 2026 08:17:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787141871;
+	 x=1787228271; bh=ColIpH4Ls6+TCPQ+C6Z8niy0ouD4+OZHl5Se6ASpVE0=; b=
+	knF27neaNYZLhG5ehhyJ8nfWwA/ulZT3/kQjY9bL4GM1vibwVgw0IwWcvR1NVcc2
+	IYkSeBj/1WmkHg0fR9hPJWrX3euycH9fnV6TXJrZ2as4c5lYz0JuyxnROPxQhJv0
+	DaDrbja4acIJeOJ7EhwowQRvZk7B7/7wWsVPY+hbVeFm5MweopZo3I9xkPa5KCH8
+	9rKX91ZA3weRGQh0ju7wNadqSjgyRECOfwE4+0y409SqxiMYRz8PGpVahPOsbVXK
+	+ibJq9E4KEUsAmxE05O5Uz5ctjU5o4s8yT1lNHR4qHQGnP5abjdSGFGSEjc1dP/e
+	8lbeCfQSam9zxdoYIRJGgg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787141871; x=
+	1787228271; bh=ColIpH4Ls6+TCPQ+C6Z8niy0ouD4+OZHl5Se6ASpVE0=; b=I
+	T7Q1Qm35b1Z3OC/WSHka2tUKpEXEDzTQZevcNKpnZG4qlTZsh6/kf1JhiOyy8pdO
+	+/cPPEY7jAPowSXcLdVcNdg1wtq+Ghvqf/vNAJU0Y8oeXJ/0l6K85NQwuI+OBOdl
+	hgLVVvxRyzEoWym4OkBrTWrJX3H9WxF4Q7R69g3crdt3IWhySJ4GCOqGHJtXM7zV
+	kcvH99EA3t/CnZSH8LJWSx5xbk1yj2oUcljVEYsQUP2nTlsKHWunay7S93DxX9mk
+	f3AjvVk03iBWCSwGwwvdic+RekgfDMsjG12LeoMCsVLOyySufTO8HN6OdWoYsOLq
+	nwahxLZjzm2kvI2lk94Yg==
+X-ME-Sender: <xms:756Faq44Z7GdCDBCkq7FDUMA9PKSnhSCidOhzI9w0Rzd3bGhVMersg>
+    <xme:756Fap4V20LblhJ7mVdufM9UAnSZO3h3mbo3QcCwWFXOrDiHqvchuV3HDVACW1ZG9
+    PHzDlL8Rml62Bo2InTTOhkDlTQT0x0I2uD_IFcFYJ_Nv5JqauS3Qg>
+X-ME-Received: <xmr:756FanEepXLzPbVpmf7BH5wg4DFIgcB6rzPq3EM4Pwpi28KCxW57jxm7zBImusJZCq8ddHveQjQpUar4XKheHceZHQeOWlORvG_ukPiK>
+X-ME-Proxy-Cause: dmFkZTFt3KbsDQuBL7cFlReuI8sAuUXG1gDaCOmZir1zJuMHZiy99MhcYTSDjVTcjs4k+p
+    OaeHKDAf4waq9z0KwfVNDjXq7SKVCHbtyhY6URXzzz/mbkLU5md4FwNSnpyeGLl3T/xaRC
+    0TwIzFL+o6vUmA0j/iq01Wg+CMdFzetPi85mwEGxYmtyHy3Xp9U5TSxv+g839sV4gNCXEf
+    Pv5k5EGXDNHpMTHb121ZZB7K2Cw89g2MkQgzvQL0RpvUH6WI4MzrO1mGvHHyVhnbWt2bnl
+    SekELlC8gVrP5RVFYrzxJXeUMXnPspPKcWdKAxT/6PHFmFlkOcBLKXnyjO75NLnPc8gChE
+    InYWia28yKajAYU9G076PmPDeP6LDHjymFfm7DEpAFjmHFirgLTLu/yhQ8k++EjPaNiM/V
+    QKLy2OP+oFj/LDyVvWCzKu0jC4FOJM9CWzZVfiXQzdL+YDq/XUJkXf2WmVoOzBMN1+5KFG
+    3pyLWDMliSmQkXY8JrgfRsu/QOvd5ERLVE5Ew8XexZQoj4w97s5qhrArNSOOLoWPlGdL25
+    pps8lRWmyqpD8RxxeyTXnalt1sWWYFdqJbifLn8fLei1ZXxtqRz1DyrKrJMoh06JVeUe9S
+    inv0AJINmmjfEelUHTKhCf0FMp862OAr08ir5MulpGjfOktT2t2BKCvoXksw
+X-ME-Proxy: <xmx:756FaiTFrV9aQlWKI831ucPoc0MDKag_Oz0faLpF_FR-P-otmoDlXg>
+    <xmx:756FagvGEbtwj_0YDXNXsp5-d6IhybXkjIPw0tFjqYMI9uF7iPZj2g>
+    <xmx:756FahwgO1iL8vRJyb4oqfOdiom86aKigsc9xehvxnfK04JTkTBR0A>
+    <xmx:756Faq6Gam3UIN_OKlZBFzQknBDR3g_Pynhyuq8PFb8G0auteQZiaw>
+    <xmx:756FauQ13OAPwhR_wCk6URoTtaOdWmcPN-KaYaWkPIgQ4W2hSszfDCe7>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 19 Aug 2026 08:17:50 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 117814b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Aug 2026 12:17:49 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Wed, 19 Aug 2026 14:17:19 +0200
+Subject: [PATCH v2 1/5] odb/source-packed: flag known-bad objects as
+ corrupt and not missing
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 19 Aug 2026 14:11:19 +0200
-X-Gm-Features: AcwNN1Vob3MoLgk7ftY65HDmBjdGdI3FUoCtOmvUHV9jrPtP-Sn98Zgvgdfr5V8
-Message-ID: <CAOLa=ZSN+h4TkZrqPPRNZ58Pyfamv9_tM=m7W8_RYhUU0p0q0w@mail.gmail.com>
-Subject: Re: [PATCH] hook: introduce the report hook for git-receive-pack(1)
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000001eb8d70659654de5"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260819-pks-odb-generic-corrupt-objects-v2-1-a984e3a0ad6f@pks.im>
+References: <20260819-pks-odb-generic-corrupt-objects-v2-0-a984e3a0ad6f@pks.im>
+In-Reply-To: <20260819-pks-odb-generic-corrupt-objects-v2-0-a984e3a0ad6f@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.15.2
 
---0000000000001eb8d70659654de5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+When reading packed objects we know to tell apart missing objects and
+corrupt objects by returning a positive error code in the former case,
+and a negative one in the latter case. We do that by distinguishing
+between errors returned by `find_pack_entry()`, which yields the offset
+of the object, and `packed_object_info()`, which reads the object
+contents.
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+But even though we already distinguish those cases when reading packed
+objects, the logic is broken in case a caller tries to read an object
+that has been marked as corrupt. In that case, `find_pack_entry()` will
+tell us that the object in question does not exist, and consequently
+we'll not flag the object as corrupt but as missing.
 
-> On Tue, Aug 18, 2026, at 09:55, Karthik Nayak wrote:
->> When running 'git-receive-pack(1)', there is currently no way for the
->> server to intercept and modify the status report before it is sent back
->> to the client. This is useful for servers with custom logic that need
->> to transform or gate the report based on the outcome of external logic
->> post reference updates.
->>
->> Introduce a new 'report' hook which receives the pkt-line encoded
->> status report on stdin and whose stdout replaces the report sent to the
->> client. A non-zero exit status causes `receive-pack` to die and the
->> client to treat the push as failed.
->>
->> Similar to the 'proc-receive' hook, this does not use the config-based
->> hook infrastructure. That infrastructure is designed for parallelizable
->> notification hooks. As this hook is a bidirectional filter, it would
->> require significant modifications to that infrastructure and this hook
->> cannot be parallelized anyway.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->> To give some context, we at GitLab are building a custom MVCC around
->> Git. Each git-push would initialize a new version which is then
->> committed as the default post some operations. These operations take
->> place after the reference transaction and based on the output status of
->> those operations, we want to propagate the status to the user. There
->> currently exists no good mechanism to do so.
->>
->> Having a report hook which allows us to modify the report being
->> propagated to the user, allows us to modify the report based on the
->> status of our MVCC commit phase.
->
-> Personally I think understanding concrete things is easier than
-> understanding general things. And discussing the concrete case in the
-> commit message would help with that as well as provide the context for
-> git-log(1) rather than just the people who have read these emails.
->
+Fix this issue by bubbling up whether the object is corrupt and, if so,
+which packfile contains the corrupted object.
 
-I was conflicted about it, since while it does provide some context, it
-doesn't apply to most usecases. I will add a little more context in the
-commit message.
+Note that we don't yet need the information about the specific packfile,
+so we could've just as well made this a `bool *corrupted` pointer. But
+we'll need information about the containing packfile in a subsequent
+commit so that we can generate a proper error message telling the user
+which packfile contains the broken object.
 
->> ---
->>  Documentation/githooks.adoc |  23 ++++++
->>  builtin/receive-pack.c      |  41 +++++++++++
->>  t/meson.build               |   1 +
->>  t/t5412-report-hook.sh      | 176 +++++++++++++++++++++++++++++++++++++=
-+++++++
->>  4 files changed, 241 insertions(+)
->
-> Should the git-receive-pack(1) doc be updated to mention that this hook
-> exists? I don=E2=80=99t understand the setup here. The existing
-> git-receive-pack(1) doc has sections for these hooks:
->
-> =E2=80=A2 `update`
-> =E2=80=A2 `pre-receive`
-> =E2=80=A2 `post-receive`
-> =E2=80=A2 `post-update`
->
-> But not these:
->
-> =E2=80=A2 `push-to-checkout`
-> =E2=80=A2 `proc-receive`
->
-> (referenced against githooks(5))
->
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/pack-objects.c    |  2 +-
+ midx.c                    | 10 +++++++---
+ midx.h                    |  3 ++-
+ odb/source-packed.c       | 22 ++++++++++++++++------
+ packfile.c                | 10 +++++++---
+ packfile.h                |  3 ++-
+ t/helper/test-read-midx.c |  2 +-
+ 7 files changed, 36 insertions(+), 16 deletions(-)
 
-I didn't know about this. I wonder why we have two sources of truth for
-the same. As you see, it's already starting to diverge.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 1ec5b6f206..10c2471024 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1786,7 +1786,7 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
+ 		struct multi_pack_index *m = get_multi_pack_index(files->packed);
+ 		struct pack_entry e;
+ 
+-		if (m && fill_midx_entry(m, oid, &e)) {
++		if (m && fill_midx_entry(m, oid, &e, NULL)) {
+ 			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset, found_mtime);
+ 			if (want != -1)
+ 				return want;
+diff --git a/midx.c b/midx.c
+index 76c3f92cc3..37f082dbdd 100644
+--- a/midx.c
++++ b/midx.c
+@@ -591,7 +591,8 @@ uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos)
+ 
+ int fill_midx_entry(struct multi_pack_index *m,
+ 		    const struct object_id *oid,
+-		    struct pack_entry *e)
++		    struct pack_entry *e,
++		    struct packed_git **bad_pack)
+ {
+ 	uint32_t pos;
+ 	uint32_t pack_int_id;
+@@ -618,8 +619,11 @@ int fill_midx_entry(struct multi_pack_index *m,
+ 		return 0;
+ 
+ 	if (oidset_size(&p->bad_objects) &&
+-	    oidset_contains(&p->bad_objects, oid))
++	    oidset_contains(&p->bad_objects, oid)) {
++		if (bad_pack && !*bad_pack)
++			*bad_pack = p;
+ 		return 0;
++	}
+ 
+ 	e->offset = nth_midxed_offset(m, pos);
+ 	e->p = p;
+@@ -1028,7 +1032,7 @@ int verify_midx_file(struct odb_source_packed *source, unsigned flags)
+ 
+ 		nth_midxed_object_oid(&oid, m, pairs[i].pos);
+ 
+-		if (!fill_midx_entry(m, &oid, &e)) {
++		if (!fill_midx_entry(m, &oid, &e, NULL)) {
+ 			midx_report(_("failed to load pack entry for oid[%d] = %s"),
+ 				    pairs[i].pos, oid_to_hex(&oid));
+ 			continue;
+diff --git a/midx.h b/midx.h
+index 939c18e588..1f2f2d5321 100644
+--- a/midx.h
++++ b/midx.h
+@@ -117,7 +117,8 @@ uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos);
+ struct object_id *nth_midxed_object_oid(struct object_id *oid,
+ 					struct multi_pack_index *m,
+ 					uint32_t n);
+-int fill_midx_entry(struct multi_pack_index *m, const struct object_id *oid, struct pack_entry *e);
++int fill_midx_entry(struct multi_pack_index *m, const struct object_id *oid,
++		    struct pack_entry *e, struct packed_git **bad_pack);
+ int midx_contains_pack(struct multi_pack_index *m,
+ 		       const char *idx_or_pack_name);
+ int midx_layer_contains_pack(struct multi_pack_index *m,
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+index 0890704e76..16fa4f5769 100644
+--- a/odb/source-packed.c
++++ b/odb/source-packed.c
+@@ -13,18 +13,19 @@
+ 
+ static int find_pack_entry(struct odb_source_packed *store,
+ 			   const struct object_id *oid,
+-			   struct pack_entry *e)
++			   struct pack_entry *e,
++			   struct packed_git **bad_pack)
+ {
+ 	struct packfile_list_entry *l;
+ 
+ 	odb_source_prepare(&store->base, 0);
+-	if (store->midx && fill_midx_entry(store->midx, oid, e))
++	if (store->midx && fill_midx_entry(store->midx, oid, e, bad_pack))
+ 		return 1;
+ 
+ 	for (l = store->packs.head; l; l = l->next) {
+ 		struct packed_git *p = l->pack;
+ 
+-		if (!p->multi_pack_index && packfile_fill_entry(p, oid, e)) {
++		if (!p->multi_pack_index && packfile_fill_entry(p, oid, e, bad_pack)) {
+ 			if (!store->skip_mru_updates)
+ 				packfile_list_prepend(&store->packs, p);
+ 			return 1;
+@@ -40,6 +41,7 @@ static int odb_source_packed_read_object_info(struct odb_source *source,
+ 					      enum object_info_flags flags)
+ {
+ 	struct odb_source_packed *packed = odb_source_packed_downcast(source);
++	struct packed_git *bad_pack = NULL;
+ 	struct pack_entry e;
+ 	int ret;
+ 
+@@ -51,8 +53,16 @@ static int odb_source_packed_read_object_info(struct odb_source *source,
+ 	if (flags & OBJECT_INFO_SECOND_READ)
+ 		odb_source_prepare(source, ODB_PREPARE_FLUSH_CACHES);
+ 
+-	if (!find_pack_entry(packed, oid, &e))
++	if (!find_pack_entry(packed, oid, &e, &bad_pack)) {
++		/*
++		 * The lookup may have failed because the object is known to be
++		 * corrupt in one of the packfiles. Report the object as
++		 * corrupt instead of missing in that case.
++		 */
++		if (bad_pack)
++			return -1;
+ 		return 1;
++	}
+ 
+ 	/*
+ 	 * We know that the caller doesn't actually need the
+@@ -77,7 +87,7 @@ static int odb_source_packed_read_object_stream(struct odb_read_stream **out,
+ 	struct odb_source_packed *packed = odb_source_packed_downcast(source);
+ 	struct pack_entry e;
+ 
+-	if (!find_pack_entry(packed, oid, &e))
++	if (!find_pack_entry(packed, oid, &e, NULL))
+ 		return -1;
+ 
+ 	return packfile_read_object_stream(out, oid, e.p, e.offset);
+@@ -583,7 +593,7 @@ static int odb_source_packed_freshen_object(struct odb_source *source,
+ 		timesp = &times;
+ 	}
+ 
+-	if (!find_pack_entry(packed, oid, &e))
++	if (!find_pack_entry(packed, oid, &e, NULL))
+ 		return 0;
+ 	if (e.p->is_cruft)
+ 		return 0;
+diff --git a/packfile.c b/packfile.c
+index 0eee45055f..34e2f9bb8b 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1859,13 +1859,17 @@ int is_pack_valid(struct packed_git *p)
+ 
+ int packfile_fill_entry(struct packed_git *p,
+ 			const struct object_id *oid,
+-			struct pack_entry *e)
++			struct pack_entry *e,
++			struct packed_git **bad_pack)
+ {
+ 	off_t offset;
+ 
+ 	if (oidset_size(&p->bad_objects) &&
+-	    oidset_contains(&p->bad_objects, oid))
++	    oidset_contains(&p->bad_objects, oid)) {
++		if (bad_pack && !*bad_pack)
++			*bad_pack = p;
+ 		return 0;
++	}
+ 
+ 	offset = find_pack_entry_one(oid, p);
+ 	if (!offset)
+@@ -1962,7 +1966,7 @@ int has_object_kept_pack(struct repository *r, const struct object_id *oid,
+ 
+ 		for (; *cache; cache++) {
+ 			struct packed_git *p = *cache;
+-			if (packfile_fill_entry(p, oid, &e))
++			if (packfile_fill_entry(p, oid, &e, NULL))
+ 				return 1;
+ 		}
+ 	}
+diff --git a/packfile.h b/packfile.h
+index e1f77152b5..3229a6ed47 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -294,7 +294,8 @@ off_t find_pack_entry_one(const struct object_id *oid, struct packed_git *);
+ 
+ int packfile_fill_entry(struct packed_git *p,
+ 			const struct object_id *oid,
+-			struct pack_entry *e);
++			struct pack_entry *e,
++			struct packed_git **bad_pack);
+ 
+ int is_pack_valid(struct packed_git *);
+ void *unpack_entry(struct repository *r, struct packed_git *, off_t,
+diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
+index fb16ec0176..27a05da957 100644
+--- a/t/helper/test-read-midx.c
++++ b/t/helper/test-read-midx.c
+@@ -82,7 +82,7 @@ static int read_midx_file(const char *object_dir, const char *checksum,
+ 		for (i = 0; i < m->num_objects; i++) {
+ 			nth_midxed_object_oid(&oid, m,
+ 					      i + m->num_objects_in_base);
+-			fill_midx_entry(m, &oid, &e);
++			fill_midx_entry(m, &oid, &e, NULL);
+ 
+ 			printf("%s %"PRIu64"\t%s\n",
+ 			       oid_to_hex(&oid), e.offset, e.p->pack_name);
 
-I will add both of them with links to githooks(5), but perhaps a cleanup
-there is in order. I would say making githooks(5) the canonical location
-with git-receive-pack(1) referencing it makes sense.
+-- 
+2.55.0.822.g20453c30eb.dirty
 
->>
->> diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
->> index ed045940d1..7e6643ad89 100644
->> --- a/Documentation/githooks.adoc
->> +++ b/Documentation/githooks.adoc
->> @@ -527,6 +527,29 @@ The exit status of the hook is ignored for any
->> state except for the
->>  status will cause the transaction to be aborted. The hook will not be
->>  called with "aborted" state in that case.
->>
->> +report
->> +~~~~~~
->> +
->> +This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
->> +`git push` and updates reference(s) in its repository. It executes on
->> +the remote repository once after all refs have been updated, but before
->> +the status report is sent back to the client.
->> +
->> +The hook receives the pkt-line encoded status report on standard input
->
-> Another naive question (I have never used any of this). Should this link
-> to some gitprotocol-X(5) after `pkt-line` in order to have a link that
-> explains what it is? I don=E2=80=99t see any mention of `pkt-line` on
-> git-receive-pack(1) or a mention of a gitprotocol-X(5).
->
-
-We could link to 'Documentation/gitprotocol-common.adoc', but I'm not
-sure if it is erring on the side of being too verbose. I'll leave it out
-since its already existing and assumed to be common knowledge for users
-of such hooks. But happy to add it in if others disagree :)
-
->> +and its standard output replaces the report sent to the client. Any
->> +output written to standard error is forwarded to the client over the
->> +sideband channel and will appear as `remote:` lines on the client's
->> +terminal. To reject individual ref updates, rewrite the corresponding
->> +`ok` lines to `ng` lines in the output report (with an explanatory
->> +error string) and exit zero; standard error can accompany this to
->> +provide a human-readable explanation. A non-zero exit status causes
->> +`receive-pack` to die.
->> +
->> +Note that by the time this hook runs, all ref updates have already been
->> +applied to the repository. A non-zero exit causes the client to see the
->> +push as failed, but does *not* roll back any ref changes that were
->> +already committed server-side.
->
-> To my naive eyes this description looks good and without any obvious
-> errors (typos ;) ).
->
-
-Thanks for reading through
-
->> +
->>  push-to-checkout
->>  ~~~~~~~~~~~~~~~~
->>
->> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->>[snip]
->> @@ -2592,6 +2630,9 @@ static void report_v2(struct command *commands,
->> const char *unpack_status)
->>  	}
->>  	packet_buf_flush(&buf);
->>
->> +	if (run_report_hook(&buf))
->> +		die("report hook failed");
->
-> Okay, it seems typical for this command to use regular strings (not
-> translated) for errors. Which makes sense given the application. There
-> does seem to be translated error strings but one example is =E2=80=9Crefu=
-sing to
-> update current branch=E2=80=9D, which seems to be more of a non-bare, end=
--user
-> error than a server error.
->
-
-Yeah, since these are generally less user-facing (I say less because
-this can be propagated to the user, if the hook exists with a non-zero
-error code) I choose not to translate it. As you mentioned, this seems
-to be the way for such error messages.
-
->> +
->>  	if (use_sideband)
->>  		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
->>  	else
->>[snip]
->> diff --git a/t/t5412-report-hook.sh b/t/t5412-report-hook.sh
->>[snip]
->> +test_expect_success "no report hook, push succeeds" '
->> +	test_when_finished "rm -rf upstream" &&
->> +	test_when_finished "git -C workbench remote remove origin" &&
->
-> This teardown routine is common to all the tests. Is it better style
-> here to write it out compared to using a helper function (test code is
-> different from =E2=80=9Cnormal=E2=80=9D code)?
->
-
-Since tests are self-contained, I usually keep the teardowns within
-them if they're simple enough.
-
->> +	git init --bare upstream &&
->>[snip]
-
---0000000000001eb8d70659654de5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 598729efabe8de23_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xRm5XWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meUQvQy85R2Q4WFJrK01WWWlSY3VqM0xWYUdXaG9hcQo1QVU2b3hhK1Jp
-YnVSbnEwSWJqS0NGS2puSkx6VitseHJWejVzTFc2VEZodVJaS0xsSnAzVVdHS1RTbTNOUnpBCllm
-K3pmUS8yVzJhZUNPTjNVbGVuZjJpeVJibkJldUFTUUI2VlJtMzE1MktidVlSeXVDNnJPQ29PcW1v
-VFlrTDgKb0c5a3UzaTRBNUl0Y2NVZjEyMFdLQlNDUFp6Tzg4QmJ3Z21zR3pqWWErcDlUNDBrcG1C
-Q2traWwzVzBkYVhaagoxa1loSkovSGp3bG9YbEZ6THhMeDh0bGxzRGFqNnZxSGpHVDFFRjZCWEl1
-ZDVaTm8xZDFnSEtxV2tib2JEbTljCldqNTc2L2hNWVhYcWpJNXdIZVVCdXp3N3E1ZUtTTXpPN2FB
-Q0pyVWFmY3Z6Z2V0bmJQRFg0SHdGdVEzSDFlbGQKVFJLNzVicWE3dFZHcG15d2t2UE1LK0oxejZ1
-U3J1dzc3NnpHK29Obnl6UG1MT2VmS09IanFUSzFvMTByMExTcgpkTmt2K0FQcWFNc3prTGJHZk01
-bUtGVnVCK0V5b2tiSldsajlBVGFSSStPbGZ6QXk5UGJkREFkRy9XcGNUWmp2CjU1bTNpckxqaERL
-NTZ6VVVFRGF5b3JOTlpTU0FZQWprb05IeFJUWT0KPXE4R0oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001eb8d70659654de5--
