@@ -1,86 +1,84 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0562B331A66
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 08:24:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A72445AD5
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 10:01:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787127857; cv=none; b=VDn2/dyG3mxPxnimU+4oyfF1jkTTX+ovtBkMN5kx7tMkfv2A4+jniG+CJgb3jpp9qxr5BWXMjR6kXFebwUIJfOvgHX/HyzSYej5kn81IxypXWyXgXmDLtNfyXCmYkIhR6FenJBVC14kgbW3GUV+Xk1qTYL6wZ1SoBo3aKuuiKL0=
+	t=1787133687; cv=none; b=TznT4lOZJP1r6TesGkMsqD07r9ekW/sbe6AMs0fiJiUKpOHjgXfpqY+gkAT6lmh0bNVa2nCiFb9dm/8aOZ8fLpHMergcjPFkTW0W271ul8DHmZOhH1s2lOhbvbMTUgFMGajcoWeJqjTELWmBjdjLe5Sxe/9hxj8qOYkJh8PIvO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787127857; c=relaxed/simple;
-	bh=4+zV3J7zqv7xr/Qp4g+m8VrRCGXQZKiXaLoibIBAwiY=;
+	s=arc-20240116; t=1787133687; c=relaxed/simple;
+	bh=6WSXHTXfHse5mSslM1Bun8TLXGf2Y2oFv6nMyhYwjME=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mfYxlg/ckY/BuPRQcbXWDlwTY8skU29IH71ZQ8EJcXwZ5r/Q7Qs/tA0ehWOI+UGjcZcx1HMRfKMyKviU8/rtKa7tLAxE1ytUmKEYngk/S1VmbVXMqJp1WDxxoCjO+dtcpqH27wQblg6rBreLoJpyyOgxIQeHA6P3P+iKSfcQhZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eVMuYCd4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dj75GSyK; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=V3wiE9pFWj3FEG62+GcAMOmNtADp4tcBExcqQPF+V4b1jaocZx6LFTt81oA+u3r3/sOTyBGVn4aTK0IqE9utZcVe4DV3eDid6cTjxHorjiFNnRRtNleIxt85pT3yeENbQbRocxwqIrlgE8t1H5aqZTmJGAY+bSPN8bolrQCKEqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kCDSU5fx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CaDHKZ02; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eVMuYCd4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dj75GSyK"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1F0457A002B;
-	Wed, 19 Aug 2026 04:24:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kCDSU5fx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CaDHKZ02"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id AE8161D00171;
+	Wed, 19 Aug 2026 06:01:24 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Wed, 19 Aug 2026 04:24:15 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 19 Aug 2026 06:01:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787127854; x=1787214254; bh=RhpeYBImuJ
-	tLhtVP/q6B9KJxFKek2CHjKoJIfFMWC9g=; b=eVMuYCd4m9qYF3C0L13MrfU2h2
-	2y0DDdOJyEYzNUUckKsMnOaqGEPIJeyov63dFTdn3dfnEJrg50LYOjhBdzmDbJGg
-	aRYWAEFMmvd9pqEFDjzLHARciSefq+qBuXUxJMqpJVmY5k09hBGBfJBbxz4zj8as
-	VsPsS72wkmNtUEmj34YqOnCuldO2JZKpSxA1zIdJbt07uh0zavAUUhCnKtr/KoCQ
-	HisxXnIWJzMY5CeitFWu9Np2XDnGxIiciJmCeAKRU+99opYwfgfj0NZA0x6t12AG
-	/HaFOWt1XQYU+8udAaTcU6a9j0ilvKzJzcbUY2GrtDVV6wNUsRZqxuuHtung==
+	:subject:to:to; s=fm3; t=1787133684; x=1787220084; bh=yDk6+DFwvd
+	FtTfvZWHMmc9WU6l196tzsv6cTGKQ0Z8c=; b=kCDSU5fxGBsQKjhLnSKtj0MU8M
+	mNg/KCG5O6rP4W5mP6J6UrP9eJlVNHbg24HmEBPC4LGAwDqN8RdmktBIW29U0bbv
+	haFMg+2ky/BYMjkdLTVylc+CNwb0h5JEXt9Lqb6hdaOBAxbe00clXr6GZKb25wQz
+	mF0GC60XbsYZG+z4cjdUCge8arY3ALlipTP33VR9GCJ2pJHXA1rwvcq3Duz8iCUY
+	jnpeUE5tIS+82qPsddhu7vlpYyEPaAwBfyjGprikDJbye1wvuPpILOprY7ZxMN51
+	EovbebVQvySjEBVfJjTXy/sMrEAgeiVjc0Qr9NgKb+IWdaOi9qP5KObbg2eg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787127854; x=1787214254; bh=RhpeYBImuJtLhtVP/q6B9KJxFKek2CHjKoJ
-	IfFMWC9g=; b=Dj75GSyK92TkdFYjCOs+PH35CzxROXY/4nA35ubXIkbUIgZXu+y
-	4P5yj0/XMIbNp0A95zMH5LaOVDDfKkPFGzXg/KUMXrMeWPigdV+xJKuHy7/ctPul
-	OsqY/M/MudJ6jzhCrJWT1s2bTCyMb3BOE2JsFRQpTQfgS4zzG+Y+5QTexns0Zl5h
-	nX4dFxl6DrVcBmv68a5BPacehVjZr4Hm3a4vmsCpV1hy60fZ8JEVlW0U8DrHvjL3
-	HhK17XQlyknfpO2mafZ3ZLQm9ltJ6dY88+QgRBc9Dw7/TkXqfiu3su2yc1c5+Cz/
-	x3Gi4+oOKH8gGDirq5+4H8iXtHsSAKNWTSw==
-X-ME-Sender: <xms:LmiFaqU6c0FA0bXaelGhT7oiLSQOt_SuTd81rg6ys7f_dgdPC04tKQ>
-    <xme:LmiFaqR3TYLNYSBH-Y-ktYHGoN3_kxCrOGqh5C-tVpxIR-63yxFXJAsiAaF_tREXJ
-    0d-Grhj8TgWlRYHm7bbADEbJOecX6RnWL8EEPZ3r6e2T9TWSCwYJQ>
-X-ME-Received: <xmr:LmiFaoOjbOCi6LSIKR4q3TsR92e5IuRgrumP_Ve8rNvBuk88kpLb6puI9LrpvvaFe8r2JHM2q6gygQJ5w3EMUixFJ5nMfIKaeowvO-ia>
-X-ME-Proxy-Cause: dmFkZTFyj8BJR40SD/+4ODl7S1ghZQjZx5myUTv8qREH/mfZavx8EylfRbt0WAbcOPF3Tq
-    u5tfwU1vKlyF312k6IZKFYcX3DKbdmWyo9RO6SgtrjeuwhwKW3dtGSVhXbzodHhqpeIMmy
-    ymnkxK49ytsxt3ehlm6gMP3Hsm2Glf+9tnwOS4maLCXvYfRb1IF16Xn0YaFutVqWmwIFf2
-    f2dR2/c20BLxq9is91Z3Z86dM1KX4+6HzemXLFInSqPmccHFzzWyoq9vpYfZGidozSaxNN
-    465iIeezzEqmJA+rmF2fgGuo9+Vgv4+2I3OdN9L8dawr5aAlT989GvADoMLanhTQP2CaRM
-    0Ki3/QdCdid6Di2CQepPYEdYsD/NoS5tzLLqRUzvEEWfx/mFCSYtagjMEO0zBP0Nqf+FUI
-    sZVMGfo6llE61QGk5xIkEYZwgJKI2fyPkz+ZBd2DqPDa0fdpT8a1OYmAkzbVHOyyTbiVgA
-    MKSFaFO+s0L5ijdek8n0KxUSj1hcfqlV30e5YFXFpYbpULqvytcuhqCp+9cPPwXCS6C+Xj
-    vF/ihUlCpBeJ7H3HPlIiVAzQyZBkl+gqYMIAiN/WB6d3fCNBXIkj6CxITQzSos5iiU4SSx
-    NM9/Sgk+BTYVPyiJZFN4VVyDAm7f3eGLNUInXhOqPrSRMtBHXyFHu7gYUdqQ
-X-ME-Proxy: <xmx:LmiFaoTA2mPZd8Ee7doGfOTYZfSMAIiEDPDlOmXN730oco0O_zobxw>
-    <xmx:LmiFamhfQGWrhfPKDXOhKI6U29IN8oj9dzVdj0E8wzilAoERB02vcQ>
-    <xmx:LmiFah8uMKU8Y2EEBQVIUxVHvp8rxPG0-6SRaYgBYX4WbO09LIcW3Q>
-    <xmx:LmiFatHzjxP92RZ0qZyTPJAzNEKcZhFehN-Q4dErrysWxq3tJTVVVA>
-    <xmx:LmiFauBs68e3A4dDg_v-uPVVnuNQHCAT_yMCVScQHhzaUpo4yCtDdMEv>
+	1787133684; x=1787220084; bh=yDk6+DFwvdFtTfvZWHMmc9WU6l196tzsv6c
+	TGKQ0Z8c=; b=CaDHKZ02QIJI/Ctwziw8M1YrECNVDB7xQjx37KjO1Js+Jrby5SK
+	CnvpVnG77Ql4qFLxm5p3W5h0tlIOGV36AWLjyKQ6o/qxjcVRwC/qC0hxZ9V3LRes
+	RPvmhuR6o6fVN235FNDyjxyKUq0NqO2uhpIgkmqywWbvABJLPUDuvsWUgjR0syAc
+	Ej6qQ8NiM2NRwZQ1gql5uqzLpt/dSxhZgw3MnfQGrVDLf9zMWECw23+cS7b7++Z0
+	c5sEi4QnNwhXnWMSm28XAyQdrga88RSDcJcXaZYYfjtsivrvo0GBbVjpERW508BS
+	DaZnTb5Cyh7gK5B3lhbIUvEPW2yTgihfU8g==
+X-ME-Sender: <xms:9H6FauJl4ECT4O_kEvQidY7mdRuVzan7DY4FFNJ0xiB8PUSeuZ24QQ>
+    <xme:9H6FasIMAPyRCGOOsc-vAM2WkDUFalOD7psvmBCnME9CiqIq7nBg0-lE5nL3qn5Tz
+    F_yWgdNXg13ArteBaw56gc8uCqgn8i77r7MS8CXO61TBGY_d5XQJw>
+X-ME-Received: <xmr:9H6FasWwnIpQZ0yYm9U14_rT7UbMUa8Mpo-Xg2oDNOcENJ8_sKwwBA8qcowSsBvLLnj_r8atT3PEFX3HPfgcQbuiAY8icrAnAoZh6YSb>
+X-ME-Proxy-Cause: dmFkZTEcxJxqjgnIJCOyLYkUaCbpc/O5ez8LaS1o30Qh5o4JHFJUN+/XKwdNadb6xFH2Pd
+    ma7WnBaw+91Eh72CiQkykj1LoSg2N9lOD2FdA8fSXK+d1NZpXPhrSulO08mK2irqGeir5Z
+    R0m/XzoLFgXo4cnXuIV5foeyTHuulNwnkU4JZ6haUqu/rnDlMwtkIWCTKrkcmo/1+TZTn+
+    ZBzRoZlnq8mMyrSyvj4l6tkRSpbfhRYtSmU6Q3chmHFKHMXIZCdauaOosRSVVy9zhzEey1
+    gjw8ZU2w3OW5jYW9bXr+EqNddz9BMb/07NqOBw7bwZEgRlzIqxiX6GahkJnDni7s1T5Cbu
+    fQaXntmv1vGOFg5hB/cN4LqG2uxqYJlwUOAY5k1zaQs1FA0Eb5hUM4D1OEdC2hJJZd1d8g
+    7WRyqdiAn9uLoWKM5bHZtYfo/EsLiyzrd6bH9JDvfi7GjWLOMsZO+Hu74QRbeNma0cRo1T
+    F3ZwxXIT+sRLb9LjYMd8jrynwoxjZfyPL+bfTUTZQ8CFg6j2mPMWo0ba8cl2eYsIbFSD/E
+    GHeAIDFwSkoEcKJhjrHD1X0nnSGOfITUEaxWQSFHx1PhaK9qt5/1FI/G4nrERsEt+vbzmN
+    03/4xGBHG+DiMkZJV7Oij343Qm2nW+aqnua9mK6OJ+K2Q9p5et6RZbG8xUOg
+X-ME-Proxy: <xmx:9H6FauiK_r4-aRzpzoDAFIdSgx3S3R1Oyfh8QAdr5tDcSJaN8qN_8g>
+    <xmx:9H6Fan8S1CoFsVyeOIiyxkkOPQBUYu9Sa6Yd3zb4_6aUQROKOCy4ng>
+    <xmx:9H6FaoDllZE_moGIa69rsttK-_76QmHd9kI0S1FQZllLKHQLEsDInA>
+    <xmx:9H6FakJqmBZSmvhWUkEi7FPFqTlkRP5F4npJvtCjRbpwSBVf1ax_Gw>
+    <xmx:9H6FahgNmIVDJxQLcRujmIo_fGYK6F6vpAYR0Anllv9JDf9wDF3YgXc6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Aug 2026 04:24:13 -0400 (EDT)
+ 19 Aug 2026 06:01:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4c2f59cf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Aug 2026 08:24:11 +0000 (UTC)
-Date: Wed, 19 Aug 2026 10:24:07 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 219bc523 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Aug 2026 10:01:21 +0000 (UTC)
+Date: Wed, 19 Aug 2026 12:01:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
-	Junio C Hamano <gitster@pobox.com>, Tian Yuchen <cat@malon.dev>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v3 3/3] core: convert build-time USE_NSEC into runtime
- core.useNanosec
-Message-ID: <aoVoJ3Ijoaj3u64e@pks.im>
-References: <cover.1786103607.git.ben.knoble@gmail.com>
- <cover.1787065125.git.ben.knoble@gmail.com>
- <48fceb4b575ca39346cf2f59f621584a19049008.1787065125.git.ben.knoble@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/7] odb/source-inmemory: signal missing objects via
+ positive return
+Message-ID: <aoV-6ClUIPYh_-OJ@pks.im>
+References: <20260818-pks-odb-generic-corrupt-objects-v1-0-ec234567510f@pks.im>
+ <20260818-pks-odb-generic-corrupt-objects-v1-2-ec234567510f@pks.im>
+ <xmqqcxvfz4lu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,125 +87,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <48fceb4b575ca39346cf2f59f621584a19049008.1787065125.git.ben.knoble@gmail.com>
+In-Reply-To: <xmqqcxvfz4lu.fsf@gitster.g>
 
-On Tue, Aug 18, 2026 at 10:59:47AM -0400, D. Ben Knoble wrote:
-> Racy Git problems persist today, manifesting themselves in the
-> performance of commands like "git diff" in new worktrees [1]. We have
-> long had a build knob "USE_NSEC" to tell Git to use in-core nanosecond
-> precision when available, which mitigates most if not all racy issues,
-> but most builds we know about it don't use it. In part, that's because
+On Tue, Aug 18, 2026 at 11:05:33AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > The in-memory source returns a negative value from its
+> > `read_object_info()` callback when the object in question does not
+> > exist. Adapt the callback to return a positive value for missing objects
+> > according to the new calling convention.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  odb/source-inmemory.c         | 2 +-
+> >  t/unit-tests/u-odb-inmemory.c | 2 +-
+> >  2 files changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
+> > index 3e71611b8e..57183daf4d 100644
+> > --- a/odb/source-inmemory.c
+> > +++ b/odb/source-inmemory.c
+> > @@ -66,7 +66,7 @@ static int odb_source_inmemory_read_object_info(struct odb_source *source,
+> >  
+> >  	object = find_cached_object(inmemory, oid);
+> >  	if (!object)
+> > -		return -1;
+> > +		return 1;
+> 
+> Let's not define "any positive value means this single thing: it
+> does not exist" and then return a mysterious and unspecified hard
+> coded constant like this.  Instead perhaps something along this
+> line?
+> 
+>     enum odb_roi_status {
+> 	ODB_ROI_SUCCESS = 0,
+> 	ODB_ROI_MISSING = 1,
+> 	ODB_ROI_IO_ERROR = -1,
+> 	...
+>     };
+> 
+> As I already said, I personally prefer to define MISSING also as
+> a negative value.
 
-s/about it/about/
-
-> diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
-> index 340329edc3..33104444ab 100644
-> --- a/Documentation/config/core.adoc
-> +++ b/Documentation/config/core.adoc
-> @@ -118,6 +118,12 @@ core.trustctime::
->  	crawlers and some backup systems).
->  	See linkgit:git-update-index[1]. True by default.
->  
-> +core.useNanosec::
-> +	If true, use nanosecond precision for ctime and mtime
-> +	comparisions between the index and the working tree (if Git
-> +	was compiled to store it).
-> +	See link:technical/racy-git.html[Racy Git]. False by default.
-
-Should we mentino here that this may not be safe on all platforms and/or
-filesystems, in addition to linking to racy-hit?
-
-And do we really want to link to the HTML page here? The user may be
-reading a manpage, so doing so feels a bit weird to me.
-
-> diff --git a/environment.c b/environment.c
-> index 6676e6f5ae..c7f6b801f4 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -571,6 +571,13 @@ int git_default_core_config(const char *var, const char *value,
->  		return 0;
->  	}
->  
-> +#ifndef NO_NSEC
-> +	if (!strcmp(var, "core.usenanosec")) {
-> +		cfg->use_nanosec = git_config_bool(var, value);
-> +		return 0;
-> +	}
-> +#endif
-
-Do we want to omit a warning in case the config is enabled and we have
-NO_SEC set? Or would that be too obnoxious?
-
-> @@ -769,6 +776,9 @@ void repo_config_values_init(struct repo_config_values *cfg)
->  	cfg->ignore_case = 0;
->  	cfg->trust_executable_bit = 1;
->  	cfg->has_symlinks = platform_has_symlinks();
-> +#ifndef NO_NSEC
-> +	cfg->use_nanosec = 0;
-> +#endif
-
-Can't we set this unconditionally? The respective field exists
-unconditionally, too.
-
-> diff --git a/read-cache.c b/read-cache.c
-> index 6c449f393d..31888f77ee 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -353,12 +353,18 @@ static int ce_match_stat_basic(const struct cache_entry *ce, struct stat *st)
->  static int is_racy_stat(const struct index_state *istate,
->  			const struct stat_data *sd)
->  {
-> +#ifndef NO_NSEC
-> +	int use_nsec = repo_config_values(istate->repo)->use_nanosec;
-> +#endif
-> +
->  	return (istate->timestamp.sec &&
-> -#ifdef USE_NSEC
-> -		 /* nanosecond timestamped files can also be racy! */
-> -		(istate->timestamp.sec < sd->sd_mtime.sec ||
-> -		 (istate->timestamp.sec == sd->sd_mtime.sec &&
-> -		  istate->timestamp.nsec <= sd->sd_mtime.nsec))
-> +#ifndef NO_NSEC
-> +		/* nanosecond timestamped files can also be racy! */
-> +		use_nsec
-> +		? (istate->timestamp.sec < sd->sd_mtime.sec ||
-> +		   (istate->timestamp.sec == sd->sd_mtime.sec &&
-> +		    istate->timestamp.nsec <= sd->sd_mtime.nsec))
-> +		: istate->timestamp.sec <= sd->sd_mtime.sec
->  #else
->  		istate->timestamp.sec <= sd->sd_mtime.sec
->  #endif
-
-I think this would be a bit more readable if we had a single NO_NSEC
-block.
-
-> diff --git a/statinfo.c b/statinfo.c
-> index 5e00af127d..2f2cec6282 100644
-> --- a/statinfo.c
-> +++ b/statinfo.c
-> @@ -72,12 +72,14 @@ int match_stat_data(const struct stat_data *sd, struct stat *st)
->  	    sd->sd_ctime.sec != (unsigned int)st->st_ctime)
->  		changed |= CTIME_CHANGED;
->  
-> -#ifdef USE_NSEC
-> -	if (cfg->check_stat && sd->sd_mtime.nsec != ST_MTIME_NSEC(*st))
-> -		changed |= MTIME_CHANGED;
-> -	if (cfg->trust_ctime && cfg->check_stat &&
-> -	    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
-> -		changed |= CTIME_CHANGED;
-> +#ifndef NO_NSEC
-> +	if (cfg->use_nanosec) {
-> +		if (cfg->check_stat && sd->sd_mtime.nsec != ST_MTIME_NSEC(*st))
-> +			changed |= MTIME_CHANGED;
-> +		if (cfg->trust_ctime && cfg->check_stat &&
-> +		    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
-> +			changed |= CTIME_CHANGED;
-> +	}
->  #endif
-
-There's one more site in "builtin/update-index.c" where we mention
-USE_NSEC that wasn't updated as part of this patch.
-
-Thanks!
+Fair enough, will adapt.
 
 Patrick
