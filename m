@@ -1,83 +1,84 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A513C4546
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 18:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DCE44065E
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 18:21:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787162996; cv=none; b=AI7+uIjQ3lyWiSyR594z15Th/BwuowdO638eGpTijle+PdObZVXwdJGt5+DT4tAjTyQVtnEeE0HtmqIOj0OrnV++c66rNzGPl6miRH6LV5p29dQAwkOJUXVNDCZ24wPdFPjODy3yWIv+JSyAErXtLFndMpC1Hw9SJEdRyf2Frd0=
+	t=1787163668; cv=none; b=lBLrhQwsp3PG8Bh961xIRHCdnPxzBy7VIebFBgndQKbKYa2preRiVhvEZ0I2REGH5FTY2cGD14fETOfl+pE13Xv8FT+uejbcbLMqqQa4UA3cvVWf7l6nlTX71Ic8Q8xNdVHRQ/2FfpatRtKXiZba0XLmt9bzJXhAYjK+5bAA4QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787162996; c=relaxed/simple;
-	bh=nWuTF245YS6QDc0zl61WPbi6phkvMK/ObnZIZCXN/cc=;
+	s=arc-20240116; t=1787163668; c=relaxed/simple;
+	bh=csQ/NAb8OLa3N3W9iQVaHN/7GwV6pR3Vbp/jtHyywwY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qczFVE+6HqlMByegKlspyKBGNYU/PdIRnPWbfyTtcv+K0NRQy4yuFjPFMSAANUonVL6GxVgWPvE2NOvZHe64CZFUXTqRtwD5bS+3etp0bnbEQhv0aIhr5vMhHdqzaphCZUj1XqsiuYfrm9j9ToixZA+eHQmNwhA8HxPLwYHl3r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OdS70jTI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a1uvws9C; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=DJiH+E1+6S8lC2XQFY81Dtksw53eRxpEseAAjh5yG8ldN0M57Oc8VQGtXzE+LZ8P/M+f+RT+0Oko+kWDHBFXe6xcppZc1rIOuLxHp2Dow1mIH/sm2RL81IbfJC65QkjbQnmmLkTCoa+71G27dZ5CCq+xARdAuMbWcFK1nCgpSa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mnW1Z0Gt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ukf2tS2X; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OdS70jTI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a1uvws9C"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B87017A013E;
-	Wed, 19 Aug 2026 14:09:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 19 Aug 2026 14:09:53 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mnW1Z0Gt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ukf2tS2X"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id CF3651D0015F;
+	Wed, 19 Aug 2026 14:21:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 19 Aug 2026 14:21:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787162993; x=1787249393; bh=CYeUNoSQ8S
-	EqrIgmli6YMaTJa2z2z7Sk3XTo5/cznWE=; b=OdS70jTIyYzdWJ7guR2Q1fEB2j
-	NhupBjkAIv4mLuro3Qlx9tgDnHF5FplEN898ERG8DCkLDNybzDpfHZ5ozXH4FDPZ
-	eSl0WFgrQ04G/jCc8TqSGUAkdL4uuHBgF5yxv0kTnt9dPUjx+9oGWiyd4i3rcFOY
-	6GGLzNAeG+qsruQooVXmzatMl/1hgjU4aaOXYsy/8YOt5mY8djOnizTC2UoTPcrI
-	pj+QaFT70OwTx2BnH5SyLFa5KaeJ6dFlIf3IalLmTxkSzdu858uOm5s6ZIfuFZOu
-	qs2CTCm8Mk4uNlPv/Jjx/T/AXggo+Q1TBW9Wfluh6dxYy7rye051yMImAoeg==
+	:subject:to:to; s=fm2; t=1787163665; x=1787250065; bh=VDMcEk63Gx
+	vTVc3ExBwsrKuRIX8Se0vweBkAZZ99JYE=; b=mnW1Z0GtfF3/fJ/v/fYqn9YoNt
+	SW3OEIrSkfkRr9wzwPzpTCkVfbT+DWwDFvs5iqV5+Oi4ggkP+h6iiC9LsNcTM7Ww
+	glq/1J7H+FiuPepMpJf1x+WAe3DxZzM0vTmZx38H4wCXUooSTMVKFF0T3vE7ratf
+	WmySwywYnWN382+WBslP7+0en9QPzgMC0mXbChRWoPk89g7b/UF6SP12VuQ0RSE1
+	rvPqXZ7J7HQQqumrnCHHB/vLZ3mcLpUeXa2/jmPlJKJlBWHljVZg+p8rVmI9X3JL
+	o1/TwYY+kQ1MBKyjcyue6ebk1omfGzPZ0FJwGkyr1JmZESnf83hphmrhuMuQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787162993; x=1787249393; bh=CYeUNoSQ8SEqrIgmli6YMaTJa2z2z7Sk3XT
-	o5/cznWE=; b=a1uvws9CYdQvmhFlfnYA6CmFRpD5D7Kda20lHWUIH1mMccXnohl
-	mS0ivCIlzAn0K5z8A2SppDSxLWyyLHBd4Xn4oZ+ncD/2ETinO2M2ii8vvIFReEE8
-	8dFitsCZ5UxFZmD0JnypS14T/NgU/bOMt71dKuFo783iQeid7TJAnwJPzIdkvIsF
-	nv53BRADGTvMmiRDeHs30bmwIOJ+Txr8suGCCTwt95W2Mp15jieRwGxjtk8UVz2M
-	at+7999FsQfhJp3l8mIFq6NdGPjCM+BLkRyTk5OsxJNz8v3k/2ndxtnzlJpdwcNz
-	orqRWF9PvkM04jdyMSa8jkRRHsEO7zd9n0g==
-X-ME-Sender: <xms:cfGFatLGr1-8efXIVu4gbbCzG6TfWL6PAP2EcYfaW5KcwHRE2PgtWA>
-    <xme:cfGFagIUP3PhEx1o5Icb9MSXLplB_YJJTon1X5SMDyl7dXgc05h7lIi_Y-njKAjH6
-    C1lmtqhr62k8MDN_5FmYl8PL2nCA31L6zNn4hSpupBXB56qbCVejSU>
-X-ME-Received: <xmr:cfGFaqtel1m8-Vl-tNrcZLRs3zUUt8klN5NRA_6jVkVBR3rNQu2VCRJurSyH8j4tAItFWWn6enA9YPNVaAbdqEa-NDalkA-qAg>
-X-ME-Proxy-Cause: dmFkZTGYT/pDp8sRzLBn/IyvqWm8omZPq7wAHc0XwfVplF6z3s3LgTUfrJ64HQPaYsGmUg
-    bV+RGw4xbt45+nocKCbJTHQuqOPcx6QmcSzmJC+WS0NkHIAhfSAoqwxMb+cZkOj54aBsb0
-    UwyuAkHL7pJ9JlwzyTTybZIoFzVkj0kO3hAY7FVckrLOr3zpUUW4GGOuIF/5YWk+SwIKbs
-    BLK9bHGsnjN2MaXkHrLp3kI92+P3t1QL3FCuAbxGoMPmMMWSGRFX1adP+KrfuggYIOljLk
-    t4AiIrKc/0wXYAHSdaMIhrAk1dcN9Cw+sGlT9Z75/6FGdlfii3sjLPuEj7hLwCwaNuKQBI
-    NPD8/s8bzJH8BzM6lg797wIUJeUhy/cBnDkIUUAyT+9lLGFyBJW6IgXHYNopEmBVl0XiZc
-    /OAr3h7vB+zkdzj+JJ76uXOBaFQfoF0EXd87UVs907LnksrFI9vKaHdLsyZ7grbMaZWfIz
-    wcy1vExW5jRrXyRlQ9penUzcBbzgkeNOawI/IgGFWWuqL8dxqlmo/JZBT6CkIrTzHigpYu
-    PfpdcqMb/pvt6RP+MEkNRbABs/0yKJgQNUYKE6NaTzV1UJvXl2Wlxxd27sROJ2RRpWguqr
-    /NhhsqxQLQrJ9zNfYe7tM/taf9j+x8pCbmlzBmRa6UA3VbHCY6q4JE9IrZzg
-X-ME-Proxy: <xmx:cfGFatT-RI2lfzW0QWdpnXyEDQu953vKJdZoFBG93pAlCMOOHBeN0A>
-    <xmx:cfGFagMuBJTX97PVPRLfLrY_0cNo41JvKULIEwCUgVtyl3lLi1XCPQ>
-    <xmx:cfGFaiaXeBrDhpCPYkOXGYbl2f7aRP4YgXaug6IVyBl37Nb9qeX9SA>
-    <xmx:cfGFaqySF3A6R1HZHXLergBwab3qRVlGkyJnZjywp5LT3cmaEwXwXw>
-    <xmx:cfGFaqNoGNjkcTlmcwiD94tqbSL2fX-j1KC6LQtMl3x0OTNA58GdMQiF>
+	1787163665; x=1787250065; bh=VDMcEk63GxvTVc3ExBwsrKuRIX8Se0vweBk
+	AZZ99JYE=; b=Ukf2tS2Xl4czg04buTAPXMVDUpLrcaUKpUkPi4uviI/1jr+3jIp
+	AuiMb/2Qu4bz4TsUn3H74QVATmBxmaihBE38wTjn0FmFc8pPlVojJs+t4q7ct9KT
+	pKQqkf2VVs807M4S+VqYRIhLwfv8F2Ikhp1WD6vrEjy3pvbjhovaDqJ/gLiTDL0l
+	zj8bWBGfeU09VMcFwgRhDe6G6wDHKOUbP4T4nzwIO5aZh1gSUeSLDTuIvXZsmQ3n
+	6VMwawtC60xo05zaR0Q+m3SfYFb9JTegbX8GSUypYDRTrXFJ7f3fRdalgJFi1p/0
+	X84xIkhbFWvJBqBOTrh+vcICjlXNf9/p6Mw==
+X-ME-Sender: <xms:EfSFan727-zHXfLCnwZGK29CJ1rFj504Nhf7wOjBOPYsJDSAE9x-oQ>
+    <xme:EfSFajwO9hS9mu1nEf1pxaLlra2f6b_O1sVx5c3fpkfQJUvsKI6jLsDT030ZlBClr
+    VA2GzpZCdTgiKVRCrfXg-vL_9vdfA11BZCrRowhQpKxdxdX43_JWZo>
+X-ME-Received: <xmr:EfSFamyK8MfM07RhJda53Ek3UUV3aoqf4gB60UPx8NbIbN-KCfX-KqcDOI1z6qZ-vhq04I2ZUpIcQC1GL9NnAsAiQ7_0N4JpVw>
+X-ME-Proxy-Cause: dmFkZTGiveYpRIC+9VJYl39BPVhktA7G4r1jtONph9VYRzvD7fxAG/3L07YleesLj1Evm7
+    22MjkaJBcWk+IJtM4G4IqNSBA0JUBbpMyftu91Wy2BuvOX35ASuCoMmX+6dmfGu1gqWJRL
+    tLjMnCax+OnNNMMghRzbrpAADpJ5PvfW8Z8ZCs6QxM8GKb2CbkCkIbBgW/QR5Z08lDZuKt
+    cd43//wsgaYp1sHNElreZYHyfGlE16HBOyT7O/qhZ2cyL7S0W1krlAILKaHpieYHUaZ4tV
+    gehVZm701RI+HZORQ56riOfnJtaxqs0HBd5/1Hh61fA45F1XFNKZ72xtO3ehJaiFjC/KLf
+    FzsmZiHvIgt+n/8KXsRg5Ebqk0dvEsHaQrapksYjOZnFIyu/k3CguV8wSKOFAykqs7ACF7
+    OUsXeVkSo1nddcfhYMHb2Q4sCqiCzsLi8MPFle8C0kzrls6meO6vBaOo3VaKNVRf66gpdn
+    jI0MxnTq7zlC+bJ17/P5PXY6NLKovtevlODdDmAZGjzb8fRivjAEa3KisLkDARsqgFyU3H
+    C4AOwtDpiNhGD9pa4yI12vLEyfjJm+tNo8w630x1QaD18WVF2ObfUqNZgO9veOZoyBi4zg
+    yqsBc3PA5mLLAxOoRrGhGyFdzM3JKoJrf2MSPDQ9qtygUhO8vQdFbQBYkT7A
+X-ME-Proxy: <xmx:EfSFajwi-QZys7SoRy4VneIB-01y1Zsm3kVzbhgy0NfFcGaxM6MraQ>
+    <xmx:EfSFaoY4O5noQg6jFO2mhMTucu44Dt60tRIjxIRQqXhBqKEvsscMdQ>
+    <xmx:EfSFasXOg8ZaA9nxztZfJSMl_8ofH7-LwKvcNv7J6NPEMjV0Ly-UZw>
+    <xmx:EfSFauhPubu5F6O4fgEMxzBlpMgoTlAhpPQ16fJf3seQV9Fu_JjGrA>
+    <xmx:EfSFanAnRkjif-1ObHz1xC3HA_mJ-1eQAM2pQ_RQq3st1MG6qFUHaZRY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Aug 2026 14:09:53 -0400 (EDT)
+ 19 Aug 2026 14:21:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/2] replay: fail gracefully when a merge input is
- unreadable
-In-Reply-To: <321af575e0a9e0c22c70c1809f6fbf0265b05d4c.1787092446.git.gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 2/2] packfile: recover when a multi-pack-index names a
+ removed pack
+In-Reply-To: <5792c08f4ee0f9627ab1432d91299fe676e0a2f5.1787092446.git.gitgitgadget@gmail.com>
 	(Elijah Newren via GitGitGadget's message of "Tue, 18 Aug 2026
-	22:34:05 +0000")
+	22:34:06 +0000")
 References: <pull.2207.git.1787092446.gitgitgadget@gmail.com>
-	<321af575e0a9e0c22c70c1809f6fbf0265b05d4c.1787092446.git.gitgitgadget@gmail.com>
-Date: Wed, 19 Aug 2026 11:09:51 -0700
-Message-ID: <xmqqfr0augls.fsf@gitster.g>
+	<5792c08f4ee0f9627ab1432d91299fe676e0a2f5.1787092446.git.gitgitgadget@gmail.com>
+Date: Wed, 19 Aug 2026 11:21:03 -0700
+Message-ID: <xmqqbjayug34.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,63 +90,51 @@ Content-Type: text/plain
 
 "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Elijah Newren <newren@gmail.com>
->
-> When objects involved in the merge cannot be read, the merge machinery
-> will return early with result.clean = -1, and result.tree left as NULL.
-> pick_regular_commit() tested only "if (!result->clean)", ignoring the
-> case where "clean < 0".  That causes the code to try to use
-> result->tree, resulting in a SIGSEGV.
->
-> Handle clean < 0 explicitly; the merge machinery will already have printed
-> messages such as "Could not read <object>" and "collecting merge info
-> failed for trees...", so we don't need to add much detail beyond the
-> fact that the merge failed.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  replay.c                 |  7 +++++++
->  t/t3650-replay-basics.sh | 35 +++++++++++++++++++++++++++++++++++
->  2 files changed, 42 insertions(+)
->
-> diff --git a/replay.c b/replay.c
-> index 463c900d6c..33e21b2032 100644
-> --- a/replay.c
-> +++ b/replay.c
-> @@ -327,6 +327,13 @@ static struct commit *pick_regular_commit(struct repository *repo,
->  	merge_opt->ancestor = NULL;
->  	merge_opt->branch2 = NULL;
+> @@ -31,6 +31,35 @@ static int find_pack_entry(struct odb_source_packed *store,
+>  		}
+>  	}
 >  
-> +	if (result->clean < 0) {
-> +		error(_("merge of %s onto %s failed"),
-> +		      oid_to_hex(&pickme->object.oid),
-> +		      oid_to_hex(&replayed_base->object.oid));
-> +		return NULL;
+> +	/*
+> +	 * Recovery for a concurrent-repack race: a MIDX can name an owning
+> +	 * pack for an object that a simultaneous repack has since deleted,
+> +	 * even though the object still exists in another pack the same MIDX
+> +	 * covers (e.g. a kept base pack that geometric repack did not rewrite).
+> +	 * If the object is present in a MIDX yet none of the paths above could
+> +	 * serve it, its recorded owning pack has become unavailable.  The
+> +	 * regular fallback above deliberately skips MIDX-covered packs, so
+> +	 * scan this MIDX's packs directly to find the surviving copy.  The
+> +	 * bsearch gate keeps genuine misses (objects absent from the MIDX) on
+> +	 * the fast path.
+> +	 */
+> +	if (store->midx) {
+> +		struct multi_pack_index *m = store->midx;
+> +		uint32_t midx_pos, i;
+> +
+> +		if (bsearch_midx(oid, m, &midx_pos)) {
+> +			for (i = 0; i < m->num_packs + m->num_packs_in_base; i++) {
+> +				struct packed_git *p;
+> +
+> +				if (prepare_midx_pack(m, i))
+> +					continue;
+> +				p = nth_midxed_pack(m, i);
+> +				if (p && packfile_fill_entry(p, oid, e))
+> +					return 1;
+> +			}
+> +		}
 > +	}
 > +
->  	if (!result->clean)
->  		return NULL;
+>  	return 0;
+>  }
 
-Hmph, so anything but "0 < result->clean" is a failure, but we by
-mistake took any non-zero value as OK?  That is an obvious mistake.
-Well spotted and fixed.
+I'll prepare an evil-merge to rewrite this line to
 
-> +		# Ensure replay gracefully handles the missing object
-> +		test_must_fail git replay --onto onto base..side 2>err &&
-> +		test_grep ! "[Ss]egmentation" err &&
-> +		test_grep "Could not read\|collecting merge info failed" err
+			if (p && packfile_fill_entry(p, oid, e, bad_pack))
 
-"test_must_fail" means "the tested command must fail voluntarily and
-in a controlled way", so a segfaulting git-replay invocation would
-not pass test_must_fail.  Hence, there is no need to separately
-test "test_grep ! '[sS]egmentation'".
+to adjust to the API change another topic in-flight brings in when
+merging these patches to 'seen'.
 
-Besides, the spelling used by strsignal() is implementation-defined,
-so you cannot reliably grep for it anyway.
-
-> +	)
-> +'
-> +
->  test_done
+This is strictly FYI.  You do not need to rebase on top of the other
+topic, until I and/or the author of the other topic ask you.
 
 Thanks.
+
