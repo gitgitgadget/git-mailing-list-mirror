@@ -1,192 +1,163 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D2A392807
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 13:20:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0FC392C2A
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 13:20:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787145611; cv=none; b=Y6kDKp57nW/QXFNFG44oGaKq+Gp++2TvSGgL78RDTjhWBlAwRwTH2YnHOMRqVLXOJMKLqyMLuGV8FxieNb/Gl/0XpHE8G01KcBKZnx5nLU3KV8E9UIZnWcxZpsUihyEDS7vbniKWyuLBV2QHaedSYRx/wsZ/eItLHZp8Q1xPp28=
+	t=1787145614; cv=none; b=Y2C9q/ZiiaCDPBzqm602uCLh5ZsXoZLN+JKHO8qiurxAc/GV2GRZG4QuEz075pdVliMamHT9iLcovhG0XGWELpb50g9RlWxy1CyuBD8AQoFFWFf6OxseSBrU4AFa1n00XmxZM7BTLQvQyx7SwWt2RlssKDk1+abm0wrjm3JetRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787145611; c=relaxed/simple;
-	bh=jE1nBZs/swiQJpXt2zdCvFoXImLiBC+owT6rrVIBF+0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tvUvHwB/K+0t+lHc4iETzEe0PgLQ+aTf4L8d+I38v9t46CsrcyyL0mgExQN6QruzH4LZs+QJS/Mz35zfkciV3B6f6CIfo5lXDyAifMhhZzY1bUvn77JBAeGzQDe8kU9wtkTWEFYYp83IATqaGPrqd3IZgwt07UTfq951rYf+t2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D5wKAe9k; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787145614; c=relaxed/simple;
+	bh=dfIaOJBHIalvR/uKbjjFDt889tkmg8QTd9TCy+MX49Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mvdcV3hLGEF4fTwzgk5W43mkKigf4VKeEpJP1Dq4xzfG43dBaBSlyXVD9eVY/SMPlLFACs+Ls6n65PzH/dMPYVO7a73q3TOQkEIlLmFdFESnrbcZVUjK3lQ/0LpNgeWUUV1RsScCp8yoi8PMCBZAxdam6CcWITdkDa3qxMTqoEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c2ZszaEQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iOrhyXHi; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D5wKAe9k"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4980fe6b3beso15706635e9.0
-        for <git@vger.kernel.org>; Wed, 19 Aug 2026 06:20:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787145607; x=1787750407; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=A5dFkHfv0mgTmtyZvL3BJVNHogreuntYXPOMhbUhpsg=;
-        b=D5wKAe9kltfg+EeanCQWN5yg0TCrFCoJD1rSooP8eWSTc0ZRJ1FMTJ/1bTfCcpk6MH
-         cNJaQtV3XfvAp1FpNxgPIGsr1vPfBg5jwLVQw3S5bo1Hs8c2DCxStZ+RmrGMI/ZCBlVr
-         O2geC5qh6+wI6L8L7fH7nMx9a1ipdl63CTFUtpPi+EO3Xhiqc7tWUlusxRUTevn5S7EU
-         zqF+ePJEMvkmXrnGOgn8sTNcSEhKkjlHXSMRoXKJcK0b73T+Z74UGIGUeMmDTvMvcsVo
-         /BqQkwKCMozUEyn4ulQFvCt6DL2Wm6gYBq9S8tOy3W0zj2HfQ7DjD3XIousynO9IUe/s
-         gNIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787145607; x=1787750407;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=A5dFkHfv0mgTmtyZvL3BJVNHogreuntYXPOMhbUhpsg=;
-        b=eCezWE8VoIzsy8jU0bEUXmwkVlj7KmRzoHqG4AhGT8RpN0Vvq9n9bUoCLm53Hnd6mo
-         zkOFjtsAK64aYs8v4lYWint+ZcGpHf0qDtmt/Q0CXOpAG5G6jlf8dqcEkNKZVOIZ7Cco
-         RfeSZ3r6qg5sDcNUyEd4bU5NYPbjdItkD8vMvL3YAsMX3w5z0SDres43ZiRarS5Bnjan
-         EJM8OI/M/rEg4c6xyqgeMSKHJecW2ik0H0JLvv0zjzLKj8xK6AIc3fSjw+dinrWYMdZM
-         7n9NS9mRuDOL5+Att1/MdkoRU3nxrSKW91v+/ULMAcg+wCqUDDiiQYjP5SqiZ5Va0xAM
-         geFQ==
-X-Gm-Message-State: AOJu0YxsnNbMhbb2mFvEGBi3dYBo3BGRynvCmyav/ITbwQcEj6eM4JyH
-	qeevs1OzooRq41AWweQqidncWuDb/DRYLEgNKqwSdNIUXfUKaJy/2+qBMu/1eLPr
-X-Gm-Gg: AR+sD10YZQoHZb2ht8iiJQVKduAbGJM3YVpfpsJmoWdaM+LMMNSEZr/RhFa+X8ytiVw
-	Vpz12keUpcXhdmA+qKhfsesapwR9e7bvhJcE4/yaQaBryDy+6INIDg2YdYPPXzVdX6idtvtJeFK
-	aO1LFlAnvhzWSjaJw3jHPWYDYAGTMlvdjGF3LHAxplXN/ZD/juYfF1oFUW9KsfoHaH5U3UqWL6l
-	IIl8xv2qhlWU2i090ZiZWVrsKcmqyRHgtsQhmsq5ufggicmxKLMjLwpBHqod95xSnW4cCiE/Pn5
-	ZIxoGcd9nGSXzSs4Tpq63AjviqsINQi24dNCt35eEoKxbKd1FBuOxolRVjKnZZLM42Rmoonj6u9
-	+1+1ZIZ7gSYVMDtX9mYPMGr8OakZJH++DPbfhuz+j+WRUak4NGXIOQD1+1+kvHbumQwed5aBih+
-	JJ8igEiN15p/qB7n5JG7h8J+gUNKHDgpksyYUGRDMsnXfbbZSPM8tgUscwM+h+GpFyr/UoGjL30
-	Q6Fy6mIhYBWrhNDF2pf2yPK9WI=
-X-Received: by 2002:a05:600c:3f10:b0:493:f783:c46a with SMTP id 5b1f17b1804b1-499aa0f306fmr86559045e9.6.1787145606920;
-        Wed, 19 Aug 2026 06:20:06 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:15a6:881d:7fd4:eabb])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499a9ddee1esm37578955e9.2.2026.08.19.06.20.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2026 06:20:05 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 19 Aug 2026 15:19:39 +0200
-Subject: [PATCH 3/3] reftable/stack: avoid reloading the stack when already
- locked
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c2ZszaEQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iOrhyXHi"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CE90414001B2;
+	Wed, 19 Aug 2026 09:20:10 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Wed, 19 Aug 2026 09:20:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1787145610; x=1787232010; bh=bGS7kr5zyN
+	AiMboY4C/T3154YwKvsB+p/CXyy3cFoxM=; b=c2ZszaEQDVt/B1uwWPPqJE+ELi
+	+NL6XACh9m+GenVpvab62yNSfQKtq1BXtuvOrOTZHI6LYeBVJdsZgs7EQNIcagQx
+	X7Fv1w0zKp49REIr7hyosBmOtg4Mago4lxFFMNxgWzgJTnslJ5STQg44dt6dUTWv
+	ql90xeQebPXjCsg9/j6rilu++xmMXcaGw2L9V03SV15mh2rBEsOeBNGjGO4jfTai
+	mHVwZb/7ObLcv4kxaDdDkIOREPW4IOYgPuzHJTXsKCea8QRbU3XHzSATN9lRdhxk
+	9XMxQ9z4lnkqTXwYeTA7jEP8WcpD+I11kpc2eiYZ5vGxIS0B+/uWGWJsvj8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787145610; x=1787232010; bh=bGS7kr5zyNAiMboY4C/T3154YwKvsB+p/CX
+	yy3cFoxM=; b=iOrhyXHiFojKpQVMH28KcZ/6bpQJhUPixftP1bCpyHJXSqQVTGb
+	RSz6HU/Kcd1Lsh5cWp8GHx4sG69Ctpmodm9oAgi9I3wMeqI/JloINgwlfvuoyHxL
+	F6iCrNKrYE7pjYR4mTAFMyQrxQtErJQZgHzd7MEDfLtP8cN5KyYQXRWhcGmD3obT
+	KC95lW7mqMMAshz7ZOKhukAaP1Em3UW9dq70C2LlhpEyEp2aMjEx+J1zuyebgQXG
+	Pc/ImHgrqOwFwruCCsRb2C6eUTCNB6aj8NfF7YV2c7ETKjSVd7r9aMv5LAxtp7GG
+	MYSrhFB3inHqILI4ENUKijoB9Lu84HP7ANQ==
+X-ME-Sender: <xms:iq2FarSSl7E3TQjUbUMuDgsSu4Kb4CkNazU9bPsJ9-mUQiwG9GvS2A>
+    <xme:iq2FaizO2vnhmlCHsBMNDfC3mcNbIi3BKQ2YAQkGmQjmkiej17wftIMoW720mBT4y
+    7X8NpFh01YkcnyqWk1k2LRnonviNcsk3qC8g5SsjL_35a8-XK5O>
+X-ME-Received: <xmr:iq2FaudGPmShhIm15vZaiN0z3qcD3ZqCkI88okkY1Tfx4VuXraA_pk2rGOlB2gC3r1IjNn4sGiJmqU3Nl0Xp_sshfhqTWGgcCf60PFmk>
+X-ME-Proxy-Cause: dmFkZTGsXJgO1WmT3AOqjQ0u2eiQNsFMhHzkShtHrRgaAs6hK1gnFOB+lq8MoIOgpR9UEW
+    YuKkHFUadGSwtNFemRg4fOqJdmZgSp2RplenteB/OQqn6PBS+bu5EHcoSxcgnDd/xUAZJv
+    agN/bogqRi/9jMChukgTlcABFSN9SwsLfXad0nfLEmFdFPeMBfx1S1yNbXT1ILIz9qUhHo
+    Iq+oqtOVRBcBpP/vMgnd7tA3USe3BkfP8xGtOXVEk+wJXTndwDlxWusfPsvw3NhMGPhX0C
+    E/Kl5tUuODHYWbRdIrkk3OPJ5ElInQQhNR4SGoR8huEIobA7bZZs303jAr/vMnTrMLZ0qf
+    AgIFBPxrpoaeWbkzIycyWYp504XXH6bJZxEooU+KFPYJZDowLnX2jnh4IAgMtOucbtEeRa
+    j+lAz8jUJRgRSnwzMJL3i5C6YiJmKy3jq3qmxmAWrjx0Cj8weAPBz8jIBgKXZO+W0XdKpp
+    ylOOT9zCnvgL7dMjabh8OwaDDQljM8x/bYNw37MrAW8JaafYJYf5JF1czAVIaR/5msrDrr
+    HcCe0uGIY8sOzj96QED5L/tzoaHMojGbOuQGmcegZ2wUUE3DH0wWSeldjSRGyomIlQzKxj
+    iHfqwQ1KQ7TFjWoqaT2HVF6CcFD/TbKCwUeaGqUdPLxqBVlWhQ19d/gWBlQA
+X-ME-Proxy: <xmx:iq2FamIDBnl704cH4SfRmAm7dQMFNGjGBErS9WXBXXCn8Q_q7Wf0Iw>
+    <xmx:iq2FanH6t_KWwKbTgenNYjt4oZ7PJeoOLuCeOXJ8Vagr6GGiXrOuJg>
+    <xmx:iq2FaooTGx-2WzMDS46lXrC5gVrFkNM8lLtvoR0pfIO7r9B6l9_6Tg>
+    <xmx:iq2FaoQA4hwfJKoT1vByJZQA4kfYujdTEhVWi5oYyU532F_A3Oi7Hg>
+    <xmx:iq2FavCYNeANcXVMLj_kxcGDbPKyqLeD7xNOK4gPTpTcdZEr5Svi8qB4>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 19 Aug 2026 09:20:10 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d8ade555 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Aug 2026 13:20:07 +0000 (UTC)
+Date: Wed, 19 Aug 2026 15:20:03 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] hook: introduce the report hook for git-receive-pack(1)
+Message-ID: <aoWtgz8wWsb3v6du@pks.im>
+References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
+ <aoVdlC7myRFenPfV@pks.im>
+ <CAOLa=ZTtOJLXkfZ8jKpuA9REg5CP_xxD8+kDxPAYLeRz_xR1Wg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260819-740-optimize-reloading-the-reftable-stack-v1-3-6bf5305d4e43@gmail.com>
-References: <20260819-740-optimize-reloading-the-reftable-stack-v1-0-6bf5305d4e43@gmail.com>
-In-Reply-To: <20260819-740-optimize-reloading-the-reftable-stack-v1-0-6bf5305d4e43@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3434; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=jE1nBZs/swiQJpXt2zdCvFoXImLiBC+owT6rrVIBF+0=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqFrYD0jYeqJ5PSJffm/HxvHSOECLi8BUNyt
- j8/fnbtOOCt3okBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqha2AAAoJED7VnySO
- Rox/B30L/RJlyB6b77LGBTSfLpr2UMHaaqrvUGAMiTa7V0mGXM5CPEVI5hVjzJe0VpGx44U87vS
- mWd3NV/f8tkwFPsYGn2bOvtt2H4H8ikrIq7AkC0wf24HQA8gI4ELLpgDiKuYjKhglqDh8LuP4vL
- f+hsnih91BVkTJoKhLhHXxxMKmII1AelOXzyoLYXSXFcRt92XUwrwPughHnVJHob5Ibyh1gEjFk
- AB7YZuk5lO33NX1n34f8NUV7dDmST7OlaQifdojlUX8gN0JyNzYaPSBC8ai+HiXDmyQ48D8+X+n
- zJuIX2fUofxw6S0RnYMM5VwODv14s+YvYDUKcJcj+lW50sHYG2Y12Jb4cDisOXUGzSmsgOCZiMe
- hYzTl1YHquM7i9hfzEGth9pLq6wnTpZQaORH/+oMGSIpqza3QCo7cubxJ5eS9i3YXng/CAYUgOc
- x4Q8Y6p4vMqwVCrfYan5uZl2ep3YrtgqL3VGdymODl6YLDERNIkCV0IphqGrCu76YrW4w3vwYN9
- vk=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZTtOJLXkfZ8jKpuA9REg5CP_xxD8+kDxPAYLeRz_xR1Wg@mail.gmail.com>
 
-When making modifications to the reftable stack, the stack obtains a
-lock to the list file and removes the lock after the commit phase. Since
-most operations reload the stack to ensure we have the latest state, any
-branched operation during the locked phase could trigger a state reload.
+On Wed, Aug 19, 2026 at 03:13:50PM +0200, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > On Tue, Aug 18, 2026 at 09:55:55AM +0200, Karthik Nayak wrote:
+> >> When running 'git-receive-pack(1)', there is currently no way for the
+> >> server to intercept and modify the status report before it is sent back
+> >> to the client. This is useful for servers with custom logic that need
+> >> to transform or gate the report based on the outcome of external logic
+> >> post reference updates.
+> >>
+> >> Introduce a new 'report' hook which receives the pkt-line encoded
+> >> status report on stdin and whose stdout replaces the report sent to the
+> >> client. A non-zero exit status causes `receive-pack` to die and the
+> >> client to treat the push as failed.
+> >
+> > I think it would have been useful to add context why none of the
+> > preexisting hooks work for us:
+> >
+> >   - The pre-receive hook runs too early, as we haven't updated
+> >     references at that point yet and we need to have the full view of
+> >     all resulting updates (both objects and references).
+> >
+> >   - The update hook is too inefficient as it runs once per reference,
+> >     and we cannot trivially determine the last update.
+> >
+> >   - The reference-transaction hook cannot be used by us because we care
+> >     about the phase where it was committed already. And while the hook
+> >     fires in that phase, it does not allow the caller to modify the
+> >     result in any capacity.
+> >
+> >   - The post-receive and post-update hooks cannot be used as they run
+> >     too late, at the point where we have already reported success to the
+> >     client.
+> >
+> 
+> Yeah, this is worthwhile mentioning, I already have made the commit
+> message a lot more descriptive, so it does become bloated. I think it is
+> justified though, since more information is always more useful than less.
 
-To prevent data loss due to concurrent writes, state reload is necessary
-right after obtaining the lock. But any reloads after that are just a
-no-op. Now that the struct has access to the lock file status, simply
-skip reloading if the lock is present.
+Well. Until it isn't anymore :) Just look at the walls of text that AI
+is prone to generate, where one is essentially drowning in information.
+And it's the worst kind of information, too: plausibly looking but
+inherently dubious.
 
-Benchmarking with a fixed, non-symbolic target OID shows a modest but
-consistent ~1-2% improvement in clock time for `update-ref` across ref
-counts ranging from 2,000 to 100,000.
+Anyway, I digress. I think in this context it's good to have the context
+indeed, and I trust your information more than the one generated by AI.
 
-We can see better improvements in the number of syscall counts. On
-master, the number of calls to `newfstatat()` grows linearly with the
-number of refs created. With this patch, the number is now a constant:
+> >> diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
+> >> index ed045940d1..7e6643ad89 100644
+> >> --- a/Documentation/githooks.adoc
+> >> +++ b/Documentation/githooks.adoc
+> >> @@ -527,6 +527,29 @@ The exit status of the hook is ignored for any state except for the
+> >> To reject individual ref updates, rewrite the corresponding
+> >> +`ok` lines to `ng` lines in the output report (with an explanatory
+> >> +error string) and exit zero; standard error can accompany this to
+> >> +provide a human-readable explanation. A non-zero exit status causes
+> >> +`receive-pack` to die.
+> >
+> > We should probably document that we expect the hook to never return
+> > non-zero, even if it rejects reference updates, and that doing so
+> > indicates a bug. This is mostly because git-receive-pack(1) shouldn't
+> > ever just die on the client without giving it a proper status.
+> >
+> 
+> Yeah, this is a part I was thinking about but wasn't sure if it should
+> be added in because, we could also do an implementation where we simply
+> ignore the exit code of the hook.
 
-  refcount   master   patch
-  --------   ------   ------
-  1,000      1,059       55
-  5,000      5,059       55
-  10,000     10,059      55
-  20,000     20,059      55
+There could be cases where just making the whole operation explode is
+the only remaining option. So I don't think it's necessarily bad to have
+it as the nuclear option.
 
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- reftable/stack.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
-
-diff --git a/reftable/stack.c b/reftable/stack.c
-index e449af9c03..433a611ed1 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -553,14 +553,21 @@ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
- 
- /*
-  * Check whether the given stack is up-to-date with what we have in memory.
-+ * If skip_if_locked is set skip stack reloading if the stack is currently
-+ * locked. Stack reloading must _not_ be skipped right after obtaining the
-+ * lock, to check for concurrent updates which may have happened.
-+ *
-  * Returns 0 if so, 1 if the stack is out-of-date or a negative error code
-  * otherwise.
-  */
--static int stack_uptodate(struct reftable_stack *st)
-+static int stack_uptodate(struct reftable_stack *st, int skip_if_locked)
- {
- 	char **names = NULL;
- 	int err;
- 
-+	if (skip_if_locked && st->list_lock.fd != -1)
-+		return 0;
-+
- 	/*
- 	 * When we have cached stat information available then we use it to
- 	 * verify whether the file has been rewritten.
-@@ -623,7 +630,7 @@ static int stack_uptodate(struct reftable_stack *st)
- 
- int reftable_stack_reload(struct reftable_stack *st)
- {
--	int err = stack_uptodate(st);
-+	int err = stack_uptodate(st, 1);
- 	if (err > 0)
- 		return reftable_stack_reload_maybe_reuse(st, 1);
- 	return err;
-@@ -683,7 +690,7 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
- 		}
- 	}
- 
--	err = stack_uptodate(st);
-+	err = stack_uptodate(st, 0);
- 	if (err < 0)
- 		goto done;
- 	if (err > 0) {
-@@ -1189,7 +1196,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 	 * we could check that relevant tables still exist. But for now it's
- 	 * good enough to just abort.
- 	 */
--	err = stack_uptodate(st);
-+	err = stack_uptodate(st, 0);
- 	if (err < 0)
- 		goto done;
- 	if (err > 0) {
-@@ -1308,7 +1315,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 	 * tables with our compacted version. If they don't, then we need to
- 	 * abort.
- 	 */
--	err = stack_uptodate(st);
-+	err = stack_uptodate(st, 0);
- 	if (err < 0)
- 		goto done;
- 	if (err > 0) {
-
--- 
-2.55.GIT
-
+Patrick
