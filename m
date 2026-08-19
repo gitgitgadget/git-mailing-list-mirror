@@ -1,316 +1,207 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294D9470422
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 12:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C544F2E737E
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 12:51:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787141885; cv=none; b=dmkwKyd/SIJG9iLqo7IzADPVMNqIn13SwEFcnX6l6wQwreamRR378GAULGQ4xlUxJwrA2OiuJIknx7e91gYNWCNs+Xka+M+P21JcJfD7LOhMXqyj/GIetkAy6dtOBrVPWquTKRL/7FjSPzhUhc6f8G0ML6sBrt6YP7u7E5f1yCE=
+	t=1787143865; cv=none; b=DSCSIgDNCoyuvCfdplYpYLsQ3SnwEuSePNonGrO8Ta+GJLMB4tom/oysNqfkcKx1qmOZRClD2Q4NdyimidR9/y68/+HqCia1vKdxAdVlMqBM+Sr+rPCLRamZLlmjeqedH205J5SLM3cxKcAwnTNAPtK5WbU7a/biPl3BH7v7cbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787141885; c=relaxed/simple;
-	bh=iIiJrmlDs9hY8mPD4HCOy3X8yHQsI8bYTWeAC1Atoqc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HtLdCnfsbe9VU9SM3F5oxf9w2R8doGiKvNqb+ZYmVAmJFtllD7I+UzVrcUJHSfd7b6GdF6z26s/Rc2K3Ai52zChLcRoQJWIvs2iRsPOaSPbxXhEaFJBHaXZZrzpXkdUTNHBKNs5cW6mRdFQB18cFddqJoXqol8mexon/rDsHJoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V+ghHr2R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Os6x+oAD; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1787143865; c=relaxed/simple;
+	bh=kX4HM1BoD9IvcRmQ2eDWIeFgQbEN5JNjviAnkFmNcLY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=A4NzczDbvFWBcPj8a2ciHwbmY+0aMV2h3Cvwbvvy+D6usGndpLaxrWf7q9PmII8W4DkC4dfSZylyEQHRNCqv2HUhNC/kCWuTVNoFhuhxw1Ma/8KpgFVx3tfuAut9v282fgLwqC7XOJo0kCtgu3z5Sf7+9t5DEGa88aP744Z7n74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DtWkFW+W; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V+ghHr2R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Os6x+oAD"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2E18AEC00E5;
-	Wed, 19 Aug 2026 08:18:03 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Wed, 19 Aug 2026 08:18:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787141883;
-	 x=1787228283; bh=IIM8tlVD5E8RXlgG+GAuzt3ibFCCFVbceafcQ8yAZGM=; b=
-	V+ghHr2Ru+S6sdMEkgiOuTa73QJ7SaktXI/R7X1ljJxBmM3aWsTCbHmRsChgbybE
-	D/JJ6uRxWlFFmVCFwh7RyrHjaGTQ8vvh4/L5Md1Pe+aEa2rF6ugzFiy8ZG3+6qGd
-	t+GQpRMA10eB22yV7BluHSMgw/TFAGI7arK9ysPrh3RQp6m9624J1NOpzsfM4Koc
-	EWHv6RVGf0BlMivbG+f5ZzLpdjAWvXCsyqVj36b9FCy5hOTQkP6GQPwQLinxgio7
-	08g9Ob7w9gPrbGi+mkgVr0zt8c3uAwa6qAttHoRrIM+KAtyVg1G0z5cp0YzCqypz
-	nXJuz2mKec7IjY/d7s4C3A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787141883; x=
-	1787228283; bh=IIM8tlVD5E8RXlgG+GAuzt3ibFCCFVbceafcQ8yAZGM=; b=O
-	s6x+oADYzSnGlQ3pCBGJQqUDOT0apd0XVaINoGkKY1tdKgdItZz+qwyqIkQvNpOo
-	Ly7pgXCSxZAU/arwIGB8mYzIlDl37kFYM98YAwioOikqy4hTlm/FW9wAF8w75pLS
-	81jeAL1jVAZoXVSpc6n+bv0uQ9ni8XL5fZP7B5msFrTzi2bI0MR76RlrOMYr1sf4
-	EVEOot50Z0EM+tgmtpGHHsraCR90+2Ckw78jbjWrz0lIMiTITrsChJr6g515LElR
-	sLx5LDvIVYyazynqweZAB6jf5kfECNVqH2unC2XXgOV+NYZSmJYzPMYlRWrux6Om
-	FnTeWOIRW3hYim3/bJTHA==
-X-ME-Sender: <xms:-56FatDLNCKdVUE0OD6SadB0zmMrY-CcgEVSIzMqdYqzUkchA0yRsw>
-    <xme:-56FarudoHdQeKTzhH9SNMJrB-mWIu-lLGNOD-jH2etwFJ1-2fRkHYKuIPKJ8FAYi
-    -7b4H46Ot0uJoV1two6Xm3WyP5QiyoDKutboXR2cJQWPo3rCi-pHQ>
-X-ME-Received: <xmr:-56FaqZzV_f2qEIsWi4mQ5Tf32r32QFa5zxxnVdVy5cZGNTL9wt0PlJJniGGi1HYZkfJQdu4irxHOvj0_UPDHB5qPZ70mUgRO0EL3VQH>
-X-ME-Proxy-Cause: dmFkZTF5mvSyHAwZNZEJLvdRLYwrNd6nj3F/OPlsiVb/McU7FBZtMInkPMxcRjhwRSPFHL
-    WUm0rG0cjgDwa2Gh6qh1SLgIou2chAX5ZgP/1gXUR1vcTnXZvTU9haB+ZjXfR8PqHoV0mT
-    yFCQgjenzzujCx6/VUrwAF3/Qro1c+XMYk7AFBZaoY+ewAjIUq/HO0s5BtCKKXPFns/It8
-    9sbenjmEVzlOv2FYEUi3TWaQBHwTcUixH6KM2lD6Gst0FYYVriPig0bbHUyLXvDoARD92l
-    wnFFv5vVxy1k7xYdbg/KUyIUF72UNvwF6UgqIcOBqHw9pklODFjYS4gk3zOO4KzbW4WhfS
-    4WqSDegdVPTq6eVaTMvXt0muYd6LYBU9yUBGbtESSYYIWWcKnB8J2544oOG3iknYnJyZ0e
-    50Havi4HX9XvJdm06n0iLKFJv2CaOb1HtA208ZoLO3IPUqBVF2wMH3j1qwK2cSdtwdToa5
-    O776YYiH0upk0Z5PAs9h8X/B9gKIy36k9BesS1r4BU0hJNBnpIr/xKWrXKdiqRHoIKKQ0W
-    94A2ngUtT1KTr4GJ7Uvr9ImXluzzO9GzvQbTJOGRmtwk74bKTg4x7EFw9uMT9IkJFGQSmb
-    Ik887pbIPs1kQI6wSN2VhoiXqLz9TB5M9ZJzlCcTqxuSpz6LKpGucrwFGTog
-X-ME-Proxy: <xmx:-56FamXf8VxWKw3NMtTVHIM_qsvI4i4bZX3TJYsX2z29iIHP2htT4Q>
-    <xmx:-56Fam7HZAay1BaRfmV0NI7JTuyzIbWlsBuKY7zduEvxs9Z1r_M0gg>
-    <xmx:-56FaphwEl0p0NVALNbFR6XQNU92yI0aqt1byrDQO1jJpagJbgOHtQ>
-    <xmx:-56Fald49H-arlv2lC8ua-6SF5RLV15frrBRTcWB3Xd147De4czhDw>
-    <xmx:-56FannvxzlNUmbMzKw8QeRpor7PCyUTdEHCIVCe7WPkSAdgoK4boFUZ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Aug 2026 08:18:02 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 57cedeaa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Aug 2026 12:18:01 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 19 Aug 2026 14:17:23 +0200
-Subject: [PATCH v2 5/5] odb: handle `OBJECT_INFO_DIE_IF_CORRUPT`
- generically
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DtWkFW+W"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-38d489b6b71so1061967a91.0
+        for <git@vger.kernel.org>; Wed, 19 Aug 2026 05:51:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787143863; x=1787748663; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=waZqAWN6KaA2aCjlmBNrkEVHEx+v09BuUVhkMlLdyj4=;
+        b=DtWkFW+WMYmiHAklcY9VsvTeSeCdaI8jJoqGSAczlWnj53alrqxpGSCi5STgGRERr6
+         4aQ3OzH5GbxmDBu10Pw3dTEm/iEW2yK3jcURdOtn9LPNwMisEHpkriduwi7ZvKhO1bMl
+         KNxYfZWXSJyWfYsQzbHvTtfNcFwQDcqbO5L2dEFdYfUiqjyfZ3Y0iJQPRTdX0AVR9XT6
+         3RVug3vxIG8Mac8fJ3sUrHNWYWiwlTEumEJyQVvzxJYQi9GvNzpWTe4JHCBhgMnF1nCH
+         fGD1F3zAJ1Tr0s7dp2+SIrUC/amJSgIb8CWVAQigfWQ/AWYZMLrniZKV3t3OH/5jbsYD
+         /ZTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787143863; x=1787748663;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=waZqAWN6KaA2aCjlmBNrkEVHEx+v09BuUVhkMlLdyj4=;
+        b=EIPexzBmzTAeJE1178Qg7UaKTv6bwR6nSKzIX3kTwQysZtO0PAmGdGaxUaYUbAVUSu
+         EGlPqpYpL3yD31rCOg+LTCd1EQoylKtsywPLytnEp9/qiIdusCffkgZqq7FSt77ku4Jt
+         718TK6J4zE8uWxrwDkGg5e+DOeJ8MTLbJFM8uTfG1arXyLTt7yGnPmX+9MAkA/1QQEJN
+         TB/FzmZeeXrwihCXGthCGje/wHQ6wPAXEGYznQjNimKxphs7CAl1/C0ATj0IUVxkfCyM
+         XFH9EOdQLR/DNp7w96omC7pql1yWUYncIjAYaKIDsozZ4wa3Zwob6HtNlY/pv64r2p72
+         VfMw==
+X-Gm-Message-State: AFuF++kLKK54F5geKJ54XFZPa5Csx9dY0lEKQdmu2OUvtA1AFTiTsmhA
+	Ys0T+A9NtTrA3F5KMMXMmQ8j19XUaW1pexoEdAX1qtb+rKDsUReDWpQs7mfXEA==
+X-Gm-Gg: AR+sD11cdBYOzc0nnjVuWo0elwpOnyxmruB/JAaWLt+Nn0MkeZ1Hf0aVCVdgnzbkL4w
+	K2Ku352rQ5sxfVjTvGFP8HCP0nln26zMz1XqJQS6ODMNVQbmCJ5jQJKY9wQIuxfbgR33IuBUAWH
+	XtaSTSo0d7OQj9KFvIflTgv+78dNGyuomBUSgf0hNOY5PuWNaQFzamzDXL3PzWvQqub1/+pxYTD
+	KdYl0WUf5WvijAAB0edRuUVXT+tA42ecD7iCav0DMudljDJOs00qsRoYUykF5hA9ozvCvo09flB
+	PaElCBdAkcav+9oHduxQpVXeIxS0RqQ9zugOtRg0Wf/IYAzUqwN9VVl2CgdTtzWx0frM7F7JjiD
+	tD7cMCs+YGxhQhkcsmnRokScrazT+JiD8K8uY5OpBWkuJCcnQmtapXn8jUEH6Zsv5TvpPY+eF/Z
+	1Xen+XykbT2FldGoHd/CIjv565P/NbV0B8TAyYbVeFdXg94YkvGuBLxjMCBYI=
+X-Received: by 2002:a17:90b:384d:b0:380:71eb:4014 with SMTP id 98e67ed59e1d1-395810cda44mr8641466a91.15.1787143861579;
+        Wed, 19 Aug 2026 05:51:01 -0700 (PDT)
+Received: from [127.0.0.1] ([134.33.76.3])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1416ae14162sm6861883c88.9.2026.08.19.05.51.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Aug 2026 05:51:00 -0700 (PDT)
+Message-Id: <pull.2197.v5.git.1787143859.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 19 Aug 2026 12:50:56 +0000
+Subject: [PATCH v5 0/2] worktree add: improve message for ambiguous remote branch name
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260819-pks-odb-generic-corrupt-objects-v2-5-a984e3a0ad6f@pks.im>
-References: <20260819-pks-odb-generic-corrupt-objects-v2-0-a984e3a0ad6f@pks.im>
-In-Reply-To: <20260819-pks-odb-generic-corrupt-objects-v2-0-a984e3a0ad6f@pks.im>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.15.2
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Yoichi Nakayama <yoichi.nakayama@gmail.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-When a lookup with `OBJECT_INFO_DIE_IF_CORRUPT` fails we want to die in
-case the object exists, but cannot be read. This flag is handled in two
-different spots right now:
+'git worktree add ../foo-dir bar-topic' fails to dwim when there are
+multiple remote branches with name `bar-topic'. But it doesn't display
+meaningful message as 'git checkout bar-topic' does under the same
+situation.
 
-  - `do_oid_object_info_extended()` calls `has_packed_and_bad()` to
-    check whether the object is known to be corrupt in any packfile.
-    This function reaches into the internals of the packed source and
-    thus breaks the abstraction provided by our object sources.
+We improve this by adding advice and modify the error message for worktree
+add.
 
-  - The loose source handles the flag itself and dies directly in
-    `read_object_info_from_path()`, which means that we die even in
-    cases where another source may still have a good copy of the
-    object.
+By Junio's suggestion, we include matched remote names in the advice. It is
+applied to checkout, too.
 
-Besides being inconsistent, it also ties us to the specific backend used
-by the database sources because `has_packed_and_bad()` assumes that they
-use the "files" backend. Any other backend will instead cause us to die
-when calling `odb_source_files_downcast()`, even if the object was
-simply nonexistent.
+The changes to 'checkout' are almost identical to what Junio proposed; I
+have made minor adjustments to use the specified branch name. I'm not sure
+how to handle the "Author" field in this case, so I've set it to myself for
+now, but I'll correct it if that's not appropriate.
 
-In the preceding commits we've carved out the infrastructure to make
-this mechanism fully generic. On the one hand, all backends now tell us
-whether the object is missing or corrupt via their return values. And
-on the other hand, they have been taught to provide a readable error
-message to the caller.
+Yoichi NAKAYAMA (2):
+  checkout: improve message for ambiguous remote branch name
+  worktree add: improve message for ambiguous remote branch name
 
-Adapt `do_oid_object_info_extended()` to use those new mechanisms. This
-means that we won't die immediately anymore when a loose object is
-corrupt, and we properly handle backends other than the "files" backend.
+ builtin/checkout.c      | 75 ++++++++++++++++++++++++-----------------
+ builtin/worktree.c      | 36 ++++++++++++++++++--
+ checkout.c              | 14 ++++++--
+ checkout.h              |  5 ++-
+ t/t2400-worktree-add.sh |  4 +--
+ 5 files changed, 96 insertions(+), 38 deletions(-)
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- odb.c                        | 46 ++++++++++++++++++++++++++++++--------------
- odb/source-loose.c           | 10 ++--------
- packfile.c                   | 17 ----------------
- packfile.h                   |  1 -
- t/t1060-object-corruption.sh | 18 +++++++++++++++++
- 5 files changed, 52 insertions(+), 40 deletions(-)
 
-diff --git a/odb.c b/odb.c
-index 83a53f7f6b..6bbea64033 100644
---- a/odb.c
-+++ b/odb.c
-@@ -15,7 +15,6 @@
- #include "object-name.h"
- #include "odb.h"
- #include "odb/source-inmemory.h"
--#include "packfile.h"
- #include "path.h"
- #include "promisor-remote.h"
- #include "quote.h"
-@@ -551,8 +550,11 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
- 							const struct object_id *oid,
- 							struct object_info *oi, unsigned flags)
- {
-+	struct strbuf corrupt_err = STRBUF_INIT;
- 	const struct object_id *real = oid;
-+	enum odb_read_status ret;
- 	int already_retried = 0;
-+	bool corrupt = false;
- 
- 	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
- 		real = lookup_replace_object(odb->repo, oid);
-@@ -568,9 +570,14 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
- 	while (1) {
- 		struct odb_source *source;
- 
--		for (source = odb->sources; source; source = source->next)
--			if (!odb_source_read_object_info(source, real, oi, flags, NULL))
--				return 0;
-+		for (source = odb->sources; source; source = source->next) {
-+			ret = odb_source_read_object_info(source, real, oi, flags,
-+							  corrupt_err.len ? NULL : &corrupt_err);
-+			if (!ret)
-+				goto out;
-+			if (ret != ODB_READ_NOT_FOUND)
-+				corrupt = true;
-+		}
- 
- 		/*
- 		 * When the object hasn't been found we try a second read and
-@@ -578,11 +585,15 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
- 		 * caches or reload on-disk state.
- 		 */
- 		if (!(flags & OBJECT_INFO_QUICK)) {
--			for (source = odb->sources; source; source = source->next)
--				if (!odb_source_read_object_info(source, real, oi,
--								 flags | OBJECT_INFO_SECOND_READ,
--								 NULL))
--					return 0;
-+			for (source = odb->sources; source; source = source->next) {
-+				ret = odb_source_read_object_info(source, real, oi,
-+								  flags | OBJECT_INFO_SECOND_READ,
-+								  corrupt_err.len ? NULL : &corrupt_err);
-+				if (!ret)
-+					goto out;
-+				if (ret != ODB_READ_NOT_FOUND)
-+					corrupt = true;
-+			}
- 		}
- 
- 		/*
-@@ -605,16 +616,23 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
- 		}
- 
- 		if (flags & OBJECT_INFO_DIE_IF_CORRUPT) {
--			const struct packed_git *p;
- 			if ((flags & OBJECT_INFO_LOOKUP_REPLACE) && !oideq(real, oid))
- 				die(_("replacement %s not found for %s"),
- 				    oid_to_hex(real), oid_to_hex(oid));
--			if ((p = has_packed_and_bad(odb->repo, real)))
--				die(_("packed object %s (stored in %s) is corrupt"),
--				    oid_to_hex(real), p->pack_name);
-+			if (corrupt) {
-+				if (corrupt_err.len)
-+					die("%s", corrupt_err.buf);
-+				die(_("object %s is corrupt"), oid_to_hex(real));
-+			}
- 		}
--		return -1;
-+
-+		ret = corrupt ? ODB_READ_ERROR : ODB_READ_NOT_FOUND;
-+		goto out;
- 	}
-+
-+out:
-+	strbuf_release(&corrupt_err);
-+	return ret;
- }
- 
- static int oid_object_info_convert(struct repository *r,
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index b57ee2701a..540b2dd40d 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -192,15 +192,9 @@ static int read_object_info_from_path(struct odb_source_loose *loose,
- 	ret = 0;
- 
- out:
--	if (ret && ret != ODB_READ_NOT_FOUND) {
--		if ((flags & OBJECT_INFO_DIE_IF_CORRUPT))
--			die(_("loose object %s (stored in %s) is corrupt"),
-+	if (ret && ret != ODB_READ_NOT_FOUND && errmsg)
-+		strbuf_addf(errmsg, _("loose object %s (stored in %s) is corrupt"),
- 			    oid_to_hex(oid), path);
--		if (errmsg)
--			strbuf_addf(errmsg, _("loose object %s (stored in %s) is corrupt"),
--				    oid_to_hex(oid), path);
--	}
--
- 	if (stream_to_end)
- 		git_inflate_end(stream_to_end);
- 	if (map)
-diff --git a/packfile.c b/packfile.c
-index 3cde39a01c..cd38be088d 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -985,23 +985,6 @@ void mark_bad_packed_object(struct packed_git *p, const struct object_id *oid)
- 	oidset_insert(&p->bad_objects, oid);
- }
- 
--const struct packed_git *has_packed_and_bad(struct repository *r,
--					    const struct object_id *oid)
--{
--	struct odb_source *source;
--
--	for (source = r->objects->sources; source; source = source->next) {
--		struct odb_source_files *files = odb_source_files_downcast(source);
--		struct packfile_list_entry *e;
--
--		for (e = files->packed->packs.head; e; e = e->next)
--			if (oidset_contains(&e->pack->bad_objects, oid))
--				return e->pack;
--	}
--
--	return NULL;
--}
--
- off_t get_delta_base(struct packed_git *p,
- 		     struct pack_window **w_curs,
- 		     off_t *curpos,
-diff --git a/packfile.h b/packfile.h
-index 3229a6ed47..573fe003d0 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -329,7 +329,6 @@ int packed_object_info_with_index_pos(struct odb_source_packed *source,
- 				      uint32_t *maybe_index_pos, struct object_info *oi);
- 
- void mark_bad_packed_object(struct packed_git *, const struct object_id *);
--const struct packed_git *has_packed_and_bad(struct repository *, const struct object_id *);
- 
- int has_object_pack(struct repository *r, const struct object_id *oid);
- int has_object_kept_pack(struct repository *r, const struct object_id *oid,
-diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
-index 502a5ea1c5..d2ef468b45 100755
---- a/t/t1060-object-corruption.sh
-+++ b/t/t1060-object-corruption.sh
-@@ -145,4 +145,22 @@ test_expect_success 'partial clone of corrupted repository' '
- 	test_must_fail git -C corrupt-partial checkout --force
- '
- 
-+test_expect_success 'corrupted loose commit can be read from alternate' '
-+	git init repo-a &&
-+	tree=$(git -C repo-a write-tree) &&
-+	commit=$(git -C repo-a commit-tree $tree </dev/null) &&
-+
-+	cp -r repo-a repo-b &&
-+	(
-+		cd repo-b &&
-+		echo ../../../repo-a/.git/objects >.git/objects/info/alternates &&
-+		corrupt_byte "$commit" 1
-+	) &&
-+
-+	git -C repo-a cat-file -p "$commit" >expect &&
-+	git -C repo-b cat-file -p "$commit" >actual 2>err &&
-+	test_cmp expect actual &&
-+	test_grep "inflate: data stream error" err
-+'
-+
- test_done
+base-commit: dea0ea3582e6980ddbc1173cc8e3e9f9db91cde0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2197%2Fyoichi%2Fimprove-worktree-add-error-message-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2197/yoichi/improve-worktree-add-error-message-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/2197
+
+Range-diff vs v4:
+
+ -:  ---------- > 1:  b838fdabb7 checkout: improve message for ambiguous remote branch name
+ 1:  f7c413b588 ! 2:  777862235e worktree add: improve message for ambiguous remote branch name
+     @@ Commit message
+          Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+      
+       ## builtin/worktree.c ##
+     -@@
+     - 	"\n" \
+     - 	"    git worktree add --orphan %s\n")
+     +@@ builtin/worktree.c: static char *dwim_branch(const char *path, char **new_branch)
+     + 	return NULL;
+     + }
+       
+     -+#define WORKTREE_ADD_AMBIGUOUS_REMOTE_BRANCH_NAME_HINT_TEXT \
+     -+	_("Matched multiple remote tracking branches, you can list them by:\n" \
+     -+	"\n" \
+     -+	"    git branch -r --list \"*/%s\"\n" \
+     -+	"\n" \
+     -+	"If you meant to create a worktree from a remote tracking branch on,\n" \
+     -+	"e.g. 'origin', you can do so by:\n" \
+     -+	"\n" \
+     -+	"    git worktree add -b %s %s origin/%s\n" \
+     -+	"\n" \
+     -+	"If you'd like to always prefer some remote, e.g. 'origin',\n" \
+     -+	"consider setting checkout.defaultRemote=origin in your config.")
+     ++static void advise_ambiguous_remote(const char *path, const char *branch,
+     ++				    const struct string_list *matched_remote_names)
+     ++{
+     ++	struct string_list_item *item;
+      +
+     - static const char * const git_worktree_usage[] = {
+     - 	BUILTIN_WORKTREE_ADD_USAGE,
+     - 	BUILTIN_WORKTREE_LIST_USAGE,
+     ++	advise(_("Branches with the same name appears in multiple remotes:"));
+     ++	for_each_string_list_item(item, matched_remote_names) {
+     ++		advise(_("  %s"), item->string);
+     ++	}
+     ++	advise(_("If you meant to create a worktree from a remote tracking branch on\n"
+     ++		 "<remote>, you can do so by:\n"
+     ++		 "\n"
+     ++		 "    git worktree add -b %s %s <remote>/%s\n"
+     ++		 "\n"
+     ++		 "If you'd like to always prefer some remote, e.g. 'origin',\n"
+     ++		 "consider setting checkout.defaultRemote=origin in your config."),
+     ++	       branch, path, branch);
+     ++}
+     ++
+     + static int add(int ac, const char **av, const char *prefix,
+     + 	       struct repository *repo UNUSED)
+     + {
+      @@ builtin/worktree.c: static int add(int ac, const char **av, const char *prefix,
+     + 	} else if (ac == 2) {
+     + 		struct object_id oid;
+     + 		struct commit *commit;
+     +-		char *remote;
+       
+       		commit = lookup_commit_reference_by_name(branch);
+       		if (!commit) {
+     --			remote = unique_tracking_name(branch, &oid, NULL);
+     +-			remote = unique_tracking_name(branch, &oid, NULL, NULL);
+     ++			char *remote;
+      +			int num_matches = 0;
+     -+			remote = unique_tracking_name(branch, &oid, &num_matches);
+     ++			struct string_list matched_remote_names = STRING_LIST_INIT_DUP;
+     ++
+     ++			remote = unique_tracking_name(branch, &oid, &num_matches,
+     ++						      &matched_remote_names);
+       			if (remote) {
+       				new_branch = branch;
+       				branch = new_branch_to_free = remote;
+      +			} else if (num_matches > 1) {
+     -+				if (!opts.quiet)
+     -+					advise_if_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
+     -+							  WORKTREE_ADD_AMBIGUOUS_REMOTE_BRANCH_NAME_HINT_TEXT,
+     -+							  branch, branch, path, branch);
+     ++				if (!opts.quiet &&
+     ++				    advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME))
+     ++					advise_ambiguous_remote(path, branch, &matched_remote_names);
+      +				die(_("'%s' matched multiple (%d) remote tracking branches"),
+      +				    branch, num_matches);
+       			}
+     ++			string_list_clear(&matched_remote_names, 0);
+       		}
+       
+     + 		if (!strcmp(branch, "HEAD"))
+      
+       ## t/t2400-worktree-add.sh ##
+      @@ t/t2400-worktree-add.sh: test_expect_success '"add" <path> <branch> dwims' '
 
 -- 
-2.55.0.822.g20453c30eb.dirty
-
+gitgitgadget
