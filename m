@@ -1,83 +1,84 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1739C1D86FF
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 10:01:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667EC425866
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 11:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787133714; cv=none; b=Sk7xAwnjoVs5n5JQ1xHJ19uyrm3Mm3zE19/19RqxRqkNldx2iqrNkJARUSevJ8K9HYqHn83J83YY+e5MuPrQlHxCcVoGJcqV1D1+h0XZmJAkYoiVClU5L6/jQap4Xdy6mfWP8/W5BRufV2xfAFi7I/nPd3bPXh/v4vcrTGUsJGI=
+	t=1787138012; cv=none; b=l/pV1VNOENG69ceXBXebkOFhG50hvubnthKAGhhcNxLElDfxZGcjDNvAgmFmkfOXzkZC5eUBmm/TztGjEnb+y2f22szr+XYozdFs5TrKA6MOPAmr3FB7UV5imq7rwbptT/xRi2FFLPctURZc6NIQRoO1M7hLTgSCs+/qSNFQ+sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787133714; c=relaxed/simple;
-	bh=8QbwY5n53eAmQs16cVMWPizDtV58KYY8TR+SLnhH1C8=;
+	s=arc-20240116; t=1787138012; c=relaxed/simple;
+	bh=vR5q1ps+Kk2iCBlSke5Gea/M/JOrW88cMnr9l4NRwgM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RIWUePYwHdLrGI86GkSm28BF9FItCn49xv+izdGQuXaPC9c9zyKixMpUOLujohGglPn06tkGaFNYl2YRvS0R2AMCI2ElwlF9pCjG7TT8oGv74kJ6621MFzx631EfX1CfIglgq88dT4ff6DFLht4Kl8uUS9/mFVjnFo2pIYchEwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kSdXl5LM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oo7p0IjS; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mg2Eeij68H4KsmoPBbpe0EuTDP2aQYVu9wSOYJ3mz0zn4EQTlQrQzGF860K3eCZr+sFmEUlEQw7SXD/tYtiG2Is6J+yyDXnWONWLBYd/4q8TT9FYYoeDfM7If64pOdESDh01KOc8Uo+l6l0fK4MHy3kLb381lyBawk23XAX2Cw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LApy4ufR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PRfbXRiP; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kSdXl5LM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oo7p0IjS"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5B9561D000C7;
-	Wed, 19 Aug 2026 06:01:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LApy4ufR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PRfbXRiP"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5C0171D0012D;
+	Wed, 19 Aug 2026 07:13:30 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 19 Aug 2026 06:01:52 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 19 Aug 2026 07:13:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787133712; x=1787220112; bh=qdm+sEc0Wh
-	TM8gHI6QYHjtIxVmBspVf+iqVp6oA3cxU=; b=kSdXl5LMdQplRcYjb3UqmuecXV
-	ZU7XIG9jplkwjRqRsEilA/lcJUG/1ezL/NK9UfROSBVMFBVLzQBckVw/29hp/cjz
-	LriXejdtqmThmh4K7qtol4msLXiHoNWOAYuFnoepiKfb/tcN4pXy4YoiA5cRT4fm
-	Ao5Dj5I0L4RE6ZwIAV2M/dmKYiQGH4cVkGnRg7aC6UpM7TBeir8fqrsy+qh111rS
-	hvKgrQu1Hc02OotF44Hb0uDhmRCOy0OgbzTdvruURqCsAlI5qMltMPcQbItn8RT/
-	DKm/9tveEBkybeWTx2hR+UIxqRS4Vxsp6RsdY6wxLAJcr0NfSvORI++DD18w==
+	:subject:to:to; s=fm3; t=1787138010; x=1787224410; bh=1q02wSHkby
+	g+cqvVX0fHr3T/FRttbOle24+zxXiinMo=; b=LApy4ufRVytSmslJAIAbRUV1mr
+	MbMnRazzB0SqDv0R7Pte/qvMTrV+cfaVUGCgdiN8z9XIO9xcAIsW+HCDa09idYtF
+	FAPZNwZUdZK4dbEbnsVVNFmN8h6yGTlB9jGI+FYuCnUmffCJ+FkcdiQOdOixzdlg
+	+BrFP7SxWR2UsELiGY/dFdsOC+TnrHQ6EYb+XAKKylHxrAZaVlUr6cU/YcJ6DfFK
+	TmcoWxMfhsoyyxQcvS6OUDSsvkxDjIWKiajt036qEzE/akrfduYYAI87kJx8rzgW
+	0Kp+S4gih5utbZRgmUUGZhdyZiho8W+RwDT/1ktdBsPXu0F3wgAk/XACyrCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787133712; x=1787220112; bh=qdm+sEc0WhTM8gHI6QYHjtIxVmBspVf+iqV
-	p6oA3cxU=; b=Oo7p0IjSbaJZ303ehjTMAbmkotQ3HmscWljY3z0HQiJu6kmYFYN
-	gVkDXKBZmUM0nxmFg2noTs3aTX6iqeco7cjFQc2P/ade8vcuDSQ8DE/MCn4zoA8K
-	Pos2yyvMsoBJcOXMxjtUivVxI5Wjfp5yMbgXcgeTRMn7qNiuijvB1Cr50QXgz02i
-	UVEtd+V0l17zF6ybdNFXiglxvTacBsmVK69pPk7pUTMCMouCUAUT6zGivVAUWNCH
-	xIvtqkhNOGW+oKJXFgDpa+C2QivAeoy2zUAQMynQUBlKA5RBaZcPWPSf2svFIP5L
-	n6s14ke8OniPIJO+GDEJ7bbEOAheqHs2/GQ==
-X-ME-Sender: <xms:EH-FamXcrIpwAFm4B4kmLVRd2wVKuygGmRusQy_gXhFrcvSbsQKxjg>
-    <xme:EH-Faok0TPVOuJGeiu6_HdqEYsllPolU44ToP99mEzJbCd5aWXF8WeVdaGbMwTrbD
-    mKIT7KfAT5pZ7OpzaHv-6FIRc9DZIG-fa-c8HsmNHQ69derIpElVg>
-X-ME-Received: <xmr:EH-FaoBqOlngMDeaKfMQYi33Il4KLBDRduGMcRK1uXd6NvaulPczh0wSdXN67770GauOSd9T-eIrARhjuNMiPHMS1TcJRXrI2EwoLBvB>
-X-ME-Proxy-Cause: dmFkZTEw2xE5w9xfQd9aay3bsHoyUC10hbA2T9HCWSEGrYBYWlnKwhQfj4JWWrBu9qWimF
-    B3a9O4+GolRd3MDSlMh+QYdabJNjsORfGI+Nzldn3d+EdPEvvjRnlDOUlCSOanoIFOmejF
-    MvXb5uiHF6MIooqn5ZEG+oVRFO2lyygyxOmvGr1HxcQZOVlaDfErdldgdDFfTk/QJhmgn0
-    93DlF5BjMKMNFZM2jP500vO0ipGWYtN/opKMRC4B8O2/8Ocw3FN4tbYAMxIo32N8L2M4B6
-    J81MA58fSTd+2lW+DUfocmmf9bY19ymlGhHSbYAOiB+e6rl/QZo7YF1VZViZ09vOgnxaMu
-    pzUaEr3hxIfaCFGFKpto6wxxjFr+OW5R3fALj3dmRgHyw9IsLdWzkuY8ZpSen+uMlq/97t
-    GSVzcbRTmhklPt8dcUYv/M3uUWKQ5vULBkde7Zl53WooNa0qIl3XijluJdAAlIloNOkVth
-    viT4Lwo6EtzKzbaFKx0Y0EO9aQjGxLJf0QfFY5BncyU0gJrR6QXw9J3qPLkteDtcFP5F/b
-    8TQpiR4yt8AS5v6dwHuZ4jSca2vIGV0o8kKjdaDeZjTEusmsksMvIPzc7eKL1AeZSnkhph
-    56wXpqrKC+OK1LeGtGEn09C9AYMCGXj/bY3yXOFAcxbcrIa+mtF7L2DUPW/g
-X-ME-Proxy: <xmx:EH-FaoehaM-uRJhKqUTfPibtmky06sFATvGg-kvUybUU_Hp_aiWWFg>
-    <xmx:EH-FajKO5jTHb5sx17bSlMPlX5xfJadyOiR-J-v_Hn-QZqZTJ4h-Gg>
-    <xmx:EH-Fardim7kE1rNw_WukiQEQVX67C1bxpqY0oaZMNGtS2yR4TeWSlA>
-    <xmx:EH-Faq0kIjApv1OPqPT80VGFdlpwSY1cPh-vZIiz272lC3aYBiVGrw>
-    <xmx:EH-FahsBKcRYutfJQiDUTgJzgbpDhU3zjwdMvl3jOpPCtJp2BCQC_0vM>
+	1787138010; x=1787224410; bh=1q02wSHkbyg+cqvVX0fHr3T/FRttbOle24+
+	zxXiinMo=; b=PRfbXRiPVtssMdkIx3d5/ppSoyq+qRq0fx6Aqz47i/NmXkJsben
+	q6VVbwTmLpkYTxFP9shnhICe2JRaGn39TG1R4cqthRv8g3vC+Dpkxf7aYsvx5cp6
+	4wHk0/vJgVPQvfrxlZrESA4/xGIg9+IiewpuMQ6K12DsCbbBEbAB9DT9f5PK76xl
+	83StIgDgS2QmjA8CC9UIQnRiTbO0WYXtD6bC4oxslqf1mgwnC3wHROcUwpjCwJkd
+	VUM/cqKScu1rZ72Lcmnck1619blLJu3NfqKR5dCQt/QxWu47ZolX5ZoLtR3mBvfM
+	NLl9ZgAMpNF5L7Dk4r3endmLK+z4WyvcChg==
+X-ME-Sender: <xms:2o-Fakh2Sr0b9r5-Wbv2x9NC3iZMtt_-a0KG57uTVnwdnTH94ZaTPQ>
+    <xme:2o-Faj7zhRQvV0Bj_GdKW8Vvl685IzD214Ch7uDFgZ5rhWaJi-EtplDZ6VAFRL9LP
+    2pmdPLUjpZRjl8oZed4NWsqlQS-mvj_i5bXC6npli2sNXRAduO7>
+X-ME-Received: <xmr:2o-FakbYzLl9UiaXC21HPjXq_kWIN3wWEhIju4zsWVDJTlBkWEuYI5iEc9dWsaA9CRjcfUUHwc8YrKFUhUTd8OOC0ru3j2fQMvlasQ9F>
+X-ME-Proxy-Cause: dmFkZTG0GEY6axZ+Wn4O6te2LRprKx+5AO1GpxasARdSbtSSbCuxSzf7eLahirAFwGnGh2
+    lqan/ye8fHcr4XDzWztY2fPWUPgeWlCWKAB8/+JBdPnXRDyUxYHtbEx3/sozzPHgFGC6Lk
+    ozMy9UecR1xlVpfnkDA+DS3hL8Alml0BXz/+BZ3ZnuCvaLF2quc/BTppB4muLg951W+3UD
+    rstbVTzgggmjeignE7uQ/dAI5rdnFO+1Ypv8fqk8GRrvXvIqLtb9HU2YHDF426s3kK/5iH
+    Yq1Fwt4NQigpR3pvZJcyKy1WIv56F2C6z0QIAjm4NwMifROWLF3rhjWMW3Hg9KyQ11O8Fv
+    q5fuYXaVdsQDGRTDJPPMEZlKQJZFtOIgY9p7DhxfPmQWrkDrJsVM+2lwASaFTDxVAdd6Kb
+    U678KWRnfNTUidhE80oKp8R40Am68umfrIR8fNPQaad9uNtX3MjqU0QKnS5QXQEMmOkCt1
+    tn+w3fAz1Xd8+JkNd3u2+rim3Slz851r7sZ6EiAS8UXIkw/IuYJ0haI1lgVvcvAv+lwqtj
+    rnLljjY8+O1/D9C46iwSa1zfk1R+9zNnjlqBuUPAVUvHaxizTKMBLD0+g0w8f7Sp2dAyCZ
+    yj6GE53dOoLd3Jc7oca44HRnpKGPsZuHqV4un4n880KSmxy8E9THr5oOyngQ
+X-ME-Proxy: <xmx:2o-Fag4ksMBYgTCWDy1gLwLPUR_fgoTpV7WtEhaBWxN4ZKZoexJfOA>
+    <xmx:2o-FavCqYeGnrd5dYsLfJ1Q5wUnVkbJZHKx6STalfEaeX4Ap9rRFew>
+    <xmx:2o-FaufBZW9hnU_tE37FWtbaMvZOMVjcYyMy5qlvjia8EHbG9eQIrA>
+    <xmx:2o-FamJhtkPwEBn04dCAlWtgHxVNPepe1xxmg0zJzEEnu6rihRiyBw>
+    <xmx:2o-FanQpfs_LuojfK408bJaIAO9qU9oo8D5bVJC18V1-7vcI8pGOFJax>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Aug 2026 06:01:51 -0400 (EDT)
+ 19 Aug 2026 07:13:29 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d21a9aa8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Aug 2026 10:01:50 +0000 (UTC)
-Date: Wed, 19 Aug 2026 12:01:47 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 88d65c89 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Aug 2026 11:13:25 +0000 (UTC)
+Date: Wed, 19 Aug 2026 13:13:17 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/7] odb/source: discern missing and corrupt objects
-Message-ID: <aoV_C8MQsTZSDqX8@pks.im>
-References: <20260818-pks-odb-generic-corrupt-objects-v1-0-ec234567510f@pks.im>
- <20260818-pks-odb-generic-corrupt-objects-v1-1-ec234567510f@pks.im>
- <xmqqh5krz4tz.fsf@gitster.g>
+To: Vincent Mailhol <mailhol@kernel.org>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Philippe Blain <levraiphilippeblain@gmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH v3 1/4] completion: add 'git history' subcommands
+Message-ID: <aoWPzTx0OUgg0mzH@pks.im>
+References: <20260813-history_autocompletion-v3-0-69eed1cea93a@kernel.org>
+ <20260813-history_autocompletion-v3-1-69eed1cea93a@kernel.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,54 +87,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqh5krz4tz.fsf@gitster.g>
+In-Reply-To: <20260813-history_autocompletion-v3-1-69eed1cea93a@kernel.org>
 
-On Tue, Aug 18, 2026 at 11:00:40AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Aug 13, 2026 at 09:05:02PM +0200, Vincent Mailhol wrote:
+> Changes in v3:
 > 
-> > The `read_object_info()` callback of `struct odb_source` is documented
-> > to return a negative error code in case reading the object has failed,
-> > and zero otherwise. This is overly broad though, as there are two very
-> > different kinds of failures:
-> >
-> >   - The object may not exist in the source at all.
-> >
-> >   - The object exists, but reading it has failed, for example because
-> >     its on-disk state is corrupt.
-> >
-> > This distinction matters to callers: when an object is corrupt in one
-> > source we may still find a good copy of it in another source, so we may
-> > still be able to proceed with a given operation.
-> >
-> > The "packed" source already distinguishes these cases by returning a
-> > positive value for missing objects and a negative value in case reading
-> > the object has failed. But all the other sources conflate them into a
-> > single negative return value.
-> 
-> In other words, "packed" did not honor the documented contract with
-> the callers and nobody noticed?  It gives us a usable escape hatch ;-)
+>   - Ignore the split "<option> <value>" syntax for options that take
+>     arguments. This simplifies revision detection and avoids hard-coding
+>     option names.
+>   - Test that options are not completed before a subcommand.
 
-Yes, kind of. It didn't matter much though, as the "files" backend
-knew to translate the positive value into a negative one.
-
-> Do we need to support many other "it is an error but we treat as non
-> error in some context" values, like the "does not exist"?  If so, it
-> does make sense to say 0 is absolute success, positive values are
-> such half-errors, and negative values are absolute failures.  If
-> not, it would have been much nicer if "you asked me about this
-> information but there is no such object" were still signalled as an
-> error (i.e., negative return value) that is distinct from other
-> kinds of errors like I/O error (which also should be signalled by a
-> negative return value), instead of a positive value whose meanings
-> were not defined, though.
-
-I cannot think of any other classes of errors where we'd want to fail
-gracefully from the top of my head. The only one that's potentially
-worth thinking about is in case an object disappears right while we are
-looking at it. But that's basically just another edge case of a missing
-object.
-
-In any case, I think I'm aligned with the proposal to turn this into a
-proper enum and then use negative values exclusively. Thanks!
+Yeah, this version is a lot more maintainable. It will have false
+positives, but I think we shouldn't let perfect be the enemy of good.
 
 Patrick
