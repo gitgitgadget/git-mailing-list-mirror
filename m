@@ -1,72 +1,72 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C613515F6
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 16:39:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DE33191CA
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 16:49:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787157598; cv=none; b=QpUT25uaiOlYVuzJxqbZFdeYX2XUW9iOlQr7Oe/SaM+E9X5hd5D1xu6e98HcRRlSMvNVBqkNKbH9LhA1iH9b+1MZ0DTL4XmIfn3jX0aFLXyaLSZzg/3vr2IIvRdFacyOO46UKPU+pfyp5b07NElauoU8KLP0PapiMttpXezPX+M=
+	t=1787158191; cv=none; b=IPdmugOG5JsmVgj1AWbB9OzEHrzJIxue32QpuyM34ayudkHIjsmrHNbw6VsrDXwijzxZ7aJi336/v17kylxqTTy0x1MvqmUAf5Jxs9vEL0V75MD+gu3ZF7Mz4BMe7Lre7ztVzFcLR4OzKCM6huLNxTVS39P1/8W/fjLuK5npTxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787157598; c=relaxed/simple;
-	bh=WVHTVnLPvHqvD3CRG1TZ/+FyE8vWWRUld09fVGvWKYY=;
+	s=arc-20240116; t=1787158191; c=relaxed/simple;
+	bh=fRyntCVfEktVZnd2nPFdB3aFrXTiDRT7ssUHJKJ3+2Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LAWPQUgMrt4r0JlceRUs6rzstLGE3Iot7PryPuMc+UlSzSflq0EGgBrMzMFOq+mx3wTZgbEv1p/8bbbREbrsgAkPd95f3jQCD1ZoEC0JGEBF1M8g0xiTTKiNOX1jcoR+cIudeGDusaSsrtPBgkgkG2pZ+LFB8lQcEBVSLnxDXXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rNG5vGNZ; arc=none smtp.client-ip=209.85.160.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=LPFMs5WwOX/3ybcowUh1+3IfjsLEWWNCbFZsIWE65dsYUCE6aru2jBIO6Xalz508pIoXdQm1s/y+VvC26Kf6fLXl6nLgKTkELyYCSZQ1itEiNgsHgIbXUrXBimF2t7OSDGJ4X9Z7HQVj3jzz+YVw5m9WLZZFjNfKF3Otpv1Zc+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rhow/YPs; arc=none smtp.client-ip=209.85.167.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rNG5vGNZ"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-4560d6f82edso1068251fac.3
-        for <git@vger.kernel.org>; Wed, 19 Aug 2026 09:39:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rhow/YPs"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-4b28d9537bcso84804b6e.0
+        for <git@vger.kernel.org>; Wed, 19 Aug 2026 09:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787157596; x=1787762396; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787158188; x=1787762988; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=Bs7TxxmImm2QLVTl6bAApC2IjMG+zsR1zNZNoA98ikc=;
-        b=rNG5vGNZcf8davDatPkCRuFhLdf254qEMhjS1EM7ndDgj+OC02R/WRghCWjn2rM2Ge
-         Vs94TavWcIxAZnWxr5Xg2f6xG9czEw5twSpMxiBG8MZKxgPLrASY2Y2/Q7/ChEoaf6Y1
-         i/9WFwRQjYu3GIwnt8yXO6wqvwfS+THf0VJN9JlXCaGWAvDk3zfRsLfccI3GTF2IX3HL
-         svCSi9NO4/ah9eJLxR2jDnFBvhUXVU1teqzvantkD1Kf5/41pd/VAv92zKk+W+Zw14ns
-         Io93HB+8kX767CaMlkXCPDfGsRpch1e1nmFf3e07slCOcQc7SLjyfi4s89q0hXKgadiq
-         M8JA==
+        bh=fsH0ItX35tdA6Rd2sCaYbkUeGtnwgZe9Rx6ctRdDltE=;
+        b=Rhow/YPspCNzC/vxRIAxyEZGypqDGH473oiofd4uLkkL/EY8pMw3YiMO9irKti4iU0
+         Zt0i7z+Vv4oaCj+86VlJyzCaBHsXp2z2ltRrZp48v7gmrsPZFs3EHlWklFbDl/zESM8q
+         4YNLzkFEWFznJ7kRh8yHJFv3Z0+f9UqlCSYrZTPZdl2fSRivjOcLZ2zjQNZDMSqMVxQw
+         VRh0gGgw4Ujm1foTY3kzwz74xKV6S4Sqdj9q0qksRG9Id/JJRLfIapxnXfZPbtYn4mu1
+         W8bSNY2bN5iTp+xsYgcF9BIz5UxVjHWjmk9C/CMlCyl4AooEXLDejZ1Kdh1Fv+pK/jh/
+         37ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787157596; x=1787762396;
+        d=1e100.net; s=20251104; t=1787158188; x=1787762988;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Bs7TxxmImm2QLVTl6bAApC2IjMG+zsR1zNZNoA98ikc=;
-        b=rRAcPF4uiow9LD7eU9UaIak3i30Aj9SfQAx2vYq+/vGSAiQagMRuu4wprqnHk/GFDr
-         Ue7Ppbo99FiWxDlBeDpzzeiEb1Qo5QF7u8jL2yX0QT9XCYdPCZblx6+V9oSzMwpZvEbA
-         +Z5JxMza7AhoeNqjoHBuG2sGYpFz4r5RRVUoUCnmhMZZ2zmIafU/P9jvu3CU3FDkqb9J
-         uCIWe2l5n0LR62SAeuXOKxuNUJlbUSGIIeOziLFOtDIP8ufzDY59zw5rEis+rMmMAq85
-         ATDq1u3RctbM0tsBB0IsPsmfV54tig4yReWYaGzSAlWNOIAsIVQkduS7dLhhPU4IHmx6
-         NoaQ==
-X-Gm-Message-State: AOJu0YyngWw/6UD2bmXKeh0cvywwhKHOD3Y3xZHI2ys1cPEsYKpH4KsI
-	mBaWwKyKyt312n+NlU4stR1ZAskt/YMbeW/Wh0tROIXxqryPXM1N0qLzN2prhg==
-X-Gm-Gg: AR+sD12Mc5mOP13sUE+n/IUlL3eG5oxBQU2pGTNBdbZBNqCFtWV2DKGfQ1fimZmpY3L
-	CDNNZDeChkqac3tPxynyixWN/vNhgOPH9ALmBdTTSwMTBQHX5jtvSP4dKpA/ErkCT1VWE8l8n9Z
-	Mx+LysadU2CVkgDXkfdCm1E6abR/5yx6E4p2QUPDoqStD5dLAPG0VvRDM5Bsn3Mpn1KPfsB2ixa
-	+91zbWJI52tesq2wng9HkA/2H90+RqEylFEsOjPXtNJ+qIP5x9RlHq16GXXClIeD3UyPCIUw/Hx
-	vzzrfBebQUbjxOHyoYXH5Alv5A0u7DaaZoU93T9S67E4hex7ci7suhtT0oPKEx86uoR/FlJoFFY
-	BKPmWz2tlYLrLJSDm9RNBcyxmbEVFfTSIgL3pCJ0U3UDNLgIvV1AWNY2IwJrfZamcYI+0Vcc2iC
-	XPgIgmZnd+ch+aq1KBOB1NowKLp6DSHFl5W9rvyoUH8QLKPrZP/gMXD+5o7yuRusV1
-X-Received: by 2002:a05:6820:162b:b0:6a3:1dc5:3570 with SMTP id 006d021491bc7-6b13c63ea50mr4398741eaf.31.1787157595632;
-        Wed, 19 Aug 2026 09:39:55 -0700 (PDT)
+        bh=fsH0ItX35tdA6Rd2sCaYbkUeGtnwgZe9Rx6ctRdDltE=;
+        b=T6H7fGsoe4zB79XoIc3lMwQB6c9C9DB5Y+/489mINkCZRx6uU3+cEDCOiuicSt5Rnp
+         rJM9QWCbmJaWaYaURVThbcARkdqdVeFi3CUeGGrE0kZ/mhlpL/atAH/LALoLeJHUT/tY
+         XnlZpblBCqUWQljfWLmaXF1Yfpx2zCDzc7mPwMKmq7SUqcAXa7K6Z/UDJobJNYoN3KKA
+         sRJERchJ1Ovv3fdL4l/wvQMEAzhUDRHh1aMO+EPzpV5j4BuSg8kKiil1K9FeSHn8ztuW
+         BSAqoDW2Hrkmvu4ZnfbPE6wqZwwcGfy99RqO+nP8+SmDV+XP7gpbjo5hGEmEyTsCny8H
+         AJ9Q==
+X-Gm-Message-State: AOJu0YzCyYlUuwvbQLThhs3N4XuuFFp+LT9lsVaUzil12UZWhIGNSocO
+	5+vYR8B4M49QtgbMEbCP2zd0yKI0NkSnzITjy5eXoQ9DQCnncTcyhFcF
+X-Gm-Gg: AR+sD13QFbH7QL1ysOQbcqkTKrnVpOc+wPY5sUIm2rZJXqHq4LiLT+34letFdeNVKiH
+	H1woBEh5jVhqH5gcRCkOUYJLup6xupU0dVeV5oRe7lQmVySq04ohpj0jAyvqSUuNFmmWf5EboVl
+	ZzJHEcYXKbwTeWwzVHfkJUDvHCjG/2QgDUCGtdMUzJyoAF3hHl9iLKmpeI8cDkAGqNvS6EuV4fD
+	978ysRnCHJpXH7b7ZrPJkk7TCcXfSTFbJJN4Hlrg0PnLLVS7NE7PMzJp7vb5Nc9E/w8JqHqKbXQ
+	ma1b7VWDAtQo95WYlau1nwclSSwlSYqWrXs+PTv6AxKRv33A6MogJQlikzy1/4i7Gj6IsSseJuH
+	RkS6HsPZfGJ1msjP1IPrImUPfHtvuyvnQsGCO3YLSDCMx3/hbn/dyNrPopZYoWSYRo3m9IL/tak
+	YfglCff9nxW/EQjj9EfqMCdFJ1eOe1rIMuLvIjQNAtE13YH+YcZlIlfg==
+X-Received: by 2002:a05:6808:c226:b0:4b2:b057:934c with SMTP id 5614622812f47-4b2cdb56b08mr507672b6e.3.1787158188275;
+        Wed, 19 Aug 2026 09:49:48 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b13cb9f1d1sm2297148eaf.4.2026.08.19.09.39.54
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b296129e2fsm6400772b6e.17.2026.08.19.09.49.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2026 09:39:55 -0700 (PDT)
-Date: Wed, 19 Aug 2026 11:39:52 -0500
+        Wed, 19 Aug 2026 09:49:47 -0700 (PDT)
+Date: Wed, 19 Aug 2026 11:49:47 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] reftable/stack: move list lock to `struct
- reftable_stack`
-Message-ID: <aoXaDW1Ifjys8HTr@denethor>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] reftable/stack: avoid reloading the stack when
+ already locked
+Message-ID: <aoXcvhFbUJruALIe@denethor>
 References: <20260819-740-optimize-reloading-the-reftable-stack-v1-0-6bf5305d4e43@gmail.com>
- <20260819-740-optimize-reloading-the-reftable-stack-v1-2-6bf5305d4e43@gmail.com>
+ <20260819-740-optimize-reloading-the-reftable-stack-v1-3-6bf5305d4e43@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,48 +75,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260819-740-optimize-reloading-the-reftable-stack-v1-2-6bf5305d4e43@gmail.com>
+In-Reply-To: <20260819-740-optimize-reloading-the-reftable-stack-v1-3-6bf5305d4e43@gmail.com>
 
 On 26/08/19 03:19PM, Karthik Nayak wrote:
-> The struct `reftable_addition` is used to modify a given stack, as such,
-> it also includes a `struct reftable_flock` used to obtain the lock to
-> the list file. While the scope of the field lies within this struct, it
-> doesn't allow for optimizations to be made on `struct reftable_stack`
-> itself.
-
-Hmmm IIUC, there can only be a single lock for the reftable stack
-correct? If that is the case, it sounds like `struct reftable_stack` may
-conceptually be the better place for the field regardless.
-
-> Move the field to `struct reftable_stack`, allowing us to make a simple
-> optimization around avoiding a stack reload when we have already
-> obtained a lock. While this is currently possible in the write path, the
-> write path also contains multiple branches to reads which only work
-> on top of `struct reftable_stack`, and we would miss the optimization in
-> such paths.
-
-Ok, so if we know the reftable stack is alreay locked, there is no need
-to reload it since it can't change. Makes sense.
-
-> While here, remove an unused header file from 'reftable/stack.h'.
+> When making modifications to the reftable stack, the stack obtains a
+> lock to the list file and removes the lock after the commit phase. Since
+> most operations reload the stack to ensure we have the latest state, any
+> branched operation during the locked phase could trigger a state reload.
 > 
+> To prevent data loss due to concurrent writes, state reload is necessary
+> right after obtaining the lock. But any reloads after that are just a
+> no-op. Now that the struct has access to the lock file status, simply
+> skip reloading if the lock is present.
+
+Makes sense.
+
+> Benchmarking with a fixed, non-symbolic target OID shows a modest but
+> consistent ~1-2% improvement in clock time for `update-ref` across ref
+> counts ranging from 2,000 to 100,000.
+> 
+> We can see better improvements in the number of syscall counts. On
+> master, the number of calls to `newfstatat()` grows linearly with the
+> number of refs created. With this patch, the number is now a constant:
+> 
+>   refcount   master   patch
+>   --------   ------   ------
+>   1,000      1,059       55
+>   5,000      5,059       55
+>   10,000     10,059      55
+>   20,000     20,059      55
+> 
+> Reported-by: Jeff King <peff@peff.net>
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 > ---
-[snip]
->  struct reftable_stack {
-> @@ -18,6 +17,12 @@ struct reftable_stack {
->  	char *list_file;
->  	int list_fd;
+>  reftable/stack.c | 17 ++++++++++++-----
+>  1 file changed, 12 insertions(+), 5 deletions(-)
+> 
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index e449af9c03..433a611ed1 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -553,14 +553,21 @@ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
 >  
-> +	/*
-> +	 * Set while an addition holds the stack locked. Used by
-> +	 * stack_uptodate() to skip reload checks while locked.
-> +	 */
-> +	struct reftable_flock list_lock;
+>  /*
+>   * Check whether the given stack is up-to-date with what we have in memory.
+> + * If skip_if_locked is set skip stack reloading if the stack is currently
+> + * locked. Stack reloading must _not_ be skipped right after obtaining the
+> + * lock, to check for concurrent updates which may have happened.
+> + *
+>   * Returns 0 if so, 1 if the stack is out-of-date or a negative error code
+>   * otherwise.
+>   */
+> -static int stack_uptodate(struct reftable_stack *st)
+> +static int stack_uptodate(struct reftable_stack *st, int skip_if_locked)
+>  {
+>  	char **names = NULL;
+>  	int err;
+>  
+> +	if (skip_if_locked && st->list_lock.fd != -1)
+> +		return 0;
 > +
+>  	/*
+>  	 * When we have cached stat information available then we use it to
+>  	 * verify whether the file has been rewritten.
+> @@ -623,7 +630,7 @@ static int stack_uptodate(struct reftable_stack *st)
+>  
+>  int reftable_stack_reload(struct reftable_stack *st)
+>  {
+> -	int err = stack_uptodate(st);
+> +	int err = stack_uptodate(st, 1);
 
-As mentioned in the log message, the lock is now tracked in `struct
-reftable_stack` and the rest of this patch just wires it accordingly.
-Looks good.
+Ok, this appears to be the only call site where is actually want to skip
+if there is a lock present. Could we instead just not invoke
+`stack_uptodate()` in such cases? That way we don't have to change its
+function signature and can leave all other existing call sites alone.
 
 -Justin
