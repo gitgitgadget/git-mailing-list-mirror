@@ -1,266 +1,253 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5922B21256C
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 13:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787144877; cv=none; b=FJ/MEt7YVyFxLsmB4E08XUBFu66KoEqTD9NEhMQJ3+fJHwRVEIai0HmDUiFVI5f9eTjZZRtn9iY6KJHXhYZzsPJ0+1S7amP3WzRzqx7VE6w5gz4/3sGt2Q1LIa2g1cxDUCPaAniDVc63+Fe/7acyY2NDyjrGjNJNrrqOOoH0d9o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787144877; c=relaxed/simple;
-	bh=HzK5nTWhWr01mIMqEmKA8Y4Pzomu+qTA9dE1hDIml4E=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=R7evHO+9euDR/EqUwaAs1L/om25bAWkE8K4sv4zq59dK2CtPZt8tJuxBpg8QwiDWYmqkV8ltGREE3S97p64VytYsvDCbqIWU0tFJWULe3rXRwcBgXQlCHKrJZl6pY7Oe69NC6UXfSg63BwGBewdqBihan5/4/ordwmrvVmtfVrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VCCDUmt/; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD56D21CC5A
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 13:10:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787145014; cv=pass; b=pLEVJnb5gsCz0tAn5a7txBwK6O66BBR6hTmpP6kT3ua2h6GgyRdxzQryxQSDs4slQJc/laBQp+qgAa241HV6cHzGRW8zLkXVdFQlbCV8SPP1aRayxL6Vk0XOL9Rz4RI94otWbRMnmadtvYJhkLmPrTWiYJXyVk1IqxEFWx2Tjdc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787145014; c=relaxed/simple;
+	bh=SWCtaV+K9f/N8VxZe8kP7UoXnGhQty1h+YFVWN5+ktY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PFSfuRRE//ZSfhdpTxR04Dnjoie5GVhFbIoOG/0LyJHJ6Ke1IwDT01wjDUbHp1YCFFoWtfBi9gAnwwSy9ogyKZcf0pHU+Fs71faiBHt7za1nluESNaGbVCXDDuK9tOVed1JyoCHqJXrbue9uivP55pSdb8Hjz3Yzc/3RSTEQgAw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UymtCWjx; arc=pass smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VCCDUmt/"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8f256eaedf8so12757926d6.2
-        for <git@vger.kernel.org>; Wed, 19 Aug 2026 06:07:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UymtCWjx"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38dfe910e9dso1193050a91.3
+        for <git@vger.kernel.org>; Wed, 19 Aug 2026 06:10:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787145012; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ax3dj4y6mFu2+1R6c/h/rE3aCS8ZpGubXYNIktrLUxP/5Q6Hytf03S/h1dm7NJ22BF
+         v1Fn1bSU9XZbFsHP//aWK3/9tSSInr85tuh2GdrzEkaR0QutnVAC7mahDyBjacIK2Dle
+         skmzSqBrGYERB4LGuZSe/7YUuttwcQxOBpWQNPua3iZ0XazodVmeDFt8YDkqL3E4S3Tg
+         x8FkqTUeX1XGnVWs2Adu0G1+Hlq9sv9M+u1kTo4TOS94HKL2xgfO93oQrSbmRnkZEnfI
+         JtlR27YEBSQHUnQ7G0Q01fcsOCWPpcwqKgFykdhahAW2NCkEIg5+IlUPasM5AXIVjcUC
+         zlbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Aori1uqsxKVwE2uFuNT/tQfhdzqJQbP9B+CGRPEi1ds=;
+        fh=uPjY8ueqdld3roU+rwxQvk+Ploi0wteBv041EUCijpk=;
+        b=dJxNn2ticx/eJ5uorKtaFhFU1Dqa4BVqZ6HEXf3YW/KCY3mFSmp925Fb38Vc39NZ/P
+         N0PP8NJBdacZ4gu5Z78cnqKz+zuo3g8dDL0ienZA0d8L7katBYY+ySG5fZNACHp8Bt3J
+         Sh7jBUhpHI3gvyKWmnEVZYXqpnN0+A3gQnGEvFCoNhB5HwuOH1sEDRVLaErWY058PRn5
+         jNW/ivX7TbWDyfYd54F8M6LNbu1MDFdNp8s5SRA6KcuIul+Ghui+LWhk9d1v8HwBFjhw
+         nu5IRsa0kl+xbP7IBpacnBRHBwaqfKcdeBCSNzH5swKdO5pKY1ta8SFJX22OGNKXiQox
+         zEHA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787144874; x=1787749674; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=SwuNZlIlAdqOt2kjAwdpKqElT2k47huhW+skiQP0Yww=;
-        b=VCCDUmt/l7Qfye++y+7/QyKYZcuqFJwMc7ZKuh8zsJItTypFA8SYhMDilVn/aC5n85
-         N5XHGHTqyKJnp+oZsnzKOhPk7uVm0TJSIt78ebaMDyc6TcYCoECGzt/7Fr8K7CAEaKxQ
-         9qPb33cdvNS8ik++/ZsML4cyxOsMZcT/CcI4+X49hKygB+e0fKm7FsgooFQmYgRy86dn
-         3yEtULOHQg8c/rqqbw+i7xzQ36U5fg7cUvCImGKy/qxX2R7z64iuHTMC/zXqjHLtOg8j
-         maw3LhT9olU1SrTXJIu1r2BoOPoqGYeLoYacvaEddjp/5EcWjKghjaio7aYKWQc3DSRG
-         ag2A==
+        d=gmail.com; s=20251104; t=1787145012; x=1787749812; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Aori1uqsxKVwE2uFuNT/tQfhdzqJQbP9B+CGRPEi1ds=;
+        b=UymtCWjxrf7p/b2hUzaMEyzqiIe+Tv+RNzFRaFxUD+ZjbyPMsRVinqjmCQDb7+sABE
+         3bjg1PxnBlTWcWBPlZeAbOAKdnki+nhPAAFx5qJiCKdPH4MGJfFSPdtx5sxLjB1sdUa8
+         Vy6ISmdOTPeGOhzEMyzvyxlGuen7ZM9fX1iS06fupLzfUdSTN3kG8jFOToeDElJH+ndv
+         J6nHCBe/IbBFs/qFU3oxLAOTO54Txh/IJIbScJJDwIzAF9xxeREDvuAjfMhiELxwdgRA
+         z5j6KRvBSuFhlpdB4FiiyIF3oiz2hHF2yNgrHAJA47NX6aPJHwBb8nDQMwQUGuhi2jCO
+         RLCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787144874; x=1787749674;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1787145012; x=1787749812;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=SwuNZlIlAdqOt2kjAwdpKqElT2k47huhW+skiQP0Yww=;
-        b=Wh0RJDZUZUKuR05OC6Z3dJh2gCUA1SBRuxsz+0dacUA1xbwKWcZYBtqHpj9s+jb+cZ
-         oW2Ffgx6G714TxD29OIvzJpZKSpbyJY9bMpOWbZFwKEO+7mrYjwm0g+UXY9lgqg1Zkp+
-         kQPV5SVoW+6GgDoMfThaUrQK5TXJbyVLAz95qXxCnNZ9TeHgGyhEP1fhRnfcZZRpzVL7
-         kz/yn3YDKwWxCkyplM+PfWE6P5kXQzC6kCRL/kwo5Ug6RDZS9X2oaIlgW7OcWx3nIQx3
-         CYwxUKfKrOtn7rmozDNpFUw+qHv5SJMLnLBmiQ4hKelmYgvwUfN7loPDIdaUaGyElrme
-         uDAA==
-X-Gm-Message-State: AFuF++knHCbzHvA8tt5kJAkEYQ/FzdyAe/cR2vcFPqKTKuL0diWNSDxl
-	SI/3X1NQ02wym96VtcjiuexmJGmY1qP69cT9OkHRbDb2QDVZ4PPU2O6cukzvrg==
-X-Gm-Gg: AR+sD12VsLUvyoCdmjVP7eiB5leukPlKcTRw3jPkl/Ct9wawNzph9PCIVg68cbNhNxt
-	GRADUQxonMf5GLZchZidMDS6TG64tWm3e0eNiUnNxOqu/MWMLQ7G5JHbwQeOzXGPsXg9/ijchsM
-	h9d/yTlkFd3NZsIjd7i9MwKSVv2YSORXhgG5rFHynyG9FRrbv5FyGIeCNfdvHgxL+yIm8Ek+CEX
-	sMd1eIbv1QEeDhytx2g/Up987z/BTJ7cR+a9hcnwEQP6jmrrLzmp2aE3FlZIjCNiFl6SAYk0sBf
-	19ST0uSEav43Ai5IHycdqCfOirfBR8VFFPXm3MpiG7YQkdyOssb/23qFXFIWrRz9vtalmVx/87O
-	Vx+qCqZ+kVD6CthwJtb/DkbDwvbx+8RX1R2nsgcCKDYy11BoTZNtlSiyXIe5PSOQjBQfqxBCS+8
-	xgHkSusSt0uuWUqJrWfA/fTUO+ugTxGuXrnGd2qbHlxL0LGXsuiGYOn3JHx1NXVseC11cv4pkAw
-	Rl0
-X-Received: by 2002:a05:6214:ccd:b0:8f2:4723:d88d with SMTP id 6a1803df08f44-90c5e961ed8mr41976866d6.4.1787144874087;
-        Wed, 19 Aug 2026 06:07:54 -0700 (PDT)
-Received: from [127.0.0.1] ([172.174.165.230])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90c5f2a2d57sm13917736d6.37.2026.08.19.06.07.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2026 06:07:53 -0700 (PDT)
-Message-Id: <pull.2155.v2.git.1787144872870.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2155.git.1781710256081.gitgitgadget@gmail.com>
-References: <pull.2155.git.1781710256081.gitgitgadget@gmail.com>
-From: "Lutz Lengemann via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 19 Aug 2026 13:07:51 +0000
-Subject: [PATCH v2] completion: zsh: support completion after "git -C <path>"
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=Aori1uqsxKVwE2uFuNT/tQfhdzqJQbP9B+CGRPEi1ds=;
+        b=HfgCEflNgTCqn9bgxKC4Zy8CtFpVKMYFmzYZuXi8p6Z6iOxn8qAMR4ikKqbvMqDhsH
+         AVtd9G/iCpQQsWT1K0FM7rBT+IJwGVbonzS3RyRi5TzNdPL63d4hKLKOYw+OmWx3sbgo
+         YEvjEyFBtsSWBxYyZuNWgey1l8KFq4VNoAs5mjXwXcCyv2GWjiR0XuZPf0yK5tW5ke13
+         P5y0uoN+3SWID26r/vmTHgaGGpLLjUJUgWB52el3hsje+UMhMiY5gnFDaZok8u+BAiWR
+         hAjy2NHDuiaTeP7cKEi/tL7AckG8yKCJ1SSbg5jynaYi5ZCyRt8VlSloGnwZqb68UIG+
+         4iZA==
+X-Gm-Message-State: AFuF++mGvR8XsZl6KfCqBV2B8R+g9ff6j/3dz7Z5y8ZlWmeC97noBjOs
+	0OLU189HdWiNfjMPdKBH47ZsDNdkjXetmYGMQrmN/+4zV9VT2tV7tzOnvu12JTN6xayRLqPCyob
+	O0T86N34dmRgFshz43qHAOX1F6bWjInI=
+X-Gm-Gg: AR+sD112OxzNUlAiQNZ4Q7Ag1txks00ZpocrQlIKOHruuMDRs5wRGOQ412Lyvrhmgr6
+	r3N+NM3VG2AoKRi3jSgLC9Tw8FcI1UX5pTWdl9y6Z75acx5zRIJa7gRda82n9hUY1+wLnAD9KPD
+	Q1NeBjaW0mKNNvw17RuEOttxPH7l+bNVWBgm4M94sguyIzu7uIFgjIfGH6fInPzRXhoBWxYZlIU
+	tXRbjWJNjklEcWVsqbir2lCBaZp4YTD0auvSoR6VLVooiH6ZtICPmrn26Bi0F9qRm1iHxA9c1LD
+	jfHKMXlzG9RQ0VbJ1XlNj5KcWLPyM3qd9ozxmLou+mcLvHBcndwliqZsT5bCMrTq0Jq5BpXm/aH
+	/cIBDeCaDsMI3CM7o+3uQohZlRLiUPHtYLArduU+00tqy7XNOD/rzLnzFA1Yo/+vfL2+BKGGwms
+	OmtxPonFzHlH9qu/Ok2l0=
+X-Received: by 2002:a17:90b:3bcd:b0:395:4290:46e0 with SMTP id
+ 98e67ed59e1d1-39580accbebmr9232635a91.5.1787145011583; Wed, 19 Aug 2026
+ 06:10:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Lutz Lengemann <lutz@lengemann.net>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Lutz Lengemann <lutz@lengemann.net>,
-    Lutz Lengemann <lutz@lengemann.net>
+References: <cover.1786103607.git.ben.knoble@gmail.com> <cover.1787065125.git.ben.knoble@gmail.com>
+ <48fceb4b575ca39346cf2f59f621584a19049008.1787065125.git.ben.knoble@gmail.com>
+ <aoVoJ3Ijoaj3u64e@pks.im>
+In-Reply-To: <aoVoJ3Ijoaj3u64e@pks.im>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 19 Aug 2026 09:09:59 -0400
+X-Gm-Features: AcwNN1X8uV1wObs5its1WkPsU-eNyBKxL4h4Srdgrkr-rEbW5ONmZcmCWZ_nrpw
+Message-ID: <CALnO6CDgfT+VXaBqSmStB8vNOwBpr5XMjvmxhMdc7v-ma-YwXg@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>, Junio C Hamano <gitster@pobox.com>, 
+	Tian Yuchen <cat@malon.dev>, Olamide Caleb Bello <belkid98@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Lutz Lengemann <lutz@lengemann.net>
+On Wed, Aug 19, 2026 at 4:24=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Tue, Aug 18, 2026 at 10:59:47AM -0400, D. Ben Knoble wrote:
+> > Racy Git problems persist today, manifesting themselves in the
+> > performance of commands like "git diff" in new worktrees [1]. We have
+> > long had a build knob "USE_NSEC" to tell Git to use in-core nanosecond
+> > precision when available, which mitigates most if not all racy issues,
+> > but most builds we know about it don't use it. In part, that's because
+>
+> s/about it/about/
 
-The zsh completion wrapper does not handle the global -C option, so
+Thanks; fixed locally.
 
-	git -C <path> <command> <TAB>
+> > diff --git a/Documentation/config/core.adoc b/Documentation/config/core=
+.adoc
+> > index 340329edc3..33104444ab 100644
+> > --- a/Documentation/config/core.adoc
+> > +++ b/Documentation/config/core.adoc
+> > @@ -118,6 +118,12 @@ core.trustctime::
+> >       crawlers and some backup systems).
+> >       See linkgit:git-update-index[1]. True by default.
+> >
+> > +core.useNanosec::
+> > +     If true, use nanosecond precision for ctime and mtime
+> > +     comparisions between the index and the working tree (if Git
+> > +     was compiled to store it).
+> > +     See link:technical/racy-git.html[Racy Git]. False by default.
+>
+> Should we mentino here that this may not be safe on all platforms and/or
+> filesystems, in addition to linking to racy-hit?
 
-offers nothing.  -C is not part of the _arguments specification, and the
-wrapper hard-codes __git_cmd_idx=1, i.e. it assumes that the command is
-the first argument, so the bash helpers look at the wrong word.  The
-latter is not specific to -C; the assumption breaks after any global
-option, e.g. "git -p checkout <TAB>" does not complete branch names.
+Yeah, a brief mention here is probably warranted.
 
-Add -C to the specification, and find the command by skipping over the
-global options and, where they take one, their arguments, as __git_main
-in git-completion.bash does.  The index is one less than zsh's, as the
-helpers count the words from zero.  Collect the paths given to -C into
-__git_C_args, or else the helpers run git in the current directory and
-fail to resolve the aliases and refs of the repository the command runs
-in.
+> And do we really want to link to the HTML page here? The user may be
+> reading a manpage, so doing so feels a bit weird to me.
 
-The argument of a -C is still completed without regard for the -C
-options before it, i.e. "git -C dir -C <TAB>" offers the directories in
-".", not the ones in "dir".
+See a variation on the grep done in patch 1; we link lots of HTML
+documentation in our manuals (including when rendered to manpage
+format).
 
-Signed-off-by: Lutz Lengemann <lutz@lengemann.net>
----
-    completion: zsh: support completion after "git -C "
-    
-     * The command is now located by walking the global options in front of
-       it, mirroring the loop at the beginning of __git_main in
-       git-completion.bash, instead of skipping only leading -C options.
-       This also fixes argument completion after other global options, e.g.
-       git -p checkout <TAB>.
-     * The log message uses the present tense for the pre-image and notes
-       that the argument of a -C is completed without regard for the -C
-       options before it.
-    
-    cc: Ben Knoble ben.knoble@gmail.com cc: Junio C Hamano gitster@pobox.com
+AFAICT, the idea is that we produce manual pages for commands and a
+few other "special" documents; we produce HTML of everything. So there
+isn't a good non-HTML link target for, e.g., the Racy Git document. In
+particular, even "git help" doesn't know about Racy Git. I have a
+script [1] that opens files out of "git --html-path", so that provides
+one way to access the Racy Git document (aside: neither of my
+systems---Homebrew macOS or Portage Gentoo---install anything into
+"git --info-path", so that would not make a good link target even if I
+knew how to write it). Patch 1/3 makes it easier to get the correct
+link in the manual for folks who can click links in their terminal
+emulators (or copy-paste).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2155%2Fmobilutz%2Fzsh-complete-global-C-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2155/mobilutz/zsh-complete-global-C-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2155
+[1]: https://github.com/benknoble/Dotfiles/tree/master/links/bin/git-doc
+(with completion!
+https://github.com/benknoble/Dotfiles/tree/master/links/zshfns/_git_doc)
 
-Range-diff vs v1:
+TBH, I am not sure what other folks do for these HTML links in
+manuals. As I mention in patch 1, the Homebrew links are broken. If
+you know about "git --html-path" you can find the documents, or use
+the Git SCM website's rendered versions.
 
- 1:  9739cde6fc ! 1:  9984228f1f completion: zsh: support completion after "git -C <path>"
-     @@ Metadata
-       ## Commit message ##
-          completion: zsh: support completion after "git -C <path>"
-      
-     -    The zsh completion wrapper (__git_zsh_main) did not handle the global -C
-     -    option, so "git -C <path> <command> <TAB>" offered nothing and could not
-     -    complete a command's arguments.
-     +    The zsh completion wrapper does not handle the global -C option, so
-      
-     -    Three things are needed to make it work, all scoped to -C:
-     +            git -C <path> <command> <TAB>
-      
-     -      - Add -C to the _arguments specification, so completion no longer stops
-     -        at it.
-     +    offers nothing.  -C is not part of the _arguments specification, and the
-     +    wrapper hard-codes __git_cmd_idx=1, i.e. it assumes that the command is
-     +    the first argument, so the bash helpers look at the wrong word.  The
-     +    latter is not specific to -C; the assumption breaks after any global
-     +    option, e.g. "git -p checkout <TAB>" does not complete branch names.
-      
-     -      - Advance __git_cmd_idx past any leading "-C <path>" options. The index
-     -        is hard-coded to 1, i.e. the command is assumed to be the first
-     -        argument; with -C present the command sits two words later for each
-     -        -C, so the bash helpers otherwise look at the wrong word and produce
-     -        nothing.
-     +    Add -C to the specification, and find the command by skipping over the
-     +    global options and, where they take one, their arguments, as __git_main
-     +    in git-completion.bash does.  The index is one less than zsh's, as the
-     +    helpers count the words from zero.  Collect the paths given to -C into
-     +    __git_C_args, or else the helpers run git in the current directory and
-     +    fail to resolve the aliases and refs of the repository the command runs
-     +    in.
-      
-     -      - Collect the -C paths into __git_C_args, as __git_main does. The bash
-     -        helpers run git to resolve aliases and list refs; without the -C
-     -        paths they run in the current directory, so completion fails whenever
-     -        the cwd is not the target repository or the command is an alias.
-     -
-     -    With these, "git -C <path> <command> <TAB>" completes the command, its
-     -    options and its arguments, including outside the repository, through
-     -    aliases, and with repeated -C options.
-     +    The argument of a -C is still completed without regard for the -C
-     +    options before it, i.e. "git -C dir -C <TAB>" offers the directories in
-     +    ".", not the ones in "dir".
-      
-          Signed-off-by: Lutz Lengemann <lutz@lengemann.net>
-      
-     @@ contrib/completion/git-completion.zsh: __git_zsh_main ()
-       		'(- :)--version[prints the git suite version]' \
-       		'--exec-path=-[path to where your core git programs are installed]:: :_directories' \
-      @@ contrib/completion/git-completion.zsh: __git_zsh_main ()
-     + 		done
-       		;;
-       	(arg)
-     - 		local command="${words[1]}" __git_dir __git_cmd_idx=1
-     +-		local command="${words[1]}" __git_dir __git_cmd_idx=1
-     ++		local command="${words[1]}" __git_dir __git_cmd_idx
-      +		local -a __git_C_args
-      +		local -i i=2
-      +
-     -+		while [[ ${orig_words[i]} == -C ]]; do
-     -+			__git_C_args+=(-C ${orig_words[i+1]})
-     -+			(( __git_cmd_idx += 2 ))
-     -+			(( i += 2 ))
-     ++		while (( i <= $#orig_words )); do
-     ++			case ${orig_words[i]} in
-     ++			-C)
-     ++				__git_C_args+=(-C ${orig_words[i+1]})
-     ++				(( i++ ))
-     ++				;;
-     ++			-c|--git-dir|--work-tree|--namespace)
-     ++				(( i++ ))
-     ++				;;
-     ++			-*)
-     ++				;;
-     ++			*)
-     ++				break
-     ++				;;
-     ++			esac
-     ++			(( i++ ))
-      +		done
-     ++
-     ++		__git_cmd_idx=$(( i - 1 ))
-       
-       		if (( $+opt_args[--bare] )); then
-       			__git_dir='.'
+Anyway, this is the current "normal" style for linking, I think.
 
+> > diff --git a/environment.c b/environment.c
+> > index 6676e6f5ae..c7f6b801f4 100644
+> > --- a/environment.c
+> > +++ b/environment.c
+> > @@ -571,6 +571,13 @@ int git_default_core_config(const char *var, const=
+ char *value,
+> >               return 0;
+> >       }
+> >
+> > +#ifndef NO_NSEC
+> > +     if (!strcmp(var, "core.usenanosec")) {
+> > +             cfg->use_nanosec =3D git_config_bool(var, value);
+> > +             return 0;
+> > +     }
+> > +#endif
+>
+> Do we want to omit a warning in case the config is enabled and we have
+> NO_SEC set? Or would that be too obnoxious?
 
- contrib/completion/git-completion.zsh | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+I would say that can always be done later ;) Perhaps it should be
+better documented, though, so let me try that, too.
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index c32186a977..d5c526665b 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -227,6 +227,7 @@ __git_zsh_main ()
- 		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
- 		'(-p --paginate)--no-pager[do not pipe git output into a pager]' \
- 		'--git-dir=-[set the path to the repository]: :_directories' \
-+		'*-C[run as if git was started in <path>]: :_directories' \
- 		'--bare[treat the repository as a bare repository]' \
- 		'(- :)--version[prints the git suite version]' \
- 		'--exec-path=-[path to where your core git programs are installed]:: :_directories' \
-@@ -251,7 +252,29 @@ __git_zsh_main ()
- 		done
- 		;;
- 	(arg)
--		local command="${words[1]}" __git_dir __git_cmd_idx=1
-+		local command="${words[1]}" __git_dir __git_cmd_idx
-+		local -a __git_C_args
-+		local -i i=2
-+
-+		while (( i <= $#orig_words )); do
-+			case ${orig_words[i]} in
-+			-C)
-+				__git_C_args+=(-C ${orig_words[i+1]})
-+				(( i++ ))
-+				;;
-+			-c|--git-dir|--work-tree|--namespace)
-+				(( i++ ))
-+				;;
-+			-*)
-+				;;
-+			*)
-+				break
-+				;;
-+			esac
-+			(( i++ ))
-+		done
-+
-+		__git_cmd_idx=$(( i - 1 ))
- 
- 		if (( $+opt_args[--bare] )); then
- 			__git_dir='.'
+>
+> > @@ -769,6 +776,9 @@ void repo_config_values_init(struct repo_config_val=
+ues *cfg)
+> >       cfg->ignore_case =3D 0;
+> >       cfg->trust_executable_bit =3D 1;
+> >       cfg->has_symlinks =3D platform_has_symlinks();
+> > +#ifndef NO_NSEC
+> > +     cfg->use_nanosec =3D 0;
+> > +#endif
+>
+> Can't we set this unconditionally? The respective field exists
+> unconditionally, too.
 
-base-commit: 0fae78c9d55efe705877ea537fe42c59164ccd94
--- 
-gitgitgadget
+Yep, see reply to Junio.
+
+> > diff --git a/read-cache.c b/read-cache.c
+> > index 6c449f393d..31888f77ee 100644
+> > --- a/read-cache.c
+> > +++ b/read-cache.c
+> > @@ -353,12 +353,18 @@ static int ce_match_stat_basic(const struct cache=
+_entry *ce, struct stat *st)
+> >  static int is_racy_stat(const struct index_state *istate,
+> >                       const struct stat_data *sd)
+> >  {
+> > +#ifndef NO_NSEC
+> > +     int use_nsec =3D repo_config_values(istate->repo)->use_nanosec;
+> > +#endif
+> > +
+> >       return (istate->timestamp.sec &&
+> > -#ifdef USE_NSEC
+> > -              /* nanosecond timestamped files can also be racy! */
+> > -             (istate->timestamp.sec < sd->sd_mtime.sec ||
+> > -              (istate->timestamp.sec =3D=3D sd->sd_mtime.sec &&
+> > -               istate->timestamp.nsec <=3D sd->sd_mtime.nsec))
+> > +#ifndef NO_NSEC
+> > +             /* nanosecond timestamped files can also be racy! */
+> > +             use_nsec
+> > +             ? (istate->timestamp.sec < sd->sd_mtime.sec ||
+> > +                (istate->timestamp.sec =3D=3D sd->sd_mtime.sec &&
+> > +                 istate->timestamp.nsec <=3D sd->sd_mtime.nsec))
+> > +             : istate->timestamp.sec <=3D sd->sd_mtime.sec
+> >  #else
+> >               istate->timestamp.sec <=3D sd->sd_mtime.sec
+> >  #endif
+>
+> I think this would be a bit more readable if we had a single NO_NSEC
+> block.
+
+I'm not sure what "single block" means here, but I think the plan (see
+reply to Junio) is to make this more readable by not needing
+pre-processor directives at all.
+
+[snip]
+
+> There's one more site in "builtin/update-index.c" where we mention
+> USE_NSEC that wasn't updated as part of this patch.
+
+Oh, did I miss one? The only spot I saw in builtin/update-index.c that
+mentions USE_NSEC is a comment that I'm sure patch 3 updated. Maybe
+you were thinking of that, or maybe you know of something I left out?
+(That is, locally on this branch, "git grep USE_NSEC" returns one hit
+in Documentation/RelNotes/2.5.0.adoc.)
+
+Thanks!
+
+--=20
+D. Ben Knoble
