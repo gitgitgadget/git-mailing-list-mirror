@@ -1,81 +1,81 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4AD44E03B
-	for <git@vger.kernel.org>; Wed, 19 Aug 2026 11:20:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6D9285060
+	for <git@vger.kernel.org>; Wed, 19 Aug 2026 11:25:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787138415; cv=none; b=bG1NbG8HuJtiuc7GX2B3jD//d3forfDGIbguyP/uE1YiPbRofRZsWloPpKC3/w55vSNe8lSbnHqEgeicKfSzEsPv8Ot4CYBHN4TJLEPHjmvZ4MrAb5Y1cv+N52inAB86UckYQ1k65AC5sDhRf1Ugp5ZnZ/oL0bde1fBGIiPQm8U=
+	t=1787138739; cv=none; b=QszO9/xPsz6r/bMj+yLffCxoOotuPFJpGwB2JfPiZu5x1evamM4GW4bgV59QvRs8h2oEizN+p4H1ns4fqVVguhoO/A+ZUc8Rc09QIWrCgGS/fVO2Ar8rQfTZC3Edpe7RjlPzDuCF+yKNznjxOynNf4Vf/HouxEbVEr8NxlKIpuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787138415; c=relaxed/simple;
-	bh=wWGkKn220clEcprgjXSzgj4spZ/t467KedUHBa2qnfw=;
+	s=arc-20240116; t=1787138739; c=relaxed/simple;
+	bh=3owoxhhCFemtRRnr58Ifm0owH3/z6XwPhlHagUmrpLs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GUaCkJ25prVC3Y22GKRJzVYfeISmrW+dxSEG00xtliTvSJy2T9ZZDXtgPZqR0xx+CA+zvMIZ4Lcr35IKh/A0+4f3HiQpA4MYp4nxcbzsD+5yiBc7KfaRjzEZvC6NxF0p2qp/7F1t5ewIldGilOTKpEACf8THXfBLR+y7j++ly+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CDRmrRnY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cJDBJ1n4; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=GpJ/J7rAXVBbc5/jsZQ6tpy3A0mEdF4oQ24uIogUUHrTwYKutOz4CIkgV9pfrz8lRaijqJWUfUrsmlSa714FMPh60YoNgGOQJIQM4NT91YOFYLZAAYroI2/alF6+18i2LAN0xT90H1s7jLyeOhelccO0TjoyYxoD7gpnVqgyVRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dkYA/ezB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BEvHYDc8; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CDRmrRnY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cJDBJ1n4"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2579C7A00C3;
-	Wed, 19 Aug 2026 07:20:13 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 19 Aug 2026 07:20:13 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dkYA/ezB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BEvHYDc8"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id AA5541D00111;
+	Wed, 19 Aug 2026 07:25:37 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Wed, 19 Aug 2026 07:25:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787138412; x=1787224812; bh=l6aPlyz1ru
-	B1Occ37avD1sK7+OWvBgZNyIVlCF6iRbY=; b=CDRmrRnYTR40bHzRdySrIBUqPr
-	wtWbGFPc+a7v8mJBwhmVXvYDYWg5aohH7TPySYTj12sagriKr5p8ejZX4vIOZdds
-	XENhfput+He7WrsK3uJzdgKya1P6UA9zKwUGmglQTdCWqee+1EKlAi3871O3jsUs
-	cti6JnlAS4VhBt07UwFBV/Fj/EJ255GRYi3gcQ0UXflLrIoi/GoOMCljd2IWd6G7
-	jM7jOL9f2OINHGIWUrHYcoJ9+6ZT5I8g6bB6pl9OBcG63xJ0f2TAdI4PYtmcIDIt
-	4Uk3I0OPv2e3KRRb0mdB+rHYKZmqMnLE5MP9l65KwNY0xwsqkkTfcf5g3H4w==
+	:subject:to:to; s=fm3; t=1787138737; x=1787225137; bh=120hQhp1Zr
+	RREbs1fnO6/47qAjsXCWVNvcza2ewA6XI=; b=dkYA/ezBLHm3LRmYnICDnS4Xm4
+	28PMuRTdU+jLeVwDRzopiTIklliQKBNUEBnBBQ8cgwP3Cm7X0RgjtmsURaA4V1Hd
+	NMjSa2IwU3X7ygbzLIR3aUg+tDb7B8tOKCpFS8QS5GDE/iaRDl0hBTNbHFNDewtl
+	HrngeoANIHQCDqgUvl8f3B2rM/dwrqQ9rKUOvU+r8Wz+no8jAAuwp0oSey6PO+SB
+	seRA9l63mWqQipkO0AthdQjnu/7nJPQyRm4uGsukGM+/NapkZ8X5uWXPK9BfH+Bu
+	dPx55eSr5gr7tVBhvhDSEllc1tgtHwRjmPmFF20GMAGjENV0BsTIG+V5UEIA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787138412; x=1787224812; bh=l6aPlyz1ruB1Occ37avD1sK7+OWvBgZNyIV
-	lCF6iRbY=; b=cJDBJ1n47nW2mtJ01VCyUj8PR782eoHACmHcPRozUDgMT8DU/g5
-	kWcpRCHH/P6THfHi/aaSZ6+nMpLM/YL7DI9QIqLpYDlNKIiyY2V8/F29OmkQEaIb
-	Uy6d0oQy0YVUZpEYt8qRXbaRCTsknH0bLdvLnbJwD9KPHQaHP843BOCkhI2NfCON
-	Yp0ljnKAHyNF8gjW2/eSWCVRgLvNKGfwwkTfpYmwMrqTJdKpVkl3SRGXWCaJNvYT
-	b88zGSBjoe5JU5OX7Sz8Fwq7eByE8LtR+jXKcKppDAoZ3RRDtrfmVTwhG/CBFs+u
-	9JfTbMVraw5/AChvfoE1cCiFokwR9H82OFQ==
-X-ME-Sender: <xms:bJGFapWvRIqnB-qx2PUxAVgJ9kmupB1ik5YaSCCWJXy-U_woBJZK-g>
-    <xme:bJGFahCYLFrpf-kibNjYldV9YpL1-v7ufUlrTxiyFIfcDVHVc63uR-i7K5YwEbLOo
-    mAhlm1AxCcsu925vrooW5K61RpjJmhUXek84YxilE4FyQnlnXdWhA>
-X-ME-Received: <xmr:bJGFaiwn2bhKRviPo7FL6tfMN7GiW-5niDmxglnDt4mW6vPL_Lbk6mHcuyMToShsdrTEg9f0VZBugLyginvo44Ss2lrQBfNWBrgzyiHL>
-X-ME-Proxy-Cause: dmFkZTFAT4gPysT1OfzUZaWg//vbUN3vL+bWhhQZFjtxOUDuxUPbK7qhJm8e5y/qU7XNUI
-    Lm6GJLHkYe7t9zwxyugdN2rUs1rM0XrFSmhsVUF6bjJihylPMhxkSvbY0O5cEvqP45UfRy
-    JHoV22F5qiDEh7UmaiTmX6rm7jLhpJcq1IvmqNd6oV24ATSy/Yp2vZkob2XS/DJ345xXnd
-    zWW0dLiNfzHhBrFN7UMvWdkcpJDDXtL64MrwsHBWHbTkGyAmNGEvhG8zhcJeuEXqEHVG8z
-    vZEE7wcg7cEa4Z7Lo7uvnYq7qhrIDrqlkA/K1ryCKN3YQqwLB1FfWUAvzbWoLwUfk3p4l6
-    dKJ2zOLaqp9dvyBnbn2kirphi+dCfabVbPRN9TpGMh951qymzq2o76RtRXrG3LpJ5aPOqR
-    8oIpXR1k67u62m2vmmDv928ZwRAiOjWqO5BdNLadYkscBo/o5s3YLRbMzBwrb3xhmeMaVk
-    eWToXy0ztLsfNYx8gOOyoMjgLy4dEsupmNnIYgruF1OJwy2wWQep5q05O2YxyL82bcPAyO
-    ZC7DKzl4pLe5r+uwTD1zV2FRn+tBDvQaB2jBabF5i7ldKdJd1PaEmg06HSh9fHVeLFIRZG
-    EaLd8lizSSGKnwPOOSUM8JkCIq45mFDddM5pkSVihrZmgPeY+pEYQhc8S5JQ
-X-ME-Proxy: <xmx:bJGFamC5AfuszSyDuJdcJyjZ8q0BMbQd85d0hw8dmQSPAaZDE8uxWA>
-    <xmx:bJGFanapKfvXu-DAVWEQM4nzlt837JTfnqRr0q98jZ_YwrTnlojWRA>
-    <xmx:bJGFamisVvZ8QUjFXJO5qIbQ5g0HpX9hdy8e0Sph9PZ-dER7Dr8pyQ>
-    <xmx:bJGFah7if08AKyiOc1Fl2tmHTb2eph1K6thsdjf-KeH2VZMMrN9e4Q>
-    <xmx:bJGFaldxy4C8YSXxsm8CZBJB5sTGYzSyRamveOZq9REY9tqDluiNckU3>
+	1787138737; x=1787225137; bh=120hQhp1ZrRREbs1fnO6/47qAjsXCWVNvcz
+	a2ewA6XI=; b=BEvHYDc88cyWYDByD2atQF6DkH9nPMyL+jc4ZYthOPgdhIjoaqq
+	guIKTo4LMT7/BbNtCkfRGRY/rwwiL2/fjrSyZC9VFUFIK0JmhjOZQi9RHVmQP9Sf
+	EIwn1DfyqdrvikfQIU2zQlrNiNpPpnUj4KMvrB9TvNCHAXumgPIytqy0l3xl7HCC
+	B8+cuzmCys1I8l3WtoINMFJv3Sgqb75+GoGPusjXFg2VqeqTSMJMP0pEzY3cWza5
+	pBLZ1CK3cq9ElY4Q9FVZZlU1fpXiQoKQtNBnQ8KkwcH7/t4WesWYB8jt3adCoelG
+	0QI7jsyBv1VfRTrKtp9/4wOz61JN+nkjIIA==
+X-ME-Sender: <xms:sZKFaqK70NTxkNqt7no6RWBr71bz4pSsHEDUQ1xFkh_0wfoxdbsccw>
+    <xme:sZKFaplnnUxKCToy6ip7IhuTnIAuJy8fBeekrnNhnobigtygtgHR5_OgbbeA62DLE
+    NcsNWkMufZ8UAF_5TtGO8GcShR6wXw5nCWR-KXLqcrRUsvpcMGi>
+X-ME-Received: <xmr:sZKFaoGaom0MsXV3uU056zfLRo4u3fbJWCJTGtH8ZGI2rABt_Rm1zZEyzQbqC1hfDPrBCT8SbvO2Tbx0Y21M9MqVhpGDkQDfnelDm78S>
+X-ME-Proxy-Cause: dmFkZTFptVYzvbRKkrofg19NlvmZi07HBos1ebaMNq+4CnyI1kbYdXeIgJJFhYAgr0HtXo
+    G2HPjhTTms0osvZ9oQZ6HwrdBbjePhkv7kH2bKc+qjSKv/pibiTw3zjT4ewB/ZJYXucTnM
+    84UcBy3N8ASqCgoxGtCaJ8/35pl+IMk/16DTsMLV069M9X2CctO9ZLbUU847QAPntMoBE/
+    GVG+llZN/65/d9dUOFSZ/WSGaoFoplKn9WEQ6LNYiGm/Q+AQ7y+U7DiVSmqP9GjW4bQ7kk
+    9SyKG1PhMjtsLobEnNBuT2r5TZIkQMr1/A3AT3i8DCuUiCnzF+dEzoR73jmxoZEzTa7xjs
+    g+yp7LepKM0Zgk3TCUgXZITh/GlJODlS0AYVi/nZMOmJ1iOY8i78roFsXtP2RKrWK+2rm6
+    1fTTFL8Yl21xjTofI6QCi0TQ144a1haBnvnUev1Vf4RPUIEfPskiETskK+7BRCbv76Kaf1
+    lRF3TwDMdDQD4A6EI5XbDGmeV6qPKpS/3WiFqkVpkiuwuO04xiwEBQcawOCdBS6ApkYLJZ
+    Bq46u+56ZhV5Bn6ebi50VTQOutIoBVMua7FytX1KwJVLHFLmGiYJsXu9w+4SMPWf9U4nP4
+    spb/jKW369rWnBsxQgNrmMLWJ0m2hTeK9buvGV3TaQXSOadLounqFYaZpNCQ
+X-ME-Proxy: <xmx:sZKFapEywvrAh-B_Xuje0_G1BDWDKUThLr98V-RdIfThV8WKbmQ4Fg>
+    <xmx:sZKFalNJKwTiv_igsYx-uuMhZWe6q5NyArnvLyOuVMA1NH_IQP2l6A>
+    <xmx:sZKFaoFLZEep5-RLiL1w5RCoeIkEUi6OSTbO1iAsIf6TQzPl9jmDrg>
+    <xmx:sZKFasMVSWj3-QL4hdTFDkzVdz0Hf-tg_ylCbJ7Mwh1uzjP9pVtPwg>
+    <xmx:sZKFanBRaGJhDMr4qrQqZPrA2zuR5upgfWUUUgVYcGPYyDHI_bE4qML9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Aug 2026 07:20:12 -0400 (EDT)
+ 19 Aug 2026 07:25:36 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 23b74a39 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Aug 2026 11:20:10 +0000 (UTC)
-Date: Wed, 19 Aug 2026 13:20:06 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 1cbe1f66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Aug 2026 11:25:34 +0000 (UTC)
+Date: Wed, 19 Aug 2026 13:25:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Nikolaus Schuetz via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-Subject: Re: [PATCH] t1402: test forbidden characters in refnames
-Message-ID: <aoWRZhO6BVy7uPLI@pks.im>
-References: <pull.2203.git.1786653837190.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] t1401: test symbolic-ref exit codes on a non-symbolic ref
+Message-ID: <aoWSqYvANg5AmuCi@pks.im>
+References: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,64 +84,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.2203.git.1786653837190.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
 
-On Thu, Aug 13, 2026 at 08:43:56PM +0000, Nikolaus Schuetz via GitGitGadget wrote:
+On Thu, Aug 13, 2026 at 09:12:33PM +0000, Nikolaus Schuetz via GitGitGadget wrote:
 > From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 > 
-> git-check-ref-format(1) documents that a refname cannot contain a
-> space, tilde, caret, colon, question-mark, asterisk or open-bracket,
-> and that it cannot be the single character "@".  Of these, only "?"
-> was tested as a character embedded in an otherwise-valid refname;
-> "*" was checked only as a lone character or with --refspec-pattern.
-> 
-> Add the remaining forbidden characters in that embedded form, and
-> check that "@" alone is rejected even with --allow-onelevel -- where
-> "@" is otherwise a valid refname component, as "refs/@" confirms.
+> git-symbolic-ref(1) documents that reading a name that is not a
+> symbolic ref exits with a non-zero status, and that --quiet does so
+> silently rather than printing a diagnostic.  This was not tested.
 
-Okay.
+Out of curiosity, what made you address these gaps in particular? Is
+there any motivation, or are you just picking random things to work on?
 
-> diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-> index cabc516ae9..bc1e878a0f 100755
-> --- a/t/t1402-check-ref-format.sh
-> +++ b/t/t1402-check-ref-format.sh
-> @@ -51,12 +51,20 @@ invalid_ref '.refs/foo'
->  invalid_ref 'refs/heads/foo.'
->  invalid_ref 'heads/foo..bar'
->  invalid_ref 'heads/foo?bar'
-> +invalid_ref 'heads/foo~bar'
-> +invalid_ref 'heads/foo^bar'
-> +invalid_ref 'heads/foo:bar'
-> +invalid_ref 'heads/foo*bar'
-> +invalid_ref 'heads/foo[bar'
-> +invalid_ref 'heads/foo bar'
+> Check that querying a non-symbolic ref exits 128 with the usual
+> "is not a symbolic ref" message, and that --quiet instead exits 1
+> with no output.
 
-This feels a tiny bit excessive, but I guess it does not hurt to enforce
-this property, especially now that it's so easy to add new backends.
+This is testing the status quo, but what I think would be good to
+research in this context is why the error codes are different in the
+first place. I personally find that quite a bit puzzling, as my
+expectation would be that "--quiet" really only impacts whether we print
+anything or not. That it also changes the error code is weird.
 
-One thing I was briefly wondering is whether we could maybe have a
-simple loop here, as this feels quite repetitive. We could for example:
+> diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+> index a2a7e94716..602db6d080 100755
+> --- a/t/t1401-symbolic-ref.sh
+> +++ b/t/t1401-symbolic-ref.sh
+> @@ -38,6 +38,16 @@ test_expect_success 'symbolic-ref refuses bare sha1' '
+>  
+>  reset_to_sane
+>  
+> +test_expect_success 'symbolic-ref reports a non-symbolic ref with exit code 128' '
+> +	test_expect_code 128 git symbolic-ref refs/heads/foo 2>err &&
+> +	test_grep "is not a symbolic ref" err
+> +'
+> +
+> +test_expect_success 'symbolic-ref -q is silent and exits 1 on a non-symbolic ref' '
+> +	test_expect_code 1 git symbolic-ref -q refs/heads/foo 2>err &&
+> +	test_must_be_empty err
+> +'
 
-    for c in '?' '~' '^' ':' '*' '[' ' '
-    do
-        invalid_ref "heads/foo${c}bar"
-    done
-
-By the way, one weird bit: is it intentional that all of these really
-use "heads/something" instead of "refs/heads/something"? I guess it
-ultimately doesn't matter.
-
->  valid_ref 'foo./bar'
->  invalid_ref 'heads/foo.lock'
->  invalid_ref 'heads///foo.lock'
->  invalid_ref 'foo.lock/bar'
->  invalid_ref 'foo.lock///bar'
->  valid_ref 'heads/foo@bar'
-> +valid_ref 'refs/@'
-> +invalid_ref '@' --allow-onelevel
-
-This one certainly is a good addition, as these are quite a bit more
-subtle.
+Do we also want to verify that stdout is empty in both cases?
 
 Thanks!
 
