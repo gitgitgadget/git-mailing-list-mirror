@@ -1,129 +1,129 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FA6437876
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 11:40:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787226025; cv=none; b=BVBMrj07iAgj97HiFy74bGLP3SptJGgPMTuQRKojeK8qiSMfUt5qUNc2mJ3SP3vPo9HOS5UZ8+n9fDXL036rWwmyl8NVUwIlw62G+D3221CpO6PUIXQpH4gDySft7984mj2YecgsrWnBwdCmqmcieNeCEMvCIedr91LaJHk3Fl4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787226025; c=relaxed/simple;
-	bh=9K5X7iPmjkkSHcpx5Jc68kte3LBve+9nK66vIoHMPhk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o87lxYpqEwSiMfi2pwBJgEPs3jSXuk0GJP3ZG56/Mny/v+U8vjzHl7zAZ5GYXNQdYxk9k8f1DsAiyU7LIj/mq4Y+DXKNyejowxskEUEeMJ//ztWEq1MNgAlNtpmEN4Z68zM0z5/g1xYPaptxeHOhk9YSrBEyoDPXSet8uTnTqKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B15SaLCM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fzWfZAme; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194F543A80A
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 11:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787226672; cv=pass; b=WVq+XPMReURapjdF8x/xPHiY31ocmBfnQwaWHUKlXlzjlAyUSZSZvPe8Ewfb7uwgCwFR9aj+c3MRQDUPm+lWFzzG8z7QXNgKLt9kjpETZciljazGiLJCl6gFB2BnbIbNU/P8epkOlV217YPnEGtCnRbNtTMYhiwo32XRg+NnQAU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787226672; c=relaxed/simple;
+	bh=PnaoSM21ql+gVaTpBozIcPYBIF+XA56Kns16OapNvuI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tEz7VskhELfLeSBDXorp9DpAHcEjOMgxpEqBgdOdk4Bh2GaPLUoYu7jDtsVvw5xacU0sGhf+bd2BQU1t8sWy5z/BrOHehaZq0xguQslk37DvrGhe+tftgtigRALkM4xkOrP0nGya3tD++EwPgQBIskpovYAdesC5t2g6k4YfLnM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kxc2J/u4; arc=pass smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B15SaLCM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fzWfZAme"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5D327EC01A8;
-	Thu, 20 Aug 2026 07:40:23 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 20 Aug 2026 07:40:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787226023; x=1787312423; bh=XZ3CWFmm4g
-	x2fap1RTHSxxTPDFD4RSzBeqlOkzLu0xU=; b=B15SaLCM2vM7LeG5GPTSeKVjY8
-	kwb0gVGW1hJcS4CgMqBmbvT1drwfWFiKCSYgb3ysOhL+KWo3DRkcZgKnM4rbuUId
-	qt5sXZJFbeN3m0DraG/WjZjXCJv1qbUuy5wZUcZK7hu6zskv60T7/veGi4YNuxtq
-	pV7NtIoHtVMVV1Vo1XI+oHsO6+SIA1mp1jupOdz6o6LcpQm0lFYbNQJ8047UJVFI
-	/SsyfRD9Fo3KGwDt3sWqDYfcKccEQ5MwOuCJ4HVFHtgyTkqegz8zL+/pVL+av+/Z
-	7GthMolMtGTqHm7JwF7dz3vhhKmboZLNmmuoT9GV+i8nygcLX/srzAPpGSQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787226023; x=1787312423; bh=XZ3CWFmm4gx2fap1RTHSxxTPDFD4RSzBeql
-	OkzLu0xU=; b=fzWfZAme9UQi7nUJDjdpfRTbTZaHcJhbpjT7RypeTp0mF04153j
-	Fa5xErebx9ah0Z8ASY1EvSNTy39bvxQfb/fj4EDXpcLQu4yyJckj7b+z9z1NMoUT
-	K9FhDiYiTFsoELIj9mtAVQXWQ8WRj5Uq+9bFb3DypQitfAQ0RsWlI7VskO0ERnmH
-	p/PkpDYesbjT+MY5xBnqEO38ObpZqvVnOBgX/IImFCai+uUXKsgfsRss3hVShxKh
-	uOga3wb7I5A0nkp2fmY0+jJzUCJjkZogErqCVcE88qQ56R0C3jcpPszj3zwwd1mU
-	q5GnC68g11MyngGlLzyDDN4JwES0DU8KLbw==
-X-ME-Sender: <xms:p-eGamcl0iWXc5JpbxNroFKcD4CNshDG6oqvfcDdKIcO_D3Pz8oHlg>
-    <xme:p-eGanFdNdCVX7vfVR87Mv9T2WkoxiQcRt2HbAsDQcY0uq7r_-FXZVj0BsLSVU-75
-    pfIScQtXHvRmDf9oG04GyFhAlVZXXwWzra61umX0impnMKsKnr-yQ>
-X-ME-Received: <xmr:p-eGav3h6l08cv3SPdY46Ii7CBBF4kHgT5ZiDGR1OjQFCflse1p2bS1kEIk_bFu2WkGu5CXFF1BHOEKXq8vV-O4YrWj5vIV76b8W3QTpzw>
-X-ME-Proxy-Cause: dmFkZTEEeSpnvqleN9KchNS2UT41H+ZiZUyeKd6upFql4UfXiGeoWuG0McBm+s8i91Cbvk
-    1WVsFcfnimxxEd8nuGQEBK5RlEND4rYc/79S17fhyxLJNmgNHuac5hRIrVesxOfmFNW0zF
-    FyvOHnZRE7sD5BS2hvNfXSU2r1gNrdyY2twGPsr/820nLYHnJeBtwy3kZiN95zMw4BD/Jh
-    5fK/+anYKlDiGklaOuaYTtcL4FGO9AvVJlDWVLvtr5QaG4wZZzLwufyghM/X9MjRd+7YJa
-    TXBVHPt+TsBPs8BVsUoVhQ4Pb3al3XU5Vc7kNCetlQMnGYCp1joKY0su93uKu35kZL7UoZ
-    HBj77v68IRimAU7XIq3NEyRtSl3KNQrwu25bvNAGSmCDOznO7G8zFtMOatRrSEdfKFSJrA
-    /15ptJFv5tda0zGcDvi6GMG7XWea11EItH/vQsYuxal3S69w38sFtKZMSBtc3JfT7YVUWy
-    7+zxmY0T8PlaqIqwBYfBOVRFmtzpiw71v9EYmeHCMpt7n03GzL9GbXGfIuunhftCoetfaq
-    VcE78YLG6VX7wbK1x4OMoEHpGuW+VzSWZmnYmqb17LS0ZR0D0NR7aelpS+Rx9s6q1zNKIU
-    2wZzrGfEeHQq+Gt0rOHJjjaG1DFExfgefsUhL0OTXSc4AI2oLxDax9UAzZcw
-X-ME-Proxy: <xmx:p-eGavmw6ERqHnil2QYouxhCycKZwtab7_Qprc_ScE010YM32OCTAg>
-    <xmx:p-eGav_MtK5bUjQpeXApVZaQZGDq1wy0o9IKJMQm6hBLJ1_k5qZ5kw>
-    <xmx:p-eGakq8OPRAlVIDYKou-yfmKBi9WT7LgQ5rkIvBWlbVB_EYOQB-8A>
-    <xmx:p-eGaonvwws5h_xtlqz0ByuGL3QSh8QnFRsqAljMuM0ZpZfoYsaezA>
-    <xmx:p-eGam2k11gzMPdf-TA5HoV75bSJSVphkN7pZtROpIdHkax0j1qZTjEf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 07:40:22 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 92c28ce4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Aug 2026 11:40:21 +0000 (UTC)
-Date: Thu, 20 Aug 2026 13:40:18 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 0/6] odb: make packfile generation pluggable
-Message-ID: <aobnos_v8xko0w57@pks.im>
-References: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
- <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im>
- <CAOLa=ZRsVjRrwzAf==SmevATf+OWoHdnHwUbvi1=M6foBRzLnA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kxc2J/u4"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2caed617615so22153615ad.3
+        for <git@vger.kernel.org>; Thu, 20 Aug 2026 04:51:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787226670; cv=none;
+        d=google.com; s=arc-20260327;
+        b=j43cOQDnBWrlnmTJhJJDKt6bjNuyahz2Cor6nB8+u3q3IgnMOwyngaT7lzMdvgS71G
+         0yY+kHaOamOSUpdUofsRKnbhTcdu2lN/a42Quc2BMc3bosS4YPbKhE7BWI+5APX/eB49
+         +slInwmlaCg5VbQejk2xdZRh3PI4tCGoj7EYLmOwY3ZJfyBwB/utKwPYPu27UVLGnvl5
+         TIbKrHJS5AsW8zjO2Lhh9pixEu5P8YsDHNDesrkDAODQIw1UZlhmsxb7HYuCucfLLySG
+         xYzKDr3DRS/CTUKfggN3TCpB64Tlr8FvTiKstzL29R6K5cCxJCTgmbX9i0xq3Rw4/0xU
+         0sWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=PnaoSM21ql+gVaTpBozIcPYBIF+XA56Kns16OapNvuI=;
+        fh=uPjY8ueqdld3roU+rwxQvk+Ploi0wteBv041EUCijpk=;
+        b=ddX7e8amRHuqk4N1W5h2nZtQcaB1Wv12/azMLiQgdXH5MxAjLCYR0hbFhfB1TdReK7
+         aghgdZw9Gb0rwpjXr72e/Ft2u1F2g9dIEi3xNIvI1bEmvY/8BozSGg+lO2fwIiWS4t/z
+         W2JZYRHdYewQkDmdhC3ByH7iDJSa2+EKaqzlBqAExjbsF8JDJbXTVcfGTtMlJyBx+v2m
+         QwmJcwgVNbtkhEAK9ts0fWhb5u1HoRWE30YW0nbq8+WlrJ4fF7y8Hr/OJRInfERwXN7z
+         KcV4SAMHKRhYkBncL3pe3QYKt5S89sRGiPR7STkFhMmDUAMInw/aIkPV3uzxIowXLHjr
+         AZKA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787226670; x=1787831470; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=PnaoSM21ql+gVaTpBozIcPYBIF+XA56Kns16OapNvuI=;
+        b=Kxc2J/u44U2iF69SD0ogSIvOytnT3vxO9NdIe4dFt4eDZAfXjP/zXx5Makw+8NY1Jo
+         0GmhCIdHDWEUbfc9cbOf9V88fWeuAcsNvn7oJiw71M8+OQ9IBqxeDq/UPUbbF7qgHZyE
+         A7xMMGt1LJI0YFmcYCcw8TKJIPMVczDK5gW1Gtq6Y+RDgnigUGX45IRE7yJKMf4MjXWZ
+         Xgx90Y2G+2gNW03kyWAvBtobI1FG2wfSW3JxgJnFdA6oIYptSKqIYgZIbytCmLPeO1ma
+         ruoe/5GjwcOr3NEKrioSBBHgkWEZH8j+Wlhud+zXaoyNzzf53iZpHG6CmvZHqEOjo+R5
+         TeZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787226670; x=1787831470;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PnaoSM21ql+gVaTpBozIcPYBIF+XA56Kns16OapNvuI=;
+        b=ATDjVICYQ8It5wmKiUK4CfGAyqXeYMAGURQrBQ4QJmcB4w+QTxul5hIZbgm1HGOiCN
+         kDCAuxiLdcJeDD+ZM0qbXysPma5ODlsZqA0f3T4TSWphR8f2u5JDprRwe+xK/lqUG7D3
+         Nl3P97m6imuCoEZJiEvvPOwDvasv6Vgx/2pdRgqdHGLHtNexqR4L3gwt+THAxcPSMpx9
+         ihyq8aukWLckecQ0bqsFOW5SXOObpWiuHxY9Z2YkjMdsxYNF7vgaEqZKJXf1NMYrQz0V
+         xWDu/yyJwcDaBRXuc2h7PK1anyrg/uwKuRaeq/bazq2FYUzjmt/xvY9hcf4zTHoGM62m
+         w+qA==
+X-Gm-Message-State: AFuF++nYADrG+kuof9TtEjYM8tV5jq3ZsqCofPcToEl1JwunoSIXTJ7L
+	Y15D6vvwuwKT45xh+GkLefw2eKHdm8UFZAPtiaFTrK+2FulpsFh+Aw0WwUUXtMSVejR6YwKjAFg
+	pzMiSszsIQnFoKFDvGmu7RbKsZigmNDCp7Z47aGg/RQ==
+X-Gm-Gg: AR+sD11l9m/1i7GB0JYORTm2GW1eJdYphHOEWe9Zhwhu8mwFpk9yP9S59gJ2eZ6ZO+l
+	YFz3rmxXVELaVJ5yMsBEjzH/SSDShyLGSj1uGpsDOU3EYhgsqI3ldC8Y2Y0Opucdeoen2BmYXOL
+	b84zxvc/HzxIjA21EDjU682gPty2iTQYZsQ4c3ryWQZ7AJ0qeYbfK/tCIlwpeMIIxbREDr5mjFX
+	YBqf7FIjbhB6c1srQCfXDlLb4SdlSzZio8Pvqq74Bhds/ZVqI2ruj+t/rh7fXnL2Xu75eqK55j5
+	VF1tINpYLQLtwWaJpGxUK9jCaodzWH2lQsxVan7mYJT9K7lBG06W5smWJpKAS4rPy1DlwZQA7wk
+	VYS5Rc03KR+jIPyyPpvo2CV4Ub4oVgMfC6nW8Jyv+Ddb1qeTxVKO8kLyW4qf3XnwtHg4qmSOXzl
+	p3YTJTgVHM+QSFW0bCfQc=
+X-Received: by 2002:a17:902:fda6:b0:2cf:a108:7605 with SMTP id
+ d9443c01a7336-2d60186263bmr239935175ad.11.1787226670233; Thu, 20 Aug 2026
+ 04:51:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZRsVjRrwzAf==SmevATf+OWoHdnHwUbvi1=M6foBRzLnA@mail.gmail.com>
+References: <cover.1786103607.git.ben.knoble@gmail.com> <cover.1787065125.git.ben.knoble@gmail.com>
+ <48fceb4b575ca39346cf2f59f621584a19049008.1787065125.git.ben.knoble@gmail.com>
+ <aoVoJ3Ijoaj3u64e@pks.im> <CALnO6CDgfT+VXaBqSmStB8vNOwBpr5XMjvmxhMdc7v-ma-YwXg@mail.gmail.com>
+ <aoaPn0gaHIa9Utwu@pks.im>
+In-Reply-To: <aoaPn0gaHIa9Utwu@pks.im>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 20 Aug 2026 07:50:58 -0400
+X-Gm-Features: AcwNN1VDmhVZlYEbAPvy0lRIjU4hhD_BcvxUr4vViNioa5mguZIIFVfa_8ZuHkg
+Message-ID: <CALnO6CAa0HKsKoytzfXvEmps4NLtx5qFkP9B4PZzW_Rfun+CNQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>, Junio C Hamano <gitster@pobox.com>, 
+	Tian Yuchen <cat@malon.dev>, Olamide Caleb Bello <belkid98@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 20, 2026 at 07:20:15AM -0400, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Hi,
-> >
-> > this patch series makes packfile generation pluggable.
-> >
-> > Note that this series only makes those parts pluggable that are required
-> > for the transport layer. The other parts that relate to packfile
-> > generation as required by our repository maintenance is kept as-is, as
-> > there is a bunch of options there that are way too specific to the
-> > "files" backend to be portable. This should ultimately not be much of a
-> > problem though, as maintenance itself is already pluggable in the first
-> > place.
-> >
-> > It's a bit of a shame though for git-pack-objects(1), which still isn't
-> > usable with alternate backends. I tried several times to find good
-> > solutions for making it fully pluggable, but due to the backend-specific
-> > options it's an utter mess. I want to eventually address this though:
-> > same as with git-refs(1), I want to introduce git-objects(1) to care
-> > about all things ODB. And as part of that command we can also introduce
-> > a command that generates packfiles in a generic fashion, without all the
-> > cruft that git-pack-objects(1) has. This is part of a future patch
-> > series though.
-> >
-> > Changes in v3:
-> >   - Fix a use-after-scope bug on abnormal exit when child processes are
-> >     cleaned up via `mark_child_for_cleanup()`, as noticed by Elijah.
-> >   - Link to v2: https://patch.msgid.link/20260817-b4-pks-odb-generate-pack-v2-0-4c8a96ccfdb3@pks.im
-> >
-> 
-> Dropping in to review the new version, the changes look good!
+On Thu, Aug 20, 2026 at 1:24=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> That'd be quite welcome indeed. The less ifdeffery the bettery. :)
 
-Thanks! I'll wait until tomorrow and then send another version with your
-nits addressed.
+Agreed!
 
-Patrick
+> On Wed, Aug 19, 2026 at 09:09:59AM -0400, D. Ben Knoble wrote:
+> > On Wed, Aug 19, 2026 at 4:24=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> > > There's one more site in "builtin/update-index.c" where we mention
+> > > USE_NSEC that wasn't updated as part of this patch.
+> >
+> > Oh, did I miss one? The only spot I saw in builtin/update-index.c that
+> > mentions USE_NSEC is a comment that I'm sure patch 3 updated. Maybe
+> > you were thinking of that, or maybe you know of something I left out?
+> > (That is, locally on this branch, "git grep USE_NSEC" returns one hit
+> > in Documentation/RelNotes/2.5.0.adoc.)
+>
+> Oh, I guess I just missed it because I already trimmed context of this
+> mail. Never mind then.
+>
+> Patrick
+
+No worries, I appreciate the careful read!
+
+--=20
+D. Ben Knoble
