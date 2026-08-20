@@ -1,274 +1,186 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38C53E4510
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 09:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787217073; cv=pass; b=sD2+2dpq72IyeXVQM1HirKDYfR5/kapIYrS+HtdcFCanB3AyqZUUek5DEPQJsV8KBGqzTlw9KH0A8kd9t+2dpSzJf9RW1z+32TF+2cusLopZmUsDxDT6Fvia7a7jvFiUMZ0OK0IQFGVY28mP6ebxHtuNAygL2ewjoUAEUkyt7EE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787217073; c=relaxed/simple;
-	bh=hQnoMbBUP46LYd6UUasMPna5OhBIEW74WIkpEXMOyqU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=II/XRkIZJWMW3UHONMFGtUERHc/MHu4et9P8cRNAXPk8KT8yh5Bj2c7nAgEAnw+6T/VPr+mAVgBykepkmIKepLiBqxv4QAg74L2QxtBeFxN9Rq6c4b468jKekJjGowlRjRJvwNwFcT6nk/x86Ft+xEQ+gbsE/YT7MG0JuSwMQ74=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W0YxXapa; arc=pass smtp.client-ip=209.85.217.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37E4361974
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 09:13:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787217207; cv=none; b=SxS5RrEyU0o4hWor5CPGMg5YYrgRPnaR01OZOBxxanFq5SJ/CnV9IzYmx6yOEvyE9ObOxNo3sdL0kPX4Yo9V8+pcDdmLDUBTYap8JHm9+0/Z32m/3xw+/qMaLnBf71nlrkhBi3HvHxlL3zKQjP01XulyXGl4TIpGDVDVK6qRt+s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787217207; c=relaxed/simple;
+	bh=7vQ84vmuPGfpVvGx/V+UIM+r39FpF401QTZxDy1dkCc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X7rhCMa3ZINmyPQWoQY2FYtfEF09IuPFLGhaSWy8HbFrYPxrpoEMXlU9CNp1UGnmeMO2QprTSKSQnb+UDq+25EFnVMOzXFbXhQzmd1bJsx2NCvbJpbMrpQfJ3S4PTZqubleaouyN1QBjZEche1i28RPqFAbjVGAybFiHcGsnRKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hRpWNBdZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ott2pukm; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W0YxXapa"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-75609e844faso666540137.0
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 02:11:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787217068; cv=none;
-        d=google.com; s=arc-20260327;
-        b=cj6rlPfRwHo77NEWNYCd2i1FZZl1RGemhZR4ckG9B1jjtKcUAHxdgwA/P6CbZjQ4gw
-         6Uy2f5QQtf6El8BlCA/4iUgW0CO/ps5wmx9Tdiyh7i2+9AqyA+lP+KlwQSnRrKM0qut5
-         6HT4F7jfxUPSRg0HwLOkpurnW8W/Yd6rc2oDIUcvM63OptEjnHeBjhDyEirUunMrsoKM
-         ehG0uih29qQ0VY3ER5j/RydOdpj0pkcG2CT/ltItBcAy2UcAAi/H1fckoG9LEOl+GcrR
-         2RuiCrGWVDfz2z6MuMrPbP1JdkHQ7yLNhIEFkIR1XPcTaoeWoRCB4CDKpg+K2pbEEPat
-         nyZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=6S9guMsslDGqShWbgxs7QzHrIL+Z/DhOePnj47raYP0=;
-        fh=ilFwKrEHnlMyT6+85EZPoruq38dvY3Cv74bln5f+1CY=;
-        b=m5jioLlBWFxcrQ7SZg7QOTZK+QTDuiR67vRToQYGWCFIv7wJMNU+yMOc5yDVUC4Gm2
-         aSfD1Wj3xJPduylUwBb/u3WxTpDvM2p9KqjiugdiTGFO+uxBD22E6YSFK20VPv6QcUIR
-         FuxjNfvTjVSWi1uscDx6AnDUAZARfdqyXzFJPLLzFZy5FBDDPVkqADbXF5dMWwchElzo
-         /P6hyadXmwzqs66UBCzVeKxoB3JL8C+pPFUHwgk0AQLNMU0a0obMZjAFaJV5msrHeCIG
-         H4Hjbu0BHl8Al0Bs7hwZ7IdXf5NxASlDFw8itGZBJHe99nQpMXWYfc3bYQrYoeMUv6eu
-         Ew+Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787217068; x=1787821868; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6S9guMsslDGqShWbgxs7QzHrIL+Z/DhOePnj47raYP0=;
-        b=W0YxXapaIqAkpZLARBAdKHBRwPIy8Tv7+BwFYIFDcSYku9t2bPqDaJEXu5S5bKj89F
-         1h0lCa6ga+rIlnpbF+pYQOo8bBnkGeh8I8jdSsoXid+S3RzhXulKXlXYEPZ420/9KInX
-         14bj5QSQwJMElH8ZVDuOYQ3XPKM6MxFLI4nQDV2C+XX898bcc5M0TD83jM+hfNyodx4+
-         Wv3LmNRUE1wyrglUO61IJBMTDraUD5kjNpje3Droz7x02ti+QgipFIWAeUNreIwqBddc
-         rBTMBoYo3HYcxC9OtvOzz1VfHOXOhFJyym80ORvly/0TVumzIqn8Zu+J79sQJPd/SEpW
-         KEEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787217068; x=1787821868;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6S9guMsslDGqShWbgxs7QzHrIL+Z/DhOePnj47raYP0=;
-        b=P+7txVO+AFfH49wavigXAGdxF7b74U3d90gmYbHNd1uz76ZeH1x+iFuIeNN85CCJpl
-         qR2CERKnmvdRNVtA67BUufcXW2xNJIBl6redgxGjgilic1tPtfZlmCdQqAZ9uF3JSqiR
-         rx+8eGVF7bFtCZoOuc/sIuU67kN9xNOUWWjk53+ewo/4/fLx/cbbC3JgpV0p6pgUn4Rd
-         PeNb6oI9RdvJLGyd+5EsjwZSiKSH13m4QeUrCpL/XKqK3T4PWeYOUtE3AbbjPO91If84
-         5T7bnub7kaMnSYcQRncpBJ1HjnaTfNbLSEq4iX59ayRm92jTCMLgzcs7ceJcTvp5C3yY
-         EOJg==
-X-Forwarded-Encrypted: i=1; AHgh+RpFlaUOaxltTTQWRhr86+FAPkILUj8z11co65qanm6eY6AgssLxLBo+n7a16mMjArrevZE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDgwXbYEMIk7wD9C07F0zcThPTyvIZWUOr36iAFGWuoGuV6DO1
-	7YW/XnjM/A/avOvnbyjskkb4+3aB7RjMyxW6pHoJIx6HwXTJsi27dlG3do+F0JDQGO5dP/HrPN0
-	WcwlnuT1HOWSQM+Vy6beVf+juvoI/irjD20IR
-X-Gm-Gg: AR+sD13xFvPG4wvfqPLqzuSK8sPLZOE6JpA/fPj9O5wlTGuxcdo1RZ/Mp4TF6A5hC0X
-	GoAmDZCDJZsmf3+c9YLGFGxlN8svorvb/e/X2ryrBEUQ+y7VSRKvRDup8LFJPXL/+STszZ4i8Wq
-	HkDJ9brO0ae7F/QWJAEi0Prodn+QeBM2HLZeKJI2G9rqUlWckZJXf9hDrMVMMzTHqA7Qg5Jbw8g
-	ncwZQzZdae+HLBXI0jx5vhCze+e9oEtmVu6/ZiFURodRz27sTuzJCkZ3YINntHz8ha9i25Fobb4
-	h/OyPPmX0+78zNfLyUMLRCccdCDRStTF7oweTqaUibyO9CE6chscd7WBod/ygeH71P8N44zud5y
-	C3pmsHtTd7gjKyqR4ZY+TH/dfIzl3y4Kh
-X-Received: by 2002:a05:6102:5695:b0:779:78ae:9ade with SMTP id
- ada2fe7eead31-77978aeb7f8mr489342137.0.1787217068309; Thu, 20 Aug 2026
- 02:11:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Aug 2026 05:11:07 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Aug 2026 05:11:07 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260817-pks-odb-eagerly-prepare-alternates-v3-0-1115a7e02467@pks.im>
-References: <20260810-pks-odb-eagerly-prepare-alternates-v1-0-f0fa4a4004e1@pks.im>
- <20260817-pks-odb-eagerly-prepare-alternates-v3-0-1115a7e02467@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hRpWNBdZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ott2pukm"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 41CDE14000CC;
+	Thu, 20 Aug 2026 05:13:23 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Thu, 20 Aug 2026 05:13:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1787217203; x=1787303603; bh=4yHpTxUwcU
+	XibWOMu8FXoDmv2Cndf2D50mujef9WFHQ=; b=hRpWNBdZexBIDKEyJIheuf6qaI
+	IHrUHBU3ykRjtpXqFANfGR3URmAejdKODu+Yz2N7CTIr+Sw4/74GgKBJmFYNVEmp
+	HqsMZNAkIMbp0H/54OcCZCEkV7iPKpkiVHGn4FnHS86xj4RN4Ux4biNb7t/42n5V
+	PavV05Oeqpu7wH9Xch60gyA4nex4R3HtRwVz8oaE5xiigPSBSscjcItptbJ6XpJr
+	NTasVDeClePD4C4f64SiZjw/ZkQ8BslsG3Yu/o3figr6z3NtjepvDerj1Ysf/nfV
+	dMQWO3T58R33AsrqM9mLKGnZWJQ274OFQuA9+5CIp1GKmHQwh60KmBU1ZU+w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787217203; x=1787303603; bh=4yHpTxUwcUXibWOMu8FXoDmv2Cndf2D50mu
+	jef9WFHQ=; b=Ott2pukmNkB0/xnJPULTZ6FIuh/qqTksjp8HSwzXNEvJqKZtCJy
+	UK7cMyO3NPazExO9cjLfmCdzEdbS9wPDDDnHEUYwIEQAL8xiNimcBVQSCKavoVwO
+	4DAi+HJOuoHRFZ5qjAqUFqnBLVBisvX1Qz4clWYM14k4QRXyeolmer/B1KTiMkxF
+	Qy8jyNZafhZbPXM0ENWShwBbUsi4z0RTzpoMjV+7kT/iy9Oix5eZnQDyxufDhPI+
+	XjKxO7vL3HJEqyqQ3p27pdsRjUyY1uRSm6Yv3dylsmFK/P6wR+Ci5NMS2tVBhabg
+	tM7ovGF8c3/l9QCjZnpeJMWqdXqA/POWkCg==
+X-ME-Sender: <xms:MsWGarmjF-zZ2yMF5Hgdo5h4LLRIYFzfh0JasoqtqQY3NFvsUWapDA>
+    <xme:MsWGal2s44JJDsW3BLet7otudhPc1IY6Ub7lcfSk2OkNZkwNCxuNScK5xH-TZqtoq
+    V0hMjkhyjpobkbwFCgA3PFgmM-bt0zT9Zo7vlGiatirv2jabH1Dvwc>
+X-ME-Received: <xmr:MsWGamr_cUH26330SHbg7JvhpO69qPMAkp0M2vZdL7BcEZuMoic_6qzb9bprg3fJwyk2H2icYa1-3qCUF97yj5_ZTeFf0ipH6xJTo0-Q9Q>
+X-ME-Proxy-Cause: dmFkZTEETB6x3HPxJRILDnZLS7Oyhai6wVui9gsL06wlxA+fkwuxw2N5Z5PJZENMQZjUHh
+    5OEtYVsI4iN3tIL6kAbvdpSXMeKlqGtXcosZCVSjKH744PULebfc3yx8G16eflwQ6S35/E
+    O10fsvQNBNwbFDmi+0Ma+TGdK5QSsw6XyAF/TghHjOhcDFJtDYfRPzu7PMO/8+eQwGNjkd
+    q+rlJgPiO0A75e+f7CrQF5tzIsSa2wJtUncOpCP2+sp4e4uIy3PjAK4A0LzAzijMG/s0az
+    QjL4/C2k2C21uM4ltm9RqMpXsFSA+MfEqAIxhzJCsMLMPrNzYaIm275J7+O31KVCtFFZez
+    ZZXD1CWO4X9v7UAqBAHwvgTCft0p8R35tpDwXxCUlR05BURwj3mFR9f/C14G8/pEFpEyJY
+    thQ5HiQ/R6gx/p4G3hxSyqpA3cFEmYPut2OI3e+jUNuqC3gt64mdm5CyslQ5CAjyPCHjEQ
+    RJrBrTR8ttfnQKPReszzIO1ABfuVAqU0A1cbFefNubRKcjNRUeuxKGN+J7C3crQhZMF3lg
+    cGGy0/22U8uqUuABMMjVrIj/oovB4fl4EYwILCpuS7U+KJAym+E5vEZnNpJUOdBNT4c0AN
+    S/0oJNNj9fpVy6iBhm7UfYE6/wnxJCLChj2DooKWaYo2030zqKLz5VsNXNsA
+X-ME-Proxy: <xmx:MsWGaicK24Pt80Bv5bowvNjpK3ugGlbIktS-bSePpvZg7T_QS5eONw>
+    <xmx:MsWGalqSl8oZ-OX8C-YLvcQ_ZLlP9UG6rGs7XUz5hJO821lfzkpklQ>
+    <xmx:MsWGajF6lLWxaJwAomoW_exAdznMu_9QjMK3l6z56DZ1iOwo1QVr0A>
+    <xmx:MsWGalsgF2EQqgaH_0MibXgOQcG0F3PemFOS3pPmNBqZiwvl94L0gw>
+    <xmx:M8WGamkiBp_U64hp__aeER-NcdKYN9cBFq2kf4VVZr6Wm-DVe41hTy9c>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Aug 2026 05:13:21 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3b0cfca5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Aug 2026 09:13:19 +0000 (UTC)
+Date: Thu, 20 Aug 2026 11:13:16 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: friel@openai.com, git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2] pack-objects: trace pack bytes written
+Message-ID: <aobFLJuiuM1EuNpv@pks.im>
+References: <20260817233914.8740-2-friel@openai.com>
+ <xmqqo6f02q2f.fsf@gitster.g>
+ <c6a8cdac36d2202055d637ebcc97e484122cdcd4.1787158152.git.friel@openai.com>
+ <aoaTjWMSO8og_iFw@pks.im>
+ <20260820082102.GA2973952@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 20 Aug 2026 05:11:07 -0400
-X-Gm-Features: AcwNN1U9W2qJIoqYEFbfiFGYe1p8ZKl0MVVVjJZXay0T72rOlSufWCabZ4wRQbA
-Message-ID: <CAOLa=ZReodSXjEbQkFoxcofMLq6mUOjXANRg7bZ2uEKKQn=DXw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] odb: eagerly load alternates
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Jeff King <peff@peff.net>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="0000000000007e5648065976e600"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260820082102.GA2973952@coredump.intra.peff.net>
 
---0000000000007e5648065976e600
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Aug 20, 2026 at 04:21:02AM -0400, Jeff King wrote:
+> On Thu, Aug 20, 2026 at 07:41:33AM +0200, Patrick Steinhardt wrote:
+> > On Wed, Aug 19, 2026 at 04:28:10PM -0700, friel@openai.com wrote:
+> > > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> > > index 1ec5b6f206..252530172c 100644
+> > > --- a/builtin/pack-objects.c
+> > > +++ b/builtin/pack-objects.c
+> > > @@ -1389,6 +1390,8 @@ static void write_pack_file(void)
+> > >  			display_progress(progress_state, written);
+> > >  		}
+> > >  
+> > > +		bytes_written += hashfile_total(f) +
+> > > +			the_repository->hash_algo->rawsz;
+> > >  		if (pack_to_stdout) {
+> > >  			/*
+> > >  			 * We never fsync when writing to stdout since we may
+> > 
+> > I guess the addition here accounts for the trailing hash written by the
+> > hashfile. If so, shouldn't we also use the algortihm that the hashfile
+> > uses in the first place via `f->algop->rawsz`?
+> 
+> Perhaps, though that is used to write the hash (via CSUM_HASH_IN_STREAM)
+> only in two of the conditional blocks. In the third we finalize the
+> hashfile and then use fixup_pack_header_footer(), passing the_hash_algo
+> directly (not even the_repository->hash_algo, though of course they mean
+> the same thing).
+> 
+> It all works out, of course, because we created the hashfile struct
+> earlier using the_repository->hash_algo. So I think this is mostly
+> academic in the first place, but your suggestion harmonizes two of the
+> conditional blocks while creating disagreement with the third.
+> 
+> I think something like this would "fix" it by consistently using the
+> hashfile's algo in all three blocks:
+> 
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 4a5fcbe5f5..0fdff72f41 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1413,9 +1413,9 @@ static void write_pack_file(void)
+>  			 * If we wrote the wrong number of entries in the
+>  			 * header, rewrite it like in fast-import.
+>  			 */
+> -
+> +			const struct git_hash_algo *algo = f->algop;
+>  			int fd = finalize_hashfile(f, hash, FSYNC_COMPONENT_PACK, 0);
+> -			fixup_pack_header_footer(the_hash_algo, fd, hash,
+> +			fixup_pack_header_footer(algo, fd, hash,
+>  						 pack_tmp_name, nr_written,
+>  						 hash, offset);
+>  			close(fd);
+> 
+> 
+> But there's a subtle yet interesting difference here! f->algop won't
+> necessarily be the same pointer as the_hash_algo. If we compiled with an
+> unsafe variant, that will be used for hashfiles. If we're just looking
+> at rawsz that's OK; the two variants should be identical (other than
+> performance and collision detection), so taking rawsz from either is
+> fine.
+> 
+> But fixup_pack_header_footer() actually recomputes the hash (as it must
+> if we tweak the header). Right now it does it using the "normal"
+> variant, but we should be able to use the unsafe one (which my diff
+> snippet above would start to do).
 
-Patrick Steinhardt <ps@pks.im> writes:
+Yeah, I agree that switching over to the unsafe algortihm is sensible.
+Being able to speed up hashing of packfiles was one of the prime
+motivations of introducing the unsafe variants in the first place, so
+the fact that we still use the safe variant here feels like a plain
+oversight to me.
 
-> Hi,
->
-> when initializing the object database we only eagerly initialize the
-> primary object database source. If the primary source has alternates,
-> those alternates are only initialized the first time we really access
-> the object database.
->
-> When introduced in ace1534d6f (Introduce SHA1_FILE_DIRECTORIES to
-> support multiple object databases., 2005-05-07), alternates were
-> originally only loaded when a given object wasn't found in the primary
-> object database. This was also reinforced by later optimization, for
-> example in 693d2bc625 (Attempt to delay prepare_alt_odb during get_sha1,
-> 2007-05-26), where we tried to avoid loading alternates in even more
-> cases. But as Git has evolved, we eventually started to eagerly parse
-> alternates all over the codebase, including on every single object
-> lookup, and consequently deferring this operation does not really buy us
-> much anymore.
->
-> The result of this is that we have calls to `odb_prepare_alternates()`
-> cluttered all over the code base. This is somewhat awkward, and as
-> almost every Git command ends up reading objects at it doesn't even buy
-> us anything.
->
-> This patch series thus gets rid of the lazy-loading. Besides simplifying
-> the codebase a bit, it also prepares us for moving alternates into the
-> "files" backend as discussed in [1].
->
-> The series is built on top of 010afd3166 (The 12th batch, 2026-08-07)
-> with ps/odb-make-creation-pluggable at e927cfeb21 (odb: make creation of
-> on-disk structures pluggable, 2026-08-07) merged into it.
->
-> Changes in v3:
->   - Create object database after we have written the complete repository
->     configuration in `init_db()`.
->   - Document that we might want to drop case-insensitive deduplication
->     of alternates going forward.
->   - Better explain why we have to migrate to `struct hashmap`.
->   - Link to v2: https://patch.msgid.link/20260812-pks-odb-eagerly-prepare-alternates-v2-0-522b9a5bc1ea@pks.im
->
-> Changes in v2:
->   - Add a missing word to a commit message.
->   - Explain why we don't have to handle GIT_ALTERNATE_OBJECT_DIRECTORIES
->     when re-preparing the object database.
->   - Link to v1: https://patch.msgid.link/20260810-pks-odb-eagerly-prepare-alternates-v1-0-f0fa4a4004e1@pks.im
->
-> Thanks!
->
-> Patrick
->
-> [1]: <amLgMqkqxR8mKIbT@pks.im>
->
-> ---
-> Patrick Steinhardt (5):
->       setup: create ref and object databases after config is written
->       odb: decouple source path comparisons from `the_repository`
->       odb: eagerly initialize alternates
->       odb: drop `loaded_alternates` field
->       odb: drop `alternates_db` field
->
->  builtin/fsck.c         |   3 --
->  builtin/pack-objects.c |   3 --
->  commit-graph.c         |   4 --
->  loose.c                |   1 -
->  object-name.c          |   1 -
->  odb.c                  | 124 +++++++++++++++++++++++++++----------------------
->  odb.h                  |  22 ++++-----
->  odb/source.h           |   7 +++
->  odb/streaming.c        |   1 -
->  pack-bitmap.c          |   2 -
->  packfile.c             |   1 -
->  packfile.h             |   2 -
->  setup.c                |  12 ++---
->  13 files changed, 91 insertions(+), 92 deletions(-)
->
-> Range-diff versus v2:
->
-> -:  ---------- > 1:  2adb64d17c setup: create ref and object databases after config is written
-> 1:  6255ac7964 ! 2:  736b8d8eb4 odb: decouple source path comparisons from `the_repository`
->     @@ Commit message
->          database. Instead of using `fspathhash()` and `fspatheq()` we resolve
->          "core.ignoreCase" manually and then use the correct comparison function
->          based on the result. This requires us to migrate to a `struct hashmap`,
->     -    as the khash interface does not give us the ability to change these
->     -    functions.
->     +    as the khash interface does not give us the ability to pass an arbitrary
->     +    payload to these functions, and hence we'd have to use global state to
->     +    decide which of those to use.
->
->          Note that we can unconditionally use `strihash()` to compute entry
->          hashes regardless of case sensitivity: a hash function only needs to
->     @@ Commit message
->          case-insensitive equality.
->
->          Overall it's quite debatable whether all of this complexity really is
->     -    worth it, or whether we should just linearly search through all sources
->     -    to find duplicates. But the mentioned commit cares about cases with
->     -    thousands of alternates, and a linear search would of course regress
->     -    performance quite a bit. This doesn't really feel like a reasonable case
->     -    to care about though, but I don't feel comfortable regressing it anyway.
->     +    worth it, out of two reasons:
->     +
->     +      - We could linearly search through all sources to find duplicates. But
->     +        the mentioned commit cares about cases with thousands of alternates,
->     +        and a linear search would of course regress performance quite a bit.
->     +        This doesn't really feel like a reasonable case to care about, but I
->     +        don't feel comfortable regressing it anyway.
->     +
->     +      - It's dubious whether we should handle "core.ignoreCase" in the first
->     +        place. The downside would be that we might add the same alternate
->     +        multiple times with different casing. But this is an edge case, and
->     +        it's not even fully fixed because we don't resolve symlinks or
->     +        mountpoints, either.
->     +
->     +    So for now, keep this infrastructure in-place while removing the global
->     +    dependency on `the_repository`. We may want to revisit this in the
->     +    future though.
->
->          Signed-off-by: Patrick Steinhardt <ps@pks.im>
->
->     @@ odb.c
->
->      -KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
->      -	struct odb_source *, 1, fspathhash, fspatheq)
->     ++/*
->     ++ * NEEDSWORK: we're using "core.ignoreCase" to deduplicate alternates that
->     ++ * _may_ be the same. This requires quite a bit of boilerplate for dubious
->     ++ * benefit:
->     ++ *
->     ++ *   - Duplicating alternates should really only lead to regressed performance.
->     ++ *
->     ++ *   - We don't properly resolve symlinks or mointpoints, so we may still end
->     ++ *     up duplicating alternates.
->     ++ *
->     ++ *   - The value may be lying, in which case we might deduplicate alternates
->     ++ *     that are in fact not mapping to the same directory.
->     ++ *
->     ++ * We should investigate whether we can remove this whole mechanism outright.
->     ++ */
->      +static int odb_source_paths_cmp(struct object_database *o,
->      +				const char *a, const char *b)
->      +{
-> 2:  4743659d76 = 3:  a9db918b49 odb: eagerly initialize alternates
-> 3:  4a62dde9d0 = 4:  369a566a6a odb: drop `loaded_alternates` field
-> 4:  e978a5a47d = 5:  a0a22a0bd2 odb: drop `alternates_db` field
->
+> Of course this whole thing is absurdly pessimal in the first place. If
+> we are just going to throw out the hashfile's checksum, then why bother
+> computing it in the first place? Because we don't trust a disk write at
+> all, and actually verify the original hash computation as we read the
+> bytes back in! So we'll actually sha1 the written packfile three times.
+> Yikes. I wonder if it's really worth being so paranoid. But that is how
+> it has always been.
 
-The new patch and the range-diff looks good. Thanks!
+That's... awful. Honestly, if we cannot trust what we're writing to disk
+we're going to be kind of screwed anyway. We don't re-verify loose
+objects, refs or whatever other data structures we write to disk either.
+So doing this thrice here feels wrong.
 
---0000000000007e5648065976e600
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d6cee469c8221df2_0.1
+> Anyway, that is a bit of a tangent from the patch in question. I think
+> either spelling is OK for the purposes of this patch. If somebody wants
+> to pursue harmonizing the paths (and maybe even doing some timings to
+> see if switching to the unsafe variant is noticeable here, and what the
+> total cost of this triple-write approach is), that can happen
+> separately.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xR3hLZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM3E4Qy85dDlHOFJ4TlpaWUtLSEN4S1lTR1oyd3NJNApSWnord2hUbTlq
-b0Jrb1VPQys5ZTVsbUxqQ2gya1VnYUoxMk1KL3BqYXRZSkpuVVlFdllpMktaMmJxd3RhRFluCjVZ
-WVJxRjF1NlVaUzJEekhTVURsZGNVcklJbUtMSWNUbUFrR09ORE05K0NUQ2s0ZE0wN1BkWDF5a2dL
-UUVuUkcKeFdQazBFeVJJYU02enR2TGE5RUdHbUJRVXpmQlM5MDAzN1B4TGxTTGk3TTJnamVLa2tw
-aFA4QVdZK0hkM0pJbwp0cVFCc256Z2NONXFBSFRUalVnMUJPUk1sWHByaG5ib3dmaDFlTS9iZ3Z0
-bGRuRUYyd1JrbXZSeVN0YXBHa2lkCkF6N244UzVKSmRjMi9tRlcraEVuajZVZDBJR3dYUXJpL3Jx
-Z0EzdHcwSkxuOFcrbkU5dUowbkJPK1FOUnZHMHcKei9LeUxrNzRuRFpOY0xsNjIwdllwbjZyMnRa
-TmRXTURnSk1CakdoMXF3aUVkMjVIVGg2KzlMRWtsTTU0ZXFGVApOZkJzYlovOThwUW4wb2l1Nys1
-QW1YOFBvZm1rbFM4TVc4RVRORnVSS1VZdGJxSmVhTVc5eEZjZXFSZUdFL1NBCjk2aGNVM1FXZEZh
-bmZVZDM2OG1JUFk5RjBlTlZacWk2dVlYN2REWT0KPTgrZHQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000007e5648065976e600--
+I agree that this is definitely out of scope of this patch series.
+
+Patrick
