@@ -1,84 +1,84 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E003B5835
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 06:46:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F6938E8A1
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 06:46:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787208402; cv=none; b=DT33HdlHf2GVGi8Uud4DSDIwNB/M4kxuYWf+3K7L4DcpBYjaklOryM4nWvZID57ya0Dif2/BF/Wt9DKf+BwNWuYljWlPK2x07utUtzr8GtJYCZ23AZwyE0Uh0oiQi41p02J42MDthfRybqjiVlExBoH3ID6l8V9z480BGiKrZ5E=
+	t=1787208406; cv=none; b=DldRzCUqUN33esj3tXuf1Vj8BBCJNweL7sZ351OY41dh7rjooPLjsbIsC3FSEGlOiAoW/jZuYGzXiOAFZ0wQzSyPI81uZWD+uoP9QvArACAZR/7R1YZRDqqiYDbBfMwPqpTmMnzbyKSv6aLgOkL+Eq+l2ULK4EwZjf/gY7QSg60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787208402; c=relaxed/simple;
-	bh=PVB+oGjRUVPXjl9H++rsgho0p00aGZ8vLzGvUIPXFXg=;
+	s=arc-20240116; t=1787208406; c=relaxed/simple;
+	bh=cDimqHHy5hbFDfdEZ7+BGy26mCZ4XirPSY0KtSjxPcQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IXBVHo7TCUrP+a4OhybqjkBKbJQo+ZjktRqrMXUTLIzumNn3LsZjAgRBEgdzUAXQANKDP/HKy5rQOjYTpNNZKWt5A+gSit0lxKCOEHmPoBH6G3PJ6D68hWThK/jJmC7Cb6FSpppseq37hhieJXZF5erULUXqkQ1lHZwQjHU6tjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R1emazm6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tk9LcvJ6; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=u+ibde9eGhiEdEhYQNQ82a9XbGoVdyTr26k4hN5XDoMLynIb8A8HSI6WXGZ32rWHzSq9hjctMAzfdpfE9iGPC5JdN46b2kcYmfBZaLBp7PZG5di5FGxfziAdRD9jYpDbfDo7bJ7YNvrHR1iB4RzmRzzM2A3pZRPptKHfh02IVdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YlRAWguA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MUBo3BQP; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R1emazm6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tk9LcvJ6"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8E6CDEC012D;
-	Thu, 20 Aug 2026 02:46:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YlRAWguA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MUBo3BQP"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DD8231400100;
+	Thu, 20 Aug 2026 02:46:43 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 20 Aug 2026 02:46:39 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 20 Aug 2026 02:46:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787208399; x=1787294799; bh=IvdPgN+EQ9
-	b9aHlCxCBFnvvt7+deT69WwwOpPJg4n3I=; b=R1emazm6I+0YAGWfqQcRk7V9Fg
-	lOQRq8EINMMpmK2ILhRctdfcWDJamfoSmaRayZTSR6mhE8P7cMVHw4fUxuHPVWT+
-	wt63ciYDkoQY66TkmPDWoMXXPUoA8IXpokrUPml2YVqZ97H7mZffJEJIE09OyWkK
-	VQeFBY8lkrQz0B1dWNVN7MAUDNQvFFM6jj+hPEHpiWTRGASrkh/5znqQGiV8bInC
-	i0Vdt+QQW/SzBcluty/HzHiIXe3q33jdm/m3NJUxftwQ1kN73jkguJsHfUlv0u4o
-	ODbcPF4TdgwZD4crvZmPDjbxkn7RDS65UEYj5L+LoCxzQUi/snH0PGkemjug==
+	:subject:to:to; s=fm3; t=1787208403; x=1787294803; bh=UEr9GHNIJx
+	F86nrWCXAbIMnHWVB/Jy0QC1En6J1577Q=; b=YlRAWguAABYlBRNjtCnkGdG8z3
+	fonGuvqgihmFq0RkJka44x0TO3LY9XbgtumFlAaq50PZqoyMvKeslXihdA4cVV1A
+	ykaelKXWlBqvpX6VSxYwmXIIXv4zzg7CQE46QIIG98OAWzaX+RAM79tbfUweLnX2
+	j68FuSy35rSuVilAY2PlLW0Xnw5ApMGDWyMbil62fcIjwy5J5+NKbm7JLDjPssim
+	wtu8ZXbIULPrCr4wdQwTNmYYJFcuNzgvakH52mFV38GUpKiY6jrZpqh00NBU5CH5
+	UgwPTp/1sXGin2LOkTveY+YYR1mqz9x4arEKTVm8PVXFGG4mt6TrOd69vegA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787208399; x=1787294799; bh=IvdPgN+EQ9b9aHlCxCBFnvvt7+deT69WwwO
-	pPJg4n3I=; b=Tk9LcvJ6IBlaQ9rh+gk1v/nsgXWBUgApc3x9iDUQ0w3uJSOdZN1
-	b0lU9eruVbEiS3vkpttKODWR0ziqXy+TZnXTRPqj4PDk49QgVAGHSSF+4wAzl4+j
-	+G0iJbEa7m45FQ1/Eq4UD0WcdUOMrYmeNNVG8aQ7jWTFfBY6AjrZFZ14wMaCIP7R
-	4XX564DblRDp0FUuQnzxDKmDy1V5Qeev4S2wXUhMu8n0LSkh6R0DY/udIZHL3ZB4
-	fMtvZ3O4k4UD1njkQYp5/XLYHcSWgk2cflF4rBfZIBVpuctJAYwk2MBRdatBnVwE
-	gCB0ek1GcNWbTGdAxJ+uab7pNTBtXur0Tdw==
-X-ME-Sender: <xms:z6KGaiueSg6rO0TV_23BtOjLa8FaTCALGRRrtxyL8WQUwFriITAyWA>
-    <xme:z6KGau7xVes40uDxADhMbs0TrtTxe8QasBMwPLMe-uY4lFtgKsNvmbVGFEZ66ykH1
-    AZHrjKRF7A0MPKlg6NSkvaojMRSjd-gtYNPscDgQRDRPbSvz0UD>
-X-ME-Received: <xmr:z6KGarLe2QpkaZYrxBP050rX9bF_JUyWUhc2rdREcrdPv6Q6co6IsRrlc-ZSXbwTKPYbNlUuzaCNaqdaK0mTJFJ97vYzYJqfa2JaX1fF-A>
-X-ME-Proxy-Cause: dmFkZTEkoe3yqOASusvPWtl0bxl0KxuqVZFU00oQkBEWFTAM2Cp7k/dcu1RVmgISAB0uKg
-    pEdN2t+CruQFGhJZfO6waIYz9c31R0wjIf7lud/WcVNd0HkfIany+8Xr8WSJDHIJzDYChT
-    U/GgQCtLffvN7SGj7QoRwpKXo+11cN/XLsSGou/lxKeKlC+9jEjifi63YhSPseBjw0oIeo
-    7utCnL3k1399zKxCqO+1vBeO7etmf6JZf1OXp2q/SZ4F2Ka3XyFXCuNFi4lOGyGKGc2Lf2
-    Fu78jJ4Sq9nJTCkSkR/f0fOiXQPhcsumgpzGzp3TcFywCW41jT/Ht9WKr9F2qQVLULyKpl
-    z0FzKVTWjlGnPvAyH5FHG4uyIAxNvkJVWB2fP97TjwLRM2pghRodzppKi+6SxGpaFEiDDS
-    Uzhk/QX4xucNIg7E+fLq/2X/9hwaj6HC0eMS6jejRuP/IdC/8Ck3B0vZ/t52KzKrgHA9KT
-    lPC4fjWbUhM2P41rFUCElJErZ+CdxgqYVJXbOU+0IxMw7UDcKQuhlsLGLdoPBl1wNaBUnN
-    0admLq4ZA2c58xoBqZBXjnpJS7SCcPfP3BPTi/B9ddGO+/W2XvnOasL2nFhi4oOx7J6t4p
-    8mNRLmQ8nkOhCrPXAxhkv38tlrAuaNBY+MRiNLOOGmLG9A+wvia+d31AfHGg
-X-ME-Proxy: <xmx:z6KGam5Buu0-fZeV0Dtry3gHblg-LacuxHpjP6JfX4JPpPHm2KpHtA>
-    <xmx:z6KGamwr4K7AGXlBqFWuvVQLS2IKNKEROwS55MuTlyIW5Wud17rliw>
-    <xmx:z6KGaiYGl5bLdiSO6YItIvxYR5LeTJX2ZDdSdkIgIF5PkTWUy_8L0w>
-    <xmx:z6KGagTMrtrwBSYDXEnYXEj3IKy56tTDwumsf8MlzbQvglmOIAzpiw>
-    <xmx:z6KGarzlIkm0p3t0yxnBzd-ATm2T9PW8Mz3rGqj0S2yY27B2D-Bo5n4X>
+	1787208403; x=1787294803; bh=UEr9GHNIJxF86nrWCXAbIMnHWVB/Jy0QC1E
+	n6J1577Q=; b=MUBo3BQPMhG5VCONAGj/w66BScS9gHvXk65xWhVsPJs4p3c3pUc
+	v+lSHaspwi1utF/iCpJWjArmvgfU4GVv3aF8Gzi0IVK5RlOW//CpFGLma0nGcWif
+	M2BRhB4zfDnX5Ec+dl1YCNYyCBZygXyysO7g13uVTSoIrpBJqfGcd+SEoHH7MWwU
+	mA0ZKlxascTLFK837L90XJUstckNKn4xAS1GWZRWtEnky0TdCSOgX8FBCvLDJm/R
+	2ztDfl/iNTdaPjASxUIRBtp4W8w7dfqO/IZ5tDdbOedtcXL43xok8Hq2jlPRfAG3
+	4Iiw8p3aWZOWTONseQleARKVnh/3lNHLbJg==
+X-ME-Sender: <xms:06KGalSuenlLC_G8ns7vjOGlKCQAA1qAfNt-LAqdMs0hOpBgUvU_oA>
+    <xme:06KGamOpHTGLkKiNWlhDPTb9TNktvoBnpYCEDTbbabhabGrHpVdz9YGbcC4GPm60k
+    jcFk1XUjDX0llRCY2Hu1M9b-JY8OftU7tT8suiDiHncTvz9DLpStqw>
+X-ME-Received: <xmr:06KGaoMZksUd1vYZglyGflw4LSn_St2EbZHpAK7nr49Kw5zHuU_sWiE0WibVASYzJCH8U6R38VegTshPaq5zsaw3rp2nokvsTZiOW3RNsg>
+X-ME-Proxy-Cause: dmFkZTGeoSTTY28wrp63u3iaeJPkVnv1Q2mi7KQ7HuCwTRUDO5dmKQdYa0OwDCk+abhfIh
+    CIEg53Y8a1D+SeKTVnNtGh3DJwmfUZhTlbZjo0cPLmkI2XU3bVxJvOFCFNO3SLhNQq7RpC
+    3pMgWTCKkm7Kg+7HURXqP0DpuzYb1acTq/mu2T7kZCtKT1TFZ4wKarOVTLWPb7XMdRCPNv
+    no1YSwwj73MS//FvPKBzLAwZpZL/P1zwAgDCctNlYmCi8y0m2QQElduKfLfUlmm064XIXX
+    vftha3pZZNslTmVRwftukMpi/M8QBG7n6NMF01PuEFoAFp24aLsQ2IbB2uoI3CWmeQyfPB
+    sQ+GZlyC7fJzj3FbJHtyClhavjJb1faxN3VYjWFLWeBf8dbpnhtEzVuFPaQvDzQet5Kmmq
+    FY/f1+mFbXzuO6ZTJl8o/Xuqd8YsCKMzCN4ax7UW6oy1pzBGu8AhONtwrKCaLCE/jUxHNH
+    dCxCzz6oSG1KtKCgmXkxSEAQmTQjQA9eneGUD0awpnruUukDohB58iL0s4la17b2ukTgzS
+    z3poS62C5n4WuT6x7fhB9TN6MvdakhQVhd1HIqK2mE3b3aKG3zrm8AoTVsVpH6exaYs4Xz
+    SvBslEJiqvXwKpXWLQUA3+fnq2AB1vnhH1KekkhzglOsXJi609cPRSPsMIGg
+X-ME-Proxy: <xmx:06KGamsSr2lAWfTZy858toP1DivZBJDUO7uVJrEhSKu4-PnOb_VCxA>
+    <xmx:06KGaiV1HHk6zkMQReGxLSZIV2Y846SSxVS-_HUs_crCegkgE3NFYg>
+    <xmx:06KGauufCkFWZ0wmGG_XXB1W8bBLGoF_kZo_YnwwuyC7PAYsmeGBMw>
+    <xmx:06KGauVCquGGF1az2pBxJQUbJSnQIHs8IJV6R_Zg5dgIhxkSR23NQg>
+    <xmx:06KGamPNNAT1CedZgYSQJFgIQlGpImTTnEiX1A75CIlS8SsRh4CY-eJ1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 02:46:38 -0400 (EDT)
+ 20 Aug 2026 02:46:42 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 08e0cb72 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Aug 2026 06:46:37 +0000 (UTC)
-Date: Thu, 20 Aug 2026 08:46:35 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 44d68ff4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Aug 2026 06:46:42 +0000 (UTC)
+Date: Thu, 20 Aug 2026 08:46:39 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v4 2/9] odb/transaction: add transaction finalize
- interface
-Message-ID: <aoaiy1wmSXjL30-m@pks.im>
+Subject: Re: [PATCH v4 9/9] odb/transaction: add transaction interface to
+ write packfiles
+Message-ID: <aoaiz7M1oGboydY4@pks.im>
 References: <20260811175415.2044235-1-jltobler@gmail.com>
  <20260819215311.3880274-1-jltobler@gmail.com>
- <20260819215311.3880274-3-jltobler@gmail.com>
+ <20260819215311.3880274-10-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,41 +87,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260819215311.3880274-3-jltobler@gmail.com>
+In-Reply-To: <20260819215311.3880274-10-jltobler@gmail.com>
 
-On Wed, Aug 19, 2026 at 04:53:04PM -0500, Justin Tobler wrote:
-> When committing an ODB transaction via `odb_transaction_commit()`, the
-> staged objects are made visible and the underlying transaction is freed
-> at the same time. Coupling these two steps does not leave room for any
-> post-commit transaction operations to be introduced though. Such a
-> capability is useful if an ODB transaction backend needs to hold on to
-> lockfiles after transaction commit until references are updated, as is
-> the case with the existing "files" backend in git-receive-pack(1).
-> 
-> Stop freeing the transaction in `odb_transaction_commit()` and introduce
-> `odb_transaction_finalize()` to explicitly clean up the transaction
-> accordingly. Note that the finalize interface also provides an optional
-> callback for any backend-specific deferred cleanup. In a subsequent
-> commit, the "files" transaction backend will use this to remove ".keep"
-> files generated for packfiles received via git-receive-pack(1) after
-> references have been updated. In preparation for this, the
-> `odb_transaction_finalize()` call site in git-receive-pack(1) is made
-> after the reference updates are finished.
-> 
-> All other callers commit a transaction and immediately finalize it with
-> no work in between and cannot meaningfully recover should either fail,
-> so introduce an `odb_transaction_commit_and_finalize_or_die()` helper
-> that performs both and dies on error. Call sites are updated
-> accordingly.
+On Wed, Aug 19, 2026 at 04:53:11PM -0500, Justin Tobler wrote:
+> diff --git a/object-file.c b/object-file.c
+> index db63587f6d..265c5f7a3c 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+[snip]
+> +static unsigned int get_unpack_limit(struct repository *repo,
+> +				     enum odb_transaction_flags flags)
+> +{
+> +	unsigned int limit = 0;
+> +
+> +	if (flags & ODB_TRANSACTION_RECEIVE) {
+> +		limit = 100;
+> +		repo_config_get_uint(repo, "transfer.unpacklimit", &limit);
+> +		repo_config_get_uint(repo, "receive.unpacklimit", &limit);
+> +	}
+> +
+> +	return limit;
+> +}
 
-That paragraph is a bit hard to read. How about:
+Okay, instead of assuming that we're running in git-receive-pack(1) we
+now pass this information along via the flags so that we can pick the
+correct limit for the given operation. That's somewhat pointless right
+now as no other operations use this infra yet, but the upside is that it
+makes it obvious for how to extend the mechanism going forward.
 
-    All other callers commit a transaction and immediately finalize it
-    without any work happening in between those two operations.
-    Consequently, they cannot meaningfully recover in case either of
-    them would fail, and spelling out these two separate steps with
-    proper error handling would be quite repetitive and pointless.
-    Introduce a helper `odb_transaction_commit_and_finalize_or_die()` to
-    help those call sites and update them accordingly.
+Also, we no longer cache the value and the logic to derive it has become
+a lot simpler. Good.
 
 Patrick
