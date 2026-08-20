@@ -1,225 +1,157 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C824441D652
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 11:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222884156E6
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 11:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.170
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787224658; cv=pass; b=O/c2FcwHWVaEWIm4OWQ6cmaee0RX5t33Mjt2VvxUgrm8baKBixDL6ovoor/PhcnA+DeKjsdiJ79mMsMvzn0pP78LgtkNK/9oR6wbVkceu1TOk7e3w4YyM5P6bszZlJioKXMyeLbjOrQab1/2kw9W+LjS6FID8fNYhdlw0irF4Pc=
+	t=1787224794; cv=pass; b=B3EwBbuevMAucj05g+ZJsLv7GT83E912xlosPnhv2YaIsrEXhIR2X21gohzbd3oWHgzN+iJSrTKvK11mDS7ialbW+/VpzCUXvrejiINJM4bNGtLPZuRw96VMId8EKDxDuDh4hgD5q88CHjqdXciCJZK9tOCx5K0lBbxgzbXrgis=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787224658; c=relaxed/simple;
-	bh=8ME7hFe76bzmFxYQFlL/B/hmHJPbmf2ZI5bH0kCdDH4=;
+	s=arc-20240116; t=1787224794; c=relaxed/simple;
+	bh=wFOGr6uvL1POsZOAn1cFhawfUEam5qEptndLZqwP2rE=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hW6498ZVocCkimAyuLNQB4hQAXMJ1CEtW6O/qn/KPptLUOOfxhREyIrd2XbU5FGQhDwAY4aoTanb/O/j+7VL1Fu9XmsngPzwO6qEPogTkP7C7CqMIyyVUzJnM5d/qPdyxomjTPRUylHFjMqybPutXJ8kCcYBn2mWN3nGbbQK/+U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dqcoUZE5; arc=pass smtp.client-ip=209.85.222.42
+	 To:Cc:Content-Type; b=iWn+rY1RTHPXTmz2cse6loFQiWxInfBG+1ratn5fZYT5t5GV8q169hBEnIdOUrJ7vV89rs/qeBEXPuIz3NiKZEHlua5N4iRh3P60uKSGSjUrkKqnPh+Oiry+jIZaY4boBCEV9N2JUvpTvSkKGtaNl1mGHeiHe40fgFo9CB+gn5A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rj5rbms3; arc=pass smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqcoUZE5"
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-97bf910aa70so603384241.2
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 04:17:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787224652; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rj5rbms3"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5c276bfce7eso1801463e0c.2
+        for <git@vger.kernel.org>; Thu, 20 Aug 2026 04:19:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787224787; cv=none;
         d=google.com; s=arc-20260327;
-        b=N37Jnc1+NnOtvlj5NhgtArPwIQv9iUG1MoH9BxjUWlf69dH6no5miMqiDGC8S6zleL
-         316hjStZ5uRx9TucKZOcmup5vDn9RCjWJlYeOt5C+B9QExCbgO7eRANy5/9Y/3cHd8me
-         7uGrr1nIu36GSMPIUCJ3OVWlWqxHHcPGGhS1tA7RdTHJQzyR9HBjg9qO0TlWSoi77KCF
-         rGoirMUAmR6mss4zSemBX7piDcw5/IszQCkA4GGTz7gTe4+o4bX1k2j+7oguexv8RjgA
-         u9c52HKArQZvEJHyFp4cPLZxthOH6OdmgTURZu2r/QQ98Ppb14GhDHF29oVloaUuKL2q
-         YClQ==
+        b=NXzCj+h90WHc9slviAdEoC8XeU+Xfe09ri8+y5QzJmmaB3/+HECx+btQTiPBxearaJ
+         97+yUwAhDNK0jCafZ7o6ER7C3YQaoBCQwcUdANBrIXxFtLhwEiB5k+qPcGyteMdh23HT
+         C4O4SLxZCNz7PXJSPKIlz7dM0EArCz+SDSg1KmMt2hbmkb5tCapmFt0X6SvGjpN7Ytqv
+         plnE4DbwDW86Zp3X8G9XjpaHalGRUqKwmN0yK19w3ug7Gi3EwpjHiAJCvJHoSYOZvSkd
+         yyv+5XNYWwUyca9biFzICQ0/hcNO67q/x36bxNb7K/pEsqkH8EXP0BlaLfEBNd1m9Nib
+         QOlQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=I0hlXU4AVZjMknw+ln7kQHDpqnoEIjIcrQcKWU7xfow=;
-        fh=w4+qF5gsWn1M022jRx1K3oJNq7GE7E8n0Kzgv9QVkeU=;
-        b=OCHi1Be4rWsQtpUoQfPSy2VvDFJ62ina1g9GRzb3eKWyYBPuI0vhuTk1RTl0zQIDKI
-         BrAaKXGUhWGtmVJ0IJ0CgowTYf8orSUl28eXVPSvDQq/Nk/fs9VJSBYoah3uHmWvGHdf
-         yeULW4J0VLh5YR+41C4Z0wfDBf9tsNCszWK7NVcJxm9KjjpQ3CpboQSdqQG5qlMcpzJL
-         FdoEuoMrp4SgSLkcTkwdWFk+yRIQRWTMH4epbYPIUJ+pD2WI/zChuK8MtPolNGUZUzqZ
-         LNoJqtv1dEJvLM34k/GZLp919kyaCppA3zi0pcXe2yPw2xCrLh7GhlXXQRMn1C1eBB69
-         lodQ==;
+        bh=b9d7g5XHtE8eu6gEOLFpmrUJK6necVyD1+sDU5+6rKI=;
+        fh=6DXZ+Op0tXqxntFnPK1WqGQqRpz+8e8kfJAMfU5umrU=;
+        b=InMLHeAsdzWheN0/XiyDeXL6yS85ZgOBQGkNutHO2WB8mlzX3pC1UoOCSEcBeyJ2L8
+         OP1Ho75LAv/1JvKM3rHvq+5nphn6adUKJ29rvH+hMSLgBnVRIW0OVxMj6OPTLYHI6yL1
+         v5wCW/BTu/UtdTi65iMDL5doDrkrCraaYCJ+RjF1zDr7nGiMGh/iOfX8uxWjIZ9ht4ia
+         ggQKSqIya+6bxfG2nsD90MO8Skd10+46ODlpiZqPSpAiJSYENPrEnZOCWYliK+07WWNf
+         WzUAlPaMzy3MeL3pCFcixxTVl3Dbol3geC3OUWbjmfJNGeIoZwN8ZKgalaxK/Xfpqh/h
+         kcmw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787224652; x=1787829452; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787224787; x=1787829587; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=I0hlXU4AVZjMknw+ln7kQHDpqnoEIjIcrQcKWU7xfow=;
-        b=dqcoUZE5/yRhK8q6+lg64T6f1HPEr+g/U0w0e3k+kM7gb0gtjU5wsOVu/tPB7jGEY1
-         YP3ddJpqA/A5r5M2RFgj1TZozq/Up3nsRjl3TNC9JZsEyBlRNHLW+mbw/rZX6585eCNJ
-         nst/Q7G99JLrmGoOEkivd76wuCNT7HmfLdIthy/3CLVaa9Ha/71OFV/wZNs0JM6GDc/o
-         Fswr9N3GO+cxZOIeP+T1J2+5yaLeECcG4SYcQlXVmuLzEWLQkJBjYafN3TO5Dbb+KNSC
-         ul2XkD4l0PtSUsuDBaxgv3huvlcQBNR9FVGKKdxNhn05eSeLWbqzwJtYZ357TI9yk68u
-         Bo7g==
+        bh=b9d7g5XHtE8eu6gEOLFpmrUJK6necVyD1+sDU5+6rKI=;
+        b=rj5rbms3AdXZsAooJyrWNHq6sF9sqEqSM768JjtW8VhWEE3c+mJwa2u7xIL/YYduwK
+         0gpOycJEmlFYxS3HGpjmTjK/zNG3YlMztV5vs/QRaMU/3Ujuy3dq3uUFN6GssbutkRMN
+         vCBPw7jnGe2CGdMFXOzXVtdPjG/+Vb7kiGtM6FIMvM4jbWBAAjJllzmDshHjKoDnvWaz
+         gqXqcE6GzL4YajZKVzkZtv6MOFIG5W3wX5IQTRSa4gJ2HgYcf0o8wcbnkUXcb2TKV0fx
+         m5T0TvfriYuauoNdTtgUxdlmKz+g52s6JbYe1tsQUJbS9uFfpddzyVCvfMJaG6UJ1yWW
+         VP1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787224652; x=1787829452;
+        d=1e100.net; s=20251104; t=1787224787; x=1787829587;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=I0hlXU4AVZjMknw+ln7kQHDpqnoEIjIcrQcKWU7xfow=;
-        b=PYwMR9oG2YzCdvS8asQOR76NTr/R/RkpFfA6eireWIuDDmKqkx4VY7PC9DUgvTDsoC
-         6SlGAvQ4PTBES0e0eVi7pGDLKkEfwpONLLAjeQHuJwpTOUTYIWB2NKHAsQ7y0KhpBHMd
-         M7V2Z0aXjG5F3KXNlDcCto4XUcDLghusqW60J0psDOGzFEBUDIf49Mdt8oQ2I5e1oCm5
-         AcIXVnX89hq7pOcq3A9LY/hq+40+9oVU/co/qH0amif1GeKRdUw8VvaExcEiqDSpDW+w
-         ELSuZjBA37kzmYAu5Z1IpBNLXhNkI0HomzN1HJgxc04F/YYuRHdYoMV0bcce3z9Y+CWW
-         5thQ==
-X-Forwarded-Encrypted: i=1; AHgh+RrzOzP1rkR2qYQdg1DN9HQDyvlpEDccReap1Rciepp6jINgSaNUnYIJU0E6dDaW/t/s7kA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzsfOPbCUyCo4r/4sngpAyFIGuy6goF8xB+PwztxUL6bpKedCLM
-	P3jredkI0Q4eFS63QlXPqf4LMiH3/nubvUhCzTUU+8ziXuEKG6LumDv+SrnuMgDkBff3Pl2OjGz
-	gvX3jql2bMKZHuWStSutV25pM3GUlJi0=
-X-Gm-Gg: AR+sD12l85oQVr7e2r4cHPm7nMY7IPjQSPpIRSIgi5qANav3Nca0httqq6vJ+lxn4eO
-	5XcsgeQKr5XcwfgKM5sKA2jcxN6Kig+tHpYb/Yia3+DvAiia67LPROzRX2YeLIupTX8MdHl91MO
-	jnZ7U/0suiCXB7sJz+Up8iqFtLF5H7abp4yN08+OiCXxR6s+s52ZJ1qvhTxO8Mv3ziIqEF7Qx+d
-	NPgH/6dPLYLdqWCF0eAWEKpBFk0rkPbwBhGgHYXUCUU+ptkUBu5wYV/hcF0fCKGMqESttA2Cr0v
-	USZOSemqQTbvSZsG0apAp1tfa7Xca5RASt6I1ssqch7Fwb4CkEPzMWUlVzOLv+cekh6vujWnf3S
-	1+YPUBxf3N2MpmytdET/17+MBfNzqs3E5OHw=
-X-Received: by 2002:a05:6102:8086:b0:738:d6c:7104 with SMTP id
- ada2fe7eead31-777f5a51c97mr3900701137.0.1787224651837; Thu, 20 Aug 2026
- 04:17:31 -0700 (PDT)
+        bh=b9d7g5XHtE8eu6gEOLFpmrUJK6necVyD1+sDU5+6rKI=;
+        b=Fw7CR0suYkL80+XEN26DSEpTR4BsZAltDZ1SMch3rNkcBh5p+TxTQEwYeZCIeoB0Up
+         odhWaSnCqCsBVMX1i7+c0Dt+YA0GqjT4oc9PL1qhXBxSpasrIHIgEx3NOdO5AW/XFwPO
+         ulywHEI61MzksKZvhJnbR3Rcdt5//Q7t1X9f8qlBf3mXAoc6oi9EuJnMR2FnkYaGDndR
+         1WLBz1ywZo0E420SoEIJo5vcdxYNLiRmeXhuog7RzX+I1TSLMMlBOX5wLJ7hiDGSjBRD
+         w4MvaixgQxKmp+Jhl3GBaYBaK8PQJJPX3SdrL6+bc0pGLKIG8XyPcE0gP3hIqQXkfzs9
+         P2aQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrIr2Zey2x6sUC0jjF2Py4Cz47sCzBozpL4ZOkBgjI3fX/PYBhWEs0dNFenQjOSMaxHXro=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzh/zgcHy2Pxiu44lXK2c4yI2JLU2TLmqiPzDA5symAGe7q1OwU
+	S1BxO1xrsuPjXGuMJWZSeK/8KXDUzn0pZunfka4rMvBE2nN5TeS7s8vZuGBKC/jW+3d91aqxgF2
+	lArOyVWhODebByWaO1r1FQRebuY7/UKI=
+X-Gm-Gg: AR+sD12PqpTZ0P2y/XfCmWy1dYl+UNzc6jkdS/WECeokHv+bBjSt9ldSdI15As0+kEN
+	4mHJGGrT3VVJ4pn4RjpqN21x5Kxm5Wvyw5aFxPliToW0WF1lJNKOMcvdZoS0g7lIWvsc2jfLOzk
+	qEbI8II57tTzYr0ZBehRDZJbio19wBctgXR7B9WH8a26jTTNLb9qn4ue4DZ9LY5PNqhX6UdTLxc
+	LDf1JvS7dxpsUwHat1CQCVdfP3Wj2XY++OtnCBoEyRb2+uhvSjtqB9zvRDIYIXRGn3rDb5UcAKE
+	Dl4cNrUVSBdaa4N001Y+DyW1QKu4e57OSiIjqSaOdK2H/9mWQz45eJlDLlyyaP8zdL5Yodaof+6
+	qOD37bupGRgyT3rIDNCP4I+BLFxHBbiS94TGwy+inrzERpA==
+X-Received: by 2002:a05:6102:5f0c:b0:774:f009:e93c with SMTP id
+ ada2fe7eead31-777f5c6160fmr5370494137.0.1787224786785; Thu, 20 Aug 2026
+ 04:19:46 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Aug 2026 07:17:30 -0400
+ HTTPREST; Thu, 20 Aug 2026 07:19:45 -0400
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Aug 2026 07:17:30 -0400
+ HTTPREST; Thu, 20 Aug 2026 07:19:45 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260820-b4-pks-odb-generate-pack-v3-4-bc42252f6169@pks.im>
-References: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im> <20260820-b4-pks-odb-generate-pack-v3-4-bc42252f6169@pks.im>
+In-Reply-To: <20260820-b4-pks-odb-generate-pack-v3-6-bc42252f6169@pks.im>
+References: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im> <20260820-b4-pks-odb-generate-pack-v3-6-bc42252f6169@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 20 Aug 2026 07:17:30 -0400
-X-Gm-Features: AcwNN1WdWhoCmXyJzz2cvGwQRSTVjHp8lt42pDUxOAUfiTiGHvpTFqQfQJECDHU
-Message-ID: <CAOLa=ZT-Tw2gMVCBS7b62VSkSJAHyVwO7dffsFW3Q4QzQe1JZg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] builtin/bundle: refactor option handling for
- progress meter
+Date: Thu, 20 Aug 2026 07:19:45 -0400
+X-Gm-Features: AcwNN1VqopJbQyVeLsJesIvaSJw6-ki2zWfs4SSAVoMsYm1f2gH7EZIzJmDp9Fg
+Message-ID: <CAOLa=ZQ7-_=T1NSXY433oME8OoddJOuLX0wmdbk2ocQ0JTAuKQ@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] bundle: generate packfiles via the object database
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
 	Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="00000000000081caef065978aa4b"
+Content-Type: multipart/mixed; boundary="0000000000008d03b0065978b22d"
 
---00000000000081caef065978aa4b
+--0000000000008d03b0065978b22d
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The git-bundle(1) command has a couple of command line options that
-> relate to whether or not progress should be reported. These options
-> match the options that git-pack-objects(1) expects, and consequently
-> they mostly get passed through to it directly.
+> git-bundle(1) spawns git-pack-objects(1) directly to generate the pack
+> data that gets appended to the bundle header. While bundles are not
+> part of the wire protocol, they are a transfer mechanism for packs all
+> the same, so convert them to use the pack generation interface of the
+> object database as well.
 >
-> This results in somewhat of a confusing interface: there are four
-> different options that relate to whether or not progress should be
-> displayed and how verbose it should be. But in reality, there's really
-> only two modes:
->
->   - "--progress" and "--all-progress" result in the same outcome, which
->     is also documented as such.
->
->   - "--all-progress-implied" does nothing as we pass that argument to
->     git-pack-objects(1) unconditionally anyway.
->
-> So in the end, the options only control whether or not progress should
-> be displayed at all, nothing else.
->
-> Refactor the interface to instead use a simple `progress` boolean. This
-> makes argument handling a lot more straight-forward and it prepares us
-> for the next commit, where we're migrating git-bundle(1) to the generic
-> interface for generating a packfile.
+> This makes the pack generator the single spawn point for all pack
+> streams that leave the repository, leaving only local maintenance tasks
+> like git-repack(1) with direct knowledge of git-pack-objects(1).
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  builtin/bundle.c | 33 ++++++++++++++++-----------------
->  1 file changed, 16 insertions(+), 17 deletions(-)
+>  builtin/bundle.c | 10 +-------
+>  bundle.c         | 69 ++++++++++++++++++++++++++++----------------------------
+>  bundle.h         |  3 +--
+>  3 files changed, 37 insertions(+), 45 deletions(-)
 >
 > diff --git a/builtin/bundle.c b/builtin/bundle.c
-> index 1e170e9278..bfafadc984 100644
+> index bfafadc984..de86e092a6 100644
 > --- a/builtin/bundle.c
 > +++ b/builtin/bundle.c
-> @@ -70,35 +70,34 @@ static int parse_options_cmd_bundle(int argc,
+> @@ -69,7 +69,6 @@ static int parse_options_cmd_bundle(int argc,
+>
 >  static int cmd_bundle_create(int argc, const char **argv, const char *prefix,
 >  			     struct repository *repo UNUSED) {
->  	struct strvec pack_opts = STRVEC_INIT;
-> +	int progress = isatty(STDERR_FILENO);
->  	int version = -1;
-> -	int ret;
->  	struct option options[] = {
-> -		OPT_PASSTHRU_ARGV('q', "quiet", &pack_opts, NULL,
-> -				  N_("do not show progress meter"),
-> -				  PARSE_OPT_NOARG),
-> -		OPT_PASSTHRU_ARGV(0, "progress", &pack_opts, NULL,
-> -				  N_("show progress meter"),
-> -				  PARSE_OPT_NOARG),
-> -		OPT_PASSTHRU_ARGV(0, "all-progress", &pack_opts, NULL,
-> -				  N_("historical; same as --progress"),
-> -				  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
-> -		OPT_PASSTHRU_ARGV(0, "all-progress-implied", &pack_opts, NULL,
-> -				  N_("historical; does nothing"),
-> -				  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
-> +		OPT_NEGBIT('q', "quiet", &progress,
-> +			   N_("do not show progress meter"), 1),
-> +		OPT_BIT(0, "progress", &progress,
-> +			N_("show progress meter"), 1),
-> +		OPT_BIT_F(0, "all-progress", &progress,
-> +			  N_("historical; same as --progress"), 1,
-> +			  PARSE_OPT_HIDDEN),
-> +		OPT_NOOP_NOARG(0, "all-progress-implied"),
->  		OPT_INTEGER(0, "version", &version,
->  			    N_("specify bundle format version")),
->  		OPT_END()
->  	};
->
 
-This is much nicer to read.
+This '{' should be on the next line, but that's not on you :)
 
->  	char *bundle_file;
-> -
-> -	if (isatty(STDERR_FILENO))
-> -		strvec_push(&pack_opts, "--progress");
-> -	strvec_push(&pack_opts, "--all-progress-implied");
-> +	int ret;
->
->  	argc = parse_options_cmd_bundle(argc, argv, prefix,
->  			builtin_bundle_create_usage, options, &bundle_file);
->  	/* bundle internals use argv[1] as further parameters */
->
-> +	if (progress)
-> +		strvec_push(&pack_opts, "--progress");
-> +	else
-> +		strvec_push(&pack_opts, "--quiet");
-> +	strvec_push(&pack_opts, "--all-progress-implied");
-> +
->
+[snip]
 
-Tangent: While trying to understand this patch, I noticed that we only
-list the '-q' shortform for '--quiet' in the 'git-pack-objects(1)'
-documentation.
+The rest looks good.
 
->  	if (!startup_info->have_repository)
->  		die(_("Need a repository to create a bundle."));
->  	ret = !!create_bundle(the_repository, bundle_file, argc, argv, &pack_opts, version);
->
-> --
-> 2.55.0.822.g20453c30eb.dirty
-
---00000000000081caef065978aa4b
+--0000000000008d03b0065978b22d
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 8f5c4f85cac0b133_0.1
+X-Attachment-Id: 51cd88f292ed0d09_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xRzRra1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNlN3Qy85blFiUVlrTG00RWwxYUtsbEI3bGJVaGdmbAp4N00zM0o2UHNG
-WXA3Zm8vd0R3S25iWWZCMjhRV3Y3dmVwZkYzK2RLRXFHWDYyNXlYTG9WZUdDUG42Z0RuZkdRCnhh
-UGFHM1hlTGFqUTdCZkhubXp6OTZGMFQyTHJEVXNKNENadW1WU1ByNEV0UnlyK2lYWFFWOWxxQ29W
-MitKVy8KSmRra0NaK1Q1YzE0YUQrUmZwVXZCNC9CeDluZlVMZzBCbTZzci9zM1hENXFEdjljRFdi
-U2swN1prdkNUSzZkbgpreGtDbU9wZ2pPc21SdTh4QmVDUnp3UE8xZWV4UyszQmZXRmttcVliS01Q
-U0hzS1FwejBndWgvakF5Y2lKa3UzCjRmVWdqLzZNSFdVeHN6UjlRV09XVWM3SmIrUXAvYVpXOEF6
-YnR0TDkzKy9IMXBjT2ZXRXlMcnFOamZCL1U1cjkKM21rV1NxL2lOYnBpeUNING9jNkFYSTBVMndF
-MEw3SHd1Nzg1RUR0ZElIdkl4WVIrbTFHS215WVN6emQwRllYRQpJVzV5a0cyZDNyUHZjWm9aN0t6
-ZGs4clpRYzBPRjBNNUdwWTRmZzViM01YbFZxZ1ZuaVBTWHY4YTZwS1pSalYyClg1SGErakMzRGFI
-U01DRjlhejN2MytuZ0cxWkI1cVJaOHhpaTNlVT0KPXk5Qm0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xRzR0QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md1ViQy85VHJ6Yi85V09mcW1hUmtpOGpYSG9yK1lsUwpwajVoZWdxZ0Fp
+NkJreTVGUUJwUUpJTUhtRkk4N010Rm1DaTJzUlBGdnljWjkweHhTQ28rTnZrOXRIZE00VHZjCmE0
+S3lmVXZrNFRsUXYwYmVISUlXR1FRNVhDK0JmbG8yeUw5ZDVQT2pHa2ZkLzBpUEtoUlRTY0tpSmRQ
+SW5pYmsKNndVaC9Rb2x0RXlxajRMVnZlUXVZSkxyODN3bEtZdmkxalM0RG5pdU5xUkl6cndCU2Nl
+OStoZ3lxcTFjMDZEMApPZlFtdXgxS01LV1hvL3A0eW5PRkg3QXRXTEd3emdDR3dMWXlDRmpiT0dC
+djJzUGNoejc3QklMT24wMXlmYUNuClh6M2N5MjRRUDFvckYyWHkwaU5HVGt5Tm1JU00reU8vTHQ1
+bnNIQmRVN2YxZGxHWFMwdzZiWmNtUGo0RU5mWEwKTDZGWlNOY0J1bVU3WmcwTEo2Y1BzNk9YWWln
+SUJnV3owOXRBeGNsMzViMkhOeVFNQ0hxdTlzOFdLNC83ejladgozUE5BdldvUEx2RkhTeldZOHc4
+NTNFUGhnNGFRdEpWdktTT1pVeFFmQUpSdkZhWkd3NEt6QitUUVdNOVp5VjVpCmVIOS9BTHZQcGZB
+YXl5Qit4NHlFYVFqWnhvdkVhWU83UXJ1b2Q2OD0KPXg5c24KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000081caef065978aa4b--
+--0000000000008d03b0065978b22d--
