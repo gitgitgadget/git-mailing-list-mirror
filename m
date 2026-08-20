@@ -1,85 +1,85 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A823543441A
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 11:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC48426431
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 11:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787225929; cv=none; b=tqTLk0mkkFfmCMq03rJ0eKM1IamfCE8y2JPPWNgLFvrsQjV8jeAXJpDOxc0Efdw4RVRSPXsZUpS4rPqucNXRuCHYYdJEsiuKVKmyEwoIsV/dLKgAaRYS3FW9eRIbUbDm8ccc/oYmG/OAA7LmN0DFFz8Czel0lW2+qDVnIb5nQAo=
+	t=1787225936; cv=none; b=ZIvORU9njpaXV4E4a0hfBE+mnZ09zunz9vFHyt+2g4UVr8tHPWnGaq48v6SxyKEwsxOEr11TcIFKtvgp6SgcI4VuDUZSR/qydfTCMGpDdyP/wret1OGa8Y8mJq3KazpbYd44iqsEEDmAV0yNEprhvqcHA3/bQrc9QCsrgjHWLxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787225929; c=relaxed/simple;
-	bh=Y4jTateaNMa30GnVeXqVPfFuKDY6R2xkeULDfey1uC4=;
+	s=arc-20240116; t=1787225936; c=relaxed/simple;
+	bh=onLbNAewXwBFTnKXykKj+8DD8SZw4MgmtkDih/OsF7M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e42tdFisywHtnC0rHhcOFH6a/DdpseO6c0kL+jlCthiDVK+GaHOhSAsPvM5GnYW4Q5524t0Bw2YRqA3wZNCyiVVRXGDLNV6HHfkgIa33YPlImXHaISYidLDANUrLRQhOHq2SueKQBBFDNLyE04fqAvs8FwGeYun65T9FuU82d0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XyO00h/7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g8/tLJvL; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=hGtPRqlqPEMesiQdxQfG1aiO54UKMBY5TF679pJ38Nd7UCFsZikPv8jL7TdupfkzM01a7qtYUxr+GV7hbibJgWL22hcDmfM990/iC+SjBi9dM/WE1UE5KPpcy3iROiRgqwzC2aXrcORt4hOlur2SOoLddA9l0VNvwxlxQkX5YbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HYnboI1t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FWl8KBy7; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XyO00h/7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g8/tLJvL"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id A6323EC01AE;
-	Thu, 20 Aug 2026 07:38:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HYnboI1t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FWl8KBy7"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 01AE2EC01AE;
+	Thu, 20 Aug 2026 07:38:54 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 20 Aug 2026 07:38:46 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 20 Aug 2026 07:38:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787225926; x=1787312326; bh=9X2IStjmxY
-	pWzTCTy6OHSRJnKMKOjoX5urQtRYSKtOI=; b=XyO00h/7QKg6/3Ks7+xYBXn/u3
-	Tk3lVIxSI20RWdx4+frlj+y0naGBTZEgAH/Y83B/H7BxcLhfQ3xI9yJ/BxiwaS4f
-	gxvmXv168QkCUBgkP3ZbBG6hv8KxHJ1p2mzDWeCmxi0hRVnhiVYGZ8C4aUdKLjrO
-	np7CCqGpTiyHbjLXsHMa5bb2YnnzBhiP1n9W7zKlaJ3bDh2Zqz4w94g44OflWqAP
-	M6dy68jzkHHA+fqbBBw72dbDdDyYDI9xtgEU/cQA9i8M1DQlm9y/UabHdiCIKqdL
-	FpD+xml9EdOb0a3ERYyVl9NuLx2n70RUcvFC1OeLyRjuKpPNw5l4wqo5d2bg==
+	:subject:to:to; s=fm3; t=1787225933; x=1787312333; bh=P/VNLrGIyQ
+	nwQDf05/2oiNFEdhdXr+OedCTLc9zSyiE=; b=HYnboI1tQLIBZvp6C44fFbGKlw
+	+ovaj08M3rADMay5zbYR+WkphHwf77nkMTdlGtIdmd0l0GCg8NCp7wNVvRQoK9k7
+	YwZMG2ZSTL6UUqOibTNn+9kq9DRhSbiQomPK4jhFvi/X4rI56BHEDcqc1iz/jtj1
+	j5L8rUxPVy1nWBVo+keQbrq5/ivAweEIJL+HfQ+S0c3aFvMXlRumAWBnGp+8fae/
+	DnJQ5o8LNgfkTqBTU+MELiX5c0K+q2Y11i92pTKJd7Oii4UcXOExR0xOOYmlTHf7
+	17+hx6gTXZz0a1U51OKl2gi/e6x1/bQQDfxnpoIc4z7AHRalKVMtxIeSOmUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787225926; x=1787312326; bh=9X2IStjmxYpWzTCTy6OHSRJnKMKOjoX5urQ
-	tRYSKtOI=; b=g8/tLJvL3aXu+5RLXiZmc4ePZKAJBB656H1TcR6WXcSmP0f/Hn+
-	cmfgeeOOUPUQU7vZpalK624NgaV26T3IkVoVgwfCZQbM3oBJkYOCm4p9Oy7TioPL
-	uaJx9X+GUIfjb2H/VvkoP/75g4xzwrIi4ePJpFyAHwu1IbOybmFzNPHGsm3zy0FU
-	wFmg8pNeGdMkNCzueITu+ofrpSP/S6/NU6yoY+qVW2aAwGhD0J1P12tOQeJikwUF
-	es/Vl7aam3S5mtF2/2Tw8myqsDBdmogGh3IbqIusjcbVqV6FQxfw7llC2XujTz8s
-	d0vQ6+2ypps/dQJoH2FP18pzT8CIo0dXQWQ==
-X-ME-Sender: <xms:RueGagg5klMq1Wak9L7j_-t4kP4ue_O5lZNdq_MqhjrB9_FgnnLzpw>
-    <xme:RueGav5eDJP4GQWgDWVhyH0WQHmqr7lfkPYFIVhphkQwNa8csi29KF-t2Y09lvQfr
-    az1P86o9ZSGJqk0o4XaPM9CWVKchlOHP7wgN2CEr5BAp9y3-C31_Q>
-X-ME-Received: <xmr:RueGagY51zKXmlH0h1pPPm2DlI3bMyAugbmLden3sH8EuhSoBGeGbZQtYO8SSQhAcqkS_e3z1fHfJEozhRlyabXX5yvzIsg5xKjvFpqVIA>
+	1787225933; x=1787312333; bh=P/VNLrGIyQnwQDf05/2oiNFEdhdXr+OedCT
+	Lc9zSyiE=; b=FWl8KBy7/3kdrvuSCKlgRnxRbP7r6KDHNBHygFOiMDaoeaCsbGx
+	PSDCXeAODiKcM5JcYWYR4jGYqS9FNXRxPRlsCGYvZhPPGozT5hFVA3QPfFz/Atz9
+	I23Z2/M22QUFl+lmeGuH1D/4MazPkDtZAjBYUvxI8erhtDWfg4kCQb6GnYmLoGEi
+	hioZ+DF6F+JsXyFQP+48VaantV8/LIwnNyfVqR02ZXJv13GLFk01W+NmvBJjn0ui
+	UpG/jGA/d+P4u4NJcirIIxiNBFPET8X5XXOAKwWkF0D2vqfcIp97CIXJhQiXGWLc
+	XU8LjPl2JItuOV7bXUFdsA+HYLewvoeqaig==
+X-ME-Sender: <xms:TeeGanqhCATXyHnvAd3TQ78M_rZGjjMf68pcO4nRTl7h258SMexT8g>
+    <xme:TeeGaohDZTyJ32vz47EOKM6NQ83Wbg3nt9ij9rTm3ynATmPMySrZnqaWDsVbQegB1
+    izkjN5zig3EXn2w2Pl8gt0TI-myjKhO3KJFooXqzrpTVbyQtKVTcg>
+X-ME-Received: <xmr:TeeGasiDPIZt63000jd9DiM9DaiOBSY6cs5KwKLVXH86Gi3nnJQE46W3ltjarTYhineWZYWTG7pKoRtPizuv5lLYWI8J9k8wZC76kFXgIQ>
 X-ME-Proxy-Cause: dmFkZTFWHYkG1q0B5NUv6TZlhvAu+qqcNdNseQgRnEnTTgnZ3q9NeEGnWEebmf1xPm9LtB
     bi6Gx7Yc/aTnLjrmxv842RgcFqW9Vwoos/btylBz/PhAaFC/dEScnGJGcbs2MlewFphw4z
     dndoapGdRDyWmT8IKPH41oF7NpuGN4lH3zTafnBEUKQQY4nn81Hx3r5TJGbUkfF0v0mMQm
     HW9wnsReSC0RbnKXF1VqtuapHGm43wosDuHnl/Be6xIzT4qwVaXpds3+Dc+YdNxVV43iBU
-    UQqIVzgwz5YTE0qoaaeeRsv2tA1sFpefei32BFpY4VcPYR06am/aWRC9fJu7pdXK/ZNvfP
-    b5BRi0pdxOPxRJ7CsBj/f6xuNt22FfoLUbx+H25FAHQd4gn0vXj+0lfbBDbb3sGDa5Qrx7
-    /+wueCzmsD4e+cr5CMW4iKSSgytgeHFnDurPlq3uBa5H+NJfaZfrQ9TPtOjxEvbejuhSGK
-    id/mn4rXfF0NirQPy7ww7bsY+LMjA5zi58ZssGWZo2YSy45zyLCDRiHksHeTMadfP48as7
-    f23aLVu29KpVwIpDTYemC+Az9Mklzci5q7+5MepRnh5LVWwEvXRkzm4ZlVqlnZV3Hl1tO4
-    lAQgtV0hZRLef8HslMe0YBAI27bCmUgDbfTxLJklAZ5HrF49YtS2h1/Wjkhg
-X-ME-Proxy: <xmx:RueGas7VB040uYkVdNkr4scHJjNs6-SMrBe4vP3LgB8vYMlB3ZBu7w>
-    <xmx:RueGarDZajZF8IODDJ4tdx37RClpo3FZxYdknjX4rk0TdXn9AqPALg>
-    <xmx:RueGaqcpT30MCB2Zq14WNYnKO-bLe9zp3VVdQ_r0Fp_hWAMmFCetrA>
-    <xmx:RueGaiIOTgicsKjnq7RVwhc9ON1cshO1i2D3RmaiwZBmnAk_vN9pyA>
-    <xmx:RueGaoJFkJ4GGU1AWgkXtNJSPDCABY02ZolsrNUfpu-Nn8iMOhrajx-u>
+    UQqIVzgwz5YTE0qoaaeeRsv2tA1sFpefei32BFpY4VcPYR06am/aWRC9fJu7pdXK/ZNvHa
+    cZSIDvIoehKOD0UU0K/bkYdm3HrxwFfyfreeNj7I7tjD1Q5hQXusGvFBbz2JGk1TUL/E+U
+    LDZXKzs/GaWY5rF4qaDdPnw690wjhjygvInNyQQlEnFDW/4Yu8Nq1lqzumqyOwHdi+7AnF
+    yy/MNegxBmL3cdRiEPX/GvHhUcrJt0ywXt1whaLq5oZE7M7O7Wo/PPTt7UCP3R+L+O3Qcp
+    kXaLHvFwsV3IYrjsYbX5LTQiH67O5gxocglo6hF6+VCp6tN5WzDQiDHfrr1hBtZHqQ7sCx
+    drVI7z2rRetneiKPwtqtfRxaTNrtbGH+B27g8cnTR9XWP5Xg287emdSLf+7w
+X-ME-Proxy: <xmx:TeeGamj2KvjH3-6wIWyw4YIcNOLrH8mUA5Rgv7s18Ykj3nU4CO4Zpw>
+    <xmx:TeeGakIXotCa0VKEN2XbpzfRYxrm1T8TvpB1d17Xf0yc16ElXq9YUw>
+    <xmx:TeeGatGMvSaYjaiEp9Fi6RgtW96qethItu_eZejEWzGROXXEffBNRw>
+    <xmx:TeeGagQDHjC8U0w73RAwo2QHrtUcdVi9e3w4Erdf19mpUvpVgY2yXA>
+    <xmx:TeeGapxqzrLMubcqYqODR0iLO8W6cP6Z6LnO7MMb4wfVm4b_UvN9xQ9d>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 07:38:45 -0400 (EDT)
+ 20 Aug 2026 07:38:52 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id af7d5ae0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Aug 2026 11:38:42 +0000 (UTC)
-Date: Thu, 20 Aug 2026 13:38:39 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0570a936 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Aug 2026 11:38:52 +0000 (UTC)
+Date: Thu, 20 Aug 2026 13:38:50 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 6/6] bundle: generate packfiles via the object database
-Message-ID: <aobnP3bJ1SQpYoFa@pks.im>
+Subject: Re: [PATCH v3 1/6] odb: introduce interface to generate packfiles
+Message-ID: <aobnSsQVOCSoR4kE@pks.im>
 References: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im>
- <20260820-b4-pks-odb-generate-pack-v3-6-bc42252f6169@pks.im>
- <CAOLa=ZQ7-_=T1NSXY433oME8OoddJOuLX0wmdbk2ocQ0JTAuKQ@mail.gmail.com>
+ <20260820-b4-pks-odb-generate-pack-v3-1-bc42252f6169@pks.im>
+ <CAOLa=ZSYyfOCs8Dr0Xdhv-=Q=j0z7vtfYqopDb07XuAm2PU84g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,39 +88,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQ7-_=T1NSXY433oME8OoddJOuLX0wmdbk2ocQ0JTAuKQ@mail.gmail.com>
+In-Reply-To: <CAOLa=ZSYyfOCs8Dr0Xdhv-=Q=j0z7vtfYqopDb07XuAm2PU84g@mail.gmail.com>
 
-On Thu, Aug 20, 2026 at 07:19:45AM -0400, Karthik Nayak wrote:
+On Thu, Aug 20, 2026 at 03:16:37AM -0700, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/odb/source.h b/odb/source.h
+> > index d69f8e2d1c..e2129766fc 100644
+> > --- a/odb/source.h
+> > +++ b/odb/source.h
+> > @@ -278,6 +278,23 @@ struct odb_source {
+> >  	 */
+> >  	bool (*optimize_required)(struct odb_source *source,
+> >  				  const struct odb_optimize_options *opts);
+> > +
+> > +	/*
+> > +	 * This callback is expected to start generating a packfile with the
+> > +	 * given options. The pack shall be generated asynchronously so that
+> > +	 * the caller can consume the pack data and progress output while the
+> > +	 * pack is being generated.
+> > +	 *
+> > +	 * This callback is optional. Sources that cannot generate packfiles
+> > +	 * shall leave it unset.
+> > +	 *
+> > +	 * The callback is expected to return 0 on success and populate the
+> > +	 * `out` pointer with the pack generator, a negative error code
+> > +	 * otherwise.
+> > +	 */
+> > +	int (*generate_pack)(struct odb_source *source,
+> > +			     struct odb_pack_generator **out,
+> > +			     const struct odb_generate_pack_options *opts);
+> >  };
+> >
 > 
-> > git-bundle(1) spawns git-pack-objects(1) directly to generate the pack
-> > data that gets appended to the bundle header. While bundles are not
-> > part of the wire protocol, they are a transfer mechanism for packs all
-> > the same, so convert them to use the pack generation interface of the
-> > object database as well.
-> >
-> > This makes the pack generator the single spawn point for all pack
-> > streams that leave the repository, leaving only local maintenance tasks
-> > like git-repack(1) with direct knowledge of git-pack-objects(1).
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  builtin/bundle.c | 10 +-------
-> >  bundle.c         | 69 ++++++++++++++++++++++++++++----------------------------
-> >  bundle.h         |  3 +--
-> >  3 files changed, 37 insertions(+), 45 deletions(-)
-> >
-> > diff --git a/builtin/bundle.c b/builtin/bundle.c
-> > index bfafadc984..de86e092a6 100644
-> > --- a/builtin/bundle.c
-> > +++ b/builtin/bundle.c
-> > @@ -69,7 +69,6 @@ static int parse_options_cmd_bundle(int argc,
-> >
-> >  static int cmd_bundle_create(int argc, const char **argv, const char *prefix,
-> >  			     struct repository *repo UNUSED) {
-> 
-> This '{' should be on the next line, but that's not on you :)
+> Nit: I see that `source` is unused anyways, do we need to pass it in? Or
+> is just for consistency?
 
-I can sneak in a small fixup. Doesn't hurt, I guess.
+Our specific implementation does not use it, but others might want. So
+it's mostly for consistency to give the callback enough context.
 
 Patrick
