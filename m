@@ -1,107 +1,283 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113DD37FF42
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 15:13:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32C538331C
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 15:26:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238816; cv=none; b=WWFrIS8a1UmqQDxlf1IAodeqefpvcGLkmWpjcp32gJhDOYfLGrKpM2WI0x53YxnIPtreoHwmptiNrgvHqSHF3cvu5/dprrriUQwiSUhmy1TosHQj7NJQ0EraMdw1d3hNECDm6QNQ+gyoNTj1+dO77z777G9s3ByTDb/1An/j5ZY=
+	t=1787239579; cv=none; b=KYolrhIQ9zjiPYwwbmHrmJ13/9btuKN6hSQtP05mmUE27VU7rS5bzQjEUCPrOHdmkup3sM2m/EKblanJgHj0p50SsP0fnm7TSKPWMV8rvfhDztlomqJZYnEdCTD9jYcS/fmqCCMFuM0fwsbVhVzOY7DAAEqzYmaCKngdOqvCNU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238816; c=relaxed/simple;
-	bh=S3MWBBpo00Uslbi0mIw+yN3WLUymLAm8Nsc/5X/xXfY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MJtqKtKuIQWK0rfgawhmER0SiwW2Qv4B/3w8CD+QhXkcodEmSp+EMYdZ8oG/13xlc6A09BuNJegoylSPnjyXwJACgd3cDgkybrprAuclblLWEL9XtXBWUVaxUOalctbhNYzdAhB+P1pDr+ByADihjkEP5MB1zSWW96V2aYcaEKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fCMjS5Qh; arc=none smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787239579; c=relaxed/simple;
+	bh=amlAk0+gAztUg1JfELtE93kwbMfB35KLtcb8UU7fD54=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Jx3VppckxTd393q7HRMWZapPjbxaIhGXeR1tX+R7XpumR45zBfmRdyW2gyD3J2A21lU9PJirzZ2jIDGVGRE/uBzDM59kks5Y9nbyhpfxMCtlZV/X8ZhOGas8yP52RcI8/whOEN1cnltLZpi6jlSOAiNHekTO9RmSB7Y56Iw5ADc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HCfSPHTC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OmNI70TD; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fCMjS5Qh"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-66c7e3a2332so1904482d50.2
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 08:13:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787238814; x=1787843614; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=S3MWBBpo00Uslbi0mIw+yN3WLUymLAm8Nsc/5X/xXfY=;
-        b=fCMjS5Qhc2wAalotjBLbAknsmEx11kFxJt5RUHy35CqZ4rImABytU+LcEht3sUIbmF
-         2fVT6NcxUa9Sk/8EyjOXbwu2iKV3veXvaiAls4nPtXtwrTCMl0egRS/+GxhDuddUmPHq
-         2DnHXDcZgYMuMlQZzrrUStZujsQx2wYFkohpoFhFIzUOoeX/6vUWqIJU+wb9r5q5QYY3
-         qXq1ybhsbMhQCMAfg53rDAyqeY2tDJ3u8Cc3duusELfEX1ruIpj5Fw2F/KlgyS4peeAx
-         3uSmDzD2GqMvdH/h87++6HG46r70XVGZ9NHbrSttCjx7oC0NwUAH7RYO3/f3w5pGBch0
-         7zvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787238814; x=1787843614;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=S3MWBBpo00Uslbi0mIw+yN3WLUymLAm8Nsc/5X/xXfY=;
-        b=IGujKoHPY/Of1OvUqf9NT61/+F9BNSctL2cY//2YLZRChMwqMieBC+IzdvJAxHQmpL
-         cuZuyS5TTsPmx3RBlvz4Cf//FxzIa/ZtzoUtZkv183UGdGFBTjnTXk4X4IJos5ornZRW
-         ke1fXmWpXFwgdGjZ4Hg2TXri+y3i/hfbPnZXEl3VTjwkU7f3WL+4Bi+UQ6OSlHvmtaCi
-         CRmdcu+Omo9HKxC+4qlnqyyUM48Bd04ujrFJfZPxU9ZFnDe2l3o+F8Bbx3+9NxcGHzgb
-         lkd2Gv1yD1UQ8XwyedARzUlNj935+UT4A6kc9onvZKZzoSU1pafC9xC3O6TG85WtGIId
-         rpAQ==
-X-Gm-Message-State: AFuF++mD4YzwZiBbvXxHDx/kKsXxlW7o2uVk1EVr8f6zyeKcSSQYydDr
-	6I+a4pTvI0ME47OkGP+VdrfcQtlEthU/qm9eH5jc9WTJxAFOLM267L5IzJArfw==
-X-Gm-Gg: AR+sD11D4GShRR/xcyPMqcIzSQqDDIYqQShRrn3Cfi8HuSTopSLTb6dZut+XY3JI4YH
-	KU/pzkZ/LZg6M0+bpM1MjSzjjGF4P7S3ckdID6XmJdoF7lSw4GN5Yht22yG1U0MNiIZTvC/66F3
-	gz1bmzEWHu7DJ47gaqggXG6lgrtw74GE60lPwevTyVj7QoUuG8ukgZfHYWDoM4uGP/0eQ3P+NtN
-	LHjYtT15Q2IJU9SFJ4gcVZpi56u3D7/sFUjaeESB1c/BSMY6awPW4DXH/Pq3CujnAsUvjjxKW1j
-	axCQW8XQiLbuMeo+ydYoVcrDYMY/X+RekKlTPCEz9O9mmxMHxmFVbC3o5VQiQAM8i9Eq/1trUiK
-	OUsU3lbGz86Q14+0bebyY1UY73fllUiUPEl4hrdJsHU8FFTOPiG5JNcbCRQAoAcA7FgFQti79hD
-	0B21eDInNFFar3K0kzLynVbmOegsYbK7fI2CBbt7LU0c+VdULQFhUW0zZ6yRp7EtXfWb3fZqwyC
-	3fyZPowseBOhNVb3X5ldGOPZR69dRi8JE2LehuNfRZBXqxkf+CFxYRWRZp2pI3fQDN0K4Jwgv6E
-	p0j0DIQFGMr4SQVEsVCP+UWSCqLgSYl1lQP7iVg=
-X-Received: by 2002:a05:690e:1a59:b0:66c:71a4:6ef7 with SMTP id 956f58d0204a3-66ccb662938mr3405047d50.35.1787238813847;
-        Thu, 20 Aug 2026 08:13:33 -0700 (PDT)
-Received: from localhost.localdomain (99-71-100-228.lightspeed.milwwi.sbcglobal.net. [99.71.100.228])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66ccaffe261sm2751499d50.6.2026.08.20.08.13.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Aug 2026 08:13:32 -0700 (PDT)
-From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t1401: test symbolic-ref exit codes on a non-symbolic ref
-Date: Thu, 20 Aug 2026 10:13:19 -0500
-Message-ID: <20260820151325.58087-1-nikolauspschuetz@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <aoWSqYvANg5AmuCi@pks.im>
-References: <aoWSqYvANg5AmuCi@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HCfSPHTC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OmNI70TD"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 140957A00FC;
+	Thu, 20 Aug 2026 11:26:17 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 20 Aug 2026 11:26:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787239576; x=1787325976; bh=G/z3YlnGU3
+	1s4rmQa3E3siJ87OE0RHKNq2ovUCYQH58=; b=HCfSPHTC+8V7DRYRQf5/5nvYTW
+	p40xHhVl7vUZixq7dGPDbpnaZGnZj6keha2tJd4xyY9Gp7YIxrUJnMWxXIU8+54e
+	AZJZUoNTgJaNLKYdaz/OppOqNZda4Vs/ncUj/cjHroGWafSs0pLCfFMfC2AXXbVM
+	lEuUK8/awF6BOrWxnw80OS1VqwOu/MpC0WEkpqim9y6X4yA9RaI8n6zP+ZSJJ7qh
+	IwYIXkB7LFjmXgwTiJo+u9rsGLDHq+ues8BPXWTQYqs8aNlS/2IU4qXca4OOnIty
+	Ix0VqVIQn39R8Xm4ZDqkkagNGm/2LlBhcECOumAZW8VWwKzO+NaaabqbBbGw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787239576; x=1787325976; bh=G/z3YlnGU31s4rmQa3E3siJ87OE0RHKNq2o
+	vUCYQH58=; b=OmNI70TDRL5m2Jqx95zvfihIFOdcQXoolfJkMIBZFYiwapl+Jm2
+	eRxpxCzjGHkjj9N+eCQUp7YNDwdtx9dIAJS8OJKdjVRHwaO2COTsCsHXsb6zEf2+
+	fzBRkGUkDVaPNxjSb2EnXufohIVl+sSetbu/Hbeus6LtEiDbFMTjyYS8QO4r0rwQ
+	91tDukdTMYWK65pqkuTqS+vYTAoVbDjAxNYe76To/5ZERCtdbDxa0CkAnF/LZRtp
+	xtB4HnT0t4L+6jD947G9Fdrp/AxdB2Viu15/fDj6cRqAC6vCLl7BbhzK6TbaRcFF
+	rgTSISOu2tSGqq83c+8bwlrkJuc90OMl0fA==
+X-ME-Sender: <xms:mByHauEfE_ZYX_qOS6ECyvL-FevpaYHt_tEXypTCN8cfzQlazseL0g>
+    <xme:mByHamV5Y9lSj_Lrzf1Qg699Zue1YiCy1IeW7CBKbpwN3BM0dXjsUnmpyFaD3_x6M
+    _40lQA6mFG0zvwOKsAmoPq6lJG7KqkeWXDTzn45D8fbonHOOM3n4Qk>
+X-ME-Received: <xmr:mByHatJ7cdul1jfX8uYExX3wu58v8lNWps5Uz_im6Jx2AhYaSvk34uj0sH3xYGTSO6iXJ_m3f-S-O6M1X6y0VmFZSDu4hTYb0Q>
+X-ME-Proxy-Cause: dmFkZTEChOHkYmko8AttoHEiWYEq5gL1ikPhUe0komz9JRw1DUgLF4QyAFq1hLBy9AiXv5
+    oAA4N6C76K95xufCKS2fXRIcz5Yq5o8U/4vJrMfO8bxuVOdr4neJMw4I/1iS4SD7zi4zjo
+    e0e0EHubMS0hkB2poQv0gl+ASIP3aFFM6PIFZGtisV8vZ4bQ2f6GScj45RplAMQoDmqYA8
+    T2RvW9YBedTst5kfvrH7dPO5RDkMG6p2H3Dt45Z8jTC8wOK7lc/e4aKewMSX2g8pYBk+tK
+    UpgWC+cCdj8VHcGoGiBp0WVl1N+2y3pXUCEWZCo3zoyHdbQawJFslT4nr0F1/X3QYeSDdO
+    BBD6P/FbRyt2GP71VEBAa12SprWdHVZKXSP90w6J1GmpeCAfCWT2l7rgy66V57LvMQu5Vl
+    23tmYKHVSlutE5QCWYUFuAKqBq9muf1YYARMqyWPhT6sEPGCuVke58iF9FjuFDj9b8RCJH
+    WRfV8sJmm0cspzPFQZNkUzEKJTOuo3xmRBm6PU3pERyHsgjvJzyXbmgl+e7nNF2JltqVho
+    xFB0LLrfshY3z+hHZOF4ZobT+NnFv7Rs1J1Wbu7CO8bm2QbB460uGRDwCY9EEDmzV72hbg
+    gsekb+0+LiMRfR570FeYYm3BXKZ1SpmI3A8eaQ/khWTWwlQfF6spFqGL7/xg
+X-ME-Proxy: <xmx:mByHam9ySH8fDU78JyXrZK5RUl_xeX6wIMp2eFZIhzQAFIAH21S4Og>
+    <xmx:mByHagKpPbYRGy-bSVXhsAFAn4fJ3GqnqjaOfNub3zaJFUqEf-H5yg>
+    <xmx:mByHarkPh9Y935ybXx_SQBxfAmJTcBplXsgVFB_Ukgo-XeIfXD635w>
+    <xmx:mByHakP7GCQIV-mxJ92PU_AGXNybH2G2v5doWqw4DCOQVUUUwsN4LA>
+    <xmx:mByHart9-ECAx-1KnPuAyrAvluP3bdkP0fhrig_-O-wYJp9D8jDjFjpS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Aug 2026 11:26:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+Cc: Aaron Plattner <aplattner@nvidia.com>,  Rahul Rameshbabu
+ <rrameshbabu@nvidia.com>
+Subject: Re: [PATCH v2] http: preserve wwwauth_headers across redirects
+In-Reply-To: <20260819-http-preserve-wwwauth-redirect-v2-1-4c61039432b0@nvidia.com>
+	(Aaron Plattner's message of "Wed, 19 Aug 2026 20:21:04 -0700")
+References: <20260819-http-preserve-wwwauth-redirect-v2-1-4c61039432b0@nvidia.com>
+Date: Thu, 20 Aug 2026 08:26:14 -0700
+Message-ID: <xmqq8q60u82x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> Out of curiosity, what made you address these gaps in particular? Is
-> there any motivation, or are you just picking random things to work on?
+For those of you who are watching from the sidelines, this v2 lacks
+the threading history.
 
-Not random -- I've been going through git commands, checking whether the
-behavior their man pages promise is actually exercised from t/, and
-filling the gaps. The idea is to pin the documented contract in a test so
-a later refactor can't quietly change it. git-symbolic-ref(1) spells out
-both the exit status and the --quiet silence, but neither was tested, so
-they stood out.
+The v1 is at https://lore.kernel.org/git/20260602161150.1527493-1-aplattner@nvidia.com/
 
-> This is testing the status quo, but what I think would be good to
-> research in this context is why the error codes are different in the
-> first place.
+Thanks.
 
-Agreed it's surprising, though it's not unique to symbolic-ref: git
-rev-parse --verify --quiet does the same thing (exit 1 and silent, vs a
-fatal 128 without --quiet). It falls out of how the two paths report in
-check_symref() (builtin/symbolic-ref.c): the non-quiet path calls die(),
-which always exits 128, while --quiet can't die() -- that would print --
-so it returns 1.
+Aaron Plattner <aplattner@nvidia.com> writes:
 
-> Do we also want to verify that stdout is empty in both cases?
-
-Great idea. I've revised the added tests to redirect stdout and check
-for empty stdout in both cases.
-
-Thanks,
-Nikolaus
+> When cURL follows a redirect, it calls the CURLOPT_HEADERFUNCTION for
+> each header received including ones from a redirect. http_request() sets
+> fwrite_wwwauth() as the header function, which will record the wwwauth[]
+> entries for the last step in the redirection chain.
+>
+> However, when http_request_recoverable() sees that cURL followed a
+> redirect, it attempts to update the credentials for the request from the
+> new URL using credential_from_url(). The first thing that does is call
+> credential_clear(), which clears everything including wwwauth_headers.
+>
+> If the new URL should use a credential helper rather than credentials
+> embedded in the URL, this loses the list of authentication methods that
+> the server provided in the redirect.
+>
+> The WWW-Authenticate challenge is not derived from the URL; it is
+> populated from the server's response, and after a redirect it describes
+> how to authenticate to the redirect target and it needs to survive the
+> URL update so that credential helpers can know which authentication
+> methods are allowed.
+>
+> Add a new credential_update_url() that wraps credential_from_url() and
+> preserves wwwauth_headers specifically. Use SWAP() to avoid having to
+> copy the whole strbuf.
+>
+> Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
+> ---
+> I decided to come back to this after I noticed that at least one other
+> person had run into the same bug:
+>
+> https://lore.kernel.org/all/CADoNwcscDrx+YcfbcW4YKONDZZQgnPiwEOxL4QYV_C7_=FOFcg@mail.gmail.com/
+>
+> Rather than reworking everything about how credentials are stored, I
+> took your advice in [1] and just moved the code to preserve the wwwauth_headers
+> into credential.c. That way any future credential fields that need to be
+> preserved can be added there without having to hunt down other places
+> like http.c that are reaching into it.
+>
+> [1] https://lore.kernel.org/all/xmqqpl28scll.fsf@gitster.g/
+> ---
+> Changes in v2:
+> - Move strvec preservation into a helper function in credential.c
+> - Use SWAP instead of strvec_pushv() to avoid having to copy the
+>   contents of the strvec.
+> - Link to v1: https://patch.msgid.link/20260602161150.1527493-1-aplattner@nvidia.com
+> ---
+>  credential.c                | 16 ++++++++++++++++
+>  credential.h                |  8 ++++++++
+>  http.c                      |  9 ++++++++-
+>  t/lib-httpd/apache.conf     |  1 +
+>  t/t5563-simple-http-auth.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 78 insertions(+), 1 deletion(-)
+>
+> diff --git a/credential.c b/credential.c
+> index 2594c0c422..035399d7ee 100644
+> --- a/credential.c
+> +++ b/credential.c
+> @@ -708,3 +708,19 @@ void credential_from_url(struct credential *c, const char *url)
+>  	if (credential_from_url_gently(c, url, 0) < 0)
+>  		die(_("credential url cannot be parsed: %s"), url);
+>  }
+> +
+> +void credential_update_url(struct credential *c, const char *url)
+> +{
+> +	struct strvec wwwauth_headers = STRVEC_INIT;
+> +
+> +	/*
+> +	 * credential_from_url() clears the whole credential. Preserve the
+> +	 * WWW-Authenticate list, which is derived from the server's original
+> +	 * response rather than from the URL and is required to authenticate to
+> +	 * the new URL.
+> +	 */
+> +	SWAP(wwwauth_headers, c->wwwauth_headers);
+> +	credential_from_url(c, url);
+> +	SWAP(c->wwwauth_headers, wwwauth_headers);
+> +	strvec_clear(&wwwauth_headers);
+> +}
+> diff --git a/credential.h b/credential.h
+> index c78b72d110..b90f666e33 100644
+> --- a/credential.h
+> +++ b/credential.h
+> @@ -305,6 +305,14 @@ void credential_write(const struct credential *, FILE *,
+>  void credential_from_url(struct credential *, const char *url);
+>  int credential_from_url_gently(struct credential *, const char *url, int quiet);
+>  
+> +/*
+> + * Update the URL-derived fields (protocol, host, path) of an existing
+> + * credential to match a new URL. Unlike credential_from_url(), this function
+> + * preserves state that was derived from a server's HTTP redirect response,
+> + * such as the WWW-Authenticate headers.
+> + */
+> +void credential_update_url(struct credential *c, const char *url);
+> +
+>  int credential_match(const struct credential *want,
+>  		     const struct credential *have, int match_password);
+>  
+> diff --git a/http.c b/http.c
+> index a0d399b274..e8abb9f95a 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -2427,7 +2427,14 @@ static int http_request_recoverable(const char *url,
+>  	if (options->effective_url && options->base_url) {
+>  		if (update_url_from_redirect(options->base_url,
+>  					     url, options->effective_url)) {
+> -			credential_from_url(&http_auth, options->base_url->buf);
+> +			/*
+> +			 * Use credential_update_url() rather than
+> +			 * credential_from_url() so that the WWW-Authenticate
+> +			 * challenge the server sent with the redirect target's
+> +			 * response is preserved and handed to the credential
+> +			 * helper.
+> +			 */
+> +			credential_update_url(&http_auth, options->base_url->buf);
+>  			url = options->effective_url->buf;
+>  		}
+>  	}
+> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+> index 4149fc1078..0627ef1433 100644
+> --- a/t/lib-httpd/apache.conf
+> +++ b/t/lib-httpd/apache.conf
+> @@ -203,6 +203,7 @@ RewriteRule ^/dumb-redir/(.*)$ /dumb/$1 [R=301]
+>  RewriteRule ^/smart-redir-perm/(.*)$ /smart/$1 [R=301]
+>  RewriteRule ^/smart-redir-temp/(.*)$ /smart/$1 [R=302]
+>  RewriteRule ^/smart-redir-auth/(.*)$ /auth/smart/$1 [R=301]
+> +RewriteRule ^/custom_auth_redir/(.*)$ /custom_auth/$1 [R=302]
+>  RewriteRule ^/smart-redir-limited/(.*)/info/refs$ /smart/$1/info/refs [R=301]
+>  RewriteRule ^/ftp-redir/(.*)$ ftp://localhost:1000/$1 [R=302]
+>  
+> diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
+> index a7d475dd68..349ae4ab39 100755
+> --- a/t/t5563-simple-http-auth.sh
+> +++ b/t/t5563-simple-http-auth.sh
+> @@ -557,6 +557,51 @@ test_expect_success 'access using bearer auth' '
+>  	EOF
+>  '
+>  
+> +test_expect_success 'bearer auth after redirect preserves wwwauth headers' '
+> +	test_when_finished "per_test_cleanup" &&
+> +
+> +	set_credential_reply get <<-EOF &&
+> +	capability[]=authtype
+> +	authtype=Bearer
+> +	credential=YS1naXQtdG9rZW4=
+> +	EOF
+> +
+> +	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
+> +	id=1 creds=Bearer YS1naXQtdG9rZW4=
+> +	EOF
+> +
+> +	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
+> +	id=1 status=200
+> +	id=default response=WWW-Authenticate: FooBar param1="value1" param2="value2"
+> +	id=default response=WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
+> +	id=default response=WWW-Authenticate: Basic realm="example.com"
+> +	EOF
+> +
+> +	test_config_global credential.helper test-helper &&
+> +	test_config_global credential.useHttpPath true &&
+> +	git ls-remote "$HTTPD_URL/custom_auth_redir/repo.git" &&
+> +
+> +	expect_credential_query get <<-EOF &&
+> +	capability[]=authtype
+> +	capability[]=state
+> +	protocol=http
+> +	host=$HTTPD_DEST
+> +	path=custom_auth/repo.git
+> +	wwwauth[]=FooBar param1="value1" param2="value2"
+> +	wwwauth[]=Bearer authorize_uri="id.example.com" p=1 q=0
+> +	wwwauth[]=Basic realm="example.com"
+> +	EOF
+> +
+> +	expect_credential_query store <<-EOF
+> +	capability[]=authtype
+> +	authtype=Bearer
+> +	credential=YS1naXQtdG9rZW4=
+> +	protocol=http
+> +	host=$HTTPD_DEST
+> +	path=custom_auth/repo.git
+> +	EOF
+> +'
+> +
+>  test_expect_success 'access using bearer auth with invalid credentials' '
+>  	test_when_finished "per_test_cleanup" &&
+>  
+>
+> ---
+> base-commit: dea0ea3582e6980ddbc1173cc8e3e9f9db91cde0
+> change-id: 20260819-http-preserve-wwwauth-redirect-a3fe4dab6b35
