@@ -1,201 +1,225 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08461339398
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 10:31:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787221893; cv=none; b=J80Rn1Cs+48pesLBjWiD+dtk0dvLPtVQHoNKQme5RnSKRj/st/nKP2AnPs5EQNoT5vUSfQY50QjDZWDYMD1r6Sn+X7S1/yXc+6lJzuUdelGo6L0aNwBfoayalQoFa6spoSicT1MgQ6fBN66w2we1bJYrdcGbV9kuU47bTJgJUUs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787221893; c=relaxed/simple;
-	bh=4F5kc6ytFrcuk7i9Pucef54vaVosDjzELGLEUas4elI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jmDZqpV1PivZUkjhEl5gP8n6dspW269Qw5CVwrGJr3y5HQfJJoGsXv6gs2ZJCvWf+6Ts6l774rYXcFDTENA92qoqZAFqfq6GVkCoc3r96+ZLoF6QBr+DEw7ChZGVP94gEIIqk2w7k3h4YSIydzHSxBA38XO26KbyiQV60kaapVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k5/KWspv; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C824441D652
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 11:17:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787224658; cv=pass; b=O/c2FcwHWVaEWIm4OWQ6cmaee0RX5t33Mjt2VvxUgrm8baKBixDL6ovoor/PhcnA+DeKjsdiJ79mMsMvzn0pP78LgtkNK/9oR6wbVkceu1TOk7e3w4YyM5P6bszZlJioKXMyeLbjOrQab1/2kw9W+LjS6FID8fNYhdlw0irF4Pc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787224658; c=relaxed/simple;
+	bh=8ME7hFe76bzmFxYQFlL/B/hmHJPbmf2ZI5bH0kCdDH4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hW6498ZVocCkimAyuLNQB4hQAXMJ1CEtW6O/qn/KPptLUOOfxhREyIrd2XbU5FGQhDwAY4aoTanb/O/j+7VL1Fu9XmsngPzwO6qEPogTkP7C7CqMIyyVUzJnM5d/qPdyxomjTPRUylHFjMqybPutXJ8kCcYBn2mWN3nGbbQK/+U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dqcoUZE5; arc=pass smtp.client-ip=209.85.222.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k5/KWspv"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8f0e5e36912so14204996d6.2
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 03:31:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqcoUZE5"
+Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-97bf910aa70so603384241.2
+        for <git@vger.kernel.org>; Thu, 20 Aug 2026 04:17:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787224652; cv=none;
+        d=google.com; s=arc-20260327;
+        b=N37Jnc1+NnOtvlj5NhgtArPwIQv9iUG1MoH9BxjUWlf69dH6no5miMqiDGC8S6zleL
+         316hjStZ5uRx9TucKZOcmup5vDn9RCjWJlYeOt5C+B9QExCbgO7eRANy5/9Y/3cHd8me
+         7uGrr1nIu36GSMPIUCJ3OVWlWqxHHcPGGhS1tA7RdTHJQzyR9HBjg9qO0TlWSoi77KCF
+         rGoirMUAmR6mss4zSemBX7piDcw5/IszQCkA4GGTz7gTe4+o4bX1k2j+7oguexv8RjgA
+         u9c52HKArQZvEJHyFp4cPLZxthOH6OdmgTURZu2r/QQ98Ppb14GhDHF29oVloaUuKL2q
+         YClQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=I0hlXU4AVZjMknw+ln7kQHDpqnoEIjIcrQcKWU7xfow=;
+        fh=w4+qF5gsWn1M022jRx1K3oJNq7GE7E8n0Kzgv9QVkeU=;
+        b=OCHi1Be4rWsQtpUoQfPSy2VvDFJ62ina1g9GRzb3eKWyYBPuI0vhuTk1RTl0zQIDKI
+         BrAaKXGUhWGtmVJ0IJ0CgowTYf8orSUl28eXVPSvDQq/Nk/fs9VJSBYoah3uHmWvGHdf
+         yeULW4J0VLh5YR+41C4Z0wfDBf9tsNCszWK7NVcJxm9KjjpQ3CpboQSdqQG5qlMcpzJL
+         FdoEuoMrp4SgSLkcTkwdWFk+yRIQRWTMH4epbYPIUJ+pD2WI/zChuK8MtPolNGUZUzqZ
+         LNoJqtv1dEJvLM34k/GZLp919kyaCppA3zi0pcXe2yPw2xCrLh7GhlXXQRMn1C1eBB69
+         lodQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787221891; x=1787826691; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=4p5Q1lX61jnou3WisU3/yk2BXnf54y61IUtOCOhxxq0=;
-        b=k5/KWspvNtitJflQorQqUILjnA2MMtR2xxaocmwVkqPZX68LEVDSX8WKfb052iuOcG
-         I+4cfTceg0NW/vjeS6PI9gwOxB6pv1KkEyOUfOk0Rt9eORQzpt5R6ESIrLFBjAqYJe3t
-         tOA5Vv05zM54V2r49hnK03F8ZmbmYVxrAoz4IBoHB2nkZ6NvCblZmP17oxscz9/J6f3d
-         BLJUXQF+G/2SJKGtFx/k0dLmjdeTh+uVRRMd6P0oHj/kk4mGqqUfK+3DUWzkiD/wBpGh
-         axzEWl/wG7UmFDPLBPqqCem4RYZXRxqjC0cDDHDyhDKlarGJAkggwG7uVxyQZHzelgNS
-         bhBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787221891; x=1787826691;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1787224652; x=1787829452; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4p5Q1lX61jnou3WisU3/yk2BXnf54y61IUtOCOhxxq0=;
-        b=IzZv+c4rZXSwt5NjabWRB/e0+pGRZBHGgUpZ2HyiiS6iwG/odUbO2jk8+AqHMDoBuo
-         aNHM6jl5VlOQtVNo13O1hnakZK/taz1yQ83eNFrvC8nWxTH17GU3cpkKdtsiL5y/RIee
-         gzSWVgmhCLV3gkCCx0gsWx+n24SkSHhZjAb2dDCkyS75pGtbgPws9jEaoVdtnr58ezfb
-         GyUKbNk6KzMOeCe++iaxCtd0Wy7Zinwy1JNCs7I7mmdAc5tuUL3qbsxmHhE2h2A0NEZp
-         onUBsUJteFZjgMwiO6WHxE0yYs/m0Z/nAVWkmwWHDviEGRFmMMVLRFcWl+0iLqJ04D5L
-         Gmvg==
-X-Gm-Message-State: AOJu0YwnyYtY8KqtDRBIVmcQhpJBuwpMpwD7684ivlowU68KJbCqfYtp
-	3G1rbfdZtUvF/NyIMyWRl3GOW4AxpJ/7YEc6GLDSTezENIw3AcgwaN2R14lhtQ==
-X-Gm-Gg: AR+sD110SavcC1q5BgFDvUqVrejew77vNkm8xxjNImytQfGhTvmNnya10w0G30HnjcU
-	+jrZ4nw3flkXg5lOgaY3WPvYXfzfLxmBBpAkNRvbAmSACI4iNfE4exOGCZ5xXQCvMdNACRVBHeN
-	uUD5OPdrNuh7iyYDHle8egL9WaxeKWgJ7uOTvmmezm9hIDq6mHrnclJDuU0KBX+jOVaH7Hml5S5
-	HyfswlK9NsyrAWUeddCT1ZQNXMcRBmQJ2AzxZQVpM6CLNjI3MlYm7TdQjvi8nme0RHni3gxiAOV
-	rccEfRGIJmbAZ1+DU2+Lbl/BDjOEEgXhdFOkZWq3EuE8hFgBCwZ4vbcl9x/y6RkoUYm+stMJCQM
-	OSrkCFwJgfy+5lmyI4r/NHFl+nFI869QLLi6/DkW6aDCw/XLdhJzswQBXCbGrfKz20sVzgYfnvY
-	VfzSrw2fvFAvCneI81khChEGCAiUvcP6+N26eTtQYFoXxC31Y9F5dydddV/a7hP4Lg
-X-Received: by 2002:a05:622a:148c:b0:51c:164b:b242 with SMTP id d75a77b69052e-52dd57bfa81mr90555661cf.15.1787221890674;
-        Thu, 20 Aug 2026 03:31:30 -0700 (PDT)
-Received: from [127.0.0.1] ([52.186.175.101])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-52dd86f33b5sm28284641cf.19.2026.08.20.03.31.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Aug 2026 03:31:28 -0700 (PDT)
-Message-Id: <pull.2192.v4.git.1787221888406.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2192.git.1785852032626.gitgitgadget@gmail.com>
-References: <pull.2192.git.1785852032626.gitgitgadget@gmail.com>
-From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 20 Aug 2026 10:31:28 +0000
-Subject: [PATCH v4] worktree add: shouldn't dwim if -b or -B is given
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=I0hlXU4AVZjMknw+ln7kQHDpqnoEIjIcrQcKWU7xfow=;
+        b=dqcoUZE5/yRhK8q6+lg64T6f1HPEr+g/U0w0e3k+kM7gb0gtjU5wsOVu/tPB7jGEY1
+         YP3ddJpqA/A5r5M2RFgj1TZozq/Up3nsRjl3TNC9JZsEyBlRNHLW+mbw/rZX6585eCNJ
+         nst/Q7G99JLrmGoOEkivd76wuCNT7HmfLdIthy/3CLVaa9Ha/71OFV/wZNs0JM6GDc/o
+         Fswr9N3GO+cxZOIeP+T1J2+5yaLeECcG4SYcQlXVmuLzEWLQkJBjYafN3TO5Dbb+KNSC
+         ul2XkD4l0PtSUsuDBaxgv3huvlcQBNR9FVGKKdxNhn05eSeLWbqzwJtYZ357TI9yk68u
+         Bo7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787224652; x=1787829452;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=I0hlXU4AVZjMknw+ln7kQHDpqnoEIjIcrQcKWU7xfow=;
+        b=PYwMR9oG2YzCdvS8asQOR76NTr/R/RkpFfA6eireWIuDDmKqkx4VY7PC9DUgvTDsoC
+         6SlGAvQ4PTBES0e0eVi7pGDLKkEfwpONLLAjeQHuJwpTOUTYIWB2NKHAsQ7y0KhpBHMd
+         M7V2Z0aXjG5F3KXNlDcCto4XUcDLghusqW60J0psDOGzFEBUDIf49Mdt8oQ2I5e1oCm5
+         AcIXVnX89hq7pOcq3A9LY/hq+40+9oVU/co/qH0amif1GeKRdUw8VvaExcEiqDSpDW+w
+         ELSuZjBA37kzmYAu5Z1IpBNLXhNkI0HomzN1HJgxc04F/YYuRHdYoMV0bcce3z9Y+CWW
+         5thQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrzOzP1rkR2qYQdg1DN9HQDyvlpEDccReap1Rciepp6jINgSaNUnYIJU0E6dDaW/t/s7kA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsfOPbCUyCo4r/4sngpAyFIGuy6goF8xB+PwztxUL6bpKedCLM
+	P3jredkI0Q4eFS63QlXPqf4LMiH3/nubvUhCzTUU+8ziXuEKG6LumDv+SrnuMgDkBff3Pl2OjGz
+	gvX3jql2bMKZHuWStSutV25pM3GUlJi0=
+X-Gm-Gg: AR+sD12l85oQVr7e2r4cHPm7nMY7IPjQSPpIRSIgi5qANav3Nca0httqq6vJ+lxn4eO
+	5XcsgeQKr5XcwfgKM5sKA2jcxN6Kig+tHpYb/Yia3+DvAiia67LPROzRX2YeLIupTX8MdHl91MO
+	jnZ7U/0suiCXB7sJz+Up8iqFtLF5H7abp4yN08+OiCXxR6s+s52ZJ1qvhTxO8Mv3ziIqEF7Qx+d
+	NPgH/6dPLYLdqWCF0eAWEKpBFk0rkPbwBhGgHYXUCUU+ptkUBu5wYV/hcF0fCKGMqESttA2Cr0v
+	USZOSemqQTbvSZsG0apAp1tfa7Xca5RASt6I1ssqch7Fwb4CkEPzMWUlVzOLv+cekh6vujWnf3S
+	1+YPUBxf3N2MpmytdET/17+MBfNzqs3E5OHw=
+X-Received: by 2002:a05:6102:8086:b0:738:d6c:7104 with SMTP id
+ ada2fe7eead31-777f5a51c97mr3900701137.0.1787224651837; Thu, 20 Aug 2026
+ 04:17:31 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 20 Aug 2026 07:17:30 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 20 Aug 2026 07:17:30 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260820-b4-pks-odb-generate-pack-v3-4-bc42252f6169@pks.im>
+References: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im> <20260820-b4-pks-odb-generate-pack-v3-4-bc42252f6169@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jacob Abel <jacobabel@nullpo.dev>,
-    Yoichi Nakayama <yoichi.nakayama@gmail.com>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Date: Thu, 20 Aug 2026 07:17:30 -0400
+X-Gm-Features: AcwNN1WdWhoCmXyJzz2cvGwQRSTVjHp8lt42pDUxOAUfiTiGHvpTFqQfQJECDHU
+Message-ID: <CAOLa=ZT-Tw2gMVCBS7b62VSkSJAHyVwO7dffsFW3Q4QzQe1JZg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] builtin/bundle: refactor option handling for
+ progress meter
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
+	Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="00000000000081caef065978aa4b"
 
-From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+--00000000000081caef065978aa4b
+Content-Type: text/plain; charset="UTF-8"
 
-'git worktree add <path> <branch>' DWIMs <branch> to a
-remote-tracking branch when neither -b, -B, nor --detach
-is given.
+Patrick Steinhardt <ps@pks.im> writes:
 
-However, 'git worktree add -b <new-branch> <path> <branch>' can
-still DWIM <branch>, causing <new-branch> to be ignored.  This is a
-regression introduced by 128e5496b3 (worktree add: extend DWIM to
-infer --orphan, 2023-05-17), which appeared in Git 2.42.
+> The git-bundle(1) command has a couple of command line options that
+> relate to whether or not progress should be reported. These options
+> match the options that git-pack-objects(1) expects, and consequently
+> they mostly get passed through to it directly.
+>
+> This results in somewhat of a confusing interface: there are four
+> different options that relate to whether or not progress should be
+> displayed and how verbose it should be. But in reality, there's really
+> only two modes:
+>
+>   - "--progress" and "--all-progress" result in the same outcome, which
+>     is also documented as such.
+>
+>   - "--all-progress-implied" does nothing as we pass that argument to
+>     git-pack-objects(1) unconditionally anyway.
+>
+> So in the end, the options only control whether or not progress should
+> be displayed at all, nothing else.
+>
+> Refactor the interface to instead use a simple `progress` boolean. This
+> makes argument handling a lot more straight-forward and it prepares us
+> for the next commit, where we're migrating git-bundle(1) to the generic
+> interface for generating a packfile.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/bundle.c | 33 ++++++++++++++++-----------------
+>  1 file changed, 16 insertions(+), 17 deletions(-)
+>
+> diff --git a/builtin/bundle.c b/builtin/bundle.c
+> index 1e170e9278..bfafadc984 100644
+> --- a/builtin/bundle.c
+> +++ b/builtin/bundle.c
+> @@ -70,35 +70,34 @@ static int parse_options_cmd_bundle(int argc,
+>  static int cmd_bundle_create(int argc, const char **argv, const char *prefix,
+>  			     struct repository *repo UNUSED) {
+>  	struct strvec pack_opts = STRVEC_INIT;
+> +	int progress = isatty(STDERR_FILENO);
+>  	int version = -1;
+> -	int ret;
+>  	struct option options[] = {
+> -		OPT_PASSTHRU_ARGV('q', "quiet", &pack_opts, NULL,
+> -				  N_("do not show progress meter"),
+> -				  PARSE_OPT_NOARG),
+> -		OPT_PASSTHRU_ARGV(0, "progress", &pack_opts, NULL,
+> -				  N_("show progress meter"),
+> -				  PARSE_OPT_NOARG),
+> -		OPT_PASSTHRU_ARGV(0, "all-progress", &pack_opts, NULL,
+> -				  N_("historical; same as --progress"),
+> -				  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
+> -		OPT_PASSTHRU_ARGV(0, "all-progress-implied", &pack_opts, NULL,
+> -				  N_("historical; does nothing"),
+> -				  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
+> +		OPT_NEGBIT('q', "quiet", &progress,
+> +			   N_("do not show progress meter"), 1),
+> +		OPT_BIT(0, "progress", &progress,
+> +			N_("show progress meter"), 1),
+> +		OPT_BIT_F(0, "all-progress", &progress,
+> +			  N_("historical; same as --progress"), 1,
+> +			  PARSE_OPT_HIDDEN),
+> +		OPT_NOOP_NOARG(0, "all-progress-implied"),
+>  		OPT_INTEGER(0, "version", &version,
+>  			    N_("specify bundle format version")),
+>  		OPT_END()
+>  	};
+>
 
-Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
----
-    worktree add: shouldn't dwim if -b or -B is given
+This is much nicer to read.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2192%2Fyoichi%2Fworktree-add-should-not-dwim-with-b-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2192/yoichi/worktree-add-should-not-dwim-with-b-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2192
+>  	char *bundle_file;
+> -
+> -	if (isatty(STDERR_FILENO))
+> -		strvec_push(&pack_opts, "--progress");
+> -	strvec_push(&pack_opts, "--all-progress-implied");
+> +	int ret;
+>
+>  	argc = parse_options_cmd_bundle(argc, argv, prefix,
+>  			builtin_bundle_create_usage, options, &bundle_file);
+>  	/* bundle internals use argv[1] as further parameters */
+>
+> +	if (progress)
+> +		strvec_push(&pack_opts, "--progress");
+> +	else
+> +		strvec_push(&pack_opts, "--quiet");
+> +	strvec_push(&pack_opts, "--all-progress-implied");
+> +
+>
 
-Range-diff vs v3:
+Tangent: While trying to understand this patch, I noticed that we only
+list the '-q' shortform for '--quiet' in the 'git-pack-objects(1)'
+documentation.
 
- 1:  477ea27c8b ! 1:  512b037bb7 worktree add: shouldn't dwim if -b or -B is given
-     @@ Commit message
-          is given.
-      
-          However, 'git worktree add -b <new-branch> <path> <branch>' can
-     -    still DWIM <branch>, causing <new-branch> to be ignored.
-     -
-     -    This is a regression introduced in v2.42.0
-     -    (128e5496b325640f0a09cc1d5b1e346c069b410f).
-     +    still DWIM <branch>, causing <new-branch> to be ignored.  This is a
-     +    regression introduced by 128e5496b3 (worktree add: extend DWIM to
-     +    infer --orphan, 2023-05-17), which appeared in Git 2.42.
-      
-          Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-      
-       ## builtin/worktree.c ##
-      @@ builtin/worktree.c: static int add(int ac, const char **av, const char *prefix,
-     + 
-       		/* DWIM: Infer --orphan when repo has no refs. */
-       		opts.orphan = (!s) && dwim_orphan(&opts, !!opt_track, 1);
-     ++	} else if (ac == 2 && new_branch) {
-     ++		if (!strcmp(branch, "HEAD"))
-     ++			can_use_local_refs(&opts);
-       	} else if (ac == 2) {
-     --		struct object_id oid;
-     --		struct commit *commit;
-     --		char *remote;
-     --
-     --		commit = lookup_commit_reference_by_name(branch);
-     --		if (!commit) {
-     --			remote = unique_tracking_name(branch, &oid, NULL);
-     --			if (remote) {
-     --				new_branch = branch;
-     --				branch = new_branch_to_free = remote;
-     -+		if (!new_branch) {
-     -+			struct object_id oid;
-     -+			struct commit *commit;
-     -+			char *remote;
-     -+
-     -+			commit = lookup_commit_reference_by_name(branch);
-     -+			if (!commit) {
-     -+				remote = unique_tracking_name(branch, &oid, NULL);
-     -+				if (remote) {
-     -+					new_branch = branch;
-     -+					branch = new_branch_to_free = remote;
-     -+				}
-     - 			}
-     - 		}
-     - 
-     + 		struct object_id oid;
-     + 		struct commit *commit;
-      
-       ## t/t2400-worktree-add.sh ##
-      @@ t/t2400-worktree-add.sh: test_expect_success '"add" <path> <branch> dwims' '
+>  	if (!startup_info->have_repository)
+>  		die(_("Need a repository to create a bundle."));
+>  	ret = !!create_bundle(the_repository, bundle_file, argc, argv, &pack_opts, version);
+>
+> --
+> 2.55.0.822.g20453c30eb.dirty
 
+--00000000000081caef065978aa4b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 8f5c4f85cac0b133_0.1
 
- builtin/worktree.c      |  3 +++
- t/t2400-worktree-add.sh | 10 ++++++++++
- 2 files changed, 13 insertions(+)
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 654d27c3e1..15a1c9624a 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -897,6 +897,9 @@ static int add(int ac, const char **av, const char *prefix,
- 
- 		/* DWIM: Infer --orphan when repo has no refs. */
- 		opts.orphan = (!s) && dwim_orphan(&opts, !!opt_track, 1);
-+	} else if (ac == 2 && new_branch) {
-+		if (!strcmp(branch, "HEAD"))
-+			can_use_local_refs(&opts);
- 	} else if (ac == 2) {
- 		struct object_id oid;
- 		struct commit *commit;
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 87b926728a..ba3bec078f 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -621,6 +621,16 @@ test_expect_success '"add" <path> <branch> dwims' '
- 	)
- '
- 
-+test_expect_success '"add" <path> <branch> does not dwim with -b' '
-+	test_when_finished rm -rf repo_upstream repo_dwim wt &&
-+	setup_remote_repo repo_upstream repo_dwim &&
-+	(
-+		cd repo_dwim &&
-+		test_must_fail git worktree add -b branch ../wt foo 2>actual &&
-+		test_grep "^fatal: invalid reference: foo" actual
-+	)
-+'
-+
- test_expect_success '"add" <path> <branch> dwims with checkout.defaultRemote' '
- 	test_when_finished rm -rf repo_upstream repo_dwim foo &&
- 	setup_remote_repo repo_upstream repo_dwim &&
-
-base-commit: dea0ea3582e6980ddbc1173cc8e3e9f9db91cde0
--- 
-gitgitgadget
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xRzRra1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNlN3Qy85blFiUVlrTG00RWwxYUtsbEI3bGJVaGdmbAp4N00zM0o2UHNG
+WXA3Zm8vd0R3S25iWWZCMjhRV3Y3dmVwZkYzK2RLRXFHWDYyNXlYTG9WZUdDUG42Z0RuZkdRCnhh
+UGFHM1hlTGFqUTdCZkhubXp6OTZGMFQyTHJEVXNKNENadW1WU1ByNEV0UnlyK2lYWFFWOWxxQ29W
+MitKVy8KSmRra0NaK1Q1YzE0YUQrUmZwVXZCNC9CeDluZlVMZzBCbTZzci9zM1hENXFEdjljRFdi
+U2swN1prdkNUSzZkbgpreGtDbU9wZ2pPc21SdTh4QmVDUnp3UE8xZWV4UyszQmZXRmttcVliS01Q
+U0hzS1FwejBndWgvakF5Y2lKa3UzCjRmVWdqLzZNSFdVeHN6UjlRV09XVWM3SmIrUXAvYVpXOEF6
+YnR0TDkzKy9IMXBjT2ZXRXlMcnFOamZCL1U1cjkKM21rV1NxL2lOYnBpeUNING9jNkFYSTBVMndF
+MEw3SHd1Nzg1RUR0ZElIdkl4WVIrbTFHS215WVN6emQwRllYRQpJVzV5a0cyZDNyUHZjWm9aN0t6
+ZGs4clpRYzBPRjBNNUdwWTRmZzViM01YbFZxZ1ZuaVBTWHY4YTZwS1pSalYyClg1SGErakMzRGFI
+U01DRjlhejN2MytuZ0cxWkI1cVJaOHhpaTNlVT0KPXk5Qm0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000081caef065978aa4b--
