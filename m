@@ -1,212 +1,395 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD55B389114
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 19:05:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6881A1A275
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 20:00:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787252756; cv=none; b=RLn04swRU29rzNty02yVLrS2oQXuerbUGXyFprAC/dCyGzfgvuQP4O1EPQpHUdj/KRanSkPjaOVJB2SxG3SObFOsn2elu123JiYtyM87c1dPzYMxhyX3SJmezPbF7WkSG9DbBIQw63kLOVjxw2YsL7tYCVqZdZOx5wMykuqfzKE=
+	t=1787256057; cv=none; b=GLU/N8I1xS1rQEQZiKsLpKTExxWdvBYHg4cZvMEQZyT7zbfv7QIT3+ngEy213PKsp8wpSv8FlE6MfJ+O90kT3L+oZ2KYeEo37hJHqh5aYoSWKoK30cj0FUcHaYrvPPp1y8nz6pV98Rg2xTWaLuuOS55SN1PDCgUhmyKUv9K9z9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787252756; c=relaxed/simple;
-	bh=vpkKkUc3IaaAOeSgMbm/mjltmBTlMJQNkYPa9nzyzlQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XRrhKX0NN11Utmp8TxWH5ZRIFf53vfpShil+lumjQLXqu2TK1u/+FuCraeToq35KHxrWaFzCa9OaLvEt53DnQMyFveSccIOX3TDjsE5FPFo5gJmhxtXDzHDvPtqNcWHwXIc/j50Vu6DP91FzMRbwtJoOJ3BW26eTOVGrgnz+VqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AqXESOi+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B5E6h9K5; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787256057; c=relaxed/simple;
+	bh=VUghJjX7eJ+7wIdQPU/c0nTpAYyWSC9Cg28ck/nY+/w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hd9/MerDUGO7rHXeNDdyW9DKxZ7y96i0rw+PeUCRChpxsAcdfzjZ7TM7dQbNAxfvcxjw43U+nguwUIZ+sSTS4NBSWU2rkN/H+FVRgkMX1Jy4qb0YsLBVLGX8rjeekDkNUSlE1ASyv60zts/CK+B2hwqhTxdjBbcak9jnoo0oJTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Aa0Cj2Br; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GiVj9mWU; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AqXESOi+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B5E6h9K5"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id DC2E6EC00D2;
-	Thu, 20 Aug 2026 15:05:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 20 Aug 2026 15:05:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Aa0Cj2Br";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GiVj9mWU"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7552E7A0137;
+	Thu, 20 Aug 2026 16:00:54 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Thu, 20 Aug 2026 16:00:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1787252753;
-	 x=1787339153; bh=QpTfmMlswc8CMQWReGoCKGabdfEMcHmbBqq0AwwFuUM=; b=
-	AqXESOi+SV5ckARtO9hUXsdG865X3VUPzoc6BXcOckarekjrJxCavO7nICrPBAi2
-	z/awuG8D4ULJriBePTxjXyjHCD9YCoffMNhQCvUWeZvP19ouyMPVgmxAReTll20J
-	CN/qPynoWPab4QaFXkyCWk8UNXniwNuHvxDMQ+ufH6//uNDrFuiAnup0attncz/V
-	AjZHIHhLnhbvC7779WJgnTnTvlclOnHOF73pK8naPZSPe7X3koVbyQBxRAWhEpgz
-	R8JP2C1v5jUL+JT0/PRO00s/H+nepFMLk1LV2TbuU8iM5ZaS166ZZoGno4fGr5No
-	5h4OeDo1XbzxXrCUs1vIvg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787256054;
+	 x=1787342454; bh=V4eXab7lOGC3lakIFHibjzaDfWsXQDiQZeRBAJUffmU=; b=
+	Aa0Cj2BrsNmNMvE4MJo0+AdyjFXWzkvyblHKNC5UHBcAFm4j3gAH4rXkE7OpKGBO
+	PgMYN77ZBev17rSnEmpv/fLB2dzMeKxJHRKp++JDGQHQ4Z+r6HJ7+j0s52ph1wv8
+	ygl0OypbF9PnQwt+VFQrXD5b1yTOTKwkcf27gJR+NEgBJ6aKFe3+lD1i5RZRD7Ak
+	uzHM+U+s14vXEAvurYZC83xfqwpl73kV/hAbhXAqEtZV82X2xE8WwIWsYWrGVAJ7
+	/LFLCk/RM16ZkZWibAxPyNX3darqTOsHcYf9e3ocS9X+R8HkASRTzmBS6OpOxx0d
+	Vagxq9w1cTmW6Xvr7tDyNQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787252753; x=
-	1787339153; bh=QpTfmMlswc8CMQWReGoCKGabdfEMcHmbBqq0AwwFuUM=; b=B
-	5E6h9K5Zlp8EpLS7PIDAfc7jL4TaGo37VBZi7Cnmp6fryrESCI9qluruOqCyYmZB
-	K7kdWi4xAKb/eR10X5MFvcKyMCyEWqSmbF0IMHK8xn8ClLqYPQWY29kuMXj+Zkf+
-	38QqW5jr81j55IF0YsREwcJb0Y6+VtCvVtWRl8Zy/TsZKvSMXgaXjU2t9JFGwT5q
-	W+2hmon9WDTMQziBDMm8ULkgliW6J+HWGWVCrnKgXdBKxKoxdAuPB5uuzb9s0hqw
-	2a1rAkdeLEI+QG+3u9rixgQ/U7K/OXFdw9kP83XTQRCHbKlvMJHALks3OwMk4BCg
-	QzMPW5UOl2N5o/YY30GhQ==
-X-ME-Sender: <xms:EVCHasVSzLr2-OKMlkSEjafLjDwYGs7ivPiSjsBwCbWMgDuCe-7s5g>
-    <xme:EVCHai1Axj25aMV468MhauNawLJJ9hOnukvSR_Re-9MxmCaCNhovgtcMj0NiID3IP
-    j1E9OWhODaucItjy4pMk2oYzJoyGBBBdyini5hzAii3ovBHrsMUPJM>
-X-ME-Received: <xmr:EVCHaiqd0YVP1uxYwAzp_kcvi2Lp7jJ79uVS67HuH-AEOkFhY5VtoGlzluGZ4tVEzM3EVPemc2eCNmuCt730tv3ulR7sEfWxZQ>
-X-ME-Proxy-Cause: dmFkZTFNLztRw6mgbI6ADa3qTa+NIzXttWzQODjOdJoccxrefh5h4ECjPBvnakknrgwK4s
-    4/4wAIdjo+QzOCQbluP0tjgJM2W3LaZLeILs6mqDe3otWbIiooI9fjuowDV8K3uMf8xe5/
-    KBiiL5WXto//kS8UikHF52iCnjbM8gTGLnVD8ijXp/qAcEg0YIFz1q99TSOFDDaJpGtra6
-    ALO8RxCtJzTbxyw1Xsw332TE4YYVh04d3QHfMiq/RtalI+dqCMytLxHQoGiNKo8TrVSCdv
-    kySVkZFbHjt0wQHgm6pTfAd9ZMolRFzekAdyCBiYgBvXiho0LigvJsZPvdgFd41OO05qSs
-    WBoDKA/FinRo39hVYqn4U14EzOr2LYqdvf1/0vBcUDtV0SCbeZI7oVQKF83ZuQDnNZbxcc
-    cnkmkH07nMJdCkt/LDxRY41JYR/2TXZ1YfZgjAGl8VWvck+KA9BXwWTwGrGp4ZVk73gKvS
-    /YUVAV1As4cs0zJXv19oCHBvvVgzIMabjDR8bzdPTSR8f9MR8LPPSh8N/85pur2RKTUqed
-    AhOCmsVtXI3LWzQzAfy4SndnKj8CBlJDtqPT2rTXq2rtSusphhM5fEUDXYTSaj+sdmFT9x
-    5Q2r0oT6RiKJocFSLhzpmFEIT4HiPy4MEbdjHAeLHk6PClXc0wmgjvccf77g
-X-ME-Proxy: <xmx:EVCHahUV2yq5Tif8n3eCF3IYBCcAga7cXuEHmjWA47kekLehz0-qJg>
-    <xmx:EVCHalasSQGLtls3yBCuTRtJERrKis_50BjjFI5KeSoL_uoTXjoZRQ>
-    <xmx:EVCHamcEyYImR1EDGkdTVn4Fv2TmpEKeFXkt5FgGuOIPk_p5kEzj3w>
-    <xmx:EVCHan3FWR7F8zEtDin4u3QI8MbeYUd1w8jb-iccv435LVqnQSU4mw>
-    <xmx:EVCHaod60BOvi1rWIYrKMi6GOHTcBU6aoPy7XcxHmLsLZYUbkL9bU5WC>
-Feedback-ID: if26b431b:Fastmail
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787256054; x=
+	1787342454; bh=V4eXab7lOGC3lakIFHibjzaDfWsXQDiQZeRBAJUffmU=; b=G
+	iVj9mWUHDLVGTkXI8366CURP03CxOCUKerjdtSRv4exuYRwxgnXI3dsuFfgDXa/+
+	0SsJNIboRNJum3fWpwYMJpvKlUqUErjs7uHwZr8FFNF2nA5TASRbTk6SJm1nEuV5
+	YJpyiqPJ0+qL7lCwG8AmCPe+jCaxCXh6PJhCTqfptVEcc925dcXTuYNBzDXslV7E
+	osByCmfEW3ZQEqQu7by/YpzNfgclgF+vAvsSS3i3vpjqFXXRA6QVg5C4kY55yk/G
+	Ubpu7fB3aaxOzed++iQU3tCELg6sm8kA2aAFWwrU/xlmsCyDLlFm+UKnVI1ClwVL
+	0dGwD2nH3IBpPUvx3HTig==
+X-ME-Sender: <xms:9lyHan6rFgOeL8cY8CvUcD2PDDe4aYEX4MpGr2q3tGChO1JXs2jxSv4>
+    <xme:9lyHaj75EG7J6pIkAz_2VQkLVeHbgnuRrJSyTSXoDEldbJjpD3iPIjkKBB76A4U6X
+    qNWGdF5GF0kszhhWRon9yT_ewsLHZuD3LziG0NmkfuXqjQif2lVRH0>
+X-ME-Received: <xmr:9lyHajfhORSFLKoU64FCDps4PC8I-2UrfKjS-T2GN-5wAHN7tAV2bG7uFkvp6E-xViW6aPwYDkrfqwi53RX4bu3xo5sds32lCvC30Q4ZchfYniJI0gfaKv4>
+X-ME-Proxy-Cause: dmFkZTE7ZUu7dCJ+rVQGYH2Fpc85YR1GO+2yNASLiTtBJQ7OK/7A46fWWMfi5yg98d9nV4
+    431YxZSiezTt9FWpwUnbavbYJ7BShFJdX7Wv6VEdjo/xvSeJR134gzjAjzIV0NNbwAaEBx
+    b1oguCEfxFIRZp1qE79vT7QIakxEhZ8VBGVwhJJC8cqKN35/RLRQYys+4D51enc0vDTnA3
+    CwPdClH+kGIJ4TB90DTaWjSG9Q/Uq1zuPiwRB79QOfrYQexJB95QOhm+dw1E655c+KusxA
+    c905qCjNYvRvJQ0c/XPKS9mwwQucB7U0Tt41M3YMFkqZkLuaVpbdgcst7LwwNLTNa4m+P4
+    bfWcK3uuHz/bQdLiAh1Gkt8Omv5sPwCxO32mIH16pAbwieLtj3CbWCPu2X6K4JMZKOGuS9
+    wV8fsE0sLfebUjDbehWmHeQWLiutOHFhbAhXQV8GKILhBzx6Ix5j3Gw6vpJzCkwlMC+DbX
+    wTfAsffh1KMKS/UPX3DMx1bIGZ8phzCVlytP8UmJqYHi5cyC9hoWXkmhN/FGukmWUtlVnU
+    4eiqoP3uVGHX3NvWnrXCnGaBR5KxjJfS0Y3TMFg4ghSuEIa/gAdyyWUVmvQEhUX22seVzS
+    UdSMRksNyg/N9oVaMmYroIDv3T/OyxGbOkaFH+vRtj529ZzWp0+GdBJkhuMg
+X-ME-Proxy: <xmx:9lyHanBc0MajIcvKDXu8xfsTz8pZrs3d1u24mjcIiVKMekwbI9Hv6g>
+    <xmx:9lyHam8xRd4GXxbzJXpKejhhFmDAXhjVg646A9nPQk4Lz2dWy62Dag>
+    <xmx:9lyHaiIUyvDVz1uNgojIHcEiQGXa_nb-Vy4O8-JK3rgrqQ1tg3GQjg>
+    <xmx:9lyHavgxZKelW3ToGOoZRvZX8jq9ZYtexx7lSy2Mga_o34P7N_Id-w>
+    <xmx:9lyHauZqXv59Z3P8DX-2KlaVBwtLzySpnmqAOgBq6wH3jyDNy8-0LRpi>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 15:05:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Daniel =?utf-8?Q?Mart=C3=AD?= <mvdan@mvdan.cc>
-Cc: Daniel =?utf-8?Q?Mart=C3=AD?= via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  M Hickford <mirth.hickford@gmail.com>,  Mantas
- =?utf-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH] credential/libsecret: load secrets explicitly
-In-Reply-To: <331e94ec-c07a-4d56-938d-d12c9a0cc5c9@mvdan.cc> ("Daniel
-	=?utf-8?Q?Mart=C3=AD=22's?= message of "Thu, 20 Aug 2026 16:00:12 +0100")
-References: <pull.2372.git.git.1785883217733.gitgitgadget@gmail.com>
-	<331e94ec-c07a-4d56-938d-d12c9a0cc5c9@mvdan.cc>
-Date: Thu, 20 Aug 2026 12:05:51 -0700
-Message-ID: <xmqq33w8sjcg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 20 Aug 2026 16:00:52 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH v2] trailers: stop recognizing URLs as trailers
+Date: Thu, 20 Aug 2026 22:00:02 +0200
+Message-ID: <V2_URLs_not_trailers.bf3@msgid.xyz>
+X-Mailer: git-send-email 2.55.0.13.g85d2d65e389
+In-Reply-To: <URLs_not_trailers.b13@msgid.xyz>
+References: <URLs_not_trailers.b13@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Daniel Martí <mvdan@mvdan.cc> writes:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-> Gentle nudge on this, anything I can do to assist in getting it reviewed?
->
-> I still run into the error a few times per week :)
->
-> On 8/4/26 11:40 PM, Daniel Martí via GitGitGadget wrote:
->> From: =?UTF-8?q?Daniel=20Mart=C3=AD?= <mvdan@mvdan.cc>
->>
->> secret_service_search_sync() can return an item whose secret is not
->> loaded, despite SECRET_SEARCH_LOAD_SECRETS being set: the search
->> silently discards secret-loading failures, and the GNOME keyring
->> daemon silently omits from its GetSecrets reply any item that is
->> locked or that was deleted after the search matched it, e.g. by a
->> concurrent "credential erase" from another git process.
->>
->> secret_item_get_secret() then returns NULL, which we pass unchecked
->> to secret_value_get_text() and secret_value_unref(), producing
+An HTTPS URL starts with an alphanumeric scheme followed by a colon.
+That means that they will be recognized as trailers in a trailer block.
+That turns out to be a problem in practice. Let’s stop recognizing these
+as trailers by failing the trailer parsing when we:
 
-I do not program Gnome so I am not exactly qualified to review this,
-but anyway.
+1. find the separator;
+2. the separator and the next two characters form `://`; and
+3. we haven’t parsed any whitespace yet.
 
-The above makes it sound like we can just request with
-secret_service_search_sync() exactly the same way as before (i.e.,
-with LOAD_SECRETS), and then check with secret_item_get_secret()
-to see if it has secret value in it.  The problem with the current
-code is that we do not validate what that secrete value is (iow, we
-do not say "ah, NULL, we should not assume we do have secret already
-obtained here").
+The simplest example of how this can be a problem is for people who do
+not use trailers but may leave URLs at the end of the commit message.
+Now, while these authors might not use trailers themselves, other
+authors may have used trailers and this metadata confusion can become a
+problem once someone tries to extract that metadata (and non-metadata).
 
-So does the first hunk to drop _LOAD_SECRETS really needed?  Rather,
-would it be more straight-forward to do
+Let’s now look at some examples in the Linux Kernel[1] to see how this
+is a problem in practice.
 
-	item = items->data;
+There are commits which contain intended non-trailer lines which start
+with URLs. These are comments. Example with just the trailers:[2]
 
-	secret = secret_item_get_secret(item);
-	if (!secret &&
-            !secret_item_load_secret_sync(item, NULL, &error)) {
-		... your error handling here ...
-		return EXIT_FAILURE;
-	} 
-        if (!secret)
-		secret = secret_item_get_secret(item);
+    Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+    [bhelgaas: squash fixes:
+    https://lore.kernel.org/r/20260108013956.14351-2-bagasdotme@gmail.com
+    https://lore.kernel.org/r/20260108013956.14351-3-bagasdotme@gmail.com]
+    Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+    Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+    Link: https://patch.msgid.link/20251210132907.58799-4-xueshuai@linux.alibaba.com
 
-instead?  I am assuming that it is rare (like, only a few times a
-week) to race with other activities that unloads the secret and most
-of the time the first secret_service_search_sync() gets everything
-needed in a single call.
+Those `[]` pairs delimit the “squash fixes” comment.
 
-I am also assuming that this is a race condition that is not very
-easy to reliably reproduce in the test, so I wouldn't expect it to
-come with a test to ensure that the fix will not regress in the
-future (in other words, lack of patch to t/ directory is fine).
+Now, any of these two commands:
 
-Thanks.
+     git log --format='%(trailers:only)' -1 <commit>
+     git log -1 --format=%B <commit> |
+         git interpret-trailers --only-trailers
 
+Will both wrongly (according to the surmised user intent) include these
+two URL lines as trailers and also mangle the URLs, e.g.:
 
->>
->>      secret_value_get_text: assertion 'value' failed
->>      secret_value_unref: assertion 'value != NULL' failed
->>
->> and losing the password even when the secret is still retrievable.
->>
->> Drop SECRET_SEARCH_LOAD_SECRETS and instead load the secret of the
->> one item we use with secret_item_load_secret_sync(), which does
->> report errors. A secret the search would have silently dropped is
->> now retrieved normally, and a genuinely inaccessible item produces
->> a useful message instead of assertion spew, with git falling back
->> to prompting either way. Merely guarding against NULL would avoid
->> the assertions, but would forfeit a secret that is still available.
->> The cost is unchanged: the search no longer batch-fetches the
->> secrets of all matching items, and the explicit load fetches the
->> one we use.
->>
->> Signed-off-by: Daniel Martí <mvdan@mvdan.cc>
->> ---
->>      credential/libsecret: load secrets explicitly
->>
->> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2372%2Fmvdan%2Flibsecret-null-secret-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2372/mvdan/libsecret-null-secret-v1
->> Pull-Request: https://github.com/git/git/pull/2372
->>
->>   .../libsecret/git-credential-libsecret.c           | 14 +++++++++++++-
->>   1 file changed, 13 insertions(+), 1 deletion(-)
->>
->> diff --git a/contrib/credential/libsecret/git-credential-libsecret.c b/contrib/credential/libsecret/git-credential-libsecret.c
->> index 941b2afd5e..6bbdf2bd45 100644
->> --- a/contrib/credential/libsecret/git-credential-libsecret.c
->> +++ b/contrib/credential/libsecret/git-credential-libsecret.c
->> @@ -126,7 +126,7 @@ static int keyring_get(struct credential *c)
->>   	items = secret_service_search_sync(service,
->>   					   &schema,
->>   					   attributes,
->> -					   SECRET_SEARCH_LOAD_SECRETS | SECRET_SEARCH_UNLOCK,
->> +					   SECRET_SEARCH_UNLOCK,
->>   					   NULL,
->>   					   &error);
->>   	g_hash_table_unref(attributes);
->> @@ -143,6 +143,18 @@ static int keyring_get(struct credential *c)
->>   		gchar **parts;
->>   
->>   		item = items->data;
->> +
->> +		/*
->> +		 * Load the secret explicitly rather than via
->> +		 * SECRET_SEARCH_LOAD_SECRETS, which silently discards load
->> +		 * failures and returns items whose secret is NULL.
->> +		 */
->> +		if (!secret_item_load_secret_sync(item, NULL, &error)) {
->> +			g_critical("could not load secret: %s", error->message);
->> +			g_error_free(error);
->> +			g_list_free_full(items, g_object_unref);
->> +			return EXIT_FAILURE;
->> +		}
->>   		secret = secret_item_get_secret(item);
->>   		attributes = secret_item_get_attributes(item);
->>   
->>
->> base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
+    https: //lore.kernel.org/r/20260108013956.14351-2-bagasdotme@gmail.com
+
+Because the `--only-trailers` mode (or `only` for the git-log(1) format)
+normalizes the output to a colon and a space.
+
+Another example is linewrapping mistakes; a `Link` trailer with a
+URL where the URL ended up on the next line, presumably because the
+user’s editor linewrapped the “too long” line. Example with just the
+trailers:[3]
+
+    Link: https://patch.msgid.link/20260216-work-xattr-socket-v1-4-c2efa4f74cb7@kernel.org
+    Link:
+    https://lore.kernel.org/3cnmtqmakpbb2uwhenrj7kdqu3uefykiykjllgfbtpkiwhaa4s@sghkevv7jned [1]
+    Acked-by: Darrick J. Wong <djwong@kernel.org>
+    Reviewed-by: Jan Kara <jack@suse.cz>
+    Signed-off-by: Christian Brauner <brauner@kernel.org>
+
+Now, this intended trailer is already ruined, but interpreting the URL
+as a standalone trailer only compounds the mistake.
+
+Yet another example is the trailer machinery normalizing the trailer
+block before application, resulting in a `https` trailer key in the
+commit message itself. Example with just the trailers:[4]
+
+    https: //sashiko.dev/#/patchset/20260429114208.941011-1-holger.brunck%40hitachienergy.com
+    Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
+    Signed-off-by: Holger Brunck <holger.brunck@hitachienergy.com>
+    Link: https://patch.msgid.link/20260507155332.3452319-1-holger.brunck@hitachienergy.com
+    Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+
+We have a helpful `Link` that points to the original patch.[5] Following
+it we can see that that `https` trailer was indeed a URL
+originally (again just the trailer block here):
+
+    https://sashiko.dev/#/patchset/20260429114208.941011-1-holger.brunck%40hitachienergy.com
+    Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
+    Signed-off-by: Holger Brunck <holger.brunck@hitachienergy.com>
+
+So how did it end up as a `https` trailer? My theory is that the trailer
+block was normalized on patch application, causing a URL comment to be
+wrongly normalized and cemented in the commit message as a trailer.[6]
+
+† 1: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/
+† 2: commit 8236fc613d44e59f6736d6c3e9efffaf26ab7f00
+† 3: commit 5bd97f5c5f241a5610c4412d1b93995a26241f81
+† 4: commit 496c0c4c53bbe1bad97e82cd12103df61a6e459d
+† 5: https://patch.msgid.link/20260507155332.3452319-1-holger.brunck@hitachienergy.com
+† 6: There are only four commits in the Linux Kernel of this kind, and
+     three of them have the same recurring person in the signoff chain.
+
+***
+
+Note that this check has some benign false positives. A trailer key
+can start with a digit, but a URL scheme can not start with a digit.
+That means that a line that starts with `1://` will be rejected even
+though it cannot be a URL. I don’t think this will reject any real
+trailers, so I think the implementation simplicity is worth it.
+
+And these false positives are just for a limited start fragment check;
+a mere heuristic, not a URL parser.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+
+Notes (series):
+    Topic name (applied): trailers-no-urls
+    
+    Topic summary: Stop recognizing URLs in trailer blocks as trailers.
+    
+    Note to the maintainer: This has been rebased on `master` since the
+    dependent topic kh/doc-trailers has been merged thither.
+    
+    § Link to v1
+    
+    https://lore.kernel.org/git/URLs_not_trailers.b13@msgid.xyz/
+    
+    § Changes in v2
+    
+    • Use `starts_with` for readability:
+        https://lore.kernel.org/git/20260609004340.GF358144@coredump.intra.peff.net/T/#m74203c474c34f1028a7e3d389ff46fb7e579444c
+    • Since `starts_with` is a function, put the simpler conjunct
+      `whitespace_found` before it. It’s better to put the cheaper operations
+      first in a short-circuiting expression. Right?
+    • Explain in the commit message that you can technically get false positive
+      “URL” start fragments:
+    
+          https://lore.kernel.org/git/20260609004340.GF358144@coredump.intra.peff.net/T/#m35047d5c7a79abd23c11f97e6b6a0364409805e3
+
+ Documentation/git-interpret-trailers.adoc | 13 ++++--
+ t/t7513-interpret-trailers.sh             | 19 +++++++++
+ t/unit-tests/u-trailer.c                  | 52 +++++++++++++++++++++++
+ trailer.c                                 |  6 ++-
+ 4 files changed, 86 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
+index b4988d39eab..903d598dcb0 100644
+--- a/Documentation/git-interpret-trailers.adoc
++++ b/Documentation/git-interpret-trailers.adoc
+@@ -123,9 +123,16 @@ OTHER RULES
+ What was covered in the previous section are the rules that are relevant
+ for regular use. The following points are included for completeness.
+ 
+-This command ignores comment lines (see `core.commentString` in
+-linkgit:git-config[1]). This is for use with the `prepare-commit-msg`
+-and `commit-msg` hooks.
++--
++* This command ignores comment lines (see `core.commentString` in
++  linkgit:git-config[1]). This is for use with the `prepare-commit-msg`
++  and `commit-msg` hooks.
++
++* Candidate trailer lines that have `:` as the separator, that have no
++  whitespace before the value part, and that start with `//` are not
++  recognized as trailers. This is to avoid accidentally interpreting
++  URLs as trailers (e.g. lines that start with `https://`).
++--
+ 
+ OPTIONS
+ -------
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 818a8dafbd2..e3555b6d51d 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -1989,4 +1989,23 @@ test_expect_success 'handling of --- lines in conjunction with cut-lines' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'URLs and lines that are not quite URLs' '
++	cat >expect <<-\EOF &&
++	https: //www.a-trailer.org
++	https: //www.another-trailer.org
++	Signed-off-by: somebody <somebody@somewhere>
++	EOF
++	git interpret-trailers --only-trailers >actual <<-\EOF &&
++	subject
++
++	body
++
++	https://www.not-a-trailer.org
++	https ://www.a-trailer.org
++	https: //www.another-trailer.org
++	Signed-off-by: somebody <somebody@somewhere>
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/t/unit-tests/u-trailer.c b/t/unit-tests/u-trailer.c
+index 3d60ea1603d..7404b165fac 100644
+--- a/t/unit-tests/u-trailer.c
++++ b/t/unit-tests/u-trailer.c
+@@ -318,3 +318,55 @@ void test_trailer__one_non_trailer_no_git_trailers(void)
+ 			   0,
+ 			   expected_contents);
+ }
++
++void test_trailer__URL(void)
++{
++	struct contents expected_contents[] = { 0 };
++
++	t_trailer_iterator("Subject: foo bar\n"
++			   "\n"
++			   /*
++			    * We do not want to match URLs as trailers.
++			    */
++			   "https://www.example.org\n",
++			   0,
++			   expected_contents);
++}
++
++void test_trailer__not_a_URL_space_after_separator(void)
++{
++	struct contents expected_contents[] = {
++		{ .raw = "https: //www.example.org\n",
++		  .key = "https",
++		  .val = "//www.example.org" },
++		{ 0 },
++	};
++
++	t_trailer_iterator("Subject: foo bar\n"
++			   "\n"
++			   /*
++			    * This has a space after ':' so it's not a URL.
++			    */
++			   "https: //www.example.org\n",
++			   1,
++			   expected_contents);
++}
++
++void test_trailer__not_a_URL_space_before_separator(void)
++{
++	struct contents expected_contents[] = {
++		{ .raw = "https ://www.example.org\n",
++		  .key = "https",
++		  .val = "//www.example.org" },
++		{ 0 },
++	};
++
++	t_trailer_iterator("Subject: foo bar\n"
++			   "\n"
++			   /*
++			    * This has a space before ':' so it's not a URL.
++			    */
++			   "https ://www.example.org\n",
++			   1,
++			   expected_contents);
++}
+diff --git a/trailer.c b/trailer.c
+index 6d8ec7fa8d8..10b1abebfbe 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -635,8 +635,12 @@ static ssize_t find_separator(const char *line, const char *separators)
+ 	int whitespace_found = 0;
+ 	const char *c;
+ 	for (c = line; *c; c++) {
+-		if (strchr(separators, *c))
++		if (strchr(separators, *c)) {
++			/* avoid accidental URL matches */
++			if (!whitespace_found && starts_with(c, "://"))
++				return -1;
+ 			return c - line;
++		}
+ 		if (!whitespace_found && (isalnum(*c) || *c == '-'))
+ 			continue;
+ 		if (c != line && (*c == ' ' || *c == '\t')) {
+
+Range-diff against v1:
+1:  e7ba66a0ce3 ! 1:  2f8d10c1c6d trailers: stop recognizing URLs as trailers
+    @@ Commit message
+         † 6: There are only four commits in the Linux Kernel of this kind, and
+              three of them have the same recurring person in the signoff chain.
+     
+    +    ***
+    +
+    +    Note that this check has some benign false positives. A trailer key
+    +    can start with a digit, but a URL scheme can not start with a digit.
+    +    That means that a line that starts with `1://` will be rejected even
+    +    though it cannot be a URL. I don’t think this will reject any real
+    +    trailers, so I think the implementation simplicity is worth it.
+    +
+    +    And these false positives are just for a limited start fragment check;
+    +    a mere heuristic, not a URL parser.
+    +
+         Helped-by: Jeff King <peff@peff.net>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+    @@ trailer.c: static ssize_t find_separator(const char *line, const char *separator
+      	for (c = line; *c; c++) {
+     -		if (strchr(separators, *c))
+     +		if (strchr(separators, *c)) {
+    -+			/* avoid accidental URL matches (://) */
+    -+			if (*c == ':' && c[1] == '/' && c[2] == '/' &&
+    -+			    !whitespace_found)
+    ++			/* avoid accidental URL matches */
+    ++			if (!whitespace_found && starts_with(c, "://"))
+     +				return -1;
+      			return c - line;
+     +		}
+
+base-commit: 1a3e64c6c4a623626ff0687008732a8e007e2a1c
+-- 
+2.55.0.13.g85d2d65e389
+
