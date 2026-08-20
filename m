@@ -1,88 +1,83 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E42B35C19B
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 05:26:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512C62D7393
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 05:41:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787203573; cv=none; b=dk2pRiefBvGtYgUrAyreYap1QwQ0AGqYCnZGjkkKNk9r4k5bCzFuQ8WRkckkrYLVy7OR/3HUNH4D9iQ4ho1hVZHS8ClrqmCx1Pqk6J+eAYZsfzvNJt7gnbDoEela2NT9OtkwY8cspVlT082xw/GY1lIxEJ27s/cfA3GvW2feYMs=
+	t=1787204501; cv=none; b=kL4GHJOg3DXlFhyzl6gtWBFZRvnGIDKByBYpXDBz3RXS7uLPj0dQHfnJtKrYbdo7V1i/63QS+ZBPGYlhS128kafx0PUmzvm3vTQ1tAhUeivwvBiN/qUeD+ZSqsYiRFbD0m/iqiKZcTARimPWHUl7jpIsoGLVsbyucynTKM7H8mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787203573; c=relaxed/simple;
-	bh=T1oGfdABr0WOuoGTSi98Fo3pITJ/RkSW4TDs8qg6U6g=;
+	s=arc-20240116; t=1787204501; c=relaxed/simple;
+	bh=new2Pyi5JSEwgQsPy7xzEn1os/7+g6ATTQVRcwWYLGQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KF2YUmWIR5bx4ABu4C5p5WsRHPa3uas2+2uS2easqiJXhChWN5K0wh3aMMvBalYuNbhnZ1LJOoVkO4EzT+50k+5h+G8RMCa/oJgT0AR5Ya0jaYkU4KmvyXFj5kkQ8ZiKgrfxZSBy42WjLTIY9l9Abr7zVxmfF8RmOEy7f/CFMiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=inSdyZwK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QGSV8FHL; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=B+lcDRG9jiTXEzmfgVK2RDf01vYyyCoysxExftghxbPt2P8o9TJXefWAHgV29E8mLEieIaKLfhDtaCZx50iyWzZzjYXdjQx5H0zX1HxyzLIIN1KnPmTIlp8Ols4h3/YLsZNBe85/Kc70MRu9RcTPUNWA7IJFg1iM41FHUSWhPeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a1SI+eCG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g00aHZcY; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="inSdyZwK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QGSV8FHL"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 85A32EC0184;
-	Thu, 20 Aug 2026 01:26:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a1SI+eCG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g00aHZcY"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 574C21400069;
+	Thu, 20 Aug 2026 01:41:39 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 20 Aug 2026 01:26:11 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 20 Aug 2026 01:41:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787203571; x=1787289971; bh=qAz1Bm6h9v
-	bDIDBKYUT1vaKcTFiJGuz4/oZBiY4KIOs=; b=inSdyZwKcBtp1jSCDZ2WEepKBN
-	fP9rd0EBnwu5SzVhEa5nI3pdBK0kILYwCdl/JFX7FuF3JBVYsPnLhKsZxYHWokq+
-	9sDDRqfsiqt9v7KIK+CYvJ7Iiyw1+6Jmhw9BtpLZxBt6hn+w8ZofPf6+s0nFwy9T
-	oGoSGsrcm6Db+Gui7Uia+gfNiJDwQlq3auwIgiD8dNartEDr/M19O7RX54GgqUh+
-	SAUVXrxGuVQ1qV847BPLVY1dqh63CmDF3NdodQ+5bcTnTDpOVFcPjdM5vBaLbh/j
-	IWTLvJ7bCWmM1dqclVYxBDitKm1RVGRizPOx/DkMBViAs9LfuRvenQ/Bipgw==
+	:subject:to:to; s=fm3; t=1787204499; x=1787290899; bh=pilst0IZel
+	j8p//rROyPGQ0bsNG7anQvd5mP12/hpVw=; b=a1SI+eCG9QSMKfpYO0V3NN7wHC
+	BoIiBwDS9Z9uud3JchARBM1wMaTlbK4Zp2uaY00irFPkutIje/oiwjjKyQMA6Y/T
+	FK89a9R9h/OvR0cSIzK5n9vbz2L+UGqLbCMlyI0tSbzVtrzF5gChDx8dN3x8Ym9d
+	PnJWmNEmnnRQXLK6yu2V94Z2gH9q0/eOtKNsxHOtVDc920udTwJBVp1CWyQNMD9F
+	3OP8GEsuyUauoxV5JUCTRRfeIJiPMLN6pUlm5SEfveINUbGQdXr7o4ygKXRSv+Ua
+	EZfh/AaaJVLhzcRNFT0YgN/FTGDzXqG7Y1YSlpWYUdObfeC23dNGBBASIqFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787203571; x=1787289971; bh=qAz1Bm6h9vbDIDBKYUT1vaKcTFiJGuz4/oZ
-	BiY4KIOs=; b=QGSV8FHLIBthE2rpzSiYwhqaNWvl9E7QUeedATHeKTAot+6538s
-	r2qIJc5OT6ruL4MjjmQOx4Bu5uGYh0/Fil/hFqhzsJl7olthTovVuO7hqwCtEugj
-	RUhato5/EBloMgDnLhEVriA/0Q0IImVAx/ocAAhZR46Yegesr/lmF4tMKK9ReFS+
-	MMXi0lqoOkptHtO+Yj9Pq8gzoul6JN0Nc8aZjyFEi6rWw+gX24ISf/AClYJmJhbC
-	RgkYlow/nYtTJEuLQciS6wk6J2J+J58GcY3r9wz0A0fusFYLD0QyQ6lVi49ABU1s
-	4UwaRSIfKA3tvVh7wnDuMkt5IgjH80KYGOg==
-X-ME-Sender: <xms:84-GaprvrzIjCqdR3w6NBtHtlF1hT920U10R9gtg03fTnuGZG54iAg>
-    <xme:84-GavWhlguAgM4qGXQU4Yk9gdtwF6lwzd4Paa9O0CXP3SQ0Q576-FzMkoUoHZfZx
-    6RzqHwiyFtCbSk5umJLz7BbccjG-irQzIhneLxNb1H0j3XwLniZZQ>
-X-ME-Received: <xmr:84-GagBuRFGd-0LMUyy3kcEElMluehtxtSzgPWqiB3t_3-tASCSlygN2vsTWpmBhhPWvgETcZ5K3ccDN-jOTnIJfUxP_82q3AUNeYEzWGw>
-X-ME-Proxy-Cause: dmFkZTGV8bkqfBelKrEOYTxuCFFIV63oXdx5RJ/De3GHfYnihzUyCDPp5hEoaFVv+PyWcd
-    yZhF2ArDYnEH4TvS6Uqc6KOwer3MKA8FqtckWW0GB5VDYCxDOHDINvZm70LC5N6EjrUFFT
-    XahfYaMioJK8dZBvJAXNuGIbGnAUqcTRWbgVkSzMSyFXhI1l31gE3G3GE/sHb8CI1HS6Oj
-    hrCvNmcEqPm/rHXpmRyrAQFjTYY9Aa8KnLara3YkJ9vGB/QRBIYl+kuCtxFbCUpbRgTtkZ
-    BSfDghJ9xjnnKG1EW3ID43WEzCIkJw1FphpOEO4HeGwpcWRomYswGgjEWy7nzhKknufMSa
-    QhNVW0vfceL/ewOwsKNfi75Qyg3XYE4nWW71qKoJXB9rQCYCw+58DUGfeQBeUYAZtFIv46
-    AaDXvkv0FJjrmbZdhdo1XIXLs5dJZLBN0RfLTlYi5Z1/IWqoWEIu81L1E7cfd789ZKQjs8
-    4/6QztXINZm27YjFJooT88fqF+tQXYz9MZjSgsKWX2hs+GAIJiD6//tuPREhHxbrv06VpR
-    mD27pqvnxjKR8tD5Mar/H9+f8+CQhxc6lzUxMkElnQETD9Hh9JYl2OJeRx91Kw79Ih89z4
-    +mclHd1+XPPd1HkVoDJAf5UNTlTjG92DpSCmXvkG84hmY/mDKS0YDKqO9s7A
-X-ME-Proxy: <xmx:84-Gar1F5GCllikThOX_pwBECoxmIzD7dhWIm5J4bapF77AYsh1V7A>
-    <xmx:84-Gaq1Oi-7FTZviSSs7ghhG-lVXHHzbs03NvK2nZ5vaxJLbLgVlcA>
-    <xmx:84-GaoAMrNYuXrihxBjKGHrF5Yi-FVZuGxoE8wOUH_i0tRY8_6fiWw>
-    <xmx:84-Gah7JhI6spPqe-Rr8lDuc23akC9uhjivDwNf6LrL5L0QXow_DfQ>
-    <xmx:84-Gaj3Q-JkLLq-iehW3Z9J9tSnVINRFJIpCJBoDiD_FR4eOR1HzVWiX>
+	1787204499; x=1787290899; bh=pilst0IZelj8p//rROyPGQ0bsNG7anQvd5m
+	P12/hpVw=; b=g00aHZcYGq8hOUjlELSHIFprhIk/Vkiy5uYsUohX4W7x7GOAwq0
+	n1eHo72KAV3y5/m+cU27ECLw89NmhFNbvrrdgZs1QXMhbyjuLk4VQ0GWyXO5KRzU
+	r8PzrvuuyjOl18/dXQb5qvck4mOszBoFbCg9lBuVnTgKJQmdAj9l1ZuYre02GXrP
+	QIsEEcJrsZiN+viuo/BZrUANZh8Nrs0KpjVQRDq8p4jQCwQj4sRNG7Afg+3PveI6
+	HHXztnWeSxX2ufJjay47riWP35ut0x2vvIHvyOMpMVbBKEX5dKMu/7fnLGfhytqN
+	g+tJ/zG4802fZWyyrlC7T0BOSMcAtwjeMaw==
+X-ME-Sender: <xms:k5OGaguPnSJTS7IEBlBPG4xoR--bQEOS7DYYuOhKvrHKuwiXoWH3nw>
+    <xme:k5OGak7Bj2WdwEbKDpMNfURNU0Oa-MZlu8lzET3op9n0KxhnHQFLCsccJ8OUozN-m
+    Dq7l3hryRHqHOjV05QlrpYeVlMNL064HBvkdQvtmlsZqUK64u5xxw>
+X-ME-Received: <xmr:k5OGapJqR3IWIhmYyow67KY1EO45QGZeD8JNshmNhMeZfKC8cbOQUOifKLL-PzZqAZybhP0eoZQucKG3PwtKl1KJCybw1nSyOfYu6TvgSA>
+X-ME-Proxy-Cause: dmFkZTEjNBMVCRV7Xo0IyjfcW0iwppblO0l7Hf08deI56bw8XqEnpOsD0HuAvhmc9mSwiV
+    M5MxU+wUGSx6WiPYFZPlqBZ6bsWsspaVTsYMlq28C4VPkN06kqcK/HSQAH5uV2Ih+552lu
+    HmC4ISpoPjMLNk208yLjlJsCvZjEGVIX1pEXENLJyGUktiQwkS7mm/2xQ+7KsYXBs5nxoy
+    oqCqNhc1N3mVxZBp8BEZrSfOvddHBzBhlxifMeAXiO+SCCy4x3ZToEOgc2JRghJ8qjtOeO
+    zeBRvhnEutGGmfMS8GsaA3L68uv37kr6CNrzLxKbqgU66q8I1tpXrDHvjFk7FcGPFUMHIZ
+    Qh1TU1diSRFqhVL/l9+JsbAR/+P2Ytul3hakmjkW2vecmoXQKlI67ZMuxB8i6tHT04ei/u
+    EiIoU97MKamA9oUIp/HxtOhZlWtvgQJJ7cjyajY5jNw/9l4h8uAAMlwCmmRal0yB9pPjTI
+    psYtaxlYKc2w88yV4B/hzseHkcds/tKeAVXqakd2QTeNI5l3ShYqf2ozIJaHJXUjYfOcyG
+    8j2VdTYo5NRzZvkB3JXIFbmhw6JFuIaF4abhbgLocvkhthMY0RfTGtxIOuUgVaLz3g+zER
+    hDCoEmoNURCYnfe560YIcRzhE8EsdqKUH3ZgM5aC8GVOruaVyNGn0OB1X+tg
+X-ME-Proxy: <xmx:k5OGas4PipU1Clrk2qL6pf7RxSV_q8_n1AZSrPODS2ISjQXxGveVZw>
+    <xmx:k5OGakxKRVan9WOLpeRfw_GMCyhEG2gyvb8o_iEe7Iz6rH4Wqy9yMQ>
+    <xmx:k5OGaoZr4mxE5CrLQzUB1SjthWl1yQtiU3z2o2_lLvf9dqWSPBaz3g>
+    <xmx:k5OGauQ1XYpJqF1bmnWX0vQh94LHLaqsM61IkNda8jd8Q17A2uUEUg>
+    <xmx:k5OGag7ZcHLrHgBra1md8X85oNTfboSPTZdwKnVjqlZnKLtspF1J-afu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 01:26:10 -0400 (EDT)
+ 20 Aug 2026 01:41:38 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2760cdf2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Aug 2026 05:26:09 +0000 (UTC)
-Date: Thu, 20 Aug 2026 07:26:06 +0200
+	by mail (OpenSMTPD) with ESMTPSA id c5a70bce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Aug 2026 05:41:36 +0000 (UTC)
+Date: Thu, 20 Aug 2026 07:41:33 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org,
-	Todd Zullinger <tmz@pobox.com>, Tian Yuchen <cat@malon.dev>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v3 3/3] core: convert build-time USE_NSEC into runtime
- core.useNanosec
-Message-ID: <aoaP7oIrR_Bpvx34@pks.im>
-References: <cover.1786103607.git.ben.knoble@gmail.com>
- <cover.1787065125.git.ben.knoble@gmail.com>
- <48fceb4b575ca39346cf2f59f621584a19049008.1787065125.git.ben.knoble@gmail.com>
- <aoVoJ3Ijoaj3u64e@pks.im>
- <xmqq8q62w0gf.fsf@gitster.g>
+To: friel@openai.com
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2] pack-objects: trace pack bytes written
+Message-ID: <aoaTjWMSO8og_iFw@pks.im>
+References: <20260817233914.8740-2-friel@openai.com>
+ <xmqqo6f02q2f.fsf@gitster.g>
+ <c6a8cdac36d2202055d637ebcc97e484122cdcd4.1787158152.git.friel@openai.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,34 +86,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq8q62w0gf.fsf@gitster.g>
+In-Reply-To: <c6a8cdac36d2202055d637ebcc97e484122cdcd4.1787158152.git.friel@openai.com>
 
-On Wed, Aug 19, 2026 at 09:15:44AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> >> diff --git a/environment.c b/environment.c
-> >> index 6676e6f5ae..c7f6b801f4 100644
-> >> --- a/environment.c
-> >> +++ b/environment.c
-> >> @@ -571,6 +571,13 @@ int git_default_core_config(const char *var, const char *value,
-> >>  		return 0;
-> >>  	}
-> >>  
-> >> +#ifndef NO_NSEC
-> >> +	if (!strcmp(var, "core.usenanosec")) {
-> >> +		cfg->use_nanosec = git_config_bool(var, value);
-> >> +		return 0;
-> >> +	}
-> >> +#endif
-> >
-> > Do we want to omit a warning in case the config is enabled and we have
-> > NO_SEC set? Or would that be too obnoxious?
-> 
-> Those who use a $HOME/.gitconfig shared across two machines with
-> different builds would be annoyed with one of them constantly
-> complaining, I am afraid.
+On Wed, Aug 19, 2026 at 04:28:10PM -0700, friel@openai.com wrote:
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 1ec5b6f206..252530172c 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1389,6 +1390,8 @@ static void write_pack_file(void)
+>  			display_progress(progress_state, written);
+>  		}
+>  
+> +		bytes_written += hashfile_total(f) +
+> +			the_repository->hash_algo->rawsz;
+>  		if (pack_to_stdout) {
+>  			/*
+>  			 * We never fsync when writing to stdout since we may
 
-Yeah, that's what I was hinting at with "too obnovious". So I agree,
-let's not add one.
+I guess the addition here accounts for the trailing hash written by the
+hashfile. If so, shouldn't we also use the algortihm that the hashfile
+uses in the first place via `f->algop->rawsz`?
+
+> @@ -1510,6 +1513,8 @@ static void write_pack_file(void)
+>  		    written, nr_result);
+>  	trace2_data_intmax("pack-objects", the_repository,
+>  			   "write_pack_file/wrote", nr_result);
+> +	trace2_data_intmax("pack-objects", the_repository,
+> +			   "write_pack_file/wrote_bytes", bytes_written);
+>  }
+>  
+>  static int no_try_delta(const char *path)
+
+The "write_pack_file/wrote" event is quite awkwardly named, if you ask
+me, as it's not immediately obvious what exactly it's counting, and the
+second metric may make this even more confusing. In retrospect it
+would've been preferable to call this "wrote_objects" to clarify.
+
+I don't really think we guarantee any kind of stability around those
+traces, so we could in theory change it here, too. But I don't feel like
+my argument is strong enough to really warrant such a change, so maybe
+we should just leave it as-is.
+
+Thanks!
 
 Patrick
