@@ -1,79 +1,79 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D133D3D07
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 07:55:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310AF3B7B71
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 07:55:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787212543; cv=none; b=QYtJgRhcOZCqCRN8xkdlNchOLMAHlOkcwJQ4R7fjSBkhej0/SdZvMXBqI8OCUk3/urGD2KKO/TdIa05A+kf3Y2oRyAhHbQv8A2ZX6gFOwnzSYgEw3swolV9ALXn3KgtGkCMlyH+cTx4tdOpipb9Qqs9fM+ZQ6nkK8JSBlx6PhxY=
+	t=1787212546; cv=none; b=oseh3Lnac9HdiLlh37T5I697eG9+apwAsvEmzw6+2NgDjcq4F75nfzk2vdYYkfnLRkREWtjpSg6PSd5g5Hl8rS0JdtgNADCMQ5vF0ogC/9B6EHDrjR8BGAtb4iUym4DuUBtrGtDrNmAva7pzv7TovNI19E+pDMXrUBv9F40uwTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787212543; c=relaxed/simple;
-	bh=Ju7iHFc8+kzSyadTGU3WQVtFA0KkClIqFiJNKoR+LxA=;
+	s=arc-20240116; t=1787212546; c=relaxed/simple;
+	bh=3NzOC9PBzCf98mgEU+OeT09IcmLPjJ6i6RRpFujOcSg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=e3fbykMR5Ny6OuyZkycz5WiN0wuxWEkU+oI59TJvtPGztP7tHR/tSoT2O34aKWGC22d6+y2ubINw+C0KckyXf1wKAFjE3F04fOKrewKhsTGYBJEzyAstOAiWTJRBkVDmYAh7BO1b9TI4qIdkQ28MaKTkZDOvu4/6gq1TEJ1cwSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dqiOip9z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VMUCwKH7; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=GlhJB3YM7ttuChrPUzH39usec5hhStpI0DRci5Kha4e0kKEWLXYGSY2oK2LALXtUsN3gaSTC0TosnqBZlhzgmzye3AhXlJrFSvoTDZbANnytIAhdO+Rp3G5GHrF5joYk1VVz3FfH7lxUxHVNjvhfWpszRS/Pmz5sZhuh47nEesY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jc3+s6q8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DNmlFDAc; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dqiOip9z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VMUCwKH7"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 44C2DEC01B2;
-	Thu, 20 Aug 2026 03:55:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jc3+s6q8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DNmlFDAc"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 540B01400112;
+	Thu, 20 Aug 2026 03:55:44 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 20 Aug 2026 03:55:41 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 20 Aug 2026 03:55:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787212541;
-	 x=1787298941; bh=Mn98yEXbLKBt+k24V4GjItViEI9AmzHQmScgP8fvXd0=; b=
-	dqiOip9z8D8yHGWsFQf958uSDp9ZDnZ4u7I55zZgRewY9xqTvTbez8DwdDexE5UF
-	R/2PUR9LyRR3GFuwKrDznWGKr64iJZ16s71LzqN9QfQt4MrbJU3g1YQcpersowKB
-	QDXA7ezJ4TK1v4/OTsAF8RonGM9MtrM1QIT/vgiEuhNxNy0kYT3O7IPjK/L9R/XB
-	1phkx1GYNvyfbWqri3vVKpSns6VtcyIvS88djZp6yozhvshKNSDzerxUZcx7sB7i
-	2mThjyr60S+uiXzV9odWwzACBg+wtGr4gRcmSRWHihXg+oYIOcJQnIlSJsvczsaZ
-	a7B9opX1W4L//jpfGfDmoA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787212544;
+	 x=1787298944; bh=pGSZFHCO45eUjb8iFv+AdJycFW47JQqJo4YyGPRgW/0=; b=
+	jc3+s6q8UW4cq6tFy/DuQgcVC/gRpMl27I5Pf6gkVJulvVkL8pVDYremtTyMDxM7
+	VHxPvv/FwszqSy34oj0tHi5rm6S/DC4gj4PBnT/9TYv+bQulYDYdnjXAK0nHw+fZ
+	TcF9dUSynFkCjPx3IOUGqyQBW0t9ngil6BgKPKO5SyVRlleG24/wajQdxJZTW4mG
+	0jx58vckpJ7v3g/c8M0EN1d8vHBAt/q8qA3YPyhsSYPovBK7bfrnY6vh6bRuOyRq
+	uW8KWAv0T0qdAwbuPCt0CtIHIKANpTdJki+QtGIdVwrbrsHoALsH1uzHoNSmiWCf
+	rP4lkQdeT5auSkSF3aIehw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787212541; x=
-	1787298941; bh=Mn98yEXbLKBt+k24V4GjItViEI9AmzHQmScgP8fvXd0=; b=V
-	MUCwKH7+SE6gXlODJeBXbZWa+lsSmeC+6oQ4kon3eKX1zxbaI0AA9lne9ySRh51F
-	8RnBLZCYobI4kND8XkpZhlC5k/T2J4GsFFnp16H436FC0mFCLJcKCH2qIYKRHyXF
-	zFkq/l/vHAidJRwqdEMgfdLGcfREQp4miNS/Hc4u9q1W5svWxFE/FCajaDWiAkgo
-	+1K53EUimjDbZYbniWmEydvodiWNYAW5m8wR4uzGRMQArLQmBcv675JO/8ZY1+9W
-	cLg6gdZOT99datlldz8ZgCcG3umW6MDmsUXruYHXh2DlH696OjD5q8chfuiixTd3
-	MBdhk3TwQzv2FgRioffSw==
-X-ME-Sender: <xms:_bKGalv0WwrZIBExaBQD7bSVDWusKrWut3s6SfpxVng3ABhBaO4vig>
-    <xme:_bKGaleNw5c6Ix3Wz36-wfeUsK_O_btfziTScJ9D2N7ncvLezUG_-cprb_-5oM5WQ
-    Ewep4UBkx1zVGdvEgqkB4rLh1kzskaMFjj41llmmRqgllLquAbQLfk>
-X-ME-Received: <xmr:_bKGatxlXXtHCTl6R6olzYXIbTP0Rp3iEN1hSdmRcpHMhvywT8BZv-jl0FG88oYcGQyWRHopddtaXbGq9ZH7uPTUVaHvAaNTrEjI356j8A>
-X-ME-Proxy-Cause: dmFkZTFf6dj8/8V1XaAc7B1kVMFZTKvMbAEygAXbbhBXRMoJE0Q/MsehWCz6Zsr3VItoGJ
-    sSOYPjnsDlfrh3lzEARCv0NJnfuJQJusLASMKcwM9uC/Tbs/YIBauNX4V2AuW+yb3o66jM
-    JzMl+gjCx01/1zMiYhH+kC59/ghsfTubikmfaAxgUR/millS0tlPNpkYgp4jFToJY+LVEk
-    c6s4D4aztX2xzEJ3LDQqGoLTd3S6W+Hcma/glCPpKbDpT9Cmp60wceni6gyM3ckjl3Tvge
-    oRcfTlFV6iALm7ps8/b3emKy+rfSopq+d7NQ4EYMi/B5tNUxYa1zjgIENCda7YAb8HlkEj
-    B86mfCj79A+oHBXZNwyVx7ZxJORSEqOfJ1Z69jvHjvgWIReYH7Sosa3uS84cXvhfOfwyc9
-    TxVcL3FJ/57Vippd3EDFOC3C8kXT0NRXGwWdYn0t2pZWbVkuLeGoPgEzX9cZwoK2kKxGIX
-    Tr0HWoeHGwXHvo0NLgqwrPgxuKyHWL3pjYtox7XxOIwJw+GqVT/d/efFY9Pot6gI3007cq
-    vmXkgusoSwBxcbvfr+weg0wOYyuUU13nq7Z3OP3T8kuKYR0VWCjJF+tpYt7rATsU6H7NGG
-    wwOg5BJiy4wpNpX2cfsnW9uN5g0RgYSCpgtNyah1l6puX+4lLuBiZkU/IaPQ
-X-ME-Proxy: <xmx:_bKGarEUOPhTMNnX6t0ZAn5u5BO8aHNa6l02crdv1Kp9PlkSl412KA>
-    <xmx:_bKGahwL5VCVQGw4rQgT_QaENUha2Us_v4ruLjjZJcx0qgYdf7vBjA>
-    <xmx:_bKGassw5w2mMNdM6m1OWicf-iwiWV3P1Rn4Tt9YvnL4edaFKdjFuw>
-    <xmx:_bKGau07VS4-7Nyy2PsW4r-D7g95AFG1BIWA1snl7holbAFZt9wWaQ>
-    <xmx:_bKGahT3K2Own_wQuQq1-Iyyd3-9gP9x4ZRtzfiYr75V3ZhVdD3XDAqE>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787212544; x=
+	1787298944; bh=pGSZFHCO45eUjb8iFv+AdJycFW47JQqJo4YyGPRgW/0=; b=D
+	NmlFDAcMQ30NwB4n6pTIssYAwcODLWizNn1+9Eg8quFVc6aZC66WjFDR2GBiSI5T
+	yqSR5rpDgcAqqMWP9lytcl6A1ysLRBn71V+hZd8tf1Di3wSgzdXkXv6lgyrUOCHZ
+	Jzr5R0Fu1KIlDHQ0q9iBOoPLBqXtoJtCEiCii2RslVVPRkhLl5w9cvbr5aq1fJYU
+	VBOQGYl8yA2rIjAHs68Wdt7RYIJseFrIMtbs9iYD38ihkJeI+etS4o27wtqHiMq5
+	uknI6k1ZVBPWRSR8htm7laRk7Mmzi2SKEbCZhNvXlW7lfWspVN5479fOojtY1FvC
+	QlOTdyib+G6TWw5+FqM3A==
+X-ME-Sender: <xms:ALOGavUAzaD4BOB42x-hudbwDABIU8C58nDojHgbhz1wGX_CWmdecQ>
+    <xme:ALOGaulGMGHsJbU2LY1Ft67HjEqbWtkRnuttR-dbRK0ElFYIsXvPoxD386-jCofnz
+    wWs1efDVzwB-8D99V-mzBk-c7GJT1JEwHNCp7HMMN878F1MTddXhg>
+X-ME-Received: <xmr:ALOGagaV-ZvE23ZkxiTLY8v2lC2qxeIP7fAJLygSIUquE7qlZ7ZWS2H9M8qEoeQaSwW9qk-M6Rke37WygmDt2RgFhj8_jixuGrsLakbPdg>
+X-ME-Proxy-Cause: dmFkZTFRy1qVenEeja18xxBUdluv9Bxlw+aOVARUGCa42rybKQa/loe9s6OQFq1FAKSsQG
+    3YNB+Nj/6lYw6/CAQ/ceGfCdF/6LJfIPbYiuzTCc2365TVmXhi6UkWyIGAH9V/L7BoXE+D
+    kHg3NXUhy9p07QqWUyj84R71n6bc+lNqf60d1YUZxGpC8FrVsqniC8cKxHMNyj+iZPY9Ea
+    A7Dbu5DX4V3jXufI1yN8hJrwjw61AXMTjmTXgukBkYKnJq45ricOXUepSfULjR/DsknWKh
+    hXFZFAA2B6e1s0pFP9lun9VjAOM6ziOIa90Y/Ds2EadefLfZrbmnL1wDK5qiDNEnnfcsl8
+    yr3X7zIVqs6kuWLVSAS/W/eCUIEmH3YofmTtJWqrjKTCRAnVWveJ2nRGuqYFBndxIynQnd
+    MAW1HBBA2in2xn6tBvhIGAOJavH7qhy6FHeALYy7/M1f47gxFQlE9LHvLjKiXldvvb2F0H
+    YMw2WSkONXOwzzWTvlWGNrOflOfAb+nxx2EY2+nweDklYzI3FAxewDfYPColTEP/JMy/t1
+    1tY4ueT86hjoTCFE0C75riADhgT5j2mF8zGBO2qLGpTTEZsmpn31SFTA8hVaWsZlNPpFCs
+    FjDw/ovu4DQS9dcwhhCKYG+go5Imd3aMN/WSqeOBEx/p7vrQrASrKamALx/Q
+X-ME-Proxy: <xmx:ALOGapPlzxN8G55hoOFDAkk3BOqhtTR_fFBQkfXvPU1O3gixmLRrpw>
+    <xmx:ALOGalYHjALkUqZmAcsVurFUbci1Z16Ln7VaYoBuakQc5BEHKREMpg>
+    <xmx:ALOGan2xFIoheoSLSKmvD6S2vh9UbQaya6Kw9Iuj2HKzLxjpSerSmQ>
+    <xmx:ALOGarfzbO8cOUdY-hPw7T1BpGCYnS0wxherI6tTpxhcHNGt9RlrpQ>
+    <xmx:ALOGah2pa8tmFtlgrUvynxMI6B1pTG-bIrU6frCiniqRVQ_PZziuGfB2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 03:55:40 -0400 (EDT)
+ 20 Aug 2026 03:55:43 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f705daee (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Aug 2026 07:55:40 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id cba92732 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Aug 2026 07:55:42 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 20 Aug 2026 09:55:26 +0200
-Subject: [PATCH v3 2/6] upload-pack: generate packfiles via the object
+Date: Thu, 20 Aug 2026 09:55:27 +0200
+Subject: [PATCH v3 3/6] send-pack: generate packfiles via the object
  database
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260820-b4-pks-odb-generate-pack-v3-2-bc42252f6169@pks.im>
+Message-Id: <20260820-b4-pks-odb-generate-pack-v3-3-bc42252f6169@pks.im>
 References: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im>
 In-Reply-To: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im>
 To: git@vger.kernel.org
@@ -91,223 +91,221 @@ Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-When serving a fetch, git-upload-pack(1) spawns git-pack-objects(1)
-directly to generate the packfile that gets sent to the client. This
-hard-codes the assumption that the object database is able to serve
-packfiles via git-pack-objects(1), which is specific to the "files"
-backend.
+When pushing, git-send-pack(1) spawns git-pack-objects(1) directly to
+generate the packfile that gets sent to the remote. Same as with
+git-upload-pack(1), which has been adapted in the preceding commit,
+this hard-codes the assumption that objects can be packed via
+git-pack-objects(1), which is specific to the "files" backend.
 
-Convert git-upload-pack(1) to instead use the pack generation interface
-of the object database.
+Convert git-send-pack(1) to use the pack generation interface of the
+object database instead.
+
+Note that this requires us to adapt t5516 because the parameters passed
+to git-pack-objects(1) are changing:
+
+  - The order of arguments changes.
+
+  - We pass "--quiet" instead of "-q".
+
+  - We don't pass "--all-progress-implied" anymore when not generating
+    output.
+
+All of these changes are benign though and should not result in a change
+in behaviour.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- upload-pack.c | 125 +++++++++++++++++++++-------------------------------------
- 1 file changed, 45 insertions(+), 80 deletions(-)
+ send-pack.c           | 101 +++++++++++++++++---------------------------------
+ t/t5516-fetch-push.sh |  12 +++---
+ 2 files changed, 40 insertions(+), 73 deletions(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index a52856d869..75a857eaa8 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -197,11 +197,11 @@ static void send_client_data(int fd, const char *data, ssize_t sz,
- 	write_or_die(fd, data, sz);
+diff --git a/send-pack.c b/send-pack.c
+index 3bb5afc687..f20460fbf4 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -42,16 +42,17 @@ int option_parse_push_signed(const struct option *opt,
+ 	die("bad %s argument: %s", opt->long_name, arg);
  }
  
--static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
-+static int append_one_shallow(const struct commit_graft *graft, void *cb_data)
+-static void feed_object(struct repository *r,
+-			const struct object_id *oid, FILE *fh, int negative)
++static void append_negative_object(struct repository *r,
++				   struct oid_array *haves,
++				   const struct object_id *oid)
  {
--	FILE *fp = cb_data;
-+	struct oid_array *shallows = cb_data;
- 	if (graft->nr_parent == -1)
--		fprintf(fp, "--shallow %s\n", oid_to_hex(&graft->oid));
-+		oid_array_append(shallows, &graft->oid);
- 	return 0;
+-	if (negative && !odb_has_object(r->objects, oid, 0))
++	/*
++	 * The remote end may have advertised objects that we do not have in
++	 * our object database. Skip those, as we cannot use them as boundary.
++	 */
++	if (!odb_has_object(r->objects, oid, 0))
+ 		return;
+-
+-	if (negative)
+-		putc('^', fh);
+-	fputs(oid_to_hex(oid), fh);
+-	putc('\n', fh);
++	oid_array_append(haves, oid);
  }
  
-@@ -299,7 +299,8 @@ static int relay_pack_data(int pack_objects_out, struct output_state *os,
- static void create_pack_file(struct upload_pack_data *pack_data,
- 			     const struct string_list *uri_protocols)
+ /*
+@@ -62,92 +63,58 @@ static int pack_objects(struct repository *r,
+ 			struct oid_array *negotiated,
+ 			struct send_pack_args *args)
  {
--	struct child_process pack_objects = CHILD_PROCESS_INIT;
+-	/*
+-	 * The child becomes pack-objects --revs; we feed
+-	 * the revision parameters to it via its stdin and
+-	 * let its stdout go back to the other end.
+-	 */
+-	struct child_process po = CHILD_PROCESS_INIT;
+-	FILE *po_in;
 +	struct odb_generate_pack_options opts = ODB_GENERATE_PACK_OPTIONS_INIT;
 +	struct odb_pack_generator *generator;
- 	struct output_state *output_state = xcalloc(1, sizeof(struct output_state));
- 	char progress[128];
- 	char abort_msg[] = "aborting due to possible repository "
-@@ -307,78 +308,42 @@ static void create_pack_file(struct upload_pack_data *pack_data,
- 	uint64_t last_sent_ms = 0;
- 	ssize_t sz;
- 	int i;
--	FILE *pipe_fd;
--
--	if (!pack_data->pack_objects_hook)
--		pack_objects.git_cmd = 1;
--	else {
--		strvec_push(&pack_objects.args, pack_data->pack_objects_hook);
--		strvec_push(&pack_objects.args, "git");
--		pack_objects.use_shell = 1;
--	}
+ 	int rc;
  
- 	if (pack_data->shallow_nr) {
--		strvec_push(&pack_objects.args, "--shallow-file");
--		strvec_push(&pack_objects.args, "");
--	}
--	strvec_push(&pack_objects.args, "pack-objects");
--	strvec_push(&pack_objects.args, "--revs");
--	if (pack_data->use_thin_pack)
--		strvec_push(&pack_objects.args, "--thin");
--
--	strvec_push(&pack_objects.args, "--stdout");
--	if (pack_data->shallow_nr)
--		strvec_push(&pack_objects.args, "--shallow");
--	if (!pack_data->no_progress)
--		strvec_push(&pack_objects.args, "--progress");
--	if (pack_data->use_ofs_delta)
--		strvec_push(&pack_objects.args, "--delta-base-offset");
--	if (pack_data->use_include_tag)
--		strvec_push(&pack_objects.args, "--include-tag");
--	if (repo_has_accepted_promisor_remote(the_repository))
--		strvec_push(&pack_objects.args, "--missing=allow-promisor");
--	if (pack_data->filter_options.choice) {
--		const char *spec =
--			expand_list_objects_filter_spec(&pack_data->filter_options);
--		strvec_pushf(&pack_objects.args, "--filter=%s", spec);
--	}
--	if (uri_protocols) {
--		for (i = 0; i < uri_protocols->nr; i++)
--			strvec_pushf(&pack_objects.args, "--uri-protocol=%s",
--					 uri_protocols->items[i].string);
-+		for_each_commit_graft(append_one_shallow, &opts.shallows);
-+		opts.shallow = 1;
+ 	trace2_region_enter("send_pack", "pack_objects", r);
+-	strvec_push(&po.args, "pack-objects");
+-	strvec_push(&po.args, "--all-progress-implied");
+-	strvec_push(&po.args, "--revs");
+-	strvec_push(&po.args, "--stdout");
+-	if (args->use_thin_pack)
+-		strvec_push(&po.args, "--thin");
+-	if (args->use_ofs_delta)
+-		strvec_push(&po.args, "--delta-base-offset");
+-	if (args->quiet || !args->progress)
+-		strvec_push(&po.args, "-q");
++
++	opts.thin = args->use_thin_pack;
++	opts.ofs_delta = args->use_ofs_delta;
+ 	if (args->progress)
+-		strvec_push(&po.args, "--progress");
+-	if (is_repository_shallow(r))
+-		strvec_push(&po.args, "--shallow");
+-	if (args->disable_bitmaps)
+-		strvec_push(&po.args, "--no-use-bitmap-index");
+-	po.in = -1;
+-	po.out = args->stateless_rpc ? -1 : fd;
+-	po.git_cmd = 1;
+-	po.clean_on_exit = 1;
+-	if (start_command(&po))
+-		die_errno("git pack-objects failed");
++		opts.progress = ODB_GENERATE_PACK_PROGRESS_VERBOSE;
++	opts.shallow = is_repository_shallow(r);
++	opts.disable_bitmaps = args->disable_bitmaps;
+ 
+ 	/*
+-	 * We feed the pack-objects we just spawned with revision
+-	 * parameters by writing to the pipe.
++	 * The pack is either written directly to the remote's descriptor, or,
++	 * in the case of a stateless RPC, read back from a pipe so that we
++	 * can wrap the pack data into pkt-lines.
+ 	 */
+-	po_in = xfdopen(po.in, "w");
++	opts.pack_fd = args->stateless_rpc ? -1 : fd;
++
+ 	for (size_t i = 0; i < advertised->nr; i++)
+-		feed_object(r, &advertised->oid[i], po_in, 1);
++		append_negative_object(r, &opts.haves, &advertised->oid[i]);
+ 	for (size_t i = 0; i < negotiated->nr; i++)
+-		feed_object(r, &negotiated->oid[i], po_in, 1);
++		append_negative_object(r, &opts.haves, &negotiated->oid[i]);
+ 
+ 	while (refs) {
+ 		if (!is_null_oid(&refs->old_oid))
+-			feed_object(r, &refs->old_oid, po_in, 1);
++			append_negative_object(r, &opts.haves, &refs->old_oid);
+ 		if (!is_null_oid(&refs->new_oid))
+-			feed_object(r, &refs->new_oid, po_in, 0);
++			oid_array_append(&opts.wants, &refs->new_oid);
+ 		refs = refs->next;
  	}
--
--	pack_objects.in = -1;
--	pack_objects.out = -1;
--	pack_objects.err = -1;
--	pack_objects.clean_on_exit = 1;
--
--	if (start_command(&pack_objects))
--		die("git upload-pack: unable to fork git-pack-objects");
--
--	pipe_fd = xfdopen(pack_objects.in, "w");
--
--	if (pack_data->shallow_nr)
--		for_each_commit_graft(write_one_shallow, pipe_fd);
--
- 	for (i = 0; i < pack_data->want_obj.nr; i++)
--		fprintf(pipe_fd, "%s\n",
--			oid_to_hex(&pack_data->want_obj.objects[i].item->oid));
--	fprintf(pipe_fd, "--not\n");
-+		oid_array_append(&opts.wants,
-+				 &pack_data->want_obj.objects[i].item->oid);
- 	for (i = 0; i < pack_data->have_obj.nr; i++)
--		fprintf(pipe_fd, "%s\n",
--			oid_to_hex(&pack_data->have_obj.objects[i].item->oid));
-+		oid_array_append(&opts.haves,
-+				 &pack_data->have_obj.objects[i].item->oid);
- 	for (i = 0; i < pack_data->extra_edge_obj.nr; i++)
--		fprintf(pipe_fd, "%s\n",
--			oid_to_hex(&pack_data->extra_edge_obj.objects[i].item->oid));
--	fprintf(pipe_fd, "\n");
--	fflush(pipe_fd);
--	fclose(pipe_fd);
--
--	/* We read from pack_objects.err to capture stderr output for
--	 * progress bar, and pack_objects.out to capture the pack data.
--	 */
-+		oid_array_append(&opts.haves,
-+				 &pack_data->extra_edge_obj.objects[i].item->oid);
-+
-+	opts.thin = pack_data->use_thin_pack;
-+	if (!pack_data->no_progress)
-+		opts.progress = ODB_GENERATE_PACK_PROGRESS_STANDARD;
-+	opts.ofs_delta = pack_data->use_ofs_delta;
-+	opts.include_tag = pack_data->use_include_tag;
-+	opts.missing_allow_promisor = repo_has_accepted_promisor_remote(the_repository);
-+	if (pack_data->filter_options.choice)
-+		opts.filter_spec = expand_list_objects_filter_spec(&pack_data->filter_options);
-+	opts.uri_protocols = uri_protocols;
-+	opts.pack_objects_hook = pack_data->pack_objects_hook;
-+	opts.pack_fd = -1;
-+	opts.progress_fd = -1;
-+
-+	if (odb_generate_pack(the_repository->objects, &generator, &opts))
-+		die("git upload-pack: unable to fork git-pack-objects");
+ 
+-	fflush(po_in);
+-	if (ferror(po_in))
+-		die_errno("error writing to pack-objects");
+-	fclose(po_in);
++	if (odb_generate_pack(r->objects, &generator, &opts))
++		die("git pack-objects failed");
 +	odb_generate_pack_options_release(&opts);
  
-+	/*
-+	 * We read from generator->err to capture stderr output for the
-+	 * progress bar, and generator->out to capture the pack data.
-+	 */
- 	while (1) {
- 		uint64_t now_ms = getnanotime() / 1000000;
- 		struct pollfd pfd[2];
-@@ -393,14 +358,14 @@ static void create_pack_file(struct upload_pack_data *pack_data,
- 		pollsize = 0;
- 		pe = pu = -1;
- 
--		if (0 <= pack_objects.out) {
--			pfd[pollsize].fd = pack_objects.out;
-+		if (0 <= generator->out) {
-+			pfd[pollsize].fd = generator->out;
- 			pfd[pollsize].events = POLLIN;
- 			pu = pollsize;
- 			pollsize++;
+ 	if (args->stateless_rpc) {
+ 		char *buf = xmalloc(LARGE_PACKET_MAX);
+ 		while (1) {
+-			ssize_t n = xread(po.out, buf, LARGE_PACKET_MAX);
++			ssize_t n = xread(generator->out, buf, LARGE_PACKET_MAX);
+ 			if (n <= 0)
+ 				break;
+ 			send_sideband(fd, -1, buf, n, LARGE_PACKET_MAX);
  		}
--		if (0 <= pack_objects.err) {
--			pfd[pollsize].fd = pack_objects.err;
-+		if (0 <= generator->err) {
-+			pfd[pollsize].fd = generator->err;
- 			pfd[pollsize].events = POLLIN;
- 			pe = pollsize;
- 			pollsize++;
-@@ -437,15 +402,15 @@ static void create_pack_file(struct upload_pack_data *pack_data,
- 			/* Status ready; we ship that in the side-band
- 			 * or dump to the standard error.
- 			 */
--			sz = xread(pack_objects.err, progress,
-+			sz = xread(generator->err, progress,
- 				  sizeof(progress));
- 			if (0 < sz) {
- 				send_client_data(2, progress, sz,
- 						 pack_data->use_sideband);
- 				last_sent_ms = now_ms;
- 			} else if (sz == 0) {
--				close(pack_objects.err);
--				pack_objects.err = -1;
-+				close(generator->err);
-+				generator->err = -1;
- 			}
- 			else
- 				goto fail;
-@@ -455,15 +420,15 @@ static void create_pack_file(struct upload_pack_data *pack_data,
- 
- 		if (0 <= pu && (pfd[pu].revents & (POLLIN|POLLHUP))) {
- 			bool did_send_data;
--			int result = relay_pack_data(pack_objects.out,
-+			int result = relay_pack_data(generator->out,
- 						     output_state,
- 						     pack_data->use_sideband,
- 						     !!uri_protocols,
- 						     &did_send_data);
- 
- 			if (result == 0) {
--				close(pack_objects.out);
--				pack_objects.out = -1;
-+				close(generator->out);
-+				generator->out = -1;
- 			} else if (result < 0) {
- 				goto fail;
- 			}
-@@ -498,7 +463,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
- 		}
+ 		free(buf);
+-		close(po.out);
+-		po.out = -1;
++		close(generator->out);
  	}
  
--	if (finish_command(&pack_objects)) {
-+	if (odb_pack_generator_finish(generator)) {
- 		error("git upload-pack: git-pack-objects died with error.");
- 		goto fail;
+-	rc = finish_command(&po);
+-	if (rc) {
+-		/*
+-		 * For a normal non-zero exit, we assume pack-objects wrote
+-		 * something useful to stderr. For death by signal, though,
+-		 * we should mention it to the user. The exception is SIGPIPE
+-		 * (141), because that's a normal occurrence if the remote end
+-		 * hangs up (and we'll report that by trying to read the unpack
+-		 * status).
+-		 */
+-		if (rc > 128 && rc != 141)
+-			error("pack-objects died of signal %d", rc - 128);
+-		trace2_region_leave("send_pack", "pack_objects", r);
+-		return -1;
+-	}
++	rc = odb_pack_generator_finish(generator);
+ 	trace2_region_leave("send_pack", "pack_objects", r);
+-	return 0;
++	return rc;
+ }
+ 
+ static int receive_unpack_status(struct packet_reader *reader)
+@@ -768,7 +735,7 @@ int send_pack(struct repository *r,
+ 			goto out;
+ 		}
+ 		if (!args->stateless_rpc)
+-			/* Closed by pack_objects() via start_command() */
++			/* Consumed by the pack generator in pack_objects() */
+ 			fd[1] = -1;
  	}
+ 	if (args->stateless_rpc && cmds_sent)
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index f3b3efc47f..b982b209bf 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1903,20 +1903,20 @@ test_expect_success 'push with config push.useBitmaps' '
+ 	test_unconfig push.useBitmaps &&
+ 	GIT_TRACE2_EVENT="$PWD/default" \
+ 	git push --quiet testrepo main:test &&
+-	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
+-		--thin --delta-base-offset -q <default &&
++	test_subcommand git pack-objects --revs --stdout --thin \
++		--delta-base-offset --quiet <default &&
+ 
+ 	test_config push.useBitmaps true &&
+ 	GIT_TRACE2_EVENT="$PWD/true" \
+ 	git push --quiet testrepo main:test2 &&
+-	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
+-		--thin --delta-base-offset -q <true &&
++	test_subcommand git pack-objects --revs --stdout --thin \
++		--delta-base-offset --quiet <true &&
+ 
+ 	test_config push.useBitmaps false &&
+ 	GIT_TRACE2_EVENT="$PWD/false" \
+ 	git push --quiet testrepo main:test3 &&
+-	test_subcommand git pack-objects --all-progress-implied --revs --stdout \
+-		--thin --delta-base-offset -q --no-use-bitmap-index <false
++	test_subcommand git pack-objects --revs --stdout --thin \
++		--delta-base-offset --no-use-bitmap-index --quiet <false
+ '
+ 
+ test_expect_success 'push with config pack.usePathWalk=true' '
 
 -- 
 2.55.0.822.g20453c30eb.dirty
