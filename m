@@ -1,97 +1,126 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DDB3750DB
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 14:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50CC379C28
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 14:48:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787237240; cv=none; b=fSGkCyZdl4dJXTP0HuH86Opf+gYEqBiZXs7JxWMcLVZFs6+L+pZhtLqyMaUB+Gg9AA2va3UcWb/yN44xB0vZH5/vasOcm2xl9hPAE0WDtRNwxW6RXhsRlhlM9i+fn2dYAmMLhsbxsysgmNwFoItcDp3NkCP6M+zFcuJIKTBY98I=
+	t=1787237305; cv=none; b=P54CE5gJ6UFfjpo+ImBk5rTB1jbkdJdfLmm3mgqFRbDZVNilSotnfco7NQ3o46FKbTNsRIae3DtutsgFNV3MWI/udcEBIp7L/pyn3qMZz+n+U1yH5Vwobt/D+FR6Vd3kafQFXDogvWDg00Y+j1dB/bw3ERLNnvyp5ucFONhbHRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787237240; c=relaxed/simple;
-	bh=HgPwnoyjtdMaV4w43xDlvqPEPtzi6Yw0WIkG34PqFf4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t30Wll05CPNMOGBhjB1mGyqIt5vtYnT+Y/22B98HvVYe0XjKK6oGtkeNoxS73JaGUfnlzpyDGM3pz9OMFq0ti7Uk7IQYyEEb90ZeZbYG7auhfvlymrCaQm06LTRmgPua8UMc2kzWTIdAZ48ktVy7dTFQ0XaEEzVtzNBi+EHj5C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VscBW1zJ; arc=none smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787237305; c=relaxed/simple;
+	bh=+bImszSgb6fGqA9wYMKyH24lS/T66iKz+y/cyaezwgI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=tAqQCOoLacd0bqzhBd8W4WZ91WKaNj/95W7RoqSYVNfjHU99VkzilNttACPPckFnlvK5ROW0HLeaRa4LnP0gekl1tUeWVtRnWF598DCYPqVprF9fkZhVmvt/lXMV6MPRk1TNlZbGFFti1kTRzKrh5K5grPex66uqybRMZ18512w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=JNuhSHqt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JbUuA71+; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VscBW1zJ"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-66c4e9769bdso2872362d50.0
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 07:47:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787237238; x=1787842038; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ISpCNXJq7GshYbPt15peQL57xGfyR8F5voLAgtHLpeY=;
-        b=VscBW1zJJGEY0iBp+vNq3m7cB/ucr20Kbe91MzVmAqTCwslAEH7PlQRiJbEdqy1Mvk
-         aUTQkSGq+ffqMC1vAuuTMJi0r42fYOU3U30UZLPYpmapoHQH0sVWrzqyAY3/QPRbl/qJ
-         iehXCuYEHJW8fMBd83EyIHx8BX6keVwCEsHJ2NBjVik+UmMZsKUe1WCAzWmLaVZxLyh2
-         OI4cIuioyflqBgjjjbTAqs9fG+p8DOgyH6wsvVqL3EdufAb/i42lzOegqnBFB0GG01Zd
-         o2co3+3uDlgYDV/pZn+1gePqJdksZ9U1fTyTzQ2GVCmZOJMgqInyl0G0fe/KV0aWaQKb
-         f8SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787237238; x=1787842038;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ISpCNXJq7GshYbPt15peQL57xGfyR8F5voLAgtHLpeY=;
-        b=kvmaoXITClFAyoyeMZVtc9pDrnFla8IJIdpPjUSltXXSyz8HDx0BY3r8rGlE5v5gYJ
-         RqvkBcYejKl+M6DAimXCWHI2qso/0fMRftGEXbEPK1ZKIIZPcLNOTLdhs/MTXqDJTJjV
-         Hdo2PxIB0eclgRwItTgHsWuNWRAn1ZsiX5Nq1nfpe6ReCP+oBhs4cg/nixV0l9EMauAo
-         OaxEKRW4SM3M31hTfo4AWT1TjCEogMD7lrhYl9Sk1G/dSSt0EVRemyMxG9zxTidnMike
-         IR4+ty2b9U3JmVKH8ljd+mHRZ9V9+lzBwDgzsFUpaowJuntbNfd+1WeoIAKCvZM2HEHs
-         03TA==
-X-Gm-Message-State: AFuF++n5N9hfcQA7nM7oQE2cC57Dd7hqHvtRZHqyuso2RDmHxknHQHti
-	B/k67WYrHm6J9a+BXXe7r5Pw0sCU639DEhy3ZcnhmYj+yvO7RreAFtb9q43QXg==
-X-Gm-Gg: AR+sD11q0gO4Dw5Y5NUVxhVd6TQNHFFyMSmTH7WR4ZdsrOkkPnkYo96roHgz+vojJXQ
-	rQ1lneci8Miwz7RtAxg9e4+RA31kAiCANZFQnFe3WHAYuErryQjZArQ6Wijg15gF0vsJI5sjhEM
-	YsXh5HJCfToKWUYpyxaBiC0pH6jHOLZKt67qLyBxJpjZXCcf0Ej+Ylw5gOzLS9ZJhKeTukUuSO7
-	jI5Gjig2+Mh1yVj/lSrhxipWYq10K7Nz5xDYRxiRSATD51dBkZgOCVCKLwt8RFDDW1wbnEJ2tw1
-	J0atJAJec+O+cosmT6HFLEkbAkvJ5xuLRhmUkwth3NPJqmtweCtSBr5P2OwKRnVAyTeJ/bKgOS3
-	dFdpO9ee9sL1rCLoLLk130bkrRM1/mbE6fhPbg/V+AQf3GZfWZWhRXWDvJswtFiqgJv1k0/NZdd
-	Bq6zTM1qdOL02oRZl3f4GddZaUKLz53/0w7n5yMsJXbXpTl1YcVHXjipg9WU2DuDSx8MEWZpTDP
-	JMXjs3gS78ZD15dQcPcggGCPxZUzaSsLAsoobWiBTNkdJ+jZ2LIGIFuvO7g2sMNOxqXuwXMqk1g
-	1sAdGx/YpOf7yAH5VcxrnVR60vXo9HLhYLISsQ==
-X-Received: by 2002:a05:690e:2441:b0:667:bb60:78b2 with SMTP id 956f58d0204a3-66ccb6f070bmr3376605d50.34.1787237238423;
-        Thu, 20 Aug 2026 07:47:18 -0700 (PDT)
-Received: from localhost.localdomain (99-71-100-228.lightspeed.milwwi.sbcglobal.net. [99.71.100.228])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-845188b28f2sm25767407b3.38.2026.08.20.07.47.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Aug 2026 07:47:17 -0700 (PDT)
-From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] t1402: test forbidden characters in refnames
-Date: Thu, 20 Aug 2026 09:46:37 -0500
-Message-ID: <20260820144648.47267-1-nikolauspschuetz@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <xmqqo6exuagw.fsf@gitster.g>
-References: <aoWRZhO6BVy7uPLI@pks.im> <xmqqo6exuagw.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="JNuhSHqt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JbUuA71+"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2C3FE7A00AF;
+	Thu, 20 Aug 2026 10:48:17 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Thu, 20 Aug 2026 10:48:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787237296;
+	 x=1787323696; bh=F/lfOD4h+5PQ11bk7pm2wGTVKEywsUCaRo9lBEGa3tM=; b=
+	JNuhSHqtjxAkNj3puAyA3yTamwFiDKBGRXLAZwU4wrFKKRATM7n6ZBc4wzZLE5lV
+	R26GJqCUGhy7HD8XaiysZCZeHlvTfrp6f4tYoqE3AlNXdQXoDXuU4zQzj0nWgb6P
+	sr6ht4MsmgBbU2MkFOOIayNRDKGc0ntm3U7Exvj6xuaZOucn2FuoPQC4mHy2LO3C
+	guUjfiEknYvUyxlmdaQdtdfZudij27sq7AMMgK+CV4eN6vCYFRHDET0FRYT7irK4
+	sY3aCYDuDBVbJnauwr28ns9+O/zIx8VVJdn9bMo3ADy9xJVkAzwDaG1uZg0M8bci
+	Gf9XiNPrS2wA2p1ZTVn3+Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787237296; x=
+	1787323696; bh=F/lfOD4h+5PQ11bk7pm2wGTVKEywsUCaRo9lBEGa3tM=; b=J
+	bUuA71+Z332HF1gKSFaLa5E27vZ+EiU6X4RbfWIt1wiv/9Eh61xYteuEOjz8rW3Y
+	wx2Ix57u+kY5S96yGSRMYCLgDblp4W8HB6WbRzDaqu4RnPxD3M4tGtorayG2fF7v
+	efrWcA3xIBpRQBbshErTdqcmL8976ldbOAJUE/t3iHMhcJYRqkuSh2UiYQnpD2Fs
+	5S/l8WbWvFKaACkErDe6XFgRZ8MZCwktYTn38hhR/MX0TE4ZEaNZzTypljNzxy1Z
+	mgNZ/qu6pi5P4/3f4AxQWE4pfgPQkqw9lNzDhh/Sm6lKBj1KW/PLPbufF4njafvY
+	vkp3wJUE+DQ3xNQUJarhQ==
+X-ME-Sender: <xms:rROHalAUrE0edPBhjEX89CErQcHxCoREeMzc8RwOME31Ou5TGE91M7Q>
+    <xme:rROHauVZ06Eb265kf8zSGg9-Y8fXkpxOQFUYK80SZX_5q57hLQjFWSXAIp9fsALjg
+    oi3As2oWnBWApij0pJYf2-fsYqLAGSB3YEJqU-hDK96IzCW7qBBmcE>
+X-ME-Proxy-Cause: dmFkZTF7rGPnA5qWjcLYRb6qCjKnq+OiOmntyYDZkDGbHhEI7NXGvZceClszZSWcJvquBQ
+    PvIFprSua5WJ2xAv8yu9u3IJhd6hnN8kCmF/5vbTVl0ks7YC8vydqR1HdBQFLeTqpYAn0C
+    6N72e69gthy5MmgiXe5+YhWGhbTNarkhrv9OdYlL9bfjnP4dz2n+HtvT9FB9Xnm05GYOjk
+    VTfEOf6Oz8kXmYdvNP1+5mjNm5TwGxkvnm2I48DKcjGb1sWg55BI9W2OfLtZ5AOQq7xIyX
+    PAKU5cF24Db8q9/jlzUQVZ9CLbOmOO/72svLSh725nycPXgn49IWy4WGehwOcCObr13HNe
+    /mwD3YJcbfhrmzU4zPM1hPGLqxG4NayWQ94V8phpdBk8fubLXZJi+C0syBOq+9hikirj8E
+    L9+mY/8plQ24q2AhKh26Mv8oIjF22Qr9Cvmh0f1Hya/rx93EA/kZXDJKbfWz7ImifunWAS
+    qgNHM1cKe6/Xgxrt5SNFJC8Y75jNKb7CKzHFtF8pVfGr5VlBE3QnKlbBVbp0vJoDWaIFVP
+    HJuseRwt1bkwCs9s4SCBFhaewBB67EAop+ryu6HHb3B+VoNL7JHKllidJatLIs9qWouXog
+    NekFL06rbz+otRRUr6PKqTWlHFjT3WzjCdlR4AmaA5KPJchdBGvIp2QeudPg
+X-ME-Proxy: <xmx:rhOHaidz9F9wt5n1GEaMi4Dq9YsxdpuwBUrkKGMWvm97Rxu4YFiHDQ>
+    <xmx:rhOHaj-VSF0QldQIF182lgy82ursbERr19orJUQsyAC6BakIsY43vg>
+    <xmx:rhOHammhc5AtHM7cgdOuM-xw8QizliDu7Vbvckvai6eoBpM9_lJ8YQ>
+    <xmx:rhOHat-QnUl9lAR7los873GDuhKWoZVPj15JbXNWhFmzxh5XhIqv6w>
+    <xmx:sBOHamSmHaa2AL8c6s09bT-uKgSjnXj7huI0XePk7liNJ26ta_xcF8XS>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id EC82122C007A; Thu, 20 Aug 2026 10:48:12 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: Ad5igGGZDhxo
+Date: Thu, 20 Aug 2026 16:47:52 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>
+Message-Id: <c097cc44-3033-4f22-8c48-859de8353f99@app.fastmail.com>
+In-Reply-To: <xmqqcxvcuaak.fsf@gitster.g>
+References: <20260609004340.GF358144@coredump.intra.peff.net>
+ <URLs_not_trailers.b13@msgid.xyz> <xmqqcxvcuaak.fsf@gitster.g>
+Subject: Re: [PATCH] trailers: stop recognizing URLs as trailers
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> True.  And c does not have to be a single byte. ".." can also be
-> part of the repertoire.
+On Thu, Aug 20, 2026, at 16:38, Junio C Hamano wrote:
+> kristofferhaugsbakk@fastmail.com writes:
+>
+>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>>
+>> An HTTPS URL starts with an alphanumeric scheme followed by a colon.
+>> That means that they will be recognized as trailers in a trailer bloc=
+k.
+>> That turns out to be a problem in practice. Let=E2=80=99s stop recogn=
+izing these
+>> as trailers by failing the trailer parsing when we:
+>> ...
+>> Helped-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> This has been on hold waiting for the base topic to settle, but now
+> that the base topic has graduated, the effort can be rebooted.
 
-Agreed and updated accordingly: forbidden chars are looped over,
-and I folded ".." in along with "\" (the same forbidden-char list).
-The other refname rules enforced by refs.c are well covered,
-so I kept the loop to the embedded forbidden tokens.
+Thanks!
 
-> By the way, one weird bit: is it intentional that all of these really
-> use "heads/something" instead of "refs/heads/something"?
+> Can somebody summarize the outstanding issues on this topic (if
+> any)?
 
-Not intentional -- the file already mixes them (e.g. 'refs/heads/foo.'
-vs 'heads/foo..bar'). check-ref-format validates each component
-regardless of a refs/ prefix, so it doesn't change what's tested; I
-kept 'heads/' to match the neighbours.
+I have version 2 ready. The only code change is using `starts_with` like
+Peff mentioned. What I wrote about the changes:
 
-Thanks,
-Nikolaus
+    =E2=80=A2 Use `starts_with` for readability:
+        https://lore.kernel.org/git/20260609004340.GF358144@coredump.int=
+ra.peff.net/T/#m74203c474c34f1028a7e3d389ff46fb7e579444c
+    =E2=80=A2 Explain in the commit message that you can technically get=
+ false positive
+      =E2=80=9CURL=E2=80=9D start fragments:
+
+          https://lore.kernel.org/git/20260609004340.GF358144@coredump.i=
+ntra.peff.net/T/#m35047d5c7a79abd23c11f97e6b6a0364409805e3
+
+I just have to dust it off.
