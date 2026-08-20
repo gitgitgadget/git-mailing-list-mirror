@@ -1,186 +1,438 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37E4361974
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 09:13:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9867408630
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 09:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787217207; cv=none; b=SxS5RrEyU0o4hWor5CPGMg5YYrgRPnaR01OZOBxxanFq5SJ/CnV9IzYmx6yOEvyE9ObOxNo3sdL0kPX4Yo9V8+pcDdmLDUBTYap8JHm9+0/Z32m/3xw+/qMaLnBf71nlrkhBi3HvHxlL3zKQjP01XulyXGl4TIpGDVDVK6qRt+s=
+	t=1787219416; cv=none; b=r9lZDzpzz9+cT1N3nLRsisg0ovyLJzEuOYnlUT8qezizJwq8IFRGSzRwBEXtu6+I2+DLWE67UuQ+VXuBeFocTFNlgDRcgtIn03lYM7PFD8eZOyJTisOt2C+PJ1c1GXLTAzO+yX44xC/uD4sQkmp9oQBgZktysRNNZnWvyXpYuMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787217207; c=relaxed/simple;
-	bh=7vQ84vmuPGfpVvGx/V+UIM+r39FpF401QTZxDy1dkCc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X7rhCMa3ZINmyPQWoQY2FYtfEF09IuPFLGhaSWy8HbFrYPxrpoEMXlU9CNp1UGnmeMO2QprTSKSQnb+UDq+25EFnVMOzXFbXhQzmd1bJsx2NCvbJpbMrpQfJ3S4PTZqubleaouyN1QBjZEche1i28RPqFAbjVGAybFiHcGsnRKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hRpWNBdZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ott2pukm; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1787219416; c=relaxed/simple;
+	bh=wHGO51DXTdOEmVO0NBUrHiOnh493lDLCSok8btRKtw0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=HaZ3lLYnIyKwVjGIi02lmDqxaDrIm+YIjwjDUD0W04x6x+vaNcD+mG32BNejLuqexc4DPsrisSklt8q+2NnsFUTLZh0Q5g9bgaxiSvWVlVgxnxavEyT6PW+YA3hdhjk/4tTGrL8R6QwFo0WqoyF5zD4ErAhQUhOLg/KfNVINWnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AO/wwaTd; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hRpWNBdZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ott2pukm"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 41CDE14000CC;
-	Thu, 20 Aug 2026 05:13:23 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 20 Aug 2026 05:13:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787217203; x=1787303603; bh=4yHpTxUwcU
-	XibWOMu8FXoDmv2Cndf2D50mujef9WFHQ=; b=hRpWNBdZexBIDKEyJIheuf6qaI
-	IHrUHBU3ykRjtpXqFANfGR3URmAejdKODu+Yz2N7CTIr+Sw4/74GgKBJmFYNVEmp
-	HqsMZNAkIMbp0H/54OcCZCEkV7iPKpkiVHGn4FnHS86xj4RN4Ux4biNb7t/42n5V
-	PavV05Oeqpu7wH9Xch60gyA4nex4R3HtRwVz8oaE5xiigPSBSscjcItptbJ6XpJr
-	NTasVDeClePD4C4f64SiZjw/ZkQ8BslsG3Yu/o3figr6z3NtjepvDerj1Ysf/nfV
-	dMQWO3T58R33AsrqM9mLKGnZWJQ274OFQuA9+5CIp1GKmHQwh60KmBU1ZU+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787217203; x=1787303603; bh=4yHpTxUwcUXibWOMu8FXoDmv2Cndf2D50mu
-	jef9WFHQ=; b=Ott2pukmNkB0/xnJPULTZ6FIuh/qqTksjp8HSwzXNEvJqKZtCJy
-	UK7cMyO3NPazExO9cjLfmCdzEdbS9wPDDDnHEUYwIEQAL8xiNimcBVQSCKavoVwO
-	4DAi+HJOuoHRFZ5qjAqUFqnBLVBisvX1Qz4clWYM14k4QRXyeolmer/B1KTiMkxF
-	Qy8jyNZafhZbPXM0ENWShwBbUsi4z0RTzpoMjV+7kT/iy9Oix5eZnQDyxufDhPI+
-	XjKxO7vL3HJEqyqQ3p27pdsRjUyY1uRSm6Yv3dylsmFK/P6wR+Ci5NMS2tVBhabg
-	tM7ovGF8c3/l9QCjZnpeJMWqdXqA/POWkCg==
-X-ME-Sender: <xms:MsWGarmjF-zZ2yMF5Hgdo5h4LLRIYFzfh0JasoqtqQY3NFvsUWapDA>
-    <xme:MsWGal2s44JJDsW3BLet7otudhPc1IY6Ub7lcfSk2OkNZkwNCxuNScK5xH-TZqtoq
-    V0hMjkhyjpobkbwFCgA3PFgmM-bt0zT9Zo7vlGiatirv2jabH1Dvwc>
-X-ME-Received: <xmr:MsWGamr_cUH26330SHbg7JvhpO69qPMAkp0M2vZdL7BcEZuMoic_6qzb9bprg3fJwyk2H2icYa1-3qCUF97yj5_ZTeFf0ipH6xJTo0-Q9Q>
-X-ME-Proxy-Cause: dmFkZTEETB6x3HPxJRILDnZLS7Oyhai6wVui9gsL06wlxA+fkwuxw2N5Z5PJZENMQZjUHh
-    5OEtYVsI4iN3tIL6kAbvdpSXMeKlqGtXcosZCVSjKH744PULebfc3yx8G16eflwQ6S35/E
-    O10fsvQNBNwbFDmi+0Ma+TGdK5QSsw6XyAF/TghHjOhcDFJtDYfRPzu7PMO/8+eQwGNjkd
-    q+rlJgPiO0A75e+f7CrQF5tzIsSa2wJtUncOpCP2+sp4e4uIy3PjAK4A0LzAzijMG/s0az
-    QjL4/C2k2C21uM4ltm9RqMpXsFSA+MfEqAIxhzJCsMLMPrNzYaIm275J7+O31KVCtFFZez
-    ZZXD1CWO4X9v7UAqBAHwvgTCft0p8R35tpDwXxCUlR05BURwj3mFR9f/C14G8/pEFpEyJY
-    thQ5HiQ/R6gx/p4G3hxSyqpA3cFEmYPut2OI3e+jUNuqC3gt64mdm5CyslQ5CAjyPCHjEQ
-    RJrBrTR8ttfnQKPReszzIO1ABfuVAqU0A1cbFefNubRKcjNRUeuxKGN+J7C3crQhZMF3lg
-    cGGy0/22U8uqUuABMMjVrIj/oovB4fl4EYwILCpuS7U+KJAym+E5vEZnNpJUOdBNT4c0AN
-    S/0oJNNj9fpVy6iBhm7UfYE6/wnxJCLChj2DooKWaYo2030zqKLz5VsNXNsA
-X-ME-Proxy: <xmx:MsWGaicK24Pt80Bv5bowvNjpK3ugGlbIktS-bSePpvZg7T_QS5eONw>
-    <xmx:MsWGalqSl8oZ-OX8C-YLvcQ_ZLlP9UG6rGs7XUz5hJO821lfzkpklQ>
-    <xmx:MsWGajF6lLWxaJwAomoW_exAdznMu_9QjMK3l6z56DZ1iOwo1QVr0A>
-    <xmx:MsWGalsgF2EQqgaH_0MibXgOQcG0F3PemFOS3pPmNBqZiwvl94L0gw>
-    <xmx:M8WGamkiBp_U64hp__aeER-NcdKYN9cBFq2kf4VVZr6Wm-DVe41hTy9c>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 05:13:21 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3b0cfca5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Aug 2026 09:13:19 +0000 (UTC)
-Date: Thu, 20 Aug 2026 11:13:16 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: friel@openai.com, git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2] pack-objects: trace pack bytes written
-Message-ID: <aobFLJuiuM1EuNpv@pks.im>
-References: <20260817233914.8740-2-friel@openai.com>
- <xmqqo6f02q2f.fsf@gitster.g>
- <c6a8cdac36d2202055d637ebcc97e484122cdcd4.1787158152.git.friel@openai.com>
- <aoaTjWMSO8og_iFw@pks.im>
- <20260820082102.GA2973952@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AO/wwaTd"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4956242332dso21014425e9.2
+        for <git@vger.kernel.org>; Thu, 20 Aug 2026 02:50:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787219409; x=1787824209; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=HkiqRjBGQyAvDTLr6MV1nreRbHSK9+0b+DSE5VHiL8M=;
+        b=AO/wwaTdz+rCCHf+1fe41hVyfAxcq5T19fnlkpyFEYhWiM//me7Hxdtce9nOTl7cRa
+         cPSq6SDHc7LEvZwx+c7nd1UCpNYUuH9Z6J2bLd2A/cHudSJMQVmsTaeFF607uAHWdXcl
+         7TjKimTpBVH7jnvQ5yaeOgg870ZRzESI6/YCuRT83UtZ0d1v2qc6OtghQqJYYyQOF4vJ
+         wyp3eSW980ZNyI9fX5RcZy0J25lZntc641mEeem3rMlbZQpdc6IPLlW+CUMp99trsIVL
+         y1NZ/LXxyo/AUInzG4zGNFv9Mr09vkmPfaGDNcj4x3y+VJ+pw0EvRXGP4M6IElvCT4fF
+         6LCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787219409; x=1787824209;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=HkiqRjBGQyAvDTLr6MV1nreRbHSK9+0b+DSE5VHiL8M=;
+        b=ghlHGSl3zag6dZJrwKjb2/p0Bkw7aIeFwixL9YdwBCnm7n9iwCiJD6hjDaC98H28Lm
+         GcBlAJ/ATxLfIg/0VscQvu2NAwcHCwHu4ETfKAXAJYV7GAccKiZ+3ud+Jm1Vtq6Zl7tx
+         2BkrBQyThNj6iwSuC2O9ht1yxyoGsejS40WwdwyO4AkIPn/py5tAXuiZ1t03OZIyk+sK
+         H6SWmrS1sniVXW9ocHwtzEVFcEb2GxRLX8jghR3nXOSmkkQEAAfat3RKzuEWOAgxNFs4
+         Sh/GqdUe9vWKZKy4oQacy+DWwgoy2Nz8+dFUf7/x9KUdPIOYdFlYN4aTMuNoLvIqhsoh
+         e8YA==
+X-Forwarded-Encrypted: i=1; AHgh+RrrZUSOSkKLxaIiH2PA6FO2a/YusJqcMs5/t7m6H5gCr+NDWa0n67BB6brJDakx2Hr3xoc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxg+jsMFAyxO+331Qz1+GdSiIMHFOwWKcTRGQG5A0Te/f5+0DYH
+	SzyDx4l5OPTFK2RfAfd6A4zMqa8JwY0SiEVGY2yk0c/6VmOPrbj7RnfqukBCqA==
+X-Gm-Gg: AR+sD10A5WFkEZP9B5ZLSGMEw3xXrKE4CSL4plJWF3sfJu1SL5frjPP4XLUvdbqucOf
+	AO7WminNU96RJpK76rw4a5f1Pg6iw/a/dmxltRaeYpK44GOkwozOkwCyE8nldLTarm8d1YgVt1X
+	QhhCzVKs7YgewLq+d5MjT21YrL5dDDL3NEJDg9qAKl5H0FoY55fLtAl2ug5xkLPHNV3a2AKDv1/
+	7I6xPgDgBCvd64ZxX9ssTlfvu+tCKEdJEb0ccUWiMddAHsu+wZhcOEJPVdRF4ivU3fCQDS1bx22
+	gPUOg8Vl6gktLO99c/lQw2pzFinbWeI4jC7iahLEmkagPEZPEc64nwi2D71wYCa+jEQbbxt8ax1
+	JGHstxp/Hx4Q3Km/rXCbtms/le8PGgpZJbHV+9LcZpVqHk08PXXsVv/bxEv4SZfXa3B/zUJlsrC
+	yPugZL+ZGHYITSB/+x96T/9Qd73pX5x/ie2WZWjEwLz2K9NuNaypK2nq6aZx85TwCKboY9WCvqo
+	lbxHjK0xj1knQ5NJc5WGOveR+ogEEdZzGQvbFlefhE=
+X-Received: by 2002:a05:600c:37c6:b0:499:8f9f:e9ee with SMTP id 5b1f17b1804b1-499aa173a16mr207306045e9.7.1787219408531;
+        Thu, 20 Aug 2026 02:50:08 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499b19dba34sm56074405e9.9.2026.08.20.02.50.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Aug 2026 02:50:07 -0700 (PDT)
+Message-ID: <29f39d8b-6cf0-4811-afb3-0a1656877f31@gmail.com>
+Date: Thu, 20 Aug 2026 10:50:06 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260820082102.GA2973952@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] hook: introduce the report hook for git-receive-pack(1)
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Aug 20, 2026 at 04:21:02AM -0400, Jeff King wrote:
-> On Thu, Aug 20, 2026 at 07:41:33AM +0200, Patrick Steinhardt wrote:
-> > On Wed, Aug 19, 2026 at 04:28:10PM -0700, friel@openai.com wrote:
-> > > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> > > index 1ec5b6f206..252530172c 100644
-> > > --- a/builtin/pack-objects.c
-> > > +++ b/builtin/pack-objects.c
-> > > @@ -1389,6 +1390,8 @@ static void write_pack_file(void)
-> > >  			display_progress(progress_state, written);
-> > >  		}
-> > >  
-> > > +		bytes_written += hashfile_total(f) +
-> > > +			the_repository->hash_algo->rawsz;
-> > >  		if (pack_to_stdout) {
-> > >  			/*
-> > >  			 * We never fsync when writing to stdout since we may
-> > 
-> > I guess the addition here accounts for the trailing hash written by the
-> > hashfile. If so, shouldn't we also use the algortihm that the hashfile
-> > uses in the first place via `f->algop->rawsz`?
-> 
-> Perhaps, though that is used to write the hash (via CSUM_HASH_IN_STREAM)
-> only in two of the conditional blocks. In the third we finalize the
-> hashfile and then use fixup_pack_header_footer(), passing the_hash_algo
-> directly (not even the_repository->hash_algo, though of course they mean
-> the same thing).
-> 
-> It all works out, of course, because we created the hashfile struct
-> earlier using the_repository->hash_algo. So I think this is mostly
-> academic in the first place, but your suggestion harmonizes two of the
-> conditional blocks while creating disagreement with the third.
-> 
-> I think something like this would "fix" it by consistently using the
-> hashfile's algo in all three blocks:
-> 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 4a5fcbe5f5..0fdff72f41 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -1413,9 +1413,9 @@ static void write_pack_file(void)
->  			 * If we wrote the wrong number of entries in the
->  			 * header, rewrite it like in fast-import.
->  			 */
-> -
-> +			const struct git_hash_algo *algo = f->algop;
->  			int fd = finalize_hashfile(f, hash, FSYNC_COMPONENT_PACK, 0);
-> -			fixup_pack_header_footer(the_hash_algo, fd, hash,
-> +			fixup_pack_header_footer(algo, fd, hash,
->  						 pack_tmp_name, nr_written,
->  						 hash, offset);
->  			close(fd);
-> 
-> 
-> But there's a subtle yet interesting difference here! f->algop won't
-> necessarily be the same pointer as the_hash_algo. If we compiled with an
-> unsafe variant, that will be used for hashfiles. If we're just looking
-> at rawsz that's OK; the two variants should be identical (other than
-> performance and collision detection), so taking rawsz from either is
-> fine.
-> 
-> But fixup_pack_header_footer() actually recomputes the hash (as it must
-> if we tweak the header). Right now it does it using the "normal"
-> variant, but we should be able to use the unsafe one (which my diff
-> snippet above would start to do).
+Hi Karthik
 
-Yeah, I agree that switching over to the unsafe algortihm is sensible.
-Being able to speed up hashing of packfiles was one of the prime
-motivations of introducing the unsafe variants in the first place, so
-the fact that we still use the safe variant here feels like a plain
-oversight to me.
+On 18/08/2026 08:55, Karthik Nayak wrote:
+> 
+> Similar to the 'proc-receive' hook, this does not use the config-based
+> hook infrastructure. That infrastructure is designed for parallelizable
+> notification hooks. As this hook is a bidirectional filter, it would
+> require significant modifications to that infrastructure and this hook
+> cannot be parallelized anyway.
 
-> Of course this whole thing is absurdly pessimal in the first place. If
-> we are just going to throw out the hashfile's checksum, then why bother
-> computing it in the first place? Because we don't trust a disk write at
-> all, and actually verify the original hash computation as we read the
-> bytes back in! So we'll actually sha1 the written packfile three times.
-> Yikes. I wonder if it's really worth being so paranoid. But that is how
-> it has always been.
+Config based hooks are about running more than one script to run per 
+hook event, they're not about parallel execution per-se. Indeed the 
+documentation for git hook notes
 
-That's... awful. Honestly, if we cannot trust what we're writing to disk
-we're going to be kind of screwed anyway. We don't re-verify loose
-objects, refs or whatever other data structures we write to disk either.
-So doing this thrice here feels wrong.
+     Some hooks always run sequentially regardless of this flag or the
+     hook.jobs config, because Git knows they cannot safely run in
+     parallel: applypatch-msg, pre-commit, prepare-commit-msg, commit-
+     msg, post-commit, post-checkout, and push-to-checkout.
 
-> Anyway, that is a bit of a tangent from the patch in question. I think
-> either spelling is OK for the purposes of this patch. If somebody wants
-> to pursue harmonizing the paths (and maybe even doing some timings to
-> see if switching to the unsafe variant is noticeable here, and what the
-> total cost of this triple-write approach is), that can happen
-> separately.
+I think the question the commit message should be answering is, whether 
+a design like proc-receive that predates config based hooks and only 
+allows a single hook script, makes sense now that we have config based 
+hooks, or, if we were adding that functionality now, would we design it 
+differently? I think the answer for server side hooks is that a design 
+around a single script is probably reasonable but it would be worth 
+discussing that in the commit message.
 
-I agree that this is definitely out of scope of this patch series.
+Thanks
 
-Patrick
+Phillip
+
+
+
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> To give some context, we at GitLab are building a custom MVCC around
+> Git. Each git-push would initialize a new version which is then
+> committed as the default post some operations. These operations take
+> place after the reference transaction and based on the output status of
+> those operations, we want to propagate the status to the user. There
+> currently exists no good mechanism to do so.
+> 
+> Having a report hook which allows us to modify the report being
+> propagated to the user, allows us to modify the report based on the
+> status of our MVCC commit phase.
+> ---
+>   Documentation/githooks.adoc |  23 ++++++
+>   builtin/receive-pack.c      |  41 +++++++++++
+>   t/meson.build               |   1 +
+>   t/t5412-report-hook.sh      | 176 ++++++++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 241 insertions(+)
+> 
+> diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
+> index ed045940d1..7e6643ad89 100644
+> --- a/Documentation/githooks.adoc
+> +++ b/Documentation/githooks.adoc
+> @@ -527,6 +527,29 @@ The exit status of the hook is ignored for any state except for the
+>   status will cause the transaction to be aborted. The hook will not be
+>   called with "aborted" state in that case.
+>   
+> +report
+> +~~~~~~
+> +
+> +This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
+> +`git push` and updates reference(s) in its repository. It executes on
+> +the remote repository once after all refs have been updated, but before
+> +the status report is sent back to the client.
+> +
+> +The hook receives the pkt-line encoded status report on standard input
+> +and its standard output replaces the report sent to the client. Any
+> +output written to standard error is forwarded to the client over the
+> +sideband channel and will appear as `remote:` lines on the client's
+> +terminal. To reject individual ref updates, rewrite the corresponding
+> +`ok` lines to `ng` lines in the output report (with an explanatory
+> +error string) and exit zero; standard error can accompany this to
+> +provide a human-readable explanation. A non-zero exit status causes
+> +`receive-pack` to die.
+> +
+> +Note that by the time this hook runs, all ref updates have already been
+> +applied to the repository. A non-zero exit causes the client to see the
+> +push as failed, but does *not* roll back any ref changes that were
+> +already committed server-side.
+> +
+>   push-to-checkout
+>   ~~~~~~~~~~~~~~~~
+>   
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 86933d8d7e..bc22b3ec31 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -1004,6 +1004,41 @@ static int run_update_hook(struct command *cmd)
+>   	return code;
+>   }
+>   
+> +static int run_report_hook(struct strbuf *report)
+> +{
+> +	struct child_process proc = CHILD_PROCESS_INIT;
+> +	struct async sideband_async;
+> +	int sideband_async_started = 0;
+> +	int saved_stderr = -1;
+> +	struct strbuf out = STRBUF_INIT;
+> +	const char *hook_path;
+> +	int code;
+> +
+> +	hook_path = find_hook(the_repository, "report");
+> +	if (!hook_path)
+> +		return 0;
+> +
+> +	strvec_push(&proc.args, hook_path);
+> +	proc.trace2_hook_name = "report";
+> +
+> +	prepare_sideband_async(&sideband_async, &saved_stderr,
+> +			       &sideband_async_started);
+> +
+> +	sigchain_push(SIGPIPE, SIG_IGN);
+> +	code = pipe_command(&proc, report->buf, report->len, &out,
+> +			    report->len, NULL, 0);
+> +	sigchain_pop(SIGPIPE);
+> +
+> +	finish_sideband_async(&sideband_async, saved_stderr,
+> +			      sideband_async_started);
+> +
+> +	if (!code)
+> +		strbuf_swap(&out, report);
+> +
+> +	strbuf_release(&out);
+> +	return code;
+> +}
+> +
+>   static struct command *find_command_by_refname(struct command *list,
+>   					       const char *refname)
+>   {
+> @@ -2547,6 +2582,9 @@ static void report(struct command *commands, const char *unpack_status)
+>   	}
+>   	packet_buf_flush(&buf);
+>   
+> +	if (run_report_hook(&buf))
+> +		die("report hook failed");
+> +
+>   	if (use_sideband)
+>   		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
+>   	else
+> @@ -2592,6 +2630,9 @@ static void report_v2(struct command *commands, const char *unpack_status)
+>   	}
+>   	packet_buf_flush(&buf);
+>   
+> +	if (run_report_hook(&buf))
+> +		die("report hook failed");
+> +
+>   	if (use_sideband)
+>   		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
+>   	else
+> diff --git a/t/meson.build b/t/meson.build
+> index a25f37d2f5..7056e31326 100644
+> --- a/t/meson.build
+> +++ b/t/meson.build
+> @@ -651,6 +651,7 @@ integration_tests = [
+>     't5409-colorize-remote-messages.sh',
+>     't5410-receive-pack.sh',
+>     't5411-proc-receive-hook.sh',
+> +  't5412-report-hook.sh',
+>     't5500-fetch-pack.sh',
+>     't5501-fetch-push-alternates.sh',
+>     't5502-quickfetch.sh',
+> diff --git a/t/t5412-report-hook.sh b/t/t5412-report-hook.sh
+> new file mode 100755
+> index 0000000000..47f20e8d67
+> --- /dev/null
+> +++ b/t/t5412-report-hook.sh
+> @@ -0,0 +1,176 @@
+> +#!/bin/sh
+> +
+> +test_description='test report hook'
+> +
+> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +
+> +. ./test-lib.sh
+> +
+> +. "$TEST_DIRECTORY"/t5411/common-functions.sh
+> +
+> +URL_PREFIX="\.\."
+> +
+> +test_expect_success "setup workbench" '
+> +	git init workbench &&
+> +	create_commits_in workbench A B
+> +'
+> +
+> +test_expect_success "no report hook, push succeeds" '
+> +	test_when_finished "rm -rf upstream" &&
+> +	test_when_finished "git -C workbench remote remove origin" &&
+> +	git init --bare upstream &&
+> +
+> +	git -C workbench remote add origin ../upstream &&
+> +	git -C workbench push origin $A:refs/heads/main &&
+> +	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
+> +
+> +	make_user_friendly_and_stable_output <out >actual &&
+> +	cat >expect <<-\EOF &&
+> +	To ../upstream
+> +	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success "passthrough does not alter report" '
+> +	test_when_finished "rm -rf upstream" &&
+> +	test_when_finished "git -C workbench remote remove origin" &&
+> +	git init --bare upstream &&
+> +
+> +	test_hook -C upstream --setup report <<-\EOF &&
+> +	cat
+> +	EOF
+> +
+> +	git -C workbench remote add origin ../upstream &&
+> +	git -C workbench push origin $A:refs/heads/main &&
+> +	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
+> +
+> +	make_user_friendly_and_stable_output <out >actual &&
+> +	cat >expect <<-\EOF &&
+> +	To ../upstream
+> +	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success "non-zero exit causes receive-pack to die" '
+> +	test_when_finished "rm -rf upstream" &&
+> +	test_when_finished "git -C workbench remote remove origin" &&
+> +
+> +	git init --bare upstream &&
+> +	git -C workbench remote add origin ../upstream &&
+> +	git -C workbench push origin $A:refs/heads/main &&
+> +
+> +	test_hook -C upstream --setup report <<-\EOF &&
+> +	exit 1
+> +	EOF
+> +
+> +	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
+> +	make_user_friendly_and_stable_output <out >actual &&
+> +	cat >expect <<-\EOF &&
+> +	fatal: report hook failed
+> +	send-pack: unexpected disconnect while reading sideband packet
+> +	fatal: the remote end hung up unexpectedly
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success "hook is invoked and receives report on stdin" '
+> +	test_when_finished "rm -rf upstream" &&
+> +	test_when_finished "git -C workbench remote remove origin" &&
+> +
+> +	git init --bare upstream &&
+> +	test_hook -C upstream --setup report <<-EOF &&
+> +	tee raw
+> +	EOF
+> +
+> +	git -C workbench remote add origin ../upstream &&
+> +	git -C workbench push origin $A:refs/heads/main &&
+> +	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
+> +
+> +	make_user_friendly_and_stable_output <out >actual &&
+> +	cat >expect <<-EOF &&
+> +	To ../upstream
+> +	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
+> +	EOF
+> +	test_cmp expect actual &&
+> +
+> +	test-tool pkt-line unpack <upstream/raw >actual-report &&
+> +	cat >expect-report <<-EOF &&
+> +	unpack ok
+> +	ok refs/heads/main
+> +	0000
+> +	EOF
+> +	test_cmp expect-report actual-report
+> +'
+> +
+> +test_expect_success "hook can modify the report sent to client" '
+> +	test_when_finished "rm -rf upstream" &&
+> +	test_when_finished "git -C workbench remote remove origin" &&
+> +
+> +	git init --bare upstream &&
+> +	git -C workbench remote add origin ../upstream &&
+> +	git -C workbench push origin $A:refs/heads/main &&
+> +
+> +	test_hook -C upstream --setup report <<-\EOF &&
+> +	test-tool pkt-line unpack |
+> +	sed "s/^ok /ng /" |
+> +	test-tool pkt-line pack
+> +	EOF
+> +
+> +	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
+> +	make_user_friendly_and_stable_output <out >actual &&
+> +	cat >expect <<-\EOF &&
+> +	To ../upstream
+> +	 ! [remote rejected] <COMMIT-B> -> main (failed)
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success "hook can report a custom failure message" '
+> +	test_when_finished "rm -rf upstream" &&
+> +	test_when_finished "git -C workbench remote remove origin" &&
+> +
+> +	git init --bare upstream &&
+> +	git -C workbench remote add origin ../upstream &&
+> +	git -C workbench push origin $A:refs/heads/main &&
+> +
+> +	test_hook -C upstream --setup report <<-\EOF &&
+> +	echo "push rejected: service X is down" >&2
+> +	test-tool pkt-line unpack |
+> +	sed "s/^ok \(.*\)/ng \1 service-x-is-down/" |
+> +	test-tool pkt-line pack |
+> +	tee raw
+> +	EOF
+> +
+> +	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
+> +	test_grep "push rejected: service X is down" out &&
+> +
+> +	test-tool pkt-line unpack <upstream/raw >actual-report &&
+> +	cat >expect-report <<-\EOF &&
+> +	unpack ok
+> +	ng refs/heads/main service-x-is-down
+> +	0000
+> +	EOF
+> +	test_cmp expect-report actual-report
+> +'
+> +
+> +test_expect_success "hook stderr is relayed to client via sideband" '
+> +	test_when_finished "rm -rf upstream" &&
+> +	test_when_finished "git -C workbench remote remove origin" &&
+> +
+> +	git init --bare upstream &&
+> +	git -C workbench remote add origin ../upstream &&
+> +	git -C workbench push origin $A:refs/heads/main &&
+> +
+> +	test_hook -C upstream --setup report <<-\EOF &&
+> +	echo "hook-stderr-message" >&2
+> +	exit 1
+> +	EOF
+> +
+> +	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
+> +	test_grep "hook-stderr-message" out
+> +'
+> +
+> +test_done
+> 
+> ---
+> base-commit: 11c6700f10234578d10523faf35656ca491425c9
+> change-id: 20260812-758-introduce-hook-5b3af9f1a7e8
+> 
+> 
+> Thanks
+> - Karthik
+> 
+> 
+
