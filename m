@@ -1,211 +1,308 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28E23B7B71
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 07:54:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D092F1F09AD
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 07:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787212482; cv=none; b=sRXm/lx1Hgf3x8cUsPpqUd6/UPLysBSx7SCFRmzjWWFBFW40R7gz1maVikGTs1N6C6bKuV0sPfVy4pB2Y303uXY8+A3SxKi0y97G+Aujt+MBldahuJQitXvgPp5l2BKxQze2TJtEmG2+B9tOZPGgXo6H5fVWFxka82A13TWQ168=
+	t=1787212539; cv=none; b=n6hwrENtdtOHVxnSVA5pVmns1LCxCw1hb0CDJz86/VMUcSmrB1cc5OWTnJFxoHJQCagmODVPS2L1hyefibhT0kl+BQWqnZ4CzWJMxaUQeEhDUpmwgWkp3SDOpxnReFcRBzntTUxlYm7KUDgvtu6Hj1riBS8bSbvIcxNBYiNpUMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787212482; c=relaxed/simple;
-	bh=FVDNlJrkrfg9QWgk8TXNltzjRGd5RkOVyRA27Z7XZac=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rot+8tEMmPLQV1MrO4oNcw8w8IGGT0tV6BrvLfqokQHtQZ547HbqMph6AmFLhSU0ZhUhTB2yMSpf4FQVfDpXVD6xDJhRNkwBXIYEqVYEPou9uI8ysHUgCrahgkNbpGr1xuqUqY+SlNFCruDCAl8aGSUQ0BJhQl8WFZMNtt0P9Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hm+KCbeK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PEnX04xe; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1787212539; c=relaxed/simple;
+	bh=q6b5GtSstkzE9bpaOIlSc1j5m/+icRjbsdAZEYTMntQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=Oq+6ds+ewjfgY2Rph3m24HLr1fs8fSTd7gupCd/1AVHxf2PxDx3gDhG1BzotrglBOTUFcdJVjMuQ6g9yBCVeC6MZrXZjXJzniUiiSw0mueGNvnJpYC6scP9wCfh6wrXDq25G4EBZo4Q+bCNadFIcV889ly+1tWF4kxoIN5LTprk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d5YXI/Zp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kDH2Pew+; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hm+KCbeK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PEnX04xe"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ED10514000D4;
-	Thu, 20 Aug 2026 03:54:39 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 20 Aug 2026 03:54:39 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d5YXI/Zp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kDH2Pew+"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id ECE05EC01B2;
+	Thu, 20 Aug 2026 03:55:36 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 20 Aug 2026 03:55:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787212479; x=1787298879; bh=N0zgG5TOcA
-	Rfw18iMgODeyx/lZKrdoq8UYCSOYbuoDA=; b=hm+KCbeKx32d2+qPeAWRUHKibT
-	+MnuwNezen1jeB+wy9AIvTEO/DwGvjwFW9L+a3+RhTXGlqea5C/poVlfQUZ1UOOw
-	wbKdovwVOwmQCQHVeZaGtJRcu+uvWDDo/N/yxqPNozjKKX3tIFcIzZds0m2nQ432
-	HvzYMq8UEfD3TWRz9l8cRIViCwu1SMYHdYxJIjnCvpuWRQ/EW4bNGMnWFZuDmWow
-	gVucn+vIuaDPN6UbGGqJ24304fC92sShdr9iBnPZhv9/hG4VfOjvJO02S1XiRz6o
-	uLOVwvf6kDHXKxank4AF1VjAsXJMMnmAuGobn43vvXPQn6LwuCHT7NeMrTlw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787212536;
+	 x=1787298936; bh=LEGXPhGWJUT0fB/i5oWBsFm9etuCpHxWPjCGXY8Pi7Y=; b=
+	d5YXI/ZpaR2gyjRzdHXq7GV5vOm4coWV7GSZtOS7RxEqe84C8+armjtUpo5SDpai
+	KCS8GcYTMKLbMCzlIIHAQ6s0AD2KOWdipI09eTGPov0i1XRx/F9mzpiepUSXHBKy
+	jTYUZmHO5hekA84FR9qHW4FeQjKjR3kdJV1B7axt4m8aN8VZwk1r5hE86hfN7qT1
+	jGl5y69a87Lup6F02itapfFGVBxaBLzrwz6nEByhwbb39HGDk5B0Cd5aMVt+rCUv
+	CK41pvLKEGmM4mPj/NCdtr1Uql78d+YRgvs+3jU8/qF5rnPHQRt5rioI3WveWhfB
+	E48vMfC5kZ7DUrbqdyhKoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787212479; x=1787298879; bh=N0zgG5TOcARfw18iMgODeyx/lZKrdoq8UYC
-	SOYbuoDA=; b=PEnX04xe5T16d8j1R04L0LON1Z2fLyMjzQkvJ/AIAzoRQkIxUVP
-	55XtF1ltrJWVW2PgE60xYUYpsbyhyGfBLYKLf4EcC165c7s4Z9vbYqdEBCnKshhe
-	j/LXFsMRnumhuRx6+Lc7AYJG6BEuDV4GMgMqpzeOE03mpHrOWAT0efWz5Xvg7Lod
-	sb6aCL1AC6W0F6+It0TC2xfDBmIwYhIdHBwOtacKYanNzzrthqf5+Zq8Qtyf9pRW
-	LyaeX1ZyQLdlQer3JnJTSr/YUWOC4daJmVwPUkO8n1JiTFC1Fnqi8dYvpXtu5qsB
-	i/4nsIHsuSLGDBqV8AyQfj4eld6BYeq0D4A==
-X-ME-Sender: <xms:v7KGalAFoctKZMsUTIKHI0WSZ9s8bd-ZDRrCVbLLAYDc3tUl9EyO_g>
-    <xme:v7KGaq8a51XymMMzBQxR8TSrPGGLY-O_4jgkURnXd2R1qdGB7rirZs67X5he2C42o
-    b6K1ruLFafjB-Z1VStRcmFsPDFVzC3W5ZCjHz06unKRzAqGaxx9dug>
-X-ME-Received: <xmr:v7KGat-eMcVGvxe4KSkSEylCNIAiuR8GPix8nD2SdI_vtmzbxa9K3Ni7FB9pjkRKuM8DCd38p3pnA3MmFscCXNk1bZO4iZD8G2EuIJp1oA>
-X-ME-Proxy-Cause: dmFkZTEq8OrU6lcOz4LWDmYcwOY4F4gSn2z0o9r9qZtiyKJiLit3WFarLCjXx/6BmL0Yur
-    TFdO4M6CQ5SXX91HF/8U+ccNWgLUsS6Sgd7xQjLFh4GhY31c2HJNMxRyUtWBtx7RZXAIH5
-    bmYNy6SL8iuOCI4TStNZURCxPhXKXgyLwq5X6Hx0fUo0llj+ikbXz2fT+DTlmB7CEio2om
-    SpxKD0+buGffL1ipu/gxMY5w0YL2RSQB3GFBQoguukYOqvSnWzqqGPI+QdoAZpvZR07zAa
-    v1txG095bVgNtf59i8YGVAUNbyP+1oZbnIL2XtmNL62ogvUX9IU/uJcqY9+Ig90Ke3Pykl
-    R4z/SyEZCm+gTlCXfnvMcGXQIRVrlPE13eOETOwEkZlKrS5tMRkvGQTz5zrgxhwCjO7GMq
-    rC9gJhxuS/YLRNYjVY4z4eTfvDt0CvlxeUAN0ch+NaxT27IJf4cBFUZ6URyxi52HUVQ5EJ
-    TJYv0F6NBVYvjc9x70ZPT5j33S11zVKAk9zChloDcz/MaIUNcF28yFi/qN+CawbRWjJMEm
-    bKFUq/LY4L7jvMMV0Xtj+a6YrQRRonAqcz4IPOo3SJtaTWLY2PEar0rLWMubUL7smOLE5C
-    P0C3PPPDtsYlb4h2qRgaIXnuGZ+/i53vFKF72PLsK/40Kjt7YsnykjAjxhpg
-X-ME-Proxy: <xmx:v7KGapeCO0tPp4B1F_EohykT95Kh93NyiDpzt_dlWVK1vubHCHBVDw>
-    <xmx:v7KGauG_Pz8UoRoNmGojUuoSPWfBByimFOko7HkQdeNyUZl8bOegag>
-    <xmx:v7KGavdZhkAxvY7KRv4DyXgGwj4H5-UY0p9meUmD9qyHGawBJ0gg4g>
-    <xmx:v7KGagFCj73IhbLn8Srk6O8D0QhGHWr6Lu2Cm0kY7Z_gfkknOv-vzg>
-    <xmx:v7KGaubFjPmZ7ckAr3Qc54M_tlzavn1Qh7U-LttxlfMPdoYph4DZ9bOP>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787212536; x=
+	1787298936; bh=LEGXPhGWJUT0fB/i5oWBsFm9etuCpHxWPjCGXY8Pi7Y=; b=k
+	DH2Pew+5yIMxSRF0zx+2NxMmJrcni/2nVj9JiQHvo3zc3bGkwZ8NFAEVIwXZ1OA6
+	0qe1dVR5Aa1FQr7niXFP1LuexDzJTMcbOq+IIMwj7fdwJxAnNrnq/IDZoULG/eU8
+	P0aNivJv3rSClOiVFzJ+CF6YZcfoMCZExaMXntt20tiv0L77EP9bVdisMhMn4jOR
+	p8BL14QlGhDqmU6wAbUm2iXLuAvgEpxObx0WHo9DawDOgJjrWVjx3o1uVOuyPKzx
+	a84qM/pV52ub27zgYelznui66NdWAHzls/edgrS11+4qCPpWlOg9AlllLlS+il52
+	zWP5YWGwUIM0SbqoaF3Ug==
+X-ME-Sender: <xms:-LKGapVbS7yse6fCTSUstL0thFILXHFPWU1UvLbqNvAyiEjPSyXUfg>
+    <xme:-LKGagmd6OYiP-SjsHAjAOGSR5tkSqEwbPPXG3LrbZiiKVwK-EqtEWa1tIt7wT1H3
+    -RzbPnLOLzVTcl2D2aij-ogZf7-ah4NinHIXfw1j0MSXdsWVbH_cA>
+X-ME-Received: <xmr:-LKGaqYAV04vs-I0wakQb4VBj0naizZKwTFpKRSkBTsFnUQKgR88jtITwkJrUDI1wBrvRqaVCEKv69sEoniIlx8WER6uKgJRChvDsT0DDg>
+X-ME-Proxy-Cause: dmFkZTGZQP7DP3G/BJaFcgX7cVUGhr2IxiU2MMAHNnpSt0PstAjtMy5Ac5eYPmUmF8fF8n
+    Pzjy/q4/meI5AOwNIPKMTIP63+PJudoYYouLW7ZmBduJhfDRGR+adrTrTs94EwICVEkBdq
+    mXnIflHdEPG8J72sGVhgRPW+XhDqIyEjz5Ks7N+FirPvU3OHCw1Fw+wfHfEy2nqgTWhu3I
+    bKP/VUe8ncbDG1TlejW6SjLZoHUtBbl/FxZ7xDTB5zij/QEw5lge/7gz8GPt5vf/E12G5h
+    BoWNeyCHF4ATWix5CHFBRjiRUWwlhkP6eU7Tc+rJ940b/4OCIlICH/fOyS9koKiPIf2DZD
+    vwXKcwiqngmfnlYlYxCMXbZe1SIMzdaqIg9JLOXrMPnoYFatCjqJ6A9XbiYsoDlYcuTudr
+    SHFusUhWC9yG/fRuekNZq/KuSBJ8/AhSncAnZd1Mlu3iLdl+AD1FMIYpRJI5mV0rwCtNAA
+    K3OydLYIhcWeQPnb6NOFFhWb+ocagVWYGPY0zytFL4n+Yq2+IVzAC0pPfmrPUCKopgbTbw
+    q2xgb6SduE2P+U7xmouayAogBHYEcRr1W9bz4N/jundw7Tha3RHZgsQzrGamTTADkBt6eu
+    YIJBYM10Jrrb+dPbo6JPT+q6vH9PuxGJg0OoanDZDpL74VImdEW+3Zio+TvQ
+X-ME-Proxy: <xmx:-LKGarN4yOsZR5ahsINcSyI0pbxKw1SdpNwE15WJ4xoInVgkBFnIdQ>
+    <xmx:-LKGavZrEa0P8gvccRgsjP03erpo59tKkw1DQCkxlSPAUzWh_bs5pg>
+    <xmx:-LKGap1JyIAuw1kmmVSvy8D_ZYDHg8XWBCEUmjU1bRmfZphivuVPjQ>
+    <xmx:-LKGald5EVKbVKeoHLtEzMdOVExu_ENcdA_aHKC2gq6JRUhCrBftWw>
+    <xmx:-LKGal4yHWfFvbkKrVyHpDrgcvrxrQ4jHFnRSlzk8QQe4j7aUFVWGvTJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 03:54:39 -0400 (EDT)
+ 20 Aug 2026 03:55:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 57139364 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Aug 2026 07:54:36 +0000 (UTC)
-Date: Thu, 20 Aug 2026 09:54:14 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 1a6b6795 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Aug 2026 07:55:34 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/2] packfile: recover when a multi-pack-index names a
- removed pack
-Message-ID: <aoayppoxHAkcFTBN@pks.im>
-References: <pull.2207.git.1787092446.gitgitgadget@gmail.com>
- <5792c08f4ee0f9627ab1432d91299fe676e0a2f5.1787092446.git.gitgitgadget@gmail.com>
+Subject: [PATCH v3 0/6] odb: make packfile generation pluggable
+Date: Thu, 20 Aug 2026 09:55:24 +0200
+Message-Id: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5792c08f4ee0f9627ab1432d91299fe676e0a2f5.1787092446.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42NwQ6CMBAFf4X07JqWEkBP/ofx0G63UIlAWiQaw
+ r/bYmI8GY+TzJu3sEDeUWDHbGGeZhfc0EeQu4xhq/qGwJnILOd5yWtegS5g7AIMRkNDPXk1EYw
+ KO7CSW42GrLTI4nz0ZN1jS58vbw53fSWcUi8ZrQvT4J/b9yyS98fNLIBDZQgLKRRVaE7R27sbS
+ x9z/lURvyp5rBRYq0OJaI2Wn8q6ri+2rCctFQEAAA==
+X-Change-ID: 20260807-b4-pks-odb-generate-pack-f30fbcdef3fc
+In-Reply-To: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
+References: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
+ Justin Tobler <jltobler@gmail.com>
+X-Mailer: b4 0.15.2
 
-On Tue, Aug 18, 2026 at 10:34:06PM +0000, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> When a geometric repack runs concurrently with other git processes, it
-> can write a new pack and multi-pack-index and then delete older packs
-> that the new one subsumes.  One or more of those older packs may have
-> been indexed by the previous multi-pack-index.  A process that already
-> had the previous multi-pack-index open keeps using it, and that stale
-> index still records the removed pack(s) as owning some objects.
-> 
-> Because a multi-pack-index attributes each object to exactly one pack,
-> an object that exists in multiple covered packs is served only through
-> its recorded owner.  If that owner is the pack a concurrent repack just
-> removed, find_pack_entry() cannot serve the object: fill_midx_entry()
-> routes the lookup to the missing pack (prepare_midx_pack() fails), and
-> the regular pack fallback deliberately skips every multi-pack-index
-> covered pack.  The object is reported missing even though a perfectly
-> good copy survives in another covered pack -- for example a large "base"
-> pack that geometric repacking intentionally kept.
+Hi,
 
-Okay. Rephrasing in my own words: the object in question exists in two
-packs covered by the MIDX. We rewrite one of those two packs, and the
-MIDX used to reference the object via the pack we're about to rewrite.
-Consequently, the MIDX is stale now and it cannot be used to find the
-object anymore because its pack has disappeared. And as we know to skip
-searching packfiles for the object that are already covered by the MIDX
-we won't be able to find it via the second packfile, either.
+this patch series makes packfile generation pluggable.
 
-> The false negative is not limited to one caller.  Any reader
-> (cat-file, rev-list, pack-objects, ...) can spuriously fail with
-> "unable to read object", and callers that only ask whether an object
-> exists get a wrong answer too, since the OBJECT_INFO_QUICK path never
-> retries.  Writers that merge in-core, such as "git replay", are hit
-> hardest: merge-ort treats the unreadable tree as a premature abort, sets
-> result.clean < 0, and returns without a result tree.
+Note that this series only makes those parts pluggable that are required
+for the transport layer. The other parts that relate to packfile
+generation as required by our repository maintenance is kept as-is, as
+there is a bunch of options there that are way too specific to the
+"files" backend to be portable. This should ultimately not be much of a
+problem though, as maintenance itself is already pluggable in the first
+place.
 
-Hm. Isn't there a slight variant of the race though for any caller that
-does not use OBJECT_INFO_QUICK?
+It's a bit of a shame though for git-pack-objects(1), which still isn't
+usable with alternate backends. I tried several times to find good
+solutions for making it fully pluggable, but due to the backend-specific
+options it's an utter mess. I want to eventually address this though:
+same as with git-refs(1), I want to introduce git-objects(1) to care
+about all things ODB. And as part of that command we can also introduce
+a command that generates packfiles in a generic fashion, without all the
+cruft that git-pack-objects(1) has. This is part of a future patch
+series though.
 
-Namely, the packfile containing our object disappears and is being
-written to a new packfile, and that file is the only one containing it.
-Without OBJECT_INFO_QUICK we would be fine: we notice the object could
-not be found, and then we perform a second read that makes the "packed"
-backend reload its packfiles. It would find the new packfile, and
-because it's not covered by its MIDX it would use it to surface the
-object. But without OBJECT_INFO_QUICK that's not the case, as we would
-skip reloading packfiles altogether, and hence we would not be able to
-find that object at all.
+Changes in v3:
+  - Fix a use-after-scope bug on abnormal exit when child processes are
+    cleaned up via `mark_child_for_cleanup()`, as noticed by Elijah.
+  - Link to v2: https://patch.msgid.link/20260817-b4-pks-odb-generate-pack-v2-0-4c8a96ccfdb3@pks.im
 
-As far as I can see though, we don't seem to pass OBJECT_INFO_QUICK in
-any of the mentioned readers. I could very well be missing something
-here, but I would have thought that those readers are fine in this
-scenario?
+Changes in v2:
+  - Mostly remove the dependencies on `the_repository` in "bundle.c".
+  - Link to v1: https://patch.msgid.link/20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im
 
-> diff --git a/odb/source-packed.c b/odb/source-packed.c
-> index 0890704e76..de96215069 100644
-> --- a/odb/source-packed.c
-> +++ b/odb/source-packed.c
-> @@ -31,6 +31,35 @@ static int find_pack_entry(struct odb_source_packed *store,
->  		}
->  	}
->  
-> +	/*
-> +	 * Recovery for a concurrent-repack race: a MIDX can name an owning
-> +	 * pack for an object that a simultaneous repack has since deleted,
-> +	 * even though the object still exists in another pack the same MIDX
-> +	 * covers (e.g. a kept base pack that geometric repack did not rewrite).
-> +	 * If the object is present in a MIDX yet none of the paths above could
-> +	 * serve it, its recorded owning pack has become unavailable.  The
-> +	 * regular fallback above deliberately skips MIDX-covered packs, so
-> +	 * scan this MIDX's packs directly to find the surviving copy.  The
-> +	 * bsearch gate keeps genuine misses (objects absent from the MIDX) on
-> +	 * the fast path.
-> +	 */
-> +	if (store->midx) {
-> +		struct multi_pack_index *m = store->midx;
-> +		uint32_t midx_pos, i;
-> +
-> +		if (bsearch_midx(oid, m, &midx_pos)) {
-
-Okay. I was initially worried that we now unconditionally search through
-all packfiles a second time, as that could have an impact on
-performance. But we really only do this in case we have a MIDX and we
-know that the MIDX _should_ have contained the object, but didn't yield
-it.
-
-> +			for (i = 0; i < m->num_packs + m->num_packs_in_base; i++) {
-> +				struct packed_git *p;
-> +
-> +				if (prepare_midx_pack(m, i))
-> +					continue;
-> +				p = nth_midxed_pack(m, i);
-> +				if (p && packfile_fill_entry(p, oid, e))
-> +					return 1;
-> +			}
-
-And here we now loop through all packs covered by the MIDX and manually
-try to look up the object in those. Makes sense.
-
-> +		}
-> +	}
-
-I was wondering whether a preferable fix would be to eagerly load
-any packfile referenced by the MIDX when loading the MIDX itself. And if
-that fails, we'd ignore the MIDX altogether. This would guarantee that
-the MIDX remains valid, and we wouldn't have to worry about any
-disappearing packfiles.
-
-The downside is of course that we now eagerly open packfiles, and we
-didn't have to do that before. So I think your fix is preferable, as we
-can rather easily detect the case where the MIDX should've yielded the
-object but didn't, and consequently the additional search only triggers
-in very specific edge cases.
-
-Overall I think this patch looks good to me. The one thing that I'm a
-bit puzzled about is the above discussion around OBJECT_INFO_QUICK. I
-feel like I'm missing something there.
+The series is built on top of 2c78326f81 (The 11th batch, 2026-08-05).
 
 Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (6):
+      odb: introduce interface to generate packfiles
+      upload-pack: generate packfiles via the object database
+      send-pack: generate packfiles via the object database
+      builtin/bundle: refactor option handling for progress meter
+      bundle: get (mostly) rid of `the_repository`
+      bundle: generate packfiles via the object database
+
+ builtin/bundle.c      |  31 ++++------
+ bundle.c              |  97 ++++++++++++++++++--------------
+ bundle.h              |   3 +-
+ odb.c                 |  21 +++++++
+ odb.h                 | 152 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ odb/source-files.c    | 149 +++++++++++++++++++++++++++++++++++++++++++++++++
+ odb/source.h          |  33 +++++++++++
+ send-pack.c           | 101 +++++++++++----------------------
+ t/t5516-fetch-push.sh |  12 ++--
+ upload-pack.c         | 125 +++++++++++++++--------------------------
+ 10 files changed, 506 insertions(+), 218 deletions(-)
+
+Range-diff versus v2:
+
+1:  34a7d13ccb ! 1:  d1282ffc64 odb: introduce interface to generate packfiles
+    @@ odb/source-files.c: int odb_source_files_optimize(struct odb_source *source,
+     +					  struct odb_pack_generator **out,
+     +					  const struct odb_generate_pack_options *opts)
+     +{
+    -+	struct child_process cp = CHILD_PROCESS_INIT;
+     +	struct odb_pack_generator_files *generator;
+    ++	struct child_process *cp;
+     +	FILE *in;
+     +
+    ++	CALLOC_ARRAY(generator, 1);
+    ++	child_process_init(&generator->cp);
+    ++	cp = &generator->cp;
+    ++
+     +	/*
+     +	 * The hook is expected to spawn "$hook git pack-objects <args...>"
+     +	 * and to behave like git-pack-objects(1) would have. This can for
+     +	 * example be used to serve precomputed packfiles.
+     +	 */
+     +	if (opts->pack_objects_hook) {
+    -+		strvec_push(&cp.args, opts->pack_objects_hook);
+    -+		strvec_push(&cp.args, "git");
+    -+		cp.use_shell = 1;
+    ++		strvec_push(&cp->args, opts->pack_objects_hook);
+    ++		strvec_push(&cp->args, "git");
+    ++		cp->use_shell = 1;
+     +	} else {
+    -+		cp.git_cmd = 1;
+    ++		cp->git_cmd = 1;
+     +	}
+     +
+     +	/*
+    @@ odb/source-files.c: int odb_source_files_optimize(struct odb_source *source,
+     +	 * be neutralized.
+     +	 */
+     +	if (opts->shallows.nr) {
+    -+		strvec_push(&cp.args, "--shallow-file");
+    -+		strvec_push(&cp.args, "");
+    ++		strvec_push(&cp->args, "--shallow-file");
+    ++		strvec_push(&cp->args, "");
+     +	}
+    -+	strvec_push(&cp.args, "pack-objects");
+    -+	strvec_push(&cp.args, "--revs");
+    -+	strvec_push(&cp.args, "--stdout");
+    ++	strvec_push(&cp->args, "pack-objects");
+    ++	strvec_push(&cp->args, "--revs");
+    ++	strvec_push(&cp->args, "--stdout");
+     +	if (opts->thin)
+    -+		strvec_push(&cp.args, "--thin");
+    ++		strvec_push(&cp->args, "--thin");
+     +	if (opts->shallow)
+    -+		strvec_push(&cp.args, "--shallow");
+    ++		strvec_push(&cp->args, "--shallow");
+     +	if (opts->ofs_delta)
+    -+		strvec_push(&cp.args, "--delta-base-offset");
+    ++		strvec_push(&cp->args, "--delta-base-offset");
+     +	if (opts->include_tag)
+    -+		strvec_push(&cp.args, "--include-tag");
+    ++		strvec_push(&cp->args, "--include-tag");
+     +	if (opts->missing_allow_promisor)
+    -+		strvec_push(&cp.args, "--missing=allow-promisor");
+    ++		strvec_push(&cp->args, "--missing=allow-promisor");
+     +	if (opts->disable_bitmaps)
+    -+		strvec_push(&cp.args, "--no-use-bitmap-index");
+    ++		strvec_push(&cp->args, "--no-use-bitmap-index");
+     +	switch (opts->progress) {
+     +	case ODB_GENERATE_PACK_PROGRESS_NONE:
+    -+		strvec_push(&cp.args, "--quiet");
+    ++		strvec_push(&cp->args, "--quiet");
+     +		break;
+     +	case ODB_GENERATE_PACK_PROGRESS_STANDARD:
+    -+		strvec_push(&cp.args, "--progress");
+    ++		strvec_push(&cp->args, "--progress");
+     +		break;
+     +	case ODB_GENERATE_PACK_PROGRESS_VERBOSE:
+    -+		strvec_push(&cp.args, "--all-progress");
+    ++		strvec_push(&cp->args, "--all-progress");
+     +		break;
+     +	default:
+     +		BUG("unknown progress option %d", opts->progress);
+     +	}
+     +	if (opts->filter_spec)
+    -+		strvec_pushf(&cp.args, "--filter=%s", opts->filter_spec);
+    ++		strvec_pushf(&cp->args, "--filter=%s", opts->filter_spec);
+     +	if (opts->uri_protocols)
+     +		for (size_t i = 0; i < opts->uri_protocols->nr; i++)
+    -+			strvec_pushf(&cp.args, "--uri-protocol=%s",
+    ++			strvec_pushf(&cp->args, "--uri-protocol=%s",
+     +				     opts->uri_protocols->items[i].string);
+     +
+    -+	cp.in = -1;
+    -+	cp.out = opts->pack_fd;
+    -+	cp.err = opts->progress_fd;
+    -+	cp.clean_on_exit = 1;
+    ++	cp->in = -1;
+    ++	cp->out = opts->pack_fd;
+    ++	cp->err = opts->progress_fd;
+    ++	cp->clean_on_exit = 1;
+     +
+    -+	if (start_command(&cp))
+    ++	if (start_command(cp)) {
+    ++		free(generator);
+     +		return error(_("could not spawn pack-objects"));
+    ++	}
+     +
+     +	/*
+     +	 * Feed the objects to pack-objects. This is safe to do synchronously
+     +	 * because pack-objects consumes all of its standard input before it
+     +	 * starts to generate the pack.
+     +	 */
+    -+	in = xfdopen(cp.in, "w");
+    ++	in = xfdopen(cp->in, "w");
+     +	for (size_t i = 0; i < opts->shallows.nr; i++)
+     +		fprintf(in, "--shallow %s\n", oid_to_hex(&opts->shallows.oid[i]));
+     +	for (size_t i = 0; i < opts->wants.nr; i++)
+    @@ odb/source-files.c: int odb_source_files_optimize(struct odb_source *source,
+     +		error(_("error writing to pack-objects"));
+     +		fclose(in);
+     +		if (opts->pack_fd < 0)
+    -+			close(cp.out);
+    ++			close(cp->out);
+     +		if (opts->progress_fd < 0)
+    -+			close(cp.err);
+    -+		finish_command(&cp);
+    ++			close(cp->err);
+    ++		finish_command(cp);
+    ++		free(generator);
+     +		return -1;
+     +	}
+     +	fclose(in);
+     +
+    -+	CALLOC_ARRAY(generator, 1);
+    -+	generator->base.out = opts->pack_fd < 0 ? cp.out : -1;
+    -+	generator->base.err = opts->progress_fd < 0 ? cp.err : -1;
+    ++	generator->base.out = opts->pack_fd < 0 ? cp->out : -1;
+    ++	generator->base.err = opts->progress_fd < 0 ? cp->err : -1;
+     +	generator->base.finish = odb_pack_generator_files_finish;
+    -+	generator->cp = cp;
+     +
+     +	*out = &generator->base;
+     +	return 0;
+2:  c7234030ad = 2:  b17dfd945b upload-pack: generate packfiles via the object database
+3:  9866e8af3d = 3:  8e9be66b36 send-pack: generate packfiles via the object database
+4:  1cd0c10438 = 4:  3dfc5df91d builtin/bundle: refactor option handling for progress meter
+5:  621c9bb411 = 5:  9f938bce19 bundle: get (mostly) rid of `the_repository`
+6:  5c1ee3d116 = 6:  41395b1444 bundle: generate packfiles via the object database
+
+---
+base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+change-id: 20260807-b4-pks-odb-generate-pack-f30fbcdef3fc
+
