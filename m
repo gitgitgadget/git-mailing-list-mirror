@@ -1,148 +1,159 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6223A784E
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 06:01:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220BC1D5CFB
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 06:46:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787205686; cv=none; b=pVy5QWE9VxFU5tTTNhtoMPnisN1pybamv/tgLuXQCKF8foL7novAqnUqtp1w4nJfkmVeh+1iCI04Eg3u8Ty6AnsZGUlxpmLX0c1ImTS64bskWYyr/5Ffu15oZrSztX8lb2rh0EZ5SPXB0iG83cG9A7LtGR2I5UvN3NbHO71eq3Q=
+	t=1787208397; cv=none; b=V1G4ACmn9Cr8N8Zaq0RITE5V/y4LIrGxbJb1YF+m6dSDAgFusChWcPJp3CgBYxgHchS2ByxAB1tK9sJIRF3hSeFAEjTosAYsYfYPY+SvGshr/3Gzn+8DpqFKEd7vJLEJzkRR8UBLfj8l+p690Y2mJGKGKZNNNEXzGrJ72s+qSwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787205686; c=relaxed/simple;
-	bh=MzRoJjUKaLWaNSr+VJr4TyEfbX81Gap39rfmnTvvdac=;
+	s=arc-20240116; t=1787208397; c=relaxed/simple;
+	bh=qMkYkPxTNaGb+m77XjYHeEj8S/cRqZyzuA8T4cGsUS0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nKA4W0s542le+5+TX7f1Z0h3gJbbDH7XpZemNbcOsSpjGNnZ/WI2z+50FAwpdq+FvgpjB/TU0Le1GjbGfw6Bi69DI8tDxAdh4csF1rwOEGyYI75B13pbTaWWS/KqElHn/oGTlBaAzvhpvTUpowsRxJRZ0Ycxo5mSe8qQfIJbzd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G/1nVJuP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RfVsQt/A; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=D7PFE4bWSL87FHwCq0Jd7XIi2vB00jQv56PiByk3iQUzZ+KeYVXttsbiQLX/aWXMb1jkAcAOfQ6IbM3GdgUsXxNvTdt1+afvsvqWNBy7fliACteP2fHGDCx26/s0Kkz/XP8yLlz1/OqRoDH8JbTQyuXy+n/722VeCdA48HVzFB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DMl4wI/0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TnBfsqnr; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G/1nVJuP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RfVsQt/A"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 31512EC01A8;
-	Thu, 20 Aug 2026 02:01:24 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 20 Aug 2026 02:01:24 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DMl4wI/0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TnBfsqnr"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4EE63EC0198;
+	Thu, 20 Aug 2026 02:46:35 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 20 Aug 2026 02:46:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787205684;
-	 x=1787292084; bh=Ln/dSL8/d7GXmdKHcKTpo5Vw+cL/JhIeIBsgCTePY1w=; b=
-	G/1nVJuP8GwlpCUimY/hhEC9P7kMg3VXqQD/cGfc5vlv2hHjM1FlS9XhnSrLjjQu
-	Q0lu6d7Em7d8Y7R/huqvHjIGde65tz377sAsYCHxtBm0hdnjNK40Gh0jh0xPPpK7
-	pU3/X2AXb+JD/vgEYrjWl7fL79LMXYpY93gJ6MlYl5h8ZlVCldDW8c5fZqkCWneb
-	cCAbzkn09agU/DLy3tLZBGmSj5xGmOP8hwQ43J4Le+4KtbC2dWtTRTapUh0gObnS
-	tiSbDlgeNo6G/NSugl0gJNDn7alItADGca7CgoVNKgG7hbDsZiZVh4GmFuiWQTjK
-	lElgclNhSWXQDJuku/mwsQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1787208395; x=1787294795; bh=W6W2QTtQJR
+	ViYvW37AeLoFLovb3lOhpKx9+ciMlUmq0=; b=DMl4wI/0Xs9hPix/q/MTynD89Q
+	Y3E5/ACVbV8NOdqSRi0AoEm2eW+1WBrxwARdc/6lIn1FFvfrpYANPsp7lFa3GGXt
+	JRxPOGnee6DbNq1q0GmVry5y1Epy4Fj4us3NRLjqZ+n9WnEHSsoWlJzixlZO4u1O
+	T2YyK5aApUJBnZbFvpXoeotPvxbHuKy2HdIO+SupGxBXGA++f+xfswrreeNkhHhl
+	RFpbpxAub2D7aPrYiPPTM+JtdRvU27eswocUXnQgmRZP44JH+YDmT10jTpH5fVPB
+	6fBBQtwXr68fQvH5ShMW5sytXQRDXwWOuqCRNicHurFIJb5ttWPXma59VscQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787205684; x=
-	1787292084; bh=Ln/dSL8/d7GXmdKHcKTpo5Vw+cL/JhIeIBsgCTePY1w=; b=R
-	fVsQt/AiV/q0ccHVSTyV5w/f4hmaaKxNFKIBjTVkA36ZZ9VQyVUbWDxh0uJIQqqF
-	5y5L8e/2fIS1clYVI+3yqoowuJAX4ab+khbmchVh+Q420a0KVABXQ6/IgBnhg4kH
-	PXsPDe3UFTHc4qtfAg15ivp2Rxmj9e9xUSKRSCMD+Xr8aKkcv5obT4zwUafwcRjM
-	x7QPN+ellpN5Jnaz0wqdfR34Ov99exxW6xX7hcmvjAyY9UK3CPCY6NX2U9uk2Zs0
-	RoOU1B3I0HtkRLrQKr81cz/4nvuVNNfeWzGRzmWbepTEozaIJpCl8JikBoV/m4Ur
-	okL1pKav8EtWl6wFQBEyg==
-X-ME-Sender: <xms:NJiGapNUqO2kuc69wzM-Cuc2m34AfXrxSv9BZ6CxoBzeTtMRF4297Q>
-    <xme:NJiGajYM_o-i57OtN8LjaEEFGtrKKa4PLattsVCdbCdQFjrYVi2WD1vjz_axQyYpF
-    A4oAuDoESCT0RPcJDh4bymThg2iwpGnJABQvk2qh9nYFj3H1BFh_w>
-X-ME-Received: <xmr:NJiGalq_adhTYQpIZK-sna-DoeJd_bXeVwh100za-rik-b5-8VDE0rE_XDSsjMmigQ3eeABW0NOR_yGiVdPF0o_knyy-z42rduRVEgZrOw>
-X-ME-Proxy-Cause: dmFkZTGl21RZ9W4wSj4vgdlKjjGfEOBbHP4yz2Ve+/sUkMUlqfLxVRLETs+us7qxd9fl8y
-    5V2B8cR9gsp0AUcaoAtvFwKl3TYawd9d7gWM5PBVnVkolsYO/bGGngPA9sUcKhdrjAIzDn
-    CXchZm0kciyBvUfsBhu9UogMqbc6F+6sZ9DCh+TCAvXioJ6MCbprRLye3V7r5cz4Wjl50r
-    3jzJ7p008nQeMNaNqWdGcgQjHHhZqg4GITJSRYLg/tXsNUdQwUs14QEW+Cl5cy4aH5kio/
-    CroMflWVhPqkKTSijxXufpoBFcKy/+nVdlquBYxD+s1OkxOGVmWnVvanPnfcLwuzOWlqAk
-    v1/9C4vu1Tv8a7xteYC1Lzv9cjtCGMTvLcmWbQEsfCW7NfmIyLeFdzYSiKgb5mnDwcCo70
-    sbZHUiDIuYlYZ8JwjVe/PEwaoXNtcdQ6r5SbHiA2ldk2Aq/P7xMB3qdbfAykZQF8mL5FoN
-    ivDJbHD7yv0mJakaOVvmDvmKuOt5yAm7GRrySIrF/TDVZhuOkXYu0LSByvrih46T95lmp/
-    /reOHYrUSnrzvaE3xPR5yy9Bs8T8lQeYvA3cPX1/UHLP7KOEWayxeq92ZpImWBtjk07hxw
-    o7tfvp7f+9Zs45WSqQ03C63FHL81TATwVmtl32FJoAyEcC8Q1XD7OuGcuiiA
-X-ME-Proxy: <xmx:NJiGavbYs4Kziq2tsoW0KJiVkhrboJgyn6TzLOMEVo47P9MXbYbCfA>
-    <xmx:NJiGalTgqfy-6kVGOJRgNMMdod9p4W0mU5s4Mid2IlI2VrPgz3TmKg>
-    <xmx:NJiGau584eMV3GtQZGysuUclGfAu2o_x3KkEcL-B1Z9on4Z7NE9j4g>
-    <xmx:NJiGaiwPe5qTFbZ3sy7Ocamz0fClJoPXwI1b6vALYb8lNz9OZZKwJw>
-    <xmx:NJiGavbVqq2N9MkFnqtGvk8uqYjGaGPIa8SXlxjUjg9fCb7X8K0DWitU>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787208395; x=1787294795; bh=W6W2QTtQJRViYvW37AeLoFLovb3lOhpKx9+
+	ciMlUmq0=; b=TnBfsqnrLzbMBGjCTyuIFdkAowMN2v1RvWf7DzXMUuu/UNO9qJ+
+	qj1Ajt7+/raI31vd/kseDDjatmrsg8/ut7QdhXqRcCjGqcVEaZwuUnm//+9lCmQX
+	KKvHw+garKXkGmvylCwUoec62uDhqg5IwY720RU51f6sTAgC3GuRUWQdo79614yc
+	ATBr/f8fxYBaI7S3st9CWtq81adbEvRR1qSgHLxRL87S0W1W+uxV2jS7MApAq9f4
+	A3Ldw+sBqu+uJrb66KsueEMfsNiwSA5/QA4ybZ0wQnXkTOvEi40Ah+aaEf/2WzUv
+	/HXJ1LSkg8lWukPSRXh515oFBl7J7kkVugA==
+X-ME-Sender: <xms:y6KGasAHmZFN6LTv3qrUse9R5aj00jQfOfQG-b-hb-NqiFvoUNpfiw>
+    <xme:y6KGal_E8NFrPtopT3r5X_uPsEfwJ5LJeOc-PNjqGAchnNtx9Bu61f69UBWbfcoy4
+    0ZBTiUgj30xpVtizk7WY4s-OHmaUsTcffNVNhX-pCFcmatPjqqBs-s>
+X-ME-Received: <xmr:y6KGas_-AlJ0IhTX6LCCOn9sAS2XCKqPvo0JK3yxfiG2FrOK7Xls_RNlSVTXKuKqr9NVaZLtffrrfVn8OUmWbSquoh7aZ01MUJStBsNvEw>
+X-ME-Proxy-Cause: dmFkZTEkoe3yqOASusvPWtl0bxl0KxuqVZFU00oQkBEWFTAM2Cp7k/dcu1RVmgISAB0uKg
+    pEdN2t+CruQFGhJZfO6waIYz9c31R0wjIf7lud/WcVNd0HkfIany+8Xr8WSJDHIJzDYChT
+    U/GgQCtLffvN7SGj7QoRwpKXo+11cN/XLsSGou/lxKeKlC+9jEjifi63YhSPseBjw0oIeo
+    7utCnL3k1399zKxCqO+1vBeO7etmf6JZf1OXp2q/SZ4F2Ka3XyFXCuNFi4lOGyGKGc2Lf2
+    Fu78jJ4Sq9nJTCkSkR/f0fOiXQPhcsumgpzGzp3TcFywCW41jT/Ht9WKr9F2qQVLULyKCK
+    uPE6HtmwPVYF8bza0MIY6ys6HfskzEvRAr4NY9aRGIhvqKGpWKSsdKLJfwSFxrwEXr3QtM
+    xD/i/bZafnqYh33g532/po5rI+PMPRjnnrT5jkigX44Sq2CqwLwy53gjeLr+cxvq0JaGsl
+    vqk0BThRvPjet21eW6qHythHtIe80GjiYnY9ar0tRxplQTJ1q6cfdteYy+g1+tsN07DjMB
+    zKz8cg5iifKOME4KeHvHHMwCgcuN7qLd7UvHH2YXzTIom4tpLR5bAaLbx778G4zVHDgGTE
+    bANnURPcVg1ZKiHTgJ5UzyoigzSHeu7RsmAUIyAXcNQy6HLN8VpuD720EPlQ
+X-ME-Proxy: <xmx:y6KGasf70u06xn7LMZf3Hwv6q2UEz9zw8c51Ya0qkJd1UjyNyHDLEA>
+    <xmx:y6KGalF53-gqhK13iHVRVkxrAsB7syt-o3GYNtEIjBuWBp8_yNOhDw>
+    <xmx:y6KGaqfuYg2WeVbOKD-XVu8X4JtILyu1BqZXu4LCbBHBj3Wz4eZ-9Q>
+    <xmx:y6KGavGwUNdNDLtnzjMtlS8R1mW3TydB6s9jVKGiG37RqF_K6CeLiw>
+    <xmx:y6KGal_7XFGq14AS3tLn2BGQEKGyRE7-o_6MNnTx1rWWAOEdpAaaikLm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 02:01:23 -0400 (EDT)
+ 20 Aug 2026 02:46:34 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 48d8e8a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Aug 2026 06:01:22 +0000 (UTC)
-Date: Thu, 20 Aug 2026 08:01:19 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b7f7689e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Aug 2026 06:46:31 +0000 (UTC)
+Date: Thu, 20 Aug 2026 08:46:28 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/6] odb: introduce interface to generate packfiles
-Message-ID: <aoaYL_BinFtgdJ5N@pks.im>
-References: <20260817-b4-pks-odb-generate-pack-v2-0-4c8a96ccfdb3@pks.im>
- <20260817-b4-pks-odb-generate-pack-v2-1-4c8a96ccfdb3@pks.im>
- <CABPp-BG3_xvbXtt5BucyOy-dHXqX569d4FBfyZwbLiAb-qRPXA@mail.gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v4 1/9] builtin/receive-pack: properly clean up keep files
+Message-ID: <aoaixMF1biKYhWN2@pks.im>
+References: <20260811175415.2044235-1-jltobler@gmail.com>
+ <20260819215311.3880274-1-jltobler@gmail.com>
+ <20260819215311.3880274-2-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BG3_xvbXtt5BucyOy-dHXqX569d4FBfyZwbLiAb-qRPXA@mail.gmail.com>
+In-Reply-To: <20260819215311.3880274-2-jltobler@gmail.com>
 
-On Wed, Aug 19, 2026 at 09:56:56AM -0700, Elijah Newren wrote:
-> On Sun, Aug 16, 2026 at 10:40 PM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > +static int odb_source_files_generate_pack(struct odb_source *source UNUSED,
-> > +                                         struct odb_pack_generator **out,
-> > +                                         const struct odb_generate_pack_options *opts)
-> > +{
-> > +       struct child_process cp = CHILD_PROCESS_INIT;
-> > +       struct odb_pack_generator_files *generator;
-> > +       FILE *in;
-> [...]
-> > +       cp.clean_on_exit = 1;
-> > +
-> > +       if (start_command(&cp))
-> > +               return error(_("could not spawn pack-objects"));
-> [...]
-> > +       CALLOC_ARRAY(generator, 1);
-> > +       generator->base.out = opts->pack_fd < 0 ? cp.out : -1;
-> > +       generator->base.err = opts->progress_fd < 0 ? cp.err : -1;
-> > +       generator->base.finish = odb_pack_generator_files_finish;
-> > +       generator->cp = cp;
-> > +
-> > +       *out = &generator->base;
-> > +       return 0;
-> > +}
-> 
-> Does this have a use-after-scope bug lurking here, due to the
-> combination of clean_on_exit = 1 (which makes a copy of &cp for later
-> use), and the fact that cp is a function-local?  If I'm reading the
-> code right, start_command() calls mark_child_for_cleanup(), which does
-> 
->     p->process = process;  /* where process is &cp */
-> 
-> and then cleanup_children() accesses various fields under p->process.
-> You do copy the necessary fields from cp to generator->cp, but
-> &generator->cp was not passed to start_command(), so p->process points
-> to the function-local cp.
+On Wed, Aug 19, 2026 at 04:53:03PM -0500, Justin Tobler wrote:
+> diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
+> index 0798ddab02..3da253cc1a 100755
+> --- a/t/t5547-push-quarantine.sh
+> +++ b/t/t5547-push-quarantine.sh
+> @@ -70,4 +70,26 @@ test_expect_success 'updating a ref from quarantine is forbidden' '
+>  	git -C update.git fsck
+>  '
+>  
+> +test_expect_success '.keep file is removed after push' '
+> +	test_when_finished rm -rf keep.git &&
+> +	git init --bare keep.git &&
+> +
+> +	git -C keep.git config set receive.unpackLimit 0 &&
+> +
+> +	# While incoming objects are still quarantined, validate that the keep
+> +	# lockfile does indeed exist.
+> +	test_hook -C keep.git pre-receive <<-\EOF &&
+> +	keep="$(ls "$GIT_QUARANTINE_PATH"/pack/pack-*.keep)" &&
+> +	test -f "$keep"
+> +	EOF
 
-Oh, that's a very good catch indeed. Out of curiosity, how did you end
-up discovering this? Did you just happen to remember that we store the
-pointer out of scope or did the copy make you have a deeper look?
+Good. So we know that the file exists while the transaction is
+running...
 
-> I think the normal teardown path happens to be fine despite this
-> issue: when odb_pack_generator_files_finish() calls
-> finish_command(&generator->cp), it clears the child by matching pid
-> (which was copied separately from p->process), so the stale pointer
-> never gets dereferenced in the successful path.  But with an
-> abnormal-exit, which is where clean_on_exit comes into play, then
-> cleanup_children() will be called and start attempting to read
-> p->process, which now points to some long-reclaimed function stack
-> space.
+> +	test_commit foo &&
+> +	git push keep.git HEAD &&
+> +	pack="$(ls keep.git/objects/pack/pack-*.pack)" &&
+> +	keep="${pack%.pack}.keep" &&
+> +
+> +	test_path_is_file "$pack" &&
+> +	test_path_is_missing "$keep"
+> +'
 
-Yeah, it's a bug waiting to happen. Will fix, thanks!
+... and we know that the packfile exists without its ".keep" file once
+the transaction has been committed.
+
+What we don't verify is that the ".keep" file is getting migrated to the
+target repository and stays intact while we're updating references. So
+do we maybe want to add the following diff so that we test for the full
+lifecycle of the ".keep" file?
+
+diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
+index 3da253cc1a..a722a01e8d 100755
+--- a/t/t5547-push-quarantine.sh
++++ b/t/t5547-push-quarantine.sh
+@@ -83,11 +83,19 @@ test_expect_success '.keep file is removed after push' '
+ 	test -f "$keep"
+ 	EOF
+ 
++	# And when updating references the keep-file should have been migrated
++	# to the actual repository.
++	test_hook -C keep.git reference-transaction <<-\EOF &&
++	keep="$(ls objects/pack/pack-*.keep)" &&
++	test -f "$keep"
++	EOF
++
+ 	test_commit foo &&
+ 	git push keep.git HEAD &&
++
++	# Once done, there should be no ".keep" files anywhere anymore.
+ 	pack="$(ls keep.git/objects/pack/pack-*.pack)" &&
+ 	keep="${pack%.pack}.keep" &&
+-
+ 	test_path_is_file "$pack" &&
+ 	test_path_is_missing "$keep"
+ '
 
 Patrick
