@@ -1,71 +1,71 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C8438F259
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 18:10:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F8138E8C3
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 18:10:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787249440; cv=none; b=tp1z3uUs1qM1XeITKnF/i/xbfbFLtfIkm+DQXtZ8w97onqPmj4FgVcwttfLy5QSs/0LpjYz2c3UZ8htUpg7AsB5p9FaMz2LDdOteuseTzMTHUCkufQQitMYcoxfMWmjIDwo34Le/D+Vcy1hJRJvDUvOtTYyujTyFzeSKkS1dUDM=
+	t=1787249441; cv=none; b=MiBIUNF8VNcqjZmSEaG6foXixcPAJPwWHNE3n6gytLzvRI0MRulSPRyFLoTYp9eKwjLbXpVnMUk0OfgCT5slUwqqb1/Rg/42iL8pLaEzwEEHV/12zCv9qOeLrSpialrM5vnKYvF2RuzW22TgOORfxf/vHddDDEYJKfuquWttfgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787249440; c=relaxed/simple;
-	bh=Qlw5ArwqpUvv+GwBilOYc/NbsKYNhuo0w1wlRcFsLzc=;
+	s=arc-20240116; t=1787249441; c=relaxed/simple;
+	bh=zTBLbCY42qzEPfo3FsH7g6zI610YC+mC3Skd9pT2eRY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rxiT+sytozX+YmbrMC4IMzXirCxtSJNo+P1soEAzEX0o3zozWGFay17kUchCe0NRhT+bzutmsab8bqgYZYK5JpIH1tcECFJR4q2RA6Hpn/3Me64G3H4tnoY2+MKZBpmzgmYMBdbp/fBm15rsufZsqt1akTQyEVAaunZZTkQ6Wc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mj1jUcTv; arc=none smtp.client-ip=209.85.210.43
+	 MIME-Version:To:Cc; b=Z7Idb8pBblB9HCqp1PO2A/wG1fNJ2D0pzFJSp64o5Kwnt8zvHkSkkRw3rESF7aZxv+7PoQDTAhd45NXOMQonfpvmTxihs08ZVT8qkYMig8PjkM4fKNH3JUStJ3d/4xmwGdFZdBxWtxYcJ1HIJwPhd50jOnH54J6vojxXl5B0zBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LEmHi62T; arc=none smtp.client-ip=209.85.210.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mj1jUcTv"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7eb787dec99so132874a34.0
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 11:10:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LEmHi62T"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7ec58fa3e01so117114a34.1
+        for <git@vger.kernel.org>; Thu, 20 Aug 2026 11:10:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787249438; x=1787854238; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787249439; x=1787854239; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=1MANe9lQPFH+VlE97G8EHUib2wUcQHWWgKSk5STbLHg=;
-        b=mj1jUcTvLdy2dkV/TxUOAK2FhOnFmKJgP/Y6J+P3fZlKeJU9+b9ZbItvlNXFI9beC4
-         RAafTRiOeCs2M+YojW0KBjTS+Xt21DpB7NMC2J0ZpgPtnbe50/Fb6kzHH4PW0/0wVmmQ
-         YVrJaY1dZoUI7JGMhxpQZ5Zka0kQwHxpxwal7FCWVaXfGBjE2mqaRu2Zk5AVKvvRmB6i
-         xKp6DeJGXeVl6HHCVVtRCXsVbpVo9sONDI3WOwF+35QcwhB3RhP05qgb0AXGS4CuA7Bi
-         nom1t36WANvvUJrfQ2G0ilEJBj7zV5aTh/K4wBIgEwPReb5dUmCg3wDIWaOAQClPC7A5
-         ymzA==
+        bh=Mhb8wnXFctJ0aaIPK5apOuJQxue+/A2xZsLxk7nvcks=;
+        b=LEmHi62TzqW/owBZfkWoc482FAkqFGGYl8s+CiHCdQJoILtqo7SBaIV5/XB+Vc+ADu
+         gRQzOU1+S4xf2NdN6kANguU7Dl5T35Mwd0kCbbYXCWTxiQS6EEqW8uoa3qYf/dbIpwlL
+         lWUX0nrB86G3ld79hFTiQtjDfdqFfovgKJiHyLZOrYcOmlJt2JuK211/jHA/EnDgJoy0
+         uhTLIEc/BBokfZPDV5Jz+dzsTm5mDzpacKP61jNZ82mNoXfqiH7Gn2FEdAipbsrcQDAi
+         r+nmpjmadmZkxbK4H2TPbbLW/E8vVQTFhWRe0tP7VHmmp/BynMKC25StJO8HlAZgq2pO
+         i72Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787249438; x=1787854238;
+        d=1e100.net; s=20251104; t=1787249439; x=1787854239;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=1MANe9lQPFH+VlE97G8EHUib2wUcQHWWgKSk5STbLHg=;
-        b=djfIaJxtraI5yBRGZ/B7NVIdDmffJAXMQaxIECFX70SlaIZ1jD8YohFeq8/7evy/Pj
-         wonctwMTX8ZnLSdHwR5SFvlVsTCChra7hb4nDKRHtc2Mxew/8jB7UcSSNk0HIZnmymFQ
-         TI3MulyIRHjiwq/pT4bZMbgkC9g3Nyez7P6lluvj3hYZ/n5MIH9qyrNCDwdpKo+6bKNV
-         rRXoeGKSwUCiq4viWbCxDRYeLf/504Ehlx6u5vIm9oT6EwPesC2FnehH6Mp7/r8Zn9Qm
-         LfjeZ55GA9Y+JvWk7CJF1C+DPxGEamcG9Gym9rf6XGIKWGRECssK56l7iBaH8j2PKmMZ
-         cm4Q==
-X-Gm-Message-State: AOJu0YyJRkqmeFhi/WPHPpv08Kc2N7uYc7F2LtSQiy/vfKCI5+3FGUPV
-	nsnVRsqom9OvG+6zBzBcZg3PkgUBlyuIZGSlLREhprI7t96x8TOwgF4oLpYecQgA
-X-Gm-Gg: AR+sD13gv+Grl3gjr6eZYUIeRVQqpIfG7gZEi+dAZ3Fbs2X2vEDiPXOAH0F6tVF7vUv
-	WHUvylnP96TEolCbNHunw6IJS2Th9kmTDw8wF/GeJjIaynNIl54vm32ccokzbh+zqcu2lcj7OJt
-	4DnMkMg07BigHTfacQgwlvY+AzvtDagYsvJD+d1QiLcdw6sD3uKAOGPFErQ/ISIHvWHE5+ACLAX
-	7W5rIrYOBg5Ceg+kFhFSqc4tr3ISBGp+jHgWuR2uBsqZCCyUgAuuWp1wsMwNHTaGfj8S7R8Vc2b
-	88sroX/ciV4i7XriQDfwbJEXcCDaL++wZ9/+0AASegPXcqPbrrRAwaPsaNoPfhjveSORB6kX34k
-	8oMnbt+o0rUPi3TMJ6tmHHN/f4rWkjMp9GqaIjW8KSEwWRB50L8qoaPZl4Ntip2tudqmSkLqUCB
-	X046lXMaz4nhUuk4yOI6ThhMN1FTtLUoYaoKSBhQFS/zDrjfjJEGj9VXm42ZyyEb7OCi9f3Ma6i
-	CA=
-X-Received: by 2002:a05:6830:6a9a:b0:7e9:cf6f:aef8 with SMTP id 46e09a7af769-7f46140436cmr342192a34.11.1787249437717;
-        Thu, 20 Aug 2026 11:10:37 -0700 (PDT)
+        bh=Mhb8wnXFctJ0aaIPK5apOuJQxue+/A2xZsLxk7nvcks=;
+        b=GQq9z6/htImeF8/yjgl3Frm469nyQCapchbQYdIjHGc4UUetdW20dcggNwLhfvP6I6
+         7zSNhf90ROn83EdRVy5V+QsifmTRp7T3g7ENOjz0SwDPylIU262HIK8pNLV9mYhOJ0mQ
+         QKntEab4MqlMsmZefdsystQ/YqypPmkPC0zZP6xj08DmRX4F3X5RJDJ935EuTDoC23M/
+         Ng8XBC22YqQ2Q66B/wrJj2J6jE7bszCxVk2xukAB9eUJMh1uSrtghjCR2Soru1ZJ8If6
+         7UbEGBy6/SHANIUEbtRJ0S5CzYcdOkBBtA0PBrAHUezS6lczkul4GjD3L9uFr0Bdv1x5
+         I4FQ==
+X-Gm-Message-State: AOJu0YzCuqol/N/dzphkvl9weCtUYqHab+Bx25h1/mwFqW2LMoKmLb/+
+	MnUKfXhfzQecxyfNvufcqPBYqJ/EDwgzwx6T0hZyhmEIiUQ9mYQept0JjCVxQ2ec
+X-Gm-Gg: AR+sD11Tg6tRr+rJt+KMKsS647Z0yS6WBR5DiAKenL0kqIcqqD0TkVwsiBQL2y5C5ZF
+	nF1Rfc0h5aSZlcGD1U4UnnTuOumC7+IqqcsugQ/n9Uxudx8U8qb4TVsCWnwFsG70qoAxGwb0n3b
+	mG3pBzeBZgzfs4a1LikgKICR6KxN4E1MIHr9XuIGPNMcWdhwFzbRo19TA54p+htTPDsH9bv86WG
+	58r76X9NtnJoMqtIwJWbckqhv9OksYj49SX2sP30FO/T5QxVlXxFj2cYXGAhrz4Wtpns8/KU37Q
+	uAQEh6FIZoElekghTCCFppYDIL8SY4CYhrxtk5E1OQfg7fAuGQjghjKLTxuez7xnuUPwy3MERZ4
+	M+4pRCVuQxG8AWGZUIusrhDA3YGiw2eqzhKyDZZTHsJ5QFxt//zd9C/JYZW8oAJMDnTBiKGiRzY
+	ZK2DsUjVgtDb8pgPCFmIOVYmHDFf4VGh8ZkvaSI5B8CKK014iLQjEVug58TsVXdWNV
+X-Received: by 2002:a05:6830:7187:b0:7e9:f8e8:d905 with SMTP id 46e09a7af769-7f46196da25mr147969a34.16.1787249438989;
+        Thu, 20 Aug 2026 11:10:38 -0700 (PDT)
 Received: from [127.0.0.1] ([52.230.251.200])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f43fea85b1sm5936704a34.11.2026.08.20.11.10.36
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f43fea4808sm5943312a34.8.2026.08.20.11.10.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Aug 2026 11:10:37 -0700 (PDT)
-Message-Id: <aadb7a5df4366639cfffaac135d51c2a83739d08.1787249432.git.gitgitgadget@gmail.com>
+        Thu, 20 Aug 2026 11:10:38 -0700 (PDT)
+Message-Id: <e1621f656eaec2680181afe1f1ac79b7d71badaf.1787249432.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2337.v14.git.git.1787249432.gitgitgadget@gmail.com>
 References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
 	<pull.2337.v14.git.git.1787249432.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 20 Aug 2026 18:10:26 +0000
-Subject: [PATCH v14 2/8] history: give commit_tree_ext a message template
+Date: Thu, 20 Aug 2026 18:10:27 +0000
+Subject: [PATCH v14 3/8] sequencer: share the squash message marker helpers
+ and flags
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,85 +87,195 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-commit_tree_ext() reuses the message of the commit it is handed. A
-caller that folds several commits together wants to seed the message
-from more than that single commit, so add an optional message_template
-parameter. When NULL, the behavior is unchanged.
+When "git rebase -i" squashes commits it builds an editor template with a
+"This is a combination of N commits." banner, a "This is the 1st/Nth
+commit message:" header above each kept message (or a "will be skipped"
+header for a dropped one), and a commented-out subject for any fixup!,
+squash! or amend! commit. The banner, the headers and the
+subject-commenting all live in static helpers in sequencer.c wired to the
+rebase state, so no other command can present a squash the same way.
 
-Pass NULL from the existing fixup and split callers.
+Pull the three pieces out into add_squash_combination_header(),
+add_squash_message_header() (which takes a flag for the "will be skipped"
+variant) and squash_subject_comment_len(), and use them from
+update_squash_messages() and append_squash_message(). Also move the
+todo_item_flags enum to the header, so a caller reading the output of
+todo_list_rearrange_squash() can tell an amend! (TODO_REPLACE_FIXUP_MSG)
+from a plain fixup!. A later change reuses all of this to give "git
+history squash" the same template.
+
+No change in behavior.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- builtin/history.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ sequencer.c | 70 +++++++++++++++++++++++++++++------------------------
+ sequencer.h | 30 +++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 31 deletions(-)
 
-diff --git a/builtin/history.c b/builtin/history.c
-index c22715d848..a60e8dbcd0 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -108,6 +108,7 @@ enum commit_tree_flags {
- static int commit_tree_ext(struct repository *repo,
- 			   const char *action,
- 			   struct commit *commit_with_message,
-+			   const char *message_template,
- 			   const struct commit_list *parents,
- 			   const struct object_id *old_tree,
- 			   const struct object_id *new_tree,
-@@ -137,13 +138,16 @@ static int commit_tree_ext(struct repository *repo,
- 		original_author = xmemdupz(ptr, len);
- 	find_commit_subject(original_message, &original_body);
- 
-+	if (!message_template)
-+		message_template = original_body;
-+
- 	if (flags & COMMIT_TREE_EDIT_MESSAGE) {
- 		ret = fill_commit_message(repo, old_tree, new_tree,
--					  original_body, action, &commit_message);
-+					  message_template, action, &commit_message);
- 		if (ret < 0)
- 			goto out;
- 	} else {
--		strbuf_addstr(&commit_message, original_body);
-+		strbuf_addstr(&commit_message, message_template);
+diff --git a/sequencer.c b/sequencer.c
+index 83c3849205..4d2d59ecbe 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1880,18 +1880,38 @@ static int is_pick_or_similar(enum todo_command command)
  	}
- 
- 	original_extra_headers = read_commit_extra_headers(commit_with_message,
-@@ -196,7 +200,7 @@ static int commit_tree_with_edited_message(struct repository *repo,
- 	if (first_parent_tree_oid(repo, original, &parent_tree_oid) < 0)
- 		return -1;
- 
--	return commit_tree_ext(repo, action, original, original->parents,
-+	return commit_tree_ext(repo, action, original, NULL, original->parents,
- 			       &parent_tree_oid, tree_oid, out, COMMIT_TREE_EDIT_MESSAGE);
  }
  
-@@ -675,7 +679,7 @@ static int cmd_history_fixup(int argc,
- 		goto out;
+-enum todo_item_flags {
+-	TODO_EDIT_MERGE_MSG    = (1 << 0),
+-	TODO_REPLACE_FIXUP_MSG = (1 << 1),
+-	TODO_EDIT_FIXUP_MSG    = (1 << 2),
+-};
+-
+ static const char first_commit_msg_str[] = N_("This is the 1st commit message:");
+ static const char nth_commit_msg_fmt[] = N_("This is the commit message #%d:");
+ static const char skip_first_commit_msg_str[] = N_("The 1st commit message will be skipped:");
+ static const char skip_nth_commit_msg_fmt[] = N_("The commit message #%d will be skipped:");
+ static const char combined_commit_msg_fmt[] = N_("This is a combination of %d commits.");
  
- 	if (!skip_commit) {
--		ret = commit_tree_ext(repo, "fixup", original, original->parents,
-+		ret = commit_tree_ext(repo, "fixup", original, NULL, original->parents,
- 				      &original_tree->object.oid, &merge_result.tree->object.oid,
- 				      &rewritten, flags);
- 		if (ret < 0) {
-@@ -886,7 +890,7 @@ static int split_commit(struct repository *repo,
- 	 * The first commit is constructed from the split-out tree. The base
- 	 * that shall be diffed against is the parent of the original commit.
- 	 */
--	ret = commit_tree_ext(repo, "split-out", original, original->parents, &parent_tree_oid,
-+	ret = commit_tree_ext(repo, "split-out", original, NULL, original->parents, &parent_tree_oid,
- 			      &split_tree->object.oid, &first_commit, COMMIT_TREE_EDIT_MESSAGE);
- 	if (ret < 0) {
- 		ret = error(_("failed writing first commit"));
-@@ -903,7 +907,7 @@ static int split_commit(struct repository *repo,
- 	old_tree_oid = &repo_get_commit_tree(repo, first_commit)->object.oid;
- 	new_tree_oid = &repo_get_commit_tree(repo, original)->object.oid;
++void add_squash_combination_header(struct strbuf *buf, int n)
++{
++	strbuf_addf(buf, "%s ", comment_line_str);
++	strbuf_addf(buf, _(combined_commit_msg_fmt), n);
++}
++
++void add_squash_message_header(struct strbuf *buf, int n, int skip)
++{
++	strbuf_addf(buf, "%s ", comment_line_str);
++	if (n == 1)
++		strbuf_addstr(buf, skip ? _(skip_first_commit_msg_str) :
++				   _(first_commit_msg_str));
++	else
++		strbuf_addf(buf, skip ? _(skip_nth_commit_msg_fmt) :
++			    _(nth_commit_msg_fmt), n);
++}
++
++size_t squash_subject_comment_len(const char *body, int squashing)
++{
++	if (starts_with(body, "amend!") ||
++	    (squashing && (starts_with(body, "squash!") ||
++			   starts_with(body, "fixup!"))))
++		return commit_subject_length(body);
++	return 0;
++}
++
+ static int is_fixup_flag(enum todo_command command, unsigned flag)
+ {
+ 	return command == TODO_FIXUP && ((flag & TODO_REPLACE_FIXUP_MSG) ||
+@@ -2012,20 +2032,13 @@ static int append_squash_message(struct strbuf *buf, const char *body,
+ {
+ 	struct replay_ctx *ctx = opts->ctx;
+ 	const char *fixup_msg;
+-	size_t commented_len = 0, fixup_off;
+-	/*
+-	 * amend is non-interactive and not normally used with fixup!
+-	 * or squash! commits, so only comment out those subjects when
+-	 * squashing commit messages.
+-	 */
+-	if (starts_with(body, "amend!") ||
+-	    ((command == TODO_SQUASH || seen_squash(ctx)) &&
+-	     (starts_with(body, "squash!") || starts_with(body, "fixup!"))))
+-		commented_len = commit_subject_length(body);
++	size_t commented_len, fixup_off;
++
++	commented_len = squash_subject_comment_len(body,
++				command == TODO_SQUASH || seen_squash(ctx));
  
--	ret = commit_tree_ext(repo, "split-out", original, parents, old_tree_oid,
-+	ret = commit_tree_ext(repo, "split-out", original, NULL, parents, old_tree_oid,
- 			      new_tree_oid, &second_commit, COMMIT_TREE_EDIT_MESSAGE);
- 	if (ret < 0) {
- 		ret = error(_("failed writing second commit"));
+-	strbuf_addf(buf, "\n%s ", comment_line_str);
+-	strbuf_addf(buf, _(nth_commit_msg_fmt),
+-		    ++ctx->current_fixup_count + 1);
++	strbuf_addch(buf, '\n');
++	add_squash_message_header(buf, ++ctx->current_fixup_count + 1, 0);
+ 	strbuf_addstr(buf, "\n\n");
+ 	strbuf_add_commented_lines(buf, body, commented_len, comment_line_str);
+ 	/* buf->buf may be reallocated so store an offset into the buffer */
+@@ -2090,9 +2103,8 @@ static int update_squash_messages(struct repository *r,
+ 		eol = !starts_with(buf.buf, comment_line_str) ?
+ 			buf.buf : strchrnul(buf.buf, '\n');
+ 
+-		strbuf_addf(&header, "%s ", comment_line_str);
+-		strbuf_addf(&header, _(combined_commit_msg_fmt),
+-			    ctx->current_fixup_count + 2);
++		add_squash_combination_header(&header,
++					      ctx->current_fixup_count + 2);
+ 		strbuf_splice(&buf, 0, eol - buf.buf, header.buf, header.len);
+ 		strbuf_release(&header);
+ 		if (is_fixup_flag(command, flag) && !seen_squash(ctx))
+@@ -2116,12 +2128,9 @@ static int update_squash_messages(struct repository *r,
+ 			repo_unuse_commit_buffer(r, head_commit, head_message);
+ 			return error(_("cannot write '%s'"), rebase_path_fixup_msg());
+ 		}
+-		strbuf_addf(&buf, "%s ", comment_line_str);
+-		strbuf_addf(&buf, _(combined_commit_msg_fmt), 2);
+-		strbuf_addf(&buf, "\n%s ", comment_line_str);
+-		strbuf_addstr(&buf, is_fixup_flag(command, flag) ?
+-			      _(skip_first_commit_msg_str) :
+-			      _(first_commit_msg_str));
++		add_squash_combination_header(&buf, 2);
++		strbuf_addch(&buf, '\n');
++		add_squash_message_header(&buf, 1, is_fixup_flag(command, flag));
+ 		strbuf_addstr(&buf, "\n\n");
+ 		if (is_fixup_flag(command, flag))
+ 			strbuf_add_commented_lines(&buf, body, strlen(body),
+@@ -2140,9 +2149,8 @@ static int update_squash_messages(struct repository *r,
+ 	if (command == TODO_SQUASH || is_fixup_flag(command, flag)) {
+ 		res = append_squash_message(&buf, body, command, opts, flag);
+ 	} else if (command == TODO_FIXUP) {
+-		strbuf_addf(&buf, "\n%s ", comment_line_str);
+-		strbuf_addf(&buf, _(skip_nth_commit_msg_fmt),
+-			    ++ctx->current_fixup_count + 1);
++		strbuf_addch(&buf, '\n');
++		add_squash_message_header(&buf, ++ctx->current_fixup_count + 1, 1);
+ 		strbuf_addstr(&buf, "\n\n");
+ 		strbuf_add_commented_lines(&buf, body, strlen(body),
+ 					   comment_line_str);
+diff --git a/sequencer.h b/sequencer.h
+index 64a9c7fb1b..b01f897020 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -119,6 +119,13 @@ enum todo_command {
+ 	TODO_COMMENT
+ };
+ 
++/* Bits for the "flags" member of struct todo_item */
++enum todo_item_flags {
++	TODO_EDIT_MERGE_MSG    = (1 << 0),
++	TODO_REPLACE_FIXUP_MSG = (1 << 1),
++	TODO_EDIT_FIXUP_MSG    = (1 << 2),
++};
++
+ struct todo_item {
+ 	enum todo_command command;
+ 	struct commit *commit;
+@@ -208,6 +215,29 @@ int todo_list_rearrange_squash(struct todo_list *todo_list);
+  */
+ void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag);
+ 
++/*
++ * Append the "This is a combination of N commits." banner that "git rebase
++ * -i" writes at the top of a squashed commit's message, commented out with
++ * the comment character.
++ */
++void add_squash_combination_header(struct strbuf *buf, int n);
++
++/*
++ * Append the header (1-based N) that "git rebase -i" writes above each message
++ * when squashing, commented out with the comment character. With SKIP it reads
++ * "The ... commit message will be skipped" for a message that is dropped (a
++ * fixup), otherwise "This is the ... commit message".
++ */
++void add_squash_message_header(struct strbuf *buf, int n, int skip);
++
++/*
++ * Return the length of the leading subject of BODY when it should be commented
++ * out in a squash message, or 0 otherwise. An "amend!" subject always
++ * qualifies; "squash!" and "fixup!" subjects only when SQUASHING, since a
++ * plain fixup chain keeps them.
++ */
++size_t squash_subject_comment_len(const char *body, int squashing);
++
+ void append_conflicts_hint(struct index_state *istate,
+ 		struct strbuf *msgbuf, enum commit_msg_cleanup_mode cleanup_mode);
+ enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
 -- 
 gitgitgadget
 
