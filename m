@@ -1,136 +1,198 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428AD47D93E
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 16:43:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202EB46D0BD
+	for <git@vger.kernel.org>; Thu, 20 Aug 2026 17:04:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244193; cv=none; b=kcSqvrHBn42RHhMzQzrpFRYebOhfYQIzaZ4qNSYgdc0W1zmBp1ykyCgmHC5YlMS+jB2NgH5CaSeMpIR5H7JlQGCDzbQ13QyxA7ZtTSgOEsw/2PXNxd0/Jr41Mx2ggxPfWPHMzMhAqtn8pe5eLRo4Soq+t/gVrD7bKpCf8ucUCxQ=
+	t=1787245500; cv=none; b=JjcO8I4eCeu0xsyEM84lP4l0mja0fjoOKjJFHyRfMR0OhRDtmyE8Tcd+/qwtx7t1gRPAxlo+9c2Wc8ANMJVhSpGn4ske8sEGjdynNbK92iNnONrduPJZ7vli/95ajf73ChcPKdbVPXIlObbE3iK3/H28w84fCfVwZoW80tU0arM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244193; c=relaxed/simple;
-	bh=oynOYrqMF0yK+mkHLBGO3X8LYNzhJujne0eCYFJr/GM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m0uFu0cPRrZeT7qy7xeSVm+C3C23voOuC2Nu+Hv0j71S0/O8Jjp5q7uRrrT/4Ro2WTvb0rCZbTEs3uGFkP9PEp9+ReDxOLsLrK2H6wmgHhpds3jycT3s5/Fj5VtEan/5mvXFclHDbovs4vOzBybaR93QxItb4dnJRH3CjClnofI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=antmicro.com; spf=pass smtp.mailfrom=antmicro.com; dkim=pass (1024-bit key) header.d=antmicro.com header.i=@antmicro.com header.b=Byxn0zbc; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=antmicro.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=antmicro.com
+	s=arc-20240116; t=1787245500; c=relaxed/simple;
+	bh=90oyMUzmh18WlVAE+kl7DezxPSOoGxlQKTD7Y5RqFdw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FUtcm9ojBbwObzOsKl8PSI54MAlLvV9HPaJc4g0CwJ1FfB8tcciW34lgvj9oa155/bbSVDkEFC3f89Q8ewfcxcTPBv27zwy8HZze/IOSOO2sHG+SuUcePhW+uPCWm6PKn8sSLfuU4K7qAxbNFsOxfwup43iDHrQ/Fo1jOqSbP2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=y3xkYbxb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RNRauo4E; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=antmicro.com header.i=@antmicro.com header.b="Byxn0zbc"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c169ae1cb26so241985766b.1
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 09:43:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=antmicro.com; s=google; t=1787244189; x=1787848989; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=mL6RX2ugJ297XOxTfXKE+Tn/qDnkTlC585SoCGIKSRY=;
-        b=Byxn0zbcc7NhoECNcZaD4/QfrycaawwUK4gtgzbyYCEjqrjlGvTaufhX4v0D03EjWI
-         MvD83zHQB1yxAeg/YYwKz0i/O8BEnki1rWuGSgKntX/wR+OMJUMYwg+2WZSrYzFN7EQZ
-         lwqj+1/vU9fGzxIHUfbwsJdCsDiLSlGLLBduU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787244189; x=1787848989;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=mL6RX2ugJ297XOxTfXKE+Tn/qDnkTlC585SoCGIKSRY=;
-        b=KmgVKLun8cWpVCIdWtC7gXUzbyirPEK/rHLaRPaycUp01cEXME18WF2E/CsSXKabpZ
-         v68RHGOIQjHCQubA1o+lo1m+woSkdWh2XmN0sYz94FyrN1n8KL3EZBd8tj2xo7peQMpL
-         neaNWhoIknfCw2IJko0ZRwo1r5yKDPUmsIPO+AyJhjvbml1PHIsAgagD63iVfllSyHHT
-         ExfLSPalwO1+V6UooWcUO7hy/cBUg6lXJRJz5uvmVzhhDPXYXnDKrmY0suRzLm1B70D5
-         kIjEZ5ttJL91ibf6e0UcTXaSYr8mVBOp31XEDhB7eEUeV8tDpoJ37L5FjB6vLyYvNZDa
-         QmZQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpbmYNLizUA7Xr/BrnRPXPdzcwGxo8cSPJDBE2qtJFh45bzGBUQ8fn2ZS8RZ+bMHYaqPGU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywo8DAuyuBQyrDjKJEZMPkTZYZyIHO00SNWxno177szKN6nJhgO
-	9MIGASMs/o/LepRKW8hDsWEx8k5Ti9qp2Ra90HpNfV9UK9PIdCBG952WMaM/BIlhgoI=
-X-Gm-Gg: AR+sD10sXC/3U9eRlqDMM/y7GZyyax+tJWUDeUFZVlWDpxElnAppF8LCLPC1dVQAc6c
-	No1gd9MP9PUDVu/lEDBxX7bSyzR4JEuVawcjRPe+RAdHC7tNUurZSSfAKPuG7AvtU76xcaKsuq5
-	WG2ztMYfaZqW36Rt40t9DO/whs+NCmx7Rt1AIln9rknsA+a3bw1OKBL/fQ0XIrdlg884QQikQJf
-	orSg/pwj/ENWICkS9VzccJUJupZr95gfm4W6fdu3w9/0KKB2VGGGohR2LlpRV6CdiF3RVMU20XW
-	5O72DtG0d+W+K0BFqX6xsB2puSrG5lx01bVV1Ji/+xN85o8jmXB8qs6HJU3zvk1gXruhO6Ea504
-	2R8AbFrLFMQDAq8nW/mrtCTkFbCEql0fssdyK0+lhcrTSjeZ/Zm030PbCnDFHByWF7wZVR/Ac0Q
-	dDDRygH8rMru8u438O6xRv4/nGHjP6gSy2GIYueb1NBgeOfoA+1PseVk+OTi+bzAfvSsAmjRYT/
-	Io=
-X-Received: by 2002:a17:907:7ba6:b0:c21:42af:4cb with SMTP id a640c23a62f3a-c244d63f5c8mr544906966b.6.1787244189401;
-        Thu, 20 Aug 2026 09:43:09 -0700 (PDT)
-Received: from [10.10.8.17] ([213.17.234.100])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c24589d9df9sm99538166b.1.2026.08.20.09.43.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Aug 2026 09:43:08 -0700 (PDT)
-Message-ID: <2b9cc581-7c8e-4cb3-9524-2b466209ac7e@antmicro.com>
-Date: Thu, 20 Aug 2026 18:43:08 +0200
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="y3xkYbxb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RNRauo4E"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 519AA1D000A6;
+	Thu, 20 Aug 2026 13:04:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Thu, 20 Aug 2026 13:04:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787245497; x=1787331897; bh=UkjETsdYsk
+	VpcsVzNxFcx+Lm9pZHb16YFUlCsg53hfE=; b=y3xkYbxbrP9Yrp6cIKkd76lL0W
+	/+wRIt7I6LGYoBy3hPK51WDCLFWoBFJdnaamrUonTD3m3ej4ZR23wAxqcM8NkLPd
+	uRsmcqcr8pYwGcNG5uRmsUghOYALbQShl4iXb2btNDQIiKBIBwB65QwPDbfyPO3n
+	kmiTo2JoVesIEO+Ym7PZoEMnyfVA7bn8repOIrMMn8qd2aselquapGdOiDSPnAtQ
+	TEipz42KiVtfSlnAs+MFuopkqz3tZ7/5rvdk+7WU7CG3gITq/DVqWUkCOaJhnjr1
+	SiaoUSzMoRgoV/HCWzR8Tjaz/xsPKhQH671UpTcqVPKTUJ8ciS0hX320WhcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787245497; x=1787331897; bh=UkjETsdYskVpcsVzNxFcx+Lm9pZHb16YFUl
+	Csg53hfE=; b=RNRauo4E8p2AXtxCK8fHFOuU6WKaEO+ptgBwh34JD8D+hIBsh1Z
+	0ZBxyO1B/ARpOSmaPuGpSr8m1pd1zEnZlACVGZLLloWV3H6/B1DHVq/U9x6MbEkL
+	LflPIyVMLwI/EoKC+IZZ1/aXxkmyzNbqOuQeiapBagElUjaI3guZcf2nSle9iixz
+	lRZaO2j1/9ei8mgvwqyN0g3IT7O/CJ3jQTa5d7GsxC6yZKNj1SfxTbkbutgY98q2
+	DiUWHpeVmRFJJU2rH4lU63ClKDpuis142JaTT8LuviPvIKTahenR6utbZSMnm4Xa
+	1Ihz8QbLyzcgEp+SZRa/7N4PhX/elzsCl/A==
+X-ME-Sender: <xms:uDOHahVLj9mEpZpkcvYwP2B8f7-aMfBCQlMkmOgpOhI4WmEeLJH2IA>
+    <xme:uDOHaoe8AOj4ZMTiqM03XOnv-BKc1f2Y-TWGCa5LG71GgVjc_pceGP8SERWLLJ5nl
+    SDG4BXTkzAIjyPmKY458mOydzszv9F0Mz4yTUzk42HXBuYuPpoGOKk>
+X-ME-Received: <xmr:uDOHalsiOPM9BgwJVNP_Bp4H7mYEg5O_ap0Iwit_QAf5vH3W_ROIAu9QaVcqpsJxg7bbpNDlI7T1yKV24DRl3VsvfsN7_TBadA>
+X-ME-Proxy-Cause: dmFkZTFKxYUWtp/GutgrbzqpzsIBdIDDeEjzOfGax4adXgt25ogSWrFe/dx/m1Xzl3nGbV
+    i/zS+ELbZ5ClWBBLPBz3mSQe+F2E1vKVOiXFz9qg9mZ2Hhhi3Fw8dAIw+1QDOoQlQwELMC
+    Y9wkxAQSX2d04NyePZedH3IU+Q0KeWCjnAg3KRlrDfTeoyTfyClUQsgJQSq0h7Qrwqr/wJ
+    dz6BB+SMOFsNILLNhkMcZsUzJ3OBgRyA8c5u4O7IGQW65D4PaOJ8dFhzlpF7HZk1IfElQw
+    t0ns+RCSzHP4XU8cPOjyDd0rFwk4lOy4pR2cPp6Qepz0jEOWL37QctnZfIFr5fsxEWc/rw
+    W93dhwKuPEJC+QB6n9LC6LW7JcUC1tpSYQeGGpyWzISyjbbA3U+6rhcSP4yZMo/CEoLUp5
+    r4+0Uh2fFARZGVNn4C22Zn3lsF5ZimETiV8aZ/MR4NW7b51NDcssLrbRtAthR65sa2sDht
+    QCVCluGWUg2j3donaGUC3ZrHcL7EefUYd1s2ry2xyVMxqd1qMsC1XorHU18VFHeuirl8ww
+    xTNU+zHCP3l4z1ILBwgRKjdbEwfe7KiGYW67f6H88hc22nr3/8ZsUyk6Dcbx8mfvMXAH2l
+    H1wGfPaP63chJBreGk18icZW5jmWPOhVpHSKXZZmQTUqAc9+9jQLqoYRxgzA
+X-ME-Proxy: <xmx:uDOHav-MSRmqyQqqz8nqj6vJvPzXjjqGBhmrVPERR6x2PFnxUhAp6Q>
+    <xmx:uDOHao3fJyvJJ1wTzQy1EU-vMq2DCXIekNoyxnfZywiG42QJyWlIbg>
+    <xmx:uDOHasA2y5KOpc8riAUd0Gf_nfiCtw3260vMzVsSiXtDk7wn3NI_WA>
+    <xmx:uDOHascX8GLNygLIZpfNz4GGSK1uWdl5LiCZc624qJso7K_3go2jcQ>
+    <xmx:uTOHavODm3BLczZ7E44FSP9SxX9KGdiZs-j3ANw-3rFbs9Wbu_pE6AXq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Aug 2026 13:04:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH v3 1/6] odb: introduce interface to generate packfiles
+In-Reply-To: <20260820-b4-pks-odb-generate-pack-v3-1-bc42252f6169@pks.im>
+	(Patrick Steinhardt's message of "Thu, 20 Aug 2026 09:55:25 +0200")
+References: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im>
+	<20260820-b4-pks-odb-generate-pack-v3-1-bc42252f6169@pks.im>
+Date: Thu, 20 Aug 2026 10:04:55 -0700
+Message-ID: <xmqqik54soy0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pull: add --hard mode
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-Cc: Artur Bieniek via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Artur Bieniek <ar2rekb@gmail.com>
-References: <pull.2384.git.git.1787052873141.gitgitgadget@gmail.com>
- <xmqqwltn1o4e.fsf@gitster.g> <0c2607e2-16da-4efd-879f-82ef2c2aa127@gmail.com>
- <xmqqo6ewsrzd.fsf@gitster.g>
-Content-Language: en-US
-From: Artur Bieniek <abieniek@antmicro.com>
-In-Reply-To: <xmqqo6ewsrzd.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-One case where --ff-only does not seem to cover that audience is when 
-the upstream branch itself is rewritten.
+Patrick Steinhardt <ps@pks.im> writes:
 
-For example, a checkout may contain no local development at all and only 
-be used to track the latest state of an upstream branch, but if that 
-branch is rebased or otherwise force-updated, git pull --ff-only will 
-refuse to update it because the histories have diverged.
+> Packfiles have two primary use cases:
+>
+>   - They are used to store objects at rest in a Git repository.
+>
+>   - They are used on the transport layer to transfer objects between two
+>     repositories.
+>
+> The first class is closely tied to a given object database backend, and
+> as such this use is highly specific to how such a backend decides to
+> store its data. This shows in git-pack-objects(1), which is used by
+> git-repack(1) et al to optimize the object database, which supports lots
+> of options that are closely coupled with how data is stored.
+>
+> But the second class is quite a lot more generic: we don't care about
+> specifics of how the object database stores its objects, but to generate
+> the packfiles we only care about the object graph itself. Still, this
+> use case is also coupled with git-pack-objects(1).
+>
+> Unfortunately, because git-pack-objects(1) covers both classes, the
+> result is that it is very hard to port the whole command to properly
+> support pluggable object databases. There are simply way too many
+> options that an alternative implementation will have a very hard time to
+> support in the first place.
+>
+> And despite being hard to implement, it's also quite unnecessary to
+> implement those backend-specific options. Optimizing the object database
+> has already been made pluggable, and an alternative implementation is
+> unlikely to care about cruft packs, unpacked objects, keep packs and the
+> like. But we still need to make at least _parts_ of the packfile
+> generation pluggable so that backends can generate packfiles for the
+> transport layer itself.
+>
+> Introduce a new interface that lets backends generate a new packfile and
+> implement that interface for the "files" backend. The options supported
+> by the callback are exactly the set of options that are required for the
+> transport layer, but nothing more.
+>
+> This means that git-pack-objects(1) itself cannot be ported over to this
+> new interface, but as explained above that's a hard feat to pull off due
+> to the backend-specific features. Ideally though, we should expose the
+> ability to generate arbitrary packfiles using this interface. The intent
+> of this is to eventually introduce a git-objects(1) subcommand (similar
+> to git-refs(1)) that exposes generic interfaces for accessing everything
+> related to the object database. In that case, we are able to expose only
+> those options that are generic.
+>
+> Subsequent commits will convert git-upload-pack(1), git-send-pack(1) and
+> git-bundle(1) to use this interface.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  odb.c              |  21 ++++++++
+>  odb.h              | 152 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  odb/source-files.c | 149 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  odb/source.h       |  33 ++++++++++++
+>  4 files changed, 355 insertions(+)
+>
+> diff --git a/odb.c b/odb.c
+> index caf1d0f542..cd9d5b48bc 100644
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -1046,6 +1046,27 @@ bool odb_optimize_required(struct object_database *odb,
+>  	return odb_source_optimize_required(odb->sources, opts);
+>  }
+>  
+> +void odb_generate_pack_options_release(struct odb_generate_pack_options *opts)
+> +{
+> +	oid_array_clear(&opts->wants);
+> +	oid_array_clear(&opts->haves);
+> +	oid_array_clear(&opts->shallows);
+> +}
+> +
+> +int odb_generate_pack(struct object_database *odb,
+> +		      struct odb_pack_generator **out,
+> +		      const struct odb_generate_pack_options *opts)
+> +{
+> +	if (!odb->sources->generate_pack)
+> +		return error(_("primary object source does not support generating packfiles"));
+> +	return odb_source_generate_pack(odb->sources, out, opts);
+> +}
 
-That seems like a reasonably natural use case for the behavior Phillip 
-described: git pull --reset on a clean working tree would mean "make 
-this checkout match the fetched upstream", while still refusing by 
-default to discard uncommitted changes.
+Perhaps a stupid question but the opts->pack_fd is documented:
 
-I also like that distinction better than my original --hard proposal, 
-since the destructive working-tree behavior would no longer be implicit 
-in the primary option.
+> +struct odb_generate_pack_options {
+> ...
+> +	/*
+> +	 * File descriptor that the generated pack shall be written to. If set
+> +	 * to `-1`, a pipe will be created and exposed via the pack generator's
+> +	 * `out` field. If set to `0`, the pack will be written to the standard
+> +	 * output stream. Otherwise, the provided descriptor will be written to
+> +	 * and is consumed by the generator.
+> +	 */
+> +	int pack_fd;
+> +
 
-Thanks,
-Artur
+Here I assume that "and is consumed by" refers to "generator writes
+into it and then closes it when it is done"?
 
-On 8/20/26 5:59 PM, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> I think if the design was slightly different so that it errored out by
->> default if there were uncommitted changes then that would make it worth
->> while as it is safer than "git fetch; git reset --hard @{u}" and would
->> allow the user to carry over those changes with "--autostash". So to me
->> something like
->>
->> 	git pull --reset [--discard-changes | --autostash]
->>
->> would be a more convincing design.
->> ...
->> If it refused to reset by default when there were uncommitted changes
->> would that be safe enough? Uncommitted changes would be protected and
->> any local commits that become unreachable after the reset can still be
->> retrieved from the reflog. It's not quite the same as integrating remote
->> and local changes, but more like updating the working copy.
-> 
-> Yup, but git pull --ff-only serves the "No development is done in
-> this repository; it is merely to keep the latest sources here"
-> audience just fine.
-> 
-> What you are suggesting may be *useful* for those who agree with
-> this statement:
-> 
->      I do value my local changes because I haven't committed them,
->      but I am willing to discard these changes and replace them with
->      whatever the upstream did.
-> 
-> but I am not sure of the use case for a repository/working tree
-> that is managed in such a way.
+odb_source_generate_pack() delegate to source->generate_pack(),
+which I presume goes to odb_source_files_generate_pack(), which in
+turn assigns opts->pack_fd to cp->out and calls start_command(cp) to
+run pack-objects.  The file descriptor is closed when the process
+finishes.
 
+What happens if the odb->sources[0] does not support .generate_pack?
+Should opts->pack_fd be "consumed" here to avoid leaking it, or we
+do not have to worry about it because the caller will soon exit
+itself?
