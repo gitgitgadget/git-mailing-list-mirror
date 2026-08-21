@@ -1,169 +1,165 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8E833556D
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 01:44:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787276659; cv=pass; b=iE2PcnzX+RbglBTHoHVnHGY8/Ggsgba+9+Le2cr3MLvKhFyCZvpT8ETVUCAPHhxpF1AQzKO30GLa4kC5knfj1rdgdu3rflMzym+TJHIIy9Mh6zqUYsVv2OTjKBS3v0k6FM1oWbrblTFiIOC7yLbjnNXbE2DCEYkHSeEPO8AvGos=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787276659; c=relaxed/simple;
-	bh=xSz8g8P+4blqmsZrj3ObikhWI/MNpZCohM721ECcz8s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X+qfeGr6RBPmUE7HpCpt6C+LUmy5/ZV3O+gdThhOnw9j4WMlESqZXYuryuRJdTKcnpR1YmIHtejevsyW3SWWHt/GF33G6QmtuvpW7qPpcLcJQ9vQ3MiW8Q6FzIimTaBjcQGd7o+Uz51DEFdU1kv7eW+vepZbUwxAgKQuvcXJG8U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l9BT8viZ; arc=pass smtp.client-ip=209.85.167.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1A92C0F8C
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 02:09:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787278163; cv=none; b=k1OF+H52rYaZCMrK8d1KQLb7Lu1coVBP9I2T6UJl1AMfuYKex7+49FPxBqLna3KWxOJZWBxSQLSBi7QEFhCl+hk4/HYOl5gkbas0wnx5IkJGPZzIhG0iHkvKF/b+F6zDouigJtrvtwLVVrKxy1or6qpCkiQOshoNnDzFk2luB98=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787278163; c=relaxed/simple;
+	bh=+tVNJvHqdk/3WutOT/aH/+cyw7wjm1Md8/Tkt5B/G0E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Tp7GU66e5zsJGqMliXdRSziB7TxL40MqHyXkib8yWqRd9FuEdfiarOgh+lqdep8NKXEFjiX4RX+E3qvfQ8tTYmFKJXgJ1AojHQlK4xWju8UuAt2k3Xuf4APXfCfnc4T2VaJp/jx9IoHvM1ET/LpRwfm9nUi5BH3fOCN15Fpxb6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RIyQ0m9D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a5it0DSB; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l9BT8viZ"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-49ff971e903so1134717b6e.0
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 18:44:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787276656; cv=none;
-        d=google.com; s=arc-20260327;
-        b=BeT2mK7Vz0yZECN42RR+DdGdGtHd+ADb+qnMbpzRp8ZfksYwATfPeuqF1lx8FlzgSm
-         65ExP+jwYigIma1i16IYdUUVGnWB8DZL5/hBPla7XQI3WG/crTFGdeJC/TKF+0f5wDsH
-         IyLOs2NgQgBik5SZQVzaUI2berbg4FGp41GyC0iAQ6Ns5eqWuJ96j6v+vDR413yCJQQq
-         xcyMitJlBv6bmrJZ/Q+4yzy3fsbqFCMyzg+8iJB8ZveyBAk2J6sQBcwF/I6y4DnkSRfC
-         qZy1aIc0uozxecT9TiTRZGyZfTD+yOrmjuDjnLiZ7Hs+tRWtYJh+ECCdfXa54Tl+ngHk
-         9VJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=KAqJ4nH2FZYnt/QVbsimN3resQk98XIAVAJjBkwAGKg=;
-        fh=ZoYMX4CE6Nj+TQb/ORsafggn5GaZ6eK222dztSSfULs=;
-        b=kt0AMpHUJWAysAeTHGyTMm14ag5alKTwa9v9C3KOBQU3SLECiDovMlOL0YRKHwLOJb
-         FFr+Boo+dpO9SC8ve0oLPTGsmeSb1RREyZkJ9TNY0tAJJq728dif2XbW42bFUQqaj/RT
-         LKu3G36mFWUmQ4nqj0W4bGrXhB0BJ7O+NcDuY0wsIVVpC0lL2zUawutAZlsOrLlQlZAE
-         cv38rmemWHL3GEZdXJAQMwKFUP8Df4YKo738Ak8kqRLS8cZvmyszFEFEVub5Ijcdzlud
-         qYjp7NUDMWUpu/CIL9dataSKVim+ysgCdWUPZ/HUOedIpAdLF+LjVjveWf6dIOC0sUo7
-         GIPQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787276656; x=1787881456; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=KAqJ4nH2FZYnt/QVbsimN3resQk98XIAVAJjBkwAGKg=;
-        b=l9BT8viZ/2k8q3yxTdk43sPqmmebFNYe0DynToW/6a0qTCkcooAhJBp3k/ZNgu7w49
-         BgCXDdcmVkLNntuHq5XLq8Mu38t8L0HNMvptcxCzpSqcnwnm18VLoMYbc4TQv0HlmDiy
-         Lhx1uLlfD6EwgPEUeK8osJsK0GNlb5T3VJl4a7uy5ojciUFmHiV5mkhbUgN74pU5ESHW
-         fBSKnp/RagI13WOwAFlDYLQZg9EmzBaT75DVwNn0+VcW4+SIViNgaH/JObJBawIEFhBq
-         LZzmj7eORONg3hBsrUU5qa4PR5TBowd3ZqUxS5XpZAQoGqofYn0zQPj5aBBP1IBXNRCX
-         cOYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787276656; x=1787881456;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=KAqJ4nH2FZYnt/QVbsimN3resQk98XIAVAJjBkwAGKg=;
-        b=pToNacQomSOdxyf0MjQCUCAbfkDzh9nuwdT7krmBa21pEIaa1ijl3/zWlxcbbi74Ei
-         dRNlJbrrkd8+WoX5iUCRO+YCdiRWMcbf47mYFNVTk3LABRKhq31Dvk1pZXu9xJTjsRav
-         IMhY3BYa5d3LVQgMP3OV77jn+goSEdsb3u90JZhfbx4fSC5brq8aTsZ0kcgBOacSJKFZ
-         tYqlItULHoJy6TD9YYQGNWXLcuC9OIJ3g3MX09VO7tSkeXlVGHz0Yar/S844S0EqRjGZ
-         uywc3szl/IR4JEPDOjfXkcLlXMnPe0vvjEldJmo10iZ2qxIoIMUverrY8MiVkReL3bq/
-         54mg==
-X-Forwarded-Encrypted: i=1; AHgh+RrbqJ8sVl+M+mLIn+/ASafxneRPvMlZaY/cQHeJcIgdkG9bomof8qLIynqiQSM2RZmP6iM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxYWOLozBfs/zhFDzFme7us2hP/QPMgBqW1BMdOQjW7ugm17tOU
-	FRoaYdN4VvU2NVU9t4HNgPMCEfCWxkxT/agpdEbmV6wgJs8TSlPGTNMNq3BDl5JP0AjqYzo/Xcp
-	YhKalsu338sF5mRRv7WI5SnS6TeQKuSY=
-X-Gm-Gg: AR+sD12vb9vNwJ8C+KHTBT8lke+udaqb4dt7G8Qn1G5+lEsON7EeZTmat8uFrXc1uZk
-	Z1IKIQ5bCBFrgmVJ+AXtYEeAnb6dqpmF8ODXC4/pYZBS4W2oPYMZoiFLrZcJcHy7P58yPbXCsop
-	jnjim4PBBK0TbJnBxH1ubhWjdAmcT0fflEzdR47ceIm5Hdo5Tl7B2ZI4MEwGdVYFRriPKGGrp3k
-	Rk/SXNu+ptGryL/95a5mPbpknR7wH+tUr+As30E31GIHHOpHYEPBPr+R//e5S4YFMnkhYJBh0lf
-	gpug2Zggh/GtOPlddhj3V4oBMYSeQ387O8j71recCzuNLNDbdn6D3mtwB8QUS7ddp1IPtfdYJ34
-	5KWBwLD2ot5M8fsdmWwYGebs+UmcyRkiYUpBvV1VohY46VtAyDQBOi+VooeY1VsFLmZbC
-X-Received: by 2002:a05:6808:1911:b0:4a4:989:bb1f with SMTP id
- 5614622812f47-4b2cdcc4f08mr10372370b6e.9.1787276656520; Thu, 20 Aug 2026
- 18:44:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RIyQ0m9D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a5it0DSB"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id B380DEC0430;
+	Thu, 20 Aug 2026 22:09:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 20 Aug 2026 22:09:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787278160; x=1787364560; bh=9vug4O6uiC
+	5ZI5wfRlV7JpNqNHhCzs3VZrV0URzifnc=; b=RIyQ0m9DeYWsXdFs+562eWHxVZ
+	44f/siahMdJNBgP0lxKVLH0XVh6MeptLlls2jOuTjDIk6ytpGdgHF9zR0PubYcn4
+	O1yJrjkgKO7x5JniCrQOhqZqgLDfIJ409DmxxCcy5/Pg8+QswpUhkBy6XltPt8DQ
+	bx2K0uba7jzmaQ0PuZuo4xbErCwUl2SQSE9Hijg8JJk2T8uzFljzjAN0ZS3FQrU/
+	7dVvPu6oVPif/9J23Gj6koOj+k1Be4Oi9QTJpBfEV9AW4vEFTvLaeE/xzaj+y/Iv
+	CjLnoVqKCNTciTvEW71D8Vxc2EDb5fJmyGNzZ8JT7mz3KYkGXE2oOfF0wkdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787278160; x=1787364560; bh=9vug4O6uiC5ZI5wfRlV7JpNqNHhCzs3VZrV
+	0URzifnc=; b=a5it0DSBcRXjA/ameH/FEaegA0sKfxbb3Pdf6b266wrozq6wrQM
+	+LiQ2mwXD/7zDQP1BCtBFpU2Uok8iRwQATxarioXeaatTd1RIPR/Ifd+n1exhnjo
+	d0RJmpa67OIYgPNVXAqKcH9HrDjEg11U3fep9VL34v65+lSd2vjQ1rkq1ZBV9p2g
+	I2BRFTheDkUxG7qxtYEnUCaN1Bwji72ydt8hI+Nz0YvtB2jdJtqar6C6pSLPOrZl
+	rEXOCidW18SKPEYlvVMmL8lby5xluLhUuo5iISaC17BSd6ypIYclREDhh/sdzngd
+	6kbRa/r+60fTq/rrUxcj+KdRDyka3GmlNtQ==
+X-ME-Sender: <xms:ULOHavFuBkGjHJunm4YnmDYRWii2B4g6iWodXEB2dQ_xhBVKUghZTg>
+    <xme:ULOHajWDxB6l0Vmou56iASwVQCtN6lHNav67-IOHhT3GNrh7iijdNrGjrZ69hzDz8
+    v5yLIyZBkkgmDdKqy7HqfNJlERj5XV4xqC9Ha6mbHt2D7FxJfEHNa4>
+X-ME-Received: <xmr:ULOHamKJUwBDV31he69ZEtx2-uX-LEjUteXY-gs5jFLfVK-5gmSe4--iogI_xAmmbKAP0ktjwgxXCtekZxwh8SX2pTBIDrdzcw>
+X-ME-Proxy-Cause: dmFkZTE1GKHWixg2mHfTHOcFXJPM+yeTc91a/WDoFBx2nI5gxt/5Yu/TaIJU/6+y7Hl78r
+    VpBtiC8qUuOI4zICkLw17HPjvKaLgh3vnpVNXCsVz1Fv2CqLJceCxzMbLDiUrZlosZ/xLf
+    cFSGqxD0eZtACjz87TejYzXv0Htsx9bHxsZKI8vtcfwHDBEzuMSm8RPWM+drtoCl7ljU76
+    1r9ism2XUaKoEBQuoWaqMhHAFJkd08zv6tvs/V2D2ZfPXNNK5yStVcivuNV2Iinosswcdl
+    ybK3581RVeMenTJIfJq/vTVuOmwvSf2lM9e+E3mV7OueKaGRYQpXfLzjIZliBUOUmPBAlC
+    khgjZCxSFxRoJ6v/BRp0+cLx4NyB/q3n6LC+o8uC/VsCFRus+U9uN16XVbGs5izIeIljhx
+    nzy2+ykzQM+E/SDb43uXiPMTV93rELByRjx8MCtq+MPGct08eQ/Su0DiJueV8d0hXUR6rC
+    O8jtfWIb3bvCETfZLWLUNklCIGXL1yP0+W6FhGUL4I9ioOIRnMXgynqxT6lfflTBTc65zQ
+    wE3Qb7athUfeh4MSxitZasymnlceaNvIKkKlb+e2BD+EfITcBABF1HX92uzi0E0ojtqlzn
+    AYpLoVeFVH8EIf49L02O07OKltUsKBW57fJXa1JM2UQeLdLFCu19VJiH5yrw
+X-ME-Proxy: <xmx:ULOHar-Yd6xY_Pjm_uRnLl4Puh2vgr3bprTyMDAuqabpAPehs0648Q>
+    <xmx:ULOHahLZfAHSsa3Pf8qjyoFWjxySO5nnTPctQI41dmMHB0EPRcfZsA>
+    <xmx:ULOHaonmXNSab_1_oSRYPeCOsBK7AB3GrMm4ODqo_yqS1UPdtd199g>
+    <xmx:ULOHatNR5L7NAoxtZL7-rcgmYqwqSTCADodCleH20CIuRDBQ18Pmuw>
+    <xmx:ULOHahp-mcgHjHNeds-89hqjlSd5hut538Zh2AbL0xewKPYKgpPNopYX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Aug 2026 22:09:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Subject: Re: [PATCH v2] worktree repair: detect relative path in .git file
+ correctly
+In-Reply-To: <pull.2205.v2.git.1787240760069.gitgitgadget@gmail.com> (Yoichi
+	NAKAYAMA via GitGitGadget's message of "Thu, 20 Aug 2026 15:46:00
+	+0000")
+References: <pull.2205.git.1786799480344.gitgitgadget@gmail.com>
+	<pull.2205.v2.git.1787240760069.gitgitgadget@gmail.com>
+Date: Thu, 20 Aug 2026 19:09:18 -0700
+Message-ID: <xmqq1pbsteb5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2207.git.1787092446.gitgitgadget@gmail.com>
- <321af575e0a9e0c22c70c1809f6fbf0265b05d4c.1787092446.git.gitgitgadget@gmail.com>
- <xmqqfr0augls.fsf@gitster.g>
-In-Reply-To: <xmqqfr0augls.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 20 Aug 2026 18:44:05 -0700
-X-Gm-Features: AcwNN1UKEv2QCKCn7mXV52YJeMPj0JNsLqtteUw1FPVXb94jmo2vWyEv0nKMjp8
-Message-ID: <CABPp-BGFpLi+FEoJOXvT=wBtexXiDmJ9vXQfc5JnBDrUk+zbDA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] replay: fail gracefully when a merge input is unreadable
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Aug 19, 2026 at 11:09=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > When objects involved in the merge cannot be read, the merge machinery
-> > will return early with result.clean =3D -1, and result.tree left as NUL=
-L.
-> > pick_regular_commit() tested only "if (!result->clean)", ignoring the
-> > case where "clean < 0".  That causes the code to try to use
-> > result->tree, resulting in a SIGSEGV.
-> >
-> > Handle clean < 0 explicitly; the merge machinery will already have prin=
-ted
-> > messages such as "Could not read <object>" and "collecting merge info
-> > failed for trees...", so we don't need to add much detail beyond the
-> > fact that the merge failed.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  replay.c                 |  7 +++++++
-> >  t/t3650-replay-basics.sh | 35 +++++++++++++++++++++++++++++++++++
-> >  2 files changed, 42 insertions(+)
-> >
-> > diff --git a/replay.c b/replay.c
-> > index 463c900d6c..33e21b2032 100644
-> > --- a/replay.c
-> > +++ b/replay.c
-> > @@ -327,6 +327,13 @@ static struct commit *pick_regular_commit(struct r=
-epository *repo,
-> >       merge_opt->ancestor =3D NULL;
-> >       merge_opt->branch2 =3D NULL;
-> >
-> > +     if (result->clean < 0) {
-> > +             error(_("merge of %s onto %s failed"),
-> > +                   oid_to_hex(&pickme->object.oid),
-> > +                   oid_to_hex(&replayed_base->object.oid));
-> > +             return NULL;
-> > +     }
-> > +
-> >       if (!result->clean)
-> >               return NULL;
->
-> Hmph, so anything but "0 < result->clean" is a failure, but we by
-> mistake took any non-zero value as OK?  That is an obvious mistake.
-> Well spotted and fixed.
+"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks, but the bug was also caused by me -- e787e664da64 (replay:
-introduce pick_regular_commit(), 2023-11-24) -- so not sure I should
-get much credit for finding it three years later.
+> This is because we wrongly use read_gitfile_gently() which always
+> returns an absolute path. To fix this, introduce read_gitfile_raw()
+> that is almost same as read_gitfile_gently(), but it skips existence
+> check of the referenced repository and returns the unmodified path
+> read from .git file.
 
-> > +             # Ensure replay gracefully handles the missing object
-> > +             test_must_fail git replay --onto onto base..side 2>err &&
-> > +             test_grep ! "[Ss]egmentation" err &&
-> > +             test_grep "Could not read\|collecting merge info failed" =
-err
->
-> "test_must_fail" means "the tested command must fail voluntarily and
-> in a controlled way", so a segfaulting git-replay invocation would
-> not pass test_must_fail.  Hence, there is no need to separately
-> test "test_grep ! '[sS]egmentation'".
+This is more or less what I expected to see, but two function-scope
+static variables are worse than one.  At least let us not
+proliferate the bad pattern that makes the functions non-reentrant.
 
-Oops, you're right.
+The attached patch updates read_gitfile_raw() in your patch to take
+a caller-prepared strbuf to store the value read from the '.git'
+file, returning the error code as an integer.  Ideally in the far
+future, we would probably want to convert read_gitfile_gently() to
+follow a similar function signature, but let us leave it as
+#leftoverbits, as it has many more existing callers and all of them
+would need adjusting.  On the other hand, it is easier to get the API
+in read_gitfile_raw() right while it still has only two callers.
 
-You said on 2/2 that I don't need to rebase because you're putting
-together an evil merge.  Do you want me to resubmit with this line
-removed (without changing the series' base), or would you rather I
-avoid that to prevent merging work for you?
+
+ setup.c | 9 +++------
+ setup.h | 2 +-
+ 2 files changed, 4 insertions(+), 7 deletions(-)
+
+diff --git c/setup.c w/setup.c
+index af7601ff67..052c7d669b 100644
+--- c/setup.c
++++ w/setup.c
+@@ -996,7 +996,7 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
+ 	return error_code ? NULL : realpath.buf;
+ }
+ 
+-const char *read_gitfile_raw(const char *path, int *return_error_code)
++int read_gitfile_raw(struct strbuf *contents, const char *path)
+ {
+ 	const int max_file_size = 1 << 20;  /* 1MB */
+ 	int error_code = 0;
+@@ -1004,7 +1004,6 @@ const char *read_gitfile_raw(const char *path, int *return_error_code)
+ 	struct stat st;
+ 	int fd;
+ 	ssize_t len;
+-	static struct strbuf contents = STRBUF_INIT;
+ 
+ 	if (stat(path, &st)) {
+ 		if (errno == ENOENT || errno == ENOTDIR)
+@@ -1047,13 +1046,11 @@ const char *read_gitfile_raw(const char *path, int *return_error_code)
+ 		error_code = READ_GITFILE_ERR_NO_PATH;
+ 		goto cleanup_return;
+ 	}
+-	strbuf_reset(&contents);
+-	strbuf_add(&contents, buf+8, len-8);
++	strbuf_add(contents, buf+8, len-8);
+ 
+ cleanup_return:
+-	*return_error_code = error_code;
+ 	free(buf);
+-	return error_code ? NULL : contents.buf;
++	return error_code;
+ }
+ 
+ static void apply_gitdir_and_environment(struct repository *repo, const char *path)
+diff --git c/setup.h w/setup.h
+index 4c2fcbbeda..7394473e95 100644
+--- c/setup.h
++++ w/setup.h
+@@ -40,7 +40,7 @@ int is_nonbare_repository_dir(struct strbuf *path);
+ #define READ_GITFILE_ERR_IS_A_DIR 10
+ void read_gitfile_error_die(int error_code, const char *path);
+ const char *read_gitfile_gently(const char *path, int *return_error_code);
+-const char *read_gitfile_raw(const char *path, int *return_error_code);
++int read_gitfile_raw(struct strbuf *contents, const char *path);
+ #define read_gitfile(path) read_gitfile_gently((path), NULL)
+ const char *resolve_gitdir_gently(const char *suspect, int *return_error_code);
+ #define resolve_gitdir(path) resolve_gitdir_gently((path), NULL)
