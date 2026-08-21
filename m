@@ -1,143 +1,160 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958D138AC7D
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 06:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787292337; cv=pass; b=BVNItAUF6mxlvamO6VvEvnBjrY2fVNSrSIoeYAm1qACvs70IAOhGQ7SpUp8pqAo3kEfuS6XLw3oLW2/4ssaMHjg8imDJxHU9pjVB4o0d0AC4lXxjgFmbyCulA43BvLW2HrRoGg2T8JnREd5OnqyTSs1gfRdqJTpHY1SIdnntON0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787292337; c=relaxed/simple;
-	bh=RPkD1MjHsW8rA2VkH7C5UEqfQ9+UVIrOeHmecOXBORE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y823+GbSsrWlE2Em4rOCgyyz4ImnwpKCEzUZ0kAnq19BtoNzCeeazJFIqoFUqu4ezEcvWIdcZEj4J9ZegQWuRuwBHREg9KjI/NU4QY45bEZUc8oHlNHK3aOBuHihR7fASVPwrWqIZ6aP/bfI6urBTSobloU641NQA6m6VlubXiY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mFWdz4I0; arc=pass smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EF1413221
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 06:28:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787293739; cv=none; b=Vmpkos52JCtwCGQJhRv3J39M5guK01bGW+8aNG42eSct9BGEV7RDHhRc6a+/PwubrAYfKroUpOgs1SJT+L76OIYsrNxO0E8KAj+7B26PsnisfSv/oktXkQmagHuKJx7Kv9ejh8busI+jEVJDbqK2zg1Adonm5dAj62Q6bPsuvd8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787293739; c=relaxed/simple;
+	bh=D7lT9+/tjpNlBrI/miB+keL3KH8b9LJzG+7Ddm3VK2Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kdRWSp0n+acy3aZKafVp+WsYcduZOchTivALw+Ob9AmsUVMcYybAvV9CvcSkCQr0OOVMzeZT2eI6+DdXe87ZU2U55i4URma+wjSrrqF3gaGDOaNRtgCcbsxgoERPxpWE8N2+fj7cJ+xNxwtIa7bYOj8/1RpkkhP93zuqhxB0mPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G8F9oXPc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mVY3GJMw; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mFWdz4I0"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-4b1be215736so571361b6e.1
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 23:05:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787292334; cv=none;
-        d=google.com; s=arc-20260327;
-        b=c5DqjcUWYOikjw2Yq9ochucSABMyiBQiFWipeaaUDZrq4f/IeXIHEzy4l3uVVcB8Rx
-         P4GNzUAUXd26+FRaYpMCw8sDW0rJ8y2SD1SqPoP0PSW0kxzE8wQqCYWngPS6nJlkf3rI
-         7dZeg9hVfDWmAtFoQ0Y+rCPbN5JHZ2kM0xDNLnBPKxvYgvbrQQG4an3Z0/CUGbvwLFXz
-         dNbPfvP8nStRlLzqE0fR92+9DQftXKmWtwHDywae65n2wLbNPfSDBNC9afaLLA4aNlqp
-         prmrAT0XsnaOIi9imS7kPsVabnAlgkCWI7GJeAvq4MEKz1K+Quuo6QMZ8+oxAsQcTBBc
-         5XwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=S6tXQmFGCiBCGGChrvhUP3fCE6DqJ9gMD2CgBJIjN7Q=;
-        fh=en/eTjevAOLt2Dy9HfTEzVwFh/fl0oEd8cMtfc183zE=;
-        b=hfjt8aCJ51Zr20PnB/MrVfObptEhSDD6Q9AY+pZ7jZj36T+fR5yxnaGcaehckzsggD
-         tnfLwb268Z3HdFhqkbqMD71poAGQoA/uTEAApl1/vFejdsBOExMIa6HYjXJURHGzIKO0
-         zednjD7w+vfk70ZzM61iWXkhjcge8TXfAZHq9z7iJsjuO45lvJ7gBEJtvmvTl5xlmS3R
-         xIrskhnKsC9yR0GdzPECAIUMzyYKQtdNesRwGID9vGBlRBoq79oSPjBUEyuzq57FSoU6
-         sf7XvL+CBdvaqgZFTKrxeMjPoBZGqVH4weNC5ylRlB41yvpUvWbeE64tWcRkkHQFsB5b
-         74CQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787292334; x=1787897134; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=S6tXQmFGCiBCGGChrvhUP3fCE6DqJ9gMD2CgBJIjN7Q=;
-        b=mFWdz4I0+V2fv+vREPkOlmlV81WZJJ3yMg5+S2o/piXX5hO92mhsuE70Xlkp1bvSD9
-         /bTTTYFxkazYyU6+XwOvD1il/miBPBOrvD73/W5Zw6drXM2265Y8yh5aa8UonnsxiZGV
-         ufiCBg9xUzh1nFLyXCNY4gJBzsP53e0SgAqxPQVXe3+aggfvgHoD8NdjggIVxQ5wTu3i
-         Nygq6pN6ztDZtqyC2dehwZnq9QXuDjbizm72g9v1TZfLFpmqYmBXSiioq4ImlSKeFzfC
-         pqdNIxG8auDeqvfkPBC9iDB4sYUPWgowHerOaQeUvZPIvLEb1NM18+/RHiot+N1bDpgH
-         Dqxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787292334; x=1787897134;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=S6tXQmFGCiBCGGChrvhUP3fCE6DqJ9gMD2CgBJIjN7Q=;
-        b=p3ailtc2LLgZ2hQ0vkYhyav4jCFi9MAjAlzBMCE1IV2aBcNPfcRLwqHhkkLuIIEbsb
-         Mvf9YOV1gUv0colsofYn2kLbJa38U0Bgi8kiXd1ZOa3aaHLgLFoLG+NBXKRhlT6CZ5FW
-         5fBTxyy3xsRLV7XMEaE5fWG0Ha8m9YF1uGFXaMcQZuEXVanHbpHLxRdKYmE4ZcwRpOlj
-         KOS05ED26cvZ0bqA8hTv19+a30gcqWMZu8gSIwXkXYa++I1E8avv3D+HukloSjpk9Urg
-         o/RMbqLeFln5CA8m2vTJDSEvX6M9QhMNEodukQyrZ6KkWkKrx8KcpSVwCxZhLEguBTXY
-         6cBw==
-X-Gm-Message-State: AOJu0YwHIhQXwrRcnACvsVAkg4E27JPRygbwlFUdw8zV2yIIRypqsDGY
-	aMSwI4xEqUY+OSt0LcfKXNT/MxOV+uNsfE2Urjojyl17PR4LExx31X6gUreOHUECuaNzrveIr7U
-	8bD/g+EKnLYjy1w5qAgunwr/bnArLHVI=
-X-Gm-Gg: AR+sD12ZuVaZP0MseX7eT3mGOQo0rRQ25twhziBXiRrbYiK0laC85MO098eeJxYmzGW
-	K/vyV+7DEfOllUslNxevM7JFyZJOSkAOnAWQjyhRnJBC7BzD58SvsXny3WmQblzzlsFryW3TZsy
-	JtFb6CiRR0Tt640+20WSSJGFNq5aVIehR1dpbtIkeEfrvwrrwG3RRApWc4m9GFFJuKKTypr8v10
-	JU1xTL1j/0o1/Pshwe3CVZwx0hep+N+j3Fchzd83iyIFnPDpQByxF5JhNSK1boZHGrNBFTtuSzv
-	Wmav2H8RGS6uqHYmthjIoT0lkcDZY5UKhGlPIpT7pJlqOMYb/qoUkHkTbIiNzgv2GwYaSkM1eb1
-	5BkL6mQX08zSO7CnbYIzSzZkYwlX+YqqTV+XfQdTAMHPoyDJwM2G2POWCestOUBBMK52pKoEiZw
-	==
-X-Received: by 2002:a05:6808:4f61:b0:4b2:8e1c:2b36 with SMTP id
- 5614622812f47-4b2ef4191b3mr3908711b6e.20.1787292334302; Thu, 20 Aug 2026
- 23:05:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G8F9oXPc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mVY3GJMw"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id CC97AEC027C;
+	Fri, 21 Aug 2026 02:28:56 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 21 Aug 2026 02:28:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1787293736; x=1787380136; bh=CW5dVvxjQB
+	1cgaC07DX8Z8r2ESTHhrGF2deDwc7+1pw=; b=G8F9oXPc+zUS0f3ZGXDrcjXGvO
+	gHQ5u+IsrL+XCTyTX1L3EJqWuXGySHqDzu6p4G0WmLIMlNwoi9lG6Y5WdnHC4NDP
+	Z+XbipkvNbvk+KXoLjzzjDcRNY5vh4C0IJuSx4YgcDo1MvnYkwnMo1BCVk9hIqyg
+	/XHGpp/SzMDXUEGWYdCv1y0TQWyGbha+B+ilKTkGMZpjQLSSPeRq12tMMT4rcxqo
+	TWS5iF4GpNyJOdBlE21OUu6BMHMnGvp8zf1U4XlidIFes0lHWQqE1HLxhceAA7tz
+	acrALmT5lIioeDLyvHuqkDU2UwnIKsThAj4i8MkooJG7V0sBpSK5/mU2V6+g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787293736; x=1787380136; bh=CW5dVvxjQB1cgaC07DX8Z8r2ESTHhrGF2de
+	Dwc7+1pw=; b=mVY3GJMwe89Sgv4WoA4oH+CYd7CKp9Uowv9cXKWd0Wvo3D4heB4
+	u9JAL+2iwpY7yzhwH8aBUbM4GK9pWGvvMJBEgmLZtRI3UZCDZDWJ7hoLcq+KciRP
+	duFikxeGl0v3XfjZFaJ9jhpetGFRsBvCWPFa5o9l6EEBUXVd8rKcVwtI1wAaf2Pf
+	hKmnZPM2PpXUJHdi2oREG41nK9aAwpdfLFfQ2c5xmtM6cKb2dq+ybEUE9kQSUwR3
+	sea7BuEdtWkn90E+TAh3gW3rl9NoiLJQJCazF2F8gyRt+Su4IKjnI4K5QO3GSerm
+	bxklVgSQx0nHNN2sVZjqmxpzjOwazRklVdw==
+X-ME-Sender: <xms:KPCHagujnjNWUqBIRMzoaZh3D23R2-0ba_3Sw5oNkdkpYWl9ZtxPOg>
+    <xme:KPCHakcOWrzJTfGb9KMgxACO1GS63aomCF9wPmqGxJTMrZ1Stw38oDdp-Hat_BOJl
+    jTObu5MSVB16eNDn6OdLaOwLAY43OWu2DdGr2JofRRzNb9-o_lmHXk>
+X-ME-Received: <xmr:KPCHagzsiUTvoeMMYXwNEeqbDI2O8AKKi9lvPmbODNs7duTGxXcMpNXQj2w7Cc37hT8TAbza13uHUf13xX1I5SXCEeCMM9zXNymcO2Khberw>
+X-ME-Proxy-Cause: dmFkZTGcTZ5cgCTrH1pRKoOSrLp9JIo2MQbmlFIGLGVinm8d8rOgTDOVIp7+INWgPHvzVb
+    yjEAEKxc3VdITfxIs8NdqW038Yfqavq92ngDnrhNNwhMcqlT/WMu/IJxHjcIqGyyZgnkx+
+    /WSvNb2gjwwK01r7HoplTA/REptyNeLgS9sfdoGflUobSxvEP7GtcyD3kyX+jkOi11j/Qq
+    pyh0eDs73k1OLDYAf8nNhq354IAKoS5A5cu80zttYbmep3zuW6fVI8HJxaN48OR97GcV4Y
+    LZ4YbUjOMpArBJEpb8YxvPLLfqG5p1tbIcJWYGzp1rqE7m7SEY/h6q6u0BnFJ8Y9Moz1PY
+    3/1LNKEwHvg56fnJjxoGiwH4ldCo9Tas6g808daYKa1zGBiCrxlM5hAQmm73DFgMkJMmcG
+    1+2WFA+Ed9dudwAiPQVbtG+6bTm24lVuYn52FrAfue/3c/xo8DchqEkVGz4akkGvNWoGZL
+    uAaUGzzTQdxtUXM9Xwf8viVRUdciOu69hUprYD+6UNMbY7gjsnsP5ojm5mbbxmDL+KZE2z
+    ZznU/5163DgeIPAYiPozQ3jNFzaRci0IHVJGkCj5ZuA1X4lroBTQFJ7Wshu7+mwizcUQck
+    VNjoyX38zLlS84MNF4ttL/AEhfab2hcOZN2j8ltTZEEsX9xBB0Op2IVjsrNg
+X-ME-Proxy: <xmx:KPCHaiFX_PSKoC7AX9ue_YFBW7NajuVBNIKkP3fxpy4EXm08GqXJuw>
+    <xmx:KPCHasz0ZaPhBwJhzUnMRWqsUwSMf6621Nx03KUX6NfLSBJH0v5xeg>
+    <xmx:KPCHarvQ_g4otut-RwIH4oZrIPsQpwaZ0GcEVOEg0l_PJp0VNLDKjg>
+    <xmx:KPCHah31VXDMdxart6h-HBZsl86V5D_fZhGfgyl7LMC35lJt1r_A8Q>
+    <xmx:KPCHakQZvOotBPnoMsE9Hs3z4O_gm0AgDZnFKbgVGAQjDYbppGoEz5dW>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 21 Aug 2026 02:28:55 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 42991d73 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 21 Aug 2026 06:28:53 +0000 (UTC)
+Date: Fri, 21 Aug 2026 08:28:46 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 1/6] odb: introduce interface to generate packfiles
+Message-ID: <aofwHhFeeWgh_3FY@pks.im>
+References: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im>
+ <20260820-b4-pks-odb-generate-pack-v3-1-bc42252f6169@pks.im>
+ <xmqqik54soy0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im> <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im>
-In-Reply-To: <20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 20 Aug 2026 23:05:23 -0700
-X-Gm-Features: AcwNN1Xa5Vqz3Qk72TDQ3rmpT4uRKauFNsjfOgvQTtw_CXdQx0YSuw3QE2ocG3g
-Message-ID: <CABPp-BHAeb5Q6kWw8e0fz9+avKyJL0_k7cUzRhesHScJjB3Xfw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] odb: make packfile generation pluggable
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Justin Tobler <jltobler@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqik54soy0.fsf@gitster.g>
 
-On Thu, Aug 20, 2026 at 12:55=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
->
-> Hi,
->
-> this patch series makes packfile generation pluggable.
->
-> Note that this series only makes those parts pluggable that are required
-> for the transport layer. The other parts that relate to packfile
-> generation as required by our repository maintenance is kept as-is, as
-> there is a bunch of options there that are way too specific to the
-> "files" backend to be portable. This should ultimately not be much of a
-> problem though, as maintenance itself is already pluggable in the first
-> place.
->
-> It's a bit of a shame though for git-pack-objects(1), which still isn't
-> usable with alternate backends. I tried several times to find good
-> solutions for making it fully pluggable, but due to the backend-specific
-> options it's an utter mess. I want to eventually address this though:
-> same as with git-refs(1), I want to introduce git-objects(1) to care
-> about all things ODB. And as part of that command we can also introduce
-> a command that generates packfiles in a generic fashion, without all the
-> cruft that git-pack-objects(1) has. This is part of a future patch
-> series though.
+On Thu, Aug 20, 2026 at 10:04:55AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/odb.c b/odb.c
+> > index caf1d0f542..cd9d5b48bc 100644
+> > --- a/odb.c
+> > +++ b/odb.c
+> > @@ -1046,6 +1046,27 @@ bool odb_optimize_required(struct object_database *odb,
+> >  	return odb_source_optimize_required(odb->sources, opts);
+> >  }
+> >  
+> > +void odb_generate_pack_options_release(struct odb_generate_pack_options *opts)
+> > +{
+> > +	oid_array_clear(&opts->wants);
+> > +	oid_array_clear(&opts->haves);
+> > +	oid_array_clear(&opts->shallows);
+> > +}
+> > +
+> > +int odb_generate_pack(struct object_database *odb,
+> > +		      struct odb_pack_generator **out,
+> > +		      const struct odb_generate_pack_options *opts)
+> > +{
+> > +	if (!odb->sources->generate_pack)
+> > +		return error(_("primary object source does not support generating packfiles"));
+> > +	return odb_source_generate_pack(odb->sources, out, opts);
+> > +}
+> 
+> Perhaps a stupid question but the opts->pack_fd is documented:
+> 
+> > +struct odb_generate_pack_options {
+> > ...
+> > +	/*
+> > +	 * File descriptor that the generated pack shall be written to. If set
+> > +	 * to `-1`, a pipe will be created and exposed via the pack generator's
+> > +	 * `out` field. If set to `0`, the pack will be written to the standard
+> > +	 * output stream. Otherwise, the provided descriptor will be written to
+> > +	 * and is consumed by the generator.
+> > +	 */
+> > +	int pack_fd;
+> > +
+> 
+> Here I assume that "and is consumed by" refers to "generator writes
+> into it and then closes it when it is done"?
 
-So, big picture, today there are three callers that spawn "git
-pack-objects --revs --stdout ..." by hand to produce a pack for
-transfer: upload-pack, send-pack, and bundle.  Each hand-rolls a
-child_process, feeds a rev list on stdin, and drains the pack from the
-child's stdout.  This series hoists that shared machinery into a new
-object-database interface, decoupling the transport use of packs from
-the storage use.  I like it.
+Yes.
 
-> Changes in v3:
->   - Fix a use-after-scope bug on abnormal exit when child processes are
->     cleaned up via `mark_child_for_cleanup()`, as noticed by Elijah.
->   - Link to v2: https://patch.msgid.link/20260817-b4-pks-odb-generate-pac=
-k-v2-0-4c8a96ccfdb3@pks.im
+> odb_source_generate_pack() delegate to source->generate_pack(),
+> which I presume goes to odb_source_files_generate_pack(), which in
+> turn assigns opts->pack_fd to cp->out and calls start_command(cp) to
+> run pack-objects.  The file descriptor is closed when the process
+> finishes.
 
-Thanks, the fix in 1/6 addresses what I raised on v2.
+Exactly.
 
-I read through the series -- I did have an alternative suggestion for
-5/6 (which I posted on v2 5/6 since there was already a thread there),
-but otherwise I didn't spot anything beyond what other reviewers
-already raised.
+> What happens if the odb->sources[0] does not support .generate_pack?
+
+If it does not support generating packs then Git would crash as this is
+a non-optional callback. All sources that could be our primary source
+though do support it, and the expectation is that any future backends
+would know how to implement it, too.
+
+> Should opts->pack_fd be "consumed" here to avoid leaking it, or we
+> do not have to worry about it because the caller will soon exit
+> itself?
+
+So this case here should not ever happen -- if we don't have the
+callback, then there's nothing that can even set `pack_fd` and we should
+die.
+
+Patrick
