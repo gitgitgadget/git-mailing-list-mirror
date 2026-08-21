@@ -1,69 +1,69 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F884310779
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 14:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905A24BCAA9
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 14:23:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787322209; cv=none; b=LCaxTiTZgMdZ4t+xvUdCu0X3HoF+jP9RAAW0Cxdiw5Dhpj2uCafHVlMRNT4qcMf3ZYcUeTKhFjFYWAJqulWtsYI4F4IMLIlSfWjoguWVjBEIGsir1sjjIUFaC1YH4hQU4lIf2aZAL3lObYuq4RBt3ZnqokF/p0tWwwWoe7FG0K0=
+	t=1787322212; cv=none; b=LUisQ4csSYmGeRNRHGn66KIOIowwX2s2wmbcvhQ1eKb8W6s+XLdQQZviQR3Vj/UAQBXNZ4Rx3M/b8rbMYkvNZVbz2k7rhieGEpSKs2kwT9kKBKfN5IdJ/Na0tXM4DQHR+AQAYm1BnVdWyTidx9/pSfhU16G0Iz4HfgFFwDOTAzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787322209; c=relaxed/simple;
-	bh=D6OfW3tWnaa0bbLRMuiYfM0F7Fq5HCRA01vLha993T4=;
+	s=arc-20240116; t=1787322212; c=relaxed/simple;
+	bh=gTh0TdRXw9oDz9fjJerhA890XOVXYJF0oOi764JWyfo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=fUhSeZcjRpVPKV5GJizQ+BjVnKBoR84YipihBWNimoPEjTgCISTim9Mw7E12OE0fiYzFZgyjmlXbnrbAYvsNQXuTG3SC6fysVMOthr03ZHOLOWkP5quiohz8RvyNjZnYxPx3BsD9CYJmFeRS5Y1cz1+aHeOEAG6q0Tr0E066Jsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rBCit4oG; arc=none smtp.client-ip=209.85.215.170
+	 MIME-Version:To:Cc; b=EGPU/0iaYnUwN6kAuU8FFdHZa1sbxBzrDiCMZsl4uU3vC5gQ+aDgpnZFbCkloLghvJ3ZavzYDxMLVJNLBs0dzHkF2tQ0aqA8sspCEnvvyFcOIAi71iSNDdwWIbbNtzFp6CZsqnG7tmr/qBiCZUBS+tl4JZXu48rodc2mtan31tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TUXy/eza; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rBCit4oG"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-cc1469c1b83so1376196a12.1
-        for <git@vger.kernel.org>; Fri, 21 Aug 2026 07:23:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TUXy/eza"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2cf452def93so15670395ad.1
+        for <git@vger.kernel.org>; Fri, 21 Aug 2026 07:23:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787322206; x=1787927006; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787322207; x=1787927007; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=avnwTnfwb8aa2zWK8O48r81kpmCWRlQcDs07jg18wU0=;
-        b=rBCit4oGxRw0JA4OqTrmCua8KiKNjtsWCG6g3CFoIW4+skd76d75hrl4rtZc9g7BWM
-         rRNHa+KbrjZ5Kvz53fAXsRUrP2WKTjLuu6y2ahXG0T49RkXY2wys/o5HA0zWdu6MxQwn
-         wDYMEpW184ZUq6sXJw1WXu/V9hshhenG21niNP3922shQAC7XW2BZXc5kGBLXnVnx6KY
-         0bD6+zc2bCtd3Xf468rPAg2rkPa9gTnRmWS2NDP6CcxKLN0Xi8R8ogOPM0UlS/x4iUul
-         AEb1se8QJD5vU6zGvMvRq0xH43SEzdE80B2AsgnftEp9lspeiVabo1ktv3fV7nWxj3pN
-         LoVw==
+        bh=/+qSf79b2CCF1OfIIfXrCoxvTbYH7HDYNAbwDNVVJpI=;
+        b=TUXy/ezaP3ixPdj4VW51hts57kbJGLg0rrSSQS02C4aa64FktpbIL7idJZOaCoWfky
+         9NpOerpGYM0qzCiSWmbXxqcu+oOk/oeyuFUmfpYcpGmr7V9MuX0z973zSip8bnnT4CZJ
+         KeLNToxUI3a+xjEEEe6jdYF75p5GWnrw0U16bZPeVMaDFWbJLCiJqcfOueEW938/l4QQ
+         6du0NXZcQ7wHVw5qu1cEQvGaXCR6SOgCPU8yEUiFVkvQMekH2zf2eNsU+uwOlLFp24FD
+         q3NYVYwlRcsAjWN9LKZygNrQYbV3dda5f5ZalzA1Iq8zilxnNa7YC4CdDCUiT0jNdKzz
+         fr3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787322206; x=1787927006;
+        d=1e100.net; s=20251104; t=1787322207; x=1787927007;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=avnwTnfwb8aa2zWK8O48r81kpmCWRlQcDs07jg18wU0=;
-        b=m8I/ZoMZNFR52tadACXkk9cxWranlPCMzYMmHZu1ZLnw2lCWwP4aoG71oF23OkhBNc
-         rDhvKllVBGfoD2F9uc7T9MLu1SrTyPgmGsbhRINW8S9jM5G7wKO0hUknguK70HV+qSg0
-         VotCNxHhbxn3v2TDOuOsE6dC0w9p3KbGVkITsl7LbnsgbgqlByXrWgbK+c+bKnqIZ3Cv
-         iTNoRrE+mBneatJpwNmUe8uAc/f/vhwIvsOQbVR5Fj4fYsyFgk07BbBF4jaBhKAp8VXk
-         QobLAfVptnr2rX4RIzU7IIq9gWXOT9fSbBEvpgwLHv7Dn57HdNfWAHVmQNV42g9CqqA2
-         wQwg==
-X-Gm-Message-State: AFuF++kWF4l9Jb2ZTo6AWE7jAA9THnTq8+XuGL4AcRATa6tkvVEeijQL
-	jPgc+RBTqgek5suXKE5dMMGQEM7v+fzSIBGRLv4a04jcLvAsWnx6fLhja+9lmQ==
-X-Gm-Gg: AR+sD10FAYq5+xt36P1DQERVne/dBUUDmgrkJRjTlLTOD/ICQkirapHKtvdTaQrRS6G
-	GvuhFffH/xDkn3b+oJzzbIweMuL+AQQY2e3/BMMcLOywx/GKWKYTYQ0H6f8i0YEVS8DLkETe1J5
-	pibldku28tBu6MIEw8JiLnFGqRvavn+SMe5S8+pf75jejfXt1yTuUHEThtt6qKpz6Ued5+xRsGs
-	rBpliz943jCDdJlGPsWQ6hl/2fSr0WQ6YGZvEUZVNJYKg/YadUqdOH3VbluLgwx0b0QSVfMaMwu
-	M6eZ5c1IoaJ21rsk8VCb3gSWf3WhKCU193NRjf0lqy/csCxRv9YYNVY9i1YQ6dY9QFPyKJWpTC6
-	OZ6D0fdKqT3ppBJgumE/G1MM2YBotnAh3mCse49RNsnSFWHN3/aiVtQ2BveHpmiB0mQo7HjoKqX
-	ON8Bwmip7ZFe8YatEu31iihVvNm4fc8lJssCusJ+Ca/O7UqDeOeignYZDeRM0iE6QPMTt26qBE
-X-Received: by 2002:a05:6a00:b94:b0:84a:2c46:3fdb with SMTP id d2e1a72fcca58-851f9ce2a0dmr9437845b3a.5.1787322205876;
-        Fri, 21 Aug 2026 07:23:25 -0700 (PDT)
+        bh=/+qSf79b2CCF1OfIIfXrCoxvTbYH7HDYNAbwDNVVJpI=;
+        b=LP0XIrOz1HpGZzTiOJdePGjz1Rh4wtC2s7QaV5c3BpIdfQvAok1HX3lppjDZ7eMjDz
+         nXzdP8VmlE9K3XFoiWCYPWd5vaxak/S82sv7gMoY1CJSBHIkjwxFCU+hmx4zQHL9VqKP
+         nMZ9tMr68v8WE7T+WHQZBOYbZppPAP17YsW3T/wUC4ervx2fayXA7y3CPf6xU0BOTlz+
+         plqToyBsWzTFRtGZd0YDh3QGUzQYY8M67w3nAtbj16UV6dIQpJLvlh6t6/9n7M1hH80C
+         WIERYmQJfpu/quzUJVFzl5scjs0B6PnF/YsTkUZrnaPFA5GGFifDsjvmGuh5uPlZ7Kbe
+         oBKg==
+X-Gm-Message-State: AFuF++n4v/XhF5Yisf+HYk0IZNPJU6ucWQlnlMeDKaqz2PmMoEm8upE0
+	+Xvp7kPQ8ljq5lvcRltLddGlMi21yIkc3tOWoll/ezA0fPHO1GRU1SoyIcVYQ3Hb
+X-Gm-Gg: AR+sD10m7wiS0tGSD2fVx/Sdr0138lO+Yr3Rnssgl7el48IXfuA80+ufrk6FgT23QUb
+	Dfx1HJaJ0JNYRx9EvsM0YgM1tvLGUepIA9n5ZbruE0AwnbsHNXjOlr1YXjrd9S3SJcUscOKspCt
+	8FjxWM/RODHN+Btv8R2Pc+EN6xAmY98RTnWYKQnobBUpGlp2MvQBoKDkYFvccs46CVw2bCnwJen
+	HQH6u95udeQWSItw7bKhL14CGdacl7bmQ4jmjvLaYX+n+OEodaY2mfTqdyIDgVgEA1tHywgG0o9
+	GtPEE93v/C+yMGg+sTdA0AEueHIlf5a6R01WzfwgljwZdZgmXIz9xzTOi/Ui1p9Rw0yRFQQBBxX
+	kwlaG3zEdm7VnUq9bC9NHN2/XtkZWscGUVWeZFvBLiSzHQ0s3SWijKBrCi/PlcL7dMImIEbXOPh
+	ke2uDcb0x85JTxkTNJa2xvKnULfQWucX86jQDVoJqRvsspKL6pXdCWROSozotDXkzq7T0=
+X-Received: by 2002:a17:903:1a84:b0:2ca:12aa:a390 with SMTP id d9443c01a7336-2d64ce3544cmr76955675ad.0.1787322207096;
+        Fri, 21 Aug 2026 07:23:27 -0700 (PDT)
 Received: from [127.0.0.1] ([128.85.45.85])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-851d369cf91sm3007721b3a.58.2026.08.21.07.23.24
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d62ea8e193sm19676125ad.81.2026.08.21.07.23.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2026 07:23:25 -0700 (PDT)
-Message-Id: <13aa80bc0167aae05498bac1c59846274ee00e9d.1787322203.git.gitgitgadget@gmail.com>
+        Fri, 21 Aug 2026 07:23:26 -0700 (PDT)
+Message-Id: <6f5bd13d8e41e02af92df0274dbd435a395d6835.1787322203.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
 References: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
 From: "Alexey Samsonov via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 21 Aug 2026 14:23:21 +0000
-Subject: [PATCH 1/3] compat/posix: introduce utimensat(2) wrapper
+Date: Fri, 21 Aug 2026 14:23:22 +0000
+Subject: [PATCH 2/3] treewide: use utimensat(2) instead of legacy utime(3p)
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,322 +79,257 @@ Cc: Alexey Samsonov <vonosmas@gmail.com>,
 
 From: Alexey Samsonov <vonosmas@gmail.com>
 
-In POSIX.1-2008, utime(3p) was marked as obsolescent in favor of
-utimensat(2) and futimens(2). In the recent POSIX.1-2024 (Issue 8)
-specification, <utime.h> and utime(3p) were officially removed.
+Now that a compatibility wrapper for utimensat(2) has been introduced,
+migrate all call sites across the codebase to use utimensat(2) instead of
+the legacy utime(3p) interface:
 
-utimensat(2) operates on `struct timespec` rather than the second-only
-`struct utimbuf`, allowing sub-second timestamp updates while also
-providing support for UTIME_NOW and UTIME_OMIT flags to selectively
-update or preserve individual access and modification timestamps.
-
-Introduce a compatibility layer for utimensat(2):
-- Provide fallback definitions for AT_FDCWD, UTIME_NOW, and UTIME_OMIT
-  in case the system headers lack them.
-- Introduce `ST_ATIME_NSEC(st)` to complement `ST_MTIME_NSEC(st)` and
-  `ST_CTIME_NSEC(st)`.
-- Implement `git_utimensat()` in `compat/utimensat.c` as a fallback using
-  utimes(2) on platforms that define NO_UTIMENSAT.
-- Implement `mingw_utimensat()` in `compat/mingw.c` converting `struct
-  timespec` to Windows FILETIME with 100ns precision.
-- Wire up NO_UTIMENSAT support in Makefile, meson.build,
-  contrib/buildsystems/CMakeLists.txt, and configure.ac.
-
-Subsequent commits will migrate callers across the codebase to
-utimensat(2) and drop the legacy <utime.h> header.
+- In `commit-graph.c`, use utimensat(2) with UTIME_OMIT and the computed
+  timestamp `now` to bump the commit-graph modification time consistently
+  across all files without needing an extra stat(2) call to preserve atime.
+- In `copy.c`, use utimensat(2) to copy full sub-second access and
+  modification timestamps from the source file.
+- In `odb/source-packed.c`, `odb/source-loose.c`, and `object-file.c`,
+  use utimensat(2) with `struct timespec` to freshen file timestamps.
+- In `builtin/pack-objects.c`, update the pack timestamp with
+  utimensat(2).
+- In `rerere.c`, touch the postimage file with utimensat(2) passing NULL
+  to set both atime and mtime to current time.
+- In `t/helper/test-chmtime.c`, update file modification times using
+  utimensat(2).
 
 Signed-off-by: Alexey Samsonov <vonosmas@gmail.com>
 ---
- Makefile                            |  6 ++++
- compat/mingw-posix.h                |  2 ++
- compat/mingw.c                      | 52 +++++++++++++++++++++++++----
- compat/posix.h                      | 21 ++++++++++++
- compat/utimensat.c                  | 39 ++++++++++++++++++++++
- configure.ac                        |  6 ++++
- contrib/buildsystems/CMakeLists.txt |  8 +++--
- meson.build                         |  2 ++
- 8 files changed, 127 insertions(+), 9 deletions(-)
- create mode 100644 compat/utimensat.c
+ builtin/pack-objects.c  | 12 +++++++-----
+ commit-graph.c          | 17 ++++++-----------
+ copy.c                  | 10 ++++++----
+ object-file.c           | 12 +++++++-----
+ odb/source-loose.c      | 10 +++++-----
+ odb/source-packed.c     | 12 +++++++-----
+ rerere.c                |  4 ++--
+ t/helper/test-chmtime.c | 19 ++++++++++++-------
+ 8 files changed, 52 insertions(+), 44 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index d4b775953d..64909d48b2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -70,6 +70,8 @@ include shared.mak
- #
- # Define NO_MKDTEMP if you don't have mkdtemp in the C library.
- #
-+# Define NO_UTIMENSAT if you don't have utimensat.
-+#
- # Define MKDIR_WO_TRAILING_SLASH if your mkdir() can't deal with trailing slash.
- #
- # Define NO_GECOS_IN_PWENT if you don't have pw_gecos in struct passwd
-@@ -2049,6 +2051,10 @@ ifdef NO_WRITEV
- 	COMPAT_CFLAGS += -DNO_WRITEV
- 	COMPAT_OBJS += compat/writev.o
- endif
-+ifdef NO_UTIMENSAT
-+	COMPAT_CFLAGS += -DNO_UTIMENSAT
-+	COMPAT_OBJS += compat/utimensat.o
-+endif
- ifdef NO_FAST_WORKING_DIRECTORY
- 	BASIC_CFLAGS += -DNO_FAST_WORKING_DIRECTORY
- endif
-diff --git a/compat/mingw-posix.h b/compat/mingw-posix.h
-index 2d989fd762..aab91d76db 100644
---- a/compat/mingw-posix.h
-+++ b/compat/mingw-posix.h
-@@ -386,6 +386,8 @@ int mingw_fstat(int fd, struct stat *buf);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 1ec5b6f206..35bdbc2b6a 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1438,11 +1438,13 @@ static void write_pack_file(void)
+ 			} else if (!last_mtime) {
+ 				last_mtime = st.st_mtime;
+ 			} else {
+-				struct utimbuf utb;
+-				utb.actime = st.st_atime;
+-				utb.modtime = --last_mtime;
+-				if (utime(pack_tmp_name, &utb) < 0)
+-					warning_errno(_("failed utime() on %s"), pack_tmp_name);
++				struct timespec times[2];
++				times[0].tv_sec = st.st_atime;
++				times[0].tv_nsec = ST_ATIME_NSEC(st);
++				times[1].tv_sec = --last_mtime;
++				times[1].tv_nsec = 0;
++				if (utimensat(AT_FDCWD, pack_tmp_name, times, 0) < 0)
++					warning_errno(_("failed utimensat() on %s"), pack_tmp_name);
+ 			}
  
- int mingw_utime(const char *file_name, const struct utimbuf *times);
- #define utime mingw_utime
-+int mingw_utimensat(int fd, const char *path, const struct timespec times[2], int flag);
-+#define utimensat mingw_utimensat
- size_t mingw_strftime(char *s, size_t max,
- 		   const char *format, const struct tm *tm);
- #define strftime mingw_strftime
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 4c2f26d454..d09a976191 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1391,22 +1391,33 @@ int mingw_fstat(int fd, struct stat *buf)
- 	}
+ 			strbuf_addf(&tmpname, "%s-%s.", base_name,
+diff --git a/commit-graph.c b/commit-graph.c
+index 49e8f63930..08bbba3d98 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2484,18 +2484,13 @@ static void mark_commit_graphs(struct write_commit_graph_context *ctx)
+ {
+ 	uint32_t i;
+ 	time_t now = time(NULL);
++	struct timespec times[2] = {
++		{ .tv_nsec = UTIME_OMIT },
++		{ .tv_sec = now, .tv_nsec = 0 },
++	};
+ 
+-	for (i = ctx->num_commit_graphs_after - 1; i < ctx->num_commit_graphs_before; i++) {
+-		struct stat st;
+-		struct utimbuf updated_time;
+-
+-		if (stat(ctx->commit_graph_filenames_before[i], &st) < 0)
+-			continue;
+-
+-		updated_time.actime = st.st_atime;
+-		updated_time.modtime = now;
+-		utime(ctx->commit_graph_filenames_before[i], &updated_time);
+-	}
++	for (i = ctx->num_commit_graphs_after - 1; i < ctx->num_commit_graphs_before; i++)
++		utimensat(AT_FDCWD, ctx->commit_graph_filenames_before[i], times, 0);
  }
  
--static inline void time_t_to_filetime(time_t t, FILETIME *ft)
-+static inline void timespec_to_filetime(const struct timespec *ts, FILETIME *ft)
+ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+diff --git a/copy.c b/copy.c
+index 6074132050..39673f7829 100644
+--- a/copy.c
++++ b/copy.c
+@@ -23,12 +23,14 @@ int copy_fd(int ifd, int ofd)
+ static int copy_times(const char *dst, const char *src)
  {
--	long long winTime = t * 10000000LL + 116444736000000000LL;
-+	long long winTime = (long long)ts->tv_sec * 10000000LL + (ts->tv_nsec / 100) + 116444736000000000LL;
- 	ft->dwLowDateTime = winTime;
- 	ft->dwHighDateTime = winTime >> 32;
- }
- 
--int mingw_utime (const char *file_name, const struct utimbuf *times)
-+int mingw_utimensat(int fd, const char *path, const struct timespec times[2], int flag)
- {
- 	FILETIME mft, aft;
-+	FILETIME *paft = &aft, *pmft = &mft;
- 	int rc;
- 	DWORD attrs;
- 	wchar_t wfilename[MAX_PATH];
- 	HANDLE osfilehandle;
- 
--	if (xutftowcs_path(wfilename, file_name) < 0)
-+	if (fd != AT_FDCWD) {
-+		errno = ENOSYS;
-+		return -1;
-+	}
-+
-+	if (flag) {
-+		errno = ENOSYS;
-+		return -1;
-+	}
-+
-+	if (xutftowcs_path(wfilename, path) < 0)
+ 	struct stat st;
+-	struct utimbuf times;
++	struct timespec times[2];
+ 	if (stat(src, &st) < 0)
  		return -1;
+-	times.actime = st.st_atime;
+-	times.modtime = st.st_mtime;
+-	if (utime(dst, &times) < 0)
++	times[0].tv_sec = st.st_atime;
++	times[0].tv_nsec = ST_ATIME_NSEC(st);
++	times[1].tv_sec = st.st_mtime;
++	times[1].tv_nsec = ST_MTIME_NSEC(st);
++	if (utimensat(AT_FDCWD, dst, times, 0) < 0)
+ 		return -1;
+ 	return 0;
+ }
+diff --git a/object-file.c b/object-file.c
+index ec35c318bc..5e4ccb36d5 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -69,15 +69,17 @@ const char *odb_loose_path(struct odb_source_loose *loose,
+ /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
+ static int freshen_file(const char *fn, const time_t *mtime)
+ {
+-	struct utimbuf times, *timesp = NULL;
++	struct timespec times[2], *timesp = NULL;
  
- 	/* must have write permission */
-@@ -1433,14 +1444,25 @@ int mingw_utime (const char *file_name, const struct utimbuf *times)
+ 	if (mtime) {
+-		times.actime = *mtime;
+-		times.modtime = *mtime;
+-		timesp = &times;
++		times[0].tv_sec = *mtime;
++		times[0].tv_nsec = 0;
++		times[1].tv_sec = *mtime;
++		times[1].tv_nsec = 0;
++		timesp = times;
  	}
  
- 	if (times) {
--		time_t_to_filetime(times->modtime, &mft);
--		time_t_to_filetime(times->actime, &aft);
-+		if (times[0].tv_nsec == UTIME_NOW)
-+			GetSystemTimeAsFileTime(&aft);
-+		else if (times[0].tv_nsec == UTIME_OMIT)
-+			paft = NULL;
-+		else
-+			timespec_to_filetime(&times[0], &aft);
-+
-+		if (times[1].tv_nsec == UTIME_NOW)
-+			GetSystemTimeAsFileTime(&mft);
-+		else if (times[1].tv_nsec == UTIME_OMIT)
-+			pmft = NULL;
-+		else
-+			timespec_to_filetime(&times[1], &mft);
- 	} else {
- 		GetSystemTimeAsFileTime(&mft);
- 		aft = mft;
- 	}
- 
--	if (!SetFileTime(osfilehandle, NULL, &aft, &mft)) {
-+	if (!SetFileTime(osfilehandle, NULL, paft, pmft)) {
- 		errno = EINVAL;
- 		rc = -1;
- 	} else
-@@ -1458,6 +1480,22 @@ revert_attrs:
- 	return rc;
+-	return !utime(fn, timesp);
++	return !utimensat(AT_FDCWD, fn, timesp, 0);
  }
  
-+int mingw_utime(const char *file_name, const struct utimbuf *times)
-+{
-+	struct timespec ts[2];
-+	struct timespec *tsp = NULL;
-+
-+	if (times) {
-+		ts[0].tv_sec = times->actime;
-+		ts[0].tv_nsec = 0;
-+		ts[1].tv_sec = times->modtime;
-+		ts[1].tv_nsec = 0;
-+		tsp = ts;
-+	}
-+
-+	return mingw_utimensat(AT_FDCWD, file_name, tsp, 0);
-+}
-+
- #undef strftime
- size_t mingw_strftime(char *s, size_t max,
- 		      const char *format, const struct tm *tm)
-diff --git a/compat/posix.h b/compat/posix.h
-index 71cc731620..3cac1751aa 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -348,6 +348,24 @@ struct git_iovec {
- ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt);
+ /*
+diff --git a/odb/source-loose.c b/odb/source-loose.c
+index ef0e919277..1fdaa9f88f 100644
+--- a/odb/source-loose.c
++++ b/odb/source-loose.c
+@@ -807,14 +807,14 @@ static int write_loose_object(struct odb_source_loose *loose,
+ 	close_loose_object(loose, fd, tmp_file.buf);
+ 
+ 	if (mtime) {
+-		struct utimbuf utb = {
+-			.actime = *mtime,
+-			.modtime = *mtime,
++		struct timespec times[2] = {
++			{ .tv_sec = *mtime },
++			{ .tv_sec = *mtime },
+ 		};
+ 
+-		if (utime(tmp_file.buf, &utb) < 0 &&
++		if (utimensat(AT_FDCWD, tmp_file.buf, times, 0) < 0 &&
+ 		    !(flags & ODB_WRITE_OBJECT_SILENT))
+-			warning_errno(_("failed utime() on %s"), tmp_file.buf);
++			warning_errno(_("failed utimensat() on %s"), tmp_file.buf);
+ 	}
+ 
+ 	return finalize_object_file_flags(loose->base.odb->repo, tmp_file.buf, filename.buf,
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+index 0890704e76..64871ff8da 100644
+--- a/odb/source-packed.c
++++ b/odb/source-packed.c
+@@ -574,13 +574,15 @@ static int odb_source_packed_freshen_object(struct odb_source *source,
+ 					    const time_t *mtime)
+ {
+ 	struct odb_source_packed *packed = odb_source_packed_downcast(source);
+-	struct utimbuf times, *timesp = NULL;
++	struct timespec times[2], *timesp = NULL;
+ 	struct pack_entry e;
+ 
+ 	if (mtime) {
+-		times.actime = *mtime;
+-		times.modtime = *mtime;
+-		timesp = &times;
++		times[0].tv_sec = *mtime;
++		times[0].tv_nsec = 0;
++		times[1].tv_sec = *mtime;
++		times[1].tv_nsec = 0;
++		timesp = times;
+ 	}
+ 
+ 	if (!find_pack_entry(packed, oid, &e))
+@@ -589,7 +591,7 @@ static int odb_source_packed_freshen_object(struct odb_source *source,
+ 		return 0;
+ 	if (e.p->freshened)
+ 		return 1;
+-	if (utime(e.p->pack_name, timesp))
++	if (utimensat(AT_FDCWD, e.p->pack_name, timesp, 0))
+ 		return 0;
+ 	e.p->freshened = 1;
+ 
+diff --git a/rerere.c b/rerere.c
+index 3d3bd0db16..b64771f57f 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -658,8 +658,8 @@ static int merge(struct index_state *istate, const struct rerere_id *id, const c
+ 	 * A successful replay of recorded resolution.
+ 	 * Mark that "postimage" was used to help gc.
+ 	 */
+-	if (utime(rerere_path(&buf, id, "postimage"), NULL) < 0)
+-		warning_errno(_("failed utime() on '%s'"),
++	if (utimensat(AT_FDCWD, rerere_path(&buf, id, "postimage"), NULL, 0) < 0)
++		warning_errno(_("failed utimensat() on '%s'"),
+ 			      rerere_path(&buf, id, "postimage"));
+ 
+ 	/* Update "path" with the resolution */
+diff --git a/t/helper/test-chmtime.c b/t/helper/test-chmtime.c
+index 0e5538833a..a9e6eb78b8 100644
+--- a/t/helper/test-chmtime.c
++++ b/t/helper/test-chmtime.c
+@@ -105,7 +105,8 @@ int cmd__chmtime(int argc, const char **argv)
+ 
+ 	for (; i < argc; i++) {
+ 		struct stat sb;
+-		struct utimbuf utb;
++		struct timespec times[2];
++		int64_t mtime_sec;
+ 		uintmax_t mtime;
+ 
+ 		if (stat(argv[i], &sb) < 0) {
+@@ -123,22 +124,26 @@ int cmd__chmtime(int argc, const char **argv)
+ 		}
  #endif
  
-+#ifndef AT_FDCWD
-+#define AT_FDCWD (-100)
-+#endif
-+#ifndef UTIME_NOW
-+#define UTIME_NOW ((1L << 30) - 1L)
-+#endif
-+#ifndef UTIME_OMIT
-+#define UTIME_OMIT ((1L << 30) - 2L)
-+#endif
-+
-+#ifdef NO_UTIMENSAT
-+#ifdef utimensat
-+#undef utimensat
-+#endif
-+#define utimensat git_utimensat
-+int git_utimensat(int fd, const char *path, const struct timespec times[2], int flag);
-+#endif
-+
- #ifdef NO_SETENV
- #define setenv gitsetenv
- int gitsetenv(const char *, const char *, int);
-@@ -502,13 +520,16 @@ int git_qsort_s(void *base, size_t nmemb, size_t size,
+-		utb.actime = sb.st_atime;
+-		utb.modtime = set_eq ? set_time : sb.st_mtime + set_time;
++		mtime_sec = set_eq ? set_time : sb.st_mtime + set_time;
  
- #ifdef NO_NSEC
- #undef USE_NSEC
-+#define ST_ATIME_NSEC(st) 0
- #define ST_CTIME_NSEC(st) 0
- #define ST_MTIME_NSEC(st) 0
- #else
- #ifdef USE_ST_TIMESPEC
-+#define ST_ATIME_NSEC(st) ((unsigned int)((st).st_atimespec.tv_nsec))
- #define ST_CTIME_NSEC(st) ((unsigned int)((st).st_ctimespec.tv_nsec))
- #define ST_MTIME_NSEC(st) ((unsigned int)((st).st_mtimespec.tv_nsec))
- #else
-+#define ST_ATIME_NSEC(st) ((unsigned int)((st).st_atim.tv_nsec))
- #define ST_CTIME_NSEC(st) ((unsigned int)((st).st_ctim.tv_nsec))
- #define ST_MTIME_NSEC(st) ((unsigned int)((st).st_mtim.tv_nsec))
- #endif
-diff --git a/compat/utimensat.c b/compat/utimensat.c
-new file mode 100644
-index 0000000000..e4c8e8d0b6
---- /dev/null
-+++ b/compat/utimensat.c
-@@ -0,0 +1,39 @@
-+#include "../git-compat-util.h"
+-		mtime = utb.modtime < 0 ? 0: utb.modtime;
++		times[0].tv_sec = sb.st_atime;
++		times[0].tv_nsec = ST_ATIME_NSEC(sb);
++		times[1].tv_sec = mtime_sec;
++		times[1].tv_nsec = 0;
 +
-+int git_utimensat(int fd, const char *path, const struct timespec times[2], int flag)
-+{
-+	struct timeval tv[2];
-+	struct timeval *tvp = NULL;
-+
-+	if (fd != AT_FDCWD) {
-+		errno = ENOSYS;
-+		return -1;
-+	}
-+
-+	if (flag) {
-+		errno = ENOSYS;
-+		return -1;
-+	}
-+
-+	if (times) {
-+		for (int i = 0; i < 2; i++) {
-+			if (times[i].tv_nsec == UTIME_NOW) {
-+				struct timeval now;
-+				gettimeofday(&now, NULL);
-+				tv[i] = now;
-+			} else if (times[i].tv_nsec == UTIME_OMIT) {
-+				struct stat st;
-+				if (stat(path, &st) < 0)
-+					return -1;
-+				tv[i].tv_sec = (i == 0) ? st.st_atime : st.st_mtime;
-+				tv[i].tv_usec = (i == 0) ? ST_ATIME_NSEC(st) / 1000 : ST_MTIME_NSEC(st) / 1000;
-+			} else {
-+				tv[i].tv_sec = times[i].tv_sec;
-+				tv[i].tv_usec = times[i].tv_nsec / 1000;
-+			}
-+		}
-+		tvp = tv;
-+	}
-+
-+	return utimes(path, tvp);
-+}
-diff --git a/configure.ac b/configure.ac
-index cfb50112bf..a37a53f5b5 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1146,6 +1146,12 @@ GIT_CHECK_FUNC(mkdtemp,
- [NO_MKDTEMP=YesPlease])
- GIT_CONF_SUBST([NO_MKDTEMP])
- #
-+# Define NO_UTIMENSAT if you don't have utimensat in the C library.
-+GIT_CHECK_FUNC(utimensat,
-+[NO_UTIMENSAT=],
-+[NO_UTIMENSAT=YesPlease])
-+GIT_CONF_SUBST([NO_UTIMENSAT])
-+#
- # Define NO_INITGROUPS if you don't have initgroups in the C library.
- GIT_CHECK_FUNC(initgroups,
- [NO_INITGROUPS=],
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 8f56203f34..bb1d96802d 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -380,9 +380,9 @@ set(function_checks
- 	strcasestr memmem strlcpy strtoimax strtoumax strtoull
- 	setenv mkdtemp poll pread memmem writev)
++		mtime = mtime_sec < 0 ? 0 : mtime_sec;
+ 		if (get) {
+ 			printf("%"PRIuMAX"\n", mtime);
+ 		} else if (verbose) {
+ 			printf("%"PRIuMAX"\t%s\n", mtime, argv[i]);
+ 		}
  
--#unsetenv,hstrerror are incompatible with windows build
-+#unsetenv,hstrerror,utimensat are incompatible with windows build (provided by compat/mingw.c)
- if(NOT WIN32)
--	list(APPEND function_checks unsetenv hstrerror)
-+	list(APPEND function_checks unsetenv hstrerror utimensat)
- endif()
- 
- foreach(f ${function_checks})
-@@ -428,6 +428,10 @@ if(NOT HAVE_WRITEV)
- endif()
- 
- if(NOT WIN32)
-+	if(NOT HAVE_UTIMENSAT)
-+		list(APPEND compat_SOURCES compat/utimensat.c)
-+	endif()
-+
- 	if(NOT HAVE_UNSETENV)
- 		list(APPEND compat_SOURCES compat/unsetenv.c)
- 	endif()
-diff --git a/meson.build b/meson.build
-index d86f2acd2b..a98f63a46c 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1475,6 +1475,8 @@ else
-     'unsetenv' : ['unsetenv.c'],
-     # provided by compat/mingw.c.
-     'getpagesize' : [],
-+    # provided by compat/mingw.c.
-+    'utimensat' : ['utimensat.c'],
-   }
- 
-   if get_option('b_sanitize').contains('address') or get_option('b_sanitize').contains('leak')
+-		if (utb.modtime != sb.st_mtime && utime(argv[i], &utb) < 0) {
++		if (mtime_sec != sb.st_mtime && utimensat(AT_FDCWD, argv[i], times, 0) < 0) {
+ #ifdef GIT_WINDOWS_NATIVE
+ 			if (S_ISDIR(sb.st_mode)) {
+ 				/*
+-				 * NEEDSWORK: The Windows version of `utime()`
+-				 * (aka `mingw_utime()`) does not correctly
++				 * NEEDSWORK: The Windows version of `utimensat()`
++				 * (aka `mingw_utimensat()`) does not correctly
+ 				 * handle directory arguments, since it uses
+ 				 * `_wopen()`.  Ignore it for now since this
+ 				 * is just a test.
 -- 
 gitgitgadget
 
