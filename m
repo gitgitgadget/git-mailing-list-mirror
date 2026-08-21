@@ -1,179 +1,232 @@
-Received: from smtp.forwardemail.net (smtp.forwardemail.net [121.127.44.73])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF28241DEEB
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 23:02:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=121.127.44.73
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787353366; cv=none; b=YEhorbyQ9eBtdLvIqej/GokrjgJZ803/C5xXXnioVdcK6H5CYsniBbsCAUwOgIoM5c2ZC9O8ThcGsng9sIF+UqoY3O+UIK1NQNQtt4Ww5eySIl+d/If6u1ARrVbGYDp8+l0vMULg6kn53qK8FJXV3qKKYScyqRXaXW9CPobYn8A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787353366; c=relaxed/simple;
-	bh=/b7ULMG8w38YPlVctPS+7y6SQscY1UuArm9YWpek2Tw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cJVGloFc95eWS6N2+VrsaM7ejT/c9IgsvfmGwU85Ivmb1gpPK1flNzHvyJMmAFJcds/jk1zIY1jiVRuiF4wVvrIUhuaDm4D85JZGdCJ0HyzPAgJZ2MDSBDKCR4oIAwexAox8SYsKNuIA7C9oJbgydGFKSRqfic0c2EtuuQIJ/eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zitro.id; spf=pass smtp.mailfrom=fe-bounces.zitro.id; dkim=pass (1024-bit key) header.d=zitro.id header.i=@zitro.id header.b=dT2lHgCk; arc=none smtp.client-ip=121.127.44.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zitro.id
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fe-bounces.zitro.id
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCFA28C009
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 23:16:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787354164; cv=pass; b=Bl/Bcf/3iVAe8VYXnGmpW7TqXRM6aI2UHVkg6RM6vdanUyZ3xjm5Di0BGwvWJZwt4Z4zUy1EMRrfbzHFwLAa+mioLZ2c8W9//zNfa6QZ5zcQnnqvkHzGnJvoNLfaVJDU7x72I/ah83RpbSjb2Pl8x/ok5KozNZyM0Zh322zaUms=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787354164; c=relaxed/simple;
+	bh=3ZokiN2P5I1/26wzNeH8jktL3ULwMxm+SO87h5SqIO4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=G/DEiWRvjf+eX8BkvH8P/PvfISWlj3E2c2hS9Pmt3SaWZbAFvHO+0vXaXJAoahesmLw9gE+j12bN0ohXEu9HfPaMw1LFOejxVCZQ9PFoDzzIvwDt0FDtDH6tH6dLRxgSBDC83uRIj+UWmsAPY4gSrvSBeVHuVonLkJRwUMDY25A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cw1nFrNr; arc=pass smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zitro.id header.i=@zitro.id header.b="dT2lHgCk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zitro.id;
- h=Content-Transfer-Encoding: Content-Type: MIME-Version: References:
- In-Reply-To: Message-ID: Date: Subject: Cc: To: From; q=dns/txt;
- s=fe-ef2ef2159a; t=1787353354;
- bh=Fvf7pVYujewH04ZFHnCpDwBDCqjZedYhZerD/7a96Zw=;
- b=dT2lHgCkPCNI4meDzSyeb69ChXSGRO03J9RiCFfBF7fuExAQP2I3a9HeO3Q703PBFw1L3ZwUi
- dqIqjb4iOZP5HY25WurhNxVSF1At7DtQjya1VeI7xOeWFaQf2+uJqz2tDItZf3ZEPo/E+sDzb71
- 4GSdBgfyIykrSy8Ygq3S0pI=
-X-Forward-Email-ID: 6a88d90896141d1f979b279b
-X-Forward-Email-Sender: rfc822; 0@zitro.id, smtp.forwardemail.net,
- 121.127.44.73
-X-Forward-Email-Version: 2.13.16
-X-Forward-Email-Website: https://forwardemail.net
-X-Complaints-To: abuse@forwardemail.net
-X-Report-Abuse: abuse@forwardemail.net
-X-Report-Abuse-To: abuse@forwardemail.net
-From: Volodymyr Vriukalo <0@zitro.id>
-To: git@vger.kernel.org
-Cc: Volodymyr Vriukalo <0@zitro.id>,
-	Jonathan Tan <jonathantanmy@fastmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Glen Choo <glencbz@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>,
-	Atharva Raykar <raykar.ath@gmail.com>
-Subject: [PATCH 2/2] branch: allow recursion with no tracking name
-Date: Sat, 22 Aug 2026 01:01:42 +0200
-Message-ID: <20260822-vv-branch-recurse-no-start-ref-v1-2-46dc140acaa8@zitro.id>
-In-Reply-To: <20260822-vv-branch-recurse-no-start-ref-v1-0-46dc140acaa8@zitro.id>
-References: <20260822-vv-branch-recurse-no-start-ref-v1-0-46dc140acaa8@zitro.id>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cw1nFrNr"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-51c04bf4711so13203091cf.2
+        for <git@vger.kernel.org>; Fri, 21 Aug 2026 16:16:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787354161; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Mf2B8eEfGE61qchZ3ZrRU9GTrkWXyGex4ejTPq3O5F/9LpbY/DHoMkMlNOhjXkWNKQ
+         bqCOxMnWDDwFnM7FGSadXhKVJaZhKCJIwstCOwG4KjPNcnegS5WaFFQ+oFuT6P6J5TTU
+         KHkbGGYkUiFmF2eFeGLa7WTckOf/504jLH1SuaR5JVK2g/Yk+GCZrY2AVAExp3puzt/3
+         jXpPl2J/QFMxUtRTVAGhzJ8E/FeDFd6h/CjHGbk9N4cupq6Lfwk+l5Hi2wdoaD1NNqLI
+         jkO9OL6pKOfyC/9BxTCWeH8pdSs34yIoqQ6tJ1UtNYEfiEmc/yFEBKaow8IsVTAW72+9
+         uU7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=9mn9IGJkk8esQQi7Coocyy+TvgvnOQqSIr271gAwhJI=;
+        fh=/Wcda/33dVcwL4uT3LrFLE8+wQJ0TvS/ZQDPBAi88s8=;
+        b=KFtHlobyjE9SXItAYGtwjxNvDQ2EwFNuAhmhusRRpSpg/bYkbKIP0vULzXh/eToTOc
+         qeUpSetB4yJD/s6at2t8EvvGtvz1ZsFL93xFj2oSxd2f1VDv3aOuYhsodlembixCU9dd
+         Iq0qyZSHUMeqxl8qm1Tds78w4tLDHNkcugxCmaX+lvHworeQzibGF90G4PoDVMgmSCHG
+         ySoGkj5SKn1gNLDzLHxClA4I7UckBS8Fq5qNZU6LmixA0VWF2C1zbFUVBUm9XxWIbUuc
+         IOsxa/J6b9dU2NXmlMwKl0u5JAm9arNSYGCRFkWwa8oq4SdgYdbeCM+EpdfDkFIBpu5c
+         hNwA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787354161; x=1787958961; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9mn9IGJkk8esQQi7Coocyy+TvgvnOQqSIr271gAwhJI=;
+        b=Cw1nFrNr24MbKuTWxEtnvAdXu5xN9LF6F2O+t9dhlpa0el1el3RQvR6L+13isFOlm0
+         0XyAZIiJ1zhP6AdYgrnui5yMdh5o08NrvkutKcKsT5dOZ/hkuFAXnVMVcAr1hIIK3O2Z
+         CE3+hrDzcwLNM8yd0PC3NZ2OeG13FZUARIHWzq/bxnceiH8ZQml+vyYKMKwmtvLTzkAw
+         bkx2asvskFh2rGUij5w1sWcIJ0f3i77TEz1O59JeqDGD4Tbx/O2mjt1+GkZU04Epf02o
+         ilMOC/kfEU+o2GqSRFsJMuzU3J44P09jPd7ZTJI99rkYfz7YwpqsJEFmqkMIawLnA3O5
+         3NSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787354161; x=1787958961;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9mn9IGJkk8esQQi7Coocyy+TvgvnOQqSIr271gAwhJI=;
+        b=MLmoqyCrQ1meSHGORELPcuGqQlmYCkB2hNe93Ok2sAaR7pkrq1un97OogDcBMdj1aF
+         jlyeDPLviHo08C3+GrzcJ4sj3zKG+L5GVL+5u7dGXakfhKwrlXyb+j55KwFFEBI6NGd3
+         2QDxzSo7xY1U0W4NEp6/IVB3ovTtLCZ4eMsBRO8jsJsfnVXwH93bcHAT/R6ShWb1sLcw
+         4pvl4XNeJCgWnOpc3MhBEhh2VGNekI8m9y+RChnm0w/L4ebZi4+ayFvNsWhXCJN/7LyC
+         cJobnPyPHVmlWBxFmReJb74NYcIAJnfDdSLtVhdzSzIVBW3asu9nbUVFA1Ve34hFO/CO
+         1ECg==
+X-Forwarded-Encrypted: i=1; AHgh+RqwSwVjfXrRsiD4i8G08SD4gQexTja+iZadFruYgSfD7gg+KseyZw7g2VeoPaXZpm9ZFR0=@vger.kernel.org
+X-Gm-Message-State: AFuF++loLvKXOX4SBD3Lw3NgCtK0jb/LBPRSanhw7+myzXbtYxZc7A39
+	I3fwcaV9w85wAMrPPJuB2CbLAPeLWc+XC4m270GZ82eXdrkTlzhzkhxS2pS6wut+qg5jtDcpfc1
+	MvPNndaU+00wB/jNgmBb2Yv6HhZLRFZw=
+X-Gm-Gg: AR+sD108floVmAyN9igKj67RNmZ5+n0YYY76zcUK24vws+jquPdQHJKnndEa9hQ3Iju
+	Cnd3NnYilgYG4XtilXAN2uwWaI6WPjWJMkynUGbDcgLCJPHRjcR9plfrwLDq8j7kRoViKB+y+Fi
+	s+oXeZVRwNyEdEJqn/YeHpJDvZaaTUukgVHXVE33AsYtel6rRivz9F24fSQEqD8OHcFGBVzFUoI
+	sl6XDR8+zF3NU3dE4xgErCZ/GD92AZTa6/KYrC9LGQdnBPGsBsSpIJGdDBL33eR3t6+iHauEwNJ
+	hUcMDW8rU2DDPx2o3aGrhsTzfzgErv/TNxVj2MWVvdhZS9N+Hh7BzG/NaxRB5n2KQK5ZkYiSp4F
+	awnwAbwqyLf9ILzhZOZ4lnvFnIaLcYWiO
+X-Received: by 2002:a05:622a:153:b0:51c:1c73:5945 with SMTP id
+ d75a77b69052e-52e09cabf84mr14147921cf.24.1787354160607; Fri, 21 Aug 2026
+ 16:16:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4779; i=0@zitro.id; h=from:subject:message-id; bh=/b7ULMG8w38YPlVctPS+7y6SQscY1UuArm9YWpek2Tw=; b=owGbwMvMwCXWv3ZB/MVrrO8ZT6slMWR1XM/Wu3T22YU7i6tWSDlfP2nxzOOfgUhb+bXJ/9gXf C0pSwtJ7ihlYRDjYpAVU2Rx9Z2dn8nWO0tj5sFtMHNYmUCGMHBxCsBE9C8y/K+KqTZPXxWSE/pb Ve5o5wL+tX+vb7VwZI1/mZFn9rXt2lGG/y5bp6Z9U/MSTnzcklA3+fxd443lXHOqsm0sC78ysTa vYwAA
-X-Developer-Key: i=0@zitro.id; a=openpgp; fpr=23DE306A7F9E54C26627EF2975B69E8242090518
-Content-Transfer-Encoding: 8bit
+References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+ <pull.2197.v6.git.1787259838.gitgitgadget@gmail.com> <dcb84a69a6a65085d468a0a212cea0281605c5d0.1787259838.git.gitgitgadget@gmail.com>
+ <xmqqa4qgruvj.fsf@gitster.g>
+In-Reply-To: <xmqqa4qgruvj.fsf@gitster.g>
+From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Date: Sat, 22 Aug 2026 08:15:49 +0900
+X-Gm-Features: AcwNN1XyX_qW3z5eOn6GrRas8i3D0Ae6hwC0AJvSzkicHrREG-905HC8ZK7u18Y
+Message-ID: <CAF5D8-vDzp9xhu96Tu0ScmWRHvVyi74MD0NhPMnQ9ayoy6h+wQ@mail.gmail.com>
+Subject: Re: [PATCH v6 3/3] worktree add: improve message for ambiguous remote
+ branch name
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Harald Nordgren <haraldnordgren@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Creating a branch across submodules from a commit that no ref points
-  at fails, with the helper's usage text reprinted as an error:
+On Fri, Aug 21, 2026 at 12:54=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+> >
+> > diff --git a/builtin/worktree.c b/builtin/worktree.c
+> > index 22c8e5e131..8286c283e0 100644
+> > --- a/builtin/worktree.c
+> > +++ b/builtin/worktree.c
+> > @@ -788,6 +788,25 @@ static char *dwim_branch(const char *path, char **=
+new_branch)
+> >       return NULL;
+> >  }
+> >
+> > +static void advise_disambiguating_remotes(const char *path, const char=
+ *branch,
+> > +                                       const struct string_list *match=
+ed_remote_names)
+> > +{
+> > +     struct string_list_item *item;
+> > +
+> > +     advise(_("Branches with the same name appears in multiple remotes=
+:"));
+>
+> The subject "Branches" calls for plural verb "appear" (not
+> "appears").  The same issue appears in [PATCH 2/3].
 
-    submodule 'sub': usage: git submodule--helper create-branch [...]
-    fatal: submodule 'sub': cannot create branch 'branch-a'
+I overlooked that. Thank you.
+Rather than simply matching the verb to the subject, I want to clarify
+what (as specified by the user) exists on multiple remotes:
+    advise(_("Branch name '%s' appears in multiple remotes:"), branch);
 
-`submodule_create_branch()` runs the helper in a child process because
-  `install_branch_config_multiple_remotes()` cannot write config into a
-  submodule, and passes the branch name, the start oid and the tracking
-  name as three positionals.
-`dwim_branch_start()` leaves the tracking name NULL where the start
-  point named no ref, and `strvec_pushl()` stops at the first NULL, so
-  the child receives two positionals.
-`module_create_branch()` requires exactly three and prints its usage.
+> >               if (!commit) {
+> > -                     remote =3D unique_tracking_name(branch, &oid, NUL=
+L, NULL);
+> > +                     char *remote;
+> > +                     int num_matches =3D 0;
+> > +                     struct string_list matched_remote_names =3D STRIN=
+G_LIST_INIT_DUP;
+> > +
+> > +                     remote =3D unique_tracking_name(branch, &oid, &nu=
+m_matches,
+> > +                                                   &matched_remote_nam=
+es);
+> >                       if (remote) {
+> >                               new_branch =3D branch;
+> >                               branch =3D new_branch_to_free =3D remote;
+> > +                     } else if (num_matches > 1) {
+> > +                             if (!opts.quiet &&
+> > +                                 advice_enabled(ADVICE_CHECKOUT_AMBIGU=
+OUS_REMOTE_BRANCH_NAME))
+> > +                                     advise_disambiguating_remotes(pat=
+h, branch,
+> > +                                                                   &ma=
+tched_remote_names);
+> > +                             die(_("'%s' matched multiple (%d) remote =
+tracking branches"),
+> > +                                 branch, num_matches);
+> >                       }
+> > +                     string_list_clear(&matched_remote_names, 0);
+> >               }
+>
+> This appears inside "} else if (ac =3D=3D 2) {" to catch an invocation
+> like
+>
+>         git worktree add ../over-there topic-branch
+>
+> where the origin of topic-branch is ambiguous (in other words,
+> appears in multiple remotes).  But don't we have the same issue for
+> 1 argument case that appears just above this (ac =3D=3D 2) case that
+> handles
+>
+>         git worktree add ../topic-branch
+>
+> invocation?  The code reads like:
+>
+>         } else if (ac < 2) {
+>                 /* DWIM: Guess branch name from path. */
+>                 char *s =3D dwim_branch(path, &new_branch_to_free);
+>                 if (s)
+>                         branch =3D branch_to_free =3D s;
+>                 new_branch =3D new_branch_to_free;
+>
+>                 /* DWIM: Infer --orphan when repo has no refs. */
+>                 opts.orphan =3D (!s) && dwim_orphan(&opts, !!opt_track, 1=
+);
+>         } else if (ac =3D=3D 2) {
+>
+> where the branch name "topic-branch" is guessed from the path by
+> calling dwim_branch(), and we would get NULL in s.  branch is left
+> as-is, so it becomes "HEAD" that was assigned much earlier in the
+> same function.
+>
+>         branch =3D ac < 2 ? "HEAD" : av[1];
+>
+> We would create a new directory in ../topic-branch next door, and
+> then which branch would we check out?  Would dwim_orphan() kick in?
+>
+> Perhaps we want to update that code path to disambiguate the same way?
 
-Make the third positional optional, since a start point that named no
-  ref has no tracking name to give and the recursion has nothing to
-  track in the submodule either.
-Push it separately in the caller too: relying on `strvec_pushl()` to
-  stop early leaves the argument dropped by accident rather than by
-  intent, and a reader has to know where the terminator falls to see
-  that it can go missing at all.
+In the case of
+         git worktree add ../topic-branch
+invocation, multiple match can occur in dwim_branch() if there is a
+'worktree.guessremote=3Dtrue' config or one specifies '--guess-remote'
+option.Then it creates a branch named 'topic-branch' from HEAD, and
+the command exits with success.
 
-961b130d20 (branch: add --recurse-submodules option for branch
-  creation, 2022-01-28) introduced both sides.
+My initial patch included a warning and advice here,
+but now I don't think they are necessary.
 
-This is the same NULL tracking name as the previous patch, reached one
-  step earlier: the dry-run pass over the submodules runs before the
-  superproject's own `setup_tracking()` call, so with a submodule
-  present this failure hides the abort that patch removes.
-The new test therefore needs that patch under it.
+Even if multiple remotes match here, the command completes
+successfully. This could well be the intended behavior
+(just as when there is no match). In that case, a warning
+or advice might be superfluous.
 
-Assisted-by: An LLM.
-Signed-off-by: Volodymyr Vriukalo <0@zitro.id>
----
- branch.c                    | 10 +++++++++-
- builtin/submodule--helper.c |  7 ++++---
- t/t3207-branch-submodule.sh | 13 +++++++++++++
- 3 files changed, 26 insertions(+), 4 deletions(-)
+From the perspective of offering advice that actually
+helps the user, since the branch and worktree have already
+been created, the appropriate guidance would be to suggest
+deleting them and starting over. That, however, would
+likely make the message even longer.
 
-diff --git a/branch.c b/branch.c
-index 182fc4a3dd..2dab1f1e35 100644
---- a/branch.c
-+++ b/branch.c
-@@ -726,7 +726,15 @@ static int submodule_create_branch(struct repository *r,
- 		break;
- 	}
- 
--	strvec_pushl(&child.args, name, start_oid, tracking_name, NULL);
-+	/*
-+	 * The tracking name is absent when the start point named no ref.
-+	 * Push it separately: strvec_pushl() stops at the first NULL, so
-+	 * passing it inline would drop the argument by accident rather
-+	 * than by intent.
-+	 */
-+	strvec_pushl(&child.args, name, start_oid, NULL);
-+	if (tracking_name)
-+		strvec_push(&child.args, tracking_name);
- 
- 	if ((ret = start_command(&child)))
- 		return ret;
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 1cc82a134d..6895216712 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -3335,7 +3335,7 @@ static int module_create_branch(int argc, const char **argv, const char *prefix,
- 		OPT_END()
- 	};
- 	const char *const usage[] = {
--		N_("git submodule--helper create-branch [-f|--force] [--create-reflog] [-q|--quiet] [-t|--track] [-n|--dry-run] <name> <start-oid> <start-name>"),
-+		N_("git submodule--helper create-branch [-f|--force] [--create-reflog] [-q|--quiet] [-t|--track] [-n|--dry-run] <name> <start-oid> [<start-name>]"),
- 		NULL
- 	};
- 	struct repo_config_values *cfg = repo_config_values(the_repository);
-@@ -3344,13 +3344,14 @@ static int module_create_branch(int argc, const char **argv, const char *prefix,
- 	track = cfg->branch_track;
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 
--	if (argc != 3)
-+	if (argc < 2 || argc > 3)
- 		usage_with_options(usage, options);
- 
- 	if (!quiet && !dry_run)
- 		printf_ln(_("creating branch '%s'"), argv[0]);
- 
--	create_branches_recursively(the_repository, argv[0], argv[1], argv[2],
-+	create_branches_recursively(the_repository, argv[0], argv[1],
-+				    argc > 2 ? argv[2] : NULL,
- 				    force, reflog, quiet, track, dry_run);
- 	return 0;
- }
-diff --git a/t/t3207-branch-submodule.sh b/t/t3207-branch-submodule.sh
-index 54f7caeb2f..c56cea31cb 100755
---- a/t/t3207-branch-submodule.sh
-+++ b/t/t3207-branch-submodule.sh
-@@ -115,6 +115,19 @@ test_expect_success 'should move a branch to a start point that names no ref' '
- 	)
- '
- 
-+test_expect_success 'should recurse into submodules from a start point that names no ref' '
-+	test_when_finished "reset_test" &&
-+	(
-+		cd super &&
-+		oid=$(git rev-parse HEAD) &&
-+		git branch --recurse-submodules branch-a "$oid" &&
-+		git rev-parse branch-a &&
-+		git -C sub rev-parse branch-a &&
-+		git -C sub/sub-sub rev-parse branch-a &&
-+		git -C second/sub rev-parse branch-a
-+	)
-+'
-+
- test_expect_success 'should ignore submodule.recurse when not creating branches' '
- 	test_when_finished "reset_test" &&
- 	(
+If there were an option (which currently doesn't exist)
+to make the command fail when remote inference fails,
+then I think it would be appropriate to issue the same
+advice and error message as in "ac =3D=3D 2" case.
 
--- 
-2.55.0.2.g927b4b9963
-
+Thanks,
+--
+Yoichi NAKAYAMA
