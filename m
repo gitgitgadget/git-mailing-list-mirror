@@ -1,32 +1,32 @@
-Received: from smtp.forwardemail.net (smtp.forwardemail.net [121.127.44.66])
+Received: from smtp.forwardemail.net (smtp.forwardemail.net [121.127.44.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33ED41D22F
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 23:02:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=121.127.44.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF28241DEEB
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 23:02:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=121.127.44.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787353353; cv=none; b=mYQJEQ52H8Ib15cHNfa6UGmepR2CS+HrNu66DZYfAHLSbY+Q+c/NApoudWRJ5LYfEwKwIdHl99ou3I7DJIwaCxtFatsdRhBn7y/4KvlnWcBQUYpH6Wq2DSBJbeM0Um38c1ZpAf6Zmyd6QrgwZpGXQ9rhXaQHlcG1+l2HnREPfus=
+	t=1787353366; cv=none; b=YEhorbyQ9eBtdLvIqej/GokrjgJZ803/C5xXXnioVdcK6H5CYsniBbsCAUwOgIoM5c2ZC9O8ThcGsng9sIF+UqoY3O+UIK1NQNQtt4Ww5eySIl+d/If6u1ARrVbGYDp8+l0vMULg6kn53qK8FJXV3qKKYScyqRXaXW9CPobYn8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787353353; c=relaxed/simple;
-	bh=YkG1YCVtxc5Fmzn1wEgU14rxVcaElKWrEaXGNeMLiBM=;
+	s=arc-20240116; t=1787353366; c=relaxed/simple;
+	bh=/b7ULMG8w38YPlVctPS+7y6SQscY1UuArm9YWpek2Tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZDHOJNiTrUEJ3ZMlaAcLkPGXMG6eoo74MyfYm/4txdaFO/I476MEBjB6jVYT8DXl6BscGJDPDB1glCb95o8L+D5OZeurcikX83M0nCzLW9yf7ufT3zwfnlAWfporMR7t2Vo9J7ozjYYIbFSqr4DZoJAw2snpR9d52BB9YFTdBgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zitro.id; spf=pass smtp.mailfrom=fe-bounces.zitro.id; dkim=pass (1024-bit key) header.d=zitro.id header.i=@zitro.id header.b=QD6gFIY8; arc=none smtp.client-ip=121.127.44.66
+	 MIME-Version:Content-Type; b=cJVGloFc95eWS6N2+VrsaM7ejT/c9IgsvfmGwU85Ivmb1gpPK1flNzHvyJMmAFJcds/jk1zIY1jiVRuiF4wVvrIUhuaDm4D85JZGdCJ0HyzPAgJZ2MDSBDKCR4oIAwexAox8SYsKNuIA7C9oJbgydGFKSRqfic0c2EtuuQIJ/eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zitro.id; spf=pass smtp.mailfrom=fe-bounces.zitro.id; dkim=pass (1024-bit key) header.d=zitro.id header.i=@zitro.id header.b=dT2lHgCk; arc=none smtp.client-ip=121.127.44.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zitro.id
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fe-bounces.zitro.id
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zitro.id header.i=@zitro.id header.b="QD6gFIY8"
+	dkim=pass (1024-bit key) header.d=zitro.id header.i=@zitro.id header.b="dT2lHgCk"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zitro.id;
  h=Content-Transfer-Encoding: Content-Type: MIME-Version: References:
  In-Reply-To: Message-ID: Date: Subject: Cc: To: From; q=dns/txt;
- s=fe-ef2ef2159a; t=1787353345;
- bh=j83l8mgPitfctiIDwBhbX+eqLyTPNDUKcjs6pFxg2/8=;
- b=QD6gFIY8Y3aJ1YzpVEU17FzMOgCzHth8IrNR3PJG3PZmLOmdvRgamB/NrR2DBmVzudmab5a4c
- 10teKNGM4bONpuX0MEhvAKOJoEPZbbUdmyFn+g/RXkanwK5ZAbjjd4hDbR9Jn5OwyGvdFW308En
- 0b53AdimeweZARx/DHqbg6A=
-X-Forward-Email-ID: 6a88d90096141d1f979b2776
+ s=fe-ef2ef2159a; t=1787353354;
+ bh=Fvf7pVYujewH04ZFHnCpDwBDCqjZedYhZerD/7a96Zw=;
+ b=dT2lHgCkPCNI4meDzSyeb69ChXSGRO03J9RiCFfBF7fuExAQP2I3a9HeO3Q703PBFw1L3ZwUi
+ dqIqjb4iOZP5HY25WurhNxVSF1At7DtQjya1VeI7xOeWFaQf2+uJqz2tDItZf3ZEPo/E+sDzb71
+ 4GSdBgfyIykrSy8Ygq3S0pI=
+X-Forward-Email-ID: 6a88d90896141d1f979b279b
 X-Forward-Email-Sender: rfc822; 0@zitro.id, smtp.forwardemail.net,
- 121.127.44.66
+ 121.127.44.73
 X-Forward-Email-Version: 2.13.16
 X-Forward-Email-Website: https://forwardemail.net
 X-Complaints-To: abuse@forwardemail.net
@@ -35,12 +35,15 @@ X-Report-Abuse-To: abuse@forwardemail.net
 From: Volodymyr Vriukalo <0@zitro.id>
 To: git@vger.kernel.org
 Cc: Volodymyr Vriukalo <0@zitro.id>,
-	Junio C Hamano <gitster@pobox.com>,
 	Jonathan Tan <jonathantanmy@fastmail.com>,
-	Glen Choo <glencbz@gmail.com>
-Subject: [PATCH 1/2] branch: do not track a start point with no ref
-Date: Sat, 22 Aug 2026 01:01:41 +0200
-Message-ID: <20260822-vv-branch-recurse-no-start-ref-v1-1-46dc140acaa8@zitro.id>
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Glen Choo <glencbz@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>,
+	Atharva Raykar <raykar.ath@gmail.com>
+Subject: [PATCH 2/2] branch: allow recursion with no tracking name
+Date: Sat, 22 Aug 2026 01:01:42 +0200
+Message-ID: <20260822-vv-branch-recurse-no-start-ref-v1-2-46dc140acaa8@zitro.id>
 In-Reply-To: <20260822-vv-branch-recurse-no-start-ref-v1-0-46dc140acaa8@zitro.id>
 References: <20260822-vv-branch-recurse-no-start-ref-v1-0-46dc140acaa8@zitro.id>
 Precedence: bulk
@@ -51,102 +54,119 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3886; i=0@zitro.id; h=from:subject:message-id; bh=YkG1YCVtxc5Fmzn1wEgU14rxVcaElKWrEaXGNeMLiBM=; b=owGbwMvMwCXWv3ZB/MVrrO8ZT6slMWR1XM+eW95WYWOYkG0w0aIn+OiUBf2HXzj7hTL+rNYSf nWZUWhlRykLgxgXg6yYIour7+z8TLbeWRozD26DmcPKBDKEgYtTACZydg/DPzuB11fzb6fymi94 kBrB3LPlWunsExvfv2W6kHZnh5FJyklGhuNVvMzWdQV7babOdJzDtOi6akFsdkWH/IsPtxTncok 08gAA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4779; i=0@zitro.id; h=from:subject:message-id; bh=/b7ULMG8w38YPlVctPS+7y6SQscY1UuArm9YWpek2Tw=; b=owGbwMvMwCXWv3ZB/MVrrO8ZT6slMWR1XM/Wu3T22YU7i6tWSDlfP2nxzOOfgUhb+bXJ/9gXf C0pSwtJ7ihlYRDjYpAVU2Rx9Z2dn8nWO0tj5sFtMHNYmUCGMHBxCsBE9C8y/K+KqTZPXxWSE/pb Ve5o5wL+tX+vb7VwZI1/mZFn9rXt2lGG/y5bp6Z9U/MSTnzcklA3+fxd443lXHOqsm0sC78ysTa vYwAA
 X-Developer-Key: i=0@zitro.id; a=openpgp; fpr=23DE306A7F9E54C26627EF2975B69E8242090518
 Content-Transfer-Encoding: 8bit
 
-Forcing a branch to a commit that no ref points at aborts when both
-  `submodule.recurse` and `submodule.propagateBranches` are set and
-  the repository has a remote configured:
+Creating a branch across submodules from a commit that no ref points
+  at fails, with the helper's usage text reprinted as an error:
 
-    BUG: refspec.c:442: refspec_find_match: need either src or dst
-    Aborted (core dumped)
+    submodule 'sub': usage: git submodule--helper create-branch [...]
+    fatal: submodule 'sub': cannot create branch 'branch-a'
 
-`create_branches_recursively()` resolves the start point through
-  `dwim_branch_start()`, which leaves `branch_point` NULL when the
-  start point names no ref -- an object id, or a revision expression
-  such as `HEAD~0`.  That NULL becomes `tracking_name`, and the
-  `setup_tracking()` call below it is guarded on `track` alone.
-  `setup_tracking()` assigns it to `tracking.spec.dst` without
-  checking, then hands the spec to `for_each_remote()`, so
-  `refspec_find_match()` receives a query with neither src nor dst
-  and trips its assertion.
-`for_each_remote()` never reaches that callback where no remote is
-  configured, which is why the abort needs one.
+`submodule_create_branch()` runs the helper in a child process because
+  `install_branch_config_multiple_remotes()` cannot write config into a
+  submodule, and passes the branch name, the start oid and the tracking
+  name as three positionals.
+`dwim_branch_start()` leaves the tracking name NULL where the start
+  point named no ref, and `strvec_pushl()` stops at the first NULL, so
+  the child receives two positionals.
+`module_create_branch()` requires exactly three and prints its usage.
+
+Make the third positional optional, since a start point that named no
+  ref has no tracking name to give and the recursion has nothing to
+  track in the submodule either.
+Push it separately in the caller too: relying on `strvec_pushl()` to
+  stop early leaves the argument dropped by accident rather than by
+  intent, and a reader has to know where the terminator falls to see
+  that it can go missing at all.
 
 961b130d20 (branch: add --recurse-submodules option for branch
-  creation, 2022-01-28) added the call with no guard at all.
-75388bf5b4 (branch: support more tracking modes when recursing,
-  2022-03-29) added the guard on `track`.
+  creation, 2022-01-28) introduced both sides.
 
-Updating the branch happens before the abort, so the command does
-  what was asked and then exits 134.
-Callers that check the exit status therefore see a failure that did
-  not happen, and one that rolls back on failure would undo a
-  successful update.
-
-`create_branch()` already declines this: it calls `setup_tracking()`
-  under `if (real_ref && track)`, leaving tracking unset when the
-  start point resolved to no ref.
-Make the recursive path agree.
-Checking for NULL inside `setup_tracking()` would also silence the
-  abort, but it would put the decision in the callee for one caller
-  that has the answer already, and leave the two creation paths
-  disagreeing about when tracking is set up.
-
-Reproducing it needs all four of:
-
-  - `submodule.recurse=true`
-  - `submodule.propagateBranches=true`
-  - a configured remote
-  - a start point that is not a ref name
-
-Submodules take no part, so the new test builds a repository with
-  neither a submodule nor a `.gitmodules`, where `propagateBranches`
-  is set and has nothing to propagate to.
+This is the same NULL tracking name as the previous patch, reached one
+  step earlier: the dry-run pass over the submodules runs before the
+  superproject's own `setup_tracking()` call, so with a submodule
+  present this failure hides the abort that patch removes.
+The new test therefore needs that patch under it.
 
 Assisted-by: An LLM.
 Signed-off-by: Volodymyr Vriukalo <0@zitro.id>
 ---
- branch.c                    |  2 +-
- t/t3207-branch-submodule.sh | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ branch.c                    | 10 +++++++++-
+ builtin/submodule--helper.c |  7 ++++---
+ t/t3207-branch-submodule.sh | 13 +++++++++++++
+ 3 files changed, 26 insertions(+), 4 deletions(-)
 
 diff --git a/branch.c b/branch.c
-index 243db7d0fc..182fc4a3dd 100644
+index 182fc4a3dd..2dab1f1e35 100644
 --- a/branch.c
 +++ b/branch.c
-@@ -806,7 +806,7 @@ void create_branches_recursively(struct repository *r, const char *name,
- 	 * tedious to determine whether or not tracking was set up in the
- 	 * superproject.
- 	 */
--	if (track)
-+	if (tracking_name && track)
- 		setup_tracking(name, tracking_name, track, quiet);
+@@ -726,7 +726,15 @@ static int submodule_create_branch(struct repository *r,
+ 		break;
+ 	}
  
- 	for (i = 0; i < submodule_entry_list.entry_nr; i++) {
+-	strvec_pushl(&child.args, name, start_oid, tracking_name, NULL);
++	/*
++	 * The tracking name is absent when the start point named no ref.
++	 * Push it separately: strvec_pushl() stops at the first NULL, so
++	 * passing it inline would drop the argument by accident rather
++	 * than by intent.
++	 */
++	strvec_pushl(&child.args, name, start_oid, NULL);
++	if (tracking_name)
++		strvec_push(&child.args, tracking_name);
+ 
+ 	if ((ret = start_command(&child)))
+ 		return ret;
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 1cc82a134d..6895216712 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -3335,7 +3335,7 @@ static int module_create_branch(int argc, const char **argv, const char *prefix,
+ 		OPT_END()
+ 	};
+ 	const char *const usage[] = {
+-		N_("git submodule--helper create-branch [-f|--force] [--create-reflog] [-q|--quiet] [-t|--track] [-n|--dry-run] <name> <start-oid> <start-name>"),
++		N_("git submodule--helper create-branch [-f|--force] [--create-reflog] [-q|--quiet] [-t|--track] [-n|--dry-run] <name> <start-oid> [<start-name>]"),
+ 		NULL
+ 	};
+ 	struct repo_config_values *cfg = repo_config_values(the_repository);
+@@ -3344,13 +3344,14 @@ static int module_create_branch(int argc, const char **argv, const char *prefix,
+ 	track = cfg->branch_track;
+ 	argc = parse_options(argc, argv, prefix, options, usage, 0);
+ 
+-	if (argc != 3)
++	if (argc < 2 || argc > 3)
+ 		usage_with_options(usage, options);
+ 
+ 	if (!quiet && !dry_run)
+ 		printf_ln(_("creating branch '%s'"), argv[0]);
+ 
+-	create_branches_recursively(the_repository, argv[0], argv[1], argv[2],
++	create_branches_recursively(the_repository, argv[0], argv[1],
++				    argc > 2 ? argv[2] : NULL,
+ 				    force, reflog, quiet, track, dry_run);
+ 	return 0;
+ }
 diff --git a/t/t3207-branch-submodule.sh b/t/t3207-branch-submodule.sh
-index fe72b24716..54f7caeb2f 100755
+index 54f7caeb2f..c56cea31cb 100755
 --- a/t/t3207-branch-submodule.sh
 +++ b/t/t3207-branch-submodule.sh
-@@ -98,6 +98,23 @@ test_expect_success 'should respect submodule.recurse when creating branches' '
+@@ -115,6 +115,19 @@ test_expect_success 'should move a branch to a start point that names no ref' '
  	)
  '
  
-+test_expect_success 'should move a branch to a start point that names no ref' '
-+	test_when_finished "rm -rf no-submodules" &&
-+	git init no-submodules &&
++test_expect_success 'should recurse into submodules from a start point that names no ref' '
++	test_when_finished "reset_test" &&
 +	(
-+		cd no-submodules &&
-+		test_commit one &&
-+		test_commit two &&
-+		git remote add origin . &&
-+		git config submodule.propagateBranches true &&
-+		git config submodule.recurse true &&
-+		git branch branch-a HEAD~1 &&
++		cd super &&
 +		oid=$(git rev-parse HEAD) &&
-+		git branch -f branch-a "$oid" &&
-+		test_cmp_rev HEAD branch-a
++		git branch --recurse-submodules branch-a "$oid" &&
++		git rev-parse branch-a &&
++		git -C sub rev-parse branch-a &&
++		git -C sub/sub-sub rev-parse branch-a &&
++		git -C second/sub rev-parse branch-a
 +	)
 +'
 +
