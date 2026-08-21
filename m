@@ -1,84 +1,82 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC2B35201A
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 16:55:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF611A6830
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 16:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787331345; cv=none; b=Yu5lNNw24xMCvqq4ACTXzwOAqi+tYRkRJtGvR2Wu2O2TUNJJQmQdZxUAUZAVbruleTFzJPsecT5vj+rEnoaKtoEBm2CQoo3KSNzpiAIzGnbyO50q0V9/hGLcVfqR1w1K/Ohz3uD/l86EkPVWqU60oGGJ7BLqodg+HvZqkOrUa2k=
+	t=1787331562; cv=none; b=SxnasLOYZrFuLo5sWWVQsQ8495P/JkYnkVWWOXlgFdnfTCqZcKH0e2WeTZOWH+dq69+7EYIaIMaHYK3h1DwDtqVioJ37LuzvjU7dXEMr+Xfy9RxiPbHF3Kq8QhOgs1E9ActG6lHV1SKJFN7AV1MdYtdt75hmlJHtzDJmM18K0rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787331345; c=relaxed/simple;
-	bh=l/vzGrw9+WnDviC8lN2ij64LltlToYWZ8Pam71MZX14=;
+	s=arc-20240116; t=1787331562; c=relaxed/simple;
+	bh=fTaZOqd1xJu998/VsdYAvJxGkvV4SideVml2qqEpmP8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VKkc5QqcB3B1qTl8rGovdcj5nCpGObqn5j7ZpYkYnFF0DUqTxr3UOzsWs0dqOp9iWZMLF7iMoh53TOlnVyAWTP3G9utLYRxOdYg8AoDc+CeGnqMZHTRdbOZdNPSE2CjxMRUJiXPcKmlElYCxx7DkhjbEwHci3UBMj+CZzgYSJME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yxO9p/Vw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BA9qVQEy; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=kEjHVn3XR4zQmpdiCBIcabZ/k4H7EyVI06HN7eX+jQGCxrZCnW5LOCo5HYfcKhKy42jCw4oJEiraVkojZuf0YeaeXfTNWLqJDovEnDa9cLweiDuOBb2zU+ftGjqz2i7RafNstNaqWw+hiG2YpbuP/M6FXANtdccSrMowLdaEKXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wVE5ktzy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=isF/qlCs; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yxO9p/Vw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BA9qVQEy"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 78D527A002D;
-	Fri, 21 Aug 2026 12:55:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wVE5ktzy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="isF/qlCs"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id DDAAA1D00133;
+	Fri, 21 Aug 2026 12:59:19 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 21 Aug 2026 12:55:43 -0400
+  by phl-compute-10.internal (MEProxy); Fri, 21 Aug 2026 12:59:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787331343; x=1787417743; bh=h2ybIJPLJ8
-	bNJWLP+VDbXgQhGEG4Zi8isvoLFIXAhl4=; b=yxO9p/Vw9fjrBUAb6RqXWovXDp
-	8QBtnzmetDV28fnY/1uZNZKp/5taK8DijqtSzF/TrfBXV6HZM8TNdnvjzRz160RS
-	WgQ06qalenJwBAjLTo9wbpFE1+F96jbviMMvgLS13nkHWvl5J/Cg6wdfhMlA1+MI
-	4TL5x2yQOaMETyZZBSzHE4AHoxJCmzRyWcqAjJXDS2Co5BXcDNgrgSbvZt+H65FQ
-	BibJhJ/X3fhgkK0jOh5Wc98B7ZrZ091bWAJTHPw3IZK7WoVjfL+Jg59dRmtUsReg
-	HwVVgvEn86Mn5cOL2g04yuZ7QDh/SakLWoNwmea2bc2Sqqru4VAO1Qb0u3dw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1787331559;
+	 x=1787417959; bh=fTaZOqd1xJu998/VsdYAvJxGkvV4SideVml2qqEpmP8=; b=
+	wVE5ktzyxgPM4v5SwQsFO76JDCNShoMHFntdwudDp3IRbiZO/e3gzjQlxvlVINf8
+	j2VfA4n2fJm24Z88jqizQfePhW05jOG6H32qdxUphmU06jrhyVxY8a35ZktdnC0B
+	ABU3AGyaf+5LRSKPRjX8VjL7Meb7jjfxqD8VdqIJ3DxR83i9efm5Hpgyv5+gecyE
+	TH0ZKyFhN/l+HAxUym83+vd2EuS1u7xLMbwmvOFsCIM6ze2F851fyKRQm/p6e+4q
+	mHqsInKYj4Bgh3EvWNz6NMZYkRbJ9QPJvPf/3fJrMl0i4loqeoK8WzhLysT0oQn9
+	RJPMQ1cs2s2PfOMbXbnBpA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787331343; x=1787417743; bh=h2ybIJPLJ8bNJWLP+VDbXgQhGEG4Zi8isvo
-	LFIXAhl4=; b=BA9qVQEymYOIhu7WLg9IZo0/XmIlQQGn3JbZdbtqa4eWzr1/hbp
-	kicpDK9HBcvafyc3L7cRvCpS9NWYkrw9C2fpKN+jS+CrA4GuVSwg2QzUY0yrOMiB
-	Q9xaRk0A1U024A8DzuG+kUdMPsMDTcF3Bon5nxl1NCmAAHo4Gw1s3vILjHvGc/xE
-	M12hOXgKzQa8cJ9XGsOW++Fym/GqX9vXk84QgshcgDFMHPIL6g9WeahTyA1XeDLk
-	Ij0z4Mi5C3YxwftI9gkpCVyFXL4Zi4qptaRvWyHQNqK6cARXNFq5eSN6UvMxk2Rd
-	e+Uupf9b3ld5s7fQmUBtTwyp1FixDR/Myxg==
-X-ME-Sender: <xms:DoOIarB8wREVkHHgOmACNtZXBqW0QHTedbwzuLTmK6cm6EHniSYAmQ>
-    <xme:DoOIaq2mldtFr_mRX6TyU9BklLqJnBTDS32hVCwofzkZmWLtxH8eydEuBmakpNJ76
-    wtmkEP4lvdWny1tLZYQq2UBC-S0YiOVQUq2jw-an9wiepir-vljkWo>
-X-ME-Received: <xmr:DoOIat00aQYihrggMCO8hCvm2loEC6xUbnSPK6j4tmhWeJ_3TexF3hvCqcyqNm9EHPPoYwiwsW9D1xKytUYV5ENb2pWrKn1pEw>
-X-ME-Proxy-Cause: dmFkZTGKOIcpBHGH95U/LstTX7geYaGPiLQ32uebdCeDzvFWMufPy0Tbnb8u6JNcY91Dzp
-    lSywUWrjlYUz12HHdZAlotPYLDPQZO/u4B0pvXT75gsTnd+O0zlN/rjPC2xFvK2pks4YCt
-    wLdehBvFMXjnOGEO4+fSfsFzEqDDtfssh8prMlJO1IStsILm9FJn0O9lNVCzeO7wyXe0hz
-    bi1tYfVqsE8ig2VVYkKBPKmZJH5bPh/c1lfpgmZAdc6F402QRl2ftzQRVHoF/FecP7lEL8
-    lPKT0k6N/15PKG1QOq+VJOmhL5OmMBtdV4ow85ObaqzdzSUQ9ElQScDalSSfxVbasFOSiV
-    lrkg/I/i3ivjvjBJYNnijkgki1+thCGRK4G4wif3Ov8/OPcmJ5bISa9BfWVnC7oOU0EM9S
-    IzVObtEZsiQ7rlMnLfboN9oSgk7wYyMONkOLZpMlTSSWzF34YXhTyvphoC2q0JlFu9RwZH
-    QQLR6oIhD+zXiP3xQHri1RAPpN5monxXPKO83rc7+AUE0A0rslAAI5R08y5EXJZGL1eX30
-    UyO1lqVpmg53fWoL7rw86wCtWz4ugLJc+sz2aOfPhAMiyHOeEj34cCWtXw6pKGd0jVM3xI
-    NYiza7RllUL26eb6k4xQauXvMIfOd3+AYaJCGg750lgiemgqdoRk3ZXUWEkg
-X-ME-Proxy: <xmx:DoOIavAuNjH1YjQl87gbdw-DyG3ljAgPatjRI1xl8tDVzddWOpj2eg>
-    <xmx:DoOIas4ShhVfXNE0r5Wr3XGABm3fNBzl8lWJb1vxocazEvDbuLmJoQ>
-    <xmx:DoOIagIasZcyEbby0tE9sOE9VRV5bR1zj8RF2ME_Zt_M7N7-dFjgaQ>
-    <xmx:DoOIatu64VQhltieheSwKvaPhFeXv0fgNAl3_cW0YlxiA5PFNTQWPg>
-    <xmx:D4OIauJQZSnmnQnPTlOp2h3GxdAvJh8NlBpzgPoBVn2Vk_0xbf7hvO3G>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787331559; x=
+	1787417959; bh=fTaZOqd1xJu998/VsdYAvJxGkvV4SideVml2qqEpmP8=; b=i
+	sF/qlCsl5e/0APa7aaUOZlMWKOYRtsPAYtEUmpUSv1ILCX+ZmOQPV2nvChkfRdeL
+	BJ5l9em6lTXaQ7f3EYUOeDHuFYKrRj13aVEcLbSR3jIRugs8jz6mnx3/2743xm9b
+	ybT6U6kCEhN7VNjiJOTf1hZEmwJ/kWetq9urWKdw5QHPezXZtsxsRYbyroyI9scK
+	HYdA+1YnfByLww1WvAM2Jv2kmjfdsPT7EueS4zO4JxIjQ2CXCl4BhTd24CHcVxe3
+	wdl9i/Gp78aC4mMPbO1kq+phW32+Z4uE6QpK+f82UhDqvdm0WvGvGkXXGVh9Q3xi
+	FkNbsecZk1G8uTixgc1jw==
+X-ME-Sender: <xms:54OIakWbNNw5ChKuoAEDS0H23Xi1WJyor9CXN6fl_BxnP8TyOo8qOw>
+    <xme:54OIavcArxrgGObUyII8Qwda2mJ_y83Ei1TWBhYCuvb6UmW9v4OL8vBx_ieKpgKnc
+    neKnriWPC2Mzg0NoaTl-i1Wa2dWDt3Bv1woPE6uV_6XNUhijFgO-EE>
+X-ME-Received: <xmr:54OIagvmJ1AvuQXarqzgmoIggcJf-S15bPXGFGKgZL0_k_DyCxb9rDk5HvPDRvowPLNMOnCNDOOBo9gE76dhxEvBzswuIA3vKw>
+X-ME-Proxy-Cause: dmFkZTE08QciQFd5PBABAZxSBbp7BeljzWQdBQPvg9kf5QOp6i2s2UrabVDISne6nfSecf
+    gA5Dys9QjTPR6UPh4XSyf4Z5XlmzIYLCSiJKTHcqpNfpcwPS3c9dv0jX//qXtkQM6EjPG1
+    bb2ReW1ybZdEV6OpCu5BAuZMeEHbr5zWbhaUidNVMshQl83WIazfb2ZYiUW1F80AqbJ+m4
+    pkdr23ibaCPdSaUZQ2YQifrHTnxwGFyS0kEm8N8jq4LIT73XK7yGveuTFb9T5VohaugYSI
+    fttWoOv56ys3CnLjHMpf9C41CNQLp69CiBkxFarnWKsO14t1j6N7CDLXI/iXcT6Zu/bYdw
+    4wU2VT1wAJEwK71bIx7Br19z/H4Yj84PvVMT7ECwv2zwVLt5oIPPO+s7mCvHFduypPdAtv
+    XjPXdrDEV7nsum90TtT7eQVPYVMypyJQxugINF94bV5nTY373hJhK1NkgQyxsStwEopK62
+    iY5e73/EEJdoBubnEfX+zP3vCkD/WvQxMEJw246k7DetRCIsmiSgeqFP8xdvG2dqgAbxwQ
+    j/FbsM3XeQ6Dih/dh392ITtsWy9A9YbFpkeh+230paykaR6HWfI9dKGYpRHMERh6rcmH0Y
+    o2Q35Gy7rGr5e8STuM+O3YSaeQmqIyTEt72LbSwvvHemLlzyBvU/LiN86+3Q
+X-ME-Proxy: <xmx:54OIau_-bxsmLt_Tvh04XiIzubiQsXtWR17LhIM_5rwfqfvjCMHkQQ>
+    <xmx:54OIar0CJMnxTmjkA3PoIQ5g05b7SE1RBYvHzKtGA8zADD1NJ86Hng>
+    <xmx:54OIajBSA28msFlby_CRZskCO65573VwyVd-Y5F_9xNzq25b44fu2w>
+    <xmx:54OIandmuvqERE8j6PgHFq9p8uETsvx_Bb6ngn1PS47HasD1Mv6HQg>
+    <xmx:54OIauPBmbDEukNmEsfDHjwcZ1VCqKuci4wHfilnHIWUEehN3rdfvagz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Aug 2026 12:55:42 -0400 (EDT)
+ 21 Aug 2026 12:59:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,
-  kristofferhaugsbakk@fastmail.com,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] hook: introduce the report hook for git-receive-pack(1)
-In-Reply-To: <aohXatWhxCAUQTcq@pks.im> (Patrick Steinhardt's message of "Fri,
-	21 Aug 2026 15:49:30 +0200")
-References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
-	<20260821-758-introduce-hook-v2-1-e90e2f7ac2cf@gmail.com>
-	<aohXatWhxCAUQTcq@pks.im>
-Date: Fri, 21 Aug 2026 09:55:40 -0700
-Message-ID: <xmqqy0dzpg4z.fsf@gitster.g>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org,  jltobler@gmail.com,  lucasseikioshiro@gmail.com
+Subject: Re: [GSoC Patch 0/2] add unicode support to git repo structure
+In-Reply-To: <20260821135410.429698-1-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Fri, 21 Aug 2026 19:23:43 +0530")
+References: <20260821135410.429698-1-jayatheerthkulkarni2005@gmail.com>
+Date: Fri, 21 Aug 2026 09:59:17 -0700
+Message-ID: <xmqqse47pfyy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,37 +84,20 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-> On Fri, Aug 21, 2026 at 03:34:58PM +0200, Karthik Nayak wrote:
-> [snip]
->> - Exit 0: the hook's stdout is used as the report. The hook can
->>   rewrite 'ok' lines to 'ng' lines to signal per-ref rejection to the
->>   client while receive-pack itself exits cleanly. The client marks
->>   rejected refs as '[remote rejected]' and exits with a non-zero
->>   status if any ref is 'ng'.
->> 
->> - Non-zero exit: the hook's stdout is discarded, receive-pack calls
->>   die(), and no report is sent to the client at all. The client
->>   observes a sideband disconnect and reports 'the remote end hung up
->>   unexpectedly', treating the entire push as failed.
->
-> I was thinking about this case a bit more. Should we maybe handle it
-> similarly to the pre-receive hook instead of dieing? If that hook fails
-> we basically update all references to "pre-receive hook declined",
-> whereas we could update all of them to "report hook failed". That might
-> make for a better user experience.
+> Currently, `git repo structure` always renders its table output using plain
+> ASCII characters (`|`, `-`, `*`), regardless of the user's locale. This
+> series introduces Unicode box-drawing characters (`│`, `├`, `─`, `┼`, `┤`)
+> and bullet points (`•`) when a UTF-8 locale is detected, providing a cleaner
+> and more visually distinct hierarchical output on modern terminals while
+> gracefully falling back to the existing ASCII formatting otherwise.
 
-It is a bit different in that pre-receive is all-or-nothing, but I
-agree that it makes sense to model a failure case after how it
-works.  In general, it helps to explicitly tell the other end that
-their action was declined than let them assume that no news is a bad
-news.
+Generally speaking, Unicode box-drawing characters do not work as
+ASCII art components as well as they should, because terminals often
+do not agree on how wide they should be rendered.
 
-I also agree with other points in your review, but I consider the
-above is the most valuable input ;-).
-
-Thanks.
-
+So I am not very enthusiastic about this change.
