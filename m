@@ -1,127 +1,118 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0CF317173
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 12:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787314241; cv=pass; b=mtesKHALYhIses7fyeB9R5lOLgzVec1aBf2IKnpJBg8CLTEcw/EXcjKD7EGspO21nnEdQY4eoqtIYZI6QbJGLvJ3DNVMf8PsOs0SO2pNLk12su6WdlOqKHOxxNSd+MdmQUmEfW1057+Gym10VF8yssAlIJtDjJrYeExFsdNHOyY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787314241; c=relaxed/simple;
-	bh=6Lt77iNMOwn3hGdB5YkvCc6/410wjJilwtdy6T+xvrE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bZdp2WiP03b1tW8PkmYRkCGgtVgim7OvzdyQr3P9ogPVs+ku4xT1YZv9CAIGa2y7NeOu5T+eG39G/C574i2Z6T8K8VcK78D1UGKREqcLpTBQNcOWc35lnnEUivlDDfI0LNKeLM/+9VC6NGUZr1H4mNlXr7ltfBHVXOu/0fPQrYo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dCzSoxIs; arc=pass smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B7A2ECD1D
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 12:22:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787314971; cv=none; b=GMNsBsi0Mk4vnLsMSRPeTKaSLOyM4RlewzutgiSrJRFY7DhsXgHzYObhLptCh2vMyaJCKYnkCLJLYHS0lT6eeFoZZlUKZAr0feUuqE1dXaKcwfWMj1XFv/urgfqZVNZMW2s5HmOdZRmtcRyTJuxeYZyVqaBhIV+A7RJMWgEyzmQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787314971; c=relaxed/simple;
+	bh=GOq9l+BqMLuEywR+q/CJ/Jz+L51uBukNIK6mCW9JOkk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KJmsaSXzT6AFx3xj2siyzgVAQT1EMcRb37lb0z9qIPhj+kk35aZyvmcKfwuFRRolSzYChWg5fEyaMvXWFS1Ej3Snut/UUetia1hW7XJEM7kGZe8sMZwtmiUmQGszeo+av4DcVveKmyX5s0XkSjZWNx/bpOBeHJwvupyG+YvvcXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P+mS2U/G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P0Bi2u9S; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dCzSoxIs"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2d032846c95so10804285ad.1
-        for <git@vger.kernel.org>; Fri, 21 Aug 2026 05:10:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787314234; cv=none;
-        d=google.com; s=arc-20260327;
-        b=hZdS4JCftB0Sp49wMQzARm4kE9tAXOLX8Ivn9kHpvUWZ0PEXz2pmQTd82aqLqUSdTr
-         5tMnx71SBRSh6bdpzxwxfvDD0z6lo+5Rn2m298tZaMwoAEbYc4KJFSejuHiTYDwDK3jF
-         ZESWSXtklRXFhNM+xpckUgswCK8xjlu3c19szsdjvQXtn66zYFHqciuOix+jrI/ntBHN
-         kVg6Zl4GIy6+/QLsJEFbElBMQHwXlq67Oi/OoGoooYVlZBqaxaX+FxpGh7JCmaBtRNIq
-         MLvea5WkwpRMXB0/GI4fBMObfiSlEX/uZt+HJmD9gOmpW2Fb9LVXmR/8QvjY3RBJyrgg
-         h1cQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=EN67GhI4rz42p0woeh+yqtUUyKZ0JW39iGlg/Zpe7t8=;
-        fh=4/ZoQpa8Wp2Caw6DAqaBnnd3ntnJLd7IcZ61KXDxvq4=;
-        b=ncsM7rhHQsvoZROm3nKh2tzOsU2VKyJ+ozCLnQ4X0v5qoTz3ukllXFm3IuqRX6jad8
-         KMUFXEE9c1j9EQIseTBJeojcWr+g92YdtBob5/iiNz30haZBVyJz+53NkMHyAeoS8zvT
-         u6xxWExfesAiwKUGdRlWXzWeRMrH1lAjSs2SReC5GNUlkAvwYmvnaMuET31muGZw/SXu
-         S0e5HuS7vwC3jdiplFKHYg1Xjp/R2q1ZE45L15Y6cariTz/ocSYmyF+nCJPMGTgssxHX
-         XH96rsL9/NiUtefoM9Yfto8P3/7/Hm+IoZAB2FOf5egns8wZuaMuXAXn6PzjbSI/6gi8
-         14zw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787314234; x=1787919034; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=EN67GhI4rz42p0woeh+yqtUUyKZ0JW39iGlg/Zpe7t8=;
-        b=dCzSoxIsn+/YEa2Z8SUvb5hl2NEwd1jD4PE4pbO6wivef4IkXcPw74tWd6tyTZwB7b
-         pnaPvK0cXHH6kAsjd9o8DiLl8krdMYjHohGL8fhotcg6Ah0c+Qe+SNF5fICTTKdyzWqH
-         am9VqQ1n/oQ+sxJ9CM6yaO/1Q4spZxya6EZaxzL4QUqsZUZWKj149KgYo86++cAD4Bzb
-         EDbgFYTFtLskCA4X6tQ22VbaGls7S4Mrh9EDPbbvy8TKQHxOlg/Sqr3Kx1ftxjZ9Tngi
-         z3IaCvEIkXWf8wYlUW6HLQArRrZWUrfQwE73tqAG1Qt4uUP4G5Fb1QtW9rNuIrpSDYJp
-         +gaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787314234; x=1787919034;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EN67GhI4rz42p0woeh+yqtUUyKZ0JW39iGlg/Zpe7t8=;
-        b=LDkITAcoxlPMwrnBDG/WMZ9eBMlVqZ/xUJjXZZyf4ajcyeICs7tdMqYLyUGZbQ+zVJ
-         esGJuN6CnwOdsh/D0uDIdSPs+Mz0dbuGy5T+W+VlYUa+qxIMY3WYcSfsznu5a98gDCko
-         Cnljvw9+XLrCDbUt5m1CtA3o80OENosQfuuxc7BlhM5GmfAb+Q9YCqgh5iwmwrPf+arx
-         Rl/8Je/KBGyGkNKJX79DbSSQ1I0xlAo4gOZCq1ehv5aRbC95KG6CUAM2alYgOiFc8wLn
-         j237ytOxbqu5dRjH8A7wmR8J0+UMJkBc1eAF65wrUbgIOX6ZG4tx/eGlGXwIi6H8Dmn8
-         B4aw==
-X-Gm-Message-State: AFuF++m25PF24KIoEO3FGJVgcsvt1AeLGEmcG5X6H3CWfavG09lbGf3+
-	2W53FnwkWAHiBR3H/sm6oF8b3kUWLJq+KPqrunpedXzkAHlF5UiyaUIXtnYLscwNN+GkTd47ewG
-	4pLHrWT+Pfqsh8x6kR3hcbFj+u4QnYM1+AM6q
-X-Gm-Gg: AR+sD11Bx6w4wXE4YdSmJmdlfVusQHuiyYvPXv7GUzW2P8GNrW1dRF5WPj54ThWOR2c
-	2nERCkAPc2ml6X1J1JXvA8wWRSDV+4cn+1TMWFdhMswxvFb3hP8zoJGk25gd4JMuHHbsP3I3liY
-	P2FlwQUybF0J9cJxkU/BRp/i+Bsj0mHbiunLx17e4gVEn/XRDS5KB3vwp19oey+PpWTWf+fh/qW
-	mrxCYx3hOQwNngmmuRm8cJyR+eWDJFX3K2PULZD9/ipdXpg9XrFFRxRsSoBBT7qwIbjlRzDNRbD
-	E0nuSPkeBQpa+TWF3imI78yiVmHSaQcgC2NgepBp3rmWf8YovJH1kD0lAJgI5kxVNRQNB0S0w44
-	mDffV2D249b0s+VaAQzCbx4Ld42qiLSFkVOey6OAEMsjj45H59xFyG9tvwp9ZXG193a4sy0raFW
-	pwUiQkLnn25BdP3sUZA70=
-X-Received: by 2002:a17:903:46cc:b0:2c9:b396:1a55 with SMTP id
- d9443c01a7336-2d64b162098mr122448875ad.12.1787314233748; Fri, 21 Aug 2026
- 05:10:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P+mS2U/G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P0Bi2u9S"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id E98D91D000C8;
+	Fri, 21 Aug 2026 08:22:45 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Fri, 21 Aug 2026 08:22:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787314965;
+	 x=1787401365; bh=kccXq+K78rFxA/CdgU3VxI7WF9YVHqS0YqklEhQQVPU=; b=
+	P+mS2U/GxPtRZGAI1tdI2Mg7wA7MFuccrbmgsv6EZ+6nUTUHmMwV0S0RcVQfMCsf
+	2zmjA5wND/lbBDPjexz6NiPkwJjL1ctlTHxRW8BNr9osU98TF7rTDTu8RoJ7D26W
+	wdSlj5GqEAfkLXGd7rFMHneNXR3w3mkh2rLZdz04DBpa20FN+MELROdL60IZLhGo
+	69ZwBZcnF/v3QITWLBCDDLA9yAWH1Y1c/TcT7jYDKKh3ipDtdoWlD+bgHklji32l
+	PC2vDhp2mVfjG49Fuo/WbcE/XxdsynQBRINKInU7cdomuj7cgPV7lJnVKxo/+0G3
+	hZ5BiuMtYxI3Y3+hxZsVLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787314965; x=
+	1787401365; bh=kccXq+K78rFxA/CdgU3VxI7WF9YVHqS0YqklEhQQVPU=; b=P
+	0Bi2u9SknGq4hWkNLLscWIweMsBaeOv5uUK3wWDdaOMQButAN9z3sz7Zi4WKr1Dy
+	XpLaVuWHBswSRyEQ5zh2fgAs3sKdw4PlvUIKFOKBJoK2KiCoca9VCsSeSXHX6XKN
+	rUiFUQKDeOs7Fm1yx2dTQeDCt/8ivMdnn3xlGhAfFABcxcDs0tSFsptDn+FJEWIY
+	mTl4XoVO0ZJXTCwAG2Bs8q6DODTOGEg+Xlig8PTKB/qzvSn1nMhSggTGs0YCDFKg
+	xWCEEGzp+j3eu8q8FHgiYMRhKkz3Ty07UkZSnwioBGyqmpXz/Xuy3lKuaZP8qKPz
+	yxbYSUbbFtBrXSrwDWlIg==
+X-ME-Sender: <xms:FUOIahephpRHBEep9R2_es6amP8gd11kbWlgNIYNTAXyQbhmaRHJ7w>
+    <xme:FUOIamNpo2-kkYdvkT_5bqCf61kS3k2l3PsdZKPJkHbHhqG3eSqkF5pVVyABBRKyp
+    y2eWJbxPGKLlyt1rHllrI5ooXfWW5P4jFETbpH-hyksf0IFsdUEn_Q>
+X-ME-Received: <xmr:FUOIavjecMj9NfS9tPgmsHutV1dn4RlD3aSmS1gJaz1Yb50c45vj6lOTp8gpMjWtwKsUHCQ3dzFuvEg91FEJXdpG6IYBhscecHcpP9i_7SCv>
+X-ME-Proxy-Cause: dmFkZTE9l2cM1M2igRlYAPqsNpQv37hFK8qRLHaKZnKBjvzIXEuAR1EpdjpAtyJC/IcOLR
+    0TEvOvOvMouO+gx1wr3sGQvRsNZo2MBrf8QgD7ai2WnLLZKo+4YZCieYWrDSRW7fOB3/xf
+    mOAGOS9BuvO00OjThh4sg6z87i/VD6zckQl+FpdRwqtk/51GCf8GsMUuN/KferpoAN9DaZ
+    ZHV0KxTYuFFq6ALDSgwhzoA5rGzgVpEcdJo+u/6Z6WZTEcoXd8Vnl09w/nYT7XGGGr4raH
+    3orTeUL6zyTatgg3c3o8709W0cfFW913yY+oCaalp53+Jz75gfTNJAopDOtMOi2o4fZRlt
+    l4VIsBQIuNfWaI9E+Vep4qrpQw6hso2ain1q5F9nSSWn/loPhWfE2lhB4KrtCxR8pA694w
+    C5TVI1zt8YAsrKA+m/UPaJVr35vHKEiCeUbJ/PiIpKi2kr3NsqWDGLSlak0N5VNMuOu2qJ
+    KGkkMApQhtoEpZTg2z74nkwY5d/KAt7yo35fQYbfVpZdO6c+Gq0P0oNLFUvsNZ4JNjN8ta
+    sLhgagPPYdn777ounbR5uAacN7Rh9n8y7PybGF7vQkZw0uUr7h6gaekwO5afcaG/gCiOKJ
+    w3Ynjkm8yfWMXCoBhFr2DCLPTzR0G+14/pSzOP+2TxR4tW6CvSf8IAQdHrjA
+X-ME-Proxy: <xmx:FUOIap3NITYs8MI_8USVxtBqdxCLGEmSH5UZZHwrcP-BO_Dhev_hZQ>
+    <xmx:FUOIapjPHMtIDI9m1kITidq-zxYSZFOYbv3HGL9-3P2caPYJotlTzg>
+    <xmx:FUOIapdBfdzRPirwzJkJWGzxNG2thODd1Z7TYAJCPbMuNPZn6VTFTQ>
+    <xmx:FUOIasmqYVuwNhe-BjXqg1E7hd9cSI4y9Sg21hxyW9tc1HcGCAldAg>
+    <xmx:FUOIamIvwYvVNow1vQwTERNQVsE2BtFnSXQZpShybX1HSLKzHVjDS6WQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 21 Aug 2026 08:22:44 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 95e0f060 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 21 Aug 2026 12:22:42 +0000 (UTC)
+Date: Fri, 21 Aug 2026 14:22:40 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 1/4] doc: git: list gitdatamodel(7) as a concept guide
+Message-ID: <aohDEKEs82MaWECV@pks.im>
+References: <CV_doc_datamodel_advertize.bea@msgid.xyz>
+ <git_help_--guide_datam.beb@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1786103607.git.ben.knoble@gmail.com> <cover.1787231825.git.ben.knoble@gmail.com>
- <5693baa9923afd20333c0eb016cc5949f8dfc423.1787231825.git.ben.knoble@gmail.com>
- <xmqqa4qgsn20.fsf@gitster.g>
-In-Reply-To: <xmqqa4qgsn20.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 21 Aug 2026 08:10:22 -0400
-X-Gm-Features: AcwNN1W0_kA2n2fHLp6HoZFl4b7gqO4AujX5a9aAZ_Xq3I0xqI58jd4jFMs5O5Y
-Message-ID: <CALnO6CC-=0X2r6USab=6MBG-yWYrwrA6zEXnDC91P8q4WDeY8Q@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] environment: align repo_config_values_init with
- struct declaration
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Tian Yuchen <cat@malon.dev>, 
-	Olamide Caleb Bello <belkid98@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <git_help_--guide_datam.beb@msgid.xyz>
 
-On Thu, Aug 20, 2026 at 1:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->
-> > The order of assignments in repo_config_values_init is chaotic and hard
-> > to follow, especially when comparing with the struct definition to
-> > ensure all members are initialized. As new members will be added in the
-> > future, make it easier to validate changes by aligning the two.
-> >
-> > Refactor assignment order with no behavioral changes.
->
-> After reading the above three times, I am tempted to slightly tweak
-> the above:
->
->     ... comparing with the definition of 'struct repo_config_values' to
->     ensure ...
->
-> Other than that, great improvement.
->
-> Thanks.
+On Thu, Aug 20, 2026 at 08:55:21PM +0200, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> 
+> dee80940 (doc: add an explanation of Git's data model, 2025-11-12) added
+> gitdatamodel(7), documenting Git’s data model. But it is not mentioned
+> everywhere.
 
-Yep, that flows much better. Amended locally.
+Nit: s/everywhere/anywhere?
 
---=20
-D. Ben Knoble
+> diff --git a/command-list.txt b/command-list.txt
+> index 21b802c4202..63ae2a67c94 100644
+> --- a/command-list.txt
+> +++ b/command-list.txt
+> @@ -217,6 +217,7 @@ gitcli                                  userinterfaces
+>  gitcore-tutorial                        guide
+>  gitcredentials                          guide
+>  gitcvs-migration                        guide
+> +gitdatamodel                            guide
+>  gitdiffcore                             guide
+>  giteveryday                             guide
+>  gitfaq                                  guide
+
+Makes sense.
+
+Patrick
