@@ -1,284 +1,571 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD2624BBEE
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 13:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3CC32B11E
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 13:35:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787318274; cv=none; b=aP4FSDxOQPUDf4WnlQNO3/Z3nXY1e5iB6e8FZvCCymaXVSmfpeixAmL+AX2qxkTYTc9gcRPHzY2iP6+2pLBr5oyi+Yp3LgBf9Sm8gPFEWRsjc3seRD8xDklvcjWoCQemhHgH0egLBrA6/csws4SvbMdcG6f/x5aNRK1dWcBuxSE=
+	t=1787319311; cv=none; b=l2er5/LYuKQOszvx/NHSil86VgsEmgiGluXQAuUuaWUZb3N288VIcih/S4xG66T2RHnM5VK0gkvQqx/h3FgdzI3xyRkBBTV8wjpe57wF5mdsOBOnawVPLvWRSefVPZsNZFhte9+PKhsnj/232dKo8EWlREFZ/pfgmGkdlhvELTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787318274; c=relaxed/simple;
-	bh=mBtH/eeRm9OkwwK58z06Hq7n/woMblbBH/3tnjBy3tw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HCEnp4cjqXn7wqgrEa2R3l2b+wOv4RgpPZv/L+zOwmz7yHbm70770ysaho3nlN7ZIQ1Oa3Be7D/38e6k5DMCMo42Z2fGvELXoCKLpnvJR5jcBNTnwavNVdqSVKVAlZuRbr6q00fd/7/0N3niXFf9iByB3eDIm2iPC2xRcmeu9BI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hAdIdQF8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LdTZSfRC; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1787319311; c=relaxed/simple;
+	bh=Ktk9EB3vwQS7W/IHhwAmCdxVoI6Qy/S3Bo8+Wmc019M=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=UMtRy25XhgzL0Lp/t2+8z8YuQ2zAJIhmSdwNy7Ib6iHeNsUHDQ+w485js+0K6uPY/+PMKjcjE4LwiIlV0D1cYsfy5MecF0m4HyMuSukcRnx5pFalBIS0gXrKrlHfOY+fvoNIWzPC5Oz8XWyFqL0BsHfaQL1w2By56q2QUnZS+js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E42s8Nl6; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hAdIdQF8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LdTZSfRC"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 049B57A001D;
-	Fri, 21 Aug 2026 09:17:43 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 21 Aug 2026 09:17:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787318263; x=1787404663; bh=Y1QdPcNvde
-	Cy9L8v/AEvSyWGFBgKQZTH1dLuOqJkW9Q=; b=hAdIdQF806ScX9tLFQAVuMdxN+
-	F6jS34DrwS3LxH5CqHVyuGffgX+yNkG6v8D7p64tOkd+0pH02Ylf4QFT+Na43+ku
-	zg0NTI/3cPJNP1wy+56xrbH0srR9EV0pw2hrRNOYdmubTfHziHQDA6mJGQiLyqHX
-	dtfU48yN01+PB+OJkTsUrnd7nonC4yoTmcyG1z9VOJ0zybLj+Iiym2imM557HJ9p
-	/LI+Rym7GNJqV6W5ozUqXghL33CeYE6AI8ziZWrdPn7tuN+R0YkezNSu99pQQygd
-	w4UY8zHnD8Abvz1YFWRX8P6YpWlJYkoZZbkCERO/vx92mLoH2+N8GfXdnziw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787318263; x=1787404663; bh=Y1QdPcNvdeCy9L8v/AEvSyWGFBgKQZTH1dL
-	uOqJkW9Q=; b=LdTZSfRCcDFjPLiF0wPxrd/Wjq9nHNx0edmJCv7O/GTrBbOD6/F
-	GKIOkn8sqPLw/hujgva0mEyblgvQhL2HAGnMJDlucij7dcbtKh9qSIy7NuwibejR
-	aMG1+hcJHh/H64qR/xshy/foBAVVC16I0P6mw8AiN2o568sqDGNWPHbBY6PUJqR0
-	+diA27QwJWhjGdnjgWKYPnLJLurxFchnR79/hH5VeDtzbGYcSm95b0nDhRiPQhMq
-	1St5AewdOub09OK+oG5f3/50cPiXzI9+qlpE7W9tH74Sj8R9MJmRXFuWJ6tU7B+n
-	QBhAWJFpdXCWSYzFrfRJFVvMo4E+/XIxNJQ==
-X-ME-Sender: <xms:90-Iags76v-hFPJM40Y_MpBPfH0d8gYOZ2WLDDoCnl4BUHIJJ-dJBw>
-    <xme:90-Iak79vBE7HzEQVXP8Zubpxq1_T8o3J4F59HFS_zkJAbBCj-HiCYzG1nLGDTW5X
-    xMNeea4htCUnw0utpdacHE2c_otepZdDkzj2lEjHHIJ0n0JffqsIkI>
-X-ME-Received: <xmr:90-IapL2cbX63GdD1NXD3DnrgefiD6xRFPXJkCR18ZepflJ5U9g1gT6FJCNP8PLJt2sFqibjlVGCb7P_HytF-X1oaqe5GTQ3HOL8R_PlU40H>
-X-ME-Proxy-Cause: dmFkZTEuudJtZOntLBleVJDAH4hhpVnpG/zGmtBanODBkYZqTrjcJK1DQROxBamx9E8UNI
-    +uwJZ3AmjNXNDMpDJgJjE0IKjapp4W1sMcYQdfeK8a/NnMMc1N16wcTrBaknzf9CiLqDbY
-    O8F7jvp4IAepBG3em1k2L73RjfwG9sFJZEvosMYRL71nHUF8yBGKaEKHd9/IyA4gxtVnG6
-    RlMXa8asMwDKSNBueN9a2tbaKwT3+1gftzXxO8G/MZaAG5SzF7l7VI3QsJeTC3DlmlsGMp
-    aLj4QZ+JVOjMpng+eHTewtW4fmXvuz2jzq61epnuEpiQmS6BGGhzevWa6s/lfY66/QuwO0
-    Lr2q47AVAhiOIk5Emp/QXo4LZx43QHY/2unXu/IGKNBwnzNwUYiZvZtYEtjzGNtxZ/H4Vu
-    Uc9zmf2wqIdD1BFwTtP2OCTtnUYxN/ic8Vnj0qarq1zFopDyhvZNCKZdPnTK2cXaeiYhkw
-    H12xier8nO56hTZSlaDRzt5dmolODIX2wY+tX8nrlD4ugCjNLsw1k7OrWynk9tLQN5g9FC
-    n9aQlN4kPww+AQWeQNk5GCg1Sx/3aXLbsHO7ARHgm6tC3vDuXokdwJEQFb9MPe7yPxi/dI
-    pBOfmyUvKh96Gk6qwvX19h4OCPXnzl4m5A+Zmgv9zLers6qfl5eqIVxHuzCA
-X-ME-Proxy: <xmx:90-Ias6rb3jfjlqbssGyLrK8APjqL3oHlSQCz9JSdP0o1zI6iTMDcQ>
-    <xmx:90-Iaky2MAyq4GjuS0K28Mixksdj9QBLHPSdugsoQ8P2ZObyvCrLCw>
-    <xmx:90-IaoZnJ_XpTSCpREwUBshF_Cq8E7ZKiSltWYdA-3REYUK2EDrcnA>
-    <xmx:90-IauSBJNoHbB5enF_tIyQjFZU9ExvZ4NCzVMDtohn5nnGsKfhNBg>
-    <xmx:90-IanV6H52aZhHpG0FPWxIAe5R-hxz-5gVZOeJBeXg7i7tvGz1Xc1df>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Aug 2026 09:17:42 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c2eceda3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 21 Aug 2026 13:17:40 +0000 (UTC)
-Date: Fri, 21 Aug 2026 15:17:32 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] send-pack: avoid sending the whole tree when pushing
- from a shallow clone
-Message-ID: <aohP7GMx9oX3ZCsQ@pks.im>
-References: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E42s8Nl6"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6a0c8283146so1986644a12.0
+        for <git@vger.kernel.org>; Fri, 21 Aug 2026 06:35:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787319303; x=1787924103; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Qpft/Wx8Ee9xA0g4nr11S8/xAoV9ykd9AJX+c7ewz48=;
+        b=E42s8Nl6NLgznqIIyGGDJGlJNrd3UdF3rVr0Agth3+T/uUYDnlx24Pm2zcZXJbvVey
+         R6Om2izZQgFWRdzo2qj9a2EYLEWYlUrad5whs8AbwFPZDBooQDiVN4kTjPdTykYn29Cc
+         FjjdBQNS+EOy1LFZnLxlv/jG9LGYiA2EUAyEMpQ0/+R4Ug5t+M2n0KOSQrVJkyFx1q8n
+         MtQap6wl8T/m2YYYTBh89DoUGNNJVI/iJ1t7SDXOGFDIj7oYgerbUi752saz0rfGzBkM
+         UxW38Ph+2Bqqyq5hwGRVO2q6ehay9VA7AY3LbA2+5XVg+qes2znJdqRDV9QSt0VgE8cO
+         18fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787319303; x=1787924103;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Qpft/Wx8Ee9xA0g4nr11S8/xAoV9ykd9AJX+c7ewz48=;
+        b=douqqH8yzG2wkris5GWQw+VlTunvQmWUa/UG88/RwL8L+6ej9ah+jiPTHju2FYn87Z
+         FUZyHnHLxsaYrJsLG/gzEq1IUNHjzt/4PtWh5fHw6HLyCEGVnXxw1BOT3DmbFUswuswU
+         UWhwkkvG9KeKHO9t44WNpSmKc7UgzPaX8m0XPCa2Ztd9SCzfztt/IgQ3o+gcx92lKguY
+         QduHIZHWjZZabuB785S+EbxJytU0paqrriooZZ5NBLCVLD/UvplTD945zq7Z87jrxqxh
+         b/yDnE+yuj/ezJZxS763WKWVHb8MyTeLVgIWqbPIqi6E+Tqz2D8ilIdu0NWLavq+4tI0
+         tX/Q==
+X-Gm-Message-State: AFuF++kNtY6xhYp/gAIT6+78hm36KhcS8RoGKJ6PN782SnMCYkJOaiBg
+	yzeuG8yt4X0Ip5sZPZit1fjfmXPy6o9aahlSm6VKf8NlUSY6Zv4R1y5TaX5YHQJ6
+X-Gm-Gg: AR+sD106Aj3IaQtcSt4rRQS2MnZvuDW6MRILb5NgUtGdHc2oqcdtKw5/y9EtiKeEcfK
+	c7KaZg9RL7SE1YrvCZBVxkBRJWrbQuZJSUyIKrtgXvnQK2qoP5G2B80vYckGc9TNui232jIv2dB
+	y6PupqAfuWFzTqUYtfN+Nm82IY8ogv/+2dgv/4pHA8Df+MhLbZiiXvnNyNykwbzLk1pdytGCGiD
+	1SjGJCiQvhISxf8lncvGksuor51HL1q9YeyvL7XtZihPKKKERZA4xciqzYep45MgCiGqKFejqXl
+	43d/Nsl9LSqxRiLfLRxpt5TgjdxnOv1b+yqCIeIxZHyfk4vRY0yGDxNz8J7095mpsbCPvJsy9+a
+	wGOZ6BMVSL2cSGyTX6oVw2UDP+wMOSk+c0sKMZhQDgKTogYzYVMDDzoRFACuVjhPXtg33XXylLA
+	cxuxDMzoLLCz+pFBbvzy6B3hYng8M29lLhqHs7cElFL4t8+v6z5TTM/9YREg76dOnCL8OR9cXWE
+	oFFqf2IUYZ7sA8D9rLnsOZxN/tWEkI0XGi2fA==
+X-Received: by 2002:a05:6402:5188:b0:6a4:ae1:333a with SMTP id 4fb4d7f45d1cf-6a42f2490acmr6104302a12.12.1787319302968;
+        Fri, 21 Aug 2026 06:35:02 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:8109:d906:4e00:a4cb:d15d:c860:3e50])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a3ff1567f8sm6699072a12.18.2026.08.21.06.35.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Aug 2026 06:35:02 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Fri, 21 Aug 2026 15:34:58 +0200
+Subject: [PATCH v2] hook: introduce the report hook for git-receive-pack(1)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260821-758-introduce-hook-v2-1-e90e2f7ac2cf@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22NQQ6CMBBFr2Jm7RhaAgyuvIdhUcoAo0JNC0RDu
+ LuAcefyJf+/N0NgLxzgfJjB8yRBXL+CPh7AtqZvGKVaGXSk04iUxiwhlH7wrhotY+vcHZMyNnV
+ eK5MxwXp8eq7ltUuvxZfDWN7YDptpW7QSBuffe3VS2+4XoH+BSaFCMlRRzmlCMV2azsjjZF0Hx
+ bIsH12/BHHGAAAA
+X-Change-ID: 20260812-758-introduce-hook-5b3af9f1a7e8
+In-Reply-To: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
+References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im, gitster@pobox.com, kristofferhaugsbakk@fastmail.com, 
+ Phillip Wood <phillip.wood@dunelm.org.uk>, 
+ Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=17155;
+ i=karthik.188@gmail.com; h=from:subject:message-id;
+ bh=Ktk9EB3vwQS7W/IHhwAmCdxVoI6Qy/S3Bo8+Wmc019M=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqIVARooMh/lexJrNwKkbKV1vPiOH7GbY0T8
+ OZjd0n78ydOaIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqiFQEAAoJED7VnySO
+ Rox/DboL/06GQhYyTmyqM1JntFpnY/KnCD82tWJUbzldosKdHq/ttnBMFob2tLbs/PX+kx5Aebw
+ hzjRJ4+gIgGo6R3o92MLPCnfmSEaphQs3QMuGu6hXSoeBi2SsFDaKptb5asr6gxJNrrx9Ls6lkK
+ QFk8NTX8fc4M20NuC530WKA4qudaLKlINZEygic8fgkDSdYazCr7uGGv1eEyDDcTW8itmnQxaaV
+ kq712bb3l0tS86pMyTUR3JRroofTszuGHC0QNbCEPX9eu9I/kgKGCTQPbk+xy0XANe34x9ryNU0
+ 86cHgMxlL6G0XjPFxMqs2qNz6rgLKpDaPbbak5E/1fdJjyqomz4aZPSzYVmiQmvAKbCb/BiG14m
+ TvJ/i5oJRGqWER2aSFaS4sMqSG4x2GOKwzKFJbbtGPYrqVwJ1X5U1O8zKX1mdwg0enB+Qyn3b4q
+ L0B0xPCHZ1Al3Q1IJ0IzGN0MZEv3jf/sv2RFGvj4p5pGj+gceycxKwJJFPzcGJhQH929cFMEsh7
+ 9Q=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-On Fri, Aug 21, 2026 at 06:55:51AM +0000, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> When pushing from a shallow clone, even if we only have made a small
-> one-line change to a tiny file, we often push the entire toplevel tree
-> of files.  For large repositories, this could be gigabytes instead of
-> kilobytes.
+When running 'git-receive-pack(1)', there is no way for the server to
+intercept and modify the status report before it is sent back to the
+client. Servers with custom logic may need to transform or gate the
+report based on the outcome of external logic post reference updates.
 
-Oh yeah, that issue. It's a common foot gun indeed, and the common
-advice here is to never clone with "--depth=1", but always with
-"--depth=2" so that there is at least one non-grafted commit available
-on the client so that they can indeed perform proper negotiation with a
-server. But over the years I had to explain this again and again, so it
-is clear that this common knowledge might only be commonly known to
-people who have spent way too much time in the Git codebase.
+This is specially needed for our usecase at GitLab where we have custom
+MVCC logic on top of Git which creates a new version for each push
+operation. The new version is only committed when certain external
+operations post reference transaction succeed. So reporting the correct
+message based on the outcome of these operations is important.
 
-> The reason for this is that the push likely lacks the commits the
-> receiver has advertised, so it walks back to its shallow grafts.  Since
-> it doesn't know that the server has anything, it sends the entire tree
-> for the graft.  It would also send the parents of the shallow graft,
-> except the shallow clone doesn't have those by construction.  We thus
-> are forced to assume that the server has the parents of the shallow
-> graft -- if it doesn't, the server's receive-pack will reject the push.
-> 
-> But that raises the obvious question: if we're going to assume the
-> server has the parents of the shallow graft, why not just assume the
-> server has the shallow graft itself -- which this clone almost certainly
-> received from the server when the shallow clone was created?
+We cannot use any of the existing hooks as:
 
-It's a good question to ask. In theory though, can't it happen that the
-client changes the commit in question locally, e.g. via `git commit
---amend`, and then pushes? If we now assume that the local commit exists
-on the remote side then we'd be insufficient information to the server.
+  - The pre-receive hook runs too early, as we haven't updated
+    references at that point yet and we need to have the full view of
+    all resulting updates (both objects and references).
 
-> As noted
-> above, receive-pack already has a builtin connectivity check that
-> predates pushing from a shallow clone by years[*], so even if a client
-> is pushing to a different server than it cloned from, the worst that
-> happens is a rejected push.  And by assuming the server has the shallow
-> graft commits, then for large repositories (those most likely to use
-> shallow clone) we can avoid transferring (and perhaps re-compressing)
-> gigabytes of file contents that the server already has.
+  - The update hook is too inefficient as it runs once per reference,
+    and we cannot trivially determine the last update.
 
-Right, the server would catch that case and abort the push. But it
-highlights the need for an escape hatch, and it makes me wonder what the
-current behaviour is when the grafted commit got modified. I guess
-nothing good comes out of it.
+  - The reference-transaction hook cannot be used by us because we care
+    about the phase where it was committed already. And while the hook
+    fires in that phase, it does not allow the caller to modify the
+    result in any capacity.
 
-There's another question though: can we properly determine whether the
-tree of the grafted commit matches a tree that the remote side has, for
-example example by including the tree in the reference negotiation? I
-have no idea whether that would break git-recieve-pack(1) or any other
-clients out there, as I don't think we ever negotiated down to trees
-until now. But in theory, there isn't really much of a reason why we
-cannot do so.
+  - The post-receive and post-update hooks cannot be used as they run
+    too late, at the point where we have already reported success to the
+    client.
 
-[snip]
-> Update the existing shallow-seeding tests in t5538 to set
-> push.shallowExcludeBoundary=false, since they exercise that
-> receive.shallowUpdate path.  Add tests for the optimized default and the
-> opt-out, that a rejected ref does not cause an accepted ref to be
-> over-excluded, and that a shallowUpdate receiver still rejects a
-> rootless snapshot by default.
+Introduce a new 'report' hook. The hook receives the complete pkt-line
+encoded status report on standard input, after all ref updates have
+been applied to the repository by execute_commands() but before the
+report is sent to the client. The report consists of an 'unpack ok'
+or 'unpack <error>' line, followed by one 'ok <refname>' or
+'ng <refname> <reason>' line per pushed ref, terminated by a flush
+packet.
 
-Do we have tests that modify the grafted commit? It would be good to
-learn how such pushes behave right now, and how the proposed change
-modifies it.
+The hook's stdout fully replaces the report sent to the client.
+receive-pack fully buffers the hook's stdout before acting on the exit
+status, so the exit code is known before the client receives anything.
+This gives two distinct behaviours depending on exit status:
 
-[snip]
->     Users can work around the problem described in this patch with
->     push.negotiate=true, but while we can educate some users to set that,
->     trying to get them all to do so is quite unlikely. Let's help users by
->     providing sane default behavior.
+- Exit 0: the hook's stdout is used as the report. The hook can
+  rewrite 'ok' lines to 'ng' lines to signal per-ref rejection to the
+  client while receive-pack itself exits cleanly. The client marks
+  rejected refs as '[remote rejected]' and exits with a non-zero
+  status if any ref is 'ng'.
 
-Makes me wonder whether the default is something that we should adjust
-so that this defaults to enabled. Are there any downsides to doing so?
+- Non-zero exit: the hook's stdout is discarded, receive-pack calls
+  die(), and no report is sent to the client at all. The client
+  observes a sideband disconnect and reports 'the remote end hung up
+  unexpectedly', treating the entire push as failed.
 
-> diff --git a/send-pack.c b/send-pack.c
-> index f20460fbf4..9a035d7403 100644
-> --- a/send-pack.c
-> +++ b/send-pack.c
-> @@ -55,6 +56,86 @@ static void append_negative_object(struct repository *r,
->  	oid_array_append(haves, oid);
->  }
->  
-> +static int check_to_send_update(const struct ref *ref, const struct send_pack_args *args);
-> +
-> +/*
-> + * Add the shallow grafts (nr_parent == -1), which are reachable from the
-> + * refs being pushed, to the pack boundary ("haves") as uninteresting
-> + * (negative) tips so the generated pack leaves out everything beneath them.
-> + *
-> + * Walk only from the pushed tips, and only until a graft: using a graft
-> + * that does not bound the pushed history could exclude an object we are
-> + * genuinely sending (if it is also reachable from that unrelated graft).
-> + * Stop early at any commit the peer already has, since it is a negative
-> + * the peer can use and the graft beneath it would be redundant.
-> + */
-> +static void append_reachable_shallow_grafts(struct repository *r,
-> +					    struct ref *refs,
-> +					    struct oid_array *advertised,
-> +					    struct oid_array *negotiated,
-> +					    struct send_pack_args *args,
-> +					    struct oid_array *haves)
+In both cases, any output the hook writes to standard error is
+forwarded to the client over the sideband channel and appears as
+'remote:' lines on the client terminal. Writing to stderr alone does
+not affect the push outcome.
 
-Nit: it might make sense to mark those parameters as `const` that are
-only used as input.
+Note that in either failure mode, ref updates already applied by
+execute_commands() are not rolled back. The hook can cause the client
+to perceive the push as failed, but cannot undo server-side changes.
 
-> +{
-> +	struct commit_list *pending = NULL;
-> +	struct oidset seen = OIDSET_INIT;
-> +	struct oidset known = OIDSET_INIT;
-> +	struct ref *ref;
-> +	size_t i;
-> +
-> +	for (i = 0; i < advertised->nr; i++)
-> +		oidset_insert(&known, &advertised->oid[i]);
-> +	for (i = 0; i < negotiated->nr; i++)
-> +		oidset_insert(&known, &negotiated->oid[i]);
-> +	for (ref = refs; ref; ref = ref->next)
-> +		if (!is_null_oid(&ref->old_oid))
-> +			oidset_insert(&known, &ref->old_oid);
+This hook does not use the config-based hook infrastructure, which
+supports running multiple scripts per hook event. This hook is a
+bidirectional filter: it receives the report on stdin and writes a
+modified version to stdout. Running multiple such scripts sequentially
+would require piping the output of one into the input of the next,
+which the current hook infrastructure does not support. A single-script
+design is therefore a natural fit, and is consistent with how
+'proc-receive' is structured for the same reason.
 
-Okay, here we assemble the list of all objects that the remote is
-supposed to know about.
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+Changes in v2:
+- Modify the documentation and commit message to be more verbose.
+- Add documentation to 'git-receive-pack.adoc'
+- Use 'ret' as the variable name for the return code.
+- Modify the test to also check for the 'remote:'.
+- Link to v1: https://patch.msgid.link/20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com
+---
+ Documentation/git-receive-pack.adoc |  15 +++
+ Documentation/githooks.adoc         |  51 +++++++++
+ builtin/receive-pack.c              |  41 ++++++++
+ t/meson.build                       |   1 +
+ t/t5412-report-hook.sh              | 201 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 309 insertions(+)
 
-> +	for (ref = refs; ref; ref = ref->next) {
-> +		struct commit *commit;
-> +
-> +		if (is_null_oid(&ref->new_oid))
-> +			continue;
-> +		if (check_to_send_update(ref, args))
-> +			continue;
-> +		commit = lookup_commit_reference_gently(r, &ref->new_oid, 1);
-> +		if (commit)
-> +			commit_list_insert(commit, &pending);
-> +	}
+diff --git a/Documentation/git-receive-pack.adoc b/Documentation/git-receive-pack.adoc
+index 0956086d61..e6cc0acaaf 100644
+--- a/Documentation/git-receive-pack.adoc
++++ b/Documentation/git-receive-pack.adoc
+@@ -236,6 +236,21 @@ if the repository is packed and is served via a dumb transport.
+ exec git update-server-info
+ ----
+ 
++PROC-RECEIVE HOOK
++-----------------
++This hook is invoked by 'git-receive-pack' when it processes push
++requests. It handles refs whose names match the patterns defined by
++`receive.procReceiveRefs` and executes the actual ref updates. See
++linkgit:githooks[5] for the full protocol description.
++
++REPORT HOOK
++-----------
++This hook is invoked by 'git-receive-pack' after all the ref updates
++have been applied but before the report is sent to the client. The hook
++receives the complete report in pkt-line format on stdin and its stdout
++replaces the report sent to the client. Allowing the hook to rewrite
++the outcomes or abort the push completely. See linkgit:githooks[5] for
++the full protocol description.
+ 
+ QUARANTINE ENVIRONMENT
+ ----------------------
+diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
+index ed045940d1..06c9e4b017 100644
+--- a/Documentation/githooks.adoc
++++ b/Documentation/githooks.adoc
+@@ -527,6 +527,57 @@ The exit status of the hook is ignored for any state except for the
+ status will cause the transaction to be aborted. The hook will not be
+ called with "aborted" state in that case.
+ 
++report
++~~~~~~
++
++This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
++`git push` and updates references in its repository. It executes on
++the repository once after all refs have been updated and after
++`execute_commands()` has applied all accepted ref changes to the
++repository, but before the pkt-line encoded status report is sent back
++to the client.
++
++The hook receives the complete pkt-line encoded status report on
++standard input. The report begins with an `unpack` line indicating
++whether the object transfer succeeded (`unpack ok` or
++`unpack <error>`), followed by one `ok <refname>` or
++`ng <refname> <reason>` line per ref that was pushed, and is
++terminated by a flush packet.
++
++The hook's standard output entirely replaces the report that is sent
++to the client. The hook must write a valid pkt-line encoded report in
++the same format it received. The hook's stdout is fully buffered by
++`receive-pack` before any data is sent to the client, so the hook's
++exit status is known before the client receives anything.
++
++There are two distinct ways the hook can affect the push outcome:
++
++* To reject individual ref updates while keeping `receive-pack` alive,
++  rewrite the corresponding `ok <refname>` lines to
++  `ng <refname> <reason>` lines in the output and exit with status 0.
++  The client will then mark those specific refs as rejected while
++  treating any `ok` refs as successful. The push as a whole is
++  considered failed if any ref is `ng`, and `git push` will exit with
++  a non-zero status on the client side.
++
++* To abort the entire push unconditionally, exit with a non-zero
++  status. In this case the hook's stdout is discarded, `receive-pack`
++  calls `die()`, and no report is sent to the client at all. The client
++  observes an unexpected sideband disconnect, making the entire push
++  appear to have failed. In general, the hook should never exit with a
++  non-zero status code and doing so would indicate a bug.
++
++Any output written to standard error is forwarded to the client over
++the sideband channel and will appear as `remote:` lines on clients
++using 'git-push(1)', regardless of the hook's exit status. Writing to
++standard error alone does not affect the push outcome.
++
++Note that by the time this hook runs, all ref updates have already been
++applied to the repository. Neither a non-zero exit nor rewriting refs
++to `ng` rolls back any ref changes that were already committed
++server-side. The hook can cause the client to perceive the push as
++failed, but cannot undo the server-side updates.
++
+ push-to-checkout
+ ~~~~~~~~~~~~~~~~
+ 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 86933d8d7e..9a0905f67e 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1004,6 +1004,41 @@ static int run_update_hook(struct command *cmd)
+ 	return code;
+ }
+ 
++static int run_report_hook(struct strbuf *report)
++{
++	struct child_process proc = CHILD_PROCESS_INIT;
++	struct async sideband_async;
++	int sideband_async_started = 0;
++	int saved_stderr = -1;
++	struct strbuf out = STRBUF_INIT;
++	const char *hook_path;
++	int ret;
++
++	hook_path = find_hook(the_repository, "report");
++	if (!hook_path)
++		return 0;
++
++	strvec_push(&proc.args, hook_path);
++	proc.trace2_hook_name = "report";
++
++	prepare_sideband_async(&sideband_async, &saved_stderr,
++			       &sideband_async_started);
++
++	sigchain_push(SIGPIPE, SIG_IGN);
++	ret = pipe_command(&proc, report->buf, report->len, &out,
++			   report->len, NULL, 0);
++	sigchain_pop(SIGPIPE);
++
++	finish_sideband_async(&sideband_async, saved_stderr,
++			      sideband_async_started);
++
++	if (!ret)
++		strbuf_swap(&out, report);
++
++	strbuf_release(&out);
++	return ret;
++}
++
+ static struct command *find_command_by_refname(struct command *list,
+ 					       const char *refname)
+ {
+@@ -2547,6 +2582,9 @@ static void report(struct command *commands, const char *unpack_status)
+ 	}
+ 	packet_buf_flush(&buf);
+ 
++	if (run_report_hook(&buf))
++		die("report hook failed");
++
+ 	if (use_sideband)
+ 		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
+ 	else
+@@ -2592,6 +2630,9 @@ static void report_v2(struct command *commands, const char *unpack_status)
+ 	}
+ 	packet_buf_flush(&buf);
+ 
++	if (run_report_hook(&buf))
++		die("report hook failed");
++
+ 	if (use_sideband)
+ 		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
+ 	else
+diff --git a/t/meson.build b/t/meson.build
+index a25f37d2f5..7056e31326 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -651,6 +651,7 @@ integration_tests = [
+   't5409-colorize-remote-messages.sh',
+   't5410-receive-pack.sh',
+   't5411-proc-receive-hook.sh',
++  't5412-report-hook.sh',
+   't5500-fetch-pack.sh',
+   't5501-fetch-push-alternates.sh',
+   't5502-quickfetch.sh',
+diff --git a/t/t5412-report-hook.sh b/t/t5412-report-hook.sh
+new file mode 100755
+index 0000000000..62e5174c58
+--- /dev/null
++++ b/t/t5412-report-hook.sh
+@@ -0,0 +1,201 @@
++#!/bin/sh
++
++test_description='test report hook'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++. "$TEST_DIRECTORY"/t5411/common-functions.sh
++
++URL_PREFIX="\.\."
++
++test_expect_success "setup workbench" '
++	git init workbench &&
++	create_commits_in workbench A B
++'
++
++test_expect_success "no report hook, push succeeds" '
++	test_when_finished "rm -rf upstream" &&
++	test_when_finished "git -C workbench remote remove origin" &&
++	git init --bare upstream &&
++
++	git -C workbench remote add origin ../upstream &&
++	git -C workbench push origin $A:refs/heads/main &&
++	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
++
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-\EOF &&
++	To ../upstream
++	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "passthrough does not alter report" '
++	test_when_finished "rm -rf upstream" &&
++	test_when_finished "git -C workbench remote remove origin" &&
++	git init --bare upstream &&
++
++	test_hook -C upstream --setup report <<-\EOF &&
++	cat
++	EOF
++
++	git -C workbench remote add origin ../upstream &&
++	git -C workbench push origin $A:refs/heads/main &&
++	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
++
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-\EOF &&
++	To ../upstream
++	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "non-zero exit causes receive-pack to die" '
++	test_when_finished "rm -rf upstream" &&
++	test_when_finished "git -C workbench remote remove origin" &&
++
++	git init --bare upstream &&
++	git -C workbench remote add origin ../upstream &&
++	git -C workbench push origin $A:refs/heads/main &&
++
++	test_hook -C upstream --setup report <<-\EOF &&
++	exit 1
++	EOF
++
++	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-\EOF &&
++	fatal: report hook failed
++	send-pack: unexpected disconnect while reading sideband packet
++	fatal: the remote end hung up unexpectedly
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "hook is invoked and receives report on stdin" '
++	test_when_finished "rm -rf upstream" &&
++	test_when_finished "git -C workbench remote remove origin" &&
++
++	git init --bare upstream &&
++	test_hook -C upstream --setup report <<-EOF &&
++	tee raw
++	EOF
++
++	git -C workbench remote add origin ../upstream &&
++	git -C workbench push origin $A:refs/heads/main &&
++	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
++
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	To ../upstream
++	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
++	EOF
++	test_cmp expect actual &&
++
++	test-tool pkt-line unpack <upstream/raw >actual-report &&
++	cat >expect-report <<-EOF &&
++	unpack ok
++	ok refs/heads/main
++	0000
++	EOF
++	test_cmp expect-report actual-report
++'
++
++test_expect_success "hook can modify the report sent to client" '
++	test_when_finished "rm -rf upstream" &&
++	test_when_finished "git -C workbench remote remove origin" &&
++
++	git init --bare upstream &&
++	git -C workbench remote add origin ../upstream &&
++	git -C workbench push origin $A:refs/heads/main &&
++
++	test_hook -C upstream --setup report <<-\EOF &&
++	test-tool pkt-line unpack |
++	sed "s/^ok /ng /" |
++	test-tool pkt-line pack
++	EOF
++
++	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-\EOF &&
++	To ../upstream
++	 ! [remote rejected] <COMMIT-B> -> main (failed)
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success "hook can report a custom failure message" '
++	test_when_finished "rm -rf upstream" &&
++	test_when_finished "git -C workbench remote remove origin" &&
++
++	git init --bare upstream &&
++	git -C workbench remote add origin ../upstream &&
++	git -C workbench push origin $A:refs/heads/main &&
++
++	test_hook -C upstream --setup report <<-\EOF &&
++	echo "push rejected: service X is down" >&2
++	test-tool pkt-line unpack |
++	sed "s/^ok \(.*\)/ng \1 service-x-is-down/" |
++	test-tool pkt-line pack |
++	tee raw
++	EOF
++
++	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
++	test_grep "push rejected: service X is down" out &&
++
++	test-tool pkt-line unpack <upstream/raw >actual-report &&
++	cat >expect-report <<-\EOF &&
++	unpack ok
++	ng refs/heads/main service-x-is-down
++	0000
++	EOF
++	test_cmp expect-report actual-report
++'
++
++test_expect_success "hook stderr with zero exit status code" '
++	test_when_finished "rm -rf upstream" &&
++	test_when_finished "git -C workbench remote remove origin" &&
++
++	git init --bare upstream &&
++	git -C workbench remote add origin ../upstream &&
++	git -C workbench push origin $A:refs/heads/main &&
++
++	test_hook -C upstream --setup report <<-\EOF &&
++	echo "push rejected: service X is down" >&2
++	tee raw
++	EOF
++
++	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
++	test_grep "push rejected: service X is down" out &&
++
++	test-tool pkt-line unpack <upstream/raw >actual-report &&
++	cat >expect-report <<-\EOF &&
++	unpack ok
++	ok refs/heads/main
++	0000
++	EOF
++	test_cmp expect-report actual-report
++'
++
++test_expect_success "hook stderr is relayed to client via sideband" '
++	test_when_finished "rm -rf upstream" &&
++	test_when_finished "git -C workbench remote remove origin" &&
++
++	git init --bare upstream &&
++	git -C workbench remote add origin ../upstream &&
++	git -C workbench push origin $A:refs/heads/main &&
++
++	test_hook -C upstream --setup report <<-\EOF &&
++	echo "hook-stderr-message" >&2
++	exit 1
++	EOF
++
++	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
++	test_grep "remote: hook-stderr-message" out
++'
++
++test_done
 
-Hm. Why do we loop through the refs twice? Wouldn't it be possible to
-combine both loops?
+---
+base-commit: 11c6700f10234578d10523faf35656ca491425c9
+change-id: 20260812-758-introduce-hook-5b3af9f1a7e8
 
-> +	while (pending) {
-> +		struct commit *commit = pop_commit(&pending);
-> +		const struct object_id *oid = &commit->object.oid;
-> +		struct commit_graft *graft;
-> +		struct commit_list *parent;
-> +
-> +		if (oidset_insert(&seen, oid))
-> +			continue;
-> +
-> +		/*
-> +		 * A commit the peer already has bounds the pushed history
-> +		 * with a negative it can use, so stop here rather than
-> +		 * descend to a graft that would only be redundant.
-> +		 */
-> +		if (oidset_contains(&known, oid) &&
-> +		    odb_has_object(r->objects, oid, 0))
-> +			continue;
 
-We abort the walk whenever we hit any of the objects in our walk that
-the remote supposedly already knows about.
+Thanks
+- Karthik
 
-> +		graft = lookup_commit_graft(r, oid);
-> +		if (graft && graft->nr_parent == -1) {
-> +			append_negative_object(r, haves, oid);
-> +			continue;
-> +		}
-
-And when hitting a graft we explicitly add that graf to the negative
-objects, too, so that we include the graft itself and its tree.
-Logic-wise this make sense, pending the above questions around whether a
-graft can be modified locally.
-
-> +		if (repo_parse_commit(r, commit))
-> +			continue;
-> +		for (parent = commit->parents; parent; parent = parent->next)
-> +			commit_list_insert(parent->item, &pending);
-> +	}
-> +
-> +	oidset_clear(&seen);
-> +	oidset_clear(&known);
-> +}
-
-Instead of doing a manual walk like this, shouldn't we use higher-level
-interfaces like `repo_is_descendant_of()` that can make use of commit
-graphs? That might be overkill though as we can assume that in most
-shallow repositories we won't have deep commit history anyway.
-
-I guess the answer is "no" though, as you don't only want to check
-reachability, but also whether any commit in between is part of the
-commits that either we or the server has advertised.
-
-Thanks!
-
-Patrick
