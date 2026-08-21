@@ -1,157 +1,213 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAE73769EC
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 06:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787294100; cv=none; b=ROHEs244W9utI73xx9OdopkwUQYKbARWHpD22tQKatnUs92S27Jj3cQYI8uKqGpF4pMM5gUkEQCtPdHxhCnMmd4yhLZn0qbYzoHZPV8clXEnT9QQbWO0dgTGnMID47PdKNrjHJKMlPPwFxTrPonHtrczSAVEolZPCOcM6s9d3H8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787294100; c=relaxed/simple;
-	bh=YuCuys2ZeoVl0eDMwnJKLxQAzLmfR3s1m4BJWvABfdw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m4Odk3mDCa089508W+ixShoTPN0qIRzhxHZfJb16vsj49ny/vOfqwG0v2HOluh0wZxVZuPkH8LrX1ypnXxz8kS71Umxnw8a/L0fHVoHwijTg+tWIFiiVGTgOqw/DaIYndDJThTmPPcfIzennvoXlPJ0k/DcS+FhZwIgnKj0JptY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=of2rJjHU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GXDo7YUr; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4511540F74A
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 06:40:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787294460; cv=pass; b=hMrE2tFCjTGFmK9cSK62CNeZI3Kpu9+Po6kPRxPGMucDJFPjs2EJvvGGvebVUTUSejhfJufuzVoHhVGVLASpUxev/SRT86mTIUST+p54vO2NhCFxDKBYu7Agq8IxudqD66W5RO5FfcTmpCrr6ykP02SQGnKDEx+0UkjSL1qJk9Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787294460; c=relaxed/simple;
+	bh=xKbCKHtR3trjQU5ihby2C1EBiVK4RxYYR4+bhwWDzno=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sVnuopkb9JzlDH6X02P2ayjJV3zSkW93kmdtlw/93pgC4S4RciBzlQEtYJhkEPKeQt68ImZjISnj4StOZ/alGAQjFGtv2SB+KfvtosRji6Lx01qZA/wGNwOluoVZd2r04oi98ytQSlBwgaCOVdwKKG4Z67uSdLOGJbLjLNdBfCg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kgg8claf; arc=pass smtp.client-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="of2rJjHU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GXDo7YUr"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1EAA9EC0283;
-	Fri, 21 Aug 2026 02:34:58 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 21 Aug 2026 02:34:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787294098;
-	 x=1787380498; bh=xg8VhxXJXdECjkkO9qQT79noAqfuPmZuXjF4myuAucU=; b=
-	of2rJjHUXI1nT1j7Y4opKJdde0ak6C3xI9MLEOmtveDoEfE/tteoTWM7y7WLDWdK
-	PBNy2Mw3UYXypf5fkquCZyuXmBhBX6O0QOgDQWN+wOWKM0s4SQqsiowUvjL3Nh1z
-	Rz40ylkRvAPw2mSE+W2hQLPIuYbxQJApUEUeUujO/OCvyPfpFoEQQYqohOQps0tw
-	XH1NMUkNEtJETd4edGBywxb1ioyPiqGGWGM1ZDNBF+J8dV+uKaCrcMBjHUonIQ1L
-	847BmgJsfz3yUBEJOVQxM2g8IDc9vs1phAEkNd5cSgLoEoNilTTDj8UVd9mx63Ld
-	5ObWyQIxI8Rfta+peEmbQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787294098; x=
-	1787380498; bh=xg8VhxXJXdECjkkO9qQT79noAqfuPmZuXjF4myuAucU=; b=G
-	XDo7YUr31ztw74z1fK3aNR+mr4VeJCLb8I4lnVzNx+eP3iWPylqEhddl2cciDaxz
-	YVUKX14k757Ea7lommuHJ9dRSSG+PnlacmuuH6vYw7igI5lhdX5AWYY6KwsYCrfJ
-	tqCL2ynM7Lt1lkqIX7K8wULGtTYvellwboZ7IcdII1Lkauhc8kT1AQiIBMrX7Y9y
-	+OYTJEJ0y+/ptJi2+N25UerzdqV82GWeZjXD9PtrL2ErnWESztcXtnXuQD6pdFU6
-	IlTlr8Ts42X952JCpUsuzF4Comr/nM4PbvbJTN1RybBqhvZz9Ct/md7JPeaWiqvO
-	OIV/ues6eJf+rmmJ916sg==
-X-ME-Sender: <xms:kvGHajBnLmoB05iTLCQ6urTBjUqA5oKaYNJ2O5mRoBSZGVyxvv2Ycg>
-    <xme:kvGHag8HiVhKrDxGbHob1Qbzw9NZuZ7oZIBpTcTBy9_mJCjVsNFYt85HCOVeJ-Mxw
-    RaLh7Dte9QNEvrFkqxLFMSSXuWoofA8vWs3RkndzukV3RXtTgWfkw0>
-X-ME-Received: <xmr:kvGHar-DAYd9zYryXSx7G6PIYzVQyZNSaMCC2JgmeF-VpJvVhq5KdJqFfhsMQW8yKwHWARUN-nAAkx8xka1vVZBQwTOvue9pcHINqNm_Oyg9>
-X-ME-Proxy-Cause: dmFkZTGUfDu3ZiAIa2b9++Vj0B1fCIExJiEus+Q6q7vqzQPizizWN5PGg1cX4xrcB/iM/Z
-    xk/XaDNjcsTe+0YD5rBlKxV4npUJbIemp7ffW3u2T7v9NK4AxMIQ1X9kLsbCoKlIqLyU5y
-    p5bYuXGLQkevMDPuf77HGSxLirfwPdvNecF8LpgNr6xyeMOOI82K7EZZ/EQXZze6K1oL+c
-    ADuNlbQa6g+QY75xhnM0Ydqd2Va6Ca+Lw/vHK4io6KBNMUrMXqST9cLqBLXaxLq7FESY4d
-    47QwfKWHds1bfvWTqxwYI9ZB2aETTMix+MtCE82c3TjOCGPmts+jb/x/BrfJR1UZUwoJg7
-    PcbxtMnS5BeSyqfv3+KejcpCIQt1JefGpvkHBIt6KIr0Iil1qv7pheptx8bKecgeD/tLcW
-    gRzO6IekW5hCOcbMOxqirOuWgLwI0ZGAfqj0zTJ8HmukcXZVEAMMYGr/IdsEoMM+gxpxdh
-    lOkTq3KbRxvl2zRgbaLG0SZcp/1LDg1lR+sgCJEkipb6uDRnBbhInYFQWi+QJQBKO22aB0
-    eYVm7KIyCc3Cf1kYXNvP7Z+GwPKvUYOEPhHvEvOK+GH9CowIZyQq5lnMQJUjhMuZPjb+kq
-    A6Z47dY3EVDBYunR6OuVxLWszDyfOVTQFPwFUrSulkBhBMwBwfsszA3kKpNA
-X-ME-Proxy: <xmx:kvGHavc14dZWhJ5vOZmlN73hOGdmaFcK-DzMUaqFOo5R_yrptlxvzg>
-    <xmx:kvGHasFfdTBzU8oEviIyfBBQn_HAcRdnAsQhOe0zx7CFvSwf1Jo-eQ>
-    <xmx:kvGHalesfsRn2ZNNsweMsL_s7cqrcD7nw19gSyKwfZfRNYaaKqKr6Q>
-    <xmx:kvGHauGUzDiBFk6KhwIkTL9lmOIFYIgmIXxfOGGfaMZLcaac3wafGw>
-    <xmx:kvGHag96MZ-b4MynmkA7J29mcHeW12f3VZ3ugrZk1aVntGdQjSPOtM37>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Aug 2026 02:34:57 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2f777e00 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 21 Aug 2026 06:34:55 +0000 (UTC)
-Date: Fri, 21 Aug 2026 08:34:53 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/6] odb: introduce interface to generate packfiles
-Message-ID: <aofxjYAYPGkCrtQ7@pks.im>
-References: <20260817-b4-pks-odb-generate-pack-v2-0-4c8a96ccfdb3@pks.im>
- <20260817-b4-pks-odb-generate-pack-v2-1-4c8a96ccfdb3@pks.im>
- <CABPp-BG3_xvbXtt5BucyOy-dHXqX569d4FBfyZwbLiAb-qRPXA@mail.gmail.com>
- <aoaYL_BinFtgdJ5N@pks.im>
- <CABPp-BHSFW38sF4dZkqZuGaRASVRj2FVG2NN1OTA7-Dd6Pt6rw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kgg8claf"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-45ef699308eso329500fac.2
+        for <git@vger.kernel.org>; Thu, 20 Aug 2026 23:40:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787294458; cv=none;
+        d=google.com; s=arc-20260327;
+        b=B+iihkcsJKwWH5ZMIMPIUxiUoiYiQaa9+JSyh4f5iP4w/cjC8P6tgllP7ZayY6HVX3
+         s/ZIloYTSeUkr/LggXdu5TWddXJk5GK/zjwuXITIVSJuz8PLAb3+HAqSD/EdY/kfX/dP
+         6OvBGFswctm4OjEVOv1EaffXKrXya4T2TP1Dv8uRVJlZpjLsO3A1DdjxY4qAPLbyv/DT
+         mDKgGePxpPaXNtq6AW3QKlOErnd4GodgGgweZPYIvEkgduIAomGFTaFofSqExap5bvaO
+         376gb8tF8jAthnLSm9rN0zRBV7f3+UHndbNhIgbUshA6kIryGPz3K/Xxn1Lzc4X9OHNr
+         Omvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=DPQNoZ6yNZ+2v1XMBwYiVuvl/fn9mLIFSS9NmsGaAsE=;
+        fh=lIuTTwg3WPgzcB7dYFnAgBSGhvcsnUpdHUtspSjo8YE=;
+        b=PV0yD2nH8MKHDQtdL6eg2u8avtwmbt3HiHdh5POE9vzo/VTQpSP4kAc0742DqzeXAG
+         6bro3nGxtb0GRL26TFfkpHwnR0jGkZqffMFbIu6x8E/oFfXR/3pU4OOnHGb0b+yHe+Ka
+         47fSen4Os1dGYpGrjlk3YFUKXUGj6JDX34cja323JMgFoqzOG2XHe4olsee1ZR9QRo/u
+         ZKkqMQhLo7SIbo8ZmGZt8Zf2a8rggfwoLiPm4X5bxRXSaIf06W9TbDJiPdOObtGBbgS7
+         xDWi3bEHYM9xweVZs18+f/y8P3FjPnc7fzO6A/3iV9L46YSUx/giKBiwC3OPplypXxUp
+         WFaw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787294458; x=1787899258; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DPQNoZ6yNZ+2v1XMBwYiVuvl/fn9mLIFSS9NmsGaAsE=;
+        b=kgg8clafE1WndnuQxoIDRv3Nz+G+Otc/E7kPEYlHZ75Vw/y6zBmSh4yHSxpSaiIHXq
+         oqfyhtKVDqkCmOqyU2SmO/06H2IcRjFQ3bI8Uh8k3HGT5r9lVMp38rEEQvhMtTZloTPc
+         bQsDlX9J71jTDQw0hYkH+XZCq49Ykcht1yyIs5TK5WH7ImGWnlJHKswPwtEcT7phlyAz
+         Zh2Wgmq8a1m4p3c91EpQZaBsfHIckY4SYIgbfpVIYVsYRoXvcyju1V2Qvd6Yvkuix+4a
+         Jl5w9DpmUt/fmGjVvKWAxKFGO1YVgarb31TjFUS0lQeVYgEE4YFgpJgXgUi1iD0E2OD7
+         HiXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787294458; x=1787899258;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DPQNoZ6yNZ+2v1XMBwYiVuvl/fn9mLIFSS9NmsGaAsE=;
+        b=M4qu+W/QY3RIjZ4q07E8GA/qgQnX5yLpjo4H04XHNaPNJVF/4aNS5XV5GKm9l8wFWs
+         McdpPltmLJWtwgp1ZMFiW66o4VL9gxOolOCXdyNz93+g1MDLSImM1VZ5V55hpWjA9afn
+         iYovY1CyKXh+bBLHzgY+5DG4Td/GbKDj7lNnNhN3NrMfsH1f5ypcj5MTnuv6ZG9u4YCg
+         Vx4zNJjINSqtb3/6SXMygNfYCilkSWIzhZekFWx+FkHuycQt2+TYcGG28LuYXALzhDJI
+         6bFSRJGYMwo2bUSZ/0KpZFnBaVQPjRgoVm3G6wHGFiG/K4mX9noMNcTnQfZC7Q2fDcrM
+         g26g==
+X-Gm-Message-State: AOJu0Yy+h53HYofNadZ6q++zvojRwIVtNfH8GfPU99KlhrOSSLmH5v26
+	TMWbZ/8WntmbjN6dMtKd933TOmNrJpuEOtfK/5q0tKjQ6yn05l3bdGyADxirxrHcPX7q//JHETb
+	jraxIFbt+5nQ1I5t5+W56ln3Zve+iU3wWbg==
+X-Gm-Gg: AR+sD13/u1frKH7mpEZPaU+dDNEZbaCLr41Qt3CA+pLfenwBvBaEmnk03ms/tpyXbb1
+	N6xQlTMthuiQ3VQz0aj5rAgWEYTrCORbEGq/vnFuRH4BGzCerHNh5Xa+coZhqOgJNY03O4SUunc
+	2tOwwPYJyQvGl6Yi4c0h2bofzlRGrqnRDUySyArCy8lm8fet1UR/jCklC9m5U80VV7wbrGffGGY
+	VEaOdbFs8Oa3797XC9AjLwghhUd62egKz9cCtqqDVufK1G6EJ0SMOhkd06cjShWAKOEFi+P/SyD
+	bK390/S99X8b9Zmt4Hz3PmPsU2vGh27FlMGp69Yi0wmskRN5dnLhU4eFapWJGxcDGjVM30eG51A
+	fwYbpM/1AESoz/9x3yGA5CCPeeQLoHYlQlwPsZZKW/c7RGm3hGd3+UvpNy2lsWdMn
+X-Received: by 2002:a05:6820:2219:b0:6b1:4cd1:a7b with SMTP id
+ 006d021491bc7-6b159402876mr3752081eaf.31.1787294457990; Thu, 20 Aug 2026
+ 23:40:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BHSFW38sF4dZkqZuGaRASVRj2FVG2NN1OTA7-Dd6Pt6rw@mail.gmail.com>
+References: <20260811-pks-geometric-maintenance-reduce-frequency-v1-1-7a54c42355ac@pks.im>
+In-Reply-To: <20260811-pks-geometric-maintenance-reduce-frequency-v1-1-7a54c42355ac@pks.im>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 20 Aug 2026 23:40:46 -0700
+X-Gm-Features: AcwNN1VNhaCoBfbhlwjZuLOnQSPDthF5zrYQDFCDCKs7pYalfYUuPUQAHpQg65w
+Message-ID: <CABPp-BHgyVTHB_OGmCL4JprFFe6_MapOQNSjUOhJxu-+oWbErg@mail.gmail.com>
+Subject: Re: [PATCH] odb/files: be less aggressive with geometric repacking
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 20, 2026 at 09:41:03PM -0700, Elijah Newren wrote:
-> On Wed, Aug 19, 2026 at 11:01 PM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Wed, Aug 19, 2026 at 09:56:56AM -0700, Elijah Newren wrote:
-> > > On Sun, Aug 16, 2026 at 10:40 PM Patrick Steinhardt <ps@pks.im> wrote:
-> > > >
-> > > > +static int odb_source_files_generate_pack(struct odb_source *source UNUSED,
-> > > > +                                         struct odb_pack_generator **out,
-> > > > +                                         const struct odb_generate_pack_options *opts)
-> > > > +{
-> > > > +       struct child_process cp = CHILD_PROCESS_INIT;
-> > > > +       struct odb_pack_generator_files *generator;
-> > > > +       FILE *in;
-> > > [...]
-> > > > +       cp.clean_on_exit = 1;
-> > > > +
-> > > > +       if (start_command(&cp))
-> > > > +               return error(_("could not spawn pack-objects"));
-> > > [...]
-> > > > +       CALLOC_ARRAY(generator, 1);
-> > > > +       generator->base.out = opts->pack_fd < 0 ? cp.out : -1;
-> > > > +       generator->base.err = opts->progress_fd < 0 ? cp.err : -1;
-> > > > +       generator->base.finish = odb_pack_generator_files_finish;
-> > > > +       generator->cp = cp;
-> > > > +
-> > > > +       *out = &generator->base;
-> > > > +       return 0;
-> > > > +}
-> > >
-> > > Does this have a use-after-scope bug lurking here, due to the
-> > > combination of clean_on_exit = 1 (which makes a copy of &cp for later
-> > > use), and the fact that cp is a function-local?  If I'm reading the
-> > > code right, start_command() calls mark_child_for_cleanup(), which does
-> > >
-> > >     p->process = process;  /* where process is &cp */
-> > >
-> > > and then cleanup_children() accesses various fields under p->process.
-> > > You do copy the necessary fields from cp to generator->cp, but
-> > > &generator->cp was not passed to start_command(), so p->process points
-> > > to the function-local cp.
-> >
-> > Oh, that's a very good catch indeed. Out of curiosity, how did you end
-> > up discovering this? Did you just happen to remember that we store the
-> > pointer out of scope or did the copy make you have a deeper look?
-> 
-> Neither.  Went to review the series, but I was worried I'd be missing
-> context from not reviewing earlier odb refactorings.  Used AI to help
-> orient me and give me its own findings from reviewing your patches.
-> (AI will sometimes spot things I miss in a review, though it'll also
-> miss some things I catch.)  And sometimes I iterate with AI to dig
-> into various areas.  Anyway, it flagged the potential problem, and I
-> dug in to make sure it didn't look like a hallucination before
-> cleaning it up and passing it on.  I'm still looking through your
-> other patches in this series, but should finish soon.
+Heh, looks like a typed up a response and got distracted just before
+the end and never came back and sent it.  Sending now due to Patrick's
+ping about this not showing up in What's Cooking; maybe an extra
+review will help.  :-)
 
-I agree. For all the pain AI is causing, doing reviews is one of the
-things where it's helping me a ton. Both by reviewing my own patch
-series before I send them out, and by reviewing others.
+On Tue, Aug 11, 2026 at 2:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> When performing auto-maintenance with geometric repacking we have two
+> conditions that may trigger a repack:
+>
+>   - Either the geometric sequence of packfiles is invalidated.
+>
+>   - Or we have too many loose objects.
+>
+> The first condition shouldn't trigger all that often: it may be hit when
+> we fetch a new packfile, but users tend to not do that all the time. The
+> second condition is what typically triggers more regularly though, as
+> every command that ends up writing new objects may cause us to cross the
+> threshold of loose objects. It is thus preferable to not be too
+> aggressive here, as otherwise we may end up repacking objects quite
+> often.
+>
+> For the geometric-repacking strategy though we have a default of 100
+> objects, only. As we're approximating the count of objects by only
+> reading the "objects/17/" shared, we'd only need 2 objects in there
+> before we perform a repack by default, which is quite aggressive.
+> git-gc(1) on the other hand has a default of 6700, so it is quite a bit
+> more conservative here.
 
-Thanks!
+2?  Wouldn't you only need 1 (or if you could have fractional numbers
+of objects, only 0.390625 of them)?  <looks around...>    Oh, huh:
 
-Patrick
+        /*
+         * This is weird, but stems from legacy behaviour: the GC auto
+         * threshold was always essentially interpreted as if it was rounde=
+d up
+         * to the next multiple 256 of, so we retain this behaviour for now=
+.
+         */
+        return loose_count > (DIV_ROUND_UP(((unsigned long) limit), 256) * =
+256);
+
+So, indeed, you need 2.
+
+> Being this aggressive is also causing problems as reported by our users.
+> When running lots of concurrent writers, those writes will constantly
+> end up spawning maintenance jobs that end up repacking objects. As we
+> also prune objects, a concurrently running process that tries to write
+> an object may see that the sharding directories get removed under their
+> feet. While we try re-creating such leading directories, we only do so a
+> single time, and it may happen that the directory vanishes again before
+> we had the chance to create the loose object. This is not a new problem,
+> but it is exacerbated by us running maintenance this aggressively.
+
+Unrelated to this patch...but should git avoid pruning the loose
+object sharding directories?
+
+> Improve the status quo by reducing the frequency at which we pack loose
+> objects to the same frequency that git-gc(1) uses.
+
+Makes sense.
+
+> Reported-by: Stefan Haller <lists@haller-berlin.de>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> Hi,
+>
+> as reported by Stefan at [1]. Thanks!
+>
+> Patrick
+>
+> [1]: <4f6a96ac-d993-4872-b3c4-30d899f61ca9@haller-berlin.de>
+> ---
+>  Documentation/config/maintenance.adoc | 2 +-
+>  odb/source-files.c                    | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/config/maintenance.adoc b/Documentation/config=
+/maintenance.adoc
+> index b578856dde..da8be9f812 100644
+> --- a/Documentation/config/maintenance.adoc
+> +++ b/Documentation/config/maintenance.adoc
+> @@ -101,7 +101,7 @@ maintenance.geometric-repack.auto::
+>         there are packfiles that need to be merged together to retain the
+>         geometric progression, or when there are at least this many loose
+>         objects that would be written into a new packfile. The default va=
+lue is
+> -       100.
+> +       6700.
+>
+>  maintenance.geometric-repack.splitFactor::
+>         This integer config option controls the factor used for the geome=
+tric
+> diff --git a/odb/source-files.c b/odb/source-files.c
+> index 5a68af7d84..555e466145 100644
+> --- a/odb/source-files.c
+> +++ b/odb/source-files.c
+> @@ -521,7 +521,7 @@ bool odb_source_files_optimize_required(struct odb_so=
+urce *source,
+>                 };
+>                 struct existing_packs existing_packs =3D EXISTING_PACKS_I=
+NIT;
+>                 struct string_list kept_packs =3D STRING_LIST_INIT_DUP;
+> -               int auto_value =3D 100;
+> +               int auto_value =3D 6700;
+>                 bool ret;
+>
+>                 repo_config_get_int(repo, "maintenance.geometric-repack.a=
+uto",
+>
+> ---
+> base-commit: 010afd3166ddc64c9863b1506f12cbcdda0d4ea1
+> change-id: 20260810-pks-geometric-maintenance-reduce-frequency-5c1c9423ce=
+b3
+
+Looks good to me.
