@@ -1,394 +1,239 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6AC397942
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 12:32:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787315522; cv=none; b=dqTnLOn0qKlenuV74SEQHdjDlFOt8eu/CAza/+BXq1U3boEmLywkehlu044hqsUYvj8eKXFCV24aXfZqaRpGzqWDGdLzflBSr5/3kCN5cVprI13fQs5b/GDCFHTk/Y5iAirHeI3adu8R9tLlQCpZ3ZpxqpJopsA/kpG1AopmhA4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787315522; c=relaxed/simple;
-	bh=6pnQ/ddns4JNGaHpt3B0qX+AUbcIi7Jn0/0+JyDXJCA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HPm0GvYJ9a++n+AJXUrJUq9YlrIzMO4h+rSxwDKzNP1edNNcz+HcBdabV99jaSDNXWVs8SEhPUsO6yfbk1BrDTHtbRYRpAugfDN5PL/N3LrejKgTbA2mEXv2Bs2LrJGUm8YMpZJRqxXwzWqmsl8G5RiR9gLY8WDdogaNm5Vqr5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gHOfkrd5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i3+MsGBN; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B3947CA8D
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 12:38:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787315898; cv=pass; b=P6xVCOuDmOVQx8O3pT9bBNU+kZN7/8avoCKyQtUUryBHTiIUdr1Q8d22LZW+M9WIlnN40DIBaBS3R5ikCcTM9sEHOYBmY0rSSC3UKwyZgCGdGY+zwd0PRmcMmfQ2MrpED0upE1PNXFQtZ9Vp7TVhJ+kKhFHz5Mwt/j8quRXF5HI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787315898; c=relaxed/simple;
+	bh=mBPicloZtal8xOLbztYqH4NZpxAdDJi9OxVXItoEOKc=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sH4lkJFxwsu3bMAXWmpN6Ugq6CKrXMSslL26bjiiOCq6U7IfvgdtKg9nHapINwwGyduH+eYzg7HF2MbPnaeL5BMoXkdebzObZUTREj95jOjMAJMGCqhXzUsxBKXTk78Wr8+eClctLvbvR9tgNH8YodxXuszChL1W6c20QcVYC4w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mfsR/r/K; arc=pass smtp.client-ip=209.85.217.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gHOfkrd5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i3+MsGBN"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3EE827A00B1;
-	Fri, 21 Aug 2026 08:32:00 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 21 Aug 2026 08:32:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787315520;
-	 x=1787401920; bh=seCg6FNueoJfCm0MKsR/SHCNGQJB+LKjeGiYPT73rHA=; b=
-	gHOfkrd5BWj1oOLFzXKnLE0LE7TvVw0PFS9MZp6BU4fB97xBhiy3Elr7l6K5TbRd
-	GB2Dh84ikIyIHItvqIcAbGnu291tJgCoU2v8qqYTrHGcWQVCumjLeR73EWmX3X51
-	lYvGivUR8KYF69uLgCxlC6tTknshRgM4daPYvBk55vpBR5UuznIyGS3+3GQDxq//
-	qXlcwEdVIzyRp/8zEbrTgHaejqPxQUvLl8K/3H6NmY6ZBbBf4smglfhciQFz9914
-	teQuSaqFUuEpp/XVdMO76pU/QGSJYuDa7zbbiSllZLg178gHrXd1nSUOX2CEu0Te
-	RJJG46dyBXxA7SWp3/Ztgg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787315520; x=
-	1787401920; bh=seCg6FNueoJfCm0MKsR/SHCNGQJB+LKjeGiYPT73rHA=; b=i
-	3+MsGBNLsWnKnwZOrGCcSSPflI3vGf0joeTG7un0bJ7n6aCjNioWwUvIUkwI/ggz
-	X+I3NomLwD/RbEYWzKljtiZRNMGV9HcLy1Gvxd5SBInJil+rH0UDxNVpRrElX1FB
-	0Wu0zRoL3OIsqUjzzy911mZcC9aD0cfxw308zd9lp9Q5fgxm3QvrMWgEo6BvJY+j
-	hnaSb6qGE7EyPfICloFSHWv7npnbzvWRT0jib3c4LLSb4FFLyxUfha7sJH+Pl4jS
-	Pnb2R4IS8Z5a//jFVg4ywdAPIbCVZP3ILlRM8+ECID8YnwG0/KjlGK9OCCG0yOOY
-	rNxRFQfSQGIPx11CGFLIA==
-X-ME-Sender: <xms:P0WIatmPzTjUblqevGyBxgn0riD-so2gKxUe25QRh2f_dZWXp_x4Mg>
-    <xme:P0WIau3UYoGh_AvaPzHEnHhilJJLF9OfVq6VHfU2v_AVM6VJnimBeDQeLTK3MuNfr
-    0E5YxYErejc9cGDXlB39YcMI9rkceT6vNbXKMeQS4-XRYdO2TMR7A>
-X-ME-Received: <xmr:P0WIahSNJufI41MiQMgjiySfB_TG0HxIBa0gI48qEvpcXvLMxG0qeAQ5O1kPX8U9-6sTgAivc6c09YKW3nFqSM_iccpTRGsyC-K_0fFvzL_t>
-X-ME-Proxy-Cause: dmFkZTEutFYURr53osgEdpGE2CY+NSFU+Cb83xojaSOXH6aiNmm46iCT87DE1W/nJWsq8Y
-    viTJTwQRzGeBwT+VUiH0nWn5S0TdkZg5Wdyzs5B9QJUnX3E08i6LorZxz7DWdoNZ//jmnl
-    CsnJGpTaxOzX/kLwDqoebtFLZrBqCAAdrjRagwizseKPvxLfAjFq7e2pfRyXy7WY9DB0hJ
-    LNq3eZSatGJYggsUdyx5fQ4plE6+6/y7F9o/jngRpt9buPyo3rOqTjh2XxM69OxCBm+5c2
-    abOCC+SO+XAZ5mSB3exCljhAFLroGSWZPJ+iiphpjJGz9YLXsmAhUKUl6orMr4V4z6SDUK
-    OJw2UkV0SurSwfdjH/GeKCOPCghJJ4QRbmbvwhSj5J0fvUOQ0krz9K2kX8Rtd5nKYReAMP
-    3MHEhxFgCk37V33fAgZpO5lpp0HBr6PEToQKfC7iy2WsxUv8qZWgmiM+VRLov0Z2RdUK89
-    sGC2l3gvCgs4PPflBMV1HFc/O+hkvEwKjUvTVY6/rlMwSK9SlC0DVZXzyK08puRZGKt3dY
-    POUrqkPPITo0GMTqTKNEjOr/P6xAQKrid4Eb7YOA8YwqWRT8f0ywvT1AH/e7szoKk5O+dz
-    0CrJIkMvuOqhqORbreiMEM+jqdMC1+czByGx5TMdEPy4OGg84KTyrW68cSUw
-X-ME-Proxy: <xmx:P0WIaotSdJxniToBjY4hxLjgwnsAiba9YAgSCPd22Xwb2YjgXSn6nQ>
-    <xmx:QEWIauaEmqtI1AudYiHf-A2hGrH8F8O-ZuCS2ZrRyii64FUF6dlAgQ>
-    <xmx:QEWIalsl0XkqHwKDdBWb1WblaX5aXX4XF-SGL1E6ARfZVAYnjczWiw>
-    <xmx:QEWIaoFcFfuFLOjWAfcZuZn_QWng1SDavDxX67qlDEsq3s4Ne8_ebw>
-    <xmx:QEWIamUgeKXmZlCXuY58hFaqYtgAEUQVKbN3e6sFjQJgt7sEgZeE2bzN>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Aug 2026 08:31:59 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id efa03274 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 21 Aug 2026 12:31:58 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 21 Aug 2026 14:31:45 +0200
-Subject: [PATCH 2/2] fetch-pack: allow parallelizing packfile URI fetches
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mfsR/r/K"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-74ac3ea9c60so296973137.1
+        for <git@vger.kernel.org>; Fri, 21 Aug 2026 05:38:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787315893; cv=none;
+        d=google.com; s=arc-20260327;
+        b=gQa6XL68ozkddoT3htslb89y2KhlGiBuXFjngWwSjlgfRenScdcZMmtASyyAFDpbp+
+         JbsvvSVCQoiz4EuAofPmv+R5xQfL8E7f9OUI/7ve7pqHO7Q3ixYQBwkeHwL8QYzpHyjj
+         fidkw3dAJhiyvDkKHJgWLgGXNkeSoldxoyeQ8iJ62viNlTdphd1d/+gEP4AonwsfP42o
+         IPMQk6zJ8geJwEQCpg1lO21/MlXxiye9tWi6/bmfOlNnh57KoSCd8wPCKyMooGhPitp4
+         jtm4o9uAe+K/zw2UniIXkhhpmmAVoc/Xe82QLSFZWlS6ttXhUtsCDBpq8GTW2lRPxYov
+         XgmA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=2jwYVRPZLErVH4WvmY7mcWgZZl6vVovggUwBtAIyj6Q=;
+        fh=QD5PF7gH8/6Y86iPLgnwxn0PCC1G8XNpSnHML+KOX/E=;
+        b=bZObTIk6FCjcEam+LKNt3MRCmgiT6ND4c6pPPdkek8DETihUFyiOvto5MCIKo+/j9g
+         iE7lRZmbuIs8WMLKjGUEQ1GWnIFKAfj6yfVrWTOK/POeysY5tZnERWec7JqvWIb3q+2m
+         84vslyi+uPCRoyyt/mz1FLuSF/LPEQ9jML+J755rvFN4+o8SyFuOS97wcSEFhyB5qPxB
+         UqSO4xLLwKa6pn6IxWgKKeuV7DuV1FpgtkA3GTHuigpsdbSzCKxM+7P4YBCuNsMUq22b
+         f+meGlBI9ZCWPrJshCGKOJAqgW3pbSzhCIcA4l9acZkYZCIBygtiy2a7YDEI734v3pTp
+         GFPw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787315893; x=1787920693; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=2jwYVRPZLErVH4WvmY7mcWgZZl6vVovggUwBtAIyj6Q=;
+        b=mfsR/r/K2B7kopx+NZgF6RlqXCnraYqPx2LRfPTZcakFgLQeJWz2Zad6rqCUM2gcrh
+         ZCU+qHv6AFLKZskoe0KPWRLag+cedLCU3mIi+N+B81kBRPW1eZ18BkqAaoNpbRuRZfyu
+         hrSrsK1PL2IOfv+dW8HV+Dx3uNeTKf3ak+2hi3qb2eCl4AHx4cLAC3VCXDO131ocw23X
+         1FErCNruKWNCuMj0SjaAHw0R7dc46HH/0SVui0NJBKi64iAX1Z4bsETvRbTxp67oMA/+
+         agIthAo/vrGKBoWukRXQ9hfj4PBHFmgULOIUIG8+JOOg6kWsWoJNGxEtDKJtZAXVtlrI
+         AHtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787315893; x=1787920693;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=2jwYVRPZLErVH4WvmY7mcWgZZl6vVovggUwBtAIyj6Q=;
+        b=TNknY4A1g/SKZr+ydCCdVvVWUrqU+AQAMfXmppbEpDiP3b5yOGInsJNuG8t1tPSJ0x
+         S6yrS3fb8rU/L4gQJxcnTdYrUF5Yf7oPPzABS6dPg+sYjbcm5EMVQd5WlU3tarveAx0c
+         b3qStC6WH7f5t0AQHqH8eCt/vd78CdUUs3gRhp5oUWU7zUCMinM+J1zj0eKnnyvP9xoS
+         sNSgvf/MSeDFMmnzJF5ArzUT4G6t8XxHYwap0YixBFou04FDd9UfZRbzUyIsl1/vwJYM
+         nE7cN9LCelrfNFf1cl+AYUL/00OkVUiTWFv5nFJoQbhENZXOQpe3ixG5+QodS1WkFs6m
+         2/tA==
+X-Forwarded-Encrypted: i=1; AHgh+RqmYjgiqur4KW5k2aU/VWSI+tGp9REWdm37Q9XS4ot6PcdZYJURxGsdFBXnCi8WVH6XLfg=@vger.kernel.org
+X-Gm-Message-State: AFuF++nGISh7sLMXEFvdywJXYQfRchOZuVlM1tmkBxwm2Bske3lWFqqu
+	p+eHIqXCB+MadtljubKhpK3CgCTD+iG3zrdPTEuSPAU7RSejaeBcc7tggdJeNq6HlZkS1UwdFTF
+	FFVrSJrDYvNLR0yD4VQhMBDGgz9rzuG8=
+X-Gm-Gg: AR+sD10HiNh2ol5aI7Bl8Oct/7cv1dlS2QQ0/Ho2ThC6nn5jqX3+SYB0oY0RmtHr52o
+	bGZiKqhtT5eqzY6AW8QyH84df//8X00SJF6OdV8gVNAM8UsT18YWJJQX60Jg2aXrpr5cbJQhhKg
+	/3/i5tgbjoQ9KGRbn2YtclqAzDtK06DtsuumzYkklM54pFpFTWdTnrMj3RBX98BQK0PTfqbI/xi
+	trbNndlgwDn5wEa+hDnElJLXP26injgAxc9csqxUuR7UhNp+mKr0+Hv1oZ+9BaE9NEHRZcAxy1Y
+	73JxHHEQfznIMOFitxGzCgnQiddcgZZ4sdPQUlbg1+CHyLBGRYXS8k5RhlDxVKe23NH9aPTjU6+
+	pyA==
+X-Received: by 2002:a05:6102:1814:b0:77a:d089:3dd8 with SMTP id
+ ada2fe7eead31-77ad0894d2cmr684192137.12.1787315892653; Fri, 21 Aug 2026
+ 05:38:12 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 21 Aug 2026 05:38:11 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 21 Aug 2026 05:38:11 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260821-b4-pks-odb-generate-pack-v4-0-074e8bd641f8@pks.im>
+References: <20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im> <20260821-b4-pks-odb-generate-pack-v4-0-074e8bd641f8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260821-pks-parallelize-fetching-packfile-uris-v1-2-0df52d9427ce@pks.im>
-References: <20260821-pks-parallelize-fetching-packfile-uris-v1-0-0df52d9427ce@pks.im>
-In-Reply-To: <20260821-pks-parallelize-fetching-packfile-uris-v1-0-0df52d9427ce@pks.im>
-To: git@vger.kernel.org
-Cc: Ted Nyman <tnyman@openai.com>
-X-Mailer: b4 0.15.2
+Date: Fri, 21 Aug 2026 05:38:11 -0700
+X-Gm-Features: AcwNN1Wu6ooPbFpByGp4-LTXuAs6wquSUjxxM-WT3Yr2RIq9iAtQHm6Jn1k5R6g
+Message-ID: <CAOLa=ZQMjb1SzYTVVuMF0ajmre_5_q=L6bmSQwYY233f-RiVXA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/6] odb: make packfile generation pluggable
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
+	Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000e22ba706598de8c4"
 
-When cloning from a server that supports packfile URIs we may see
-multiple URIs being announced by the server. If so, the expectation is
-that the client will download all of those packfiles. This is being done
-sequentially, where we fetch one packfile after the other.
+--000000000000e22ba706598de8c4
+Content-Type: text/plain; charset="UTF-8"
 
-In many cases this should be fine, but there are scenarios where it's
-not. When packfiles are for example hosted by object storage (think AWS
-S3 or GCS) then the way to achieve high performance is typically to
-parallelize downloading the data as a single connection is often capped
-at a certain bandwidth. Furthermore, when the server announces a bunch
-of smaller packfiles, then the overhead of establishing the connection
-may eventually add up.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Despite the limitations caused by the network bandwidth and latency, Git
-also runs git-index-pack(1) on all of the fetched packfiles. This is
-another task that can be easily parallelized for another speedup.
+> Hi,
+>
+> this patch series makes packfile generation pluggable.
+>
+> Note that this series only makes those parts pluggable that are required
+> for the transport layer. The other parts that relate to packfile
+> generation as required by our repository maintenance is kept as-is, as
+> there is a bunch of options there that are way too specific to the
+> "files" backend to be portable. This should ultimately not be much of a
+> problem though, as maintenance itself is already pluggable in the first
+> place.
+>
+> It's a bit of a shame though for git-pack-objects(1), which still isn't
+> usable with alternate backends. I tried several times to find good
+> solutions for making it fully pluggable, but due to the backend-specific
+> options it's an utter mess. I want to eventually address this though:
+> same as with git-refs(1), I want to introduce git-objects(1) to care
+> about all things ODB. And as part of that command we can also introduce
+> a command that generates packfiles in a generic fashion, without all the
+> cruft that git-pack-objects(1) has. This is part of a future patch
+> series though.
+>
+> Changes in v4:
+>   - Improve an error message.
+>   - Sneak in a small stylistic fix while at it.
+>   - Link to v3: https://patch.msgid.link/20260820-b4-pks-odb-generate-pack-v3-0-bc42252f6169@pks.im
+>
+> Changes in v3:
+>   - Fix a use-after-scope bug on abnormal exit when child processes are
+>     cleaned up via `mark_child_for_cleanup()`, as noticed by Elijah.
+>   - Link to v2: https://patch.msgid.link/20260817-b4-pks-odb-generate-pack-v2-0-4c8a96ccfdb3@pks.im
+>
+> Changes in v2:
+>   - Mostly remove the dependencies on `the_repository` in "bundle.c".
+>   - Link to v1: https://patch.msgid.link/20260807-b4-pks-odb-generate-pack-v1-0-7dec431ae7cd@pks.im
+>
+> The series is built on top of 2c78326f81 (The 11th batch, 2026-08-05).
+>
+> Thanks!
+>
+> Patrick
+>
+> ---
+> Patrick Steinhardt (6):
+>       odb: introduce interface to generate packfiles
+>       upload-pack: generate packfiles via the object database
+>       send-pack: generate packfiles via the object database
+>       builtin/bundle: refactor option handling for progress meter
+>       bundle: get (mostly) rid of `the_repository`
+>       bundle: generate packfiles via the object database
+>
+>  builtin/bundle.c      |  34 +++++------
+>  bundle.c              |  97 ++++++++++++++++++--------------
+>  bundle.h              |   3 +-
+>  odb.c                 |  21 +++++++
+>  odb.h                 | 152 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  odb/source-files.c    | 149 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  odb/source.h          |  33 +++++++++++
+>  send-pack.c           | 101 +++++++++++----------------------
+>  t/t5516-fetch-push.sh |  12 ++--
+>  upload-pack.c         | 125 +++++++++++++++--------------------------
+>  10 files changed, 508 insertions(+), 219 deletions(-)
+>
+> Range-diff versus v3:
+>
+> 1:  4a56334af1 = 1:  33039a0ab8 odb: introduce interface to generate packfiles
+> 2:  1ff0eaf6b7 ! 2:  7093fcee83 upload-pack: generate packfiles via the object database
+>     @@ upload-pack.c: static void create_pack_file(struct upload_pack_data *pack_data,
+>      -	 */
+>      +		oid_array_append(&opts.haves,
+>      +				 &pack_data->extra_edge_obj.objects[i].item->oid);
+>     -+
+>     +
+>      +	opts.thin = pack_data->use_thin_pack;
+>      +	if (!pack_data->no_progress)
+>      +		opts.progress = ODB_GENERATE_PACK_PROGRESS_STANDARD;
+>     @@ upload-pack.c: static void create_pack_file(struct upload_pack_data *pack_data,
+>      +	opts.progress_fd = -1;
+>      +
+>      +	if (odb_generate_pack(the_repository->objects, &generator, &opts))
+>     -+		die("git upload-pack: unable to fork git-pack-objects");
+>     ++		die("git upload-pack: unable to generate pack");
+>      +	odb_generate_pack_options_release(&opts);
+>     -
+>     ++
+>      +	/*
+>      +	 * We read from generator->err to capture stderr output for the
+>      +	 * progress bar, and generator->out to capture the pack data.
+> 3:  22a19a9a70 = 3:  0a2ca04c01 send-pack: generate packfiles via the object database
+> 4:  5d2275c90b = 4:  2d339ee7b7 builtin/bundle: refactor option handling for progress meter
+> 5:  0f00e6d234 = 5:  3cf0210247 bundle: get (mostly) rid of `the_repository`
+> 6:  ae6af210ff ! 6:  d3345e4407 bundle: generate packfiles via the object database
+>     @@ Commit message
+>
+>       ## builtin/bundle.c ##
+>      @@ builtin/bundle.c: static int parse_options_cmd_bundle(int argc,
+>     + }
+>
+>       static int cmd_bundle_create(int argc, const char **argv, const char *prefix,
+>     - 			     struct repository *repo UNUSED) {
+>     +-			     struct repository *repo UNUSED) {
+>      -	struct strvec pack_opts = STRVEC_INIT;
+>     ++			     struct repository *repo UNUSED)
+>     ++{
+>       	int progress = isatty(STDERR_FILENO);
+>       	int version = -1;
+>       	struct option options[] = {
+>
+> ---
+> base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+> change-id: 20260807-b4-pks-odb-generate-pack-f30fbcdef3fc
 
-All of these limitations can be addressed by parallelizing the fetch.
-Introduce a new configuration option that allows the user to ask for
-this: by default we continue to not parallelize the fetch to retain the
-status quo. But when configured to 0 (where we auto-detect the number of
-cores) or a value larger than 1 we perform the fetches concurrently.
+Everything looks good now. Thanks!
 
-With this infrastructure in place we can significantly speed up such
-fetches. Using a local HTTP server demonstrates the speedup when using a
-throttled connection of 2MB/s and downloading 8x1MB packfiles:
+--000000000000e22ba706598de8c4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 117aaf1f9f787c79_0.1
 
-    Benchmark 1: 2MB/s, 8x1MB packfiles, 1 threads
-      Time (mean ± σ):      4.321 s ±  0.003 s    [User: 0.195 s, System: 0.113 s]
-      Range (min … max):    4.318 s …  4.325 s    5 runs
-
-    Benchmark 2: 2MB/s, 8x1MB packfiles, 2 threads
-      Time (mean ± σ):      2.284 s ±  0.241 s    [User: 0.191 s, System: 0.114 s]
-      Range (min … max):    2.173 s …  2.714 s    5 runs
-
-    Benchmark 3: 2MB/s, 8x1MB packfiles, 4 threads
-      Time (mean ± σ):      1.212 s ±  0.238 s    [User: 0.192 s, System: 0.105 s]
-      Range (min … max):    1.102 s …  1.638 s    5 runs
-
-    Benchmark 4: 2MB/s, 8x1MB packfiles, 8 threads
-      Time (mean ± σ):     569.9 ms ±   2.5 ms    [User: 183.4 ms, System: 116.0 ms]
-      Range (min … max):   566.5 ms … 573.4 ms    5 runs
-
-    Summary
-      2MB/s, 8x1MB packfiles, 8 threads ran
-        2.13 ± 0.42 times faster than 2MB/s, 8x1MB packfiles, 4 threads
-        4.01 ± 0.42 times faster than 2MB/s, 8x1MB packfiles, 2 threads
-        7.58 ± 0.03 times faster than 2MB/s, 8x1MB packfiles, 1 threads
-
-Quite unsurprisingly, we scale almost linearly with the number of
-threads in this case as we're limited by the bandwidth of a single
-connection. But we can also demonstrate a speedup on an unthrottled
-connection when downloading slightly larger packfiles:
-
-    Benchmark 1: unthrottled, 8x16MB packfiles, 1 threads
-      Time (mean ± σ):      2.434 s ±  0.031 s    [User: 2.067 s, System: 0.329 s]
-      Range (min … max):    2.381 s …  2.460 s    5 runs
-
-    Benchmark 2: unthrottled, 8x16MB packfiles, 2 threads
-      Time (mean ± σ):      1.353 s ±  0.129 s    [User: 2.025 s, System: 0.328 s]
-      Range (min … max):    1.288 s …  1.583 s    5 runs
-
-    Benchmark 3: unthrottled, 8x16MB packfiles, 4 threads
-      Time (mean ± σ):     702.9 ms ±  23.9 ms    [User: 1732.5 ms, System: 313.9 ms]
-      Range (min … max):   660.7 ms … 718.5 ms    5 runs
-
-    Benchmark 4: unthrottled, 8x16MB packfiles, 8 threads
-      Time (mean ± σ):     455.1 ms ±   7.7 ms    [User: 1730.0 ms, System: 372.3 ms]
-      Range (min … max):   442.8 ms … 462.8 ms    5 runs
-
-    Summary
-      unthrottled, 8x16MB packfiles, 8 threads ran
-        1.54 ± 0.06 times faster than unthrottled, 8x16MB packfiles, 4 threads
-        2.97 ± 0.29 times faster than unthrottled, 8x16MB packfiles, 2 threads
-        5.35 ± 0.11 times faster than unthrottled, 8x16MB packfiles, 1 threads
-
-In this case, the speedup is caused by us running git-index-pack(1) in
-parallel. The improvement isn't linear, but still quite significant.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/config/fetch.adoc |  9 +++++
- fetch-pack.c                    | 86 +++++++++++++++++++++++++++++++++++++++--
- t/t5702-protocol-v2.sh          | 44 +++++++++++++++++++++
- 3 files changed, 136 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/config/fetch.adoc b/Documentation/config/fetch.adoc
-index 00435e9a16..7afe8d7d5c 100644
---- a/Documentation/config/fetch.adoc
-+++ b/Documentation/config/fetch.adoc
-@@ -94,6 +94,15 @@ A value of 0 will give some reasonable default. If unset, it defaults to 1.
- For submodules, this setting can be overridden using the `submodule.fetchJobs`
- config setting.
- 
-+`fetch.packfileURIThreads`::
-+	Specifies the number of threads used to download packfiles
-+	advertised by the server via the `packfile-uris` capability in
-+	parallel. Each packfile is downloaded via a separate
-+	linkgit:git-http-fetch[1] process.
-++
-+A value of 0 will use a reasonable default based on the number of available
-+CPUs. If unset, it defaults to 1, downloading packfiles sequentially.
-+
- `fetch.writeCommitGraph`::
- 	Set to true to write a commit-graph after every `git fetch` command
- 	that downloads a pack-file from a remote. Using the `--split` option,
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 6aca0b2588..b9dca9e07f 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -37,6 +37,7 @@
- #include "mergesort.h"
- #include "prio-queue.h"
- #include "promisor-remote.h"
-+#include "thread-utils.h"
- 
- static int transfer_unpack_limit = -1;
- static int fetch_unpack_limit = -1;
-@@ -53,6 +54,7 @@ static struct shallow_lock shallow_lock;
- static const char *alternate_shallow_file;
- static struct strbuf fsck_msg_types = STRBUF_INIT;
- static struct string_list uri_protocols = STRING_LIST_INIT_DUP;
-+static unsigned int packfile_uri_threads = 1;
- 
- /* Remember to update object flag allocation in object.h */
- #define COMPLETE	(1U << 0)
-@@ -1692,6 +1694,13 @@ static void fetch_packfile_uri(const char *uri_with_hash,
- 	cmd.git_cmd = 1;
- 	cmd.no_stdin = 1;
- 	cmd.out = -1;
-+
-+	/*
-+	 * Multiple threads may spawn and reap children concurrently in here.
-+	 * This is safe because the child-cleanup bookkeeping in run-command.c,
-+	 * which is not thread-safe, is only ever used when `clean_on_exit` is
-+	 * set.
-+	 */
- 	if (start_command(&cmd))
- 		die("fetch-pack: unable to spawn http-fetch");
- 
-@@ -1720,22 +1729,84 @@ static void fetch_packfile_uri(const char *uri_with_hash,
- 		    uri_with_hash);
- }
- 
-+struct fetch_packfile_uris_state {
-+	const struct string_list *packfile_uris;
-+	const struct strvec *index_pack_args;
-+	struct fetch_packfile_uri_result *results;
-+	size_t next;
-+	pthread_mutex_t lock;
-+};
-+
-+static void *fetch_packfile_uris_thread(void *data)
-+{
-+	struct fetch_packfile_uris_state *state = data;
-+
-+	trace2_thread_start("fetch_packfile_uri");
-+
-+	for (;;) {
-+		size_t i;
-+
-+		pthread_mutex_lock(&state->lock);
-+		i = state->next++;
-+		pthread_mutex_unlock(&state->lock);
-+		if (i >= state->packfile_uris->nr)
-+			break;
-+
-+		fetch_packfile_uri(state->packfile_uris->items[i].string,
-+				   state->index_pack_args,
-+				   &state->results[i]);
-+	}
-+
-+	trace2_thread_exit();
-+
-+	return NULL;
-+}
-+
- static void fetch_packfile_uris(const struct string_list *packfile_uris,
- 				const struct strvec *index_pack_args,
- 				struct oidset *gitmodules_found,
- 				struct string_list *pack_lockfiles)
- {
-+	unsigned int nr_threads = packfile_uri_threads;
- 	struct fetch_packfile_uri_result *results;
- 
-+	if (!nr_threads)
-+		nr_threads = online_cpus();
-+	if (nr_threads > packfile_uris->nr)
-+		nr_threads = packfile_uris->nr;
-+
- 	/* Initialize the data. */
- 	CALLOC_ARRAY(results, packfile_uris->nr);
- 	for (size_t i = 0; i < packfile_uris->nr; i++)
- 		oidset_init(&results[i].gitmodules_found, 0);
- 
- 	/* Perform the fetches. */
--	for (size_t i = 0; i < packfile_uris->nr; i++)
--		fetch_packfile_uri(packfile_uris->items[i].string,
--				   index_pack_args, &results[i]);
-+	if (nr_threads > 1) {
-+		struct fetch_packfile_uris_state state = {
-+			.packfile_uris = packfile_uris,
-+			.index_pack_args = index_pack_args,
-+			.results = results,
-+		};
-+		pthread_t *threads;
-+
-+		pthread_mutex_init(&state.lock, NULL);
-+		ALLOC_ARRAY(threads, nr_threads);
-+
-+		for (size_t i = 0; i < nr_threads; i++)
-+			if (pthread_create(&threads[i], NULL,
-+					   fetch_packfile_uris_thread, &state))
-+				die(_("failed to create thread"));
-+		for (size_t i = 0; i < nr_threads; i++)
-+			if (pthread_join(threads[i], NULL))
-+				die(_("failed to join thread"));
-+
-+		pthread_mutex_destroy(&state.lock);
-+		free(threads);
-+	} else {
-+		for (size_t i = 0; i < packfile_uris->nr; i++)
-+			fetch_packfile_uri(packfile_uris->items[i].string,
-+					   index_pack_args, &results[i]);
-+	}
- 
- 	/* Aggregate results. */
- 	for (size_t i = 0; i < packfile_uris->nr; i++) {
-@@ -2018,6 +2089,15 @@ static void fetch_pack_config(void)
- 		}
- 	}
- 
-+	if (!repo_config_get_uint(the_repository, "fetch.packfileurithreads",
-+				  &packfile_uri_threads)) {
-+		if (!HAVE_THREADS && packfile_uri_threads != 1) {
-+			warning(_("no threads support, ignoring %s"),
-+				"fetch.packfileURIThreads");
-+			packfile_uri_threads = 1;
-+		}
-+	}
-+
- 	repo_config(the_repository, fetch_pack_config_cb, NULL);
- }
- 
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 0f05286de8..a43d64ac95 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -1270,6 +1270,50 @@ test_expect_success 'part of packfile response provided as URI' '
- 	test_line_count = 6 filelist
- '
- 
-+test_expect_success 'packfile URIs are downloaded in parallel' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	rm -rf "$P" http_child log trace2.txt &&
-+
-+	git init "$P" &&
-+	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-+
-+	for i in one two three
-+	do
-+		echo blob-$i >"$P"/blob-$i &&
-+		git -C "$P" add blob-$i &&
-+		configure_exclusion "$P" blob-$i >h-$i || return 1
-+	done &&
-+	git -C "$P" commit -m message &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TEST_SIDEBAND_ALL=1 git \
-+		-c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		-c fetch.packfileurithreads=2 \
-+		clone --quiet "$HTTPD_URL/smart/http_parent" http_child 2>err &&
-+
-+	# Ensure that all objects were found.
-+	for i in one two three
-+	do
-+		git -C http_child cat-file -e "$(cat h-$i)" || return 1
-+	done &&
-+
-+	# Ensure that there are exactly 4 packfiles with associated .idx.
-+	ls http_child/.git/objects/pack/*.pack \
-+	    http_child/.git/objects/pack/*.idx >filelist &&
-+	test_line_count = 8 filelist &&
-+
-+	if test_have_prereq PTHREADS
-+	then
-+		# Ensure that exactly two worker threads were spawned.
-+		git grep --no-index --only-matching "\"thread\":\"th[0-9]*:fetch_packfile_uri\"" trace2.txt >threads &&
-+		sort -u <threads >threads.unique &&
-+		test_line_count = 2 threads.unique &&
-+		test_grep ! "warning: no threads support, ignoring fetch.packfileURIThreads" err
-+	else
-+		test_grep "warning: no threads support, ignoring fetch.packfileURIThreads" err
-+	fi
-+'
-+
- test_expect_success 'packfile URIs with fetch instead of clone' '
- 	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
- 	rm -rf "$P" http_child log &&
-
--- 
-2.55.0.822.g20453c30eb.dirty
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xSVJxOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNVZiQy80OVlOcmdHVGNvaXV3ZFY1Ni91OUFuVm8wdApvV2ZhN0EzTlAr
+R0lNbmlIZnYwWVN1enBySHpYNzZ2QVJoMkNoK2N0NW83K2J4T3AvY2VmK2c5YktFa3F1azNBCnU3
+WUMyakoyRXFGNkV3VlB0ZlNXUVE2S2R1TXRPNUMzMTgzTmJMeTZiQlBIbGNTeU1NUkR5NVVlRFJ2
+SlVueUgKN3pTVWYwYVZHZHgrMTJhMWtwTnBzdVJEU3ZFTlZrb3h2YUx5bnl1QkZTZ1p1WHBQbnBu
+R3RrM2FDblM3VGZqeQorZFpmR3hiczdXTTlLREVzWnpIWTNZamlIS2dqeTNRa0hiUi9oeGJiK2d3
+M2VUaWpmWlZVRHhkcFhXS0xaajhnCmhsNkRuZllkZUJtbW5sK2JQZXNMNFR3SzlQRVBCcEx5YUZa
+SjBHV0pNM0djdGpROWxjekJXWUtmK1gyZC9vQmoKaGRoblpjQ0F4TUJsN3ExNFd0Q0E1d1AzUjJU
+M1FGU1VndFFIZnZzazJROGRpVkRQRHptNVQrUXBwNGl5SGd3Mwo0VEJCNVFPeDRwVzdsWUFxZmFu
+b2RXZkFHTWRSY0dBWHVTSHUvZjJmVGt0eU1UL0dsYkhydzZmK3hLRlA3cVFwCm5HbzNjVVBETi9j
+ZXMzVXpOV0FkNlVpTEN1dll2NkkvR1NlZWdPaz0KPVJjYnYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000e22ba706598de8c4--
