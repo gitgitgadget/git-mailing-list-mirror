@@ -1,83 +1,84 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B7143E074
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 15:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670663B05AD
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 15:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787324742; cv=none; b=U7wzmzklNh1jla4c9ln/TolT5g8ug2UyxX04NFeZkvOK/knWr0gqWXMrXdnc66wWTovO+FJpEyeD9EintyDXtB1Du5iYkyhje2EMasr800vlEEnqMmCafsNlujlkA9l68rcVRB32ii6WpSAMkV0Tyz3nXof6SaenesoHtf3zVSU=
+	t=1787325580; cv=none; b=DBTs4ExaTNCm839Nbp7A3Yjy2ypTUea7ii52YqNxxT7h5gMjhYLpOA9fveukQ9lGl6TREbN16QCM3fZpO7Lg0qqhfC/tk8O9FggXe6FMP3AFniTj7NkYC6xmy4kuJemh7nQTASwRhlE4nXXuSSeDduWz8VDivEnC5SuE6Y2Lc1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787324742; c=relaxed/simple;
-	bh=WSt4IyFIh/0ScCY5JobrY742+BTjCgNT8gVQQ484xAs=;
+	s=arc-20240116; t=1787325580; c=relaxed/simple;
+	bh=4gH2VXANKQjrOJi7M7o3RsxFeMibmw8Abl56GEhauHs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=V4pO9hav/V50mD4GU4/7gOa1PAKN1O7iV+r74VrUyedZthkpxEg7Y5ZaHajLtjFhhTW6i68RixqnelbdIxntt7LBlg0F3RuIOSPXUxNgRfFLRxmtFKELq3ncQdA6w6cOlKXmBlzhWBTjDx2igwP0xHOuzf3ux+RljMuds8cidpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MyjqPt69; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MRWlspZT; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=E1GI6Av/Vkyr168uGioJCo6sr+XJcLT/x2TR090niv01QOtCUt9++QRH6IPBC5txydpAlZwzV+W6x0WUCzoVpX3T9Hk84a8yQjvA7eqe/nfWMc38cJwZrN8nc73pS02sEgCoJzd8Fg7nwSGDSMhOEPIt/UiYM0pLCUNQV7iDAJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TDORzxqV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NCmg8fIx; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MyjqPt69";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MRWlspZT"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D51997A0100;
-	Fri, 21 Aug 2026 11:05:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TDORzxqV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NCmg8fIx"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A0A7D7A0156;
+	Fri, 21 Aug 2026 11:19:38 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 21 Aug 2026 11:05:39 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 21 Aug 2026 11:19:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787324739; x=1787411139; bh=h0kW/tKFw9
-	z0gOWqLqTWYnQZE/FSq+hViAm9seBBkpI=; b=MyjqPt69KAhDXvY4j9OZU7Rv70
-	UL5oQ3R1FTUhYjrW9T01Nyu7nEZTdF5yl45hQARdSmibpALW3b9JI7A0NHtikwTN
-	ZNEjqhZITCeuIU5FSMGHlvVWI7hmqFfEGru0DBJ3UUCSdePYngT8YbVKiwEtRAh0
-	XzXovVzwwe0z19LFg71M0faA7+uNfd8nMUdVnwesKHHbgMaO49++bMLzSnTbP8EW
-	I/lZe9nQ2uZ8e+5aRceTvmH6qJ1xqX4nE2VnqLZnDQIRBQ19pA0qL1lkQwS5Un11
-	UQKcmAErxSSFfJL+qftqBNMoWsCS+gsZix1bTputu0w262GDz4+opqjw/EQQ==
+	:subject:to:to; s=fm2; t=1787325578; x=1787411978; bh=fTlntbmtBk
+	CO4F43GSoT9EAIUq4YxJui1jNeoHDnxhk=; b=TDORzxqVQkWXUn+8rGT+1+11Yk
+	BX7vO7jhLD7IhecB/ARMtYb4RPXwQjwoUlCwzO8Q6RcB9zWspPHgDU7MGfuKebP6
+	11m6qOdsWtX9a4MMM4bUIeuc/XgQ5JgFXT6p8M38iXja7Z21Hrzrpc6xooo69Rrd
+	B38BpB2otPI+Xr3xaaWC42UOHKwb9X0h498Fo8n/Dm1NA08v2s4FKiYJ63XNdOjP
+	ZAS1qGt98uls/giHYK+KHLn7deBiPUaVa8MqwZU2uN3ezr8ZOz34KwPQeGdmDTwG
+	0KBMBD/APv68u/m/pxcUb24/xG/0Nkgr1IJP4KfN4tOVuSVWnX1vKWaePC9A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787324739; x=1787411139; bh=h0kW/tKFw9z0gOWqLqTWYnQZE/FSq+hViAm
-	9seBBkpI=; b=MRWlspZTYneKPIlJJhRaXsMa6UbWqDf/zRGs98u30z491j9zQUp
-	rbz+iqVTRz3OjOOwnKCYCjHZRIPSPLZVBWfunT2zkM9pYlSCbLwwTdp3E7B3iMS8
-	QS8gbdNqZifZlJOD3ei06kdsnMMHR7+UlYrYATzAJSzwQfpgCzv9dObW86M0ABpq
-	5J566qtCYjGIcaS9JT2ComNZfScQb6MFDGKNKBlES5YCaFePZW/48ti4wav4VSf1
-	VRVi/C2v2+VTsfWG7XleyxZS8kHODVWSoVAJTN2WCLCUxDM1ffXe10nE+Jxy1Nn/
-	EBuKrFXuYqIz+d97DSJMY6oYZSfCNsBVaMQ==
-X-ME-Sender: <xms:Q2mIanyGF8bULtb6O8kBNKmpCyBsxMe28SA41RZRM8oCff_R3Qu5BA>
-    <xme:Q2mIamRrVmAizMSu33ZBUaqPYzKSwNAtiM4pYAQ3SDJ-Ba9zMd7tnUSRrRiDtlins
-    78KjAg5UGAH_SNdpX8kP12AP1ChN776Zl5hSzSl7RIUgVEzqf-F1Fw>
-X-ME-Received: <xmr:Q2mIamWfYc_naa_70ozOCjLuBqOSV3JwjU_yqSmB6Ds8dEhZW0seClQlZZFG83VYzj0rdC524HKE6mcIckuPvtnU2HJUAgXoXQ>
-X-ME-Proxy-Cause: dmFkZTFFs7nW0sDrlwBT014MCnHT6iz10M8Tpm+gmOtL1MEdwiSlKixrRGyt/pu7pBumDX
-    S8XFk0rq5KDjRQY1xe90//c/G7bkmQUOiGpXEX8gghTuoE3NmPtqFKktmFeDHFznePJ+kv
-    2ZSBObpHeiLP8OUzIg9OAP3O/4AzD34zFgLpRg7iG8gqUsb7aG1KK34v0Pi2I4ahD7sglz
-    GqJLgvhqmf3eZ2n+jVm1bGnukNLmhqgAdd4nV1CIeQyYdfJMhEPmBH97hgwWwjYcAdpjHA
-    YjdIu256hjPP+EGigTArZr2twrjt2Tobqpzy0yFjGyww3uLRBFNAd2gEyJwZdxOgcjijOX
-    pY1m7swM7/C12eECwiJrkdymL9DhUkp1z0gdZwd+OcMxS0169WXAnC0nPVxTHaMkiPyQuK
-    CWtBFJi3MlT6GlMhTwI2BqWfpE3uC7YC+HLseVdu+qr5KDUAgMKwLAPjD4Zil42EqL+iEm
-    sRWRSzsqJ9ddwYFFuqwIjgFbQVp4yjz1tJRCFKwOwKC9mhRNTk15U6ntjIo/Q5AKtpA9z7
-    g2NUCCbDP8iKMAyCYBkusUVwJB/lKvT8Ou8iCI+XIMuwWw6SUkqedw5GGRqcTteSDp9u6Z
-    zCwpyVJPrjDbfACfCirQ/vO8DjhHtkY8pcbxtxn8Y4GsC/vphKOiyu27eJVA
-X-ME-Proxy: <xmx:Q2mIagaqAWJ5DXIO7x-nwY5dpV2gCiFd_NdCcDM2HTT-Yp9jf80BzA>
-    <xmx:Q2mIak3-P9g49MnDh-HULbMTKXQNQllHZYK-j4g1SU8Qwedc4KdAXQ>
-    <xmx:Q2mIaqjCShUYEefVWhXhkr_yGssr9Fu-5ZtPRU-O2ObzL0Hhc0TNEg>
-    <xmx:Q2mIagblguYDdA9ZFK6h0drrH9nKTyPvVtlBCWL-qtqHJDTHL8u82w>
-    <xmx:Q2mIat0V-69dJ0MYjn1zdjP0uy-lIQzKXQlqVrTXNgPfSCWb2K_sJzyN>
+	1787325578; x=1787411978; bh=fTlntbmtBkCO4F43GSoT9EAIUq4YxJui1jN
+	eoHDnxhk=; b=NCmg8fIx2gkQA2Ch8+gXSROe1mtZgWvQu+nZySP5jT8kBPYu+BI
+	C7bJOJTOdc/VjN7wtAXyuUKhDBsBVX3AdwA0LVJvJJ37geno6bbVNgAwt1MQkpTi
+	dn+kjhR3EDeFbQCXXZy1V5fsYvuhQbRiKk4X1a56yuTuu4bgas1jmzGF2tQzAkBr
+	djexVokN+G0X1y1c5d5sqldato6JQ61TUqMLx3S8SdzaMtJNBkNFzpDIrKKmRrij
+	axItUr4oeADefqPGZfxcACM9toDiYZMYkYelLnJBiyi4QmZghU4DjXU8+B+eBCOS
+	V6/BM/qXaiu6Cz/5XlKJwB1/zN+XA45H9Kw==
+X-ME-Sender: <xms:imyIatNs1dZwq9hERxo6SXz3w4QlDuKk0W4Bc2oUstgR3QoIuYxZQw>
+    <xme:imyIam3OVaBte0vSpOz1Zyup2DSzyWW5BRDa1Sqk1LB7TCGIMeX0ylEtpbiPpdgty
+    8ahEcKsKRQDUNJsSSZhqgcD7DDWYxt1uSOcZSP0RehcZtYGDtLF-Vs>
+X-ME-Received: <xmr:imyIaklljdG_GL3vlXjGP9yxVnnwhijbe2u83P223FHxV2Z7IdWTkZwQFRfKeaqaXX0h-dwmqI6B5iCbD-kXFpfACZlMZkVrmg>
+X-ME-Proxy-Cause: dmFkZTF2v+Xx6PkWJs4Q+ui9+6/d3VmUFOivFhbrv9BWqlEE6KzyaqKz38fiq5J9Z03o9q
+    PttrC0R0bbwTtSeQj2Ha5g2sCSNTDl7FPbCZtMFlWE839uaUwp0NUrQD0H41LUodvue7hH
+    N8n4TjF9NB/+89HSh0+443qgHOUzSIUV3EoiKnDwlsWCWSyVZmiU+tR1/iugdQZe1GZeXb
+    N4G23WZ76nMrcLQ9aUMof3OCM0naYiJDfNMmNes6XzatX0DWMyQD9wlN3EfQDNzFybhREr
+    xKh34vrlPaEoFLHIpyO7iMudJgjZl8MJenueH7n3bvTtGXJSFgynUCpDbuVH99fvgrYJtH
+    U9vn2OO8Q4fOX2Fpei+pYZgZOR4MXCSKlvJV6wMsFhd9V/urGXi6JPP2UI2e7zVFmzVR9Z
+    lbHw/hLPvhFSkHTZlLwnH3GE4VTHEsn+Sgg3gSJHVZy0Hdc9oQExyfAJ8tzZwjF6o0OY5j
+    L9CUGR/mBbHjk0zIxPYrsYAESfk6dLhKKx1fmebHGcFQRN9tNUr+9LGXI9x82LE7azUp4o
+    HE68GSfrouhOioSgjjZixu/AgDLMuI7wvgYsLTmHBLY5GcjBv1IZLDqFx7Ums38OfZE5vg
+    DZOyfOs/AO+eE4oSU6C8b6eSa52wzyeexgBpTPnbo/obhe2SvPtymOWQo62w
+X-ME-Proxy: <xmx:imyIalXgIHVPrcw5j2r6bk5W3N8xUOsYKU_Ora9FcH-2-i4cL-LdhA>
+    <xmx:imyIaiuf_SGJ-w5FwcIVnsZMNz7qCp3XSsLfNnYM5bZH5vAs9wkTNQ>
+    <xmx:imyIagbBnV8cJepp63TQX7Y4_6UJIHY05YaX4Wonaht1Uz3v5B7RjA>
+    <xmx:imyIapXbV-0JukrncxF0OmBU1wrDDk9CTAQKoOUNYHS7_gmtmwOyjw>
+    <xmx:imyIaj0UUfhIzM0IkFfrhYjVSiCaBBowKItI369ACMnYZmM0XevFqjep>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Aug 2026 11:05:38 -0400 (EDT)
+ 21 Aug 2026 11:19:37 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v5 9/9] odb/transaction: add transaction interface to
- write packfiles
-In-Reply-To: <20260820234940.894624-10-jltobler@gmail.com> (Justin Tobler's
-	message of "Thu, 20 Aug 2026 18:49:40 -0500")
-References: <20260819215311.3880274-1-jltobler@gmail.com>
-	<20260820234940.894624-1-jltobler@gmail.com>
-	<20260820234940.894624-10-jltobler@gmail.com>
-Date: Fri, 21 Aug 2026 08:05:37 -0700
-Message-ID: <xmqqo6evqzsu.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v3 2/5] odb: decouple source path comparisons from
+ `the_repository`
+In-Reply-To: <aof-t_bRzC0u1hHj@pks.im> (Patrick Steinhardt's message of "Fri,
+	21 Aug 2026 09:31:03 +0200")
+References: <20260817-pks-odb-eagerly-prepare-alternates-v3-0-1115a7e02467@pks.im>
+	<20260817-pks-odb-eagerly-prepare-alternates-v3-2-1115a7e02467@pks.im>
+	<xmqqmrugsryl.fsf@gitster.g> <aof-t_bRzC0u1hHj@pks.im>
+Date: Fri, 21 Aug 2026 08:19:36 -0700
+Message-ID: <xmqqik53qz5j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,45 +88,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Justin Tobler <jltobler@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> In git-receive-pack(1), the incoming packfile is written to the ODB via
-> `unpack()`, which spawns git-index-pack(1) or git-unpack-objects(1)
-> directly. With pluggable object databases, an alternative backend may
-> need to handle writing packfile data differently though.
+> I don't feel comfortable removing that mechanism though. There's always
+> that one person relying on those weird edge cases.
+
+I do not, either, and more importantly, removing the hashing
+mechanism does not help an iota here to deal with case insensitive
+filesystems.
+
+>> ... an easy way out may be to tell users "don't
+>> spell the pathnames inconsistently" or its equivalent, "do spell
+>> them exactly the way readdir() would report on your system", with "if
+>> you fail to do so, bad things will happen".  I suspect that the bad
+>> thing in this particular case is merely that a search in the
+>> alternates is made unnecessarily inefficient due to duplicates, so it
+>> may be a reasonable alternative.
 >
-> Introduce `odb_transaction_write_pack()` as a generic interface to
-> handle writing a packfile to a transaction and use the logic from
-> `unpack()` as the "files" backend implementation. Note that when storing
-> the objects as a packfile, git-index-pack(1) also writes a ".keep"
-> lockfile next to it to prevent a concurrent repack from removing the new
-> pack prior to reference updates being performed. The "files" transaction
-> backend is responsible for managing these ".keep" files and removes them
-> post-commit once the transaction is finalized.
+> Yeah. All of this is really just caused by the fact that there is no
+> platform-agnostic way to check whether two directories are the same
+> thing. Which is kind of surprising, if you ask me.
 >
-> Call sites in git-receive-pack(1) are updated accordingly.
+>> Alternatively, we can even say "your repository cannot span
+>> filesystems with different case sensitivities"; I am sure there
+>> would be some users affected by such a declaration, but I do not
+>> know how much we should care.
 >
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->  builtin/receive-pack.c | 160 +-----------------------------------
->  object-file.c          | 178 +++++++++++++++++++++++++++++++++++++++++
->  odb/transaction.c      |   7 ++
->  odb/transaction.h      |  62 ++++++++++++++
->  4 files changed, 250 insertions(+), 157 deletions(-)
+> I'm hesitant to go there, as that would retroactively introduce
+> limitations that could break ...
 
-Reading receive.unpackLimit and transfer.unpackLimit in generic
-object-layer code feels like a layering violation, as these settings
-belong to the transfer layer.  However, deciding whether to unpack
-or index is inherently up to the file-backend, which is what the
-'*.unpacklimit' settings control.  Future ODB backends might not
-distinguish loose from packed objects, and even if they do, their
-performance characteristics will differ.
+Yup.  Which means the simplest way out would be to do a "best
+effort" case-insensitive match when there is a hint that the
+platform might be using a case insensitive filesystem.
 
-We can attribute these '*.unpackLimit' names to historical wart; we
-lacked non-file ODB backends when they were named.  Had we named
-them today, something like 'odb-file.unpackLimit' would have been
-more accurate.  If we had other bulk-import mechanisms that use pack
-streams, they would use the same '*.unpacklimit' to optimize the
-object layout for file-backed ODB stores.
+And that in turn gives us a direction to solve this part ...
 
-Thanks.
+>> > +/*
+>> > + * NEEDSWORK: we're using "core.ignoreCase" to deduplicate alternates that
+>> > + * _may_ be the same. This requires quite a bit of boilerplate for dubious
+>> > ...
+>> > +static int odb_source_paths_cmp(struct object_database *o,
+>> > +				const char *a, const char *b)
+>> > +{
+>> > +	if (o->source_paths_icase < 0) {
+>> > +		int icase = 0;
+>> > +		repo_config_get_bool(o->repo, "core.ignorecase", &icase);
+>> 
+>> I suspect accessing o->repo should be safe even in the
+>> initialization sequence, simply because "o->repo = repo" is done as
+>> the first thing in odb_new(), but do we know o->repo->initialized is
+>> true in this code path?  Refraining from making that call and
+>> assuming a case senstivie comparison may be necessary when o->repo
+>> is not yet initialized.
+
+...which is that, since case-insensitivity support is at most best
+effort, we do not really care if o->repo is not initialized.  The
+code can stay as-is, and if the user spelled the path to a single
+alternate object store using two different cases in two places,
+causing the code to treat them as two different entities, the effect
+is merely an extra search of the "second copy" (which is guaranteed
+to find nothing, after a search in the first copy finds no object
+they are looking for)s, a minor performance penalty
