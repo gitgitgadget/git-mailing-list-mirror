@@ -1,120 +1,140 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.forwardemail.net (smtp.forwardemail.net [149.28.215.223])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF713921ED
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 22:20:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF8841D22F
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 23:02:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=149.28.215.223
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787350860; cv=none; b=MO6sm5XZ7vncaMXSe+9N5nIplQrkjgoWYB5ALG9uaEkxQrVZNRhsCp8XxNKdDymqIBDgzVzNwN9iLePRAR1id4KJtZWAlWoNGEI0gpvB6KDbjbMhNi9f0GBNpCksZoA/6lPO8lKNspteVXa2pmxVPiOj2OHnx8AnHYFFNaiENQM=
+	t=1787353341; cv=none; b=iH0a8lYVB+x1oKGbxdgp8ihK9Zr2lPmal1I15mrmeeO6PjJ6SXGCdbfY7k52Y2KXaLHP5O+fRVMDJhis/378h+UGQArIu+laVRcXetheomRR9pH3C+B8LKJAdQm69/FHVdOFdbn6yrz1mKNRoN4+fPICVaNgsOJLa7bgGnJf3qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787350860; c=relaxed/simple;
-	bh=y+BA/hqdwhQednaRW7R3uWGQXl8cHxmlx4ZONHybUIc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t6S9qZW3xFSrPnm7HGSDOVXltbr1+Zj3JPgSEMbzvPIESZCcpsUZ531jCkoRIuW6sJ5b09H/7A0MK1N7/FkiZs5eN92fkGUG9fdGXJ9jS8MqnqFjoBqllKJDvHVDuwV9g8xQaMk7GGEod7CVm/IUgnu1pAJn9U5mY8AG0BY83fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hDodSq84; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZhGsv6RO; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787353341; c=relaxed/simple;
+	bh=cSBV2TI157My7SritYRYM764kCf1UO8pNh9hU8FVcNg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KNeEobZ53T5mzrDAFxjIBJstsq9PtH3SDkPPB/8bY+sqvFKlfagRz6aFQ0MUpyXLK6SPQcZQVNBI0u/hVFv6NWbpkoyeOH6qoskF2lXEfaNkkvJfBS+0CuUTQ1B3QNOOl4d700eVNIstf/IBKEcICWAFtTmNbnRLlQPxg3Vr+OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zitro.id; spf=pass smtp.mailfrom=fe-bounces.zitro.id; dkim=pass (1024-bit key) header.d=zitro.id header.i=@zitro.id header.b=C42Q2Gg+; arc=none smtp.client-ip=149.28.215.223
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zitro.id
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fe-bounces.zitro.id
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hDodSq84";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZhGsv6RO"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 63B0A1D0011C;
-	Fri, 21 Aug 2026 18:20:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 21 Aug 2026 18:20:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787350858; x=1787437258; bh=j9lzL4f6pP
-	ZoaW/yOOQfQMQg3iam35iP7eZ3WkwHjis=; b=hDodSq84gJB7YVwGJB3BknjTm/
-	umkEYezkNzseLMmX8vEcCOhF8b526d7G7IcgYX3co0O5czNVbA4cjRekTF4cZejU
-	WOY4QfIc4i2pOwoCD8BEgGIt+Fc4o7Cibchwc2XwXzrmHeDXXIl7zhgIdopeh9Qu
-	rn9inTa3s4pVXCSx7KuK+lUBy8Ilx7ZPPLbhAoOpxKOKTMMxqLWhfYrenpmAwoBa
-	plUu7azAdmZnyzuGMuZzqY+16Xhrgr7Q9m6hGlGzCQVT1ccorO3/V1q75WjjwT2K
-	YhQ+hglK4ooni7ENLSapX7vSW3b5naK2Lf2pUwty//iqWWGkT9zAm5KCgK7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787350858; x=1787437258; bh=j9lzL4f6pPZoaW/yOOQfQMQg3iam35iP7eZ
-	3WkwHjis=; b=ZhGsv6RODtFNNUx8KAdkctI14pZ1ayUiXGE3u0AGFeQLnwgry9+
-	/IEg6zWvXsNFemXA6Sk+MFhrdVlkVjB+PHjzVlUX56fA33VtVSQyThkS1oU9eM8m
-	ynryESuJ6Q9pMt6syxRDKa9HiuzPdWh21aN8SyMS7EaBRiHOtIIKJh5Mhbbu5vyF
-	NCH6M5oC21Q43X20hEppwv7yzYwt4zl//A8T+nFcs1pJk+X8bpmoZVGSA50rzuae
-	hrcTIwZPmeFxZv9WwL1EKUYTRGvkKTngE4Di19cXk5smW7/cPa0BHWrhKFrRd/4H
-	HMsGYGjdK2L6AK0cZbM2dK/xchyIBpxDQyQ==
-X-ME-Sender: <xms:Ss-Iaogn3uqkjhWTL6TGqbyLgSof74DDzioy4a3weziFPgGWBdaTVA>
-    <xme:Ss-IaoDFqVyQWgi1yIrx5RlYGSHlEP9sNZjjjT_zGjB5_rIfGXBf_JwpT3JyDBaX1
-    lgh3DvKYUFXAVsSJcMKUGR7qdT6JeLLSa2jgAGWqyrbjg0hE3Hu21k>
-X-ME-Received: <xmr:Ss-IalElpHuV0nguKE4IR_-X4nJvOU3URwKj9SaSxj0bmUV1VKGeofDQBTarLATKdbUPKlrlZtgn88q4b0JZ0BCaY7SJbXnfig>
-X-ME-Proxy-Cause: dmFkZTFuD3asiKNe9R0gIDKK8Yx6I+gEWIb5JunutWwbCz9LVvysZZwwYmz76mxrSEkQft
-    OR1NnnrsrpM1Z0rphS0MxTV1F4VhxMrNJWLQ+EbOLybma636lKwGaS2xYwABMhDfUj8Oys
-    RP1NNc2JXtLQygjxFfuI2rsGvO7VW2wfLAw53XfZWstSwq4H3q2mLBfPJUHxTGO7eSSGdY
-    U06B51vjdbQO2uSoJt67STszswcNaQo9C6SSi5I6xb2tOoCgyuwZFvXx1TOypvFCH8Qwhd
-    16Yp+O7PGkZ5DX82/hT8X+Ozk2N/v+oKi1ZabbaYs25WAmQZXq64niiQs1cew/FliA1SMW
-    7VG12jEz0/WjDGy2HG1cUOM9+k3EnoOe4lacU4UPwDNfVbfcx+Bezp1+Eispnjh4CG+XBi
-    Nnhpd1n1CWNHhCSztoROV9hBulwPRtS0kb1puUEFJpf5B+Y27ocvPAP+TlA1RSzcd/uKFg
-    RthkAM/gDJGS+1MQzvwGzqcShfgAF/NMOMEY82w3X+rkjWxWtb49px32RZrpkEaoSNHu7o
-    bk1DDXPEwHwKkie2WEmftzI34auLxMi5CNYZuo20ZmEy1NkcvmiViM67Rqj0IG1QJj/MH7
-    1aYNe3RuZP46SsemWpY+Y5011mtPALM7WlAjqu4sq4cK6nzJhje1eLYBIyyQ
-X-ME-Proxy: <xmx:Ss-IaoK3NpxNyHsv4gtlCj7dsSHvn45jUR1kMX0mvcWT7yJnkrf-sg>
-    <xmx:Ss-IahkkREH-OweOIZHEDJ3tNFdYpnGmyBETVxSg3ZKHAC-oPINJDg>
-    <xmx:Ss-IaoQiFEYqCrl6NzYAEoRiAOqwoistachMOWvHocnctjWPMTwVkQ>
-    <xmx:Ss-IarJdML95inP6FvH09nybHWy1u_DayP2oZqRo8_JkvvX4Eu9nNQ>
-    <xmx:Ss-Iasm6-8QIABSvUNoEJJZ0ZCJQ4N7yWnGJ-y39_WrsxjbNZPIeMHIk>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Aug 2026 18:20:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Subject: Re: [PATCH v3] worktree repair: detect relative path in .git file
- correctly
-In-Reply-To: <xmqq8q5zyvwd.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	21 Aug 2026 15:02:42 -0700")
-References: <pull.2205.git.1786799480344.gitgitgadget@gmail.com>
-	<pull.2205.v3.git.1787344586470.gitgitgadget@gmail.com>
-	<xmqq8q5zyvwd.fsf@gitster.g>
-Date: Fri, 21 Aug 2026 15:20:56 -0700
-Message-ID: <xmqq4ignyv1z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=zitro.id header.i=@zitro.id header.b="C42Q2Gg+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zitro.id;
+ h=Content-Transfer-Encoding: Content-Type: MIME-Version: Message-ID: Date:
+ Subject: Cc: To: From; q=dns/txt; s=fe-ef2ef2159a; t=1787353339;
+ bh=Q7yQMPxarkqz1bDFzDREA+m2cp1YUbf0yvfPt7OlQ8A=;
+ b=C42Q2Gg+i4YQAz95Q2xt2nMqFOavcQfg5u5+SI1jUERwvBbCeRTKp+3mVy65BpKRtYLrQGAmE
+ iPZVFcqehCPYkA0rlKPhdnAWd9pQDzwFQlTu7vbBBI7WmQwmqqncvLjVZb84b2QWwZAuD8TPHd/
+ kcm8DTvdel9p+hb+9BumKqI=
+X-Forward-Email-ID: 6a88d8f896141d1f979b2754
+X-Forward-Email-Sender: rfc822; 0@zitro.id, smtp.forwardemail.net,
+ 149.28.215.223
+X-Forward-Email-Version: 2.13.16
+X-Forward-Email-Website: https://forwardemail.net
+X-Complaints-To: abuse@forwardemail.net
+X-Report-Abuse: abuse@forwardemail.net
+X-Report-Abuse-To: abuse@forwardemail.net
+From: Volodymyr Vriukalo <0@zitro.id>
+To: git@vger.kernel.org
+Cc: Volodymyr Vriukalo <0@zitro.id>,
+	Junio C Hamano <gitster@pobox.com>,
+	Atharva Raykar <raykar.ath@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Olamide Caleb Bello <belkid98@gmail.com>,
+	Glen Choo <glencbz@gmail.com>,
+	Jonathan Tan <jonathantanmy@fastmail.com>
+Subject: [PATCH 0/2] branch: fix --recurse-submodules with a nameless start point
+Date: Sat, 22 Aug 2026 01:01:40 +0200
+Message-ID: <20260822-vv-branch-recurse-no-start-ref-v1-0-46dc140acaa8@zitro.id>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20260822-vv-branch-recurse-no-start-ref-31fac1e34eab
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3872; i=0@zitro.id; h=from:subject:message-id; bh=cSBV2TI157My7SritYRYM764kCf1UO8pNh9hU8FVcNg=; b=owGbwMvMwCXWv3ZB/MVrrO8ZT6slMWR1XM9+cNxOdl7JzzMPWqYUSEf/MnI6eEH3cuP+i2b7p hurdaaFdZSyMIhxMciKKbK4+s7Oz2TrnaUx8+A2mDmsTCBDGLg4BWAi6sYM/z3j1kjlTleNb5dz N9okcZf77q2Txla/f/Orfi1z6Nil38LIcI89IoxPS3fvS9Y5TzybBLQd7C68eDjp4s25yTN++Un KcAEA
+X-Developer-Key: i=0@zitro.id; a=openpgp; fpr=23DE306A7F9E54C26627EF2975B69E8242090518
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+vv/branch-recurse-no-start-ref
 
-> Among these three, the last one obviously belongs here.  Leaving the
-> relative path relative was the reason why we wanted to add
-> read_gitfile_raw() in the first place.
->
-> But moving the other two to here is a bit iffy.  The worktree repair
-> job used to call read_gitfile_gently(), which means it used to
-> depend on what the first two did for it, namely, to make the
-> relative path after "gitdir:" from the .git file relative to the
-> current process to make it usable, and to ensure that the directory
-> pointed at by .git is indeed a git directory.  Is it correct to drop
-> these from the caller, which now calls read_gitfile_raw() instead?
->
-> IOW, I am not sure if the two functions are split correctly.  I
-> expected that the only two things read_gitfile_gently() would do
-> after read_gitfile_raw() are (1) upon error, jump to cleanup_return,
-> and (2) otherwise call strbuf_realpath().
+"git branch" with submodule.propagateBranches enabled mishandled a
+start point that names no ref, such as a raw object id.  In a
+repository with no submodules it aborted with a BUG after having
+already moved the branch; with submodules it failed earlier, when the
+helper it invokes rejected a truncated argument list.  Both are the
+same missing tracking name, which has been corrected.
 
-Actually, I take half of that back.  If we pretend the leading part
-of the "path", which could be absolute, the result will lose the
-relative-ness of the original.  Keeping the tweaking of the relative
-path in read_gitfile_gently() is reasonable.  As is_git_directory()
-needs to be called on a usable path, if the relative path tweaking
-cannot be done inside read_gitfile_raw(), it cannot check if the
-directory is is_git_directory(), either.
+I hit the first of these while scripting a branch rewrite -- the sort
+that moves a branch to a commit no ref points at yet, which for such a
+script is the ordinary case rather than the exception:
 
-So, the change to setup.c is fine as is.  I didn't look at the
-changes to worktree.c, though.
+    BUG: refspec.c:442: refspec_find_match: need either src or dst
+    Aborted (core dumped)
 
-Thanks.
+The ref had already been updated.  So the abort is loud and the damage
+is quiet, which is the wrong way round: an exit status of 134 on an
+operation that in fact completed will fool any caller that checks it,
+and one whose error path rolls back will helpfully undo a successful
+update.
+
+The exposure is bounded.  submodule.propagateBranches is documented as
+experimental, and reproducing it needs all four of that setting,
+submodule.recurse, a configured remote, and a start point that is not a
+ref name; drop any one and the command succeeds.  Within those bounds
+it is not exotic -- a script that moves a branch by object id hits it
+on the first attempt, the commit it wants having no ref on it yet,
+which is rather the point of moving a branch.  It reproduces
+identically on 2.54.0, 2.55.0 and master, which is why this is based on
+maint.
+
+Both patches guard at the call site rather than inside the callee.
+That follows create_branch(), which already declines the same value
+with "if (real_ref && track)", and it leaves setup_tracking()'s own
+convention intact: it opens by BUG()ing on a caller that should not
+have called it, so absorbing a NULL quietly would contradict that four
+lines later.  Neither patch changes anything for a start point that
+does name a ref.
+
+This series was written with LLM assistance, recorded as an
+"Assisted-by: An LLM." trailer on both patches.  I used it for the
+whole change rather than as step-by-step guidance, because at this
+size the distinction is irrelevant: two guards and two tests, short
+enough to read in full.  I have read the surrounding code and checked
+every claim in the commit messages against the source myself.
+
+Two things I would welcome direction on.
+
+dwim_and_setup_tracking() carries the same unguarded call.  It survives
+only because its single caller passes BRANCH_TRACK_OVERRIDE, under
+which dwim_branch_start() dies rather than returning NULL -- safe by an
+argument its caller happens to pass, not by anything in the function
+itself.  Nothing enforces that, so a future caller could reintroduce
+the same abort.  I left it alone to keep the series to the bug I
+actually hit, but I am happy to add a third patch.
+
+The first test uses no submodule, because the bug does not need one.  I
+put it in t3207 since create_branches_recursively() is only reached
+under submodule.propagateBranches, but t3200 is a perfectly defensible
+home and I will move it on request.
+
+The series merges cleanly into next and seen; both merge results build
+and pass t3200 and t3207, and the full suite passes on the topic
+itself.
+
+---
+Volodymyr Vriukalo (2):
+      branch: do not track a start point with no ref
+      branch: allow recursion with no tracking name
+
+ branch.c                    | 12 ++++++++++--
+ builtin/submodule--helper.c |  7 ++++---
+ t/t3207-branch-submodule.sh | 30 ++++++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 5 deletions(-)
+---
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+change-id: 20260822-vv-branch-recurse-no-start-ref-31fac1e34eab
+
+Best regards,
+--  
+Volodymyr Vriukalo <0@zitro.id>
+
