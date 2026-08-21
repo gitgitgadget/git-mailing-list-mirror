@@ -1,122 +1,112 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C50449991
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 09:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC0A45348A
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 09:29:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787303405; cv=none; b=O/mlsWhyuVrOHRv+Z8FS0tin396laFiO8C3ck3uRtThF4MpnlcejMRksM1UlZSiJNehCF+AX+1PKja1cXgkNuMOFUx8hRecbvlKoSRPK/FaFIjt96UXjrPjApqzD7Tt04Ab/JMFZ+YDofwQsVYD0kj7jHeY4Lr6R181fnlvZEUU=
+	t=1787304569; cv=none; b=RNBAQcHQzRg39vUwnot6Oc5UjmJ+4Lcil8xFZIdKlSKfe7qYaP/meonIDuefj6CBdV4ffnCa3Ra1FkQLdNpu0Jnkq14Y3TrDfK+kHnG3Q5qLhZXlwuy4aVHOdTzWcVzfEklL8xYXN3Gk06puR/tfX9mm1quGA2sMfwB0XxyTVgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787303405; c=relaxed/simple;
-	bh=BAsZUrFuoknlEUwG/pt5vtVn7PmtOVzEZZvPk7vfNZo=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=q61HmnHJ3L2QFyl2ali5cBESA9wQpcA1KFDLKnWpOGoK/B7tI0pIeIMluXbViKQK+p35eh5zLitalR5dFHpUgFxq2Wfh09y39pd8qi8S0meEDnTiHHU+UQRBNMoZMpo8CGzBDhHBhOwNUqFuCGHzgMRe8fzvJ5b/Ikiq9HD43Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=GlYNjVkf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SJqnf779; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1787304569; c=relaxed/simple;
+	bh=VK/3GfnaGRcN7ZDtaB0gINzKsKCzhYEEX4Tx1azBkCM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LKapDTpNhWfclp+XA+q/ETAv1SP0dfFS7u3QZ5qppN0gt99g/MPqMt1HZkOBe2Lkuk9N7tHASor9bKH1MNWqDOSmMPZPW3vyVYEhuUoWan+SnjMYUHkV73DDdnOe6OjndXStEoBpedZ2SnngwZ6vatz+mCZ7R5mabAuGw14xbJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=w6VquPVY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T2kCf9lH; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="GlYNjVkf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SJqnf779"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.stl.internal (Postfix) with ESMTP id 197211D00073;
-	Fri, 21 Aug 2026 05:09:48 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Fri, 21 Aug 2026 05:09:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787303388;
-	 x=1787389788; bh=TJ2sYEgz8eXytjmszpvETajvE0lu13X7EKgtfM19//4=; b=
-	GlYNjVkfOcom6qCkttsyzcrCQ7HX1MrP47bdq4bc1OjhKtU+Sy7UbbNIPDuNhxBe
-	HFOtBGt7gIw0qqvI6B59Do6dbZzPyjjfO4Wwgzlr9SsuG9/6nIHBQUVK0MpctcMt
-	JFR5hg9G3ND2492PwhHMpotnchstF4gDcp+TGkRyiaem8CAoLj2LU+pBmWMYrWRG
-	0w1/wQjasC3qbpE17ffmmSV5nWEhsZn1ren6TjXRSK06E3X+zZo9G1/Vroogbyg4
-	NV0vjvHmhD36KYdr/pCOVFDwjWmV+Qf0ppB4WzN/lAucQRx5etpTy/4/ZKO1Ir/k
-	51WhlrIY/2j3/jkDn+zepQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="w6VquPVY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T2kCf9lH"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AD03114001BA;
+	Fri, 21 Aug 2026 05:29:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 21 Aug 2026 05:29:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787304560; x=1787390960; bh=LqXrzAWe8O
+	B+Zt7jTNUhNlaILorttMS0zgnhFBjOrTs=; b=w6VquPVY1bt+Xa2EYg7rox6VeU
+	p3HA7V5j++YPnXia6eycAI0aQ96VyteUng8RGzR+iKS9Jz1FcKPDd0gIxpDvP9E+
+	9TPptX+QyoOwVNQzQcgkbVfXqfUCX513ftRvRROyaf5S77d5pEibUO1btBq+85JT
+	6hJ+zHl7uqZv4OiZgh2WAP+JBNcAGqLoQVYI9sTrPv5kTZHfL0ROD8AtbT3UurRz
+	JKgYIpZF9oM43zuN+fys49pfl4ZiM2VaHOG5fvn2f8EHIvcjgPuZhAeSyAY4eBau
+	R9iXZbtRzV0R1/413qW/P/GTaA4lWZs7VO2qQXNlaPzNkH0Mf07Ew7Dl9Oag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1787303388; x=1787389788; bh=T
-	J2sYEgz8eXytjmszpvETajvE0lu13X7EKgtfM19//4=; b=SJqnf779yxl93lkLY
-	EbxLC/5PWUaDWPSTdH6PQwCgUdFM/G0UIFnnbVbWfdCHprDYGfGZxsU1Lcnwdnr0
-	Amn7Ox8A1XIHrBtQJ6cH0eomKe0KvoLcczz1a89i2R4TMDEUBN7VnKgXTWSMerp9
-	1BiCqvQqoal22BM07KcxTWsv2kvhXLf1h9rnxHiC1zQ3p+6TZr/sM3Y+j7UyrQmv
-	JR8FFLMF6bkUV0xXlN4RQlQw+36cXWXmcBdtV1+LFIELvm3kUgXUiW+y+WbAOcO0
-	FXSvJkToJV7IXElk7WaCY7qXD1I7/eLR/Uu+dGXFtGuY0xxvjTRFdqHgyRBCfgoQ
-	RtUyw==
-X-ME-Sender: <xms:2RWIai7MMC5sZPcWCBfvuBYBFJ88vDqPpEFjIL3geajn-nPt59depxg>
-    <xme:2RWIamsXL3xxPy36k7F2C24pdaybOm5MFyJccIQOXb1rsU6TC5nrTvg3D1ase5pmI
-    kqabaw2WfbZE9bTF8jFZbMJE2RswhkTdkyZdihuJYEfKUhXzLDUUZU>
-X-ME-Proxy-Cause: dmFkZTGtfi3m0gj180tbwYPcCEVWHzTTJPsOFDgjSy7q+BQWXoEw08CBXV/5gulVOK88ZT
-    ppvt0cuOp+PfJBs7+6FM0CTkmS7VFa7RrS5sActr5XgDcvIEAsFFDBRwJuebyj8E2JoN/f
-    6cG3k+rR/rxK3tWfvXtvVl6CpmL8E8mEHbDklh4fvZJzEx4+VoVf80Rspie2HKkPu6ahIl
-    s1+M2LmHYFzar4GIJ9ECBaCfCDj0WDy73FJMTJRzMnmuOIoLK2ZKFI768xLkVvYYIhhBrZ
-    J54QoGRGc2FMkjuZ1z9nbnjjsP1fitsw9pzlC1iZeBTtGK20j/0nCzFskStRpzdy7Yquia
-    5rNTtfmzBWEs3VYMpKZHKa0oHQFUV6BZLq0+kyLupwSk5tHy0QKjDr+OHfLypcMpC52elI
-    gyDLE2ZilS9FvrdvwCWwsegvE46xxLRguxetx/N8udNCp/eED76nAJCilInuoN9LqdhWpT
-    +LXpmWtiYjeTqJAQkNWRs0bImmhSdbaoCFlw9ZRvrvCGAziDdbEpkr0WLi0nHxADleEs8N
-    PuHz4LsI9TOtIwqhOrX7jKA1YIY/cjbnI/A1ippV/x22CLkMYWoAC/7dhkXjJrXjv9v9NG
-    vJT6BrepcgcITXDmPG7ffVHcOPS0ECCj0U1Jrm5/aagvyEI6LTpW2B8jIFzg
-X-ME-Proxy: <xmx:2hWIatmaHtyoD_FteiFyWwpiYF3wumffNqVK2CuYLjJ1jNLnN8QXqg>
-    <xmx:2hWIamwtDU41Zo-wi07TQnJu2t_Q43qh4FG8R7w9X09Tn52d9pGXww>
-    <xmx:2hWIarPcwYPaV4aBarrHRdOtw0gOoQ5Zz6cmOXD4xHwIBVisBuz5dA>
-    <xmx:2hWIaqS1b5LjcBzZ2dh9kXdIdPk7rkOqOumpe87QdqosjbB8uQWIwA>
-    <xmx:3BWIagzmugybCN4ZEW4Dk2tW2VrcMUBuXiG33HjBAcqcRpJatl-C26wp>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 75F0F22C007A; Fri, 21 Aug 2026 05:09:45 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787304560; x=1787390960; bh=LqXrzAWe8OB+Zt7jTNUhNlaILorttMS0zgn
+	hFBjOrTs=; b=T2kCf9lHIEzGEFUbFo4z7qqcKqRx3LoQms/Dnhv+3FD0Oq/shzm
+	tTxH0/PNq04HTqUp2QYrQYZlgAC+SvZ03h2HctgPdIIVLc6PQW7WcdtWGc0PGpiH
+	obMrIKQADY+FjOeHKteJTv6/7vvGDS0S1pD+Pr7acOuRbYkfBP14VxgF6MTsUE1k
+	Le8BHKqyHL35tg8akblYSIbPy7lrwjpBWTHHnYoRu201jBReDp1G2FrjB5rsu90e
+	Ise8xdBLEmU9x8DCy/Te5eqksN9ry3TqAqvt7YR069MYvHWg0OK3t1rgmcM6D9Yc
+	UkObg/qTFL1GaSapLfkkHYSe3hDX+uIV4Cw==
+X-ME-Sender: <xms:cBqIanBkXHrtDTdpJ42rGAvDZFZiOgAHfmO0JTVoEnc8oAsQmfDR5Q>
+    <xme:cBqIakZKAO6biRDRJ4_HsXqIbyCFQGblT84gv07twq1VLP3we-5BhZnaDH5M5ZZqV
+    HqdFY7ABJqDIiOTJfqkBUDhinYtSDauzvhyNDwVV1xVCL-p6IKgbg>
+X-ME-Received: <xmr:cBqIaq4WdWifdtv5j6866yjLKuY0uV65WYD6iv6RrCPCllehzI-3ldzPOuWy0Kzcl2GUY9peTq_wFJLHGKVyP0Hu1_SLOIZmMQ>
+X-ME-Proxy-Cause: dmFkZTGR54aMEuRo+lBaSRBY7vsaagDjpDlBY7VGkr+ltQEymbpc9X+cnSRORGgDvQD8fv
+    kjKkx3L/cmrujXixjHwOm93/K6rrYWN60tbb24flFY7W95VhLXPCDFKAkZnx2TYxgVj5fZ
+    +XZLomxLIe66Jn0JgqU+X9Q7gdaG8EvibO0AdrYwnuBfTmCUoWKDr8ODQJuuGntaWKqr9v
+    msCzqE35lvRs5alaDewoom2M0+Km4nlhlugb6najThlIgOzTAtZgFEMpbGlfcWQr+0L9S+
+    DLIfMSMZn66TA6ewSNLlqlLHZ+AOqEU05QwFkvxtuOBRgqTjQgzA8+I6w8+tTVStD3uiRz
+    0sTFyPDFLjs613Wos/vmrSGCytG2ZElPSpYslRqVACf5fIeYbuq7w4V1ytWf6D5KMbCntc
+    WuI1MuhEc7rRyXOeLxAuW9MH12bV46ZO4gwZf69Aw9WWEJupd0MBDBbHdyfhzt13HBi2Ur
+    E2nUeOi3ZwVzryLSllAO1sBaWltXTWsSTmV78E3vq6uO3dg2iLdMdKz0I5fD/ktNKihnba
+    xXRxo5ypnJx1f0lIfcaN3pU61CU0l6V8siS9/1BGSV/oJ39YWARpXJX/HsC33tccGqzYKW
+    4F5PBn3Y3fW7W2mBilidWsD3ixRf5ApsKk6h6DlRwZAE0B4zYenSp4lnyBng
+X-ME-Proxy: <xmx:cBqIalYmRP7QlBO9M9-QpH-sjG_RTBn43pvqdJekIH1_TGb3CRMtDg>
+    <xmx:cBqIaphT0515k4un-kpNGLj4lKv4bv-kO1ZJCB4ApYGg7ZcmNMQzeQ>
+    <xmx:cBqIam-BMfTluk-Bi_5CWRhfHZIp9hHp-gAk9t-Lmr40smLpaLgbYg>
+    <xmx:cBqIakoe612Bh3A7zF4f38wyqJKZkEA1YP4KpkcwELV1JiHe_ysjSw>
+    <xmx:cBqIagqQm6EBclMU0_YmgCFLikMXv3AhM2w9iJPw8Kt4LQ64Ta99Gz_M>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 21 Aug 2026 05:29:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Nikolaus Schuetz
+ <nikolauspschuetz@gmail.com>
+Subject: Re: [PATCH v2] t1402: test forbidden characters in refnames
+In-Reply-To: <pull.2203.v2.git.1787264417682.gitgitgadget@gmail.com> (Nikolaus
+	Schuetz via GitGitGadget's message of "Thu, 20 Aug 2026 22:20:17
+	+0000")
+References: <pull.2203.git.1786653837190.gitgitgadget@gmail.com>
+	<pull.2203.v2.git.1787264417682.gitgitgadget@gmail.com>
+Date: Fri, 21 Aug 2026 02:29:18 -0700
+Message-ID: <xmqq5x13stxt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AsP0z-S4Wazw
-Date: Fri, 21 Aug 2026 11:09:25 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Message-Id: <76e81149-4aff-47cf-8ae7-1e781ec2a228@app.fastmail.com>
-In-Reply-To: <xmqq5x14tg5t.fsf@gitster.g>
-References: <xmqq5x14tg5t.fsf@gitster.g>
-Subject: kh/doc-trailers
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Aug 21, 2026, at 03:29, Junio C Hamano wrote:
-> * kh/doc-trailers (2026-08-09) 11 commits
->   (merged to 'next' on 2026-08-13 at 2966f0265a)
->  + doc: interpret-trailers: document comment line treatment
->  + doc: interpret-trailers: rewrite new-trailers paragraphs
->  + doc: interpret-trailers: commit to =E2=80=9Ctrailer block=E2=80=9D =
-term
->  + doc: interpret-trailers: join new-trailers again
->  + doc: interpret-trailers: add key format example
->  + doc: interpret-trailers: explain key format
->  + doc: interpret-trailers: explain the format after the intro
->  + doc: interpret-trailers: not just for commit messages
->  + doc: interpret-trailers: use =E2=80=9Cmetadata=E2=80=9D in Name as =
-well
->  + doc: interpret-trailers: replace =E2=80=9Clines=E2=80=9D with =E2=80=
-=9Cmetadata=E2=80=9D
->  + doc: interpret-trailers: stop fixating on RFC 822
->  (this branch is used by kh/trailers-no-urls.)
->
->  Documentation for 'git interpret-trailers' has been updated to explain
->  the format of trailer keys (alphanumeric characters and hyphens),
->  replace outdated terminology, define key terms upfront, and document
->  how comment lines in the input are treated.
+"Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks for improving the topic summary by the way. I feel like after I
-added more changes on top of explaining the trailer keys format, it just
-got bunched into =E2=80=9CAlso replace some terms [and a bunch of stuff]=
-=E2=80=9D... ;)
+>     This adds the remaining forbidden characters in embedded form, and
+>     checks that "@" alone is rejected even with --allow-onelevel, where "@"
+>     is otherwise a valid refname component (as "refs/@" confirms).
 
->
->  Graduated to 'master'.
->  cf. <0687D60D-DF6B-4547-868C-FCFC5B27ECAF@gmail.com>
->  source: <V5_CV_doc_int-tr_key_format.b26@msgid.xyz>
+Many funny characters are not allowed between 'foo' and 'bar', but
+are there characters other than dot that are not allowed at the
+beginning or at the end (e.g., "refs/heads/foo." and "foo.lock")?
 
-Kris
+IOW are we testing exhaustive now?
+
+>  invalid_ref '.refs/foo'
+>  invalid_ref 'refs/heads/foo.'
+> -invalid_ref 'heads/foo..bar'
+> -invalid_ref 'heads/foo?bar'
+> +for c in '?' '~' '^' ':' '*' '[' ' ' '\' '..'
+> +do
+> +	invalid_ref "heads/foo${c}bar"
+> +done
+>  valid_ref 'foo./bar'
+>  invalid_ref 'heads/foo.lock'
+>  invalid_ref 'heads///foo.lock'
