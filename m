@@ -1,225 +1,131 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0CC4C6EF6
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 14:23:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B7143E074
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 15:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787322213; cv=none; b=C5OfaWkU+DH+7uDB6YCN5Z0BrtxhxL/XhA456twLs1H09bZ38qaDPias51red4f81eJfg4w3/vpl7b7isTt1bb9m+491xNfiR3ihaRqcWK5lWdiEDFgjlqewvCNg/XL+XPEJd7xN3yjnm9NDs+UPBE1QejiRbj0AD615+Ysh+tE=
+	t=1787324742; cv=none; b=U7wzmzklNh1jla4c9ln/TolT5g8ug2UyxX04NFeZkvOK/knWr0gqWXMrXdnc66wWTovO+FJpEyeD9EintyDXtB1Du5iYkyhje2EMasr800vlEEnqMmCafsNlujlkA9l68rcVRB32ii6WpSAMkV0Tyz3nXof6SaenesoHtf3zVSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787322213; c=relaxed/simple;
-	bh=g9o+TTVFeiVKb4cJLa4FWnTWFidSsuOc5be5Bdj6XM4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=dq/Ma5UpWfzSvAFKE4gyhveyRtS5gg4i2fIZAy8zsdCjiYeBem1yYmTkm0b8wsuOaFrAaadGdE4djTYMBSvaNqxRGg7qIUe1lMhboUIbC/Pms5HA8tlQRvqzwvYC+AsNXcTGQPg4G0FgvlJeFAjEjq7AFR5EsC667UanMgiYd9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q+hRHPLS; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787324742; c=relaxed/simple;
+	bh=WSt4IyFIh/0ScCY5JobrY742+BTjCgNT8gVQQ484xAs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=V4pO9hav/V50mD4GU4/7gOa1PAKN1O7iV+r74VrUyedZthkpxEg7Y5ZaHajLtjFhhTW6i68RixqnelbdIxntt7LBlg0F3RuIOSPXUxNgRfFLRxmtFKELq3ncQdA6w6cOlKXmBlzhWBTjDx2igwP0xHOuzf3ux+RljMuds8cidpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MyjqPt69; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MRWlspZT; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q+hRHPLS"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-84f38f3b36eso679587b3a.1
-        for <git@vger.kernel.org>; Fri, 21 Aug 2026 07:23:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787322208; x=1787927008; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=y4XCY9NSj45V/REZJLyq/UNASKcmXubSD1izy4LVCbI=;
-        b=Q+hRHPLS37afqv/KbMQioyZR3/YkvzqYA2anVmtLuvqOXvWilWY2a5t3L9hQp2qcoW
-         Can2bvuHOPKMqcoo0+Ubuqo9SpVaBnqGNf8s72rkwKC42NP7IJzFUzw82f7+zSrKkLXU
-         tF9fguKBR8cZ6t61XWf8SlQ3BT/okWvAFalwo1mqZtL1zs9+ezz/gCqccLivniqkAT43
-         Y14vr55240wFurn5Vck4iZ28R4r1ajEGrGSoH75wnhCUTdVlW3RHZPRt4/ymAamcb1nY
-         RStFlHtBjXJEf9Nx+dPPyA0LPYjqcFta/P8pAwtcjnTMxs/Mh6ocmyEvULhLGccPY8hT
-         8JPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787322208; x=1787927008;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=y4XCY9NSj45V/REZJLyq/UNASKcmXubSD1izy4LVCbI=;
-        b=OH9vTfVWRRn0qcEbScV1qywhPYbB43fdn07K+MM0/1Oktx77iUiJrB984/jlkyvEdr
-         ta6M6hGkoFkIyjqIbC1f4J+j9RnK88cCnE0wEuGycW87dHSpTcxuzC+nGW5ACfzleUme
-         R62+aJ/vdfAVJ+ma7bOIaC2aQoxp7xxPOeUV7mER9CQcBv5gGviuYGKWOfmrY2K3UMbu
-         pT3DntEbGJa2xiHFje3c8aJWqXNeR6sH0x4btS8NI9kpnHcFjmaRLeT/oSNU2p4ial+3
-         gXvwEYZZi6E9n7b/g5H42d0Y8b5v1PWHzC3VoJw1W5BQtG0hD1wxod3/Y2gJeEYIkd3P
-         H61g==
-X-Gm-Message-State: AFuF++mnj/YEpR99B273dFiR9LiECjdDISysGpfNazePSJPqYhcDjKka
-	7Z5goW7OqaNbkNXQE9VFgTyrInKWgE4chJtJgGpgN06HB05YGxWfSPOXRf3kbjqf
-X-Gm-Gg: AR+sD11O6LKv1N//ZrTv6wgdpxJMCN/XOecJasoHPWCp4xw1efSrLlWsYRxJncp6sSc
-	/K85xBz9WIwzQfM6hLfahXCj0ZfXMBfX9BGF0rk1/2lSpf/LJqSo5M7Gb9gRBzeholPbjp0PVgr
-	SBLgJkhcXDsfoO6prUu9fqrqdzvhDtj/BuxkI855SnAp+euT6puC/lLObtdUvkEyZiiCFJNs0gw
-	uPBqhJdtc7Yyixc6RvwesPrERTH4hty+2eQaH0bXr/oAZaYiAB+DgN4qmKm51P1+UMOuBi5aail
-	+lF35e5qiTq50C9pKXA3KEYmZN4DJ+AGIiX3+904D5Z12Vf4Tbia8hoBPffTFezz0qWvNtSzrA1
-	8HUiy3+oG7IDxBFil93qKYNMN5tq8Adha553t9oF6KtxjkaSJVg1OC73JUarK73TdEvTQ6PeEb8
-	Uaeh6yG4kzvDhn4Wk3b/AD6DhwSK04IiHS+OD07Tu1HUkmK+6opQ6LU2NmNzXQqA==
-X-Received: by 2002:a05:6a00:8c2:b0:84e:24df:3870 with SMTP id d2e1a72fcca58-851f95a0290mr10294324b3a.0.1787322208273;
-        Fri, 21 Aug 2026 07:23:28 -0700 (PDT)
-Received: from [127.0.0.1] ([128.85.45.85])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc155238b85sm3154527a12.6.2026.08.21.07.23.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2026 07:23:27 -0700 (PDT)
-Message-Id: <9c737bd600bac6b6645a10f6b36951985a99262d.1787322203.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
-References: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
-From: "Alexey Samsonov via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 21 Aug 2026 14:23:23 +0000
-Subject: [PATCH 3/3] compat/posix: drop legacy <utime.h> header and shims
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MyjqPt69";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MRWlspZT"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D51997A0100;
+	Fri, 21 Aug 2026 11:05:39 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 21 Aug 2026 11:05:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787324739; x=1787411139; bh=h0kW/tKFw9
+	z0gOWqLqTWYnQZE/FSq+hViAm9seBBkpI=; b=MyjqPt69KAhDXvY4j9OZU7Rv70
+	UL5oQ3R1FTUhYjrW9T01Nyu7nEZTdF5yl45hQARdSmibpALW3b9JI7A0NHtikwTN
+	ZNEjqhZITCeuIU5FSMGHlvVWI7hmqFfEGru0DBJ3UUCSdePYngT8YbVKiwEtRAh0
+	XzXovVzwwe0z19LFg71M0faA7+uNfd8nMUdVnwesKHHbgMaO49++bMLzSnTbP8EW
+	I/lZe9nQ2uZ8e+5aRceTvmH6qJ1xqX4nE2VnqLZnDQIRBQ19pA0qL1lkQwS5Un11
+	UQKcmAErxSSFfJL+qftqBNMoWsCS+gsZix1bTputu0w262GDz4+opqjw/EQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787324739; x=1787411139; bh=h0kW/tKFw9z0gOWqLqTWYnQZE/FSq+hViAm
+	9seBBkpI=; b=MRWlspZTYneKPIlJJhRaXsMa6UbWqDf/zRGs98u30z491j9zQUp
+	rbz+iqVTRz3OjOOwnKCYCjHZRIPSPLZVBWfunT2zkM9pYlSCbLwwTdp3E7B3iMS8
+	QS8gbdNqZifZlJOD3ei06kdsnMMHR7+UlYrYATzAJSzwQfpgCzv9dObW86M0ABpq
+	5J566qtCYjGIcaS9JT2ComNZfScQb6MFDGKNKBlES5YCaFePZW/48ti4wav4VSf1
+	VRVi/C2v2+VTsfWG7XleyxZS8kHODVWSoVAJTN2WCLCUxDM1ffXe10nE+Jxy1Nn/
+	EBuKrFXuYqIz+d97DSJMY6oYZSfCNsBVaMQ==
+X-ME-Sender: <xms:Q2mIanyGF8bULtb6O8kBNKmpCyBsxMe28SA41RZRM8oCff_R3Qu5BA>
+    <xme:Q2mIamRrVmAizMSu33ZBUaqPYzKSwNAtiM4pYAQ3SDJ-Ba9zMd7tnUSRrRiDtlins
+    78KjAg5UGAH_SNdpX8kP12AP1ChN776Zl5hSzSl7RIUgVEzqf-F1Fw>
+X-ME-Received: <xmr:Q2mIamWfYc_naa_70ozOCjLuBqOSV3JwjU_yqSmB6Ds8dEhZW0seClQlZZFG83VYzj0rdC524HKE6mcIckuPvtnU2HJUAgXoXQ>
+X-ME-Proxy-Cause: dmFkZTFFs7nW0sDrlwBT014MCnHT6iz10M8Tpm+gmOtL1MEdwiSlKixrRGyt/pu7pBumDX
+    S8XFk0rq5KDjRQY1xe90//c/G7bkmQUOiGpXEX8gghTuoE3NmPtqFKktmFeDHFznePJ+kv
+    2ZSBObpHeiLP8OUzIg9OAP3O/4AzD34zFgLpRg7iG8gqUsb7aG1KK34v0Pi2I4ahD7sglz
+    GqJLgvhqmf3eZ2n+jVm1bGnukNLmhqgAdd4nV1CIeQyYdfJMhEPmBH97hgwWwjYcAdpjHA
+    YjdIu256hjPP+EGigTArZr2twrjt2Tobqpzy0yFjGyww3uLRBFNAd2gEyJwZdxOgcjijOX
+    pY1m7swM7/C12eECwiJrkdymL9DhUkp1z0gdZwd+OcMxS0169WXAnC0nPVxTHaMkiPyQuK
+    CWtBFJi3MlT6GlMhTwI2BqWfpE3uC7YC+HLseVdu+qr5KDUAgMKwLAPjD4Zil42EqL+iEm
+    sRWRSzsqJ9ddwYFFuqwIjgFbQVp4yjz1tJRCFKwOwKC9mhRNTk15U6ntjIo/Q5AKtpA9z7
+    g2NUCCbDP8iKMAyCYBkusUVwJB/lKvT8Ou8iCI+XIMuwWw6SUkqedw5GGRqcTteSDp9u6Z
+    zCwpyVJPrjDbfACfCirQ/vO8DjhHtkY8pcbxtxn8Y4GsC/vphKOiyu27eJVA
+X-ME-Proxy: <xmx:Q2mIagaqAWJ5DXIO7x-nwY5dpV2gCiFd_NdCcDM2HTT-Yp9jf80BzA>
+    <xmx:Q2mIak3-P9g49MnDh-HULbMTKXQNQllHZYK-j4g1SU8Qwedc4KdAXQ>
+    <xmx:Q2mIaqjCShUYEefVWhXhkr_yGssr9Fu-5ZtPRU-O2ObzL0Hhc0TNEg>
+    <xmx:Q2mIagblguYDdA9ZFK6h0drrH9nKTyPvVtlBCWL-qtqHJDTHL8u82w>
+    <xmx:Q2mIat0V-69dJ0MYjn1zdjP0uy-lIQzKXQlqVrTXNgPfSCWb2K_sJzyN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 21 Aug 2026 11:05:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v5 9/9] odb/transaction: add transaction interface to
+ write packfiles
+In-Reply-To: <20260820234940.894624-10-jltobler@gmail.com> (Justin Tobler's
+	message of "Thu, 20 Aug 2026 18:49:40 -0500")
+References: <20260819215311.3880274-1-jltobler@gmail.com>
+	<20260820234940.894624-1-jltobler@gmail.com>
+	<20260820234940.894624-10-jltobler@gmail.com>
+Date: Fri, 21 Aug 2026 08:05:37 -0700
+Message-ID: <xmqqo6evqzsu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Alexey Samsonov <vonosmas@gmail.com>,
-    Alexey Samsonov <vonosmas@gmail.com>
+Content-Type: text/plain
 
-From: Alexey Samsonov <vonosmas@gmail.com>
+Justin Tobler <jltobler@gmail.com> writes:
 
-With all callers across the codebase now converted to utimensat(2), we no
-longer need to include the legacy <utime.h> header in `compat/posix.h`.
+> In git-receive-pack(1), the incoming packfile is written to the ODB via
+> `unpack()`, which spawns git-index-pack(1) or git-unpack-objects(1)
+> directly. With pluggable object databases, an alternative backend may
+> need to handle writing packfile data differently though.
+>
+> Introduce `odb_transaction_write_pack()` as a generic interface to
+> handle writing a packfile to a transaction and use the logic from
+> `unpack()` as the "files" backend implementation. Note that when storing
+> the objects as a packfile, git-index-pack(1) also writes a ".keep"
+> lockfile next to it to prevent a concurrent repack from removing the new
+> pack prior to reference updates being performed. The "files" transaction
+> backend is responsible for managing these ".keep" files and removes them
+> post-commit once the transaction is finalized.
+>
+> Call sites in git-receive-pack(1) are updated accordingly.
+>
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>  builtin/receive-pack.c | 160 +-----------------------------------
+>  object-file.c          | 178 +++++++++++++++++++++++++++++++++++++++++
+>  odb/transaction.c      |   7 ++
+>  odb/transaction.h      |  62 ++++++++++++++
+>  4 files changed, 250 insertions(+), 157 deletions(-)
 
-Remove `#include <utime.h>` from `compat/posix.h` and test fixtures,
-remove `mingw_utime()` from `compat/mingw.c`, and delete the legacy
-header shims in `compat/vcbuild/include/`.
+Reading receive.unpackLimit and transfer.unpackLimit in generic
+object-layer code feels like a layering violation, as these settings
+belong to the transfer layer.  However, deciding whether to unpack
+or index is inherently up to the file-backend, which is what the
+'*.unpacklimit' settings control.  Future ODB backends might not
+distinguish loose from packed objects, and even if they do, their
+performance characteristics will differ.
 
-Signed-off-by: Alexey Samsonov <vonosmas@gmail.com>
----
- compat/mingw-posix.h               |  2 --
- compat/mingw.c                     | 16 --------------
- compat/posix.h                     |  1 -
- compat/vcbuild/include/sys/utime.h | 34 ------------------------------
- compat/vcbuild/include/utime.h     |  1 -
- t/helper/test-chmtime.c            |  1 -
- t/t4051/includes.c                 |  1 -
- 7 files changed, 56 deletions(-)
- delete mode 100644 compat/vcbuild/include/sys/utime.h
- delete mode 100644 compat/vcbuild/include/utime.h
+We can attribute these '*.unpackLimit' names to historical wart; we
+lacked non-file ODB backends when they were named.  Had we named
+them today, something like 'odb-file.unpackLimit' would have been
+more accurate.  If we had other bulk-import mechanisms that use pack
+streams, they would use the same '*.unpacklimit' to optimize the
+object layout for file-backed ODB stores.
 
-diff --git a/compat/mingw-posix.h b/compat/mingw-posix.h
-index aab91d76db..286ca24002 100644
---- a/compat/mingw-posix.h
-+++ b/compat/mingw-posix.h
-@@ -384,8 +384,6 @@ int mingw_fstat(int fd, struct stat *buf);
- #define lstat mingw_lstat
- 
- 
--int mingw_utime(const char *file_name, const struct utimbuf *times);
--#define utime mingw_utime
- int mingw_utimensat(int fd, const char *path, const struct timespec times[2], int flag);
- #define utimensat mingw_utimensat
- size_t mingw_strftime(char *s, size_t max,
-diff --git a/compat/mingw.c b/compat/mingw.c
-index d09a976191..e2ec44fdd2 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1480,22 +1480,6 @@ revert_attrs:
- 	return rc;
- }
- 
--int mingw_utime(const char *file_name, const struct utimbuf *times)
--{
--	struct timespec ts[2];
--	struct timespec *tsp = NULL;
--
--	if (times) {
--		ts[0].tv_sec = times->actime;
--		ts[0].tv_nsec = 0;
--		ts[1].tv_sec = times->modtime;
--		ts[1].tv_nsec = 0;
--		tsp = ts;
--	}
--
--	return mingw_utimensat(AT_FDCWD, file_name, tsp, 0);
--}
--
- #undef strftime
- size_t mingw_strftime(char *s, size_t max,
- 		      const char *format, const struct tm *tm)
-diff --git a/compat/posix.h b/compat/posix.h
-index 3cac1751aa..435ed90f56 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -123,7 +123,6 @@
- #include <signal.h>
- #include <assert.h>
- #include <regex.h>
--#include <utime.h>
- #include <syslog.h>
- #if !defined(NO_POLL_H)
- #include <poll.h>
-diff --git a/compat/vcbuild/include/sys/utime.h b/compat/vcbuild/include/sys/utime.h
-deleted file mode 100644
-index 582589c70a..0000000000
---- a/compat/vcbuild/include/sys/utime.h
-+++ /dev/null
-@@ -1,34 +0,0 @@
--#ifndef	_UTIME_H_
--#define	_UTIME_H_
--/*
-- * UTIME.H
-- * This file has no copyright assigned and is placed in the Public Domain.
-- * This file is a part of the mingw-runtime package.
-- *
-- * The mingw-runtime package and its code is distributed in the hope that it
-- * will be useful but WITHOUT ANY WARRANTY.  ALL WARRANTIES, EXPRESSED OR
-- * IMPLIED ARE HEREBY DISCLAIMED.  This includes but is not limited to
-- * warranties of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-- *
-- * You are free to use this package and its code without limitation.
-- */
--
--/*
-- * Structure used by _utime function.
-- */
--struct _utimbuf
--{
--	time_t	actime;		/* Access time */
--	time_t	modtime;	/* Modification time */
--};
--
--#ifndef	_NO_OLDNAMES
--/* NOTE: Must be the same as _utimbuf above. */
--struct utimbuf
--{
--	time_t	actime;
--	time_t	modtime;
--};
--#endif	/* Not _NO_OLDNAMES */
--
--#endif
-diff --git a/compat/vcbuild/include/utime.h b/compat/vcbuild/include/utime.h
-deleted file mode 100644
-index 8285f38fde..0000000000
---- a/compat/vcbuild/include/utime.h
-+++ /dev/null
-@@ -1 +0,0 @@
--#include <sys/utime.h>
-diff --git a/t/helper/test-chmtime.c b/t/helper/test-chmtime.c
-index a9e6eb78b8..295f55cf47 100644
---- a/t/helper/test-chmtime.c
-+++ b/t/helper/test-chmtime.c
-@@ -38,7 +38,6 @@
-  */
- #include "test-tool.h"
- #include "git-compat-util.h"
--#include <utime.h>
- 
- static const char usage_str[] =
- 	"(-v|--verbose|-g|--get) (+|=|=+|=-|-)<seconds> <file>...";
-diff --git a/t/t4051/includes.c b/t/t4051/includes.c
-index efc68f8bf6..4861f6657b 100644
---- a/t/t4051/includes.c
-+++ b/t/t4051/includes.c
-@@ -15,6 +15,5 @@
- #include <signal.h>
- #include <assert.h>
- #include <regex.h>
--#include <utime.h>
- #include <syslog.h>
- #include <End.h>
--- 
-gitgitgadget
+Thanks.
