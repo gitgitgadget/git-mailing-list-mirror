@@ -1,164 +1,143 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0456439CD01
-	for <git@vger.kernel.org>; Thu, 20 Aug 2026 23:49:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552771E0E14
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 00:40:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787269805; cv=none; b=aZHoVEgFER7thrYo/H8eefEPANvezqg87ri5NEiZHkvEl/995eFLcGDlglH1X5sPGQ4NB9EwthkfmAwtYZ7HonTvKDuyQyOc3snWTaP6ibuiB9Fs7ANT46irFYeq5zb8ucU8e25WBRdoY2MeahRnS+eQXMr2v3i8qegA5V5TlVI=
+	t=1787272824; cv=none; b=HElKXHAjVQcJwYeT4xiJpbf0Z1l8bQpM6FwhdiBowCUGKrkljAtF7KTYOyE8hJAIGhjUoevZU8h9GD7gio8msvXa3hxTjO1UNLkwfzpB+FY7LmhgTVV2oLAM9pswBRGVUhcXnX4N7rKCVEtiuwcraNROMHVGOPPxR7e9Z/xEzy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787269805; c=relaxed/simple;
-	bh=mdZB7D9kOGGF60uk7ZSWYhL/XTX1DDOZg3/eZMtBBD0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DaB2gNXK9u18GuwqaVRfqgyN2nHnu/oP63L+zkpQ6GknpVm2W9gAJ4kN/NWrQdRLMuQrGXOyexsBSFOHgpbcDzuPgzoOLa9e/P4J0b9dKMJE62rwatDVPDW8ElgWK7eWIpT3coTXcTrT3wmLPEO4bi+2XZU83C0aPkjmMTh8JKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YmHg+mUw; arc=none smtp.client-ip=209.85.210.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787272824; c=relaxed/simple;
+	bh=Gq98y59ULYeI6GcF6tkxZFb1ADeC0lKKyp152eDDFXs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NH44A1WulEfU73QNLyURdOPk9uQiArrXZkpuRAkN5N+XHJrWeOZRl+6hpTiEcQmxuLOYU6buDduUCQBcQ7FhR4U3K1QKsivRUGI8vvEcLIzJ+CvG541VxGWrJT0FT8lmFNQjdNuKEAlHlgu2R4QadvgI5F2dvWgGCL4UyvqBf30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NcbhmmwE; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YmHg+mUw"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7e9ecd7216cso334752a34.3
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 16:49:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787269792; x=1787874592; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3XEpiN/PgbrSK3k5Row5H0tIA0GjrBj5Rwt4GEwE59E=;
-        b=YmHg+mUw7fYnoFbk9F8E+9ke309CwWowihuAOiSl/zqOccPZoVibbAMU6ZFSqlU5JD
-         M/caHIIFeQlHhuonOc36+mQSOzuGA0OVdfhi4hiofpJ9dDZuOLwH1wtF9XanD1gJ+bbB
-         HlnebpcjBPnd/s6AnxvEokociDHyWPGysI/p+qLw/3lmtBSUtjqq03dYxU6LX1UgsBXm
-         vtXVFREgR1tTaolODW3QI6uOLndRuiuBQborYNr2onh40MSod9XHDckwGqujxRfPL4pX
-         lwcKxhEUZUBzDYmwLOpoQLY7iSWo9yiDaBoNEehi2xgWyuwWhb+pcAQ1ogIXVS4ZgXGA
-         YndA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787269792; x=1787874592;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=3XEpiN/PgbrSK3k5Row5H0tIA0GjrBj5Rwt4GEwE59E=;
-        b=DvwzByaYhRqyE7ik8WpPjm4Z0W2MJXmEZ5kK/GUr2lDxBb5wWg5O6N7D8mWFLYENyj
-         A42X2Xe9K+IwRf5lb1NIk1nr3ZxYz7RArWCEY3s+13RDwEJ4Hs9m+EBrejSARjR1SCNz
-         wpANmK1MyJ5m93UUwLKz+mcRdEoaxmAABjdDuwvO9Yg+JR5j1jkXneDncZnSsQ5hI8Dh
-         yNEIWUWwc7HehLV5WdSGtXkAXLbEkVok9xykC9CZmHwoDze+E6KuGMfrv8uBwdkMHwu9
-         6C/k93yM4/dnLiQvc9olNaYTiTPkn9VeOL5F5sTAK9bfKNrbUu1GzeTD7JEgSlt1NbJ6
-         dkew==
-X-Gm-Message-State: AOJu0YxNSLd7Ebuukw7SaQvTkhinIoIQXq0e0BrkDFghgnRY95JSv2MB
-	ygGzx+8DhOZ6Dive3EzCHflUOtb4dQO7JYRrj4Gp+F2XJD1hKV+A9eOKIEVR6Q==
-X-Gm-Gg: AR+sD115BXls9RJeZqSyLVLuqF8Y66nMBm8Gos0/gcIbDXgGa11D36uuF6W0NBhfWGe
-	Z4GVjTyKqXsaU0TQljqVuiWtHdwV1/+H0KUPp6oDotxgefEESXvxkVLGusaaUSIKULO2siycAs5
-	DQoYG3NGQjCbeCJ3CvOnh/byKKnleemOKZ3CPS1EtKrXScAGuTH6SZY6ljQSRafzSsTuM3V58QN
-	+4AD6Gdm/8pncSuhuIG5/alPwviwfm3WYHfLdtcq3kVPVnL6njZ/09oxVNvXJMFpBT2jwiRf7J6
-	Fz/oMIqkVUPOlNLCpHm0gxEmvhnuxWn1ut0zKwEg9ueuLnqFja7AoaBDWqR6HwNtQ6jGARUVbTS
-	ZiIHqbaWkpmWPvujancKWTPJfFK3F63F7mxLxeHGnbiKA/0ofLcKHvjdIeFooDyartwL7hnoM7k
-	uR2QuPle01V0p67ZCc2+R84vpcab763ynTMXx/99petRTz0dmqIANMFO48UspUyBZTdfSE8g==
-X-Received: by 2002:a05:6820:4de8:b0:6aa:f920:6b1a with SMTP id 006d021491bc7-6b159287077mr2760864eaf.16.1787269791923;
-        Thu, 20 Aug 2026 16:49:51 -0700 (PDT)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4632a6c360asm2961133fac.5.2026.08.20.16.49.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Aug 2026 16:49:51 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	gitster@pobox.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v5 7/9] builtin/receive-pack: explicitly pass packfile fd
-Date: Thu, 20 Aug 2026 18:49:38 -0500
-Message-ID: <20260820234940.894624-8-jltobler@gmail.com>
-X-Mailer: git-send-email 2.55.0.424.g13c7afec21
-In-Reply-To: <20260820234940.894624-1-jltobler@gmail.com>
-References: <20260819215311.3880274-1-jltobler@gmail.com>
- <20260820234940.894624-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NcbhmmwE"
+Received: (qmail 83097 invoked by uid 106); 21 Aug 2026 00:40:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Gq98y59ULYeI6GcF6tkxZFb1ADeC0lKKyp152eDDFXs=; b=NcbhmmwEZOBtUjeKZLy1XV0o15ES6+xAsjrkFSSeV0E9iuLb0rScWpoKfO4dO7aG7ffCqu1rYOqZApOZ4vgAzkHn+n3Jlq8W7Ho8lSCngT2Yi0Xxdv7+TjDlJ23yhd4S8+z/0ML+hMSFRUGKMFfH2fUvZgpC8oH7o4O0Q8KRqjOb35GSCs1NSi7WhtpNrU0Fp4Q8BMEq0C0H40MMpN9X2TPNv/dyns/HL8Eewi7CGTRqcAjm2xzwDV/3lfWUcbXVwJ+Kn/jh3urq21Unrojv/KzDwONFfVXviZgtvXfgfKMrXYYvt9RmZuFNt/JafcDdQNdNhq23QnfK+vPVHTGfOg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Aug 2026 00:40:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 68349 invoked by uid 111); 21 Aug 2026 00:40:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Aug 2026 20:40:23 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 20 Aug 2026 20:40:19 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: friel@openai.com, git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2] pack-objects: trace pack bytes written
+Message-ID: <20260821004019.GA296407@coredump.intra.peff.net>
+References: <20260817233914.8740-2-friel@openai.com>
+ <xmqqo6f02q2f.fsf@gitster.g>
+ <c6a8cdac36d2202055d637ebcc97e484122cdcd4.1787158152.git.friel@openai.com>
+ <aoaTjWMSO8og_iFw@pks.im>
+ <20260820082102.GA2973952@coredump.intra.peff.net>
+ <aobFLJuiuM1EuNpv@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aobFLJuiuM1EuNpv@pks.im>
 
-When processing the incoming packfile in git-receive-pack(1), `unpack()`
-assumes it should always read it from stdin. In preparation for
-`unpack()` logic being moved behind a generic ODB transaction interface,
-update the function signature to take the an explicit fd provided by
-callers to read the incoming packfile from instead. Call sites are
-updated accordingly.
+On Thu, Aug 20, 2026 at 11:13:16AM +0200, Patrick Steinhardt wrote:
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- builtin/receive-pack.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+> > But there's a subtle yet interesting difference here! f->algop won't
+> > necessarily be the same pointer as the_hash_algo. If we compiled with an
+> > unsafe variant, that will be used for hashfiles. If we're just looking
+> > at rawsz that's OK; the two variants should be identical (other than
+> > performance and collision detection), so taking rawsz from either is
+> > fine.
+> > 
+> > But fixup_pack_header_footer() actually recomputes the hash (as it must
+> > if we tweak the header). Right now it does it using the "normal"
+> > variant, but we should be able to use the unsafe one (which my diff
+> > snippet above would start to do).
+> 
+> Yeah, I agree that switching over to the unsafe algortihm is sensible.
+> Being able to speed up hashing of packfiles was one of the prime
+> motivations of introducing the unsafe variants in the first place, so
+> the fact that we still use the safe variant here feels like a plain
+> oversight to me.
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 6df872697b..b369466783 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2292,9 +2292,9 @@ static void read_push_options(struct packet_reader *reader,
- 	}
- }
- 
--static const char *parse_pack_header(struct pack_header *hdr)
-+static const char *parse_pack_header(struct pack_header *hdr, int pack_fd)
- {
--	switch (read_pack_header(0, hdr)) {
-+	switch (read_pack_header(pack_fd, hdr)) {
- 	case PH_ERROR_EOF:
- 		return "eof before pack header was fully read";
- 
-@@ -2340,8 +2340,8 @@ struct unpack_opts {
- 	int quiet;
- };
- 
--static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
--		  const struct unpack_opts *opts)
-+static int unpack(struct odb_transaction *transaction, int pack_fd,
-+		  struct strbuf *err_msg, const struct unpack_opts *opts)
- {
- 	struct pack_header hdr;
- 	const char *hdr_err;
-@@ -2349,7 +2349,7 @@ static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
- 	struct child_process child = CHILD_PROCESS_INIT;
- 	int err_fd = opts->err_fd;
- 
--	hdr_err = parse_pack_header(&hdr);
-+	hdr_err = parse_pack_header(&hdr, pack_fd);
- 	if (hdr_err) {
- 		if (err_fd > 0)
- 			close(err_fd);
-@@ -2376,6 +2376,7 @@ static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
- 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
- 				     (uintmax_t)opts->max_input_size);
- 		child.no_stdout = 1;
-+		child.in = pack_fd;
- 		child.err = err_fd;
- 		child.git_cmd = 1;
- 		status = run_command(&child);
-@@ -2410,6 +2411,7 @@ static int unpack(struct odb_transaction *transaction, struct strbuf *err_msg,
- 			strvec_pushf(&child.args, "--max-input-size=%"PRIuMAX,
- 				     (uintmax_t)opts->max_input_size);
- 		child.out = -1;
-+		child.in = pack_fd;
- 		child.err = err_fd;
- 		child.git_cmd = 1;
- 		status = start_command(&child);
-@@ -2461,7 +2463,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
- 	int ret;
- 
- 	if (!use_sideband)
--		return unpack(transaction, err_msg, &opts);
-+		return unpack(transaction, 0, err_msg, &opts);
- 
- 	use_keepalive = KEEPALIVE_AFTER_NUL;
- 	memset(&muxer, 0, sizeof(muxer));
-@@ -2471,7 +2473,7 @@ static int unpack_with_sideband(struct odb_transaction *transaction,
- 		return 0;
- 
- 	opts.err_fd = muxer.in;
--	ret = unpack(transaction, err_msg, &opts);
-+	ret = unpack(transaction, 0, err_msg, &opts);
- 
- 	finish_async(&muxer);
- 	return ret;
--- 
-2.55.0.424.g13c7afec21
+Yes, though I think the oversight can be forgiven here. The unsafe
+variants are purely for performance, so we started by converting a few
+hot code paths, knowing that it was OK to leave other spots using the
+collision-detecting implementation. The main one we cared about is
+"pack-objects --stdout" to serve fetches.
 
+But this particular case is almost never exercised! It triggers only
+when --max-pack-size causes us to split the result into multiple packs
+(we can't write the header up front in that case, because we don't know
+how many objects we'll fit into the output). So I doubt anybody would
+have noticed or cared about the performance difference.
+
+But it also means that cleaning up the triple-hash is tricky. The three
+hashes in this code path are:
+
+  a. we hash as we write, via struct hashfile
+
+  b. we hash as we read back the data to verify it
+
+  c. we re-hash the data on top of the fixed-up header
+
+We can obviously drop (b) if we choose. We can't drop (c); it's the
+final value that goes into the on-disk packfile. So we'd like to drop
+(a), which is pointless (except for cross-checking step b).
+
+But we don't know if we're in this code path until we've finished
+writing the file! If the output is smaller than --max-pack-size, then we
+just write the hash from (a) directly, and neither (b) nor (c) happens
+at all. This is the "nr_written == nr_remaining" conditional, the second
+in the chain.
+
+We could pessimistically assume that we'll need to do (c), and skip the
+hash for (a). But that is worse for the usual case that we don't split
+the packfiles. Instead of hashing as the data is written, we have to
+re-read it (passing all those bytes through memory again).
+
+So realistically the best we can do is drop (b).
+
+Of course what I'd _really_ like to do is rip out --max-pack-size
+entirely. I don't think it's generally helpful, and it introduces all
+kinds of weird corner cases and complications like this. But obviously
+that's a much bigger change, and naturally if I seriously proposed it
+somebody would come out of the woodwork so with obscure case where it's
+useful.
+
+> > Of course this whole thing is absurdly pessimal in the first place. If
+> > we are just going to throw out the hashfile's checksum, then why bother
+> > computing it in the first place? Because we don't trust a disk write at
+> > all, and actually verify the original hash computation as we read the
+> > bytes back in! So we'll actually sha1 the written packfile three times.
+> > Yikes. I wonder if it's really worth being so paranoid. But that is how
+> > it has always been.
+> 
+> That's... awful. Honestly, if we cannot trust what we're writing to disk
+> we're going to be kind of screwed anyway. We don't re-verify loose
+> objects, refs or whatever other data structures we write to disk either.
+> So doing this thrice here feels wrong.
+
+There was an attitude in the early days of Git that we should be
+checking hashes and checksums all the time. I.e., that the validity of
+the data was the most precious thing, and we should notice an on-disk
+corruption as quickly and reliably as possible, similar to filesystems
+that checksum the data.
+
+But over time we've relaxed that quite a bit because of the quite
+noticeable costs. For example, we used to re-hash every object we
+loaded, but these days we have PARSE_OBJECT_SKIP_HASH_CHECK, and
+features like the commit graph.
+
+I think this is a case where we could similarly relax. Especially
+because this is just the pack checksum. The actual object contents are
+still protected by their respective hashes.
+
+-Peff
