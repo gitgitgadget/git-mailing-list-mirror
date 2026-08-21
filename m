@@ -1,80 +1,79 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636184156C2
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 06:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2204156EB
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 06:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787293821; cv=none; b=VNKxCKZi5ymeoEdAphI5y0zovhK8dj03GI8APTePmOtniFY7ExQuh4ZDberSuo5WC9XZGZAQZciWloDTojMurVVneYQuQIzYch0VopVnFaItqxDka7SBI68V29MJPyuiJ4n9/cKklyPuZ60wl3hYrPuL9+AQF2eE06RUTku3Ptw=
+	t=1787293823; cv=none; b=dR4VYxJ06fRBqZuEfiFtyRrApJqFUk8lAKouJ7Hnt4Z6iAj0kr6Rq5kZkO9ME39gahqJXS9wzKrbSmf3qJgmBhqMjdufGcSYSQ9PiaxK0GHH7TkG4qYaefop3zkjU6rDnLip268fzvHoXlEfIGRsLD5aWXRLuJVY+UPSrw+sCus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787293821; c=relaxed/simple;
-	bh=gWUAKuISxreljwcS1nFc0hslOP805lUVZ7EgHHzyvWY=;
+	s=arc-20240116; t=1787293823; c=relaxed/simple;
+	bh=oNVhj+04r5QgWYtWlMBF3q3K020v2fGQTt18EusdNmA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aSf83a5t6CFfFO2i5CCAxReluDH3pj3pfCw5AT0/kkAFL7/m+ZXR36WjhHNLBjCQ3/0LQ/Ck7dTuGrKPMCaAZJcMTYZz3rPYgiDd9X4Qttm9pEAprNdCdlHHEm0kgXJEF4aRlje2m+nSSGb+eX9hOWZP4xx2udeSNVsN9rUPXO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cmiyku0d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NwQUcxFW; arc=none smtp.client-ip=103.168.172.148
+	 In-Reply-To:To:Cc; b=YvICK0puV301Q7ppyDx3x8DXBLm2EJ5OoNAkO1ZiB5trV+zQomJkNVQltbMe6NDHVwwUWfV0jWvaXQMRcyTAmJjzzsWNiqyUf+mEIT/3eIz4DKztw5Y71aPLWLE8uyLfo9pJQsiMTAaLO/TPvm4rOCFWr/52pygSiCIxQP/t7lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fkVU5HYe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lE2zcFKo; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cmiyku0d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NwQUcxFW"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5EFA1EC02AE;
-	Fri, 21 Aug 2026 02:30:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fkVU5HYe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lE2zcFKo"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8BEA8EC02A8;
+	Fri, 21 Aug 2026 02:30:21 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 21 Aug 2026 02:30:19 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 21 Aug 2026 02:30:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787293819;
-	 x=1787380219; bh=KFxM4hbLPgZQ5cdv8a1NKBaxbS9EAZYPRi3rQQMJuQc=; b=
-	cmiyku0dDiDp0X+PPFuEG9vhmrKavr9BZBFuelrCWcuhIa/ygaTH+xECGv6To7oK
-	/qlTDazFb5L0Yo3ek0vLLrmfmq3q/1SaVBVrII6bY7GwhVoZUIeebOoeQVirMRJV
-	YR6TZ1N/PkxkdeRq4mzZi/JNRvfjUz0SvbX8wURSv58PZilJBEPaJhHqKq+jRtEt
-	XEsIyCr9qiv3JPOp8SrevOENlnmd9WzpJXlKrt/NC1Ld+zmdt6WpY9j9W/nKayfS
-	rGvquVL2vnNyI97Bb/ddmv12no/cuoyDQeBrZ2DB5h47d/IrceKhXCQg+NoBV4pI
-	xIsGe9SlbIIQ1SWNlQTpcg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787293821;
+	 x=1787380221; bh=cn53tK2EQgqX+GtA8ytcyMXLOdXZzK0sPTPiFV/gO74=; b=
+	fkVU5HYeVHHTr88VFtbBlmZX1SDXhSb+x7h1nZ8Xv9LI4rgiCZmsjzZd9l1+oxlL
+	iCKSps8u9lDjgN+wtVAgGL1MFkC2cOpUnM3d4mseLs1C9l2d55MdSMl/wbAkacva
+	82TFXqh4l+CfJXX/SitG1zVtnH6He/qG68Eu3zqVJJZP9S6TGCuI0iGrourm3jhy
+	qZp/znnCHWWXqEzVG4dd+UFF9yNPJIItGiyvfOQ+p8BbWMZ2YJWs+k/drMZ6/jjL
+	sH2TaoDaZE2g0gLYnLYw0b28MCmXxnkdY4B8QzgE5havCNnWWoraVTMo3wttXY89
+	vqFjH2Pemb7gqhc3EksjlA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787293819; x=
-	1787380219; bh=KFxM4hbLPgZQ5cdv8a1NKBaxbS9EAZYPRi3rQQMJuQc=; b=N
-	wQUcxFWFmArxRUaP02zk8oos8ce7V2wcx5ZyV4DNs91VAOmwxo2xE1L2tMUGx7tt
-	2z3pZsOFkK2RAKUntGg7yTTtEUXrSMLRlTjxSJL4dCzvgX90UV5gqAwqydmPTZWH
-	J4p/PTAPDV4g5WciTrtb9oZ6d+UOTbjlUuMxsgJytfv16/X0eaKlezpyZQvvvSlj
-	wbsB7R6A1edqGpk5rgGYfhzblCMyP6c/oSSDbUmYjRpvvdC1XU6xD9OCFxvXlPXQ
-	gKesQRt3wx2aCOla8R5wxDBc5rGdNJ1gIVv3cOsJ/KvVO6UAFcY1N3O/XHhuVYVg
-	m0DzwKn6HSwa47W32LU/w==
-X-ME-Sender: <xms:e_CHaiqioaf3lwFKDeeAobelimRnRg7W5J3NJZ2KNDIqRuydXO6CWg>
-    <xme:e_CHaniuaJ1xjIyJz0gQbsY1jSnVhNM1TgYBY7pKAbhAV1uaJbl00uw6XCcEyz-A6
-    1dlM7vz_WSifz1tMOb8ZK8SMPBD6aps6bHOVDSFlEJxSAhBxmfpGZc>
-X-ME-Received: <xmr:e_CHavirBJxXB8PqWV66TzPjrh8nOi6qsS6SxXot4q8DPrz1wJN3TO2GYPI-Y0zzmeKvdgQUQLHebPKNzpqHPi-9szU5XfEq8vDEWGuSBUrw>
-X-ME-Proxy-Cause: dmFkZTFOsnqZFvFAsZ6dw3BMx9gD3pe649no1Q5+pxVYg6gGo7oNkCmbJalFqc+jHFtmID
-    RaRAAMqOr5Dax1kTanndHINXiDpLK04EVbTnXSqsKaaBGXopToHvuu9z0IzacuMrpv75k5
-    MMyuHWpTDNY06Me9cf0/5J82v/p54IvpLd/GSqaTCDZk8uCdTOErloALOV83IQSKjUgFKk
-    14TktuIkU/KgUdUpuxxoU5Ykz+e2jwx2gPQE7Pel8xmxdCa4uWa5O/de0R7BBYixLtkAPw
-    cA2du4/8TogV5iZNNaAG1IZMXvbbQJe854uwOBNUTaw5DCdACl5f905fziUQb/9H1x+MOt
-    jFgNWWqPyrGHJV4FcTp62N/WTNCXEAHYOsbpDgl2oI3s0DkKFI49L5QcPjdqbHF6/o29oU
-    VxBIb+QaC0elbMSlOpriY6qwlbDJyujK5eNAW5lQx9pC8lWnTKiny/5GRwp0DXX0OukMeV
-    gvUMeDf+SykbhB+FKrKAX+F3aJUcDfMf4vm+ZYGCa/9NnESl/PhBM5QoldxWifGATOyjTn
-    3/v4cjS4LhfijgzCgOuj8krjh/xgxwV9M+jQ21eLrwwMFo1OOGGc99TLqYk2/DMkBDbJs/
-    FHG2Hz/sd9r5rY+pfrOxJRphwvPSKkfrz2C9eJCwDitWUCb2wSLvTjaM46hA
-X-ME-Proxy: <xmx:e_CHatgyv749lhhVvyBrlGNVjx0yzIODvkxpxS9d90xHNV-cJQKNgQ>
-    <xmx:e_CHavJyTGNmYU8T-PBlCT6idzqC7NkT0i4YvurwvUfXQP8Di3Dkrg>
-    <xmx:e_CHasG25s2DpM156pwbejoKT8-VW5zpj0yhCmcmmeTQYJFsQpBOdg>
-    <xmx:e_CHajR-kiGCb_UVTSuUs1AveUytId25PCgOjtMeEaXuXDdia4PK2w>
-    <xmx:e_CHagyT8AOFRG0ojyPMpQPVxrNB72VZ34-hxF2XjXxMR5PhJAKY_50k>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787293821; x=
+	1787380221; bh=cn53tK2EQgqX+GtA8ytcyMXLOdXZzK0sPTPiFV/gO74=; b=l
+	E2zcFKoOx8qdRWn8svWwLATO5Ym4r2aKkjZ/NuXQKNNYJI+lcE+GCjx6sPkLQ8fT
+	3/v+9XjxsR3Qn4kxYC6VwVcyQOLnBbpk5lU042kYaXNAxrwivmjpQ/EuQv6s81sF
+	k+AsrTk4MYMbNX1HoeKfrSqo9zwr0kj47fDH+5LEfwP8bVD5Ejr/LU6kYD9C+Hdb
+	ImLfEFtRGEtRnwP9hdj4Um9wmO/gOzScx9ioLEP6WQTpI0O3OZN09CpFUvm0ZQlY
+	UjUnJ84rPIdTrx15vsqUvoN8AA4GXs3prY4I6n1NhSK0ukeQ8/N3IYUUOasxQjPQ
+	9l4bugBcbrX5EssAM7VMw==
+X-ME-Sender: <xms:ffCHaoRN5T3gEtfTndblNF3rNms3X1QXDxDDBd8Imdm2HAmnrRK6Yg>
+    <xme:ffCHasp_I2dqy-tJl4eUJ48RzDWU28QXdVNelLpW0qfb5CmVOjOMlx8Mjfc53ooRi
+    aKSjS7v3_imhsAP0Avl4HUxC9Zke5xRM0BjyXoeV4I1YetUgw-dYMg>
+X-ME-Received: <xmr:ffCHauJ3N2wmGUmKvcqzOnMd_ySdzlzpfsHboGKJ_Y6adZzeMEz0lt1YfQ3HCuTtjiOZey3xm6YMNzI4WWvrhVWfjFiDlk0IuPF66WGB0oBn>
+X-ME-Proxy-Cause: dmFkZTGvGr7AfD8DCnwMaod+pFuPIsXtrfEPPcql2hViDk1ZB8UQGHOuXDkGbeRxx2570l
+    cRxGSWWWMovYlUT44fOZtzhNuR2uyD1biL8STN/BNnE9CfvJalG+92PvRA5Rf5iSe1mIQp
+    rQDnz14/uoDmFci+eTs3zjZowpnDp9o/yN2BM5n46dTwTmCzgXr3dk5OdMbE9RmJ5o+Srm
+    Fd7KdtJ89qrpxh6A/yke8ZFpXrtJo/ItD9nlo9XiiDqbg2xEI+4gp82nM6vzDGnM4fkm9p
+    69ZV+W2vom486+Rw7nic5ewj1j03AB4c4xKwZ8M1/tlzf/fE/UHatBuW2LwjNnelus2UfD
+    WPNgPkUoe44meY0RvZ6WIM3/+n1jdO5MiGlpOF7j+7WpLNJoToAKifsn3+W9FfwyBgEFbq
+    jr26vHn8mMQQmjCWSUXU1iH30vwi9Lb7gMqLua/qJMJ6TELbIKuRqEk04C48tXGoeP0Uho
+    Z+Z3LcdDcMxT+/mw2TBgTVkrpIF0ViGjBpQe/S2VKhv2nu1lLa9vmJsm4G82v3zOvPbl/p
+    d8fiki1djQcYQ+HK7dKOThbvt1STB0ToBNaD/WMZuCMJAiwFDIRBp6wenW8DXcldouEH4N
+    bDXA6q5UF/cm5tORiNYZlS65VrcUxRszh/ieoqoY4rlzadTi+mpvEjH9OhXA
+X-ME-Proxy: <xmx:ffCHanpBTO-9AHf5xWxiN6NxCONcJSF0l0IPnYRKmaRADpmtGtx4fg>
+    <xmx:ffCHauw52cMuGB_LOuXgpFAGieTN65dWbHzHyJRC2950iq5Zy9yKug>
+    <xmx:ffCHajMLFJ8ekopZwWnmJTInxxJfvEB0QHmMgyMsnwSh8nZBvnByAA>
+    <xmx:ffCHar7e1aCkWPWF5oNn3HUsVKK0HHydUCHifK8N0ZJuRPV5rGxMgA>
+    <xmx:ffCHai6AA0qUKZN2h8WQ3t9E3u7yfCihNOnKjKMqkz-nvwCiAm1GJBf2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Aug 2026 02:30:18 -0400 (EDT)
+ 21 Aug 2026 02:30:20 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2e5bebf3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 21 Aug 2026 06:30:17 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 47751d36 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 21 Aug 2026 06:30:20 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 21 Aug 2026 08:30:04 +0200
-Subject: [PATCH v4 4/6] builtin/bundle: refactor option handling for
- progress meter
+Date: Fri, 21 Aug 2026 08:30:05 +0200
+Subject: [PATCH v4 5/6] bundle: get (mostly) rid of `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260821-b4-pks-odb-generate-pack-v4-4-074e8bd641f8@pks.im>
+Message-Id: <20260821-b4-pks-odb-generate-pack-v4-5-074e8bd641f8@pks.im>
 References: <20260821-b4-pks-odb-generate-pack-v4-0-074e8bd641f8@pks.im>
 In-Reply-To: <20260821-b4-pks-odb-generate-pack-v4-0-074e8bd641f8@pks.im>
 To: git@vger.kernel.org
@@ -92,91 +91,131 @@ Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>,
  Patrick Steinhardt <ps@pks.im>
 X-Mailer: b4 0.15.2
 
-The git-bundle(1) command has a couple of command line options that
-relate to whether or not progress should be reported. These options
-match the options that git-pack-objects(1) expects, and consequently
-they mostly get passed through to it directly.
+Refactor "bundle.c" so that we don't depend on `the_repository` anymore.
+This conversion is trivial for most of the part, as we already have a
+repository available in all calling conexts.
 
-This results in somewhat of a confusing interface: there are four
-different options that relate to whether or not progress should be
-displayed and how verbose it should be. But in reality, there's really
-only two modes:
-
-  - "--progress" and "--all-progress" result in the same outcome, which
-    is also documented as such.
-
-  - "--all-progress-implied" does nothing as we pass that argument to
-    git-pack-objects(1) unconditionally anyway.
-
-So in the end, the options only control whether or not progress should
-be displayed at all, nothing else.
-
-Refactor the interface to instead use a simple `progress` boolean. This
-makes argument handling a lot more straight-forward and it prepares us
-for the next commit, where we're migrating git-bundle(1) to the generic
-interface for generating a packfile.
+The only exception is that we use `get_log_output_encoding()`, which
+implicitly depends on `the_repository`. Add an `extern` declaration for
+this function so that we can drop `USE_THE_REPOSITORY_VARIABLE` and not
+accidentally introduce more uses of `the_repository`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/bundle.c | 33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
+ bundle.c | 32 +++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 1e170e9278..bfafadc984 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -70,35 +70,34 @@ static int parse_options_cmd_bundle(int argc,
- static int cmd_bundle_create(int argc, const char **argv, const char *prefix,
- 			     struct repository *repo UNUSED) {
- 	struct strvec pack_opts = STRVEC_INIT;
-+	int progress = isatty(STDERR_FILENO);
- 	int version = -1;
--	int ret;
- 	struct option options[] = {
--		OPT_PASSTHRU_ARGV('q', "quiet", &pack_opts, NULL,
--				  N_("do not show progress meter"),
--				  PARSE_OPT_NOARG),
--		OPT_PASSTHRU_ARGV(0, "progress", &pack_opts, NULL,
--				  N_("show progress meter"),
--				  PARSE_OPT_NOARG),
--		OPT_PASSTHRU_ARGV(0, "all-progress", &pack_opts, NULL,
--				  N_("historical; same as --progress"),
--				  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
--		OPT_PASSTHRU_ARGV(0, "all-progress-implied", &pack_opts, NULL,
--				  N_("historical; does nothing"),
--				  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
-+		OPT_NEGBIT('q', "quiet", &progress,
-+			   N_("do not show progress meter"), 1),
-+		OPT_BIT(0, "progress", &progress,
-+			N_("show progress meter"), 1),
-+		OPT_BIT_F(0, "all-progress", &progress,
-+			  N_("historical; same as --progress"), 1,
-+			  PARSE_OPT_HIDDEN),
-+		OPT_NOOP_NOARG(0, "all-progress-implied"),
- 		OPT_INTEGER(0, "version", &version,
- 			    N_("specify bundle format version")),
- 		OPT_END()
- 	};
- 	char *bundle_file;
--
--	if (isatty(STDERR_FILENO))
--		strvec_push(&pack_opts, "--progress");
--	strvec_push(&pack_opts, "--all-progress-implied");
-+	int ret;
+diff --git a/bundle.c b/bundle.c
+index b64716f252..a9330bf0d3 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
  
- 	argc = parse_options_cmd_bundle(argc, argv, prefix,
- 			builtin_bundle_create_usage, options, &bundle_file);
- 	/* bundle internals use argv[1] as further parameters */
+ #include "git-compat-util.h"
+@@ -21,6 +20,13 @@
+ #include "connected.h"
+ #include "write-or-die.h"
  
-+	if (progress)
-+		strvec_push(&pack_opts, "--progress");
-+	else
-+		strvec_push(&pack_opts, "--quiet");
-+	strvec_push(&pack_opts, "--all-progress-implied");
++/*
++ * NEEDSWORK: this function implicitly depends on `the_repository` and is not
++ * available because we dropped USE_THE_REPOSITORY_VARIABLE. We can remove the
++ * declaration once it's accessible via `repo_config_values`.
++ */
++extern const char *get_log_output_encoding(void);
 +
- 	if (!startup_info->have_repository)
- 		die(_("Need a repository to create a bundle."));
- 	ret = !!create_bundle(the_repository, bundle_file, argc, argv, &pack_opts, version);
+ static const char v2_bundle_signature[] = "# v2 git bundle\n";
+ static const char v3_bundle_signature[] = "# v3 git bundle\n";
+ static struct {
+@@ -294,7 +300,8 @@ int list_bundle_refs(struct bundle_header *header, int argc, const char **argv)
+ 	return list_refs(&header->references, argc, argv);
+ }
+ 
+-static int is_tag_in_date_range(struct object *tag, struct rev_info *revs)
++static int is_tag_in_date_range(struct repository *repo,
++				struct object *tag, struct rev_info *revs)
+ {
+ 	size_t size;
+ 	enum object_type type;
+@@ -305,7 +312,7 @@ static int is_tag_in_date_range(struct object *tag, struct rev_info *revs)
+ 	if (revs->max_age == -1 && revs->min_age == -1)
+ 		goto out;
+ 
+-	buf = odb_read_object(the_repository->objects, &tag->oid, &type, &size);
++	buf = odb_read_object(repo->objects, &tag->oid, &type, &size);
+ 	if (!buf)
+ 		goto out;
+ 	line = memmem(buf, size, "\ntagger ", 8);
+@@ -362,7 +369,8 @@ static int write_pack_data(int bundle_fd, struct rev_info *revs, struct strvec *
+ 		struct object *object = revs->pending.objects[i].item;
+ 		if (object->flags & UNINTERESTING)
+ 			write_or_die(pack_objects.in, "^", 1);
+-		write_or_die(pack_objects.in, oid_to_hex(&object->oid), the_hash_algo->hexsz);
++		write_or_die(pack_objects.in, oid_to_hex(&object->oid),
++			     revs->repo->hash_algo->hexsz);
+ 		write_or_die(pack_objects.in, "\n", 1);
+ 	}
+ 	close(pack_objects.in);
+@@ -395,10 +403,10 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 
+ 		if (e->item->flags & UNINTERESTING)
+ 			continue;
+-		if (repo_dwim_ref(the_repository, e->name, strlen(e->name),
++		if (repo_dwim_ref(revs->repo, e->name, strlen(e->name),
+ 				  &oid, &ref, 0) != 1)
+ 			goto skip_write_ref;
+-		if (refs_read_ref_full(get_main_ref_store(the_repository), e->name, RESOLVE_REF_READING, &oid, &flag))
++		if (refs_read_ref_full(get_main_ref_store(revs->repo), e->name, RESOLVE_REF_READING, &oid, &flag))
+ 			flag = 0;
+ 		display_ref = (flag & REF_ISSYMREF) ? e->name : ref;
+ 
+@@ -406,7 +414,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 			goto skip_write_ref;
+ 
+ 		if (e->item->type == OBJ_TAG &&
+-				!is_tag_in_date_range(e->item, revs)) {
++				!is_tag_in_date_range(revs->repo, e->item, revs)) {
+ 			e->item->flags |= UNINTERESTING;
+ 			goto skip_write_ref;
+ 		}
+@@ -428,7 +436,8 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 
+ 		ref_count++;
+ 		strset_add(&objects, display_ref);
+-		write_or_die(bundle_fd, oid_to_hex(&e->item->oid), the_hash_algo->hexsz);
++		write_or_die(bundle_fd, oid_to_hex(&e->item->oid),
++			     revs->repo->hash_algo->hexsz);
+ 		write_or_die(bundle_fd, " ", 1);
+ 		write_or_die(bundle_fd, display_ref, strlen(display_ref));
+ 		write_or_die(bundle_fd, "\n", 1);
+@@ -507,7 +516,7 @@ int create_bundle(struct repository *r, const char *path,
+ 	 *    SHA1.
+ 	 * 2. @filter is required because we parsed an object filter.
+ 	 */
+-	if (the_hash_algo != &hash_algos[GIT_HASH_SHA1_LEGACY] || revs.filter.choice)
++	if (r->hash_algo != &hash_algos[GIT_HASH_SHA1_LEGACY] || revs.filter.choice)
+ 		min_version = 3;
+ 
+ 	if (argc > 1) {
+@@ -528,14 +537,15 @@ int create_bundle(struct repository *r, const char *path,
+ 	if (version < 2 || version > 3) {
+ 		die(_("unsupported bundle version %d"), version);
+ 	} else if (version < min_version) {
+-		die(_("cannot write bundle version %d with algorithm %s"), version, the_hash_algo->name);
++		die(_("cannot write bundle version %d with algorithm %s"), version,
++		    r->hash_algo->name);
+ 	} else if (version == 2) {
+ 		write_or_die(bundle_fd, v2_bundle_signature, strlen(v2_bundle_signature));
+ 	} else {
+ 		const char *capability = "@object-format=";
+ 		write_or_die(bundle_fd, v3_bundle_signature, strlen(v3_bundle_signature));
+ 		write_or_die(bundle_fd, capability, strlen(capability));
+-		write_or_die(bundle_fd, the_hash_algo->name, strlen(the_hash_algo->name));
++		write_or_die(bundle_fd, r->hash_algo->name, strlen(r->hash_algo->name));
+ 		write_or_die(bundle_fd, "\n", 1);
+ 
+ 		if (revs.filter.choice) {
 
 -- 
 2.55.0.822.g20453c30eb.dirty
