@@ -1,161 +1,365 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D9F2DEA61
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 04:41:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787287277; cv=pass; b=o9WpYtK7BCNGenOpdozV+LKvE2AHN33mkB79iqInf33ySbpGUWca0PmpVPrLUFrqQ0hnYtYOVwxhq03+PVD0cbTKP8jN+jDWkC5d0yTSm/t34kZ3+NfDwsfL4DYwcllhLblplM6gZlf90VuTIy5vvrGPRx8zoFf+ygyZ2xbeKds=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787287277; c=relaxed/simple;
-	bh=4RVYx8fPw9CaKxgtY3mI/l/dwu4F8svamfW+Y4xGVl0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AGw7NcvKbpixxzKLT0AO3p9LKwTh/DQVV1SHtDLCDq0EUWWw9Vg/2ugyElGD+/UVoIKRZzAekJLNdhGe+F5sfS4Lhc7B3W0ZJ38pSix/FL8v0Te68cA3H1x0Qn3gQn4L6C+u8KdrZzG+bEmkjYsX746K437iG8C/kPGGQjAqHRU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fvaGK4/X; arc=pass smtp.client-ip=209.85.167.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A87837A846
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 05:26:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787289995; cv=none; b=hF5VVYvgOGKz6pzQBurlbY0H4H7EDHW0FNr4rUWeR0RyjMW/xmQOWW8Asho3gi9YYtqvWwbB8HTlkBKhVTprfSEYpAByFow4umz+ynTj6Eb2wsbUHpJ+lNwpz1fsssl9r4GhCpCKvCLeWY5Og2GATO/sEOmC9drXlSR+nSbKcWc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787289995; c=relaxed/simple;
+	bh=BwqsKXAcoNd+3bafOS6pzIAJEfpi5oe+FeMAwQHZmKg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=OUkGcHWX+kgO6Q9yS0HkM5Fui7uW8CYACGorHNs4EA8e8e83UKeJsmnkAfnNxcIv0Fi/xajWwt2b3xmxPvIGm5UzowmyyJnRDCh5yXQN5fV4HG8wTo+10og+N4SUXY5oxvsOIHliY3Ewv0i2dpwYh1wV6A1gGHTlb3Ipf32VzH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Ofcd73lz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nj45OwPc; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fvaGK4/X"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-4ab89cff9c7so250489b6e.2
-        for <git@vger.kernel.org>; Thu, 20 Aug 2026 21:41:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787287275; cv=none;
-        d=google.com; s=arc-20260327;
-        b=WVN/4625L+K29fT5Y7ZdYIEbS3yJndJDGk6gwBxfXdx81XR4nSNwQqT0MAsJ9Ic9tw
-         aJsxyQOz9TWHBTmVO9h9aE5EkTsj1UZdnSUE6osXekfdHoQA8B4sOsd+lBywkGqwI0fM
-         enxBt6yx7sBAVt9AJlrzdHMcrh6MiIbj/puW212nh1bxP9vE/HdOB0YWpJGOvm+8I2iY
-         9RfT46Zyq2x8GVNXLLjazkAeV60bq0CdcmzV0U33wJvONFIp9mgLPHcA79Sm0Si0/HGc
-         UPFKMDs8F9oJdlL8e/cUlyAPf0pSSaESsKrffcInbKVvtXx1hARKPLYKMhYLDDgoObxb
-         vvrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=NnXzjQ1d9vGarjXXvImAiyeaKZVJEiR2CGT3JE9tN1w=;
-        fh=4ryOG4wBbIqKixWzeKd5dc717SQGdNJth+KYU2DAukY=;
-        b=k/Om6mByWet8z06FcyeJUM/Lge6+jozVC4J1HeDkIxRP+haGj9CAF/smUpfVJXVJKI
-         GS0yGRjuvy6eop1YO7gmfV3PaVNzYAXK6NcB3GLwRL8X9nB3AA8h4stgmA21M+eNMz7w
-         cfRW7gjTVsC/sMnsvKih73G7wgVv1/AJV1lG59G6NcNN2i5AGXroSG8GyCOLypA7iIS1
-         PrxA9NiOp79wOnwjy9zcz2Abh/BrU0nMBaNWy01SVEYW3ERhlzjnstyVAvUOcXX7klVv
-         I0sNXgo+4VkS7cHkRlz3wM47ve+rMi6ejbWstA1QLk8YulmLiRHTMGGbAmCsZKIVaKKV
-         hVvw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787287275; x=1787892075; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=NnXzjQ1d9vGarjXXvImAiyeaKZVJEiR2CGT3JE9tN1w=;
-        b=fvaGK4/XzcPu+1OBBCrkbPpp8zrfiHxV3MW/WEj1TMcry09tUSqXiLUblU9UQsCVzT
-         JYhM6ubW8lIGivAskxiTy3jlasEXxS7Xhf0+bnDMBCJtWjLehNZ0WuJmqDXjgj3ZO180
-         fRSZQyauBqmsWgDGk1K3+I9cP3Du2Gx/plK59TBx5tMFbbqIj5Dtso59MOPe7AR11mSC
-         K0TzJiXN0HefSKoKAgcMFh2Il1iObLQsRWL1jhdfL+KY0iTHGSTYadA0+qJeIU4QTbDp
-         attseNUELvtJqYC/E3wa/v951Ag+CPUNOJerYouzAxLFYUuQwOHwuR4n7xVMaEucXAmn
-         jltQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787287275; x=1787892075;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NnXzjQ1d9vGarjXXvImAiyeaKZVJEiR2CGT3JE9tN1w=;
-        b=Vkk1Tzb8mWNJ+C+ZiEK/+38RM5zAGK+mX4waXJqYTI26ssdngptJEh1nTiEyR5RJLF
-         MwL1yKvTyWP5U/Y6wSICzIy278mcBAIxJyDxBNXaCHh5ZoCu8ynuYgsKxRt9Uyz2i2D+
-         seeALndn5r0vrYHuiWNHSKOnIvw03fPeGKuUo2HQS+cltPlwIyesJvyGyEopT9xN8OGU
-         qzokP7MRk0NGdk/oqAImxhQRuqq6+2Fw9zxBcXMLSJpy1cAS8m4AIRCiuWwViAnMRMuX
-         Jz7vzcsB+4ypBp8zK25Ogyx4/IbPWsDiaC5wo4VkwBzPBLY+cxVDAUpAs/47JVuWT+Is
-         TlSg==
-X-Gm-Message-State: AOJu0YwqoiCN6c/kR9u1z9J9Y6OicLaQ/vszEoy5Qc6PAeeUvqQx2PsD
-	bLTgUv7A2qmNHvWKNebb0JP8wLBuR3v3wcGyVC4qXxbZhndI1ag+pe1kltKK5UphSBDy5pYNPyG
-	dilxLO57J+Zt+0ehpM43HHGNljS9e12w=
-X-Gm-Gg: AR+sD12ybAqNf9S5sG1zGwRMfFkW4LFJqwC4DqR5bWHgdSCMqXwhe3LU93DPP0OKZg9
-	LX1VVb0PWOIb7kvBZdRogfKEOsLFAvY8R1/oZxYEXEy9nH0BHrLcLOzrsCtVIh8C24Xt35lCrql
-	y0kwZroAP3i1Nwxq+dAnkBBramWl3lIb+FxIll+LpQiwLY6Prv0D98uGaS2ZmbtQ6WZBTrv8FNF
-	gqmoOMNi2BKZkEDrwoQe0hUOH+bin4jgvgzyA661Olg31ZPs90o9rsuL8f3zgZxAMLsNumve2LW
-	6eF9KQkgVmdhzD516IPBxhiW5Yiw4qcfM2jY11K+ge6RMGCFk4B8CCjlKvR9wyaITjfk7xFAEcD
-	skSXtaj2nhEzhm677aopV+5TDIfpTsEg13MKzYLSUdCWJTAZFvYyHHc+Z7Zpp+8I=
-X-Received: by 2002:a05:6808:15a3:b0:496:fd2:94e8 with SMTP id
- 5614622812f47-4b2ef332787mr3501276b6e.12.1787287275053; Thu, 20 Aug 2026
- 21:41:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Ofcd73lz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nj45OwPc"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id C604C1D00019;
+	Fri, 21 Aug 2026 01:26:31 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Fri, 21 Aug 2026 01:26:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787289991;
+	 x=1787376391; bh=6uqXoP0svcvq7M/OdQZ91xJPYkGwx54olg1QoJmBPzk=; b=
+	Ofcd73lzlV7++jA7Y62zozehrKcDSq+rzRJP1VV50vd93clfedtmc4G7V2oE6RaO
+	vBkhIuwrsSb0gxA95iufejN++O8cMfd5vUxPt9+jTqG77lR/5KlhGW6UPN3XcWka
+	wc6YMRCjQyRySk9eFKcjlG61gV+L17I5Zy0Rze5UV3PYacxjeuO4uiO6oytGmunE
+	lItDNpQDBFtz1DkYRLtfxDQAup9GqIUghTcxe5nJDVk9H3DNchGQssZs1zf8nTh9
+	okEo2JLLCF8F9G4ZbEP3tR3r/Bln+Y34dr98xNXFPIRM4p4GuMFnehG03yaXqwpL
+	wPJDYxV/9egWv0B6jDu+LA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787289991; x=
+	1787376391; bh=6uqXoP0svcvq7M/OdQZ91xJPYkGwx54olg1QoJmBPzk=; b=N
+	j45OwPc8wcxuA01MY2OENgFj+OOIaK+ij6TxDJwWQ6VF9QvzNA8T6gS2jhK6DuIf
+	aNmVWJorH850EVlgxyXaWWWG9FjMh3n/JwIpGRblxD/BPzNkANRcgsCuRivFlj4S
+	hL0g41i4ti5xUAK+pvYsdv4JjMfYVmshekDjK577XLjCtEf+ND7Z6VC6rZSaBLsL
+	efQPhbBtxvxnKFg8MGtEKYK50kF9OuZS6ZSj7IrxsONwWNP4d9WAevZqjpTcxOrZ
+	dzL5N/ltr11iiqmC+Wok+FFNBP5Y9J4ZDkhl6H8syNseUMD4VFJq6W+wNHe3C09T
+	WXWRyvHuMlvFkhiNA+tEQ==
+X-ME-Sender: <xms:h-GHam-6bcv8_n_eLjvfuUBD9vAYYk-nhKF_GyPvCN-_DN9yoYOfi38>
+    <xme:h-GHatvburbw-3Am3N5FJ_gOSlnS_-WfL_zU1UpZzJ8tUYbX5yHqllICsq6l694LI
+    zyiLs3h2SlRLm92WAEHPNHPFzlnllSt9X90xfiK81Dz3ErBLOd7xP4>
+X-ME-Received: <xmr:h-GHahBs5LQ5WWUIBs0aaclfHowur5APaW8BCIi19LzgGJofx0cDS4uZu--adnl0maBnSeF3YsovvPeN8FNb-0KlpvvaoFZf8_PKHjFOJSM065VMJQ>
+X-ME-Proxy-Cause: dmFkZTGbrIiinAVogI/5gnviQpOVKw/bCw/tXCmm9pILWchz25gz9hJPYzE8+dqj63T40+
+    tGMLK0YfOBs5C4WC2JKrz8lOIq88lcCjfcomqXq0i5w/ARG3UtiXJun0MisdqRCPdmF0Mq
+    wbm5SFRLxvsGU1X3fEJooGnFXntK+TdDwPAeS/lW1yNxmw+82W+/FupeE5ZX1igCgWJ+3Z
+    c02uNY+vTLaCrRC7FXviw3XgEgQddgdghhw5a5i8c97eOs9XuykjA75Vbxbhhin6H3JL/q
+    PCoouke+qPzoXPWOdEzCKDB8TQ4ZmVWl05oh7L9cqoegbRGL+gx7LavKXBiuqFJOFp/xr9
+    lf0G6CSMrT2GnmcGzb4YwQHLwSXDosQdsKfMAk42vrcHTyNACRx20E33Qp35zlPGllIlLz
+    +kqFUEL9VPbXqmikuhNFmwp2HYVDByoTTyufzAYolHV7DvWEwQIZer1AyvQdeBnA7rPOpo
+    bjpXBMGTmz3g46XO4B6LwHaStpvjSrzARrI/w28RTrCU2g+p76P1e6HdZ7ua9lGvBWJzJU
+    Jlnruu9I49nXBxAm+XlAidEyugUqK7byVb2PdBvBwvW3Cy6hkrq2U4QXTE57uoVJUQc7b9
+    Q0PNeQkMP9WuKR/GTH2ggo+ah4wjVsqsvrM6OgtBPju9Zz3fDaowJZyQQGuA
+X-ME-Proxy: <xmx:h-GHatVwOJb_LSKZRcX5kGKTUG9bp-R5GHxq6bYZy24xfKUQTN0D9w>
+    <xmx:h-GHanCeBBMQEXTDmFDHHgMUe68ECQ21X629zc7IcdJ3L4v2Do_QOA>
+    <xmx:h-GHao9jJr3rYJwK6seO2HAhcA3_CRW9DpeNxDxeenpNW7QEhfSYoQ>
+    <xmx:h-GHamHxiVj5MhCpY7gNGYoB_7qab7m2e6ANIxDhyYytiDCY4RVr9A>
+    <xmx:h-GHal8I0xFV7LGyzS1HQ4Y8zI7LnQv66o1Gaf2CjGrVTArWao6Yc9fD>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 21 Aug 2026 01:26:30 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+Subject: [PATCH v3] trailers: stop recognizing URLs as trailers
+Date: Fri, 21 Aug 2026 07:26:04 +0200
+Message-ID: <V3_URLs_not_trailers.bfc@msgid.xyz>
+X-Mailer: git-send-email 2.55.0.13.g85d2d65e389
+In-Reply-To: <URLs_not_trailers.b13@msgid.xyz>
+References: <URLs_not_trailers.b13@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260817-b4-pks-odb-generate-pack-v2-0-4c8a96ccfdb3@pks.im>
- <20260817-b4-pks-odb-generate-pack-v2-1-4c8a96ccfdb3@pks.im>
- <CABPp-BG3_xvbXtt5BucyOy-dHXqX569d4FBfyZwbLiAb-qRPXA@mail.gmail.com> <aoaYL_BinFtgdJ5N@pks.im>
-In-Reply-To: <aoaYL_BinFtgdJ5N@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 20 Aug 2026 21:41:03 -0700
-X-Gm-Features: AcwNN1UMroIhemZZYo0qr7St4utvp2NI2Q9V_9xlUGidKUxAR-a8llNq6GP-kOg
-Message-ID: <CABPp-BHSFW38sF4dZkqZuGaRASVRj2FVG2NN1OTA7-Dd6Pt6rw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] odb: introduce interface to generate packfiles
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 19, 2026 at 11:01=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
-te:
->
-> On Wed, Aug 19, 2026 at 09:56:56AM -0700, Elijah Newren wrote:
-> > On Sun, Aug 16, 2026 at 10:40=E2=80=AFPM Patrick Steinhardt <ps@pks.im>=
- wrote:
-> > >
-> > > +static int odb_source_files_generate_pack(struct odb_source *source =
-UNUSED,
-> > > +                                         struct odb_pack_generator *=
-*out,
-> > > +                                         const struct odb_generate_p=
-ack_options *opts)
-> > > +{
-> > > +       struct child_process cp =3D CHILD_PROCESS_INIT;
-> > > +       struct odb_pack_generator_files *generator;
-> > > +       FILE *in;
-> > [...]
-> > > +       cp.clean_on_exit =3D 1;
-> > > +
-> > > +       if (start_command(&cp))
-> > > +               return error(_("could not spawn pack-objects"));
-> > [...]
-> > > +       CALLOC_ARRAY(generator, 1);
-> > > +       generator->base.out =3D opts->pack_fd < 0 ? cp.out : -1;
-> > > +       generator->base.err =3D opts->progress_fd < 0 ? cp.err : -1;
-> > > +       generator->base.finish =3D odb_pack_generator_files_finish;
-> > > +       generator->cp =3D cp;
-> > > +
-> > > +       *out =3D &generator->base;
-> > > +       return 0;
-> > > +}
-> >
-> > Does this have a use-after-scope bug lurking here, due to the
-> > combination of clean_on_exit =3D 1 (which makes a copy of &cp for later
-> > use), and the fact that cp is a function-local?  If I'm reading the
-> > code right, start_command() calls mark_child_for_cleanup(), which does
-> >
-> >     p->process =3D process;  /* where process is &cp */
-> >
-> > and then cleanup_children() accesses various fields under p->process.
-> > You do copy the necessary fields from cp to generator->cp, but
-> > &generator->cp was not passed to start_command(), so p->process points
-> > to the function-local cp.
->
-> Oh, that's a very good catch indeed. Out of curiosity, how did you end
-> up discovering this? Did you just happen to remember that we store the
-> pointer out of scope or did the copy make you have a deeper look?
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Neither.  Went to review the series, but I was worried I'd be missing
-context from not reviewing earlier odb refactorings.  Used AI to help
-orient me and give me its own findings from reviewing your patches.
-(AI will sometimes spot things I miss in a review, though it'll also
-miss some things I catch.)  And sometimes I iterate with AI to dig
-into various areas.  Anyway, it flagged the potential problem, and I
-dug in to make sure it didn't look like a hallucination before
-cleaning it up and passing it on.  I'm still looking through your
-other patches in this series, but should finish soon.
+An HTTPS URL starts with an alphanumeric scheme followed by a colon.
+That means that they will be recognized as trailers in a trailer block.
+That turns out to be a problem in practice. Let’s stop recognizing these
+as trailers by failing the trailer parsing when we:
 
-On a related note, one of my local patches happens to have a semantic
-conflict with this series (namely 3/6), which piqued my interest.
-I'll submit it soon, using your series as a base so I can submit my
-patch with the conflict fixed.
+1. find the separator;
+2. the separator and the next two characters form `://`; and
+3. we haven’t parsed any whitespace yet.
+
+The simplest example of how this can be a problem is for people who do
+not use trailers but may leave URLs at the end of the commit message.
+Now, while these authors might not use trailers themselves, other
+authors may have used trailers and this metadata confusion can become a
+problem once someone tries to extract that metadata (and non-metadata).
+
+Let’s now look at some examples in the Linux Kernel[1] to see how this
+is a problem in practice.
+
+There are commits which contain intended non-trailer lines which start
+with URLs. These are comments. Example with just the trailers:[2]
+
+    Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+    [bhelgaas: squash fixes:
+    https://lore.kernel.org/r/20260108013956.14351-2-bagasdotme@gmail.com
+    https://lore.kernel.org/r/20260108013956.14351-3-bagasdotme@gmail.com]
+    Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+    Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+    Link: https://patch.msgid.link/20251210132907.58799-4-xueshuai@linux.alibaba.com
+
+Those `[]` pairs delimit the “squash fixes” comment.
+
+Now, any of these two commands:
+
+     git log --format='%(trailers:only)' -1 <commit>
+     git log -1 --format=%B <commit> |
+         git interpret-trailers --only-trailers
+
+Will both wrongly (according to the surmised user intent) include these
+two URL lines as trailers and also mangle the URLs, e.g.:
+
+    https: //lore.kernel.org/r/20260108013956.14351-2-bagasdotme@gmail.com
+
+Because the `--only-trailers` mode (or `only` for the git-log(1) format)
+normalizes the output to a colon and a space.
+
+Another example is linewrapping mistakes; a `Link` trailer with a
+URL where the URL ended up on the next line, presumably because the
+user’s editor linewrapped the “too long” line. Example with just the
+trailers:[3]
+
+    Link: https://patch.msgid.link/20260216-work-xattr-socket-v1-4-c2efa4f74cb7@kernel.org
+    Link:
+    https://lore.kernel.org/3cnmtqmakpbb2uwhenrj7kdqu3uefykiykjllgfbtpkiwhaa4s@sghkevv7jned [1]
+    Acked-by: Darrick J. Wong <djwong@kernel.org>
+    Reviewed-by: Jan Kara <jack@suse.cz>
+    Signed-off-by: Christian Brauner <brauner@kernel.org>
+
+Now, this intended trailer is already ruined, but interpreting the URL
+as a standalone trailer only compounds the mistake.
+
+Yet another example is the trailer machinery normalizing the trailer
+block before application, resulting in a `https` trailer key in the
+commit message itself. Example with just the trailers:[4]
+
+    https: //sashiko.dev/#/patchset/20260429114208.941011-1-holger.brunck%40hitachienergy.com
+    Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
+    Signed-off-by: Holger Brunck <holger.brunck@hitachienergy.com>
+    Link: https://patch.msgid.link/20260507155332.3452319-1-holger.brunck@hitachienergy.com
+    Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+
+We have a helpful `Link` that points to the original patch.[5] Following
+it we can see that that `https` trailer was indeed a URL
+originally (again just the trailer block here):
+
+    https://sashiko.dev/#/patchset/20260429114208.941011-1-holger.brunck%40hitachienergy.com
+    Fixes: c19b6d246a35 ("drivers/net: support hdlc function for QE-UCC")
+    Signed-off-by: Holger Brunck <holger.brunck@hitachienergy.com>
+
+So how did it end up as a `https` trailer? My theory is that the trailer
+block was normalized on patch application, causing a URL comment to be
+wrongly normalized and cemented in the commit message as a trailer.[6]
+
+† 1: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/
+† 2: commit 8236fc613d44e59f6736d6c3e9efffaf26ab7f00
+† 3: commit 5bd97f5c5f241a5610c4412d1b93995a26241f81
+† 4: commit 496c0c4c53bbe1bad97e82cd12103df61a6e459d
+† 5: https://patch.msgid.link/20260507155332.3452319-1-holger.brunck@hitachienergy.com
+† 6: There are only four commits in the Linux Kernel of this kind, and
+     three of them have the same recurring person in the signoff chain.
+
+***
+
+Note that this check has some benign false positives. A trailer key
+can start with a digit, but a URL scheme can not start with a digit.
+That means that a line that starts with `1://` will be rejected even
+though it cannot be a URL. I don’t think this will reject any real
+trailers, so I think the implementation simplicity is worth it.
+
+And these false positives are just for a limited start fragment check;
+a mere heuristic, not a URL parser.
+
+Helped-by: Jeff King <peff@peff.net>
+Acked-by: Jeff King <peff@peff.net>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+
+Notes (series):
+    Topic name (applied): trailers-no-urls
+    
+    Topic summary: Stop recognizing URLs in trailer blocks as trailers.
+    
+    § Link to v2
+    
+    https://lore.kernel.org/git/V2_URLs_not_trailers.bf3@msgid.xyz/
+    
+    § Changes in v2
+    
+    • Add Ack https://lore.kernel.org/git/20260821004248.GA296777@coredump.intra.peff.net/
+
+ Documentation/git-interpret-trailers.adoc | 13 ++++--
+ t/t7513-interpret-trailers.sh             | 19 +++++++++
+ t/unit-tests/u-trailer.c                  | 52 +++++++++++++++++++++++
+ trailer.c                                 |  6 ++-
+ 4 files changed, 86 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
+index b4988d39eab..903d598dcb0 100644
+--- a/Documentation/git-interpret-trailers.adoc
++++ b/Documentation/git-interpret-trailers.adoc
+@@ -123,9 +123,16 @@ OTHER RULES
+ What was covered in the previous section are the rules that are relevant
+ for regular use. The following points are included for completeness.
+ 
+-This command ignores comment lines (see `core.commentString` in
+-linkgit:git-config[1]). This is for use with the `prepare-commit-msg`
+-and `commit-msg` hooks.
++--
++* This command ignores comment lines (see `core.commentString` in
++  linkgit:git-config[1]). This is for use with the `prepare-commit-msg`
++  and `commit-msg` hooks.
++
++* Candidate trailer lines that have `:` as the separator, that have no
++  whitespace before the value part, and that start with `//` are not
++  recognized as trailers. This is to avoid accidentally interpreting
++  URLs as trailers (e.g. lines that start with `https://`).
++--
+ 
+ OPTIONS
+ -------
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 818a8dafbd2..e3555b6d51d 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -1989,4 +1989,23 @@ test_expect_success 'handling of --- lines in conjunction with cut-lines' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'URLs and lines that are not quite URLs' '
++	cat >expect <<-\EOF &&
++	https: //www.a-trailer.org
++	https: //www.another-trailer.org
++	Signed-off-by: somebody <somebody@somewhere>
++	EOF
++	git interpret-trailers --only-trailers >actual <<-\EOF &&
++	subject
++
++	body
++
++	https://www.not-a-trailer.org
++	https ://www.a-trailer.org
++	https: //www.another-trailer.org
++	Signed-off-by: somebody <somebody@somewhere>
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/t/unit-tests/u-trailer.c b/t/unit-tests/u-trailer.c
+index 3d60ea1603d..7404b165fac 100644
+--- a/t/unit-tests/u-trailer.c
++++ b/t/unit-tests/u-trailer.c
+@@ -318,3 +318,55 @@ void test_trailer__one_non_trailer_no_git_trailers(void)
+ 			   0,
+ 			   expected_contents);
+ }
++
++void test_trailer__URL(void)
++{
++	struct contents expected_contents[] = { 0 };
++
++	t_trailer_iterator("Subject: foo bar\n"
++			   "\n"
++			   /*
++			    * We do not want to match URLs as trailers.
++			    */
++			   "https://www.example.org\n",
++			   0,
++			   expected_contents);
++}
++
++void test_trailer__not_a_URL_space_after_separator(void)
++{
++	struct contents expected_contents[] = {
++		{ .raw = "https: //www.example.org\n",
++		  .key = "https",
++		  .val = "//www.example.org" },
++		{ 0 },
++	};
++
++	t_trailer_iterator("Subject: foo bar\n"
++			   "\n"
++			   /*
++			    * This has a space after ':' so it's not a URL.
++			    */
++			   "https: //www.example.org\n",
++			   1,
++			   expected_contents);
++}
++
++void test_trailer__not_a_URL_space_before_separator(void)
++{
++	struct contents expected_contents[] = {
++		{ .raw = "https ://www.example.org\n",
++		  .key = "https",
++		  .val = "//www.example.org" },
++		{ 0 },
++	};
++
++	t_trailer_iterator("Subject: foo bar\n"
++			   "\n"
++			   /*
++			    * This has a space before ':' so it's not a URL.
++			    */
++			   "https ://www.example.org\n",
++			   1,
++			   expected_contents);
++}
+diff --git a/trailer.c b/trailer.c
+index 6d8ec7fa8d8..10b1abebfbe 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -635,8 +635,12 @@ static ssize_t find_separator(const char *line, const char *separators)
+ 	int whitespace_found = 0;
+ 	const char *c;
+ 	for (c = line; *c; c++) {
+-		if (strchr(separators, *c))
++		if (strchr(separators, *c)) {
++			/* avoid accidental URL matches */
++			if (!whitespace_found && starts_with(c, "://"))
++				return -1;
+ 			return c - line;
++		}
+ 		if (!whitespace_found && (isalnum(*c) || *c == '-'))
+ 			continue;
+ 		if (c != line && (*c == ' ' || *c == '\t')) {
+
+Interdiff against v2:
+
+Range-diff against v2:
+1:  2f8d10c1c6d ! 1:  736610daf6e trailers: stop recognizing URLs as trailers
+    @@ Commit message
+         a mere heuristic, not a URL parser.
+     
+         Helped-by: Jeff King <peff@peff.net>
+    +    Acked-by: Jeff King <peff@peff.net>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Documentation/git-interpret-trailers.adoc ##
+
+base-commit: 1a3e64c6c4a623626ff0687008732a8e007e2a1c
+-- 
+2.55.0.13.g85d2d65e389
+
