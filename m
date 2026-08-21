@@ -1,215 +1,161 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672EA352C5B
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 03:54:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787284468; cv=none; b=BkIMHemlAdAMtNmKE6xYkuXOwJ77u6UzJEfHDQLv2+AODwkxvLukQzLwDn7N0Vs0A4PFzo4r2X+H+BdAPWTgq+JOhCpm4eTgT5EvlL2fw7FuAbyNjgWWHNhGgXlE7JzLcv7gydXY5SigabPYKguQxkiq7tLmKxumlmjLWCxrS10=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787284468; c=relaxed/simple;
-	bh=k25m0dsq4WdD4T/dPgGT6NCzQIQ/2RkiFPlRCqz0dZQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ri6MbIqQU5lbbkplhIZdk6MEt2f5P5hdpJMTDmUIiPMna9fF80g6tJB7aSYLwxvMZTeh4Jv8meWMYR64zBE372r/NDwruVxuKWTXNy82QjYy0MSVVMt+drbr+6rRU2gkeGSGBinXsfVv9Zu3Q+sqV6gLx4u7Jy1UJFkZwKSDZh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wke/hkZW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HieUXkFR; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D9F2DEA61
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 04:41:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787287277; cv=pass; b=o9WpYtK7BCNGenOpdozV+LKvE2AHN33mkB79iqInf33ySbpGUWca0PmpVPrLUFrqQ0hnYtYOVwxhq03+PVD0cbTKP8jN+jDWkC5d0yTSm/t34kZ3+NfDwsfL4DYwcllhLblplM6gZlf90VuTIy5vvrGPRx8zoFf+ygyZ2xbeKds=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787287277; c=relaxed/simple;
+	bh=4RVYx8fPw9CaKxgtY3mI/l/dwu4F8svamfW+Y4xGVl0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AGw7NcvKbpixxzKLT0AO3p9LKwTh/DQVV1SHtDLCDq0EUWWw9Vg/2ugyElGD+/UVoIKRZzAekJLNdhGe+F5sfS4Lhc7B3W0ZJ38pSix/FL8v0Te68cA3H1x0Qn3gQn4L6C+u8KdrZzG+bEmkjYsX746K437iG8C/kPGGQjAqHRU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fvaGK4/X; arc=pass smtp.client-ip=209.85.167.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wke/hkZW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HieUXkFR"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87DC814001CC;
-	Thu, 20 Aug 2026 23:54:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 20 Aug 2026 23:54:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787284466; x=1787370866; bh=hUhb7Y/7Sv
-	PgLEL9cjS7Ro1ujtn0F1/vrWN27qqNGM0=; b=Wke/hkZW7cx36XL0FJ7bPsv6a7
-	lVw26StEUuEtwmqADu8Pcl/VsruAnwyFj2pxpKsEoK56Wid0DMnmGch/eetX4/ng
-	Bgqup4v8Xp0CZdabBhG9j5R7zTgti1VUUtVcWjVjFdIx2nj9qyjsdqiLus4mYhjy
-	pYRt3mjqN7J+fjFPfoFdZVYfLEw9cOjAuk50Rtro0MqBkuzveR9CS7JXBz2Ks4AN
-	Z6fFxzwKXZfgkkxRR+k4NWpia8q68ZVC84Q32c4wZ/aN1Su/hXKSq25G35jL9tcL
-	SS57xp3U0H9xYmWUDj8QX85WVZw/PT0bOQTzn0OtF/jmMuUcnZkLq6XMiJEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787284466; x=1787370866; bh=hUhb7Y/7SvPgLEL9cjS7Ro1ujtn0F1/vrWN
-	27qqNGM0=; b=HieUXkFRusRUlhrj3Kz68aQPLLNwc0tw53Sy9Ys8vNer0AwZlA8
-	6qolOzvVusPG3yNeWXNtKN2YGAtaE2Bc+1zN3D4QOTw86GkntxAP//Qm8cIcLF7B
-	bstyF1sdeEeHNS/+NaG2N2JoUMGF2sEwuArMey9PWYta1a8bAne31BAmXs60G1AX
-	zXDwvdGJ/+NnnJ1yzD9URwFOpuhJiyrTCs3m/ayvUx5fHOAaMCBvZFw3Ji94CyJj
-	up5Eb96Kg4rEFCAnIwmeuKz2QMSJa6ED6arq+vUlNQCnaqW0HysULSCsZ6FjnCVM
-	nR3QTcx/R/4bXbBjM1tCNI4P57iliQx4f3Q==
-X-ME-Sender: <xms:8suHan9svxlvIhGQYAEfkNvigj53Qj7lrspwpAsTvvPAgt2bchs81g>
-    <xme:8suHanaNgBDLZuDkjTZ_vj51oSueLtMXu71QvqfEQJsUe7M3bmx7g74WZ85wBcOei
-    Zi2VtSdu1LWth1yw0ln-c5hWF-_bv511RRQL8HLokQGUabKmtT_0A>
-X-ME-Received: <xmr:8suHau2ZX4sDd2FdlWwttUZSXNAViXJrXSq-hRRN0__mVddfieyEy_Tq9O9xG2BVV_retkhwzg-xStqufnJMiV-pLxuIajtoGg>
-X-ME-Proxy-Cause: dmFkZTEGSzY3iV0EtcZwyzhSF+Ia/q5tXd2tPaY5G6CgimwbV4DKRMvbH81g463OjmVjls
-    CdHyKEt5mIdaSNWvQxBUPyhMCJUnkRatsMldGqxkAFd+Caoqp3iofYOt+xtIB2GMnlq0Co
-    Uzy6gvSjeS/rJFKhC9b7hVNz/llofPIx/EWu7H2O0x1qT+a5puVRZNRJA1RpOsY66JEZfw
-    Cn8EHJCjzjH20O4If2jlcL9DQ5r3i4Lz31U7BDOeb7XRm1T/WimuVA45ACafxDLGmdOVcn
-    WmlarSOvg8fKvGZq2+dyPVMtvEtbAB1WXb3r3Ge5iHPRz1HvZIbZWbdFVq3S+SGnIykwaF
-    ybNe8As3i47kkKh4nx7cBK899ydLSOD1RCF3J3aZjo0IJlokFv6D0lP6sKOY1NRx4G/xJr
-    OOjWwdZ/+uGbEXJIHzcmAL6ufdG7BXDoHYZvBwgsgvzbd6LK6gHBWccK46CkIapZMSiHck
-    DGq/u/cNp+WXbWks2xBj3gRyY9KDDwVbJRaQ+BXde+OZhe4FUYU0UiNRP5Au81IC+FCiq8
-    A+FiSd9VCYh7//0nAyPs1QLKYJ8C/J6zLENq4g4XemFPSyurWyI1xUnVsXDckuXaI8ZQtx
-    3F3q71LMiS/gIlAPstifI113dx1MxkToa/5NiiEEOJFQX77nkFToWbcJUZQw
-X-ME-Proxy: <xmx:8suHaqbnaIyzNjudE--gZ_GhJL7k89VwQoc6VDYy1UyaPHX7k_w0wQ>
-    <xmx:8suHauKUR_AQLj-dInR02IrEv-ZctfP2XwLu8SFwjY8KUxXyXca9gQ>
-    <xmx:8suHahGPxWntUSGsA2xb57HUiYxCOfc5UwOIuk7VzeOuFW96OnCNBg>
-    <xmx:8suHatumWzfM1ja3E3-_i6-DO36yrcNtsjbBeX1tUcz7tZ-rDaZ4wQ>
-    <xmx:8suHaohnZczZud6iyUSp2k0xMLYQIj-4OiBfVxH79dQhzmG_oviwkWb6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Aug 2026 23:54:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,
-  Yoichi Nakayama <yoichi.nakayama@gmail.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>
-Subject: Re: [PATCH v6 3/3] worktree add: improve message for ambiguous
- remote branch name
-In-Reply-To: <dcb84a69a6a65085d468a0a212cea0281605c5d0.1787259838.git.gitgitgadget@gmail.com>
-	(Yoichi NAKAYAMA via GitGitGadget's message of "Thu, 20 Aug 2026
-	21:03:58 +0000")
-References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
-	<pull.2197.v6.git.1787259838.gitgitgadget@gmail.com>
-	<dcb84a69a6a65085d468a0a212cea0281605c5d0.1787259838.git.gitgitgadget@gmail.com>
-Date: Thu, 20 Aug 2026 20:54:24 -0700
-Message-ID: <xmqqa4qgruvj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fvaGK4/X"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-4ab89cff9c7so250489b6e.2
+        for <git@vger.kernel.org>; Thu, 20 Aug 2026 21:41:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787287275; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WVN/4625L+K29fT5Y7ZdYIEbS3yJndJDGk6gwBxfXdx81XR4nSNwQqT0MAsJ9Ic9tw
+         aJsxyQOz9TWHBTmVO9h9aE5EkTsj1UZdnSUE6osXekfdHoQA8B4sOsd+lBywkGqwI0fM
+         enxBt6yx7sBAVt9AJlrzdHMcrh6MiIbj/puW212nh1bxP9vE/HdOB0YWpJGOvm+8I2iY
+         9RfT46Zyq2x8GVNXLLjazkAeV60bq0CdcmzV0U33wJvONFIp9mgLPHcA79Sm0Si0/HGc
+         UPFKMDs8F9oJdlL8e/cUlyAPf0pSSaESsKrffcInbKVvtXx1hARKPLYKMhYLDDgoObxb
+         vvrg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NnXzjQ1d9vGarjXXvImAiyeaKZVJEiR2CGT3JE9tN1w=;
+        fh=4ryOG4wBbIqKixWzeKd5dc717SQGdNJth+KYU2DAukY=;
+        b=k/Om6mByWet8z06FcyeJUM/Lge6+jozVC4J1HeDkIxRP+haGj9CAF/smUpfVJXVJKI
+         GS0yGRjuvy6eop1YO7gmfV3PaVNzYAXK6NcB3GLwRL8X9nB3AA8h4stgmA21M+eNMz7w
+         cfRW7gjTVsC/sMnsvKih73G7wgVv1/AJV1lG59G6NcNN2i5AGXroSG8GyCOLypA7iIS1
+         PrxA9NiOp79wOnwjy9zcz2Abh/BrU0nMBaNWy01SVEYW3ERhlzjnstyVAvUOcXX7klVv
+         I0sNXgo+4VkS7cHkRlz3wM47ve+rMi6ejbWstA1QLk8YulmLiRHTMGGbAmCsZKIVaKKV
+         hVvw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787287275; x=1787892075; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=NnXzjQ1d9vGarjXXvImAiyeaKZVJEiR2CGT3JE9tN1w=;
+        b=fvaGK4/XzcPu+1OBBCrkbPpp8zrfiHxV3MW/WEj1TMcry09tUSqXiLUblU9UQsCVzT
+         JYhM6ubW8lIGivAskxiTy3jlasEXxS7Xhf0+bnDMBCJtWjLehNZ0WuJmqDXjgj3ZO180
+         fRSZQyauBqmsWgDGk1K3+I9cP3Du2Gx/plK59TBx5tMFbbqIj5Dtso59MOPe7AR11mSC
+         K0TzJiXN0HefSKoKAgcMFh2Il1iObLQsRWL1jhdfL+KY0iTHGSTYadA0+qJeIU4QTbDp
+         attseNUELvtJqYC/E3wa/v951Ag+CPUNOJerYouzAxLFYUuQwOHwuR4n7xVMaEucXAmn
+         jltQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787287275; x=1787892075;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=NnXzjQ1d9vGarjXXvImAiyeaKZVJEiR2CGT3JE9tN1w=;
+        b=Vkk1Tzb8mWNJ+C+ZiEK/+38RM5zAGK+mX4waXJqYTI26ssdngptJEh1nTiEyR5RJLF
+         MwL1yKvTyWP5U/Y6wSICzIy278mcBAIxJyDxBNXaCHh5ZoCu8ynuYgsKxRt9Uyz2i2D+
+         seeALndn5r0vrYHuiWNHSKOnIvw03fPeGKuUo2HQS+cltPlwIyesJvyGyEopT9xN8OGU
+         qzokP7MRk0NGdk/oqAImxhQRuqq6+2Fw9zxBcXMLSJpy1cAS8m4AIRCiuWwViAnMRMuX
+         Jz7vzcsB+4ypBp8zK25Ogyx4/IbPWsDiaC5wo4VkwBzPBLY+cxVDAUpAs/47JVuWT+Is
+         TlSg==
+X-Gm-Message-State: AOJu0YwqoiCN6c/kR9u1z9J9Y6OicLaQ/vszEoy5Qc6PAeeUvqQx2PsD
+	bLTgUv7A2qmNHvWKNebb0JP8wLBuR3v3wcGyVC4qXxbZhndI1ag+pe1kltKK5UphSBDy5pYNPyG
+	dilxLO57J+Zt+0ehpM43HHGNljS9e12w=
+X-Gm-Gg: AR+sD12ybAqNf9S5sG1zGwRMfFkW4LFJqwC4DqR5bWHgdSCMqXwhe3LU93DPP0OKZg9
+	LX1VVb0PWOIb7kvBZdRogfKEOsLFAvY8R1/oZxYEXEy9nH0BHrLcLOzrsCtVIh8C24Xt35lCrql
+	y0kwZroAP3i1Nwxq+dAnkBBramWl3lIb+FxIll+LpQiwLY6Prv0D98uGaS2ZmbtQ6WZBTrv8FNF
+	gqmoOMNi2BKZkEDrwoQe0hUOH+bin4jgvgzyA661Olg31ZPs90o9rsuL8f3zgZxAMLsNumve2LW
+	6eF9KQkgVmdhzD516IPBxhiW5Yiw4qcfM2jY11K+ge6RMGCFk4B8CCjlKvR9wyaITjfk7xFAEcD
+	skSXtaj2nhEzhm677aopV+5TDIfpTsEg13MKzYLSUdCWJTAZFvYyHHc+Z7Zpp+8I=
+X-Received: by 2002:a05:6808:15a3:b0:496:fd2:94e8 with SMTP id
+ 5614622812f47-4b2ef332787mr3501276b6e.12.1787287275053; Thu, 20 Aug 2026
+ 21:41:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260817-b4-pks-odb-generate-pack-v2-0-4c8a96ccfdb3@pks.im>
+ <20260817-b4-pks-odb-generate-pack-v2-1-4c8a96ccfdb3@pks.im>
+ <CABPp-BG3_xvbXtt5BucyOy-dHXqX569d4FBfyZwbLiAb-qRPXA@mail.gmail.com> <aoaYL_BinFtgdJ5N@pks.im>
+In-Reply-To: <aoaYL_BinFtgdJ5N@pks.im>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 20 Aug 2026 21:41:03 -0700
+X-Gm-Features: AcwNN1UMroIhemZZYo0qr7St4utvp2NI2Q9V_9xlUGidKUxAR-a8llNq6GP-kOg
+Message-ID: <CABPp-BHSFW38sF4dZkqZuGaRASVRj2FVG2NN1OTA7-Dd6Pt6rw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] odb: introduce interface to generate packfiles
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+On Wed, Aug 19, 2026 at 11:01=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
+te:
 >
-> When the user runs 'git worktree add ../foo-dir bar-topic' command
-> that does not exactly say which remote they want to work with, and
-> there is no local branch named bar-topic, we try to guess which remote
-> by passing bar-topic then create a new branch named bar-topic which
-> tracks the remote branch.
+> On Wed, Aug 19, 2026 at 09:56:56AM -0700, Elijah Newren wrote:
+> > On Sun, Aug 16, 2026 at 10:40=E2=80=AFPM Patrick Steinhardt <ps@pks.im>=
+ wrote:
+> > >
+> > > +static int odb_source_files_generate_pack(struct odb_source *source =
+UNUSED,
+> > > +                                         struct odb_pack_generator *=
+*out,
+> > > +                                         const struct odb_generate_p=
+ack_options *opts)
+> > > +{
+> > > +       struct child_process cp =3D CHILD_PROCESS_INIT;
+> > > +       struct odb_pack_generator_files *generator;
+> > > +       FILE *in;
+> > [...]
+> > > +       cp.clean_on_exit =3D 1;
+> > > +
+> > > +       if (start_command(&cp))
+> > > +               return error(_("could not spawn pack-objects"));
+> > [...]
+> > > +       CALLOC_ARRAY(generator, 1);
+> > > +       generator->base.out =3D opts->pack_fd < 0 ? cp.out : -1;
+> > > +       generator->base.err =3D opts->progress_fd < 0 ? cp.err : -1;
+> > > +       generator->base.finish =3D odb_pack_generator_files_finish;
+> > > +       generator->cp =3D cp;
+> > > +
+> > > +       *out =3D &generator->base;
+> > > +       return 0;
+> > > +}
+> >
+> > Does this have a use-after-scope bug lurking here, due to the
+> > combination of clean_on_exit =3D 1 (which makes a copy of &cp for later
+> > use), and the fact that cp is a function-local?  If I'm reading the
+> > code right, start_command() calls mark_child_for_cleanup(), which does
+> >
+> >     p->process =3D process;  /* where process is &cp */
+> >
+> > and then cleanup_children() accesses various fields under p->process.
+> > You do copy the necessary fields from cp to generator->cp, but
+> > &generator->cp was not passed to start_command(), so p->process points
+> > to the function-local cp.
 >
-> If there are multiple remotes that have branch named bar-topic, we
-> silently gave up, leaving the variable 'branch' intact.  Then we
-> entered the conditional clause 'if (!opts.orphan &&
-> !lookup_commit_reference_by_name(branch))' and triggered "invalid
-> reference" error.  This error message did not contain enough
-> information to resolve the issue where the remote could not be
-> guessed.
->
-> To improve the situation, we display a hint and a descriptive error
-> message and die immediately when multiple matching branches are found.
->
-> Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-> ---
->  builtin/worktree.c      | 35 +++++++++++++++++++++++++++++++++--
->  t/t2400-worktree-add.sh |  4 ++--
->  2 files changed, 35 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 22c8e5e131..8286c283e0 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -788,6 +788,25 @@ static char *dwim_branch(const char *path, char **new_branch)
->  	return NULL;
->  }
->  
-> +static void advise_disambiguating_remotes(const char *path, const char *branch,
-> +					  const struct string_list *matched_remote_names)
-> +{
-> +	struct string_list_item *item;
-> +
-> +	advise(_("Branches with the same name appears in multiple remotes:"));
+> Oh, that's a very good catch indeed. Out of curiosity, how did you end
+> up discovering this? Did you just happen to remember that we store the
+> pointer out of scope or did the copy make you have a deeper look?
 
-The subject "Branches" calls for plural verb "appear" (not
-"appears").  The same issue appears in [PATCH 2/3].
+Neither.  Went to review the series, but I was worried I'd be missing
+context from not reviewing earlier odb refactorings.  Used AI to help
+orient me and give me its own findings from reviewing your patches.
+(AI will sometimes spot things I miss in a review, though it'll also
+miss some things I catch.)  And sometimes I iterate with AI to dig
+into various areas.  Anyway, it flagged the potential problem, and I
+dug in to make sure it didn't look like a hallucination before
+cleaning it up and passing it on.  I'm still looking through your
+other patches in this series, but should finish soon.
 
->  		if (!commit) {
-> -			remote = unique_tracking_name(branch, &oid, NULL, NULL);
-> +			char *remote;
-> +			int num_matches = 0;
-> +			struct string_list matched_remote_names = STRING_LIST_INIT_DUP;
-> +
-> +			remote = unique_tracking_name(branch, &oid, &num_matches,
-> +						      &matched_remote_names);
->  			if (remote) {
->  				new_branch = branch;
->  				branch = new_branch_to_free = remote;
-> +			} else if (num_matches > 1) {
-> +				if (!opts.quiet &&
-> +				    advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME))
-> +					advise_disambiguating_remotes(path, branch,
-> +								      &matched_remote_names);
-> +				die(_("'%s' matched multiple (%d) remote tracking branches"),
-> +				    branch, num_matches);
->  			}
-> +			string_list_clear(&matched_remote_names, 0);
->  		}
-
-This appears inside "} else if (ac == 2) {" to catch an invocation
-like
-
-	git worktree add ../over-there topic-branch
-
-where the origin of topic-branch is ambiguous (in other words,
-appears in multiple remotes).  But don't we have the same issue for
-1 argument case that appears just above this (ac == 2) case that
-handles
-
-	git worktree add ../topic-branch
-
-invocation?  The code reads like:
-
-	} else if (ac < 2) {
-		/* DWIM: Guess branch name from path. */
-		char *s = dwim_branch(path, &new_branch_to_free);
-		if (s)
-			branch = branch_to_free = s;
-		new_branch = new_branch_to_free;
-
-		/* DWIM: Infer --orphan when repo has no refs. */
-		opts.orphan = (!s) && dwim_orphan(&opts, !!opt_track, 1);
-	} else if (ac == 2) {
-
-where the branch name "topic-branch" is guessed from the path by
-calling dwim_branch(), and we would get NULL in s.  branch is left
-as-is, so it becomes "HEAD" that was assigned much earlier in the
-same function.
-
-        branch = ac < 2 ? "HEAD" : av[1];
-
-We would create a new directory in ../topic-branch next door, and
-then which branch would we check out?  Would dwim_orphan() kick in?
-
-Perhaps we want to update that code path to disambiguate the same way?
-
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> index 87b926728a..5c105cf252 100755
-> --- a/t/t2400-worktree-add.sh
-> +++ b/t/t2400-worktree-add.sh
-> @@ -624,12 +624,12 @@ test_expect_success '"add" <path> <branch> dwims' '
->  test_expect_success '"add" <path> <branch> dwims with checkout.defaultRemote' '
->  	test_when_finished rm -rf repo_upstream repo_dwim foo &&
->  	setup_remote_repo repo_upstream repo_dwim &&
-> -	git init repo_dwim &&
->  	(
->  		cd repo_dwim &&
->  		git remote add repo_upstream2 ../repo_upstream &&
->  		git fetch repo_upstream2 &&
-> -		test_must_fail git worktree add ../foo foo &&
-> +		test_must_fail git worktree add ../foo foo 2>error.actual &&
-> +		test_grep "matched multiple (2) remote tracking branches" error.actual &&
->  		git -c checkout.defaultRemote=repo_upstream worktree add ../foo foo &&
->  		git status -uno --porcelain >status.actual &&
->  		test_must_be_empty status.actual
+On a related note, one of my local patches happens to have a semantic
+conflict with this series (namely 3/6), which piqued my interest.
+I'll submit it soon, using your series as a base so I can submit my
+patch with the conflict fixed.
