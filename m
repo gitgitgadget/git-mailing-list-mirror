@@ -1,79 +1,79 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2204156EB
-	for <git@vger.kernel.org>; Fri, 21 Aug 2026 06:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F3F4156C5
+	for <git@vger.kernel.org>; Fri, 21 Aug 2026 06:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787293823; cv=none; b=dR4VYxJ06fRBqZuEfiFtyRrApJqFUk8lAKouJ7Hnt4Z6iAj0kr6Rq5kZkO9ME39gahqJXS9wzKrbSmf3qJgmBhqMjdufGcSYSQ9PiaxK0GHH7TkG4qYaefop3zkjU6rDnLip268fzvHoXlEfIGRsLD5aWXRLuJVY+UPSrw+sCus=
+	t=1787293826; cv=none; b=KLnt3U10PQvQL1awQjvJVbGuB+4EQq1H+HM7reHFZvGIeDSTR80A8lBdmo1TQlt/OnlMx3x30OtQGxTe2vrD3c+XTejTh7CEj85q6pEqzplma5gs3J0pE4EuhkRrUySs5FGDAFfS3nEoAozPpLkeE9rWnSyKzxOpgodmelxT9B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787293823; c=relaxed/simple;
-	bh=oNVhj+04r5QgWYtWlMBF3q3K020v2fGQTt18EusdNmA=;
+	s=arc-20240116; t=1787293826; c=relaxed/simple;
+	bh=YrHZU3ct2/rIzgWF+ZVLscVeC4lYl452PLzzpkrrW88=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YvICK0puV301Q7ppyDx3x8DXBLm2EJ5OoNAkO1ZiB5trV+zQomJkNVQltbMe6NDHVwwUWfV0jWvaXQMRcyTAmJjzzsWNiqyUf+mEIT/3eIz4DKztw5Y71aPLWLE8uyLfo9pJQsiMTAaLO/TPvm4rOCFWr/52pygSiCIxQP/t7lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fkVU5HYe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lE2zcFKo; arc=none smtp.client-ip=103.168.172.148
+	 In-Reply-To:To:Cc; b=m5GCkJ4G3UVQsmGR540JkKfREqMAEB4SvJEZxlIkbnVlnNBiHq0PgfPMx2KQ6rs9CGk+LWnNVfT1CsQs/q3UjYDoG6miBy3X77Ezt1bmUMcaJ5zEGO+XkboJ0hN7kcbYWi0wEQp1FWzjEZ1D3lziGVgYbehIbN7BMzmRJac9xj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DY3xNtji; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KuRTvAVV; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fkVU5HYe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lE2zcFKo"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8BEA8EC02A8;
-	Fri, 21 Aug 2026 02:30:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DY3xNtji";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KuRTvAVV"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9ACD4EC02A5;
+	Fri, 21 Aug 2026 02:30:24 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 21 Aug 2026 02:30:21 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 21 Aug 2026 02:30:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787293821;
-	 x=1787380221; bh=cn53tK2EQgqX+GtA8ytcyMXLOdXZzK0sPTPiFV/gO74=; b=
-	fkVU5HYeVHHTr88VFtbBlmZX1SDXhSb+x7h1nZ8Xv9LI4rgiCZmsjzZd9l1+oxlL
-	iCKSps8u9lDjgN+wtVAgGL1MFkC2cOpUnM3d4mseLs1C9l2d55MdSMl/wbAkacva
-	82TFXqh4l+CfJXX/SitG1zVtnH6He/qG68Eu3zqVJJZP9S6TGCuI0iGrourm3jhy
-	qZp/znnCHWWXqEzVG4dd+UFF9yNPJIItGiyvfOQ+p8BbWMZ2YJWs+k/drMZ6/jjL
-	sH2TaoDaZE2g0gLYnLYw0b28MCmXxnkdY4B8QzgE5havCNnWWoraVTMo3wttXY89
-	vqFjH2Pemb7gqhc3EksjlA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787293824;
+	 x=1787380224; bh=Ump8Tgbz+rNvoofkrqZuO1fVDOagx5nKjdDaeMx5uSg=; b=
+	DY3xNtjiAcgpYJLPC+STZTIyV6qKAY4qyxXAHLl7DGvQbQl62uiQSWYRXzwmpMZP
+	7XMe90P/zUsM9jVEPgupNfpn0JSut7pylVbkBinz7XWnF5J3Nywin5229e4Gf8ah
+	zdtjU56oYJyunJGZCGC7iyiG9bQeiRbhZIxAsR1pnT5/xRR53QtL87/GbqTe+W28
+	Xgb0OuizN3OuaiBYUoXn6t6kIKadwoyf13PNC9xPN30ZaJunBq5QAZboJ7vqtQ8h
+	y0PviZiUIC0Uc04ahBnv/dwsKWJdazg7qYJwmWrpcoedzyBFMy0vpPIYT6PNb82k
+	J03PFzd4V7FFgUlCSomyfw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787293821; x=
-	1787380221; bh=cn53tK2EQgqX+GtA8ytcyMXLOdXZzK0sPTPiFV/gO74=; b=l
-	E2zcFKoOx8qdRWn8svWwLATO5Ym4r2aKkjZ/NuXQKNNYJI+lcE+GCjx6sPkLQ8fT
-	3/v+9XjxsR3Qn4kxYC6VwVcyQOLnBbpk5lU042kYaXNAxrwivmjpQ/EuQv6s81sF
-	k+AsrTk4MYMbNX1HoeKfrSqo9zwr0kj47fDH+5LEfwP8bVD5Ejr/LU6kYD9C+Hdb
-	ImLfEFtRGEtRnwP9hdj4Um9wmO/gOzScx9ioLEP6WQTpI0O3OZN09CpFUvm0ZQlY
-	UjUnJ84rPIdTrx15vsqUvoN8AA4GXs3prY4I6n1NhSK0ukeQ8/N3IYUUOasxQjPQ
-	9l4bugBcbrX5EssAM7VMw==
-X-ME-Sender: <xms:ffCHaoRN5T3gEtfTndblNF3rNms3X1QXDxDDBd8Imdm2HAmnrRK6Yg>
-    <xme:ffCHasp_I2dqy-tJl4eUJ48RzDWU28QXdVNelLpW0qfb5CmVOjOMlx8Mjfc53ooRi
-    aKSjS7v3_imhsAP0Avl4HUxC9Zke5xRM0BjyXoeV4I1YetUgw-dYMg>
-X-ME-Received: <xmr:ffCHauJ3N2wmGUmKvcqzOnMd_ySdzlzpfsHboGKJ_Y6adZzeMEz0lt1YfQ3HCuTtjiOZey3xm6YMNzI4WWvrhVWfjFiDlk0IuPF66WGB0oBn>
-X-ME-Proxy-Cause: dmFkZTGvGr7AfD8DCnwMaod+pFuPIsXtrfEPPcql2hViDk1ZB8UQGHOuXDkGbeRxx2570l
-    cRxGSWWWMovYlUT44fOZtzhNuR2uyD1biL8STN/BNnE9CfvJalG+92PvRA5Rf5iSe1mIQp
-    rQDnz14/uoDmFci+eTs3zjZowpnDp9o/yN2BM5n46dTwTmCzgXr3dk5OdMbE9RmJ5o+Srm
-    Fd7KdtJ89qrpxh6A/yke8ZFpXrtJo/ItD9nlo9XiiDqbg2xEI+4gp82nM6vzDGnM4fkm9p
-    69ZV+W2vom486+Rw7nic5ewj1j03AB4c4xKwZ8M1/tlzf/fE/UHatBuW2LwjNnelus2UfD
-    WPNgPkUoe44meY0RvZ6WIM3/+n1jdO5MiGlpOF7j+7WpLNJoToAKifsn3+W9FfwyBgEFbq
-    jr26vHn8mMQQmjCWSUXU1iH30vwi9Lb7gMqLua/qJMJ6TELbIKuRqEk04C48tXGoeP0Uho
-    Z+Z3LcdDcMxT+/mw2TBgTVkrpIF0ViGjBpQe/S2VKhv2nu1lLa9vmJsm4G82v3zOvPbl/p
-    d8fiki1djQcYQ+HK7dKOThbvt1STB0ToBNaD/WMZuCMJAiwFDIRBp6wenW8DXcldouEH4N
-    bDXA6q5UF/cm5tORiNYZlS65VrcUxRszh/ieoqoY4rlzadTi+mpvEjH9OhXA
-X-ME-Proxy: <xmx:ffCHanpBTO-9AHf5xWxiN6NxCONcJSF0l0IPnYRKmaRADpmtGtx4fg>
-    <xmx:ffCHauw52cMuGB_LOuXgpFAGieTN65dWbHzHyJRC2950iq5Zy9yKug>
-    <xmx:ffCHajMLFJ8ekopZwWnmJTInxxJfvEB0QHmMgyMsnwSh8nZBvnByAA>
-    <xmx:ffCHar7e1aCkWPWF5oNn3HUsVKK0HHydUCHifK8N0ZJuRPV5rGxMgA>
-    <xmx:ffCHai6AA0qUKZN2h8WQ3t9E3u7yfCihNOnKjKMqkz-nvwCiAm1GJBf2>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787293824; x=
+	1787380224; bh=Ump8Tgbz+rNvoofkrqZuO1fVDOagx5nKjdDaeMx5uSg=; b=K
+	uRTvAVVXA3GBCEQd0EBci0xFoK6hoDxd3fCOGZBLpbMhkxU4nD0FK+dyiWamVem4
+	/8XzJz3nUrQJW+GyhmOZQCHREREbcSP0adgDwUKH1Cq/HOgcdrzIKyiYUZKc/EyR
+	EsYIA/BO8w0QQ6sjIATbFQfVJIzUS2obBMPCnXI7YFJ1Tt7PgGvIpJ3y8Q1lb8Jk
+	6mEqu6WwcULEdWWSuWyWzkmbQqP3Mhj8sYatTWNVwpFapDDOPx2GnLvCXgDRmobQ
+	qYMU56qbpJnR3/AhBxz0GYRqFHlJMW/fJeGSBUqSMcdvvMxTGB6BGB4lEVBlahHZ
+	BMEtBY3hwM+PNowPlww6w==
+X-ME-Sender: <xms:gPCHagbaLe-8IBgr5dAyroDXcFmQucSUjXwmrKU7LbzapoQ_c3PYlQ>
+    <xme:gPCHaiQfHFVA_xOtpruZELLaS8l0OOWXZ4hp1MS_vaN8bAIgwlt0sspjFp_7UxXH6
+    I4t0vD3FdcoP8pPgoYexkQ9axGlcSa6DwwP9KudQc6phb0rOG9xAw>
+X-ME-Received: <xmr:gPCHajQtNhGuyAWnLYr6aor7-B60gQvcX6qHRH6gdHoDUG6FyW0UUFlmmv5v90pxYO0RxQ1fTr11h3p8F_UhxOJI-96aUucje5bTyfJBtI3t>
+X-ME-Proxy-Cause: dmFkZTE4livzZQEViiFuJlDvtHalR/9FSTk/Y5iWxY7udKBKIfnP3uN4Essy9oUEXw/ddw
+    JijVdUG6GwV9ONoYIvSUP6ZXdwNbHLP1I5sDorH6MbJdga+4XefrN7F8JAR6WJ1kIDCwVW
+    jUqxpCGQWN99uuNwjONbIV9Cgsv647mtk7LKtY61U7aqNOsrn2oCc5kVoXMrsiykDm+AKD
+    wd1uWvXMHNycNPQjyv9EW/kjunufvBtvaINiX6v8Lnh91gcSwqsU84wBaG4q2220XUSxvJ
+    3kVoCAYCOjix0Qq21t3CSWP5sxd8DsXxdFUbKX9hvR5VzbbAT8G9Gw6OV02lwetirSiwXv
+    Qx1RmutLKkCYWVuT/+2uMiO+LljUK4esW3A1rBhzHc16kf71puFC51H01344ZaAX/rGv0t
+    URE4vB8kHXo6KOe0d4Cd56a543IXSWdY4lUSOUWdE968lnmj00Zk49Ib47ed4Y5olZE9ez
+    KnBNgVBjCV8VDWWnHj8qHHy/WJ6Ni7eMQykADIbC9eD/H3fdWOzRjTAhdK3tISRX0aTebI
+    xHsM7K/iziOjwOQXoiwWspygw0TkQOZGhT2YIsSPMbGhV29aFHR4v7FfFg5DJD8O208OuA
+    oGcKjzaM+Vz7qZjMDT07uHkG/WHNhPGTjiLZENXjhq04HpVNEgBfzUPxpR4A
+X-ME-Proxy: <xmx:gPCHamQhP0qjaMg7BOSNdek4sJUEahuVzfNssTq5s9Hn5ld1ZYP34w>
+    <xmx:gPCHao7MJgqUl-V5KVs8UDWVtRy5xGMkahKnLL0i_89G6SVApYtc9g>
+    <xmx:gPCHai0GMenimbPXjHDwqYOZgFAXF5UGSosw__RVSd7n4MfHIIfktA>
+    <xmx:gPCHajBXIWPA_pf2mpm7qtPqDFIfyeueHbi67_crclU6pR8b04AaUw>
+    <xmx:gPCHapioK1dehWwDEPP-z_TQft-LTiVHKWCl3djolxj3tUxfGSW700FX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Aug 2026 02:30:20 -0400 (EDT)
+ 21 Aug 2026 02:30:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 47751d36 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 21 Aug 2026 06:30:20 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a61bee5b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 21 Aug 2026 06:30:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 21 Aug 2026 08:30:05 +0200
-Subject: [PATCH v4 5/6] bundle: get (mostly) rid of `the_repository`
+Date: Fri, 21 Aug 2026 08:30:06 +0200
+Subject: [PATCH v4 6/6] bundle: generate packfiles via the object database
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260821-b4-pks-odb-generate-pack-v4-5-074e8bd641f8@pks.im>
+Message-Id: <20260821-b4-pks-odb-generate-pack-v4-6-074e8bd641f8@pks.im>
 References: <20260821-b4-pks-odb-generate-pack-v4-0-074e8bd641f8@pks.im>
 In-Reply-To: <20260821-b4-pks-odb-generate-pack-v4-0-074e8bd641f8@pks.im>
 To: git@vger.kernel.org
@@ -91,131 +91,177 @@ Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>,
  Patrick Steinhardt <ps@pks.im>
 X-Mailer: b4 0.15.2
 
-Refactor "bundle.c" so that we don't depend on `the_repository` anymore.
-This conversion is trivial for most of the part, as we already have a
-repository available in all calling conexts.
+git-bundle(1) spawns git-pack-objects(1) directly to generate the pack
+data that gets appended to the bundle header. While bundles are not
+part of the wire protocol, they are a transfer mechanism for packs all
+the same, so convert them to use the pack generation interface of the
+object database as well.
 
-The only exception is that we use `get_log_output_encoding()`, which
-implicitly depends on `the_repository`. Add an `extern` declaration for
-this function so that we can drop `USE_THE_REPOSITORY_VARIABLE` and not
-accidentally introduce more uses of `the_repository`.
+This makes the pack generator the single spawn point for all pack
+streams that leave the repository, leaving only local maintenance tasks
+like git-repack(1) with direct knowledge of git-pack-objects(1).
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bundle.c | 32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ builtin/bundle.c | 13 +++--------
+ bundle.c         | 69 ++++++++++++++++++++++++++++----------------------------
+ bundle.h         |  3 +--
+ 3 files changed, 39 insertions(+), 46 deletions(-)
 
-diff --git a/bundle.c b/bundle.c
-index b64716f252..a9330bf0d3 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
-@@ -21,6 +20,13 @@
- #include "connected.h"
- #include "write-or-die.h"
- 
-+/*
-+ * NEEDSWORK: this function implicitly depends on `the_repository` and is not
-+ * available because we dropped USE_THE_REPOSITORY_VARIABLE. We can remove the
-+ * declaration once it's accessible via `repo_config_values`.
-+ */
-+extern const char *get_log_output_encoding(void);
-+
- static const char v2_bundle_signature[] = "# v2 git bundle\n";
- static const char v3_bundle_signature[] = "# v3 git bundle\n";
- static struct {
-@@ -294,7 +300,8 @@ int list_bundle_refs(struct bundle_header *header, int argc, const char **argv)
- 	return list_refs(&header->references, argc, argv);
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index bfafadc984..5c6d8e1343 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -68,8 +68,8 @@ static int parse_options_cmd_bundle(int argc,
  }
  
--static int is_tag_in_date_range(struct object *tag, struct rev_info *revs)
-+static int is_tag_in_date_range(struct repository *repo,
-+				struct object *tag, struct rev_info *revs)
- {
- 	size_t size;
- 	enum object_type type;
-@@ -305,7 +312,7 @@ static int is_tag_in_date_range(struct object *tag, struct rev_info *revs)
- 	if (revs->max_age == -1 && revs->min_age == -1)
- 		goto out;
+ static int cmd_bundle_create(int argc, const char **argv, const char *prefix,
+-			     struct repository *repo UNUSED) {
+-	struct strvec pack_opts = STRVEC_INIT;
++			     struct repository *repo UNUSED)
++{
+ 	int progress = isatty(STDERR_FILENO);
+ 	int version = -1;
+ 	struct option options[] = {
+@@ -92,16 +92,9 @@ static int cmd_bundle_create(int argc, const char **argv, const char *prefix,
+ 			builtin_bundle_create_usage, options, &bundle_file);
+ 	/* bundle internals use argv[1] as further parameters */
  
--	buf = odb_read_object(the_repository->objects, &tag->oid, &type, &size);
-+	buf = odb_read_object(repo->objects, &tag->oid, &type, &size);
- 	if (!buf)
- 		goto out;
- 	line = memmem(buf, size, "\ntagger ", 8);
-@@ -362,7 +369,8 @@ static int write_pack_data(int bundle_fd, struct rev_info *revs, struct strvec *
+-	if (progress)
+-		strvec_push(&pack_opts, "--progress");
+-	else
+-		strvec_push(&pack_opts, "--quiet");
+-	strvec_push(&pack_opts, "--all-progress-implied");
+-
+ 	if (!startup_info->have_repository)
+ 		die(_("Need a repository to create a bundle."));
+-	ret = !!create_bundle(the_repository, bundle_file, argc, argv, &pack_opts, version);
+-	strvec_clear(&pack_opts);
++	ret = !!create_bundle(the_repository, bundle_file, argc, argv, version, progress);
+ 	free(bundle_file);
+ 	return ret;
+ }
+diff --git a/bundle.c b/bundle.c
+index a9330bf0d3..f55a521b2a 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -332,51 +332,52 @@ static int is_tag_in_date_range(struct repository *repo,
+ 
+ 
+ /* Write the pack data to bundle_fd */
+-static int write_pack_data(int bundle_fd, struct rev_info *revs, struct strvec *pack_options)
++static int write_pack_data(int bundle_fd, struct rev_info *revs, int progress)
+ {
+-	struct child_process pack_objects = CHILD_PROCESS_INIT;
++	struct odb_generate_pack_options opts = ODB_GENERATE_PACK_OPTIONS_INIT;
++	struct odb_pack_generator *generator;
++	int ret = 0;
+ 	int i;
+ 
+-	strvec_pushl(&pack_objects.args,
+-		     "pack-objects",
+-		     "--stdout", "--thin", "--delta-base-offset",
+-		     NULL);
+-	strvec_pushv(&pack_objects.args, pack_options->v);
++	opts.thin = 1;
++	opts.ofs_delta = 1;
++	if (progress)
++		opts.progress = ODB_GENERATE_PACK_PROGRESS_VERBOSE;
+ 	if (revs->filter.choice)
+-		strvec_pushf(&pack_objects.args, "--filter=%s",
+-			     list_objects_filter_spec(&revs->filter));
+-	pack_objects.in = -1;
+-	pack_objects.out = bundle_fd;
+-	pack_objects.git_cmd = 1;
++		opts.filter_spec = list_objects_filter_spec(&revs->filter);
+ 
+ 	/*
+-	 * start_command() will close our descriptor if it's >1. Duplicate it
+-	 * to avoid surprising the caller.
++	 * The pack generator will consume our descriptor if it's >1.
++	 * Duplicate it to avoid surprising the caller.
+ 	 */
+-	if (pack_objects.out > 1) {
+-		pack_objects.out = dup(pack_objects.out);
+-		if (pack_objects.out < 0) {
+-			error_errno(_("unable to dup bundle descriptor"));
+-			child_process_clear(&pack_objects);
+-			return -1;
+-		}
++	opts.pack_fd = bundle_fd;
++	if (opts.pack_fd > 1) {
++		opts.pack_fd = dup(bundle_fd);
++		if (opts.pack_fd < 0)
++			return error_errno(_("unable to dup bundle descriptor"));
+ 	}
+ 
+-	if (start_command(&pack_objects))
+-		return error(_("Could not spawn pack-objects"));
+-
+ 	for (i = 0; i < revs->pending.nr; i++) {
  		struct object *object = revs->pending.objects[i].item;
  		if (object->flags & UNINTERESTING)
- 			write_or_die(pack_objects.in, "^", 1);
--		write_or_die(pack_objects.in, oid_to_hex(&object->oid), the_hash_algo->hexsz);
-+		write_or_die(pack_objects.in, oid_to_hex(&object->oid),
-+			     revs->repo->hash_algo->hexsz);
- 		write_or_die(pack_objects.in, "\n", 1);
+-			write_or_die(pack_objects.in, "^", 1);
+-		write_or_die(pack_objects.in, oid_to_hex(&object->oid),
+-			     revs->repo->hash_algo->hexsz);
+-		write_or_die(pack_objects.in, "\n", 1);
++			oid_array_append(&opts.haves, &object->oid);
++		else
++			oid_array_append(&opts.wants, &object->oid);
  	}
- 	close(pack_objects.in);
-@@ -395,10 +403,10 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+-	close(pack_objects.in);
+-	if (finish_command(&pack_objects))
+-		return error(_("pack-objects died"));
+-	return 0;
++
++	if (odb_generate_pack(revs->repo->objects, &generator, &opts)) {
++		ret = error(_("Could not spawn pack-objects"));
++		goto out;
++	}
++
++	if (odb_pack_generator_finish(generator)) {
++		ret = error(_("pack-objects died"));
++		goto out;
++	}
++
++out:
++	odb_generate_pack_options_release(&opts);
++	return ret;
+ }
  
- 		if (e->item->flags & UNINTERESTING)
- 			continue;
--		if (repo_dwim_ref(the_repository, e->name, strlen(e->name),
-+		if (repo_dwim_ref(revs->repo, e->name, strlen(e->name),
- 				  &oid, &ref, 0) != 1)
- 			goto skip_write_ref;
--		if (refs_read_ref_full(get_main_ref_store(the_repository), e->name, RESOLVE_REF_READING, &oid, &flag))
-+		if (refs_read_ref_full(get_main_ref_store(revs->repo), e->name, RESOLVE_REF_READING, &oid, &flag))
- 			flag = 0;
- 		display_ref = (flag & REF_ISSYMREF) ? e->name : ref;
+ /*
+@@ -485,7 +486,7 @@ static void write_bundle_prerequisites(struct commit *commit, void *data)
+ }
  
-@@ -406,7 +414,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 			goto skip_write_ref;
+ int create_bundle(struct repository *r, const char *path,
+-		  int argc, const char **argv, struct strvec *pack_options, int version)
++		  int argc, const char **argv, int version, int progress)
+ {
+ 	struct lock_file lock = LOCK_INIT;
+ 	int bundle_fd = -1;
+@@ -594,7 +595,7 @@ int create_bundle(struct repository *r, const char *path,
+ 	}
  
- 		if (e->item->type == OBJ_TAG &&
--				!is_tag_in_date_range(e->item, revs)) {
-+				!is_tag_in_date_range(revs->repo, e->item, revs)) {
- 			e->item->flags |= UNINTERESTING;
- 			goto skip_write_ref;
- 		}
-@@ -428,7 +436,8 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 	/* write pack */
+-	if (write_pack_data(bundle_fd, &revs_copy, pack_options)) {
++	if (write_pack_data(bundle_fd, &revs_copy, progress)) {
+ 		ret = -1;
+ 		goto out;
+ 	}
+diff --git a/bundle.h b/bundle.h
+index d664b2f2d6..471da23d1b 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -27,8 +27,7 @@ int read_bundle_header(const char *path, struct bundle_header *header);
+ int read_bundle_header_fd(int fd, struct bundle_header *header,
+ 			  const char *report_path);
+ int create_bundle(struct repository *r, const char *path,
+-		  int argc, const char **argv, struct strvec *pack_options,
+-		  int version);
++		  int argc, const char **argv, int version, int progress);
  
- 		ref_count++;
- 		strset_add(&objects, display_ref);
--		write_or_die(bundle_fd, oid_to_hex(&e->item->oid), the_hash_algo->hexsz);
-+		write_or_die(bundle_fd, oid_to_hex(&e->item->oid),
-+			     revs->repo->hash_algo->hexsz);
- 		write_or_die(bundle_fd, " ", 1);
- 		write_or_die(bundle_fd, display_ref, strlen(display_ref));
- 		write_or_die(bundle_fd, "\n", 1);
-@@ -507,7 +516,7 @@ int create_bundle(struct repository *r, const char *path,
- 	 *    SHA1.
- 	 * 2. @filter is required because we parsed an object filter.
- 	 */
--	if (the_hash_algo != &hash_algos[GIT_HASH_SHA1_LEGACY] || revs.filter.choice)
-+	if (r->hash_algo != &hash_algos[GIT_HASH_SHA1_LEGACY] || revs.filter.choice)
- 		min_version = 3;
- 
- 	if (argc > 1) {
-@@ -528,14 +537,15 @@ int create_bundle(struct repository *r, const char *path,
- 	if (version < 2 || version > 3) {
- 		die(_("unsupported bundle version %d"), version);
- 	} else if (version < min_version) {
--		die(_("cannot write bundle version %d with algorithm %s"), version, the_hash_algo->name);
-+		die(_("cannot write bundle version %d with algorithm %s"), version,
-+		    r->hash_algo->name);
- 	} else if (version == 2) {
- 		write_or_die(bundle_fd, v2_bundle_signature, strlen(v2_bundle_signature));
- 	} else {
- 		const char *capability = "@object-format=";
- 		write_or_die(bundle_fd, v3_bundle_signature, strlen(v3_bundle_signature));
- 		write_or_die(bundle_fd, capability, strlen(capability));
--		write_or_die(bundle_fd, the_hash_algo->name, strlen(the_hash_algo->name));
-+		write_or_die(bundle_fd, r->hash_algo->name, strlen(r->hash_algo->name));
- 		write_or_die(bundle_fd, "\n", 1);
- 
- 		if (revs.filter.choice) {
+ enum verify_bundle_flags {
+ 	VERIFY_BUNDLE_VERBOSE = (1 << 0),
 
 -- 
 2.55.0.822.g20453c30eb.dirty
