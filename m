@@ -1,145 +1,179 @@
-Received: from mta1.migadu.com (out-198.mta1.migadu.com [95.215.58.198])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1E1380FE7
-	for <git@vger.kernel.org>; Sat, 22 Aug 2026 16:10:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18AB330ACF1
+	for <git@vger.kernel.org>; Sat, 22 Aug 2026 17:22:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787415017; cv=none; b=IOeARX1X8xBaEOzVGNfOAWUn+/JELacnsQurQrXohrZlwQEtoxitJff9T7vBhILeHqnMaDPqsimdvIpN1Q2bH7j55CW70NbAVZbUgHP0egOzKV2ekq0fW+8O4IrpfjZ/bD2chL3se3mrUCPiYaO8asrsmXzDTlErWbBypThk7hg=
+	t=1787419331; cv=none; b=fZUack6PPrbSEb2ZcGK37Ve/qBEALDmxZeE1FWcNjlIpmF47YVMMwrthLtHGaqMYmVrmMfa09sJW8wsxeGHF7+N/sZ2g7eotaWxwFg7fgi5cwaIYA3IatnNoviZL6Rw05SlK5nQNUPn5NVnPuztLKjbvnKUdIO/sNX////b4Rqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787415017; c=relaxed/simple;
-	bh=rUBnbo6i2iuXCCAmuodTYI7ZBKAVV2jzL0xtivOAdS0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To; b=KcVb7J9yua5bg8NBJrTI5Og+xNRhR4tapuwpOWpyCNegHPag1PpqiR8/W1m8Zb9Cx6GWxDb1MApsLDSK9N9V1+k2ugVAom18P/Cttlamhmr8Pfzb0K3qFYsUhQODLLc2CKVEwyj15Qbn5RQEhj1X90ploBHI5bGXTYmxgUiAaUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fordltc.net; spf=pass smtp.mailfrom=fordltc.net; dkim=pass (2048-bit key) header.d=fordltc.net header.i=@fordltc.net header.b=Vv5BuvX0; arc=none smtp.client-ip=95.215.58.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fordltc.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fordltc.net
+	s=arc-20240116; t=1787419331; c=relaxed/simple;
+	bh=IGXqP4ezf1cnKFvvKo8tDcPpJDaW4M9EknM2KmQlbWc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CeeBruDUF6Jd1uRlJv6aGMFvDl81VDrvM8t7898mrb/RRPq4/MV+HD/SV4BodcZE9Ih1AvSxbfDY/zUHLVNbfAA2pQXZaIbQnwbLPWqTahS+cQRJwoewp+ymTMx1lomjJkutQ4Cf+3UM1jE4/E8B5MtueJk/Uc0Xtw7rPVcWbTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jCi5KK68; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BMFLsav+; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fordltc.net header.i=@fordltc.net header.b="Vv5BuvX0"
-X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=rUBnbo6i2iuXCCAmuodTYI7ZBKAVV2jzL0xtivOAdS0=;
- c=simple/simple; d=fordltc.net;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787415010; v=1; x=1788019810;
- b=Vv5BuvX0iTRJkIcLjoGiM3kCEPzSUlh5g1vnjLXOd7/eon7c4j9WEZ9iseNgus/bMqAOHwrG
- zNdID5cifkjaDKJKf5nIeds75NLG5K5RoaCwd7miS2klKyltVLVGKQoLPjC9SdVaA3zLdT8U9dZ
- uK2nboagaqiiv/wlxsOq0bqWIomKmIUNZiJocI50LRMjrG9CcqPeMrd5xMBgv7tuzg4ChpJZXJ4
- Yqd0JWLqGTtGqgj8AdMnhIwI197vc7Pad7VL8NDAaQ3PnbaJ/fz9E/43+UoIB00ybfAwo9WvFh+
- 178JebUvWjWxtc2cfaIH2PZ9DbBBYdFLwzVnMCVLbjURg==
-X-Envelope-To: git@vger.kernel.org
-Received: from localhost (70.23.216.172)
-	by smtp.migadu.com with ESMTPS id 40594fbfb52505b7;
-	Sat, 22 Aug 2026 16:10:09 +0000
-X-Mizu-Trace-ID: 40594fbfb52505b7
-X-Migadu-Flow: FLOW_OUT
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jCi5KK68";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BMFLsav+"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 802E27A008A;
+	Sat, 22 Aug 2026 13:22:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sat, 22 Aug 2026 13:22:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1787419328;
+	 x=1787505728; bh=sDfwee+OiXl978mdVBDpw7hHtXlutIEViLy2/nMt3IE=; b=
+	jCi5KK68aPqwpKYwGPluOIB9pZ5X/bmxTyP2xOdwdacEcChQqvgZP1/jqCXEyr4d
+	qXbiFPRGpLOUUAbvawx8KJaJNoxh2nDzh17gKHWhNPEdtngY0/oqnHybBfOJZfXJ
+	ytW5LywFj+LtyzQIXYypKNq91m375eQXwlvjgArlX4vcPQTQDfui78B4it4SNid8
+	WNkVBoLtMEYpE/FbRCQnMJ9igx/SMC6dmp5aNSK51eQpes+aYLTcVI+gCHgomohR
+	AoQ1L8mIWH0+PmqfFeIyiE2++1lMTx9jeC1vuicPqCnNqb4SW2droONU5QQ6rZj1
+	znmvGMnTHGmWFlPm8uNT3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787419328; x=
+	1787505728; bh=sDfwee+OiXl978mdVBDpw7hHtXlutIEViLy2/nMt3IE=; b=B
+	MFLsav+VHZ0PZeSgQHJ28TStz62l+Piw84yymddsgmjgmLiAmPbXVG2nedEC42Cd
+	ZAutsG5A+qhq6ZoJmEUqi9mQTNJGRjRFGGVS0ZqF8f/OpV0u4+N7B3mSyEm5epeV
+	eCtfJ1KQVAk4D/dCg271gMz0lmvRUSw2nlmjjNgVlP+Lq/Sz4FLbBQnoWrm85S8Q
+	wgO/R2bip//8h21gN/gRIV1CTUGKse0f4ILkFcXQLwgn1PvblL6X0cw3zUxGBjoN
+	YKYCIKaK8UV/I+E4T5f2X/cJ+dytKY19gEXKwFsxThqsFxE582Lwv9jcWrxaAoyK
+	JzGQtmNoJz19qwCaTcAGQ==
+X-ME-Sender: <xms:wNqJakjHeDbvov1cnIDS1SluCPvQOSqV163W--a_jT7B6jqUfguc-w>
+    <xme:wNqJagvLSNLU1OQOJ_rJAAgdP0-tRQT7mcoAtdAKGKNRePQdTE6O_DsrA5u80CS3c
+    -J18Bj7akUGp3kFGsZgvCXXEsPMigB5_1ybjzIZJtfg1HU99bNwSg>
+X-ME-Received: <xmr:wNqJal6wUfBVmQH8Q9wvXh-_QBrv-QZOp9tunyx4sdxdyUzT-LeJLdk1QUmGMLDpChtAcAm-EzAuyqVuiRuDXc8FFkDyG-IJqw>
+X-ME-Proxy-Cause: dmFkZTE94TqOnlw+zMJEudxgMz2lVHZ5LHQWL8TUGtyM90x7aAt28tZ5HfJUmcJayiG9Mt
+    sjVSCee4N+79MHurvlpde303tZIyK44EZPAnEbaSuvroLuCDdgmKroM+vFmrWuyYd+6CL8
+    yHzqNjDrT3x5SkpLPuFq0BgnxZv09uuQvoHlQXO5SU4xT2hvdpkGLKtu/5dE4+Wseo5dru
+    y8hkYY6LZvp+Af1pQNy+Q36xNyZumMQyOqlTJ6qQJVE4WN8OOCIOpB3aZOLieOtaTQKlm5
+    RkCzKKwrGCtq4j2yEA9JchXHMFa1WMKDH6OJZGRJYKmkhrqmzNqCQT+q2PifucnVnm8ary
+    C+VbiV4D5f2x1H6Ph2+QSxESI6JpG976nnxkBLSunoC+S2T4bGILeQs9ZFMVqBoYtyAmq6
+    DJugEUFmE58p1RSEZSzOsWXiPOBDRaDJaQpfMk9j8D0/m4jAhGPRWKP3v/BuPWbR4q6qg1
+    WU/2hDzM9GZlWtFgjUyIg2kUg83virkUVx3IrTq7ANin0148J5NS2QopUF4foe3Gxa78Y/
+    R6R4h/pu4JhUMbjIhzanD3XrLfEaUyyGMu+k02lHFRaq+66Vm3jVIHQsO+JI8W543y1B9d
+    EkJ+4W4wW7Lhxz3ennF6is6r0XauWK2qOLmPCpiVLH0lP1lIdNaCd1QGpH1Q
+X-ME-Proxy: <xmx:wNqJasP70bWz2N9ItQ8zQNRsJ9tyIaMh9LOivla3KO7rtMJEfTVBtQ>
+    <xmx:wNqJajsz06p1c5lMPY5LpEhBzXNJJAKLDKApgEWhTl5nSSuwVLHhoQ>
+    <xmx:wNqJavbwh2-lyhstGbq8LDNkxzZM1-YJsKmQJ9Y6kVo6AuUmBeS7KA>
+    <xmx:wNqJalwTLyTxulU1fXS8aZMKzc59K-HwL9P89VjXKf0dcicg5DrShw>
+    <xmx:wNqJaiEPTCZjYAF_a-7OC8wFI8Hiti7UhLtoDnWIIvE1z1p37m-NIJx8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 22 Aug 2026 13:22:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,  "D.
+ Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v6 3/3] worktree add: improve message for ambiguous
+ remote branch name
+In-Reply-To: <CAF5D8-trxeMd8HYzy6kD4myf+bynkxOvxKDQrMdmqnvcdpdkEA@mail.gmail.com>
+	(Yoichi Nakayama's message of "Sat, 22 Aug 2026 09:50:48 +0900")
+References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+	<pull.2197.v6.git.1787259838.gitgitgadget@gmail.com>
+	<dcb84a69a6a65085d468a0a212cea0281605c5d0.1787259838.git.gitgitgadget@gmail.com>
+	<xmqqa4qgruvj.fsf@gitster.g>
+	<CAF5D8-vDzp9xhu96Tu0ScmWRHvVyi74MD0NhPMnQ9ayoy6h+wQ@mail.gmail.com>
+	<xmqqzeyfxcdu.fsf@gitster.g>
+	<CAF5D8-trxeMd8HYzy6kD4myf+bynkxOvxKDQrMdmqnvcdpdkEA@mail.gmail.com>
+Date: Sat, 22 Aug 2026 10:22:06 -0700
+Message-ID: <xmqqld9yvznl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 22 Aug 2026 12:10:04 -0400
-Message-Id: <DKVLQLCHHBM4.WCEIQ0I73YOA@fordltc.net>
-Subject: Bug Report: subtree then rebase causes unrelated history to
- conflict
-From: "Gabriel Ford" <gabe@fordltc.net>
-To: <git@vger.kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-I created this report from the git bugreport template following
-https://git-scm.com/community. Thanks to anyone who takes the time to
-read and look into this! Please let me know if there are any follow up
-questions or if anything is unclear. This is my first bug report to git
-so please let me know if I should have written anything different!
+Yoichi Nakayama <yoichi.nakayama@gmail.com> writes:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+> No. The exit codes of the command 'git worktree add ../topic-branch'
+> are the same (== 0). but the results are different.
+>
+> If there is a unique match found in dwim_branch(), it creates a local
+> branch named topic-branch which tracks <remote>/topic-branch.
+> In case of no match or multiple matches, it creates a local branch
+> named topic-branch from HEAD.
+>
+> Since Git treats both cases as successful, either can be considered
+> the intended behavior.
+> (Although, if there are multiple matches, there is a fair chance the
+> result might not be what was intended.)
+>
+> I am confident that it is appropriate to provide a hint when a command
+> fails, but it is difficult to decide what to do when a command succeeds.
 
-  I found this when using git subtree to vendor this library
-  (https://github.com/htfy96/dollar), I believe this will also happen in an=
-y
-  similar cases where the subtree has a file with an identical path as one =
-of the
-  files in your repo.
- =20
-  I was able to repro this from a brand new repository as follows:
- =20
-  ```sh
-  mkdir ./test_repo=20
-  cd ./test_repo
-  touch .clang-format
-  echo 'Any text in this file should work' > .clang-format
-  git commit -m "create .clang-format in main repo"
- =20
-  git checkout -b feat_branch
-  git subtree add --prefix dollar_subtree git@github.com:htfy96/dollar.git =
-master --squash
- =20
-  git checkout master
-  touch foo.txt
-  git commit -m "commit anything so that we have something to rebase onto"
- =20
-  git checkout feat_branch
-  git rebase master
-  ```
- =20
-  You should see that there is a conflict that needs resolution between the=
- main
-  .clang-format file we created, and the subprojects .clang-format even tho=
-ugh
-  the files are in seperate dirs.
+I actually think it falls into the same class of bug you are fixing
+in this topic, which was caused by not considering the possibility
+that there can be any case other than 0-match and 1-match, and not
+thinking through the ramifications of treating 2-match and 0-match
+the same way.
 
+It is of course OK to fix one bug and leave the other one
+unaddressed, to be fixed in a later follow-up effort.
 
-What did you expect to happen? (Expected behavior)
-  I did not expect a conflict since the .clang-format file we created didn'=
-t change.
+The rest of this message is only for those who will tackle the
+"later follow-up effort" part after the dust settles once the
+current topic lands (aka #leftoverbits).
 
+In the beginning, before Thomas Gummerer started his topic in
+November 2017 [*1*], 'git worktree add <path> [<branch>]' created a
+new branch from the checked-out HEAD, without looking at any
+remote.
 
-What happened instead? (Actual behavior)
-  There was a conflict between the two files in seperate dirs.=20
+ - 'git worktree add <path> <branch>' before Thomas's effort errored
+   out if <branch> did not exist.  It was safe to add DWIM from
+   remote-tracking branches without requiring any option.
 
+ - 'git worktree add <path>' used to create a new branch whose name
+   is derived from basename(path) that points at the current HEAD,
+   without erroring out.  Enabling DWIM from remote-tracking
+   branches unconditionally would have meant a silent behavior
+   change.  So DWIM was added to this case to require the
+   '--guess-remote' option to enable [*2*].
 
-What's different between what you expected and what actually happened?
-  The rebase conflict that occured.
+Back then, unique_tracking_name() did not let the callers
+distinguish between 0-match and multiple-match cases, so when you
+had multiple matches, 'git worktree add <path> [<branch>]' triggered
+the same code path as 0-matches.  When the DWIM feature was
+designed, handling the multiple-match case correctly was on nobody's
+radar.
 
+Even when Ævar Arnfjörð Bjarmason updated unique_tracking_name() in
+3c87aa946a (checkout: pass the "num_matches" up to callers,
+2018-06-05), in a topic that ends at 8d7b558bae (checkout &
+worktree: introduce checkout.defaultRemote, 2018-06-05), to allow
+callers to distinguish between 0-match and ambiguous multi-match
+cases, this work unfortunately concentrated on improving "git
+checkout", and callers of unique_tracking_name() in "git worktree"
+were updated to pass NULL, i.e., teaching them to count how many
+matches they got was postponed.
 
-Anything else you want to add:
-  I think this is happening due to the way git subtree is squash merging in=
- the
-  subproject, even though a git blame on the .clang-format we created doesn=
-'t
-  show any changes, it appears that the history conflicts since the path
-  relative to the root is the same in the subproject.
+We know that the update to unique_tracking_name() in this work back
+then was not complete on the "git worktree" side.  After all, that
+is how this topic arose to fix one of the two code paths that call
+the function so that we react differently between 0-match and
+multiple-match cases.
 
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.55.0
-cpu: x86_64
-built from commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: enabled
-feature: fsmonitor--daemon
-gettext: enabled
-libcurl: 8.21.0
-OpenSSL: OpenSSL 3.6.3 9 Jun 2026
-zlib-ng: 2.3.3
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Linux 7.1.8-arch1-3 #1 SMP PREEMPT_DYNAMIC Tue, 11 Aug 2026 09:16:08=
- +0000 x86_64
-compiler info: gnuc: 16.1
-libc info: glibc: 2.44
-$SHELL (typically, interactive shell): /usr/bin/fish
+Now that we are aware of the issue, I think the code should error
+out, instead of creating the new branch out of HEAD, when there are
+multiple remotes with the name of the branch.  In other words, the
+existing code that behaves the same way in 0-match and 2-match cases
+is buggy, and we should eventually fix it.
 
 
-[Enabled Hooks]
+[Footnotes]
 
+ *1* https://lore.kernel.org/git/20171112134305.3949-1-t.gummerer@gmail.com/
+ *2* https://lore.kernel.org/git/20171126194356.16187-1-t.gummerer@gmail.com/
