@@ -1,100 +1,181 @@
-Received: from mta1.migadu.com (out-46.mta1.migadu.com [95.215.58.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07703493658
-	for <git@vger.kernel.org>; Sat, 22 Aug 2026 20:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FC837FF7F
+	for <git@vger.kernel.org>; Sat, 22 Aug 2026 21:15:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787431652; cv=none; b=eTD9ha0ZrsOn9kXGcmgiwufUvuewIhBziKi40JXDE4VNSLvlI5RkM89IRJ5FRfHq8cWpwdVc6V02sY1I/xh3WyRCK1CBgSek6p+pN3QqMgdof1HrwfBdT5fPaFG6MEYK7yiADRksoMfQFu0qTZCO1+OIqofmPjOd94UVSYyklfc=
+	t=1787433342; cv=none; b=COqfuTW96pJjNGu+FwidL72x780hI+H9g879XOMJUO2/pLH9oc8YYMdlvcTnfxD7U2krYDPdlVoehGtnsizePuJnE5psA+xHjAfRoXJMg6acd3huqCbkwzfJdWxk3TZmfkdnmItnfDYPD5jVyss+/FeWWzikdVxmFX5xcT3GxHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787431652; c=relaxed/simple;
-	bh=bJOf1rlgcyVaLGtO+uRKgrN49a3X/aA44p6nfVznqcs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oC3NwjHPWftUjis3JsoDz70s+D8Qo0pqWOW6e4M88GuRN82WQs/clhHIMFcyTds/RZgTqqPqKdlthjBgb0y5tMPTTWnAw4x3XSgNO5KazIvIbdLxwZIeI5m6MhMc2MYSR8Sl6wOMFvMgk6PQMG3B3QPvsXsaW6X06FtSMYvflfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mvdan.cc; spf=pass smtp.mailfrom=mvdan.cc; dkim=pass (1024-bit key) header.d=mvdan.cc header.i=@mvdan.cc header.b=AFCVa1Ii; arc=none smtp.client-ip=95.215.58.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mvdan.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mvdan.cc
+	s=arc-20240116; t=1787433342; c=relaxed/simple;
+	bh=1jcoQrrg+ZOFFcm0IJezhK7ZkjN9NLdnp7HFt2xdfN4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ji0ncRclX7N/bFJhLRoNoyVxNEWl2YFKVL4seG72PsY81D3Nfsxm+NabiKQ8Hg1TLbfeKXeWzJwHJWt06vsm8xPcOSiZaWfZWX4HIYDesBe2vy2HrEPZYs6PKqOOw/LJbSAIv+3+9D6FflDsGD9zPYWX7j1Dr7Nw+kfM1DNxV7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=EyIM1r1C; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mvdan.cc header.i=@mvdan.cc header.b="AFCVa1Ii"
-X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=bJOf1rlgcyVaLGtO+uRKgrN49a3X/aA44p6nfVznqcs=;
- c=simple/simple; d=mvdan.cc;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787431646; v=1; x=1788036446;
- b=AFCVa1IioY0hFWqalCEXRzb0MZfPPkF5L+dcSroDCYicgu1IAgBNk+uCYafh0gQUk/9JSHiQ
- HXtVm6QC0MspnQ8mV2KWldBZHa+rL2kNjDlJ4yNG/U2GYDnSKKcMOCfcZfz/MIUyGnhC6e/qn+2
- E+UVB1AmzfcC1bK4ncAkvY5s=
-X-Envelope-To: git@vger.kernel.org
-Received: from [IPV6:2a02:6b6f:ea56:2100:e59a:61c0:de61:63be] (2a02:6b6f:ea56:2100:e59a:61c0:de61:63be)
-	by smtp.migadu.com with ESMTPS id 0b21dfa7a8a8a8b6;
-	Sat, 22 Aug 2026 20:47:16 +0000
-X-Mizu-Trace-ID: 0b21dfa7a8a8a8b6
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <a60afe54-7059-4827-8c3b-dfe01a0cde9c@mvdan.cc>
-Date: Sat, 22 Aug 2026 21:47:12 +0100
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="EyIM1r1C"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1787433336;
+	bh=1jcoQrrg+ZOFFcm0IJezhK7ZkjN9NLdnp7HFt2xdfN4=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=EyIM1r1C6o3N0J2MKkkkS1VtJL3QZgGslQ0oxxVnJ0XaT6d4i5Olsk/9P6oFvoQkZ
+	 7KOVqwdYKbJp+Kxo2WY0gVkAIdbm/DpJaV+Y4czWdSe4g3Wme2WzVwMpMdi6JQLodh
+	 WRpv6kvASvmd2AUMowN3ez300ejDQ0Jx/PDrtR8mANV3ehvJdV+0iODqyLzKPLpDi5
+	 T5/EdUulhcYjby+UJq5q5zfxs4GX+vqGi/RDFBRHgh7e1tLtIh6guURZDq7ySsKI7e
+	 jhP5/FckjaJnQUv6Z+sM/9q4z6u4nLOUBmACiYD0AKoioYup2L36txLXCiOKB3ABRk
+	 HLeSg6klWu+chQpBop1ymkLJnhfFQiJSxsVw2qX6Hpsn8UND2C/zRIyBdw9Hjc/JeN
+	 OOYE77AFT9XTy78SDGATayqJgbEBL1QuYMgiA+d39mrAR0ET6slmWGCteePyrvYO7l
+	 dTU2xlz2ymWjXm/BLLFvouENaEozIqdW0lK8W3BkamuhooxKH48
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3e4a:aa65:6e9d:a12d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E176E20101;
+	Sat, 22 Aug 2026 21:15:36 +0000 (UTC)
+Date: Sat, 22 Aug 2026 21:15:35 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Alexey Samsonov via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Alexey Samsonov <vonosmas@gmail.com>
+Subject: Re: [PATCH 0/3] treewide: migrate from legacy utime.h to utimensat
+Message-ID: <aooRdiVdjovWSFiG@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Alexey Samsonov via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Alexey Samsonov <vonosmas@gmail.com>
+References: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
+ <aonIVn-ZQoMKWCAd@fruit.crustytoothpaste.net>
+ <xmqqzeyeujde.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] credential/libsecret: load secrets explicitly
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Daniel_Mart=C3=AD_via_GitGitGadget?= <gitgitgadget@gmail.com>,
- git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>,
- =?UTF-8?Q?Mantas_Mikul=C4=97nas?= <grawity@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-References: <pull.2372.git.git.1785883217733.gitgitgadget@gmail.com>
- <331e94ec-c07a-4d56-938d-d12c9a0cc5c9@mvdan.cc> <xmqq33w8sjcg.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Daniel_Mart=C3=AD?= <mvdan@mvdan.cc>
-In-Reply-To: <xmqq33w8sjcg.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="b5EUN2Bp6VXukB6y"
+Content-Disposition: inline
+In-Reply-To: <xmqqzeyeujde.fsf@gitster.g>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Hi Junio, thanks very much for your review. I also do not program Gnome,
-so this is just based on my best effort research :)
+--b5EUN2Bp6VXukB6y
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
- > The above makes it sound like we can just request with
- > secret_service_search_sync() exactly the same way as before (i.e.,
- > with LOAD_SECRETS), and then check with secret_item_get_secret()
- > to see if it has secret value in it.  The problem with the current
- > code is that we do not validate what that secrete value is (iow, we
- > do not say "ah, NULL, we should not assume we do have secret already
- > obtained here").
- >
- > So does the first hunk to drop _LOAD_SECRETS really needed?
+On 2026-08-22 at 17:59:09, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > On 2026-08-21 at 14:23:20, Alexey Samsonov via GitGitGadget wrote:
+> >> This change is generated by Gemini Flash from Antigravity, but all the=
+ code
+> >> has been manually verified by me, and, where applicable, adjusted to m=
+atch
+> >> the existing behavior as closely as possible.
+> >
+> > Unfortunately, I don't think that's allowed.  From SubmittingPatches[0]:
+> >
+> >     The Developer's Certificate of Origin requires contributors to cert=
+ify
+> >     that they know the origin of their contributions to the project and
+> >     that they have the right to submit it under the project's license.
+> >     It's not yet clear that this can be legally satisfied when submitti=
+ng
+> >     significant amount of content that has been generated by AI tools.
+> >
+> > I therefore haven't read this series to avoid being influenced by code
+> > we're not allowed to include.
+> >
+> > [0] https://git-scm.com/docs/SubmittingPatches#ai
+>=20
+> Your stance, as I understand it, is that Alexey's DCO is not valid
+> because, acting as a copy editor of Antigravity/Gemini's work,
+> Alexey cannot possibly know where the code was copied from.  And we
+> cannot accept work that is not covered by a valid DCO.
 
-Not strictly; your version would avoid the assertion failures too.
+Yes.  We know that in some cases LLMs regurgitate code that is
+substantially similar to training inputs and we don't know what the
+legal status of the output of an LLM is, especially since there is
+active litigation around the world.
 
-I dropped the flag because it isn't the single call it appears to be:
-libsecret implements SECRET_SEARCH_LOAD_SECRETS as the SearchItems
-D-Bus call followed by a separate GetSecrets call covering the matched
-items, with any error from that second step discarded. It also skips
-locked items on the client side without even asking the daemon, so
-SECRET_SEARCH_UNLOCK having silently failed is one way to end up with
-a NULL secret. The patch does SearchItems plus one GetSecret for the
-one item we use, so the common case is the same two round trips either
-way; it is your fallback version that would add a third in the rare
-case. That is what the "cost is unchanged" paragraph in the commit
-message is trying to say.
+The DCO was invented to provide a legal assertion by an author that they
+are only submitting code they legally have the right to submit and I
+don't think there's enough legal clarity for us to know that with an
+LLM.
 
-Keeping the flag with a fallback load would also mean the explicit
-load only runs during the rare race, so that path would go essentially
-unexercised, and load errors on the common path would still be
-silently discarded. With the unconditional load there is one code
-path, taken on every run, and any failure produces a real error
-message.
+> I think that is a much more prudent attitude than being cavalier
+> about legal issues.  I used to think, "Hey, the person claims in the
+> DCO that the code is appropriately licensed, so if it turns out to
+> be a false claim later, that is his or her problem, not ours."
+>=20
+> But that is not how things work.
 
- > I am also assuming that this is a race condition that is not very
- > easy to reliably reproduce in the test, so I wouldn't expect it to
- > come with a test to ensure that the fix will not regress in the
- > future (in other words, lack of patch to t/ directory is fine).
+It's my understanding that in many places there's a difference between
+knowingly doing something and doing something without knowledge.  For
+example, Canada's Copyright Act uses the text, "that the person knows or
+should have known infringes copyright".
 
-Right, it needs a concurrently-racing process (or a locked keyring)
-to trigger, so I don't see a way to test it reliably.
+So we do have more of a legal problem if we knowingly distribute code
+that infringes copyright or which we suspect may do so.
 
-Thanks!
+> If work submitted under a DCO later turns out to be based on
+> something we cannot legally use, the submitter may of course be in
+> trouble, but we would also need to bear the cost of ripping it out;
+> the later we discover the problem, the more substantial the effort
+> necessary to deal with the fallout will be.
 
+Yes, that's true.  We still have the fallout and issues in terms of
+project management to deal with, but fewer legal problems.
+
+> Stepping back a bit, though, is the situation really all that
+> different between a relatively new author who discloses their use of
+> AI and another author similarly unknown to us who claims it is all
+> their own work?  Either way, if the code turns out to be unusable,
+> we would still be on the hook for participating in the infringement
+> and would bear the cost of ripping it out.
+>=20
+> What worries me a bit is that there may not be much difference
+> between "you said that you relayed AI output, so we won't talk to
+> you" and "we do not know you well enough to trust you, so we won't
+> talk to you".
+
+If somebody comes to our project and lies to us about the provenance of
+their work, that's very serious.  Saying, "I wrote this with AI," when
+we don't allow AI is being honest and ethical and disclosing relevant
+details to the project.  It may be that we can't accept their code for
+that reason, but they have participated in the project in good faith.
+We could certainly accept other patches from such a person written
+without AI.
+
+But if a contributor misleads us about the origin of their code, whether
+it came from AI or was taken without credit from another project,
+then they're not at all acting in good faith and we will likely not
+allow them to continue to contribute to the project.  Moreover, they
+will also be unwelcome in most other projects as well because they'll be
+viewed as dishonest.
+
+That doesn't affect whether we end up having negative consequences from
+distributing that code, true.  But at some point, we have to trust that
+most people are honest or our community and society break down.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--b5EUN2Bp6VXukB6y
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmqKEXcJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ8sbtg/wYTR9iBltNz6sF/UhE+X067LFQVG48G3ZNiUU
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAIyFAQCHIPxCyYrd98LZnGpZzEr3gcE3
+yYVykoAI/TgjNdo1RwEAwt0/X23ewyAulZde6jOqKb/oF7WTTQDa35gY3x/tHgA=
+=vpfX
+-----END PGP SIGNATURE-----
+
+--b5EUN2Bp6VXukB6y--
