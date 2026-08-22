@@ -1,130 +1,145 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-198.mta1.migadu.com [95.215.58.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E8D3F0AAC
-	for <git@vger.kernel.org>; Sat, 22 Aug 2026 16:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1E1380FE7
+	for <git@vger.kernel.org>; Sat, 22 Aug 2026 16:10:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787414629; cv=none; b=cfL7IHAXHeWxf10SWE9RLlNdvQ3kqROnxeKs7oM75Kdkc+PmMJpRmb3wQZxi4uPETa74mdNkPm5xjXPDLoS9AOugO6EKFMhjiukQShQVwlhPxd0CUu0TT0l71J+LR5T/D7q2uF0QhRNqLcM8+SKmRywn7qIMc8RCLh5cxpVvM90=
+	t=1787415017; cv=none; b=IOeARX1X8xBaEOzVGNfOAWUn+/JELacnsQurQrXohrZlwQEtoxitJff9T7vBhILeHqnMaDPqsimdvIpN1Q2bH7j55CW70NbAVZbUgHP0egOzKV2ekq0fW+8O4IrpfjZ/bD2chL3se3mrUCPiYaO8asrsmXzDTlErWbBypThk7hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787414629; c=relaxed/simple;
-	bh=vCLqMBclHhGt2LS+p7AOX7VjU+Ub0ejjv2SKeGyUhFw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aM3ibTIMIJdAS+s/4areHJwOQXdzvqFL3LE95oTKxmyRbfay3qHg64dooKFGJsZYXGkHLqNN+LgjByo3tar7Qy9nnIGfT5mGhMEnLlAz+Xj4BvxRb0ibtEsCdfKG6mNG3jM2sBXMzDPCaaZ/rsLXY1FKEiGDMbNd9VK7c9PMrqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=c7BTUQrc; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1787415017; c=relaxed/simple;
+	bh=rUBnbo6i2iuXCCAmuodTYI7ZBKAVV2jzL0xtivOAdS0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To; b=KcVb7J9yua5bg8NBJrTI5Og+xNRhR4tapuwpOWpyCNegHPag1PpqiR8/W1m8Zb9Cx6GWxDb1MApsLDSK9N9V1+k2ugVAom18P/Cttlamhmr8Pfzb0K3qFYsUhQODLLc2CKVEwyj15Qbn5RQEhj1X90ploBHI5bGXTYmxgUiAaUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fordltc.net; spf=pass smtp.mailfrom=fordltc.net; dkim=pass (2048-bit key) header.d=fordltc.net header.i=@fordltc.net header.b=Vv5BuvX0; arc=none smtp.client-ip=95.215.58.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fordltc.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fordltc.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="c7BTUQrc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1787414616;
-	bh=vCLqMBclHhGt2LS+p7AOX7VjU+Ub0ejjv2SKeGyUhFw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=c7BTUQrcPJVegxSw2Kv0XjINVbRf8mSypxLIEnrpYMoVHUNuW/S8y0bSmuN1tBV/K
-	 t1BHU+4TRhKm6NJZiJiwwrEmMNulyY+IJgBqyFHaSD0Egx9HgggTg8NZ/MryeALHat
-	 fgHc3xbbD2eXDF89VxY4XSVU0nQCkt4d2HBMnRdXd4xsR7td+fQQMxSAeqkyLCfWtR
-	 2dEsKA8LMXZsYRelrJRJA9gcU37gUMm2ofnKv4cP7l+VUmQ7Vu2JmRQ7GqylzDAabf
-	 C3rWqN4X+VPDSiVQbrCh0lfz+E8jXegcfav6b661FQQuIMHaUhzQyIUvnZXAmMVZjr
-	 J8V9bJrVjQJnFYUCdRAPJGlNq5BvyI3n47/odImGC7HAj1BoGhZf0fWY/S+xalsQBI
-	 tLVqlwbQ/9WnELdlDszQ6cV1IgdSR5W4FqR/ydNyFud5urRktZP6r3EiyfkZKs1cZw
-	 OZDL5LUEnPE5nYCxxjHULOKnswtAtrUqjeEQno3NPaqjtXqxW1Y
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ca36:4c7:5dcd:6322])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5677320101;
-	Sat, 22 Aug 2026 16:03:36 +0000 (UTC)
-Date: Sat, 22 Aug 2026 16:03:35 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Alexey Samsonov via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Alexey Samsonov <vonosmas@gmail.com>
-Subject: Re: [PATCH 0/3] treewide: migrate from legacy utime.h to utimensat
-Message-ID: <aonIVn-ZQoMKWCAd@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Alexey Samsonov via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Alexey Samsonov <vonosmas@gmail.com>
-References: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=fordltc.net header.i=@fordltc.net header.b="Vv5BuvX0"
+X-Envelope-To: git@vger.kernel.org
+DKIM-Signature: a=rsa-sha256; bh=rUBnbo6i2iuXCCAmuodTYI7ZBKAVV2jzL0xtivOAdS0=;
+ c=simple/simple; d=fordltc.net;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787415010; v=1; x=1788019810;
+ b=Vv5BuvX0iTRJkIcLjoGiM3kCEPzSUlh5g1vnjLXOd7/eon7c4j9WEZ9iseNgus/bMqAOHwrG
+ zNdID5cifkjaDKJKf5nIeds75NLG5K5RoaCwd7miS2klKyltVLVGKQoLPjC9SdVaA3zLdT8U9dZ
+ uK2nboagaqiiv/wlxsOq0bqWIomKmIUNZiJocI50LRMjrG9CcqPeMrd5xMBgv7tuzg4ChpJZXJ4
+ Yqd0JWLqGTtGqgj8AdMnhIwI197vc7Pad7VL8NDAaQ3PnbaJ/fz9E/43+UoIB00ybfAwo9WvFh+
+ 178JebUvWjWxtc2cfaIH2PZ9DbBBYdFLwzVnMCVLbjURg==
+X-Envelope-To: git@vger.kernel.org
+Received: from localhost (70.23.216.172)
+	by smtp.migadu.com with ESMTPS id 40594fbfb52505b7;
+	Sat, 22 Aug 2026 16:10:09 +0000
+X-Mizu-Trace-ID: 40594fbfb52505b7
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/Yg24tiwWjkji3vQ"
-Content-Disposition: inline
-In-Reply-To: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-
---/Yg24tiwWjkji3vQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 22 Aug 2026 12:10:04 -0400
+Message-Id: <DKVLQLCHHBM4.WCEIQ0I73YOA@fordltc.net>
+Subject: Bug Report: subtree then rebase causes unrelated history to
+ conflict
+From: "Gabriel Ford" <gabe@fordltc.net>
+To: <git@vger.kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
 
-On 2026-08-21 at 14:23:20, Alexey Samsonov via GitGitGadget wrote:
-> utime() function for setting access/modification time for files (and a
-> corresponding <utime.h> header) have been officially removed from POSIX
-> starting from POSIX.1-2024. While existing system library implementations
-> still provide this function for compatibility reasons, its implementation
-> may be removed in the future, or otherwise degrade over time. Some newer
-> libc implementations (e.g. LLVM-libc, currently under development) don't
-> provide utime() function at all.
->=20
-> This PR switches the git codebase to recommended alternative: utimensat()
-> POSIX function (which supports nanosecond-level precision) from <fcntl.h>,
-> and, as a possible fallback for older systems compatibility, utimes()
-> function from <sys/stat.h>. It also provides the corresponding MinGW
-> wrapper.
+I created this report from the git bugreport template following
+https://git-scm.com/community. Thanks to anyone who takes the time to
+read and look into this! Please let me know if there are any follow up
+questions or if anything is unclear. This is my first bug report to git
+so please let me know if I should have written anything different!
 
-I seem to remember that we cannot use the *at functions because of
-Windows and the fact that it doesn't offer the proper semantics.  I'm
-curious as to how you did this, but I didn't read the series because of
-the below.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> The alternative is to unconditionally use utimes() where possible, but gi=
-ven
-> that utimensat is available in glibc starting from 2007, and on BSD syste=
-ms
-> since 2012 or so, it makes sense to use the newer variant by default.
->=20
-> No behavior changes is intended or expected (except for Git explicitly
-> passing nanosecond-precision timestamps to kernel, where previously only
-> second-level precision was used).
->=20
-> This change is generated by Gemini Flash from Antigravity, but all the co=
-de
-> has been manually verified by me, and, where applicable, adjusted to match
-> the existing behavior as closely as possible.
+  I found this when using git subtree to vendor this library
+  (https://github.com/htfy96/dollar), I believe this will also happen in an=
+y
+  similar cases where the subtree has a file with an identical path as one =
+of the
+  files in your repo.
+ =20
+  I was able to repro this from a brand new repository as follows:
+ =20
+  ```sh
+  mkdir ./test_repo=20
+  cd ./test_repo
+  touch .clang-format
+  echo 'Any text in this file should work' > .clang-format
+  git commit -m "create .clang-format in main repo"
+ =20
+  git checkout -b feat_branch
+  git subtree add --prefix dollar_subtree git@github.com:htfy96/dollar.git =
+master --squash
+ =20
+  git checkout master
+  touch foo.txt
+  git commit -m "commit anything so that we have something to rebase onto"
+ =20
+  git checkout feat_branch
+  git rebase master
+  ```
+ =20
+  You should see that there is a conflict that needs resolution between the=
+ main
+  .clang-format file we created, and the subprojects .clang-format even tho=
+ugh
+  the files are in seperate dirs.
 
-Unfortunately, I don't think that's allowed.  From SubmittingPatches[0]:
 
-    The Developer's Certificate of Origin requires contributors to certify
-    that they know the origin of their contributions to the project and
-    that they have the right to submit it under the project's license.
-    It's not yet clear that this can be legally satisfied when submitting
-    significant amount of content that has been generated by AI tools.
+What did you expect to happen? (Expected behavior)
+  I did not expect a conflict since the .clang-format file we created didn'=
+t change.
 
-I therefore haven't read this series to avoid being influenced by code
-we're not allowed to include.
 
-[0] https://git-scm.com/docs/SubmittingPatches#ai
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+What happened instead? (Actual behavior)
+  There was a conflict between the two files in seperate dirs.=20
 
---/Yg24tiwWjkji3vQ
-Content-Type: application/pgp-signature; name=signature.asc
 
------BEGIN PGP SIGNATURE-----
+What's different between what you expected and what actually happened?
+  The rebase conflict that occured.
 
-wr0EABYKAG8FgmqJyFYJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ1TRp7kvbASYvcE7IL8Mu37CgYqN/qdriASaCNTJrWCe
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAKwNAP9E4ps4Lsk8Lf9+UYnX2piVzEpr
-ENB3mzIzkaXvtaPNOwEAk5vrB0VLqhfsoyoBPGBmXg46zy8ZED4CDvTiowmSrAU=
-=xVcf
------END PGP SIGNATURE-----
 
---/Yg24tiwWjkji3vQ--
+Anything else you want to add:
+  I think this is happening due to the way git subtree is squash merging in=
+ the
+  subproject, even though a git blame on the .clang-format we created doesn=
+'t
+  show any changes, it appears that the history conflicts since the path
+  relative to the root is the same in the subproject.
+
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.55.0
+cpu: x86_64
+built from commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+rust: enabled
+feature: fsmonitor--daemon
+gettext: enabled
+libcurl: 8.21.0
+OpenSSL: OpenSSL 3.6.3 9 Jun 2026
+zlib-ng: 2.3.3
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Linux 7.1.8-arch1-3 #1 SMP PREEMPT_DYNAMIC Tue, 11 Aug 2026 09:16:08=
+ +0000 x86_64
+compiler info: gnuc: 16.1
+libc info: glibc: 2.44
+$SHELL (typically, interactive shell): /usr/bin/fish
+
+
+[Enabled Hooks]
+
