@@ -1,82 +1,85 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E826E49365C
-	for <git@vger.kernel.org>; Sat, 22 Aug 2026 17:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC48034D3A9
+	for <git@vger.kernel.org>; Sat, 22 Aug 2026 18:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787421553; cv=none; b=GgZU05f18hpXMr5bfwic8JxXOq+hxkfQo4+yKg+dNvvgOBtLx2tPGeG+7tdC/XJxhVPnyi0oDQ49GZvDp95qrVc8v4Xv8czdsDQz36W97TwODdgatIM6cZ79H+zb5QTRHruwAh1I0EuW+B9KT4JBIN1HouejKx/d8sOHcwJ0o9E=
+	t=1787422132; cv=none; b=dJ5QtVrsRfrf7dKtw+YYLmNBNnBaD0Tuv6WH2zs6+xASwfvK2tlwVaIPbbvzpDEi/9wYwI5J9cq1R2VmAXNy+QZKhA3rWUHwrsHiPZi++HqEMvjbNcPQvRnQQPGviMYdRidhzN9/YxBYRTC33F9tNly1M4VjRHhYRqRALyldcXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787421553; c=relaxed/simple;
-	bh=BEI9ONZ3E4PDX0t5iiOOVd5eI0CBGp3EVbX0bfzyLUw=;
+	s=arc-20240116; t=1787422132; c=relaxed/simple;
+	bh=6pVlORUJ3QP+yvufzcGhJG6mOATFUzQA/XPc3YozQxM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IjNf/0ScecarzyrA/uR1Mg3U4AGp5B+rUqr1lwLDoMWzRyOuY76xw/r4EW8B95ZojfU8Zv53p7HQaR7bcylOcDCuW914EVeUX+h92IZwS35MwIuK40Cts6vCVpShLBL7ZkXIwlTDya+Us+O2rG/cQMtj53QfdOpzBY6JZm3wPtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xjjkk9hn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TVV+8Qmf; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=N8ZaXnf7Gi6JnR2gCgEFuZb2Ghipjpkx2xik5psOqnCd6ygUIplQTCodIsXtY3kag+NoLCpD6MKjiZSAij17ZyzzWJQcrvL3UxxPbASwKiD33VAGUYE1Y9ZB81RC2ZxDECgcejjbBW2kSahmW1gdZqcc1dUyqygBeAqhwo4gJUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ov/LiyTd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y9U2EeBq; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xjjkk9hn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TVV+8Qmf"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 37DE91D000A6;
-	Sat, 22 Aug 2026 13:59:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ov/LiyTd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y9U2EeBq"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id C7CBF1D0002E;
+	Sat, 22 Aug 2026 14:08:49 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 22 Aug 2026 13:59:11 -0400
+  by phl-compute-05.internal (MEProxy); Sat, 22 Aug 2026 14:08:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787421551; x=1787507951; bh=UmGZlYRVMJ
-	hPv93lZB09Ad68RKCAEf9pXuAQTvlrbCM=; b=Xjjkk9hnP0rog3k1YKVuhOkx+m
-	bi++TkQE1KXy2v5iMKAXTOxXimH9PgMw5sxC/YSlGHomWJBe7Z4DWDDrnUgvo6UG
-	agXZqlFJAp+ANIPANoZsEMZdLxZXp3PnRpVSJCEvnAvsYsuUEVJSVn+8NYqK++kw
-	KyIjTjeq1PoUsSwCvxhDUIH3pE4jC4e5bVHQDnwQ8sItrO5x5lJNVa8aK+mVwXiJ
-	NUYtlLv+3gGaHPdITugEsL6roOU50c74JsgEkGCuxLNM+92LAOWYFc2p465p5KaE
-	DRCwm85j1wDVIJpeKgUkkDF5ex4fLk8gzxwFPf53eH84iwd10nH79cXJ0jiA==
+	:subject:to:to; s=fm2; t=1787422129; x=1787508529; bh=YhRtbvyvaI
+	sK4nqDx1b7P0Z/S4wcA5n8m1VVuqHRHF0=; b=ov/LiyTdJngjNVDX5N/q3Bs0PZ
+	UlNHXnboUZdA9Te5fwx9wh8cPMp+D8tlF8nBrkTrc7y/S3FsRiQak0QbPY7shgmd
+	J2qJzgbZ/H6f0X+RYDA2K3AxTQdmm3a24GMGLwNXGkm1NevY2ZUdWHdBKZf/g2i0
+	YxdaWy1YRoZnnBGNNoXPLFGNASSE3nH9jcKqU3VBe6V3PBj1UKX5mZMEVCfMVfny
+	oUOQQxxtPO27d+zIqNYHDkO2c9x7PdOI8L6+VrySIwAlGIWAkSWjjPhZCZBa25MW
+	VrkxV77AbwAGlb+mactNnKwGWEDd9dr1Gq2Golf9LpulsqslL9ICtj6Vl8JQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787421551; x=1787507951; bh=UmGZlYRVMJhPv93lZB09Ad68RKCAEf9pXuA
-	QTvlrbCM=; b=TVV+8QmfFFVu7UtE5yP51ZXpySL/TFPbUV1yBkfdEQdKfJOnBrm
-	TCaT75rFh9qM2nWA3NtJMvjfCF0uYMrzUvWrk1pQA3vMZ/54eITDJ8tFWk8gCDAO
-	HNvccTQdODUqDX4uBX6sVv2DTgmgR9jSO8l5u9c7bJHO7oCWHDk0VppV9c5dFkJQ
-	UXwud8/WruaPpatIWJUAiPaWcNpfIyZO1g312JGDOjxlJcDo/9CGHGE/3lXX0wvU
-	6a6iMBGmixwpmoT4QzoCKcaOub0uMjRfhODTGKC3DfVFsfyHF+7wGMf90QXTfL9+
-	BISiizT6H7/C5IhXmYplxuiit2ygwh177NA==
-X-ME-Sender: <xms:buOJailXx0hZQFl4sqyxeKQpTsMLce9r5ormGCxVf78v_vDaSG02Bg>
-    <xme:buOJagvZJxhZqz3ZZYBTIQVG3unUTNFAtrYstFMfsvl6sNTVA6GBMIUT7RX0LN4_s
-    BSHjI5XcLSPrduM1Zh6TBsU9Y0UkX9ay4qhp7i51RqgezEgrU7V>
-X-ME-Received: <xmr:buOJao_eLVk-9_EGurYg6_x4s9mJ42zShN83LZvZtZ3jRaq5cjL0L_jeaR2e2BPI8JQkqHTK_5tEt_CQyHkrdwNuHRKAsH7CGg>
-X-ME-Proxy-Cause: dmFkZTFQkDAENXUejBWhTZNFOXPyNoKDNbxkTgSHnKsQKawC4PS5FKWaHKFwmPwFgRbbC6
-    bylPDieIAkPMDIbb/MTJMT5Xp1LqoKXTdvuTKUy661j3hvz7k8yeFM4ljEicbj2EO3HsRA
-    dfLCG9iiBGqG6aNhlWBEFr9jSZGtvowUsKdtAFq6HO4xvx7k+1eNsFHlDZT5itBXqXpdRw
-    im16/+YgVaudLihAcDArTLOvo9fC3GNACVrHqml70Y4x6Q7xKU1jvqpYjzxK4gaKfDlnfZ
-    EWLqgFIDOpWCSjF3LBWWFkGfxr3KwY9jGMdfvxnK8WdKJSSmJV32dMKQZk5+s74vwfeZZ7
-    rWT7JdMUN6t4YYudi4nRGBqMj+3nPpiNriiaV9FHlQdnyHVC4aCqqD4DqVBgYNccuCYRdU
-    fIs/n+NHz+1q7Dc3SAyRruPD9jHrce4+4cez+VRaYBZqbxceZ/BFQgBfiWJEG+ldlMg/Qd
-    1coR9C7sHZokRJKdxEiHCbDLjVGH/tXVT6ccrTdx+KaEDTBMSYwajBso2ZgQWsmjszx35n
-    TSqDAvwzOqxElUUEpe3nDljf9P68FKbrv09teXbmFraosMM6afa31Q0mntmq5x7ukNpDe0
-    oUOyAbD2qPzndYEpxXhoWkZEIp1s+R+daM600cdS61f1y21vkfY9+TtAXH/A
-X-ME-Proxy: <xmx:buOJaiNn8eEXat58f5HuS5fayjGJ96bajiFLPWNeR_vReqFuH2bbXA>
-    <xmx:buOJauEYzLm0qCWPQYtD5SEKcThusrOu1Sy0z4SRLy_jFD0bMFlHyg>
-    <xmx:buOJaoQXqYuWYzFRRvVYUJ_yzCTjHXG0k4R9QPUk309SeF99Dcl07g>
-    <xmx:buOJajvjCN5EFL7Ja5rcl4S8oO8LmzJhbCP6D8eGqLbHKWydeROdYg>
-    <xmx:b-OJal-p-1WD7S9kGy163JP2fAqlkz90pt29uJayqgcFwrByTEEMEzFi>
+	1787422129; x=1787508529; bh=YhRtbvyvaIsK4nqDx1b7P0Z/S4wcA5n8m1V
+	VuqHRHF0=; b=Y9U2EeBqq1NNONJeguX4KoIyvV0kPUiqOtusjH8M0CHzMR3xAha
+	5FKHzIOQfpzA6HLiYUqYsPcxN1AlLh04WiHhnC3fp2CnOm8N59puTf9XLD1afsq0
+	2weOts9qh2U/hKn20L9qG43PLVKBAcju6utUZq1vk+ydfmT2sFExxNrPn0Vierzf
+	Je8k5FKgRM15amIzpC/3iU1il+joVFkfDWf4bG859FHmRoyWFcmnhHmcnT4GWtZu
+	7IqZ7QFn/2jZhQxOnLCpuina0sW1A/B7MAxV/lPuUM4OIGfyqEHzPziC0fxc07/x
+	wUIBsKLEsZ1/6lxf666sF5+LkoV5+AAfFEw==
+X-ME-Sender: <xms:seWJarJmHFw5dwyf2H1QvkU9goFL6ASSShEUAeAMFr25QQhJQknJ6Q>
+    <xme:seWJai3n5LtFj7wFXxsNE4WsJiJucDTUIXlXK49iTDds56nsbBl5OVE2mcSRd8fNl
+    opD0wraxKP75oqdykY9sCUIi-2WCNG1fDZFdTJUpn5GpmYFVkvK>
+X-ME-Received: <xmr:seWJatg2aBQucWUlxOWpjnQKI1YRBYD-ktoG8pqzJnxi7YOR6VOuvD0arMpnooCD39alfgVizmYSplBXVNpfqssTZeIohDuPzA>
+X-ME-Proxy-Cause: dmFkZTFJlTQAHbpcY6ZUGdp+b1yuTVm3DNR9csB3Yfv+QasQHMir63WdzLKpHIEaBkEIOU
+    DKVUBXG6oqHZWbljFGP+t0TuW/P0kKUHIQRyffHzjor7eegvgEaqF63c4qaCEfIefK2jff
+    QSxEv2zSHHMpJ9ECOMJdyH5X+hcCBII0ibv3RehE0a6jKWmVKvKxr6TkCTB3Qm3JbKzZZ2
+    fL59LzQ7Xm+9K/n6t/pSEmGC9df/zr5YwdeOehTdw7mgbN4MnSe/G3y0nceuoeaVlO1Qhj
+    B2P2UlAtk19Udi8J3sPg5VUMWZqJ8CDmgn2BEywch6gC864L/APhyVMuqcacj+KoalS9m9
+    2hjefUpaqsYiFFUd+ihYf3o7wxgQhCsliltLmEa9FBuISX2dRj8a6i6Q+vOhAm5s0fMnxn
+    +4PiftLDgUgNFSIXT+daiAUrqixpN5YWAT2SX5uv6e54JlbHSTfAlxdTVxb01Ax1bl4H7q
+    Q7Egku+d1zwGshrB7AzKAtwzFO9e1pDS5alrovfpbpI+ELdSbVNs3aR/A/zCOapDJjHx/f
+    9QVG0SvWbkkiLAJZUvZ56gY5Kz6Q6SyjD1KOEsBv52oh1YmXOddSIhqBKIZyyM8+5Gc3TN
+    qYniJEnVa0znsl30Y84SOHYpNfq9D7pWRW/EnlFGSoEwLveUtDUT2NsLdWgw
+X-ME-Proxy: <xmx:seWJarXZshTmD5na3pcB2IFe3TlI_nKghgyIko6sI9RL4VhoYjengg>
+    <xmx:seWJakUfEY9_j_z7dXgHEggruDo_r4BTvac6aJP7xJlZgByRo5IJ2A>
+    <xmx:seWJajhtLoUKkzFCzd0E7_u_id9sA8K0RdqtnXh24SBW0900d6w6yA>
+    <xmx:seWJanZHjbhmyLqIj929vTAbV2gvFF6SvhucI9XdzcqGT5b1OqfIpA>
+    <xmx:seWJaqurW0Q4GBiCLjoA3oxQHlcgo-Z2-7JaljYV9oBOauB9TB5Jmrvs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 22 Aug 2026 13:59:10 -0400 (EDT)
+ 22 Aug 2026 14:08:49 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Alexey Samsonov via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Alexey Samsonov <vonosmas@gmail.com>
-Subject: Re: [PATCH 0/3] treewide: migrate from legacy utime.h to utimensat
-In-Reply-To: <aonIVn-ZQoMKWCAd@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Sat, 22 Aug 2026 16:03:35 +0000")
-References: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
-	<aonIVn-ZQoMKWCAd@fruit.crustytoothpaste.net>
-Date: Sat, 22 Aug 2026 10:59:09 -0700
-Message-ID: <xmqqzeyeujde.fsf@gitster.g>
+To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,
+  Yoichi Nakayama <yoichi.nakayama@gmail.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>
+Subject: Re: [PATCH v7 0/3] worktree add: improve message for ambiguous
+ remote branch name
+In-Reply-To: <pull.2197.v7.git.1787368962.gitgitgadget@gmail.com> (Yoichi
+	NAKAYAMA via GitGitGadget's message of "Sat, 22 Aug 2026 03:22:39
+	+0000")
+References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+	<pull.2197.v7.git.1787368962.gitgitgadget@gmail.com>
+Date: Sat, 22 Aug 2026 11:08:48 -0700
+Message-ID: <xmqqv792uixb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,53 +89,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 2026-08-21 at 14:23:20, Alexey Samsonov via GitGitGadget wrote:
->> This change is generated by Gemini Flash from Antigravity, but all the code
->> has been manually verified by me, and, where applicable, adjusted to match
->> the existing behavior as closely as possible.
->
-> Unfortunately, I don't think that's allowed.  From SubmittingPatches[0]:
->
->     The Developer's Certificate of Origin requires contributors to certify
->     that they know the origin of their contributions to the project and
->     that they have the right to submit it under the project's license.
->     It's not yet clear that this can be legally satisfied when submitting
->     significant amount of content that has been generated by AI tools.
->
-> I therefore haven't read this series to avoid being influenced by code
-> we're not allowed to include.
->
-> [0] https://git-scm.com/docs/SubmittingPatches#ai
+>  * fix grammatical errors in hints
+>  * narrow the scope of local variable oid
 
-Your stance, as I understand it, is that Alexey's DCO is not valid
-because, acting as a copy editor of Antigravity/Gemini's work,
-Alexey cannot possibly know where the code was copied from.  And we
-cannot accept work that is not covered by a valid DCO.
+Both changes look sensible.  I very much like the new advise()
+message that is much more concise.
 
-I think that is a much more prudent attitude than being cavalier
-about legal issues.  I used to think, "Hey, the person claims in the
-DCO that the code is appropriately licensed, so if it turns out to
-be a false claim later, that is his or her problem, not ours."
+>      -+	advise(_("Branches with the same name appears in multiple remotes:"));
+>      ++	advise(_("Branch name '%s' appears in multiple remotes:"), branch);
+>      -+	advise(_("Branches with the same name appears in multiple remotes:"));
+>      ++	advise(_("Branch name '%s' appears in multiple remotes:"), branch);
 
-But that is not how things work.
-
-If work submitted under a DCO later turns out to be based on
-something we cannot legally use, the submitter may of course be in
-trouble, but we would also need to bear the cost of ripping it out;
-the later we discover the problem, the more substantial the effort
-necessary to deal with the fallout will be.
-
-Stepping back a bit, though, is the situation really all that
-different between a relatively new author who discloses their use of
-AI and another author similarly unknown to us who claims it is all
-their own work?  Either way, if the code turns out to be unusable,
-we would still be on the hook for participating in the infringement
-and would bear the cost of ripping it out.
-
-What worries me a bit is that there may not be much difference
-between "you said that you relayed AI output, so we won't talk to
-you" and "we do not know you well enough to trust you, so we won't
-talk to you".
-
+Will queue.
