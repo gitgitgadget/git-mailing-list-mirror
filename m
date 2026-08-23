@@ -1,34 +1,33 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C36C0385D68
-	for <git@vger.kernel.org>; Sun, 23 Aug 2026 10:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AD5A348465
+	for <git@vger.kernel.org>; Sun, 23 Aug 2026 10:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787481060; cv=none; b=fVa7PM9zooAjNg3l2Es+WOAzC9QsPU7IXpAXfDx7tgs5M5NGuQnnxYJgJ1CcXDtBy94TswiFdruwZrPcSYZVZJiO0i3Te/1t8kQUfTxYOXQwYG+nhP5B6Hr4GO2lT65JRkB9bJxuongvNX1uNNlJCu8p6uVbre62M63PW4HIp5Y=
+	t=1787481061; cv=none; b=mu33nMEXoFFkJLXGWcBN1Hs2p9R0aVemvOcknQodQWvkdCMwo0bYeuJd1d+EnnylAlwJtyYzQf94/uSzmmD8nnY6PaNhyz318z1NJR0mIIgSxflrhY7397jxSBOVwd1X82TV1nHI4h884T1tRP4LVMbaCeUABoKgw2bMjosbjYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787481060; c=relaxed/simple;
-	bh=a6zMdcBqTIK+qFB8KMVDjq7dsO2kGy1GrTfOXtN1sbA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=ocwSdyPjWW/X/eurtTWFd6IvjVH4+kSY6yukzfTpq3cM53UXKscodM5OgK2NLrUZLVTZquw8V83zIaHKhg8hSv2veVxBSw9GSRjYumP/n+G/GtAtRzmXtDX6s6o82yqFLXqJ2+yL4NXNgP0gIr/w2KFxNcUG2q1BycTisZVNC1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=WDB5eWvU; arc=none smtp.client-ip=13.77.154.182
+	s=arc-20240116; t=1787481061; c=relaxed/simple;
+	bh=y1a+X5PL3/vNDKXEW3UajOOWYhhIjFPDbgzMKOw88gg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=YXHidxjIyA7pSvQSxfY87pOtr7I8BKC1mmfZIP1sUjwb8P5ZDi14VuNGuWxpq5BuTeawrO5YD3qo3BH/e14AsSiCC8e/x6Q3wl63hl+/t+NC8UgDRJGAy6c09+PA1a6C/K3LINjU5qO+excuU9vpqi1g4y46KVJ14AJDgxH1ALA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=HQPHDH1Z; arc=none smtp.client-ip=13.77.154.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="WDB5eWvU"
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="HQPHDH1Z"
 Received: from [192.168.4.34] (unknown [4.194.122.136])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 131BD20B7166;
-	Sun, 23 Aug 2026 03:30:14 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 131BD20B7166
+	by linux.microsoft.com (Postfix) with ESMTPSA id 30B3420B7128;
+	Sun, 23 Aug 2026 03:30:24 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 30B3420B7128
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1787481018;
-	bh=DJ/ZAC94sBFNg4Y32nKEiSOE8CFQTm4Z+WemhEm0uoc=;
-	h=From:Subject:Date:In-Reply-To:References:To:Cc:From;
-	b=WDB5eWvUWrzb90LJvdA3n72931sqpsrh4HwamJu6DBNrbmFy8yfB2/cbZcba/FlvN
-	 TxyJGdJaCROPXk5TCz8yMHrk8j963q7damALz7uXxO8FHWmXIL75rpYRpCfCbyODuA
-	 1e/eekd1P+JgGf/3IXnLn8J2/ByZrbLk5WVvhwjI=
+	s=default; t=1787481027;
+	bh=njdmNuyp7zLhJMLH9F1CkUSTp860MpnVbW/tXvu3LfA=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=HQPHDH1ZpC5ZYzSgFpSTkIeEIR0suLJ9hPSLi8/R6uuVKoNkA1y8MFJbZeBiChdfI
+	 MZ3EyrhMEtcQnt0b3mthHvmJOdQss3JA+HMmFkp4BJAbypYWTJetx7ZeEwLlDjZpxk
+	 q+zQpbcjJQRxwQNzjO343prNH9nJ2qQ+zOaa12+Y=
 From: Delilah Ashley Wu <delilahwu@linux.microsoft.com>
-Subject: [PATCH v2 0/3] config: read both home and xdg files for --global
-Date: Sun, 23 Aug 2026 20:28:25 +1000
-Message-Id: <20260823-fix-config-list-global-home-and-xdg-v2-0-b29cc63f017b@microsoft.com>
+Date: Sun, 23 Aug 2026 20:28:27 +1000
+Subject: [PATCH v2 2/3] config: let sequence require a successful file
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -37,123 +36,164 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEvLimoC/5WPTQ6CMBBGr2K6dkjBv+LKexgWQxnKmEJJW4nGc
- HdbPIHJbF4y8775PiKQZwriuvsITwsHdlOCar8TesDJEHCXWFSyOkslFfT8Au2mng1YDhGMdS1
- aGNxIgFMHr85A3WpELesDlq1IptlTOttS7s2Pw7N9kI5ZnTd670aIgyfc0uantUVZH1RhOBbl5
- SzlSaljnTEPdobizYzIttBuzIYhPeP8eyuylDnpb0uzrusXkcVMzhEBAAA=
-X-Change-ID: 20260808-fix-config-list-global-home-and-xdg-9bcaac093a1b
-In-Reply-To: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
-References: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
+Message-Id: <20260823-fix-config-list-global-home-and-xdg-v2-2-b29cc63f017b@microsoft.com>
+References: <20260823-fix-config-list-global-home-and-xdg-v2-0-b29cc63f017b@microsoft.com>
+In-Reply-To: <20260823-fix-config-list-global-home-and-xdg-v2-0-b29cc63f017b@microsoft.com>
 To: git@vger.kernel.org
 Cc: Nils Fahldieck <nils@fahldieck.de>, Patrick Steinhardt <ps@pks.im>, 
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
  Junio C Hamano <gitster@pobox.com>, 
  Delilah Ashley Wu <delilahwu@microsoft.com>, 
  Derrick Stolee <stolee@gmail.com>, Ben Knoble <ben.knoble@gmail.com>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- Jade Lovelace <lists@jade.fyi>, Glen Choo <glencbz@gmail.com>
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.15.2
 
-Hi all, thanks for your patience. Here's my reroll.
+From: Delilah Ashley Wu <delilahwu@microsoft.com>
 
-As reported in [1], `$HOME/.gitconfig` and `$XDG_CONFIG_HOME/git/config`
-are both valid global configuration locations. However, when both files
-exist, `git config list --global` only reads from the former location
-whereas `git config list` (without `--global`) reads from both. The same
-issue was reported for `git config get` in [2]. This inconsistency has
-no good justification and contradicts the documented behaviour.
+Teach `do_git_config_sequence()` to optionally report an error if no
+configuration files in the sequence were successfully processed. Gate
+this new behaviour with a flag and keep it disabled for now.
 
-Suppose that `$HOME/.gitconfig` contains:
-    [home]
-        config = true
+Add tests to record existing behaviour and prevent regressions in the
+next patch, "config: read global scope via config_sequence", which adds
+a code path that enables the flag. When no global configuration file
+exists, `git config list` succeeds whereas `git config list --global`
+fails. The command output is irrelevant, so only check the exit code.
 
-and `$XDG_CONFIG_HOME/git/config` contains:
-    [xdg]
-        config = true
-
-Then, listing with `--global` shows only the home config:
-    $ git config list --global --show-scope --show-origin
-    global  file:/Users/delilah/.gitconfig    home.config=true
-
-and getting the XDG configuration entry with `--global` will fail:
-    $ git config get --global xdg.config; echo $?
-    1
-
-Git still reads the XDG config as part of its effective configuration,
-as shown by listing the configuration without `--global`:
-    $ git config list --show-scope --show-origin
-    global  file:/Users/delilah/.config/git/config    xdg.config=true
-    global  file:/Users/delilah/.gitconfig            home.config=true
-
-The documentation, quoted in [1] and [2], states that `--global` should
-read from both files, so its output should be the same as above. Here's
-the relevant excerpt:
-
-> OPTIONS
->     --global::
->         For writing options: write to global `~/.gitconfig` file
->         rather than the repository `.git/config`, write to
->         `$XDG_CONFIG_HOME/git/config` file if this file exists and the
->         `~/.gitconfig` file doesn't.
->
->         For reading options: read only from global `~/.gitconfig` and from
->         `$XDG_CONFIG_HOME/git/config` rather than from all available files.
-
-To be consistent with the documentation and the behaviour without
-`--global`, we should read both configuration files when `--global` is
-passed. We do this in a few steps:
-
- - Patch 1 fixes slash normalisation on Windows paths. This is used for
-   `--show-origin` assertions in patch 3 tests.
- - Patch 2 modifies error handling when reading configuration files.
-   This is used to prevent a regression in patch 3.
- - Patch 3 reads both configuration files when `--global` is specified.
-
-[1]: https://lore.kernel.org/git/CAFA9we-QLQRzJdGMMCPatmfrk1oHeiUu9msMRXXk1MLE5HRxBQ@mail.gmail.com/
-[2]: https://lore.kernel.org/git/CAAdFe9yhBk-WecVzCTsjQ-4Z3AZAbpP+w+B076ouM3qX6d1WAg@mail.gmail.com/
-
-Thanks again for your time!
-Delilah
-
+Signed-off-by: Delilah Ashley Wu <delilahwu@microsoft.com>
 ---
-Changes in v2:
- - Squash test-only patches into their corresponding implementation
-   patches.
- - Reorder patches to prevent a regression from being introduced and
-   then fixed in a later patch.
- - Narrow the scope of slash conversion to `xdg_config_home_for()` and
-   avoid modifying `cleanup_path()`, which could've broken callers that
-   do not expect normalised slashes.
- - Clarify that some tests only check the return code of a `git config`
-   command; we do not care about the output.
- - Link to v1: https://patch.msgid.link/pull.1938.git.1760058849.gitgitgadget@gmail.com/
+ config.c          | 57 ++++++++++++++++++++++++++++++++++++++-----------------
+ t/t1300-config.sh | 12 ++++++++++++
+ 2 files changed, 52 insertions(+), 17 deletions(-)
 
----
-Delilah Ashley Wu (3):
-      path: use forward slashes in XDG config on Windows
-      config: let sequence require a successful file
-      config: read global scope via config_sequence
+diff --git a/config.c b/config.c
+index 1bdd702e7a..4c958f46bf 100644
+--- a/config.c
++++ b/config.c
+@@ -1544,11 +1544,27 @@ int git_config_system(void)
+ 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
+ }
+ 
++static void attempt_git_config_from_file_with_options(config_fn_t fn,
++						      const char *filename,
++						      void *data,
++						      enum config_scope scope,
++						      const struct config_options *opts,
++						      int *success_count,
++						      int *cumulative_ret)
++{
++	int ret = git_config_from_file_with_options(fn, filename, data,
++						    scope, opts);
++	if (!ret)
++		(*success_count)++;
++	*cumulative_ret += ret;
++}
++
+ static int do_git_config_sequence(const struct config_options *opts,
+-				  const struct repository *repo,
+-				  config_fn_t fn, void *data)
++				  const struct repository *repo, config_fn_t fn,
++				  void *data, int require_successful_config)
+ {
+ 	int ret = 0;
++	int success_count = 0;
+ 	char *system_config = git_system_config();
+ 	char *xdg_config = NULL;
+ 	char *user_config = NULL;
+@@ -1574,32 +1590,35 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	if (git_config_system() && system_config &&
+ 	    !access_or_die(system_config, R_OK,
+ 			   opts->system_gently ? ACCESS_EACCES_OK : 0))
+-		ret += git_config_from_file_with_options(fn, system_config,
+-							 data, CONFIG_SCOPE_SYSTEM,
+-							 NULL);
++		attempt_git_config_from_file_with_options(fn, system_config, data,
++							  CONFIG_SCOPE_SYSTEM, NULL,
++							  &success_count, &ret);
+ 
+ 	git_global_config_paths(&user_config, &xdg_config);
+ 
+ 	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK))
+-		ret += git_config_from_file_with_options(fn, xdg_config, data,
+-							 CONFIG_SCOPE_GLOBAL, NULL);
++		attempt_git_config_from_file_with_options(fn, xdg_config,
++							  data,
++							  CONFIG_SCOPE_GLOBAL,
++							  NULL, &success_count, &ret);
+ 
+ 	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK))
+-		ret += git_config_from_file_with_options(fn, user_config, data,
+-							 CONFIG_SCOPE_GLOBAL, NULL);
++		attempt_git_config_from_file_with_options(fn, user_config,
++							  data,
++							  CONFIG_SCOPE_GLOBAL,
++							  NULL, &success_count, &ret);
+ 
+ 	if (!opts->ignore_repo && repo_config &&
+ 	    !access_or_die(repo_config, R_OK, 0))
+-		ret += git_config_from_file_with_options(fn, repo_config, data,
+-							 CONFIG_SCOPE_LOCAL, NULL);
++		attempt_git_config_from_file_with_options(fn, repo_config, data,
++							  CONFIG_SCOPE_LOCAL, NULL, &success_count, &ret);
+ 
+ 	if (!opts->ignore_worktree && worktree_config &&
+ 	    repo && repo->repository_format_worktree_config &&
+-	    !access_or_die(worktree_config, R_OK, 0)) {
+-			ret += git_config_from_file_with_options(fn, worktree_config, data,
+-								 CONFIG_SCOPE_WORKTREE,
+-								 NULL);
+-	}
++	    !access_or_die(worktree_config, R_OK, 0))
++		attempt_git_config_from_file_with_options(fn, worktree_config, data,
++							  CONFIG_SCOPE_WORKTREE,
++							  NULL, &success_count, &ret);
+ 
+ 	if (!opts->ignore_cmdline && git_config_from_parameters(fn, data) < 0)
+ 		die(_("unable to parse command-line config"));
+@@ -1609,6 +1628,10 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	free(user_config);
+ 	free(repo_config);
+ 	free(worktree_config);
++
++	if (require_successful_config && !success_count && !ret)
++		ret = -1;
++
+ 	return ret;
+ }
+ 
+@@ -1644,7 +1667,7 @@ int config_with_options(config_fn_t fn, void *data,
+ 		ret = git_config_from_blob_ref(fn, repo, config_source->blob,
+ 					       data, config_source->scope);
+ 	} else {
+-		ret = do_git_config_sequence(opts, repo, fn, data);
++		ret = do_git_config_sequence(opts, repo, fn, data, 0);
+ 	}
+ 
+ 	if (inc.remote_urls) {
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 329407a73d..2ce85b76ff 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -2457,6 +2457,18 @@ test_expect_success '--show-scope with --default' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'list with nonexistent global config gracefully exits' '
++	rm -f "$HOME"/.gitconfig "$HOME"/.config/git/config &&
++	git config ${mode_prefix}list &&
++	git config ${mode_prefix}list --show-scope
++'
++
++test_expect_success 'list --global with nonexistent global config fails' '
++	rm -f "$HOME"/.gitconfig "$HOME"/.config/git/config &&
++	test_must_fail git config ${mode_prefix}list --global &&
++	test_must_fail git config ${mode_prefix}list --global --show-scope
++'
++
+ test_expect_success 'override global and system config' '
+ 	test_when_finished rm -f \"\$HOME\"/.gitconfig &&
+ 	cat >"$HOME"/.gitconfig <<-EOF &&
 
- builtin/config.c     |  11 +++++
- config.c             |  76 +++++++++++++++++++++++-----------
- config.h             |   2 +
- path.c               |  16 ++++---
- t/t1300-config.sh    | 115 +++++++++++++++++++++++++++++++++++++++++++++++++++
- t/t1306-xdg-files.sh |   5 ++-
- 6 files changed, 194 insertions(+), 31 deletions(-)
-
-Range-diff versus v1:
-
-1:  d9525d954e < -:  ---------- config: read both home and xdg files for --global
-2:  c24ed49bac < -:  ---------- cleanup_path: force forward slashes on Windows
-3:  51293ee827 < -:  ---------- config: test home and xdg files in `list --global`
-4:  26f3c46598 < -:  ---------- config: read global scope via config_sequence
-5:  b6ab7bfd67 < -:  ---------- config: keep bailing on unreadable global files
--:  ---------- > 1:  2fa37d8aa7 path: use forward slashes in XDG config on Windows
--:  ---------- > 2:  d90c9ae69f config: let sequence require a successful file
--:  ---------- > 3:  a3b5599c8d config: read global scope via config_sequence
-
----
-base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
-change-id: 20260808-fix-config-list-global-home-and-xdg-9bcaac093a1b
+-- 
+2.54.0
 
