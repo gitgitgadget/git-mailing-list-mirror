@@ -1,164 +1,206 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC571C861D
-	for <git@vger.kernel.org>; Sun, 23 Aug 2026 15:28:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3851C35201F
+	for <git@vger.kernel.org>; Sun, 23 Aug 2026 15:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.182
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787498899; cv=pass; b=MXXMgeUIuokQQBkJmYXhFqURH/YzA74U8xStWIu9grtmw1RdIaIICW47ztOo2yh02wCTWJm7WTV6A5FEI3IZyFDx7ywdplzJCCPQEUPITNd1KNje97Y59OR72kSJy1kRElAqlq/JJGVwtOSJkP6Zs7SyDN8vulhfKwFZ39RXb9Q=
+	t=1787499553; cv=pass; b=J7Efm0PkieEGC0tbVevOHJ+MDS9QuM/XPtMPG9S4KCVxeeoBWqSBfkOqWKlJhChKp4SlZC9TgR82G7fkA80DHrUmHH58sdISHIEL9tY8yJ/E9MoOMerPyHxBlAA5EMGvV4UnwXlhZ4W5LbvAL8Bj/SzkJgls1mCCg7atqX2o8uk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787498899; c=relaxed/simple;
-	bh=oC6h85YWB/JHcIS7bPmFrjApt/QaPQWmVPN3OBvuvu4=;
+	s=arc-20240116; t=1787499553; c=relaxed/simple;
+	bh=31bGDhl3mhPAs91kcln3x4xe9W37AxgAqxjf6bclkPc=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rwjK3QS9fRh1hD/TWd8TiXydOFbaFZw01F7sUR6lNNOta3fcWKhysx8kb4QztGzA4CY/vxLB/tgNeTAPamcTGciMClf4JjCicDg1H7BtmfCEqB3VUGM8v1SeP6una+aE9vIpQFUl6lLZhAPWaH9+TLBJxB2Rq9XtJf2AMBjmjAs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BJ00Wf4u; arc=pass smtp.client-ip=209.85.221.176
+	 To:Cc:Content-Type; b=aakY73tFGOJHb3RknqoE0STgX86LIjsXPNf63D5IEsHONZpCUH4wQ/rr2pBTdzSAstkZxTGOwUjyQ1QJ6vQW+orpfAzLcozw2LyTPHaQKy5c0+9vE5NLVRQY+pS6BYzL1vIihJK0LLEjm7Y1hwpFIzKXi9sbRIsET1tpS5kDr2w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qPQLuNQ9; arc=pass smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJ00Wf4u"
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-5bf83925ddaso1067962e0c.1
-        for <git@vger.kernel.org>; Sun, 23 Aug 2026 08:28:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787498896; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qPQLuNQ9"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cc11a30a259so2657123a12.3
+        for <git@vger.kernel.org>; Sun, 23 Aug 2026 08:39:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787499551; cv=none;
         d=google.com; s=arc-20260327;
-        b=CQmuw08AziBjG60mbFnwPEGfbnr+kgxqR077eBEPkCf54bFdb5TR7Uq1Wkvgh7rIYd
-         V4GZHMyAIYT5SXPUsMLbSaEW7a6IQ9pJ8zAAs0vXGmZoysg5gNhvotwGocm8wRIMgdXf
-         ShV94fPVesnDVvzJwIZrMdvfIiqQepIJ1SQ02adELwU1fuAwW2VAYrdsew2qdfkgBNRN
-         CaaoS7tX7ownIbZD/48yE0/mpoppZya2JwUWWlPkSkQYAoELNh3YG/axZ2f56jFnfT6v
-         9LNjPaxKega2pa3qC+f+wT7vQXPWyScC0rKi5t6VmE5ujheBi6Own06oUIGpR15yMqz6
-         +8qg==
+        b=nqw57bT3kkH8thpzUZNJrCGjgMH4n7VrquIvovF+H8lo7INmmmCMONA3F85B49VPsj
+         p1OutCJ88J+n6XVwMucMzKPNQGt9XW9/UhdxpR6REhSCgg4g7M5b6Nu10XIUC5VCiUeZ
+         y1oe6FZ4DL6FAofqcbPKgnW1eAroLp/un6cQW/URXhIqigHzUB1NnVpJRdOFeV8UJU5Y
+         OhWrulTqrnEX7tLuVKrmtiT/O+cetoKxeC3LT2uFZsFEg5aG7fnsWnBHLVqK8t3rGZsd
+         CrT2mXpPKWuVdLwmQSQjpEONcL48RtGnXY2ya+QlULuYyL93r0IhBHFtV1oph+QuCyi/
+         Skzw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=KgrEMsXUWTq6F8d53TlAq2WXPEXutCtOPm94zFWDBxs=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=fUU7GiTBEBW0PoBrjoXkwQ80FqQoGODh1JgMgOz/M7UDE3w6JgE6LThx891s7GVZcv
-         qsadz2Jbf5VQW8VBw2cc8ENxO1MPvl/DdK07BmA7BrJ1eiXd3WkPUEVkGFXBPfUZbrUD
-         iIh7CBGnUkcT9WYe/lVnZCDp6Bd7UhHMbfJiD9fGSoOWD6obuDjaQjC24dcT7af/BgRI
-         pFy3W7P0COO4UYSuyiGqqHzBVgeJujGTOSBEN8sAAW2YD00Cj/dlcz5gv5W1lY6ofDWs
-         LuIZgm0smXfoU4Yq+6S/9IsbjPNJeqCbImi7sAt/iX6hqHVzVhLVW9w2xJ7wQ4faWPE/
-         xKtg==;
+        bh=C9Q2TOdhSqghdHNrmhOrBX0THOo3SkXPsB9YzfmVvJQ=;
+        fh=1m+XsQH2FcrBTIcMIJPnwO8mEqt8/O/U6XNxt92+ynQ=;
+        b=KO9/aNk5o73Bg63wIxZyi+8Z3/8YcBxKQom2BLwheSLOG9DrKZi6jyPHOvezSzb3CO
+         mN3Ptz4IXbEGZqqsvzZebMlFBg8xC/Yey4TFEviPIzqCkpvADH5WwqPXRWPA61KaZf96
+         1jhHvP3h0u2RfQoDh65QfG4zsoN7zl0ZVGpN1U4LP1Qq+pgWYb16JnaWhauetC/deO/I
+         tp5ToGZVjaQVj9mDeIu1SdTaGyeNz7oZIL/5Bm9Cm6H9uNjtvgyH3wKrRj7+1wRzKodQ
+         1YkSP1ubZOPIS/LzKhvpf7OUJAAfnkCWRI07XIxaqYAtI5b9wLms9bQ0HXR4bWgQyH0A
+         lNzA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787498896; x=1788103696; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787499551; x=1788104351; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=KgrEMsXUWTq6F8d53TlAq2WXPEXutCtOPm94zFWDBxs=;
-        b=BJ00Wf4ugQUluBvsSVjjxs7sTiTK5/WTawJmBkQVz+EVNTh7lxppKcsUQzBWzKpVwp
-         XXhhVPB5Zl4Ly9JgBvRlaK6pI20YwFUUUNZUT4w95LFfJE9D14BBoGk5O9lx49G8OuIV
-         S+jrZHOzvdssIRuMnV2rcaDNgcexom+5Po1xpkTdskOPdb5RyMC8DqEclD0e7yl7nUTs
-         pcdN1d2X+5XENuZ5BmVTtira+qVmneA/0CL4A0j6m+y4U/MsX2oDS/nn6wqKi/tcL4Vy
-         gZLsZ21a8KmVrGKt7nYQ87seg5dw9YOppomcT45ZRarIP/XXZK46DuNqfzZ4rSTA+fDG
-         QqDw==
+        bh=C9Q2TOdhSqghdHNrmhOrBX0THOo3SkXPsB9YzfmVvJQ=;
+        b=qPQLuNQ9ZFmIQP/aHM1sK/mvo7Oz9o7mkG3UOnEKFW2/bUK6CVdBZnVjdsa2l6Z5ou
+         TP6KION2qmgtYNzVZhqOLq/jzzytOjjhwl5mdAEbqU05DiOBAULD1w1W9+pFHIrRkc8O
+         8Q5cmQACfssC7v/ErtnxLSlV29HrDH82Pddf9Ptg6/NT5Mu9VoUDGL37Vx2I/iCoOXOB
+         rG0V8loA/ypp0ePNVQQKbRxNGQ+fUwBiHyi92BIRb/VGy+PL18cKSF04fk5BrQlt2ed1
+         HgXzbAYlSEa3B0+/gvV8SDF/Vd0jt2cBtCBOQkq31A+q8Z7fFoIUzD93HsZs7UKQetTk
+         5hnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787498896; x=1788103696;
+        d=1e100.net; s=20251104; t=1787499551; x=1788104351;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=KgrEMsXUWTq6F8d53TlAq2WXPEXutCtOPm94zFWDBxs=;
-        b=H3EQl6B2vW+AmUiceuPxJAZi1kqdETMnFZWG8yz+RzrmZiyl1ef4ugl8cvHMfPhLiK
-         WSJrRsCzXAm/oqDiISLMCm/LJs8gHHtvsUx3WQ8Jt6c1ZVrkU7uEkejH5BBwfLhyt/eY
-         JSuzdF41R658u87ahytNDA85y5cBOiZJUEpo24YnpB/cNBcApb1qpDpLxiVWSgy1F9B5
-         po2QNjoOgo1okLVGj6/NYCEiS+VaA0mJ2Zop+FLZOvg1CxnIIiJ1Dx+ySyIj1K846/Jt
-         UVRZ6QoJRTVZVZWlIMx9DR/bFC6quoEsITK4vxtBEFTe8OxLZIiLd1g/0Jy4SCIF+D7W
-         hTgA==
-X-Gm-Message-State: AFuF++lByIy4za/ZAp2tQNRH6vqCWeS8DJ3OwfUMkKsY6sZ0rM4KvBXE
-	yIUiEhmt2S8jTf41EWDZ0tGeyuIwr8/zcw5zgV0BFGBvtUMYyeOmGg4xsi2z9D4UiTrJGLzUtu6
-	k8KCAMqSG944NEDRZrlY8JaliskHYrCDhZN3W
-X-Gm-Gg: AR+sD12aeMS3ULxjSuNhIjb0h8+3G6hul1yLRgL1aV18jqOGOuFjol+4aYzrtU/rwkA
-	85rnqwnY/N2AN6n4TKEAbyihQPC9bIx3IUa7pIjRFd+8pajaVklml5+e4Dc29KmiKEj1ANIAncs
-	oiVBtlhVvNCpVMDUGLvkdonPCq5V+dN+FQUE5LHvWWsRK+2l7qhZ3orBBCLj0XdOO8xDQKRogWy
-	isdxk3hBrMI9hcNrtM2o11hfBrL5QBk+Hz0gP1eq2iPUVkDhet1z2rjON/ljyHdgQHsxV5QH/WP
-	nMqkpmBGz524J4BXK5peMH2lHzBgYI5EF7CJep647IlmpO3TnVjpKt9yrUKJOwXjTXPHzNoQcR8
-	t7D4XNDaKmYuk0hD6aO/ISECX2OmTIh/Hz7A=
-X-Received: by 2002:a05:6122:3c47:b0:5bd:86ac:a847 with SMTP id
- 71dfb90a1353d-5c60de75d5dmr4653886e0c.6.1787498896482; Sun, 23 Aug 2026
- 08:28:16 -0700 (PDT)
+        bh=C9Q2TOdhSqghdHNrmhOrBX0THOo3SkXPsB9YzfmVvJQ=;
+        b=OgLGHIMwzZzRwckKs6G4+7/7kEipb2lFpWFuTWn8iSkt3bIEzc1BzYjjcplMPqZlAh
+         bSZZ+uuf4WwofQAQUAS/cHWem6M/0cAkjQIiFCtLqhRF1x84f9crr1CthkBFagvX8HfI
+         x/TirtZArTXzU7wTmimTvqGH1AwwKxjLsmEi6+iO0LZBogzzfeqcxp4xjNIXImWfNGzT
+         a53XYBX5wwvZsg4HqT1JZb6mUGNc7JkH8crPaNCzVnHeEN7ka9N2jk25UMFEPlrqBtuI
+         KVXWJaTHn9SVTE0Ob2brderW2nQUBGCBZ1YI/MjhHfHC9/22qAJIl1fsKKgIto8vvZcX
+         BCVQ==
+X-Gm-Message-State: AFuF++msWfAJmuu445YPaIZW0KK6OfMTgW8DhIIzXjnn9rUP9ChZxV4v
+	/qsZpxstnbFl/NjqEfKALY23q3itWIJvJmNu74aecFYOLUr+pCy1Xu2KxQBNPVB83aXyLw9cuVY
+	kV6tadmuHRi5QrlzTyiv+8heZ1Mxtx0S6zQP+
+X-Gm-Gg: AR+sD13f1yWUl0UviB/E4+Pap7Wlb+57OJZCtR00YMlrLwhS+MSU5XsrWwMu0o4+EYt
+	RiLU55LNZ7+5uX2VfVN+lGdWjEpBmbxjpa5F8aw8gUO1N1NAgBpC+Uy89BO4r/CnAd7ynyA7WEV
+	lSB+X8MvV7sUtV/TjXBpCPuQW+ZPBby62PYt0n9vk9vkuLg8xctEYbocAki5fd99JWmW+qQpDUu
+	4uPVqUTuroA2UYox2TG8Z3Ji0PnEllfC7XT21mNTfEW32D4UsogT6Ap9YLaUuQSoOYyGsSE6qS9
+	ZtneyAjPF6ZTAf/fYZJMfI3gMT5Ml4igSK8ou1Td1rizUqUfzXXo53Ezf3qwGBdKqIFfqBJZTYd
+	P4A/hBSHzT0zxn+3oZmAjInR2riI0Nqpgns94aeOzZoJc5g==
+X-Received: by 2002:a05:6a20:9d96:b0:3bf:6237:4d3f with SMTP id
+ adf61e73a8af0-3cd4bc45418mr24100490637.18.1787499551423; Sun, 23 Aug 2026
+ 08:39:11 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 23 Aug 2026 08:28:15 -0700
+ HTTPREST; Sun, 23 Aug 2026 10:39:08 -0500
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 23 Aug 2026 08:28:15 -0700
+ HTTPREST; Sun, 23 Aug 2026 10:39:08 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq33wavxko.fsf@gitster.g>
+In-Reply-To: <aoXcvhFbUJruALIe@denethor>
 References: <20260819-740-optimize-reloading-the-reftable-stack-v1-0-6bf5305d4e43@gmail.com>
- <20260819-740-optimize-reloading-the-reftable-stack-v1-2-6bf5305d4e43@gmail.com>
- <xmqq33wavxko.fsf@gitster.g>
+ <20260819-740-optimize-reloading-the-reftable-stack-v1-3-6bf5305d4e43@gmail.com>
+ <aoXcvhFbUJruALIe@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 23 Aug 2026 08:28:15 -0700
-X-Gm-Features: AcwNN1Wiwpt239OihNdl7VQws4Ezp6tE2TeaC2as3t6pG0Dyn_jy1_LNRxOrbe8
-Message-ID: <CAOLa=ZR2Krkxpz_2wWygosV4NSLCuc1m33-iHqdyAXADDvyaSg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] reftable/stack: move list lock to `struct reftable_stack`
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000c300620659b88417"
+Date: Sun, 23 Aug 2026 10:39:08 -0500
+X-Gm-Features: AcwNN1Wfk88KBE0wyZL6H4J2d7f_1K1PkHoUbNNtHX-wiEZBxRPSCNSwhMs1ruA
+Message-ID: <CAOLa=ZT4WuBh2eansJhzMm5F39UCTiOP1vgQ+yfQK0syzbm1uw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] reftable/stack: avoid reloading the stack when
+ already locked
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Content-Type: multipart/mixed; boundary="000000000000ccb8ea0659b8ab50"
 
---000000000000c300620659b88417
+--000000000000ccb8ea0659b8ab50
 Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Justin Tobler <jltobler@gmail.com> writes:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> The struct `reftable_addition` is used to modify a given stack, as such,
->> it also includes a `struct reftable_flock` used to obtain the lock to
->> the list file. While the scope of the field lies within this struct, it
->> doesn't allow for optimizations to be made on `struct reftable_stack`
->> itself.
+> On 26/08/19 03:19PM, Karthik Nayak wrote:
+>> When making modifications to the reftable stack, the stack obtains a
+>> lock to the list file and removes the lock after the commit phase. Since
+>> most operations reload the stack to ensure we have the latest state, any
+>> branched operation during the locked phase could trigger a state reload.
 >>
->> Move the field to `struct reftable_stack`, allowing us to make a simple
->> optimization around avoiding a stack reload when we have already
->> obtained a lock. While this is currently possible in the write path, the
->> write path also contains multiple branches to reads which only work
->> on top of `struct reftable_stack`, and we would miss the optimization in
->> such paths.
+>> To prevent data loss due to concurrent writes, state reload is necessary
+>> right after obtaining the lock. But any reloads after that are just a
+>> no-op. Now that the struct has access to the lock file status, simply
+>> skip reloading if the lock is present.
 >
-> As long as nobody tries to open a nested or concurrent addition on
-> the same 'struct reftable_stack', this should be safe, but do we
-> give enough tools to help the API users avoid doing so?
+> Makes sense.
 >
-> I may be misreading the code completely, but when a caller already
-> holds a lock after calling reftable_stack_init_addition() on an
-> instance of reftable_stack, and then adds another reftable_addition
-> on the same reftable_stack, flock_acquire(add->stack->list_lock)
-> would fail because the lock is per stack now, unlike the original
-> code where the lock was per reftable_addition.  We jump to the
-> done: label and call reftable_addition_close(), which would release
-> the lock, which is now shared with other reftable_addition
-> instances that work on the same stack, which in turn would get the
-> holders of the lock into trouble, no?
+>> Benchmarking with a fixed, non-symbolic target OID shows a modest but
+>> consistent ~1-2% improvement in clock time for `update-ref` across ref
+>> counts ranging from 2,000 to 100,000.
+>>
+>> We can see better improvements in the number of syscall counts. On
+>> master, the number of calls to `newfstatat()` grows linearly with the
+>> number of refs created. With this patch, the number is now a constant:
+>>
+>>   refcount   master   patch
+>>   --------   ------   ------
+>>   1,000      1,059       55
+>>   5,000      5,059       55
+>>   10,000     10,059      55
+>>   20,000     20,059      55
+>>
+>> Reported-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  reftable/stack.c | 17 ++++++++++++-----
+>>  1 file changed, 12 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/reftable/stack.c b/reftable/stack.c
+>> index e449af9c03..433a611ed1 100644
+>> --- a/reftable/stack.c
+>> +++ b/reftable/stack.c
+>> @@ -553,14 +553,21 @@ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
+>>
+>>  /*
+>>   * Check whether the given stack is up-to-date with what we have in memory.
+>> + * If skip_if_locked is set skip stack reloading if the stack is currently
+>> + * locked. Stack reloading must _not_ be skipped right after obtaining the
+>> + * lock, to check for concurrent updates which may have happened.
+>> + *
+>>   * Returns 0 if so, 1 if the stack is out-of-date or a negative error code
+>>   * otherwise.
+>>   */
+>> -static int stack_uptodate(struct reftable_stack *st)
+>> +static int stack_uptodate(struct reftable_stack *st, int skip_if_locked)
+>>  {
+>>  	char **names = NULL;
+>>  	int err;
+>>
+>> +	if (skip_if_locked && st->list_lock.fd != -1)
+>> +		return 0;
+>> +
+>>  	/*
+>>  	 * When we have cached stat information available then we use it to
+>>  	 * verify whether the file has been rewritten.
+>> @@ -623,7 +630,7 @@ static int stack_uptodate(struct reftable_stack *st)
+>>
+>>  int reftable_stack_reload(struct reftable_stack *st)
+>>  {
+>> -	int err = stack_uptodate(st);
+>> +	int err = stack_uptodate(st, 1);
+>
+> Ok, this appears to be the only call site where is actually want to skip
+> if there is a lock present. Could we instead just not invoke
+> `stack_uptodate()` in such cases? That way we don't have to change its
+> function signature and can leave all other existing call sites alone.
+>
+> -Justin
 
-That's a good line of thought and something I didn't think of.
+We want to selectively invoke `stack_uptodate()` based on if the lock
+file exists. If we move that logic outside of `stack_uptodate()` further
+callees would have to replicate that logic. While that's not an issue,
+missing it becomes easier. So I made this explicit choice.
 
-With the current version, this wouldn't work, as you mentioned, the
-second `reftable_addition` would free the first's lock. The only way I
-can think of is each `reftable_addition` also holding it's own bit
-indicating if it acquired the lock and only release the stack lock based
-on this bit. This works, I will write a unit test to also validate this
-behavior. But I'm wondering if there is a better design.
-
---000000000000c300620659b88417
+--000000000000ccb8ea0659b8ab50
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 971c25c1a1007b8a_0.1
+X-Attachment-Id: b2c0c1f053d2a5b4_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xTEVZNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOWJiQy85SUVHaTNZOG1NZm9zVmVTRlJoVTE4MlkwRQpQeUIzZ1BoU0FF
-dWJqZEl5OC83eW0xZDBoOFFPaGtiektuTzhVY3BTTktwbmxVYjVJYkc0Q28ycmdUdVZ3OHIxCmtP
-T2xVUW1ZME42NmVwUWh5VFBJZmF4dDZHUGo1YnQ1czZuemxmWG5mczlyZHdIN1ovRkVrMHVSTUdF
-Q3l6T0kKZUg4U2pGM1VWZE9veVdRTVk5cjhsSWZYTEpndmNjRmRPTnprKzJreUQwRWt0Nkd1YnVk
-V3Q3Z0kwbXhiQXJKNApTcUNlc24zYmREZml6Qm5UdEJLQU5xM1hXVENFeXhTN0J4WDNraXg0UVJT
-aU5rOVNLMnBYU1dVbGxiQVRiRENjCjRwWHJDWmZZL3Z5d3F0TG9NdW1tYjJYMEJvSmg0dzRKTHBu
-Y0o0YzFHdW5URjAzUUNDYTE5Sy9uRjlLOEZVeXkKK2xVVFZiVnY4bGhMdksvRXZoZ3hobXBhTW5N
-bjFreUFpYW83Y2w3ekg3Qi92eVM2bjg2UHNDUmh6RlFvSC9KMwp0a1BMWjNHTUp0UWs3Z3FmOGg5
-L1hyOTBwSFlETTVuZkkyZ05LUStCUzIwUjRPa3dJRlB2THhQTExrTkduQlRoCmFBc2ZBYUkwWURX
-TG9ZeElmdm9zVFhlRDhFaWpOcFV3c2xLaWlOND0KPW9CTGoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xTEZCa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNXhuQy85bUJHVWtXQytiNVA0N3J0aUF3anRYSGVtZgo4VjZjc2tJU1Na
+R2pYZDZCNGZscDQ4WXhJY2FJcEJhSk1vWGEreFdVNHZPOGFxb1M5aG9tQk1ET2ZHT3ZzS0hHCnZI
+ZUU0OGR3Q2xKYmdCSkg1UTdYVER0MysvT1crUjZETXFLTW0wNjF2alhoWURQSEJQb2NscE5nRjVt
+Q0NYaDMKQ1J1ZUJjZkJqaGkxZUxEMnk2RHhQMGlPdHY5NUZSL0hZeS9rMEgvTVJoV2dXbEd5ZHRJ
+L1BXRlRYQURXTW5KMQpod2VHSEF5a3FuTnFuNEI5NlJ3YTNkTGdrSEJsdTZ4YUZPOUltYmJCUnlh
+ek4wczNQYTFQemUzUWRIS3JQZXR0CjRpQlJOVE4xTGdVSURrbWtkODNlRWFudVp4N3ZLSVcydFdR
+OC8vd2FtcEoybUFndG53R2VUN2MzbHhBblVsWWMKdW5aV2NEQlJHMXl0TktmM25DTVlpUXhFZHlC
+bmMzVStMOW54UzhMV3Izcy9EMlpqcjlzeXV2NjBxSlFpMVdRZQoxMXZ3MU05WXl1dXgySXRiUTNP
+M2oxb1cxZEh1Qm9HcjNWNHUxNEcwbjcyUmU0YXRRamJHYWMybGZvMVJUaEM1ClVOV2JxOEtKUzVC
+dmZYTFFJa0Jub1h4NGlJdXJGemVoRXJMMktyYz0KPUtHR0MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000c300620659b88417--
+--000000000000ccb8ea0659b8ab50--
