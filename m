@@ -1,181 +1,82 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FC837FF7F
-	for <git@vger.kernel.org>; Sat, 22 Aug 2026 21:15:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344792701B8
+	for <git@vger.kernel.org>; Sun, 23 Aug 2026 10:04:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787433342; cv=none; b=COqfuTW96pJjNGu+FwidL72x780hI+H9g879XOMJUO2/pLH9oc8YYMdlvcTnfxD7U2krYDPdlVoehGtnsizePuJnE5psA+xHjAfRoXJMg6acd3huqCbkwzfJdWxk3TZmfkdnmItnfDYPD5jVyss+/FeWWzikdVxmFX5xcT3GxHs=
+	t=1787479467; cv=none; b=cpez4pC+X/kByZnynSTe6engWgEPKmQ6SjdhG81CInee0i/S/bXRQNErYBlC5RorMIWjYKDlDOo64yelhgjtH1Qxzc44eSGCbfzlykRu5Br/6YGiHGOX5AIVOQxjf7DolhYbzTtic9AcMc9AyXR8J+Pv2Mx1eppwX156PHVqf74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787433342; c=relaxed/simple;
-	bh=1jcoQrrg+ZOFFcm0IJezhK7ZkjN9NLdnp7HFt2xdfN4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ji0ncRclX7N/bFJhLRoNoyVxNEWl2YFKVL4seG72PsY81D3Nfsxm+NabiKQ8Hg1TLbfeKXeWzJwHJWt06vsm8xPcOSiZaWfZWX4HIYDesBe2vy2HrEPZYs6PKqOOw/LJbSAIv+3+9D6FflDsGD9zPYWX7j1Dr7Nw+kfM1DNxV7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=EyIM1r1C; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="EyIM1r1C"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1787433336;
-	bh=1jcoQrrg+ZOFFcm0IJezhK7ZkjN9NLdnp7HFt2xdfN4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=EyIM1r1C6o3N0J2MKkkkS1VtJL3QZgGslQ0oxxVnJ0XaT6d4i5Olsk/9P6oFvoQkZ
-	 7KOVqwdYKbJp+Kxo2WY0gVkAIdbm/DpJaV+Y4czWdSe4g3Wme2WzVwMpMdi6JQLodh
-	 WRpv6kvASvmd2AUMowN3ez300ejDQ0Jx/PDrtR8mANV3ehvJdV+0iODqyLzKPLpDi5
-	 T5/EdUulhcYjby+UJq5q5zfxs4GX+vqGi/RDFBRHgh7e1tLtIh6guURZDq7ySsKI7e
-	 jhP5/FckjaJnQUv6Z+sM/9q4z6u4nLOUBmACiYD0AKoioYup2L36txLXCiOKB3ABRk
-	 HLeSg6klWu+chQpBop1ymkLJnhfFQiJSxsVw2qX6Hpsn8UND2C/zRIyBdw9Hjc/JeN
-	 OOYE77AFT9XTy78SDGATayqJgbEBL1QuYMgiA+d39mrAR0ET6slmWGCteePyrvYO7l
-	 dTU2xlz2ymWjXm/BLLFvouENaEozIqdW0lK8W3BkamuhooxKH48
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3e4a:aa65:6e9d:a12d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E176E20101;
-	Sat, 22 Aug 2026 21:15:36 +0000 (UTC)
-Date: Sat, 22 Aug 2026 21:15:35 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Alexey Samsonov via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Alexey Samsonov <vonosmas@gmail.com>
-Subject: Re: [PATCH 0/3] treewide: migrate from legacy utime.h to utimensat
-Message-ID: <aooRdiVdjovWSFiG@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Alexey Samsonov via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Alexey Samsonov <vonosmas@gmail.com>
-References: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
- <aonIVn-ZQoMKWCAd@fruit.crustytoothpaste.net>
- <xmqqzeyeujde.fsf@gitster.g>
+	s=arc-20240116; t=1787479467; c=relaxed/simple;
+	bh=WkxEKY8lad5XxnnGWgdBDzcanSyWXgR9VnELQZLUw6E=;
+	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=nW/hVL6JO1yBJ6a82vPy+xoR0F+vNq/GWr34jriag9GpMcQbHQRGgTS1T9SWbLZiygcDWZDdRqBg5q1P6vUhA1RYFSuHxavOtSRleRM800apB1pLm8R2Py82BopJ3iu+YIbzokW/mc1Ge96S7WmNT7TFElUqWA+aibW2HUpvePY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.107])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4hSTDc1cDsz7Qgqr
+	for <git@vger.kernel.org>; Sun, 23 Aug 2026 11:25:52 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4hSTDQ3tbYzRpKv;
+	Sun, 23 Aug 2026 11:25:42 +0200 (CEST)
+Message-ID: <b4ce8b09-5faa-4e6e-af38-5384a71ae699@kdbg.org>
+Date: Sun, 23 Aug 2026 11:25:42 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="b5EUN2Bp6VXukB6y"
-Content-Disposition: inline
-In-Reply-To: <xmqqzeyeujde.fsf@gitster.g>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+To: Git Mailing List <git@vger.kernel.org>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] gitk: discourage AI contributions
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
---b5EUN2Bp6VXukB6y
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Since the provenance of code generated by AI cannot be tracked with
+confidence, which would be necessary to sign off a contribution, tell
+contributors not to use AI.
 
-On 2026-08-22 at 17:59:09, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > On 2026-08-21 at 14:23:20, Alexey Samsonov via GitGitGadget wrote:
-> >> This change is generated by Gemini Flash from Antigravity, but all the=
- code
-> >> has been manually verified by me, and, where applicable, adjusted to m=
-atch
-> >> the existing behavior as closely as possible.
-> >
-> > Unfortunately, I don't think that's allowed.  From SubmittingPatches[0]:
-> >
-> >     The Developer's Certificate of Origin requires contributors to cert=
-ify
-> >     that they know the origin of their contributions to the project and
-> >     that they have the right to submit it under the project's license.
-> >     It's not yet clear that this can be legally satisfied when submitti=
-ng
-> >     significant amount of content that has been generated by AI tools.
-> >
-> > I therefore haven't read this series to avoid being influenced by code
-> > we're not allowed to include.
-> >
-> > [0] https://git-scm.com/docs/SubmittingPatches#ai
->=20
-> Your stance, as I understand it, is that Alexey's DCO is not valid
-> because, acting as a copy editor of Antigravity/Gemini's work,
-> Alexey cannot possibly know where the code was copied from.  And we
-> cannot accept work that is not covered by a valid DCO.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ Following a recent brief discussion[1] it looks like I should not
+ accept code for Gitk that was generated by AI even if the submitter
+ understands all of it. Should I discourage AI contributions outright
+ like this or would it overshoot the mark?
 
-Yes.  We know that in some cases LLMs regurgitate code that is
-substantially similar to training inputs and we don't know what the
-legal status of the output of an LLM is, especially since there is
-active litigation around the world.
+ -- Hannes
 
-The DCO was invented to provide a legal assertion by an author that they
-are only submitting code they legally have the right to submit and I
-don't think there's enough legal clarity for us to know that with an
-LLM.
+ [1] https://lore.kernel.org/git/aooRdiVdjovWSFiG@fruit.crustytoothpaste.net/T/#md44580584f30c9b3e3c9e23250baf08b7fd7fb0c
 
-> I think that is a much more prudent attitude than being cavalier
-> about legal issues.  I used to think, "Hey, the person claims in the
-> DCO that the code is appropriately licensed, so if it turns out to
-> be a false claim later, that is his or her problem, not ours."
->=20
-> But that is not how things work.
+ README.md | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-It's my understanding that in many places there's a difference between
-knowingly doing something and doing something without knowledge.  For
-example, Canada's Copyright Act uses the text, "that the person knows or
-should have known infringes copyright".
+diff --git a/README.md b/README.md
+index 2e30746..c402788 100644
+--- a/README.md
++++ b/README.md
+@@ -79,13 +79,14 @@ are also accepted.
+ All commits must be signed off (use `git commit --signoff`) and should
+ have commit messages prefixed with `gitk:`.
+ 
+-Email Patches
+--------------
+-
+ Send patches to git@vger.kernel.org and CC j6t@kdbg.org. See the Git
+ project's [patch submission guidelines](https://git-scm.com/docs/SubmittingPatches)
+ for detailed instructions on creating and sending patches.
+ 
++Please do not submit work that originated from AI, because this project
++is down-streamed to the Git project, which has a rather
++[strict AI guideline](https://git-scm.com/docs/SubmittingPatches#ai).
++
+ License
+ =======
+ 
+-- 
+2.55.0.704.g7397dd7565
 
-So we do have more of a legal problem if we knowingly distribute code
-that infringes copyright or which we suspect may do so.
-
-> If work submitted under a DCO later turns out to be based on
-> something we cannot legally use, the submitter may of course be in
-> trouble, but we would also need to bear the cost of ripping it out;
-> the later we discover the problem, the more substantial the effort
-> necessary to deal with the fallout will be.
-
-Yes, that's true.  We still have the fallout and issues in terms of
-project management to deal with, but fewer legal problems.
-
-> Stepping back a bit, though, is the situation really all that
-> different between a relatively new author who discloses their use of
-> AI and another author similarly unknown to us who claims it is all
-> their own work?  Either way, if the code turns out to be unusable,
-> we would still be on the hook for participating in the infringement
-> and would bear the cost of ripping it out.
->=20
-> What worries me a bit is that there may not be much difference
-> between "you said that you relayed AI output, so we won't talk to
-> you" and "we do not know you well enough to trust you, so we won't
-> talk to you".
-
-If somebody comes to our project and lies to us about the provenance of
-their work, that's very serious.  Saying, "I wrote this with AI," when
-we don't allow AI is being honest and ethical and disclosing relevant
-details to the project.  It may be that we can't accept their code for
-that reason, but they have participated in the project in good faith.
-We could certainly accept other patches from such a person written
-without AI.
-
-But if a contributor misleads us about the origin of their code, whether
-it came from AI or was taken without credit from another project,
-then they're not at all acting in good faith and we will likely not
-allow them to continue to contribute to the project.  Moreover, they
-will also be unwelcome in most other projects as well because they'll be
-viewed as dishonest.
-
-That doesn't affect whether we end up having negative consequences from
-distributing that code, true.  But at some point, we have to trust that
-most people are honest or our community and society break down.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---b5EUN2Bp6VXukB6y
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmqKEXcJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ8sbtg/wYTR9iBltNz6sF/UhE+X067LFQVG48G3ZNiUU
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAIyFAQCHIPxCyYrd98LZnGpZzEr3gcE3
-yYVykoAI/TgjNdo1RwEAwt0/X23ewyAulZde6jOqKb/oF7WTTQDa35gY3x/tHgA=
-=vpfX
------END PGP SIGNATURE-----
-
---b5EUN2Bp6VXukB6y--
