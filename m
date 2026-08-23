@@ -1,70 +1,70 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923A3377A85
-	for <git@vger.kernel.org>; Sun, 23 Aug 2026 17:19:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8154E33EB06
+	for <git@vger.kernel.org>; Sun, 23 Aug 2026 17:19:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787505575; cv=none; b=Q2FKKJRZRv6Tho7tgnn3FyZjIGBkOVL51vFFF0bwqKnidT2BjGm4r3dA+b5QaPbYYexLU6CQ0Hlu2d6RWxk6BXMW2dcOMMVtKM+Nk8gra1oxi8WziLHVbBovUGIWvzcEnSY4iobFCGl202Pirh2dCHsO791ANPnYAu1DEyIt4Ws=
+	t=1787505579; cv=none; b=H9Fxb/J65Zz13quY+QTsCdxwu+2SZiPUaxQGlciUoejqdtAG05TECUfffCVhEieE4/ozgmu+GVAm07hqK1IiYk2xZuvgX6IhBAxm6JEIEekqlZBR+y0O+Ja3jCd8kwbDNrlAJTGhuAtLWkQjkQF91qjYO+Ad8r7XJroS2xn4uuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787505575; c=relaxed/simple;
-	bh=V/lkhtPYgmhG0tzWhbRYDhZgVoMHYdTKOGHNppCPgOk=;
+	s=arc-20240116; t=1787505579; c=relaxed/simple;
+	bh=o1jGVaXYVOeevEOHVyBAmNm4yG5RNOFW6iyLOaS3hkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o14GFJEcnyEHo/lOWCXzSzMrGjogToTP5fDWS4pklQkkZSxvd7icuFXvKGL0wr6nilSxwSK/swbbk3VGLRicOIekPztRmZ5n/ql08vuw/Hu7RqTtAFqOGNRqQHK4KYz+Fd2VQ2sEhdaojWgzgRe9UK4CIuSrfvUkxPigmRAsc2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K1LQ7g8q; arc=none smtp.client-ip=209.85.214.171
+	 MIME-Version; b=PYEpHgz3ziIj+PG7NHrLUciK/xYJl+osHJeyh0idzR64vSlHXr/ju1PcKrONgsPvNkvCc0fCo/7kq6XOFcPl63t4nEs1A9djPjTCPkWRXOVebKiQaCNi0x4LYzlg3pGIjhlmDL8qDSRpMbO8UpzkAT3ht9FyApgP06gXqJYW+vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bbp+mnYd; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K1LQ7g8q"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2d58efc7356so29640945ad.1
-        for <git@vger.kernel.org>; Sun, 23 Aug 2026 10:19:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bbp+mnYd"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2cedda2ce6fso15453425ad.1
+        for <git@vger.kernel.org>; Sun, 23 Aug 2026 10:19:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787505568; x=1788110368; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787505571; x=1788110371; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=LljVwFyiglrMg/zwVzYBSwLRf94rzpV0LN7S8JuOI0w=;
-        b=K1LQ7g8qRNPpLr70/uYp4MLnmqF+LOBzK9ngTEzZR7wuJshGQYxYfKwI3ob2OzxFdq
-         faLoUuMJL0sPuMefvOYduaEBChxY343w7txs/cvy+qsZ0ZAQwKylmFegJ6rIFtSKQW5h
-         uOGGXLmXoqISD8VYbm8OtZPOOgcqzkFZaCcuYfRBgGWdsbSx+97NgmK4xdFk70fVbL37
-         69jVRHUDnixqXdwDtR5wa/V+pVJwU8dMy2xjhCiWPKu/lgrs5YqrUhnCZZgUmyyuP/+E
-         5gm9w/iTK1KyHIXZaFUI6hfomzYfsyu0WJgoFCdati9QuW5rN9/hTH2ro0TYI2Erm7oL
-         C9MQ==
+        bh=bgM59LnXKvn9HE5pUvQCixdeBgkgMv59XzDt1svkTfk=;
+        b=bbp+mnYdpOpsoH5paa9ZlAr1yAPG9zsNylvIc5bxcbTSzpZcaRkkv2e3eWYhWH0TSe
+         Wwi7UhCUoFtyLHJuUoE0lw4cnF6iIdwUDgUstQeCq5oq4JnCLeAEtZKZLvTs4XTMWtk7
+         z2nwbXKd3JtrDYRVkK0t5UVKNX344QNK1DvQ0gcl+g5uF+bShUjkTSxarnTC6B3TaPEJ
+         PWHZWkkq+bW2hC1qoOSV2fvv+rlb4+MlopEd++tmkBUxLWV6uyR+xakBobIO603f0ItM
+         YSWa/lG0w3f5NJJDS522lYThkYzlqLrCOUmb1DxJr7BJbZehcaYDeeY+iMYjR+LHPgEJ
+         z/Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787505568; x=1788110368;
+        d=1e100.net; s=20251104; t=1787505571; x=1788110371;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LljVwFyiglrMg/zwVzYBSwLRf94rzpV0LN7S8JuOI0w=;
-        b=g59P9qTQmxZI3tkbyw9Iz7vCCHZ5o5Y+vs6dJVl2ppisum1w22TxVzR2pvkEbmfyMj
-         c7Khey+uK/HRi9wBSWOFaN7TKWxa79gAXOrwxgV4uMbU0hYTfJMfMq3MVJfih7DnvIsB
-         W2rLgnOSo7nh/Naa4PXjk3CRTX5Q4LcUe3PFdwOQSWBE4/op1CUQmQ6IY7bbmCJ/DW5X
-         bbAhIpd4kqcxNYqLJV0/4Ful5PXrdR/xlA29t4kb1GrOQQtNyX6t/YqGXHqZp/WBEpiS
-         0qHsqvu6VXq3imI5zdYvi2s1Fas9+YIwQyoCQ1DSggUbeW9dUpDVQd6Xl9R0YVW/OwWv
-         D8Rw==
-X-Gm-Message-State: AFuF++lXA/U7MXIt27cVXHQ7aHNJlSftJAs8P0RpTUPuhh06d2RE27I7
-	DpHFGZQceH0Lu8d0Do22pxOHTCsk9N8EIwiV+DZbIPbNEkeOz+Gxa9LIB3ilEA==
-X-Gm-Gg: AR+sD10W1JP9MPVG17i3ydfkVvuvetfxoIueF1G9YUuDSva64q/qF295JHDINMVibk6
-	pCmS+OVCPugh1OMboTekZjjwX435oyBMO/RUek3WuN6t7RCtMV8XA6yQZzbLlhlGWItDgP6U+qS
-	v6IqISwhqg86ypBJ22GaK74xYrFt1hVhOTVR3SVBe3paI1IUq9GhXK8hkPIHnN80R9mpyA4Zand
-	9SF+vGIUYofgkjiW3i39oRAMrPVjB8ozjjQGxbALhkPzdSyiWP3VT9DZEpsFLtgburXRmP/EE/A
-	ERyPprBLP44F38JA4kR9B/oaYrOgdqhbeVEDdPUqeDMKbLfEX/S6vH23rsjX4rzocadJdrP1ep1
-	LGVM5GAtUMA3vxTrfnYZ2Y6epEAltptOn2RJ2deMUziYbDRbc5lNQ/WVc+80EI+tBqnv3s3keNY
-	+zQqPyXnr5FwQ8pE8vi0mvz0awDeGdeUZ/Z1LerHuvUPZ4GOOpD2oMpS6zdfhMta7zPvsTcejiY
-	Aqnb5QnAWBRdjJsZyIVd8V5bFRJumHk/Ug31uuNQ7q5eTXe3hpv4TyZsrC03kHGoaoOK4nC8Lnu
-	AV/cHauiN5mEAgE9hOCCG6MNU2g+kw7YIvYgW71oIMOpDISmbWRmQcnTog==
-X-Received: by 2002:a17:902:da86:b0:2d5:cb05:49d9 with SMTP id d9443c01a7336-2d670bd7471mr207751635ad.5.1787505567211;
-        Sun, 23 Aug 2026 10:19:27 -0700 (PDT)
+        bh=bgM59LnXKvn9HE5pUvQCixdeBgkgMv59XzDt1svkTfk=;
+        b=Y7Nwa7mQQir/qxs+D6yrYOC1V2jHmyDLVFfX9ZkVtwcOhrxvsgDcpoYYOWGuLH4l5H
+         DFx+Q+po6Luiv6aVHcWkyI3KyVdsxooG2bRLQ+hfXf7UJh86Jt3ZHavsrpQpVm8E6xhT
+         lGCUyUq5Xk1BiJUD0PfR6FqPSXBmlZqWYaljVbKr0T2w02upeAWLoWxlVwFZhdIdi6Vk
+         GxA74CK2y+Nj5brfIM7k6l2JM6v3pfXsV1I1G9TzcsJzwEM7FCGHNcAjK1wTioLWN/2u
+         Q4U9NYWJAuwhBpcPkEepfrF5eBd+TF/iMGswGYpoBwtYtgtIpxB3wPRwsY9JH5cSTvMD
+         L12Q==
+X-Gm-Message-State: AFuF++lcZDSlAPT5oYMD5dcLYF0ugTYjgTXDWfPui/yvkL6NRkchYwGe
+	8RZDQ56R3hAqeRGmTGJZB+sfYHD6mMP3KACPuitzrDXFYMb1H1EpHQcmgGc14g==
+X-Gm-Gg: AR+sD13pDm9e0W389Hyubmyv+/ri+1f0WFrZpKfH6xgm5eMLvtQjDGKBVC+5wNHoV5o
+	b54fcm9x5Z4cYd068CJeyeqhVAuem1YIq8Ira7xOUbSZGID0zGl3JmzT1tf4pFW/0tRLpkV++9d
+	IMHOBjOAISLecR8V5w8kWCxvUwBPc6v88QJ55ek17cHVCyQOOFp1I0UJbsTpBhaxdFERu15p98n
+	dYIqkHv7D2GE+pH68t48PWxu/BqxEdqpPxq1fDXyRsaF780v4YSwcxkzMKwIQGsIsDlxydboZxn
+	7X0DaZ4Spu9uoJOyeLeQ0Tg2HeU9jRGzL0IdFHLPWLv5h4AuM8F+D46sRNO41UrIH5QhsZP7Jfa
+	ilq7GGDbV6+IqdK6bkegPbVyJCKwa871RjYdtCRU/8+u+TWhX+VVJz4aIXqHBQb625piOSIRMXF
+	3OVWTu2rsqiAX0J+kspalu0GiKlW51BGgtVLQ1aM+QbBpuNkBlIA/WHwcUvgRfA9GkM0CGvetXJ
+	PiWIfscqkhUmVgiOptbjQRzGexh+O3aa5Z4H+1QG97P1LXUS227XUSx4oKRDwzqY/0+zphdyqjl
+	r+eoDRmoWZJyhgXjeyos/bfZiNMlmDZBvkkvk9N7NDrIEw==
+X-Received: by 2002:a17:902:ebc3:b0:2ca:1479:d9dc with SMTP id d9443c01a7336-2d64b0427fdmr406486335ad.12.1787505570576;
+        Sun, 23 Aug 2026 10:19:30 -0700 (PDT)
 Received: from localhost (192-184-169-91.fiber.dynamic.sonic.net. [192.184.169.91])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327f909c6c9sm20822624eec.6.2026.08.23.10.19.24
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327ff728ca7sm15539234eec.3.2026.08.23.10.19.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Aug 2026 10:19:25 -0700 (PDT)
+        Sun, 23 Aug 2026 10:19:29 -0700 (PDT)
 From: Michael Montalbo <mmontalbo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <pks@pks.im>
-Subject: [RFC PATCH 06/14] organize: record a label for every source in scope
-Date: Sun, 23 Aug 2026 10:18:50 -0700
-Message-ID: <20260823171915.2662373-7-mmontalbo@gmail.com>
+Subject: [RFC PATCH 08/14] refs: gather the refs sources under refs/
+Date: Sun, 23 Aug 2026 10:18:52 -0700
+Message-ID: <20260823171915.2662373-9-mmontalbo@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260823171915.2662373-1-mmontalbo@gmail.com>
 References: <20260823171915.2662373-1-mmontalbo@gmail.com>
@@ -76,511 +76,2322 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Run the reference labeler over Git's tree and record its labels in
-.gitorganize. Each source's component comes from the "area:" prefix its
-commits carry most often, consolidated by git-layout.map; a source the
-prefix cannot place falls back to its filename, and one that neither places
-but changes chiefly alongside a component is promoted there. Standalone
-programs stay at the root, and a source that stays diffuse is component=?.
-Each line also carries the prefix, the #include coupling, and the co-change
-profile as advisory signals.
-
-status now reports the whole to-move set across thirteen components:
-
-  495 in scope (113 in place, 303 to move, 79 backlog)
-
-The 79 backlog sources, recorded component=? with role=lib, are left at
-the root as the frontier. A public header or program also records
-component=? but is kept at the root by its role.
+Move the 8 refs C sources and 8 headers into refs/ as renames. Repoint
+every reference to their old paths to the new ones: the #include lines
+across the tree, the Makefile and meson.build build entries.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- .gitorganize | 475 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 475 insertions(+)
+ .gitorganize                        | 32 ++++++++++++++---------------
+ Makefile                            | 16 +++++++--------
+ add-interactive.c                   |  2 +-
+ archive.c                           |  2 +-
+ attr.c                              |  2 +-
+ bisect.c                            |  2 +-
+ blame.c                             |  2 +-
+ branch.c                            |  6 +++---
+ builtin/am.c                        |  2 +-
+ builtin/bisect.c                    |  2 +-
+ builtin/blame.c                     |  2 +-
+ builtin/branch.c                    |  6 +++---
+ builtin/check-ref-format.c          |  2 +-
+ builtin/checkout.c                  |  2 +-
+ builtin/clone.c                     |  4 ++--
+ builtin/config.c                    |  2 +-
+ builtin/describe.c                  |  2 +-
+ builtin/fast-export.c               |  4 ++--
+ builtin/fast-import.c               |  2 +-
+ builtin/fetch.c                     |  4 ++--
+ builtin/for-each-ref.c              |  2 +-
+ builtin/fsck.c                      |  4 ++--
+ builtin/gc.c                        |  6 +++---
+ builtin/history.c                   |  2 +-
+ builtin/init-db.c                   |  2 +-
+ builtin/log.c                       |  4 ++--
+ builtin/ls-remote.c                 |  2 +-
+ builtin/merge.c                     |  4 ++--
+ builtin/name-rev.c                  |  2 +-
+ builtin/notes.c                     |  4 ++--
+ builtin/pack-objects.c              |  2 +-
+ builtin/pack-refs.c                 |  2 +-
+ builtin/pull.c                      |  4 ++--
+ builtin/push.c                      |  2 +-
+ builtin/rebase.c                    |  2 +-
+ builtin/receive-pack.c              |  4 ++--
+ builtin/reflog.c                    |  6 +++---
+ builtin/refs.c                      |  6 +++---
+ builtin/remote.c                    |  4 ++--
+ builtin/replace.c                   |  2 +-
+ builtin/replay.c                    |  2 +-
+ builtin/repo.c                      |  4 ++--
+ builtin/reset.c                     |  2 +-
+ builtin/rev-list.c                  |  2 +-
+ builtin/rev-parse.c                 |  2 +-
+ builtin/show-branch.c               |  2 +-
+ builtin/sparse-checkout.c           |  2 +-
+ builtin/stash.c                     |  6 +++---
+ builtin/submodule--helper.c         |  4 ++--
+ builtin/symbolic-ref.c              |  2 +-
+ builtin/tag.c                       |  4 ++--
+ builtin/update-index.c              |  2 +-
+ builtin/update-ref.c                |  2 +-
+ builtin/var.c                       |  2 +-
+ builtin/verify-tag.c                |  2 +-
+ builtin/worktree.c                  |  4 ++--
+ bundle-uri.c                        |  2 +-
+ bundle.c                            |  2 +-
+ checkout.c                          |  2 +-
+ combine-diff.c                      |  2 +-
+ commit-graph.c                      |  2 +-
+ commit-reach.c                      |  2 +-
+ config.c                            |  2 +-
+ connect.c                           |  2 +-
+ delta-islands.c                     |  2 +-
+ diff-lib.c                          |  2 +-
+ dir.c                               |  2 +-
+ environment.c                       |  2 +-
+ fetch-pack.c                        |  2 +-
+ fmt-merge-msg.c                     |  2 +-
+ help.c                              |  2 +-
+ http-backend.c                      |  2 +-
+ log-tree.c                          |  4 ++--
+ merge-ort.c                         |  2 +-
+ meson.build                         | 16 +++++++--------
+ midx-write.c                        |  2 +-
+ negotiator/default.c                |  2 +-
+ negotiator/skipping.c               |  2 +-
+ notes-cache.c                       |  2 +-
+ notes-merge.c                       |  2 +-
+ notes-utils.c                       |  2 +-
+ notes.c                             |  2 +-
+ odb/commit.c                        |  2 +-
+ odb/fsck.c                          |  2 +-
+ odb/object-name.c                   |  2 +-
+ odb/replace-object.c                |  2 +-
+ pack-bitmap-write.c                 |  2 +-
+ pack-bitmap.h                       |  2 +-
+ path.c                              |  2 +-
+ pretty.c                            |  2 +-
+ pseudo-merge.c                      |  2 +-
+ reachable.c                         |  4 ++--
+ read-cache.c                        |  2 +-
+ refs/files-backend.c                |  4 ++--
+ refs/iterator.c                     |  2 +-
+ ls-refs.c => refs/ls-refs.c         |  4 ++--
+ ls-refs.h => refs/ls-refs.h         |  0
+ pack-refs.c => refs/pack-refs.c     |  4 ++--
+ pack-refs.h => refs/pack-refs.h     |  0
+ refs/packed-backend.c               |  4 ++--
+ refs/ref-cache.c                    |  2 +-
+ ref-filter.c => refs/ref-filter.c   |  6 +++---
+ ref-filter.h => refs/ref-filter.h   |  0
+ reflog-walk.c => refs/reflog-walk.c |  4 ++--
+ reflog-walk.h => refs/reflog-walk.h |  0
+ reflog.c => refs/reflog.c           |  4 ++--
+ reflog.h => refs/reflog.h           |  2 +-
+ refs/refs-internal.h                |  2 +-
+ refs.c => refs/refs.c               |  4 ++--
+ refs.h => refs/refs.h               |  0
+ refspec.c => refs/refspec.c         |  4 ++--
+ refspec.h => refs/refspec.h         |  0
+ refs/reftable-backend.c             |  4 ++--
+ worktree.c => refs/worktree.c       |  4 ++--
+ worktree.h => refs/worktree.h       |  2 +-
+ remote.c                            |  4 ++--
+ remote.h                            |  2 +-
+ repack-midx.c                       |  2 +-
+ replay.c                            |  2 +-
+ repository.c                        |  2 +-
+ reset.c                             |  2 +-
+ revision.c                          |  6 +++---
+ scalar.c                            |  2 +-
+ sequencer.c                         |  2 +-
+ serve.c                             |  2 +-
+ server-info.c                       |  2 +-
+ setup.c                             |  4 ++--
+ setup.h                             |  2 +-
+ shallow.c                           |  2 +-
+ submodule.c                         |  4 ++--
+ t/helper/test-reach.c               |  2 +-
+ t/helper/test-ref-store.c           |  4 ++--
+ transport-helper.c                  |  4 ++--
+ transport.c                         |  4 ++--
+ unpack-trees.c                      |  2 +-
+ upload-pack.c                       |  2 +-
+ walker.c                            |  2 +-
+ wt-status.c                         |  4 ++--
+ 138 files changed, 210 insertions(+), 210 deletions(-)
+ rename ls-refs.c => refs/ls-refs.c (99%)
+ rename ls-refs.h => refs/ls-refs.h (100%)
+ rename pack-refs.c => refs/pack-refs.c (97%)
+ rename pack-refs.h => refs/pack-refs.h (100%)
+ rename ref-filter.c => refs/ref-filter.c (99%)
+ rename ref-filter.h => refs/ref-filter.h (100%)
+ rename reflog-walk.c => refs/reflog-walk.c (99%)
+ rename reflog-walk.h => refs/reflog-walk.h (100%)
+ rename reflog.c => refs/reflog.c (99%)
+ rename reflog.h => refs/reflog.h (99%)
+ rename refs.c => refs/refs.c (99%)
+ rename refs.h => refs/refs.h (100%)
+ rename refspec.c => refs/refspec.c (99%)
+ rename refspec.h => refs/refspec.h (100%)
+ rename worktree.c => refs/worktree.c (99%)
+ rename worktree.h => refs/worktree.h (99%)
 
 diff --git a/.gitorganize b/.gitorganize
-index 18cf3228a8..522821522e 100644
+index 5da6d0b2b1..e29497504a 100644
 --- a/.gitorganize
 +++ b/.gitorganize
-@@ -17,3 +17,478 @@ component:transport = transport
- component:notes = notes
- component:submodule = submodule
- component:archive = archive
-+[labels]
-+# The recorded placement of each source; edit a line to change it.
-+# apply --labels-only fills in unrecorded sources; --reseed re-derives all.
-+abspath.c component=? role=lib prefix=abspath cochange=setup:12,diff:6,refs:5,index:3,submodule:3
-+abspath.h component=? role=public prefix=abspath cochange=setup:1
-+add-interactive.c component=? role=lib prefix=add-interactive includes=index:3,odb:2,diff:1,refs:1,revision:1 cochange=diff:19,index:16,revision:16,odb:7,refs:6
-+add-interactive.h component=? role=public prefix=add-patch cochange=odb:2
-+add-patch.c component=? role=lib prefix=add-patch includes=setup:3,index:2,odb:2,diff:1 cochange=index:10,transport:8,odb:6,merge:4,refs:4
-+add-patch.h component=? role=public prefix=add-patch cochange=odb:1
-+advice.c component=? role=lib prefix=advice includes=setup:2 cochange=transport:18,index:12,odb:9,diff:8,revision:8
-+advice.h component=? role=public prefix=advice cochange=transport:14,index:9,odb:6,submodule:4,pack:3
-+alias.c component=setup role=lib prefix=alias includes=setup:2 cochange=setup:8,diff:4,transport:3,convert:2,index:2
-+alias.h component=setup role=header prefix=completion cochange=setup:3,transport:2,pack:1,revision:1
-+alloc.c component=odb role=lib prefix=alloc includes=odb:6,setup:1 cochange=odb:54,revision:8,diff:6,pack:6,index:3
-+alloc.h component=odb role=header prefix=alloc cochange=odb:16,refs:1,revision:1
-+apply.c component=? role=lib prefix=apply includes=index:5,setup:4,odb:3,diff:2,merge:2 cochange=index:93,setup:43,diff:41,odb:26,merge:24
-+apply.h component=? role=public prefix=apply includes=odb:1 cochange=diff:2
-+archive-tar.c component=archive role=lib prefix=archive-tar includes=archive:1,odb:1,setup:1 cochange=archive:59,index:12,diff:9,odb:9,transport:8
-+archive-zip.c component=archive role=lib prefix=archive-zip includes=diff:2,archive:1,odb:1,setup:1 cochange=archive:57,diff:12,odb:8,index:7,transport:6
-+archive.c component=archive role=lib prefix=archive includes=odb:5,setup:3,convert:2,archive:1,index:1 cochange=archive:54,convert:42,odb:39,index:36,revision:31
-+archive.h component=archive role=header prefix=archive includes=index:1 cochange=archive:58,index:3,revision:3,convert:2,diff:1
-+attr.c component=convert role=lib prefix=attr includes=odb:3,setup:3,index:2,convert:1,refs:1 cochange=index:55,convert:54,diff:41,setup:26,revision:22
-+attr.h component=convert role=header prefix=attr cochange=convert:50,index:13,diff:9,archive:8,setup:3
-+banned.h component=? role=public prefix=banned
-+base85.c component=? role=lib prefix=base85 cochange=diff:4,pack:2,convert:1,transport:1
-+base85.h component=? role=public prefix=base85 cochange=diff:1
-+bisect.c component=revision role=lib prefix=bisect includes=odb:5,revision:5,setup:2,diff:1,index:1 cochange=revision:61,odb:32,transport:31,refs:13,diff:9
-+bisect.h component=revision role=header prefix=bisect cochange=revision:29,odb:2
-+blame.c component=revision role=lib prefix=blame includes=odb:5,diff:2,index:2,pack:2,revision:2 cochange=diff:68,revision:66,odb:56,index:29,pack:22
-+blame.h component=revision role=header prefix=blame includes=diff:1,odb:1 cochange=revision:19,odb:7,diff:4,archive:1,index:1
-+blob.c component=odb role=lib prefix=object includes=odb:2 cochange=odb:131,transport:12,pack:11,revision:10,refs:5
-+blob.h component=odb role=header prefix=blob includes=odb:1 cochange=odb:33,revision:4,pack:3,transport:2
-+bloom.c component=pack role=lib prefix=bloom includes=odb:4,diff:2,pack:2,setup:2 cochange=pack:38,revision:25,diff:15,odb:6,index:2
-+bloom.h component=pack role=header prefix=bloom cochange=pack:28,revision:12,odb:1
-+branch.c component=? role=lib prefix=branch includes=refs:3,setup:3,odb:2,submodule:1,transport:1 cochange=refs:62,transport:41,setup:28,index:19,revision:12
-+branch.h component=? role=public prefix=branch cochange=setup:8,refs:4,submodule:4
-+builtin.h component=? role=public prefix=builtin includes=setup:1 cochange=diff:15,index:15,transport:12,odb:6,notes:5
-+bundle-uri.c component=transport role=lib prefix=bundle-uri includes=transport:5,odb:1,refs:1,setup:1 cochange=transport:28,setup:7,odb:4,merge:2,pack:2
-+bundle-uri.h component=transport role=header prefix=bundle-uri cochange=transport:14
-+bundle.c component=transport role=lib prefix=bundle includes=odb:3,revision:3,setup:2,transport:2,diff:1 cochange=transport:63,odb:24,revision:21,refs:17,pack:10
-+bundle.h component=transport role=header prefix=bundle includes=revision:1 cochange=transport:37,revision:5
-+cache-tree.c component=index role=lib prefix=cache-tree includes=odb:5,index:2,setup:1,transport:1 cochange=index:94,odb:69,revision:27,transport:21,diff:20
-+cache-tree.h component=index role=header prefix=cache-tree includes=odb:2 cochange=index:42,diff:4,revision:4,odb:3,refs:1
-+cbtree.c component=odb role=lib prefix=cbtree includes=odb:1 cochange=odb:9,diff:1,merge:1,pack:1
-+cbtree.h component=odb role=header prefix=cbtree cochange=odb:12,pack:3,setup:1,transport:1
-+chdir-notify.c component=? role=lib prefix=chdir-notify includes=revision:1 cochange=index:2,archive:1,merge:1,revision:1
-+chdir-notify.h component=? role=public prefix=chdir-notify
-+checkout.c component=index role=lib prefix=checkout includes=setup:2,index:1,odb:1,refs:1,transport:1 cochange=transport:16,refs:6,setup:5,index:3,odb:2
-+checkout.h component=index role=header prefix=checkout includes=odb:1 cochange=index:4,diff:1,odb:1,refs:1,revision:1
-+chunk-format.c component=pack role=lib prefix=chunk-format includes=odb:1,pack:1 cochange=pack:20,odb:1,transport:1
-+chunk-format.h component=pack role=header prefix=chunk-format includes=odb:1 cochange=pack:15,odb:2,setup:1,transport:1
-+color.c component=? role=lib prefix=color includes=setup:1 cochange=diff:21,index:14,revision:13,setup:7,transport:7
-+color.h component=? role=public prefix=color cochange=diff:18,index:12,revision:12,transport:2,odb:1
-+column.c component=? role=lib prefix=column includes=setup:1 cochange=transport:6,setup:5,diff:4,revision:3,index:2
-+column.h component=? role=public prefix=column
-+combine-diff.c component=diff role=lib prefix=combine-diff includes=odb:5,diff:4,revision:2,convert:1,refs:1 cochange=diff:198,revision:67,index:35,odb:16,transport:16
-+commit-graph.c component=pack role=lib prefix=commit-graph includes=odb:9,pack:4,setup:2,refs:1,revision:1 cochange=pack:206,odb:125,revision:47,transport:34,setup:22
-+commit-graph.h component=pack role=header prefix=commit-graph includes=odb:2 cochange=pack:92,odb:14,setup:9,revision:8,transport:5
-+commit-reach.c component=revision role=lib prefix=commit-reach includes=revision:3,odb:2,pack:1,refs:1 cochange=revision:38,odb:17,pack:15,transport:9,index:5
-+commit-reach.h component=revision role=header prefix=commit-reach includes=odb:2 cochange=revision:32,odb:9,transport:8,pack:3,refs:3
-+commit-slab-decl.h component=odb role=header prefix=commit-slab cochange=odb:6,revision:1
-+commit-slab-impl.h component=odb role=header prefix=commit-slab cochange=odb:7,pack:3,revision:1,setup:1,transport:1
-+commit-slab.h component=odb role=header prefix=commit-slab includes=odb:2 cochange=odb:8,revision:2,transport:2,index:1,merge:1
-+commit.c component=odb role=lib prefix=commit includes=odb:10,setup:4,revision:3,diff:1,index:1 cochange=odb:403,revision:147,transport:87,pack:57,setup:45
-+commit.h component=odb role=header prefix=commit includes=odb:1 cochange=odb:237,revision:205,transport:49,pack:25,notes:22
-+common-exit.c component=? role=lib prefix=common-main
-+common-init.c component=? role=lib prefix=common-main includes=odb:2,setup:2,convert:1 cochange=setup:1
-+common-init.h component=? role=public prefix=common-main
-+common-main.c component=? role=lib prefix=common-main cochange=setup:5,transport:4,convert:3,index:1
-+config.c component=setup role=lib prefix=config includes=setup:4,odb:2,convert:1,index:1,refs:1 cochange=setup:274,index:93,diff:75,refs:48,revision:46
-+config.h component=setup role=header prefix=config includes=setup:1 cochange=setup:100,index:30,transport:23,submodule:21,merge:6
-+connect.c component=transport role=lib prefix=connect includes=transport:7,setup:4,odb:1,refs:1 cochange=transport:238,setup:19,diff:13,index:10,refs:10
-+connect.h component=transport role=header prefix=connect includes=transport:1 cochange=transport:58,refs:1
-+connected.c component=transport role=lib prefix=connected includes=transport:3,odb:1,pack:1 cochange=transport:39,pack:31,odb:7,diff:6,index:5
-+connected.h component=transport role=header prefix=connected cochange=transport:23
-+convert.c component=convert role=lib prefix=convert includes=convert:2,index:1,merge:1,odb:1,setup:1 cochange=convert:59,diff:43,index:41,setup:30,transport:30
-+convert.h component=convert role=header prefix=convert includes=odb:1 cochange=convert:29,index:18,diff:8,setup:8,archive:4
-+copy.c component=? role=lib prefix=copy cochange=pack:6,transport:5,diff:3,odb:3,merge:2
-+copy.h component=? role=public prefix=copy cochange=transport:3,merge:2,convert:1,setup:1
-+credential.c component=? role=lib prefix=credential includes=setup:3 cochange=transport:13,index:4,odb:4,convert:2,merge:2
-+credential.h component=? role=public prefix=credential cochange=transport:6
-+csum-file.c component=? role=lib prefix=csum-file includes=odb:1 cochange=pack:49,odb:13,index:10,transport:10,diff:8
-+csum-file.h component=? role=public prefix=csum-file includes=odb:1 cochange=pack:44,odb:8,diff:5,index:5,transport:5
-+ctype.c component=? role=lib prefix=ctype cochange=setup:3,index:2,odb:1,pack:1,refs:1
-+daemon.c component=? role=program prefix=daemon includes=setup:3,transport:2 cochange=transport:77,index:14,setup:13,diff:7,refs:5
-+date.c component=? role=lib prefix=date cochange=revision:17,odb:16,refs:14,setup:9,diff:7
-+date.h component=? role=public prefix=date cochange=refs:7,revision:4,setup:2,archive:1,odb:1
-+decorate.c component=revision role=lib prefix=decorate includes=odb:1,revision:1 cochange=diff:6,odb:5,revision:5,pack:2,transport:2
-+decorate.h component=revision role=header prefix=decorate cochange=revision:4,odb:1
-+delta-islands.c component=pack role=lib prefix=delta-islands includes=odb:6,pack:4,diff:1,refs:1,setup:1 cochange=pack:20,odb:17,revision:7,transport:7,diff:5
-+delta-islands.h component=pack role=header prefix=delta-islands cochange=pack:6
-+delta.h component=pack role=header prefix=diff-delta cochange=pack:27,odb:19,diff:5,transport:3,convert:1
-+diagnose.c component=? role=lib prefix=diagnose includes=archive:1,index:1,odb:1,pack:1,setup:1 cochange=index:4,revision:4,odb:3,pack:3,transport:3
-+diagnose.h component=? role=public prefix=diagnose cochange=revision:2,refs:1,transport:1
-+diff-delta.c component=pack role=lib prefix=diff-delta includes=pack:1 cochange=pack:24,diff:7,index:2,odb:2,transport:2
-+diff-lib.c component=diff role=lib prefix=diff includes=index:6,odb:3,diff:2,revision:2,refs:1 cochange=diff:150,index:124,revision:47,submodule:18,odb:8
-+diff-merges.c component=diff role=lib prefix=diff-merges includes=diff:1,revision:1 cochange=revision:18,diff:17,odb:4,refs:3,index:2
-+diff-merges.h component=diff role=header prefix=diff-merges cochange=diff:11,revision:4,merge:1
-+diff-no-index.c component=diff role=lib prefix=diff includes=diff:2,index:2,odb:1,revision:1 cochange=diff:76,revision:21,index:19,refs:8,notes:7
-+diff.c component=diff role=lib prefix=diff includes=odb:5,diff:4,setup:3,convert:2,index:2 cochange=diff:610,revision:121,index:100,transport:71,setup:69
-+diff.h component=diff role=header prefix=diff includes=index:1,odb:1 cochange=diff:471,revision:83,index:29,submodule:18,odb:14
-+diffcore-break.c component=diff role=lib prefix=diffcore-break includes=odb:2,diff:1,transport:1 cochange=diff:71,pack:8,revision:7,index:5,merge:3
-+diffcore-delta.c component=diff role=lib prefix=diffcore-delta includes=diff:1 cochange=diff:26,revision:7,odb:4,index:2,refs:2
-+diffcore-order.c component=diff role=lib prefix=diffcore-order includes=diff:2 cochange=diff:19,index:8,refs:7,revision:7,pack:5
-+diffcore-pickaxe.c component=diff role=lib prefix=pickaxe includes=diff:3,odb:1,revision:1 cochange=diff:97,revision:15,notes:3,odb:3,merge:2
-+diffcore-rename.c component=diff role=lib prefix=diffcore-rename includes=diff:2,odb:2,transport:1 cochange=diff:188,index:38,revision:37,odb:21,pack:17
-+diffcore-rotate.c component=diff role=lib prefix=diff includes=diff:2 cochange=diff:14,revision:5,pack:2,merge:1,refs:1
-+diffcore.h component=diff role=header prefix=diff includes=odb:1 cochange=diff:175,revision:11,merge:10,submodule:4,odb:2
-+dir-iterator.c component=index role=lib prefix=dir-iterator includes=index:2 cochange=index:7,refs:1
-+dir-iterator.h component=index role=header prefix=dir-iterator cochange=index:7,refs:1
-+dir.c component=index role=lib prefix=dir includes=index:7,setup:4,odb:2,convert:1,refs:1 cochange=index:343,diff:61,setup:49,odb:37,convert:29
-+dir.h component=index role=header prefix=dir includes=index:2,odb:1 cochange=index:236,odb:13,setup:12,submodule:11,convert:10
-+editor.c component=? role=lib prefix=editor includes=setup:2 cochange=transport:20,setup:12,index:8,odb:4,submodule:4
-+editor.h component=? role=public prefix=editor cochange=transport:1
-+entry.c component=index role=lib prefix=entry includes=index:7,odb:1,setup:1,submodule:1 cochange=index:96,diff:28,convert:20,setup:17,odb:10
-+entry.h component=index role=header prefix=entry includes=convert:1 cochange=index:18,submodule:4,revision:3,transport:2,convert:1
-+environment.c component=setup role=lib prefix=environment includes=setup:5,convert:3,odb:2,merge:1,refs:1 cochange=setup:281,index:77,odb:48,refs:36,transport:28
-+environment.h component=setup role=header prefix=environment includes=setup:1 cochange=setup:135,index:37,odb:15,refs:11,pack:9
-+exec-cmd.c component=? role=lib prefix=strvec includes=setup:1
-+exec-cmd.h component=? role=public prefix=argv-array cochange=refs:4,transport:4,odb:1,setup:1,submodule:1
-+fetch-negotiator.c component=transport role=lib prefix=repo-settings includes=setup:1,transport:1 cochange=setup:8,transport:7,index:2,odb:1
-+fetch-negotiator.h component=transport role=header prefix=fetch-negotiator cochange=transport:7,setup:3,odb:1,pack:1,revision:1
-+fetch-object-info.c component=transport role=lib prefix=cat-file includes=transport:3,odb:2 cochange=transport:7,odb:1
-+fetch-object-info.h component=transport role=header prefix=cat-file includes=transport:2 cochange=transport:7,odb:1
-+fetch-pack.c component=transport role=lib prefix=fetch-pack includes=transport:8,odb:7,setup:4,pack:3,revision:2 cochange=transport:303,odb:96,revision:46,pack:40,setup:25
-+fetch-pack.h component=transport role=header prefix=fetch-pack includes=odb:1,revision:1,transport:1 cochange=transport:108,odb:2,pack:2,refs:2,diff:1
-+fmt-merge-msg.c component=merge role=lib prefix=fmt-merge-msg includes=odb:3,diff:2,revision:2,setup:2,merge:1 cochange=revision:10,odb:7,index:6,diff:4,setup:4
-+fmt-merge-msg.h component=merge role=header prefix=fmt-merge-msg cochange=merge:3,setup:2
-+for-each-ref.h component=? role=public prefix=?
-+fsck.c component=odb role=lib prefix=fsck includes=odb:9,setup:3,convert:1,index:1,pack:1 cochange=odb:113,revision:46,transport:43,pack:20,setup:15
-+fsck.h component=odb role=header prefix=fsck includes=odb:2 cochange=odb:50,diff:5,revision:5,transport:5,refs:4
-+fsmonitor--daemon.h component=index role=header prefix=fsmonitor--daemon includes=index:1 cochange=index:1
-+fsmonitor-ipc.c component=index role=lib prefix=fsmonitor includes=index:1,setup:1 cochange=index:6,transport:2,merge:1,notes:1,pack:1
-+fsmonitor-ipc.h component=index role=header prefix=fsmonitor cochange=index:2
-+fsmonitor-ll.h component=index role=header prefix=fsmonitor-ll cochange=index:4
-+fsmonitor-path-utils.h component=index role=header prefix=fsmonitor cochange=index:2
-+fsmonitor-settings.c component=index role=lib prefix=fsmonitor includes=index:3,setup:2 cochange=index:17,setup:10,transport:2,diff:1,odb:1
-+fsmonitor-settings.h component=index role=header prefix=fsmonitor-settings cochange=index:11,setup:4
-+fsmonitor.c component=index role=lib prefix=fsmonitor includes=index:4,setup:3 cochange=index:37,setup:16,transport:4,merge:2,refs:2
-+fsmonitor.h component=index role=header prefix=fsmonitor includes=index:4,odb:1 cochange=index:24,setup:7,diff:3,submodule:1
-+gettext.c component=? role=lib prefix=gettext includes=setup:1 cochange=pack:5,refs:3,setup:2,transport:2,merge:1
-+gettext.h component=? role=public prefix=i18n cochange=transport:2,setup:1
-+git-compat-util.h component=? role=public prefix=git-compat-util cochange=setup:48,index:35,odb:22,pack:21,diff:17
-+git-curl-compat.h component=transport role=header prefix=git-curl-compat cochange=transport:22
-+git-zlib.c component=? role=lib prefix=git-zlib cochange=archive:2,odb:1,transport:1
-+git-zlib.h component=? role=public prefix=git-zlib cochange=archive:3,setup:2,odb:1,transport:1
-+git.c component=? role=lib prefix=git includes=setup:4,odb:2,convert:1,index:1,revision:1 cochange=setup:70,revision:54,transport:47,index:28,diff:25
-+gpg-interface.c component=? role=lib prefix=gpg-interface includes=setup:3,index:1,odb:1 cochange=revision:25,odb:22,setup:13,transport:11,diff:8
-+gpg-interface.h component=? role=public prefix=gpg-interface cochange=odb:22,revision:15,merge:4,transport:3,refs:1
-+graph.c component=revision role=lib prefix=graph includes=revision:2,odb:1,setup:1 cochange=revision:38,diff:23,index:4,odb:3,transport:3
-+graph.h component=revision role=header prefix=graph includes=diff:1 cochange=revision:19,diff:2,odb:1
-+grep.c component=? role=lib prefix=grep includes=diff:4,odb:1,revision:1,setup:1 cochange=diff:40,revision:28,transport:10,index:7,refs:7
-+grep.h component=? role=public prefix=grep includes=diff:1 cochange=revision:23,diff:10,transport:4,index:2,refs:2
-+hash-lookup.c component=odb role=lib prefix=hash includes=odb:2,index:1 cochange=pack:14,odb:12,diff:1,index:1,merge:1
-+hash-lookup.h component=odb role=header prefix=hash-lookup cochange=odb:10,pack:8,diff:1,merge:1,revision:1
-+hash.c component=odb role=lib prefix=hash includes=odb:1 cochange=odb:15,diff:2,setup:2,index:1,transport:1
-+hash.h component=odb role=header prefix=hash includes=setup:1 cochange=odb:32,pack:11,index:9,diff:7,transport:4
-+hashmap.c component=? role=lib prefix=hashmap cochange=diff:33,revision:19,index:17,refs:13,submodule:13
-+hashmap.h component=? role=public prefix=hashmap cochange=diff:39,revision:23,index:18,submodule:14,refs:13
-+help.c component=? role=lib prefix=help includes=setup:4,index:1,odb:1,refs:1,transport:1 cochange=setup:19,transport:19,diff:9,index:8,odb:7
-+help.h component=? role=public prefix=help cochange=diff:1,odb:1,revision:1,transport:1
-+hex-ll.c component=? role=lib prefix=hex-ll
-+hex-ll.h component=? role=public prefix=hex-ll
-+hex.c component=? role=lib prefix=hex includes=odb:1 cochange=odb:7,revision:5,notes:3,transport:3,refs:2
-+hex.h component=? role=public prefix=hex includes=odb:1 cochange=revision:3,odb:2,convert:1,merge:1,pack:1
-+hook.c component=setup role=lib prefix=hook includes=setup:4 cochange=setup:37,transport:10,odb:8,refs:5,diff:3
-+hook.h component=setup role=header prefix=hook includes=setup:1 cochange=setup:34,transport:6,odb:5,refs:5,pack:3
-+http-backend.c component=? role=program prefix=http-backend includes=setup:4,odb:3,transport:2,pack:1,refs:1 cochange=transport:57,pack:41,setup:19,refs:14,revision:13
-+http-fetch.c component=? role=program prefix=http-fetch includes=setup:3,transport:2 cochange=transport:46,setup:10,pack:9,index:7,refs:7
-+http-push.c component=? role=program prefix=http-push includes=odb:7,revision:3,setup:3,transport:2,diff:1 cochange=transport:272,odb:134,revision:82,pack:60,diff:34
-+http-walker.c component=transport role=lib prefix=http includes=transport:3,odb:2,pack:1,revision:1,setup:1 cochange=transport:73,pack:40,odb:17,index:11,refs:7
-+http.c component=transport role=lib prefix=http includes=transport:4,setup:3,odb:2,pack:2 cochange=transport:195,pack:71,odb:27,diff:8,setup:8
-+http.h component=transport role=header prefix=http includes=transport:1 cochange=transport:149,pack:15,diff:6,odb:4,archive:3
-+ident.c component=setup role=lib prefix=ident includes=setup:2 cochange=setup:19,revision:10,odb:6,refs:6,pack:4
-+ident.h component=setup role=header prefix=ident cochange=setup:3,revision:1
-+imap-send.c component=? role=program prefix=imap-send includes=setup:3,transport:1 cochange=transport:47,diff:16,index:16,refs:9,odb:8
-+iterator.h component=? role=public prefix=refs cochange=index:2,refs:2
-+json-writer.c component=? role=lib prefix=json-writer
-+json-writer.h component=? role=public prefix=json-writer cochange=transport:1
-+khash.h component=? role=public prefix=khash includes=odb:1 cochange=odb:7,pack:5,diff:4,revision:4,index:3
-+kwset.c component=? role=lib prefix=kwset cochange=convert:2,diff:1,pack:1,revision:1
-+kwset.h component=? role=public prefix=kwset
-+levenshtein.c component=? role=lib prefix=? cochange=diff:2,revision:2,odb:1
-+levenshtein.h component=? role=public prefix=? cochange=transport:2,diff:1,refs:1,setup:1
-+line-log.c component=revision role=lib prefix=line-log includes=odb:4,revision:4,diff:3,setup:2,pack:1 cochange=revision:52,diff:48,odb:23,pack:15,notes:8
-+line-log.h component=revision role=header prefix=line-log includes=diff:1 cochange=revision:20,odb:3,diff:2,setup:1,submodule:1
-+line-range.c component=revision role=lib prefix=line-range includes=diff:2,revision:1 cochange=revision:14,diff:8,archive:1,odb:1,pack:1
-+line-range.h component=revision role=header prefix=line-range cochange=revision:13
-+linear-assignment.c component=? role=lib prefix=linear-assignment cochange=diff:1,revision:1
-+linear-assignment.h component=? role=public prefix=linear-assignment
-+list-objects-filter-options.c component=revision role=lib prefix=list-objects-filter-options includes=revision:1,setup:1,transport:1 cochange=revision:39,transport:21,setup:9,diff:6,index:4
-+list-objects-filter-options.h component=revision role=header prefix=list-objects-filter includes=odb:1 cochange=revision:40,transport:17,odb:4,diff:3,refs:2
-+list-objects-filter.c component=revision role=lib prefix=list-objects-filter includes=odb:5,revision:3,diff:1,index:1 cochange=revision:32,odb:13,index:10,diff:6,pack:3
-+list-objects-filter.h component=revision role=header prefix=list-objects cochange=revision:16,odb:1
-+list-objects.c component=revision role=lib prefix=list-objects includes=odb:6,revision:4,diff:1,pack:1,setup:1 cochange=revision:91,odb:68,pack:40,transport:28,index:15
-+list-objects.h component=revision role=header prefix=list-objects cochange=revision:32,pack:13,transport:4,odb:1
-+list.h component=revision role=header prefix=list cochange=submodule:2,transport:2,index:1,revision:1
-+lockfile.c component=? role=lib prefix=lockfile includes=setup:1 cochange=refs:18,index:13,setup:9,diff:8,merge:3
-+lockfile.h component=? role=public prefix=lockfile cochange=index:5,revision:4,diff:3,refs:3,odb:2
-+log-tree.c component=revision role=lib prefix=format-patch includes=odb:8,revision:5,diff:3,setup:3,refs:2 cochange=revision:222,diff:112,odb:112,refs:31,transport:16
-+log-tree.h component=revision role=header prefix=format-patch cochange=revision:64,diff:11,refs:3,odb:2,transport:2
-+loose.c component=odb role=lib prefix=loose includes=odb:5,setup:1 cochange=odb:31,pack:18,setup:7,transport:6,refs:2
-+loose.h component=odb role=header prefix=loose cochange=odb:8,setup:3
-+ls-refs.c component=refs role=lib prefix=ls-refs includes=setup:3,refs:2,odb:1,transport:1 cochange=refs:26,transport:17,pack:10,revision:5,odb:4
-+ls-refs.h component=refs role=header prefix=ls-refs cochange=transport:11,refs:5,submodule:1
-+mailinfo.c component=? role=lib prefix=mailinfo includes=setup:2 cochange=transport:5,index:3,notes:3,odb:3,revision:3
-+mailinfo.h component=? role=public prefix=mailinfo
-+mailmap.c component=? role=lib prefix=mailmap includes=setup:3,odb:2 cochange=setup:13,transport:11,refs:10,index:8,revision:5
-+mailmap.h component=? role=public prefix=mailmap cochange=setup:8,revision:4,transport:2,diff:1,index:1
-+match-trees.c component=odb role=lib prefix=match-trees includes=odb:5,setup:1 cochange=odb:33,index:15,notes:15,revision:12,pack:10
-+match-trees.h component=odb role=header prefix=match-trees cochange=merge:1,odb:1
-+mem-pool.c component=? role=lib prefix=mem-pool cochange=index:6
-+mem-pool.h component=? role=public prefix=mem-pool cochange=index:4
-+merge-blobs.c component=merge role=lib prefix=object-store includes=merge:2,odb:2 cochange=merge:9,notes:3,diff:2,convert:1,odb:1
-+merge-blobs.h component=merge role=header prefix=merge-blobs cochange=merge:2
-+merge-ll.c component=merge role=lib prefix=merge-ll includes=convert:2,diff:1,merge:1,setup:1 cochange=merge:11,diff:6,transport:4,convert:2,index:2
-+merge-ll.h component=merge role=header prefix=merge-ll cochange=merge:11,diff:2,convert:1,notes:1
-+merge-ort-wrappers.c component=merge role=lib prefix=merge-ort includes=odb:4,merge:2,index:1,setup:1 cochange=merge:7,odb:2,notes:1,revision:1
-+merge-ort-wrappers.h component=merge role=header prefix=merge includes=merge:1 cochange=merge:9,odb:2,revision:1
-+merge-ort.c component=merge role=lib prefix=merge-ort includes=odb:8,index:6,diff:3,merge:2,revision:2 cochange=diff:41,merge:32,index:23,odb:23,revision:16
-+merge-ort.h component=merge role=header prefix=merge-ort includes=odb:1 cochange=merge:19,odb:2,revision:2,diff:1
-+merge.c component=merge role=lib prefix=merge includes=odb:4,index:2,merge:1,setup:1 cochange=index:22,merge:6,setup:4,diff:2,odb:2
-+merge.h component=merge role=header prefix=merge cochange=merge:1
-+mergesort.h component=? role=public prefix=mergesort cochange=odb:1
-+midx-write.c component=pack role=lib prefix=midx-write includes=pack:5,odb:2,revision:2,refs:1,setup:1 cochange=pack:100,odb:20,refs:7,transport:6,setup:4
-+midx.c component=pack role=lib prefix=midx includes=pack:5,index:1,odb:1,setup:1 cochange=pack:220,odb:34,transport:11,index:6,setup:4
-+midx.h component=pack role=header prefix=midx cochange=pack:134,odb:5,setup:2,transport:2,refs:1
-+name-hash.c component=index role=lib prefix=name-hash includes=index:3,odb:1,setup:1 cochange=diff:43,index:39,revision:18,setup:14,refs:12
-+name-hash.h component=index role=header prefix=name-hash cochange=index:7
-+notes-cache.c component=notes role=lib prefix=notes includes=odb:3,notes:1,refs:1,revision:1,setup:1 cochange=notes:37,odb:29,diff:10,index:10,revision:9
-+notes-cache.h component=notes role=header prefix=notes-cache includes=notes:1 cochange=diff:7,notes:3
-+notes-merge.c component=notes role=lib prefix=notes-merge includes=odb:4,diff:3,notes:3,index:1,merge:1 cochange=diff:54,revision:41,odb:37,notes:36,index:30
-+notes-merge.h component=notes role=header prefix=notes-merge includes=notes:1 cochange=notes:18,odb:2
-+notes-utils.c component=notes role=lib prefix=commit includes=setup:2,notes:1,odb:1,refs:1 cochange=notes:33,odb:15,refs:9,transport:9,revision:8
-+notes-utils.h component=notes role=header prefix=notes includes=notes:1 cochange=notes:17,odb:6
-+notes.c component=notes role=lib prefix=notes includes=odb:4,setup:2,notes:1,refs:1 cochange=notes:63,odb:58,revision:41,transport:36,index:24
-+notes.h component=notes role=header prefix=notes cochange=notes:55,revision:20,setup:9,odb:3,refs:2
-+object-file-convert.c component=odb role=lib prefix=object-file-convert includes=odb:5,setup:1 cochange=odb:8,setup:2,transport:1
-+object-file-convert.h component=odb role=header prefix=object-file-convert includes=odb:1 cochange=odb:4
-+object-file.c component=odb role=lib prefix=object-file includes=odb:6,index:2,pack:2,setup:2,convert:1 cochange=odb:183,pack:96,index:55,setup:30,transport:27
-+object-file.h component=odb role=header prefix=object-file includes=odb:2 cochange=odb:113,pack:30,index:12,notes:5,transport:5
-+object-name.c component=odb role=lib prefix=object-name includes=odb:8,setup:5,index:2,revision:2,pack:1 cochange=odb:46,pack:31,revision:23,setup:19,refs:18
-+object-name.h component=odb role=header prefix=object-name includes=odb:1 cochange=odb:5,revision:3,refs:2,index:1
-+object.c component=odb role=lib prefix=object includes=odb:8,index:1,pack:1 cochange=odb:265,pack:61,revision:55,transport:34,refs:17
-+object.h component=odb role=header prefix=object includes=odb:1 cochange=odb:187,revision:54,transport:41,pack:29,refs:20
-+odb.c component=odb role=lib prefix=odb includes=odb:7,pack:3,setup:3,index:1,submodule:1 cochange=odb:123,pack:64,setup:13,transport:12,index:8
-+odb.h component=odb role=header prefix=odb includes=odb:3 cochange=odb:117,pack:71,transport:16,setup:13,index:10
-+oid-array.c component=odb role=lib prefix=oid-array includes=odb:2 cochange=odb:13,pack:10,merge:2,diff:1,revision:1
-+oid-array.h component=odb role=header prefix=oid-array includes=odb:1 cochange=odb:3,diff:1,index:1,refs:1,revision:1
-+oidmap.c component=odb role=lib prefix=oidmap includes=odb:2 cochange=diff:11,revision:7,odb:6,refs:5,index:4
-+oidmap.h component=odb role=header prefix=oidmap includes=odb:1 cochange=odb:6,revision:4,index:2,transport:2,convert:1
-+oidset.c component=odb role=lib prefix=oidset includes=odb:1 cochange=odb:17,convert:2,diff:2,transport:2,index:1
-+oidset.h component=odb role=header prefix=oidset cochange=odb:17,revision:1,transport:1
-+oidtree.c component=odb role=lib prefix=oidtree includes=odb:2 cochange=odb:14,index:3,setup:2,diff:1,merge:1
-+oidtree.h component=odb role=header prefix=oidtree includes=odb:2 cochange=odb:9
-+pack-bitmap-write.c component=pack role=lib prefix=pack-bitmap-write includes=odb:7,pack:6,revision:2,setup:2,diff:1 cochange=pack:132,odb:32,revision:27,transport:10,diff:4
-+pack-bitmap.c component=pack role=lib prefix=pack-bitmap includes=pack:7,odb:3,revision:3,setup:2,diff:1 cochange=pack:232,revision:30,odb:18,transport:14,refs:7
-+pack-bitmap.h component=pack role=header prefix=pack-bitmap includes=pack:2,refs:1 cochange=pack:117,refs:5,odb:2,setup:2,revision:1
-+pack-check.c component=pack role=lib prefix=pack-check includes=odb:2,pack:2,setup:2 cochange=pack:59,odb:26,transport:23,diff:11,index:10
-+pack-mtimes.c component=pack role=lib prefix=pack-mtimes includes=pack:2,odb:1 cochange=pack:10,odb:3,transport:2,notes:1
-+pack-mtimes.h component=pack role=header prefix=pack-mtimes cochange=pack:4,odb:2,setup:1,transport:1
-+pack-objects.c component=pack role=lib prefix=pack-objects includes=pack:3,odb:1,setup:1 cochange=pack:66,diff:17,odb:16,transport:9,index:5
-+pack-objects.h component=pack role=header prefix=pack-objects includes=pack:2,odb:1 cochange=pack:44,setup:5,odb:1
-+pack-refs.c component=refs role=lib prefix=pack-refs includes=refs:2,setup:2,revision:1 cochange=refs:12,transport:8,index:2,merge:2,odb:2
-+pack-refs.h component=refs role=header prefix=pack-refs cochange=refs:5
-+pack-revindex.c component=pack role=lib prefix=pack-revindex includes=pack:3,odb:1,setup:1 cochange=pack:94,odb:7,index:6,transport:5,setup:4
-+pack-revindex.h component=pack role=header prefix=pack-revindex cochange=pack:32,odb:1
-+pack-write.c component=pack role=lib prefix=pack-write includes=pack:5,setup:2,odb:1,transport:1 cochange=pack:88,odb:21,transport:21,setup:14,index:10
-+pack.h component=pack role=header prefix=pack-write includes=odb:1 cochange=pack:72,odb:13,transport:9,setup:5,revision:1
-+packfile-list.c component=pack role=lib prefix=packfile includes=pack:2 cochange=pack:3
-+packfile-list.h component=pack role=header prefix=packfile cochange=pack:3
-+packfile.c component=pack role=lib prefix=packfile includes=odb:8,pack:7,setup:2,index:1,revision:1 cochange=pack:317,odb:134,transport:52,revision:36,index:27
-+packfile.h component=pack role=header prefix=packfile includes=odb:3,pack:1,revision:1,setup:1 cochange=pack:234,odb:66,transport:32,revision:9,setup:7
-+pager.c component=? role=lib prefix=pager includes=setup:4 cochange=setup:23,diff:9,transport:7,revision:3,submodule:3
-+pager.h component=? role=public prefix=pager cochange=diff:3,setup:2,revision:1
-+parallel-checkout.c component=index role=lib prefix=parallel-checkout includes=index:4,odb:1,setup:1,transport:1 cochange=index:26,transport:7,odb:6,diff:3,merge:3
-+parallel-checkout.h component=index role=header prefix=parallel-checkout includes=convert:1 cochange=index:12,convert:1
-+parse-options-cb.c component=? role=lib prefix=parse-options includes=odb:3,setup:2 cochange=revision:10,transport:10,diff:7,odb:4,refs:3
-+parse-options.c component=? role=lib prefix=parse-options cochange=index:14,diff:12,setup:10,transport:10,odb:6
-+parse-options.h component=? role=public prefix=parse-options cochange=diff:7,merge:4,archive:3,index:3,refs:3
-+parse.c component=? role=lib prefix=parse cochange=setup:6,index:3,pack:2,convert:1
-+parse.h component=? role=public prefix=config cochange=setup:6,index:3,pack:2,convert:1
-+patch-delta.c component=pack role=lib prefix=patch-delta includes=pack:1 cochange=pack:23,diff:2,odb:2,transport:2,convert:1
-+patch-ids.c component=diff role=lib prefix=patch-ids includes=diff:2,odb:2 cochange=diff:73,revision:34,index:14,odb:13,refs:12
-+patch-ids.h component=diff role=header prefix=patch-ids includes=diff:1 cochange=diff:15,revision:3,index:1
-+path-walk.c component=? role=lib prefix=path-walk includes=odb:9,revision:3,index:1,setup:1 cochange=index:2,revision:2,transport:2,odb:1,pack:1
-+path-walk.h component=? role=public prefix=path-walk includes=odb:1 cochange=index:2
-+path.c component=? role=lib prefix=path includes=setup:2,index:1,odb:1,pack:1,refs:1 cochange=setup:78,refs:29,index:26,transport:15,odb:12
-+path.h component=? role=public prefix=path includes=setup:1 cochange=setup:23,refs:13,odb:11,index:10,pack:8
-+pathspec.c component=index role=lib prefix=pathspec includes=index:4,setup:3,convert:1 cochange=index:89,setup:23,convert:16,diff:16,revision:9
-+pathspec.h component=index role=header prefix=pathspec cochange=index:67,diff:11,odb:9,convert:6,submodule:4
-+pkt-line.c component=transport role=lib prefix=pkt-line includes=transport:2 cochange=transport:102,pack:6,convert:5,diff:5,odb:3
-+pkt-line.h component=transport role=header prefix=pkt-line cochange=transport:94,pack:5,convert:4,odb:2,diff:1
-+preload-index.c component=index role=lib prefix=preload-index includes=index:6,setup:3 cochange=index:52,setup:15,diff:12,revision:5,merge:3
-+preload-index.h component=index role=header prefix=preload-index cochange=index:2,setup:1
-+pretty.c component=revision role=lib prefix=pretty includes=odb:3,revision:2,setup:2,diff:1,notes:1 cochange=revision:115,odb:72,refs:29,notes:23,transport:19
-+pretty.h component=revision role=header prefix=pretty cochange=revision:26,refs:7,diff:5,odb:5,archive:4
-+prio-queue.c component=? role=lib prefix=prio-queue cochange=odb:5,revision:5,diff:2,pack:2,transport:2
-+prio-queue.h component=? role=public prefix=prio-queue cochange=odb:3,revision:2,transport:2,pack:1
-+progress.c component=? role=lib prefix=progress includes=setup:1 cochange=index:11,diff:6,setup:6,pack:4,revision:2
-+progress.h component=? role=public prefix=progress cochange=index:5,diff:3
-+promisor-remote.c component=transport role=lib prefix=promisor-remote includes=setup:3,transport:2,odb:1,pack:1 cochange=transport:32,setup:15,odb:6,pack:5,index:4
-+promisor-remote.h component=transport role=header prefix=promisor-remote includes=setup:1 cochange=transport:18,setup:7,diff:4,index:3,revision:3
-+prompt.c component=? role=lib prefix=prompt includes=setup:2 cochange=index:7,setup:6,pack:4,diff:3,transport:2
-+prompt.h component=? role=public prefix=prompt cochange=transport:1
-+protocol-caps.c component=transport role=lib prefix=protocol-caps includes=odb:3,transport:2,setup:1 cochange=transport:6,odb:3,refs:2,merge:1,setup:1
-+protocol-caps.h component=transport role=header prefix=protocol-caps cochange=transport:6,refs:2
-+protocol.c component=transport role=lib prefix=protocol includes=setup:2,transport:1 cochange=transport:21,index:4,setup:4,refs:2,diff:1
-+protocol.h component=transport role=header prefix=protocol cochange=transport:5
-+prune-packed.c component=pack role=lib prefix=environment includes=pack:2,odb:1,setup:1 cochange=pack:13,odb:7,setup:5,diff:3,revision:3
-+prune-packed.h component=pack role=header prefix=? cochange=pack:1
-+pseudo-merge.c component=pack role=lib prefix=pseudo-merge includes=odb:3,pack:2,refs:1,setup:1 cochange=pack:21,refs:3
-+pseudo-merge.h component=pack role=header prefix=pseudo-merge cochange=pack:17
-+quote.c component=? role=lib prefix=quote cochange=index:15,diff:12,transport:7,odb:6,revision:6
-+quote.h component=? role=public prefix=quote cochange=diff:8,transport:6,index:5,odb:5,refs:5
-+range-diff.c component=diff role=lib prefix=range-diff includes=diff:4,odb:2,revision:2,setup:2 cochange=diff:49,revision:26,index:9,submodule:8,setup:7
-+range-diff.h component=diff role=header prefix=range-diff includes=diff:1 cochange=diff:13,revision:4
-+reachable.c component=pack role=lib prefix=reachable includes=pack:4,odb:3,refs:2,revision:2,diff:1 cochange=odb:60,pack:57,revision:47,transport:17,refs:14
-+reachable.h component=pack role=header prefix=prune cochange=pack:5
-+read-cache-ll.h component=index role=header prefix=read-cache includes=index:1,odb:1 cochange=index:8,diff:1,odb:1,revision:1
-+read-cache.c component=index role=lib prefix=read-cache includes=index:10,odb:6,setup:4,diff:2,submodule:2 cochange=index:240,odb:81,setup:79,diff:67,pack:46
-+read-cache.h component=index role=header prefix=read-cache includes=index:2,odb:1,setup:1 cochange=index:4,setup:4,diff:2
-+rebase-interactive.c component=? role=lib prefix=rebase-interactive includes=odb:3,setup:3,index:1 cochange=revision:4,transport:4,index:3,odb:3,merge:2
-+rebase-interactive.h component=? role=public prefix=rebase-interactive
-+rebase.c component=? role=lib prefix=rebase cochange=index:3,pack:3,setup:2,convert:1,diff:1
-+rebase.h component=? role=public prefix=pull
-+ref-filter.c component=refs role=lib prefix=ref-filter includes=odb:6,setup:5,refs:3,revision:2,index:1 cochange=refs:112,revision:59,odb:41,transport:40,index:30
-+ref-filter.h component=refs role=header prefix=ref-filter includes=odb:2,revision:1 cochange=refs:62,revision:7,transport:6,diff:5,index:4
-+reflog-walk.c component=refs role=lib prefix=reflog-walk includes=refs:2,diff:1,odb:1,revision:1,setup:1 cochange=refs:34,revision:26,index:13,diff:9,transport:8
-+reflog-walk.h component=refs role=header prefix=reflog-walk cochange=revision:23,refs:19,odb:6,archive:2,index:2
-+reflog.c component=refs role=lib prefix=refs includes=odb:3,refs:2,setup:2,revision:1 cochange=refs:18,transport:13,odb:9,revision:7,diff:4
-+reflog.h component=refs role=header prefix=reflog includes=refs:1 cochange=refs:8,odb:3,index:1,revision:1,transport:1
-+refs.c component=refs role=lib prefix=refs includes=setup:6,odb:5,refs:2,submodule:1 cochange=refs:373,transport:133,setup:116,odb:82,revision:77
-+refs.h component=refs role=header prefix=refs includes=odb:2,setup:2 cochange=refs:352,transport:55,revision:34,setup:25,odb:16
-+refspec.c component=refs role=lib prefix=refspec includes=refs:2,odb:1,transport:1 cochange=refs:27,transport:26,index:2,submodule:2
-+refspec.h component=refs role=header prefix=refspec cochange=transport:31,refs:29,submodule:3,index:2
-+remote-curl.c component=transport role=lib prefix=remote-curl includes=transport:9,setup:3,odb:1 cochange=transport:226,diff:9,revision:6,setup:5,archive:4
-+remote.c component=transport role=lib prefix=remote includes=odb:3,setup:3,transport:3,refs:2,revision:2 cochange=transport:272,refs:91,revision:56,index:51,odb:30
-+remote.h component=transport role=header prefix=remote includes=odb:1,refs:1 cochange=transport:245,refs:24,index:12,revision:6,setup:2
-+repack-cruft.c component=pack role=lib prefix=repack includes=pack:2,setup:1 cochange=pack:8,transport:2,odb:1
-+repack-filtered.c component=pack role=lib prefix=repack includes=pack:1,setup:1 cochange=pack:1
-+repack-geometry.c component=pack role=lib prefix=repack includes=pack:3,setup:1 cochange=pack:25,transport:2,odb:1
-+repack-midx.c component=pack role=lib prefix=repack includes=odb:3,pack:3,refs:1 cochange=pack:23,refs:3,setup:2,merge:1,odb:1
-+repack-promisor.c component=pack role=lib prefix=repack-promisor includes=pack:3,setup:1 cochange=pack:8,odb:3,revision:2
-+repack.c component=pack role=lib prefix=repack includes=pack:3,index:1,odb:1,setup:1 cochange=pack:31,transport:2,odb:1
-+repack.h component=pack role=header prefix=repack includes=revision:1 cochange=pack:28
-+replace-object.c component=odb role=lib prefix=refs includes=odb:4,refs:1,setup:1 cochange=odb:8,setup:6,refs:5,pack:3,diff:2
-+replace-object.h component=odb role=header prefix=replace-object includes=odb:2,setup:1 cochange=odb:11,setup:9,pack:4,revision:3,merge:1
-+replay.c component=? role=lib prefix=replay includes=odb:2,merge:1,refs:1,revision:1,setup:1 cochange=transport:1
-+replay.h component=? role=public prefix=replay includes=odb:1
-+repo-settings.c component=setup role=lib prefix=repo-settings includes=setup:4,pack:2 cochange=setup:65,pack:17,index:8,transport:8,odb:6
-+repo-settings.h component=setup role=header prefix=environment cochange=setup:40,pack:7,refs:6,odb:4,diff:2
-+repository.c component=setup role=lib prefix=repository includes=setup:4,odb:3,index:2,transport:2,refs:1 cochange=setup:141,odb:39,index:27,refs:18,submodule:17
-+repository.h component=setup role=header prefix=repository includes=setup:2 cochange=setup:157,index:31,refs:25,pack:22,odb:19
-+rerere.c component=merge role=lib prefix=rerere includes=index:4,merge:2,odb:2,setup:2,diff:1 cochange=index:54,merge:29,pack:26,odb:25,transport:25
-+rerere.h component=merge role=header prefix=rerere cochange=merge:16,odb:1
-+reset.c component=? role=lib prefix=reset includes=odb:3,index:2,refs:1,setup:1 cochange=index:9,merge:5,odb:3,notes:2,revision:2
-+reset.h component=? role=public prefix=reset includes=odb:1,setup:1
-+resolve-undo.c component=index role=lib prefix=resolve-undo includes=index:4,odb:1 cochange=index:33,merge:5,revision:4,diff:3,notes:2
-+resolve-undo.h component=index role=header prefix=resolve-undo includes=odb:1 cochange=index:12,merge:3,archive:1,revision:1
-+revision.c component=revision role=lib prefix=revision includes=odb:9,revision:8,index:4,setup:4,diff:3 cochange=revision:379,diff:194,odb:181,refs:109,pack:101
-+revision.h component=revision role=header prefix=revision includes=odb:4,revision:3,diff:1,notes:1,setup:1 cochange=revision:304,odb:48,diff:24,pack:19,refs:15
-+run-command.c component=? role=lib prefix=run-command includes=setup:2,index:1,pack:1 cochange=transport:27,index:21,setup:14,odb:8,submodule:6
-+run-command.h component=? role=public prefix=run-command cochange=transport:21,setup:8,odb:6,submodule:5,refs:4
-+sane-ctype.h component=? role=public prefix=sane-ctype
-+scalar.c component=? role=lib prefix=scalar includes=index:3,setup:2,pack:1,refs:1 cochange=setup:9,transport:7,pack:4,index:3,merge:3
-+send-pack.c component=transport role=lib prefix=send-pack includes=transport:6,odb:3,setup:2,revision:1 cochange=transport:177,odb:29,revision:17,refs:15,pack:8
-+send-pack.h component=transport role=header prefix=send-pack cochange=transport:39
-+sequencer.c component=? role=lib prefix=sequencer includes=odb:8,index:5,merge:4,setup:4,revision:3 cochange=revision:84,odb:83,index:77,refs:60,transport:55
-+sequencer.h component=? role=public prefix=sequencer includes=index:1 cochange=revision:5,index:4,notes:3,odb:3,transport:3
-+serve.c component=transport role=lib prefix=serve includes=transport:6,setup:3,odb:1,refs:1 cochange=transport:53,refs:7,odb:4,setup:3,index:1
-+serve.h component=transport role=header prefix=serve cochange=transport:9,refs:3,submodule:1
-+server-info.c component=pack role=lib prefix=server-info includes=odb:5,pack:2,index:1,refs:1,setup:1 cochange=pack:40,transport:34,odb:33,setup:13,refs:10
-+server-info.h component=pack role=header prefix=server-info cochange=pack:2
-+setup.c component=setup role=lib prefix=setup includes=setup:4,odb:2,refs:2,index:1,revision:1 cochange=setup:177,refs:47,transport:44,index:39,odb:24
-+setup.h component=setup role=header prefix=setup includes=refs:1 cochange=setup:70,refs:8,index:5,revision:4,submodule:4
-+sh-i18n--envsubst.c component=? role=program prefix=sh-i18n--envsubst cochange=index:3,diff:1,transport:1
-+sha1dc_git.c component=? role=lib prefix=sha1dc cochange=diff:3,odb:2,revision:2,setup:1
-+sha1dc_git.h component=? role=public prefix=sha1dc cochange=odb:2
-+shallow.c component=revision role=lib prefix=shallow includes=odb:5,revision:4,diff:1,index:1,refs:1 cochange=odb:83,transport:73,revision:31,index:20,refs:14
-+shallow.h component=revision role=header prefix=shallow includes=odb:2,setup:1 cochange=revision:10,transport:7,odb:5,diff:3,index:2
-+shell.c component=? role=program prefix=shell includes=setup:1 cochange=transport:10,setup:4,revision:2
-+shortlog.h component=? role=public prefix=shortlog cochange=revision:2
-+sideband.c component=transport role=lib prefix=sideband includes=transport:2,setup:1 cochange=transport:51,revision:6,diff:5,index:5,refs:4
-+sideband.h component=transport role=header prefix=sideband cochange=transport:23
-+sigchain.c component=? role=lib prefix=sigchain cochange=diff:2,transport:1
-+sigchain.h component=? role=public prefix=sigchain cochange=diff:2
-+simple-ipc.h component=? role=public prefix=simple-ipc includes=transport:1 cochange=submodule:1
-+sparse-index.c component=index role=lib prefix=sparse-index includes=index:7,setup:3,odb:1 cochange=index:42,setup:17,diff:2,odb:2,revision:1
-+sparse-index.h component=index role=header prefix=sparse-index cochange=index:16,setup:4,merge:1,revision:1
-+split-index.c component=index role=lib prefix=split-index includes=index:2,odb:1,setup:1 cochange=index:46,odb:5,revision:4,pack:3,merge:2
-+split-index.h component=index role=header prefix=split-index includes=odb:1 cochange=index:21,archive:1,merge:1,revision:1
-+stable-qsort.c component=? role=lib prefix=stable-qsort
-+statinfo.c component=index role=lib prefix=environment includes=setup:2,index:1 cochange=index:9,setup:6,diff:2,odb:1,revision:1
-+statinfo.h component=index role=header prefix=statinfo cochange=index:8,odb:1,revision:1
-+strbuf.c component=? role=lib prefix=strbuf cochange=index:16,odb:12,setup:11,revision:10,transport:10
-+strbuf.h component=? role=public prefix=strbuf cochange=revision:15,index:14,odb:14,diff:7,setup:7
-+string-list.c component=? role=lib prefix=string-list cochange=transport:14,index:8,notes:7,refs:7,diff:5
-+string-list.h component=? role=public prefix=string-list cochange=transport:19,index:6,notes:6,diff:5,refs:5
-+strmap.c component=? role=lib prefix=strmap
-+strmap.h component=? role=public prefix=strmap
-+strvec.c component=? role=lib prefix=strvec
-+strvec.h component=? role=public prefix=strvec cochange=submodule:3,revision:2,index:1,transport:1
-+sub-process.c component=? role=lib prefix=sub-process includes=transport:1 cochange=diff:19,convert:12,revision:11,index:8,refs:8
-+sub-process.h component=? role=public prefix=sub-process cochange=convert:8,transport:6,refs:5,diff:4,odb:4
-+submodule-config.c component=submodule role=lib prefix=submodule-config includes=odb:3,setup:3,submodule:2,index:1 cochange=submodule:60,setup:41,diff:36,revision:27,odb:22
-+submodule-config.h component=submodule role=header prefix=submodule-config includes=odb:1,setup:1,submodule:1 cochange=submodule:54,setup:9,odb:3,diff:2,index:2
-+submodule.c component=submodule role=lib prefix=submodule includes=odb:5,setup:4,diff:2,index:2,refs:2 cochange=submodule:134,diff:83,setup:66,index:60,revision:49
-+submodule.h component=submodule role=header prefix=submodule cochange=submodule:128,index:22,diff:21,transport:17,setup:6
-+symlinks.c component=index role=lib prefix=symlinks includes=index:1,setup:1 cochange=index:23,diff:3,archive:2,convert:1,revision:1
-+symlinks.h component=index role=header prefix=symlinks cochange=index:9,diff:1
-+tag.c component=odb role=lib prefix=tag includes=odb:7,setup:2,pack:1 cochange=odb:189,transport:36,pack:32,revision:29,refs:14
-+tag.h component=odb role=header prefix=tag includes=odb:1 cochange=odb:60,transport:10,revision:8,refs:7,pack:6
-+tar.h component=? role=public prefix=tar-tree
-+tempfile.c component=? role=lib prefix=tempfile cochange=pack:5,setup:4,index:3,odb:3,revision:3
-+tempfile.h component=? role=public prefix=tempfile includes=revision:1 cochange=revision:3,diff:2,index:2,setup:2
-+thread-utils.c component=? role=lib prefix=thread-utils cochange=diff:1
-+thread-utils.h component=? role=public prefix=thread-utils cochange=transport:1
-+tmp-objdir.c component=odb role=lib prefix=tmp-objdir includes=odb:3,setup:2,index:1 cochange=pack:24,odb:23,setup:8,transport:5,revision:3
-+tmp-objdir.h component=odb role=header prefix=tmp-objdir cochange=odb:8,revision:3,setup:1
-+trace.c component=? role=lib prefix=trace includes=setup:2 cochange=setup:26,transport:13,index:11,odb:4,diff:2
-+trace.h component=? role=public prefix=trace cochange=transport:6,index:5,odb:4,pack:3,revision:3
-+trace2.c component=? role=lib prefix=trace2 includes=setup:2 cochange=setup:2
-+trace2.h component=? role=public prefix=trace2 cochange=setup:2
-+trailer.c component=? role=lib prefix=trailer includes=setup:2,odb:1,revision:1 cochange=transport:13,revision:12,odb:8,index:7,refs:6
-+trailer.h component=? role=public prefix=trailer includes=revision:1 cochange=revision:7,refs:1
-+transport-helper.c component=transport role=lib prefix=transport-helper includes=transport:4,odb:2,refs:2,setup:2,pack:1 cochange=transport:210,refs:23,revision:16,odb:14,index:12
-+transport-internal.h component=transport role=header prefix=transport includes=transport:1 cochange=transport:42,refs:3,odb:1,submodule:1
-+transport.c component=transport role=lib prefix=transport includes=transport:12,setup:3,odb:2,refs:2,submodule:1 cochange=transport:482,refs:35,setup:31,submodule:29,revision:21
-+transport.h component=transport role=header prefix=transport includes=transport:2,revision:1 cochange=transport:249,submodule:6,odb:4,revision:2,diff:1
-+tree-diff.c component=diff role=lib prefix=tree-diff includes=odb:3,diff:2,index:1,setup:1 cochange=diff:115,odb:56,revision:53,index:36,notes:12
-+tree-walk.c component=odb role=lib prefix=tree-walk includes=odb:4,index:3,setup:1 cochange=odb:70,index:61,diff:31,revision:24,pack:13
-+tree-walk.h component=odb role=header prefix=tree-walk includes=odb:1 cochange=odb:64,diff:23,index:23,revision:21,notes:7
-+tree.c component=odb role=lib prefix=tree includes=odb:6,setup:2 cochange=odb:212,revision:45,index:36,pack:25,transport:21
-+tree.h component=odb role=header prefix=tree includes=odb:1 cochange=odb:75,revision:12,archive:8,index:6,pack:5
-+unicode-width.h component=? role=public prefix=unicode
-+unix-socket.c component=? role=lib prefix=unix-socket cochange=diff:3,revision:2,setup:1
-+unix-socket.h component=? role=public prefix=unix-socket
-+unix-stream-server.c component=? role=lib prefix=unix-stream-server
-+unix-stream-server.h component=? role=public prefix=unix-stream-server
-+unpack-trees.c component=index role=lib prefix=unpack-trees includes=index:11,odb:3,setup:3,submodule:2,convert:1 cochange=index:262,odb:49,diff:41,transport:19,revision:18
-+unpack-trees.h component=index role=header prefix=unpack-trees includes=convert:1,index:1,odb:1 cochange=index:75,diff:9,odb:6,setup:5,merge:4
-+upload-pack.c component=transport role=lib prefix=upload-pack includes=transport:6,odb:4,revision:4,setup:4,diff:1 cochange=transport:198,odb:88,revision:80,refs:55,pack:34
-+upload-pack.h component=transport role=header prefix=upload-pack cochange=transport:18,refs:5,submodule:1
-+url.c component=? role=lib prefix=url cochange=transport:12,revision:8,diff:6,index:2,refs:2
-+url.h component=? role=public prefix=url cochange=transport:9,revision:4,submodule:1
-+urlmatch.c component=? role=lib prefix=urlmatch cochange=diff:3,odb:2,revision:2,setup:2,transport:2
-+urlmatch.h component=? role=public prefix=urlmatch includes=setup:1 cochange=transport:1
-+usage.c component=? role=lib prefix=usage cochange=index:3,odb:2,diff:1,revision:1,setup:1
-+userdiff.c component=diff role=lib prefix=userdiff includes=setup:2,convert:1,diff:1 cochange=diff:41,convert:34,archive:11,index:7,transport:6
-+userdiff.h component=diff role=header prefix=diff includes=notes:1 cochange=diff:40,notes:2,archive:1,merge:1,revision:1
-+utf8.c component=? role=lib prefix=utf8 cochange=revision:6,index:3,setup:3,transport:2,convert:1
-+utf8.h component=? role=public prefix=utf8 cochange=revision:6,index:2,setup:2,transport:2,convert:1
-+varint.c component=? role=lib prefix=varint cochange=index:2,transport:1
-+varint.h component=? role=public prefix=varint cochange=index:2,transport:1
-+version.c component=setup role=lib prefix=version includes=setup:1 cochange=setup:8,transport:2
-+version.h component=setup role=header prefix=version cochange=setup:8,transport:2
-+versioncmp.c component=? role=lib prefix=versioncmp includes=setup:1 cochange=setup:5,pack:3,transport:3,index:2,refs:2
-+versioncmp.h component=? role=public prefix=versioncmp cochange=refs:1
-+walker.c component=transport role=lib prefix=refs includes=odb:6,refs:1,setup:1,transport:1 cochange=odb:70,transport:55,revision:42,refs:24,pack:17
-+walker.h component=transport role=header prefix=walker includes=transport:1 cochange=transport:19
-+wildmatch.c component=? role=lib prefix=hex cochange=index:4,refs:3,diff:1,odb:1,revision:1
-+wildmatch.h component=? role=public prefix=? cochange=index:3,refs:2,diff:1,revision:1,setup:1
-+worktree.c component=refs role=lib prefix=worktree includes=setup:4,index:2,refs:2 cochange=refs:73,setup:53,index:22,submodule:13,pack:11
-+worktree.h component=refs role=header prefix=worktree includes=refs:1 cochange=refs:61,revision:10,pack:5,setup:5,odb:4
-+wrapper.c component=? role=lib prefix=wrapper cochange=setup:21,index:16,pack:6,transport:5,convert:4
-+wrapper.h component=? role=public prefix=wrapper cochange=index:2,revision:1,setup:1
-+write-or-die.c component=? role=lib prefix=write-or-die cochange=pack:6,setup:6,index:4,transport:2,convert:1
-+write-or-die.h component=? role=public prefix=write-or-die
-+ws.c component=convert role=lib prefix=whitespace includes=convert:2 cochange=convert:24,diff:18,archive:9,index:5,setup:5
-+ws.h component=convert role=header prefix=whitespace cochange=diff:5,convert:2,setup:2
-+wt-status.c component=index role=lib prefix=wt-status includes=odb:5,index:4,setup:3,diff:2,refs:2 cochange=index:149,diff:83,transport:55,refs:45,revision:45
-+wt-status.h component=index role=header prefix=wt-status includes=index:1,transport:1 cochange=index:89,diff:10,refs:9,revision:4,transport:4
-+xdiff-interface.c component=diff role=lib prefix=xdiff-interface includes=setup:2,diff:1,odb:1 cochange=diff:73,index:5,merge:3,notes:3,refs:3
-+xdiff-interface.h component=diff role=header prefix=xdiff-interface includes=odb:1 cochange=diff:62,index:2,notes:2,merge:1,odb:1
+@@ -201,8 +201,6 @@ lockfile.c component=? role=lib prefix=lockfile includes=setup:1 cochange=refs:1
+ lockfile.h component=? role=public prefix=lockfile cochange=index:5,revision:4,diff:3,refs:3,odb:2
+ log-tree.c component=revision role=lib prefix=format-patch includes=odb:8,revision:5,diff:3,setup:3,refs:2 cochange=revision:222,diff:112,odb:112,refs:31,transport:16
+ log-tree.h component=revision role=header prefix=format-patch cochange=revision:64,diff:11,refs:3,odb:2,transport:2
+-ls-refs.c component=refs role=lib prefix=ls-refs includes=setup:3,refs:2,odb:1,transport:1 cochange=refs:26,transport:17,pack:10,revision:5,odb:4
+-ls-refs.h component=refs role=header prefix=ls-refs cochange=transport:11,refs:5,submodule:1
+ mailinfo.c component=? role=lib prefix=mailinfo includes=setup:2 cochange=transport:5,index:3,notes:3,odb:3,revision:3
+ mailinfo.h component=? role=public prefix=mailinfo
+ mailmap.c component=? role=lib prefix=mailmap includes=setup:3,odb:2 cochange=setup:13,transport:11,refs:10,index:8,revision:5
+@@ -290,8 +288,6 @@ pack-mtimes.c component=pack role=lib prefix=pack-mtimes includes=pack:2,odb:1 c
+ pack-mtimes.h component=pack role=header prefix=pack-mtimes cochange=pack:4,odb:2,setup:1,transport:1
+ pack-objects.c component=pack role=lib prefix=pack-objects includes=pack:3,odb:1,setup:1 cochange=pack:66,diff:17,odb:16,transport:9,index:5
+ pack-objects.h component=pack role=header prefix=pack-objects includes=pack:2,odb:1 cochange=pack:44,setup:5,odb:1
+-pack-refs.c component=refs role=lib prefix=pack-refs includes=refs:2,setup:2,revision:1 cochange=refs:12,transport:8,index:2,merge:2,odb:2
+-pack-refs.h component=refs role=header prefix=pack-refs cochange=refs:5
+ pack-revindex.c component=pack role=lib prefix=pack-revindex includes=pack:3,odb:1,setup:1 cochange=pack:94,odb:7,index:6,transport:5,setup:4
+ pack-revindex.h component=pack role=header prefix=pack-revindex cochange=pack:32,odb:1
+ pack-write.c component=pack role=lib prefix=pack-write includes=pack:5,setup:2,odb:1,transport:1 cochange=pack:88,odb:21,transport:21,setup:14,index:10
+@@ -353,16 +349,22 @@ rebase-interactive.c component=? role=lib prefix=rebase-interactive includes=odb
+ rebase-interactive.h component=? role=public prefix=rebase-interactive
+ rebase.c component=? role=lib prefix=rebase cochange=index:3,pack:3,setup:2,convert:1,diff:1
+ rebase.h component=? role=public prefix=pull
+-ref-filter.c component=refs role=lib prefix=ref-filter includes=odb:6,setup:5,refs:3,revision:2,index:1 cochange=refs:112,revision:59,odb:41,transport:40,index:30
+-ref-filter.h component=refs role=header prefix=ref-filter includes=odb:2,revision:1 cochange=refs:62,revision:7,transport:6,diff:5,index:4
+-reflog-walk.c component=refs role=lib prefix=reflog-walk includes=refs:2,diff:1,odb:1,revision:1,setup:1 cochange=refs:34,revision:26,index:13,diff:9,transport:8
+-reflog-walk.h component=refs role=header prefix=reflog-walk cochange=revision:23,refs:19,odb:6,archive:2,index:2
+-reflog.c component=refs role=lib prefix=refs includes=odb:3,refs:2,setup:2,revision:1 cochange=refs:18,transport:13,odb:9,revision:7,diff:4
+-reflog.h component=refs role=header prefix=reflog includes=refs:1 cochange=refs:8,odb:3,index:1,revision:1,transport:1
+-refs.c component=refs role=lib prefix=refs includes=setup:6,odb:5,refs:2,submodule:1 cochange=refs:373,transport:133,setup:116,odb:82,revision:77
+-refs.h component=refs role=header prefix=refs includes=odb:2,setup:2 cochange=refs:352,transport:55,revision:34,setup:25,odb:16
+-refspec.c component=refs role=lib prefix=refspec includes=refs:2,odb:1,transport:1 cochange=refs:27,transport:26,index:2,submodule:2
+-refspec.h component=refs role=header prefix=refspec cochange=transport:31,refs:29,submodule:3,index:2
++refs/ls-refs.c component=refs role=lib prefix=ls-refs includes=setup:3,refs:2,odb:1,transport:1 cochange=refs:26,transport:17,pack:10,revision:5,odb:4
++refs/ls-refs.h component=refs role=header prefix=ls-refs cochange=transport:11,refs:5,submodule:1
++refs/pack-refs.c component=refs role=lib prefix=pack-refs includes=refs:2,setup:2,revision:1 cochange=refs:12,transport:8,index:2,merge:2,odb:2
++refs/pack-refs.h component=refs role=header prefix=pack-refs cochange=refs:5
++refs/ref-filter.c component=refs role=lib prefix=ref-filter includes=odb:6,setup:5,refs:3,revision:2,index:1 cochange=refs:112,revision:59,odb:41,transport:40,index:30
++refs/ref-filter.h component=refs role=header prefix=ref-filter includes=odb:2,revision:1 cochange=refs:62,revision:7,transport:6,diff:5,index:4
++refs/reflog-walk.c component=refs role=lib prefix=reflog-walk includes=refs:2,diff:1,odb:1,revision:1,setup:1 cochange=refs:34,revision:26,index:13,diff:9,transport:8
++refs/reflog-walk.h component=refs role=header prefix=reflog-walk cochange=revision:23,refs:19,odb:6,archive:2,index:2
++refs/reflog.c component=refs role=lib prefix=refs includes=odb:3,refs:2,setup:2,revision:1 cochange=refs:18,transport:13,odb:9,revision:7,diff:4
++refs/reflog.h component=refs role=header prefix=reflog includes=refs:1 cochange=refs:8,odb:3,index:1,revision:1,transport:1
++refs/refs.c component=refs role=lib prefix=refs includes=setup:6,odb:5,refs:2,submodule:1 cochange=refs:373,transport:133,setup:116,odb:82,revision:77
++refs/refs.h component=refs role=header prefix=refs includes=odb:2,setup:2 cochange=refs:352,transport:55,revision:34,setup:25,odb:16
++refs/refspec.c component=refs role=lib prefix=refspec includes=refs:2,odb:1,transport:1 cochange=refs:27,transport:26,index:2,submodule:2
++refs/refspec.h component=refs role=header prefix=refspec cochange=transport:31,refs:29,submodule:3,index:2
++refs/worktree.c component=refs role=lib prefix=worktree includes=setup:4,index:2,refs:2 cochange=refs:73,setup:53,index:22,submodule:13,pack:11
++refs/worktree.h component=refs role=header prefix=worktree includes=refs:1 cochange=refs:61,revision:10,pack:5,setup:5,odb:4
+ remote-curl.c component=transport role=lib prefix=remote-curl includes=transport:9,setup:3,odb:1 cochange=transport:226,diff:9,revision:6,setup:5,archive:4
+ remote.c component=transport role=lib prefix=remote includes=odb:3,setup:3,transport:3,refs:2,revision:2 cochange=transport:272,refs:91,revision:56,index:51,odb:30
+ remote.h component=transport role=header prefix=remote includes=odb:1,refs:1 cochange=transport:245,refs:24,index:12,revision:6,setup:2
+@@ -480,8 +482,6 @@ walker.c component=transport role=lib prefix=refs includes=odb:6,refs:1,setup:1,
+ walker.h component=transport role=header prefix=walker includes=transport:1 cochange=transport:19
+ wildmatch.c component=? role=lib prefix=hex cochange=index:4,refs:3,diff:1,odb:1,revision:1
+ wildmatch.h component=? role=public prefix=? cochange=index:3,refs:2,diff:1,revision:1,setup:1
+-worktree.c component=refs role=lib prefix=worktree includes=setup:4,index:2,refs:2 cochange=refs:73,setup:53,index:22,submodule:13,pack:11
+-worktree.h component=refs role=header prefix=worktree includes=refs:1 cochange=refs:61,revision:10,pack:5,setup:5,odb:4
+ wrapper.c component=? role=lib prefix=wrapper cochange=setup:21,index:16,pack:6,transport:5,convert:4
+ wrapper.h component=? role=public prefix=wrapper cochange=index:2,revision:1,setup:1
+ write-or-die.c component=? role=lib prefix=write-or-die cochange=pack:6,setup:6,index:4,transport:2,convert:1
+diff --git a/Makefile b/Makefile
+index a95b87d970..f733ccfee0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1201,7 +1201,7 @@ LIB_OBJS += list-objects.o
+ LIB_OBJS += lockfile.o
+ LIB_OBJS += log-tree.o
+ LIB_OBJS += odb/loose.o
+-LIB_OBJS += ls-refs.o
++LIB_OBJS += refs/ls-refs.o
+ LIB_OBJS += mailinfo.o
+ LIB_OBJS += mailmap.o
+ LIB_OBJS += odb/match-trees.o
+@@ -1246,7 +1246,7 @@ LIB_OBJS += pack-bitmap.o
+ LIB_OBJS += pack-check.o
+ LIB_OBJS += pack-mtimes.o
+ LIB_OBJS += pack-objects.o
+-LIB_OBJS += pack-refs.o
++LIB_OBJS += refs/pack-refs.o
+ LIB_OBJS += pack-revindex.o
+ LIB_OBJS += pack-write.o
+ LIB_OBJS += packfile.o
+@@ -1278,17 +1278,17 @@ LIB_OBJS += reachable.o
+ LIB_OBJS += read-cache.o
+ LIB_OBJS += rebase-interactive.o
+ LIB_OBJS += rebase.o
+-LIB_OBJS += ref-filter.o
+-LIB_OBJS += reflog-walk.o
+-LIB_OBJS += reflog.o
+-LIB_OBJS += refs.o
++LIB_OBJS += refs/ref-filter.o
++LIB_OBJS += refs/reflog-walk.o
++LIB_OBJS += refs/reflog.o
++LIB_OBJS += refs/refs.o
+ LIB_OBJS += refs/debug.o
+ LIB_OBJS += refs/files-backend.o
+ LIB_OBJS += refs/reftable-backend.o
+ LIB_OBJS += refs/iterator.o
+ LIB_OBJS += refs/packed-backend.o
+ LIB_OBJS += refs/ref-cache.o
+-LIB_OBJS += refspec.o
++LIB_OBJS += refs/refspec.o
+ LIB_OBJS += reftable/basics.o
+ LIB_OBJS += reftable/block.o
+ LIB_OBJS += reftable/blocksource.o
+@@ -1377,7 +1377,7 @@ LIB_OBJS += version.o
+ LIB_OBJS += versioncmp.o
+ LIB_OBJS += walker.o
+ LIB_OBJS += wildmatch.o
+-LIB_OBJS += worktree.o
++LIB_OBJS += refs/worktree.o
+ LIB_OBJS += wrapper.o
+ LIB_OBJS += write-or-die.o
+ LIB_OBJS += ws.o
+diff --git a/add-interactive.c b/add-interactive.c
+index 51ddcc4e87..67ee53f5cc 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -11,7 +11,7 @@
+ #include "read-cache-ll.h"
+ #include "repository.h"
+ #include "revision.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "string-list.h"
+ #include "lockfile.h"
+ #include "dir.h"
+diff --git a/archive.c b/archive.c
+index c0d2e0c44b..53820bd859 100644
+--- a/archive.c
++++ b/archive.c
+@@ -13,7 +13,7 @@
+ #include "path.h"
+ #include "pretty.h"
+ #include "setup.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/odb.h"
+ #include "odb/commit.h"
+ #include "odb/tree.h"
+diff --git a/attr.c b/attr.c
+index e829149cb4..e7c6562bee 100644
+--- a/attr.c
++++ b/attr.c
+@@ -20,7 +20,7 @@
+ #include "utf8.h"
+ #include "quote.h"
+ #include "read-cache-ll.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "revision.h"
+ #include "odb/odb.h"
+ #include "setup.h"
+diff --git a/bisect.c b/bisect.c
+index 2dea7139ad..85c5a12ed2 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -9,7 +9,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "revision.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "list-objects.h"
+ #include "quote.h"
+ #include "run-command.h"
+diff --git a/blame.c b/blame.c
+index d1cba8811f..a594dc5f0e 100644
+--- a/blame.c
++++ b/blame.c
+@@ -2,7 +2,7 @@
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/odb.h"
+ #include "cache-tree.h"
+ #include "mergesort.h"
+diff --git a/branch.c b/branch.c
+index 7593a499a9..d752e55b88 100644
+--- a/branch.c
++++ b/branch.c
+@@ -9,13 +9,13 @@
+ #include "hex.h"
+ #include "odb/object-name.h"
+ #include "path.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "remote.h"
+ #include "repository.h"
+ #include "sequencer.h"
+ #include "odb/commit.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "submodule-config.h"
+ #include "run-command.h"
+ #include "strmap.h"
+diff --git a/builtin/am.c b/builtin/am.c
+index f138a8fe3d..d7e4e125d2 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -22,7 +22,7 @@
+ #include "tempfile.h"
+ #include "lockfile.h"
+ #include "cache-tree.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/commit.h"
+ #include "diff.h"
+ #include "unpack-trees.h"
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index a1b7fc9407..51e2e949cc 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -9,7 +9,7 @@
+ #include "odb/object-name.h"
+ #include "parse-options.h"
+ #include "bisect.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "strvec.h"
+ #include "run-command.h"
+ #include "odb/oid-array.h"
+diff --git a/builtin/blame.c b/builtin/blame.c
+index c88fc489f7..1662bd487d 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -30,7 +30,7 @@
+ #include "odb/odb.h"
+ #include "pager.h"
+ #include "blame.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "setup.h"
+ #include "odb/tag.h"
+ #include "write-or-die.h"
+diff --git a/builtin/branch.c b/builtin/branch.c
+index c50c28c720..7909f250aa 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -12,7 +12,7 @@
+ #include "color.h"
+ #include "editor.h"
+ #include "environment.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/commit.h"
+ #include "gettext.h"
+ #include "odb/object-name.h"
+@@ -24,8 +24,8 @@
+ #include "strmap.h"
+ #include "column.h"
+ #include "utf8.h"
+-#include "ref-filter.h"
+-#include "worktree.h"
++#include "refs/ref-filter.h"
++#include "refs/worktree.h"
+ #include "help.h"
+ #include "advice.h"
+ #include "commit-reach.h"
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index fd1c9c0e0c..5de8c0e6f5 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -5,7 +5,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ 
+ #include "builtin.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "setup.h"
+ #include "strbuf.h"
+ 
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 2dcebb2cb2..87c1f087b8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -24,7 +24,7 @@
+ #include "path.h"
+ #include "preload-index.h"
+ #include "read-cache.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "remote.h"
+ #include "repo-settings.h"
+ #include "resolve-undo.h"
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 6d6a756a12..12170ae8f4 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -22,8 +22,8 @@
+ #include "hex.h"
+ #include "lockfile.h"
+ #include "parse-options.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "odb/object-file.h"
+ #include "odb/odb.h"
+ #include "odb/tree.h"
+diff --git a/builtin/config.c b/builtin/config.c
+index 0882899c3f..15782dfe64 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -15,7 +15,7 @@
+ #include "quote.h"
+ #include "setup.h"
+ #include "strbuf.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ 
+ static const char *const builtin_config_usage[] = {
+ 	N_("git config list [<file-option>] [<display-option>] [--includes]"),
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 75961c5945..c16a1da092 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -9,7 +9,7 @@
+ #include "lockfile.h"
+ #include "odb/commit.h"
+ #include "odb/tag.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/object-name.h"
+ #include "parse-options.h"
+ #include "read-cache-ll.h"
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 472877f0e5..4a98f14d39 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -12,8 +12,8 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "odb/object-file.h"
+ #include "odb/odb.h"
+ #include "odb/commit.h"
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 1d560d4e71..43bc72f05f 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -16,7 +16,7 @@
+ #include "pack.h"
+ #include "path.h"
+ #include "read-cache-ll.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "csum-file.h"
+ #include "quote.h"
+ #include "dir.h"
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 2089e7823e..ce46a709a6 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -11,8 +11,8 @@
+ #include "gettext.h"
+ #include "environment.h"
+ #include "hex.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "odb/object-name.h"
+ #include "odb/odb.h"
+ #include "odb/oidset.h"
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index d3399455ef..9b3f277cb8 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -6,7 +6,7 @@
+ #include "gettext.h"
+ #include "odb/object.h"
+ #include "parse-options.h"
+-#include "ref-filter.h"
++#include "refs/ref-filter.h"
+ #include "strbuf.h"
+ #include "strvec.h"
+ 
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 3176941c1d..430cf28bd8 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -6,7 +6,7 @@
+ #include "odb/tree.h"
+ #include "odb/blob.h"
+ #include "odb/tag.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "pack.h"
+ #include "cache-tree.h"
+ #include "odb/fsck.h"
+@@ -23,7 +23,7 @@
+ #include "resolve-undo.h"
+ #include "run-command.h"
+ #include "sparse-index.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "pack-revindex.h"
+ #include "pack-bitmap.h"
+ 
+diff --git a/builtin/gc.c b/builtin/gc.c
+index f2fdc2c69d..1a71e6f908 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -32,17 +32,17 @@
+ #include "odb/object-file.h"
+ #include "odb/odb.h"
+ #include "path.h"
+-#include "reflog.h"
++#include "refs/reflog.h"
+ #include "rerere.h"
+ #include "revision.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "remote.h"
+ #include "exec-cmd.h"
+ #include "gettext.h"
+ #include "hook.h"
+ #include "setup.h"
+ #include "trace2.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ 
+ #define FAILED_RUN "failed to run %s"
+ 
+diff --git a/builtin/history.c b/builtin/history.c
+index a2aa224bd1..56b5015bc0 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -15,7 +15,7 @@
+ #include "parse-options.h"
+ #include "path.h"
+ #include "read-cache.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "replay.h"
+ #include "reset.h"
+ #include "revision.h"
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index e96b1283b7..f459635129 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -10,7 +10,7 @@
+ #include "gettext.h"
+ #include "parse-options.h"
+ #include "path.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "setup.h"
+ #include "strbuf.h"
+ 
+diff --git a/builtin/log.c b/builtin/log.c
+index ab381e529e..7099f5fcc5 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -13,7 +13,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/object-name.h"
+ #include "odb/odb.h"
+ #include "odb/streaming.h"
+@@ -28,7 +28,7 @@
+ #include "odb/oid-array.h"
+ #include "odb/oidset.h"
+ #include "odb/tag.h"
+-#include "reflog-walk.h"
++#include "refs/reflog-walk.h"
+ #include "patch-ids.h"
+ #include "path.h"
+ #include "shortlog.h"
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index fe77829557..1b12d6e6ec 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -4,7 +4,7 @@
+ #include "hex.h"
+ #include "transport.h"
+ #include "pkt-line.h"
+-#include "ref-filter.h"
++#include "refs/ref-filter.h"
+ #include "remote.h"
+ #include "parse-options.h"
+ #include "wildmatch.h"
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 56f89b2944..2369c3b6f9 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -26,8 +26,8 @@
+ #include "hook.h"
+ #include "diff.h"
+ #include "diff-merges.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "odb/commit.h"
+ #include "diffcore.h"
+ #include "path.h"
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index d2870bd37c..4e0254d70e 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -8,7 +8,7 @@
+ #include "config.h"
+ #include "odb/commit.h"
+ #include "odb/tag.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/object-name.h"
+ #include "pager.h"
+ #include "parse-options.h"
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 2cf1437346..6ebb5db39c 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -20,14 +20,14 @@
+ #include "path.h"
+ 
+ #include "pretty.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "exec-cmd.h"
+ #include "run-command.h"
+ #include "parse-options.h"
+ #include "string-list.h"
+ #include "notes-merge.h"
+ #include "notes-utils.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "write-or-die.h"
+ 
+ static const char *separator = "\n";
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3e4c5442dc..69f35a727b 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -21,7 +21,7 @@
+ #include "list-objects-filter-options.h"
+ #include "pack-objects.h"
+ #include "progress.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "thread-utils.h"
+ #include "pack-bitmap.h"
+ #include "delta-islands.h"
+diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
+index 3446b84cda..235ae2cc5a 100644
+--- a/builtin/pack-refs.c
++++ b/builtin/pack-refs.c
+@@ -1,6 +1,6 @@
+ #include "builtin.h"
+ #include "gettext.h"
+-#include "pack-refs.h"
++#include "refs/pack-refs.h"
+ 
+ int cmd_pack_refs(int argc,
+ 		  const char **argv,
+diff --git a/builtin/pull.c b/builtin/pull.c
+index cb3d76cb16..bc8dcde318 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -24,8 +24,8 @@
+ #include "path.h"
+ #include "read-cache-ll.h"
+ #include "rebase.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
+ #include "wt-status.h"
+diff --git a/builtin/push.c b/builtin/push.c
+index 2377b5af55..39b6ff4b8b 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -12,7 +12,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "refspec.h"
++#include "refs/refspec.h"
+ #include "run-command.h"
+ #include "remote.h"
+ #include "transport.h"
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 7b8366e5cd..983dbb7ce5 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -16,7 +16,7 @@
+ #include "run-command.h"
+ #include "strvec.h"
+ #include "dir.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "config.h"
+ #include "unpack-trees.h"
+ #include "lockfile.h"
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 5ec79a4595..88cbaed133 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -27,7 +27,7 @@
+ #include "parse-options.h"
+ #include "pkt-line.h"
+ #include "protocol.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "remote.h"
+ #include "run-command.h"
+ #include "server-info.h"
+@@ -40,7 +40,7 @@
+ #include "trace.h"
+ #include "trace2.h"
+ #include "version.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ 
+ static const char * const receive_pack_usage[] = {
+ 	N_("git receive-pack <git-dir>"),
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index b709cb0e3c..fc0b74ed95 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -8,9 +8,9 @@
+ #include "revision.h"
+ #include "reachable.h"
+ #include "wildmatch.h"
+-#include "worktree.h"
+-#include "reflog.h"
+-#include "refs.h"
++#include "refs/worktree.h"
++#include "refs/reflog.h"
++#include "refs/refs.h"
+ #include "parse-options.h"
+ 
+ #define BUILTIN_REFLOG_SHOW_USAGE \
+diff --git a/builtin/refs.c b/builtin/refs.c
+index 37936353be..abfc0acdd2 100644
+--- a/builtin/refs.c
++++ b/builtin/refs.c
+@@ -1,11 +1,11 @@
+ #include "builtin.h"
+ #include "config.h"
+ #include "odb/fsck.h"
+-#include "pack-refs.h"
++#include "refs/pack-refs.h"
+ #include "parse-options.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "strbuf.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "for-each-ref.h"
+ #include "refs/refs-internal.h"
+ 
+diff --git a/builtin/remote.c b/builtin/remote.c
+index b5b54ded27..9a5df99c11 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -14,8 +14,8 @@
+ #include "strbuf.h"
+ #include "run-command.h"
+ #include "rebase.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "odb/odb.h"
+ #include "strvec.h"
+ #include "commit-reach.h"
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 793226006c..83497cd974 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -14,7 +14,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "parse-options.h"
+ #include "path.h"
+ #include "run-command.h"
+diff --git a/builtin/replay.c b/builtin/replay.c
+index 4ea7c42215..83b136a13e 100644
+--- a/builtin/replay.c
++++ b/builtin/replay.c
+@@ -9,7 +9,7 @@
+ #include "hex.h"
+ #include "odb/object-name.h"
+ #include "parse-options.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "replay.h"
+ #include "revision.h"
+ 
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 473072b44d..e052e6c0ba 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -11,8 +11,8 @@
+ #include "path-walk.h"
+ #include "progress.h"
+ #include "quote.h"
+-#include "ref-filter.h"
+-#include "refs.h"
++#include "refs/ref-filter.h"
++#include "refs/refs.h"
+ #include "revision.h"
+ #include "setup.h"
+ #include "strbuf.h"
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 55539f565c..c3bfbab7d5 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -20,7 +20,7 @@
+ #include "lockfile.h"
+ #include "odb/object.h"
+ #include "pretty.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "odb/tree.h"
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 0c55dc5b96..466a0a515d 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -21,7 +21,7 @@
+ #include "graph.h"
+ #include "bisect.h"
+ #include "progress.h"
+-#include "reflog-walk.h"
++#include "refs/reflog-walk.h"
+ #include "odb/oidset.h"
+ #include "odb/oidmap.h"
+ #include "packfile.h"
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index f3bf7831b7..2fb682d5a2 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -17,7 +17,7 @@
+ #include "gettext.h"
+ #include "odb/hash.h"
+ #include "hex.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "quote.h"
+ #include "odb/object-name.h"
+ #include "parse-options.h"
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index c58abc872f..4da3330a26 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -8,7 +8,7 @@
+ #include "odb/hash.h"
+ #include "hex.h"
+ #include "pretty.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "color.h"
+ #include "strvec.h"
+ #include "odb/object-name.h"
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index e2186fdd33..9b4cad87a5 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -19,7 +19,7 @@
+ #include "quote.h"
+ #include "setup.h"
+ #include "sparse-index.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ 
+ static const char *empty_base = "";
+ 
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 2af975aaff..62fec2f17f 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -9,7 +9,7 @@
+ #include "hex.h"
+ #include "odb/object-name.h"
+ #include "parse-options.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "lockfile.h"
+ #include "cache-tree.h"
+ #include "unpack-trees.h"
+@@ -27,8 +27,8 @@
+ #include "sparse-index.h"
+ #include "log-tree.h"
+ #include "diffcore.h"
+-#include "reflog.h"
+-#include "reflog-walk.h"
++#include "refs/reflog.h"
++#include "refs/reflog-walk.h"
+ #include "add-interactive.h"
+ #include "odb/oid-array.h"
+ #include "odb/commit.h"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 96c83476df..bf8b20247f 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -21,8 +21,8 @@
+ #include "string-list.h"
+ #include "run-command.h"
+ #include "remote.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "revision.h"
+ #include "diffcore.h"
+ #include "diff.h"
+diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
+index 231e41e715..9ea9ca6500 100644
+--- a/builtin/symbolic-ref.c
++++ b/builtin/symbolic-ref.c
+@@ -3,7 +3,7 @@
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "parse-options.h"
+ #include "strbuf.h"
+ 
+diff --git a/builtin/tag.c b/builtin/tag.c
+index e3eee35e88..d554ae8f81 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -16,7 +16,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/object-file.h"
+ #include "odb/object-name.h"
+ #include "odb/odb.h"
+@@ -28,7 +28,7 @@
+ #include "gpg-interface.h"
+ #include "odb/oid-array.h"
+ #include "column.h"
+-#include "ref-filter.h"
++#include "refs/ref-filter.h"
+ #include "date.h"
+ #include "write-or-die.h"
+ #include "odb/object-file-convert.h"
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 992f496efd..54741c3241 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -20,7 +20,7 @@
+ #include "odb/object-file.h"
+ #include "odb/odb.h"
+ #include "odb/transaction.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "resolve-undo.h"
+ #include "parse-options.h"
+ #include "pathspec.h"
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index e7ac68f495..5bcd100e52 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -7,7 +7,7 @@
+ #include "gettext.h"
+ #include "odb/hash.h"
+ #include "hex.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/object-name.h"
+ #include "parse-options.h"
+ #include "quote.h"
+diff --git a/builtin/var.c b/builtin/var.c
+index cc3a43cde2..d01c87dfa2 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -14,7 +14,7 @@
+ #include "environment.h"
+ #include "ident.h"
+ #include "pager.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "path.h"
+ #include "strbuf.h"
+ #include "run-command.h"
+diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+index 791679a4d8..460244f25b 100644
+--- a/builtin/verify-tag.c
++++ b/builtin/verify-tag.c
+@@ -13,7 +13,7 @@
+ #include "odb/object-name.h"
+ #include "parse-options.h"
+ #include "gpg-interface.h"
+-#include "ref-filter.h"
++#include "refs/ref-filter.h"
+ 
+ static const char * const verify_tag_usage[] = {
+ 		N_("git verify-tag [-v | --verbose] [--format=<format>] [--raw] <tag>..."),
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 7c2ed274f9..90af2193c1 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -18,14 +18,14 @@
+ #include "strvec.h"
+ #include "branch.h"
+ #include "read-cache-ll.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "remote.h"
+ #include "run-command.h"
+ #include "hook.h"
+ #include "sigchain.h"
+ #include "submodule.h"
+ #include "utf8.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "quote.h"
+ 
+ #define BUILTIN_WORKTREE_ADD_USAGE \
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 948265330b..96ddf92347 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -6,7 +6,7 @@
+ #include "bundle.h"
+ #include "copy.h"
+ #include "gettext.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "run-command.h"
+ #include "hashmap.h"
+ #include "pkt-line.h"
+diff --git a/bundle.c b/bundle.c
+index 81d241e6d0..c64b14a05a 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -15,7 +15,7 @@
+ #include "revision.h"
+ #include "list-objects.h"
+ #include "run-command.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "strvec.h"
+ #include "list-objects-filter-options.h"
+ #include "connected.h"
+diff --git a/checkout.c b/checkout.c
+index 966a70c267..e3b4d341da 100644
+--- a/checkout.c
++++ b/checkout.c
+@@ -3,7 +3,7 @@
+ #include "git-compat-util.h"
+ #include "odb/object-name.h"
+ #include "remote.h"
+-#include "refspec.h"
++#include "refs/refspec.h"
+ #include "repository.h"
+ #include "checkout.h"
+ #include "config.h"
+diff --git a/combine-diff.c b/combine-diff.c
+index 1c33937f21..6f16e9ea38 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -14,7 +14,7 @@
+ #include "xdiff-interface.h"
+ #include "xdiff/xmacros.h"
+ #include "log-tree.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/tree.h"
+ #include "userdiff.h"
+ #include "odb/oid-array.h"
+diff --git a/commit-graph.c b/commit-graph.c
+index abf7c404b3..7c22588c46 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -10,7 +10,7 @@
+ #include "packfile.h"
+ #include "odb/commit.h"
+ #include "odb/object.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/hash-lookup.h"
+ #include "commit-graph.h"
+ #include "odb/odb.h"
+diff --git a/commit-reach.c b/commit-reach.c
+index 9b4715fd65..9636b5b37f 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -6,7 +6,7 @@
+ #include "decorate.h"
+ #include "hex.h"
+ #include "prio-queue.h"
+-#include "ref-filter.h"
++#include "refs/ref-filter.h"
+ #include "revision.h"
+ #include "odb/tag.h"
+ #include "commit-reach.h"
+diff --git a/config.c b/config.c
+index eacc6847a2..3f335dbec1 100644
+--- a/config.c
++++ b/config.c
+@@ -30,7 +30,7 @@
+ #include "path.h"
+ #include "utf8.h"
+ #include "color.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "setup.h"
+ #include "strvec.h"
+ #include "trace2.h"
+diff --git a/connect.c b/connect.c
+index e54c88f5e2..a24b019b2c 100644
+--- a/connect.c
++++ b/connect.c
+@@ -7,7 +7,7 @@
+ #include "hex.h"
+ #include "pkt-line.h"
+ #include "quote.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "run-command.h"
+ #include "remote.h"
+ #include "connect.h"
+diff --git a/delta-islands.c b/delta-islands.c
+index 0c0d222ab3..1c92cdf37c 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -11,7 +11,7 @@
+ #include "odb/tree-walk.h"
+ #include "diff.h"
+ #include "progress.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "khash.h"
+ #include "pack-bitmap.h"
+ #include "pack-objects.h"
+diff --git a/diff-lib.c b/diff-lib.c
+index 313b6136b1..a5072c5f6d 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -17,7 +17,7 @@
+ #include "revision.h"
+ #include "cache-tree.h"
+ #include "unpack-trees.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "repository.h"
+ #include "submodule.h"
+ #include "symlinks.h"
+diff --git a/dir.c b/dir.c
+index c9005a0ac1..d230ecdec1 100644
+--- a/dir.c
++++ b/dir.c
+@@ -19,7 +19,7 @@
+ #include "name-hash.h"
+ #include "odb/object-file.h"
+ #include "path.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "repository.h"
+ #include "wildmatch.h"
+ #include "pathspec.h"
+diff --git a/environment.c b/environment.c
+index 40b993ec90..6066417b62 100644
+--- a/environment.c
++++ b/environment.c
+@@ -26,7 +26,7 @@
+ #include "odb/object-name.h"
+ #include "repository.h"
+ #include "config.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "fmt-merge-msg.h"
+ #include "odb/commit.h"
+ #include "strvec.h"
+diff --git a/fetch-pack.c b/fetch-pack.c
+index b172114879..434b57e5b0 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -9,7 +9,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "lockfile.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "pkt-line.h"
+ #include "odb/commit.h"
+ #include "odb/tag.h"
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 6e11ad0fa9..7fa8c4cd79 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -4,7 +4,7 @@
+ #include "git-compat-util.h"
+ #include "config.h"
+ #include "environment.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/object-name.h"
+ #include "odb/odb.h"
+ #include "diff.h"
+diff --git a/help.c b/help.c
+index ccc42f09e0..96f98ec621 100644
+--- a/help.c
++++ b/help.c
+@@ -15,7 +15,7 @@
+ #include "string-list.h"
+ #include "column.h"
+ #include "version.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "parse-options.h"
+ #include "prompt.h"
+ #include "fsmonitor-ipc.h"
+diff --git a/http-backend.c b/http-backend.c
+index 9b7ae96579..90624c3348 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -8,7 +8,7 @@
+ #include "hex.h"
+ #include "path.h"
+ #include "repository.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "pkt-line.h"
+ #include "odb/object.h"
+ #include "odb/tag.h"
+diff --git a/log-tree.c b/log-tree.c
+index c9fde242a1..116bb7ea68 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -18,8 +18,8 @@
+ #include "graph.h"
+ #include "log-tree.h"
+ #include "merge-ort.h"
+-#include "reflog-walk.h"
+-#include "refs.h"
++#include "refs/reflog-walk.h"
++#include "refs/refs.h"
+ #include "odb/replace-object.h"
+ #include "revision.h"
+ #include "string-list.h"
+diff --git a/merge-ort.c b/merge-ort.c
+index 35d30dcf06..a12bf62a3d 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -44,7 +44,7 @@
+ #include "path.h"
+ #include "promisor-remote.h"
+ #include "read-cache-ll.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "revision.h"
+ #include "sparse-index.h"
+ #include "strmap.h"
+diff --git a/meson.build b/meson.build
+index 6586f8ae9f..8dd613a8bb 100644
+--- a/meson.build
++++ b/meson.build
+@@ -406,7 +406,7 @@ libgit_sources = [
+   'lockfile.c',
+   'log-tree.c',
+   'odb/loose.c',
+-  'ls-refs.c',
++  'refs/ls-refs.c',
+   'mailinfo.c',
+   'mailmap.c',
+   'odb/match-trees.c',
+@@ -451,7 +451,7 @@ libgit_sources = [
+   'pack-check.c',
+   'pack-mtimes.c',
+   'pack-objects.c',
+-  'pack-refs.c',
++  'refs/pack-refs.c',
+   'pack-revindex.c',
+   'pack-write.c',
+   'packfile.c',
+@@ -483,17 +483,17 @@ libgit_sources = [
+   'read-cache.c',
+   'rebase-interactive.c',
+   'rebase.c',
+-  'ref-filter.c',
+-  'reflog-walk.c',
+-  'reflog.c',
+-  'refs.c',
++  'refs/ref-filter.c',
++  'refs/reflog-walk.c',
++  'refs/reflog.c',
++  'refs/refs.c',
+   'refs/debug.c',
+   'refs/files-backend.c',
+   'refs/reftable-backend.c',
+   'refs/iterator.c',
+   'refs/packed-backend.c',
+   'refs/ref-cache.c',
+-  'refspec.c',
++  'refs/refspec.c',
+   'reftable/basics.c',
+   'reftable/error.c',
+   'reftable/block.c',
+@@ -579,7 +579,7 @@ libgit_sources = [
+   'versioncmp.c',
+   'walker.c',
+   'wildmatch.c',
+-  'worktree.c',
++  'refs/worktree.c',
+   'wrapper.c',
+   'write-or-die.c',
+   'ws.c',
+diff --git a/midx-write.c b/midx-write.c
+index bb4ceaede7..af4410a0b8 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -12,7 +12,7 @@
+ #include "run-command.h"
+ #include "chunk-format.h"
+ #include "pack-bitmap.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "revision.h"
+ #include "list-objects.h"
+ #include "path.h"
+diff --git a/negotiator/default.c b/negotiator/default.c
+index 404db17785..7d67933e06 100644
+--- a/negotiator/default.c
++++ b/negotiator/default.c
+@@ -5,7 +5,7 @@
+ #include "odb/commit.h"
+ #include "../fetch-negotiator.h"
+ #include "../prio-queue.h"
+-#include "../refs.h"
++#include "refs/refs.h"
+ #include "../repository.h"
+ #include "odb/tag.h"
+ 
+diff --git a/negotiator/skipping.c b/negotiator/skipping.c
+index e1218d2a93..9e685f54a1 100644
+--- a/negotiator/skipping.c
++++ b/negotiator/skipping.c
+@@ -6,7 +6,7 @@
+ #include "../fetch-negotiator.h"
+ #include "../hex.h"
+ #include "../prio-queue.h"
+-#include "../refs.h"
++#include "refs/refs.h"
+ #include "../repository.h"
+ #include "odb/tag.h"
+ 
+diff --git a/notes-cache.c b/notes-cache.c
+index abe0964bba..02fb418c6f 100644
+--- a/notes-cache.c
++++ b/notes-cache.c
+@@ -7,7 +7,7 @@
+ #include "pretty.h"
+ #include "repository.h"
+ #include "odb/commit.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "strbuf.h"
+ 
+ static int notes_cache_match_validity(struct repository *r,
+diff --git a/notes-merge.c b/notes-merge.c
+index 2b025b6d3d..72a3b9479c 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -5,7 +5,7 @@
+ #include "advice.h"
+ #include "odb/commit.h"
+ #include "gettext.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/object-file.h"
+ #include "odb/object-name.h"
+ #include "odb/odb.h"
+diff --git a/notes-utils.c b/notes-utils.c
+index b6275dfa26..491de7a7ce 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -5,7 +5,7 @@
+ #include "odb/commit.h"
+ #include "environment.h"
+ #include "gettext.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "notes-utils.h"
+ #include "strbuf.h"
+ 
+diff --git a/notes.c b/notes.c
+index ef44dae00d..5842226c68 100644
+--- a/notes.c
++++ b/notes.c
+@@ -13,7 +13,7 @@
+ #include "strbuf.h"
+ #include "odb/tree-walk.h"
+ #include "string-list.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ 
+ /*
+  * Use a non-balancing simple 16-tree structure with struct int_node as
+diff --git a/odb/commit.c b/odb/commit.c
+index d0e036876c..dc98000ab2 100644
+--- a/odb/commit.c
++++ b/odb/commit.c
+@@ -22,7 +22,7 @@
+ #include "odb/hash-lookup.h"
+ #include "wt-status.h"
+ #include "advice.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "commit-reach.h"
+ #include "setup.h"
+ #include "shallow.h"
+diff --git a/odb/fsck.c b/odb/fsck.c
+index e76779109a..75306dc8a3 100644
+--- a/odb/fsck.c
++++ b/odb/fsck.c
+@@ -14,7 +14,7 @@
+ #include "odb/commit.h"
+ #include "odb/tag.h"
+ #include "odb/fsck.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "url.h"
+ #include "utf8.h"
+ #include "odb/oidset.h"
+diff --git a/odb/object-name.c b/odb/object-name.c
+index 98c88e7337..16b6cd8f12 100644
+--- a/odb/object-name.c
++++ b/odb/object-name.c
+@@ -12,7 +12,7 @@
+ #include "odb/commit.h"
+ #include "odb/tree.h"
+ #include "odb/tree-walk.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "remote.h"
+ #include "dir.h"
+ #include "odb/odb.h"
+diff --git a/odb/replace-object.c b/odb/replace-object.c
+index 32d778f55e..c69c5aa200 100644
+--- a/odb/replace-object.c
++++ b/odb/replace-object.c
+@@ -4,7 +4,7 @@
+ #include "odb/oidmap.h"
+ #include "odb/odb.h"
+ #include "odb/replace-object.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "repository.h"
+ #include "odb/commit.h"
+ 
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 64233d6cd0..b5e14b196f 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -23,7 +23,7 @@
+ #include "odb/oid-array.h"
+ #include "config.h"
+ #include "odb/alloc.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "strmap.h"
+ #include "midx.h"
+ #include "pack-revindex.h"
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 1385027c1f..b50ef0b4e4 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -5,7 +5,7 @@
+ #include "khash.h"
+ #include "pack.h"
+ #include "pack-objects.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "string-list.h"
+ 
+ struct commit;
+diff --git a/path.c b/path.c
+index 3a3a66155a..4afd1e3ffa 100644
+--- a/path.c
++++ b/path.c
+@@ -9,7 +9,7 @@
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "dir.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "setup.h"
+ #include "submodule-config.h"
+ #include "path.h"
+diff --git a/pretty.c b/pretty.c
+index 461e8cd527..4575f3fde6 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -17,7 +17,7 @@
+ #include "log-tree.h"
+ #include "notes.h"
+ #include "color.h"
+-#include "reflog-walk.h"
++#include "refs/reflog-walk.h"
+ #include "gpg-interface.h"
+ #include "trailer.h"
+ #include "run-command.h"
+diff --git a/pseudo-merge.c b/pseudo-merge.c
+index 0809a2bcb3..f87fd46b46 100644
+--- a/pseudo-merge.c
++++ b/pseudo-merge.c
+@@ -8,7 +8,7 @@
+ #include "strbuf.h"
+ #include "config.h"
+ #include "string-list.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "pack-bitmap.h"
+ #include "odb/commit.h"
+ #include "odb/alloc.h"
+diff --git a/reachable.c b/reachable.c
+index 2a62adf7f5..a99699c6d8 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -3,7 +3,7 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/commit.h"
+ #include "odb/blob.h"
+ #include "diff.h"
+@@ -13,7 +13,7 @@
+ #include "progress.h"
+ #include "list-objects.h"
+ #include "packfile.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "odb/object-file.h"
+ #include "pack-bitmap.h"
+ #include "pack-mtimes.h"
+diff --git a/read-cache.c b/read-cache.c
+index 8f6b812b5f..148a93f10e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -16,7 +16,7 @@
+ #include "tempfile.h"
+ #include "lockfile.h"
+ #include "cache-tree.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "dir.h"
+ #include "odb/object-file.h"
+ #include "odb/odb.h"
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index ef7532e727..35acc13ccc 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -9,7 +9,7 @@
+ #include "odb/hash.h"
+ #include "../hex.h"
+ #include "odb/fsck.h"
+-#include "../refs.h"
++#include "refs/refs.h"
+ #include "../repo-settings.h"
+ #include "refs-internal.h"
+ #include "ref-cache.h"
+@@ -22,7 +22,7 @@
+ #include "../dir.h"
+ #include "../chdir-notify.h"
+ #include "../setup.h"
+-#include "../worktree.h"
++#include "refs/worktree.h"
+ #include "../wrapper.h"
+ #include "../write-or-die.h"
+ #include "../revision.h"
+diff --git a/refs/iterator.c b/refs/iterator.c
+index d5cacde51b..08c80ee818 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -6,7 +6,7 @@
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "refs/refs-internal.h"
+ #include "iterator.h"
+ 
+diff --git a/ls-refs.c b/refs/ls-refs.c
+similarity index 99%
+rename from ls-refs.c
+rename to refs/ls-refs.c
+index e29ef0947f..75b9b5e620 100644
+--- a/ls-refs.c
++++ b/refs/ls-refs.c
+@@ -6,9 +6,9 @@
+ #include "odb/hash.h"
+ #include "hex.h"
+ #include "repository.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "strvec.h"
+-#include "ls-refs.h"
++#include "refs/ls-refs.h"
+ #include "pkt-line.h"
+ #include "config.h"
+ #include "string-list.h"
+diff --git a/ls-refs.h b/refs/ls-refs.h
+similarity index 100%
+rename from ls-refs.h
+rename to refs/ls-refs.h
+diff --git a/pack-refs.c b/refs/pack-refs.c
+similarity index 97%
+rename from pack-refs.c
+rename to refs/pack-refs.c
+index eb6b2ba2c2..c9f36872cc 100644
+--- a/pack-refs.c
++++ b/refs/pack-refs.c
+@@ -1,9 +1,9 @@
+ #include "builtin.h"
+ #include "config.h"
+ #include "environment.h"
+-#include "pack-refs.h"
++#include "refs/pack-refs.h"
+ #include "parse-options.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "revision.h"
+ 
+ int pack_refs_core(int argc,
+diff --git a/pack-refs.h b/refs/pack-refs.h
+similarity index 100%
+rename from pack-refs.h
+rename to refs/pack-refs.h
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index c7005a9ecc..afcb800a5f 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -7,14 +7,14 @@
+ #include "../gettext.h"
+ #include "odb/hash.h"
+ #include "../hex.h"
+-#include "../refs.h"
++#include "refs/refs.h"
+ #include "refs-internal.h"
+ #include "packed-backend.h"
+ #include "../iterator.h"
+ #include "../lockfile.h"
+ #include "../chdir-notify.h"
+ #include "../statinfo.h"
+-#include "../worktree.h"
++#include "refs/worktree.h"
+ #include "../wrapper.h"
+ #include "../write-or-die.h"
+ #include "../trace2.h"
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index a4182ea57f..3599199b8e 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -1,6 +1,6 @@
+ #include "../git-compat-util.h"
+ #include "odb/hash.h"
+-#include "../refs.h"
++#include "refs/refs.h"
+ #include "../repository.h"
+ #include "refs-internal.h"
+ #include "ref-cache.h"
+diff --git a/ref-filter.c b/refs/ref-filter.c
+similarity index 99%
+rename from ref-filter.c
+rename to refs/ref-filter.c
+index 8a3d056577..e3de16b7a7 100644
+--- a/ref-filter.c
++++ b/refs/ref-filter.c
+@@ -9,7 +9,7 @@
+ #include "hex.h"
+ #include "parse-options.h"
+ #include "run-command.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "wildmatch.h"
+ #include "odb/object-name.h"
+ #include "odb/odb.h"
+@@ -23,7 +23,7 @@
+ #include "color.h"
+ #include "odb/tag.h"
+ #include "quote.h"
+-#include "ref-filter.h"
++#include "refs/ref-filter.h"
+ #include "revision.h"
+ #include "utf8.h"
+ #include "versioncmp.h"
+@@ -31,7 +31,7 @@
+ #include "wt-status.h"
+ #include "odb/commit-slab.h"
+ #include "commit-reach.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "hashmap.h"
+ 
+ static struct ref_msg {
+diff --git a/ref-filter.h b/refs/ref-filter.h
+similarity index 100%
+rename from ref-filter.h
+rename to refs/ref-filter.h
+diff --git a/reflog-walk.c b/refs/reflog-walk.c
+similarity index 99%
+rename from reflog-walk.c
+rename to refs/reflog-walk.c
+index 4058cfa6df..711b71be66 100644
+--- a/reflog-walk.c
++++ b/refs/reflog-walk.c
+@@ -2,12 +2,12 @@
+ 
+ #include "git-compat-util.h"
+ #include "odb/commit.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "diff.h"
+ #include "repository.h"
+ #include "revision.h"
+ #include "string-list.h"
+-#include "reflog-walk.h"
++#include "refs/reflog-walk.h"
+ 
+ struct complete_reflogs {
+ 	char *ref;
+diff --git a/reflog-walk.h b/refs/reflog-walk.h
+similarity index 100%
+rename from reflog-walk.h
+rename to refs/reflog-walk.h
+diff --git a/reflog.c b/refs/reflog.c
+similarity index 99%
+rename from reflog.c
+rename to refs/reflog.c
+index 178ef7fe44..751485f885 100644
+--- a/reflog.c
++++ b/refs/reflog.c
+@@ -7,8 +7,8 @@
+ #include "gettext.h"
+ #include "parse-options.h"
+ #include "odb/odb.h"
+-#include "reflog.h"
+-#include "refs.h"
++#include "refs/reflog.h"
++#include "refs/refs.h"
+ #include "revision.h"
+ #include "odb/tree.h"
+ #include "odb/tree-walk.h"
+diff --git a/reflog.h b/refs/reflog.h
+similarity index 99%
+rename from reflog.h
+rename to refs/reflog.h
+index b996712c00..ef39b0fcc5 100644
+--- a/reflog.h
++++ b/refs/reflog.h
+@@ -1,6 +1,6 @@
+ #ifndef REFLOG_H
+ #define REFLOG_H
+-#include "refs.h"
++#include "refs/refs.h"
+ 
+ #define REFLOG_EXPIRE_TOTAL   (1 << 0)
+ #define REFLOG_EXPIRE_UNREACH (1 << 1)
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index c3ac7b556f..51be5be0fb 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -1,7 +1,7 @@
+ #ifndef REFS_REFS_INTERNAL_H
+ #define REFS_REFS_INTERNAL_H
+ 
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "iterator.h"
+ #include "string-list.h"
+ 
+diff --git a/refs.c b/refs/refs.c
+similarity index 99%
+rename from refs.c
+rename to refs/refs.c
+index e01163be2a..2bc9c3cecd 100644
+--- a/refs.c
++++ b/refs/refs.c
+@@ -12,7 +12,7 @@
+ #include "hex.h"
+ #include "lockfile.h"
+ #include "iterator.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "refs/refs-internal.h"
+ #include "hook.h"
+ #include "odb/object-name.h"
+@@ -20,7 +20,7 @@
+ #include "odb/object.h"
+ #include "path.h"
+ #include "submodule.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "strvec.h"
+ #include "repo-settings.h"
+ #include "setup.h"
+diff --git a/refs.h b/refs/refs.h
+similarity index 100%
+rename from refs.h
+rename to refs/refs.h
+diff --git a/refspec.c b/refs/refspec.c
+similarity index 99%
+rename from refspec.c
+rename to refs/refspec.c
+index f3cb1b0748..324c274bff 100644
+--- a/refspec.c
++++ b/refs/refspec.c
+@@ -6,8 +6,8 @@
+ #include "hex.h"
+ #include "string-list.h"
+ #include "strvec.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "remote.h"
+ #include "strbuf.h"
+ 
+diff --git a/refspec.h b/refs/refspec.h
+similarity index 100%
+rename from refspec.h
+rename to refs/refspec.h
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 9d6194c4e6..120f9c947f 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -12,7 +12,7 @@
+ #include "../iterator.h"
+ #include "../parse.h"
+ #include "../path.h"
+-#include "../refs.h"
++#include "refs/refs.h"
+ #include "../reftable/reftable-basics.h"
+ #include "../reftable/reftable-error.h"
+ #include "../reftable/reftable-fsck.h"
+@@ -23,7 +23,7 @@
+ #include "../setup.h"
+ #include "../strmap.h"
+ #include "../trace2.h"
+-#include "../worktree.h"
++#include "refs/worktree.h"
+ #include "../write-or-die.h"
+ #include "refs-internal.h"
+ 
+diff --git a/worktree.c b/refs/worktree.c
+similarity index 99%
+rename from worktree.c
+rename to refs/worktree.c
+index cbf95328a3..3578229534 100644
+--- a/worktree.c
++++ b/refs/worktree.c
+@@ -6,10 +6,10 @@
+ #include "gettext.h"
+ #include "path.h"
+ #include "repository.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "setup.h"
+ #include "strbuf.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "dir.h"
+ #include "wt-status.h"
+ #include "config.h"
+diff --git a/worktree.h b/refs/worktree.h
+similarity index 99%
+rename from worktree.h
+rename to refs/worktree.h
+index fbb2757f5b..11cdc5f7fc 100644
+--- a/worktree.h
++++ b/refs/worktree.h
+@@ -1,7 +1,7 @@
+ #ifndef WORKTREE_H
+ #define WORKTREE_H
+ 
+-#include "refs.h"
++#include "refs/refs.h"
+ 
+ struct strbuf;
+ 
+diff --git a/remote.c b/remote.c
+index 89dc91429a..39e9f58cba 100644
+--- a/remote.c
++++ b/remote.c
+@@ -10,8 +10,8 @@
+ #include "remote.h"
+ #include "url.h"
+ #include "urlmatch.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "odb/object-name.h"
+ #include "odb/odb.h"
+ #include "path.h"
+diff --git a/remote.h b/remote.h
+index fbf552cc2f..e094082e03 100644
+--- a/remote.h
++++ b/remote.h
+@@ -3,7 +3,7 @@
+ 
+ #include "odb/hash.h"
+ #include "hashmap.h"
+-#include "refspec.h"
++#include "refs/refspec.h"
+ #include "string-list.h"
+ #include "strvec.h"
+ 
+diff --git a/repack-midx.c b/repack-midx.c
+index a9df431952..342deb798c 100644
+--- a/repack-midx.c
++++ b/repack-midx.c
+@@ -8,7 +8,7 @@
+ #include "odb/oidset.h"
+ #include "pack-bitmap.h"
+ #include "path.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "run-command.h"
+ #include "tempfile.h"
+ #include "trace2.h"
+diff --git a/replay.c b/replay.c
+index 9e29f29ff6..8dd7b99502 100644
+--- a/replay.c
++++ b/replay.c
+@@ -5,7 +5,7 @@
+ #include "hex.h"
+ #include "merge-ort.h"
+ #include "odb/object-name.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "replay.h"
+ #include "revision.h"
+ #include "sequencer.h"
+diff --git a/repository.c b/repository.c
+index 72434e3a50..b5e442f9f3 100644
+--- a/repository.c
++++ b/repository.c
+@@ -17,7 +17,7 @@
+ #include "sparse-index.h"
+ #include "trace2.h"
+ #include "promisor-remote.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ 
+ /*
+  * We do not define `USE_THE_REPOSITORY_VARIABLE` in this file because we do
+diff --git a/reset.c b/reset.c
+index 950d45d07d..29bbeaa9d4 100644
+--- a/reset.c
++++ b/reset.c
+@@ -4,7 +4,7 @@
+ #include "hex.h"
+ #include "lockfile.h"
+ #include "odb/object-name.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "reset.h"
+ #include "odb/tree-walk.h"
+ #include "odb/tree.h"
+diff --git a/revision.c b/revision.c
+index 9e90f909da..35a1893436 100644
+--- a/revision.c
++++ b/revision.c
+@@ -16,12 +16,12 @@
+ #include "odb/commit.h"
+ #include "diff.h"
+ #include "diff-merges.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "revision.h"
+ #include "repository.h"
+ #include "graph.h"
+ #include "grep.h"
+-#include "reflog-walk.h"
++#include "refs/reflog-walk.h"
+ #include "patch-ids.h"
+ #include "decorate.h"
+ #include "string-list.h"
+@@ -32,7 +32,7 @@
+ #include "cache-tree.h"
+ #include "bisect.h"
+ #include "packfile.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "path.h"
+ #include "read-cache.h"
+ #include "setup.h"
+diff --git a/scalar.c b/scalar.c
+index a80d8ee3ff..af3456b5d0 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -13,7 +13,7 @@
+ #include "simple-ipc.h"
+ #include "fsmonitor-ipc.h"
+ #include "fsmonitor-settings.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "dir.h"
+ #include "packfile.h"
+ #include "help.h"
+diff --git a/sequencer.c b/sequencer.c
+index 67ab3cdf0d..d13721ab1f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -29,7 +29,7 @@
+ #include "merge.h"
+ #include "merge-ort.h"
+ #include "merge-ort-wrappers.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "sparse-index.h"
+ #include "strvec.h"
+ #include "quote.h"
+diff --git a/serve.c b/serve.c
+index 95cf3d8ea4..df3086fb3a 100644
+--- a/serve.c
++++ b/serve.c
+@@ -4,7 +4,7 @@
+ #include "odb/hash.h"
+ #include "pkt-line.h"
+ #include "version.h"
+-#include "ls-refs.h"
++#include "refs/ls-refs.h"
+ #include "protocol-caps.h"
+ #include "serve.h"
+ #include "upload-pack.h"
+diff --git a/server-info.c b/server-info.c
+index 75ead482e1..3021ee8926 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -4,7 +4,7 @@
+ #include "dir.h"
+ #include "hex.h"
+ #include "repository.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/object.h"
+ #include "odb/commit.h"
+ #include "odb/tag.h"
+diff --git a/setup.c b/setup.c
+index fe8e9ffdc5..925a600dba 100644
+--- a/setup.c
++++ b/setup.c
+@@ -9,7 +9,7 @@
+ #include "hex.h"
+ #include "odb/object-file.h"
+ #include "odb/object-name.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "repository.h"
+ #include "config.h"
+ #include "dir.h"
+@@ -22,7 +22,7 @@
+ #include "quote.h"
+ #include "trace.h"
+ #include "trace2.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ 
+ enum allowed_bare_repo {
+ 	ALLOWED_BARE_REPO_EXPLICIT = 0,
+diff --git a/setup.h b/setup.h
+index 763fd384e8..7bfc5ce068 100644
+--- a/setup.h
++++ b/setup.h
+@@ -1,7 +1,7 @@
+ #ifndef SETUP_H
+ #define SETUP_H
+ 
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "string-list.h"
+ 
+ int is_inside_git_dir(struct repository *repo);
+diff --git a/shallow.c b/shallow.c
+index 25116d7a6e..daa6db8e0d 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -9,7 +9,7 @@
+ #include "odb/commit.h"
+ #include "odb/tag.h"
+ #include "pkt-line.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "odb/oid-array.h"
+ #include "path.h"
+ #include "diff.h"
+diff --git a/submodule.c b/submodule.c
+index d091b484a4..32af65e6b8 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -16,14 +16,14 @@
+ #include "revision.h"
+ #include "run-command.h"
+ #include "diffcore.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "string-list.h"
+ #include "odb/oid-array.h"
+ #include "strvec.h"
+ #include "thread-utils.h"
+ #include "path.h"
+ #include "remote.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "parse-options.h"
+ #include "odb/object-file.h"
+ #include "odb/object-name.h"
+diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+index 4151cfbe25..df1c677b9f 100644
+--- a/t/helper/test-reach.c
++++ b/t/helper/test-reach.c
+@@ -6,7 +6,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "odb/object-name.h"
+-#include "ref-filter.h"
++#include "refs/ref-filter.h"
+ #include "setup.h"
+ #include "string-list.h"
+ #include "odb/tag.h"
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 1fbdc52fc5..8c2fb0aad7 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -2,9 +2,9 @@
+ 
+ #include "test-tool.h"
+ #include "hex.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "setup.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "odb/odb.h"
+ #include "path.h"
+ #include "repository.h"
+diff --git a/transport-helper.c b/transport-helper.c
+index 59f61f23c6..55bd9291db 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -15,8 +15,8 @@
+ #include "thread-utils.h"
+ #include "sigchain.h"
+ #include "strvec.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "transport-internal.h"
+ #include "protocol.h"
+ #include "packfile.h"
+diff --git a/transport.c b/transport.c
+index 5b83cf9e73..38915e5466 100644
+--- a/transport.c
++++ b/transport.c
+@@ -15,8 +15,8 @@
+ #include "send-pack.h"
+ #include "bundle.h"
+ #include "gettext.h"
+-#include "refs.h"
+-#include "refspec.h"
++#include "refs/refs.h"
++#include "refs/refspec.h"
+ #include "branch.h"
+ #include "url.h"
+ #include "submodule.h"
+diff --git a/unpack-trees.c b/unpack-trees.c
+index d6e05207a8..b911700d74 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -16,7 +16,7 @@
+ #include "cache-tree.h"
+ #include "unpack-trees.h"
+ #include "progress.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "attr.h"
+ #include "read-cache.h"
+ #include "split-index.h"
+diff --git a/upload-pack.c b/upload-pack.c
+index 5c12af2219..80d2c95c9b 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -6,7 +6,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "pkt-line.h"
+ #include "sideband.h"
+ #include "repository.h"
+diff --git a/walker.c b/walker.c
+index 876865d20a..83f980c1f3 100644
+--- a/walker.c
++++ b/walker.c
+@@ -12,7 +12,7 @@
+ #include "odb/tree-walk.h"
+ #include "odb/tag.h"
+ #include "odb/blob.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "progress.h"
+ #include "prio-queue.h"
+ 
+diff --git a/wt-status.c b/wt-status.c
+index 950ebc3418..708366b973 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -21,7 +21,7 @@
+ #include "run-command.h"
+ #include "strvec.h"
+ #include "remote.h"
+-#include "refs.h"
++#include "refs/refs.h"
+ #include "submodule.h"
+ #include "column.h"
+ #include "read-cache.h"
+@@ -31,7 +31,7 @@
+ #include "trace2.h"
+ #include "odb/tree.h"
+ #include "utf8.h"
+-#include "worktree.h"
++#include "refs/worktree.h"
+ #include "lockfile.h"
+ #include "sequencer.h"
+ #include "fsmonitor-settings.h"
 -- 
 2.54.0
 
