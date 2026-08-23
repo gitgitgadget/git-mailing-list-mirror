@@ -1,186 +1,95 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C29D28033B
-	for <git@vger.kernel.org>; Sun, 23 Aug 2026 14:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787494766; cv=pass; b=tM0UqXF1/j3CjqATdLsZrUyYNn1CeFgTLz5ppdMANu2vL7fntkE7H26Dh01pim1EB3TfqZEeQSdxnnZBWiM11VSkVCJ2bFoII+8yXrSO3ngXkRPD3fkcl86J1Ovbf3qON+t5hywUH2C5NYGRNaC+0zVMkxFSPy8r6V07V4U+9h0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787494766; c=relaxed/simple;
-	bh=tXYFWlLT2TRF+cB2uu6hvhUV8L39BmLL2zb+UMLYWKk=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=JguZxvOn/8+UoCa9lSYWqd0RHpUn2TInDGd6Xq3+p+cuOCyeDVfQpZz6+bRjKV0Tz+J4QXLCyqLJ0UHNoD8xRTxsl+k2nxb07bwJzRNA/BI31YFiAnb7nbBhSgnIJV0E+/z1gL0HnIqRq3MPsF3t2BYCnYkGRSQAXIao2TFbRzE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SoddXIfX; arc=pass smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8342725782D
+	for <git@vger.kernel.org>; Sun, 23 Aug 2026 15:01:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787497311; cv=none; b=NbiQjTZjVuCMS9V47jYB8AG+6rsWtuwG+AF5T+324XBrWVbDi1GqO1CpKb9w2tc86Csn8tnYS2v1z6RjlVQxYHolGW/UFEmGwmPwn9Q0skrx3L19WhtotRcuSFoQcu1BlaIoOI/Xek2vZ3oh0zxXjlK6NEw6cRooW21YFM3rAFc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787497311; c=relaxed/simple;
+	bh=TAbT+g5Qf+K58iXIpaThWsiRe76Nb+gJCM62KOrWqKo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=p5gFCpMjy3Li+hXN9WbBkzlCDblL9Sioo4rgxY3D/kOluG6/JTjCedXWaNd0reA+ZWtmji9oJN6tFFhH1Qn5gf8eAiBFkl1qZy3QYQ1zFswQyIKhU7FAH0HbgqCwIh8AmIyFONCLgfaAZJCBFvlo68k/qzKTCFccuqXkPE782x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gg0uLlZk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ln8PDwFZ; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SoddXIfX"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6a1a546a6bbso4566100a12.1
-        for <git@vger.kernel.org>; Sun, 23 Aug 2026 07:19:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787494763; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZM7T5KynC4gNzCgQyw7kUlpGd85a5AveDAsoQPiQmBfo9VHk9Qgg/QcYe22JuLiYYt
-         sTibq0dpOmaH2bUMA8Vd30uoyEFpxSk4nKD2QlRr2QB4+NtuSfcd46tFzVePPPsyt1YB
-         PfWnX/AqjVThem7rQNLkHiRGhewG8J6uRO6Py0OJ0wlfEHvWt5m+bs17UQO9BD941kZb
-         3m+lCEe5WyrEUvL9PFkCRVlxQh6glMiY9/w+P8VN+96U+AfWFW+cHRazTBU8igXYXBus
-         ONNknb8jVxgmh+kwpdXgdyIMZGvLWRahrN7K1kWMV56hNngab+yIOUSiBmZh5AYs6FEv
-         Mq4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=t+IlFxlQtgWmaAFDMh3aJapvbJDYuUjtmUAiMTgqn8g=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=PvHO6xr5omRYs2UDUOr5mo8hhdMBYOqt/PWcAbA1ijdEDCrs6YEPllufrVuVmZzzg7
-         NIPEJAPdadTC2xFvlr7AZgfOjUcdhCZEdRv5C1c4dLmjgI3SFQQ7c52IibmVux49zbuC
-         5TBcqabRv6Epd9mhqOp47w1dRuDGID9cTxf1pemrtuWUIh6V9e3yVY+d2Iaju60usmEc
-         uWZJaxDnuN86rl4GjrAEQfvEfV9CHMmlT5wu228z5TqT//PZQn1WFo4qHTU5+dGMBBxI
-         h6YK8joiUs6ES3IBqGXbnJJ7O763UC6JoJjnIbuZh3LfxXDcImqMzqtqfMgdnc/DM2pU
-         DF0Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787494763; x=1788099563; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=t+IlFxlQtgWmaAFDMh3aJapvbJDYuUjtmUAiMTgqn8g=;
-        b=SoddXIfXtrK+gP4yslVpParAs0+lToRasq7swWGfIewWN9l7MbauSygPyzVFNBl6rg
-         Cfmr+UNsNZjMj5j+8siVAdpsp8kiHA8/0Yl8KlNxNGFIz/xX9km0cAOelBO93Whgy/Jb
-         dLK8vzbHs2yMSB7Pfn9e9OQ+sLUO20Lo7tktgfDkh2ZszAPXc+AG48dX+FdzzUFlJtv6
-         rXnY+SC2KpCrV5DRpp1e9GAdWv9BD896JBHt2BLJsYD+tTj6iCO06zzYoh1HbbzGI+3U
-         bomTdwjC6hT7gD5QimTuuwMyMFZN1qR0NxwGmBkhkiBToBDX4tXiDalzCNl9YP/AGvAe
-         ADGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787494763; x=1788099563;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=t+IlFxlQtgWmaAFDMh3aJapvbJDYuUjtmUAiMTgqn8g=;
-        b=RKWlj/bIDzprZ5M2JD00VeRfNXRMp8l/hCAhPmB71mdd62Wb0zLyLBPvMrEXzT3EEM
-         WtQz4F5RLBob9X+mqziyOfowKZJ1Us2AMkJC6IMM4v2XbeZjT5vTuYYRqzbV/cavqvuH
-         j4AnSFV0XRGODXhLL1Ag996ycw7mgeF1WsCaAV7c0X/QUKgvII9LPNjH11OJCjFQxswL
-         uGnLTCVOgGbWF7wp9OzNaCGnRQ8mpvrftjpB3YeQU1FGMzESIvSLjQ8iZ5fNpT72gCUp
-         x/Xpdw5yZ/JeVUmKdnHEX5KRWZEMFM1LI7A3YymIwJjPBAgzwnnCEzw3mUT65Qi+q52c
-         Urhg==
-X-Gm-Message-State: AFuF++msPgp0zBnyxpdjtwPYrJ9zxR+hrpEFPO7VmAx8w+/Gijo9qTyZ
-	W0sWOQPVmQjr7Tj7p83rXDM5zHtYeEVk/1u87UAVBrum8cHKnVZ2AcMQ/GIu0KdtV5fWtsdFaN7
-	TZcd7O5j0XKNlRw1fC+bIVR/pcF9n8IJIixdzflk=
-X-Gm-Gg: AR+sD12DbyJuYVwAxLVSIzJz2t8rw4r2mypPwRmiGIhfNXPjvWD5O8nXCPj57Fv0bpY
-	FjR3j+g9XHvWHeNY+DeYRPUaGfKG2N7yDlxyLJIvXT92EAYwvJTEx5HbOCXkMGxKzMwc8iQgzNZ
-	SNcJzlGOhaYP2j7g8QICfFsfX2+JK8TxExbSV+Kf6gucijvcsqM7roPg8Toq6d+bXrbIF2Jy804
-	/cBQvJa0eFUSP42FNHRkfoVBRM8TPzbGPbaEfP8ksfTuUfdIt71t76I4QsSFADE73xfUSPp/E+I
-	YnGmAgQGnKQpFvS9oOPHnOhOpFY3cs2f+cV7Maqa9C9skV1aXjuZSmpHzQ==
-X-Received: by 2002:a05:6402:510c:b0:6a1:fb46:c405 with SMTP id
- 4fb4d7f45d1cf-6a42f1d6a2emr20412871a12.14.1787494763353; Sun, 23 Aug 2026
- 07:19:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gg0uLlZk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ln8PDwFZ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 71B821400094;
+	Sun, 23 Aug 2026 11:01:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sun, 23 Aug 2026 11:01:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787497308; x=1787583708; bh=6EuiA33DnH
+	F82T4QgLATvXo7m8lPexm0sB7kW5cLLy4=; b=Gg0uLlZkdUc4gk+MfeKAW2GePW
+	Vbm9BJHmyua9QSUDeQIwrD74p5dZCbxbXWAQOTRXfBXdn7EQ+WYhEOKE0ePAN7gh
+	lxNXekPkxqBj77RU99IQYm6DJtoibo+L6vKNJFlZJHJcFyKCWfIHSRr0LXO5b5dr
+	EAhC0rjosXDHcwEXcQ5oxdRTQ4v+mNJRcbMQ6xJqSwMnjPIjtfAnUIFTnWtj24mi
+	pj0JDkc36YGafW9u59kfS2PR7mvVDmdcE3cDV6bLzX+I3VA0ryDVmNLf5IUX0qSp
+	Q/I3PjdQEzmRKJNO6B4fkXqNIR0XAHpwyzNR2JXwd73fNEtfpGodDDtH0Xng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787497308; x=1787583708; bh=6EuiA33DnHF82T4QgLATvXo7m8lPexm0sB7
+	kW5cLLy4=; b=ln8PDwFZnPVaLR/yBshrPgSOS7sXVmIWpfqnrzesLJNaPTDFnSl
+	NyL2epp+A/0fjbknrpyD4OmEHA7T0pl7pK58rLxls+IB2H8EoW7Pk4z/F8A+OhEk
+	FDpXbsHrmWuGwUv4Xe0jgNCf3KvwPZ2MAsXGMA4IMI9tUCgPkhkMjG7ITO8KrnKj
+	dcDDO28jRNxoZ3eptOjqaZAVLaO9KuJgn09oSF438wbhGwgRNWS5pfRd199i7yrq
+	IzocNqSd9F0Hfl32QNysenbXhBMh8AHno4P2ZKPyzIAi9mxKqhZbOJ4Pj00ifykW
+	x2nisgcby54UFQqaSsitT8TMjR/kzJB6q4w==
+X-ME-Sender: <xms:XAuLaotFwEb2vraOMtfQD-N_EONaRB9FgpK2_Pz6LPb51IQhFuXp2g>
+    <xme:XAuLas51TjbDk_pJPMArhMlmmQiu-hURUzTx9qhKOpGTgxYAdjZumKBG19LLirnWy
+    rCirRDHEnfYbJgJYFmRvaEPoK_HmOTixOblpaP_Y8BQjxY7HVNrh78>
+X-ME-Received: <xmr:XAuLahJFpQ_0P8JiqjJKzkrFhzhoNFXj7ahE8IFG1W1MaKjWrBlBDSBcwI78tj_STcRzHA-sbmSTGHJKWVNiJ6f_swDsW3aEVg>
+X-ME-Proxy-Cause: dmFkZTEovx8LsCOh72CPeyXns/SUXsWvtWOmaG++JPxxKE7guCRU1F5WDoifwj0hifMg70
+    7xclx/SdbYPg5yXrpJu8YGvwgnVsLQiIKHb6/xYN7OcVggb9ukLsm03bMq6FHsLXHAQATZ
+    9IWIVIvNOTL3kD+gcOp6VpygTwcncjkDrIy6XCIeQofnRyg0uGOJFYr9b/wqiUfotk07G3
+    4zQs3YkvEU4hmBbCTUFgDrh2eQ5jkCNiVLIOcK5z4cgnXaWwZn729yhejxckOdtgoP4nPx
+    otITlDefchUTTh6qwrNMaaeThBhZ6Ba7BnWFI0mTDYm520RqKUZFKgLG2qisWoNnlZsvUY
+    3U2anZ0GS6sZqeGCjKzulyosnEFcu5qg2+2zfADIC78hW9EQ7t41Iy+gBjUzM0dLCV150u
+    UBMlLF+iJV85Jbner9E853cDq7/OAmhWJv/j0Ffd0cS0009peUGEI8leBtnnxl/GJIb7Rd
+    0OMj9ZEwixCrNaKuVImK9jS8MeyG27DuTSLH2MTFfNtkDCT3mNVFJJVf4V9RzonsfeqZUo
+    c6JLbZEHiyI9Qvj/xT7p72pJAtoL32oH4wfHfbm0mkisBCE8luArEToVTP1lBkb8/7P3hm
+    aHHjLyPeVQsB/0eO8KkwYd0TkXmnumzuTxVP4wtkNxczQoY43f+w14tbrZlQ
+X-ME-Proxy: <xmx:XAuLak4Yz1Zz4pd47ZvAQdxWQRJt7DoQ74nbvRU2N5OPbNeqML2cmQ>
+    <xmx:XAuLaszoTHzUpu9mGj70jkU2RLIZ-SUX9TOt0LkEBD5PVA66NUpkBg>
+    <xmx:XAuLagboh5RWLLiGo4SAYKF06XyqKXRbM5SLtwR03onGgpehC0OVFQ>
+    <xmx:XAuLamQ4rt9RHhqk-6GOkhrrseRf0Y7PJEfMsobKNFTXArvpe0C_4w>
+    <xmx:XAuLavdrp18MgUwbJCn_84Ry37KCvSCd8vCUJt6r0PDkmfwoH1qko_gc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 23 Aug 2026 11:01:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC Patch 0/2] add unicode support to git repo structure
+In-Reply-To: <aorzcZVdCK27pdjG@ugly.lan> (Oswald Buddenhagen's message of
+	"Sun, 23 Aug 2026 15:19:45 +0200")
+References: <20260821135410.429698-1-jayatheerthkulkarni2005@gmail.com>
+	<xmqqse47pfyy.fsf@gitster.g> <aorzcZVdCK27pdjG@ugly.lan>
+Date: Sun, 23 Aug 2026 08:01:46 -0700
+Message-ID: <xmqqqzjovq1x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Vladimir Sitnikov <sitnikov.vladimir@gmail.com>
-Date: Sun, 23 Aug 2026 17:19:11 +0300
-X-Gm-Features: AcwNN1UKvu9qjx9jQ_X7JR4UFULh3SwwwUrdLSnC6LJ87rvmZg6W14R5zNOYLKU
-Message-ID: <CAB=Je-GRbyonmkW4qXCuMRQhWcAZE8zc_Xp32hwC1i61bNnjaw@mail.gmail.com>
-Subject: Subject: [RFC] stash: let the stash stack live in a configurable ref
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi,
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-refs/stash is shared by the main checkout and every linked worktree, so
-two worktrees push onto and pop from the same stack.  With git 2.52.0:
+> if compatibility with broken terminals/fonts is considered important, an 
+> option can be introduced to opt out from the modern experience.
 
-    git init wt-a && cd wt-a
-    git commit --allow-empty -m base
-    git worktree add ../wt-b -b b
-
-    echo A >file-a && git add file-a
-    git stash push -m "worktree A: half-finished refactor"
-
-    cd ../wt-b
-    echo B >file-b && git add file-b
-    git stash push -m "worktree B: unrelated fix"
-    git stash pop      # worktree B's own entry, as expected
-    git stash pop      # worktree A's entry, applied here
-
-After the second pop, wt-b holds both file-a and file-b, and wt-a has an
-empty stash and a clean tree.  Nothing warned about it, and the entry is
-gone from the stack, so wt-a has no way to find out where its changes
-went.
-
-This is documented behavior: git-worktree(1) lists refs/bisect,
-refs/worktree and refs/rewritten as the per-worktree exceptions, and
-refs/stash is not among them.  For a human who drives one worktree at a
-time it is mostly harmless, and sharing is occasionally useful - stash
-in one worktree, apply in another, as a way to move work across
-checkouts.
-
-What changed is who runs these commands.  Running one coding agent per
-worktree, against one repository, has become a common setup, and the
-agents stash and pop on their own schedule.  The failure above then
-turns into silent data movement between unrelated sessions.  The same
-report has already been filed against at least two such tools:
-
-    https://github.com/github/copilot-cli/issues/1725
-    https://github.com/stablyai/orca/issues/13695
-
-I would like to propose a configuration knob rather than a new concept,
-because most of the machinery is already in the tree:
-
-  - refs/worktree/* is per-worktree, so a private stack has somewhere
-    to live;
-  - `git stash export --to-ref` and `git stash import` already read and
-    write a stash stack under an arbitrary ref;
-  - extensions.worktreeConfig and `git config --worktree` already give
-    a worktree its own configuration.
-
-The missing piece is telling stash itself which ref to use.  Say
-stash.ref, defaulting to refs/stash, honored by push, save, list,
-show, pop, apply, drop, branch and clear.  A worktree that wants
-isolation then asks for it once:
-
-    git config extensions.worktreeConfig true
-    git config --worktree stash.ref refs/worktree/stash
-
-Nothing changes for anyone who does not set it, and the tools that
-manage worktrees for agents can set it when they create a worktree.
-
-Alternatives I considered and rejected:
-
-  - Making the stash per-worktree unconditionally.  It breaks the
-    stash-here-apply-there workflow, and it moves existing entries out
-    from under scripts.  If that is the destination, it belongs in
-    Documentation/BreakingChanges.adoc for Git 3.0, with a warning
-    released first - but it does not have to block a knob today.
-
-  - Named stashes.  A name that survives a push by another process is
-    what a ref already is, so this would grow a second naming scheme
-    over the one branches and tags already use, plus commands to list
-    and delete those names.
-
-  - Leaving it to tooling.  It works - `git stash create` writes a
-    stash commit without touching any ref, so a wrapper can store it
-    under refs/worktree/<name> and apply it later - but every tool
-    reimplements it, and the failure mode for anyone who does not is
-    silent.
-
-Points I am not sure about, and where I would like guidance before
-writing a patch:
-
-  - Whether stash.ref is the right name, and whether it should be
-    restricted to refs/ (rejecting a value that is not a ref name).
-
-  - Whether `git stash list` should be able to show the other stacks -
-    a worktree's entries becoming invisible to the main checkout is the
-    cost of the knob, and `git stash list --all` over
-    worktrees/*/refs/worktree/stash might be a reasonable answer.
-
-  - Reachability.  fsck and reflog expiry learned to iterate
-    per-worktree refs, and I would like a second opinion on whether
-    stash entries under refs/worktree/* are safe from gc in the same
-    way refs/stash entries are.
-
-If the direction sounds reasonable, I am happy to write the patch.
-
-Thanks,
-Vladimir Sitnikov
+Absolutely.  My response was mostly a reaction to the implementation
+that only paid attention to the locale settings, leaving no way for
+people to opt out without discarding UTF-8 altogether.
