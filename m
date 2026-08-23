@@ -1,81 +1,81 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8126374E7A
-	for <git@vger.kernel.org>; Sun, 23 Aug 2026 11:33:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1E736197C
+	for <git@vger.kernel.org>; Sun, 23 Aug 2026 11:34:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787484823; cv=none; b=Q7AIaubWQv+zat0DjtqRKvGXA+7WebQlZeIyf0vy138p14pxt/IQSfjsxDfmCuGuz5jijlPT6D0wbFdsnKwQ4RVhnvs9gW0YPFBJ7AzVoar4a291wOKXVSWzzvMRC9sububeicXOLjrSz9wzPsG7OyZ2KpWey2oRDteSODD9SYE=
+	t=1787484842; cv=none; b=CL4tuHbpCO8+dHd1tip3eI4cKGeLg6PIE7oPJ2mvQ2ZsHJwxwwVFxolVY3irBRDB62kdlv5UCeuiGDreJCfsl9dxIgm7AVRCIgQw7f2mtqu599jLocd7uM2Evr5Jerk2O9HmKwmoS6zMC12avfC+E3F3ok9Qdj4fbUJMXt7fTk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787484823; c=relaxed/simple;
-	bh=hyViv2qde8tcnX+wE7O5Q+4amyYL/6RxTWfctgeErtI=;
+	s=arc-20240116; t=1787484842; c=relaxed/simple;
+	bh=74+1nJ85lGZQpfPD/CLReQ/3x1++tqz65zTRTfYQTX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=liwGGv0/joFTkrPut45C5mfZGZ71Iu4crgTmjYyeyF6B0O9Z0lcePdrYmw08Th5XNIIjKoMx2+KPe6FysMV92pNFcszgVKk+MOTwAHWrafW73z/ZK3OlHiL5fRrPb5rIc9fGFGT+D33mxaNZakcwG+dgsyeUG6iuF+WEOL8sNI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LausqDgd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N7BYVs6h; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=kOnGOvwaKeMsewt21ZtKj1Rsw8wziTgmb/g2c4T/uQ21d0KZXga4l4vA+iPnJ/5YExSc2T4LbKccLEy7U45v/5sXXkSsHgP95T7QjwRMbWpY507tsEsdaQ9e/TfseUQWNiXrFYEwwhBlk+D91/EKVK9TM78oz1FRxnW0zrrJE8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=fksoXYan; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JsMD+AZC; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LausqDgd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N7BYVs6h"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D8BA7140007D;
-	Sun, 23 Aug 2026 07:33:40 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Sun, 23 Aug 2026 07:33:40 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="fksoXYan";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JsMD+AZC"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id C5452EC012C;
+	Sun, 23 Aug 2026 07:33:59 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Sun, 23 Aug 2026 07:33:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787484820;
-	 x=1787571220; bh=xlonEJuSDp+PJH6kWeOvNLVWq2PsNuNUqj1oT+tBLNY=; b=
-	LausqDgdoh8dUX3r5kPIUGD5aqmSVFR85K520X8LB/6tWpakbm7LGkklDv2myG15
-	5XnFrd7qJ6a9ZksWe/+GGKt3xGLR6xSZeFFHM96/OgPVo7p2B8E3YngNhPUcndaj
-	GJw5bTnuNCOHk9ngCQMWlz9LQRcHYOAU6MgRRdb52sjjkcPEbeHbfgpMlomji83L
-	K3savobQjRE8vc3Khk/JeXr0U2QQ9U/Hw4APCCidQj0zCGxudcYEMNe0yHctrLoC
-	OvMeynS82RfxKHmaBmh8niTVLX56etZKcVXoEwxwAfD/h/BA5Kx4wA4DPOPz3YG5
-	GU8dOv1SDTe0/cHH1U5CjA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787484839;
+	 x=1787571239; bh=zM3HYBXo7pMqW6l9MVEXygzBJBVT79QMv2EOsq3GTPw=; b=
+	fksoXYan+fhqg2HgoO9Rkvv8eAvXkLzZXBo7uzMu8yyy5UzrH2vyOIRXTFrbQiJo
+	otNKLpQsq8H8yuZ7l6l+VnvH73YR8XBpvGUwyct/+Ww1oy+yBihhiG6gyNfsrNfa
+	lD2MYWuXnk+8PiFyRrqtDSez+wybtfmgyTv+va+6eWniExKLHe3CpkSoKfNDlo7q
+	s2ZCMwUnph2dbPsR8lmX6I71HGQjzS6yN4jXlmFNZMvXYV1+X+48HE4Ph6U8X8nn
+	mZZ14xXqpqRiRdAWUhZvHR97SRSLreehzn2bsoXScCYxacbwPihIUPL9n5C+7wxK
+	s+8PWfWRuPMCpjqfE+fRoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787484820; x=
-	1787571220; bh=xlonEJuSDp+PJH6kWeOvNLVWq2PsNuNUqj1oT+tBLNY=; b=N
-	7BYVs6h6labZz0DdUaDo6bea+CFIkBA3jc8iePvoEm3ELllBdPVJD+GEYDFO56zg
-	GMa75evaHp4yZRtVPbEoSVTkgsTHyGhXeLKD3B70Y/2JuYAwt626qCgLRwERBhGZ
-	kKjYX97D0nMv9OsdCnp3TdobDu9Hf+EQ8Oo/vRKinuJGL+00+x5N7tscGNzfKQSr
-	ln6Ky1VyPgors0KJ6vRKhPLZTM7OXMB18FamsBJPIA0ap3gcZJyGXRZFErfATCLE
-	PM7zglESK8i9hRZGiT1uSrPE7b5B8EAQIkrEi3ABDcJlgeNU3VM81VI+WwHVuISH
-	bHZxK4jJtJR20qbmYY/Aw==
-X-ME-Sender: <xms:lNqKancwtXYz56IiZ7ZtUEmigWEFN-zfJRo_SoJS5lR7IL27JurdtdA>
-    <xme:lNqKakNNk5fFjTFCrD_Zjz69XYhHwVh2l3rMtT0dayQ_tymA0zCYGfWFfuvz-mMke
-    -CxTLWvaR6xfq2sYLybxoDxoHZ0b23nf0N41uqaelguwWmRFU9lSQ>
-X-ME-Received: <xmr:lNqKalgl0KIuLV1vbQ27JwUQpojEz4zFNeSPLCTDmnJipZIZ3VXYIfHWqn1xJ_whWjv_BzU8zyBXDnv5PLsAJkIHZA5bARQxwOq4vv2KfZVEGuq0rChBTAY>
-X-ME-Proxy-Cause: dmFkZTFfJ3LWw51gC+1cNjjS7elSyMDiWlFQmemF9lL0fYBM851lerZ4k4xRpiBSwH+R4W
-    451qFezDmEOh/Q2iNE0YpVVEhLqcRZIYIMEfKUsMRYfLsN70n8MCVcKIIP5iNzo/OF9k8Z
-    fpkSRYckclG3nWrEIc2nTsZmeGYZacUh/bilZPpsd7/5XNbDlC1z+gpc5B1AqV8g4FBKlh
-    qtdJLaaDVn3Lbohj3KaFI2eEBTQAueJYOGHkEvYCEAMAPuP/aGoIJOsCSQlWi4r8M5SVdx
-    kruf2sb1J7RaWe1iK1BrrMIOw8tEjP3YPCl0isvLjM8e5VHZGSZQCdPIVrWXokv2cacTMZ
-    fkMP2PJTVLP3R65hbG4xXvioB/00Oe7qn5xiMX1S37vS8fbsIuliU+QzE9yY4P0KEbHSGf
-    P5CEspZly2swhjVVqPWepHRgXE0FrJzSHdZo2zfaht2d6SwRkkYz7fYgpIVmZcZVsTVGUs
-    +2poFcPtKGYtL3qu0VX+SCKn4uwf/qw4ty5dIxkn4rMhrtnG97qmqnAZ9X07Rs5nMjppqY
-    w5gP/LqgvyJ1Onu8OR4yaGUfQ1elxGGWRA1wDo5lHntpHT2ccNb7jN6FLwvCnjKsqFHKeG
-    9bY4QhA6vigdiScNvqrpcYrIhcYxSoAR1OAYRZMq0ty41dtuf0T0PFTcar6w
-X-ME-Proxy: <xmx:lNqKan0EbepPtwu6xr_oVyDFLJz_82xt96FiWa2YzRbAOhanjJA2hw>
-    <xmx:lNqKavhs8PhimIKxAMldzYkoCOi7AhOUGsMqYzTEXcrXfUYHll_6QA>
-    <xmx:lNqKaneDe9Ndz5PBWXNtYePdZlFlW00V51nGzX82natEWRnr4BVnkg>
-    <xmx:lNqKain3Uu-mQqeYjg0Q0dPmPYc5JRfio5nFUFmWTjXt4_JbV8qmkA>
-    <xmx:lNqKasIlI-6nC6TyoaQhzOsEQTngfsFrnYRiKkdFTUAAJaH1KS2eSCyR>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787484839; x=
+	1787571239; bh=zM3HYBXo7pMqW6l9MVEXygzBJBVT79QMv2EOsq3GTPw=; b=J
+	sMD+AZCI/TidGAejSqg8fH7DMNXhIC+xb+/xmgpnHPZwsnMYlKfCWIV1upXkNhnJ
+	l2szKLrQvjR6YIHHWOwM8RBZZoSpAqocuDQMDndL9F8rVDnSkz3P+jYPogO3VO3t
+	+YFWtvQ+TRwT/TAQlPzHzutIjSMcq5hSf2MjczwoknHmAnpo91MyzLMkSsHOLmt/
+	udg1twfBNY0eQTClydjQXpqiuxY6fIuwsvCJNPGABCuDESB7Qoo/VKcR2bnziq8y
+	LfGRSsnlGzxedkT/gDAvzeH9VFqJz505oXhKJVLH3cw1RL5jkg2mSUiXRrezBXoV
+	wWk7cYxxTSXsHqhKmSolQ==
+X-ME-Sender: <xms:p9qKauqY2tosmaHI5bmdzFP2ycFQhcu5gkojeJKvwNFi05y2AMkzeYU>
+    <xme:p9qKajoYXNsI7X6J0B6IXyPjJv7fWuRAXdNhoxHCIDif2iW_fP7ohsOBb-Mjp25ih
+    Gsty5ECPNyNfllaCJm_LXg9XesflIz60wpKTd0XU_D26VR-ZtK9sg>
+X-ME-Received: <xmr:p9qKaoN6XDPHmG2Yj9Vfip-6TvFzG5uVzaMTC3dX3N5rvTaJ84HIvd48_XlyecngBJMqSBuudITEHPd3ZmJnLAW_G_6IB7fzQ5iJIhb5vWn8kzmhXJXMojY>
+X-ME-Proxy-Cause: dmFkZTGAdgoJw0eISgLjOVUvlkii4gHUtUwYlDKUJKSOMWh2V8XNdblkD8uNPqezVl/w94
+    bhYEHTiUzn8VLkf61Ubv/2Q2mBwU+zN5pxNcQnfTvS9cZVEHy/sEfm6zjJWlS/wAs467FR
+    RTSA9KBsIOzbJgbAtXYZq0MgJK7ouT9bY//u6N2qDhH4hWMLpkTPL4H86uoIlFokgu2n2V
+    5g/G9n4Q3t52bEYGtsmEchBeslDro0bCo89V5UDUM5MRKX+z+nFnLeMOINbvbt2OjLPfuX
+    6bCvmRpLlROTgpnmf8pXvx3PvLJsK+6qsM6iYPU6xt3t5v9SfAsoKsW+JuwSivRcgKJFYd
+    yAFzTo08oLtzKquTSPadEECn1ib4HO1TmSN+4kDC+tcjU2y4BTVJiahXkN0IQjdi6LfCqD
+    qW1sByTml1NghxvLQyMjiKvjAAtvHnrtIWAMNG805p9Rtf9nZ5pZDdfhQPSSJYlPZNvr50
+    giR3aGKhkn/bjLtNX76KIxZex4jM4aVzigErjYG4DwnoXywCs/jyuDrR+y3zDzkNev8ZQM
+    7nsrgAZ+6pgguWvS3x8cqpbrKM1R/rBKcdQZbm3A3Qto8gYjAAZeAIB9CClD7iAtcCb9wF
+    sqN9f4nObJGXqyIgky8UVyTnMiSIbvFV6/FtMNpEB7hrdmEbupRXU9PLCaQA
+X-ME-Proxy: <xmx:p9qKaszpVVjGA0IH1lSN2GK1EaVtA28vCe-3cRJqCULB_3rOdZ9oSA>
+    <xmx:p9qKapsJ8-mIZEH5bFPV00PJzXadAyvLCa7qPdn4SZTX6k4XJWKtsA>
+    <xmx:p9qKat6mlooIP6HJ-NYVziFii-4ivPySEa6vHdLANdO1S6coXcP21A>
+    <xmx:p9qKagSUozzGZqIrpgRVsxgxZU5eRYOCgJ0jpcIi3xsDVxVyDePf6w>
+    <xmx:p9qKam1sUIKAL_zMAG-237cpZaD3jYAjL8gTO0ibwwqSiedI3QJTbSjC>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 23 Aug 2026 07:33:39 -0400 (EDT)
+ 23 Aug 2026 07:33:58 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Patrick Steinhardt <ps@pks.im>,
 	Julia Evans <julia@jvns.ca>
-Subject: [PATCH v2 2/4] doc: git: link to the gitdatamodel(7) tutorial
-Date: Sun, 23 Aug 2026 13:32:47 +0200
-Message-ID: <V2_git_to_datam.c22@msgid.xyz>
+Subject: [PATCH v2 3/4] doc: glossary: link four of the terms to gitdatamodel(7)
+Date: Sun, 23 Aug 2026 13:32:48 +0200
+Message-ID: <V2_glossary_4_terms_datam.c23@msgid.xyz>
 X-Mailer: git-send-email 2.55.0.13.g85d2d65e389
 In-Reply-To: <V2_CV_doc_datamodel_advertize.c20@msgid.xyz>
 References: <CV_doc_datamodel_advertize.bea@msgid.xyz> <V2_CV_doc_datamodel_advertize.c20@msgid.xyz>
@@ -90,92 +90,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-The previous commit added the first mention of gitdatamodel(7) here,
-under Guides. But there are also other sections where a mention is
-relevant.
+Four of the terms in the glossary are discussed in gitdatamodel(7).
+Let’s link to the data model page from the glossary.
 
-Let’s mention it:
+The phrasing needs to be tweaked based on what gitdatamodel(7) offers
+for each term compared to the glossary, or even other pages (see the
+git-reflog(1) mention). For instance, the ref/reference discussion can
+be called a “see also” since the glossary here already goes into
+detail. On the other hand, gitdatamodel(7) offers more details on
+the subject of “the index”.
 
-• under Description, since it is as useful as the other tutorials
-  already mentioned there for those who are interested;
-• under Terminology, since it complements gitglossary(7) as a
-  pedagogical rather than reference source for the core terms;[1] and
-• under See Also, since the other tutorials (plus the user manual) are
-  mentioned there.
-
-We don’t need to mention it under Further Documentation since we now
-mention it under Description.
-
-† 1: See dee80940 (doc: add an explanation of Git's data model,
-     2025-11-12):
-
-          `gitglossary`. This makes a good effort, but it's an
-          alphabetically ordered dictionary and a dictionary is not a
-          good way to learn concepts. You have to jump around too much
-          and it's not possible to present the concepts in the order
-          that they should be explained.
+Let’s also add gitdatamodel(7) to See Also. It is at least as relevant
+as the other tutorial pages that are already mentioned.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    v2:
-    • Msg: Correct section: s/gitdatamodel(1)/gitdatamodel(7)/[1]
-    • Msg: Missing “is”[1]
-    • Msg: Correct “on another page” which refers to git(1)—the same
-      page that we are changing.[2] This is a mistake from my own
-      iterations since this started as the first commit and I had to
-      reword from: not mentioned yet; mentioned with `git help
-      --guides`; (realizes that it is also automatically included in
-      Guides now) ...
-    • Msg: s/other places/other sections/[2]
-      🔗 1: https://lore.kernel.org/git/aohDFdjPU0t2d9_8@pks.im/
-      † 2: Self review
-    ---
-    v1:
-    I have used double spacing for sentences since that seemed to what was
-    already in use.
+    V2:
+    No changes.
+    
+    I reread the Ref entry in the glossary and compared it to the
+    Reference entry on the data model page. These two texts cover
+    similar things (except the “irregular refs”, only covered in the
+    glossary). The data model page is slightly more conceptual in tone.
+    
+    That’s why I originally went with just “see also” instead of for
+    example “see also ... more details” or “see also ... for a more
+    conceptual overview). They are too similar to distinguish further
+    in this context.
 
- Documentation/git.adoc | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ Documentation/gitglossary.adoc      |  1 +
+ Documentation/glossary-content.adoc | 13 ++++++++++---
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 8a5cdd3b3d2..6f0075f9188 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -25,7 +25,8 @@ and full access to internals.
- See linkgit:gittutorial[7] to get started, then see
- linkgit:giteveryday[7] for a useful minimum set of
- commands.  The link:user-manual.html[Git User's Manual] has a more
--in-depth introduction.
-+in-depth introduction.  See linkgit:gitdatamodel[7] if you want to
-+learn about the data model and important terminology.
+diff --git a/Documentation/gitglossary.adoc b/Documentation/gitglossary.adoc
+index 0e85be48470..b046d9cb293 100644
+--- a/Documentation/gitglossary.adoc
++++ b/Documentation/gitglossary.adoc
+@@ -16,6 +16,7 @@ include::glossary-content.adoc[]
  
- After you mastered the basic concepts, you can come back to this
- page to learn what commands Git offers.  You can learn more about
-@@ -469,7 +470,9 @@ Higher level SCMs may provide and manage additional information in the
- 
- Terminology
- -----------
--Please see linkgit:gitglossary[7].
-+Please see linkgit:gitglossary[7].  See linkgit:gitdatamodel[7] for a
-+discussion of the core data model, which includes important terminology
-+used throughout the documentation.
- 
- 
- Environment Variables
-@@ -1199,8 +1202,9 @@ SEE ALSO
+ SEE ALSO
  --------
- linkgit:gittutorial[7], linkgit:gittutorial-2[7],
- linkgit:giteveryday[7], linkgit:gitcvs-migration[7],
--linkgit:gitglossary[7], linkgit:gitcore-tutorial[7],
--linkgit:gitcli[7], link:user-manual.html[The Git User's Manual],
-+linkgit:gitglossary[7], linkgit:gitdatamodel[7],
-+linkgit:gitcore-tutorial[7], linkgit:gitcli[7],
-+link:user-manual.html[The Git User's Manual],
- linkgit:gitworkflows[7]
++linkgit:gitdatamodel[7],
+ linkgit:gittutorial[7],
+ linkgit:gittutorial-2[7],
+ linkgit:gitcvs-migration[7],
+diff --git a/Documentation/glossary-content.adoc b/Documentation/glossary-content.adoc
+index 8c4e9dd3bee..52301a56dda 100644
+--- a/Documentation/glossary-content.adoc
++++ b/Documentation/glossary-content.adoc
+@@ -251,7 +251,8 @@ for a more flexible and robust system to do the same thing.
+ 	as objects. The index is a stored version of your
+ 	<<def_working_tree,working tree>>. Truth be told, it can also contain a second, and even
+ 	a third version of a working tree, which are used
+-	when <<def_merge,merging>>.
++	when <<def_merge,merging>>. See "THE INDEX" in
++	linkgit:gitdatamodel[7] for details.
  
- GIT
+ [[def_index_entry]]index entry::
+ 	The information regarding a particular file, stored in the
+@@ -290,7 +291,8 @@ This commit is referred to as a "merge commit", or sometimes just a
+ [[def_object]]object::
+ 	The unit of storage in Git. It is uniquely identified by the
+ 	<<def_SHA1,SHA-1>> of its contents. Consequently, an
+-	object cannot be changed.
++	object cannot be changed. See "OBJECTS" in
++	linkgit:gitdatamodel[7] for details.
+ 
+ [[def_object_database]]object database::
+ 	Stores a set of "objects", and an individual <<def_object,object>> is
+@@ -587,12 +589,17 @@ extended in the future:
+ Different subhierarchies are used for different purposes. For example,
+ the `refs/heads/` hierarchy is used to represent local branches whereas
+ the `refs/tags/` hierarchy is used to represent local tags..
+++
++See also "REFERENCES" in linkgit:gitdatamodel[7].
+ 
+ [[def_reflog]]reflog::
+ 	A reflog shows the local "history" of a ref.  In other words,
+ 	it can tell you what the 3rd last revision in _this_ repository
+ 	was, and what was the current state in _this_ repository,
+-	yesterday 9:14pm.  See linkgit:git-reflog[1] for details.
++	yesterday 9:14pm.
+++
++See "REFLOGS" in linkgit:gitdatamodel[7] for a short explanation of the
++format. See linkgit:git-reflog[1] for details.
+ 
+ [[def_refspec]]refspec::
+ 	A "refspec" is used by <<def_fetch,fetch>> and
 -- 
 2.55.0.13.g85d2d65e389
 
