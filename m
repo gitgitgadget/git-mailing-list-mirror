@@ -1,131 +1,98 @@
-Received: from mta0.migadu.com (out-236.mta0.migadu.com [91.218.175.236])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5159526B2DA
-	for <git@vger.kernel.org>; Sun, 23 Aug 2026 13:26:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.236
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7A519CCF5
+	for <git@vger.kernel.org>; Sun, 23 Aug 2026 14:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787491578; cv=none; b=g7NNOXBzq7b77svM/zYpS5Ouyuywi74Yb4juMNiBKO0iEn98iH2khThAZdk+4a13sjgr0JInVEaK7a8ZYexQntsqDYDDjuJxMWj43Ut2yXmARuPL/OTODHxSRttbyeiNc6PNGUyvbY5NvJraNs9Pks0wEJ+G1XGqshjufYaJH00=
+	t=1787494578; cv=none; b=S7uwkif2QDWpjUEVulDldd1kxH0U4MQGO4sKkIMbftmA81JFSJskZuvS1LGHnn27CsMj10rkK2NhvZXIUGoQO/C0XS74JW79YG1Bx5A302nViWZ3bqXkc8IA2xgAEzwbMgYX3ssV8ctSrlTclBdfPYU5sC1UDCO5pDcVmow/2kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787491578; c=relaxed/simple;
-	bh=ALLPIPvPNW3KZSgqGB2L9ZrvKSc+CLcDsgEWCIh+Nw0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TAABHVAnrkai1x+XldxzjFhjMuwO5sqkIxGazmZX8mDxj/D6hrYgsOIrG+fw2+rO960dPJaSTpYWTfZJNKfXL4OLjG7ElzkGm6Pn1TuFra/MbLW2/VUKx1moHEJaOOd0PwtlVSkbj2TyOGAuImhdpXvLPHs7zrIB/4Yn2ow3mqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=UQu0U9y2; arc=none smtp.client-ip=91.218.175.236
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
+	s=arc-20240116; t=1787494578; c=relaxed/simple;
+	bh=GLjgKFO/b7B6bZS9YKJupeHgM25O+e6RU0e+b5gwn+o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZHTv7qmE3S8Pse8INMRRWZlEev4zHFHDa6kHYD2/6rJZtoMVNIPdNKiac5Qly9ltAXvEqW7bI4D5OC1tqHn23l2j5eTowc3sDe+kOECzthRvXcjKojw+/pn1yDfx4oC32T/0Qs7+ikw8xrMb/SWINos4YDAXlPasa0zmJWcKlFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OrjzlBlR; arc=none smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="UQu0U9y2"
-X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=ALLPIPvPNW3KZSgqGB2L9ZrvKSc+CLcDsgEWCIh+Nw0=;
- c=simple/simple; d=wyuan.org;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787491572; v=1; x=1788096372;
- b=UQu0U9y2Xb47tlp+r4LZx0Eus5V2fT8atqJhgFgklF7Q6mQAxAfst9fXoujGNZYumhHuKja/
- t3k+D7HscJtKKGfINVodVM/a19PK5nYqKXxNlXUMrNYI18QYipm9c7OzQa/vdzXI3ZGhaEAst84
- aYduVLnthHa1gZkR3I2GCgDw74xoOMfMF9bWwY4Ld8y8W/CGd2YjLrdsgsZfT54jvenKTP2HnJX
- 7/RJTBIaWKgAPmBJtNBd4RbnOhKozqEAbN+lRxpDtU4gvqS734vHir4frVSdmx1Ew3VvQrGzEDe
- bHrUnsX7dc3QyXcGSz85wZcq+5aGtez4BI2AEblMbmaoA==
-X-Envelope-To: git@vger.kernel.org
-Received: from localhost (117.176.242.187)
-	by smtp.migadu.com with ESMTPS id 6d6d7ad293e0594c;
-	Sun, 23 Aug 2026 13:26:11 +0000
-X-Mizu-Trace-ID: 6d6d7ad293e0594c
-X-Migadu-Flow: FLOW_OUT
-Date: Sun, 23 Aug 2026 21:26:04 +0800
-From: Weijie Yuan <wy@wyuan.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OrjzlBlR"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-52cd38ddcdfso14600831cf.3
+        for <git@vger.kernel.org>; Sun, 23 Aug 2026 07:16:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787494574; x=1788099374; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=GLjgKFO/b7B6bZS9YKJupeHgM25O+e6RU0e+b5gwn+o=;
+        b=OrjzlBlRudLjTCrsfJd0FvH9oAAYQ9HNvvGuW5AEovTs1GGwctdcvcTN9KeAsqe6Xg
+         FsVmdO3rT73i/KtD7LNBr2IWKqvYWC/4hp/yxQI1dN3/Z0ktloeP+MxBgST+g7qbbxoE
+         klmjCZoaS+R5nMg3MYtzw9eOHF8v+lfZcO5q89E+mu+Np1/VNKyauHAGh3KZ6ifiTOSz
+         e+PC7OdKoXgEPLUnFXKzpLFnb5R3kWk0VS2wZWOArtPx1lup6kdWPfW6zrJMMLT3oYFx
+         M+aZ00eX05p5eRGX2w6g2v08j82xi/d4KgpuYn1LT9RbpoCeDiSq+Z1E3Ymh2VeWeCdV
+         o8gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787494574; x=1788099374;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GLjgKFO/b7B6bZS9YKJupeHgM25O+e6RU0e+b5gwn+o=;
+        b=e/1AB/vOIMLYsgx0Z6mpRnhllUpLXSmkdtHCNtyRedt3qG6X5uuOoXp9GTohyQROYj
+         h74oHMmV7Y1SKjAbycFwM93A/s5QCXQK/zKNUdn8IPzSeyMA0Qci5AtilZ4exotkQVvH
+         +Vz+sEHpcrUO0aGYM66FSOEi0Gplwh/Lwf7XBYHoMvsAQyqcgVAilP+ICKx+LYX5kpuE
+         i/aHNwDipmQyLJ78Hjhlc/ecOh04ITrBUzjt4DN7VKw+xPZUPC1OR1OpLQENjSonPtDA
+         FLyyn6Pwh3+slyaWDPt6FobFXO+OjjI/rsVmCntCZhd62QqJkQqftFURnDJH/a47Tzel
+         aClA==
+X-Gm-Message-State: AFuF++mO15Y6jNQ6xJwpin78fMhy9pNJSC62wAg/uzwoQAF0Wx/tHwUA
+	5sWrFUTu8ERiL2NM47ztJ3DnxQVvqfXpL2GUYDyTnaQQuVObzA44rGwx
+X-Gm-Gg: AR+sD122gbXF2q6iuiINNAswl6rix9ZanoY0RHpFbqK56FxBaoDCfq1kdppwbZQImV1
+	iuarLAWBFQ+ESHM/35B9Ak3WBdvYU/VnB5a5Ryculcm/GVdAGqLds/Qw6Aov8bGd5qiAzP8Sa62
+	gfVtaRjb/vpfK169EFtxqqJ8lbdkNhj2IZW71utJXi1cb9T3gTzvnjmdpjlF3M/dyr/NjLUd3/b
+	h5F8lHOryG8pOzp/n4/tMMOPuBMX2ukBRssvg/WJFQ9yr1ZTFOxWuTZ+QVgcn6mY8RRJQxZQnyX
+	MdL9uE9C28TDeFaPHJNxFVJo7KZikUEWxRzAgVP9IBJ4dR5P0OeHkpCUbWce09vrTzt9RkVz3wK
+	WgEDorEQzyRaq0w83Way2q6O2eP+AM9tXRzfPAq8i42nzYZ4rzePW3Kv8xeKTZC0pi0fUED6eAl
+	LUjEgc/Z04OfP/4Q5xae5v+u5aTtXDU7gHWmlHzR5O7ljogUchYssRa63NKfNu7AW5FeW7k+rVY
+	PcMSuK7xy3ptGO6MWG4PoM/5rt4x/uagD5hWN3IDsgX4kdJhparFmV+
+X-Received: by 2002:a05:622a:30c:b0:517:6d6c:187f with SMTP id d75a77b69052e-52df572bee0mr197719751cf.14.1787494574298;
+        Sun, 23 Aug 2026 07:16:14 -0700 (PDT)
+Received: from niko (50.sub-75-194-244.myvzw.com. [75.194.244.50])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90c93a4d8bdsm38494086d6.38.2026.08.23.07.16.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Aug 2026 07:16:13 -0700 (PDT)
+From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Alexey Samsonov via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Alexey Samsonov <vonosmas@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/3] treewide: migrate from legacy utime.h to utimensat
-Message-ID: <aor07LvsXOy1p7vh@wyuan.org>
-References: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
- <aonIVn-ZQoMKWCAd@fruit.crustytoothpaste.net>
- <xmqqzeyeujde.fsf@gitster.g>
+Cc: git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] t1402: test forbidden characters in refnames
+Date: Sun, 23 Aug 2026 09:15:11 -0500
+Message-ID: <20260823141600.74820-1-nikolauspschuetz@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <xmqq5x13stxt.fsf@gitster.g>
+References: <xmqq5x13stxt.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqzeyeujde.fsf@gitster.g>
 
-[+cc Johannes Schindelin]
+> Many funny characters are not allowed between 'foo' and 'bar', but
+> are there characters other than dot that are not allowed at the
+> beginning or at the end (e.g., "refs/heads/foo." and "foo.lock")?
+>
+> IOW are we testing exhaustive now?
 
-On Sat, Aug 22, 2026 at 10:59:09AM -0700, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> 
-> > On 2026-08-21 at 14:23:20, Alexey Samsonov via GitGitGadget wrote:
-> >> This change is generated by Gemini Flash from Antigravity, but all the code
-> >> has been manually verified by me, and, where applicable, adjusted to match
-> >> the existing behavior as closely as possible.
-> >
-> > Unfortunately, I don't think that's allowed.  From SubmittingPatches[0]:
-> >
-> >     The Developer's Certificate of Origin requires contributors to certify
-> >     that they know the origin of their contributions to the project and
-> >     that they have the right to submit it under the project's license.
-> >     It's not yet clear that this can be legally satisfied when submitting
-> >     significant amount of content that has been generated by AI tools.
-> >
-> > I therefore haven't read this series to avoid being influenced by code
-> > we're not allowed to include.
-> >
-> > [0] https://git-scm.com/docs/SubmittingPatches#ai
-> 
-> Your stance, as I understand it, is that Alexey's DCO is not valid
-> because, acting as a copy editor of Antigravity/Gemini's work,
-> Alexey cannot possibly know where the code was copied from.  And we
-> cannot accept work that is not covered by a valid DCO.
-> 
-> I think that is a much more prudent attitude than being cavalier
-> about legal issues.  I used to think, "Hey, the person claims in the
-> DCO that the code is appropriately licensed, so if it turns out to
-> be a false claim later, that is his or her problem, not ours."
-> 
-> But that is not how things work.
-> 
-> If work submitted under a DCO later turns out to be based on
-> something we cannot legally use, the submitter may of course be in
-> trouble, but we would also need to bear the cost of ripping it out;
-> the later we discover the problem, the more substantial the effort
-> necessary to deal with the fallout will be.
+No -- dot is the only character with position-specific rules,
+and every other character in the forbidden set is rejected
+anywhere in a component.
 
-Sorry to interject here, but I seem to remember that dscho already has a
-few commits with an Assisted-by trailer that have made it into master.
-I´m not entirely sure what kind of assistance he received either, but as
-you suggest, it seems better to mention this here sooner rather than
-later.
+The file already exercises each of those rules on its own -- the
+leading/trailing-dot, ".lock", empty-component, single-level and
+--normalize cases are all present. So this isn't reaching for
+exhaustiveness; the coverage was already broad, and this just
+fills the untested gap -- of the "forbidden anywhere" characters,
+only "?", "\" and ".." were tested embedded, so I folded the rest
+into the loop.
 
-(I also mentioned this part here [1], with full respect to Johannes)
-
-> Stepping back a bit, though, is the situation really all that
-> different between a relatively new author who discloses their use of
-> AI and another author similarly unknown to us who claims it is all
-> their own work?  Either way, if the code turns out to be unusable,
-> we would still be on the hook for participating in the infringement
-> and would bear the cost of ripping it out.
-
-> What worries me a bit is that there may not be much difference
-> between "you said that you relayed AI output, so we won't talk to
-> you" and "we do not know you well enough to trust you, so we won't
-> talk to you".
-
-But I think that, from Linus's point of view, the chain of trust matters
-more than whether AI was used in the first place:
-
-| So AI giveth, and AI taketh away. But the basic issue shouldn't be AI
-| per se, it should be that notion of "trust". [2]
-
-Of course, I also understand that the Git community doesn't need to
-completely follow the rules from kernel community.
-
-Thanks.
-
-[1] https://lore.kernel.org/git/aorxVo_6_U1ceaKm@wyuan.org/
-[2] https://lore.kernel.org/all/CAHk-=wgbGarE7Ozw4VG6oUKDj9pk-8DRoDiX00bo1MwEMm9UWQ@mail.gmail.com/
+Thanks,
+Nikolaus
