@@ -1,87 +1,85 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4C13911CE
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 05:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5836549364D
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 05:40:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787549574; cv=none; b=bptU79cnTMSirOE4RTnjVvrSRVjPVVpr8YwD5yW2bCacgeUiAzoS0RQg09HmcmFmnKaMOCscqsh/h17sDCEUbRPkOAP8rawco55Un/0VOpDo2+IDTdbsY1AiaiaTmjWTJRfd5s1DZJ5BfguAUIadLwS8423tJFLUzrf82cmQyVY=
+	t=1787550031; cv=none; b=s3rEPEHyBwjFI4Of7h8ydXobHOYQr/MsPOKW4785SbsFIUFYh7HlXKcoAeofDAao7NoZiC+Z/5G4UpPg8MoWypd4zyAxkoF1p408MSj77kqtHc96RgT+xMPZp4xOkAaMWx3/JKICwjT3aiR4VFXMMq6RIMGvoEk8e1btM58acbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787549574; c=relaxed/simple;
-	bh=oV4n+xlD8snUiF8i138ZcvGc547ZpuUFuHvbXgUJtWE=;
+	s=arc-20240116; t=1787550031; c=relaxed/simple;
+	bh=MNspRV/VQWTKdzWvOMfGLwzoo5fbHNKu0OFbyYAygts=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NnMnhDVh8o2zl+cLbH0/p7oQ3G6GtLsMkL4Tvs1KoHPpF/qMP1RYVOoO4uFhEgqRb/W/oF6rOF9VSFQcbRr//D74S3DNaOGz9e39wH9a081JIJ76zgrS+B+caXQCnD6j5fDiWxFkiC+G7VmqNB5aQK0jYUQ/QaSWVjmd/HAMSLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lChcXCQV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OamooDpT; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=A88ruXal1qjM6sZDeTowwKMjdbf0JofzOGgJxzXpqHNAs+hvkF/iso1zjfiXFR2llcFGm4XmkClv+hZ5GKflpMP+h6xu6ZmkIVKnzCmTdPwWUMifo00rHTJtSyXuSRY5746L09GO1vwLlsV8XH4K06kLPXBTcuehkKbVQQ88G1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HijAcBJA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Myff6lvn; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lChcXCQV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OamooDpT"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 77F061D00065;
-	Mon, 24 Aug 2026 01:32:39 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 24 Aug 2026 01:32:39 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HijAcBJA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Myff6lvn"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 945DF7A00A2;
+	Mon, 24 Aug 2026 01:40:29 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 24 Aug 2026 01:40:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1787549559; x=1787635959; bh=vSYqB6yC2s
-	VJR+S3G5OyCDX/0bKo7jsaZSNxHhJVchg=; b=lChcXCQVk2otxB2K3gdWldBrhp
-	Og0DH10JLPBuqzp8tbOQOSLD2EKyclkBjxyaKMjLR7Yfm3OSiwYqoFHAHJDJsAY9
-	quRd/dveMi1mEVbZHA5rV5+MnwjYqY1Ej5wawB3WgjKiYP9V7VzAqeHF3FYs+Rv2
-	VQ4Psd50nvRhI4cBj/X0GExhkyq5EeLeunRmTpgYVDHSU+EqRqwZc6f57QVLpCkg
-	k8lSV1WW6PvdHqXhGEGZe74kHC1Wrr4HOLDSrQCgS1q1mBTRVL/uzNhkR+itsMnz
-	OzeTNir7HlueMOOHKk6nuDiD2vN7bh+LPIB4yPG1UhW0dRWokmJcBPS3Tfsg==
+	:subject:to:to; s=fm3; t=1787550029; x=1787636429; bh=iM0eeeQzxu
+	pFo1uWgPHmLBFeFdPCOHyeg2sAx7gfjeY=; b=HijAcBJAkLNi5MO5Qt1xYIpgya
+	CM2WIf6ZxT3t9lJXRVSTvlDaTYA1HchTFJWeW8LbnwsJ40kz0tHKzVKtY0legT70
+	e5kCxifeh7S3vaRdXnGcH4Ar9nm72UxU1Pp61BhYdIKpsm358EiTUHgL0CEcjbNG
+	go8w3HC1MYNShOSJjhZuJDbuy77UrgclzxXdGkRD4ZBNsA6NMDoo6dOrjsUP3NAO
+	7ckthlQcLCgUrqfizuA/vnmdVg2q1CKZiNb0q5VG/FkHqlJIYHohKUoAhyD+qlnR
+	AcU7NLT4aiAH7QkUOJLeV0hUz9fH0H/WWQ3s/PQEvNv0QAxqhgSqVVz9MUhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787549559; x=1787635959; bh=vSYqB6yC2sVJR+S3G5OyCDX/0bKo7jsaZSN
-	xHhJVchg=; b=OamooDpTLK8oWGj6QBm2TKznFzXqR0SWKlY6qKSjLlHAOhVggMW
-	D9Waad0O9WZkQJLSABaJRYkUNTpSfU2FmKMVq4v59e85+6RFR68gGwqx3nyd+eci
-	VlQA+qcDrjFGRyNxbAUkxQ6F3OsweK9RkDGynavWABKOxjqPtyeqdezJ1fLnU8RK
-	AptIJD8IMsI/KR6aSpv+8Bk7/mR5VUNHXtAg80n1U0EIvhZ3i30WiDYjknNrsH/m
-	AKIqSoTudamEUK44h0nsAenb4+W0487cA1Sn+McYI7z/+WJplu+cFw9twNiR3qCb
-	4Xs/+PL4WkUALUbjMmE134FnFuYw8Z7TX3A==
-X-ME-Sender: <xms:dteLarRndqhquG5tL03T_2rl-GijyG5jtP24rsva_gLTYjIPBvmCFA>
-    <xme:dteLauQJJ1P7X_DuQYY4IWGGf9Q70NOXcOPNjkADIyuhIBYLpC0yGTua-lTiieoBC
-    k5Ddi26V1UGI64nIUwBgoLdJL01syXp9kc1qucOgTB-oAuvkag2bQ>
-X-ME-Received: <xmr:dteLag7Lx4V1UCQr1z0QIHZef9Wii3ic7obNeRXAPa363lB0YCuY40FCgbHiBHyhpruSpBEyvm66wej5Hli9p9Gtc9VN3K9EYvQ-hqoj-g>
-X-ME-Proxy-Cause: dmFkZTGTSTpbjgvZUqptkr4/+bylzfrdkaQTX1KLLbxC6g4+qa7MV3fMW9YcuzJsTgkVM4
-    NX+2ujh0Ayb9FOdDtz1shukb0Ei4idd8zwVmbhs5L8JWlXUqNnhbYW7TJMI/v6DWjPc0NC
-    aG3zLDmA3Tv8xyMMBrYpBm8dTr/B3lTbDGazjWYJ3vNP+AgNyVl9o8YHoV1MsaSrYb0QYK
-    GsuVwDfPVQntUdlni/6I6GWn7LvkDV2Ny1FxHtvkG0/L+lKbIEjjCWavr/9wrpFcZnk8rN
-    cdx+C6dA7QTZ+Q6esKAmk37hw8eraNxstbpnK9+7BIwY4XNy246eaj/kEal3Dqnl8ph2kP
-    SDjQ0kS3VKBUK4fm0dg/o/i5QfKdK4kKbSQyy8DpSzG0tsV74cnpeLItHrwmSZgtV1n2Jo
-    jxqYS0XusGvdrTq7qtAPLrErUs5tczmURQ2aKZ/hBh4kBMSQQrKdlugFOVHuXHLAROBVFF
-    SdcaCIByH5YTVuyUD/Rbvh91wG2WCbhXXhKCJBB4Klor8BLbcO+KzFeXqwNoYZ70Yy6nQf
-    Uz6T4mfiRZHPZTPb+jvbPrOpST029fP7rQ2ZW3ZLqq/idebLsu+64J62qkhKof/js2TsoX
-    cSzjcOqEwziu6Xzuv57FGS8vxxAA3Of6MsqFWHqHigJ+Yp32PkERxAh2381Q
-X-ME-Proxy: <xmx:dteLaq1iZM9OK-A18CvZ80frkj4vu-ZHjk3OvcD1yBhBUhEbKjVMHQ>
-    <xmx:dteLarC5GtImRtI52EnkSIT3Xj74QD9EfVRz0sa7jharskbG8-4R0w>
-    <xmx:dteLalNx5j3n6_YFejISDtCm5Wptco2nIKgZAD1wNGq4bElDi3ZNDw>
-    <xmx:dteLagYtNiBOTLb40RPmGqEQybcQ1-8AQYQ37uuEb1u5zcuypHWuGA>
-    <xmx:d9eLaiEjHDubv9EqvEb4oEXqGKPGZbQvKQudXh_6H5HIZWsAet9jo4eQ>
+	1787550029; x=1787636429; bh=iM0eeeQzxupFo1uWgPHmLBFeFdPCOHyeg2s
+	Ax7gfjeY=; b=Myff6lvnruYvv02NX2egs/wVjUMZLOKkITFqRMV9XYpDBErRUaf
+	RXiB5R6N41LYyyRDOCbQbt/WwYqNEQjiqhII1ax0n+nN95I5GKpbz1QM3ePgk4fY
+	DLPmTrnEMuk3wVNS3lGZC1ff8JUECkYguh82K6bCzi6IbiWMxmZWSzyBIBE0B1gD
+	5kuZiNEYCgiO6RWTbjhsh/rIQvhX1qcpxOYDUE69kHmBibBBDkK94w6MMZWEjNXe
+	5iiFJahDTbn0cz+uL5vziU4yMdCk1chlyviFvUfoGV3TjJyA23iAN76WHMIjE+Ym
+	+cI/lS5MqOLRzWXWUxgkfp0oeBYWwkEhhbg==
+X-ME-Sender: <xms:TdmLas27fLsivCpsMabLcmaNa8rzLoNRCAzpNH2GxRFsVefcewWDaQ>
+    <xme:TdmLauHkAC8hbwrgMWlf2qChmfTKLF2BSGuhJvhwmM-SmFxOfpVfLFGIB3c-iArIl
+    1qkwl52ZiVJ8Pka2CuvpEjbhFbl1yDgd89gZu8uM5i_94ZPKcPjKKY>
+X-ME-Received: <xmr:TdmLap6nWVwKMdu0ZEJm-y9o9OqIoFOYrAsnnMSEvjFxrlDaTQJlKGAz9l_ndN8lOM5OE02N9OaLw4g3188m2b1bqcvdAwojyW46Zgs7RQ>
+X-ME-Proxy-Cause: dmFkZTFaaY8C7eJnTl0U5KJtfwv+JsAc57ME7moRWGdYMQ0YaSJDZ5iwt9qDvK7Go2Yp6j
+    M9zQZeSA+qExiu9ujMc8iscNjSQZfJM2JpT+9+UzW1G0PSVo7YWcfdvZ3vzKZ2HiF8fNOj
+    fn+kX7xZYLi6kJp7SH2hB56b10tU0usP1jmHHnQU18tqAQvGHuMBcmOk8UQ9mi/X277soZ
+    7Ii8JFRA6vYMWHsY5mOK8nS4sFW/EDrtINE7nZPbmMe4xQENY/EykN1mfk68ltDisKLe4E
+    xEipCVQr3LEK72uQWwuSG366LMYelYRhUgPjThypsUssQJye6DOKPdr/1kgfw+EggLinpD
+    MkrgIO6wsNCLZzr3u5Ruo4PoAn0rkcbQdDUG9t1JaLDWEeuhZVpInmbgRag9tQAJRCBk6v
+    I7tzdEC5w/zsrUZ5RyONqHEOmpqPEM4q/NhwrpSK/rGJ1Wl2tP6EKR7+fOp4w7XhNXZ8aP
+    wjLfKp+iK3fPFyBUDbE4YZyVb/NxDuO3+wLi+vOgGb7w8x2DtdJ8ZdowDSYXZ69R6Qph/z
+    JcZV7drwIoKGkT921CFO6FLCeIC3K51Ws6kRroaFQc95MZKOmNMSyUBbnIFdIwuTdFS8fO
+    98vU/9KKezRK7dnOUXzymLu+ZCTHc8Re9w57RryTIaSnmnVxueLUf5XzsGMQ
+X-ME-Proxy: <xmx:TdmLaktgjEEUWGlKLMKQwPwkR38L8BxuE1BJdCa_BINIVm9KGkuQDQ>
+    <xmx:TdmLaq6XrYOJyMVCdY1rwYzudEl6cCooqFSC1DwcJENRWqXnS8HulQ>
+    <xmx:TdmLavU2Lg6X-nSmIVHOQ4Chif-BsiRocdQ78aWXUH-EhcFYcC6cSg>
+    <xmx:TdmLas-X1DakQgMYX2a4IrU0tT_87fGqrfXRjKHXMg0Ido2Qyse_Jg>
+    <xmx:TdmLao9bTzlavJDGsNUZqdZlD1Z9LP9-qBe6xn1RIB_b63E5111s8Eot>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Aug 2026 01:32:37 -0400 (EDT)
+ 24 Aug 2026 01:40:28 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2bb5f4e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 24 Aug 2026 05:32:36 +0000 (UTC)
-Date: Mon, 24 Aug 2026 07:32:32 +0200
+	by mail (OpenSMTPD) with ESMTPSA id c5272e73 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 24 Aug 2026 05:40:26 +0000 (UTC)
+Date: Mon, 24 Aug 2026 07:40:22 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	kristofferhaugsbakk@fastmail.com,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] hook: introduce the report hook for
- git-receive-pack(1)
-Message-ID: <aovXcPHCiBPxlLXo@pks.im>
-References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
- <20260821-758-introduce-hook-v2-1-e90e2f7ac2cf@gmail.com>
- <aohXatWhxCAUQTcq@pks.im>
- <CAOLa=ZTkW14coLA4st-m6B6P-9pUr+Yzh7Ph6nb0ohXJSbTk4A@mail.gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] packfile: recover when a multi-pack-index names a
+ removed pack
+Message-ID: <aovZRjcIbAUqswFT@pks.im>
+References: <pull.2207.git.1787092446.gitgitgadget@gmail.com>
+ <5792c08f4ee0f9627ab1432d91299fe676e0a2f5.1787092446.git.gitgitgadget@gmail.com>
+ <20260824045529.GB142844@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,46 +88,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTkW14coLA4st-m6B6P-9pUr+Yzh7Ph6nb0ohXJSbTk4A@mail.gmail.com>
+In-Reply-To: <20260824045529.GB142844@coredump.intra.peff.net>
 
-On Fri, Aug 21, 2026 at 09:08:12AM -0700, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > On Fri, Aug 21, 2026 at 03:34:58PM +0200, Karthik Nayak wrote:
-[snip]
-> >> +repository, but before the pkt-line encoded status report is sent back
-> >> +to the client.
-> >> +
-> >> +The hook receives the complete pkt-line encoded status report on
-> >> +standard input. The report begins with an `unpack` line indicating
-> >> +whether the object transfer succeeded (`unpack ok` or
-> >> +`unpack <error>`), followed by one `ok <refname>` or
-> >> +`ng <refname> <reason>` line per ref that was pushed, and is
-> >> +terminated by a flush packet.
-> >> +
-> >> +The hook's standard output entirely replaces the report that is sent
-> >> +to the client. The hook must write a valid pkt-line encoded report in
-> >> +the same format it received. The hook's stdout is fully buffered by
-> >> +`receive-pack` before any data is sent to the client, so the hook's
-> >> +exit status is known before the client receives anything.
-> >> +
-> >> +There are two distinct ways the hook can affect the push outcome:
-> >> +
-> >> +* To reject individual ref updates while keeping `receive-pack` alive,
-> >> +  rewrite the corresponding `ok <refname>` lines to
-> >> +  `ng <refname> <reason>` lines in the output and exit with status 0.
-> >
-> > It's `ng <refname>[ <reason>]`, right? I think the reason itself is
-> > optional. We might also want to clarify whether there should be a
-> > trailing newline or not.
-> >
+On Mon, Aug 24, 2026 at 12:55:29AM -0400, Jeff King wrote:
+> On Tue, Aug 18, 2026 at 10:34:06PM +0000, Elijah Newren via GitGitGadget wrote:
 > 
-> You're right, since 'send-pack' will default to 'failed' if there is no
-> reason.
+> > Teach find_pack_entry() to recover.  After the normal multi-pack-index
+> > lookup and the regular pack fallback both miss, check whether the object
+> > is nonetheless present in a covered multi-pack-index (bsearch_midx()).
+> > If it is, its recorded owner must have become unavailable, so scan that
+> > index's packs directly for a surviving copy.  The bsearch gate keeps
+> > genuine misses (i.e. objects absent from the index) on the fast path, and
+> > because the recovery lives in find_pack_entry() itself it also fixes the
+> > OBJECT_INFO_QUICK callers that never reprepare.
 > 
-> We do say 'terminated by a flush packed'.
+> You don't even have to pay the bsearch() again. We'd already have looked
+> in the midx earlier in the function. We just need to distinguish three
+> cases:
+> 
+>   1. it was not in the midx (or there is no midx)
+> 
+>   2. it was in the midx but we could not load it (pack invalid, or
+>      object in the bad_objects list)
+> 
+>   3. it was in the midx and is available
+> 
+> In fill_midx_entry() we return a boolean that lumps cases 1+2 together,
+> versus case 3. It could return a tri-state that would let us distinguish
+> all three. And then your fallback would kick in only for case 2 (case 3
+> already returned with success, and case 1 means the midx does not even
+> mention the object).
+> 
+> This is all assuming the fallback is worth pursuing. I'm still puzzled
+> why this specific case would matter when we have the same (already
+> solved) problem of reading a regular .idx whose .pack has gone away.
 
-We only send the flush packet once donce with all refs though, right?
-I was wondering about each individual reference line: are they supposed
-to end with a newline or not?
+I've tried to clarify in a parallel message already, but the issue is
+that we skip over any packfiles that covered by a MIDX when doing the
+lookup. So any secondary packfiles that contain the object would be
+completely ignored, and that's why we don't find the object there.
+
+But this mail here suggests an alternative fix: instead of re-scanning
+all packfiles like the patch proposes, wouldn't the proper fix be to not
+ignore _all_ MIDX'd packs, but only the pack that _should_ have
+contained the object?
+
+Ultimately though, this would be equivalent to turning the function's
+return value into a tri-state as suggested by Peff here. The only case
+where the issue can occur is in case (2), and in that case we should not
+skip MIDX'd packs at all as the MIDX'd pack that should've contained the
+pack does not exist anyway.
 
 Patrick
