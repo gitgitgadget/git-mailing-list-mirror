@@ -1,117 +1,125 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B933822A9
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 18:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92320381AF9
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 18:35:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787595825; cv=none; b=PEgmbnlRGwoczc9nZGcZpccvRdOHV1GaMWjttOg96nc/vt4Zwr1FykG4/kX4aZSbjvRElCSigpYPae2jK++o1lACPhQk6lzUkCXd4q+fpDwEa/CeeyTIA/frhn+xHMBrdZdgkhBwGb+YMgVPR3M9DTuG/8judGaZIfPL5OHwZqs=
+	t=1787596512; cv=none; b=og/Uclswf95abDVLG40wr1xfRqaJP7vZmIcqco2YtKQDS2w/SubiYBbpNzhZ6GTuxSxRJfKxdATHTZQsxzMa59BOHe0NkJrSY1+7qroY3SKE8FJrXRu3XHNTo78FS0JAUDstdkvK7I3mVp/sWh7om5iYtkcQKH2vonKwLhDUorM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787595825; c=relaxed/simple;
-	bh=X8LZMgZnbwCQzEnbdbfs7pI61vPWb5GFDd7HLsswswQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kK+JfnOvzc4MSWOxoAig30KvgXm44vrpJCYeGtUJM6Xw8wL92Qd8l6AOcNrip8CRpuKDtT78o4E0YkdconyJkb155svhbrx+nbR5TiY4+QrFjhmHaKG5w2JrpfghVz82a62/N8oH5v7EOVkz/7EcqQnqfC8r4AOcNlvymDNV6us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AIOUTBvu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ih9N4ii+; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787596512; c=relaxed/simple;
+	bh=Dw1xosBxLNKXu2f6WELztg6TqFb4oC1bMmq83uqFz8g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VaAQNCQQjfnCoIUQs575l2Pj+UOwNA/8QT0jC+pDTPwq+wZ8kbDk7icyDc6xtfBLWQTgXzlEXV/Lw+ZMJNlLVG4g9t0K72yYPHayo2BWHr5QMojKk6qcJCB7jKYB8qjZlZKsuR92bj4jTKIxOIy6KVuD6TIMf27ZtXTYP4YLTAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eg1P/GRC; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AIOUTBvu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ih9N4ii+"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8863114000E3;
-	Mon, 24 Aug 2026 14:23:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 24 Aug 2026 14:23:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787595822; x=1787682222; bh=uBmr5UVkLU
-	606mv4TwUgtT2mvKlXQB//mfMa7tCK0cI=; b=AIOUTBvuHwbaIygn0JB8ZQ30Yl
-	VKUzCm9bo9p5LI+pgZckZ/cknFOqARrcCaOatzOfRh4JCseu1xjBfiHbko7WHvQA
-	ei3gaerbBqNaHOrZDe8db0dFQxeXtG1Ifry9m26VhYxbI4/A/xk0/KPojF9C2nUO
-	CuxUskgSj0gAzpiwjJvl4L301QDGzzAAJoeMbVaDE7mvpWcJ+1j1IL+aTtjQx6LB
-	/qndXVLingmGRJ9Um5GZnISN3RMQp8WbL0Ns82XoOuQzjKgCow9RXkFplsKO6YVd
-	RH2+SJW8GXEXhuxzywyv8WM76qiCaxiJdmAyY6t+5L2XCRY66/ZMz23jaXOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787595822; x=1787682222; bh=uBmr5UVkLU606mv4TwUgtT2mvKlXQB//mfM
-	a7tCK0cI=; b=Ih9N4ii+ynqx4FZxD/gjZI92013VzMgGTBd+L+cgcQ9XNFdirrT
-	PZK7qQARt2XsfKCeQ0Faj55Le+JGFLxiC+HeVKfimJu0nUF0pAI+qxcyCLYFlwo5
-	j79LxNckhpn3Km0e+mAkCec9ikEgzUKDGNnvSRyzhjEkyTXqIPI6NdPr7XdAbrUv
-	hrsAlcdRcjsrIx7edU2wDLOyuRQ/b/9giLO/a72PeFVnNeamfCkNwa1NvzgzuzYQ
-	Fwa5eFjwqd5MZB6ykXX3s0MZK+nd6XoF2cRDqK/1MKovWoCX30vsDB+29ZxPWtbh
-	r+5qGcRxFNuzPkgcJavO+Vcsrh8amc4uweQ==
-X-ME-Sender: <xms:LoyMaqux1Pq2NwuidbtjYsfmvGX1eg8jhavblcG9VYDk9byXCkwL8g>
-    <xme:LoyMamUuABNwObTKeMB7khDBekiGW0Z3S-Rrvdmp3BXtgVbkCEBX9NkYW7hPNQV3c
-    IO4eBmjs7Qror7XEcXRMtHjnZW-U0hTrGeIpDY-EW3_M2dKe9o2hA>
-X-ME-Received: <xmr:LoyMauER8T48pi5qkyEzQyj7CegJLR460FiYXg6PzLqQQzjGpGNLVVq4rrkeMJgLYTswy9JWAfSHIVh3jMnwPAwKWYIi5ZwE2g>
-X-ME-Proxy-Cause: dmFkZTGDqR2vT6oWyrxZtigzFywvMXf0TlhHebLxEkM0gLgJM7xmrmbHMomA0Y9uxEEYQ0
-    DfK5+1F8UV6GYeYDHeVCf/F043uh7z80sqCBe38ISzhJp1QBwpo7c1MV0sW8+vZUdSERWj
-    I3/27xEdVUw+C/E+/rUMGlsiahUpCt28oLM7l3mesTMICOUQ+p1MGo4kme34EetcPKmwZX
-    y5zZszzd/2MJrTbgTgNZ20n8prjf3j6FyQjyuxoLVvjwxbUzNvPzGv/kmDWFrEr8f6Y8s0
-    8Ibx34dXf8t/ict2BHAzKYTh3GypiRf99lkSuGXcU2DLiKaL9vFZAGhoOfjnBsMXGz/CUo
-    jFkzXg3OPaSMdMIHQf3U1u9dGaz+2QhW0hsX7PHuSQW8vdVSKQFpooWux3WMdkDLdEV4B3
-    fN5teLFeol6+71hp3s8Rg6RJQXn/OSnyi8KJ/N3e7/iRXkZpuM/X+NFy6ST+Vl+tUF09eY
-    EpshJMDQwxw/ExWTJdlQj5aACNoJ1fYDtwyO5QHRU9rIYlPW6gm/ALtNP6QjE6vkOUjajE
-    tK+l73oCVvJqKEjHhGWT919FtH6P9mQwjOs2fgAX2Oj8qk/zwyLLjOKWebGk1va6Iw7xgK
-    QIau5km3bNwfo+dB0RsZsCvJ9lX5nzsyIU0kr5K08L4eJgSMUlmL6yvMIHDg
-X-ME-Proxy: <xmx:LoyMag3twYEDWAaAwFRuJl74icq7zq79tiAe-5pomN0MLKxt9mmucg>
-    <xmx:LoyMaoNZnX2vwbERYIoTgU4FzNHMLUisdbuyQOSjKECThE0nEp_OIg>
-    <xmx:LoyMan4oK_0C7xoR5IZ24V-7mnNvsfFg7UMCcBoW6DEZGMleDump6w>
-    <xmx:LoyMaq25IoAVo_3CErbj2L--an4lBLRS0arg0Q9d0A6leuPZfafJ5Q>
-    <xmx:LoyMaoFBeTr9mwoPOCvLdwgsY5t7KqsHGnNTxOgiue_jkJZbOd6itQtQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Aug 2026 14:23:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Nikolaus Schuetz via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-Subject: Re: [PATCH v2] t1401: check symbolic-ref exit codes and --quiet
- silence
-In-Reply-To: <aoyBxOCdAq3qeAvW@pks.im> (Patrick Steinhardt's message of "Mon,
-	24 Aug 2026 19:39:16 +0200")
-References: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
-	<pull.2204.v2.git.1787264402361.gitgitgadget@gmail.com>
-	<aoyBxOCdAq3qeAvW@pks.im>
-Date: Mon, 24 Aug 2026 11:23:40 -0700
-Message-ID: <xmqqbjarqswj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eg1P/GRC"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-499a4d1d7f1so20644225e9.3
+        for <git@vger.kernel.org>; Mon, 24 Aug 2026 11:35:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787596510; x=1788201310; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=8rdUadd/J49dt/K4tcsv6hK3VRuRZ2ODypqV4oZBwOM=;
+        b=eg1P/GRCb+ayxFelJoXw7RbjbZz3tOYSmlzKFXiCEmlxGBzmp0JFbkIMn+kOu+Xi+4
+         5Iwd4lFjd8xRqFz8qV/4oAcBQ+kpIIw5cfOswEPBpCdA01n4tA032t2ZNSB7/+ykIzCx
+         YpwbLcWgapcYqNZIWDo6W9Et03dDY8uXsgo1EE298+g5X156iGxVka47zs7FtHQ29E5/
+         if9oRKgYOQM6P9PPlC2WCLlNzXqzZlBrfAZNW68k+ogzchDuD0PZh2BhgH+nfHKqI8tP
+         GQrj/DTZjJr26GpSuo/Sdrb5/ocUgHGfDwwocw5kMQ/vUGtW5JO3Zmkxpcq/FsYkJmCE
+         YpVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787596510; x=1788201310;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=8rdUadd/J49dt/K4tcsv6hK3VRuRZ2ODypqV4oZBwOM=;
+        b=T61m0iBGzm7v4MWCdgNSXqQ/cP12Jkyg/Ht9pCxeAVn14t7A5viScgl9v3ESaXftOF
+         rrkW2iJ3WoK3NkDVhbJYOB5EAmGv+I/BdjAOWmcKDSybtH2GJ/+Z8i9WErp9bl0fDp9R
+         w8Y9sJIMARB6EHSloyBORk8nlQIFj8oaLxe7AwKWedNZfslfPEqmspBSNWjFQVwX55ia
+         yYxSkAYhwt9/BjlKy0whPV+A3BDRzcAVhNmp7+SXdqovc3qLMXP937L7bnMU+TP6RL3x
+         iJ4SEkFlSQAYH1w8tcZKGSaii8eS2I3D+kPyHZZeojH5qD8pU3gka3Duio+SIDS5qSQu
+         uAmw==
+X-Forwarded-Encrypted: i=1; AHgh+RrGi2ISCYFcA79E+GlKDgKPKOpTY1gjnzjb9BiKa1m4pB7YXC6vGHm6qH+lEzZzFGBqksY=@vger.kernel.org
+X-Gm-Message-State: AFuF++nA/ZLLke3HLCoFcNmN0pkiIvdgJB+AVVbFLWKfl6rIPcjMSy/J
+	8aMxGsvafkrduXPhE4qBmBBW2r8aoOkPL7MqklAjWU5U85bY1il2JlGQ
+X-Gm-Gg: AR+sD10wkfxXFBJtqW55A81b7yEivU9k/mYSCfhKsxJDE11t3OXCCL/p2mO4LccwhbZ
+	Zxh/28Jjv2ueIBOgqadtKoLnzpZzZl4XdSz+jAC7Vq+vuPbMKENvsNOJpfAoDSzcQTXPhwLvoJ+
+	vJtUJppO3qKNSQ7qta3x2yOZaHme8xLemy/9/py79yoP4hVTue7sV5mFaalCHyu5bzZjE8NyQkI
+	jiQvMZAUAT0uMNg1j/oMuWFcQTZ2Dhw7WoV3dtVkhrDrECd8gnTxuxal1nDKoNAgGlRBa3YofoD
+	Zjb2LDVNPH60ffVLv5YQ5jq7YVWSKhFdXhjStgTXZvTdIUz1CZJfxTZiUGp19sZtwYnlqCt0R4L
+	GqywttKtdwZu4nEE8BGyqcL/IDFjC9v/Y7QTR9H/cmVYAsccfAsSrF7mNXNhE++fEZfxh1Jj8uG
+	P/XzPXwJkBlexaRqRu3Y3A5rUyXmono3UHAMmxg3JVqHd6rpqsE+9+Po9+4qDzKwRyBSwDdhSao
+	RS2IN2+i1FJllWNxUOM052Q9sXD1kNU4E+ygff/7+E=
+X-Received: by 2002:a05:600c:5486:b0:499:a277:e8c8 with SMTP id 5b1f17b1804b1-499b8464cb8mr330882955e9.13.1787596509623;
+        Mon, 24 Aug 2026 11:35:09 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499d65c326esm1642545e9.10.2026.08.24.11.35.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Aug 2026 11:35:08 -0700 (PDT)
+Message-ID: <9b5d2c16-3e95-4e3c-8cd9-9c25842bbb4e@gmail.com>
+Date: Mon, 24 Aug 2026 19:35:03 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] t1401: check symbolic-ref exit codes and --quiet
+ silence
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: Nikolaus Schuetz via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+References: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
+ <pull.2204.v2.git.1787264402361.gitgitgadget@gmail.com>
+ <aoyBxOCdAq3qeAvW@pks.im> <xmqqbjarqswj.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqbjarqswj.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 24/08/2026 19:23, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+>> I'm still not completely sold that this difference is intentional. As
+>> you mentioned elsewhere, in one code path we use `exit(1)` and in the
+>> other we use `die(...)` to print an error message, which returs 128. But
+>> that to me feels more like nobody noticed that those return different
+>> error codes rather than an intentional difference in design, so casting
+>> that behaviour into stone with new tests feels wrong to me.
+> 
+> I tend to agree.  The choice of 1 would have been more about "we
+> need to exit with non-zero status" than "we need to use something
+> different from what is used by die()".
 
-> I'm still not completely sold that this difference is intentional. As
-> you mentioned elsewhere, in one code path we use `exit(1)` and in the
-> other we use `die(...)` to print an error message, which returs 128. But
-> that to me feels more like nobody noticed that those return different
-> error codes rather than an intentional difference in design, so casting
-> that behaviour into stone with new tests feels wrong to me.
+I'd always assumed the difference was to allow scripts to distinguish 
+between an invalid option and the ref not existing, like "git rev-parse 
+--quiet --verify" and "git show-ref --quiet --verify".
 
-I tend to agree.  The choice of 1 would have been more about "we
-need to exit with non-zero status" than "we need to use something
-different from what is used by die()".
+Thanks
 
-> I'd suggest that we either:
->
->   - Continue not checking for the exact error code.
->
->   - Adapt the `exit(1)` to instead be `die(NULL)` so that we have the
->     same error code across both code paths and then verify that both
->     have the same error code.
+Phillip
 
-Both sounds very sensible.
+> 
+>> I'd suggest that we either:
+>>
+>>    - Continue not checking for the exact error code.
+>>
+>>    - Adapt the `exit(1)` to instead be `die(NULL)` so that we have the
+>>      same error code across both code paths and then verify that both
+>>      have the same error code.
+> 
+> Both sounds very sensible.
+> 
+> Especially the former to avoid overspecifying what does not matter
+> in the end.
+> 
+> Thanks.
+> 
 
-Especially the former to avoid overspecifying what does not matter
-in the end.
-
-Thanks.
