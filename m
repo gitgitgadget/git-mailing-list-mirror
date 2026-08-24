@@ -1,66 +1,102 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9720D36C0AC
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 22:52:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AA039022E
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 23:05:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787611926; cv=none; b=U7CTY8RZGxUUX154b4ipne5eqB+g9fGMDkCYeTjR8AdI4xnwuHVBLJRJSmkncrK7266qWtxLod7LBoPAkuyUBRDcrjtyi1uywfzJbVmMqOu7jLjvs1Xk7ZAMWH4fCMh6Ty3moMdtPfVccDdoEYDMPR2VTzUmPD7RwMI67bmjVHc=
+	t=1787612743; cv=none; b=Nppnkhp7/vPtFMF/e95xSUfXgBMaaSoKM5dHW+l/jestGELrUqVWrjZd+B8ATbi5tpk378nKJf8Q2son2lheHTANTibCPu4u9KJQN+dG7EfgJ8YZMV5OLhjbRq43cj4J5i6VQYxUOsSO1zt8+i9gtxx60bcoVDIaLGNWkeEw35g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787611926; c=relaxed/simple;
-	bh=uNTHI7qIubf+IgvwfGdkB8YyTrqKmw2qOqmtOsDB4BA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mm0lEv6VbY+RR5o+evt4gul0QtAjz21nIoURwbKi07Hu+zlGSl40lAboAFiREfzKaQEGL5GzFZvz8DDO+ywFLvj/BBpJJyGIMyJ1alAjsakuaz+PNdWBS2/crFSNNdfcOzdtVEvp4Nw3EjYMYoyseYhqkpWnkLalbpOf24wzHIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OUTJ8258; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1787612743; c=relaxed/simple;
+	bh=RMRIW0f7tsw9CR3dow4YXMPs/oSbpZ9w0FblLs+KWic=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=P5tfTnMvUGhpGLxBJvVLjTXOAlW4mPmM+jN7J3clivpf6U/hoQgM9YzdAeediVRc65PuZJPFGgUwGOXmANIrCfNkVIDpVky+ELlCN8DBBNMqcak8rJSC3VBYPgUysetWBbmqD1qVvxj6OTjKvzR69r/v9K1QMNG+ky85dPxQEPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YTr/sa9c; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OUTJ8258"
-Received: (qmail 119497 invoked by uid 106); 24 Aug 2026 22:52:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uNTHI7qIubf+IgvwfGdkB8YyTrqKmw2qOqmtOsDB4BA=; b=OUTJ82583BGwsUgjuSfmuRwykGRZcfEu9vaLrJiTXFWAEX0TO/K627PM0IEeTClAkXnLxbxgmqK7a9M9BODPqoCIwhAw3eUQ9U0mq1/KBqySRSRMygi8bhrAU5se48r22qNyZaCSNPnHjYJocOo2RiQgy9GdHc0Ph6TWmbgMuDyqpsCs4x+5qnOC3g6leoT5aBITYSA/2y4QWJepm66dIWQjojS1UZiNBPJmN0CMSsmWTapHAnsvy+8C6sOpVY3/EbArALm9wY4j1CWQhqOiESqyOyvqDwQd+BmljYxSwm3Yje1d8ofSZnq951hd1WOGvFGzRLvR+kzbUMUh9/wP7A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Aug 2026 22:52:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 151915 invoked by uid 111); 24 Aug 2026 22:52:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Aug 2026 18:52:05 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 24 Aug 2026 18:52:02 -0400
-From: Jeff King <peff@peff.net>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, jltobler@gmail.com
-Subject: Re: [PATCH v2 4/4] reftable/stack: avoid reloading the stack when
- already locked
-Message-ID: <20260824225202.GA190620@coredump.intra.peff.net>
-References: <20260824-740-optimize-reloading-the-reftable-stack-v2-0-9c9de2eb0af7@gmail.com>
- <20260824-740-optimize-reloading-the-reftable-stack-v2-4-9c9de2eb0af7@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YTr/sa9c"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-52d7a3defe8so27793221cf.0
+        for <git@vger.kernel.org>; Mon, 24 Aug 2026 16:05:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787612741; x=1788217541; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ZuNGXekE0mtyUHyOi2aKqxvktPGXvpKgPzPf00iCrd0=;
+        b=YTr/sa9cxobD9wBuSvQ+hrjNdnxwKCuwJp5jftMdg0AcBsWbsA7tSw2WTyP67lMjpR
+         vjfOXqAqpHfnjTIvPVOqt/ujjyVG3fD4Wur4cQ0Y0j55nfjWNj0RQjt/oX4rJea5wa2k
+         WDyhLxev/EiPrE453Fzq0zV1q8W2xZocDdtqU7kCll8xIFxQyGWsMvApYogQoNKaTpbk
+         Es89TqmQJy6yNJGv0fccfufixwU0UjTBYpB5qd21DWmb9l9ARPqV7MKYs/CxWUA5hlMO
+         gWfxS4/NiM5aJBO1fa0pKKlxvkWw+/yIZp0+S/dz8b7ot1tvu12npOunTD1Xub/pPNhv
+         P8vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787612741; x=1788217541;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZuNGXekE0mtyUHyOi2aKqxvktPGXvpKgPzPf00iCrd0=;
+        b=kevKe3L7SvzsYc6f2RFhlUrwVvAyUJtcaQEsFv5JSF/2Tp3QSUkCnZ6VqHxakyhH0i
+         NdIrbpsT1aDfrQOtwGXdiyl8YkpR4gWnv0daIWePCEhSYdCtKgEYvXuI03TxUX0w7ME7
+         Cjb2M6rIPCudMOi9RRXtFCweASHtPbOUF/ZuTAPDVIilPqiGDfrf6bWHOHkftpytVFuD
+         BpTedRnpo/JE22MGvMvQrZwt/+Sk20iCr5vN37dudbpvPU7ip44ZugmjJn+p6s7N3boy
+         amPrWaV3vAqoIYvwSifvXFqmA5AFOYVqaJkm0BR6BNPG7xk4TBDHX7w7uhqd/yBSBEhL
+         YxkQ==
+X-Forwarded-Encrypted: i=1; AHgh+RoK2tAoiyJvek6zdzlJD57FtY8UAWc2O26EG3VyQCVEPwbW8r2KA8MoNvBTagwM1O1SDkY=@vger.kernel.org
+X-Gm-Message-State: AFuF++l7wqOQR6evygr8sORB+mioDKOhCHinYtPBv7uC32HYDVxr7H/3
+	KYGv3k8Dp/3xAnFE7VupP65GdKLYv6oNOi/eTpusz2n/vrYqK9fKCepr
+X-Gm-Gg: AR+sD10bxWntHPCiPzFeLNJk01dMze03UBDRRU+GrinchqR34AvBBTL6nIAfMukLDlL
+	qUvxGsa0UBvgAkGOWGCXwGqNKAym3sgnttNbRQc9nFnE59s/1iVGPJ24I/G9aMEIcd2io7If+4K
+	tTXZE3HOn/XQN0SZVmPmq0LYXEQDLm6PIe36Nxmnq8klyDVhVt05ElXNqJ1AZkWnBGM32218DmR
+	h4w8S15Jh3CxVgqCDSCHjlz7NQ9H6iuCt08RqVuwVTQBAnfiUKV0Py992a/ll3XWTnVAuxYrFx7
+	H2ryvG6la5AGMbD9N6wjFPpOmV74Ouw+xDuAUG6WEnUOayRtSzxUELDdmuR5el/1+9okJFWpy13
+	NCkxEglJJj+miBkJyTSMtSogtz6jBde6085NM10dSKi/018sW9+2PrqL5sV7BixRWqyK5gv6Fmg
+	DCV1PSBhg4TjODaGPPMZ77pO/0uSDXPoC7G9O8p20cV1mTd08ULMRD7WJf+oFQm27wUmSnayXpS
+	W7NEdR0VPrIeqo3KUfN8KiI7tgCKjq5VWlxpSTmlqToAKhDucmO0Zn605YfWiVWHq6vDRwWDclr
+	kcjy/m3FCn0P/bIFAPU=
+X-Received: by 2002:a05:622a:4108:b0:528:32b1:c202 with SMTP id d75a77b69052e-52e2f04ee3fmr33731021cf.7.1787612740574;
+        Mon, 24 Aug 2026 16:05:40 -0700 (PDT)
+Received: from niko.lan (pool-74-109-218-190.pitbpa.fios.verizon.net. [74.109.218.190])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-52e09aecba0sm56497991cf.28.2026.08.24.16.05.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Aug 2026 16:05:38 -0700 (PDT)
+From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2] t1401: check symbolic-ref exit codes and --quiet silence
+Date: Mon, 24 Aug 2026 18:05:27 -0500
+Message-ID: <20260824230527.24163-1-nikolauspschuetz@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <xmqqbjarqswj.fsf@gitster.g>
+References: <pull.2204.v2.git.1787264402361.gitgitgadget@gmail.com> <aoyBxOCdAq3qeAvW@pks.im> <xmqqbjarqswj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260824-740-optimize-reloading-the-reftable-stack-v2-4-9c9de2eb0af7@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 24, 2026 at 11:31:02AM +0200, Karthik Nayak wrote:
+I would favor continuing to not test for the exact error code, and
+would rather not disturb anything scripts may already rely on.
 
-> Benchmarking with a fixed, non-symbolic target OID in the 'refs/tags/'
-> namespace (since it triggers a stack reload when checking if reflog
-> exists for the given tag name), shows a consistent 15-20% improvement
-> with these patches:
-> 
->   refcount   master     patch     speedup
->   --------   -------    -------   -------
->   2,000       18.5 ms    16.6 ms   1.11x
->   20,000     120.7 ms   102.8 ms   1.17x
->   50,000     296.5 ms   247.1 ms   1.20x
+In either case the git-symbolic-ref.adoc NOTES are out of sync with the
+actual behavior:
 
-Much nicer. :)
+  'git symbolic-ref' will exit with status 0 [...], with status 1 if the
+  requested name is not a symbolic ref, or 128 if another error occurs.
 
-I'm not very familiar with the reftable code, so you can take my review
-with a huge grain of salt. But I think the idea is sound, and I didn't
-see anything obviously wrong. Thanks for working on this.
+To describe the actual behavior:
 
--Peff
+  'git symbolic-ref' will exit with status 0 if the contents of the
+  symbolic ref were printed correctly, with status 1 if the requested
+  name is not a symbolic ref and --quiet was given, or with status 128
+  if it is not a symbolic ref and --quiet was not given, or another
+  error occurs.
+
+If that sounds OK I can update the adoc and call it good.
+
+Thanks,
+Nikolaus
