@@ -1,88 +1,86 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726A21990A7
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 01:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A91C17993
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 01:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787535177; cv=none; b=A4nOl5gGEIPwIVp+r8yaNMo3LqHnnfzG0NiK4gNaqYqzIeRqNY+y9qqcEiJ5B/PPVhnSwWzdVcCQk6zq8Bc1CL++3Wokeqr5uvZegKJoejdGEgky5DkEWn4ZfUnfzszimi1A44B42UzJPXzf6gQkuXzDFNgD/vxYdLwAdeGfXOM=
+	t=1787536194; cv=none; b=Q3fZDmW0yEBmPdT2Y4FFypaJWC0spkntWe2cQ/H8+N0IiwSbbzl/SFx1jY0RZKVwncDdUJL/vfcPq9L7Ug23/z0Z3Hyb9LnbdSumjCDyCvbr3mACu6/u5LguG3e7X70fy2NjCao6DHXRlv+eeNKsxLcYaXQ4Z+gSh4e/RnhgRCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787535177; c=relaxed/simple;
-	bh=zLb8RMQH8oqU+losqrz+youcqAsGidC2OESS2BosSaE=;
+	s=arc-20240116; t=1787536194; c=relaxed/simple;
+	bh=rzNEvEj2Ib3i5UJ8kmMMyJUl/oh7i7Vpv3+54SOK6KQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=llC16tTZyuUR9dx2EDpzvJtJ7wvishMMQ+i+xegcPzp7+y0HOghr8cfqr5X8IAiGS8ZuQaSVYQ9WY0a19TCPIO6540GrbFXBqVmhDsrYvnfrDjXWwzhgNXVneWg0gNR1Ft2upf5RQ+js8ixVOFtkGny9K7yofbdQFhm5tiKyMWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=USR4w5Um; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fbdoFxIl; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=nT3vqPsQXAvrgKDcxAx4/1bmcjtaNeJaD+MiU53btR8zOU9Fud9+2C14d+wJfGRuIbDdfTn6cpmz4jsMJXdOCzfvF0pBaVH27CxtJFS0vGWydLVWKf9qibo2SQNAjukRJJJYR7O37mgsVbsYplnPJzBSrPtLI+G5F3ONQlC9Rig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LpYGi3Vu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eRqr/NN2; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="USR4w5Um";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fbdoFxIl"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LpYGi3Vu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eRqr/NN2"
 Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ABA7314000F3;
-	Sun, 23 Aug 2026 21:32:54 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A66F1140011C;
+	Sun, 23 Aug 2026 21:49:51 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Sun, 23 Aug 2026 21:32:54 -0400
+  by phl-compute-09.internal (MEProxy); Sun, 23 Aug 2026 21:49:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787535174; x=1787621574; bh=stRN1AVjsk
-	Uyzt5g5jNhHuEC3KCWa+uojZl3Q0IGoco=; b=USR4w5Um89wXecxbQuMYf264Tu
-	hLFwA9y5d306bNrvZYm4XSYK2JLTR7MPJ+LRCFskxqVBAMkJ1fqmpBczQ2NqL3ev
-	oZdriHfQJ6wL9gbLgSNUH8NOmXfivpFIeJfwDq0a97hwdmmUbVdSIndUpt/xOfmT
-	3pBYNPDk3JwYp3p6vLfe0T1BeSV1aWopQMP+WEmYabTsy2HeQKSdIMX9QnCsJOb/
-	NLsi/Voa1QbI8RAwZR4wdv14tuw21auex0t8pUZ7qRx+pRsGMXO8niV4Jp8JfDaw
-	rYDKAoPzUWaV1sDWwA7J3UcWb6C93BCBGJ7x23FK2Cv/4gM+q3JVTDF95fyw==
+	:subject:to:to; s=fm2; t=1787536191; x=1787622591; bh=AJHKR1kKOk
+	fHNU+J9XCdZ2/kOrlVt80Q87RR4399tTM=; b=LpYGi3Vuux75Bee03SRI3ShwPo
+	TKgQXrbdXQI9nZG1yXNVSd+eHE4NxplppMpd5ejZvI47r3ZMlGYplttwDjX9Luq0
+	xYM93OT9YJWKKydrOViQ74o8D2rPlkcvnm3YYXq3TCzAYvdQ91Bo/n4WrjNsL3Dp
+	5wEnFqoZeuKNCy85nFBRQj3nPh6BxatYacxXI7Q08WvBuQq0/U6VMGXmd5jfr8+I
+	uU0zYDrYB3ZczMlK5v8ATaeZYSx55zmXMuh0rjRqVpahULYPf3vtrCly2zTpOKdp
+	sCssgCPdStev44HAOeZkYwxtLrb2Pbtw/YkrwVdYooXaEL0CmGtvR/ZXGftw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787535174; x=1787621574; bh=stRN1AVjskUyzt5g5jNhHuEC3KCWa+uojZl
-	3Q0IGoco=; b=fbdoFxIl03X6Lk0iUIFpb7IzShhqsvNJAlJSfifmaGsMkRBx81M
-	hUcGDI/AeiQEg3e1FwqTYvLALNar87orm/AtEQ/wfoewGoCne3JYaPKrxsFtvy9+
-	D9lGUxM0/HNYex4CrE9gHupD9zA06/PNrbCD0s3p3K2FD1a+JVKnibQ8iEZIJcZO
-	N7I5xldISg0w/Fm5HQSYUG1T55sozJx5BXELeMoKmUIRu8SlFJtZLKtESwdVFx1W
-	VrUEyhbn5LvNKibw/aMkt3o4nd8wG3p9WbptQJx3GSn/AY9qF00q+xS20r1J7C4X
-	iyg+PzW64MI2G97pwOSHPp13qu7FCTnxyTA==
-X-ME-Sender: <xms:RZ-LarHA95QIOUtI41skh_S5Y0-S0LmRH-qiOk4QZ7yO9tFKes8qXg>
-    <xme:RZ-Lau2wNYuK501Nm0mkocsYyFR1uat82d8wdLBjsSwZdVqNLZLs2r9Fa_sAGzU_O
-    z84HU0da3-u29ZzDFsF5r6-0d_PWnzuRbKygcx4qOVBI_b2BP7Ktg>
-X-ME-Received: <xmr:RZ-LarJNN7y_V-P0bJCpkU3ASv3_z3SuoXvW8OKDaVXHk620U0apzP8PCpLLOTpXSvJuqjZe_w8isaSigLXc2ipYsJaE_JR-7Q>
-X-ME-Proxy-Cause: dmFkZTFHZ9FlK+iT1R9yvOf5hjz+JHuaSSyXnVzur5oJHhxlftZbmv/8psu7iYZLSDGKkN
-    c19SZVbyqmEFOOwBh/bHQ3/OtgV1cLt5+OrT6LF4FANyrMFPFWi8vwwZbXjLpQFkByJgLi
-    8xayE5FIe5ecPQk+4+Zg4Lj476hvBMyDMyZeSY10p27AFibUvnA32R5CuV//yr1m6Wiwe7
-    hBdeuBsbMto+chk65u7lElr7B9iBN9jrCN8kd7MkxcLalOzMDsQad2QegW7fn7X9K291LF
-    lK5rIgX/IkTXBptPiE50J43NJGVHfCvUpW3++pLdQGsKL2bPrr6kwe1KQW0qBNP5DzWIBk
-    qxSqf+H7nFwmciNxkiA2+qSvXfQm/iMaeRJhiv/pojDnIb3e1CHc2QfsmBMtbIwUgDIQqk
-    +kLQLn6POtchTJwIcRUt0yhbH9aTg9B6h1cUNIcdn8MVmkIKcUwIRZcsL7CQXzllHj+oDe
-    xkbR7Yvoxn9vqR2JqJkUm9hWeBLN0EQe4m6/cNz/xliBBRSh5aNFlSe0KIlyz6HS0tG31/
-    QB5JqhKe3tjauce1TekICkppvMEnBUbnl+K+UCEUSKADjuSf8Ik266pvXZKd/C3qw53R5v
-    pAQvdzZ5jwdNRJkFtogXE4sODrMQ17cqOjl3mEmk2n0rY9nx8zhdNVSAN+Cw
-X-ME-Proxy: <xmx:RZ-Lar1MHN0ywn9Z7OJbdd57KXAjdAFbdY0Rz_1vYD9MtTME8TSIpw>
-    <xmx:RZ-LanldKLBSHD0Alkh-fxGPOFUvi6mEVPWcOO1VyDfOWsi8_RJZTA>
-    <xmx:RZ-Lauh1fPx0_01l0BafGwElC_a86uoB0wemIyagYLBlKKIVsX0gwg>
-    <xmx:RZ-LamTxQ_zUwh3hV7gbyBQo1j2loZ4a9YPfvEix2_1Bm1DY4RvPyA>
-    <xmx:Rp-LajMhE_K_UI8E9lNHn-hJXGzzzGkgP9UFRsj6LBp8Y7mP3_vWFxpK>
+	1787536191; x=1787622591; bh=AJHKR1kKOkfHNU+J9XCdZ2/kOrlVt80Q87R
+	R4399tTM=; b=eRqr/NN25nwEK7oLI+NX+3suscbvmNoDABJ7894q9CyZVbJrLxX
+	qe6HeFlUG+ZDyRSld1wUUSvEr5WwCJMI+wSWW3wWTOHfJ6jJlDkoVryQGpExCFQ8
+	HU7um/govc2p9DWB6iFg2hdtQy3pnt6gvOGN0bkB9HlA43yBuaYOFA8qpaL9EmAe
+	iEJr9y71sl3cAMm2P/ZMRwarmzOUHcKDxZqvQVCc/Z1qgmvo8rMBw9cmripTKv+L
+	osVcLg0PXDSJil0SJSofjWcg4YkvdwK8fUeORsQA2mok5Nxia2PUoFeXHq8Wvbho
+	pBzfI7vlBsO8kaBdEQZoTxnA7PLYe3Rm6JQ==
+X-ME-Sender: <xms:P6OLaugiOe2cmA7npwr_6OVOLzVC6_xJGl_y7ukWYPZyBhCZcIKSOA>
+    <xme:P6OLahRRXrO_zOjlKwGIL4GQdOGiDM4IKrD_gchbuy1pY9P2oNGg52YQb6ifJjDCu
+    13cZjpWAXiz0eX7Zqmy2PeyzZwwhIP5HhrCGJnIe5514bFhtrRwE_c>
+X-ME-Received: <xmr:P6OLaoVZtB1nVkkgMTjYz30V5KvaAZHAb46S9JXosYggvSistFthPDbw5Ed-tpvdagCzu6lFJDzpil7CYTYH-QFOKx88_GXLug>
+X-ME-Proxy-Cause: dmFkZTEE3u2Z70B5+bMX1FKouWpn22IiphMqB/WRT7YOWaWULa/Nym9Wd2XD9i6VubEKFf
+    3/+yDEnFjw+bPEqFLuD+DwtsfDInR2nl5w7REmWDMxjxJi6fGZ4ZSINbhaLA4iIdzTzPak
+    oi+mHvg3iY6Fgw1ciw1RM011L27WZiBgxUpZzqXvG6T1jmzwRg/NsT7toqdWq2HctTEpa4
+    0EPQ/AdTe+XxNY31aOwGDWNlITU3ov1IfNoDk3IeV7v0YmGRXxK5/oPmiUcPClH0J2OGQA
+    eqCzmmb4hY3MoUVLYKNa5p6JhSVz613HihRtXXVTT57bwlZctY5ELmTJMGDn3gzMSm9Ikk
+    ztEDPOe3p8TfU+aEYMRIXd3sJ48xWBbxvyNFHhqhC2aPR+Slbo3pwmRmR/zYYY4GFAYoNk
+    1I3nG3xspqI5u+cj0U7+21MC8ocIBa+wjJZo1oE/PfBUCEe4bCY98zQeK/o6faAUPANXRD
+    X/A/2gJ7hPZlZTR6Nyoa0Ipv5QOzQvQ3VM7MnQ+5lXvrd/rcSdMW2QS5g+SzT7teqFZXaQ
+    hBUjJuEb56n8oKsqeT9Bj9Bm/yTV10q1fuHQ7Jq3jY3xX8myKeDqWb/FLt3RTC9zpt+6XV
+    FOYMlYc/4clqYVxh+Y70Vr45dQbIGDZ3OGGUVzv27OGz6JMADb3t0auosxqg
+X-ME-Proxy: <xmx:P6OLatQJgxnv07nbatATrD-qwcAf7YrHPs5mCBEgBezL9L000_fQug>
+    <xmx:P6OLaql7xMaosTOhZyqpv5l_5mUHvGxpXay4cm4Zh-WNAePcqVQe_Q>
+    <xmx:P6OLar7c2wiaNTUqrptt2Uz8EdzeR-7TQeWLWWO32-xkniG0wSUHoA>
+    <xmx:P6OLaogM8gTNr963_KZWTw8z_CdDui92LAwLeTcwWjrndG_cpw4Hag>
+    <xmx:P6OLaqConF0UFJnV5omrN9YD7zgN_N298CBOw5xdabIvxh7PpBiTRubc>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 23 Aug 2026 21:32:53 -0400 (EDT)
+ 23 Aug 2026 21:49:50 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Chris Torek <chris.torek@gmail.com>
-Cc: Delilah Ashley Wu <delilahwu@linux.microsoft.com>,  git@vger.kernel.org,
-  Nils Fahldieck <nils@fahldieck.de>,  Patrick Steinhardt <ps@pks.im>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Delilah Ashley
- Wu <delilahwu@microsoft.com>,  Derrick Stolee <stolee@gmail.com>,  Ben
- Knoble <ben.knoble@gmail.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Jade Lovelace <lists@jade.fyi>,  Glen Choo
- <glencbz@gmail.com>
-Subject: Re: [PATCH v2 0/3] config: read both home and xdg files for --global
-In-Reply-To: <CAPx1GvcDNx4BUPQkVjbKxYLxTJ=StvLC43R0S_2=T0R8NKbZ7w@mail.gmail.com>
-	(Chris Torek's message of "Sun, 23 Aug 2026 05:36:28 -0700")
-References: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
-	<20260823-fix-config-list-global-home-and-xdg-v2-0-b29cc63f017b@microsoft.com>
-	<CAPx1GvcDNx4BUPQkVjbKxYLxTJ=StvLC43R0S_2=T0R8NKbZ7w@mail.gmail.com>
-Date: Sun, 23 Aug 2026 18:32:51 -0700
-Message-ID: <xmqqo6esti9o.fsf@gitster.g>
+To: Weijie Yuan <wy@wyuan.org>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Alexey Samsonov via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Alexey
+ Samsonov <vonosmas@gmail.com>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] treewide: migrate from legacy utime.h to utimensat
+In-Reply-To: <aosVkqwcsmAWrDr6@wyuan.org> (Weijie Yuan's message of "Sun, 23
+	Aug 2026 23:45:22 +0800")
+References: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
+	<aonIVn-ZQoMKWCAd@fruit.crustytoothpaste.net>
+	<xmqqzeyeujde.fsf@gitster.g> <aor07LvsXOy1p7vh@wyuan.org>
+	<xmqq5x10vowf.fsf@gitster.g> <aosVkqwcsmAWrDr6@wyuan.org>
+Date: Sun, 23 Aug 2026 18:49:49 -0700
+Message-ID: <xmqqfr04thhe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,42 +90,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Chris Torek <chris.torek@gmail.com> writes:
+Weijie Yuan <wy@wyuan.org> writes:
 
->> Git still reads the XDG config as part of its effective configuration,
->> as shown by listing the configuration without `--global`:
->>     $ git config list --show-scope --show-origin
->>     global  file:/Users/delilah/.config/git/config    xdg.config=true
->>     global  file:/Users/delilah/.gitconfig            home.config=true
->>
->> The documentation, quoted in [1] and [2], states that `--global` should
->> read from both files ...
+>> We know Johannes well enough to trust that his patches were sent
+>> with sufficient due diligence.  So...?
 >
-> I have a related question: which of the global file(s) does
+> <xmqqzeyeujde.fsf@gitster.g>:
+>> If work submitted under a DCO later turns out to be based on
+>> something we cannot legally use, the submitter may of course be in
+>> trouble, but we would also need to bear the cost of ripping it out;
+>> the later we discover the problem, the more substantial the effort
+>> necessary to deal with the fallout will be.
 >
->     git config --global --edit
->
-> edit? Which one(s) should it edit?
+> What I meant is that you said we should be wary of content that might
+> carry legal risks,...
 
-I _know_ that having git-config read per-user configuration from
-both places was a deliberate design choice to help those who choose
-to migrate away from ~/.gitconfig to the XDG layout, while making
-sure we do not disrupt those who choose not to migrate.
+I am not sure what your point is.  Is there any part in "we trust
+Dscho well enough to trust that he sent them with sufficient due
+diligence" that was hard for you to understand?
 
-For the write-out path of "git config --global set var val", we also
-chose accordingly, knowing that the majority of users back then had
-their per-user configuration in ~/.gitconfig and some, but not
-necessarily all, wanted to migrate to the XDG layout, while avoiding
-writing the same thing twice to different places.  Therefore, "git
-config --global --edit" should follow the choice in the same spirit
-as the existing write-out code path (and no, I do not think we want
-to open two files in users' editors).
-
-As to the primary focus of this topic, I think "git config --global"
-for the read path was not designed as carefully as the write-out
-code path or the general "git config" sequence when we introduced
-optional support for the XDG layout.  Any discrepancy between "git
-config" when reading per-user values (to be overridden further by
-per-repository settings) and what "git config --global" reads from
-per-user files is very likely not due to any deliberate design
-choice, but merely bugs caused by a slip of the mind.
