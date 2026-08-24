@@ -1,202 +1,125 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4359A3905EC
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 22:26:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787610371; cv=pass; b=Glsq8o2li6cgX9tDyWai4cEs50d62ubGLbIx2Z5tXHiqhqI9JiDpT8gr7yeIeKIORIW0+HC0xd/qYdq0Ub919DhBWnPuPzVZIB29nKHcqtEf0N7uEo15AMmwrYbF40fmAJNZ+K/dJdzkLV+sDP2LOcY+TFO8pNa3mFvYD33jkfk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787610371; c=relaxed/simple;
-	bh=MYOE3SvHrt5DNH3CfzRXX182ks0QUDgMkmX6jF7NvD8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Zy2qisF6TVwZsW+NIc224JnW1cIUs28eLjoqF1WHFCp+bp/f3B1RKo4xL+MYln0nBtUrbcx4hj/fLpgTM7J7Wy5oXclkv4FuFsl2PhnbJQZdHKtaghS+y5whdHtO4z2PISXihVvOTrj7xXDQZGO1WbMKhmn6+XFaq720SiTaJzM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JSSxJZeZ; arc=pass smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20ABF39479F
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 22:31:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787610675; cv=none; b=BSWILaDgSwUEmmK3+pddfG+FtM6mw0+eE2qDxf1OP+pJyWLHMQpfelpuApN+K+0HQ3R8d5Pf835+6O8DhNyuZQL7w3JvYE7xH+O8FnyUnWnt2UzMKQSKK9AfqWQIYIwwn35ee9QPbUKgg7E/LW09QVDy+WXjwYOSIH1GsQrXhoA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787610675; c=relaxed/simple;
+	bh=F1eL9DIubhBs31I00JYzfzDYDG3xWgkxJKoZqCytlYc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KYzZup5xq9qbiJ5tMnYnC2jR1X6vEB8UF7x0ChSlZzwtaL8ntYCuXMTJKywV6W888YJ5+p35e/oUny7E1ToBrMJ4DIP1EA9XHggx/no+0u2WardQzaAqVWIti15FAx31Dh7VwJ6E7S/zLGybM4/1nxvMNgyHwyt55Z558xTPiSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RtZyNJTr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i7LO/eOb; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JSSxJZeZ"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-9061a795d76so44594526d6.3
-        for <git@vger.kernel.org>; Mon, 24 Aug 2026 15:26:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787610369; cv=none;
-        d=google.com; s=arc-20260327;
-        b=IizD25bPJAIvuvfabThvBwdX/JSVitimLrT8twL3QeYs2vLIY/QDVh/ojq2S+WkfD4
-         xtmhvBK6gM1ydh1ECn1djX2d5/mheNGXzF4zaFD+tV6Uzx0Z063nQlSqJH0vp9DS8tjw
-         MW1I1JNJKu5CNwu7aLP8VhS0DUyiumDqJd6efXwHyLHlBoS2Id/VQSIjUNAl493WxfPp
-         Px8QQjHTCgosxP0DVtRBBFbSqJddvchuOTpeOjr1mXugUPZJsi7SjwzBhQTjX7ZAGiMH
-         r+riaHzdsXMfITrUCLZ9oCWMOOhkosZPvDA5GLJ+IDwNr3Hbp3tqyBy1SXj89cBMjEO/
-         x9vg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3IIeZyBoWmHzrUryk9C+ycyR9PnvuMUwFKfDHWRnZAE=;
-        fh=uQBtnae+wNDXI3ZPeiO1RcBfQ8OpOnVQDeXL/xisg2Y=;
-        b=p0qQ+/t2+ivT3WeqfkZFP+ZhHnmgAoZh2aVhfrEObVzJbL7PebmVGaqhss+gEDVotL
-         Fdy3iMbWVkYQNH5VReSlhzuMqU2nsB4FaK7focBZnn5FsC7sMPgt/avPoZmBJx3zZ9GA
-         7tQUNxJH7Q8PBN3NSH/YSI9g6EoODrV9UvQwZJKaRy3+a4J4Y6fnXKaRcjQIcmlNgt5q
-         ObuShceG+krWtVpkYKO3EXfYkKo05dBP1feO3QlMqXcb3NgrXRRr48Orja3pX/UesuVn
-         AwDHu2whBVeUKGF82mdwoqOeWY5qLL+Y9p3UlUHwh89vekBfcUwc/Ct/XIvHB9IhZW6L
-         QIiw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787610369; x=1788215169; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=3IIeZyBoWmHzrUryk9C+ycyR9PnvuMUwFKfDHWRnZAE=;
-        b=JSSxJZeZx6BlRyXP7IP2+kbnOiAZzflr7cUx2uCZB9ie+fHt01VyUHcQFnry9Bu75g
-         3lSnLyx0a6qxHXdaj3KWEqovuOu7SlFbD3xWDMsNTJl0EVqzufNab0D/vzv1tl4BxTXi
-         wYcFRE37cSIGfYGfYlCCgRBgedqvMCtH15nLMAGT3GyQC2PFANGGCOTNuIJE60TovxIW
-         QixugyNwbixpH+UG8hMq+Zc16iwLu/sxyxx89hZBD3bC9PS1JMNh+xdbaozJk38MEFHm
-         ZV4IQZ3QxxC6+vwZExS+1ZDGIRKFq93S9UwfTO4Mp4tL7vQILgBXG2rZLzYYETD9BGTt
-         w+VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787610369; x=1788215169;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3IIeZyBoWmHzrUryk9C+ycyR9PnvuMUwFKfDHWRnZAE=;
-        b=nHaY/ZsWeNJ83h10J4IDGpxnsmP11U50kBe1yUnFkvdtXcVSCf6gErGLORz0+k7ST9
-         G9QPm/dAWzduK1Tn5RwZX+zZaIUTm/af45+93tFCczDx0aYgqNltkaX/n+gW71C3CTPW
-         kqpu08LXt2B0MAfJCm+3r+5nzdJmpgMQ36gGeMk5PK7Bk5/bqcCn0nvCtEEs9tL11DUM
-         8SXlr4ynIhb2n+f4f1bjuBbXE0UqYoiXJmNw6VwGvf4RLlfESp84vvpBlkKJJ4Lr7UcL
-         175nhKYY7z4YnY2cllgpwPRuzqFcxJ25IwhKkeBvGMGiKcHm4Fag+SkugfM3HfwFzq6P
-         jwxQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpW/5yNR7eNUesp3Z8kDB3DWg18Jsu/11Ze4iByQkS7X8OK7aCQmkc/cFHiuXsrwpIpC98=@vger.kernel.org
-X-Gm-Message-State: AFuF++n+KO3OCHfOJNV7rwmlikDddtiALaOW990C1nH50tK8SWcfz+2X
-	rVbcY/Hu51gsho9gEWPq9juFtTb5b9XZ8GmUSFk6LBZrThFW4R3z2u+/4v4Z28245qQltGwGoN+
-	xotB63SuUtqT05xiiFcJhIJPht9MkvouPcAKA
-X-Gm-Gg: AR+sD10IOSkGhIfSgRKITB795hk92aQyi02IRD0QX/h2A6O/BSgny9AMDdgcfufag7j
-	79mnajziPQsdqZGRisYVFo2NeDGFWoR+yj0Zb8lvcfq17Rgsv3dPFpr44a1lMVVg7ojwOg4lg0U
-	fMsabWoRb/viI2fTD8MS/jxtdwAjLtaO2/DcvZHqsrnqRZTsxLr0BQQFvdNcEcoTmOEze/ckkNI
-	Mf1GY0R3J6VLoP7QexF28yH5hlXAl2PlSEswNsv8jbaDKqiJ86SYJKLFJwShiYJl1CU7CfogY3Y
-	ZdX5GZ2blzLToJ9iXt70/WxQ9tpZfkXwqw4HI817nQ9lRz2zmUnulS7CZi2jS0nbcFaO8Lh/OYL
-	ZFMU1/CYMu+kV3j8zXsxXtdpgegxBy9vtWQ==
-X-Received: by 2002:a05:6214:234c:b0:90a:927f:8a9b with SMTP id
- 6a1803df08f44-90cb77e8264mr23920966d6.7.1787610369022; Mon, 24 Aug 2026
- 15:26:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RtZyNJTr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i7LO/eOb"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2230214000F2;
+	Mon, 24 Aug 2026 18:31:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Mon, 24 Aug 2026 18:31:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787610672; x=1787697072; bh=zAD1c4cIP1
+	fAS8yEpNxxY6VPU3+kG4qOTinDraZP6YA=; b=RtZyNJTrsX+7fuzJc6TQWWAMtD
+	TDNTRA4yh1c/KUAeTQUZmUDLYzf6TQnKm38s0yqt6EOCc3gTQ8ffojxfpq58Ek4E
+	Ypxl/E7SAFUVPjFQn00UWFpFARRfSEoZ6qdyFEQ3BzrnqHdslOlhVpE1DYGD5z0X
+	tJluxbnBWJdwt79PQd03+fCGtDPQ626naOCiGcVbjSqBcAqt6eTJNK221iDdxjLF
+	gfK5tRJvlONqtNkqf70OMb+duwPB6ts0AUbNiMazcZzaGbZ0duwapW7NiJmBN2qt
+	b2crunFPsbvEcBQyAb6gMY1gRhLHZvak+FSye/w+JvXCoEOzwuvjhVKFNsDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787610672; x=1787697072; bh=zAD1c4cIP1fAS8yEpNxxY6VPU3+kG4qOTin
+	DraZP6YA=; b=i7LO/eObEfGibuUvb5711gj0Jyj57SAPkNcpVaDGTBNevCrXYd0
+	kI8FK38Yx5Ux5fLp+3Okx29age1GOG1sdFU7oziwam7WWcJYnAzt4D80Uzz3Ty3c
+	6I9VcVAsm4Ytrh9Mamef+G8DzW7Ug9pfS5EiagsyS2Zp7EBkibC+TORl0AeY54/t
+	Egk7Ny/r7ulQ4cGYX5Ui/DT+2L28upW+0Phu5GGEfTJ/CB2/1ngW/CJ2GuIM0k5G
+	8vRRrXsq2HARSUf635NPf9UHyWigEEJLJhX28sdSwKmoaDqsy+F4xEJIgPAlJ6r0
+	NLhkE6i+t77hGlGNjWSaNQ5yWRHoyK/0OfQ==
+X-ME-Sender: <xms:MMaManVH6vpWVwJ2wMWTs2nsiI-cZs9GNe2g089miNs_yC5km6d4Zg>
+    <xme:MMaMamlL_gq1exle2G00cXhvJ-mt2atkWAXXjDi9EqKO3A8hAglSmutemfOcoTRsg
+    _bBHdQ3iRl_ve_PARw0MoweM9qGR1KtQsF7030swvFWBLLHXwmcOA>
+X-ME-Received: <xmr:MMaMaoZ_vCbCegJVP87HJkZ3mLAwWl7RDIs_dp1e_O4ZeaXnWuH8BYsVDyvPqnaCj6jMXW_utMgAnXWUI-gwTR7RuUBgFo8jhA>
+X-ME-Proxy-Cause: dmFkZTEpp5yyj5rRDEqHDYkVbQpQ0VJmaaY9PzREmGp+pM8fNO8Vf4oY7JyKZzBhktIY3t
+    R0N2flUGEXly+FRgWl/3nxfWEM3A05OAlRR5iKVq0onF6hxTWM/PNfkzIzo6yTSP6f6VBz
+    dnk3M56Moj6Qen5AmA4tWwHuIS+jR24Xg5BDbhMCpiqPwUqD8XqcFZo5IwpYCeXLB1Pe05
+    uu81C6FbxbV61RYyjIb+UbKHuj39jBpmtbrbwZbg1ArwbZhYmBOFByZuPJvzBU949/EGKM
+    hMffi/z80pdVO06DaHs8wqO+Qy4inbec07kNcSD8S51OvC+uY5C+nhTelXsGliI1Utd0pQ
+    SLITTBGuJIwgHBGtML9XW8veUJIv8aJ47rNFRGI8V36QTM4RCyguKKXSdpu4jqRN1Bnu3Q
+    KbmqG1hzioinNVBcdCUNFasXxyz30IA2Pkrqnia+m/V+oKgvRntdw1wUJeaTHZHoJY35EC
+    qkKPrkFRkeFov7iCmUdMIxP+IpBPU0YIWavp4fF/9YNn8vZZhDrXP1r9RUghem9dgh/euc
+    5E26o0cV4C/HKtM4EzTJMrnSv2VBKyC9h/MPM+cTNqw47wRDvvKsruro/MQIiND2iqDex3
+    N0IRMhW7yofIFQ6jLKvAt/3mhFmP5NPPqbNSpeClw9m9ercHFtqoID1LI6DQ
+X-ME-Proxy: <xmx:MMaMahO-fHWcBxMTb3gzWsiDUeiE7B-3ZB0pbI__sl5rkStBERFZ4w>
+    <xmx:MMaMatY1p3mOm8_wOL1aHcMm0tmNJeZ9ilkUhMG5gsj97OKX_u2cog>
+    <xmx:MMaMav19borvUjicLgJuouDrVqoM_jESPyjqGKKzkDBFMyIMeHH2nw>
+    <xmx:MMaMajcGZEnUTFDjbeRJDYCmL5cN8lNyECtFSutc_doDlgrb4htP3g>
+    <xmx:MMaMavAu3qcLd8XyrZ7TFihcYAM-ste8b1kbB_yuVxI1PF1kFDEPdJ8p>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 24 Aug 2026 18:31:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH 3/3] format-patch: learn --[no-]range-diff-notes
+In-Reply-To: <format-patch_learn_--range-diff-notes.c5a@msgid.xyz>
+	(kristofferhaugsbakk@fastmail.com's message of "Mon, 24 Aug 2026
+	22:35:44 +0200")
+References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
+	<format-patch_learn_--range-diff-notes.c5a@msgid.xyz>
+Date: Mon, 24 Aug 2026 15:31:10 -0700
+Message-ID: <xmqqjypfp2vl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
- <pull.2197.v6.git.1787259838.gitgitgadget@gmail.com> <dcb84a69a6a65085d468a0a212cea0281605c5d0.1787259838.git.gitgitgadget@gmail.com>
- <xmqqa4qgruvj.fsf@gitster.g> <CAF5D8-vDzp9xhu96Tu0ScmWRHvVyi74MD0NhPMnQ9ayoy6h+wQ@mail.gmail.com>
- <xmqqzeyfxcdu.fsf@gitster.g> <CAF5D8-trxeMd8HYzy6kD4myf+bynkxOvxKDQrMdmqnvcdpdkEA@mail.gmail.com>
- <xmqqld9yvznl.fsf@gitster.g>
-In-Reply-To: <xmqqld9yvznl.fsf@gitster.g>
-From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Date: Tue, 25 Aug 2026 07:25:57 +0900
-X-Gm-Features: AcwNN1V-KRcLnD9C_O-kkoSy96A0Li5Mxd3xRhGye0_5SD2H75HLr0BKQEJqysw
-Message-ID: <CAF5D8-uDROnfs9gZXm1gwQdsOr-xP5Ai3OG-w7eOSHos3_pa8Q@mail.gmail.com>
-Subject: Re: [PATCH v6 3/3] worktree add: improve message for ambiguous remote
- branch name
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Harald Nordgren <haraldnordgren@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sun, Aug 23, 2026 at 2:22=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Yoichi Nakayama <yoichi.nakayama@gmail.com> writes:
->
-> > No. The exit codes of the command 'git worktree add ../topic-branch'
-> > are the same (=3D=3D 0). but the results are different.
-> >
-> > If there is a unique match found in dwim_branch(), it creates a local
-> > branch named topic-branch which tracks <remote>/topic-branch.
-> > In case of no match or multiple matches, it creates a local branch
-> > named topic-branch from HEAD.
-> >
-> > Since Git treats both cases as successful, either can be considered
-> > the intended behavior.
-> > (Although, if there are multiple matches, there is a fair chance the
-> > result might not be what was intended.)
-> >
-> > I am confident that it is appropriate to provide a hint when a command
-> > fails, but it is difficult to decide what to do when a command succeeds=
-.
->
-> I actually think it falls into the same class of bug you are fixing
-> in this topic, which was caused by not considering the possibility
-> that there can be any case other than 0-match and 1-match, and not
-> thinking through the ramifications of treating 2-match and 0-match
-> the same way.
->
-> It is of course OK to fix one bug and leave the other one
-> unaddressed, to be fixed in a later follow-up effort.
->
-> The rest of this message is only for those who will tackle the
-> "later follow-up effort" part after the dust settles once the
-> current topic lands (aka #leftoverbits).
->
-> In the beginning, before Thomas Gummerer started his topic in
-> November 2017 [*1*], 'git worktree add <path> [<branch>]' created a
-> new branch from the checked-out HEAD, without looking at any
-> remote.
->
->  - 'git worktree add <path> <branch>' before Thomas's effort errored
->    out if <branch> did not exist.  It was safe to add DWIM from
->    remote-tracking branches without requiring any option.
->
->  - 'git worktree add <path>' used to create a new branch whose name
->    is derived from basename(path) that points at the current HEAD,
->    without erroring out.  Enabling DWIM from remote-tracking
->    branches unconditionally would have meant a silent behavior
->    change.  So DWIM was added to this case to require the
->    '--guess-remote' option to enable [*2*].
->
-> Back then, unique_tracking_name() did not let the callers
-> distinguish between 0-match and multiple-match cases, so when you
-> had multiple matches, 'git worktree add <path> [<branch>]' triggered
-> the same code path as 0-matches.  When the DWIM feature was
-> designed, handling the multiple-match case correctly was on nobody's
-> radar.
->
-> Even when =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason updated unique_tracking_=
-name() in
-> 3c87aa946a (checkout: pass the "num_matches" up to callers,
-> 2018-06-05), in a topic that ends at 8d7b558bae (checkout &
-> worktree: introduce checkout.defaultRemote, 2018-06-05), to allow
-> callers to distinguish between 0-match and ambiguous multi-match
-> cases, this work unfortunately concentrated on improving "git
-> checkout", and callers of unique_tracking_name() in "git worktree"
-> were updated to pass NULL, i.e., teaching them to count how many
-> matches they got was postponed.
->
-> We know that the update to unique_tracking_name() in this work back
-> then was not complete on the "git worktree" side.  After all, that
-> is how this topic arose to fix one of the two code paths that call
-> the function so that we react differently between 0-match and
-> multiple-match cases.
->
-> Now that we are aware of the issue, I think the code should error
-> out, instead of creating the new branch out of HEAD, when there are
-> multiple remotes with the name of the branch.  In other words, the
-> existing code that behaves the same way in 0-match and 2-match cases
-> is buggy, and we should eventually fix it.
->
->
-> [Footnotes]
->
->  *1* https://lore.kernel.org/git/20171112134305.3949-1-t.gummerer@gmail.c=
-om/
->  *2* https://lore.kernel.org/git/20171126194356.16187-1-t.gummerer@gmail.=
-com/
+kristofferhaugsbakk@fastmail.com writes:
 
-Thank you for the analysis. I believe the behavior of treating multiple mat=
-ches
-as an error is appropriate.
+> diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
+> index 191f64b77d1..e0ba435dfcf 100644
+> --- a/Documentation/git-format-patch.adoc
+> +++ b/Documentation/git-format-patch.adoc
+> @@ -378,6 +378,23 @@ case is to show comparison with an older iteration of the same
+>  topic and the tool should find more correspondence between the two
+>  sets of patches.
+>  
+> +`--range-diff-notes[=<ref>]`::
+> +`--no-range-diff-notes`::
+> +	Used with `--range-diff`, tweak what notes to display in the
+> +	range diff. For example, you can use `--no-range-diff-notes` to
+> +	turn off all notes in the range diff. The default behavior is
+> +	to display the same notes in the range diff as on the patches
+> +	(see `--notes`).
+> ++
+> +You may want to turn off this notes override after it has been
+> +activated. Use this sequence to do that:
+> ++
+> +----
+> +--no-range-diff-notes --range-diff-notes
+> +----
+> ++
+> +Now the range diff is back to displaying the same notes as the patches.
+> +
 
-I feel that now is the time to implement the fix that had been postponed.
-I'll make another commit for it.
+Hmph, this is a bit too complex for me.  When I say
 
-Thanks,
---=20
-Yoichi NAKAYAMA
+    $ git format-patch --no-notes --range-diff-notes ...
+
+I would expect that individual patches would not get notes, but the
+range-diff will include them in the comparison.  But if
+--range-diff-notes just falls back to default (i.e., inherit what
+patches use), would I see the notes used in the range-diff?
+
