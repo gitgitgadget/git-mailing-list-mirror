@@ -1,123 +1,66 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630C839479F
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 22:40:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787611258; cv=pass; b=bs9CY/YFRkEDLl3kNoOzGEQ7FTqum/bmZHN5e6nDixIyECJychep+VqQ57aEAG6IcrxJ1/MAo/zJgibky+GXdNnTFLm6aPILAQ8YG7AgXJPeyxCexq6aFCJs3optPSa43CWM1/IsH2BcgnDhdwkkrnm6Ku14Pv1DB/8KRdja0ws=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787611258; c=relaxed/simple;
-	bh=TAq6fPyo+YsMeCY+zIg+7ZDq+vhBbDj1zJKhcJ5nzZs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=butakGgZxLXunDM2hsLjxOtvtdX+GKNuryf16Cb7PkJ7IdiAiVZCY6G8CQjq3+f0T1E3Hyoo7QDrCeahMcepHYDceoA0MKJvK34asADyozSQzY2rgksPznBhMN/uvL1MALyQXJ4AIOj8YWmTrkd79LE7FzJsh2e+TuE+c1FztFc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iTTHMeL0; arc=pass smtp.client-ip=209.85.167.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9720D36C0AC
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 22:52:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787611926; cv=none; b=U7CTY8RZGxUUX154b4ipne5eqB+g9fGMDkCYeTjR8AdI4xnwuHVBLJRJSmkncrK7266qWtxLod7LBoPAkuyUBRDcrjtyi1uywfzJbVmMqOu7jLjvs1Xk7ZAMWH4fCMh6Ty3moMdtPfVccDdoEYDMPR2VTzUmPD7RwMI67bmjVHc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787611926; c=relaxed/simple;
+	bh=uNTHI7qIubf+IgvwfGdkB8YyTrqKmw2qOqmtOsDB4BA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mm0lEv6VbY+RR5o+evt4gul0QtAjz21nIoURwbKi07Hu+zlGSl40lAboAFiREfzKaQEGL5GzFZvz8DDO+ywFLvj/BBpJJyGIMyJ1alAjsakuaz+PNdWBS2/crFSNNdfcOzdtVEvp4Nw3EjYMYoyseYhqkpWnkLalbpOf24wzHIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OUTJ8258; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iTTHMeL0"
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-4a456e44e01so2949561b6e.1
-        for <git@vger.kernel.org>; Mon, 24 Aug 2026 15:40:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787611256; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YtBRncf0dx00vFnffnS9kqTMB9sjCWpNejKViiU8vov9gwIwxt4ERU9AOFyl5tRfWK
-         VMamKpMvAjeUqT99DY85PDEdiNx45/J4LzpWYdo5us9GshWfB6/0sedYoevCD61DvqKq
-         QEwlvkE0zzPax83gRoYJ93b2DHutlDYfacxcc3ls4I+hYR1NRRRvArjdwXNB4wC1rQrL
-         t7j2enYKRe/IGTmg5XUm1NI/pb6moTHL5FHP6aSXPeeoTG0jDfxgzmrqXANYvvr9S0TX
-         Qw562/G0Hs7C9bpRQb8BB0ct66aaYN0IuQgXChF+kpIRYPWqaxJT2Y8f4bhP2OHrrdph
-         euBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=9CyH8Rahg4vQ+ogW0QrybiRnAOQ8YkxXAxI0Z+AlLhY=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=CfsrexdEmRxvywQiKKYiriu4l1dli3kI/EfvS2KmEAX03GmFSceJG4p+DpJCcL2jLE
-         cpBbOD6s0ZH2d/bNekDnWl3HVT/PfAHAxDOjhUpOZXN3POCdpSLLj9hJ5J2Lt8S+FEjP
-         V60g3MAgXVaDMR2SKRy1EztELKgrcVwhljuTzJEmrTVea7zbCqjYWCqoi790pdwE007Q
-         6p3c3SVb1lVwzwOkpFe2bjamHlFbJSbz50h0niLe5mET1s5AkbsKIp0cOmH/ygnm+KRp
-         QcNL3igC3d1NB6PxM8QCNikHY51dzPPQd6Np8V7ovIhhMEYKbZ6z/KZ7IsAG70LmNNoL
-         9GGg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787611256; x=1788216056; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=9CyH8Rahg4vQ+ogW0QrybiRnAOQ8YkxXAxI0Z+AlLhY=;
-        b=iTTHMeL0hPlbnDtfE2VGK9Uq3xbtYLHdTgipaE07Lk7IKNrGeA/c2cFqGes/ABcbgb
-         fFIqJZLrZbJayU1mEnZPC3zZjWt5H9ZRw65ybqQkBJ4AOD18cnsOKPFLByIAxIedCbqG
-         EGobLvTka7jT9nEv8V/h5wEgODMWqrE1kISsg7xpipBzie6YZyIolHJotNsWusOjuFEx
-         RI5rU5AjmhxnAKLgjwez/BUaUF7gY5VhvDGMgPUDJtL1LYI/V1/fD8UP6CJdyIYet2VA
-         mHg1gtC8UJrrjPQwFwnd4OFd91jhOXGO8WY93D/mAVoJeJbXIwNzK9o/KHyp7WKj+2vd
-         l/Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787611256; x=1788216056;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=9CyH8Rahg4vQ+ogW0QrybiRnAOQ8YkxXAxI0Z+AlLhY=;
-        b=anYotG9YyNc2/Hkb0fUbheUaJbPs9P7yqGdhEVlLVHKxMNPcEJtuo9beNmkxug6Q/6
-         PKnZsWAzX8gGeAF/hOHLI5p2rR/ZvWsrxMAMc0JYAPpE0Guu6V7QspMlifg4qgxXy8mD
-         SIF1unAIr12MZsLLt1zH6amDak5GkrYJD0tlXBWIC9v6MQQvwLi1RedLYbrIGjmlRQqg
-         Rur2sXEox2zmYPJFcKJIEVc3M7fzUeX9Du0KcTVV6MLj/ItKsRjs9vFlYfp/8Pm5AIVN
-         wPpCTtgSq/mspgvbKySABcucbyTZhJtUZz3/o7f7S4qHotQQp9xO9OyG0VUuGXp9i6U2
-         MWGg==
-X-Gm-Message-State: AFuF++m7wgfYY+4Uz2woznM3jVdR2k+lJH5QMIMkOkoNR/vxjIKXED3G
-	vDjs5CqmEYETRK2H9YqoHmeD/wUkhye1E0qcC/V4CXRRmEnWZ4BOwMVHNDPCcDu2wzY2cwIO6Gb
-	7/jIX4iR/C5T4nAnMLMN2VxYxhDjRFuE=
-X-Gm-Gg: AR+sD13GnIPPlnPv/nXbRTAc57taxJ0FkfpgOHEL1rJwGZEnopbSK0UrDf3hNTMbl9s
-	MTrnILIWj4v6veKbFtY4RkuEpbcMgujmI6DjVrvIfJaOUsur5+XUP6lLZWyNXOgaSdk3z8Sa/AH
-	lA1Tppaz4/3ByOAhSMFvArz2gyjXYRr/TYTLsUvIgWS7YuX4XGrcVIYK7ILYx2iiYXnUAk4lSCv
-	WDOf8Er4/gWXFag4Zq25rFa3wNrumEFGNygsEaJK2T5CfC9M+8SGSEzQPrREg6rzgUFF6VICQBC
-	DCufC35heX++F04WIUndLZmZiKcrlG/baig35tye75gxWcSyk0N4YG+XwLnwX5mwifwaHUlYZzx
-	m96WxyObnsVQmvKwIvYVxYL8wNigVDlAUrjoVMWFOiKYslyUGyanvAK3S+lOigN4=
-X-Received: by 2002:a05:6820:2d05:b0:6ae:42c7:ef83 with SMTP id
- 006d021491bc7-6b158fc84demr29425083eaf.0.1787611256105; Mon, 24 Aug 2026
- 15:40:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OUTJ8258"
+Received: (qmail 119497 invoked by uid 106); 24 Aug 2026 22:52:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uNTHI7qIubf+IgvwfGdkB8YyTrqKmw2qOqmtOsDB4BA=; b=OUTJ82583BGwsUgjuSfmuRwykGRZcfEu9vaLrJiTXFWAEX0TO/K627PM0IEeTClAkXnLxbxgmqK7a9M9BODPqoCIwhAw3eUQ9U0mq1/KBqySRSRMygi8bhrAU5se48r22qNyZaCSNPnHjYJocOo2RiQgy9GdHc0Ph6TWmbgMuDyqpsCs4x+5qnOC3g6leoT5aBITYSA/2y4QWJepm66dIWQjojS1UZiNBPJmN0CMSsmWTapHAnsvy+8C6sOpVY3/EbArALm9wY4j1CWQhqOiESqyOyvqDwQd+BmljYxSwm3Yje1d8ofSZnq951hd1WOGvFGzRLvR+kzbUMUh9/wP7A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Aug 2026 22:52:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 151915 invoked by uid 111); 24 Aug 2026 22:52:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Aug 2026 18:52:05 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 24 Aug 2026 18:52:02 -0400
+From: Jeff King <peff@peff.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, jltobler@gmail.com
+Subject: Re: [PATCH v2 4/4] reftable/stack: avoid reloading the stack when
+ already locked
+Message-ID: <20260824225202.GA190620@coredump.intra.peff.net>
+References: <20260824-740-optimize-reloading-the-reftable-stack-v2-0-9c9de2eb0af7@gmail.com>
+ <20260824-740-optimize-reloading-the-reftable-stack-v2-4-9c9de2eb0af7@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqtsojp4zf.fsf@gitster.g>
-In-Reply-To: <xmqqtsojp4zf.fsf@gitster.g>
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Mon, 24 Aug 2026 15:40:43 -0700
-X-Gm-Features: AcwNN1WyYPgEl777aoCS8fs70oEwwn6vRsozTn2TlZITQjqL1Bk_dJqBQ0OtmoY
-Message-ID: <CAC2QwmJkuF_awJnZgDCOKwpoHstVNygLdbECQAr6vXUSVEx+qQ@mail.gmail.com>
-Subject: Re: [PATCH] rerere: technical documentation typofix
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260824-740-optimize-reloading-the-reftable-stack-v2-4-9c9de2eb0af7@gmail.com>
 
-On Mon, Aug 24, 2026 at 2:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Add missing preposition "in" to a sentence.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/technical/rerere.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git c/Documentation/technical/rerere.adoc w/Documentation/technica=
-l/rerere.adoc
-> index 580f23360a..56ec7093f5 100644
-> --- c/Documentation/technical/rerere.adoc
-> +++ w/Documentation/technical/rerere.adoc
-> @@ -77,7 +77,7 @@ Sorting hunks
->  ~~~~~~~~~~~~~
->
->  As before, let's imagine that a common ancestor had a file with line A
-> -its early part, and line X in its late part.  And then four branches
-> +in its early part, and line X in its late part.  And then four branches
->  are forked that do these things:
->
->      - AB: changes A to B
->
+On Mon, Aug 24, 2026 at 11:31:02AM +0200, Karthik Nayak wrote:
 
-LGTM.
+> Benchmarking with a fixed, non-symbolic target OID in the 'refs/tags/'
+> namespace (since it triggers a stack reload when checking if reflog
+> exists for the given tag name), shows a consistent 15-20% improvement
+> with these patches:
+> 
+>   refcount   master     patch     speedup
+>   --------   -------    -------   -------
+>   2,000       18.5 ms    16.6 ms   1.11x
+>   20,000     120.7 ms   102.8 ms   1.17x
+>   50,000     296.5 ms   247.1 ms   1.20x
+
+Much nicer. :)
+
+I'm not very familiar with the reftable code, so you can take my review
+with a huge grain of salt. But I think the idea is sound, and I didn't
+see anything obviously wrong. Thanks for working on this.
+
+-Peff
