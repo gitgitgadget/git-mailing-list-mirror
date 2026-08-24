@@ -1,200 +1,209 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0D63F44C0
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 09:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E03374A1E
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 10:03:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787563885; cv=none; b=uxGpr38cWkGK4yv71an47cMnvrO70lAmOMViiPSPjKyTrQRdjKjv/yWdIDdKXi/dDwn4/KYbw/R9XGWQRHTBDpgpWkdcgvc7lreGYQMf4KdnzLrFOcenwI+oerftYkIj/cN/2MNNNKksrdU7ZBPABXvFbvJwIjllBuDhLz0SDwA=
+	t=1787565805; cv=none; b=GmArJ8DblSNZs5rF79rDH5KcWrnytEB1UNq2YkLDL3EUzuBxRrYQSaqlfwvSwqfvKWg1TDDqVvf0/m0yBrDIM3rC8DCDRZhz/aPkps3KCjXP55WVYkS+weCkxJpgHpufQ4EGM3cScbTjaDlqY9TrZmUdqw1WNAgiwGF0x5GzU3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787563885; c=relaxed/simple;
-	bh=1xJMFPniy0isx20K4GQaKZhajzhGweU//TV9Gj+2rSM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=myIhNH/2NTxg0NDEyKjRd/5W3GdJ62alKrsE8acqgSungX/R5+7xjVI7Zx4s9fvyClZuHnvcta3Gi5fGbX71OeN9wStdvXUySgPFHi1oovJAzQsKv8N7HRJfe4m/v5eVQO7ERXzbGE7/kCtsIZdEqynkXba1e3wXkjXnZepJamI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EGW9meYt; arc=none smtp.client-ip=209.85.218.53
+	s=arc-20240116; t=1787565805; c=relaxed/simple;
+	bh=Xb2s11Yiz46UK3UvnU9ZewfxJcV22vaFwCr0G42mi2Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZaCqwd5BgLs/AyzGx3MMmSzRO4g1aqiN2iOtADSzEtZmCTStBSJzGiUePK0zkj/EwqwYZstdDB5g1ufaPXnXfNJoNoO74S40S/HijuEjWxI7FMWBdhZ/SytcUlJwIAOP/OOvmedaa7Y1F2CHBECP1xHtrqLvEt4NjbIHvVZczw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d+6iOnls; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EGW9meYt"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c197eaaab00so536565566b.0
-        for <git@vger.kernel.org>; Mon, 24 Aug 2026 02:31:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d+6iOnls"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-495590dde14so27180545e9.0
+        for <git@vger.kernel.org>; Mon, 24 Aug 2026 03:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787563879; x=1788168679; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GegnWJKnYQKkUj2azpIw6ukOXaq2+VV1ZmghQ1+uHh0=;
-        b=EGW9meYtjo+MnzdWwy9PdrRqzkGzrHr/+UpSkT2shj5zi5Mr4kZPMZtMuNx26I/nh7
-         uc3DBQS/hC9f0+IKQG+Yp6ltlum5uVXpex9zC019T2N2rTVsgDfYa6iUC3dTjnhq+fbY
-         uZ9aNPxSgVv2a6q8vRr0kixsBFEE/ZSZ1ejodx0SnngwI0kAjOAXBtdpC2RdAmBiJj+Y
-         50CkXHmK/qXcj/eOdczgQvWr+GN3OCF83U/ynTXDdWhfEDFQpkxa3cJz+0ajvSlyRaFH
-         dQbtDfnDqFdWr80aMIcKCJfv5Nhkeq5uS29f8o9VLVc0gtvv4KXG0rl2e8gofYPArq8k
-         2FYw==
+        d=gmail.com; s=20251104; t=1787565802; x=1788170602; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=5lefmcLehnU2yzWp1tDVd3wBrfiY3FmEENV5EPWTeeQ=;
+        b=d+6iOnls+vYSmevDjCWZgBmY6A5ft8TdCdsj9rLMXC+LoZdDdB4hmr1S2BswmutuDp
+         4g0kcrMb8hW+97adNWkDRd3y3HEChu2BdWrm23SDM/Pr9l29RAgMVadt49EQ0skFmvcV
+         7y9aSNBqJC0+Bt4KmMrScuJgaeY31/uMK4pHrMQBas76lpDU+mIXx7XZxbwai9Qq1xxD
+         HqdQ2eq3tN0+nsYgKw5DsddRlLNREdTfHoam3l7tkFuNXhzAzg0zHJuUiXH3NHAiGwj/
+         jcjpPNOja8qR4t2z4sXSeC1Sdbs55HcpBgQPW+wVE/3jkW/IXHHzPfqf7nIWhqutx+ah
+         pGrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787563879; x=1788168679;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GegnWJKnYQKkUj2azpIw6ukOXaq2+VV1ZmghQ1+uHh0=;
-        b=SDagsFc0tgyRywzzqWaLXM+BqZFlBO5Xtxd1CdzaKpjOZ8pug7c9XqRcw258Ueuxw6
-         z10qPaz/Oz09TYJmSecRH3Z2+Vg8ZR2ipkxm61m1VJsEiC91bRoA/Cnpyx8CCo8K6cOw
-         4vAvxHjsgbHwCWCSqQ3KkP62ABnL5o0VvbE9msHAgawN1onf3x7LPYsx4KL9FnwLOGjB
-         gUZqj0nGqNDiU1iAsRfMLoqT1K0PcfsUGwuZ7kG6Rpb3uvBofOhpk6vioGd3voBgA6lI
-         2vj9kdZYYFcOk6l41iB/wVwHl6WIRV5fnWbxMk7Tk+sClVRxMBlat3FryHDgMIRyTrpC
-         Li6g==
-X-Gm-Message-State: AFuF++lBwBpHssNXbwIGWKkj4FuSg2FeEjjvbc2+19IkkCjnrPmfxf/Z
-	H8kJB2iPvmrqkiCFV7OvjWaN4tFhlPsDdG3tde2urKZjmUn3UgE2zdJB
-X-Gm-Gg: AR+sD10I/BZycLs0E4Hn765glNiCSk8AKjyDuDR2r48ZbEQRsckQDn9HMjuc8clEO5x
-	EF7x1KGlhx4ykX/oQMv9yqXW0tzu/ALuPeRW3q6FSzjm2p4EbzhDbRFXxarPRVZliiWCw/lA6aN
-	V6uDvZzyshXlyw7/CCsVGbjrQRvby9cB+rkFlR3zSboTbsPT74QHjWO0j6RXkKTg+HtGgC48Y66
-	ZaQ9mAbKjhvDWrm1fjJc2ntTpZuaEnDlVI0heYteRnhlu1Dnf/89OJz1rOq3t/49lVKYzYHanJF
-	fxCELr+hquFF7xWHvnnCTPFlXX/FCCq+fjo1bmsygdl9ppVqNAR29w+sYCv5vk1XpAafEGfpHLh
-	6vv1qG1ODr7qc8dTjl9/TYKspXR9B46L4Kln4qdyldgFGVO9w8NnXoFME/jGog69DfKWJ7/LdhE
-	R92YKdw1JCCoRKa6X3+44Q3YagQNnP7sT+I8JXPOJ6/PsHFoSele90OlFHJV/ZnM4DVZcQMtfAd
-	TgDjf9IYM8jLM7p/eWOtFWCWwbeMLKEtS4PWvQ=
-X-Received: by 2002:a17:907:c30c:b0:c20:9447:bd6d with SMTP id a640c23a62f3a-c246a683fc8mr3017422066b.11.1787563878379;
-        Mon, 24 Aug 2026 02:31:18 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:d6d5:360a:4ee9:3f53])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c24966f9cbcsm1303013566b.29.2026.08.24.02.31.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Aug 2026 02:31:17 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 24 Aug 2026 11:31:02 +0200
-Subject: [PATCH v2 4/4] reftable/stack: avoid reloading the stack when
- already locked
+        d=1e100.net; s=20251104; t=1787565802; x=1788170602;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5lefmcLehnU2yzWp1tDVd3wBrfiY3FmEENV5EPWTeeQ=;
+        b=iXK4A/OPdRo+aGurnUCN/QJjF8jI3Sl49+uMHOcVzTEI/SVHBPRORBn0lcURF2OfNf
+         MBSjj+NIKaV1z2tpf5Bpx9iH56qn2IGWaJVaF1Gpv/1DyNdK9SPezTZ2rtmm3+S4h0NZ
+         vXzM0BO+Ygr0MiS74URk3lY+ZSVRgR7DGSbWm2aoJWUcjmmeXOmlGC+Nk4jzr130Xh11
+         oFTQEyb1313CfRqm2HkTbuCuom5LUdz+GLqc4wTuEk9GxT33FKEwz+vg1DqnsIJikZUS
+         K5Vg7vui8/yJ86l4Q90G5tBzBQRsaqJRcr3INOYx/qVzlV+gMsk+cPdptWf+6M1CHVHt
+         LivA==
+X-Forwarded-Encrypted: i=1; AHgh+Rp+luH5ymSjtCafzP0rGXEGPCGWJmpdC32HCdrchzIXqYGi2IZKoYHRH3HneF7nLGergkg=@vger.kernel.org
+X-Gm-Message-State: AFuF++lrGCXdgrktdsCNOi52rS8r2bDgo218zVjn2M6clrHXQv9ICQKD
+	lGawHw2ntDphlx3UKqDBCCaRoxtB/BXszfw1ucO14FVGvb8h6ZLXY4OU
+X-Gm-Gg: AR+sD10J9C2cUGW98q9c0R/EhXL0dv8ZSRjHV5sk1QDw0nO4Lj4sJhCEbobua6S6xoq
+	tu1FAdFhC8us88Ust0qlbBJmyP99uKv//FClIPfbua79zBdOpNV5oejW0Q75X/YTYn9jX2wNo1c
+	C430tZk/zXmWXrSuQt8p59q7dRu9a0KSTQQ4RqZhXpR9nDk9u54ptxTEXgIioF+ivSgnj9bKUlY
+	A5AELnYt72neLGb98N3ybQB9RqVG03I6fnPfR+V2ZfEye7WhRNSywBD00DNTmZr+OZ8FrAQfb/l
+	ZMTOXNZDpPXjzRqEBH3bWf/d4ks0ZyZLgbTYVyVrUZCq5RTiyVsGpdUfbR/zJ4WFHEGdGalNBzp
+	9SpRhgRDlZ2WJKfivkVXsnGhCUoIX1tIdO92sOzWtIt8VVvKm3FtTLJqW8Qjs160Qgpbv/Hp1aS
+	rBWJhx8CkZdJwo3NFEpd6mux6MAuZbTyAYy6+XgXhmdw1oMJP30PPifO7AqXdFS14C78vQW2A5h
+	AScohLd7w0aOM1nGZ/HAOlJXW89x1WuaRISrtGqM2s=
+X-Received: by 2002:a05:600c:c494:b0:499:a5c8:c6f3 with SMTP id 5b1f17b1804b1-499b82f4d3bmr274721875e9.3.1787565801328;
+        Mon, 24 Aug 2026 03:03:21 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499c3566e1dsm77693315e9.7.2026.08.24.03.03.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Aug 2026 03:03:20 -0700 (PDT)
+Message-ID: <a786e6c0-1c17-4121-8623-b4541478a88f@gmail.com>
+Date: Mon, 24 Aug 2026 11:03:16 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] sequencer: release the ODB before spawning git commit
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.2198.git.1786388689444.gitgitgadget@gmail.com>
+ <pull.2198.v2.git.1786528498689.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <pull.2198.v2.git.1786528498689.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260824-740-optimize-reloading-the-reftable-stack-v2-4-9c9de2eb0af7@gmail.com>
-References: <20260824-740-optimize-reloading-the-reftable-stack-v2-0-9c9de2eb0af7@gmail.com>
-In-Reply-To: <20260824-740-optimize-reloading-the-reftable-stack-v2-0-9c9de2eb0af7@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, gitster@pobox.com, 
- jltobler@gmail.com, Jeff King <peff@peff.net>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3701; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=1xJMFPniy0isx20K4GQaKZhajzhGweU//TV9Gj+2rSM=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqMD2AqxDN0AZlR3LquFdWp6B/p9QEReSxfq
- 7eLQL2BdOuasIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqjA9gAAoJED7VnySO
- Rox/59oL+QE+z3+eki9z6ryRqdXxTOoX1zj19h+z+SQtX/avJLtXbxwag8cPiqdgS17UrWjy4b7
- V5O63H+Encvd97ObYWaeOsJjgti63cR9gE/jmBYyqMGHK72X5ffLKqyB2dNx/N3MUpezUOEKbDg
- 8BG6bMQo0QtTaFQXPTauvCnGSleFzzX3ku132znwCC7X8Dih5kE603w4D+S9yI8ecdoLZe7AUR6
- 73fUMY/U3gW4U7y4NwN3vVSI6/z0GPitr6Q5M1kR1DqJ/AvfvZqlOnSTRaDukxMigYs0Nds1eVE
- AxAA6qsSz7QiGQ4LOJv2jAa9ghb67KlxX08aKtKIIhxmO80Cmon4FNn9/vNqpwWtNkN+GO0BmqK
- 9U07c5/MQqXmSnDreXIJubx38fF3R8OE1AQr2s3O/XvvjvnwrH6ipoT3i5SH7PJfUpBqwpNZKao
- vTu3cWbrtswDGXVgTu09/u3WeQvKgqnBcR7S2NdZ//gxkOuoKws5rhegvGQzs587z3tpD8zLYf9
- lk=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-When making modifications to the reftable stack, the stack obtains a
-lock to the list file and removes the lock after the commit phase. Since
-most operations reload the stack to ensure we have the latest state, any
-branched operation during the locked phase could trigger a state reload.
+Hi Johannes
 
-To prevent data loss due to concurrent writes, state reload is necessary
-right after obtaining the lock. But any reloads after that are just a
-no-op. Now that the struct has access to the lock file status, simply
-skip reloading if the lock is present.
+On 12/08/2026 10:54, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> As of 4557f1add261 (rebase--helper: add a builtin helper for interactive
+> rebases, 2017-02-09), continuing an interactive rebase uses the builtin
+> sequencer, which spawns `git commit`.
+> 
+> The child may trigger auto-maintenance, which may need to replace files
+> for which the sequencer still holds resources. See
+> https://github.com/git-for-windows/git/issues/6315: on Windows, this
+> produces unlink retry prompts that cannot succeed while the sequencer
+> waits for the child.
+> 
+> Resources such as file handles or memory mappings must be released
+> before spawning a command that may run auto-maintenance, as established
+> by 28d04e1ec197 (run-command: offer to close the object store before
+> running, 2021-09-09): release the ODB file handles and memory mappings,
+> so that auto-gc can repack (potentially deleting existing packfiles in
+> the process); If the sequencer needs to access the ODB afterwards, it
+> will gracefully (re-)open the ODB.
+> 
+> Release the sequencer's ODB before spawning `git commit`. The regression
+> test uses the legacy-delete trick introduced by 69ed0e35a754 (mingw:
+> optionally use legacy (non-POSIX) delete semantics, 2026-05-07) to
+> trigger the failure on modern Windows.
 
-Benchmarking with a fixed, non-symbolic target OID in the 'refs/tags/'
-namespace (since it triggers a stack reload when checking if reflog
-exists for the given tag name), shows a consistent 15-20% improvement
-with these patches:
+This looks fine as an immediate fix for the bug but I wonder if we 
+should pass "-c gc.auto=false" when we fork "git commit" from the 
+sequencer. We call run_auto_maintenance() at the end of the rebase and 
+its not clear to me that repacking during the rebase is helpful. Another 
+thought I had was whether we should automatically close the object 
+database when forking another git command. I'm not sure how easy that is 
+to implement but it would prevent future regressions and I assuming 
+re-opening the object store is cheap compared to forking another git 
+command.
 
-  refcount   master     patch     speedup
-  --------   -------    -------   -------
-  2,000       18.5 ms    16.6 ms   1.11x
-  20,000     120.7 ms   102.8 ms   1.17x
-  50,000     296.5 ms   247.1 ms   1.20x
+Thanks
 
-We can also see the improvements in the number of syscall counts. On
-master, the number of calls to `newfstatat()` grows linearly with the
-number of refs created. With this patch, the number is now a constant:
+Phillip
 
-  refcount   master   patch
-  --------   ------   ------
-  1,000      1,059       55
-  5,000      5,059       55
-  10,000     10,059      55
-  20,000     20,059      55
 
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- reftable/stack.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
-
-diff --git a/reftable/stack.c b/reftable/stack.c
-index c3d4deff29..47a60db079 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -553,14 +553,21 @@ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
- 
- /*
-  * Check whether the given stack is up-to-date with what we have in memory.
-+ * If skip_if_locked is set skip stack reloading if the stack is currently
-+ * locked. Stack reloading must _not_ be skipped right after obtaining the
-+ * lock, to check for concurrent updates which may have happened.
-+ *
-  * Returns 0 if so, 1 if the stack is out-of-date or a negative error code
-  * otherwise.
-  */
--static int stack_uptodate(struct reftable_stack *st)
-+static int stack_uptodate(struct reftable_stack *st, int skip_if_locked)
- {
- 	char **names = NULL;
- 	int err;
- 
-+	if (skip_if_locked && st->list_lock.fd != -1)
-+		return 0;
-+
- 	/*
- 	 * When we have cached stat information available then we use it to
- 	 * verify whether the file has been rewritten.
-@@ -623,7 +630,7 @@ static int stack_uptodate(struct reftable_stack *st)
- 
- int reftable_stack_reload(struct reftable_stack *st)
- {
--	int err = stack_uptodate(st);
-+	int err = stack_uptodate(st, 1);
- 	if (err > 0)
- 		return reftable_stack_reload_maybe_reuse(st, 1);
- 	return err;
-@@ -693,7 +700,7 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
- 		}
- 	}
- 
--	err = stack_uptodate(st);
-+	err = stack_uptodate(st, 0);
- 	if (err < 0)
- 		goto done;
- 	if (err > 0) {
-@@ -1200,7 +1207,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 	 * we could check that relevant tables still exist. But for now it's
- 	 * good enough to just abort.
- 	 */
--	err = stack_uptodate(st);
-+	err = stack_uptodate(st, 0);
- 	if (err < 0)
- 		goto done;
- 	if (err > 0) {
-@@ -1319,7 +1326,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 	 * tables with our compacted version. If they don't, then we need to
- 	 * abort.
- 	 */
--	err = stack_uptodate(st);
-+	err = stack_uptodate(st, 0);
- 	if (err < 0)
- 		goto done;
- 	if (err > 0) {
-
--- 
-2.55.GIT
+> Assisted-by: GPT-5.6 Sol
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>      sequencer: release the ODB before spawning git commit
+>      
+>      This fixes https://github.com/git-for-windows/git/issues/6315
+>      
+>      Changes since v1:
+>      
+>       * Clarify in the commit message what the strategy introduced in
+>         28d04e1ec197 (run-command: offer to close the object store before
+>         running, 2021-09-09) is all about.
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2198%2Fgit-for-windows%2Frebase-release-odb-before-commit-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2198/git-for-windows/rebase-release-odb-before-commit-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2198
+> 
+> Range-diff vs v1:
+> 
+>   1:  904d65e8cb ! 1:  039fd29039 sequencer: release the ODB before spawning git commit
+>       @@ Commit message
+>            Resources such as file handles or memory mappings must be released
+>            before spawning a command that may run auto-maintenance, as established
+>            by 28d04e1ec197 (run-command: offer to close the object store before
+>       -    running, 2021-09-09).
+>       +    running, 2021-09-09): release the ODB file handles and memory mappings,
+>       +    so that auto-gc can repack (potentially deleting existing packfiles in
+>       +    the process); If the sequencer needs to access the ODB afterwards, it
+>       +    will gracefully (re-)open the ODB.
+>        
+>            Release the sequencer's ODB before spawning `git commit`. The regression
+>            test uses the legacy-delete trick introduced by 69ed0e35a754 (mingw:
+> 
+> 
+>   sequencer.c                   |  1 +
+>   t/t3404-rebase-interactive.sh | 18 ++++++++++++++++++
+>   2 files changed, 19 insertions(+)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 57855b0066..83952d96e3 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1127,6 +1127,7 @@ static int run_git_commit(const char *defmsg,
+>   	struct child_process cmd = CHILD_PROCESS_INIT;
+>   
+>   	cmd.git_cmd = 1;
+> +	cmd.odb_to_close = the_repository->objects;
+>   
+>   	if (is_rebase_i(opts) &&
+>   	    ((opts->committer_date_is_author_date && !opts->ignore_date) ||
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 58b3bb0c27..8f81c80fd4 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -65,6 +65,24 @@ test_expect_success 'setup' '
+>   	test_commit P fileP
+>   '
+>   
+> +test_expect_success MINGW 'rebase releases object database before committing' '
+> +	test_when_finished "rm -f .git/hooks/post-commit repacked packs" &&
+> +	git switch -C repack-rewrite primary &&
+> +	git repack -ad &&
+> +	write_script .git/hooks/post-commit <<-\EOF &&
+> +	git repack -ad &&
+> +	>repacked
+> +	EOF
+> +	(
+> +		set_fake_editor &&
+> +		FAKE_LINES="reword 1" GIT_TEST_LEGACY_DELETE=1 \
+> +			git -c core.commitGraph=false rebase -i HEAD^
+> +	) &&
+> +	test_path_is_file repacked &&
+> +	ls .git/objects/pack/*.pack >packs &&
+> +	test_line_count = 1 packs
+> +'
+> +
+>   # "exec" commands are run with the user shell by default, but this may
+>   # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
+>   # to create a file. Unsetting SHELL avoids such non-portable behavior
+> 
+> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
 
