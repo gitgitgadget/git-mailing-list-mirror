@@ -1,117 +1,119 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA47D43DA26
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 14:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392C13630A5
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 14:45:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787582638; cv=none; b=S+AQKh7L9mAE2i7XJwIrT7C6ytzf8eSLWbhG7ROoJP+CApAFUx5L2MRHOu9WgOs6fyx4DhaBtkuDJ60+ZFXWu+1jfmH7BYQPtEr08IZdDaHdDDUYePfXYkJcQYyv/3a/DYuee5xLWTMOpyaFl8Hb6XWdkhHCVFwuWy4E7ReUq98=
+	t=1787582741; cv=none; b=tesdD3iRYQU8GYyieUBtApu4jNN+oGXxbtC76vm5Tsfp8wFu1CdBtjWiA+Oe+r8aibrB2gSB3vrng3TxIFxxbtnW6Cjr/G0KzNGrvoXuxaSx0CfwYIuO+3CpG1+dQcObLnAYlONG9Bm9FvSo/Fkv1XFg9wFmX2D03qEfZjVCHjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787582638; c=relaxed/simple;
-	bh=3ta2O2gXXhrD4u2TXNdnLP4Mqzdpl4Hi1O9VcI120ro=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DtQpkwFMimEtUw/gUvAT8zGb3Y63fXeF5dIdtuvBcV+UlWeATWdPelz5PLoMPqyAM3o15dchklVnbiUy64xuJHBgnSuoLJxQzV7RyyszuvATVAHi3DVNKiFPf4/TSaiqxgUV3Baz75wMsLNcRxFHsSLBFFAiae8bnH7y1MuM1r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kj55Mzca; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z8sCFQ+3; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787582741; c=relaxed/simple;
+	bh=udd9bs9jcSqW7r5amWlAxHwPryJaHZkj754UbRawhfM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oV6Zq+qZAYQKggA4Wjq2IAC4da5CZ3Ab9ziVEc4UzwBJBs5y9iV33s0OFcnPS3ji7mGKuQqo68588NqKQIZgFFHAcPrN1dJY2Y7imSHfxbbhD5YEZF5lL/ZzRbJJYBqyjiBSwDwvpU+lHx1daI5eRIm85kN7mKsyAUxte6k/G1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CyKW4xDe; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kj55Mzca";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z8sCFQ+3"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9DF96EC00E0;
-	Mon, 24 Aug 2026 10:43:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 24 Aug 2026 10:43:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787582628; x=1787669028; bh=R1bu17ZjB+
-	9LV+Njm7AGAxezKvCfsotFqGbiPy54S0U=; b=kj55MzcaLmcjGr/XX7eVu+m3Cs
-	U5OfgM46gMmu6UB1+sFAxnGUm7We8mVjvh/zSGMNicEObkz1MpFOCOP3DGkbYcPG
-	CY3M09O3uN/THSexhTZ+Z/4smMELDhvlaZOU7HGm8oQzMVE88RCtHfvjENcNubCO
-	BuKSXANCn3dRsqggy2u0A0eTQflHiL72pkxxUSgrEPzE/v/MZ9fq0iRl7G4BiCMd
-	t958M5muUcZFlONBkv83U3HYAAmZcvH2iIDi5s7gtPxj3OuB08WfN1ip43i3ICk8
-	qmaU0d7kiy/b9T5g1LBoooCtktWwFcxw9ylbQAstZmgT94w+qATEOug/GcnQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787582628; x=1787669028; bh=R1bu17ZjB+9LV+Njm7AGAxezKvCfsotFqGb
-	iPy54S0U=; b=Z8sCFQ+3g9R7kvDu8Iw1BipLNH8sZSP5Y4+1LtCHVM7aEIzgR4H
-	YKdttSr6qcDO7jwlf0N8ZzXod4t6HMiQT0poarTu0/FyiynXcpyAHl3PRq8BIgyh
-	vQq+MsSf9yaIj6S9ggfHepVNf862J9xKFdQrjFN/HNp6wFkGPcJS7yWKj4ktseNw
-	FpPHcr7INOSd1gKb09YtVS0GcMPzWLvpMHoHC3ehKJrwD4hkRtRSD5XrJV0yY2bQ
-	0WnZIeiVZK9NKoqQ2VN+Sjnkq/NRd8MhB/uheyP2o0g1eqXUlA9XezUUPOFDW+QE
-	Jd9mpl7hkbTCToX+1Ul9OI12g0MKRFgWOsA==
-X-ME-Sender: <xms:pFiMamCTtRJBS-AaECjbX-zT5VkwVBZrKjEZPjXRi1rttEpBQrP4lw>
-    <xme:pFiManbmZFE7L1ZHIpPP9jGmS-uJFvkyvU2pbvzXV49TG16koY-kDIe664jVJY7eV
-    iWJIRA-Vf3hN9yF05ctFvaEWBj2Mj8ypREjhId1z6bbwLUuiFGEMO8>
-X-ME-Received: <xmr:pFiMah633rovE-do8Bclu7arJdgf1Ev8GUvVN8uY7BfZU9fjhmMRKJiCyfayqKCtDsR5ShYA7lbQHfW5AedblpObqyymQDFoSw>
-X-ME-Proxy-Cause: dmFkZTG2zrEcZQKtncz+XNFX9RB1fYsapz/nvw1hF37Th93rSVJdVuHkeqSDFbSENSgnod
-    eQZFaIvb26R9ztLJlU16y+apWPYCfbWa9ikALEq9m4kljwb3PYfQquCjnqlD9+Hiv6vznA
-    MSXPhqEJ/anCHFtkqRb9wJU7KGkILT/yRsA0TKXvaHD5Cmd+4AdE6ZlkI+vzgtY2oPMMBd
-    90o74NNjqWwTFs/5hIoLnNoCxvwfzxa7PX4WJjou5NH2VNYKNlRrkmkeKlgbCIVxb+tYlg
-    1gbTw9WTCuI1sB26mzc2Qj5yCzMlynckS6qgLGjD7WVA5WeWoYYhNhjxNGUZ5uroP7psp4
-    N6gkH05Rdgl3u0xLqsscr0xnXIZ9M5OFUKoAoGTeiK709vZq2PeHU8ghIGvvalPywZ8SH1
-    igFdDVDwmBTzUlCZvPYlLzwpTpSWTkPYXX480CBArLpcOvG3IwDM4FMFWhF4ZAO0PABZNK
-    CjArSByrx+909h71c6ZUqOUAhEpoWW/jkSdFYzRaVZ8mz3rMfn0LZYqXokcmONSvb3ax1u
-    SE+h21g8BI69LPYC6yN5YvRfiWx82H4uG3Y22/D+QhQQMSAQe4ga+sc/fuUCkuyD/aEQzi
-    bVj17pv/NM4TMkxTk7J/qbfJwtlPEV/FzSGauKI2jeo+ZIs021O6TqtyRLzw
-X-ME-Proxy: <xmx:pFiMagYWogJzwKGJijsieDv9KLdLAPsSFY9d5RNlgZIDzO7fZhdybQ>
-    <xmx:pFiMaoiBanWxb4yDE8Zz9s7ei2oD1FY68dK33ATQ01KqwGt4OQXa9A>
-    <xmx:pFiMap-wFQyEMhMLXuVmpJXGmmajuFHFTHtRBb4yqB4aXEVnlfUlEQ>
-    <xmx:pFiMarpVuKxXpJ8s4odM4_6AcMMyBXKyYJb-gAMkLELdzpF3xc_tTQ>
-    <xmx:pFiMamzxYhCbfQ1eVREIFMWb_gn2NtkzcJK1-CBxKvwsVUwNzGupq6jJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Aug 2026 10:43:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: Michael Montalbo <mmontalbo@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <pks@pks.im>
-Subject: Re: [RFC PATCH 07/14] odb: gather the odb sources under odb/
-In-Reply-To: <aoxQaSGaDwqkP7Tb@ugly.lan> (Oswald Buddenhagen's message of
-	"Mon, 24 Aug 2026 16:08:41 +0200")
-References: <20260823171915.2662373-1-mmontalbo@gmail.com>
-	<20260823171915.2662373-8-mmontalbo@gmail.com>
-	<aoxQaSGaDwqkP7Tb@ugly.lan>
-Date: Mon, 24 Aug 2026 07:43:46 -0700
-Message-ID: <xmqqjypfshnh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CyKW4xDe"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-92e7c6ec9dbso154221085a.0
+        for <git@vger.kernel.org>; Mon, 24 Aug 2026 07:45:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787582739; x=1788187539; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=700uH5Cr3l/sC+EC7R+9NsGtFAxhWYobTCjcr1sJQ3s=;
+        b=CyKW4xDeQaa9X7FFn6JGkpHb0+SWqjcCoaqd8x5Ny7+wrUUuTtYiM9P0iHjN3Ks9qv
+         5U428ntXtbsZkGceQ/+RiNjw6Ct2wxdaPYSs5ejDcmdGAaJ5Zi8AFmfkCZI8Asva00QY
+         he8tdEn9CCUdBFNidXdhHBqB0uA3gp9lyzLznmRVAHwHlg7WZWoRkZN/NLfsj1pTu32i
+         80Z5XA8fp6K9nQElDw2C5OwVTUfmxA/07YoRoEPNp6jEqVl5RpbsudNnxXHMX+5EldeV
+         MEZE1kEI0o17sVSUrwgLRxkW1s86vHvpEhAM1/zOUys0XirvYRWqaw2dPyGIdcrJso6y
+         rxOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787582739; x=1788187539;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=700uH5Cr3l/sC+EC7R+9NsGtFAxhWYobTCjcr1sJQ3s=;
+        b=A8UfGwzC5FGZ2mLvlZipsKeV/O/sEEuvKRymHmy4MlZf0GlwMh/6nycifsz1+Tq0nX
+         tAxyBRy8etUIhnZt1b0kdGBBRzF48/qnTdUzM45/XMs6p34RF7BujaIbIo+6H2bSKA1X
+         4gw6EgdvWybJSXb2iyf5GssmI1yK/oxi84WPBn4UD902+jnk/EzYX6Fz8z41MvUGkp9C
+         odPXTyMnY57XyJOJ8UguTyTB7M119AhS1hXSzpvB+jDDXdAlM1988BJ3iT6JJO46bbbH
+         q/VStqsAiBmQ3UpiawW0j/74fx8qLlYi0vwM8gFeIs9nIzDv5urcdybE9j+dpc9LY1st
+         F+cA==
+X-Forwarded-Encrypted: i=1; AHgh+Rq0oB1RzEleb2N7XOoQ2ofp+Ao2oZmLPq8zWPz450ETZcC6HunLVMdFHpRgEhDibcWiMb0=@vger.kernel.org
+X-Gm-Message-State: AFuF++lCFrxNC9uy+kRBbC3hjYAiEm7jXrnv+0gh2kKcMoNfar25RFkI
+	TpHvTGr4zQFkVW9agU4EcYzXrVBCJKdLtWuFiRpt/KTBMDfVeBjsJO8V
+X-Gm-Gg: AR+sD11RrCjp4h1OoFl7EeIAKoY9B/MF3VECvUwqOFa6KgyjBcyoWP6ZQlAPza1pX8P
+	ZDDlJeIPPtCTQC1k7/sPhiBlSO3SJ+J1jFDiJI3uItposdjS3xAkXbzLGsvuy7N9cu37/8HYXKz
+	LWD8rrqYf+OJhU0rfWBrvUEMeL53fLWdYqBecuAjJm247H2+TpDPHwfYo0ebIpWdcEteji/V0hJ
+	HLBIGc0yNuG8vvbTPuSoQDixa8B6OU+0Pd7kLB4xHjkk0udRgWzI7c2h3C0HdS2GpmLp5uKDDyS
+	y2AaUMb6z7M+OkISevcw3eG1Yd7cCIfylrbyTAXS7AcV+I2DfqilN79e9HUYAz5WShWxlmLK4J8
+	sLf/yVRpqTGjYwYTs6cX9wG2RIdVgCS6XDAS96XEouA2FyoMD+hbYmi/+XK83vrAtfHg2aoSSDI
+	adOoPONKy7gZiJrl3xp3tErH4yDkcJIKw7xYN2JcatMygxla8nUG791oftCnJw1atexq3Mwd9J/
+	tyrZiTocWHNrIrmLSEt6CHh3FYvUoIQtXO6bkhfONTi7kG4zkHWC0Ehi1vHqNa0Ds9ocHQXFLa+
+	YQU5KANw9g5otmU=
+X-Received: by 2002:a05:620a:1b84:b0:91d:6ac3:565a with SMTP id af79cd13be357-93739496be1mr2614516985a.12.1787582738824;
+        Mon, 24 Aug 2026 07:45:38 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93749abeb0asm513796785a.2.2026.08.24.07.45.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Aug 2026 07:45:37 -0700 (PDT)
+Message-ID: <ebaae70f-9e21-4673-b051-09e30420631e@gmail.com>
+Date: Mon, 24 Aug 2026 10:45:36 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] packfile: recover when a multi-pack-index names a
+ removed pack
+To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>
+References: <pull.2207.git.1787092446.gitgitgadget@gmail.com>
+ <5792c08f4ee0f9627ab1432d91299fe676e0a2f5.1787092446.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <5792c08f4ee0f9627ab1432d91299fe676e0a2f5.1787092446.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+On 8/18/2026 6:34 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> When a geometric repack runs concurrently with other git processes, it
+> can write a new pack and multi-pack-index and then delete older packs
+> that the new one subsumes.  One or more of those older packs may have
+> been indexed by the previous multi-pack-index.  A process that already
+> had the previous multi-pack-index open keeps using it, and that stale
+> index still records the removed pack(s) as owning some objects.
 
-> On Sun, Aug 23, 2026 at 10:18:51AM -0700, Michael Montalbo wrote:
->>Move the 23 odb C sources and 26 headers into odb/ as renames.
->>
-> i for one would go with lib/odb/.
->
->>+++ b/builtin/add.c
->>-#include "object-file.h"
->>-#include "odb.h"
->>+#include "odb/object-file.h"
->>+#include "odb/odb.h"
->> 
-> that's the wrong include style here.
-> it was already wrong in a lot of places, but as you rewrite everything 
-> anyway, you could fix it just as well.
+This kind of race is why 'git multi-pack-index expire' exists, to
+delete packfiles whose objects are all referenced within other
+packfiles. The inclusion of these "stale" packs in the multi-pack-index
+helps halt reads of those packfiles by new processes while allowing
+them to be read by existing processes.
 
-I do not agree with lib/odb/ suggestion, but I am curious what you
-think the "right" include stle is, because I cannot read it out of
-what you have written.  Please do not assume that everybody knows
-what you think is right or wrong.
+This is currently used in the incremental repacks done by 'git
+multi-pack-index repack' and maybe could be used again in this kind
+of geometric repack.
 
-Do you mean they should not be quoted in a pair of double quotes
-because the behaviour of such includes is implementation-defined
-(instead use "<>" as we use -I<path> on the command line)?  Do you
-mean they should be alphabetical?  Something else?
+(This dance is more important on Windows platforms where read handles
+prevent deletions, so it's common to have a foreground operation
+prevent a packfile deletion in background maintenance.)
 
-Thanks.
+I do think your attempts to be more robust to missing packs is good,
+but the comment thread does show that it's a complicated situation
+that we may want to avoid whenever possible. Leaving some redundant
+data around for some time interval can reduce the number of times
+that the fallback logic is triggered.
+
+Thanks,
+-Stolee
+
