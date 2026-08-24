@@ -1,139 +1,110 @@
-Received: from mta1.migadu.com (out-80.mta1.migadu.com [95.215.58.80])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D38544683D
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 15:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.80
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C4836D9E9
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 15:35:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787585623; cv=none; b=VGr+HvAq53V++DisC7/XRcV5jeCtMiNeo1fycUJ4pJSVgetqmB9BsNeqmzmdjvgOYgG87QYmLRUWYnAs9PSXOsn3KDVmjKiYItvwd/AMUsEZtUg/BAqABs+7kpp3kK9sNtC+aGIU9p5d0hubtZiiWwvjO4BQIUNgXclcP6B27Oc=
+	t=1787585718; cv=none; b=oMh5wcomoQQ/tVgc79SUknFUVegm5eWhX1Ehby6v2BdKFh5UXLbASMFqS5D1tch/dRR8cUoga3R5/m/4a85rQMGZlOEf3cqBBbCe6YpTTxaQk5RTz9imt4ie2TUMWXuCkMwVuYUkf+cacQOpRvXYDGvdpt1Qt5hxYvxz+ebZC6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787585623; c=relaxed/simple;
-	bh=6UzFIOMNBIMqTToL8kHUVEF7kBp+IQ4AfsE7NG3DiJc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CX/QQ3O7k2Emc/6vaMEOiMHY0/3XyqOft/WC/lRZaKrbeXoQ11vejSKCb4tX3uZ3igGpgH8mJT5GAOQGMJLozJWq0dRtDnXGdDz5cDCk/cC/1sta6eXFU7lYLSa4ucgQASm7lRfEdWgxEjzXBO2g3heI4LoE4svoVM9Nqn2c+Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=DoPlfepm; arc=none smtp.client-ip=95.215.58.80
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
+	s=arc-20240116; t=1787585718; c=relaxed/simple;
+	bh=aOKYGChv7kycs8HvjhJeCbmu/92OvatfMmEg8CW5LWM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=H5vxMMzKu/usiMtfMJ8Eoa2HXW3EgwXTa0KRiTc2J2rN2CgtCma+zzAtmmyi9+Lz7jSR9IFcJiOr9g9BrT38eOqkx0QMdTWQx86MfYIcR0SHKg7c0NsllUN3JmPDmlaKvh7JEu+nTKf3/V44GWL42345sYzjvzFWsIMfUKgOGh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UNkbVQgT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WvkeCiTv; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="DoPlfepm"
-X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=6UzFIOMNBIMqTToL8kHUVEF7kBp+IQ4AfsE7NG3DiJc=;
- c=simple/simple; d=wyuan.org;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787585618; v=1; x=1788190418;
- b=DoPlfepmfZWIzWfLnW/jaeyyhlvvv3oZpXqaIwn+ZVo6Oup7JioWPlSL+/G1Gfm6KTRQpYaS
- s7aH+7+asXbcGVoGtyy+BPOnSryp6GakEXZlWng9viHf5EIycp/x9UCblKMHHPuRibbnNqEoJTU
- kae82RY886sBMBM42a5R4CpVeOkaWSoDEEFS8f6O7WVQjJINvF+DU/N/XB4dPq7q5lVHwuZqHo8
- O/Kkz6WruBwFkSJJL5IuJnUNfUsaYb8Baar/7Pto4OV/aG8CfzJ57dp/Mo1Nb/UczK3vHkbHtod
- yQxWVgVoudmZ4uSdq/1RaQ0txplWN7IZSkPtIX0zHDKfg==
-X-Envelope-To: git@vger.kernel.org
-Received: from localhost (117.176.242.187)
-	by smtp.migadu.com with ESMTPS id c8e18ae75c614d56;
-	Mon, 24 Aug 2026 15:33:28 +0000
-X-Mizu-Trace-ID: c8e18ae75c614d56
-X-Migadu-Flow: FLOW_OUT
-Date: Mon, 24 Aug 2026 23:33:20 +0800
-From: Weijie Yuan <wy@wyuan.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Alexey Samsonov via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Alexey Samsonov <vonosmas@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/3] treewide: migrate from legacy utime.h to utimensat
-Message-ID: <aoxkQHCGJENGxV2I@wyuan.org>
-References: <pull.2209.git.1787322203.gitgitgadget@gmail.com>
- <aonIVn-ZQoMKWCAd@fruit.crustytoothpaste.net>
- <xmqqzeyeujde.fsf@gitster.g>
- <aor07LvsXOy1p7vh@wyuan.org>
- <xmqq5x10vowf.fsf@gitster.g>
- <aosVkqwcsmAWrDr6@wyuan.org>
- <xmqqfr04thhe.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UNkbVQgT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WvkeCiTv"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id C9993EC00E3;
+	Mon, 24 Aug 2026 11:35:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 24 Aug 2026 11:35:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787585715; x=1787672115; bh=DyNN2xUa2R
+	h87O9PN+iooNNwK4E9jpr2CmfO4Eszcvg=; b=UNkbVQgTo3XntkEz6OgS3NNv6E
+	SEZSpkyrhdYvDmCMyDdjSgo/Dt8Y7546X6Bl4yjS4sV5PLRhGd6qjT6PtqC3TBlp
+	EsSfNXjPA98tZ3iYfTuFt2O+chpMQ4UzwCq2Ab6DnW080wF53DqksSrSA7NuDC0v
+	2pAhIq6zkMBbBWEB5/R6CtFp8+8U8clv87N4I9laSngo5fH9tdmTPSs0HThgsodh
+	Y8rIRHHPU/lsCwMHk+QUQt5l2KbtmAqGOKfA7rFXemUUVC8AmuLmN+BOhw/CxjV8
+	fEHPi2cGHFHxj4cYt2wivpuMKCrDfY4IDeYQoVjmqnRwNN5QHkwGyUSPvSmw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787585715; x=1787672115; bh=DyNN2xUa2Rh87O9PN+iooNNwK4E9jpr2Cmf
+	O4Eszcvg=; b=WvkeCiTvhyRuqjewDO1dJ701JuYQqOxEDRoNv7IxIfxWmpc9+do
+	hOmDdPVo6oekdStuLqC1YiaTs7wyRzr1wqJs4b1HK1vfNJIDb00v7eby7nnLWtTo
+	Oxet17W2zuWAvpL6Ip+syXQZMRk+ffIc1EmVlm2wa3baQWITh1KKHuxAxkZMCyCI
+	Q/w2wcPOnYQtCpe76T/oQw2fEnPsGq61bLC5bGW3ESvO7V7DnFVk94sRVw3gsx19
+	0TF+fauIJ+A53bfbruH8uiHkLXbFcQOXHBllFGI/AEN+3qiYM4VgNSDW2fz2djgv
+	wwpzh2weWrVnx5vCw9VemuUxfrfvr5ha72A==
+X-ME-Sender: <xms:s2SMaob4k6mQcq4nQ5HF0E0XQZZ5UsYkxe_-wzAuZK9GKCdUIxJk0g>
+    <xme:s2SMakGjgAOmBsRE9QYXKCYZoMXNNQjWiH-PAkwewUKb68_Nj1IrxPlz1X679ZL-I
+    WX5cN0Z0vVOT9_mu9r4_r7kVa2f4ZcrKpZ0Gk9mbxYil74_VmChp4w>
+X-ME-Received: <xmr:s2SMahK9EjZ1MK9FF24xxpw6_iSgW--t99sii-VJEAm85mkv-_bL5l3IVhKQ0IuizGc3htUPN4OO9v6D5WY0h1WHNzWz8fGsXg>
+X-ME-Proxy-Cause: dmFkZTFoL+pG+auMPV2QnUCNhXKT14b92U4+5+g/KQsWQVbo2DwfB2/9Nyhdacq0LeGLG8
+    MQu+NdwcWuyTbw4P4gB05S/QwkaUyn6vubZY8SnEVMITveYiQCjQqP2O+Xy0hSJyJz3oro
+    /MPG846Vv2SNcgKPLqdD+z+ogwpAbrzrFNI3//qgEYVOK/6NXwc7+GhS1RggIRZZLSEK0M
+    cwJB6uBZApdG6qQTqpqVCXgH8jVt4bW2YCzupe9/AV4x56//QpZ0CVOhgIDgLAkcgn9fsf
+    fQvYjLiDtwpMOuKN6Xfda/ML6bHfYaJ3zdalTQaJH3UIBrzTvoiyDyUscQbEWqPmz3s+pn
+    v+dqonDDx7eXk+6k9GUSQp+2XDndNCzZ/qfV6kXEFMTjZik0TVb45LwY0fqQ0UUKsRJE7a
+    KLF91YAVEgOMFWv8enM7MwXPFGFX0zFfUHF33C824N0FAh3hf2+2kUIig27JG3l+CwQFSo
+    qRJSA0YJozKcI5+tIV/bCMEjWjWpADQOUmpUdwEzoj9BR7zAkyDdBKbxoyReMAxa+tNoqy
+    rmPDUPVzXwBctiJ2bziL6bxIDs3S5DpNZ123La3LSeJcPrxpbgAYnpkLoz7v1rrcP3azLl
+    r/f178s3VeGMS+Cw3MVZpV0YgoR0CXzxR86hj6jnSjUXTw+3yacNd+xavJbg
+X-ME-Proxy: <xmx:s2SManMMvhaYYzevaq9Oyb_CzPZjz3dQiMx9SsV7SvO173NHHHELTw>
+    <xmx:s2SMapn6-BVAerQzBWpLsZHNyzd7GKhDsmrzZI5B5zfU9yJxv3Rz_w>
+    <xmx:s2SMaj4knU2MDU628zbiTWbFrAKE93SiBz3SAGX36teA9EIcLm5kXA>
+    <xmx:s2SMal3gLPvBstZqdtZ04bMdndb7NZkdDjHaGt4i5qypt8B8jTc8UA>
+    <xmx:s2SMaoVufP6UyuG5qvjkv3-5nECZmZdtEMCjIns-jiCasjYQgBHSAcgy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 24 Aug 2026 11:35:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com,
+  kristofferhaugsbakk@fastmail.com,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 0/3] hook: introduce the report hook for
+ git-receive-pack(1)
+In-Reply-To: <20260824-758-introduce-hook-v3-0-499526f0a062@gmail.com>
+	(Karthik Nayak's message of "Mon, 24 Aug 2026 12:20:58 +0200")
+References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
+	<20260824-758-introduce-hook-v3-0-499526f0a062@gmail.com>
+Date: Mon, 24 Aug 2026 08:35:13 -0700
+Message-ID: <xmqqv78zr0pa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfr04thhe.fsf@gitster.g>
+Content-Type: text/plain
 
-On Sun, Aug 23, 2026 at 06:49:49PM -0700, Junio C Hamano wrote:
-> Weijie Yuan <wy@wyuan.org> writes:
-> 
-> >> We know Johannes well enough to trust that his patches were sent
-> >> with sufficient due diligence.  So...?
-> >
-> > <xmqqzeyeujde.fsf@gitster.g>:
-> >> If work submitted under a DCO later turns out to be based on
-> >> something we cannot legally use, the submitter may of course be in
-> >> trouble, but we would also need to bear the cost of ripping it out;
-> >> the later we discover the problem, the more substantial the effort
-> >> necessary to deal with the fallout will be.
-> >
-> > What I meant is that you said we should be wary of content that might
-> > carry legal risks,...
-> 
-> I am not sure what your point is.  Is there any part in "we trust
-> Dscho well enough to trust that he sent them with sufficient due
-> diligence" that was hard for you to understand?
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Sorry, I think I failed to make my actual question clear in my previous
-replies.
+> ---
+> Changes in v3:
+> - Move out addition of proc-receive hook doc to 'git-receive-pack.adoc'
+>   into a new commit.
+> - Add a new commit to move out the response generation in receive-pack
+>   to a new function.
+> - Instead of die-ing on non-zero exit code, we modify each reference to
+>   indicate that the hook failed.
+> - Instead of correctly listing out the protocol, link to
+>   linkgit:gitprotocol-pack[5], as the protocol also differs between v1
+>   and v2.
+> - Link to v2: https://patch.msgid.link/20260821-758-introduce-hook-v2-1-e90e2f7ac2cf@gmail.com
 
-I do understand, and agree with, your point that you trust Johannes to
-have submitted his patches with sufficient due diligence. I was not
-trying to question Johannes or your trust in him.
+This has some interaction with Justin's pluggable writes series.
+Please help sanity check the conflict resolution I did near the tip
+of 'seen' when I push the integration results out later today.
 
-What I was trying to understand is how that fits with the particular DCO
-concern being discussed here.
-
-You pointed out that if something submitted under the DCO later turns
-out to be based on material we cannot legally use, the project also
-bears the cost of removing it, and that the fallout becomes worse the
-later such a problem is discovered.
-
-As I understand brian's concern, if a significant amount of a
-contribution is generated by an AI tool, there may be uncertainty over
-whether the submitter can make the DCO certification with sufficient
-confidence.
-
-That is why Johannes's existing commits with an Assisted-by trailer
-came to mind. I am not claiming that those commits necessarily contain
-AI-generated content of the kind brian is concerned about; I do not know
-what the assistance actually consisted of.
-
-But if the disclosed assistance did involve generated content of that
-kind, wouldn't the same DCO question arise? And if we do not know
-whether it did, isn't that the sort of question that, following your
-point above, would be better clarified sooner rather than later?
-
-At the same time, I can also see the point behind your:
-
-"if you use one, do not tell us" ;-)
-
-Thinking about it from that angle also makes me wonder about
-Assisted-by trailers themselves. If I understand the point behind
-"if you use one, do not tell us" correctly, then perhaps we should
-simply not encourage Assisted-by: LLM trailers, since such a trailer
-explicitly records the very fact that we might prefer the project not
-to be told about.
-
-Of course, I am simply worried that an Assisted-by trailer might
-create some legal risk. I am not a lawyer, though, so I do not know
-whether that concern is actually well-founded.
-
-On the other hand, I can also understand why the kernel community made
-a different trade-off and prefers disclosure. Knowing that a tool was
-involved gives the maintainer additional information, and the maintainer
-can then decide according to their own judgment whether that information
-should affect how the patch is handled. (possibly there are other reasons)
-
-That was what I was trying, rather unsuccessfully, to get at before. I
-am sorry that my earlier replies made it sound as though I was singling
-out Johannes as a problematic case.
-
-Sorry again for the confusion and the noise.
-
-Thanks,
-Weijie
+Thanks.
