@@ -1,125 +1,123 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20ABF39479F
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 22:31:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787610675; cv=none; b=BSWILaDgSwUEmmK3+pddfG+FtM6mw0+eE2qDxf1OP+pJyWLHMQpfelpuApN+K+0HQ3R8d5Pf835+6O8DhNyuZQL7w3JvYE7xH+O8FnyUnWnt2UzMKQSKK9AfqWQIYIwwn35ee9QPbUKgg7E/LW09QVDy+WXjwYOSIH1GsQrXhoA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787610675; c=relaxed/simple;
-	bh=F1eL9DIubhBs31I00JYzfzDYDG3xWgkxJKoZqCytlYc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KYzZup5xq9qbiJ5tMnYnC2jR1X6vEB8UF7x0ChSlZzwtaL8ntYCuXMTJKywV6W888YJ5+p35e/oUny7E1ToBrMJ4DIP1EA9XHggx/no+0u2WardQzaAqVWIti15FAx31Dh7VwJ6E7S/zLGybM4/1nxvMNgyHwyt55Z558xTPiSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RtZyNJTr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i7LO/eOb; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630C839479F
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 22:40:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787611258; cv=pass; b=bs9CY/YFRkEDLl3kNoOzGEQ7FTqum/bmZHN5e6nDixIyECJychep+VqQ57aEAG6IcrxJ1/MAo/zJgibky+GXdNnTFLm6aPILAQ8YG7AgXJPeyxCexq6aFCJs3optPSa43CWM1/IsH2BcgnDhdwkkrnm6Ku14Pv1DB/8KRdja0ws=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787611258; c=relaxed/simple;
+	bh=TAq6fPyo+YsMeCY+zIg+7ZDq+vhBbDj1zJKhcJ5nzZs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=butakGgZxLXunDM2hsLjxOtvtdX+GKNuryf16Cb7PkJ7IdiAiVZCY6G8CQjq3+f0T1E3Hyoo7QDrCeahMcepHYDceoA0MKJvK34asADyozSQzY2rgksPznBhMN/uvL1MALyQXJ4AIOj8YWmTrkd79LE7FzJsh2e+TuE+c1FztFc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iTTHMeL0; arc=pass smtp.client-ip=209.85.167.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RtZyNJTr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i7LO/eOb"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2230214000F2;
-	Mon, 24 Aug 2026 18:31:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Mon, 24 Aug 2026 18:31:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787610672; x=1787697072; bh=zAD1c4cIP1
-	fAS8yEpNxxY6VPU3+kG4qOTinDraZP6YA=; b=RtZyNJTrsX+7fuzJc6TQWWAMtD
-	TDNTRA4yh1c/KUAeTQUZmUDLYzf6TQnKm38s0yqt6EOCc3gTQ8ffojxfpq58Ek4E
-	Ypxl/E7SAFUVPjFQn00UWFpFARRfSEoZ6qdyFEQ3BzrnqHdslOlhVpE1DYGD5z0X
-	tJluxbnBWJdwt79PQd03+fCGtDPQ626naOCiGcVbjSqBcAqt6eTJNK221iDdxjLF
-	gfK5tRJvlONqtNkqf70OMb+duwPB6ts0AUbNiMazcZzaGbZ0duwapW7NiJmBN2qt
-	b2crunFPsbvEcBQyAb6gMY1gRhLHZvak+FSye/w+JvXCoEOzwuvjhVKFNsDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787610672; x=1787697072; bh=zAD1c4cIP1fAS8yEpNxxY6VPU3+kG4qOTin
-	DraZP6YA=; b=i7LO/eObEfGibuUvb5711gj0Jyj57SAPkNcpVaDGTBNevCrXYd0
-	kI8FK38Yx5Ux5fLp+3Okx29age1GOG1sdFU7oziwam7WWcJYnAzt4D80Uzz3Ty3c
-	6I9VcVAsm4Ytrh9Mamef+G8DzW7Ug9pfS5EiagsyS2Zp7EBkibC+TORl0AeY54/t
-	Egk7Ny/r7ulQ4cGYX5Ui/DT+2L28upW+0Phu5GGEfTJ/CB2/1ngW/CJ2GuIM0k5G
-	8vRRrXsq2HARSUf635NPf9UHyWigEEJLJhX28sdSwKmoaDqsy+F4xEJIgPAlJ6r0
-	NLhkE6i+t77hGlGNjWSaNQ5yWRHoyK/0OfQ==
-X-ME-Sender: <xms:MMaManVH6vpWVwJ2wMWTs2nsiI-cZs9GNe2g089miNs_yC5km6d4Zg>
-    <xme:MMaMamlL_gq1exle2G00cXhvJ-mt2atkWAXXjDi9EqKO3A8hAglSmutemfOcoTRsg
-    _bBHdQ3iRl_ve_PARw0MoweM9qGR1KtQsF7030swvFWBLLHXwmcOA>
-X-ME-Received: <xmr:MMaMaoZ_vCbCegJVP87HJkZ3mLAwWl7RDIs_dp1e_O4ZeaXnWuH8BYsVDyvPqnaCj6jMXW_utMgAnXWUI-gwTR7RuUBgFo8jhA>
-X-ME-Proxy-Cause: dmFkZTEpp5yyj5rRDEqHDYkVbQpQ0VJmaaY9PzREmGp+pM8fNO8Vf4oY7JyKZzBhktIY3t
-    R0N2flUGEXly+FRgWl/3nxfWEM3A05OAlRR5iKVq0onF6hxTWM/PNfkzIzo6yTSP6f6VBz
-    dnk3M56Moj6Qen5AmA4tWwHuIS+jR24Xg5BDbhMCpiqPwUqD8XqcFZo5IwpYCeXLB1Pe05
-    uu81C6FbxbV61RYyjIb+UbKHuj39jBpmtbrbwZbg1ArwbZhYmBOFByZuPJvzBU949/EGKM
-    hMffi/z80pdVO06DaHs8wqO+Qy4inbec07kNcSD8S51OvC+uY5C+nhTelXsGliI1Utd0pQ
-    SLITTBGuJIwgHBGtML9XW8veUJIv8aJ47rNFRGI8V36QTM4RCyguKKXSdpu4jqRN1Bnu3Q
-    KbmqG1hzioinNVBcdCUNFasXxyz30IA2Pkrqnia+m/V+oKgvRntdw1wUJeaTHZHoJY35EC
-    qkKPrkFRkeFov7iCmUdMIxP+IpBPU0YIWavp4fF/9YNn8vZZhDrXP1r9RUghem9dgh/euc
-    5E26o0cV4C/HKtM4EzTJMrnSv2VBKyC9h/MPM+cTNqw47wRDvvKsruro/MQIiND2iqDex3
-    N0IRMhW7yofIFQ6jLKvAt/3mhFmP5NPPqbNSpeClw9m9ercHFtqoID1LI6DQ
-X-ME-Proxy: <xmx:MMaMahO-fHWcBxMTb3gzWsiDUeiE7B-3ZB0pbI__sl5rkStBERFZ4w>
-    <xmx:MMaMatY1p3mOm8_wOL1aHcMm0tmNJeZ9ilkUhMG5gsj97OKX_u2cog>
-    <xmx:MMaMav19borvUjicLgJuouDrVqoM_jESPyjqGKKzkDBFMyIMeHH2nw>
-    <xmx:MMaMajcGZEnUTFDjbeRJDYCmL5cN8lNyECtFSutc_doDlgrb4htP3g>
-    <xmx:MMaMavAu3qcLd8XyrZ7TFihcYAM-ste8b1kbB_yuVxI1PF1kFDEPdJ8p>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Aug 2026 18:31:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 3/3] format-patch: learn --[no-]range-diff-notes
-In-Reply-To: <format-patch_learn_--range-diff-notes.c5a@msgid.xyz>
-	(kristofferhaugsbakk@fastmail.com's message of "Mon, 24 Aug 2026
-	22:35:44 +0200")
-References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
-	<format-patch_learn_--range-diff-notes.c5a@msgid.xyz>
-Date: Mon, 24 Aug 2026 15:31:10 -0700
-Message-ID: <xmqqjypfp2vl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iTTHMeL0"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-4a456e44e01so2949561b6e.1
+        for <git@vger.kernel.org>; Mon, 24 Aug 2026 15:40:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787611256; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YtBRncf0dx00vFnffnS9kqTMB9sjCWpNejKViiU8vov9gwIwxt4ERU9AOFyl5tRfWK
+         VMamKpMvAjeUqT99DY85PDEdiNx45/J4LzpWYdo5us9GshWfB6/0sedYoevCD61DvqKq
+         QEwlvkE0zzPax83gRoYJ93b2DHutlDYfacxcc3ls4I+hYR1NRRRvArjdwXNB4wC1rQrL
+         t7j2enYKRe/IGTmg5XUm1NI/pb6moTHL5FHP6aSXPeeoTG0jDfxgzmrqXANYvvr9S0TX
+         Qw562/G0Hs7C9bpRQb8BB0ct66aaYN0IuQgXChF+kpIRYPWqaxJT2Y8f4bhP2OHrrdph
+         euBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=9CyH8Rahg4vQ+ogW0QrybiRnAOQ8YkxXAxI0Z+AlLhY=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=CfsrexdEmRxvywQiKKYiriu4l1dli3kI/EfvS2KmEAX03GmFSceJG4p+DpJCcL2jLE
+         cpBbOD6s0ZH2d/bNekDnWl3HVT/PfAHAxDOjhUpOZXN3POCdpSLLj9hJ5J2Lt8S+FEjP
+         V60g3MAgXVaDMR2SKRy1EztELKgrcVwhljuTzJEmrTVea7zbCqjYWCqoi790pdwE007Q
+         6p3c3SVb1lVwzwOkpFe2bjamHlFbJSbz50h0niLe5mET1s5AkbsKIp0cOmH/ygnm+KRp
+         QcNL3igC3d1NB6PxM8QCNikHY51dzPPQd6Np8V7ovIhhMEYKbZ6z/KZ7IsAG70LmNNoL
+         9GGg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787611256; x=1788216056; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9CyH8Rahg4vQ+ogW0QrybiRnAOQ8YkxXAxI0Z+AlLhY=;
+        b=iTTHMeL0hPlbnDtfE2VGK9Uq3xbtYLHdTgipaE07Lk7IKNrGeA/c2cFqGes/ABcbgb
+         fFIqJZLrZbJayU1mEnZPC3zZjWt5H9ZRw65ybqQkBJ4AOD18cnsOKPFLByIAxIedCbqG
+         EGobLvTka7jT9nEv8V/h5wEgODMWqrE1kISsg7xpipBzie6YZyIolHJotNsWusOjuFEx
+         RI5rU5AjmhxnAKLgjwez/BUaUF7gY5VhvDGMgPUDJtL1LYI/V1/fD8UP6CJdyIYet2VA
+         mHg1gtC8UJrrjPQwFwnd4OFd91jhOXGO8WY93D/mAVoJeJbXIwNzK9o/KHyp7WKj+2vd
+         l/Ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787611256; x=1788216056;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9CyH8Rahg4vQ+ogW0QrybiRnAOQ8YkxXAxI0Z+AlLhY=;
+        b=anYotG9YyNc2/Hkb0fUbheUaJbPs9P7yqGdhEVlLVHKxMNPcEJtuo9beNmkxug6Q/6
+         PKnZsWAzX8gGeAF/hOHLI5p2rR/ZvWsrxMAMc0JYAPpE0Guu6V7QspMlifg4qgxXy8mD
+         SIF1unAIr12MZsLLt1zH6amDak5GkrYJD0tlXBWIC9v6MQQvwLi1RedLYbrIGjmlRQqg
+         Rur2sXEox2zmYPJFcKJIEVc3M7fzUeX9Du0KcTVV6MLj/ItKsRjs9vFlYfp/8Pm5AIVN
+         wPpCTtgSq/mspgvbKySABcucbyTZhJtUZz3/o7f7S4qHotQQp9xO9OyG0VUuGXp9i6U2
+         MWGg==
+X-Gm-Message-State: AFuF++m7wgfYY+4Uz2woznM3jVdR2k+lJH5QMIMkOkoNR/vxjIKXED3G
+	vDjs5CqmEYETRK2H9YqoHmeD/wUkhye1E0qcC/V4CXRRmEnWZ4BOwMVHNDPCcDu2wzY2cwIO6Gb
+	7/jIX4iR/C5T4nAnMLMN2VxYxhDjRFuE=
+X-Gm-Gg: AR+sD13GnIPPlnPv/nXbRTAc57taxJ0FkfpgOHEL1rJwGZEnopbSK0UrDf3hNTMbl9s
+	MTrnILIWj4v6veKbFtY4RkuEpbcMgujmI6DjVrvIfJaOUsur5+XUP6lLZWyNXOgaSdk3z8Sa/AH
+	lA1Tppaz4/3ByOAhSMFvArz2gyjXYRr/TYTLsUvIgWS7YuX4XGrcVIYK7ILYx2iiYXnUAk4lSCv
+	WDOf8Er4/gWXFag4Zq25rFa3wNrumEFGNygsEaJK2T5CfC9M+8SGSEzQPrREg6rzgUFF6VICQBC
+	DCufC35heX++F04WIUndLZmZiKcrlG/baig35tye75gxWcSyk0N4YG+XwLnwX5mwifwaHUlYZzx
+	m96WxyObnsVQmvKwIvYVxYL8wNigVDlAUrjoVMWFOiKYslyUGyanvAK3S+lOigN4=
+X-Received: by 2002:a05:6820:2d05:b0:6ae:42c7:ef83 with SMTP id
+ 006d021491bc7-6b158fc84demr29425083eaf.0.1787611256105; Mon, 24 Aug 2026
+ 15:40:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqtsojp4zf.fsf@gitster.g>
+In-Reply-To: <xmqqtsojp4zf.fsf@gitster.g>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Mon, 24 Aug 2026 15:40:43 -0700
+X-Gm-Features: AcwNN1WyYPgEl777aoCS8fs70oEwwn6vRsozTn2TlZITQjqL1Bk_dJqBQ0OtmoY
+Message-ID: <CAC2QwmJkuF_awJnZgDCOKwpoHstVNygLdbECQAr6vXUSVEx+qQ@mail.gmail.com>
+Subject: Re: [PATCH] rerere: technical documentation typofix
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-kristofferhaugsbakk@fastmail.com writes:
+On Mon, Aug 24, 2026 at 2:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Add missing preposition "in" to a sentence.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/technical/rerere.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git c/Documentation/technical/rerere.adoc w/Documentation/technica=
+l/rerere.adoc
+> index 580f23360a..56ec7093f5 100644
+> --- c/Documentation/technical/rerere.adoc
+> +++ w/Documentation/technical/rerere.adoc
+> @@ -77,7 +77,7 @@ Sorting hunks
+>  ~~~~~~~~~~~~~
+>
+>  As before, let's imagine that a common ancestor had a file with line A
+> -its early part, and line X in its late part.  And then four branches
+> +in its early part, and line X in its late part.  And then four branches
+>  are forked that do these things:
+>
+>      - AB: changes A to B
+>
 
-> diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-> index 191f64b77d1..e0ba435dfcf 100644
-> --- a/Documentation/git-format-patch.adoc
-> +++ b/Documentation/git-format-patch.adoc
-> @@ -378,6 +378,23 @@ case is to show comparison with an older iteration of the same
->  topic and the tool should find more correspondence between the two
->  sets of patches.
->  
-> +`--range-diff-notes[=<ref>]`::
-> +`--no-range-diff-notes`::
-> +	Used with `--range-diff`, tweak what notes to display in the
-> +	range diff. For example, you can use `--no-range-diff-notes` to
-> +	turn off all notes in the range diff. The default behavior is
-> +	to display the same notes in the range diff as on the patches
-> +	(see `--notes`).
-> ++
-> +You may want to turn off this notes override after it has been
-> +activated. Use this sequence to do that:
-> ++
-> +----
-> +--no-range-diff-notes --range-diff-notes
-> +----
-> ++
-> +Now the range diff is back to displaying the same notes as the patches.
-> +
-
-Hmph, this is a bit too complex for me.  When I say
-
-    $ git format-patch --no-notes --range-diff-notes ...
-
-I would expect that individual patches would not get notes, but the
-range-diff will include them in the comparison.  But if
---range-diff-notes just falls back to default (i.e., inherit what
-patches use), would I see the notes used in the range-diff?
-
+LGTM.
