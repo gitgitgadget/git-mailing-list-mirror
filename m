@@ -1,68 +1,68 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC949405C48
-	for <git@vger.kernel.org>; Mon, 24 Aug 2026 10:21:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930884052DC
+	for <git@vger.kernel.org>; Mon, 24 Aug 2026 10:21:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787566870; cv=none; b=fvaa/a1mUQ+SQGJ4iLVAVbVuRV9sSeECrsPfegegzaKRbpoJEzSpVQ37T3wyry1X5ojdzL8U1rDfauWujV2icYWcYXRm0Rfwsa5Lsv74Dxt3bLyfkJF4/AY+AQNOlHZghsKPNVi8xxFEnRvWy5fYJmoUKF074QlP1t3PKPdVZxo=
+	t=1787566870; cv=none; b=Im0nq0m4sGyLVVFu4bi/vIxrfN6yyAYyZOVm50qMDZgQIXHJhYhZumaiUy3ApU5pziWus3rWruZaF4tg9STYIAsnVm1lJBr5ehOv8waoz0WC5qC0HnvCCEKfYynuNunspoEksNuQ3d4dv5If9jInnymw1yah86u+rCPmFYO3PFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1787566870; c=relaxed/simple;
-	bh=B3SN1ATBJKX3LmJdjOWVjgZEUDVqoHrUxRmQ64Qoiy8=;
+	bh=N0WMD2NEoMqy5ejZuH1H/0bwDUTiN/IbGGRveTwUV/k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Rqon+E00Uo/moiBUBUs65MzSpZxbtMfQfzmMLaE90AOrISKe2HeMu+a2D/ro/kkXvDGMwE92I0uXRDzknQHp+XuZ4qr8yu0GoA7VweClw0hx8qTh0n2Y2p9bSIoTiJoU1P5CaGZ3NJvqfQW+BzGILUSQUynwmbQ9/Z72PDp6Afw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eYUKiTf3; arc=none smtp.client-ip=209.85.218.52
+	 In-Reply-To:To:Cc; b=ICI/dlQQbDgQ2/H00Dc/xpxLXnnajKB4JwRUhu+7b1HaS+aa5PhTfJuNCCtEW8g9jFiWKnsKfn3F7FUSH6F0JWPbUP1K5XlI3h1rDW22ahCyLJhCZkUtAkM1gFxiOpYeQ9CItaz2ZXARRj/6+rR6Zfo+P5f1ck+XvKKD9//fzS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pXczfbzJ; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eYUKiTf3"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c247f6687dcso367754466b.2
-        for <git@vger.kernel.org>; Mon, 24 Aug 2026 03:21:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pXczfbzJ"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c20e70a0962so490992966b.2
+        for <git@vger.kernel.org>; Mon, 24 Aug 2026 03:21:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787566867; x=1788171667; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787566866; x=1788171666; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=NT7FFAMbwOQgFc1vopNGO2ONJTF4p93UwimeTPLGLgI=;
-        b=eYUKiTf3KQWCGgu9Qd9tOU67VXff4L/0nfOrsFBiOntnTQars0BUei03fbn3O3S+2u
-         w0KNeiCwJTGQqjK2bFwkYb0Yj8OZCHVh8LPlilJvvFwRf0H2oZnEUhe5xLPEM4SDYLPx
-         J3lh3PQ0RHQTSSnet6eZi4tKdOkJs7m6FBQmHHx+uVe4G8t/EZKuhR0pFts4JMp6lOC4
-         4zy+JB2JKQV9myBQVOl0Q10RfEyCHjrH0kI6watRAFuCpzvcc8zjQtw6xLFMo2seFnLU
-         u7KkN0zAN6a5uiEM+lSkj0OcRv90xAwKKa1HZYqkSXa9Ex/dcLX+1tF3ztnHUrTi86M7
-         u7/w==
+        bh=oQXucLS9JhhSbzwEWCxCwUTJ+50Oo1InaUmt4jFaezk=;
+        b=pXczfbzJX1RgrSdgM3jzLS/bGxLWiq0ptH7Di+5R7rxVy/R4q/lLqlGz3pYpJO9SoV
+         ncXcfi0E7+gJ+6m52nIeNPUeDYxCsf7Y56i3P8MhhAweXaVZz1c4hKU/M5HVU6mwBilw
+         oJV4QfzmknbK2AgN8y+uerOR/lFko3Zi6CPxqAZ03/k6LujBgtey3c1g0JfNaUmh/96m
+         Dujs6MxWyPqXiJQYYFyen19x9byPpM10OyZWTpqh6iFXUTHq8u9BhX5bXKJcgc0xRk/4
+         /QYx6TcEVM+BN69/qMBPhA9SlEhMUrfohBzQ+QPkaS7ai7mgpLsuD4zLaT5oY75O8rYX
+         NYqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787566867; x=1788171667;
+        d=1e100.net; s=20251104; t=1787566866; x=1788171666;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=NT7FFAMbwOQgFc1vopNGO2ONJTF4p93UwimeTPLGLgI=;
-        b=ng40+VQaw52mTdiPvuRBS643YnFdYAFhmKQgnUrdG54wxPAS4x8b+baIl48eKvKmSY
-         zbOAACS5XHZMl1T1qSgAUb7ecfQ4TtRIvFIpyDsEE8ermk41haQE07XmpqtsRm0BCBaO
-         lcNMp2JIhPFWIK5+JaoW010xQMDcgQdjvsqWp6NQ+QUDuF8ysDTLGiMNiKBxjEAYCohk
-         ylFOKOyBYtgwZqaO25FuQYOJFZU8nOC7t36xrX0ezQS9QJIV2mkcg2i6E/FZ/i2SKe1G
-         3fLeH1SwES+ZzcOpnPO+jXbGnAFt7QKYsyUctwoiuKIlYgrl7XEtZa7qtHsmZc/6bAGc
-         cAOA==
-X-Gm-Message-State: AFuF++nu5bopAP3rBchW5rXxdgY6Zhi1wOMA6TAnWotXrOYHUhBDwbN1
-	XJlxL7V6f8+G0tckL+h160OFbDvC+0/X9PhMTBVHLUgqjY51DmZE3s5E
-X-Gm-Gg: AR+sD10vQovNc9tfySgQTgpRIvAqb6C5ZzSwX9KiFK9nQD/Us43M6y/YHdKcMyrtvQq
-	eWf6BHg3T6HUW7XmDE93MfbTYGwKto3uK4FIRBBLfuxcRxsmnhbhXJhkUbdJdXnSBXIpPL0Jb5M
-	F0paORXdgJBkg6+aMSI7CEUurfBuNd3otF9amqdDTqbBIZyyzsh8d/2iOzeCfforOzC0g4FVd/4
-	Bk04+jEUwq57Z8oG60XMryHLHRKyHYlhkMVRpO5aNr/1TZWlutB3Y0HxeEfDrhIAfldLnjKBKop
-	WFu6XaAKgTQHeQI7iUheIU9eCNxkk0MbKcTSxHb18prcJ9xLhJt0H09DhXDuGJzxybJfaYv9b9y
-	Hkza26b75U/4CIvpmDWfNDjT/KA6lkNT/Rl7D9VALdWm/MKRQvLNIPh5nuuCIK9cEyfxIzaUr4d
-	Nbmc+qQ6bUbhPQqWNJkLj0bVWDKlVZJ1QHZbagnwNobhmX10994WJ4nnZkH05KdSXkNCNL0VIYz
-	uIXUG6PcsC4Pag9ZzF8484t67U=
-X-Received: by 2002:a17:907:da16:b0:c21:34a3:4df9 with SMTP id a640c23a62f3a-c246a2cf648mr2871094866b.3.1787566866719;
-        Mon, 24 Aug 2026 03:21:06 -0700 (PDT)
+        bh=oQXucLS9JhhSbzwEWCxCwUTJ+50Oo1InaUmt4jFaezk=;
+        b=nG0bWNF2k0J6J5fHVxO89VZ4v/bJP9tqftY55wkdkBuWHk2eiHhvKXC2hppNhhsqPa
+         oJZsxfyVbe7T5EtVUSnR7NHQ+oUlKiMx9FPWDnHVgdmxjSI6fWzVYtEXtEQWuZlsF1yy
+         z9fuGFgtp6oJ4clyQcTdd/h0omCpoIn+QtssUWfCn+VedacARpDhjddOWXN0PEo6LEbr
+         SdPi+5oM/s+7eDrkzXn0fJYqU7MrUkA7CENjcpiHTEZ2N0PZdWx28rgJPfO6F2cTz5Yt
+         K2GZYAHX9vf3LAhOy5dQaLagF4p/CDYFalodVLjRryqd3+k7CRbTihkm0TQ33CKB+JbB
+         WT5w==
+X-Gm-Message-State: AFuF++mPVaYiDMDVpDHRF/OkhcIwC21jFXXBE+lg5Nh43JpEGB3CYe3/
+	Wu+GdeLF3Id77n/S6fdWtVJjpTKF9L40C+BOMwXtwYzIEEtTLz7fT3X0
+X-Gm-Gg: AR+sD11kH48iHuTYPWP0LT9J9FTE7hZlUwKpxR6GbnzAHb24IZOKd8HjTKFExOd/ch8
+	vFcmC9Gt843JlYyNiJdP1gnyjrmRjpBH9kFUqSgHc/sXvipgZ/wmKsWIXo1jlrTwTauLDaQD91N
+	pNCfKRyiHnm65D2d5KqPFZqE5BQXrKCmAMzLL2i4RG7kQVkD8MnWab8cMrabm/T0aWCjxBuM2SK
+	bUQTsxoUeE/V9JqIpJEP9EARhBEOSL1fYXKB8Apz98AKAGiVbJWB2LcVcPgtK+rmRYE3AK74TZS
+	QTkSS+8s1M4accf5oQjkUp8/nUtI1fV99+zpcTzZ/XOrM9Ag2OULXmWmL+VhI+NhbICKIDpD9t3
+	H116GCgpgBAzyZzPKrVWqPvwodceD6FprDHKjClQ0DdluhUa8XYFUQQKhKh6dIZOU36h/0eel3Q
+	6uKrF0wRJgJqYJ9YtplnQn3ZhAaMYLjBP2DaF8mDUCFRiThG9hRqhzQl8g+FGQHpEcwLR3fu04V
+	IaBDKXCU9Z9oKZrkmdkSBF6fRc=
+X-Received: by 2002:a17:906:5183:10b0:c16:84dc:9607 with SMTP id a640c23a62f3a-c246a704562mr2269966966b.19.1787566865663;
+        Mon, 24 Aug 2026 03:21:05 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:d6d5:360a:4ee9:3f53])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c249629a901sm1327677066b.25.2026.08.24.03.21.05
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c249629a901sm1327677066b.25.2026.08.24.03.21.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Aug 2026 03:21:06 -0700 (PDT)
+        Mon, 24 Aug 2026 03:21:05 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 24 Aug 2026 12:21:00 +0200
-Subject: [PATCH v3 2/3] receive-pack: move message generation to separate
- function
+Date: Mon, 24 Aug 2026 12:20:59 +0200
+Subject: [PATCH v3 1/3] doc: add proc-receive hook info in
+ 'git-receive-pack.adoc'
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,7 +71,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260824-758-introduce-hook-v3-2-499526f0a062@gmail.com>
+Message-Id: <20260824-758-introduce-hook-v3-1-499526f0a062@gmail.com>
 References: <20260824-758-introduce-hook-v3-0-499526f0a062@gmail.com>
 In-Reply-To: <20260824-758-introduce-hook-v3-0-499526f0a062@gmail.com>
 To: git@vger.kernel.org
@@ -79,149 +79,47 @@ Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, gitster@pobox.com,
  jltobler@gmail.com, kristofferhaugsbakk@fastmail.com, 
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4163; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=B3SN1ATBJKX3LmJdjOWVjgZEUDVqoHrUxRmQ64Qoiy8=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqMGw4dGrLGR2VzjlfX+BhBufLz4UYN3tEmM
- fvaZoPclL50OokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqjBsOAAoJED7VnySO
- Rox/jUML/iet4ovkuO9rnxR6EWsKx39eyb6ALAh9bGTYay4n8NdVNYShXrb9Jk0IyFjKADAdslu
- 5ZT1cQ5cEPmczcDSql5RXILuhybhlTjTn7OtEW5Msljb4549gWtLM7vqHnaggkS8+gMOUkjsXQX
- Bs6Cu2oZzaoqy9rRuBj+egG1z7097LS6mtJlsaJnhd+iCfJ45r0uHtWfH8YgC5TQh2LaiRQO5ni
- ETu6aTmjyF7jacMKvNnt3mAE5YaF0oi6pseonugbuFRJy1f+vM0ibYHtcE8UN9SHsPZguK4EzOY
- o1+F/fBZgsw6fndgcfoxvd2HWAhFROGLk3trlwn9ZF9SG66Ll5Fx9saPms761f3FHKtxu+rVUF+
- AeNeBWXOGLf/615q7IWVYB6/eZuxztKb81lxKWAEE/i0f/vVvmmAKa8WdWxmOKqphMt/AKfzJ2Y
- ssIojqRmqzTFvhq+LlJgJKhhstF0znNIPmHHwcL9KabA77GUeriz1YMBJXZ45lvZFhsuu8P9296
- zs=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1069; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=N0WMD2NEoMqy5ejZuH1H/0bwDUTiN/IbGGRveTwUV/k=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqMGw4ayUcsBxB4rNLHmo6r1v1R9tPgkrIV2
+ AILCMJiLSTwQIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqjBsOAAoJED7VnySO
+ Rox/8ZsL/jNsX0uOSFZ1URG/KT0aMS04vsA0hEbVqGlweA1xbwKiULI3SI7oxBR/RL0pZbyyxZA
+ UNqd4Ry7OhG119yH0qdZshcyrSbi1Kv/uOjBwtV0nR+3wHiwA0QCbAoD4NiU0VCf304cSm902D1
+ fZzkCBwTyNmPcMxe5LFNQfgB5vw/AY5K/KpJPb2HkbdQ28HACZrDun/YCNRR2hyvQtu1gaNqbtq
+ N7Hj/EmS06ir3HXTAW6en76oEXE+xPdtXYMXCm50CxaUN4SYC82NsvR1jlbVxUTDg7l/6pzP8QY
+ FNm/4OCvlww8W315UrZcbqRozlTadal+1vX4NXe3SbIzhFJS8wLl3+nyJr1jIs0mvmNcKO2Is8N
+ JxuE/34rycJFmkanO/qiY87iq2rOAeBH07uX93RzWi06iswRYCakc/6AsOuZPqzQMo4pZRiMLgL
+ Ng4vvNp9LNY0UrE3PXMZXW+lwQTwaM+e10L/UPIMj1jlw7FPI0jhmPdrJbEjuf7u0cNOatqSOu6
+ Y8=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Post the reference transaction, both `report()` and `report_v2()`
-generate the message to be sent to the client. In v2, we also add
-reports for each reference if available. Since they share common code,
-move them to a common function. This will also help the following
-commit, where we will need to regenerate the message during hook
-failure.
+The 'Documentation/git-receive-pack.adoc' contains documentation about
+hooks which lie in the lifecycle of 'git-receive-pack(1)'. Unfortunately
+it is missing information about the 'proc-receive' hook. Add it.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/receive-pack.c | 84 ++++++++++++++++++++++++++------------------------
- 1 file changed, 44 insertions(+), 40 deletions(-)
+ Documentation/git-receive-pack.adoc | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 86933d8d7e..70a686c142 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2530,67 +2530,71 @@ static void update_shallow_info(struct command *commands,
- 	free(ref_status);
- }
+diff --git a/Documentation/git-receive-pack.adoc b/Documentation/git-receive-pack.adoc
+index 0956086d61..4349487e6a 100644
+--- a/Documentation/git-receive-pack.adoc
++++ b/Documentation/git-receive-pack.adoc
+@@ -236,6 +236,12 @@ if the repository is packed and is served via a dumb transport.
+ exec git update-server-info
+ ----
  
--static void report(struct command *commands, const char *unpack_status)
-+/*
-+ * Generate the response to be sent to the client invoking 'git-receive-pack(1)'.
-+ * For v2 protocol, set `add_reports` to true, which will also add additional
-+ * report per reference update.
-+ */
-+static void generate_response(struct strbuf *buf, struct command *commands,
-+			      const char *unpack_status, bool add_reports)
- {
- 	struct command *cmd;
--	struct strbuf buf = STRBUF_INIT;
++PROC-RECEIVE HOOK
++-----------------
++This hook is invoked by 'git-receive-pack' when it processes push
++requests. It handles refs whose names match the patterns defined by
++`receive.procReceiveRefs` and executes the actual ref updates. See
++linkgit:githooks[5] for the full protocol description.
  
--	packet_buf_write(&buf, "unpack %s\n",
-+	packet_buf_write(buf, "unpack %s\n",
- 			 unpack_status ? unpack_status : "ok");
--	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (!cmd->error_string)
--			packet_buf_write(&buf, "ok %s\n",
--					 cmd->ref_name);
--		else
--			packet_buf_write(&buf, "ng %s %s\n",
--					 cmd->ref_name, cmd->error_string);
--	}
--	packet_buf_flush(&buf);
--
--	if (use_sideband)
--		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
--	else
--		write_or_die(1, buf.buf, buf.len);
--	strbuf_release(&buf);
--}
--
--static void report_v2(struct command *commands, const char *unpack_status)
--{
--	struct command *cmd;
--	struct strbuf buf = STRBUF_INIT;
--	struct ref_push_report *report;
- 
--	packet_buf_write(&buf, "unpack %s\n",
--			 unpack_status ? unpack_status : "ok");
- 	for (cmd = commands; cmd; cmd = cmd->next) {
-+		struct ref_push_report *report;
- 		int count = 0;
- 
--		if (cmd->error_string) {
--			packet_buf_write(&buf, "ng %s %s\n",
--					 cmd->ref_name,
--					 cmd->error_string);
-+		if (cmd->error_string)
-+			packet_buf_write(buf, "ng %s %s\n",
-+					 cmd->ref_name, cmd->error_string);
-+		else
-+			packet_buf_write(buf, "ok %s\n", cmd->ref_name);
-+
-+		if (!add_reports || cmd->error_string)
- 			continue;
--		}
--		packet_buf_write(&buf, "ok %s\n",
--				 cmd->ref_name);
-+
- 		for (report = cmd->report; report; report = report->next) {
- 			if (count++ > 0)
--				packet_buf_write(&buf, "ok %s\n",
-+				packet_buf_write(buf, "ok %s\n",
- 						 cmd->ref_name);
- 			if (report->ref_name)
--				packet_buf_write(&buf, "option refname %s\n",
-+				packet_buf_write(buf, "option refname %s\n",
- 						 report->ref_name);
- 			if (report->old_oid)
--				packet_buf_write(&buf, "option old-oid %s\n",
-+				packet_buf_write(buf, "option old-oid %s\n",
- 						 oid_to_hex(report->old_oid));
- 			if (report->new_oid)
--				packet_buf_write(&buf, "option new-oid %s\n",
-+				packet_buf_write(buf, "option new-oid %s\n",
- 						 oid_to_hex(report->new_oid));
- 			if (report->forced_update)
--				packet_buf_write(&buf, "option forced-update\n");
-+				packet_buf_write(buf, "option forced-update\n");
- 		}
- 	}
--	packet_buf_flush(&buf);
-+
-+	packet_buf_flush(buf);
-+}
-+
-+static void report(struct command *commands, const char *unpack_status)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	generate_response(&buf, commands, unpack_status, false);
-+
-+	if (use_sideband)
-+		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
-+	else
-+		write_or_die(1, buf.buf, buf.len);
-+	strbuf_release(&buf);
-+}
-+
-+static void report_v2(struct command *commands, const char *unpack_status)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	generate_response(&buf, commands, unpack_status, true);
- 
- 	if (use_sideband)
- 		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
+ QUARANTINE ENVIRONMENT
+ ----------------------
 
 -- 
 2.55.GIT
