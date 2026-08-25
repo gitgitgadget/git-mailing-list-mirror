@@ -1,120 +1,698 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B6C3A718D
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 20:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F120345740
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 20:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787690098; cv=none; b=dN5BzXMNTUENbSRe/Pwl0yAfYncjJrtWnjvgb1fWh/Ts55F92xsNNjLhFO0yumTwYR18k8CndDWmnkx6wK3C1DzU5xEy5bMT85/0MtyU2taN5zrc6/vPJF1UMCMs9NEuoHYcKAgys5NablpteUyKVsq8jLq0Nq+sMlFhtKtOTx0=
+	t=1787690807; cv=none; b=CIKg3yiY7707N5AESftDTWI4f6ulqeUi5N8sAw7vRqziDgZU3RrHcLX2aS6vchBQfcDezG02kQpXydSuOPjm4c0YfWyfkOTiPdWvSW8KKC1YXtJe7+RIIFPAlW8mzk7tqvgkeq+vMZVvN9ldw+UTx//Trsp/zy6J0Vvn7csSzv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787690098; c=relaxed/simple;
-	bh=dgh7tQwbKSkSul5leU8NUf5gQL2QEUhuGUEv4sufyd0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=esxoF8AZLIktZ3rLFrE9/1Oh2BlRjQifLtuBdYVnhof7VhR8wQgaFlMKxmM2G34J8khCwJlUOIImbLijqfii23lcMau+zL37Zl+YDPYe4YkA/zp3wb04OEMW26YkJzwuJQ5Go66GqhndwK0sDZCd9TaKSMWdBhPUn1/gbzGSg2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pUv5S7nv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Psgvk/i9; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787690807; c=relaxed/simple;
+	bh=LMKM0e0SujBcEz4n4GuvfQlZzx+V2lo73P+g2tEJ1lc=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=BtQ2FOctGi+koRy3Gy8uFQsWeA+7jjDZn46rTTiEuAecm3o6hXBgYT/fQWGobM5sK9DsCyp/FwivNW2vKVJj/pvRKBOK844QUZM7w1X2+YCIEWSysT1dOJg0sryLMpUpeH7ndNqU1FdvLWm6qVXpe6I43GkCAxJUWXVR9clXE1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UmUlZRnf; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pUv5S7nv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Psgvk/i9"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id C5155EC006E;
-	Tue, 25 Aug 2026 16:34:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 25 Aug 2026 16:34:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787690095; x=1787776495; bh=2KR/eXrVYo
-	e/A/+np2bwurOtaZGytCftO3WVux2zLUk=; b=pUv5S7nvlHkTVbDqzwH1PrseEm
-	tHA/gq3RrptQ0CAEiNahXu0Lyibcx+T1ZBEnTH/nf7PMUu9sNhIEoPLf0V8XLU6P
-	urmQjhWZcMlvhwwfZq4qZEFAnsR8OFGJPKulP/mIjfO6EsOI4P67fBVAPZOvV4us
-	rRAxLQgRyENC4gkFUP0/S/7e0qJ4pCBOZIepgdLtQwfEln4s/H2bljS60EIg3JK1
-	mlROZDrc6vRMNCjlXfqxsBsgNXR3HbBzTd/+ddWwcdsvDXGIcCr5TqZCDNc//pq0
-	VMOiJ99Fw6GziVdjiPjTaPHW+42eJfQtyATkO6/Va5FylThtoK8zYNMI63IQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787690095; x=1787776495; bh=2KR/eXrVYoe/A/+np2bwurOtaZGytCftO3W
-	Vux2zLUk=; b=Psgvk/i9BaTocT1xYjjabLw2j9OEnDmEXrIN1/GA9aFlg+iQSC1
-	Dk7RWs8kesbAqUz/qQauaDV/xoBU4ACEFG5nDF0PEwMats4NnZktOIVk8Kx2zvAm
-	16vDuZea7DzIzTiM1eN05Hpry+5reEGf6DSDtproApjTHJX7VB5czH0Wcyg03Gjd
-	LV7LkAlzBXwgBjbn5fGnoppnU7JYNBg/9j79tu39osuvCtgFXx0Uu2K6T4EwhzQV
-	pFgpe6Wd6J988Rk88x76zzcprdGUlzuFs3DlrfHGC9mlbYtBbY3AT/oQZi3sWAbU
-	dwJq4eBuzJpg/APv2hEiCm1vrQtivMp8Uog==
-X-ME-Sender: <xms:b_yNakWdCScyAsOirNby0J5NHF3VjyqnRHoDhlUGtZ7JnH7gvKSOSA>
-    <xme:b_yNavfaLC9g9TANK7BID43OqzeOzv9kFDGTOtKyxZbrhhlEDxUYkwsvat_z_ggV2
-    P2LYhlEqluRMryUWwBbgYMNTD1ra9EAxHxB05z1Bz3XK68u-DkwWw>
-X-ME-Received: <xmr:b_yNagu4mRO9T8_Yd-6ReKPwozmbRoiH9JZA_9A38XbQzcn6zg2sZ0qTMT2-GJ19h5QvXbgQAZNBgEwLeKL_3ymWiyQUNm6K8g>
-X-ME-Proxy-Cause: dmFkZTGM6+df23KpaoRmvA29+TT7xAHByWF2CKp9N44xaGtV9s4z9MprFCEv64LWjC6gxH
-    HgOH5ZB9NLMowhg99CZZ7Zjl2PpUaneUPdfGcl6yGWO+vwiG+IjCQDVkCglGToWO+uTk6+
-    hYC4KbReU0XJARGALOlR/EDFKfU4tIDQZLMVtDbFY9wwUeuUJrcBLQZoaXtho1MK24ELbv
-    zY8nnSjKCwAFyDq7p6cJ/Fe/1JdHVX/WjDnvMXuBIbCCc+MS4TAAnp++siGGjeyfJmhDQ/
-    4VghzUZU3qNJx3+pQTD19QNskKOXUEMb+XatzZ0O7hbxqpMa7t9o5a/hGP2Z3eW8Yw4XkU
-    NEChaI2nSVtut3eH+0J+LD8eDOZDmHyXcglqhUqw5nWE2BnGrwqy0aMwJ/Qogm9Xqevw7W
-    IhH4GaekamQO9a4I8c4iTwyW2rsihiWZhd00DsN/bN8Dzjx/oSItIRNVlPs8LhNDlBuCaw
-    KLrVy9htdJYCOGs1M1N+FNb4Qn+YgWPn7hGOW5bAv18/Tw/qhpJvZsGTpo5fgk9MTAjj4r
-    HkyXyv7/9ShFMwvddJlqoDvKPesW2oQme+U2fRHrz7J5NSfynd+UfB0PsUi+qy9vA1E6Jt
-    CG50maHGGJnS06RFzDR6ac930XCnKpe4mNpliKqe8dZzPclUvZ0GIlHIxNbg
-X-ME-Proxy: <xmx:b_yNau9oki1f2nSCN1wfjC6O3atvDogGw2-DzseURQW7kOxqDeUyfA>
-    <xmx:b_yNar0kByWcA34SYXHY_rQFD9ePJfVGmO1baQZxuM4KV3GAAUjNQA>
-    <xmx:b_yNajDMRPf5i0Ri8l85cz4-c54cTf0Yd9IW1WH8YRDDyPZrZCecng>
-    <xmx:b_yNandYN0r78iWYsMUFfIvzqeQlx8D34QRZnR9zxrr6Ch3RGsYpNw>
-    <xmx:b_yNarfM4RHQ2xyKaBu2yN--1ipCQdpbj0T2c7r9lJ0LZv3K3oTDH_cU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Aug 2026 16:34:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Taylor Blau <ttaylorr@openai.com>,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH v2 1/7] banned-die: create header for banning of functions
-In-Reply-To: <84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Tue, 25 Aug 2026
-	18:56:15 +0000")
-References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
-	<pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
-	<84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
-Date: Tue, 25 Aug 2026 13:34:53 -0700
-Message-ID: <xmqqh5kikkgi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UmUlZRnf"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-51c0ecfaee7so2024151cf.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 13:46:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787690804; x=1788295604; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=nAVY2LYjmGmhREeiCM/zu0+L23YVaWEMQgkeY15BcpE=;
+        b=UmUlZRnf+ChdBuULBrOWyTvA+CxzLOQIAIo7Vc5IFm9difH/SfPORiGB/zpeSpiP/f
+         rNxJ3XTEtPJUiQnJNHimQEHxi5Wmuv8Qxm4c3EarTANEq6vwYQ43CNLAlge0b9gWy/9l
+         eltQzKSqpdAeQVcWgE+ggjCBfuYOiN27UnBmYLxa7uJEnLkYilyC5rO4wmfJN2+As/il
+         P/zP1ic68jlqd8GkEUZFX7QXNiUGlbzxnLeQlCgFfPBsb66lSFUhPzUigmjIUqtrAFzu
+         NFHjonzgCW8VqcC/olXxnVkQLPHDeKxw8VipVPWH8EQLaK8zY4pHEjFB7yKMpAGUNFxB
+         wFPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787690804; x=1788295604;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=nAVY2LYjmGmhREeiCM/zu0+L23YVaWEMQgkeY15BcpE=;
+        b=UxxXaMimJZzx0tR5X7F1jSt0I2MyYRmpfM2ev4R1yrgcH81RQSAP4E1fVZJxD/wE9Q
+         i5inPvRlxp/kOlOMzNLVPOteSMDihiSF/OMJNjiK40Rt7sVT7tmi30lsjMhGsu8Eb/N0
+         tgHFWZKPz2E9UBkPDe72tbTgfU/XLMLXfEfRH2k17m+K2bj6Zbk6/bSux08vzfMNr7Rt
+         IJ7ZzEwGySTN4K1ChivB6imbkdMXjgTbRKO0GFygexEuYlPJYpPMgNRNz+2FM0Tw40vR
+         qf7Yi30AarjrUg9xHJU3lbILpBE2srv5GRHKxRDp83gs9ZGPfRmCarly7/gutaJwq+Am
+         cIBg==
+X-Gm-Message-State: AFuF++lduEUlpygvI4RVwfH4wyq86GiiUS4ZxG25eBNMFxMJyTLkxeSp
+	F+/5xApDLSKHsfzBc470wiazBRJvhb7h9ZclLQRwHW3RetMOMh13KuuSqewTlBO3
+X-Gm-Gg: AR+sD133Tgfd2ziiwPSKb/KTcr3kglorhBusDiUK4dSe3YvDqoOm+OHf7LvBruuRn3h
+	0D4I7HH6mKz2LmXf/QMmTSIK/1D0XsQ2zKJL9FiyFeS2i8DYpAT1btaRex6XIx6eYpwwv6dtODn
+	iDwNLNdnZulTHuNhKmEumVA24RqXgrFlCA1bM7BerLPH0ua0Leu6KL+IByFj93T6sBQXYbvChst
+	5BRnFDL0G3pbzniz0JWcmhv2zfR+RBccbC0ataRcfCo2p+XSfLJlitdDKRy8F+sWEhe2vyqMSRb
+	NDPXJgeDxMUQDvxpuhtElZOuvyxuL33XBpfgxq95I9+j+7mI/5vMw1AdEP1hi2cAxDRoq6nnoYI
+	7uS7//gYsk0JYM++6MJQsupDXYpujYcrHZ6jnkfI6X1bein2moZqN0Y/rsvrbxj25TRH8y8/jdN
+	C/7tIXv3MYOjy9PNI6WP538cWn/+h+2pI+QaGWF104q4/4mMwdMgQenneel5uKhxioTGzhoQ==
+X-Received: by 2002:a05:622a:2b49:b0:52d:cf84:abf3 with SMTP id d75a77b69052e-52e42266fe6mr20368761cf.4.1787690803921;
+        Tue, 25 Aug 2026 13:46:43 -0700 (PDT)
+Received: from [127.0.0.1] ([57.154.217.178])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90cc65093bfsm7603276d6.29.2026.08.25.13.46.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Aug 2026 13:46:43 -0700 (PDT)
+Message-Id: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
+From: "Andrew Pleeter via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 25 Aug 2026 20:46:42 +0000
+Subject: [PATCH] builtin/whoami: add new 'whoami' command
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Andrew Pleeter <andrewpleeter@gmail.com>,
+    anpl1623 <andrewpleeter@gmail.com>
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: anpl1623 <andrewpleeter@gmail.com>
 
-> From: Derrick Stolee <stolee@gmail.com>
->
-> We have universally-banned functions listed in banned.h since
-> c8af66ab8ad (automatically ban strcpy(), 2018-07-26), but some layers of
-> the code should be more strict than others.
->
-> One such example is the trace2 API which runs during atexit() and can
-> prove to cause die()-handler recursion problems if it calls die().
->
-> Create a new banned-die.h header file that will ban some Git methods
-> that call die(). Include that in all trace2 API implementation files.
-> This currently only bans die() itself, and that was already not used.
->
-> It would be reasonable to name this file trace2/tr2_banned.h to be
-> specific to the trace2 API, but it seems like such a restriction would
-> be valuable to put in some other areas of the code, so adding it at the
-> root of the tree seems like a good long-term approach.
+Add a builtin 'whoami' command to inspect and display the resolved
+author and committer identity along with the commit signing
+configuration (GPG/SSH key ID and commit.gpgsign status) used when
+creating Git commits.
 
-In other words, the functions banned by including this file are not
-listed because they are banned from being used in trace2 API, but
-because they may lead to die().  There may be some other traits that
-we might want to avoid in certain subset of our code, and we may
-have similar banned-frotz.h header to prevent direct or indirect use
-of frotz.  Which makes sense to me.
+Support optional flags (--author, --committer, --name, --email,
+--signing-key, and --verbose) for targeted querying and scripting.
 
-Would the same approach work for the_hash_algo and the_repository, I
-wonder?
+Include documentation in Documentation/git-whoami.adoc and regression
+tests in t/t0015-whoami.sh.
 
+Signed-off-by: anpl1623 <andrewpleeter@gmail.com>
+---
+    builtin/whoami: add new 'whoami' command
+    
+    
+    Title:
+    ======
+    
+    builtin/whoami: add new 'whoami' command
+    
+    ------------------------------------------------------------------------
+    
+    
+    Description:
+    ============
+    
+    SUMMARY
+    
+    Adds a new builtin git whoami command that inspects and displays the
+    user's active author and committer identity along with their commit
+    signing configuration (GPG/SSH key ID and commit.gpgsign status).
+    
+    MOTIVATION
+    
+    Users often work across multiple environments, profiles, or repositories
+    with different global/local configs and signing keys. Currently,
+    verifying what identity and signing key will be attached to a new commit
+    requires checking several individual git config and git var settings.
+    git whoami provides a simple, direct porcelain command to verify this in
+    one step.
+    
+    CHANGES
+    
+     * Core implementation: Added builtin/whoami.c using Git's ident.h and
+       gpg-interface.h APIs.
+     * CLI flags supported:
+       * git whoami (default overview)
+       * -a, --author (author identity: Name <email>)
+       * -c, --committer (committer identity: Name <email>)
+       * -n, --name (name only)
+       * -e, --email (email only)
+       * -s, --signing-key (signing key ID)
+       * -v, --verbose (detailed identity and signing breakdown)
+     * Documentation: Added manpage in Documentation/git-whoami.adoc.
+     * Build integration: Added to Makefile, meson.build, command-list.txt,
+       and builtin.h.
+     * Test suite: Added comprehensive automated tests in t/t0015-whoami.sh.
+    
+    EXAMPLE OUTPUT
+    
+    $ git whoami
+    Author:    Jane Doe <jane@example.com>
+    Committer: Jane Doe <jane@example.com>
+    Signing:   /Users/jane/.ssh/id_ed25519_git (format: ssh, commit.gpgsign: true)
+    
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2388%2Fanpl1623%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2388/anpl1623/master-v1
+Pull-Request: https://github.com/git/git/pull/2388
+
+ Documentation/git-whoami.adoc |  48 ++++++++
+ Documentation/meson.build     |   1 +
+ Makefile                      |   1 +
+ builtin.h                     |   1 +
+ builtin/whoami.c              | 201 ++++++++++++++++++++++++++++++++++
+ command-list.txt              |   1 +
+ git.c                         |   1 +
+ meson.build                   |   1 +
+ t/meson.build                 |   1 +
+ t/t0015-whoami.sh             | 181 ++++++++++++++++++++++++++++++
+ 10 files changed, 437 insertions(+)
+ create mode 100644 Documentation/git-whoami.adoc
+ create mode 100644 builtin/whoami.c
+ create mode 100755 t/t0015-whoami.sh
+
+diff --git a/Documentation/git-whoami.adoc b/Documentation/git-whoami.adoc
+new file mode 100644
+index 0000000000..80670f10e9
+--- /dev/null
++++ b/Documentation/git-whoami.adoc
+@@ -0,0 +1,48 @@
++git-whoami(1)
++=============
++
++NAME
++----
++git-whoami - Show current user identity and commit signing information
++
++
++SYNOPSIS
++--------
++[synopsis]
++git whoami [options]
++
++DESCRIPTION
++-----------
++Displays the author and committer identity (name and email address) and
++commit signing configuration that will be used when signing and recording
++Git commits.
++
++OPTIONS
++-------
++`-a`::
++`--author`::
++	Show author identity.
++
++`-c`::
++`--committer`::
++	Show committer identity.
++
++`-n`::
++`--name`::
++	Show name only.
++
++`-e`::
++`--email`::
++	Show email only.
++
++`-s`::
++`--signing-key`::
++	Show commit signing key only.
++
++`-v`::
++`--verbose`::
++	Show detailed identity and signing status.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index f4854f802d..3476e41f29 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -163,6 +163,7 @@ manpages = {
+   'git-verify-tag.adoc' : 1,
+   'git-version.adoc' : 1,
+   'git-web--browse.adoc' : 1,
++  'git-whoami.adoc' : 1,
+   'git-worktree.adoc' : 1,
+   'git-write-tree.adoc' : 1,
+   'git.adoc' : 1,
+diff --git a/Makefile b/Makefile
+index d4b775953d..3af620d73d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1517,6 +1517,7 @@ BUILTIN_OBJS += builtin/var.o
+ BUILTIN_OBJS += builtin/verify-commit.o
+ BUILTIN_OBJS += builtin/verify-pack.o
+ BUILTIN_OBJS += builtin/verify-tag.o
++BUILTIN_OBJS += builtin/whoami.o
+ BUILTIN_OBJS += builtin/worktree.o
+ BUILTIN_OBJS += builtin/write-tree.o
+ 
+diff --git a/builtin.h b/builtin.h
+index 4e47a4ebd3..9e38298274 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -284,5 +284,6 @@ int cmd_verify_pack(int argc, const char **argv, const char *prefix, struct repo
+ int cmd_show_ref(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_pack_refs(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_replace(int argc, const char **argv, const char *prefix, struct repository *repo);
++int cmd_whoami(int argc, const char **argv, const char *prefix, struct repository *repo);
+ 
+ #endif
+diff --git a/builtin/whoami.c b/builtin/whoami.c
+new file mode 100644
+index 0000000000..3830f76c93
+--- /dev/null
++++ b/builtin/whoami.c
+@@ -0,0 +1,201 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
++#include "builtin.h"
++#include "config.h"
++#include "gettext.h"
++#include "gpg-interface.h"
++#include "ident.h"
++#include "parse-options.h"
++#include "strbuf.h"
++
++static const char * const whoami_usage[] = {
++	N_("git whoami [options]"),
++	NULL
++};
++
++int cmd_whoami(int argc,
++	       const char **argv,
++	       const char *prefix,
++	       struct repository *repo UNUSED)
++{
++	int show_author = 0;
++	int show_committer = 0;
++	int show_name = 0;
++	int show_email = 0;
++	int show_signing_key = 0;
++	int verbose = 0;
++	int ret = 0;
++
++	struct option whoami_options[] = {
++		OPT_BOOL('a', "author", &show_author, N_("show author identity")),
++		OPT_BOOL('c', "committer", &show_committer, N_("show committer identity")),
++		OPT_BOOL('n', "name", &show_name, N_("show name only")),
++		OPT_BOOL('e', "email", &show_email, N_("show email only")),
++		OPT_BOOL('s', "signing-key", &show_signing_key, N_("show commit signing key")),
++		OPT__VERBOSE(&verbose, N_("show detailed identity and signing status")),
++		OPT_END()
++	};
++
++	struct strbuf author_info = STRBUF_INIT;
++	struct strbuf committer_info = STRBUF_INIT;
++	struct ident_split author_split, committer_split;
++	struct strbuf author_name = STRBUF_INIT;
++	struct strbuf author_email = STRBUF_INIT;
++	struct strbuf committer_name = STRBUF_INIT;
++	struct strbuf committer_email = STRBUF_INIT;
++
++	char *signing_key = NULL;
++	char *gpg_format = NULL;
++	char *ssh_default_key_cmd = NULL;
++	char *resolved_key = NULL;
++	int gpgsign = 0;
++	int is_ssh = 0;
++
++	argc = parse_options(argc, argv, prefix, whoami_options,
++			     whoami_usage, 0);
++
++	if (argc > 0)
++		usage_with_options(whoami_usage, whoami_options);
++
++	die_for_incompatible_opt2(show_author, "--author", show_committer, "--committer");
++	die_for_incompatible_opt2(show_name, "--name", show_email, "--email");
++	die_for_incompatible_opt2(show_signing_key, "--signing-key", show_name, "--name");
++	die_for_incompatible_opt2(show_signing_key, "--signing-key", show_email, "--email");
++	die_for_incompatible_opt2(show_signing_key, "--signing-key", show_author, "--author");
++	die_for_incompatible_opt2(show_signing_key, "--signing-key", show_committer, "--committer");
++	die_for_incompatible_opt2(show_signing_key, "--signing-key", verbose, "--verbose");
++	die_for_incompatible_opt2(verbose, "--verbose", show_name, "--name");
++	die_for_incompatible_opt2(verbose, "--verbose", show_email, "--email");
++	die_for_incompatible_opt2(verbose, "--verbose", show_author, "--author");
++	die_for_incompatible_opt2(verbose, "--verbose", show_committer, "--committer");
++
++	repo_config(the_repository, git_default_config, NULL);
++
++	strbuf_addstr(&author_info, git_author_info(IDENT_NO_DATE));
++	strbuf_addstr(&committer_info, git_committer_info(IDENT_NO_DATE));
++
++	if (split_ident_line(&author_split, author_info.buf, author_info.len) == 0) {
++		if (author_split.name_begin && author_split.name_end)
++			strbuf_add(&author_name, author_split.name_begin,
++				   author_split.name_end - author_split.name_begin);
++		if (author_split.mail_begin && author_split.mail_end)
++			strbuf_add(&author_email, author_split.mail_begin,
++				   author_split.mail_end - author_split.mail_begin);
++	}
++
++	if (split_ident_line(&committer_split, committer_info.buf, committer_info.len) == 0) {
++		if (committer_split.name_begin && committer_split.name_end)
++			strbuf_add(&committer_name, committer_split.name_begin,
++				   committer_split.name_end - committer_split.name_begin);
++		if (committer_split.mail_begin && committer_split.mail_end)
++			strbuf_add(&committer_email, committer_split.mail_begin,
++				   committer_split.mail_end - committer_split.mail_begin);
++	}
++
++	repo_config_get_bool(the_repository, "commit.gpgsign", &gpgsign);
++	repo_config_get_string(the_repository, "user.signingkey", &signing_key);
++	repo_config_get_string(the_repository, "gpg.format", &gpg_format);
++	repo_config_get_string(the_repository, "gpg.ssh.defaultkeycommand", &ssh_default_key_cmd);
++
++	is_ssh = gpg_format && !strcmp(gpg_format, "ssh");
++
++	if (signing_key && *signing_key) {
++		resolved_key = xstrdup(signing_key);
++	} else if (is_ssh) {
++		if (ssh_default_key_cmd && *ssh_default_key_cmd)
++			resolved_key = get_signing_key_id();
++	} else if (gpgsign) {
++		resolved_key = get_signing_key_id();
++	}
++
++	if (show_signing_key) {
++		if (resolved_key && *resolved_key) {
++			puts(resolved_key);
++			ret = 0;
++		} else {
++			ret = 1;
++		}
++		goto cleanup;
++	}
++
++	if (show_name) {
++		if (show_author)
++			puts(author_name.buf);
++		else
++			puts(committer_name.buf);
++		goto cleanup;
++	}
++
++	if (show_email) {
++		if (show_author)
++			puts(author_email.buf);
++		else
++			puts(committer_email.buf);
++		goto cleanup;
++	}
++
++	if (show_author) {
++		puts(author_info.buf);
++		goto cleanup;
++	}
++
++	if (show_committer) {
++		puts(committer_info.buf);
++		goto cleanup;
++	}
++
++	if (verbose) {
++		printf(_("Author Name:      %s\n"), author_name.buf);
++		printf(_("Author Email:     %s\n"), author_email.buf);
++		printf(_("Committer Name:   %s\n"), committer_name.buf);
++		printf(_("Committer Email:  %s\n"), committer_email.buf);
++		if (signing_key && *signing_key)
++			printf(_("Signing Key:      %s\n"), signing_key);
++		else if (resolved_key && *resolved_key)
++			printf(_("Signing Key:      %s (default fallback)\n"), resolved_key);
++		else
++			printf(_("Signing Key:      %s\n"), _("none"));
++		printf(_("Signing Format:   %s\n"),
++		       gpg_format ? gpg_format : "openpgp");
++		printf(_("GPG Signing:      %s\n"),
++		       gpgsign ? _("enabled") : _("disabled"));
++	} else {
++		printf(_("Author:    %s\n"), author_info.buf);
++		printf(_("Committer: %s\n"), committer_info.buf);
++		if (gpgsign) {
++			if (signing_key && *signing_key) {
++				printf(_("Signing:   %s (format: %s, commit.gpgsign: true)\n"),
++				       signing_key,
++				       gpg_format ? gpg_format : "openpgp");
++			} else if (resolved_key && *resolved_key) {
++				printf(_("Signing:   default key (%s) (format: %s, commit.gpgsign: true)\n"),
++				       resolved_key,
++				       gpg_format ? gpg_format : "openpgp");
++			} else {
++				printf(_("Signing:   enabled (no signing key configured)\n"));
++			}
++		} else {
++			if (signing_key && *signing_key) {
++				printf(_("Signing:   disabled (key: %s, format: %s, commit.gpgsign: false)\n"),
++				       signing_key,
++				       gpg_format ? gpg_format : "openpgp");
++			} else {
++				printf(_("Signing:   disabled (commit.gpgsign: false)\n"));
++			}
++		}
++	}
++
++cleanup:
++	free(signing_key);
++	free(gpg_format);
++	free(ssh_default_key_cmd);
++	free(resolved_key);
++	strbuf_release(&author_info);
++	strbuf_release(&committer_info);
++	strbuf_release(&author_name);
++	strbuf_release(&author_email);
++	strbuf_release(&committer_name);
++	strbuf_release(&committer_email);
++
++	return ret;
++}
+diff --git a/command-list.txt b/command-list.txt
+index 21b802c420..0276bc2a53 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -210,6 +210,7 @@ git-verify-pack                         plumbinginterrogators
+ git-verify-tag                          ancillaryinterrogators
+ git-version                             ancillaryinterrogators
+ git-whatchanged                         ancillaryinterrogators          complete
++git-whoami                              ancillaryinterrogators
+ git-worktree                            mainporcelain
+ git-write-tree                          plumbingmanipulators
+ gitattributes                           userinterfaces
+diff --git a/git.c b/git.c
+index e5f1811b6b..83629178c9 100644
+--- a/git.c
++++ b/git.c
+@@ -680,6 +680,7 @@ static struct cmd_struct commands[] = {
+ #ifndef WITH_BREAKING_CHANGES
+ 	{ "whatchanged", cmd_whatchanged, RUN_SETUP | DEPRECATED },
+ #endif
++	{ "whoami", cmd_whoami, RUN_SETUP_GENTLY },
+ 	{ "worktree", cmd_worktree, RUN_SETUP },
+ 	{ "write-tree", cmd_write_tree, RUN_SETUP },
+ };
+diff --git a/meson.build b/meson.build
+index d86f2acd2b..0daf395752 100644
+--- a/meson.build
++++ b/meson.build
+@@ -726,6 +726,7 @@ builtin_sources = [
+   'builtin/verify-commit.c',
+   'builtin/verify-pack.c',
+   'builtin/verify-tag.c',
++  'builtin/whoami.c',
+   'builtin/worktree.c',
+   'builtin/write-tree.c',
+ ]
+diff --git a/t/meson.build b/t/meson.build
+index 181d61a8a0..8c111148da 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -87,6 +87,7 @@ integration_tests = [
+   't0012-help.sh',
+   't0013-sha1dc.sh',
+   't0014-alias.sh',
++  't0015-whoami.sh',
+   't0017-env-helper.sh',
+   't0018-advice.sh',
+   't0019-json-writer.sh',
+diff --git a/t/t0015-whoami.sh b/t/t0015-whoami.sh
+new file mode 100755
+index 0000000000..2a2d9b6dd3
+--- /dev/null
++++ b/t/t0015-whoami.sh
+@@ -0,0 +1,181 @@
++#!/bin/sh
++
++test_description='basic sanity checks for git whoami'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY/lib-gpg.sh"
++
++test_expect_success 'default output format without signing' '
++	cat >expect <<-EOF &&
++	Author:    $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>
++	Committer: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
++	Signing:   disabled (commit.gpgsign: false)
++	EOF
++	git whoami >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git whoami --author' '
++	echo "$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>" >expect &&
++	git whoami --author >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git whoami --committer' '
++	echo "$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >expect &&
++	git whoami --committer >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git whoami --author --name and --author --email' '
++	echo "$GIT_AUTHOR_NAME" >expect_name &&
++	git whoami --author --name >actual_name &&
++	test_cmp expect_name actual_name &&
++	echo "$GIT_AUTHOR_EMAIL" >expect_email &&
++	git whoami --author --email >actual_email &&
++	test_cmp expect_email actual_email
++'
++
++test_expect_success 'git whoami --committer --name and --committer --email' '
++	echo "$GIT_COMMITTER_NAME" >expect_name &&
++	git whoami --committer --name >actual_name &&
++	test_cmp expect_name actual_name &&
++	echo "$GIT_COMMITTER_EMAIL" >expect_email &&
++	git whoami --committer --email >actual_email &&
++	test_cmp expect_email actual_email
++'
++
++test_expect_success 'git whoami --signing-key when signing is disabled and unset' '
++	test_config commit.gpgsign false &&
++	test_unconfig user.signingkey &&
++	test_must_fail git whoami --signing-key
++'
++
++test_expect_success 'git whoami with explicitly configured signing key' '
++	test_config user.signingkey "TEST_KEY_123" &&
++	test_config commit.gpgsign true &&
++	test_config gpg.format ssh &&
++	cat >expect <<-EOF &&
++	Author:    $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>
++	Committer: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
++	Signing:   TEST_KEY_123 (format: ssh, commit.gpgsign: true)
++	EOF
++	git whoami >actual &&
++	test_cmp expect actual &&
++	echo "TEST_KEY_123" >expect_key &&
++	git whoami --signing-key >actual_key &&
++	test_cmp expect_key actual_key
++'
++
++test_expect_success 'git whoami with signing disabled but key configured' '
++	test_config user.signingkey "TEST_KEY_123" &&
++	test_config commit.gpgsign false &&
++	test_config gpg.format openpgp &&
++	cat >expect <<-EOF &&
++	Author:    $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>
++	Committer: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
++	Signing:   disabled (key: TEST_KEY_123, format: openpgp, commit.gpgsign: false)
++	EOF
++	git whoami >actual &&
++	test_cmp expect actual &&
++	echo "TEST_KEY_123" >expect_key &&
++	git whoami --signing-key >actual_key &&
++	test_cmp expect_key actual_key
++'
++
++test_expect_success 'git whoami with openpgp signing enabled without explicit key' '
++	test_unconfig user.signingkey &&
++	test_config commit.gpgsign true &&
++	test_config gpg.format openpgp &&
++	cat >expect <<-EOF &&
++	Author:    $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>
++	Committer: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
++	Signing:   default key ($GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>) (format: openpgp, commit.gpgsign: true)
++	EOF
++	git whoami >actual &&
++	test_cmp expect actual &&
++	echo "$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" >expect_key &&
++	git whoami --signing-key >actual_key &&
++	test_cmp expect_key actual_key
++'
++
++test_expect_success 'git whoami with ssh signing enabled without explicit key' '
++	test_unconfig user.signingkey &&
++	test_config commit.gpgsign true &&
++	test_config gpg.format ssh &&
++	test_unconfig gpg.ssh.defaultKeyCommand &&
++	cat >expect <<-EOF &&
++	Author:    $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>
++	Committer: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
++	Signing:   enabled (no signing key configured)
++	EOF
++	git whoami >actual &&
++	test_cmp expect actual &&
++	test_must_fail git whoami --signing-key
++'
++
++test_expect_success GPGSSH 'git whoami with ssh defaultKeyCommand' '
++	test_unconfig user.signingkey &&
++	test_config commit.gpgsign true &&
++	test_config gpg.format ssh &&
++	test_config gpg.ssh.defaultKeyCommand "cat \"${GPGSSH_KEY_PRIMARY}.pub\"" &&
++	git whoami --signing-key >actual_key &&
++	test_grep "^SHA256:" actual_key
++'
++
++test_expect_success 'git whoami -v / --verbose' '
++	test_config user.signingkey "MY_SIGNING_KEY" &&
++	test_config commit.gpgsign true &&
++	test_config gpg.format openpgp &&
++	cat >expect <<-EOF &&
++	Author Name:      $GIT_AUTHOR_NAME
++	Author Email:     $GIT_AUTHOR_EMAIL
++	Committer Name:   $GIT_COMMITTER_NAME
++	Committer Email:  $GIT_COMMITTER_EMAIL
++	Signing Key:      MY_SIGNING_KEY
++	Signing Format:   openpgp
++	GPG Signing:      enabled
++	EOF
++	git whoami -v >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git whoami with environment variable overrides' '
++	test_unconfig user.signingkey &&
++	test_config commit.gpgsign false &&
++	cat >expect <<-EOF &&
++	Author:    Custom Author <custom.author@example.com>
++	Committer: Custom Committer <custom.committer@example.com>
++	Signing:   disabled (commit.gpgsign: false)
++	EOF
++	GIT_AUTHOR_NAME="Custom Author" \
++	GIT_AUTHOR_EMAIL="custom.author@example.com" \
++	GIT_COMMITTER_NAME="Custom Committer" \
++	GIT_COMMITTER_EMAIL="custom.committer@example.com" \
++	git whoami >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'incompatible option combinations fail' '
++	test_must_fail git whoami --author --committer 2>err &&
++	test_grep "cannot be used together" err &&
++	test_must_fail git whoami --name --email 2>err &&
++	test_grep "cannot be used together" err &&
++	test_must_fail git whoami --signing-key --name 2>err &&
++	test_grep "cannot be used together" err &&
++	test_must_fail git whoami --signing-key --email 2>err &&
++	test_grep "cannot be used together" err &&
++	test_must_fail git whoami --signing-key --author 2>err &&
++	test_grep "cannot be used together" err &&
++	test_must_fail git whoami --signing-key --committer 2>err &&
++	test_grep "cannot be used together" err &&
++	test_must_fail git whoami --verbose --name 2>err &&
++	test_grep "cannot be used together" err
++'
++
++test_expect_success 'git whoami outside of repository' '
++	nongit git whoami --author >actual &&
++	test_grep "<" actual
++'
++
++test_done
+
+base-commit: 593c42fe075be0c8cd5239b3a2f21c610cbc9798
+-- 
+gitgitgadget
