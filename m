@@ -1,80 +1,78 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D35A481FC1
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 14:12:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27056440A34
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 14:30:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787667176; cv=none; b=dRwJr9n9Zr4Z5ggJLD3xFbgS8RAdygrOJtlU5BccgeNYgHemIIFP2Rxf5/w31fsOv7CL+6cNMTC12PrQWFfqr51bjsvHt+nAUpI9xA5zGuKDH+L1sdCGnQiZntyjobDgJhgzB36U+iANR4BmnqYH2YiXyEZDDdOhyKG2o36XiCg=
+	t=1787668218; cv=none; b=pJVc9N0pS4lsj+L+PZ0pDaAKmQgmRvlfdqT5WIDlGu8Ih5BVRNuUzWWfRMfCG8o2xRnOY7zhsSa/rTJAHfNorPirPjY8AOyG0bLk6ZYeaw8QoRYxkzoXJyu5rx8RK009BfGZVezEtSz51wZfmg6Z640/zFT/+h24Dpz3SdCJfYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787667176; c=relaxed/simple;
-	bh=uxgrFkpqV3Si1p/Jld29JSvMWXS0CaZ4K2pFQSBKqV0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GjzODJdmkm3RXPG8xsVYi5LUl/HzWH3gqzgmWutXunv4884Q3aZFcTG8p+SlPanUqpObrqeubcIsvtEg5RIsFS3y4JbsCdOb0V2tiVefxcZ1FiaJSAPr1NhVAdBB90W9r01rNXDQAy0ZfpICCF5143oBPqeDojxzIb9FE4DnG0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OAk3AiF+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M9rSsu1k; arc=none smtp.client-ip=202.12.124.147
+	s=arc-20240116; t=1787668218; c=relaxed/simple;
+	bh=aF6OoVtlGXalC/GGs2TVAecSzWJb1RMZiD8u4McwZT8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CrpCVLjImWMccEYuqpmD9KuFCmKEiDT7/2VJpR6CUcxJtCtwU+DCjdYARn5fPu1tglnM1inYyKmQpSxfoarsW/UvIJGboLhNtFf7JXKUxJOdEufDIwdFuiRNMLoOoT80S+CRWccaUvKXXi4olS4T2EdMG03IxLtOvqXY4E1fdAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m2IdSXYb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TFJyBNtL; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OAk3AiF+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M9rSsu1k"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0A8EC1D00046
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 10:12:54 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 25 Aug 2026 10:12:54 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m2IdSXYb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TFJyBNtL"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5556B7A00E2
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 10:30:16 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Tue, 25 Aug 2026 10:30:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787667173;
-	 x=1787753573; bh=YePWBQmhtL4SkoxNiWdyDGyb1IOQc5sqhhaPx92oWqE=; b=
-	OAk3AiF+QNKqklIx7iMXtHu7Z+MzFA8x7/mS5eOo7O7G/UGkcBW7QL4Ad1V/j6VN
-	HJj/IAKbBM/jv3tBOwi9Rs7ZQ911jx2+HxsB2ca6DNRMuKnD+0LSXBpD2rVH4xdm
-	4LF3HEPizlwYNEup3knGXer27SeGFr5vF1mvdVoO6jKHbZRGsPDAHNNgwcgpiGHS
-	Kpbpe/I3y0gDwNlp8/0FTz4NagXr3D+fLLhqbJMMc0w9g0HMzLJayh14z7QjicHY
-	c0UAbysR9zhZUHOSarDwEacpv7p2AcCPBZv6OdWbzGBaslg/WZN0Xzn0Zgy3jizw
-	aNdiEIUhFcLnNcAv/9mBvw==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1787668216; x=1787754616; bh=Db+8IL5DEW
+	dWzSBy13ZL3/UkdC9SCP0iWj6bb8D0dac=; b=m2IdSXYb0o5GByjbs19CGmLh6O
+	zvkQpJDgmZbkGJ2hsB689Pd4whybmw025JMw3c9UAVbGExoDD5aqENUXjmwFpEnh
+	vGSdryNSS/ZYq/PhQlE4uNBSeJG/cuBgqSw2xmkpeCNvoObkbYPJ4IRQpQBBfeBJ
+	DqloJaK/HjMX2XaQUcZzvFWYsXn1jbOvY6GDVZIwl9yqPZj9OiSTww9gklCpObxL
+	ueaEV9Fjk2tWAAoY8fIPG50NTnmTeHCITM393gGzJYAe0BUM/shdKtf5OekTNZf9
+	xYngSyrL7ezk6wJVQliR46iVZKguT+GnCEyAORITA/t3vNO4ndfDUeEDqapQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787667173; x=
-	1787753573; bh=YePWBQmhtL4SkoxNiWdyDGyb1IOQc5sqhhaPx92oWqE=; b=M
-	9rSsu1krTPCQYHys1F+CdvXPoajaBlGtkZbUHJ5pzRJaaEYEran2o3yWKdtvSGjb
-	RbsDTgT+Zb/9K0PHOKkA5sHNO28gMdlOS2D2A7p7XazjT4vanpp90uWcyedAryCD
-	rI9S9lnISOJZgHiMB3nfqNTctIRpqJtphRpA9URar7W0xB0TebsQ+3vo6c/MKpup
-	Zz47P05OhdFGnHpGAjyqW9R5SXqCE15fQSi6LCjKNxrNUm26YOUuborPvfJIsK9u
-	gAZOEAyrfw8Wz4nljODTNxdY0ZcynD14lsSmjZoHoigUYY7b0GXYw/me5L0jZbd6
-	7eqcaL2qSr4BQfLOnHgTA==
-X-ME-Sender: <xms:5aKNakC7p7cAKzAMNWrYKdzTpYR7veyngz0trXHN1tqcdCVZ8_kHXQ>
-    <xme:5aKNatdORqq-_UyTJkmFiuBuQ0eVtFIBShzAKRP0rwAxVc6SAWeU-1wVh2TwBbNHP
-    IPJADvcefsmlLiY9IpVRJdSS0WaCX2DAhD9s_du-dPbnhgGjpdb>
-X-ME-Received: <xmr:5aKNatMmG0cLOhrdLeQX_-NHuDSdCsSkQ05Igs0AgHkT2KHLAahwK38mq82woax6rJ0gzsbTdMvL2PVNPqT3BA0FsEHUapRPlBkGiyVL2w>
-X-ME-Proxy-Cause: dmFkZTGeb4bxLdeGsZIHwBpNvHkBYVFqb0gPBRFQdjclKFZL9iepAsMrQPToqlL/TKVr+q
-    N4zotQK8qWu/iZbZxMh9T+enbjab8RTI96+ANj5zdevsOZpx/k2kbDA/Ezij5R9InemX2I
-    ieATfXIkvh0YiRX3YRriT1epVXzuvh+X9pcDU66Ymz3EVbvLlj2rZKEI0CELpv6/vw7ah2
-    elZ11v6nTiFLLnUx3cpsB978r+ZIEPLEKCBDKbZEAm79gm+cy32vgIs/g1+gOLXs07WJ70
-    65IHgmKSzOBkB+IYs7mYVzgUR2wQOS5+Tr0YSbucb929Tar/yOh4FpTSqzhx1xlgLk0GXS
-    Tf0fwM/dxsOqGmifjfstJlRzonmnGaKGhzkownaBdt8EtleewkQ2Rp43MU1cMlwXJO7eEY
-    6sZxNZVxujpKaN5SBV46XTW2Lcb9I0UkSOuKUrAKb0jAM1mwanDC2t7gLOsAwZOCrjRjFj
-    1/9jvN9cMSjt9AlRebPdjT8aU9HI9rVtfVUqRdT/RQTz7XKSyx5a2oVJaHApX75DmzVbR/
-    E7h+zIk3W4XWtnldb/WHZ9urqnreQxYmxXw+/zKI8tHTTFos0sgVJjWPVh2XDMejlz7M9V
-    4FzOShRUYw1MK/VsMrahZAlcHy3S1qU9LsSUp7eor1cxmL3UivdN/R0DvWhQ
-X-ME-Proxy: <xmx:5aKNav6aathScs9X1G_5Ft0MRj1Btvfde-XBAn5rReD2yT_p4A9t-g>
-    <xmx:5aKNapIn8bM1mQh5JCVXmIYFLSDn-POK1sMdlKzV7NpUglXapv6zoA>
-    <xmx:5aKNahfyfR8nTK8bwFZVzuoL-knGYz0ov6-zLzRiE_Et4ErC5fI-3w>
-    <xmx:5aKNakfHU76urXKC2ZmjuA_SFdXfnpb-scvyAHv7levBaZ_OsNAzlg>
-    <xmx:5aKNavClU6Wb2FbeHS7XduJRYJtsevAySFBdEnZqvrMenAlSKKjjDc68>
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1787668216; x=1787754616; bh=Db+8IL5DEWdWzSBy13ZL3/UkdC9S
+	CP0iWj6bb8D0dac=; b=TFJyBNtL1Q81h3gVWFZlhgliTxCzYQi23Py9pUwXLS4L
+	ejNs8s1RDw5ASSdGfZ02f657//MwOcjukkDscj/sJgTjbObE+U8ocZnbtKqf5Itr
+	kall4do4avgTfQOBh9DgwIL+kbqXKtMyTx66gb8AGQXbcfte4fn1X76d22gAUBw5
+	XcsvV0AP0L/WuZgsFS0b1h9TmA7tKnwikZ1QLrAs9COgxa8OkcpgwY6l7Uuez9ND
+	ObcupefDzUOFnQwWle8TdUPw3k5S7QeHw+T7RIXkhOeuKLXgGmy9zqTjYYxUzxca
+	AWDa+O7b0svfZBHy9K2gDNS1kSFYZ9lsGvoO5JjTqQ==
+X-ME-Sender: <xms:-KaNag41OJ5laVOMtNkYAnUpxIhwv-7N2mQV1XPgY6PHJf2PZ-Dp8g>
+    <xme:-KaNao0_IZE3pJGKRV6iN20yt-k8GW9LZWdX-wF2lDbokNDQfivGZsfyUjVFpis6I
+    qxSeyEuSuK3OrnzjFU_z3LR_cOJbK7oe5UmTMRZFpNajL6ItohPJig>
+X-ME-Received: <xmr:-KaNalEoXwJSTDSJVheQbj_3BK2Qjz-WacS4ZPs4WkKALctaOhLBdebPhRW2OEBy3IoM9Y3bZo8H43shXZu8Ki0EuCkHYpbMOAEumXh2YQ>
+X-ME-Proxy-Cause: dmFkZTEYr40wNtBQWcDJSe0UNekzAAUSiWyB6ed2QP6hrMFQBPAe1l8rpkkJbOJLCOw3lR
+    FWXcxv0pAJrC4Z/X1XOKmH3Inw5dmiExextMzAoL/m9qkP2SwTvnZ2+ZhgWdzywMu4UiYG
+    uvX7jIDh0OXbVjRGBIVABx1mHKKCXFJQTtv4jiud7KT1XvhsyOzGuRvFXUTifY7ohaIdxh
+    0e87j095HI6Wmo5n5CrdeqP1dI06blytj8rhvRnKhd6AsBvqbUJs8T4FDwv/BJi2Zrrp8e
+    yw/mIqV7d+LLi5WMvzyV4hqySQvMO+HGoLAoRihDOT8e0KgXzEd1+yFzsj4ZWrsVhBA+hV
+    ygDXrxIAXutXtRpom7So8JQayZpmKNZPJfUccMiXu3RQau0YZAdwDtkfvl8zba5JmzrMXG
+    Ynorrqc0XOn4WpX0kNrZ7Q1u6sPiEVPKo5za3owfaxVHQW7gLC46F9snOPzmmtzpGNosOd
+    w0VL+LgScwghIX669YVw3aUNsgY0DN4O/SLtzE33bm78+Fh5g6t/BqL8NxMFkWuKHZ+9nn
+    Vq9079WJHR2km7+S9iB0dOeMZ8zic1X4L1nGXkVrBXgtmnH4RF6vtQeFXLLZCSbcDhkRW4
+    HhbbG5ky6iSe7EjiAYlZcdi4wROE857smRmKSFtalWYNs9nmBWfwUL1yVHqg
+X-ME-Proxy: <xmx:-KaNaqRx3lEdWGw9Hw2yrblV4KkKsY-lXEQeswNoVdhprmAgege4SQ>
+    <xmx:-KaNakCwJFImbFwXpqzPWK0aTKO2tyc8Nwsz9SuoDt6MGSb25jCwIA>
+    <xmx:-KaNai14o6xdDLkzQaru-UUklSibVChmR-HBjALXDEO_ilqiiVYs9Q>
+    <xmx:-KaNaqWiDT4zvDSgW1UyXaCLhgQHidsqExd0xntd75lg7nSoc5_8CA>
+    <xmx:-KaNahZyouYhEVbHWG93iD2nmemaV9BRqNvGzvjtj_vGD9fjmAhRpLpP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 25 Aug 2026 10:12:53 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 25 Aug 2026 10:30:15 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 069cff55 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id ea8b8fb0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 25 Aug 2026 14:12:52 +0000 (UTC)
+	Tue, 25 Aug 2026 14:30:12 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 25 Aug 2026 16:11:57 +0200
-Subject: [PATCH 8/8] odb/source: remove the ability to write alternates
+Subject: [PATCH 00/10] odb: make consistency checks pluggable
+Date: Tue, 25 Aug 2026 16:30:02 +0200
+Message-Id: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,265 +81,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260825-pks-odb-write-alternates-at-creation-time-v1-8-911513ba95c3@pks.im>
-References: <20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im>
-In-Reply-To: <20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ6CMBBG4auQWTtJaZQar2JcyPAXBhJKOmJMC
+ He3yvJbvLeRISuMbtVGGW81TXNBfapIhufcg7UrJu98466142UyTl3LltYs4GgyMZpzCF4CcIl
+ UyiUj6ud/vT8O29qOkNdvRfv+BSw3YYx3AAAA
+X-Change-ID: 20260810-pks-odb-source-fsck-e64772c7ee5f
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-There are no users of `odb_source_write_alternates()` in our tree
-anymore. Remove that function and its supporting infrastructure.
+Hi,
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+this patch series makes object database consistency checks pluggable.
+
+This series is built on top of 2c3adbb2c4 (The 18th batch, 2026-08-24)
+with the following two dependencsie merged into it:
+
+  - ps/odb-eagerly-load-alternates at 0076dc9f81 (odb: drop
+    `alternates_db` field, 2026-08-17)
+
+  - ps/odb-pluggable-pack-generation at 5176dd3d05 (bundle: generate
+    packfiles via the object database, 2026-08-21)
+
+Thanks!
+
+Patrick
+
 ---
- odb.c                 |  9 ---------
- odb.h                 |  7 -------
- odb/source-files.c    | 55 ---------------------------------------------------
- odb/source-inmemory.c |  7 -------
- odb/source-loose.c    |  7 -------
- odb/source-packed.c   |  7 -------
- odb/source.h          | 26 ------------------------
- 7 files changed, 118 deletions(-)
+Patrick Steinhardt (10):
+      builtin/fsck: use `fsck_obj_buffer()` when checking loose objects
+      builtin/fsck: merge `fsck_obj_buffer()` and `fsck_obj()`
+      builtin/fsck: de-globalize option handling
+      builtin/fsck: don't check alternates with "--no-full"
+      odb: provide infrastructure for pluggable fsck checks
+      builtin/fsck: move packfile verification into the packed source
+      builtin/fsck: move reverse index verification into the packed source
+      builtin/fsck: move bitmap verification into the packed source
+      builtin/fsck: move multi-pack index verification into the packed source
+      builtin/fsck: move loose object verification into the loose source
 
-diff --git a/odb.c b/odb.c
-index 67d98d64fc..b531cf8fb3 100644
---- a/odb.c
-+++ b/odb.c
-@@ -239,15 +239,6 @@ static struct odb_source *odb_add_alternate_recursively(struct object_database *
- 	return alternate;
- }
- 
--void odb_add_to_alternates_file(struct object_database *odb,
--				const char *dir)
--{
--	int ret = odb_source_write_alternate(odb->sources, dir);
--	if (ret < 0)
--		die(NULL);
--	odb_add_alternate_recursively(odb, dir, 0);
--}
--
- struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
- 						const char *dir)
- {
-diff --git a/odb.h b/odb.h
-index b9e0db56ec..2d002461f8 100644
---- a/odb.h
-+++ b/odb.h
-@@ -270,13 +270,6 @@ int odb_mkstemp(struct object_database *odb,
-  */
- int odb_has_alternates(struct object_database *odb);
- 
--/*
-- * Add the directory to the on-disk alternates file; the new entry will also
-- * take effect in the current process.
-- */
--void odb_add_to_alternates_file(struct object_database *odb,
--				const char *dir);
--
- /*
-  * Add the directory to the in-memory list of alternate sources (along with any
-  * recursive alternates it points to), but do not modify the on-disk alternates
-diff --git a/odb/source-files.c b/odb/source-files.c
-index 5e77b21d9f..feef9e169a 100644
---- a/odb/source-files.c
-+++ b/odb/source-files.c
-@@ -4,7 +4,6 @@
- #include "chdir-notify.h"
- #include "config.h"
- #include "gettext.h"
--#include "lockfile.h"
- #include "object-file.h"
- #include "odb.h"
- #include "odb/source.h"
-@@ -303,59 +302,6 @@ static int odb_source_files_read_alternates(struct odb_source *source,
- 	return 0;
- }
- 
--static int odb_source_files_write_alternate(struct odb_source *source,
--					    const char *alternate)
--{
--	struct lock_file lock = LOCK_INIT;
--	char *path = xstrfmt("%s/%s", source->path, "info/alternates");
--	FILE *in, *out;
--	int found = 0;
--	int ret;
--
--	repo_hold_lock_file_for_update(source->odb->repo, &lock, path,
--				       LOCK_DIE_ON_ERROR);
--	out = fdopen_lock_file(&lock, "w");
--	if (!out) {
--		ret = error_errno(_("unable to fdopen alternates lockfile"));
--		goto out;
--	}
--
--	in = fopen(path, "r");
--	if (in) {
--		struct strbuf line = STRBUF_INIT;
--
--		while (strbuf_getline(&line, in) != EOF) {
--			if (!strcmp(alternate, line.buf)) {
--				found = 1;
--				break;
--			}
--			fprintf_or_die(out, "%s\n", line.buf);
--		}
--
--		strbuf_release(&line);
--		fclose(in);
--	} else if (errno != ENOENT) {
--		ret = error_errno(_("unable to read alternates file"));
--		goto out;
--	}
--
--	if (found) {
--		rollback_lock_file(&lock);
--	} else {
--		fprintf_or_die(out, "%s\n", alternate);
--		if (commit_lock_file(&lock)) {
--			ret = error_errno(_("unable to move new alternates file into place"));
--			goto out;
--		}
--	}
--
--	ret = 0;
--
--out:
--	free(path);
--	return ret;
--}
--
- static int too_many_loose_objects(struct odb_source_files *files, int limit)
- {
- 	unsigned long loose_count;
-@@ -839,7 +785,6 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
- 	files->base.write_object_stream = odb_source_files_write_object_stream;
- 	files->base.begin_transaction = odb_source_files_begin_transaction;
- 	files->base.read_alternates = odb_source_files_read_alternates;
--	files->base.write_alternate = odb_source_files_write_alternate;
- 	files->base.optimize = odb_source_files_optimize;
- 	files->base.optimize_required = odb_source_files_optimize_required;
- 
-diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-index 795672adf2..b00248dfb2 100644
---- a/odb/source-inmemory.c
-+++ b/odb/source-inmemory.c
-@@ -326,12 +326,6 @@ static int odb_source_inmemory_read_alternates(struct odb_source *source UNUSED,
- 	return 0;
- }
- 
--static int odb_source_inmemory_write_alternate(struct odb_source *source UNUSED,
--					       const char *alternate UNUSED)
--{
--	return error("in-memory source does not support alternates");
--}
--
- static void odb_source_inmemory_close(struct odb_source *source UNUSED)
- {
- }
-@@ -388,7 +382,6 @@ struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb)
- 	source->base.freshen_object = odb_source_inmemory_freshen_object;
- 	source->base.begin_transaction = odb_source_inmemory_begin_transaction;
- 	source->base.read_alternates = odb_source_inmemory_read_alternates;
--	source->base.write_alternate = odb_source_inmemory_write_alternate;
- 
- 	return source;
- }
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index bb3455dfbd..0f9b30bac1 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -982,12 +982,6 @@ static int odb_source_loose_read_alternates(struct odb_source *source UNUSED,
- 	return 0;
- }
- 
--static int odb_source_loose_write_alternate(struct odb_source *source UNUSED,
--					    const char *alternate UNUSED)
--{
--	return error("loose source does not support alternates");
--}
--
- static void odb_source_loose_clear_cache(struct odb_source_loose *loose)
- {
- 	oidtree_clear(loose->cache);
-@@ -1053,7 +1047,6 @@ struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
- 	loose->base.write_object_stream = odb_source_loose_write_object_stream;
- 	loose->base.begin_transaction = odb_source_loose_begin_transaction;
- 	loose->base.read_alternates = odb_source_loose_read_alternates;
--	loose->base.write_alternate = odb_source_loose_write_alternate;
- 
- 	if (!is_absolute_path(loose->base.path))
- 		chdir_notify_register(NULL, odb_source_loose_reparent, loose);
-diff --git a/odb/source-packed.c b/odb/source-packed.c
-index 630d955585..c2d253759c 100644
---- a/odb/source-packed.c
-+++ b/odb/source-packed.c
-@@ -628,12 +628,6 @@ static int odb_source_packed_read_alternates(struct odb_source *source UNUSED,
- 	return 0;
- }
- 
--static int odb_source_packed_write_alternate(struct odb_source *source UNUSED,
--					     const char *alternate UNUSED)
--{
--	return error("packed backend cannot write alternates");
--}
--
- void (*report_garbage)(unsigned seen_bits, const char *path);
- 
- static void report_helper(const struct string_list *list,
-@@ -849,7 +843,6 @@ struct odb_source_packed *odb_source_packed_new(struct object_database *odb,
- 	packed->base.write_object_stream = odb_source_packed_write_object_stream;
- 	packed->base.begin_transaction = odb_source_packed_begin_transaction;
- 	packed->base.read_alternates = odb_source_packed_read_alternates;
--	packed->base.write_alternate = odb_source_packed_write_alternate;
- 
- 	if (!is_absolute_path(path))
- 		chdir_notify_register(NULL, odb_source_packed_reparent, packed);
-diff --git a/odb/source.h b/odb/source.h
-index 86b82fab3b..5ee769e839 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -287,19 +287,6 @@ struct odb_source {
- 	int (*read_alternates)(struct odb_source *source,
- 			       struct strvec *out);
- 
--	/*
--	 * This callback is expected to persist the singular alternate passed
--	 * to it into its list of alternates. Any pre-existing alternates are
--	 * expected to remain active. Subsequent calls to `read_alternates` are
--	 * thus expected to yield the pre-existing list of alternates plus the
--	 * newly added alternate appended to its end.
--	 *
--	 * The callback is expected to return 0 on success, a negative error
--	 * code otherwise.
--	 */
--	int (*write_alternate)(struct odb_source *source,
--			       const char *alternate);
--
- 	/*
- 	 * This callback is expected to optimize the object database source.
- 	 * Returns 0 on success, a negative error code otherwise.
-@@ -519,19 +506,6 @@ static inline int odb_source_read_alternates(struct odb_source *source,
- 	return source->read_alternates(source, out);
- }
- 
--/*
-- * Write and persist a new alternate object database source for the given
-- * source. Any preexisting alternates are expected to stay valid, and the new
-- * alternate shall be appended to the end of the list.
-- *
-- * Returns 0 on success, a negative error code otherwise.
-- */
--static inline int odb_source_write_alternate(struct odb_source *source,
--					      const char *alternate)
--{
--	return source->write_alternate(source, alternate);
--}
--
- /*
-  * Create a new transaction that can be used to write objects into a temporary
-  * staging area. The objects will only be persisted when the transaction is
+ builtin/fsck.c                | 296 ++++++++----------------------------------
+ odb.c                         |   9 ++
+ odb.h                         |  33 +++++
+ odb/source-files.c            |  13 ++
+ odb/source-inmemory.c         |   8 ++
+ odb/source-loose.c            |  92 +++++++++++++
+ odb/source-packed.c           | 117 +++++++++++++++++
+ odb/source.h                  |  21 +++
+ pack-bitmap.c                 |  26 ++--
+ pack-bitmap.h                 |   2 +-
+ t/t1450-fsck.sh               |   5 +
+ t/t5319-multi-pack-index.sh   |  13 ++
+ t/t5325-reverse-index.sh      |   8 ++
+ t/t5326-multi-pack-bitmaps.sh |  10 +-
+ 14 files changed, 394 insertions(+), 259 deletions(-)
 
--- 
-2.55.0.822.g20453c30eb.dirty
+
+---
+base-commit: 6b08999fb1b3ad0bad04d492dc206ad42839e274
+change-id: 20260810-pks-odb-source-fsck-e64772c7ee5f
 
