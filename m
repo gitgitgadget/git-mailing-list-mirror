@@ -1,129 +1,153 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38AC3E47B
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 15:54:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C163733E348
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 16:11:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787673268; cv=none; b=T+4uRdDQUPaavbZzY0XDGPa/c4E5bSVV5IewZbciaNnF1rg7ltDvO4Qrw6TaspxeMps4t12loIsJ317xfgurw+W9QyQsitc49yRS722XWJ5/UnO7ShjnuB8NATLaTYejdX6hmDBLs3KlVAIlvt5d5Mg+h9YI4mZ6IT+JhWbOFnY=
+	t=1787674306; cv=none; b=L2wnl7IPrAdSg3dZG/N34+XkndDm5yJdMLznv6qA0Q22z6Srczlm3IHefGgzhGMGoLtIDycTZ3HqZREncSa2UkrINF1Fs/IT7C6FVyQKYKKpuvUWH9PqjQTvjzgZEv+m++dZosaVBtxIofyUjG7O6TQpWwA5XIbDTQ6cq79jLEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787673268; c=relaxed/simple;
-	bh=8GDE+UkgTrJGZ9s+1t0vWz5mXCFRi5MMPgiLPmjUGJU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=B42Ot/mF+739+Z3CuGTAGO/wm4wNxZYarEY/rjmKsyXpO1uGkGhd1eutHSpRXK9HPaGzxJ9iuRvW2tZRPU0TwKVI1d7v45O7zokRT4f2bEu+ikG9gLvlw2dloXxIvuRLrr3j3X/twRdDj2LXiDPUVSz/fd50FM/rcRKeO54BoLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UMaSTN6w; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787674306; c=relaxed/simple;
+	bh=klN1ZKdBxzLoWmTgxVeM2w2aO/lD1lpkiVraD+pSmpw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DHDVVJcZkkt6AZ0pdxxSlPK+8TLRqtx+qkLV5w534NCm16ivpWRyxL1pUlBwt5DxJWk0qdaxJ4zzZxTvKgd73wSxkn0ezIK4NAwdm5LJvRdIAxtFMehWCoTy4zfLgILdpvxNUtwu9Tsf5wez0zhwJUB7GYI/boTQDiKbZFonDyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b07MPrTh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dljYMPox; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UMaSTN6w"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-47fd66a094eso1443836f8f.3
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 08:54:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787673265; x=1788278065; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+VYC0CCgo7UgSgz9G+qtzeKthJLQJKKgGlmDl1VnLe0=;
-        b=UMaSTN6wVBJsjpkSbCy0q9O8Zi1ZhfTCcXOr4yDZ8/RInJP/2H/2M+/KAtSpxaR4sZ
-         IUbUaO1AbiyP3rimMxy8h8AHdLGLJNsRwopy7uTBNBa6XvdtTh2xbhNmXR8eq9ODbgra
-         YHsSikWdpvUpVKdVerlA7HN7zcg+2ZfFfdvNdle/qJaiBIWao2M+gdmwx0PIatcAOLJR
-         gP8sHFIBYHMLQwyQo5knKc/gAnrdPhAeIkXpl/VnoytT1+UaCSY7Q/xXiZAOALF7SVhM
-         ypRmqWipgzVxeBqKcMsms3/+zgg3pRUJTm2eErgMckvBnRNSAQZ5LlqFOD5K36AWGlIX
-         8z0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787673265; x=1788278065;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+VYC0CCgo7UgSgz9G+qtzeKthJLQJKKgGlmDl1VnLe0=;
-        b=jTlaqEAZ5hsOl5F2h2pAXooSUcj2ACmR9c5Hp/vsM/ZRjWZ1CzAUUjZ68dlsiy6fEo
-         GyPkou6XCkIAnWYTnb68WcujsXJ3du1EBSMTfNSGIM83AAuBj1vm1Mw+pqxNec7OMpON
-         chLRg+7rFZetaTF37VJMhu16DKMlF4227XKRw6MRiYtxFKQcPODUVMIR56df+eUys7I5
-         PQ0LiAMIBXQfVIQdBOL6qgxl6zPKcXXQAUBKBGa9VyuC3cj0iEc1NizlimYk1h4hMSsK
-         LrSfa+UnJzjPEevChzwnKavk7wcdGJv0/LICTfLG05oAKcrqa7wBCvn3aTXtIMTh3jxC
-         wsJg==
-X-Forwarded-Encrypted: i=1; AHgh+Rq7D7WH8DTVmH/XvZ0Nd0NPscLJAx1jiAxpAdxLjIB9tfldgX9baCjGfI84/p1e7Kjz6mE=@vger.kernel.org
-X-Gm-Message-State: AFuF++mnpW9Bt6aCRlkhBb97N7NpAA6qwpXyrhw1vvxKdmoNbFJ/Myff
-	9SxkhAdnNtH/3huY3HJmt1IOMX47rGKwVNbqNfTzkeaaNH1tuPeTX356
-X-Gm-Gg: AR+sD13+d2ejDSTJfCMpu1/juDQs7DL7SFVjfe+lizRFqXz73+mm3LIj7OeSXlHpTF5
-	FTXXk4R25RXkKVGskqq62TlcyM3LjRAwK9I9JjwXmdlHz1maQ1I5O5gaHUcfm8ByXF5Tdy6yiZA
-	Xsj18ZYNW2ud7P+XusYj8NbjWiqugqgZh7hYipG5dyfVqWz0NWVFfB7KYnr0Vhis7vZqesScEpO
-	eUQYuRAzYfpSbfbQk942xeJQrVHObWLO+JTcuxi3lzcN8c1PTBEIU3xOZ0JtwhLEbJz9inT83E/
-	HW70wOB46T5NRBVZn1H9p0bJfzVZIj/9iZ1SKd9OF5zZpsGplLMNcj4BgKLN+Cq3o+ezIIEsqvh
-	qsjwkgDCs9KphICogp8J+uYTiohuUe2HLrHP4sqHd9iCpxS2qVyK9r7/0PeXarUL8hpTZ9AJOsN
-	nsAzIDU03fsFT+trlPGHiXrMq5rMoFogAE7j2uI4xjZUvPQ2he9AKNjEKeA6KE36KOaV0pUOiu/
-	GFMR1i9+C5qNu5/1bmNNNRKwY2mY/bVGz4utT6XYUA=
-X-Received: by 2002:a05:6000:4681:b0:481:4fa4:f9e5 with SMTP id ffacd0b85a97d-482e26adb2dmr134590f8f.14.1787673264934;
-        Tue, 25 Aug 2026 08:54:24 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482d4710ac5sm6480203f8f.32.2026.08.25.08.54.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Aug 2026 08:54:23 -0700 (PDT)
-Message-ID: <472164ed-7707-4842-a275-0356cb0e7c71@gmail.com>
-Date: Tue, 25 Aug 2026 16:54:14 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b07MPrTh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dljYMPox"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 28EFA7A0071;
+	Tue, 25 Aug 2026 12:11:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Tue, 25 Aug 2026 12:11:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787674304; x=1787760704; bh=sqUUm7ZAAj
+	fS8/6+sR9fF44+yzKLtK6970X+v9QBqO8=; b=b07MPrThQh0SYgJ3VgoYemwb0Y
+	hOFd0YPmmPAvq0ZiohEN51mLxBY3onpiSAFj5w5hsqGWC4VFPn8BGklkcuf5AhNu
+	Y5wZ0MA4KCn0M2RBIXYNFPiJuBYsycGcC+TYYcXOSc/Zyk0kZ6FVQutuKo0kZ4sP
+	We/O4P7DuCrwRT8Wwbi1d1uHPMVafncNTGj5CJDq+0ovoH9owaFFDXVuUQzi9fUp
+	C6IOYhXJ/JX8lU8poR0HQda2DLapN6fdnaRcyCvLgC+L1BhpH4J32fR3ya7oLt9z
+	gG4Fq63oRCJQLlMfV5plDooVYGEvP1yFPai5DRsCwGydasjIIezQd48HqzGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787674304; x=1787760704; bh=sqUUm7ZAAjfS8/6+sR9fF44+yzKLtK6970X
+	+v9QBqO8=; b=dljYMPoxkcsw9kV1AKksWm/4cGIJikMk7+ub0GuEfGZmWRE91Gj
+	fsbiH3udMp45levHvPc4IdV5MxpGO4dAclDDXWKM0jgtW26hwolomei8TMRowRTd
+	KiqzEniMP0hgJIRvLGviaJ1aInvRVdHDhEDdY2NPKtbGlJd+25qUsKZYR4srBSUW
+	p9CohCaG/to4Q41xg1YUqGi7qQTchNw4T0NSeY7lRfMmTetjb00Nt4gb934X6tgB
+	97NZccG0Z7v1XRjlA0ALGu5h1FgWwRUcLTNMr4gkoMX3e1+5Euq7XrR6ZqhNHY1S
+	TwFcqXkhP+Vni9fvwFIbb59U3eXQySrZvgw==
+X-ME-Sender: <xms:v76Nap8jazJe1gd7CqqA2bA_mM3RBnMAA7ZyznfiK4BCql21YJfu6w>
+    <xme:v76NalL8BCRFqO8uXv7r1d1hhpsWfhFUGh5ytzf5zA6g6RDRl6_6gTkz1QntQUoK6
+    ub6Znu3yC32bLKVqgspjKwl32pUUKj2p56Kn4_cm5jyYwWife6A>
+X-ME-Received: <xmr:v76NakYj57xSVBAR58W30BXbLdYndnGJPFd9s91Cb8KaJy_ZaLwTpF7y6dC8EkI3vG9O7lcO5G8OkqHBmiMgIhxmgFBWTujcFQ>
+X-ME-Proxy-Cause: dmFkZTF48VxPOd4a2xgMiAclGpRYNBHUnYihZY/1uHCxYn2NenOmJ2GKkb+TF6Q8cuNtDI
+    9RgekwSNLsq/88A5leKzFT8CBfc2PBPZv4Y2/Zran11iaUwjapfwKT6NCWIzinjrrQMrV/
+    c6R+5W2HBnJleMzmHE9Jvf0FDJIdsTAtk82BIAwkXmSd8gDD9DIUhV/r8413g5GNvSuQrL
+    0/0vUBcfkAar2oyrwbeZvHOwVDDCm8gbvzUWPitv8q5bLPqghpHi7X9sjA+2miHIKhCP7U
+    tuCbBnrgqAr3nny5Pcx2aym8IX33I5dGyK/rrCNFu8BpBKU4eEGS9E3twGuh9x20b1b8AR
+    XbyvC19yEzh8mdU6Akd74DbCCUQAallkGAWtqrpeL6uGBPb1p8DdHHdyZyyh0MNHgWrKpS
+    68jGxueL+J3yPGA5y76rhwV9HkU8va+5/2UwO4wAyhZOcl+vmL9yIFmPKh2D6dnmGxDao4
+    2v+QQABgW5BDcatKaV9uCsEyZ2UaDpbcByGE4ByLexQKw0pmrhMlpNEzJtsN4ffa9ShlWL
+    zdUjatHPNS1uQRBprNLcOkNuJgzCUQoZPBpr9+lfiWHoNiNj38Z5KOcewtbXo7j0ZqzzZH
+    u5/l24ue/DrtZx3iaMB2EJCFdRPYw62PCLmXi89ODXAP75TrTcp/VrzLRbwA
+X-ME-Proxy: <xmx:v76NanJsbTnZauvkSBRPQpV1qXHmE0V4X0qhHwd5C_aLadt4CjeIsg>
+    <xmx:v76NaiAUfwJkWRsSMHO_nSvx2eP6E3NxWtQ30642H7O5v0ZAOh6NyA>
+    <xmx:v76NasrSQZScV0Uyq8TMfRuXztnXSDHO1MoCp6KdBK6rFkJxF5ahew>
+    <xmx:v76NathFcy-go8RFlQyltDSnzb5s-9R__aZEpx9clzD1i35dvoFL5g>
+    <xmx:wL6Nan1C2-P3AbKYT6B1ybCAbpnW7qKweEtx_MUoboCT4AtRTO9Y6-jC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Aug 2026 12:11:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 4/6] hex: label usages of hex parsing for object IDs
+In-Reply-To: <20260729233215.398654-5-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Wed, 29 Jul 2026 23:32:13 +0000")
+References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
+	<20260729233215.398654-5-sandals@crustytoothpaste.net>
+Date: Tue, 25 Aug 2026 09:11:42 -0700
+Message-ID: <xmqqh5kinps1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] sequencer: release the ODB before spawning git commit
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.2198.git.1786388689444.gitgitgadget@gmail.com>
- <pull.2198.v2.git.1786528498689.gitgitgadget@gmail.com>
- <a786e6c0-1c17-4121-8623-b4541478a88f@gmail.com> <xmqqo6ersi07.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqo6ersi07.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 24/08/2026 15:36, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> This looks fine as an immediate fix for the bug but I wonder if we
->> should pass "-c gc.auto=false" when we fork "git commit" from the
->> sequencer. We call run_auto_maintenance() at the end of the rebase and
->> its not clear to me that repacking during the rebase is helpful.
-> 
-> This is a bit amusing as I was reading old discussion the other day
-> around the constant 6700 [*] and saw it discused that because
-> "commit" triggers auto-gc, there was no point in doing so in
-> "rebase", which does series of "commit" invocations [*].  With small
-> projects and short rebases I tend to agree with you that gc at the
-> end of a rebase session should be plenty, but given the widespread
-> use of Git, itt may not apply to everybody.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-That's a coincidence. These days we avoid running "git commit" for 
-simple picks, but we do run it when rebasing a merge and I suspect large 
-rebases probably include merges. So we will probably do trigger gc 
-during large rebases even if there are no conflicts or commits being 
-reworded (which I think are the only two other cases where we fork "git 
-commit").
+> In preparation for a future change, label the hex parsing we're doing
+> for object IDs by defining a constant called HEX_KIND_OID.  This is
+> currently the same as HEX_KIND_MIXED, so there is no functional change
+> here.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  diagnose.c    | 2 +-
+>  hex-ll.h      | 2 ++
+>  hex.c         | 2 +-
+>  http-push.c   | 4 ++--
+>  notes.c       | 2 +-
+>  object-file.c | 2 +-
+>  6 files changed, 8 insertions(+), 6 deletions(-)
 
-Thanks
+This is a hard-to-review patch in the sense that what we see in the
+patch may be perfectly good, but we cannot see what is left out,
+either by mistake or by misdesign.  So I checked out the state with
+this patch (and no later ones) applied, and eyeballed the output of
 
-Phillip
+    $ git grep -n -e HEX_KIND_MIXED
 
->> Another
->> thought I had was whether we should automatically close the object
->> database when forking another git command. I'm not sure how easy that is
->> to implement but it would prevent future regressions and I assuming
->> re-opening the object store is cheap compared to forking another git
->> command.
-> 
-> I think it is a great approach to study how feasible it is, as we
-> will not have to sprinkle fixes like the one proposed to many code
-> paths.  Thanks for raising it.
-> 
-> 
-> [References]
-> 
->   * https://lore.kernel.org/git/?q=6700+d:..20071231
->   * https://lore.kernel.org/git/20070906023934.GI18160@spearce.org/
+At this step, a few explicit uses of HEX_KIND_MIXED remain that I
+think should have been converted to HEX_KIND_OID.
 
+ * builtin/index-pack.c:repack_local_links() spawns a pack-objects
+   process and reads its output.  As we are reading from a known
+   version of Git (i.e., pack-objects that came with the index-pack
+   that runs this code), we do not need to be lenient and can use
+   HEX_KIND_OID here.
+
+ * notes.c:load_subtree() has two calls to hex_to_bytes() to read
+   paths in a notes tree, and this patch updates only one to use
+   HEX_KIND_OID, leaving the other one HEX_KIND_MIXED, which we
+   probably should change at the same time (if there is a valid
+   reason, it deserves an in-code comment to explain it).
+
+
+The remaining uses of HEX_KIND_MIXED look mostly OK.
+
+ - color.c uses MIXED to decode things like #AAFF00, which will be
+   correct forever.
+
+ - mailinfo.c uses MIXED to decode Q encoding, and we have no power
+   or business to forbid uppercase hex there.
+
+ - pkt-line.c:packet_length() uses MIXED to decode the packet length
+   expressed in the four hex digits at the beginning.  We could
+   forbid uppercase hex there (our length bytes have always been
+   lowercase) if we wanted to, but HEX_KIND_OID is not the enum to
+   use to do so.
+
+ - ref-filter.c:append_literal() is similar to the next one.
+
+ - strbuf.c:strbuf_expand_literal() uses MIXED to decode %0A into line
+   feed, etc.  We could forbid uppercase hex there if we wanted to,
+   but HEX_KIND_OID is not the enum to use to do so.
+
+ - url.c:url_decode_internal() uses MIXED to decode %2F into '/',
+   etc., and we have no power or business to forbid uppercase hex
+   there.
+
+ - urlmatch.c:append_normalized_escapes() uses MIXED to decode %2F
+   into '/' before escaping it back with %02X.
