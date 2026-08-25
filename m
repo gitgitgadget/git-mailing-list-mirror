@@ -1,71 +1,70 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDAC3CA49A
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 19:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44EF3403F4
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 19:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787684462; cv=none; b=B1WKJa6yhHULZX/b9VehVXJT8aCFSIkKYUrwhZqHd/IDOpG8PjgVqMTTaaXLVXorvs7AQKwtjTd0GQir4ZnSbzcuqoAjc2EHWGpeipv0GYD1faWo7nZAJAqT0crkZwaAlXchuhyKdHVuxC9H+ugbCXEnS1v4yiPlET8fAPg/lPY=
+	t=1787684781; cv=none; b=p6xV3SV+kVXHHDmE0RH9q/Sphrf5GhzLV7jLHCCFqVabjxJ8TV8umHfD0BKbOr/VqITUDOmOslzGWaJ2MIJ0Yd1ttYiLIdFDGlo2zCqIVXWSuHuwqEPjtkVyCFaUpjdyRJ7lU9PHTsh0N77D1BlXngxcBhgZrUFlPDMk3HmF+Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787684462; c=relaxed/simple;
-	bh=MyAd0kuYtCEyVifeZq5LrSLdUSRXPdPP2Lzsb/l9Ey0=;
+	s=arc-20240116; t=1787684781; c=relaxed/simple;
+	bh=xbmDH3na3ST5L+NRIlUonK6UKWRoIT/Kj5AL7mQazC0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=MNg1a+r1j8frDkX3jh9YqGnQUa6F3X//ot1ny5GpZ0RUND45icjqWfjj0F8qpLDvTIAmx7uglYRSB+jVDuqreQcM29HZIvqdmduCHx34GAgk0G8T20E9cw9r/oLay5hMTZ9/Y+JDTNCXukTEZ7/JxywJs/GYjyut/5/Q5Lvn5qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lNWpsj8r; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version:To:Cc; b=Uy1yp5Xc4GeOdM7/YL8No5VwlL/EgS1PYN+RjxNA2mbWGmGbEfCXnIa+2HY8eJKaM49X/X2H2526r61nGuaHmoUBFO8txlXxwObe/lbPPCN5/LnIHP+oYKhkKISuB4+IIFsDe3T9xUWUJupzdSrw8yNMNOyTVCfH8JTi7klddpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jDonDbe2; arc=none smtp.client-ip=209.85.160.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lNWpsj8r"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-93695893ac1so4867285a.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 12:00:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jDonDbe2"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-44cedfaab6bso140059fac.3
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 12:06:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787684441; x=1788289241; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787684777; x=1788289577; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=vk31NgWsDnwCeQmS9ug0Wm4hyB3S55TPl4W5MqdIcbQ=;
-        b=lNWpsj8rjSbINoV1wj2tTAAKQ/sHwOkpZ5NzXgfj+WTudLyRdRpV6+7VNa5DvlIDUB
-         AszPjbajWn02X/oOhx13haCtBwsQMmW8SUnr4wjCBpvgU0517gL79hMYsdwzacmZd4xw
-         VE7UoqRxODHdKX1gfjqrnop7IG8E0p0P4m2DFPZd1lCygXzzBEGWsAcH+A4MbiwYOJH2
-         QfqroBbK3oWtnUqBbSybTNY55QnRYaGFxPGMJH1gjYFTMt+Ecr3VKpcXz7EuUf0IkIkY
-         ZA2qLUqaj1bECXoYDPnARKujve7NLC0EMfGvdwjSwDcDCaB95tNM7I2IrRAfr33Q63TM
-         mL2g==
+        bh=2BeMgXvVJEANe9DGP6D6o86p2acWbNqynmtLo10+uy8=;
+        b=jDonDbe2Hkb1eOYWlYJuI4qqscNJu+mmCcEboDh2PpjIlFkFV1zgV2QBBCFS3pC+4z
+         475eFJrFwvgzts4CkuSvTHrrRHgc7FRVE698FSKorXFL8W5R1Yn7N4zX1EVg7C63ZkEu
+         Hi4bNNq2W3GvGs9iSQGJ2cvSbwNIdPRvaE7VSfDWyVsvAYBx3LIn36wZ5gxq9nFpTz9W
+         jL/W5qskjsAiOBEeL758savkEN5WC5jHUPy0Vqv0fCf+DYWGDa1e7sjSKXhKj/VrRDm2
+         Z58so0IVnXFoHyX9JE1m5tbnH3wHrBYG8OYhPNbtchrZlclNtfR2PnrhQSqsQqFEVAGR
+         AKHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787684441; x=1788289241;
+        d=1e100.net; s=20251104; t=1787684777; x=1788289577;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=vk31NgWsDnwCeQmS9ug0Wm4hyB3S55TPl4W5MqdIcbQ=;
-        b=NRNUjZ20lV6ROlZ+t2ojiXfVZRaSFRgDuS30hyYj6Kl82jx4p3bdDRs5EUPlm80xRG
-         gFP2qmZq1bJcIZpMftGn/uCApN40IoaJ+wCaN3c2o5AU6s9kFKChkjfDL2laEcbT6xPG
-         aWNXvL/MiKlVJn+R2EBfxqPxRNyP+zPlSMEWcfZakV5rd0Ggofd0N00/BUTzCuFxH94x
-         fFrs5pv6OIzKopXRcqgNMCkgExn1WI72s9tGBMoNFIzZn52sQs9JkipXY73o+Q2Vh7/x
-         CKT1u40oAh7g4V0Ec+LZge6Y4/qHJ4MYa2AuHNVCuVKVt9JG9aBB6515chvy61dMj33Q
-         CKVg==
-X-Gm-Message-State: AFuF++lUuxvMhuyTHVa9f274iZtN9jEVVd/jrzYM1a/bbHWpLEtsSKNp
-	Kh5I5N/TNJgW5BijdJEY3MtR+Pa55kAV2xLMyFUQvonjMiQeuhLJySl0Dw70s3CN
-X-Gm-Gg: AR+sD12Qnvy8f9TRUxouJQS6oqcRNGYciPUCWkzJod1+pUKtMS4LFdZJKWLV2CF3TB1
-	zhZbyzr66iR9ZFrAM3TJu+V2L3amk/6q9aCBeDuoobyV/SlgoGbXCAByv/MTfR2oqLX/dWZ4/TI
-	XX3eJWReG6dgPKODc2VCU7z+dq460H/HPj2QJr8t6cUS+Ql3EZGkzFnBBW/ugh+vMISdUvCgpQK
-	lYw7uZhCjynlbg742Wx8Iyn4q5NL5MO5A2X5yLnekDTV6o1DbIznY6wWfACtq2EaMnFcv+4E4fb
-	wsk3ApzWqt8ooLdskXxJOYikKskHRV7hSHlvfgNEnh2HgYOykHRcCP7yPK+bYg6NhNP+w0GeAgn
-	+uCigYegK/nigEVYvRjA+DCJPd5y86Ebgt6rnZ4E8sJBbeaFtKViS6gT+klgbbIOuH34TF23XdN
-	qhSla06HcZKIKPfnjAauahQCGRUtQ3lR71SzLxjjk7n+1Wdxv2dIJ053yp3H/J2MGN
-X-Received: by 2002:a05:620a:a805:b0:937:6771:e7e7 with SMTP id af79cd13be357-937803e0f4amr60405785a.30.1787684435445;
-        Tue, 25 Aug 2026 12:00:35 -0700 (PDT)
-Received: from [127.0.0.1] ([20.127.245.161])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9377f0ab844sm31977485a.45.2026.08.25.12.00.34
+        bh=2BeMgXvVJEANe9DGP6D6o86p2acWbNqynmtLo10+uy8=;
+        b=VJv6/unXP/+yzLMf5qVxpqeGHKJLmaSusWhWiGWxaXL/LIupQc1okQQSAaOmiHa1X3
+         PA3GaStQHK9/SG2SkLh+tt8bdwi6iaJmG4M0XvR8BGocrfmHMkGtF/GbmzQxsyhrpxth
+         LVkftq90qiqZb+8UcpVthx5yzV1fEKQJyxwuNhSJyS5VSDadZQR5SeHZUMJnOx6v1+Y8
+         Ffnpw0ihIffZRleMfAtiz/WxQlCRpMGE+mVUW7iWhhw7kCTmELJCWNIA7bc+zS/Bar8T
+         RWpQBv9hBijbG6wGquouPi+8vpZYW1mrq0NvlkON0Mee/9oLTYJ4xPOjjhm0iONasEV+
+         WXug==
+X-Gm-Message-State: AFuF++lEqedh7pVwdLOM4hVHRSQsRwILEGIAGS5gm+khrl6T/aWxTfZG
+	QijD07F7ovsZAoC7RWVoLhW5V/1yUASiKXQfKZTymIPHMp+pb3O99G7+5YKqwGB0
+X-Gm-Gg: AR+sD10SFAEf9IR4K9FpY6Q6TsTfw++8dmFQmRbS1sd/q0KMHx/zzjXHcl4oeADT6qV
+	Vdl17IGM0dxKpVt/F9ymd6sE/7Fm2WqRsDU2OE7pJUV3AqEruq4wFaZ2yU0LkEXyvE2xWln4aWi
+	j4Iq8LfIv4InH/fkdKxdG7OLIyndH/BJvUCEnypepHYS0qX8o1Eq8OHfYfg/Gyhb94PECE7WGvo
+	pZBIq+3uy0uPpKVHpDUf/B3n9zM+kG93SwJvG304XgMWltB40nkzUxkM34wzP46uYMaBASAv0Q1
+	yxX0NbVR0X3TyMZ53dOeF+U65GuvlSlmTK+hcuQu48kvaEM9cyS2b004+Y8pHLJiBez9A2mETcx
+	HMiIaAcwyU6sMWI2oDfMMOfxfyqjq4sM90bmSxvMd9wtaQsD315cHdkz5xlzfzlJR6HjWKCwQ2G
+	T69nTnvpwAH9IlyzPB/0GzkjRrDnIDRdvnVLhdkWbK1+nvJb1brdzscEd/DullgwTB
+X-Received: by 2002:a05:6870:fb8e:b0:456:1edc:86f8 with SMTP id 586e51a60fabf-4659ae5bb7cmr1753728fac.15.1787684777293;
+        Tue, 25 Aug 2026 12:06:17 -0700 (PDT)
+Received: from [127.0.0.1] ([52.240.168.195])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-465afa1f389sm206278fac.10.2026.08.25.12.06.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 12:00:34 -0700 (PDT)
-Message-Id: <eacf6ba4b11e366466da18b7b668e65793c532a9.1787684429.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2207.v2.git.1787684429.gitgitgadget@gmail.com>
-References: <pull.2207.git.1787092446.gitgitgadget@gmail.com>
-	<pull.2207.v2.git.1787684429.gitgitgadget@gmail.com>
+        Tue, 25 Aug 2026 12:06:16 -0700 (PDT)
+Message-Id: <pull.2208.v2.git.1787684776048.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
+References: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Aug 2026 19:00:29 +0000
-Subject: [PATCH v2 4/4] packfile: recover when a multi-pack-index names a
- removed pack
+Date: Tue, 25 Aug 2026 19:06:16 +0000
+Subject: [PATCH v2] send-pack: avoid sending the whole tree when pushing from
+ a shallow clone
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,360 +77,505 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
     Elijah Newren <newren@gmail.com>,
-    Jeff King <peff@peff.net>,
-    Derrick Stolee <stolee@gmail.com>,
     Elijah Newren <newren@gmail.com>,
     Elijah Newren <newren@gmail.com>
 
 From: Elijah Newren <newren@gmail.com>
 
-A geometric repack writes a new pack and multi-pack-index and then
-deletes the packs the new one subsumes.  A process still using the
-previous MIDX keeps seeing a removed pack listed as the owner of some
-objects.  Since a MIDX attributes each object to exactly one pack, such
-an object is served only through its recorded owner; if that owner was
-just removed, find_pack_entry() cannot serve it -- fill_midx_entry()
-routes to the missing pack, and the regular pack fallback deliberately
-skips every MIDX-covered pack, so a surviving copy in another covered
-pack (e.g. a kept base pack) is never consulted.
+When pushing from a shallow clone, even if we only have made a small
+one-line change to a tiny file, we often push the entire toplevel tree
+of files.  For large repositories, this could be gigabytes instead of
+kilobytes.
 
-Unlike the ordinary "a pack's .idx is mapped but its .pack is gone"
-race, the second read does not rescue us -- and not only for
-OBJECT_INFO_QUICK callers.  Reloading the on-disk pack set does not
-reload the borrowed, cached MIDX (freeing it under the code that caches
-the "struct multi_pack_index *" would be a use-after-free), so the stale
-MIDX keeps routing to the removed pack and the surviving copy stays
-hidden behind the covered-pack skip.  cat-file, rev-list and pack-objects
-can thus all spuriously fail with "unable to read object".
+The reason for this is that the push likely lacks the commits the
+receiver has advertised, so it walks back to its shallow grafts.  Since
+it doesn't know that the server has anything, it sends the entire tree
+for the graft.  It would also send the parents of the shallow graft,
+except the shallow clone doesn't have those by construction.  We thus
+are forced to assume that the server has the parents of the shallow
+graft -- if it doesn't, the server's receive-pack will reject the push.
 
-Teach find_pack_entry() to recover.  fill_midx_entry() now returns a
-tri-state, distinguishing "absent from the MIDX" from "present but the
-owning pack is unavailable"; in the latter case, once the regular
-fallback has also missed, scan the MIDX's packs directly for a surviving
-copy.
+But that raises the obvious question: if we're going to assume the
+server has the parents of the shallow graft, why not just assume the
+server has the shallow graft itself -- which this clone almost certainly
+received from the server when the shallow clone was created?  As noted
+above, receive-pack already has a builtin connectivity check that
+predates pushing from a shallow clone by years[*], so even if a client
+is pushing to a different server than it cloned from, the worst that
+happens is a rejected push.  And by assuming the server has the shallow
+graft commits, then for large repositories (those most likely to use
+shallow clone) we can avoid transferring (and perhaps re-compressing)
+gigabytes of file contents that the server already has.
 
-Do the scan only on the second read (OBJECT_INFO_SECOND_READ): by then
-the cheaper on-disk reload has run, so an object merely relocated into a
-new (non-covered) pack has already been found by the regular fallback,
-and only a genuine hidden duplicate reaches the rescan.  QUICK callers
-that would skip the second read are steered into it by the preceding
-commit's stale_packs_detected flag, which prepare_midx_pack() sets when
-it cannot open the owning pack.
+[*] Compare 5dbd76760181 (receive/send-pack: support pushing from a
+    shallow clone, 2013-12-05) and 52fed6e1ce07 (receive-pack: check
+    connectivity before concluding "git push", 2011-09-02)
 
-Reloading the stale MIDX would be a more complete fix but is much more
-involved (the borrowers above need proper invalidation), so leave that
-for later.
+Fix this by finding the shallow grafts behind the history we're pushing
+and adding them to the pack boundary as uninteresting (negative) tips,
+so the generated pack leaves out everything underneath them.  We only
+use grafts that the pushed commits can actually reach; excluding every
+graft in the repository would be simpler, but it could drop an object we
+really do need to send -- for example, a new blob we're pushing that
+also happens to sit under some unrelated shallow root pulled from a
+different remote.
 
-Assisted-by: Claude Opus 4.8 & GPT-5.6 Sol
-Helped-by: Jeff King <peff@peff.net>
+We can also stop early at any commit we and the server both have --
+one the server advertised, or that push negotiation found in common.
+Such a commit already marks the edge of what we need to send, so
+there's no reason to keep walking down to a graft below it.  For
+deeper clones the server usually has a commit close by, which keeps
+this walk short; we only reach a graft when we and the server share no
+history that we know about.
+
+One very rare (and non-default) workflow genuinely needs the larger
+push: seeding a receiver willing to adopt new shallow roots
+(receive.shallowUpdate; see 5dbd76760181 (receive/send-pack: support
+pushing from a shallow clone, 2013-12-05) and 0a1bc12b6e40
+(receive-pack: allow pushes that update .git/shallow, 2013-12-05)).
+When the server sets receive.shallowUpdate, it is willing to accept
+pushes despite lacking ancestors of the pushed commits.  But it expects
+us to send all tree objects so it can graft a new shallow root.  For
+that case, add a sender-side config, push.shallowExcludeBoundary,
+defaulting to true (the optimization), while allowing users to set it to
+false to restore the previous behavior needed for that rare case.
+
+Update the existing shallow-seeding tests in t5538 to set
+push.shallowExcludeBoundary=false, since they exercise that
+receive.shallowUpdate path.  Add tests for the optimized default and the
+opt-out, that a rejected ref does not cause an accepted ref to be
+over-excluded, and that a shallowUpdate receiver still rejects a
+rootless snapshot by default.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/pack-objects.c      |  2 +-
- midx.c                      | 38 ++++++++++--------
- midx.h                      | 21 +++++++++-
- odb/source-packed.c         | 42 ++++++++++++++++---
- t/t5319-multi-pack-index.sh | 80 +++++++++++++++++++++++++++++++++++++
- 5 files changed, 158 insertions(+), 25 deletions(-)
+    send-pack: avoid sending the whole tree when pushing from a shallow
+    clone
+    
+    Changes since v1:
+    
+     * Fixed two small code style issues
+     * Updated the cover letter below to point out that push.negotiate=true
+       doesn't work for everyone, and even when negotiation does work it
+       doesn't solve all cases.
+     * Updated to latest ps/odb-pluggable-pack-generation branch.
+    
+    Maintainer note: The base for this series is
+    ps/odb-pluggable-pack-generation; that series' removal of feed_object()
+    conflicted with my original version of this patch, so I rebased on that
+    series and fixed up the conflict.
+    
+    Some users can work around the problem described in this patch with
+    push.negotiate=true. Even if we were to make that the default, though,
+    (a) negotiation doesn't work for some people (depending on other server
+    and client settings and programs), and (b) even for those for whom
+    negotiation does happen, that doesn't solve all cases. Let's help users
+    by providing sane default behavior.
+    
+    One alternative I considered here is making the new
+    push.shallowExcludeBoundary config a tri-state: true, false, or abort,
+    and default to abort. If abort, then when shallow grafts are reached by
+    send-pack, simply abort the push on the client side and tell the user to
+    set push.shallowExcludeBoundary to either true or false. That'd be the
+    more traditional backward compatibility approach of introducing an error
+    period before changing the default. But since the "traditional" case
+    seems extraordinarily rare to me and already requires additional special
+    configuration (receive.shallowUpdate=true on any relevant server), I
+    thought the transition period wasn't warranted in this case. Let me know
+    if you disagree.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 399acd0f22..30ad7d822c 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1786,7 +1786,7 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
- 		struct multi_pack_index *m = get_multi_pack_index(files->packed);
- 		struct pack_entry e;
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2208%2Fnewren%2Favoid-expensive-shallow-pushes-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2208/newren/avoid-expensive-shallow-pushes-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2208
+
+Range-diff vs v1:
+
+ 1:  649efa1c5f ! 1:  d4501a5c23 send-pack: avoid sending the whole tree when pushing from a shallow clone
+     @@ send-pack.c: static void append_negative_object(struct repository *r,
+      + * the peer can use and the graft beneath it would be redundant.
+      + */
+      +static void append_reachable_shallow_grafts(struct repository *r,
+     -+					    struct ref *refs,
+     -+					    struct oid_array *advertised,
+     -+					    struct oid_array *negotiated,
+     -+					    struct send_pack_args *args,
+     ++					    const struct ref *refs,
+     ++					    const struct oid_array *advertised,
+     ++					    const struct oid_array *negotiated,
+     ++					    const struct send_pack_args *args,
+      +					    struct oid_array *haves)
+      +{
+      +	struct commit_list *pending = NULL;
+      +	struct oidset seen = OIDSET_INIT;
+      +	struct oidset known = OIDSET_INIT;
+     -+	struct ref *ref;
+     ++	const struct ref *ref;
+      +	size_t i;
+      +
+      +	for (i = 0; i < advertised->nr; i++)
+      +		oidset_insert(&known, &advertised->oid[i]);
+      +	for (i = 0; i < negotiated->nr; i++)
+      +		oidset_insert(&known, &negotiated->oid[i]);
+     -+	for (ref = refs; ref; ref = ref->next)
+     -+		if (!is_null_oid(&ref->old_oid))
+     -+			oidset_insert(&known, &ref->old_oid);
+      +
+     ++	/*
+     ++	 * Record every commit the peer is known to have as a boundary for
+     ++	 * the walk, and seed the walk from the tips we are actually sending.
+     ++	 * The walk below does not begin until "known" is fully populated.
+     ++	 */
+      +	for (ref = refs; ref; ref = ref->next) {
+      +		struct commit *commit;
+      +
+     ++		if (!is_null_oid(&ref->old_oid))
+     ++			oidset_insert(&known, &ref->old_oid);
+     ++
+      +		if (is_null_oid(&ref->new_oid))
+      +			continue;
+      +		if (check_to_send_update(ref, args))
+
+
+ Documentation/config/push.adoc |  12 +++
+ send-pack.c                    | 100 +++++++++++++++++++++
+ t/t5538-push-shallow.sh        | 156 ++++++++++++++++++++++++++++++++-
+ 3 files changed, 265 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config/push.adoc b/Documentation/config/push.adoc
+index 28132eedfe..9fd6a956a8 100644
+--- a/Documentation/config/push.adoc
++++ b/Documentation/config/push.adoc
+@@ -134,6 +134,18 @@ This will result in only b (a and c are cleared).
+ 	rely solely on the server's ref advertisement to find commits
+ 	in common.
  
--		if (m && fill_midx_entry(m, oid, &e, NULL)) {
-+		if (m && fill_midx_entry(m, oid, &e, NULL) == MIDX_FILL_HIT) {
- 			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset, found_mtime);
- 			if (want != -1)
- 				return want;
-diff --git a/midx.c b/midx.c
-index 942505ac41..6b585f3c1a 100644
---- a/midx.c
-+++ b/midx.c
-@@ -595,46 +595,50 @@ uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos)
- 					       (off_t)pos * MIDX_CHUNK_OFFSET_WIDTH);
- }
- 
--int fill_midx_entry(struct multi_pack_index *m,
--		    const struct object_id *oid,
--		    struct pack_entry *e,
--		    struct packed_git **bad_pack)
-+enum midx_fill_result fill_midx_entry(struct multi_pack_index *m,
-+				      const struct object_id *oid,
-+				      struct pack_entry *e,
-+				      struct packed_git **bad_pack)
- {
- 	uint32_t pos;
- 	uint32_t pack_int_id;
- 	struct packed_git *p;
- 
- 	if (!bsearch_midx(oid, m, &pos))
--		return 0;
-+		return MIDX_FILL_MISS;
- 
- 	midx_for_object(&m, pos);
- 	pack_int_id = nth_midxed_pack_int_id(m, pos);
- 
- 	if (prepare_midx_pack(m, pack_int_id))
--		return 0;
-+		goto owner_unavailable;
- 	p = m->packs[pack_int_id - m->num_packs_in_base];
- 
--	/*
--	* We are about to tell the caller where they can locate the
--	* requested object.  We better make sure the packfile is
--	* still here and can be accessed before supplying that
--	* answer, as it may have been deleted since the MIDX was
--	* loaded!
--	*/
-+	/* Make sure the pack is still present before pointing at it. */
- 	if (!is_pack_valid(p))
--		return 0;
-+		goto owner_unavailable;
- 
- 	if (oidset_size(&p->bad_objects) &&
- 	    oidset_contains(&p->bad_objects, oid)) {
- 		if (bad_pack && !*bad_pack)
- 			*bad_pack = p;
--		return 0;
-+		return MIDX_FILL_MISS;
- 	}
- 
- 	e->offset = nth_midxed_offset(m, pos);
- 	e->p = p;
- 
--	return 1;
-+	return MIDX_FILL_HIT;
++`push.shallowExcludeBoundary`::
++	When pushing from a shallow repository (see linkgit:git-clone[1]
++	`--depth`), Git normally assumes that the receiving end already
++	has the pushing repository's shallow grafts, and omits those
++	objects from the generated pack rather than resending the full
++	toplevel tree of those grafts. This is safe because the
++	receiving end rejects a push that references objects it does not
++	have. Set this to `false` to send those objects anyway; this is
++	only needed for the highly unusual case of using a push to seed
++	a receiver that adopts new shallow roots (i.e. a receiver that
++	has explicitly set `receive.shallowUpdate`). Default is `true`.
 +
-+owner_unavailable:
-+	/*
-+	 * Re-arm stale_packs_detected on every such lookup, not just the
-+	 * first: prepare_midx_pack() caches the failure, so without this a
-+	 * later lookup of the same vanished pack would leave the flag clear
-+	 * and a QUICK reader would skip its recovering second read.
-+	 */
-+	m->source->base.odb->stale_packs_detected = 1;
-+	return MIDX_FILL_OWNER_UNAVAILABLE;
+ `push.useBitmaps`::
+ 	If set to `false`, disable use of bitmaps for `git push` even if
+ 	`pack.useBitmaps` is `true`, without preventing other git operations
+diff --git a/send-pack.c b/send-pack.c
+index f20460fbf4..5e1ac9dd89 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -14,6 +14,7 @@
+ #include "transport.h"
+ #include "version.h"
+ #include "oid-array.h"
++#include "oidset.h"
+ #include "gpg-interface.h"
+ #include "shallow.h"
+ #include "parse-options.h"
+@@ -55,6 +56,91 @@ static void append_negative_object(struct repository *r,
+ 	oid_array_append(haves, oid);
  }
  
- /* Match "foo.idx" against either "foo.pack" _or_ "foo.idx". */
-@@ -1038,7 +1042,7 @@ int verify_midx_file(struct odb_source_packed *source, unsigned flags)
- 
- 		nth_midxed_object_oid(&oid, m, pairs[i].pos);
- 
--		if (!fill_midx_entry(m, &oid, &e, NULL)) {
-+		if (fill_midx_entry(m, &oid, &e, NULL) != MIDX_FILL_HIT) {
- 			midx_report(_("failed to load pack entry for oid[%d] = %s"),
- 				    pairs[i].pos, oid_to_hex(&oid));
- 			continue;
-diff --git a/midx.h b/midx.h
-index 1f2f2d5321..52fe9c81e9 100644
---- a/midx.h
-+++ b/midx.h
-@@ -117,8 +117,25 @@ uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos);
- struct object_id *nth_midxed_object_oid(struct object_id *oid,
- 					struct multi_pack_index *m,
- 					uint32_t n);
--int fill_midx_entry(struct multi_pack_index *m, const struct object_id *oid,
--		    struct pack_entry *e, struct packed_git **bad_pack);
++static int check_to_send_update(const struct ref *ref, const struct send_pack_args *args);
++
 +/*
-+ * Result of looking an object up in a multi-pack-index.  MIDX_FILL_HIT means
-+ * "e was filled in"; the two miss variants distinguish an object the midx does
-+ * not know about (MIDX_FILL_MISS) from one it does know about but whose owning
-+ * pack we can no longer open (MIDX_FILL_OWNER_UNAVAILABLE -- the signature of a
-+ * concurrent repack having removed that pack).  A known-bad (corrupt) object
-+ * reports MIDX_FILL_MISS but also sets *bad_pack, if provided, to the owning
-+ * pack so the caller can tell "corrupt" apart from "absent".
++ * Add the shallow grafts (nr_parent == -1), which are reachable from the
++ * refs being pushed, to the pack boundary ("haves") as uninteresting
++ * (negative) tips so the generated pack leaves out everything beneath them.
++ *
++ * Walk only from the pushed tips, and only until a graft: using a graft
++ * that does not bound the pushed history could exclude an object we are
++ * genuinely sending (if it is also reachable from that unrelated graft).
++ * Stop early at any commit the peer already has, since it is a negative
++ * the peer can use and the graft beneath it would be redundant.
 + */
-+enum midx_fill_result {
-+	MIDX_FILL_MISS = 0,
-+	MIDX_FILL_HIT,
-+	MIDX_FILL_OWNER_UNAVAILABLE,
-+};
++static void append_reachable_shallow_grafts(struct repository *r,
++					    const struct ref *refs,
++					    const struct oid_array *advertised,
++					    const struct oid_array *negotiated,
++					    const struct send_pack_args *args,
++					    struct oid_array *haves)
++{
++	struct commit_list *pending = NULL;
++	struct oidset seen = OIDSET_INIT;
++	struct oidset known = OIDSET_INIT;
++	const struct ref *ref;
++	size_t i;
 +
-+enum midx_fill_result fill_midx_entry(struct multi_pack_index *m,
-+				      const struct object_id *oid,
-+				      struct pack_entry *e,
-+				      struct packed_git **bad_pack);
- int midx_contains_pack(struct multi_pack_index *m,
- 		       const char *idx_or_pack_name);
- int midx_layer_contains_pack(struct multi_pack_index *m,
-diff --git a/odb/source-packed.c b/odb/source-packed.c
-index b6c1d8fdf4..ae4c4bac40 100644
---- a/odb/source-packed.c
-+++ b/odb/source-packed.c
-@@ -17,13 +17,18 @@
- static int find_pack_entry(struct odb_source_packed *store,
- 			   const struct object_id *oid,
- 			   struct pack_entry *e,
-+			   enum object_info_flags flags,
- 			   struct packed_git **bad_pack)
- {
- 	struct packfile_list_entry *l;
-+	enum midx_fill_result midx_result = MIDX_FILL_MISS;
- 
- 	odb_source_prepare(&store->base, 0);
--	if (store->midx && fill_midx_entry(store->midx, oid, e, bad_pack))
--		return 1;
-+	if (store->midx) {
-+		midx_result = fill_midx_entry(store->midx, oid, e, bad_pack);
-+		if (midx_result == MIDX_FILL_HIT)
-+			return 1;
++	for (i = 0; i < advertised->nr; i++)
++		oidset_insert(&known, &advertised->oid[i]);
++	for (i = 0; i < negotiated->nr; i++)
++		oidset_insert(&known, &negotiated->oid[i]);
++
++	/*
++	 * Record every commit the peer is known to have as a boundary for
++	 * the walk, and seed the walk from the tips we are actually sending.
++	 * The walk below does not begin until "known" is fully populated.
++	 */
++	for (ref = refs; ref; ref = ref->next) {
++		struct commit *commit;
++
++		if (!is_null_oid(&ref->old_oid))
++			oidset_insert(&known, &ref->old_oid);
++
++		if (is_null_oid(&ref->new_oid))
++			continue;
++		if (check_to_send_update(ref, args))
++			continue;
++		commit = lookup_commit_reference_gently(r, &ref->new_oid, 1);
++		if (commit)
++			commit_list_insert(commit, &pending);
 +	}
- 
- 	for (l = store->packs.head; l; l = l->next) {
- 		struct packed_git *p = l->pack;
-@@ -35,6 +40,33 @@ static int find_pack_entry(struct odb_source_packed *store,
- 		}
- 	}
++
++	while (pending) {
++		struct commit *commit = pop_commit(&pending);
++		const struct object_id *oid = &commit->object.oid;
++		struct commit_graft *graft;
++		struct commit_list *parent;
++
++		if (oidset_insert(&seen, oid))
++			continue;
++
++		/*
++		 * A commit the peer already has bounds the pushed history
++		 * with a negative it can use, so stop here rather than
++		 * descend to a graft that would only be redundant.
++		 */
++		if (oidset_contains(&known, oid) &&
++		    odb_has_object(r->objects, oid, 0))
++			continue;
++
++		graft = lookup_commit_graft(r, oid);
++		if (graft && graft->nr_parent == -1) {
++			append_negative_object(r, haves, oid);
++			continue;
++		}
++
++		if (repo_parse_commit(r, commit))
++			continue;
++		for (parent = commit->parents; parent; parent = parent->next)
++			commit_list_insert(parent->item, &pending);
++	}
++
++	oidset_clear(&seen);
++	oidset_clear(&known);
++}
++
+ /*
+  * Make a pack stream and spit it out into file descriptor fd
+  */
+@@ -88,6 +174,20 @@ static int pack_objects(struct repository *r,
+ 	for (size_t i = 0; i < negotiated->nr; i++)
+ 		append_negative_object(r, &opts.haves, &negotiated->oid[i]);
  
 +	/*
-+	 * Recovery for a concurrent-repack race: a stale MIDX may still name a
-+	 * vanished owning pack even though the object survives in another pack
-+	 * the same MIDX covers.  The regular fallback above skips MIDX-covered
-+	 * packs, and repreparing the on-disk pack set does not reload the
-+	 * borrowed, cached MIDX, so scan its packs directly for the survivor.
-+	 *
-+	 * Do this only on the second read, by which point repreparing packs has
-+	 * already had a chance to find an object merely relocated into a new,
-+	 * uncovered pack; only a genuine hidden duplicate reaches here.
++	 * When pushing from a shallow repository, avoid re-pushing the
++	 * entire toplevel tree.
 +	 */
-+	if (midx_result == MIDX_FILL_OWNER_UNAVAILABLE &&
-+	    (flags & OBJECT_INFO_SECOND_READ)) {
-+		struct multi_pack_index *m = store->midx;
-+		uint32_t i;
-+
-+		for (i = 0; i < m->num_packs + m->num_packs_in_base; i++) {
-+			struct packed_git *p;
-+
-+			if (prepare_midx_pack(m, i))
-+				continue;
-+			p = nth_midxed_pack(m, i);
-+			if (p && packfile_fill_entry(p, oid, e, bad_pack))
-+				return 1;
-+		}
++	if (is_repository_shallow(r)) {
++		int exclude_boundary = 1;
++		repo_config_get_bool(r, "push.shallowexcludeboundary",
++				     &exclude_boundary);
++		if (exclude_boundary)
++			append_reachable_shallow_grafts(r, refs, advertised,
++							negotiated, args,
++							&opts.haves);
 +	}
 +
- 	return 0;
- }
- 
-@@ -57,7 +89,7 @@ static enum odb_read_status odb_source_packed_read_object_info(struct odb_source
- 	if (flags & OBJECT_INFO_SECOND_READ)
- 		odb_source_prepare(source, ODB_PREPARE_FLUSH_CACHES);
- 
--	if (!find_pack_entry(packed, oid, &e, &bad_pack)) {
-+	if (!find_pack_entry(packed, oid, &e, flags, &bad_pack)) {
- 		/*
- 		 * The lookup may have failed because the object is known to be
- 		 * corrupt in one of the packfiles. Report the object as
-@@ -105,7 +137,7 @@ static int odb_source_packed_read_object_stream(struct odb_read_stream **out,
- 	struct odb_source_packed *packed = odb_source_packed_downcast(source);
- 	struct pack_entry e;
- 
--	if (!find_pack_entry(packed, oid, &e, NULL))
-+	if (!find_pack_entry(packed, oid, &e, 0, NULL))
- 		return -1;
- 
- 	return packfile_read_object_stream(out, oid, e.p, e.offset);
-@@ -611,7 +643,7 @@ static int odb_source_packed_freshen_object(struct odb_source *source,
- 		timesp = &times;
- 	}
- 
--	if (!find_pack_entry(packed, oid, &e, NULL))
-+	if (!find_pack_entry(packed, oid, &e, 0, NULL))
- 		return 0;
- 	if (e.p->is_cruft)
- 		return 0;
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 68143cb5b7..4041805807 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -1393,4 +1393,84 @@ test_expect_success 'pack.preferBitmapTips interprets patterns as hierarchy' '
- 	)
+ 	while (refs) {
+ 		if (!is_null_oid(&refs->old_oid))
+ 			append_negative_object(r, &opts.haves, &refs->old_oid);
+diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
+index afab456b32..6b0425bdbc 100755
+--- a/t/t5538-push-shallow.sh
++++ b/t/t5538-push-shallow.sh
+@@ -64,7 +64,8 @@ EOF
+ test_expect_success 'push from shallow clone, with grafted roots' '
+ 	(
+ 	cd shallow2 &&
+-	test_must_fail git push ../.git +main:refs/remotes/shallow2/main 2>err &&
++	test_must_fail git -c push.shallowExcludeBoundary=false \
++		push ../.git +main:refs/remotes/shallow2/main 2>err &&
+ 	test_grep "shallow2/main.*shallow update not allowed" err
+ 	) &&
+ 	test_must_fail git rev-parse shallow2/main &&
+@@ -75,7 +76,8 @@ test_expect_success 'add new shallow root with receive.updateshallow on' '
+ 	test_config receive.shallowupdate true &&
+ 	(
+ 	cd shallow2 &&
+-	git push ../.git +main:refs/remotes/shallow2/main
++	git -c push.shallowExcludeBoundary=false \
++		push ../.git +main:refs/remotes/shallow2/main
+ 	) &&
+ 	git log --format=%s shallow2/main >actual &&
+ 	git fsck &&
+@@ -90,7 +92,8 @@ test_expect_success 'push from shallow to shallow' '
+ 	(
+ 	cd shallow &&
+ 	git --git-dir=../shallow2/.git config receive.shallowupdate true &&
+-	git push ../shallow2/.git +main:refs/remotes/shallow/main &&
++	git -c push.shallowExcludeBoundary=false \
++		push ../shallow2/.git +main:refs/remotes/shallow/main &&
+ 	git --git-dir=../shallow2/.git config receive.shallowupdate false
+ 	) &&
+ 	(
+@@ -164,4 +167,151 @@ test_expect_success 'push new commit from shallow clone has good deltas' '
+ 	test_region pack-objects path-walk config-push.txt
  '
  
-+test_expect_success 'lookup recovers object whose midx-owning pack was removed' '
-+	test_when_finished "rm -fr repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
++test_expect_success 'shallow push only pushes what is necessary' '
++	git init adv-origin &&
++	# The shallow grafts are intentionally untagged so that no
++	# advertised ref points at them.
++	test_commit --no-tag -C adv-origin a &&
++	test_commit --no-tag -C adv-origin b &&
 +
-+		# "keep" ends up only in the big pack; "dup" is deliberately
-+		# placed in two packs so the midx has to choose an owner.
-+		test_commit keep &&
-+		echo duplicated-content >dup &&
-+		git add dup &&
-+		git commit -m dup &&
-+		dup_oid=$(git rev-parse HEAD:dup) &&
++	git clone --depth=1 "file://$(pwd)/adv-origin" adv-client &&
 +
-+		# Roll every object, including dup, into a single big pack.
-+		git repack -adq &&
++	# The remote branch advances past the history we have, so its
++	# advertised tip is something we cannot use as a negative tip;
++	# only the shallow graft lets us exclude the full tree.
++	test_commit --no-tag -C adv-origin c &&
 +
-+		# Build a second, "moderate" pack that also contains dup, so dup
-+		# now lives in two packs that the midx will cover.
-+		moderate=$(echo "$dup_oid" |
-+			git pack-objects --quiet $objdir/pack/pack) &&
++	git -C adv-client checkout -b topic &&
++	test_commit --no-tag -C adv-client new &&
++	GIT_PROGRESS_DELAY=0 git -C adv-client push --progress origin topic 2>err &&
 +
-+		# Attribute dup to the moderate pack in the midx.
-+		git multi-pack-index write \
-+			--preferred-pack="pack-$moderate.idx" &&
-+
-+		# Simulate a concurrent "git repack" retiring the moderate pack:
-+		# its files disappear, but the now-stale midx still names it as
-+		# the owner of dup.  A valid copy of dup survives in the big pack.
-+		rm -f $objdir/pack/pack-$moderate.* &&
-+
-+		# The midx routes the lookup to the deleted pack, and the regular
-+		# pack fallback skips midx-covered packs, so without recovery dup
-+		# would appear missing even though it is physically present.
-+		echo blob >expect &&
-+		git cat-file -t "$dup_oid" >actual &&
-+		test_cmp expect actual
-+	)
++	# Only the new commit, its tree, and the new blob are sent; sending
++	# the full tree is avoided by excluding the shallow graft.
++	test_grep "Enumerating objects: 4, done." err
 +'
 +
-+test_expect_success 'repeated QUICK lookups recover after owning pack removed' '
-+	test_when_finished "rm -fr repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
++test_expect_success 'push.shallowExcludeBoundary=false sends full tree' '
++	git init adv-origin2 &&
++	test_commit --no-tag -C adv-origin2 a &&
++	test_commit --no-tag -C adv-origin2 b &&
 +
-+		# Two blobs, each duplicated across packs so the midx must pick
-+		# an owning pack, and each attributed to the same moderate pack.
-+		echo one >f1 &&
-+		echo two >f2 &&
-+		git add f1 f2 &&
-+		git commit -m dups &&
-+		d1=$(git rev-parse HEAD:f1) &&
-+		d2=$(git rev-parse HEAD:f2) &&
++	git clone --depth=1 "file://$(pwd)/adv-origin2" adv-client2 &&
++	test_commit --no-tag -C adv-origin2 c &&
 +
-+		# Roll every object, including d1 and d2, into one big pack,
-+		# then build a moderate pack that also holds both blobs.
-+		git repack -adq &&
-+		moderate=$(printf "%s\n%s\n" "$d1" "$d2" |
-+			git pack-objects --quiet $objdir/pack/pack) &&
++	git -C adv-client2 checkout -b topic &&
++	test_commit --no-tag -C adv-client2 new &&
++	GIT_PROGRESS_DELAY=0 git -C adv-client2 \
++		-c push.shallowExcludeBoundary=false \
++		push --progress origin topic 2>err &&
 +
-+		git multi-pack-index write \
-+			--preferred-pack="pack-$moderate.idx" &&
++	# With the optimization disabled and no advertised ref pointing at
++	# the shallow graft, the full snapshot down to the shallow graft is
++	# resent, including its full tree.
++	test_grep "Enumerating objects: 7, done." err
++'
 +
-+		# Retire the moderate pack; the stale midx still names it as the
-+		# owner of both blobs, each of which survives in the big pack.
-+		rm -f $objdir/pack/pack-$moderate.* &&
++# A rejected ref must not over-exclude objects that another, accepted ref
++# legitimately needs in the pack.  Set up a testcase using two independent
++# shallow roots.
++#
++#   origin: two unrelated histories; only branch A carries blob O (sh=shared)
++#       A:  A0---A1     (A0, A1 trees contain sh=O)
++#       B:  B0---B1     (no "shared" blob)
++#
++#   receiver: seeded from branch B only, under both ref names; lacks blob O
++#       refs/heads/B -> B1
++#       refs/heads/A -> B1     (makes our A push a non-fast-forward)
++#
++#   client: "clone --depth=1 --no-single-branch" gives a graft at each tip
++#           and a copy of blob O under A1   (x = cut parents = shallow graft)
++#           x        x
++#           |        |
++#          A1       B1
++#           |        |
++#          cX     topic=cY     (cY re-adds sh=O, which the receiver lacks)
++#
++#   push "A topic" (non-atomic):
++#     A     -> a non-fast-forward vs receiver A=B1, so its ref update is
++#              rejected locally and never applied.  It still takes part in
++#              the shared pack computation, and the buggy code also walked
++#              back from it to graft A1 (which owns O).
++#     topic -> accepted; cY grafts onto B1 and needs blob O.
++#
++#   Using the shallow graft A1 (an ancestor of A) to trim the pack, even
++#   though our push of A is rejected locally, would omit blob O from topic's
++#   pack -- yet topic needs O.  We want to ensure that when topic is pushed,
++#   O is sent along with it despite A being rejected.
++test_expect_success 'shallow push does not over-exclude for an accepted ref via a rejected one' '
++	# origin
++	git init tworoot-origin &&
++	git -C tworoot-origin checkout -b A &&
++	test_commit -C tworoot-origin --no-tag has-shared sh shared &&
++	test_commit -C tworoot-origin --no-tag A1 &&
++	git -C tworoot-origin switch --orphan B &&
++	test_commit -C tworoot-origin --no-tag B0 &&
++	test_commit -C tworoot-origin --no-tag B1 &&
 +
-+		# One resident QUICK reader ("git mktree --batch") resolves both
-+		# blobs.  The first lookup recovers d1 and caches the owning
-+		# packs failure; unless that failure keeps re-arming the second
-+		# read, the lookup of d2 skips its recovering read and the reader
-+		# dies reporting d2 as missing.
-+		printf "100644 blob %s\tf1\n\n100644 blob %s\tf2\n\n" \
-+			"$d1" "$d2" |
-+			git mktree --batch >trees &&
-+		test_line_count = 2 trees
-+	)
++	# receiver: branch B only, exposed as both B and A
++	git init --bare tworoot-receiver.git &&
++	git -C tworoot-origin push "file://$(pwd)/tworoot-receiver.git" \
++		B:refs/heads/B B:refs/heads/A &&
++
++	# client: a shallow graft at each branch tip
++	git clone --depth=1 --no-single-branch \
++		"file://$(pwd)/tworoot-origin" tworoot-client &&
++
++	# branch A gets commit cX; including A in the push gives us a
++	# locally-rejected ref whose graft A1 the buggy code walked to.  The A
++	# ref update is a non-fast-forward, so it is rejected and never applied.
++	git -C tworoot-client checkout A &&
++	test_commit -C tworoot-client --no-tag cX &&
++
++	# branch topic is what we actually send, reintroducing blob O on B1
++	git -C tworoot-client checkout -b topic B &&
++	test_commit -C tworoot-client --no-tag reintroduce sh shared &&
++
++	# push both in one command: they share a single pack computation, so a
++	# graft reached from the rejected A can strip objects that topic needs.
++	# The A ref update is rejected locally (non-fast-forward); the shared
++	# pack must still contain blob O for topic to land on the receiver.
++	test_must_fail git -C tworoot-client push \
++		"file://$(pwd)/tworoot-receiver.git" A topic &&
++	git --git-dir=tworoot-receiver.git rev-parse --verify topic
++'
++
++# push.shallowExcludeBoundary (default true) omits the shallow boundary
++# snapshot from the pack, since an ordinary receiver already has it.  The
++# exception is a receiver willing to adopt a *new* shallow root
++# (receive.shallowUpdate): it genuinely needs that snapshot, so the default
++# optimization leaves it unable to graft the new root.  Verify the receiver
++# rejects such a push (rather than corrupting itself), and that setting the
++# config to false restores the full snapshot and lets the push succeed.  This
++# is the tradeoff that motivates the config knob.
++test_expect_success 'default push to a shallowUpdate receiver rejects a rootless snapshot' '
++	git init seed-origin &&
++	test_commit -C seed-origin s1 &&
++	test_commit -C seed-origin s2 &&
++	test_commit -C seed-origin s3 &&
++
++	# depth-2: a shallow graft at s2, pushing s3 on top of it
++	git clone --depth=2 "file://$(pwd)/seed-origin" seed-client &&
++
++	git init --bare seed-receiver.git &&
++	git --git-dir=seed-receiver.git config receive.shallowUpdate true &&
++
++	# Default (optimization on): the s2 boundary snapshot is withheld, so
++	# the receiver cannot graft the new root and rejects the push, leaving
++	# the ref uncreated.
++	test_must_fail git -C seed-client push \
++		"file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded 2>err &&
++	test_grep "remote rejected" err &&
++	test_must_fail git --git-dir=seed-receiver.git rev-parse --verify seeded &&
++
++	# Opt-out: the full snapshot is sent, so the same push now succeeds and
++	# the new shallow root is grafted.
++	git -C seed-client -c push.shallowExcludeBoundary=false push \
++		"file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded &&
++	git --git-dir=seed-receiver.git rev-parse --verify seeded
 +'
 +
  test_done
+
+base-commit: 5176dd3d057ac5cae8321508febef61fa88537aa
 -- 
 gitgitgadget
