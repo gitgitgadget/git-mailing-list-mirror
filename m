@@ -1,71 +1,70 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B9D3C942E
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 19:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A452C3C9896
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 19:00:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787684461; cv=none; b=YCtfyTOarUUulen3dT0OG8Q+LmhVHEpesqOLiR7HR4eOUigS6dB+86Mz1H+Dxx4JlsAdtC9BKa3ByrsaCu9N2dxNEEoT23HK2wW1HJZ3aZceom9Cf3v6aCsF0sXghGGmpEmlMeTwxwx8xTDXWV83vsA5w6+HKhiQgXUOkk9jS8s=
+	t=1787684461; cv=none; b=ZA3QjgxWwFLNn+d0apMerza0ys+PavyTSM7AIeeizn1U/gNKRYBovRB6DWOymn4MiuakRDAVvw81Kw/f8VfXPxj8c++bVfr61wGBLX7sNReiIdqys0sQJ4rA1287PvY0c6p5rqQ1quIJjxRZgULKf3SyM6xyII5eobFiQaK0kkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1787684461; c=relaxed/simple;
-	bh=V/blUPsU/FGmBxxqg20D7H6NZp2IsP3qN6i4aGITe30=;
+	bh=y7Xd2QRkKexfdLqprlJZvhTfEP1S7P+RadLOG22Hc1g=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jJFdPiMcbAfcU2S58vT9CQLwXKAGaEZxlYKA32k+hG0dSwi9a+OSWnYlCVCW15Zs0kbcmjE/GZbeUt7Olqo5gj4ZHQQkh/UAROGQ1f2BjmxFn9KuoZ97p0cS97RcsAm9xzn9Yl4JZpL28xyBm6G7H5f2KjP27GEjUsrRiqSOc/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n3My2mvZ; arc=none smtp.client-ip=209.85.219.52
+	 MIME-Version:To:Cc; b=neugRQh/4aGh+3Y7Fqjpmn5A9x8iVWBXKn2VUlIUj9pVzma7IngmYvrKMPiLjtARjaivMRQYRuVf4ksCT5AFusWS2EHHE1VHJ5Q0F/KHTVs0jBBnNoj3idGyh2I8nSJfGMY95//Knv1XaLVwAjsfLx7a7Ts9J/88At43L9rsTxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mix9gThR; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n3My2mvZ"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8f1a8e914a9so1398176d6.1
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 12:00:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mix9gThR"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-936e8bd9caaso3300485a.2
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 12:00:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787684432; x=1788289232; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787684433; x=1788289233; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Z1Gvi27EBY7jxIjXW77iMlUlNbLtCav43HZLeeP32Mg=;
-        b=n3My2mvZSj4yxfZhqoLoYg5kMzoGcsyYMZfwUqoM92Hez8A6STguzJp2sOQYLhLmuK
-         reenwcckAQE8MWShSCkhWJzWRBioppmvMkPe0bv21klkt8v2BMm6419p4TM88pg2eTSn
-         GPUExhciP4VAGUH42hgMjn3VSK1HWUp5dGEOqXBxBXxiCyUhQGreGaHsyYycUAL9B+nS
-         phYU8YhcntNw9+o8BzFmqXP3DhSrYAXkiHRgWbPd63qGskLqRyOMFg3YTNXSQ4bVwHor
-         mjtD36MWcv7BbDlFp6u5EU/6JkEW1gts/XUqPp0vbVIdFUq/1Y7mpGuVwkhDD0lXcBHW
-         MH3A==
+        bh=YKY8oUgSl0zYFpTP2jqrH1GyvgrY7187VZjR009U1ek=;
+        b=Mix9gThRkd8SAPOFYoLnHerwGaDWQcQ+F6HKe4NJIEuBtpGqtcwTRLadBKdJLkbkk9
+         rgDsxMrX/Yh3kZTy5GX1p8SaZm9qf5DmKgcHj9IwlOPn7NrN5XUmfyrmLsoVigL/EX2j
+         +/t9JROFPU6hVo34YHYWsvBkcdMdpn1DYan5PjDOYdcZy/I/Lm9OxdQ91dL8fAC9t+ZH
+         sFb5iz6BoEqm5GaAOQih2vSCuHgSU5uIYlEjqlPzvkrhqpIdkJ6AVCYtHfhh+RYPS+YI
+         QhzZ1lJv4Ft7FeicCmRLC++caAXInWgf6wX27QtQzEIIyZeuxdfzrFdXZcqDqqOyaUpv
+         moqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787684432; x=1788289232;
+        d=1e100.net; s=20251104; t=1787684433; x=1788289233;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Z1Gvi27EBY7jxIjXW77iMlUlNbLtCav43HZLeeP32Mg=;
-        b=dsG2prF/e+LLtsVxYUXDBJvpsZJFo7ho/ZqWAgMoRwejKDWpxVhI2JtYOTyXpnebjx
-         /rwX+huTjKKfBT4xS/EClWz7NBNQTY4SugUORACrMAwbulFi4Qd+DRVeute9VGD40OTQ
-         j9JOK7XMcKuavIt9EurJS+VpTumL66Y6VZO7jkpZB6WmyivxuRhdVQ6z5DAValE5WyFo
-         7kUUgtK/VjwrKzLDXsw0sgm8L6hp2rQ+wmzVtoKnXENH6If+aYbxtjAjWHvOGzawkwSe
-         KRSxYI90PPZDtWr44r4+GkXP+8CgqeH1ftZq9v78l9U6iROKnmnMJBZQdvHnu8chuEXQ
-         HnFA==
-X-Gm-Message-State: AFuF++ndvM4g8ntv0QxrncGJRDp49wFw/LrvqcLLsIg2MuQYRAI0MkXk
-	EjjWv3Ffgyf1xiKhdanG8AEOsUsA5lWrx6MrIiH1MrLvwpTlAgSp+JwpvOHO8MY+
-X-Gm-Gg: AR+sD13YX7wtwieMTa6oooRQb90BQ9vhSr743ZUZ4eBaNXcolXMLc3xCWF+TrbBMDvR
-	yyPsNbWl/8I6WNplMODQTFaYOAfchTT8UNnQs7yWE8fHs8uE4fm3dy2y53IqANbvSnbE51GmNgB
-	aCNsLHuRl2WgalOzxcH8g9l4YrsYy4pYoXEZ5wG+3iUgg3Xwp2vsEuC2mytUoCM3vvffqtrFuN0
-	3tWuY5i4l8zAX+hGJ9/Cn4YjjEdRXLQC3WjUYEMm1RfrZaq3TFLOWiC4O20SjHBT6cwR90qGL9C
-	o3t6haS80qvWQmz1OjwTUdkVyGLV0y2vn8w5xDY9F8Q29hdicoQ/JtVj24AN3ZtrKG4FpZimMhn
-	lxMvX4388owe/RwPBn6UTx09oHEBeK5kjC4k2ZdBg5lvNpp5ToAKgfUwcXq9DiBCNHKDO+WBa1n
-	iKPJyM5gu1IUKB+yuHwfetj4paY7cMjDfdH3sJ8m+/57bBoHlU0q0Cxkxftt2qtHlR
-X-Received: by 2002:a05:6214:3988:b0:8fd:d5a7:f970 with SMTP id 6a1803df08f44-90cc787af1amr10202256d6.11.1787684432358;
-        Tue, 25 Aug 2026 12:00:32 -0700 (PDT)
+        bh=YKY8oUgSl0zYFpTP2jqrH1GyvgrY7187VZjR009U1ek=;
+        b=j1EeuG9MumWiPma1K5JakXwzgWkG4NRe8l2AaAnd4UWX+6i658ymbK2I6bHQ65ZIls
+         uS4kiKXLLJ8FqXfzrtdvV3FvAFgodbPFgD5CXhIKmL8ptaKN9hn5IKCMM9mUFpHbqSSU
+         uz1UBXud3oLK6oK27IT66BcjuXwfce0gollCw56AbXIOyM9regJpVcucIYP33MCt760f
+         3xQfMxzVwZtYr2SAWWmt0BH5U2lLDztB0MhaAZiN0Vn1Yuw7sv9hyIWZNpp250zjLUjf
+         1cjzGDmkem2GocnGVMRMtMesNJb6beKfUMYbAtbj9c3bHUwHC5q/XqIcGgjGQxocAM8q
+         9h1g==
+X-Gm-Message-State: AFuF++khH56S8kdZbrSx2YNVpmuEMOC4pRY0EVIX7nYvqOM4Wfwm2r7S
+	5NmV6Lm4kLNjIws20NOm+E+mq7QYlKuoIQRqK73SF1SVcq1zFrCod85gh2z0o4GB
+X-Gm-Gg: AR+sD10rvaPkS0RweB02/5thluFrV1g5/hZr8LWfX872jNTgT8ivVie/Es/+A6QRuVD
+	ZVpyybA6yqitKjIqbHv6QzFIzfTlORib+EVUBHL5IGp8sXzQQoux1NuOV0unuCcvg+GpAssix5S
+	8nqXnN9OoDNcnCsxliGj+gLZLJjXdyHjSSJB8JyB4JbgNXyg9G6L5BDUKs6G7a7xiMfI0DPsvAD
+	8HvcqMKoyddmN8o+eOGDS4yDAGBNQPCsS2NstZ2epGH5cl/fmkipbxz8FP62BwCUOtULeMm5cQt
+	7Lai/mvBNMXML4HR3pG+fD90p8oB4HHw0PvLaCknRV3vlnslu7ZgeLxuxMD4FYLF5MzW58L6jZj
+	ZCifjMHajvudefCyWvCZIJOa1aSGNcdO1mdZtw82Jlku/p8PjEqGlOwfrIG6NZAAQc7O3Kkjze0
+	KauPolsqgTRW8jEUJt/Li09nRSMOdea5d4WtSsHh+X3MSpGE6pWFKqTmFKFoHsTuas
+X-Received: by 2002:a05:620a:6303:20b0:937:78a7:1f94 with SMTP id af79cd13be357-937803c22ccmr56129385a.18.1787684433311;
+        Tue, 25 Aug 2026 12:00:33 -0700 (PDT)
 Received: from [127.0.0.1] ([20.127.245.161])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90cc6415888sm5645316d6.19.2026.08.25.12.00.31
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9377f072156sm32410385a.30.2026.08.25.12.00.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 12:00:31 -0700 (PDT)
-Message-Id: <36bf2ce17be1a4da1ba92d5eb89ce49c7e00be9d.1787684429.git.gitgitgadget@gmail.com>
+        Tue, 25 Aug 2026 12:00:32 -0700 (PDT)
+Message-Id: <3f3b75690eea02960c7edc8d318ce7dff654f1bc.1787684429.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2207.v2.git.1787684429.gitgitgadget@gmail.com>
 References: <pull.2207.git.1787092446.gitgitgadget@gmail.com>
 	<pull.2207.v2.git.1787684429.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Aug 2026 19:00:26 +0000
-Subject: [PATCH v2 1/4] replay: fail gracefully when a merge input is
- unreadable
+Date: Tue, 25 Aug 2026 19:00:27 +0000
+Subject: [PATCH v2 2/4] mktree: plug per-tree leak in --batch mode
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,84 +84,37 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Elijah Newren <newren@gmail.com>
 
-When objects involved in the merge cannot be read, the merge machinery
-will return early with result.clean = -1, and result.tree left as NULL.
-pick_regular_commit() tested only "if (!result->clean)", ignoring the
-case where "clean < 0".  That causes the code to try to use
-result->tree, resulting in a SIGSEGV.
+In --batch mode "git mktree" reuses its entry buffer across trees,
+resetting `used` to 0 after writing each tree.  It never frees the
+`treeent` structures the previous tree appended, though, so once the
+next tree overwrites those slots the earlier allocations are leaked.  A
+single-tree invocation hides this, as the entries stay reachable through
+the `entries` global until exit.
 
-Handle clean < 0 explicitly; the merge machinery will already have printed
-messages such as "Could not read <object>" and "collecting merge info
-failed for trees...", so we don't need to add much detail beyond the
-fact that the merge failed.
+Free each entry when resetting the buffer, and free the buffer itself
+before returning.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- replay.c                 |  7 +++++++
- t/t3650-replay-basics.sh | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
+ builtin/mktree.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/replay.c b/replay.c
-index 463c900d6c..33e21b2032 100644
---- a/replay.c
-+++ b/replay.c
-@@ -327,6 +327,13 @@ static struct commit *pick_regular_commit(struct repository *repo,
- 	merge_opt->ancestor = NULL;
- 	merge_opt->branch2 = NULL;
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index 4084e32476..dc2d293c3d 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -200,8 +200,11 @@ int cmd_mktree(int ac,
+ 			puts(oid_to_hex(&oid));
+ 			fflush(stdout);
+ 		}
++		for (int i = 0; i < used; i++)
++			free(entries[i]);
+ 		used=0; /* reset tree entry buffer for re-use in batch mode */
+ 	}
++	free(entries);
+ 	strbuf_release(&sb);
  
-+	if (result->clean < 0) {
-+		error(_("merge of %s onto %s failed"),
-+		      oid_to_hex(&pickme->object.oid),
-+		      oid_to_hex(&replayed_base->object.oid));
-+		return NULL;
-+	}
-+
- 	if (!result->clean)
- 		return NULL;
- 
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index 3353bc4a4d..12348b4a5f 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -565,4 +565,38 @@ test_expect_success '--onto with --ref rejects multiple revision ranges' '
- 	test_grep "cannot be used with multiple revision ranges" err
- '
- 
-+test_expect_success 'replay fails without segfault when objects are missing' '
-+	test_when_finished "rm -fr unreadable" &&
-+	git init unreadable &&
-+	(
-+		cd unreadable &&
-+
-+		test_write_lines l1 l2 l3 l4 l5 l6 l7 l8 >f &&
-+		git add f &&
-+		git commit -m base &&
-+		git branch base &&
-+
-+		test_write_lines l1 l2 l3 l4 l5 l6 l7 CHANGED >f &&
-+		git commit -am side &&
-+		git branch side &&
-+
-+		git switch -c onto base &&
-+		test_write_lines CHANGED l2 l3 l4 l5 l6 l7 l8 >f &&
-+		git commit -am onto &&
-+
-+		# The replay works while every object is readable.
-+		git replay --onto onto base..side &&
-+
-+		# Removing the onto tree makes parse_tree() fail during the
-+		# incore merge, driving clean < 0 with a NULL result tree.
-+		onto_tree=$(git rev-parse onto^{tree}) &&
-+		obj=$(test_oid_to_path "$onto_tree") &&
-+		mv .git/objects/${obj} saved-tree &&
-+
-+		# Ensure replay gracefully handles the missing object
-+		test_must_fail git replay --onto onto base..side 2>err &&
-+		test_grep -e "Could not read" -e "collecting merge info failed" err
-+	)
-+'
-+
- test_done
+ 	return 0;
 -- 
 gitgitgadget
 
