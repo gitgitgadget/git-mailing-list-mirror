@@ -1,120 +1,204 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9B9175A83
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 18:37:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DD73B71AC
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 18:56:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787683039; cv=none; b=cIFR2uj5skb9fTe/ThC7uOVlUYBM2cxsFtn/OA1KBaRkag4fv3svEu4BC6NjZrKOiZZoU2gW2aHi7T7AASlpu9Z+A9gSEvYdgY64kBTRIuVKe8XXXl6DsoOgRLZ2m1frrdV6fvlGhJ4NgF1jmb0cHveeH4AJbnwj3cmCLw4G4rc=
+	t=1787684188; cv=none; b=R3WuvZa2H2MA5vtLHN+In3e8j39brWX6IhNpFUKFSFqFXQ9cAQhS5N1HrHJP+qZUbIYd/pLYXqTZHxOWt/ef6OlakXSAAonYMBCbcejK/J5PjNRPgnrQ5+l+AulA8fxHu2nRmRFVg9qmcy/DyBQXDQQGnHfjV1RtRkfu+n5T6kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787683039; c=relaxed/simple;
-	bh=bJU+dZ7UR6zdnoBj5QMLblRcC/FFQE/Pkw2vkx4SoVs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=TKrPCz/tHSIIRZBbbBQShqe+yHOOEwbn2vKWp50tkWjGSzRKSERyTniz1fB+KZBT/EKec1/nDEYJSA40XRXVuULXpDF+Q9xKT38mnJVEOjBXC3kUtLEvN/xBLq/+0xfdIGCSK3k9haU9UtJMEkXzZWF6BThQtc1Kz0vyskJNRpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=XlddejfM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QNWPLIY8; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1787684188; c=relaxed/simple;
+	bh=GJbBniY10QauoMqVGMPIL6TkGcRSgPyx/rfD5u2r/oc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=EUQ90e2bZbUt+CFG1ct8508qJKO8whaspSs88riKKmxGKS4mTrLw60RN5SgBzm/iqSKEicRy8ioo+dmg5QHzGsnLbKwIozikhx0H1E9eHeai4aChtku4jflzcsTa+3gHVH5zQAdQRwHDT7PY3LV8FUzH3BxmTVNn4TWQID1XXSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=p9vvWXIu; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="XlddejfM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QNWPLIY8"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E282D14000EE;
-	Tue, 25 Aug 2026 14:37:15 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Tue, 25 Aug 2026 14:37:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1787683035;
-	 x=1787769435; bh=hdupONC7nAnWWAwOJel/FUgD/AzZhd2DQ/XiaqRZWMU=; b=
-	XlddejfM7WzC4H6eTc25mX6gEmlQuumfHfvaY7Z1JTnL+Lp3Vbir5BuDIFHSCwdm
-	WEAJfhHvjzIUhqX5ngA0MwMKLNvkzE5Ws+m0s3ZNq+akoInjBcit9v93tYkOKn0A
-	Q5HsR6IUEQVYEacbG/CzU5Bqo+IE5Lkr+v+v6ksaSxv2FP72w3HzNxEqAIvucjSz
-	3FtGXTHE3h0UnseXK9BHgeJcdjFAkV4IFpdKJLDiFiweRKFTpEPr90WHUST45EG3
-	04a6f7dx1BKVZ4YpyAQZqiJyEfQ0Blw1/9t8zTvybpMzN5CPDyIeriwolllv2TWM
-	AxIVR04psVeCjMzOi4bc9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787683035; x=
-	1787769435; bh=hdupONC7nAnWWAwOJel/FUgD/AzZhd2DQ/XiaqRZWMU=; b=Q
-	NWPLIY8bRgVm5OGzeQ0n/OS7Ze+eFIvObpKijdg81wqnvUsmk7t0fdKumHYcZWmE
-	j741O1vGtsqqf1FjhzU14lMJihVEbAmGe8U89JQI2UyDHLvWxFkrgawnQbDSYUyG
-	g8Idrl7yJXotPjS6ntV+nfF8r3X339iGDS92Xb29ZECk2R3GNnrl6aqBc3vgQv7Y
-	21gXeqKqTGeMEuxz5x8iYlfJei+IgSx/fVwFV9XdKqN9AkAvDQsB5m1z6a5tBM6q
-	ErgabeYeGUAygcUeVUV6T7E/GXBJtcVIK36iVMuTOMQ6vlEv9XVgjoUk07GLFFUI
-	0JVDoApFCeSLL6HTo2o3g==
-X-ME-Sender: <xms:2OCNajNo7xTucYnJzA06GDifsxPB1kQsOY_4SB3klqmBEfZdAo-HmQY>
-    <xme:2OCNaowDICZSxUkAZIoPCXJ18B9sOq8FhI3S-VsUxIXO1Ngzr2Pe7RVe2pmm4QpAU
-    Yx2a6aVQP1X77oB-1NPMl65gzeYbMAIw6uxl9ZxWpLU2OjMCoBr>
-X-ME-Proxy-Cause: dmFkZTGKlQhSmk2t+Gy7vUFgIvk1P9ZjCBlwd9mJJxwVQyhEhEaLdlTKO9t7c9ETUgptTf
-    VzX4J+TVXWS1R09wCoOgyKUAk3udJwF7y6cELuK/i5M4/W5wp0MQd6BoFt9Ay80WtewW17
-    npTzGgZoHF2zbONH2AwgVOTNVUszPnjrc/Bi2mn9Iqu21nnpyqS6vISeoZLiuWp/BVkyJa
-    35F8BYcpcCCmHXlAVWEWsrYM8kaF5MHqJKFEd0+UeyKmCGDE6wphD2S3yKnlJpnrxAEv0h
-    /8sOqxyTXq8dnRRS+he7xSsRI0wwrqm+CamXNCn3KsyqSMmfhVxyoh73s/1rLIWPIXZHFH
-    SOoFw/85KXKQ9bBcsom6F4addKOKpgFtv7hJRul8EPNOGA2kJygYveWI6kqUMI+IWSch+P
-    /qGJziYkLZRxUirJ9EGzftMoNEeRjGPJRZHfP5UQ/5/9aNXNKncFu44dcE9+n7gRpYoO95
-    OybxhYltpFlEmGyAhJp5c2AVT0cZqLstME72qHwTQ7mdbY94qx1lP0GdLoh/mEjoX/lWKj
-    6gsgs43hdHxXaB+7uaoNTLhNiUCQWq5D549o5hE/v6yLI7PL60y20UBs3Z6LapR+NseHe6
-    Ox3xSejYvJOCFlxfVAC8t4D6mMWLPdUAIOWtdbf8erQQ0GLhFv85m8sHi4bw
-X-ME-Proxy: <xmx:2eCNah5CAIIIDP0-Aj39YGfEEotYNh7wjp_ddfjCuhFLKtMCQwFECw>
-    <xmx:2eCNas1jBbUTp3pX32NOs1McE7_CS2SmKft5b5i5ZT3J-hHacQw4WQ>
-    <xmx:2eCNagAquJtOZkvztunQn6i4Q7_4cygTE2ABLnZRiZcjrALpwvAj8g>
-    <xmx:2eCNam3NvRgAtWAVBOneHQDOQbkHNpnhaTlSCe32FLGSkkNcYz3dtw>
-    <xmx:2-CNaihGy_ZOfPZqhASXuaZ5IrfWUFyqMAKe7J3KJRjfkkrCDwVdm591>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 2377522C0078; Tue, 25 Aug 2026 14:37:12 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p9vvWXIu"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3964dfb5b9aso266142a91.1
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 11:56:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787684183; x=1788288983; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mpc1FTtvvLAt3q5aqsUhQg5+QK87snRK1gXGneAKKyU=;
+        b=p9vvWXIupuSMeQ6YwZfJHuEqRWQCjOQFszHEY72PZ9mnhT7XrAHXZ+wBfk2tPuxjk0
+         xixnTqe6X7FlrO/x02SKFrAnfV616OQu9dNpU+LX9WqInnpMXOACFgkm/fzAs+/OG3qs
+         6OClR+CebjfoP3/2rcQaAAOVohIQD1TZUvfais7wiylmg0ieUD2GIL25qx7G+UnD6LhM
+         3o8Wv0LE4vFuWaVvd+V32gCW57IQJpONuVZfb/wKWIM7XWbrTt7A8Lva7oaaa0hblSYs
+         Z4QS5R1GfXc/EvQfopnSv0L9hL2tFtdr3yG4xj/MGCh8lvYCYlVsGJ5bWxlIIFMAKcoM
+         xx8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787684183; x=1788288983;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mpc1FTtvvLAt3q5aqsUhQg5+QK87snRK1gXGneAKKyU=;
+        b=im3MgBT1AfosiTzwpN0ICTu4svMDPF53aOZye7E/Uprz5buQoW1MtsI95y61uqKQGr
+         juR7Kx7JSHm9RoylInykfVd26ut8fop/g3efnxY9FEbViMyh1CHRzH1yZRWAszidYBi3
+         GSVtWMisz9aCLuX/yu2X6RqOx8Brftx429R0spxedxhAt288fi9cXARtSjNy71bnTmHD
+         oRamDECdMcjClHPefqa3Hxm0f2748UOMrkO4rtWvuZFgHLVHePAHxC1GqLO9FoLYDQwL
+         9cIPorn9D2FWKR+618wUj6NDXzL7oOtWMBKXZiIg95gYR7FAaYSW4q3QNOnDPxBi5EPi
+         v/8A==
+X-Gm-Message-State: AFuF++lthALOmP69T8S/ErNh8+Riijgc0PADa30AuJi4ywla++ji0nLO
+	lkYJJgnLZ3sYLBwXCi+LW2N0B0VnKt96zG1Vcmiuv5VvO0KPMKJOuIG5qONuog==
+X-Gm-Gg: AR+sD111ls6768s8lOn+tYazVg8xFJ8bDy7oPrazDMAIwYvaGI5oFAEfll5h2+aKSFB
+	yXVUVtIodrFlc07a3VVPEA3utkLRgUmjb5dLJ0X2v21jY0VfecYaHXpcSgR2lq2ps/WePFwbGu2
+	vWrzrXvb0PtyjfB/d/yCP2U6F38gUviWc1I1eM2gu+WY0BZra3PkeW/oHM7bnROTMozDnMuNJ7X
+	s+jEu8Y1iPxf55+7ugVLdiYUNhRtBSfDFFb5CO3FoJFU1MIJKUN/L7QEajLfA982+8PJK4VFmkz
+	hSSPg0WhxE7tBGsygievV3LydMsb22CR720HrRdZWFlgb7ifPt5uBUEwOz9GJSBIdGBOixj7W+9
+	ocmT4bLvZWro6aUzLyqtYngO9h0RN2Wdslm1VfOwmCUy4mc/hf4ymUrU8OyaMcw76mTM53vCPXW
+	U82v35LxVMmOvNLzWsvEC9Bs3OQGqrG7m+HFlP6FOCW0LC8NwZI97qtauBcs+IN0k=
+X-Received: by 2002:a17:90a:fc47:b0:38e:9045:bac0 with SMTP id 98e67ed59e1d1-3966d1b1f18mr2657959a91.5.1787684183455;
+        Tue, 25 Aug 2026 11:56:23 -0700 (PDT)
+Received: from [127.0.0.1] ([172.208.153.5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3283d60b59dsm1094412eec.3.2026.08.25.11.56.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Aug 2026 11:56:22 -0700 (PDT)
+Message-Id: <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 25 Aug 2026 18:56:14 +0000
+Subject: [PATCH v2 0/7] trace2: stop allowing die()
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 25 Aug 2026 20:36:50 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <16315616-097a-4fe2-8665-010e424afd8b@app.fastmail.com>
-In-Reply-To: <xmqqjypfp2vl.fsf@gitster.g>
-References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
- <format-patch_learn_--range-diff-notes.c5a@msgid.xyz>
- <xmqqjypfp2vl.fsf@gitster.g>
-Subject: Re: [PATCH 3/3] format-patch: learn --[no-]range-diff-notes
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    Taylor Blau <ttaylorr@openai.com>,
+    Derrick Stolee <stolee@gmail.com>
 
-On Tue, Aug 25, 2026, at 00:31, Junio C Hamano wrote:
-> [snip]
->> +Now the range diff is back to displaying the same notes as the patches.
->> +
->
-> Hmph, this is a bit too complex for me.  When I say
->
->     $ git format-patch --no-notes --range-diff-notes ...
->
-> I would expect that individual patches would not get notes, but the
-> range-diff will include them in the comparison.  But if
-> --range-diff-notes just falls back to default (i.e., inherit what
-> patches use), would I see the notes used in the range-diff?
+After v1 was posted, based on a concrete example of tracing leading to a
+recursive die() problem, more evidence has come up to imply that allocations
+are failing for some users more often. This is potentially an issue with the
+allocator chosen by Git for Windows, which is being discussed elsewhere.
 
-You will not get patch notes and not get
-range diff notes. That --range-diff-notes
-told it to use the patch notes which you
-just turned off/emptied the list.
+But the conclusion is this: the trace2 API shouldn't call helpers that might
+call die(). It's too low-level for that.
 
-Code-wise, the list of notes is cleared so you
-you would have to change the --notes implementation
-if you want to keep a sort of shadow list
-of not-patch-notes-but-RD-notes.
-And another problem, or fact, is that format-patch
-does not show notes by default. So what should
---RD-notes show? The default notes?
+In this v2, I have a much more robust approach to removing die() from the
+trace2 API.
 
-Thanks
+This starts with a new banned-die.h header file at the root of the repo and
+including it from all trace2 API *.c files. It starts empty, but the later
+patches will add one method at a time:
 
-sent from mobile
+ * xsnprintf() : This is the original patch, but made more complete by
+   adding the method to banned-die.h.
+ * xstrdup()
+ * ALLOC_ARRAY()
+ * xstrfmt()
+ * ALLOC_GROW()
+ * xcalloc()
 
+During each patch, the goal was to have the trace2 logic be "as correct as
+possible" when an allocation failure occurs. This may mean that we have
+incomplete messages or dropped trace messages.
+
+The focus here is that the trace2 API should never cause a process-ending
+failure, because those failures will trigger trace2 API calls while
+reporting the failure.
+
+Thanks, -Stolee
+
+Derrick Stolee (7):
+  banned-die: create header for banning of functions
+  trace2: tolerate failed timestamp formatting
+  trace2: remove use of xstrdup()
+  trace2: remove use of ALLOC_ARRAY()
+  trace2: remove use of xstrfmt()
+  trace2: remove use of ALLOC_GROW()
+  trace2: remove use of xcalloc()
+
+ banned-die.h            | 32 +++++++++++++++++
+ trace2.c                | 51 ++++++++++++++++++++++++---
+ trace2/tr2_cfg.c        |  1 +
+ trace2/tr2_cmd_name.c   |  1 +
+ trace2/tr2_ctr.c        | 11 +++++-
+ trace2/tr2_dst.c        |  1 +
+ trace2/tr2_sid.c        |  1 +
+ trace2/tr2_sysenv.c     |  7 ++--
+ trace2/tr2_tbuf.c       | 50 +++++++++++++++++++--------
+ trace2/tr2_tgt_event.c  |  1 +
+ trace2/tr2_tgt_normal.c |  1 +
+ trace2/tr2_tgt_perf.c   |  1 +
+ trace2/tr2_tls.c        | 76 +++++++++++++++++++++++++++++++++++++++--
+ trace2/tr2_tls.h        |  7 ++++
+ trace2/tr2_tmr.c        | 15 ++++++--
+ 15 files changed, 229 insertions(+), 27 deletions(-)
+ create mode 100644 banned-die.h
+
+
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2178%2Fderrickstolee%2Ftrace2-dont-die-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2178/derrickstolee/trace2-dont-die-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2178
+
+Range-diff vs v1:
+
+ -:  ---------- > 1:  84634717e2 banned-die: create header for banning of functions
+ 1:  95c546bb3b ! 2:  bd45f46a34 trace2: tolerate failed timestamp formatting
+     @@ Commit message
+          triggering this problem in a loop as the 'atexit' event would be
+          retriggered by the die().
+      
+     -    I could not determine the exact cause of why these errors started
+     -    occuring in a bunch. My best guess is that these users are dogfooding an
+     -    early operating system version that is more likely to fail in the
+     -    gettimeofday() function and thus leaves the structures uninitialized and
+     -    potentially violating the expected values.
+     +    Based on other symptoms impacting users on the version reporting these
+     +    failures, it is most likely that this is actually a failure to allocate
+     +    memory, which is a specific symptom in Git for Windows. That fork uses a
+     +    different library for its implementation of vsprintf() which allocates
+     +    an array when seven or more positional arguments exist in the formatting
+     +    string, such as this one.
+      
+     -    However, for full defense-in-depth I made several modifications:
+     +    Ultimately, the trace2 machinery is so low-level that it should not rely on
+     +    any helper functions that perform error handling with die(), as that can
+     +    trigger issues that would then be traced, causing this kind of recursive
+     +    loop.
+     +
+     +    These changes help remove any use of die() within this file:
+      
+          1. Both 'tv' and 'tm' structs are initialized with zero values, allowing
+             an erroring gettimeofday() or gmtime_r() method to leave them
+     @@ Commit message
+          but they only die() on out-of-memory errors instead of formatting
+          issues. I chose to leave those in place for now.
+      
+     +    Helped-by: Taylor Blau <ttaylorr@openai.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+     + ## banned-die.h ##
+     +@@
+     + #undef die
+     + #define die banned(die)
+     + 
+     ++#undef xsnprintf
+     ++#define xsnprintf(...) BANNED(xsnprintf)
+     ++
+     + #endif /* BANNED_DIE_H */
+     +
+       ## trace2/tr2_tbuf.c ##
+      @@
+       
+ -:  ---------- > 3:  ec447a6a77 trace2: remove use of xstrdup()
+ -:  ---------- > 4:  db6858d381 trace2: remove use of ALLOC_ARRAY()
+ -:  ---------- > 5:  7f0bb405ad trace2: remove use of xstrfmt()
+ -:  ---------- > 6:  120cf1967b trace2: remove use of ALLOC_GROW()
+ -:  ---------- > 7:  c8fc195a2a trace2: remove use of xcalloc()
+
+-- 
+gitgitgadget
