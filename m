@@ -1,160 +1,122 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C489039281D
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 21:41:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD4539281D
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 21:41:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787694107; cv=none; b=QhgBVQwZBO2A6bcYqdId0xQNmKO3pqRIBvRvcxKrT+WMXzK23UY9+ltjMWYLnYp21DM2PO4On0mYCbWGIVqV1SWfOamhLyyDkhznJbry8dXdn+xHr3CNCAOllR2d+8h/an4p45THjK3H9vsfM48hIEifChJmDeLHagTSwHw8r+g=
+	t=1787694121; cv=none; b=qhBzh9kx9jOsYZa/FbTi47pEfgts8zn0QaKCtMNaQOE6ntfZRzRBcVfQO0fKVmP8FABz36IJ8lmpWEVDz+nP7v3sRp744LbCoSUJXjf9XKZwSt6Sb+T8ltrLV9PCTlYEISygbvkKS8BJMh5+ZUItUN5epE/IoD5AHbYRnfT1488=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787694107; c=relaxed/simple;
-	bh=odOliccZ7A0ZG3dPMzhQ+yoSANWmCkhmvLu7k46BFdM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lCzY5Jgy6GbdrJeyg3fnCoiU+fwkUO0JFD6QX0dWwGtvMwzZrWBp4JLKIeNzo5a++3U4IxSk8v4b7wF5xKw5U1jViQp/J8nhBhJO01z6Np/BMuzAUhQHo1wmiTzq/oeioBK+lXO7jWs2hk8RAZXFV1Bs4lsXh/ljwoScla68VYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kI7YSeEt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jeU5qKin; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787694121; c=relaxed/simple;
+	bh=krEB5/95CMpWjBccUbr3sT7IGlVu03qsluTGkVYbMdY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KmdLKmZUKa8xOF8goGfaj2bQrovCoKME1xKwAeur78wu9wAY5LNKWco9fcZci5MERow2Yg1RLCkYz0/QyRrcJJYgW5+aigZKmmuL1cJH5QRSSjxuxst35scdl7a6go9aSICKouAxANKNZmjN6DSlAdmTN4CCGhmSJhROVYtdpB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=BHiqd0KH; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kI7YSeEt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jeU5qKin"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E938714000BB;
-	Tue, 25 Aug 2026 17:41:44 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 25 Aug 2026 17:41:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787694104; x=1787780504; bh=rAWTPpvUWZ
-	K20XNqeqZ5VIKz96/BCpA99KAWytLr3Vk=; b=kI7YSeEtyQPXi51LlpUWHtSl2i
-	ke7iDQNQ5UOBqLyW/Kl1zJYclVBpQGqKhjtghbGmbGFwGaRaqt3ecAPbvxS83vVj
-	TTFIcgZe8w3Ns8dkZ8Dy9OG8hqwKlx1Px5KJ5L6N3Lc7w+jH+B3XHu/n0aisbvl4
-	pZUWZW9ygO7SwkbrJhKxqIticOneHX8YWx95PuSCOPn3Vd7fAyLwVGPRmi/pIhVy
-	YReZ5M9dHprpNvBdVP5QnZ7SFjZlf3PppnD05HSj3jl4S39S7MhVQUhtld0AlmCO
-	qaurd3LsDb/VBSNVvskfHR1iiHOjCSkdGxRb4Q6I9wKsYjKDYReHX+SkfMDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787694104; x=1787780504; bh=rAWTPpvUWZK20XNqeqZ5VIKz96/BCpA99KA
-	WytLr3Vk=; b=jeU5qKinhtw79SVrlIvYuJlSgPIM0QEvtSghs/8epumar0OSkAv
-	BV54TPeojym/I8XtIaH/WBf6yCnhOKuZNUu5yv/IaHQbEsdGwebZWIGKP/kJ9pXl
-	NKw0Rhljv2Vsl0euMVHJdZi0pyycwO9AgSOfnTB3k8labwPh9od/soU7onoJkbzR
-	5u/l1dFM1HWcZrOY9ZL+SCBC74Ap+cG9l2YocWR6Xty4sA3A1Zcog97VhE4fl+W3
-	28H51rjf0Mghs46+BaERVqccVYDvEQP5ZgST2Qy5j1V8WbXTogUZI8FnYJPtucbA
-	a+L8srkJlVI1YT88BeTU1601mKkBI2WRR+A==
-X-ME-Sender: <xms:GAyOak4XOlvTe5USB9yqWXVQm-UGjZ9qKsShjpQQi3NJSkC7T3qy6Q>
-    <xme:GAyOas7Awotsc_wtbDmBEvscv9vwC3DfH56SpH7BEZHb9QK3yCMAN3fFNEmli20Jq
-    xLDkchtYpGs5jxAyM01g76akOEeekprSgpsgHIDiiCY8-mdLT_5wg>
-X-ME-Received: <xmr:GAyOaoc590q8OzLjKDrQSt5afvo6z33cDW_FRwCZ8DvCIRJwQw6An4WNu4IEJPr7KZwo9EIAEpYpFreEhk2wZPRrhBppEh0uyw>
-X-ME-Proxy-Cause: dmFkZTEEAFt0ukbFzb21yVLf/ingKHGjdn+LVNNXEbVI9aBM/y4iYaKc2b+MUBm9vfZJ9N
-    nzP7+c0ohK0H3LlIixhk0L9P4O1pHQZPOrOPj1W48opF/MPgkOJkOeTBbSpZTmhT/dQtGx
-    ZiU9tC2nQUgQ5lJERrgPszMSEecaDKmnico5ZZEaqLqjzW5ekwJrZpuoB29GyGQG+uRPke
-    N3XuOoELmTderTcdrWPJqP/CT2+oEEUKBcKPIgNdkxoQ6JB2IiXzwaZfiBqLNS2ay+w7Z+
-    BSpIJN5lwFB2NU6JMa0xpakSY03/vs6thuG4XaZFve117cm91iSoHCtyKkVcnaMeByXEeu
-    fBNwFB02WC+VD34uw46cWoepqAHFBvMQBt/IjjGBvvTVIu7c4/ovO5o4M46DI4X0IWwKXk
-    x8ZVw1mkt/KAAGlSK04E/YHhpHmLSjosuBdhA17ACq4vNMetE6ouqZ5/6mu85ZEfm6Kjk0
-    M4IUCODOU/MS98jYX/0Cl4U6n7OVtIFAt8OP0VhGtoLu+RH6mjaahbASoVj7ffnxvRmvm4
-    jPNsY4xjXVIR8Re5J95VtNeu2je9pZBIx94+x77KvIS1xGwW5c7lvViQ0yWHPEu05R3NsV
-    syUQ3BiCur7Q0POAW/A123JTghEHy+Y+bXkAL/mZExeCzyNwxmrLMogHC/Gw
-X-ME-Proxy: <xmx:GAyOaoDWhvz169P66QpW5sDygNo4KotoE8wJtMw77eubtLnYNMjL-w>
-    <xmx:GAyOaj-KYRVc768d-Nry_LJkfMK8YI_t-D0e3XPcZgIQcP0sE4M0yw>
-    <xmx:GAyOarLEZh-rtarMCN6OiU_l-RwwA7l6UWpdQlPBAzycfJivywGkkg>
-    <xmx:GAyOaki_fOuHC_wfm4xtiYcp1CBoBSDMQbxq97kqvPpDKaEmqkLqjA>
-    <xmx:GAyOan_uZ3Evh-YR6k86ud7P_Cg0wbCXBUv53IEIDKOLLrqvpu28sWT5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Aug 2026 17:41:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Andrew Pleeter via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Andrew Pleeter <andrewpleeter@gmail.com>
-Subject: Re: [PATCH] builtin/whoami: add new 'whoami' command
-In-Reply-To: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com> (Andrew
-	Pleeter via GitGitGadget's message of "Tue, 25 Aug 2026 20:46:42
-	+0000")
-References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
-Date: Tue, 25 Aug 2026 14:41:43 -0700
-Message-ID: <xmqq7bldlvxk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="BHiqd0KH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1787694118;
+	bh=krEB5/95CMpWjBccUbr3sT7IGlVu03qsluTGkVYbMdY=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=BHiqd0KHNXKAVq1eCAYjG2u1g72GE3NnclljNTx97Zn5qn4QDJiQ7tFn1AlqywH1/
+	 AEd0iFL4dHii7sDuwzWFmu7qqptWCaDxBXEz3B7PQ5RKdaiNo8TsfO/fK09NBrfrqe
+	 JcewItTGcnNJj+tLSJPd9wLap/v1juJsoKGMm8b5GSt/ZJYfu7ykIHTi+oks5xvWp3
+	 TFb9LH0BWGNLa/l5p2b0uSt5slpyyhW9MGex8XSgQO4zPCpoWhFGVhFdXutLO+RKeG
+	 8odYDO0GhIX+ToCBsAMuTKlas+/z1nSFXUZu4X9MzREFAPD4TGuaz4TqsdeIBUi1Nm
+	 ++2DIZyesAD8SpT+YPxEVBRm1GXP/nz0AXHJ5bTXshKEhOxyF5nSChSBnmaf7RUZ29
+	 gPnk23eaftKJ3HgflHhdjNhn1+KkNY75Iwez72O5jUUGslu8+nNem5C2JJIpY0dmAd
+	 wqh+xAkLif6bqw3rpJquR4+3OTVka/YYAJbHkNCvoiYfQgoQFPZ
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:23b3:441d:199e:9561])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5D9C920101;
+	Tue, 25 Aug 2026 21:41:58 +0000 (UTC)
+Date: Tue, 25 Aug 2026 21:41:57 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH 5/6] object-name: use hexval
+Message-ID: <ao4MJQgp6Ai4tJxi@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
+ <20260729233215.398654-6-sandals@crustytoothpaste.net>
+ <CABPp-BFDaWdahoOnNRGQjshzQXin1YLuROv94W_PrajnLWDAuQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pzQItSUaHuz98YZG"
+Content-Disposition: inline
+In-Reply-To: <CABPp-BFDaWdahoOnNRGQjshzQXin1YLuROv94W_PrajnLWDAuQ@mail.gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-"Andrew Pleeter via GitGitGadget" <gitgitgadget@gmail.com> writes:
+--pzQItSUaHuz98YZG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->     builtin/whoami: add new 'whoami' command
+On 2026-08-25 at 19:44:34, Elijah Newren wrote:
+> On Wed, Jul 29, 2026 at 4:33=E2=80=AFPM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> >
+> > We've open-coded a different implementation of parsing hex values here
+> > when we already have a perfectly good one in hexval.  This
+> > implementation will almost certainly be slower because it isn't
+> > table-driven, unlike the other one, and since it's not constant time it
+> > has no other advantages either.  To tidy things up and prepare for
+> > future work, switch to hexval in this case.
+>=20
+> As Junio noted, you may want to call out that your replacement drops
+> the case-normalization that the former parse_oid_prefix() provided.
 
-In general, I would really really want to see us refrain from adding
-any more random subcommands.
+Will fix in v2.
 
-> +`-a`::
-> +`--author`::
-> +	Show author identity.
-> +
-> +`-c`::
-> +`--committer`::
-> +	Show committer identity.
+> [...]
+> > -               unsigned char val;
+> [...]
+> > +               int val =3D hexval(c, HEX_KIND_OID);
+> > +
+> > +               if (val < 0)
+> >                         return -1;
+> [...]
+> >                if (oid_out) {
+> >                        if (!(i & 1))
+> >                                val <<=3D 4;
+> >                        oid_out->hash[i >> 1] |=3D val;
+>=20
+> hexval returns unsigned int.  Is there a risk that someone "tries to
+> fix" that discrepancy by changing val to unsigned int here,
+> inadvertently causing the `if` immediately below to become dead code?
+>=20
+> In patch 1, in hex2chr, you used a (val & ~0xf) check together with an
+> unsigned int val; would that make sense here, or is that overkill?
 
-This pair hints the users they are equals.
+I can re-roll with an appropriate change, sure.  I think that we'd need
+to have a slightly different check, but I'll tidy it up accordingly.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-But the code tells us otherwise:
+--pzQItSUaHuz98YZG
+Content-Type: application/pgp-signature; name=signature.asc
 
-> +	if (show_name) {
-> +		if (show_author)
-> +			puts(author_name.buf);
-> +		else
-> +			puts(committer_name.buf);
-> +		goto cleanup;
-> +	}
-> +
+-----BEGIN PGP SIGNATURE-----
 
-So when "-n" is in effect, "-c" is completely ignored.  Lack of "-a"
-means "-c" instead.  The same story holds for "-e".
+wr0EABYKAG8FgmqODCUJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ8iwsKGWD7sCJcWe1Kje4eFrmrHSLPhJxYsQKToSr+Ql
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAP6gAP9ui0SfbYxx4MQwkxQKnXOoVRnT
+OSeBlpV9RxMlKcdWLgD+Ozd1loIQzXFSci37cJOzb0n7Zqesbom3WnA0EVEuhQA=
+=rMZN
+-----END PGP SIGNATURE-----
 
-Yet later in the code that is executed when neither "-n" or "-e" is
-in effect:
-
-> +	if (show_author) {
-> +		puts(author_info.buf);
-> +		goto cleanup;
-> +	}
-> +
-> +	if (show_committer) {
-> +		puts(committer_info.buf);
-> +		goto cleanup;
-> +	}
-> +
-
-Here, lack of "-a" is not sufficient to view committer information
-and you'd explicitly need to pass "-c" if you want to view committer
-information.
-
-So confusing.
-
-> +`-n`::
-> +`--name`::
-> +	Show name only.
-> +
-> +`-e`::
-> +`--email`::
-> +	Show email only.
-
-Why not make -a/-c/-n/-e more additive instead?  Something along the
-lines of ...
-
-    $ git ident -a -e -n
-    Andrew Pleeter <andrewpleeter@gmail.com>
-    $ git ident -a -n -v
-    Author: Andrew Pleeter
-    $ git ident -a -c -e
-    <andrewpleeter@gmail.com>
-    <andrewpleeter@gmail.com>
-    $ git ident -a -c -e -v
-    Author: <andrewpleeter@gmail.com>
-    Committer: <andrewpleeter@gmail.com>
-
+--pzQItSUaHuz98YZG--
