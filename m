@@ -1,78 +1,81 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27056440A34
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 14:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284D547ECFD
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 14:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787668218; cv=none; b=pJVc9N0pS4lsj+L+PZ0pDaAKmQgmRvlfdqT5WIDlGu8Ih5BVRNuUzWWfRMfCG8o2xRnOY7zhsSa/rTJAHfNorPirPjY8AOyG0bLk6ZYeaw8QoRYxkzoXJyu5rx8RK009BfGZVezEtSz51wZfmg6Z640/zFT/+h24Dpz3SdCJfYQ=
+	t=1787668219; cv=none; b=CjiPTHcWAFxbqwxb87w1WKRi/7sPmOp+mFM4Ws4thIHibWaW1gGxlES5YqpVLizD3jnV4+FLu/b2ARcnRAzUbkFY+E8bu1j0iryKlNSNq0d/HbOlcR2KQJYzPmmmEVU7Xsq8vVXLpZI5cMAaNYXXvliP/mThazSA9W8h0umhTaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787668218; c=relaxed/simple;
-	bh=aF6OoVtlGXalC/GGs2TVAecSzWJb1RMZiD8u4McwZT8=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CrpCVLjImWMccEYuqpmD9KuFCmKEiDT7/2VJpR6CUcxJtCtwU+DCjdYARn5fPu1tglnM1inYyKmQpSxfoarsW/UvIJGboLhNtFf7JXKUxJOdEufDIwdFuiRNMLoOoT80S+CRWccaUvKXXi4olS4T2EdMG03IxLtOvqXY4E1fdAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m2IdSXYb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TFJyBNtL; arc=none smtp.client-ip=202.12.124.157
+	s=arc-20240116; t=1787668219; c=relaxed/simple;
+	bh=Fi64fjQ9+ezxl4wCx8vVDWJiOnLcywSv3gY2wdPy7ig=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=QgSV8hzDiRIEtnuqims+2/hFgxwa/bxL4iyk6ISxoZVGjkC8K2lfQkGRFKUMCY0kH/C6eiJwDK2MNZZyBciQpltkHFZj5GdSd3XUMCe2wZOxIfZ84Akr0CwVJuSFhUs67ahVpR4lCmkDpEasklZ2xPFm7C8g4498RGZSbeGkNSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EhZ3vZh4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fNtR9owA; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m2IdSXYb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TFJyBNtL"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5556B7A00E2
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 10:30:16 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Tue, 25 Aug 2026 10:30:16 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EhZ3vZh4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fNtR9owA"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4CD021D00123
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 10:30:17 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Tue, 25 Aug 2026 10:30:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1787668216; x=1787754616; bh=Db+8IL5DEW
-	dWzSBy13ZL3/UkdC9SCP0iWj6bb8D0dac=; b=m2IdSXYb0o5GByjbs19CGmLh6O
-	zvkQpJDgmZbkGJ2hsB689Pd4whybmw025JMw3c9UAVbGExoDD5aqENUXjmwFpEnh
-	vGSdryNSS/ZYq/PhQlE4uNBSeJG/cuBgqSw2xmkpeCNvoObkbYPJ4IRQpQBBfeBJ
-	DqloJaK/HjMX2XaQUcZzvFWYsXn1jbOvY6GDVZIwl9yqPZj9OiSTww9gklCpObxL
-	ueaEV9Fjk2tWAAoY8fIPG50NTnmTeHCITM393gGzJYAe0BUM/shdKtf5OekTNZf9
-	xYngSyrL7ezk6wJVQliR46iVZKguT+GnCEyAORITA/t3vNO4ndfDUeEDqapQ==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787668217;
+	 x=1787754617; bh=oUnmCgHMeOM/TYoC1dIRBSbIaA6SGWcZ4yXWHyQQC84=; b=
+	EhZ3vZh4R6JQe9hF2Ad1NSqyaQ9IviKwzVPzDIvgcMB8qR/Hmr21xr3t5+ob9e2x
+	5mvZpLSXbroTtiLyXinG7eZXSkW2lz939S9ngv6ekfKxS8TnBJE0q3PiNtB1+iqz
+	KyBPoR0rO8YA5Bavvqw5IrunEVKfhjGHY8GApXAakngDKXSvvvnLE6HjjR2Gznwd
+	yaAtaWCJNl09Nfb5EwVKNvST0AXUBP5LOrEi9qU17ZshEoAntI7XDXaWrWLLAsUC
+	6dhDZyGhEOoVuBUMSGYqw8PVsWMasw+IU+jkqSi/AHbrKmcNbUdobhueET3YEplH
+	o/kD4IRcQ5g44S/mg9dzFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1787668216; x=1787754616; bh=Db+8IL5DEWdWzSBy13ZL3/UkdC9S
-	CP0iWj6bb8D0dac=; b=TFJyBNtL1Q81h3gVWFZlhgliTxCzYQi23Py9pUwXLS4L
-	ejNs8s1RDw5ASSdGfZ02f657//MwOcjukkDscj/sJgTjbObE+U8ocZnbtKqf5Itr
-	kall4do4avgTfQOBh9DgwIL+kbqXKtMyTx66gb8AGQXbcfte4fn1X76d22gAUBw5
-	XcsvV0AP0L/WuZgsFS0b1h9TmA7tKnwikZ1QLrAs9COgxa8OkcpgwY6l7Uuez9ND
-	ObcupefDzUOFnQwWle8TdUPw3k5S7QeHw+T7RIXkhOeuKLXgGmy9zqTjYYxUzxca
-	AWDa+O7b0svfZBHy9K2gDNS1kSFYZ9lsGvoO5JjTqQ==
-X-ME-Sender: <xms:-KaNag41OJ5laVOMtNkYAnUpxIhwv-7N2mQV1XPgY6PHJf2PZ-Dp8g>
-    <xme:-KaNao0_IZE3pJGKRV6iN20yt-k8GW9LZWdX-wF2lDbokNDQfivGZsfyUjVFpis6I
-    qxSeyEuSuK3OrnzjFU_z3LR_cOJbK7oe5UmTMRZFpNajL6ItohPJig>
-X-ME-Received: <xmr:-KaNalEoXwJSTDSJVheQbj_3BK2Qjz-WacS4ZPs4WkKALctaOhLBdebPhRW2OEBy3IoM9Y3bZo8H43shXZu8Ki0EuCkHYpbMOAEumXh2YQ>
-X-ME-Proxy-Cause: dmFkZTEYr40wNtBQWcDJSe0UNekzAAUSiWyB6ed2QP6hrMFQBPAe1l8rpkkJbOJLCOw3lR
-    FWXcxv0pAJrC4Z/X1XOKmH3Inw5dmiExextMzAoL/m9qkP2SwTvnZ2+ZhgWdzywMu4UiYG
-    uvX7jIDh0OXbVjRGBIVABx1mHKKCXFJQTtv4jiud7KT1XvhsyOzGuRvFXUTifY7ohaIdxh
-    0e87j095HI6Wmo5n5CrdeqP1dI06blytj8rhvRnKhd6AsBvqbUJs8T4FDwv/BJi2Zrrp8e
-    yw/mIqV7d+LLi5WMvzyV4hqySQvMO+HGoLAoRihDOT8e0KgXzEd1+yFzsj4ZWrsVhBA+hV
-    ygDXrxIAXutXtRpom7So8JQayZpmKNZPJfUccMiXu3RQau0YZAdwDtkfvl8zba5JmzrMXG
-    Ynorrqc0XOn4WpX0kNrZ7Q1u6sPiEVPKo5za3owfaxVHQW7gLC46F9snOPzmmtzpGNosOd
-    w0VL+LgScwghIX669YVw3aUNsgY0DN4O/SLtzE33bm78+Fh5g6t/BqL8NxMFkWuKHZ+9nn
-    Vq9079WJHR2km7+S9iB0dOeMZ8zic1X4L1nGXkVrBXgtmnH4RF6vtQeFXLLZCSbcDhkRW4
-    HhbbG5ky6iSe7EjiAYlZcdi4wROE857smRmKSFtalWYNs9nmBWfwUL1yVHqg
-X-ME-Proxy: <xmx:-KaNaqRx3lEdWGw9Hw2yrblV4KkKsY-lXEQeswNoVdhprmAgege4SQ>
-    <xmx:-KaNakCwJFImbFwXpqzPWK0aTKO2tyc8Nwsz9SuoDt6MGSb25jCwIA>
-    <xmx:-KaNai14o6xdDLkzQaru-UUklSibVChmR-HBjALXDEO_ilqiiVYs9Q>
-    <xmx:-KaNaqWiDT4zvDSgW1UyXaCLhgQHidsqExd0xntd75lg7nSoc5_8CA>
-    <xmx:-KaNahZyouYhEVbHWG93iD2nmemaV9BRqNvGzvjtj_vGD9fjmAhRpLpP>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787668217; x=
+	1787754617; bh=oUnmCgHMeOM/TYoC1dIRBSbIaA6SGWcZ4yXWHyQQC84=; b=f
+	NtR9owAzHxcu/FRIYfc0rKBcN9C4aUo1bNtVLVPtE36D228WcLcBEkgwAssIfgST
+	Yo9VnQwcIiDM0yau5sdtZMdBC2bDv++oN+U1zTQmOau9HM9EuHfSSei6d1c6H6ij
+	FxspdL3ZVIYDsAv7k5Jub0gLqPNRer1yJOE26LMDcWKI62M1oloxvLqrQoCpJffQ
+	6eAhiTiRONhlcM/jE/ofqIRJbL/0UvfJtVgX/4ydVMPxuuSVnPQUlHfJj1/YKeUT
+	a6e7k6lyg5SRSYaZT18VhYtrw9TuW28/QesTEuzKtP5WFv9PRG3q24z0GcPBkK6s
+	+GyzMt1qCHYrlhtrCx4XA==
+X-ME-Sender: <xms:-aaNavOMQN3LNiuGTEKU3rZjJNDtct_qmIo7HCSFQ_hsm-oiUeGbCw>
+    <xme:-aaNag5qwoMmiq6djNg4J0RolL8ZmaZ8Ox8cxkhxHT9uCl8Qv-UGBSnXJ2-Nozi5e
+    KC4f4Mq8VDQI5oDkMMSbv_PUQFpKDQzfjkup7qqZ0q2fehyg3HrXw>
+X-ME-Received: <xmr:-aaNaj4nGirmAbpo83u8B-RoQn0zB1NbpffZ6hzZApNw320btg-q4mHITp8dYR8sPbLRbpNoeXlBaWYqkRi3nULHbYoqZ5CHzUcmt2H6ag>
+X-ME-Proxy-Cause: dmFkZTF7di7P9fqeVtKyfLKbViZD7TBnl4srwz5Ve7VQBJmvFG7KMshIDpaCixvYPMRY1h
+    MToVw8leZsp6NRTEnNkzR2GbnzhIeSkDMXyz6tF1rPG3WCmPgAfOp7w9ECiJnWNm3qggyf
+    pLU70w6A34nyTdJBsTiO7P4+tQsyhOcfD6IbKuN50FcBA4BTbgRys6YYiGRQNZVpKGXBR8
+    +Yz6NjycNLVfAEeHhUraj08VjNvG7b1J92ThlgvTW+tWd3AIJZcCqdUSRypwuSKWRIkp/w
+    B5AADDwhd0O4ES96La8mcFBQZ+myORW03YyVssffHdRAHA1X5QkXTM5vsOoGZqFrWVlOo6
+    ZRexnXOezoh4WClspnPyKfXFMRmVWCxFEYBMjdwQwA3CvRVYs8N5iVKa6OM1+2J//km/oj
+    a3etYQYkyMO0a62jpWuTb3BYgjQwMfSFQ9yyWFZmYXFORd/RnO1eC4RHHAoo6hg4SUyoDv
+    mfvfFcMfiVHT3fii1lHjGvKSA/K2iI8zo/playTxu6GITbLq7Og2+TC25/JVRYejKM1MIj
+    1+EbwT7z4GufUMiUu7AMgJKvxgwVBOJ6rjK7PtkwFnhqJC4FAZj/IZobNjLmjqTxwz/SzJ
+    65yrrjV+7BKi8fOOhs640sHcIYF5fZWXVDxzsiXJK7JxjVR9qfetNPGzhNYQ
+X-ME-Proxy: <xmx:-aaNao3qAcZiACgyQYYcv4QPGkwVPqMTyno_PLf4UWucgvQsuxFw8A>
+    <xmx:-aaNanWBrCjphv_F48iCRW9WSSEBDhfo7nNyfbMBCaqrqkFaXUXmNA>
+    <xmx:-aaNar4pSd1k6Ud5Cfq3joCKfzPgOHYqau0PR7yI6SUc_MdW5Taplg>
+    <xmx:-aaNamKDzkGN1G-23_IjWyPHnRAXUCNblbpK8Ga6q2hAUMm2rAo-zA>
+    <xmx:-aaNaj_3KdSUlwFewz-FDz4SPKSQNfoqIzsIb6IL7fYGQ8j2xDD0lK5b>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 25 Aug 2026 10:30:15 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 25 Aug 2026 10:30:16 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ea8b8fb0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 2dbeefdc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 25 Aug 2026 14:30:12 +0000 (UTC)
+	Tue, 25 Aug 2026 14:30:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 00/10] odb: make consistency checks pluggable
-Date: Tue, 25 Aug 2026 16:30:02 +0200
-Message-Id: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
+Date: Tue, 25 Aug 2026 16:30:03 +0200
+Subject: [PATCH 01/10] builtin/fsck: use `fsck_obj_buffer()` when checking
+ loose objects
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,62 +84,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ6CMBBG4auQWTtJaZQar2JcyPAXBhJKOmJMC
- He3yvJbvLeRISuMbtVGGW81TXNBfapIhufcg7UrJu98466142UyTl3LltYs4GgyMZpzCF4CcIl
- UyiUj6ud/vT8O29qOkNdvRfv+BSw3YYx3AAAA
-X-Change-ID: 20260810-pks-odb-source-fsck-e64772c7ee5f
+Message-Id: <20260825-pks-odb-source-fsck-v1-1-b756de0bf24f@pks.im>
+References: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
+In-Reply-To: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Hi,
+When checking loose objects we manually parse the object buffer we have
+read from the on-disk file, mark the object and then call `fsck_obj()`.
+Almost the exact same steps are also performed by `fsck_obj_buffer()`.
 
-this patch series makes object database consistency checks pluggable.
+Stop open-coding this logic and call `fsck_obj_buffer()` instead.
 
-This series is built on top of 2c3adbb2c4 (The 18th batch, 2026-08-24)
-with the following two dependencsie merged into it:
-
-  - ps/odb-eagerly-load-alternates at 0076dc9f81 (odb: drop
-    `alternates_db` field, 2026-08-17)
-
-  - ps/odb-pluggable-pack-generation at 5176dd3d05 (bundle: generate
-    packfiles via the object database, 2026-08-21)
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (10):
-      builtin/fsck: use `fsck_obj_buffer()` when checking loose objects
-      builtin/fsck: merge `fsck_obj_buffer()` and `fsck_obj()`
-      builtin/fsck: de-globalize option handling
-      builtin/fsck: don't check alternates with "--no-full"
-      odb: provide infrastructure for pluggable fsck checks
-      builtin/fsck: move packfile verification into the packed source
-      builtin/fsck: move reverse index verification into the packed source
-      builtin/fsck: move bitmap verification into the packed source
-      builtin/fsck: move multi-pack index verification into the packed source
-      builtin/fsck: move loose object verification into the loose source
+ builtin/fsck.c | 17 +----------------
+ 1 file changed, 1 insertion(+), 16 deletions(-)
 
- builtin/fsck.c                | 296 ++++++++----------------------------------
- odb.c                         |   9 ++
- odb.h                         |  33 +++++
- odb/source-files.c            |  13 ++
- odb/source-inmemory.c         |   8 ++
- odb/source-loose.c            |  92 +++++++++++++
- odb/source-packed.c           | 117 +++++++++++++++++
- odb/source.h                  |  21 +++
- pack-bitmap.c                 |  26 ++--
- pack-bitmap.h                 |   2 +-
- t/t1450-fsck.sh               |   5 +
- t/t5319-multi-pack-index.sh   |  13 ++
- t/t5325-reverse-index.sh      |   8 ++
- t/t5326-multi-pack-bitmaps.sh |  10 +-
- 14 files changed, 394 insertions(+), 259 deletions(-)
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 892c5661d9..3c4127f4d8 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -722,7 +722,6 @@ static int fsck_loose(const struct object_id *oid, const char *path,
+ 		      void *cb_data)
+ {
+ 	struct for_each_loose_cb *data = cb_data;
+-	struct object *obj;
+ 	enum object_type type = OBJ_NONE;
+ 	size_t size;
+ 	void *contents = NULL;
+@@ -751,21 +750,7 @@ static int fsck_loose(const struct object_id *oid, const char *path,
+ 	if (!contents && type != OBJ_BLOB)
+ 		BUG("read_loose_object streamed a non-blob");
+ 
+-	obj = parse_object_buffer(data->repo, oid, type, size,
+-				  contents, &eaten);
+-
+-	if (!obj) {
+-		errors_found |= ERROR_OBJECT;
+-		error(_("%s: object could not be parsed: %s"),
+-		      oid_to_hex(oid), path);
+-		if (!eaten)
+-			free(contents);
+-		return 0; /* keep checking other objects */
+-	}
+-
+-	obj->flags &= ~(REACHABLE | SEEN);
+-	obj->flags |= HAS_OBJ;
+-	if (fsck_obj(data->repo, obj, contents, size))
++	if (fsck_obj_buffer(oid, type, size, contents, &eaten, data->repo))
+ 		errors_found |= ERROR_OBJECT;
+ 
+ 	if (!eaten)
 
-
----
-base-commit: 6b08999fb1b3ad0bad04d492dc206ad42839e274
-change-id: 20260810-pks-odb-source-fsck-e64772c7ee5f
+-- 
+2.55.0.822.g20453c30eb.dirty
 
