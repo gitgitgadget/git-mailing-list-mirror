@@ -1,257 +1,175 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FCB3D47B2
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 21:04:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24193E5A1F
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 21:24:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787691887; cv=none; b=hda/XO5T6g3nExpi/Of5xV7OOINN6ncBBvTj9V1bD2l6wf2LVDFI1QIgpnrKYVoFRArkSgTncHxWJdMz5reM32E8A08BV4SN1Wg96ZCjF6AaEa7BFXuzXOlsQYcJ1Y5ZDU7nm/3XJK3ExlArgxHaZ/pmH2BdKaJndMd5MY84VNE=
+	t=1787693082; cv=none; b=grIC5VJcq1X0fZ9dVITX6INX96Td38e6j32UHf3U5+bMcFi+O3bQP0/SgS4o1BVzEq0YkoRdQqTuHVOlh3AIFmHYvZNjOLIYcRMs8AFEDp9e1XM+CxKu7F1sgpx4Mvj5NracLf+lvP3QQU8dZNIfHwouhHSyO0VRBXgGyDN/KZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787691887; c=relaxed/simple;
-	bh=YoFdl0+xJeLYWA8WGjysQsQUa76pfTy+Il1frhF0HPs=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BlnBuKXZtxMk81qolJRd3jEqTjXvx49QlpWElfmlGc/gywi+BzWZngGQ8IW8erOIj5OxNTTYACBH6Kp/5mKYO576WyNX3O6ATXQ9ynvRXbX6yIqocTp1VRwuv3Z5pvR6fh9T9VBF0j3DqlmkIt3bhrWZGaY0eq9ben6BsaO1u7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ai10Nvni; arc=none smtp.client-ip=209.85.160.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787693082; c=relaxed/simple;
+	bh=f1EoCmN3q1voZehglMsJIdTz2XGprzWrHLlEPAO6wDM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NA94+Ut8LNvtbEiVnn0DVchtHh/I0PUS762JpeSKS7fkS2+bEDzXgK2THF3Cd9uMTOi7ORYnrPEGujdLq1+BlG+1v3luGEIbdUaybyiOZziTd74/PjABtduViJ1lxPRW6u3J8RalHMTMjtp+MItjQyguxKvmmKk7RjoIfGpUqrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZL1rb3E5; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ai10Nvni"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-45837e52d8aso378381fac.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 14:04:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787691884; x=1788296684; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=e2prjvmCA/0jrs1yAhSlWb24Nrr9WcWBqJwlz9UKcQs=;
-        b=ai10NvniuPp8DdNwMnqtf2Kalx254oWK6ihiTquUKbZSMgPuBWbwHz2Zbbb5t2JA/h
-         ocM9RksdnePm0+sBhGtKkbKl4AI5VRzmpnt6FaaLULVo+A1iCgV0stBSnevVOrRKa6p5
-         a8GT0FrZWhWl+XhPMlKNeHZRxUzePncRGjbf74ByKUtj9CWFv/g/FyTN9PGI32xSW26A
-         4enD9vYKoXuodz7izQ97jZU5GFfiKABB+puWZSRvt+y4tOuNtHkTC7K5iF6CJSGp6ZKw
-         kS2mp/fwQgkMK1jb9n3fo1Drk/F+RUvn5dvbdBKGqOvJL+qn8TphDLStgfIQol+Kay8F
-         YWLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787691884; x=1788296684;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=e2prjvmCA/0jrs1yAhSlWb24Nrr9WcWBqJwlz9UKcQs=;
-        b=Rrb7J3dhiRV06Z2FOHSqeIprMkmz9vz7q7C23iDqQDbI5OmUqtrdGMa/Y3+nI0gpyU
-         3tlftvZPHK8MLls8G05iiNTInE9LFeLCLjYDA3o/o/gLSMStyPItVwvdRlf+ydswpRZY
-         WNJnomKAHQD85HdFmICQgxoXyf4FtlLZBHCrcL3OXGcJe3RT0DNPCGIwExfySLyTfKxk
-         OcdfGZkeTNMJN9wda+Prc9+xNtJR5Csbse/VjJTuGXsiB4lbZcU+8qYkk64AVGoSFpuu
-         CjnAEO4nsX3xFhywZa+u/G7k5g8+By7U1Z6Hu3jbMEn8ON1Ls+VbblxqsrFUvUH7zIzb
-         l8mw==
-X-Gm-Message-State: AFuF++k43OT6Mn8GglbW1vUCbTsPczPlec1VVsn79I0oUq+VGo7Vr1ax
-	UnvzYb4TVXp1eHiBP6G5qQvIhxAEvR3UKxnRTb3lg1Jhew/bYh5p2hzWVHQpJg==
-X-Gm-Gg: AR+sD13yLrJTLPJjf5MtQjtQ8o3LzW2R9jXE9PVhk4wDmSLE7CZA1gBcv+8D92W/OZQ
-	BMNfOqLHwC4T/5BIUjqcycblDna/tHfy98HmR8lnjHYyBVzEDCHznSg1GWXWddQ698GtppXIS5M
-	aCNAIb/JsZlLQtRX4lGtqotcEvRHrelLPQ9rVVlNhkaJ6mVcfXiCR1dNTAvztZ7Vc6XqmZn3IHa
-	lZ0efsFdNxcxHOV67mX9h1DjmFWKPO3+ygSx5XZ6nxZO2Fvc8Bw0oydZiEVvEcuVl5mCHlp4tTN
-	5QbRsaMQPaEMtHY2Ew+QYDU0QSFPIQ0VnawepOsc/+v2vMz/d7GZiJk/e6UunW10O1Y7lwKIWhg
-	D5GAIsKNZfP7/TieqEQ1GbzWLIszoLcYKYfFFGbsEbSY8rXq/llhwd3mNeKKuuQcp8j71E+x6zM
-	74WyEq5r55DZeTHgX2OoY7ioHwdnK3mc255+kdBFGlAjA3hEIDL2vxvHEpWROvnZCJBpGPS7SNb
-	tWj
-X-Received: by 2002:a05:6871:2b04:b0:456:4cd1:646b with SMTP id 586e51a60fabf-46599a1f054mr2569583fac.11.1787691884332;
-        Tue, 25 Aug 2026 14:04:44 -0700 (PDT)
-Received: from [127.0.0.1] ([172.212.165.178])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-465ade707ecsm465626fac.5.2026.08.25.14.04.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 14:04:43 -0700 (PDT)
-Message-Id: <927856e0a07cf6d9e7e1093a4fbf979584141224.1787691875.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2197.v8.git.1787691875.gitgitgadget@gmail.com>
-References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
-	<pull.2197.v8.git.1787691875.gitgitgadget@gmail.com>
-From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Aug 2026 21:04:35 +0000
-Subject: [PATCH v8 4/4] worktree add: treat multiple matches with
- --guess-remote as an error
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZL1rb3E5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1787693072;
+	bh=f1EoCmN3q1voZehglMsJIdTz2XGprzWrHLlEPAO6wDM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=ZL1rb3E5u/qYwgHH5M+4CjZBgF0WUxtxSgltwNnyQFcSp0IR/0m1y8zAPPXI7KK45
+	 HcdWTR0zEVGeQwtWsC61FICLDXuEJuFOrAuLaP/KWaIkKCBbvZ3qQrN0iePdpGx0WV
+	 EvOJigF2MIYK0sq3Efa/ILfUcDrz7D8mstDHtCwEuPaSEmpW10TAeLIWZLcJwUSIRB
+	 WKgncMoIyJYq4wR0CC35T1VT/nyOGUYcXI2lrIP+spbajJ8OCMpEWWd58LXSq6wLLA
+	 N0cgEVlMwiFg9Il6Vqk4mWdSByQL6qApM5cCrgS4CrtLizJRUscYtT+oLN99guQD6R
+	 yCM36fjuKWeLct8FtlpDUhzt10Y+PijoGOc6ND2TmI7XhUTIq2fhnNTXk7o2blgE4F
+	 ZXTU9GN88/PLK0oKHkMgQBjOZnrXluhrExtdNrPpnrEBze8NB5CizchIY2NTxIDYMg
+	 mX0j+OfD6zAhkBKh3TAfMfTDGsyhGEEKoWr1O2vXb/4K7MUYDIJ
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:23b3:441d:199e:9561])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0798F20101;
+	Tue, 25 Aug 2026 21:24:32 +0000 (UTC)
+Date: Tue, 25 Aug 2026 21:24:30 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Andrew Pleeter via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Andrew Pleeter <andrewpleeter@gmail.com>
+Subject: Re: [PATCH] builtin/whoami: add new 'whoami' command
+Message-ID: <ao4IDZMbgvTTYksS@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Andrew Pleeter via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Andrew Pleeter <andrewpleeter@gmail.com>
+References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Yoichi Nakayama <yoichi.nakayama@gmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="R3eA2LyeTV5wwr+G"
+Content-Disposition: inline
+In-Reply-To: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+--R3eA2LyeTV5wwr+G
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-When 'git worktree add <path>' is invoked without <commit-ish> and
-with the --guess-remote option (or when worktree.guessRemote is set to
-true), it tries to find a remote-tracking branch matching the basename
-of <path>.
+On 2026-08-25 at 20:46:42, Andrew Pleeter via GitGitGadget wrote:
+> From: anpl1623 <andrewpleeter@gmail.com>
 
-Currently, the behavior when multiple matches are found is the same as
-when no match is found: it falls back to creating a branch from
-HEAD. This has been the behavior since 71d6682d8c (worktree: add
---guess-remote option to add subcommand, 2017-11-29), when the option
-was first introduced.
+You will probably want this to match your real name since you're using
+it in the email.  We prefer that people use their real names, but don't
+require it, but I assume that it's not a problem since you just CC'd
+yourself using it (and it's also in your email address).
 
-However, if the specified <path> matches any remote-tracking branch,
-we infer that the user intended to use one of the remote-tracking
-branches as the start-point rather than HEAD. So we abort the creation
-of the branch and worktree when there are multiple matches, and
-instruct the user to choose the start-point.
+> Add a builtin 'whoami' command to inspect and display the resolved
+> author and committer identity along with the commit signing
+> configuration (GPG/SSH key ID and commit.gpgsign status) used when
+> creating Git commits.
+>=20
+> Support optional flags (--author, --committer, --name, --email,
+> --signing-key, and --verbose) for targeted querying and scripting.
 
-Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
----
- Documentation/config/worktree.adoc |  5 +--
- Documentation/git-worktree.adoc    |  4 ++-
- builtin/worktree.c                 | 58 ++++++++++++++++++------------
- t/t2400-worktree-add.sh            | 13 +++++++
- 4 files changed, 55 insertions(+), 25 deletions(-)
+I suspect users will want a way to get _all_ of the output in a
+machine-readable way, so you'd probably want to provide some method of
+doing that.  Note that because your existing endpoints provide
+translated strings, they are not suitable for this.  That doesn't mean
+that they should not be translated (because they should) but we'd
+probably want a format like the following:
 
-diff --git a/Documentation/config/worktree.adoc b/Documentation/config/worktree.adoc
-index a248076ea5..0930183b91 100644
---- a/Documentation/config/worktree.adoc
-+++ b/Documentation/config/worktree.adoc
-@@ -5,8 +5,9 @@
- 	set to true, `worktree add` tries to find a remote-tracking
- 	branch whose name uniquely matches the new branch name.  If
- 	such a branch exists, it is checked out and set as "upstream"
--	for the new branch.  If no such match can be found, it falls
--	back to creating a new branch from the current `HEAD`.
-+	for the new branch.  If multiple matches are found, the command
-+	fails.  If no such match can be found, it falls back to
-+	creating a new branch from the current `HEAD`.
- 
- `worktree.useRelativePaths`::
- 	Link worktrees using relative paths (when "`true`") or absolute
-diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
-index fbf8426cd9..32787eacc3 100644
---- a/Documentation/git-worktree.adoc
-+++ b/Documentation/git-worktree.adoc
-@@ -219,7 +219,9 @@ To remove a locked worktree, specify `--force` twice.
- 	of creating a new branch from `HEAD`, if there exists a tracking
- 	branch in exactly one remote matching the basename of _<path>_,
- 	base the new branch on the remote-tracking branch, and mark
--	the remote-tracking branch as "upstream" from the new branch.
-+	the remote-tracking branch as "upstream" from the new branch. If
-+	there are multiple matches, the command fails. If there is no
-+	match, the command falls back to creating a new branch from `HEAD`.
- +
- This can also be set up as the default behaviour by using the
- `worktree.guessRemote` config option.
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 320b18873d..07163bf9b7 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -764,7 +764,26 @@ static int dwim_orphan(const struct add_opts *opts, int opt_track, int remote)
- 	return 1;
- }
- 
--static char *dwim_branch(const char *path, char **new_branch)
-+static void advise_disambiguating_remotes(const char *path, const char *branch,
-+					  const struct string_list *matched_remote_names)
-+{
-+	struct string_list_item *item;
-+
-+	advise(_("Branch name '%s' appears in multiple remotes:"), branch);
-+	for_each_string_list_item(item, matched_remote_names) {
-+		advise(_("  %s"), item->string);
-+	}
-+	advise(_("If you meant to create a worktree from a remote tracking branch on\n"
-+		 "<remote>, you can do so by:\n"
-+		 "\n"
-+		 "    git worktree add -b %s %s <remote>/%s\n"
-+		 "\n"
-+		 "If you'd like to always prefer some remote, e.g. 'origin',\n"
-+		 "consider setting checkout.defaultRemote=origin in your config."),
-+	       branch, path, branch);
-+}
-+
-+static char *dwim_branch(const struct add_opts *opts, const char *path, char **new_branch)
- {
- 	int n;
- 	int branch_exists;
-@@ -782,31 +801,26 @@ static char *dwim_branch(const char *path, char **new_branch)
- 	*new_branch = branchname;
- 	if (guess_remote) {
- 		struct object_id oid;
--		char *remote = unique_tracking_name(*new_branch, &oid, NULL, NULL);
-+		char *remote;
-+		int num_matches = 0;
-+		struct string_list matched_remote_names = STRING_LIST_INIT_DUP;
-+
-+		remote = unique_tracking_name(*new_branch, &oid, &num_matches,
-+					      &matched_remote_names);
-+		if (!remote && num_matches > 1) {
-+			if (!opts->quiet &&
-+			    advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME))
-+				advise_disambiguating_remotes(path, *new_branch,
-+							      &matched_remote_names);
-+			die(_("'%s' matched multiple (%d) remote tracking branches"),
-+			    *new_branch, num_matches);
-+		}
-+		string_list_clear(&matched_remote_names, 0);
- 		return remote;
- 	}
- 	return NULL;
- }
- 
--static void advise_disambiguating_remotes(const char *path, const char *branch,
--					  const struct string_list *matched_remote_names)
--{
--	struct string_list_item *item;
--
--	advise(_("Branch name '%s' appears in multiple remotes:"), branch);
--	for_each_string_list_item(item, matched_remote_names) {
--		advise(_("  %s"), item->string);
--	}
--	advise(_("If you meant to create a worktree from a remote tracking branch on\n"
--		 "<remote>, you can do so by:\n"
--		 "\n"
--		 "    git worktree add -b %s %s <remote>/%s\n"
--		 "\n"
--		 "If you'd like to always prefer some remote, e.g. 'origin',\n"
--		 "consider setting checkout.defaultRemote=origin in your config."),
--	       branch, path, branch);
--}
--
- static int add(int ac, const char **av, const char *prefix,
- 	       struct repository *repo UNUSED)
- {
-@@ -909,7 +923,7 @@ static int add(int ac, const char **av, const char *prefix,
- 		opts.orphan = dwim_orphan(&opts, !!opt_track, 0);
- 	} else if (ac < 2) {
- 		/* DWIM: Guess branch name from path. */
--		char *s = dwim_branch(path, &new_branch_to_free);
-+		char *s = dwim_branch(&opts, path, &new_branch_to_free);
- 		if (s)
- 			branch = branch_to_free = s;
- 		new_branch = new_branch_to_free;
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 5c105cf252..a37137042d 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -669,6 +669,19 @@ test_expect_success 'git worktree add --guess-remote sets up tracking' '
- 		test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
- 	)
- '
-+
-+test_expect_success 'git worktree add --guess-remote fails if there are multiple matches' '
-+	test_when_finished rm -rf repo_a repo_b foo &&
-+	setup_remote_repo repo_a repo_b &&
-+	(
-+		cd repo_b &&
-+		git remote add repo_a2 ../repo_a &&
-+		git fetch repo_a2 &&
-+		test_must_fail git worktree add --guess-remote ../foo 2>actual &&
-+		test_grep "matched multiple (2) remote tracking branches" actual
-+	)
-+'
-+
- test_expect_success 'git worktree add --guess-remote sets up tracking (quiet)' '
- 	test_when_finished rm -rf repo_a repo_b foo &&
- 	setup_remote_repo repo_a repo_b &&
--- 
-gitgitgadget
+user.author.name=3DA U Thor
+user.author.email=3Dauthor@example.com
+
+Other formats are possible, though.
+
+Possibly a `-z` option for NUL-terminated instead of LF-terminated
+output might be warranted as well unless we're certain that our output
+will never contain a newline (hint: config options can).
+
+> Include documentation in Documentation/git-whoami.adoc and regression
+> tests in t/t0015-whoami.sh.
+>=20
+> Signed-off-by: anpl1623 <andrewpleeter@gmail.com>
+
+Again, you'll want to sign this off with your real name.
+
+>     MOTIVATION
+>    =20
+>     Users often work across multiple environments, profiles, or repositor=
+ies
+>     with different global/local configs and signing keys. Currently,
+>     verifying what identity and signing key will be attached to a new com=
+mit
+>     requires checking several individual git config and git var settings.
+>     git whoami provides a simple, direct porcelain command to verify this=
+ in
+>     one step.
+
+I think this should go in the commit message.  I thought to myself,
+"Well, there are already ways to get this information, so why add a new
+one?"  Telling us why your patch is compelling and solves an important
+purpose is appropriate for the commit message.
+
+I might also like to see an explanation as to why this wouldn't work
+better in `git var` or elsewhere instead, since much of the information
+is already there.  Since that's an alternative you've rejected, tell us
+why and sell us on your vision.
+
+> +	repo_config(the_repository, git_default_config, NULL);
+
+Let's not add more uses of `the_repository`.  Use the `repo` argument to
+the main function above, taking care to handle the NULL case.
+
+> +	repo_config_get_bool(the_repository, "commit.gpgsign", &gpgsign);
+> +	repo_config_get_string(the_repository, "user.signingkey", &signing_key);
+> +	repo_config_get_string(the_repository, "gpg.format", &gpg_format);
+> +	repo_config_get_string(the_repository, "gpg.ssh.defaultkeycommand", &ss=
+h_default_key_cmd);
+> +
+> +	is_ssh =3D gpg_format && !strcmp(gpg_format, "ssh");
+> +
+> +	if (signing_key && *signing_key) {
+> +		resolved_key =3D xstrdup(signing_key);
+> +	} else if (is_ssh) {
+> +		if (ssh_default_key_cmd && *ssh_default_key_cmd)
+> +			resolved_key =3D get_signing_key_id();
+> +	} else if (gpgsign) {
+> +		resolved_key =3D get_signing_key_id();
+> +	}
+
+Should this also do something useful for X.509 keys?
+
+Overall, I don't have a strong need for this and I'm fine using the
+existing functionality.  However, I see how it could be useful and if it
+were merged and available in the versions of Git I use, then I might
+make use of it.
+
+Perhaps others think this is compelling, though, so I'm interested to
+hear other opinions about the utility of the command.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--R3eA2LyeTV5wwr+G
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmqOCA4JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ3XCjYHZ1SEbmb2/m8X5+Nri2t6jEjS/K6hRXPdcJYd+
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAOQ4AQDxEJkewuU7FSOzcmdgU56q9jPu
+4LSkSNZLTDZWI55FugEAggjJ7muDIeNcfhhIIKJnXvPfaXmRmHMy/vw7Y0f8ngE=
+=IVpI
+-----END PGP SIGNATURE-----
+
+--R3eA2LyeTV5wwr+G--
