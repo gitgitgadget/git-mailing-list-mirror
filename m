@@ -1,70 +1,71 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD6D3B6379
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 18:56:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B397721883E
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 18:56:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787684198; cv=none; b=O5LNxSEiVPTS53bxn/fs2GoA4KJ3fFUwyc/54Q/qVz9jjb5kVhPNxdkUaCdKsrBXjnkL1ZueZfkvRKZJmgB9A/F1S3jKK+MSNJLVc1qfJR8E8/i26ZZQrI7TisHSdTX3KSaoY0pe6qIx4Sz83nIvbRo/g0klu8/OoLTg+hF/msM=
+	t=1787684199; cv=none; b=Q2fx/YEiudEOeYW73EUpM53ix5QTU+qtOzU6GU5cDal6ghkzPFlh4CR0yEx+QOQ2Uv3iEsN/DHhW3chQw+R3zloQiFzp8qW393U1Tyz6pyogLcO5GJOuPJmTCbEtzNTlqZO/jyeFDSsfU6wLohDslhaF6l93fpR9Zg+m/8zh2h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787684198; c=relaxed/simple;
-	bh=MT9dtwYx8E8rh9BAByRWXay1EQcu/+7yL3FL97SkuG0=;
+	s=arc-20240116; t=1787684199; c=relaxed/simple;
+	bh=Ok/4E6SiEjxsQGSkw4lhLuSqLzW6cPDYzkJpKtXDctI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Y/QlwT1iKL0H2jlNlK6xB/YClYnrqHtKdCEVP++uo0pUq8e1+AISm5C5QN9qJLnY87M4hR5pFoqoJ++XXLQmy4BbjVaRBCMPjuYLFZgGMyb1iFLL9Phc2auBjVZBNyGvLlxLHjpQyVyBfLNiDIiqu3ZLlEq+OXV/mTjJT03+OOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=exSoeiXT; arc=none smtp.client-ip=209.85.216.46
+	 MIME-Version:To:Cc; b=qx1ATyHPB5PXA2wz3TWWbNAi1pdAGprtz5WunpQ29CgKd/Y2kuTBWblz1UTy+vUI7ut3XLdGoYj2MZW1bOO4lVAiXRpTRCwszT9xinNrziccOjaicn425FQ9tX1BaGYQr4TblZQxxrM222iG0uY3C88YC6EO9uHiW7DSvqgIcl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hG5OLwry; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="exSoeiXT"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3856d6fbcb3so226293a91.2
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 11:56:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hG5OLwry"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2cace91f112so2767095ad.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 11:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787684191; x=1788288991; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787684192; x=1788288992; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=NbU2GtKeRttj2xyh8lux8ka6I+e3u5TZhvpvzX80RNM=;
-        b=exSoeiXT9IqkNK8FzK6aD8BvfLzuNwZZJJUN7/HkiZUi29YRVP+oqUdcTKvIzldgtX
-         pc6itqHuk2BnkYuV2YoqdKKmT4J7ISkYhphMDIQyjLSxdtBmEvGbxd1N8yqSICXJCWSe
-         mKJ0SHvVjDu054QtDdbEYvpT7lmzN7+nFvOolArMhFbUk2pMilGwhytBjobu0K0EMzvl
-         E867B+5wcXqauRj7/MDfxtX6ZwvoL+DzgN42rB58SCAzMJt48ZrfYVWASCQ50Fj0sUgl
-         KHo4xelZ+0nEXaHFy/MJrhuPmGI6EnzdLf34sE1bSk5D0OnRguanRLHW+uGR91mTbw1Y
-         Ot+g==
+        bh=VU8yuVhDeJuZIfeWaLIYtUBg9gCORCCUsaBPGSHLv/0=;
+        b=hG5OLwryt0NysDg5IClIo4CFY37OdV3Ysr4SCiS0HyTIIxQBlQYsgNxpkdqy1DZgcl
+         jO9aWD4IV+hbsYPbi94Bbo3MZPeNSP3j1gkq28kVeLykDPg8mw1RrvXxWbTojSTjqAcb
+         29TNg80pd0hu7OZvwVzumdt4zfZtAxAndUFpFB7gniH+PKHHPV4LztDjwKVgPTPS1YWH
+         8DufOoOD4Zq2G1lMWF4EUse4CVtnSxWcpV6rNliig3NDNxNKyVIYV5v2ueEdVyCPaeks
+         Lw0WdZwCf/7OvNFsX72JiQ5kwBoatKbXkpLUYBrc4TeSLft0jtJiMzGOzmXHU7659h9L
+         9siQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787684191; x=1788288991;
+        d=1e100.net; s=20251104; t=1787684192; x=1788288992;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=NbU2GtKeRttj2xyh8lux8ka6I+e3u5TZhvpvzX80RNM=;
-        b=Fq3ndsRjDrJwBhCaYbrkHij0YMERng+r39HSzVm8SqG5xw7/Cc6C49w/ayNxxyVrDD
-         Rp/K5sknCmi+si3MTpwvhzY4iTyTHHgxUZjUN41Z/Qrt+/jmb5CFC52TtXf0ddV/11nT
-         GiPb2EjZ9HoCI6qzu4r5XEVCstVeL0cz28uUz+OQe2/a/vZpVPVVRIkGfKhz6iZ+lTJU
-         cPicMou97s9bJZFi9mIZZZJkCzTkSLJhJnhZ1uu0n4Z4NDP5RbJDIHtsk4UXrcJOjb3o
-         zsg/ABXellFAxdJdnXv6kGljBBVB6RFgoHrxErfVbFIjWhd34L7mTLwPam4A0k+8FZzA
-         ut7Q==
-X-Gm-Message-State: AFuF++l7GXdtWYBr8Sbr14wEI4KjBMyVmT9TDiolbUnUowNkHDpNVPqG
-	IOChBVrDsjh+tPNX9AkL3J/RRAFKMTejfZbLfPGa4qHc5cznse24pTk9Bi2VUQ==
-X-Gm-Gg: AR+sD113Q+jgKpilHSvEMtXOyiNc3E6NnB9sCV3ShwY75D64AYdyoGlNtc0uS/52p34
-	MRdkMVhbld1VaDPauGeCcw7ertzKGaE5r2+NVBBMtaOU8tj0qxZnGsHQiDs3OECv5hUqq9N/CyY
-	OjIhlCejJN4ugP/bSDpx5OBewfRyC1C9OeU0dz2B36oE+2XZXdGNYKvo5lNfdM0DGEU9GVa1wEK
-	VCdLWM5uEY5VqffueDs6SnnJaG6RTRH2T3yv7idmNozSA4FeBOzguSwZkCXPs6jy7yg5Q4GgWNd
-	STXxYwySDCH6YG+UM0SI74tu5S/YP5jctN92oDbfa600jFVHNH9rCcDrueg/KvDDPNId5ttlv3G
-	6YCKaOqwpfvUkNnx0DEFOxDnWT1yp+ZUlf3Z83myGH7762/P8C7fdU0ZuPCdUBdPBwiypvw5Z8r
-	H+3wNOsZQkunFf7knKsKjenFcCBjrvJk57002NI1Ywtp+hVbDBjJZNdpEr9ZLuNUM=
-X-Received: by 2002:a17:90b:52c8:b0:38e:c232:9d3f with SMTP id 98e67ed59e1d1-3966d191092mr2722986a91.5.1787684191002;
-        Tue, 25 Aug 2026 11:56:31 -0700 (PDT)
+        bh=VU8yuVhDeJuZIfeWaLIYtUBg9gCORCCUsaBPGSHLv/0=;
+        b=tYasFA0scMrmwYV08dE8xXJy4B4eKbOOegyYQcaW0JwWTSIcEcjj2kfo2qdcRyS84t
+         d6yodcchKhfpj3bCrwbzVBvJUrYIML2g5OsW27UpBqgjr/o/Zln2YToY/Obh9NKd8L6t
+         0sDbGcYbIn4CkeW8jvnVx78ozjoPDT1S7lTy2bpT7yqPBs/ypwxxeH4IBU70gVOahuac
+         pl984DqgiNHxco3/DHs+7K/sEhb+VZADN/5zLljW1SFT0Ll4q7JSOUhiklYD303pVvIv
+         2We7pc0mQzuk2NRHw6KwtxmwRIjom/1kaReHa+jcBxFVuZ84A28+y9Zaxrl21dvN8QOp
+         qmEA==
+X-Gm-Message-State: AFuF++mkmDvwbOLDYG0kuj2FsIazepgPal6h1jM8gmU9OZox9jxsZVKu
+	N4aSmIii6zQiJEYjFF0p/aXGN83LwWBVIQ9uJyDj1O/RySoHavTX88UN7snvXpaN
+X-Gm-Gg: AR+sD10xNqDkhjQVqZ0Gs/L61CIf/ERNbuiT1NGkstm9vjUQFrf7b48GPa9qoXTJ1T3
+	cfZswIpl716bDvHw2ejpI8nlOrp+qoGY6mg/I2Ez5Ea57uZmINo61gXU8zqab+/eGB6IrxneLgw
+	th409nLk2icE2hHptYACO8N28sn6zOM2LFr798c7+NsBuAjRNDw46l5FT1lO4cRXIwsw8Y9qOh9
+	q+16O3PKrfEX5VI8mvpS+Cq7CUuIjtcWQd2WbWlQvDiUDUpw0BzgpGZV50T2DzeIm8dtf+2ptu7
+	f267xiJnuw+/qMIo6B1cjCtMJl/G7zEFWe+OgM4TcBzDmrp3Rn6Ih63A/PLWO1HGNd7lZGQXPSD
+	pzUKK0O3JYECoURozRm2a0AzemxJCNlrSynjpjpP49xTJ1VaxKpFkUi/H6BXfwaA82fSA5BUiHE
+	4DFj9YggDLrwmUlPCpj4sTacDKxk0KQJ8L26P+a8Eeri84Hzb8NvttRHluFe/2UZvxMmsWmAQiT
+	w==
+X-Received: by 2002:a17:903:19ce:b0:2d6:f6ba:263d with SMTP id d9443c01a7336-2d707aafd1fmr6321285ad.7.1787684192478;
+        Tue, 25 Aug 2026 11:56:32 -0700 (PDT)
 Received: from [127.0.0.1] ([172.208.153.5])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-141a8f47d8csm1167894c88.8.2026.08.25.11.56.30
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3283d884d5esm955863eec.17.2026.08.25.11.56.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 11:56:30 -0700 (PDT)
-Message-Id: <7f0bb405ad380fd35ae6381961ac667fd7e5dfd9.1787684181.git.gitgitgadget@gmail.com>
+        Tue, 25 Aug 2026 11:56:31 -0700 (PDT)
+Message-Id: <120cf1967bde4e719a781c391b285c718553ad58.1787684181.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
 References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
 	<pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Aug 2026 18:56:19 +0000
-Subject: [PATCH v2 5/7] trace2: remove use of xstrfmt()
+Date: Tue, 25 Aug 2026 18:56:20 +0000
+Subject: [PATCH v2 6/7] trace2: remove use of ALLOC_GROW()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,102 +83,108 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-We continue removing the possibility of a die() in the trace2 API by
-banning xstrfmt(), which calls die() during a failure to format. Instead
-of allowing a die(), perform a soft failure by failing to output the
-trace2 data when such a failure occurs.
+The ALLOC_GROW() helper can call die() on a failed memory allocation.
+We need to remove this from the trace2 API code to prevent a recursive
+die() handler.
 
-This requires carefully concatenating strings using memcpy() to
-construct redacted data to avoid copying password information in traced
-URLs.
+This helper is used to track the nested region stack. Use a new
+skipped_regions member to track how many times a region was entered
+without being added to the stack, and decrease that amount as we leave
+each region. This allows us to avoid a failure and instead stop
+deepening the stack, giving as much nesting behavior as possible without
+failing the entire process.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- banned-die.h |  3 +++
- trace2.c     | 34 ++++++++++++++++++++++++++++++++--
- 2 files changed, 35 insertions(+), 2 deletions(-)
+ banned-die.h     |  3 +++
+ trace2/tr2_tls.c | 34 +++++++++++++++++++++++++++++++++-
+ trace2/tr2_tls.h |  1 +
+ 3 files changed, 37 insertions(+), 1 deletion(-)
 
 diff --git a/banned-die.h b/banned-die.h
-index cb2eed75cd..14aecfdc7a 100644
+index 14aecfdc7a..423e7b607d 100644
 --- a/banned-die.h
 +++ b/banned-die.h
-@@ -17,6 +17,9 @@
- #undef xstrdup
- #define xstrdup(str) BANNED(xstrdup)
- 
-+#undef xstrfmt
-+#define xstrfmt(...) BANNED(xstrfmt)
-+
+@@ -23,4 +23,7 @@
  #undef ALLOC_ARRAY
  #define ALLOC_ARRAY(x, alloc) BANNED(ALLOC_ARRAY)
  
-diff --git a/trace2.c b/trace2.c
-index 7044276435..c37f783fa0 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -260,7 +260,10 @@ int trace2_is_enabled(void)
- static const char *redact_arg(const char *arg)
++#undef ALLOC_GROW
++#define ALLOC_GROW(x, nr, alloc) BANNED(ALLOC_GROW)
++
+ #endif /* BANNED_DIE_H */
+diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+index ae2d39d2f5..8596292a94 100644
+--- a/trace2/tr2_tls.c
++++ b/trace2/tr2_tls.c
+@@ -108,8 +108,33 @@ void tr2tls_unset_self(void)
+ void tr2tls_push_self(uint64_t us_now)
  {
- 	const char *p, *colon;
-+	const char *redact = ":<REDACTED>";
-+	char *redacted;
- 	size_t at;
-+	size_t prefix_len, suffix_len, redacted_len, redact_len;
+ 	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
++	uint64_t *new_array;
++	size_t new_alloc;
++
++	if (ctx->nr_skipped_regions) {
++		ctx->nr_skipped_regions++;
++		return;
++	}
++
++	if (ctx->nr_open_regions < ctx->alloc)
++		return;
++
++	if (ctx->alloc > SIZE_MAX / (2 * sizeof(*ctx->array_us_start))) {
++		ctx->nr_skipped_regions++;
++		return;
++	}
++	new_alloc = ctx->alloc * 2;
++
++	new_array = realloc(ctx->array_us_start,
++			    new_alloc * sizeof(*ctx->array_us_start));
++	if (!new_array) {
++		ctx->nr_skipped_regions++;
++		return;
++	}
++
++	ctx->array_us_start = new_array;
++	ctx->alloc = new_alloc;
  
- 	if (!trace2_redact ||
- 	    (!skip_prefix(arg, "https://", &p) &&
-@@ -275,7 +278,25 @@ static const char *redact_arg(const char *arg)
- 	if (!colon)
- 		return arg;
- 
--	return xstrfmt("%.*s:<REDACTED>%s", (int)(colon - arg), arg, p + at);
-+	redact_len = strlen(redact);
-+	prefix_len = colon - arg;
-+	suffix_len = strlen(p + at);
-+
-+	if (unsigned_add_overflows(prefix_len, suffix_len) ||
-+	    unsigned_add_overflows(prefix_len + suffix_len, redact_len))
-+		return NULL;
-+
-+	redacted_len = prefix_len + suffix_len + redact_len;
-+
-+	redacted = malloc(redacted_len);
-+	if (!redacted)
-+		return NULL;
-+
-+	memcpy(redacted, arg, prefix_len);
-+	memcpy(redacted + prefix_len, redact, redact_len - 1);
-+	memcpy(redacted + prefix_len + redact_len - 1, p + at,
-+	       suffix_len + 1);
-+	return redacted;
+-	ALLOC_GROW(ctx->array_us_start, ctx->nr_open_regions + 1, ctx->alloc);
+ 	ctx->array_us_start[ctx->nr_open_regions++] = us_now;
  }
  
- /*
-@@ -300,6 +321,8 @@ static const char **redact_argv(const char **argv)
+@@ -117,6 +142,11 @@ void tr2tls_pop_self(void)
+ {
+ 	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
  
- 	if (!argv[i])
- 		return argv;
-+	if (!redacted)
-+		return NULL;
++	if (ctx->nr_skipped_regions) {
++		ctx->nr_skipped_regions--;
++		return;
++	}
++
+ 	if (!ctx->nr_open_regions)
+ 		BUG("no open regions in thread '%s'", ctx->thread_name);
  
- 	for (j = 0; argv[j]; j++)
- 		; /* keep counting */
-@@ -316,7 +339,14 @@ static const char **redact_argv(const char **argv)
- 	ret[i] = redacted;
- 	for (++i; argv[i]; i++) {
- 		redacted = redact_arg(argv[i]);
--		ret[i] = redacted ? redacted : argv[i];
-+		if (!redacted) {
-+			for (j = 0; j < i; j++)
-+				if (ret[j] != argv[j])
-+					free((void *)ret[j]);
-+			free(ret);
-+			return NULL;
-+		}
-+		ret[i] = redacted;
- 	}
+@@ -137,6 +167,8 @@ uint64_t tr2tls_region_elasped_self(uint64_t us)
+ 	uint64_t us_start;
  
- 	return ret;
+ 	ctx = tr2tls_get_self();
++	if (ctx->nr_skipped_regions)
++		return 0;
+ 	if (!ctx->nr_open_regions)
+ 		return 0;
+ 
+diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
+index 3bdbf4d275..c365017923 100644
+--- a/trace2/tr2_tls.h
++++ b/trace2/tr2_tls.h
+@@ -20,6 +20,7 @@ struct tr2tls_thread_ctx {
+ 	uint64_t *array_us_start;
+ 	size_t alloc;
+ 	size_t nr_open_regions; /* plays role of "nr" in ALLOC_GROW */
++	size_t nr_skipped_regions;
+ 	int thread_id;
+ 	struct tr2_timer_block timer_block;
+ 	struct tr2_counter_block counter_block;
 -- 
 gitgitgadget
 
