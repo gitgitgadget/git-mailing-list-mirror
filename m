@@ -1,581 +1,110 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44EF3403F4
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 19:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C3333ADB9
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 19:31:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787684781; cv=none; b=p6xV3SV+kVXHHDmE0RH9q/Sphrf5GhzLV7jLHCCFqVabjxJ8TV8umHfD0BKbOr/VqITUDOmOslzGWaJ2MIJ0Yd1ttYiLIdFDGlo2zCqIVXWSuHuwqEPjtkVyCFaUpjdyRJ7lU9PHTsh0N77D1BlXngxcBhgZrUFlPDMk3HmF+Fo=
+	t=1787686310; cv=none; b=jdwBAoNQd43lq5UwLuq39cX2+No2KBLY7oVPCYNIAycVL2Bgap+SnWWXHe+A9RQGn073FghhYMYu6FwaFkJ8cDe8pOOrRtp3zfjDm+iBfOyTL779iKquT0T71G0+bcEdxkWeIutr0WP7bfjle64bYyHxDyp5QoiTIXhZ3nTK1As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787684781; c=relaxed/simple;
-	bh=xbmDH3na3ST5L+NRIlUonK6UKWRoIT/Kj5AL7mQazC0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Uy1yp5Xc4GeOdM7/YL8No5VwlL/EgS1PYN+RjxNA2mbWGmGbEfCXnIa+2HY8eJKaM49X/X2H2526r61nGuaHmoUBFO8txlXxwObe/lbPPCN5/LnIHP+oYKhkKISuB4+IIFsDe3T9xUWUJupzdSrw8yNMNOyTVCfH8JTi7klddpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jDonDbe2; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787686310; c=relaxed/simple;
+	bh=lkkVh0K52nU1gnvoOQqy/DawDuIWNkhncabwQYdX+9E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=px9owu5guQAapY/hsD+GJG+eauLKUBWUOBEAzn6PPp8eJDYW1I/7ajzORV56QcYqXYz48OBAT8lHRSmWUh2fj1kGjvuGdJuP0vdBsKaohYFSRcuJPdzioHoEQJXbvL+vcz7TgqK0oBMAx32O5FjwlyG7681/i/FIkX0e6dHDnMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YbHVj4Hp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bVGyKuvF; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jDonDbe2"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-44cedfaab6bso140059fac.3
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 12:06:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787684777; x=1788289577; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=2BeMgXvVJEANe9DGP6D6o86p2acWbNqynmtLo10+uy8=;
-        b=jDonDbe2Hkb1eOYWlYJuI4qqscNJu+mmCcEboDh2PpjIlFkFV1zgV2QBBCFS3pC+4z
-         475eFJrFwvgzts4CkuSvTHrrRHgc7FRVE698FSKorXFL8W5R1Yn7N4zX1EVg7C63ZkEu
-         Hi4bNNq2W3GvGs9iSQGJ2cvSbwNIdPRvaE7VSfDWyVsvAYBx3LIn36wZ5gxq9nFpTz9W
-         jL/W5qskjsAiOBEeL758savkEN5WC5jHUPy0Vqv0fCf+DYWGDa1e7sjSKXhKj/VrRDm2
-         Z58so0IVnXFoHyX9JE1m5tbnH3wHrBYG8OYhPNbtchrZlclNtfR2PnrhQSqsQqFEVAGR
-         AKHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787684777; x=1788289577;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2BeMgXvVJEANe9DGP6D6o86p2acWbNqynmtLo10+uy8=;
-        b=VJv6/unXP/+yzLMf5qVxpqeGHKJLmaSusWhWiGWxaXL/LIupQc1okQQSAaOmiHa1X3
-         PA3GaStQHK9/SG2SkLh+tt8bdwi6iaJmG4M0XvR8BGocrfmHMkGtF/GbmzQxsyhrpxth
-         LVkftq90qiqZb+8UcpVthx5yzV1fEKQJyxwuNhSJyS5VSDadZQR5SeHZUMJnOx6v1+Y8
-         Ffnpw0ihIffZRleMfAtiz/WxQlCRpMGE+mVUW7iWhhw7kCTmELJCWNIA7bc+zS/Bar8T
-         RWpQBv9hBijbG6wGquouPi+8vpZYW1mrq0NvlkON0Mee/9oLTYJ4xPOjjhm0iONasEV+
-         WXug==
-X-Gm-Message-State: AFuF++lEqedh7pVwdLOM4hVHRSQsRwILEGIAGS5gm+khrl6T/aWxTfZG
-	QijD07F7ovsZAoC7RWVoLhW5V/1yUASiKXQfKZTymIPHMp+pb3O99G7+5YKqwGB0
-X-Gm-Gg: AR+sD10SFAEf9IR4K9FpY6Q6TsTfw++8dmFQmRbS1sd/q0KMHx/zzjXHcl4oeADT6qV
-	Vdl17IGM0dxKpVt/F9ymd6sE/7Fm2WqRsDU2OE7pJUV3AqEruq4wFaZ2yU0LkEXyvE2xWln4aWi
-	j4Iq8LfIv4InH/fkdKxdG7OLIyndH/BJvUCEnypepHYS0qX8o1Eq8OHfYfg/Gyhb94PECE7WGvo
-	pZBIq+3uy0uPpKVHpDUf/B3n9zM+kG93SwJvG304XgMWltB40nkzUxkM34wzP46uYMaBASAv0Q1
-	yxX0NbVR0X3TyMZ53dOeF+U65GuvlSlmTK+hcuQu48kvaEM9cyS2b004+Y8pHLJiBez9A2mETcx
-	HMiIaAcwyU6sMWI2oDfMMOfxfyqjq4sM90bmSxvMd9wtaQsD315cHdkz5xlzfzlJR6HjWKCwQ2G
-	T69nTnvpwAH9IlyzPB/0GzkjRrDnIDRdvnVLhdkWbK1+nvJb1brdzscEd/DullgwTB
-X-Received: by 2002:a05:6870:fb8e:b0:456:1edc:86f8 with SMTP id 586e51a60fabf-4659ae5bb7cmr1753728fac.15.1787684777293;
-        Tue, 25 Aug 2026 12:06:17 -0700 (PDT)
-Received: from [127.0.0.1] ([52.240.168.195])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-465afa1f389sm206278fac.10.2026.08.25.12.06.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 12:06:16 -0700 (PDT)
-Message-Id: <pull.2208.v2.git.1787684776048.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
-References: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Aug 2026 19:06:16 +0000
-Subject: [PATCH v2] send-pack: avoid sending the whole tree when pushing from
- a shallow clone
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YbHVj4Hp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bVGyKuvF"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id B388AEC01CC;
+	Tue, 25 Aug 2026 15:31:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Tue, 25 Aug 2026 15:31:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787686307; x=1787772707; bh=HO81a59/u+
+	7lL6tnlF29RdIVeE98D2/emDp3lyycKaQ=; b=YbHVj4Hp2IXQ1A4uyV0zeuc15h
+	4RlitUyUUyccmnMglVIan8kFVJ/EUAciW3HyputwjpRgZCXG2J9YLNu8EHHo55Ks
+	l7PKjH+k/4WO8dayKEp8EjC1/qHdba9RJSdNdbLAIV8d6FkQRHCeWk3B4sRxm/Aw
+	zf15bTbPCCvTXqbEVclpBOnFts8s/6N/jG6q6MhrqhpSpP7Z8NC/PeQdw8OFGxb0
+	J/Nc1qCoEQWFiQccEpsLwPHTR5rgtyIg16CGUhOqqMNpEjX78OYiqdhhFJD/H3G9
+	i1tOn/Z/uT8vXxjpeWk+8j4G0CV5Qq75MCvcpLLlsEX8rOVLu6MKUy2g3UWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787686307; x=1787772707; bh=HO81a59/u+7lL6tnlF29RdIVeE98D2/emDp
+	3lyycKaQ=; b=bVGyKuvFaEkbBUrN5oorZRi9iSRq23WLWcI4teSn4ebm4eFevLa
+	NklUbqzuJutNE8+l8KolS4CJxlH3l6DeG3+/NKJhKE6LpzmehkZWM/HkVXHTTHwQ
+	7+wJpPcKmwcBfrmOvKd+DKK9NUFg8mclQRJpCl+y0F3bgiAiXd59Rw8H7Qwk0I4j
+	0H3MerNArX2l1IwGj/xr5RJhW9LFPwsHPm4f1uMKPWlW59MLWszK+mF3uKW5iJQd
+	sKY8GW5xVPA2N4yJh53YGKZJgHkn0+cKCULHRgSjXhh1i+/FvSeeR97HMEPaTgqO
+	vefPh7MTAHkZqZ2sGBDI/k9kjSVbos/ZkeQ==
+X-ME-Sender: <xms:o-2Nag1AKKzAevO-X31wOPjVqFMmg2a9sA4TxJpm7lJKMgV49krB6w>
+    <xme:o-2NammGvWtk5E1yaukkOCDUlt8EiiFOJv9gVCkVFC-kqECb1ZF_HRRwoLLEVPaWT
+    _tobe3ltsYjB5KxQlCxXXz9_Y3--nLm9bwKpkFwooO_phzyvYLFKA>
+X-ME-Received: <xmr:o-2NavW64aKfceyUPtMsk5Grl62_T-1-tN_ABapyJEBO0JB1WWF1_xPIMGlTnpVbYqW-XV917i_XUCBUqBfkpBChjeFDwXiJlA>
+X-ME-Proxy-Cause: dmFkZTFQ1Uy6sZX0czBCS5P1F/NPrsEBPt1t/drdJxD2fxSKFS/KeGvBPh8szXeEUf8qeh
+    PXFSgAH3UlOnE/6wKvN27VVjEYmRALWrDmPmM0JnctheWamVwnRzLzubxeJb8xabor3NXx
+    GH2dkgU3brO4DW93+w9jnjdhf0nRvHivbtAtdcKrMwU8+xzAJu8zz37MaU8+7Ghmpuyw5K
+    6UW7EkAvsK6EC4BFPlpNo/thj39q6Iu6Ht2kDHEnvcRdeBXltdozN0mFXnuYba3jmqzmrE
+    SylDGaZIcrSCpDWYV35HQYJw4c5V3s1Nx+SEQbMzXGzRGGfrcNd7w34NQm0DBEMkbh6xMZ
+    Lj68KdckxOohmiy6wGAcIX21rSW4xLWT8FB4Dajcuo80Eb9sEyV2L9JEN0x+em3obuctf0
+    xaoS4E687CEvJa6bc0w6Iclgw1pCOYM67xB7TpGSJzpNXpkGn3ZWnMpqDiDa/p8dX2irj0
+    IJdhIWHNuL/wcbPZUAwiVjI0dpniUTb+ZFxUIFpt5ZSaQ5jEMl8rf9ihF8vfIV/h0lHN7P
+    LepXhjD4XYPk+Y9Y1kmbsLXIJVT7inZeJB+b6sGlX7oqNzycHP//hCl4Km5TfCnyfXCrmf
+    zD5woeio2TCsFpEZ4DrKQZcrgQAhrEfkvboSAI92SIos2BmPHCCA4guj+IJw
+X-ME-Proxy: <xmx:o-2Nakt1Bi0M2e4xGWpVQg79h8bhA1aKwYLXjLs5-73S2IjFTmyGGA>
+    <xmx:o-2NaqasQSiI1lgVsFNa_uvBb0fMiCCRnL4HIA1G6anazu-2CTOslg>
+    <xmx:o-2NarXuVJjNVn87-JgKrdJgmQSEOXC9Tq9D8_n56sj4CUdv8PY3Rg>
+    <xmx:o-2NanSC7SYAnDkd-UDxW1CMNebDoJ1rDK58g-nRnsKxhFNCEgOzoQ>
+    <xmx:o-2NaoEi1b5czQG-8CPEUHTvkP6R_0Kn3JRNsUr5DGPyJRop-P5H8dLI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Aug 2026 15:31:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org,  jltobler@gmail.com,  lucasseikioshiro@gmail.com
+Subject: Re: [GSoC Patch v5 7/7] repo: add path.cdup
+In-Reply-To: <20260825175818.645579-8-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Tue, 25 Aug 2026 23:28:18 +0530")
+References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
+	<20260825175818.645579-1-jayatheerthkulkarni2005@gmail.com>
+	<20260825175818.645579-8-jayatheerthkulkarni2005@gmail.com>
+Date: Tue, 25 Aug 2026 12:31:45 -0700
+Message-ID: <xmqq7blem1y6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
 
-From: Elijah Newren <newren@gmail.com>
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-When pushing from a shallow clone, even if we only have made a small
-one-line change to a tiny file, we often push the entire toplevel tree
-of files.  For large repositories, this could be gigabytes instead of
-kilobytes.
+> +static int get_path_cdup(struct repository *repo, struct strbuf *buf)
+> +{
+> +	const char *pfx = repo->prefix;
+> +
+> +	while (pfx) {
+> +		pfx = strchr(pfx, '/');
+> +		if (pfx) {
+> +			pfx++;
+> +			strbuf_addstr(buf, "../");
+> +		}
+> +	}
+> +	return 0;
+> +}
 
-The reason for this is that the push likely lacks the commits the
-receiver has advertised, so it walks back to its shallow grafts.  Since
-it doesn't know that the server has anything, it sends the entire tree
-for the graft.  It would also send the parents of the shallow graft,
-except the shallow clone doesn't have those by construction.  We thus
-are forced to assume that the server has the parents of the shallow
-graft -- if it doesn't, the server's receive-pack will reject the push.
+Can we have a small common helper library (e.g., repo-info.c at the
+top level) shared between this code and builtin/rev-parse.c so
+that we have only a single implementation of 'cdup'?
 
-But that raises the obvious question: if we're going to assume the
-server has the parents of the shallow graft, why not just assume the
-server has the shallow graft itself -- which this clone almost certainly
-received from the server when the shallow clone was created?  As noted
-above, receive-pack already has a builtin connectivity check that
-predates pushing from a shallow clone by years[*], so even if a client
-is pushing to a different server than it cloned from, the worst that
-happens is a rejected push.  And by assuming the server has the shallow
-graft commits, then for large repositories (those most likely to use
-shallow clone) we can avoid transferring (and perhaps re-compressing)
-gigabytes of file contents that the server already has.
-
-[*] Compare 5dbd76760181 (receive/send-pack: support pushing from a
-    shallow clone, 2013-12-05) and 52fed6e1ce07 (receive-pack: check
-    connectivity before concluding "git push", 2011-09-02)
-
-Fix this by finding the shallow grafts behind the history we're pushing
-and adding them to the pack boundary as uninteresting (negative) tips,
-so the generated pack leaves out everything underneath them.  We only
-use grafts that the pushed commits can actually reach; excluding every
-graft in the repository would be simpler, but it could drop an object we
-really do need to send -- for example, a new blob we're pushing that
-also happens to sit under some unrelated shallow root pulled from a
-different remote.
-
-We can also stop early at any commit we and the server both have --
-one the server advertised, or that push negotiation found in common.
-Such a commit already marks the edge of what we need to send, so
-there's no reason to keep walking down to a graft below it.  For
-deeper clones the server usually has a commit close by, which keeps
-this walk short; we only reach a graft when we and the server share no
-history that we know about.
-
-One very rare (and non-default) workflow genuinely needs the larger
-push: seeding a receiver willing to adopt new shallow roots
-(receive.shallowUpdate; see 5dbd76760181 (receive/send-pack: support
-pushing from a shallow clone, 2013-12-05) and 0a1bc12b6e40
-(receive-pack: allow pushes that update .git/shallow, 2013-12-05)).
-When the server sets receive.shallowUpdate, it is willing to accept
-pushes despite lacking ancestors of the pushed commits.  But it expects
-us to send all tree objects so it can graft a new shallow root.  For
-that case, add a sender-side config, push.shallowExcludeBoundary,
-defaulting to true (the optimization), while allowing users to set it to
-false to restore the previous behavior needed for that rare case.
-
-Update the existing shallow-seeding tests in t5538 to set
-push.shallowExcludeBoundary=false, since they exercise that
-receive.shallowUpdate path.  Add tests for the optimized default and the
-opt-out, that a rejected ref does not cause an accepted ref to be
-over-excluded, and that a shallowUpdate receiver still rejects a
-rootless snapshot by default.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    send-pack: avoid sending the whole tree when pushing from a shallow
-    clone
-    
-    Changes since v1:
-    
-     * Fixed two small code style issues
-     * Updated the cover letter below to point out that push.negotiate=true
-       doesn't work for everyone, and even when negotiation does work it
-       doesn't solve all cases.
-     * Updated to latest ps/odb-pluggable-pack-generation branch.
-    
-    Maintainer note: The base for this series is
-    ps/odb-pluggable-pack-generation; that series' removal of feed_object()
-    conflicted with my original version of this patch, so I rebased on that
-    series and fixed up the conflict.
-    
-    Some users can work around the problem described in this patch with
-    push.negotiate=true. Even if we were to make that the default, though,
-    (a) negotiation doesn't work for some people (depending on other server
-    and client settings and programs), and (b) even for those for whom
-    negotiation does happen, that doesn't solve all cases. Let's help users
-    by providing sane default behavior.
-    
-    One alternative I considered here is making the new
-    push.shallowExcludeBoundary config a tri-state: true, false, or abort,
-    and default to abort. If abort, then when shallow grafts are reached by
-    send-pack, simply abort the push on the client side and tell the user to
-    set push.shallowExcludeBoundary to either true or false. That'd be the
-    more traditional backward compatibility approach of introducing an error
-    period before changing the default. But since the "traditional" case
-    seems extraordinarily rare to me and already requires additional special
-    configuration (receive.shallowUpdate=true on any relevant server), I
-    thought the transition period wasn't warranted in this case. Let me know
-    if you disagree.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2208%2Fnewren%2Favoid-expensive-shallow-pushes-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2208/newren/avoid-expensive-shallow-pushes-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2208
-
-Range-diff vs v1:
-
- 1:  649efa1c5f ! 1:  d4501a5c23 send-pack: avoid sending the whole tree when pushing from a shallow clone
-     @@ send-pack.c: static void append_negative_object(struct repository *r,
-      + * the peer can use and the graft beneath it would be redundant.
-      + */
-      +static void append_reachable_shallow_grafts(struct repository *r,
-     -+					    struct ref *refs,
-     -+					    struct oid_array *advertised,
-     -+					    struct oid_array *negotiated,
-     -+					    struct send_pack_args *args,
-     ++					    const struct ref *refs,
-     ++					    const struct oid_array *advertised,
-     ++					    const struct oid_array *negotiated,
-     ++					    const struct send_pack_args *args,
-      +					    struct oid_array *haves)
-      +{
-      +	struct commit_list *pending = NULL;
-      +	struct oidset seen = OIDSET_INIT;
-      +	struct oidset known = OIDSET_INIT;
-     -+	struct ref *ref;
-     ++	const struct ref *ref;
-      +	size_t i;
-      +
-      +	for (i = 0; i < advertised->nr; i++)
-      +		oidset_insert(&known, &advertised->oid[i]);
-      +	for (i = 0; i < negotiated->nr; i++)
-      +		oidset_insert(&known, &negotiated->oid[i]);
-     -+	for (ref = refs; ref; ref = ref->next)
-     -+		if (!is_null_oid(&ref->old_oid))
-     -+			oidset_insert(&known, &ref->old_oid);
-      +
-     ++	/*
-     ++	 * Record every commit the peer is known to have as a boundary for
-     ++	 * the walk, and seed the walk from the tips we are actually sending.
-     ++	 * The walk below does not begin until "known" is fully populated.
-     ++	 */
-      +	for (ref = refs; ref; ref = ref->next) {
-      +		struct commit *commit;
-      +
-     ++		if (!is_null_oid(&ref->old_oid))
-     ++			oidset_insert(&known, &ref->old_oid);
-     ++
-      +		if (is_null_oid(&ref->new_oid))
-      +			continue;
-      +		if (check_to_send_update(ref, args))
-
-
- Documentation/config/push.adoc |  12 +++
- send-pack.c                    | 100 +++++++++++++++++++++
- t/t5538-push-shallow.sh        | 156 ++++++++++++++++++++++++++++++++-
- 3 files changed, 265 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/config/push.adoc b/Documentation/config/push.adoc
-index 28132eedfe..9fd6a956a8 100644
---- a/Documentation/config/push.adoc
-+++ b/Documentation/config/push.adoc
-@@ -134,6 +134,18 @@ This will result in only b (a and c are cleared).
- 	rely solely on the server's ref advertisement to find commits
- 	in common.
- 
-+`push.shallowExcludeBoundary`::
-+	When pushing from a shallow repository (see linkgit:git-clone[1]
-+	`--depth`), Git normally assumes that the receiving end already
-+	has the pushing repository's shallow grafts, and omits those
-+	objects from the generated pack rather than resending the full
-+	toplevel tree of those grafts. This is safe because the
-+	receiving end rejects a push that references objects it does not
-+	have. Set this to `false` to send those objects anyway; this is
-+	only needed for the highly unusual case of using a push to seed
-+	a receiver that adopts new shallow roots (i.e. a receiver that
-+	has explicitly set `receive.shallowUpdate`). Default is `true`.
-+
- `push.useBitmaps`::
- 	If set to `false`, disable use of bitmaps for `git push` even if
- 	`pack.useBitmaps` is `true`, without preventing other git operations
-diff --git a/send-pack.c b/send-pack.c
-index f20460fbf4..5e1ac9dd89 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -14,6 +14,7 @@
- #include "transport.h"
- #include "version.h"
- #include "oid-array.h"
-+#include "oidset.h"
- #include "gpg-interface.h"
- #include "shallow.h"
- #include "parse-options.h"
-@@ -55,6 +56,91 @@ static void append_negative_object(struct repository *r,
- 	oid_array_append(haves, oid);
- }
- 
-+static int check_to_send_update(const struct ref *ref, const struct send_pack_args *args);
-+
-+/*
-+ * Add the shallow grafts (nr_parent == -1), which are reachable from the
-+ * refs being pushed, to the pack boundary ("haves") as uninteresting
-+ * (negative) tips so the generated pack leaves out everything beneath them.
-+ *
-+ * Walk only from the pushed tips, and only until a graft: using a graft
-+ * that does not bound the pushed history could exclude an object we are
-+ * genuinely sending (if it is also reachable from that unrelated graft).
-+ * Stop early at any commit the peer already has, since it is a negative
-+ * the peer can use and the graft beneath it would be redundant.
-+ */
-+static void append_reachable_shallow_grafts(struct repository *r,
-+					    const struct ref *refs,
-+					    const struct oid_array *advertised,
-+					    const struct oid_array *negotiated,
-+					    const struct send_pack_args *args,
-+					    struct oid_array *haves)
-+{
-+	struct commit_list *pending = NULL;
-+	struct oidset seen = OIDSET_INIT;
-+	struct oidset known = OIDSET_INIT;
-+	const struct ref *ref;
-+	size_t i;
-+
-+	for (i = 0; i < advertised->nr; i++)
-+		oidset_insert(&known, &advertised->oid[i]);
-+	for (i = 0; i < negotiated->nr; i++)
-+		oidset_insert(&known, &negotiated->oid[i]);
-+
-+	/*
-+	 * Record every commit the peer is known to have as a boundary for
-+	 * the walk, and seed the walk from the tips we are actually sending.
-+	 * The walk below does not begin until "known" is fully populated.
-+	 */
-+	for (ref = refs; ref; ref = ref->next) {
-+		struct commit *commit;
-+
-+		if (!is_null_oid(&ref->old_oid))
-+			oidset_insert(&known, &ref->old_oid);
-+
-+		if (is_null_oid(&ref->new_oid))
-+			continue;
-+		if (check_to_send_update(ref, args))
-+			continue;
-+		commit = lookup_commit_reference_gently(r, &ref->new_oid, 1);
-+		if (commit)
-+			commit_list_insert(commit, &pending);
-+	}
-+
-+	while (pending) {
-+		struct commit *commit = pop_commit(&pending);
-+		const struct object_id *oid = &commit->object.oid;
-+		struct commit_graft *graft;
-+		struct commit_list *parent;
-+
-+		if (oidset_insert(&seen, oid))
-+			continue;
-+
-+		/*
-+		 * A commit the peer already has bounds the pushed history
-+		 * with a negative it can use, so stop here rather than
-+		 * descend to a graft that would only be redundant.
-+		 */
-+		if (oidset_contains(&known, oid) &&
-+		    odb_has_object(r->objects, oid, 0))
-+			continue;
-+
-+		graft = lookup_commit_graft(r, oid);
-+		if (graft && graft->nr_parent == -1) {
-+			append_negative_object(r, haves, oid);
-+			continue;
-+		}
-+
-+		if (repo_parse_commit(r, commit))
-+			continue;
-+		for (parent = commit->parents; parent; parent = parent->next)
-+			commit_list_insert(parent->item, &pending);
-+	}
-+
-+	oidset_clear(&seen);
-+	oidset_clear(&known);
-+}
-+
- /*
-  * Make a pack stream and spit it out into file descriptor fd
-  */
-@@ -88,6 +174,20 @@ static int pack_objects(struct repository *r,
- 	for (size_t i = 0; i < negotiated->nr; i++)
- 		append_negative_object(r, &opts.haves, &negotiated->oid[i]);
- 
-+	/*
-+	 * When pushing from a shallow repository, avoid re-pushing the
-+	 * entire toplevel tree.
-+	 */
-+	if (is_repository_shallow(r)) {
-+		int exclude_boundary = 1;
-+		repo_config_get_bool(r, "push.shallowexcludeboundary",
-+				     &exclude_boundary);
-+		if (exclude_boundary)
-+			append_reachable_shallow_grafts(r, refs, advertised,
-+							negotiated, args,
-+							&opts.haves);
-+	}
-+
- 	while (refs) {
- 		if (!is_null_oid(&refs->old_oid))
- 			append_negative_object(r, &opts.haves, &refs->old_oid);
-diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
-index afab456b32..6b0425bdbc 100755
---- a/t/t5538-push-shallow.sh
-+++ b/t/t5538-push-shallow.sh
-@@ -64,7 +64,8 @@ EOF
- test_expect_success 'push from shallow clone, with grafted roots' '
- 	(
- 	cd shallow2 &&
--	test_must_fail git push ../.git +main:refs/remotes/shallow2/main 2>err &&
-+	test_must_fail git -c push.shallowExcludeBoundary=false \
-+		push ../.git +main:refs/remotes/shallow2/main 2>err &&
- 	test_grep "shallow2/main.*shallow update not allowed" err
- 	) &&
- 	test_must_fail git rev-parse shallow2/main &&
-@@ -75,7 +76,8 @@ test_expect_success 'add new shallow root with receive.updateshallow on' '
- 	test_config receive.shallowupdate true &&
- 	(
- 	cd shallow2 &&
--	git push ../.git +main:refs/remotes/shallow2/main
-+	git -c push.shallowExcludeBoundary=false \
-+		push ../.git +main:refs/remotes/shallow2/main
- 	) &&
- 	git log --format=%s shallow2/main >actual &&
- 	git fsck &&
-@@ -90,7 +92,8 @@ test_expect_success 'push from shallow to shallow' '
- 	(
- 	cd shallow &&
- 	git --git-dir=../shallow2/.git config receive.shallowupdate true &&
--	git push ../shallow2/.git +main:refs/remotes/shallow/main &&
-+	git -c push.shallowExcludeBoundary=false \
-+		push ../shallow2/.git +main:refs/remotes/shallow/main &&
- 	git --git-dir=../shallow2/.git config receive.shallowupdate false
- 	) &&
- 	(
-@@ -164,4 +167,151 @@ test_expect_success 'push new commit from shallow clone has good deltas' '
- 	test_region pack-objects path-walk config-push.txt
- '
- 
-+test_expect_success 'shallow push only pushes what is necessary' '
-+	git init adv-origin &&
-+	# The shallow grafts are intentionally untagged so that no
-+	# advertised ref points at them.
-+	test_commit --no-tag -C adv-origin a &&
-+	test_commit --no-tag -C adv-origin b &&
-+
-+	git clone --depth=1 "file://$(pwd)/adv-origin" adv-client &&
-+
-+	# The remote branch advances past the history we have, so its
-+	# advertised tip is something we cannot use as a negative tip;
-+	# only the shallow graft lets us exclude the full tree.
-+	test_commit --no-tag -C adv-origin c &&
-+
-+	git -C adv-client checkout -b topic &&
-+	test_commit --no-tag -C adv-client new &&
-+	GIT_PROGRESS_DELAY=0 git -C adv-client push --progress origin topic 2>err &&
-+
-+	# Only the new commit, its tree, and the new blob are sent; sending
-+	# the full tree is avoided by excluding the shallow graft.
-+	test_grep "Enumerating objects: 4, done." err
-+'
-+
-+test_expect_success 'push.shallowExcludeBoundary=false sends full tree' '
-+	git init adv-origin2 &&
-+	test_commit --no-tag -C adv-origin2 a &&
-+	test_commit --no-tag -C adv-origin2 b &&
-+
-+	git clone --depth=1 "file://$(pwd)/adv-origin2" adv-client2 &&
-+	test_commit --no-tag -C adv-origin2 c &&
-+
-+	git -C adv-client2 checkout -b topic &&
-+	test_commit --no-tag -C adv-client2 new &&
-+	GIT_PROGRESS_DELAY=0 git -C adv-client2 \
-+		-c push.shallowExcludeBoundary=false \
-+		push --progress origin topic 2>err &&
-+
-+	# With the optimization disabled and no advertised ref pointing at
-+	# the shallow graft, the full snapshot down to the shallow graft is
-+	# resent, including its full tree.
-+	test_grep "Enumerating objects: 7, done." err
-+'
-+
-+# A rejected ref must not over-exclude objects that another, accepted ref
-+# legitimately needs in the pack.  Set up a testcase using two independent
-+# shallow roots.
-+#
-+#   origin: two unrelated histories; only branch A carries blob O (sh=shared)
-+#       A:  A0---A1     (A0, A1 trees contain sh=O)
-+#       B:  B0---B1     (no "shared" blob)
-+#
-+#   receiver: seeded from branch B only, under both ref names; lacks blob O
-+#       refs/heads/B -> B1
-+#       refs/heads/A -> B1     (makes our A push a non-fast-forward)
-+#
-+#   client: "clone --depth=1 --no-single-branch" gives a graft at each tip
-+#           and a copy of blob O under A1   (x = cut parents = shallow graft)
-+#           x        x
-+#           |        |
-+#          A1       B1
-+#           |        |
-+#          cX     topic=cY     (cY re-adds sh=O, which the receiver lacks)
-+#
-+#   push "A topic" (non-atomic):
-+#     A     -> a non-fast-forward vs receiver A=B1, so its ref update is
-+#              rejected locally and never applied.  It still takes part in
-+#              the shared pack computation, and the buggy code also walked
-+#              back from it to graft A1 (which owns O).
-+#     topic -> accepted; cY grafts onto B1 and needs blob O.
-+#
-+#   Using the shallow graft A1 (an ancestor of A) to trim the pack, even
-+#   though our push of A is rejected locally, would omit blob O from topic's
-+#   pack -- yet topic needs O.  We want to ensure that when topic is pushed,
-+#   O is sent along with it despite A being rejected.
-+test_expect_success 'shallow push does not over-exclude for an accepted ref via a rejected one' '
-+	# origin
-+	git init tworoot-origin &&
-+	git -C tworoot-origin checkout -b A &&
-+	test_commit -C tworoot-origin --no-tag has-shared sh shared &&
-+	test_commit -C tworoot-origin --no-tag A1 &&
-+	git -C tworoot-origin switch --orphan B &&
-+	test_commit -C tworoot-origin --no-tag B0 &&
-+	test_commit -C tworoot-origin --no-tag B1 &&
-+
-+	# receiver: branch B only, exposed as both B and A
-+	git init --bare tworoot-receiver.git &&
-+	git -C tworoot-origin push "file://$(pwd)/tworoot-receiver.git" \
-+		B:refs/heads/B B:refs/heads/A &&
-+
-+	# client: a shallow graft at each branch tip
-+	git clone --depth=1 --no-single-branch \
-+		"file://$(pwd)/tworoot-origin" tworoot-client &&
-+
-+	# branch A gets commit cX; including A in the push gives us a
-+	# locally-rejected ref whose graft A1 the buggy code walked to.  The A
-+	# ref update is a non-fast-forward, so it is rejected and never applied.
-+	git -C tworoot-client checkout A &&
-+	test_commit -C tworoot-client --no-tag cX &&
-+
-+	# branch topic is what we actually send, reintroducing blob O on B1
-+	git -C tworoot-client checkout -b topic B &&
-+	test_commit -C tworoot-client --no-tag reintroduce sh shared &&
-+
-+	# push both in one command: they share a single pack computation, so a
-+	# graft reached from the rejected A can strip objects that topic needs.
-+	# The A ref update is rejected locally (non-fast-forward); the shared
-+	# pack must still contain blob O for topic to land on the receiver.
-+	test_must_fail git -C tworoot-client push \
-+		"file://$(pwd)/tworoot-receiver.git" A topic &&
-+	git --git-dir=tworoot-receiver.git rev-parse --verify topic
-+'
-+
-+# push.shallowExcludeBoundary (default true) omits the shallow boundary
-+# snapshot from the pack, since an ordinary receiver already has it.  The
-+# exception is a receiver willing to adopt a *new* shallow root
-+# (receive.shallowUpdate): it genuinely needs that snapshot, so the default
-+# optimization leaves it unable to graft the new root.  Verify the receiver
-+# rejects such a push (rather than corrupting itself), and that setting the
-+# config to false restores the full snapshot and lets the push succeed.  This
-+# is the tradeoff that motivates the config knob.
-+test_expect_success 'default push to a shallowUpdate receiver rejects a rootless snapshot' '
-+	git init seed-origin &&
-+	test_commit -C seed-origin s1 &&
-+	test_commit -C seed-origin s2 &&
-+	test_commit -C seed-origin s3 &&
-+
-+	# depth-2: a shallow graft at s2, pushing s3 on top of it
-+	git clone --depth=2 "file://$(pwd)/seed-origin" seed-client &&
-+
-+	git init --bare seed-receiver.git &&
-+	git --git-dir=seed-receiver.git config receive.shallowUpdate true &&
-+
-+	# Default (optimization on): the s2 boundary snapshot is withheld, so
-+	# the receiver cannot graft the new root and rejects the push, leaving
-+	# the ref uncreated.
-+	test_must_fail git -C seed-client push \
-+		"file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded 2>err &&
-+	test_grep "remote rejected" err &&
-+	test_must_fail git --git-dir=seed-receiver.git rev-parse --verify seeded &&
-+
-+	# Opt-out: the full snapshot is sent, so the same push now succeeds and
-+	# the new shallow root is grafted.
-+	git -C seed-client -c push.shallowExcludeBoundary=false push \
-+		"file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded &&
-+	git --git-dir=seed-receiver.git rev-parse --verify seeded
-+'
-+
- test_done
-
-base-commit: 5176dd3d057ac5cae8321508febef61fa88537aa
--- 
-gitgitgadget
+The same comment applies to all the other features that duplicate
+implementations from rev-parse and elsewhere in the repo-info file.
