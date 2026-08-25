@@ -1,84 +1,90 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED81531C8
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 17:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CFC3803F1
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 17:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787678079; cv=none; b=svm+ci4dSI6K16NriK1/DcpGpIHqqKM+F0SFWrSeutXULLwLdK4Ig4SltN69ggkLoUGnK9o8cVPk5ZWcIDj2LCVg7Tdmu93E01iDCZvf54Qc2u5N8Ckl8DS64Fa/CueeMUQsQC4RE0xNSSTlvVVS0bOZvQ4nCddcJpBHZ8BywGE=
+	t=1787678412; cv=none; b=YUYUFqkG4McAy4h0jc2gn1LtuMKR1HM9KMyG9f8fFLaSuzbBQJVREGWfuK8vhiHsnPtQ8Ud1+I5g0lxGSEJCips9MUr81Yi78oZc411rcOABWaytg9oI725n6ihOTAGj6eD2JKakbhhNg9G5Gg7bVZLOC4XD3LEjxd2JX5wgn9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787678079; c=relaxed/simple;
-	bh=ZMKH/dOAPcOVUHIKZSaCuxaPuqVbaRl4neoDMBNLGy8=;
+	s=arc-20240116; t=1787678412; c=relaxed/simple;
+	bh=7OEaQGDkSD6ohD1cA5EcCyrWkWeAj8WG38130yR2aoM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ivKOdVSl+HdIpYoJH0LRfc3a7R23FeoQCQu2NvGtOLWnRSDHpdST0yXzsOQRgoERTMNGJyY5kJeXlN1AA1JoNuHzUSWAa8TkvRZ4umg/L5CE6ibnCuvivI2piAShrfZgzV2zqAkslYhf+qCXnGyZ2OVS8g+1YM00DeipcqS0j48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jb7uBV0I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dX5Lh4/j; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=jjHXzpp5CxvmJTBXbt9OhTbDi+iKR1UdYhRjfp0XHSXdLFOuONJeJrUZvykmABTJRNwg1ksH8RuSWQy7EeS+frMWmUnIOQaj8F/PlnZHq6AOUUsMLGsR19dZwhLOk9eaNqLmHNMWOFs73qPL+vEA9HO2SpO+6hiKyZoTf0jBo7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V+tP6agT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IY8Yk7+n; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jb7uBV0I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dX5Lh4/j"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 291C91D0008D;
-	Tue, 25 Aug 2026 13:14:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V+tP6agT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IY8Yk7+n"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7DDFF1D00171;
+	Tue, 25 Aug 2026 13:20:09 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 25 Aug 2026 13:14:37 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 25 Aug 2026 13:20:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787678077; x=1787764477; bh=RyGIx16D8q
-	ECnP78oRbeYjT0X0fhW2SW9kZJJ/EEB2c=; b=jb7uBV0IuIjnuw9U6Ox8haP9lD
-	k+D/M/h8ouvq4g+mxNGarff9Oud2iC2/cMLsyjNCvUUX/yBCiTHOYU1+N0psu3mh
-	bITrvCUW+d/EeIjSnGVU0pGsruLdO3U1NxDNjp/LpNkRWS5VnsfI44cn6s/mWTW8
-	Rwhff9CqUMwv7Qk53npv/MFI0B0ZMmYykxKCYybdPO9IqCtROp22ta77+UyRcD28
-	bk1oNPiwN1+NfOxrPzw3yopfgQ2OgGWC2UhtTrbMlr3HM/MWNss9yvsPqq3evvzf
-	jj3LiS5beUplidYPRzfAoSi9W/fDKplhed8GOTuuj/L+o2eO7nK0l6k+8ynw==
+	:subject:to:to; s=fm2; t=1787678409; x=1787764809; bh=u/Br9B6eTE
+	2MQLQvQ9CYFwedfI0a6sS/+Pq181e47e0=; b=V+tP6agTkoyVo5EdnbBnDptjHe
+	GbmeLdjsKlr61nO8Ee6vUAI62Opmky02BY7lb7AECKHVEEV+Efgc97hhH6aggnCz
+	MFj1iKPNKDKu+Zw2tJRuDkujdxf6Hzbb4DToehhcw7E48F/bDWYzkwsVQgsF2oGZ
+	RvX/ELP3vnHjRKWc42EMotHCi0C1I7AQBqrlCIUeSV8FylrRGLlIJhjy8OrJ1hQ4
+	epTcNuO+lQ3/QMuHE16ptjfXdNIZWs8Lxmpo/Iu8gdyP7rVCxichXzCl6ul3sbkj
+	izKwkv96rAEHXj+j80TMc3kp8erPRTGCTolef52g/Ure4pzUCB9qknHmgGsw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787678077; x=1787764477; bh=RyGIx16D8qECnP78oRbeYjT0X0fhW2SW9kZ
-	JJ/EEB2c=; b=dX5Lh4/jT1xgDKacD+2DnThKxXA6I8QrtCi61btzqdxatX7Zx9Z
-	LO0nLEX6mIaSF8Lu1YE1cEVIhR0xuifAw+u5wYFMYe9NTOQBUXtqeUlZMEvjx9S5
-	siKjjjZ7LCK+inTJzn93d7m4i5UF/foeqb1sFYi88OF4JzZ/m62+RwFdNSBIZWil
-	vjmFkKsH4r0b5iWyK77vOZN8ujmvnNWKcdb4CNX2aB+TVJcQ8BYjc3Tw43GNUdLt
-	jYR0qENy9g5+Jpmswu3L3yJcHRP99er0+Au2pJ+kGFTeBH91EeoTFIDqifEajEv5
-	H//dqc7drkwEdXyzUnieLdN2bX+vCC/pi5A==
-X-ME-Sender: <xms:fM2NarHx36A4Dd9FsVzknHt7iXNo0wMJelyVPvDeeECFfEFCZ_0l9Q>
-    <xme:fM2NasAvHPdsHUVPVV388JLv4kzNVDS0muEjVWDnlWgKwc13xcrjONFGLIoV5rbtt
-    NAc4MKfMIn0t0sSL1E7xvq8kksPynrvB6fuUUEWpGAC77j1j16RhQ>
-X-ME-Received: <xmr:fM2Nam8vqlfYuNqzvwFaWDEsFb1NtAmUW2SDjWbAOXsqeDBKxCoFP65Nz-xbGZTibJJ4wbDAxwlkxKTgYriafLql_E-ehhTfZw>
-X-ME-Proxy-Cause: dmFkZTFxOUkzOAeDXkDmK6ZFZ4b9xQrdDz+QK1Ia7EIayi2RlQC3MjrvZAOhD5RgvbaOKS
-    YWBT+Eye1PmiUlZ3h6ly/fOBarthMEMGWHjDVCwlfA6sjKWJ0YmrM0mNulTsHxM+g4IeWM
-    dV5WifM584yzh+8qYiNBTMW9t1GwBujfoPGwE7qyQWGgZ2uPn4vMlaLsHRKwQf2Q+s5JE5
-    wOeoHLJoNegCGGqri8cSxZF+rYZx0CTRS9IGbGfMJpe78nnvu0MFN86DimblM5oB02uNPa
-    8lg70ZW4D3SrFhbINRP5l30DyFcpCC2l8GxogeARZZxyZckhJw/VUjVelei+HvlIa6SdK8
-    r+ecVpEkyiDPOmLIlAnXjh1RiIK8fENo++JK5QKCE7gb1ASXnyvKR1QPrjm3VH8F2AWY08
-    /RjqWH0bbV5pSeTd923bwbrTDflQfG+Vt0FDrib8v5htkW4aMZaLUSTn4RaPLP9Xy9D67z
-    zx4NVQit6QUancrutWq/aLvinOJgROKfKWlzf73EU1HJIK7Iak+shsiaKp04Vh3suPTo8D
-    V8Izm9kM3JVPn0RNwwsDoKSEJuIZe8WXzrxek2g0qsvcN4InONbe1c0v/26NwzJWhVhLQS
-    ujtYS86/zb9lCiqhk3K/5tYOXPXy5A2dWNYRiie0X1Ilu6kn1Oo5nEJ55Hxg
-X-ME-Proxy: <xmx:fM2NagBcVRoUqUdVjnS6i5pPF9I6SyNYb2h_B_vvYNwOe1TDQacd7w>
-    <xmx:fM2NajT7dR0sqtwb9Nm3H2T2ofYeS3KGPyUCL8rqJon2LffprIEVsQ>
-    <xmx:fM2NavvLDMYFE0BsffCNygB-ClrSuLbZIObjqZMYfF9_5j-cRlFANQ>
-    <xmx:fM2Nan3SIpbbS5D7XLvsnPdFtsyARVIB47zPF0HxmA0ix0766rxHhg>
-    <xmx:fc2NahhtiytcSt3C5zK2rffL8srRKirnoHE6pkAvgXdVuaGlRiNErCA->
+	1787678409; x=1787764809; bh=u/Br9B6eTE2MQLQvQ9CYFwedfI0a6sS/+Pq
+	181e47e0=; b=IY8Yk7+nhm8d6U/beYQMjL3s5CnTNioOn08TOr44U9rws/LvHAY
+	G39cV4sBverIF48m+0InbTnCyB1jFNbRermr8G+wxVplppQ6/6auOqaQZZ/Eb59D
+	ppiWiXbIlrW/2H8/TFbJUiPbnLrebuoRh9kumUjeC/9JbdtRmFccHZc+LZJC58wo
+	zdbnNgc4lZo+lo+8Azki0LElcFermd+7Tb9eBcyhBkNbWpsp+/7KmDsnZ4UUtu/x
+	3en4JWbDF3WnMCK3l3W0nbtZbsbU/B1CwY8caqzs791JbQSJM7TKZjU0SYaPcL9S
+	lMT2wRX5VqEp2JVMNxR29Bku32N6zuESHxQ==
+X-ME-Sender: <xms:yM6Nap_sSuRMwycpae6pL7zQ0W5-HlyEkoPfsQK1q9a6h0peqx06JQ>
+    <xme:yM6NaqSA3QBBr56OIr-nuEOD8OW53toHfisGLCSVt_soFxo8TH3DBd3rFCNnXkOIz
+    lBl28PiQfHZKUklbsbSv_6U5kvScsxT-1bKmFedw09lK7GqNevx-vw>
+X-ME-Received: <xmr:yM6NardWuaImtGAyjcMxg2gXwz8jtonCa4eUUwKNzdJU6DhGx8ii39ge98q816Bi4ldrVDK9ZRho0DI-sABF21LxIY1NxkLuAw>
+X-ME-Proxy-Cause: dmFkZTGh9JP5460z3eVdR/YzVdKk0Qac//fS6eOtFtF54iQaDR2ooRoTuWbThsTKg0WM4H
+    GnQFM84/A2QwcSeIFG1s0oV1ojg0t0tL6/9OMpHiz/qqjRWXdmcG2OCxXUlwauIpXn8D6z
+    rSRTUGXPHZSC0CR4LeATzL2p2qzyLtMe36IclsyBC3P5z0WZeOj0Lp1ypSYDBS0lUKrpDU
+    50nmNl3spisAbI6t0rd0K3QJCDjq/2GGtI7CAZbO52FceuI/SCo+O1u7T3NEaZK2Uwq6c2
+    8wJiCsrBXJo4145Z7IlCWuzHGm2kRC52Y5giVdW+0aX50Q8H5jE2Rkjw/dt72sbuI216X8
+    2pMnc76QCOVmLcs22u63q+N2lkgS1HZmyhngln17SHkba5zYyEv7yxpzwhmjze4kxKbvUv
+    1YprZNjIcE9mKyT+PqEENqMKWxz+ByFSCHsJ4PTW8f2ITVlT848gRrrHoF9h89qKe0FY2+
+    8dnVaVyROGxDKJ/TuH8kStG2tI1ssSttzJ0W05LpqZjohip6p1FyRyIfmxAChWPFmvnB6n
+    qfcQ8AZ1VpuBdHV2pKuXkFV3nAvJdtFuaCniaf/ouNT0Ybu0d8KFOfhJZiS3Y66MGw08v4
+    ci8A323c4AdOs9o3xscClPkkSiAFeXLAxfOkNmIlP9swp/mOhGK5A0GSALKQ
+X-ME-Proxy: <xmx:yM6NakRX-58WO1fM2uOrmyT6RYTR2VsmPOTbgKYv3McFFuAiurtS3g>
+    <xmx:yM6NavIXObUAeAndNuWloYHWQnzzUqJUrn4-A4Hy9Tw0qI6gMK_rQg>
+    <xmx:yM6NapIV7Tz55Gixc6m6_j81o_GkwXrQyZlozc4lOhl0QPe6GYO-kg>
+    <xmx:yM6NaijEqwTrzVL_TKKBGMvmA_Z6f9OZVNF4ymlQzkGJtOdabB3yQg>
+    <xmx:yc6NapNDHIJe2GLkWPxmZZOaKgbrulDmdz8s6wt4306xaHBqhvswGVAB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Aug 2026 13:14:36 -0400 (EDT)
+ 25 Aug 2026 13:20:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Nikita Leshenko <nikita@island.io>
-Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>,
-  Patrick Steinhardt <ps@pks.im>,  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH] am: record blobs of cleanly applied patches when using
- --3way
-In-Reply-To: <20260825085516.66088-1-nikita@island.io> (Nikita Leshenko's
-	message of "Tue, 25 Aug 2026 11:55:16 +0300")
-References: <20260825085516.66088-1-nikita@island.io>
-Importance: high
-Date: Tue, 25 Aug 2026 10:14:34 -0700
-Message-ID: <xmqqmruam8at.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Matt Hunter <m@lfurio.us>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Tuomas Ahola <taahol@utu.fi>,  Harald
+ Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v14 7/8] history: create squashed commits without editing
+In-Reply-To: <39664e65-6997-40d4-83d4-1d2cae27ac50@gmail.com> (Phillip Wood's
+	message of "Tue, 25 Aug 2026 10:08:17 +0100")
+References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
+	<pull.2337.v14.git.git.1787249432.gitgitgadget@gmail.com>
+	<03528d3b34c202b990cc42865a009a5786255b7c.1787249432.git.gitgitgadget@gmail.com>
+	<xmqq4igov9h9.fsf@gitster.g>
+	<29ada18c-b849-4bc3-aad3-b4fdc09c81f9@gmail.com>
+	<xmqqbjarsgjd.fsf@gitster.g>
+	<39664e65-6997-40d4-83d4-1d2cae27ac50@gmail.com>
+Date: Tue, 25 Aug 2026 10:20:07 -0700
+Message-ID: <xmqqik4ym81k.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,104 +94,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Nikita Leshenko <nikita@island.io> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Make "git am --3way" succeed in an edge case where it currently fails.
+> On 24/08/2026 16:07, Junio C Hamano wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>> 
+>>> On 20/08/2026 21:10, Junio C Hamano wrote:
+>>>> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>>>
+>>>>> +	/*
+>>>>> +	 * Allow "fixup! <hex object id>", but not "fixup! HEAD^" or
+>>>>> +	 * "fixup! main". If the target is not being squshed check the subject
+>>>>> +	 * to allow "fixup! abc123" and "fixup! <subject of abc123>" to be
+>>>>> +	 * squashed together.
+>>>>> +	 */
+>>>>> +	target = lookup_commit_reference_by_name(s);
+>>>>> +	if (target && istarts_with(oid_to_hex(&target->object.oid), s)) {
+>>>>
+>>>> Why istarts_with()?  "fixup! ABCdef" should not be accepted, should it?
+>>>
+>>> I agree there isn't really a compelling case for mixed case oids, but
+>>> accepting all uppercase, or all lowercase seems reasonable, or are we
+>> 
+>> Tell that to brian who wrote the bc/restrict-hex-to-lowercase topic
+>> in <20260729233215.398654-7-sandals@crustytoothpaste.net>.
+>> >> planning to completely ban uppercase oids as brain has suggested? The
+>>> aim here is to accept any oid that rebase would, but not accept ref names.
+>> 
+>> I understand that we never emitted hexadecimal containing uppercase
+>> letters ourselves, so 'commit --fixup' and friends wouldn't have
+>> added anything that requires istarts_with().  So accepting any oid
+>> that we would have given the users after "fixup!" but not refnames
+>> can be achieved by starts_with() just fine, no?
 >
-> First, some background about the case:
->
-> Say we have a patch with two commits, A and B, and both of them change the
-> same file.  We apply them to a different repo on a different version of the
-> file using --3way.
->
-> If both patches apply cleanly, we are done.
->
-> If A does not apply cleanly, git am falls back to 3-way merge.  To merge,
-> Git uses the preimage hash from the patch:
->
->     A: index 83b2a16..cccad2b 100644
->     B: index cccad2b..0ce2f98 100644
->
-> git am looks up 83b2a16, applies A to it, and merges that result with the
-> current version of the file.  As an important side effect, applying A to
-> 83b2a16 also stores A's postimage, cccad2b, in the repository.  This means
-> that if B also doesn't apply cleanly, cccad2b (which is now B's preimage)
-> exists in the repository so we can merge against it as well.
->
-> Let's assume instead that A applies cleanly and B fails.  Because git am
-> didn't have to 3-way merge A, nothing created cccad2b this time.  What we
-> have after applying A is our file plus A's change, which is a different
-> hash.  When B doesn't apply cleanly, git am fails because it doesn't know
-> what cccad2b is:
->
->     Applying: A
->     Applying: B
->     error: sha1 information is lacking or useless (file).
->     error: could not build fake ancestor
->
-> However, technically we have the information to build the fake ancestor!  We
-> have 83b2a16 in the repository, and we have A, so if we apply A we'll get
-> that hash.
->
-> So do exactly that: if the user requested --3way, apply the patch on the
-> fake ancestor even after a patch applies cleanly, in order to produce
-> intermediate hashes for later commits.  If the preimage is missing, or the
-> patch does not apply, nothing is recorded and git am behaves as it does
-> today.
->
-> This does not change the behavior of how patches apply, but when the user
-> requested --3way it does cost one extra "git apply --build-fake-ancestor"
-> process and one extra apply per clean patch.
+> If they're using "git commit --fixup" then yes. If we're going to reject 
+> uppercase hex everywhere then clearly we should be using starts_with() 
+> here, but if we keep accepting uppercase hex elsewhere why should we 
+> reject it here?
 
-If you have a 50-patch series that cleanly applies, we would incur
-overhead to spawn 49 extra "git apply --build-fake-ancestor"
-subprocesses, to write and unlink 49 temporary index files, and to
-perform 49 in-core patch applications, generating unneeded loose
-objects in the object database, and loading and unloading the index
-file one extra time per step.  That is simply unacceptable.
-
-Can't you do the equivalent lazily inside fall_back_threeway()
-instead?  A rough outline may go like so:
-
- * Imagine that, after applying patches 1..(N-1) successfully, you
-   are applying patch N.
-
-   - First try direct application of the patch, and it fails.
-
-   - You call fall_back_threeway().
-
-   - build_fake_ancestor() is called for patch N; if the preimage
-     blob exists, you are done, but the case you want to address is
-     what to do when the preimage is missing.  And in that case (and
-     in that case only), can't you reconstruct the image chain
-     lazily?
-
-     Instead of returning error("could not build fake ancestor"):
-
-     - You inspect patches in .git/rebase-apply/ for 1..(N-1)
-       patches (i.e., those you have applied already) to find the
-       relevant blob objects involved in reconstructing the
-       preimage blob necessary to apply patch N.  Some of the
-       blobs may already exist in the object database (83b2a16
-       in your example).
-
-     - Apply these previous patches in-core to arrive at the
-       preimage recorded in these earlier patches (applying patch 1
-       to 83b2a16 would now give you cccad2b), until you see the
-       preimage blob recorded in patch N.  Write out that blob
-       object (and not the blobs that the chain may have
-       produced as a result of intermediate patches).
-
-   - If the lazy reconstruction yielded the necessary blobs, try the
-     build_fake_ancestor() call again, which should succeed.  If
-     not, you can return error("could not build fake ancestor").
-
-   - And after patch N succeeds with 3-way fallback this way, you
-     would also have the postimage blob recorded in the patch in
-     your object database, which may help when you apply patch
-     (N+1).
-
-When the patches cleanly apply, or if 3-way finds necessary blobs
-already, there is no additional overhead with the above approach.
-
-Hmm?
+The point is not to add any *new* places that accept uppercase hex,
+and this is to participate in the move to discourge the use of
+uppercase hex.
