@@ -1,125 +1,118 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900703563CD
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 22:15:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787696109; cv=pass; b=as7sitb6C0wJWOBkdt7tGwGN2hFHHqpgmbedMqloZpjsf34qrTxEXHzbXSF8c54HuF0QGH9NfF2Gf3XB1YDFdPKVQD43k5QfkVCEmiOxIL+FXXH1+4IarV61AjSpMafA+S9mSW18hcIaN4gMq+eiWQnKwDfiVQCJplEEC8+0t20=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787696109; c=relaxed/simple;
-	bh=FRyKpuBRBU42blfKwRFemNFzClwFyi0t+Bd201ru1cg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ulNgmVOMkhuMQgw+KqU09sypw5quO2+aYINTPAEoriV12BkQ48OCRLjCz5CC3qcezNpgg52p5pppVu+Tif16M9JbiOZtUiaUNoFrjjCCOlhW1fxf9oQQp3P+IzwMakEDQlFZzzyeax/783F2x1uSHzpTSD1RcyFXQaFR2ujI/60=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nCa6QoxN; arc=pass smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01279367B61
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 22:36:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787697418; cv=none; b=TCWeIrKLjqE1xv3P5A8RSdx7Tc9CL/4tEJdLodCcW2ZD82RSQJbQ4aeAfW2eUX7pB4nSaTmI3eUUY08LiYih6i0l5U1gIm/1d4nPQ9Ja6az9LFmEXgh+lbiCfPUM+VJvc4oCW7AKXaZiBhqk1iYLE3sYJInwGRhxQ3bZFhswjYU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787697418; c=relaxed/simple;
+	bh=R2RW5pEi+4IwQCLmM98x2/p0+Jclx2FnG22h0fGoNB4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jERVN2HlyvA03BzNtLkYcZwEuUXXZn2MbcrLgUXrzuS5XEVLyMD8IRUFbUGtcYkrJ77uyJQz9j/FDfRjuzh7QUcT7gyltMCdzxEWFmJ4TuE9sPqEdkxKVzWDpkVIaVCU8GQL1cJYd8RYRVqLoPgtLTID/qzJjSwjBIHYVvSps7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fD7MP7rt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lIHxgEDM; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nCa6QoxN"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-4b21f71613fso307242b6e.2
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 15:15:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787696107; cv=none;
-        d=google.com; s=arc-20260327;
-        b=OMebcIjrLn3pejGc2KdljUVX35onhhjOBsdiFq67Mq4Yx2wanTxZtwUzaPJZnUbo/H
-         C5jN3d4hfavRUU49KUBMsaGlNnxDPS51Yxt+IVOgCw8obQ7/8UHyA83gxYZj1M0raDFF
-         m37t4F3UD6dSsY5iZgPEW7EjzxeO7bSdtSJ/N2Z1miQpb/FON0UhAhXy0Q+nLXRydbV7
-         oZt2KG+7qxzugFQS1cjdz25mDhVakcTbLmmGOiXi5/dV4pqgw0MNyv7P+Yjr9rtecHTY
-         2GgnWnkZNXwoRiDkZD1nXJLoLcH4tLgThTKTjp/bvVhgFQbw05jWUxzO329rG4nCs5nk
-         i95g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8S1RVHzHyp7sUqdX49yxokh5S9s59g5Zc6HhiG7NGFo=;
-        fh=8kE2VkWfDdS5fLCIXYYt7RvkWfuys8Lc4lEVxWzzsJQ=;
-        b=dkQ+qh4EYu0WxvRoZIV+jNbGI0FHw+DqBDRm8q3gal58Z6X33mVwO/0ticDSc1MXtD
-         AcWqjN9oCu1BIS1s8Kiyv7AQEGGQBenLIlv7HSxIIaaU2ggd7KxPzpJRWl49Q7ly5lxt
-         JJ3+8c9ASsv4IoG6KAmZNmouk/2VEdLos27TaxvQxC1ZebMT7Ct/UmjyLux4hlT9MuIo
-         D23goCChUyIyHapKJbjspxyPtuOAByJ88jCHY5i6oOuCPnMqbT8IVoe1i3UCVvMET6y3
-         g1li2NVno7JlBriD8woM2kEAXht951PUdNv4m1jYh3sPkcgnSKLSg0JUfo8lHSK0ummh
-         oznQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787696107; x=1788300907; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=8S1RVHzHyp7sUqdX49yxokh5S9s59g5Zc6HhiG7NGFo=;
-        b=nCa6QoxNLw/xlU5vBHP1LNrHt7RT2J1M0kASy4ih0xeyX6fj/EERJ3MW7+NwLG8j2N
-         J98bygDsddDS7DITwjcPO54ZyqjknLerLRFPQOTuSYn6p6eVSiA/HDZDtUrjFkqo6NKC
-         z2S9OlxcEwBkSbKYdAzRm5Uhe//SL/THH7pWq8G+YfE1Fihj0Qo28dIwy5JNMPxhKhtz
-         CZJ+EQj1jR3ieL5EdVPXajVqnVLHvYY8x6ILg9NYuAvosGjgZ1HytqCmlvbkMHJ/g7x+
-         bciOqrpW6v9vsgZvWB1KJDWpVyb1/H92CKTtvUJXzMCAyzjKRqhR0mRNxNvTfgJQdcEN
-         IIog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787696107; x=1788300907;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8S1RVHzHyp7sUqdX49yxokh5S9s59g5Zc6HhiG7NGFo=;
-        b=ZMWP0xf4l8SybcJ41wwDGqlIOpxXAOmkY/GMcEfLJ4NitKfZidAWmaqUa0Wb2JPfCv
-         a3YW7y0Xeac+7FSqQuVErMLFPuQihsaArlIIEfxxsr3AxZY+2i/dIh0YNW3oVvtSFLfl
-         Ph2rfrA8IiHAk7DSeahf9UpQfOKlf9dfCjsdrxyuDe90P/1+GUVzV54JXP8NxCZzixhF
-         G7x7tP8TOoZMbFlzitqi1yLhSAqfLSy6EAZMB9LZLXajuxP7fe+NZHqbzm1Zy40IYIR7
-         ac0wBHinWBS0r1QECcxtE7+QVvu/PqFNHdVuuhQbFcWgGQVVhZG+hrBhxX+jT94DArlx
-         pnUw==
-X-Gm-Message-State: AFuF++kQeN6nTj+B70Uxp58SFW7crrT/DAm+IT6xgJHYuVqt1KvaZSTG
-	ktHqhAhh/bL4vvTqCuUyu8xFOMnqucXsfXo/suYbac/kav8Tyo9jlRG/kqjVMGNnU+cnMsYWRtJ
-	yzkF6FAgh2hd1SrqSQm9Bc+zBORKwTRI=
-X-Gm-Gg: AR+sD10GEIByYseXmZa7rI4/ZhVfJui8sLD5n/aacVUOIJ9jcNi977OTVb5Og0VFlH+
-	wwnP4myCE4PLoiR/VYk3gpsfxGIywwWRNkldGj8nnC5OlamCiRjIQTZ9wIvDjdU8rILQKx4LtdL
-	9EfkEz0fGhKptLVzz/M/Z9UaNW7dpWZpRf8YwWXcosVth+QXqwXjv+hppAUkzF8onx8QdpGVO+F
-	AIFSF8cLliWUFz5zadyF11CbIZ0t0YIV4yEvav6oIF/JrKX7Flu3HDPFJJADGg8Bhqvx5I14Mjo
-	ots1sI+JBVItRRrBoGZ0hnmJGtx8+/Hxs1eQwMd2ZJSm1L630/kKS1Bu8d/EvnlXu2wyTBieHCE
-	H9emPpcPVIjDwrgLzCusawtk6BAqw2MsRd4ZOwzitgY+AgN7gja6QEoqsd4nI
-X-Received: by 2002:a05:6808:1815:b0:497:c1f1:1511 with SMTP id
- 5614622812f47-4b366b5c134mr2728288b6e.16.1787696107434; Tue, 25 Aug 2026
- 15:15:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fD7MP7rt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lIHxgEDM"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E2E3D1400050;
+	Tue, 25 Aug 2026 18:36:55 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 25 Aug 2026 18:36:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1787697415;
+	 x=1787783815; bh=s/2tTDskiJbQKx6nIvm9Cy5+8LHn+oeOc/k3qCJGzl4=; b=
+	fD7MP7rtU+wHBCIi/3w1Oc/fH5Pb2uMNtscCCYE0e2c42S58GMYnV/SChQWDBurH
+	c2o/i/ftDOnyzWZdBPnj+sQ6sMPCogFz1Te740bTpeT5PwQ5nGEkD9doBiBTNlxA
+	2tXkVlDCrvCyamUAQYlXAY0qXkGRZ2PG0wIslnaJ4wDWFlLS30ohuVud+0gc5sFv
+	EP3ntVUu3S7IscUgZyreP+44ReFvNJoRfTK6kEplDNPH3PEjJRABjJ4QpGmtSpYn
+	YQBSStXQTduE3ETOTvNXVZb+6tce1BHhxzlcTM1bqqmeXuSvAoBz+OL8hiKA0q9P
+	WCk6/EHSIRwPAuzm/3/MLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787697415; x=
+	1787783815; bh=s/2tTDskiJbQKx6nIvm9Cy5+8LHn+oeOc/k3qCJGzl4=; b=l
+	IHxgEDMT6BmOQFwYa5v2Tt6R/mj9gG3AmHDCGCjcIzmFi/ymH0I3xJ/VHI6jKJwU
+	5LQ4Qwiml3YwE378iBgjszUzLe2XMwLaDiFBYrZZ8Uz5gMDlKaIgsOohewgW6eQi
+	rkAcZBbiFvXwlwpmeiJpFQ/Ih0gpfjX4KX37oaYXzgUr4kFAX2dnf544jIMPQ1XK
+	cIa9JIhxyAeAq9w9zc2TGHxtCcnog51wvNh4gsT9uVZiJQwkfdlwhHK24xLTkdMB
+	OgbAehsWp9O36VRqk4gktxptQaRWIbC0YxsKmfTDN9i9TxUaTzdCvg625Z6crkxq
+	xL22nv7vf2l/1gd0t37Xg==
+X-ME-Sender: <xms:BxmOaqjfZSl4U2aUvQqEhSsj6FrPbmr1BNww7NdfwoIcGnnI4cWGfQ>
+    <xme:BxmOautrov1IJjbO_Q6huyM-DYE7nVoDMHwmuiEZ4JgCKTxgjNwqQgnLA0AJGKqSE
+    dbNNVbTzlHUyFVmW_H2-uWnW1V35Nbm1E757Qq_DNDGKLiqJxkN7XM>
+X-ME-Received: <xmr:BxmOar5vhHqClve8hf_X7evkgRNHI6rJOWcz0TmRJOldE5rLin6B8zsUsu7r7q6iNNFoSnpfWPvqbCScadAe-C9ZRo-6ya0bSA>
+X-ME-Proxy-Cause: dmFkZTFPrKehXmbcxbIIkuw7TlX3+JabXUY7lIdG4q5QVT2dFQ989ShpmQC9eoaMX46UW9
+    GcJvP1aytEOJQConDVcc6d+71YICydMPmvAsjbd3hUfNorU3cGW4/cZjsozIox5IV2DRPS
+    S2hJTALU2Ib2pXsJeT5cDzv0ihqurQrctT91Ort72A8tVw0h4j2qb62CbEfRx51M6TWe3B
+    V0jlWpBHhMXG2Po2Ndm8RXOdqmnARg8RWWr0vo38mnmnjihtda8/zKBAXtQ9PR5jcLqmZ9
+    i+Ixqpg/G9Zkv9L9pupvHrdyD0uwEXhEK/7yiBMcCWq/5Gfxo2bIn+i1M2Isd2tRRN8TMa
+    5ELr/Qtdno6ymrtlbPTWM0rRsCPm0iw4AFtMGdT0R5G9Smkzx7qNC/d1oKLdrvuOmSqnsh
+    +ur2P+r5Osl36xa/kfHCQxJuxg3jQOGb8SaJl7UgrDUvEl85EvxjbIaSjpFCZVzuF6uBfl
+    wys/AA9zIt9+x5Q/wxVlC72kUMPiqiy+FHwvew89u3mEZ5VHSJHxp5xiR8NBEVhs3Ykk3w
+    cTaSIfbaRU9gPSpKjGlRinpEb2cS6WWWugGWAvWyt0jt6//jb7huQxOkLemWbuPK3mPiid
+    KKSOBdqI0+RujBYvBXA+S7ZkJu/4/BVpHME+AxlvMnx9NkbLysP7O0HETjeA
+X-ME-Proxy: <xmx:BxmOaqO33dFZoTDh1dxGYD2EgRGq89ja6T5FFE0-aZhc1Z2_ZZwcog>
+    <xmx:BxmOaptxHZnb-pKY1hk6Wln0JlUT30dLZ8Z_vZ2QDugU4_fzIBu-0Q>
+    <xmx:BxmOata_rllUb3GlP5fgZExD6B2k154Bf-g9NcHb2iUfPT2FGb-LuA>
+    <xmx:BxmOarxoEqt34iJ8ixeICtgF3rdnf3nTPVsjM_dWinGvvTpBA9M08g>
+    <xmx:BxmOan9hjmnILoQG1E2GybtaIhnh6ZVNzv9toVJxGhsFWT9GeB8N2MCu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Aug 2026 18:36:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Taylor Blau <ttaylorr@openai.com>,  Derrick Stolee
+ <stolee@gmail.com>
+Subject: Re: [PATCH v2 5/7] trace2: remove use of xstrfmt()
+In-Reply-To: <CABPp-BHxpt1UBTY5LCn9OFMZ6EtOcUPc-61RMWvjpjDBmv1rzg@mail.gmail.com>
+	(Elijah Newren's message of "Tue, 25 Aug 2026 15:14:49 -0700")
+References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+	<pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
+	<7f0bb405ad380fd35ae6381961ac667fd7e5dfd9.1787684181.git.gitgitgadget@gmail.com>
+	<CABPp-BHxpt1UBTY5LCn9OFMZ6EtOcUPc-61RMWvjpjDBmv1rzg@mail.gmail.com>
+Date: Tue, 25 Aug 2026 15:36:54 -0700
+Message-ID: <xmqqy0dtket5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
- <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com> <120cf1967bde4e719a781c391b285c718553ad58.1787684181.git.gitgitgadget@gmail.com>
-In-Reply-To: <120cf1967bde4e719a781c391b285c718553ad58.1787684181.git.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 25 Aug 2026 15:14:55 -0700
-X-Gm-Features: AcwNN1XIEukHn00l92Uc50ZemIrujbzJlTd7FfnINT52SYjp_twRH__UqqMBUqE
-Message-ID: <CABPp-BFsSPJutOKManq-55ri=ddBpWLfN16xSNVs9O7+c2z0cg@mail.gmail.com>
-Subject: Re: [PATCH v2 6/7] trace2: remove use of ALLOC_GROW()
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Taylor Blau <ttaylorr@openai.com>, 
-	Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 25, 2026 at 11:57=E2=80=AFAM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+Elijah Newren <newren@gmail.com> writes:
+
+> On Tue, Aug 25, 2026 at 11:59 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+> [...]
+>>+       const char *redact = ":<REDACTED>";
+>>+       char *redacted;
+> [...]
+>> +       memcpy(redacted, arg, prefix_len);
+>> +       memcpy(redacted + prefix_len, redact, redact_len - 1);
 >
-> From: Derrick Stolee <stolee@gmail.com>
+> Only copy redact_len - 1 bytes?  So only ":<REDACTED" without the
+> trailing ">" ?  Why?
+
+Yeah, if it were (redact_len + 1) it would have worked better, perhaps?
+
 >
-> The ALLOC_GROW() helper can call die() on a failed memory allocation.
-> We need to remove this from the trace2 API code to prevent a recursive
-> die() handler.
 >
-> This helper is used to track the nested region stack. Use a new
-> skipped_regions member to track how many times a region was entered
-> without being added to the stack, and decrease that amount as we leave
-> each region. This allows us to avoid a failure and instead stop
-> deepening the stack, giving as much nesting behavior as possible without
-> failing the entire process.
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-
-Checking out this commit and running
-
-   GIT_TRACE2_PERF=3D1 ./bin-wrappers/git status
-
-dies with
-
-   no open regions in thread 'main'
-
-Seems to be fixed by 7/7, though.  Maybe a bad splitting?
+>> +       memcpy(redacted + prefix_len + redact_len - 1, p + at,
+>> +              suffix_len + 1);
+>> +       return redacted;
+>>  }
+>>
