@@ -1,130 +1,122 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5816A3A5456
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 09:08:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8532192F9
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 10:30:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787648908; cv=none; b=rMl02XAZ3Kmiv+cmsiaMuYXCBuumkQyfumsxyNixARULVGiOu3a1BHQY1YuO0OvoYVVgTNUwzfP0v05BmXDMGY+V92oyLryEdnmcmd/cDD3MtYzMfp3TrIorANQB+sC6/e/4+0jqn7oHDowaA2yr++4lBj7J746TIHVccBzNrXo=
+	t=1787653819; cv=none; b=pytzVrnbog6Xkyk9VasEMwEUFdOCuEKgBsbzlhcroFKjAc6Bwp8YoE1xn4P4OYovarHgmtVJUi4kmfJj4ewqpJ4Bit1oM1aCqgF/LyOu2HgBkJB12J5azoUqjorpIxwxP9vMn1G3kOMTtmRQqJ3YhxiFm+ePqt3KBQxlr4bQe20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787648908; c=relaxed/simple;
-	bh=Wos9Tss1D5uP7iLsV9HHHp7wwoH6jTO7nk8v0/6LKkM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=qZuBILrkbTC4Gt2YZtLuIHjeejeOlrKnrqNPCJiZKpruOTO7pL3mdZoDqLQxR9CTR/4YHidvVwCsGrX5OHV4ukDxyANYOWwVVC0F5lNbwx31HaSd+rZTcMViM2EQvTbFg6LyMQQ0RXBE80zh6I6FwiGTLkrd1EBZ5XLwxcfOJb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I3EK+GT8; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787653819; c=relaxed/simple;
+	bh=KBXF/8hb0bmQPD6Nl2emRWagxnfNc1Af9+cXcHSS/is=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lbIPsVSpoTyP40HjDnKiwwg7C9h7/HPRZBbhvc1VAUZh8AE3PKOrfvAMYlV38ZZ/c4sGzdHP3g9pgvezls4xRSMresI5TflBMBPFM6+1C4fqNTOXB1jaY70vNvQU01xPYHRiXej2Rj1GEwi9xME6H1fKDukRviKtpRjvPSz30FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B8xzRv/h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hLA6Qa6/; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I3EK+GT8"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-47f96c5b722so1938815f8f.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 02:08:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787648905; x=1788253705; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=7ss+04u/df5PpvVfUCtVALmb2MJyOdBEJ3l7q1LL9Lo=;
-        b=I3EK+GT8IKIUaR0H89uRQneVNN6ObhlPhH9S1H9oLElt6qiuQdDDgbNsH9OrXvdrYz
-         8VZCZZAQpiMSiSoKrW7QURxxQBQEVzBY9okkup2mcyJV62DHq5E0Px3YXOQ8Xd5M61UD
-         kMbiCFqaSC2QJPJfC0Euk2l5oXLO8zrJFtjGvv/U2Q6HLwqB/KfHyIYCho00tU96hluk
-         xzB/3QgvO3/FIH1XBVaX/LIUqDy313h2CxaERkB2Eaj3nxdr2uN15QqM/+xBFJJ8nid2
-         7IuBLJryVjyZoO2VXjoQuk+pIfctd685hrj2FjVN0o5Zh6l6ysBCNBkX0amlgVa/Gzry
-         f1yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787648905; x=1788253705;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=7ss+04u/df5PpvVfUCtVALmb2MJyOdBEJ3l7q1LL9Lo=;
-        b=fB0c+JIWT+5Lcol2b8CHP1amXHU6rbdtscjQilW4ZjUj4uXHW0rCXfAwqU+DsajmkE
-         JcIrBtg9FHuI3oH9FMJtUmQ8vAihtEGVVclFpMq5z3fFGpRn/80mJX4DpLar2pmcYLSr
-         xUODsJq4em32HLog3fZAwsBbXYKQe3PaUt2lgC52hu1a1toGxtn45OL4/Mtl/LhUXzCT
-         PBzxSbSa6hjNsbCblpJYHiohkYkz/ASvWl7rnDJHTobmKdAmPBU8/Rv6etm+LXWqRqcm
-         T0+QMwUOjoIzMpcldyN0ApkPwXvTrUsOaaFJK1fCZMplK0G/OTWkBz+1R107boDDZUSN
-         W/FQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqrZZp6/N0qtQwT5V60A+RITpd1C8FEHnNELCfWQk8Y5bQ6FXPta+nNFkaE+J/yvzrRJ/o=@vger.kernel.org
-X-Gm-Message-State: AFuF++kSvSpL7cegq/necy5aDwBm5oiNPzCi5sqp3K8EYiIJyh0/J68S
-	wWFmYzxU+p1HFLSkOf5JyY3DMNL0AGKEejHk8ppvzHjr2tstkyOaTuw/
-X-Gm-Gg: AR+sD13NY543g58xekY9wplguhsdYf3TPvgKImAk8smejfzjDe8Kj3jBEC+zUVgwdNl
-	/vt8a41PxjY8YjO+GPgexl/iUJ95tJ2OfDoVRKoVkLf9hIXpEtJmvGSulhgCbNPf3UcapSAk9qF
-	Zb2tGcRBm9shTM0ZHou4T3yW3zTNJmDZPKp9NIh/a8wn5v3V7qywQMErHIw3XyhKBPsK42iPGsc
-	9vAD3X+SPE5SICp1UBgkiopaRUccjBF6kO5BytItteaE557QmX3uGE/yoCkP0L4DhdfaiTX1haB
-	jx71OLdX6VoH6uufDSTEKnnbVGsKQvk0UwO8l3DWfvHVXJpXjhTgQrlqM5n8QRsNs8YW8Wnk6f4
-	frZ9zzz871h+KfgyLRi6WRShi3QZXPcmLNC/pc3BrIc3/97tCRHIp8P0LeACerQqMtJ4qUD0gFP
-	M0f5AeN7F6XkhWzYqA1mDZKfErveQMlY4kjgiLXn8V90w4QS1hYBA5SBFbaTEbKBJLNeJcSjW2S
-	MgFuHLE9Ogc/M6DpSdJRcUmSHOJ4V6I9N+2E8yJZBw=
-X-Received: by 2002:a05:6000:4543:b0:482:c5ee:c7a9 with SMTP id ffacd0b85a97d-482c5eece65mr28165553f8f.17.1787648905510;
-        Tue, 25 Aug 2026 02:08:25 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482dd853b8fsm888918f8f.8.2026.08.25.02.08.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Aug 2026 02:08:24 -0700 (PDT)
-Message-ID: <39664e65-6997-40d4-83d4-1d2cae27ac50@gmail.com>
-Date: Tue, 25 Aug 2026 10:08:17 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B8xzRv/h";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hLA6Qa6/"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id D4ACFEC0177;
+	Tue, 25 Aug 2026 06:30:15 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Tue, 25 Aug 2026 06:30:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1787653815; x=1787740215; bh=Qgs6+bFiF2
+	CCq1DNkhiH3SqbR3s7pque/OP5EMzZQyo=; b=B8xzRv/h9bMeg3EwK6PIA2nvxw
+	6BN/wC+oKUtzjfsNH7QNNO8/VXehfGF1oY7v2LwWtm+t/V2sQYvnhHDu/1jkoSQ4
+	hcQFvkyCqVV1ROYkZ2XmX66F2ypymty4UcYtGNK557nlLoO7VEqZmtGFvkD7GXcX
+	p/Hk/vkNs6PRVLOne/6RQD1hyOb4Gaj+X94JTg48yDBr2JT71NT5k+XJjR1ljTeQ
+	ENL1UWZmCwx+gQlTv6tj8tqnwP8Q/UDtsNqOmS3ligo7l3gCnqF6JsKbDFD7NZQs
+	jbJz2is2e52faWvYN8UGQ4t/S0KwxOWYikclhPLmX6w0cQiXEYYPPJwoPUfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787653815; x=1787740215; bh=Qgs6+bFiF2CCq1DNkhiH3SqbR3s7pque/OP
+	5EMzZQyo=; b=hLA6Qa6/Vb32ldl1iz+mW6D78+5VDMlqwei8o/p+V0gbdfTK2G/
+	RzIp1UXem70BEbixWrCEA0iDb1+NkehppED8PXodK3fTMLWsk6NbIwwWShnGdzvE
+	kjPdewAXjtMnN6e77EdXsguDuuZAFeTzLdjmHS1FqGlEsnIIq5g6R4BL2d6y4jJ9
+	4WbkQ+1bqC7ue2C2UEYfoEN66pKx8gupC3MD38WdcYzdt7VQ/cQf0dHIaPh+MABg
+	w3NKsJ3+oK2mh7K67OPKYkJcZBv2NCBZxnd6n05BJDNhsCCKfQx48WUCFqFIIDgg
+	cSU5WsvJ4Hw2zE4Ss4upPGHGrzDrcRszjFA==
+X-ME-Sender: <xms:t26Nai46jGdqw9mPszYEDmeM3m3mPuUj0XxmwdzpWi6tAB9Sj6n_gg>
+    <xme:t26Nai7akPwWVqHvYyJeWvHGEgEpLVrIrWsseqKIvKWGBeMBLwf3dsvBwlvMcyqLR
+    6LYFP0GyNdXEaiOW_tgNun40n87yPPEh2LNcE8dwTUq0IRVAtApAw>
+X-ME-Received: <xmr:t26NamdHBCImAdv-SIIQ6kqhzfHC_09j8UHS1T7J57uZ-JPQi-61luSp6S308yobBhdpCgybHx-SQuHaSUPWWbZYnuOovIAJbg62aZurtw>
+X-ME-Proxy-Cause: dmFkZTFmfgYJ4/BYJYIodLscQQAnkjXJaA02IiJJTKl51ueum2C6c45owdv22PM8xVCony
+    tWEvgSWU4IndcLsmEfgVbdE3nrImVf5i+x0mzRYJFUnBZ5RAM2x1dC8znYOE4yFwbm4r2D
+    8y7uw8OnArOJ17o4FzvC3rcR3pwQ4VhgNeqyMWCaxbgkz4JcP9tw1n4//e0lzz7fxM3635
+    Rdc558C9VX7awJb9lsgaEUyUPhYNlXs7m6arjobsD8zSde8uhCBtQvS0XDO7R2R03KMySV
+    31J3sWwMH398eh2AMEmhT6i5+r1U5NO0uXV5dBA5bXfHpG8lsFYCnNBZnLW1GtTIosuAn9
+    CtkXbQ/6TH5EDWcT7+9sKqiuLMiUTRbkTwAJqQu+bAzfGPY1vnuwTVL9ivgy7bJMpqZ0iy
+    PWSH17RNWLnFfMT+dY6l2XlORySWv6XIpBhrCix7PENhYZD3kozEw/HRMu0n7bZHgKBzzs
+    dMN6sH6zp8eh6mUOEmW+IshtoHIFiRYyp96NW0xXes5wvcbGavHJf0z7r5aEOXOR9/EYPw
+    Zm9dbQ4UiqczWLIrCUXU7B1hkhl0W11tXyOaEUAUFle884zXvXAcvqhDTNw0ClJc0xkJ+Z
+    HiA+GhdGFfiizgQF0Es+MHGNkWGuA8XXYp5U046JRVJXHUqhr73F515pm8Ig
+X-ME-Proxy: <xmx:t26NauD-DFKgoloH9nbFNgtuEgK5AH0XL_N8lnAwbebL5x-nKAgqDA>
+    <xmx:t26Nah_7RoBznKL4Uk8aCBCfJRYwFMSczqKqqEl-NwwnIjIxYy7GaA>
+    <xmx:t26NahIUARVkUUZ6hywf8yoXAGHRihVJY7W9Bq7uKy69Z_OlKLDpwQ>
+    <xmx:t26NaijLAI64RuIay4Z2NsrW-myam59yge2dn6K_B0LoawCvXJ7z3A>
+    <xmx:t26Nal8UPTxzAE06bXbbVFTCziNJUSv96YNWv1GWCxrJ19q0AFg9BRsu>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Aug 2026 06:30:14 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id fb4b8afa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Aug 2026 10:30:11 +0000 (UTC)
+Date: Tue, 25 Aug 2026 12:30:02 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com
+Subject: Re: [PATCH v2 3/4] reftable/stack: move list lock to `struct
+ reftable_stack`
+Message-ID: <ao1uqpCxFHlOyTV-@pks.im>
+References: <20260824-740-optimize-reloading-the-reftable-stack-v2-0-9c9de2eb0af7@gmail.com>
+ <20260824-740-optimize-reloading-the-reftable-stack-v2-3-9c9de2eb0af7@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v14 7/8] history: create squashed commits without editing
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
- Patrick Steinhardt <ps@pks.im>, Matt Hunter <m@lfurio.us>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Tuomas Ahola <taahol@utu.fi>, Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
- <pull.2337.v14.git.git.1787249432.gitgitgadget@gmail.com>
- <03528d3b34c202b990cc42865a009a5786255b7c.1787249432.git.gitgitgadget@gmail.com>
- <xmqq4igov9h9.fsf@gitster.g> <29ada18c-b849-4bc3-aad3-b4fdc09c81f9@gmail.com>
- <xmqqbjarsgjd.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqbjarsgjd.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260824-740-optimize-reloading-the-reftable-stack-v2-3-9c9de2eb0af7@gmail.com>
 
-On 24/08/2026 16:07, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> On 20/08/2026 21:10, Junio C Hamano wrote:
->>> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>
->>>> +	/*
->>>> +	 * Allow "fixup! <hex object id>", but not "fixup! HEAD^" or
->>>> +	 * "fixup! main". If the target is not being squshed check the subject
->>>> +	 * to allow "fixup! abc123" and "fixup! <subject of abc123>" to be
->>>> +	 * squashed together.
->>>> +	 */
->>>> +	target = lookup_commit_reference_by_name(s);
->>>> +	if (target && istarts_with(oid_to_hex(&target->object.oid), s)) {
->>>
->>> Why istarts_with()?  "fixup! ABCdef" should not be accepted, should it?
->>
->> I agree there isn't really a compelling case for mixed case oids, but
->> accepting all uppercase, or all lowercase seems reasonable, or are we
-> 
-> Tell that to brian who wrote the bc/restrict-hex-to-lowercase topic
-> in <20260729233215.398654-7-sandals@crustytoothpaste.net>.
-> >> planning to completely ban uppercase oids as brain has suggested? The
->> aim here is to accept any oid that rebase would, but not accept ref names.
-> 
-> I understand that we never emitted hexadecimal containing uppercase
-> letters ourselves, so 'commit --fixup' and friends wouldn't have
-> added anything that requires istarts_with().  So accepting any oid
-> that we would have given the users after "fixup!" but not refnames
-> can be achieved by starts_with() just fine, no?
+On Mon, Aug 24, 2026 at 11:31:01AM +0200, Karthik Nayak wrote:
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 703548417c..c3d4deff29 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -628,10 +630,16 @@ int reftable_stack_reload(struct reftable_stack *st)
+>  }
+>  
+>  struct reftable_addition {
+> -	struct reftable_flock tables_list_lock;
+>  	struct reftable_stack *stack;
+>  	struct reftable_write_options opts;
+>  
+> +	/*
+> +	 * While the list lock is acquired on the stack, we need to distinguish
+> +	 * which 'reftable_addition' is responsible for the lock. This avoids
+> +	 * clearing the lock of another 'reftable_addition'.
+> +	 */
+> +	unsigned int locked : 1;
+> +
+>  	char **new_tables;
+>  	size_t new_tables_len, new_tables_cap;
+>  	uint64_t next_update_index;
 
-If they're using "git commit --fixup" then yes. If we're going to reject 
-uppercase hex everywhere then clearly we should be using starts_with() 
-here, but if we keep accepting uppercase hex elsewhere why should we 
-reject it here?
+This feels somewhat fragile, as tracking state via a bit is very easy to
+get wrong. I would have preferred a solution where we didn't have to
+have this field and instead a more direct proxy. But there's not that
+many spots where we have to do this, so this may be okay-ish.
 
-Thanks
+Other than that this series looks good to me, thanks!
 
-Phillip
-
+Patrick
