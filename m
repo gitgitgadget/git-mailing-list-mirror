@@ -1,70 +1,71 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CC8331207
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 18:56:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E1F3B636A
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 18:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787684193; cv=none; b=qwFwTcMd+me8B1yRysZsroOPAyxW1qs2zTKxwVvYR+P4Z2llp/5t2E3JWjHmA9bm1r1j6UpahydQdhOCvIMUnpO4V5XMsbMSrSVmqGLHEmF1DPBzj7jRxagbAJrm2y0YUEjLwJhdxKdRMFMCjM/y4fk3WeFr8VCPxlNfgwkPp1Y=
+	t=1787684197; cv=none; b=JDzcCgnNK+bkYqlvU1C2pW73XVc4OkuM12t1UQXrSjrRfDoew9pd2IbxTa3bH79l5+/DaDPcXgEqrv5ANMCQQh2zYJ3jpR6QuH1JQ2u6ZJjfK+8zduVvnP0S8m4hdBY+Zf6ng3C3GKCR2lJyjScAbQfSm6zKz7uwJ/5nddmc84Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787684193; c=relaxed/simple;
-	bh=Q3qTUhAIsqrXCjASdqvYpxM1pghX6JY5AFBh6nmS89k=;
+	s=arc-20240116; t=1787684197; c=relaxed/simple;
+	bh=TxohoPRazEHjQ35DXH1GbSbgmYLZf7cWMzbEkMWPy2A=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lct8fQ85kYdc+UFqNRagrFUeX2wMgN5f2jTLVoPwZyckxWmrV+6kPv2wKJEbnYToKDuK3LHDzOsfVsC3arsHuiahpN8EiqUeqk5PcK0URCrTCRo/JoFkfFz+X1JbogdxhCxYSoQhyzVs/ObaE5iS5N9mTnjfuiWT/dYueH3/Oko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WZslUYZG; arc=none smtp.client-ip=209.85.215.180
+	 MIME-Version:To:Cc; b=ArlMIHSIke8x8c5tA/E0BZM79gcrx/Psc+QpTiudnNAHHEY+rvQGJ87kw7z4sb6hFiISaeFy4hv3SK2wXxzOTqsO3TFQ3Er6QrQrXEsh4jLschVhImGsXuZNDtGib26my2tbddY+b3AT0IBoZyw+69MGtV7pmpG349r2Ogp2jVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VSQchPW3; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WZslUYZG"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-cbb8b54fcf8so110484a12.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 11:56:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSQchPW3"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-38dc69c74b8so266099a91.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 11:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787684188; x=1788288988; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787684190; x=1788288990; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=vOMX5+RP5r4fpBI4bR93CMjmPtXTju5wanwA2ywuHwo=;
-        b=WZslUYZGwVq6PAwPSQa0BSBDEjjGeEuISH07fPw3E1st7G7o0M8Zx/uhFrjy2ezCIA
-         NMykQh0cAD/7pXStDx06OOy8Hpbv/nZt7NSm2dcCz8CxZjzVtB8mXT63THrO14ub2MLL
-         /q3LShZQPMPIjYqUs1jzbmBixqKX7oP3eihq7eqj/dG5XTCyntCBoxLlSlGdHeWHIX90
-         J+DRPMOLf5frzO+Obnic3L4qBmfqbP6+YPPlsHXbhlcbkhgIzVhdHe9NYv6ngaFYhzZ1
-         wpV0q1fN2x8j18B4uu31bRQzbfj8URgtaGe9NzNIa8Xc0aC6sAu98hapDpTgT9GsId3k
-         vOfg==
+        bh=metu9WbUQqerOjlJF/andVTWxEoUgcDq4lweRFlh2mw=;
+        b=VSQchPW3g7F5Y3VFruURI1YAINkfuo5Gdb2zjMUldlNvQKPvLcgik5jK1QjWEElpja
+         ObfKAtfVTEAQh14KFhL9mtVK0RCfFTW+HtF7OgrnXwaHUlTWzJ/50yDgjxxHoc4a3YQh
+         kbdG2HZPwcFFnu7tHLCJ3kWT6m3IBHp5HSLkrBMD+khyOR1k9obN4+1RvQIWeLEjfCUx
+         N8k86OyPP/Gdb7PeVPpWlw6mh77ZIISMu8GOXjXqK/wH/oo95qadM8gRsoHTKmXRdVk6
+         3XH8UQl6sJ5S2uX23arpzHVu8Efc1mPKEQWDPRvUu9YcLOnU0kye3IL4Ri77jRRGYCm8
+         KbzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787684188; x=1788288988;
+        d=1e100.net; s=20251104; t=1787684190; x=1788288990;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=vOMX5+RP5r4fpBI4bR93CMjmPtXTju5wanwA2ywuHwo=;
-        b=PEUi//wVTQM7X3twqF1N/dvNeMwNzwTq8vwgJmdGFvyyX2bTqcNuf1d27zK0NJie7W
-         LA0jeT+kXKJMh9YYUxmMb9eBvE6HdRsgqhpC5MSN6aWpdnlGNw5ZVHh+I68qPFlyHoyp
-         ULkXD6WGlq/AkUfvWfgJg4V77EwNiSBya5AzbPu6+x6fgfCMQ5YhS+8PknClIquKyco4
-         mvcds6keZCwWUx6M3uHwfUlWsMXLKM0woEYN0uNwS0HtlY2iO3S1J5YJuc4u5cQH5mHY
-         IwXE1ngz/EtTQBD6nhfl/jrAVTYOVvv9t1nqvfy8tdaNwmluPBv9MIkxFSpVeCOC5Kr8
-         rwrw==
-X-Gm-Message-State: AFuF++m2Jty8Mqkj3/ZeyYnrYWCHocqAV4oR0GglCYvPTYMFgVmlWwsi
-	oJh1WtsLP8XWeYB9nyqY0Q03U0eLpVbW86NJ7ZKLnIJts2l+ngu4YneP7GJOXqyt
-X-Gm-Gg: AR+sD129tSAsdb10tvMqeA4hx7vKHVzy/18the4sXcXYRo2n6Nk6Z+VH56s88bcuRFG
-	vLEYkRo2B6aNMx61nVmpR0JOzbzRCLoYA/SKSbGCFFvubSj8fwoLR5ER87bYXvM+u4n1ChC3CjV
-	JGFx+iAiDajjX6MQeBBfTFzTlkzDwU+DjHmGjMu58zbfPHATwNdwObfUN+Hs6nM6AS94TrCQKw5
-	azHdu0NqxBGCd4nxsP4FjIv7zwLPBBOyEGReMJ8a94Jx6A7iQsanYyqM8PvB+vuS5npsWu2GUue
-	sYsoEn4DemW6WOCPc8XmC20oPnw2qjqNanpA3CAeIfFP69WCf5AQqwChb7xhXE3tgfT0lOuYkDr
-	ahSXJ8iyF2G1OBQSzt/tHr/UXjh/2A8TJF9AFR0Ada0svu/DuHidnEsGiNx1f3YLA8VV3QcsyD/
-	mINFvntZYKCTjL7kOeUG6+gO0YhTRy2XjtrGeL9f2hXowGg47ZONP/l3cUUM20/g==
-X-Received: by 2002:a05:6a21:a383:b0:3c4:1916:9d3c with SMTP id adf61e73a8af0-3cf85467e50mr1074887637.15.1787684187760;
-        Tue, 25 Aug 2026 11:56:27 -0700 (PDT)
+        bh=metu9WbUQqerOjlJF/andVTWxEoUgcDq4lweRFlh2mw=;
+        b=S5z/MMrsSdQGmBPkPczYHnTfMtyGI3V8CFeEoPLLOn/10K/XpUP6dteSYy9hdstyUM
+         +FtwBSQV6f0GGOrLKD6Qv7VQrs/4mBxeQ+DXhDZ2fmaygF/RmdwpDSWs4lp9knCtMGY6
+         KEvTsoFgEZQVtlKdFDnAtB/6c2bPCqDzaUu2Q4vh02DRSisn7ZcSnZVfd2PPfFnCHtMo
+         NF29QGVIbSP6y1qnWITRx2uEClvpeCL5Bd3+8P3seMmhAye2Qg+ypnaDQPokE/OTPiKI
+         EakkxQs4v8jswqTU9jdaMYtKfLVXyGdGn/P/0Rg/hkSZz0SPT2PPJuSia5Hr06ON6mtr
+         Itnw==
+X-Gm-Message-State: AFuF++nxx8lNHc9NjL97xNmH31sL9sI/ELrx2nbVHcJ2uUKXbgWhKA1R
+	SEfhvNLwtlUk+pH/kvuB5o0npfyzZF+O3PLrPuNdsy7yL3PDierJ8arvkRUZoO+N
+X-Gm-Gg: AR+sD11A6ec+v9BEdrXN0YuHYvePKZUpGGjYgEKYZVZFRBOibwJGX68QIE/bVIzeZLN
+	jt5pfTPwKZKUG7NkCwa6OWdz9O1F9AJGlnq9sYohdv9j+DtGAIfAUrgsQeTHqe16+gbjtBEq0B5
+	ugw4Pj5tk9/uxOJ7tktenHwF8kKL4JTUEseLVuqU2rG4Bj5DvWJgZLTP4VA9e1XYPJZ0kHwAynl
+	TXDNfxr75X9PTxRh283btU9b8qMyfJO4zZ+bmlxMFQaqgFgWwlo4eGfRQXffd+/U0MxK1NFpkEG
+	CSNAbSwltjGsmL9kFGNs85grp7G7wUGnAzsJmjnKdXUpNOgqSlcmyzM0UuRiNwphJpbhH1xo3Oo
+	3LV0NdRC6rddTYsYsfXD2a1yXD0oN9jqehe7afn/eY1Clq6taj29LOGs+gszG7Q/rYTSz+nmhX8
+	NBhoMvvVi1Wu1vJ/5gktsE8rdOaNMU54d7rtV6xvIbVuLfcr709VgwbYrcIiKJRr61QQK0vh/PQ
+	A==
+X-Received: by 2002:a17:90a:dfd0:b0:38f:bbc:6a0f with SMTP id 98e67ed59e1d1-3966d144247mr2682618a91.1.1787684189486;
+        Tue, 25 Aug 2026 11:56:29 -0700 (PDT)
 Received: from [127.0.0.1] ([172.208.153.5])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3283fa89e8fsm427233eec.8.2026.08.25.11.56.27
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-141a9035c06sm1086842c88.10.2026.08.25.11.56.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 11:56:27 -0700 (PDT)
-Message-Id: <ec447a6a778a5c49344346df54b434a96c792082.1787684181.git.gitgitgadget@gmail.com>
+        Tue, 25 Aug 2026 11:56:28 -0700 (PDT)
+Message-Id: <db6858d3811c8cfdd136a0069f0ace33b95888ae.1787684181.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
 References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
 	<pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Aug 2026 18:56:17 +0000
-Subject: [PATCH v2 3/7] trace2: remove use of xstrdup()
+Date: Tue, 25 Aug 2026 18:56:18 +0000
+Subject: [PATCH v2 4/7] trace2: remove use of ALLOC_ARRAY()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,68 +83,93 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-In the previous change, we removed a use of xsprintf() that caused a
-recursive die() loop when failing to allocate memory. The trace2 library is
-too low-level to be calling die(), especially because of these recursive
-loops that can occur during the die handler.
+The banned-die.h header is used to prevent use of helper methods that
+call die(). Remove use of the ALLOC_ARRAY() helper, which calls die() on
+allocation failures. Replace the use in trace2.c with a more direct
+allocation and soft failure when allocation fails. This prevents die()
+recursion loops when memory allocation fails and trace2 logs are
+enabled.
 
-For full defense in depth, we remove the xstrdup() calls from
-trace2/tr2_sysenv.c.
-
-First, in tr2_sysenv_cb(), we need to handle a failed assignment of the
-value with a negative return to halt the config parsing loop.
-
-Second, in tr2_sysenv_get(), the method will return NULL when strdup()
-returns NULL. This return is indistinguishable from the environment variable
-having no value. That means that all callers know how to handle a NULL
-response, but no behavior change will occur between the case of no
-environment being set and detecting an environment variable exists but we
-fail to duplicate it. This seems an appropriate trade-off, as an allocation
-failure at this level will likely lead to failure in another system, but at
-least the trace2 API will not cause the process to fail early.
+The tricky part about this change is how to handle the results from
+redact_arg(), which is a 'const char *' result because it might be a
+pointer directly to the externally-controlled argument. When it is
+different from the argument, then it is indeed a newly-allocated string
+that we need to free before returning. This requires using a (char *)
+cast to allow a change.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- banned-die.h        | 3 +++
- trace2/tr2_sysenv.c | 6 ++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ banned-die.h |  3 +++
+ trace2.c     | 16 ++++++++++++++--
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/banned-die.h b/banned-die.h
-index 0e0a794e5d..2e16c4899c 100644
+index 2e16c4899c..cb2eed75cd 100644
 --- a/banned-die.h
 +++ b/banned-die.h
-@@ -14,4 +14,7 @@
- #undef xsnprintf
- #define xsnprintf(...) BANNED(xsnprintf)
+@@ -17,4 +17,7 @@
+ #undef xstrdup
+ #define xstrdup(str) BANNED(xstrdup)
  
-+#undef xstrdup
-+#define xstrdup(str) BANNED(xstrdup)
++#undef ALLOC_ARRAY
++#define ALLOC_ARRAY(x, alloc) BANNED(ALLOC_ARRAY)
 +
  #endif /* BANNED_DIE_H */
-diff --git a/trace2/tr2_sysenv.c b/trace2/tr2_sysenv.c
-index deb3fabff4..4ee273a4ae 100644
---- a/trace2/tr2_sysenv.c
-+++ b/trace2/tr2_sysenv.c
-@@ -74,7 +74,9 @@ static int tr2_sysenv_cb(const char *key, const char *value,
- 			if (!value)
- 				return config_error_nonbool(key);
- 			free(tr2_sysenv_settings[k].value);
--			tr2_sysenv_settings[k].value = xstrdup(value);
-+			tr2_sysenv_settings[k].value = strdup(value);
-+			if (!tr2_sysenv_settings[k].value)
-+				return -1;
- 			return 0;
- 		}
- 	}
-@@ -110,7 +112,7 @@ const char *tr2_sysenv_get(enum tr2_sysenv_variable var)
- 		const char *v = getenv(tr2_sysenv_settings[var].env_var_name);
- 		if (v && *v) {
- 			free(tr2_sysenv_settings[var].value);
--			tr2_sysenv_settings[var].value = xstrdup(v);
-+			tr2_sysenv_settings[var].value = strdup(v);
- 		}
- 		tr2_sysenv_settings[var].getenv_called = 1;
- 	}
+diff --git a/trace2.c b/trace2.c
+index 1d0ed2db2b..7044276435 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -304,7 +304,11 @@ static const char **redact_argv(const char **argv)
+ 	for (j = 0; argv[j]; j++)
+ 		; /* keep counting */
+ 
+-	ALLOC_ARRAY(ret, j + 1);
++	ret = calloc(j + 1, sizeof(*ret));
++	if (!ret) {
++		free((char *)redacted);
++		return NULL;
++	}
+ 	ret[j] = NULL;
+ 
+ 	for (j = 0; j < i; j++)
+@@ -345,6 +349,8 @@ void trace2_cmd_start_fl(const char *file, int line, const char **argv)
+ 	us_elapsed_absolute = tr2tls_absolute_elapsed(us_now);
+ 
+ 	redacted = redact_argv(argv);
++	if (!redacted)
++		return;
+ 
+ 	for_each_wanted_builtin (j, tgt_j)
+ 		if (tgt_j->pfn_start_fl)
+@@ -513,6 +519,7 @@ void trace2_child_start_fl(const char *file, int line,
+ 	uint64_t us_now;
+ 	uint64_t us_elapsed_absolute;
+ 	const char **orig_argv = cmd->args.v;
++	const char **redacted;
+ 
+ 	if (!trace2_enabled)
+ 		return;
+@@ -530,7 +537,10 @@ void trace2_child_start_fl(const char *file, int line,
+ 	 * temporarily replace the original argv (inside the `strvec`)
+ 	 * with a possibly redacted version.
+ 	 */
+-	cmd->args.v = redact_argv(orig_argv);
++	redacted = redact_argv(orig_argv);
++	if (!redacted)
++		return;
++	cmd->args.v = redacted;
+ 
+ 	for_each_wanted_builtin (j, tgt_j)
+ 		if (tgt_j->pfn_child_start_fl)
+@@ -622,6 +632,8 @@ int trace2_exec_fl(const char *file, int line, const char *exe,
+ 	exec_id = tr2tls_locked_increment(&tr2_next_exec_id);
+ 
+ 	redacted = redact_argv(argv);
++	if (!redacted)
++		return exec_id;
+ 
+ 	for_each_wanted_builtin (j, tgt_j)
+ 		if (tgt_j->pfn_exec_fl)
 -- 
 gitgitgadget
 
