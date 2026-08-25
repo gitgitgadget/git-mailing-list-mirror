@@ -1,81 +1,81 @@
 Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7103CEB9A
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 22:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC2830C16A
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 22:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787696079; cv=pass; b=CA/5V8hvyJXrC4zNlTpY9Ke96dhAcNhZ7DeuUUpsCF0pS5LvFapsYMQ3FuKthz6CbLef4HY07ep3YK58CY744l6FO7N8lMlOj744hDm7b9/dY1GpPMKNYpU8H964ITAoth5f5wTPn+SeJghl6PPD/Wni8sxMtZPAq9ScMywf3jU=
+	t=1787696092; cv=pass; b=qsfUtWEcOMJyBsTCuLtcWgNonErct4VLAbHxw99Gak5ooPIdPp0PMONyhpC1mWVLyMEIbIKn0QYLz8/Bc0mFwkaGJJkSz+6OuVdv5YU5GPtjMyym83BwO/BFZxJ+LxDqZcDuowx4Gr9n8k3VqH4sMLyxsyOO8Bk4zhf/BT58ots=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787696079; c=relaxed/simple;
-	bh=IQH8b5iB1vv5s9DOBtK24L+IAtMqiB36s0PmdbdIS1k=;
+	s=arc-20240116; t=1787696092; c=relaxed/simple;
+	bh=c8tqax6QiImIpdGZcumB+n+z4XaMMozYEHfOj1v0YY0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZcvOMNw7cFJgUQAXkPDN+niVA8acxi/EXeIafG7CSqQTEPYUkxLUce9FMHOuDvSD6SPRaz2RaDwA3d097IrT+qPs7Vmmrx6lpLdth1dk1phQhUQ8ImETbWnYK58ELgrTzb4g043Zj8jvruRdhNPRpTmoNVynXIf4xB4rUzncQgI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V6jUTdXZ; arc=pass smtp.client-ip=209.85.167.172
+	 To:Cc:Content-Type; b=grhXBgKGTZpzHVC8Kbjw1MESVfT8gjc1KaxPI1KoVOoNob36UaLzbd83beUK+Cr+Tz8wUr/5sbLo+gr1KP/fnGaBkadBA8DWRb5znT3ZdddPX8bu36rdU2DaCas9dNcaTagpLEYMo8KzVxa5gd+4v4wZzMloSBHUxWjRsqYZRo8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Klo+E1c8; arc=pass smtp.client-ip=209.85.167.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V6jUTdXZ"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-4b1be215736so331549b6e.1
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 15:14:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787696077; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Klo+E1c8"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-4ab70b882c5so319927b6e.2
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 15:14:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787696090; cv=none;
         d=google.com; s=arc-20260327;
-        b=Vmx+AfCRKFhwo86v2v3Sw4xjczcs0vS7ZzKiyrYi6Ze4hrrk4gRke0zSZ/JC+6VckO
-         YRXEUaeXN3Qg8AatI/qkWTLZuy8q2z0vCT16JVK/i1vEUX+982Uf0Nr/ZcSV02x+vD6b
-         jLm/WnxdfHtoKZUjL8ef+4G54plxq4WvvJodIxcvljP7xI/C+254NgITdZs2WhAcLWpo
-         ofwjTSnVClTM/RT0bwJFwXnCQ0bzYvMCveRmJ9QEeEMTTuyY+KrcUAX/D3tTKDuYQwTu
-         X/W5L30M/cEg8CcCk6OKeyUAQqH60aB0vJ5R1OBogvr59ZBUHkT9C1qEZAt40t1TLbbo
-         S5Lw==
+        b=PBt8fk+f791E3KndcbqmbHYYNFDWc/beRzmlaOLAvf+sUaojFazrbutYsigEEtzwSZ
+         564u1+Rl+oEPELkykUw979WvpWNMVRgKvpRUkbf8c8aMHqdrijUUh0Lhc5gtWhq/WDI0
+         2gJa4RhJc4qE/f7MNibQMsFdj8a3K3IPaIfFRjjmuUFeZL3v8fFnGZc/kWOo1Mkrvyna
+         IbpKFLwCeMoaCq1nLclKrgNlVgj1Fxw7hmEl8nS05KGt5j7jvu4s4DeUea4osKjVYFMO
+         LtFSxad/cTwsv4vUUgqjVwMTXT7Kje5ac0bOhYROoos7C8GxlJjQlN/Q+PA5js0ZnVna
+         qJuA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=D75fInvg+r09iPcPb4DMRyrNPhfp5Qo6unK6y6h/7oo=;
+        bh=mOLdPOWiJR8OoJwOaJFzXx59jq3ZXhglondlZVPNg2A=;
         fh=8kE2VkWfDdS5fLCIXYYt7RvkWfuys8Lc4lEVxWzzsJQ=;
-        b=WftEKnua4EW8UrA996Oi5YZLZdb0WVsQXq5TfQ0DEhruiqXsqY3O4zQZFBzaYF/vTK
-         Vok4XCw+i9XnxuPDnoJRgOYlksogcr2onAUb/y5jgWVaUUCk/pYwVjWGe7JzZWAzPUjL
-         br8YREYuH2db7OW79bjiTAldYjnlJPfU2lqny5E+GI70HgJ6OTqCdSpY0KVEemzEu6Yf
-         eVw6DIXJlnHX5Cam+Hj5uOtzmWTVs3zmZgScSepZ4WRBhw31UYD3bqX9feVqh3aKVbmN
-         Imvw8hhoAX5XcnPhbwQA1Z10Q7ib2gFFvyqOdVqcc6H9Xkom11eYGhAu2fM8R7xIZrt+
-         LVyA==;
+        b=N0Jotlc8o1Hj/AF/EvWZRz2rrK0vXs1qOsa+RzPPODZyRvDEAssWldkNE5P5U18RaA
+         X2wSs9ILTHFYIz2eoMPRBPKnn2Y0N+KoasKl6UwzJxb+lYDF36gWQDCBpLEjL+OzeYxY
+         UO9LzwQ3vdQ/+DvPdbajBPbfY8G7KIO2ZJd1IAw2eWcc/2eGSlmh4EOagHJJmxfF7cHN
+         BMaaLuJG+Yu40Slvx02OYMC7tSkQanIlOGq8rrHF1NqAFtn3OV3vh5v/AZib7MPxaWNG
+         iOU1BMNtcmamZcqQr+IXGnVDauhWv1WUf4hlIDHTl4UaNy4agR3I9dBTxwsb8MiqEaYj
+         ajLA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787696077; x=1788300877; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787696090; x=1788300890; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=D75fInvg+r09iPcPb4DMRyrNPhfp5Qo6unK6y6h/7oo=;
-        b=V6jUTdXZrPFhS9apTdYjTCQmoDvfrGK5Dv8mgesMQCjhw8xZKnjMyPLxrIschqya4Q
-         E73xQy1apuuX4Q1estpp/0nSae0MFeQYHp56PTxFOP4a/zlN1BkaQ5tJrad/NQq0WMiI
-         Lfe0QIAipJwrD1w2v6JJnCWsEKmLOr8fniedZuStLvgrcgXK36Pl25rGs9UXVzxCNiTM
-         2YG8BW5SNjaxdLfPNPpv/uvK4JOckIrtbPOmvlLdD0HIB+oGGBHsE24kFCjYkbwnaCG+
-         n0fJsuMih9kIUdEhRfyuhcaRhp9jsjoswClwooHvVfOEB3WZgx1XOy2l7Y9n+sgpe+kf
-         /Jmw==
+        bh=mOLdPOWiJR8OoJwOaJFzXx59jq3ZXhglondlZVPNg2A=;
+        b=Klo+E1c8JhAxF45MPlMLnFcjAewr2AYRskFnrznOBtlOT+Dezuoa5DqalDWTwRTd72
+         KjWKFXFIv7b9Agh32F2mqIV1ZQ9fhHKSdsQJJwcQ8R4uzF6uJFt6uQNZL9jspXvdCj8b
+         +Jg66GdvqNqgnJoTb6QC9A/s4djf1wb/QLdagq7bEp/DFl53xIA8LFUaXQGGOU8rDNSJ
+         dwI3APMyn900E9psZIPtzZ8onNWMk8DHqmcsm8JzrWxK3Y7ieJ11tssry8VTxF603Nhz
+         kOL36fhkHk//aYaMMDTRLzZ+ijlUCCoCWLQBzjTubXZmSVd97R3NiEoOAcYdG7VhL2ib
+         8f/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787696077; x=1788300877;
+        d=1e100.net; s=20251104; t=1787696090; x=1788300890;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=D75fInvg+r09iPcPb4DMRyrNPhfp5Qo6unK6y6h/7oo=;
-        b=rlOd00sWzPXL/tyj3lT7BTu/ti19SGMtE7+EhYIm8R3Q3rIuzV97CGUv2RUydFAfbY
-         xWGrUuhczrAYzebZhKcXx96KoOzPXrhK0fReDyF8szjUgufEqp47RJgLWFK04OfHk5ZN
-         DrmTgSZTCfv+ObeQN2xpMRoND1VjFvLkYvnE4mG//hthOtjEXMG2v5w+BFJLeXqmcQOl
-         HhCLHqSw9H/XnJDJAixmNWoWyVSsPczgvwIEwD0JPK4VP9NgZbELILsdj7W+Nw9Tq3a2
-         ILcIYhRIpBy27GGFc/V40m70vb1dNkeOeFhbyGJdGis/AJly7kzUFGbl0F4xnkOAuBI6
-         5YYw==
-X-Gm-Message-State: AFuF++kOSCFL0tbB+jqVbA067OJqCaUa0xGjHHfXc+GTyhnyji6pNPEL
-	X8Aw3h0tGhkfA0hEtBKiNPBr0B7JdF3Twc+W6JMX2LGWX/f5JyYkNU7tIe2aEDsJa8U2xp++ns0
-	92y6unfpZ8j8YwZdZMyROSP4pwYidbTk=
-X-Gm-Gg: AR+sD13E0JEsUdH9s/4QHsC2wrSwLj4EST8SGCnXsiY6LuvgwxTxD/9hIXqWaGoKbo8
-	zhARwoAYutYvyxEi1XIkVZCzzouPL4OcRGrf+9s7xGbFsqcjx6LehO0Ms4uXgb0ZlLfn/88RSWK
-	O23pRwZgSp2exDOyVMTMNzYFjTAqKoEopOekYq/JurHgcZ90BbTYv4i8yF/12ibeBCqJhsRq/b/
-	BEZQN+02SlOdyfXb4Ui9uvOD+8rGPNywljQ4F9AdkVTVqQO83eCpN8KjVQ487hEwnwywQ63I8Df
-	swwdXIkMF9vMC9GnRHnUcz+998DPYWHBVuooQBePtpLHRzUn5U81lcwF/YSI/G71ym6nLz+ElAX
-	JFU9RYMp3x2KBpRoLtlRTp8elejIHMRTXGE+xF/M1EkrRHd+1SP3dkJM7762O
-X-Received: by 2002:a05:6809:194:10b0:4b3:6801:85d3 with SMTP id
- 5614622812f47-4b36801a869mr1826410b6e.20.1787696077115; Tue, 25 Aug 2026
- 15:14:37 -0700 (PDT)
+        bh=mOLdPOWiJR8OoJwOaJFzXx59jq3ZXhglondlZVPNg2A=;
+        b=My6LpmWIRHNbd3q1tBOz5EmDhU/WP3F7wdshUkAYpjgHSRO4WAtbquZHkwq67Q5TWL
+         H9gbA9HL1xYRoC3yVjFtPMeJTm2T8mv0y7zdpdnRoWZoPrYu9gm60FOBZx8Ha5kn1L5P
+         2TGO3fBuX3eqDXuPyIvoLnqD912YMdfaQvAYJm2EAO6ucdtpN2vSQLGb6lWSSMUAOt15
+         skyzpSL3+NyoUMHhmYEx8gXcIy0hscD/BNkInZwZhqFI189sg+gt9A0j8120Pb/TIA0/
+         pbeIGGN/o0p20lbdEXMU5lRtKnLRk2nwao2CYSgbkSKraZxZPOs5moTtYsGrLCpNXHo2
+         /LDA==
+X-Gm-Message-State: AFuF++n6q4B2VOXQWsIWExtRBMVJETGEhMEjH2WrFnDkJnj6jgVCKVK8
+	hqes4PkI2fU09HsPgdRb00i7xXg7gCcq+hBUBvAFNaqE19gFPT71WiruxaR2VQYMXhoI2pkLIxz
+	NmW44K4u4RBFKYYrbOxl1NVC8H+d7Eoo=
+X-Gm-Gg: AR+sD116DYq+OU624Ambk4N0C3AdxhNO7lKyLipPqkGG9aYykXm0FUAMVpLNg/fjTdf
+	qznnYCP7DRbSAdfdwyw3c2iGg2tliEDLWXHB/kY4RDZ8rDJtIFYvLTRHmbLJJgIT0tx1mt8283B
+	u6G5/PLmkjnmTq5joFJDw5+YvWbIeUVQjzm4neKFzrx46VZ3qxZIaSVKFjCqJjlg54ZIS3w4BrY
+	0UUrftLhotttQyKCo13ux37u6s2p32XkPHkW0TgkVLLFWlwl2j3s0BdgTVO+57gOw7RnX/ZC+e+
+	6u4m2aCxXJ4M1AeC1fZIpIofEtKd6iniwB8k/suS6B2BJTGvSAmUkjdbecih6RM4UTzRcilR3j1
+	zdQtx/p3eBjVK3rV09HpEdUglP2skVdja8sTN9PQcrMtiBLSRpOLDKqJteFSO
+X-Received: by 2002:a05:6808:c195:b0:4b2:98a3:a567 with SMTP id
+ 5614622812f47-4b3666a9fbamr3197360b6e.4.1787696089800; Tue, 25 Aug 2026
+ 15:14:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,13 +83,13 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
- <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com> <84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
-In-Reply-To: <84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
+ <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com> <ec447a6a778a5c49344346df54b434a96c792082.1787684181.git.gitgitgadget@gmail.com>
+In-Reply-To: <ec447a6a778a5c49344346df54b434a96c792082.1787684181.git.gitgitgadget@gmail.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Tue, 25 Aug 2026 15:14:26 -0700
-X-Gm-Features: AcwNN1V9gw0tDtpPRLPrM3Zb_3yiozw-DbihnkntJce2pmtL4MEsJxCH8WHxdIo
-Message-ID: <CABPp-BHtmjSqkgL+RL=nmd1VNqqZ6vDUhQxj0AnEzAHZxznoHw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] banned-die: create header for banning of functions
+Date: Tue, 25 Aug 2026 15:14:37 -0700
+X-Gm-Features: AcwNN1WRigpy4RZKBGywQoGUUbaMtgW3ZzruiCok9OYu1_Usty2m6Z2XBEk-alk
+Message-ID: <CABPp-BH1TeDTeqddZw+cvzou+3PRgw+HNpYF2JnhMTSBp9qfbQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/7] trace2: remove use of xstrdup()
 To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, Taylor Blau <ttaylorr@openai.com>, 
 	Derrick Stolee <stolee@gmail.com>
@@ -100,26 +100,46 @@ On Tue, Aug 25, 2026 at 11:58=E2=80=AFAM Derrick Stolee via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
 [...]
-> +#undef die
-> +#define die banned(die)
-
-Shouldn't that be BANNED(die) to match all the other cases in the code
-(and avoid an obtuse "implicit declaration of function 'banned'"
-instead of the nicer "sorry_die_is_a_banned_function" message)?
-
-> +
-> +#endif /* BANNED_DIE_H */
-> diff --git a/trace2.c b/trace2.c
-> index c23c0a227b..1d0ed2db2b 100644
-> --- a/trace2.c
-> +++ b/trace2.c
-> @@ -17,6 +17,7 @@
->  #include "trace2/tr2_tgt.h"
->  #include "trace2/tr2_tls.h"
->  #include "trace2/tr2_tmr.h"
-> +#include "banned-die.h"
+> For full defense in depth, we remove the xstrdup() calls from
+> trace2/tr2_sysenv.c.
 >
+> First, in tr2_sysenv_cb(), we need to handle a failed assignment of the
+> value with a negative return to halt the config parsing loop.
+>
+[...]
+> --- a/trace2/tr2_sysenv.c
+> +++ b/trace2/tr2_sysenv.c
+> @@ -74,7 +74,9 @@ static int tr2_sysenv_cb(const char *key, const char *v=
+alue,
+>                         if (!value)
+>                                 return config_error_nonbool(key);
+>                         free(tr2_sysenv_settings[k].value);
+> -                       tr2_sysenv_settings[k].value =3D xstrdup(value);
+> +                       tr2_sysenv_settings[k].value =3D strdup(value);
+> +                       if (!tr2_sysenv_settings[k].value)
+> +                               return -1;
 
-Is there a risk that future folks add new includes at the end of the
-list, then functions in them get added to banned-die.h, but are
-silently ignored because banned-die.h wasn't the last include?
+I'm not sure if this matters, but I think the call sequence from
+config.c to this function is:
+
+  read_very_early_config ->
+    config_with_options ->
+      git_config_from_file_with_options ->
+        do_config_from_file ->
+          do_config_from ->
+            git_parse_source ->
+              get_value ->
+                git_config_include ->
+                  tr2_sysenv_cb
+
+and the -1 unwinds back to git_parse_source, which breaks, formats an
+error message, and calls die:
+
+   error_msg =3D xstrfmt(_("bad config line %d in file %s")...)
+   die("%s", error_msg)
+
+Am I reading this right?  If so, the -1 actually triggers a die as
+well -- unless the allocation in xstrfmt manages to kill it first.
+This isn't a regression (the old xstrdup() also died) and the die
+isn't inside the trace functions, but the commit message might read as
+promising more than it delivers.
