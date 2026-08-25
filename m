@@ -1,110 +1,128 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C3333ADB9
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 19:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787686310; cv=none; b=jdwBAoNQd43lq5UwLuq39cX2+No2KBLY7oVPCYNIAycVL2Bgap+SnWWXHe+A9RQGn073FghhYMYu6FwaFkJ8cDe8pOOrRtp3zfjDm+iBfOyTL779iKquT0T71G0+bcEdxkWeIutr0WP7bfjle64bYyHxDyp5QoiTIXhZ3nTK1As=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787686310; c=relaxed/simple;
-	bh=lkkVh0K52nU1gnvoOQqy/DawDuIWNkhncabwQYdX+9E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=px9owu5guQAapY/hsD+GJG+eauLKUBWUOBEAzn6PPp8eJDYW1I/7ajzORV56QcYqXYz48OBAT8lHRSmWUh2fj1kGjvuGdJuP0vdBsKaohYFSRcuJPdzioHoEQJXbvL+vcz7TgqK0oBMAx32O5FjwlyG7681/i/FIkX0e6dHDnMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YbHVj4Hp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bVGyKuvF; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1C23CB8E2
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 19:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787687088; cv=pass; b=TAXjwi+s6Xx+tv6HynV3Fa+i/29d0JkzFa9XKMCS30PFM7qi73J4nS9IuTjJ9BPdusudBQwTaW2/vFCvQLapvWKzebgzo8PxbWr/F0trNRIcZ1RxabSe2lEOMUT8ttEWU2E4iV1P3Jw2ybwrtcl4533CHAbmB1TIlDNT43Oz1cU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787687088; c=relaxed/simple;
+	bh=SkVsjIHUwCiH5gHDv3AQsh50WmUYkzGL0adWq6AKq0I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tS864YKkQcK7Wj3csU7MPbURbkGq0InK2fkf+DqNMYqkdiib3i7BzadVCfTP613shbpWZeoeurvKPVhPCz3n2TIS88uaqox4LvGEpRmncogOf0SJJhJlZNSvsoc/dDZNv/nT/tqOuiVsWeRQQY1PomdoPsgWLuBX1VnCGnLdVoo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nR8PhCgf; arc=pass smtp.client-ip=209.85.167.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YbHVj4Hp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bVGyKuvF"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id B388AEC01CC;
-	Tue, 25 Aug 2026 15:31:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Tue, 25 Aug 2026 15:31:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787686307; x=1787772707; bh=HO81a59/u+
-	7lL6tnlF29RdIVeE98D2/emDp3lyycKaQ=; b=YbHVj4Hp2IXQ1A4uyV0zeuc15h
-	4RlitUyUUyccmnMglVIan8kFVJ/EUAciW3HyputwjpRgZCXG2J9YLNu8EHHo55Ks
-	l7PKjH+k/4WO8dayKEp8EjC1/qHdba9RJSdNdbLAIV8d6FkQRHCeWk3B4sRxm/Aw
-	zf15bTbPCCvTXqbEVclpBOnFts8s/6N/jG6q6MhrqhpSpP7Z8NC/PeQdw8OFGxb0
-	J/Nc1qCoEQWFiQccEpsLwPHTR5rgtyIg16CGUhOqqMNpEjX78OYiqdhhFJD/H3G9
-	i1tOn/Z/uT8vXxjpeWk+8j4G0CV5Qq75MCvcpLLlsEX8rOVLu6MKUy2g3UWw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787686307; x=1787772707; bh=HO81a59/u+7lL6tnlF29RdIVeE98D2/emDp
-	3lyycKaQ=; b=bVGyKuvFaEkbBUrN5oorZRi9iSRq23WLWcI4teSn4ebm4eFevLa
-	NklUbqzuJutNE8+l8KolS4CJxlH3l6DeG3+/NKJhKE6LpzmehkZWM/HkVXHTTHwQ
-	7+wJpPcKmwcBfrmOvKd+DKK9NUFg8mclQRJpCl+y0F3bgiAiXd59Rw8H7Qwk0I4j
-	0H3MerNArX2l1IwGj/xr5RJhW9LFPwsHPm4f1uMKPWlW59MLWszK+mF3uKW5iJQd
-	sKY8GW5xVPA2N4yJh53YGKZJgHkn0+cKCULHRgSjXhh1i+/FvSeeR97HMEPaTgqO
-	vefPh7MTAHkZqZ2sGBDI/k9kjSVbos/ZkeQ==
-X-ME-Sender: <xms:o-2Nag1AKKzAevO-X31wOPjVqFMmg2a9sA4TxJpm7lJKMgV49krB6w>
-    <xme:o-2NammGvWtk5E1yaukkOCDUlt8EiiFOJv9gVCkVFC-kqECb1ZF_HRRwoLLEVPaWT
-    _tobe3ltsYjB5KxQlCxXXz9_Y3--nLm9bwKpkFwooO_phzyvYLFKA>
-X-ME-Received: <xmr:o-2NavW64aKfceyUPtMsk5Grl62_T-1-tN_ABapyJEBO0JB1WWF1_xPIMGlTnpVbYqW-XV917i_XUCBUqBfkpBChjeFDwXiJlA>
-X-ME-Proxy-Cause: dmFkZTFQ1Uy6sZX0czBCS5P1F/NPrsEBPt1t/drdJxD2fxSKFS/KeGvBPh8szXeEUf8qeh
-    PXFSgAH3UlOnE/6wKvN27VVjEYmRALWrDmPmM0JnctheWamVwnRzLzubxeJb8xabor3NXx
-    GH2dkgU3brO4DW93+w9jnjdhf0nRvHivbtAtdcKrMwU8+xzAJu8zz37MaU8+7Ghmpuyw5K
-    6UW7EkAvsK6EC4BFPlpNo/thj39q6Iu6Ht2kDHEnvcRdeBXltdozN0mFXnuYba3jmqzmrE
-    SylDGaZIcrSCpDWYV35HQYJw4c5V3s1Nx+SEQbMzXGzRGGfrcNd7w34NQm0DBEMkbh6xMZ
-    Lj68KdckxOohmiy6wGAcIX21rSW4xLWT8FB4Dajcuo80Eb9sEyV2L9JEN0x+em3obuctf0
-    xaoS4E687CEvJa6bc0w6Iclgw1pCOYM67xB7TpGSJzpNXpkGn3ZWnMpqDiDa/p8dX2irj0
-    IJdhIWHNuL/wcbPZUAwiVjI0dpniUTb+ZFxUIFpt5ZSaQ5jEMl8rf9ihF8vfIV/h0lHN7P
-    LepXhjD4XYPk+Y9Y1kmbsLXIJVT7inZeJB+b6sGlX7oqNzycHP//hCl4Km5TfCnyfXCrmf
-    zD5woeio2TCsFpEZ4DrKQZcrgQAhrEfkvboSAI92SIos2BmPHCCA4guj+IJw
-X-ME-Proxy: <xmx:o-2Nakt1Bi0M2e4xGWpVQg79h8bhA1aKwYLXjLs5-73S2IjFTmyGGA>
-    <xmx:o-2NaqasQSiI1lgVsFNa_uvBb0fMiCCRnL4HIA1G6anazu-2CTOslg>
-    <xmx:o-2NarXuVJjNVn87-JgKrdJgmQSEOXC9Tq9D8_n56sj4CUdv8PY3Rg>
-    <xmx:o-2NanSC7SYAnDkd-UDxW1CMNebDoJ1rDK58g-nRnsKxhFNCEgOzoQ>
-    <xmx:o-2NaoEi1b5czQG-8CPEUHTvkP6R_0Kn3JRNsUr5DGPyJRop-P5H8dLI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Aug 2026 15:31:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org,  jltobler@gmail.com,  lucasseikioshiro@gmail.com
-Subject: Re: [GSoC Patch v5 7/7] repo: add path.cdup
-In-Reply-To: <20260825175818.645579-8-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Tue, 25 Aug 2026 23:28:18 +0530")
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
-	<20260825175818.645579-1-jayatheerthkulkarni2005@gmail.com>
-	<20260825175818.645579-8-jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 25 Aug 2026 12:31:45 -0700
-Message-ID: <xmqq7blem1y6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nR8PhCgf"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4b28d9537bcso199516b6e.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 12:44:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787687086; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YpIQipe8X2cQBGXEaBr8Kk0BXoxQn2uQQQrBWaos1slnhMcUdxU8vOEZs8XPBanpQ5
+         9KTai9lMXxS4pYIm7Iqh77eEpjBVjp5OdHvveag+HlWNV+aRvaBkhr9TBP8mLlQYs2Zv
+         MLXeKBgZneYPYFiTLJTc5gReNRCyK2MoBLCrFyNaAAzn2fBqCT14Gg5uykwrocReW6St
+         NigZUsnSVsEig+1NUjvM2BwXLmbaMviOuC8x5AKIVQOCK15ZvYbpHtRHp7aU6CKaiRMZ
+         LCIi/qSpn5mWnQqXcgTFbobliqnzk6pjgdXyYcKZxz5hkHyxJzfbfEgU2K+W+rMD7ZYc
+         nAnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=1cPqolBjDRCxxrCpkLZ7FRgcV1RRPDA0KJCpTkNhKog=;
+        fh=+4VZ6tdlnaiSiUvxibrIWqeIRNRmZ6y4CAINKUCullM=;
+        b=fjxPXsWQ9D2zjl1f7oAzqj03nPjPzJkv5zhgjLnQboO2t+9dmdx9c5yKNmLWiN+knz
+         EBHnW/XickAk2WZmBIQFWyBWosFyHHOdGSLPaXdZVri1Oq9VQEZse9P2u3Cjxtra0BJZ
+         jzKIet3VosrQEx3op8YeSro45XkqL9p+fKAwrO59USd6Nx+eF3r2xEfprNj7BxbiYspE
+         VfyHqAfmx5xvHbltMDN6TfQcMBQHjxe9lSgycCj774lZX+v9wSBWYc5xeJPYVUCGTJUq
+         yz4DkRU+ng0Nu7a8r6wShPFwJ3nEUqpA6ZlofooTc3lVf6PPzk08ORjChZUMMyw4EtXZ
+         WjHw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787687086; x=1788291886; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=1cPqolBjDRCxxrCpkLZ7FRgcV1RRPDA0KJCpTkNhKog=;
+        b=nR8PhCgfzjbOowAWyNXLM48UM/yiUeAtWVlcdI0wNLYTquPFHyKlXxQ7E9RkKg+pml
+         tcxZ27Axbi5V2Tz6RRUQ/rLeSBnIhUayn5QNx/dKyZ64p8PbIyS/hhJuKK0T13nVcY5E
+         wfvdtgUZs4NroZSOXa6r0Egw9zEFx3dPrm2HeasejBQ84gjWfofk7E/4nbBFwCD1eHka
+         zVn+187AUO4JmTGStSfRiLTJBBI9Ro6hbDdhAEFXj8IiIsqY4BrQK1garEDmtrn1zDwC
+         73n4ByLXV65E53QWeRvDhGLz6nmExppH7y8ELXZrOOKt58sEE6fb7mvTyUkoQkRrAi39
+         eu8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787687086; x=1788291886;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=1cPqolBjDRCxxrCpkLZ7FRgcV1RRPDA0KJCpTkNhKog=;
+        b=B2SRebE468LDuJq/GEg72WDNJU/7U3sNQGXrFNBvU/Fmal5gMThRQsAr75EqaQeKK9
+         ZWgQZrerFOyuU2cLy2pOzdr01C3RMoxTlR6Eu+jTQVcchIlGg5U0QuF8i+9dZDXFgXM1
+         YfLvOTIDMINcpPzELibC7gvYz4l47cp1wnNlxN0gS3KcvuJRWA6lKZnQ8QAYTTAG18sb
+         OdhP096mnaHN/82kKiCJuZ+ZBU8tuMkkzXIdQBcXbNADENP7Cv/zxrC5OscFviXBPsUh
+         5I5SKkqlvVFljHUX4J5SOmseaoIL+eGahQ1GIppxg8+vm8NhQMuWWwdqAKyJ02DlGFb+
+         pE1w==
+X-Gm-Message-State: AFuF++mDViHQlZFwiqKmo6fTkVqUQK2NcdVjzlrsCC9PtjKPkvhY4nL4
+	7wkSFii6gKDPCNHsTSWHeydMKwqImbUtVOmoSqZNoqRiqQYxqKqBc8nTGOkcPwTXV7lESHYMjBj
+	bnlWUxUSimr/Mxp9M3PVM01MtYoR0m7JYMjMo
+X-Gm-Gg: AR+sD12u7WsYSDhk6V0Lc4fylLDxIV1XfzcN+P7rl9QeFItLbQgglfeeh7J/kBz+DNf
+	Den59IaOe3gunPM2/FwXPjZdZXr8sPdL22g+gIQ4qzX89i0B/gG7O+4hJd4fl12ijAT9KmOK+0G
+	3lG6BiagOPCj5gREm7UMQxBK4HKpsCdNeWLgItnOSnW9oYf/eo4jJ8578a04eM+jTcOUgqZVgsf
+	NrJeNQ2Qj5fnHneY0aHSNNa00wN8madghN4l5vW6Pq7KTaytARY8XofIHrfk6dUbac/2PCq8eAq
+	hVStTLEHyPpDmLzBLImLvKjoAJU9R4+7hn2VmFgHKszYQ21M2hUSJU05Ro3h0tUzONn2dGXEDkR
+	hvRo4ccK+ZyYCoQvDsQBc89G+EqW6s9fCDYHi7IbJadgN9mmhI5zvQtbqIMlP
+X-Received: by 2002:a05:6808:4f07:b0:4b2:6691:b019 with SMTP id
+ 5614622812f47-4b3501fe004mr7096264b6e.3.1787687086122; Tue, 25 Aug 2026
+ 12:44:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260729233215.398654-1-sandals@crustytoothpaste.net> <20260729233215.398654-6-sandals@crustytoothpaste.net>
+In-Reply-To: <20260729233215.398654-6-sandals@crustytoothpaste.net>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 25 Aug 2026 12:44:34 -0700
+X-Gm-Features: AcwNN1UJXjRjh3g8G_l3r8V3xMUfryJ8E7KlvHBhWLqKmBxDABpZVJY7KVbnatQ
+Message-ID: <CABPp-BFDaWdahoOnNRGQjshzQXin1YLuROv94W_PrajnLWDAuQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 5/6] object-name: use hexval
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+On Wed, Jul 29, 2026 at 4:33=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> We've open-coded a different implementation of parsing hex values here
+> when we already have a perfectly good one in hexval.  This
+> implementation will almost certainly be slower because it isn't
+> table-driven, unlike the other one, and since it's not constant time it
+> has no other advantages either.  To tidy things up and prepare for
+> future work, switch to hexval in this case.
 
-> +static int get_path_cdup(struct repository *repo, struct strbuf *buf)
-> +{
-> +	const char *pfx = repo->prefix;
+As Junio noted, you may want to call out that your replacement drops
+the case-normalization that the former parse_oid_prefix() provided.
+
+[...]
+> -               unsigned char val;
+[...]
+> +               int val =3D hexval(c, HEX_KIND_OID);
 > +
-> +	while (pfx) {
-> +		pfx = strchr(pfx, '/');
-> +		if (pfx) {
-> +			pfx++;
-> +			strbuf_addstr(buf, "../");
-> +		}
-> +	}
-> +	return 0;
-> +}
+> +               if (val < 0)
+>                         return -1;
+[...]
+>                if (oid_out) {
+>                        if (!(i & 1))
+>                                val <<=3D 4;
+>                        oid_out->hash[i >> 1] |=3D val;
 
-Can we have a small common helper library (e.g., repo-info.c at the
-top level) shared between this code and builtin/rev-parse.c so
-that we have only a single implementation of 'cdup'?
+hexval returns unsigned int.  Is there a risk that someone "tries to
+fix" that discrepancy by changing val to unsigned int here,
+inadvertently causing the `if` immediately below to become dead code?
 
-The same comment applies to all the other features that duplicate
-implementations from rev-parse and elsewhere in the repo-info file.
+In patch 1, in hex2chr, you used a (val & ~0xf) check together with an
+unsigned int val; would that make sense here, or is that overkill?
