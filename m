@@ -1,197 +1,120 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F26836308E
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 20:26:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787689617; cv=pass; b=TVbHPKw+fX6DwVRV/Bc9kL8ysntZhMGWIm9rcYwnkXTKkPj4Oz4hn6+DyRTJFrETkn4A6n2Ji+6XMs/AbWg1GzhenaafxMlnCHjJSRT1+vc2PemWN2Riwiq6igA7gPouHpvXqKhOXqYSkoqo6NQCgfVT9/5y6jVDxX1VgbePeXA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787689617; c=relaxed/simple;
-	bh=pHuY04sc1ZQFslzJSr1GObWswTGpVGWmcYogJs2gEM0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BJWNE3kM0/y+lnSltbn50AEYoM8JxWWMkLYsDkGKn/IFQOiIhKa+rlY3jqTKr19OFHnwy0xk1n5hkDtysVkmqeWj0YDhxNINbnrB17m2Flmpdt4+BXBEUa9ahqPSz1Kz+qAVTzOWHcouTjlkfx5O+6Sw3gzsRT15LXbky8bU8lU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=island.io; spf=pass smtp.mailfrom=island.io; dkim=pass (2048-bit key) header.d=island.io header.i=@island.io header.b=YdNxD1DX; arc=pass smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=island.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=island.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B6C3A718D
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 20:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787690098; cv=none; b=dN5BzXMNTUENbSRe/Pwl0yAfYncjJrtWnjvgb1fWh/Ts55F92xsNNjLhFO0yumTwYR18k8CndDWmnkx6wK3C1DzU5xEy5bMT85/0MtyU2taN5zrc6/vPJF1UMCMs9NEuoHYcKAgys5NablpteUyKVsq8jLq0Nq+sMlFhtKtOTx0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787690098; c=relaxed/simple;
+	bh=dgh7tQwbKSkSul5leU8NUf5gQL2QEUhuGUEv4sufyd0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=esxoF8AZLIktZ3rLFrE9/1Oh2BlRjQifLtuBdYVnhof7VhR8wQgaFlMKxmM2G34J8khCwJlUOIImbLijqfii23lcMau+zL37Zl+YDPYe4YkA/zp3wb04OEMW26YkJzwuJQ5Go66GqhndwK0sDZCd9TaKSMWdBhPUn1/gbzGSg2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pUv5S7nv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Psgvk/i9; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=island.io header.i=@island.io header.b="YdNxD1DX"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5b159850b16so190225e87.3
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 13:26:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787689614; cv=none;
-        d=google.com; s=arc-20260327;
-        b=I0ZFtNvSOXgq/SW71Q8P9OsfhlhQrobNQhUKFdpAJA4nNQ8z3K3Qxl9QQz2GsvZmEv
-         16Jf/Oi+nm2T+b3UhXdx3+uZ/u2OqKe70VdCTaH7/Eq9PiDIXQ6dM43pAz1xqTPsFhcJ
-         VSY8zXgPrxTJ5EQyfs5trszTzi293JrPtnFBK3kCeXzSqaIrbGpDHGW5NXol3hotFg94
-         EQ2TBWex1nc76uLu075sphnJI7zvgqM3WoBrrtyG9+4rVO8fZ5RovL6R3M5w65DROjPL
-         5inZZoHlSZPbS2WLnOCSusFowQ9JhhkQIrse3gihCew5ApLiqb++2niTX0PrXKfV45cj
-         gj5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=R/zCMX5IFQyl+GlRjLxHNpzlKhochyht3NY8aOu369Y=;
-        fh=l7Jg0bdyeW8Q9iOq6X2jsY8GLImu4/0p3W+ODxIntmU=;
-        b=Wpx0pEHy35xGhnYmPp5FIGDP0y3GhPgwJcLNdH/YG27E5nmZ+I9I8FUwTQAgs9ajt9
-         pYcUmofvyzDolr95dOIu+x+8lGFFpQ+XNs+7Cd7seIaZVvVdqaZst6Oc0U1+5tiU5v9N
-         wK6WvIMAMuimpRbt031sUeh2Y739+XZ/tomWyKGZVBF8YC1nJilNPAEyS9w0GOjNQkg4
-         ysO0oHBWzrv4AI0AiReaH4R37j6OtWQFLxLEOtjJGjkbZOGvhqUbBFeSTwNAQ4efM+G1
-         Mkrke89UWtXI9zVMdFydFvz9gh3l/JYI1R735EGaPZ0Swz4O5CagZpBRiLvooz37UkRB
-         evvw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=island.io; s=google; t=1787689614; x=1788294414; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=R/zCMX5IFQyl+GlRjLxHNpzlKhochyht3NY8aOu369Y=;
-        b=YdNxD1DXZcP6DBEHDTKKr12EJngd59C0F9y8etoypeldkZt9wlsYfw0A4EurNY90gz
-         zusRy5lLl+YwY04ix2BX/lGXgYyjWpCEfX4dBkkZ6kgYTrfgXgiIiRdYscmoEONp5PzC
-         Sn4dzYx6fnKEfra0MZyuZSKfzI8bAKFRmFw6VLF49dr8s+o4qZCV4+TlQs2sfMtAWVbG
-         CrL1NMrVT/gejpa+s+nxDNPCJbJ+5SADF4QU6SGoLU+8RdE4aZ13XpfWtd28w7ayJ3so
-         07BbhizkEtYqHyg+ltk2x0RJZRh4xc+VfRjwZV2jiMeoIqA/f/GPagHmUTapQ9XBn/0q
-         yE5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787689614; x=1788294414;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=R/zCMX5IFQyl+GlRjLxHNpzlKhochyht3NY8aOu369Y=;
-        b=Xy8Fvy/hcmysfSeUDOt0S4QIjGPUqybUe67UOsUmhiO7E8i+6iK4bPJsXPRwjMvNFF
-         Wsz7kRC2ESP7gans0inRXsEGmKN5l4NvCxLTRMPumGsmS7gjy+St9xvWkmf7G855WVbm
-         cICjMPk2k6x0IfQ6pvhPsFpFw1glKoj/sAjjgQuFu+oraHQ10Pv1rBrCMayMYi9HLux5
-         BGRHcbQplzEtXTE8J53NTH478/tNQFJh57JkX29G+1LyvXxan7L/OoJOW++5lmMfebDe
-         FLbv6kyPmTRRT8rbRstc7ZOBCBhZNYTBEl3sqSjT5pvHLX2CvhOGGZg7jf9WHeytYz1s
-         w7AQ==
-X-Gm-Message-State: AFuF++kt0lywNbyxEurvmFmJ7jwRI80uzCHFnCpLmgh5Wbuk0p5lcWEY
-	4cyjbf50/WbdMOKL1Th1Cji1WX/s+UjGYgJPgEfYEEzAwVnPaYV6yEnOyeqQX3vFyKIg0PX1JvJ
-	HAb87doQUWS2VjiWBR2HQyFrRpk1qKI2cDJep+DZG9g==
-X-Gm-Gg: AR+sD10intKzhaIAMM3xnzQ9ZT1FDbE5ojt+RI0qG+nJ53YpdomQp1IivoAO5uq4tlM
-	z97F9F3vdWF5T5QHslY7wnBB3D32XqnKG7AuE//MLwWyQEJDauAGKxTfzKuIFtOtfwlO4g361xZ
-	DsIiuBUh3DB8HfeJmV8gJfuRxmijR4uMudzV1DSy01iPzB3qFMcJB6n+qoVBnrv1yF604cT6NGg
-	fLPoUsOmY1zychMwMqtIvyBnGk7ehjRngu+/SVg8jm3TnW3/g+dgrlmEtYRJ/LY6eQffFx5o7Yo
-	tBZsYi2/SCKS2zqXsi6ahNzC99aIcp+b1iOvLFLOFOriVSXR+l7ZIpgZLudY978peTmvVB3vDNM
-	mscjRFs1RPJiWrZ5ue89Bm46tTGeKVQNefsAwGJ6KtlvwICfoVafYdIQLIUI=
-X-Received: by 2002:ac2:5e8a:0:b0:5b1:537b:de9b with SMTP id
- 2adb3069b0e04-5b4a9064b4amr202032e87.19.1787689613981; Tue, 25 Aug 2026
- 13:26:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pUv5S7nv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Psgvk/i9"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id C5155EC006E;
+	Tue, 25 Aug 2026 16:34:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 25 Aug 2026 16:34:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787690095; x=1787776495; bh=2KR/eXrVYo
+	e/A/+np2bwurOtaZGytCftO3WVux2zLUk=; b=pUv5S7nvlHkTVbDqzwH1PrseEm
+	tHA/gq3RrptQ0CAEiNahXu0Lyibcx+T1ZBEnTH/nf7PMUu9sNhIEoPLf0V8XLU6P
+	urmQjhWZcMlvhwwfZq4qZEFAnsR8OFGJPKulP/mIjfO6EsOI4P67fBVAPZOvV4us
+	rRAxLQgRyENC4gkFUP0/S/7e0qJ4pCBOZIepgdLtQwfEln4s/H2bljS60EIg3JK1
+	mlROZDrc6vRMNCjlXfqxsBsgNXR3HbBzTd/+ddWwcdsvDXGIcCr5TqZCDNc//pq0
+	VMOiJ99Fw6GziVdjiPjTaPHW+42eJfQtyATkO6/Va5FylThtoK8zYNMI63IQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787690095; x=1787776495; bh=2KR/eXrVYoe/A/+np2bwurOtaZGytCftO3W
+	Vux2zLUk=; b=Psgvk/i9BaTocT1xYjjabLw2j9OEnDmEXrIN1/GA9aFlg+iQSC1
+	Dk7RWs8kesbAqUz/qQauaDV/xoBU4ACEFG5nDF0PEwMats4NnZktOIVk8Kx2zvAm
+	16vDuZea7DzIzTiM1eN05Hpry+5reEGf6DSDtproApjTHJX7VB5czH0Wcyg03Gjd
+	LV7LkAlzBXwgBjbn5fGnoppnU7JYNBg/9j79tu39osuvCtgFXx0Uu2K6T4EwhzQV
+	pFgpe6Wd6J988Rk88x76zzcprdGUlzuFs3DlrfHGC9mlbYtBbY3AT/oQZi3sWAbU
+	dwJq4eBuzJpg/APv2hEiCm1vrQtivMp8Uog==
+X-ME-Sender: <xms:b_yNakWdCScyAsOirNby0J5NHF3VjyqnRHoDhlUGtZ7JnH7gvKSOSA>
+    <xme:b_yNavfaLC9g9TANK7BID43OqzeOzv9kFDGTOtKyxZbrhhlEDxUYkwsvat_z_ggV2
+    P2LYhlEqluRMryUWwBbgYMNTD1ra9EAxHxB05z1Bz3XK68u-DkwWw>
+X-ME-Received: <xmr:b_yNagu4mRO9T8_Yd-6ReKPwozmbRoiH9JZA_9A38XbQzcn6zg2sZ0qTMT2-GJ19h5QvXbgQAZNBgEwLeKL_3ymWiyQUNm6K8g>
+X-ME-Proxy-Cause: dmFkZTGM6+df23KpaoRmvA29+TT7xAHByWF2CKp9N44xaGtV9s4z9MprFCEv64LWjC6gxH
+    HgOH5ZB9NLMowhg99CZZ7Zjl2PpUaneUPdfGcl6yGWO+vwiG+IjCQDVkCglGToWO+uTk6+
+    hYC4KbReU0XJARGALOlR/EDFKfU4tIDQZLMVtDbFY9wwUeuUJrcBLQZoaXtho1MK24ELbv
+    zY8nnSjKCwAFyDq7p6cJ/Fe/1JdHVX/WjDnvMXuBIbCCc+MS4TAAnp++siGGjeyfJmhDQ/
+    4VghzUZU3qNJx3+pQTD19QNskKOXUEMb+XatzZ0O7hbxqpMa7t9o5a/hGP2Z3eW8Yw4XkU
+    NEChaI2nSVtut3eH+0J+LD8eDOZDmHyXcglqhUqw5nWE2BnGrwqy0aMwJ/Qogm9Xqevw7W
+    IhH4GaekamQO9a4I8c4iTwyW2rsihiWZhd00DsN/bN8Dzjx/oSItIRNVlPs8LhNDlBuCaw
+    KLrVy9htdJYCOGs1M1N+FNb4Qn+YgWPn7hGOW5bAv18/Tw/qhpJvZsGTpo5fgk9MTAjj4r
+    HkyXyv7/9ShFMwvddJlqoDvKPesW2oQme+U2fRHrz7J5NSfynd+UfB0PsUi+qy9vA1E6Jt
+    CG50maHGGJnS06RFzDR6ac930XCnKpe4mNpliKqe8dZzPclUvZ0GIlHIxNbg
+X-ME-Proxy: <xmx:b_yNau9oki1f2nSCN1wfjC6O3atvDogGw2-DzseURQW7kOxqDeUyfA>
+    <xmx:b_yNar0kByWcA34SYXHY_rQFD9ePJfVGmO1baQZxuM4KV3GAAUjNQA>
+    <xmx:b_yNajDMRPf5i0Ri8l85cz4-c54cTf0Yd9IW1WH8YRDDyPZrZCecng>
+    <xmx:b_yNandYN0r78iWYsMUFfIvzqeQlx8D34QRZnR9zxrr6Ch3RGsYpNw>
+    <xmx:b_yNarfM4RHQ2xyKaBu2yN--1ipCQdpbj0T2c7r9lJ0LZv3K3oTDH_cU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Aug 2026 16:34:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Taylor Blau <ttaylorr@openai.com>,  Derrick Stolee
+ <stolee@gmail.com>
+Subject: Re: [PATCH v2 1/7] banned-die: create header for banning of functions
+In-Reply-To: <84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Tue, 25 Aug 2026
+	18:56:15 +0000")
+References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+	<pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
+	<84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
+Date: Tue, 25 Aug 2026 13:34:53 -0700
+Message-ID: <xmqqh5kikkgi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260825085516.66088-1-nikita@island.io> <xmqqmruam8at.fsf@gitster.g>
-In-Reply-To: <xmqqmruam8at.fsf@gitster.g>
-From: Nikita Leshenko <nikita@island.io>
-Date: Tue, 25 Aug 2026 23:26:42 +0300
-X-Gm-Features: AcwNN1UNOE6m-j_uut6lfKZb4CO4L2J7GmJRbBojqleBYBneBWsKPV_CY6YT9cA
-Message-ID: <CAEXts1trFiGJKZfgE=-HAkEcLPVB7Hsx88JX-NHXHX+G+=e_RQ@mail.gmail.com>
-Subject: Re: [PATCH] am: record blobs of cleanly applied patches when using --3way
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Michael Montalbo <mmontalbo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Aug 25, 2026 at 8:14=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Nikita Leshenko <nikita@island.io> writes:
->
-> > This does not change the behavior of how patches apply, but when the us=
-er
-> > requested --3way it does cost one extra "git apply --build-fake-ancesto=
-r"
-> > process and one extra apply per clean patch.
->
-> If you have a 50-patch series that cleanly applies, we would incur
-> overhead to spawn 49 extra "git apply --build-fake-ancestor"
-> subprocesses, to write and unlink 49 temporary index files, and to
-> perform 49 in-core patch applications, generating unneeded loose
-> objects in the object database, and loading and unloading the index
-> file one extra time per step.  That is simply unacceptable.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Understood.
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> We have universally-banned functions listed in banned.h since
+> c8af66ab8ad (automatically ban strcpy(), 2018-07-26), but some layers of
+> the code should be more strict than others.
+>
+> One such example is the trace2 API which runs during atexit() and can
+> prove to cause die()-handler recursion problems if it calls die().
+>
+> Create a new banned-die.h header file that will ban some Git methods
+> that call die(). Include that in all trace2 API implementation files.
+> This currently only bans die() itself, and that was already not used.
+>
+> It would be reasonable to name this file trace2/tr2_banned.h to be
+> specific to the trace2 API, but it seems like such a restriction would
+> be valuable to put in some other areas of the code, so adding it at the
+> root of the tree seems like a good long-term approach.
 
->
-> Can't you do the equivalent lazily inside fall_back_threeway()
-> instead?  A rough outline may go like so:
->
->  * Imagine that, after applying patches 1..(N-1) successfully, you
->    are applying patch N.
->
->    - First try direct application of the patch, and it fails.
->
->    - You call fall_back_threeway().
->
->    - build_fake_ancestor() is called for patch N; if the preimage
->      blob exists, you are done, but the case you want to address is
->      what to do when the preimage is missing.  And in that case (and
->      in that case only), can't you reconstruct the image chain
->      lazily?
->
->      Instead of returning error("could not build fake ancestor"):
->
->      - You inspect patches in .git/rebase-apply/ for 1..(N-1)
->        patches (i.e., those you have applied already) to find the
->        relevant blob objects involved in reconstructing the
->        preimage blob necessary to apply patch N.  Some of the
->        blobs may already exist in the object database (83b2a16
->        in your example).
->
->      - Apply these previous patches in-core to arrive at the
->        preimage recorded in these earlier patches (applying patch 1
->        to 83b2a16 would now give you cccad2b), until you see the
->        preimage blob recorded in patch N.  Write out that blob
->        object (and not the blobs that the chain may have
->        produced as a result of intermediate patches).
->
->    - If the lazy reconstruction yielded the necessary blobs, try the
->      build_fake_ancestor() call again, which should succeed.  If
->      not, you can return error("could not build fake ancestor").
->
->    - And after patch N succeeds with 3-way fallback this way, you
->      would also have the postimage blob recorded in the patch in
->      your object database, which may help when you apply patch
->      (N+1).
->
-> When the patches cleanly apply, or if 3-way finds necessary blobs
-> already, there is no additional overhead with the above approach.
->
-> Hmm?
+In other words, the functions banned by including this file are not
+listed because they are banned from being used in trace2 API, but
+because they may lead to die().  There may be some other traits that
+we might want to avoid in certain subset of our code, and we may
+have similar banned-frotz.h header to prevent direct or indirect use
+of frotz.  Which makes sense to me.
 
-I'm concerned about the complexity of creating such lazy reconstruction
-logic, especially for cases where multiple blobs from the patch are missing=
-,
-and their preimages were modified in different previous commits (which coul=
-d
-in turn have multiple blobs missing from other commits).  You mentioned
-writing only the strictly necessary blobs to the database so IIUC I'll need
-pretty elaborate scanning logic to surgically perform the minimal number of
-applies given a list of missing hashes.
+Would the same approach work for the_hash_algo and the_repository, I
+wonder?
 
-This can be done, but IMO such complexity isn't warranted for this
-relatively niche problem.  (I haven't seen online discussion about this
-exact flavor of the issue, even though I encounter it from time to time.)
-
-How about this:
-
-  - If build_fake_ancestor() fails due to useless sha1 information, try to
-    apply ALL 1..(N-1) patches on their fake ancestors.  This will build a
-    lot of unrelated blobs but will build the missing blob.  This will allo=
-w
-    us to build fake ancestor and apply N on it.
-
-  - Record in am_state .git/rebase-apply called "postimage-attempted" (WIP
-    name) that we tried to apply on fake ancestors all the way to N.  So if
-    patch M > N later fails due to missing sha1, we apply ALL (N+1)..(M-1)
-    patches on their fake ancestors.
-
-  - Optional optimization: if patch N was applied on its fake ancestor and
-    "postimage-attempted" is N-1, bump it to N.
-
-This is less optimized than you suggested but it doesn't hurt the clean
-path, and this logic kicks in only when patch application would have
-otherwise failed.
