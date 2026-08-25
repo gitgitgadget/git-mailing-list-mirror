@@ -1,82 +1,84 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0CB32B105
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 16:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED81531C8
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 17:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787675795; cv=none; b=bG36QL44gix7UaLO44yxqwLc7EwoBwEztiJsN6cDIU3QuwHVTyIHhLxln2oNQlGTUbaaxEJRITj3fP/qW0it2jwUBcVJrd7HwmgfCXiGr1X9/rpKy5QPLyJtgPA1pFCv+vWv+QrGqfkTZIH1U1Kg4skDfCzZ0BJ7UweW4MIiApk=
+	t=1787678079; cv=none; b=svm+ci4dSI6K16NriK1/DcpGpIHqqKM+F0SFWrSeutXULLwLdK4Ig4SltN69ggkLoUGnK9o8cVPk5ZWcIDj2LCVg7Tdmu93E01iDCZvf54Qc2u5N8Ckl8DS64Fa/CueeMUQsQC4RE0xNSSTlvVVS0bOZvQ4nCddcJpBHZ8BywGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787675795; c=relaxed/simple;
-	bh=JIvjH1cf2QmGN90+9iL11/k45AK6RYRyy4ZMXww+PGA=;
+	s=arc-20240116; t=1787678079; c=relaxed/simple;
+	bh=ZMKH/dOAPcOVUHIKZSaCuxaPuqVbaRl4neoDMBNLGy8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=koMo3YHcKb15yuYpKqqhRtYpibJO1vHt2/YmLKAHuSR67J+SYNwJBWC8FgR7Cqv+7qciigaxaZKZRFjJWwFI5RrumqI55SrPPMFoYoAVES9ZXy2za6LsUX/mh3Zy7q6hbKMi2D78k13zpfbsK7oxa7DhY86cTTT0vGeOq3rgVs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jPwsWv76; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CyBaCYy+; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=ivKOdVSl+HdIpYoJH0LRfc3a7R23FeoQCQu2NvGtOLWnRSDHpdST0yXzsOQRgoERTMNGJyY5kJeXlN1AA1JoNuHzUSWAa8TkvRZ4umg/L5CE6ibnCuvivI2piAShrfZgzV2zqAkslYhf+qCXnGyZ2OVS8g+1YM00DeipcqS0j48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jb7uBV0I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dX5Lh4/j; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jPwsWv76";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CyBaCYy+"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id E2B6F1D00155;
-	Tue, 25 Aug 2026 12:36:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jb7uBV0I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dX5Lh4/j"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 291C91D0008D;
+	Tue, 25 Aug 2026 13:14:37 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 25 Aug 2026 12:36:33 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 25 Aug 2026 13:14:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787675792; x=1787762192; bh=rpLD4sxv4X
-	RetERYSktAH3+U5naiL0j+woatKlT35nc=; b=jPwsWv76l39mAPEJgH3Qtt+loF
-	2CkAfNksxJzpsKW9j/EIBblELe3ETk3hNQqDjBf106kOuO9ki/LLkpGxxG8IRgPx
-	syPn3LRpc4lshnbYKlFpiIVbIWJ74T4Dc6pgAXPl5lQh1PsFLpkL1HbtnGf/osCX
-	Ph5Hi0FIEjSt0lCIBqWj1g9pLXKYxpaEy2LkcF+xUK2mPXNtHITbXq0CYFbx4duw
-	CmjKOc6wNto+CcTNxPK1+LFXz9kPeFxusWJ6XRP8B93uGxjTD0PTMJHiMSrtxDvV
-	J6SH1l8GFnRMCKSQhettO/rFNgO2WAqrWYSbd0slT/ycxBPRkvwLSEZD8cIg==
+	:subject:to:to; s=fm2; t=1787678077; x=1787764477; bh=RyGIx16D8q
+	ECnP78oRbeYjT0X0fhW2SW9kZJJ/EEB2c=; b=jb7uBV0IuIjnuw9U6Ox8haP9lD
+	k+D/M/h8ouvq4g+mxNGarff9Oud2iC2/cMLsyjNCvUUX/yBCiTHOYU1+N0psu3mh
+	bITrvCUW+d/EeIjSnGVU0pGsruLdO3U1NxDNjp/LpNkRWS5VnsfI44cn6s/mWTW8
+	Rwhff9CqUMwv7Qk53npv/MFI0B0ZMmYykxKCYybdPO9IqCtROp22ta77+UyRcD28
+	bk1oNPiwN1+NfOxrPzw3yopfgQ2OgGWC2UhtTrbMlr3HM/MWNss9yvsPqq3evvzf
+	jj3LiS5beUplidYPRzfAoSi9W/fDKplhed8GOTuuj/L+o2eO7nK0l6k+8ynw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787675792; x=1787762192; bh=rpLD4sxv4XRetERYSktAH3+U5naiL0j+woa
-	tKlT35nc=; b=CyBaCYy+N1MdKLfcCE6pc14Om8Xl7cXFZEi8PjxVVvprt+wIYnT
-	nTy7568h1z6BjLqEoHw0voWkeNtY2ZzDhuZUp9W5edU4u/RNVWEGhvhnvZta1ECg
-	H14SmcT4kzsHHIHRBESF/dwW+ECdsOZjvOs3vdAaGly8vkJqKdC/2Y6XWxYPrbXV
-	U+aNl5Zh0dRsKl++cO3X8vWqW7B/p2fBk9YF3XlrTEIVnvRdAz/EzncBtBmevlJG
-	XplvcZYU9V40jFgAHl3Ik9SXAk7zOtIyOWkdtfOb9c/7taIZ9gcUytSvHFPMZRzr
-	i+5wc/hb/SXE1C3JHJGLyEOIq0oxdsafKAA==
-X-ME-Sender: <xms:kMSNal9P9HmyEf6iZXh7bTPv0zO7CnvmE63GVHZ6Q7s9POZZMvOYog>
-    <xme:kMSNahIdu6sr3XFGQfLI90hIRgA0xnAFfoEjax3YbXCRTcJDM2uiK6AGPiQlXmVAP
-    uy6f_RDV93Etub3HqBsMN-3x6g-Ok5sckHzXTeQURlKMUlgauMV3A>
-X-ME-Received: <xmr:kMSNagaV39emX4YWhUq5Vjx3TOCNCbojRtLIvyHrxhdU9T6lY01gZvgASBeLdKhhObm2J5tPeJ7TTHOikBXKAWjL6bU2XZfRvw>
-X-ME-Proxy-Cause: dmFkZTE2RhSLZ6KGvZuTFFr8zjyVmhwUJMjMURBcztYHnhmSr0XiomgG7ERRx5/zikwYn+
-    ZZJrnUOMimPymk06TrczLzMzsCbgdumlg+xcE3XSerByTu9ZCrCuxY7N9VzzYxjrL9qM9q
-    Qt7okbzuE6Pw6ud7n92XOmFLjwkKj0z/RW4O9/nwcC63R2lnDhrRvBvAro2zCJbZSzQK/5
-    1ROrQyQpB0HK1mi5i0OPqxVxu+4pQ1jgWt+LQ3CDFa1uF9m/zRPtO4dM6cqad7h3nhJbdv
-    M7s3CH5L2OJBRK8N58QZ9Z3ylNCsK3m8zkdHRjy3SMrXrApKmumawbPhTSS/oZIWBH6SAX
-    b+VC/DM6OsOCDDIzhGXZea1s9IimRIKL8Au28aCTtPyUq8toBtL76ZkyHYOX/gj1p2zJWF
-    AnlCcgoWZCZHhxvLcRryHa5ZD6LJLlxrpsjLuaO9OTZkBILsOK2X6y+2lUaFVuMaYk/KeG
-    xOyFOYkQC6Gum/5gyeup/q5cOHWy1n6k7oOMcA+Dc3kqR7qWLfaCRVhGynmoA+37HLmXmo
-    VzgvoEVde4mV9kSe/facI58zfFitW4CCxTy5/wrtMIah/pUYWZfqGwaTt9OJY7jPjvTYAn
-    7jVBoFvhUMixzSxPqOTrBV0qMdAVXSCXEc3dnePbdh1V1Mu0mdhEMcKaQ7ZA
-X-ME-Proxy: <xmx:kMSNajJbaEicHHhvoS8zqIF6JwcwyAcNre3_Kbwuf1KqAK9YIPYIig>
-    <xmx:kMSNauA7124cFTzE6SfdRuBlVKmI7IB2KkXDDh7vwIHhYdGJIVoDoA>
-    <xmx:kMSNaoo_gQ6xQGHY3rmfE8hoORLRncVrUFyL-r566iAp79e9eTUJ1A>
-    <xmx:kMSNapgTKfkOCVdrV5nyAprlSY7RM9AxDtVfStF1mQv1KKkONAz67g>
-    <xmx:kMSNaj29gu2HbABxno7xmZ2x0IaV893DIZerq5ldaOu3u2lHoKcEdttX>
+	1787678077; x=1787764477; bh=RyGIx16D8qECnP78oRbeYjT0X0fhW2SW9kZ
+	JJ/EEB2c=; b=dX5Lh4/jT1xgDKacD+2DnThKxXA6I8QrtCi61btzqdxatX7Zx9Z
+	LO0nLEX6mIaSF8Lu1YE1cEVIhR0xuifAw+u5wYFMYe9NTOQBUXtqeUlZMEvjx9S5
+	siKjjjZ7LCK+inTJzn93d7m4i5UF/foeqb1sFYi88OF4JzZ/m62+RwFdNSBIZWil
+	vjmFkKsH4r0b5iWyK77vOZN8ujmvnNWKcdb4CNX2aB+TVJcQ8BYjc3Tw43GNUdLt
+	jYR0qENy9g5+Jpmswu3L3yJcHRP99er0+Au2pJ+kGFTeBH91EeoTFIDqifEajEv5
+	H//dqc7drkwEdXyzUnieLdN2bX+vCC/pi5A==
+X-ME-Sender: <xms:fM2NarHx36A4Dd9FsVzknHt7iXNo0wMJelyVPvDeeECFfEFCZ_0l9Q>
+    <xme:fM2NasAvHPdsHUVPVV388JLv4kzNVDS0muEjVWDnlWgKwc13xcrjONFGLIoV5rbtt
+    NAc4MKfMIn0t0sSL1E7xvq8kksPynrvB6fuUUEWpGAC77j1j16RhQ>
+X-ME-Received: <xmr:fM2Nam8vqlfYuNqzvwFaWDEsFb1NtAmUW2SDjWbAOXsqeDBKxCoFP65Nz-xbGZTibJJ4wbDAxwlkxKTgYriafLql_E-ehhTfZw>
+X-ME-Proxy-Cause: dmFkZTFxOUkzOAeDXkDmK6ZFZ4b9xQrdDz+QK1Ia7EIayi2RlQC3MjrvZAOhD5RgvbaOKS
+    YWBT+Eye1PmiUlZ3h6ly/fOBarthMEMGWHjDVCwlfA6sjKWJ0YmrM0mNulTsHxM+g4IeWM
+    dV5WifM584yzh+8qYiNBTMW9t1GwBujfoPGwE7qyQWGgZ2uPn4vMlaLsHRKwQf2Q+s5JE5
+    wOeoHLJoNegCGGqri8cSxZF+rYZx0CTRS9IGbGfMJpe78nnvu0MFN86DimblM5oB02uNPa
+    8lg70ZW4D3SrFhbINRP5l30DyFcpCC2l8GxogeARZZxyZckhJw/VUjVelei+HvlIa6SdK8
+    r+ecVpEkyiDPOmLIlAnXjh1RiIK8fENo++JK5QKCE7gb1ASXnyvKR1QPrjm3VH8F2AWY08
+    /RjqWH0bbV5pSeTd923bwbrTDflQfG+Vt0FDrib8v5htkW4aMZaLUSTn4RaPLP9Xy9D67z
+    zx4NVQit6QUancrutWq/aLvinOJgROKfKWlzf73EU1HJIK7Iak+shsiaKp04Vh3suPTo8D
+    V8Izm9kM3JVPn0RNwwsDoKSEJuIZe8WXzrxek2g0qsvcN4InONbe1c0v/26NwzJWhVhLQS
+    ujtYS86/zb9lCiqhk3K/5tYOXPXy5A2dWNYRiie0X1Ilu6kn1Oo5nEJ55Hxg
+X-ME-Proxy: <xmx:fM2NagBcVRoUqUdVjnS6i5pPF9I6SyNYb2h_B_vvYNwOe1TDQacd7w>
+    <xmx:fM2NajT7dR0sqtwb9Nm3H2T2ofYeS3KGPyUCL8rqJon2LffprIEVsQ>
+    <xmx:fM2NavvLDMYFE0BsffCNygB-ClrSuLbZIObjqZMYfF9_5j-cRlFANQ>
+    <xmx:fM2Nan3SIpbbS5D7XLvsnPdFtsyARVIB47zPF0HxmA0ix0766rxHhg>
+    <xmx:fc2NahhtiytcSt3C5zK2rffL8srRKirnoHE6pkAvgXdVuaGlRiNErCA->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Aug 2026 12:36:32 -0400 (EDT)
+ 25 Aug 2026 13:14:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 6/6] hex: allow only lowercase object IDs in
- breaking changes mode
-In-Reply-To: <20260729233215.398654-7-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Wed, 29 Jul 2026 23:32:15 +0000")
-References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
-	<20260729233215.398654-7-sandals@crustytoothpaste.net>
-Date: Tue, 25 Aug 2026 09:36:30 -0700
-Message-ID: <xmqq8q5unomp.fsf@gitster.g>
+To: Nikita Leshenko <nikita@island.io>
+Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>,  Michael Montalbo <mmontalbo@gmail.com>
+Subject: Re: [PATCH] am: record blobs of cleanly applied patches when using
+ --3way
+In-Reply-To: <20260825085516.66088-1-nikita@island.io> (Nikita Leshenko's
+	message of "Tue, 25 Aug 2026 11:55:16 +0300")
+References: <20260825085516.66088-1-nikita@island.io>
+Importance: high
+Date: Tue, 25 Aug 2026 10:14:34 -0700
+Message-ID: <xmqqmruam8at.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,52 +88,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Nikita Leshenko <nikita@island.io> writes:
 
-> IDs.  Note that in t5324, we change the hex character from "A" to "b"
-> because in SHA-256 mode, "a" is the correct value, so our test_must_fail
-> assertion will unexpectedly succeed in that case.
+> Make "git am --3way" succeed in an edge case where it currently fails.
+>
+> First, some background about the case:
+>
+> Say we have a patch with two commits, A and B, and both of them change the
+> same file.  We apply them to a different repo on a different version of the
+> file using --3way.
+>
+> If both patches apply cleanly, we are done.
+>
+> If A does not apply cleanly, git am falls back to 3-way merge.  To merge,
+> Git uses the preimage hash from the patch:
+>
+>     A: index 83b2a16..cccad2b 100644
+>     B: index cccad2b..0ce2f98 100644
+>
+> git am looks up 83b2a16, applies A to it, and merges that result with the
+> current version of the file.  As an important side effect, applying A to
+> 83b2a16 also stores A's postimage, cccad2b, in the repository.  This means
+> that if B also doesn't apply cleanly, cccad2b (which is now B's preimage)
+> exists in the repository so we can merge against it as well.
+>
+> Let's assume instead that A applies cleanly and B fails.  Because git am
+> didn't have to 3-way merge A, nothing created cccad2b this time.  What we
+> have after applying A is our file plus A's change, which is a different
+> hash.  When B doesn't apply cleanly, git am fails because it doesn't know
+> what cccad2b is:
+>
+>     Applying: A
+>     Applying: B
+>     error: sha1 information is lacking or useless (file).
+>     error: could not build fake ancestor
+>
+> However, technically we have the information to build the fake ancestor!  We
+> have 83b2a16 in the repository, and we have A, so if we apply A we'll get
+> that hash.
+>
+> So do exactly that: if the user requested --3way, apply the patch on the
+> fake ancestor even after a patch applies cleanly, in order to produce
+> intermediate hashes for later commits.  If the preimage is missing, or the
+> patch does not apply, nothing is recorded and git am behaves as it does
+> today.
+>
+> This does not change the behavior of how patches apply, but when the user
+> requested --3way it does cost one extra "git apply --build-fake-ancestor"
+> process and one extra apply per clean patch.
 
-This was a bit hard to read and puzzled me, as you have two "A" and
-change only one of them to "b".
+If you have a 50-patch series that cleanly applies, we would incur
+overhead to spawn 49 extra "git apply --build-fake-ancestor"
+subprocesses, to write and unlink 49 temporary index files, and to
+perform 49 in-core patch applications, generating unneeded loose
+objects in the object database, and loading and unloading the index
+file one extra time per step.  That is simply unacceptable.
 
-Is the idea that we wanted to make sure we use lowercase letters,
-because we do not want to see the tested "verify" command fail for
-now-forbidden uppercase hex but we want the command to read the data
-as valid hex and fail because it notices the corruption?  So the
-first hunk is a no-op change (i.e., the first hash identifier on the
-first line is corrupt with the 30-th char in the file replaced with
-either 'a' or 'A'), while the second hunk is not (i.e., the second
-hash identifier on the second line in the file is corrupt with the
-70-th char in the file replaced with 'A' but it is OK with 'a'
-because in the SHA-256 mode, the correct character for the place
-happens to be 'a')?  It is puzzling if that is the case, because
-what this series wanted to tighten was that we used to treat hex
-chars case insensitively.  So, if 'a' happened to be the right
-uncorrupted value for position 70, how did the original that
-replaced it to 'A' tested a "corrupted" state?
+Can't you do the equivalent lazily inside fall_back_threeway()
+instead?  A rough outline may go like so:
 
+ * Imagine that, after applying patches 1..(N-1) successfully, you
+   are applying patch N.
 
-> diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-> index bf7ba0e558..29db815c77 100755
-> --- a/t/t5324-split-commit-graph.sh
-> +++ b/t/t5324-split-commit-graph.sh
-> @@ -349,7 +349,7 @@ test_expect_success 'verify after commit-graph-chain corruption (base)' '
->  		test_must_fail git commit-graph verify 2>test_err &&
->  		grep -v "^+" test_err >err &&
->  		test_grep "invalid commit-graph chain" err &&
-> -		corrupt_file "$graphdir/commit-graph-chain" 30 "A" &&
-> +		corrupt_file "$graphdir/commit-graph-chain" 30 "a" &&
->  		test_must_fail git commit-graph verify 2>test_err &&
->  		grep -v "^+" test_err >err &&
->  		test_grep "unable to find all commit-graph files" err
-> @@ -364,7 +364,7 @@ test_expect_success 'verify after commit-graph-chain corruption (tip)' '
->  		test_must_fail git commit-graph verify 2>test_err &&
->  		grep -v "^+" test_err >err &&
->  		test_grep "invalid commit-graph chain" err &&
-> -		corrupt_file "$graphdir/commit-graph-chain" 70 "A" &&
-> +		corrupt_file "$graphdir/commit-graph-chain" 70 "b" &&
->  		test_must_fail git commit-graph verify 2>test_err &&
->  		grep -v "^+" test_err >err &&
->  		test_grep "unable to find all commit-graph files" err
+   - First try direct application of the patch, and it fails.
 
+   - You call fall_back_threeway().
+
+   - build_fake_ancestor() is called for patch N; if the preimage
+     blob exists, you are done, but the case you want to address is
+     what to do when the preimage is missing.  And in that case (and
+     in that case only), can't you reconstruct the image chain
+     lazily?
+
+     Instead of returning error("could not build fake ancestor"):
+
+     - You inspect patches in .git/rebase-apply/ for 1..(N-1)
+       patches (i.e., those you have applied already) to find the
+       relevant blob objects involved in reconstructing the
+       preimage blob necessary to apply patch N.  Some of the
+       blobs may already exist in the object database (83b2a16
+       in your example).
+
+     - Apply these previous patches in-core to arrive at the
+       preimage recorded in these earlier patches (applying patch 1
+       to 83b2a16 would now give you cccad2b), until you see the
+       preimage blob recorded in patch N.  Write out that blob
+       object (and not the blobs that the chain may have
+       produced as a result of intermediate patches).
+
+   - If the lazy reconstruction yielded the necessary blobs, try the
+     build_fake_ancestor() call again, which should succeed.  If
+     not, you can return error("could not build fake ancestor").
+
+   - And after patch N succeeds with 3-way fallback this way, you
+     would also have the postimage blob recorded in the patch in
+     your object database, which may help when you apply patch
+     (N+1).
+
+When the patches cleanly apply, or if 3-way finds necessary blobs
+already, there is no additional overhead with the above approach.
+
+Hmm?
