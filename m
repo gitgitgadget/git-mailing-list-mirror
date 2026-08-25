@@ -1,81 +1,81 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C163733E348
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 16:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B0E3321C2
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 16:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787674306; cv=none; b=L2wnl7IPrAdSg3dZG/N34+XkndDm5yJdMLznv6qA0Q22z6Srczlm3IHefGgzhGMGoLtIDycTZ3HqZREncSa2UkrINF1Fs/IT7C6FVyQKYKKpuvUWH9PqjQTvjzgZEv+m++dZosaVBtxIofyUjG7O6TQpWwA5XIbDTQ6cq79jLEU=
+	t=1787674776; cv=none; b=sp9F3Nxb35tDwPm2UDyg/IcUfLH+N/ejWrtGjLOZmCTCwzi2pP06Hi05jA9X4bOmN71BYaC6MVns3h8O7eiIKlQRWkmMsUaW1M/4y0JYXPzWBDJcm2PWCXm1GNHy1TALMZntd0JetFvmo8NWOEP1x5wbB68MCRP9U+NbIehBCAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787674306; c=relaxed/simple;
-	bh=klN1ZKdBxzLoWmTgxVeM2w2aO/lD1lpkiVraD+pSmpw=;
+	s=arc-20240116; t=1787674776; c=relaxed/simple;
+	bh=q30/sl1w+556LlTTLb2TQtU5dc/phZU2a0uxAQId8bA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DHDVVJcZkkt6AZ0pdxxSlPK+8TLRqtx+qkLV5w534NCm16ivpWRyxL1pUlBwt5DxJWk0qdaxJ4zzZxTvKgd73wSxkn0ezIK4NAwdm5LJvRdIAxtFMehWCoTy4zfLgILdpvxNUtwu9Tsf5wez0zhwJUB7GYI/boTQDiKbZFonDyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b07MPrTh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dljYMPox; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=FCA6Hk4b7ENlFehIB/9OYkal4UMNRxTM9uI3sGsuQOMZPolPmhHXfn7fRmbx/zmTrIjxil5TH1Z1R/T+xSn4sGCez8IE+82cJSKdl4uWT+NPxR03IQk890GdlHjPVlGS+zxFbbY0tUg0rNtfytBtbwHYKGv7b335ZS1GXzE9vvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=llN0IK87; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aZE6bGo1; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b07MPrTh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dljYMPox"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 28EFA7A0071;
-	Tue, 25 Aug 2026 12:11:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="llN0IK87";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aZE6bGo1"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CAB3C7A00BA;
+	Tue, 25 Aug 2026 12:19:33 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 25 Aug 2026 12:11:44 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 25 Aug 2026 12:19:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787674304; x=1787760704; bh=sqUUm7ZAAj
-	fS8/6+sR9fF44+yzKLtK6970X+v9QBqO8=; b=b07MPrThQh0SYgJ3VgoYemwb0Y
-	hOFd0YPmmPAvq0ZiohEN51mLxBY3onpiSAFj5w5hsqGWC4VFPn8BGklkcuf5AhNu
-	Y5wZ0MA4KCn0M2RBIXYNFPiJuBYsycGcC+TYYcXOSc/Zyk0kZ6FVQutuKo0kZ4sP
-	We/O4P7DuCrwRT8Wwbi1d1uHPMVafncNTGj5CJDq+0ovoH9owaFFDXVuUQzi9fUp
-	C6IOYhXJ/JX8lU8poR0HQda2DLapN6fdnaRcyCvLgC+L1BhpH4J32fR3ya7oLt9z
-	gG4Fq63oRCJQLlMfV5plDooVYGEvP1yFPai5DRsCwGydasjIIezQd48HqzGA==
+	:subject:to:to; s=fm2; t=1787674773; x=1787761173; bh=eNQbi0Lt4b
+	ud3Bt0Sspquo8VJvGuxDzNVW4lFhxSsYc=; b=llN0IK87szVAWnlIhQUsjrNttD
+	BF5KKou74LA3iIQoGmOv1MnigKgObB3PcTcpRTE+AlKefNuhnKPSZaxMlTwjaPq+
+	5uV8TNrqhOPOrh6lNDj08cMSY/CLTGab/ps/yYvxtY8nm/+TVjsib+sJDxu32a47
+	M777+yP+A+AkBUeSNygHrK5oSjFuDhA7vlnr6Z9nen/q5my8TyVNv19M6eoP6Q3s
+	pVZvIoCWiECVKcbPRqqHOuh5tudHQ7D9fdjWgKB53XvvIQ9UWBoQOEcXv8DzdvwE
+	6EHCWbZufgkdUeZgoe/9DeEaHbpl2R33rtynWogjDfwH1IvNvj1SrgbAHFeQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787674304; x=1787760704; bh=sqUUm7ZAAjfS8/6+sR9fF44+yzKLtK6970X
-	+v9QBqO8=; b=dljYMPoxkcsw9kV1AKksWm/4cGIJikMk7+ub0GuEfGZmWRE91Gj
-	fsbiH3udMp45levHvPc4IdV5MxpGO4dAclDDXWKM0jgtW26hwolomei8TMRowRTd
-	KiqzEniMP0hgJIRvLGviaJ1aInvRVdHDhEDdY2NPKtbGlJd+25qUsKZYR4srBSUW
-	p9CohCaG/to4Q41xg1YUqGi7qQTchNw4T0NSeY7lRfMmTetjb00Nt4gb934X6tgB
-	97NZccG0Z7v1XRjlA0ALGu5h1FgWwRUcLTNMr4gkoMX3e1+5Euq7XrR6ZqhNHY1S
-	TwFcqXkhP+Vni9fvwFIbb59U3eXQySrZvgw==
-X-ME-Sender: <xms:v76Nap8jazJe1gd7CqqA2bA_mM3RBnMAA7ZyznfiK4BCql21YJfu6w>
-    <xme:v76NalL8BCRFqO8uXv7r1d1hhpsWfhFUGh5ytzf5zA6g6RDRl6_6gTkz1QntQUoK6
-    ub6Znu3yC32bLKVqgspjKwl32pUUKj2p56Kn4_cm5jyYwWife6A>
-X-ME-Received: <xmr:v76NakYj57xSVBAR58W30BXbLdYndnGJPFd9s91Cb8KaJy_ZaLwTpF7y6dC8EkI3vG9O7lcO5G8OkqHBmiMgIhxmgFBWTujcFQ>
-X-ME-Proxy-Cause: dmFkZTF48VxPOd4a2xgMiAclGpRYNBHUnYihZY/1uHCxYn2NenOmJ2GKkb+TF6Q8cuNtDI
-    9RgekwSNLsq/88A5leKzFT8CBfc2PBPZv4Y2/Zran11iaUwjapfwKT6NCWIzinjrrQMrV/
-    c6R+5W2HBnJleMzmHE9Jvf0FDJIdsTAtk82BIAwkXmSd8gDD9DIUhV/r8413g5GNvSuQrL
-    0/0vUBcfkAar2oyrwbeZvHOwVDDCm8gbvzUWPitv8q5bLPqghpHi7X9sjA+2miHIKhCP7U
-    tuCbBnrgqAr3nny5Pcx2aym8IX33I5dGyK/rrCNFu8BpBKU4eEGS9E3twGuh9x20b1b8AR
-    XbyvC19yEzh8mdU6Akd74DbCCUQAallkGAWtqrpeL6uGBPb1p8DdHHdyZyyh0MNHgWrKpS
-    68jGxueL+J3yPGA5y76rhwV9HkU8va+5/2UwO4wAyhZOcl+vmL9yIFmPKh2D6dnmGxDao4
-    2v+QQABgW5BDcatKaV9uCsEyZ2UaDpbcByGE4ByLexQKw0pmrhMlpNEzJtsN4ffa9ShlWL
-    zdUjatHPNS1uQRBprNLcOkNuJgzCUQoZPBpr9+lfiWHoNiNj38Z5KOcewtbXo7j0ZqzzZH
-    u5/l24ue/DrtZx3iaMB2EJCFdRPYw62PCLmXi89ODXAP75TrTcp/VrzLRbwA
-X-ME-Proxy: <xmx:v76NanJsbTnZauvkSBRPQpV1qXHmE0V4X0qhHwd5C_aLadt4CjeIsg>
-    <xmx:v76NaiAUfwJkWRsSMHO_nSvx2eP6E3NxWtQ30642H7O5v0ZAOh6NyA>
-    <xmx:v76NasrSQZScV0Uyq8TMfRuXztnXSDHO1MoCp6KdBK6rFkJxF5ahew>
-    <xmx:v76NathFcy-go8RFlQyltDSnzb5s-9R__aZEpx9clzD1i35dvoFL5g>
-    <xmx:wL6Nan1C2-P3AbKYT6B1ybCAbpnW7qKweEtx_MUoboCT4AtRTO9Y6-jC>
+	1787674773; x=1787761173; bh=eNQbi0Lt4bud3Bt0Sspquo8VJvGuxDzNVW4
+	lFhxSsYc=; b=aZE6bGo12x9uJpPAOaBF+dxmNYxHJGzBdVop8s2so/OAtnoAkQ0
+	kGHvYORoacpdOuJWvuU7gt29HKv815zn7mXWC3OvgqpDZU0TErnoCmfJUDLrDFap
+	MMtA9rkEwYQ24epJ7tqLrdujdxqkAfoAZ7iWNYTajW71x4kPpUE2+CDulB1+/YX9
+	QuTpOfJptcH3fOJIx6FyfNjm9dcP4BckRSd/BayZGbcP9003iNmXLCKdjK42Jz/e
+	J9TpHDVdjvJ9+Z4wqihChvvaz+AbEZR2sc9r/iAOWCw0VLE1dauDz8X+4HC1yr3g
+	TSmyoHbYPDegWM/AH5i9qP4IphSDlqNUQLg==
+X-ME-Sender: <xms:lcCNamJTWLuJ8vKsEO9sfUiDWV2SpcknGDIOLCgKgKUKIMU7QfGEpg>
+    <xme:lcCNalmEr6vVE2qvgcwmizJ6qNJzX7_VAI9l1hWcHf4HnlV9MeXarlZdGAlp0O2d7
+    TdCHylgC4Hgf7EluLe7W6j1ueLuhMATRqPtbHf-k1gkXc-vS6bQKw>
+X-ME-Received: <xmr:lcCNakFYLS_0G5is8s_Sc2e_60Q_xK5l17QLvzkex8Aq8gAn3T1Yzg48x3IxueEc-UT14vEAbqgOhMs3J0tUVN94QTd_dslNKw>
+X-ME-Proxy-Cause: dmFkZTF3tKLUxJ5eeBEGXHsaXQRiZWgUTLkeDQNC24txiLAIXZ5V4le6WH+ABXyrs2Ly5o
+    0Ep5e3Krn9+HobyCWPW3uGn0OyaqyUfkw+HAxSnWcE7mEMWDR19CWiJnbR6r5Uh3iolcqx
+    zVKMvMhrtn3uq5oDx6XTn1Jc2hmziWpqr4rZQ2Osw/A/CSnBP0r9KtQZu3CXYHp/7KswgP
+    JbUUwDHZb2/hxQydekW4qTLBG0rFnPMjvSqMfup2+3H6mDAPxzLpQpCut8lfF9vQNx2Pep
+    kn8lLMsJzhmI4zTAp7CJJSRwPF1gi1o2MrNHFnDkmw5Gg+TEt02vBl2LStwMkozv90+SFb
+    xuhqHv2xGCQ+cQJ6bmEbQVCdCa36GAxnUt4+nwO6DDYFXFRfypEcfmbb00ReyQ/0oA/IbH
+    4MQK0WRyzTpuo4lXbAF2iezHWgcTvzN217fJvyfyqaVmOdjGLSt67eTQoWAPKsZqni9sZp
+    yb6YuSljx1wQbAP+ft7HDGwhXUWCDdAmlfuhTeRtaFTom/S8RunNzVqtQrqVUQV1uEUPjN
+    j8reuVT/ug0UK8cGsU32r2awKLkC78o22ElyjtMhl/o0yURNTtXvsBCO3n7URx5uSeBzZ5
+    85hROa+cCrNa9i74d/WsCk+YsSqYD2dbr61Z1rmcrn4oHjTym6NwIPgOkddw
+X-ME-Proxy: <xmx:lcCNalF9T3ZZiWMvzwPkAPhYdInDjq9JMXPFFLiMEe2fccGOIHeGTg>
+    <xmx:lcCNahOdfPnCMAkY-z9FYvWUei4_kOGhf99v6e_xgaaFDZxxWfti9g>
+    <xmx:lcCNakF0Q4GvkT9i0_y1A1cs7tq5urm5u-kWxu8u4rGKkgYbucpvHg>
+    <xmx:lcCNaoPv6Zumdod7miTeJTrpFFBH77fM22x_99es_4JpwvS_-Dei-A>
+    <xmx:lcCNasw1hD1As83eY8KUY2hkbYsoTjfIZ3TLXQi6gwBjJA1nXylJNN6w>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Aug 2026 12:11:43 -0400 (EDT)
+ 25 Aug 2026 12:19:33 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 4/6] hex: label usages of hex parsing for object IDs
-In-Reply-To: <20260729233215.398654-5-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Wed, 29 Jul 2026 23:32:13 +0000")
+Subject: Re: [RFC PATCH 5/6] object-name: use hexval
+In-Reply-To: <20260729233215.398654-6-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Wed, 29 Jul 2026 23:32:14 +0000")
 References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
-	<20260729233215.398654-5-sandals@crustytoothpaste.net>
-Date: Tue, 25 Aug 2026 09:11:42 -0700
-Message-ID: <xmqqh5kinps1.fsf@gitster.g>
+	<20260729233215.398654-6-sandals@crustytoothpaste.net>
+Date: Tue, 25 Aug 2026 09:19:31 -0700
+Message-ID: <xmqqcxv6npf0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,67 +87,55 @@ Content-Type: text/plain
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> In preparation for a future change, label the hex parsing we're doing
-> for object IDs by defining a constant called HEX_KIND_OID.  This is
-> currently the same as HEX_KIND_MIXED, so there is no functional change
-> here.
+> We've open-coded a different implementation of parsing hex values here
+> when we already have a perfectly good one in hexval.  This
+> implementation will almost certainly be slower because it isn't
+> table-driven, unlike the other one, and since it's not constant time it
+> has no other advantages either.  To tidy things up and prepare for
+> future work, switch to hexval in this case.
 >
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
->  diagnose.c    | 2 +-
->  hex-ll.h      | 2 ++
->  hex.c         | 2 +-
->  http-push.c   | 4 ++--
->  notes.c       | 2 +-
->  object-file.c | 2 +-
->  6 files changed, 8 insertions(+), 6 deletions(-)
+>  object-name.c | 13 +++----------
+>  1 file changed, 3 insertions(+), 10 deletions(-)
+>
+> diff --git a/object-name.c b/object-name.c
+> index 83efba0ba6..d2d81b3511 100644
+> --- a/object-name.c
+> +++ b/object-name.c
+> @@ -236,17 +236,10 @@ static int parse_oid_prefix(const char *name, int len,
+>  {
+>  	for (int i = 0; i < len; i++) {
+>  		unsigned char c = name[i];
+> -		unsigned char val;
+> -		if (c >= '0' && c <= '9') {
+> -			val = c - '0';
+> -		} else if (c >= 'a' && c <= 'f') {
+> -			val = c - 'a' + 10;
+> -		} else if (c >= 'A' && c <='F') {
+> -			val = c - 'A' + 10;
+> -			c -= 'A' - 'a';
+> -		} else {
+> +		int val = hexval(c, HEX_KIND_OID);
+> +
+> +		if (val < 0)
+>  			return -1;
+> -		}
+>  
+>  		if (hex_out)
+>  			hex_out[i] = c;
 
-This is a hard-to-review patch in the sense that what we see in the
-patch may be perfectly good, but we cannot see what is left out,
-either by mistake or by misdesign.  So I checked out the state with
-this patch (and no later ones) applied, and eyeballed the output of
+When hex_out[] is given by the caller, they used to get a downcased
+version of object name.  After your planned transition to forbid
+uppercase hex, they will get an error, which is exactly as you
+intend.
 
-    $ git grep -n -e HEX_KIND_MIXED
+However, during transition, they will *not* get an error (as
+KIND_OID is still KIND_MIXED before the transition), and they will
+see the hex_out[] filled with object names in the original case,
+without canonicalization that the original code gave them.
 
-At this step, a few explicit uses of HEX_KIND_MIXED remain that I
-think should have been converted to HEX_KIND_OID.
-
- * builtin/index-pack.c:repack_local_links() spawns a pack-objects
-   process and reads its output.  As we are reading from a known
-   version of Git (i.e., pack-objects that came with the index-pack
-   that runs this code), we do not need to be lenient and can use
-   HEX_KIND_OID here.
-
- * notes.c:load_subtree() has two calls to hex_to_bytes() to read
-   paths in a notes tree, and this patch updates only one to use
-   HEX_KIND_OID, leaving the other one HEX_KIND_MIXED, which we
-   probably should change at the same time (if there is a valid
-   reason, it deserves an in-code comment to explain it).
-
-
-The remaining uses of HEX_KIND_MIXED look mostly OK.
-
- - color.c uses MIXED to decode things like #AAFF00, which will be
-   correct forever.
-
- - mailinfo.c uses MIXED to decode Q encoding, and we have no power
-   or business to forbid uppercase hex there.
-
- - pkt-line.c:packet_length() uses MIXED to decode the packet length
-   expressed in the four hex digits at the beginning.  We could
-   forbid uppercase hex there (our length bytes have always been
-   lowercase) if we wanted to, but HEX_KIND_OID is not the enum to
-   use to do so.
-
- - ref-filter.c:append_literal() is similar to the next one.
-
- - strbuf.c:strbuf_expand_literal() uses MIXED to decode %0A into line
-   feed, etc.  We could forbid uppercase hex there if we wanted to,
-   but HEX_KIND_OID is not the enum to use to do so.
-
- - url.c:url_decode_internal() uses MIXED to decode %2F into '/',
-   etc., and we have no power or business to forbid uppercase hex
-   there.
-
- - urlmatch.c:append_normalized_escapes() uses MIXED to decode %2F
-   into '/' before escaping it back with %02X.
+While seemingly harmless, because repo_for_each_abbrev() doesn't
+seem to malfunction on uppercase string metadata for
+disambiguation), we may want to mention that this changes API
+contract (until we forbid uppercase input altogether).
