@@ -1,175 +1,95 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24193E5A1F
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 21:24:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B537F3E00AA
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 21:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787693082; cv=none; b=grIC5VJcq1X0fZ9dVITX6INX96Td38e6j32UHf3U5+bMcFi+O3bQP0/SgS4o1BVzEq0YkoRdQqTuHVOlh3AIFmHYvZNjOLIYcRMs8AFEDp9e1XM+CxKu7F1sgpx4Mvj5NracLf+lvP3QQU8dZNIfHwouhHSyO0VRBXgGyDN/KZ8=
+	t=1787693121; cv=none; b=LpibXfjJyNxTzO+RtMrCPICtcVyMIeOj/m+DFzB35LR6phrBRj1+qyH+mRKGnrbBcW/ieY1dSkrndpEc2WwEY0qJmgoQjSi/1p/eJutC4qz8to+2LHi4q4fYjZBgSO10sEbkjYW2FRDvhuuC8+hHc4fskOAHEC3sHP9fgVflZ38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787693082; c=relaxed/simple;
-	bh=f1EoCmN3q1voZehglMsJIdTz2XGprzWrHLlEPAO6wDM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NA94+Ut8LNvtbEiVnn0DVchtHh/I0PUS762JpeSKS7fkS2+bEDzXgK2THF3Cd9uMTOi7ORYnrPEGujdLq1+BlG+1v3luGEIbdUaybyiOZziTd74/PjABtduViJ1lxPRW6u3J8RalHMTMjtp+MItjQyguxKvmmKk7RjoIfGpUqrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZL1rb3E5; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1787693121; c=relaxed/simple;
+	bh=LyF4Hen6+RnKeAibTlcAyIcWfSw5Ps4opnw3nhaHXg4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=tzTkjKmxQGVLVrjy8XJgnOdjB/dQfczgBY2nAyljVCBBH3oZs3Qau+6UK+vWBNH/p7sIXSeYPAk89u8epzqZZG5GXamcL4iVIgWq2//YIDWvPMBROlGQS/C3gF0fWl1wcwJLVQDpr6naWQcrNVQQYzTTimoBqZu+AsIJMdygroo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lO6GN/s/; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZL1rb3E5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1787693072;
-	bh=f1EoCmN3q1voZehglMsJIdTz2XGprzWrHLlEPAO6wDM=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ZL1rb3E5u/qYwgHH5M+4CjZBgF0WUxtxSgltwNnyQFcSp0IR/0m1y8zAPPXI7KK45
-	 HcdWTR0zEVGeQwtWsC61FICLDXuEJuFOrAuLaP/KWaIkKCBbvZ3qQrN0iePdpGx0WV
-	 EvOJigF2MIYK0sq3Efa/ILfUcDrz7D8mstDHtCwEuPaSEmpW10TAeLIWZLcJwUSIRB
-	 WKgncMoIyJYq4wR0CC35T1VT/nyOGUYcXI2lrIP+spbajJ8OCMpEWWd58LXSq6wLLA
-	 N0cgEVlMwiFg9Il6Vqk4mWdSByQL6qApM5cCrgS4CrtLizJRUscYtT+oLN99guQD6R
-	 yCM36fjuKWeLct8FtlpDUhzt10Y+PijoGOc6ND2TmI7XhUTIq2fhnNTXk7o2blgE4F
-	 ZXTU9GN88/PLK0oKHkMgQBjOZnrXluhrExtdNrPpnrEBze8NB5CizchIY2NTxIDYMg
-	 mX0j+OfD6zAhkBKh3TAfMfTDGsyhGEEKoWr1O2vXb/4K7MUYDIJ
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:23b3:441d:199e:9561])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0798F20101;
-	Tue, 25 Aug 2026 21:24:32 +0000 (UTC)
-Date: Tue, 25 Aug 2026 21:24:30 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Andrew Pleeter via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Andrew Pleeter <andrewpleeter@gmail.com>
-Subject: Re: [PATCH] builtin/whoami: add new 'whoami' command
-Message-ID: <ao4IDZMbgvTTYksS@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Andrew Pleeter via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Andrew Pleeter <andrewpleeter@gmail.com>
-References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lO6GN/s/"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-ca766c1c9ccso179862a12.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 14:25:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787693119; x=1788297919; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=t6kgLnbPn9gjwgw6qI9HjJObkyfHNIognNsL3/BwxsU=;
+        b=lO6GN/s/rHrh6nS90Ha/YsoQMQAlh1vBFzxpDABioIskB1LnxGYIfdBMOgR3hnr6zD
+         jpvEvOSudfIzooZ5A9bGWMBCUEl/DsQlFWz5a/xG4EVyItGak7SMmUU5Y1LaE3JpoH4C
+         IDzkDx5hnKt0K1O2TnD5kl1KgEJsqJQoy5q1Mlq5fFqFAk5/PHe/Ww8wttpxQsol5ua3
+         FPckJ372Pu2YjPYJu8tdaJ4wpwT+/9TYk0l60e8gsKVyf9Fkr3Fa8ULgcU9QfkHhY84j
+         G1MvJuEklEuFafpLkr7MlRTIpjx5PlyuqnBzf28GvO73N9CYZaPnvZskQ5yKxe91Mx3P
+         2fsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787693119; x=1788297919;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=t6kgLnbPn9gjwgw6qI9HjJObkyfHNIognNsL3/BwxsU=;
+        b=fKyzNtEk476yOGbQzR1+I8JtAifLuVcZstiwM2LAKfBa/M6emhBE1cfxdWObSR2TRL
+         rLzz4KQnOR1co7zaa+cqie5H+78uzHXyBt6raLFPSnMkurJx6cEeJhIvXUR5F+NsUXbG
+         F0LrTcEINDLMJYBKgLSMHTBe9q13gFQ8jBw+O5tDUyjZvDqkRfSTjb/y1nsfWpT/5fN7
+         Vccst9MUXrZok6w4hyvgxmS8DCjUHkzuWDWQXa9zPPfSDKl+iVtLmMiyGhacDBFUHh6i
+         3db+4QfmrvZLCdsUKvpanAW7csHj9LClYjUXt5pZ6ZwJcV1CdpNp68zddmAVuLNbyyef
+         zWaQ==
+X-Gm-Message-State: AFuF++nm0X0ksh3oaIGc4Nr7G1510o1KPMoxfdZ3BrwTckLX5vhtPMQb
+	lSlcozKE8jYzbb+TgPo0GRJElQYWv/OeDFqL32IyTVBfuf7NdUDEM16exsdW9A==
+X-Gm-Gg: AR+sD129dwAWIOrjpv4bAZH350CaXksuQnImCjTXyIb82gMxZcFdEtShEWdDDNgPyJp
+	0JXU6tMbmBy1yJxCDgQP37fH0HQAUEahKUx88No4RaifQ9P+WPbbrBzbXggTPbLsH3DeeZXvR7T
+	iE2/M1oa69Y70p+Q7UM9bqX5C2V2HfvnhrIFcO4/2QzPGkKFFVKfWD2x2Cjt5s1DzslwuPYze1r
+	UJN92iZDqfbyQdGc9avFlnK0gt9AbNJxJymS5Oo7nqc8u1nQn5RzIkktN6a+X3d0DEvcLWR83AF
+	5Y6pz8jVKqOFhTgRDLY+/hx0OAOw137bh4x16jPAx1+BJOVql47FlSKH6BvgI3rKXQJe4v0hFwd
+	pWNRIUlRyrvV9mSu3RaHjUoPYKhksxErA62MOq6GF+Ms5VZmjil0LQhE0eLYR9bam78PMHX/ndo
+	+cmZbkiQlf0HwTiQvpvMvTfyDkjXdSZEGAlkitTH4SrXkdzO3MekZqz1Mtve450UDrjg==
+X-Received: by 2002:a05:6a21:3997:b0:3cc:917f:f302 with SMTP id adf61e73a8af0-3cf83c17569mr3054828637.9.1787693118955;
+        Tue, 25 Aug 2026 14:25:18 -0700 (PDT)
+Received: from [127.0.0.1] ([172.208.158.163])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3283d9edd8esm1598955eec.27.2026.08.25.14.25.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Aug 2026 14:25:18 -0700 (PDT)
+Message-Id: <pull.2365.git.git.1787693117.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 25 Aug 2026 21:25:15 +0000
+Subject: [PATCH 0/2] branch: -d protects upstream branches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="R3eA2LyeTV5wwr+G"
-Content-Disposition: inline
-In-Reply-To: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
---R3eA2LyeTV5wwr+G
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Protect local branches from git branch -d when a surviving branch depends on
+them through a local upstream chain.
 
-On 2026-08-25 at 20:46:42, Andrew Pleeter via GitGitGadget wrote:
-> From: anpl1623 <andrewpleeter@gmail.com>
+Harald Nordgren (2):
+  branch: move stacked branch helpers
+  branch: protect local upstreams from -d
 
-You will probably want this to match your real name since you're using
-it in the email.  We prefer that people use their real names, but don't
-require it, but I assume that it's not a problem since you just CC'd
-yourself using it (and it's also in your email address).
+ Documentation/git-branch.adoc |   4 +-
+ builtin/branch.c              | 142 +++++++++++++++++++++-------------
+ t/t1507-rev-parse-upstream.sh |   4 +-
+ t/t3200-branch.sh             |  43 ++++++++++
+ t/t6040-tracking-info.sh      |   2 +-
+ 5 files changed, 137 insertions(+), 58 deletions(-)
 
-> Add a builtin 'whoami' command to inspect and display the resolved
-> author and committer identity along with the commit signing
-> configuration (GPG/SSH key ID and commit.gpgsign status) used when
-> creating Git commits.
->=20
-> Support optional flags (--author, --committer, --name, --email,
-> --signing-key, and --verbose) for targeted querying and scripting.
 
-I suspect users will want a way to get _all_ of the output in a
-machine-readable way, so you'd probably want to provide some method of
-doing that.  Note that because your existing endpoints provide
-translated strings, they are not suitable for this.  That doesn't mean
-that they should not be translated (because they should) but we'd
-probably want a format like the following:
-
-user.author.name=3DA U Thor
-user.author.email=3Dauthor@example.com
-
-Other formats are possible, though.
-
-Possibly a `-z` option for NUL-terminated instead of LF-terminated
-output might be warranted as well unless we're certain that our output
-will never contain a newline (hint: config options can).
-
-> Include documentation in Documentation/git-whoami.adoc and regression
-> tests in t/t0015-whoami.sh.
->=20
-> Signed-off-by: anpl1623 <andrewpleeter@gmail.com>
-
-Again, you'll want to sign this off with your real name.
-
->     MOTIVATION
->    =20
->     Users often work across multiple environments, profiles, or repositor=
-ies
->     with different global/local configs and signing keys. Currently,
->     verifying what identity and signing key will be attached to a new com=
-mit
->     requires checking several individual git config and git var settings.
->     git whoami provides a simple, direct porcelain command to verify this=
- in
->     one step.
-
-I think this should go in the commit message.  I thought to myself,
-"Well, there are already ways to get this information, so why add a new
-one?"  Telling us why your patch is compelling and solves an important
-purpose is appropriate for the commit message.
-
-I might also like to see an explanation as to why this wouldn't work
-better in `git var` or elsewhere instead, since much of the information
-is already there.  Since that's an alternative you've rejected, tell us
-why and sell us on your vision.
-
-> +	repo_config(the_repository, git_default_config, NULL);
-
-Let's not add more uses of `the_repository`.  Use the `repo` argument to
-the main function above, taking care to handle the NULL case.
-
-> +	repo_config_get_bool(the_repository, "commit.gpgsign", &gpgsign);
-> +	repo_config_get_string(the_repository, "user.signingkey", &signing_key);
-> +	repo_config_get_string(the_repository, "gpg.format", &gpg_format);
-> +	repo_config_get_string(the_repository, "gpg.ssh.defaultkeycommand", &ss=
-h_default_key_cmd);
-> +
-> +	is_ssh =3D gpg_format && !strcmp(gpg_format, "ssh");
-> +
-> +	if (signing_key && *signing_key) {
-> +		resolved_key =3D xstrdup(signing_key);
-> +	} else if (is_ssh) {
-> +		if (ssh_default_key_cmd && *ssh_default_key_cmd)
-> +			resolved_key =3D get_signing_key_id();
-> +	} else if (gpgsign) {
-> +		resolved_key =3D get_signing_key_id();
-> +	}
-
-Should this also do something useful for X.509 keys?
-
-Overall, I don't have a strong need for this and I'm fine using the
-existing functionality.  However, I see how it could be useful and if it
-were merged and available in the versions of Git I use, then I might
-make use of it.
-
-Perhaps others think this is compelling, though, so I'm interested to
-hear other opinions about the utility of the command.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---R3eA2LyeTV5wwr+G
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmqOCA4JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ3XCjYHZ1SEbmb2/m8X5+Nri2t6jEjS/K6hRXPdcJYd+
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAOQ4AQDxEJkewuU7FSOzcmdgU56q9jPu
-4LSkSNZLTDZWI55FugEAggjJ7muDIeNcfhhIIKJnXvPfaXmRmHMy/vw7Y0f8ngE=
-=IVpI
------END PGP SIGNATURE-----
-
---R3eA2LyeTV5wwr+G--
+base-commit: 2c3adbb2c475981e340c79fdc5e7f4f9b5d9054e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2365%2FHaraldNordgren%2Fbranch-d-protect-stacked-upstreams-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2365/HaraldNordgren/branch-d-protect-stacked-upstreams-v1
+Pull-Request: https://github.com/git/git/pull/2365
+-- 
+gitgitgadget
