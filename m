@@ -1,289 +1,199 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5493F379EF9
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 08:56:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D228A3DEFF6
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 09:04:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787648192; cv=none; b=AaiY1cq5PN3ntQwkTnluwmyLn3QLRcFGSDarVrQuSrG0VKRTzo3Bjw6ArdtBWxUOZzPQsA1XsU98npZ+5cJ/3kklC+W+Jvi/XHxUcRc4ICJQqCVq5649ZgjJhADIE0aVCT6L7UVlxiT1nfpTjEEQdqNdgVUucclyCjpTQYhl3LY=
+	t=1787648689; cv=none; b=jam6F/yqj6cEO0ZOHms3e1rmhLDIW476l6Yz0DIPIeScX4gPh4vOcw/t8rvBrs5Ihtd1St4z0h17mhbd8oCEBAp69by/7oxA81p1oEnavzM6tHcX+eqPPQKxbski8etwLqW7TGlsitfK4KWqT546wxbe/Cl/dXjf1tQHyEP5dlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787648192; c=relaxed/simple;
-	bh=TMV1xrfysNI10skD2vv7L8cVJwKhRoxrC8zRZ6KkzbE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=A4x7SrK9zo3djVEh/l1BQnqftoGxncRxEVyA8RAUhDnsIB9v6yxyF5Gnsin6TplAdGiFmB1o8zwMGLMOowPkeWfob5sfqh0hDGV4NJMGrukWudw+nJ8AVHCLqx9aSOK/xWJFACRD9Ddol5Ld17BgRM+6CDwXoIszXXX7NVvrT2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=island.io; spf=pass smtp.mailfrom=island.io; dkim=pass (2048-bit key) header.d=island.io header.i=@island.io header.b=YIPaQV9L; arc=none smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=island.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=island.io
+	s=arc-20240116; t=1787648689; c=relaxed/simple;
+	bh=skGb05ucf2VzTF/0qa35d5DkQu1jo/CURBiRaOyj0pQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=QqJ29l68GMRYKp9MTzjXlc8Qr8yUzsixtfqYynOPaSt3tb+ezt01jGhX/wUMHRz/9gczr65kipDqtn1jLWrGoCERnPclSmYQtz4sQkMZxjIPAjWGULrUkbY1XevIwxmdYSzxW9D/yhIWuq5Z1e94CnszwhdqKAIS1McCGjLcnjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DWxQyVNB; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=island.io header.i=@island.io header.b="YIPaQV9L"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-51c4436d02cso23746441cf.1
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 01:56:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DWxQyVNB"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-47f3b39f2a1so3139439f8f.2
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 02:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=island.io; s=google; t=1787648189; x=1788252989; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=H8XMwSXLvrqUiDpzXiN+csjqSrt61bs31HsoqlaY52Q=;
-        b=YIPaQV9LjirZVlgL38Gb8r0F2wRDgTal+dcicb5Ajmuqx8lNUegJhmy/1ozjr2jp73
-         wMIM1AQXKZIjUOIee5L7vG1Ce5kKqm4ZdC6FaXrcemeou9SqCFN4tVlSx6DNvdmSeX8P
-         cZOUtOHpF3TE6RXLWEyIvgV1WJDSFXGG9jRV8Wy8UOfDbaJb6EXYW0yFbDGWUAglZ8vy
-         aWPJRy4iCdRFR27wO4gC/9Jqy4uYbPkNhIr8Cm6jBTvfOdyuqhM+GHOATT0bb03rYNzh
-         eRsju+OHGPcWA5J3K/UwYo2OqTUX+4A39dbKRjNx7L41GHKG179+9iv8xhiW+tYAEoed
-         HXag==
+        d=gmail.com; s=20251104; t=1787648686; x=1788253486; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=a6N2ekp9DwB0huh25zrH48YDLs3wJYQGwkwkQNjJRv0=;
+        b=DWxQyVNBgQ2TWRFIkgrHarqNokcp9XPOz0YkgUXtG9fbgH4Nc3w2pT9Ml1uO4QAu/+
+         LvuXrKhd2SdoOlaLxWnvTf1Kopu5Bg+PT3yOjoBUSri0TtlqyhouuPJs0UWhYwAZRCoG
+         xRxFoCODM9eWYqrtrRqCZ2eh4sTUgZrZ6pr9vO5oAFnbQiH+TgMIKyHACupzKI8HQKPT
+         HaigyjYetqcTqSvkM+Nf8yIpxpyH22kwZvxcQ0LgPhqNPJ2xwyzUKzk0YkaEs+KphPMW
+         vl1UiCVi+ResdOpDzzZ165Bojgwt/PhvOTLztY8370vsV+xScI+uIZH2EG+z4D0fCnbW
+         CjiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787648189; x=1788252989;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1787648686; x=1788253486;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=H8XMwSXLvrqUiDpzXiN+csjqSrt61bs31HsoqlaY52Q=;
-        b=SXVSI6b6PpWc9RVEWGW68kSppjapOwPu7c9k6cJ/KTn9y6H5icrw9/JIp/cKmDE/p5
-         /eo9hCwVMwSRkC2LNnulqDUDyB/k3Av8QLQN8X3ViYnVZ9Z/lkGv8QFdUcnxz88ALwtt
-         qq3IWfCZgwES3msw0MyCxbKySH7eMB1vU/IpBhPnNJl3FngJhNUPXytE0aEN2FFS0Iwq
-         tTogxNJnvcd1EJH550rpCPo9evo9ElPYWU4ouvVl+FkIfxro47B1/YZ3kj+Wn8G7UZSi
-         7aVtOiiqukQrwQECjdILH4p5RFUPFE1fSk28w+tF4v++J6u+098gxVvy6TfxPBFJJspT
-         PksA==
-X-Gm-Message-State: AFuF++miHtUvsX/JNCi5G7X81dKdqoexrckJi9FcHsK3l12/tsyyf/Ab
-	Gjz563YLCHm6C2X0WAFcP/Hv514qIE2byk03AveUPFyXavAr2JwnHRu47IXBBuWNGD2fgD9npox
-	wD/+ySKWyzA==
-X-Gm-Gg: AR+sD12gerHFA+OUA4zT40rkoIQeXZE581iIc6tqXyUMcMblYMoHdsCAEKB4qQES+vJ
-	5Y8gYt+MCLshQcDETV/jizJoxsd0NqUzYEbUgx/gM5I/S9RbpaN8/HooXMSVlXaBBiVoXde7CZ5
-	qpqsDc1qWM2SUyfb/WkbJ94uCn6t8uNMt5BWaOb6nTR1ch0bFZKarUsnf5RXtyUhazmBLRCA+l2
-	csaP0pjqTqEhd4OVGd8zsM/qvISozWZ3a/T9Dvc0euauHfdneaO+zz5lTy7nHbOYhIBtO23CaEi
-	k5NnZZxnDvuEcgUXIh2Mnm6H0khNdtMmvpL1e0kjUdGTSVtwFaFjQZZAh6PnoJTejVj0Fj5M6Vp
-	rY4ZyJgPXKmRlc4wxWGof7mfKkRSOpArcljz7abEJBHhnSEhEbcE5Fn8l4u+gxGjoMPL37mJiK4
-	MQELX62kqOYl0XutMX9QyPve8y+xWiZFOeEoU9XFIAHogFIZj+RVK01x83O0DTfHwUPq+Rv+zJH
-	YGT6iBmmLiXx39Xs4OwMrExCMTCyTJG/ORd2M/pMGl2v0xitE7khyKgkIWfwnDe2viP
-X-Received: by 2002:a05:622a:420a:b0:52d:f4fb:8baa with SMTP id d75a77b69052e-52e2f1589camr57774391cf.35.1787648188875;
-        Tue, 25 Aug 2026 01:56:28 -0700 (PDT)
-Received: from brick ([146.185.57.226])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90cbe08b6c9sm6287936d6.35.2026.08.25.01.56.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 01:56:28 -0700 (PDT)
-From: Nikita Leshenko <nikita@island.io>
-To: git@vger.kernel.org
-Cc: Nikita Leshenko <nikita@island.io>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Michael Montalbo <mmontalbo@gmail.com>
-Subject: [PATCH] am: record blobs of cleanly applied patches when using --3way
-Date: Tue, 25 Aug 2026 11:55:16 +0300
-Message-ID: <20260825085516.66088-1-nikita@island.io>
-X-Mailer: git-send-email 2.55.0
+        bh=a6N2ekp9DwB0huh25zrH48YDLs3wJYQGwkwkQNjJRv0=;
+        b=b4BFblYF7xrXL8zDfd/ITs5LJzKU6/29PcM5k2EjD2+N4UiO0pNIj2m6SwZ0jC3j66
+         wV7V3psPV/z21H3DHqCDYafoiNzIqD8C1pmKIuizaLNPQsUEFA0tvAknjq7uXqDvTPZU
+         hYyxbJhGU/nS5R50XVmxprVqzb3P6+G6+uTUMRKGLeokb/Bahf0yQ5YV2Lwgn3IvcI50
+         W1ns4kkUaicffKCz4g/MyK2fPXgh4BHNsge8/V4L8XAOA6UnlPko7R1f8ajObGqtfGrb
+         g3fvuM7vYjYppGWjYxOx6wUGXnkdK4+WjvWYac4CX2e1AIi/jNIKQ3PE+Fx6ghCMkBgo
+         yRnA==
+X-Forwarded-Encrypted: i=1; AHgh+Rqo8urifFWk5ylnrLzxv4nJcHw/ZB/HdGN5x4vetehiaMeGajmhOGed3AVSE7YUkl7ln+w=@vger.kernel.org
+X-Gm-Message-State: AFuF++ne7KsSLHjwb6/lIv+zdCFO7FWgLOhEWBV/Tq6eXvGHEMCPO9S3
+	Poe6Y2p5podW1Tdd4MLoabfA5qwCF2LyOZTZp0eqbuwQDjEAzeMTR7rT
+X-Gm-Gg: AR+sD10FwI1JTh5DkdB3jX8WM91Z9NuunGwkH4vfmtnxrXcnLKQgfiD9wufMTEx8Gc1
+	El9XZEp5ru3nqNRjMvHz5aL58P8akW6UlWA05aV82KNpIhJNfEHlKGAGEmr4in8QdJAy2pgHBNY
+	ebCGVEkk2ZSjlsgW4SwdqcVJsU3vHXGYSKqSM6ffNbQiHJbHT08PGedNXw02282+I7OWh2/enqz
+	kEt2jPZupdV5o7pZpMAXpXLsowZZTksUy8ulw7u3nvndXqv6njNR4VjxAUW0Fnk7dEl28wxjJoa
+	Wr+X87GsvEdT1XWF0atrOwlBfrokqOZduQbFFl8Dam3749KGS+eVsJEpZxc0RqtZU3kNi/Bd759
+	c4EyQuHNv+xlelOSZvF6orczW00ljQoIwBxXI2xMlWhDxSZspq2rwmo9ekvTJHkA4/BndqQH6V5
+	5ueEZilgypfY+HseF+untUmoSUm3R2xTXkWhCwnkq19mgDbM7rKZjkGrLGTLpELsNNWwAd5iL9/
+	4NMZwZ+Hca4egYv8ZN91yFnD1NW14ZEwo/JcvriuChq6HdW0YnmZQ==
+X-Received: by 2002:a05:6000:1446:b0:47f:c648:e280 with SMTP id ffacd0b85a97d-482d9f26da2mr5219025f8f.18.1787648684194;
+        Tue, 25 Aug 2026 02:04:44 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482df59db9asm429672f8f.34.2026.08.25.02.04.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Aug 2026 02:04:43 -0700 (PDT)
+Message-ID: <d6940aa6-9336-481b-8ee5-5e3d9f3d3a50@gmail.com>
+Date: Tue, 25 Aug 2026 10:04:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 6/6] hex: allow only lowercase object IDs in breaking
+ changes mode
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
+ <20260729233215.398654-7-sandals@crustytoothpaste.net>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260729233215.398654-7-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Make "git am --3way" succeed in an edge case where it currently fails.
+Hi brian
 
-First, some background about the case:
+On 30/07/2026 00:32, brian m. carlson wrote:
+> Git has historically allowed either lowercase or uppercase hex for
+> object IDs, but it has always emitted only lowercase.  This has caused
+> people to expect only lowercase and not handle uppercase.
+> 
+> As an example, Git's own example hooks look for "[0-9a-f]" in several
+> places, but there are many other Git-adjacent pieces of software,
+> including Gitolite, which make the assumption that object IDs are always
+> lowercase.  This is not to criticize the authors of these projects, but
+> rather to point out how common this assumption is.  In fact, it's so
+> common that we have only one test in our codebase that fails when we
+> reject uppercase object IDs.
+> 
+> More critically, it leads people to make security-based assumptions that
+> an object ID either does not contain uppercase characters or that an
+> object ID can be expressed uniquely in hex form, neither of which are
+> currently true.  Git itself normally uses binary object IDs, which
+> avoids many of these problems, but most other projects deal primarily in
+> hex object IDs, so they are more affected.
 
-Say we have a patch with two commits, A and B, and both of them change the
-same file.  We apply them to a different repo on a different version of the
-file using --3way.
+Can you say a bit more about the security problems please - I'm trying 
+to understand why ABCDEF is a security risk when abcdef^0 isn't.
 
-If both patches apply cleanly, we are done.
+Thanks
 
-If A does not apply cleanly, git am falls back to 3-way merge.  To merge,
-Git uses the preimage hash from the patch:
+Phillip
 
-    A: index 83b2a16..cccad2b 100644
-    B: index cccad2b..0ce2f98 100644
-
-git am looks up 83b2a16, applies A to it, and merges that result with the
-current version of the file.  As an important side effect, applying A to
-83b2a16 also stores A's postimage, cccad2b, in the repository.  This means
-that if B also doesn't apply cleanly, cccad2b (which is now B's preimage)
-exists in the repository so we can merge against it as well.
-
-Let's assume instead that A applies cleanly and B fails.  Because git am
-didn't have to 3-way merge A, nothing created cccad2b this time.  What we
-have after applying A is our file plus A's change, which is a different
-hash.  When B doesn't apply cleanly, git am fails because it doesn't know
-what cccad2b is:
-
-    Applying: A
-    Applying: B
-    error: sha1 information is lacking or useless (file).
-    error: could not build fake ancestor
-
-However, technically we have the information to build the fake ancestor!  We
-have 83b2a16 in the repository, and we have A, so if we apply A we'll get
-that hash.
-
-So do exactly that: if the user requested --3way, apply the patch on the
-fake ancestor even after a patch applies cleanly, in order to produce
-intermediate hashes for later commits.  If the preimage is missing, or the
-patch does not apply, nothing is recorded and git am behaves as it does
-today.
-
-This does not change the behavior of how patches apply, but when the user
-requested --3way it does cost one extra "git apply --build-fake-ancestor"
-process and one extra apply per clean patch.
-
-Signed-off-by: Nikita Leshenko <nikita@island.io>
----
- builtin/am.c  | 58 ++++++++++++++++++++++++++++++++++++++++++++-------
- t/t4150-am.sh | 28 +++++++++++++++++++++++++
- 2 files changed, 79 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/am.c b/builtin/am.c
-index e9623b8307..37569fed65 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1488,7 +1488,8 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
-  * Applies current patch with git-apply. Returns 0 on success, -1 otherwise. If
-  * `index_file` is not NULL, the patch will be applied to that index.
-  */
--static int run_apply(const struct am_state *state, const char *index_file)
-+static int run_apply(const struct am_state *state, const char *index_file,
-+		     int quiet)
- {
- 	struct strvec apply_paths = STRVEC_INIT;
- 	struct strvec apply_opts = STRVEC_INIT;
-@@ -1528,7 +1529,7 @@ static int run_apply(const struct am_state *state, const char *index_file)
- 	 * If we are allowed to fall back on 3-way merge, don't give false
- 	 * errors during the initial attempt.
- 	 */
--	if (state->threeway && !index_file)
-+	if (quiet || (state->threeway && !index_file))
- 		apply_state.apply_verbosity = verbosity_silent;
- 
- 	if (check_apply_state(&apply_state, force_apply))
-@@ -1559,11 +1560,13 @@ static int run_apply(const struct am_state *state, const char *index_file)
- /**
-  * Builds an index that contains just the blobs needed for a 3way merge.
-  */
--static int build_fake_ancestor(const struct am_state *state, const char *index_file)
-+static int build_fake_ancestor(const struct am_state *state,
-+			       const char *index_file, int quiet)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 
- 	cp.git_cmd = 1;
-+	cp.no_stderr = quiet;
- 	strvec_push(&cp.args, "apply");
- 	strvec_pushv(&cp.args, state->git_apply_opts.v);
- 	strvec_pushf(&cp.args, "--build-fake-ancestor=%s", index_file);
-@@ -1589,7 +1592,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 	if (repo_get_oid(the_repository, "HEAD", &our_tree) < 0)
- 		oidcpy(&our_tree, the_hash_algo->empty_tree);
- 
--	if (build_fake_ancestor(state, index_path))
-+	if (build_fake_ancestor(state, index_path, 0))
- 		return error("could not build fake ancestor");
- 
- 	discard_index(the_repository->index);
-@@ -1617,7 +1620,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 		release_revisions(&rev_info);
- 	}
- 
--	if (run_apply(state, index_path))
-+	if (run_apply(state, index_path, 0))
- 		return error(_("Did you hand edit your patch?\n"
- 				"It does not apply to blobs recorded in its index."));
- 
-@@ -1658,6 +1661,39 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 	return 0;
- }
- 
-+/**
-+ * Applies the patch on the fake ancestor and stores the postimage in the
-+ * repository for future patches to reference.  Best effort, fails quietly.
-+ *
-+ * Motivation: Say a patch file has two commits, A and B, that both change the
-+ * same file.  We apply it with --3way.  If A applies cleanly, nothing stores
-+ * A's postimage.  If B then does not apply cleanly, git am cannot 3-way merge
-+ * it, because B's preimage is A's postimage.
-+ */
-+static void try_record_patch_postimage(const struct am_state *state)
-+{
-+	struct strbuf index_path = STRBUF_INIT;
-+
-+	strbuf_addstr(&index_path, am_path(state, "patch-postimage-index"));
-+
-+	if (build_fake_ancestor(state, index_path.buf, 1))
-+		goto done;
-+
-+	/*
-+         * Discard index because run_apply() reads `index_path` only if no index
-+         * is in core.
-+         */
-+	discard_index(the_repository->index);
-+	run_apply(state, index_path.buf, 1);
-+
-+	discard_index(the_repository->index);
-+	repo_read_index(the_repository);
-+
-+done:
-+	unlink(index_path.buf);
-+	strbuf_release(&index_path);
-+}
-+
- /**
-  * Commits the current index with state->msg as the commit message and
-  * state->author_name, state->author_email and state->author_date as the author
-@@ -1886,9 +1922,17 @@ static void am_run(struct am_state *state, int resume)
- 
- 		say(state, stdout, _("Applying: %.*s"), linelen(state->msg), state->msg);
- 
--		apply_status = run_apply(state, NULL);
-+		apply_status = run_apply(state, NULL, 0);
- 
--		if (apply_status && state->threeway) {
-+		if (!apply_status && state->threeway && state->cur < state->last) {
-+			/*
-+			 * The patch applied cleanly, so no 3-way was performed.
-+			 * A patch later in the series may reference postimage
-+			 * hashes this patch would have produced, so record them
-+			 * while we still can.
-+			 */
-+			try_record_patch_postimage(state);
-+		} else if (apply_status && state->threeway) {
- 			struct strbuf sb = STRBUF_INIT;
- 
- 			strbuf_addstr(&sb, am_path(state, "patch-merge-index"));
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index ee96223668..e5ed666c2f 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -641,6 +641,34 @@ test_expect_success 'am with config am.threeWay overridden by --no-3way' '
- 	test_path_is_dir .git/rebase-apply
- '
- 
-+test_expect_success 'am -3 records blobs a later patch needs' '
-+	test_when_finished "rm -rf 3way-source 3way-target" &&
-+
-+	# Two patches touching the same file, the first of which applies
-+	# cleanly to the target while the second one does not.
-+	git init 3way-source &&
-+	test_write_lines 1 2 3 4 5 6 7 8 9 >3way-source/file &&
-+	git -C 3way-source add file &&
-+	git -C 3way-source commit -m base &&
-+	test_write_lines 11 2 3 4 5 6 7 8 9 >3way-source/file &&
-+	git -C 3way-source commit -am first &&
-+	test_write_lines 11 2 3 4 5 66 7 8 9 >3way-source/file &&
-+	git -C 3way-source commit -am second &&
-+	git -C 3way-source format-patch --stdout -2 >3way-two.patches &&
-+
-+	git init 3way-target &&
-+	test_write_lines 1 2 3 4 5 6 7 8 9 >3way-target/file &&
-+	git -C 3way-target add file &&
-+	git -C 3way-target commit -m base &&
-+	test_write_lines 1 2 3 4 5 6 7 8 9XXX >3way-target/file &&
-+	git -C 3way-target commit -am "change outside the first patch" &&
-+
-+	git -C 3way-target am -3 ../3way-two.patches &&
-+	test_path_is_missing 3way-target/.git/rebase-apply &&
-+	test_write_lines 11 2 3 4 5 66 7 8 9XXX >expect &&
-+	test_cmp expect 3way-target/file
-+'
-+
- test_expect_success 'am can rename a file' '
- 	test_grep "^rename from" rename.patch &&
- 	rm -fr .git/rebase-apply &&
--- 
-2.55.0
+> In preparation for Git 3.0, only allow lowercase hex object IDs in
+> breaking changes mode and document this as well.  Update the single
+> failing test and add a new one to verify we reject new uppercase object
+> IDs.  Note that in t5324, we change the hex character from "A" to "b"
+> because in SHA-256 mode, "a" is the correct value, so our test_must_fail
+> assertion will unexpectedly succeed in that case.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>   Documentation/BreakingChanges.adoc | 5 +++++
+>   hex-ll.h                           | 4 ++++
+>   t/t1503-rev-parse-verify.sh        | 5 +++++
+>   t/t5324-split-commit-graph.sh      | 4 ++--
+>   4 files changed, 16 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
+> index 73bb939359..dbc46d14e3 100644
+> --- a/Documentation/BreakingChanges.adoc
+> +++ b/Documentation/BreakingChanges.adoc
+> @@ -171,6 +171,11 @@ JGit, libgit2 and Gitoxide need to support it.
+>     matches the default branch name used in new repositories by many of the
+>     big Git forges.
+>   
+> +* Git will accept hex object IDs only in lowercase. The fact that Git has
+> +	historically allowed uppercase characters in hex object IDs has been the
+> +	source of a variety of bugs and security problems in software using Git. We
+> +	don't expect most users to notice any change.
+> +
+>   * Git will require Rust as a mandatory part of the build process. While Git
+>     already started to adopt Rust in Git 2.49, all parts written in Rust are
+>     optional for the time being. This includes:
+> diff --git a/hex-ll.h b/hex-ll.h
+> index 9da76f17e8..2f9c8d7c25 100644
+> --- a/hex-ll.h
+> +++ b/hex-ll.h
+> @@ -6,7 +6,11 @@ enum hexkind {
+>   	HEX_KIND_LOWER = 1,
+>   };
+>   
+> +#ifdef WITH_BREAKING_CHANGES
+> +#define HEX_KIND_OID HEX_KIND_LOWER
+> +#else
+>   #define HEX_KIND_OID HEX_KIND_MIXED
+> +#endif
+>   
+>   extern const signed char hexval_table[256];
+>   extern const signed char hexval_lc_table[256];
+> diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
+> index 87638a4a2c..f07b45de5a 100755
+> --- a/t/t1503-rev-parse-verify.sh
+> +++ b/t/t1503-rev-parse-verify.sh
+> @@ -60,6 +60,11 @@ test_expect_success 'works with one good rev' '
+>   	test "$rev_head" = "$HASH4"
+>   '
+>   
+> +test_expect_success WITH_BREAKING_CHANGES 'rejects uppercase revs' '
+> +	UC_HASH=$(echo "$HASH1" | tr a-f A-F) &&
+> +	test_must_fail git rev-parse --verify "$UC_HASH"
+> +'
+> +
+>   test_expect_success 'fails with any bad rev or many good revs' '
+>   	test_must_fail git rev-parse --verify 2>error &&
+>   	test_grep "single revision" error &&
+> diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+> index bf7ba0e558..29db815c77 100755
+> --- a/t/t5324-split-commit-graph.sh
+> +++ b/t/t5324-split-commit-graph.sh
+> @@ -349,7 +349,7 @@ test_expect_success 'verify after commit-graph-chain corruption (base)' '
+>   		test_must_fail git commit-graph verify 2>test_err &&
+>   		grep -v "^+" test_err >err &&
+>   		test_grep "invalid commit-graph chain" err &&
+> -		corrupt_file "$graphdir/commit-graph-chain" 30 "A" &&
+> +		corrupt_file "$graphdir/commit-graph-chain" 30 "a" &&
+>   		test_must_fail git commit-graph verify 2>test_err &&
+>   		grep -v "^+" test_err >err &&
+>   		test_grep "unable to find all commit-graph files" err
+> @@ -364,7 +364,7 @@ test_expect_success 'verify after commit-graph-chain corruption (tip)' '
+>   		test_must_fail git commit-graph verify 2>test_err &&
+>   		grep -v "^+" test_err >err &&
+>   		test_grep "invalid commit-graph chain" err &&
+> -		corrupt_file "$graphdir/commit-graph-chain" 70 "A" &&
+> +		corrupt_file "$graphdir/commit-graph-chain" 70 "b" &&
+>   		test_must_fail git commit-graph verify 2>test_err &&
+>   		grep -v "^+" test_err >err &&
+>   		test_grep "unable to find all commit-graph files" err
+> 
 
