@@ -1,65 +1,69 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B537F3E00AA
-	for <git@vger.kernel.org>; Tue, 25 Aug 2026 21:25:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245083E8337
+	for <git@vger.kernel.org>; Tue, 25 Aug 2026 21:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787693121; cv=none; b=LpibXfjJyNxTzO+RtMrCPICtcVyMIeOj/m+DFzB35LR6phrBRj1+qyH+mRKGnrbBcW/ieY1dSkrndpEc2WwEY0qJmgoQjSi/1p/eJutC4qz8to+2LHi4q4fYjZBgSO10sEbkjYW2FRDvhuuC8+hHc4fskOAHEC3sHP9fgVflZ38=
+	t=1787693122; cv=none; b=nG4Ce53iLvQzPnnIXyc38AGHSvoPKWuwb5GTEZTIcwy9jsVCWdbAr5dBzyfex/EOnqHRmQW6YQWIoA0a5JDXGS+qBk4g5dzedbPRQSp7Kjycsi0wM+I8UvOjuijTy2nF1CK9cw9ggB2c9yimIvEWWoLpF/39+71NkQklAu3zNUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787693121; c=relaxed/simple;
-	bh=LyF4Hen6+RnKeAibTlcAyIcWfSw5Ps4opnw3nhaHXg4=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=tzTkjKmxQGVLVrjy8XJgnOdjB/dQfczgBY2nAyljVCBBH3oZs3Qau+6UK+vWBNH/p7sIXSeYPAk89u8epzqZZG5GXamcL4iVIgWq2//YIDWvPMBROlGQS/C3gF0fWl1wcwJLVQDpr6naWQcrNVQQYzTTimoBqZu+AsIJMdygroo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lO6GN/s/; arc=none smtp.client-ip=209.85.215.172
+	s=arc-20240116; t=1787693122; c=relaxed/simple;
+	bh=R7SNzlLNtJiWfjOeE4Llnc1qOKpyboprkgjMwhvNM9U=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=fBAxpaDcY4BNKBqMzE2ljAQp6Y6alidE8uPXLc0/UFXM3aSDPB/pWh9zpfHagnsHh3P0rhHZBvNSb4eoSn70UYPPuwE0/aH4Ax1LUsTBPhIcPS0RYPSR+byVCUAKr5G+CnpsV4krJO0bSueqYF5SAz8DQc29+ZY5fFz/pb9sr+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WPmiuj+p; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lO6GN/s/"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-ca766c1c9ccso179862a12.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2026 14:25:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WPmiuj+p"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2d6e954afbdso2612215ad.2
+        for <git@vger.kernel.org>; Tue, 25 Aug 2026 14:25:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787693119; x=1788297919; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787693120; x=1788297920; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=t6kgLnbPn9gjwgw6qI9HjJObkyfHNIognNsL3/BwxsU=;
-        b=lO6GN/s/rHrh6nS90Ha/YsoQMQAlh1vBFzxpDABioIskB1LnxGYIfdBMOgR3hnr6zD
-         jpvEvOSudfIzooZ5A9bGWMBCUEl/DsQlFWz5a/xG4EVyItGak7SMmUU5Y1LaE3JpoH4C
-         IDzkDx5hnKt0K1O2TnD5kl1KgEJsqJQoy5q1Mlq5fFqFAk5/PHe/Ww8wttpxQsol5ua3
-         FPckJ372Pu2YjPYJu8tdaJ4wpwT+/9TYk0l60e8gsKVyf9Fkr3Fa8ULgcU9QfkHhY84j
-         G1MvJuEklEuFafpLkr7MlRTIpjx5PlyuqnBzf28GvO73N9CYZaPnvZskQ5yKxe91Mx3P
-         2fsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787693119; x=1788297919;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=t6kgLnbPn9gjwgw6qI9HjJObkyfHNIognNsL3/BwxsU=;
-        b=fKyzNtEk476yOGbQzR1+I8JtAifLuVcZstiwM2LAKfBa/M6emhBE1cfxdWObSR2TRL
-         rLzz4KQnOR1co7zaa+cqie5H+78uzHXyBt6raLFPSnMkurJx6cEeJhIvXUR5F+NsUXbG
-         F0LrTcEINDLMJYBKgLSMHTBe9q13gFQ8jBw+O5tDUyjZvDqkRfSTjb/y1nsfWpT/5fN7
-         Vccst9MUXrZok6w4hyvgxmS8DCjUHkzuWDWQXa9zPPfSDKl+iVtLmMiyGhacDBFUHh6i
-         3db+4QfmrvZLCdsUKvpanAW7csHj9LClYjUXt5pZ6ZwJcV1CdpNp68zddmAVuLNbyyef
-         zWaQ==
-X-Gm-Message-State: AFuF++nm0X0ksh3oaIGc4Nr7G1510o1KPMoxfdZ3BrwTckLX5vhtPMQb
-	lSlcozKE8jYzbb+TgPo0GRJElQYWv/OeDFqL32IyTVBfuf7NdUDEM16exsdW9A==
-X-Gm-Gg: AR+sD129dwAWIOrjpv4bAZH350CaXksuQnImCjTXyIb82gMxZcFdEtShEWdDDNgPyJp
-	0JXU6tMbmBy1yJxCDgQP37fH0HQAUEahKUx88No4RaifQ9P+WPbbrBzbXggTPbLsH3DeeZXvR7T
-	iE2/M1oa69Y70p+Q7UM9bqX5C2V2HfvnhrIFcO4/2QzPGkKFFVKfWD2x2Cjt5s1DzslwuPYze1r
-	UJN92iZDqfbyQdGc9avFlnK0gt9AbNJxJymS5Oo7nqc8u1nQn5RzIkktN6a+X3d0DEvcLWR83AF
-	5Y6pz8jVKqOFhTgRDLY+/hx0OAOw137bh4x16jPAx1+BJOVql47FlSKH6BvgI3rKXQJe4v0hFwd
-	pWNRIUlRyrvV9mSu3RaHjUoPYKhksxErA62MOq6GF+Ms5VZmjil0LQhE0eLYR9bam78PMHX/ndo
-	+cmZbkiQlf0HwTiQvpvMvTfyDkjXdSZEGAlkitTH4SrXkdzO3MekZqz1Mtve450UDrjg==
-X-Received: by 2002:a05:6a21:3997:b0:3cc:917f:f302 with SMTP id adf61e73a8af0-3cf83c17569mr3054828637.9.1787693118955;
-        Tue, 25 Aug 2026 14:25:18 -0700 (PDT)
+        bh=QyjsfSl7YBf6UJTOStBhwD6dH1t218LlIhTMrvdbozU=;
+        b=WPmiuj+pDoh15O+FDAbz2s1R+klR0iPvuiYGngx8uCZc/a6WcKKEwT/+pQ5JpOSFX0
+         EM5Doqwa9u8fpkudHY5aQfXvY3+djwgtPcg/ADIO7MwauoEFGP7A68XZYigBPyolf4ja
+         2Oeu3NKQKw4xXlh/Le9K3p0jCGMRYo6xVeOr0wBw+nVbB0AqtiFx3rJd2aTGPSnjiTp/
+         QQNmuSPtGIssHvqCMI0ZEPTs6DSQE+/8W2g7QBGifmXKiks8Cf/31Sq8HXj2A2QbAOw9
+         D4TMb01kuJXjAOjP7S49VEO5tQeDkZBseTRg9jhrBbIdtTZioaQxtgigbUQJQSE2v9gx
+         X28g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787693120; x=1788297920;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QyjsfSl7YBf6UJTOStBhwD6dH1t218LlIhTMrvdbozU=;
+        b=A5ITp5JLAqLyew6qw8tQS8EimCtYcU4QSFcNt9c7pqVp77Z5putKQqca5cX1L4cg2Q
+         aYjByUMtHhdf/pDQb0FBoIhlpuB1gE8XikxLyoYKY1iywEsjkl+8K7U7S9Ys6g850deZ
+         hgGTzBKvhB8gZYf8mMXtQmnuQaWpkmwm3skftr4rPqQDGxnRS+rv5HH37Vv4ntutLRVJ
+         3qZuQDaq5i5bBBHZ3pN1Kksh76eEUWx9sMzzmI/r63FIcwfCEFAPJiKFh0dR5ffbb13N
+         gE9j6/3BPRLvTI214Oma8/1U/MDIFAcEYyOpDfQx2Ey1xZpfbQcQasI7FVJ0rZtZ7jVA
+         KLVw==
+X-Gm-Message-State: AFuF++mI8TCz0/HFPH42m1WZSYmVBl8rzgfsDwOYLaruFmU7zQ2CT9pW
+	oUajS78eiWbjleqLjBGIXWCi/zDICqSGvD+p6T5P4E7IUx+psltj0Sq5sxidkg==
+X-Gm-Gg: AR+sD10URexIR+Zt2DcMdBpDIVKY+p7Rn6LCqsKXo73dXldN9KHXmShNMx9lJbY/qEf
+	VVe+wiQ/pjFoqQZaMDhf+SmwjcPVVtoHhVSmQOC6U9yZCVWvDF6tLzT/KSWF1x1Os/4vd1HyFEQ
+	xJBNSZ+O2nQrIQ/u/BY+0gyUd10J4CJCALMSiUMV/AS7pUwwWnac8GsvBx2lqHPJroN2jC24uDu
+	TJYefTfeOxaGJE/Ykw2QFbdIphLV2rHvg4RSX5waB+aRLJbOCFey0hAPXuoukt1GBu7EGqkTF3M
+	ugcNRhoR6Jl5Wz7v5TdRqlxL3JB2SUepb6vXl1ri6z25M+6AaMG9bMvFkga+1nUXdut6MTwIx6D
+	Pxl753TvMaK94fqpMCEz5+xqcobviriz0XoUr4edpK2CFrJLAFlpxro/Yl+/RzDk1zKwTaIuT+3
+	LCwLdSRWGST5Fi54hNYitVnWmGguxRTQ158Pw8eUCvkSev9okr7f394CoRgEMjxZUBVQ==
+X-Received: by 2002:a17:902:cf4c:b0:2d6:f9e2:af7f with SMTP id d9443c01a7336-2d707a3485fmr25487745ad.1.1787693120331;
+        Tue, 25 Aug 2026 14:25:20 -0700 (PDT)
 Received: from [127.0.0.1] ([172.208.158.163])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3283d9edd8esm1598955eec.27.2026.08.25.14.25.18
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3283da08e23sm1672841eec.29.2026.08.25.14.25.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2026 14:25:18 -0700 (PDT)
-Message-Id: <pull.2365.git.git.1787693117.gitgitgadget@gmail.com>
+        Tue, 25 Aug 2026 14:25:19 -0700 (PDT)
+Message-Id: <f7856e7a5b7b996be9380eb78d24c92b682a1fae.1787693117.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2365.git.git.1787693117.gitgitgadget@gmail.com>
+References: <pull.2365.git.git.1787693117.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Aug 2026 21:25:15 +0000
-Subject: [PATCH 0/2] branch: -d protects upstream branches
+Date: Tue, 25 Aug 2026 21:25:16 +0000
+Subject: [PATCH 1/2] branch: move stacked branch helpers
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,26 +74,141 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Protect local branches from git branch -d when a surviving branch depends on
-them through a local upstream chain.
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Harald Nordgren (2):
-  branch: move stacked branch helpers
-  branch: protect local upstreams from -d
+Move the stacked branch helpers earlier so delete_branches() can use
+them without a forward declaration.
 
- Documentation/git-branch.adoc |   4 +-
- builtin/branch.c              | 142 +++++++++++++++++++++-------------
- t/t1507-rev-parse-upstream.sh |   4 +-
- t/t3200-branch.sh             |  43 ++++++++++
- t/t6040-tracking-info.sh      |   2 +-
- 5 files changed, 137 insertions(+), 58 deletions(-)
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ builtin/branch.c | 104 +++++++++++++++++++++++------------------------
+ 1 file changed, 52 insertions(+), 52 deletions(-)
 
-
-base-commit: 2c3adbb2c475981e340c79fdc5e7f4f9b5d9054e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2365%2FHaraldNordgren%2Fbranch-d-protect-stacked-upstreams-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2365/HaraldNordgren/branch-d-protect-stacked-upstreams-v1
-Pull-Request: https://github.com/git/git/pull/2365
+diff --git a/builtin/branch.c b/builtin/branch.c
+index a613148fc7..87f0aa4051 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -203,6 +203,58 @@ enum delete_branch_flags {
+ 	DELETE_BRANCH_DRY_RUN = (1 << 4),
+ };
+ 
++struct stacked_branch_data {
++	struct strset *deletable_branch_names;
++	struct strset *protected_branch_names;
++};
++
++static int collect_stacked_branch_base(const struct reference *ref,
++				       void *cb_data)
++{
++	struct stacked_branch_data *data = cb_data;
++	const char *branch_name;
++	struct branch *branch;
++	const char *upstream_refname;
++	const char *upstream_branch_name;
++
++	if (!skip_prefix(ref->name, "refs/heads/", &branch_name))
++		BUG("expected local branch ref, got '%s'", ref->name);
++	if (strset_contains(data->deletable_branch_names, branch_name))
++		return 0;
++
++	branch = branch_get(branch_name);
++	upstream_refname = branch_get_upstream(branch, NULL);
++	if (!upstream_refname ||
++	    !skip_prefix(upstream_refname, "refs/heads/",
++			 &upstream_branch_name) ||
++	    !strset_contains(data->deletable_branch_names,
++			    upstream_branch_name))
++		return 0;
++
++	strset_add(data->protected_branch_names, upstream_branch_name);
++	return 0;
++}
++
++static void protect_stacked_branch_bases(struct ref_store *refs,
++					 struct strset *deletable_branch_names,
++					 struct strset *protected_branch_names)
++{
++	struct stacked_branch_data data = {
++		.deletable_branch_names = deletable_branch_names,
++		.protected_branch_names = protected_branch_names,
++	};
++	struct refs_for_each_ref_options opts = {
++		.prefix = "refs/heads/",
++	};
++	struct hashmap_iter iter;
++	struct strmap_entry *entry;
++
++	refs_for_each_ref_ext(refs, collect_stacked_branch_base, &data, &opts);
++
++	strset_for_each_entry(protected_branch_names, &iter, entry)
++		strset_remove(deletable_branch_names, entry->key);
++}
++
+ static int check_branch_commit(const char *branchname, const char *refname,
+ 			       const struct object_id *oid, struct commit *head_rev,
+ 			       int kinds, unsigned int flags)
+@@ -718,58 +770,6 @@ static int parse_opt_forked(const struct option *opt, const char *arg, int unset
+ 	return 0;
+ }
+ 
+-struct stacked_branch_data {
+-	struct strset *deletable_branch_names;
+-	struct strset *protected_branch_names;
+-};
+-
+-static int collect_stacked_branch_base(const struct reference *ref,
+-				       void *cb_data)
+-{
+-	struct stacked_branch_data *data = cb_data;
+-	const char *branch_name;
+-	struct branch *branch;
+-	const char *upstream_refname;
+-	const char *upstream_branch_name;
+-
+-	if (!skip_prefix(ref->name, "refs/heads/", &branch_name))
+-		BUG("expected local branch ref, got '%s'", ref->name);
+-	if (strset_contains(data->deletable_branch_names, branch_name))
+-		return 0;
+-
+-	branch = branch_get(branch_name);
+-	upstream_refname = branch_get_upstream(branch, NULL);
+-	if (!upstream_refname ||
+-	    !skip_prefix(upstream_refname, "refs/heads/",
+-			 &upstream_branch_name) ||
+-	    !strset_contains(data->deletable_branch_names,
+-			    upstream_branch_name))
+-		return 0;
+-
+-	strset_add(data->protected_branch_names, upstream_branch_name);
+-	return 0;
+-}
+-
+-static void protect_stacked_branch_bases(struct ref_store *refs,
+-					 struct strset *deletable_branch_names,
+-					 struct strset *protected_branch_names)
+-{
+-	struct stacked_branch_data data = {
+-		.deletable_branch_names = deletable_branch_names,
+-		.protected_branch_names = protected_branch_names,
+-	};
+-	struct refs_for_each_ref_options opts = {
+-		.prefix = "refs/heads/",
+-	};
+-	struct hashmap_iter iter;
+-	struct strmap_entry *entry;
+-
+-	refs_for_each_ref_ext(refs, collect_stacked_branch_base, &data, &opts);
+-
+-	strset_for_each_entry(protected_branch_names, &iter, entry)
+-		strset_remove(deletable_branch_names, entry->key);
+-}
+-
+ static void clear_deleted_upstreams(struct strset *protected_branch_names,
+ 				    struct strset *deletable_branch_names)
+ {
 -- 
 gitgitgadget
+
