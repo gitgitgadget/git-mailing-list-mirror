@@ -1,157 +1,194 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38A931195B
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 16:46:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7A247142B
+	for <git@vger.kernel.org>; Wed, 26 Aug 2026 16:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787762793; cv=none; b=tzO3ifkWvDp1iozkA5qHG0VFj9mFaPdRHoEIxhCUWZN9yNFrjeGWf8cI6wEVYAqEKvT4CV5rEazszEdEPatvYIGq2FvsSRihm2FXsBCCqmDStct0cOTVmtF13F3YtjW+LF9PRswel0PiV4kFEpfvQOFx72PYhTDDflvaTUus68s=
+	t=1787763132; cv=none; b=AvP5PZTqTEnoRnDMxcjgygaT+IH9UPtzCyqmOhJ/rePkEqUiTGYSduV4DAcoH9eps6J3gIIRh9Ok0vNJOMPJmSKsJAhBh/wctkp2b+Zu42pk1pYUKGloHyo9iDmB4oRfxVJZdYtqCblgdVI/EEfrvSnCbGswKIiJzWkS6dFVmeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787762793; c=relaxed/simple;
-	bh=5IqJD9VolkbJEAPxeZlUF+kHU0E0KfTOCF6UMACbfGk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CRV1pQnH9aTqWXEzkEBBqSyAXcl5XtX99cktLlQTP3DD55bNnZIl6FXIhf3gOjLFQu0EGOJZenz8MkQLq+GfFvbB5Wf/asjaFZ/FHobko4nEXoAfvFmsS6GItKMriZrx/qUrslzq26Ne7mInK1rk85ZA8EvjyCBmLyeqeQWfKwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gHv5KVwW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NYWZP5Jk; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787763132; c=relaxed/simple;
+	bh=2wfSY2s34DTQhFR296lkGLLKF2LkhpedRnWo4324/HY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=SVYb27H7tQ/E+Yf0TS+gxvChFm1UC4lpbKtNeThcoQKTmJC9Mabwo4WFA4uNyRWM5/sHVvEYGkMhVRt5x2hYu6k6kLbVl01z7YZhZ8RiZlwJ/pO670huxmu91pMTWxvVEnYdTxZBMqI1st0/YNSpG5s6NRJm+pgrIDd737hta1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dR3Ix3GY; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gHv5KVwW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NYWZP5Jk"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 64B721D0003E;
-	Wed, 26 Aug 2026 12:46:11 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 26 Aug 2026 12:46:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787762771; x=1787849171; bh=YRdlePeVJC
-	sI49yHtCamHFsBGJEhMvR8twY4JSYFiH0=; b=gHv5KVwWxnvWTP58s66uLnLWIK
-	cgPiCB/pAfzbJRAY2IbruF7IhHW50ADtARfwn+WWN51VrbfpkiO9S0JQ9dHXp5qQ
-	7gHxZIR2niAxbgbjfKkAS1yRCWMIZXqGdUTMum81UQ8oarQjdCjvIPWbCPl1JlqJ
-	eX3MCefnCTNkvnVh1TdQ0+RdkUmiHI6dso82rguoPJOwe7qO5ABpbLw18mqxklWS
-	ef9Tj75Txx9cJzLiC9FsS5apbQOm9nzULwKbr9UjEBTQyjOsg0h47uKLIIBO1UBX
-	Xco3elASBoPbVqxAeCtSFoyAea9tXFnH0GzcFD1U+cregB3GnGRyUfj9kUsQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787762771; x=1787849171; bh=YRdlePeVJCsI49yHtCamHFsBGJEhMvR8twY
-	4JSYFiH0=; b=NYWZP5JkJWLlGqQMJP9yqycxcTsrYLLmmBAHo3rFvSA6ESCQhH+
-	L63dhnQPgBNzSzNNJudmvwCXL87Ln3+prUCG/qeiqOrTsD1JxEURGcQ8q/z8J53H
-	xxT55aQVMLWV1BdJf1Jb7Ul4DV6gHoDSJ43c3I8Lyk4E1eQI3k8EdswMQdbv039F
-	VBf0GyeLejOTc/j3hCaLkAgNUhx2FsaCAOp7ZGN9VMDBBER0XyHXu+jceQAs/Rcv
-	8duxdEYnHhcdOFqXZcj19ackml+zRgyl/c/gooo+ijhKZ3o9WPExorynq51201Lw
-	rFbXKpqL+CPTm+uzY0zFxvuolcqvdFF3wow==
-X-ME-Sender: <xms:UxiPavPbRXqujZg1VIaJ35prIh9fushrA3USxdLuj1Tw6bOZKrK3xA>
-    <xme:UxiPato50Eg0suKJME33ER06YGHqH3jpZl2SZMCaTqLR8fkVzjWzR26H0ikKrwhig
-    t_ys5-Ic-3WsPUI5IMUhkK-zNtXTUFg0gtlawc1n7LXd745ZWwRiQ>
-X-ME-Received: <xmr:UxiPaoHYXb64hcZUsn_8TV8-VkTov9uzDZfPSrjcAmEof-Hy7gmJOy8UqQYV4hl2zI5NYcha6BBrcQa494Jl60VzPq66ncgZmA>
-X-ME-Proxy-Cause: dmFkZTGnXWT06w1L+H08EYZiS5x8M0rh3Uq5bZvRccz+hIqu3QQPKw5Czobtp7R9RCgLpW
-    qs5IwhC/udaEwHGy+x7ZNpUwistDE217jiETnmBmdoczR7HEBObIGHxrZB+qAuk4B1EIQG
-    lmYeuGA+5SIyyC4IRGchJFcMEAn0MAOE7QKNIXjGH5d9kNJVGQmqobuuSLHMueMgaqWf3Z
-    Icf29tlzPO+DvdSfPUA3WxACgwkYp93WWPqehPYPFfXFU3Wh7vM8gdg5Z4ALMUDXqM2ojV
-    AUtIhfdh2n2dHFPUWkvQfkZDOQ8YPr19bESKfJlgMOLc0dCpFFapvJ2/HHgKob3eaiHAXM
-    VrYHIyYGjzhhAWxxuMIihIJLh7QY8ZfIE7TzCdz0/TKrDgtrsnp4h/uSO4wOVdxhJjPrbQ
-    QTWibHJZQVccU+m5ZpcC1b4HeWjmL04qMLFuDNAEDpnyVgP5bkBUUi5Dp1+tFJs8KWHegi
-    7fIgu9mXltJQMIYoY+9faUcHrDt/5AawlqyXPqZZxgem5YP8FkGYYZakosmbCYzTtO9AVb
-    SFlrU2vrPeqvtsSVV8JVWD9Hbjukro9+qP+O7SHOFcWqkohdLUunM1J9h6RdwSG9F0s2Us
-    If6BSJ1691XS+fPS9pntuecgT9hfli6zwCgSSXdlN8YJW5BnvQOTgWERr0TQ
-X-ME-Proxy: <xmx:UxiPaqqEUreAzKvmA5iO6ZVXY9EnAUWbUzXgJpglTEIcL1gYUXV3dg>
-    <xmx:UxiPapYHgVCsHpqh760KVc3zX3Arx7fDNSIsK4OgTxdIEZmC7JvT6Q>
-    <xmx:UxiParUdOdXJnWwuCRpBiInUB3h20zeABYie5pdwEY9hS0Xv99Kg8Q>
-    <xmx:UxiPaq-65oDDuzA9JsH0zInwSggYm2YW4US2qyqO1euNHt1nrZLTKA>
-    <xmx:UxiPajzDsRwTXT9noGoMNlqQNtptEp_zuE5A62HMSUl9PKYK2RSt-8bD>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Aug 2026 12:46:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,
-  Yoichi Nakayama <yoichi.nakayama@gmail.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>
-Subject: Re: [PATCH v9 2/4] checkout: improve message for ambiguous remote
- branch name
-In-Reply-To: <89c0f4d30317ebf7cda884710944e9a6f23d46fe.1787741111.git.gitgitgadget@gmail.com>
-	(Yoichi NAKAYAMA via GitGitGadget's message of "Wed, 26 Aug 2026
-	10:45:08 +0000")
-References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
-	<pull.2197.v9.git.1787741111.gitgitgadget@gmail.com>
-	<89c0f4d30317ebf7cda884710944e9a6f23d46fe.1787741111.git.gitgitgadget@gmail.com>
-Date: Wed, 26 Aug 2026 09:46:09 -0700
-Message-ID: <xmqqmru8j0dq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dR3Ix3GY"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-908a2ca5becso11072086d6.0
+        for <git@vger.kernel.org>; Wed, 26 Aug 2026 09:51:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787763110; x=1788367910; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=8pGmMeQll06Mr0AxNSuXztNTnWSvb5TURu+6u7f+n7k=;
+        b=dR3Ix3GYCPEeMUC3xqiYhz8yDy4NDm0KYsPIc/qKrH3bYl3lL7B/Fl/TYC6/+KgZKv
+         y9RepAxIyO/fOnl7p+jhj8jm7JwRgmYY+iA+Oeb3lWVsWfxK7RoHs/VTjGBMj9I4t8yS
+         rSQFbysNSyl2oWoBxFYiiYv1rVZkDNsTe+z2CyvW31hJqG2yKVDl/oKttCgy5qarcnIN
+         /c3mHPW2bfJa7UrRbVG6n19zLX3CVnbgNS/poOoODNKNzDKyv7kPME43sgD5Do7u9KBG
+         a54/hyFTzPaGywUVy2XA0ap1gg6w64lQoztLjdzvnbJcD4WvwhJq/e2ubxODWXwtYIPM
+         jv3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787763110; x=1788367910;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8pGmMeQll06Mr0AxNSuXztNTnWSvb5TURu+6u7f+n7k=;
+        b=LVTj2WNdskDHDfdDjvIT46meVHStEhq6tjm8mjnJgj0r/I8uUp1OT+qkTnryf1ehe5
+         X3pTweE289tfRK5LFsP6Bipbnl7Oo1k6Awire8TMBrk5Cajfm8SO4UA9x4/D6ywZ71+t
+         MmgwKWX8+L9A7qiUrvWWI8WcFNh8pSj7x4jVCjn1czRnLSMSV2X4QMPc8tott/1yapMD
+         bVxQUl374SJYo2bn9XRFhNYmwLapGexyk5Yyad4XgBPhWwQHHyJduJttKS2Ai/XeriaB
+         ve5ITlU03MQRJIuR+PjtGhAW69zZQJeHnXTXnxBMa9n6PM5FfYOVQDqrqyuipsS9ZciE
+         dhPg==
+X-Gm-Message-State: AFuF++kyH4rlg2Kbc97PZ8F2GvV4ikv3mhMZ9lpomua5+bYmhgYNl08W
+	haHfrF6+g5E1Oik++cHNf7Rf0IqH0emerM/LpL+IgeFovMxqDS3L0XdN5H1xhw==
+X-Gm-Gg: AR+sD13OZ/k5MWCCb5EjmKcLLvHP2oF4rRrulVHq7RCOpnfHyp1La1g5L/U8rVvYtvq
+	5PTJoV+t2Y1hibZDv4RlXeqGS0UEbscLDXFNhHEQwQt2TJfSOip3h7GXaqjpWQgJWW4Mhg/h+fx
+	wVmCE352E68rGpqooZs3ZVXmN9+NtUCcJMd4erJYd0Tof1DTAKulRLlpkaG2ViZOLS9BiuRfLKH
+	R2/jaxBFJuf+SGyDqFqje4OgLZTOUwYpqOgQd7LwE7F+CHLinFl5fNqQ60IbGd1z8WHPdOnMEe1
+	QyKrVW0io4Vh6fuBxaODXPDlFLQRk2U2/ccSedolDzv4LK6VtzmujhiIzA7eE9Yxt8mCwYhT/zC
+	Yj6lIjg75YQ5P3VtVqwbIW+39N45+6b0MTDboxEHtIAmjV78Lpi5jxFx8X4z66uvqE9yYtFGC1n
+	Blg+dV5oLBA+g3thlJuNDll9N9eEtTdCzwlHaYQVMzdLsclHcYxFC8vqSnE5wvxHA=
+X-Received: by 2002:a05:6214:1244:b0:8f0:a849:f392 with SMTP id 6a1803df08f44-90cc7958d25mr89348416d6.14.1787763108687;
+        Wed, 26 Aug 2026 09:51:48 -0700 (PDT)
+Received: from [127.0.0.1] ([20.106.191.82])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90cc63e3108sm30087186d6.11.2026.08.26.09.51.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Aug 2026 09:51:48 -0700 (PDT)
+Message-Id: <pull.2204.v3.git.1787763107646.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
+References: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
+From: "Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 26 Aug 2026 16:51:47 +0000
+Subject: [PATCH v3] t1401: check symbolic-ref failure and --quiet silence on a
+ non-symbolic ref
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Nikolaus Schuetz <nikolauspschuetz@gmail.com>,
+    Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 
-"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 
-> diff --git a/checkout.c b/checkout.c
-> index 1588b116ee..2806b783ec 100644
-> --- a/checkout.c
-> +++ b/checkout.c
-> @@ -8,6 +8,7 @@
->  #include "checkout.h"
->  #include "config.h"
->  #include "strbuf.h"
-> +#include "string-list.h"
->  
->  struct tracking_name_data {
->  	/* const */ char *src_ref;
-> @@ -17,6 +18,7 @@ struct tracking_name_data {
->  	const char *default_remote;
->  	char *default_dst_ref;
->  	struct object_id *default_dst_oid;
-> +	struct string_list **remote_names;
->  };
+git-symbolic-ref(1) documents that reading a name that is not a
+symbolic ref fails, and that --quiet does so silently.  Tests such as
+t2020 and t5621 already rely on "symbolic-ref -q HEAD" failing on a
+detached HEAD, but none checks that the plain form reports the error
+or that --quiet stays silent.
 
-Do we really need double indirection?  The unique_tracking_name()
-function that uses this struct for callback receives a pointer to
-the string list the caller has, and the job of the callback is to
-append to the supplied string list.  
+Assert that a non-symbolic ref fails with the "is not a symbolic ref"
+message, and that --quiet fails with no output.  Use test_must_fail
+rather than pinning the exact exit codes, which are documented but not
+worth freezing in the test.
 
-It is not like it wants to swap the given pointer to a string list
-to the pointer to another string list, so I do not see a reason for
-anybody involved in the callchain to want this as a pointer to a
-pointer.
+Signed-off-by: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+---
+    t1401: test symbolic-ref exit codes on a non-symbolic ref
+    
+    git-symbolic-ref(1) documents that reading a name that is not a symbolic
+    ref exits with a non-zero status, and that --quiet does so silently
+    rather than printing a diagnostic. This exit-code contract was untested.
+    
+    This adds two tests: querying a non-symbolic ref exits 128 with the
+    usual "is not a symbolic ref" message, and --quiet instead exits 1 with
+    no output.
+    
+    Test-only; documents existing behaviour, in the spirit of 919eb8ace
+    (t1402: check for refs ending with a dot).
 
->  #define TRACKING_NAME_DATA_INIT { 0 }
-> @@ -39,6 +41,8 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
->  		oidcpy(dst, cb->dst_oid);
->  		cb->default_dst_oid = dst;
->  	}
-> +	if (cb->remote_names)
-> +		string_list_append(*cb->remote_names, remote->name);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2204%2Fnikolauspschuetz%2Fns%2Ft1401-symbolic-ref-quiet-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2204/nikolauspschuetz/ns/t1401-symbolic-ref-quiet-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2204
 
-If we lose the double indirection, this can become
+Range-diff vs v2:
 
-		string_list_append(cb->remote_names, remote->name);
+ 1:  22694da869 ! 1:  0391dcceef t1401: check symbolic-ref exit codes and --quiet silence
+     @@ Metadata
+      Author: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+      
+       ## Commit message ##
+     -    t1401: check symbolic-ref exit codes and --quiet silence
+     +    t1401: check symbolic-ref failure and --quiet silence on a non-symbolic ref
+      
+          git-symbolic-ref(1) documents that reading a name that is not a
+     -    symbolic ref exits non-zero, and that --quiet does so silently.
+     -    Tests such as t2020 and t5621 already rely on "symbolic-ref -q HEAD"
+     -    failing on a detached HEAD, but none pins the exact exit codes or
+     -    checks that --quiet actually suppresses the diagnostic.
+     +    symbolic ref fails, and that --quiet does so silently.  Tests such as
+     +    t2020 and t5621 already rely on "symbolic-ref -q HEAD" failing on a
+     +    detached HEAD, but none checks that the plain form reports the error
+     +    or that --quiet stays silent.
+      
+     -    Assert that a non-symbolic ref exits 128 with the "is not a symbolic
+     -    ref" message, and that --quiet instead exits 1 with no output.
+     +    Assert that a non-symbolic ref fails with the "is not a symbolic ref"
+     +    message, and that --quiet fails with no output.  Use test_must_fail
+     +    rather than pinning the exact exit codes, which are documented but not
+     +    worth freezing in the test.
+      
+          Signed-off-by: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+      
+     @@ t/t1401-symbolic-ref.sh: test_expect_success 'symbolic-ref refuses bare sha1' '
+       
+       reset_to_sane
+       
+     -+test_expect_success 'symbolic-ref reports a non-symbolic ref with exit code 128' '
+     -+	test_expect_code 128 git symbolic-ref refs/heads/foo >out 2>err &&
+     ++test_expect_success 'symbolic-ref reports a non-symbolic ref' '
+     ++	test_must_fail git symbolic-ref refs/heads/foo >out 2>err &&
+      +	test_must_be_empty out &&
+      +	test_grep "is not a symbolic ref" err
+      +'
+      +
+     -+test_expect_success 'symbolic-ref -q is silent and exits 1 on a non-symbolic ref' '
+     -+	test_expect_code 1 git symbolic-ref -q refs/heads/foo >out 2>err &&
+     ++test_expect_success 'symbolic-ref -q is silent on a non-symbolic ref' '
+     ++	test_must_fail git symbolic-ref -q refs/heads/foo >out 2>err &&
+      +	test_must_be_empty out &&
+      +	test_must_be_empty err
+      +'
 
->  char *unique_tracking_name(const char *name, struct object_id *oid,
-> -			   int *dwim_remotes_matched)
-> +			   int *dwim_remotes_matched,
-> +			   struct string_list *dwim_remote_names)
->  {
->  	struct tracking_name_data cb_data = TRACKING_NAME_DATA_INIT;
->  	const char *default_remote = NULL;
-> -	if (!repo_config_get_string_tmp(the_repository, "checkout.defaultremote", &default_remote))
-> +
-> +	if (!repo_config_get_string_tmp(the_repository,
-> +					"checkout.defaultremote",
-> +					&default_remote))
->  		cb_data.default_remote = default_remote;
->  	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
->  	cb_data.dst_oid = oid;
-> +	if (dwim_remote_names)
-> +		cb_data.remote_names = &dwim_remote_names;
 
-And this can become
+ t/t1401-symbolic-ref.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-		cb_data.remote_names = dwim_remote_names;
+diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+index a2a7e94716..fd3aa89a91 100755
+--- a/t/t1401-symbolic-ref.sh
++++ b/t/t1401-symbolic-ref.sh
+@@ -38,6 +38,18 @@ test_expect_success 'symbolic-ref refuses bare sha1' '
+ 
+ reset_to_sane
+ 
++test_expect_success 'symbolic-ref reports a non-symbolic ref' '
++	test_must_fail git symbolic-ref refs/heads/foo >out 2>err &&
++	test_must_be_empty out &&
++	test_grep "is not a symbolic ref" err
++'
++
++test_expect_success 'symbolic-ref -q is silent on a non-symbolic ref' '
++	test_must_fail git symbolic-ref -q refs/heads/foo >out 2>err &&
++	test_must_be_empty out &&
++	test_must_be_empty err
++'
++
+ test_expect_success 'HEAD cannot be removed' '
+ 	test_must_fail git symbolic-ref -d HEAD
+ '
 
+base-commit: 745601a9a94110d74769ab605ccd4f61339758d2
+-- 
+gitgitgadget
