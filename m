@@ -1,149 +1,193 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B1E280A56
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 09:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787737634; cv=pass; b=Du8rbxK9IpDqKnUtNXcrsc7p/vFN9vR3z7BnpgH9MSwJcFwS1CsYr9IdTJriZ7waHNmAFbcNXKEEovI7UrpCjKiwBjkXxAUO/8grcxUjxEndzryNLlUY+RTHPk9ZLPN8cQudwbSoHtEvELJ50wzMM5Q/SIXs4NfvfiHZ9CuNKbo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787737634; c=relaxed/simple;
-	bh=iZ82JC25TfQQTbwn9yW73SlPykir+B5uV99SZuR7KBg=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dGUNe3BIKPSfFp/0tQleAnKN1XCy7t96JlCL9/jDd6yc2P3AQGdwA48MuCOTOvT81vDXLJyHHvIDCrKOtSbm7+G/Dlo1oxGIUdMuieafIcWtRcrCRIqptxTFURPfhIA+20jAkE2FE/npnppWOoeJXvw+mZeen43QzZt9rt0PiTo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZcZYkBgr; arc=pass smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6490B23645D
+	for <git@vger.kernel.org>; Wed, 26 Aug 2026 10:08:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787738941; cv=none; b=D+rEGdoiUq3Kh2goQ3BRo42qCyIH7P6VNpmQ7GrfCmiILLAoNn2T/skFjfWrbFcgqFdld6UTkyLm5sxI/aTpzipK78bB+G+WfHbhYDMnh7P5Y8+OIC50i+WDC7VMZk4SZJ3Jwjul7WrGQaeo3iTOUyQsZm5IfTvVhgZe4XF9QdE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787738941; c=relaxed/simple;
+	bh=Q7h+CEBtq4uFGZmqfnMZRlb9eAQdrmY/1q4at2s0L0o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BKfEwDrQ6eZF0BJK/9Q9VRh/z+57YYGMaShQyOQC/vHfNLHvCKbf/M1OWmnA2G+kMoUaMtOxZY2hjsJpDr/VZTDkMzo91zkCR4u7V7VRDnjdcPDUZ1uEFmiTLbkbEcu6YkoWpOwuKb6n/68OXKjGpo0xOm85MgtwvWfatnTbxdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=khZ58e+Z; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZcZYkBgr"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-97c79f2db08so310214241.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2026 02:47:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787737632; cv=none;
-        d=google.com; s=arc-20260327;
-        b=rVNF5fhB7peVW9CFKZF8mZZiNArhqjLi122d8pN5clPnSDWiJaUsoYT0uOB3KPe6n5
-         qcwoaIm4r9rArq+Ujq0yfbI6sRXWQGoKcMB5e5Td44O+eTaCam2VMEf+x9eoB/I70l8X
-         aXZn3HMY/6Hlp5HmY3/3U8fmuB0ew1s9WK1KCai8mIrJX52EmTyX+gCJ7kXwPlRASDRu
-         mHTJEM7mpradem4HDZhJ7MIMGLketHz4XWu7k0e6UbIdMvuuOGQixsLAYbmpl+da1rk5
-         KLCETflbER6eIADC4+XByFZHPTtc6K1xohXLPWdZ6WMjv413kkiuwOdkaaUM8zSKxKxA
-         Rk0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=hjzokfKEQZtNcCFLbTAcascJLCoPdIiNXqkrdTcRZH4=;
-        fh=rF92/hKkNSqTOvJyQo6isjv9H80DGl/xHyflQ/yGv+8=;
-        b=H3uNLOOtCGgpThWgcosg/9AIjfwlf9SsE+eHvmh4bZstKKiu/MnZfP40tHaIiLzDzD
-         nXP2RBTuIne+RMPCpzIR39Zp7cn7VFguYyf6iF5saClv1QChYz8UPcTBHBScj7RlOTew
-         iWg88yMOm13lWPKgbnoc5H5fLRA0ngmxIg3zhBgngqxiRZzhQp0MT/TOiLjjUKPadwRa
-         swgyztL+DHH+pjjVenuvHvw3Z8Hii2QHf7u9EuHwvefqcEz82GuLkLYCNYesd9jIGZW9
-         AIsvejjaLJSy5lsZNEiYPs/Q9ExuiJZ8i/LJySkljIwcW02V4mjtRTLi9vIIOjy5wJpm
-         g1SA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="khZ58e+Z"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4956869750eso4535785e9.2
+        for <git@vger.kernel.org>; Wed, 26 Aug 2026 03:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787737632; x=1788342432; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hjzokfKEQZtNcCFLbTAcascJLCoPdIiNXqkrdTcRZH4=;
-        b=ZcZYkBgrjaZbQ158/sN/eygNHlhNwiSd1zCD8StwPoy2gaGaG87RLIMWa2hWND3mq/
-         SZd77qaRx3R8UyUkhhcuYBnKXEzPvrsE+YeWAQ0qqRCIvU6gukyX21RroCTemNGwUOOE
-         tLj8pgyqfCo3jLWJI7GCuk1hRcVZ8g0A7vBoE3nqJYQyuPwZ1wpSW/Gn4IkWVJPWHImL
-         1/FEArUe+P2evG4jY9XIckAqGr8FlyDDnBAkbFmMhVy8RtqHQaA9ZYwrcQPLtBgASZdV
-         CFDWzmHJIHISjl1aK//i38N4Uuiumcv7BjwLBfbN56QGcsyD19fB0lttiX5vsxF5cCuC
-         vtOw==
+        d=gmail.com; s=20251104; t=1787738937; x=1788343737; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=34OTB66OheLiOXx8SyLFOdJ9ajjuzYowPnqJOtgn+SM=;
+        b=khZ58e+ZUbG/UqwyF0JbpbpA6JTpqwb0GiNqcJqLz7PryalcO6hCkL+ctaDKH/qp7o
+         ouMmbm63oHc2+XnPsfCUSO8Jg53aHG97Z6JXHPSFGL3pb+my3BqE3fYW4wPgIKgXEvYn
+         5tf1Bvv5zZ6IzvPSxF/y2VBaDRxZWsVPpCvQFrea6HBQzuTrCSDaFuBH4nEONQzWgkd1
+         LV0q63hgJP5vfYibsd1D5IQGja/Yu6umZ+SvAKSNbVAhe+WIdABHkCQ7kgSNSNoS49aW
+         232UHHM5fHOWJ4KlKNYmmnxk0KSQ06rvKIC5aZbMOtbpTd1JD4aT6FblZFdmBRHhZHxQ
+         whuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787737632; x=1788342432;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1787738937; x=1788343737;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=hjzokfKEQZtNcCFLbTAcascJLCoPdIiNXqkrdTcRZH4=;
-        b=m3MG3dZZhNZbZKXg0nbQ5RAjBPGR4/lH85I2ynIaRYY36Sv3nWXbbO5jDt+6XLZx2b
-         642xcOBEXrd+21+g0w/BZnak0Dqxy9N2jLyeVxz/CZbD9FDqlv1WxkiumIu7kFi7vy7K
-         muYC6n3H3WEoHbCdelMcHkrbb9YwXK05q8EWERvQajFjwE48fLXhejpICesHRciRmpyr
-         h0U19VfXJwjccDzjhiUcTxveaEBGsSAJNRfAtYRSsWqk2tF+bZSsmfgMNWG8zGj8Zx2h
-         TcZ4jlMB/75VKypkS8zGRnBIG11Tg/kPl1qy3lBwftZRV/vrFV4WFqluFHjZGkNBLTdG
-         M0gA==
-X-Gm-Message-State: AFuF++l78KZYNieFfbpKHr9sWH+arSkhs/8Be3XdekVNHv+UGna85A8F
-	Q465weH1GP1t/RD1u07OmqYkx4r90hKatCVHeOOY2UiN96f3q38j7Tx+7aTB74rw7ZrbNEdOWA/
-	rbbk7Hj6Y7hoPs2u2kzVi8J1Sei/SSMU=
-X-Gm-Gg: AR+sD10TowLG4OgRLUOqdC4pcvkCFEjvaUr0FB/U0fxN1AzW/1eLdqbBx49914NiW+z
-	aIVC6g87VCF4SezDnvFyXYjojfY0dTfo9P1LIjwTnjFpaRe03W1svCUxkNYcdfcF4o1sSJXhtwF
-	mbk8gcW8f1WMTwsPbNk11iwE2ukaug172S/GX72exLcY4EdDvmjt//WSESI3hClRaJrH9DJVyTA
-	Iu1+SmggavwNkbgYsS1/TGZ09IM7nTeIozB5nE66UQam2kiD3uI7zpPw3ehoVGyCPK1YyRPX7Ad
-	Czyxz/wVHugIPS5IjQ7RQXnUve5AeHWRF2G8EPJXEV7Ev7Uj/vr4WYcsvhiJQKA666zyA6AbgCR
-	KxXqyK8s7GHZvYh0sgttGo5gV6JeMH+k+lTs=
-X-Received: by 2002:a05:6102:41a4:b0:778:5579:c661 with SMTP id
- ada2fe7eead31-782c0dfe6a6mr1945952137.7.1787737627174; Wed, 26 Aug 2026
- 02:47:07 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 26 Aug 2026 04:47:06 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 26 Aug 2026 04:47:06 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260824225202.GA190620@coredump.intra.peff.net>
-References: <20260824-740-optimize-reloading-the-reftable-stack-v2-0-9c9de2eb0af7@gmail.com>
- <20260824-740-optimize-reloading-the-reftable-stack-v2-4-9c9de2eb0af7@gmail.com>
- <20260824225202.GA190620@coredump.intra.peff.net>
+        bh=34OTB66OheLiOXx8SyLFOdJ9ajjuzYowPnqJOtgn+SM=;
+        b=hkN4ungop7/XeVlfwKMalYZbvBZ1dNHpXlQbdgq0weNC/Hh5jZ/43kx9yG5yV2Lh++
+         eL2BLJTrEyYIsk9UCXBQfVw44fjXh1hWh/Rnzo/+7lI//7H2xQP2Ob0Z6PeNjRklkbDP
+         ZsPvD79fwdmdWAmWuatPqDpQM10Dtz6alrUZRUXnGAgIZcr3HxP9RYv8idbLbdYJMCCi
+         gtgi0IzNVaOYaOyloABqeP7nRGXmI4xvL9eDKI3grgNcQDOep5CIVSfT9gCvSti/GUVc
+         68okW8b4/1++oD06glG7Wh8aNk8+1bhnT5o3l3g4NTAejN5L8hGhZrvVAoERKVSd93Q6
+         uWmw==
+X-Gm-Message-State: AFuF++nUAXTKc/iwOdxOGcYGZ5wkZJ72fExOTp/qXSalH74BrdUSbYW+
+	4VE49+DfiriYyInU9iGGTt8+YgowVic5LUQuWUvzk5NuLW3uJKmVYM6M
+X-Gm-Gg: AR+sD13vSzalgd1QED8Z7FDiPOrMFgKjDAHtS0yv3o7DquWjM0/UtpZn5UaObScSmhS
+	LLolIcF7MSPnMhXzv0PagLC4iD0K0tQgWypbzsRhxyG0cKc0ONK2+n49rxE1bph8XAco/M2Ah81
+	xfmRny/s2hd6YM8drXuIyY290/CuiZiRxtQtirNVH1E5nhglOQd03e0jpbZDCM9YK4piUGXx8nq
+	IULaO6/n/jyfRYZA5JlyXuyAam8U0iuT7zaIzraPgiqc+rarJszdIbvt3uLrXuY9n1UEvtu+uSr
+	KgyBnPJdm6A7/tiQAhHbCPDyzrhtSBMcsuxNc7mD6iump+hfU5tfVINRS4qKOPpQ95OSlJ7dHCk
+	a2KFn29rP1+R0uwJVFYMQzJYQMgAQc6jaqZbt1hGp1goMX7/Nrz/VKtJeXToP0FhLZCCBMXUxio
+	WuTGjhNvE136Ej3zEETjsfTg0lHUqrJKe7xmFnz1RqDvVGTkFRkvLrD2rJQK8esYdzP53ymDoDd
+	74eQuDo0YiJh1MHyLBwDp4ls6YlbP67Ms/7YyN+e8Y=
+X-Received: by 2002:a05:600c:4514:b0:499:8777:ccba with SMTP id 5b1f17b1804b1-499dc822557mr44672085e9.12.1787738936937;
+        Wed, 26 Aug 2026 03:08:56 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499dc9b83aesm21299115e9.12.2026.08.26.03.08.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Aug 2026 03:08:56 -0700 (PDT)
+Message-ID: <4c7734f5-2ef4-4bb0-9397-a97cd67a3bd4@gmail.com>
+Date: Wed, 26 Aug 2026 11:08:55 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 26 Aug 2026 04:47:06 -0500
-X-Gm-Features: AcwNN1VbHH-XcyZU6AtyBbtXOf2DcN9q5KtbbN5IJmEmLyYvcibV3QTObVcypmw
-Message-ID: <CAOLa=ZRanhvBragQEcsLostB=4YGdDT8js7x8Ck5nJvLpsRZOQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] reftable/stack: avoid reloading the stack when
- already locked
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000003850850659f01a2f"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC] stash: let the stash stack live in a configurable ref
+To: Vladimir Sitnikov <sitnikov.vladimir@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <CAB=Je-GRbyonmkW4qXCuMRQhWcAZE8zc_Xp32hwC1i61bNnjaw@mail.gmail.com>
+ <91feddb6-0d1b-42af-9942-307b98aa747d@gmail.com> <xmqqfr03sgyu.fsf@gitster.g>
+ <e3e7d23c-ad66-42de-b959-f9f2fae8d16b@gmail.com> <xmqqecfmm76c.fsf@gitster.g>
+ <CAB=Je-GVyfrP=3kW6hRh8aVnzkKg_6yKZW2LCV=Z1XB=T7KxFg@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAB=Je-GVyfrP=3kW6hRh8aVnzkKg_6yKZW2LCV=Z1XB=T7KxFg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---0000000000003850850659f01a2f
-Content-Type: text/plain; charset="UTF-8"
+Hi Vladimir
 
-Jeff King <peff@peff.net> writes:
+On 25/08/2026 19:24, Vladimir Sitnikov wrote:
+> Kristoffer Haugsbakk writes:
+> 
+>> To my uninformed, not-using-agents mind, what agents do with the tool
+>> seems like the least concerning thing. They can be non-deterministically
+>> instructed to not use the stash.
+> [...]
+>> And for determinism you can give them a git(1) wrapper that bans
+>> git-stash(1).
+> 
+> A wrapper that bans git-stash(1) misses it, because a command that never
+> mentions the stash still writes to refs/stash:
+> 
+>      git rebase topic --autostash
+>      Created autostash: 637ca99
+>      Applying autostash resulted in conflicts.
+>      Your changes are safe in the stash.
+>      You can run "git stash pop" or "git stash drop" at any time.
+> 
+> The entry sits in refs/stash afterwards, where every worktree sees it.
+> rebase.autoStash lives in the shared .git/config, so one worktree can
+> turn this on for all of them, and the flag then never appears in any
+> command line to ban.
+> 
+> Having a stash subcommand and forbidding it to execute is fishy.
+> Agents might miss the instructions and they might still attempt calling stash.
 
-> On Mon, Aug 24, 2026 at 11:31:02AM +0200, Karthik Nayak wrote:
->
->> Benchmarking with a fixed, non-symbolic target OID in the 'refs/tags/'
->> namespace (since it triggers a stack reload when checking if reflog
->> exists for the given tag name), shows a consistent 15-20% improvement
->> with these patches:
->>
->>   refcount   master     patch     speedup
->>   --------   -------    -------   -------
->>   2,000       18.5 ms    16.6 ms   1.11x
->>   20,000     120.7 ms   102.8 ms   1.17x
->>   50,000     296.5 ms   247.1 ms   1.20x
->
-> Much nicer. :)
->
-> I'm not very familiar with the reftable code, so you can take my review
-> with a huge grain of salt. But I think the idea is sound, and I didn't
-> see anything obviously wrong. Thanks for working on this.
->
-> -Peff
+Right, your wrapper would need to be a bit more complicated. It would 
+need to pass "-c rebase.autoStash=false -c merge.autoStash=false -c 
+pull.autoStash=false", disallow command-lines containing --autostash and 
+probably set GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true to enforce that.
 
-Thanks for the report and the review :)
+> Your point about the bar for a configuration option is well taken, and
+> so is the one about the framing.  The single confused session justifies
+> the option on its own; the agents changed how often it happens, not
+> whether it is worth fixing.
+> 
+> Phillip Wood writes:
+> 
+>> When I'm not trying to move changes between branches I associate a stash
+>> with the branch that's checked out when it is created, not the worktree
+>> where that the branch happens to be checked out.  We already record the
+>> branch name when creating the stash so perhaps we should add an option
+>> to pop the last stash that was created on the current branch.
+> 
+> That covers more of my case than I expected.  Git refuses to check the
+> same branch out in two worktrees, so a per-branch filter separates every
+> worktree that sits on a branch, and the entries stay visible to
+> `git stash list`, which a private ref gives up.
+> 
+> The gap is a detached HEAD:
+> 
+>      git checkout --detach
+>      echo v2 >f && git stash push -m "my own text"
+>      git stash list
+>      stash@{0}: On (no branch): my own text
+> 
+> Every detached worktree records the same "(no branch)", so a per-branch
+> filter groups them together rather than separating them.  That is not a
+> corner case for the tools I have in mind: one repository here has 436
+> linked worktrees, 23 of them on a detached HEAD, because a worktree
+> created to look at someone else's commit has no branch to be on.
 
---0000000000003850850659f01a2f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 54fe874b4a5ca491_0.1
+When we create a stash entry its first parent is HEAD. So I think you 
+can find the last stash that was created in the current worktree by 
+using HEAD's reflog and the first parents of the stashes. You want to 
+find the most recent stash entry stash@{M} where
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xT3RoZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meTh2Qy80NXVuUE9PaExHc21zOVVycGNpRUFxb1U4VAphL3V6eW5OZFUx
-UFJrSS9xNkRnN3hNTmRocHVhUkpTSTdRdWI0WnQ5RGI0NmZPWWRRVFEvaGNWRHhsT2NkNE80CmNM
-VnpTOHlaeVRqRFJWNmtBYUExMlM0dGJLTXRVZWRrUjhGUmJJRjhFNExBbkF1YlVIWVo0VDlwbDhJ
-NWkvamEKTDZ3NVpZVDdxYmtYMElMTE9vRWtTYjZxWGpWWDJKSEpqZmVjaklzUEVJdkxIWEpUUHJO
-c05Wa3k4VFVQREV3ZgpHOStkdGl0RzVDSEdyQ2FsQndOaGcyN2VkdGFHVzJlVzFPeGlONFhSVmdk
-ZHZwQU4xbVFHM0ZIN2RsU3M4SFoxCnFvamxDY21xSVJ1VVFsQVhPSnJOYytBQnNBVjFRaExnUWJ6
-TjlnR0N4V0lDcUtrVy9tR0pkd1QwMSt0cEtrNTkKYnBKeElNWUZ0NlBra2dFZDZBTlJJVnA3eldH
-VW5MbkVaNStxM3FpWUVsOGFPRVRpM1QxYmpqR0NoRkVLSWhHZAp5UFZLM1pBdklodG9JK204N1pY
-VFJxWTZ4WkxmSHlOT1B4NWJkQ3ZWeW1hME5QS3d5a0gxSzFrTFBGTURsWk5lCjNydlRaUWFheS9P
-Z0RLQXBhUXcrUDdURGxkNlE3N2tRS2c4NkNicz0KPTF6cWgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000003850850659f01a2f--
+     object-id(HEAD@{N}) == object-id(refs/stash@{M}^1) &&
+     reflog-date(HEAD@{N}) <= commit-date(refs/stash@{M}) &&
+     commit-date(refs/stash@{M}) <= reflog-date{HEAD@{N-1})
+
+that will give you the stash whose first parent is the same commit as 
+HEAD in the current worktree when the stash was created.
+
+>> If an agent really needs a private stash it can use "git stash create"
+>> and record the oid of the stash under "refs/worktree/".
+> 
+> That is what I do today, and it works.  It is also what every tool has
+> to reimplement, and the ones that skip it produce the failure I opened
+> with.
+> 
+> The two ideas may well be one knob.  If the scope of the stack were
+> configurable (the shared ref, the current branch, or a per-worktree
+> ref), then "pop what this branch stashed" and "pop what this worktree
+> stashed" become two values rather than two features, and a detached
+> worktree can choose the one that still separates it.
+> 
+> I am happy to write the patch for whichever direction you prefer, or to
+> test yours.
+
+My preference would be to add options to "git stash pop" to pop the most 
+recent stash created on the current branch, or the most recent stash 
+created in the current worktree. That keeps the convenience of the 
+global store for moving changes between different branches/worktrees 
+while making it easy to pop the stash that you intended. It would be 
+nice to have options to filter the output of "git stash list" by branch 
+or worktree as well but that could be added separately.
+
+I'd be interested to hear what others think
+
+Thanks
+
+Phillip
+
