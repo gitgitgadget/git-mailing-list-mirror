@@ -1,69 +1,72 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFDD346E44
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 10:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07E63D6CD3
+	for <git@vger.kernel.org>; Wed, 26 Aug 2026 10:45:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787741116; cv=none; b=My1A+Ftei+ISdxEkqkLzn/s63x7TVQeus8NqhMCVR0f9YK8y5T4ijHxZNrXL0fP3zul9HvT/dKe0eJplo9WqXUt0Hd2ONDSqizrQft2RK6Q4Zd6zyow+2IVmXFFyB1Jdndqdstj5IGR3kh97QL/yQzY4ikXlvGlrtldZYDguSlE=
+	t=1787741123; cv=none; b=mN13Zi9IceAtckEA4YfQT7jSMN5Uq6S4ERowmwXzieKAMkkrnIfgvFXQrSs0Ab8DJNbxcrlAYoIrsxidrh0v+pMYKAYAdfnd7LBfARrkTm6WuFqncpeM/A3iZ4EeXz72JJr+USx+vz5Xee61oRxoWyBh8fdMxLg5xYjlIzITorM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787741116; c=relaxed/simple;
-	bh=Mo6k8k3U7woCE01SUkpdcmyFPllNFVgkiQ2bcpWDkFc=;
+	s=arc-20240116; t=1787741123; c=relaxed/simple;
+	bh=9TEn4ZmDZXFeXUdR/N/oWv7Rt0Nw71zbMQWPHhzrc2I=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JNBu8ih+XKE1EJ8r7KNSWmrd+rDIprkH9AM623QFh4oz/BJ9Uq1JjqwSAl5K5d9un5mDWHiEMunFeKgIOXz51DosU/HKMmy7YAg2xp6bGp3jv2VjVD3H6uai1ATKgfEFi21UHlhE1e6CHrGptnFpCE7IrVxrXmLdnXbBP+YSJao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hby/1qtN; arc=none smtp.client-ip=209.85.160.41
+	 MIME-Version:To:Cc; b=Is7UFY2B5xnyVcHEMr2zCcWkiLa9DAY5JLZShLW0H9MWZvcBzguit4ICRznzTa231Aplvg1YJUkgX9hrGvyrU4YIkC0SQ/JidKBzaT0ETXHgUo62r6zg1GNLMLjcxuNu6jcZM5DCXlItt9jx85OWNQhysSsBAPxhQsMJt77s7vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rEH2vClh; arc=none smtp.client-ip=209.85.210.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hby/1qtN"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-45eb2e6402aso711132fac.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2026 03:45:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rEH2vClh"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7f18c0e03e3so549233a34.2
+        for <git@vger.kernel.org>; Wed, 26 Aug 2026 03:45:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787741113; x=1788345913; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787741116; x=1788345916; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=zZnVAm44NUBPTWrYj5KYLyRgqY75Weygye8GZw6P5ZM=;
-        b=hby/1qtN61ctNi3xrjRsDl5Dj9zS7qJD8z2hoTHYgJ8gwvzuqd4nvkQ8Tie5xR9wfQ
-         NengRalpZJLzR4AJhQH121dkBXASsTYzA6a4VhqwKd8eTeE04dXbhtzZ48U78TJT5vBd
-         S2NtEg9yc5ef90+LXKEVLIizo4D/j6Zo7EJEqWsqHT6ppJb5vWNPb3fJQcVUpPnTsGsH
-         648FR7xFAlZfrB7otPV4ryWqquVMXQoLkP5uSutDMGr/NDceJ6wgDsB3vm2Es2h6Mlzj
-         A2uPrxz1fvpcpLfuWxgr2YXcSxG5UqmBs9TFfIEp5Vq1AJF+TwOS1p3jSwJITkO78zig
-         pFsg==
+        bh=igX4ScQhVcKIUKOi+hnrGtHVpigj/MZsgio+JOhg6CU=;
+        b=rEH2vClhNeCxEnUkiTLXv0/qZiNsRa/QM1sX7O0F00yOLT179PujwjGmFl8WNHSv+1
+         ILai0aPNQdPZ5m2Mx8y7uxF4XLc8GGyio+INPBP4G5sScMxaxzw8+xtMdnG+6qzAGHFy
+         T0HnfqWoS9DNmftvX0/kh52UkBqQoy08rutzur1DJjmuwdeqq5XphzSyPHqwDGtrbsR9
+         n/aiTFzjMPhB2JPnDVh2/ju9LY4IitawLjLX5M2Cy29jUbHWvwmBTS348LJBOCFsNxXR
+         nbGQM4pIKPKgozwtqm3NG9KliGsiz58ia/fky+inAVxpuDZkXvPZHVRth1Q89foDoQul
+         KeBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787741113; x=1788345913;
+        d=1e100.net; s=20251104; t=1787741116; x=1788345916;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zZnVAm44NUBPTWrYj5KYLyRgqY75Weygye8GZw6P5ZM=;
-        b=EB8ruf5Hzt/vYX7KR7JvkJTITpSCCNnqTiQknQ62FOw7NtMrt4H3EEiQqi0het+0vP
-         3dleUpQqbsBkbP0rxAJsa1V+TxjPrBENBvTCde6pz6zzYiN4w1YBM1lgAdVQ9LvwPg8S
-         obqhCUf732lePRuLoyM8DYWYDQIQ+HTjEdOTkOPAtAA2tmQCDzn5h532Z9e5fvq9MjUY
-         i6E8gYY7+rvJ0mn7s7jfGxaIjdFXr5K058kTWmyLN9O4dIrz+7WpWPa/NKwlcjN4jtRu
-         MWe2YNlkLQeUU05E8w31sy/sNjzid34LVHusNeWUetU3lAJY843m1v3t7idOS1gzv5j7
-         mU8Q==
-X-Gm-Message-State: AFuF++nXj2dqhkYMXwauNyqjisUMA50vgAMQ619IH9ZUTdKMoD1WrvMK
-	A2zOe7tWmbulzMDDEtcBoXTkn6C13BWdkxIj5IJdnLyGIl5zZH0+5vKQUP7310fN
-X-Gm-Gg: AR+sD10/v6GyS/Rv9zhvcUB9UlsmE+K1BgUitnPQckdZHm+RBNJqWpcgS6ltbm9nX8P
-	3Hto9Y0742Qri1xDRlpD6xm8O24TixISlIQV4fBlZi7JgM8sq6qmTin8+1pC2yM3K9N/H3aukOr
-	T7ddw9xpVBZ2kvcnlXGisrv302ptiyJueI2p67btV1OBQMWtI12gPgVmlacIRwIVaxz9fxjqXK6
-	s9GNHe6GivlR6Z/LTeMHBTqw/D3Z3yxc5KM5xqJo3ousYk87y6JegI40nJcKOWjmXStHLmNIlqR
-	0NEXpH+5JSi9Fzdb/KNDSx6TOMNY9UOpw2E3kG2NA5Hv0jJ8dRWcWiJ3IKrdFtFbMsrUTD7mH7r
-	6+BWfBTExGmXA6opsBpIS7OGRc8AZqrsaNfzCANesL1ZWtdt5VCocCb1Gr9OQqZsDGpJzZY135P
-	jYVjlYLyn47wTt9IwxC56EC8WfH7XlUIXay3C9j9S72snHhFT5K20leNRLSnhKIYs=
-X-Received: by 2002:a05:6820:f02f:b0:6aa:d13c:a709 with SMTP id 006d021491bc7-6b1a051cd62mr4597019eaf.31.1787741113217;
-        Wed, 26 Aug 2026 03:45:13 -0700 (PDT)
+        bh=igX4ScQhVcKIUKOi+hnrGtHVpigj/MZsgio+JOhg6CU=;
+        b=iV2rME9uYg5MFlpdKNpLzyW8yDgeLgKEjxY4SneIRnXVu76llCEn0jz2bhNRKeKpZB
+         PVAIgtxueSnqsLn8sJyV9niWWcK7RTxNuTZCj6EYdMuAvePLZ4SIRmC2TB0Omv+WBERJ
+         P7lkpWG5xTT63C7sCDVOnn4L/V0P3ZiQlDp+4h0JIaxQGOBTujekMeH+GT/4RvMDDL2e
+         MwlF/It7WP5wTVl3bGp+yLq3ulIcMUc3bMB3zYXLYvIxr4H/oMA70TXT/EIOonWPYe5i
+         3IOP+Xx0LYoeK30uO56taLX51UABqDG0RN9f+M2melALE1mq82kdHdEAbpV0HbXDjdXr
+         ikOA==
+X-Gm-Message-State: AFuF++mUpT5lGTiom35dqBOGUXyTxhNhiQVm8fyuH2CA8JkkdX7Pcyar
+	6v/eNNx68p9lGswNH74Xpta/jzEYfWXCqMAG494kfEUL5xoZqfO0sLmRKRdmuZZI
+X-Gm-Gg: AR+sD13ei+3C2tF88wZA2DKhGFex82OVo4kFkpdivczGBBA50A1Ld3jJOBAHIlxH6DV
+	XMVmceeDebtr7TwzDk0qRsV/NXXwf3bAfsug8meB6voLINulRjiO5VWUtdp6ZgJbrkTsD+UM3v9
+	ikf8M0qLeCHIA2vq4YwSWfI1t7O98YAvWAzB3Dj6MPDoUOZd02hD6tfPuWnGhbkJ7TPjCJc1lhh
+	de383ahl9dEMRJN0kJz8Wk9tJAGFu5thw5MTK5JnwKNBZE2NerNNTnoSBm2LpzjF3t/dbnmXH+k
+	oIgDX+F6aUMRmoxrreXQxqm37y0Fw5AtB+HkVQav4IJH4tH58k+n+0DOKymPkGZ7ZeZXqCjmgSG
+	xr4F1wHWBcUFu9x0RKUiUuO9Fk0e1fw1d42oqJ4syy9imEZ3Pj+yxDBETRYus4Kk7/JDBuPLhp8
+	ERg1LtG0Gtz845toTVbBGi7Sl02EaUaXFIhNOcT21Gbcyzf4oWveUxQnSITxbJm4cjhmtnNpI/8
+	g==
+X-Received: by 2002:a05:6820:2910:b0:69e:3e6b:c07 with SMTP id 006d021491bc7-6b1a03705a3mr5519586eaf.5.1787741116316;
+        Wed, 26 Aug 2026 03:45:16 -0700 (PDT)
 Received: from [127.0.0.1] ([52.154.19.227])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-465afa1f389sm1761485fac.10.2026.08.26.03.45.11
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-465afb1613bsm1742916fac.11.2026.08.26.03.45.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2026 03:45:11 -0700 (PDT)
-Message-Id: <pull.2197.v9.git.1787741111.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+        Wed, 26 Aug 2026 03:45:14 -0700 (PDT)
+Message-Id: <e3f7d885209e6cf9487bea296bc81df43f3758db.1787741111.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2197.v9.git.1787741111.gitgitgadget@gmail.com>
 References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+	<pull.2197.v9.git.1787741111.gitgitgadget@gmail.com>
 From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 26 Aug 2026 10:45:06 +0000
-Subject: [PATCH v9 0/4] worktree add: improve message for ambiguous remote branch name
+Date: Wed, 26 Aug 2026 10:45:07 +0000
+Subject: [PATCH v9 1/4] checkout: extract function to display advice for
+ ambiguous remotes
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,139 +80,96 @@ To: git@vger.kernel.org
 Cc: Harald Nordgren <haraldnordgren@gmail.com>,
     Yoichi Nakayama <yoichi.nakayama@gmail.com>,
     "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
     Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-'git worktree add ../foo-dir bar-topic' fails to dwim when there are
-multiple remote branches with name `bar-topic'. But it doesn't display
-meaningful message as 'git checkout bar-topic' does under the same
-situation.
+From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-We improve this by adding advice and modify the error message for worktree
-add.
+Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+---
+ builtin/checkout.c | 62 ++++++++++++++++++++++++----------------------
+ 1 file changed, 33 insertions(+), 29 deletions(-)
 
-By Junio's suggestion, we include matched remote names in the advice. It is
-applied to checkout, too.
-
-We also fix the behavior of --guess-remote when there are multiple matches.
-
-Changes from the previous patch:
-
- * move advise_disambiguating_remotes() definition upper in the 3rd commit
-
-Yoichi NAKAYAMA (4):
-  checkout: extract function to display advice for ambiguous remotes
-  checkout: improve message for ambiguous remote branch name
-  worktree add: improve message for ambiguous remote branch name
-  worktree add: treat multiple matches with --guess-remote as an error
-
- Documentation/config/worktree.adoc |  5 +-
- Documentation/git-worktree.adoc    |  4 +-
- builtin/checkout.c                 | 76 ++++++++++++++++++------------
- builtin/worktree.c                 | 57 +++++++++++++++++++---
- checkout.c                         | 14 +++++-
- checkout.h                         |  5 +-
- t/t2400-worktree-add.sh            | 17 ++++++-
- 7 files changed, 134 insertions(+), 44 deletions(-)
-
-
-base-commit: dea0ea3582e6980ddbc1173cc8e3e9f9db91cde0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2197%2Fyoichi%2Fimprove-worktree-add-error-message-v9
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2197/yoichi/improve-worktree-add-error-message-v9
-Pull-Request: https://github.com/gitgitgadget/git/pull/2197
-
-Range-diff vs v8:
-
- 1:  e3f7d88520 = 1:  e3f7d88520 checkout: extract function to display advice for ambiguous remotes
- 2:  89c0f4d303 = 2:  89c0f4d303 checkout: improve message for ambiguous remote branch name
- 3:  095a5796d4 ! 3:  1010ac3295 worktree add: improve message for ambiguous remote branch name
-     @@ Commit message
-          Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-      
-       ## builtin/worktree.c ##
-     -@@ builtin/worktree.c: static char *dwim_branch(const char *path, char **new_branch)
-     - 	return NULL;
-     +@@ builtin/worktree.c: static int dwim_orphan(const struct add_opts *opts, int opt_track, int remote)
-     + 	return 1;
-       }
-       
-      +static void advise_disambiguating_remotes(const char *path, const char *branch,
-     @@ builtin/worktree.c: static char *dwim_branch(const char *path, char **new_branch
-      +	       branch, path, branch);
-      +}
-      +
-     - static int add(int ac, const char **av, const char *prefix,
-     - 	       struct repository *repo UNUSED)
-     + static char *dwim_branch(const char *path, char **new_branch)
-       {
-     + 	int n;
-      @@ builtin/worktree.c: static int add(int ac, const char **av, const char *prefix,
-       		/* DWIM: Infer --orphan when repo has no refs. */
-       		opts.orphan = (!s) && dwim_orphan(&opts, !!opt_track, 1);
- 4:  927856e0a0 ! 4:  edb88b658a worktree add: treat multiple matches with --guess-remote as an error
-     @@ Documentation/git-worktree.adoc: To remove a locked worktree, specify `--force`
-       `worktree.guessRemote` config option.
-      
-       ## builtin/worktree.c ##
-     -@@ builtin/worktree.c: static int dwim_orphan(const struct add_opts *opts, int opt_track, int remote)
-     - 	return 1;
-     +@@ builtin/worktree.c: static void advise_disambiguating_remotes(const char *path, const char *branch,
-     + 	       branch, path, branch);
-       }
-       
-      -static char *dwim_branch(const char *path, char **new_branch)
-     -+static void advise_disambiguating_remotes(const char *path, const char *branch,
-     -+					  const struct string_list *matched_remote_names)
-     -+{
-     -+	struct string_list_item *item;
-     -+
-     -+	advise(_("Branch name '%s' appears in multiple remotes:"), branch);
-     -+	for_each_string_list_item(item, matched_remote_names) {
-     -+		advise(_("  %s"), item->string);
-     -+	}
-     -+	advise(_("If you meant to create a worktree from a remote tracking branch on\n"
-     -+		 "<remote>, you can do so by:\n"
-     -+		 "\n"
-     -+		 "    git worktree add -b %s %s <remote>/%s\n"
-     -+		 "\n"
-     -+		 "If you'd like to always prefer some remote, e.g. 'origin',\n"
-     -+		 "consider setting checkout.defaultRemote=origin in your config."),
-     -+	       branch, path, branch);
-     -+}
-     -+
-      +static char *dwim_branch(const struct add_opts *opts, const char *path, char **new_branch)
-       {
-       	int n;
-     @@ builtin/worktree.c: static char *dwim_branch(const char *path, char **new_branch
-       		return remote;
-       	}
-       	return NULL;
-     - }
-     - 
-     --static void advise_disambiguating_remotes(const char *path, const char *branch,
-     --					  const struct string_list *matched_remote_names)
-     --{
-     --	struct string_list_item *item;
-     --
-     --	advise(_("Branch name '%s' appears in multiple remotes:"), branch);
-     --	for_each_string_list_item(item, matched_remote_names) {
-     --		advise(_("  %s"), item->string);
-     --	}
-     --	advise(_("If you meant to create a worktree from a remote tracking branch on\n"
-     --		 "<remote>, you can do so by:\n"
-     --		 "\n"
-     --		 "    git worktree add -b %s %s <remote>/%s\n"
-     --		 "\n"
-     --		 "If you'd like to always prefer some remote, e.g. 'origin',\n"
-     --		 "consider setting checkout.defaultRemote=origin in your config."),
-     --	       branch, path, branch);
-     --}
-     --
-     - static int add(int ac, const char **av, const char *prefix,
-     - 	       struct repository *repo UNUSED)
-     - {
-      @@ builtin/worktree.c: static int add(int ac, const char **av, const char *prefix,
-       		opts.orphan = dwim_orphan(&opts, !!opt_track, 0);
-       	} else if (ac < 2) {
-
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 55e3a89a85..650eda735f 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1343,6 +1343,34 @@ enum checkout_command {
+ 	CHECKOUT_RESTORE = 3,
+ };
+ 
++static void advice_disambiguating_remotes(enum checkout_command which_command)
++{
++	const char *cmdname;
++
++	switch (which_command) {
++	case CHECKOUT_CHECKOUT:
++		cmdname = "checkout";
++		break;
++	case CHECKOUT_SWITCH:
++		cmdname = "switch";
++		break;
++	default:
++		BUG("command <%d> should not reach parse_remote_branch",
++		    which_command);
++		break;
++	}
++
++	advise(_("If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
++		 "you can do so by fully qualifying the name with the --track option:\n"
++		 "\n"
++		 "    git %s --track origin/<name>\n"
++		 "\n"
++		 "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
++		 "one remote, e.g. the 'origin' remote, consider setting\n"
++		 "checkout.defaultRemote=origin in your config."),
++	       cmdname);
++}
++
+ static char *parse_remote_branch(const char *arg,
+ 				 struct object_id *rev,
+ 				 int could_be_checkout_paths,
+@@ -1358,35 +1386,11 @@ static char *parse_remote_branch(const char *arg,
+ 	}
+ 
+ 	if (!remote && num_matches > 1) {
+-	    if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME)) {
+-		    const char *cmdname;
+-
+-		    switch (which_command) {
+-		    case CHECKOUT_CHECKOUT:
+-			    cmdname = "checkout";
+-			    break;
+-		    case CHECKOUT_SWITCH:
+-			    cmdname = "switch";
+-			    break;
+-		    default:
+-			    BUG("command <%d> should not reach parse_remote_branch",
+-				which_command);
+-			    break;
+-		    }
+-
+-		    advise(_("If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+-			     "you can do so by fully qualifying the name with the --track option:\n"
+-			     "\n"
+-			     "    git %s --track origin/<name>\n"
+-			     "\n"
+-			     "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+-			     "one remote, e.g. the 'origin' remote, consider setting\n"
+-			     "checkout.defaultRemote=origin in your config."),
+-			   cmdname);
+-	    }
+-
+-	    die(_("'%s' matched multiple (%d) remote tracking branches"),
+-		arg, num_matches);
++		if (advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME))
++			advice_disambiguating_remotes(which_command);
++
++		die(_("'%s' matched multiple (%d) remote tracking branches"),
++		    arg, num_matches);
+ 	}
+ 
+ 	return remote;
 -- 
 gitgitgadget
+
