@@ -1,194 +1,112 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7A247142B
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 16:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571184766A3
+	for <git@vger.kernel.org>; Wed, 26 Aug 2026 17:00:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787763132; cv=none; b=AvP5PZTqTEnoRnDMxcjgygaT+IH9UPtzCyqmOhJ/rePkEqUiTGYSduV4DAcoH9eps6J3gIIRh9Ok0vNJOMPJmSKsJAhBh/wctkp2b+Zu42pk1pYUKGloHyo9iDmB4oRfxVJZdYtqCblgdVI/EEfrvSnCbGswKIiJzWkS6dFVmeE=
+	t=1787763621; cv=none; b=ll9q2i0qyKzD6Yn/r4zVA4QXlAMORwH2cdnV/pEy3XTITf9jmM3n8HpdHi4UWQu++ZhNMIaDbWHYrMWpHSkE78ES4gKgsdqZU3zDf8j6/EKLj9oon+D3uPFpW28qwSru96LtTzL3hmUO7ypOSBvScBsdWNJXuZFs5f4DZ2ZNTO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787763132; c=relaxed/simple;
-	bh=2wfSY2s34DTQhFR296lkGLLKF2LkhpedRnWo4324/HY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=SVYb27H7tQ/E+Yf0TS+gxvChFm1UC4lpbKtNeThcoQKTmJC9Mabwo4WFA4uNyRWM5/sHVvEYGkMhVRt5x2hYu6k6kLbVl01z7YZhZ8RiZlwJ/pO670huxmu91pMTWxvVEnYdTxZBMqI1st0/YNSpG5s6NRJm+pgrIDd737hta1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dR3Ix3GY; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787763621; c=relaxed/simple;
+	bh=oNbe0bKG7wbY17L/0wwPq7Cy1sS5cydVrVBXlgsWFQk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Cc6TK5zGSeukLTM7AhUvTyDo397HFydmCndNiSEqaC5BQlJeM0wpuhlQfvOJB1qVFpU72npPsrtT7My8iwqBycRuajPwugRcVkNVB9Bgv5+nbyn4w2uONRgSj9kQltljknnFUvPa3GZ11ZeOroB6tRIriFvzQwK+K0LdbS/DQmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FeDppMca; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P9tVKbpd; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dR3Ix3GY"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-908a2ca5becso11072086d6.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2026 09:51:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787763110; x=1788367910; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=8pGmMeQll06Mr0AxNSuXztNTnWSvb5TURu+6u7f+n7k=;
-        b=dR3Ix3GYCPEeMUC3xqiYhz8yDy4NDm0KYsPIc/qKrH3bYl3lL7B/Fl/TYC6/+KgZKv
-         y9RepAxIyO/fOnl7p+jhj8jm7JwRgmYY+iA+Oeb3lWVsWfxK7RoHs/VTjGBMj9I4t8yS
-         rSQFbysNSyl2oWoBxFYiiYv1rVZkDNsTe+z2CyvW31hJqG2yKVDl/oKttCgy5qarcnIN
-         /c3mHPW2bfJa7UrRbVG6n19zLX3CVnbgNS/poOoODNKNzDKyv7kPME43sgD5Do7u9KBG
-         a54/hyFTzPaGywUVy2XA0ap1gg6w64lQoztLjdzvnbJcD4WvwhJq/e2ubxODWXwtYIPM
-         jv3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787763110; x=1788367910;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8pGmMeQll06Mr0AxNSuXztNTnWSvb5TURu+6u7f+n7k=;
-        b=LVTj2WNdskDHDfdDjvIT46meVHStEhq6tjm8mjnJgj0r/I8uUp1OT+qkTnryf1ehe5
-         X3pTweE289tfRK5LFsP6Bipbnl7Oo1k6Awire8TMBrk5Cajfm8SO4UA9x4/D6ywZ71+t
-         MmgwKWX8+L9A7qiUrvWWI8WcFNh8pSj7x4jVCjn1czRnLSMSV2X4QMPc8tott/1yapMD
-         bVxQUl374SJYo2bn9XRFhNYmwLapGexyk5Yyad4XgBPhWwQHHyJduJttKS2Ai/XeriaB
-         ve5ITlU03MQRJIuR+PjtGhAW69zZQJeHnXTXnxBMa9n6PM5FfYOVQDqrqyuipsS9ZciE
-         dhPg==
-X-Gm-Message-State: AFuF++kyH4rlg2Kbc97PZ8F2GvV4ikv3mhMZ9lpomua5+bYmhgYNl08W
-	haHfrF6+g5E1Oik++cHNf7Rf0IqH0emerM/LpL+IgeFovMxqDS3L0XdN5H1xhw==
-X-Gm-Gg: AR+sD13OZ/k5MWCCb5EjmKcLLvHP2oF4rRrulVHq7RCOpnfHyp1La1g5L/U8rVvYtvq
-	5PTJoV+t2Y1hibZDv4RlXeqGS0UEbscLDXFNhHEQwQt2TJfSOip3h7GXaqjpWQgJWW4Mhg/h+fx
-	wVmCE352E68rGpqooZs3ZVXmN9+NtUCcJMd4erJYd0Tof1DTAKulRLlpkaG2ViZOLS9BiuRfLKH
-	R2/jaxBFJuf+SGyDqFqje4OgLZTOUwYpqOgQd7LwE7F+CHLinFl5fNqQ60IbGd1z8WHPdOnMEe1
-	QyKrVW0io4Vh6fuBxaODXPDlFLQRk2U2/ccSedolDzv4LK6VtzmujhiIzA7eE9Yxt8mCwYhT/zC
-	Yj6lIjg75YQ5P3VtVqwbIW+39N45+6b0MTDboxEHtIAmjV78Lpi5jxFx8X4z66uvqE9yYtFGC1n
-	Blg+dV5oLBA+g3thlJuNDll9N9eEtTdCzwlHaYQVMzdLsclHcYxFC8vqSnE5wvxHA=
-X-Received: by 2002:a05:6214:1244:b0:8f0:a849:f392 with SMTP id 6a1803df08f44-90cc7958d25mr89348416d6.14.1787763108687;
-        Wed, 26 Aug 2026 09:51:48 -0700 (PDT)
-Received: from [127.0.0.1] ([20.106.191.82])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90cc63e3108sm30087186d6.11.2026.08.26.09.51.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2026 09:51:48 -0700 (PDT)
-Message-Id: <pull.2204.v3.git.1787763107646.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
-References: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
-From: "Nikolaus Schuetz via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 26 Aug 2026 16:51:47 +0000
-Subject: [PATCH v3] t1401: check symbolic-ref failure and --quiet silence on a
- non-symbolic ref
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FeDppMca";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P9tVKbpd"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id B293A1D00121;
+	Wed, 26 Aug 2026 13:00:11 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Wed, 26 Aug 2026 13:00:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787763611; x=1787850011; bh=OOrvHaiZmi
+	0sES5NmL4NQfhNODO4avVQlw2qDuzYa+g=; b=FeDppMcaOuUIIkXze9ERoJ5epi
+	fJo6z3ztQUauZ3Dqdf7az3KL/lBSqWDVf8bGUNid/lCt+AgiBBI5q87ulJ4i/1Am
+	Cc1c0Z77Dz4rx7VhAiL2lRdaMRIrtjrg+ppx4DeYsR8pM/cFV9wI+azAO31o5BPq
+	jjGNBayqWqBJ0RRLquCk/BEDD843pohxoJaJts5U15oKpwonvbYhMUf3+lS/BW9+
+	7FCMh578AXcIVg7uSmOwaAETWCuEmeuDDKv+dobPEVLE0Lgsp9TRvLbsxWqRZf/9
+	osRfwdT/iOQ890PSswXP8vY94+/jdwK3lQ7HQ0DLvfmskrSofe9yBO++lTpw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787763611; x=1787850011; bh=OOrvHaiZmi0sES5NmL4NQfhNODO4avVQlw2
+	qDuzYa+g=; b=P9tVKbpdwlqMH/KJGMOB/S972NNqZ8xkBwCaxQF6yZfGozMCBTp
+	BRZtmXHdmPYJPUqXhAChQqYxeYOTC7+QEaaAS+YftaXoqDMruLy0bnKCIGcBQLqY
+	5rBUoGSIv5NAe07bSaXgMTADkemoSpzStrqtH30Nb97uljJ+CbxIsxCkfxls27VP
+	/r5eM+Ed7MU3YmEiyTrFhOUBz5Iryy5i5LtjAqUBSR9byZJXweu47k8sFzdB+Ge9
+	IgMnba9eqIVhoF9U2+GqgWpNfnjt/3UQZKdQ9nolyJHLUNE7mD6sVP2z7BV9Vtu+
+	75v2CAL4K2eKy/2yZsB0vxHuYW09GDSmuKQ==
+X-ME-Sender: <xms:mxuPaqAR8eL8hIHCjdCJUBarIJLDQy1gWykz1yEjl_4JnqfcJ81bGA>
+    <xme:mxuPar84zOezaokUCKaFY9Keq1KC5CWnDOELCQWqOZTdCWF6gyYug3W8U8RDYN3nn
+    hdK29y_gOQLamMbPT1OJ_0JCc3rcjOieYDMcNaubKvKn7KrkNRG>
+X-ME-Received: <xmr:mxuPaq_LgVOPSPC3TTJfw-fazPlS2s6bmNLfFL2d5hrpJJS1XOnI9_lo26wk4GEsMzQOa5MQGhD_UaqPPLPgMjG17dp1jwc5eQ>
+X-ME-Proxy-Cause: dmFkZTGdz7tba33edHTQMArVVK7iX/ujGMkyP+mWLfmOlcqofpypCodymkE1L8+Tm9M2UT
+    jV4PIdWUMbEACwWtZOK5Z9pVEEQjBUGZCkUMUGS0t0y+0zlYVI7jVfxoSXsf9q5bLXWop2
+    LBODpAtDXeIdD/KVtrxMkTpeRbaKSIBvGA+C0mOUnQm3/ZxdIALDrP4ba8j5HJdyycNYnc
+    iZmciGRJmw5y5sY1+xSWIISZlEhyxFVBla/U8+AG96uWK6lGqBel9zeW2YBYQPf+ncCsOg
+    Xb5bY58cvTVByCq9YHlxpPGq61ppyiybwWXijzQ85w788xX+S7qyp+Ksuuh79pwKMxMUrz
+    UNmnseb6FIKhv9ADdQMqV8L5DUoPsX/H+lbRJkv1do6JKRzRCGBuXAJpnFRGOFmsrNvq1B
+    gmZ6o5/0oDnz7QYkPaCLf49z5sxo51Mxw1rMf73+RoUzIqGDozj2QO7LIGZRo2wPuJjl9X
+    X+tfoi+kz38I8zHVe+71cuBKrcjGE+DPCPU+4XK16vOXp8Dxp+x7XYUBtsVRo4gI6CKxlv
+    5L4JS/PXv8QjiOAqDXhxECon1rBEyjOHiljfk2+UixKZHvDidh5Ql7I3kifWgsyxIxhpaa
+    go0z7DoOihDVEgW1q9mGbOqgd4vXifPbMKjMnpbMGFPy54sChEbk0Qr43cvg
+X-ME-Proxy: <xmx:mxuPaid3YZvN5Upw8D7mzUysNrFfRN_kzwpDoCwCuJ32xK4GHamq6Q>
+    <xmx:mxuPajFB4s322lsKPIOKUlWNTIUvW_7zcbSY0q1A9N4a5wHRyuCv3g>
+    <xmx:mxuPagdJpZE1i37VJg42u_HobkkQf_Y4rtJ24XX2eYJ2681yLub_zA>
+    <xmx:mxuPatFrQ1W27hzBae80AGtMFJUHj6yW-HXIb4MnZMlCZTPMPSXM_A>
+    <xmx:mxuPar-nERA_4IglxFifZIdUXop5M1MeydbbXqAyjALeSoJBWxXGvDZ_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Aug 2026 13:00:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Michael Montalbo <mmontalbo@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] you_still_use_that(): reword the instructions
+In-Reply-To: <CAC2QwmJ_fjNw9z+8an9Doq6Mx_29R5mcGXT1=NnVvu-g71QByA@mail.gmail.com>
+	(Michael Montalbo's message of "Wed, 26 Aug 2026 09:04:31 -0700")
+References: <xmqqo6epj6is.fsf@gitster.g>
+	<CAC2QwmJ_fjNw9z+8an9Doq6Mx_29R5mcGXT1=NnVvu-g71QByA@mail.gmail.com>
+Date: Wed, 26 Aug 2026 10:00:08 -0700
+Message-ID: <xmqqik4wizqf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Nikolaus Schuetz <nikolauspschuetz@gmail.com>,
-    Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+Content-Type: text/plain
 
-From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+Michael Montalbo <mmontalbo@gmail.com> writes:
 
-git-symbolic-ref(1) documents that reading a name that is not a
-symbolic ref fails, and that --quiet does so silently.  Tests such as
-t2020 and t5621 already rely on "symbolic-ref -q HEAD" failing on a
-detached HEAD, but none checks that the plain form reports the error
-or that --quiet stays silent.
+> I think this change makes sense.
+>
+>> +                 "- Send an email to <git@vger.kernel.org> asking for help, only if\n"
+>> +                 "  suggestions by others do not work for you.\n"
+>
+> Maybe a slight reword to reinforce the idea that the command is not coming
+> back:
+>
+>   "Send an email... asking for help, only if suggested replacements
+>     for the [now?] deprecated command do not work for you."
+>
+> Other than that suggestion, I think the change looks good.
 
-Assert that a non-symbolic ref fails with the "is not a symbolic ref"
-message, and that --quiet fails with no output.  Use test_must_fail
-rather than pinning the exact exit codes, which are documented but not
-worth freezing in the test.
+Not repeating 'replacement' there was deliberate for two reasons.
+First, the preceding instruction mentions others suggesting
+replacements, presenting an obvious opportunity to keep the wording
+concise.  Second, this message is meant to be generic.  For a case
+like 'whatschanged', the "new workflow" is to use another command
+(i.e., 'replacement'), but other cases may involve doing things
+differently and are not limited to a simple replacement with another
+command.  
 
-Signed-off-by: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
----
-    t1401: test symbolic-ref exit codes on a non-symbolic ref
-    
-    git-symbolic-ref(1) documents that reading a name that is not a symbolic
-    ref exits with a non-zero status, and that --quiet does so silently
-    rather than printing a diagnostic. This exit-code contract was untested.
-    
-    This adds two tests: querying a non-symbolic ref exits 128 with the
-    usual "is not a symbolic ref" message, and --quiet instead exits 1 with
-    no output.
-    
-    Test-only; documents existing behaviour, in the spirit of 919eb8ace
-    (t1402: check for refs ending with a dot).
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2204%2Fnikolauspschuetz%2Fns%2Ft1401-symbolic-ref-quiet-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2204/nikolauspschuetz/ns/t1401-symbolic-ref-quiet-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2204
-
-Range-diff vs v2:
-
- 1:  22694da869 ! 1:  0391dcceef t1401: check symbolic-ref exit codes and --quiet silence
-     @@ Metadata
-      Author: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-      
-       ## Commit message ##
-     -    t1401: check symbolic-ref exit codes and --quiet silence
-     +    t1401: check symbolic-ref failure and --quiet silence on a non-symbolic ref
-      
-          git-symbolic-ref(1) documents that reading a name that is not a
-     -    symbolic ref exits non-zero, and that --quiet does so silently.
-     -    Tests such as t2020 and t5621 already rely on "symbolic-ref -q HEAD"
-     -    failing on a detached HEAD, but none pins the exact exit codes or
-     -    checks that --quiet actually suppresses the diagnostic.
-     +    symbolic ref fails, and that --quiet does so silently.  Tests such as
-     +    t2020 and t5621 already rely on "symbolic-ref -q HEAD" failing on a
-     +    detached HEAD, but none checks that the plain form reports the error
-     +    or that --quiet stays silent.
-      
-     -    Assert that a non-symbolic ref exits 128 with the "is not a symbolic
-     -    ref" message, and that --quiet instead exits 1 with no output.
-     +    Assert that a non-symbolic ref fails with the "is not a symbolic ref"
-     +    message, and that --quiet fails with no output.  Use test_must_fail
-     +    rather than pinning the exact exit codes, which are documented but not
-     +    worth freezing in the test.
-      
-          Signed-off-by: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-      
-     @@ t/t1401-symbolic-ref.sh: test_expect_success 'symbolic-ref refuses bare sha1' '
-       
-       reset_to_sane
-       
-     -+test_expect_success 'symbolic-ref reports a non-symbolic ref with exit code 128' '
-     -+	test_expect_code 128 git symbolic-ref refs/heads/foo >out 2>err &&
-     ++test_expect_success 'symbolic-ref reports a non-symbolic ref' '
-     ++	test_must_fail git symbolic-ref refs/heads/foo >out 2>err &&
-      +	test_must_be_empty out &&
-      +	test_grep "is not a symbolic ref" err
-      +'
-      +
-     -+test_expect_success 'symbolic-ref -q is silent and exits 1 on a non-symbolic ref' '
-     -+	test_expect_code 1 git symbolic-ref -q refs/heads/foo >out 2>err &&
-     ++test_expect_success 'symbolic-ref -q is silent on a non-symbolic ref' '
-     ++	test_must_fail git symbolic-ref -q refs/heads/foo >out 2>err &&
-      +	test_must_be_empty out &&
-      +	test_must_be_empty err
-      +'
-
-
- t/t1401-symbolic-ref.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index a2a7e94716..fd3aa89a91 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -38,6 +38,18 @@ test_expect_success 'symbolic-ref refuses bare sha1' '
- 
- reset_to_sane
- 
-+test_expect_success 'symbolic-ref reports a non-symbolic ref' '
-+	test_must_fail git symbolic-ref refs/heads/foo >out 2>err &&
-+	test_must_be_empty out &&
-+	test_grep "is not a symbolic ref" err
-+'
-+
-+test_expect_success 'symbolic-ref -q is silent on a non-symbolic ref' '
-+	test_must_fail git symbolic-ref -q refs/heads/foo >out 2>err &&
-+	test_must_be_empty out &&
-+	test_must_be_empty err
-+'
-+
- test_expect_success 'HEAD cannot be removed' '
- 	test_must_fail git symbolic-ref -d HEAD
- '
-
-base-commit: 745601a9a94110d74769ab605ccd4f61339758d2
--- 
-gitgitgadget
+And that is why the message only says "suggestions by others".
