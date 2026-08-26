@@ -1,86 +1,75 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB00223DFF
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 14:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7F6425898
+	for <git@vger.kernel.org>; Wed, 26 Aug 2026 14:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787753919; cv=none; b=gud9HlGrMo/Am+EDMe3labFUhY6H3yU5Kvt/W0Zk8Zy61x+EGqQUDOVfKrErlm8oG2/nzRWGhlnZThEE9tiCLO0rZEKYYBfnODuAhlTa0A32lkHO878IbZyJf5tMGKUn9A+ORaAjCfksSyTFkJC2QO0E91O0Mei256uzkoWhrn4=
+	t=1787754815; cv=none; b=LyPApwbs3GF1zNbsTNEqIaFU2YmKHEAKe3UM8z4OX8tScBEnlPtcGtk/jCxP5AEwojzfqZ1XQsPJMRtqmSwgDFx0yYSFxbdcidifghMaLbBHQWkQ52KGqsa62nMJByUuYAyfO+5N8jd39Pl7CcxxcuQpWBekiLACA6ojOg3hni0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787753919; c=relaxed/simple;
-	bh=2K+g+3s0+cuEvX0FbDZUSPyIZa7pjvr2IDq2XiufnyU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ciN3F8w8be3w+Sp5P2EUYhBfL7CmNAoPAzIAtR1J2dG3uw2/y4gAUNMKOz2fKtdi1r9fpT+zXDltYWwogia+ghojG+1xI6m+GrGcYBZl+xA+/JLhB1oyA2PdhDnnkMmD8ifkehVkgcSGB1ls7+xS+I5pps4gr59FaOuQ4dCjfZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FgaSVKPg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ez7c/nq2; arc=none smtp.client-ip=202.12.124.156
+	s=arc-20240116; t=1787754815; c=relaxed/simple;
+	bh=frP0b1rRtJke08fZtM+YirGY4Svms9LnztF2SdCVgKc=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nBdsIDuCjH3TSiGgvbAF8OzXu6BRpLcyFAaHdyMkUW14HEpEMYIX8fmQG3CnLPL1lSTJTlg6Qlz7SQBzAjtabesA0EC6C+wa950X8FjJmHUmHg2vdyA/s1J8rPhqjrgMHVuC+ZNXdh27494wR1C4ENh4fRC4O+CnZRe4HNVzdlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J9v17R7u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GFBEbQA1; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FgaSVKPg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ez7c/nq2"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A661B7A0126;
-	Wed, 26 Aug 2026 10:18:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J9v17R7u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GFBEbQA1"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F28237A012F;
+	Wed, 26 Aug 2026 10:33:32 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 26 Aug 2026 10:18:36 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 26 Aug 2026 10:33:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1787753916;
-	 x=1787840316; bh=AGUVCNqWaisevMWhfVLySU7jOvORqP18j0ooYulS7dI=; b=
-	FgaSVKPgFgut+LSKA/QQXpdyiajqowpCCtlO2sCsLTP34TKjFFraKcAsc409iLsf
-	hJSByZqXnr/W3JlD5O7PBV20z/0lNHhTxrJ2YTpufjAS0oAzANO3kih9rjEi7aCA
-	Zr6MR4ac5Lkp/pGbOsX+ufumyrO1o7C1ef4tp1hvR9UQyi3l6VWS3Y0+mwNVNYR8
-	mjmMPNRGauKgg8RhQSJpf5Cq2v5hxnBHrqP/TmlqK3AE4wq1wTS6sFez+5DaGr0b
-	YCn7vaI8/l6YpGoZu/vOMBqrQYrevpdL9DQkUrN0UYTMbNyD6gG+rORof2qMEQK4
-	WB52NVxrjhLrf6jk3ucq+A==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1787754812; x=1787841212; bh=+lNghnm6zjB55Gf7ZDSg4LGSJO1mKpgo
+	t4wthvb7oBA=; b=J9v17R7uihCmx9P5rn98/6lXEYuCxLLCx5MJhgptu+DAuFxa
+	a1OLH6Z3PtYWcpfrjH70xvOmqq4OesymU45j/Jk00xFZKnxIUttRjkGl6nlfFWsu
+	xl1vlvDnyYi6Ny/rLIk8QgOtPQyOl9gzsuCMQ8UU/qdzh+LXDVltGle6luGGSext
+	FAPi30wTv/urhGX+QcpuguV1JLCRyDGTAxpE71N/FXBexsUG9kVgga+MG26urADU
+	1Igj92tgauFa1VVuwV7duosSy6yP4hLK8Y/e+qsdGitHVJlsePmX8CPZcf0O0E7q
+	D0uMSUp368P5vrVwhLP21FwPIbHO1UQbTTY+jQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787753916; x=
-	1787840316; bh=AGUVCNqWaisevMWhfVLySU7jOvORqP18j0ooYulS7dI=; b=e
-	z7c/nq2On3/xSIZ7ehJ670jQR3/B32QxQq3idwsRkk6I1z6RbrKvgPv2yiXfC5xF
-	yilkQLIUlP5YfqbodCnPLtnPdrnVBYXTNFbniJ7K6Zk+Sb5EnO26QAeHfCfnaM0u
-	/KXOSQsKmPf4VLB21SxNU8ehyodm329zFzetYkLJBltH9+tsTki8FLUSkVYharo0
-	Y+lHa4uXUDuMH3Aiev9+TKdQ3NNIhZrQn2LXxWWnuJLh3Jqb15JAidAzB9MuWtAL
-	UcQFvHf+wN/tAdkD95iVGU8dFigna2YUW6ArxYoZ1sKuzTJQYi4FO4HZETtVjafJ
-	fpdHzYaDHbnN4kFVH3hVg==
-X-ME-Sender: <xms:vPWOatu9kk9j5EIsO1ATrvr3tzjO3ilJdbVcOru_WJmf8iKDhqiOZA>
-    <xme:vPWOaqLZYp_qUXpBc4uwLlaZXfndERXR9Y-7xpvK4nbeKMv7YwgGwzKilyrme5hWh
-    NdUJEJ-bsC3aeFdAQ2sS00dDCSLZP7rPEwlSnbUl2vPQKsuWNfjpQ>
-X-ME-Received: <xmr:vPWOaqmQuRIHzc4PwQZhhJNfz1hNUCbU_7VyHdUA0r1CqyhPDL5YTG25QJNOwfOdNq2snx93tCS_Va6eZW7230O8VmgVQ6UCUQ>
-X-ME-Proxy-Cause: dmFkZTGplOjRXWArQ71hn0kwORDJHKfJcVtveTiAifkWljU5w1BjzI2VtTQqJS3VscEHSt
-    0EfBTSkEqAtYOySDa11pXMAwrsECTuERmPnpim/PnJ1bcvffy6v0lYsMHBhZUwEbNacffk
-    vBJ+KgKoc7ihlmDb9j5ozOhYu7p2dYK4YVIvewnQTtNGk+bUc2PFzgTG5sSk2waqBifC3B
-    ppdsc+JO/Z4ch9tdxjscGTnRj4dT5Sn4YcD2xZWvOYHptPkdAhtPN2uD+lm6SdX15RB0O+
-    Z+Q3W9H150hfp22G3fIwsFEfEvzL7d58m1q8W9pI/QU1Hm/MftRTPGNZyWMLmNS4XZ+MFc
-    OEfwt2MVPk+hywYajU7U06hxDc+Mar9/GmZCXGVWGcvpi9aNF2UkA5cI9hwFx8qiq4hZI3
-    vzyLEIUibVAHEz/qVio7O9+YBLaydjkM+9kN7dhkL2oKsTgGgerbcnoO/PIr+j30qTdrXs
-    SyljK/p1Cy6Jxp68T6Kz+qqpnGdDtFPIGXLn7AyYxI8MejY+RQhsh/WeLycPYRHTpINunS
-    GtakbJp8Obn/V0J9iMAUlruzgW6CLGEedKfSSE0i5LmtRyZvIlhJJyklBRq56OWT07xr7t
-    fj9o1rs2NY9HQKTIinDDVuNGOM02Qky34BEwjRZFzfK/fDYudcW4YPNTq0Pw
-X-ME-Proxy: <xmx:vPWOarLds34TeKzykcn3O4ftbde-cFeMDVNjQ1vAZwbLXd6xozEf3w>
-    <xmx:vPWOav4fUa5y-BpDDwAXsDcxyvYVMshdUXNFo5ZT4Re_iJbHQqcg8Q>
-    <xmx:vPWOav3xoGxEaTQEu1CigIWjzEiWVY3RkJ92r-LCj-4_R5gfx_qxGw>
-    <xmx:vPWOalfNNGO3LPBgxLdgGooi7XVuXBqktzs41fcYM9VyWTeOnomF3Q>
-    <xmx:vPWOaqRtBa09W41bSGD0Y-Q2krOBJMhboYz3MBe5rNayJCwaHu-WAlKU>
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787754812; x=
+	1787841212; bh=+lNghnm6zjB55Gf7ZDSg4LGSJO1mKpgot4wthvb7oBA=; b=G
+	FBEbQA1u+eVTej8giY0q9ziZxKSDB30Yuh7J75q/oW7AOKuK2bUDQv1/2m9PIJp1
+	JFToOAZnZvzSahMd1wSYunf2CVOhxMce2CnSk/KvXJ5kHrnNUMnF184dC2O9ppDE
+	vk3cuD9Ir0cfcmOntsk2BAi2lNZbEKV3kLwKv/uevxWtWa4VtNCFZ5SKqaoFGoUU
+	/shtDCFQwHgXuEzntbBXqGOgKAiyO9ck5KGBspHIpxNgy3E7EQ2yUChjLFJk2XUd
+	xzfZ3O1xRh7tpz2jRSjPKSDGkpW2Zlica/ZkRC5lI2VNwUrrYQVzQthvPhYTQ9zu
+	Ogu7ZuQ7j/C6vsre+RMew==
+X-ME-Sender: <xms:PPmOai6pHcMmnPhV6XITAa8GNFWR6jIlwG9CDV99yERBSji-pByc9g>
+    <xme:PPmOah78m2wn8QeX9c4OIdPAarGospYBsPgRgwtkmIkaecripnJJ4YFX9zI2943DV
+    c7Kc8wJcvGUVsmpzfC1bfChUCGj1eO_zoVEmGufmov-YFTLUdHL>
+X-ME-Received: <xmr:PPmOavFC3gYCcAzoxejN9UXR-XdnJHUfn3RiKXVlEmCw2_hjjcE3ar2bDj_oPMnGH9Tm_BjbsryIfvbZojhBJaMpAWegJrJVqg>
+X-ME-Proxy-Cause: dmFkZTEV9UgaT5g/kilGL9ONq0YFy24FP0UEiCVQ8+9kMdsaYAM1Cveu/lhuzixQ4+3rVC
+    ++J5z+u0oh9WqnOAFDnYN7FnTx09JIco8vQsV7v8X2+56R7gxoxXzpC6mfkpUzgb8eh5sv
+    QncX0c55SNh69eFCGcjh+zGiZ2phA31zyKynBCZD97LvFkssKQDvD+YWH3OcKZe1YQ/7vV
+    nHFh3/m18KunACo4jnmUmEGI76XDVZIITn29GzFDSXSUqw95K3P9H779mMvEebl4lzX977
+    kbIJY/q+0vjjKHX6b+j+QJNwmBzKZ2hMnJLys/6hNH9C7dH6mneiVxpVUZtYAOUID6QZog
+    1Ys+zKdsSV6XlLBCVpfaeByOcHGHJA8MnuJ93+XSoMsQ0TfcHwDlQ+HIaAQu01JUzOlO2L
+    qAbzL4sW554083XS0wk3xR+XmBOzFTtcUvaokWsVZyKVTASGbHTa+9VCnKqvpBmFMYHG+5
+    ahnUxD952ngLMAMG53E55MBeqQK6DTph3DQuGWt3jUjHQ9MY2YWTJnMeXx21LJx8l0i6B9
+    /qPeHTolgpNnE3ERsnMf1MA94kqsRLxy0z7M7WYQO9p6v1GrQKYOs3PqrK6ThnaZCCZgT8
+    pwAUITo6GkggiHKftazbnQpOMOY3bKEk00UaibFWJFLuJpLZlbgYkCmUIMtQ
+X-ME-Proxy: <xmx:PPmOaqRPzXj5nbiSyRhJgFoRo7Ba_F1XqZKQDEg47ISruQtse5SwvA>
+    <xmx:PPmOaou-7nG_RL70M_y_3odibYJFk07zovEuh52MCI67R6rBe7nVNQ>
+    <xmx:PPmOapzuk9GU0w8dO64gjPtpSCiknWQi120hs8PWEbdhux5V5RxJ4A>
+    <xmx:PPmOai5zwT-ENCy5DbV2oeeD6BwXMdyIgkkViAWWoqBzLNKYoLC9MQ>
+    <xmx:PPmOamTmFDVfe8MVIN1hPBk6BY-lczuw8rj63Igr4GCmV6q-UISn-dQI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Aug 2026 10:18:35 -0400 (EDT)
+ 26 Aug 2026 10:33:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>,  git@vger.kernel.org,
-  jltobler@gmail.com,  lucasseikioshiro@gmail.com
-Subject: Re: [GSoC Patch v5 0/7] add more path keys to git repo info
-In-Reply-To: <ao6UWnHfOK9VkD4n@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
- =?utf-8?Q?=22's?= message of "Wed,
-	26 Aug 2026 09:23:06 +0200")
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
-	<20260825175818.645579-1-jayatheerthkulkarni2005@gmail.com>
-	<ao6UWnHfOK9VkD4n@szeder.dev>
-Date: Wed, 26 Aug 2026 07:18:34 -0700
-Message-ID: <xmqqtsohj77p.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: [PATCH] you_still_use_that(): reword the instructions
+Date: Wed, 26 Aug 2026 07:33:31 -0700
+Message-ID: <xmqqo6epj6is.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,13 +77,41 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+The message is overly long and may mislead readers into thinking
+there is recourse other than adopting the new workflow.  Clarify
+that it merely helps them find a replacement, rather than offering
+to reconsider a decision that has already taken effect.
 
-> This patch series depends on "repo->prefix", but it's queued on top of
-> 41365c2a9b (The 4th batch for Git 2.56, 2026-07-16), where this field
-> doesn't exist yet, resulting in not buildable commits.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ usage.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-Thanks.  Will queue on top of more recent master.
+diff --git c/usage.c w/usage.c
+index 3f0118ab2a..9933b9911c 100644
+--- c/usage.c
++++ w/usage.c
+@@ -392,15 +392,13 @@ NORETURN void you_still_use_that(const char *command_name, const char *hint)
+ 		fputs(hint, stderr);
+ 
+ 	fprintf(stderr,
+-		_("If you still use this command, here's what you can do:\n"
++		_("If you need a replacement:\n"
+ 		  "\n"
+-		  "- read https://git-scm.com/docs/BreakingChanges.html\n"
+-		  "- check if anyone has discussed this on the mailing\n"
+-		  "  list and if they came up with something that can\n"
+-		  "  help you: https://lore.kernel.org/git/?q=%s\n"
+-		  "- send an email to <git@vger.kernel.org> to let us\n"
+-		  "  know that you still use this command and were unable\n"
+-		  "  to determine a suitable replacement\n"
++		  "- Read https://git-scm.com/docs/BreakingChanges.html.\n\n"
++		  "- Check what others on the mailing suggest as a replacement:\n"
++		  "  https://lore.kernel.org/git/?q=%s\n\n"
++		  "- Send an email to <git@vger.kernel.org> asking for help, only if\n"
++		  "  suggestions by others do not work for you.\n"
+ 		  "\n"),
+ 		percent_encoded.buf);
+ 	strbuf_release(&percent_encoded);
