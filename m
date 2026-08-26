@@ -1,75 +1,86 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7F6425898
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 14:33:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8170F2D94BA
+	for <git@vger.kernel.org>; Wed, 26 Aug 2026 14:35:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787754815; cv=none; b=LyPApwbs3GF1zNbsTNEqIaFU2YmKHEAKe3UM8z4OX8tScBEnlPtcGtk/jCxP5AEwojzfqZ1XQsPJMRtqmSwgDFx0yYSFxbdcidifghMaLbBHQWkQ52KGqsa62nMJByUuYAyfO+5N8jd39Pl7CcxxcuQpWBekiLACA6ojOg3hni0=
+	t=1787754910; cv=none; b=EffrColk8HU7tbpG5Qo/E+8uZW9g2Mf8ntP0qTefS4AHcjrz07Fi6upXHhsynl+0h/BK3tHa4J/A3XztFvFQOlIKIcjB9CNxNMG3PBFKLx8lV+zKP5qonCe5T1Apx0IKKzaG97h50j80oR64kxXMI8fG546WQP5V9KUCOM8YLHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787754815; c=relaxed/simple;
-	bh=frP0b1rRtJke08fZtM+YirGY4Svms9LnztF2SdCVgKc=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nBdsIDuCjH3TSiGgvbAF8OzXu6BRpLcyFAaHdyMkUW14HEpEMYIX8fmQG3CnLPL1lSTJTlg6Qlz7SQBzAjtabesA0EC6C+wa950X8FjJmHUmHg2vdyA/s1J8rPhqjrgMHVuC+ZNXdh27494wR1C4ENh4fRC4O+CnZRe4HNVzdlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J9v17R7u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GFBEbQA1; arc=none smtp.client-ip=202.12.124.156
+	s=arc-20240116; t=1787754910; c=relaxed/simple;
+	bh=OeOd4Qd4ePSoBaA5T01e3aujF9B1e4hQOviJ85fsuSY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U1sTXbWMiawNGgutFhZrXfWnvBd8dDzh32u/81iLLXf9BqZFGTNTRPzy0e8qq/TVor5S50lLgi9yx61X0cy1opriTNIKt07GP8fa++pYAclEbBXir5sSFX9LZ6MvcplacghNQizs6ovkcoMynyBn7g+MQ1FNFbPridvI4OKyqIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QwRLPdW5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XWbP0Ohk; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J9v17R7u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GFBEbQA1"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F28237A012F;
-	Wed, 26 Aug 2026 10:33:32 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 26 Aug 2026 10:33:33 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QwRLPdW5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XWbP0Ohk"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id C40D31D000E9;
+	Wed, 26 Aug 2026 10:35:08 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 26 Aug 2026 10:35:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1787754812; x=1787841212; bh=+lNghnm6zjB55Gf7ZDSg4LGSJO1mKpgo
-	t4wthvb7oBA=; b=J9v17R7uihCmx9P5rn98/6lXEYuCxLLCx5MJhgptu+DAuFxa
-	a1OLH6Z3PtYWcpfrjH70xvOmqq4OesymU45j/Jk00xFZKnxIUttRjkGl6nlfFWsu
-	xl1vlvDnyYi6Ny/rLIk8QgOtPQyOl9gzsuCMQ8UU/qdzh+LXDVltGle6luGGSext
-	FAPi30wTv/urhGX+QcpuguV1JLCRyDGTAxpE71N/FXBexsUG9kVgga+MG26urADU
-	1Igj92tgauFa1VVuwV7duosSy6yP4hLK8Y/e+qsdGitHVJlsePmX8CPZcf0O0E7q
-	D0uMSUp368P5vrVwhLP21FwPIbHO1UQbTTY+jQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1787754908;
+	 x=1787841308; bh=RNWf3j6Mxq4aFHIRJZE/a2uRRFIJu740wWr+9JLix7E=; b=
+	QwRLPdW5dOAQyGE6oTHGtYE7wB099kbIMa82juHeEAhYlCU4Mo8DpndhJXHzMQTk
+	uCU3COhONjysXGvTLNaoux/zPRuMYIClIf0YfdgY0Vx/EfD41PlwbelsG9oUrHEw
+	3X1QWBB5MSX230BxYdwUVCK1c5ZtadBvXCKPRm+HoCeEF+SVa/SCW/b9Su3NaINT
+	CSRPY8wMXkrbTRVhq2Ewem115XhXUqfhkYefilXylUWMWGGCOR9pzvu5a3D4/BQT
+	FC1wYFWo9hgl9iTe6aWRW5337b1HOA0m6kn65NSlg1AzNlnqauBBLIeO8aEbkTku
+	ncTGbrlb4+NOSvIPKXLrHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787754812; x=
-	1787841212; bh=+lNghnm6zjB55Gf7ZDSg4LGSJO1mKpgot4wthvb7oBA=; b=G
-	FBEbQA1u+eVTej8giY0q9ziZxKSDB30Yuh7J75q/oW7AOKuK2bUDQv1/2m9PIJp1
-	JFToOAZnZvzSahMd1wSYunf2CVOhxMce2CnSk/KvXJ5kHrnNUMnF184dC2O9ppDE
-	vk3cuD9Ir0cfcmOntsk2BAi2lNZbEKV3kLwKv/uevxWtWa4VtNCFZ5SKqaoFGoUU
-	/shtDCFQwHgXuEzntbBXqGOgKAiyO9ck5KGBspHIpxNgy3E7EQ2yUChjLFJk2XUd
-	xzfZ3O1xRh7tpz2jRSjPKSDGkpW2Zlica/ZkRC5lI2VNwUrrYQVzQthvPhYTQ9zu
-	Ogu7ZuQ7j/C6vsre+RMew==
-X-ME-Sender: <xms:PPmOai6pHcMmnPhV6XITAa8GNFWR6jIlwG9CDV99yERBSji-pByc9g>
-    <xme:PPmOah78m2wn8QeX9c4OIdPAarGospYBsPgRgwtkmIkaecripnJJ4YFX9zI2943DV
-    c7Kc8wJcvGUVsmpzfC1bfChUCGj1eO_zoVEmGufmov-YFTLUdHL>
-X-ME-Received: <xmr:PPmOavFC3gYCcAzoxejN9UXR-XdnJHUfn3RiKXVlEmCw2_hjjcE3ar2bDj_oPMnGH9Tm_BjbsryIfvbZojhBJaMpAWegJrJVqg>
-X-ME-Proxy-Cause: dmFkZTEV9UgaT5g/kilGL9ONq0YFy24FP0UEiCVQ8+9kMdsaYAM1Cveu/lhuzixQ4+3rVC
-    ++J5z+u0oh9WqnOAFDnYN7FnTx09JIco8vQsV7v8X2+56R7gxoxXzpC6mfkpUzgb8eh5sv
-    QncX0c55SNh69eFCGcjh+zGiZ2phA31zyKynBCZD97LvFkssKQDvD+YWH3OcKZe1YQ/7vV
-    nHFh3/m18KunACo4jnmUmEGI76XDVZIITn29GzFDSXSUqw95K3P9H779mMvEebl4lzX977
-    kbIJY/q+0vjjKHX6b+j+QJNwmBzKZ2hMnJLys/6hNH9C7dH6mneiVxpVUZtYAOUID6QZog
-    1Ys+zKdsSV6XlLBCVpfaeByOcHGHJA8MnuJ93+XSoMsQ0TfcHwDlQ+HIaAQu01JUzOlO2L
-    qAbzL4sW554083XS0wk3xR+XmBOzFTtcUvaokWsVZyKVTASGbHTa+9VCnKqvpBmFMYHG+5
-    ahnUxD952ngLMAMG53E55MBeqQK6DTph3DQuGWt3jUjHQ9MY2YWTJnMeXx21LJx8l0i6B9
-    /qPeHTolgpNnE3ERsnMf1MA94kqsRLxy0z7M7WYQO9p6v1GrQKYOs3PqrK6ThnaZCCZgT8
-    pwAUITo6GkggiHKftazbnQpOMOY3bKEk00UaibFWJFLuJpLZlbgYkCmUIMtQ
-X-ME-Proxy: <xmx:PPmOaqRPzXj5nbiSyRhJgFoRo7Ba_F1XqZKQDEg47ISruQtse5SwvA>
-    <xmx:PPmOaou-7nG_RL70M_y_3odibYJFk07zovEuh52MCI67R6rBe7nVNQ>
-    <xmx:PPmOapzuk9GU0w8dO64gjPtpSCiknWQi120hs8PWEbdhux5V5RxJ4A>
-    <xmx:PPmOai5zwT-ENCy5DbV2oeeD6BwXMdyIgkkViAWWoqBzLNKYoLC9MQ>
-    <xmx:PPmOamTmFDVfe8MVIN1hPBk6BY-lczuw8rj63Igr4GCmV6q-UISn-dQI>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787754908; x=
+	1787841308; bh=RNWf3j6Mxq4aFHIRJZE/a2uRRFIJu740wWr+9JLix7E=; b=X
+	WbP0OhksDA0CL4QukFy/Lusd6J8FjEiIvOFM+WeXUlPhWEkOg4kUhBKVQfVI1ngf
+	BLiHT3mDSRFmLf16ao6g+OJSpzrJrX32sZtHeNpJq+vQIKn/KgG4kkLwYs0xJt6q
+	spXYSdCI3cEZK120U2rOKZweLB3fSvO2tej9JISSnhz7HvLXImWcwWEuOrqglsI3
+	4q82OR81GC8jri+WrkLnuWkZ5mnQTsfSemiu8fLl5OcISx7ZhooP/I9fOplbFqB2
+	BnUyzSRUKzmdSS4cEYz7zy2R4AVALp2cTrBOZmxeKk+T4wwv9Q4db+9gFkaiBT4N
+	BrKmWN+JFVvx2TMFTfOTg==
+X-ME-Sender: <xms:nPmOauecV7xFNKpxuMgbLwRVd9JKmOCAvz-x1IjjjqagZz63kRpjmw>
+    <xme:nPmOavpPC5FU3IWCR5EZBPbLJK58BOQunl5iHiQuRhPk7-t-gc6wE3M7wBQKAtJqZ
+    7sZf9SjF4FnR4HFC6WFUMBH4fJVYOW1qjsSfiI7NrGDqswnkxle>
+X-ME-Received: <xmr:nPmOas6xoaZq6WY7homzCA1EOJXRgsXC5jMX4oHGuZX7_MbHj-Txb29st62iGMW09c3Y76qN2GB8g-2plCEqLaovGB5tQtxnEg>
+X-ME-Proxy-Cause: dmFkZTFMlu8BDZfcni8oCfF26/3a0EWmycp1LEKiNiuG7Qg45suHotDFXTYGk0wg5ErLCV
+    VVNMcqEswBLaSrSrpsDpKZJ1VRilElt8xI4YXRLFAHw8c18wzCeUnOS45E2ji/y9qGZuk4
+    hu5sBpkZu+vUNRCx8axxCD0RgBlU76WGRz+bu+w6ZzUkui2krHck9E9PrXzuqEHkE9KxU2
+    ru7350oLePq85gvQQwMRpSCOgaQa1zt5a1iCVl0N1OJpfoABSIyD51s/cv6KMt/U0bHV1o
+    gDvLF+0QqHRe343YtZk+oS9tXytMg95mSIJFr5DhhDW1Q9+5lCzqkY5kuorWV5UNjcU0Ga
+    lfofYWUeDvrotWA60prtHF7jc7+pwcEeuCzS813UGQdv0oGFdfjeYQT1sF64JnnqebRTCj
+    ZKiLXhc+SnI7kUOhAzeUy61G2ptBAE7xyWvEpW502P3+eKIT48TdPx9fHevjjrGyvJTkl5
+    1Ly9L/xD4lO6KDIOJkivNgXFXsEiTMox6CKlMGlbBoHdWlZbBr67KnF0+cE1qPMgQtjMxz
+    KAtRyT/ytgvMQvqu3zqghH1YQmVaPN07i+mI0KXUckhSZSkXBUglbIL6Aa6lY5wOsN3tCC
+    4PMEu4VgkSgJUR/M6ywrfpiDgXTFmz4zkMtnhpoXmgjbmAdhXTPDb/1m+hHw
+X-ME-Proxy: <xmx:nPmOalpMSq_r6XSVl9S69_s7TS-weqGUfPOjhXc2uAns8cU4XsUMgA>
+    <xmx:nPmOaujZlDydQcHPdrrTMWBhxILscxWKU3u9crbpD3lEET7XTTDcSg>
+    <xmx:nPmOavK4mKP89tJUU0GxRi2uGRhH1hFpTgQ1_QOhPgmo2df_twpTRw>
+    <xmx:nPmOauA0G6cfopEG4yPf3yNe8bEPuQASs53hNDD5-eorbQv7z1BnRw>
+    <xmx:nPmOarRJFbtr8HtzRqBGLFe6_aobjYnJ88FqnWj5gXBJAat9Mj5pLrA2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Aug 2026 10:33:32 -0400 (EDT)
+ 26 Aug 2026 10:35:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] you_still_use_that(): reword the instructions
-Date: Wed, 26 Aug 2026 07:33:31 -0700
-Message-ID: <xmqqo6epj6is.fsf@gitster.g>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/4] worktree add: let worktree_basename() return string
+ copy
+In-Reply-To: <18e65a59-2d33-4f47-a5eb-ca5971cec482@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Wed, 26 Aug 2026 06:37:47 +0200")
+References: <20260825180350.2099-1-l.s.r@web.de>
+	<20260825180350.2099-5-l.s.r@web.de> <xmqqld9uklud.fsf@gitster.g>
+	<18e65a59-2d33-4f47-a5eb-ca5971cec482@web.de>
+Date: Wed, 26 Aug 2026 07:35:07 -0700
+Message-ID: <xmqqjypdj6g4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,41 +88,51 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-The message is overly long and may mislead readers into thinking
-there is recourse other than adopting the new workflow.  Clarify
-that it merely helps them find a replacement, rather than offering
-to reconsider a decision that has already taken effect.
+René Scharfe <l.s.r@web.de> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- usage.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+> On 8/25/26 10:04 PM, Junio C Hamano wrote:
+>> René Scharfe <l.s.r@web.de> writes:
+>> 
+>>> worktree_basename() requires callers to do pointer arithmetic to get the
+>>> actual basename.  Simplify them by doing the calculations in the
+>>> function and returning a copy of the basename directly.
+>> 
+>> OK.
+>> 
+>>> Remind programmers to free the result by renaming the function to
+>>> worktree_basename_dup().  Two already do; convert the remaining one from
+>> 
+>> This is a bit surprising, depending on what "do" refers to, as I
+>> read it to mean "Two callers already free what is returned by the
+>> worktree_basename() function", which cannot be the case (or they
+>> would be segfaulting already).  So I must have misunderstood this
+>> sentence.  I count three callers of the function, so two do
+>> something while the other one that needs conversion does something
+>> else.
+>
+> It's confusing because I changed "callers" to "programmers" last
+> minute and forgot to adjust the next sentence.
+>
+>>> resetting a shared strbuf to freeing the allocated string, which
+>>> requires the same number of lines, but no arithmetic.  The added
+>>> allocation is negligible because it's small and there's only one per run
+>>> of "git worktree add".
+>
+>> So going back to the confusing part of the log message,
+>> 
+>>     Remind ... to worktree_basename_dup().  Among the three callers
+>>     of worktree_basename(), two immediately make copies of the
+>>     returned string before using and freeing it, which makes for an
+>>     easy conversion.  Convert the other one from resetting ...
+>> 
+>> or something like that, perhaps?
+>
+> Yes.
 
-diff --git c/usage.c w/usage.c
-index 3f0118ab2a..9933b9911c 100644
---- c/usage.c
-+++ w/usage.c
-@@ -392,15 +392,13 @@ NORETURN void you_still_use_that(const char *command_name, const char *hint)
- 		fputs(hint, stderr);
- 
- 	fprintf(stderr,
--		_("If you still use this command, here's what you can do:\n"
-+		_("If you need a replacement:\n"
- 		  "\n"
--		  "- read https://git-scm.com/docs/BreakingChanges.html\n"
--		  "- check if anyone has discussed this on the mailing\n"
--		  "  list and if they came up with something that can\n"
--		  "  help you: https://lore.kernel.org/git/?q=%s\n"
--		  "- send an email to <git@vger.kernel.org> to let us\n"
--		  "  know that you still use this command and were unable\n"
--		  "  to determine a suitable replacement\n"
-+		  "- Read https://git-scm.com/docs/BreakingChanges.html.\n\n"
-+		  "- Check what others on the mailing suggest as a replacement:\n"
-+		  "  https://lore.kernel.org/git/?q=%s\n\n"
-+		  "- Send an email to <git@vger.kernel.org> asking for help, only if\n"
-+		  "  suggestions by others do not work for you.\n"
- 		  "\n"),
- 		percent_encoded.buf);
- 	strbuf_release(&percent_encoded);
+Thanks.  We do not know if other parts of the series gets more
+serious reviews that necessitates an updated version, so in the
+meantime I'll reword what I have locally.
+
