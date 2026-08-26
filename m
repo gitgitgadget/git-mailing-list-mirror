@@ -1,164 +1,149 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B56D3BBA0E
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 09:46:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B1E280A56
+	for <git@vger.kernel.org>; Wed, 26 Aug 2026 09:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787737584; cv=pass; b=Lh5vOt9lLrlKmDgF1iQt0r0U5FWfqSKChm5nB0XPfPNFiz+uBLjbP6XRVc8Oc9FET1TZ6PeMSGFtSYf1OvzrZ/AMAvDKfsrl91It2GEiGdgwqEYcfpRS7U8YbkeiDqfx2lC/RGXDhKUhm13hhCR4yAlQvRnjNUAi7msBu5ST62k=
+	t=1787737634; cv=pass; b=Du8rbxK9IpDqKnUtNXcrsc7p/vFN9vR3z7BnpgH9MSwJcFwS1CsYr9IdTJriZ7waHNmAFbcNXKEEovI7UrpCjKiwBjkXxAUO/8grcxUjxEndzryNLlUY+RTHPk9ZLPN8cQudwbSoHtEvELJ50wzMM5Q/SIXs4NfvfiHZ9CuNKbo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787737584; c=relaxed/simple;
-	bh=oPPiuJT2GRY40bcULK+01ET/F1jcbNmm09PPFMP/ioA=;
+	s=arc-20240116; t=1787737634; c=relaxed/simple;
+	bh=iZ82JC25TfQQTbwn9yW73SlPykir+B5uV99SZuR7KBg=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R2hvRNopZSellkB+BELtfKmLhMSn9MVGlkfZj4xHIZzHzfw4WO2oAZQf4ZpTEwuWf+0+GVTP3M/qSdPeoWZpJ48Rw69kXQPDSZ4UX3iVxeE/9DL/h2jW2WlM4JBAcbScgmE3fSOcuaW0fPhqzLCksyq/XGnMuy8WIfVeyNeCNH0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HrbCF91n; arc=pass smtp.client-ip=209.85.217.48
+	 To:Cc:Content-Type; b=dGUNe3BIKPSfFp/0tQleAnKN1XCy7t96JlCL9/jDd6yc2P3AQGdwA48MuCOTOvT81vDXLJyHHvIDCrKOtSbm7+G/Dlo1oxGIUdMuieafIcWtRcrCRIqptxTFURPfhIA+20jAkE2FE/npnppWOoeJXvw+mZeen43QzZt9rt0PiTo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZcZYkBgr; arc=pass smtp.client-ip=209.85.222.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HrbCF91n"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-783c3744227so5398137.1
-        for <git@vger.kernel.org>; Wed, 26 Aug 2026 02:46:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787737582; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZcZYkBgr"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-97c79f2db08so310214241.0
+        for <git@vger.kernel.org>; Wed, 26 Aug 2026 02:47:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787737632; cv=none;
         d=google.com; s=arc-20260327;
-        b=T1gZkplJTZ0X299BweCDb1tk8L9c+NfA7NeRPG13APE0t9lNT944IknzTyMd6zHZsy
-         HIoCCJvrMv+vmSfb0fENkO4m5Tz+BUEsqfhEGz4AgATc4OAEDilCvH2FdV78976Zuv/n
-         ZtUm/5+KASLx88EbS9ZPwhI4vn+OmFC79dr36zlwxPSWP24bZ1N2S+K+cXlaay0/81d4
-         gp6bJKS6zmD4ACIES4Do9O4mDbPtKGy+g11hSeBdibdbcPZwAcA8NxVJK6o8Dul7bLbk
-         eeLuQzQvXvlriYlaTKI9PUmFX4vIZ3PaxaY4xPBDYiYTe1dXzNtnVj08ix+gEQjDF/i1
-         j0cw==
+        b=rVNF5fhB7peVW9CFKZF8mZZiNArhqjLi122d8pN5clPnSDWiJaUsoYT0uOB3KPe6n5
+         qcwoaIm4r9rArq+Ujq0yfbI6sRXWQGoKcMB5e5Td44O+eTaCam2VMEf+x9eoB/I70l8X
+         aXZn3HMY/6Hlp5HmY3/3U8fmuB0ew1s9WK1KCai8mIrJX52EmTyX+gCJ7kXwPlRASDRu
+         mHTJEM7mpradem4HDZhJ7MIMGLketHz4XWu7k0e6UbIdMvuuOGQixsLAYbmpl+da1rk5
+         KLCETflbER6eIADC4+XByFZHPTtc6K1xohXLPWdZ6WMjv413kkiuwOdkaaUM8zSKxKxA
+         Rk0g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=6H/uHQrYqAT37EsisxkMTzWgvaYthp1W3f6U7/Dpr+I=;
-        fh=NvnRkRZ7iM6A9pib/3cJxIVptBzKJq1gYMEXR72SskU=;
-        b=qOxhey1CttMw8SeVL5xMk/vwSzqgfa9MkD86peo1jwBkOCJNPw3f6Ksa1h3XF/U24J
-         zMVFf+rdyukfYgOjFDzisQPy5Ml1ybmYEioaCe7B1jIKEvrifCIR1gcOwduuXscYvbah
-         M2uFMrSgGUAGLQ5k5odB6WWlhxnmpAE/L8vXPCiNYKHUAG+SvSvrwxQtYvaWl9kXd3mO
-         AC6S8zZwqnmO5E9NpxeY8WKDyRef99/NG3FIlHbQqn0ai4whZjayRH/TRfTyEANtdswg
-         hRebGzkTZKFchUrsQ7TXjtrVhhkwn3BbI0sSD0MDl38BOLzMTmpcGTkRotsmdVcS4XE9
-         9LEg==;
+        bh=hjzokfKEQZtNcCFLbTAcascJLCoPdIiNXqkrdTcRZH4=;
+        fh=rF92/hKkNSqTOvJyQo6isjv9H80DGl/xHyflQ/yGv+8=;
+        b=H3uNLOOtCGgpThWgcosg/9AIjfwlf9SsE+eHvmh4bZstKKiu/MnZfP40tHaIiLzDzD
+         nXP2RBTuIne+RMPCpzIR39Zp7cn7VFguYyf6iF5saClv1QChYz8UPcTBHBScj7RlOTew
+         iWg88yMOm13lWPKgbnoc5H5fLRA0ngmxIg3zhBgngqxiRZzhQp0MT/TOiLjjUKPadwRa
+         swgyztL+DHH+pjjVenuvHvw3Z8Hii2QHf7u9EuHwvefqcEz82GuLkLYCNYesd9jIGZW9
+         AIsvejjaLJSy5lsZNEiYPs/Q9ExuiJZ8i/LJySkljIwcW02V4mjtRTLi9vIIOjy5wJpm
+         g1SA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787737582; x=1788342382; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787737632; x=1788342432; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=6H/uHQrYqAT37EsisxkMTzWgvaYthp1W3f6U7/Dpr+I=;
-        b=HrbCF91ndyVDIwoEcfVXiV2tlN148T7RNViZWgZ5jyXrXPYsgcL9lxDdTfO1tis+QZ
-         PNEeN32dzq+yeoDkCxV2x89tztYNavtPdSsRsMsmX03rGeT2c64WjrEXILDoKSOIbhg3
-         hFjBSs6iZ+eoL1Ubeu+f6uH3PRFLV1cVZXCPbVeBRKNtClfaYJfzL3/bNiNBQqUdLWEG
-         GFW1Iy+mrNelvTn0PxJobJPdxPveuUMMacq7a6GdjNUA5/ovKSmesasxs8aoeXojYbbF
-         ycHIWXaEElOLfGwIuu9CTK4UnW/r7WB7iIfP/UFzswqBAwptLAbszI0pOPaxGuHX9Oiw
-         zUuA==
+        bh=hjzokfKEQZtNcCFLbTAcascJLCoPdIiNXqkrdTcRZH4=;
+        b=ZcZYkBgrjaZbQ158/sN/eygNHlhNwiSd1zCD8StwPoy2gaGaG87RLIMWa2hWND3mq/
+         SZd77qaRx3R8UyUkhhcuYBnKXEzPvrsE+YeWAQ0qqRCIvU6gukyX21RroCTemNGwUOOE
+         tLj8pgyqfCo3jLWJI7GCuk1hRcVZ8g0A7vBoE3nqJYQyuPwZ1wpSW/Gn4IkWVJPWHImL
+         1/FEArUe+P2evG4jY9XIckAqGr8FlyDDnBAkbFmMhVy8RtqHQaA9ZYwrcQPLtBgASZdV
+         CFDWzmHJIHISjl1aK//i38N4Uuiumcv7BjwLBfbN56QGcsyD19fB0lttiX5vsxF5cCuC
+         vtOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787737582; x=1788342382;
+        d=1e100.net; s=20251104; t=1787737632; x=1788342432;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=6H/uHQrYqAT37EsisxkMTzWgvaYthp1W3f6U7/Dpr+I=;
-        b=eyb3M2cerJMHjS7hXFdArz+rANpEKZIEXk5g1mkD8F1kL839B78OMuK839hL2UNdl2
-         gWafiHDz1nM/sMtQscpE/DAuNOTmVygn8rLZ4E0NBwK4cQ7aHjKyYNB+zPSY5ZG922NW
-         3dyQsvDbe67b/R3hjmI0u2xpevxclxfU7/O1NM9bwCuNQ7rAv3eDc+RZQj97cj7GGKWy
-         +dNNqaC3qtUqnraCPt2gUDeHRg8bkwk6kl7j5iZR/oT7fcj6PkWVyGSHBoXctCzgc36T
-         tsAIiuhCKCOSBnaDC3IEfz25vqXKFzvZCwGfRXzcUWwcOEWJjSFB2ChE9nVbdTLZB2D2
-         b/vA==
-X-Gm-Message-State: AFuF++nn3nuzUw97R0Vl0u8Gz33waEDC6DoD3m1aRz4MuXzwZkj5QAMU
-	0ypZxEzeqGyrV37futmV8ezNQN3BByVcDQcSFJ0yUnnUh2ilDvTs8V9a3EdtomlIZmC9hXiN+Aj
-	3SQX416jxGSaUuaj4/+itdgos0fsTxcA=
-X-Gm-Gg: AR+sD11d2oXJst/V/cFZcGNOFI2hK2Bpt433Hh5RlVlQU4fubGFctw4dCxQCpfSMFpZ
-	2KL91TzUuZsPlbBvq5DPQIlQMyaJdEqufgybZLV05CmoH7JiODQjl3VLbBwSATSwYiRo582PPcn
-	e4S6weIOd5z+RYuwLcsk+yfrMoV7BhZKFFGHJcdc7+i1hsGCA4wbGB1ctxqMLpAgmJEHp6PXlfP
-	Tc2T+3IS1UKm+FuZLZP6N/ex+kQAADtpbthbrvFFIj9rkD5o1jyavK3oUe9zWOjTFv5RAm2Yj69
-	zgK4y2SRL9qGpY4+HN7PggvNqr2hXI6e9fMLGFpYf7YG7ZqP/xjkSIgJ3Z8NtPfsAk4nZeMw1m7
-	SJtG6rxqFtq0Z3YgCEom9eLBFqKl243ZqYwMkWmkjWg8fbw==
-X-Received: by 2002:a05:6102:14a1:b0:77f:7c67:e864 with SMTP id
- ada2fe7eead31-782c02ddfa7mr1609315137.4.1787737582126; Wed, 26 Aug 2026
- 02:46:22 -0700 (PDT)
+        bh=hjzokfKEQZtNcCFLbTAcascJLCoPdIiNXqkrdTcRZH4=;
+        b=m3MG3dZZhNZbZKXg0nbQ5RAjBPGR4/lH85I2ynIaRYY36Sv3nWXbbO5jDt+6XLZx2b
+         642xcOBEXrd+21+g0w/BZnak0Dqxy9N2jLyeVxz/CZbD9FDqlv1WxkiumIu7kFi7vy7K
+         muYC6n3H3WEoHbCdelMcHkrbb9YwXK05q8EWERvQajFjwE48fLXhejpICesHRciRmpyr
+         h0U19VfXJwjccDzjhiUcTxveaEBGsSAJNRfAtYRSsWqk2tF+bZSsmfgMNWG8zGj8Zx2h
+         TcZ4jlMB/75VKypkS8zGRnBIG11Tg/kPl1qy3lBwftZRV/vrFV4WFqluFHjZGkNBLTdG
+         M0gA==
+X-Gm-Message-State: AFuF++l78KZYNieFfbpKHr9sWH+arSkhs/8Be3XdekVNHv+UGna85A8F
+	Q465weH1GP1t/RD1u07OmqYkx4r90hKatCVHeOOY2UiN96f3q38j7Tx+7aTB74rw7ZrbNEdOWA/
+	rbbk7Hj6Y7hoPs2u2kzVi8J1Sei/SSMU=
+X-Gm-Gg: AR+sD10TowLG4OgRLUOqdC4pcvkCFEjvaUr0FB/U0fxN1AzW/1eLdqbBx49914NiW+z
+	aIVC6g87VCF4SezDnvFyXYjojfY0dTfo9P1LIjwTnjFpaRe03W1svCUxkNYcdfcF4o1sSJXhtwF
+	mbk8gcW8f1WMTwsPbNk11iwE2ukaug172S/GX72exLcY4EdDvmjt//WSESI3hClRaJrH9DJVyTA
+	Iu1+SmggavwNkbgYsS1/TGZ09IM7nTeIozB5nE66UQam2kiD3uI7zpPw3ehoVGyCPK1YyRPX7Ad
+	Czyxz/wVHugIPS5IjQ7RQXnUve5AeHWRF2G8EPJXEV7Ev7Uj/vr4WYcsvhiJQKA666zyA6AbgCR
+	KxXqyK8s7GHZvYh0sgttGo5gV6JeMH+k+lTs=
+X-Received: by 2002:a05:6102:41a4:b0:778:5579:c661 with SMTP id
+ ada2fe7eead31-782c0dfe6a6mr1945952137.7.1787737627174; Wed, 26 Aug 2026
+ 02:47:07 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 26 Aug 2026 04:46:20 -0500
+ HTTPREST; Wed, 26 Aug 2026 04:47:06 -0500
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 26 Aug 2026 04:46:20 -0500
+ HTTPREST; Wed, 26 Aug 2026 04:47:06 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ao1uqpCxFHlOyTV-@pks.im>
+In-Reply-To: <20260824225202.GA190620@coredump.intra.peff.net>
 References: <20260824-740-optimize-reloading-the-reftable-stack-v2-0-9c9de2eb0af7@gmail.com>
- <20260824-740-optimize-reloading-the-reftable-stack-v2-3-9c9de2eb0af7@gmail.com>
- <ao1uqpCxFHlOyTV-@pks.im>
+ <20260824-740-optimize-reloading-the-reftable-stack-v2-4-9c9de2eb0af7@gmail.com>
+ <20260824225202.GA190620@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 26 Aug 2026 04:46:20 -0500
-X-Gm-Features: AcwNN1XFk9IxUHty1Gj55iyZsO5f692_xrnTYRrE_1p_YySRaLZJtX8SQyOpo7w
-Message-ID: <CAOLa=ZSbOFmsNUfhsEESsD5rBqUq0iX=Ls_TgfRkeo5FQpamtQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] reftable/stack: move list lock to `struct reftable_stack`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="00000000000088f20c0659f017cb"
+Date: Wed, 26 Aug 2026 04:47:06 -0500
+X-Gm-Features: AcwNN1VbHH-XcyZU6AtyBbtXOf2DcN9q5KtbbN5IJmEmLyYvcibV3QTObVcypmw
+Message-ID: <CAOLa=ZRanhvBragQEcsLostB=4YGdDT8js7x8Ck5nJvLpsRZOQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] reftable/stack: avoid reloading the stack when
+ already locked
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, jltobler@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000003850850659f01a2f"
 
---00000000000088f20c0659f017cb
+--0000000000003850850659f01a2f
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Mon, Aug 24, 2026 at 11:31:01AM +0200, Karthik Nayak wrote:
->> diff --git a/reftable/stack.c b/reftable/stack.c
->> index 703548417c..c3d4deff29 100644
->> --- a/reftable/stack.c
->> +++ b/reftable/stack.c
->> @@ -628,10 +630,16 @@ int reftable_stack_reload(struct reftable_stack *st)
->>  }
+> On Mon, Aug 24, 2026 at 11:31:02AM +0200, Karthik Nayak wrote:
+>
+>> Benchmarking with a fixed, non-symbolic target OID in the 'refs/tags/'
+>> namespace (since it triggers a stack reload when checking if reflog
+>> exists for the given tag name), shows a consistent 15-20% improvement
+>> with these patches:
 >>
->>  struct reftable_addition {
->> -	struct reftable_flock tables_list_lock;
->>  	struct reftable_stack *stack;
->>  	struct reftable_write_options opts;
->>
->> +	/*
->> +	 * While the list lock is acquired on the stack, we need to distinguish
->> +	 * which 'reftable_addition' is responsible for the lock. This avoids
->> +	 * clearing the lock of another 'reftable_addition'.
->> +	 */
->> +	unsigned int locked : 1;
->> +
->>  	char **new_tables;
->>  	size_t new_tables_len, new_tables_cap;
->>  	uint64_t next_update_index;
+>>   refcount   master     patch     speedup
+>>   --------   -------    -------   -------
+>>   2,000       18.5 ms    16.6 ms   1.11x
+>>   20,000     120.7 ms   102.8 ms   1.17x
+>>   50,000     296.5 ms   247.1 ms   1.20x
 >
-> This feels somewhat fragile, as tracking state via a bit is very easy to
-> get wrong. I would have preferred a solution where we didn't have to
-> have this field and instead a more direct proxy. But there's not that
-> many spots where we have to do this, so this may be okay-ish.
+> Much nicer. :)
 >
-> Other than that this series looks good to me, thanks!
+> I'm not very familiar with the reftable code, so you can take my review
+> with a huge grain of salt. But I think the idea is sound, and I didn't
+> see anything obviously wrong. Thanks for working on this.
 >
-> Patrick
+> -Peff
 
-I agree, I couldn't find another solution. The alternative being, we
-move the bitfield to the 'reftable_stack', but that is more fragile
-since there are more touch fields. So I think this is okay too.
+Thanks for the report and the review :)
 
-Thanks
-
---00000000000088f20c0659f017cb
+--0000000000003850850659f01a2f
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 39248ada9ea5f8b6_0.1
+X-Attachment-Id: 54fe874b4a5ca491_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xT3Rlb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNkEzREFDQTBuRkVqQ2tiQU5ORkV0VEtIK0dhZGFKKwo2bldldFhuMVZw
-Y04wL1lPdGQvcHhXSjRTVVV0ZUpDc1JOZW1zYXNjOXFHLzJwSTJrVkt6Z0Z3by9FdHVhQmFuClhI
-a0FYRkl2SFUxaHFRZERuSll2ZjNQc1VWSEI5L3JqWklYSXB4Z2RqL05adFRNclJDNE9EMVZSUmM0
-dm5UUWIKNHdEelM1VzBLWU0vSW1KempmblU5aXdFY1JjaWFmV2traGswd0dkYTJJMEVscTl0UEd2
-bHRaS0w1enhlSXFpRwo0VTNEVERXRllKbExTWEN0MVhLcEtXOWkwM0RJRGRkOGRlZVdOb1JUbTZF
-dHk0R2RFbHlkSGM4UFlzZE9MRzJiCjVPNEJheUhGTm1NREROL1FSVGdiNlM2d3JSSGVRWlA0N2Qv
-YlM0VkVOR3A5WmxZTEk4OGNCR3pHcWlxME12bTQKdHdBcDhUSzE1anNsY1A3SFFiWk5xUEkzVEpW
-SkpyRmE5Q3hSZTJJajhiMFJTQzJ3K2ZIV0RKWU1ZL0l4ODZGWgpCWk9Ud1Ridms4YzVPTzh0MTFz
-WTlkdDFKR0FHYlpKNWxVaVZUZHYzREhFTTRXY2VvYW1yWWd1UVd4SFc0THVkCjQ2bmVjdSt2THBH
-M1huWkpramZuRGlQREFFTnNpNHdaU1UvTktuVT0KPTVjbE8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xT3RoZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meTh2Qy80NXVuUE9PaExHc21zOVVycGNpRUFxb1U4VAphL3V6eW5OZFUx
+UFJrSS9xNkRnN3hNTmRocHVhUkpTSTdRdWI0WnQ5RGI0NmZPWWRRVFEvaGNWRHhsT2NkNE80CmNM
+VnpTOHlaeVRqRFJWNmtBYUExMlM0dGJLTXRVZWRrUjhGUmJJRjhFNExBbkF1YlVIWVo0VDlwbDhJ
+NWkvamEKTDZ3NVpZVDdxYmtYMElMTE9vRWtTYjZxWGpWWDJKSEpqZmVjaklzUEVJdkxIWEpUUHJO
+c05Wa3k4VFVQREV3ZgpHOStkdGl0RzVDSEdyQ2FsQndOaGcyN2VkdGFHVzJlVzFPeGlONFhSVmdk
+ZHZwQU4xbVFHM0ZIN2RsU3M4SFoxCnFvamxDY21xSVJ1VVFsQVhPSnJOYytBQnNBVjFRaExnUWJ6
+TjlnR0N4V0lDcUtrVy9tR0pkd1QwMSt0cEtrNTkKYnBKeElNWUZ0NlBra2dFZDZBTlJJVnA3eldH
+VW5MbkVaNStxM3FpWUVsOGFPRVRpM1QxYmpqR0NoRkVLSWhHZAp5UFZLM1pBdklodG9JK204N1pY
+VFJxWTZ4WkxmSHlOT1B4NWJkQ3ZWeW1hME5QS3d5a0gxSzFrTFBGTURsWk5lCjNydlRaUWFheS9P
+Z0RLQXBhUXcrUDdURGxkNlE3N2tRS2c4NkNicz0KPTF6cWgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000088f20c0659f017cb--
+--0000000000003850850659f01a2f--
