@@ -1,86 +1,81 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDC34483B4
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 18:38:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6AB47142C
+	for <git@vger.kernel.org>; Wed, 26 Aug 2026 19:14:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787769504; cv=none; b=NjvBix8pwhnUrxpmJCbWXEAv4C5v7NoMvXaHD0OEi4YsNONTjb/beHP5zQde1yHSmcAyCZnil8yJlv9rnEYlYGW0k13KkMztbSgMS2rErl1ViOVzLAaJ4KGs9xa7ArydG1bJUsGUntB3dSsph0DWr7imN2WBwH1TqEiVfUpVpzU=
+	t=1787771687; cv=none; b=rlU3VINYI6U0yeS8aXlVFcvfXn3aaoFjUBnEeiCJZpyeh9vc4w0PI/XPJ8h+Vr/b4JjTYcMSrM5NxvA5yvWsZpfg7uFK8ipQERQN0lNOtq/rLMZJ68SED3qUlO42SrEAa66MdnaEUlW8J3laJMcHCiUxd+qAi0UjjRKKvw0qf74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787769504; c=relaxed/simple;
-	bh=E8TAdNcxL4N8EyfokNHTPJ3hmUBXSapNT5whRqonXqs=;
+	s=arc-20240116; t=1787771687; c=relaxed/simple;
+	bh=teOrOn/58Xm38HCC7jN3vFq/2AgMHqitrvzLewv39do=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RJF9paS5yQ5hnJlT/BUgWzrqJyCi+vSfj2w5N75bpIfvo9wJ1SnUXz8HBQDZU5mfu8vgTs2wX4Cf3Xx50kgIKFlUfLNcioLSw7sO9atK6fxgdUSKl9sKp7CRY9sWgC+iCU9oUITCjSEwizsXuGqYxfDjTycUgz6QlEj2pZWyqYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G0GYl1Qk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=amagmmDh; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=deCSwhYECLmhsw+SgDsN38+a/FhUepSIVbanYpwu9soFH+H+Zbdz3sU9/vanR0T5eHNfLA2foGmwUNVvF2x+pzdDPJBPongz6TnfGZ3HDvJCCmXU8QqWcmlOfzGvu9RubS5YkYVJsCiNE+hspSwYtKu/wJb/kFQRB6Ds23L+TmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bc6z1F9j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=anNgHUCU; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G0GYl1Qk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="amagmmDh"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id D3A3E1D000DD;
-	Wed, 26 Aug 2026 14:38:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Wed, 26 Aug 2026 14:38:05 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bc6z1F9j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="anNgHUCU"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E788F7A0082;
+	Wed, 26 Aug 2026 15:14:36 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 26 Aug 2026 15:14:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787769484; x=1787855884; bh=ErsPMdn4eK
-	gZqXHGOiKg9mY+YetOqCpZ7JNrDj9nf8o=; b=G0GYl1QkNTQR9t+hRnj4DQQe6R
-	DMkcBb6tlLndj8XKfxANfMuNeIw0qVtz6iczDPZEzn2c+pEpc6p8MLIFzi/zUN3T
-	G4nVmuWaz5ElzQsph7DeJdBCNN0ELoZdAF9Ps9W0A428jizmhlMT72lQ79utm6HU
-	0Z28EH/lGpPnhyXCB9I9Ks+F+u/1ARdsMFfla7vdSHvavXmlSM9x/aYWC+cBuqwh
-	UphTgaumMa7WNQXbQLkbuxkJEDAIs2Ih68wRDAu8bjatrbkwYO48Mqo3uJZ4xZmf
-	1qvKJMGMxtok9Cje4b4GDeH0tUG39i0pYCsNhDDQ1x+bSBzR7t8Bn4Efv1wA==
+	:subject:to:to; s=fm2; t=1787771676; x=1787858076; bh=etF4Fe5zOm
+	cpIZpbL4f2/hOqGzVWfCTrrVV+HG1HXzI=; b=bc6z1F9jB7wLRA5z7svuaeDyeM
+	+TNnMFtKPGurKBOqhMq/DX2EuD2NxnEr/VtMx9FvdohCpSTyz1h4928BXD3d9Mbv
+	ZHEOet7ik2osJC3J/RlwX94ojm5jGY0tQKUcS6C6iPFlnUCfZL20xpdE5Fwm5kF4
+	j4tgY84ejflKYFUomrmfK2boryhUFxL4syxMkNm0N9fpFrdWbB3UWlVVzwAJycxR
+	cnf4lt3I3SQumP7pIkSZcrPvoM5sXa/YVdEIFqsgjv8CApDq5wgn73OzAGAIAXrq
+	yNpwcxyxXA8PMhntHmTUprRR+N51KHXBaFHCKnJXnuMNnIZjj06camorm8NA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787769484; x=1787855884; bh=ErsPMdn4eKgZqXHGOiKg9mY+YetOqCpZ7JN
-	rDj9nf8o=; b=amagmmDh5edxhJAnFYhG8YC/iX4cwZUfWuk1KpCdcX0i3k+9TbB
-	A4cdHOgN6tgSgbbgrmMXMfXevy+BlyXOV1iCjQQzJvVMqKH/c0DGskE2hchzGRSV
-	kYku1gCIgcYubV3oX99GQy69VU20vO0vPf//eYB9Ph/ss79lYOkrrcajsUIQYOIR
-	YpW7CqP/SeOGMsSYmeOn19R6TRGMK68v8Eq87IgsQWxJvWhreUreYFHS/Ne52Wr/
-	K7WH32wRuMMp+/BeVmq/8RgEkP85hzVky6UhBVt2iMYB+49gfR5SV5xnmIb7UhTH
-	DqFDf1eLNbwFh5pThsXCxsyFweu/f5ylq8A==
-X-ME-Sender: <xms:jDKPakVk8yFvonFu-SndA4jLSG1qiYV2FfVBYLNAk7uSjDZn2Vmf6w>
-    <xme:jDKPaqLsAZmYwOlsSCYMYY9l6mRyL_Rgf7LelxuNg_V5FyKtoN7D32v3FuK4bSAQf
-    hbHjVCwjII1Ne_I4PsR673RO0Z9NxaTgD5BaqWf7VdYeinGV3DS>
-X-ME-Received: <xmr:jDKPanrjTcglmIH_92CWh0TJg2gxN5ob4WEJw7piP9FIBRzzIm6yd3XThOrDzOirdoSLZCV6-izxIAyypEg4PDG7308PUZOpfw>
-X-ME-Proxy-Cause: dmFkZTF07htFMKCYSvDRIpAnYhDnLYpZttSz9xKvCnhBbUqKh1GrI00pG+jo0V4+9K5xvt
-    MVglVTdGR02qg8YW9Bykuxj8kwYkyX1h6W2JIymh1E7JszVLZq4oGXhjZcSnFqwJcb9Rin
-    LgvCXE0oVIHrp9ib2/9YmZ2l+T/A/NDDn1IFjEUBKiBoowx7/OUbk6eDbR4bkwEEfu8v7H
-    lAS+ElIoOaR41T8g00ercWwuBloqFLDBVH9jcX2255RvoxfDm+Zyeb+4NsUtGJ7ziyIb41
-    lO/vgotoLZ3JImu++o/fdmTJ7Qy+2xotNgCL3740KtGHcmYdAQ4Hbddrp/+LqKiBQFveQM
-    vLrRuo3olkjUwDp0rmAjdbIuBdzKrPU6iH30B5wh7oQr9TtNs+ICiz8FAqW3C9su96xZNB
-    2FkOtGeT0nrwGD9NLaFxBcjODoergdvWZeHpsrKV1iGFoTw4GZCVD8EQXSl28DNYJTcUgy
-    segq2myM2fjfOuib0sIvtmXsJVB3KRKXmJdffUVsxCtUuCtWLj21Gyb9X2VtoP9XWmHlKd
-    x6LypoiHkEqUVXqjBFbJLhOUTTH0vNvnyAxgbzRghI9eAw/nt2tebWTC2kR8Ij6cuZZeGH
-    EUneSeNXujjy8hb2+UwaV+I2i6KRFZJqsFfgoG3BnLzriiyWCKlsb09bQ9mw
-X-ME-Proxy: <xmx:jDKPapxIAO9iHQh1H9HKgM2XIIOBuAKYN45XNniYtT5ddB1Fk3YoDw>
-    <xmx:jDKPajsgxAV276291IZ87lI2AZE760FumvS6tMdWj8mnFmXyMwYOiQ>
-    <xmx:jDKPaq05Rdxx1mCgBZOvJ3g91oopxeokcfFDNtQ0A3lWV30WgDBQqQ>
-    <xmx:jDKPajAet6k3FmDn-c1QMeXVrmpelcJITzWiVXG4l_FB72BJvpRyzA>
-    <xmx:jDKPalTkqwwS1EvAsfmiGuNN-5E0rJpNZZk02SzSK2BjX3fTbhAC1lFz>
+	1787771676; x=1787858076; bh=etF4Fe5zOmcpIZpbL4f2/hOqGzVWfCTrrVV
+	+HG1HXzI=; b=anNgHUCUC2S0dPYI3R8vAkwoqGl1+I22KcPmefQZEbwtt4gGRV1
+	lz2qco9gbG5z4d8dCAbhdzCrJ3ZWy2YbGR6slJcf2E/V3w2DSICQHiI6fYABC1NN
+	+oVoDlfjO1diNSbBHeebHRUSVLOZe6RRCAjHiHRxMQ8kF02sFMYSMX6hLRKpmjuc
+	7GVhF/ke8SSnPeyw9WlcC/ps+OjotDemyyAzh+2JUduvWHWQKIINrF0B2Y+AlJFL
+	UQjljza57NNbCtw3GQVKLOsoqz8WqNI8iIH6oe0kxci8AJq6xyeG79KlgUTp88dn
+	L2WhNfLTl8eVStjWoujCKRCxydChy0FlNsw==
+X-ME-Sender: <xms:GzuPaoqwNzCNAxhDaCPhfO7Y6HusCa8wg1DqbKId6TMlZPWMQbo5lQ>
+    <xme:GzuPasc0qtRt9KohAb29xNv5W4DuXouD_krID2-OxhQDF5XIrMEvSvy4dGWviZ1PQ
+    3jB73mcYQb9uMQAfBQUXXefEg-qg3365aAIqBC-aFOc7YKjELTm>
+X-ME-Received: <xmr:GzuPanp4mF5NEpwaSKfbUcs9Udbf199mYitsye1slyWJDvECUHoh19g3aTxLIuzaiz_Lg5M1vV7FNG2inVAjs0eBsv9nyS-rQw>
+X-ME-Proxy-Cause: dmFkZTEepx/SugniHBBRbxoJeQ7eIB/ybWwhUxka1Ib/eRCZ02+qae5H5XuB7+ZPf3K3m3
+    GGzqNi99JKQ+yjDOI/RMBqU9i3qoRO462CVaRYzng+PippzcBGX7kT68VmWRfkdolP/2sk
+    +bLb2lOzRuFqgCFkCdrbMr+RAiECq8xvsAuXJWgz3CbKU79UXtlDmdLIwMSpcKamo3CJyE
+    dvgmhxwOuxuXNornvwj1x1Wg4FwPkCLRMEVBZk+0WL4W628M2DIBVrqQhOXkA5HTG5dxQ8
+    BO5FKah9c1LPqxl/DnbiVOG7HItUmx7qEX7w7n6geMGD2dsSRKwPsyWKLJrw+cG4l1oal1
+    Z0kEpI/ZC8QtvGBwvrSy8PQPxO09Nc9KtGj1AVVJQijjRA3bRpp8bL6nbaCMbSyvfcClPz
+    Zh9+ieJiSC2CTmQ2ySkAsMWmFu6+T4xpSQRn4RNKN98oqGTdIkcicPRBlWKfhtayS1pkvk
+    FGL1xVN/Gjou8btR2g1eQSDPtlFio4L8Yz5Vom0VH5fZq7ZDc846PTPc4n/efVMOrhh5+r
+    bTdkAtoExw620P1f7GoDopoG2cN1ntFQBmfVV2XN3JROUd7EBU4Gw73gu1uisVbwy7DPZj
+    QtbAlxrVeztbSp/9lchya8ksS3hPiDDw2BT4yiiY41mvP0rhVbDvie4qx8mA
+X-ME-Proxy: <xmx:GzuPatE1N256gpakPrcf0ct3NcBvwK-X_MYP5DhlUi5oqHi1LkDYeg>
+    <xmx:GzuPanvDcuqoGpHuBoZEBCoOi6mPtoq6BqgU6fP2FLi83YIgK57EjQ>
+    <xmx:GzuPavWjDuno-Zwc65b_2dHoy0s0mOZk5LqeJHRI3kno60h9eScIFg>
+    <xmx:GzuPajGAeKEs901qKBFEnxw3BVw16CwRjXPQP7VDr9tdjuU73Mx_-g>
+    <xmx:HDuPaqn7pzdIpY0ISS0yXHj0OQcs9LgiU3v3YrK5dYeiKpr6UPPykxRv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Aug 2026 14:38:04 -0400 (EDT)
+ 26 Aug 2026 15:14:35 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Delilah Ashley Wu <delilahwu@linux.microsoft.com>
-Cc: git@vger.kernel.org,  Nils Fahldieck <nils@fahldieck.de>,  Patrick
- Steinhardt <ps@pks.im>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Delilah Ashley Wu
- <delilahwu@microsoft.com>,  Derrick Stolee <stolee@gmail.com>,  Ben Knoble
- <ben.knoble@gmail.com>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Jade Lovelace <lists@jade.fyi>,  Glen Choo <glencbz@gmail.com>
-Subject: Re: [PATCH v2 3/3] config: read global scope via config_sequence
-In-Reply-To: <20260823-fix-config-list-global-home-and-xdg-v2-3-b29cc63f017b@microsoft.com>
-	(Delilah Ashley Wu's message of "Sun, 23 Aug 2026 20:28:28 +1000")
-References: <20260823-fix-config-list-global-home-and-xdg-v2-0-b29cc63f017b@microsoft.com>
-	<20260823-fix-config-list-global-home-and-xdg-v2-3-b29cc63f017b@microsoft.com>
-Date: Wed, 26 Aug 2026 11:38:03 -0700
-Message-ID: <xmqqse40g22c.fsf@gitster.g>
+To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH 0/2] checkout -m: refine autostash fallback
+In-Reply-To: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Sat, 25 Jul 2026 15:34:27
+	+0000")
+References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
+Date: Wed, 26 Aug 2026 12:14:33 -0700
+Message-ID: <xmqqld9sg0di.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,121 +85,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Delilah Ashley Wu <delilahwu@linux.microsoft.com> writes:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->  	if (opts->use_global_config) {
-> +		/*
-> +		 * Since global config is sourced from more than one location,
-> +		 * read it using `do_git_config_sequence()` with other scopes
-> +		 * ignored. However, writing global config should point to a
-> +		 * single destination, set in `opts->source.file`.
-> +		 */
-> +		opts->options.ignore_repo = 1;
-> +		opts->options.ignore_cmdline = 1;
-> +		opts->options.ignore_worktree = 1;
-> +		opts->options.ignore_system = 1;
+> Avoiding checkout -m autostash retries when no tracked local changes exist
+> and visually separating autostash conflict advice from the subsequent
+> branch-switch message.
+>
+> Addresses #leftoverbits from here:
+> https://lore.kernel.org/git/cfd09dbf-8d77-4464-8030-3a0ffb4aeae7@gmail.com/
+>
+> Harald Nordgren (2):
+>   sequencer: teach autostash apply to report conflicts
+>   checkout -m: refine autostash fallback
+>
+>  builtin/checkout.c | 18 ++++++++++++++----
+>  builtin/commit.c   |  2 +-
+>  builtin/merge.c    |  6 +++---
+>  sequencer.c        | 29 +++++++++++++++++++----------
+>  sequencer.h        |  3 ++-
+>  t/t7201-co.sh      | 17 ++++++++++++++++-
+>  6 files changed, 55 insertions(+), 20 deletions(-)
+>
+>
+> base-commit: 9a0c4701dcd5725c4184599322b52933ff5005ca
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2364%2FHaraldNordgren%2Fhn%2Fgit-checkout-m-leftoverbits-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2364/HaraldNordgren/hn/git-checkout-m-leftoverbits-v1
+> Pull-Request: https://github.com/git/git/pull/2364
 
-We used to use ignore_repo, ignore_worktree, and ignore_cmdline
-members in the config_options, but to ignore system configuration,
-we relied on git_config_system() that checks GIT_CONFIG_NOSYSTEM
-environment variable, and there was no way to ignore per-user
-configuration.  From that point of view, I find it sensible to make
-config_options the primary way to configure which parts of the
-configuration sequence is disabled.
+This topic unfortunately has seen no interests from others on the
+list.  Asking Phillip for help, as the leftoverbits comment cited in
+the cover letter is from him.
 
-But then we should go one step further, shouldn't we?  Either teach
-git_config_system() to take config_options struct and pay attention
-to .ignore_system member in it, or get rid of git_config_system()
-and have the current users of that function take config_options and
-pay attention to its .ignore_system member, so that we do not have
-to write an ugly conditional like this one:
-
-> -	if (git_config_system() && system_config &&
-> +	if (!opts->ignore_system && git_config_system() && system_config &&
+Thanks.
 
 
-> +	if (!opts->ignore_global) {
 
-It is a bit misleading that this conditional is always taken.  No
-caller will tell this function to skip the per-user configuration.
 
-> +		git_global_config_paths(&user_config, &xdg_config);
-> +		if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK))
-> +			attempt_git_config_from_file_with_options(fn, xdg_config,
-> +								  data,
-> +								  CONFIG_SCOPE_GLOBAL,
-> +								  NULL, &success_count, &ret);
-> +		if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK))
-> +			attempt_git_config_from_file_with_options(fn, user_config,
-> +								  data,
-> +								  CONFIG_SCOPE_GLOBAL,
-> +								  NULL, &success_count, &ret);
-> +
-> +		free(xdg_config);
-> +		free(user_config);
-> +	}
-
-> @@ -1624,8 +1629,6 @@ static int do_git_config_sequence(const struct config_options *opts,
->  		die(_("unable to parse command-line config"));
->  
->  	free(system_config);
-> -	free(xdg_config);
-> -	free(user_config);
->  	free(repo_config);
->  	free(worktree_config);
->  
-> @@ -1659,7 +1662,8 @@ int config_with_options(config_fn_t fn, void *data,
->  	 */
->  	if (config_source && config_source->use_stdin) {
->  		ret = git_config_from_stdin(fn, data, config_source->scope);
-> -	} else if (config_source && config_source->file) {
-> +	} else if (config_source && config_source->file &&
-> +		   config_source->scope != CONFIG_SCOPE_GLOBAL) {
->  		ret = git_config_from_file_with_options(fn, config_source->file,
->  							data, config_source->scope,
->  							NULL);
-> @@ -1667,7 +1671,8 @@ int config_with_options(config_fn_t fn, void *data,
->  		ret = git_config_from_blob_ref(fn, repo, config_source->blob,
->  					       data, config_source->scope);
->  	} else {
-> -		ret = do_git_config_sequence(opts, repo, fn, data, 0);
-> +		ret = do_git_config_sequence(opts, repo, fn, data,
-> +					     config_source && config_source->scope == CONFIG_SCOPE_GLOBAL);
->  	}
-
-+100 column wide columns?  Please don't.
-
-This sequence is a bit hard to read.  Instead of piggybacking on the
-existing call to do the READL sequencing, add a new "else if" clause
-to deal specifically with the global case to the cascade would make
-the result easier to follow, I suspect.  Something like this fix-up
-on top of this patch, perhaps.
-
- config.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git c/config.c w/config.c
-index acad89102d..bf77f847c3 100644
---- c/config.c
-+++ w/config.c
-@@ -1663,7 +1663,9 @@ int config_with_options(config_fn_t fn, void *data,
- 	if (config_source && config_source->use_stdin) {
- 		ret = git_config_from_stdin(fn, data, config_source->scope);
- 	} else if (config_source && config_source->file &&
--		   config_source->scope != CONFIG_SCOPE_GLOBAL) {
-+		   config_source->scope == CONFIG_SCOPE_GLOBAL) {
-+		ret = do_git_config_sequence(opts, repo, fn, data, 1);
-+	} else if (config_source && config_source->file) {
- 		ret = git_config_from_file_with_options(fn, config_source->file,
- 							data, config_source->scope,
- 							NULL);
-@@ -1671,8 +1673,7 @@ int config_with_options(config_fn_t fn, void *data,
- 		ret = git_config_from_blob_ref(fn, repo, config_source->blob,
- 					       data, config_source->scope);
- 	} else {
--		ret = do_git_config_sequence(opts, repo, fn, data,
--					     config_source && config_source->scope == CONFIG_SCOPE_GLOBAL);
-+		ret = do_git_config_sequence(opts, repo, fn, data, 0);
- 	}
- 
- 	if (inc.remote_urls) {
