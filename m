@@ -1,82 +1,83 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8929C3546E7
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 19:56:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3895C379989
+	for <git@vger.kernel.org>; Wed, 26 Aug 2026 19:59:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787774208; cv=none; b=ZKLJWesTiPPip9s8ZpIenshnyN0wyH28Yl5piPkxucNXFj1es6EkdUUewQ2Yt5rVAa5qwh9gcmMxGCT+y4LYuhm3SB64FJb9pBKYXlDG7lLDe3Zj4QUvDviDfomAbO96R0XuiRd8mU8qdNlQx75DAim8U0gZNeB8exoKH9SXRfE=
+	t=1787774360; cv=none; b=FRYYlC+PWPz/9GQTmf0CyTB9G5ubPgdATuqr6Hjy9JFAXCQZLz1wmrJYEqwkIfeKDLBfMC8YJcHD3V25x5Kfpy0DQQINBndCH6+31GA9aucVdriWmIeYqvIDPXzJ0sx5g19xI2iZyle0RA5vJcruD9vfoH3HCTJJvIoNYTQQ0mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787774208; c=relaxed/simple;
-	bh=WtXx7iT5CuNMnKEpxpO5cpRfj1h4ZKYQ2Qp+SvtBc2E=;
+	s=arc-20240116; t=1787774360; c=relaxed/simple;
+	bh=T94fRRlTfodEQv44JT8Rg7zziEhCZr8op/qEvFfjpoo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JP8H/JGI6SUaXC04y0naxsYgJ+Puas91wxY2CM8iGLWj4ugCOPxOVzkLUlrrfyTQMXmIC40IvP19ibjWiui7cdpWgdBIpWbhw23ZSm+0hk4/mUE2+OTU4HTCVaHzW3gWOeywt0j6y89JFB+aEwe5CwS4y/KQ7+mwL0PX96gu+Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hBPAbHLC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tf3YIS4E; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=IvFnYfP+r9wYxTYO060Z2O1ywzMavFvWNzkwuPSqSpIV7D49QKGhCY17pn8o9S2CbQ12wxvoJoNJOaGdakPvcSztFeZN1jO6HCJCEwpHgE4NfDWg5t3yGCx5BhvRq7TE8WMX/h35vtD/dQT6Cti2d7vBNzCo6UvGeXZ173naqcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c1PO38cm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y1UnmXmO; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hBPAbHLC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tf3YIS4E"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 004FA7A006B;
-	Wed, 26 Aug 2026 15:56:43 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 26 Aug 2026 15:56:44 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c1PO38cm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y1UnmXmO"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 94F0B1D000DB;
+	Wed, 26 Aug 2026 15:59:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 26 Aug 2026 15:59:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787774203; x=1787860603; bh=3+Z6OMuy/r
-	4Do87lJRPUaimlbY2AavS7pEaQfE4eIB8=; b=hBPAbHLCfQEm+s+Z0I78HsMFgk
-	oqiOecrAW3+liaipq9UEMD7s+hsu3EKTvrjV8xuHgQGQYgj02uaWuIaji3qylK58
-	0G+a87fAUJcEboX+sYfQJ8TmoFSuAJqiYP4VEMivqMHvDYqj+VRMGYnB4YYzPFLw
-	sDY72hGKku+7kdybxkVtNhVmvAZW/KsPTkX8pdG0EXsMth+sVWQDvSppPyvD6Jkw
-	jmrZd4CHcQkmvW0QKaTPAxYBBxk4k3Zl937BBpUEMtrvRBlXdU9uRjk+PEtzfltx
-	arnQNwL7jFscT5xGzVnmHl1zepkw7DJXcEaLzbcyrat+kGEPVceJx+jRlAoA==
+	:subject:to:to; s=fm2; t=1787774356; x=1787860756; bh=lKr0hLsXfA
+	g7ysX9aV7uqlPjx7WDER1Zqgt1mm0gPtU=; b=c1PO38cmKmpTQ8q1/goh3kF5uo
+	6I7hMOcP95DP3aFf1egD676s0KkhaexZbrfF4YpW8kgEyxFzl2gbsfj3XSQsKAFm
+	618SmUlbmi+FiNcwKkN2X1l2kLgBrZzXJ7ml89gUIG5IXNSlVu9LfmyKq/M6LJN3
+	rX/I35sN60qBmHvoCLBQEmOWaVkFxlDBHGRdLeMKVEbV7puXqY89ClgY8jalPPoX
+	qq78yt4Iyi/2PPJw9gJCXyAJVaZGndpIWjhdzhgKfpVuoIvyffbX8l14ynq8E7Hl
+	hhVGZruS0U25zpy27O883L3Nj3wnWL00Gty68o9K71ATOJgW/x+rpl61U2pQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787774203; x=1787860603; bh=3+Z6OMuy/r4Do87lJRPUaimlbY2AavS7pEa
-	QfE4eIB8=; b=Tf3YIS4E+8MKTG2FH6tIwhe2KJKmapDzw/pg/LUYPb9LskKbjGX
-	yRaWJbfFNy6jO2WZgE2Z7lnRMO6chF0uqx+U1tMs1Sn0PpoqaprVrTBii4cMHiUa
-	rtfBH63JUHO4lBbbTF+rsIRaOkXJ0txuaJTpjyZtBp81PwZ3enBGaXElxgeCLXdV
-	lLPi/M9UPiVzwFF/1EDBYKmr4btRNb9SF8lIkbeJHcXQ+5KAJhl8r3Qitajemk1P
-	LocbpwUe1e0VsYDMAfMbAjGDhQcqAVoC/D+qu32GzEV67i5Jb0n1ZVGbxFzaedBu
-	GWIxaUWtzL6wEWN24qDhcIvdPhJi/cdFl/g==
-X-ME-Sender: <xms:-0SPalrV2v7S4ACADhG5LIr6amtDu2GArIv0WfzmbfuBcdSaHqzkgQ>
-    <xme:-0SPaupzAj0Epd0Oxwxp_1DZyXJME3nj_GYE0fjASDdTFIrC_iRQL2LeFbZOYJGdY
-    qkvnmZ1-PSUT2o6X3YHsYIUSr_G-KfWy2jVkqQSMo4HTl_4cPvtDg>
-X-ME-Received: <xmr:-0SPanOk0WP2rnuWp_xFLH38UuM2JskvDuya0urLe0mWcdF0DfnC9J-hgdtS6j8UngtHFbiXSd_vs3U25qouS_tovfbiEbpqWw>
-X-ME-Proxy-Cause: dmFkZTFWwjxxauAa2yUij9GpdBGdP6jxKto4niHHAfgpCI95Lal62Ee6e+mOpCSt3THxuI
-    QuVGvbSUVL1uGOfeoai6kYwnlgHgWrbXnrcfpttV2gxU2AF1QWEzPzaBGrMPZlayWOcm/M
-    qDUR8F+8Cm1op25PFFnhAmI7MDz4rEJt79PE+vu9xdF3Foyv6/daT+pjpi7Zl265iXkZxS
-    wvd402+CLE5SBvpDOM94XiGjeYd3ZBWlMKQtFJhBvoYcRcHdZyOw2PbERO6ieJsvY9dmlQ
-    8jA2vtz/w2ZRxUGvi/8ezX++V4TThimVkOn4dx29hZy1GnMnunYOOo4cNuLk0WtF+NTzNR
-    NVseZXBwbNIy0r+dFHqBveAJCLc1MHwHmrdePvsUiYJcsaZXuxYRtAOkUI77QoW4vZ5M1y
-    nnwtMtU6rTK9WkLneJk9KoRKvf/PILhrdvFKl88MzZJeL7vuhE5vg5wT9kmU2nwrs3Fc89
-    ChDT4VCgO4riSN8sQubAnH04cF8L4F6AXJevLECDV7kcYD/7XGNgHbWShhL7uOzurnGq2F
-    Fm/49ZzLjj+t7cdSpzmouENVIR5bPnoKlzJ9yvIoD8elFuMa5V6dcrPGJD4qX8QQBbyNo8
-    bgcoI/kgai0eDNdZ0PW2PlrqgyMARPVQmW+q6d5hDMVX9QYleOIYqDLQye0g
-X-ME-Proxy: <xmx:-0SPavxkJge46_dYpmv-Xku1I1CPMoMFi6Zp5o7yHADHJOkTD4N3Tg>
-    <xmx:-0SPagudpNca94IU6MaQArQdStMxDava8Mz9t19Lt7vOmz15s7VNrw>
-    <xmx:-0SPao4N6VTKqi6UXcA_cmKRoMsl1ZrT0qDejcg8cC54tAIxfn05og>
-    <xmx:-0SPavRsO7Sd8egYLdNSw4OjjeW5XDx_WnNN6B6qUpAk_JBD91ODfA>
-    <xmx:-0SPalzMdlkIb1ik61mAG32xIoWQO40HIeR_pbWudFNNv7_D558BnNLl>
+	1787774356; x=1787860756; bh=lKr0hLsXfAg7ysX9aV7uqlPjx7WDER1Zqgt
+	1mm0gPtU=; b=Y1UnmXmO0obFP8BJ37No7SDcGgUx8MqARAlowFso1epyeVpAXuX
+	3FwiTsnLeJn306KO4YxeHH+H9afFpfGd8chN8LHtn/9RZ0ZCAzvb4TJ7/zz61EEy
+	cA1vlzy7pnMHT7o3fBm22/ZZAZtVoEwjzS8ONosE6qaNh7qaoyZ7p5XbX2RU58Nv
+	ucxp6dFYVA8pM+W/Kp7gwQqA4vJy6HbfQMdV5fXZwmm3v/xoMG0+DbA1L63koYBz
+	WErFh4P1/o/+T3YA2ZDib66p1+8xJ8p6nj+SKMIOn62hJGErxE7ph0G7qmyYGwWv
+	N0mle5gUaTOYgDQYr2ipKREKMOCExyWuakA==
+X-ME-Sender: <xms:lEWPau8UKD39bC9BIQGPoG7qu4aXpCvaA5KovhIDZ1kW4cH_j13DvA>
+    <xme:lEWPalmKYLaORQK5HZAb_zJC5xyrQr4r8LL3SFMxeSlI7_NC8TjtCdqrsfqLrQhDF
+    RaMN0kQ25X24iCZemg_5AdjooGIZ4R3CM9NbML5i1XzwrGTp9ghBg>
+X-ME-Received: <xmr:lEWPasVwhb5UrM5j_J7MRdbey7by-Wun7ZMbE-42qPTxV4dVyA7J-OfELGdv_m1s_sjUlROVpepnoKks3By-P1aP5W9tjOf3Fg>
+X-ME-Proxy-Cause: dmFkZTFWLeVqPq32RcZpeUvoxmF4uV830l34NS3RFeAGGjz73Aa+FBS8SoRee2kUvU61a4
+    wVQL/b3r2kCefk/692sBzDFMQI6hwJJDvuRNog8RsFS13fz7u4djqPc9rGhD8AG3qp6HMG
+    4sZoIdcLGe7+ly2B2S6ECdOpob07psrzl6qr+IsjHJtuy8r7mrfkUBlQInM8xK1w/3GrKe
+    s6Pv9IAOrJaP9ygeqgaG/TfdL4Sz6j/mLbTCPBm1pZUngPNNs37LRLUambMAtI6G4C+srZ
+    kirDQVrhBeernSa1MrX1SZ/McQuhQzzHwGij6Fv6rd+eNTKMEtFOU8Uh+i0QGvWoD5yoom
+    cM7Ih4Hk+JDsQSnZgFVqp4tdRfnltfnEnRzQSw3PO94OqPMmgMvsrxePJw1npOhnAw4SNi
+    Y4EIhFFnfM36jgpNcL5UcLkzevaX+/a4J8+YwHeRA/iSEKnHQopvkPnA7oJhnP+l915EXR
+    MQspWPFr1zjuJ8e3lQVN64lPKqeOhQjMOR5uSb6pUhcO1flc84VGUke5Mnrp2TXRsu6rkw
+    CqbAwljsZIYfbXJVidXHshAh6qOQeVU1UGGvF5kX/2gh+KxxxTr2yefdhJTeiq532vLugw
+    R2f7Zd8SfMsHuv1YKxKQ76xtSbOeI0W3jvhxFP0FOLbvFjfkWsVYfy1ntxZQ
+X-ME-Proxy: <xmx:lEWPaiEsX1O7dvSych3ukMwvhj3r5Kg9ZTDZ-eXhsc1pDgSWrTobRw>
+    <xmx:lEWPagctrYJSFqqemcB8hTx5ohmuQ8BynchPOb6B68al5KNloajq4w>
+    <xmx:lEWParLPoNJ0wPJDkzqZ6MJgGXeKMO1ZXQ_8aGv1w_z36XFgueCGaQ>
+    <xmx:lEWPatGiY1OswQMIQUqV6-G9rS4Fc00wP-zyTqo317n7HslwM_VDXw>
+    <xmx:lEWPapWh4OmG8RViZLNwV2-TiTQEhpPDIuiuVmE-eL7LcQK5kCA0szkY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Aug 2026 15:56:43 -0400 (EDT)
+ 26 Aug 2026 15:59:15 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Tian Yuchen <cat@malon.dev>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 0/3] environment: clean up repository config handling
-In-Reply-To: <anlmwaEtwcCPse1N@pks.im> (Patrick Steinhardt's message of "Mon,
-	10 Aug 2026 07:50:57 +0200")
-References: <20260805115342.3939931-1-cat@malon.dev>
-	<20260807085932.3958759-1-cat@malon.dev> <anW7wHfUxYj9cj0P@pks.im>
-	<xmqq1pc9eivn.fsf@gitster.g> <anlmwaEtwcCPse1N@pks.im>
-Date: Wed, 26 Aug 2026 12:56:42 -0700
-Message-ID: <xmqq5x0wfyf9.fsf@gitster.g>
+To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Michael Montalbo
+ <mmontalbo@gmail.com>
+Subject: Re: [PATCH v3 0/3] t/lib-httpd: make CGI test helpers concurrency-safe
+In-Reply-To: <pull.2171.v3.git.1786583137.gitgitgadget@gmail.com> (Michael
+	Montalbo via GitGitGadget's message of "Thu, 13 Aug 2026 01:05:33
+	+0000")
+References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
+	<pull.2171.v3.git.1786583137.gitgitgadget@gmail.com>
+Date: Wed, 26 Aug 2026 12:59:14 -0700
+Message-ID: <xmqq1pbkfyb1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,56 +87,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Fri, Aug 07, 2026 at 02:11:08PM -0700, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> > On Fri, Aug 07, 2026 at 04:59:29PM +0800, Tian Yuchen wrote:
->> >> Hi all,
->> >> 
->> >> This series contains several cleanup patches for repository configuration
->> >> handling.
->> >> 
->> >> No functional changes are intended. The patches make the related code
->> >> more consistent and easier to maintain by improving documentation,
->> >> formatting, and the organization of repo_config_values.
->> >> 
->> >> RFC:
->> >> If there are other small cleanups in this area that would be useful to
->> >> include, suggestions are welcome.
->> >
->> > Somewhat unrelated to this patch series, but I was wondering whether you
->> > plan to drop the limitation in `repo_config_values()` that requires that
->> > the passed-in repository is `the_repository`. This limitation is
->> > starting to create problems as more and more of our infrastructure is
->> > migrating into `struct repo_config_values`, so using a different repo
->> > than `the_repository` is starting to become harder and harder in our
->> > codebase.
->> >
->> > Thanks!
->> >
->> > Patrick
->> 
->> Hmph, that is an interesting point.  What is our plan to really
->> ...
-> Yeah, this split is adding to the confusion indeed. I think that we
-> should make it a goal to unify those going forward.
-> ...
-> The last part about not modifying that structure could be quite a bit
-> painful though, as it would mean that we might have to adapt call chains
-> to pass down a `struct git_config_values` instead of a `struct
-> repository`. But arguably, that's the right thing to do anyway for at
-> least some subsystems that are independent of repositories.
+>  * Patch 1 fixes apply-one-time-script.sh (the actual flake) and adds t5567,
+>    which drives the helper directly with no web server so the overlap can be
+>    forced deterministically.
+>  * Patch 2 makes http-429.sh atomic.
+>  * Patch 3 documents the atomic idioms next to where t/lib-httpd.sh installs
+>    the CGI scripts, so the guidance is in front of anyone adding another
+>    helper.
 >
-> As you say though, none of this is really related to this patch series
-> at hand, and I don't think we need to resolve this discussion before we
-> can merge it. I just want to make sure that we have a plan for how to
-> get rid of `the_repository` instead of only shuffling stuff around.
+> Changes since v2:
+>
+>  * Patch 1 now consumes the marker with a plain "rm" (without "-f") instead
+>    of a rename. "rm" without "-f" already fails once the marker is gone,
+>    which is the atomicity the helper needs. A new comment explains why the
+>    helper discards the one-time script's stderr: a losing request can find
+>    the marker already removed.
+>
+>  * Patch 3 is now specific to the lib-httpd CGI helpers and lives beside
+>    their install site in t/lib-httpd.sh, rather than as a general section in
+>    t/README.
+>
+>  * Reworded several helper comments and the patch 1 and 2 log messages for
+>    clarity and to match the code; no behavior change.
 
-Well, after this sort-of offtopic exchange, the thread went dark.
+After giving a cursory review to the previous round, I was hoping
+that somebody more clueful than I am about HTTP tests would lend an
+eye or two to these patches, but nobody seems interested.
 
-Is anybody interested in reviewing these patches and move the topic
-forward?
+Any takers?
 
 Thanks.
