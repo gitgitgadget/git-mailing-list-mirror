@@ -1,133 +1,103 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9852DE70D
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 06:06:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B86C49362B
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 06:06:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787810786; cv=none; b=gPR5R7ZHsDpIoI5jZMRj2CWzrNfD4UtY5Vkk/FqNsi5yynrFO6W8njdI5lzivc6qLViBbhaKDciQLwAf9DzIrwO2RoIG66XCbzbFYLlIiy6Jc82zfL0VPics4yl351qFb1nop0NUjzjtQFSnhXuAiSxGM8x2KQTrwNawvqwW7dc=
+	t=1787810820; cv=none; b=mNE+z/TF6gGP2dcW14qDpKKMStRYYFXawkeomPp9ZETd0mmT0DijFSwAdan89/cd9nGsulrT7C6I8Ku6r3LYxRFGmxw3Hw2F1IfZY+c1MPGDVgg4XgBUannX8blGpM8qcwDUKf8RTH5AbFzizO4k2joOmPI8NpCCXvBf2LEeStE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787810786; c=relaxed/simple;
-	bh=MHjEEZ4OKbz6Ima3BNb+19bpdLi3lljWNhuCO3qIPPU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GZA9OUMjYV/P17d9W4ty8NZHvzXAx0Qrfrjw0egz76o87IubwTtK0sHo13bEVl2BmisPt5f9ufTMAShbaI6u3XELF9V0k173fyexoluXVg/9adSCuUpMtJ1PXn8ngTFb6vdOHNyfwNMB0lw7AvyXx5ah+3eDjBk6+qBEbmHUVco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Vmj8Zpg+; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1787810820; c=relaxed/simple;
+	bh=BM/cczbHb9Fbc7dTqG9A27alI74sMnC+cd23wVZs0WM=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=nEFn5cVlBMCG1+7d0FWZrwsGR0PDJIsdATCzXMLKfOyYZGSCsEF1j77l5b5yBaKP8Cv4SurcLp8PGv0aX6h73K5yvN+ZLbN9dqq3s+ELTzaxeUhz3gyNmnCp7zOQjPUXNyvlMw8LABap5fLOT3ayd2C2uBDFzTH4DIvCDyUzd5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=M/CvqDNj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PXjNNUkN; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Vmj8Zpg+"
-Received: (qmail 7721 invoked by uid 106); 27 Aug 2026 06:06:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=MHjEEZ4OKbz6Ima3BNb+19bpdLi3lljWNhuCO3qIPPU=; b=Vmj8Zpg+1Lf4J6lvu6DF7qNQM3wG039zgpALsXg9Tpf9P49fsellY14htR7zCQrV0zNOV4YDNWyEN/flpVlatmD1XVGrPSXL2hzzGBSgwl6OEiwyboDfhXwH+mZ0x0kB+AaLCh2U+u/iRqpJcQkpkP64+vO6hsJ13TJGlZPSOy6O39PIEhgxjwPI+0G/r0lhufrtC9AwC3fBLpj5/4OSS55G+mggRrXkkANMe17NEQDaIXOk4LGfJ+H/Eoe05/bznAY1yAF7o7v9PCnpwfUixn2yujeEyZwIO4OyhrRMuJEuC93hOyUDt8f1gP66PyON7HMRuH4vSRKwwYvZ++HOXA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 27 Aug 2026 06:06:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 38672 invoked by uid 111); 27 Aug 2026 06:06:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 27 Aug 2026 02:06:27 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 27 Aug 2026 02:06:22 -0400
-From: Jeff King <peff@peff.net>
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 4/4] packfile: recover when a multi-pack-index names a
- removed pack
-Message-ID: <20260827060622.GC189659@coredump.intra.peff.net>
-References: <pull.2207.git.1787092446.gitgitgadget@gmail.com>
- <pull.2207.v2.git.1787684429.gitgitgadget@gmail.com>
- <eacf6ba4b11e366466da18b7b668e65793c532a9.1787684429.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="M/CvqDNj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PXjNNUkN"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.stl.internal (Postfix) with ESMTP id 261071D000C6;
+	Thu, 27 Aug 2026 02:06:57 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Thu, 27 Aug 2026 02:06:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1787810816;
+	 x=1787897216; bh=QlKbiDYqVyoDVPHlH0+TZB9KkDImQHA5yP8duVz8j1E=; b=
+	M/CvqDNj6PSRCKaIFPFor3IvGycDLU3oj5skmbyvYzq1Ww7uNgV5YyjLcpz4h2jg
+	KiwJZCFs1fl6w5cYXi1SV5Wgd95tb3uCfWiQhPHUMmKKKVK13MN/U6KanrJ2+CsH
+	cecbAs3OXv5GQO0qYvBrCK1VYFykLObqhcop5OAr1SjoAMaJVPc9OJfmNCdw36Ta
+	6Ed+SKoEqLoksjpKQH0O+8RaFiJjBn9kHAGqH4PA44dHXOwbRjoejeN2ksylfNPF
+	uRGr/1BdQoTTI2ypokOTdyCNi1bkvRCCNgnEReEpwaqGWyZVNmVTZvX47hAlXCZn
+	JphArySgrZeANQ2ks9bT/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1787810816; x=1787897216; bh=Q
+	lKbiDYqVyoDVPHlH0+TZB9KkDImQHA5yP8duVz8j1E=; b=PXjNNUkNFwQcCo9ty
+	+Aqfs11b+MOC4FXd0qLCg7EWsy56Wrstbr3vTaOjtAqjW7arwKXAB7W3Cs89wo8W
+	+RY9pgdfV6YLrOobS0NSv5qDg/VxjYEVO8OV8AsHoul14Q/oIianpb+WOYlDkORW
+	BBSkFE71ZZSGJoF9EecyDVJfl4txTz8s/9f7rd1GsLnaqVSukIdTVdhSWmkTxDI8
+	9UcLcWKVw51hNrOPdDSxP9+j+OfXsOatqOsxkcQgDrGW7wi8J2b+R3UxzHmUI5h1
+	TSIiBDVvBkO1qeWJrsAuvI2qnHNqJ8mHp7aViUeFw9vKzSe+gtOb//p5BmMHOuuc
+	VwA/w==
+X-ME-Sender: <xms:_dOPahJ2flBAdPxBEIIAXfxnPD5erkefMtSIm557B2ojwniWG392i3k>
+    <xme:_dOPan9FEzSUhBb68BKjxRK1PsS2N_PyDCCjXPVwh4CZxwhKld9eHesfuLM3hH9v0
+    U0kM3azlkYfhyDEnqBYVTN366a3XDzjVqVd5Nq3LMii1F6H8fwOL5c>
+X-ME-Proxy-Cause: dmFkZTESnE7DZt9BBdDKnNdVS4h8+JWDk05fYVFidx1Wf3Lp+xQm9SPubDGbiXi0mX7EY3
+    98jFIR+ViDy7At87gZlcSnO1rBj+qtZWJuNSg9DNQR7tEZcgdDpEiME7Fq64dLOrDDFTyE
+    s+YvYLyJPVyJ0UM8TY185sXh2RRRVf8++3t0E9e4bl+sUx6k/IB2bU+XhbY+5hF6mQ4Mfd
+    xBb/AFLkkgj9SFbrT7IyI7SRSMPgCPKEbT4PBi/218cT5ZOSshl+r/QpHT5YQZu8x551aV
+    M3v1mx8nmG5x3JjmkFRCrhP6IOadYRVjitz4uv2Yzp7qr12W/tmGHe6y7Jv9hpEG94Pwg7
+    x21tPkRjjE+wlBsSkbYsYtpQHIbbE0vwSp2Atf/Q4/NlJs/gJVFZczK3EgAJcIejZWW/Vv
+    4WC4yIZlomLe10c0bnpXCuXKj6WappUzFc6GuAjqr942GMvIEsZubeGFesEgh1AUFikgP0
+    nX13Rmsxisyds+UqYf1tBvVtnf7DlrztEpV4MzdJIHwR0oK+/Dv/jh7asWbNI/If8+b0Gp
+    GY9OLcjslgIjexo3UkCMufMkRXZ+2Sx6rW1SPUXBd+SgYai8m6hg0Ys0XMYq+Ll+KTP7Cx
+    zO0ZhopS6a5ugRFpl/+6dPTLHRh8azkrqW9rm2Wm0AbnBJr3aQHat7DjUaxA
+X-ME-Proxy: <xmx:_tOPar2FeqhkWAT1DPbRpPOibktTUt_QxFrFCA-ggdFLSLM_h-joHQ>
+    <xmx:_tOPaoAIaSh_mX80R7B6QziM2u_-0Bfq0LmMLf1SlA_-H0S0kP-QLQ>
+    <xmx:_tOPajccIlLPYeb_606U0Z79b3AdPaHGR1smsDoCYYvA70OBGYZHlA>
+    <xmx:_tOPathYK_ATAnRyfMuawYou9CZAR-2Alp5cJUDHZ7qXBRcO_wrvNQ>
+    <xmx:ANSPaitTHcN-1lksbnl4oupXrFMqhtpia3gyuSOqOpmuUyMXAK4wPdEo>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id BC9C822C007C; Thu, 27 Aug 2026 02:06:53 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <eacf6ba4b11e366466da18b7b668e65793c532a9.1787684429.git.gitgitgadget@gmail.com>
+Date: Thu, 27 Aug 2026 08:06:00 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <b73090a1-b508-4dbd-aca3-9ab83413413c@app.fastmail.com>
+In-Reply-To: <xmqqh5kgcvtl.fsf@gitster.g>
+References: <xmqqh5kgcvtl.fsf@gitster.g>
+Subject: kh/format-patch-range-diff-notes
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Tue, Aug 25, 2026 at 07:00:29PM +0000, Elijah Newren via GitGitGadget wrote:
+On Thu, Aug 27, 2026, at 01:21, Junio C Hamano wrote:
+> * kh/format-patch-range-diff-notes (2026-08-24) 3 commits
+>  - format-patch: learn --[no-]range-diff-notes
+>  - revision.h: rename struct member to reflect notes role
+>  - format-patch: simplify get_notes_arg parameters
+>
+>  The 'format-patch' command has been updated with options to
+>  configure notes specifically for range-diff output, allowing them to
+>  differ from the notes displayed on the patches themselves.
+>
+>  Waiting for response.
+>  cf. <xmqqjypfp2vl.fsf@gitster.g>
+>  source: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 399acd0f22..30ad7d822c 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -1786,7 +1786,7 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
->  		struct multi_pack_index *m = get_multi_pack_index(files->packed);
->  		struct pack_entry e;
->  
-> -		if (m && fill_midx_entry(m, oid, &e, NULL)) {
-> +		if (m && fill_midx_entry(m, oid, &e, NULL) == MIDX_FILL_HIT) {
->  			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset, found_mtime);
->  			if (want != -1)
->  				return want;
+I posted a response.
 
-We've changed the return value semantics without changing the signature
-(or name). So we need to make sure we adjust all callers, as here.
-That's _probably_ OK in practice for such a specialized function. But we
-could also rename it if we wanted to be paranoid (especially about
-new callers added on parallel branches).
-
-> +enum midx_fill_result fill_midx_entry(struct multi_pack_index *m,
-> +				      const struct object_id *oid,
-> +				      struct pack_entry *e,
-> +				      struct packed_git **bad_pack)
-
-OK, so this is our tri-state fix. Mostly looks as expected, though:
-
->  	if (prepare_midx_pack(m, pack_int_id))
-> -		return 0;
-> +		goto owner_unavailable;
-
-I'd have expected just "return MIDX_FILL_OWNER_UNAVAILABLE" here. But
-then, I'm not sure I buy the need for this stale_packs_detected stuff
-from patch 3.
-
->  	p = m->packs[pack_int_id - m->num_packs_in_base];
->  
-> -	/*
-> -	* We are about to tell the caller where they can locate the
-> -	* requested object.  We better make sure the packfile is
-> -	* still here and can be accessed before supplying that
-> -	* answer, as it may have been deleted since the MIDX was
-> -	* loaded!
-> -	*/
-> +	/* Make sure the pack is still present before pointing at it. */
->  	if (!is_pack_valid(p))
-> -		return 0;
-> +		goto owner_unavailable;
-
-This comment rewrite seems superfluous at best. Can we try to keep such
-patch fluff to a minimum?
-
-> +	/*
-> +	 * Recovery for a concurrent-repack race: a stale MIDX may still name a
-> +	 * vanished owning pack even though the object survives in another pack
-> +	 * the same MIDX covers.  The regular fallback above skips MIDX-covered
-> +	 * packs, and repreparing the on-disk pack set does not reload the
-> +	 * borrowed, cached MIDX, so scan its packs directly for the survivor.
-> +	 *
-> +	 * Do this only on the second read, by which point repreparing packs has
-> +	 * already had a chance to find an object merely relocated into a new,
-> +	 * uncovered pack; only a genuine hidden duplicate reaches here.
-> +	 */
-> +	if (midx_result == MIDX_FILL_OWNER_UNAVAILABLE &&
-> +	    (flags & OBJECT_INFO_SECOND_READ)) {
-> +		struct multi_pack_index *m = store->midx;
-> +		uint32_t i;
-> +
-> +		for (i = 0; i < m->num_packs + m->num_packs_in_base; i++) {
-> +			struct packed_git *p;
-> +
-> +			if (prepare_midx_pack(m, i))
-> +				continue;
-> +			p = nth_midxed_pack(m, i);
-> +			if (p && packfile_fill_entry(p, oid, e, bad_pack))
-> +				return 1;
-> +		}
-> +	}
-
-OK, and this is as-before but now gated on the SECOND_READ flag. As
-expected in this revision.
-
--Peff
+<16315616-097a-4fe2-8665-010e424afd8b@app.fastmail.com>
