@@ -1,16 +1,16 @@
 Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5F71E5B68
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 23:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E760E32BF4B
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 23:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787874245; cv=none; b=fvxiFMynQHJczUA8HaMQy7+v+u0YWiKIjolancFwyUAlK6phzW8NAHvMf+qVWnEG9p7N8zJfXXqu6GIPEtzENpu+sLyTxBghoP1oM2/MNWAWIJgmpV9MN9yapGmxQ+n5QyKp4G4WqMLAXNiFRda5YmgYj5iXmKXzDcQ71ojJLEE=
+	t=1787874246; cv=none; b=kTebF+skosDjIRLSov+lf0jH2ysvu0nI0e/u+0iAu/mo1yxlIk4C2drVXsSgSdPGKKn14bWc0g6l++mGWRR/J7G9mRUgAzogW31QhanF4AmqZscbdYPBodGxQm5G94JhhiBRJ4EYJO6xjLc6ob3440TiJAYybNVBn4xlrDrHoL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787874245; c=relaxed/simple;
-	bh=DNcSIC3ioGHU0Whigbh+Y75jzSV04vqylFJFnCJY6hE=;
+	s=arc-20240116; t=1787874246; c=relaxed/simple;
+	bh=lMQ18cvRHLfKcT59UyMgjmlh6IXlWerX1NRTo+BsQIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n54adfp03KzzdlXb+olHLTCHGuc0vmBfqH4CfswKGg2+t65U7Nojzr+NXiLcLCyXwZBX5Rj2T6+/d9YBUX1ECEtc+Gh/WgKGtnxT8VfeESZR+Q6k4VAyubrWjQXbaHSeBb3WQKM0+AtCTO+cvBsIm9AhPfZBotriDarB6LFk7+8=
+	 MIME-Version; b=f31goiHo6vUCz+HewESWeVREGen1WTMGgXEOCmrukL/b3MadvciIl6dcAqPHTghirqHBUGriRXyNXZCWHMzNNK9dtLfYE0EFjIg1uRnS9/WfpQfZOLz6Gu3G7oiBGcLPyiNsawccf6C7mODVqhRJnnzeCXYYqwFKGll1Bh9YF/E=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net; spf=pass smtp.mailfrom=opperschaap.net; arc=none smtp.client-ip=80.241.56.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opperschaap.net
@@ -18,14 +18,14 @@ Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4hWJ4s0t7rzKq6N;
-	Fri, 28 Aug 2026 01:43:57 +0200 (CEST)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4hWJ4t5f7tzKryP;
+	Fri, 28 Aug 2026 01:43:58 +0200 (CEST)
 From: Wesley Schwengle <wesleys@opperschaap.net>
 To: gitster@pobox.com
 Cc: git@vger.kernel.org
-Subject: [PATCH v2 1/2] git-svn: don't print v1-layout migration noise when there's nothing to migrate
-Date: Thu, 27 Aug 2026 19:43:44 -0400
-Message-ID: <20260827234345.1037130-2-wesleys@opperschaap.net>
+Subject: [PATCH v2 2/2] Makefile: add NO_GIT_SVN knob to skip building/installing git-svn
+Date: Thu, 27 Aug 2026 19:43:45 -0400
+Message-ID: <20260827234345.1037130-3-wesleys@opperschaap.net>
 In-Reply-To: <20260827234345.1037130-1-wesleys@opperschaap.net>
 References: <xmqqy0dr8npo.fsf@gitster.g>
  <20260827234345.1037130-1-wesleys@opperschaap.net>
@@ -37,118 +37,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-`migrate_from_v1()' unconditionally announced and created `.git/svn'
-when no legacy `refs/remotes/*' metadata existed to migrate. This
-happens for example right after a `git init'.
-
-Defer the logic until an actual candidate is found, matching
-the existing pattern of `migrate_from_v0'
+This option also implies that NO_SVN_TESTS is enabled.
 
 Signed-off-by: Wesley Schwengle <wesleys@opperschaap.net>
 ---
- perl/Git/SVN/Migration.pm  | 16 ++++++++++------
- t/t9107-git-svn-migrate.sh |  7 +++++++
- 2 files changed, 17 insertions(+), 6 deletions(-)
+ Makefile | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/perl/Git/SVN/Migration.pm b/perl/Git/SVN/Migration.pm
-index ed96ac593e..65f6b393a0 100644
---- a/perl/Git/SVN/Migration.pm
-+++ b/perl/Git/SVN/Migration.pm
-@@ -84,35 +84,39 @@ sub migrate_from_v0 {
+diff --git a/Makefile b/Makefile
+index d4b775953d..e4b2f5fa0b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -81,20 +81,23 @@ include shared.mak
+ #
+ # Define NO_SYS_SELECT_H if you don't have sys/select.h.
+ #
+ # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
+ # Enable it on Windows.  By default, symrefs are still used.
+ #
+ # Define NO_SVN_TESTS if you want to skip time-consuming SVN interoperability
+ # tests.  These tests take up a significant amount of the total test time
+ # but are not needed unless you plan to talk to SVN repos.
+ #
++# Define NO_GIT_SVN if you don't want git-svn built or installed at all.
++# Implies NO_SVN_TESTS.
++#
+ # Define NO_FINK if you are building on Darwin/Mac OS X, have Fink
+ # installed in /sw, but don't want GIT to link against any libraries
+ # installed there.  If defined you may specify your own (or Fink's)
+ # include directories and library directories by defining CFLAGS
+ # and LDFLAGS appropriately.
+ #
+ # Define NO_DARWIN_PORTS if you are building on Darwin/Mac OS X,
+ # have DarwinPorts (which is an old name for MacPorts) installed
+ # in /opt/local, but don't want GIT to
+ # link against any libraries installed there.  If defined you may
+@@ -741,21 +744,23 @@ SCRIPT_SH += git-web--browse.sh
  
- sub migrate_from_v1 {
- 	my $git_dir = $ENV{GIT_DIR};
- 	my $migrated = 0;
- 	return $migrated unless -d $git_dir;
- 	my $svn_dir = Git::SVN::svn_dir();
+ SCRIPT_LIB += git-mergetool--lib
+ SCRIPT_LIB += git-sh-i18n
+ SCRIPT_LIB += git-sh-setup
  
- 	# just in case somebody used 'svn' as their $id at some point...
- 	return $migrated if -d $svn_dir && ! -f "$svn_dir/info/url";
+ SCRIPT_PERL += git-archimport.perl
+ SCRIPT_PERL += git-cvsexportcommit.perl
+ SCRIPT_PERL += git-cvsimport.perl
+ SCRIPT_PERL += git-cvsserver.perl
+ SCRIPT_PERL += git-send-email.perl
++ifndef NO_GIT_SVN
+ SCRIPT_PERL += git-svn.perl
++endif
  
--	print STDERR "Migrating from a git-svn v1 layout...\n";
--	mkpath([$svn_dir]);
--	print STDERR "Data from a previous version of git-svn exists, but\n\t",
--	             "$svn_dir\n\t(required for this version ",
--	             "($::VERSION) of git-svn) does not exist.\n";
- 	my ($fh, $ctx) = command_output_pipe(qw/rev-parse --symbolic --all/);
- 	while (<$fh>) {
- 		my $x = $_;
- 		next unless $x =~ s#^refs/remotes/##;
- 		chomp $x;
- 		my $info_url = command_oneline(qw(rev-parse --git-path),
- 						"$x/info/url");
- 		next unless -f $info_url;
- 		my $u = eval { ::file_to_s($info_url) };
- 		next unless $u;
-+		unless ($migrated) {
-+			print STDERR "Migrating from a git-svn v1 layout...\n";
-+			mkpath([$svn_dir]);
-+			print STDERR "Data from a previous version of ",
-+				     "git-svn exists, but\n\t",
-+				     "$svn_dir\n\t(required for this version ",
-+				     "($::VERSION) of git-svn) does not ",
-+				     "exist.\n";
-+		}
- 		my $dn = dirname("$svn_dir/$x");
- 		mkpath([$dn]) unless -d $dn;
- 		if ($x eq 'svn') { # they used 'svn' as GIT_SVN_ID:
- 			mkpath(["$svn_dir/svn"]);
- 			print STDERR " - $git_dir/$x/info => ",
- 			                "$svn_dir/$x/info\n";
- 			rename "$git_dir/$x/info", "$svn_dir/$x/info" or
- 			       croak "$!: $x";
- 			# don't worry too much about these, they probably
- 			# don't exist with repos this old (save for index,
-@@ -120,21 +124,21 @@ sub migrate_from_v1 {
- 			foreach my $f (qw/unhandled.log index .rev_db/) {
- 				rename "$git_dir/$x/$f", "$svn_dir/$x/$f";
- 			}
- 		} else {
- 			print STDERR " - $git_dir/$x => $svn_dir/$x\n";
- 			rename "$git_dir/$x", "$svn_dir/$x" or croak "$!: $x";
- 		}
- 		$migrated++;
- 	}
- 	command_close_pipe($fh, $ctx);
--	print STDERR "Done migrating from a git-svn v1 layout\n";
-+	print STDERR "Done migrating from a git-svn v1 layout\n" if $migrated;
- 	$migrated;
- }
+ SCRIPT_PYTHON += git-p4.py
  
- sub read_old_urls {
- 	my ($l_map, $pfx, $path) = @_;
- 	my @dir;
- 	foreach (<$path/*>) {
- 		if (-r "$_/info/url") {
- 			$pfx .= '/' if $pfx && $pfx !~ m!/$!;
- 			my $ref_id = $pfx . basename $_;
-diff --git a/t/t9107-git-svn-migrate.sh b/t/t9107-git-svn-migrate.sh
-index 6d7d2aa491..a27f7f6171 100755
---- a/t/t9107-git-svn-migrate.sh
-+++ b/t/t9107-git-svn-migrate.sh
-@@ -1,15 +1,22 @@
- #!/bin/sh
- # Copyright (c) 2006 Eric Wong
- test_description='git svn metadata migrations from previous versions'
- . ./lib-git-svn.sh
+ # Generated files for scripts
+ SCRIPT_SH_GEN = $(patsubst %.sh,%,$(SCRIPT_SH))
+ SCRIPT_PERL_GEN = $(patsubst %.perl,%,$(SCRIPT_PERL))
+ SCRIPT_PYTHON_GEN = $(patsubst %.py,%,$(SCRIPT_PYTHON))
  
-+test_expect_success 'migrate is silent when there is nothing to migrate' '
-+	git svn migrate 2>err.log &&
-+	test_grep ! "Migrating from a git-svn v1 layout" err.log &&
-+	test_grep ! "Data from a previous version of git-svn exists" err.log &&
-+	! test -d "$GIT_DIR"/svn
-+	'
-+
- test_expect_success 'setup old-looking metadata' '
- 	cp "$GIT_DIR"/config "$GIT_DIR"/config-old-git-svn &&
- 	mkdir import &&
- 	(
- 		cd import &&
- 		for i in trunk branches/a branches/b tags/0.1 tags/0.2 tags/0.3
- 		do
- 			mkdir -p $i &&
- 			echo hello >>$i/README ||
- 			exit 1
+ # Individual rules to allow e.g.
+ # "make -C ../.. SCRIPT_PERL=contrib/foo/bar.perl build-perl-script"
+@@ -3408,20 +3413,23 @@ $(test_bindir_programs): bin-wrappers/%: bin-wrappers/wrap-for-bin.sh
+ 	     -e 's|@GITPERLLIB@|$(shell pwd)/perl/build/lib|' \
+ 	     -e 's|@MERGE_TOOLS_DIR@|$(shell pwd)/mergetools|' \
+ 	     -e 's|@TEMPLATE_DIR@|$(shell pwd)/templates/blt|' \
+ 	     -e 's|@PROG@|$(shell pwd)/$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
+ 	chmod +x $@
+ 
+ # GNU make supports exporting all variables by "export" without parameters.
+ # However, the environment gets quite big, and some programs have problems
+ # with that.
+ 
++ifdef NO_GIT_SVN
++NO_SVN_TESTS = YesPlease
++endif
+ export NO_SVN_TESTS
+ export TEST_NO_MALLOC_CHECK
+ 
+ ### Testing rules
+ 
+ test: all
+ 	$(MAKE) -C t/ all
+ ifdef TEST_CONTRIB_TOO
+ 	$(MAKE) -C contrib/ test
+ endif
 -- 
 2.55.0.975.g5fa7c85aff
 
