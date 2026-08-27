@@ -1,84 +1,85 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E77925A2C6
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 16:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274FC476CE7
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 17:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787849702; cv=none; b=YRoHinaRlYIuuH94G3fGnq4T/BXdXgQlME7H/TxKTcKHCFsOY6xAYS64GlipMMauweTZHak1xejs5A0Glz2eZ2D3XCxzM6bmbeTciQrbHU/BtaQfWbnt0ZwVG+lV6mFc1N93HEll4rovGs7tSHCyLljT2RROxYjOA/Cb4TxoZ0E=
+	t=1787850040; cv=none; b=av/nH0dovw4n4Fe9CRL5zXMxfsX+VFdvelJ5IRUcoHBSu2PiH8iTcQiUZhRXJ8cCntniHLhsFyycgHGB0pR1EMKIvsJM2Bmwz8b0Yf6yRwhh80bQGkdLj9mpPS+h/nijn1opmsOMyvHbL5rGW2PvWRgmur41HOY3KllGyAuZCDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787849702; c=relaxed/simple;
-	bh=F51krKtJITwX5RdLIl6guyBINmLX50XTFsnAOghToKY=;
+	s=arc-20240116; t=1787850040; c=relaxed/simple;
+	bh=8q1dlLnlzrheKpn69qgd1AkAdKgDRc6PDMrJk0nKLrY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mHu0l+IWk1YawXFAIbQlMlmssl2duV51Y9WRBj6n/XVeASQcJbUFZzlkJUVNQxqd44FvJqd/RV9Ycxd7piOMopGyKcTQbE5T/vM9UGDQRRzyu/QPQyatAeCtX3j7eKnDoDxIS4xXHT7z944Mj3uBKumvzqsSxi8G8CRzIl1qxQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bQMZgXnw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gBlmjzRl; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=pIOo9P2U7M7rnRdLWiyIxG0KHpg8W8V05mUGXx5qX2JZ8ZTOb45cMHAX9tt52nbA8rHWtRNWm+a3RHsscmh7b7B93UrCOWRrjuE5U5MQM0NBha5l5YKW2y6ydXQzx0YujdWzzNzgvkhsprSISd91sf0vaQ1GAf7lDmxNdp/wJ70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hxkVd7Rb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xuw60WrD; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bQMZgXnw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gBlmjzRl"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 122BA1400151;
-	Thu, 27 Aug 2026 12:55:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 27 Aug 2026 12:55:00 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hxkVd7Rb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xuw60WrD"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2A69914000FE;
+	Thu, 27 Aug 2026 13:00:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 27 Aug 2026 13:00:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787849700; x=1787936100; bh=jIs/x2eoyz
-	i9wXOmXTMIWua9wbfa28cgxwesEjwa1Wg=; b=bQMZgXnwz8eROsiyojA9LA0Ju4
-	7dF2DUW9wFNZSRxFZC9DrDIw865phW2DJYVgr1KrBNBzT+tH1PwcL5k30AVVFFce
-	8pXpssVJTf9zDoTcCUedgSD7bYiEGmzROFVMy/MnDrNUvHOTyILFlAT+yOXbiiL0
-	dRalzDpiK+WiDduP05Xoz+2mwkEQhZR/WHac12KmEAj/AnUPFRw2B01WH3+VuLRg
-	G2MayDQuPrFGFxF1QObykk9/SJKH230U+ylxQhFglR+gII/HiNHfZDZbOWYQ5QRu
-	GhdgFn/trT2pxkgI9/K3DYc4qvAelLgjdMdtJSJiee7K2+xXoLCHNvFQ51qw==
+	:subject:to:to; s=fm2; t=1787850038; x=1787936438; bh=keLXMc56A+
+	Z87wCiMrc31VGbeFKsZ1pHTGsw3RUyhw0=; b=hxkVd7Rb2k37b6q02LeNKgl/WN
+	7LXWMixnWkhbjq4aRXmyj1jA2Pxmwkc/RIMGEJ3JJvXw6t7FeVoFWeHUiAQOMa+m
+	rUKEvEJfAiyUnrMQHaVIjf+exxidRJZXb7QXDKJSln/YfuwY2IEv+E5sDzLKB6pi
+	uV+3xE84/N6Du31m5C/Pufl+6OTQjWUQTOxVF6MetLOOGlF3jTQIp/XcJC0miH2I
+	3REu8Mki62nG3Dy3ttnmvhhO2cxORIQN19vohltBustZ7A4r3thVbLLQKviClEeX
+	ZwQDTlK922Z7JW4XgYzZnELAVZhIHin0STKzWWvDPtIgKf2IGp835fbIEsQw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787849700; x=1787936100; bh=jIs/x2eoyzi9wXOmXTMIWua9wbfa28cgxwe
-	sEjwa1Wg=; b=gBlmjzRlG//1QVnP5T1b8VylBA9/bVITaUPAqu35+hNg1VPtLAu
-	o6DMB5gkJgl+jfVHPiqg7uG6S11XqpJHXCNanc82sVnLWbd9PFtLeGRd6NLRyGA8
-	07q2P1VBV7NkPgNZ75ruXwoKjd8PUhYZBDq3+uikKeo77UB2aDADwrEyy7yJ47Om
-	Y8oZgGzw9SBpext5j8szfrIHit5HRs65XVgZSja9suP8pQkOr9fNuiUg1jh5Ievw
-	RE1EnOaK36BPKmBpUMT/Dfy4Mh4t4bggYoBPO0luegFkjKGt+MiMG9KWaNxOp3CK
-	+zudnw8qMhMbyM1vYKpCyFxkM79M3guIV3w==
-X-ME-Sender: <xms:42uQahLlIOKmyjVepPEqRtuA_oTGiu3rhujUqsZk4QvozM1mcD9qeA>
-    <xme:42uQakCblLnHiAEDN_WKw9wqwsTIvQAr9EwuJkfPx7Mjff5efu8QvpFV3nIeQs4Wa
-    yCZ8uAu8xXUOEWjYRjD8VTd9YWsonQ_JwpwvM5MtpnmCxqtBjVU5Q>
-X-ME-Received: <xmr:42uQaiAt1MnezMv3wYjlF2I5tWVYhStENHFQST9AoZymZoaIwcd3YIy1EHUPx1IIFin-lLBUfk-sL8XQNCn5IX16ZDCqjKrdrw>
-X-ME-Proxy-Cause: dmFkZTGG/c61O3eXvmiak5zrg2Cd7sb7pbP4yc/8yeVnU+Ehwu4H52jKafVygEv5HNpmx5
-    luTbkHAW9ZVqRah0wAzU6ETAYFYY/1RjnUuw+mDq/Kz50OWUctHVuOj/gp7+5RBdjIvnI1
-    JeleRHAWnbs0ANjQJ4zbRxesgJKZ0gSFx9LGT0pURl3dDB6/PKPsPZiVnq5YZjozLY1H2U
-    Sm6sH337A05GDyOsrIfoNdOqnKCHqlq5h5GTi+XtAmc4GhN1xrCt7DuJMH7knM5v6Dwcww
-    nPeEDArPxz48KOGqzk0wWIq8AgPGp3mGEB08kSsvuZr9VFYHmd77Jba+duN2YQfPN3leqd
-    H/IwoT8LDoJ443Fh3qjWRF5B6qacXF+hC/8NBefpwomb+ls9FDCjwdCy0hkX0w7xICmJsa
-    59J78C9qBBAo63wGdRkk9Lw+2OcE98wxwygX8sMoCAiiU6dp/ibZCnyXQXLN1mHQvpe0fv
-    N/NQpXIndqwraYj/E0akLKiYav+an+u1YjuY+eLDpby/i1Dzy2OISOhLZ49IpCR+lrDLjm
-    BuQV5YAIdSze9bduXOIxubKT8tFbaw08rl6DSACYcDK3H1C7INiYZpf09uOaxsyWta59vQ
-    3if3DLedpgrjuQmVyA1QTZijfTdPJpC9Ld2B80j0c9X9ZgE4E1inLZuFcW0w
-X-ME-Proxy: <xmx:42uQauAgA29aucDBjyZwD5By9uFICI_s_-MnSf29YwawOr3s8PK31w>
-    <xmx:5GuQalr8c9f0R_vWQfrlnM0WoQu83OhmSb4U6L0yLFRGQDzmjhW07Q>
-    <xmx:5GuQagmoD6SeOodPSt0f1xsYV5RPKT_ObpYo0fEOXAt8aCADZJ9BYQ>
-    <xmx:5GuQatzpJ_iKNxsStNDYSqV6FX5EOVwanbb15BUE2q3dQFzjDYk_oA>
-    <xmx:5GuQahRbH3TfIxO_2GSBgYMGpsibrsOgma7gDdgZFXEbvPv2nP5avuZ3>
+	1787850038; x=1787936438; bh=keLXMc56A+Z87wCiMrc31VGbeFKsZ1pHTGs
+	w3RUyhw0=; b=Xuw60WrDXvhxCYXmHzgJJ1cOnEKb4X58E3ESUCGZsyjCVMwi8TP
+	PfisDc0Jk+VHnaSbcqJsMgr2KtvcdQlFSggTDZTr+HMg2yG05GuT7iCLIL6P+TEN
+	Id1QYJ3ZBEoMdy8lOiHE2QaMxoy8UXSRhJskB4gc/0OHMbJoKME4T6l82u6/rgBn
+	N0olRmtrgirViin+skmAyya9oLjq2Mx870Ihd7rF6z/hYcuikB+tkJn4xHzRdsq/
+	dO47f7pY6Rz9MNncVr4PyUrCsIubvRwXRElOKHiThn60QI/B/Z3IKjlZayNgrnnt
+	+Ux8RpLVIn2tjrYha8rI9B7TR9j4kfRFnDA==
+X-ME-Sender: <xms:Nm2QahdLc7wToixSxi2kcp05qbyM_qSkyLPJcVvpevD6swg-0w_7NQ>
+    <xme:Nm2QamNj8GCQDUnEWZ3G7CkDj-fx35Q0tfqvy2CCZzNBRm0NAOKP9Xn5j5I9xiysK
+    ycEpUJ1OnVjcK694JuVReSkW5y4-vOUh5dKZqdtxgE1bLQDfmzN4Rg>
+X-ME-Received: <xmr:Nm2QavhQ0yaqYreUMvb2lJr6mnBHGmwH9t1rPFikM1CQyoLavyv_AnDI4yUKI8HajTqlqB3kKCSOQSrJ0LXYcLve4Rpn4ycwlQ>
+X-ME-Proxy-Cause: dmFkZTEYmDytq922yXb4hZTtZL3pQSAgNcKg5izpqyYC8fSiwn/eB3vd8z8AOn7OkdAuYM
+    eW3DGQe7xDLLK8+VKgniig28qf25iptoX4Vvkh6PWRQtwKvI5bTwY0OlKW7HRThrPQJsAv
+    NHsWs2XBvZ3u3IVDkESMSmwgczplWng2wsc6PmKlz08JrRm+mCkbsFtlo7oAW/zygpZAfM
+    EFVs5q+ELxkml60nZsAJOmUqEdMnc27mTPOeKt+OMzrpevvDgHR2/9RQncFxp1pO9268vV
+    rzADhhqsmCTcmXCoNfUu/svkO9cNNyLkfyZr/0fysMixStI1rB0oXBgBc43gzLfXB0iVa3
+    Z99a9yKI5M/jLk160ckCIpby8Vp1y/WXMd1YGXYVt/Sy9VhwCsPmoTNnmiaTmTjLzWh0NZ
+    DIfF6/zGM7t9tbCsWRlggAmOnakUy7TUL1+J8aprFsHdUz76Q5Sl4iEmUHHnN7VYP4nQgi
+    raZ6MUfCNQvfnnQak+0lAtc3sc2MloEcJ/AYXi7NEyAjCrnnLa5r9D7pVs99qFDfnvIqeS
+    FuLdNAQTdsFEnCiJwGnEHCbCPt4Hwyk0fjmw2AIDgLPHJz9snnYCCF2oSDlhaFTmQNLhWj
+    Gq1azbIBlklZwDyVnP6qL4q2B78rWLr+SceA9B7hsqO8jIKrDkIK8i0laa7w
+X-ME-Proxy: <xmx:Nm2Qap1XePAl_biUmu7WDHX-nEC5IVo2meRL6GmpymTEKPUk-jEP-g>
+    <xmx:Nm2QapiR8RmdECSVxriEc5kAHEWe0T0xhfN7cm9wbO9cgATBrmFenA>
+    <xmx:Nm2QapfbX2vdZcy9zcOiZBXWgvjUVzlq6TjX8Kr0snT95kLfu0QBag>
+    <xmx:Nm2Qask8OcAlZK9WvQgAyWaaWn8cDwzsF72FCeJrY454pOmtGvbTsA>
+    <xmx:Nm2QajBdcDDCgG2v3t9PwjABzOQJ2OBgp9-7Edv8Op1RfO_GKxnE6GOt>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Aug 2026 12:54:59 -0400 (EDT)
+ 27 Aug 2026 13:00:37 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/3] commit: reword the empty-commit rebase errors
-In-Reply-To: <dec05fd6-b99c-4a71-b80e-24e7d6de4b62@gmail.com> (Phillip Wood's
-	message of "Thu, 27 Aug 2026 16:19:09 +0100")
-References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
-	<pull.2389.v2.git.git.1787792534.gitgitgadget@gmail.com>
-	<65c48ed3cb638cf0be18a3aa6d86d4c4f2cf01a2.1787792534.git.gitgitgadget@gmail.com>
-	<dec05fd6-b99c-4a71-b80e-24e7d6de4b62@gmail.com>
-Date: Thu, 27 Aug 2026 09:54:58 -0700
-Message-ID: <xmqqwltba4gt.fsf@gitster.g>
+To: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v3] worktree repair: detect relative path in .git file
+ correctly
+In-Reply-To: <CAF5D8-vocLWba-rvKxy3WWB1ZHTh1+eRcRWiMqv0M-CX56Y71A@mail.gmail.com>
+	(Yoichi Nakayama's message of "Thu, 27 Aug 2026 23:38:15 +0900")
+References: <pull.2205.git.1786799480344.gitgitgadget@gmail.com>
+	<pull.2205.v3.git.1787344586470.gitgitgadget@gmail.com>
+	<xmqq8q5zyvwd.fsf@gitster.g> <xmqq4ignyv1z.fsf@gitster.g>
+	<CAF5D8-vocLWba-rvKxy3WWB1ZHTh1+eRcRWiMqv0M-CX56Y71A@mail.gmail.com>
+Date: Thu, 27 Aug 2026 10:00:36 -0700
+Message-ID: <xmqqse3za47f.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,20 +89,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Yoichi Nakayama <yoichi.nakayama@gmail.com> writes:
 
->> @@ -521,7 +521,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
->>   		else if (is_from_cherry_pick(whence))
->>   			die(_("cannot do a partial commit during a cherry-pick."));
->>   		else if (is_from_rebase(whence))
->> -			die(_("cannot do a partial commit during a rebase."));
->> +			die(_("cannot do a partial commit while resolving a commit that became empty."));
->
-> "while committing a commit that became empty" would be clearer to me, 
-> but I what you have is definitely an improvement on the existing message.
+> Are you concerned about the lack of explanation in the commit
+> message, or about the functional differences between
+> `read_gitfile_raw()` and `read_gitfile_gently()`?
 
-A stupid question, but wouldn't a partial commit of an empty commit
-still an empty commit?  IOW, why do we need to reject a partial
-commit while committing a commit that became empty?
+Mostly the former, i.e., the commit message too sketchy.
+
+I now understand that these two functions need to be more different
+than just the _raw() not calling strbuf_realpath() and the other
+calling strbuf_realpath().  The functional split is fine.
 
 Thanks.
+
