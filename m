@@ -1,132 +1,124 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC162379EC8
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 20:28:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12585346AFB
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 21:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787862529; cv=none; b=gRblQh+7p2Cn1S91TgERKj8Xxoysx6ILSce4KmGTHQRpoGvLdk2/omtq/oUcBgsiEsgs+7VI+mCXI57ywLgSSo3h8JdLz+yZ+wyhZG8gFPSCWQOuz47xd1eektNIaQFvQJJ5dp+L5gSaxJOUXYqH6IekfXcr5ALJw6Xafllhz6U=
+	t=1787865153; cv=none; b=tFMTHivjg0Ud4siNbeuv6brP7ydqwKiFCRhMtrfjEpiuODEcOTi5g9ycnZxs732TMgjRSS6x1rT+gEw8woqK6xDK96L0uNGdPILa9jilpmKgl52X+NzqDd4iuKkDQj63W8Sez/hsYPTmUJNI7t9LjmcfyAXh7JDl7977Xe2xZ5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787862529; c=relaxed/simple;
-	bh=0VSYaHposUdaVXjf6RRmKcXP+9jy8qBxtG3JDm55DbY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U3qxlt/CT3qpUI+pQYoP5D+tCKdt1As+w51fznCo4LdAXCVlyvG/1k0bzlaoKk+yZ/0DKUfpn1XODPAL416HZRmvFmWYOSVIP0pyYywWyFa+GL0toThr21mc6jm172Z02jAOAnqVNSh3ifiTnfw62DGjKCRCyOc4tSbUD5+R1C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RiIU9baC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lia9SNQ8; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787865153; c=relaxed/simple;
+	bh=798pX1WaLxpweCwH5g5OiRtKK+2PrcvO43XRRC2YY9o=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=pYp+ci8oLN0CyRT7PWmc2B3vl7LKpOulMrP/l4WK38lJOC3p1BuQofIqz+bqkX4H1Iknc5449ccCumPZI9rk7aJ6rXWCLaR2cJLrkfwiaFjmSP+I6XbZYVyI/DvSyFHQS/OWoeB73XCCKCW8in5l2LLxB6NMasDSUVNQYmQIt4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eOfdylBE; arc=none smtp.client-ip=209.85.128.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RiIU9baC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lia9SNQ8"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 34375EC0100;
-	Thu, 27 Aug 2026 16:28:45 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 27 Aug 2026 16:28:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787862525; x=1787948925; bh=O/7i1E4lpS
-	zeozKYNRa08E31U1ecUmVrHqoE9/Teyuo=; b=RiIU9baCow9rL9R2XLjMCXI5nn
-	TtLlUOUVVg2n06qVt0ApX9qAx6LEM2SGobmKwKrjZyz2pvN9A2MKVWGGuRjkDow4
-	2DjF45QJadNv09dzrGRRyyva8QTYWzpAKSBRzAlABFf5MTJwRduCDKXwk0Hbbx7h
-	GUzn3nBQq6CqZlCANyIgpKZoaAV/x6i0fmOIHrZ6JuLu07yzZlpwHjrqyT6qhZLu
-	DSMfP6qXnj6mQsolrixtb+mrBmJtNeMLHSr+iwC4x2YpfC3NE5donYaWtQhAtEMv
-	6CA/ZaPxaoUKKui9Onli0j0oaAOShjxn318iv1KWjP0qUoJoZbDn+7Hvpbtg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787862525; x=1787948925; bh=O/7i1E4lpSzeozKYNRa08E31U1ecUmVrHqo
-	E9/Teyuo=; b=lia9SNQ80Pi+qkQBGsfBxViocVpcSQFOPcWs1nZNdJf0Dg7N8LA
-	/I8qKaIzLHtI+ahvCO6HVGHaQ2FlqUzg/jwyK2IUhkX3tEJ/eT/an4IuYwd8UkT8
-	/P3BEiV8kfNkDkSoQV0z37wz1Na8O2L1HZudziV76ysK7iUpOcB2/GXLmVIZRiCp
-	44bjcTeKooVXuEg/cJGae/okThw6SOWra1lPzmFENCwo0yb4MGkr+qhQd06IF4c9
-	LEKACm58ly/lT8GEIwkUtrYMHrCXiN+AjQzfH0Zjc8BdXtBkktkRxPXWQAeOmlFY
-	SW4KMMb29yAC2otpp/wpVH1pc82yS3EBCrw==
-X-ME-Sender: <xms:_Z2QaprJCs5KkeHJwZmhZNFb_WBeuw2ujZ4oJF_G6DxmSJoH0D4XtQ>
-    <xme:_Z2QajEqgoNNQaEaq1M900KV7G88FXfCrZPANQ_5fnCHJKpnbAoPf4UKd5Ll77Qx3
-    vtSiF4n-H8fPxbqwlqB5LLZT9xOgRiBXPgWu9ItPOI2EwZxuDSCi8g>
-X-ME-Received: <xmr:_Z2QajkF_of7bx1xeoD7uIODMEZcLC9G62FsBlGGfZpOhW4EvFq-fzN8Aez_nWgFTRzfxp6Jnyw5VZHendK8u9iHIx-UQcfSbQ>
-X-ME-Proxy-Cause: dmFkZTFO5ZOOSjJs9A4Ro/n6AgMXt3Dk4EIgHXFkJvPQCla1XA9+Wzl3PwsBpJo6HlMa5O
-    6yOwpvn9ECEmgcgU8RSKubDWOf8topiQHp5i1iOivQtTbX+Sho60jaZxKfWFsE04ckI2s3
-    bnhEbDNAt89SirtTpq17lzsLzoz3/6/GC0O7WqPeL+x3JHp4pHYPKPppfsfZKBvDcLAbQI
-    r4fl0BDfAYnQt0FNMfTUZSgi4NOjpvJFu2AQEzX/w7Zy44g96ZLrqMF1qeg29ua4HRO57h
-    3haRkQ5WQa2oE7pbdy9BOW6A2V95OnH1WdS71NESFyzcL+2RM7YlxN7J1PMJia6s3z+KZj
-    hySL6ec4X17SgOuTlM2djP1HaE61m9eFsZtXau7hFtydIYuTKhBR/pDmznnRC9ciH0hZ5r
-    24VmWTOktDWI5deHzrkGQl+DZBgfGAgXYAXJ7nz3kbXHwS69iykyirazzp7d5SdU/y7bBW
-    2W/r8Mi2AcjUtTqF/y/44l9Ot7qPykdtIszX49AXDgiUOL7KWSuvE/Lo6BM5sJqbX+SiRq
-    xnZRGdI1S6GQDO/dudquwAupdbyqNQMo/xUXDY+IIZQGXHPZDLv+BENvCyb5gNMpo4GZbc
-    dkTE/6uAF8jqUPc6BZuRSRamccqc9BYDfjbzGspVmxaHgQ06Rx1IeVGKgm9Q
-X-ME-Proxy: <xmx:_Z2QaunyL0cJPeHuM7xnR8aoTX9ZeoqHULFZlDDKPZpWo6WTJrRQhg>
-    <xmx:_Z2Qass-1crkPwIA0lVWSRm8ac4YyB1FcU7t8FeYMEaC2ksaBflOsA>
-    <xmx:_Z2Qapmf6-oNANegkpmzczZqdwzal8qSi4SCokk4EbT7yk1dmecAKQ>
-    <xmx:_Z2QavtzlfQR_JuZgvSjsBcPxqyDr30Qs5O3t7ucp_8Chnu5dRmffg>
-    <xmx:_Z2QarEbZ7MemFsdGP_yRKlfSnoDMUQZuhB9IyDRSlDZ2ggseL0Lasqd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Aug 2026 16:28:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Hardik Kumar" <hardikxk@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] builtin: replace the_repository parameter in
- is_bare_repository()
-In-Reply-To: <DKZZYSTLY6TX.2TDQEBBOG5IAV@gmail.com> (Hardik Kumar's message of
-	"Fri, 28 Aug 2026 01:39:43 +0530")
-References: <20260827-env-is_bare_repo-v1-1-aa99600dc213@gmail.com>
-	<xmqqo6en8jof.fsf@gitster.g> <xmqqh5kf8hqc.fsf@gitster.g>
-	<DKZZYSTLY6TX.2TDQEBBOG5IAV@gmail.com>
-Date: Thu, 27 Aug 2026 13:28:43 -0700
-Message-ID: <xmqq7blb8g04.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eOfdylBE"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7ff05e5d009so4727417b3.1
+        for <git@vger.kernel.org>; Thu, 27 Aug 2026 14:12:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787865151; x=1788469951; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hG7s2TDc/K5397cEMi6KYwLmYjDKV5w/gLd5J1ZP4uo=;
+        b=eOfdylBEQC68yW8vt9HJgJV1nrjtb0M6C91NCpWcpNJP7TStZhHPXul5H/fVX5ASM1
+         dhvSg8jzDqEQbgwNGKe3Yt6iWDoECRyPmdAHPBG+DaxEIRL5I6t4ykx0lLiN2QQM8+77
+         23mLAX12AXx1E8a4s3klfeNHABKiQfUva3yDjtfZK4cz7ncBzCWxzhQpUtCzBVNWvGhs
+         wovhMGxyPECTQZQbotPrcpARD2R0bFAN7bJMulsfV1E88+2k1Jscf7PYV99FWQ+OaYoQ
+         lnzRyPRNEMvpKvRBeeCOPfyhI1s8P/229v61lP7AzZSu99lwFE4CD71JC5kWQSGTGBdk
+         1p6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787865151; x=1788469951;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hG7s2TDc/K5397cEMi6KYwLmYjDKV5w/gLd5J1ZP4uo=;
+        b=gyDKfyLH7w+w/Q7Xhn3PLQS2YnGEm+y0N9dsU/Il9UFWPT/Gj6sdIumrIfK05M8Fh2
+         L63URPyKY02LRgF3LLHrN0KB26q4zbSKC1xPGGP0ebbvzZfBvcIXYmPaUEkBkqIldH1H
+         VyVlNFyQfW8dg/RNTBdj9H/6cFuRTaGXrBfTO6xMjoTm5gngrJhNLU/7E+sPhTdmwhun
+         fL4x5o0TEpKw3l2IwYRY/TvkD5gvacaJmYCz1qvp8nt6r+vZKTPRxEkM1KZqn8OckPmb
+         36lgGJgsvQ4poxcm2WaCZVMM3sHe4Uxe7JbxjyKS61v/Yn8QrblKYIL690T/RA3ONnwP
+         PmVg==
+X-Forwarded-Encrypted: i=1; AHgh+Rp/x6bQOi64TyhJVXxvnR0UIINrhUYcfoS2rQCWRbioqGCxrI8W9kXAksYVtNv/EN0pJ4A=@vger.kernel.org
+X-Gm-Message-State: AFuF++kh6huOFpRe9KalHGipkb3rlW+Tfxi4uUO06OYV8VvedgjMQVJU
+	hWXNKB+OCgNKHlMw6qJHw6pPTD0mdIQu5eBW3wGTXrZ8f5BgEOnt5lED7aDVjNBn
+X-Gm-Gg: AR+sD11wyOtc4UlCfkViAyWVYu3RpFcOQpILTpVsLtmBF6qiJAdYVRb+NJFjJXkDERT
+	cs2vW4VHOpKuyv6ms5//u5e+3WLsfugcloct9BmOgjD+7RvuIKnJ7Gzg9zA2h4DQkTSAFO0X1ql
+	lHYUrjHTPdk7tbBrXRoiIjoXYgKNJdrAS0cpqHsLzEGC5nVtUpzih41p+Dr4hOYbCaFN2Icw0BL
+	UtEtVgqBB9/C+QT1u3WI2lYP3ZGEXAr3H4maSRbOpTjjNL1eJxcaSRiWDmpEttjAV3YeRADn5bl
+	wZTcPuFZlzHnqPbknkRTNBuOKRzmN+rmA7LzKIK2yjCnVOAqag6sloH8+XrDXRH1Pwd4ndE+g+Z
+	FguMQaPZrDHaD7g/uWALPd1szfYtlBIBe/v2ShuLvBg3vgOu3ONmFffis+VBnXmNKgSfcaJGa0i
+	XISlq/rln+MdfejurtYPomTHuDGgmN8HzdNTKvyO2RckAnaSjBUh808akp7OlYZ45ylsElOSx8B
+	XE5IkLdfi+z7YapktI4ze6ynMOt99rNKR+xwmoFZhQZ5+eDIkL2z2V9nZfKIom3Bo9GZutBRbrO
+	N7mjIrQN4fk8qdHk/QIls16w0+QNFQVVdrbusg==
+X-Received: by 2002:a05:690c:6606:b0:7db:ccda:a409 with SMTP id 00721157ae682-85d69e05e99mr10400867b3.9.1787865150677;
+        Thu, 27 Aug 2026 14:12:30 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:a192:5f4d:1ead:cad5])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-85b6144694bsm16619817b3.30.2026.08.27.14.12.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Aug 2026 14:12:30 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] builtin: replace the_repository parameter in is_bare_repository()
+Date: Thu, 27 Aug 2026 17:12:19 -0400
+Message-Id: <F276C11F-1904-496E-AA77-953724362C9A@gmail.com>
+References: <xmqq7blb8g04.fsf@gitster.g>
+Cc: Hardik Kumar <hardikxk@gmail.com>, git@vger.kernel.org
+In-Reply-To: <xmqq7blb8g04.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (23D8133)
 
-"Hardik Kumar" <hardikxk@gmail.com> writes:
 
->> In general, builtin/foo.c::cmd_foo() are concrete programs that work
->> on specific repository (i.e., the_repository), and there is not much
->> reason to rewrite the use of the_repository to use "repo" given by
->> the caller which is git potty.  You'd also need to deal with the
->> case where "repo" is NULL (hint: "cd / && git foo -h").
->
-> Right, but would safety check be required for single instance or better
-> to find and work on only the specific ones which could lead to an
-> exception.
+> Le 27 ao=C3=BBt 2026 =C3=A0 16:30, Junio C Hamano <gitster@pobox.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BF"Hardik Kumar" <hardikxk@gmail.com> writes:
+>=20
+>>> In general, builtin/foo.c::cmd_foo() are concrete programs that work
+>>> on specific repository (i.e., the_repository), and there is not much
+>>> reason to rewrite the use of the_repository to use "repo" given by
+>>> the caller which is git potty.  You'd also need to deal with the
+>>> case where "repo" is NULL (hint: "cd / && git foo -h").
 
-I do not quite get what you mean.  In a single function you use
-the_repository and repo interchangeably, relying on repo, when it is
-not NULL), being the same as the_repository for correctness.  If
-they ever refer to different things, then your updated code is less
-consistent than the original, which would not be an improvement.
+[snip]
 
-I actually think a good medium size project is to fix the last
-parameter given to cmd_foo() built-in command implementations that
-is a pointer to "struct repository".  It was a misguided design.
+> The utility functions builtin/foo.c borrows from outside builtin/
+> directory are being "libified" to reduce the hardcoded dependence on
+> the_repository, and cmd_foo() can call these functions with
+> the_repository as a parameter.  But we have no reason to waste our
+> time updating (and also reviewing patches that make such updates)
+> the built-in implementations themselves to take a pointer to an
+> arbitrary repository.
 
-This pointer is either NULL or the_repository; it never takes any
-other value.  It is misleading and invites confusion that these
-functions can take arbitrary repository instance.  It also invites
-people to replace all references in cmd_foo() to "the_repository"
-with "repo", which may lead to an error.  Depending on where
-parse_options() call appears in the cmd_foo(), "cd / && git foo -h"
-will cause segfaults with such a change.
+Hm. What if a program wants to do =C2=AB exactly what =E2=80=98git switch=E2=
+=80=99 does =C2=BB sans shelling out? It=E2=80=99d be a maintenance burden t=
+o answer =C2=AB open code it using helpers in libgit and the builtin sources=
+ =C2=BB, at least as presented. Many builtin sources seem (at least to me) q=
+uite complex! And it=E2=80=99s not immediately obvious how I could recreate t=
+he intended effects of, say, =C2=AB switch branches =C2=BB with just one or 2=
+ libgit calls. (Maybe that=E2=80=99s just me.)
 
-If we change the function signature of cmd_foo() to receive a "bool"
-that says "true" if the command was run inside a repository and
-"false" otherwise, cmd_foo() can still tell if the command was run
-outside a repository, and programmers will not be misled to use
-anything other than "the_repository" as the repository to work on.
+In other words, the stance =C2=AB it=E2=80=99s not worth it to libify builti=
+ns =C2=BB only makes sense if we also say =C2=AB we don=E2=80=99t explicitly=
+ support precisely replicating builtin behavior via libgit =C2=BB.
 
-The utility functions builtin/foo.c borrows from outside builtin/
-directory are being "libified" to reduce the hardcoded dependence on
-the_repository, and cmd_foo() can call these functions with
-the_repository as a parameter.  But we have no reason to waste our
-time updating (and also reviewing patches that make such updates)
-the built-in implementations themselves to take a pointer to an
-arbitrary repository.
+Which is fine! I=E2=80=99m probably just not aware if there was discussion/c=
+onsensus on that somewhere. Pointers welcome :)
+
+(I for one think it would be nice to have the ability to call a builtin dire=
+ctly through libgit, or at least think through what organization of code wou=
+ld be necessary to make it feasible to say =C2=AB to do builtin X, you need o=
+nly call these 5 lib functions in sequence with your choice of arguments =C2=
+=BB=E2=80=94since perhaps parseopt=E2=80=99ing isn=E2=80=99t so relevant at t=
+hat level=E2=80=94but I lack a concrete use case at the moment.)=
