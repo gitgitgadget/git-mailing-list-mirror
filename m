@@ -1,146 +1,138 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9C143B49F
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 10:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7D837E5D2
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 10:05:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787825004; cv=pass; b=T33fhzQdS3gBtUsV7mxM8DJ8uFHepEE52s0lRmA+jj3HKNvmEgbyhIG0Ug/Wu+rbb+BBl/ALSGaURL/kw9v7GzYmMuHpDKqSduGxHqufJFBlvdmFXecG4s/WIhR5yJSKw+FYv+d0cTiqS1ha0qxxiMFolUdybtmBvcr02Hw1CW0=
+	t=1787825129; cv=pass; b=mDvgBLtchIgey0nZxTzeRixoVgxjz1270r9gyferu+pKaIcMzXyN9kVO598Thh9ro0458iPKNuZwGtvCDwTwniIpmqJC1Y/MvLBH7Qd58jQL0mHFAJ/73ilS+yShpUcVTl6VI2DyFqbssQjOaAxBT8KKc1GzCbSAaEfY21ryla8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787825004; c=relaxed/simple;
-	bh=EGUUilKrzQyO7GHZddf/I/6DPEEEfXQCLSOCNxgg85c=;
+	s=arc-20240116; t=1787825129; c=relaxed/simple;
+	bh=C8JtRC8NTeUnCNYlrSeyj/ETM6n/x981VVkYOv3Ofvw=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=RJ5rbOCmCOngBsCqv/taMyLUSBgHkBXbcXXjBmehhLN1Ceek+y6W3gIoL+iu30R2Hi+fsEIjmUW1weBITtzrOdNLU56XllpNrLTob1AEiy4uwyfb/E2nRmbnzZYXDEUT0TIXPfQSwFfld+fb/clzdN8SpFMOgPEbIJc6/jrOShg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Moi4cpPi; arc=pass smtp.client-ip=209.85.217.54
+	 To:Content-Type; b=iL5yOC0V8zy0+9P8U1qM1spjEXx/wMDh6g4AsmOq9Fs4kEd3+dd2ITV7MjBZJWtAvNcBH0yXleb0eyIgRUUkae1i8ZjSSU4AKgwl/n3Fx4ZbAm54jCv/FOgC5ZanI0LcXWwsxCPDDnSErJYsecXiQTbUnckqg9zJw1Z0J9I30u0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZVT3C1+D; arc=pass smtp.client-ip=209.85.217.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Moi4cpPi"
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-7777fa8f1ccso126994137.3
-        for <git@vger.kernel.org>; Thu, 27 Aug 2026 03:03:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787824990; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZVT3C1+D"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-7838857b001so766520137.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2026 03:05:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787825115; cv=none;
         d=google.com; s=arc-20260327;
-        b=IwX3M/i05hQjSTP3NFi6VB6rFUUQypHiwEMhhyFbAp2rf1zmW9oPkMcMScPAyHqONz
-         6frVV3RDKpF5iq1EpbWqmrbXUTr7pbk2gfVs+6Cxj7D8Kq2ESvzTDmOt7AN9X9NLmV8C
-         d/wv5B81qgb/UqZTW+wIx/XS0stqxk8JoXMpBMRcTVolv3KV0+GrTtB7y0nMxIKrlVER
-         g6T4rJfX/fES2pm3eW5pWwv8SAQVWnevyJ67JVgnbuKv4hGIQxH8nxQEd3RjlWAYh9La
-         3DD4BW/08tpXN7Trxpfo3kRA7/0m1z9olzukmaDEfYmskyWtK+Hz/O47A35ahLw9koVK
-         Qj/w==
+        b=sj8705qHSHlTuasM6KfmqTzsPCFGFu0nhAPFVbJ5V5hm5mU7oiIMnM9gTrMqV0hwxK
+         fss+4NtHXs0D0OiN3ZXM9MEFUOPZ22Vf5tfzAfWEDOcQA+Is2hFuivDU0k/aHbkJaHz6
+         jjPEKsGLZazKqrjarMCWx/at200EZxbGKdC8Hzj7tj7/Ng9ha+X9KYQYCXMURkRryFpD
+         L4+HKumvFozET35xO2zqJI+Jng+gTx7yx+mQHEE2wqqsf6e+k/d3zud+06ayR7kR4sup
+         66w3fLilmQuKOeVdc8sz+U9kOLdcnoo4QNVOJTt9PMq8tQh3H2Aeg9XtziSGQVPnV0rq
+         i7TA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :dkim-signature;
-        bh=bbCPJ1efSUzwU5mfeaijExQPUHbIP/ERnCAkDKwHvc8=;
-        fh=/hZ9KGdMZnYT8XCf321wAFEvTf+xHN/Pv9o0ZhMT1FM=;
-        b=Eo+lB47weR+chpNLgLtOuXUWQW8BrathYdrAphZ1FxMFsNWpHVLaMGhzmP8CsFcIkL
-         Ty53Q2/NAMtqXuPoJ14FXJE553hHHJILI5MqBswA+8uAflPMxgiXv2S3ianidjwXYWpG
-         QXzwfFaRuu3TvUMv0HfhVeeaE7qyHmfyAo8Bl5uxlznBuib73iOrii1h+qpfRsTi8h4A
-         5Br3tH6233Vig2gOlbSemQG+3K2EZEY1iZ4lh1s3GL1vH3aUCW6jGiqyhAoqNN9S2DMm
-         dd3hLNM1WJeqgBw/H2IO3d0oJ2xib88F7hWyEWxj399cIzjFWzc5qprbt8ByDpqgU8Om
-         PWVQ==;
+        bh=C8JtRC8NTeUnCNYlrSeyj/ETM6n/x981VVkYOv3Ofvw=;
+        fh=XxsF5RW5pjbpiL/37vKymhnAt8umi//Co7DDTcwNvEM=;
+        b=QEITQmS1EH2GcSD2dMAFW1AwdDh9A/mBXLTH6JSCVyrJqnrovc3Mo5mSQsM+XJ9Czd
+         Deq9KlwS73lBG7piuwEokjbBnHsbecMe1+cIoC7uv5HK0yATk5a4qh//2pO2eU6T9oyV
+         fR5p7D7ua5pLDgqXWnbIMKMdCjXdnw9jgtxr9wlVfKE6/I7dmcdTEZh6x+Ds+O0jFuD7
+         UPRS5Tgjj44o+ax6ZjEPjpSxMQYPE6bnLgT6oi4n4qnQkXJYfOwShqcTt5x4Xy7h3PWM
+         HRU9w6lU4ZSJB6W4eVR7aGLlqNmCDTDDwYcB/ZNnJzkCvMkOCfbBUREHy1xC4P4P+Xev
+         yJjQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787824990; x=1788429790; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787825115; x=1788429915; darn=vger.kernel.org;
         h=content-type:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=bbCPJ1efSUzwU5mfeaijExQPUHbIP/ERnCAkDKwHvc8=;
-        b=Moi4cpPiFvCixB6/rKdKOFt+O1gc8tRbAaPJXsyZslvlt3uElAFcQnS0i52pcapX5A
-         FItH622cTRlK4ts21cRQ0Le6XhgESJm4cR8NYt2kQkP+NBH8itB8RvVzlzph12VxHhRy
-         8HPSqPtODC4HnBQOhnVVwQXSe02tkfEB4NGae878KGMKdONSlDa3fiGP36QXVwzQzmL3
-         4k1ydb+iwkU9xJkZHmBIAmeCAf73kHLCHDVGIxCI+4KQJlP365EbV/oV58fLEfMpLks4
-         WRreKMytvIw6ZJoXGskylvrtE5LL2ZqHRaeLDrO2nwMLo74UMRwS5c1lQRBvGUu1T5B0
-         9l/g==
+        bh=C8JtRC8NTeUnCNYlrSeyj/ETM6n/x981VVkYOv3Ofvw=;
+        b=ZVT3C1+D1SAkclWnpxzhYzLfOTsoFE5HonjRNFcgKyJJaFVFLe0ZgYn2vKzPWlBRvC
+         uwLVyPGD8p3AkjWneXpxWX7iXF9egdkPGyVPey0cNosSoLzOGIY6AeAZtYYXtbdxMouJ
+         GIvRkpm6123xZbYwo8csE3oGnQgtEnuoxEMrsOMglboQRTz4jIBuawaw2R1FmH01aKlc
+         mLHo5kU6SpQuYH0QkBdNCb/Ld6xDVt2sm9jwBBk6fJ09xKeOSQ15vzP1AkoWG/Dt7ZgQ
+         KYvzXA9V9QDtAqfTRSI3wBequ27x9eSR57G4Be6wK08UEbCVgkxCCFvJADzzUGMT2k+R
+         3bXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787824990; x=1788429790;
+        d=1e100.net; s=20251104; t=1787825115; x=1788429915;
         h=content-type:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=bbCPJ1efSUzwU5mfeaijExQPUHbIP/ERnCAkDKwHvc8=;
-        b=cKStPR+aW4ArwO0QdnycB6j9ifxQrFIgLBZtTV3+FEOTCYo/UfJZNLOZ49ktLsEDLp
-         5Lxf2PZuZygjEf0KtCmnDiz7S/OSQ6jBcVsb1BUZZWEU7z6MJWfxDRyPYTquqkeGdgtD
-         9kG7IbdfOx6dMTyos3qg7LQfOImCttTcnrKzkB4xbQV+f/CP+lEXBh8qu/K203SMOzUT
-         PueU6YLzM6AOGip4VMYLKjBT/eNAJhZmz0qBAxUFl7QjETFNPyAqR91f+9mNwn5INwNa
-         Ks1Bqb/TcYRrk/BQOV1wpf84tw7x8k9H5mecgKU+h/jme2hvITNw6YVTooeHR8mRJaeQ
-         cJtg==
-X-Forwarded-Encrypted: i=1; AHgh+Rrem7OH+8r0gIstBZZGgt5czzAEYrUVzunOIY0NCIHA/LTgc+IJR6BREA1jOYMwq440YZs=@vger.kernel.org
-X-Gm-Message-State: AFuF++km7hB7Ir0UX3FF/RecSg4rtotzAblH94LTDKRNhYnJNfVofPsj
-	QJ4wg4xoSuAOtAi5iV9OgZMgTBFqMot9AnKVi33tAxyt5hkGsA80tpweLYXMd2cplITkPkEQ1Lz
-	vX8pHGXTk7yx0ZqyKNNUxAlwBwkvhn9s=
-X-Gm-Gg: AR+sD13laXRLyxyEdoSlQhKExYex7i9+5fx3IIBQWXVTOTpQhPdG+6bapXc+iGyi/Ec
-	1gES0ea7c4bCRI8ZTyw/NXuu++hcw5TIQfnF+cNC4XsTyG967DEkD8o4PNNRgOVI1liFaiS7MmP
-	fLIVdoW2cp7v4uP+nWJ33QwnRjA+5adoqvcNRW5T/ydJnrqPpi27yXCLyixhYrwaKcu1yn4OYVA
-	GOPcYwRLtErA5rAwCL1nikWh7B5hAYR3K6FCjqNL68a0K5QVT9BNZE6DGWvD2n5S1n5Fw7toZ0q
-	k6IvsumG8dlJtWRFUvbVFGS+QWAit2xRlYeKjlZKrviu+uqICp2Nr+Vv+0k7LhY9rhrXipj8Lrz
-	6esbjQlSmiDrIm5McFPamwDxITkwaCKbKIg==
-X-Received: by 2002:a05:6102:5f0a:b0:76f:eaa2:6fa7 with SMTP id
- ada2fe7eead31-782bfabe54bmr3873603137.2.1787824990035; Thu, 27 Aug 2026
- 03:03:10 -0700 (PDT)
+        bh=C8JtRC8NTeUnCNYlrSeyj/ETM6n/x981VVkYOv3Ofvw=;
+        b=mCrVRWZmBgRS2xJ8kZ/kWcoeEPGW7Mz+qzX9SkRz5wZcJ1QSNgmBicSWnajo3GWtoN
+         jYT3zPJDOEQplGi/SIhc6WqamKdKXCIduVd8Bxf0H8sKu7wVaEHBF0vM6NeIa2wrELB/
+         +2t+EbqsOVyxYsXYkW5qJCb6i0djj0VdSivGryQHQRcrbiX0NhKD+TfmHl5RZUNkSxzs
+         QB/Fdwc+K3PsO5Q8WU1GV3Lxpar5/BOF7LEia95E8Ng7KUYPBpX/5VhuD2rJ4yC/PzHM
+         dObJ34o4pN7tjhXplKxFR69r8bSJeoRAPZqPDPh2rUUlKPNlzu1lfb0J2wm2+MB3RPHL
+         cT0g==
+X-Forwarded-Encrypted: i=1; AHgh+RruWnSPDYslf39CvXAih54P1FhNZxE9gzGXA4C3ax6sMyAqYUcWTNsZeVZ+fPJiukPneGo=@vger.kernel.org
+X-Gm-Message-State: AFuF++klhVIa98hOxWbWsXSdUXprt7k1FLcJyVKymSm8tWapJEtubTD7
+	ND1VcJMlpnT2Z6kx/yKUeEw0hDif9wH30RM4DeUN0kvAcOzxe2a0nwZ8auzF4LIqgqWq+F1oVUf
+	8hQK0YTHpnH8Tr3LnclpDnQOsdaAy3ag=
+X-Gm-Gg: AR+sD11WZfPy7IUmbVgsPjze+dAzGaEYfzT4yJ05TCgbuiCiPdj3/hkI1xrvklAVbO6
+	MJ5iNgCD3VVHxYguZYA4oWqL7xDhjavc9LJawsC0KqxNDwSzpvYFpNt233WXmXN7nTAwFZ3Vh6U
+	NlJOr29JtmKw17Aag0/rmRfCPilEKVWp/FoMJLqGJ97rcoTcF2oXZm2uLDiCqbQ4cOLEkbARhCL
+	xKwEkWtPvWfn1qvzXwA77YQL48eWBWAu+kRPEw8ZKl2smZ5gYehUs0ActHdJCt9kGsegYc2f38T
+	sio6Rwxbs/mVvHuTVRCdZ5x4uz4qDNnapgFe+aTYhnyhhwmfQ3dV5gMFtgL/zw8EmQW0zhehJTg
+	A8iLIi89Y8/7gEbk6ycttsi0QHDvrfm6RdA==
+X-Received: by 2002:a05:6102:5cc5:b0:779:328:8a2e with SMTP id
+ ada2fe7eead31-7841da85156mr1344200137.5.1787825115384; Thu, 27 Aug 2026
+ 03:05:15 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 27 Aug 2026 06:03:08 -0400
+ HTTPREST; Thu, 27 Aug 2026 10:05:14 +0000
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 27 Aug 2026 06:03:08 -0400
+ HTTPREST; Thu, 27 Aug 2026 10:05:14 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260825-pks-odb-source-fsck-v1-2-b756de0bf24f@pks.im>
-References: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im> <20260825-pks-odb-source-fsck-v1-2-b756de0bf24f@pks.im>
+In-Reply-To: <20260825-pks-odb-source-fsck-v1-3-b756de0bf24f@pks.im>
+References: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im> <20260825-pks-odb-source-fsck-v1-3-b756de0bf24f@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 27 Aug 2026 06:03:08 -0400
-X-Gm-Features: AcwNN1WZOmKgzz6QwANPro6hxV3FGAkqM2Ou9qwlwcOuqQgVj7XvNemdzZHzXFY
-Message-ID: <CAOLa=ZSmjfCD-5fPgJm4cbaKZOQa0S62wAf+vSxWFWLrrgczBA@mail.gmail.com>
-Subject: Re: [PATCH 02/10] builtin/fsck: merge `fsck_obj_buffer()` and `fsck_obj()`
+Date: Thu, 27 Aug 2026 10:05:14 +0000
+X-Gm-Features: AcwNN1U8QFk7_dQZtKK3XzD-T_fzpz5txhd4BP2q1tIk923-fb3hY3TOrW85s0Q
+Message-ID: <CAOLa=ZQoJotCEXWxbOz9sHs0+Xen=7NwW-3OcrNXFL461VEz1Q@mail.gmail.com>
+Subject: Re: [PATCH 03/10] builtin/fsck: de-globalize option handling
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000073d4c6065a047126"
+Content-Type: multipart/mixed; boundary="000000000000ec7010065a047817"
 
---00000000000073d4c6065a047126
+--000000000000ec7010065a047817
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The interfaces of the functions `fsck_obj()` and `fsck_obj_buffer()` are
-> somewhat similar to one another. The only difference between those two
-> is that `fsck_obj()` takes an already-parsed object as input, whereas
-> `fsck_obj_buffer()` parses the buffer and then calls `fsck_obj()`.
+> In subsequent commits we're about to rework some of the option handling
+> in git-fsck(1) a bit. It is currently a bit of a mess though due to lots
+> of global state that makes it hard to see which flags are used where
+> exactly.
 >
-> Furthermore, `fsck_obj()` has no callers other than `fsck_obj_buffer()`.
->
-> Refactor the code by merging those two functions. This makes it obvious
-> which function does what, and it allows us to get rid of the early in
-
-s/early/early return/ ?
-
-> `fsck_obj()` in case `SEEN` is set as the only caller unconditionally
-> clears that bit before calling it anyway.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/fsck.c | 47 ++++++++++++++++++++---------------------------
->  1 file changed, 20 insertions(+), 27 deletions(-)
+> Refactor the code by moving the fsck options into `cmd_fsck()`. This
+> allows us to convert some of the options into function-local variables.
 >
 
-The patch looks good!
+Nice. I was wondering how much work this would involve, but it seems
+like these variables are only used in `cmd_fsck()` anyway, so they
+didn't even have to be global. Good spotting.
 
---00000000000073d4c6065a047126
+[snip]
+
+--000000000000ec7010065a047817
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 46d18e534471935_0.1
+X-Attachment-Id: 8d0562c69d1f47bc_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xUUMxb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK2h6Qy85bnF2MTBUZWFXd1NHbmVySUl3Q0N5MTcwUgpXK3c2MVp2c1pv
-U05PUkt5S1R2TnVYdmRXdXRiRmtTVU1ZZEVubEZLVXR0TTEwajhVay95dTR0aDdVcG03ZzZMCmVt
-Ty9xc0xYdFAyTm5wUzRlcERnWnlaQ3ZvOGFZTHpmaWlLNndvYjU3LzZGNUlRR2lUSE5PVU4raE54
-WkxZYWMKajRFWTVCRW51RFFIVkpMNHF6UEU1bHU0V0l1UHhFdEVtcmNmVlhqa2RtNjM5dENHRmVh
-SmwrcFQyNmRpT0hYMQpHWmxJY05tclYyYlpsN2ZDV2d1R0F4bkpIS0R1Y3d5dVB6Qnd4RTZVeHZx
-WFJBRkRLQWE1cFBwRi9mQ25yd2tUCk1BTkNhVWR0MGVPL0NGTGMvZUNLTmRmeDJObExsZTlaR1Iz
-WXJzWUlSME1NYlgwdUJ1SHFQdXprc0JNVVpNakwKNGFJVFAvZkJkUDdqaU5GSndRWjJxbjdyUWJI
-R05iZmtpWTI2Nlo1VDhWMko4TERQRnpyUGZtZUR2MlNGbTZZTwpCNGpPUURqTDB0bUU5WWpvMmYx
-YVk2a25laXdrTXAxc3dONFdDZFZ0bkNHWndVdXhGSG9haC9HQ3l2TGZZdVlBCnFSdkR1Lzlzd1p3
-enhQNDRZZWZZSktOZ0RVQWVEVmtScXUrZElRYz0KPVZma0oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xUUM5Z1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMjI4REFDR2t6OWJ1VnZwUlQ3NlBDNERGNDRaUk9SNwpwSmFYdUtoRHg1
+NldEWU5hRGc5S0pzMWl3aTlxcVZYc2d1VHFrQktERlJicVZjOFJRbVlQVHM2UTNGRXpLbDQ3Cmx4
+ZUxpc0Vqd04xcjhuT1QwdFl4NkM5MUE4cGNPdnlsY2JZZ0FpQUVVd3VSQ1B0NHNyMTE0MzhVSXNB
+UUgzR1IKUUJBNkN6cDE2OWxzMjlDUkxPOGgvUFdmbU5seTVwUWxlRDJ6ZkdQcjRxZDhab2k3amJB
+VTR6Q0hWVHZtOEhSNwpiaVZjeDMvM2Z5TzlKU0ZPMzF4dTJhT0NUaEtmSGw4S1F6ZmQ5dWhneVZY
+MjNMcEJidDRtWDJTM2I0REQvam1MCkJLQSs3RHg2eDZ1Y1dMTTAycGZjTVYrQkhkb0ZNWVdxT1gr
+OTZudjhwZjMzQTRIbEZsNDFsNldXRzNvZjNGMSsKZjlYTVJjdzJCR2R4Umt0V05ZSE1uekVxUjVs
+cmNaZ2M3QTl1T25jMFgxcGJEdnhpa0JNaFlYR2xsMC82WUhnUwpuR3BhWDlYTFJOSXI5TUgxcEdz
+YTlUOGxUVGVNMEZIOTY3aWN4NE0yYTFlYnlzUStCNm81T3BFOTJlRDlBR1RPCmZKLzRCeW9IWXE5
+cS9lMDl4anF1N3BCS3Z4U21oakF6YmUyTmVWWT0KPWtra3QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000073d4c6065a047126--
+--000000000000ec7010065a047817--
