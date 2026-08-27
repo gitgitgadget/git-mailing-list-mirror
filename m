@@ -1,115 +1,134 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D914F48820F
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 16:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EABF486B8C
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 16:18:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787846474; cv=none; b=XMZK5RlVQ1HU5MG3NIpjHwQ2bKQ+UVTESb9TLi+gUBEhHo1h7mAfcavFzl4sVkZa6OnmVMuetF37InnodSTVr3361wmd13amU5vyTvje0YJXYUvnMPgROmkn6OpHa0d5lmlD1iqRsShxo8OUNd/nXK7G9gBUqPYngJK2EMv/upM=
+	t=1787847538; cv=none; b=WMKcohRziTACm7VnG3Ne/aglUZS8AU65d4CDQawMVL6nkoH1GMxCt5uRob9WDYPWMi2I9I9vYJKCHtSQpk3NI2i1BU89O49cPVhRDbq3QbxFICHaiujQFNp/NEsGiMdyUbZdujskasTxuyUDQzYb4j6HOyeVJPDR9Oj78SpXNJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787846474; c=relaxed/simple;
-	bh=kXVfemNBZ1Z/lwLYnmHpS7XsYy7SzdCElGxwLA0PTqM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VsAYNyQ3YPE2ZbhJR4r/w1XaM1H7e8zoZv5if5k4PxUNKKvMi2kneHYZnyOVTHVwG/sfTLHjZBYew5LEQwkD/2wkN79oDZZ8/jtts5KYW5Gk8PJNuERZ0hOLBGTFT8hzeZoxWmGEI7vQsPZ22pFzmd6i3xVo+3+uxn/9pmKYri4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kBisUTUB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BzhS62xJ; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787847538; c=relaxed/simple;
+	bh=7hOkXTk7r8fXflo+dnEIRqGE2l8P16rPcBI68PZxpGs=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=l9zEnCxVwY8Qe8tM0Iy05u1wUxkoI8e1+TH4HYe1CIQ8jP5WVBUK0WIv0u3RMdM4JqtdYiAyth3SnYWVL7Mu7veHQ16qVJGO9n0ANvVdNf9GlTTwTQWdWWXaTVskakigLLo/a3GfiIUO00w1psYQGS2FWRZNsmwxt4G99hreAf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QN5OqDZj; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kBisUTUB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BzhS62xJ"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C2E1D1400166;
-	Thu, 27 Aug 2026 12:01:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 27 Aug 2026 12:01:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1787846470;
-	 x=1787932870; bh=EvnAlmQCediRDIHiAf8WDzGgFRrujtsG8yaOL0BYlsw=; b=
-	kBisUTUBy0sF7M6kQ2X+PqFLNYvOQni2+gM6pmMB4c/dD2DA9svKWqDbNEJO8dp+
-	nWhcl0JpIngXuG0WB+pgADdPK+XGIjH4WolfyaP0qASOm/8s1xvMuOi/aytICk5L
-	GcsPVW3UahF6z72qTtCePbvwf1Vdq0t1y6ePAtAx0XbeoiHVFnv0ejmpi8IUw2qJ
-	sq5MQ/J8OA1DL5HCweZa5mRqLtLkdeGaTyUP9Voiq7WKglW9OBHrU9np2l1JWY2o
-	HTJ2yoAZ/3s8c+jaX1Q1bg6rvV8XyzZWPAVFVt45fWHxeeBod+QkRp1ZE9Tt9eBU
-	3M8NE3ZS8NeLSJsjzNzaQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787846470; x=
-	1787932870; bh=EvnAlmQCediRDIHiAf8WDzGgFRrujtsG8yaOL0BYlsw=; b=B
-	zhS62xJLfVgLyq7Pigk6J053uSU7aclSqkSwzoZF0RtgeejO7SyBB9XfMrEsJCS1
-	Xjqfq7SR79aI6d/FiJwdinW/qAqnzmkVWft6XmtQKHbyMqmzLKoN2dKlCDuYGyes
-	rAJJ5iQzE92sFlhR7KTkOWt0ZNSkknjR0Yp54gclRMhgsHnyUKX31Qa3AEnFFkkF
-	1SURmUCqXXFwvTDPe+9SprRY/AoU3e1UgZuQ25joNOhzJDbRqQAnsD3EVPD+92rR
-	EDq6VXYu9k+0Xj79WZ5U6WWwyDxTzDpmaEhBxQf65U7dhUf2wUOlwOIlIh0Ne7Tl
-	WdrgeLDauBVg1PqSBWRUg==
-X-ME-Sender: <xms:Rl-Qap-CViSryaS27myGH25acRRnqQETkDv0EDyvyRDxDNhZJVqrGQ>
-    <xme:Rl-Qakle8Zn6L7kuJRmRWfaqn_QGyatvzCIbO3x41nLjrrQ1HHhXgxQoV-TlMlBdQ
-    bYtNN9kFKWPkdqsd0PkvpHPjbTK5AUjVjmoAL3GIny4B4RF0UC8Kw>
-X-ME-Received: <xmr:Rl-QavVN2ULjBY8dPkly7BIL5kaGWuXGkzoqCiY5cYgmiNlGldl6HZXFuIx7sYeT41dcTYxhf6MFhvhXf3AsjpEgv780M-gq5A>
-X-ME-Proxy-Cause: dmFkZTGdaVrGWUrPqivybVsqg1ixMvmBiUt8IXaNDYzGG8qfFH91fBaww5pUx/b/MfBhTC
-    3GFCD/CtuCqm0c/vDTknz86Hsrty1FeZkY958Wvf6lnf+1PZ2TrVzvz+gGR+0b83Ir19N+
-    AITHYsJgJR1uOL3CJRM0UMCKR2VRpLKi/suKO06ObEvw+e8JjKyeHZ5fOgCtP/JSNZX4pH
-    HFYrGzMFTdRJMNp4xn4aBkIITm19gXSa7/0QdeucuvoPEi3ltRNI7eNxEm2DG8j9qWe8kL
-    qEPGTfKE5g4t7XHRSmFXdjp1ILlMjqzcaUIsOdBW7RfcfZuilmBB9MF4K8S/OI2BIAvLnD
-    x0JoeAC2oyHN4uUe0xeNEBX1dH3+0sRp2bSdOCvwUy3jjyLuAl4THX7pR98+bhhmosDHf8
-    +IvnBpHbqZndNy/T2QC62Yel2k6ggWFESZP2UF5iWw2j/FTiqkvKkLygSZla6p4PS5AWck
-    uUDdzs1DygKqYkNziNCAaZzuXoCR7ELE4kak4XTKXdBHyJV214Ibg4jCjOnDH2tF/a8f17
-    GdB0CX5bbIPoh9x48yAm5i0aarlRyhMvhOmdtFWncOGFyVUupV5vIVozWmHD3zWDhKLe09
-    P3+rGzrjB229zrsODH0Eck/5j3wKMRaqY5y35TTgH7mEJAlCr6F8BrT4Z4tg
-X-ME-Proxy: <xmx:Rl-QapF5DYwetnnGKE9UWmTcY_rrMcesyzWXyGU7RQgmq8Qq-IM89A>
-    <xmx:Rl-QarfFtsHdyZksWKZi1O8cCwFV_UPrEAFqaDSpGB2FaD2XH9Pf2A>
-    <xmx:Rl-QaqLyJKvKY4sdfogOR9e7DWXVc0NCxEmSs5BqN760VUixwKQccQ>
-    <xmx:Rl-QagEjSpD39Qzdb0yK6ErHPYKCuECCbqBHYXBpDAeP5RvQUQM23g>
-    <xmx:Rl-QagUb_NpWyl0V832lIz_Kea5TTeyF-rumVQi_NVgLkx3YDmJ30cOJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Aug 2026 12:01:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org,  "Michael Montalbo" <mmontalbo@gmail.com>,  "Elijah
- Newren" <newren@gmail.com>
-Subject: Re: [PATCH v2] you_still_use_that(): reword the instructions
-In-Reply-To: <cd741511-b457-4464-aab0-56d8554bf763@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Thu, 27 Aug 2026 08:49:27 +0200")
-References: <xmqqo6epj6is.fsf@gitster.g> <xmqqjypchixe.fsf@gitster.g>
-	<cd741511-b457-4464-aab0-56d8554bf763@app.fastmail.com>
-Date: Thu, 27 Aug 2026 09:01:08 -0700
-Message-ID: <xmqqecfjbliz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QN5OqDZj"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7dbcb505578so28021957b3.3
+        for <git@vger.kernel.org>; Thu, 27 Aug 2026 09:18:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787847535; x=1788452335; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=LDW/ph+lwl68/JGsQhMJwXwthTDEZyoCXbcz+2NElpg=;
+        b=QN5OqDZjQJdFTfGNXnFqdMRL03eq7E+0NATSq0ftEtR7sujm/Voczp7OC3GDmKL0RH
+         8GQtKPbiHaYHs1MJoeD8wV+DsrjF34clG35/SrdCZckZJN7xrbPaaIWx3WW7Ps7vTt61
+         sN9Q2DsTeGm0kRwFYSDSsBPja6E8tuhtJP9tDP+bXd6EGZifiopizjCXsVuyAayI6x3W
+         qU5lvXabmmmzsk1iONcW0JB4+Bb3VcL1qTg98xSDaxWrlXhhJgprNKMHg7aRtDXckfei
+         jwb7s5Avay4xEN3YYdg7hiLJ1rh8WTZJRMHcJ7UplOl8aogY8eD5l8KFOIlbzSPmY5Ja
+         lx5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787847535; x=1788452335;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LDW/ph+lwl68/JGsQhMJwXwthTDEZyoCXbcz+2NElpg=;
+        b=EjWlJWo845gzKmEIOz4Ew6m3HYHOISlTSX434K27wcA1hB0BlvtVLpQVqKfoGWYl8M
+         Q8yuncVJhC9SRaaRJXY+TDVSjyyqt6eBgijg022IBzIeQP8hgjf/gwBkq1dWxrUSCiaC
+         rfQC94ysqf84k/Dt35fHCzMEMDvTDxFsUTb69X9+E5LIamSzhHTUZ0TwuQe0dJAMahcs
+         wb1ItlvPYwVDZX0amkcjWICj0GSL7bkFbwFKPYwJ2wQfhOVGauN/cfh2AqWZYcIORfXR
+         gCGkQNCaCB9FbKqdtJEhiFre6NnNxO2jLJhry0lxOYAjRSiJPA1GlzYmag9iPgl388Sd
+         yYsA==
+X-Gm-Message-State: AFuF++l32u2dwKylgib6teBkImLfuxjQdE+iA8RIN7zlqiOV5MTjsqzH
+	ew2esAgrlhONrhuSZh1wIEuHlerYWtmMwWv2gR8A816sI2Nn1uujpwJryHqfmR3v
+X-Gm-Gg: AR+sD11VR+eepJFhpYXtkjfzyvRu+PbIDZ3BigNxsY7ba8TelrMPGN9WyrE6/SDDOcJ
+	wlmsVGUQux7x5OanIYshSp06+CZ9qtioM5JFePUwkYnzrpY+N1p4JfzvuuF3eXm9frfuArESHw3
+	1zLWfc4vhrVu2ax7Wzkcnfysvrd2DLGzER4HcPjcRScFbhz7MpmCNThhWDziP9MtLzC4o2m7kKo
+	B3KD/SEvH70T5V3JoVn3aFis6idUEGKedFLxn91l3QBYIGD7dXbEcOUAfWkBy2X0lX8oTgk4HHV
+	ObAV9ki24oPU1CByOPrI4J1Fb6KAgLsF8uEVMQbeNm7KYniqrZowrMi66rCQGcFGFc2rr57VRc+
+	YjCXFPdNLFcs87lPXPHUPMsO3OTgdCJHsMPRiRqFKU89v/UUUijU8EDyjEEXFP9nHnFOS6taORS
+	YR6gpedka2BJMKU0jEuF2OYSUi+BDyP7zzw4vl2I8Laqvizgbi9Rh+zGBjVCG/zAvsrVxTOamOh
+	D1uG6qtecqC/DiRmSW3KNAWKpBK6CroHT2t5VGXfNJzalIybrvBCfVh2Nu+X/n1sg4SGr4ReTTo
+	XErGoSYXwvloAy0bvl07qkg77f60Kq3dSEfqpw==
+X-Received: by 2002:a05:690c:6607:b0:85b:946f:129e with SMTP id 00721157ae682-85d6fab03bamr1517267b3.33.1787847534816;
+        Thu, 27 Aug 2026 09:18:54 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:7413:45f1:6c28:eded])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-85b5bc34ed4sm12766327b3.9.2026.08.27.09.18.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Aug 2026 09:18:54 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: Translation issue in git checkout explanation (french)
+Date: Thu, 27 Aug 2026 12:18:43 -0400
+Message-Id: <E65E2F73-4497-493F-8D3D-4DF2E6B8509F@gmail.com>
+References: <d928fd6d-bc80-45f6-b8ff-d21d9a55e18f@dgfip.finances.gouv.fr>
+Cc: git@vger.kernel.org,
+ =?utf-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>,
+ flashcode@flashtux.org
+In-Reply-To: <d928fd6d-bc80-45f6-b8ff-d21d9a55e18f@dgfip.finances.gouv.fr>
+To: Eric Gautier <eric.gautier@dgfip.finances.gouv.fr>
+X-Mailer: iPhone Mail (23D8133)
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Bonjour,
 
-> I was thinking that maybe the final bullet point could say something
-> like
->
->      ... and don’t send a message voting for it to come back because the
->      decision has already been made
->
-> But it *could* be mentioned here instead. “The decision is final ...”
-> ...
-> And I also bring this up because the commit message says:
->
->      and [the message] is not offering to reconsider a decision that has
->      already taken effect.
+> Le 27 ao=C3=BBt 2026 =C3=A0 09:37, Eric Gautier <eric.gautier@dgfip.financ=
+es.gouv.fr> a =C3=A9crit :
+>=20
+> =EF=BB=BF
+> Bonjour,
+>=20
+> Je suis tomb=C3=A9, sur cette page de votre site : https://git-scm.com/doc=
+s/git-checkout/fr.html (que je vois en fran=C3=A7ais, sans demande particuli=
+=C3=A8re) sur cette phrase dans l'article git checkout :
+> L=E2=80=99extraction =C3=A9chouera s=E2=80=99il n=E2=80=99y a des changeme=
+nts non valid=C3=A9s dans les fichiers o=C3=B9 < branche> et votre commit ac=
+tuel ont un contenu diff=C3=A9rent.
+>=20
+> Cette phrase est mal construite =C3=A0 mon avis, ce type de construction e=
+st tr=C3=A8s rare en fran=C3=A7ais, le" n' "dans s'il n'y a ne peut avoir qu=
+'une fonction expl=C3=A9tive c'est =C3=A0 dire neutre au point de vue du sen=
+s de la phrase : bref, il faut comprendre la phrase comme si ce " n' "=C3=A9=
+tait absent, ce qui donne :
+> L=E2=80=99extraction =C3=A9chouera s=E2=80=99il y a des changements non va=
+lid=C3=A9s dans les fichiers o=C3=B9 < branche> et votre commit actuel ont u=
+n contenu diff=C3=A9rent.
+>=20
+> Est-ce bien le sens voulu?
 
-I forgot to respond to this part.  Yes, we could be more blunt and
-explicitly state that bringing the issue back to the discussion
-stage is way too late and unwelcome.
+Avec l=E2=80=99aide de la page anglaise, on verra que c=E2=80=99est bien le s=
+ens voulu:
 
-However, offering advice only on finding a replacement should be a
-sufficient hint for any reasonably clueful person to understand that
-it is far too late to suggest a reversal.  There will always be
-those who demand that we revisit our decisions regardless of what we
-tell them, and those people are unsalvageable.
+The checkout will fail if there are uncommitted changes to any files where <=
+branch> and your current commit have different content.=20
+
+> Dans ce cas, je vous conseille hautement de retirer le n' qui, non seuleme=
+nt  complique inutilement  la phrase et mais en outre produit un risque de c=
+onfusion avec l'habituel ne...pas ou n'....pas qui est une n=C3=A9gation ; a=
+insi, on pourrait comprendre =C3=A0 tort :
+> L=E2=80=99extraction =C3=A9chouera s=E2=80=99il n'y a pas de changements n=
+on valid=C3=A9s dans les fichiers o=C3=B9 < branche> et votre commit actuel o=
+nt un contenu diff=C3=A9rent.
+> Il me semble douteux que ce soit le sens voulu et il vaut mieux =C3=A9vite=
+r d'embrouiller les d=C3=A9butants.
+>=20
+> A toutes fins utiles!
+>=20
+> Cordialement,
+> --
+> Eric GAUTIER
+> Contr=C3=B4leur Programmeur
+> DISI Nord - ESI Amiens
+> Division D=C3=A9veloppement
+
+Afin de la corriger, j=E2=80=99ai mis en Cc les traducteurs ;)=
