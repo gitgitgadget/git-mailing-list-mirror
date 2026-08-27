@@ -1,105 +1,156 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274FC476CE7
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 17:00:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E4B36A342
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 17:01:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787850040; cv=none; b=av/nH0dovw4n4Fe9CRL5zXMxfsX+VFdvelJ5IRUcoHBSu2PiH8iTcQiUZhRXJ8cCntniHLhsFyycgHGB0pR1EMKIvsJM2Bmwz8b0Yf6yRwhh80bQGkdLj9mpPS+h/nijn1opmsOMyvHbL5rGW2PvWRgmur41HOY3KllGyAuZCDE=
+	t=1787850089; cv=none; b=ro5ikliyLEClhnEsb5SorUl394zqkRv46Lgz5LgGY0p9FJN00pbpirqSR/zFGpYPTHjcgy8nXjFiIs1H+2c2TvjY3TgWpX3SMkovLdiKkOVnRKTuVR/KBatoZyWnUu+95RWSYvUix5cQtXtLCtbkq1TLpY/whl9vjsbiOoqFGXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787850040; c=relaxed/simple;
-	bh=8q1dlLnlzrheKpn69qgd1AkAdKgDRc6PDMrJk0nKLrY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pIOo9P2U7M7rnRdLWiyIxG0KHpg8W8V05mUGXx5qX2JZ8ZTOb45cMHAX9tt52nbA8rHWtRNWm+a3RHsscmh7b7B93UrCOWRrjuE5U5MQM0NBha5l5YKW2y6ydXQzx0YujdWzzNzgvkhsprSISd91sf0vaQ1GAf7lDmxNdp/wJ70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hxkVd7Rb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xuw60WrD; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hxkVd7Rb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xuw60WrD"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2A69914000FE;
-	Thu, 27 Aug 2026 13:00:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 27 Aug 2026 13:00:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787850038; x=1787936438; bh=keLXMc56A+
-	Z87wCiMrc31VGbeFKsZ1pHTGsw3RUyhw0=; b=hxkVd7Rb2k37b6q02LeNKgl/WN
-	7LXWMixnWkhbjq4aRXmyj1jA2Pxmwkc/RIMGEJ3JJvXw6t7FeVoFWeHUiAQOMa+m
-	rUKEvEJfAiyUnrMQHaVIjf+exxidRJZXb7QXDKJSln/YfuwY2IEv+E5sDzLKB6pi
-	uV+3xE84/N6Du31m5C/Pufl+6OTQjWUQTOxVF6MetLOOGlF3jTQIp/XcJC0miH2I
-	3REu8Mki62nG3Dy3ttnmvhhO2cxORIQN19vohltBustZ7A4r3thVbLLQKviClEeX
-	ZwQDTlK922Z7JW4XgYzZnELAVZhIHin0STKzWWvDPtIgKf2IGp835fbIEsQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787850038; x=1787936438; bh=keLXMc56A+Z87wCiMrc31VGbeFKsZ1pHTGs
-	w3RUyhw0=; b=Xuw60WrDXvhxCYXmHzgJJ1cOnEKb4X58E3ESUCGZsyjCVMwi8TP
-	PfisDc0Jk+VHnaSbcqJsMgr2KtvcdQlFSggTDZTr+HMg2yG05GuT7iCLIL6P+TEN
-	Id1QYJ3ZBEoMdy8lOiHE2QaMxoy8UXSRhJskB4gc/0OHMbJoKME4T6l82u6/rgBn
-	N0olRmtrgirViin+skmAyya9oLjq2Mx870Ihd7rF6z/hYcuikB+tkJn4xHzRdsq/
-	dO47f7pY6Rz9MNncVr4PyUrCsIubvRwXRElOKHiThn60QI/B/Z3IKjlZayNgrnnt
-	+Ux8RpLVIn2tjrYha8rI9B7TR9j4kfRFnDA==
-X-ME-Sender: <xms:Nm2QahdLc7wToixSxi2kcp05qbyM_qSkyLPJcVvpevD6swg-0w_7NQ>
-    <xme:Nm2QamNj8GCQDUnEWZ3G7CkDj-fx35Q0tfqvy2CCZzNBRm0NAOKP9Xn5j5I9xiysK
-    ycEpUJ1OnVjcK694JuVReSkW5y4-vOUh5dKZqdtxgE1bLQDfmzN4Rg>
-X-ME-Received: <xmr:Nm2QavhQ0yaqYreUMvb2lJr6mnBHGmwH9t1rPFikM1CQyoLavyv_AnDI4yUKI8HajTqlqB3kKCSOQSrJ0LXYcLve4Rpn4ycwlQ>
-X-ME-Proxy-Cause: dmFkZTEYmDytq922yXb4hZTtZL3pQSAgNcKg5izpqyYC8fSiwn/eB3vd8z8AOn7OkdAuYM
-    eW3DGQe7xDLLK8+VKgniig28qf25iptoX4Vvkh6PWRQtwKvI5bTwY0OlKW7HRThrPQJsAv
-    NHsWs2XBvZ3u3IVDkESMSmwgczplWng2wsc6PmKlz08JrRm+mCkbsFtlo7oAW/zygpZAfM
-    EFVs5q+ELxkml60nZsAJOmUqEdMnc27mTPOeKt+OMzrpevvDgHR2/9RQncFxp1pO9268vV
-    rzADhhqsmCTcmXCoNfUu/svkO9cNNyLkfyZr/0fysMixStI1rB0oXBgBc43gzLfXB0iVa3
-    Z99a9yKI5M/jLk160ckCIpby8Vp1y/WXMd1YGXYVt/Sy9VhwCsPmoTNnmiaTmTjLzWh0NZ
-    DIfF6/zGM7t9tbCsWRlggAmOnakUy7TUL1+J8aprFsHdUz76Q5Sl4iEmUHHnN7VYP4nQgi
-    raZ6MUfCNQvfnnQak+0lAtc3sc2MloEcJ/AYXi7NEyAjCrnnLa5r9D7pVs99qFDfnvIqeS
-    FuLdNAQTdsFEnCiJwGnEHCbCPt4Hwyk0fjmw2AIDgLPHJz9snnYCCF2oSDlhaFTmQNLhWj
-    Gq1azbIBlklZwDyVnP6qL4q2B78rWLr+SceA9B7hsqO8jIKrDkIK8i0laa7w
-X-ME-Proxy: <xmx:Nm2Qap1XePAl_biUmu7WDHX-nEC5IVo2meRL6GmpymTEKPUk-jEP-g>
-    <xmx:Nm2QapiR8RmdECSVxriEc5kAHEWe0T0xhfN7cm9wbO9cgATBrmFenA>
-    <xmx:Nm2QapfbX2vdZcy9zcOiZBXWgvjUVzlq6TjX8Kr0snT95kLfu0QBag>
-    <xmx:Nm2Qask8OcAlZK9WvQgAyWaaWn8cDwzsF72FCeJrY454pOmtGvbTsA>
-    <xmx:Nm2QajBdcDDCgG2v3t9PwjABzOQJ2OBgp9-7Edv8Op1RfO_GKxnE6GOt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Aug 2026 13:00:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v3] worktree repair: detect relative path in .git file
- correctly
-In-Reply-To: <CAF5D8-vocLWba-rvKxy3WWB1ZHTh1+eRcRWiMqv0M-CX56Y71A@mail.gmail.com>
-	(Yoichi Nakayama's message of "Thu, 27 Aug 2026 23:38:15 +0900")
-References: <pull.2205.git.1786799480344.gitgitgadget@gmail.com>
-	<pull.2205.v3.git.1787344586470.gitgitgadget@gmail.com>
-	<xmqq8q5zyvwd.fsf@gitster.g> <xmqq4ignyv1z.fsf@gitster.g>
-	<CAF5D8-vocLWba-rvKxy3WWB1ZHTh1+eRcRWiMqv0M-CX56Y71A@mail.gmail.com>
-Date: Thu, 27 Aug 2026 10:00:36 -0700
-Message-ID: <xmqqse3za47f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1787850089; c=relaxed/simple;
+	bh=CjPBIhXsRT7GxDO9/N9iQ4I8+gMKeosGZ0Q9YV1NYNw=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=lm0Bafmktgy4p+VuG2+8jmcOuwRaoesOIvbAzlSwuVntyXVJe/dYcoKe7WCGI7V5BNwEGCgNIVCcrrO61erlvkWDe7A1eRVws3RuuEj/NtrE0N2mAc+1xDAAbrxoU7B301jBDe/TT50ozrCzL3+af1ObvIkzOxTqUrz7mlDIogw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net; spf=pass smtp.mailfrom=opperschaap.net; arc=none smtp.client-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opperschaap.net
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4hW6xH6Zc0zKvy6;
+	Thu, 27 Aug 2026 18:51:47 +0200 (CEST)
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of wesleys@opperschaap.net designates 2001:67c:2050:b231:465::2 as permitted sender) smtp.mailfrom=wesleys@opperschaap.net
+From: Wesley Schwengle <wesleys@opperschaap.net>
+To: git@vger.kernel.org
+Subject: [PATCH 1/2] git-svn: don't print v1-layout migration noise when there's nothing to migrate
+Date: Thu, 27 Aug 2026 12:51:33 -0400
+Message-ID: <20260827165134.848207-2-wesleys@opperschaap.net>
+In-Reply-To: <20260827165134.848207-1-wesleys@opperschaap.net>
+References: <20260827165134.848207-1-wesleys@opperschaap.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 4hW6xH6Zc0zKvy6
 
-Yoichi Nakayama <yoichi.nakayama@gmail.com> writes:
+`migrate_from_v1()' unconditionally announced and created `.git/svn'
+when no legacy `refs/remotes/*' metadata existed to migrate. This
+happens for example right after a `git init'.
 
-> Are you concerned about the lack of explanation in the commit
-> message, or about the functional differences between
-> `read_gitfile_raw()` and `read_gitfile_gently()`?
+Defer the logic until an actual candidate is found, matching
+the existing pattern of `migrate_from_v0'
 
-Mostly the former, i.e., the commit message too sketchy.
+Signed-off-by: Wesley Schwengle <wesleys@opperschaap.net>
+---
+ perl/Git/SVN/Migration.pm  | 16 ++++++++++------
+ t/t9107-git-svn-migrate.sh |  7 +++++++
+ 2 files changed, 17 insertions(+), 6 deletions(-)
 
-I now understand that these two functions need to be more different
-than just the _raw() not calling strbuf_realpath() and the other
-calling strbuf_realpath().  The functional split is fine.
-
-Thanks.
+diff --git a/perl/Git/SVN/Migration.pm b/perl/Git/SVN/Migration.pm
+index ed96ac593e..a6de4b14a8 100644
+--- a/perl/Git/SVN/Migration.pm
++++ b/perl/Git/SVN/Migration.pm
+@@ -84,35 +84,39 @@ sub migrate_from_v0 {
+ 
+ sub migrate_from_v1 {
+ 	my $git_dir = $ENV{GIT_DIR};
+ 	my $migrated = 0;
+ 	return $migrated unless -d $git_dir;
+ 	my $svn_dir = Git::SVN::svn_dir();
+ 
+ 	# just in case somebody used 'svn' as their $id at some point...
+ 	return $migrated if -d $svn_dir && ! -f "$svn_dir/info/url";
+ 
+-	print STDERR "Migrating from a git-svn v1 layout...\n";
+-	mkpath([$svn_dir]);
+-	print STDERR "Data from a previous version of git-svn exists, but\n\t",
+-	             "$svn_dir\n\t(required for this version ",
+-	             "($::VERSION) of git-svn) does not exist.\n";
+ 	my ($fh, $ctx) = command_output_pipe(qw/rev-parse --symbolic --all/);
+ 	while (<$fh>) {
+ 		my $x = $_;
+ 		next unless $x =~ s#^refs/remotes/##;
+ 		chomp $x;
+ 		my $info_url = command_oneline(qw(rev-parse --git-path),
+ 						"$x/info/url");
+ 		next unless -f $info_url;
+ 		my $u = eval { ::file_to_s($info_url) };
+ 		next unless $u;
++		unless ($migrated) {
++			print STDERR "Migrating from a git-svn v1 layout...\n";
++			mkpath([$svn_dir]);
++			print STDERR "Data from a previous version of ",
++				     "git-svnexists, but\n\t",
++				     "$svn_dir\n\t(required for this version ",
++				     "($::VERSION) of git-svn) does not ",
++				     "exist.\n";
++		}
+ 		my $dn = dirname("$svn_dir/$x");
+ 		mkpath([$dn]) unless -d $dn;
+ 		if ($x eq 'svn') { # they used 'svn' as GIT_SVN_ID:
+ 			mkpath(["$svn_dir/svn"]);
+ 			print STDERR " - $git_dir/$x/info => ",
+ 			                "$svn_dir/$x/info\n";
+ 			rename "$git_dir/$x/info", "$svn_dir/$x/info" or
+ 			       croak "$!: $x";
+ 			# don't worry too much about these, they probably
+ 			# don't exist with repos this old (save for index,
+@@ -120,21 +124,21 @@ sub migrate_from_v1 {
+ 			foreach my $f (qw/unhandled.log index .rev_db/) {
+ 				rename "$git_dir/$x/$f", "$svn_dir/$x/$f";
+ 			}
+ 		} else {
+ 			print STDERR " - $git_dir/$x => $svn_dir/$x\n";
+ 			rename "$git_dir/$x", "$svn_dir/$x" or croak "$!: $x";
+ 		}
+ 		$migrated++;
+ 	}
+ 	command_close_pipe($fh, $ctx);
+-	print STDERR "Done migrating from a git-svn v1 layout\n";
++	print STDERR "Done migrating from a git-svn v1 layout\n" if $migrated;
+ 	$migrated;
+ }
+ 
+ sub read_old_urls {
+ 	my ($l_map, $pfx, $path) = @_;
+ 	my @dir;
+ 	foreach (<$path/*>) {
+ 		if (-r "$_/info/url") {
+ 			$pfx .= '/' if $pfx && $pfx !~ m!/$!;
+ 			my $ref_id = $pfx . basename $_;
+diff --git a/t/t9107-git-svn-migrate.sh b/t/t9107-git-svn-migrate.sh
+index 6d7d2aa491..a27f7f6171 100755
+--- a/t/t9107-git-svn-migrate.sh
++++ b/t/t9107-git-svn-migrate.sh
+@@ -1,15 +1,22 @@
+ #!/bin/sh
+ # Copyright (c) 2006 Eric Wong
+ test_description='git svn metadata migrations from previous versions'
+ . ./lib-git-svn.sh
+ 
++test_expect_success 'migrate is silent when there is nothing to migrate' '
++	git svn migrate 2>err.log &&
++	test_grep ! "Migrating from a git-svn v1 layout" err.log &&
++	test_grep ! "Data from a previous version of git-svn exists" err.log &&
++	! test -d "$GIT_DIR"/svn
++	'
++
+ test_expect_success 'setup old-looking metadata' '
+ 	cp "$GIT_DIR"/config "$GIT_DIR"/config-old-git-svn &&
+ 	mkdir import &&
+ 	(
+ 		cd import &&
+ 		for i in trunk branches/a branches/b tags/0.1 tags/0.2 tags/0.3
+ 		do
+ 			mkdir -p $i &&
+ 			echo hello >>$i/README ||
+ 			exit 1
+-- 
+2.55.0.827.g48ce2c92dc
 
