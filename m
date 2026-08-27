@@ -1,155 +1,137 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7102C2BDC13
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 01:23:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787793788; cv=pass; b=FEGzJJMKVVo1drdkhLvDyGLtyslzq9NnkYvkM3gpnYlB9Ae/5iH0oefYoXHK5SkYTgYV5WqbU8wGJyEkRcik+LlgbadmmDUv4i1xbwiGj9CKeqsaF+efwMh3NAMfOVqwl710mLfmopcDBto7Ys96cUQ8rCn2syDnM5XQhxxz9v4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787793788; c=relaxed/simple;
-	bh=6l6I6gjJ+ibIkUEw3BdCrokOc2OeA1G+3QEPwajBjNk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ChZuN2rjnsTXitM0glrGWt1duOuLWScTrUVf7Qe/5LzAYIqmnhMAr9cZuxdyKRVEWH5eIsjoVYsPegd95zjNXSP/UHyL42nEsnUvIjvkWR/H6Wku+hjnNYUjXNe/wCIaLzvLlQ24u1rbqDCrM1QkfZpwHdbdJBf48szb83S2S+E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EowxOCDP; arc=pass smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F26E3644D4
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 04:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787806525; cv=none; b=Kncbg3QFshQSBmJvR9f4KUH+VEq/Fz/ILS9ZDZWBslkAjcMWr6b1tJyq0qx8Jco7hOVV6NYgno3yXzVK7YBzn73JuN87gbeLtU5rILkIO1+SVWsr78HHOEQmWC7XhnDRmnPfZ8Cu2BvDAnfg55vIEXgy4MmAyiJ5qCf3yat6SLs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787806525; c=relaxed/simple;
+	bh=HwjWxs5OhcbLbqrYSXYXAc9DuEGhECx37IIpaobGA5Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jf4MQXh3+ZqONi6pZgRET0cYHcoVlkuoz3C4mr2PVBsbbUA1NfFGE6WxxOUfyqK0zr534ocfhI+tfm3XE1yddi10XV3i0Si8bbA1gE6cLS3z/QhbGXaagO62GCd1dCCRVWVYlhYvxljeBQLZfHqFVMTJi8moylmfSzKFZxgV9cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ciO7/4gj; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EowxOCDP"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-4b381337e1fso322118b6e.1
-        for <git@vger.kernel.org>; Wed, 26 Aug 2026 18:23:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787793786; cv=none;
-        d=google.com; s=arc-20260327;
-        b=a8Ey5qDtDBEn+yQVQNcxI2ha6DFj7qecL0095btHldOWwLAhb7biCOScj8F+1fLW9k
-         6ozBsYr6rlC1B1f2XwH66Ar0xQDs8TT74FZly6kvFJ+esMllbOATCQtmN1A6lOtU/v4t
-         BagVDAHYsW17CRLb4z0XqurwYA9+Y7rO8tJTN9gvwn5CSTHyRKmI5CRGl3lo3qxB7Lu+
-         7SdNTdp/1T9fUGAANP5NdYAI9nGKTz4BPHPu6f5w1fr3Ps8aa6eLwivRJfQDE+AHQWpg
-         HeVTkr2W2oWbcizu63EpjlfSjvkJuuzOWri0kDjGro2N/aTx5s+g4SjrPVkuHfU1/f7+
-         e7sg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BSixYvDfB7AnKGoG5qKysz4ayYinnKw2WIrFGt5W/QY=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=tAhiPqYGlGy/NHLgIb0Y+/Md+O46PEGyJ6yDCjiUtp9zEw3kOUzkVLl/ooG00Cj+tC
-         cgZ2dSMX9+aKaGrXtqUpHQw/dhw3rmfy5rwDgS2bkKWwL1yOhpDJmZTzb9r4cuDC8Jku
-         VuJDuG7UYuov9hrKBbeHFCfIcG0spe5k6GJy6kAhBwBttdyxIJHB1gaZ5Lz44Pwtwycr
-         JfWJzxu/sAYUizcwc7KJvACRsKmRU5zW6jqB8cvArEein9nsZ6wzxjNIWe2H4kcb5q76
-         KRNnljMEfqAk1bdEaG4sNjiTx8F0ykBJkJN9gudGV90f7BxpIJhf5sxAM5srHnaWs7/g
-         e5FQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787793786; x=1788398586; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=BSixYvDfB7AnKGoG5qKysz4ayYinnKw2WIrFGt5W/QY=;
-        b=EowxOCDPcCegdF11eS/SmTVelPu8eF3XcLZtLkpHbTB6DJQC+thfDcZHwrz3t1cfuy
-         rXFm0IW4hW9DMsHmoWFugLGJVmyFFnwLxQsvkzDqS7J1YRffRKyrUJ2xDWeXJSkD7J1O
-         omZmu+VVPYHkjFpTOqCj3ChP269av02cao8K9aKYu9xTWLQEio2V1Lx5Wx7H4/LrTEVM
-         RFbbTLxpqFCLctJv4p9m/aAIKvc6aDpiu6hzxXE1yh9pUQ4b0yzeWKgPCXooycXi3SWw
-         4am79MP0RqsSlx6Tq6WRHKlCo1axaXNStirJ5VdZI3S5L1xlfUTk+ZSkb/75FNLIgJWU
-         t3bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787793786; x=1788398586;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BSixYvDfB7AnKGoG5qKysz4ayYinnKw2WIrFGt5W/QY=;
-        b=XeR/U8+32PLgQdhBB9hIxD6o0aLkqzB8ZJBX330JygaY2EUCTr0k/yIpkv4c1ruNyx
-         8doOYejLLLA1czl77UoB6LvJPESKx1fvqags2vHRJ+vbmm+cdDFfUoKMaSR/M9yjLm6Q
-         /WupOW7/glUa7txcbgC5jHelwg+JcuLFrLQay57j+RQwlKAOmv0Wfseeu+Z7pEbyjytS
-         70BdgHSvmHFfi7NcZe8BPhlS5QTzey3eUXNrWgLaZ2NLG7Ojp2HO30NCr/l14szlbrgd
-         pKI6spe7R3lvjseuCYMpUpPwgVEKM3bWhP0c+HKwwHtwBUeoozd2cbRHRbXS1+RyRbi8
-         UA2A==
-X-Gm-Message-State: AFuF++lGx0hrl1NNEP0lprqQnUe81CivXRBo6qWej3ZDO8GUdsNOnEFZ
-	etqi5KBu2GJOJM1UuKPLtTiu4jBP1x0WBo5e3PX9NNTQOGhoee1rEMLqs9OkXUuEK9eSy7ZyARL
-	lZfgSasdJQecJH02UGB/j+ARNlvGH5gSS7g==
-X-Gm-Gg: AR+sD11j7I8je+JrstY4X98g9p5gfHWAVDUMZerTdydxCyUivhYOKFOMD9Wz1L8qrh4
-	ds5m8mg1tb8SqOvye4BQ3EkT1CqehjR7biZmWFWZsUqbhFCHK6eup5HoiuO0GE4/0oZ5I4sNpDM
-	+W7z+L8A3Q9/wiuHjfAZ3igOLb5MsAKjC5K2dWbK8CSc/s26nBjCxbpYP5/1ZA3ZfvMK44tj5aB
-	ecwH+DMCmfcDdZ22qRxKyh1L96+EWesYaccum6pboZErZAxEeZEM6M3Jx58s9R/uydAiYoEYXuU
-	xyCWj6ZuNL3Y7KoW/PQpm3tT4SqFENkaWaVStWQTdb+3BAHHAXFm45oRJyJr9HdDPUnCGnHSgs4
-	a5C0CjDZXQAPhRZMHdqTAonKPKtGYYKQW0vnKeJ7+sg/4zQ91KPNnUgNK2K4+hmo=
-X-Received: by 2002:a05:6808:138a:b0:4b3:7dcf:b77d with SMTP id
- 5614622812f47-4b37dcfe96bmr4202924b6e.2.1787793786372; Wed, 26 Aug 2026
- 18:23:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ciO7/4gj"
+Received: (qmail 6791 invoked by uid 106); 27 Aug 2026 04:55:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HwjWxs5OhcbLbqrYSXYXAc9DuEGhECx37IIpaobGA5Y=; b=ciO7/4gjK4xyMdijnwrrx+N1ZWJXOurjqYHxXuBHukLum/ReQ7YykuZFiMLEuL3J3Qrceh4ZFfhRKe3/bbx21K/OK5YMoeIfRqsFeMPBz7gJfhQ9nG+TxJEC3TdZ+mJ6DBxysQ3L6aOK72fAYY3qsEdUhv1X+BrPF5d2F1hh2d+cOx8++21V9vwPfIVO9sQhnoBEa3eCYQG1NMXGQoiQ1FodRCJdO7yXiDh1RdRZXBHebjescGvh7bdC5qq3TAA86qVJaYcGA+iSHSsUWlq20Xj1GC9QsX9VCSBPMxcGVXMgriFl27oK+8rhv9e49IyCz4FyYzG9ZJM+LAojegEzOw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 27 Aug 2026 04:55:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 33976 invoked by uid 111); 27 Aug 2026 04:55:20 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 27 Aug 2026 00:55:20 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 27 Aug 2026 00:55:15 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] die_for_incompatible_opts(): accept more than four
+ options
+Message-ID: <20260827045515.GA176544@coredump.intra.peff.net>
+References: <20260826233152.1703497-1-gitster@pobox.com>
+ <20260826233152.1703497-3-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqo6epj6is.fsf@gitster.g> <xmqqjypchixe.fsf@gitster.g>
-In-Reply-To: <xmqqjypchixe.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 26 Aug 2026 18:22:54 -0700
-X-Gm-Features: AcwNN1XPaFZRD1OpotHlwY1oeUYWkqun_zwgbFFKlT8wicNzaP50FX2Z_D1w65k
-Message-ID: <CABPp-BEnTWbk7m7jRoBG7Bp6vT62GRHoEfXg7=bJh111BqSx_A@mail.gmail.com>
-Subject: Re: [PATCH v2] you_still_use_that(): reword the instructions
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260826233152.1703497-3-gitster@pobox.com>
 
-On Wed, Aug 26, 2026 at 10:50=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> The message is overly long and may mislead readers into thinking
-> there is recourse other than adopting the new workflow.  Clarify
-> that the message is there merely to help them find a replacement
-> workflow, and is not offering to reconsider a decision that has
-> already taken effect.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  usage.c | 16 +++++++---------
->  1 file changed, 7 insertions(+), 9 deletions(-)
->
-> diff --git c/usage.c w/usage.c
-> index 3f0118ab2a..365c0bcb90 100644
-> --- c/usage.c
-> +++ w/usage.c
-> @@ -386,21 +386,19 @@ NORETURN void you_still_use_that(const char *comman=
-d_name, const char *hint)
->                                  STRBUF_ENCODE_SLASH);
->
->         fprintf(stderr,
-> -               _("'%s' is nominated for removal.\n"), command_name);
-> +               _("'%s' will be removed soon.\n"), command_name);
->
->         if (hint)
->                 fputs(hint, stderr);
->
->         fprintf(stderr,
-> -               _("If you still use this command, here's what you can do:=
-\n"
-> +               _("If you need a replacement:\n"
->                   "\n"
-> -                 "- read https://git-scm.com/docs/BreakingChanges.html\n=
-"
-> -                 "- check if anyone has discussed this on the mailing\n"
-> -                 "  list and if they came up with something that can\n"
-> -                 "  help you: https://lore.kernel.org/git/?q=3D%s\n"
-> -                 "- send an email to <git@vger.kernel.org> to let us\n"
-> -                 "  know that you still use this command and were unable=
-\n"
-> -                 "  to determine a suitable replacement\n"
-> +                 "- Read https://git-scm.com/docs/BreakingChanges.html.\=
-n\n"
-> +                 "- Check what others on the mailing suggest as a replac=
-ement:\n"
+On Wed, Aug 26, 2026 at 04:31:52PM -0700, Junio C Hamano wrote:
 
-missing "list"?  ("mailing [list] suggest")
+> To avoid allocation costs, the implementation reports only the first
+> four mutually incompatible options used.
+> 
+> This behavior is deliberate.  If a set of ten options were mutually
+> exclusive and a user specified seven of them at once, they would be
+> told that the first four cannot be used together.  If the user then
+> tries the remaining three, the same error for the remaining three
+> would be reported.  It is dubious that there is any practical
+> downside to not reporting all seven incompatible options at once,
+> especially given that there are other three mutually incompatible
+> options that the user will not be told about with this message
+> anyway.
 
-> +                 "  https://lore.kernel.org/git/?q=3D%s\n\n"
-> +                 "- Send an email to <git@vger.kernel.org> asking for he=
-lp, only if\n"
-> +                 "  suggestions by others do not work for you.\n"
->                   "\n"),
->                 percent_encoded.buf);
->         strbuf_release(&percent_encoded);
+It took me a minute to understand why we would even want to have an
+arbitrary-sized input if we are capping at 4 anyway. The answer is that
+we are capping at 4 options _that the user actually specified_. But the
+input can be the total set of conflicting options, which is greater. OK.
 
-Otherwise, looks good.
+Really we could cap at 2 if we wanted to be technically correct, but it
+might annoy the user to find each pair iteratively.
+
+So that makes sense. Of course the follow-on question is whether any
+callers actually want to pass more than 4 options. I don't see any
+patches adding new calls.
+
+> -void die_for_incompatible_opt4(const char *opt1_name, int opt1,
+> -			       const char *opt2_name, int opt2,
+> -			       const char *opt3_name, int opt3,
+> -			       const char *opt4_name, int opt4)
+
+One nice thing about foo4() without varargs is that the compiler will
+tell you if you messed it up. The obvious downside being that you have
+to count in order to avoid messing it up. ;)
+
+But now we can forget the NULL terminator and cause a runtime problem.
+So we probably want LAST_ARG_MUST_BE_NULL in the header file here:
+
+> +void die_for_incompatible_opts(const char *opt1_name, int opt1, ...);
+
+The rest of the patch looks OK, but just a few observations.
+
+> +void die_for_incompatible_opts(const char *opt1_name, int opt1, ...)
+>  {
+> -	int count = 0;
+> +	unsigned count = 0;
+>  	const char *options[4];
+> +	va_list ap;
+> +
+> +	va_start(ap, opt1);
+>  
+>  	if (opt1)
+>  		options[count++] = opt1_name;
+> -	if (opt2)
+> -		options[count++] = opt2_name;
+> -	if (opt3)
+> -		options[count++] = opt3_name;
+> -	if (opt4)
+> -		options[count++] = opt4_name;
+> +	while (count < ARRAY_SIZE(options)) {
+
+Using ARRAY_SIZE() is nice, because we could in theory bump this 4
+later. Though sadly here:
+
+>  	switch (count) {
+>  	case 4:
+>  		die(_("options '%s', '%s', '%s', and '%s' cannot be used together"),
+> -		    opt1_name, opt2_name, opt3_name, opt4_name);
+> +		    options[0], options[1], options[2], options[3]);
+
+we still hard-code various count values. It probably would be fine to
+allocate a buffer for the message, though I guess that pushes
+translators into lego-land.
+
+> +static inline void die_for_incompatible_opt4(const char *opt1_name, int opt1,
+> +					     const char *opt2_name, int opt2,
+> +					     const char *opt3_name, int opt3,
+> +					     const char *opt4_name, int opt4)
+> +{
+> +	die_for_incompatible_opts(opt1_name, opt1,
+> +				  opt2_name, opt2,
+> +				  opt3_name, opt3,
+> +				  opt4_name, opt4, NULL);
+> +}
+
+OK, now we wrap the arbitrary-sized version. The "3" and "2" variants
+could probably be cleaned up slightly by calling it, too, rather than
+passing dummy 0/"" values.
+
+-Peff
