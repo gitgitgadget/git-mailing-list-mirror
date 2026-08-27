@@ -1,63 +1,63 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5DF3F104A
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 19:56:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2473783B4
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 20:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787860608; cv=none; b=EZiSLiHnzGN41O4vcxzjWFOtpsMVSQKV8nC9l76DyggX7uw0cSzfRfNFgbWnNnMN3xcEolsBioqAOs6hpTUGZNPDcAOTLfshQ3IrRboXN4d9z83uDXMXYS8Dzb1aCc0KueSuWwsCe0w3fjPbhTM/r+7nqwZfL6EdIFA3R2lZ6WM=
+	t=1787861391; cv=none; b=fRNuWXwadODfk408iOPWVGJOl8bIVxiUWQ2N7O1BChUivLDQXEYVBenQqZHO/ydBnig/iuqD3DYQ4bY36ftTgGb9Gv9Et+wcret4lduhO9ZYzwwtP2rUbsE1XhGG66Um0wuavuXfLRK0CBYWKKwXspgCNbeLFzkGIQ9Py8Rm5Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787860608; c=relaxed/simple;
-	bh=1GOHsGHvdvXIZK9JWwAqKRaLlEY+BXiyojND3R24bXg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=r2WiaCg0T8Uip2EwEJ17JRfyehsnI9nmT7tny/ilmzOJWvt+ohPnq+pXvhR9Yx1onhw9hq12Q4jqDrBeZzqhFtoXic9XVXcGhl0j4GeSZCOUp+n97xMsmOUtbJ5Qcj+M6pwVz4Dl9La1q6MMYjxI42BgcnddEGpfM6f7vlJBNLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fYOCcZMN; arc=none smtp.client-ip=209.85.215.178
+	s=arc-20240116; t=1787861391; c=relaxed/simple;
+	bh=HIkJisONdVVHhrhLvsKNlVCrH/YXgoChy7dZsjoccAU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=Yn9CUn0n4nyEDQ4M48973R5LMhBe7s7BhxBqZ125EUvSobVC3ihHdlGsuLJB5vb7nxje5RG8gIH6FDYWo9Tcf6+tjzZsjmGINSgy9o8iMYC/86AIqwqrZPc03e8DBvoz3KjU7uewbVmKqzY2zmJ/8BZ34zc/I8URieST4bnbYh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GPWDhTDu; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fYOCcZMN"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c96c92c0980so211406a12.3
-        for <git@vger.kernel.org>; Thu, 27 Aug 2026 12:56:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GPWDhTDu"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2d712281f8bso3084595ad.1
+        for <git@vger.kernel.org>; Thu, 27 Aug 2026 13:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787860607; x=1788465407; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=gmail.com; s=20251104; t=1787861389; x=1788466189; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=1GOHsGHvdvXIZK9JWwAqKRaLlEY+BXiyojND3R24bXg=;
-        b=fYOCcZMNQn/3r4ZgCzR2ZuDbo8UQH7KQDkk2/BMXhby9HPgeD7HBv1yg0FC7vOCqAT
-         sPkllAcu9+wDQc/Dnjch/2GqFLg+ZmM6E63PXtUWn/ZoHC20J5Dr1TnJ7YEPvAsEdPYR
-         NHU3wfGRspDTje8f0zQ+UDVl1Faq5ug71CJl2qaoxdIEpxzTgSn9my9tBWyRs2aPmAZl
-         IUOIMMxezbt8BbQ+XvBHc2G1t1kuVIaokTDydG4IIrZmjsED/OutkDAa25MGbAj2ClLy
-         WUaPVGNCMyZ9DKPIKi/UHuIUxERlRXCfp1OFt/VQu//h+Z0D8WDbb6/peH5TGyj6dcUl
-         hQSg==
+        bh=cJC0ycAbKlexHsRdRcKuk7xKuhoqLGIpSmJbZDE9dmQ=;
+        b=GPWDhTDu35tvHtt+IRjPfmDj9kZQmtsNmpav8gkPzyDK1rjltzXtkibU8kADJWAUlo
+         9qMMfvAMuS06qnB20xu6YJYJcUrWUrxaGWEe84mTinOwGlYIpqtgs3McZEexZiAoa+KR
+         JMgdd1UR69EjmG2HjinkkkpxjtO5fu1RlstxZfrTIZglgwLWSe0kKegJ2KL5eG6yQwk+
+         +LYII+fOD2VlfjMsqCwZUWCkHqZeGVBwe+reH35F1n5olDSfui5vhST6H7msGYOyU6JL
+         yUvbs8lvU1TCb8qM+P5T2LjhIg0HvaDy80tdSp6SN36gCgrcUjGfLdbtOj1NAP4VLc0v
+         zigQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787860607; x=1788465407;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=1e100.net; s=20251104; t=1787861389; x=1788466189;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=1GOHsGHvdvXIZK9JWwAqKRaLlEY+BXiyojND3R24bXg=;
-        b=ipnuCJlYelQ62qTUuVitC3TI8uydYM0qF3jBxqwHH749KPYW4DqCNxiwJ+hXo4UhVO
-         eGqzA6qXTkhdEGu3d2hLCz3Sjz71nYNzppW4w/iE3D58BU4sgfX3xinBdj+dZwgzF04M
-         1+p39abPRLjhBJ9V2GrH62MIbXcmnH1laIe4ml1PKpS38lQE6tiRCYhS06jSPOOIBifS
-         jjlecD1WhQxBE7p0p0Xmau+R8vK4G9ruBxkJwUQndtx2gfrPimtcr9IdutBoo1OsB0Rb
-         XOULrRFZoLAdrx3sl+v0KNvbhqz9cLrzbs7R8WfkYQ0Ps4SUeu04ebKQpkA2KU/iLHWz
-         lUIA==
-X-Gm-Message-State: AFuF++mLkmKoQgiSzlx+FrNjGPO+x/r7Ky2OnJseyxIkBtrarmopbmy/
-	B62NDwuith7iDx/JQbZDgDvIqhbVfyzm1EBPM9aj08a8kHZCTDVZY7RyDAcggw==
-X-Gm-Gg: AR+sD10ZiLw2z+5hWOFrhAr/SniTrmDFqkzCGDSYg5B3RFtzXoiRkgdvFHp/lIfXcSP
-	3AKCRmIMlHCwL8C/JebV1+ljH3hmhGWeZ2B/nFXdQF+DI7cn4R60DhqNHKpm3RmbZ9NMr2MGQiJ
-	tbGGaaMZGkFqDORgwB8CsJ99E3V4+DgTxqGlilpMCZTDCFty66bdi/l9Jxiw+IuDzkILZsrgOJp
-	0jX0toO5r8MWa21eKRPc9d7LUHGBS5xXriYQaRH3iJNasffNVxUhVXHnngyO4K/6iAWuHhWHvrL
-	LcdE9/lndOqNLpT8q1uQnofGUefBXMY2FcNJoEdOZt4qyiHTort3Ph9TqtBRoSSM1mApe90nlkS
-	xtKK7BzjojW3S5/ebGcezu0uu/elGsYFQliDbHbSKMX+5P7PllmjJfja/yTTX4GW5BFwkGFBVfC
-	0y5YyDGXvvvnCLqRssixCYyMjajh/lRfGr5CHQd6HQF3OqjRi2y6c+v8M=
-X-Received: by 2002:a05:6a20:c998:b0:3c4:3767:adb2 with SMTP id adf61e73a8af0-3d26657e1dfmr2938815637.1.1787860606650;
-        Thu, 27 Aug 2026 12:56:46 -0700 (PDT)
-Received: from localhost ([117.213.200.3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3283fa89e8fsm32701819eec.8.2026.08.27.12.56.44
+        bh=cJC0ycAbKlexHsRdRcKuk7xKuhoqLGIpSmJbZDE9dmQ=;
+        b=hPLffHKsIqgx8utWiEImN5B7O3dOKRvYWHyZzTjaKj3AqHtsrXPV3rzzODRia3eT3m
+         NKwp4DuX7PQH57aChPDd3/7BSp1/EqmyxREKcXTO5aD0Fo6lt/zvlRewcdLQ28K4Oex3
+         VOgHoRWQC8AZ93h5qIBcp6Dl3Azk/eH0VZbq4mngyO5X5klHkddDI7H7QnF/1A/K8wYQ
+         +HTzP66vyo67s0d+3j/crFYBwElzz19rna+YMbVIxKRjYT1RjIdWKEZgdiYHd5jh7MX8
+         HLz5YJ7KtsxctT2yjawq/+NlfxjPiYmBCfCTEDrLyfjsscJuro/wzTkg6o3KNaHjHPAi
+         I3qQ==
+X-Gm-Message-State: AFuF++mvID3upY3CL2yNYbFb84zrl0Nr5ieatYj4tt/5qygqrnxYr8e8
+	o2R22W3fz2/hvE8MtKClhCTmcEgs1BSZFMt9H/c9/pE/F9+LTsJmtB3riXno6g==
+X-Gm-Gg: AR+sD13l/bQF9QipUOV1ArREFun6G+FUyZAB2HhWtZSQdWDqTxqfuffsF6rvW11PcWi
+	iX5R8hD/IlqhPDJ9YYSEj1OBHXKP8jawOa2EZeAEC7YVyOq5P9KyVA6aQd4vVhRBgxnjF00hhkc
+	soad7iOJLv4VIUlMpb4heZuuPIZuZUUcLJHS6R1m9GiCW17uPm8UGS/2tt1+mq/i3eJhqOqe/EF
+	7toGVWzAOd2irAjs5c277DMGF/znky+Af1uXVw+8ltxTTE5aUjD4RTxjhe+SbkiRDArSUvG9og2
+	SRKwfkbSYwlFPu1L+9da84Lzj3KAxOvITojHNDNUBIUBKoV2QdeCjq5j9SXYYypffehT3lWkIo6
+	ZTwdIwtG1ad4gziLDuULopyTRV6nsLQ7Ugnp/UI+MBMyU6U2aSMOR+RdIr4iX5M5aNLwZiEAXjN
+	WV4tCDNBWWahzvzJxLe1qPXDGKtJdExVzJUZd3NljXK+DRMnlvX6OlEPmf3g==
+X-Received: by 2002:a17:903:13c7:b0:2cc:f5aa:9513 with SMTP id d9443c01a7336-2d74dee93abmr27515655ad.10.1787861388586;
+        Thu, 27 Aug 2026 13:09:48 -0700 (PDT)
+Received: from localhost ([112.133.220.139])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3283d60c291sm34552016eec.6.2026.08.27.13.09.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Aug 2026 12:56:46 -0700 (PDT)
+        Thu, 27 Aug 2026 13:09:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,36 +66,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 28 Aug 2026 01:26:41 +0530
-Message-Id: <DKZZOTND7RNF.16J4VLMEKOMLM@gmail.com>
+Date: Fri, 28 Aug 2026 01:39:43 +0530
+Message-Id: <DKZZYSTLY6TX.2TDQEBBOG5IAV@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Hardik Kumar"
+ <hardikxk@gmail.com>
 Cc: <git@vger.kernel.org>
 Subject: Re: [PATCH] builtin: replace the_repository parameter in
  is_bare_repository()
 From: "Hardik Kumar" <hardikxk@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Hardik Kumar"
- <hardikxk@gmail.com>
 X-Mailer: aerc 0.22.0
 References: <20260827-env-is_bare_repo-v1-1-aa99600dc213@gmail.com>
- <xmqqo6en8jof.fsf@gitster.g>
-In-Reply-To: <xmqqo6en8jof.fsf@gitster.g>
+ <xmqqo6en8jof.fsf@gitster.g> <xmqqh5kf8hqc.fsf@gitster.g>
+In-Reply-To: <xmqqh5kf8hqc.fsf@gitster.g>
 
-On Fri Aug 28, 2026 at 12:39 AM IST, Junio C Hamano wrote:
+On Fri Aug 28, 2026 at 1:21 AM IST, Junio C Hamano wrote:
 
->> The patch leaves some instances of this case that would require
->> additional changes rather than simply replacing the arguments passed to
->> the function call.
->>
->> - Only update sites that do not introduce any functional changes.
+> I guess this was a bit too short, so let me explain in a bit more
+> detail.
 >
-> How did you make sure that the places touched by this patch do not?
+>>> diff --git a/builtin/blame.c b/builtin/blame.c
+>>> index 48d5251c6d..dbf4b4ffc7 100644
+>>> --- a/builtin/blame.c
+>>> +++ b/builtin/blame.c
+>>> @@ -957,7 +957,7 @@ static void build_ignorelist(struct blame_scoreboar=
+d *sb,
+>>>  int cmd_blame(int argc,
+>>>  	      const char **argv,
+>>>  	      const char *prefix,
+>>> -	      struct repository *repo UNUSED)
+>>> +	      struct repository *repo)
+>>>  {
+>>>  	struct rev_info revs;
+>>>  	char *path =3D NULL;
+>>> @@ -1187,7 +1187,7 @@ int cmd_blame(int argc,
+>>> =20
+>>>  	revs.disable_stdin =3D 1;
+>>>  	setup_revisions(argc, argv, &revs, NULL);
+>>> -	if (!revs.pending.nr && is_bare_repository(the_repository)) {
+>>> +	if (!revs.pending.nr && is_bare_repository(repo)) {
+>>>  		struct commit *head_commit;
+>>>  		struct object_id head_oid;
 >
-> How do you deal with repo=3D=3DNULL case in these code paths?
+> There are a handful of uses of the_repository before the execution
+> reaches here.  But you left them unmodified.
+>
+> The original code used to consistently used the_repository.  Here
+> you changed it to use "repo".  In practice, they are most likely the
+> same when "repo" is not NULL, so in that sense, this may not be
+> breaking anything, but you must ask yourself what the point is,
+> unless you convert all uses of the_repository with "repo".  It does
+> not help libification effort at all.
 
-I verified by running the entire test suite which passed fine. In
-addition to that the methods in `repository.c` should already handle
-such a case if the `repo` were to ever be NULL or not initialized as the
-same pointer is what is passed to all callers.
+My main goal here was to start small with by removing the dependence
+from `the_repository`. The other instances are obivous left out which
+makes the patch seem inconsistent but I suppose those functions are the
+ones that require execution before the flow ever checks for the value of
+`repo` and so they rely on the global one instead.
 
-Also the repo should always be NOT NULL and then git just throws an
-error about the inexistence of it.
+> In general, builtin/foo.c::cmd_foo() are concrete programs that work
+> on specific repository (i.e., the_repository), and there is not much
+> reason to rewrite the use of the_repository to use "repo" given by
+> the caller which is git potty.  You'd also need to deal with the
+> case where "repo" is NULL (hint: "cd / && git foo -h").
+
+Right, but would safety check be required for single instance or better
+to find and work on only the specific ones which could lead to an
+exception.
+
+>
+> They are quite different from other parts of the system, things
+> outside builtin/, many of which are general utility/helper routines,
+> many of which should be designed to work with given repository.
+
 
