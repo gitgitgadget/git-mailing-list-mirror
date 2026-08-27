@@ -1,94 +1,94 @@
 Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C332F8EAC
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 00:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4313F2F8EAC
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 00:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.169
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787790229; cv=pass; b=J3s/lUZcOxAw+phlC9Y6v7tU7XSstXBA6GGnAeb4BRdArnKtDVY2sNvlu3aRWg0FTSsQEP9Y3cXbIVzf77qU/V0jAz90MjqJu6d2bAddPwgnWQ7pYCz93jHBy86PKfJDuBi5OpZxAZSHAcMGmtN1leo3ZyGsoTousBp+6riPmTA=
+	t=1787790295; cv=pass; b=f1ru+dyyKBuR0YdS8hEYi7h44f1GblY7tkVAqBk022utVMHbp9DDHqYXf0pqIk1Ir0mepEiUwKS5dhukt+FTJEIkmqwKIn+yFAPvjeF9LPUK2Ly3wDtSCPIVdv5emlfBY2AkStwELjeDGNmJpSTDijiCShg3i+QRg6SzlGQ4vik=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787790229; c=relaxed/simple;
-	bh=0VNJpAIXJLrW7ONixjeoRZmcJq1VwDGkunV8ie8JJU4=;
+	s=arc-20240116; t=1787790295; c=relaxed/simple;
+	bh=HN+R5zZBEiUbGxIXkYk7HfnxrH6C5Dr7uDfzJRQ1RyY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WGJxS+Hh/9f0a2oQS7mVAqnP9XPC2TLHi35/g0kJWNIThdH9t5NuDXViPRhb3IBe5gmzgzNaZ5OG6dxIGq0hF8sU6YjHBxL/h3xOg4rQinzh5v/jBaxz7bhIY/7IYq9PD3nNR8ksZTSNQjoqbYAoEFnLmI+bnayHDMScsFm2078=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qe7U2lGr; arc=pass smtp.client-ip=209.85.167.169
+	 To:Cc:Content-Type; b=UwUGKzTHKFtArxgvR0Fqd0Ql7gNN37kMcSWohwFs6xxIa6wNq9d4r/crf0KIdb/XrbAXiU33W/FCKCxz5ABTKaqhg/aD4AxzKXIFFAFsk4zz8lxOgcEqWvuJbkuQf5yNofnc89dPJ6mGQ1HY3Z28uYB5SaPabryXXUdjvqNO0Gk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aCaEBHV6; arc=pass smtp.client-ip=209.85.167.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qe7U2lGr"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4a4cb36ae00so1431244b6e.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2026 17:23:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787790227; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aCaEBHV6"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4a451915d8aso1536565b6e.2
+        for <git@vger.kernel.org>; Wed, 26 Aug 2026 17:24:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787790293; cv=none;
         d=google.com; s=arc-20260327;
-        b=eAcI80ZovtQt2LuaI0jXUgcCZ/oy+IB202VlHMLJ/ktsIIDKg4J4U3OuZaCuddd4Ol
-         NZ+1DNFh0yPSUBdxFeI3SavSQYlGXGa1SIRQFPJQD62wwHFm8CziSA2mzhWoZ1et7TA6
-         MeF5bk38MVN9/0VfAvN3Bn4wiT4jUIUhgnYJh6FnX6OTL9dMwIH82CETji32V9L+lGu2
-         jxUeVvVWN6ct2hsh5D6pQNV1YAnU9FzPmblo3jopqB6JC0JxNRBjuS4PJi5UXlIpj1Wp
-         md6DlsADwpXe3xYf8Yh1ecA55A/f0gUR35GLGjXgZcPycuIIWPt7irM6WdV/yAJMlgU5
-         jIMA==
+        b=Ma3p+KNwWtsDNRbgWhzimazx51GLM4w3SweWEIczjohjhc3e3dHGB+OJaGjBdeik9E
+         X+q/whF0Ohp2zrqthstvrGlYyrbtnjLKkF+d91FcUulQnCkYR3tEYjkLq7T4DSVS6wtW
+         aONMOU9qAQVRAsCGdtVXY/5N/DIgxEghcEWaQ0AGJs1Au40FI1tUbzIw5KJRC4s8yiW0
+         1kqedkvUIXljrV9Z1jiexjAKjFJ9UVFZlBjrOYohLF+3X3KFF3SJE15MXk5Vf0slr+47
+         BLMKCk5RhUEjcNMiATsl2SyV9LmhmYedDt/zAk3k9vlNeMm1PHK5F7aPr0etWeG1N82U
+         siTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=K8TIqteEyIaw7rPggQsf8kv3yqjCwneapy2rxU0XE4Y=;
-        fh=YE92iq/8oKjxrlHLqbOxj5RWdKPEJKrTgQDxuEl5IHU=;
-        b=Bj0kV1j7W9CBbskpXERkM5Kuq49e/IakRaAlJ0O+JxWVFNou4ZfAzS5dLNnnqoTrJO
-         mIDomS2bbf/2bM8vkrHRabNb4RyT1fsqp10Mi16MYQWsSXCp/Z4l2ZLqlLA6eY6WNDrz
-         2zL9osQ9rlSkKGUxQtilDNsNj+92KXGGiWxtDBg6uyVDJ4Nu2SPd3Jd0Iid6pjWUws9b
-         Xgehhs21NWRrohFVGTpqPtXfgDIs9UAp4ytMFrfaYfk5xzdZe2d2pVGnNZ6q9sV0UHE+
-         AfQb0AF7iAALrjXjWv5CvaVWGpNFjSce1a4HC1Cev8ia35LnLEtGpVk05w7b65yruvln
-         uICg==;
+        bh=x78NnvcG8X0RSkE4OPY+gw2cxrN06tMjfO1TOye9cFk=;
+        fh=X2KZDZcaZnSClZy+GjmVx024w/uPegmH5iT+6Bu0nZc=;
+        b=AnVVrTw/WQdmIVpuBC2A0tdM4qwB7FhNOrlKaBG3RV9UlG2WixHrCbAhOsrUooroFC
+         k51NY/RfsxGnE5NsS1E5X30WlWZx4+Q2gjCWsZT7GFfY5C6sjj1/kURnyIMvkWaNn77F
+         +mYB4qBV34f+fWf5zUNO57qpgNj3fIZti15j5Q+g8F8uzkXmCDKPGHKye9cjqURrIiQ7
+         Ej+QS/qcv//8M8XO5D9eVr8lcoGKsxEWDLKCiW/A/3kefcwFP/7GOgk7XS1RwierL5Bz
+         xb4Z1NHeW+MIQ8BsgzoG/TjrBCoC6c8k2FW4WalY6TDOVMhQOxhUozNInu/sKtbOibWc
+         NDLQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787790227; x=1788395027; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787790293; x=1788395093; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=K8TIqteEyIaw7rPggQsf8kv3yqjCwneapy2rxU0XE4Y=;
-        b=Qe7U2lGroUwJ9SDIZKBaIvjrp4ntmrD5LhM10CEgye4hY7iKJCI6ndswCF00Z8tjie
-         h2X1Hymo3uFFtGMYNUBUwuOARALJTovFBbr6HRUvbNk8vUayQOuStjUENsGnXmGvtGzF
-         +lnzEqhhdp3GD+zPxUOFg7R1WYXYLfEFG8yAxtyBzLLbJE1bw8xBdyEOaYMXOmOzAIlv
-         Oy9AqiRprL/afHkwl8eTO2um7Ak11rbecxb7cXoimBMjzSHCaN9UZbs3rT4sjMHPH0Af
-         Mk/ClcYWcIE9DKwizKT1a/C8D6eTvCD5fcaOre8K5Gyr9vm228QIz1j/sW15zX8lvIYn
-         c4RQ==
+        bh=x78NnvcG8X0RSkE4OPY+gw2cxrN06tMjfO1TOye9cFk=;
+        b=aCaEBHV6qJTu79GmQXNfHTXy+B1ZMWcVlP6zVRTDI0u1/SDtiYxdG6opsfN3Clo7sQ
+         GLn6EhFqVrXBTNuzEtl+3wnNLdCcc/udJd6QavChJ8fuTMLuaXMfAgcnUn0LXRtDSFnG
+         Cu9m5LDPFgKJtM9DCASJYRxxfzI9VbE0qdrOs6ef8vJTZ5K3g3pJgm9ytcyzvbpjmnXO
+         Yp+bfsGIwemTcN6kJyrsZMHeo1DwTdpurXzccZtIwryZ+MbcB4945hvpnI76yiZDWaWF
+         18jxy23ZMJMEJ1dKou1OFE7fpGk+kw1bDSy/Yd9Bj0WhUJ53//kPwUwteS5uBDpgLSLm
+         xGNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787790227; x=1788395027;
+        d=1e100.net; s=20251104; t=1787790293; x=1788395093;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=K8TIqteEyIaw7rPggQsf8kv3yqjCwneapy2rxU0XE4Y=;
-        b=g7iWHtUteoVFXQ7/1JLrWZ8P0jE0gi7mG0m03U5ke+P7Xz+pM4dwBEgp6tP3A6DUfH
-         MC/piUj5l54ahV9GUg3F1N9cSurXVHcEzFy89HKt+07Q9GnIS+XYesdv8MSAQdl+izQ2
-         C9d0QCfd4xXdDkPNZU52Uq6uEsuHNsJUZShZX7z6fA9DIGiWuodOcn6REaUGGC5KfFEs
-         HtT2uszNC+bHiK6zu6hODd8euZGqbJK4xneBD0Xld1DmRVG0Sf8Uy+QALb0omZwkiM3u
-         D8nT8sW9UobmRvRVOhltgvxfha+ka25+Kvqw+bDPk0lBlvVSW5l9yJs0o01vVPfkOgV/
-         b9NA==
-X-Forwarded-Encrypted: i=1; AHgh+RpFXktnhSHWU1kPbZVIbfs0nLFZMFpTz46tIdTIFIRqnnIunPpKXKIIdVeaBOEcTT+EK4k=@vger.kernel.org
-X-Gm-Message-State: AFuF++mYxV5cchk80xSm0vfk164uhC0+tSOpgft2aHDPu1rpNNRCv0zK
-	NYsfMmPVePBxxqfIlOD27ZJzxatwqnFaBkh5Tc6u0T0ERh59kJhrotXnWs17eJWRyGz37Mc//jU
-	c0uqvTvL8X09qs6bNsWZ3Loy3SGfDSRQ=
-X-Gm-Gg: AR+sD102R98l+c3CmTqlvGRru0Fl7TdfUaNGpGMyMFGVll/hHwiqwZMUKJjGmEZKRuP
-	+NAveyHEs4bA5A855U7lCgukd0dAQbN+bGtxnpjZIGUokUvPQf47QKXo4NDnfrjf5aDBn+RGEQX
-	QgHbaX2yZoypsVwjreC37KJxneIT/+tvRHpQ76rqXoP+4KAdwa28tTe9PADkVwlJaa9vCy9Ixes
-	A9bB1U2YUr6ZvWzKzuHScZlXTuwOFhhJqgZo3prpuUn0KX14qxM8iFzNMRVfchjKUDY4FtUMXiL
-	yARVO5JgjnNHhg3ZLtQ5s4KcE86WZDDtvprR+Cpdz8FXmdGmF4KGixhsa0hu0Fqk+q71x/8wsbz
-	V5ooTD3PAEeseJMwh9Z41YHSNHeEjFbtAvzPrnFMQg5b9AzJnM2F0bVcNuydebg==
-X-Received: by 2002:a05:6808:f06:b0:495:d7ec:b6ae with SMTP id
- 5614622812f47-4b366cca0f9mr11791346b6e.16.1787790227267; Wed, 26 Aug 2026
- 17:23:47 -0700 (PDT)
+        bh=x78NnvcG8X0RSkE4OPY+gw2cxrN06tMjfO1TOye9cFk=;
+        b=ceGgmUrycAP4viaKNozW5uJwo+e+FiOkqSZMcQhwCq0i/tWL0JPGPcoOn2JbfdAdc5
+         MW+5kmMuBpjlhz887n588RaPX+7m/c/vfgSWdVJBG6Q5dPTBfFHPXNeB50RKBK+sm3xz
+         JgHPhX3YLcNV+oKwAfQaKMI2DhlRuejTjzGZKCll6uDrNbGTGh4UqT5MFtbl0TqgeuXC
+         VHPn5GptvZLlidqyHEOH+rfyN9d4ijlIHeFc7SEjHCaGLEY4BEiEmTgS6jaJtPHyXwEu
+         VhXzy5/fTx+dEPpJSR4y9kkpGEGNqyRV0mllV8KqN2H2RIEOMo/T5gG1/5dM6xvP4SfX
+         Jsog==
+X-Forwarded-Encrypted: i=1; AHgh+RqJsC/VXQ5bI1eq+jYpCCShDRTlyl/iKuw1kzrHxOe0GooX+wnvVkRBOeEWHcFcvFiDD/Y=@vger.kernel.org
+X-Gm-Message-State: AFuF++klC+dpzEf538s5zHV9LYf8byy3+m14UbAs7MY9C4wx7goOgBQ2
+	t8447zEnl81MfXeZK+0sz4atClJCSNRttSZhUDtSKTsQab0Td7E13ELG0IgkIsXQ6OBRwFKtJ7m
+	QzfcArZW5PmTE+3REVjglBIJ7YNIxGzg=
+X-Gm-Gg: AR+sD132pc7ygG5YsEBt4rBVam2r5kmDQrUPEiA8aXZZy+tqlyhx1cdUp9rI6AX1e/s
+	grvwTYQ1P7DmTup9saQUkpWBxDbcMFqiN9f0nY+uT8WU884PwbBC19BmcZD1nndhKgm759EDO8N
+	DmX/g091YCbbt+jtmA7ovHOe68fxbWnGS/8WEjaEolhEw/TjtTDQQh26oowoDVnAITQPnaPbHT8
+	xUPzzMWTfUFssUlFg43oLpwoyW0qHnHewJaKlxsIE81VtUhdJw3SQYKN/crtLD81VOJ2ijT7lZm
+	rChFqId9iWo8SEXl56+VciFt2oCErFQmgp68Pv4F6azWsobCaSsNfTJk2R3j59ZFl+4nOUxgMEs
+	BMtfBZJMvj0OcWWJrb3ixkyuD19U/PvDC0pDamKF8rh8dCx96tORgV4rDpZMqnw==
+X-Received: by 2002:a05:6808:518e:b0:4b3:1e40:6451 with SMTP id
+ 5614622812f47-4b366908364mr12462966b6e.1.1787790293134; Wed, 26 Aug 2026
+ 17:24:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com> <xmqqzey8j1gt.fsf@gitster.g>
-In-Reply-To: <xmqqzey8j1gt.fsf@gitster.g>
+References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com> <xmqqqzjkj0p2.fsf@gitster.g>
+In-Reply-To: <xmqqqzjkj0p2.fsf@gitster.g>
 From: Elijah Newren <newren@gmail.com>
-Date: Wed, 26 Aug 2026 17:23:34 -0700
-X-Gm-Features: AcwNN1U7N9zkn5J4ULaqbjDL_7XEA-Rl7bsRk6djGfQrQyGjIs4n4Grpq8z5ngA
-Message-ID: <CABPp-BETkvaRUvn36TxgnK4DW6agVbsiHe++FnJFhnRDfkge0A@mail.gmail.com>
+Date: Wed, 26 Aug 2026 17:24:40 -0700
+X-Gm-Features: AcwNN1X7nXu0F26aggZTAZK1nv720lQnjcSHnUEnZVvj6RufS7j5I2Xxum4NO9U
+Message-ID: <CABPp-BFwN_ek_t67V5nPruV5vL0hSzZyoy3ut3rvzNsWv2DKpw@mail.gmail.com>
 Subject: Re: [PATCH] commit: refuse to amend during conflict resolution
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
@@ -96,54 +96,40 @@ Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 26, 2026 at 9:22=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+On Wed, Aug 26, 2026 at 9:39=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
 wrote:
 >
 > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > ...  However, with the merge backend of rebase we have to
-> > be more careful, since it powers interactive rebases and
-> >   - the interactive machinery internally uses `git commit --amend` for
-> >     `squash` and `reword` directives
-> >   - users are expected to `git commit --amend` after hitting an `edit`
-> >     or `break` directive
-> > So, we need to be careful with rebase to only reject amending when doin=
-g
-> > conflict resolution.
+> > @@ -1336,6 +1337,46 @@ static int parse_and_validate_options(int argc, =
+const char *argv[],
+> >               else if (whence =3D=3D FROM_REBASE_PICK)
+> >                       die(_("You are in the middle of a rebase -- canno=
+t amend."));
+> >       }
 >
-> True.
+> Let's make a mental note that the function receives these parameters:
 >
-> In addition, in any and all of these scenarios that lets the user
-> deal with conflicts in his or her working tree files and record the
-> result of conflict resolution in a commit, we should reject not only
-> "git commit --amend" but also "git commit <paths>", shouldn't we?
+> static int parse_and_validate_options(int argc, const char *argv[],
+>                                       const struct option *options,
+>                                       const char * const usage[],
+>                                       const char *prefix,
+>                                       struct commit *current_head,
+>                                       struct wt_status *s)
 >
-> It may probably be better done in a separate topic, as the guiding
-> principle is slightly different (i.e., "recording the conflict
-> resolution is about recording the state on top of the current HEAD
-> and never about updating the state recorded in the current HEAD" is
-> the theme of the current topic.  "recording the conflict resolution
-> is always about the entire tree" is the other topic), so we may want
-> to leave a #leftoverbits marker here.
+> > +     if (amend && whence =3D=3D FROM_COMMIT) {
+> > +             char *applying, *apply_dir, *stopped_sha, *amend_marker;
+> > +             int in_am, conflicted_stop;
+> > +
+> > +             /* Check middle of revert */
+> > +             if (refs_ref_exists(get_main_ref_store(the_repository),
+> > +                                 "REVERT_HEAD"))
+> > +                     die(_("You are in the middle of a revert -- canno=
+t amend."));
+>
+> "the_repository" can become "s->repo".  The same comment for other
+> checks in this block.
 
-Oh, good callout.  And later in commit.c we do disallow those, but
-only for the same operations we previously disallowed and amend
-during:
-
-        commit_style =3D COMMIT_PARTIAL;
-
-        if (whence !=3D FROM_COMMIT) {
-                if (whence =3D=3D FROM_MERGE)
-                        die(_("cannot do a partial commit during a merge.")=
-);
-                else if (is_from_cherry_pick(whence))
-                        die(_("cannot do a partial commit during a
-cherry-pick."));
-                else if (is_from_rebase(whence))
-                        die(_("cannot do a partial commit during a rebase."=
-));
-        }
-
-The exact same additional structure could apply there, and that kind
-of reinforces Phillip's suggestion to factor out a helper that we can
-call.  I did that in v2.
+Good catch; fixed in v2...although the partial commit callsite didn't
+have a handy repo that I could spot, so I still used the_repository on
+that one, but I used s->repo as you suggested for the amend site.
