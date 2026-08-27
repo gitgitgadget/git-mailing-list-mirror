@@ -1,79 +1,85 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997383FFFB3
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 17:28:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9818937B007
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 17:32:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787851717; cv=none; b=b9DJvlHC2UGeQqgtf5HxevR1Qkm5/EpTqmVrMqTLSreYviyK2Lwalm3fVo9xtkzQwEB4KJedAoIC4k+j5zHM2IgXfKgWaFaJFXpOe42lZzaD2jndHPBqieBl/LsWjxV//g3dbcH0oST5iUwcTvoDZqU1Ge7tte281F/X4GG8WGE=
+	t=1787851968; cv=none; b=mQKDSf9FC2Wc3Jaj5ob60GNfSj2rGhSRkaTUHBGHkRU5eQchuSR/Yko2/GZAf3iWnX+104UqqnawPyCRd71oZULcOnBEdNWTPh6JB5jCGJovD8UQuJ2OA0QQnF71EfwynNRhuEAl6Dq/suNLIMmcq41PeRUqYX/unhEPsK6gfLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787851717; c=relaxed/simple;
-	bh=Pyvzy1DXry7VgaEawOEKoTai+kzCXQqarqDV47a8e70=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=E0ZEegCg+M3CPWYE7DGNj153N/S9ZQOEok3MRDjvRZ2m8Q1XVM/VBJGbP/rSw9rAUrKyYIJ8H81Jhpy5VdxdKYkxHqft6yRwL87OnxHxWOR5LWfq1ajaIhXk+FmLsPE4DIce29k9qkWyILdlJ9iMX4sEiw/j0BZkcD6BjicQOGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oPfOWk8/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V7Y7uOfv; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1787851968; c=relaxed/simple;
+	bh=cmRoPCoYK46XVgdmUVVkyfT3rPP/c9oyCMH2swSH+f0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r1olV1dLwWlcoQDdrLcstHe8P6MoYyIpQKGg/6cZueHoBt03895GNueYl2POfVpmZjdvRVrhZSqnVcoalVek9VNx6/qbLHuYmCL/PBUnNA0qvHgh6+j2NmxZwcbnmpxhTeaXMkSLmYd7YlrSnaXOzwvEkn5JfkHX7QDt9BhXOmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VOxWqD7o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S2Vh3LP7; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oPfOWk8/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V7Y7uOfv"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9AB3D1400132;
-	Thu, 27 Aug 2026 13:28:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VOxWqD7o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S2Vh3LP7"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A47FCEC025F;
+	Thu, 27 Aug 2026 13:32:45 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 27 Aug 2026 13:28:34 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 27 Aug 2026 13:32:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787851714; x=1787938114; bh=fZq5JxJ3fj
-	iSHG83gL6nr3d8BsKb1YsK4x2+IylWHRQ=; b=oPfOWk8/JerfDKZrE6gtOwwK2q
-	Jg10P+PDjc2m6goL45xbGY17QZlm8nH8SZjezWRupohsMmr7c3QbvzmGoTtv5fa7
-	6Syfp18sB44y2VrVKzsmXxS/+eIvQoNZiNGrvlaIL9DUPOPunryEjp1qyyY/RTXQ
-	gQtOWuvrK+o3fpTl916nQEfTDcyOL9P71rloN5QqlO5DgGHB0714D6EgESOMcs7C
-	8N4HrRBe4VkvXZbZTdcPRi4EUOaC4m5tfxUNJziauPF5qo2u2CAHd9pePywr/Ski
-	BtJg5Te+lXEAAuwLCI+A1gjjNF9OaS+fiCFqddj7jULQceq+8wVsNN/YaIjQ==
+	:subject:to:to; s=fm2; t=1787851965; x=1787938365; bh=IBZ/4O8aLW
+	VAjXe7H5NqVr5xwTmtDWJ7HGJ4h4cyktY=; b=VOxWqD7o1lNayGqrUIHGYb3H+F
+	fk8Y90lWStinX8/ehFJ/lP8dfDEq0aQGp6FBNBQt98LQ2YDaS99mDftLGogH2tHK
+	dicR1Ajea1+CKWg96hNpu/vVzRJZ7PZM0qaQvFpBlNqlx4YAhBZ6JsQHxAQUVOX1
+	gj70iDBcAMpbuK/yE+w959++WgkUFbw60m/bJwBho4U2VoHd+Q5NBY6b5XvP5RCa
+	JzZRc+YpD3jNBKoomTkeEHfP4eicyx5HVfMhjAP4LSqwvrvvZqz+4IUbUcSnGM/b
+	4Ax9n0xa6GcD+1Sv4bHLY1hsbO9JjKpbTdJqIeGj+YzH4xX1uouKRXq2zpRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787851714; x=1787938114; bh=fZq5JxJ3fjiSHG83gL6nr3d8BsKb1YsK4x2
-	+IylWHRQ=; b=V7Y7uOfvpH3q3CxYMyAsteQIojbXwukey23PSPIC/V2fgp8/uZO
-	pezn3QDuwCPgmsUBPms6aFxL5sphSQzYpzn9lPiao0m4wnnSrc51bJ31nkw7NYMS
-	ZG4o6WoaEJY4UhLGXjEVGeCJUxvtzaFu8J1/c/Ri4O4gpaCC8PSwuaET6cuujnWK
-	mobsY7xDYRusa53/JSJHD5Yo4CxW12OTqCGrsp2s6Wgv1OfEGpDzp+prr0dQmhH8
-	KBiu8ubYmFPjE2SOzSAym8eSFK/8ve2rgn3VV5HndlbwehrNVLYRzMfr6OBvmepj
-	BjXcE5JYLPuMM48E/8y2R08/paK/U5LWfWA==
-X-ME-Sender: <xms:wnOQavSfkm1W25kGBEEldFkTiVt1ezSy5LHbzdvo7JT8ZU4zd_bAag>
-    <xme:wnOQamzypkgNgiO0an0oaDrBpoDpIthlv65WK4sbszgUWHDbNhuj-mhG4QmeSmHyG
-    KB97IxiU1jrVUBiFn4jqhVQSjjcHA0wBL7x8Af21Wiw6wzDsEKZM90>
-X-ME-Received: <xmr:wnOQaic2u0RmB7SgN85XPndpAB4TydpGm0CBXBMZEGTuYUTURvmiXb-Om3J1vCdS4WUcMGyac0n1wSL7Ys5aZIMnDlxJzNPhoQ>
-X-ME-Proxy-Cause: dmFkZTGXAIrT+oC2B7gktKCKeM9BXTe3Sm7IoTvmAd5oLr1YoeEQxjfOqv07Nke00AZArD
-    7j718vMvaEo1JFaN0flSNoBXtWcnrmg5/ICXpUxfMI1MZzq7YeOjl54pbIy47OwFOjI0iT
-    BDw2MN0XRZzSPuh46ZlTvN9qX2BVjrlrfuqWjXcmdZBP2dNMPF2RvcP0Kiwykw4/EoR8wU
-    oHGzjoxDFDANahRnbRPid9OrujHqkkcUPciAFEykBnMR+ZuAS23ykkpsENhl7Z+Qnq0/My
-    6rBEf6e1ox7ZW3M8IRn1pLOh7Wg0+0aJmdU/omUNL5zjKrqtBRdggZZPjACSd/3ee8J9sg
-    che+FcPnHIcT9b16ovKahVMsN3/VvYjMVSOtRgh0jwJWCE60lpTXoKYM3qZB6awdZMRmXY
-    1fkXMraRQZ95D4ma/35HEgx2ZbBDv3Uc7D6O/pueJY4Nz8XDzYJ5H7WKkBaQZF3Ic7zy0j
-    PeQor70sAyfhZ4n+ggIGxDfD/A3kz3BMhnkei8kvR9dBi/Go/Zy2kA8AZdi7qFn3x3yfZM
-    mesTkB+w8Vo4ksZF9BkjFsoOWYmuaRjgGkffkUcl1NEXUcA3YkJV2PdtTYfZEMwJ8dZtx/
-    Ku7zcT0BimiXEUBUc1iVMUrHaAO0WbeQtjPMa9Zh+lEK/V7JWvtoRnAaE+PA
-X-ME-Proxy: <xmx:wnOQaqJhK1xXV-Gor9o7QG9aKY995qIM9C1HP5ScxN_V9UCdrQ4g7w>
-    <xmx:wnOQarGbTp8x1JH5uOnIwUOCVv-OFPiCLAusx5l2i-XbUBsIeClcUA>
-    <xmx:wnOQaso7HReQ-Dej8PGFBtSVB0b0PdrK0iRwOz2QJX2__vthrEntgQ>
-    <xmx:wnOQasSj9kC4ys_jWE5n2_5ovVKh9gDPHP6ZlAZd7kbEPFIONd2Brw>
-    <xmx:wnOQaiq4mu65As4Wf9OB3XxrdVBC-NMcvV4jqaXoNBi-0miH2mO--ER->
+	1787851965; x=1787938365; bh=IBZ/4O8aLWVAjXe7H5NqVr5xwTmtDWJ7HGJ
+	4h4cyktY=; b=S2Vh3LP7JY/Zmn29ZJkk5EU609U8rpcg+JWtt1RjF9HynjILQ34
+	MVHcVZaF8z7S5YriRg3MHJFHgRLBeIvSgxJOx6LgWoue9vnCGawaoahrvv13KEAh
+	pQU402G57pcNq7o6hAt2rMY4Gdq651yDxzchYcQd21N32LR705yuEHuM0NDl2ouB
+	aSjKLt+H/UUIpd3yLwjHgT/0E8UGPkw8K7UBhxEOKC+0G59vSB+PWtnoKp5whtgA
+	c4iuvWZDB9CnIsdRDoecbWgfgMFWB/BZcNy888AITvv3BJgDwBszJllI0vTXYMxk
+	HcK305COcbdYz/BI/XGcIOxpJCs92xiWtSw==
+X-ME-Sender: <xms:vXSQakLLwwa3UOm8kBK5NMjlaSH6cfuQSaUgkyJUr2SASSczFFULLw>
+    <xme:vXSQan0YRF4J0PXELdRYfD79eqsLFGRm_3MtwzdFgQDXlgrFYTo4j5VMus6baG26o
+    n1HVZGAgjaa6jyizXQzMcz7vAphFhxoJuHxHP_oW4zlVoRFhkdP5EI>
+X-ME-Received: <xmr:vXSQaugV_pIlOnCO1ubnx2L0n1z-2FP5-EbUe-DHkRvRA4MhN2C8AjHqoceP7GNDOZtO5nRXgC5de0mXG_mypyu3bKLttPa6gQ>
+X-ME-Proxy-Cause: dmFkZTETPW0ZAZZVxUJhbRDVnstAqyHqRRYN6W3JzbF2MDX1IZs9jpFyxmsuUFIczKhuCC
+    gYi+i42afCKjwtbrHkImbzVZORbctb7LGziH5LoqgxpVRjakY40osJeAbQI3gwnDsJm62i
+    a0SQpoqAbnDpSulZHkkFY37EW+CffVQpt471BazkawfeFnu3cJk4trlpDBtshD+LibLjaG
+    9duKEHL98+ach2HuR/LEuSJAQct7QJ5nJy9uHL8jcbwXG9RR6daF+LETIidmuZWHq03WLh
+    odF0+rsyCkMM0J3EZjFT/KlQEMaKER8+E/pUDA3nGd1v2MZPOcL3iarps/33Y5b5ByIrXe
+    wYo0pm+kLOzMsW53Pg/i/ow+RZq7hIVZvBCR/o3tZpB/hrmb/SKffzDSdnVlnOV6cuyNjk
+    Qb152CyjEuJkHzEsqdZpA4QpCX3xl8q1mt0aGCTLZqxanF0gAu6l27wv+MaMf0tb5pKGhz
+    AZdFV7l0DH2hZ0sjjm1CgrcElHCM/8jWt5UbH/8OVVFPt1riYR1BINauVgmhu5GPVVgc4V
+    fXX+9ePXKcwpkkJ/9F0lbRYR4uLHt76AXeLNQ04J8AtvD3AMRkgl0z/K7+htrUSWVGE0y4
+    fQO8TFuIodnRje/PrCQykk3jEoWT3TV7cq5oLLRt/Iy4/QS1pU/zL9y5ZAwA
+X-ME-Proxy: <xmx:vXSQaoUzqyObhCm1mhBPGu2dgikgqmUQY34s2noVjp23aUmi89PuJQ>
+    <xmx:vXSQatU8QDveHLJYtiY0M3hhGqqDbfwbErGET0-Fx2DMKV5lqRwKRA>
+    <xmx:vXSQaohjjUpACQLVhtTpdS62lNua_-lhsqYuITZb_GCHaSlgJSwG2w>
+    <xmx:vXSQaoYHCIVk3aeYMtV-b5MnNMN0E00FupWHWB9S-kgQQmADiVPbwg>
+    <xmx:vXSQajtd8Z-aWizxFFG_LvmWbfOd7W-JEP8gHUJcSbKeFGsHYRMBqTwf>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Aug 2026 13:28:34 -0400 (EDT)
+ 27 Aug 2026 13:32:45 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v2] die_for_incompatible_opts(): unbounded number of options
-In-Reply-To: <20260826233152.1703497-1-gitster@pobox.com> (Junio C. Hamano's
-	message of "Wed, 26 Aug 2026 16:31:50 -0700")
-References: <20260826233152.1703497-1-gitster@pobox.com>
-Date: Thu, 27 Aug 2026 10:28:32 -0700
-Message-ID: <xmqqbjana2wv.fsf@gitster.g>
+To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,
+  Yoichi Nakayama <yoichi.nakayama@gmail.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>
+Subject: Re: [PATCH v10 0/4] worktree add: improve message for ambiguous
+ remote branch name
+In-Reply-To: <pull.2197.v10.git.1787841717.gitgitgadget@gmail.com> (Yoichi
+	NAKAYAMA via GitGitGadget's message of "Thu, 27 Aug 2026 14:41:53
+	+0000")
+References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
+	<pull.2197.v10.git.1787841717.gitgitgadget@gmail.com>
+Date: Thu, 27 Aug 2026 10:32:44 -0700
+Message-ID: <xmqq4igfa2pv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,135 +89,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-We have die_for_incompatible_optN() (for 2 <= N <= 4) to check and
-complain when two or more among N mutually incompatible options are
-used.
+"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-What should a developer do if there are more than four options that
-cannot be used at once?
+> 'git worktree add ../foo-dir bar-topic' fails to dwim when there are
+> multiple remote branches with name `bar-topic'. But it doesn't display
+> meaningful message as 'git checkout bar-topic' does under the same
+> situation.
+>
+> We improve this by adding advice and modify the error message for worktree
+> add.
+>
+> By Junio's suggestion, we include matched remote names in the advice. It is
+> applied to checkout, too.
+>
+> We also fix the behavior of --guess-remote when there are multiple matches.
+>
+> Changes from the previous patch:
+>
+>  * [1/4] fix the function name and add detailed commit message
+>  * [2/4] change type of tracking_name_data.remote_names
 
-Introduce die_for_incompatible_opts(), which can handle an arbitrary
-number of mutually exclusive options, and rewrite existing variants
-using it.
+This iteration looks good to me.  Let's mark it for 'next' unless
+we hear other comments in a few days.
 
-The new function takes N pairs of <bool optN, const char *nameN>,
-followed by EOF.  Note that even if the caller passes bool, it is
-promoted to platform-natural int when calling this variadic
-function.  Thus, the implementation uses va_arg(ap, int) to extract
-the value, which allows it to distinguish between bool and EOF
-serving as the sentinel.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- parse-options.c | 29 +++++++++++++++++------------
- parse-options.h | 38 ++++++++++++++++++++++++++------------
- 2 files changed, 43 insertions(+), 24 deletions(-)
-
-diff --git c/parse-options.c w/parse-options.c
-index 4519ead9dc..0aad1e5373 100644
---- c/parse-options.c
-+++ w/parse-options.c
-@@ -1535,26 +1535,31 @@ void NORETURN usage_msg_optf(const char * const fmt,
- 	usage_msg_opt(msg.buf, usagestr, options);
- }
- 
--void die_for_incompatible_opt4(int opt1, const char *opt1_name,
--			       int opt2, const char *opt2_name,
--			       int opt3, const char *opt3_name,
--			       int opt4, const char *opt4_name)
-+void die_for_incompatible_opts(bool opt1, const char *opt1_name, ...)
- {
--	int count = 0;
-+	unsigned count = 0;
- 	const char *options[4];
-+	va_list ap;
- 
- 	if (opt1)
- 		options[count++] = opt1_name;
--	if (opt2)
--		options[count++] = opt2_name;
--	if (opt3)
--		options[count++] = opt3_name;
--	if (opt4)
--		options[count++] = opt4_name;
-+	va_start(ap, opt1_name);
-+	while (count < ARRAY_SIZE(options)) {
-+		int opt_set = va_arg(ap, int);
-+		const char *opt_name;
-+
-+		if (opt_set == EOF)
-+			break;
-+		opt_name = va_arg(ap, const char *);
-+		if (opt_set)
-+			options[count++] = opt_name;
-+	}
-+	va_end(ap);
-+
- 	switch (count) {
- 	case 4:
- 		die(_("options '%s', '%s', '%s', and '%s' cannot be used together"),
--		    opt1_name, opt2_name, opt3_name, opt4_name);
-+		    options[0], options[1], options[2], options[3]);
- 		break;
- 	case 3:
- 		die(_("options '%s', '%s', and '%s' cannot be used together"),
-diff --git c/parse-options.h w/parse-options.h
-index d7f896a933..50bd715b86 100644
---- c/parse-options.h
-+++ w/parse-options.h
-@@ -441,29 +441,43 @@ void NORETURN usage_msg_optf(const char *fmt,
- 			     const char * const *usagestr,
- 			     const struct option *options, ...);
- 
--void die_for_incompatible_opt4(int opt1, const char *opt1_name,
--			       int opt2, const char *opt2_name,
--			       int opt3, const char *opt3_name,
--			       int opt4, const char *opt4_name);
-+/*
-+ * Take N pairs of <bool optN, const char *opt_nameN> as parameters,
-+ * followed by EOF.  The caller declares "The options opt_name1 through
-+ * opt_nameN exist and the command line has options whose optN is set."
-+ * and asks that an error be raised if two or more of these options are
-+ * set at the same time.
-+ */
-+void die_for_incompatible_opts(bool opt1, const char *opt1_name, ...);
- 
-+static inline void die_for_incompatible_opt4(int opt1, const char *opt1_name,
-+					     int opt2, const char *opt2_name,
-+					     int opt3, const char *opt3_name,
-+					     int opt4, const char *opt4_name)
-+{
-+	die_for_incompatible_opts(!!opt1, opt1_name,
-+				  !!opt2, opt2_name,
-+				  !!opt3, opt3_name,
-+				  !!opt4, opt4_name,
-+				  EOF);
-+}
- 
- static inline void die_for_incompatible_opt3(int opt1, const char *opt1_name,
- 					     int opt2, const char *opt2_name,
- 					     int opt3, const char *opt3_name)
- {
--	die_for_incompatible_opt4(opt1, opt1_name,
--				  opt2, opt2_name,
--				  opt3, opt3_name,
--				  0, "");
-+	die_for_incompatible_opts(!!opt1, opt1_name,
-+				  !!opt2, opt2_name,
-+				  !!opt3, opt3_name,
-+				  EOF);
- }
- 
- static inline void die_for_incompatible_opt2(int opt1, const char *opt1_name,
- 					     int opt2, const char *opt2_name)
- {
--	die_for_incompatible_opt4(opt1, opt1_name,
--				  opt2, opt2_name,
--				  0, "",
--				  0, "");
-+	die_for_incompatible_opts(!!opt1, opt1_name,
-+				  !!opt2, opt2_name,
-+				  EOF);
- }
- 
- /*
+Thanks.
