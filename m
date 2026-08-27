@@ -1,138 +1,155 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA26B1FB1
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 01:19:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7102C2BDC13
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 01:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.177
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787793577; cv=pass; b=fmLqnv4bCujlDaKo0mRAgJvtZzf3jwsFOSr9qjvXilXXpWu1YDkEe59QEji2y99GlFQlnT+gDx0ApXZDmaOZQ+j3YYo4QVw+Uc9weehhd8hgqlSaYsfsYc0r8MsIRWmAoxwNDCvFkBPAqaOcTU9ENoZcXwjfU0H0rGqdIOT4sZ8=
+	t=1787793788; cv=pass; b=FEGzJJMKVVo1drdkhLvDyGLtyslzq9NnkYvkM3gpnYlB9Ae/5iH0oefYoXHK5SkYTgYV5WqbU8wGJyEkRcik+LlgbadmmDUv4i1xbwiGj9CKeqsaF+efwMh3NAMfOVqwl710mLfmopcDBto7Ys96cUQ8rCn2syDnM5XQhxxz9v4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787793577; c=relaxed/simple;
-	bh=D1galKNEBMvCr++hJ4I1qhRtn6tp6K5RWdxdfYt2cGY=;
+	s=arc-20240116; t=1787793788; c=relaxed/simple;
+	bh=6l6I6gjJ+ibIkUEw3BdCrokOc2OeA1G+3QEPwajBjNk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Zib3J8NG/GhhSo+cv9fxrzVWVP4hNWIQXA7FXt7Dr0j/kYfB8zPNJzQ4vHEr6MtBbHvEV5w+sCrqNosyIhiPvHL/kLoYQ5Wq4ggueev/YZuOtHNqR1kFiDiL1Su+8HIgtwInb1DC6d+lrb8i4DpQ0JSHqCn97ZKo/pJDoNytgOI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Woka4Oz6; arc=pass smtp.client-ip=209.85.160.53
+	 To:Cc:Content-Type; b=ChZuN2rjnsTXitM0glrGWt1duOuLWScTrUVf7Qe/5LzAYIqmnhMAr9cZuxdyKRVEWH5eIsjoVYsPegd95zjNXSP/UHyL42nEsnUvIjvkWR/H6Wku+hjnNYUjXNe/wCIaLzvLlQ24u1rbqDCrM1QkfZpwHdbdJBf48szb83S2S+E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EowxOCDP; arc=pass smtp.client-ip=209.85.167.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Woka4Oz6"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-44cf70de986so1209071fac.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2026 18:19:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787793575; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EowxOCDP"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-4b381337e1fso322118b6e.1
+        for <git@vger.kernel.org>; Wed, 26 Aug 2026 18:23:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787793786; cv=none;
         d=google.com; s=arc-20260327;
-        b=hTuXc+FTf4sxTvUHpOtzGLU5BOYfLGa57W7UVu6QvQhoYDE5iNgJfwI6v/6SiJNEL8
-         cvOmAFwOC4OQZ3NIYMm1x/N1V+9YoL0NA3LjWmG/OqsdaYbat6DcDt6Yg+lCrxrms5gJ
-         Ax13JhwmSL6UgCpQXiAHto/zgnOK75ugigEqItAPwzVIjIj+SPEKeSFW8hkiv/mnTez7
-         5O11djVc8xnFF7IvStopSIyOTvl1tw3V/dvQmBmxSrbZhcVJteY4l0V3XbrI+pwVw0nw
-         dffJBWENTvEJFDOPj7YbdXrt7zH+SBu/d4PoZOFVlNx/jDSMW0nkbGjF2PArFq51nhqo
-         a8ig==
+        b=a8Ey5qDtDBEn+yQVQNcxI2ha6DFj7qecL0095btHldOWwLAhb7biCOScj8F+1fLW9k
+         6ozBsYr6rlC1B1f2XwH66Ar0xQDs8TT74FZly6kvFJ+esMllbOATCQtmN1A6lOtU/v4t
+         BagVDAHYsW17CRLb4z0XqurwYA9+Y7rO8tJTN9gvwn5CSTHyRKmI5CRGl3lo3qxB7Lu+
+         7SdNTdp/1T9fUGAANP5NdYAI9nGKTz4BPHPu6f5w1fr3Ps8aa6eLwivRJfQDE+AHQWpg
+         HeVTkr2W2oWbcizu63EpjlfSjvkJuuzOWri0kDjGro2N/aTx5s+g4SjrPVkuHfU1/f7+
+         e7sg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=WinKCkN+9tmBwCiM4gGmFmHHGikU7Ol1VXOdFSOkq60=;
+        bh=BSixYvDfB7AnKGoG5qKysz4ayYinnKw2WIrFGt5W/QY=;
         fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=pkigpJllC9pKHzbwdKPLUgqxA9Ew4GUR8kDyUryPo8YqUof3RDMdghrPUZXylw09y4
-         DwElSr8YHdwQaB5Efs6QuE8IjW9mKBEpWCBXU/zNcJ2ZQ0N7nbTE7Bl1OP4LEtjq8KOJ
-         AV4PfinQTg1qJ59mw0bJxTA4FI/z/8UweiIDkYKKctnEFlg/eSTQurw6JnCb/Io8xuK2
-         awT59aMeesN6APolekg9CpQ81t0oXLL7Dsfx0MVnEtAKkCcCJ3nEVGKKs44Gtu5dNpui
-         sK2fMce5gU4jrW0NkPkKQP/OQmajKcKC4katpeyRuTZQoEuqjJC/zvZkbn0g4jEN2SJe
-         wszw==;
+        b=tAhiPqYGlGy/NHLgIb0Y+/Md+O46PEGyJ6yDCjiUtp9zEw3kOUzkVLl/ooG00Cj+tC
+         cgZ2dSMX9+aKaGrXtqUpHQw/dhw3rmfy5rwDgS2bkKWwL1yOhpDJmZTzb9r4cuDC8Jku
+         VuJDuG7UYuov9hrKBbeHFCfIcG0spe5k6GJy6kAhBwBttdyxIJHB1gaZ5Lz44Pwtwycr
+         JfWJzxu/sAYUizcwc7KJvACRsKmRU5zW6jqB8cvArEein9nsZ6wzxjNIWe2H4kcb5q76
+         KRNnljMEfqAk1bdEaG4sNjiTx8F0ykBJkJN9gudGV90f7BxpIJhf5sxAM5srHnaWs7/g
+         e5FQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787793575; x=1788398375; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787793786; x=1788398586; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=WinKCkN+9tmBwCiM4gGmFmHHGikU7Ol1VXOdFSOkq60=;
-        b=Woka4Oz601HB5Z/quEuAZpa5kESWI5Mz2DaB6fAxYQIbeSt9KB+AqesBQiIHWWi45L
-         8t1mfrvhpp4OHiqiTz0424rQAxw4TcLz+ncJLgOVcs3sKTgKDgWv0QPs1KHt9/YcZXze
-         YyJU3hPap8pIAB72jjrxR8108k9DAYWQvPcf1oGXgyxy6upvF13G7Ioqw5F6KLLAEgnN
-         71cpEBgsgBLYMvQLIHFl4RqiDu59NnsIncBgYcLgWeqFA44vx4dn4FEeOoZLe4fZurNS
-         XdKkrJrmCS7XbVzTGtPABJTQAP6tDF87E50fb2fFEX47hIljh05pYKbafPiPnMEfe8U5
-         U7/g==
+        bh=BSixYvDfB7AnKGoG5qKysz4ayYinnKw2WIrFGt5W/QY=;
+        b=EowxOCDPcCegdF11eS/SmTVelPu8eF3XcLZtLkpHbTB6DJQC+thfDcZHwrz3t1cfuy
+         rXFm0IW4hW9DMsHmoWFugLGJVmyFFnwLxQsvkzDqS7J1YRffRKyrUJ2xDWeXJSkD7J1O
+         omZmu+VVPYHkjFpTOqCj3ChP269av02cao8K9aKYu9xTWLQEio2V1Lx5Wx7H4/LrTEVM
+         RFbbTLxpqFCLctJv4p9m/aAIKvc6aDpiu6hzxXE1yh9pUQ4b0yzeWKgPCXooycXi3SWw
+         4am79MP0RqsSlx6Tq6WRHKlCo1axaXNStirJ5VdZI3S5L1xlfUTk+ZSkb/75FNLIgJWU
+         t3bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787793575; x=1788398375;
+        d=1e100.net; s=20251104; t=1787793786; x=1788398586;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=WinKCkN+9tmBwCiM4gGmFmHHGikU7Ol1VXOdFSOkq60=;
-        b=RCKfe6JRb+zTUDFu9oJ4NiychoX2RRrAd2M2LvKFuYkepS+UYWdQiRI54KjUwP8/1S
-         K7OQ5Osv6ZlkFpd5DPBRDbW0nqm4SeT7u1K9EF0DaAgYiUQGLEcimlHoHLKXco1K8vRV
-         bzpMTJKz+rNbwrSfrlOYeV6I3gPJNWFfbkUFCIjag1Dut9XKLl3ZSbWwELLK+Zc4hRLu
-         dsge4E9wgN/nh8Bo5OJtqe+Oas7ikGSTtZHJo2cwqRio/LkW6pC8K8VqIev3ph/57SXS
-         Jc/UDR08TI7Up4wM4Z16czujZIGzc07hobhaecmfqtEOXXR4e75lghZqS1XBlUb6vybp
-         k0lw==
-X-Gm-Message-State: AFuF++m722+wko6etDtSQrga+AWTAgMRfyRJ84D5mfb2NSZKm/nCbBn1
-	BdUuVg0Lka/ekVxgZk6DKYGr+pHLsZkbMu0JRbMMM1Vp0TUYD3YM2y/OtHpesxC3Cn0FMNYE6VI
-	sfV5zI8aAq78KefaMmYmhhHs69TIUbbKTfA==
-X-Gm-Gg: AR+sD12gZMFnxrU42EmNJz+e1aTDtcEe8iCqL69OFHgAxej41c3OWP5+7zoZ1K262YS
-	9DKKvXE9bHskYTGaPzsCEqlTvGQZJucRGJzCou2oS3ysHsZthiPctlP+5sKQyOVRqpEG8A/P5Yy
-	UpPXdQq0J4z30qCtulr1LUwTRJ9GTxDx34S/LcjXbxI+rPZMqSIchah2txp6pTZDQmY1aY9RmE4
-	fYOAioYLwNUEkxURamsvA7fIrHky5zKRXDr1DD9jdq6HjRqNCMpk9jWeN9AMLOl1+c4DsaH3io3
-	lT6KQjvPOvYNaiLltGbP/IMKg9B1MY4yP10/W0Nd+5k9dHugSDm5Uo84OfBnAkkqYso2dAV4QxP
-	6nmeBbITK2E+Zg+vZkjjzESjMFJ526DptOdPihebs24c2X09X4kdviQqRfzMWFQ==
-X-Received: by 2002:a05:6820:a28b:20b0:6b1:4e37:41c0 with SMTP id
- 006d021491bc7-6b1a048c805mr8680447eaf.19.1787793574682; Wed, 26 Aug 2026
- 18:19:34 -0700 (PDT)
+        bh=BSixYvDfB7AnKGoG5qKysz4ayYinnKw2WIrFGt5W/QY=;
+        b=XeR/U8+32PLgQdhBB9hIxD6o0aLkqzB8ZJBX330JygaY2EUCTr0k/yIpkv4c1ruNyx
+         8doOYejLLLA1czl77UoB6LvJPESKx1fvqags2vHRJ+vbmm+cdDFfUoKMaSR/M9yjLm6Q
+         /WupOW7/glUa7txcbgC5jHelwg+JcuLFrLQay57j+RQwlKAOmv0Wfseeu+Z7pEbyjytS
+         70BdgHSvmHFfi7NcZe8BPhlS5QTzey3eUXNrWgLaZ2NLG7Ojp2HO30NCr/l14szlbrgd
+         pKI6spe7R3lvjseuCYMpUpPwgVEKM3bWhP0c+HKwwHtwBUeoozd2cbRHRbXS1+RyRbi8
+         UA2A==
+X-Gm-Message-State: AFuF++lGx0hrl1NNEP0lprqQnUe81CivXRBo6qWej3ZDO8GUdsNOnEFZ
+	etqi5KBu2GJOJM1UuKPLtTiu4jBP1x0WBo5e3PX9NNTQOGhoee1rEMLqs9OkXUuEK9eSy7ZyARL
+	lZfgSasdJQecJH02UGB/j+ARNlvGH5gSS7g==
+X-Gm-Gg: AR+sD11j7I8je+JrstY4X98g9p5gfHWAVDUMZerTdydxCyUivhYOKFOMD9Wz1L8qrh4
+	ds5m8mg1tb8SqOvye4BQ3EkT1CqehjR7biZmWFWZsUqbhFCHK6eup5HoiuO0GE4/0oZ5I4sNpDM
+	+W7z+L8A3Q9/wiuHjfAZ3igOLb5MsAKjC5K2dWbK8CSc/s26nBjCxbpYP5/1ZA3ZfvMK44tj5aB
+	ecwH+DMCmfcDdZ22qRxKyh1L96+EWesYaccum6pboZErZAxEeZEM6M3Jx58s9R/uydAiYoEYXuU
+	xyCWj6ZuNL3Y7KoW/PQpm3tT4SqFENkaWaVStWQTdb+3BAHHAXFm45oRJyJr9HdDPUnCGnHSgs4
+	a5C0CjDZXQAPhRZMHdqTAonKPKtGYYKQW0vnKeJ7+sg/4zQ91KPNnUgNK2K4+hmo=
+X-Received: by 2002:a05:6808:138a:b0:4b3:7dcf:b77d with SMTP id
+ 5614622812f47-4b37dcfe96bmr4202924b6e.2.1787793786372; Wed, 26 Aug 2026
+ 18:23:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260826233152.1703497-1-gitster@pobox.com> <20260826233152.1703497-3-gitster@pobox.com>
-In-Reply-To: <20260826233152.1703497-3-gitster@pobox.com>
+References: <xmqqo6epj6is.fsf@gitster.g> <xmqqjypchixe.fsf@gitster.g>
+In-Reply-To: <xmqqjypchixe.fsf@gitster.g>
 From: Elijah Newren <newren@gmail.com>
-Date: Wed, 26 Aug 2026 18:19:22 -0700
-X-Gm-Features: AcwNN1X-x4Mfx_SM9MrYZ76_K_d2B-IzubQVt1m3tWZT_iQTE_rF_-z8Osx6Ijc
-Message-ID: <CABPp-BG2PJ7AyC2ctPuX0bmkFd_cGmNz+XtbjdjCbMrH4_d99A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] die_for_incompatible_opts(): accept more than four options
+Date: Wed, 26 Aug 2026 18:22:54 -0700
+X-Gm-Features: AcwNN1XPaFZRD1OpotHlwY1oeUYWkqun_zwgbFFKlT8wicNzaP50FX2Z_D1w65k
+Message-ID: <CABPp-BEnTWbk7m7jRoBG7Bp6vT62GRHoEfXg7=bJh111BqSx_A@mail.gmail.com>
+Subject: Re: [PATCH v2] you_still_use_that(): reword the instructions
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 26, 2026 at 4:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Wed, Aug 26, 2026 at 10:50=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-[...]
-> +void die_for_incompatible_opts(const char *opt1_name, int opt1, ...)
->  {
-> -       int count =3D 0;
-> +       unsigned count =3D 0;
->         const char *options[4];
-> +       va_list ap;
-> +
-> +       va_start(ap, opt1);
+> The message is overly long and may mislead readers into thinking
+> there is recourse other than adopting the new workflow.  Clarify
+> that the message is there merely to help them find a replacement
+> workflow, and is not offering to reconsider a decision that has
+> already taken effect.
 >
->         if (opt1)
->                 options[count++] =3D opt1_name;
-> -       if (opt2)
-> -               options[count++] =3D opt2_name;
-> -       if (opt3)
-> -               options[count++] =3D opt3_name;
-> -       if (opt4)
-> -               options[count++] =3D opt4_name;
-> +       while (count < ARRAY_SIZE(options)) {
-> +               const char *name =3D va_arg(ap, const char *);
-> +               if (!name)
-> +                       break;
-> +               if (va_arg(ap, int))
-> +                       options[count++] =3D name;
-> +       }
-> +
->         switch (count) {
->         case 4:
->                 die(_("options '%s', '%s', '%s', and '%s' cannot be used =
-together"),
-> -                   opt1_name, opt2_name, opt3_name, opt4_name);
-> +                   options[0], options[1], options[2], options[3]);
->                 break;
->         case 3:
->                 die(_("options '%s', '%s', and '%s' cannot be used togeth=
-er"),
-> diff --git a/parse-options.h b/parse-options.h
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  usage.c | 16 +++++++---------
+>  1 file changed, 7 insertions(+), 9 deletions(-)
+>
+> diff --git c/usage.c w/usage.c
+> index 3f0118ab2a..365c0bcb90 100644
+> --- c/usage.c
+> +++ w/usage.c
+> @@ -386,21 +386,19 @@ NORETURN void you_still_use_that(const char *comman=
+d_name, const char *hint)
+>                                  STRBUF_ENCODE_SLASH);
+>
+>         fprintf(stderr,
+> -               _("'%s' is nominated for removal.\n"), command_name);
+> +               _("'%s' will be removed soon.\n"), command_name);
+>
+>         if (hint)
+>                 fputs(hint, stderr);
+>
+>         fprintf(stderr,
+> -               _("If you still use this command, here's what you can do:=
+\n"
+> +               _("If you need a replacement:\n"
+>                   "\n"
+> -                 "- read https://git-scm.com/docs/BreakingChanges.html\n=
+"
+> -                 "- check if anyone has discussed this on the mailing\n"
+> -                 "  list and if they came up with something that can\n"
+> -                 "  help you: https://lore.kernel.org/git/?q=3D%s\n"
+> -                 "- send an email to <git@vger.kernel.org> to let us\n"
+> -                 "  know that you still use this command and were unable=
+\n"
+> -                 "  to determine a suitable replacement\n"
+> +                 "- Read https://git-scm.com/docs/BreakingChanges.html.\=
+n\n"
+> +                 "- Check what others on the mailing suggest as a replac=
+ement:\n"
 
-va_start() without a va_end()?
+missing "list"?  ("mailing [list] suggest")
+
+> +                 "  https://lore.kernel.org/git/?q=3D%s\n\n"
+> +                 "- Send an email to <git@vger.kernel.org> asking for he=
+lp, only if\n"
+> +                 "  suggestions by others do not work for you.\n"
+>                   "\n"),
+>                 percent_encoded.buf);
+>         strbuf_release(&percent_encoded);
+
+Otherwise, looks good.
