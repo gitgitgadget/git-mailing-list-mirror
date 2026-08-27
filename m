@@ -1,213 +1,161 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7D4367F5E
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 14:42:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0538743B4B8
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 15:19:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787841726; cv=none; b=ZT6T10rIZCR9dog8Yttx50dxgAznCRLVFJkfFey2ZS2DGKQc668UYeCPG8CLRXvPOuEMa13w4/q1ZRNaiwaHzh1cKs3//hFqbTbrlc3KhT0mqgkK3HrbeDq6FjC7YLCYVndDZi/xKWLqis1OWn+1/8EaZ1ha/UyRj4i4VnSwVpg=
+	t=1787843959; cv=none; b=CFH5CnQm2lpY4J1nw/80FDaAh8sPLFLcwHHj5oYchVB72VhJ7mPGWBSaLurh/xUU202v6t9To60pDABgpZpogBMj46XdDH8LwmiDG7sGkG0hOCCa6QfMoTPTd7MK1PQ8+hzVD75wDL6AXCKFPfH6LIA6fhXVKmZvGbmLkbhHx38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787841726; c=relaxed/simple;
-	bh=5P5HwovBzB824qtal9Oy8kV4jgptR4lDi9AP7mtGnKg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FqcAptr9/1Xk0kcDfePwiyKnE1xQX0r8Y8elaY+enDA460Iy7hu9qfGHhQMaS0cxPb2/JbR4z1xKhFegiPg+yknvyqlJPgVAhAPLMxtSqAuesfV2mbaxvl1c0Ql6k0GqeTK/nWOP30WzXjwmIAxYR5aa88VesDXzmf7LuQqbT30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=icgD6izq; arc=none smtp.client-ip=209.85.222.182
+	s=arc-20240116; t=1787843959; c=relaxed/simple;
+	bh=zvym0fwieLPyyRxHicaTPLmLOpGipozUfmEmiXjSqPs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=iM77bZoId0/3j29TXCsOusCB6rJ5LUEx1aRaLqIHWW0GZywc0Lrlt3XF2BxKAnyOJu7N6bh5tNN0haPzTSwseEL/XtJFtNgyHLCSzFCtrYApqjNhKSns5z2PvfvMLpPteg29c8+opWxUqnJt4AQxkPehgn6ZmHtXMx0DTkOWo/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ebe7CTlp; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="icgD6izq"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-938cd95b06eso70642485a.1
-        for <git@vger.kernel.org>; Thu, 27 Aug 2026 07:42:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ebe7CTlp"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-49b0d78a801so11411365e9.2
+        for <git@vger.kernel.org>; Thu, 27 Aug 2026 08:19:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787841723; x=1788446523; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=pgPOLThxsyUvFkp7Uko/wm2Bra7A6zsnyci9hWVHhIM=;
-        b=icgD6izqDVT4iUq1LaZN9cU2T9d9vMcbyDZTs19iZgdUMJ+2f81/WQxRr3/uUTTCn9
-         Sj/lZxR44AMStmjpKSLwEM9krpi2YVJFKUqI4sg+hs9+wNLZr5bsdM3bkUe1v7irSKQS
-         cMs/3MT7I87kAmZvWl7aYmQlFwom24sFwr0yCCikNlPLw/xZG1PmEikyNXh/8AFYQbGG
-         qQLTcixxTp/tsq38fnIxSDiuupm5w9QPktbIgjbJf+hXVZ+agUgomnD34PKBRBNyl1kD
-         RsKFLWyX3XwE0V8JE6jtyLIL4nICMR9eAn8iBs7piS9lht/KJ3h1wCn4p6eNGb/jXphg
-         auYw==
+        d=gmail.com; s=20251104; t=1787843952; x=1788448752; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=d5ILsPzLPpRFtKqwTgoqLyKt9KA3mx56bT9taONMFwE=;
+        b=ebe7CTlpcGqgeIrQFJNuf94laglaJ/LezqudIbp0bYBVPOWnn+1K4N6O0Qwde9FdU1
+         TUuHbZZjOcuD4AWFc+WgMM1BXSCBczkR1gpHOnY4dGZHSqgYZ+9fhE492O2R2yq//jN9
+         fjxIIINH+AVfqCPkx7Bug9T35RG/Lu1PxaJPKi9tgtKgDfDuuEaBxIVXPJy7k3yNh1iY
+         mFd2JLhLtiMm2AK4Ggqqoo4ZRnXZXgIRNBbG1iHD26wVkafgi3KvWSwJnqp/VtkgPcjI
+         AAqn4Ju+iO1VyqS3ZIxhFxsC7lTHQ/3LUOuZldnG5KmMV5NaiY1j1zhvTt+6ncklwtc5
+         94Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787841723; x=1788446523;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pgPOLThxsyUvFkp7Uko/wm2Bra7A6zsnyci9hWVHhIM=;
-        b=AFBHYtAH/2D8Zp8QU3cLulrFA3Tx1b63jKKee2wOQcXAelEWCMwryZqAWNMD1NgN6F
-         in62LBfqAjWfIc+3YVocItN6orf/m7rvaOJldRCgRnLASBv5p+2H7ccZlT7b9eRghXWh
-         e+vQPHGneYvedroNBid09gbbg0JjQIYeN7wiKz6GnrQEExlvclGdDFKwUt5mRUliDBe+
-         rUNvhfvQKPZBfdENwTJxCU49goFDLOu6PJcktact40LjCItz6JwMVrrjE5PL1d9ZSo/N
-         rx0G2xHyHtmDpacWyosS2jfSABjawCT/1lMI3o4muYwq4q305/1YTpN6mYx7KizHRfjl
-         CddA==
-X-Gm-Message-State: AFuF++kB8in3hqYgoIGniHgJ36CzlxX9CwnU3N+PmGjW8SupuPTV8kEE
-	5Hwak7zJcGLt5JMSJhDWzYRZ956iM1qFWefmQVaz6gqFpG5Zz8mixZ5CxZTxTw==
-X-Gm-Gg: AR+sD111fgJuO4hiXwR8XBeyErogYQvGJgC34na7td70Lk+NrTHRo2UmVBunfw4nvyH
-	KxmR38Y1PmY+r6025xzFwZF6b/DvPGUkl1cX2Mxh0dSJz0fDYjqLnLeVSFb3D2iYtm8QFdqTs4N
-	c3lWri64MehJxqobmC/dZgtcrm/Q6IAgC6P3l28kyDA9z9hwC+rN2QsEeWzoCwvlMmQ8bXtn6RU
-	szZscYzRuwm8l37+OOTG6eO85jnz05ZXrOdWgmoTKbNlAaxgKP0ZoGanDFVE59H9jdBCdpxskDd
-	f/E6Ny97LY+ee/kUr4jVgIEnFUcg2bG2xH3ZEA57uDBLzY98m4XwysKgkOl07let4IgEAvNZrOc
-	J0dybjN7XMBfCig6oiWqFko/852SqVuS5Mm3n/K9SGE/3TcOZQzz0Eh+1bPP9mK3nFwFTQyM5e1
-	gkilmFJ/XPF1GXBHNK/nXTIL/WWNw2/5b9xRrTmoxnpRVvH6hc+yT8tBekFG1N5ed7
-X-Received: by 2002:a05:620a:6486:b0:936:cf9c:a994 with SMTP id af79cd13be357-93900458887mr732535185a.19.1787841723418;
-        Thu, 27 Aug 2026 07:42:03 -0700 (PDT)
-Received: from [127.0.0.1] ([52.186.174.241])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-939046018f2sm161776285a.7.2026.08.27.07.42.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Aug 2026 07:42:02 -0700 (PDT)
-Message-Id: <407c53b33c1b4fb2b1919b4552cf15a71deb7cb8.1787841717.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2197.v10.git.1787841717.gitgitgadget@gmail.com>
-References: <pull.2197.git.1786177301832.gitgitgadget@gmail.com>
-	<pull.2197.v10.git.1787841717.gitgitgadget@gmail.com>
-From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 27 Aug 2026 14:41:57 +0000
-Subject: [PATCH v10 4/4] worktree add: treat multiple matches with
- --guess-remote as an error
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1787843952; x=1788448752;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=d5ILsPzLPpRFtKqwTgoqLyKt9KA3mx56bT9taONMFwE=;
+        b=gsFbyHlWaeVte1wbf4Qhh1S+cgjCYcMXP5plXZt+bn30fkXvh00VjOCKAPh4i0by9B
+         IP4kxkxo21Y+9Bx4OBj2b4CMjYgRMLA9SqaLwglnacLc6JDrX1btXCKND670Pu4UIjW2
+         qZdsd6s2a/6KuXB4i3bbrpLZaMXgVHsPB8B2MTz7RQOF+uWXRUSWT+1J8yyFUy9Fd5kR
+         HgqOlFxiiWCSAk9l4zwJ5ksP0higX5ibBpmY5gBmMObm4m7NN/nAGF+yr27kKwRBEkc2
+         Cx4V/0dIgTAuQGEUjLkoZs+LmrZdq4h1E4S+ZPCrwQUMaReIdW5uWGZYlZpyPeM4dcZx
+         LQ8A==
+X-Forwarded-Encrypted: i=1; AHgh+RrxnrZkBIUNWi76StqTycM1PUFWRRInOAEsR2uzcP+hq6UcZR666kD3UXKcU68UBOCA6Pc=@vger.kernel.org
+X-Gm-Message-State: AFuF++kSbElqaSFeYE1YLfH8wTMG+dVq+y53/TIi9/YcTLktstzOBAX1
+	RqsAuhBPlSy0HkbOseUHjc+k87h+GKataswULKjgWhwyDGbzPWwqYUlS
+X-Gm-Gg: AR+sD12c5Aoq3RkVrNoFwxn6A/MTFXv/op130Tu1wwGtGK2SQHKry3vkNPIL/Oynf2G
+	MiWvgdhI6T1SBD6/GDQIoj4pyBzZfrmmBJ80R+KfWuJ2dgyLB44Mb4oEyFxechWY0KMKcWn8K4h
+	zUP/GdZIWQS2D/H7d1c9vhlJELdLqkUCbm6RnioNc+Ki8o8PW8edCohT6kQknju4zeHMXyE5Ynf
+	twhm3xH36dDeFXZY58a3YDCIEiAiKWRiXbILq/CDYbQXTXJ/M388wnzgVianAtp4YYLmurswGkF
+	EEXlOt9ERNQaiMdr4d0izgTmHHJOR19RoNjoTWBFVkpr+u0sDNq3y8A9P4/IRce+jPNQbr+uQdS
+	Z6I8hFWZF8eAcSUi02h8VU5zkbT+oh0IdzaDhtAnr4/AulZ9Xk3pOqi2OZ0ZsVWKJOYm7mHHk6K
+	y2CHsOSMCj/zolEpb2+MlWWSgrDj7qtSlkf8GTJTWKJk5zKJqOYObafiUTyU0d5JYAPR/bhdWlm
+	mQzHC52DfYA2Xr3a8exazKsJJsVMX4W3zv/MXxMSVcC8sNzEOsBPQ==
+X-Received: by 2002:a05:600c:c87:b0:495:7888:281c with SMTP id 5b1f17b1804b1-499dc693e38mr160125975e9.0.1787843951715;
+        Thu, 27 Aug 2026 08:19:11 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d? ([2a0a:ef40:17bb:9901:c6b0:b529:d03b:36d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49b49610170sm129285965e9.6.2026.08.27.08.19.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Aug 2026 08:19:10 -0700 (PDT)
+Message-ID: <dec05fd6-b99c-4a71-b80e-24e7d6de4b62@gmail.com>
+Date: Thu, 27 Aug 2026 16:19:09 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Yoichi Nakayama <yoichi.nakayama@gmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
-    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 1/3] commit: reword the empty-commit rebase errors
+To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>
+References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
+ <pull.2389.v2.git.git.1787792534.gitgitgadget@gmail.com>
+ <65c48ed3cb638cf0be18a3aa6d86d4c4f2cf01a2.1787792534.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <65c48ed3cb638cf0be18a3aa6d86d4c4f2cf01a2.1787792534.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Hi Elijah
 
-When 'git worktree add <path>' is invoked without <commit-ish> and
-with the --guess-remote option (or when worktree.guessRemote is set to
-true), it tries to find a remote-tracking branch matching the basename
-of <path>.
+On 27/08/2026 02:02, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> When a rebase applies a commit that becomes empty, it stops and asks the
+> user to decide whether to keep it or drop it.  HEAD still points at the
+> previously-applied commit at that point, so either amending or creating
+> a partial commit is refused, with one of the following messages:
+> 
+>      You are in the middle of a rebase -- cannot amend.
+>      cannot do a partial commit during a rebase.
+> 
+> Neither message hints that the real problem is a commit that became
+> empty, and "during a rebase" is overly broad besides -- amending and
+> partial commits are fine at an `edit` or `break` stop.  Reword both to
+> describe the actual situation.
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>   builtin/commit.c              | 4 ++--
+>   t/t3404-rebase-interactive.sh | 4 ++--
+>   2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 28f6174503..0d908d72bb 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -521,7 +521,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+>   		else if (is_from_cherry_pick(whence))
+>   			die(_("cannot do a partial commit during a cherry-pick."));
+>   		else if (is_from_rebase(whence))
+> -			die(_("cannot do a partial commit during a rebase."));
+> +			die(_("cannot do a partial commit while resolving a commit that became empty."));
 
-Currently, the behavior when multiple matches are found is the same as
-when no match is found: it falls back to creating a branch from
-HEAD. This has been the behavior since 71d6682d8c (worktree: add
---guess-remote option to add subcommand, 2017-11-29), when the option
-was first introduced.
+"while committing a commit that became empty" would be clearer to me, 
+but I what you have is definitely an improvement on the existing message.
 
-However, if the specified <path> matches any remote-tracking branch,
-we infer that the user intended to use one of the remote-tracking
-branches as the start-point rather than HEAD. So we abort the creation
-of the branch and worktree when there are multiple matches, and
-instruct the user to choose the start-point.
+Thanks
 
-Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
----
- Documentation/config/worktree.adoc |  5 +++--
- Documentation/git-worktree.adoc    |  4 +++-
- builtin/worktree.c                 | 20 +++++++++++++++++---
- t/t2400-worktree-add.sh            | 13 +++++++++++++
- 4 files changed, 36 insertions(+), 6 deletions(-)
+Phillip
 
-diff --git a/Documentation/config/worktree.adoc b/Documentation/config/worktree.adoc
-index a248076ea5..0930183b91 100644
---- a/Documentation/config/worktree.adoc
-+++ b/Documentation/config/worktree.adoc
-@@ -5,8 +5,9 @@
- 	set to true, `worktree add` tries to find a remote-tracking
- 	branch whose name uniquely matches the new branch name.  If
- 	such a branch exists, it is checked out and set as "upstream"
--	for the new branch.  If no such match can be found, it falls
--	back to creating a new branch from the current `HEAD`.
-+	for the new branch.  If multiple matches are found, the command
-+	fails.  If no such match can be found, it falls back to
-+	creating a new branch from the current `HEAD`.
- 
- `worktree.useRelativePaths`::
- 	Link worktrees using relative paths (when "`true`") or absolute
-diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
-index fbf8426cd9..32787eacc3 100644
---- a/Documentation/git-worktree.adoc
-+++ b/Documentation/git-worktree.adoc
-@@ -219,7 +219,9 @@ To remove a locked worktree, specify `--force` twice.
- 	of creating a new branch from `HEAD`, if there exists a tracking
- 	branch in exactly one remote matching the basename of _<path>_,
- 	base the new branch on the remote-tracking branch, and mark
--	the remote-tracking branch as "upstream" from the new branch.
-+	the remote-tracking branch as "upstream" from the new branch. If
-+	there are multiple matches, the command fails. If there is no
-+	match, the command falls back to creating a new branch from `HEAD`.
- +
- This can also be set up as the default behaviour by using the
- `worktree.guessRemote` config option.
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index c745deddde..07163bf9b7 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -783,7 +783,7 @@ static void advise_disambiguating_remotes(const char *path, const char *branch,
- 	       branch, path, branch);
- }
- 
--static char *dwim_branch(const char *path, char **new_branch)
-+static char *dwim_branch(const struct add_opts *opts, const char *path, char **new_branch)
- {
- 	int n;
- 	int branch_exists;
-@@ -801,7 +801,21 @@ static char *dwim_branch(const char *path, char **new_branch)
- 	*new_branch = branchname;
- 	if (guess_remote) {
- 		struct object_id oid;
--		char *remote = unique_tracking_name(*new_branch, &oid, NULL, NULL);
-+		char *remote;
-+		int num_matches = 0;
-+		struct string_list matched_remote_names = STRING_LIST_INIT_DUP;
-+
-+		remote = unique_tracking_name(*new_branch, &oid, &num_matches,
-+					      &matched_remote_names);
-+		if (!remote && num_matches > 1) {
-+			if (!opts->quiet &&
-+			    advice_enabled(ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME))
-+				advise_disambiguating_remotes(path, *new_branch,
-+							      &matched_remote_names);
-+			die(_("'%s' matched multiple (%d) remote tracking branches"),
-+			    *new_branch, num_matches);
-+		}
-+		string_list_clear(&matched_remote_names, 0);
- 		return remote;
- 	}
- 	return NULL;
-@@ -909,7 +923,7 @@ static int add(int ac, const char **av, const char *prefix,
- 		opts.orphan = dwim_orphan(&opts, !!opt_track, 0);
- 	} else if (ac < 2) {
- 		/* DWIM: Guess branch name from path. */
--		char *s = dwim_branch(path, &new_branch_to_free);
-+		char *s = dwim_branch(&opts, path, &new_branch_to_free);
- 		if (s)
- 			branch = branch_to_free = s;
- 		new_branch = new_branch_to_free;
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 5c105cf252..a37137042d 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -669,6 +669,19 @@ test_expect_success 'git worktree add --guess-remote sets up tracking' '
- 		test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
- 	)
- '
-+
-+test_expect_success 'git worktree add --guess-remote fails if there are multiple matches' '
-+	test_when_finished rm -rf repo_a repo_b foo &&
-+	setup_remote_repo repo_a repo_b &&
-+	(
-+		cd repo_b &&
-+		git remote add repo_a2 ../repo_a &&
-+		git fetch repo_a2 &&
-+		test_must_fail git worktree add --guess-remote ../foo 2>actual &&
-+		test_grep "matched multiple (2) remote tracking branches" actual
-+	)
-+'
-+
- test_expect_success 'git worktree add --guess-remote sets up tracking (quiet)' '
- 	test_when_finished rm -rf repo_a repo_b foo &&
- 	setup_remote_repo repo_a repo_b &&
--- 
-gitgitgadget
+>   	}
+>   
+>   	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
+> @@ -1334,7 +1334,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+>   		else if (is_from_cherry_pick(whence))
+>   			die(_("You are in the middle of a cherry-pick -- cannot amend."));
+>   		else if (whence == FROM_REBASE_PICK)
+> -			die(_("You are in the middle of a rebase -- cannot amend."));
+> +			die(_("You are resolving a commit that became empty -- cannot amend."));
+>   	}
+>   	if (fixup_message && squash_message)
+>   		die(_("options '%s' and '%s' cannot be used together"), "--squash", "--fixup");
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index ff11abb2f2..1e78dbfd90 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1868,7 +1868,7 @@ test_expect_success 'correct error message for partial commit after empty pick'
+>   	) &&
+>   	echo x >file1 &&
+>   	test_must_fail git commit file1 2>err &&
+> -	test_grep "cannot do a partial commit during a rebase." err
+> +	test_grep "cannot do a partial commit while resolving a commit that became empty." err
+>   '
+>   
+>   test_expect_success 'correct error message for commit --amend after empty pick' '
+> @@ -1881,7 +1881,7 @@ test_expect_success 'correct error message for commit --amend after empty pick'
+>   	) &&
+>   	echo x>file1 &&
+>   	test_must_fail git commit -a --amend 2>err &&
+> -	test_grep "middle of a rebase -- cannot amend." err
+> +	test_grep "resolving a commit that became empty -- cannot amend." err
+>   '
+>   
+>   test_expect_success 'todo has correct onto hash' '
+
