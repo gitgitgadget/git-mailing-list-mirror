@@ -1,156 +1,131 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3BB390237
-	for <git@vger.kernel.org>; Wed, 26 Aug 2026 23:38:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787787508; cv=none; b=V6L2R6YgicTrkDgN3OWdPkuB9BJFF0nkQhV6/muH+c5CFnm7uFi4ZLw2GdqQHUzZshJAPk4ya1OlGydfMLPoZ1A6dNkieONmGCcZ5ABT3AS1f6zBuKvK9pKPsuBYmtJdzK0nU+w2CasYiWthywtxiTz2U25l/li6KBsG5uj+gW8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787787508; c=relaxed/simple;
-	bh=tXe1bJW8cotQiqdQhSaiaf28AOD+WmodUgVIHsxBYf8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QsPqktSW3TsDWXw0HwtZW/wBVbsTbeVK397yYWeG5VjBuYLewJJU+vNjnRSrDQsiDZaN66gG81zfV9CrhynsELCNYH0kTyg+FXdvInHBnemh0Ni58yxpfsIKXQ4JyfPwdd/+gf+XcjbEe7L8iF+YdAl1Op4PpiLuF/iHJVUIFNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=EiK7lWDx; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8967B259C9C
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 00:22:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787790123; cv=pass; b=G6o1p+yF91rvG1jiK6g48i+taQ5PL84vj/x+CnNrIULuJkVsdjOEYk4owCOBOMxAMSxiRMP1/Lt+JY8xw0sNojCeGsdoSuJYDceEQx7730Xlc/XLVGTg28dC98LoLVBUXEBlL5HPNuFUfpzFeDHG3JtUGug4XZcHMSrJW+NHHUM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787790123; c=relaxed/simple;
+	bh=sh0EIdvvs6OgV2dJp91aXph5mhF7mcD+/qHU6Xg31NY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=frtjqONxXiOVVwwblDaVvSFJDSPaZt7x+7k4xjYKhoGvZ9RS8AGA7rd38m7cLnjYJd1T1JnVruSqDOyHorD1O2OCOu9oscPy+09t82kyM0w33zR8A9IMrsM/UUacbdPev0cg1mUlasnnFjieAtFEfihtpiUVCLWGZwIaJRyNctw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILbHlB3x; arc=pass smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="EiK7lWDx"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-836c718715fso16787967b3.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2026 16:38:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILbHlB3x"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4ab47c40e7eso72593b6e.3
+        for <git@vger.kernel.org>; Wed, 26 Aug 2026 17:22:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787790121; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fe4OI/gvgScaMhnarZ/fasn8vA5evFZMpIVpLgnR4RPLzkf0939GzaDqx4rbfRw1vO
+         koyLNLguQC6kWY3xnoUznS0j0LjBmUUQMxEMllXDipONghU2mhZjQlWXo/qGSz9tn0j6
+         SUvRRK+mVFy/k5nyxVKTSDnXDiIaIeWBv0lyeS2sAAw/proraH9b2EYk+0UHYucSiab8
+         oeVhF5W1aoIynhbpIioG+lMGQOHGtbeG6PBEfvuiFeri0s3o9ePCLhxi1eYiBH+D69KO
+         Z/XH3EZfmV/4C/UP2x1rfrBOerfvmnY2h6GSek/FyV8fAbekPSw/A5ShcJ0oZoLoOmC+
+         awog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=dwS5K+cLXfmB1quEM42agKZW5EtLMPvKSLCkzHda0KA=;
+        fh=e3ITgC0XzphPp0NSqgaRpAmAW52qKR11b8vSu9Onx3Q=;
+        b=AsJLrvw+tMMfczx8rOywNK+OERBkcXW6qqSVRIwaGEnO2M2CaKc5SLuRL5yqyxOHM1
+         OJVqdRgP+mZTzylzC9nOWYYuhGL3MZY2pJKV1Eoc6q+JS1aTqQ0syDjmTgvKekLmtME5
+         ZBC8BnA2wFWWdmBFpRYRUcwjImul3VHUSI3TFFTbqyw1PNo0c5lGDWFE75ZVA60eABRT
+         lUQJ9pHFXCLpAgZEsAcTyLK66ljPPbfOalkq9KoU2MqJMnymt1/DsRv1wTEeU5h8mnQp
+         eYhMu5PXMskf3iZup/gB71kk7IczYj5MmmTCGef0S5fZ5twoCRE4mmS9qjghw0lIYgv2
+         oPJg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1787787506; x=1788392306; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1787790121; x=1788394921; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=mibiQDT9GeG6+z9PanXyvG93vHlD20tDcS8sPUjlY6g=;
-        b=EiK7lWDxffSVwSPVJZ9ivWTfuyaK76OuQhWcFDcRcANXr4H33rlJQcQC86tG0zs21M
-         cqkSVokoQs3Z843HhOG/KHz0eUsGTkNCygI9vD4V/n3cgcSeNn+bwIBI8fw8qGOcQ8+t
-         hhTenlytDjkPw9twBkSpqLqYUSHCFEb82ZWhI=
+        bh=dwS5K+cLXfmB1quEM42agKZW5EtLMPvKSLCkzHda0KA=;
+        b=ILbHlB3xltV55/bDqOhxvo2Ee9zxV2iuM0TKz38e7NKJzPYS1Xpap99QIemsnt4cfz
+         P5m5ad7YYSEzEZu+yP6BCGGStTniubZawOWt5e1T4xtIv8px+OBaTGLIG2wloITv6sNI
+         2ARw+IvDw0u2w1K6lf57FldZNoIt60pAcunQ6SWcVRE9xbJEoadp6MrTHBDHIozd05z/
+         gRENk/wv4wT7FO781b5rfslZre7tVJmDyb+JgZjzrg8aVPb07EsJo1saRGX5Kk6GDle+
+         zGKKXGJpmoy6Ak0b5c7jRL+qnxxH5LhvYC7jMeug0dMi3E3AzkSOR3WXAKtUHTmYTX1m
+         fXEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787787506; x=1788392306;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1787790121; x=1788394921;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=mibiQDT9GeG6+z9PanXyvG93vHlD20tDcS8sPUjlY6g=;
-        b=AJ/uXwuaEy2yzNc2cDk0aUtRHm7WlUgzEOsNLBK9gfBgCXIs941oyMs4tDcBmZlHw9
-         umuuVUR9ySaGtLbGsQcLdVmoe2RvC54KoU4woM3lG0PDLLcUML4eQgHLBh7/PMOsOuFD
-         ZXxrZ9xo0pX2JKGcOPgBXsiTo3BhgmPyp9BLagxWN+xphgdQKSsr9M1WewsuUdWzCzlZ
-         XZeWpb0saNOTevYBhD/DWXhBm2Ege20iSQG/LzxI8EpYSctHLOp084Zaq/y0jUjod954
-         8hDfOxF6HRPSe6XfWk0HJ7oiNDj9ZA5JvPlGVyeq6SGtdtM9EuHgRoiLFxvq56uXiYSv
-         N2nQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqZDIS3u5DnzlszvYY3zhdx2wTkIcGKPg71D15GAalVKAUYBekyNCZWrH/srEu9vm0eHF0=@vger.kernel.org
-X-Gm-Message-State: AFuF++mnYxiawa2gqjt+ftY9aoD6odxUkjV2t4LnKgefSQqVFFTzB6pN
-	9RiefSKupOMVnzB53DwPamVafNl/Af/jnOE8LFIaXFqTfQtFI1P2B9wo9rWFxfMSH34=
-X-Gm-Gg: AR+sD12ojyV28mLygSn+LEqJGHJtcp5Q4/at/lA+hKK3S3joBqSt6jq7dk9k7zv0weU
-	GGRXbWgRwuRvT6pgJGR6MLFOppAcz3+IlyaVx+N7pz3431PxJEjKigdmY81h7pJ4cdX2Z5eT/Vx
-	MHrGmslM85S/5m8XCekTk2Sqq3t4LEkVbn6UQPZW2d+4fEAL+LJMtdFuKOuefDqdirWpHfU7q7x
-	bdFuQxo62x4WlxYpuk4/PAzlmK0bqMjHbWQsdEMT+JiuiGVhr17WF/tBi1sY0NcjXeyrDUXhzuK
-	ObH2I3JL7U1LVEdK4z/ewzVtW1KzAKr5pWvY2tn+jWBAGy6lar6NbztXAulqdw3MSmj9X9SAjzs
-	gsoiJU01VRlOwl8+jNm9Fi3oZ42uSC6qpxLiC6v0lw07v4+bKr3ha6Mf8idJG6w2XqR/4ND8fDF
-	rYDPOSQATG5rdHvoNmV1DQ4ubSSo1/JK3iMDRxspsub221QI7o2ixFj56b+GFC2ls3Rz2aQOLG1
-	gIbHIxtz6so1OI15zQX5XI+f0n9oMuC/jyH5qFonCRE0qucDfrjUxVz
-X-Received: by 2002:a05:690c:4b04:b0:845:d58c:cc8 with SMTP id 00721157ae682-8573fade218mr50132057b3.20.1787787506416;
-        Wed, 26 Aug 2026 16:38:26 -0700 (PDT)
-Received: from com-79390 ([20.98.136.114])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-85b6143f961sm1343517b3.23.2026.08.26.16.38.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2026 16:38:26 -0700 (PDT)
-Date: Wed, 26 Aug 2026 18:38:15 -0500
-From: Taylor Blau <ttaylorr@openai.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 3/3] midx-write: include packs above custom incremental
- base
-Message-ID: <ao945zRwDt9ThFTG@com-79390>
-References: <cover.1781294771.git.me@ttaylorr.com>
- <7bf7c87b60532a90c04c4a2404449a9d8ea21214.1781294771.git.me@ttaylorr.com>
- <an2FAWvyfX2LuGsG@pks.im>
- <an4uIQA09rDCwwBp@com-79390>
- <xmqqtsogd0mk.fsf@gitster.g>
+        bh=dwS5K+cLXfmB1quEM42agKZW5EtLMPvKSLCkzHda0KA=;
+        b=SYxwiKTrSu7831g9yVjX56JFFvnz8SjdGGr7OLJnybQU/nhekf1bww2gUgl+Dx2MHr
+         4fK8P6JAmrN7d4bpdHTh2BA5H6IO0PRFC3KEa3dzxCA9s/oB/lO/1xdvWM9/cJrxiUIK
+         WKeLgCdcCYian9OeNuxOJZUcyVZRL109yxccxvRummTIpI0qJwgQcqk5VztaH+eloJg2
+         EmTWf9NJpziDwJcLmNnl2e4Tm7xJqwXXXxqKNUCBuxstt4rrJBYyobKh/K9e/nFH7K88
+         +4TP35CiGTBOk8OqDCczoZfK7boGlycTl7dgZyATmZnzqS0bmhxnh3SVBbvdN/r/Th+A
+         kFGA==
+X-Forwarded-Encrypted: i=1; AHgh+RrjTO0Q0XhShvciHInOEONAhoFBDVTV0PtGPkAUtvBs4B/k9deGlf04IUMvl7HnhCKGgfQ=@vger.kernel.org
+X-Gm-Message-State: AFuF++k8HnoQp6hc7pAx6C9axzDonfas+sJwhy8Frp4pk3YV7I8S+/xm
+	dplR3VJYTqNQy+W6WZUYhUYat4PjTqcJXZ89/+V1nMEGnYVtFLZZRh8YP/+6ZERMMlha4k26wVq
+	7U8V6bfJC8nsuDoXA7702fSaCSaUp/Wk=
+X-Gm-Gg: AR+sD13hwW1iH6uWBpzV2kDDwHv0R2v/uW2t8yKbQs/RlePJrzhh03aTZ1JWfhJuZDE
+	BwuvffphrMqgfrkcK85Idyaf8hi2enj3I5gAOJPe6Oq5ZtLMVIBhCtRt9R03fjEuE6hSFbg7kz4
+	9KnHAdezNMBcoD8Q+4Mz3R1jDGJmlotDgsLriYyePRCvw4HE8Rc5khFq6iG8AwlOR+6hPgsgCdl
+	lrxMtcK3thZVWSVzsPk07ddnOzcCfdaHENLleU03yw+9pmIKO6mnpS0LYDGKsqAEGJCoS2DRoa5
+	B2sBdx4RiIfTjML7QY5ETbzxqZQePa5wQp5DPPDu38IPFyOxa+UUOW7FHB3aau9H8o9dgdLfWcs
+	pS4HkFOjHhGPNNTbFijCOykovZHOYQXk21ShN6Z6UMXkM4t35uAHI7Ws8mbbOPg==
+X-Received: by 2002:a05:6808:678c:b0:4b2:8d89:6a40 with SMTP id
+ 5614622812f47-4b36695ccf4mr12856630b6e.7.1787790121369; Wed, 26 Aug 2026
+ 17:22:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtsogd0mk.fsf@gitster.g>
+References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com> <4688ee19-b782-456a-bed2-8cd2a4415736@gmail.com>
+In-Reply-To: <4688ee19-b782-456a-bed2-8cd2a4415736@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 26 Aug 2026 17:21:50 -0700
+X-Gm-Features: AcwNN1U41zdDpZ_xNu3lytNhj6Fmc3B1sUbJI_BUIsllvRSnv_9RVfx9rA_5Ngo
+Message-ID: <CABPp-BHx7H5mF8tqs3JkK+Rqjn8hMSjXhohT9NW=NmPsU1by1Q@mail.gmail.com>
+Subject: Re: [PATCH] commit: refuse to amend during conflict resolution
+To: phillip.wood@dunelm.org.uk
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 26, 2026 at 02:37:23PM -0700, Junio C Hamano wrote:
-> Taylor Blau <ttaylorr@openai.com> writes:
+On Wed, Aug 26, 2026 at 6:56=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> > `ctx->to_include` can indeed be non-NULL.
-> > ...
-> > The filtering still does the right thing: packs covered by the selected
-> > base are excluded, and the remaining packs are checked against the stdin
-> > list. But the comment is wrong, so I'll fix it.
+[...]
+> > @@ -1336,6 +1337,46 @@ static int parse_and_validate_options(int argc, =
+const char *argv[],
+> >               else if (whence =3D=3D FROM_REBASE_PICK)
+> >                       die(_("You are in the middle of a rebase -- canno=
+t amend."));
+> >       }
+> > +     if (amend && whence =3D=3D FROM_COMMIT) {
+> > +             char *applying, *apply_dir, *stopped_sha, *amend_marker;
+> > +             int in_am, conflicted_stop;
+> > +
+> > +             /* Check middle of revert */
+> > +             if (refs_ref_exists(get_main_ref_store(the_repository),
+> > +                                 "REVERT_HEAD"))
+> > +                     die(_("You are in the middle of a revert -- canno=
+t amend."));
 >
-> Has anything happened since we saw this comment on Aug 13th?
+> I think it would be much cleaner to move this check and sequencer
+> related ones below into sequencer_determine_whence() so that we don't
+> have to hard code the paths here. It might be worth checking for "am"
+> and the "apply" based rebase in that function as well.
 
-Not until you sent this message ;-).
+Moving the logic makes sense.  I was a little unsure about putting it
+in sequencer_determine_whence() since commit has its own
+determine_whence() based on keeping the merge handling separate.  I
+kind of wanted some function for ongoing_operation, so I just made a
+new helper, and added merge, am, and the apply-based rebase to it.
 
-I had a small reroll prepped that I had meant to send a couple of weeks
-ago but never got around to doing so. When I looked at it just now, I
-found that I wasn't quite satisfied with the range-diff in that the
-resulting block comment was somewhat confusing.
+> The logic looks sound to me
 
-Instead of sending a new round immediately, let me instead share the
-comment that I wrote instead. Patrick (or others): does this comment
-seem clear, or do you think there are ways to tighten it up further?
-
---- 8< ---
-diff --git a/midx-write.c b/midx-write.c
-index 66da608370..ff94076104 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -143,15 +143,31 @@ static int should_include_pack(const struct write_midx_context *ctx,
- 		m = ctx->base_midx;
-
- 	/*
--	 * Note that m and ctx->to_include may both be set,
--	 * so we are testing midx_contains_pack() and
--	 * string_list_has_string() independently (guarded by the
--	 * appropriate NULL checks).
--	 *
--	 * We could support passing to_include while reusing an existing
--	 * MIDX, but don't currently since the reuse process drags
--	 * forward all packs from an existing MIDX (without checking
--	 * whether or not they appear in the to_include list).
-+	 * Note that it is OK for both ctx->base_midx and
-+	 * ctx->to_include may both be non-NULL, but at most one of
-+	 * ctx->m and ctx->to_include may be non-NULL.
-+	 *
-+	 * When ctx->m is NULL we are writing a new MIDX without reusing
-+	 * any packs from the previous layer(s). In that case, we care
-+	 * that both:
-+	 *
-+	 *   - the new layer's base MIDX (ctx->base_midx) does not
-+	 *     already contain the pack we are considering, or the new
-+	 *     layer has no base (i.e., it is a non-incremental MIDX)
-+	 *
-+	 *   - the pack appears in ctx->to_include, or ctx->to_include
-+	 *     is NULL, meaning that we can include any pack provided
-+	 *     the above condition is met.
-+	 *
-+	 * When ctx->m is non-NULL, we are writing a new MIDX that will
-+	 * subsume ctx->m and thus includes its packs. In this case, we
-+	 * could support respecting ctx->to_include, but currently
-+	 * don't.
-+	 *
-+	 * The only caller of this function which permits
-+	 * ctx->to_include being non-NULL restricts setting ctx->m when
-+	 * this is the case. So in this setting it is impossible that
-+	 * both will be non-NULL.
- 	 *
- 	 * If we added support for that, these next two conditional
- 	 * should be performed independently (likely checking
---- >8 ---
-
-Thanks,
-Taylor
+Thanks for taking a look!
