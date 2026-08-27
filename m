@@ -1,90 +1,156 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5821B27A916
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 05:10:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787807457; cv=none; b=EUxQl0/ngf9rtSS6YHezVUtsvNFwg8gOoFge6xHr+ZOi792436ifMzvZeZUWqMhyKuvRZ04LuTXpy5o+J1ZbL2ieW6KP/mY/rVBUJ/FVe+uaSGBPScDvsewg7TKapbOGZK9q2Yvf4ccne8Ycu2AuPZ4ZVblUGS4+JKUuDVR7V1s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787807457; c=relaxed/simple;
-	bh=oaE7Jgw0p+ZzJoye1JOlF4qhrgQjUz9tuX3KW31HM0M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X6aJ0cG97uEaUtwbZEy4DpASS69ItMYZVutXw/kBKyuSaekZIdda8rqPP8kK1GSMHQJKIFocLBKDCYoZW2VyBJirruMiG5Y7JUbMmuSoSr0MNUX9Fa7J1jD+NremmJy6oUG74dynj+/Q6n5rDeG5O/PV642frYeDhMt2FhD/UT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AKStI8zX; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DE53112BD
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 05:20:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787808006; cv=pass; b=LvJzXwKMbmfVsRADQsr5EklvjJ6wxNYo6I2jk1oCgKlebvoaat8ikaFr9RwRX79uqXv5/Y59BpttmI3NydXX/Z59jAkAoY6sD/Zl+lbDsHBVAjgUTTYI1X517WufbHOHIkjjbFAUFpkZNcAGq3zR+jLcmyApjhjcsGXUHOF7z3Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787808006; c=relaxed/simple;
+	bh=YJNTs366ZG+e6bRMYjgR3LrpNmK/M8B+2U1h166YG58=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rw85CPpc77BcFxY3Tj2L0Y1lC15aZWYMU4BHHGvPYGPn2a+nZJZDrPc72NXvfJMIuibPGkys3lhcsGGnTlyDTyubXoQfGwOn94Td/O87xP1R+AFWh7m+SK+fk6byV9gD+PWRhWoQHkM7R6byph+Tu7j++Wre9hCwhUw7TBTRd/Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=al44xzrh; arc=pass smtp.client-ip=209.85.167.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AKStI8zX"
-Received: (qmail 6976 invoked by uid 106); 27 Aug 2026 05:10:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=oaE7Jgw0p+ZzJoye1JOlF4qhrgQjUz9tuX3KW31HM0M=; b=AKStI8zX5F1OGq+tz/og2oFHhvGlEoZoB6dB7zWaMpZilewaaliutpiyjccCDpMWYybXin+JjLWEiN5X5iSiSoK5ka4lvpKyVDSfGCo/2M8FOlaHr67GAFMhrMVlNm1JizN9iMQQkzMkH1xAi82dSjyfEkhqB/5cuzo9hT6GfTUKkDq4YKW8KoGyTulIDM/s2yXuup3r/8urvwhA7KKgvlHyTY4+giR009M3IidJDCRuuL0mj3PdGRZLNBsGeY/d701c8oMv2iP0I6F36/KwAr7AmLmrPz9jF6d+jh/T4Nw4/kXQHDo9FzSxcNh0jfM8k8PdJHSP33qkj2N3hvlEkg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 27 Aug 2026 05:10:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 34977 invoked by uid 111); 27 Aug 2026 05:10:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 27 Aug 2026 01:10:58 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 27 Aug 2026 01:10:53 -0400
-From: Jeff King <peff@peff.net>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Taylor Blau <ttaylorr@openai.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 1/7] banned-die: create header for banning of functions
-Message-ID: <20260827051053.GB176544@coredump.intra.peff.net>
-References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
- <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
- <84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="al44xzrh"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-4ab47c40e7eso222294b6e.3
+        for <git@vger.kernel.org>; Wed, 26 Aug 2026 22:20:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787808003; cv=none;
+        d=google.com; s=arc-20260327;
+        b=B3ClsdheTtwDQruApdU+EBmCPwyZm4H0AJEvYzQRAKQhGmp6oJRRhgPp2MoytKoPET
+         Tlm9jSK1cqZXqToKxSC0dCKRJDggrHKlD5lx40SlJBiAcZV/z9J2mSH6GXQ9tjPDVyXx
+         JrNfYPqm5UwxgUax47P9rXz/begzlZ7+WRBQzJYxJyCrHJ59IFtds4Gmmqb9MDqV7T8x
+         S4hd3TaoUVbQXtPUnnks316Di7D26MHuZdd/pwxP1u+g5GZX/HVdUuzw+AzmzNYsYZ0F
+         b4urrBI8Lw81AQmJK/mTcJhE5m9k2BhvfzdUcYQ2LfXA27NvryF8lsbFZUmS9HYUu9FF
+         l1KA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=sR7Riw4eeqE8jniJNHvW9XSHH8+fAWv73gKBfu1YMR8=;
+        fh=Ox4D5aCb0Wm3NuWmIZhbrD5IUgm6JPtaEE6xbKungY4=;
+        b=UOHsU4qoRoPd2ZAkKeiY4O1XsrtxhirYIsuJc/UYeIdMzq59iI7vOlu4zH8nauWBzU
+         BWZpk7SYPFs2B4wS5pgR6AAvPlIYJgbHjdNBoFF3G1UiDAFZdLyYfq+qhAgyrzhWbb5w
+         2uIfZOGOvHMtfS+U8u+6WsLfcpbXv84vnlh2h7r1jUUE+aqJDfHmA1JzGC/SELE11lCe
+         bc8imvkvg0mVEfJMXJtivcQdRGkh4NdSVPL4NzmhvCdx5CoNDsK0tkqnE09relZEWqyE
+         nBi2pnc+2O5S3DTW93xKAI2aHZE2+cVR5Sb/AR6q7G93CCiG3zVUeSYCzMqRlu12MY6p
+         CXmw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787808003; x=1788412803; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=sR7Riw4eeqE8jniJNHvW9XSHH8+fAWv73gKBfu1YMR8=;
+        b=al44xzrhUV40UFuHxvLI2KTTqihx8atJs5Xil28BGQL5Qdxu/dF0AQw/Mg025q3Se3
+         ZAAHVVW34ROehBrgAHx1ZsFMo5uOidteBFfn2LlVhRv8tnddku3+8tebtA8TAYeJllXv
+         UTOUqgiNZI8T77PwyXLvTzPjqkAx+JEqDqFD9eiCFfMHPBFcfz0AhhVkhxKEUYw0XLxJ
+         cCmxZ5P4DOmu8roQAChzTsB4VUAGYQnJcZr+AafEWz1d7knXYKr92SnwvmfGlkKHvN/9
+         UzMrnKR/+vEHrXGLaL3gBMkDNbnHPYOKRg9d+ss4RfKZiup8xtwAWtMFZ0a31jYFC8xI
+         FwzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787808003; x=1788412803;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=sR7Riw4eeqE8jniJNHvW9XSHH8+fAWv73gKBfu1YMR8=;
+        b=H+F0QjyaHoGPYlCMLfeDbGCzr4fkh79DsJivPLA/pitvRVMdIgaO0tHKogRUYh2MNI
+         Ea6YJv3WSN/dNlkiQhvILvbBtRfTSjFGTVjAW8Sysi7wJbrAJEKnAhzIjf494RoeP6JF
+         GsjHgYyuBykpq6/aLuDVVJIn53fAPhRNliu3iRirAJW3aMVPu6nzmvZ0Uxl3y+cwiU9y
+         3jwo9Qgrj3UVT0rmpxLAxEbbmVqtkvb8Ewq3ZuX1mHUPRXYCaUbye7n+oY56TRsJHIzw
+         p/EI1iBhUI47o/x8/3HWvckNXNdl9wVdsg99qN6Ml0CI7Y44+tiy02W8A3cW79rEMzy5
+         F1ng==
+X-Gm-Message-State: AFuF++k538hexOQTGRRRxUswIJlCRimSYvPBv50Q2WCiOKclZJq1AwP5
+	1vJ7JMhoUTW0i46XrG+zTkvCfDRM9N5t5qIEE6mlo+cqbrEtovpmbBCLgEWQqeBnfIJEKRrluE/
+	C1pso+I99mVowCjsM4CSE6gVOxdsawXg=
+X-Gm-Gg: AR+sD11wHOENGgr5e0WCWWCmGGzE756GaLDOwnq2uujED0lQoqCshuU//n4/d/x2mWP
+	nloKmkxu1dDkei7xiyz6QRCyQSZlHTYxvRnlp7wSA2cc/tkKTZ9CP9n789ORW6PxYfyAF6tWicC
+	rnTxSwlVN0d4bCu1q+RjjafWSzf0lLLevjrw7Pv3dloKQ7mjyQWG0DC4D3VhwUbzyybndLSvOP4
+	cG8zwpuHoLRZssestWPlYvI+tcBZ1S8N+U6D9zTFs+vRCfWEFydbHimoCv2VYzdSQx3rVPpsD/+
+	TrVX5RxT+c7eYFQKUKw2EuNIqafx50wQM1exFO+kg4ee6ELpyoHWpm6ziF5N7bqQYMb++va1ULM
+	vTweaioyalawlJ0koPiAaa0cLiRGwl/g3rhei1wVdCzPGRndgMC+4ew0Y+qOYcA==
+X-Received: by 2002:a05:6808:17a4:b0:4b2:8dbe:b596 with SMTP id
+ 5614622812f47-4b3668b9b23mr12069038b6e.2.1787808003388; Wed, 26 Aug 2026
+ 22:20:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
+References: <pull.2365.git.git.1787693117.gitgitgadget@gmail.com> <d3d7a06e3d6f0c7adf9739ca496ed4012e261ac1.1787693117.git.gitgitgadget@gmail.com>
+In-Reply-To: <d3d7a06e3d6f0c7adf9739ca496ed4012e261ac1.1787693117.git.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 26 Aug 2026 22:19:51 -0700
+X-Gm-Features: AcwNN1Uk8xcE_M81OIVfy5OyTCW9wGujLJ5lvLlUs1_XDNwDGYhD9f8ADhnH3us
+Message-ID: <CABPp-BHQvUwwA6v+5rq9=8iUWavDO1ScMVr-3ok4Zm5r_Bp2hQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] branch: protect local upstreams from -d
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 25, 2026 at 06:56:15PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Tue, Aug 25, 2026 at 2:30=E2=80=AFPM Harald Nordgren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> A local branch may be fully merged into its own upstream while still
+> serving as the base of a surviving stacked branch. Deleting it with
+> "git branch -d" then leaves the surviving branch with a missing
+> upstream.
+>
+> Use the existing stacked-branch protection after checking every
+> requested deletion. This makes multi-branch deletion independent of
+> argument order: a branch that fails its safety check remains available
+> to protect its upstream.
+[...]
+> diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.ado=
+c
+> index bfdf459329..5c2a3339b2 100644
+> --- a/Documentation/git-branch.adoc
+> +++ b/Documentation/git-branch.adoc
+> @@ -102,7 +102,9 @@ OPTIONS
+>  `--delete`::
+>         Delete a branch. The branch must be fully merged in its
+>         upstream branch, or in `HEAD` if no upstream was set with
+> -       `--track` or `--set-upstream-to`.
+> +       `--track` or `--set-upstream-to`, and must not be an upstream,
+> +       directly or indirectly, of another local branch that will remain
+> +       after the operation.
 
-> We have universally-banned functions listed in banned.h since
-> c8af66ab8ad (automatically ban strcpy(), 2018-07-26), but some layers of
-> the code should be more strict than others.
-> 
-> One such example is the trace2 API which runs during atexit() and can
-> prove to cause die()-handler recursion problems if it calls die().
-> 
-> Create a new banned-die.h header file that will ban some Git methods
-> that call die(). Include that in all trace2 API implementation files.
-> This currently only bans die() itself, and that was already not used.
+With this patch applied:
 
-There's a subtle but big difference between the universal code bans in
-banned.h and this banned-die.h. In the former case we are deciding
-strcpy() is unfit for our code base and outlawing it everywhere. The
-potential problem is in the source code, so catching it while compiling
-the source code is OK.
+$ git init -q repo && cd repo
+$ git commit --allow-empty -m base
+[master (root-commit) b9a0882] base
+$ git branch A
+$ git branch B
+$ git branch C
+$ git branch --set-upstream-to=3DA B
+branch 'B' set up to track 'A'.
+$ git branch --set-upstream-to=3DB C
+branch 'C' set up to track 'B'.
+$ ~/floss/git-review/bin-wrappers/git branch -d A B
+error: the branch 'B' is an upstream of another branch
+hint: If you are sure you want to delete it, run 'git branch -D B'
+hint: Disable this message with "git config set advice.forceDeleteBranch fa=
+lse"
+Deleted branch A (was b9a0882).
 
-But we are not doing that with die(). It is a perfectly OK function in
-general, but we do not want to ever trigger its runtime effects from
-certain code paths. Banning it from being called from those code paths
-can catch _some_ instances, but not any transitive calls. If we call
-foo(), it may call die() itself, and we would not want to ban foo() from
-doing so. And recursively for functions called by foo() and so on.
+So, C had B as an upstream and git did protect B from being deleted.
+That matches the claims above.
+However, B had A as an upstream and git didn't protect A; it deleted
+it.  That doesn't match the claims above.
 
-So you end up playing whack-a-mole with functions that might call die()
-and adding them to this ban list.
+Verifying:
 
-I think that's _probably_ the best we can do in practice. I think the
-framing above suggests that we could approach the problem more directly
-with a runtime flag: when we enter those code paths, set a flag to avoid
-the unwanted behavior, and have the low-level code respect that. But
-die() is a special case here, because we'd want to suppress its
-no-return behavior. And its callers are not prepared for die() to
-suddenly start returning because of some global flag.
-
-So I think the whack-a-mole is the best we can do. But I would not want
-to see this strategy extended to other areas. In most cases some kind of
-runtime support is probably a better solution.
-
--Peff
+$ git config branch.B.merge
+refs/heads/A
+$ git rev-parse -q --verify refs/heads/A ; echo $?
+1
+$ git rev-parse -q --verify refs/heads/B ; echo $?
+b9a088270710b2494f5fa0668fc7e81a40aebd35
+0
