@@ -1,146 +1,284 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9A7420484
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 10:58:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787828307; cv=pass; b=MBm6/GVvzPipgNRM3v+6xrXSVEpiFil97j+55sGzSwXIuEAV/IDmtviGum6TRQbZfiwvar8OOAoJvu9axcnfyCPqEy/ymF8yQPMa3M5qxCGN7fxUinBTR6Aml0a/V+XLLrRv3pMxtXcieI11ivMLvmz8nB5U3npzP3MZ1NujkGA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787828307; c=relaxed/simple;
-	bh=dCwB/WQC0+MAUMhnz0jLuwV/hKohfL2w62Z0rBf4fS0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=J+nsYl254BGuhVcQqvdxI8rxs2nTve0oPVmcfdZjwUdstmB6qZFpVxG8SPJZGq5B7SnERU/gArxDQWd7WbwARPAodX6kv2uOAlDjvruko07t7xoEpw+hyFnM3vObCM5nO5/NrBURLiHSwF42Z3RUziHggGByQe6ebzmS1+8DvQA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YiDLLx46; arc=pass smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95D7305665
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 13:01:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787835715; cv=none; b=CzpCiAwIhjCckHBIhv+9L7FWGc3lST2J2GfH1V+XVoAc7bjXFGtDeNdSyAO2Jht1GWJ7jDZKeZrsgOR/G6kK9Yv2aTzzWvHZd+C1Lq/u5YNvN/wTWbF7MndY1fWkuDDzXAOLALjF9RXhA21zJ/itPOVULoJCJUdBC+m8Qofgs9g=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787835715; c=relaxed/simple;
+	bh=yiTkE8pNygV7zy7C/auF7L7T4pcKVkmmBMuRFzgRJrw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ktz9j0ZtrUS417p09expZByVngXcTBpW7R1/5Ngb2+hfsKQS7EJkOyHLxRyWjplUWFzxTp6/xJ/TEngzW2RhjFmHTxCt3DaJaUNPG4sYGbG9/ecXjYgHxRp23sCF6bp80B8wi9RBTlTRM1OcN7rDpdh1dnTo+F14ixbJEQCYGAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l7QcLQTv; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YiDLLx46"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-7777fa8f1ccso141698137.3
-        for <git@vger.kernel.org>; Thu, 27 Aug 2026 03:58:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787828304; cv=none;
-        d=google.com; s=arc-20260327;
-        b=AcCTfTD29ljQ/hEpak4B9dJ7zgA+U92uQMZVXT1MOZJYxVjhCCsOhpM1mvfnyTwhHN
-         JlY2N69M9uAsA9Z/sRkNcTO0uoKcRvSNB3BhK/1toTmS753FBoOHCYihiEy6aumf9cy8
-         FC1Y9T5a+Hl1w+ldKr8wW4ioY8dAvMv5b0QgCbhMEF+RiqCCOR74X+t4/fm2q7tUQefx
-         UZ2mAvHkB4YvkHm8D74FCnlVtGDNA+TGHAZ9EPVUGHctB3NxcYQDpX8IVL5F9bYJriiy
-         KHY6LQ+L2qzQNLFsipuGxK5uZrSsoqfa6AUS3C7dd03oLRbj+vRkvVttgjQ9NJH5GB6F
-         MJ2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=82KqTGlus9I58w6u4zz+HAazOe2BeY5jtCHUWVjRZXg=;
-        fh=VcIWOZxoILg7lf40wA/G9jVGBVNFPy/R4nSzpWxwQU8=;
-        b=o5ScQDWgCwHAYqnWtgy/57oqBI8DM29KG+B4MHmXVTg3koRnnqqn7ZCwQDzVmPuXGr
-         W8aW0obVKP6RyR6dix8W46qRXjlJEnYE3+TD5/PF/9jt6Cfwc0wUxvVluHUs2Et6w198
-         ajugBtC1+5oYfi5jOPG927Ig0DbUbnt5nYDwR0rKjZExfyiPB/C80K/HYEkGcbsrlcD8
-         gx2fFzMDkESF7hYdgKKlP4NgfKOPTcJJVvqt/yyfBsTIHX5bQgSF5YuKzC+a4/B3uONi
-         lJ4Svr5IA/MQwpZoncOWzvSGHVuUUt6/1Adrd3oW0jSUD0xkcsOikeWCVYIJrgLw2qAJ
-         x8PA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l7QcLQTv"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6a173ad7cf4so3607917a12.3
+        for <git@vger.kernel.org>; Thu, 27 Aug 2026 06:01:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787828304; x=1788433104; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=82KqTGlus9I58w6u4zz+HAazOe2BeY5jtCHUWVjRZXg=;
-        b=YiDLLx46DYVruBTqVG0DgWeo4Kn15rjSzcGBUkokPYtwmQccNSIB/D+4DcBgt9Pk1z
-         I6dMwUZUGXch1ItDliqCT3FQlwqAxO+DSFndQOD1MWsI30u8HPGxY2e+vQhMsImuEvht
-         T6YejQWhG6bn4rly3/oKjOdSfHztk/N1yGtphs//ncUV5apXsbggSv9pjfOSxVlQyuyb
-         JwGz73dK4LbOJjMnx0dJB3aaCBwQ0xiCPznfa5INiOQG2/GG3dGKV9rJSVxKlP3OGxZJ
-         yFyVOddVkVBFcqBX2SNM36Cd4Id+peMuP/dx6lfLtSjbBXOORWg/kb60i2ekXHF2RHev
-         GiOw==
+        d=gmail.com; s=20251104; t=1787835696; x=1788440496; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=XnsSnAWLFoPG1WPEQ7q8Lyh15caJJHU7TGK9pVDIvuI=;
+        b=l7QcLQTvJPwmQc5cuZGedFwBTSR60k/L3pMYq5l3Q3hHPIpXs2NgR0W0+K8GmQWYz/
+         /WrjqlwbmJyGQRoN169pCr/deyG8wosHIzMjLXLB0tXMCKtkvt1b9YnkA3S+cQSMWA2H
+         vQiGnqkmKIwpmWp45xtWS+k7XAOrSoL0pDjm07kNRBKykdKYSfWbjJo7zo47RzPX3pHm
+         sQAGRxtheyYo0Pwo2l6sKYwfWIwywL7v6nnOOC8Kb72fzSKKymmFoRH9jiSH9jfPQFhv
+         xo0TmVuS4axCFfKWY220bLck00fGR7mnE0B1d7xq0ZaSg6Z1I6kuMWXIePKy3EzurjvG
+         14vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787828304; x=1788433104;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1787835696; x=1788440496;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=82KqTGlus9I58w6u4zz+HAazOe2BeY5jtCHUWVjRZXg=;
-        b=VqA8KrNKHet1Uqooq/NMHtjiyXyEpC79E+IueUR3GKpmdxGZm44hG6+5+2mxRonGyU
-         18yd8870gCKnPnPQ3PID2KWFRAPtzdkTXEnN7kmg2DWsJWQNjVnAMq4c08DwnHI4Xn6O
-         pqGzFGJ2x/226UBkt7ajwKEyfRrSovwJek7lI/z9QZXWgA6KrhKdTOYM4pwtLkSOenVj
-         mkXTuYngJISSdZ0ykfViydqwKDw2P61NVSFVLJ0WDacOrkwS0xdz4v96QfEx2aWrSB7V
-         OV85uDhoGUgtY7k317/8Jo69rjIPaJw7hsDnNq9ofqm6WBow8Kbx3n3tBtAG9V/JzWrq
-         iZnA==
-X-Forwarded-Encrypted: i=1; AHgh+Rp2Qh98lw/dXy12srSk7XLGLTNGOHmYMvMtAjsq1OpkWS85jLYUrGadAsuzl8X39YNhEJU=@vger.kernel.org
-X-Gm-Message-State: AFuF++m+C5y8t1Tx5T3GKgMpdMDIxgKL8dQv9p5xdqd4t9gTRrpR8pMf
-	LdNrcASNrUbLID11JK1Ist2TSoUw22h+qQHtz2Slo5CvojbCR3dqEt2+S6KQCsLg6FvJChxYZnX
-	P2W971t0+18rQIWoNvuIX9WFhgcFTpTK2YS2e
-X-Gm-Gg: AR+sD10HrS+2XrPgvq5JMPK4+RJy0XCTmNJ24eC5dMi10H4xaxgByueaNdaXHbyHauA
-	lfb+bgb7q2UBLiLT98wRqAPLnbmcXyPJIDhJiWRYg/ysofT0tFhEF/Fpn0qj3PnBJhkeljH0VS5
-	MCKKLxT5Ejv+XpvO2PmcHQgMs3BwRJpYqoBfGxvQIPEWRIxQNlZ+bYZpbqVckqbeQ0I9flvNjzR
-	TyoByVpEGvYWwyhv7o2YOh2+7Zi80a0gRsg3oOl6Re0LsuYspS1mTR+Ujib2xjspPpaZMY1obom
-	HbDSWQhPGKdjsuJ1iQ6LNcoiglvxhV/mLncpyUKzPAQsZeGAuHxZd2O3rC9+56HS7pN0bGrkzVI
-	YssT0K3bVOUkVbGjhjYK0LWbhE5YRp9daqmG8T8gLTGoIvg==
-X-Received: by 2002:a05:6102:5486:b0:785:35cb:e64a with SMTP id
- ada2fe7eead31-78535cc0ff1mr14899137.3.1787828304335; Thu, 27 Aug 2026
- 03:58:24 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 27 Aug 2026 06:58:23 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 27 Aug 2026 06:58:23 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
-References: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
+        bh=XnsSnAWLFoPG1WPEQ7q8Lyh15caJJHU7TGK9pVDIvuI=;
+        b=PMLGy36XgZ9VyZdJwznetoD9jHkqHSNkTf0O3Y1szoQc37f8CbeYPdbAYnZ3am54OP
+         MGQtSTrxnhMvA1hFxLAQjrJ62yhI5d/3lR6jG114w18hV2+MLtfXnx8KPqapSKv7IuOG
+         o5T28bhdNYA/EVStud1YJKM4yTaLqZRONKWQlWyyd0dc4pWndV8AkT//AYVmEdji4JTH
+         rfLez945K6QhllHTzScV4Vv5VjS9FTKeMeT2povQFBRanwG5uodccvTZVvJCrzsp7IWC
+         qeVRw4n52/DuRSdlGXHSldZIU4wURqsQXgMLebZC1L6oyS6B8XyXuv2y6oHli4pmaxbc
+         76bg==
+X-Forwarded-Encrypted: i=1; AHgh+Rp3KfEyyR0rhQvsnBwuIrbkM9unuPnAe1KTNK8Jwt4u4UmNKX1iZfHMkWkUA5jqJMalFVM=@vger.kernel.org
+X-Gm-Message-State: AFuF++kG/XDNFDyXbsvxowxqZWd+0H9oORfgbgcQcJb/G6U6g8tzDxaq
+	mbXbdBakhZQUwm+wyqIwdjbXM0Z8H+FhNH5meHAhKzFYCxH0fdJ4GjTS
+X-Gm-Gg: AR+sD12txBBTh7SukSil8iCZby8573hmAeCdfO68MUMvokupxhipsmCcb3DRPj65xAD
+	1GnXmX5B//SqO7tPp8B/xD7v1UOshcCiztJ/Ns6HBDM3+k3gvKw/AGaybLar9JON9RgU2az4UX2
+	kWVSnUJE/Ju5IT56x64qmpAUyJC6dZFvqndyUhje3Q0S8/jgYxHPUB4R/Q31ozPG4ZpPTm07tfW
+	IYH3tbxIG2JVG7caoAKYYdZ+QH3F+eYs+4osYBKgbERjEtXYeQ/y5ZNLc8BYsfvo5v77x1L40nS
+	+CPY7zy9jrtqsgF8/AailqPtJANkr2oMj2mWgRlTHAfth/mgCz9+F2eritAyQI/iNXPAtOKnOH4
+	WXsJ1HxS65FjzOdh/GPkBn6gRiveyIwf+et/SGmqJpf2EuSttPSGKVb2vci3NaXDBlAR/V2yLei
+	Hwkf0BdMVSCi/GWw99Wd4gY29as+X8RCOPwCpz3FSzRJjJyyxV5S3Ipp3f9/jLfuRE7hPXAZ2sq
+	kct7dEbqIC1hqo48bXDdf+80AqMsiMSHQl7yOlXWw9RJtFyZAw=
+X-Received: by 2002:a17:907:3e26:b0:c12:83c9:d41 with SMTP id a640c23a62f3a-c250c595aaamr1468649166b.12.1787835695273;
+        Thu, 27 Aug 2026 06:01:35 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17bb:9901:8486:9ada:868f:4693? ([2a0a:ef40:17bb:9901:8486:9ada:868f:4693])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c250a88ab65sm746162966b.37.2026.08.27.06.01.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Aug 2026 06:01:34 -0700 (PDT)
+Message-ID: <ec6c3986-94ab-4692-a4c2-47569b77e9ca@gmail.com>
+Date: Thu, 27 Aug 2026 14:01:33 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 27 Aug 2026 06:58:23 -0400
-X-Gm-Features: AcwNN1VNQVfEVzUIFWk2ST188nhNJEPtqN5P8oC-U07oOL5O6gpwKP0fHe2o-xY
-Message-ID: <CAOLa=ZRYSje476JJDr5b8hHozwa5=4bw4E30i3AfLX176=12ZA@mail.gmail.com>
-Subject: Re: [PATCH 00/10] odb: make consistency checks pluggable
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000fff6ad065a0536ad"
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 1/2] sequencer: teach autostash apply to report conflicts
+Reply-To: phillip.wood@dunelm.org.uk
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
+ <b501b5fcd0b9dde65c1ce358e2f4014dfa340c37.1784993669.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <b501b5fcd0b9dde65c1ce358e2f4014dfa340c37.1784993669.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000fff6ad065a0536ad
-Content-Type: text/plain; charset="UTF-8"
+Hi Harald
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 25/07/2026 16:34, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> Add a conflicted parameter to apply_save_autostash_oid() and
+> apply_save_autostash_ref() so callers can learn whether applying the
+> stash resulted in conflicts.  Thread the parameter through
+> apply_autostash_ref() and update existing callers to pass NULL.
 
-> Hi,
->
-> this patch series makes object database consistency checks pluggable.
->
-> This series is built on top of 2c3adbb2c4 (The 18th batch, 2026-08-24)
-> with the following two dependencsie merged into it:
->
->   - ps/odb-eagerly-load-alternates at 0076dc9f81 (odb: drop
->     `alternates_db` field, 2026-08-17)
->
->   - ps/odb-pluggable-pack-generation at 5176dd3d05 (bundle: generate
->     packfiles via the object database, 2026-08-21)
->
-> Thanks!
->
-> Patrick
->
+It would be nicer to use the return value to indicate 
+success/error/conflicts rather than adding yet another parameter. Apart 
+from that this looks good.
 
-Hi,
+Thanks
 
-I reviewed the series and only have some small nits/questions. Rest
-looks good :)
+Phillip
 
---000000000000fff6ad065a0536ad
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 1f251e5e6c8e3d11_0.1
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>   builtin/checkout.c |  3 ++-
+>   builtin/commit.c   |  2 +-
+>   builtin/merge.c    |  6 +++---
+>   sequencer.c        | 29 +++++++++++++++++++----------
+>   sequencer.h        |  3 ++-
+>   5 files changed, 27 insertions(+), 16 deletions(-)
+> 
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index aee84ca897..72aafa4049 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1242,7 +1242,8 @@ static int switch_branches(const struct checkout_opts *opts,
+>   					    new_branch_info->name,
+>   					    "local",
+>   					    stash_label_base,
+> -					    autostash_msg.buf);
+> +					    autostash_msg.buf,
+> +					    NULL);
+>   		}
+>   		if (ret) {
+>   			branch_info_release(&old_branch_info);
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 28f6174503..d678a81865 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1980,7 +1980,7 @@ int cmd_commit(int argc,
+>   	}
+>   
+>   	apply_autostash_ref(the_repository, "MERGE_AUTOSTASH",
+> -			    NULL, NULL, NULL, NULL);
+> +			    NULL, NULL, NULL, NULL, NULL);
+>   
+>   cleanup:
+>   	free_commit_extra_headers(extra);
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 5b46a596f0..cecb8fb716 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -538,7 +538,7 @@ static void finish(struct commit *head_commit,
+>   
+>   	if (new_head)
+>   		apply_autostash_ref(the_repository, "MERGE_AUTOSTASH",
+> -				    NULL, NULL, NULL, NULL);
+> +				    NULL, NULL, NULL, NULL, NULL);
+>   	strbuf_release(&reflog_message);
+>   }
+>   
+> @@ -1680,7 +1680,7 @@ int cmd_merge(int argc,
+>   					  &commit->object.oid,
+>   					  overwrite_ignore)) {
+>   			apply_autostash_ref(the_repository, "MERGE_AUTOSTASH",
+> -					    NULL, NULL, NULL, NULL);
+> +					    NULL, NULL, NULL, NULL, NULL);
+>   			ret = 1;
+>   			goto done;
+>   		}
+> @@ -1844,7 +1844,7 @@ int cmd_merge(int argc,
+>   			fprintf(stderr, _("Merge with strategy %s failed.\n"),
+>   				use_strategies[0]->name);
+>   		apply_autostash_ref(the_repository, "MERGE_AUTOSTASH",
+> -				    NULL, NULL, NULL, NULL);
+> +				    NULL, NULL, NULL, NULL, NULL);
+>   		ret = 2;
+>   		goto done;
+>   	} else if (best_strategy == wt_strategy)
+> diff --git a/sequencer.c b/sequencer.c
+> index 1355a99a09..91a70e39a1 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4748,7 +4748,8 @@ void create_autostash_ref(struct repository *r, const char *refname,
+>   static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply,
+>   				    const char *label_ours, const char *label_theirs,
+>   				    const char *label_base,
+> -				    const char *stash_msg)
+> +				    const char *stash_msg,
+> +				    bool *conflicted)
+>   {
+>   	struct child_process child = CHILD_PROCESS_INIT;
+>   	int ret = 0;
+> @@ -4783,14 +4784,16 @@ static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply,
+>   		strvec_push(&store.args, stash_oid);
+>   		if (run_command(&store))
+>   			ret = error(_("cannot store %s"), stash_oid);
+> -		else if (attempt_apply)
+> +		else if (attempt_apply) {
+> +			if (conflicted)
+> +				*conflicted = true;
+>   			fprintf(stderr,
+>   				_("Your local changes are stashed, however applying them\n"
+>   				  "resulted in conflicts.  You can either resolve the conflicts\n"
+>   				  "and then discard the stash with \"git stash drop\", or, if you\n"
+>   				  "do not want to resolve them now, run \"git reset --hard\" and\n"
+>   				  "apply the local changes later by running \"git stash pop\".\n"));
+> -		else
+> +		} else
+>   			fprintf(stderr,
+>   				_("Autostash exists; creating a new stash entry.\n"
+>   				  "Your changes are safe in the stash.\n"
+> @@ -4814,7 +4817,7 @@ static int apply_save_autostash(const char *path, int attempt_apply)
+>   	strbuf_trim(&stash_oid);
+>   
+>   	ret = apply_save_autostash_oid(stash_oid.buf, attempt_apply,
+> -				      NULL, NULL, NULL, NULL);
+> +				      NULL, NULL, NULL, NULL, NULL);
+>   
+>   	unlink(path);
+>   	strbuf_release(&stash_oid);
+> @@ -4833,19 +4836,24 @@ int apply_autostash(const char *path)
+>   
+>   int apply_autostash_oid(const char *stash_oid)
+>   {
+> -	return apply_save_autostash_oid(stash_oid, 1, NULL, NULL, NULL, NULL);
+> +	return apply_save_autostash_oid(stash_oid, 1, NULL, NULL, NULL, NULL,
+> +				       NULL);
+>   }
+>   
+>   static int apply_save_autostash_ref(struct repository *r, const char *refname,
+>   				    int attempt_apply,
+>   				    const char *label_ours, const char *label_theirs,
+>   				    const char *label_base,
+> -				    const char *stash_msg)
+> +				    const char *stash_msg,
+> +				    bool *conflicted)
+>   {
+>   	struct object_id stash_oid;
+>   	char stash_oid_hex[GIT_MAX_HEXSZ + 1];
+>   	int flag, ret;
+>   
+> +	if (conflicted)
+> +		*conflicted = false;
+> +
+>   	if (!refs_ref_exists(get_main_ref_store(r), refname))
+>   		return 0;
+>   
+> @@ -4858,7 +4866,7 @@ static int apply_save_autostash_ref(struct repository *r, const char *refname,
+>   	oid_to_hex_r(stash_oid_hex, &stash_oid);
+>   	ret = apply_save_autostash_oid(stash_oid_hex, attempt_apply,
+>   				       label_ours, label_theirs, label_base,
+> -				       stash_msg);
+> +				       stash_msg, conflicted);
+>   
+>   	refs_delete_ref(get_main_ref_store(r), "", refname,
+>   			&stash_oid, REF_NO_DEREF);
+> @@ -4869,16 +4877,17 @@ static int apply_save_autostash_ref(struct repository *r, const char *refname,
+>   int save_autostash_ref(struct repository *r, const char *refname)
+>   {
+>   	return apply_save_autostash_ref(r, refname, 0,
+> -					NULL, NULL, NULL, NULL);
+> +					NULL, NULL, NULL, NULL, NULL);
+>   }
+>   
+>   int apply_autostash_ref(struct repository *r, const char *refname,
+>   			const char *label_ours, const char *label_theirs,
+> -			const char *label_base, const char *stash_msg)
+> +			const char *label_base, const char *stash_msg,
+> +			bool *conflicted)
+>   {
+>   	return apply_save_autostash_ref(r, refname, 1,
+>   					label_ours, label_theirs, label_base,
+> -					stash_msg);
+> +					stash_msg, conflicted);
+>   }
+>   
+>   static int checkout_onto(struct repository *r, struct replay_opts *opts,
+> diff --git a/sequencer.h b/sequencer.h
+> index 64a9c7fb1b..b39528b6d0 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -237,7 +237,8 @@ int apply_autostash(const char *path);
+>   int apply_autostash_oid(const char *stash_oid);
+>   int apply_autostash_ref(struct repository *r, const char *refname,
+>   			const char *label_ours, const char *label_theirs,
+> -			const char *label_base, const char *stash_msg);
+> +			const char *label_base, const char *stash_msg,
+> +			bool *conflicted);
+>   
+>   #define SUMMARY_INITIAL_COMMIT   (1 << 0)
+>   #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xUUdFMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNXNIREFDR0E5c2hpblNZL25FdlIvYTBmZFp1TVk1eAozN2E3NDhQRktn
-Y2cwa3dKS3VyWUh1bUtGbWZrbERNYUlTQ2lab1FIejk5QzEzQ2JOVmZpWklLSWEwNUdlR0VJCk1P
-ZUJrUFVNQWlhczMrSk9Reit1enJ0SzV0QzV0TkZXZE9ISFhlMVVHTnV1QW4ybFdHV3RXeEdtNlla
-OFBZSnAKVW1aTG4zdUJ5Wnc5OG1wdlcraWpacnhNRkdlY2pJbWR3Z3VwU3lXYVZzTnF1NllTR05J
-WTRZc0FZTTlURkZWRwowSy9CWmJRN01FdSt1N1lHdmRMUHl0WTgza25PSWRTT2sraXlBTUk2LzNu
-WFRtQ1J5c1M5RkgzUnF2U0E3dWE0CkZKSEczREU5WDUxQ2wreXJZdTFIVi9EejEvcGp0QWZWQjha
-ejZwSURqUzhPWDRzcXNMcHFxYmFkMEQzbnRIU2wKN3d3MUNhQkVSQ1dCOEZZVGhjWm4wR2J5QVUr
-alBsS2E1dmh0aUo4SlpHenVQZGJZSnlKbVhBZGYzdjdzRzE4cwozZGpWTzFEaDhHQXFzUlVmSE02
-K2FKTnhLVVRVakhESXRGV2VCVkJuTXpFejA4T0Z4Z0tIU2tyRHZHVzljaVdOCmxaOXdObzlxb2pX
-MnhuYjN1WG9hVTVLY3lRUHhRVzhOY2ZtQjh1OD0KPWcrVmIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000fff6ad065a0536ad--
