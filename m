@@ -1,91 +1,96 @@
-Received: from mail.dgfip.finances.gouv.fr (bdmprod002-2.dgfip.finances.gouv.fr [145.242.11.194])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4AD471D05
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 13:24:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=145.242.11.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B7E47986A
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 14:22:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787837048; cv=none; b=koGLqvUEBHcBkh9YAvA3SQ32dWPwxrpfsiLMxhjq5hUUm6Fzx9vxr9aG6/+w9lGqtkm92SiXbOvetOQerOXRPt5N3XT1mT8oAl+JHZ+DZ9CaTsaMEiTQMdMr/07cmE5SAm7JpzKQldr8vjUXTRJLhRr93y8hn7gBvHKrIrTuuhs=
+	t=1787840565; cv=none; b=HSv/A3f8d8yvqq94uFsNk5nbssfE2T3aQub6A7lMRW9Utuab+qf5BzQr4VwImu9tWBLEmy7AWkwAe1JCrRD8Hnr0zsBqr/8ra3HvNI11hq3o+wgmrnkuB2lYZghTBQ+nIbeU9HCXeFI7FN/GH8qBjUCxtUl2gLJWW3OMWC9KklU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787837048; c=relaxed/simple;
-	bh=NP6Fy1J0vyp/2uXrW+BSmRqnuaz+LXWBk20lNu8RYCU=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=bYAOzH3LzZdp5v0AxQ9BNd2rSkGH8i+8S2dFjrMa+llZwvw8Nh9GIlyoe5LT0Zq7xVOm1zGisJGSwuPGHKY7qKakDbp2KFdC4ZzM6ZajJdebkRUZEZ1R6q65XyfBNHKaulrlT+p0CNR8N6C4e5ykY9aLQlx87fBJWIbiS/Px4cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dgfip.finances.gouv.fr; spf=pass smtp.mailfrom=dgfip.finances.gouv.fr; dkim=pass (2048-bit key) header.d=dgfip.finances.gouv.fr header.i=@dgfip.finances.gouv.fr header.b=TGXoPLDR; dkim=pass (2048-bit key) header.d=dgfip.finances.gouv.fr header.i=@dgfip.finances.gouv.fr header.b=ho5jM+09; arc=none smtp.client-ip=145.242.11.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dgfip.finances.gouv.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dgfip.finances.gouv.fr
+	s=arc-20240116; t=1787840565; c=relaxed/simple;
+	bh=bPfoOZMKmNos28qaKM2n2lXMEwwqGWPJWsE9L5UnMj0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XnM0+YTzc5DSzK4DO7I/YVXxBL0urJfAhVRc5ddst0z5n/8/RIddRa5shUC6quDuFZbKdMYGS11EgDrDxiCfiVJtbrfaEV3TrYjl9MzNQfZbUqf6ON/1i6haDePaEeTARq7G8XhBIO/VRvQhruqjeI+524A4OfxHF0M0oX+FC3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LFdigd8s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Um2wY1GP; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dgfip.finances.gouv.fr header.i=@dgfip.finances.gouv.fr header.b="TGXoPLDR";
-	dkim=pass (2048-bit key) header.d=dgfip.finances.gouv.fr header.i=@dgfip.finances.gouv.fr header.b="ho5jM+09"
-DKIM-Filter: OpenDKIM Filter v2.11.0 pf3pgsi002-a.pfz3 4hW1dp62DXzMygpf
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=dgfip.finances.gouv.fr; s=pf3; t=1787835182;
-	bh=NP6Fy1J0vyp/2uXrW+BSmRqnuaz+LXWBk20lNu8RYCU=;
-	h=Date:To:From:Subject:From;
-	b=TGXoPLDRmjV9eyUynJRRjJ18Xv+5cpPdl5zVT/FC0inXUijnnmSFEPFQvX6/N/VXB
-	 Doj/RFANL7wX1yiVjsIsqC+cM2ZNCd1DFAkqpMM4v6slgK/daYo92a225Zi58KQlrX
-	 79WJ+3aJmauo7mRzHmCyRuZHNiNS+iFhrEJr8qqHzHm/ixzsKWx05AdqqMF5KJFzwb
-	 WOsR1HdDGOAdMTSURagEtE4NLFqDFRt0ZBFrY/bt1BqhbtYze1O1QrTXqNBKU1naaX
-	 f/6ODFSf8dBJMUCaFIcyKd6lihahGW7Mp80U5/Szd6ZdGngrLZYL4jonzS8XhEPZgy
-	 RsXH+x5IncgYw==
-DKIM-Filter: OpenDKIM Filter v2.11.0 mespgsa031.dgfip.finances.gouv.fr 988751400041A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=dgfip.finances.gouv.fr; s=mes-appli; t=1787835182;
-	bh=NP6Fy1J0vyp/2uXrW+BSmRqnuaz+LXWBk20lNu8RYCU=;
-	h=Date:To:From:Subject:From;
-	b=ho5jM+096ui2d/mmHT/RrIHx+5YxhbEaiTVNg9eKWtlx2PEPS6z5Ky8JJPfg6gAzO
-	 22Af0+CrvU9iwSnEOLT+fynzgawTmyzMWH/6VuOSYLzF+RbTCoDVq0zmKP2brs+hij
-	 ForTaNbR489K39KZIeuNd80H01JhLZyoinvtqFCJWYl8YadXQM3BsLDjdNeK5+pI/H
-	 ighaUoeUURUrLrPTRDzJ3sG79u/psLaVfAjzZRCC9LuuCCdKbZ4l2NnvVurk63hdRK
-	 8M9m169RO/8NQhYShI6l0GmGRNy/qU+9FzfbrufdcmasMtTVDrs8r7uaoAF/mUZQVX
-	 PTBQ3nesaH28w==
-Message-ID: <d928fd6d-bc80-45f6-b8ff-d21d9a55e18f@dgfip.finances.gouv.fr>
-Date: Thu, 27 Aug 2026 14:53:02 +0200
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LFdigd8s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Um2wY1GP"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5EFFDEC0121;
+	Thu, 27 Aug 2026 10:22:40 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 27 Aug 2026 10:22:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787840560; x=1787926960; bh=qg/yCZ5KnG
+	LasqIXzNPy6ERqzs+oSZCA24BnrjHEaXQ=; b=LFdigd8sicJi/fJE65e/mMpelG
+	pMeOwcAyudo6XxglsplDnMLnc8jUsYRstA42wpzFCEY0UsvLRmo8fa29CJRf7pOC
+	8awHeQ10GM3nIxxwRSNuLR5NweR+NG7LM8phY/ypKVuCHjK0evGU0xRhUTmbmNSW
+	GiuVPREnvsc9AB03q0Gwr+luCggGmhA4qSnl2rlManC/eSRra4Tdq78gXlf1AsnI
+	6nuT/gO9y1ibouB7GzA1h/jXBQJCX7t2QIz9f0HKwyQ3VF6FDSYuSCqN1+PALeX2
+	w9uHJCKuVuoK1XlectHjPACQCIXy/BTRwM4atk5ViDd8UyPxBmhGkBiX+MCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787840560; x=1787926960; bh=qg/yCZ5KnGLasqIXzNPy6ERqzs+oSZCA24B
+	nrjHEaXQ=; b=Um2wY1GPDjTJsMnluI+2fuHVNy7PfwsEG9QLdP9aAA6r6lwdvXI
+	MDC2WMsOkxASE7CCDEGaVuncfIPHGUEeaLxjgffTTcNAxeAZ8VLaTTr7DWmaMgnX
+	9YE/UnnSa8VDwL1DzmfiG84N1AscZp/gn+EMRx8dgMdBJpjpIcWXdj027DXmSG6k
+	S4vhrbBVuO1k8UxeRHVFMj9RjZaZDT+PdEDk2mfTLwPaWg5DRE/RW8baS5sKYVUR
+	jkJLZfkZ8TPz8JIV5C961dPy/Zvn3/tCz25e7ylnH65bCcdTVl0s89TfIv2kpt8U
+	SRe7VB0po2yIV22/GrRoJ5eCO+ltuV4VHSg==
+X-ME-Sender: <xms:MEiQahZP4TdriOr5JDEG0PuAuWoyqerIQI2bfK6O2xvIda9oHghWFQ>
+    <xme:MEiQav1nFuba1a_iUVayRiP6B-feyPoRh67rEj3skUtHROBrlldSBqja-7KJcX-C2
+    v_I0aV27XUmDRD4gq9FQpvL8r17yj9HNN0WjBRm0KG_ZgT1IUvFIQ>
+X-ME-Received: <xmr:MEiQahWdsZB7ye2a9KYp-DS89oIPcD8YWsaIITxf1eSql5ObK5L0zpTKk-7iSPYADTZiyUdaNpw1DV8TBivD2AnfCu5ZKzdl1g>
+X-ME-Proxy-Cause: dmFkZTFcUm84F6s29Z9AeuBq8OVVcQCT0UPL3J6LWifMt8lOwl1/iQFxjqAUCBJqy28cZB
+    6JEO2m4TQVZVM50UtrpmLWHv0Re6Aw7RSYISvGJbmQskhC8V1GMfEvIxdrhByKR9a6w6I6
+    xJYNNcSCCK2+4ekz8ptdM2f0XOFJGCKFbaCt7vuBMopvkPuOUPrXsQ69XwfR/ghTOHor6W
+    hwM4Cxkv+7YG362xKFwZWvA6YBg6L6LiMLvLFvBNGup2lzK0k3Y865lB2qJ4AGKDcssnOn
+    NzieSiXMyBjzjwSv8EnQ/37pPkJSubHAqkmuHxQ+d3FokqJ27sh0vbG1IzO55Bbzb0drPT
+    eNBdQ5vtD2yiHZI8Tcx6DzQs0V6NKl+ksNukExSl0KtDoXAs824JZqHE6virVdNE0VIDVh
+    wOXPr1EkntgJWHkY9S2qdINi5bSRAh7w+4CGmAX138il4FVpGU8QlhekGKnZEUOLlDz0te
+    Zjmfq7xr3s2Kz+WIx5WLRIhhvBFbIw5LuGvS9+fu7IcJLzlaxVI7rrbEagqd+Uj6jHVDe7
+    WmLOOvpT20u7PK+yu0PuFpyOTLGp5+FWxShXzGF2MeTZaU+Er4/3jUsBXJpquwU+EJzsbg
+    ug2HVpw5aw8Beued7Bi10QM4t6pNVTyj4rO8kD4KvYHk/VKipvybqAcJnBqw
+X-ME-Proxy: <xmx:MEiQapVD5xwTqy8lyUgoZt9CEMavf3A-7xz7Ot2A8WOtIrU7Tycl4A>
+    <xmx:MEiQagcg7QIfYppC6cedIP1bK9Z0XZ92_gjh-YvYtYql43uat5B-Lw>
+    <xmx:MEiQaiVuwuypD9lB8rnJi5AVXR1uigpkzmLlxVzc_5dvksnjQMgGyw>
+    <xmx:MEiQapctrYvCrhLWmf8rJuosiebpDBPFzhh84g7MWwHM-2Tr84EPjA>
+    <xmx:MEiQat9dcAA2PZZ-MgrA6BllS8etRUiIoNap_co2-azV0MI_FBZTuNi4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Aug 2026 10:22:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] die_for_incompatible_opts(): accept more than four
+ options
+In-Reply-To: <CABPp-BG2PJ7AyC2ctPuX0bmkFd_cGmNz+XtbjdjCbMrH4_d99A@mail.gmail.com>
+	(Elijah Newren's message of "Wed, 26 Aug 2026 18:19:22 -0700")
+References: <20260826233152.1703497-1-gitster@pobox.com>
+	<20260826233152.1703497-3-gitster@pobox.com>
+	<CABPp-BG2PJ7AyC2ctPuX0bmkFd_cGmNz+XtbjdjCbMrH4_d99A@mail.gmail.com>
+Date: Thu, 27 Aug 2026 07:22:38 -0700
+Message-ID: <xmqq4igfd4nl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Language: fr
-To: git@vger.kernel.org
-From: Eric Gautier <eric.gautier@dgfip.finances.gouv.fr>
-Subject: Translation issue in git checkout explanation (french)
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLVFYWC48UVpaWFhYWFldSFtdSA0aAQtGDwkdHAENGigMDw4BGEYOAQYJBgsNG0YPBx0eRg4aSFlI
- WVFIDwEcKB4PDRpGAw0aBg0ERgcaD0hYSFpIWVlIWVhGWV1cRl9ZRlpIUEhYSFhIWUhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFg=
+Content-Type: text/plain
 
+Elijah Newren <newren@gmail.com> writes:
 
-Bonjour,
+>> diff --git a/parse-options.h b/parse-options.h
+>
+> va_start() without a va_end()?
 
-Je suis tombé, sur cette page de votre site : 
-https://git-scm.com/docs/git-checkout/fr.html (que je vois en français, 
-sans demande particulière) sur cette phrase dans l'article git checkout :
-L’extraction échouera s’il n’y a des changements non validés dans les 
-fichiers où < branche> et votre commit actuel ont un contenu différent.
-
-Cette phrase est mal construite à mon avis, ce type de construction est 
-très rare en français, le" n' "dans s'il n'y a ne peut avoir qu'une 
-fonction explétive c'est à dire neutre au point de vue du sens de la 
-phrase : bref, il faut comprendre la phrase comme si ce " n' "était 
-absent, ce qui donne :
-L’extraction échouera s’il y a des changements non validés dans les 
-fichiers où < branche> et votre commit actuel ont un contenu différent.
-
-Est-ce bien le sens voulu? Dans ce cas, je vous conseille hautement de 
-retirer le n' qui, non seulement  complique inutilement  la phrase et 
-mais en outre produit un risque de confusion avec l'habituel ne...pas ou 
-n'....pas qui est une négation ; ainsi, on pourrait comprendre à tort :
-L’extraction échouera s’il n'y a pas de changements non validés dans les 
-fichiers où < branche> et votre commit actuel ont un contenu différent.
-Il me semble douteux que ce soit le sens voulu et il vaut mieux éviter 
-d'embrouiller les débutants.
-
-A toutes fins utiles!
-
-Cordialement,
--- 
-Eric GAUTIER
-Contrôleur Programmeur
-DISI Nord - ESI Amiens
-Division Développement
+Good eyes.  Thanks.
