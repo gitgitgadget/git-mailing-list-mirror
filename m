@@ -1,116 +1,151 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4183E5A35
-	for <git@vger.kernel.org>; Thu, 27 Aug 2026 16:29:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787848149; cv=pass; b=tTwxaZAycY8N7g50K30xVk6MdNlKZ+HTpazekUPmrpK3qujHUnxPjdzWdImn4KK/67Of1vLc5dniEbPGxQaYXdcI7wUdlz2q3jNb3R2z5vvqRATco/CkIYKIYmnlN9unhRhZ9Bv/bdVLsrsWBUq26PNS9LxrOt8QOAwP8vLEIsY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787848149; c=relaxed/simple;
-	bh=ul8VzHHc+HN2EwuG1rMEK3J+zGMoScrWoVHGPKxHcx4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Bxn7Cr8ZvICHqMUN8F9DDrcfwPakX9J8gw3sVRGhuLV6NT+Ueui4ornPYUU+xzA/QgeW2JeCLRL/q4INUJUwtK7BObneA4/JOnhVZ1HLKM2+Hlr2cag5FYmK0iWw8iyGiRbEobUraW/OSIXDKogweBzMgM18JxBGCl3zEZlgvAM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i2ReultD; arc=pass smtp.client-ip=209.85.167.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DC7483BFF
+	for <git@vger.kernel.org>; Thu, 27 Aug 2026 16:35:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787848547; cv=none; b=FZGrwaN4oSXiWLm0jzhYl7/yNKMMphxAeRSVNJI5V2KgBVrNsJbLiKmqDnCexrL4fKPVjHNmaFkiPp2gwf6XP+PJgF1qEMQq9MWj63/9QKAbr6cwPBJahx29wI5EV005o9mni3K0sqwwoqars6VszVLbC9KRZDry8Ncl6EC3C/Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787848547; c=relaxed/simple;
+	bh=xlg9jN54RcGqaYi/02NZC7x7ZX6V0aBaSmBG8MKnknI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U7niGjeNaV+JC4mjyWF+aSXfvhHzf4p1eZ1SNSi38MQzTB4tZZuCZ9BvI+seKxpeA/bei8pRCXPjovgrjsOBvKFdF7f58/7M3/sbqK1cxbDvFdIUUff9uW1byFXL06ZnE74FAD0HUflBRnLaYnGlga/Mv8JtNw4+6lXCla1NplA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gI7Syj3g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WAp4g6ED; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i2ReultD"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-4b28d9537bcso1165999b6e.0
-        for <git@vger.kernel.org>; Thu, 27 Aug 2026 09:29:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787848147; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PzPMdMurZojFGjjxI3ArmxGgFtLcH9QIJxnYtkoUvFNk2QdqjoA51kdvQM3rP5rpfT
-         ZFNjbXJ6ERhVo3I2r0P320u7eS3d60/zy5+JcIgU1MOmZxd1pZBsli+nx5bxgOA9/9sc
-         Vp4nGpv2/5nzh691RdABULvTE0R0ghITAuy1wJYCCbkPFTpMpgqQdi5RpjSczBPM4RSi
-         VG81iU+We8ddZ4eKkiJNm2agQjcrreK0f3BQhz/gACr+e1ld67J4A7Go9bJZ1DEvRCoM
-         3R9bzu2NfF8q/68oOLAZwvnGhphIWL75/8WTEPpGL+MzVc/oYINmIa0eCSRmtLKRb4No
-         Nypg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=bu8IqI/zx1LgkeW7Nh2IsLYgnVqyFsmQd7jcA4zNGRI=;
-        fh=QKVXa8Lecfo0zZmpGkUQ7gwqG8g6nVUUxOShKA//EU0=;
-        b=UEnCpKWHnwtm9l1T4SUxkBF2FesZwJLox/kwKPWWMrKKiGvpqlpeZN3v7dKsu9gdWt
-         ++McAoyMvSVAkOHXEF4VIHBQDGJbYKuedwWzGDOFVW3+Ib5mzPraL4W2nNs9DwUBtmi2
-         LIFcR8ZkpxwcpqpdeQqoiOa9dKhAcpUkJKk4D9FMMuM+rENr3ZxtLdBoMiMyD++GIbnp
-         DiAomyAask2ujyjIj/QHzT2IWj6wCby7gmhEmuUDWeSXlgqT08141zKczwxpmuMmYbw5
-         XYFLvSNdcFlKMk4dQD2Mlhwi0cCdwgFFz6EbxijVYtSGgiInPvtfRlwu0qC5k/eSH6Rg
-         jjPQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787848147; x=1788452947; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=bu8IqI/zx1LgkeW7Nh2IsLYgnVqyFsmQd7jcA4zNGRI=;
-        b=i2ReultDqHbQXSqIDUHhbirTjh1hlS08FZike2+/Cv+1j1xWSifXjgd3KP45ynVel0
-         kPPKIhSt1JFGGrrgMswwVxeI0yDTlYpxZ5Pdy9xMT9pGxid90xgYGmm+JGjeoFY7/9IA
-         oBtolb82VxTvzXFik/ZxKoAgZ5HDTT9reR7p5CvgwkeExjyGli9OyFLBU87jlsVQ76Wa
-         OY0pArK7yWxNDRfitPin8hwLpUAQ9GTczVRYQj7rETQRiF+tn76bHJIQsf5xJE77OQhm
-         oSCt4TuswsL0KPIV+zLUUetsX0mrwCPnhOLG+FG9EksrOZul+CdcGSJc6O8RN7c8+5IE
-         Kqbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787848147; x=1788452947;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bu8IqI/zx1LgkeW7Nh2IsLYgnVqyFsmQd7jcA4zNGRI=;
-        b=mq3N9V4WvbFAuqeu+3Ixtm9jVLCfEoVhsQ6kTXiAMLKH/xyBrt54DMq+TBzEDvB5Qs
-         USeWoPkFLDqLd4BGjmcr7vlUtbKq8liWAcYZAyImXk24Pk06c+chiPAmvaeioyJgXp1Y
-         tI6BltcWTl5VZEQ29Sezy0qaseOe1QOHkNbknoW8Vanwiwlxty/6cdlyHP+twSYYeciX
-         IHrKuJRIO3530hYoOaKnbT0fbz2fw1TIMclzWKySLskIWVQvZrPeu2yeR+PGBYe3382V
-         DxzK7mL9xiP4YaPk7so03GNU2qrl91Iv9IP2ceyG2sb5+XOl61ZMj9IhWVC9wS5+l17b
-         yMiQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rr1Evm8zdwX/srgq1ceRhG66NL33CYOV2gd1kBpVqSuP0Vmh92fOdsIwMRByP9hLoxdNWE=@vger.kernel.org
-X-Gm-Message-State: AFuF++kF3bfgppNnRKhS2+vdbi/jJtA6fKg8FYVR+9tgc+jB84Giahtu
-	gA+iuIIABx2Pqvg0W8mkO4HGXlQkiXUBge1suAUYsRiWk3On8xcBPMLRvmAUEP3OaFnuS9yXIcX
-	fkEkWrfUjkMpvvqoWxLcm3hgpDGHKo1w=
-X-Gm-Gg: AR+sD11A9IVBIDKghm5ggTbyWqZV170UKzofza6n/bzFrAtELH7jqCLeBuIegDsoJ4t
-	q7kYvitPGVNFTvcxxsLjloCcE59ndUuB6htjttpp/93gLt8rfG9oPzg6MMaVrAc6/40W9TRAEP2
-	iF/N2nXe0BlSWhHZllH0Wtb3lzNYuKM2vtuLgQnETwMCZD8RMLXR0A965FU/VOQavmQhfF2GgEe
-	HVk8NuYZxQ0lfh5bO7RDGGMCTrASAAFBPRCB+aWJPTO60eP4qyuBHGXTp+6A8Y439R8/wCy+ku2
-	CD9fkvROXtXtRdwyEEcnyleovhyF4xvmResrUyWOy8HGZRYscDCOJSfv0QC+nzy0wBOENUnLTmx
-	XbBWoMTKUwGMkHU3F5SaOse59aHXGmhV4Sly1j1mE0nNNEn/W21D9LT5W1Ds96qJAzfO5FVvR
-X-Received: by 2002:a05:6808:1a21:b0:496:9ee:e538 with SMTP id
- 5614622812f47-4b37c81e675mr5684856b6e.5.1787848146564; Thu, 27 Aug 2026
- 09:29:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gI7Syj3g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WAp4g6ED"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 72DEA1400166;
+	Thu, 27 Aug 2026 12:35:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 27 Aug 2026 12:35:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1787848544; x=1787934944; bh=czsfuOZWbe
+	nRAwIW0euVStYaRp2rYzEiXIbeb5iLIsI=; b=gI7Syj3go2VgSBFDaLkmv3U0oN
+	vvYGsPiSFdJDcsysqtkC8stO3bbmYtTMqWrpCpcOfFMCpCk7PouJta26N3f1yHap
+	JiO7XAez+xo9fUjFAm3Mytm7cxIVV/sZylGzyTtZGeOD18KkY3aFtoq/F1rGNiVQ
+	ejnOFigTH7uSNxdYsEdc1cJl0/KiIEI+Kvp3sLUyOGAdXXiVDLEgi/wadJltyKEz
+	IXknQuUvAyrTrDoybARy3pGC56pLR9ZS2FoNKON6ijW1PAl/paxuSe1g0fLR19xs
+	cl8jj0uSrdLgByceYyTVEAyWjPYT6kRsi8sygp2CaOVVA+UTIdM5mWFxJaXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1787848544; x=1787934944; bh=czsfuOZWbenRAwIW0euVStYaRp2rYzEiXIb
+	eb5iLIsI=; b=WAp4g6EDA3ZZwr3bxp+lFiGhWFCuaTzh5pt4wUgHq646s6hgpSI
+	soQCpIjNtIwEeNxdJ6sakuh6bLrubI69eEbXkiQTniKVWcI1DRp6bGVDjacXTCoM
+	5cY1jeRbgyy0y0C2Yn7giMPyujuuwz62MS4qSZF0fWOzc1YgoZrZ+O3nbDNwnOLc
+	b0iOWm0HWH45uR6nrhZdiUzThJeRrLA5yawX8YAIyi2zLH3c1p/czpOTNp5Jtk9u
+	zt6s4MhUF/nQKQajP7dEBgDfkptERcV0PkUiGpnjvlx6TgFrqCcYH2IPXjP8IksK
+	pAW3h+MD+w7yyulQlwk5kD3YjupQ+8cyqRQ==
+X-ME-Sender: <xms:YGeQat-f9Oad4QdCYSzz3MNpWupc-Rk82G8kgrUV2QOqIpFI_HkOaw>
+    <xme:YGeQaolSi_xjBukyNICBTxtu81bp0W8t6pXOAPJ2OryoEV1qOyWgkYfh0cIUydXJg
+    e_aAdwg0nEN-TN3IOSdrqArp-F5LkvhPSWhq27p6fTvTyu1YoVt8To>
+X-ME-Received: <xmr:YGeQajXN1zqtGJTskJ4SyRhLQsq4ohflD9lbdkGU37z3HrtCagcGxX51e0dWKY_-8tJaluXDfP4FxwZ-bBr__BL4siihd8EF0A>
+X-ME-Proxy-Cause: dmFkZTE3x4azP1ix13LDWN7eDS/V9SoCDL1P8W7bP5/eBR+aSxyLGnDjN9ipRIkKn/tijV
+    +/DNTb6NfAa+mRWXT5efDA5sXiTHHfdhrGf3ZJAqtb6ugQ0pw8ZI4UaEtdexrYqNlaHJqz
+    gDubW+CL3YyzuG3rk+4NxxADT2m4hqtVDaYQLQuAgfOdbdDm0z6HgJmNhHMIPl5XQN5uBj
+    N2KjoSSTO06MsN3x2u/OlqMhNVseQQ6gvq39VbMemCAoKiWJ/7RsCMC1nfUdnR3z5vdBbX
+    urrfNL/n1zE5clkbK37ejTRERqRwk7N8J8M6ZrVkx+yS4X8J5XdreDqAJyeXgFFxxFZAHc
+    ZpweqglvMrBOutupCzt/gRmLDWi6tHtTtsDs0UWkUu/0Oga71ofYb7S4nikR5TOpqY026i
+    swY96RtYXWxhLQFTuEs/1k3xem4KY5Z6hFqmt7FozuFCFc5RMFErbh0mb8kLX1VbmKs8oI
+    8lpz/jzZrf4LMfouhUXxIqX5QBz49hHsReuXi1o9cBmxbFRUO+N2jdGKAz2Gv8DdegRBW/
+    DBNhXWdT3Nor4vB4VRWM/r5oApSDWVBpI/QAiPSRKVF98gQAmQ4TcIQT13TnHwwgK0TEQk
+    9Nz3gQezshO1WevdxGhGKd3Hxr6QLgrTiIDQOiXB3pyNK9VoaeECrweITJFA
+X-ME-Proxy: <xmx:YGeQatEnvZg5d8Om02KUnGpsNhnn_9AbfphCCspdn1Ko1WExm1rIwg>
+    <xmx:YGeQavd2ESLvAtvJeBfZdGfZJAUErKaYzqlBJ1W2bmxhwsD5qeIXBA>
+    <xmx:YGeQauLqARSaUFbi4M2JVFykW2DdAhWyY_dzDht-aZJT1hjOofR7zA>
+    <xmx:YGeQakFWaRjyvh8Yv8d2qmQSIY-9CJOlI-TDpjmbtWOkCOoJxQpS9g>
+    <xmx:YGeQai1z5mkhWJyKJvPCqOipBy29b3tXPTISMaSpKGR0gf1J4Izrgdzn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Aug 2026 12:35:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Elijah
+ Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/3] commit: reword the empty-commit rebase errors
+In-Reply-To: <65c48ed3cb638cf0be18a3aa6d86d4c4f2cf01a2.1787792534.git.gitgitgadget@gmail.com>
+	(Elijah Newren via GitGitGadget's message of "Thu, 27 Aug 2026
+	01:02:12 +0000")
+References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
+	<pull.2389.v2.git.git.1787792534.gitgitgadget@gmail.com>
+	<65c48ed3cb638cf0be18a3aa6d86d4c4f2cf01a2.1787792534.git.gitgitgadget@gmail.com>
+Date: Thu, 27 Aug 2026 09:35:42 -0700
+Message-ID: <xmqq5x0vbjxd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
- <pull.2389.v2.git.git.1787792534.gitgitgadget@gmail.com> <6a04525c-d9e7-415a-845f-f11ed1c0f0d5@gmail.com>
-In-Reply-To: <6a04525c-d9e7-415a-845f-f11ed1c0f0d5@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 27 Aug 2026 09:28:54 -0700
-X-Gm-Features: AcwNN1UTMXLT4TywC0oSAoj2vDfOukAtobi1zx-FUD1LXA0TArmk_GMfDMd1iuA
-Message-ID: <CABPp-BG3O1xB3AhU3NfAwT5S1W5UnikT8U9HW=AqA9inYMS76w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] commit: refuse to amend during conflict resolution
-To: phillip.wood@dunelm.org.uk
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Phillip,
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Thu, Aug 27, 2026 at 8:19=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
+> From: Elijah Newren <newren@gmail.com>
 >
-> > The three patches:
-> >
-> >   1. reword the two pre-existing "empty commit" rebase messages, which =
-were
-> >      misleadingly generic
-> >   2. refuse git commit --amend during these additional operations
-> >   3. refuse partial commits during the same operations.
+> When a rebase applies a commit that becomes empty, it stops and asks the
+> user to decide whether to keep it or drop it.  HEAD still points at the
+> previously-applied commit at that point, so either amending or creating
+> a partial commit is refused, with one of the following messages:
 >
-> Thanks for working on this, it is a useful improvement to our UI. I've
-> left a couple of comments but this all looks pretty sound to me.
+>     You are in the middle of a rebase -- cannot amend.
+>     cannot do a partial commit during a rebase.
+>
+> Neither message hints that the real problem is a commit that became
+> empty, and "during a rebase" is overly broad besides -- amending and
+> partial commits are fine at an `edit` or `break` stop.  Reword both to
+> describe the actual situation.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  builtin/commit.c              | 4 ++--
+>  t/t3404-rebase-interactive.sh | 4 ++--
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 28f6174503..0d908d72bb 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -521,7 +521,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+>  		else if (is_from_cherry_pick(whence))
+>  			die(_("cannot do a partial commit during a cherry-pick."));
+>  		else if (is_from_rebase(whence))
+> -			die(_("cannot do a partial commit during a rebase."));
+> +			die(_("cannot do a partial commit while resolving a commit that became empty."));
 
-Thanks again for taking a look.  I'll send a v3 incorporating your suggesti=
-ons.
+That is a mouthful.  It also is awkward to say "while resolving a commit".
+
+More importantly, I am not sure if whence == FROM_REBASE_PICK at
+this point in the code flow is a sufficient sign to tell that we
+were not just in the middle of a rebase, not just a rebase stopped
+with _some_ conflict, but the way the rebase stopped was because a
+step in rebase resulted in a commit that is no-op relative to the
+previous commit.  What makes us certain that the rebase-pick is
+empty?
+
+> @@ -1334,7 +1334,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+>  		else if (is_from_cherry_pick(whence))
+>  			die(_("You are in the middle of a cherry-pick -- cannot amend."));
+>  		else if (whence == FROM_REBASE_PICK)
+> -			die(_("You are in the middle of a rebase -- cannot amend."));
+> +			die(_("You are resolving a commit that became empty -- cannot amend."));
+>  	}
+
+Again "resolving a commit" sounds a bit awkward.  What makes us
+certain that we aren't seeing an ordinary conflicted "pick" step but
+the one that has become empty?  If "rebase -i" stopped for conflict
+while applying one step, you edited away conflicts in the working
+tree files, and instead of saying "rebase --continue" tried to run
+"commit --amend" by mistake, we do want to stop, but wouldn't it
+surprise us if the message to stop us said something about "became
+empty"?
+
