@@ -1,85 +1,85 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C83B286881
-	for <git@vger.kernel.org>; Fri, 28 Aug 2026 16:18:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A80737D123
+	for <git@vger.kernel.org>; Fri, 28 Aug 2026 17:13:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787933902; cv=none; b=gPOh/R9uKMcnDdnaXCrSnVjbCXeYHuco6KG2oQBr7oCE19Vl4/kw14oib4EhP0/lR3sPaxVSm/SJyK2HxLCXAfRl9Swep2L9TuafGi1dNuRg3ImcmIMhwLchAKid5djfYJ4KnLVHkMxf6LPvcyi2ujvryASYwAxp5X2vV3Pv2aw=
+	t=1787937196; cv=none; b=syL//phPwzqagH8fKePbLcol0NSvHQ/s+dHTWZOk9kEEvDHawsEv+vkLVlUSfuHqg9HjAHSPq6PAWTWTWKFFPiO1r7OmoIHDAy49iemlFput2UlRgWw+czQJ+ujUbSgSBSU+UNAOJijIZmkB3jLIJwibt/7JJx/0Lc3C4uY+EO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787933902; c=relaxed/simple;
-	bh=jFbhDRh+PM4I+moYtRtqNJEtN+0HchKR1ta+6fKZspY=;
+	s=arc-20240116; t=1787937196; c=relaxed/simple;
+	bh=v3LuC4NEeEpdil8OtuGWq67Q96vRuXcCgPIo09Rm/xA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DDO2RlibzfTVkqipYO91Iu7XWzohkc/XU1XUa+CGBlFlI4HLeojbILjkjepFuY8tk8SQljBBbSeCsbxjhFN7FzL3JTNZ6DFMQioqMIXXePpgbht+awS64xckpkzMKdgbqaOid7oI2GTgnwWX8FPK+VEwLoKJMRabrLuJSqH8bXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lzqPdY8b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SiXAqUuV; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=t7qO9sXlDmG0YxLIAkVmKT/zrvaQnQPKUbwtH5E1R88rfHfomz3WdHN0E/p6ieMSv+kx0Cmr45sSlrXJYnXhe9VBgJ6wMHbIW2xNnOR2B1eVLk9PFPPMC/sDR6JAQZI1TseL9KyhMCxmz6S8ANrRgo4NVQblb+gmTNqrKRsABT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BrLsXMiM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T3ZkCI/M; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lzqPdY8b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SiXAqUuV"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id B85A51D000B1;
-	Fri, 28 Aug 2026 12:18:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BrLsXMiM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3ZkCI/M"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9CD561D0011A;
+	Fri, 28 Aug 2026 13:13:14 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 28 Aug 2026 12:18:19 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 28 Aug 2026 13:13:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787933899; x=1788020299; bh=Nc86UopPhx
-	qy43CVBYjNMInJNMkloBsz5Qg8pmZN/go=; b=lzqPdY8bUXbVBO0m8EDZ6TJu6y
-	lIb7v9WQ7tndCIZL6a6wyFLxxvndRAdq1iId6QMThDFHA9lHwiWyTNFEoTG7ClcP
-	K9Y58nmnh1fZ4LvrY/8+8avQOTVjJcMtHCV5yQkUj86zOz4xFytDxn6BeDTYjDMm
-	129Ba/g3oNimT4Z0aM8bW5Odm2veYiEU+3txKHeM3E+n0XD7zXzpuNie94LBorHA
-	0RYhjtXX6z/R5Y0H1Zc51SwPhluAS4lbDpQ1KyDXWLQyuUoUbOA7mKqdIG/CGsU/
-	LIxSWbAf38AN3DyC/MUuY4OVkmvB7lvfo9EcrJyeCVDWNW3REzSorupkUAxg==
+	:subject:to:to; s=fm2; t=1787937194; x=1788023594; bh=ucinx9BhWQ
+	dH2GzHZ0HYBQClNtivRz7kTgtrC/O+XwU=; b=BrLsXMiMeGnCBh6lTS2PTslrCM
+	QRKwQIVHC8DDtGhiG/KKL8tP98ibmq+LF/kl9Pzg0Q7c1gQ7QgR81OVge1d1ph3C
+	exCAEpyo+DTugU4cGXETEADh1OK88gMloyvrWNC4c4lvthmJg70QINE8ZOURZgB2
+	b98Tigq+Zo73mgxxYr1GneeCyWwBF/hmxdEJyWC+ypuSH0/26L2aJmw9m/uCiANT
+	UI92Q6DEkzGlwUxqrTcSQ1K51T8YkAxdV4wyoPWfR5yMHCQ4fgcMrL0tmV/oZHc/
+	00AqyaiEu7bI7GZUmK3eV4lUtaXPPsBH1lqldFHeQmvIM7qPQP3ZVGTSRnNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787933899; x=1788020299; bh=Nc86UopPhxqy43CVBYjNMInJNMkloBsz5Qg
-	8pmZN/go=; b=SiXAqUuVkzKNxma8WjSJPIBsaNCBOXmkpLaTL2yufcId09LtYn1
-	KeAKige8EpvCBBrAczweTirmDalUygwypq7AI8STUfiBVyqHqF0OOjMhNbVDxkAT
-	ST6bhu++qxqSnHU2ywq5w73mqD/CeyfOMKyoSwcABbNLxEz4CNieI7Gg8n9Cv4OL
-	H9Nnz7xRqiM16Kqoz0vnC9lrMrjbTabKKfvIVzqqbzhDT76/eN1HlYsapUP2SZwe
-	TjF/DPl8K4lNfma8I2I5Ytuj9bvrmIkVuKb/haNGZyJya24jFrLzzjboBfO0jhCf
-	2caFeOl0yu4OI7Hr8q3NIYWFmv1V9oUDJ2A==
-X-ME-Sender: <xms:y7SRalO2a6Bo4T-y68vn3As6d-_PXOucjKS_bcwB_9gu45bypBK-NQ>
-    <xme:y7SRau0ZXD2OICTABXidQlZWgebI8bulGYfns3EgjW2FxSshtLEY-UzoLKugWwVeV
-    Nmq11L0X0kG214-o9KbgwJmivUHXol-ZunWT9-xaqqGhQojxU_R7Xs>
-X-ME-Received: <xmr:y7SRasmKEO_grO2Xv3FAN_XePgXMAd8hZ-Sr3788KfPJQUc0NIP9qLkB89XiRcnfyqjQCWSBAsYCa1sOUrKqKGK_y1Y19Vm1_A>
-X-ME-Proxy-Cause: dmFkZTEJfLP8gCd75+0IS8wlvp2//mRaRSLsXfeWNZx0+kggdBG91x9kcw4JvTUBV3dzUL
-    L7L5ZStHyVDHI7ENH2ITpVmvtjDsAq/yWhE+T91PdjISDbGsGt+K2MoLv40U0VbDB8evjd
-    fTjtf1OLP3uA2/Jq4GDqiIGC2n/affftsG1YAXQdC91EpJLhVJyJ/frumzD18m4dvHPkGd
-    KoHueoPWSvRGBb0xiZ+garmZeqf0EknhiUhGB44LC+C4sGLeZ6IBUhNdZNIWAXrh48KS+M
-    iSscaqkMMDuUhgnGjNuqtZTBElWHzRLE6Q7acy/iEbYge0brlLFl+ciFic/aEy4HiwOqnY
-    nyhv6shhpfF7mpJ9qyjZi1dCuMfqcUuPW0+TXU0O52ml5Vc7SPWjVMdu0TvEzNvwFwajJk
-    pQ7M4VrEO3JDLz6/w1B4oKeHd6l4XrYueeM/bY0sSPFghxWrkuzdJbZg15RSoia2kZIYuI
-    nGWTUl1+RLYPL6Xfa2Q64mKBUDuvrdgoJQ5WgTjBqYe94fbykPlfiKhc1F43dEIaEEf8Oa
-    uhgWVhugwRS1TolDURqVca2GwQ7QtXL5ZIWoLSfKOWQiWcuu9ds6lrYdz29UBNBBIAC0QN
-    e3vVlcekOquXwkINEvD28T8LdiZB8sYV/H+9wGY2ZTMBy9pjfGFzSvDVS3Zw
-X-ME-Proxy: <xmx:y7SRatXXqGtriI9ZbCeFeHrHfN14SpV3EHKrZeJplYxMKKApSeHB6A>
-    <xmx:y7SRaqsAP2wzpOCcFWdGpJdiVUzt30adGOpawpZa9SJi2nnJ5d3b7w>
-    <xmx:y7SRaoZEDZ02PiDvFaHfJS6fP5iyJG0eJbGX8a7ucCtYdeY1zYoDQg>
-    <xmx:y7SRahXZ93-Mw1osAwJMZUPr28yfSqVyWJld4q0O5c1cCyZ6WFtqhA>
-    <xmx:y7SRakl2XrqLqfZQhX7tk9dwM0WT_j0h0b2E9_k1-oZ9r_cJDka_evsx>
+	1787937194; x=1788023594; bh=ucinx9BhWQdH2GzHZ0HYBQClNtivRz7kTgt
+	rC/O+XwU=; b=T3ZkCI/MESUZiSXHw0/5/8ClfCTh/8kbgd39iqbpU+DQBn5FGMY
+	bsUvJnuhDBVHLjAkJsf7CuY1nTIglWWPODK063MKevT41WIJ5adm0rXIrS2hjUu4
+	Ph11bFhwaLE/xyLUXWqALBF+/G2wQI1vnMkJgtWa9tPkeWV+CuJvHC5hFPViL80s
+	ov87ZV1ZTZi6c/gHWJ3/9Hc38+/0yHltXLU0d8RqvapTpnhoB6bbMa5QBTZ81XiT
+	bNLQK/T731jJukxH6WP06t9tH0FXA6gZPecv4ej1eVMrJFYHYsA0Yv4tnp3R9uqR
+	Y5Aw6XPWiXU190SRjj1Mfh4JD53oAtlp1/w==
+X-ME-Sender: <xms:qsGRavdKaVgU2bz-rWf6TN4MYPCVv7TA5NIaoIK0XP8OGjg2AkQFAg>
+    <xme:qsGRasrMtD0TUqEkgi4TMjceNfpkQGy8xGmaOdIAzCbXFTjCxq23qd9AhAlvwLwf6
+    nfI6B-p7w2tq4vE5o8hOPan4K-7hSQmlYbPqdTSz37kN056V4Dl7cQ>
+X-ME-Received: <xmr:qsGRal62ruDqO97JJmijzEcz1EuvvwTbwgz92LSrGb9UI0ZwiTTi6CVybgMSQzBhQVEIhlMPjTVCl7aH3Ve7FV_c7aAHTgtuYg>
+X-ME-Proxy-Cause: dmFkZTGv/tzGpVyF2iokhtY7oYvpwHWgy9iRHtPpnTTILvbhZG21vaITPZ25q7T7GgMGIu
+    xIKK3LqmDQOWd91xlMsZWYMLktGnnA56pePQJWRd4HCkIunHUXQAiBF1ruQ2aE7xsgQARu
+    fV6am13XOhVx0S6Np7xP8WBB1EbWuWn1e8aMbJH5180J11Zjz2mo1gUavAVX83SHSLVrZF
+    hImstBa0RjtKyGoUPoI2Rvwu9UnOEYi/6KBfkPywlRFKRMOvyobzV+6pdqbIwJsD5TLf4L
+    /VdArVpaPHEg5cs3a3R+zg7FRYEXzfaRY3tMPza4FlDRhPPuUAN1AC2tZSffx+5dHi4PZX
+    6KDSHmVcJODKCY6UOo3POu4wvvAhBb+psjdUtw0e6h7ylnpApJxTslLmse004NGc3RzEP2
+    xNRF6fJXm9Qaz/ohPpKrLYGrI+7042ovnCi6EdyIh6W2hpPolELIMg+6Td78BB7so437wS
+    rKN21W3hUasG2HmLISts+LbbENN+YACvwZOsPcqlYZAxnYLKPjF0UaO0Mj3ruWdIiyp2MW
+    rlQQvqfkGH2vu+KFXNiQWFpCXi7tgPHL7Mr+d31c1I696gBicohe6mnQIuEcvM5WDcIohi
+    X6DbGcSioJ1HFf5BpYOcjXit0y/MJnDu/eDOH824EpKUo1T4tCk0dRQ59/gg
+X-ME-Proxy: <xmx:qsGRaqqdri3yLsMbGeOqV_tGvCiu6FARseSJq6LhBaEj_bVsphPulw>
+    <xmx:qsGRavhYGYQD0fBpG-NpDSSn-Zak1W4vD6CKoA1rOwVZhh5fKkhQOQ>
+    <xmx:qsGRasIy6yOifUjmfNg34yYsVn9cpFMdtlZh780CigP8fzhEHsp-0w>
+    <xmx:qsGRanDyaQ9bjIb5EFzvNt0hI_gj_nVRPQQi8BnF0QtEOoFfVuKnyw>
+    <xmx:qsGRasxnWNfpanQ_TY6n6sPm7K9JE-hat3neI6sc_lwPR-JrvoNmz_od>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Aug 2026 12:18:19 -0400 (EDT)
+ 28 Aug 2026 13:13:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Elijah
- Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 5/5] commit: refuse partial commits during conflict
- resolution
-In-Reply-To: <050b9e8a52e531bcb17f483d0d574aaca3875adf.1787903085.git.gitgitgadget@gmail.com>
-	(Elijah Newren via GitGitGadget's message of "Fri, 28 Aug 2026
-	07:44:45 +0000")
-References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
-	<pull.2389.v3.git.git.1787903085.gitgitgadget@gmail.com>
-	<050b9e8a52e531bcb17f483d0d574aaca3875adf.1787903085.git.gitgitgadget@gmail.com>
-Date: Fri, 28 Aug 2026 09:18:17 -0700
-Message-ID: <xmqqqzji5id2.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/3] format-patch: learn --[no-]range-diff-notes
+In-Reply-To: <9335a35f-e9c0-4e62-812c-e5855c201003@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Fri, 28 Aug 2026 15:48:13 +0200")
+References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
+	<format-patch_learn_--range-diff-notes.c5a@msgid.xyz>
+	<xmqqjypfp2vl.fsf@gitster.g>
+	<16315616-097a-4fe2-8665-010e424afd8b@app.fastmail.com>
+	<xmqqbjan6q7l.fsf@gitster.g>
+	<9335a35f-e9c0-4e62-812c-e5855c201003@app.fastmail.com>
+Date: Fri, 28 Aug 2026 10:13:12 -0700
+Message-ID: <xmqqpkz24193.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,34 +89,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> -	if (whence != FROM_COMMIT) {
-> -		if (whence == FROM_MERGE)
-> -			die(_("cannot do a partial commit during a merge."));
-> -		else if (is_from_cherry_pick(whence))
-> -			die(_("cannot do a partial commit during a cherry-pick."));
-> +	switch (sequencer_ongoing_operation(the_repository, whence)) {
-> +	case ONGOING_NONE:
-> +		break;
-> +	case ONGOING_MERGE:
-> +		die(_("cannot do a partial commit during a merge."));
-> +	case ONGOING_CHERRY_PICK:
-> +		die(_("cannot do a partial commit during a cherry-pick."));
-> +	case ONGOING_REBASE_EMPTY:
-> +		/*
-> +		 * A pick that became empty is not a conflict, and creating
-> +		 * a new commit (partial or not) poses no problem.
-> +		 */
-> +		break;
-> +	case ONGOING_REVERT:
-> +		die(_("cannot do a partial commit during a revert."));
-> +	case ONGOING_AM:
-> +		die(_("cannot do a partial commit during an am session."));
-> +	case ONGOING_REBASE_CONFLICT:
-> +		die(_("cannot do a partial commit while resolving conflicts during a rebase."));
->  	}
+>> I do not know.  My preference actually is not to introuce a new
+>> option whose interaction with the existing --notes option cannot be
+>> defined in simple terms.
+>
+> Let's drop this topic then.
 
-Looks quite thorough.  
-Deliberate ommission of "default:" is a plus ;-)
-
+That is fine by me.  I was hoping that you'd come up with a way to
+add this new option with simpler-to-explain interactions.  E.g.,
+when only --notes exists on the command line, it is used as the
+material compared by the range-diff and as the material inserted
+into the final output, but when both options exist, they work
+independently, i.e., --notes gets used only as the final output,
+while --range-diff-notes gets used only for comparison material,
+or something like that.
