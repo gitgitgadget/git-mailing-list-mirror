@@ -1,111 +1,129 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C453F107F
-	for <git@vger.kernel.org>; Fri, 28 Aug 2026 17:20:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787937635; cv=none; b=qoohh6L1fRi2zwIwVHNd4rzh59uaERROYMjy78abA+CfF1k5NLknV4NacfFiNVnRkMVvrIupPuUovvc+iBdfe4lLtYEL/ncbIRFaxPgiRdOYWYrFVB9VVZAWP21xVgqdBPZco6wlyac1y2gRDgpTnp9CzIvG/s37a6O3+pVDLHk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787937635; c=relaxed/simple;
-	bh=/MMZKuy+1rEOwRMY/Coa8LPxTUv0dWmKsNKLCKDql9o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aLkKhQEtoM0bPsmEWBw9/DQJnpN78tJPJ8dc1YSy1u1VA/J3960gW6hw3fHXwC6LVddqE0IaQ66xxV4sFMB3howVcMTSgwHizYn4tnqocoQfkOXf0dNctqjo/TFUi9prYx95wT8ZbUEe2+c4qITrVEFN/2fNboUhiTkgM6A0raM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VdIccK4I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T73vG7vW; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D57286881
+	for <git@vger.kernel.org>; Fri, 28 Aug 2026 17:27:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787938073; cv=pass; b=ljAHAkHsLPZleLec59y21lSXZiMvCfKTKNEYSiPSdngPJWbQBd3iUKcSSxdKPlLv6oDrxdu6BlXZqqfVgjecJotMBrMBZ5PFscTUbnW3Th5xh/w7OGY6QDpk0eC/96r80yQolAFaVQsGROZq1Jj4CpXnvW2shepqFJVo99fhlB8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787938073; c=relaxed/simple;
+	bh=47xdcCFhYHmfUNmP5+Iv83xD5XjVmWPtwzER8qsOI2E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jw1RLIzouHBlMOS63b9ZKnoRG7ghGItHV8+ncEyDIxLrxUJPAJmATPocd/KExVaY5IRXemsdIceru/c2CGKzhfOxZ/FF41yT6VDHUw8iuVg8hG1smePN2aQ0Q77NhkHuWBjnE4CnizhqlkM/qG78dfkxU0/DyoWFNWKUkbRynHc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QBFZtwRx; arc=pass smtp.client-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VdIccK4I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T73vG7vW"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 245D91D000FD;
-	Fri, 28 Aug 2026 13:20:33 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 28 Aug 2026 13:20:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1787937633;
-	 x=1788024033; bh=46mdubRaQ65vy8KZmdSIRgZTs8jNdxi+tcCvNbnDzOE=; b=
-	VdIccK4IKf+EyWnBljFmZqBJZXbGjsZHCFqmWOQFcZaatwXIq4NdBqTeNJ8xUKRY
-	SEnrtfkE5uRglSnOCD8FORMobbZdH5d3hgggXqI+Ry9Y/ir0GForuOsOxDVrl2es
-	Bbu/5UYlnlttmMvqIL2rU47HC/zXM8u5XUZkXGGTP3sythKkdFBWpQn6odxxVMgV
-	5+FoQd6B8Sz/Xn3pd1sZtKWlPUoV65VYUo1JfPAFcb/1DID4Es6qYOVQDjo002cQ
-	Gf39soOeb6L0Bj/BXHoKoDpyEoNolSB8N/U2zJ24nkdaCBmgQ2S2T6hdX9elM8rA
-	iptv0hfHJ/+WXRtR5or/Vw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787937633; x=
-	1788024033; bh=46mdubRaQ65vy8KZmdSIRgZTs8jNdxi+tcCvNbnDzOE=; b=T
-	73vG7vWdAa6a/yNwvHbJF8FqqBwJ90WRXQOC0yMCMNzSsF2dxnUrxROOM1ZCSKGu
-	sgLQjb1Mork8vocVAP+05sxnYv1cLokARwj8DOMnLaaJYrUBwOcwGv2HhWIzXvGJ
-	mzzws9HGcYvIqV1grfHOifYGwwvIv79JPFx5T8eLQC0i1QJtdWfMFXQxMe01t0J/
-	VNJg/AiGjHJXWoX57PGs5++HQitfv0dvh/uKBUTojwQDVC5Sd9OLHYLGb9cEzdB/
-	3fyI3aFsofMn8Yx2yTEpcflh1OLjULZ4IYTcxmu40JWZlygWrQDYMlFwxVpFU+H0
-	X9n7Ec4/CQWySBwk21oBA==
-X-ME-Sender: <xms:YMORap6thIxbzvN_XbvQ85CAOtvOehjQb7NGnf70fcjQpcPJkaVgNg>
-    <xme:YMORaqkhkxEoobyXmNX4SB3tQJc3N-T_HbYNji_PEo-AP5LfbmE62CEF6RFWqEF5x
-    lkeMHitQbp6qI2r9FIOOtRQ5DtgCKHB4IUO7QhXoSVrL5wUNnf_BQ4>
-X-ME-Received: <xmr:YMORaqSFcooT-F_e9yzPpVGdGPAeEJbQXPu-GIkXvwKjY9Y7VLy9BkXhz9WpbR5x3vplOIpuPBESqhq1SqISRQ1_OFFkRKQSSQ>
-X-ME-Proxy-Cause: dmFkZTGLTScxu9oi6kh+gtgiKdUepv1M461FHa4dUf7dpEqahZBlhzCdQ9WYkb1M/YW/GP
-    9BzV9li2r3NNsoPczs5cV19pObdHCdvjOZdtTNXv1DFk0pehIGPHZEajc0H3HoUpVfq9YU
-    K3e8FwG1EDZ2dAKTXrJrXX80NB46kio66dLsmgWqRuson7cgc+MqsP3Oef+VFj9WyGXFfl
-    azW7529L1aN/igIXjgmahJAEGp5HzxKJpHnSVg0UEfR22TlHJY/4Ny5TeVR3N5AyTvBV1V
-    HTROkq6vVPLmyw78qbewL5mpkdIh4+JrTCTLauqauZ0oQD7zx+8XrLhJwIFwYQZe/0lEDJ
-    gHaFFv8jfA2h8dDGZGCprl7ZrCkLa/Y3ionZMpfd7wg87vDygxpGYEKPJtxwviUPknp9GE
-    vayahz/BkgIy2EserRqbnJipRd5yBiZWVA9P7OFYJ7TOQGfrA+qXrWzrfEHdj+LKG+1whG
-    o6X+YW9bcq4ubtlH3SOSuuj3eQVkvroZASh2plwY8hLjae+CE0HKL6/IIaHri59j+fklw3
-    Nl3fK5VILHVXT464yzlY9at7JrIVb7TLUKOp8YXS4SWHJQ9cglbeY2tU1iQvlEdfJsS1N7
-    qreLy4wnuqgV2SBR/4MbBZgwU3yWNR6SXkCpBrT7WHNl2E+pA9lkpBYpEXTg
-X-ME-Proxy: <xmx:YMORapGu8SVO-pF5HrHaOT3e95DaGEt_KdTWIdo_RR6xXivzrqknHw>
-    <xmx:YMORavFo31xURzuvxHfIHSjY6IZWgYM-q_49wj_p-Mtt_-RlNfsdxQ>
-    <xmx:YMORanRTxI5NawBXZT1msC_TeapDZ8ug5zQC-gzyVkdTAHdlGPhRyQ>
-    <xmx:YMORagI3isEmmpMJFx94b7TTYFDLqjOy25rbLS-BJa1M8j5GkRAhUA>
-    <xmx:YMORaropXwgQh8LJ2FOAF-ermz4SICUuTXB8OQJskuVspBCm1KhOCQ_p>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Aug 2026 13:20:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Grayson Gordon <graysongordon1@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net,  avarab@gmail.com,  ps@pks.im
-Subject: Re: [PATCH v6] http: add http.sslVerifyStatus to check stapled OCSP
- responses
-In-Reply-To: <CALgUfNjd_y-e-zTKJ31o8_bQuRw8wFWe=sdsf2KJ7LOmmO21aQ@mail.gmail.com>
-	(Grayson Gordon's message of "Fri, 28 Aug 2026 09:51:45 -0400")
-References: <xmqqmruqt36l.fsf@gitster.g>
-	<20260818214858.65122-1-ggordon@gitlab.com>
-	<xmqqpkz4czhu.fsf@gitster.g>
-	<CALgUfNjd_y-e-zTKJ31o8_bQuRw8wFWe=sdsf2KJ7LOmmO21aQ@mail.gmail.com>
-Date: Fri, 28 Aug 2026 10:20:31 -0700
-Message-ID: <xmqqld9q40ww.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QBFZtwRx"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-4678d3e490bso2010904fac.1
+        for <git@vger.kernel.org>; Fri, 28 Aug 2026 10:27:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787938070; cv=none;
+        d=google.com; s=arc-20260327;
+        b=LikewHq3SdrnmXS2OjZWY1EqtfC1i7IXspyNXeuPAnC7xA/RAFlhP3EtBrbLDCTj6a
+         OUlJ5GAsEmHTD7TTv0NljlZZ+QyaD381s8ePYpabOa8MPGiJH5jBMf4qi+jiAeTiMk9s
+         +y5GZz5z7a4chYBwKllMsNTQiedTgEbXvrzqM3mg23wki4OcJ2esFqrLA78TGRwbUr3C
+         Iy5aqGtdgzJ3y3g2+rdaU1tOprjFTcFK824pNmx9T8IgJoqQD0YPddYhkKBcLIjIaBSl
+         Gpx5ZAeCvLMSP+GbQzSiIBmtoTEe4/704AsDm6PrH4cZlDbmIOsIjQUw492QKZg4g8XR
+         LL/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Z6aaQk+tVC2JDMHseGLoHu5BNV0xojvS9pn3rywns50=;
+        fh=LPrDpOBqLx6qT70YJs+UVENM3dISXSLn7kfLjIXoTdE=;
+        b=aXfmnyh9nSvPoWNpvOw5f+f35zRVaDWs7EGPHpLtSg0u2Ke16+1QgB6oPD0lqiGGYO
+         7tCrcyw7MwOSCuW7CPxQtpjjRi7k1xS6isyFlLHutBI/z9NoXaJB4mczB3ENaMZS+1vk
+         GWpBWSW8qcovxBPr9Dbnw+oGWAQu9M4e5LplLcVcHYq7k0JpKskdwbv+Ing1TnqHi+O4
+         gEifDzZjhBcyAV/RvDRSXKRIX/W7RMeMgbdN/FA7XCJYsjkFfOe2IPMFHwOh7SFipxRu
+         dSLjIHep8ffwbvbx3J0g8scc7SrXVl5ksuIozauTyTJrJnu8IDKioyDBX7tUXayot7sz
+         QWdQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787938070; x=1788542870; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Z6aaQk+tVC2JDMHseGLoHu5BNV0xojvS9pn3rywns50=;
+        b=QBFZtwRxd64oRXSa5a8nPUfTqw0z5ZgJoQDRz8BZSHIpNDmV6aSvh8d0hAtmtmF/f8
+         cAZPfg2QSzfh23Py0m9OiUsRrPoj/ztWOcNBmayjfSapo9mjhQDXRLnyFM8e9aoDjx8h
+         Qfgdg7rzuFr/wC+95Tsq4cKmJ/jyZMpF1n9X4uVLYS2kppT8vXLz+szv3tS2gCbD7LTf
+         GyLepnU6ajRBK+KxrHVrAUGa170KSdt2kN/WzXCdXHcODUXW0Sr/+7h66UTZsUZe/YAi
+         NbhEHFt98qWdaFjTmBr8X94huPW6AvB/8IzySZOUDS6Bd0YAcRZu/dGc3/F0n6fiu1T4
+         Fhsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787938070; x=1788542870;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Z6aaQk+tVC2JDMHseGLoHu5BNV0xojvS9pn3rywns50=;
+        b=OwFy0nMHwsEc3jyYxHsAf4YoxDqq3sf5TYpd4HY8b735buhMOV5pv4ulr8OnjdllBT
+         txkEH43nrYLJhGx3vxqwJ3CZShxOEjFkA9u9rPqt1HgUAKPhAEdQRbIs+GxL5BB1vV0o
+         L7WRb+XDONd4ZWrqSdI5kjG3z7pqV2c8HW2SU8maLzrJH2p4qp9fGDelcpgKQnvsR0tL
+         yWELTO3A6cggzBFHDKlWFV3kSmttszb+VjqBg6YHLwQz1DAQkcC2zTGqrDEz5AWYaWPY
+         PXMNinTTTsvsUCWiV1359wjSOOvMPj9kN1xFSx6oYLJskHo+fqNFiRZeB44g/m7Z+jvT
+         aX+A==
+X-Forwarded-Encrypted: i=1; AHgh+RpgthsYirIbKf8Ks/ietk8oo+FARyMiwxECZNrWuAz2ykwOx3MpS8Q5TJLr5jA6E+V14n0=@vger.kernel.org
+X-Gm-Message-State: AFuF++kVjBFsxZyXFFj9dncdYIxDJZwpBpV0Njpk62WrWLcWFzhRD5R7
+	OTFcxMaLx7vlH9BgSFW1tg2QrhiwWOeczfp31uqcK0W7w+FGMLLjl+33aNV+g8oCav/mzQIT/s0
+	djrJrUCOYHE7RJ1dDl20WN04pGSF/wOs=
+X-Gm-Gg: AR+sD13Jcz2bRUo15Yra9OMLuEsOw1p6yKfb9WRfCoFNaQlV+gfv2Y8BqLH1Fvf4xX8
+	tGSX3amX2OWjT8bQq3JH9667q260s0GCe1xXPBgiua0Er4shLZPBQfehc1LSG6K23QiOfpJfiwU
+	x/aU+VWYWD83nAzV9w9t44dah1LqRkfk5nxQADjNBKK2vE1shGYvtjICaddB43oABndEMoH7vIj
+	LWU+mzPPr4B5z5CxzuZCoFmpWdItgty4Pd+J1SVLqPtb3qDeU8wlOGcRBN6bxmdo7SmwtL7BASg
+	ki8pmpvkf0PlP2Cq1pIGaEB7y3HCBYvvQ6fpnoodM+HyyM2TWFPyja1rmkBE7SodB2wN5E/z33Y
+	+gvT9wkQM4qk8J+b8uK+BMZRiL9gDyXZE9Gtm7rBTi2A5v2LlmF0ASQfzKtaJ
+X-Received: by 2002:a05:6808:d46:b0:4b3:7baa:f944 with SMTP id
+ 5614622812f47-4b37c6e4dbdmr12938268b6e.2.1787938070605; Fri, 28 Aug 2026
+ 10:27:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
+ <pull.2389.v3.git.git.1787903085.gitgitgadget@gmail.com> <7e198a20fa47f0d5b2c50ffc7046bdfc792b62af.1787903085.git.gitgitgadget@gmail.com>
+ <xmqq7bla6ymz.fsf@gitster.g>
+In-Reply-To: <xmqq7bla6ymz.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 28 Aug 2026 10:27:38 -0700
+X-Gm-Features: AcwNN1Ux1rG8upjePblINzcMBEf6YwGbqNAvXOXLqj80Tl3f1U8BaUCD9IGz4L8
+Message-ID: <CABPp-BG0AmOgfT1CrS+hTo8sRBd4J1gT0_KN8TRBHSFo86hMvw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] commit: clarify FROM_REBASE_PICK and
+ is_from_rebase() names
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Grayson Gordon <graysongordon1@gmail.com> writes:
-
-> Junio,
+On Fri, Aug 28, 2026 at 8:41=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Yes, I was hoping for clarity on how thorough we wanted the testing to
-> be. Patrick added a lot of great stuff that I’m happy to use if that’s
-> your preference, but we also talked about wanting to keep the tests
-> succinct. Please let me know what you feel is most appropriate.
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Commit 430b75f7209c (commit: give correct advice for empty commit durin=
+g
+> > a rebase, 2019-12-06) introduced a FROM_REBASE_PICK enum value and an
+> > is_from_rebase() function.  Those names failed to convey that they were
+> > specifically about hitting a commit that becomes empty when rebasing.
+> > Clarify their names now.
+>
+> Becomes empty is different from picking an empty commit, right.  I
+> am not sure if "is_from_rebase_empty()" conveys the difference and
+> more importantly, I am afraid it hints the latter.  I have a feeling
+> that EMPTY_REBASE (instead of REBASE_EMPTY) may match what we want
+> to express slightly better, but not by a large margin to make a
+> difference.  Perhaps Phillip has a better idea?
 
-If you can keep them succinct but still test the essential bits,
-that would be great, but I am not sure if that is a great question
-to ask me ;-)  Patrick?  You said "not 100% sure given the complexity",
-but which parts make you feel iffy?  They do look involved but seem
-to cover the situations we do care about, except we seem not to test
-when the server does not explicitly say "this is still good", or am
-I not reading the tests correctly?
+or maybe FROM_REBASE_NOW_EMPTY and is_from_rebase_now_empty() ?
 
-Thanks.
+>
+> > While at it, change `whence =3D=3D FROM_REBASE_EMPTY` to use
+> > `is_from_rebase_empty(whence)`.
+>
+> Very much appreciated.
