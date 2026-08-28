@@ -1,83 +1,83 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B403DA7DB
-	for <git@vger.kernel.org>; Fri, 28 Aug 2026 20:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7CA35E1A8
+	for <git@vger.kernel.org>; Fri, 28 Aug 2026 21:37:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787950800; cv=none; b=XD68amWICDY9bF5geI9+/981OVX0VsITigUxrgmX2/BrICegZMNyKNUHbMVyaAIepz72GSseW7qNyPMC3XR8157OH1Wxw1My4bFJuKwX1Y4h+AHHnUlviAYh2wI0gg6+8UcAiObElzvyOGXjCEfBGD3dbN3k7FtF/ZyhZdlBJGg=
+	t=1787953030; cv=none; b=dIhins7GZSo1JnzctVCVjGaQVQWb/S3/Slb+UiZ2Fn8JaQ8HSj/3+cqmnTVRlpLJYq/ivohZ5RqObslRc/8IUAvd9e2xlxG7TPzpao0hzzq3pHUYwkYe4EcsWnZKasy6gJStrA2sG93jtbcVjrkclgBEwm9WValrW6Bzv9pFBo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787950800; c=relaxed/simple;
-	bh=h2aB1RgvwokHqH0ETk2g7GF7QLrvJIbiTZhIpfFM39U=;
+	s=arc-20240116; t=1787953030; c=relaxed/simple;
+	bh=9Lqlnh/dOdwKnORazi2MBuNGDAUY4P86xYrwEb/T74A=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K5ryaqS9C3g3y9jd9c6P70BvEvD0OSbi1nUX9R3Kof9DPtVedVxqZ3Rr4R44FwpSAbUDoGdPPbTfpUwOh7qDISKvpYuykHt3WKoWRXQOmvZU9LQJsB9tiEwHdau3wO7mht7O2gt8Fk9RXS57FfEjVqm+x56Vcr1PeEokusbMJnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ud56IHgl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IR5JO1bV; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=XYqCuUdTAJSSu0LbGXxiQt9lIk53Xrm1m47COc8PzvUj1nl5AJS/+KZHIMlT3r3uVSzz1s1MSJqf0uJ2v2M9ABWfrZhCtW9JU4pwQuOuco7lWt6EtuHtT1rjb1bo4pJOcK+f+nE6Ur7wDmJHmQSuBQ4Ziry8D5ig3yvgOPq6pO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PhIEq2jL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JQD/aVpe; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ud56IHgl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IR5JO1bV"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0ED411D00124;
-	Fri, 28 Aug 2026 16:59:58 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 28 Aug 2026 16:59:58 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PhIEq2jL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JQD/aVpe"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0DF021D00146;
+	Fri, 28 Aug 2026 17:37:08 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 28 Aug 2026 17:37:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787950797; x=1788037197; bh=MONItSSTBa
-	av2Kn5t6ME6ltfQR7Q/IIGNuMr6u+Lz2Y=; b=Ud56IHglZQAkapJiZNNEwQFrzD
-	N8q1T/3zEZcZxK0JGEBqsjdQlgl22HjSBLLQUSlkuKZMXn43/DEzXner3z7Ft2c1
-	wL+8PUhIt/4KV1+xvqIU/XEdT6Dz73fIS+qz9jZvr4yErsqmXef/NZmLiuIh6xcg
-	UAyGl19aL3uQbh1S2xbs+uNapP03GrvxLFeVGzWVVEpx3Bgmcx0o0vvaSQYJnXFv
-	fu8L5pHwYxbViWkzSxQWmwRhkEzVt+U+SftLsZDdO6mug96Iv+WwhddpuAkwKsMn
-	X+7TWBeXejgVhqITJWQRXB9B/Mtrtxys77BN3P9s/JcellWr/v/xmE0FVDPA==
+	:subject:to:to; s=fm2; t=1787953027; x=1788039427; bh=5aOzhUQ0H0
+	r/N+yiwS5w/bVWAFmYhloVQP58HSjEDYQ=; b=PhIEq2jLMiXq5uDSogRXsOpczp
+	QMKPUcb34vYAJQO0ZwAPf95ERVGkRwN9f24NxZRLNp/QuNJsspK3lni6WX9HRH+P
+	BjNPvgQBxxzpcs3K7P2s20pirho1L4ynN+n22xpWSF78KdgDPad46leuABombIQb
+	VItim7Ik5rER5YdEEnrWyYP5CmaIua+8zLWbU6J/b0M92Bc1Kjj3a7isQqTLSQ2a
+	x1Eec9YFfsYYX3k4gCcoBp4lhcoScy869ZifqutZDvrLBYYt6HaaxGVowmCb5k5y
+	jXPycDzcbz8S48ddHDH0eoOSjaAQB8ATLKMEXEpZbU0ti/L+iHj7n7fdguZg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787950797; x=1788037197; bh=MONItSSTBaav2Kn5t6ME6ltfQR7Q/IIGNuM
-	r6u+Lz2Y=; b=IR5JO1bV/G7FPUg6sgiYltZKjaxkI9lt6EnXzKgA4kYULO6PrdT
-	791BZpf91xM7aUVlyNMUXUjRpVZ3obAjffEJT74Pai2Mdcdiizhm0jtaq2yzo9j5
-	X/k/MpS6h56ude4cvo88IHK3og+Bz/we3A5GlvcpTAODJKfa7YFIU47JrCCq/k1u
-	IwHrXI/cURxip8OcN+BBsk1beQ6jHZXHmP3anUXE5FoN5n+EOIuH3bLICwgU0nof
-	oh0gy6J3OAuXtlhg+QIhq91FLHzZxY83rDj8DcnRu7fgyToqt5yMfXYOocIXZcF0
-	9EdSFKMdQupyJRPcucVN9DzfeF4xQZWbbRQ==
-X-ME-Sender: <xms:zfaRaibf9fCw3igtlQluW1mt0ipeikBmXFkX1taGf0VnSToGB_3ozw>
-    <xme:zfaRas0eBtzoAxcojUpwqsB2uOso_RwMGHAhgeG0khF6TgUUAn_k3G3CeIRXS2ZHm
-    pQWwzA-g8H-TODgd67hsCfcb0r1T1YCmfWOyMoyle0T0OWdO2R1Vg>
-X-ME-Received: <xmr:zfaRaqVTwY3RvmSQx0yhQw4acuqgj3Fa_eSS6UCYC77CN94M54PK09UkDYRMoAVyvm64F0KtRZoCIvnzTS_nd0ezSC6iMkRymQ>
-X-ME-Proxy-Cause: dmFkZTEXjjRnNEyX33kGNbWrWTlVzymgif2Fx57PbRejXljt89TZyNTXGaoXqhfhajVvzU
-    C2UnS8QTowjN1Hq4sToywEOxK+P5iRexWijtEpvsa0RdQJ9eXRIOOuuQKterGKueF51IGv
-    tYSKbvQbGVRRgfMjF4+YkPGTNylBQzFeyHE1RQjsrjbSbQtkM9idODuCtwqGtllTmQoMoL
-    7CthXyt7Rd3PPjSJyR05ZRUiSssMQ95MysXr4Z0ZQtISVFZKEVqndZ2ixUWRjIqt72uaMb
-    PQjtKPVFNSEvIKWcOnF+3o0rrKBR6qyEgi+0AYm6RrVoCd3PKZ6kEa8rp8Bp5oG8AoH+nX
-    +BXgNi/iIAOkm89ks6r/wyNXE7s4u7ADLCQvZpP/kzk0gT8RWzBkdK6fKLF9shoZMR/C+K
-    SulzvE8fFVxAGYuk7J3cYX9vd82tFXuxUBYIE7HJQpDD1CrmTg6b9i8iXtz08wA0VEAWsu
-    8gBwQG6K+4CivC2nPrmYoLGfBJjD+sCANtQYfVmwkMWxTNY/Hf/oMA/GZaVjPvMKmgsbCO
-    8j4ZwDcgcF/Mqi6YHmg4d4BFFT99kg6SFW2PAc/Lw3ZlRjwWrSTE0w8kid9gLgPR+Oqo27
-    9z5FqE6u2MmJc9irOq5rOOV/AWQFcDp3t52nlKeO8DMo+7HTGWtbhEr3gZ2Q
-X-ME-Proxy: <xmx:zfaRauVeXSf6LpBPRsBP7uwSOeO5LMDBTbCpIXQ3l2309xBKIsVIJg>
-    <xmx:zfaRahehgCEc5c4eOL2a6yzs21yamYghTW8dOIA6A8Nwzk5MGDIStw>
-    <xmx:zfaRavXBRFLrBe7COC9HJCKy5-ZWA5EMfKhrINVUnhNgD1eNhVy4RA>
-    <xmx:zfaRaie9N38dDT7FuQTIcgZ3z-kEY3THHrOLhNGjXE9Ux04OzRZo1A>
-    <xmx:zfaRak1rlM7Q6xlPJ8bpYHL2s0L9WF2MGK0h0qSrpMwwZORSkHNPQgAC>
+	1787953027; x=1788039427; bh=5aOzhUQ0H0r/N+yiwS5w/bVWAFmYhloVQP5
+	8HSjEDYQ=; b=JQD/aVpe0IGu21FTPYYc/YeW6QBw5ZTcApLPnBSIrATchg1lP08
+	cBeEhB5+MvRvy4g214MoI85YN6QcN3+CPSq8C50ad36/8U6M74rvnAc4K0/+7f+w
+	FwkiNAJWcF7uIT81EqtHwPUZMZKF5XQKp1TJn4gAfuVankJagnIpDPIP/VoqVxEc
+	UXjtfyq4wvgg9GGIOSCQkTRJIuu9S6/StvelKd/RbirJuV8SP4mmyy/5cTDMI48N
+	hETQonXzo9zGLJnwY0TjS0jhDtWbTKFagTV/2iCdNAt6ufpV1jcpO/Phdt9esCDV
+	Wl4UIQ1+8rOQMCQNMbldQ1DRzFeXDsOgNsw==
+X-ME-Sender: <xms:g_-RahVkv1yURaFbQO3-OEwNgpmCea0s4IN5lJBhY779QdgjxljAhQ>
+    <xme:g_-RalS8NeIJV8For4P-IcRIXtNihbbmUIxT7XHS2X2rxpNoJwbCbzmxwvEU2bksD
+    tqqvYl-VvI4HKRaAMbYSSYJJizhxMkgUAfPhI4TUt4_KNZp9IT7pQ>
+X-ME-Received: <xmr:g_-RanMCSFYr8LrOkiwLm2tX9D4vrbLjJZGJqtKmdfjQ0wb9DyiGRIcHybFgBkeKG4mo90R9a_KWH0iaXdpa-vUyBxm8Sag5Kw>
+X-ME-Proxy-Cause: dmFkZTFLYnayFBhF6MF7ysrKYjJdUjdFv9TDLntLk+VKBmgs3wiwLmVdyifoe/eq8TPz4r
+    3bUrLETGVa1C/o/Nf3nHBzsWeXKlNT0iyoKmJqqv+qxCOcK09gAcAuu9zkxs5vaxKK8q/v
+    2Wp5dTOJe3Jw8l8dJaYbpwoD9G7kS7fdV/5xzt1BTUVWj85SAbhBzof1J0FBmrO0FvS5Mv
+    wZteOAPIZkBIL0Ck4soJst+0NDkNFabw78cKc6KjEVzpxtOMAPsuWckRQDw+2uyaTgIrLr
+    AdtLmlI+2ogTMaciH4vumRObhuYzyORVKJnRYb58OjW3E3Jf0qX5wKiYm92yR+0qPoPImT
+    mpOBjZ3Erb/0k7bNtLliS6Pz0gBDDmHwTRUU47fG4rU3/yVLvCRAPpukDb9CAUAEyjCCNj
+    kiJNL9JdZqPXD4uJg8fvFhs1BTr98g1zOSKmmdjyG3LwdzuA67gB15Pio/8lap7BSqhXXt
+    Nsms7RoUKYHBTjY1NhyFcRtyI2opmRbaD7fsylpGYdVl813uaLhRHJbNO7dt7f67AfKnxm
+    nfdSaX1C0cNIVoP0Xg21r1cPHC2TImI+E0rr/ZHLiqcTgVYASZmLn62slwPqyItHGBrvtQ
+    YFRusNfHGGfWp9N1YZSe8uQrILtsR1CumLIyRjpOcGvMNylVpR/QBxmn69HA
+X-ME-Proxy: <xmx:g_-RarTMzU7vFQU6Xy9NfTiSTuG3r950eSlepxvUfwTu5KZdM84Tvw>
+    <xmx:g_-Rativ76dWV9XtICarymO41nIhTm76HfL7OH0zhM1hLn3MXOd8zQ>
+    <xmx:g_-Ras8NWtNr6Sowqv0bZWE45pDxjhuUe56gV_GFjwgDxbMIYdWhwQ>
+    <xmx:g_-RasFRnDB0I5LuFd0frUFWSugJIQxJLZPdUxBZDbhPDkQAQkS7qw>
+    <xmx:g_-Rat6HNiZoo9x0orBM0h13hNCJIkoZ7ftc6J6FJVlryu--XGtHyzrg>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Aug 2026 16:59:57 -0400 (EDT)
+ 28 Aug 2026 17:37:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Hardik Kumar" <hardikxk@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] do not pass "repo" to builtin commmand implementations
-In-Reply-To: <DL0GH05O36T1.1J4TSL2PU73TO@gmail.com> (Hardik Kumar's message of
-	"Fri, 28 Aug 2026 14:35:47 +0530")
-References: <20260827-env-is_bare_repo-v1-1-aa99600dc213@gmail.com>
-	<xmqqo6en8jof.fsf@gitster.g> <xmqqh5kf8hqc.fsf@gitster.g>
-	<DKZZYSTLY6TX.2TDQEBBOG5IAV@gmail.com> <xmqq7blb8g04.fsf@gitster.g>
-	<xmqqmru76ybk.fsf_-_@gitster.g> <DL0GH05O36T1.1J4TSL2PU73TO@gmail.com>
-Date: Fri, 28 Aug 2026 13:59:55 -0700
-Message-ID: <xmqq5x0u3qr8.fsf@gitster.g>
+To: "Diogo Castro via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Thomas Haller <thaller@redhat.com>,  Jeff King
+ <peff@peff.net>,  Diogo Castro <dc@diogocastro.com>
+Subject: Re: [PATCH] dir: fix negative pathspecs in 'git ls-files' and 'git
+ add'
+In-Reply-To: <pull.2391.git.git.1787949348110.gitgitgadget@gmail.com> (Diogo
+	Castro via GitGitGadget's message of "Fri, 28 Aug 2026 20:35:48
+	+0000")
+References: <pull.2391.git.git.1787949348110.gitgitgadget@gmail.com>
+Date: Fri, 28 Aug 2026 14:37:06 -0700
+Message-ID: <xmqqwlta2agt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,31 +87,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Hardik Kumar" <hardikxk@gmail.com> writes:
+"Diogo Castro via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> This would certainly help make it more obvious as not use the pointer
-> parameter. But would you not consider to eventually move towards
-> something more efiicient in the future?
+> From: Diogo Castro <dc@diogocastro.com>
+>
+> `git ls-files` calls `common_prefix()` / `get_common_prefix_len()` which
+> calculate the length of the common prefix of all *positive* pathspecs,
+> `max_prefix_len`.
+> ...
+> Solution: in `do_match_pathspec()`, only strip the prefix when handling
+> positive pathspecs, not when handling negative pathspecs.
 
-It is unclear what kind of more efficient alternative you have in
-mind.
+Hmph, if the command line were
 
-The primary motivation for this change is to make the implementation
-of built-in commands less error-prone and harder to abuse.  The
-implementation of 'git foo' in cmd_foo() in builtin/foo.c performs
-one-time initialization (such as calling git_config()) and
-finalization that cannot be repeated, making it an anti-pattern to
-call cmd_foo() from within cmd_bar().  Refraining from pretending
-these functions can operate on an arbitrary caller-supplied
-repository instance is one step toward preventing such misuse.
+	git ls-files -- a/b/c a/b/d !a/b/
 
-However, another motivation for this change is to encourage
-developers who want to aid the libification effort to refactor code
-out of cmd_foo() into reusable helper functions.  Instead of keeping
-those helpers within builtin/foo.c, they can be moved to library
-files outside the builtin/ directory and take a pointer to 'struct
-repository'.
-
-The top-level cmd_foo() can still access 'the_repository' directly
-and orchestrate the execution of 'git foo' by passing a pointer to
-these helper functions.  That way, more code becomes reusable.
+shouldn't we strip a/b/ from all three?  Would it make sense to
+leave the negative one relative to the full tree?  I am wondering
+if the solution is to compute common prefix across both positive and
+negative ones instead.
