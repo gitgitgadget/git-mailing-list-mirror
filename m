@@ -1,81 +1,81 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963333976A0
-	for <git@vger.kernel.org>; Fri, 28 Aug 2026 22:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D5C1DF748
+	for <git@vger.kernel.org>; Fri, 28 Aug 2026 22:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787957759; cv=none; b=XWHlipfkxL9011K6zcJPzvwBfupmhb5/TJ3GJ8mMIdUANpgvN10avA4/akRFQBez3FwcFcytG6KS0m+ODP/pALwH+XdDdRwMYoHEUwy4AW8F7n9eJeNIpeGtqWEAK3TODX9+E5nI4j6x4CgiEuIuN0dwA70eEehHs8htIJVhKzM=
+	t=1787957843; cv=none; b=qCw71htEAFXW80yOLsywV+PrEt9v5eedhtrk9YtEiy14jSpTM4iUTiPWol6tmm3VG7j44zDIrxNzCO4ZvBmbcjelhAUjHynEnN1nqXsCA1lV6OpuXJNB3Ud78tJph8XfACyLmo0w1VOefiDMnekqZa2AYASFVsvAN/o0QDW0ERk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787957759; c=relaxed/simple;
-	bh=iBep1ZnlU3L8c2zU0KoBZscGcIqCv5ModbeH6HiPfu8=;
+	s=arc-20240116; t=1787957843; c=relaxed/simple;
+	bh=/8zc4XFzwT10KTZpDa+Pgmwg6TCpprRsov3WLvVALAc=;
 	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hfd6uMYfJr3Vtpgf+FdFHb9g7LsC6jfS6pd7v1gd4MGiVVzHWNrwkqE5ogm+4ehTxLIycK5nkSuilkuM9HAh/J4ZKkytfJIF9G53R7PA5FtRugatjXQ7fYDBkPxLh/5jOwiouc+K8hKOTlJ8w+/AWroF2Z2QqQUj2RWN9v53C7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qxBv5y2G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gCJAviTG; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=EfIryeUe5lCkt0TG989F42+XYoA1p9f9r5r4bqpqAPaeJUdUTEoeZEd3Eifk/OMbQj+MGpxXpefwzqDWM3W4EODiDUi3UarjvXgZCf6qMugt1OvVO1VkiyxOewWNSbixmDTDg1uf58AgvIBWlpITX8h3YN4aDrbGcMY4eSCvubc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vIte1D4w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bs5nv0+R; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qxBv5y2G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gCJAviTG"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id AC7581D00098;
-	Fri, 28 Aug 2026 18:55:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 28 Aug 2026 18:55:57 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vIte1D4w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bs5nv0+R"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6C0C41D00157;
+	Fri, 28 Aug 2026 18:57:21 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 28 Aug 2026 18:57:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787957757; x=1788044157; bh=+fxmN2aRfD
-	pS5UZdkyZtapy56TTeuG29UzSFrn1dEX8=; b=qxBv5y2G4Y2B+cG6+STnPgrMqV
-	gClvd8DgLqiJ2w25LBGrqOzeEYKc2purvkqWyW5Z7oJFSs+dNHardlB9/EzfeVOD
-	jgEEgx+ev3vF3Vtr4pAdHNrZgR/JU8lg3l2ef1ji/1SLyvmEuXNZNDIOs0dcIXj1
-	YDNuJS+Kv6jfAo0TVQRldOQKgZP4ZSGOdNc46jXyjtCGlrUaEHGq+gSNizQ1tob+
-	JX1l97OUvKGRo2oHn+RexcvC40fA5UaiZmVW96f/wa0CJadWFXfyq/G4dCZn3l+c
-	Z7RhK4JVvEsbOR3CRPA1p0sVdCeXn0ZKcY4WjwPM59wGs0PSLwb5B2LXBC2Q==
+	:subject:to:to; s=fm2; t=1787957841; x=1788044241; bh=+xUFIcobEx
+	tXw5BScetb/hXDJBkitRS3QT8yKeb9XOI=; b=vIte1D4wm5Eh4cqLU7qwbORL+j
+	ec12IGxgsM40lcgLJu8iT41MEZU8PEvCdGw2MT0yk6RdAWbUtU5wL92Wsc2YbpwK
+	/GGHSHGYJB3B2N5SyxooWeVdW3zrNvOZcBGR6YzpLfpqvo5PHF4jnWpGGueJHqPG
+	xQNAfU9V6ox5K3bwu8+u3KoDyl1zgGyOedWhKHSvf/IHTyBRg32nOetWr8U8wAAF
+	vyUnOq59XfpVoKC567qIo5wa0W6+z2mWxwhYgBEYWIrs35GWa6n4jfI1y+/DNaOC
+	ETvRvJyYHBC967wvETiUxLlflRPPQ7KKJ/BjMVJ+BEa+704omM5qsJCsxpTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787957757; x=1788044157; bh=+fxmN2aRfDpS5UZdkyZtapy56TTeuG29UzS
-	Frn1dEX8=; b=gCJAviTGev9MYgls3/qtn9htTTlBHx2gR6qXkId5f2dskNPb0FI
-	AIfz/8AY1YKA7jo9OVkKDiWbeyIASQ4iXMwvz3gwnmot0Qf3Y7yNYYS+VRyR0VHs
-	9I9py8spxwPRuZ7EUv//O+GFSltqaN2dnbAtv5X7kXwg8M9EKxUpbxV9CSB2p9jw
-	7/AvmxP0/Pk7WHJF0vrpw/BSLiagVyj4GMMEf5/QeEcufVzStG0GB5jlpSkuZzLM
-	Sm8fIPNmimaZeB37DhP5YsvPW8lryGCLWDiwPoS9h7IWHltY+dGZ71m1j3CB3IoS
-	6DIcveNKD9xf9JyGOK07asafzRiebav52Kg==
-X-ME-Sender: <xms:_RGSajlMqhwbnAufIQwLxwVF0VrVev1hrlgVskwdYQe445osd188mw>
-    <xme:_RGSas1JHcB-Md7SZU6nvxg9LSL2wOfoyKQjrZd17yh1BJnV-QCG--ha9hwb433S3
-    qBxqdlvVrKMnTY25FhRKtZv1yBmx5SmLF64rWlDJzCBLydUWcrFu8k>
-X-ME-Received: <xmr:_RGSanSQCyBZvg-g8I68zQqwkr7nzoIR7KOBMAT1B_DKKj9c5WqD_jqYMhFvCDHD44PmNiQm7vLzs_TeYN-SC-4rJMXOdZ76sA>
-X-ME-Proxy-Cause: dmFkZTEVOAi6cMMUEFRKe6v8X6mpAghs98DTCNi8Z/txgrjnNWfFi0Atzshd08Hk3tmlWD
-    MWwV3+LrRxgtpacw24HsPl42mFvICXjDLi602Aw9r8WxoU7XRTAZmGYZ8U/IsDpp7U0Xpx
-    H/OROW1h8jD0b62JluQdDm1U/u5k4dRBH5u6I4zhWfv3OG72qnDqQEvJINKLhz94cvK+EH
-    0xa0YwN+eTepFIz+WxA37UTfmK7Iuf2lYWTzzHn6DWAaV6EQeBMQAFlJbskbY29Ir0wSu1
-    QUu04x3M0oeKjygP731Ju+imBcz52R8h5Vbcv7gbzmsXqMeqYH2nY/QI6/v6ffZN3eIqmu
-    zbtez6ONBZ8zF0psMLZz8CFlHCXxhaNBsPFUDjUAasJJgICPGBEp4xxobIjmhV1H/OHzeE
-    qRN8dr8+tbTpT0sajxvlTDQ4Tz0s3WtXdP+cH1+t2coorTsw3oX1SzIbA/YyHX2kQEc4PD
-    4KoBqfOQ4onrpn5N0t2zIDpWRqphezy6uBWdh99we/zSGYpBMY1kMdcg8JfmPDed7tQ65a
-    SxiKGd40nVtyL/NTdFP0ye04DhrePhv+lzmlXz+ceKtzAirgNOumuYp3DYpULU9o+WSlN0
-    +G5pq+3siFiVYXuBntES3jsn50vYa7e2LjCeXrSMrG7sXygpKm0JURHWyazg
-X-ME-Proxy: <xmx:_RGSamsCf_N0bxMrfOVjcINw_1c9UwmEEzuWZd782VJdMnFJi4uFAA>
-    <xmx:_RGSakanqrdzQ06S1t7di-_Qpivz2864fgF-jztpsXEcigBKNLlADg>
-    <xmx:_RGSajsIEgw03OyHV52KVPDTWMtfNLFR_y53Dp6ZRKYXM_WEfcY4Gg>
-    <xmx:_RGSauE1C_N8mkoA8URJ0rerx9gsflhJkUYuIL6Co7Vqtyp27A9LXw>
-    <xmx:_RGSau_q3vBaQLg97AgwV7JiZmQtOt5DprMInhsb-TGvWuy43vFj0j6_>
+	1787957841; x=1788044241; bh=+xUFIcobExtXw5BScetb/hXDJBkitRS3QT8
+	yKeb9XOI=; b=bs5nv0+R+gTEeC8Aj8v3lQEB4Z9XROt7wszFnFTrDG+G1xKpDnM
+	ppqOpCrdpMPhwkFilLk5YL++V/xKZfo4sdaBqHCY9BtPpeWUpFM6NyfNcDpfOiuq
+	0ZG92vC1IRG1RVtc1VLkhQq89ASugz/l1CxOXq2RHeujkaPbmUDEbfP+p8fCGn3/
+	1TGkrILT4hOtZHVuSh+IAvhdNoLxxE1xgskpNzV1G951Omax8lf4vPdG9E5up5rw
+	pBdqLgDUsco8+C/WDtwyWuomGtivoWQ1VAYcbAL9vpb1S9So4b/NyqLVQ4fdsXM1
+	y6RinMKP5/lwIoOmJsdsoImTMQ+wHL5D74g==
+X-ME-Sender: <xms:URKSamWHrOOmZxSpmoDVpgA2yQ3eefNFocjlUnFGWEws2xtSM3-snQ>
+    <xme:URKSaokDyjFVlzjT-kZj6E4eeUIsIGq_q3oaoLEUIXTB4VFTE1LhnR-tYDx0SBXqf
+    GP6QFWUY_Zc4LG0p2nxjqy3bYV9IDZ1GzcEy9PorQwSNbpZ9GTgPw>
+X-ME-Received: <xmr:URKSaoCNxfakLCJwPBc311RfGwR7sgagEQscDDS7-oc7Dwus2Wz0TmrGvk2V1tkRAt601yERgFhe03trv42HjT_kR7f1_Vms4g>
+X-ME-Proxy-Cause: dmFkZTFeA1sKfnaGx2CxC2MorUhWJ4EO+vkNljP8mkEmjGkzYJW6o+4uMyTYCUfFTLoFfW
+    ay7JeCLUvKOpM5lBrHeNnCE4T8J4yeNegKqKTStLLsEOC4JsoCOB6YxUXeV+2dcrFsZWfE
+    8vHktF3YHUDK+EaCsfjYc7qN15+tD9MSxzZM2g2pczSc8nLIlHSxXA5thOGdZHovi1Mf8L
+    qZrkXW4JmHGfx8+3eV5XKYFDjvEZZQb5RDmA+fNwN3f1V96ddCpCspVWFXpFCnKWutSaDQ
+    UMfAQ7btbhm1wr1Cd09UdvNg7xtzD4nP8Dcx0YhoAltuH8ICU/nw0x4OLkZHCBdm3jBkN/
+    DFPAAgWxtY4PBnPQSd4VHwoJQl0Nmwuj7RhIBhVXoYTFhGW/Tf2IHKcnKt8S7VKEIq4AEu
+    5GYjSOuginf+dii4nGoLQMrl6yfQEn9usFn+bmfYv6/S+YnShz0ma6VWySKZ7bZFTtIid3
+    H2LQNmZLXC5KRBBc7g6xKAdG42l9kI6F61WLFQBOagDwwt/PsL6AqqZkVWXQRdCYX7rndT
+    XfFY9AKdpqfyMGLAw1UTtdvqyaA0sDEXXiGsHvpWlMkNWgcd3kUwPqt/X4TCHaWTZoGH8u
+    J/gNvISJbi8s9HiqNCyVTl8hZBSkG9OOU9xC+E/VKG+onTiBvxQ7OIvIMdvw
+X-ME-Proxy: <xmx:URKSaoeIGCkBzygjj9E0emQW4X2z3fKDswBWLyIsSUfgnoQ86b52Ug>
+    <xmx:URKSajLpVWIzUzFRUu-X-paBOCY3lQv27UKVQwAoeFMkI-ZpaTs8VQ>
+    <xmx:URKSarchxwFcKkhcbGcKmkzGEN3Gl5A2LmHOhQBpQE5fS2PSUNR4ig>
+    <xmx:URKSaq13XEz9w01LIqq8TLfYXyO2s1LLuiKhj8UTlmSYPMYF1UxFEw>
+    <xmx:URKSahssWuV-RHnnTko8CXgBIHJ9PWCOTtMNp-8HCEpboX6pKCYkXRnD>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Aug 2026 18:55:57 -0400 (EDT)
+ 28 Aug 2026 18:57:20 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: Re: [PATCH 7/8] checkout: wrap overly long lines
-In-Reply-To: <20260828225206.310500-8-gitster@pobox.com> (Junio C. Hamano's
-	message of "Fri, 28 Aug 2026 15:52:05 -0700")
+Subject: Re: [PATCH 8/8] checkout: move post_checkout_hook() to checkout.c
+In-Reply-To: <20260828225206.310500-9-gitster@pobox.com> (Junio C. Hamano's
+	message of "Fri, 28 Aug 2026 15:52:06 -0700")
 References: <xmqqh5kd3lm3.fsf@gitster.g>
 	<20260828225206.310500-1-gitster@pobox.com>
-	<20260828225206.310500-8-gitster@pobox.com>
-Date: Fri, 28 Aug 2026 15:55:55 -0700
-Message-ID: <xmqqcxv13ldw.fsf@gitster.g>
+	<20260828225206.310500-9-gitster@pobox.com>
+Date: Fri, 28 Aug 2026 15:57:19 -0700
+Message-ID: <xmqq7bl93lbk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,28 +87,33 @@ Content-Type: text/plain
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> So far, the patches in this series have tried to leave the original
-> code intact as much as possible when moving it, to make the
-> refactoring easier to review.
->
-> However, there are quite a few overly long lines that are hard to
-> read.  There are also several manual checks for mutually
-> incompatible options where die_for_incompatible_optN() could be
-> used instead.
->
-> Now that most of the refactoring is complete, tidy up these warts to
-> finish off the series.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin/checkout.c | 54 +++++++++++++++++++++++++++++-----------------
->  1 file changed, 34 insertions(+), 20 deletions(-)
-> ...
-> +	die_for_incompatible_opt3(opts->new_branch,
-> +				  new_branch_opt,
-> +				  opts->new_new_branch_force,
+> +int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+> +		       int changed)
+> +{
+> +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
+> +
+> +	/*
+> +	 * "new_commit" can be NULL when checking out from the index before
+> +	 * a commit exists.
+> +	 */
+> +	strvec_pushl(&opt.args,
+> +		     oid_to_hex(old_commit ? &old_commit->object.oid : null_oid(the_hash_algo)),
+> +		     oid_to_hex(new_commit ? &new_commit->object.oid : null_oid(the_hash_algo)),
+> +		     changed ? "1" : "0",
+> +		     NULL);
+> +
+> +	return run_hooks_opt(the_repository, "post-checkout", &opt);
+> +}
 
-Editor slip.  This should of course be "opts->new_branch_force".
+Not a very good illustration.  We should teach the caller to pass
+"struct repository *repo" to this function, and then teach this
+function to learn what hash algorithm to use from the given
+repository instance.
 
-> +				  new_branch_force_opt,
-> +				  opts->new_orphan_branch, "--orphan");
+> +/*
+> + * Run the post-checkout hook.
+> + */
+> +int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+> +		       int changed);
+> +
+>  #endif /* CHECKOUT_H */
