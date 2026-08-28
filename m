@@ -1,70 +1,71 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9E53DEFF3
-	for <git@vger.kernel.org>; Fri, 28 Aug 2026 07:44:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C183E022C
+	for <git@vger.kernel.org>; Fri, 28 Aug 2026 07:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787903092; cv=none; b=DMXLPmT1ok0TN5wZYxHvm5omEgtqEQjOvfld+lHljDLLFq5acMpzGyKsBIs2wTOxjeFjnErj8aiQmYEO1IO14STwkBH0f9dTO5itb5ICuFUMZzjxfdAzfl4yeJINX7X8mOsLqI0cGfyQOhkI3tPMqURkThEz20yTO2j+RzXBF58=
+	t=1787903093; cv=none; b=JNCVFSB99kA5FvvWk/oApw/VLknvf3c6ujG0bJXAJzTWDHsrM1XDe6moNmfJDePE/eNJB+DDcgNwtxDc3bRkejNUCKuqe7YLsq4flFsv4xM/PnfmyILwuHkCp6LVPy4Ygv1x8ZbVCV+jn9gUQC0bPQLi5L4q05sW8innzippnv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787903092; c=relaxed/simple;
-	bh=xCIcB9ZIk02ckQ2g6Fx0ZgIlacSlaeJjB/8sJqYhiJc=;
+	s=arc-20240116; t=1787903093; c=relaxed/simple;
+	bh=C++dvrkfpqdLUbZblzYW8hnwQQVw933A/TVnx8PP+tY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ElrN5wk7NXfnxKkGkdt72rXfb+J5MmdtULh65ce7kUaP0Hh2NdKups2Y9jP9sawxElav7FTUYH9QoW/VeP4Df7qXgkNZ6qHpZDmu4KkHvclbAqdUJmHWlXZR1tadVdcQ0hnYHlh1S3FBDgqUqFsYZwkb1QG6xly86lBMbIKcVQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HAZxtBeU; arc=none smtp.client-ip=209.85.167.174
+	 MIME-Version:To:Cc; b=tWbSSxVBeUPTq+5tKF67vChiifPywSzzQYERA6Yb7J7zPoEvoGdVnNwPJvdl2Dhx5juaXfnCU4mK60ujfWwA/HFl3mi7HIj0FSFK3u+JRz8bkVaaplQlWjQtLEnZzK9uPTcOvz0wpB097U2eBGyMm87/iPSa4CxwsZiKyx+N2sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RGW4lCC4; arc=none smtp.client-ip=209.85.167.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HAZxtBeU"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-4ab47c40e7eso665641b6e.3
-        for <git@vger.kernel.org>; Fri, 28 Aug 2026 00:44:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RGW4lCC4"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-4a456e44e01so751229b6e.1
+        for <git@vger.kernel.org>; Fri, 28 Aug 2026 00:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787903089; x=1788507889; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787903090; x=1788507890; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=HvLg3099S1BLCm3Rl/izUoj+Skh0ObCeIUCjlX/Wad8=;
-        b=HAZxtBeUtQghlCyRUZdN/cj7gQZTLJLwdqxeLLw/Jr8nJGWFTTqnfF2QQGiejw1xQU
-         ycO28XSI7niepNqIcSlFM8ZOB7kOCO4KP3IcgNEyyt5bnoRyzc4XLic5DJfg4h7KKF8z
-         FTXBiXEMqqvfe9NW0SvlshGltw3Kk9JikizW72TosTpUjkmNGNLyCU0daPc7lpth76/H
-         Cgrhlnkr62sXF6VRks3HR8/nQAeDMnV3LHmBHRhMnpup7KIMvMXG1gdz6FaAldumAaF6
-         XpQG7wOj6W6yOO/ApsuuN6DqLFP+W1udnxCIod1tl5xtrnU01ZvstgpOtBn8RlhWM4t1
-         XqJg==
+        bh=5az9diHVuM9bqD9oSRfw4W7i6mXaWPqfXCIxBJt+Twc=;
+        b=RGW4lCC4TW6T1lJRvSmWcB/0vnMFwtwOYeBnK/WFg0nA1aFU4GOd0No7anGo0FxEhS
+         ZgAwpj1VAdZlhCMpwrYlCkB3lnhALmUjMQe8GZc9Uojv+WSJOo+yGWW2pO2ceIPGyhSd
+         JE16ntPRjNYY7L7fi90BSFID7XU2xmCdO3Ek1tp/yrYsLcf4MusBakZ3j5QcaTJ6e7gZ
+         x1wWfyGayoOe4VXP6KIfTiHtoxnqOU5LIpKg2HgH5v2Qoh7GSK9wwKTLbGoe8P86dQfY
+         y8su33ULAL4qx3cT6E5fgM/hf07pcfHVbco+7XdO6SH4qDmWP6ERMSwQFUv2gOpsIk19
+         sC0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787903089; x=1788507889;
+        d=1e100.net; s=20251104; t=1787903090; x=1788507890;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=HvLg3099S1BLCm3Rl/izUoj+Skh0ObCeIUCjlX/Wad8=;
-        b=mWClLnhybW6aKVcM0VfIjBWcsvBe2XCmWibsZVe27sJWX2htH5GDSjUDJ14kvI6ReY
-         OSYQ6rYV+ElFrEoROwWtIQPxLluLCAyzmATcvtWqm+Pd3K0nXMZFGIBT7V4ZDUY+O0l/
-         hbKGBQKqs/E1xlk9J7ILS2eSbKE/8Oxv7MX674xI94GcVj4JZz8ndIBFMHrQWoLf0ZU3
-         BAk/F6/GXAuYDsq+ZpiUZpjvvhotI/i7MJKZhtIq5e4sodQ0nu1jSj5ANcgrN9R/zmq/
-         Qzes5+o+VjsSW2WCYF7t+d6ldTiZBBUwKIiUrBxj+KXpq4hGMolRHqNDj0R17jQZFhgC
-         5+QA==
-X-Gm-Message-State: AFuF++mZSfiKwOwo1AuYT9GAmrSV6/U/UDQy+nXhl3Gfu9oxRUfHiJCD
-	vQ60X5tyPOyJxXwczmWVm4NP4uuT6Lt100DyzSx7LV/Eh2HhUm4mBEbF+JIloeF8
-X-Gm-Gg: AR+sD10U2hoQcGE2kHAw/z3uPQaJvFDe/0OTXAzP6bf1tuj7mp7RerwoMOB5ALRqPYA
-	mIln93V/6kYGSHSuemKjc5ikEa4Dc0GEjbYZ3MHPt433Xg+Bq/Ax0FvnhRv0vyneIpoHd4L2ug/
-	DzeDqPikSRAmbYr9116S//Ho/wclU6LTDWa7fRYpXJhI9C5HvQr8oMsFjwHh6mXX+i3l9QH1yXx
-	Ff/mrzursgKYc5J5lCmgt8wX45VRST1eZXiZHjjPlsAwUNn1oQ9NFNAEzWke7bquC96o7hESjS7
-	4Etpj6tn+Wx4Izm3HJlZRyUNMi6fqaZxz7BGww18ZbEQ2xoukZ0Z8DCM8dbin6IWSR9y3wKsCwa
-	BCdI3qNa+S23s5bEoFRaxzL7ymf0Bvw+JdwUTVuitUSfyR7LWIxmXAuXkmwjgxER+YS1Yseag+a
-	BgnJTzrk7PG5xiWy8nxIkvSbSyjt1ja2Ug7k7QAD/q1ZZSj+p17E3YotL6VM/1jRRi7eOIzX0kn
-	g==
-X-Received: by 2002:a05:6808:1b23:b0:496:b7c:274b with SMTP id 5614622812f47-4b39832dc4cmr4866567b6e.19.1787903089006;
-        Fri, 28 Aug 2026 00:44:49 -0700 (PDT)
+        bh=5az9diHVuM9bqD9oSRfw4W7i6mXaWPqfXCIxBJt+Twc=;
+        b=Ls3K3T35zds4/A1o6kZRTZJyQShbNLYveOztzmRO4pYkvZ7A/7vfpQONprxBlHsmTM
+         AY+AoxZ5TpVB83/eOyYRjDvACPtYjgFovwaTUB/ns9531GlpL9xyweM4azpQ0rOjm+0x
+         92UdnMrjBrNyLuAMjbesPoU8XRk6uB1Dp4QIxA5cQ4i6J/EjPxC/lzu254RKnJte7NK4
+         ve8W9AslgIss+oKyYOqjqTuFi4Ry0AO0uOXuXrvEh5hKWj48Mx9n2X9vskV1AXSAnk0Z
+         5zehH5lDrmfKlmHnUUKKIIjenSEI5A5MhY/Z7VBqNa596UWYsFM21jO3loAdrOKuz48E
+         FW/Q==
+X-Gm-Message-State: AFuF++nvVIGvhZQPgUOx3VsF7X8tqItErRdBdXh0ZZGhHzCU1YW9OblD
+	AJw9NACxUBs5F/UHBgs22abAg8kK6hVfRhGsXJHsJanXfSy9YqEtsu4Ee7mI/Gw3
+X-Gm-Gg: AR+sD132jH6Yz5zSW+x5f5VXLYeNc/14CNEt4nwpGwlyxJpfDz8G1pZszfzPHzai6QH
+	ba7m7A+aXKpMQ9Cscwwdd1SFc1xqDTwrSVOAJE24CH71RFR0E2rFQNPmTSKX0PSanSFaB/4xO+L
+	Ytv7OBtCmoxqtqlSLPiMnQo226NuCL+Z97t7Ci8ybMP0mJ09/sEvemV5M9pXJ20r7T0ruI9G8t7
+	jZYyw7ND3/R5cbZaFyxWVLj/IkEJs1BLvjCDwk4ic23CEPZDsFoGfg37muO8A/A0sD/SeD24WQo
+	of8Xf9hiv+i1GmIBUz3lvEVaya3cHbyFygipfrsl4C5tKKcLZC9HTrPvYfNaUI2zXGAYKujV7W2
+	2wyS4xAmyl48/VJZvJSkRxgAORi7i7cOY6RdRb29hjPSXW6cHNTfdkop2t0v5L3Wcyz3EZrIUzP
+	e5BBaeJ83DDWlXJTXnI5TJJ0XFNQfnEQKfVIfly40mNSlDFOxJtI06HTDPOV3Do2I=
+X-Received: by 2002:a05:6820:3095:b0:6b1:65ad:3181 with SMTP id 006d021491bc7-6b1c66d53ffmr4485126eaf.16.1787903090215;
+        Fri, 28 Aug 2026 00:44:50 -0700 (PDT)
 Received: from [127.0.0.1] ([172.202.78.2])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b3a12976a4sm692789b6e.0.2026.08.28.00.44.46
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b1ce122df5sm952533eaf.5.2026.08.28.00.44.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Aug 2026 00:44:47 -0700 (PDT)
-Message-Id: <pull.2389.v3.git.git.1787903085.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
+        Fri, 28 Aug 2026 00:44:49 -0700 (PDT)
+Message-Id: <7e198a20fa47f0d5b2c50ffc7046bdfc792b62af.1787903085.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2389.v3.git.git.1787903085.gitgitgadget@gmail.com>
 References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
+	<pull.2389.v3.git.git.1787903085.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 28 Aug 2026 07:44:40 +0000
-Subject: [PATCH v3 0/5] commit: refuse to amend during conflict resolution
+Date: Fri, 28 Aug 2026 07:44:41 +0000
+Subject: [PATCH v3 1/5] commit: clarify FROM_REBASE_PICK and is_from_rebase()
+ names
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,281 +78,132 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>,
     Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>,
     Elijah Newren <newren@gmail.com>
 
-Changes since v2:
+From: Elijah Newren <newren@gmail.com>
 
- * Two new preparatory patches:
-   * Rename FROM_REBASE_PICK and is_from_rebase() to point out they are
-     about empty commits
-   * Allow a partial commit when a rebase pick becomes empty
- * Tweaked the error message for attempted amend on now-dropped empty commit
-   (suggestions for further improvements welcome)
- * Used the path accessor functions within sequencer.c to simplify the new
-   helper function
+Commit 430b75f7209c (commit: give correct advice for empty commit during
+a rebase, 2019-12-06) introduced a FROM_REBASE_PICK enum value and an
+is_from_rebase() function.  Those names failed to convey that they were
+specifically about hitting a commit that becomes empty when rebasing.
+Clarify their names now.
 
-Both git commit --amend and a partial commit (git commit <paths>) are
-foot-guns while the user is in the middle of an operation that resolves
-conflicts on top of HEAD: recording a conflict resolution is about capturing
-the state of the whole tree as a new commit, not about rewriting HEAD or
-committing a subset of paths.
+While at it, change `whence == FROM_REBASE_EMPTY` to use
+`is_from_rebase_empty(whence)`.
 
-Historically we only rejected these during a merge or a cherry-pick or when
-resolving an empty pick during a rebase. The same hazard exists for am,
-revert, and rebase conflict stops, none of which were covered. This series
-extends the refusal to all of them.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ builtin/commit.c | 14 +++++++-------
+ sequencer.c      |  2 +-
+ wt-status.h      |  6 +++---
+ 3 files changed, 11 insertions(+), 11 deletions(-)
 
-The three patches:
-
- 1. reword the two pre-existing "empty commit" rebase messages, which were
-    misleadingly generic
- 2. refuse git commit --amend during these additional operations
- 3. refuse partial commits during the same operations.
-
-Elijah Newren (5):
-  commit: clarify FROM_REBASE_PICK and is_from_rebase() names
-  commit: allow a partial commit when a rebase pick becomes empty
-  commit: reword the empty-commit rebase amend error
-  commit: refuse to amend during conflict resolution
-  commit: refuse partial commits during conflict resolution
-
- builtin/commit.c                |  65 +++++++++++-----
- sequencer.c                     |  59 ++++++++++++++-
- sequencer.h                     |  24 ++++++
- t/t3404-rebase-interactive.sh   | 128 +++++++++++++++++++++++++++++++-
- t/t3507-cherry-pick-conflict.sh |  22 ++++++
- t/t4151-am-abort.sh             |  22 ++++++
- wt-status.h                     |   6 +-
- 7 files changed, 299 insertions(+), 27 deletions(-)
-
-
-base-commit: 2c3adbb2c475981e340c79fdc5e7f4f9b5d9054e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2389%2Fnewren%2Frefuse-amend-during-conflicts-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2389/newren/refuse-amend-during-conflicts-v3
-Pull-Request: https://github.com/git/git/pull/2389
-
-Range-diff vs v2:
-
- -:  ---------- > 1:  7e198a20fa commit: clarify FROM_REBASE_PICK and is_from_rebase() names
- -:  ---------- > 2:  e169303619 commit: allow a partial commit when a rebase pick becomes empty
- 1:  65c48ed3cb ! 3:  0850a999da commit: reword the empty-commit rebase errors
-     @@ Metadata
-      Author: Elijah Newren <newren@gmail.com>
-      
-       ## Commit message ##
-     -    commit: reword the empty-commit rebase errors
-     +    commit: reword the empty-commit rebase amend error
-      
-          When a rebase applies a commit that becomes empty, it stops and asks the
-          user to decide whether to keep it or drop it.  HEAD still points at the
-     -    previously-applied commit at that point, so either amending or creating
-     -    a partial commit is refused, with one of the following messages:
-     +    previously-applied commit at that point, so amending is refused, with:
-      
-              You are in the middle of a rebase -- cannot amend.
-     -        cannot do a partial commit during a rebase.
-      
-     -    Neither message hints that the real problem is a commit that became
-     -    empty, and "during a rebase" is overly broad besides -- amending and
-     -    partial commits are fine at an `edit` or `break` stop.  Reword both to
-     -    describe the actual situation.
-     +    That message would suggest that amending is not allowed during an 'edit'
-     +    or 'break' stop, which is misleading, plus it lacks the specificity that
-     +    might help the user know why their particular case is a problem: the
-     +    commit they intended to amend became empty and was dropped, so amending
-     +    would affect the wrong commit.  Reword the error accordingly.
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-       ## builtin/commit.c ##
-     -@@ builtin/commit.c: static const char *prepare_index(const char **argv, const char *prefix,
-     - 		else if (is_from_cherry_pick(whence))
-     - 			die(_("cannot do a partial commit during a cherry-pick."));
-     - 		else if (is_from_rebase(whence))
-     --			die(_("cannot do a partial commit during a rebase."));
-     -+			die(_("cannot do a partial commit while resolving a commit that became empty."));
-     - 	}
-     - 
-     - 	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
-      @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *argv[],
-       		else if (is_from_cherry_pick(whence))
-       			die(_("You are in the middle of a cherry-pick -- cannot amend."));
-     - 		else if (whence == FROM_REBASE_PICK)
-     + 		else if (is_from_rebase_empty(whence))
-      -			die(_("You are in the middle of a rebase -- cannot amend."));
-     -+			die(_("You are resolving a commit that became empty -- cannot amend."));
-     ++			die(_("The now-empty commit has been dropped -- cannot amend."));
-       	}
-       	if (fixup_message && squash_message)
-       		die(_("options '%s' and '%s' cannot be used together"), "--squash", "--fixup");
-      
-       ## t/t3404-rebase-interactive.sh ##
-     -@@ t/t3404-rebase-interactive.sh: test_expect_success 'correct error message for partial commit after empty pick'
-     - 	) &&
-     - 	echo x >file1 &&
-     - 	test_must_fail git commit file1 2>err &&
-     --	test_grep "cannot do a partial commit during a rebase." err
-     -+	test_grep "cannot do a partial commit while resolving a commit that became empty." err
-     - '
-     - 
-     - test_expect_success 'correct error message for commit --amend after empty pick' '
-      @@ t/t3404-rebase-interactive.sh: test_expect_success 'correct error message for commit --amend after empty pick'
-       	) &&
-       	echo x>file1 &&
-       	test_must_fail git commit -a --amend 2>err &&
-      -	test_grep "middle of a rebase -- cannot amend." err
-     -+	test_grep "resolving a commit that became empty -- cannot amend." err
-     ++	test_grep "now-empty commit has been dropped -- cannot amend." err
-       '
-       
-       test_expect_success 'todo has correct onto hash' '
- 2:  4a1461e527 ! 4:  9f80d8a00d commit: refuse to amend during conflict resolution
-     @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *ar
-      -		else if (is_from_cherry_pick(whence))
-      +		case ONGOING_CHERRY_PICK:
-       			die(_("You are in the middle of a cherry-pick -- cannot amend."));
-     --		else if (whence == FROM_REBASE_PICK)
-     +-		else if (is_from_rebase_empty(whence))
-      +		case ONGOING_REBASE_EMPTY:
-     - 			die(_("You are resolving a commit that became empty -- cannot amend."));
-     + 			die(_("The now-empty commit has been dropped -- cannot amend."));
-      +		case ONGOING_REVERT:
-      +			die(_("You are in the middle of a revert -- cannot amend."));
-      +		case ONGOING_AM:
-     @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *ar
-       		die(_("options '%s' and '%s' cannot be used together"), "--squash", "--fixup");
-      
-       ## sequencer.c ##
-     +@@ sequencer.c: static GIT_PATH_FUNC(rebase_path_author_script, "rebase-merge/author-script")
-     +  * command is processed, this file is deleted.
-     +  */
-     + static GIT_PATH_FUNC(rebase_path_amend, "rebase-merge/amend")
-     ++/*
-     ++ * The apply ("am") backend keeps its state in the rebase-apply directory;
-     ++ * the "applying" file within it marks a plain `git am` (as opposed to an
-     ++ * apply-based rebase).
-     ++ */
-     ++static GIT_PATH_FUNC(apply_dir, "rebase-apply")
-     ++static GIT_PATH_FUNC(apply_path_applying, "rebase-apply/applying")
-     + /*
-     +  * When we stop at a given patch via the "edit" command, this file contains
-     +  * the commit object name of the corresponding patch.
-      @@ sequencer.c: int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
-       	return 0;
-       }
-     @@ sequencer.c: int sequencer_determine_whence(struct repository *r, enum commit_wh
-      +enum ongoing_operation sequencer_ongoing_operation(struct repository *r,
-      +						   enum commit_whence whence)
-      +{
-     -+	char *path;
-     -+	int found;
-     -+
-      +	/*
-      +	 * The merge, cherry-pick, and (empty) rebase-pick stops are already
-      +	 * distinguished by 'whence'.
-     @@ sequencer.c: int sequencer_determine_whence(struct repository *r, enum commit_wh
-      +	case FROM_CHERRY_PICK_SINGLE:
-      +	case FROM_CHERRY_PICK_MULTI:
-      +		return ONGOING_CHERRY_PICK;
-     -+	case FROM_REBASE_PICK:
-     ++	case FROM_REBASE_EMPTY:
-      +		return ONGOING_REBASE_EMPTY;
-      +	case FROM_COMMIT:
-      +		break;
-     @@ sequencer.c: int sequencer_determine_whence(struct repository *r, enum commit_wh
-      +		return ONGOING_REVERT;
-      +
-      +	/* In the middle of an `am`? */
-     -+	path = repo_git_path(r, "rebase-apply/applying");
-     -+	found = file_exists(path);
-     -+	free(path);
-     -+	if (found)
-     ++	if (file_exists(apply_path_applying()))
-      +		return ONGOING_AM;
-      +
-      +	/*
-     @@ sequencer.c: int sequencer_determine_whence(struct repository *r, enum commit_wh
-      +	 * to be amended (a clean edit/reword stop); its absence therefore
-      +	 * marks a conflicted stop.
-      +	 */
-     -+	path = repo_git_path(r, "rebase-apply");
-     -+	found = file_exists(path);
-     -+	free(path);
-     -+	if (!found) {
-     -+		char *stopped_sha = repo_git_path(r, "rebase-merge/stopped-sha");
-     -+		char *amend_marker = repo_git_path(r, "rebase-merge/amend");
-     -+
-     -+		found = file_exists(stopped_sha) && !file_exists(amend_marker);
-     -+		free(stopped_sha);
-     -+		free(amend_marker);
-     -+	}
-     -+	if (found)
-     ++	if (file_exists(apply_dir()) ||
-     ++	    (file_exists(rebase_path_stopped_sha()) &&
-     ++	     !file_exists(rebase_path_amend())))
-      +		return ONGOING_REBASE_CONFLICT;
-      +
-      +	return ONGOING_NONE;
-     @@ sequencer.h: int sequencer_get_last_command(struct repository* r,
-      
-       ## t/t3404-rebase-interactive.sh ##
-      @@ t/t3404-rebase-interactive.sh: test_expect_success 'correct error message for commit --amend after empty pick'
-     - 	test_grep "resolving a commit that became empty -- cannot amend." err
-     + 	test_grep "now-empty commit has been dropped -- cannot amend." err
-       '
-       
-      +test_expect_success 'commit --amend is refused at a rebase conflict stop' '
- 3:  e0be8cdf63 ! 5:  050b9e8a52 commit: refuse partial commits during conflict resolution
-     @@ Commit message
-          Similar to the previous commit, just as `git commit --amend` is a
-          foot-gun during conflict resolution, so is a partial commit (`git commit
-          <paths>`).  Recording a conflict resolution is about capturing the state
-     -    of the entire tree on top of HEAD, not a subset of paths.  For many
-     -    years we have rejected partial commits in the middle of
-     +    of the entire tree on top of HEAD, not a subset of paths.  For many years
-     +    we have rejected partial commits in the middle of
-            - a merge
-            - a cherry-pick
-     -      - a rebase that stopped at a pick
-      
-     -    but, just like amending, this was never extended to the other
-     -    operations that can also leave conflicts to resolve:
-     +    but, just like amending, this was never extended to the other operations
-     +    that can also leave conflicts to resolve:
-            - an `am` operation
-            - a revert
-            - a rebase that stopped for conflict resolution
-      
-          Reuse sequencer_ongoing_operation(), introduced for the analogous
-     -    `--amend` check, to detect all of these and refuse the partial commit.
-     +    `--amend` check, to detect these and refuse the partial commit.  A rebase
-     +    that stopped because a pick became empty is not conflict resolution and,
-     +    as an earlier patch established, is deliberately left permitted.
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-     @@ builtin/commit.c: static const char *prepare_index(const char **argv, const char
-      -			die(_("cannot do a partial commit during a merge."));
-      -		else if (is_from_cherry_pick(whence))
-      -			die(_("cannot do a partial commit during a cherry-pick."));
-     --		else if (is_from_rebase(whence))
-     --			die(_("cannot do a partial commit while resolving a commit that became empty."));
-      +	switch (sequencer_ongoing_operation(the_repository, whence)) {
-      +	case ONGOING_NONE:
-      +		break;
-     @@ builtin/commit.c: static const char *prepare_index(const char **argv, const char
-      +	case ONGOING_CHERRY_PICK:
-      +		die(_("cannot do a partial commit during a cherry-pick."));
-      +	case ONGOING_REBASE_EMPTY:
-     -+		die(_("cannot do a partial commit while resolving a commit that became empty."));
-     ++		/*
-     ++		 * A pick that became empty is not a conflict, and creating
-     ++		 * a new commit (partial or not) poses no problem.
-     ++		 */
-     ++		break;
-      +	case ONGOING_REVERT:
-      +		die(_("cannot do a partial commit during a revert."));
-      +	case ONGOING_AM:
-
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 28f6174503..569e31fb60 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -520,7 +520,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 			die(_("cannot do a partial commit during a merge."));
+ 		else if (is_from_cherry_pick(whence))
+ 			die(_("cannot do a partial commit during a cherry-pick."));
+-		else if (is_from_rebase(whence))
++		else if (is_from_rebase_empty(whence))
+ 			die(_("cannot do a partial commit during a rebase."));
+ 	}
+ 
+@@ -893,7 +893,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	 */
+ 	else if (whence == FROM_MERGE)
+ 		hook_arg1 = "merge";
+-	else if (is_from_cherry_pick(whence) || whence == FROM_REBASE_PICK) {
++	else if (is_from_cherry_pick(whence) || is_from_rebase_empty(whence)) {
+ 		hook_arg1 = "commit";
+ 		hook_arg2 = "CHERRY_PICK_HEAD";
+ 	}
+@@ -1086,7 +1086,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		if (amend)
+ 			fputs(_(empty_amend_advice), stderr);
+ 		else if (is_from_cherry_pick(whence) ||
+-			 whence == FROM_REBASE_PICK) {
++			 is_from_rebase_empty(whence)) {
+ 			fputs(_(empty_cherry_pick_advice), stderr);
+ 			if (whence == FROM_CHERRY_PICK_SINGLE)
+ 				fputs(_(empty_cherry_pick_advice_single), stderr);
+@@ -1333,7 +1333,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 			die(_("You are in the middle of a merge -- cannot amend."));
+ 		else if (is_from_cherry_pick(whence))
+ 			die(_("You are in the middle of a cherry-pick -- cannot amend."));
+-		else if (whence == FROM_REBASE_PICK)
++		else if (is_from_rebase_empty(whence))
+ 			die(_("You are in the middle of a rebase -- cannot amend."));
+ 	}
+ 	if (fixup_message && squash_message)
+@@ -1353,7 +1353,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	if (amend && !use_message && !fixup_message)
+ 		use_message = "HEAD";
+ 	if (!use_message && !is_from_cherry_pick(whence) &&
+-	    !is_from_rebase(whence) && renew_authorship)
++	    !is_from_rebase_empty(whence) && renew_authorship)
+ 		die(_("--reset-author can be used only with -C, -c or --amend."));
+ 	if (use_message) {
+ 		use_message_buffer = read_commit_message(use_message);
+@@ -1362,7 +1362,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 			author_message_buffer = use_message_buffer;
+ 		}
+ 	}
+-	if ((is_from_cherry_pick(whence) || whence == FROM_REBASE_PICK) &&
++	if ((is_from_cherry_pick(whence) || is_from_rebase_empty(whence)) &&
+ 	    !renew_authorship) {
+ 		author_message = "CHERRY_PICK_HEAD";
+ 		author_message_buffer = read_commit_message(author_message);
+@@ -1887,7 +1887,7 @@ int cmd_commit(int argc,
+ 		if (!reflog_msg)
+ 			reflog_msg = is_from_cherry_pick(whence)
+ 					? "commit (cherry-pick)"
+-					: is_from_rebase(whence)
++					: is_from_rebase_empty(whence)
+ 					? "commit (rebase)"
+ 					: "commit";
+ 		commit_list_insert(current_head, &parents);
+diff --git a/sequencer.c b/sequencer.c
+index 65afd100d9..0ea730a8dc 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -6956,7 +6956,7 @@ int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
+ 		    !repo_get_oid(r, "REBASE_HEAD", &rebase_head) &&
+ 		    !repo_get_oid(r, "CHERRY_PICK_HEAD", &cherry_pick_head) &&
+ 		    oideq(&rebase_head, &cherry_pick_head))
+-			*whence = FROM_REBASE_PICK;
++			*whence = FROM_REBASE_EMPTY;
+ 		else
+ 			*whence = FROM_CHERRY_PICK_SINGLE;
+ 
+diff --git a/wt-status.h b/wt-status.h
+index e9fe32e98c..9588097dbe 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -41,7 +41,7 @@ enum commit_whence {
+ 	FROM_MERGE,      /* commit came from merge */
+ 	FROM_CHERRY_PICK_SINGLE, /* commit came from cherry-pick */
+ 	FROM_CHERRY_PICK_MULTI, /* commit came from a sequence of cherry-picks */
+-	FROM_REBASE_PICK /* commit came from a pick/reword/edit */
++	FROM_REBASE_EMPTY /* rebase applied a pick that became empty */
+ };
+ 
+ static inline int is_from_cherry_pick(enum commit_whence whence)
+@@ -50,9 +50,9 @@ static inline int is_from_cherry_pick(enum commit_whence whence)
+ 		whence == FROM_CHERRY_PICK_MULTI;
+ }
+ 
+-static inline int is_from_rebase(enum commit_whence whence)
++static inline int is_from_rebase_empty(enum commit_whence whence)
+ {
+-	return whence == FROM_REBASE_PICK;
++	return whence == FROM_REBASE_EMPTY;
+ }
+ 
+ struct wt_status_change_data {
 -- 
 gitgitgadget
+
