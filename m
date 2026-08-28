@@ -1,85 +1,85 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707292620DE
-	for <git@vger.kernel.org>; Fri, 28 Aug 2026 15:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F86B241686
+	for <git@vger.kernel.org>; Fri, 28 Aug 2026 15:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787931699; cv=none; b=UfPUifuJf++IWo58wxXtRHUIf5C+Ecc6lKzbi7WTM3bEe2zqWGmU/dYzoTlWJqNK8O9cyAvy2pVWynI5/xXUTbzkFG7AxT1ewDdK939m7rm3O8098Bh89Z0uGR6FOxtQHtjOcS2he1ckLd1gaQqRUQejdAHbWevgSYpEWjJqz1o=
+	t=1787932022; cv=none; b=ayaEYiTUhSAriGvV/wvRMi9/A9dUOYYEyj6CP8z4YqGFJN4BxgBw3lXUdy8MTp+XQxNY2zoIm2EjneuOjy3RYsB5eOhz0zKYglHEOZEYT+fGtO/h/GCwf5ecVHuQs5Y48aPo72AFfsGj8Q7wuvt9H8zWSFh19yttWdEDj6dNjSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787931699; c=relaxed/simple;
-	bh=6O5fz1EpdlsO7LQAWP/GegzqTr2TZrHTxOt82R3EWhU=;
+	s=arc-20240116; t=1787932022; c=relaxed/simple;
+	bh=g0cKPqUXXYKJ0/9yYtmYVSoIwh1dLVUCybsIEdn46J0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=F19keY2agaKyaAvig/YNTt2xkCLKVh8chEkStn5j+Z3uH1qWRW79h2bUy8pyN7hFEFXfyIZ8K9L2yWBUws4NN7Azr2uJCd3Xy/+Uu9+0rx5EiPMoorM1dcrrvy/+mHZViPtBt0JAyo4DCSAXjGwclVXary38JDqcSO/45S63Rhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wWGTNLxD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aMBobnkP; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=aD53RrkQ0G/5v1TafM2bvuijUyFev8aTaNhmzX65SNRrsnLlna+uXJAGmi+d21YOkF1lM2mO+jpP70WM4DD5BfjZfpGje5B/pj8YKKZsH6n8kL8Fz3DBzzFfMJ9WUFIofnFSVxB1BFhWO6XsSYAnJPAl9GRKXHn9SPlEGaIFXME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KQeFxPdd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZiKrNfHS; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wWGTNLxD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aMBobnkP"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 84A881D000A9;
-	Fri, 28 Aug 2026 11:41:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KQeFxPdd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZiKrNfHS"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0E6091D00104;
+	Fri, 28 Aug 2026 11:46:55 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 28 Aug 2026 11:41:26 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 28 Aug 2026 11:46:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787931686; x=1788018086; bh=ej021BNBMp
-	W6HaAMGk+DOS6z1oJq3SFQfPZHZ6QVpJA=; b=wWGTNLxDnPWIkK0Yei6K7L3TP2
-	a5orMGPK2AYtXxO4fqSi8MsaAk9L1zHVXNBitddlpEaaqwtoFwXukzraNjnHduTk
-	faDf/dWI19TZzDXGnLvN3flvcNHBOGoWZoqhM0WMn+TsTh3NSye1hinixPSO5QvO
-	gUG/CuX0YEJBC77tWRdVOfREu4yuJK9qOa3CiLXq0IjhJgA3l8Xo56Boe1FTKx0i
-	Mzo2CH/ssHmWgn2gJFKs1nrq/yOalZ8NKPUGAGKnGg3EJG6OcCyUTnFYEZCWsAJc
-	FMC4Kmb3xiq8ipYO3xtt6ggfRkGRG51neeQgxeKCidLHBafZtfEHZPWfVOvQ==
+	:subject:to:to; s=fm2; t=1787932014; x=1788018414; bh=/pubb2qSU7
+	gCI+cKeLVaO/NyhgrTlU31m/g+8zUGub0=; b=KQeFxPddH/Bj19/Eri0L5wnzj6
+	ZuwJYsI+WZFYUrhcLRNOrGtJ5/2uAZglNi+Y63du9xzKZfGOtVVrrl1Vdf9yj71D
+	oxNrEaUCIs5y+80+m/TKNVDlr9aogVfZBWfbSeXNvksx9AvSyUaa5o9aOmbR2rJs
+	sYcq/SKt1JZT6/ZSyDjGv4g7ZPPi+/SG8cJRSwjH0erSwjYbvGMp279OM0WkKzpc
+	DPQSJ4BbUvgFcAnx1rFkx3JI2vKe7nQg0wU0mLd9Nqv+sHYN3JQZOeowhXyJJ3Iu
+	wTIQS6gBm4/s116uTjz8djjuQK1MOAqHNvnFeMhvbwhEWOchkB8u7cSD6aqA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787931686; x=1788018086; bh=ej021BNBMpW6HaAMGk+DOS6z1oJq3SFQfPZ
-	HZ6QVpJA=; b=aMBobnkPG769I7mWk1dvzvty7pRhkgYXLLMzP0+eFAUn41W/GYJ
-	ZBxu4C0t4GCnsjhg5dWn2n346n/qhqfSwsytcMIhpBm/jijYS30fDItx57IihpXR
-	cZHlhApxbt0bgENRc7iA5IEBaOgbLAd4WKbk6nOsRHcnRRGnK8+uIr88YwWaWBeY
-	VfVXNivTk6aCsPFX/cQfbbu0FhixyA7v7xesCg1gbFoRlkJZTkf5LxqRy740zKYt
-	4siuFaCOfMGXjHBXADPNjmxgud/LV8VAq6UDLjfUk+W3QEv7aB5fTYM2JioAfWnH
-	AXX2n3PuLl/VaxSWzUpSFJZiMayy9GZLeUw==
-X-ME-Sender: <xms:JqyRairlKW6ZplN9O_mtfCkDZgV2tZ0GuyM5ebfKT61DQRNEUjvA_Q>
-    <xme:JqyRang1n1WsZtz0Kvorl0pFvWjmmzCAPKaU7HkEpNeI-nRARCGPQ8ZK2Vej8JblQ
-    QCQPONhvJp_N3_y1YUjdIw2okRBsSTn5Tp2f7tJENmxXInjDGMV9g>
-X-ME-Received: <xmr:JqyRavgmhnxS0iKHY_yGQvYQC-7Z6Frx0BAwcjypsHsphxkFQ9jtmLOk27ezLRAi6B6BSOySTj5HZIz1jFPlUkR3A6s9Qo_PDA>
-X-ME-Proxy-Cause: dmFkZTEEjfNzfMOvu0xiAuEz92dGYnVJbznp7M69E04ilZSHByk2tyqHWPpyBJJnMHvh/U
-    KI10QUzEuG6DWnqrO57KFPIJuKK/PvIveE7AAR7501WXCu65C1SoOEDiDjYVv/djPJe/Y3
-    TPJvs+Rqs2yrMunbAWuX1wPwaWMzw7GK5VP3gB/i5pjK6uoXtzcZfpD16OgZ90jwDo2xdu
-    HPgmXYSxIHvx6ri+PEw2Ly/lOS1BEO6ku13uTBVBGcyr9tQ0UDUCNJban+faaxivXrjb2j
-    kyJ0dsUNHqqo+oNLJMO0kYWZiBK28WITDaMS25fKjrAaTG+Z4zHj84m/gCaX2RVCFb6Ubl
-    ul4R0kUP6xQT0M37Y+nhCQSfIszkMFs+2ZPeGQy85qbXBb91U5oJ3Af9tTCKlH9cN5hG4s
-    TmDvRupd4DxfKkCPJSiZmd3WGwYo6T/eYtsy/FS/3hizx30VGuhhQCtdUFdBUXhKyh7lCv
-    pIs9Iy0fQc397BeIThia4fKB4v8MxG2y9Jx+P+GUuJgUCHbcHpE4K5m3VC4V5eusjVPLXt
-    8bWRS45R5hhIEGFPL0ity4rInUsP8gKgz8NXQLRKtG/MihHAzi4igmomQQj/HgYkvbZCc0
-    hksKRBXDYHgbeZ4qbMgXG/911E6Olb00LQtnW6njawS+UKQd4d2GvNGgfJBg
-X-ME-Proxy: <xmx:JqyRatiRYg7TdXlYtm07TnCHudHywUkvzfh8389mJMHIem1aTYIbbg>
-    <xmx:JqyRavLlNaf3gqjwOc0ZcfF-FLzeUUTdt1JoOZ-evMbbuUg9MaHcxg>
-    <xmx:JqyRasGtnnniqLGbKHRSYvacnWQNISg4RdE3JjDoIxiiqrsvkwYH2A>
-    <xmx:JqyRajSp0DpF_IuVOFBgg2KkH-iy2AH0_2lSL_fqZIHcDaNAHRyeXQ>
-    <xmx:JqyRagyy4D7i1PbB7xSG8KQBUPDrTHiv1_bQK_H5OysbiBJ2VG7LApRI>
+	1787932014; x=1788018414; bh=/pubb2qSU7gCI+cKeLVaO/NyhgrTlU31m/g
+	+8zUGub0=; b=ZiKrNfHSVPZd99DKmgbAWNjgGhDUiwOTzGezfhe24lYEn2n7bD/
+	xFVoT42Jzk0gGBapAUWb22ixALWQ5kIZClHMd1XB7AHJhaqogghVF6mNmNS25NxY
+	7WVz6a5tgq7+aCJX5XhWqoAbogBGnMFG3Yai+pxy5bnGpI5fbdIDT8jNhsup2jbC
+	N+TmWnISH9LDT1knUlZMlNwlmU56yFsj7e20vZSrM6d75c4FFVeivn66GnrDzyBh
+	UPPXw0emhRuv7q2EEFk6NpMrqvXGX3PSJPRmXVXcDsxHkVJvTlyR3RHPnDoV6P4Y
+	X2VZ9H+CP8BP18TGxDzIs5ripWlbguPWX4w==
+X-ME-Sender: <xms:bq2RajU0ss6-78HsS2Om7g0lp6fE8E92L8jHOtRpSltXYYf4xBMxmw>
+    <xme:bq2Raie_0E6iLAbxJ34NKwF_gq2oHr_kIrTUBnWXe7vSrOcNgTiVEnlXLgZhXBJye
+    VpdjXfj_wkj35XV3zLLGu77GCu3L9-xIWS-1VtDldFEDrIdOuJUGj4>
+X-ME-Received: <xmr:bq2RansApcdpo2QmYHlHF9l_MsbTdprJI9DEUMQao6U7DlFuGfYIKUKd7tqVozF73Tn_lymOWoiO0DJckkOnmEnvOc9qZUbPsg>
+X-ME-Proxy-Cause: dmFkZTE/CYSe9ZzgjrAWiUqLH6HgclKkYzMrKMmPtwQyTQ48t394TQJAO5TKKNJq4AzwJQ
+    K9CdVIg7YIbVnjXrLADMsOlfKslqIMNcTKNUmxXhLIS9rapFdAHUli69Ki8rylxIDx+Z4f
+    L10bUr5Nt6Jikq7ZUF2+iz/MHwVqDep3WIwCuHVOqhfyzLahBTkpggcTX5x97HEhm6/cdk
+    D5xb3GHqOlBsCGK7LgG4U0QQFQ1NgJHWiVah2yTlFLU4o/09TrNEYUZpXCIj68umkJPuBF
+    lLkKb05OpcrdfAaOVnVmRdcugjc/4XV/DmL5DXlSCSfXHBzf/emtROg7+ggIJ3ZlwUemHN
+    6GBv9PgEZWwHOITFSZ83vwY3fVQWtOfSCR9SiJjt45YQ5cKZAcmuT9N5NNgrSXp28h4gbl
+    Q7vOfypl+WF5YGaybLP/bHlUJ5BMTMXR56RT/rplAvQIDZOg/t4YfKxgVR1mIAdXpA2HTe
+    sEi6q+SxiGtg+N6FR24jQ3S5JZfK7YGghO1fXGICznDT4lksEKkLpDu831U3hgJ4hAnErB
+    jOuWQbJ4XKVOqdoznKqWoh0KOKKhnn0l+Jyw2digm0Z3XXQnuD862ovy3pUgHdSxGW0eYB
+    xVz6gZJFmHzWwm8LBv0DEBHNxtGY6mQ7FF8CG+u5MlpcYwM0MWP2gFdDOL1Q
+X-ME-Proxy: <xmx:bq2Rap_gtOCV33voifyx4i6KR2jGBHFLCeRyE8-dDtCXEWbCs05nSg>
+    <xmx:bq2Raq06fFjoqVfR3maUDxEilz9HDp8ZSmaTjr56fqCwf99e-ojqvw>
+    <xmx:bq2RamDDFGtpSY5RatXLoAZD4RWdF6OpGWA1SgE1H2XvOxmKo4Ipzw>
+    <xmx:bq2Raue3GPIeHLwdo6f43srsSR5Ok-SADFRl1iRbMhvA_yzndkRGLQ>
+    <xmx:bq2RapOfd5h4OJLgbKCOJ8mQ9wUpg37Qle6p8QlC7WbCrg0P6h71Y__e>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Aug 2026 11:41:25 -0400 (EDT)
+ 28 Aug 2026 11:46:54 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Elijah
  Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 1/5] commit: clarify FROM_REBASE_PICK and
- is_from_rebase() names
-In-Reply-To: <7e198a20fa47f0d5b2c50ffc7046bdfc792b62af.1787903085.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v3 2/5] commit: allow a partial commit when a rebase
+ pick becomes empty
+In-Reply-To: <e16930361978335a6718814cf5d56a8dd8b42f75.1787903085.git.gitgitgadget@gmail.com>
 	(Elijah Newren via GitGitGadget's message of "Fri, 28 Aug 2026
-	07:44:41 +0000")
+	07:44:42 +0000")
 References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
 	<pull.2389.v3.git.git.1787903085.gitgitgadget@gmail.com>
-	<7e198a20fa47f0d5b2c50ffc7046bdfc792b62af.1787903085.git.gitgitgadget@gmail.com>
-Date: Fri, 28 Aug 2026 08:41:24 -0700
-Message-ID: <xmqq7bla6ymz.fsf@gitster.g>
+	<e16930361978335a6718814cf5d56a8dd8b42f75.1787903085.git.gitgitgadget@gmail.com>
+Date: Fri, 28 Aug 2026 08:46:53 -0700
+Message-ID: <xmqq33vy6ydu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,20 +93,59 @@ Content-Type: text/plain
 
 > From: Elijah Newren <newren@gmail.com>
 >
-> Commit 430b75f7209c (commit: give correct advice for empty commit during
-> a rebase, 2019-12-06) introduced a FROM_REBASE_PICK enum value and an
-> is_from_rebase() function.  Those names failed to convey that they were
-> specifically about hitting a commit that becomes empty when rebasing.
-> Clarify their names now.
+> For years, we disallowed partial commits during merges or cherry-picks.
+> In commit 430b75f7209c (commit: give correct advice for empty commit
+> during a rebase, 2019-12-06) it was noted that the "cannot do a partial
+> commit during a cherry-pick" message was also printed when rebasing a
+> commit that became empty, and rather than drop the check in that case,
+> that commit opted to make the message print the actual operation that
+> was in progress.
+>
+> Since a commit that has become empty comes without conflicts, a new
+> partial commit poses no problems; remove the error in that case.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  builtin/commit.c              | 2 --
+>  t/t3404-rebase-interactive.sh | 5 ++---
+>  2 files changed, 2 insertions(+), 5 deletions(-)
 
-Becomes empty is different from picking an empty commit, right.  I
-am not sure if "is_from_rebase_empty()" conveys the difference and
-more importantly, I am afraid it hints the latter.  I have a feeling
-that EMPTY_REBASE (instead of REBASE_EMPTY) may match what we want
-to express slightly better, but not by a large margin to make a
-difference.  Perhaps Phillip has a better idea?
+OK.  Looking good.
 
-> While at it, change `whence == FROM_REBASE_EMPTY` to use
-> `is_from_rebase_empty(whence)`.
-
-Very much appreciated.
+>
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 569e31fb60..610820c99f 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -520,8 +520,6 @@ static const char *prepare_index(const char **argv, const char *prefix,
+>  			die(_("cannot do a partial commit during a merge."));
+>  		else if (is_from_cherry_pick(whence))
+>  			die(_("cannot do a partial commit during a cherry-pick."));
+> -		else if (is_from_rebase_empty(whence))
+> -			die(_("cannot do a partial commit during a rebase."));
+>  	}
+>  
+>  	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index ff11abb2f2..3588e16543 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1858,7 +1858,7 @@ test_expect_success 'post-commit hook is called' '
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_success 'correct error message for partial commit after empty pick' '
+> +test_expect_success 'partial commit is allowed when a rebase pick becomes empty' '
+>  	test_when_finished "git rebase --abort" &&
+>  	(
+>  		set_fake_editor &&
+> @@ -1867,8 +1867,7 @@ test_expect_success 'correct error message for partial commit after empty pick'
+>  		test_must_fail git rebase -i A D
+>  	) &&
+>  	echo x >file1 &&
+> -	test_must_fail git commit file1 2>err &&
+> -	test_grep "cannot do a partial commit during a rebase." err
+> +	git commit file1
+>  '
+>  
+>  test_expect_success 'correct error message for commit --amend after empty pick' '
