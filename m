@@ -1,142 +1,218 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FA636E468
-	for <git@vger.kernel.org>; Fri, 28 Aug 2026 19:13:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C417C2192FA
+	for <git@vger.kernel.org>; Fri, 28 Aug 2026 20:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787944389; cv=none; b=crCrcXqGML3cOOwunP60s6WYt2oay1iElu1IyfKrDCQ+R3Qgksaaa/UqzVXGa2aDNrFBQwGl9cWU5oD0wvJ/aFpKZc+W/BGK7PhBPR/6eaPwacEPucsFCMC+F6MCXcxAyXUV2p4jM/4LLiQSitCQ4RtYbXKYaK0/KooOUUZp4qE=
+	t=1787949352; cv=none; b=IusxgGJtNFXLjzYYPUwWKqX/VlJqDFPaij4Y7kLDRLMdMsKoR/6w5Whna+pUmk9com1T8nOlQu4rjZTncL+bVHUr3X6iQ2w2LxXGzHWGrPqOiVoN81G0o9oSVgzmhvwAnYWT4bJF7qt+aGpqk1AyP7QXvttvb1XeVZ2lNxoTze8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787944389; c=relaxed/simple;
-	bh=FXO/wh/5OSv3x4KYSqEjB0j+C93MkTaR9rF30MfZsi8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QJ0NSa61jo/9NA+qyvUWRuhjSJ+yrPCr2lTlzwRcQs0E7EvGkPenCGQP7Wm9SEg0LHtevG8zJ0ZUq3Hn12K3puAdOmHkK1TTX31xDUjFLsZ4chmFaDPDgw5qdm94jYJQ/JDgVC0K4A8sGiSRon0eQ+qd9YxVbYqtGMv+/uF50jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GZc+iaoX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rse/vCHd; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1787949352; c=relaxed/simple;
+	bh=5HPLSAA4RaCXLCrmzOkh/6b4IUMuRiDfsqZBvE/o2qs=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Omw5aLAQ/NemUcgwGa97F6/tZQ8/s12oEyLPZ0WJTWJei/9uh1YJV9UWLZg55XpPLr+DRmfU8zKlgfM7OAWGIhx4OQzdRpEBFkbQ710xHvo2gvAIs28qkhX1SEquVlfdUapEy6xuBATTzuOSq8EGNlNfy0LAHaL6SCdpcWD5ius=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ufxw/EyG; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GZc+iaoX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rse/vCHd"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3C28D1D00077;
-	Fri, 28 Aug 2026 15:13:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 28 Aug 2026 15:13:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1787944386; x=1788030786; bh=ZT4yUeubxf
-	5poDzI8dQdzoQzUbOaTweIosJA+dbodUw=; b=GZc+iaoX6LZSgjBIZpqoMX3x/0
-	+OgqJZw9qp2jM7QRird0denbaJbIgJBJz+Un/OF7GYFtzoDE2swJslI6Ybtq/KkK
-	b9mxDpeGvRgqBgv5dz0kWMc/F71sWHg5pILQCYgwN+HwyviWaiuE1jN5ez1IrH+B
-	tlmDI9GcwOD7DSUOxdV+3vUzI4qrGr5jKhpX1bCgl/NP2Bw/MMnTBVf+7xHqteAD
-	6pHYg3mysCRNjyQKsnqAlVlhfYnq6JULOZlQu2yJv5upUif0+zCvo8IhKApv1vYr
-	2T7L5l06/iYs9jq+AsUnfBaEW0aSxjZRhq4npsotnzJ1MdYu/n+ZLO1JVcJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1787944386; x=1788030786; bh=ZT4yUeubxf5poDzI8dQdzoQzUbOaTweIosJ
-	A+dbodUw=; b=Rse/vCHdZ5lROXkytyYiIUOE+rzFXzbXEZZk1/RTStSyJtWsBaE
-	PpiF0hZsjcrW8BiFtno8RjKEhyLgwPNn70LfAgmTB377v8at7oA80Mos9/4dXWyI
-	SvvoPLDugo/2fAJBdT02kt2KcbuLX4Ul6NiV5V821ku0o06tlVzGydBki1ciz83g
-	9YhIebDLbxzRkgBi0dyLxI2Rnq33FyvmJIt2cA7zTzA2az4e2ggl4ZptX+LDabeV
-	Igzrq7x+MVc2Cvv6BHL39XgXPAxbtHz7RkP84y7Orgs8JaTv0AnMLJYlqgjmxdNn
-	xQOosCYJ2EQjeCVN6YSwOkRCPyOpaiO06SA==
-X-ME-Sender: <xms:wd2RauBodcmtvfVTAsTM0zIRnz1AqKMlGEfO1yOwuyq-EeFD05Dugg>
-    <xme:wd2Rav_eiONnyMTEKOjboFclHIsPEbPv7sCj3aThGVZNbPriiD5R1uat6Y8AgSujc
-    onqORqTdugWXk5GWEvHux-WpnNiEdXOPJ2GgC_uNA1h-ph2wTQ4Sis>
-X-ME-Received: <xmr:wd2Rau8UMsPo3X35-yCzvRlLMyuag7mFyNNaxYj3z_h2acJlEN9JSGkiWApsk-Lf3dl9gBo8w728GaXL3i1IQBd-kYgZkRKUdA>
-X-ME-Proxy-Cause: dmFkZTGkEgAqON5MqzzS4dd3bSIRvfi2KvUBaJ6QC2bzIAstbxJoAGzwVzJn0IAfnKfts4
-    UEAts0GW/Cic8Fvl/2fb/9/LJakLQLJ47R8kIbQ6pyiJ0jRJ+7IMesDF+SeiGKeAl5ZgCF
-    dfle3Ayo3gc1IMTvkssSOCMElmzdzP8admsACcqavLPYSVLXeTelNKryosWPLU4crAdpiy
-    rBTR+wtgp31tI7yiurirzIY5sXZdxxFkMDQjJR6TpkynUQvzKI247vvd0bHckl4C1RT+Ll
-    xJNy4BSugq9ytq6Hm39LaE/x+ssMKN+VS/bSwt930cicy5Nb9XjJPHUT0bAgYXfKGGlFTv
-    59v7pB1rZHIifoOH9Y/viR15jErJCIAr9GWgPjuEd6sw8xitNzGSmyd2scTg2pv53isf/i
-    qAAipFrpW92huzOBKSFeeXw7kcuD2ZUs+VDaAF7KIH3VTQxM7a1AqTOic6xQDue5T0GYgO
-    G9ivgUvDmRuWBMm3x1jIcSGneJVx+b3XDCobiuBYqfITqYlSWQbb0xrQYZ8GNOqT7BYsSv
-    OWfLGpEhcnfl23WjYxwvaGxMUUO6tz+YlEPoEaN72WDXC4VaKWCpu6ICWE7WSAzg0ZmvYe
-    6FYj1tAZ9EKTa9gABM2w5W8cwVfVG87DZN79c5n9cv0MX+GWBxhkZhLlO60A
-X-ME-Proxy: <xmx:wd2RamcnQJIY2paUQf7ERPk47UTo2b8NAFqmbd-IUb28N7SaMkRqPg>
-    <xmx:wt2RanHMDPhS87IYvysmNgbodPre7PYKFsRH4Y7cTQF2RXW8qXnaUw>
-    <xmx:wt2RakcT3p0UX92QS00QpsMdnec4NmlwE1C-fRI0THcrt8_CZRmHJQ>
-    <xmx:wt2RahEJJ4KcubNj7JJ_X5fLyyhVO8LQpQVYnQaTd0PmkkZc3DGTuQ>
-    <xmx:wt2RaoG4sqUjBc45lcNCSkQY3SSj5-gAAiOIKlVotyDF24qwVY76vhaA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Aug 2026 15:13:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 6/8] odb/source: support writing alternates when
- creating the database
-In-Reply-To: <20260825-pks-odb-write-alternates-at-creation-time-v1-6-911513ba95c3@pks.im>
-	(Patrick Steinhardt's message of "Tue, 25 Aug 2026 16:11:55 +0200")
-References: <20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im>
-	<20260825-pks-odb-write-alternates-at-creation-time-v1-6-911513ba95c3@pks.im>
-Date: Fri, 28 Aug 2026 12:13:04 -0700
-Message-ID: <xmqqbjam3vpb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ufxw/EyG"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-cc1a4c62804so1152165a12.3
+        for <git@vger.kernel.org>; Fri, 28 Aug 2026 13:35:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787949350; x=1788554150; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=iPYdiIfFCPJ5sFn+FKWKRmVmwHcywim8fI1XSF+bdFI=;
+        b=Ufxw/EyGptp0A3n5eeidxPBffVcIrJgBL19IFGT2HJv+AhmwcuMIRdQNAzIfyeNBtE
+         6ygq2saNARP6eSrRNahbV+lAIXTSesxcWvkL18YSD+PnH5k4PTrZHYD+PdapYdLCW8AP
+         UuK/bif+wcz26vfc8D97us+RtaIoN9DbwT5zFnqPopGyy72kh6idj3utw//hhG596wFL
+         uHek1K7fP6AVA4PzZADl4OKDpOIcXIsOmmPq0QmmsaWvHHHbVfcmO4faljKEGrJ+IpLl
+         aOAdygONYpJ9qitTDhjTne6a36L1tNSycd6x2A2I21OwazimSoIADdgJm/wVupGGjgSD
+         /I9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787949350; x=1788554150;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=iPYdiIfFCPJ5sFn+FKWKRmVmwHcywim8fI1XSF+bdFI=;
+        b=F8S0yaHItarz2xySaW1txiHWAm4cr+oBuPejD1rwC0UIMIEhPlQELCEybch9Oow6cM
+         xhnV9ocYV6OF3Q4ROxDS/7nXcjKcwvQCHKIRu/NeP/5a/Qs0di7tRHWQUAjrNKrukmFa
+         aC8ENoSCNAviVWIz5HyR8A9MFmtsJ26DDwtV9hgVevYDTaBEO5IV+eYGn6BZbyuywlze
+         ZEvB0RYAlx3PxipNvLSn0aRdy5j67syELVcn9suCXoQCbPvwckYOCl+a50/LvfFX+u7v
+         5mvCvH3+T1CqBQVp2hYDRY4dXGEQpIZxSh+jgPWawvwj5iH/ACeacD49P5DEwLNPEWZ9
+         SoHQ==
+X-Gm-Message-State: AFuF++kY2xEC6NS2NRkxhOqfv9Indu+xp0RfLY16YuUfrzAR+l2MBVkB
+	ZEZUqdrm7ztDCQ9dZbmAgZ4VYKKSCetx4lImt/BR88s+dZy0nnBeYLP2hHMcqA==
+X-Gm-Gg: AR+sD13VHE7qh/gMgazyM2zfU3WEDXNQffaFEofhgwZ1CAEknlE5GTBG1Kre84wjAFC
+	nNRZ08cf15LU1AhMhJSy4j+NVtaFvSzS4LlSgcq3UFRJX1uAa1DPYHlrbBktIjj1ab6ga+vRJm+
+	5NbibNedwx8kiNOXTKj/o5zItr79E0ZTOaMKjGVfSP15eyzNKJGUkSxOVukmTrJpWT7oZrK2sQt
+	VU547/WRbwbXnWrkDD37OYw3spoI9uqNPBs/YZLnjUr30WSJgo+O5G3OcaTFYOXUQ7pW2SeEZCW
+	07vJBfkefABZWfJlfNPZl5GCUnNhIV26EWX4a/fa3zfIk/QtHd2VOYqY/DSgD4UXu/5RHGCxGPd
+	1S2BEvpIx+o73eHcPu6rVpWdTc3iVsStDDOlg0ACMywANg2K4bk7cTW3SgQALP+XuKVvGcgEzly
+	OKeQS1kjbfeNrDCpuEwHKHn5oyRZhhbIgm2f5NDFVbzbVHozJ/7N9y7gCchpg39VT0sQ==
+X-Received: by 2002:a05:6a20:d529:b0:3d1:be60:2811 with SMTP id adf61e73a8af0-3d2682a18b0mr18329018637.15.1787949349867;
+        Fri, 28 Aug 2026 13:35:49 -0700 (PDT)
+Received: from [127.0.0.1] ([172.184.213.243])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3286f9595bbsm9139331eec.14.2026.08.28.13.35.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Aug 2026 13:35:49 -0700 (PDT)
+Message-Id: <pull.2391.git.git.1787949348110.gitgitgadget@gmail.com>
+From: "Diogo Castro via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 28 Aug 2026 20:35:48 +0000
+Subject: [PATCH] dir: fix negative pathspecs in 'git ls-files' and 'git add'
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Thomas Haller <thaller@redhat.com>,
+    Jeff King <peff@peff.net>,
+    Diogo Castro <dc@diogocastro.com>,
+    Diogo Castro <dc@diogocastro.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Diogo Castro <dc@diogocastro.com>
 
-> Add the ability to write alternates when creating the object database.
-> This change allows us to remove the `write_alternates()` callback in a
-> subsequent patch.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
+`git ls-files` calls `common_prefix()` / `get_common_prefix_len()` which
+calculate the length of the common prefix of all *positive* pathspecs,
+`max_prefix_len`.
 
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index b7b3a297bb..5e77b21d9f 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> ...
-> @@ -64,8 +70,71 @@ static int odb_source_files_create_on_disk(struct odb_source *source)
-> +	if (opts->alternates && opts->alternates->nr) {
-> +		strbuf_reset(&path);
-> +		strbuf_addf(&path, "%s/info/alternates", source->path);
-> +
-> +		/*
-> +		 * The alternates file may already exist, e.g. when it has been
-> +		 * seeded from a template directory. Read any preexisting
-> +		 * entries so that we don't end up writing duplicates.
-> +		 */
-> +		f = fopen(path.buf, "r");
-> +		if (f) {
-> +			while (strbuf_getline(&line, f) != EOF)
-> +				strset_add(&seen, line.buf);
-> +
-> +			if (ferror(f)) {
-> +				ret = error_errno(_("unable to read alternates file"));
-> +				goto out;
-> +			}
-> +
-> +			fclose(f);
-> +		} else if (errno != ENOENT) {
-> +			ret = error_errno(_("unable to read alternates file"));
-> +			goto out;
-> +		}
-> +
-> +		f = fopen(path.buf, "a");
-> +		if (!f) {
-> +			ret = error_errno(_("unable to open alternates file for writing"));
-> +			goto out;
-> +		}
+`max_prefix_len` is then passed to `match_pathspec()` ->
+`match_pathspec_with_flags()` -> `do_match_pathspec()`, which strips
+`max_prefix_len` bytes off of *all* paths and `match_pathspec_item()`
+strips *all* pathspecs (positive or negative).
 
-I understand that using 'a' instead of 'w' is an attempt to deal
-with the potential TOCTOU problem, but shouldn't we be using the
-standard lockfile API, which atomically adds (or fails to add) to
-avoid leaving a partially written file?  Or does it not matter,
-since this is done only once upon repository creation when nobody
-should be looking at the files on the filesystem?
+This causes the bug previously reported in [1].
 
-Thanks.
+As a result, when we run `git ls-files -- sub/sub/sub/file
+':(exclude)nonexistent'`:
+* The common prefix of the positive pathspecs is `sub/sub/sub`, 11 bytes
+* 11 bytes get stripped off both pathspecs:
+  * "sub/sub/sub/file" becomes "/file"
+  * "nonexistent" becomes ""
+* Since the negative pathspec degenerated into "", it matches every
+  file, and thus no results are returned.
+
+When the common prefix is longer than the negative pathspec, we read out
+of bounds.
+
+`git add` suffers from the same issue. It uses `fill_directory()`, which
+returns the common prefix length, but doesn't strip the trailing slash.
+Using the same pathspecs as in the example above, the common prefix
+would be `sub/sub/sub/`, 12 bytes.
+
+Only `git ls-files` and `git add` are impacted. Other callers pass in
+`0` as the prefix.
+
+Bug introduced in: ef79b1f870 (Support pathspec magic :(exclude) and its
+short form :!, 2013-12-06).
+
+Solution: in `do_match_pathspec()`, only strip the prefix when handling
+positive pathspecs, not when handling negative pathspecs.
+
+[1]: https://lore.kernel.org/git/e2dbe996f6a7285fe0487e34d65eccf712867547.camel@redhat.com
+
+Reported-by: Thomas Haller <thaller@redhat.com>
+Signed-off-by: Diogo Castro <dc@diogocastro.com>
+---
+    dir: fix negative pathspecs in git ls-files and git add
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2391%2Fdcastro%2Fdiogo.castro%2Ffix-pathspecs-common-prefix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2391/dcastro/diogo.castro/fix-pathspecs-common-prefix-v1
+Pull-Request: https://github.com/git/git/pull/2391
+
+ dir.c                       | 11 ++++++++
+ t/t6132-pathspec-exclude.sh | 52 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 63 insertions(+)
+
+diff --git a/dir.c b/dir.c
+index 32430090dc..3fb2764efe 100644
+--- a/dir.c
++++ b/dir.c
+@@ -539,6 +539,17 @@ static int do_match_pathspec(struct index_state *istate,
+ 			return 0;
+ 	}
+ 
++	/*
++	 * The `prefix`, calculated by `common_prefix_len()`, only takes
++	 * positive pathspecs into account. Negative pathspecs are not
++	 * considered.
++	 *
++	 * Therefore, the prefix can only be stripped from positive
++	 * pathspecs, not from negative pathspecs.
++	 */
++	if (exclude)
++		prefix = 0;
++
+ 	name += prefix;
+ 	namelen -= prefix;
+ 
+diff --git a/t/t6132-pathspec-exclude.sh b/t/t6132-pathspec-exclude.sh
+index 9fdafeb1e9..dd54378019 100755
+--- a/t/t6132-pathspec-exclude.sh
++++ b/t/t6132-pathspec-exclude.sh
+@@ -425,4 +425,56 @@ test_expect_success 'stash with all negative' '
+ 	test_cmp expect actual
+ '
+ 
++# `ls-files` finds the length of the common prefix of the *positive* pathspecs.
++# In this example, there's only one positive pathspec, so the common prefix is `aaa/bbb`, with length 7.
++#
++# Before the bug described in https://lore.kernel.org/git/e2dbe996f6a7285fe0487e34d65eccf712867547.camel@redhat.com
++# was patched, as an optimization, we would then strip the first 7 characters from the path,
++# the positive pathspec, and (incorrectly) the negative pathspec.
++#
++# But stripping the negative pathspec would mean that `xxx/yyy/file` becomes `file`
++# and we'd wrongly end up excluding `aaa/bbb/file`.
++#
++# After this bug fix, `aaa/bbb/file` should no longer be excluded by `:(exclude)xxx/yyy/file`.
++test_expect_success 'exclude is not matched against the tail of the path' '
++	test_when_finished "git rm -q --cached -r aaa xxx && rm -rf aaa xxx" &&
++	mkdir -p aaa/bbb xxx/yyy &&
++	>aaa/bbb/file &&
++	>xxx/yyy/other &&
++	git add aaa xxx &&
++	echo aaa/bbb/file >expect &&
++	git ls-files -- aaa/bbb/file ":(exclude)xxx/yyy/file" >actual &&
++	test_cmp expect actual
++'
++
++# Before the bug described in https://lore.kernel.org/git/e2dbe996f6a7285fe0487e34d65eccf712867547.camel@redhat.com
++# was patched, when the negative pathspec had the same length or was
++# shorter than the common prefix of the positive pathspecs,
++# then stripping the common prefix from the negative pathspec would result in an empty string,
++# which would match everything, and thus exclude all files.
++#
++# In this test, the prefix for "sub/sub/sub/file" is "sub/sub/sub" (11 bytes).
++test_expect_success 'ls-files keeps entries when an exclude matches the common prefix length' '
++	echo sub/sub/sub/file >expect &&
++	git ls-files -- sub/sub/sub/file ":(exclude)nonexistent" >actual &&
++	test_cmp expect actual
++'
++
++# This test is similar to the above, but tests `git add` instead of `git ls-files`.
++#
++# `git add` does not exclude the trailing slash, so the common prefix is "sub/sub/sub/" (12 bytes).
++test_expect_success 'add keeps entries when an exclude matches the common prefix length' '
++	test_when_finished "git reset -q && rm -f sub/sub/sub/untracked" &&
++	>sub/sub/sub/untracked &&
++	git add -- sub/sub/sub/ ":(exclude)no/such/path" &&
++	echo sub/sub/sub/untracked >expect &&
++	git diff --cached --name-only HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'an exclude shorter than the common prefix still excludes' '
++	git ls-files -- sub/sub/sub/file ":(exclude)sub" >actual &&
++	test_must_be_empty actual
++'
++
+ test_done
+
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+-- 
+gitgitgadget
