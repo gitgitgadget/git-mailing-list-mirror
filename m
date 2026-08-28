@@ -1,71 +1,70 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F323E0083
-	for <git@vger.kernel.org>; Fri, 28 Aug 2026 07:44:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD943DC4D7
+	for <git@vger.kernel.org>; Fri, 28 Aug 2026 07:44:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787903095; cv=none; b=mqbstDKZ/zBWaVvRjhMZ1rI+S4tRyRs/fXJPpMdIFvY5uYKBlF0yUzun8CPZpeU793Keq8KpfRDr+Htl2zbyNnqANuB64OsOcOqUSEIgS3b7jzioCMMG+53l99lZ++G5ikzE6GzlB5Yx2zDgnFRpnQTovn9tEazYuK+BbbMmMms=
+	t=1787903098; cv=none; b=u6TGWkfZst+ejB8pO3lGW66V9M9B/a6sJDKx5g+PQKs7Gs3ZD/wvb7naB4wgzeEMsSglTfAp1J4vdAxewGITsimzcvo9K6uYz0kVSMTncw3gNFTEXmeOYdQkL2ZgzaBFY6AU7DFr3PGMt2MPfu25XCJN7RHVFgfXxrT7hnlOryo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787903095; c=relaxed/simple;
-	bh=rJrgAbd10CHpFo+nSNBBg2L4Bw0ph79UcB0MSHe2QV8=;
+	s=arc-20240116; t=1787903098; c=relaxed/simple;
+	bh=MIM7Kf4HMK+IXkYCICmBaz/tzi8+Ql1ym6hXTd2gilI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=man0owfdlNKevNXoRzIjZFhbKRBKZ/GfCKGdoirXXKZC9fAFxVJl3Wj3h17tYpEvtujOEdBy4BvEolHBtuVj1f5JhoP1OioSGDatpfwlM1J/l0RSKmuCdRji7VJFxLxRL3aI7of/wyT65sM9HFZqR3Dyj81CW19meEPdgu/flUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ps/ihjDM; arc=none smtp.client-ip=209.85.160.46
+	 MIME-Version:To:Cc; b=XzTKuJz1V02OoBlKD9CHPEPLD7zc9OzqsxajmYSaxn8BgCs+SPC9MdVnPC9nBl9pyrcYHY2bPeg+4FxDx4hPrOhTzdrnTwQt+W+X3SlRqcNCuuqJg5rpm4Ck/waEuTAp/XbtUDsZwkwEakyRngv/aHL+JRbl1ha6OlORlJwLw4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mpxJ3ApE; arc=none smtp.client-ip=209.85.167.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ps/ihjDM"
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-46556b9e02cso648479fac.1
-        for <git@vger.kernel.org>; Fri, 28 Aug 2026 00:44:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mpxJ3ApE"
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-4b28df1f600so664887b6e.2
+        for <git@vger.kernel.org>; Fri, 28 Aug 2026 00:44:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787903092; x=1788507892; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787903095; x=1788507895; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=p50Tr/uHmYjs7XETcmH/uTMlBsXyUasKDIjTUKhfg4I=;
-        b=Ps/ihjDMy8WVok1/sIER1ofEhFfI/7Wr+HeOISzFhBwt33XX2wPjoJn1YyuaAN4EKE
-         iwn2Pa5N4Nyq3+qi/4X/8hS6mjVAcB9R6s0HZaPSt9whXoCsmIVHbfNop9e1i6FFhfIb
-         7yeO6G97X30P+7TzihUiq64eSeSnwKx8F+XnHq8WGC3K8HzAOFIIrkIbHkzWgSgrCKtV
-         ThcrBPl4EZnUjPC6ozBC1/JOMnoYoCNCUgSikWfRN/JYd8TnIhNs2ZO9iwbziKavDb0P
-         4cO6y2/ERlq9/1GSGawspt28XZuDuo7G9sLsEvSyKPmJkvq+4Bg+n5xDkkkcSfpjnaVW
-         WX3w==
+        bh=pzhbpngrlm/rdB9/ok2Igwlirh8FxNnOTS0AS3IrIrc=;
+        b=mpxJ3ApEMIvnOw1CoUpdIlbm5qNPyZEMH3K3YiZIIKnhfOMfMHZCCW11UcSMK0tjFy
+         pscjhaXLYjSIMky/q8S/iYD9NXJWEhxqcmKlO+l6IFvlSE4jv0LHbK0gMHPJyV4qi+LO
+         w9Uq4bE9hXGxUg/KmJgBJxCMvazOZ9DNgJ+ts1BxGs6e7RXsluCUya1MtBSj/H/EBrd3
+         yh6Zi9w++0Eal6D1m2rz9RQT+3ODPKHyVL9Y1HTmU64AZx6B4HawpWBLboZ1uF8NwEB9
+         7WvK2mWz/Ih1eC+KMxn3Iu5juao7dujYU7wh7+rZqB5m5VpnlBbfRPT6F2olG+s3z7/f
+         8IZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787903092; x=1788507892;
+        d=1e100.net; s=20251104; t=1787903095; x=1788507895;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=p50Tr/uHmYjs7XETcmH/uTMlBsXyUasKDIjTUKhfg4I=;
-        b=S8pPXhbiMbFvOMOQZmpZ9chHJbByXp9FMe1NdOjp2/naPir+kGY3BDsN9iuLBtn+9O
-         uN9fJ8Iv6lFkB+81duj6rh9+Iuc6rC4/kULLB2tWQN8FdLm35gEli0aLAoaVC9y6StzL
-         t9jNMSTO41S2E7wHFWaXsZeS7jJNh6s738TQ2PfHiqz5s4QU3POiEPRljrxjINhqPmjW
-         6WhBgjsmc6V4joWz1RbxAXwEL6qdP8WKy/NvLmuSkAKsqBj+OOPPhklhK3eEWqmDxh5t
-         Tu74XOk5bn3koF4yTYEMK6gSekHEBIt2Aj8PLZvmPcAvG7k9RfTjFolb1m5QwNaTYh/b
-         tcOw==
-X-Gm-Message-State: AFuF++lrhS6EDq9MhvGomVj/DnXcI8S+bk6C40MlOG66JKcKuHa0rn59
-	HE++2mr4zT2xwUaeH5ISJIAKHbGzPXqYVfuM5r9eeRBeDcykzNmSdV+NMIfgULaF
-X-Gm-Gg: AR+sD12KFQW3+UZaGDYQ32tTQOhTjdxVbx/t+uWJIaar7Bv9IYipNRkmavh8nkU0Nbt
-	EmIt0aPHY8YRw1HP5AQ88FIn3pVO76SYnApjbDjL8Gi3aJ8nPEIHMc5AytzSllQT0tL06PjWgWy
-	4g7/KTwCc9WG3HDFN3AiQxcbqCCPGj5UEQPzYv+PW7yakXn+XyMyx0Axf0j/jMnrfuL+LFEsjfj
-	MIeE8AKXoWUGTja1bX/jFP0MJ0UP14kyC8m+WqmCM9vPWmlWjg4/E74MyE/nIO6Sf9mmNrxwm5P
-	iSubdNSTPS/tvZsSan2NpBiogmwOn57x7+ETzOpbn9doZKwOhU0PzHLxmbgm6xYF8mZd1ftURia
-	keyk8D1n3npDIUYp6jVCqKRz6R7qriyVkEJ+gKegqLFraeqjoBR9X2JWKaTrc6ZKcUAX6q+fBgQ
-	FFBwmsudlHvigVSt+9wA0qMRRYrcBKGy2B5A0yZJRlh8h7LnPBjuCallJGR11sDdY=
-X-Received: by 2002:a05:6870:a0a6:b0:448:6ba8:539f with SMTP id 586e51a60fabf-4682ec5e867mr4771039fac.6.1787903092465;
-        Fri, 28 Aug 2026 00:44:52 -0700 (PDT)
+        bh=pzhbpngrlm/rdB9/ok2Igwlirh8FxNnOTS0AS3IrIrc=;
+        b=cDENUEh2U8DKkzwM/t/DXzJTsuZ7LJz88EZhsgbTaLlLkxZD6ImmrQN3KRa/+aWnj0
+         0iLAwcOA4KTNCT4Rr1MlUyUw/gUkTuCK80j2LKJT/3ObnUADgcNErgN9hJcHe6bu6CKo
+         PIq8T8rXH9DvsKF3uCQHKb+qypLLP7hvpi+THIEENAL3Y3mgXwoJ5gu+EyTOw83TpYmF
+         4/kcXJyAR3pOigzpp7v5RWTTT3M4yxGFGKWFQzpa8SrgYZBrRXkM/RpNkQBMozEhnh9U
+         sfOM0C38xg6i44MZLTC3paPlJYzN2xNKah6XygW+y1qZF1FGJTInladg+PLpeHIv8gI+
+         nyyw==
+X-Gm-Message-State: AFuF++mXbC6STJIQD3K9tUhd01qvRIfvzB0clFqRI0SHSghnyEJnYRCy
+	I7/vVHgr6Plpdfu/aSGocwX5gIIoe0eP+hHzU6IerNTmouUQBzCRUH4at2ZvLQCl
+X-Gm-Gg: AR+sD13VZ+DNHQuET+4Uv8nHxCTTXd7/GzRHjtOoAq8mgw+o7O2UwBGJqnwhu0Tk4nJ
+	FjhChEac4UjDDDsYGIxuhZDTaiR2slROe5Q6WKqbIN4Xvpy4pSOouWVnAuSBQcL4hnu5k5UEA+y
+	AWV1jpDJPLm7E6LEu0W9R+ITeH5EgLOlaxeJ/XnhK6V1Vc7LFPmPag75zGfv07HvcOGC/m9hUB4
+	qbOj/0DkWwlY2Z3y52mv3uPs5OZaJLMjPvnQK6L/wOmmBbJsDDZ40EUdtdyiUNTTDUm2wEPtVvt
+	Tqhd6U3VRVn4gsqUEVkwd2+pBLjpoZ9mwK1P5S5tseCBiN1afXJyKLLQft28HuzdMFx6SypBODU
+	QCyUwDdNNKEWx0uZWsRskEr+RGRfqj65wrUWhqFiz79RnkCxRmyAn29PYO1bvr8kKD/Okj+rTcJ
+	D45dtScQvqtEbxNmmyYbHgLb+eRPPcJPMUtihRtUBtPpwEtuT++0YiIjZvSa1nkrE=
+X-Received: by 2002:a05:6808:c165:b0:4ab:3210:b31a with SMTP id 5614622812f47-4b398253454mr5341640b6e.14.1787903095458;
+        Fri, 28 Aug 2026 00:44:55 -0700 (PDT)
 Received: from [127.0.0.1] ([172.202.78.2])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-468a543ae75sm758996fac.13.2026.08.28.00.44.50
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-468a2ef0452sm876095fac.4.2026.08.28.00.44.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Aug 2026 00:44:52 -0700 (PDT)
-Message-Id: <e16930361978335a6718814cf5d56a8dd8b42f75.1787903085.git.gitgitgadget@gmail.com>
+        Fri, 28 Aug 2026 00:44:54 -0700 (PDT)
+Message-Id: <0850a999dab65345c9efe4b1d5bc6926b2641217.1787903085.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2389.v3.git.git.1787903085.gitgitgadget@gmail.com>
 References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
 	<pull.2389.v3.git.git.1787903085.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 28 Aug 2026 07:44:42 +0000
-Subject: [PATCH v3 2/5] commit: allow a partial commit when a rebase pick
- becomes empty
+Date: Fri, 28 Aug 2026 07:44:43 +0000
+Subject: [PATCH v3 3/5] commit: reword the empty-commit rebase amend error
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,59 +82,50 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-For years, we disallowed partial commits during merges or cherry-picks.
-In commit 430b75f7209c (commit: give correct advice for empty commit
-during a rebase, 2019-12-06) it was noted that the "cannot do a partial
-commit during a cherry-pick" message was also printed when rebasing a
-commit that became empty, and rather than drop the check in that case,
-that commit opted to make the message print the actual operation that
-was in progress.
+When a rebase applies a commit that becomes empty, it stops and asks the
+user to decide whether to keep it or drop it.  HEAD still points at the
+previously-applied commit at that point, so amending is refused, with:
 
-Since a commit that has become empty comes without conflicts, a new
-partial commit poses no problems; remove the error in that case.
+    You are in the middle of a rebase -- cannot amend.
+
+That message would suggest that amending is not allowed during an 'edit'
+or 'break' stop, which is misleading, plus it lacks the specificity that
+might help the user know why their particular case is a problem: the
+commit they intended to amend became empty and was dropped, so amending
+would affect the wrong commit.  Reword the error accordingly.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/commit.c              | 2 --
- t/t3404-rebase-interactive.sh | 5 ++---
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ builtin/commit.c              | 2 +-
+ t/t3404-rebase-interactive.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 569e31fb60..610820c99f 100644
+index 610820c99f..774fb8299d 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -520,8 +520,6 @@ static const char *prepare_index(const char **argv, const char *prefix,
- 			die(_("cannot do a partial commit during a merge."));
+@@ -1332,7 +1332,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
  		else if (is_from_cherry_pick(whence))
- 			die(_("cannot do a partial commit during a cherry-pick."));
--		else if (is_from_rebase_empty(whence))
--			die(_("cannot do a partial commit during a rebase."));
+ 			die(_("You are in the middle of a cherry-pick -- cannot amend."));
+ 		else if (is_from_rebase_empty(whence))
+-			die(_("You are in the middle of a rebase -- cannot amend."));
++			die(_("The now-empty commit has been dropped -- cannot amend."));
  	}
- 
- 	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
+ 	if (fixup_message && squash_message)
+ 		die(_("options '%s' and '%s' cannot be used together"), "--squash", "--fixup");
 diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index ff11abb2f2..3588e16543 100755
+index 3588e16543..81f4844950 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -1858,7 +1858,7 @@ test_expect_success 'post-commit hook is called' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'correct error message for partial commit after empty pick' '
-+test_expect_success 'partial commit is allowed when a rebase pick becomes empty' '
- 	test_when_finished "git rebase --abort" &&
- 	(
- 		set_fake_editor &&
-@@ -1867,8 +1867,7 @@ test_expect_success 'correct error message for partial commit after empty pick'
- 		test_must_fail git rebase -i A D
+@@ -1880,7 +1880,7 @@ test_expect_success 'correct error message for commit --amend after empty pick'
  	) &&
- 	echo x >file1 &&
--	test_must_fail git commit file1 2>err &&
--	test_grep "cannot do a partial commit during a rebase." err
-+	git commit file1
+ 	echo x>file1 &&
+ 	test_must_fail git commit -a --amend 2>err &&
+-	test_grep "middle of a rebase -- cannot amend." err
++	test_grep "now-empty commit has been dropped -- cannot amend." err
  '
  
- test_expect_success 'correct error message for commit --amend after empty pick' '
+ test_expect_success 'todo has correct onto hash' '
 -- 
 gitgitgadget
 
