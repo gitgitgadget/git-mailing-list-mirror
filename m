@@ -1,74 +1,76 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C004413D53C
-	for <git@vger.kernel.org>; Sat, 29 Aug 2026 13:38:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96B613D53C
+	for <git@vger.kernel.org>; Sat, 29 Aug 2026 13:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788010712; cv=none; b=MduP/887NIAgT/ZL5KpjlNJNn+16QH7IN2SWFmKTx4jK1Dc8Xe8JjQgzcS1bAanX0WKFyhyAyWYK9sM7bow9Gq38R9BXn94Dm29H9NA08QoEsfOQPiV7NxnBxUj7NdFF92wuDcgbEdI8P/2fMznkVlJGXEBwz02HxeT9plac1do=
+	t=1788010718; cv=none; b=tJoy42Hn/gwgV2Pmu+9c4/4DeoQSPkxkQ4CxkxTXZW22/vE6mgNkGzokTC53FXMuECiYY4RsFnBTJUUjHIMkXF7kuijc68Ykl6w/2MRJp0/G2qdJpdWSs6epRb5Rgz5w91IOWA2zDwWvz8OkBIsooMH+jdJtNZEt3dqPBkfZrpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788010712; c=relaxed/simple;
-	bh=dZVoZoG+T2IUdU5QOu/1TQmh7xcD5yzV4A7a6Ur0etA=;
+	s=arc-20240116; t=1788010718; c=relaxed/simple;
+	bh=qO3CU+W7z5AIzPx4uaDJ7XBT4wsqKQFTRqorFsMGnVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=paMudDPgZMR1Z72iavL1P01sIvnCSntWlEqAIaUGZmvg0uOGMYDg1eykPjPUmV+tvBEnE4yWZzCyvR2q4M0CsFZjj/6NJwlQA8RihLXmzo5/JeHoe1sgZ7LVdjEJoGlUu1lqs9LslUjFMVzmfzsFqWxNLZ3x23RMzn+kNOHhbGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gASyynp5; arc=none smtp.client-ip=209.85.128.171
+	 MIME-Version:Content-Type; b=Jh9p6ycWryx5T5qsnr5mqQEbzhslJrCNZVEEvIDsUc6FnB7pIlpmJTg4CUcoaCSEEtkjmcWcS6PBdq66eES/d++NzEIL0tF7AmGTEUojl9/dhKZO/l1BKPv0knClEv7y9Yhp9X4Jkz0XPNwPl8FOrow5ywFI9CBaZKd8MVbd3lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NFrxvNh/; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gASyynp5"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-836c4474028so24852567b3.0
-        for <git@vger.kernel.org>; Sat, 29 Aug 2026 06:38:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NFrxvNh/"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-857ff9fef54so22780137b3.1
+        for <git@vger.kernel.org>; Sat, 29 Aug 2026 06:38:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788010709; x=1788615509; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788010716; x=1788615516; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=HycNXNoKTuVfkAIajlLWwKQE0YItA4fYZhHCB6iiRuA=;
-        b=gASyynp5phkZ3xrwJzhQjGfhNYXsgZhlFRN7ZA0BBYGKhRjgZ9v1OCbUbyQgKuS1Jg
-         yqllOBYkKVgc4RwMY4g+MD1J+Bc42DhEeTs4gaYRaCIIaBZSMCjvl0vU38qKUyIya1kq
-         rETrbMpfNOx7OGkW8xucOVjQAS4ewagWLULFRz+g4fzgB4KgoM3wfauO9SylFumCUxio
-         urJAyan3UT3D4fTbWeI/EZcPdlTwJFnDDxhOTEytZ+EL81oNRQYl1PNfYJMiUgCaRcWq
-         e9wWRSBwYHc0u2MNR+NkGPuVrZX1rTHftzZOSqWO8wiiWdVJFhWjZGK5SzLNlzpGmcVJ
-         oSQw==
+        bh=pfWbbitrrFpkECN1lc190K5Biv61gMTnFAHWSnlT+DM=;
+        b=NFrxvNh/8Y0Rc3vuEcluFysreUMBeOfK2dZNdWe50Lz9okZUpyVrTztkZ1uhMb6m9o
+         PjKpLyy1886Y2/n/B19P+sJTfIqzimnW1ldOX0iL4iCrjTtTpQWm/xxLQQG58qG3N7sd
+         jg4/93Kj2x+xLD2a1LqAW0hcBICudX0VvVNdeHU3ow0bEr7ZaO/nUJcY2/qzd4pNJvsZ
+         16D7xCAxbpN4aUZgvSz+bAFLWvftTDAIjIxMGqcttexRWZs80g9RJ4U8kGTAtcYzf7xh
+         lf4DTOaOwjh5qw858ERC2HMaaM67zKCHqAmMFlPDeA9cLDdo688YDeQSH/m/9yj25jxn
+         qmvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788010709; x=1788615509;
+        d=1e100.net; s=20251104; t=1788010716; x=1788615516;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=HycNXNoKTuVfkAIajlLWwKQE0YItA4fYZhHCB6iiRuA=;
-        b=JXMhnn/Xjzw+oLYmk6rE3MQE2NY90GGcNtaXO2eVpS8syZT+6SQUTBVL9XHtG2GDJj
-         Zo/yVluSVhxdx3CTM5+EO5e8mGkWwE76RIf50Sjuvzv728XXmkA/9gxRBhjJPZ0EZAdB
-         TBFDhlfh+xuMjw8Q/T4uEuTsk6W7+AWT3sj+r2r4Hcf5xljcu9nWd84wAjmj4mX15vB3
-         x2+saBurbz6uNrB4Xr8WEx5E2dvGFrno0UwZ1EXC+9wT8Y4HaOus0GXlf79cyb6/8hs6
-         lIJnNI6PPBYGR+vblMHUFQ1/Pr5K9Xj9MPbCkXK45iwLPN+HgB+ijQCcT3++55JGe/Lm
-         w+dQ==
-X-Gm-Message-State: AFuF++nCxVq/oIgwYED0zdSmOfSDvveX+0jmStevQdiyfNceOi49KuKU
-	JRtrE0bGS7E+c8FS6L4b18pDLec7eGC/tiSWe2oe+1s+qLTx5aiM475gt7ZYN7kg
-X-Gm-Gg: AYBFou3h9Dr/n5q1/MxIE3V398uGscImoZEU0K2CU3iPgBR2fihHXb4otb98V2IO4hS
-	2+TunoKB1WjJ9GCXlHApL9Qln1Uf4v7Z9EgT5VNQKrEaha8M1kOIPjqognd5qdRkHd5zTIiFckq
-	98oFPlEakKV6kVuepcVY50kqvjX1+0CVZVqcC+5mK10wHNaONnl/gde4KO52v06SL/jhEQC8CGe
-	uda9724BuCDCLurE0FlDOeTbdXlx1spykQfS3SdFqGb3pdUBMbOWrKH9qGp/cwXslsaNW0g4Y1V
-	sNFT+p9/bVPFYlYl8yDA7Jj7uuwEz+6gTSgSaM4uOvqLn5/Zhf32FWoHuQ+Os9oCcPG6R3Jp2P3
-	nosPaGl22Ia6wMJgwLzf5q5QQ+nwHhPCKakqlJE0Emjr23i9zLa7lrV9tMJZNPyV822iub+oOUj
-	glciw7eAxlZo82q6MHZMl5JQQHyqutpcvs5SeQek1LAVqiaQJZook5m7pRsZ83SKyuKJ1qDpbhb
-	XNvuBe7NR5JmUfj51m9VEIec12YBo9TugWMEUyfWHJrGTiQEm6AtFpZxo0Ja1iX1ji3bjnUUxlJ
-	+Qb9pDs4TmgO5WYUcyJMAg==
-X-Received: by 2002:a05:690c:c759:b0:820:1251:d2c2 with SMTP id 00721157ae682-85d6f3e09c6mr44981177b3.28.1788010709475;
-        Sat, 29 Aug 2026 06:38:29 -0700 (PDT)
+        bh=pfWbbitrrFpkECN1lc190K5Biv61gMTnFAHWSnlT+DM=;
+        b=kCF+Ez+7RZ+ojUJNtsYwq/vwUfUe8heWIQur73KSqFKzaGuQYSUkKIogmoinhzS1pu
+         9417Si+u3mcCjZFqLmhBtrt39soibePPTly31gE31HbJAnZhCou2omjMrNL8gymlnN7A
+         EhiyXCcDWwamdsP/GBcHAefU47YGG4WY4Y8f1jpZENW4VbCY1qHnh6CoYFfYg9hcRz7g
+         Btt1+k2tpII3jz1IhvGvPGs9HHPzN5eqNZ76V96P92pABxMRnIjMVpMQRO5vwxm+hS35
+         CaU/8hDnk2DT98OevBGNzrc2vu/Tw6+X6Lq2kBM3vfgQonzIgjN9ddml+SrTEY+TCJhM
+         RVRA==
+X-Gm-Message-State: AFuF++kq9lEd6zX27sFM8WMP1Vi+vezS2ljGYuxZyJhXyNT9KX8GItZi
+	hXYnZ/7p3lHpZ/ocvPYYZEc9tQ+tCbABzNr4l9/7V8LJob+PsnGKQU3bv/Yq99dr
+X-Gm-Gg: AYBFou1JttJ7Iay4VwSUztDX/3uwkR52MmhBS6zx0jLdaJo6pHWbACEwH0YHOT9axbz
+	hJStVCH81tZGYFjI9y2/AHyS8FiWN/SkGoaH+519Kkw0Mk31yxNhhWPvMwP+UOsxoQcj7Ng3wIC
+	c3AqDAGbiBS7750GoAcy/7Ao6g6V1U7rTW81uVZ+Jh8zc6hV8tcDXVBatgkUHkpeGTomAPOVfY6
+	4BzQe3I84hl8ucyFuREMzt38kNdoKpdeiQaLW+ZkYhos3JoZFJfPgQy1tJqMZogp8BB9ZInf4fR
+	SqriphA2wECqWTEFTYXPbLfIti+GiXWRDg8ouIGqJUceOoZchV317PU/a45BIpx9NmqAQAM48WD
+	P5bVMC1XERoHuvHlQNIdo7GOz+dbZE96I5oxUKkfL+4g2FMnYG7M//vtdYbZUF3S38Vc/BCkC9w
+	HgrMYLJeGYCH41VZXNay7TSkUDXqQP/AJbJKsGEGGO4/p60TZx7PJaNB2m38IKdD5M4oeaGJqve
+	W8HlZ+giJMnQS4Vmsr4s0BATzP6s+IOCICeTv01VEILsroKRayOwKemEvyURe2BMeICxdpGXrGT
+	KR24ApuUjVM=
+X-Received: by 2002:a05:690c:e159:20b0:855:37f6:a73f with SMTP id 00721157ae682-85d69f00d89mr44210897b3.13.1788010715647;
+        Sat, 29 Aug 2026 06:38:35 -0700 (PDT)
 Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::6])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-85e66abaf31sm21364557b3.35.2026.08.29.06.38.28
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-85e66abaf31sm21364557b3.35.2026.08.29.06.38.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Aug 2026 06:38:28 -0700 (PDT)
+        Sat, 29 Aug 2026 06:38:35 -0700 (PDT)
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
 To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>
-Subject: [PATCH v5 0/3] Convert USE_NSEC to runtime config
-Date: Sat, 29 Aug 2026 09:38:17 -0400
-Message-ID: <cover.1788010335.git.ben.knoble@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v5 1/3] meson: expose knob for xmlto relative links in manuals
+Date: Sat, 29 Aug 2026 09:38:18 -0400
+Message-ID: <d612de6c2de615f368b5985f200c5ea8e3116c08.1788010335.git.ben.knoble@gmail.com>
 X-Mailer: git-send-email 2.55.0.860.g4b6b3295ed.dirty
-In-Reply-To: <cover.1787231825.git.ben.knoble@gmail.com>
-References: <cover.1787231825.git.ben.knoble@gmail.com>
+In-Reply-To: <cover.1788010335.git.ben.knoble@gmail.com>
+References: <cover.1787231825.git.ben.knoble@gmail.com> <cover.1788010335.git.ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,127 +80,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Topic name: dk/use-nsec-runtime (applied)
+Makefile-based builds have had this knob for most of the project's life,
+since a479a564dc (Documentation/Makefile: allow
+man.base.url.for.relative.link to be set from Make, 2009-12-03).
 
-Topic summary: Expose USE_NSEC as a runtime configuration, since
-build-time is too early for distributing Git [1]. As a result, common
-index-related options, like git-diff, are less likely to hit "racy git"
-problems on supported filesystems.
+Meson, however, hard-codes the equivalent of $prefix/$mandir, which is
+not really where all the HTML docs are stored in most distro builds.
+Plus, this value is missing a trailing slash, so links come out broken,
+like this in git.1:
 
-[1]: https://git.github.io/rev_news/2026/07/31/edition-137/
+        1. Git User’s Manual
+           /usr/share/manuser-manual.html
 
-Built on master (2c78326f81 (The 11th batch, 2026-08-05)).
+Of course we can do better:
 
-Changes in v5:
+1. Change the default to match Make: use file://$(htmldir)/ (with
+   trailing slash!) to form a local URL pointing at the HTML docs. This
+   is safe because all current uses of link:<relative> point at HTML
+   docs:
 
-- improve message flow in patch 2
+      git grep 'link:[[:alnum:]]' Documentation | grep -ve html -e http
 
-    Junio: my apologies. I missed that the "What's cooking" changed from "Needs
-    review" (#10) to "expecting a small (hopefully final) reroll" (#11, #12),
-    since I was expecting to see Patrick's review. This just tweaks the commit
-    message as you suggested.
+   produces only a single result (Documentation/howto/howto-index.sh)
+   which can be ignored. Since nothing else [*] in the normal build sets
+   MAN_BASE_URL, this seems like the right default.
 
-Changes in v4:
+2. Provide a configurable knob, just like the Makefile, so distributions
+   that build with Meson (like Gentoo) can decide where to make the
+   links if they need to. Those that set htmldir probably won't need to
+   tweak this any further, though.
 
-- fix message typo
-- change #ifdef strategy: only ignore the config variable.
-  Otherwise, use the use_nanosec member unconditionally. Also clarify
-  that config might be ignore depending on build options in the docs.
-- mention potential platform unsafety directly in config doc in
-  addition to the link to Racy Git
+[*]: Well, Git's todo branch has a script dodoc.sh to build and archive
+     docs for kernel.org; these docs are pulled by Homebrew
+     installations, for example. It sets MAN_BASE_URL to "git_htmldocs",
+     so the equivalent note on macOS + Homebrew is
 
-Changes in v3:
+        1. Git User’s Manual
+           git-htmldocs/user-manual.html
 
-- #ifdef out use_nanosec when NO_NSEC is requested
+     which is not functional either, but that's a problem for
+     downstream. In any case, users can recover the right path with
+     "git --html-path".
 
-As I have heard no comments about the "Todo" lines below, which perhaps
-could more clearly be marked "RFC"/"RFH", I've added this line to call
-them out ;) and renamed them "Comments welcome"
+Signed-off-by: D. Ben Knoble <ben.knoble@gmail.com>
+---
 
-Changes in v2:
+Notes (benknoble/commits):
+    This patch is mostly because I noticed the link I added in a later patch
+    didn't come out right.
+    
+    I did an internet search for "MAN_BASE_URL" and got no real hits, so I'm
+    not sure if any distros today actually use it, but that's not a proper
+    audit in that I didn't look at any distro _code_ besides Gentoo (which,
+    as noted, uses Meson).
 
-- move Best-viewed-with trailer into message body as descriptive
-  text.
-- read core.useNanosec through struct repo instead of parsing
-  config strings. The test suite passes locally this way, though that
-  skipped 151 tests.
-    - CI run: https://github.com/benknoble/git/actions/runs/31701945211
+ Documentation/meson.build | 7 ++++++-
+ meson_options.txt         | 2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-Original cover letter:
-
-Hi all, this series follows up on the previous racy Git/USE_NSEC
-conversations.
-
-- The first patch is a mostly-unrelated documentation fix for Meson, but
-  it came out of something I spotted while reviewing the outputs of the
-  final (main) patch.
-- The second patch is a preliminary no-op reorganization of
-  repo_config_values_init.
-- The third patch is the meat, converting USE_NSEC into core.useNanosec.
-
-There is a small textual and semantic conflict with
-'ty/repo-config-cleanups' in 'seen', since that branch removes the
-comments in 'struct repo_config_values' which this series adds to. (The
-semantic conflict is that, if we drop those comments, we should probably
-not add them to repo_config_values_init like I do in patch 2.)
-
-Comments welcome: I haven't touched any tests; I saw a bunch of hits for
-"git grep racy t" but wasn't sure how to fit this particular change in,
-especially since it won't be equally valid on all systems? Advice
-welcome.
-
-Comments welcome: I wonder if "useNanosec" paints us into too much of a
-corner; that is (slightly more abstractly), we are using *extended
-precision* in the index. Maybe the name and documentation should reflect
-that, so we aren't too committed to "nanoseconds"?
-    - Some platforms could offer extended precision that is not as
-      precise as nanoseconds
-    - Some could offer precision _beyond_ nanoseconds
-
-idk.
-
-v1: <cover.1786103607.git.ben.knoble@gmail.com>
-v2: <cover.1786710807.git.ben.knoble@gmail.com>
-v3: <cover.1787065125.git.ben.knoble@gmail.com>
-v4: <cover.1787231825.git.ben.knoble@gmail.com>
-
-[1/3] meson: expose knob for xmlto relative links in manuals
-[2/3] environment: align repo_config_values_init with struct declaration
-[3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
-
- Documentation/config/core.adoc        |  7 +++++++
- Documentation/meson.build             |  7 ++++++-
- Documentation/technical/racy-git.adoc | 11 ++++++-----
- Makefile                              | 12 +-----------
- builtin/update-index.c                |  2 +-
- compat/posix.h                        |  1 -
- configure.ac                          |  6 ------
- environment.c                         | 27 ++++++++++++++++++++-------
- environment.h                         |  1 +
- meson_options.txt                     |  2 ++
- read-cache.c                          | 15 ++++++---------
- statinfo.c                            | 14 +++++++-------
- 12 files changed, 57 insertions(+), 48 deletions(-)
-
-Diff-intervalle contre v4 :
-1:  d612de6c2d = 1:  d612de6c2d meson: expose knob for xmlto relative links in manuals
-2:  5693baa992 ! 2:  12974e07d0 environment: align repo_config_values_init with struct declaration
-    @@ Commit message
-         environment: align repo_config_values_init with struct declaration
-     
-         The order of assignments in repo_config_values_init is chaotic and hard
-    -    to follow, especially when comparing with the struct definition to
-    -    ensure all members are initialized. As new members will be added in the
-    -    future, make it easier to validate changes by aligning the two.
-    +    to follow, especially with the definition of 'struct repo_config_values'
-    +    to ensure all members are initialized. As new members will be added in
-    +    the future, make it easier to validate changes by aligning the two.
-     
-         Refactor assignment order with no behavioral changes.
-     
-3:  0aa0e9fc17 = 3:  01cd487cd2 core: convert build-time USE_NSEC into runtime core.useNanosec
-
-base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index f4854f802d..cfa9c67609 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -379,13 +379,18 @@ foreach manpage, category : manpages
+       output: fs.stem(manpage) + '.xml',
+     )
+ 
++    man_base_url = 'file://' + htmldir + '/'
++    if get_option('man_base_url') != ''
++      man_base_url = get_option('man_base_url')
++    endif
++
+     doc_targets += custom_target(
+       command: [
+         xmlto,
+         '-m', '@INPUT0@',
+         '-m', '@INPUT1@',
+         '--stringparam',
+-        'man.base.url.for.relative.links=' + get_option('prefix') / get_option('mandir'),
++        'man.base.url.for.relative.links=' + man_base_url,
+         'man',
+         manpage_xml_target,
+         '-o',
+diff --git a/meson_options.txt b/meson_options.txt
+index dc88f130d7..d590c21648 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -111,6 +111,8 @@ option('default_help_format', type: 'combo', choices: ['man', 'html', 'platform'
+   description: 'Default format used when executing git-help(1).')
+ option('docs_backend', type: 'combo', choices: ['asciidoc', 'asciidoctor', 'auto'], value: 'auto',
+   description: 'Which backend to use to generate documentation.')
++option('man_base_url', type: 'string', value: '',
++  description: 'The base URL to use for relative links in manuals')
+ 
+ # Testing.
+ option('benchmarks', type: 'feature', value: 'auto',
 -- 
 2.55.0.860.g4b6b3295ed.dirty
 
