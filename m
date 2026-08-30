@@ -1,77 +1,77 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7841A31A065
-	for <git@vger.kernel.org>; Sun, 30 Aug 2026 20:48:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CCA30F548
+	for <git@vger.kernel.org>; Sun, 30 Aug 2026 20:48:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788122925; cv=none; b=qQcwpXNidkXpllM9jyIeAXzbd5wJ57MksyXetDvxLqnKnqFs0Au+vkqnLfaWiSKsbqd3RQiYrCXUudL8doeqKzZ6+GyKHd28kCGjjjOB3eeizSbdmP0Q6txHa+2YPW/1yXXGy91SHM7Rz7U+3ly3ps7s0KZMK6KCS2XZrAT4E6k=
+	t=1788122926; cv=none; b=WM7fnLXzyEOAhBGiuljk35axxNq/jEOwumo/GTxJhH8yfJsoKtMPMs1WpGXXbHKIn0H0bG1SZfyCT0Dunm2mf8Sic7iUMLJMFapLMZSJlK1fkgZTyp7k4LIk28yVdhQNFRpknoiTvAezQBmCKkYDZmCmlwfLM/zYaU1iVcHGnQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788122925; c=relaxed/simple;
-	bh=5vSm8Ccsc7qzuXj8Tisg48sLvFlxN9+dOgWR2Jz+Xfg=;
+	s=arc-20240116; t=1788122926; c=relaxed/simple;
+	bh=+pibVRtydhMYz8xUI2gYHmsPUaF59/VdS94O2AUC8XI=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FtSe2wvI5vhLuP8jMphKiRWNt/Q1QI1NeDIN9frlbceesIHdCF+iD6r2Ls3qa+3X8cOWZ/yPG21vtmDobzFoWGZ1k5k7oZVhLxVF9L26Kvn84KrhZ9dgQTx+nToiIG2uHoQgUMByCAmqhP4dw1anXJ6xL2lumrgdKZG6kxUVeG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Tp4b1xQp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JPwq6XRS; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version; b=uTeyJGYatXZvjChU7FyXtOb6wRWA0wy/qcQVVVdOv6E+FIADWsSwh2uIhrhGD4npiheeFVinTlZhahuFIpttgY9470mAayMkEA/tJHOVomnwtEKJDprSv5z9hlY747KUlSNwoZEjoi5tV1sYeXr87z9+moFOrHPHBagCHHBSd6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dVeDmC2g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RZcZjQzj; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Tp4b1xQp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JPwq6XRS"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9978A14000A1;
-	Sun, 30 Aug 2026 16:48:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sun, 30 Aug 2026 16:48:42 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dVeDmC2g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RZcZjQzj"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0C3B2EC0086;
+	Sun, 30 Aug 2026 16:48:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Sun, 30 Aug 2026 16:48:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1788122922; x=
-	1788209322; bh=ObWOmkgCIUxahEnTajfZVMNChQYSKAccomMwN69dooM=; b=T
-	p4b1xQpuTfPzeANW+SzBiZ5okRpgf9oge9az1uLtrFg0v9HsFA3HVwLkbu+hAtEZ
-	hANJQ7aDH1qFD5k9YHuf2PozmVaSz+MN1EFauzJWWHxHb+St0FN1+X3ImQ2QV0o0
-	rOFcUK9VXK50FekjmUO6svbyRguvvVFQex8JgM9q58YCo2wat5Y3pE9nvf8MxOT3
-	lQwzSdsICXENShzHQyyBdT7R6nGzHYoGK14k/HKJAMVX6qUSU3Um+HVOiSptwChI
-	olIjEPvz5cgZIAdGKG6dITLHywc2jAnd/23qzJB+LPRMwW23Lxu6Cbe8ArgrzxD+
-	0C0v0J5bgbStBPGR355qQ==
+	:reply-to:subject:subject:to:to; s=fm2; t=1788122924; x=
+	1788209324; bh=AbX7CPBPGn9ZgDDFDS32r1pJ8bHX0Ux0FEyW7LKTn1Q=; b=d
+	VeDmC2gR2mK1+/pQNJbj4qOzjfGQX7R/F/XvxykEdF78ej5VHtBzTSi+zyi9Q6bl
+	cpTriozmHIY1/6AiAmH7Dw9IjTesWxc16B/woJLYMWDW9SpHbz1T7nBiDVL2PG5F
+	QoeSAykdueh4x6ndJH/6PaOF3S9zhxhlpscwFwO1YbD2jPQhnDsXq2Y26U7rsXsF
+	XyC/6dNaZZPePaKpeyVmlMMXsBSuWBgt6dzAIrIVtlVVHVYO+jQJ6e7zuGOHIBfK
+	tLepIQAFPc14TQYJkcoNqegEQXa9OEGFaM9t2HFMVeVaMtSge2xLU15KSi6RnyY0
+	xHhVlUD9ZkDE3ogjMp/cA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1788122922; x=1788209322; bh=ObWOmkgCIUxahEnTajfZVMNChQYS
-	KAccomMwN69dooM=; b=JPwq6XRSrrcskRORqjViuhzZF+9XQzsGzjpO9esJGV8z
-	pLfn5eNNv6orhCBJWbzIHx4wrTk7ZSF2cq2fsF4m7pR11qEbS5yFFe4FTRL0Buix
-	YB50WEnP4BWkP6LTLkC8B3d2tHsfAwP61phfI5QZ4hh1d089Xf2tA1RKAPqcF0HJ
-	8XKL70K8jQgMKnriA5dWF3ne5blURffUPFJ2hHc/X5i6+L8VOz/MeD52YUser1oT
-	NeAjijRINd1YH3Oh7+EgAiA+CExSvuz+IvnhlETKVrTaB52SAuzpUqz4Y7M+fQV6
-	T4GwXK22yqxpqTd6V1ryfhp4NDXf47T75P0wIAGWxA==
-X-ME-Sender: <xms:KpeUaoxSasD6mDQIkyfbRQdtqNdvp02c3o4zCN-AzBF5NzwxPi75-g>
-    <xme:KpeUaiSNEs358n8IWFbgNDHLxXotYJOlzv0Fux_pu_Rmhd07ulUysFn8u1emzOeQJ
-    e0KyoN1kSdBgtUDTY0-ayAPLT6mrF7ReV0hGHM_lOIYVUOloJGG2A>
-X-ME-Received: <xmr:KpeUan9mLYW_uzdF2VJwZWRvx3pG2V81j4z2bqn7mA2JXwQQuGxxGCjZIy-eCN_O8ea9RpLgmOnEAUZenkNUPZaFO700F9FJ1w>
+	fm3; t=1788122924; x=1788209324; bh=AbX7CPBPGn9ZgDDFDS32r1pJ8bHX
+	0Ux0FEyW7LKTn1Q=; b=RZcZjQzjxGJ0iBmE+EU/lcEsGC/j2KE8USd8JKNZJklP
+	EYBcmUIus/5qcH41NfORrwcyV1wdmQmF/F/nGSwT5AiBD3m8AS1dCz6hflsxfltY
+	fZcdb9Ow2KSJVqhBaOxORHSi3wlK2FahcEsqh6CnjjM6vfkxpaAzN+NFwmIKR677
+	7y59TeqagD7iSa7uTapE3jta2/eKu4qwIh2Lj5tTBtCa/tCnKEQcJ61urHsY2mSW
+	nxfjoLfGEgOIkf+6EHC5vLfBqFkoDvkf5Dxup4lug53itfIoHDKI+d2k0bssAPhX
+	6FbAzcAX0TrUbKJVZG/HwoLZ92FCqcce3PubCKyQag==
+X-ME-Sender: <xms:K5eUauXwaNFl7rR4mucSbs2VZXL5Iljufcow_pJOeM_ZWj3kSdUh6Q>
+    <xme:K5eUagnvy_MOK8FCgiiqusZoZcyUdaBrI3KR0KmnrS1e50ezjLgdbXtaIMFH4-En9
+    utAm3c8jaoIHOWAfwlgEQ5P_1sXdPWb52Qyy_m6QYM1-W3o68LIbwU>
+X-ME-Received: <xmr:K5eUagDTK2VyQhA8RXnUPjOsqoAICx9HalueokwfQMnCb2f-exb5OUgM8B7c3SC1jz5XAbzhWgyZCwbuioQjoO5rFjf8mItUTw>
 X-ME-Proxy-Cause: dmFkZTGpxBreKong0VtR4qC+o1j65EClxmMKtlNb51ZMOKkI04uXcAfuEsFsLLc+HbJj8e
     0uh5su56pJDxkDNagV0UC6S6uMVhaFZ5jIBZtwvmdengJmUhCxcdsNjG/XEMam3+verCk7
     H+yUAW193Pbb3PboqDdPE/X+dfwuUuh2WZmN90YifjKjFoJ/OdNwHqTxOnRMHKgE6nqZwD
     pOQh6dMLhuJEriX8QtN7iSSj4zlM3sswf6gW+Yby+7EWb/cJnyEE9EV6EcsgdIp0VBsK2F
-    PlRVcO5jVI2l+wZNp7rE7xBEphaLUgejJ5SSXParYGKyF4xabIUgL1OXOhxq+EnrXoy+qt
-    2bpwpc9O1rCE1HmJlouIaDOFzqNQpJZF1AGveFrIvsmrPjK9xPgMb8qBpS0wTm7DifBr85
-    hQnMIdPIZC1QBIM2QhXo1ccnQdkubM/7OLGdNy2PCdfItdOxTo7RDT73HJ2HnZlzpN52Of
-    pg0qgIGslSOQLHB/Qvq5KaOE/L0WeoTBTY+SDjTBNZITMbkV7ZS0rbkOQiWNAAE2m7oa0A
-    lNAvH9q3DvKWalbuzcREB51MxjgJzvJpsEzrHC2AwUJOEwV9/3fHhz2WqK3VqT03DqUS9F
-    mywikY6MbRnEFwU7ukYEN4JlMfMcxZfd7Q5vgnWTOh75qvIQ188B5vmkYyzg
-X-ME-Proxy: <xmx:KpeUahoHWUUWxoziif_chT3px7JzvVJPvRCxy37PBF-gzxAFD7kqXQ>
-    <xmx:KpeUasnfB4W8-FcY2uovtcukUKIfjU8zUBwkItzmSBUnsoQcqF4-XQ>
-    <xmx:KpeUagLKTPDD9l7o_MmdnKXsqAMmWmKzVbarFNlB0_ojVVKH-8fWuw>
-    <xmx:KpeUapyBnB90DJ_perxytA1RHochUqfiw6I2R0VVUh3vXqDdXeEV7Q>
-    <xmx:KpeUasKW982045V0v66S9Ih4IaXd9ruleoW-AaiSlJdgU58w7YOTNK-Q>
+    PlRVcO5jVI2l+wZNp7rE7xBEphaLUgejJ5SSXParYGKyF4xabIUgL1OXOhxq+EnrXoy+gF
+    Meq0UCSPm3i3DS4lwvohFq2+s/1Wgnfe84zAGYj/AMHGKZCAhr3/Y2BquSWt/5c2yZAK/z
+    ay7b0IvfjNKeowaza87zYxUM+o1/75qIRhYrRjtQF7k0Y4N6qJXpwaQ0LSoDyDnlUMee6E
+    +BPqJSjqsmVsp6AFaxYzG5btBnTfFjwDmh1oiMZGesel7lCletEaYU7VEv/B48DxlpHyMh
+    c18FrFIwaZwiukA5I9xWkEig/qDJ0BfyYyjh0FeJwymeufDkSSeSD3jAJX5vEY7zZyaJwH
+    LM6FXNz9D6KWEhmNoM5udtYTG5UNPv3an0QNuiVrsZ8rqQUa7tmZ/wM9Tvow
+X-ME-Proxy: <xmx:K5eUagcgFR9giMNw7ZQRMZAKniBtORmZXa-rrWuFXl_8zV37WNPu0w>
+    <xmx:K5eUarJq_7g8MPvRfSHLDqyxq_W0luS3lwTklD07bTEj2OjNPrdw3Q>
+    <xmx:K5eUajdFTJT3cRWV9iVO7HDdrgx3hsZVxuVFpPmMsHNPITdvc4PX8g>
+    <xmx:K5eUai2V8QZs2Yhr0lJcsSTr2LJpovWI4o8hVj9B9QGOsXylUfwjew>
+    <xmx:LJeUaptVCRUuHVYURvD3WRJ6d_naVjZBoJDSX7niTWXMUgj864T0YK9_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 30 Aug 2026 16:48:42 -0400 (EDT)
+ 30 Aug 2026 16:48:43 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 4/8] checkout: extract option validation and pathspec helpers
-Date: Sun, 30 Aug 2026 13:48:31 -0700
-Message-ID: <20260830204835.1040408-5-gitster@pobox.com>
+Subject: [PATCH v2 5/8] checkout: extract branch setup and tracking helpers
+Date: Sun, 30 Aug 2026 13:48:32 -0700
+Message-ID: <20260830204835.1040408-6-gitster@pobox.com>
 X-Mailer: git-send-email 2.55.0-884-g76cf8659c2
 In-Reply-To: <20260830204835.1040408-1-gitster@pobox.com>
 References: <20260828225206.310500-1-gitster@pobox.com>
@@ -84,239 +84,157 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The checkout_main() function handles initialization, option parsing,
-option validation, and pathspec resolution.
+The checkout_main() function validates branch-creation options,
+DWIMs tracking branch options, and sets up branch information
+directly in its body.
 
-Extract option validation and pathspec handling logic into static
-helper functions:
+Extract these branch setup operations into static helper functions:
 
-  - init_checkout_opts() initializes default checkout options and
-    repo settings.
+  - validate_branch_options() validates compatibility of '-b', '-B',
+    and '--orphan' options.
 
-  - validate_path_options() validates patch context and
-    index/worktree flags.
+  - dwim_branch_track_option() infers the branch name when '--track'
+    is given without an explicit branch name.
 
-  - prepare_common_options() prepares progress, merge, and force
-    options.
+  - setup_branch_name_and_info() drives branch validation and parses
+    the branch name argument.
 
-  - parse_pathspec_from_file_options() parses and validates
-    pathspecs read from a file.
-
-Call these helpers from checkout_main().
+Call the new setup helper from checkout_main().
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/checkout.c | 171 +++++++++++++++++++++++++--------------------
- 1 file changed, 96 insertions(+), 75 deletions(-)
+ builtin/checkout.c | 104 +++++++++++++++++++++++----------------------
+ 1 file changed, 54 insertions(+), 50 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index e3d23256e2..8d567def7e 100644
+index 8d567def7e..2edaca5539 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -1846,6 +1846,98 @@ static struct option *add_checkout_path_options(struct checkout_opts *opts,
- 	return newopts;
+@@ -1938,6 +1938,57 @@ static void parse_pathspec_from_file_options(struct checkout_opts *opts,
+ 	opts->pathspec.recursive = 1;
  }
  
-+static void init_checkout_opts(struct checkout_opts *opts, const char *prefix)
++static void validate_branch_options(struct checkout_opts *opts, char cb_option)
 +{
-+	opts->overwrite_ignore = 1;
-+	opts->prefix = prefix;
-+	opts->show_progress = -1;
++	if ((!!opts->new_branch + !!opts->new_branch_force + !!opts->new_orphan_branch) > 1)
++		die(_("options '-%c', '-%c', and '%s' cannot be used together"),
++			cb_option, toupper(cb_option), "--orphan");
 +
-+	repo_config(the_repository, git_checkout_config, opts);
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		the_repository->settings.command_requires_full_index = 0;
-+	}
++	if (opts->new_branch_force)
++		opts->new_branch = opts->new_branch_force;
 +
-+	opts->track = BRANCH_TRACK_UNSPECIFIED;
++	if (opts->new_orphan_branch)
++		opts->new_branch = opts->new_orphan_branch;
 +}
 +
-+static void validate_path_options(struct checkout_opts *opts)
++static void dwim_branch_track_option(int argc, const char **argv,
++				     struct checkout_opts *opts, char cb_option)
 +{
-+	if (opts->patch_context < -1)
-+		die(_("'%s' cannot be negative"), "--unified");
-+	if (opts->patch_interhunk_context < -1)
-+		die(_("'%s' cannot be negative"), "--inter-hunk-context");
-+
-+	if (!opts->patch_mode) {
-+		if (opts->patch_context != -1)
-+			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
-+		if (opts->patch_interhunk_context != -1)
-+			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
-+		if (!opts->auto_advance)
-+			die(_("the option '%s' requires '%s'"), "--no-auto-advance", "--patch");
-+	}
-+
-+	if (opts->overlay_mode == 1 && opts->patch_mode)
-+		die(_("options '%s' and '%s' cannot be used together"), "-p", "--overlay");
-+
-+	if (opts->checkout_index >= 0 || opts->checkout_worktree >= 0) {
-+		if (opts->checkout_index < 0)
-+			opts->checkout_index = 0;
-+		if (opts->checkout_worktree < 0)
-+			opts->checkout_worktree = 0;
-+	} else {
-+		if (opts->checkout_index < 0)
-+			opts->checkout_index = -opts->checkout_index - 1;
-+		if (opts->checkout_worktree < 0)
-+			opts->checkout_worktree = -opts->checkout_worktree - 1;
-+	}
-+	if (opts->checkout_index < 0 || opts->checkout_worktree < 0)
-+		BUG("these flags should be non-negative by now");
-+}
-+
-+static void prepare_common_options(struct checkout_opts *opts)
-+{
-+	if (opts->show_progress < 0) {
-+		if (opts->quiet)
-+			opts->show_progress = 0;
-+		else
-+			opts->show_progress = isatty(2);
-+	}
-+
-+	/* --conflicts implies --merge */
-+	if (opts->merge == -1)
-+		opts->merge = opts->conflict_style >= 0;
-+
-+	if (opts->force) {
-+		opts->discard_changes = 1;
-+		opts->ignore_unmerged_opt = "--force";
-+		opts->ignore_unmerged = 1;
++	/* --track without -c/-C/-b/-B/--orphan should DWIM */
++	if (opts->track != BRANCH_TRACK_UNSPECIFIED && !opts->new_branch) {
++		const char *argv0 = argv[0];
++		if (!argc || !strcmp(argv0, "--"))
++			die(_("--track needs a branch name"));
++		skip_prefix(argv0, "refs/", &argv0);
++		skip_prefix(argv0, "remotes/", &argv0);
++		argv0 = strchr(argv0, '/');
++		if (!argv0 || !argv0[1])
++			die(_("missing branch name; try -%c"), cb_option);
++		opts->new_branch = argv0 + 1;
 +	}
 +}
 +
-+static void parse_pathspec_from_file_options(struct checkout_opts *opts,
-+					     const char *prefix)
++static int setup_branch_name_and_info(int argc, const char **argv,
++				      struct checkout_opts *opts,
++				      struct branch_info *new_branch_info,
++				      char cb_option)
 +{
-+	if (opts->pathspec_from_file) {
-+		if (opts->pathspec.nr)
-+			die(_("'%s' and pathspec arguments cannot be used together"), "--pathspec-from-file");
++	validate_branch_options(opts, cb_option);
++	dwim_branch_track_option(argc, argv, opts, cb_option);
 +
-+		if (opts->force_detach)
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--detach");
-+
-+		if (opts->patch_mode)
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
-+
-+		parse_pathspec_file(&opts->pathspec, 0,
-+				    0,
-+				    prefix, opts->pathspec_from_file, opts->pathspec_file_nul);
-+	} else if (opts->pathspec_file_nul) {
-+		die(_("the option '%s' requires '%s'"), "--pathspec-file-nul", "--pathspec-from-file");
++	if (argc) {
++		struct object_id rev;
++		int dwim_ok =
++			!opts->patch_mode &&
++			opts->dwim_new_local_branch &&
++			opts->track == BRANCH_TRACK_UNSPECIFIED &&
++			!opts->new_branch;
++		return parse_branchname_arg(argc, argv, dwim_ok, cb_option,
++					    new_branch_info, opts, &rev);
 +	}
-+
-+	opts->pathspec.recursive = 1;
++	return 0;
 +}
 +
  static int checkout_main(int argc, const char **argv, const char *prefix,
  			 struct checkout_opts *opts, struct option *options,
  			 enum checkout_command which_command)
-@@ -1887,17 +1979,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 		BUG("no such checkout variant %d", which_command);
- 	}
+@@ -1992,10 +2043,6 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	validate_path_options(opts);
+ 	prepare_common_options(opts);
  
--	opts->overwrite_ignore = 1;
--	opts->prefix = prefix;
--	opts->show_progress = -1;
+-	if ((!!opts->new_branch + !!opts->new_branch_force + !!opts->new_orphan_branch) > 1)
+-		die(_("options '-%c', '-%c', and '%s' cannot be used together"),
+-			cb_option, toupper(cb_option), "--orphan");
 -
--	repo_config(the_repository, git_checkout_config, opts);
--	if (the_repository->gitdir) {
--		prepare_repo_settings(the_repository);
--		the_repository->settings.command_requires_full_index = 0;
--	}
--
--	opts->track = BRANCH_TRACK_UNSPECIFIED;
-+	init_checkout_opts(opts, prefix);
- 
- 	if (!opts->accept_pathspec && !opts->accept_ref)
- 		BUG("make up your mind, you need to take _something_");
-@@ -1907,57 +1989,13 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	argc = parse_options(argc, argv, prefix, options,
- 			     usagestr, parseopt_flags);
- 
--	if (opts->patch_context < -1)
--		die(_("'%s' cannot be negative"), "--unified");
--	if (opts->patch_interhunk_context < -1)
--		die(_("'%s' cannot be negative"), "--inter-hunk-context");
--
--	if (!opts->patch_mode) {
--		if (opts->patch_context != -1)
--			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
--		if (opts->patch_interhunk_context != -1)
--			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
--		if (!opts->auto_advance)
--			die(_("the option '%s' requires '%s'"), "--no-auto-advance", "--patch");
--	}
--
--	if (opts->show_progress < 0) {
--		if (opts->quiet)
--			opts->show_progress = 0;
--		else
--			opts->show_progress = isatty(2);
--	}
--
--	/* --conflicts implies --merge */
--	if (opts->merge == -1)
--		opts->merge = opts->conflict_style >= 0;
--
--	if (opts->force) {
--		opts->discard_changes = 1;
--		opts->ignore_unmerged_opt = "--force";
--		opts->ignore_unmerged = 1;
--	}
-+	validate_path_options(opts);
-+	prepare_common_options(opts);
- 
- 	if ((!!opts->new_branch + !!opts->new_branch_force + !!opts->new_orphan_branch) > 1)
- 		die(_("options '-%c', '-%c', and '%s' cannot be used together"),
- 			cb_option, toupper(cb_option), "--orphan");
- 
--	if (opts->overlay_mode == 1 && opts->patch_mode)
--		die(_("options '%s' and '%s' cannot be used together"), "-p", "--overlay");
--
--	if (opts->checkout_index >= 0 || opts->checkout_worktree >= 0) {
--		if (opts->checkout_index < 0)
--			opts->checkout_index = 0;
--		if (opts->checkout_worktree < 0)
--			opts->checkout_worktree = 0;
--	} else {
--		if (opts->checkout_index < 0)
--			opts->checkout_index = -opts->checkout_index - 1;
--		if (opts->checkout_worktree < 0)
--			opts->checkout_worktree = -opts->checkout_worktree - 1;
--	}
--	if (opts->checkout_index < 0 || opts->checkout_worktree < 0)
--		BUG("these flags should be non-negative by now");
  	/*
  	 * convenient shortcut: "git restore --staged [--worktree]" equals
  	 * "git restore --staged [--worktree] --source HEAD"
-@@ -2048,24 +2086,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			    argv[0]);
- 	}
+@@ -2003,52 +2050,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	if (!opts->from_treeish && opts->checkout_index)
+ 		opts->from_treeish = "HEAD";
  
--	if (opts->pathspec_from_file) {
--		if (opts->pathspec.nr)
--			die(_("'%s' and pathspec arguments cannot be used together"), "--pathspec-from-file");
+-	/*
+-	 * From here on, new_branch will contain the branch to be checked out,
+-	 * and new_branch_force and new_orphan_branch will tell us which one of
+-	 * -b/-B/-c/-C/--orphan is being used.
+-	 */
+-	if (opts->new_branch_force)
+-		opts->new_branch = opts->new_branch_force;
 -
--		if (opts->force_detach)
--			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--detach");
+-	if (opts->new_orphan_branch)
+-		opts->new_branch = opts->new_orphan_branch;
 -
--		if (opts->patch_mode)
--			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
--
--		parse_pathspec_file(&opts->pathspec, 0,
--				    0,
--				    prefix, opts->pathspec_from_file, opts->pathspec_file_nul);
--	} else if (opts->pathspec_file_nul) {
--		die(_("the option '%s' requires '%s'"), "--pathspec-file-nul", "--pathspec-from-file");
+-	/* --track without -c/-C/-b/-B/--orphan should DWIM */
+-	if (opts->track != BRANCH_TRACK_UNSPECIFIED && !opts->new_branch) {
+-		const char *argv0 = argv[0];
+-		if (!argc || !strcmp(argv0, "--"))
+-			die(_("--track needs a branch name"));
+-		skip_prefix(argv0, "refs/", &argv0);
+-		skip_prefix(argv0, "remotes/", &argv0);
+-		argv0 = strchr(argv0, '/');
+-		if (!argv0 || !argv0[1])
+-			die(_("missing branch name; try -%c"), cb_option);
+-		opts->new_branch = argv0 + 1;
 -	}
 -
--	opts->pathspec.recursive = 1;
-+	parse_pathspec_from_file_options(opts, prefix);
- 
- 	if (!opts->pathspec.nr) {
- 		if (opts->accept_pathspec && !opts->empty_pathspec_ok &&
+-	/*
+-	 * Extract branch name from command line arguments, so
+-	 * all that is left is pathspecs.
+-	 *
+-	 * Handle
+-	 *
+-	 *  1) git checkout <tree> -- [<paths>]
+-	 *  2) git checkout -- [<paths>]
+-	 *  3) git checkout <something> [<paths>]
+-	 *
+-	 * including "last branch" syntax and DWIM-ery for names of
+-	 * remote branches, erroring out for invalid or ambiguous cases.
+-	 */
+-	if (argc && opts->accept_ref) {
+-		struct object_id rev;
+-		int dwim_ok =
+-			!opts->patch_mode &&
+-			opts->dwim_new_local_branch &&
+-			opts->track == BRANCH_TRACK_UNSPECIFIED &&
+-			!opts->new_branch;
+-		int n = parse_branchname_arg(argc, argv, dwim_ok, cb_option,
+-					     &new_branch_info, opts, &rev);
++	if (opts->accept_ref) {
++		int n = setup_branch_name_and_info(argc, argv, opts,
++						   &new_branch_info, cb_option);
+ 		argv += n;
+ 		argc -= n;
+ 	} else if (!opts->accept_ref && opts->from_treeish) {
 -- 
 2.55.0-884-g76cf8659c2
 
