@@ -1,142 +1,166 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CWXP265CU010.outbound.protection.outlook.com (mail-ukwestazon11022092.outbound.protection.outlook.com [52.101.101.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F19F264612
-	for <git@vger.kernel.org>; Sun, 30 Aug 2026 13:42:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788097362; cv=none; b=MHx9pZjqfxWTXM7srm1XlOPAzptA9MzxJyji/cPBklTb1NOtBuqHjunfZrIFPynLtZoa1hTyxWWt9wRw+Ue+JeBAKXqFQBQ7w7OgsVde3xUko2+PxvYEI2K8/v431A1ro0RiD0jW5G++avEiiArr+aynB08WRDxiHsBRY0XqxRA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788097362; c=relaxed/simple;
-	bh=L2byxbzfmgmztf3oWpX30QeO6F+tQrk9HtEtC12w6m8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VzI0VXrvxV4fSHkbYLjrbhkNBQn7Momw1IULGAaVE2gbIz7ZMU+/s6p+LTUgCmZpeoAGvhLWBE7P5LW6IIEfbvXVtgNccUCgFCICaG4lVGcPylyhMXyLwjgWtMsMCGvEdbmlE6h2o28UPEV/T6LXptGURUXMW1h1uZ5sIPPb0yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SatyLDIk; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SatyLDIk"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3856d6fbcb3so2528537a91.2
-        for <git@vger.kernel.org>; Sun, 30 Aug 2026 06:42:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788097360; x=1788702160; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=KaKZRwMv4zPn9cdnYxnOv26qIcXwsxizXNA6AZMYhns=;
-        b=SatyLDIkbhgxBvkFytwxsLczkDpsnSLCukKFXBZ7UOLVGuIQOHEV5RG2t8LMDDyVj2
-         eLW27XCPU20biILY2IEzl1Ox6dnBXi1iK9Mu7VHNVcHuv6TdK3tRf8Zr1t5wUsUzukh3
-         aZJyzPsmIbsUNd4KsVHE0cHApX2r/yHFUYLk4o458tJ5KyLAbsH1uF8rWlS7BfTA66d4
-         4aB1D9d2+Iq6ybB3pshSZF6s5OLkw0O35ycsmPpr+396Sy+5NIdk9W79Td12eGBBFVwb
-         L530N9k1NC+tMgVdV7LajKPPtNe1dfRy+wHH28HXOm9a3gIER07dwSnJg+xDDqgcLGwF
-         sBrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788097360; x=1788702160;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=KaKZRwMv4zPn9cdnYxnOv26qIcXwsxizXNA6AZMYhns=;
-        b=Un8Mov9UuKvH/A9G62YjfaxMLTgI4/Rwnrk9wBaA6b1AhdQtF7koC1zQybbwN30aj3
-         0+WEwJ8xeu4hXAXpTkQ+DQoNY04CrIroXBKnGQkX6Syqm2lAm0zRgl9mc+u4ONJnlNoA
-         SLgVZbxPSDMA9EegPahdb+kGUi1YBRVKTx4pZaA3ctP8JQwPLFYEawl43s8vsJsO5Biv
-         Z0UaMJIEysxCqvEru0BBB6HtGJT3Jb5Nw5QWSBZC37UVPlgbQFVlDHStmWeU+45tT37R
-         U9LMg4Dvh/25c+GjWl/Q8U83vlt8DEWBtxD3Q7NpcNSE58pnnbteZ5EPu+ZgOLpPVBGZ
-         vv5A==
-X-Gm-Message-State: AFuF++mWwEvTQG4w/7jJbCZmDCtJYOTNLQW9YATZYMaC6U3k+28PDY38
-	sgeJcGZMqYU09ywFWx2jALlbef379rwCyGYA23ULaGeX7QhNzWiXbCJQKHxXRw==
-X-Gm-Gg: AYBFou1XqqOqj4jg+3AI+ZHFQI+y+nnPhuIfKXTKJ5kEhbHQ7q+4Yi5BtoSzlM3XVdO
-	Gta5m8CMhgOlpGNs3+VwKGd5gRD/hYjSyFreqNoT/UfqwLlFm96LeLZXcEQQZDgds+nFSPK6Aw5
-	UPp7tBOXKjYtL8PGdsX8iHTUMRvWlIIA+GDxCSFF5pfOX3zxUdhlixtcAc9318GPsH/BVmubROp
-	1dymkPYwNHFvfWzedajLdgHMZ8JXJt+BhyJRG8vbr9sQ5r4/fOXb/i5r55OpvR3GJKkJ5dGzHXd
-	K4/9zRMM44qIU3keqf8C39JF7Bj8LHtcggQ6bkJhKb+JYY1k2YRO3c0J2XP0jKHTAmHVwCmO4b5
-	1eu0W29DaLx0GLt9LJgiwPrvIKHfsxOTUYKVMD/z1tpWF05bpq6pFHh9Tj/tA0BoHcie86Z0iI3
-	bYb46MtIFBgWs8F9NgRhBYaDZiziJu6GAwBamNs2AZ80oDuSjxoyeU3FoHtkI9vaRzNw==
-X-Received: by 2002:a17:90b:2f0f:b0:396:41d1:cbc7 with SMTP id 98e67ed59e1d1-396d0d92d15mr33698379a91.3.1788097360400;
-        Sun, 30 Aug 2026 06:42:40 -0700 (PDT)
-Received: from [100.87.176.22] ([112.133.220.139])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-142e0dc854dsm21729689c88.10.2026.08.30.06.42.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Aug 2026 06:42:40 -0700 (PDT)
-From: Hardik Kumar <hardikxk@gmail.com>
-Date: Sun, 30 Aug 2026 19:12:35 +0530
-Subject: [PATCH] typofix: fix spelling mistakes in comments and test
- description
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6F135C180
+	for <git@vger.kernel.org>; Sun, 30 Aug 2026 14:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.101.92
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788101866; cv=fail; b=JV4l4WsCYZiK60UXcLtCOiT0g4g/c8K3xwlsUPA7x6ekMygGiyp7EyfwFNmEU9q4qFKnG0OnPh5XwpI1w16yxne1857yz1xmeWtDRFZACEtfpV8/tdxYQa++u6/9U7LpDgnuJRbjAANmE6tU8aGYLriCSr4AQUBKqDOcu5dhv/Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788101866; c=relaxed/simple;
+	bh=kaZ78m/vLhnI9K6ImlogpbDgHnR9XCYeiq0bZK+SkAI=;
+	h=References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
+	 Content-Type:MIME-Version; b=c6yVYcpOa1gPcrdLrLN/F4c5p1IBHX2uFtOpqjIE61yitfJYfnC1uB9vON2R7xto0Yc+z3Gq2M4jYWOTLfmQvm9QV5MQ0C/iL47PHlSCyfZGxQcUC9ooNz9hHdV8t09MSWREiFkoLAk03zundaQUpUUC0LN5ntCEnt6CuDUVC3w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=diogocastro.com; spf=pass smtp.mailfrom=diogocastro.com; arc=fail smtp.client-ip=52.101.101.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=diogocastro.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=diogocastro.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OCvSQJOlkxtA42ePNqI495LiS4cOSxWsNMNDDb5x4W13loi15aZRXguMzGC//gwFj+E7nEb1kTMKEMwtVvuJqjLb9Weo+dtipHwClmT3K3sPewYxEd1Sav9AqDXjJeWIPzOh8P+cWrkZ6bjbOXZVKIxTaIulrjtWS3zTCGQekUdRRyZl10QwATuM9uwvhVkhhSgEm7LLSJWzXmWoPXgLFOSTmukcpm90Ruecsdgm2bWSjkiey9i2BHHU7xK6pB87UPY8W+vQwOLvtKYnIFP9PGMr901sa4lQgcM0uRTdq2GNzp38HeChMbo1VoUSRya2dzUJhNE/khMG1Q7BQftkbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UsZRxFidQ/mZN2jnOTMsLs6rMFns8n9gpm3GzVis7mg=;
+ b=FcOgtW9/JS0Qt7IjTZm0dk20NfHeM0NqAUKqp2XOW4BXmeAo0Inyh73E0MHuwVEmF5fJ5CXi0hy55iL7vbFPS255am16lDJWtt6T1QQ+r43hlNGHnh/8amlCrgaxAsJOe6ZR2g6S7DuUGLacokg9vyxUrZPIYq5Na46sLgPJ7BWZsOXiMBGIphY0PyMORjx1XwJplSa/8URRtw2cFmEgPL1hwauYBecHhytat82ZD9JW+IQdkHTS7npaI+o7rGBtGqQRPCkZocZptuKCXBzdjWdf5wv+cRCggWTIkI/ZBgDJUrPNkf1gnArRKnyrqKBfPhUCiV8V6L7mPyQ28JMOTw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=diogocastro.com; dmarc=pass action=none
+ header.from=diogocastro.com; dkim=pass header.d=diogocastro.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=diogocastro.com;
+Received: from CWXP265MB5784.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:1a6::12)
+ by LO4P265MB6477.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:2e6::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Sun, 30 Aug
+ 2026 14:57:42 +0000
+Received: from CWXP265MB5784.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::89b0:b7f3:81c9:8447]) by CWXP265MB5784.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::89b0:b7f3:81c9:8447%7]) with mapi id 15.21.0339.012; Sun, 30 Aug 2026
+ 14:57:42 +0000
+X-Forwarded-Encrypted: i=1; AKwUvBxfEHRWCw/dTqh0poM+VvhQ3IEO+fviRf20qOkHtEoDfvignH062JiMLnHyPwHYTywIW/Q=@vger.kernel.org
+X-Gm-Message-State: AFuF++nN5l9MVu43aCfzAy9vPC/NgDbtSkhjirk4xWYFRCoj/ubrggY5
+	eC9q7XrUTGoeYEy43xZy0jzZXPsbRWDHt4YuctptlcU8gEhAMwZQjOPnck1Cm5kvCvoz5KPHhol
+	46qgyWfUG7ehL1Ql5giopLJxYOeRKlf8=
+X-Received: by 2002:a17:903:4405:b0:2d9:efc:f208 with SMTP id
+ d9443c01a7336-2d90efcf9a0mr62459285ad.4.1788101858279; Sun, 30 Aug 2026
+ 07:57:38 -0700 (PDT)
+References: <pull.2391.git.git.1787949348110.gitgitgadget@gmail.com> <xmqqwlta2agt.fsf@gitster.g>
+In-Reply-To: <xmqqwlta2agt.fsf@gitster.g>
+From: Diogo Castro <dc@diogocastro.com>
+Date: Sun, 30 Aug 2026 15:57:27 +0100
+X-Gmail-Original-Message-ID: <CAJw8QBPbxangB90DceDXxaDmyz8fn5jbEUihhe2faJrZ3o7BeQ@mail.gmail.com>
+X-Gm-Features: AcwNN1XIlV6paVVjH7FwUl3sFRFBWpLyrzJrDTS-j4tc0bDYl5clIWbA9fFgJHI
+Message-ID: <CAJw8QBPbxangB90DceDXxaDmyz8fn5jbEUihhe2faJrZ3o7BeQ@mail.gmail.com>
+Subject: Re: [PATCH] dir: fix negative pathspecs in 'git ls-files' and 'git add'
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Diogo Castro via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Thomas Haller <thaller@redhat.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+X-ClientProxiedBy: MW4PR04CA0248.namprd04.prod.outlook.com
+ (2603:10b6:303:88::13) To CWXP265MB5784.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:400:1a6::12)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260830-typo-v1-1-d397c8dfb301@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDC2MD3ZLKgnzdtNREU0sgTjQwSlQCKi0oSk3LrAAbEx1bWwsAmHsslFY
- AAAA=
-X-Change-ID: 20260830-typo-fea59ea5a02a
-To: git@vger.kernel.org
-Cc: Hardik Kumar <hardikxk@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788097358; l=1725;
- i=hardikxk@gmail.com; s=20260827; h=from:subject:message-id;
- bh=L2byxbzfmgmztf3oWpX30QeO6F+tQrk9HtEtC12w6m8=;
- b=/JPnrX7p7iHuexD4uGPdzQMdQfE7cQ4Q7xXHs8PSqRHwFdatFfFheIYK9cDx3pdszA3BvaNvr
- vvqJEk87CnnByVLntmTUI9237OUj3dDfQ/WYuT+t3HQy1yS5XAUMerv
-X-Developer-Key: i=hardikxk@gmail.com; a=ed25519;
- pk=56yFuFlLHAdRemUZghoGHVCijEX767atrut3dPD0thQ=
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CWXP265MB5784:EE_|LO4P265MB6477:EE_
+X-MS-Office365-Filtering-Correlation-Id: 469bad57-975d-496f-e746-08df06a70b02
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|23010399003|52116014|376014|22082099003|18002099003|56012099006|4143699003|10067099003|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	EsJGu1PZNlMf6RppxCpyzfj8x0E/nNs9mRs43M9q1GZnkhti5NSevfjHWIDg1509KUHFlJGmi2Qp5ldK7H8/kNUFRUF+ldpv2mE8M0YXuVxQ8xI2fUlaYtfDAu7W9+axElPkoiu4cDw7VJsVWFrGNRXjbV6RvM+ypQ7llAL/dgGQecnyTIqylQsQZmaX3/DUdYgeGsE+VQO4ih+kNd3sdjROdTZ609zQayqXWTT0/VBOjrdRRop3QrG8/6nF4AYtGmqEEd5WbVtSMIgDoqQbrSPhDXuXW7mPVexOWn2rueEDLf8jPBDHiAcW6e7+abLznsRfjS7Di1H1tE7U9SzKp1rQWbMceiyWJy3CV3t9h6U/veyQrDQ8Z6XJ/JiOHOJ2bI97eKMWg178raOe7grS4hdSFHfeZQOtRgS8tr4sZD3EH9hmzdpb68spMcBgDdWPS6MQft12wjCroM4/nnuvAQ0YbfTCMz1soSD4+gIY2bIn11258mTxnZYo4IlgEk4kSAt13+pX+yePxido0SaJXSDTqBG7YdfnCkqXz/311HeafOuNb9+slIVQFjvvzVz/8P9JHhhxIqYE99Qp6AZ494kDufMNl7n0t89//fMb1ZyvTEurmva7mnEFQo6ttDNH3SjxJUto4sUY32vCN8Y+SMXqb3AibpdvX0ayh0qCWiAoeL/ZFnxQNhPHcXd7KYjq/nt05NUWs10qfUkqZYjbXA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWXP265MB5784.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(52116014)(376014)(22082099003)(18002099003)(56012099006)(4143699003)(10067099003)(38350700014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dEtPcDU2ZmVzcWw0K0JUQkpxYUZVS25WV0Zpd21aVDlVZitZUGFYRy84WnFu?=
+ =?utf-8?B?SVVWcUo2R2dINTFDOEgxZ3lnaGJ1NEdjVURIVVhPbFlneWVyRDRNdzZTMUhj?=
+ =?utf-8?B?TFk5cmhJNGQ4RUg5UVgrRlpHTTRPb0V6alVaQlZFWnNERFlIY2l4dkxPUitp?=
+ =?utf-8?B?cXFvNXBHZ2ZFMHNJNlIwaFQyelFHZUtuYkEyZzcwM2lhSHlEZm9hNW42Rklv?=
+ =?utf-8?B?NXlsdkFJSjZkVkROKzJCV2llejRjYXYwQnh1S2g3NmdoMUUrNmd2czNEMW5w?=
+ =?utf-8?B?dzc4ZGlud0NXMlJzVS81ZG0zbmp5YU1tRVpsZ0FveXpOSXd6Y3k5MFVLMEpa?=
+ =?utf-8?B?V0FCUEFJSWlvZkN4ZVNXaFpUcW1MMzR2RUoxNTc0aFlnNjJhbUtWWGhNV01i?=
+ =?utf-8?B?OU41RE55a1dleFBMckcvcmVMRk5Dbmo0c1pYVmpqcnFySkk5RmVMd0t6MXBU?=
+ =?utf-8?B?djZnNnl0Z0FjbDhTRmxXTHV6eWNSbndUYXVxT3ZRSHJxU3l4WGpid013aFRM?=
+ =?utf-8?B?TzRac3lnY0g2MVpzWlFDRG9HWFluNGg4NFVObDhITzF5SmZkLzg2VkNRWDk0?=
+ =?utf-8?B?U1ZrTjZWUEphandWd0RyVWhUL0tFVytHYnAyYU5QUVdCbFBVeGpiWlJZQ1A4?=
+ =?utf-8?B?OWVVN3BsR0lEaHU5NklmelB1anR0QkFPQW1pVWxEY3F6b1RoTVdPTVd5VnM4?=
+ =?utf-8?B?NVh3VW0zWHAzKzhTRjdvNkxkMU11ekVwelRZVG5LN2NJb1hLM0lORVREaXNy?=
+ =?utf-8?B?ejRycHBxMFhTRHc0NXFlaTIrN2E3NkVzOW5yQjRicEVINy9nYlk4NTV1TUVh?=
+ =?utf-8?B?YmZuYWhlbEtSN2dldzI1MDZhOFZXVGpreU1zODV1K2hkWWtNNWYxVEpiT1cy?=
+ =?utf-8?B?Tk1VZGx1NEkwNmhDdklYeXRUdHZWRlpRelBRaG13bnJTclpLb01QN1pvc3Jk?=
+ =?utf-8?B?cE5LN2s2OFc1YS80dTNGVFhwVFg0NFlDY2U1RE9vWlJOYTJUcUFGdmNNNTM2?=
+ =?utf-8?B?VHhYZFYvenlNZk5hbFlCb2diWTh1YkVxdllmRGRIVU1lajBaeVZ6SUUvUHdD?=
+ =?utf-8?B?YnpDd2JTUGkzSTFNTzVybHRMWEJDSlppcjQ1MWxLVFdsODNiQ3JlVzNjNVJr?=
+ =?utf-8?B?bVdHMHVrUkIyWHhqREdYczZrWjhVY1NYQXdzazdkanRac3IzSGZFeHFQUVVi?=
+ =?utf-8?B?UDRPRmJZM2pBbWVUeWJxemc5c3hVbHpkelVvTDNiTy85bHRaRjJuakNBejBN?=
+ =?utf-8?B?RHZRNEovVUFxQTR2ajBDcE1Yb2NxWUJiTmk0TUI5YmhxdE5KT1FWRUg3VTVW?=
+ =?utf-8?B?Wmw4TnNScVlHT1RhNUhQMlZvNCtTdkNEQXRnWG9FdHRMbG5EZkNkMVVUOXFr?=
+ =?utf-8?B?dzJkZVNqTkNtMWZ2WFNvMmRiYVJxVmZYSE13Qzk3cnFNcE90L0R4RjNwWWhM?=
+ =?utf-8?B?SGhUOVFVcjZERFdNOG8wampac29IUFQwMWFEZkhFc2NxSnF5aUxJaUplc25B?=
+ =?utf-8?B?YmdMcVZYUFo0eTFneXpSWEt4K25ZWFoxMjlKeG9TRDlIQXF3LzJOU21Bb1ds?=
+ =?utf-8?B?NkdmQ09aQTBjL2pVZ01RSUpXcDhTVGlKVlNUbkZnM0h1cHBKRXJPOGV2QXdQ?=
+ =?utf-8?B?eFhFNTFKQ0lPWGl4WndDK3BqSVRxRzhLa0dQcG9vNkRLMjNLajZJaFA0bmp3?=
+ =?utf-8?B?YjFRNXJMa0VjY2d6bnpyQTk1TW5DZER0TTlWbkN2QmRhSlhqajNzalJRcklS?=
+ =?utf-8?B?M2YxUWtrOEs4QzB5VVRFcWZUWEFPaS9aUS8zSjVKR1BTOFhWWlczQVh0U1Ez?=
+ =?utf-8?B?TWwrTkVhSGRreUw0c2NLYkRjeDZ2TFQydjUzN2RrTXhNR3cvWXpqUHZFUUw2?=
+ =?utf-8?B?cmg4eEZjQ1Z1THhkR2krZWUzYXZiU0tMdHhOQk9wMWpGaDlobjVTelpqL0Ix?=
+ =?utf-8?B?dkV6NzlrUGIyaUNlQ0JtclRodk5qSTF5RE1jY01jOTZVVURNeHhhdzh4Rlhx?=
+ =?utf-8?B?WjM0WkNDK3Z2WndNRWdQVmRnVWpmN29LVjNPL3hEZENQVktFSjZqVWpBZlVN?=
+ =?utf-8?B?RVU0MnoxT2lnK2J2MEF5SmtFeDd5ZkZVMWNwVFVNTU8valRxaDYydjhXNjZ1?=
+ =?utf-8?B?TnpNT05ZOE8vQmh3aytEcE1Ya3lBclVzWDEyc2FLZUFwNERYVVBFYUEza2Y4?=
+ =?utf-8?B?UFVTNnZWZ2R2TXc2UWJZOFo3T3dnbkdwZ2FCMVpRSGVOek91Tmx0bXZKRmdt?=
+ =?utf-8?B?cUc5YVExOVVvQ0JmUGdyb0E5NFBPQ2crUldocE56SkxyR3o4V3VjS3FIb1Nl?=
+ =?utf-8?B?TUtHc1hlSWFrY1cxNEh1WERnVjlQNDlLT2dKOUI0ZGpqRWVETWprUT09?=
+X-OriginatorOrg: diogocastro.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 469bad57-975d-496f-e746-08df06a70b02
+X-MS-Exchange-CrossTenant-AuthSource: CWXP265MB5784.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Aug 2026 14:57:42.4615
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 68708ab7-2c25-4153-9869-a0a6b92bb578
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: EanbbYaaWr3WW43FlxT51FM5xChK0yntQkGr/dGZ2KPLPcv9+CbgsBbzpIjre5rOZZkdiwM60VuBt7AZvt3LYg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO4P265MB6477
 
-Fix spelling errors in the following places:
+I don't think so.
 
-versioncmp.c:           "fractionnal" -> "fractional"
-git-gui/git-gui.sh:     "occurence"   -> "occurrence"
-t/t0022-crlf-rename.sh: "similiarity" -> "similarity"
+As far as I can tell, the "strip the common prefix" feature is a
+performance optimization aimed at avoiding walking the working
+directory needlessly.
+So for `git add -- a/b/c a/b/d`, there's no need to look anywhere
+other than in `a/b/`.
 
-Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
----
- git-gui/git-gui.sh     | 2 +-
- t/t0022-crlf-rename.sh | 2 +-
- versioncmp.c           | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+But extending the "strip the common prefix" to negative pathspecs
+could end up negating the benefits we get from this perf optimization.
+E.g. in `git add -- a/b/c a/b/d ':!*.md'`, there is no prefix common
+to *all* pathspecs, so we'd revert to walking the entire working
+directory, even though `a/b/` would still suffice.
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 15dd2b3a84..cc8a05517a 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -109,7 +109,7 @@ foreach p [split $env(PATH) $_path_sep] {
- 	if {[file pathtype $p] ne {absolute}} {
- 		continue
- 	}
--	# Keep only the first occurence of any duplicates.
-+	# Keep only the first occurrence of any duplicates.
- 	set norm_p [file normalize $p]
- 	dict set _path_seen $norm_p 1
- }
-diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
-index 9bd863a970..328c6e5903 100755
---- a/t/t0022-crlf-rename.sh
-+++ b/t/t0022-crlf-rename.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- 
--test_description='ignore CR in CRLF sequence while computing similiarity'
-+test_description='ignore CR in CRLF sequence while computing similarity'
- 
- . ./test-lib.sh
- 
-diff --git a/versioncmp.c b/versioncmp.c
-index 3a81b17bc1..f1e451755a 100644
---- a/versioncmp.c
-+++ b/versioncmp.c
-@@ -15,7 +15,7 @@
- 
- /*
-  * states: S_N: normal, S_I: comparing integral part, S_F: comparing
-- * fractionnal parts, S_Z: idem but with leading Zeroes only
-+ * fractional parts, S_Z: idem but with leading Zeroes only
-  */
- #define  S_N    0x0
- #define  S_I    0x3
 
----
-base-commit: c73e85354c275c9d409b26445089bc16940fc527
-change-id: 20260830-typo-fea59ea5a02a
-
+On Sun, 30 Aug 2026 at 15:25, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Diogo Castro via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Diogo Castro <dc@diogocastro.com>
+> >
+> > `git ls-files` calls `common_prefix()` / `get_common_prefix_len()` which
+> > calculate the length of the common prefix of all *positive* pathspecs,
+> > `max_prefix_len`.
+> > ...
+> > Solution: in `do_match_pathspec()`, only strip the prefix when handling
+> > positive pathspecs, not when handling negative pathspecs.
+>
+> Hmph, if the command line were
+>
+>         git ls-files -- a/b/c a/b/d !a/b/
+>
+> shouldn't we strip a/b/ from all three?  Would it make sense to
+> leave the negative one relative to the full tree?  I am wondering
+> if the solution is to compute common prefix across both positive and
+> negative ones instead.
+>
