@@ -1,166 +1,127 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E109339378
-	for <git@vger.kernel.org>; Sun, 30 Aug 2026 21:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94EA339B3D
+	for <git@vger.kernel.org>; Sun, 30 Aug 2026 22:54:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788126984; cv=none; b=DgU9E92arDfRgRz5TjiITz/vAbKJ5pFsPITLKDfM2AyTBvE4XVt1xgayK8sMBLlpkywW9gVm+DfTiCrk4fM66IhtRgZRlbRnf8i1QzqppcSFYdplDfkjN/uRFThySp6TFkq1kLQUJuW0aBvJZnrvzHV58XLrvTKMfkDoFg2VaLo=
+	t=1788130478; cv=none; b=MTgGOKsHsLOgA8rzssF7BcWwVIKKkJHIdtIoQap4HHIa7PdA6XJ/1TKRh5RviwHvFM96vq5lOmNmB+ySYcN6Yw05WwTRBYzDLKPt0FgO/OqaOhXPlrIiznqEluiAc+beUHPBE8MLCFf30EwnYx2xotlgrOrl1ehU2P7YxY854J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788126984; c=relaxed/simple;
-	bh=9Jx5mpGDTubTbjUyzQb3Xr0oh+CWA4bxXy5p1LtwI5A=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lUHkLjrioB1OxKW3GW5I5625zKMUMAGWqZKKHDL031y6FXVMExrXRfJ77OSqoAvxYZVwETriWjTpbBgqZL2hY3tjUiM0YgI7HzpFEfU0/zujz3YofRn8emKGHrA3zIViquCI5j4JpFeYF4TNRb21DKs93OkTpEv7ucTlCniaZL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CsoE5stj; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788130478; c=relaxed/simple;
+	bh=N9QnR2M/m9MdneNz+rBAaOWYm8TqMZxZ3DHdoLM0Lcw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kdUunS61/wQ18YiXhNyIIMvdWymDEBoeJsSl7OmsSooiHjrhLfuPBvNGLTFzXXa9bmzrIPNvS90MALOKX3nKnAlW+n/TPuzTndkbFsDRF7nf6g3n5YU9t2NfKFKgea6WJBrTIc66r4g8vK3q8n749lW3973puhroiqu1dDddhv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PutdIrAn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aakgNYmo; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CsoE5stj"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-49b392ccaacso38421815e9.2
-        for <git@vger.kernel.org>; Sun, 30 Aug 2026 14:56:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788126981; x=1788731781; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=r7DwYQgKSlIDSnGRg0dKeMH488aMay9QFgTirB9F+OI=;
-        b=CsoE5stjhsCYDNJlWR3JkcjlQzDlYUvR3rpN7FMNA2K4xubh8dDdhDM7or14wFqCX1
-         Pu/zI1CYk/ZJzt9YeP83v/9cyaki3ONwMOQFtsQfonAzdKV2q++Sxqspy++KJYaZDj7Z
-         u9gSRNYCPELW0hqd0og3i/o1JQIhr5TeI2sM1IynDca4uix45b3HBf6aJ22z4ASNp7BM
-         MkM6K3fa9PN5bpJrnwrb3++oOHOk2qjAv4tz9uQldfu+RRPYgooWOhI8yjAypjMo4wNy
-         ukbPPPopjtGAeZQnncTcIqjKtHxjIxUOcPLMIEOWfsB3SS64RNqHN6pqpxFpp8uwjIvW
-         0fPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788126981; x=1788731781;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=r7DwYQgKSlIDSnGRg0dKeMH488aMay9QFgTirB9F+OI=;
-        b=Tm1xHzcTsFU2m0Srk08akyI1baOmdK+Ufu+JV9dRZAQyGwV3g/9DgFRpmMk1zbKIKe
-         fTgaM871xSqxv4px+DeqlJk+SQb4SmIJnNgXU9b5fgVnMHJoR0OJNwUSx8s0Iq2U1Iqv
-         8pa420t7gSosDN3G+GyqczpefMacVYLsCQl6qVlKubWeuo2/8uL7sjoFW6fuwpf0HFeQ
-         yOhgETYK6dZMH7QcfNfWJUk+2YPMsxyGlnLcKdsdhLH4WIYK7ZHu5o1zjK8s7Rx4MSQY
-         /t8AThX463ZCQFyIQnTz7cvTnNlfO1WwQ84GCuldkj6jAmL0PlzDyRw+GNG2nruH1P2v
-         n+7g==
-X-Gm-Message-State: AFuF++n3VS5Kf4tObsrTslyRwqBlI2k+8cVSPVXm1q4mpZvbWhke0kJM
-	bz76Zj6pax99leN2KiXn1yVH2ZAZFo1NiZ1UWFy5sZq16Qw0f53mbNn/wfLg6A==
-X-Gm-Gg: AR+sD12BzmCunszkSMkRqg80O4Oyr9t4mHMvmu7iCqZaRS7c5Z3tDGQnuDrtLQ8b6iN
-	EmuUet3ykG4elUITC8HWLfnuMqLIBl9zChf7asooVMQUGJuVUdZgroBLrMclg7+J8/XgUREQifV
-	L1+8G6kHTFmyhuk0oxUqnfZ6bGjHk91Lgy2BdWpPXv6+8z5x/LMWjQvir7YCbhNjc2a0iEpD3JC
-	RNJ0irZqa2OOmoROupabs6WxEHNAlaSfH2/e/+ES6RzcjOJLagHUr1te6TRz3QeID+ZTYGpBpJE
-	K6j14+M5nc2MMgYVr0c7jxy8czY82ZFc4wJ8o3Ziaefo4CmbCFfJT62HhvwCqexRjGv8a8Shpip
-	C4VifyHEaaQ50cl9WLgPdpbrXVGwqJqz28kB+2ZYf7YJtio5Rp5mAEsb+Dj2fDNNqkUPD77HAnO
-	X7+a/2jDM8CerNOl9Gc8AOQ65tWv6oPa8KxGiqUHQaXurf1dhKpo3/chnwLbD+qt0rC+tnGN8KD
-	dk=
-X-Received: by 2002:a05:600c:1549:b0:49c:d618:e341 with SMTP id 5b1f17b1804b1-49cd618e6d9mr47086045e9.14.1788126980456;
-        Sun, 30 Aug 2026 14:56:20 -0700 (PDT)
-Received: from mirko (164.68.84.79.rev.sfr.net. [79.84.68.164])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49b94dc1076sm229240335e9.3.2026.08.30.14.56.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Aug 2026 14:56:20 -0700 (PDT)
-From: Nicolas Le Cam <niko.lecam@gmail.com>
-To: git@vger.kernel.org
-Cc: Nicolas Le Cam <niko.lecam@gmail.com>,
-	Jeff King <peff@peff.net>
-Subject: [BUG] git stash show --src-prefix prints freed memory since 2.52.0
-Date: Sun, 30 Aug 2026 23:55:55 +0200
-Message-ID: <20260830215555.2660035-1-niko.lecam@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PutdIrAn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aakgNYmo"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0A424EC00DB;
+	Sun, 30 Aug 2026 18:54:35 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sun, 30 Aug 2026 18:54:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788130475; x=1788216875; bh=pt8PoQOI6B
+	0Z1j0B6mfytlI5FemBRb4M+DQH+2fa6so=; b=PutdIrAnEku4qAK9wtrp1XvR/p
+	EAIwMYHC4z2LH4lOjH+jDtiUnUU8aOTZEKmXbRWb9grk+k8H1WjX1ab5kygRrkPg
+	X8Dv6fOTfaX3WfyrSbRkBuXo1+uWytPsmHFX4vYO711UW2IQ5ya9u7bKtZk3iPPp
+	Z2WHTg7jqY2c3ywA+LyJsWvZCdEW0ZszSI9VLcJOwjnkVeR0fvEFwooOia/ayIbc
+	3lHSHvywsoNfx9Vh4BNtmgEjI2suSIMKUFiKKwDPP7w3u90gfY6+Z4r2xTkj7/8/
+	F+/v4SwFoFDXuqVLBt/C9v88ZYOE5rTKLetjcZVkW5d1Dyb0OlNyILu6pFuw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788130475; x=1788216875; bh=pt8PoQOI6B0Z1j0B6mfytlI5FemBRb4M+DQ
+	H+2fa6so=; b=aakgNYmoeXztnAWZW+CLHw/quu7vGcFku9+LFtZhqfJPGpuHlzl
+	Sgh+U1hdocKJFuwcPcaD2i3yayUGCt6aOYbabaA1L6tIeAqY6numzpm8WTXnaUa2
+	5129mLFTnEm8lbREcdVSMRAcUB3mom8qxpE1abtd69NR+8g/AdyodXSDPcGRUehZ
+	p7IHexi/Cdgspj76Q1cE8twE7Lii89dfgRT0KQyhR0L2PRU5u27XcsuU+I2MYnSj
+	WWQ9cCrojEtmtZTroczvTle1KLpqS/e3HzzZ6bAisMH2+3wdWmhDUYyOk9IY7rw/
+	8xOoM4IQBffFnWFKoZB98GPK8NCCOOnk55Q==
+X-ME-Sender: <xms:qrSUav36fAhP0UB_zMMG32RX18LU9ibb-phdJw6VXWRCRSsUV7A1ZA>
+    <xme:qrSUalHsIBGadTOx--BHGuhLr2vf6Mq3fj-9WoY-J_RFtOf9oD20pPA_-H0fgXp6U
+    OKS2QW69m1UBSl0kTEoAYj86dgTKVWphR6qBk8UFuth1mp6B0mtCA>
+X-ME-Received: <xmr:qrSUak5y62VXz8FUguG3mAPXZ1UDG5plmu6wiZ2bMjM781ZERAI5adI9BC6Dp06U3pG1t9SJO0nCpzAZ6XdVkAWSxNKswAWnoQ>
+X-ME-Proxy-Cause: dmFkZTFmhjccQ1cKjeyx0+Y6RUwCgpKP1/0eAcquGZhC6Z74gMneJ3ALuXwAxbU6YZVPsS
+    O3RzVLm7WKeDSkDx2zozNjcIPphIq+ipGtY05AY+epY4OT512oTuiy2wFXw8tG6lnvzo6l
+    517o6WchHavK5XM6LaXMVE0UtJe3b/GrH5uljUEaiUOhrbm1eWr5pTnDy5DUh2Qo9a7MqK
+    oWvjPXjTlf/Pgqur134eJhw/wEkdzP9aWUzTkGXBPWK/xg5qSZTJelb+djADWFfNqJg9FS
+    NjvZQBlS58h7JAN+ERyO5AK5Z5m2DHst2m1Yx/TrTC6Cdimyxur9ERL63L/mxN4SosNlhF
+    KA19ciLm0KtQ6Va119BsWiXXLWoE+M9l/aoR+w8bcX1Ft0vGeIPuE5SNFYa/dsDJ78W9jd
+    ENpUpDVky+5iQq6yPuYYmFnnxTESe9JmG6hogMC/Ntakn17nyU5A1mYcSZmuVJR4iwWwO4
+    zCOHzYVU5HOcTC7pok31OzuHgeTYBJop9S/o6QtuttpoOLkIQdRzpJk+crRfm2BG5Rhm50
+    iD7+PtbKMZzvQsi2HEVephr8S8tjY/t5141diAsy4PgDv371IBW5wYcWknAFdXwlndNYMP
+    DmBdWDhgKTM3C3riFAB4oV0oBu5GVAb1Daf7plEI2tzOZ2mwqIkYN06HAZ+w
+X-ME-Proxy: <xmx:qrSUajvN-cqrKoS-e8fO1PHjygwWjQ3JAoTkes2Gqy1Z4ywEEnL3DQ>
+    <xmx:qrSUat6ZZOQ2WHNI1ba2tAT3TXaqysHC3v7kChoAU22kdxDLOn22YA>
+    <xmx:qrSUamVFUUwLXvdApUc9rqDlcw1NpDxEei3EZvVbwiG6F1jG8Jpb3Q>
+    <xmx:qrSUan9d-pltdfDqRfO1QYu_ScCRGpTRVPym4zpOsOMpof1mqrnjyw>
+    <xmx:q7SUagZGaU9KJvRAiUwMlo51CkLPz5CSBMZyMMv7hpT3vhvW97fRcrI6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 30 Aug 2026 18:54:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v2] ci: cancel stale pull request workflow runs
+In-Reply-To: <pull.2369.v2.git.git.1788087560290.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Sun, 30 Aug 2026
+	10:59:20 +0000")
+References: <pull.2369.git.git.1785492641983.gitgitgadget@gmail.com>
+	<pull.2369.v2.git.git.1788087560290.gitgitgadget@gmail.com>
+Date: Sun, 30 Aug 2026 15:54:33 -0700
+Message-ID: <xmqqqzjfz0ba.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-    git init repo && cd repo
-    printf 'one\ntwo\nthree\n' >f.txt
-    git add f.txt && git commit -m init
-    printf 'one\nTWO\nthree\n' >f.txt
-    git stash
-    git stash show --src-prefix=a/ --dst-prefix=b/
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+>
+> The CI workflow previously grouped all runs by commit hash using
+> `group: ${{ github.sha }}`.  This meant every push to a pull
+> request started a separate workflow run, and all workflows
+> triggered by the same commit shared the same concurrency group.
 
-What did you expect to happen? (Expected behavior)
+That's the current status that we normally describe in the present
+tense, no?
 
-The first line of the patch should use the prefixes I asked for:
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+> ...
+> +# For more details about the `concurrency` attribute, see:
+>  # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
+>  concurrency:
+> -  group: ${{ github.sha }}
+> +  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+> +  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-    diff --git a/f.txt b/f.txt
+If a user has CI enabled on their own repository, pushes a commit
+there, and opens a pull request, wouldn't GitHub Actions trigger
+two events for the same commit at the tip of the pushed branch?
 
-What happened instead? (Actual behavior)
+Before this change, both events are assigned to the same concurrency
+group (the commit object name).  One waits while the other runs, and
+the skip-if-redundant logic stops the second one early without
+wasting cycles on the same commit.  With this change, the
+concurrency groups for these two events are separate.  Would we end
+up building and testing the same commit twice in parallel?
 
-The prefixes are replaced by fragments of unrelated heap data, and the
-value changes between runs of the same command:
-
-    $ git stash show --src-prefix=a/ --dst-prefix=b/ | head -1
-    diff --git Uf.txt Uf.txt
-    $ git stash show --src-prefix=a/ --dst-prefix=b/ | head -1
-    diff --git Vf.txt Vf.txt
-
-On other versions the garbage is recognisable as pieces of other
-strings live in the process -- "ributes" (from "attributes"),
-"bjectmode" (from "objectmode"), "4c/" -- which is what suggests a
-use-after-free rather than an off-by-one.
-
-What's different between what you expected and what actually happened?
-
-Scope, from testing across released versions.
-
-"git diff --src-prefix=a/ --dst-prefix=b/" is correct on every version
-I tried. Only "stash show" is affected. First line of the patch from
-"git stash show --src-prefix=a/ --dst-prefix=b/":
-
-    2.49.1   diff --git a/f.txt b/f.txt          (correct)
-    2.52.0   diff --git ributesf.txt 4c/f.txt
-    2.53.0   diff --git Uf.txt Uf.txt
-    2.54.0   diff --git 4c/f.txt bjectmodef.txt
-
-The 2.53.0 output varies between invocations; the others were stable
-within a single container but differ from each other.
-
-Also unaffected: "git stash show -p" with no prefix flags, and
-"git stash show -p --no-ext-diff --no-textconv".
-
-Anything else you want to add:
-
-Suspected cause. 3ea35c64b ("stash: tell setup_revisions() to free our
-allocated strings", merged in jk/setup-revisions-freefix) added
-
-    struct setup_revision_opt opt = { .free_removed_argv_elements = 1 };
-
-to show_stash(). v2.51.0 does not contain that commit; v2.52.0 does,
-which matches the bisect above.
-
---src-prefix and --dst-prefix are parsed by OPT_STRING_F in diff.c:
-
-    OPT_STRING_F(0, "src-prefix", &options->a_prefix, N_("<prefix>"),
-                 N_("show the given source prefix instead of \"a/\""),
-                 PARSE_OPT_NONEG),
-
-parse-options stores the pointer into the argv element rather than
-copying it, so options->a_prefix points into the "--src-prefix=a/"
-string itself. Once setup_revisions() is told it may free the argv
-elements it consumes, that string is freed while a_prefix still
-references it, and the dangling pointer is read later when the diff
-header is emitted.
-
-If that reading is right, the same hazard would apply to any diff
-option parsed with OPT_STRING* into a struct diff_options field, not
-only these two -- "stash show" is simply the caller that now opts in
-to the freeing.
-
-How I ran into it: a tool that passes --src-prefix=a/ --dst-prefix=b/
-explicitly so it can parse the resulting patch without being affected
-by a user's diff.noprefix or diff.mnemonicPrefix configuration. That
-is a fairly common pattern for programs consuming git's diff output
-(lint-staged does the same), so the corrupted paths surface as
-unparseable filenames rather than as an obvious crash.
-
-I could not find an existing report for this.
-
-[System Info]
-git version 2.53.0 (Debian). Reproduced identically on the
-alpine/git 2.52.0 and 2.54.0 images; not reproducible on 2.49.1.
-
-Thanks,
-Nicolas Le Cam
+I suspect this may not be a problem in practice given how our
+contributors use GitHub Actions in our official repositories (either
+those owned by gitgitgadget or git).  They push to their own
+repositories where CI may not be enabled, so 'push' does not
+trigger.  Still, I thought it better to bring this up before the
+change gets merged and wastes build cycles.
