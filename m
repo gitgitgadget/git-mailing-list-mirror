@@ -1,121 +1,166 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD1D2F3C3E
-	for <git@vger.kernel.org>; Sun, 30 Aug 2026 21:15:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E109339378
+	for <git@vger.kernel.org>; Sun, 30 Aug 2026 21:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788124521; cv=none; b=csdmgSmsSxeM5DOElwk6eTteHHULyWsFuUJC0wgA9Fb4omitwg3wwmgrhtdKf1T8CWzEIoCK9S0srKdQ+0PwBs4yq/t2oM0z7F9n17F9Wbg/DCDgoazKfsC1CnN7+ZnxhVJqyryQvd9eJu43X2craxZQqpNp16XyHeeyrumGMUQ=
+	t=1788126984; cv=none; b=DgU9E92arDfRgRz5TjiITz/vAbKJ5pFsPITLKDfM2AyTBvE4XVt1xgayK8sMBLlpkywW9gVm+DfTiCrk4fM66IhtRgZRlbRnf8i1QzqppcSFYdplDfkjN/uRFThySp6TFkq1kLQUJuW0aBvJZnrvzHV58XLrvTKMfkDoFg2VaLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788124521; c=relaxed/simple;
-	bh=o12iRjzaCCSjld09Ryhh2JA5l5OQbe8fekG3un3wSrw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JmbESnsh/k96oRI/C86upY5DcHxICvAhD6RkfskROr/jWTYhmR5Pqgoa4MzdQVy8oZ2XQ8q9D8x/0u3O1Xx1hwmd4Mu9FUSsZkBSdD3joW9QPUEFG/cRsR6kjKwbiR9b7aeiIwzPEALOb6/C1LjIOU1PKxq/LCjlvi/4KR5lclU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wwXi7Ghc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SXO97GJj; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788126984; c=relaxed/simple;
+	bh=9Jx5mpGDTubTbjUyzQb3Xr0oh+CWA4bxXy5p1LtwI5A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lUHkLjrioB1OxKW3GW5I5625zKMUMAGWqZKKHDL031y6FXVMExrXRfJ77OSqoAvxYZVwETriWjTpbBgqZL2hY3tjUiM0YgI7HzpFEfU0/zujz3YofRn8emKGHrA3zIViquCI5j4JpFeYF4TNRb21DKs93OkTpEv7ucTlCniaZL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CsoE5stj; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wwXi7Ghc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SXO97GJj"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 842A714000BA;
-	Sun, 30 Aug 2026 17:15:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sun, 30 Aug 2026 17:15:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1788124519; x=1788210919; bh=bEM9lm3a10
-	UgtLRSKZnSqUdhkFt4ZSsd5yht3b/5c5o=; b=wwXi7GhcUAhVbO2QIEtjbktfx+
-	OwSekXaAIkAokCgwg0uPO7v2+r5pvcY3aeeL9k19MM2dSyb8D/rka32UdaHtPjfW
-	sHYxIWfeagx9RBl5B6ApGwrqYiFFQC+vgmTcU8bDjBfDAtAU17WCHJGMSkzjPBR0
-	ksCjXQt4ThRoDwuUEale7pH75W+ws2u8bsdXpJNQbGjKAf6jymSgSGAGI4oafvcG
-	crzcLaUYt1Mphbgr4j1F/2oiGlgQSnC5NE9cGTF9oE5P6f05v1hxqjuL+/DZV45X
-	pBBytcK7k7ERH91H7eIPduJBuGNbIditlU5OqUHLoJbKLdVIlYp2+IcnGDhQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788124519; x=1788210919; bh=bEM9lm3a10UgtLRSKZnSqUdhkFt4ZSsd5yh
-	t3b/5c5o=; b=SXO97GJjmrHBk4O9FfgVIv3KtzaoU0M2eaoVnU2CwHwfZV6MuUb
-	MBuu6li3rdOzfC1dTZEtCLqMmsbPs87w3t7HHOvk7QC+kVnWR7GhhWA7CMG6dSMc
-	rLJFWo1wZ3DXGP8tBuhaqHd8F/OnFzgpasp2n/q1POTi15+5F/fv3h1iQLu2utPc
-	OHv2wgvbDj2tJheourJDE1aHWGRt0iVHK1UvNyoBjp8HtDme3iAsPv+3OJ2Un1Ms
-	zMEj/ugIwMKg4nnDh/yqhY+lIjAaWt77bSh/CX2Y31URVvhOIgOwnlVZn8iUkvab
-	zDC4JSTpQskYZXkrClagji3eyIr96pJkrzA==
-X-ME-Sender: <xms:Z52UakzDK84r1np0M-9S9DALO8sp_2NiGGueDcmcnbeA9XAJyp4yOQ>
-    <xme:Z52Uaqhz9gop_SHuM4GjvN7ueXO0Q057mZKBuTA4HHNmLQLR8eRuAWX9UxmaJP8GK
-    y_yi8ZoDNTZYwqxg4BOmaS6b0WZj3IC8ZUbY-rqMdgEldtDQCI0Kg>
-X-ME-Received: <xmr:Z52UaokK_FDRjrUxrhHts5yugjIQAxHSykk9S73WLXlPHxv3i1rYsAAaDJ1_oO5FiUlpoMyiaY2nUNxZgdtaYzv9qtsGLmUJ1w>
-X-ME-Proxy-Cause: dmFkZTFHoXt3Pr+no3LVYDVGfZFroRXIiiaQN78CWGeVetrJ+twtogKoXg4zTCUawNuLgr
-    GyuLfC6+OkB4ymGfSwJBImlqZVZxEdsTEnqEsghFDMXhBFtedTrYLesJDKOK/5sBQi7o2r
-    XX3jD4bZecZTsYkRDu9+WSk3qoh6ybUfbzsbyNknWV5Oq7GXh+l+Xoji9wB2XoWn4bXJw6
-    j+9raQCEURzNBuEj2B+IPwC8TufvEg8rf3EL06f2kY+lrEgor/aaoZaBxvw2irvlFL5MUx
-    onj5XUqiMY+Qd4UUhiU+9T3X1m96srPE/KGHkqPhhrEDnfa/uDz2PgZi3svba+K7vovdk4
-    EXTlEgdpJ5blx9ZWPLssiqYxPjMOVN/MVtCac6O5hRpMah6NvKrfA9fE7v5y2CyQeJX2Jn
-    mnWl4ClRfW8MVaatCnXOtZ0+z8CCYB5UpEv0vG4eSrtlCP8LUGiJD/dyW+BclohSgui7Q5
-    6gIQOTIpV9myQL1em0mUFPwPGqSMioB5M4sDTWlQJWyq1DOYzcuproPGm3xwND0qVCDy9F
-    bMDhYYlVVjPx6rTuBd26wis+qYnQa7bRcWql2+Vf6aTt9YBhr8LFSpTg5JHIx+Ol8orxxW
-    eQc0MnFrSDbA0kqbgis57wR9FsDk2i9vq11BWlxNme5vg9qlj2hnhCddWm4g
-X-ME-Proxy: <xmx:Z52UaogAw__aBA2L5eyNawJOOm4po7nAQfy2nvkGZxFmkXbfamcpsA>
-    <xmx:Z52Uak0-ls3XKXDPxilUyZzrMM2tQQ5Poq6oIMJFu5Ga6oHDvsoGhQ>
-    <xmx:Z52UapIUOwxyoymYYg6_QCrsnACKLKDs930dqR0_0OLx354F_hcEfw>
-    <xmx:Z52UasxJFVCmZF9J3KTbfG6p6c7QcnQm1I3nFbpWTEftLM5eWpX3sg>
-    <xmx:Z52UakP7F4nB_bk0h_MOC-kHHhvwsiP8zFX4LYGtkVfeF0pBdiYP0Zyc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 30 Aug 2026 17:15:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org,  Olamide Caleb Bello <belkid98@gmail.com>,  Todd
- Zullinger <tmz@pobox.com>,  Tian Yuchen <cat@malon.dev>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v5 3/3] core: convert build-time USE_NSEC into runtime
- core.useNanosec
-In-Reply-To: <01cd487cd23f23b1d18359b86fbcf18e25039e6d.1788010335.git.ben.knoble@gmail.com>
-	(D. Ben Knoble's message of "Sat, 29 Aug 2026 09:38:20 -0400")
-References: <cover.1787231825.git.ben.knoble@gmail.com>
-	<cover.1788010335.git.ben.knoble@gmail.com>
-	<01cd487cd23f23b1d18359b86fbcf18e25039e6d.1788010335.git.ben.knoble@gmail.com>
-Date: Sun, 30 Aug 2026 14:15:17 -0700
-Message-ID: <xmqq8q5n1fa2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CsoE5stj"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-49b392ccaacso38421815e9.2
+        for <git@vger.kernel.org>; Sun, 30 Aug 2026 14:56:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788126981; x=1788731781; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=r7DwYQgKSlIDSnGRg0dKeMH488aMay9QFgTirB9F+OI=;
+        b=CsoE5stjhsCYDNJlWR3JkcjlQzDlYUvR3rpN7FMNA2K4xubh8dDdhDM7or14wFqCX1
+         Pu/zI1CYk/ZJzt9YeP83v/9cyaki3ONwMOQFtsQfonAzdKV2q++Sxqspy++KJYaZDj7Z
+         u9gSRNYCPELW0hqd0og3i/o1JQIhr5TeI2sM1IynDca4uix45b3HBf6aJ22z4ASNp7BM
+         MkM6K3fa9PN5bpJrnwrb3++oOHOk2qjAv4tz9uQldfu+RRPYgooWOhI8yjAypjMo4wNy
+         ukbPPPopjtGAeZQnncTcIqjKtHxjIxUOcPLMIEOWfsB3SS64RNqHN6pqpxFpp8uwjIvW
+         0fPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788126981; x=1788731781;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=r7DwYQgKSlIDSnGRg0dKeMH488aMay9QFgTirB9F+OI=;
+        b=Tm1xHzcTsFU2m0Srk08akyI1baOmdK+Ufu+JV9dRZAQyGwV3g/9DgFRpmMk1zbKIKe
+         fTgaM871xSqxv4px+DeqlJk+SQb4SmIJnNgXU9b5fgVnMHJoR0OJNwUSx8s0Iq2U1Iqv
+         8pa420t7gSosDN3G+GyqczpefMacVYLsCQl6qVlKubWeuo2/8uL7sjoFW6fuwpf0HFeQ
+         yOhgETYK6dZMH7QcfNfWJUk+2YPMsxyGlnLcKdsdhLH4WIYK7ZHu5o1zjK8s7Rx4MSQY
+         /t8AThX463ZCQFyIQnTz7cvTnNlfO1WwQ84GCuldkj6jAmL0PlzDyRw+GNG2nruH1P2v
+         n+7g==
+X-Gm-Message-State: AFuF++n3VS5Kf4tObsrTslyRwqBlI2k+8cVSPVXm1q4mpZvbWhke0kJM
+	bz76Zj6pax99leN2KiXn1yVH2ZAZFo1NiZ1UWFy5sZq16Qw0f53mbNn/wfLg6A==
+X-Gm-Gg: AR+sD12BzmCunszkSMkRqg80O4Oyr9t4mHMvmu7iCqZaRS7c5Z3tDGQnuDrtLQ8b6iN
+	EmuUet3ykG4elUITC8HWLfnuMqLIBl9zChf7asooVMQUGJuVUdZgroBLrMclg7+J8/XgUREQifV
+	L1+8G6kHTFmyhuk0oxUqnfZ6bGjHk91Lgy2BdWpPXv6+8z5x/LMWjQvir7YCbhNjc2a0iEpD3JC
+	RNJ0irZqa2OOmoROupabs6WxEHNAlaSfH2/e/+ES6RzcjOJLagHUr1te6TRz3QeID+ZTYGpBpJE
+	K6j14+M5nc2MMgYVr0c7jxy8czY82ZFc4wJ8o3Ziaefo4CmbCFfJT62HhvwCqexRjGv8a8Shpip
+	C4VifyHEaaQ50cl9WLgPdpbrXVGwqJqz28kB+2ZYf7YJtio5Rp5mAEsb+Dj2fDNNqkUPD77HAnO
+	X7+a/2jDM8CerNOl9Gc8AOQ65tWv6oPa8KxGiqUHQaXurf1dhKpo3/chnwLbD+qt0rC+tnGN8KD
+	dk=
+X-Received: by 2002:a05:600c:1549:b0:49c:d618:e341 with SMTP id 5b1f17b1804b1-49cd618e6d9mr47086045e9.14.1788126980456;
+        Sun, 30 Aug 2026 14:56:20 -0700 (PDT)
+Received: from mirko (164.68.84.79.rev.sfr.net. [79.84.68.164])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49b94dc1076sm229240335e9.3.2026.08.30.14.56.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 Aug 2026 14:56:20 -0700 (PDT)
+From: Nicolas Le Cam <niko.lecam@gmail.com>
+To: git@vger.kernel.org
+Cc: Nicolas Le Cam <niko.lecam@gmail.com>,
+	Jeff King <peff@peff.net>
+Subject: [BUG] git stash show --src-prefix prints freed memory since 2.52.0
+Date: Sun, 30 Aug 2026 23:55:55 +0200
+Message-ID: <20260830215555.2660035-1-niko.lecam@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> +		/* nanosecond timestamped files can also be racy! */
-> +		(repo_config_values(istate->repo)->use_nanosec
-> +		 ? (istate->timestamp.sec < sd->sd_mtime.sec ||
-> +		    (istate->timestamp.sec == sd->sd_mtime.sec &&
-> +		     istate->timestamp.nsec <= sd->sd_mtime.nsec))
-> +		 : istate->timestamp.sec <= sd->sd_mtime.sec));
->  }
+    git init repo && cd repo
+    printf 'one\ntwo\nthree\n' >f.txt
+    git add f.txt && git commit -m init
+    printf 'one\nTWO\nthree\n' >f.txt
+    git stash
+    git stash show --src-prefix=a/ --dst-prefix=b/
 
-Currently this is probably fine, but the use of repo_config_values()
-here means that the order in which we can transition/libify two
-unrelated things are forced on us:
+What did you expect to happen? (Expected behavior)
 
- * We'd first need to make sure repo_config_values() can work on an
-   instance of repository that is not the_repository,
+The first line of the patch should use the prefixes I asked for:
 
- * And until the above happens, we cannot do a --recurse-submodule
-   option that loads the index in a submodule and operate on it in
-   the same process (e.g., "git diff --resurse-submodules"),
-   because immediately at this step, istate taken from a submodule
-   would have its .repo member pointing at something that is not
-   the_repository and we will hit a BUG().
+    diff --git a/f.txt b/f.txt
 
-And after writing all of the above, I realized that I am mostly
-repeating what Patric already said in the upstream, e.g.,
+What happened instead? (Actual behavior)
 
-    https://lore.kernel.org/git/an720tZnot07HYiK@pks.im/
+The prefixes are replaced by fragments of unrelated heap data, and the
+value changes between runs of the same command:
 
-Other than that, this looks good to me.
+    $ git stash show --src-prefix=a/ --dst-prefix=b/ | head -1
+    diff --git Uf.txt Uf.txt
+    $ git stash show --src-prefix=a/ --dst-prefix=b/ | head -1
+    diff --git Vf.txt Vf.txt
+
+On other versions the garbage is recognisable as pieces of other
+strings live in the process -- "ributes" (from "attributes"),
+"bjectmode" (from "objectmode"), "4c/" -- which is what suggests a
+use-after-free rather than an off-by-one.
+
+What's different between what you expected and what actually happened?
+
+Scope, from testing across released versions.
+
+"git diff --src-prefix=a/ --dst-prefix=b/" is correct on every version
+I tried. Only "stash show" is affected. First line of the patch from
+"git stash show --src-prefix=a/ --dst-prefix=b/":
+
+    2.49.1   diff --git a/f.txt b/f.txt          (correct)
+    2.52.0   diff --git ributesf.txt 4c/f.txt
+    2.53.0   diff --git Uf.txt Uf.txt
+    2.54.0   diff --git 4c/f.txt bjectmodef.txt
+
+The 2.53.0 output varies between invocations; the others were stable
+within a single container but differ from each other.
+
+Also unaffected: "git stash show -p" with no prefix flags, and
+"git stash show -p --no-ext-diff --no-textconv".
+
+Anything else you want to add:
+
+Suspected cause. 3ea35c64b ("stash: tell setup_revisions() to free our
+allocated strings", merged in jk/setup-revisions-freefix) added
+
+    struct setup_revision_opt opt = { .free_removed_argv_elements = 1 };
+
+to show_stash(). v2.51.0 does not contain that commit; v2.52.0 does,
+which matches the bisect above.
+
+--src-prefix and --dst-prefix are parsed by OPT_STRING_F in diff.c:
+
+    OPT_STRING_F(0, "src-prefix", &options->a_prefix, N_("<prefix>"),
+                 N_("show the given source prefix instead of \"a/\""),
+                 PARSE_OPT_NONEG),
+
+parse-options stores the pointer into the argv element rather than
+copying it, so options->a_prefix points into the "--src-prefix=a/"
+string itself. Once setup_revisions() is told it may free the argv
+elements it consumes, that string is freed while a_prefix still
+references it, and the dangling pointer is read later when the diff
+header is emitted.
+
+If that reading is right, the same hazard would apply to any diff
+option parsed with OPT_STRING* into a struct diff_options field, not
+only these two -- "stash show" is simply the caller that now opts in
+to the freeing.
+
+How I ran into it: a tool that passes --src-prefix=a/ --dst-prefix=b/
+explicitly so it can parse the resulting patch without being affected
+by a user's diff.noprefix or diff.mnemonicPrefix configuration. That
+is a fairly common pattern for programs consuming git's diff output
+(lint-staged does the same), so the corrupted paths surface as
+unparseable filenames rather than as an obvious crash.
+
+I could not find an existing report for this.
+
+[System Info]
+git version 2.53.0 (Debian). Reproduced identically on the
+alpine/git 2.52.0 and 2.54.0 images; not reproducible on 2.49.1.
+
+Thanks,
+Nicolas Le Cam
