@@ -1,77 +1,77 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E11430AAB8
-	for <git@vger.kernel.org>; Sun, 30 Aug 2026 20:48:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D360530F548
+	for <git@vger.kernel.org>; Sun, 30 Aug 2026 20:48:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788122928; cv=none; b=b0kRgrqPi3ynt05HxeOZy3zvsJJpIGuJ/0x7ZsnNhZ+jNd+x48PS2nk2thiK1+i5bT9pobt+uS24+Az1sWu6/gr9CfZNFPGFdS9IVNWs1cL7tVhNJPcoVhySqMRjQS5QX6Kgr0MO+NynitmMWexEh4baAupBvL4RVEK/0363ANM=
+	t=1788122930; cv=none; b=E7jDb2iCMa82mpv0L7wdh7AmInHN4bg6WUo9fIaSicTHIIGma/VMbNgnA6LvhcRDg0GCsYJAOj7aIO22Yrpurp0h5tRsLtYaza3gcaUh2BlcSgq0P4Unc3FKhwzFRawIFS8wnLTXF3pat1E5JwNVTp6/53s0Xned6cp6ucoYJLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788122928; c=relaxed/simple;
-	bh=gQT11GYiCPdFsSMRPjw0KEVypAH6Jr3FkFLj8g+ZTks=;
+	s=arc-20240116; t=1788122930; c=relaxed/simple;
+	bh=K7+VkvR3ZXjinFAQoSb5+5OaI0U/D+i6082HInzktJo=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5VJowqx91JKFA3VyEVCwfwgUNZQ6SQ4qkv+vpyOZgQ4L2iu2ExiXnIFmokpa4gbBjsfQJmnbT3eXVsZ3Yh0xrJHbvO3bkfjL7xN4et1b5o1+GUeHZW+b6wOMX/2XB3oR/hTqNJt+aqQrPFAPQXB6cA8qIT3dTPVH4jSnvm0CIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tdGOu9HE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EsddRJVv; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version; b=AKDN4lMfbO5xoJYXAl3KQyuu49Pwr05YkunygjXdDdg+F+BPSr4m8ix2wbHSNY42P9gAcxcDM82oNbjkFTmXDqCb/BBOsvlyZ4rdc5Rhzij0Hu6xdYksCKfjfpxFeaY8lTFZ8rKotq3F/jfUpwtVTNvPbj1QBf1k/X3cJjq2AN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i+70xFLB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MQKKNDIz; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tdGOu9HE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EsddRJVv"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CC84914000CF;
-	Sun, 30 Aug 2026 16:48:46 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sun, 30 Aug 2026 16:48:46 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i+70xFLB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MQKKNDIz"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 32889EC0086;
+	Sun, 30 Aug 2026 16:48:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Sun, 30 Aug 2026 16:48:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1788122926; x=
-	1788209326; bh=YKlrzG70umC37U8sWXXDevfoInF4XqkXQpBqyRlrris=; b=t
-	dGOu9HEG/yuReUL4VK2vgNeqnhr2r4rACv6g5SglUBOxO4Xn83aHkx885riJlfyU
-	A3zlvzLPiUu1MJrEsAxD/qrT/0smfhOt2q/stYp4qNEXf2VLMqK1eTGKLyoTOw+Z
-	u8IaxY9Kk9pBbbuTv0Bt+MNw2GJIikqMcooYcGpbAQczIX2FueezgeKY/28FR8ht
-	+vdVvO2IOGbuX3R+VtesRMDsnAg15unzb2Il6avY4ekMdq93jovsQUdDkv941WJ2
-	D2ta2y0JV6KBgQ441Shf23IagF/P/xc5Zf6dDShlyNX9AAfj5vy1GlkHX1f6kqvo
-	NVcZdU1zwwwH0//gMN0rg==
+	:reply-to:subject:subject:to:to; s=fm2; t=1788122928; x=
+	1788209328; bh=5zm6q5g+iSY9B1IwWenRPfQ33djHCNWzxeYiqiAw3T8=; b=i
+	+70xFLBaIT+2S+ZPl8hOmRvtrQpOQN49d3oyPWhpY6aCAvJ2tqYiAjKirFxrWrym
+	d7OG31kJ5QGCm9AtthCwKHvH+bKsKnCLZBb+El0xmAuQVQqGe375vsgyZA1h3n7N
+	8CgJae668G6f5778FDbZUmBNdHHHIsILSsOkM/iW2iOKf0bNti2j7pm92SN8lDuA
+	NUDvPYGKyjRwFaQg0f42Sn1xSZXjhQhhNh4k22wtWDSKZY4z2+gWca/opGzc28J/
+	QSeDGmgdIEwveZF0PZCajSRLrM3BZ8OWqg7w6liwJlFs9aN90PG1z6g8tOVO39RH
+	8JlInUqIho1TLZ6kqdxjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1788122926; x=1788209326; bh=YKlrzG70umC37U8sWXXDevfoInF4
-	XqkXQpBqyRlrris=; b=EsddRJVvSjRJmpqj2MpJzJWOxyFyNpqCoUm5aGJQz7HP
-	GHaPlk0wSbo2D6DVLv3vnoFkYkUzFztjppt0h9j98IGbbheAA8RxOMCF4TIG3RmK
-	97wJwyHhWKl7/JfqdiJpQwIitJg7cs6hGa3ImREkUkmE4LnL3dUaqhNH8LBNsm4o
-	FYMVxeqY0qgFwwu1gVySTtQFktya1TGFR77NyNAgVi5+uSJn9k2e3K1fnwLtoZvc
-	atcaB5/xDJ/KQpm4/UzZJllSBepvzdCLlzCnRyyFUaW8mexcy+x+lFAcJM4FBLVB
-	rJ+1sqnLwwBOTAdyzU7egNKSq14wrahKt4JARz/L/w==
-X-ME-Sender: <xms:LpeUatrFmK6Ynx_p-9V9yoFCAom-QSWFBiVU5_wyis_qHLSpiFGR6A>
-    <xme:LpeUalq5WeJONFJDXXbTzCQ_Iq3_CoZ5TbnK9LPUdNG_tN7dT1acfv1XcUGGicLS6
-    8ph2yo3pQleqVy5-qJUa7sA0v5b9NBR_tLk2p5OgaaVIPf_YinF>
-X-ME-Received: <xmr:LpeUan29-xs271rgIwnbbpHnoX5ison24gZocGry61rWRB7Sp64jguA_i71VYK-7XccRVLgljS2o9pr1RtbKHJKxtIPonaHA7A>
-X-ME-Proxy-Cause: dmFkZTEQbBtPgYkS/zewLDFKkOpXjeUjuQbZySv7JkCot0bNQf0M3imQzT0Cigu141QPEY
-    wZfYg+WlpXyw7xhr2aMFt78S3bJQlmsUB39KfGE8xLAaG3dixc2mic4PUV/0OkLaf9Yqy4
-    qWh+e2fkK4HeZTiTo8k27RhGm4ac7PgGAXvwWVx804Hdz/+hgDSqwkk1MZ+/XXcoPJ8nSv
-    d0RelN/55BVwfvaeAFGcXop9lugjugpNsEyS67nsNtOPkakh/Nz8R0MJLMuaTlUDao8L5I
-    HDf1t2nB7wE2aUX9njqTEDDI4paqkfQfCr3rNNjERzLead+6aN/GHlz96mKW8AJlXQ3GfQ
-    JcP2LOJSJhFULaqpMMLSzH1tXTEj+MQ12boDXaf6kIDrd/oRPMQlEIUYoQk9QF4lxSBeS+
-    sfzJyd2ydwaYx0soNeAlpy0okuYFoXCF/zoCDyepZJECYrTjZN3pedqS6x8JhIHdO144mw
-    LFcpJgbjpJl3yGiPzJp+98H8ibyyiktePQnxbvssaK9bKlMFUW+kxdiuii5iCp79Njns0D
-    0ib/6bJc+eXuCeqIGWDF8wQpjQGm1NqzAn0MtWogvf9xobv82463RW16ybU5rH5I/LXOt1
-    gQOqmwQSWpcHdN3099u8FcO2JcmldSgyDeCQV2WPh26ojFG1kd1q9RSxYnmQ
-X-ME-Proxy: <xmx:LpeUakBFhFOuao4O9J9TlBE9IVggjGkjfQYfwhRpZgsu6OPxW9EnFQ>
-    <xmx:LpeUavd5T6Y7B7p4F8jurBFftF1ePmSMNdOYE_5eNCLSDb2kKthsPQ>
-    <xmx:LpeUapjDtnZOxqTmuV39JvcqrY-rNTVMXW6vdE9qlGNwOD7BvT29DA>
-    <xmx:LpeUanqKQLslLj8UJj9cLz6ygaXSrAD72SVq_MGFL_CXGUlf18otSw>
-    <xmx:LpeUahDJl78zKpRaH08jxBCFeTmEfGY97nckxTjJIr6MRr7g_fGUbh5q>
+	fm3; t=1788122928; x=1788209328; bh=5zm6q5g+iSY9B1IwWenRPfQ33djH
+	CNWzxeYiqiAw3T8=; b=MQKKNDIztHERwA6aSxD2UlqFu+gPp/kIXKYGzgdUgY3u
+	qKLc+OQiP3xB+z2MiuZRPz5tBgH2Jg5TCnb807spulLvIc6YuHk88Wl0atjVTmeK
+	1ZqPcB8WoJ6SP2uLxcGtM5iFl6DHGbRfg/7I+mYPW5Q59rCj0jce0lZ3O8Wy1VTF
+	a/ia5ZIYuqmy3O5Tw8PMPegrKfXWlC3AWpOBVNfuH7JF8RzxHdVp/jiyNs5T7dk9
+	9FLyieKpLLQdqy5Ngju8WRpHdLm3tUE56ApaBCu1ohAUMT7Srdyv2Y48V3luR6/9
+	F/6ABYz+3MHyZJOPLLqLOBRHkhTkaZ1I7t0qgqw11A==
+X-ME-Sender: <xms:MJeUahy5EUqrNqya_GNpeVYpafs_IWOBQ6Acva5naT0w6Z1Bp7NgJw>
+    <xme:MJeUanSYPjy94ux13XYY-HB28ZsxVG-afCBDnSc8gTIDB3pj0gPLlFt5_cdSuPdVO
+    kww7QjXI_PFK54ufMDfF65pPYoGt500BPfHh1SDHocJ9mcEKxte>
+X-ME-Received: <xmr:MJeUao8X2DrKBukm7ibQ6WRz8Cl_KezCz3wDfVqEvHHluaEH1LkroUPstlVVYcLGm5HbVyfeIpMQ9Torp5e-NxJuJkQhrAq-JA>
+X-ME-Proxy-Cause: dmFkZTFScx5N3yID/Wd8piL81iio/vbFBvkFUjI0kIswckuEWS4J5hDifEykfqhESoeOdC
+    mwVC8gsuMoEHcRCa0lvsSozaXSelQ6CrY0zT742PYgh1E2l/nRGebCx4/z1qYDE67jEG39
+    /B2iVXiolehkRkNhZgPNwdXbXryA2vLv8f0n8e9ovVR6aOgUoOuueTLTatZkiWO+ay2+6r
+    c0lcpVsTuIoMHKtwg2MuyTGIZdu33aW/DIf85hVtEgSZr+eNkyWfTuwnHkUaE19zISEs6P
+    GdP8ByQrI20KvDmh30LXRH/4yC8jlRNe4SFbibbt/pnsMtVQm6k9k69VKYlig4q9SCItUo
+    r8cHOclxLQAGtBkqUcrPHD7PQA6sIV9fxhYSIiIYG6fvTlrgmVDko75JtJc3h37cZYZIvN
+    kDOqrSg7G9eJtKb9EPkr7N3059YTgSYlEUGo3nIpmY4lQZ6c325hxQJ1iuV9qU6JODzJyZ
+    BgOPtAVDMombAu6TovXILmhXLJorkK0TLHtbETFFda2poP9n0k4Zrn80uU0lMNebKJ7Yld
+    Wtvew7Hk9o0yY7PC/U8Yh36M41nTyyKrNUx+bNvfIwmAzPESnM473SE8O2a0CetR+MtcTX
+    wFx/LOfqQLeuWZzr9/oWiiog4vEjPMFgEV2o1L4w1b5HCz364clCdnHBXNlw
+X-ME-Proxy: <xmx:MJeUaurK2hSdhg7MgbSJ9iRKaX6WTzcKh1JoOz59xDX7_TKnm1ngYw>
+    <xmx:MJeUalkf9VjIoGJrADP9ijG8A0rOkAMxbGc-sQaK4TaqMLDEYnpx6g>
+    <xmx:MJeUalI6LMxvozakjJmYFyJq4rPmhYQHNMh1u7lT5s9B5UzHyVwNOg>
+    <xmx:MJeUaqwzZ2ZiPfc9w9zHECdmmGy8RfgpFqEFOVk-SsIlYHB4qJXhSw>
+    <xmx:MJeUalKFpdJpl4RMXfPSCavZtbr65ULt9hvys7PZXQXCob_UeUqpctP->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 30 Aug 2026 16:48:46 -0400 (EDT)
+ 30 Aug 2026 16:48:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 7/8] checkout: wrap overly long lines
-Date: Sun, 30 Aug 2026 13:48:34 -0700
-Message-ID: <20260830204835.1040408-8-gitster@pobox.com>
+Subject: [PATCH v2 8/8] checkout: move post_checkout_hook() to checkout.c
+Date: Sun, 30 Aug 2026 13:48:35 -0700
+Message-ID: <20260830204835.1040408-9-gitster@pobox.com>
 X-Mailer: git-send-email 2.55.0-884-g76cf8659c2
 In-Reply-To: <20260830204835.1040408-1-gitster@pobox.com>
 References: <20260828225206.310500-1-gitster@pobox.com>
@@ -84,125 +84,155 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-So far, the patches in this series have tried to leave the original
-code intact as much as possible when moving it, to make the
-refactoring easier to review.
+post_checkout_hook() in builtin/checkout.c runs the 'post-checkout' hook
+after switching branches or checking out paths.
 
-However, there are quite a few overly long lines that are hard to
-read.  There are also several manual checks for mutually
-incompatible options where die_for_incompatible_optN() could be
-used instead.
+Move post_checkout_hook() to checkout.c and declare it in checkout.h
+so that other subsystems can invoke the post-checkout hook without
+depending on builtin/checkout.c.
 
-Now that most of the refactoring is complete, tidy up these warts to
-finish off the series.
+Remove the dependency on 'the_repository'.  While OK when the helper
+was in builtin/checkout.c as an integral part of 'git checkout' (and
+'git restore'), this is no longer true for a common utility
+function.  Have it take a pointer to 'struct repository' and use its
+associated hash algorithm.
+
+This step in the series is entirely optional and is here primarily
+for illustration.  We may later want to teach 'git worktree' to
+trigger the 'post-checkout' hook, for example, in which case such
+libification may turn out to be useful.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/checkout.c | 63 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 41 insertions(+), 22 deletions(-)
+ builtin/checkout.c | 23 +++--------------------
+ checkout.c         | 28 ++++++++++++++++++++++++++++
+ checkout.h         | 10 ++++++++++
+ 3 files changed, 41 insertions(+), 20 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index b18515ac7f..9771c848c5 100644
+index 9771c848c5..c6e29e9526 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -1864,15 +1864,18 @@ static void validate_path_options(struct checkout_opts *opts)
+@@ -124,24 +124,6 @@ static void branch_info_release(struct branch_info *info)
+ 	free(info->checkout);
+ }
  
- 	if (!opts->patch_mode) {
- 		if (opts->patch_context != -1)
--			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
-+			die(_("the option '%s' requires '%s'"),
-+			    "--unified", "--patch");
- 		if (opts->patch_interhunk_context != -1)
--			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
-+			die(_("the option '%s' requires '%s'"),
-+			    "--inter-hunk-context", "--patch");
- 		if (!opts->auto_advance)
--			die(_("the option '%s' requires '%s'"), "--no-auto-advance", "--patch");
-+			die(_("the option '%s' requires '%s'"),
-+			    "--no-auto-advance", "--patch");
+-static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+-			      int changed)
+-{
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
+-
+-	/*
+-	 * "new_commit" can be NULL when checking out from the index before
+-	 * a commit exists.
+-	 */
+-	strvec_pushl(&opt.args,
+-		     oid_to_hex(old_commit ? &old_commit->object.oid : null_oid(the_hash_algo)),
+-		     oid_to_hex(new_commit ? &new_commit->object.oid : null_oid(the_hash_algo)),
+-		     changed ? "1" : "0",
+-		     NULL);
+-
+-	return run_hooks_opt(the_repository, "post-checkout", &opt);
+-}
+-
+ /*
+  * Handle a tree object and determine if we need to recurse into the
+  * tree (READ_TREE_RECURSIVE) or skip it (0).
+@@ -718,7 +700,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 			   &rev, NULL);
+ 	head = lookup_commit_reference_gently(the_repository, &rev, 1);
+ 
+-	errs |= post_checkout_hook(head, head, 0);
++	errs |= post_checkout_hook(the_repository, head, head, 0);
+ 	return errs;
+ }
+ 
+@@ -1273,7 +1255,8 @@ static int switch_branches(const struct checkout_opts *opts,
+ 		}
  	}
  
--	if (opts->overlay_mode == 1 && opts->patch_mode)
--		die(_("options '%s' and '%s' cannot be used together"), "-p", "--overlay");
-+	die_for_incompatible_opt2(opts->patch_mode, "-p",
-+				  opts->overlay_mode == 1, "--overlay");
+-	ret = post_checkout_hook(old_branch_info.commit, new_branch_info->commit, 1);
++	ret = post_checkout_hook(the_repository,
++				 old_branch_info.commit, new_branch_info->commit, 1);
+ 	branch_info_release(&old_branch_info);
+ 	strbuf_release(&old_commit_shortname);
+ 	strbuf_release(&autostash_msg);
+diff --git a/checkout.c b/checkout.c
+index 1588b116ee..28c5c18d96 100644
+--- a/checkout.c
++++ b/checkout.c
+@@ -1,6 +1,9 @@
+ #define USE_THE_REPOSITORY_VARIABLE
  
- 	if (opts->checkout_index >= 0 || opts->checkout_worktree >= 0) {
- 		if (opts->checkout_index < 0)
-@@ -1914,19 +1917,25 @@ static void parse_pathspec_from_file_options(struct checkout_opts *opts,
- {
- 	if (opts->pathspec_from_file) {
- 		if (opts->pathspec.nr)
--			die(_("'%s' and pathspec arguments cannot be used together"), "--pathspec-from-file");
--
--		if (opts->force_detach)
--			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--detach");
--
--		if (opts->patch_mode)
--			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
--
--		parse_pathspec_file(&opts->pathspec, 0,
--				    0,
--				    prefix, opts->pathspec_from_file, opts->pathspec_file_nul);
-+			die(_("'%s' and pathspec arguments cannot be used together"),
-+			    "--pathspec-from-file");
-+
-+		die_for_incompatible_opt2(!!opts->pathspec_from_file,
-+					  "--pathspec-from-file",
-+					  opts->force_detach,
-+					  "--detach");
-+
-+		die_for_incompatible_opt2(!!opts->pathspec_from_file,
-+					  "--pathspec-from-file",
-+					  opts->patch_mode,
-+					  "--patch");
-+
-+		parse_pathspec_file(&opts->pathspec, 0, 0,
-+				    prefix, opts->pathspec_from_file,
-+				    opts->pathspec_file_nul);
- 	} else if (opts->pathspec_file_nul) {
--		die(_("the option '%s' requires '%s'"), "--pathspec-file-nul", "--pathspec-from-file");
-+		die(_("the option '%s' requires '%s'"),
-+		    "--pathspec-file-nul", "--pathspec-from-file");
+ #include "git-compat-util.h"
++#include "commit.h"
++#include "hex.h"
++#include "hook.h"
+ #include "object-name.h"
+ #include "remote.h"
+ #include "refspec.h"
+@@ -8,6 +11,7 @@
+ #include "checkout.h"
+ #include "config.h"
+ #include "strbuf.h"
++#include "strvec.h"
+ 
+ struct tracking_name_data {
+ 	/* const */ char *src_ref;
+@@ -73,3 +77,27 @@ char *unique_tracking_name(const char *name, struct object_id *oid,
  	}
- 
- 	opts->pathspec.recursive = 1;
-@@ -1934,9 +1943,17 @@ static void parse_pathspec_from_file_options(struct checkout_opts *opts,
- 
- static void validate_branch_options(struct checkout_opts *opts, char cb_option)
- {
--	if ((!!opts->new_branch + !!opts->new_branch_force + !!opts->new_orphan_branch) > 1)
--		die(_("options '-%c', '-%c', and '%s' cannot be used together"),
--			cb_option, toupper(cb_option), "--orphan");
-+	char new_branch_opt[] = "-c";
-+	char new_branch_force_opt[] = "-C";
+ 	return NULL;
+ }
 +
-+	new_branch_opt[1] = cb_option;
-+	new_branch_force_opt[1] = toupper(cb_option);
++int post_checkout_hook(struct repository *repo,
++		       struct commit *old_commit, struct commit *new_commit,
++		       int changed)
++{
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
++	const struct git_hash_algo *hash_algo = repo->hash_algo;
 +
-+	die_for_incompatible_opt3(!!opts->new_branch,
-+				  new_branch_opt,
-+				  !!opts->new_branch_force,
-+				  new_branch_force_opt,
-+				  !!opts->new_orphan_branch, "--orphan");
++	/*
++	 * "new_commit" can be NULL when checking out from the index before
++	 * a commit exists.
++	 */
++	strvec_pushl(&opt.args,
++		     oid_to_hex(old_commit
++				? &old_commit->object.oid
++				: null_oid(hash_algo)),
++		     oid_to_hex(new_commit ?
++				&new_commit->object.oid
++				: null_oid(hash_algo)),
++		     changed ? "1" : "0",
++		     NULL);
++
++	return run_hooks_opt(repo, "post-checkout", &opt);
++}
+diff --git a/checkout.h b/checkout.h
+index 55920e7aeb..6d8d2c2bab 100644
+--- a/checkout.h
++++ b/checkout.h
+@@ -3,6 +3,9 @@
  
- 	if (opts->new_branch_force)
- 		opts->new_branch = opts->new_branch_force;
-@@ -2147,10 +2164,12 @@ int cmd_checkout(int argc,
- 			   N_("create and checkout a new branch")),
- 		OPT_STRING('B', NULL, &opts.new_branch_force, N_("branch"),
- 			   N_("create/reset and checkout a branch")),
--		OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create reflog for new branch")),
-+		OPT_BOOL('l', NULL, &opts.new_branch_log,
-+			 N_("create reflog for new branch")),
- 		OPT_BOOL(0, "guess", &opts.dwim_new_local_branch,
- 			 N_("second guess 'git checkout <no-such-branch>' (default)")),
--		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode (default)")),
-+		OPT_BOOL(0, "overlay", &opts.overlay_mode,
-+			 N_("use overlay mode (default)")),
- 		OPT_BOOL(0, "auto-advance", &opts.auto_advance,
- 			 N_("auto advance to the next file when selecting hunks interactively")),
- 		OPT_END()
+ #include "hash.h"
+ 
++struct commit;
++struct repository;
++
+ /*
+  * Check if the branch name uniquely matches a branch name on a remote
+  * tracking branch.  Return the name of the remote if such a branch
+@@ -12,4 +15,11 @@ char *unique_tracking_name(const char *name,
+ 			   struct object_id *oid,
+ 			   int *dwim_remotes_matched);
+ 
++/*
++ * Run the post-checkout hook.
++ */
++int post_checkout_hook(struct repository *,
++		       struct commit *old_commit, struct commit *new_commit,
++		       int changed);
++
+ #endif /* CHECKOUT_H */
 -- 
 2.55.0-884-g76cf8659c2
 
