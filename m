@@ -1,90 +1,84 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B153BFAC8
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAC83C1F
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788156753; cv=none; b=r7bk0DCfDLmCaYFy8gN6tLQUJBaNOSMhiDTa4gQhCAdCtwGfKeEYamziQWsnYV2zOccM7S8TZADBMGhT+tecN+4AvU8jxFNZb/NoXpT7pnDBGVCL9R10vWGbloUTPwWII02HHi+/XTCPsIl2lzR6kjCWt2yVKLrlpPBl1IrTKTQ=
+	t=1788157209; cv=none; b=MqJrQRMrsorjpw2eX6VvN9Ola0ODe7ZaH7ox0RyFQSyJ/Bf6COoHI8yAflN/FBFcq1S1MXddzmW7Z9DInaOaviiGZRkUTZmNGEeBixCMr0a6OtzAdSH8nZDhjbDlJEYSHR/8+QET1GtlPal3bf/hDS9Jzhlve+zjzezBE4SGjz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788156753; c=relaxed/simple;
-	bh=p21Fa10KqSCGCdQWcNILSFI+CGBq6Q95LY8j6kgnJJQ=;
+	s=arc-20240116; t=1788157209; c=relaxed/simple;
+	bh=EXQYbISiEgtisZXp1JwuKlKYZDj/cY4N2OBIRmBAZ9I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lW87fnHl+w/qP0TaSg9pBQohHHYhjKZDC541fFdHj8ROKPULXhvYjnMvsUGCCAeAZWYt5WrBXBqlImFD3di4EwGuO5VQ8m2+K8Jl+F6DT6Ssh4xs+xcxtRKJIFLTT7XaUn7L+xBs9wE2k5CUc0WhbQ+tiAlp49lnhYt9HsggxOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oANAf3Fk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aEiVBJJ8; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=MUren1SU6FbTdnPRlULzUnmbbhDHhXadyUDhN4Ic3+vywenWI8aAOEzgI/LNfP90Q3TgQKFCC0ytC/HXx2HHCWZJbpvEv/DF8XaQktWc2j7+fvHPdDtnBezLo56bBJqYdATyw1uJN3kZhLmoXRGZEqIKuKzxYcyqWL39RaIxobQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Nt3saEs7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D7STTF1h; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oANAf3Fk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aEiVBJJ8"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 37D251D00128;
-	Mon, 31 Aug 2026 02:12:27 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 31 Aug 2026 02:12:27 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Nt3saEs7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D7STTF1h"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0FD047A0156;
+	Mon, 31 Aug 2026 02:20:07 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 31 Aug 2026 02:20:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788156747; x=1788243147; bh=9bpZcrc/Ue
-	5BxPrLrtcb7Pv1fpdc52lfr3+ixLKlE6c=; b=oANAf3Fku7js4SIWF/YkpRt8XA
-	qVkMCivEk8ZBAt3K1K2cbRop82yW82fX0ZSdQLuSUejDs/GR+rLMBLBEJFkTvgU2
-	SVTeh4soVXQISul0p7brEf8y074i9MuhabfdtIDhJVaOtSqRilg0TOSqEdtmnQg3
-	PPxRUk/0dUJrsCi1QwjhOgE3wr3zI4+UUMIQvhuXL0a7F/Ro5SSdugKkHlxmYv82
-	SIkcNBIyuR46/0ekPlKTihJ4OsKeoTnpDQ1bz8+gMRB2XHhjlsWbiTZXRERxQNMa
-	H94oHfykBGrP5cRnFl8gJv9I49eX3q7UmihBoEUa2GSBHi6wesfcGx7QsiWw==
+	:subject:to:to; s=fm3; t=1788157206; x=1788243606; bh=42rf/Gg7Hu
+	h8MOnTn706zwTPsl1w3QuT9KasfWhUziM=; b=Nt3saEs7Au3IU+LwRpziIFz3VF
+	Z6eGelRpITpyYZBm1e9VfQUEkyzzzph0rDhju/NOQqvYcODlqcTq1F9swhfAEA6C
+	GwkBWpF/2bIf6C0hyVfy5DXVcdmQJd88Grb5Ihb5hgWDjktjT45wkS5WLhSeCykq
+	jgb/yU1db3rWObs+NKgZ5IhlrsU146cMbj5e6bXVBTTGPoThzhMwSbKN1D5YEyPI
+	oouAeCpc0CfZGdrbEBemd35yD/HVzvNuApP0lBeaXoR/Eo1y/V5+PwNVWMsMwZGe
+	uGzlTG8M+z9VGrZ34OqzXRyi2NlWXGzkRKKySEX5EmMxRAMVtxAuMSG9ieig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788156747; x=1788243147; bh=9bpZcrc/Ue5BxPrLrtcb7Pv1fpdc52lfr3+
-	ixLKlE6c=; b=aEiVBJJ8XIKRC+2IZ9hqjjkR1iRa6z0JGjQFSVNTAqQW873atP4
-	iLA/WsgIGJXsdAp59eq6a0PS3rU63IDvJPCrVGIhF5cxjem1uBxxC/y0NJC/5v6Q
-	lc2DYZ5Wel4VfPPfkGpxYo+A1+pans2TCJxAJ9afc//G9tz352jkL+0TwibsvQxv
-	20+EUMPy037QEpqArjDnHSaTHxI8/cl8tCMzpc9moCh1LRpLiwCL+lcuQIDkXlnw
-	AyQg9kIY8TpcmzlHp8IiZYKG4IudqCtR73FGAGMpuu2mcEMVe4lC6TOQyb/FhC6q
-	1Bxj9cWbLzcJCclZMwIFD9vE5IfObSkyrcQ==
-X-ME-Sender: <xms:ShuVaneeLssbUN3PTMzqA0OM-i0TqY-2dn9DF_FxvTkSe0uS4Rql3w>
-    <xme:ShuVavdmuqshPD1rkS-XgSpJcOuKRPe7WG595ZmJkEXKmbAVMDxADGOtJ7dTqXXhA
-    fC42rqhWYAKkLBiJVDuMkn6Ndlt62e7mYevKpq5HCwevoaOsByB5Q>
-X-ME-Received: <xmr:ShuVaiyd15_OJGqqnAcuohpgLhJqeaWj_5uw5nveasNNRMzLQKEodwxm-gLJ6zLIny0IZw>
-X-ME-Proxy-Cause: dmFkZTGnMRRrwJEcVmLFULNwgBQbr29XNmQfDAhr9mjIxkE2ocVjIJaEShW6WJltlz2FEy
-    /6sC60G3yRwqLT3L8y1lSTCbi4KQx5YJvqgUEnlJUeTnI0su/B3gnc2tIXPgZpTYsbWwg9
-    Fs+/mRHnHDJlc2/tGqbPyXbIa37XiPQnq7caEhMjVRMjcZ8ESVyvQHJDDFCiWArRTeONvv
-    tQlSUyAoZnsRddlfiAGwevABdaFKxds0cGLln0OuCCWjw86ANsRAQQBWlpc55/varDo8MG
-    wDGwxIBy/3i4QUH/rcETOXrU7LFUSLkwiSR2nt5Iq/K+AcdsXc/Wf4/r/+TVXpaJUlCLEK
-    tn+lax+kQnMrWwJZ5x/i76glGKRj1ycLJZdnO7g2iiZ1WMHxcxYm9y+hEejlX8vlPFf+Ty
-    KsFzFJgzF4j1BeO7XsJz5L4b5vsgF5/EAilHQ/bTTPQt5H9DVg1ysA2BV9dfTWEczpZG2h
-    kbeABnUzPv5A0svz802SrYXXHZHAFCBrr1A4dZoI7qIGJUk5ntiu5DaqqNHm2n7wX1fIXS
-    p8BZBNQwyYI3kPQw6ErC9b1yj2h68Or5fF1PFPsXQnH6ykMPDv/kgdJ8C2zwZetXLCE+Fx
-    jHGiJfhFWhFivwV3xxV/+ifgATFV+FTaE8hgyJHm7STRoNCHIyIIPt98mCEg
-X-ME-Proxy: <xmx:ShuVau_hQmHFvvCyfjBeWvcI5RgsRGIfSiD8Zw5BpXSEQ3Uaxr-Hew>
-    <xmx:ShuVaijBf1Le41Djl2DuK-8kwIvt6kwfjcsjXZJ11mUZXERrsXwzMw>
-    <xmx:ShuVatGNHPtGOz8uVA2GF047rU5Q0T46JTRcojMabqPj_3OVJRwTpA>
-    <xmx:ShuVap-DGAES8WSQnAuL433oC0zUTgLN4PddiVY59I8ho-T1WaPJ2Q>
-    <xmx:SxuVarDad1XFEgIWbDpYv1jsM8DXD_86XzsJrBufcf8gWAAw1rM5EfA7>
+	1788157206; x=1788243606; bh=42rf/Gg7Huh8MOnTn706zwTPsl1w3QuT9Ka
+	sfWhUziM=; b=D7STTF1hFyESIwqumm5Tsj0Nm3ahN4WZoNbnF6A9ZpTQPxD1fuF
+	HDYQpQikgZ514PQVb06oQBG4gfIs+D+ZqNnuGOPxu9WslRNDbvUFfnwy8QmAF0fx
+	IoIcc69nswkFRxo03kkhwH6Tl4UGa55f8UalVQMIhrLz1KsMUJWbGhYcFmNg/iwk
+	X96GK0DiqQ1PIPkLjTCZuTYMNU7bneBt3Q+RQb8vrg95AJu+GyheesZGetotNGq/
+	tUep+9qQseH81qhX8NWhB5GcVkghzjz3XWdoWlUdRwjqsidHUBH8Xi5aRkTkwLNN
+	1ZRr83qdjQqlCI+m/yT4B9qFtfw+WKQZZkg==
+X-ME-Sender: <xms:Fh2Vajgaym8Uj0Ys7yN_bykffzZTDtCC_xdc5Vcx7ET3_Cky3weeYA>
+    <xme:Fh2VanA6akuCaDOT2WXQXI0ijkjvTgi7FFBEZaKVHzcqVbpgUXoSGv0821jHeqOUg
+    XHyEmFU4xBKsZdR5SHZQ6MmuphgtuZ3d0npmaQ1nEJiGCNS6eVcL8E>
+X-ME-Received: <xmr:Fh2VaoGP5fk7eIfYDR70ME1O3fzkAekmvU3rjLUD4aZqaqpcHpA6ZK0Ir1Q8T-hH80_URA>
+X-ME-Proxy-Cause: dmFkZTGbpAtIrR78AhuGEKMGdpL20ctYiAE6XpkO3lSePhmI7x78bC8FgQ+WsQrhH/Rg7s
+    8fsrh/QnMEw39xn1j3SXBu+0sk070QYZWyOva5mtuR7QH4vyu1wLa7RuyLLAUaHZ3Sa+hb
+    BxjHvadHpksPDPVfqaZDYTb4z8mbZlFofotMOpk1sJhPILeqHc591aAT9jyhgFciOVskth
+    FKXzzv6JhoVDd0bWcn4xOyBRMnsJ7nA3+bJObFz6T0X7J9GeOhao34dJbh0o/d5SCqFW4g
+    MsRawk1F67wWvhr1sOEZPVpIC/7rfBTLdL8GpOtUYkhi7Jkuyd610RHRjmMT3t+oFYv2Ei
+    bElMGnJS8UemlTLhvYgJW0WJ1K/C9dlP7mdcGX1Son/XXxy6NeJtgo+luFq3jsVw3rZ0Gn
+    Hh85wxQp2ZBcjDQLHCN+vtXFzOhuasTHFGagT5MmZEQSFTnf8LO9Q6JTxq01ln6/JkLssf
+    Tfbsma59jkNpAXSQ8rhd6vNG2qSohURBB6Y3Z/Tzphnbtsx8A6xWKldG7GGsEnoJmsHP1H
+    V1UAWabzKUwYsidh3jxcgOg9XLoXqC5dTgwX25TwfggDWCvctHikMo6O92zG9sUsT+562N
+    kAtcdvGmNad4a8MbWErXkSJl6Epu3+yjyVo23tN+L8C0MsLg37D5XwT4Nusw
+X-ME-Proxy: <xmx:Fh2VavINuKcvuZ6w9wyDwWIo7sxAWYNe3sUI6BgE4XVk-LcZJS4bog>
+    <xmx:Fh2VasmRPirRa7mPBwp6kFCfM1Bl8U6sysUQw20UPtabEHmLkvv1Hw>
+    <xmx:Fh2VanT2gDUi8CfUGxh_SwZPLsGkwp_I053nNMUzO1513MqmPUbp-Q>
+    <xmx:Fh2VauI6MPh8xwUZMsLPBMIW_9i6nzKvnY5DPWKvHzSMjuevnNby4Q>
+    <xmx:Fh2VagbazvpG-cXSQw5jDbCAVKYSSEC6rWjY7ouYqRBOrISsBNxNFHkQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 02:12:25 -0400 (EDT)
+ 31 Aug 2026 02:20:05 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 73a14af9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 06:12:31 +0000 (UTC)
-Date: Mon, 31 Aug 2026 08:12:19 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ae83c3c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Aug 2026 06:20:11 +0000 (UTC)
+Date: Mon, 31 Aug 2026 08:19:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <ttaylorr@openai.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 3/3] midx-write: include packs above custom incremental
- base
-Message-ID: <apUbQ4S-zJGtBeu2@pks.im>
-References: <cover.1781294771.git.me@ttaylorr.com>
- <7bf7c87b60532a90c04c4a2404449a9d8ea21214.1781294771.git.me@ttaylorr.com>
- <an2FAWvyfX2LuGsG@pks.im>
- <an4uIQA09rDCwwBp@com-79390>
- <xmqqtsogd0mk.fsf@gitster.g>
- <ao945zRwDt9ThFTG@com-79390>
+To: Nikolaus Schuetz via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+	Nikolaus Schuetz <nikolauspschuetz@gmail.com>
+Subject: Re: [PATCH v3] t1401: check symbolic-ref failure and --quiet silence
+ on a non-symbolic ref
+Message-ID: <apUdDyG98D5upbhj@pks.im>
+References: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
+ <pull.2204.v3.git.1787763107646.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,85 +87,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ao945zRwDt9ThFTG@com-79390>
+In-Reply-To: <pull.2204.v3.git.1787763107646.gitgitgadget@gmail.com>
 
-On Wed, Aug 26, 2026 at 06:38:15PM -0500, Taylor Blau wrote:
-> On Wed, Aug 26, 2026 at 02:37:23PM -0700, Junio C Hamano wrote:
-> > Taylor Blau <ttaylorr@openai.com> writes:
-> >
-> > > `ctx->to_include` can indeed be non-NULL.
-> > > ...
-> > > The filtering still does the right thing: packs covered by the selected
-> > > base are excluded, and the remaining packs are checked against the stdin
-> > > list. But the comment is wrong, so I'll fix it.
-> >
-> > Has anything happened since we saw this comment on Aug 13th?
+On Wed, Aug 26, 2026 at 04:51:47PM +0000, Nikolaus Schuetz via GitGitGadget wrote:
+> From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
 > 
-> Not until you sent this message ;-).
+> git-symbolic-ref(1) documents that reading a name that is not a
+> symbolic ref fails, and that --quiet does so silently.  Tests such as
+> t2020 and t5621 already rely on "symbolic-ref -q HEAD" failing on a
+> detached HEAD, but none checks that the plain form reports the error
+> or that --quiet stays silent.
 > 
-> I had a small reroll prepped that I had meant to send a couple of weeks
-> ago but never got around to doing so. When I looked at it just now, I
-> found that I wasn't quite satisfied with the range-diff in that the
-> resulting block comment was somewhat confusing.
-> 
-> Instead of sending a new round immediately, let me instead share the
-> comment that I wrote instead. Patrick (or others): does this comment
-> seem clear, or do you think there are ways to tighten it up further?
-> 
-> --- 8< ---
-> diff --git a/midx-write.c b/midx-write.c
-> index 66da608370..ff94076104 100644
-> --- a/midx-write.c
-> +++ b/midx-write.c
-> @@ -143,15 +143,31 @@ static int should_include_pack(const struct write_midx_context *ctx,
->  		m = ctx->base_midx;
-> 
->  	/*
-> -	 * Note that m and ctx->to_include may both be set,
-> -	 * so we are testing midx_contains_pack() and
-> -	 * string_list_has_string() independently (guarded by the
-> -	 * appropriate NULL checks).
-> -	 *
-> -	 * We could support passing to_include while reusing an existing
-> -	 * MIDX, but don't currently since the reuse process drags
-> -	 * forward all packs from an existing MIDX (without checking
-> -	 * whether or not they appear in the to_include list).
-> +	 * Note that it is OK for both ctx->base_midx and
-> +	 * ctx->to_include may both be non-NULL, but at most one of
-> +	 * ctx->m and ctx->to_include may be non-NULL.
+> Assert that a non-symbolic ref fails with the "is not a symbolic ref"
+> message, and that --quiet fails with no output.  Use test_must_fail
+> rather than pinning the exact exit codes, which are documented but not
+> worth freezing in the test.
 
-That reads a bit off. Should that be "Note that it is OK for both ... to
-be non-NULL" instead?
+Documented sure, but the behaviour does not match the documentation:
 
-> +	 * When ctx->m is NULL we are writing a new MIDX without reusing
-> +	 * any packs from the previous layer(s). In that case, we care
-> +	 * that both:
-> +	 *
-> +	 *   - the new layer's base MIDX (ctx->base_midx) does not
-> +	 *     already contain the pack we are considering, or the new
-> +	 *     layer has no base (i.e., it is a non-incremental MIDX)
-> +	 *
-> +	 *   - the pack appears in ctx->to_include, or ctx->to_include
-> +	 *     is NULL, meaning that we can include any pack provided
-> +	 *     the above condition is met.
-> +	 *
-> +	 * When ctx->m is non-NULL, we are writing a new MIDX that will
-> +	 * subsume ctx->m and thus includes its packs. In this case, we
-> +	 * could support respecting ctx->to_include, but currently
-> +	 * don't.
-> +	 *
-> +	 * The only caller of this function which permits
-> +	 * ctx->to_include being non-NULL restricts setting ctx->m when
-> +	 * this is the case. So in this setting it is impossible that
-> +	 * both will be non-NULL.
+  git symbolic-ref will exit with status 0 if the contents of the
+  symbolic ref were printed correctly, with status 1 if the requested
+  name is not a symbolic ref, or 128 if another error occurs.
 
-I feel like this last paragraph could be dropped -- it's something that
-we could mention as part of the commit message, but in this function
-here I think it's very likely to go stale fast.
+So in theory we should always exit with 1 in case the refname is not a
+symbolic reference, no matter whether the user passes "--quiet" or not.
 
-Other than that I think this is good. It's quite long, but I don't have
-any good ideas for how to tighten this up significantly.
-
-Thanks!
+Anyway, we're not asserting the current broken behaviour in the new
+tests anymore, so I think that this version is good enough. Thanks!
 
 Patrick
