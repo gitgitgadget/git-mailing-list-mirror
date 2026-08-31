@@ -1,366 +1,135 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE2D3C2787
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:46:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACBA2D9EED
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:56:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788158807; cv=none; b=li3xCge8s1SMM7LObGxtaNbsPB6vuxMdvj7mmstx1BtvweXfUwSzXi/i6Cerd7jKnNK8HU3dVzWd2K/Ze6KfQ07fjm9pFA7opcBUtZh9V8CE5YY1nZ6my+kp7YfTXQf49FHefjMM1l4IuMVzj4m2HLDA3/gKVKcdp2VidsNfAQM=
+	t=1788159414; cv=none; b=t2AhQtB/XGMh75je1jwIW26e4t8RbOLpEtIZAFSIWPLQUkV6XR4K3A4Y4p6fvEUVFJYSryG5fp0enQVgupJklQcVjmt7TOJ221zvRoJIFdEwGufKzhLkLkBsmS36ZJyEuevmuFvPcPh3YfvHJLMdMYcab2OKaG0h2sazxXSY4mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788158807; c=relaxed/simple;
-	bh=lcNWTyhXEwJzbJznESni540UItTOrCYWYlLJecUwgXc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UP734Ace5rGZCh+K3haThDymJunwAHx+LCZ/OTkk2jUAUwP27VPQKl7jMahJmbSkdcOZ7iI0cuCSSrfv8kj8/HsfiWfU1sfOTU3dSv1+SgWyT+DI61xbO/VKD3dFAC7nskl5IsWdmmst+wwbbsg9Ye3l5CTlAXnWYqnZMT9rrmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OiB9hi7S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mfzu2FYr; arc=none smtp.client-ip=202.12.124.155
+	s=arc-20240116; t=1788159414; c=relaxed/simple;
+	bh=f7iW3R3wddhdoYvl7bdUti9SVLx5zADb4Zi6ntoVjDU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OzhBvwWq0YpsQUm3vRy4vNKH5Dkf0sHCiZ2gymhVio+YEjgiTAafcMEwgqoWuVDnzHuSZG/Rzp2wmV2H2EpSwIF++q9WvxKigfY+HgN+yY5WT9oCIBGrrnaruG2YeEmeYcZ3wObh6SHDXk0umRoUBA2dOapWzzdS2OV09k9bbk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K4NHm4LG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Onwp0jQw; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OiB9hi7S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mfzu2FYr"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A7B8F7A0115;
-	Mon, 31 Aug 2026 02:46:45 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 31 Aug 2026 02:46:45 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K4NHm4LG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Onwp0jQw"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id D2D401D00015;
+	Mon, 31 Aug 2026 02:56:49 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 31 Aug 2026 02:56:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788158805;
-	 x=1788245205; bh=rwygE9PaMY1aw4blRrhPINLIgG4e9GbzXcy+ec8zxYk=; b=
-	OiB9hi7SXwy3mIrFgWzgPj1Pvp/3OCRisSlpy9t2QypMILoLqDYdvUvvYNkrV9rK
-	7hW2Y4CkhHBy0Mr8rdGuqcpLVlyNyhDsrZfziMhsHZhMMBv61QYrFUfQK+zh7kYM
-	30ygGs7ORUxekBsMJaRoMwX9sQ3K/YQlBGCjZ5DiCcs/93jrFzP3x/ViH0vbJTjK
-	xRVhzIpb/0UVyxnNLeSELgFouZ7fFIexXxFuz7AcpersPreZ2rp0+hS76cDVBSEW
-	iThWa1N9USPL43j3cTsOEOzk3wBJIRLV1+1TM3bISIe2CE05KFRnUGFf//zT4DC1
-	ywNA8rCRu0u9LEHLYJODKg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788159409;
+	 x=1788245809; bh=bKJUudTo2mWihyqV1TZhKHYEI35Ocq7VgPWv8UJJ1rU=; b=
+	K4NHm4LGOrdBcQKp/q1BJVCZLonmshNAmaTIw2rYc2/LTFixvExt1dBMCyoLvS2T
+	oV70wvL3M9VzYI8RYvQIK/N8gIfLsF0ieutsHPu6opQda+m6LvDu5l/xxuN0Uetg
+	BwqCkRH03Fw5XZi5BsfPDZ/0fqiDbwj8uLk0VSeg4LVXKRJZn3fKLjDanKU2z27W
+	lWNQqS00kK2OfyLcSBGoS9OpxwZMBo8lw9KLERf6yG12yR6DN6SgDtbZac4gXjpg
+	3T8GG8yzDSeqklkBd7LZAOZqd5FSLRc3iK0fJOEegbAnxhvccJvZ81qJbfJFb+r0
+	uje+qTp5LNH66jVIaEXfHw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788158805; x=
-	1788245205; bh=rwygE9PaMY1aw4blRrhPINLIgG4e9GbzXcy+ec8zxYk=; b=M
-	fzu2FYr3PhGisrPO9Hz2GV/3qXcV8dTZp0ovYL7Q+wZuNH7GkAhEG21OAYX9ciBZ
-	8B6uapuyGfGWtQQ1m8BZG+31NmZLLd5kWvoLIFQO6h6ghCQuy2Yijj/jRfYh9+gE
-	wuTxmyFallmIn+k1ch20Am7W2LQX9z0nxx0qEThqI0ctvUnWtFcgk5jtUinONFq9
-	WIrhND3rnD7eO1jxMGDOTgvZCmo2U+3IMaZKFjbhFmGZs7yNbhTUCjGzGL04nZS6
-	A0ZOMcgXljVYXBFo+kzp0u+FcLAUEwvizwXVMJa2i0xvZsXxwyBXwYciUcgIrNkD
-	RdwIx3zeidbtPMrDIK50Q==
-X-ME-Sender: <xms:VSOVahvz3du0vUtg50V9c62Qhcw_azu9SDzB61EBANEmvB7IfTFfgg>
-    <xme:VSOVagdkYmXCXyH4YQAHOXxb1I-7up0f1yVSpmHWHddX4_3dnliw2A12hAOiC8DfB
-    DMQQvwpsJ9Pt4cegrRO7Njs5vE0SFwWQEzQ3cYaLYMkvBlqS0RdbA>
-X-ME-Received: <xmr:VSOVaibXfw0kqLY97xpVivz5fqPUGko3f3VIysqg89_bzADisIgdaulvY1qvC4s8M7tMdw>
-X-ME-Proxy-Cause: dmFkZTF8uJVk8lultrpZLZY6KctS9HgxGKMdbkrLq5VWkDlt8iOMXWmFSq7W24q4LNVoIC
-    NQgeuGP4D1i9C4kuY8em/kvEITSdgjIUluBgCUf7PCb67wuW3weXmbCP+Fh2ElzJ9cONkH
-    EJMxUYNa0jPEaKghsMfDJk4CHW3UAB7tpATIFdMJhegVOG9kPk9/0RAThe/VOHvzip80Rk
-    xtztq770kAzTxm6piezbwEPSxm1tajLJ/9uUpzDjTwv2WWi2MPS+pWD+1Ao3skxSSuwC2T
-    QjioQ3f4gWhpIVctNVlc09b579dXsRhipZB2e5viJVF+lNFjzHJKI4aokIc55eDDAaRlLb
-    0r0kDkHeaXuuKkJ56477rPqdfA6B9lMt9fZoSAoo8akQoXc2WaR/wvHhMyNRBldKAth44m
-    IAM+mlbNpUneyMOXN9WlS/axXg5TIhv8Q/9abTqZ12qtP4mGzMR4P3Hb26tM4cZadPC9/4
-    o0ynHg9rCf9nRyhMJ9kIJ8LWnPQrZyIAFsVb/rcmYpi8C6vvwOlbuHUNPkDrvHOv8MXtZ4
-    07dIB4iQaGwD+UuETdwkuN2V0ddxHb4d4rJIYsGHhVk+x4wDpHhaBgnkDRbnPP3RMfeKMx
-    sxw99+0iLamyDr+/kWtpLxZpAPI1lNMZo/JDltkUKHsqmTHIE74iUZtQj1yQ
-X-ME-Proxy: <xmx:VSOVajUInQ0USlNPgpGBkjya1u9vwq_Ss3D-mheNygIru2AWgKQTLQ>
-    <xmx:VSOVakia3lFchh6j-oK9_ZJvubw3Ft-fIkj_HErsgZ_YygnblUiEjg>
-    <xmx:VSOVahVMXCKefcEn_c3F6zKheqCdYn0FaeGHbBKrwoayKFovwx9QfQ>
-    <xmx:VSOVarP1l8Igd9woBRuann2g18ppMoLfS62r7TvTaGTPEadD-nXhDg>
-    <xmx:VSOVasdnvVZMptBrI2_OoLGhUFCmcUMY3XrTxaXI7Hu_1_vA26O8ookT>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788159409; x=
+	1788245809; bh=bKJUudTo2mWihyqV1TZhKHYEI35Ocq7VgPWv8UJJ1rU=; b=O
+	nwp0jQwpl8Njos64gm9hcOEJPu/9sQC2AyzSqk+2lBQC8G9Bl6NkGDnxAjLOl4n7
+	TyoKqrjFU011L4pgA0Kh7taLehpPi8PegiqR2RQNELPIkJbdkmO4TIbCU1bmCren
+	vwY8ljM05Wpwfcl2MLC6xZJbluT5i/dKV3XSBj//ccE3Y6IS35IFRn0IUgKCV0xR
+	Y+8F7kTcfR/KHjOKbnaRnZOsNHSpotI4AYZM4LnYtZQfZCTNFL5vbxiSzuiYxcPB
+	S5wCakiXsnbTBhb11EvEMzVk9OW4+MSGGuHa8USyQgOjpfbsUle1z95mmpS0GqLs
+	Gh5sIpO8YSfVq021pJ5uw==
+X-ME-Sender: <xms:sSWVarrEiHjkJpaSmAcRBlX6tPmjd3-BEew7OYMo4vbVRGFy4Voxfg>
+    <xme:sSWVasjFn_XzNMml1JVTFCWHlZDZhJX50o2emD0OQ4E18ikn3NSrEgPRKO00d-YCf
+    50H_p7_yTzUDvKIeHgmlYziLprNOz6RnD06wNlWcfLZ0fxKI6gn_nE>
+X-ME-Received: <xmr:sSWVagh5K4jMQINDgluAAccArT053nSDCx5rUAQcr4ZpvOvgclgnSApuN5QyyU1laPuYng>
+X-ME-Proxy-Cause: dmFkZTGHmg99h4TEqeOQFfRMGmUbo3kJAva4nwuxfggDbLD8ZXDJy2lw7wZdsraWq7VjXz
+    GsABxGbnt+h/Yc6eP/qX2EJhf8L6W+45KLnIULB5/9s2qdpOhS3iMUHU71TmZfZ1lZHSIW
+    j+pNzMZ9fGq5WQzHzgDLYOVjzTPrHwB/+jCpZIKoyXPj3BAH6+nykvzOsLveOXrV7cRNsQ
+    nPSQAWqgBO8PJNYc4AopEL86usA+yWRM8zoAOXI+iJCkBFYMAtAaJdW4fR72TLSYTo/ml8
+    J6Vs7b37ygQCDw6O82NOYuMzCyKPUPgyKmuZ7ZS/pF5pDs+0rMQp7qjUwuHzMxKtzTP8qM
+    GFh2euJLP1jP+bYyx7f73ko4ksNt+HMEWNTbCNRVxOqt0PmYnOkPBfkAMiVyjFH4QdIy0y
+    k3/BrktMg1pGLh8hgADcFgGAy2C9nyGXqHUdVfoO/BMbkMlQXFSIeYwBp0CQ0pLr/+83Dv
+    qU1UarQippOo578aR3T/MDymYuX5S1HIxknLJHnRyI46t/b37+XmOABrhFUIcVFCsivXnu
+    h8HSp7PDL1I3PYifwuL8DzO6nTihYs/NkbESMY9EysBkCRcbKlvfDrtq5g9gWyJGY8vDP2
+    kzLzF4d7DBqE8IOaGMLb/VixLxar9WDMl8yuopsX3I3Bz5IvoHglra3/607Q
+X-ME-Proxy: <xmx:sSWVaqjiQBKCfs4A21_YMpArNl06tmrYLXrnKfMaGJedcvdI5bKBEQ>
+    <xmx:sSWVaoIuOekS8HHGPQ5NpvRQzWn_H9i3-2XtUrFP_aiwJiVHwsSEHA>
+    <xmx:sSWVahHz9UwQBX42lBmHrpVltIuEKd-ec6KncYg9EceTtjG4e5ldLg>
+    <xmx:sSWVakQM_-SVkjwIXHubHwahNCLqxasnRyTKyc8ley6ca4vqnjXtLg>
+    <xmx:sSWVarDrPNrWpkGckkP8hTIwU9z5nwlQcsqGPddsZ4hEHdqlFmSqRZHG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 02:46:44 -0400 (EDT)
+ 31 Aug 2026 02:56:48 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a5c54167 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 06:46:51 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4b96933d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Aug 2026 06:56:54 +0000 (UTC)
+Date: Mon, 31 Aug 2026 08:56:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 31 Aug 2026 08:46:24 +0200
-Subject: [PATCH v2 10/10] builtin/fsck: move loose object verification into
- the loose source
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Grayson Gordon <graysongordon1@gmail.com>, git@vger.kernel.org,
+	peff@peff.net, avarab@gmail.com
+Subject: Re: [PATCH v6] http: add http.sslVerifyStatus to check stapled OCSP
+ responses
+Message-ID: <apUlqvXgChMeCUkp@pks.im>
+References: <xmqqmruqt36l.fsf@gitster.g>
+ <20260818214858.65122-1-ggordon@gitlab.com>
+ <xmqqpkz4czhu.fsf@gitster.g>
+ <CALgUfNjd_y-e-zTKJ31o8_bQuRw8wFWe=sdsf2KJ7LOmmO21aQ@mail.gmail.com>
+ <xmqqld9q40ww.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260831-pks-odb-source-fsck-v2-10-f9b16ef4957b@pks.im>
-References: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
-In-Reply-To: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqld9q40ww.fsf@gitster.g>
 
-The consistency checks for loose objects are hosted by "builtin/fsck.c".
-These checks are obviously specific to the "loose" backend.
+On Fri, Aug 28, 2026 at 10:20:31AM -0700, Junio C Hamano wrote:
+> Grayson Gordon <graysongordon1@gmail.com> writes:
+> 
+> > Junio,
+> >
+> > Yes, I was hoping for clarity on how thorough we wanted the testing to
+> > be. Patrick added a lot of great stuff that I’m happy to use if that’s
+> > your preference, but we also talked about wanting to keep the tests
+> > succinct. Please let me know what you feel is most appropriate.
+> 
+> If you can keep them succinct but still test the essential bits,
+> that would be great, but I am not sure if that is a great question
+> to ask me ;-)  Patrick?  You said "not 100% sure given the complexity",
+> but which parts make you feel iffy? 
 
-Move the logic into `odb_source_loose_fsck()`. Introduce a new "verbose"
-flag so that we can properly retain semantics around whether or not we
-want to print some status messages.
+Setting up OCSP is quite a pain, and that is what made me feel iffy.
+That being said, given that this is a security-focussed feature I feel
+like we should probably bite the bullet and verify that we indeed know
+to reject servers that respond with invalid stapled responses.
 
-Note that this fixes a bug as a side effect: the progress meter was
-captured in the callback data before `start_progress()` was even called,
-so the per-subdirectory progress updates always operated on a NULL
-pointer and the meter jumped straight from 0 to 256 upon completion. The
-new code only sets up the callback data's progress meter after it has
-been created, so the progress display now advances incrementally again.
+And given that this whole setup is now getting more complex I feel like
+it's worth it to also allocate a new test number for it.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/fsck.c     | 91 ++----------------------------------------------------
- odb.h              |  3 ++
- odb/source-loose.c | 89 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- 3 files changed, 93 insertions(+), 90 deletions(-)
+> They do look involved but seem to cover the situations we do care
+> about, except we seem not to test when the server does not explicitly
+> say "this is still good", or am I not reading the tests correctly?
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 7eaea340b0..4af1d874cc 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -12,7 +12,6 @@
- #include "parse-options.h"
- #include "progress.h"
- #include "packfile.h"
--#include "object-file.h"
- #include "object-name.h"
- #include "odb.h"
- #include "odb/streaming.h"
-@@ -695,88 +694,6 @@ static void process_refs(struct repository *repo, struct snapshot *snap)
- 	}
- }
- 
--struct for_each_loose_cb {
--	struct repository *repo;
--	struct progress *progress;
--};
--
--static int fsck_loose(const struct object_id *oid, const char *path,
--		      void *cb_data)
--{
--	struct for_each_loose_cb *data = cb_data;
--	enum object_type type = OBJ_NONE;
--	size_t size;
--	void *contents = NULL;
--	int eaten;
--	struct object_info oi = OBJECT_INFO_INIT;
--	struct object_id real_oid = *null_oid(data->repo->hash_algo);
--	int err = 0;
--
--	oi.sizep = &size;
--	oi.typep = &type;
--
--	if (read_loose_object(data->repo, path, oid, &real_oid, &contents, &oi) < 0) {
--		if (contents && !oideq(&real_oid, oid))
--			err = error(_("%s: hash-path mismatch, found at: %s"),
--				    oid_to_hex(&real_oid), path);
--		else
--			err = error(_("%s: object corrupt or missing: %s"),
--				    oid_to_hex(oid), path);
--	}
--	if (err < 0) {
--		errors_found |= ERROR_OBJECT;
--		free(contents);
--		return 0; /* keep checking other objects */
--	}
--
--	if (!contents && type != OBJ_BLOB)
--		BUG("read_loose_object streamed a non-blob");
--
--	if (fsck_obj_buffer(oid, type, size, contents, &eaten, data->repo))
--		errors_found |= ERROR_OBJECT;
--
--	if (!eaten)
--		free(contents);
--	return 0; /* keep checking other objects, even if we saw an error */
--}
--
--static int fsck_cruft(const char *basename, const char *path,
--		      void *data UNUSED)
--{
--	if (!starts_with(basename, "tmp_obj_"))
--		fprintf_ln(stderr, _("bad sha1 file: %s"), path);
--	return 0;
--}
--
--static int fsck_subdir(unsigned int nr, const char *path UNUSED, void *data)
--{
--	struct for_each_loose_cb *cb_data = data;
--	struct progress *progress = cb_data->progress;
--	display_progress(progress, nr + 1);
--	return 0;
--}
--
--static void fsck_source(struct repository *repo, struct odb_source *source)
--{
--	struct progress *progress = NULL;
--	struct for_each_loose_cb cb_data = {
--		.repo = source->odb->repo,
--		.progress = progress,
--	};
--
--	if (verbose)
--		fprintf_ln(stderr, _("Checking object directory"));
--
--	if (show_progress)
--		progress = start_progress(repo,
--					  _("Checking object directories"), 256);
--
--	for_each_loose_file_in_source(source, fsck_loose,
--				      fsck_cruft, fsck_subdir, &cb_data);
--	display_progress(progress, 256);
--	stop_progress(&progress);
--}
--
- static int fsck_cache_tree(struct repository *repo, struct cache_tree *it, const char *index_path)
- {
- 	int i;
-@@ -978,8 +895,10 @@ int cmd_fsck(int argc,
- 
- 	if (show_progress == -1)
- 		show_progress = isatty(2);
--	if (verbose)
-+	if (verbose) {
- 		show_progress = 0;
-+		odb_fsck_opts.flags |= ODB_FSCK_VERBOSE;
-+	}
- 	if (show_progress)
- 		odb_fsck_opts.flags |= ODB_FSCK_PROGRESS;
- 
-@@ -1012,10 +931,6 @@ int cmd_fsck(int argc,
- 		odb_for_each_object(repo->objects, NULL,
- 				    mark_object_for_connectivity, repo, 0);
- 	} else {
--		for (source = repo->objects->sources; source; source = source->next)
--			if ((odb_fsck_opts.flags & ODB_FSCK_FULL) || source->local)
--				fsck_source(repo, source);
--
- 		if (odb_fsck(repo->objects, &odb_fsck_opts) < 0)
- 			errors_found |= ERROR_OBJECT;
- 
-diff --git a/odb.h b/odb.h
-index 0bf6c8d7d2..b87f281cbd 100644
---- a/odb.h
-+++ b/odb.h
-@@ -218,6 +218,9 @@ enum odb_fsck_flags {
- 
- 	/* Display a progress meter, if sensible. */
- 	ODB_FSCK_PROGRESS = (1 << 1),
-+
-+	/* Be extra verbose when checking the database. */
-+	ODB_FSCK_VERBOSE = (1 << 2),
- };
- 
- /* Options that shall be passed to `odb_fsck()`. */
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index f68d3c4d6c..efef9ca61f 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -12,6 +12,7 @@
- #include "odb/streaming.h"
- #include "oidtree.h"
- #include "path.h"
-+#include "progress.h"
- #include "repository.h"
- #include "strbuf.h"
- #include "tempfile.h"
-@@ -1031,12 +1032,96 @@ static void odb_source_loose_free(struct odb_source *source)
- 	free(loose);
- }
- 
--static int odb_source_loose_fsck(struct odb_source *source UNUSED,
--				 struct odb_fsck_options *opts UNUSED)
-+struct fsck_loose_data {
-+	struct odb_source_loose *source;
-+	struct odb_fsck_options *opts;
-+	struct progress *progress;
-+	bool error_found;
-+};
-+
-+static int fsck_loose(const struct object_id *oid, const char *path,
-+		      void *cb_data)
- {
-+	struct fsck_loose_data *data = cb_data;
-+	enum object_type type = OBJ_NONE;
-+	size_t size;
-+	void *contents = NULL;
-+	int eaten = 0;
-+	struct object_info oi = OBJECT_INFO_INIT;
-+	struct object_id real_oid = *null_oid(data->source->base.odb->repo->hash_algo);
-+	int err = 0;
-+
-+	oi.sizep = &size;
-+	oi.typep = &type;
-+
-+	if (read_loose_object(data->source->base.odb->repo,
-+			      path, oid, &real_oid, &contents, &oi) < 0) {
-+		if (contents && !oideq(&real_oid, oid))
-+			err = error(_("%s: hash-path mismatch, found at: %s"),
-+				    oid_to_hex(&real_oid), path);
-+		else
-+			err = error(_("%s: object corrupt or missing: %s"),
-+				    oid_to_hex(oid), path);
-+	}
-+	if (err < 0)
-+		goto out;
-+
-+	if (!contents && type != OBJ_BLOB)
-+		BUG("read_loose_object streamed a non-blob");
-+
-+	if (data->opts->object_cb(oid, type, size, contents, &eaten,
-+				  data->opts->object_payload)) {
-+		err = -1;
-+		goto out;
-+	}
-+
-+out:
-+	if (err)
-+		data->error_found = true;
-+	if (!eaten)
-+		free(contents);
-+	return 0; /* keep checking other objects, even if we saw an error */
-+}
-+
-+static int fsck_cruft(const char *basename, const char *path,
-+		      void *data UNUSED)
-+{
-+	if (!starts_with(basename, "tmp_obj_"))
-+		fprintf_ln(stderr, _("bad sha1 file: %s"), path);
-+	return 0;
-+}
-+
-+static int fsck_subdir(unsigned int nr, const char *path UNUSED, void *cb_data)
-+{
-+	struct fsck_loose_data *data = cb_data;
-+	display_progress(data->progress, nr + 1);
- 	return 0;
- }
- 
-+static int odb_source_loose_fsck(struct odb_source *source,
-+				 struct odb_fsck_options *opts)
-+{
-+	struct odb_source_loose *loose = odb_source_loose_downcast(source);
-+	struct fsck_loose_data data = {
-+		.source = loose,
-+		.opts = opts,
-+	};
-+
-+	if (opts->flags & ODB_FSCK_VERBOSE)
-+		fprintf_ln(stderr, _("Checking object directory"));
-+
-+	if (opts->flags & ODB_FSCK_PROGRESS)
-+		data.progress = start_progress(source->odb->repo,
-+					       _("Checking object directories"), 256);
-+
-+	for_each_loose_file_in_source(source, fsck_loose,
-+				      fsck_cruft, fsck_subdir, &data);
-+	display_progress(data.progress, 256);
-+	stop_progress(&data.progress);
-+
-+	return data.error_found ? -1 : 0;
-+}
-+
- struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
- 					      const char *path,
- 					      bool local)
+Isn't the following test covering that scenario? Or am I misreading?
 
--- 
-2.55.0.979.g7e5102b832.dirty
+    test_expect_success SSL_VERIFYSTATUS 'fetch succeeds with stapled "good" OCSP response'
+           with_ssl_verification git -c http.sslVerifyStatus=true \
+                   ls-remote "$HTTPD_URL/smart/repo.git" >actual &&
+           test_line_count -gt 0 actual
+    '
 
+Thanks!
+
+Patrick
