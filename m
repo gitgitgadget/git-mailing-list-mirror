@@ -1,223 +1,172 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2473DA7ED
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 09:27:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788168422; cv=pass; b=MPl6jnTkBnAS0DqYvD0wgx+Cr0AHEcs0WeDDxRx2p9J9E0eNc+yfnoD1yV+myQSUe6YX1+SOksCT1+Axh8bBmpDjsaZgdNog+PbyJRFTLbkXgYMlKOOlnb2MOIzXOuuU0rcaNK1u1aqNHDgWV4Ll7UuV84AMDyu3S0sN4t2F4PE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788168422; c=relaxed/simple;
-	bh=H4J3l3aYtH8xCtQ7Mt6NdeAbSskw2xav0rA+g/HAvCo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=h/BYREO3rSy6E7K9kQDa+XxSFi+0wBZ0KHe3uZ3mIq52Sgzq17bD8iBmtyDhhsc3ZeaHGOo5p73f3MtLsx6ixhZrsFeRjjj2DTIaZLexY2hjjB5gEpeI9/qwDQZRHA3N1VeYKFqFB0zYaiJpVvf853YynZyeWV/qhtCnjd+GcJE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MrQfljXa; arc=pass smtp.client-ip=209.85.217.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8131839D3FC
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 09:27:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788168463; cv=none; b=gPzpb5xBu7qIp8Tp1COQyvdL7y81Zf9s63QW9jKszBYK+7XM3RLI2AmRglkU3KqKbVGsiwF2lHPwSKQgcZemY3cQ06z1FJulmPCjAaLMO4pTQhM7ISlBfGwJ310ArYXBLysUmlB9xIdIp24cw1edos2lMNR17pfkj1othksiH+k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788168463; c=relaxed/simple;
+	bh=HBX1WhnwsQCCtebI+3ox6EKSU/d7Ga8basUj87J5Cww=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JxhPtPnxP560rnjfD/0EoqcS5Vv7dyot39uRobt1IvH4VUNiHizlSmcbz0Id3DMmYU3IqOM7nB9EFy6VUR9kUe9duYZi4S+EmldJTfwwRByrADwQyuhGvZmMvdwAxmg9P4QASRAi5QXEOZZ4l3jor+dJAjPrFuysDJ7F+6JBuDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GMeLlK04; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NUs1PKtg; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MrQfljXa"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-7841b831381so569756137.2
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 02:27:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788168420; cv=none;
-        d=google.com; s=arc-20260327;
-        b=OxW2DTB13dFDHKXqRh9Ngd6BGVxJa3OrETzKesUOCeVlBCRpUjgp+xENJslDDPt3Dh
-         pPWbFRvcLUsJmGJG2SVY7Qyqyqvl5EH9lc26RwXwoKHSdnMKKPJIpMkw2mXNMCcSTd12
-         vk2h9L4aFWzUi/h5luVb8zAiLRY3kwoPNMy471LGPlS/z3ikQiyISBg51eI+DhpKA/9y
-         x2byMXBJXa39QSAge55X1TFsxwrOVmWA1dFqEVAB40Oixr1BecBcvsaS3Gcw9aRqeQ9b
-         6UPlg/jbrAB1Qya/9ULHX2861u0xxb/GzuvHs4IFtSmxM7QBm3El3mvJ7ozkmIfnnnH+
-         GqJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=ESQuHX+UHFhuuv2vinVyRZkjpMVp8tNaasHvCNkJoFg=;
-        fh=1oqchylwQmpaYYYokh0Na2gm/hAXZhiRjup9Dhri3Lc=;
-        b=DqFLxE9iMsOsLfbQuv8H0fsczm/ty1kCBTletuoL3mlqiQVYUy4NkGybhzwUBv1vRw
-         0vS+Te7wXIiWZemlmJtn0W5gTCTjlqrxK92TfUJJjadQvkk/gsDujHZpQgmn6rsu7qzH
-         IS10g87tIfsEkzVVkGAbWSGzLpLKDAt42CCq2wGNepttECPmlPytVmOnprpNbhwRF7ji
-         cfTzlTVF1hpyX7nect5AykxVTV4EXhILRbYj6UWk+XqRA98B6RKZwi8RMNJw2BHCONCZ
-         YKnXKFCpdHQHOF9cdH/hRyZDPqAzzw4GnnQpIcLC0sGJkLzwYTpuj4NIpzAgzjo7ji7/
-         zGrg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788168420; x=1788773220; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ESQuHX+UHFhuuv2vinVyRZkjpMVp8tNaasHvCNkJoFg=;
-        b=MrQfljXaOw8ESKLCDiCxv7tIaidfmkajSgDOyTNLGqVEmedqZb7oVTcSc5U2WEgVJ9
-         iPNp2PirhnN3BzIoePGW+0RPefe+jXRVwg3lfJKidHzZF4tfCsqLPR4d8xiDZzrc20jE
-         aIHCtZBpzQNVRg8qTcgWWuitRgtYE7UxXGK/m9D3pkJu+RdLOGW6EmIwzoXZQvhbn7C6
-         9IQ791wt/8PecFeGWd9WulhGjvAhna3MIr+SFrliAf16WE9Cl8ciVHSCNeq5siS6VLPe
-         JF79oQ0yD3Kqyl9jE/pIPI0tGh9DYIHkxOcuntoEyBifo/2Z4L8TuPQp+426Iw4Z8IDu
-         oXNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788168420; x=1788773220;
-        h=content-type:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ESQuHX+UHFhuuv2vinVyRZkjpMVp8tNaasHvCNkJoFg=;
-        b=cmjfZlqFnLgA7A9MJT6dFQlgcegOHiRUx8FZwUfa93nJTvJDvv273vuuqATdrE6Gm1
-         yxbf6aMOG9p89uiFV5d/Z1yIiVOFWpubvTQjghzHqhBbrLf3SLVIxGUEMO/tuPFaL/f9
-         I8uqEdsWhsiUtLe7MjNjz5mjmyGDCQZqj4PXH76vbZpa7VErBNf2FqEeDgcar8H5uE3a
-         F5ksqvTQe0zhm4pgkSIIapEJ1WYEJPgeR30V5ZXCKVyeuOXxXrCpC+0u0/GznncPw0Eg
-         cSaoRGsrehNFFwoM9vNRZLY+xvlpmTBcUhSVOT5rG3iw6oea7AM67qbkziqFkjGvryQ3
-         Riog==
-X-Forwarded-Encrypted: i=1; AHgh+Rpk19ZV27+O12boc8yKMWgrIFVQAfs47CObp2cG5K+Vf5TNt+ZAAJINpmgEkqepyuoqLEg=@vger.kernel.org
-X-Gm-Message-State: AFuF++ken3oaJmrqsDq88Ynzr2zjvqVsOKkTLpF8OYtnUUb7Nzke5A3A
-	JuyMUxWiNz0CP2sj1BSUW0ivNF1BbUsqEicMXQ79H9aSJ2Bs9g2YZkAWPY/no6xVFBcaIRLk5MI
-	uUrYbFgTj2VQHpIEKixPsubO67tk+r5L9JvxO
-X-Gm-Gg: AR+sD10QwALSuNaxoNbwDQirRIsBW6Bpxv05keXbtkS0zSfCfM590zfhCHJwuXPLKGz
-	f/9fwWFh+dp2Jaqo9sYaYMd3ggf+4RXulSiZQi6U/AupLWXqFQXRBNvOzzbaPtTFHBruSDgdE89
-	IxyiRQQiffHAnntgVJEJzq24YhJMt5EazO4dMhMtaOoSGI4WwzJ7BW2HYd1Bn1pT3BeLrNDkQCI
-	KGIWaMgsAhGrYk1ufRX3z6r2JPp4emVwfArwc0fo56tTaonvwiehl3aqqvHm184IoiGQH/d2OyS
-	9aWFsJxsaUTkVQfskCCD+We2mXwY4BnN0a0Y2i/FjOIVn9UOustAjrTPug61/Lwapn4twYXm0/q
-	K6hvZ+IYmz8l4yZ9BtNqUbHrtmFoHyJhdGFQ=
-X-Received: by 2002:a05:6102:e07:b0:780:d949:663f with SMTP id
- ada2fe7eead31-789ef7c90d5mr801406137.4.1788168419859; Mon, 31 Aug 2026
- 02:26:59 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 31 Aug 2026 02:26:57 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 31 Aug 2026 02:26:57 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
-References: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im> <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GMeLlK04";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NUs1PKtg"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 53AB57A017F;
+	Mon, 31 Aug 2026 05:27:40 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 31 Aug 2026 05:27:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788168460;
+	 x=1788254860; bh=88XC3YpVOb++rjnXHFKTStqPlUo6sNegdJp7oqERKR4=; b=
+	GMeLlK04ghG/4N+lYjdkcJltdlGCJ75d87geR2PpljJEMkQC3eNWUXukQH3Ylg3a
+	9rI2VrnAh3AbcSy14mp6Y1yB34gKTjuQnEl/u+y6WRDEHVJ6MaCIexpnq6z6z5zA
+	d6TbQMCCMjO/WONsAMzXGsndvBVq79KUoPDAXP4b0AGGk5WtxTaAUbCbQCOTQ04k
+	nIFv/S44f0J6fckAqCH4yXmD+WQKAc7+1DJ57E+FeK3feFFSnvfng5be7Wh4Qg2k
+	4DNu09ryTCnF5J+OHtyf+Q4SBF88768EL9SuFwvyKTE8w6AiwgfYSH407A9bRFlr
+	PNPyulOO8IfzD3LFySrStA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788168460; x=
+	1788254860; bh=88XC3YpVOb++rjnXHFKTStqPlUo6sNegdJp7oqERKR4=; b=N
+	Us1PKtg3U60jrW75lnfdRIWH1+JITOlOKp8//VIAGNHUKLWKlNgggQ780BWEoQDf
+	MBoif4xgzitIeBUaAKdhWgst17JQVgYdRASgxYKj1lKkGEx2AX4Qs8nlQBEtdiFY
+	jg0SekXus6PPsbx16AiEx7FUoYu4otuWu9INHDzV7/O4LUJb6cdcue5UlQvOrD4n
+	r7DtV/XZQZsKBbDe59+/LeaMoJIPI6PiyU5TsUNMskThu0/3xu3nH2GK8Vndb8or
+	wJTGgScNha0i1H0g0xiSYoavg7Z4LZkOJT+p8/iEHvOPT5l3iUFKTGJNEZXjBW5W
+	mE3MpoZSiRWe3adzfflnw==
+X-ME-Sender: <xms:DEmVahmWIWjNFZwbUdH2U49u2tgsKFR6NF8Wvvb9huT4cadcUvxZEw>
+    <xme:DEmValS59ti3I0cyF388CUri5tJrqgHSZr9o3bdia48Tx5cZPHM7OsDv6xn3T6JM3
+    0PFiofds58cM_Tun5HtWlEtYS-dQ3KzmcyG8gTjUwwIcG_uO3-GhyY>
+X-ME-Received: <xmr:DEmVaoHQ66AlsLMTFTHUtjRi3FDy3vfwvFlwXjhIjSn0dnPnTPHStOsws-f7DHkIFONSvg>
+X-ME-Proxy-Cause: dmFkZTGc+nhNIGpY0B35Yg8GOfxOYdjkFwfJ+h45w20Hvl0nQeBFzfAVQaVClyxnfUFA/O
+    ER1ljMdF59RZEwjXmK/TUGe0fGKdO0N2jupWCDa55WRP1sVCXb4EH3Iy+cy0IPJPJmeQwU
+    b2QOAiFq9rktPUgwR3qjSEHzaJTydNrQzMEAbo+q8VLoasEP1QMr4tRDYDuH4MqMwAjMgD
+    2dcRd0/Y5vzE48TGk1qZdZ7zAoJa2hq+RFoF+Frclc5nB2vgKb+3i+EY+sEPvG1MHB8U6S
+    d1x+VjXg8C0MAFyQmyKTMAG0y9CEwO2q7VQDqq+Sffxy15H/+TTjmvPE9nGjUOyE68maJu
+    6I6VXAzTup02wltyVtKjFrkND3bZx4O9EK64nzfpNd4TA/SPGRVmHeVwJSFuLKvk9A7L/n
+    3igdTvqLWcVm3hWNmD2ChyHtoHQYvwEZ++Nmv+lmSd07flzq8HsM8HCa4AMEjXXhEtkw+K
+    hwk4R6JYNlu9+mWc7sjnvUCibSld4vtaJUqQ8xXnJqByQn2G8/yG0YX6+vJ+kqrpKDxb/S
+    LWkqEebSvYe/fRI8QU8KdF/SoR5hTaeyasg9TSnm6tWh2qS7RG5AfZeVuAF0ZVDaIYJrca
+    U8QpwHKB7SEfWRm8zAxsZ/fWu3wL3q2wBV9OiONEVnfnRzSh7yw67gc2U7MA
+X-ME-Proxy: <xmx:DEmVaiF8Hd2XMeoI85pUQXpkNvfkTXI9xAo-mTlQGfv44MTDRBwRPQ>
+    <xmx:DEmVauSerz5jr363EJiG_RJ55cAw2_JmEQXtTdgFYAGPntSoAM4MgA>
+    <xmx:DEmVarL1v7lqAne6p3k0X1lLp_D3Am5q6C3cqzotXWILN7Iumu-2mw>
+    <xmx:DEmVahaNX2hS6Z2XlDW9Z3BpQ2Qn19IO-1JdIKcU7Zkj49M6jpOd-w>
+    <xmx:DEmVaiOjRZsinDF6JxwrAWzzNSuD8AUAAHRC_RqiHuxBzGGEiCfppowW>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 31 Aug 2026 05:27:38 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 7d1279a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Aug 2026 09:27:42 +0000 (UTC)
+Date: Mon, 31 Aug 2026 11:27:31 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Olamide Caleb Bello <belkid98@gmail.com>,
+	Todd Zullinger <tmz@pobox.com>, Tian Yuchen <cat@malon.dev>
+Subject: Re: [PATCH v5 3/3] core: convert build-time USE_NSEC into runtime
+ core.useNanosec
+Message-ID: <apVJAzddTPPCI7kA@pks.im>
+References: <cover.1787231825.git.ben.knoble@gmail.com>
+ <cover.1788010335.git.ben.knoble@gmail.com>
+ <01cd487cd23f23b1d18359b86fbcf18e25039e6d.1788010335.git.ben.knoble@gmail.com>
+ <xmqq8q5n1fa2.fsf@gitster.g>
+ <CALnO6CBejkZTgPM9tK6TEGeNYSRfi9r2-xi7R4ckTsRm4ZGaQw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 31 Aug 2026 02:26:57 -0700
-X-Gm-Features: AcwNN1V3KD7i18VFvMrLN0TPdN1ErDrW2S0yAAgNfT3NpThf9MUSJfpMzSGsEdI
-Message-ID: <CAOLa=ZSi1TiTZ=i=SQp+pmjTOm2_wY-NiCotx66+M6VDKx=ZXg@mail.gmail.com>
-Subject: Re: [PATCH v2 00/10] odb: make consistency checks pluggable
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000770c06065a546798"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALnO6CBejkZTgPM9tK6TEGeNYSRfi9r2-xi7R4ckTsRm4ZGaQw@mail.gmail.com>
 
---000000000000770c06065a546798
-Content-Type: text/plain; charset="UTF-8"
+On Sun, Aug 30, 2026 at 08:27:13PM -0400, D. Ben Knoble wrote:
+> On Sun, Aug 30, 2026 at 5:15 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+> >
+> > > +             /* nanosecond timestamped files can also be racy! */
+> > > +             (repo_config_values(istate->repo)->use_nanosec
+> > > +              ? (istate->timestamp.sec < sd->sd_mtime.sec ||
+> > > +                 (istate->timestamp.sec == sd->sd_mtime.sec &&
+> > > +                  istate->timestamp.nsec <= sd->sd_mtime.nsec))
+> > > +              : istate->timestamp.sec <= sd->sd_mtime.sec));
+> > >  }
+> >
+> > Currently this is probably fine, but the use of repo_config_values()
+> > here means that the order in which we can transition/libify two
+> > unrelated things are forced on us:
+> >
+> >  * We'd first need to make sure repo_config_values() can work on an
+> >    instance of repository that is not the_repository,
+> >
+> >  * And until the above happens, we cannot do a --recurse-submodule
+> >    option that loads the index in a submodule and operate on it in
+> >    the same process (e.g., "git diff --resurse-submodules"),
+> >    because immediately at this step, istate taken from a submodule
+> >    would have its .repo member pointing at something that is not
+> >    the_repository and we will hit a BUG().
+> >
+> > And after writing all of the above, I realized that I am mostly
+> > repeating what Patric already said in the upstream, e.g.,
+> >
+> >     https://lore.kernel.org/git/an720tZnot07HYiK@pks.im/
+> 
+> Yep---just so I'm clear, we don't currently have such an option,
+> right? I mean, there is no --recurse-submodules for git-diff(1), and I
+> tweaked t4060 to run "git -c core.useNanosec=true diff
+> --submodule=diff" without any issue.
 
-Patrick Steinhardt <ps@pks.im> writes:
+I do have a patch series coming up where we start to rely more on
+sub-repositories when recursing. The motivation behind that series is
+that it allows us to get rid of registering submodule object databases
+with the main ODB. But I just double-checked, and your series luckily
+doesn't break it.
 
-> Hi,
->
-> this patch series makes object database consistency checks pluggable.
->
-> This series is built on top of 2c3adbb2c4 (The 18th batch, 2026-08-24)
-> with the following two dependencsie merged into it:
->
->   - ps/odb-eagerly-load-alternates at 0076dc9f81 (odb: drop
->     `alternates_db` field, 2026-08-17)
->
->   - ps/odb-pluggable-pack-generation at 5176dd3d05 (bundle: generate
->     packfiles via the object database, 2026-08-21)
->
-> Changes in v2:
->   - Some commit message improvements.
->   - Link to v1: https://patch.msgid.link/20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im
->
-> Thanks!
->
-> Patrick
->
-> ---
-> Patrick Steinhardt (10):
->       builtin/fsck: use `fsck_obj_buffer()` when checking loose objects
->       builtin/fsck: merge `fsck_obj_buffer()` and `fsck_obj()`
->       builtin/fsck: de-globalize option handling
->       builtin/fsck: don't check alternates with "--no-full"
->       odb: provide infrastructure for pluggable fsck checks
->       builtin/fsck: move packfile verification into the packed source
->       builtin/fsck: move reverse index verification into the packed source
->       builtin/fsck: move bitmap verification into the packed source
->       builtin/fsck: move multi-pack index verification into the packed source
->       builtin/fsck: move loose object verification into the loose source
->
->  builtin/fsck.c                | 296 ++++++++----------------------------------
->  odb.c                         |   9 ++
->  odb.h                         |  33 +++++
->  odb/source-files.c            |  13 ++
->  odb/source-inmemory.c         |   8 ++
->  odb/source-loose.c            |  92 +++++++++++++
->  odb/source-packed.c           | 117 +++++++++++++++++
->  odb/source.h                  |  21 +++
->  pack-bitmap.c                 |  26 ++--
->  pack-bitmap.h                 |   2 +-
->  t/t1450-fsck.sh               |   5 +
->  t/t5319-multi-pack-index.sh   |  13 ++
->  t/t5325-reverse-index.sh      |   8 ++
->  t/t5326-multi-pack-bitmaps.sh |  10 +-
->  14 files changed, 394 insertions(+), 259 deletions(-)
->
-> Range-diff versus v1:
->
->  1:  cf49376600 !  1:  1aec903546 builtin/fsck: use `fsck_obj_buffer()` when checking loose objects
->     @@ Commit message
->
->          When checking loose objects we manually parse the object buffer we have
->          read from the on-disk file, mark the object and then call `fsck_obj()`.
->     -    Almost the exact same steps are also performed by `fsck_obj_buffer()`.
->     +    The exact same steps are also performed by `fsck_obj_buffer()`.
->
->          Stop open-coding this logic and call `fsck_obj_buffer()` instead.
->
->  2:  da2ca27041 !  2:  3804f0339e builtin/fsck: merge `fsck_obj_buffer()` and `fsck_obj()`
->     @@ Commit message
->          Furthermore, `fsck_obj()` has no callers other than `fsck_obj_buffer()`.
->
->          Refactor the code by merging those two functions. This makes it obvious
->     -    which function does what, and it allows us to get rid of the early in
->     -    `fsck_obj()` in case `SEEN` is set as the only caller unconditionally
->     -    clears that bit before calling it anyway.
->     +    which function does what, and it allows us to get rid of the early
->     +    return in `fsck_obj()` in case `SEEN` is set as the only caller
->     +    unconditionally clears that bit before calling it anyway.
->
->          Signed-off-by: Patrick Steinhardt <ps@pks.im>
->
->  3:  a24506f55e =  3:  b2cb9032cf builtin/fsck: de-globalize option handling
->  4:  f6a407efd0 =  4:  10ee3b8baf builtin/fsck: don't check alternates with "--no-full"
->  5:  31841a1f05 =  5:  1e65eec60e odb: provide infrastructure for pluggable fsck checks
->  6:  2cd6d71983 =  6:  0b8cf751aa builtin/fsck: move packfile verification into the packed source
->  7:  c0559f1820 =  7:  3a38a75549 builtin/fsck: move reverse index verification into the packed source
->  8:  96ae1ce3c6 !  8:  dd3a4c6cea builtin/fsck: move bitmap verification into the packed source
->     @@ Commit message
->          instead use the generic `ERROR_OBJECT` bit.
->
->          Note that this change also adapts `verify_bitmap_files()` to be
->     -    focussed on a single "packed" source instead of verifying bitmaps from
->     +    focused on a single "packed" source instead of verifying bitmaps from
->          all sources. This change is required as we already know to loop around
->          the sources in `odb_fsck()` itself.
->
->  9:  4721f4b4ba =  9:  90ada56b7f builtin/fsck: move multi-pack index verification into the packed source
-> 10:  0b36829fd9 = 10:  b0f6fccae8 builtin/fsck: move loose object verification into the loose source
->
-> ---
-> base-commit: 6b08999fb1b3ad0bad04d492dc206ad42839e274
-> change-id: 20260810-pks-odb-source-fsck-e64772c7ee5f
+> I would happily prove that at least none of our existing tests fail
+> with core.useNanosec=true, but I'm not really sure how to shove
+> configuration into every test invocation of git. Even if we could, I'm
+> not sure we necessarily want to add another CI job for that (though
+> that's a separate matter).
+> 
+> In particular, (among others) I have not received any concrete comments for
+> 
+> > Comments welcome: I haven't touched any tests; I saw a bunch of hits for
+> > "git grep racy t" but wasn't sure how to fit this particular change in,
+> > especially since it won't be equally valid on all systems? Advice
+> > welcome.
+> 
+> so if there's at least a way to exercise this path on all the tests on
+> my system (which should support it), that would probably be a good
+> thing.
 
-The changes here look good to me, thanks!
+Yeah, I simply don't have a good answer here. It's messy, and I'm not a
+fan of the current direction of `repo_config_values()` because nobody
+has yet stepped up to untangle it from `the_repository`. I gave it a
+quick shot at one point in time, but the result was messy at best
+because of how we populate it via `repo_config(git_default_config)`.
 
---000000000000770c06065a546798
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 69a67ffeda033881_0.1
+In any case, if we see that your changes interact badly with some edge
+cases that we don't currently have on our radar then we can still
+refactor the series and move the value into `struct repo_settings`
+instead, as that structure works alright with different repositories.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xVlNOc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mME0rQy80ajZmMExCbFNMc1dxVWhMRk8ySWs0TTk0UgpXelBybVZ0RytZ
-cEowdU1BTjlkcWhpNmpnc2lzREEvZWlVTTRuSmlaSTdHZE40Q0Nla1ZYT3k0aXdmRGVFQ1B2CmRB
-SHd6WVJKNXcwVmlaZ1EwTi9sV3ZSQ3ZDbzQrUUhrR2FYd0ZxQWRQcVQ3b1ZQTmhDRlJsRFE5M09F
-anlPLzEKYUVrWHl2Yjd0QldwZlpZYVBNUGp4SllRU1VVelQ5SllIMEhITW9PUmpFTFdsbFRuUE1I
-c0hqVXNDT0pmOFEraApTRElkL3l6WTRiQUMzRkFtVXlTZUNWWFNNNCtuRm5vRm5KYWx3OUhxQ3B6
-RFBzdTlNT1FPMlRZRVFrM2FRWWhRCllLWEREcW1seSsyV0hzTjN6dmIweVAvcGNmUW9qdDBvTjY5
-SElFc0dDUkZpVzAwM01QVGxXYWJXWW9OYzdvb0kKNzBNSXFkRGpGTEZpUktnVGhtd05yYUc2NGVh
-YWtqOFV4UWUxSCt1YVp2ekZBcjB4UG1adG0rd21VY0xGdlh4VApxVkxsUEE4OXlGbWpkSFhXUHZ4
-b2FmZWEvRDZzZWx3Z0ZIVVRWTENXVGRZR01xclhYd1ZwWGhYZEFGLzZkeS9QCklaNlI5WCt4czRn
-TkNxbzdNN0ZRN0dGZ25mZXEvU1RTd1B4QzFDaz0KPWRQTHMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000770c06065a546798--
+Thanks!
+
+Patrick
