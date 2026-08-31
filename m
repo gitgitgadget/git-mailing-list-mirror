@@ -1,115 +1,132 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDA33FB067
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 18:26:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4611233DEF9
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 18:45:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788200804; cv=none; b=VhlFRt+M0bZ0OtrM9pYZUvqMhrZlqjLLHABy3SfZhb/hylzo7HdUE5IAfY6fuy3D9wJiQ+qJtWyHvGqZJe6gcPQlu9Uq40RVSk4LvNMsuBUy7CxdxdBTDYpVrhQRhYc8OYa6EAKDZ7w2XIkbN7vg0WjHU4DATJFTqJI40poueiQ=
+	t=1788201908; cv=none; b=dOy1hGOHRILIM8DaNAm7NpR4tbXrrifqQF5K/54XZpavmYusPaKULBNei+0Qj8n4IkzW/IFHcRssSuGQbaCGWeCotXw5wrb/59pgccj5f4VJvEOgyU5RA5X7ms5vObeep1uB1l6sNQvHE4S/ksQdHDYCIMZvFRH6gmA3mYHHElI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788200804; c=relaxed/simple;
-	bh=q1RuJk1mV2/KNX7KyGpOvAJPFlJgWeGTqla7W2Y0wns=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lg/kGuxpA7BNfAXKmtRa17p8PecYMHRayZ7xRY7ecC+bKrmvXiazQaXkL2vSdtlAosY5f3BbCw3BD4KGApzTFczofkjTBL1SEFfx4lmIyr4CqVEiaxofmg8kGgsez0q/VJg5Cs1F0bzqFumgjKjMCU1UW/+9hUchhBMOgCOBcJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jcyyBUIe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NNIUxMRi; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788201908; c=relaxed/simple;
+	bh=44U8TQS3imRqLPeQeMD51BhGHmQ//MM/5hyIlOkzyvU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Bmph4uHDoJ3wDdjqpizxrYXFj5fUhF6n6dDpK2M/lnEbl3YUaG4iAn9PT+n16mmGqGV4tv/ciMneX6LkprIsWusDwRTwd1Is6qbgckbGaOK8khGC/nSpZxFqVWa/oqBMhl+w37YyDBCoYLSEArz3ld/cJD9mrBiLz2Hb3jE8bt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fAspxJmh; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jcyyBUIe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NNIUxMRi"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 22C8E1D000FA;
-	Mon, 31 Aug 2026 14:26:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 31 Aug 2026 14:26:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1788200800; x=1788287200; bh=4KZsALtCae
-	XIERMY5XSXc6/ZgIL04wSnoAa3twO0SEs=; b=jcyyBUIe8kBPdBLBQEJZkMEIDR
-	qlVf4gnosBYohUEWxbRsmhvIGtIMpfTFIzBC827+IANLzIneOHs6XeqilWrExeA0
-	tJJcASeDwMvMp5fWT5dp7X4QoSAWXl7AA/c29/QPc0nnIlwMv+zxKodBpfxbD5Y+
-	P7P7uScv6698UqQUbv1Nao6jM8VGXQlGaNpx+YQ9uDjINfjhaJDc0KPizpv/ZOd5
-	292JRXqzbofWrbp98VWdc9g1L2zJd4CSWDm3678fTOHdT3y4p8iEtZe4OkCAiML5
-	wtD1uvEZ4cWT79Wt4S8ID3Nn31KozWSpyzrZJ0pR8vbiXdU08nHhRk3Q1PQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788200800; x=1788287200; bh=4KZsALtCaeXIERMY5XSXc6/ZgIL04wSnoAa
-	3twO0SEs=; b=NNIUxMRi8/ncvPjv9gq8wp5QU797rGRqW+gk2ZxQnhuakYQhlUv
-	rTITwrKn6UWWYnax1rfW9lxW/ADouvEH/5wJPyNcuo+Id0CrRVk03qN9vdoDBbAA
-	rCc2zRs52oCVILpM8MB8TDlMJPSpQw2FMUTbSCJ8d3ZIxhYwzwfbrJqzeHcnDy4E
-	kmvUaEh/pYKkxxLR44waouLqsyzfX/pHLZWyUIPuK00Mcgnglzdb2IqQAT+/GWkB
-	6zx3ZVJScBjWDC1LmTkINhD0JUb+94WqGWJ+rvBroOoMFVxBW9SO3eGZslUDmV3Y
-	JnLr+959SYT2St3MNl1yUXTyyvMHBJCgFzg==
-X-ME-Sender: <xms:YMeVahfUuJHdhlDIpjzkqYiiFdkoegJ0d2Q1LhW0NxWJRRUNDRRAgA>
-    <xme:YMeVahf8QJCrzONp_X_eEegGt3dYw3qIVJeaI39sN_7ka4Ez_3n9kZYX6TzIH2JHI
-    tlbG3Hs-kBnKd5QCxLk21N8tontVlrTjfvYkfTzlfXxBVCTG6jwSg>
-X-ME-Received: <xmr:YMeVaszbnxCE1RvATh6T1JjLYEF8gdlM1RkmpWPo77sPY20wmVotfg4zuPYJILOxjeHmR0FV6fXI6cGKeUjAG04IctwbLsHEbA>
-X-ME-Proxy-Cause: dmFkZTEZIPDKoFJNKK2cRcTB8ZiglPY7/mx8LVRisl2U38udH3MGL+F1HOlf3MR7bXYQlw
-    9vwg0B0sLtNe6Ztv2o86fRVGZVCdQ37e69k5QyvLx8eospAIVBmJn2fWVaicceQP6yIVNo
-    GBFgRpowrrgNK2BqCwQTDufNdT5gxwIYJpsB4R63SnLYqqNd57C5DD/4d2VHKF1A6nNzsi
-    EPMoEjM+0JwFTzFtJYXsdkYU2e/vRmEbWI67tiYBUlG/+Of13FGaq2NozB6SbiwWbKQ4kn
-    pI7iHM7V0g3HsjhXXeojerCFzHZrNhfDSzQeQDw5/s/BUsGI4BSlBJOgojgU8L7HJTSbo6
-    bADXdDSeavBeZcMGS0Upyg+AufK4MXtFdEu37rM2k3yWHV605RnvtWN/h2NpUDzYUMAqyX
-    bFZfFw0ZAsDLLQ7tlJyPbcIYC9EMEK+Dd3vLwQm1ZiFbuWH1Kd21J2/MWvAM/B1K8qLRK7
-    NV6CdVrvETIo6cJVEflok+O9jLTfGqfNvW6MfWV+q+INw/ktTH06GL1V7TSevTXOQxbm6v
-    7/nthmDRlIbPkoKYkKEhVF41wvpfguQVGK5o16IANQYzydr0Y5+wIJYjd9TUTLi9AGWNc8
-    b7cz0ZHmgYAjiL2naMS6gznn/ARMqZSxcrwFbgVuxsN/Uzej3b/WHt/oyNdw
-X-ME-Proxy: <xmx:YMeVag9MScoY-uGmBMuzjbGrMx1wW6BBedHARxF9WOdk5gKdeYLnXA>
-    <xmx:YMeVasiwE2N7oI3-6O_NuqQdmLedO75-1Tn42yyK1SqEXgmXYIXcvQ>
-    <xmx:YMeVavFU45pLWIWNm2Dg13jkXsfVpgSY5EhWBItQpHXwPQyImk83ww>
-    <xmx:YMeVaj8MIvHpHFAFkMXtBlupYUgeWqgpxDJ7xv8vOxtbPG_OY_5fsg>
-    <xmx:YMeVah7icOfqffkC2WSeDxP-GoTci9JMsN8MadHm5WJFbhSV5P76x0-B>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 14:26:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Diogo Castro <diogo.filipe.acastro@gmail.com>
-Cc: Diogo Castro <dcastro@diogocastro.com>,  Diogo Castro via GitGitGadget
- <gitgitgadget@gmail.com>,  "git@vger.kernel.org" <git@vger.kernel.org>,
-  Thomas Haller <thaller@redhat.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH] dir: fix negative pathspecs in 'git ls-files' and 'git
- add'
-In-Reply-To: <CAJw8QBMmv=zLN6sd_W9uQMF3H6Baatyq=TogLyZSFXK2gN4V8w@mail.gmail.com>
-	(Diogo Castro's message of "Mon, 31 Aug 2026 15:30:22 +0100")
-References: <pull.2391.git.git.1787949348110.gitgitgadget@gmail.com>
-	<xmqqwlta2agt.fsf@gitster.g>
-	<CAJw8QBPbxangB90DceDXxaDmyz8fn5jbEUihhe2faJrZ3o7BeQ@mail.gmail.com>
-	<a8955129fcb7478f9739c8586c6975e1@CWXP265MB5784.GBRP265.PROD.OUTLOOK.COM>
-	<CAJw8QBMmv=zLN6sd_W9uQMF3H6Baatyq=TogLyZSFXK2gN4V8w@mail.gmail.com>
-Date: Mon, 31 Aug 2026 11:26:39 -0700
-Message-ID: <xmqqv78qw3hc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fAspxJmh"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cc1a4c62804so3273781a12.3
+        for <git@vger.kernel.org>; Mon, 31 Aug 2026 11:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788201906; x=1788806706; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=weWQlAjV+xqJ+ci9dShjtQ3pv9C0oCOUkvyfS5cTqB0=;
+        b=fAspxJmhbPGjChc63iCdlCHtlRSL3cd2rP+gzYgwRMOl/of5H8SAE6LrVmGNDLoJAD
+         khk42fUP/VYgd/vy42H45tKulAzjItcYQhKxLnQ4obAeqtRb7Yh8LcUuYsXqOOud64sC
+         Typ0x78LYD6KXWBB62+mGmiippR3CDH90szk+tORGgWtw2Thm8dI56EedZ4n5EykX2S2
+         DBYYRISKAqzM2Y30hyzPZnHoglkHWqGYEI2M+9o/n0vlgz1FPwXlt0RUKlyiM2eIvGJj
+         OMXGKG5OEWnF4uSokG8WSZ9KD14MplnYJRlYbAKYIiItRUPQA9hKjpWi6CtPQQA/JKzx
+         T50w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788201906; x=1788806706;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=weWQlAjV+xqJ+ci9dShjtQ3pv9C0oCOUkvyfS5cTqB0=;
+        b=eKl8ELwyDwx0VRjq762eXBpWGKTN2G7rp0QdD+RCtBHR7hW7ksHTPqS8baUp5eWWVa
+         KGE90eUpE+rIlLldd5kw5hPLDE/0ZkSUF4PgT3ZfXIM42mCLqnkKvl+GDjwD+xMdn9xK
+         ZyIC+LEmLzhJVwFCkosL7A9gWlZeVe4fmMlvxzjLPszbEVYi9ISS3eyWAIUnoUuxMijn
+         LX20wrq3FmzXkzofkqKS7rGqzpT2nJqNJ0t2gKZJpEqHJaNCJndYMqJYcW7sV0j/Smqa
+         PjHM9xFKrv7HsxqSqO9QpoDdqSMRENMlTi/noSJNp5u3lEDXIR6mDAXtUNrvjlA8r4MS
+         ZpnQ==
+X-Gm-Message-State: AFuF++miSHmN557zXV7H9LA9KTrGJ2QV608NYfpnPfoKMv4Wo8SakDjV
+	AgvwEMtQ4CSkdJl/IbkK8K2woAVX0Oh0dxeIYqLTU1qrIjDxu8ww7EGKzKNXvw==
+X-Gm-Gg: AYBFou2l7ASHANMuwPMXmcuVIzNJRK2EGxko1NRQiIvyXCquJZ8bw7SlnLovg0bMAV0
+	j+hcEmEBfwhii8gao3llTu9CMFTVZDusepe0lUypi1MPMv9fV69Mf9fjB1f+wbUPiPZLB/8jpDb
+	5hWjDrb11utegvuA2km8JjHEx6xwsErg2QmzCHOlxY2SApmTvS6kO4m8nXy/OU9nthT3lQ0FOlh
+	bcoOexvz9vJD4foFbkprXWuyB5sgydOmvWwtdIWoFl1ulmN+BANf6lV4UI7mOA9TW6VNKKeG6Vp
+	KFcpiSJXPJ5MFbtbtCJNz1P+3YCNhSP2ysBdUNnB6FEWmyI9jCgvgAsQPKrf5lJkmS3F3eat07K
+	N1j65QX1PNiD2Maze6BnFHUHQTR9yufNFWcx79YPRefhwDM53xkIJ1HzIK1FAsdlgeeI2th++iW
+	ixBBAUkgS+NGdyeFopVSDjm1qwnq9f/DOAwOdnPRt701T8yCzvIO1s3So85im7wRY=
+X-Received: by 2002:a17:90b:3d91:b0:38f:18f9:785 with SMTP id 98e67ed59e1d1-396d0f016bcmr46201314a91.8.1788201906324;
+        Mon, 31 Aug 2026 11:45:06 -0700 (PDT)
+Received: from [100.87.176.22] ([117.213.200.3])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-142e0d38207sm29327763c88.5.2026.08.31.11.45.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Aug 2026 11:45:05 -0700 (PDT)
+From: Hardik Kumar <hardikxk@gmail.com>
+Date: Tue, 01 Sep 2026 00:15:01 +0530
+Subject: [PATCH v2] versioncmp: fix typo in versioncmp.c,
+ t/t0022-crlf-rename.sh
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260901-typo-fix-v2-1-6aeafbae6389@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22Myw6CMBBFf4XM2jHt+Gjjyv8wLCqMMIlQ0hIiI
+ f13R9bu7jm5ORtkTsIZbtUGiRfJEkcFOlTQ9GHsGKVVBjJ0NZ48zusU8SUfdGSfzlnndIDep8S
+ q99SjVu4lzzGte3mxP/snsli0SGf2JnjH7eV074Yg72MTB6hLKV96jhyeoAAAAA==
+X-Change-ID: 20260828-typo-fix-721b77177721
+To: git@vger.kernel.org
+Cc: Hardik Kumar <hardikxk@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788201904; l=1396;
+ i=hardikxk@gmail.com; s=20260827; h=from:subject:message-id;
+ bh=44U8TQS3imRqLPeQeMD51BhGHmQ//MM/5hyIlOkzyvU=;
+ b=p1mXzcvZ2Z4DfPUFLhLvyX0BVifnnZQiKFo6DbvqT/B1apViiDbhwCuhWY0sgW8ZjL1SWzwcx
+ bXBVJWzqtAoBRNcwQ0+yW75sWtrSFgxZSdWbPET414bUsf6W7mzzaZs
+X-Developer-Key: i=hardikxk@gmail.com; a=ed25519;
+ pk=56yFuFlLHAdRemUZghoGHVCijEX767atrut3dPD0thQ=
 
-Diogo Castro <diogo.filipe.acastro@gmail.com> writes:
+The patch fixes two typos in two places.
+versoncmp.c:            "fractionnal" -> "fractional"
+t/t0022-crlf-rename.sh: "similiarity" -> "similarity"
 
-> My point was that computing the common prefix across both positive
-> *and* negative pathspecs would not improve performance, and might
-> actually make it worse.
+No functional changes, only update a comment and a test_description.
 
-OK.  Then that points at the right solution.  Ignore negative ones
-when finding what the common prefix is, strip it only from positive
-ones to reduce the width of the traversal to come up with the list
-of possible match candidates, and match them as full paths against
-the negative ones to cull "within the positive set but is excluded"
-paths, and the posted patch looks good.
+Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
+---
+Changes in v2:
+- refactor commit message
+- Link to v1: https://lore.kernel.org/r/20260828-typo-fix-v1-1-24e80a87ed53@gmail.com
+---
+ t/t0022-crlf-rename.sh | 2 +-
+ versioncmp.c           | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-I still wonder if we need different implementation when we have many
-more negative patterns than the positive ones.  In such a case, the
-stage to filter paths that matched one positive pattern by finding
-matches with a negative pattern among many of them, which may
-benefit from having a similar common prefix (among negative
-patterns) optimization, but that is a separate topic.
+diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
+index 9bd863a970..328c6e5903 100755
+--- a/t/t0022-crlf-rename.sh
++++ b/t/t0022-crlf-rename.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='ignore CR in CRLF sequence while computing similiarity'
++test_description='ignore CR in CRLF sequence while computing similarity'
+ 
+ . ./test-lib.sh
+ 
+diff --git a/versioncmp.c b/versioncmp.c
+index 3a81b17bc1..f1e451755a 100644
+--- a/versioncmp.c
++++ b/versioncmp.c
+@@ -15,7 +15,7 @@
+ 
+ /*
+  * states: S_N: normal, S_I: comparing integral part, S_F: comparing
+- * fractionnal parts, S_Z: idem but with leading Zeroes only
++ * fractional parts, S_Z: idem but with leading Zeroes only
+  */
+ #define  S_N    0x0
+ #define  S_I    0x3
 
-Thanks.
+---
+base-commit: f78ce2f7b6df702f93d40b85d6bda92a3f65da79
+change-id: 20260828-typo-fix-721b77177721
 
