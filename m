@@ -1,67 +1,68 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28AA412BF8
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 13:15:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DB13D903E
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 13:27:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788182118; cv=none; b=auhKJMnkfuNeLtuo+o4QoV2givOYJDE6pqf2FAuNkB0PcKmvGPfn59cg8YZyklgbeurTfjyl5shVV5QncbtC/vvJ5aQwkqEpa90KBA2fx0ZH4Phy6sHMHZ3VgjQoK23TUXIMhIq+VRIj2KiUTE05WWqoqxmpTN+BBgSUYkwbBLA=
+	t=1788182874; cv=none; b=o7RAbam6KzQsho+ieOFPmo2vgfG5xDCh1LtMwXPJr9MYd55mMsMjU/ZLSVqlO31p93E0AJSeBl7/d8xnfjscpnbzooNSerMT/BUsapiidI1MQmA9OvWmXAJZsRbrVArlz3ilkTB64nIpRQ2WVrY3aZKdsidrTAkJPXHoDac/KFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788182118; c=relaxed/simple;
-	bh=Pb8kcO11l1l1TIB8gKv65SAn9YgxIgseXPwbVQSieHo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=BXVAq9FpenYQsXzNYU24pnRBjdGaejDt0BRGpoVjZogpRygVjyIPdF2sSRFBVF3EEtGjznPcmW5NCf5G83EgFiPHHdw+QQbb+bf3fdo9YzHmi+ZN6B9xIIjSXzoQrKd7+I5KCcHUYbHtBZwmHmj5ATocamjQk5cZD+TOh/sJjDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qewrFPzh; arc=none smtp.client-ip=209.85.218.42
+	s=arc-20240116; t=1788182874; c=relaxed/simple;
+	bh=qawamj1swqv9yK/RXkXm2nSK9z++dlmmsKg1E8ZQtbg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q/UfPaGlOtCnXKZ1XcqIdwcNic1/waDdpVXbrWxeHFxZZDh2J8r4y4wOVMMeBbk7m6I258s7+VtNL/lvasZzO8ClApMoWvrcdqkhs5QRomQPuB6F6kCrIZ5h4d8NwPTsrfbbQAQyabJXBCAB3gic15jd1YQS8v7UpVDH8OVHjZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RpivklZU; arc=none smtp.client-ip=209.85.160.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qewrFPzh"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c25344a8c6cso458744766b.0
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:15:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RpivklZU"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-52cd38ddcdfso30638541cf.3
+        for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:27:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788182115; x=1788786915; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=XigRSuOX7u8fiIiHSOKO6kuoG5Tbb+YM/F7awfu/4G4=;
-        b=qewrFPzh12ok9JOk/u/sW63XiGhWxPOMlG8MsktLssX4uvXcYC5ZKWFQEMOXtXQMNG
-         Bgyt4NY7qA8NzqBdyLGlD+xI9sG0+n+QTKsiYl+yiOn2z1FnTAccMoXtjbDrn+MTv5GG
-         /dyRyskhe1VYIlv8jU/GSo6d+Hit8oMZF1Y9IOTEOhw2FeHg6ITP3osqVju/03cIM+xg
-         MqG9kt3Y4BqTOklplgANLKmyj4ZUTl7VZZo4Lmad9P5VSaGlvhALnvTkVpKmuKJYyaCh
-         W40boA4BcfQWy/FmXcooxIOj7aP1wQgAlfJD3DAtVNlqhv7l20b247ibzAj+hc8OwzeX
-         qb1g==
+        d=gmail.com; s=20251104; t=1788182871; x=1788787671; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=P0Js+shwjkSHsbP0XSKcHDajScxKZbFfYfudOtDCJXk=;
+        b=RpivklZU+TUILUMDxcuhId1sZ/RAZ+zYHL9EEDtYQup+CuAcQFxPhFzPiUolmT941K
+         oxtT1bw1Lv7Y0CtyJUPuOfYlIOU3lxo0/Gu+N9XrZpsgko7qDZeGb7f/9X86ZPBBYxPH
+         gKbxUaraaFTuMzHG7q1Y119OoWNcPmJdW3XsEoUULoQAk208aKGCTsxMREbDb5SrH8+Y
+         BMoYl7qp+KIxUzm4KcT/y6oXJcJLi2HKIcngl4QWHB7YXl/rHtJf8oT3VKFRO80Rbg9o
+         jsvYY+LvThs7tF0oTfUx9WyAEM6IvSuDLy79vfZMhGfxIKEhRuxavKr3CjBg/wxnoxQq
+         2+/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788182115; x=1788786915;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1788182871; x=1788787671;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=XigRSuOX7u8fiIiHSOKO6kuoG5Tbb+YM/F7awfu/4G4=;
-        b=E6G8Z9wQkvmqO6PwDzB+CZ2618JYQpxOkYRljoqUa9M5hH4aT2aTEogpkD7K6gDgrB
-         wm9T+peDyCHmDfyEP4D7uMU1LrCChErTwulfwzR4gnY111jxMwQmradq4Zf/LK/t0bL3
-         Qq8P/pC2R1MYoIpyrQZ5jb05K6bekERPO6A6anE/Dt8vrtWwWhIotGE08eKn6Lhy9bZx
-         PdcC/hk0ToietyMXYCA5hz6AwRbjbry6WmiGVY+G2e441RLiQTgamUUSjVvnCRvEgick
-         bf4uZSO1nUWhPqLrOHSl1SFc0lBFU5pqn4Djkp9Ugzwb88eJSSO+++/oLJL/ZIFoJ5y5
-         f2Cg==
-X-Forwarded-Encrypted: i=1; AHgh+Rp6MdJCiK/KYqQXeniFg+9zZtSMAeuDPQ8i/V890BmcXRVHYO07wZYSkyyGj/KJQY5I7gI=@vger.kernel.org
-X-Gm-Message-State: AFuF++miCDvco1+Ew1b0b1MWk33/Pts+krbXhoaQHXjTd4BiXKniBSUL
-	oNzFV1khYCUzu0p8syBY8tJ422nZWNgrt+Zqmh4eh+lQLvKQpLM0roxH
-X-Gm-Gg: AR+sD13G6oBwXnSohNZfQyYYKH9HipcjHLCfC9e+UrdWwzCc9lW9hHpFGzaJMC3YrQy
-	8h2tuuaspbs4AxbprcGvBcHjBxSeToQFfSidr8NLneaiUQ+z67dT+zF5pipj0LShNJ5XjC03/Iv
-	pGKZvxytJa5+Jv6gaIkF3NVYvGr7pKNSb89UYJDpeaSRPNH+iKVASZ1AqIE82rrh3C1jlbvn467
-	4EdIH9lIr64VSxHoHu25FA+NE3rZ1OitCOiQYz2ki+SBrR9L2aC8tzavPnPmjzVk1aKfqxMD0fx
-	W3qQIugX0go0ShOPFgjTGQS/rgqU+5jK9QEJem3cH6o8g9SP8agtNdivwPl3dU51J50aDod4Ql7
-	kjS5+LpoB146BlA2yhJMouibCFqXTkJQ8egtaFGh6ji4wg43gQe4rBqlf+Dfbl3NjtUUxNXezgI
-	GZJQ9RAQLy6dbJR1M4Pma8zn5itcnvGll/JjGRaLYqZPxHSdksQBaLwZZ2xqQbFiWJKRstzeYwX
-	srMdNYtxS8Ec7dQnKxLnYT8vDPA9gBsXEBhZ7CcBIkj
-X-Received: by 2002:a17:907:980e:b0:c20:f529:2d6a with SMTP id a640c23a62f3a-c255721317amr1601372666b.22.1788182114766;
-        Mon, 31 Aug 2026 06:15:14 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c255f1b2074sm436234266b.38.2026.08.31.06.15.13
+        bh=P0Js+shwjkSHsbP0XSKcHDajScxKZbFfYfudOtDCJXk=;
+        b=Xzvd0hGsTbU/4YKpZxU+t1tJcI9JscqLExhfOjqjr2W0okX+XNqIPvqdP8qIYyIxR+
+         gj1aY9g0DB+ew7YUK4WoXJL5oy3S7w0STnTYKYnzA+JDpShcfjxLMKAbaKsPVIOxiQw6
+         rpOsMHCBGnU2kgvHHZDCCG+V+Cm4GEtlaGdM0E/ByN8DPBJ7je5od+OpippRVY8pyG4m
+         J9ks+2deOX0pMU089uPfo0s1Ky/L3gkwtZnaRhI31Z8H/1CRRHlHiFkXNc3j2CzuLFVI
+         TfOdp+Iq3Cwrvccz+EC9bUIu2C4/K40gLk54dgN63isl6n7yIQfe50WB2SFHmWrQdhSK
+         XWYQ==
+X-Gm-Message-State: AFuF++kpLPS9idUP7M7/R7GJBe7Pd9QJD4044fRk3CMRSbqBhotb7uok
+	IC+u36hN/MKiup3lcf2QXgzFKCnVznqoJRsayEaoS7TN+KNaUs2ZoB7D
+X-Gm-Gg: AR+sD11YRkk96B+G0sY8BE413pWdrK0GnQURTpfWyLqSsCFuuucNzHe/o/1bGIvAIZ1
+	YhamdHoDVgw/oY5du4RLg/85Hej3cllYKlmcVuKew/ApARIQk7tJJL5uCN2Z2WNRFnu2iQI5doA
+	lfXhIfc8W1sWAN75QGAv5+GNEkXKPu8lGDZCAdny/dwsxsUyddrETSMxzYIM2/nsBOXlGww/InQ
+	9IK+5s6neKGxrcNfepd6PXFfuRpeoD+NG4zUsQpPRBgyaWxEGp+CX7jlsNDjUcHMSU+Zhr8SF9l
+	74/cniK4ZCtULBwO2jdvGJyq00q/TdEEUQ/wibjKEGjrN1AzSZ9OXbULQ4v9y4ROWrtX/QUEjiG
+	NA5R+mD/SXQL738RGkYvOF8M1vVRiryFK1Tq/4zZHGKICfE06YwycNfFyZ5Cojdk8xXzDMuMSVz
+	46I+5iqUX2oy4r70YXvz/ZllX7sZCxugxBkRFAJsxjpks2JqUZvCrNBNS3lpjq9RhWbTnnGwo1n
+	TFM0FetujcsglpxTJueaRF1uGisT5ANIlkmZY46jilJ2baCtggDjVUVgF25gjJ5nGjDVE/fQM6I
+	9UnenpXztbMpXaJA
+X-Received: by 2002:a05:622a:58f:b0:52f:b1b6:a4aa with SMTP id d75a77b69052e-53021b0f659mr9512381cf.4.1788182871094;
+        Mon, 31 Aug 2026 06:27:51 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90ce8769b76sm75446546d6.13.2026.08.31.06.27.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Aug 2026 06:15:14 -0700 (PDT)
-Message-ID: <4813f6a6-69f0-48ff-9558-6339949efdd3@gmail.com>
-Date: Mon, 31 Aug 2026 14:15:07 +0100
+        Mon, 31 Aug 2026 06:27:50 -0700 (PDT)
+Message-ID: <a41bdb3b-1fe7-4c1e-9d16-72390d93503b@gmail.com>
+Date: Mon, 31 Aug 2026 09:27:49 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,39 +70,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] sequencer: teach autostash apply to report conflicts
-To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
- <b501b5fcd0b9dde65c1ce358e2f4014dfa340c37.1784993669.git.gitgitgadget@gmail.com>
- <ec6c3986-94ab-4692-a4c2-47569b77e9ca@gmail.com>
- <CAHwyqnVDBihNE8+tbJheO3R5TgfBUgqLHRx=zDxwT3btUi2NZA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] trace2: stop allowing die()
+To: Jeff King <peff@peff.net>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Taylor Blau <ttaylorr@openai.com>
+References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+ <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
+ <20260827052318.GC176544@coredump.intra.peff.net>
 Content-Language: en-US
-In-Reply-To: <CAHwyqnVDBihNE8+tbJheO3R5TgfBUgqLHRx=zDxwT3btUi2NZA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20260827052318.GC176544@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 31/08/2026 11:18, Harald Nordgren wrote:
->>> Add a conflicted parameter to apply_save_autostash_oid() and
->>> apply_save_autostash_ref() so callers can learn whether applying the
->>> stash resulted in conflicts.  Thread the parameter through
->>> apply_autostash_ref() and update existing callers to pass NULL.
->>
->> It would be nicer to use the return value to indicate
->> success/error/conflicts rather than adding yet another parameter. Apart
->> from that this looks good.
+On 8/27/2026 1:23 AM, Jeff King wrote:
+> On Tue, Aug 25, 2026 at 06:56:14PM +0000, Derrick Stolee via GitGitGadget wrote:
 > 
-> Is the int flexible enough to separate autostash conflict from other
-> errors? Or should we introduce an enum here?
+>> This starts with a new banned-die.h header file at the root of the repo and
+>> including it from all trace2 API *.c files. It starts empty, but the later
+>> patches will add one method at a time:
+>>
+>>  * xsnprintf() : This is the original patch, but made more complete by
+>>    adding the method to banned-die.h.
+>>  * xstrdup()
+>>  * ALLOC_ARRAY()
+>>  * xstrfmt()
+>>  * ALLOC_GROW()
+>>  * xcalloc()
+> 
+> OK. This feels like the tip of the iceberg, though. All of strbuf would
+> have to be off-limits, too (both because it calls malloc directly, but
+> also because it will bail if snprintf() returns -1). I won't be
+> surprised if there are other indirect calls hiding in various places
+> (e.g., all of json-writer.c).
 
-I think a tri-state enum would be clearest - the callers are only 
-interested it "stash applied without conflicts", "stash applied with 
-conflicts" and "something went wrong - could not apply stash"
+You're absolutely right. Not only in json-writer.c, but several direct
+calls to the strbuf API. The only real way to fix that would be to
+create a "safe strbuf" library. This is potentially an interesting
+direction that I might want to pursue and send an RFC after getting
+started. 
+> I think if you really want to avoid allocations in trace2 it would
+> probably need to be a ground-up no-dependency rewrite.
 
-Thanks
+Or to update the dependencies to be "safe". Not an easy thing, either
+way.
 
-Phillip
+I don't have much knowledge of CodeQL, but the following vibe-coded
+.ql script is able to detect these transitive calls and demonstrate
+the issue:
+
+----
+
+import cpp
+
+class Trace2Function extends Function {
+  Trace2Function() {
+    getFile().getRelativePath() = "trace2.c" or
+    getFile().getRelativePath().matches("trace2/%.c")
+  }
+}
+
+predicate directlyCalls(Function caller, Function callee) {
+  exists(FunctionCall call |
+    call.getEnclosingFunction() = caller and
+    call.getTarget() = callee
+  )
+}
+
+from Trace2Function source, Function sink
+where
+  sink.getName() = "die" and
+  directlyCalls+(source, sink)
+select source, "This Trace2 function can transitively reach die()."
+
+----
+
+Adding such a check now would obviously fail and not provide any
+ability to demonstrate incremental progress like banned-die.h.
+
+I know that microsoft/git is running CodeQL analysis to look for
+security issues [1] but doesn't appear to be running specific
+queries like this one.
+
+[1] https://github.com/microsoft/git/commit/6b367b94752b7ae0fada0629a542e90ea0a1892c
+
+Perhaps this is something we could investigate in the future.
+
+Thanks,
+-Stolee
 
