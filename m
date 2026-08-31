@@ -1,189 +1,125 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520E643CED9
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 16:18:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788193099; cv=none; b=nytd62FrkBlwvpzA0nQrxDgveFWYpuw7mfh/PweLhi0Ht9C9V+arc76TQGx+FZBkPfv29Gaeh4pjK7/fuC1iegjbRZsZQlwgbuJLezZgjScyy+IA0B6BcbC71vJ7QBeLHh+P59JDv2tUrqX1Wp4LdN3GVCrcO6mn9bEO36sG3qg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788193099; c=relaxed/simple;
-	bh=FRoZsjgpEgb3jwFgfxa1delFnjoqKJVCcAdiiBBEmPI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LxO8xihD1R7pUSs9kcgRREvUtBaFLYzVzRkagR/M4CNJq/k7AWJ1+XW30voHZ98euRcEuoJ/nkyUgimHFqndL4MjYt586lGZtZx2ypGk6IS585Ta9shtBMnwBg8wq4cjcGBA3VPON4asxDnn/jI5wSjH6SOtY3cbwp96yDw0NcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cYApPLn3; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2764A4405
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788196168; cv=pass; b=nOSyxVdNYIA6G+3X9gKaFi/mBwvuII12hCcf3ySe4Zj/EbdedD4jDIq8H7IyIJ7QukbatGkEEo/wei0X3jpQ75CLFrvpMJ9CeyumY91hL0VkuJT+GEzVjO6HmnTedXX5Y2C+ktYdfQUYFH50Zcuj+ijA/QLijbWiH2ZCC5VbOpA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788196168; c=relaxed/simple;
+	bh=fTHY1U3nzjZeI0TLExs3pQ9QuIDB0WH78GvH3G5Dnhs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qnacv0oGJBABNJHy0TvoYa1yGQ9iZLxN/u4S25gZe5SRyekQ+oNbtcAsDIwMzc9ctxh0FFc9Q74HwRavuEo6VpkHgZz3+WnAVNbES5FZxkXbr7TK9olxPOvQmGzMXdHZVqN5N4JSfiifywyoCaBJBKu1+JGcvq+NP1u2R8gqD5c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NvQ5deaj; arc=pass smtp.client-ip=209.85.210.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cYApPLn3"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-85339ed040aso3194133b3a.1
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 09:18:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NvQ5deaj"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7f3ff92cf4aso3939746a34.1
+        for <git@vger.kernel.org>; Mon, 31 Aug 2026 10:09:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788196166; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ZDeOd5dXYE0n40VNce1G+w0fu/BSldaDojq2Z8ldBUkH/RKvO3axn8Jium3TXN6+oj
+         IJ5biCWTvH7I+8WgtWI98CE2o79mr61edSUl8O7/Ttx4Gyg0oyMvqJvPYRPtT4KnXMaT
+         n74g3l31v8poeQxaTL9faMut4dF6oHxYsB3BD0NfvSSxTs34mz+Neca0WSvwGYykU562
+         Yy3I1NAqXzaZkCFS2CTWCGYNM6uIgePufHN764UdTVx7ZUNT1FZ/O9emtxQlKaLsjf38
+         k1jUN0ZawVMARmLt5Lxc8+kHXOkDND3/tYeWLtXtOjrO41r39X4F+Q2uYIQE7UfT6GLs
+         OTrA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=fTHY1U3nzjZeI0TLExs3pQ9QuIDB0WH78GvH3G5Dnhs=;
+        fh=SSUWuFhxMYV6ppXtqOZMmvNk7lvDD72X4tCX1vPPE70=;
+        b=nX/t7DeozTybc7N/7M3xbIjDnkTCKXDtCdKy9OnxctDe4Pf0z87KgTQ6Aef7iNj6FK
+         lxVJFS34cvrf74RRj76XXRIHiqRC23pxu3xw+/onNH0rc4DN6oTm3NhQqaJa5EFCHZFQ
+         pg7kSZ+8zvVdBs1PKaDIu1qBS1MwtJU3SjlvpWfuKp6UWlKqb9JYx7g46GNGKv9yS+eg
+         zf6+zy+HLAvsN1JYUfSaLZXH6BzpOjKtwsfiNAARjso+jhcUMuijjl1ctgeoOt6rbqXu
+         v8fx6YYEj6JfoWzJpkBx5xsjo2azIZH/mAxYNtKWTTO74gjSMLmywA0MqoSJNetfN134
+         ftNA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788193097; x=1788797897; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=a6Mspa4EBvc4TjO/GiQQObW/o5+kpC5Furr7oPpE1Nc=;
-        b=cYApPLn3QgDc/0seHNpyeXRehnc1JpyYoUATbIFxFTiz45YelIJK8N17TByd2MwEm5
-         K2YmRtcgP30QmrfyQSKPpRslrtdnJ0H4g6tzEe7QN8RkchXhGsfwpSZXfDmD2NY2mLqX
-         Nljr0F3fnNYRkvhteaMlAfAa7qvWjiJy5/cFqcciuQfuyGtYpEVu/tGNQbVgsLjnnSrV
-         oofdYUBLShLRtGLBNymZKcR9yUeXitTfAkVLg7FIYbvafot1bLJMOIMbZVWjY6MkNf3r
-         hDoX8/QaZnAKjxGtQEYdRUnSalBDJLEfkM5mGpdWOZgCXFc5DhTrnYhWjkh7x5BWCA3X
-         3TWw==
+        d=gmail.com; s=20251104; t=1788196166; x=1788800966; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=fTHY1U3nzjZeI0TLExs3pQ9QuIDB0WH78GvH3G5Dnhs=;
+        b=NvQ5deajq5HIJzLCCFlzfyqNpreKIyEKn2zEbg8WmAA0rrSBgUZjkCSZZLkaDxGrEL
+         /V5h98H4062kPJIr06AGQv/f0/dVAlT/ZKPKh4+XOLLNPdwNSD6BpGaAg5rrI0PrRFy8
+         i+RHdDeBl0nj0xWsxh80vG0+rstP0cmAJ3oEAgB5ZyRC3sYDzsXunTs4g13fwBwjtJQf
+         oSO2LHnCVhCiQLmFY+Mkz/AbSBC+ZUVxiBSYFDl8jLkZbN373Kj48S0R/t/XoH6WUqkf
+         iK8NnZw7lhVa+xTXPzoOeYSC0yLU9LaJDhkWwyqE5xq6/PsxFbIpBzi9jwtcC3kALOCd
+         eOBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788193097; x=1788797897;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1788196166; x=1788800966;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=a6Mspa4EBvc4TjO/GiQQObW/o5+kpC5Furr7oPpE1Nc=;
-        b=oC3FaiFvlL5dXFHZJtIN2KaFt+ikOUWBSUX70Uw0r2uLUTO3iHjyt2oEGzsUVcSxiO
-         48ijTKZGtXQOD/piJXXCxQkVEyl/pyU6yqRa0fyNy7CpxZLc2LcCJ6nERMExXJs6jJiP
-         0fw4a89kGPJBcih7i5ey26mK/k3ZohkEMHyDjNdiHMbaH0UKCu2O3ffKcg2cWUM6OoDY
-         LFMARPmmIoozjNshMAEUfo3lxgEKdEITLloCWguAYgj+zjRWz1vMgq6l00k/h64Gp4rN
-         saro7NgGh5b3LD7zZvNEQl2wnkZWrLS4rkwsVCJK2W3ygOuJg0+fYpNHQnh2JAuo04TO
-         oDbg==
-X-Gm-Message-State: AFuF++nZjRFHAl5FMPMdc3nyEjvES76iH0JCqofFfMUflytHNdGgHhig
-	I0273IvdoO8TFYultFjJotzcWyxA8AlAcEhouW+YjgLULJxLvkHquXG3GHiQmw==
-X-Gm-Gg: AR+sD12mnyhuIP8jj+e9ZfzIGaQ+HavMOqeC3Mqr463xaAv5iFsUdyNqCiRuIvXwtfj
-	WOKVxSjgE40xRN0H2yIpEcHNnW2gauHtFLjfZxLJKoDnmXlA0+dB62965SjQCZzbUaD981lLYK4
-	0IC3R9X6Vlk+7q3oPehFvHXx1ygL2urAd9r3KhUr55sR06q4jb4blgFHlUg0Uw5q382a0+9gCR3
-	W8K1CgB0fR6csbGSNCSUW7fVk2Z/cPj+Lc0c9lWQ/0407B91r/HyDZ6eGqa12Nlo9lk/fmolFS4
-	jd8dr9cj5YKL0uOiSlmq4hl15408Nat0yezrVOOirw+amrRvZA9yTh9zCNkYLyhYKyQu9f60ySL
-	N+L1zXiWy0l8eLOcpmTHPtKiH2H/ziE11yzPzmlqUZa+Yc0p/YRFojt21AfqHgiWNEcrNvS5qDj
-	0w6JAeSj1NLRUxq3hdDiECTEW1ROugDfhdwD2yATdNhU2XKB7nCaGUWw+0az8niniBuQ==
-X-Received: by 2002:a05:6a00:ad06:b0:848:3fe2:c88b with SMTP id d2e1a72fcca58-85b59c69450mr3402507b3a.6.1788193097210;
-        Mon, 31 Aug 2026 09:18:17 -0700 (PDT)
-Received: from [127.0.0.1] ([172.184.219.168])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8569ff701d5sm3943645b3a.25.2026.08.31.09.18.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 09:18:16 -0700 (PDT)
-Message-Id: <pull.2369.v3.git.git.1788193095825.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2369.git.git.1785492641983.gitgitgadget@gmail.com>
-References: <pull.2369.git.git.1785492641983.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 31 Aug 2026 16:18:15 +0000
-Subject: [PATCH v3] ci: cancel stale pull request workflow runs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=fTHY1U3nzjZeI0TLExs3pQ9QuIDB0WH78GvH3G5Dnhs=;
+        b=E7ZdPeJ9ShjmN4bPoQk/heax27BRQSspWRthhRZFNt+WPprNW7szyd6IqS5NERXB+3
+         f+bxhb4Kega0/OUehz4wBUFdSl1kdApFqQzvocFPwK4aTXCs0JBGnwD4WnFgPvV7qZQf
+         CilK/Dt8MjuhNC47VCGvqw9JG4YDiCdjANb1CbR7WEmfFD8jxqGs7t9CF9zsq3IgmkJ3
+         1pE+ue0+G3uMgeCEEqys/Ycd4C1nWLDLhJWAnHMPkxbqfyLh6eu4L45s1DWXsP2sRlq8
+         4tLORNwnw3ohVj28vqrNySPLynQDJwJgAk3NQMNYduYagMx58XxPgWrSEJomdYEbbxYr
+         zVSg==
+X-Forwarded-Encrypted: i=1; AHgh+RrVqZC23uN0Jdj5/S/0E65YedjK87jNRNqaUrmbgZDl9FA+UMafKbBYAHBDQt+R2n+SQpA=@vger.kernel.org
+X-Gm-Message-State: AFuF++meBydz2lI/pHG2GKsAU9jXqY7T57VywqGX23yVqFZQSk6aGJi6
+	SbLCEwupbil8SVWgbwTJwFH82UF5lQ3OklESLqSk4E7jmQT50qgWTRu5j4hAKzS7C5QBgUhH8Nx
+	GMqZM+Lt/gUTZLFtc8DZAuE7LqyBsga0=
+X-Gm-Gg: AR+sD12zk4QSoaHh+WV1Z6+aZD4xFVBFZo7CCpp0uD8c+K2Kih+LoMLPqKX2EKUNTQN
+	Gd1X5SKJKn0qGNPSU9nheqpMRGJyi/elGF4X8OHbYjhUwGLAVrP9ov2Ms9rJZyebrBDyQk2Yg9D
+	84rCsvR8DYVwiKz6A6lIGL+Tr8cI8f80Vi0QNu2SWEwHemHhzsqZW19csOSOiFeYci5tl7JVQin
+	X5YmmHUIQuZvbtaywoSkVnIcvGa1E6NjaDZPef1XhBH8HVRIcvQJ9dU5YCH3bwZv9nDSEpEIIrX
+	ZFmuf5YTQmUYU+Fbi7tG+QRtpz7pGw6hY9plKshvuOZMgP7bdiuSomcxp/pP8mNRcjJWoqvf8yG
+	TplMVxYqzYYgmc4vu1JH3UyVDmimC1Boe8RqBcME7wECVedHWX2pSOs8V8FevI9s=
+X-Received: by 2002:a05:6830:3105:b0:7e7:76f:3ec0 with SMTP id
+ 46e09a7af769-7f687c09d4cmr2473575a34.15.1788196166210; Mon, 31 Aug 2026
+ 10:09:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
+ <pull.2171.v3.git.1786583137.gitgitgadget@gmail.com> <8ed22c02a192e10ab46c7df61e92a3669faaf25a.1786583137.git.gitgitgadget@gmail.com>
+ <apUqs8N3EnTFngyQ@pks.im>
+In-Reply-To: <apUqs8N3EnTFngyQ@pks.im>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Mon, 31 Aug 2026 10:09:14 -0700
+X-Gm-Features: AcwNN1WyORwMYPGzuAXj6QETd5TRzKML-zdEuLKQo-g3dJp-CThqgBv-mb9KGGk
+Message-ID: <CAC2Qwm+L01XZgys2NGtZwWfVapWmnqDbsevt3Z4WKpS9EoP65A@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] t/lib-httpd: make http-429 first-request check atomic
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On Mon, Aug 31, 2026 at 12:18=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
+te:
+>
+> On Thu, Aug 13, 2026 at 01:05:35AM +0000, Michael Montalbo via GitGitGadg=
+et wrote:
+> > From: Michael Montalbo <mmontalbo@gmail.com>
+> >
+> > http-429.sh returns 429 to the first request for an endpoint and
+> > forwards later ones to git-http-backend so the retry succeeds. It
+> > remembers that it has already answered 429 by checking for a shared
+> > state file with "test -f" and creating it with "touch".
+...
+> > There is no regression test. The check and the set are adjacent command=
+s
+> > with nothing in between to synchronize on, so the overlap cannot be
+> > forced deterministically, only reproduced by chance; the fix is
+> > preventive.
+>
+> A lot of AI-fluff in this message that could have otherwise been much
+> briefer, but okay.
+>
 
-The CI workflow groups all runs by commit hash using
-`group: ${{ github.sha }}`.  This means every push to a pull
-request starts a separate workflow run, and all workflows
-triggered by the same commit share the same concurrency group.
-
-With this change, pull request runs are grouped by pull request
-number instead of commit hash, and runs superseded by a newer
-push are canceled.  The concurrency group becomes
-`${{ github.workflow }}-${{ github.event.pull_request.number ||
-github.sha }}` and `cancel-in-progress` is set to true for
-pull request events.
-
-For pull request events, the group is `<workflow>-<pull-request-number>`
-(e.g., "main-workflow-42").  If you push a new commit to an
-existing pull request before the CI working on it finishes, the
-new request will be placed in the same group and cancel the
-currently running run.
-
-For non-pull-request events, the group is `${{ github.workflow }}-${{
-github.sha }}` and `cancel-in-progress` defaults to false, so
-there is no regression in behavior.
-
-Note that the previous configuration used `group: ${{ github.sha }}`,
-which meant all workflows sharing the same commit hash were in the
-same group.  The new configuration includes the workflow name in
-the group, so each workflow has its own concurrency group per
-commit/PR.
-
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    ci: cancel stale pull request workflow runs
-    
-    Group CI workflow runs by pull request and cancel older revisions so
-    only the latest push consumes runner capacity.
-    
-    Changes in v3:
-    
-     * Status quo in present tense in commit message.
-    
-    Changes in v2:
-    
-     * Explain behavior in commit message.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2369%2FHaraldNordgren%2Fcancel-stale-pr-ci-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2369/HaraldNordgren/cancel-stale-pr-ci-v3
-Pull-Request: https://github.com/git/git/pull/2369
-
-Range-diff vs v2:
-
- 1:  2773cc5a84 ! 1:  61fb54612d ci: cancel stale pull request workflow runs
-     @@ Metadata
-       ## Commit message ##
-          ci: cancel stale pull request workflow runs
-      
-     -    The CI workflow previously grouped all runs by commit hash using
-     -    `group: ${{ github.sha }}`.  This meant every push to a pull
-     -    request started a separate workflow run, and all workflows
-     -    triggered by the same commit shared the same concurrency group.
-     +    The CI workflow groups all runs by commit hash using
-     +    `group: ${{ github.sha }}`.  This means every push to a pull
-     +    request starts a separate workflow run, and all workflows
-     +    triggered by the same commit share the same concurrency group.
-      
-          With this change, pull request runs are grouped by pull request
-          number instead of commit hash, and runs superseded by a newer
-
-
- .github/workflows/main.yml | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 205325eb33..4fff344874 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -5,18 +5,20 @@ on: [push, pull_request]
- env:
-   DEVELOPER: 1
- 
--# If more than one workflow run is triggered for the very same commit hash
--# (which happens when multiple branches pointing to the same commit), only
--# the first one is allowed to run, the second will be kept in the "queued"
--# state. This allows a successful completion of the first run to be reused
--# in the second run via the `skip-if-redundant` logic in the `config` job.
-+# For pull requests, only the latest workflow run is allowed to proceed.
-+# Older runs are canceled when a new revision is pushed.
- #
--# The only caveat is that if a workflow run is triggered for the same commit
--# hash that another run is already being held, that latter run will be
--# canceled. For more details about the `concurrency` attribute, see:
-+# For pushes, if more than one workflow run is triggered for the very same
-+# commit hash (which happens when multiple branches point to the same commit),
-+# only the first one is allowed to run. This allows a successful completion of
-+# the first run to be reused in the second run via the `skip-if-redundant`
-+# logic in the `config` job.
-+#
-+# For more details about the `concurrency` attribute, see:
- # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
- concurrency:
--  group: ${{ github.sha }}
-+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
-+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
- 
- jobs:
-   ci-config:
-
-base-commit: c73e85354c275c9d409b26445089bc16940fc527
--- 
-gitgitgadget
+You are right. I will go through all the prose in the series and re-write i=
+t
+by hand. I apologize for giving you unnecessary AI-fluff to read and will
+not do it again.
