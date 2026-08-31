@@ -1,86 +1,81 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3878B3AAF57
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 18:59:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC893B1EE7
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 19:01:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788202779; cv=none; b=CPfVrazjccSIUAu5AqkhAmqFPGYgEcfbhB+AHwn6Oa7Gq3lkFEERDYQeXss5qfpbFFImfyZGO7++U7aWto7hJbGgEIWCHLACn1hJSH5js3SEV6sKp2XTLf3udq+ZwcYW3AX7D3RqbXcIIyS/6/y9HOpQkHX0o4OgJBDsVmzhcAQ=
+	t=1788202886; cv=none; b=Qm6VkTGrPWmV7nYC2Q8I9OMAOvm4uSVW2TEAH44jMoK1bi1845aACHv0NLp8RSDIIfcILt+hSUny1m+4rwPm7yw2qk2CL2QFgQZF44Q6igDzSPb/Ultf/wZw+7OrrwXFpTF6HNdMO03f2ZLZ9OrQ6TAZmzkn41Badk9CO/mYFVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788202779; c=relaxed/simple;
-	bh=k9lc3jE9dCCwyOCJ94vBMLffe0ow/fDBwuBVoqov8XE=;
+	s=arc-20240116; t=1788202886; c=relaxed/simple;
+	bh=9gsHk9D+1E6cT54zSA3sUa6zKuqvXfyr4xO806PI8g4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lPbZALeALyf1D+OkgQZprBZLFyZXL8NeWC4Wemgrd+b51LJXA6zP9xMt0jjpMGjQKhYJDrjfEb7hLWejB4+IOViITPuIJbec7YfMD1lJQwy5yV6nptOiPkHSFKq3G6zAS9TAHNSGbWJeDjguvOZCxKrahjwXee6jstwtMjvSdcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VXSvYGNr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MfTVWlsO; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=vED9ZWDI0Qu24yynsrc1gLuq6DrT5pWdqNR46ysRZmkc7M5DYrUPBsLe8/8Y2mdwTv0G8bFw9qeHxUspXgfk09H0xRMbpfSTzOMQKqv1t9ndRo0x8E59+1pXZIRFQSnJGoB7WV5qUMpGalVmA0jjNSr1e7rbbEmwVHe89cCbuWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HFdL+nek; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JOuV61hW; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VXSvYGNr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MfTVWlsO"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 69BA07A01DF;
-	Mon, 31 Aug 2026 14:59:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 31 Aug 2026 14:59:36 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HFdL+nek";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JOuV61hW"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8F0D91D00119;
+	Mon, 31 Aug 2026 15:01:24 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 31 Aug 2026 15:01:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1788202776; x=1788289176; bh=iuB/reAeed
-	WLRoIptdYKB8M0qOXggWn8PNuP3t8ikr8=; b=VXSvYGNrGEEjsBuRcdKoTTOsrl
-	g77Q3ZRrthB8JMaOiPsxi/tUHBBMfPBYxu3VAPfpJpY0xBWIw0xBcm6PmyMgFn43
-	vHRRn5AvEQG+uXCMnQ2ZwATSqkkfxp1A+wujfQQRDlw8Xp6zF33g65wPYxOEA145
-	SfWjj0ZFq1H3f+ujW6r4b80koUGC9OGdAgvtnjj7Js/Rj8wFSHwbpbKhKKOLtE3A
-	rMIkOOQTy0T3VmGaAXj8E+l3ZMI5PRrYy/RAvDDxJ3hq+uHDy20d2XH3oPr42d8H
-	DDhq7HPoDY0q19u2eiZZIOaf8CwFpPsO4ZF6l3fn2T5BmKTxvY9AfvZ7aOUw==
+	:subject:to:to; s=fm2; t=1788202884; x=1788289284; bh=VZU1fKgLYx
+	jTUKOWaGpHbRDfGbUERky2Dcxh40dRf8M=; b=HFdL+nekSWQ16e5c9mSuGAKMmV
+	D4OOTk1MlEZIJLVDNAqKXuqO1n1whINGOavsm7Ospwh8+16beDHEeOQ7LbUXOvbh
+	SBWHddZ9TGqMNJ7JTgme6cZ3lGQLep8Vli9Gy2CNwozrIU4Mpma8XqhheazLZx+9
+	1WwwVrm2bJjwbccCe2w4iZgfaESye1A/YcX+bxjKvIWR9lBLc38+d4Ulgh8vpYf7
+	iahQqx8Gya2Gve2VwLwc4K8kV6T2CVjFozWyI0WpQfKYPfoQ5i8vl0qAEF32adJm
+	naOrPVKjxa9CdQSrXKw30v3qpvrNpS+I93ENa1WI2CJliiotckQvkP5f3Mig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788202776; x=1788289176; bh=iuB/reAeedWLRoIptdYKB8M0qOXggWn8PNu
-	P3t8ikr8=; b=MfTVWlsOE1rhukQYqw92Y7m4uQZTbHIrWGl+jCNhjq6qopomxst
-	QHDQvV9BNrXNXvtRTxztTPhLHsbvI7F1NzBJXg4CFTDOlEAZj414aweXjvQ5I8CU
-	36KbiJIJXVAT1W+WSxY4wCsshLNgZaH/m4UHHueO2hb/2Pd56hp5lIyWbRHHdsk0
-	yreZvl5Le8Wsdx/NPL9cn7B3o3H6rssAWfd5IHcQdDi2K8M3uPTg8agh9WpZuEGa
-	MxhCL/CeQ4mgEK1knore0TFt8OI/y2rkJsI9rcThk7oRr0a1cWk3vfFAxS47PJ4R
-	yuY+vX1S9BLK97JUjbZRChGiBHBZ6OYajIA==
-X-ME-Sender: <xms:GM-VavSp9wU1ZstmZDXErTyPWrZWvg1Fwt0fmnCNDjqo7u_7ozMJ8Q>
-    <xme:GM-Vanp7QW0Wcn4UL921TcXj6fG-YPM2jezwIgJZvjQogTcRMUPPPgnNiF4GOrh-u
-    iBkZr0BIf_kPSoiyW6bnGIMRcAxychxllbKdcw5pXpXRt60_xFDGgo>
-X-ME-Received: <xmr:GM-VatLBW510snmgLyPacOPR4JMpvWImprsaR27R46ON-srxzStc73o3ScouewqJR0XZtXl6tRRioEGZRFJ2H67cIVd-Eg6eEQ>
-X-ME-Proxy-Cause: dmFkZTGN+XoKdlc4EQKMygtXOhFm8njOc+fbP8XO7+n/UDv3Xcc6fxReOPjPtTcDJii9dj
-    mz0DwHZv0TYXCOFgvj/gzPJY22VruQS+/etavM7ssImVIgz7D/fzADE0bXvFcDYF7YIdg+
-    M4JgVu83LgEfCFwQ9KYVp4L1KO5voE3hpkCrfa9rM9H9HDgoTKaBHW6SN79nOxI18uTYr9
-    gA2o7JFlT9vVVLgl7ohRCTpcXSltY3NHZWMdlNmmVnhif8Uw/zLLZgp44QgNHaZ/5J6CWX
-    l9dj6ibA1aVLaclYWNk4rcixkyA5+eyGjgpsmPlTABzxCE5tIDPnJVEhxGad1mkshNRTYO
-    YyKTtEwKvS++vc6lA18F8vH4TZ1yyaXlibe7jV0L0mEcpMlbKygCNUh5YbKM9bmdjl0l3T
-    BItyxhXTnfJOjUTZ+nGTg1r06i37hzl5Fhf2Zr7dyAkKMgzkYnprgm+UuH5h26IShl5HTu
-    Ueawe0/gEyYXmg2bOLgCcrcbE+iK4T2JfsMqiizwhrw7AvXzy9uUre8FLW+oM0l+mr2Raa
-    XIF23ou1Y/8SBPdFX6ho6KHHbTt3GYPr+vT4XMEgr1fBXZH6pYSiomf/zsAqfssCjFvkIt
-    0H+fH5UksD3vjNLLhG0Ipd+uI0kvAOMwp096OLyb5GAccmfFsflfJqWSgp1A
-X-ME-Proxy: <xmx:GM-Vaqpcbb-JnIstxNeaHfAlb1CCEWmX3F5TJbqmaeYNjBBdM68SBQ>
-    <xmx:GM-ValztntA_ODhT16dwTt9dCN-QzIcsftyvwtj68gnK-ypELOA8Lw>
-    <xmx:GM-VauMRuDkQZ85LjKn9-QPUtOV1gAkDMvXreVr_ohAz6aGXC01hMw>
-    <xmx:GM-Vaq7X7qBhV8nNUiHQbdg_PQWcxuXVz4gb-e6U_ramNBgUIO0Sbw>
-    <xmx:GM-VardYAImw5Sqk3zlmsOBAzZ4oXt_F_zk9h8B_cEUC3OrM9qrlt4Q8>
+	1788202884; x=1788289284; bh=VZU1fKgLYxjTUKOWaGpHbRDfGbUERky2Dcx
+	h40dRf8M=; b=JOuV61hWyyPniZTEg6Vk5nFNjufa2hiq7++668b6ovN/Kekq54h
+	mAxQ/w/4gZJi1fWHaBcbRC5tyf6ba1si/URC0zGMAnX48l0Xs01mWAtElydJSSvK
+	G7ltKibNu5+LxYGxaQNFkcw2q0cTa0Vq1TH9yafiZx9qzxOlmKQHz7X7+/rrQORr
+	k5WWYlUu+iCzREimzl+rhaJ6fnfRUsATcXAbxYkcY9MTWNcVb49zq+Bv9Dy4l9tI
+	QsiYZOlyA/E13tRDMmi5HkZ2QM6gp4scQnQqx/WbzxgBXXyV5Xb9ja4E414toT5h
+	q64yIAEXjH70sQpwfKx2F3hy1VqYbG/IZDg==
+X-ME-Sender: <xms:hM-Varg4kETjy9RpRmlFn-lmwjQbI1pQVMhqFAXo5A3jQh3dJDItuA>
+    <xme:hM-Vavdtz08KEyJG9CGOqG-Pn2fdL00lzKZbBgF2IAuCCNnw-BGw934QJPl6FqFnu
+    0zAObFAZBlsafWFgK3vqNoMA6l-tmR8LqSf83TYE_RcB4fRiYWsZtc>
+X-ME-Received: <xmr:hM-VaofETx5eDBGCOp60KKQPUU1XYWkLCvt7Pc9KpMxkOfGLOa99OsDfXV1KU_i320wn5-KRLKZ7-SLtroo3-icihlq9hz_JJw>
+X-ME-Proxy-Cause: dmFkZTG4XIieL51fRN0BvLzkqaWdcZM5lO+ql5sIqTvj62hyduZGV3Bvqwpa/XpA3tlDnK
+    F7mPvby1HPvq17Y0y5qz8C8miSqXNqxPPnReAJNf9lbU5HtbNSV5B8F8xd7tDZGQOBlSSW
+    pCyVWYnMUtsMX38tVtNv9s5XWf5vbm3ViFM+Pho7vQ/L45Hu/3/By5Ffskf/Z9Eapyx7wJ
+    RTh+Noj/HNAZLReQP1JX7GCQHXhiFoEw8wvukk0cRzYMAJ4X+V45Rjz/PwrtYtMH4hb8L5
+    gtEWknYf9vh7QRTg1I+utljovfzQujh/jjJeoaWm5j6zGVjnEbm9a5XbZt2errkAOI1QBD
+    sAbH74jDHB2Z5sEw6kPWwQJKsz8VUrGFtrsNvmqWWBvQTQgIEgi7Zlko3ZLrNdpdpAKGfB
+    1CcaWdyWIjDXeM26EQI0qXxqEcvuG+/CRr+aYLKXZLs3oYwT4Bghbl1Z9+Q/c2qcDNLo73
+    5x321KS+w9FoXqcUpyPtCJkeD3L6LMh9GCl3+lRLs0a+r01GyzaC5Mt9P6ZADLDWGTZT3j
+    96XqpUII/1vPD0cXu1P9ESuS9LKTzYVZ+LhhdVtD6TM15N/WBc/GHlMHhon/JMmtjobrN9
+    txnPM6hazsRioG9v+kd8z9MbT7oMlXeggLSDGkGB/J7XDdRcw/hJAQbkpsqQ
+X-ME-Proxy: <xmx:hM-Vah97xrmde7GzlvPcI_0Lq3VUGFZ2-5FsNDBXrPu0ziETF2koHQ>
+    <xmx:hM-VasnBFTnSJgk_l8DBeUgBoBL9vWJSGFDeMlD9LDFoWcqaRxRptQ>
+    <xmx:hM-Var-ZO9iFs0bwIKXYFGNNH6iGklFbH3aRjxAJa3qTZKfpmbTPwQ>
+    <xmx:hM-VaikaaWkoZnMINWKdTu2y4G-Sjt-Yd775wZyXwyZ87qcLJgCJgg>
+    <xmx:hM-VaveS_n8s777hy_zzN4Vm30xEL9U7jU-NoO1i2OFexnBQxnVQ6xF1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 14:59:35 -0400 (EDT)
+ 31 Aug 2026 15:01:23 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>,  Johannes Sixt
- <j6t@kdbg.org>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v2 08/12] mingw: rely on MSYS2's metadata instead of
- hard-coding it
-In-Reply-To: <4f4129df-681f-4e99-8b1f-8bb96e206a2d@kdbg.org> (Johannes Sixt's
-	message of "Sat, 15 Aug 2026 15:44:44 +0200")
-References: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
-	<pull.2195.v2.git.1786521173.gitgitgadget@gmail.com>
-	<9de4ea7fc1d250e8e9dfae386424451242cb3daa.1786521173.git.gitgitgadget@gmail.com>
-	<4f4129df-681f-4e99-8b1f-8bb96e206a2d@kdbg.org>
-Date: Mon, 31 Aug 2026 11:59:34 -0700
-Message-ID: <xmqqbjaiw1yh.fsf@gitster.g>
+To: Hardik Kumar <hardikxk@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] versioncmp: fix typo in versioncmp.c,
+ t/t0022-crlf-rename.sh
+In-Reply-To: <20260901-typo-fix-v2-1-6aeafbae6389@gmail.com> (Hardik Kumar's
+	message of "Tue, 01 Sep 2026 00:15:01 +0530")
+References: <20260901-typo-fix-v2-1-6aeafbae6389@gmail.com>
+Date: Mon, 31 Aug 2026 12:01:22 -0700
+Message-ID: <xmqq7bl6w1vh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,52 +85,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Hardik Kumar <hardikxk@gmail.com> writes:
 
-> Am 12.08.26 um 09:52 schrieb Johannes Schindelin via GitGitGadget:
->> diff --git a/config.mak.uname b/config.mak.uname
->> index 21f53e3f7e..3a90995587 100644
->> --- a/config.mak.uname
->> +++ b/config.mak.uname
->> @@ -465,14 +465,8 @@ ifeq ($(uname_S),Windows)
->>  	GIT_VERSION := $(GIT_VERSION).MSVC
->>  	pathsep = ;
->>  	# Assume that this is built in Git for Windows' SDK
->> -        ifeq (MINGW32,$(MSYSTEM))
->> -		prefix = /mingw32
->> -        else
->> -                ifeq (CLANGARM64,$(MSYSTEM))
->> -			prefix = /clangarm64
->> -                else
->> -			prefix = /mingw64
->> -                endif
->> +        ifneq (,$(MSYSTEM))
->> +		prefix = $(MINGW_PREFIX)
->>          endif
->>  	# Prepend MSVC 64-bit tool-chain to PATH.
->>  	#
->> @@ -755,6 +749,10 @@ ifeq ($(uname_S),MINGW)
->>  		BASIC_LDFLAGS += -Wl,--dynamicbase
->>          endif
->>          ifneq (,$(MSYSTEM))
->> +                ifeq ($(MINGW_PREFIX),$(filter-out /%,$(MINGW_PREFIX)))
->> +			# Override if empty or does not start with a slash
->> +			MINGW_PREFIX := /$(shell echo '$(MSYSTEM)' | tr A-Z a-z)
->> +                endif
->>  		prefix = $(MINGW_PREFIX)
->>  		HOST_CPU = $(patsubst %-w64-mingw32,%,$(MINGW_CHOST))
->>  		BASIC_LDFLAGS += -Wl,--pic-executable
+> The patch fixes two typos in two places.
+> versoncmp.c:            "fractionnal" -> "fractional"
+
+Verson???
+
+> t/t0022-crlf-rename.sh: "similiarity" -> "similarity"
 >
-> At this point, MINGW_PREFIX is only used to set prefix.
+> No functional changes, only update a comment and a test_description.
 >
-> Only in 12/12 is the variable (and ENSURE_MSYSTEM_IS_SET) used to drive
-> C code. Therefore, it seems that the following hunks concerning the
-> CMake and meson build systems do not belong in this patch, yet, but only
-> in 12/12.
-
-Haven't heard anything on this topic for a few weeks.  Can we
-conclude it anytime soon?  I do not like too many topics that are
-almost there hanging around only because they miss the finishing
-touches.
-
-Thanks.
+> Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
+> ---
+> Changes in v2:
+> - refactor commit message
+> - Link to v1: https://lore.kernel.org/r/20260828-typo-fix-v1-1-24e80a87ed53@gmail.com
+> ---
+>  t/t0022-crlf-rename.sh | 2 +-
+>  versioncmp.c           | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
+> index 9bd863a970..328c6e5903 100755
+> --- a/t/t0022-crlf-rename.sh
+> +++ b/t/t0022-crlf-rename.sh
+> @@ -1,6 +1,6 @@
+>  #!/bin/sh
+>  
+> -test_description='ignore CR in CRLF sequence while computing similiarity'
+> +test_description='ignore CR in CRLF sequence while computing similarity'
+>  
+>  . ./test-lib.sh
+>  
+> diff --git a/versioncmp.c b/versioncmp.c
+> index 3a81b17bc1..f1e451755a 100644
+> --- a/versioncmp.c
+> +++ b/versioncmp.c
+> @@ -15,7 +15,7 @@
+>  
+>  /*
+>   * states: S_N: normal, S_I: comparing integral part, S_F: comparing
+> - * fractionnal parts, S_Z: idem but with leading Zeroes only
+> + * fractional parts, S_Z: idem but with leading Zeroes only
+>   */
+>  #define  S_N    0x0
+>  #define  S_I    0x3
+>
+> ---
+> base-commit: f78ce2f7b6df702f93d40b85d6bda92a3f65da79
+> change-id: 20260828-typo-fix-721b77177721
