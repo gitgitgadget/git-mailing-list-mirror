@@ -1,83 +1,81 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9335737C923
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 21:19:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5987B37C929
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 22:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788211145; cv=none; b=YXXsVKdBqwMhkgtuOei/nAqdDTsBSVP/WFel2XGZA+vUyOwwZ0eKQC31UVQxksRVhJBO3WOtbNuE6JzGY0YcyyYFVlfr49NyMzUY3WAkv8HaFUboT7BfvlurQdpXUcuRXue2f1pDmyuQv1eGPHZQiB3WEwdn1W0pewYqRfxPlU8=
+	t=1788214209; cv=none; b=iyVWh+3u6jEsOLZQ8QqPWMinzhDGzyx3Ktpnw0/3rt1w+OyTPFnkrhjHOm7lCDdXWobJgAQpaGaPfMPJljpI9gj9iye7R1B3Naq0TaKcBwrFcMSTWuuW5MQyUK9wcH3R1t+gEK9dMPn5H0A/iUDcNV7FPWcrLZhfReZAi3LoHPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788211145; c=relaxed/simple;
-	bh=fKbi5ngUnu0bW2bkpL/d91c/B917izyK1i/akza4Ncc=;
+	s=arc-20240116; t=1788214209; c=relaxed/simple;
+	bh=67yPpFx3yOWUT6fyAuKNa1Q3SpsrMYmFHdlFeGFFET8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Nv07Qx9GJnI/VEq/DbX2ZsWgE+dUayp9w/tvDj2xWhBl+oKwIVYc3kQr/M+DvJ6YyRHplwod0yrU97mBvjreqvshUz3xodMsXfwLQPmORS8BOQ+1ySTRH45Pd6wmWnhs64SD9X+zLXEfsRt0qQhLqoVSsf6ClY/0R2TJJwg6cYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dvUg1pPa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lYJAhtYw; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=VrVlSZ+WGD8cizRItgEyzi1W5a/GCp2PIuhK+VL0jW9P1kEzeF7d/Zw54pePrm5ujeG4vpbB/+hO7bV6FmwGA0vRbu2ePM2/ubC/O8/pjSPqXbay/3BJWiBOMXW/mBwxR6i054jHbJL4gofcT2cOLR12KAfhpLa0x/qqErOCMuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RMmnpTUG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jm8gxQUc; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dvUg1pPa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lYJAhtYw"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 66B977A01AB;
-	Mon, 31 Aug 2026 17:19:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Mon, 31 Aug 2026 17:19:02 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RMmnpTUG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jm8gxQUc"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 650B31D001F0;
+	Mon, 31 Aug 2026 18:10:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 31 Aug 2026 18:10:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1788211142; x=1788297542; bh=kdIBx7OmBb
-	7fmNnxF64HCVBzkmwJRqp2azY7K87nMAA=; b=dvUg1pPakhEo15+5you2WMKP5U
-	/lY1e8XZEiD2BB2wr8+NyPrHPzZ06VsgdWZiByQySKWW0zPw0rOn2ZD4+Bvgfclg
-	ndNvCP5E90mxrzKi31bEn3OuFGBBxpIXjgIKvk5lyoR8auEsoV0+RjjYPmuTCqLQ
-	ye0Ndhg0+TLbXp/7UsMPp7RtUZSxXWhIEUAcjAEZUI3XGS7ZA0bZfNIDfnkAJ//4
-	kMhYi1HZ9AYUSBKnM2Q8ZSaUGNcpUkgR6f5epuUwANTp/Drka1IH7lIOxwRpj4fF
-	flMhisVgIDMm3abNUbRNP8/7kbS74rzi9c9bgPIWwUi7XEHibxG+65f3LKsg==
+	:subject:to:to; s=fm2; t=1788214206; x=1788300606; bh=vhOvQO9zKf
+	YQX9y4dokl1nYApXXc92/4vDL56zQqGiM=; b=RMmnpTUGGcS+cuk3oGuU4tgomK
+	9VT3k/7U+TIDbYyzqMrxJ2KO6glVWsVppTfQhglRSg4qAbi5utozWm8KYPh5hozg
+	9tDeBAoPs1KdC5xIK03T/mwWpwmcKj2xkwESId3cDxChmiqali432iW080JZ0RJq
+	LdBL935siDNuusKKYgUD3gaJTcJ6QSO99P3Pb0BQ73ngm5Jx6M+1j9jfLV1d55yr
+	P3vQGhNf7GwEX0KUyq8/lO0z/MY8IeaykfdUeAT6GOwseSLzK2DR+yaroip8eil/
+	DGQRziOEnr6MgPS2TLc2XUpMiGFaJ4Pp2Crg6rPl2BkLMy/MzqQ0yU5auUuw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788211142; x=1788297542; bh=kdIBx7OmBb7fmNnxF64HCVBzkmwJRqp2azY
-	7K87nMAA=; b=lYJAhtYwDM78CWpJ2MTORtbuWubupr1CODip3Iys6fJE0AhEcK0
-	cg3P02xZNwIdFj1j7vYu2GwHTGwf9osNRqbbN5ivJjh/cnu9/xJLNRdBUnFDTPlQ
-	8oqPlO8PrEPIdGGiK0wtP4/ya1RxuZ4AcLZy/a3AJzd6xILbz0aXPWA20VZU/9OU
-	pQPDiX63Gr+dgmZhPIwStm4WRYA/s0PM/I5kP5CEGZk4romId+le6uhkvVMhg+Hn
-	vr2NHapmlysFSUU9Y4l4NzDHNnUGuRSEBUickHMF/foP88RCp9Wyo0rNfCjV4eo5
-	dOc6xbVUubZ9ENzYyWlMH6s6QdBRcKxdjfA==
-X-ME-Sender: <xms:xu-Vav9rj02vG8kn6VYuJNx2h6W5-ZiT-LDQN1XyO0imPmxhAgk3Qw>
-    <xme:xu-VavZWnYl8ZG90zVpAMf5x4g6E4A8wHH7tfvGfN2mHwyX5PLjiIKj3evdLfdswL
-    o-kLsCb_tb9MCSDa0CV8EypXTqlQtWpTDN4JP3VuJMr5bxOt4-HvSI>
-X-ME-Received: <xmr:xu-Vam1lqrumcE3v-85qrh5kkD1T87Ld_-A19A-UCwl817RRa4nBgIWpFBrc5cH_nAtp7b3Ijdysc88l3om8jVHUB0auTv3JQg>
-X-ME-Proxy-Cause: dmFkZTGDlhKecgF849XuG9ldkkiFFglkuU+IG6UakApSS7gAKsyka4JUQwptUgWGoENT7B
-    fRr0aXesr4IY2QHmwjgYHmuLKjsOejCq15VoDIGIu9T2ZWTiuqorGYs8gzRy4rotwh71qT
-    qKgbBVOZGqUQcdfFzIR5nE3Dt/W0B41jlV1LL/XToTD9VNJJgxQ3M1kgE23DOjXW6P1izE
-    xptvVwemoTpxj/PsGQ+/v1nB77UF4lghzqjC8H3px7LNyGzw0Inu75LIgibIcKcV+0R42T
-    Pt+xzS10J7/MJFNwfLuY8/qGRq3sw0ioKZqCaLBcTusCDQrEi6sqB4oG6sHgbhFZW2D/KL
-    94RDH7y5fABKRMyMHkhiCi/0zYsvKbDxOr+lyLH7/ud5xh+Ml/CQGq3r8LeI53gQEbA5V7
-    J0PMsm21qrGhyRlBA9qPZukM0v2hyqueV2nv7YwOWnzYOMI7jUNgcFGBW98qmWzoqklcJb
-    0h3tf+ZwXQ2MRfghE7B0p9C19XkXCVuUldyuBo1lwCMkH25f+acKHbxNyVQOduts4w0tPO
-    9716cuMSA0xGc5m1lsVA1qP4vDjqNkt+vCV2FkyP3e6VIdkm9q3GZV8Jy8FkoN4HVu0z+h
-    cTfK54bYtuBp+WXnen2hEw2nXlaMQ5Guad15fHNcvWSecwD0U/kWR89/a5sA
-X-ME-Proxy: <xmx:xu-VaiaNFunL3UvzGE0-mIIWZ4-QaaPWZdbFQKHLmPetscWrInMqmA>
-    <xmx:xu-VamIM6PpTPyepysOg9Fk1YQVLCinxRwVSbcYQizfYeeMW2jlXeg>
-    <xmx:xu-VapFwdUUcZRKYp3HNOrnNP9TtHUQg31f6q-PPQMCz1alKmks-Ig>
-    <xmx:xu-Valuq16dgxpbxw9JDF0IMDBgEBKa44ZcvHAqfLireQFkZ3210XQ>
-    <xmx:xu-Vak6qVe_1w3jBUJL5DoZEUqNNjb226mbkSVd6HT4QiKQNcol1kee4>
+	1788214206; x=1788300606; bh=vhOvQO9zKfYQX9y4dokl1nYApXXc92/4vDL
+	56zQqGiM=; b=jm8gxQUcjpgL7bNHpnSOa8vv4rTuCtgeDeqcIEF8nmQgchl5hjw
+	aCU/dzAeLvgB1r0aVuRmOmR5OVkgq9WRKlOKXeO3Td9JQGuYsN6wJ3EfLlx99sAw
+	k44iUJZ5RluQttCMHs3EHe90W8g2/yzsVcgaosMHMSTBUsgU/OE6sRrcyz+mSNf4
+	9iDDbxfqcXVi8comt4tC4ekz7EbweeU8Uhq872dAsAGX+DOhGxmRyamYsCrDKpY8
+	snS7nVjpjcClSpYThqDWoqp41HBjGhrmKPffagahSpnBSwdyQmy5NyPEPBQVEFSe
+	JzglzNnWkbPU201iusoIhN1u/pBbSD2ww4A==
+X-ME-Sender: <xms:vvuVaiUzfP7_pLJIVj1ch9-Sm8bYcFVSbOjs9aQawRtrPRSOt4__JA>
+    <xme:vvuVamD8wt7H0MvXf3nNLmx44ccimjRwnhNBIWjcPw22SPphHDYx0pO9UYkwISfub
+    MzJrhzt7gVrv2ACFYu1oyCs62RoqRu_g0agSudeMdzreJOoig9f330>
+X-ME-Received: <xmr:vvuVajy9wSSJ1u5wHvtd3ggnAeEQEPdyBIp6gnS3h2MUayaAmGWFyNBpezWBWg6tu2fLxUqaL2FReQACVjuN0onHkgggLWNoEw>
+X-ME-Proxy-Cause: dmFkZTFv78RtUZHY8z2Zx6SiZXkM76JTHpw0b6muKuRseOku/ZvL2B1tmH6Ixc24N8EJQ+
+    i3ob20/mPsLcwLrHuKst0mJmsfpozTNs+JiN7rfVne0cewysX11iEvBJ9RA2OmyDg6kNlf
+    SA0mNFIyt8u3p5Hqjdb105+mQHdo3pCplZI9wS1EPCdr++q+Hh16YQNJljBPTaSy1aRTBs
+    joGamjDeudcOcvS+EJv9PCYNziPd+MahfbHn2C79OxxS/PJzdHHA3UWupKl+P/wlgP+rIH
+    /3lVpYajX+VlL2zJ2uMYyVRTn+ZmAyaWwaKk2m6kKoMQbJ1plJEmlt1NgZAmWa/Ow17bJl
+    iGDvOyjHwahNj7kxD/tTK3T9kcX3vsGSglPCe5EFQbtv5l7/vk0om3lebnOJeiY+F8Kl4c
+    kkBXiEpDzuK/CoMoWV1b5tsfgbFkHh1WTlfBrPqafzQDORbqSlwtd6AFGapi1n38zmfpRy
+    v6uqEFNijSeLmHKpyLmV8GqUDb90ql8z+Ycs264vYnh1z+ADF2i8t6wTslIxYntOHjuaxJ
+    sYSj7NI/XVo38Vwgfhr6z+9P55FaCuzPo2Tb4O9E4geZrT59zhMlKs0A5wrtnG4CAAxgbV
+    KkZzrtfnVVM/4a8TyMwr9L4qz2/PQsyACyefKVjbZbBvykM0S0Jm5ff253YA
+X-ME-Proxy: <xmx:vvuVajD-mxr13CosVVkx1SOaHiLwgTp9bqXvkWD9eItcBaXrUUJw7g>
+    <xmx:vvuVagbWa9nNFYHW0Mqj5sOFmCFA6SG5TSU8LsIoyp6yt-TKAW8R9A>
+    <xmx:vvuVargFTQFUUBwU54Zohu8za7oyn6QwueI8XV5mKnDZorR_0Euvow>
+    <xmx:vvuVai7JYQTyjXOR4ZNKdGdtmYefX3shsCg4uy-z9dpJ0QiqKETBMQ>
+    <xmx:vvuVasaUVBepLYhgHfdp8JEVgiMIr4HsuRPUwcRjcrMENARAWa0zurMg>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 17:19:01 -0400 (EDT)
+ 31 Aug 2026 18:10:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Gusted <gusted@codeberg.org>,  Jeff King
- <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 0/6] last-modified: use the pathspec's Bloom key to
- pre-filter commits
-In-Reply-To: <20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com>
-	(Toon Claes's message of "Mon, 31 Aug 2026 17:18:40 +0200")
-References: <20260807-toon-speed-up-last-modified-v2-0-7d87bbdeaf9b@iotcl.com>
-	<20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com>
-Date: Mon, 31 Aug 2026 14:19:00 -0700
-Message-ID: <xmqqmru2ugxn.fsf@gitster.g>
+To: Hardik Kumar <hardikxk@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3] versioncmp: fix typo in versioncmp.c,
+ t/t0022-crlf-rename.sh
+In-Reply-To: <20260901-typo-fix-v3-1-cc342f329190@gmail.com> (Hardik Kumar's
+	message of "Tue, 01 Sep 2026 00:59:13 +0530")
+References: <20260901-typo-fix-v3-1-cc342f329190@gmail.com>
+Date: Mon, 31 Aug 2026 15:10:04 -0700
+Message-ID: <xmqqik4quekj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,45 +85,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Toon Claes <toon@iotcl.com> writes:
+Hardik Kumar <hardikxk@gmail.com> writes:
 
-> Similar timings are seen across a few other repositories (like GitLab's
-> monolith gitlab-org/gitlab).
+> The patch fixes two typos in two places.
+> versioncmp.c:           "fractionnal" -> "fractional"
+> t/t0022-crlf-rename.sh: "similiarity" -> "similarity"
 >
-> [1]: https://lore.kernel.org/git/17f356ff-7bfb-47f5-b714-62a95cc8b821@codeberg.org/
-> [2]: https://codeberg.org/ziglang/zig
+> No functional changes, only update a comment and a test_description.
 >
+> Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
 > ---
 > Changes in v3:
-> - Add trace2 "bloom_queries" and use it in test to verify top-level
->   wildcard behavior.
-> - Link to v2: https://patch.msgid.link/20260807-toon-speed-up-last-modified-v2-0-7d87bbdeaf9b@iotcl.com
+> - fix file name typo in commit message body
+> - Link to v2: https://lore.kernel.org/r/20260901-typo-fix-v2-1-6aeafbae6389@gmail.com
 
-Merged to 'seen', pushed the result out, and saw this:
+Thanks.  Applied.
 
-  https://github.com/git/git/actions/runs/33429987759/job/99612809093#step:10:1391
-
-It seems that it is reproducible locally with the variable settings
-stolen from ci/run-build-and-tests.sh, i.e.,
-
-    $ bash
-    sh-5.3$ export OPENSSL_SHA1_UNSAFE=YesPlease
-    sh-5.3$ export GIT_TEST_SPLIT_INDEX=yes
-    sh-5.3$ export GIT_TEST_FULL_IN_PACK_ARRAY=true
-    sh-5.3$ export GIT_TEST_OE_SIZE=10
-    sh-5.3$ export GIT_TEST_OE_DELTA_SIZE=5
-    sh-5.3$ export GIT_TEST_COMMIT_GRAPH=1
-    sh-5.3$ export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
-    sh-5.3$ export GIT_TEST_MULTI_PACK_INDEX=1
-    sh-5.3$ export GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=1
-    sh-5.3$ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-    sh-5.3$ export GIT_TEST_NO_WRITE_REV_INDEX=1
-    sh-5.3$ export GIT_TEST_CHECKOUT_WORKERS=2
-    sh-5.3$ export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
-    sh-5.3$ make T='t8020*' test
-
-and it does reproduce when the topic is tested standalone (I've kept
-the base that I have used to queue the previous iteration,
-41365c2a9b The 4th batch for Git 2.56).
-
-Ejected out of 'seen' for now.
+>
+> Changes in v2:
+> - refactor commit message
+> - Link to v1: https://lore.kernel.org/r/20260828-typo-fix-v1-1-24e80a87ed53@gmail.com
+> ---
+>  t/t0022-crlf-rename.sh | 2 +-
+>  versioncmp.c           | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
+> index 9bd863a970..328c6e5903 100755
+> --- a/t/t0022-crlf-rename.sh
+> +++ b/t/t0022-crlf-rename.sh
+> @@ -1,6 +1,6 @@
+>  #!/bin/sh
+>  
+> -test_description='ignore CR in CRLF sequence while computing similiarity'
+> +test_description='ignore CR in CRLF sequence while computing similarity'
+>  
+>  . ./test-lib.sh
+>  
+> diff --git a/versioncmp.c b/versioncmp.c
+> index 3a81b17bc1..f1e451755a 100644
+> --- a/versioncmp.c
+> +++ b/versioncmp.c
+> @@ -15,7 +15,7 @@
+>  
+>  /*
+>   * states: S_N: normal, S_I: comparing integral part, S_F: comparing
+> - * fractionnal parts, S_Z: idem but with leading Zeroes only
+> + * fractional parts, S_Z: idem but with leading Zeroes only
+>   */
+>  #define  S_N    0x0
+>  #define  S_I    0x3
+>
+> ---
+> base-commit: f78ce2f7b6df702f93d40b85d6bda92a3f65da79
+> change-id: 20260828-typo-fix-721b77177721
