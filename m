@@ -1,84 +1,84 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFD239E18E
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F83838D
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788156046; cv=none; b=GZ5G8rus+DQaJyazdk6NMteVnehzJn5Ql2DGz3n0FDCZB2YH42sn+Phw52jzveT6NyllKudQ5s1fW/i039+PW/EyCupNwwosv1HtG3EhEGL4FdhYvLTaoYpdZNJpZrl+Jn6Hq/BC5dNmmy1kB0XBnzW2ZRauNguyFumi7XUdlQ4=
+	t=1788156051; cv=none; b=r4CV3EXPlgRE3f9j8f49yfGel+jS3lbs2ae5ka+1Dr44iGEHoCyCGbf8me/Q7pT8nt+eB/QXdD3pqnR2gV73fG40f0wsr2Go7GjKOExeYkzBBF+aWzQdd4zNoxD2qhTlM525XzAI2jmXhGW3/Fx4uGc0V90Mg2E+G5Vei2SkupI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788156046; c=relaxed/simple;
-	bh=w6su9IeU/GwAQ0mDamJ94nHkkezxzCjPUQdcsOM2NoA=;
+	s=arc-20240116; t=1788156051; c=relaxed/simple;
+	bh=sAPU+Ca/BNAjqDyX4DrkPfXCeX2XS4JmN4zxAbuBF3k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DYvZ0hflZuHGOtY30ubfp2SQ6M3H+ORSh1mjrh+d9eZVG2YHaVQuSpOfp7Mf7SUxWUCzc+W+7XHjr+39S7TO91VvlOYk0UGFa+c+rYBLU3yCUCKwjCOM1mdHK7k3TrxvVNARbEV32ypphHpERVi8ZcFEu57qFzYbLpwBczHM9s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a8XlzKFt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i046x7wH; arc=none smtp.client-ip=202.12.124.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=QnvTgwp/bnS5bZkdDAd2IHiSn5M5skuPvUTH4qnglpNZ+cX+dU2J6MiLACO7/NW3EoUUXy7CW9Q7B1ODjEAc3wuQPsWovFMyMHfWvp1tQ1YtjIHX2PifVTdaXp5sDj0dEWkFqcCUDR7OzRJz/2w9zKnMFupiLPZfpcb9axwtr1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nCcif46t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YfwsZGFa; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a8XlzKFt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i046x7wH"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5E3447A0139;
-	Mon, 31 Aug 2026 02:00:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nCcif46t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YfwsZGFa"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B4E3D7A0136;
+	Mon, 31 Aug 2026 02:00:49 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 31 Aug 2026 02:00:44 -0400
+  by phl-compute-09.internal (MEProxy); Mon, 31 Aug 2026 02:00:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788156044; x=1788242444; bh=m/7pVzpKdj
-	+QhNbSWDRPYWEyU1C5xoikWwsPOGsb+cc=; b=a8XlzKFtYahcpofoUQk5ihuhKZ
-	9V2YOimRWMp8sRwWNbWyiJl9G2O2bRYHbthv+INFNG2UEp2gLNaYYanyAO+ogn3y
-	V9Nr6wQVqBPedkLfkiYOTArLQ2cCYKPWI7mHvqSXasHiSJ/7x3aCkGOD8NQqZx9+
-	wXNXAcGfaGz92366XCrJX7mWudiJj34KQr99vMgm6cIF3cUq2N8zj9hiOzXK3sPs
-	hWXBkmaVGGNXMwDWgYxYm6YyzUpUob3knctnlKES38XOZw6/psgkarUkCULviP+S
-	5CJec0JW70yriOTHNcAdFBv+tWuJRfcIbaHtRC+LLXY2W/tvuWeDyajtpzQQ==
+	:subject:to:to; s=fm3; t=1788156049; x=1788242449; bh=afJ3lX67WY
+	AB8RombVZeMO59skwrHC7vYc/zLtOmeu8=; b=nCcif46tZd6B9UszukWZ5o5LQt
+	suQeY8kX9x/HJ6qALtHe3SbtoEefcxywuZ5FtrE/UhpcRReMCmCJUzoOUD+e82ez
+	HBjuYcL80h5JNlzNcvaMiGLI3x/QY+nKINqh/dnG+KDKTHQbuMiZmWErcOwX9sY5
+	/iLbzphJxJIVqAvdVx2Ddc+LUp1fxDa+AV0K7yHC2btMYFlT+6AlQEUYxhtW352m
+	GaFsHDgTpZA4CRJ1slyCKQfD6O78lfm9pD4ErpKhnGjysWf4DdBi2YwDtqgKZryF
+	maBFg0MbGl0hgG1Gl6BdLfBpQwcEQYS4e8+R70j+Rh+q9z2R434nZSnTYvHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788156044; x=1788242444; bh=m/7pVzpKdj+QhNbSWDRPYWEyU1C5xoikWws
-	POGsb+cc=; b=i046x7wHrwyWkGh4L27yKBEOT2BdyAskuxKmPSxAVj8cNxiItE6
-	eEpnVV5Fr4YWWO8iUqUhauETozkrgBkpyuZNAf57o35Cxk4Hs2Uci1tgNYWTdnOd
-	BRFEFf140AAVZgFedk0t0uZL/Xk/ps+UPAzReZhXHmA9+GXuQNm9ayqdASq65rXV
-	lJ5qs0YavnYRUHPFWkyUCJ7EGcfYSs2SY7q3iATyq4fSjS5HEJ9d7fVUvB7IqOpo
-	TL6YklHqXFQoDAqk8PDkxVFkTDGL7Vaj2fmoB4RnIFo9MB2cG1dxDrMPrqUqNkQm
-	6YzLomhZ5KptN4sv30U7ZtPf6dVY/6SLGtg==
-X-ME-Sender: <xms:jBiVaiHpt9Y-ELZMKRzsSJfjdEWvXB0yMYFEDLqqmrHWVKt8EZ3HVg>
-    <xme:jBiVapWIwQhV1M4_xZ3D3Vkge0j321kWWRi81hbivhatAudsxrzyD-RJtsyzvv6Vg
-    1h9UsOVoiHNnupGdwOQD9DsnGBi1pQ5VPHgUBkI5pdbyMnGakmgPBo>
-X-ME-Received: <xmr:jBiVapz7we4O7FSxY5vButpEwqdib7k3VFWFjBkdlMKjZlsn-2GvNLXXDDab-w5iiQWWoA>
-X-ME-Proxy-Cause: dmFkZTFMKLwiil4HL+xg0vV0X8ZHibuphipUKGgdJIVIc9Kt87M7HfYLYQnrQ3WcjMRK5m
-    PBstsMhC3Gok/QZGKy3NnZehG1f5th8LFuV1ZVNfcnv6rgYl2/fCy7aIIWgC2d9OFb6NTc
-    Vov1tvWQbQLZwsFDU+n6CVG0cShTQurg4WSbr1tKBA6PhhRV+XOTlLgTQ9j8yXztfTa2pw
-    L0r1zq3AjnkkO9pT8GImcmgFbpOoZ66UHxWOtRfW8xicZdyuDGaeFGaPjiD++e4dR94YTZ
-    PWQ02Osm7vOltcu7Co4Ntfhd/Tmavk85Gdc4yf1nn5gYtd108LL2IWDKASihhgpBIKwum9
-    uzX1KkOwyGJioLJOhVPLK0Gt5ULjGEYGyiQ0CvbPQwHy5t4TjbOUEioJxS2xvXPSVlq4T/
-    FHYSwC3EHYC+ONeobaNrfi5lVHwMR+hDwLot4OPew+VF4IlzUHaCe4Xx5S8bCAFVIQqziM
-    sMFCsl5QHNY/LmJNGwCuFA32BZlH7GL7m7ChXhMxiYfgt5BvG2t/U3sXhsO6pVT4EJNKyN
-    nGKFY5oJA6Us3RcwDOG9nbUV7tW4bW49TsDsFTtmtet+e/5hKTnJN/JqpEPwf8255b5t8Z
-    FX6Yaquc9Nf0Rg7QHeTXcsdEiflOgk/xQjn5UWrL+HsxmempzQFn/E/C8zhA
-X-ME-Proxy: <xmx:jBiVanOSUFQDy6nxw_LMZuzggI4Su4hZyYsxUbiqHuNhJMVr4RGJbw>
-    <xmx:jBiVaq4qrO-BH0g-41QGJgx8_6XdavEI-u4xkIyIbqj9yaYoNkO48w>
-    <xmx:jBiVaoNrppRi4491GquqdHWAD7bqRJOYQIDmd7313XDn5GfKQkdxXQ>
-    <xmx:jBiVaokrzGHSfMh0PvwOa406DZh_bsqTyPFbTX_6BCRH2b-hsBJkDQ>
-    <xmx:jBiVai3O-B6vmx1iY-rdi3ZFIu7uzOntYc-zNJq9ZyW014rvPqurobXH>
+	1788156049; x=1788242449; bh=afJ3lX67WYAB8RombVZeMO59skwrHC7vYc/
+	zLtOmeu8=; b=YfwsZGFa1biGXxeD7UuWqwVWV/OZq5Z8Wbh/BTqh89Vl1K3uD6U
+	+HIDnXC+LbrRntmkonBvekePE5o79ra4Rn+PqOT0gN6rH000lU+75vzvFVYPjJW3
+	IrcGzUZEkyaudMwWFi6TtvrXE5cRJIPbXA/jMg8ufdPbO2G0gQXOZwwnFuikon6k
+	svEiSrJOoOJVbAuyPQQFGyPB155l41owms5sQH6fxPmGku5dJCvSSRXBEdFWyuaR
+	T1neSPxaShVUwUCEwRFXUM9sO8pn96uFDVm52cbz0drepyd4EcAtZMtHo+zyN5Ce
+	7PQ1ciWX7dLg5+qMootYDW37qGGQ6CPKymQ==
+X-ME-Sender: <xms:kRiVajcSNUtpdo7tpEzVVxmKYlHtXfGnPoFRWY4jCO8IwJZcvVeXtQ>
+    <xme:kRiVavPKPQneHWRvi4RGHmh2gmCfs79cNAYqJ1Lfw7kLrtN3WZToC8IpYxQ6WW-nV
+    wxZcAR1EWmnrBvYMdJNB-0FQfSSVhwPolMzOp42b4CutCqmAIG-Lv8>
+X-ME-Received: <xmr:kRiVaqKx8nlmG8qT38suFq91J5n-BRWNau1opV7VdRRabekTJE1wHDXCV3j-undP_e4PVw>
+X-ME-Proxy-Cause: dmFkZTETdnV+1Lx7Ywt8j7HKvcjJOkdkKoWrV18B+EQCxVJhhDFWuf0TIfyoWy61XFEGT7
+    wxMP6pcLmQqHTHV3VytQjZWjlKOT5+tlWigTUBQ0EJ6/B3VIGb7fPzoGNtP5c1My0YAudW
+    foC2eYYSV7PtnbA98NQJo8Qna7lOcO52LUnTvBdv1IwVjxMWKHArQeH/cMwb2GbBqX7JFi
+    8FcT7Nn9e0T1tbwttQaKZW/IQ/dcPuntggzDWrsSksUL7LGXEvsLP17x35RsvQlDbeyAF/
+    mhBeTz7vGc6+8NQo+lXdTOk0n9jNYhukJ2xCEAdqpREftLRWyW8B8y9zm3/DV049ArE1Na
+    ck5938Nqn/zREoGFlgoE395BpnpTsC37Y65X51UxvqTpFNhZKrTMXFaaovI8b+qTKAJLu1
+    EdUAhOot6jdtS9wOfSZh8UiNmI95nKT6XwhwYU9iGNIPYGxtCpAfWmlfEq2C2pT0WbJtwX
+    jLP/FPCsw0xkbPA8x1F63si0wM0rhLTYJWFCae7LDsgr5pDgMaJlZj0hLTdZVYL23QH4nS
+    Uvj9G1eWem5EBZWCSNPqjsF52DXF2QU63XnJRsWRE83cAK0qj9KsKIAZ7E6lfRTzDjeYX1
+    IAJywzZ+EcKCfTpChgTukMTAiNWxofpxm7S2pLRAz2X+Lq/ffuvl9WuBdS3w
+X-ME-Proxy: <xmx:kRiVagF3H11iAHUq5YvBhLOozhe6lsIiIq7J2QyFjUk7YYbdiRhQBw>
+    <xmx:kRiVaiQPA2gtYHP48mU7BqkmcUjhllGeLeBHsg5y5IdTnEdZWkpRlg>
+    <xmx:kRiVasG1r9NNwd9VvydWf-4VUsHYx_Kfcplc27QuDyw2mCwaoICh-A>
+    <xmx:kRiVau97nMbCSH7cKB0hLy3Rl2OkCU8S2lp30FewjfmGD1BE_KbF9w>
+    <xmx:kRiVaqMYGDXjzNFeSHCprie2M3Ku2mZRZ3l8B4pqJAYZIXZPg3Y8YEfA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 02:00:43 -0400 (EDT)
+ 31 Aug 2026 02:00:48 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b708403f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 06:00:50 +0000 (UTC)
-Date: Mon, 31 Aug 2026 08:00:38 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 258bff76 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Aug 2026 06:00:55 +0000 (UTC)
+Date: Mon, 31 Aug 2026 08:00:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 05/10] odb: provide infrastructure for pluggable fsck
- checks
-Message-ID: <apUYhh-Uz-ZVrsFh@pks.im>
+Subject: Re: [PATCH 08/10] builtin/fsck: move bitmap verification into the
+ packed source
+Message-ID: <apUYiv36xvWe-oj7@pks.im>
 References: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
- <20260825-pks-odb-source-fsck-v1-5-b756de0bf24f@pks.im>
- <CAOLa=ZQaetcmzOWzba=peCadW6i_JqhMth5cmQOZ32xz-E-zoQ@mail.gmail.com>
+ <20260825-pks-odb-source-fsck-v1-8-b756de0bf24f@pks.im>
+ <CAOLa=ZQwhpPMrgeLW8W0pezH8VFrqDiiAfet3G_jDRQDu_KQUg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,41 +87,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQaetcmzOWzba=peCadW6i_JqhMth5cmQOZ32xz-E-zoQ@mail.gmail.com>
+In-Reply-To: <CAOLa=ZQwhpPMrgeLW8W0pezH8VFrqDiiAfet3G_jDRQDu_KQUg@mail.gmail.com>
 
-On Thu, Aug 27, 2026 at 06:49:38AM -0400, Karthik Nayak wrote:
+On Thu, Aug 27, 2026 at 06:54:51AM -0400, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/builtin/fsck.c b/builtin/fsck.c
-> > index 3f6056535f..adbe192e56 100644
-> > --- a/builtin/fsck.c
-> > +++ b/builtin/fsck.c
-> > @@ -977,7 +979,8 @@ int cmd_fsck(int argc,
-> >  		OPT_BOOL(0, "root", &show_root, N_("report root nodes")),
-> >  		OPT_BOOL(0, "cache", &keep_cache_objects, N_("make index objects head nodes")),
-> >  		OPT_BOOL(0, "reflogs", &include_reflogs, N_("make reflogs head nodes (default)")),
-> > -		OPT_BOOL(0, "full", &check_full, N_("also consider packs and alternate objects")),
 > 
-> Question: OPT_BOOL sets 'check_full' to 0 when using '--no-full', does
-> OPT_BIT provide similar functionality?
-
-Yes, it does.
-
-> > @@ -1047,10 +1050,13 @@ int cmd_fsck(int argc,
-> >  				    mark_object_for_connectivity, repo, 0);
-> >  	} else {
-> >  		for (source = repo->objects->sources; source; source = source->next)
-> > -			if (check_full || source->local)
-> > +			if ((odb_fsck_opts.flags & ODB_FSCK_FULL) || source->local)
-> >  				fsck_source(repo, source);
+> > The checks for bitmaps live in `verify_bitmap_files()`, which is called
+> > by "builtin/fsck.c". These checks are obviously specific to the "packed"
+> > backend.
 > >
-> > -		if (check_full) {
-> > +		if (odb_fsck(repo->objects, &odb_fsck_opts) < 0)
-> > +			errors_found |= ERROR_OBJECT;
-> > +
+> > Move the logic into `odb_source_packed_fsck()`. As in preceding commits,
+> > this means that we now properly honor both "--connectivity-only" and
+> > "--no-full". Furthermore, we drop the dedicated `ERROR_BITMAP` bit and
+> > instead use the generic `ERROR_OBJECT` bit.
+> >
+> > Note that this change also adapts `verify_bitmap_files()` to be
+> > focussed on a single "packed" source instead of verifying bitmaps from
 > 
-> So most of the functionality will move into this and we'll cleanup
-> around in the following commits.
+> nit: s/focussed/focused
 
-Yup, exactly.
+You can actually use both spellings [1], where "focussed" is more
+commonly used in the UK. Anyway, I'll change this to help our American
+friends out there.
 
 Patrick
+
+[1]: https://en.wiktionary.org/wiki/focussed
