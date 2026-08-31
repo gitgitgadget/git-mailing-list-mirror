@@ -1,105 +1,108 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FB44772AB
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:41:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7853AA1A8
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:56:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788198075; cv=none; b=oci+CFlTjDEkXSI5/LcAm6cMCkeJBuJ4/D1mOB6KwSzbV1MTZWcSJ/WBj7VEZXTgemtrX7Cc4zBVWQtvYbDJNQH/otc4UhIqfqFIE7LOSFHpI36DoMv22R72yVwLh35nf0LrCqUrxDnxin7GYjoHr4dTFzE87e7KK+YVdeNiZt0=
+	t=1788199019; cv=none; b=X8ML2Q0YdWHVs/omBHc+FlXQp5afbi47WtwKtz9dfsXtP6rd09K5x+eVX+ORUV4uqnlFRkHS2H+yZ49rblhsQDDMS4GryE145g27TFx2MnMreuIodE/iTxNQ3sgVu+G7z1ltqE6WKGjiSmW+AnOfgJ6Jc5F2nOi18UEK5zG1ZW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788198075; c=relaxed/simple;
-	bh=JBgPkJ2coI1RZ0+3z5oq0MIe4ewDhesbRXSrwOGRgS4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QgxF5KN/5kPT83y148A+4LR1gDeGItXbBasBc/U2YMxqDHTkq9JPuJd9aUTUCrYRtnVApMGI6os3o5Vxc5cm+dspepi2MguPY9KdcdccydVcEMnwzXnjLYwOHBTyqGLRv/5rkbBzPCL3uPMkMm7eUc71eI0pzFTIpq9bjF3xgF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=q6R02Zms; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eTO7PXjL; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788199019; c=relaxed/simple;
+	bh=fQIJstYiDFPDjSPFyAzV1qKW/NKs3ReqB/T+sFXpT2U=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=f/S/4pBz1M8Se4pg8Z8hgjPOsBqJjwcjWOCtXO9x60GaPsKLWt0sMfeZHuIuw/vgRvMW7RSAUUHr1Aye2pDg04x4LoZTZAUIbvsw8FURkASWC6xAgjeDYBFPR2iHxCllEQkHgdlf9IlC1sjUE9Gz1bBG0JcGJOfIrbjmthyCiCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ex0T4lxm; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="q6R02Zms";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eTO7PXjL"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id C11A81D001E1;
-	Mon, 31 Aug 2026 13:41:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 31 Aug 2026 13:41:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1788198072; x=1788284472; bh=0Yj2ewj++x
-	pior+6LCvdkzLh7J6z2NCqEIyzok+qwlk=; b=q6R02ZmsFkdJxBDMcDOBiHys0n
-	pgRDLpjvBOKfkYGzLC12nhquOl5AHpUNyWsESeWS97j48cFZ4oTnDpzO0ONcHx9W
-	sU21chxse3u3BcN9i7picCSzP1imeJoRjkIFhtiVJlHPSu95IiVH4isIosKDz0wl
-	rNulVCOYEyluigFc03CpEsPWICsKwkBChmXOPR/vt7E/WsNRqS8ooJ8dezwDcNaF
-	YGzcCeMsWCJASiOmcJX768rGU9cv5SmX8CquoIHXzZp0XFqdE54diOH5znLA3SVw
-	UKbqF12gsnDuJyp7G54GU6DD3/3A8P4L7y9POrAZTTlcnb7WFxQ463Kyc5xA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788198072; x=1788284472; bh=0Yj2ewj++xpior+6LCvdkzLh7J6z2NCqEIy
-	zok+qwlk=; b=eTO7PXjLhTtlPkNaslvxgON81UGAbhv5SfxXQ9L48tkztfYWWeU
-	y/jMlule8TR6t6unKOj087kf6aJwATiL+fXp3BOpAzN45wC9KdOJQ4AB9oSi8aQb
-	IKf9IgE1pULfDtArDRMzS9diPR09iBRz8HhzwMuL9B7H72APK96nkaP5F6aHIC98
-	9Wyd4UVUQsfLYtbBaGhUttyHJPhZ+omBLe4i9NhEKxhh7utQTL40su6R0LJhwm5w
-	ngR5ThE9ZOALo747hS+Du9wyRirzwzkGIhA8mEKRkyeQxmMCcG6lJs/XVQeT1i6h
-	GVUHMXzTtpnxaD02ICI+V5Ne+AE/Jt7WDSw==
-X-ME-Sender: <xms:uLyVajDQqkjLe-x6s34YxF5FfjDJdDCZVn0qFi0t1uIngGVBuf4VyQ>
-    <xme:uLyVag-816UpdUotqUqE156MjHtRsvckdCpZljDDiX7ihIX6BexVW6JJIcCfATIST
-    6aqv5n1-MlpZ9HbfPJsX9HfTAK9qG0G0sePZ6ukBdMT25hWq0QFiQY>
-X-ME-Received: <xmr:uLyVar-UIgQf3wH3zpSV7EYHY4EEJRRhgh1WTHUDjSMir-_ROSt8be0TPsaha7PiZT7bTkklj1w0xvTsqlPUhpBRG1izT6FktQ>
-X-ME-Proxy-Cause: dmFkZTG0sPzj1aYfdznY9vT7cpTN2LQMbWtJFHcqV2I1NRxtq2WbQIbtgPQUP6G/vHmbIA
-    ldXlcFfF9yNAyMeJChBi+6yAbEnvZRab3BaQa8D3SzDG/vDI2dHBIgyn75gw81dcLwB2GC
-    xPTaB9U/GYDBRE0CoMM4cb2n1QoXP3QAZ9vseAJkJ9e6biIhaLTBZI7vclX+yZsAw4/1Qi
-    GNHSBa3thYnn2BL6oJLtPkaH4o9ud7X0/qF8FYIVSDY9n8cSSrzdUpTI7dm8sgNHy6wCTk
-    kLsivuoeoJotklKoSqfx2pxa+wXZaDCe8EUo2d84PcIpLUZ77saq7KwSbK9rKdLuQyA2j2
-    QJUmwOKKE5aj5xwHECuei6LSUe8jB7oP6tHXKCbwWNZFal5HVA1SnW2kWgJ+MAa46nsgqo
-    5Ti/6mE0ViSxdOEzwTNEJT8BwQjMibjLD0DQavcJQWVpKJL9XZK+2sBaE0+M7GbJdQpe1T
-    g+nHHseKQY/88brY10UW7bCFtf+Fw3zJo5co2WHCkdQd0gqTavh6wgy8jvRB933M+91f6l
-    cE5qkr0PcSJW8yqF4Aq5i1fbqICDKGsJTRt2864w4Rsl75UzrAtNibAYrECtI9vltkgZ08
-    H1IgAAbybUxfeDYoqQWbWDVbgPYqNGMSZAqboe0kI6j4ZxN8uE1slYfDvsoQ
-X-ME-Proxy: <xmx:uLyVavdyO3_PLd04HIKEvRofC1H4SDRgaxOwa1euM0nBYLWKOPiqcw>
-    <xmx:uLyVasFYry2CmoFH3oCrETPmEXD5941Z3SVAOuIL-c1TDLBsDoQLOQ>
-    <xmx:uLyValex4zesGjV1Hvrq6Xpw_d9O9j-zsjnDxUIWaV_JBHay4w90dg>
-    <xmx:uLyVauG1Tbm5PxnCxTuGn6PUourDaP1PEw_s_XWM2C2RBtUCVBVocg>
-    <xmx:uLyVag9vFElt-dWVtRRLUYrGk4d-Fwpz5d5wsFm7k9pim8M1P1NnCNgL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 13:41:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Hardik Kumar <hardikxk@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] typofix: fix spelling mistakes in comments and test
- description
-In-Reply-To: <20260830-typo-v1-1-d397c8dfb301@gmail.com> (Hardik Kumar's
-	message of "Sun, 30 Aug 2026 19:12:35 +0530")
-References: <20260830-typo-v1-1-d397c8dfb301@gmail.com>
-Date: Mon, 31 Aug 2026 10:41:10 -0700
-Message-ID: <xmqqzey2w5l5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ex0T4lxm"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cc11a905ba5so39578a12.2
+        for <git@vger.kernel.org>; Mon, 31 Aug 2026 10:56:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788199018; x=1788803818; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=V2UxfIAxi+HMhZSkSRzKzex8+bBgrmJvf9q98e1as2A=;
+        b=Ex0T4lxmnJREDVPws+ahVszHWU27s7eCMHvbcw3/hKxX0/WIqkIN/dlG2AH3mWUyjQ
+         NXYjbq6Sh43DVeMnxY8NuROfg/lLKJEmDiRN+WeC8WlqCoZgVVmREE1uBHMI8tBuMw3i
+         oXoegKAv+TO9FxFbhqu8qg6+bjldd5KHeXJ8vZnwrlVg+k2G5OSsBe10u0CI6rATCwsk
+         Jh/T7n5T6dnyD7WQafl/cQ9ZO2n2xYz7cLCOM9Ds9R5DH27h/pZaH9pojPWNO4wAagLa
+         8LY5Xpyj+KGooUHhzAeh/Gh9a1x6cf5H/agPcGZw9dtQ45EMno5lI/0gFOLk4smC+lbK
+         XAMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788199018; x=1788803818;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=V2UxfIAxi+HMhZSkSRzKzex8+bBgrmJvf9q98e1as2A=;
+        b=YpTO+TjUDF+WUCIbJKxol26+j2ZhNVro+IcSElncDs3kDbvu/a4GLP4iMWceje6OLs
+         DgZk7f+jkyuyPnQv35pJKD+JaowhGmLiFHpEKG0jTmLWkXQ/tZgz3HQpLsm4cuf+Fn9i
+         AA2k/GIdpA4lZrJCIArh3ogDiyjS3RnqibA2VA+j8S4oRcKbPmVH4oSUMcFyDtWcQFf0
+         FTWSu2d9PsoYcRIgrIVVGlWmJkwhVY1No6jHio9TjSclQFLb9zGqVrofWSqC2VtYyx2O
+         8vXAIpnKtcZgW9N/vSsvqcgOyAzajhfNRrMfmS5zHN80pFNQigo+QvcAs20SwoYWxH6I
+         80hA==
+X-Gm-Message-State: AFuF++luHKGSzXNlOFuHGQ4sAIQg3ddXIohhvtBM0MuZSMCuqql/kBQj
+	sKvkQjWSV2q/zyfwM9UOc5jHciEHVGR1YNtIKE/2c01Ut4i5LeeqAdlk
+X-Gm-Gg: AR+sD1194bLRstXMRZGSC8Obcuml3FaXOPfK2Tdxjwi+pvjB8a820HRMezsnmQyLZLk
+	IyUOPkcAwMobQGmNOpdEeRd1QC8dy9C6KS8QAeavFs34XGyf1laKu9jP1vFEYdy4a6gwLRaSUX3
+	ML/9WLthqONfjsEcXNI6Xsrxvpmf3fFdFqj4QFcgKYLOYfm4+Tpp0J/FE1hjUq1dMZU1/p1OwsY
+	7U7dB/1OqwbonIAXrfxNFwcB/yLkBSAQB9nTpqnjGKc1IZitNVrYwVFz4Ux8FrvL66WFqbIrDP/
+	DAPoRcgmIpu7BZo/U59e4wzL8j6MvWEXpm0DlpLSpza8AK4k2H5OV9JZrUUXuvQURicsq/h+Bnh
+	J0FwsIGHD+xe4IAyTjFaAph1FQorIUDcgShf8uiK7P9po9sH3ixi/GpYmP5aBtKq6VzWsmro7Ki
+	A4EHEWCWn5WMxd3VORY6TpL5a+5TYm4u7BDl6Cl69wZa7fiONGJBfWvabkRWhLOyHL1X3L
+X-Received: by 2002:a05:6a21:a247:b0:3d0:88f5:f812 with SMTP id adf61e73a8af0-3d268ef9f7amr49219749637.10.1788199017793;
+        Mon, 31 Aug 2026 10:56:57 -0700 (PDT)
+Received: from localhost ([112.133.220.139])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-32b58c057bbsm17014379eec.19.2026.08.31.10.56.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Aug 2026 10:56:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 31 Aug 2026 23:26:50 +0530
+Message-Id: <DL3BN8L6HK8O.T44IZ297KCF3@gmail.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH] typofix: fix spelling mistakes in comments and test
+ description
+From: "Hardik Kumar" <hardikxk@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Hardik Kumar"
+ <hardikxk@gmail.com>
+X-Mailer: aerc 0.22.0
+References: <20260830-typo-v1-1-d397c8dfb301@gmail.com>
+ <xmqqzey2w5l5.fsf@gitster.g>
+In-Reply-To: <xmqqzey2w5l5.fsf@gitster.g>
 
-Hardik Kumar <hardikxk@gmail.com> writes:
-
-> Fix spelling errors in the following places:
+On Mon Aug 31, 2026 at 11:11 PM IST, Junio C Hamano wrote:
+> Hardik Kumar <hardikxk@gmail.com> writes:
 >
-> versioncmp.c:           "fractionnal" -> "fractional"
-> git-gui/git-gui.sh:     "occurence"   -> "occurrence"
-> t/t0022-crlf-rename.sh: "similiarity" -> "similarity"
+>> Fix spelling errors in the following places:
+>>
+>> versioncmp.c:           "fractionnal" -> "fractional"
+>> git-gui/git-gui.sh:     "occurence"   -> "occurrence"
+>> t/t0022-crlf-rename.sh: "similiarity" -> "similarity"
+>
+> git-gui comes from a separate project and a different rule applies
+> to patches in that area.  See Documentation/SubmittingPatches for
+> details, but the consequences to the rule are:
+>
+>  - Any patch to git-gui (or gitk) would not be a patch against a path
+>    inside git-gui/ (or gitk-git/) directory.
+>
+>  - A patch message to git-gui (or gitk) would not contain any
+>    patches to other parts of the system.
 
-git-gui comes from a separate project and a different rule applies
-to patches in that area.  See Documentation/SubmittingPatches for
-details, but the consequences to the rule are:
+Thank you I had skipped over that.
 
- - Any patch to git-gui (or gitk) would not be a patch against a path
-   inside git-gui/ (or gitk-git/) directory.
+I had sent another patch with the "versioncmp" prefix which only edits
+the core files to fix the typos.
 
- - A patch message to git-gui (or gitk) would not contain any
-   patches to other parts of the system.
+Thanks.
 
+Hardik
