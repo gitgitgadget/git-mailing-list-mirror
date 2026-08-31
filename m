@@ -1,133 +1,110 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FE5430CF9
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 13:30:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABC848986C
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 14:16:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183054; cv=none; b=ZMQo18NKxorBV6nVyLzTtC0eL934Hn2rwrh2rR8ILYhREAX9qQKrdoqxRJszUHsThycLCQJ4jbRsxtZcVyoPyrRZs+v3H3IBMCwnfc/2JODOqRmtSsQTC9V4wjf/TAIiMTxzpAxDYnGAR1upYSFP6oqRgpqaWQNLcqrLcK2Bbf4=
+	t=1788185820; cv=none; b=u4ri+07FLnfh89KgJ+Igl9V6FRgT0birEomv6YPNtoC1TFGT78nYWJhy+ipxYsOlqlkcOnZVb+cHgeG0wBpccPLtf+dtZn1DdoGBCg+/8N0DSKwgDyI+JB3Bd3tGdnOBAN93pkFk0LTNgXWAlXgnmzYGNcx3G7ljh4IY9F/2P34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183054; c=relaxed/simple;
-	bh=pTCIiWejL0lEqQ0q1KF2s3uRyd82gw1gIdeg6/ygA44=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uMYlXBEqeWfXbgo05E28rkyivNNL1xTDk6nafic/PFCwRAOx8kfXGraVJH7mqZ3+HKMzyxVrqUbrqTLivik7rOba1bhhqOZYam9ztvzWkVAy+kc/o0VKcOWOzFrUqh2nJ0foqTwI16vkLhOR/vRgZoxzKbudpNca8ZSzzo7Guy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Oy1DjChZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NrgkueM4; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1788185820; c=relaxed/simple;
+	bh=nd3X1R5slNIjBeGCatlznwIAJT1ml2FCoWUI6PAJSW4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RC8ZeFs4ZtQnLyfQzE+kLmuyHJT37zYO6X4bm+vJJdBI5DsqGQ0mqHOo1eJ9ivj3dybR/0o1/Uc2NgWmlFnLd1vMVZ9aN3YDlmaPUCOs+uzmJagU8olbkkRgkcJ1T0f602W+YeqhGNMx6u/BhFMoLPRknVMzS3ClypVgAnOGTlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ESC9KIRp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PXIXKowD; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Oy1DjChZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NrgkueM4"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EE1FF140011B;
-	Mon, 31 Aug 2026 09:30:48 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 31 Aug 2026 09:30:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ESC9KIRp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PXIXKowD"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id E4E5E1D000B8;
+	Mon, 31 Aug 2026 10:16:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Mon, 31 Aug 2026 10:16:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788183048; x=1788269448; bh=0cdUmEGKmX
-	cq+7TgRX+lgW4SsEZ92lmO2Ryz+c5ioWM=; b=Oy1DjChZLGDNz7UBgYR01p9wBB
-	gxEiuJoT1olrG73c/P9mQN3AI/0mNzzU1Tvd9IPvlrBOAVdlg4ZshrXJXo4lenUR
-	NuspB/95JOucjfxtqfI8hC+im8IcCnfvZRPfyH/pinr4PcZvhSwQdAXN9hJjHdzZ
-	SLitxJlvf0d0wgF9ADyrmsAK4KDpMWXZi6DtKE4zOyNNs6jKUn1f+POwVhRa/zg6
-	ZLgEd5LIUVqqv51baVWMFb+CBIUjseFfIpR/OiZdKgIyG/Bru11tRHfzbLqkfhXv
-	Ws60sU6sKNC4p+K+yAntqbA+eUwMkPGIbm5nZANsxgyyRGL4CRfsdLbFXzkw==
+	:subject:to:to; s=fm2; t=1788185816; x=1788272216; bh=IMMVqEeBT/
+	uU8pl//ZEno6uXUUo7BqQGp2Oh2hazuVE=; b=ESC9KIRprYX5vfI1RZbfnUcoAk
+	1YjbEqcOXX51VN3vsY0PBVU+OsXqxN2aAt7SthsK2SwTkfBPl9iXMRKXN+FzknL0
+	pYXdj2NHMAMvarAVXksXR/aKWd6JfBrqSoqRTWqyZ9JomDTm7hZxOeN2eIU42uZT
+	p66WQYvDDzsyS4/VTXNL+hzbWpMJ5AfO3b2duBnOhUBCNkc392jKQIpnoiz3kFUK
+	au46LRWWhW4hD496tFq+W0juJ5nJ2ZiQOQMDHtxBlA21bWP1ugzEHbaSJMl01YEW
+	c+/Sr1dQlJxmD+EXRQq5zeDnSk8N2nIEiQwGhLyoCREoke930LBgt7XNU8Uw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788183048; x=1788269448; bh=0cdUmEGKmXcq+7TgRX+lgW4SsEZ92lmO2Ry
-	z+c5ioWM=; b=NrgkueM4DZ1c6dyeNeG+mHLs7k8oeRj6iy69ICNEAv/0bILSW0f
-	EZbvxyy6GxvJYeVkdfGWI2fAYEZPlXt4VULczZ0rvE5AHiIlbYztZULfOP9nQZjS
-	1elBj5KTns4k7Fbc/k0T50/lR4PHXqKMgeM+X3OPkLwv8zJuLXxLxokvwESZhLU6
-	ZTrZNVRiCiwq6EtJa0la3oDU7u38CtMtzWf72/4PbJ79OEIwNpuTQFqKAP3Wjutl
-	GVGIeAwobIbElxU/qCjwz+nQQ7eG+s50bCfJ9QiMyadq1AWZ+LOJKRXe2YWg6+ri
-	ZkdWDhaEiAzUOFS2QU6FG6MME9Zs59GfoSA==
-X-ME-Sender: <xms:CIKVaoyvEUBlre--cQNFzVYb0htxjhbIS1KsztE66Gq4yOekRDV6pw>
-    <xme:CIKVajJtfIPqTGdt6lRjzwfNuiODE0exyTcQXs5Cq8qR8GEN9Sda3LZ6zVpLU53NN
-    IkJI0j_bBH-Mcg7lPkjtx6rpl4rD3hVIn2NQT80eBazb1b1wdFCRPI>
-X-ME-Received: <xmr:CIKVair9P2_UhMzTSzOcpiWcSfF-AyuoA02OWb9sJEhKwvSmxXSY4DvYmSdt5K4JfebPFQ>
-X-ME-Proxy-Cause: dmFkZTENf3x9BrTUuGSnvX2HtfyVqi/FCK05b69t+wnA1g1x0fndk61/2ari7KrpmNIsfl
-    xl+WnQZHRjnJv9NI07S9jqs9g44GDCVAw+RdM6xEN9DKjD4wPagCemaLCuapiscu7lbjvO
-    waPncT5Bf/NDbhCOIh1RZJ5J1hydEjJZSwtFrtS0PaQMOJEG3xdtQls03TfeDJE5Q36kuL
-    ljUZaqgArlaGIQNamfkU2tGlzzOvP1RX99qspLPstRDBddf61Yu+era/GT1ROsj1NVxfMq
-    bfV5sfsll/NSrIkLzLQzui5ZiGgJ86Il+E72X0Wq+5iC7Ma3e3lu5IfVsmQ99REi4uWnIE
-    vzCaCdEU7AH81i4i7SRnPu7Fb2aJReeJCPgiFdSKIUUtG7pMa0o0Xd9Iqsn4iI0outxecP
-    wgzeFuqCB9Tc1REqU9IWXPu2/o3qtKa7p66f/PKbOuelB2sCSDv9WGIqpZRuPktobRptIx
-    WYMggS21sDm/NFTfGP2FoVIquxoeMZQgNbetaRA3ck5w9PVHwLqOC06l40kx5zCeMX46rM
-    6Ownh+GWsYM70n11VrPVe6DFuCNoStrhRa9kHD+I3It8CubjE41ww1NwnHoiQ9N+gyBmMU
-    IFpYdWQnGUVESVBWoR5Wl2/4aY6wGVZ8TZnqBC7hYek49FtL85+aK5CzSRzQ
-X-ME-Proxy: <xmx:CIKVaiKxCzBtjO8n0hi-Y5xHvrdMyc7I-uGXQWlnIUGE3evJ09jj0Q>
-    <xmx:CIKVanS0jPLK0XOudPOIPLb2lN7L_MjeB1x4ouKU6QmvsN2IAeBLhw>
-    <xmx:CIKVahtn9aaycq0iBC79yRYakf2eIBtYCLTKTA_DRQoOdEhkk_4R-g>
-    <xmx:CIKVaoZwPF76XyskSIpxIsRn85hutAfsM-zsgyhobqXjXHVspqvCMg>
-    <xmx:CIKVaqee5fMLYWQOoT59i-bxb-9oO61GMUhjfk_atmVt9XpcSI_ofi2a>
-Feedback-ID: i197146af:Fastmail
+	1788185816; x=1788272216; bh=IMMVqEeBT/uU8pl//ZEno6uXUUo7BqQGp2O
+	h2hazuVE=; b=PXIXKowDjU5PZD0SUe25jxd1PooSavBQ/09//XzwzBSzkq4NGA+
+	NZ8nhm63CnX9JHK7W+jC5zvysQchqhr+v+XMDbPLlSO+jggSjVQCAe4oFMF3pWAs
+	ATLhj0x4gH5dwfIFTRYazjw51HQxh5QowllIlwXk68OELowMtW7ot1KLRS4JpFcq
+	9jc3Nexi81EeNo0JYs5a8B28WEo8OYbHQ3ZcilR2hqxQ2orHRO7Rdu4NhQ57B9vH
+	9blIJuG9vfvICpCo4JOzuWXUZ4yf89YClupcFxUIZuP96ADRkl0F4rKEicM1rXV6
+	kkLEwAD5GelkQ5xUXkwJ6SKIF0sIHjJGD/A==
+X-ME-Sender: <xms:2IyVagl4wRw7B0Vvnx1kY4GHWjU80WNzPns4HFjSIvTEoQEVmTXq2w>
+    <xme:2IyVajhz9X2nyjEdcW12-Nd6bAYjAXJy8A2qRYatIqDyDE-kV3_5DMaVnXnC0nNLr
+    8yAswGLVePIOddd5yfJjXn7pONxS3YL4U-3eI4bkzsRzgArvdx-ipY>
+X-ME-Received: <xmr:2IyVaoe5aTduHBgfjgFcvunoa17BdTDcF2y5FFu1E6grzHbK165flLhVWKl7PKL-BvO3iMOnzeITSIezzBaQIuxav-jfNlK_3w>
+X-ME-Proxy-Cause: dmFkZTEgqv1SB5BPcquukVFdg8U8GcEbueu8fqmJRxvf4GmSA/iGPB+9p/WASEKKFFJwAu
+    jsWHcvvLeTwNYNURXXOi7DZll8DhXEh11+fvTknDNWHZsNMw7e9F6Yf0nEYuEOrSCaYD3U
+    z+8+4e2oS4prEVW9JlQGaRpOotvWuXPXJC40QQAJz5Y65j5WOF6AJkzSFPhMRU6Ew74clF
+    VF4x/OzCAgYvpVhqLKAsOkwZsP/BLKY06R0qCGS01ZaqTEWE+7dfA5hq4ByLE6S/yaTw85
+    X/rFM3XESziaGolOSmkl5FJKX6iFgkXAKeCy+q/2Nna3eLShHBtr4XSi2L0Plt6uzm/jIk
+    ULVwmsQ6QrOFm2NW7qtuBkZDJnCfEJrrjz/M34xl0blFZ0ipGwtG/smIXCmCE8GjXB0PAU
+    Oq/wVaWvHGZz0FgUUDOfxCM8VD0SKZ9QxlaRDAMA9vsJCywqcqXeYvXhZerfvDwZ6ZTyrQ
+    5rtOEcHOZjHH762jQityZ/CLsi50UW+ncBgU1t2i3AABxS71CSIyJILfwPETmiQdSNgf6Q
+    DUXIXjAnNgp5amoCxKjjRIoxAFGZ7Q5WLtijs/W98xZP/fm/2BlOk5BylJVVOVKfkkqfEU
+    DEJMdsC3x8PEaNNvslRvdvq1ICxH/Ro8+vjHvTyCFEYsmj8LV9GWEy1oUpEw
+X-ME-Proxy: <xmx:2IyVaji4FJP0wKdieLQFKl1VN8BNvSVKfBVBG751RQnZxjdeGtKCsA>
+    <xmx:2IyVagyPageA4rjPv8eMkzPYA0dw_-olioANl8sc7dDDXSSLULf5BQ>
+    <xmx:2IyVavPOI7uvP-5nwdmyAswAke5fkUNQ_t8OxmTjfP524OYCuSIl3g>
+    <xmx:2IyVahXmOWo_Uy4PB1sleqlNk9zcwNeuzFx9qQWKi-JTJ5XELFOgKw>
+    <xmx:2IyVavWfArj_geOJMYArFre3DXqhyMlSnO2M8ISHPAYHTgyYyqgw4sDS>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 09:30:47 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c122dc86 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 13:30:56 +0000 (UTC)
-Date: Mon, 31 Aug 2026 15:30:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Taylor Blau <ttaylorr@openai.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 1/7] banned-die: create header for banning of functions
-Message-ID: <apWB_D9oivo56vcw@pks.im>
-References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
- <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
- <84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
- <xmqqh5kikkgi.fsf@gitster.g>
+ 31 Aug 2026 10:16:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Grayson Gordon <graysongordon1@gmail.com>,  git@vger.kernel.org,
+  peff@peff.net,  avarab@gmail.com
+Subject: Re: [PATCH v6] http: add http.sslVerifyStatus to check stapled OCSP
+ responses
+In-Reply-To: <apUlqvXgChMeCUkp@pks.im> (Patrick Steinhardt's message of "Mon,
+	31 Aug 2026 08:56:42 +0200")
+References: <xmqqmruqt36l.fsf@gitster.g>
+	<20260818214858.65122-1-ggordon@gitlab.com>
+	<xmqqpkz4czhu.fsf@gitster.g>
+	<CALgUfNjd_y-e-zTKJ31o8_bQuRw8wFWe=sdsf2KJ7LOmmO21aQ@mail.gmail.com>
+	<xmqqld9q40ww.fsf@gitster.g> <apUlqvXgChMeCUkp@pks.im>
+Date: Mon, 31 Aug 2026 07:16:54 -0700
+Message-ID: <xmqqik4qz86h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqh5kikkgi.fsf@gitster.g>
+Content-Type: text/plain
 
-On Tue, Aug 25, 2026 at 01:34:53PM -0700, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > From: Derrick Stolee <stolee@gmail.com>
-> >
-> > We have universally-banned functions listed in banned.h since
-> > c8af66ab8ad (automatically ban strcpy(), 2018-07-26), but some layers of
-> > the code should be more strict than others.
-> >
-> > One such example is the trace2 API which runs during atexit() and can
-> > prove to cause die()-handler recursion problems if it calls die().
-> >
-> > Create a new banned-die.h header file that will ban some Git methods
-> > that call die(). Include that in all trace2 API implementation files.
-> > This currently only bans die() itself, and that was already not used.
-> >
-> > It would be reasonable to name this file trace2/tr2_banned.h to be
-> > specific to the trace2 API, but it seems like such a restriction would
-> > be valuable to put in some other areas of the code, so adding it at the
-> > root of the tree seems like a good long-term approach.
-> 
-> In other words, the functions banned by including this file are not
-> listed because they are banned from being used in trace2 API, but
-> because they may lead to die().  There may be some other traits that
-> we might want to avoid in certain subset of our code, and we may
-> have similar banned-frotz.h header to prevent direct or indirect use
-> of frotz.  Which makes sense to me.
-> 
-> Would the same approach work for the_hash_algo and the_repository, I
-> wonder?
+Patrick Steinhardt <ps@pks.im> writes:
 
-Don't we already do this? If `USE_THE_REPOSITORY_VARIABLE` is not
-defined then we hide several function declarations where we know that
-they depend on `the_repository`. It's not perfect as we still expose
-functions that do rely on it implicitly, but it's easy to remove more
-function declarations over time by just adding another ifdef.
+>> They do look involved but seem to cover the situations we do care
+>> about, except we seem not to test when the server does not explicitly
+>> say "this is still good", or am I not reading the tests correctly?
+>
+> Isn't the following test covering that scenario? Or am I misreading?
+>
+>     test_expect_success SSL_VERIFYSTATUS 'fetch succeeds with stapled "good" OCSP response'
+>            with_ssl_verification git -c http.sslVerifyStatus=true \
+>                    ls-remote "$HTTPD_URL/smart/repo.git" >actual &&
+>            test_line_count -gt 0 actual
+>     '
 
-Maybe we should follow a similar approach with functions that die?
-
-Patrick
+Probably I misstated.  What I meant was a reaction to "fail close"
+floated earlier.  A server does not explicitly give stapled good,
+and the client says "this is not known-good" and not talking to it.
+I.e. 'fetch fails without stapled "good"'
