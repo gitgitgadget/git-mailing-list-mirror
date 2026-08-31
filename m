@@ -1,145 +1,123 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C692C0294
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 20:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BF038DC5C
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 20:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788206790; cv=pass; b=XNTNPHe7N7wDbl5q02DSGW3fqfI5EOfT/l4n8wxT51iaooAt9brmXr0ZZqrflcrgSUlFiCzJTCl0gOQMvvHWbv4Bcf12A/vRP4b2qSnO84wFw3+ndpnQtfu013zexLev8WpI1Af7kAzM9/S0zEdVIwOWm21Sz4/u57TRiZ5y/UU=
+	t=1788208561; cv=pass; b=CdqXZnASvV/UPOBLRyZIxCzwCnBYoLzyYcr5WC0pVaJs+GSM326Nm8rpKV/b7yqaJ+dZiVPWix7pjgyDD44sVzW6PTsb1bFyDSDTzon3J/s225cFmx8RwjsOq6xW6YtgPc+6cxJWnreB3H54fgYNX1qE1/74RDbrsqn47fQLOEQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788206790; c=relaxed/simple;
-	bh=N/+PEvtzq8S3XqNK7P43H4Hlxb73BM4FvcvfqKUVtpI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=OT3F+fiYHYNE+AnK7MunmF3ajhM1m8weOvg2ordy5kGxNoExlKdNEAZmR1FxKsz7O8YMVfo4N5QW4yrRdPgBrrMLnuEk8KXQ8g9O48ev/yxzouhqrId4RFxshduc53tCgVMt1m0/c9KiJ314ZQa4bjrX/S/UaA89duakeD5lfJg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F9MfcSL7; arc=pass smtp.client-ip=209.85.210.181
+	s=arc-20240116; t=1788208561; c=relaxed/simple;
+	bh=Ic7dRHoBmmFEL5IY2wttIxL4M9J5H/rUsYAgIBf+hPA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=bUfUbS/6FqQPVlD6JHhg7MJpvglnj/AptrXhig1h21uEOW/1XgC3CHeaVHMjXAy88ArAvudG14K2EITSYUXdhZLtHmP7RcVqCesLQVH5GcZeKgJWtn6TVk2l8J3x2B7UMFfGJ3mBuk3Yv/K8LOKF7mNHynn3YDf8UrYVbQ2x8VM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nU8Ef0zD; arc=pass smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F9MfcSL7"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8485b358552so4036728b3a.2
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 13:06:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788206788; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nU8Ef0zD"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-ca97d139d5fso3342081a12.0
+        for <git@vger.kernel.org>; Mon, 31 Aug 2026 13:35:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788208559; cv=none;
         d=google.com; s=arc-20260327;
-        b=aYx8TrwFZ6k/dD8nyONFO0+zuAVs0gV9uYmGz9mvL3DHEDyCWuVIHsIVsjaqVNx38t
-         YLVHrsrsI365xElV7dygKzZkYVgwGTxGXIaiarBMeRTmjG5WQ/3ZPinptRWuWAJsG+1V
-         fB1nEAdzgaUSe0dP89Osw1bPqDA0mAJIE1yLsxOyIFALHZgkCAkd/WAXk4ELCuvmvaeR
-         SWyc0YM0KnWa9tb/pOsu5Xw7/imcjN6+l5MSVwEWtYM89XhGegv1OUUrNEpHZcvwKPxe
-         3mf3p+hzCObHhrn2dcMovGQpUEhvlmS531ZrNMvwl4FykBlo/3hUk6ff2QPyKtnz83ju
-         aFrQ==
+        b=oxFXCwulle4hHq9Ih3Fmp+QOI44y+5WJ9o5CioHDpb4B7507/ORJfhrVNQ7boomQjA
+         +uUp8pM9VjR0Az0+eJtLzyPPXxLRUqTq9Ud/1E4A8bMkWI9X0mIFJa0Mgr9JqUWa8L+k
+         +D8IuIz1EGBpTgqYNV8dIztN3/UZa0kb4ZZm64cWFV//lPGQ8V9svjKEpAy7TPlquTgG
+         pQvj3GY5Wncx8/8Pk4yq+Yqyn7jRM+k2EN1NVkmNX67fmLOdT3jwUsg8+zk4mVQIWjCw
+         RQoOjlVXGvTFxo09S2fVYYB+23xLu08hTEcoh10KoG/DUTkcSNTEWLCIOuxVOHJnwbNM
+         OdUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ZoO0yWdbl7A//LNSQeYOfJqmCtlsNINi7l5bc1ZekU8=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=nNIsRvL7+wSm4hvIzPgVvM2c8Fm2zJIcrm+Z0D/OuW2+jsXjIsRp5t6ftUVQKWjUJs
-         5K8taZD3B7eImnK2E7ttLg1bRXK6njhbip2wMRdV9dcyAaH1iteXZINRSwe08Xq4CKFm
-         B7Xe48DM4udGiVpvWGp2SDg9OipCB8dfleYExnnFyBMgSQj74MLsHBhpc959PUdaVktX
-         8Mp2q708a9bSf0HVs3+8ZODmzhVO7+SDtllEiBI1yxUy5O40T5gC7jeSb8MC3wWRCD//
-         misxlAceB7DtBnUlkKnph0QvpkRcEhvsIeYwwJuRedm4jHln20sCrFntb9b8VFI+9m3M
-         S0cA==;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=GmGw/QQbmE53cAxFOr8lf1H0za4GJZhbs8AeCdqQG7I=;
+        fh=l6El87tDRIBbJeF+PdPs8k46FfzzH3dt4/Kxk07b6vg=;
+        b=Z2M+fzQdOUW1iA93FztbeZ4+dBLML43k8VPcY9+hEvv9P9QWizIQzxmlq19YtEL0FW
+         VL9PV8WD5IoDOeGLdwE1coT+QXQAwRT40igVoo9KqnnZe6cpOWS2EDYsy5QTAoqMEqLW
+         HsLJ0Xvtbj1xKTqCPVKiWE3muBIb/1KWjUltNUa2m/vj5wx15jkOmOw+5UR6cXBVZDjY
+         SN4Jqa238n/pkZfVki0SV4bSt2ips3A0cPmyYh5hzhdn/pWzAIszBgTyRMcZhAePFEIc
+         pMfRLwHLRpS6zt3S9VioyERY9l0Cflg1c2yKm21a5pzJcNHx28v6xCw26jx685n5D9UE
+         cC9A==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788206788; x=1788811588; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ZoO0yWdbl7A//LNSQeYOfJqmCtlsNINi7l5bc1ZekU8=;
-        b=F9MfcSL7CWknSaHLg1b9bwknFGADHWiiTwoWHWSoQdb0Cnvw7Yc8AZS7FCXTSsLIjM
-         8MTCetZsig1OocUc4Nha3SGU631dD2DHztq/Ha3FBiy5cr/8zqs+ClekwDT2il7UCi7c
-         hDia1D1QJyKFq8uEymjafAbJ7h0ZwjMMlvhZQHfkajYhnSYPFFBDu7gl3xmxBwPYQfIe
-         NCLGYlgeIHFSpKE/oxAqKk6kHDyqnaboth4Mf6GZp3yw1IIrBcG7ibdNfA6H1JkvKYqv
-         kjUOjzZbwPQDIkQ8QJDAJ24Rp/RzRAlylZiRRhDW1/UTvPPEuHb1hvG2SncIcFBHghOU
-         dipA==
+        d=gmail.com; s=20251104; t=1788208559; x=1788813359; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GmGw/QQbmE53cAxFOr8lf1H0za4GJZhbs8AeCdqQG7I=;
+        b=nU8Ef0zDkwPTgLMjJfzU6BBdpms+qOPMD62EyT5x7QulGrdUIMN4f8ISKPdZ+hUYGK
+         RqrFhyo0GSvC5QlObBdyISWOwdMYQfoKxZ4fKTd5YTPNEhzZNNTTWeoZRan1gzDutHdj
+         kjBICim/jUaSncx/ItIN7WsdP4bVkkZBHkjGLul4b+eS6PBzVyuawNBziZJ17PgpWkMb
+         x9G2ojODQSvu0gYbe8nkNPzbgPHd7DIU/Wvm/OwyyH8ir4WDk4SOQ7PNYxJz/Zqdn7Rt
+         24cWRWCpHhT+/JcuiinSxyhlr/0znYcoJ8p8Apy1Yu++UyhT2KLc6oumgNUJT7ZWGKkB
+         o0Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788206788; x=1788811588;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ZoO0yWdbl7A//LNSQeYOfJqmCtlsNINi7l5bc1ZekU8=;
-        b=D2GJ55zRtB5oipy7T5WrjYiQXpnd0GGXvDDnVZKVlC9Orl51q55D9imL8Alc7Z3g9J
-         zIPUN/o2LZM3J/kW2hfxzW7v2eK/CP9hSTIPWK8ifiwKXPYWoNkJYOLrzqIC+JHCe5pu
-         fyix0t0sa+2Vkqltr0I/qjuX3S/lib11kHQ4bA5VLPwZCRDsRo4ECQvPbT6QHqVrDCKa
-         2JE/4zEbVtih7bWtY6a+UfzbXohbu1eeN0W4Syby/eImSHzUz6GXCm8eeH9BE8SiEpGS
-         gOnOKWXYwsFnfmoGtrKjN70jLw+Duw3ceyNaI/6jf7Uf+/15ygksxf/4oJIPNa7eKHvc
-         OdmQ==
-X-Gm-Message-State: AFuF++lPUgIlXJojkR8og83aMhEcNqbBoWMh18yK7xlost2RwtbjsglE
-	QcI5PVzYq77y3u6ooZUxPrp0SuoOw95GiBsF9qe4HMWL0faYEGE47Dg+NeAqQ5f4Zz7BTqyR9aO
-	Wp7LXszL2n3ne9I0BEMc64X7f8GpJoMg+LtnX
-X-Gm-Gg: AR+sD11S9eBeJjlrvnBR/D1qN0soVoZ0EoCZPgY1foORlYduW6caXIRAM3VGK5UyTrv
-	91IojrDds0vM98gwmGemv6lJXYH3rMMFH2MOOEtWlDR1/nbfqUk5vq+78ybPI5Ec6sD1Ee3bisE
-	nDCrTtlNc0NELFyRW9NyeRfxAXXiISinGNbTGNECY6ot8O33ZegkUc8SyodKc305w2Qn79Q/W61
-	Pzxv0KcYcsYtuJfIe+rybgMG3Rba7sSM7BED2nfSpI0cUmQZZVNu2e/PkFWz0xJn/CPS6CO63jS
-	W49EPp1buWQnF4rWXXFfIGU4iCIGRzLONMj9iW2TxZsLBGnJvqaZ2m+auDa7supm1lGVP/phCoA
-	VORB5zqVw31/J5uN2G7fd8+nGcOM6Ip2bda1GSt4y4Ns+yC87o0/k+otF7MsDVQ9E1EXvV24L
-X-Received: by 2002:a05:6a00:800e:b0:84e:d5e6:a085 with SMTP id
- d2e1a72fcca58-85b56940463mr5239950b3a.0.1788206788222; Mon, 31 Aug 2026
- 13:06:28 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1788208559; x=1788813359;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=GmGw/QQbmE53cAxFOr8lf1H0za4GJZhbs8AeCdqQG7I=;
+        b=ZiLa7m0hVEzSScIRi+G6VhyLE+7g/WoWODiqIPRxb6SF6+sDJBE5DQZuBrsCkNaA/u
+         KFwMy4B58vDq/TEvIyC5DO2OFQeCi8WRftD9QBpfNz2WlxrApJETdE95mkH6ccK/c3sr
+         lDrhQCB7ssvgP5jcr/c4YK6aSXtC//YdXaUPo0Wz3R+LyR8Yhs7ep03/L30OhsjIhluN
+         IQ6oQbbTQoEGjm1GREfZ5FUTkMuCQOpdXEN7a7cWqqorFnCEXFGcNzCICkC5dY9t4PTo
+         CXnF5x2RK/gxZG3tZChh3LRtOJC94OZLImxmgLRzSItOQOKiHodlLEjdh/RIcDmRXryh
+         ZjmQ==
+X-Gm-Message-State: AFuF++lEuMJBAQ6NBf+aKkASfml6ps3n9bLkKLaj8LeuwVY7Ckr97ua9
+	hagEC612G+0s9+4nzGFsFU3ZRmCX0pkl6pa8aDXOi9xOAkjuq7dC07pLHfBhuoOXGA98IRnl7u0
+	vKVztbR/a7hspH+o1C34wqsNaHUvSp72tvkdSzKE=
+X-Gm-Gg: AR+sD13Dztivd48MNhwHkJxRUW5BfcqHEZjsadNP8cgqvrNGVHvDDNdFmfjPxFveNhE
+	Js0Ew3NL8xklJGBv9JUP9vXYGQ19umh4KoKnubi4qx8DzhFx2q6b7TxsxL/cAyafdwLHnviCfJl
+	2v+tqLtYuct1IJDIbS2a3QaoOjkKLW5KmV0JhlZbgXAPCWWSP7UKCZgIzdoa5wKFI/2sbThDQBX
+	cCPCUA7UA19WqqmniJ+5wPtY+RH5WQvh0nN3JGTF0BnFqsFFtk+8v2Xq3+cjLtTq7a8ba5+VX2H
+	0LDaXWiP1u8x8xkx8VeQpnkfjZQkF6/fTU92Xb3JfDTzBk2kWPUDl41D85yYdDweVt2kFm00Tef
+	JxdRtEZIUKvHP48voLe390dizhv59A9fP5uICv/oRdnHC1xI/iu4Ln+TbwcR2SpwmmRIXOEanHI
+	UVUyxR1aaDzJeGwbQpB2rcEWodHWf2
+X-Received: by 2002:a05:6a20:2d24:b0:3c3:b57b:627d with SMTP id
+ adf61e73a8af0-3d7ae9f3b68mr5856160637.12.1788208559234; Mon, 31 Aug 2026
+ 13:35:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1787231825.git.ben.knoble@gmail.com> <cover.1788206466.git.ben.knoble@gmail.com>
-In-Reply-To: <cover.1788206466.git.ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 31 Aug 2026 16:06:14 -0400
-X-Gm-Features: AcwNN1Xfoq5PiyBrgdQGpGV4qwCqVPDw5Pt40aGnl6XCHc2fPf-6LMjDHXlJi_I
-Message-ID: <CALnO6CDCqACYpR=GoaNR28wwxYOEQUJBA1U9sX-xDhO8-4_n+g@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] Convert USE_NSEC to runtime config
-To: git@vger.kernel.org
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 31 Aug 2026 22:35:46 +0200
+X-Gm-Features: AcwNN1UXUiTCIDOc9nlxxm8Ra4bl7_c9uyRK5Dj-oUywDvePfMM-kS65r-Qcz0w
+Message-ID: <CAP8UFD33n1h587u5W+akp0MGHAgt5uMqpJVJ6HeZqTGDr2Ahig@mail.gmail.com>
+Subject: Draft of Git Rev News edition 138
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>, 
+	Kristofer Karlsson <krka@spotify.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Erm, woops
+Hi everyone,
 
-On Mon, Aug 31, 2026 at 4:02=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
->
-> Topic name: dk/use-nsec-runtime (applied)
->
-> Topic summary: Expose USE_NSEC as a runtime configuration, since
-> build-time is too early for distributing Git [1]. As a result, common
-> index-related options, like git-diff, are less likely to hit "racy git"
-> problems on supported filesystems.
->
-> [1]: https://git.github.io/rev_news/2026/07/31/edition-137/
->
-> Built on master (2c78326f81 (The 11th batch, 2026-08-05)).
+A draft of a new Git Rev News edition is available here:
 
-Changes in v6: slight comment tweak
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-138.md
 
-> Changes in v5:
->
-> - improve message flow in patch 2
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-[snip]
+  https://github.com/git/git.github.io/issues/856
 
-> Diff-intervalle contre v5 :
-> 1:  d612de6c2d =3D 1:  d612de6c2d meson: expose knob for xmlto relative l=
-inks in manuals
-> 2:  12974e07d0 =3D 2:  12974e07d0 environment: align repo_config_values_i=
-nit with struct declaration
-> 3:  01cd487cd2 ! 3:  0a611f6140 core: convert build-time USE_NSEC into ru=
-ntime core.useNanosec
->     @@ builtin/update-index.c: static void xrmdir(const char *path)
->       {
->         /*
->      -   * not use if we could usleep(10) if USE_NSEC is defined. The
->     -+   * not use if we could usleep(10) if core.useNanosec is defined. =
-The
->     ++   * not use if we could usleep(10) if core.useNanosec is enabled. =
-The
->          * field nsec could be there, but the OS could choose to
->          * ignore it?
->          */
->
-> base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
-> --
-> 2.55.0.860.g4b6b3295ed.dirty
+You can also reply to this email.
 
-Thanks
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
 
---=20
-D. Ben Knoble
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition early on Wednesday
+September 2nd, 2026.
+
+Thanks,
+Christian.
