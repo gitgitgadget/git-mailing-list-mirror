@@ -1,161 +1,133 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DB13D903E
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 13:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FE5430CF9
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 13:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788182874; cv=none; b=o7RAbam6KzQsho+ieOFPmo2vgfG5xDCh1LtMwXPJr9MYd55mMsMjU/ZLSVqlO31p93E0AJSeBl7/d8xnfjscpnbzooNSerMT/BUsapiidI1MQmA9OvWmXAJZsRbrVArlz3ilkTB64nIpRQ2WVrY3aZKdsidrTAkJPXHoDac/KFU=
+	t=1788183054; cv=none; b=ZMQo18NKxorBV6nVyLzTtC0eL934Hn2rwrh2rR8ILYhREAX9qQKrdoqxRJszUHsThycLCQJ4jbRsxtZcVyoPyrRZs+v3H3IBMCwnfc/2JODOqRmtSsQTC9V4wjf/TAIiMTxzpAxDYnGAR1upYSFP6oqRgpqaWQNLcqrLcK2Bbf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788182874; c=relaxed/simple;
-	bh=qawamj1swqv9yK/RXkXm2nSK9z++dlmmsKg1E8ZQtbg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q/UfPaGlOtCnXKZ1XcqIdwcNic1/waDdpVXbrWxeHFxZZDh2J8r4y4wOVMMeBbk7m6I258s7+VtNL/lvasZzO8ClApMoWvrcdqkhs5QRomQPuB6F6kCrIZ5h4d8NwPTsrfbbQAQyabJXBCAB3gic15jd1YQS8v7UpVDH8OVHjZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RpivklZU; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788183054; c=relaxed/simple;
+	bh=pTCIiWejL0lEqQ0q1KF2s3uRyd82gw1gIdeg6/ygA44=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uMYlXBEqeWfXbgo05E28rkyivNNL1xTDk6nafic/PFCwRAOx8kfXGraVJH7mqZ3+HKMzyxVrqUbrqTLivik7rOba1bhhqOZYam9ztvzWkVAy+kc/o0VKcOWOzFrUqh2nJ0foqTwI16vkLhOR/vRgZoxzKbudpNca8ZSzzo7Guy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Oy1DjChZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NrgkueM4; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RpivklZU"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-52cd38ddcdfso30638541cf.3
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:27:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788182871; x=1788787671; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=P0Js+shwjkSHsbP0XSKcHDajScxKZbFfYfudOtDCJXk=;
-        b=RpivklZU+TUILUMDxcuhId1sZ/RAZ+zYHL9EEDtYQup+CuAcQFxPhFzPiUolmT941K
-         oxtT1bw1Lv7Y0CtyJUPuOfYlIOU3lxo0/Gu+N9XrZpsgko7qDZeGb7f/9X86ZPBBYxPH
-         gKbxUaraaFTuMzHG7q1Y119OoWNcPmJdW3XsEoUULoQAk208aKGCTsxMREbDb5SrH8+Y
-         BMoYl7qp+KIxUzm4KcT/y6oXJcJLi2HKIcngl4QWHB7YXl/rHtJf8oT3VKFRO80Rbg9o
-         jsvYY+LvThs7tF0oTfUx9WyAEM6IvSuDLy79vfZMhGfxIKEhRuxavKr3CjBg/wxnoxQq
-         2+/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788182871; x=1788787671;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=P0Js+shwjkSHsbP0XSKcHDajScxKZbFfYfudOtDCJXk=;
-        b=Xzvd0hGsTbU/4YKpZxU+t1tJcI9JscqLExhfOjqjr2W0okX+XNqIPvqdP8qIYyIxR+
-         gj1aY9g0DB+ew7YUK4WoXJL5oy3S7w0STnTYKYnzA+JDpShcfjxLMKAbaKsPVIOxiQw6
-         rpOsMHCBGnU2kgvHHZDCCG+V+Cm4GEtlaGdM0E/ByN8DPBJ7je5od+OpippRVY8pyG4m
-         J9ks+2deOX0pMU089uPfo0s1Ky/L3gkwtZnaRhI31Z8H/1CRRHlHiFkXNc3j2CzuLFVI
-         TfOdp+Iq3Cwrvccz+EC9bUIu2C4/K40gLk54dgN63isl6n7yIQfe50WB2SFHmWrQdhSK
-         XWYQ==
-X-Gm-Message-State: AFuF++kpLPS9idUP7M7/R7GJBe7Pd9QJD4044fRk3CMRSbqBhotb7uok
-	IC+u36hN/MKiup3lcf2QXgzFKCnVznqoJRsayEaoS7TN+KNaUs2ZoB7D
-X-Gm-Gg: AR+sD11YRkk96B+G0sY8BE413pWdrK0GnQURTpfWyLqSsCFuuucNzHe/o/1bGIvAIZ1
-	YhamdHoDVgw/oY5du4RLg/85Hej3cllYKlmcVuKew/ApARIQk7tJJL5uCN2Z2WNRFnu2iQI5doA
-	lfXhIfc8W1sWAN75QGAv5+GNEkXKPu8lGDZCAdny/dwsxsUyddrETSMxzYIM2/nsBOXlGww/InQ
-	9IK+5s6neKGxrcNfepd6PXFfuRpeoD+NG4zUsQpPRBgyaWxEGp+CX7jlsNDjUcHMSU+Zhr8SF9l
-	74/cniK4ZCtULBwO2jdvGJyq00q/TdEEUQ/wibjKEGjrN1AzSZ9OXbULQ4v9y4ROWrtX/QUEjiG
-	NA5R+mD/SXQL738RGkYvOF8M1vVRiryFK1Tq/4zZHGKICfE06YwycNfFyZ5Cojdk8xXzDMuMSVz
-	46I+5iqUX2oy4r70YXvz/ZllX7sZCxugxBkRFAJsxjpks2JqUZvCrNBNS3lpjq9RhWbTnnGwo1n
-	TFM0FetujcsglpxTJueaRF1uGisT5ANIlkmZY46jilJ2baCtggDjVUVgF25gjJ5nGjDVE/fQM6I
-	9UnenpXztbMpXaJA
-X-Received: by 2002:a05:622a:58f:b0:52f:b1b6:a4aa with SMTP id d75a77b69052e-53021b0f659mr9512381cf.4.1788182871094;
-        Mon, 31 Aug 2026 06:27:51 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90ce8769b76sm75446546d6.13.2026.08.31.06.27.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Aug 2026 06:27:50 -0700 (PDT)
-Message-ID: <a41bdb3b-1fe7-4c1e-9d16-72390d93503b@gmail.com>
-Date: Mon, 31 Aug 2026 09:27:49 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Oy1DjChZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NrgkueM4"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EE1FF140011B;
+	Mon, 31 Aug 2026 09:30:48 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Mon, 31 Aug 2026 09:30:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1788183048; x=1788269448; bh=0cdUmEGKmX
+	cq+7TgRX+lgW4SsEZ92lmO2Ryz+c5ioWM=; b=Oy1DjChZLGDNz7UBgYR01p9wBB
+	gxEiuJoT1olrG73c/P9mQN3AI/0mNzzU1Tvd9IPvlrBOAVdlg4ZshrXJXo4lenUR
+	NuspB/95JOucjfxtqfI8hC+im8IcCnfvZRPfyH/pinr4PcZvhSwQdAXN9hJjHdzZ
+	SLitxJlvf0d0wgF9ADyrmsAK4KDpMWXZi6DtKE4zOyNNs6jKUn1f+POwVhRa/zg6
+	ZLgEd5LIUVqqv51baVWMFb+CBIUjseFfIpR/OiZdKgIyG/Bru11tRHfzbLqkfhXv
+	Ws60sU6sKNC4p+K+yAntqbA+eUwMkPGIbm5nZANsxgyyRGL4CRfsdLbFXzkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788183048; x=1788269448; bh=0cdUmEGKmXcq+7TgRX+lgW4SsEZ92lmO2Ry
+	z+c5ioWM=; b=NrgkueM4DZ1c6dyeNeG+mHLs7k8oeRj6iy69ICNEAv/0bILSW0f
+	EZbvxyy6GxvJYeVkdfGWI2fAYEZPlXt4VULczZ0rvE5AHiIlbYztZULfOP9nQZjS
+	1elBj5KTns4k7Fbc/k0T50/lR4PHXqKMgeM+X3OPkLwv8zJuLXxLxokvwESZhLU6
+	ZTrZNVRiCiwq6EtJa0la3oDU7u38CtMtzWf72/4PbJ79OEIwNpuTQFqKAP3Wjutl
+	GVGIeAwobIbElxU/qCjwz+nQQ7eG+s50bCfJ9QiMyadq1AWZ+LOJKRXe2YWg6+ri
+	ZkdWDhaEiAzUOFS2QU6FG6MME9Zs59GfoSA==
+X-ME-Sender: <xms:CIKVaoyvEUBlre--cQNFzVYb0htxjhbIS1KsztE66Gq4yOekRDV6pw>
+    <xme:CIKVajJtfIPqTGdt6lRjzwfNuiODE0exyTcQXs5Cq8qR8GEN9Sda3LZ6zVpLU53NN
+    IkJI0j_bBH-Mcg7lPkjtx6rpl4rD3hVIn2NQT80eBazb1b1wdFCRPI>
+X-ME-Received: <xmr:CIKVair9P2_UhMzTSzOcpiWcSfF-AyuoA02OWb9sJEhKwvSmxXSY4DvYmSdt5K4JfebPFQ>
+X-ME-Proxy-Cause: dmFkZTENf3x9BrTUuGSnvX2HtfyVqi/FCK05b69t+wnA1g1x0fndk61/2ari7KrpmNIsfl
+    xl+WnQZHRjnJv9NI07S9jqs9g44GDCVAw+RdM6xEN9DKjD4wPagCemaLCuapiscu7lbjvO
+    waPncT5Bf/NDbhCOIh1RZJ5J1hydEjJZSwtFrtS0PaQMOJEG3xdtQls03TfeDJE5Q36kuL
+    ljUZaqgArlaGIQNamfkU2tGlzzOvP1RX99qspLPstRDBddf61Yu+era/GT1ROsj1NVxfMq
+    bfV5sfsll/NSrIkLzLQzui5ZiGgJ86Il+E72X0Wq+5iC7Ma3e3lu5IfVsmQ99REi4uWnIE
+    vzCaCdEU7AH81i4i7SRnPu7Fb2aJReeJCPgiFdSKIUUtG7pMa0o0Xd9Iqsn4iI0outxecP
+    wgzeFuqCB9Tc1REqU9IWXPu2/o3qtKa7p66f/PKbOuelB2sCSDv9WGIqpZRuPktobRptIx
+    WYMggS21sDm/NFTfGP2FoVIquxoeMZQgNbetaRA3ck5w9PVHwLqOC06l40kx5zCeMX46rM
+    6Ownh+GWsYM70n11VrPVe6DFuCNoStrhRa9kHD+I3It8CubjE41ww1NwnHoiQ9N+gyBmMU
+    IFpYdWQnGUVESVBWoR5Wl2/4aY6wGVZ8TZnqBC7hYek49FtL85+aK5CzSRzQ
+X-ME-Proxy: <xmx:CIKVaiKxCzBtjO8n0hi-Y5xHvrdMyc7I-uGXQWlnIUGE3evJ09jj0Q>
+    <xmx:CIKVanS0jPLK0XOudPOIPLb2lN7L_MjeB1x4ouKU6QmvsN2IAeBLhw>
+    <xmx:CIKVahtn9aaycq0iBC79yRYakf2eIBtYCLTKTA_DRQoOdEhkk_4R-g>
+    <xmx:CIKVaoZwPF76XyskSIpxIsRn85hutAfsM-zsgyhobqXjXHVspqvCMg>
+    <xmx:CIKVaqee5fMLYWQOoT59i-bxb-9oO61GMUhjfk_atmVt9XpcSI_ofi2a>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 31 Aug 2026 09:30:47 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c122dc86 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Aug 2026 13:30:56 +0000 (UTC)
+Date: Mon, 31 Aug 2026 15:30:36 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Taylor Blau <ttaylorr@openai.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 1/7] banned-die: create header for banning of functions
+Message-ID: <apWB_D9oivo56vcw@pks.im>
+References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+ <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
+ <84634717e2eca479026d1cdf39a089a8f61d131e.1787684181.git.gitgitgadget@gmail.com>
+ <xmqqh5kikkgi.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] trace2: stop allowing die()
-To: Jeff King <peff@peff.net>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Taylor Blau <ttaylorr@openai.com>
-References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
- <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
- <20260827052318.GC176544@coredump.intra.peff.net>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260827052318.GC176544@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh5kikkgi.fsf@gitster.g>
 
-On 8/27/2026 1:23 AM, Jeff King wrote:
-> On Tue, Aug 25, 2026 at 06:56:14PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Tue, Aug 25, 2026 at 01:34:53PM -0700, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
->> This starts with a new banned-die.h header file at the root of the repo and
->> including it from all trace2 API *.c files. It starts empty, but the later
->> patches will add one method at a time:
->>
->>  * xsnprintf() : This is the original patch, but made more complete by
->>    adding the method to banned-die.h.
->>  * xstrdup()
->>  * ALLOC_ARRAY()
->>  * xstrfmt()
->>  * ALLOC_GROW()
->>  * xcalloc()
+> > From: Derrick Stolee <stolee@gmail.com>
+> >
+> > We have universally-banned functions listed in banned.h since
+> > c8af66ab8ad (automatically ban strcpy(), 2018-07-26), but some layers of
+> > the code should be more strict than others.
+> >
+> > One such example is the trace2 API which runs during atexit() and can
+> > prove to cause die()-handler recursion problems if it calls die().
+> >
+> > Create a new banned-die.h header file that will ban some Git methods
+> > that call die(). Include that in all trace2 API implementation files.
+> > This currently only bans die() itself, and that was already not used.
+> >
+> > It would be reasonable to name this file trace2/tr2_banned.h to be
+> > specific to the trace2 API, but it seems like such a restriction would
+> > be valuable to put in some other areas of the code, so adding it at the
+> > root of the tree seems like a good long-term approach.
 > 
-> OK. This feels like the tip of the iceberg, though. All of strbuf would
-> have to be off-limits, too (both because it calls malloc directly, but
-> also because it will bail if snprintf() returns -1). I won't be
-> surprised if there are other indirect calls hiding in various places
-> (e.g., all of json-writer.c).
+> In other words, the functions banned by including this file are not
+> listed because they are banned from being used in trace2 API, but
+> because they may lead to die().  There may be some other traits that
+> we might want to avoid in certain subset of our code, and we may
+> have similar banned-frotz.h header to prevent direct or indirect use
+> of frotz.  Which makes sense to me.
+> 
+> Would the same approach work for the_hash_algo and the_repository, I
+> wonder?
 
-You're absolutely right. Not only in json-writer.c, but several direct
-calls to the strbuf API. The only real way to fix that would be to
-create a "safe strbuf" library. This is potentially an interesting
-direction that I might want to pursue and send an RFC after getting
-started. 
-> I think if you really want to avoid allocations in trace2 it would
-> probably need to be a ground-up no-dependency rewrite.
+Don't we already do this? If `USE_THE_REPOSITORY_VARIABLE` is not
+defined then we hide several function declarations where we know that
+they depend on `the_repository`. It's not perfect as we still expose
+functions that do rely on it implicitly, but it's easy to remove more
+function declarations over time by just adding another ifdef.
 
-Or to update the dependencies to be "safe". Not an easy thing, either
-way.
+Maybe we should follow a similar approach with functions that die?
 
-I don't have much knowledge of CodeQL, but the following vibe-coded
-.ql script is able to detect these transitive calls and demonstrate
-the issue:
-
-----
-
-import cpp
-
-class Trace2Function extends Function {
-  Trace2Function() {
-    getFile().getRelativePath() = "trace2.c" or
-    getFile().getRelativePath().matches("trace2/%.c")
-  }
-}
-
-predicate directlyCalls(Function caller, Function callee) {
-  exists(FunctionCall call |
-    call.getEnclosingFunction() = caller and
-    call.getTarget() = callee
-  )
-}
-
-from Trace2Function source, Function sink
-where
-  sink.getName() = "die" and
-  directlyCalls+(source, sink)
-select source, "This Trace2 function can transitively reach die()."
-
-----
-
-Adding such a check now would obviously fail and not provide any
-ability to demonstrate incremental progress like banned-die.h.
-
-I know that microsoft/git is running CodeQL analysis to look for
-security issues [1] but doesn't appear to be running specific
-queries like this one.
-
-[1] https://github.com/microsoft/git/commit/6b367b94752b7ae0fada0629a542e90ea0a1892c
-
-Perhaps this is something we could investigate in the future.
-
-Thanks,
--Stolee
-
+Patrick
