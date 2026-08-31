@@ -1,193 +1,194 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F161E1A3D
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:45:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7AA3BD659
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:46:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788158714; cv=none; b=ORkkHNAFx7Z7CdciHAA0Kz/hIHFXYIKm5vUCAe0jZ6kEHseqm5RpU51DcT8Hgf1nwV7ADZtCTvDEq7fihhg74FHTJkPB5gcD0XEB0gwDqMF9FnXwupP6huTM2pXAzO2662pltnBYFLxVQpYp5MfPc1aA49qzDrOKZYIrAq32IBs=
+	t=1788158784; cv=none; b=WCdf8cp2qTmF8jbtalwdywSnvP4xQBmoYFvIBOuU22mqyVvDcGfXBQmF5zNreOQAm/HrjGdyBIOsMccLikGynZ/T7QgSg6fyABGn6Kbaz9STkFBouk+bX7dS6nCx2rZ0V78B3qBaMaWBP2bPtJnii8x1Xjz3gPFrbD9OADH7Xtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788158714; c=relaxed/simple;
-	bh=hHKt97otDTbJHrho65vej4XXAmNsIB80vs/YRBInk8I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AiB4N56iSgp7n7F+hwCQFk2r5hK8nhHSomog6mtSXlqPgVW51QRwxgHdwSiYoyduHkNNNdyVq/AuH3uO6d6ABH6TM9SK8CljDOmWVg+kje2pZg+DZQlFL/NvOeZtq1yzfFYit+F563OM/8Sf00HJRFR6R8fQjyBWC/JGjIgL758=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mX5umPWh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XeI1b33C; arc=none smtp.client-ip=202.12.124.151
+	s=arc-20240116; t=1788158784; c=relaxed/simple;
+	bh=BZwGOD4eM6EcTd5r1iqmWCpiVsGr72S2aIEjSP1nkOA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=JTsFREExMhA66FmwOTuUfXzatmh5UCcfHDJ3duexLnbJYcdaAxTPr+I01Cl5EaP5YuFFCr38Ckq14lvzDuZg7TLpBmiD+9+4W/QXmVajHDWJT6qLGjUIHx885OyCUjw7m7dl21AIxSAZzjIOOm6x1io9FYtn9nr/GZBvqIns02o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LgJeAfjO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gq6CPz8d; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mX5umPWh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XeI1b33C"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id D68EB1D0012C;
-	Mon, 31 Aug 2026 02:45:11 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 31 Aug 2026 02:45:12 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LgJeAfjO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gq6CPz8d"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A66427A013C;
+	Mon, 31 Aug 2026 02:46:22 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 31 Aug 2026 02:46:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788158711; x=1788245111; bh=4L5Vc4Eece
-	dC2ISBm+pivMydT4HJAcC+CaJ4v6/oG8s=; b=mX5umPWhVlu45r2EJRdlNaLmh9
-	6DJCVDuaDr07ayFV73LXWID7IbjeKKx7tXZASpXUkkqMSaJpwk8xOB8qeeVGbYXi
-	oak2jiETZEZxd9fSqUOFfBFokYtty8dinIAXWtrD5bXVNInYuGYJATPPwgHcXzje
-	tXcmbOeFZZsTD7SoxkN0jeZjSBnbTiHLmhHI2qZFxWG/qiQa/zu9utPSMEB2YHTT
-	0eDU6ge3OcllsfRbn/6kBT8WVVW45StwoVlLMQoSN7HNa0NYHDlwFYogbWGDKX8P
-	ZBJ2NZL8sT6ZdF7BlRk6syRQAubjaBW3P6N+YnhQ36GrMNhiXDVH2+ODHc7A==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788158782;
+	 x=1788245182; bh=316bo6h5ojTaUj4FVY2VEK86l+KovTBTgKgqr19Joh4=; b=
+	LgJeAfjO+supXQzAK6zfU8O0SBVbpjODmQUy6Pj9K4BxLwBYrMKIGuvNAsc3iefm
+	uEWiUZY7sJKB1KTp5CVXi0UOGQKBn3e9cWeOcO7HNzH/m7J1eA+iHf5m/oclrGNU
+	b2W13BKDA5zP9b2gdgMABJl6r4Io0W9fN05lp/4pg4yhpk5Rh4NfxkJxRh2cC/e1
+	Zcs+sCeDPkxzOlHm4Y/vFosleA7gjzPpiljO37beq4t0BBNvZjjA3kQ4qESTR61/
+	2m3Crjf5rrpja22TYvFyMVPHpfTFEV62/61iOe0eCagDQFUzI3OYTelGwQVbKJDX
+	9pS9ZSiWjD5BOUEamS8kQg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788158711; x=1788245111; bh=4L5Vc4EecedC2ISBm+pivMydT4HJAcC+CaJ
-	4v6/oG8s=; b=XeI1b33CaZVT0ZFJwsIToNq0IXgFtWOTlrm1c5FnSD6ZNZqeJUr
-	5c0KeG/Qg5qtqAhwsfmgmOL9ZY4PqvCtxD71aa+ImFrIoNlWzQW8HsnzLDcOhiO2
-	uV3dWkpXvXK5gG3vKJxDK9XqQc+gVZVJ9fPvZscwoCs9E8/yfl6wUGUit0s/zRzW
-	SEt/3TjWn8oY4eHFIzIPwifjLuYPucLRPgg/Ui9FvLzjeHjIPI1qPWa5dq1vbSHr
-	Y8gDz2EEMB4OVPH3lugj5Lbmh+3/EaxmoCaZdJNrG/wVjSVkIJKUHqXjgvXN12t4
-	518gpvcxf6cDgnmqHUmMgQ5sC0LkfMYvXWw==
-X-ME-Sender: <xms:9yKVatM8ITN80ezBMf6ZQZFaegJlwK1t0daAg8uZyT1yGok-dF9Tzg>
-    <xme:9yKVapTnPZLt2iGmSgakqwM4799B0uQKrWjs2mqgtBWd-aZPEPJSkeN4aoCS7XKR9
-    4wshXPlcv2q4xooNbLAx-mUtyGlKS6dMKo-xoJZKZkrGAv510u8>
-X-ME-Received: <xmr:9yKVajhhUB0rluzwvNeTrqdRu1VJtCEFHF5QYfMFBmD0ZkdPgpGqfWLuJsJw5K-t4gCrvg>
-X-ME-Proxy-Cause: dmFkZTF0lhxVI2SNImni3LGLJIS6/cEZ8oB5ybC9Ftl18g3G0/2qKTKY3nY/zPwzMXmQir
-    QQ88m4VMWGjNts171qx3v8yLraWhdK727nn+CZ3cJx5E/ZGOFyo47x4c5AYZAKJQ7u36tK
-    pyjuwm/LTwYF1BLkvn84nf3mcD1HTh2WaMave/OKB2OcadQ9GGcLGZJAlxckzK61xXnq9j
-    3b5OG8VAyxTWmOeTqWrratyPQ3zZKQX3zPjZll/4d9NPmLC56NOjxpGgMtuZ8SvEAt5UTV
-    cL7rNaQX2FqkOUhC7lb3rmMgPaWzVJwgrAbNPvBkvD1gwUTrsB5hDD10ZoH9E4ONb7JFmm
-    tNROS0dEGJmeDJpxRLFfj2Ow/wyRsOgB0Ml8BxrmfpAudgCVm1PEeB8LgyMPcw+e0Op+gx
-    DhBIheTM1uEG/DRfjSBi9pYh0XBQqyrwUOdRU6rC/uIIJm3AhsIvpxa2AK/qvFVK5fDYup
-    JzKRGgq8AU8oAtkdP2bVJYEU6+F1ob8KyKOkc5QSvZA1X5XkRKU7OHGfNurminjVua+lCv
-    MIKTvTSYIHzaZyhky4982b7hx8xLkpOAmqlM5PM947esQHIO+CcN1Fbtqf4IZhHV3/PeRR
-    pAcHDFxHtDTFwvlfb5bxqp20IC2SvQPDz8WWmcTytax6wwo8DDCgt0PGgo1A
-X-ME-Proxy: <xmx:9yKVaq_TYXFm-BM7MGoZQuvBmXpCrxNtTmm2bRjYpByuLUCiBU4F0g>
-    <xmx:9yKVaiHSMiAEP4LqF7fsHMyw3O1m1MLCjZ-pbgo7yLtRYUffllF_PA>
-    <xmx:9yKValkip7HoaATBOhyNpRuMxcjFd43XDkpwfcoY30x7Lw-9cMuUnw>
-    <xmx:9yKVauZxVZCdjrEeGQ3YPJWS7FyUCXFxPPSeRhBxkjykTRhgQZVzlA>
-    <xmx:9yKVauUKWts9OdvcD4F4SSsPZqEetdKMWr23n-2aiqeXV1HFOPeOdINT>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788158782; x=
+	1788245182; bh=316bo6h5ojTaUj4FVY2VEK86l+KovTBTgKgqr19Joh4=; b=G
+	q6CPz8dyYz9B0iiBK/lzyX+ZpKh15E9WtzrQ/Q/gZL/lehVDJLdAiLP7R7ZLm+aB
+	nvi9XK2fOaqc5tkanIFJ9n7CvQ1UB3PMEuIt/SUZEqTjVeK/LuTJYGf1dtiBxHs4
+	bleoH9vko5OURC31ddkx4Y+EBC0w0dS1fXUhgp/65juzYFRyfVflaRIsUjqClgx3
+	//qIOAaHdmZcFk30YuSfejSsQ7w1DqEywPj+k2ED/ZrJ3sPEzt6XHwxTMYim//o/
+	Ch3Mh44CQv5AzRMYeM5onftTobgom3jhm9T/YLBs1H2m5UEYkbNAJ51ew/Ev68bV
+	D7g00EQP2eu5kSK7fKEdw==
+X-ME-Sender: <xms:PiOVagiA5Qgn-YgW-WvjWoNylrY5qgNqGShWW1Nl1rjJkR3zTyI8fQ>
+    <xme:PiOVavBSssrU_070if41ANFuqeQ5V9gi6D7ZiN0UGpelnUes167-QvVZYfAV_dHb8
+    mVDTpIU6fJvqrPw_2nlqZ00qSDo9vsIZw8s0Yi3kfLH8ymbiyCWm04>
+X-ME-Received: <xmr:PiOValvm-U3QyoinlWZqnBjabfwp8EB_jlXXAKFctWgA9fqfvumSCp5PfZScsn6ljKpgvA>
+X-ME-Proxy-Cause: dmFkZTGJqXuGkFNWEHpKJSUQrx1K+bRo/kOWFKIRfUsvus6Nicr2eKGbsaiErXPE4cDXcA
+    4mqBZBC5/PoyoeCht1bZEoRE5MwgLli0rgMzNviho0+bzwl8MzUWHn7L+LGu+qzzMC5AGG
+    EVb0E1bGaGPJMtpITpZq7SpYsHybQ/acmadCnPOPw+6+XPrmu3JOogt6/KiCxBfuGh/BsT
+    WtDIBb3lDZX2wQUnjspDg9TWkMekV84PPx+q6LlS7P1A76rloeJIT+HPCu5Hb5/dyYeT3/
+    s3E1ID+kchwdD8Z7oJZqSrb8+wxJyUZCMgcBz+ZKfgB+adOVrRPIA7FwXK4QDdEHzQrMUM
+    MLxYAgbGKQXlEyP2VDbDcc9/8Nsx41bVcSMgm5z48ZtlBSuiAfZyDVRY3anKNT5RA3SBRF
+    Bfnma4Kst4qOCVE9r4XAOv3y+sEzz2WxKKd4U8ldc0o+fRDIBGl60ln2v8tWF4qmwwLLoR
+    vJRSSKdnl2RSAadoel5lPtBBHMhv6BZZoTE2G8XRaGirq8Pir5m0I6BjufBajbKWX+EOpB
+    8wx60W3qZs9X3tBwWeqcNOJ4XR5MCxNAk1wOuufhTeK6Y3OjGIMstffxdaRsSaUvZszjiF
+    xC3VcfMpTz1HyLbd1wG6PeGAAZ5fNKnncrJmI45AWJpG+CgzxdkHnVbGQEdQ
+X-ME-Proxy: <xmx:PiOVasYfGybzU76RkIn0uwR39SnpeNVM5puL4NermIz6lzhLLl0T3Q>
+    <xmx:PiOVagXpZoCyitvXuZgmTrgVoZOEphDPLJtHhvpJ1ulYOf2RlFA75Q>
+    <xmx:PiOVao6gX-WENYUDqW44D-ejjXHUJ-EMT8Q5Nzod0aJxFQ8Ek-7oxA>
+    <xmx:PiOVajijc5YWF1JdhkZf4zMDdnz8pd9zFKY1zOFj-Sujdzqeh32XfQ>
+    <xmx:PiOVaoQ7l4qaVzx8svvzK_HaJEjRLplSmeWt9xlBmLsxGYe_wy2yxy_Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 02:45:10 -0400 (EDT)
+ 31 Aug 2026 02:46:21 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f1bf7266 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 06:45:16 +0000 (UTC)
-Date: Mon, 31 Aug 2026 08:45:04 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 2364149d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Aug 2026 06:46:27 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com,
-	kristofferhaugsbakk@fastmail.com,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 3/3] hook: introduce the receive-report hook
-Message-ID: <apUi8I-b69XxDAYY@pks.im>
-References: <20260826-758-introduce-hook-v4-0-6b14975ad957@gmail.com>
- <20260826-758-introduce-hook-v4-3-6b14975ad957@gmail.com>
+Subject: [PATCH v2 00/10] odb: make consistency checks pluggable
+Date: Mon, 31 Aug 2026 08:46:14 +0200
+Message-Id: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260826-758-introduce-hook-v4-3-6b14975ad957@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22NQQ6CMBBFr0Jm7ZjSADWuvIdhYctURiIlHSAaw
+ t0t6NLlS97/bwGhyCRwzhaINLNw6BPoQwauvfV3Qm4Sg1a6Uqdc4dAJhsaihCk6Qi+uQ6oKY7Q
+ zRKWHtBwieX7tr9f6yzLZB7lxu9qMlmUM8b1n53zzfgVd/i3MOSq0pqwaUtbrwl+SdeQn1Ou6f
+ gBkMO0CxQAAAA==
+X-Change-ID: 20260810-pks-odb-source-fsck-e64772c7ee5f
+In-Reply-To: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
+References: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15.2
 
-On Wed, Aug 26, 2026 at 12:19:39PM +0200, Karthik Nayak wrote:
-> diff --git a/Documentation/git-receive-pack.adoc b/Documentation/git-receive-pack.adoc
-> index 4349487e6a..f2d52b7df2 100644
-> --- a/Documentation/git-receive-pack.adoc
-> +++ b/Documentation/git-receive-pack.adoc
-> @@ -243,6 +243,15 @@ requests. It handles refs whose names match the patterns defined by
->  `receive.procReceiveRefs` and executes the actual ref updates. See
->  linkgit:githooks[5] for the full protocol description.
->  
-> +RECEIVE-REPORT HOOK
-> +-------------------
-> +This hook is invoked by 'git-receive-pack' after all the ref updates
-> +have been applied but before the report is sent to the client. The hook
-> +receives the complete report in pkt-line format on stdin and its stdout
-> +replaces the report sent to the client. Allowing the hook to rewrite
+Hi,
 
-s/\. Allowing/, which allows/
+this patch series makes object database consistency checks pluggable.
 
-> diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
-> index ed045940d1..e83ebde667 100644
-> --- a/Documentation/githooks.adoc
-> +++ b/Documentation/githooks.adoc
-> @@ -527,6 +527,49 @@ The exit status of the hook is ignored for any state except for the
->  status will cause the transaction to be aborted. The hook will not be
->  called with "aborted" state in that case.
->  
-> +receive-report
-> +~~~~~~~~~~~~~~
-> +
-> +This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-> +`git push` and updates references in its repository. It executes on
-> +the repository once after all refs have been updated and after all
-> +accepted ref changes are applied to the repository, but before the
-> +pkt-line encoded status report is sent back to the client.
-> +
-> +The hook receives the complete pkt-line encoded status report on
-> +standard input, see linkgit:gitprotocol-pack[5] for details on the
-> +structure. The hook's standard output entirely replaces the report
-> +that is sent to the client. The hook must write a valid pkt-line
-> +encoded report in the same format it received. The hook's stdout is
-> +fully buffered by `receive-pack` before any data is sent to the client,
-> +so the hook's exit status is known before the client receives anything.
-> +
-> +There are two distinct ways the hook can affect the push outcome:
+This series is built on top of 2c3adbb2c4 (The 18th batch, 2026-08-24)
+with the following two dependencsie merged into it:
 
-Aren't there three? The hook can also update the "unpack" status to
-indicate failure.
+  - ps/odb-eagerly-load-alternates at 0076dc9f81 (odb: drop
+    `alternates_db` field, 2026-08-17)
 
-> +* To reject individual ref updates while keeping `receive-pack` alive,
-> +  rewrite the corresponding `ok <refname>` lines to
-> +  `ng <refname> <reason>` lines in the output and exit with status 0.
+  - ps/odb-pluggable-pack-generation at 5176dd3d05 (bundle: generate
+    packfiles via the object database, 2026-08-21)
 
-s/ <reason>/[ <reason>]/
-
-> +  The client will then mark those specific refs as rejected while
-> +  treating any `ok` refs as successful. The push as a whole is
-> +  considered failed if any ref is `ng`, and `git push` will exit with
-> +  a non-zero status on the client side.
-> +
-> +* To abort the entire push unconditionally, exit with a non-zero
-> +  status. In this case the hook's stdout is discarded, `receive-pack`
-> +  modifies all references to be rejected with a 'receive-report hook
-
-Yup, I think this is a lot more sensible.
-
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 70a686c142..1358285589 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -2534,9 +2569,12 @@ static void update_shallow_info(struct command *commands,
->   * Generate the response to be sent to the client invoking 'git-receive-pack(1)'.
->   * For v2 protocol, set `add_reports` to true, which will also add additional
->   * report per reference update.
-> + * If `ref_error` is set, then all references will be rejected with the given
-> + * error message.
->   */
->  static void generate_response(struct strbuf *buf, struct command *commands,
-> -			      const char *unpack_status, bool add_reports)
-> +			      const char *unpack_status, bool add_reports,
-> +			      const char *ref_error)
->  {
->  	struct command *cmd;
->  
-> @@ -2550,10 +2588,13 @@ static void generate_response(struct strbuf *buf, struct command *commands,
->  		if (cmd->error_string)
->  			packet_buf_write(buf, "ng %s %s\n",
->  					 cmd->ref_name, cmd->error_string);
-> +		else if (ref_error)
-> +			packet_buf_write(buf, "ng %s %s\n",
-> +					 cmd->ref_name, ref_error);
-
-Precedence is a bit weird here, as I would have expected the explicit
-error to override the implicit per-command ones. It also raises the
-question whether it's correct to retain any populated error strings in
-favor of updating everything to "receive-report hook failed".
-
-This makes me wonder whetther it would be preferable to update the
-`cmd->error_string`s instead of adding this new parameter?
+Changes in v2:
+  - Some commit message improvements.
+  - Link to v1: https://patch.msgid.link/20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im
 
 Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (10):
+      builtin/fsck: use `fsck_obj_buffer()` when checking loose objects
+      builtin/fsck: merge `fsck_obj_buffer()` and `fsck_obj()`
+      builtin/fsck: de-globalize option handling
+      builtin/fsck: don't check alternates with "--no-full"
+      odb: provide infrastructure for pluggable fsck checks
+      builtin/fsck: move packfile verification into the packed source
+      builtin/fsck: move reverse index verification into the packed source
+      builtin/fsck: move bitmap verification into the packed source
+      builtin/fsck: move multi-pack index verification into the packed source
+      builtin/fsck: move loose object verification into the loose source
+
+ builtin/fsck.c                | 296 ++++++++----------------------------------
+ odb.c                         |   9 ++
+ odb.h                         |  33 +++++
+ odb/source-files.c            |  13 ++
+ odb/source-inmemory.c         |   8 ++
+ odb/source-loose.c            |  92 +++++++++++++
+ odb/source-packed.c           | 117 +++++++++++++++++
+ odb/source.h                  |  21 +++
+ pack-bitmap.c                 |  26 ++--
+ pack-bitmap.h                 |   2 +-
+ t/t1450-fsck.sh               |   5 +
+ t/t5319-multi-pack-index.sh   |  13 ++
+ t/t5325-reverse-index.sh      |   8 ++
+ t/t5326-multi-pack-bitmaps.sh |  10 +-
+ 14 files changed, 394 insertions(+), 259 deletions(-)
+
+Range-diff versus v1:
+
+ 1:  cf49376600 !  1:  1aec903546 builtin/fsck: use `fsck_obj_buffer()` when checking loose objects
+    @@ Commit message
+     
+         When checking loose objects we manually parse the object buffer we have
+         read from the on-disk file, mark the object and then call `fsck_obj()`.
+    -    Almost the exact same steps are also performed by `fsck_obj_buffer()`.
+    +    The exact same steps are also performed by `fsck_obj_buffer()`.
+     
+         Stop open-coding this logic and call `fsck_obj_buffer()` instead.
+     
+ 2:  da2ca27041 !  2:  3804f0339e builtin/fsck: merge `fsck_obj_buffer()` and `fsck_obj()`
+    @@ Commit message
+         Furthermore, `fsck_obj()` has no callers other than `fsck_obj_buffer()`.
+     
+         Refactor the code by merging those two functions. This makes it obvious
+    -    which function does what, and it allows us to get rid of the early in
+    -    `fsck_obj()` in case `SEEN` is set as the only caller unconditionally
+    -    clears that bit before calling it anyway.
+    +    which function does what, and it allows us to get rid of the early
+    +    return in `fsck_obj()` in case `SEEN` is set as the only caller
+    +    unconditionally clears that bit before calling it anyway.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+ 3:  a24506f55e =  3:  b2cb9032cf builtin/fsck: de-globalize option handling
+ 4:  f6a407efd0 =  4:  10ee3b8baf builtin/fsck: don't check alternates with "--no-full"
+ 5:  31841a1f05 =  5:  1e65eec60e odb: provide infrastructure for pluggable fsck checks
+ 6:  2cd6d71983 =  6:  0b8cf751aa builtin/fsck: move packfile verification into the packed source
+ 7:  c0559f1820 =  7:  3a38a75549 builtin/fsck: move reverse index verification into the packed source
+ 8:  96ae1ce3c6 !  8:  dd3a4c6cea builtin/fsck: move bitmap verification into the packed source
+    @@ Commit message
+         instead use the generic `ERROR_OBJECT` bit.
+     
+         Note that this change also adapts `verify_bitmap_files()` to be
+    -    focussed on a single "packed" source instead of verifying bitmaps from
+    +    focused on a single "packed" source instead of verifying bitmaps from
+         all sources. This change is required as we already know to loop around
+         the sources in `odb_fsck()` itself.
+     
+ 9:  4721f4b4ba =  9:  90ada56b7f builtin/fsck: move multi-pack index verification into the packed source
+10:  0b36829fd9 = 10:  b0f6fccae8 builtin/fsck: move loose object verification into the loose source
+
+---
+base-commit: 6b08999fb1b3ad0bad04d492dc206ad42839e274
+change-id: 20260810-pks-odb-source-fsck-e64772c7ee5f
+
