@@ -1,118 +1,154 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5B425771
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 08:14:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788164077; cv=none; b=lQLST1W/G3I2BnA/ZLAZPb4fBwZm2P2kkNJlmQSG/sCJb3+67WG+n46ySkJ8NVgt6acLn3BjvUfqmTuYtFl1Zwr1rp/ij/kBj18CdQFYw8yrb9T//SRrjZidWja9dHnLy121gJMSd7dmSr8GrAyjf7doLHqg7aJINFWwRf/VD5A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788164077; c=relaxed/simple;
-	bh=Kjl4cafSvHZzicoJeoXs5J/JYBcznSk1LepwSq6cxas=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nDDIWVwaH3Pb9BV1L7hOL16j0UBite0tC0PvV9evlreDVsgggdaJrzvoJjX6Wwj3Y+/egJk6quyBSfLyG2hLTt19JB5XwjVaji1/SiXCnje+eHiCS19ODBm8hQ0STtPN3X6LLOm7rRkr0VSXRlpf4let2J4kgAyLhyUY39wqUHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HWQnFJzV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Es1csYki; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2833DE450
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 09:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788168380; cv=pass; b=Oi5RMTOrvU+d4TBHgZGD6bH+2UDdVu5OYnCT2cXXDE2uSSI0ohLJd/5f+DK1mJqI2/m+WmNJXdOYYgiAIhuRAFUWKlP6Z6VJAbwUCdEB7raBR4DXqc04CiLq1gIm36BVqAnMbj3727SSmu2OV2+POUQpZucBtqAQ5aaD5ZB6NJk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788168380; c=relaxed/simple;
+	bh=yLyONWOcCxkHJWzBkQIIfimHvTMGWYjxu5Re4YtI+CY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sTLp7O9aPwrTGhTm0BSX80gFwaZMjcV3kIrUaECXGbZl5dWQNeLJPZzxAfbIKSv194hWqGTGpuFE3KdU5I5zmtU+EB/2/PoopARTRpOfrj8FLzmMQaaASV6Aex+dT+FiTME1Wu8Z07iH7jgsqtf8uQDaP5XPimcc5oCZP+/eWL0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o/APwkEj; arc=pass smtp.client-ip=209.85.222.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HWQnFJzV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Es1csYki"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3EB2B7A005C;
-	Mon, 31 Aug 2026 04:14:35 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 31 Aug 2026 04:14:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788164075; x=1788250475; bh=/k2DL4y3S/
-	gJAw9TU6Bcfhnevbcoec0BCIh9lfEFsiI=; b=HWQnFJzVvkkVqVhNTPmBvx2kWj
-	x7OUus7bCeZADniPgKFiVr3QvaTqsl+YYnJVCB0Dgq08y/ze8D7QlUyNUg+3c0kj
-	gOIhaGUv6Mlq7eseyQwllanzLONWxJFQo/aXzCDRF7DLEd57w/zMeHfvN29ydV1k
-	684GgEy/qY7R3Bt2E7PAAlrGfZBLgX8dN+Taqp+efa0CpvSodMwA1uta2QXFM5gX
-	BMIT07FVZp/H2mALpn+PRohx/z464Zz8MWXpxZiEKRGdLERU9c/PjxDQYNAmeq2O
-	tEgWnAOyAPqJOkAC/qfn+mk1Z61YWX0Ylzfz6VqEWph19bLtEZpb2apzlRzw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788164075; x=1788250475; bh=/k2DL4y3S/gJAw9TU6Bcfhnevbcoec0BCIh
-	9lfEFsiI=; b=Es1csYkie8WxORyGOtpVo0xEKYOtw4/nQiBNOnRofkrisUlReel
-	CAn0j8nREGUhUdzXwWHy0Xhwi5w8cWGVM/yXP3xng4X+PFSVujGHspKsUvd5MBYq
-	wPH0KK6+96eQ83W4LPeN5TYnuDqURm8LDwwh/Hl3LBSkxx5zJMD7KBEpxS9gQ87Z
-	ydxltJYcLtCqPCaOCzldmybcVdO5WpzqrtNqWEyAJIiKMg82lQ41231y3pIWkrkX
-	1sJjVZ1/SXDEuUhuqHOWtpCpgK3R2t+4MGfTaavDgb8LOwnTZNOdw6IEvmQLpnC1
-	uPDYLpQW1I77Lv2GpaP7UVHf/ZLBUqpOzFw==
-X-ME-Sender: <xms:6jeVai9q-k-R5aXBsXKkdS3j6EaCBKb2qQNvUeXxLYzGDvjMUysKAg>
-    <xme:6jeVaosP7YYnpDUxtSz3LEjEISh_Vi7hnBVnu0xifyEDPfQmVGvama_sT0ACIL5dB
-    adQ7sotmSWWr3I0WJ5ZhfPMvvkUyioNzhXiGsVModqrMh8F7crfNcc>
-X-ME-Received: <xmr:6jeValp2U4H5rHPiJwVZ9WruUlf_kpMmAmo4BOqMHyXQ0EtJaDWyDF9xDvsiqOhTrAnbtw>
-X-ME-Proxy-Cause: dmFkZTFZXM4nlK7FuyZfh7KCinb1QyGk2t3KSS9yX5r1PCB1Xa5vcF8NfeAsZ67pSXj2ji
-    fAT+1vdX3nk639xkgZMwzZT5pzCYuwKtrrf+X55yT+oZv2K9xDX23VMWH3hwqiWhBV8BwZ
-    Wy1AB3wM7mVN+sc4Q2PZI0DpMgOEfkJBhrhHEEQCGbDsPXyNrDwh8Yxp3EKVJStka+0YV/
-    cA7j1H4qwk/p45uS6WLyAy/hT4bB0VmK1lbYNulT9LAUcZxIyA4CjG5osStpowI+IyYttD
-    w5TXW1cS6UZxtFPb/7gVJaYXUWCdvApbm08K6ecFPdWCI73cTqUzZU/ZpZik8DucGQjdsi
-    jE0UhonBcQt5+EDqOcgbcm13X1X9LyEwi/keLiw5MC69e9+6SJQorrqiFIbsD8dkcn2Xnj
-    kNca/m57bjeNP35nYVmdg17OqqIoVf7p4LyYDn+jRRvL2kQ7Mw/dWyU2SAMEz1Ic1d6fgu
-    AwK+0Zj3XqgoBGVQSo7uDNjmpzhBryIEwd11r7p/Znae69i00vZ2izIWb6gqkpJQdqMwfz
-    hZHtSKf8lHwEGFR7gQe3/27DJw9hsHqI/sZeAki+af4V5EnA3f5fA4U2L0XzjRPZw+JN9s
-    P+Ylirg1yesXomO/tf53QMWGuIhHb5BWLRHNeHttYVtt1AeRUwozP/jr2Edg
-X-ME-Proxy: <xmx:6zeValmJsFuim5XBmn8U0nzsLOHgF3v4PuUPJJ59KOaveCyAJwjiDw>
-    <xmx:6zeVapzuYltzTwE1svWlDK1sXG78ByzUll39Ei7Se63T_iBCYhPgVA>
-    <xmx:6zeVatmr56isIqr7ZyXro0R4yGi9ckktFOoqI8lKC3vQj_UG0fG6kw>
-    <xmx:6zeVaifUqYTOZucRNI4OuytIlOQH1BmVZjGGouMmRJOS2oiDKb6_PQ>
-    <xmx:6zeVauU7U-d7p9o9Lvtr_SuhJ88RS2lfyOzquIaoH2ab3odv4LNJmFmK>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 04:14:34 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 47ae3bd9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 08:14:40 +0000 (UTC)
-Date: Mon, 31 Aug 2026 10:14:28 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 8/8] odb/source: remove the ability to write alternates
-Message-ID: <apU35PsS6kzMbQmd@pks.im>
-References: <20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im>
- <20260825-pks-odb-write-alternates-at-creation-time-v1-8-911513ba95c3@pks.im>
- <871pbiuwhw.fsf@emacs.iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o/APwkEj"
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-97cb5850a93so1246807241.0
+        for <git@vger.kernel.org>; Mon, 31 Aug 2026 02:26:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788168377; cv=none;
+        d=google.com; s=arc-20260327;
+        b=NLH0QtoMaYu8cdegWUsCZUQLn73bVwobg9g/RrsE+j1LnWnYP//qwtz/LTQHtdC30f
+         Wcco0HyyyysXKXJdkONDNMMwdyg906ZgVGqFKi+s933RSHQyW64Ex5i0gZCPuBORnF2B
+         VRSSDhPj9MZ1C5J68eZ1elhMgTP85S8pmP35PxgXqxZAASQFyNqZohqbyvYzTvT1UXRB
+         lbMOVC96JVqOjLIePkqkWH6NF2EaCSNQ/zYYx8jOt+tFHWMZC94f5lnbbXQQDY9q0Ugw
+         K1zCOEGIWbbH0RpV0+OgG3tFlrUNwrEK/JBZ3kUFV302BJgOi/AOl6oNZvEF7XS8kaT6
+         AWUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=yLyONWOcCxkHJWzBkQIIfimHvTMGWYjxu5Re4YtI+CY=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=pKkagaG+D9aRTclamQdCF94ADMUjSyiXAo3H3L0nBtrelGfPrLCK99SdQllOm09KMi
+         Kn0xWT3D7Fd50WwMXOj8hWQ5T8QtWOLI1Ty4hW4stuJCKm1eyJaeGqF02Tl6ybjgqUK4
+         KNxDW2omH//XHHvV1APahzn5r1Li7xdc064vfPVe0pWEAwUtSA+2r2hQrWXS47lddzmC
+         4kjtrJaoG0dlR7VMZxSSZIgGiXK93A8qUqiOqi+2IQHbLPUUFAB5nrp9zhLcjrNU2QEa
+         6O6/tZFdaH8nbikYnOS8YOqNyv9cmF+le48wDHbJfGgyCYeFZ2cMq6fj/IEUcLLEF6Tp
+         vEyw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788168377; x=1788773177; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=yLyONWOcCxkHJWzBkQIIfimHvTMGWYjxu5Re4YtI+CY=;
+        b=o/APwkEjgoNSzilzVAkAvF5KB1aI06gCYvlUkfN/scTu12hUGTPeCT72vVG5h/QsyE
+         trK5uuQTyvMFdpcP7t5MepWph1uBd0mEJuQTIGkU04e1Fynz+vPkCfFLFYcNvyFAELcd
+         INri5Gyucq0ofnMbsYwMXkLUGKykB9uviHYpqoby6R/fsC2dpUqItNm3ergHaG9bIxgs
+         RV+u5olnFJnGQwwPuc99TFKNM6vfj5wiV+RslZu4M14JJoavGgUdTOgOMXiBap/aBJjj
+         B8oWCQ3O/8S+lqkjrx/QhugxU3RmxmAnhTjiioOE29ocL6QKhRXdC+ovCu/XeBKsYj2p
+         NM8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788168377; x=1788773177;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=yLyONWOcCxkHJWzBkQIIfimHvTMGWYjxu5Re4YtI+CY=;
+        b=C8Jlhl05D62tmN9o4A+ZdplnYdNXhgZN5mXDWLRCk1WJSELkqGGLSQr1ORruY5GJko
+         QPg9K4m58TTVDqQj97keMe7dNZH/gBmw2LViR26I9C9ZGSh+iUWZWMQ0GL06+Bm9yi8s
+         hDYipC0jSksj6spG/ZudM1CtRXwPtCXXLvuzNEnH4lUIjg9prm5PxVz+RsvD91xXBqf+
+         zr7Wik7LcTyNxrUlJJ0YyBEIfgxMHIxgN9SxuHpTGCotzNvLUz5smZa90F5mJqRqHySp
+         RZN5BWE1JUxUbFmbdPVWfNvu4x0qbyz1LTDC9pQMW/enkzmNYEzcEiakU29koBZOCetM
+         l3Jg==
+X-Gm-Message-State: AFuF++m1MeJ8jaj2bXwafHUxhn9g9QbtpAllxnQESZrO/6VfkNFS2qX4
+	AYVZnrPqifdFKKduahHRw9p1+I01jKQo86sOlBv4RF2G1KdbJBykEDN2VCaumE/p1lmSzxnB1AV
+	R1K0yeM0NthOUCQgvwlwjCIo/smffHWwXFRYv
+X-Gm-Gg: AR+sD107SsrVlbybawCd2UmryDk0cfimFHiCr1A33hELXx9brSpNfn5gEYILKpeAUV4
+	Jku4g1k6FXbnbPVf0EJFp3eq3ii6DQSD0FvZTDXN4j23BXkfrsLtlZT9BHEvNBKcSXxk5bQfoqr
+	ygdM5InE6WYP4WkbMQvqnh1kB3ohe31YutC+beXhL8JBtOD010HQAXN0dSx68gQNzaUW2fkcSum
+	AA9LNTB6WXhn19qjHougQ+aegP5QmiJgtGkPOMo6SDARXt0Jwgi7lDG/G0k1/teKR3NHj8LnIJB
+	oNRq13UgCgIoXtr02IFGfLUUdRmM2UObVEW+olWDU+JXQ7/i6EQ5nEqwrLeZ9vEDu5E161EmkZF
+	jcvUXHt27u/pmFT0d0IwZleEP8DSRdtyFkWA=
+X-Received: by 2002:a05:6102:c8f:b0:786:4822:308f with SMTP id
+ ada2fe7eead31-789ef95b88bmr817658137.13.1788168377280; Mon, 31 Aug 2026
+ 02:26:17 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 31 Aug 2026 05:26:16 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 31 Aug 2026 05:26:16 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <apUYiv36xvWe-oj7@pks.im>
+References: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
+ <20260825-pks-odb-source-fsck-v1-8-b756de0bf24f@pks.im> <CAOLa=ZQwhpPMrgeLW8W0pezH8VFrqDiiAfet3G_jDRQDu_KQUg@mail.gmail.com>
+ <apUYiv36xvWe-oj7@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <871pbiuwhw.fsf@emacs.iotcl.com>
+Date: Mon, 31 Aug 2026 05:26:16 -0400
+X-Gm-Features: AcwNN1U-oahM5WzgxitahXM-ySEcghzKKjO9fijZ-zZfBoIyIAi_jR3uUraw8JU
+Message-ID: <CAOLa=ZSVe2okfJZL-xt1PkADF67z8JZrtcFce+mecsoMaseKuA@mail.gmail.com>
+Subject: Re: [PATCH 08/10] builtin/fsck: move bitmap verification into the
+ packed source
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000ed4877065a5464d3"
 
-On Fri, Aug 28, 2026 at 04:53:47PM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/odb/source-files.c b/odb/source-files.c
-> > index 5e77b21d9f..feef9e169a 100644
-> > --- a/odb/source-files.c
-> > +++ b/odb/source-files.c
-> > @@ -303,59 +302,6 @@ static int odb_source_files_read_alternates(struct odb_source *source,
-> >  	return 0;
-> >  }
-> >  
-> > -static int odb_source_files_write_alternate(struct odb_source *source,
-> > -					    const char *alternate)
-> > -{
-> > -	struct lock_file lock = LOCK_INIT;
-> > -	char *path = xstrfmt("%s/%s", source->path, "info/alternates");
-> > -	FILE *in, *out;
-> > -	int found = 0;
-> > -	int ret;
-> > -
-> > -	repo_hold_lock_file_for_update(source->odb->repo, &lock, path,
-> > -				       LOCK_DIE_ON_ERROR);
-> 
-> Why is the new implementation not using a lockfile?
+--000000000000ed4877065a5464d3
+Content-Type: text/plain; charset="UTF-8"
 
-Junio asked the same, and the only reason is that I simply didn't
-think about using a lockfile at all. Will fix, thanks.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Patrick
+> On Thu, Aug 27, 2026 at 06:54:51AM -0400, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>> > The checks for bitmaps live in `verify_bitmap_files()`, which is called
+>> > by "builtin/fsck.c". These checks are obviously specific to the "packed"
+>> > backend.
+>> >
+>> > Move the logic into `odb_source_packed_fsck()`. As in preceding commits,
+>> > this means that we now properly honor both "--connectivity-only" and
+>> > "--no-full". Furthermore, we drop the dedicated `ERROR_BITMAP` bit and
+>> > instead use the generic `ERROR_OBJECT` bit.
+>> >
+>> > Note that this change also adapts `verify_bitmap_files()` to be
+>> > focussed on a single "packed" source instead of verifying bitmaps from
+>>
+>> nit: s/focussed/focused
+>
+> You can actually use both spellings [1], where "focussed" is more
+> commonly used in the UK. Anyway, I'll change this to help our American
+> friends out there.
+>
+> Patrick
+>
+> [1]: https://en.wiktionary.org/wiki/focussed
+
+I usually follow the UK spellings, I didn't know the focussed <> focused
+variability.
+
+--000000000000ed4877065a5464d3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 70a2eebd48a03388_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xVlNMVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNjJBQy80c0lsUCtHMHphb0NUUHRIaEdCVnpYZ2dRRApEVWRLakQxUS9h
+UlppdkErUzd4U1VlenRWV1lvYXN4SDQzbkQ0azMxVlhmbnV1dGNESHM3UlppTTBUaUtXb2c5CmNT
+UU56WVY2ZnhNdnlBL1Avb1prM0g3UFhHMjFHQWhsRlVlTzg0QytEVHFmMlc2UHNrZnNsdTIzQVFX
+TVcwQ0MKb24vZlE0YnFxUTJnUWVvMGxURWpvS2F4Rk5oVkVleHZ0d1VncTNFVGc0YVJsRXp0T1Mw
+cGNnTTRxUXhvakRaeApPcnV1VThSKyt6aXVEWjFHVFZxSFo3dXdpanVBUkdqTHZWYXl1VW5OWjJR
+ZlRnMVc3WGtaK3hmZFY0dnYyeGwzCnBYWWVhbHZGMFVoZDJYYS9HNDdzREgySExtZDUwUTFuUDA5
+N0JOS050N2Rna1VNYUNJL0MzVzliMkllTytXZ0QKWnhCYjQ3SVJQamhnSFFlVmJZcUs0UUpQU1Fu
+YXZ6ODdGS0g0T1kyTGh6T01NN2dBazFQTlZsY2VUN21ocmF6YQpxU3lWa1BJbys0bXhHeFR3d1Vs
+eG1Db0ZWYXBUMmZQRkhkblpFbVBDVmt2TkZydXJDaEpSUzh0MWFxTWgwOE5KCnJuY1VTSmxHR05F
+cUN4c0JBYk1zdXBLVEwyKzRRVmViaTlyYm9WND0KPVBpREoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ed4877065a5464d3--
