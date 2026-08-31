@@ -1,80 +1,80 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5B13BF672
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CD43BBFBB
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788158786; cv=none; b=p63MzLtPOMlymI6FoYCl7wxXroE1W99nbBbyB/A3iayGGb6rHZNvDBiquMwXLOM2t+Rmcf6JbbnQGOESlKdKeIP45UzdF6/WCU0dYMTPpp8TCXp8uoYBjzz661mmNg6DoXsSQMs3DrA0LzKy7vWVQxY/N5Uc1+LRcUGjpoUi6iQ=
+	t=1788158788; cv=none; b=ZDAIzsAhDI8aeeHfJI7Kt0a2qCWD4WzEVW7i9iOG5nWvBf/3SBX5fiEqDwk/OwKLdDf0GdD+5CEqmHq3NNmB1ErpMVCVDczqR0BfGTYKIoyzFjgTPw3Fw1kTSpBRm7Kz0LyHT/HGuNCst0QfvdpuE3hDEOWwszVvi6E07uW+iLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788158786; c=relaxed/simple;
-	bh=N1QRJzQUUS1hHXhH329+mfZptUi6pgrje1AVJKquSzU=;
+	s=arc-20240116; t=1788158788; c=relaxed/simple;
+	bh=moXfeSG1yOuUPFGa7IiZPAder5vTaA8zySzDDJXnYZk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VNLZ2FbMQFi2grqjAX3wSY926FOlG0Cg/ehfjAovj79NkLNKL6SAeHED1izHlRN7YFseBCM5sWzYd9W+5T8b2KJmxmSHd2pMMqKJWQU+QXlbJp7GMBGlR4bx2qf9Y4RktnnpOAbSVSF6xUXSOf+fKWU+ccyWIGcaXTGSiAA6jpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f7NnlyZP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eNOmS2Qf; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=WfABABDddl0Le7Ur7BdkOuwg1XMxhSUn0Bql55ztU9xTjyrfrtkyJCLBAB3h3cS5WRHkiEKq6cFygqsEEENNEeCLki4dOvUUI/FO43Y8JYHGzK9FgRBS/YgIrf/Efwtuvfo4TzMddtqn/eImG52F0RBepYK810FFK5A2f0GmwQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dBTeUklC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ptlb7TGf; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f7NnlyZP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eNOmS2Qf"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BACFB7A0115;
-	Mon, 31 Aug 2026 02:46:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dBTeUklC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ptlb7TGf"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CEB5F7A015B;
+	Mon, 31 Aug 2026 02:46:26 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 31 Aug 2026 02:46:24 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 31 Aug 2026 02:46:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788158784;
-	 x=1788245184; bh=XzqzdvzR0ODC8NbnePdVMLV9Vb6htVV2Zby/bkaX9KA=; b=
-	f7NnlyZPYENhfq29SnbYKv15qfXGOR4WRF+HY4HYqDQ3U+ANhOSMFoqcGyokc2Ni
-	Yg1vfahtlAMBFlkWaN+TK4MTmvKCa7c3LzWTzrMj93fYf2k77yjfXrpx3KLWrxr5
-	HpR11lmGm/6DBk1aMepvvNQWx1bxNlicb83LJUNsT1WNgEZvU3JoApzUxQR4xvjT
-	YIeEgTBS61crr56a4Oy7lPM5Fo+szqusdKJkBNeevqiyICP5URK02v9YXiZ6s4dj
-	X4wrUIEKCgK3KkNpyrapV2+QS49KolQLKrURA3kJWpX8dGvd8w/Xx372o8/r3FWV
-	G+YiplGP2rin2nnfmuSi3A==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788158786;
+	 x=1788245186; bh=WCMbjjauvbxcf8Cn+mV+knbaLlK1GBQO4D0RmDf4/h0=; b=
+	dBTeUklCAxnvh5oz8Zqjn+QZ6xKVh9mDdtD/eHvHYqgz5zPIL4TwLla3/SnzGiFF
+	w5bp2HTWOLz+/Ripc3GHOsbh6yiRaxWOBwdu+zSL/B7sfG0BzL73LmhoyQTR0nXh
+	RnBCxINeys16dp8hq4uc+7jH5wsHLjJ61q7l89azL9BnoOM72lV9343KiPqL9JYN
+	DGa0VPbYg+JFC79JC7hZdJ9geibl+0MO2Dn14UYoQ+BYASR4d4YQn/QutYhIj55V
+	86uE32KyR5+djKyMK9Y4MEloJcaBIkVbOPRuK+pMbkD09HKeIr0QoUFEs7vfKfPP
+	NaWFOlEJvhLFSByBryjM5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788158784; x=
-	1788245184; bh=XzqzdvzR0ODC8NbnePdVMLV9Vb6htVV2Zby/bkaX9KA=; b=e
-	NOmS2QfBRbPkWBJn8mQ52TVaGhSBojhvSVlQNSNU6ZFkBh/Vhc2SUspnsxAKCZW9
-	pIgG/LJvS5cm3sNe5RII9cuzb6245F4wiymBdhFSpjQ5eghMRsdaytmsfdL93/cl
-	alq7f2bS6YCpU2jF5qEOJ/GMO+1mDhLZn/NMSRFzJu9DVSxn99ETc3T4xIjg5fXp
-	NrSUR/qd7lVTy7LdXtb9vVoAWKmjJ2/7Gprobt+sBlaeyTegPjhZwUOi1axF6HE0
-	SqReVd2pkbZwZP/mL7gX8nP+6+rcMKxWc0hr7Ot3BpSbPUjVKthVZmVTagUbi9J2
-	l6KnRn1Hyyc1Em9iT5SBA==
-X-ME-Sender: <xms:QCOVav7ugcSsZZ6gWAiukzOLhKn0R9c67T91TLk8Lk0Utelr7pFLQg>
-    <xme:QCOVaq6Vxtac-j8aboxBJAfXjkTompRg-mwFbsUaGEYccq3Tl7L4Lh_2Og9KM_D4v
-    sAT67-iUu1vbO6J0yGwiKPwvqvboC8_1oxgRciHs8GYFqmHSD52OCY>
-X-ME-Received: <xmr:QCOVakEFufFpKMlPaJzTy0HJNdhtxk6WE0ggjOFrnUfICEcil17JtDjIPEWmZPPBamQ9vA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788158786; x=
+	1788245186; bh=WCMbjjauvbxcf8Cn+mV+knbaLlK1GBQO4D0RmDf4/h0=; b=P
+	tlb7TGfVhYta6tYEOvvv1NfmOg65c1vCgoULbYa93FD82hOWVJ0UiMngLmkePC1a
+	TZYSqARZfTJYLccom8UYT0hwyol8XfUiJW/wTDat/qLI6hoJ9k0PX9bzONpfZlwZ
+	kNtYnh9KDIRESFLFGxMG0JXl7DsblfbTL7Um0qGD5CQkD0XHBqHOt6tPp4k9NJ9q
+	T2z/qZQL2wjD+bQyAmK3VkXCpPN6QQJv37nRG6g0CriIaAK1D2OUn0bP2+bhrFqE
+	dS2iZWznBRnXS1f34drOpD3Hj4XVQVZVJ+an9jL3lDLwlnVz9U/KtAlF+LAcQfQ7
+	pDYGqL+/iLQczZ0cbE1UQ==
+X-ME-Sender: <xms:QiOVap4qiIWsjBukz-SkUlYnS6UoO2VDZKiKaRC8GYJP-Q4wBJUyxQ>
+    <xme:QiOVas64f1eB6Q-uOG1Cqdi5d1ih8CpLuzWe-974eOD8bKiYCGYDTqbm1Ju6OwF9a
+    u440Rbwb2kxqkA74u2L4lAeCOAM_KX6yl56tPOr9z0EWe0k7d2JRg>
+X-ME-Received: <xmr:QiOVauG5mzffklee-MO8bmwgnIfrExO7rjnmOnE1u-QgRkCZjW6hDsZ0QT29uMdMXFyGIA>
 X-ME-Proxy-Cause: dmFkZTEYVf0dL7UGrcJrZICBDSB3LjjfPaqozSE//v2Uk+wmrGGsN1vPAxnqAgkLBIQ8YH
     jkGm/0q2QCpTLzGMeN0PR1MeaTkM5EPaoEuoMhHzPGrgkrrahxb2HsmJ1bVk4UiWR43FR+
     opCeq8ZwOupZwyvgFz/5EO1rlWMX9ymY395FZ4JB8b6N4ddSX0Lf/ccWyhtowb9unYs78i
     q65B8tbD9ISvvMC186S9fuYl1A66bWAlIet37pjlPsFSIH2y9YQw83JMBRERaOog6/NRAV
-    yj9dTKgCGRxgJt3f7+n8VX5/0i3r6oQenmQAn+SILo/sIBIqcd93oq/gzZ6ziXimOnALTZ
-    CNpun9eDgs/eir4x0tkZe9ItvR8dXTQf46431dDew4pakdGaScL4wpp59gT7AqgAA5Ii7s
-    DyGcF37FXiI+c1EFTHw4Yp0kkSP1JkTx2+cvcGC6QUO+JEvvvS2LdvhP3BJrAWxtqVmnM2
-    ernQ+SUHkETUuuxvlXEPV7SkQYkKHRahBrbRGLo553zQb9Tvd2P9WiUyNQTNIQ3z+Sr6/9
-    ICgx/s14ge+5ljuujA4v66DI63kW1pmg4DT4w9FYM5v2hnlfO2cGXmQ4rvpBvsohFh4x6+
-    edD/mId7zNeEE+IrtqKdb+HbVY9QCRF9BHQwBnpf2xbC1mIGfKP1ZN2tqp9A
-X-ME-Proxy: <xmx:QCOVarTrRYS4n1rC7ApOJd__w7SK9BeIBcjzsIUmgq2-mYJDeTY_fA>
-    <xmx:QCOValuRP2-cX0yBH28W009Ss8OGDoA9cKHQa6SWKwWlzc1x6TkmBQ>
-    <xmx:QCOVaiyRJAJN8BPtdPWG4g-u79u1bSQ0B-l1AEn1GygYziaH9sTLGQ>
-    <xmx:QCOVan4KJJy_V_ujm5ryQNlmJTCEJnZzK52xmMBSrm4MQmxtySSkag>
-    <xmx:QCOVatopzzgHifgUa642uIvUyvE9Gv8FZr6auDfsTHLyH1mk89Dwgmyp>
+    yj9dTKgCGRxgJt3f7+n8VX5/0i3r6oQenmQAn+SILo/sIBIqcd93oq/gzZ6ziXimOnALU4
+    dsaNPmIIk7+AwXC8spD1+snzMeB5jlE7Be3e+e3r+J9Rv0k+a/tOPpDRzU7StJus97rcZ+
+    Oz93nkPmbOb6gMB+4TPmXWIeE1TMqu9HHlzInJykLi5wzngR8lGLSRUqmgcF+MHmzFSEsH
+    4FslJ7pQqEvu3ajn48mpq9tNwIXqRwi8Z5ooVWeavjRt8rvQozYKEoo/CqdC9wTsp66KQ/
+    sJM03h0NrUaGUoHzarW4Oz2GzvZYM9UBtnYamCYcpK+8FvKvkK5QPjdonN/kB3VkOvhoZw
+    Pv3zCCvuIJwyOkTxzqIbk5J3j++C9GPpxqEQN3Tdj38KhFyTtwFhSXnDp3Mg
+X-ME-Proxy: <xmx:QiOVatSTlDfJqCyyNBGU9xo6K3rz4gt9nDZjvH_K6r9eOuVrLc71dg>
+    <xmx:QiOVavvmSTBGYblDrVxIB3YYNOo9in53kI_j0uDS-bnCftG6xcu4WA>
+    <xmx:QiOVakzG-CtHH8jPRsFVZJchWQlUgkbwyRAlhea8uRxh-p5mF-PBUA>
+    <xmx:QiOVah5pucz1dAuymuyPrI5XmG5lb1bgz85nZRJbMaa9MsVgR8AkXA>
+    <xmx:QiOVanofuNvgP65vCvtp1AaJkg_4vWKRd1-6cZnTaFamf-YJuA7C1-vQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 02:46:23 -0400 (EDT)
+ 31 Aug 2026 02:46:25 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e18de361 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 06:46:30 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id cad37c66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Aug 2026 06:46:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 31 Aug 2026 08:46:15 +0200
-Subject: [PATCH v2 01/10] builtin/fsck: use `fsck_obj_buffer()` when
- checking loose objects
+Date: Mon, 31 Aug 2026 08:46:16 +0200
+Subject: [PATCH v2 02/10] builtin/fsck: merge `fsck_obj_buffer()` and
+ `fsck_obj()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,59 +83,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260831-pks-odb-source-fsck-v2-1-f9b16ef4957b@pks.im>
+Message-Id: <20260831-pks-odb-source-fsck-v2-2-f9b16ef4957b@pks.im>
 References: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
 In-Reply-To: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-When checking loose objects we manually parse the object buffer we have
-read from the on-disk file, mark the object and then call `fsck_obj()`.
-The exact same steps are also performed by `fsck_obj_buffer()`.
+The interfaces of the functions `fsck_obj()` and `fsck_obj_buffer()` are
+somewhat similar to one another. The only difference between those two
+is that `fsck_obj()` takes an already-parsed object as input, whereas
+`fsck_obj_buffer()` parses the buffer and then calls `fsck_obj()`.
 
-Stop open-coding this logic and call `fsck_obj_buffer()` instead.
+Furthermore, `fsck_obj()` has no callers other than `fsck_obj_buffer()`.
+
+Refactor the code by merging those two functions. This makes it obvious
+which function does what, and it allows us to get rid of the early
+return in `fsck_obj()` in case `SEEN` is set as the only caller
+unconditionally clears that bit before calling it anyway.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fsck.c | 17 +----------------
- 1 file changed, 1 insertion(+), 16 deletions(-)
+ builtin/fsck.c | 47 ++++++++++++++++++++---------------------------
+ 1 file changed, 20 insertions(+), 27 deletions(-)
 
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 892c5661d9..3c4127f4d8 100644
+index 3c4127f4d8..bed8481893 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -722,7 +722,6 @@ static int fsck_loose(const struct object_id *oid, const char *path,
- 		      void *cb_data)
- {
- 	struct for_each_loose_cb *data = cb_data;
--	struct object *obj;
- 	enum object_type type = OBJ_NONE;
- 	size_t size;
- 	void *contents = NULL;
-@@ -751,21 +750,7 @@ static int fsck_loose(const struct object_id *oid, const char *path,
- 	if (!contents && type != OBJ_BLOB)
- 		BUG("read_loose_object streamed a non-blob");
+@@ -401,14 +401,27 @@ static void check_connectivity(struct repository *repo)
+ 	}
+ }
  
--	obj = parse_object_buffer(data->repo, oid, type, size,
--				  contents, &eaten);
+-static int fsck_obj(struct repository *repo,
+-		    struct object *obj, void *buffer, unsigned long size)
++static int fsck_obj_buffer(const struct object_id *oid, enum object_type type,
++			   unsigned long size, void *buffer, int *eaten, void *cb_data)
+ {
++	struct repository *repo = cb_data;
++	struct object *obj;
+ 	int err;
+ 
+-	if (obj->flags & SEEN)
+-		return 0;
+-	obj->flags |= SEEN;
++	/*
++	 * Note, buffer may be NULL if type is OBJ_BLOB. See
++	 * verify_packfile(), data_valid variable for details.
++	 */
++	obj = parse_object_buffer(repo, oid, type, size, buffer, eaten);
++	if (!obj) {
++		errors_found |= ERROR_OBJECT;
++		err = error(_("%s: object corrupt or missing"),
++			    oid_to_hex(oid));
++		goto out;
++	}
++
++	obj->flags &= ~REACHABLE;
++	obj->flags |= HAS_OBJ | SEEN;
+ 
+ 	if (verbose)
+ 		fprintf_ln(stderr, _("Checking %s %s"),
+@@ -417,6 +430,7 @@ static int fsck_obj(struct repository *repo,
+ 
+ 	if (fsck_walk(obj, NULL, &fsck_obj_options))
+ 		objerror(repo, obj, _("broken links"));
++
+ 	err = fsck_object(obj, buffer, size, &fsck_obj_options);
+ 	if (err)
+ 		goto out;
+@@ -442,32 +456,11 @@ static int fsck_obj(struct repository *repo,
+ 	}
+ 
+ out:
+-	if (obj->type == OBJ_TREE)
++	if (obj && obj->type == OBJ_TREE)
+ 		free_tree_buffer((struct tree *)obj);
+ 	return err;
+ }
+ 
+-static int fsck_obj_buffer(const struct object_id *oid, enum object_type type,
+-			   unsigned long size, void *buffer, int *eaten, void *cb_data)
+-{
+-	struct repository *repo = cb_data;
+-	struct object *obj;
 -
+-	/*
+-	 * Note, buffer may be NULL if type is OBJ_BLOB. See
+-	 * verify_packfile(), data_valid variable for details.
+-	 */
+-	obj = parse_object_buffer(repo, oid, type, size, buffer, eaten);
 -	if (!obj) {
 -		errors_found |= ERROR_OBJECT;
--		error(_("%s: object could not be parsed: %s"),
--		      oid_to_hex(oid), path);
--		if (!eaten)
--			free(contents);
--		return 0; /* keep checking other objects */
+-		return error(_("%s: object corrupt or missing"),
+-			     oid_to_hex(oid));
 -	}
--
 -	obj->flags &= ~(REACHABLE | SEEN);
 -	obj->flags |= HAS_OBJ;
--	if (fsck_obj(data->repo, obj, contents, size))
-+	if (fsck_obj_buffer(oid, type, size, contents, &eaten, data->repo))
- 		errors_found |= ERROR_OBJECT;
+-	return fsck_obj(repo, obj, buffer, size);
+-}
+-
+ static int default_refs;
  
- 	if (!eaten)
+ static void fsck_handle_reflog_oid(struct repository *repo,
 
 -- 
 2.55.0.979.g7e5102b832.dirty
