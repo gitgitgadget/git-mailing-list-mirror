@@ -1,84 +1,85 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAC83C1F
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:20:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5783BBFBB
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:45:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788157209; cv=none; b=MqJrQRMrsorjpw2eX6VvN9Ola0ODe7ZaH7ox0RyFQSyJ/Bf6COoHI8yAflN/FBFcq1S1MXddzmW7Z9DInaOaviiGZRkUTZmNGEeBixCMr0a6OtzAdSH8nZDhjbDlJEYSHR/8+QET1GtlPal3bf/hDS9Jzhlve+zjzezBE4SGjz8=
+	t=1788158707; cv=none; b=gMEyA0CVs4BfsihkGO8h+bGJFDOv2DC9dZ+k0Rk7kEJ1LYnzwlqByxgIuHjeZewpBgB4nSAv/XoC5pNZsJUxOlJTzyv4yMw9jF75tZeCQMLEGPLpLxHkyTI850Dwb8pf68qiJgjh4P76R6K7fUZ8GbTbHKOyu8WOhibhC832lDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788157209; c=relaxed/simple;
-	bh=EXQYbISiEgtisZXp1JwuKlKYZDj/cY4N2OBIRmBAZ9I=;
+	s=arc-20240116; t=1788158707; c=relaxed/simple;
+	bh=/8b0RApSzDKiy8fPlbCTSZHTycyLsYe7DUeE7i4wec8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MUren1SU6FbTdnPRlULzUnmbbhDHhXadyUDhN4Ic3+vywenWI8aAOEzgI/LNfP90Q3TgQKFCC0ytC/HXx2HHCWZJbpvEv/DF8XaQktWc2j7+fvHPdDtnBezLo56bBJqYdATyw1uJN3kZhLmoXRGZEqIKuKzxYcyqWL39RaIxobQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Nt3saEs7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D7STTF1h; arc=none smtp.client-ip=202.12.124.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=jDwkiPH7FOuTPNsjG/Rk5ouATJp8X3GumUNA2r8VdXEOAm1zewSiF0jB+r/4cGH7MPgsdpskujHdM3SVGX2gFg35mInDlc5Ib1NLN16M6JbJdJDeJ3vzuczNEvEijb441pwxX3Mp3Yw/dpb1m2zZPU+R3PmBiHMXuZp4rpdPBCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HwgoLTLg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NU89t9sJ; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Nt3saEs7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D7STTF1h"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0FD047A0156;
-	Mon, 31 Aug 2026 02:20:07 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 31 Aug 2026 02:20:07 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HwgoLTLg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NU89t9sJ"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5D3DE7A013D;
+	Mon, 31 Aug 2026 02:45:05 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 31 Aug 2026 02:45:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788157206; x=1788243606; bh=42rf/Gg7Hu
-	h8MOnTn706zwTPsl1w3QuT9KasfWhUziM=; b=Nt3saEs7Au3IU+LwRpziIFz3VF
-	Z6eGelRpITpyYZBm1e9VfQUEkyzzzph0rDhju/NOQqvYcODlqcTq1F9swhfAEA6C
-	GwkBWpF/2bIf6C0hyVfy5DXVcdmQJd88Grb5Ihb5hgWDjktjT45wkS5WLhSeCykq
-	jgb/yU1db3rWObs+NKgZ5IhlrsU146cMbj5e6bXVBTTGPoThzhMwSbKN1D5YEyPI
-	oouAeCpc0CfZGdrbEBemd35yD/HVzvNuApP0lBeaXoR/Eo1y/V5+PwNVWMsMwZGe
-	uGzlTG8M+z9VGrZ34OqzXRyi2NlWXGzkRKKySEX5EmMxRAMVtxAuMSG9ieig==
+	:subject:to:to; s=fm3; t=1788158705; x=1788245105; bh=gi7f2ANoxe
+	l2kBs8qOneU9Ax7LRLuVAGccoHzc7nFlA=; b=HwgoLTLgq96B/A7uBWZ/3qcwCp
+	VUIhsN1C5S9yWIRgDTmJh0k5mPM0PprBtoLGoaE+9jdiPzGCKlKPIkvy0XNx881g
+	jOk6/UEFYf9Ia6K9f0Y62vvY3ePh7VZLyCG0XcCjE5wxOqY40gQoMClgtqVrAGZD
+	l4BuHw2dWIlGbYye2gnj5maCZuucCW+TZ3o5O/WpsP8Rzdt9i73Oa422POB0Ftgo
+	KfSsbvDhvTGq53uqZUp4ROK3Emvq00quYlHLxoFVlfw8EqdmamE4WwLx6+YEhGU2
+	RE68RoGJvXC3gVfE+mGU39MK8u41qMT/pDN0uFqYioLVvhPrhVWamTgHDdFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788157206; x=1788243606; bh=42rf/Gg7Huh8MOnTn706zwTPsl1w3QuT9Ka
-	sfWhUziM=; b=D7STTF1hFyESIwqumm5Tsj0Nm3ahN4WZoNbnF6A9ZpTQPxD1fuF
-	HDYQpQikgZ514PQVb06oQBG4gfIs+D+ZqNnuGOPxu9WslRNDbvUFfnwy8QmAF0fx
-	IoIcc69nswkFRxo03kkhwH6Tl4UGa55f8UalVQMIhrLz1KsMUJWbGhYcFmNg/iwk
-	X96GK0DiqQ1PIPkLjTCZuTYMNU7bneBt3Q+RQb8vrg95AJu+GyheesZGetotNGq/
-	tUep+9qQseH81qhX8NWhB5GcVkghzjz3XWdoWlUdRwjqsidHUBH8Xi5aRkTkwLNN
-	1ZRr83qdjQqlCI+m/yT4B9qFtfw+WKQZZkg==
-X-ME-Sender: <xms:Fh2Vajgaym8Uj0Ys7yN_bykffzZTDtCC_xdc5Vcx7ET3_Cky3weeYA>
-    <xme:Fh2VanA6akuCaDOT2WXQXI0ijkjvTgi7FFBEZaKVHzcqVbpgUXoSGv0821jHeqOUg
-    XHyEmFU4xBKsZdR5SHZQ6MmuphgtuZ3d0npmaQ1nEJiGCNS6eVcL8E>
-X-ME-Received: <xmr:Fh2VaoGP5fk7eIfYDR70ME1O3fzkAekmvU3rjLUD4aZqaqpcHpA6ZK0Ir1Q8T-hH80_URA>
-X-ME-Proxy-Cause: dmFkZTGbpAtIrR78AhuGEKMGdpL20ctYiAE6XpkO3lSePhmI7x78bC8FgQ+WsQrhH/Rg7s
-    8fsrh/QnMEw39xn1j3SXBu+0sk070QYZWyOva5mtuR7QH4vyu1wLa7RuyLLAUaHZ3Sa+hb
-    BxjHvadHpksPDPVfqaZDYTb4z8mbZlFofotMOpk1sJhPILeqHc591aAT9jyhgFciOVskth
-    FKXzzv6JhoVDd0bWcn4xOyBRMnsJ7nA3+bJObFz6T0X7J9GeOhao34dJbh0o/d5SCqFW4g
-    MsRawk1F67wWvhr1sOEZPVpIC/7rfBTLdL8GpOtUYkhi7Jkuyd610RHRjmMT3t+oFYv2Ei
-    bElMGnJS8UemlTLhvYgJW0WJ1K/C9dlP7mdcGX1Son/XXxy6NeJtgo+luFq3jsVw3rZ0Gn
-    Hh85wxQp2ZBcjDQLHCN+vtXFzOhuasTHFGagT5MmZEQSFTnf8LO9Q6JTxq01ln6/JkLssf
-    Tfbsma59jkNpAXSQ8rhd6vNG2qSohURBB6Y3Z/Tzphnbtsx8A6xWKldG7GGsEnoJmsHP1H
-    V1UAWabzKUwYsidh3jxcgOg9XLoXqC5dTgwX25TwfggDWCvctHikMo6O92zG9sUsT+562N
-    kAtcdvGmNad4a8MbWErXkSJl6Epu3+yjyVo23tN+L8C0MsLg37D5XwT4Nusw
-X-ME-Proxy: <xmx:Fh2VavINuKcvuZ6w9wyDwWIo7sxAWYNe3sUI6BgE4XVk-LcZJS4bog>
-    <xmx:Fh2VasmRPirRa7mPBwp6kFCfM1Bl8U6sysUQw20UPtabEHmLkvv1Hw>
-    <xmx:Fh2VanT2gDUi8CfUGxh_SwZPLsGkwp_I053nNMUzO1513MqmPUbp-Q>
-    <xmx:Fh2VauI6MPh8xwUZMsLPBMIW_9i6nzKvnY5DPWKvHzSMjuevnNby4Q>
-    <xmx:Fh2VagbazvpG-cXSQw5jDbCAVKYSSEC6rWjY7ouYqRBOrISsBNxNFHkQ>
+	1788158705; x=1788245105; bh=gi7f2ANoxel2kBs8qOneU9Ax7LRLuVAGcco
+	Hzc7nFlA=; b=NU89t9sJNi2wt/Red7t/mB0/6Z4f1eSK2/g22LlXxyj0eRBTIWW
+	KlQlpHGXKjDE6IbR75Ib0041IAFIaI5Grk6gp80mIgslgFY+ChUktAten63PEd9C
+	V2cq8jhz7Hxo1HKwGvNEMD4Rsvs1EbI+qPsasqYjf5m3y/WY9FD+J0Z6gFjznuca
+	9nbB4vQYLPE3F0FtATQeSqphJXkZFLanzPtCmUlsqcOmUqB4k1cOeIzSRmOfdsTX
+	YQVYn6lZCPOMygWK6u8/Mvk4xyByHq4linaABQFHA2KbzUqrkbgkwuAFfj8uv/xX
+	rCOcmErizhoBqenmxofAsjoGbyUEBLI+nkA==
+X-ME-Sender: <xms:8CKVaojqVHIr3WSFgpzHPdOFs8F8vmcw-byiQwLD_LXOqB17_d9wGw>
+    <xme:8CKVaqV7KwJ5gS21nEO23Uwy7oroKImErvIoq8_bbQwlGNsL1O11r_t1dYEV3gGOI
+    HhZfqAUbd8NbP33IM9vmB7eDC2TY-_O6N44BjWyeUbyBm1Q6D950A>
+X-ME-Received: <xmr:8CKVanWyK3Ypmn0NjG3V1A3spd5PhyoE8n3mPVoTZnEDT91o7I9FmZkNgktpxNNw3RdUWA>
+X-ME-Proxy-Cause: dmFkZTGRMJIBfY/+ObDXyo7W//g4WVS5enPXXIGAPKdBdxeF3CbfSrEF2us7bf6hKsvnIx
+    9S2eunt7XU5tUDBojUSpDVWZvpEC4NbZ/sNe7omwiyk1010vDUkESgVcmx9LoFHDKdzXYv
+    qflvvL/lxHbWTuX8AVQs9oFNOzriSzQiaI4xU789Bgutz9vT//WzZbvuA8PEf0sU59pWF8
+    1L/DTNxsuqmsTBetkA+sulNum9p7Cuhm5LRVsm+UfsDxdXbrzF8Hpn5n7D42rscY2OcMAf
+    ZQg4Wkw3dyBztwf1uFka6vS6e3UDjaPPUSu7zLXgo17PfVNIr2JF4a0dbwHpXwm1hZLzLj
+    LUCqq9DMgSHDocauMFRGEAv3HYhGB70yS7FGT9gpAD4/lx8oK7DM6kJD3bgXK1xv+5QQIe
+    Iy8G49JrWlfLVj/oMD6M/gfmZTt1W0p1nyRkA4blLHlsGeyVdozdZED5z0OhkdG0HliFI0
+    kAaIUjqfYHtfGkStGxlQSFbrox18bmGA8FyUjhUbU+D9DrCzy9brLkFmoHyAmDkYAuhowR
+    6CBL6c6cm6YQhpwp1nZhRkXtEWZz445LwcYLqPNrGVHY4zYbYTCvRqA5ArTL/Yz/vSng2x
+    dQQ8nFk2DT6TSW3pwlgqF6rLoylnl7otQ79h853nhE9gyYvstwytjRxGV9Vg
+X-ME-Proxy: <xmx:8CKVaqg4_Bt7aetG6IAkp5DoOHgSZFV1hlvwW4dwvvqlL3O_NN5uQw>
+    <xmx:8CKVaiaGM36MYIIed211S22KDl5Z-tjFOgAy44-4q0sUs5RQRGExDQ>
+    <xmx:8CKVanpGTKRGEqtORtGyvL04lXgM6sPE8A-E6uMif0EaY703SbCEVg>
+    <xmx:8CKVavN5hyvXOGaEbi0RPvUjtwfuNkZKaxAKLDyGZLdvWbIttAEKAA>
+    <xmx:8SKVarqF7VJxdF0J5sMenuTH8Drh9BCEGlWDH4TAVpXMES5TCMJ2umIh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 02:20:05 -0400 (EDT)
+ 31 Aug 2026 02:45:03 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ae83c3c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 06:20:11 +0000 (UTC)
-Date: Mon, 31 Aug 2026 08:19:59 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a23cf690 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Aug 2026 06:45:06 +0000 (UTC)
+Date: Mon, 31 Aug 2026 08:44:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Nikolaus Schuetz via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-	Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-Subject: Re: [PATCH v3] t1401: check symbolic-ref failure and --quiet silence
- on a non-symbolic ref
-Message-ID: <apUdDyG98D5upbhj@pks.im>
-References: <pull.2204.git.1786655554197.gitgitgadget@gmail.com>
- <pull.2204.v3.git.1787763107646.gitgitgadget@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com,
+	kristofferhaugsbakk@fastmail.com,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 1/3] doc: add proc-receive hook info in
+ 'git-receive-pack.adoc'
+Message-ID: <apUi5iUeNUkqVa1L@pks.im>
+References: <20260826-758-introduce-hook-v4-0-6b14975ad957@gmail.com>
+ <20260826-758-introduce-hook-v4-1-6b14975ad957@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,32 +88,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.2204.v3.git.1787763107646.gitgitgadget@gmail.com>
+In-Reply-To: <20260826-758-introduce-hook-v4-1-6b14975ad957@gmail.com>
 
-On Wed, Aug 26, 2026 at 04:51:47PM +0000, Nikolaus Schuetz via GitGitGadget wrote:
-> From: Nikolaus Schuetz <nikolauspschuetz@gmail.com>
-> 
-> git-symbolic-ref(1) documents that reading a name that is not a
-> symbolic ref fails, and that --quiet does so silently.  Tests such as
-> t2020 and t5621 already rely on "symbolic-ref -q HEAD" failing on a
-> detached HEAD, but none checks that the plain form reports the error
-> or that --quiet stays silent.
-> 
-> Assert that a non-symbolic ref fails with the "is not a symbolic ref"
-> message, and that --quiet fails with no output.  Use test_must_fail
-> rather than pinning the exact exit codes, which are documented but not
-> worth freezing in the test.
+On Wed, Aug 26, 2026 at 12:19:37PM +0200, Karthik Nayak wrote:
+> The 'Documentation/git-receive-pack.adoc' contains documentation about
+> hooks which lie in the lifecycle of 'git-receive-pack(1)'. Unfortunately
+> it is missing information about the 'proc-receive' hook. Add it.
 
-Documented sure, but the behaviour does not match the documentation:
+I think this reads a tiny bit awkward. How about the following instead:
 
-  git symbolic-ref will exit with status 0 if the contents of the
-  symbolic ref were printed correctly, with status 1 if the requested
-  name is not a symbolic ref, or 128 if another error occurs.
+  The manpage of git-receive-pack(1) documents hooks invoked when
+  receiving a push. The manpage doe snot mention the 'proc-receive' hook
+  though, which is also invoked as part of that process. Add a paragraph
+  about this hook to plug that gap.
 
-So in theory we should always exit with 1 in case the refname is not a
-symbolic reference, no matter whether the user passes "--quiet" or not.
+> diff --git a/Documentation/git-receive-pack.adoc b/Documentation/git-receive-pack.adoc
+> index 0956086d61..4349487e6a 100644
+> --- a/Documentation/git-receive-pack.adoc
+> +++ b/Documentation/git-receive-pack.adoc
+> @@ -236,6 +236,12 @@ if the repository is packed and is served via a dumb transport.
+>  exec git update-server-info
+>  ----
+>  
+> +PROC-RECEIVE HOOK
+> +-----------------
+> +This hook is invoked by 'git-receive-pack' when it processes push
 
-Anyway, we're not asserting the current broken behaviour in the new
-tests anymore, so I think that this version is good enough. Thanks!
+s/'git-receive-pack'/linkgit:git-receive-pack[1]/
+
+> +requests. It handles refs whose names match the patterns defined by
+> +`receive.procReceiveRefs` and executes the actual ref updates. See
+> +linkgit:githooks[5] for the full protocol description.
+
+Instead of reinventing the wheel, we could also just copy the first
+paragraph of githooks(5):
+
+  This hook is invoked by git-receive-pack(1). If the server has set the
+  multi-valued config variable receive.procReceiveRefs, and the commands
+  sent to receive-pack have matching reference names, these commands
+  will be executed by this hook, instead of by the internal
+  execute_commands() function. This hook is responsible for updating the
+  relevant references and reporting the results back to receive-pack.
+
+I think this is quite a good summary of what it does, and for everything
+else we can then still provide the link to the manpage.
 
 Patrick
