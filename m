@@ -1,38 +1,38 @@
-Received: from mta0.migadu.com (out-49.mta0.migadu.com [91.218.175.49])
+Received: from mta0.migadu.com (out-50.mta0.migadu.com [91.218.175.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D84411A0A
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 15:19:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6ED5355A3
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 15:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788189565; cv=none; b=T6o016sRFf6Hip47XARwCW9djHUPCsOeOxaKG4eT1mVI4YCdUAuq21yGgVyZL3w8EVE7j2yFFTsQDP+VZDqvwzGakboC+GhgM73B0xvZF2zETrcTF1WAhNkawO4MzOyGN5HdrIq1tLzuaZc4Qb0+DkRGkJAv43k1UC4zEyO4gfc=
+	t=1788189567; cv=none; b=IGx+s3vPyZ1hRI7w+J1aiC/SrYZLj7JB9I7tAjxas6KykEHORuLBXm7+wRpi6UzaJAY1jgQ0d5Zis6GJPBbFrTukDfTY32K2+8IeENyN6Rl5pb/zeTjMcb8uGzIV7syGQpyZ4LJDWdFS8Fzd8f+nOGNxrAbrjD3MBQA6mBurPKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788189565; c=relaxed/simple;
-	bh=9HEFzI2DMo3ay8hqRNez2kt2g/PF1vE82klQL4lZsTo=;
+	s=arc-20240116; t=1788189567; c=relaxed/simple;
+	bh=8uIHnUzpY2KEZa065LgC2CQGvJSyZ9tUHUiqFx64O2A=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iqUCf70KxuCJsQRc5HOLwJlTCyGbG6Q5/9acveTWNCo7mFjDr0dYH+TkNXHe3YlkGNhAvtJl+LTCmnBkOp1BnBa9+aP1CioPhNR1MW3WKpOPmJ6m3swjnNezvAq3PLc/7c67Z/mcsgpZJiUN/KA1HSzNkYf3BNIMSA2Ys29yoYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=K7oQdVQq; arc=none smtp.client-ip=91.218.175.49
+	 In-Reply-To:To:Cc; b=MS7P09NfisskcxpE9TOqhSPYFnjpp42Nq8niSTncdXI23KOcLoCNiY1QtOFDrmwta/J6wM3hkkzUjES+J6Vl7gXD8O7Si2H9byxEsthwupBhHBcya7+W4r/IUEAn23d7R3Jr8qOyRVutIFYfBCqiCRlpOlE8BV7ic8rXpJ/leWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=4VeW511F; arc=none smtp.client-ip=91.218.175.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="K7oQdVQq"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="4VeW511F"
 X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=9HEFzI2DMo3ay8hqRNez2kt2g/PF1vE82klQL4lZsTo=;
+DKIM-Signature: a=rsa-sha256; bh=8uIHnUzpY2KEZa065LgC2CQGvJSyZ9tUHUiqFx64O2A=;
  c=simple/simple; d=iotcl.com;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788189561; v=1; x=1788794361;
- b=K7oQdVQqrPUPNOWx3AJs5aN7t59/LF9RQPyAOTG5vbNSCM6C+b5/juwsFKI+8Rll/OezeiAh
- myxSlNgSgxiZbFahiBIw8u79lFyTZSvaldYGErEfzxAGSsMIOFeca72tdXUynt1CqCjvYiTVZMo
- x7cs3CoXs2S5YJxC1e3jqL4I=
+ t=1788189563; v=1; x=1788794363;
+ b=4VeW511FKWtuxurSIVIM303sEYJffWhgto63vX17GUOjJn3Xo0nNPZMgViIBpFq5OBh7lc71
+ bSSeCNDcyMBZOZc0doNKTg6Ezw+Zu6ctmayrouQtJBLWZFxwB+o7wTqxpHJnUHNhWcLm0mim/on
+ eejlQjuYJKZ/WdGsckBr+XiQ=
 X-Envelope-To: git@vger.kernel.org
-Received: by mta10.migadu.com with ESMTPS id 029ace1065c28664;
-	Mon, 31 Aug 2026 15:19:21 +0000
-X-Mizu-Trace-ID: 029ace1065c28664
+Received: by mta12.migadu.com with ESMTPS id bf312aa8e8f969d2;
+	Mon, 31 Aug 2026 15:19:23 +0000
+X-Mizu-Trace-ID: bf312aa8e8f969d2
 X-Migadu-Flow: FLOW_OUT
 From: Toon Claes <toon@iotcl.com>
-Date: Mon, 31 Aug 2026 17:18:45 +0200
-Subject: [PATCH v3 5/6] last-modified: check pathspec against Bloom filter
- first
+Date: Mon, 31 Aug 2026 17:18:46 +0200
+Subject: [PATCH v3 6/6] last-modified: keep per-path Bloom filters for
+ wildcard pathspecs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,7 +41,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260831-toon-speed-up-last-modified-v3-5-2bbb864acf93@iotcl.com>
+Message-Id: <20260831-toon-speed-up-last-modified-v3-6-2bbb864acf93@iotcl.com>
 References: <20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com>
 In-Reply-To: <20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com>
 To: git@vger.kernel.org
@@ -49,97 +49,114 @@ Cc: Gusted <gusted@codeberg.org>, Jeff King <peff@peff.net>,
  Toon Claes <toon@iotcl.com>, Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.16-dev-9febb
 
-When git-last-modified(1) starts, it builds a list of all the paths
-matching the pathspec it needs to find the last modifying commit for.
-For example, every file and subdirectory listed by:
+The last-modified builtin expands the pathspec to a set of literal paths
+and builds a Bloom key for each. During the walk it looks those keys up
+in the commit's filter to decide whether the commit is worth diffing.
+These lookups need `bloom_filter_settings` for the key hashing.
 
-    $ git last-modified -t --max-depth=0 -- src/
+prepare_revision_walk() runs prepare_to_use_bloom_filter() to build the
+pathspec key vectors. For a pathspec that cannot be turned into a Bloom
+key, such as a top-level wildcard like "*.c", that function gives up and
+clears `bloom_filter_settings`.
 
-As it resolves a commit for each path during the revision walk, it drops
-that path from the list.
+Restore `bloom_filter_settings` after prepare_revision_walk() so the
+per-path check keeps working for wildcard pathspecs.
 
-To avoid diffing trees for every commit, Bloom filters are used when
-available. For each remaining path, the commit's Bloom filter is checked
-to see whether the commit changed that path. The Bloom filter says
-either "no" or "maybe", and only in the latter case is the diff
-calculated.
-
-git-log(1) does this differently. It does not expand the pathspec but
-checks the Bloom filter against the pathspec itself. This way, commits
-not touching any path matching the pathspec can be discarded as a whole.
-
-Apply this same check to git-last-modified(1). In a previous commit the
-function revs_maybe_changed_in_bloom(), used by git-log(1), was made
-public. Use this as a pre-filter in git-last-modified(1). After this
-pre-filter, paths are still checked one-by-one to only find those which
-don't have a "last commit" yet.
-
-With `--show-trees` the list holds more than the paths matching the
-pathspec. It also holds each parent tree entry, up to the root. Each of
-those can resolve to a different commit. Thus for the pathspec "a/b/c",
-the list will also hold "a" and "a/b".
-
-When a commit touches "a/other", that commit could be the last commit
-for "a", but revs_maybe_changed_in_bloom() would discard it, because it
-doesn't match the full pathspec.
-
-Instead, when `--show-trees` is given, use
-revs_maybe_changed_in_bloom_with_parents(), which indicates the commit
-maybe changed any of the paths leading up to the path in the pathspec.
+This change isn't having any effect on the output, but only has an
+impact on performance. Add a "bloom_queries" trace2 counter that records
+how often the per-path Bloom check runs, and a test that asserts the
+count increments as appropriate for a top-level wildcard pathspec.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- builtin/last-modified.c  | 12 ++++++++++++
- t/t8020-last-modified.sh | 21 +++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+ builtin/last-modified.c  | 16 ++++++++++++++++
+ t/t8020-last-modified.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
 
 diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index 3846244dfc..8ab7944314 100644
+index 8ab7944314..bedccb3ace 100644
 --- a/builtin/last-modified.c
 +++ b/builtin/last-modified.c
-@@ -272,6 +272,18 @@ static bool maybe_changed_path(struct last_modified *lm,
+@@ -18,6 +18,7 @@
+ #include "quote.h"
+ #include "repository.h"
+ #include "revision.h"
++#include "trace2.h"
+ 
+ /* Remember to update object flag allocation in object.h */
+ #define PARENT1 (1u<<16) /* used instead of SEEN */
+@@ -63,6 +64,8 @@ struct last_modified {
+ 
+ 	/* 'scratch' to avoid allocating a bitmap every process_parent() */
+ 	struct bitmap *scratch;
++
++	unsigned int count_bloom_filter_queries;
+ };
+ 
+ static struct bitmap *active_paths_for(struct last_modified *lm, struct commit *c)
+@@ -272,6 +275,8 @@ static bool maybe_changed_path(struct last_modified *lm,
  	if (!filter)
  		return true;
  
-+	/*
-+	 * With --show-trees we also track the tree entries containing the
-+	 * paths, so a change to any of those parent directories matters too.
-+	 */
-+	if (lm->show_trees) {
-+		if (!revs_maybe_changed_in_bloom_with_parents(&lm->rev, filter))
-+			return false;
-+	} else {
-+		if (!revs_maybe_changed_in_bloom(&lm->rev, filter))
-+			return false;
-+	}
++	lm->count_bloom_filter_queries++;
 +
- 	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
- 		if (active && !bitmap_get(active, ent->diff_idx))
- 			continue;
+ 	/*
+ 	 * With --show-trees we also track the tree entries containing the
+ 	 * paths, so a change to any of those parent directories matters too.
+@@ -370,6 +375,14 @@ static int last_modified_run(struct last_modified *lm)
+ 
+ 	prepare_revision_walk(&lm->rev);
+ 
++	/*
++	 * prepare_revision_walk() clears bloom_filter_settings for pathspecs
++	 * without a Bloom key. Restore it so the per-path check keeps working.
++	 */
++	if (!lm->rev.bloom_filter_settings)
++		lm->rev.bloom_filter_settings =
++			get_bloom_filter_settings(lm->rev.repo);
++
+ 	max_count = lm->rev.max_count;
+ 
+ 	init_active_paths_for_commit(&lm->active_paths);
+@@ -479,6 +492,9 @@ static int last_modified_run(struct last_modified *lm)
+ 	if (hashmap_get_size(&lm->paths))
+ 		BUG("paths remaining beyond boundary in last-modified");
+ 
++	trace2_data_intmax("last-modified", lm->rev.repo, "bloom_queries",
++			   lm->count_bloom_filter_queries);
++
+ 	clear_prio_queue(&not_queue);
+ 	clear_prio_queue(&queue);
+ 	clear_active_paths_for_commit(&lm->active_paths);
 diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
-index 9dba4b9d90..df73c7d0d0 100755
+index df73c7d0d0..75b18ee83b 100755
 --- a/t/t8020-last-modified.sh
 +++ b/t/t8020-last-modified.sh
-@@ -269,6 +269,27 @@ test_expect_success 'last-modified merge undoes changes' '
- 	EOF
+@@ -290,6 +290,32 @@ test_expect_success 'last-modified with Bloom filters and --show-trees' '
+ 	)
  '
  
-+test_expect_success 'last-modified with Bloom filters and --show-trees' '
-+	test_when_finished rm -rf bloom &&
-+	git init bloom &&
++test_expect_success 'last-modified with Bloom filters and top-level wildcard' '
++	test_when_finished rm -rf wildcard &&
++	git init wildcard &&
 +	(
-+		cd bloom &&
++		cd wildcard &&
++		test_commit base-c a.c &&
++		test_commit base-h a.h &&
++		test_commit touch-c a.c &&
 +		mkdir d &&
-+		test_commit base-a d/a &&
-+		test_commit base-b d/b &&
-+		test_commit touch-a d/a &&
-+		test_commit touch-b d/b &&
++		test_commit sub-c d/b.c &&
 +
 +		git commit-graph write --reachable --changed-paths &&
-+		git -c core.commitGraph=false last-modified -t HEAD -- d/a \
-+			>expect &&
-+		git -c core.commitGraph=true last-modified -t HEAD -- d/a \
-+			>actual &&
++		GIT_TRACE2_PERF="$(pwd)/off.perf" \
++			git -c core.commitGraph=false last-modified -r HEAD \
++			-- "*.c" >expect &&
++		test_grep "data .* bloom_queries:0$" off.perf &&
++
++		GIT_TRACE2_PERF="$(pwd)/on.perf" \
++			git -c core.commitGraph=true last-modified -r HEAD \
++			-- "*.c" >actual &&
++		test_grep "data .* bloom_queries:2$" on.perf &&
 +
 +		test_cmp expect actual
 +	)
