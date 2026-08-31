@@ -1,80 +1,80 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7AA3BD659
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5B13BF672
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 06:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788158784; cv=none; b=WCdf8cp2qTmF8jbtalwdywSnvP4xQBmoYFvIBOuU22mqyVvDcGfXBQmF5zNreOQAm/HrjGdyBIOsMccLikGynZ/T7QgSg6fyABGn6Kbaz9STkFBouk+bX7dS6nCx2rZ0V78B3qBaMaWBP2bPtJnii8x1Xjz3gPFrbD9OADH7Xtw=
+	t=1788158786; cv=none; b=p63MzLtPOMlymI6FoYCl7wxXroE1W99nbBbyB/A3iayGGb6rHZNvDBiquMwXLOM2t+Rmcf6JbbnQGOESlKdKeIP45UzdF6/WCU0dYMTPpp8TCXp8uoYBjzz661mmNg6DoXsSQMs3DrA0LzKy7vWVQxY/N5Uc1+LRcUGjpoUi6iQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788158784; c=relaxed/simple;
-	bh=BZwGOD4eM6EcTd5r1iqmWCpiVsGr72S2aIEjSP1nkOA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=JTsFREExMhA66FmwOTuUfXzatmh5UCcfHDJ3duexLnbJYcdaAxTPr+I01Cl5EaP5YuFFCr38Ckq14lvzDuZg7TLpBmiD+9+4W/QXmVajHDWJT6qLGjUIHx885OyCUjw7m7dl21AIxSAZzjIOOm6x1io9FYtn9nr/GZBvqIns02o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LgJeAfjO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gq6CPz8d; arc=none smtp.client-ip=202.12.124.155
+	s=arc-20240116; t=1788158786; c=relaxed/simple;
+	bh=N1QRJzQUUS1hHXhH329+mfZptUi6pgrje1AVJKquSzU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=VNLZ2FbMQFi2grqjAX3wSY926FOlG0Cg/ehfjAovj79NkLNKL6SAeHED1izHlRN7YFseBCM5sWzYd9W+5T8b2KJmxmSHd2pMMqKJWQU+QXlbJp7GMBGlR4bx2qf9Y4RktnnpOAbSVSF6xUXSOf+fKWU+ccyWIGcaXTGSiAA6jpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f7NnlyZP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eNOmS2Qf; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LgJeAfjO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gq6CPz8d"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A66427A013C;
-	Mon, 31 Aug 2026 02:46:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f7NnlyZP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eNOmS2Qf"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BACFB7A0115;
+	Mon, 31 Aug 2026 02:46:24 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 31 Aug 2026 02:46:22 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 31 Aug 2026 02:46:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788158782;
-	 x=1788245182; bh=316bo6h5ojTaUj4FVY2VEK86l+KovTBTgKgqr19Joh4=; b=
-	LgJeAfjO+supXQzAK6zfU8O0SBVbpjODmQUy6Pj9K4BxLwBYrMKIGuvNAsc3iefm
-	uEWiUZY7sJKB1KTp5CVXi0UOGQKBn3e9cWeOcO7HNzH/m7J1eA+iHf5m/oclrGNU
-	b2W13BKDA5zP9b2gdgMABJl6r4Io0W9fN05lp/4pg4yhpk5Rh4NfxkJxRh2cC/e1
-	Zcs+sCeDPkxzOlHm4Y/vFosleA7gjzPpiljO37beq4t0BBNvZjjA3kQ4qESTR61/
-	2m3Crjf5rrpja22TYvFyMVPHpfTFEV62/61iOe0eCagDQFUzI3OYTelGwQVbKJDX
-	9pS9ZSiWjD5BOUEamS8kQg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788158784;
+	 x=1788245184; bh=XzqzdvzR0ODC8NbnePdVMLV9Vb6htVV2Zby/bkaX9KA=; b=
+	f7NnlyZPYENhfq29SnbYKv15qfXGOR4WRF+HY4HYqDQ3U+ANhOSMFoqcGyokc2Ni
+	Yg1vfahtlAMBFlkWaN+TK4MTmvKCa7c3LzWTzrMj93fYf2k77yjfXrpx3KLWrxr5
+	HpR11lmGm/6DBk1aMepvvNQWx1bxNlicb83LJUNsT1WNgEZvU3JoApzUxQR4xvjT
+	YIeEgTBS61crr56a4Oy7lPM5Fo+szqusdKJkBNeevqiyICP5URK02v9YXiZ6s4dj
+	X4wrUIEKCgK3KkNpyrapV2+QS49KolQLKrURA3kJWpX8dGvd8w/Xx372o8/r3FWV
+	G+YiplGP2rin2nnfmuSi3A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788158782; x=
-	1788245182; bh=316bo6h5ojTaUj4FVY2VEK86l+KovTBTgKgqr19Joh4=; b=G
-	q6CPz8dyYz9B0iiBK/lzyX+ZpKh15E9WtzrQ/Q/gZL/lehVDJLdAiLP7R7ZLm+aB
-	nvi9XK2fOaqc5tkanIFJ9n7CvQ1UB3PMEuIt/SUZEqTjVeK/LuTJYGf1dtiBxHs4
-	bleoH9vko5OURC31ddkx4Y+EBC0w0dS1fXUhgp/65juzYFRyfVflaRIsUjqClgx3
-	//qIOAaHdmZcFk30YuSfejSsQ7w1DqEywPj+k2ED/ZrJ3sPEzt6XHwxTMYim//o/
-	Ch3Mh44CQv5AzRMYeM5onftTobgom3jhm9T/YLBs1H2m5UEYkbNAJ51ew/Ev68bV
-	D7g00EQP2eu5kSK7fKEdw==
-X-ME-Sender: <xms:PiOVagiA5Qgn-YgW-WvjWoNylrY5qgNqGShWW1Nl1rjJkR3zTyI8fQ>
-    <xme:PiOVavBSssrU_070if41ANFuqeQ5V9gi6D7ZiN0UGpelnUes167-QvVZYfAV_dHb8
-    mVDTpIU6fJvqrPw_2nlqZ00qSDo9vsIZw8s0Yi3kfLH8ymbiyCWm04>
-X-ME-Received: <xmr:PiOValvm-U3QyoinlWZqnBjabfwp8EB_jlXXAKFctWgA9fqfvumSCp5PfZScsn6ljKpgvA>
-X-ME-Proxy-Cause: dmFkZTGJqXuGkFNWEHpKJSUQrx1K+bRo/kOWFKIRfUsvus6Nicr2eKGbsaiErXPE4cDXcA
-    4mqBZBC5/PoyoeCht1bZEoRE5MwgLli0rgMzNviho0+bzwl8MzUWHn7L+LGu+qzzMC5AGG
-    EVb0E1bGaGPJMtpITpZq7SpYsHybQ/acmadCnPOPw+6+XPrmu3JOogt6/KiCxBfuGh/BsT
-    WtDIBb3lDZX2wQUnjspDg9TWkMekV84PPx+q6LlS7P1A76rloeJIT+HPCu5Hb5/dyYeT3/
-    s3E1ID+kchwdD8Z7oJZqSrb8+wxJyUZCMgcBz+ZKfgB+adOVrRPIA7FwXK4QDdEHzQrMUM
-    MLxYAgbGKQXlEyP2VDbDcc9/8Nsx41bVcSMgm5z48ZtlBSuiAfZyDVRY3anKNT5RA3SBRF
-    Bfnma4Kst4qOCVE9r4XAOv3y+sEzz2WxKKd4U8ldc0o+fRDIBGl60ln2v8tWF4qmwwLLoR
-    vJRSSKdnl2RSAadoel5lPtBBHMhv6BZZoTE2G8XRaGirq8Pir5m0I6BjufBajbKWX+EOpB
-    8wx60W3qZs9X3tBwWeqcNOJ4XR5MCxNAk1wOuufhTeK6Y3OjGIMstffxdaRsSaUvZszjiF
-    xC3VcfMpTz1HyLbd1wG6PeGAAZ5fNKnncrJmI45AWJpG+CgzxdkHnVbGQEdQ
-X-ME-Proxy: <xmx:PiOVasYfGybzU76RkIn0uwR39SnpeNVM5puL4NermIz6lzhLLl0T3Q>
-    <xmx:PiOVagXpZoCyitvXuZgmTrgVoZOEphDPLJtHhvpJ1ulYOf2RlFA75Q>
-    <xmx:PiOVao6gX-WENYUDqW44D-ejjXHUJ-EMT8Q5Nzod0aJxFQ8Ek-7oxA>
-    <xmx:PiOVajijc5YWF1JdhkZf4zMDdnz8pd9zFKY1zOFj-Sujdzqeh32XfQ>
-    <xmx:PiOVaoQ7l4qaVzx8svvzK_HaJEjRLplSmeWt9xlBmLsxGYe_wy2yxy_Y>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788158784; x=
+	1788245184; bh=XzqzdvzR0ODC8NbnePdVMLV9Vb6htVV2Zby/bkaX9KA=; b=e
+	NOmS2QfBRbPkWBJn8mQ52TVaGhSBojhvSVlQNSNU6ZFkBh/Vhc2SUspnsxAKCZW9
+	pIgG/LJvS5cm3sNe5RII9cuzb6245F4wiymBdhFSpjQ5eghMRsdaytmsfdL93/cl
+	alq7f2bS6YCpU2jF5qEOJ/GMO+1mDhLZn/NMSRFzJu9DVSxn99ETc3T4xIjg5fXp
+	NrSUR/qd7lVTy7LdXtb9vVoAWKmjJ2/7Gprobt+sBlaeyTegPjhZwUOi1axF6HE0
+	SqReVd2pkbZwZP/mL7gX8nP+6+rcMKxWc0hr7Ot3BpSbPUjVKthVZmVTagUbi9J2
+	l6KnRn1Hyyc1Em9iT5SBA==
+X-ME-Sender: <xms:QCOVav7ugcSsZZ6gWAiukzOLhKn0R9c67T91TLk8Lk0Utelr7pFLQg>
+    <xme:QCOVaq6Vxtac-j8aboxBJAfXjkTompRg-mwFbsUaGEYccq3Tl7L4Lh_2Og9KM_D4v
+    sAT67-iUu1vbO6J0yGwiKPwvqvboC8_1oxgRciHs8GYFqmHSD52OCY>
+X-ME-Received: <xmr:QCOVakEFufFpKMlPaJzTy0HJNdhtxk6WE0ggjOFrnUfICEcil17JtDjIPEWmZPPBamQ9vA>
+X-ME-Proxy-Cause: dmFkZTEYVf0dL7UGrcJrZICBDSB3LjjfPaqozSE//v2Uk+wmrGGsN1vPAxnqAgkLBIQ8YH
+    jkGm/0q2QCpTLzGMeN0PR1MeaTkM5EPaoEuoMhHzPGrgkrrahxb2HsmJ1bVk4UiWR43FR+
+    opCeq8ZwOupZwyvgFz/5EO1rlWMX9ymY395FZ4JB8b6N4ddSX0Lf/ccWyhtowb9unYs78i
+    q65B8tbD9ISvvMC186S9fuYl1A66bWAlIet37pjlPsFSIH2y9YQw83JMBRERaOog6/NRAV
+    yj9dTKgCGRxgJt3f7+n8VX5/0i3r6oQenmQAn+SILo/sIBIqcd93oq/gzZ6ziXimOnALTZ
+    CNpun9eDgs/eir4x0tkZe9ItvR8dXTQf46431dDew4pakdGaScL4wpp59gT7AqgAA5Ii7s
+    DyGcF37FXiI+c1EFTHw4Yp0kkSP1JkTx2+cvcGC6QUO+JEvvvS2LdvhP3BJrAWxtqVmnM2
+    ernQ+SUHkETUuuxvlXEPV7SkQYkKHRahBrbRGLo553zQb9Tvd2P9WiUyNQTNIQ3z+Sr6/9
+    ICgx/s14ge+5ljuujA4v66DI63kW1pmg4DT4w9FYM5v2hnlfO2cGXmQ4rvpBvsohFh4x6+
+    edD/mId7zNeEE+IrtqKdb+HbVY9QCRF9BHQwBnpf2xbC1mIGfKP1ZN2tqp9A
+X-ME-Proxy: <xmx:QCOVarTrRYS4n1rC7ApOJd__w7SK9BeIBcjzsIUmgq2-mYJDeTY_fA>
+    <xmx:QCOValuRP2-cX0yBH28W009Ss8OGDoA9cKHQa6SWKwWlzc1x6TkmBQ>
+    <xmx:QCOVaiyRJAJN8BPtdPWG4g-u79u1bSQ0B-l1AEn1GygYziaH9sTLGQ>
+    <xmx:QCOVan4KJJy_V_ujm5ryQNlmJTCEJnZzK52xmMBSrm4MQmxtySSkag>
+    <xmx:QCOVatopzzgHifgUa642uIvUyvE9Gv8FZr6auDfsTHLyH1mk89Dwgmyp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 02:46:21 -0400 (EDT)
+ 31 Aug 2026 02:46:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2364149d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 06:46:27 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id e18de361 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Aug 2026 06:46:30 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 00/10] odb: make consistency checks pluggable
-Date: Mon, 31 Aug 2026 08:46:14 +0200
-Message-Id: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
+Date: Mon, 31 Aug 2026 08:46:15 +0200
+Subject: [PATCH v2 01/10] builtin/fsck: use `fsck_obj_buffer()` when
+ checking loose objects
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,112 +83,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22NQQ6CMBBFr0Jm7ZjSADWuvIdhYctURiIlHSAaw
- t0t6NLlS97/bwGhyCRwzhaINLNw6BPoQwauvfV3Qm4Sg1a6Uqdc4dAJhsaihCk6Qi+uQ6oKY7Q
- zRKWHtBwieX7tr9f6yzLZB7lxu9qMlmUM8b1n53zzfgVd/i3MOSq0pqwaUtbrwl+SdeQn1Ou6f
- gBkMO0CxQAAAA==
-X-Change-ID: 20260810-pks-odb-source-fsck-e64772c7ee5f
-In-Reply-To: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
-References: <20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im>
+Message-Id: <20260831-pks-odb-source-fsck-v2-1-f9b16ef4957b@pks.im>
+References: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
+In-Reply-To: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+When checking loose objects we manually parse the object buffer we have
+read from the on-disk file, mark the object and then call `fsck_obj()`.
+The exact same steps are also performed by `fsck_obj_buffer()`.
 
-this patch series makes object database consistency checks pluggable.
+Stop open-coding this logic and call `fsck_obj_buffer()` instead.
 
-This series is built on top of 2c3adbb2c4 (The 18th batch, 2026-08-24)
-with the following two dependencsie merged into it:
-
-  - ps/odb-eagerly-load-alternates at 0076dc9f81 (odb: drop
-    `alternates_db` field, 2026-08-17)
-
-  - ps/odb-pluggable-pack-generation at 5176dd3d05 (bundle: generate
-    packfiles via the object database, 2026-08-21)
-
-Changes in v2:
-  - Some commit message improvements.
-  - Link to v1: https://patch.msgid.link/20260825-pks-odb-source-fsck-v1-0-b756de0bf24f@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (10):
-      builtin/fsck: use `fsck_obj_buffer()` when checking loose objects
-      builtin/fsck: merge `fsck_obj_buffer()` and `fsck_obj()`
-      builtin/fsck: de-globalize option handling
-      builtin/fsck: don't check alternates with "--no-full"
-      odb: provide infrastructure for pluggable fsck checks
-      builtin/fsck: move packfile verification into the packed source
-      builtin/fsck: move reverse index verification into the packed source
-      builtin/fsck: move bitmap verification into the packed source
-      builtin/fsck: move multi-pack index verification into the packed source
-      builtin/fsck: move loose object verification into the loose source
+ builtin/fsck.c | 17 +----------------
+ 1 file changed, 1 insertion(+), 16 deletions(-)
 
- builtin/fsck.c                | 296 ++++++++----------------------------------
- odb.c                         |   9 ++
- odb.h                         |  33 +++++
- odb/source-files.c            |  13 ++
- odb/source-inmemory.c         |   8 ++
- odb/source-loose.c            |  92 +++++++++++++
- odb/source-packed.c           | 117 +++++++++++++++++
- odb/source.h                  |  21 +++
- pack-bitmap.c                 |  26 ++--
- pack-bitmap.h                 |   2 +-
- t/t1450-fsck.sh               |   5 +
- t/t5319-multi-pack-index.sh   |  13 ++
- t/t5325-reverse-index.sh      |   8 ++
- t/t5326-multi-pack-bitmaps.sh |  10 +-
- 14 files changed, 394 insertions(+), 259 deletions(-)
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 892c5661d9..3c4127f4d8 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -722,7 +722,6 @@ static int fsck_loose(const struct object_id *oid, const char *path,
+ 		      void *cb_data)
+ {
+ 	struct for_each_loose_cb *data = cb_data;
+-	struct object *obj;
+ 	enum object_type type = OBJ_NONE;
+ 	size_t size;
+ 	void *contents = NULL;
+@@ -751,21 +750,7 @@ static int fsck_loose(const struct object_id *oid, const char *path,
+ 	if (!contents && type != OBJ_BLOB)
+ 		BUG("read_loose_object streamed a non-blob");
+ 
+-	obj = parse_object_buffer(data->repo, oid, type, size,
+-				  contents, &eaten);
+-
+-	if (!obj) {
+-		errors_found |= ERROR_OBJECT;
+-		error(_("%s: object could not be parsed: %s"),
+-		      oid_to_hex(oid), path);
+-		if (!eaten)
+-			free(contents);
+-		return 0; /* keep checking other objects */
+-	}
+-
+-	obj->flags &= ~(REACHABLE | SEEN);
+-	obj->flags |= HAS_OBJ;
+-	if (fsck_obj(data->repo, obj, contents, size))
++	if (fsck_obj_buffer(oid, type, size, contents, &eaten, data->repo))
+ 		errors_found |= ERROR_OBJECT;
+ 
+ 	if (!eaten)
 
-Range-diff versus v1:
-
- 1:  cf49376600 !  1:  1aec903546 builtin/fsck: use `fsck_obj_buffer()` when checking loose objects
-    @@ Commit message
-     
-         When checking loose objects we manually parse the object buffer we have
-         read from the on-disk file, mark the object and then call `fsck_obj()`.
-    -    Almost the exact same steps are also performed by `fsck_obj_buffer()`.
-    +    The exact same steps are also performed by `fsck_obj_buffer()`.
-     
-         Stop open-coding this logic and call `fsck_obj_buffer()` instead.
-     
- 2:  da2ca27041 !  2:  3804f0339e builtin/fsck: merge `fsck_obj_buffer()` and `fsck_obj()`
-    @@ Commit message
-         Furthermore, `fsck_obj()` has no callers other than `fsck_obj_buffer()`.
-     
-         Refactor the code by merging those two functions. This makes it obvious
-    -    which function does what, and it allows us to get rid of the early in
-    -    `fsck_obj()` in case `SEEN` is set as the only caller unconditionally
-    -    clears that bit before calling it anyway.
-    +    which function does what, and it allows us to get rid of the early
-    +    return in `fsck_obj()` in case `SEEN` is set as the only caller
-    +    unconditionally clears that bit before calling it anyway.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
- 3:  a24506f55e =  3:  b2cb9032cf builtin/fsck: de-globalize option handling
- 4:  f6a407efd0 =  4:  10ee3b8baf builtin/fsck: don't check alternates with "--no-full"
- 5:  31841a1f05 =  5:  1e65eec60e odb: provide infrastructure for pluggable fsck checks
- 6:  2cd6d71983 =  6:  0b8cf751aa builtin/fsck: move packfile verification into the packed source
- 7:  c0559f1820 =  7:  3a38a75549 builtin/fsck: move reverse index verification into the packed source
- 8:  96ae1ce3c6 !  8:  dd3a4c6cea builtin/fsck: move bitmap verification into the packed source
-    @@ Commit message
-         instead use the generic `ERROR_OBJECT` bit.
-     
-         Note that this change also adapts `verify_bitmap_files()` to be
-    -    focussed on a single "packed" source instead of verifying bitmaps from
-    +    focused on a single "packed" source instead of verifying bitmaps from
-         all sources. This change is required as we already know to loop around
-         the sources in `odb_fsck()` itself.
-     
- 9:  4721f4b4ba =  9:  90ada56b7f builtin/fsck: move multi-pack index verification into the packed source
-10:  0b36829fd9 = 10:  b0f6fccae8 builtin/fsck: move loose object verification into the loose source
-
----
-base-commit: 6b08999fb1b3ad0bad04d492dc206ad42839e274
-change-id: 20260810-pks-odb-source-fsck-e64772c7ee5f
+-- 
+2.55.0.979.g7e5102b832.dirty
 
