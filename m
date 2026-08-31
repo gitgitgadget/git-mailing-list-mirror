@@ -1,132 +1,110 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4611233DEF9
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 18:45:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27F5397352
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 18:56:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788201908; cv=none; b=dOy1hGOHRILIM8DaNAm7NpR4tbXrrifqQF5K/54XZpavmYusPaKULBNei+0Qj8n4IkzW/IFHcRssSuGQbaCGWeCotXw5wrb/59pgccj5f4VJvEOgyU5RA5X7ms5vObeep1uB1l6sNQvHE4S/ksQdHDYCIMZvFRH6gmA3mYHHElI=
+	t=1788202606; cv=none; b=LYJuwmqPAJdjJDc0d12YLQaWC7B9mUEV+111lcWgmGCwBMOGzRNhHfOzxRExOl/j6Sw3gTlRdRVFB7wbEZxYG561sNsza1l4jXt3V8DbFvr6ruHAlQzhaFnGZaBiUXfKFAdp/voMSGc+lG+pcxHdzhR3WCN9tR3NmTb6ohoQ88Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788201908; c=relaxed/simple;
-	bh=44U8TQS3imRqLPeQeMD51BhGHmQ//MM/5hyIlOkzyvU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Bmph4uHDoJ3wDdjqpizxrYXFj5fUhF6n6dDpK2M/lnEbl3YUaG4iAn9PT+n16mmGqGV4tv/ciMneX6LkprIsWusDwRTwd1Is6qbgckbGaOK8khGC/nSpZxFqVWa/oqBMhl+w37YyDBCoYLSEArz3ld/cJD9mrBiLz2Hb3jE8bt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fAspxJmh; arc=none smtp.client-ip=209.85.215.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788202606; c=relaxed/simple;
+	bh=PyDkfMVocexJfgLvX46MHEw8Yr2Hekezg0G+gh0ZxL0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VWcJbzLBxHHNc4b/5Mcqwwvaq0mOPsoyPhpsZbukJhBK2Ar9DwHIhXMDHj2pojiVCZby99nwwN+18S5DaJZGHj1OOhUNn0kmVpe80GK8O4gJMYIQrIotMH/sjZ5ME8Cw8xyqKCVMhJfh7wDQFRJ7o88NEsSgsxQXlOYVeMBiO1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GdBhNlIx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PG/LpUtM; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fAspxJmh"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cc1a4c62804so3273781a12.3
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 11:45:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788201906; x=1788806706; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=weWQlAjV+xqJ+ci9dShjtQ3pv9C0oCOUkvyfS5cTqB0=;
-        b=fAspxJmhbPGjChc63iCdlCHtlRSL3cd2rP+gzYgwRMOl/of5H8SAE6LrVmGNDLoJAD
-         khk42fUP/VYgd/vy42H45tKulAzjItcYQhKxLnQ4obAeqtRb7Yh8LcUuYsXqOOud64sC
-         Typ0x78LYD6KXWBB62+mGmiippR3CDH90szk+tORGgWtw2Thm8dI56EedZ4n5EykX2S2
-         DBYYRISKAqzM2Y30hyzPZnHoglkHWqGYEI2M+9o/n0vlgz1FPwXlt0RUKlyiM2eIvGJj
-         OMXGKG5OEWnF4uSokG8WSZ9KD14MplnYJRlYbAKYIiItRUPQA9hKjpWi6CtPQQA/JKzx
-         T50w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788201906; x=1788806706;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=weWQlAjV+xqJ+ci9dShjtQ3pv9C0oCOUkvyfS5cTqB0=;
-        b=eKl8ELwyDwx0VRjq762eXBpWGKTN2G7rp0QdD+RCtBHR7hW7ksHTPqS8baUp5eWWVa
-         KGE90eUpE+rIlLldd5kw5hPLDE/0ZkSUF4PgT3ZfXIM42mCLqnkKvl+GDjwD+xMdn9xK
-         ZyIC+LEmLzhJVwFCkosL7A9gWlZeVe4fmMlvxzjLPszbEVYi9ISS3eyWAIUnoUuxMijn
-         LX20wrq3FmzXkzofkqKS7rGqzpT2nJqNJ0t2gKZJpEqHJaNCJndYMqJYcW7sV0j/Smqa
-         PjHM9xFKrv7HsxqSqO9QpoDdqSMRENMlTi/noSJNp5u3lEDXIR6mDAXtUNrvjlA8r4MS
-         ZpnQ==
-X-Gm-Message-State: AFuF++miSHmN557zXV7H9LA9KTrGJ2QV608NYfpnPfoKMv4Wo8SakDjV
-	AgvwEMtQ4CSkdJl/IbkK8K2woAVX0Oh0dxeIYqLTU1qrIjDxu8ww7EGKzKNXvw==
-X-Gm-Gg: AYBFou2l7ASHANMuwPMXmcuVIzNJRK2EGxko1NRQiIvyXCquJZ8bw7SlnLovg0bMAV0
-	j+hcEmEBfwhii8gao3llTu9CMFTVZDusepe0lUypi1MPMv9fV69Mf9fjB1f+wbUPiPZLB/8jpDb
-	5hWjDrb11utegvuA2km8JjHEx6xwsErg2QmzCHOlxY2SApmTvS6kO4m8nXy/OU9nthT3lQ0FOlh
-	bcoOexvz9vJD4foFbkprXWuyB5sgydOmvWwtdIWoFl1ulmN+BANf6lV4UI7mOA9TW6VNKKeG6Vp
-	KFcpiSJXPJ5MFbtbtCJNz1P+3YCNhSP2ysBdUNnB6FEWmyI9jCgvgAsQPKrf5lJkmS3F3eat07K
-	N1j65QX1PNiD2Maze6BnFHUHQTR9yufNFWcx79YPRefhwDM53xkIJ1HzIK1FAsdlgeeI2th++iW
-	ixBBAUkgS+NGdyeFopVSDjm1qwnq9f/DOAwOdnPRt701T8yCzvIO1s3So85im7wRY=
-X-Received: by 2002:a17:90b:3d91:b0:38f:18f9:785 with SMTP id 98e67ed59e1d1-396d0f016bcmr46201314a91.8.1788201906324;
-        Mon, 31 Aug 2026 11:45:06 -0700 (PDT)
-Received: from [100.87.176.22] ([117.213.200.3])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-142e0d38207sm29327763c88.5.2026.08.31.11.45.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 11:45:05 -0700 (PDT)
-From: Hardik Kumar <hardikxk@gmail.com>
-Date: Tue, 01 Sep 2026 00:15:01 +0530
-Subject: [PATCH v2] versioncmp: fix typo in versioncmp.c,
- t/t0022-crlf-rename.sh
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GdBhNlIx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PG/LpUtM"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 58ACD7A01AA;
+	Mon, 31 Aug 2026 14:56:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 31 Aug 2026 14:56:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788202603; x=1788289003; bh=HBEshXg89C
+	auA1RCQFxYk7drMJPAUDiiUBvBb7Udm8E=; b=GdBhNlIxU+Eo7Begh4WlEThlRe
+	MaUfJlq2G4oqsYS11EMeNre2t3ipRAA4kz1E/jb+arWbWuUin30uQdE0RPhp2tzJ
+	naj1barR11jvo2ZF12FCyf1+E4O1Q4w5ruMWKlRMOH+qXwump+xOnmQ8mluKaLwm
+	M1nGjzMhyL7S1M23KbtVTitkoOauzAIVlZeaih5p8XbtMmw2QfQiGd6KtiGxV46j
+	R5TSmw+7Id9XxWzaeZrd0mPlWw2/owTK3PSyAh5oF5OOujdoYxwzriO0doEglzLK
+	+k27PihTzs5edqK9hf2568p4O2zgvXFa7gZq2nzHJTb+GtrL3JpgZ9Tde9ZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788202603; x=1788289003; bh=HBEshXg89CauA1RCQFxYk7drMJPAUDiiUBv
+	Bb7Udm8E=; b=PG/LpUtMsxapaVj8spedsMEn4Do12rtAXVIsE8x/RTXM6gR5soL
+	g4RsAs/uOy0xW3PMmSZpa2osvsrq6VfF8M2v/5oY5m49ad8e6XdirlV4pvyKEe8g
+	5SwEN5K69cEOB+bYo9VVLf9SRzR9T+I277opJs7CFiYEg+v9e8UOfkg3BEKZIe7M
+	YW05i96Va9FFJsmMohO9HX0UNvzY0KS4bT4bp7KUoCg8dReACtiKjjAo5jNOFaxo
+	Leszt1uDQZxoOoij5nroAITvY5su9bFIseA8lzcQSWmHJrdcSBhEelbVeWR3NC6d
+	BtjDiWCMsJF2zodWyq3M7Fe2XZJ9LbxEw1w==
+X-ME-Sender: <xms:a86VamVSrG9fwMzP72EooHYS3FIhZtnupODUpF8RGQzSfWl4dqAE_Q>
+    <xme:a86VaqDKU5v6PxsMXQ5MBm8yvyA9N1r0R_0Cy1SiT5FfTGK-tn_rwdxgvHx4x5VmS
+    jdsj-MQpBosKd6rg25yJyEeBw9EGbN9iuB6_32pOiC2Yrf-pzjkwRA>
+X-ME-Received: <xmr:a86VanwOtyp0lSPCr07mljQeuoMIlv-_XnaPT1XdJDNlUbR9dugeZwWij9duwW86GVODzofnD0tE9qF_aXKc7WvEC6RxyZoWCg>
+X-ME-Proxy-Cause: dmFkZTGU75+kVLYNZk2piXWQue4igNIC0R3gkxxKo/8pos9r+KQ/reWfV4Bi6WmSx4r0Pc
+    mN4HJGLJAYqwZLNWBK5Gawf/LWEkrQSQoK/xHdY/5r0sYBqzX+orAopO0M9cn/OxGAuNlu
+    wfgl0ThIB8pOnP7EHGhktTZrheElo2KtOJnD6W+c6I36s/6kpu244oPTYm5eKlp7mmy3FW
+    stlg6XKLyU1WMVAE5sA9kcsCqpg3+fgk8o62JbcJXZwyvSfF9SROlOQTqzfYidJeIYulI9
+    UxaB7tZFeuki/uOkl+Wb3h0VYxzEQdeJDUoNoi51dxeny5GSeLRruduQDS51ujLs4+dXUr
+    rcoxgleuZRbUvU/ik1jHQwFcPiXfrMu/FjsAP8lPTCsHTTKvKaULI1jvEcQSM/qcD1dVgo
+    ZxPG5H/yFyvX6+BB7X5dU/ipQ9dgGGh0jxV1Tx6G2HXIhanXqtDRhhM9iMLB++mkmoXWjU
+    P8oBw2AAw9pn2/vLpU5Fq+rxAx96xm0IEC89fEGjbvJ68nsyb+S68Yar2UopalNMy/C2CJ
+    KXNbOEHfZq4bJlJGYCJswEj2pfPMgnYoJidqcEcZHbis1DyuaQrLv9N4Gpv13LxETZyhJd
+    sb4jr09zUEaXiXOvKfk34vbLRJGDUpTTEnR2K0lUnF7gKcnmbZgEtxv0zE6w
+X-ME-Proxy: <xmx:a86VanAWD3IiFplG2zbIZVRlplNLy2RXcM9u-hm7xJkpo73AZ-NaQA>
+    <xmx:a86VakapNlikjJArrbKVOoMAGJZmB2fHVnPAaf7q2aHKBYYlIcoSQA>
+    <xmx:a86Vavh3dHYMVizYNQhmdHmiWhP9TJV60dxcyac7iKmQSFQmbsuwjA>
+    <xmx:a86Vam7u0imxoj2rVsSRYSXkNKojMvnjrR02EHaBDMq5XtV4fAhP1w>
+    <xmx:a86Vanr-ab3shFVfH5xOyiBj_LJUp2tlX2e-eHyyILGof04UefkHlIcO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 31 Aug 2026 14:56:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/4] worktree add: let worktree_basename() return string
+ copy
+In-Reply-To: <xmqqjypdj6g4.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	26 Aug 2026 07:35:07 -0700")
+References: <20260825180350.2099-1-l.s.r@web.de>
+	<20260825180350.2099-5-l.s.r@web.de> <xmqqld9uklud.fsf@gitster.g>
+	<18e65a59-2d33-4f47-a5eb-ca5971cec482@web.de>
+	<xmqqjypdj6g4.fsf@gitster.g>
+Date: Mon, 31 Aug 2026 11:56:41 -0700
+Message-ID: <xmqqfqzuw23a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260901-typo-fix-v2-1-6aeafbae6389@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22Myw6CMBBFf4XM2jHt+Gjjyv8wLCqMMIlQ0hIiI
- f13R9bu7jm5ORtkTsIZbtUGiRfJEkcFOlTQ9GHsGKVVBjJ0NZ48zusU8SUfdGSfzlnndIDep8S
- q99SjVu4lzzGte3mxP/snsli0SGf2JnjH7eV074Yg72MTB6hLKV96jhyeoAAAAA==
-X-Change-ID: 20260828-typo-fix-721b77177721
-To: git@vger.kernel.org
-Cc: Hardik Kumar <hardikxk@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788201904; l=1396;
- i=hardikxk@gmail.com; s=20260827; h=from:subject:message-id;
- bh=44U8TQS3imRqLPeQeMD51BhGHmQ//MM/5hyIlOkzyvU=;
- b=p1mXzcvZ2Z4DfPUFLhLvyX0BVifnnZQiKFo6DbvqT/B1apViiDbhwCuhWY0sgW8ZjL1SWzwcx
- bXBVJWzqtAoBRNcwQ0+yW75sWtrSFgxZSdWbPET414bUsf6W7mzzaZs
-X-Developer-Key: i=hardikxk@gmail.com; a=ed25519;
- pk=56yFuFlLHAdRemUZghoGHVCijEX767atrut3dPD0thQ=
+Content-Type: text/plain
 
-The patch fixes two typos in two places.
-versoncmp.c:            "fractionnal" -> "fractional"
-t/t0022-crlf-rename.sh: "similiarity" -> "similarity"
+Junio C Hamano <gitster@pobox.com> writes:
 
-No functional changes, only update a comment and a test_description.
+>>> So going back to the confusing part of the log message,
+>>> 
+>>>     Remind ... to worktree_basename_dup().  Among the three callers
+>>>     of worktree_basename(), two immediately make copies of the
+>>>     returned string before using and freeing it, which makes for an
+>>>     easy conversion.  Convert the other one from resetting ...
+>>> 
+>>> or something like that, perhaps?
+>>
+>> Yes.
+>
+> Thanks.  We do not know if other parts of the series gets more
+> serious reviews that necessitates an updated version, so in the
+> meantime I'll reword what I have locally.
 
-Signed-off-by: Hardik Kumar <hardikxk@gmail.com>
----
-Changes in v2:
-- refactor commit message
-- Link to v1: https://lore.kernel.org/r/20260828-typo-fix-v1-1-24e80a87ed53@gmail.com
----
- t/t0022-crlf-rename.sh | 2 +-
- versioncmp.c           | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
-index 9bd863a970..328c6e5903 100755
---- a/t/t0022-crlf-rename.sh
-+++ b/t/t0022-crlf-rename.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- 
--test_description='ignore CR in CRLF sequence while computing similiarity'
-+test_description='ignore CR in CRLF sequence while computing similarity'
- 
- . ./test-lib.sh
- 
-diff --git a/versioncmp.c b/versioncmp.c
-index 3a81b17bc1..f1e451755a 100644
---- a/versioncmp.c
-+++ b/versioncmp.c
-@@ -15,7 +15,7 @@
- 
- /*
-  * states: S_N: normal, S_I: comparing integral part, S_F: comparing
-- * fractionnal parts, S_Z: idem but with leading Zeroes only
-+ * fractional parts, S_Z: idem but with leading Zeroes only
-  */
- #define  S_N    0x0
- #define  S_I    0x3
-
----
-base-commit: f78ce2f7b6df702f93d40b85d6bda92a3f65da79
-change-id: 20260828-typo-fix-721b77177721
-
+And nothing happened since then.  As the topic was in a good shape
+except for the confusing part of the log, which we amended in my
+tree already, let's mark the topic for 'next'.
