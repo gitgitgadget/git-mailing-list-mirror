@@ -1,169 +1,157 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0FF36F8F0
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 14:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3433932F0
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 14:51:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788187683; cv=none; b=bY+zAb7d4smznQ6Mt0MNaqZne2i39eyY2w18QRdnKdovtBbzPe4HXJOmwFHXJGKFMhunHs/G+jOFiuKwFsn3USHfNnynYjk0tv5tl4Xl6ykEx6l66vMwQDDlTJj1+bPQBiLF/vJGSMyBRkxHYIyT1LGs/lkQAoqc7IQ4PI/1geE=
+	t=1788187864; cv=none; b=cvdamVyWfhNwlq+TFV8wSuW6F/0WahTB9ysHDFoqhJMfr3tVLXRWLTRh+cfdl7eOZdYBaL8PL3VXYI652hFVLAqP/+aMSzOAHet96JoJ4U7iEBg4aAZndB4DetqhH/B5dxhb2QrRri4dC1Zgj7/QZ43qcLjiR5LWVpMr4cdAvPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788187683; c=relaxed/simple;
-	bh=bdL/fbrU7gkgLvLenaB4Gnqmr7EuUSersj5J3XgBIzk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f7QafDSj2tEzxTN3GUfKJ+NYB3uaYV1OZeNZTwZJ3eijDhaxs3n4EBS+82lKqKtQBbwZv3TVLbdfq2PpDr8yaVqy4ODmukh//GEC8QPCnyT4wPLxnlGHDdLFc8b4IyT5Wf58HiS5oVWdZol5qyFJr4ZCDRHgZjyXfzXm9Xvr6PY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QdUULI8r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iZZ8RvhH; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1788187864; c=relaxed/simple;
+	bh=3whTvkR538Y+mT6bafm+sHjLA+u8mRKyolMd+tMq0dY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lSjQLmQL3Bhfw9ZuGZZrB6PerlM1fkUS6kMmrWQ+ahsy/8IR7uuOxoh0nv3aEY+nt8m6Rx92zTMvRA/jwnw75v6Hzs7fJ/z1MsGk9vb1kFuBvdEE+pJ9a5fUcV+4TtlQVO7OuwtotGRAbXjZRyIuL1FIc02T5rcduVUikD+gJ98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oy7bMhQt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y6Bq3XSD; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QdUULI8r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iZZ8RvhH"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 030BD1400154;
-	Mon, 31 Aug 2026 10:48:01 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 31 Aug 2026 10:48:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788187680;
-	 x=1788274080; bh=rMuKXOMJdZtJpQlWGymi2MV0NxdVcr2qWPzmDWjoV50=; b=
-	QdUULI8rcSyVAyq06l5hPg/FJawyN7CqmPcVZU+MX12/+gIWhMvlejKLj4DAwzJC
-	3DcxZHGPnupZJ4QaElp5CNBqCwhmxstur13r+0GAA+FJMEEFEI8pgPDhh5OLsO87
-	ly43VqlfpsRjjtoGs0YO1+R+9+kXxpZu7p6vYcNUW/VMBhslQF0oJX3MhtqoqwhI
-	fLSelNnGc/r1OWadfLwx26qFXtizuekS7BNDRZKZFywXy1gD+6QnrAJ//f5IK9vJ
-	szDXndtxPMaYfGTS/YkK8WWvaWPsr3XsP0j9qiO2Iqw+dvBXewMpni/iWVxnpQor
-	DkyWQONInQzI3UOAivy22Q==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oy7bMhQt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y6Bq3XSD"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id D8DC01D00199;
+	Mon, 31 Aug 2026 10:51:01 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Mon, 31 Aug 2026 10:51:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788187861; x=1788274261; bh=qM+n4GiZDH
+	ilJngLOASAgfMS42UdEoMV55CSSmgNjD4=; b=oy7bMhQtL9UoS2D6j99qQssbO3
+	s7NUh+VWUC0caXPV0a63Xu2PapY0XZa4FTfBIWLCzXFpJHmJxsRwaxQ4R6pA23E8
+	fC0s909iRVPZXt1NEjC3ftFOaALPsj7BD7GUdaJ9UDYe9fqykEouBH5l6B8B28PB
+	1t/esqfCWJjFUS9Aj7ODWGTnuiONGB3EVsP2LYG0a/PoLRKCSsXqCI3gxMQWx+ZQ
+	zVHiEj/RE194cccLuFKicocY6oIIolcPm8yCnW7kpLMlbi8tXgERnxWnxJngm+cV
+	SpfSOYpd+uUPuAhUgZoI/omeS7Ot316BSmQYikH56BAx7CNVPNY/Pn10rEFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788187680; x=
-	1788274080; bh=rMuKXOMJdZtJpQlWGymi2MV0NxdVcr2qWPzmDWjoV50=; b=i
-	ZZ8RvhHCVzTbS8x57b74On34FBMcbhLOPA+dWDZHE2lC55t7zBPaZt/rHHDr5TMl
-	vJtec30pr9VdiISRhPNVw6B9dGVX0xe+RyH4FDfCCZR6p9B1Dc6YkVKlR4dIPxNy
-	yUYh/p4boPspFhdYePa14ybF0DyQ6Jo26NPTZHNIAxkVbRpx61wsTrcNoZeAWHHM
-	ydGLeXG0uZZ1cjN3p4QuZCCr4AXqMVV69BbWfmeh/vNKAKn6HMEr5luT9pBEtps1
-	3xHo/+on2gafAhuHR+t+cpltN21/zq/TRc2GKa0TLDtPTKC0Ui9OKuvGz5zR+1Pc
-	LLKDXOkfbqi5DISATD90A==
-X-ME-Sender: <xms:IJSVah4p01JymT5HTampqbYKnKahe4CngDXZ1tSHp2b2XwapJaLLDA>
-    <xme:IJSVaim38t2Xg8hxtlU-1UYhyqdkIq92obLB_dfAgx35mlKzjpRDBWNvl1Hcs1zMw
-    HOWsXDiIMHk9jylLKuOJ0h0yF_u7-dd_Qg9sBxAZbme3BwEtuynmw>
-X-ME-Received: <xmr:IJSVaiQtdkFiXQ_va-OnXH2b7XiprWzR2TBBRjLamnRUwmWmIO-SqWDBybNC7mOdXqpiYw>
-X-ME-Proxy-Cause: dmFkZTEY4gBnCHm9OnPGstjPACE4XUN1RkL/GA1EZoi3itt5B67BPt2yVcD6P7W2NFgdlI
-    Oo00TnxBDPbOeVvcdf104ZmDSrmfYtK29Y+FTj34LtUiahgj92PBvpvnZNUJACyEodcIqg
-    yR1gc8ZZaJK+jSEGqdSSqiPxytdeoHludUlqpLtmeV81sHYzqO6Lb1k8Kcfg/Y0pUBrZ3S
-    IRonQe+m51SI3I1cMSXXiJNh3axyiCyWgFWIEq/LRrPpBqcIgNglcCkieeAJ4bZ8wDiVrd
-    mBqms7GOzAPiZlW+mM2BsU9lP7EWKTKbIpqbP48GljTIHql5+n+uFF/4mtjReLzC87A/Dc
-    JFhlDRZQixV/xPEsa76XSerAYQb+QEFDYSogI5IRbw0fcOvFZ5AP1d7VGpI6BrT65RB77x
-    VOycDgUixRXXtMjtTZGILfMMA9h7wP92PjWcg4uHJ+HHuEvc76d7m7jysLoOn1HXY4BqDt
-    yZPRk9mBf+1b4nGGfvVs3nIX9zLBCkvz16BN4c47zuHHqCpKweFMgtEJykD5ngmr+erMcs
-    X9tb9NDgUliGj0tpqr0hSgOeLYMn+RPdnN180dh8U0NxQKKqawhrhaGQrhheZLNKSSB2jV
-    I7Wexsqh3wIiMKSCK0lDSYmoi2c1xsfK8td/KyqLbIYBs7Wm4mOKt8EYhtiA
-X-ME-Proxy: <xmx:IJSVahEA_cTxGIKArnRDb-J-4bu0p7W2MyVBgVV5OpqBVzAQtmvxkA>
-    <xmx:IJSVanEc6mHO1usmaOkwl1qIBoRCqR-Z1aF-cu66CGQWHYOV9wetsQ>
-    <xmx:IJSVavTAl8v8jWvo62QYVAdcJaUtiRnLTvTSDzIXW1wREoSF9PLAHQ>
-    <xmx:IJSVaoLW8I2MneoV51hWiICDXMDme6A6cZHPz6wfet536jB1Lh99EQ>
-    <xmx:IJSVauFEiMCjmk9SnLCzXAr-002DJRAlCmOu-0wfDyynpgf_7WSDmCnV>
-Feedback-ID: i197146af:Fastmail
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788187861; x=1788274261; bh=qM+n4GiZDHilJngLOASAgfMS42UdEoMV55C
+	SSmgNjD4=; b=Y6Bq3XSDRNdy1nBF7xivmAQJERXzYoJfOICwOpMk/kAQf3Sej8R
+	ZN/n0aZETDQfDJNw39qV7W1Pf+g+m5ZMAwXWy70LlGWLFGeoV+5qxHSbH3FZknhg
+	Y8Cz4ivYFEts1chfyX2knYOkXROPMGO0ZottWgBctwWsG4pkcnIg+Fkz3DrgpmrC
+	32ZpJHDmg5nm4ZdHiyaqbHtu74CjhTwUaQJdzJGN3T7OSgaAILR+fvfN7UYyCXx5
+	i/4N6vXrnRsSIc4oSr4Y38Yv1UXnd/oJrXseLd13h0ZgizrP2DvohYy8jEXdu1AZ
+	bhHSo9uAx2MBcY05nuJMY0qxc4ujkE/jTwQ==
+X-ME-Sender: <xms:1ZSVagHG8lXlZ1bEP4OKpPe2dYGXH3rxD3WsyJHwQ68EmTUglqEgeQ>
+    <xme:1ZSVagMbXDjrprZlG3zY53cvj8xY8Zs8eg6NXmepGxbZEMtg2K3O07TKvd_eq1mbK
+    UIN4gvRUptKVndU6B86dzUzlcCZQW9ZN1AypzWvSUpos_2mbvTx7mM>
+X-ME-Received: <xmr:1ZSVaifFUuMy-41spzRhUmvz7kNGMqY6Zt85d1zm_VkekrHGGtml4hrN7mC3JzialWV8SvA_Kcw8M27v2WqZonC8uKp8BdTqDw>
+X-ME-Proxy-Cause: dmFkZTErQx9FaKpd4P3miIGnfHneEAtzC5HFjhD2T1rKu+TRVcjKyXitlSbT2WfcQ8KBWp
+    zK8Mv3OoMCB4KKO5r6FCq95jpyV1aJQsXmMF3szzJopPzhedDnTKci1OU3e6bO8Uw+5Q2U
+    XIeAGTrKLjcLZDWqta1sleXy51hrfmfM/IVVnX08EZZIXe7D2ey+GNPY2xHnK5o/tZk9VX
+    rF++2sChs0Ibtbp8enfBGHaP/UxLF5+WxkjUG5b0dU3BbizT5R+2lVX5NynLX7p4xXe9Dg
+    6HmAq8uvsqQ4EoYk4+U//VNoUcF9Cs1PNfgaqaszwMMtmY1eXXaI7em5MHFyFhGen1tpuE
+    m6tNk4eL7/gZ4i2vSnCtE6Dq11pna0eJjnlz1cr+hvYiia3I7HeVeY0nCvT6KK6qvy312S
+    A8uJ685WRCVs9KldqL/WfKkk5Orh/O8NmXfInSrLXdrwsdSaXf7On0x8q9WwPSlfNNDgwo
+    zJT4GJ3cLNKLyfrRRsJTp2vBoHmDQDl8l69zHEWmUV3+HNCQLagEP4UuUtow/JRz42kqBk
+    V6BeBZq1G1taavFniUa7za06sucvrzbsLYWT0OtuXsj7HgClzOgilrMYvn7BQVuhnW63WM
+    HEs2P/bGzliQdNbCNV9gzo123p00kP1xZnkBi2tZ2jOGs34B9mJJ9XOz5v3A
+X-ME-Proxy: <xmx:1ZSVatsl9D5iW1Vy4K4mIVl_fWQQe9BvbLXyjXgly1RZOpHg1HD1QQ>
+    <xmx:1ZSVajmd8CwfDOSuqSxpcFjHpqfm6cDAco7c5e6A0ecr5K-_5TnyxA>
+    <xmx:1ZSVavyAPLK4xt7M7N5dKw5mTYrD2fmzsIhwqbDZRNgh0tKeU4cyng>
+    <xmx:1ZSValObLgYhfp5ox3LIeV9-AeTA1Lc-__dGGzvPNZ0k4TJGRRlk3g>
+    <xmx:1ZSVas9HzwEM79NPaA989TMogn4RpemBiuP5dlVx_tOw7qIHKohe1GvZ>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Aug 2026 10:47:59 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id be6dc847 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Aug 2026 14:48:08 +0000 (UTC)
-Date: Mon, 31 Aug 2026 16:47:53 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Olamide Caleb Bello <belkid98@gmail.com>,
-	Todd Zullinger <tmz@pobox.com>, Tian Yuchen <cat@malon.dev>
-Subject: Re: [PATCH v5 3/3] core: convert build-time USE_NSEC into runtime
- core.useNanosec
-Message-ID: <apWUGfzQxx7vArpo@pks.im>
-References: <cover.1787231825.git.ben.knoble@gmail.com>
- <cover.1788010335.git.ben.knoble@gmail.com>
- <01cd487cd23f23b1d18359b86fbcf18e25039e6d.1788010335.git.ben.knoble@gmail.com>
- <xmqq8q5n1fa2.fsf@gitster.g>
- <CALnO6CBejkZTgPM9tK6TEGeNYSRfi9r2-xi7R4ckTsRm4ZGaQw@mail.gmail.com>
- <apVJAzddTPPCI7kA@pks.im>
- <CALnO6CCNwXC1_PUCTWEU-HXBk+W+sBGqn7Sr8D=ZHW3Mxcu20g@mail.gmail.com>
+ 31 Aug 2026 10:51:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
+Subject: Re: [PATCH v3 2/3] t/lib-httpd: make http-429 first-request check
+ atomic
+In-Reply-To: <apUqs8N3EnTFngyQ@pks.im> (Patrick Steinhardt's message of "Mon,
+	31 Aug 2026 09:18:11 +0200")
+References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
+	<pull.2171.v3.git.1786583137.gitgitgadget@gmail.com>
+	<8ed22c02a192e10ab46c7df61e92a3669faaf25a.1786583137.git.gitgitgadget@gmail.com>
+	<apUqs8N3EnTFngyQ@pks.im>
+Date: Mon, 31 Aug 2026 07:50:59 -0700
+Message-ID: <xmqq33vuz6lo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CCNwXC1_PUCTWEU-HXBk+W+sBGqn7Sr8D=ZHW3Mxcu20g@mail.gmail.com>
+Content-Type: text/plain
 
-On Mon, Aug 31, 2026 at 08:57:49AM -0400, D. Ben Knoble wrote:
-> On Mon, Aug 31, 2026 at 5:27 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > On Sun, Aug 30, 2026 at 08:27:13PM -0400, D. Ben Knoble wrote:
-> > > On Sun, Aug 30, 2026 at 5:15 PM Junio C Hamano <gitster@pobox.com> wrote:
-[snip]
-> > > I would happily prove that at least none of our existing tests fail
-> > > with core.useNanosec=true, but I'm not really sure how to shove
-> > > configuration into every test invocation of git. Even if we could, I'm
-> > > not sure we necessarily want to add another CI job for that (though
-> > > that's a separate matter).
-> > >
-> > > In particular, (among others) I have not received any concrete comments
-> > for
-> > >
-> > > > Comments welcome: I haven't touched any tests; I saw a bunch of hits
-> > for
-> > > > "git grep racy t" but wasn't sure how to fit this particular change in,
-> > > > especially since it won't be equally valid on all systems? Advice
-> > > > welcome.
-> > >
-> > > so if there's at least a way to exercise this path on all the tests on
-> > > my system (which should support it), that would probably be a good
-> > > thing.
-> >
-> > Yeah, I simply don't have a good answer here. It's messy, and I'm not a
-> > fan of the current direction of `repo_config_values()` because nobody
-> > has yet stepped up to untangle it from `the_repository`. I gave it a
-> > quick shot at one point in time, but the result was messy at best
-> > because of how we populate it via `repo_config(git_default_config)`.
-> >
-> 
-> I took a quick look (being unfamiliar), and yeah, it does seem pretty
-> tangled. I suppose one way to go about it would be to have repo_config()
-> forward the repository argument through configset_iter to the config_fn_t
-> callback? I'm a bit surprised (leaving aside how pervasive the_repository
-> is otherwise) to see it doesn't already do that :)
-> 
-> Is that the approach you took? Or, where else did you feel hung up about
-> the resulting code? Just wondering.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Yeah, that's what I did. I don't quite remember what was awkward about
-it though. It might've been that callers have to be aware whether a repo
-is initialized, and whether it has all info to be able to read its own
-configuration? Or I was trying to make it auto-lazy-load or something
-like that, but because our config subsystem is so fragile that led to
-lots of weird edge cases.
+> On Thu, Aug 13, 2026 at 01:05:35AM +0000, Michael Montalbo via GitGitGadget wrote:
+>> From: Michael Montalbo <mmontalbo@gmail.com>
+>> 
+>> http-429.sh returns 429 to the first request for an endpoint and
+>> forwards later ones to git-http-backend so the retry succeeds. It
+>> remembers that it has already answered 429 by checking for a shared
+>> state file with "test -f" and creating it with "touch".
+>> 
+>> That "check-and-set" is not atomic. Apache runs the CGI for several
+>> requests at once, so two of them can pass the "test -f" before either
+>> "touch"es the file, and both then answer as the first request. The
+>> retry flow is mostly sequential, so this has not been observed to fail,
+>> but the race is latent. Replace the check and the "touch" with a single
+>> atomic "mkdir", which fails if the directory already exists, so exactly
+>> one of the concurrent requests is rate-limited and the rest are
+>> forwarded.
+>> 
+>> The "permanent" mode needs one extra step, for correctness rather than
+>> tidiness. The marker means "429 already served, now forward", so it must
+>> never be visible to a request that must itself return 429. Since
+>> "permanent" returns 429 to every request, it must leave no marker. The
+>> original did not manage this. It ran the "touch" unconditionally and
+>> removed the file with "rm -f" in the "permanent" case, and that
+>> "create-then-remove" has the same racy window: a concurrent "permanent"
+>> request can see the marker before the "rm -f" and be wrongly forwarded.
+>> Skipping the "mkdir" entirely for "permanent" (the "!= permanent" guard)
+>> leaves no marker at all, so every "permanent" request rate-limits.
+>> 
+>> There is no regression test. The check and the set are adjacent commands
+>> with nothing in between to synchronize on, so the overlap cannot be
+>> forced deterministically, only reproduced by chance; the fix is
+>> preventive.
+>
+> A lot of AI-fluff in this message that could have otherwise been much
+> briefer, but okay.
 
-Sometimes I really wonder whether that whole caching layer is even worth
-it. We already store the configuration as part of the configset, so
-caching the parsed values probably does not buy us a lot. For some very
-central aspects like the bareness of a repository or the location of the
-worktree it probably even makes sense, but for everything else... I
-dunno. By now I feel like it would make more sense there to find
-localized solutions specific to subsystems instead of having that one
-big global struct that has weird semantics.
+I too find it disturbing it that the messages from this author tends
+to contain material that triggers "it may not be wrong, but is it
+relevant?" reactions.  More does not mean better.
 
-> > In any case, if we see that your changes interact badly with some edge
-> > cases that we don't currently have on our radar then we can still
-> > refactor the series and move the value into `struct repo_settings`
-> > instead, as that structure works alright with different repositories.
-> 
-> This sounds reasonable to me. If nothing else, this series might become
-> good motivation to untangle repo_config_values…
-> 
-> Sounds to me like we might be ready for 'next'?
+The above made me curious enough to ask a near-by Gemini to distill
+it down to quarter of the original length without losing essense of
+the original.
 
-Works for me.
+    http-429.sh marks that a 429 response was served by creating a
+    state file with "test -f" and "touch".  This check-and-set
+    sequence is not atomic and can race under concurrent Apache
+    requests, causing multiple requests to claim first-arrival
+    status.
 
-Patrick
+    Replace the check and "touch" with an atomic "mkdir", which
+    fails if the directory already exists.  In "permanent" mode,
+    skip the "mkdir" entirely so no state marker is ever created.
+
+    Omit a regression test, as this concurrency window cannot be
+    forced deterministically without artificial synchronization
+    points.
+
+This seems readable enough to me, but may still need some manual
+clean-up, but this experiment told me that "A lot of AI-fluff" is
+not something users cannot avoid without some extra work.
+
+Thanks.
+
