@@ -1,69 +1,71 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9583C45C700
-	for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:25:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8D8471274
+	for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:25:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788197147; cv=none; b=JoW3D5+r+t+NPpweuWmrl1L4Ztt6C7kHQEeEOlckY58CXfpz5J5S2mE2YIKwZ+SAVWg+Pkt7uSsqHcdd9yDzfZvyuefLUNTHS0ZlqUGnzuvo4mENUlXPI5erGT+GUSITru8V9y5Nn45QqReZs6AG5WdOKKWwz2rKS9rPwGiRxyY=
+	t=1788197148; cv=none; b=RAt7vr1SWQ+7NKmnk8MIVAf8O2dK3njKdz4IeIU4JNfMti9wisgrdJAyOGlJownHCUT4NafNzAtyPb19i9KR+k9dRIpyCym8XqV4wiK3/dBCoKJlLZxYrQOFZhfIYyhRoyF52no14BUt7WCnOzk8Q/PXfL+vBJ7xTD7iP5jBgjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788197147; c=relaxed/simple;
-	bh=2ovwkc6HBABX6A5KBKrpwWXPG5atESsb+RsdtrXof/Q=;
+	s=arc-20240116; t=1788197148; c=relaxed/simple;
+	bh=2G5WncU4EFYSz93WkkqXLD6iBGdVrXrfOreuWtT/8DU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Em9d/RUoxoRzkQHlmT7j7eEXTXGaL8e6ggoobIDpbWL4XxRlX7eHSImRUyDQfX/erVEPl8tw6F1jNGWdkxHHq1V+x8TodQpZ/lS67buNO7cmA5u43Q926B7xBExY6VBx/PLDmymtWqIh2zL1yzZslLqkaCGes4Re46r64mxDkK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PA+GD7Oa; arc=none smtp.client-ip=209.85.160.170
+	 MIME-Version:To:Cc; b=BUsSMxq863+J0hr4yws1TIwBhcOA6tm66a+hShY/Fim9gryTXHkqkc9ZBwIgF5YRvR0eP2P94o3q3J7iAKVFpIoA7/GkAeo30wH2uHFMNkhTt0k173Wk2/GLDHqRUUpVhLtayNpbZ07f08PABdIVYYZ6F5EIQi05JmXIhMAq4OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=okZXPWUo; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PA+GD7Oa"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-530187593e0so1355471cf.1
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 10:25:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="okZXPWUo"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-90e8095621eso18037296d6.1
+        for <git@vger.kernel.org>; Mon, 31 Aug 2026 10:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788197144; x=1788801944; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788197145; x=1788801945; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=E4UBUjPI4oeYs5u+kf1SnNxZqGbrpmyS9dm8AO5eStU=;
-        b=PA+GD7OakuG2fv0lTMzmrCvPAvNecTkk3qmzbK739iBoB7iBpu1phjdiTK4p+tahVd
-         KJ0GFcxtHWNQCtbfWqFrqC9cpHCrQh8nSDunJSlm+IcWQLB43SPWzgsEgBOR3agPDXoW
-         H0tUIaP+OBCYDeZt5rMVuu2/rYT9kyhug5CToanoPCRt9F/C+H3/nuj9FYPRUeLhyL9C
-         /nXfLXbyGrqhig8ucMF8+ac5urnZ1yzilbTfYqvRD2gZO5d9uptJ3OTQmnJcnWzMMjAt
-         wpyJ38GgsAw73MHzzT/TBHxiFhUPQ6eYM4hYWYBS3hLiJ3kz+1zkveeUadls+hWWxSR9
-         O6Yg==
+        bh=prxZcGdNpmvxn5rXRHkaWFQGPch3Y6lNfyWfPVzcCcA=;
+        b=okZXPWUoBtnv0OlmEkWLr6XAnJuXJwxYLBDzAZ8FMlJ+aIH6XmNt2w5AVefzEbcnw8
+         di0LIJIDlz28BJxLEJaqzdq7DPOXjm9rD9lvCGSwBejhGF8dYbIZcGqRK00FrTZQJ3iN
+         6cAR66RzPl2laRekxLcSGnAZIhm0LpItxurptNtiZmfREHsBoX4wkydy0iDX6cx1sLfc
+         fMDgYaIXbUwsbUid9rJDFDlDODz/qnBgf6BO8MJCmc2YOaN6vdqunjo999t7yl8g+M29
+         voLgDcJEy5Oly9OcSY4MMA65GorghgzWxdhyd7pWj9ZG2rw9dHJQgIfI/3rvBFLWqR0i
+         aVrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788197144; x=1788801944;
+        d=1e100.net; s=20251104; t=1788197145; x=1788801945;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=E4UBUjPI4oeYs5u+kf1SnNxZqGbrpmyS9dm8AO5eStU=;
-        b=VauLuLYCUUCx3FryV0aH3CqIYeW8JAhtPSW/qIpmV1OzI3C60UWEgq4ZfeN77wGwW2
-         n31L2KZV6caRwUiSvDe0QfpoxzNfn5EpIF8w4ReQ69YCCrPwCfIYWOOw/A5EPuX7HT3g
-         +LtgWr4KiONRUnPz9ElE1fBKMPDVBBSOMybvK13fXp2i2mY1iP4H1GzDvWX308AnLNSV
-         LFPFzD/O3cs+num7Jg63sNIJMK8zXoq7Ef+PWLIoxa2UjFgMmo9Z0JnWalanNJRbHMVT
-         7jZuKIXy/a44s2fciSeqMPlOu6NK3UwvC+gUdnfZluDAa9zcicaSgd0q8bb4wEdo1bC8
-         LcrQ==
-X-Gm-Message-State: AFuF++lwH+pA5cRw8LMawZmzIlbGU2VrvLzjscSaUTqkkbtMMKzcnRXk
-	OU4KB7xFfK0hAC6k+JXev3gfdCdOy/N1bpKAsJJaYr/5old9FlVjpmMVLNHVKQ==
-X-Gm-Gg: AR+sD12p8U5JTxBqc8BaPAr6UhIIlzgQxr8xyfsjPHaQQaxCgmJsxFgXAOKnGog+cgh
-	SDIwegshlXtIf9CE49dpGklWM6YlX0nU4vpZVfw1cc8oiSDOSAT58wb1mOjakCQ1uRPkJB7MJNY
-	S/wBpG/IQY0uvhjPEVfvlEtGFT7jv1XaYFyKD5D/nZUaUwfNbXqTakjVScTY4ihBnQy/3/HMS+I
-	gnfwq1B1SWWCCc2xEHFIWtKm9T0TU3jQtJrHoK6IU8yRh+df4XRgvjVU9Koe/48BMvzVeNAw5Nk
-	yEY6MgyFqqY0w6hq21inbUsI+S40M2WnzJ3B1/8oKYyPsV79HfLJXYIedk54iUaUVkUR6CEk2Ws
-	EhRoCHozypqODgPX/HFb8Um9W8wllBbpv5oSaSWTwFvtUNXp9ALPTW4WMFCIeIl4/FYCZUZ1dYG
-	HEo5evN97x/fJp0Vz9vuczmHb6J07U3GsmTPjDS5UBaZ8ilalVHluQgn3KnZZoPZcZ
-X-Received: by 2002:ac8:5a02:0:b0:52e:f66:f1a5 with SMTP id d75a77b69052e-5300b7568e3mr101863911cf.5.1788197144167;
-        Mon, 31 Aug 2026 10:25:44 -0700 (PDT)
+        bh=prxZcGdNpmvxn5rXRHkaWFQGPch3Y6lNfyWfPVzcCcA=;
+        b=SVQzkMP2QV9FmWCDMzFCbNnKNglPd7nmcMKmgtVcSIk1xweUWLxRrrrxbraQtwakze
+         Zqly6ehC0PwXOp+ETkZUmVXoMPSc+TuOEX3Q5fLfneq2WD0x/lfipF32+3Wau2ppt59A
+         QtoBdTqM3lvxV27haY5zkBPtBoyTZuENN54+UDYOPYqbXIArGqYTV8My1bRzAn7S4gb3
+         ykhrMKk3AtmAaBHTHELrYm7DEt7HmMkjFEAs0wAn98eMiCHd1NFsMSHaZbBbUOSabPGg
+         PXEPHmlfINkuz3ceRuZCi8UzN9DXQt3SpJWqwlyJteXahNdnLuujx8382ER0IIlUO6oK
+         P/GA==
+X-Gm-Message-State: AFuF++kjQG+rSFGFR1gDo8YyKjLUbPSC126gmigtruNNlzPhaJuFKb2J
+	GMMqtjAZiqxWNvKVUvdBXe5xrE3rqpvWJhUKRV03n04wMuJpMbtkbZwHZh68mcc5
+X-Gm-Gg: AR+sD10LTWcAwwZRzPk4VTVNpRqBcb86hpGhyGViaq6lEdDAobakDjs78FpBhLhCXH8
+	ZLuH5tMh4dFUArjbtr39AjTnLKo9yLeKO83rJe4/m29/EUa+OuugvdsMqiwylBf8jpre9Tuceq4
+	vFsscaFhhPHUwGoXjMhO+pfEnC/PZ3FG9ZNAPJwYi3d+8946MKQTK5Tx2+hBSl1MJPeGMUHlPC5
+	Z6AcN4vlQAseRsxCcmeN44HXbhOEamre1QEFY7DAYRcgkwhmTBS+ZH3tQIE+FGT6Z1hmSeiTauO
+	lSmgEUIH8JIVDTEn8CnJ9Pd21sKFX7/lRsg5vYgNcUoceUiood3oGu5s8SwHAg8ZO785RxbdLoE
+	VD3+j5sNclz6jkFOkZqzULvURhi3zF67/HgQnKbN9BKX3H5g3RcxRhflbYznGzJA2Ocu9J82Ipw
+	UYSAEZTnCVCR1MzeptHOMPe5rAY7bfdqSm6BRCxGuiZqbE0RkILuBnztvjbmF6p9drYstjlenK/
+	Ic=
+X-Received: by 2002:ad4:5f0d:0:b0:8f0:3b2c:a9c8 with SMTP id 6a1803df08f44-90e9292ddebmr36833206d6.12.1788197145141;
+        Mon, 31 Aug 2026 10:25:45 -0700 (PDT)
 Received: from [127.0.0.1] ([172.174.223.96])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-52fbe7fbe06sm77336341cf.17.2026.08.31.10.25.43
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90ce44f5157sm88896426d6.24.2026.08.31.10.25.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 10:25:43 -0700 (PDT)
-Message-Id: <pull.2178.v3.git.1788197143.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+        Mon, 31 Aug 2026 10:25:44 -0700 (PDT)
+Message-Id: <c483a4bf764c47ee2c7f715ff8143196cac73b9b.1788197143.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2178.v3.git.1788197143.gitgitgadget@gmail.com>
 References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
+	<pull.2178.v3.git.1788197143.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 31 Aug 2026 17:25:36 +0000
-Subject: [PATCH v3 0/7] trace2: stop allowing die()
+Date: Mon, 31 Aug 2026 17:25:37 +0000
+Subject: [PATCH v3 1/7] banned-die: create header for banning of functions
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,450 +80,234 @@ Cc: gitster@pobox.com,
     Taylor Blau <ttaylorr@openai.com>,
     Elijah Newren <newren@gmail.com>,
     Jeff King <peff@peff.net>,
+    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
-NOTE: this v3 is rebased onto a recent 'master' due to conflicts in a test
-script.
+From: Derrick Stolee <stolee@gmail.com>
 
-After v1 was posted, based on a concrete example of tracing leading to a
-recursive die() problem, more evidence has come up to imply that allocations
-are failing for some users more often. This is potentially an issue with the
-allocator chosen by Git for Windows, which is being discussed elsewhere.
+We have universally-banned functions listed in banned.h since
+c8af66ab8ad (automatically ban strcpy(), 2018-07-26), but some layers of
+the code should be more strict than others.
 
-But the conclusion is this: the trace2 API shouldn't call helpers that might
-call die(). It's too low-level for that.
+One such example is the trace2 API which runs during atexit() and can
+prove to cause die()-handler recursion problems if it calls die().
 
-In this v2, I have a much more robust approach to removing die() from the
-trace2 API.
+Create a new banned-die.h header file that will ban some Git methods
+that call die(). Include that in all trace2 API implementation files.
+This currently only bans die() itself, and that was already not used.
 
-This starts with a new banned-die.h header file at the root of the repo and
-including it from all trace2 API *.c files. It starts empty, but the later
-patches will add one method at a time:
+It would be reasonable to name this file trace2/tr2_banned.h to be
+specific to the trace2 API, but it seems like such a restriction would
+be valuable to put in some other areas of the code, so adding it at the
+root of the tree seems like a good long-term approach.
 
- * xsnprintf() : This is the original patch, but made more complete by
-   adding the method to banned-die.h.
- * xstrdup()
- * ALLOC_ARRAY()
- * xstrfmt()
- * ALLOC_GROW()
- * xcalloc()
-
-During each patch, the goal was to have the trace2 logic be "as correct as
-possible" when an allocation failure occurs. This may mean that we have
-incomplete messages or dropped trace messages.
-
-The focus here is that the trace2 API should never cause a process-ending
-failure, because those failures will trigger trace2 API calls while
-reporting the failure.
-
-
-Updates in V3
-=============
-
- * Peff correctly points out that this is far from complete, as the strbuf
-   library is not safe from die(). The banned-die.h provides incremental
-   demonstration that these changes are showing progress and preventing
-   regression in future changes, but not showing a complete picture. I will
-   start an investigation into a "safe" or "gentle" variant of the strbuf
-   API as a potential direction for these API layers.
- * The first patch had a lowercase banned() that should have been uppercase
-   BANNED().
- * A 'return -1' was replaced with 'return 0' to avoid a misleading error
-   message.
- * The ":<REDACTED>" string length was incorrect. This is fixed and tests
-   are improved to cover this string manipulation. These test changes
-   conflict with changes to use test_grep in 47f79f61983 (t: convert grep
-   assertions to test_grep, 2026-07-06), so this v3 is rebased onto
-   'master'.
- * Patch 6 was previously failing at runtime. The appropriate fix is pulled
-   out of patch 7 and into patch 6.
-
-Thanks, -Stolee
-
-Derrick Stolee (7):
-  banned-die: create header for banning of functions
-  trace2: tolerate failed timestamp formatting
-  trace2: remove use of xstrdup()
-  trace2: remove use of ALLOC_ARRAY()
-  trace2: remove use of xstrfmt()
-  trace2: remove use of ALLOC_GROW()
-  trace2: remove use of xcalloc()
-
- banned-die.h            | 32 +++++++++++++++++
- t/t0212-trace2-event.sh | 12 ++++---
- trace2.c                | 52 +++++++++++++++++++++++++---
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ banned-die.h            | 14 ++++++++++++++
+ trace2.c                |  2 ++
  trace2/tr2_cfg.c        |  2 ++
  trace2/tr2_cmd_name.c   |  2 ++
- trace2/tr2_ctr.c        | 12 ++++++-
+ trace2/tr2_ctr.c        |  2 ++
  trace2/tr2_dst.c        |  2 ++
  trace2/tr2_sid.c        |  2 ++
- trace2/tr2_sysenv.c     |  8 +++--
- trace2/tr2_tbuf.c       | 51 +++++++++++++++++++--------
+ trace2/tr2_sysenv.c     |  2 ++
+ trace2/tr2_tbuf.c       |  2 ++
  trace2/tr2_tgt_event.c  |  2 ++
  trace2/tr2_tgt_normal.c |  2 ++
  trace2/tr2_tgt_perf.c   |  2 ++
- trace2/tr2_tls.c        | 77 +++++++++++++++++++++++++++++++++++++++--
- trace2/tr2_tls.h        |  7 ++++
- trace2/tr2_tmr.c        | 16 +++++++--
- 16 files changed, 250 insertions(+), 31 deletions(-)
+ trace2/tr2_tls.c        |  2 ++
+ trace2/tr2_tmr.c        |  2 ++
+ 14 files changed, 40 insertions(+)
  create mode 100644 banned-die.h
 
-
-base-commit: c73e85354c275c9d409b26445089bc16940fc527
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2178%2Fderrickstolee%2Ftrace2-dont-die-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2178/derrickstolee/trace2-dont-die-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2178
-
-Range-diff vs v2:
-
- 1:  84634717e2 ! 1:  c483a4bf76 banned-die: create header for banning of functions
-     @@ banned-die.h (new)
-      + */
-      +
-      +#undef die
-     -+#define die banned(die)
-     ++#define die BANNED(die)
-      +
-      +#endif /* BANNED_DIE_H */
-      
-     @@ trace2.c
-       #include "trace2/tr2_tgt.h"
-       #include "trace2/tr2_tls.h"
-       #include "trace2/tr2_tmr.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       static int trace2_enabled;
-     @@ trace2/tr2_cfg.c
-       #include "trace2/tr2_cfg.h"
-       #include "trace2/tr2_sysenv.h"
-       #include "wildmatch.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       static struct string_list tr2_cfg_patterns = STRING_LIST_INIT_DUP;
-     @@ trace2/tr2_cmd_name.c
-       #include "git-compat-util.h"
-       #include "strbuf.h"
-       #include "trace2/tr2_cmd_name.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       #define TR2_ENVVAR_PARENT_NAME "GIT_TRACE2_PARENT_NAME"
-     @@ trace2/tr2_ctr.c
-       #include "trace2/tr2_tgt.h"
-       #include "trace2/tr2_tls.h"
-       #include "trace2/tr2_ctr.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       /*
-     @@ trace2/tr2_dst.c
-       #include "trace2/tr2_dst.h"
-       #include "trace2/tr2_sid.h"
-       #include "trace2/tr2_sysenv.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       /*
-     @@ trace2/tr2_sid.c
-       #include "strbuf.h"
-       #include "trace2/tr2_tbuf.h"
-       #include "trace2/tr2_sid.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       #define TR2_ENVVAR_PARENT_SID "GIT_TRACE2_PARENT_SID"
-     @@ trace2/tr2_sysenv.c
-       #include "config.h"
-       #include "dir.h"
-       #include "tr2_sysenv.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       /*
-     @@ trace2/tr2_tbuf.c
-      @@
-       #include "git-compat-util.h"
-       #include "tr2_tbuf.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       void tr2_tbuf_local_time(struct tr2_tbuf *tb)
-     @@ trace2/tr2_tgt_event.c
-       #include "trace2/tr2_tgt.h"
-       #include "trace2/tr2_tls.h"
-       #include "trace2/tr2_tmr.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       static struct tr2_dst tr2dst_event = {
-     @@ trace2/tr2_tgt_normal.c
-       #include "trace2/tr2_tgt.h"
-       #include "trace2/tr2_tls.h"
-       #include "trace2/tr2_tmr.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       static struct tr2_dst tr2dst_normal = {
-     @@ trace2/tr2_tgt_perf.c
-       #include "trace2/tr2_tgt.h"
-       #include "trace2/tr2_tls.h"
-       #include "trace2/tr2_tmr.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       static struct tr2_dst tr2dst_perf = {
-     @@ trace2/tr2_tls.c
-       #include "thread-utils.h"
-       #include "trace.h"
-       #include "trace2/tr2_tls.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       /*
-     @@ trace2/tr2_tmr.c
-       #include "trace2/tr2_tls.h"
-       #include "trace2/tr2_tmr.h"
-       #include "trace.h"
-     ++/* banned-die must be last. */
-      +#include "banned-die.h"
-       
-       #define MY_MAX(a, b) ((a) > (b) ? (a) : (b))
- 2:  bd45f46a34 ! 2:  754fffb74e trace2: tolerate failed timestamp formatting
-     @@ Commit message
-       ## banned-die.h ##
-      @@
-       #undef die
-     - #define die banned(die)
-     + #define die BANNED(die)
-       
-      +#undef xsnprintf
-      +#define xsnprintf(...) BANNED(xsnprintf)
- 3:  ec447a6a77 ! 3:  87d3f1b557 trace2: remove use of xstrdup()
-     @@ Commit message
-          trace2/tr2_sysenv.c.
-      
-          First, in tr2_sysenv_cb(), we need to handle a failed assignment of the
-     -    value with a negative return to halt the config parsing loop.
-     +    value with a zero-valued return to halt the config parsing loop. Note
-     +    that we don't want to use a negative return here or we would imply to
-     +    the config system that the config key or value was somehow invalid; such
-     +    an output would mask the real issue that the process failed to allocate
-     +    memory.
-      
-          Second, in tr2_sysenv_get(), the method will return NULL when strdup()
-          returns NULL. This return is indistinguishable from the environment variable
-     @@ Commit message
-          failure at this level will likely lead to failure in another system, but at
-          least the trace2 API will not cause the process to fail early.
-      
-     +    Helped-by: Elijah Newren <newren@gmail.com>
-          Signed-off-by: Derrick Stolee <stolee@gmail.com>
-      
-       ## banned-die.h ##
-     @@ trace2/tr2_sysenv.c: static int tr2_sysenv_cb(const char *key, const char *value
-      -			tr2_sysenv_settings[k].value = xstrdup(value);
-      +			tr2_sysenv_settings[k].value = strdup(value);
-      +			if (!tr2_sysenv_settings[k].value)
-     -+				return -1;
-     ++				return 0;
-       			return 0;
-       		}
-       	}
- 4:  db6858d381 = 4:  5bf6ab91f3 trace2: remove use of ALLOC_ARRAY()
- 5:  7f0bb405ad ! 5:  3e419c5522 trace2: remove use of xstrfmt()
-     @@ Commit message
-          construct redacted data to avoid copying password information in traced
-          URLs.
-      
-     +    Update t0212 to more carefully test this behavior to explicitly include
-     +    the ":<REDACTED>" string in the appropriate context.
-     +
-     +    Helped-by: Elijah Newren <newren@gmail.com>
-          Signed-off-by: Derrick Stolee <stolee@gmail.com>
-      
-       ## banned-die.h ##
-     @@ banned-die.h
-       #define ALLOC_ARRAY(x, alloc) BANNED(ALLOC_ARRAY)
-       
-      
-     + ## t/t0212-trace2-event.sh ##
-     +@@ t/t0212-trace2-event.sh: test_expect_success 'unsafe URLs are redacted by default in cmd_start events' '
-     + 
-     + 	GIT_TRACE2_EVENT="$(pwd)/trace.event" \
-     + 		test-tool trace2 300redact_start git clone https://user:pwd@example.com/ clone2 &&
-     +-	test_grep ! user:pwd trace.event
-     ++	test_grep ! user:pwd trace.event &&
-     ++	test_grep "user:<REDACTED>@example.com/" trace.event
-     + '
-     + 
-     + test_expect_success 'unsafe URLs are redacted by default in child_start events' '
-     +@@ t/t0212-trace2-event.sh: test_expect_success 'unsafe URLs are redacted by default in child_start events'
-     + 
-     + 	GIT_TRACE2_EVENT="$(pwd)/trace.event" \
-     + 		test-tool trace2 301redact_child_start git clone https://user:pwd@example.com/ clone2 &&
-     +-	test_grep ! user:pwd trace.event
-     ++	test_grep ! user:pwd trace.event &&
-     ++	test_grep "user:<REDACTED>@example.com/" trace.event
-     + '
-     + 
-     + test_expect_success 'unsafe URLs are redacted by default in exec events' '
-     +@@ t/t0212-trace2-event.sh: test_expect_success 'unsafe URLs are redacted by default in exec events' '
-     + 
-     + 	GIT_TRACE2_EVENT="$(pwd)/trace.event" \
-     + 		test-tool trace2 302redact_exec git clone https://user:pwd@example.com/ clone2 &&
-     +-	test_grep ! user:pwd trace.event
-     ++	test_grep ! user:pwd trace.event &&
-     ++	test_grep "user:<REDACTED>@example.com/" trace.event
-     + '
-     + 
-     + test_expect_success 'unsafe URLs are redacted by default in def_param events' '
-     +@@ t/t0212-trace2-event.sh: test_expect_success 'unsafe URLs are redacted by default in def_param events' '
-     + 
-     + 	GIT_TRACE2_EVENT="$(pwd)/trace.event" \
-     + 		test-tool trace2 303redact_def_param url https://user:pwd@example.com/ &&
-     +-	test_grep ! user:pwd trace.event
-     ++	test_grep ! user:pwd trace.event &&
-     ++	test_grep "user:<REDACTED>@example.com/" trace.event
-     + '
-     + 
-     + test_done
-     +
-       ## trace2.c ##
-      @@ trace2.c: int trace2_is_enabled(void)
-       static const char *redact_arg(const char *arg)
-     @@ trace2.c: static const char *redact_arg(const char *arg)
-      +	suffix_len = strlen(p + at);
-      +
-      +	if (unsigned_add_overflows(prefix_len, suffix_len) ||
-     -+	    unsigned_add_overflows(prefix_len + suffix_len, redact_len))
-     ++	    unsigned_add_overflows(prefix_len + suffix_len, redact_len) ||
-     ++	    unsigned_add_overflows(prefix_len + suffix_len + redact_len, 1))
-      +		return NULL;
-      +
-     -+	redacted_len = prefix_len + suffix_len + redact_len;
-     ++	redacted_len = prefix_len + suffix_len + redact_len + 1;
-      +
-      +	redacted = malloc(redacted_len);
-      +	if (!redacted)
-      +		return NULL;
-      +
-      +	memcpy(redacted, arg, prefix_len);
-     -+	memcpy(redacted + prefix_len, redact, redact_len - 1);
-     -+	memcpy(redacted + prefix_len + redact_len - 1, p + at,
-     -+	       suffix_len + 1);
-     ++	memcpy(redacted + prefix_len, redact, redact_len);
-     ++	memcpy(redacted + prefix_len + redact_len, p + at, suffix_len + 1);
-      +	return redacted;
-       }
-       
- 6:  120cf1967b ! 6:  ccd284fbeb trace2: remove use of ALLOC_GROW()
-     @@ Commit message
-          deepening the stack, giving as much nesting behavior as possible without
-          failing the entire process.
-      
-     +    Helped-by: Elijah Newren <newren@gmail.com>
-          Signed-off-by: Derrick Stolee <stolee@gmail.com>
-      
-       ## banned-die.h ##
-     @@ trace2/tr2_tls.c: void tr2tls_unset_self(void)
-      +		return;
-      +	}
-      +
-     -+	if (ctx->nr_open_regions < ctx->alloc)
-     -+		return;
-     ++	if (ctx->nr_open_regions >= ctx->alloc) {
-     ++		if (ctx->alloc >
-     ++		    SIZE_MAX / (2 * sizeof(*ctx->array_us_start))) {
-     ++			ctx->nr_skipped_regions++;
-     ++			return;
-     ++		}
-     ++		new_alloc = ctx->alloc * 2;
-      +
-     -+	if (ctx->alloc > SIZE_MAX / (2 * sizeof(*ctx->array_us_start))) {
-     -+		ctx->nr_skipped_regions++;
-     -+		return;
-     -+	}
-     -+	new_alloc = ctx->alloc * 2;
-     ++		new_array = realloc(ctx->array_us_start,
-     ++				    new_alloc * sizeof(*ctx->array_us_start));
-     ++		if (!new_array) {
-     ++			ctx->nr_skipped_regions++;
-     ++			return;
-     ++		}
-      +
-     -+	new_array = realloc(ctx->array_us_start,
-     -+			    new_alloc * sizeof(*ctx->array_us_start));
-     -+	if (!new_array) {
-     -+		ctx->nr_skipped_regions++;
-     -+		return;
-     ++		ctx->array_us_start = new_array;
-     ++		ctx->alloc = new_alloc;
-      +	}
-     -+
-     -+	ctx->array_us_start = new_array;
-     -+	ctx->alloc = new_alloc;
-       
-      -	ALLOC_GROW(ctx->array_us_start, ctx->nr_open_regions + 1, ctx->alloc);
-       	ctx->array_us_start[ctx->nr_open_regions++] = us_now;
- 7:  c8fc195a2a ! 7:  fa10e8d246 trace2: remove use of xcalloc()
-     @@ trace2/tr2_tls.c: void tr2tls_push_self(uint64_t us_now)
-       	uint64_t *new_array;
-       	size_t new_alloc;
-       
-     --	if (ctx->nr_skipped_regions) {
-     --		ctx->nr_skipped_regions++;
-     --		return;
-     --	}
-     --
-     --	if (ctx->nr_open_regions < ctx->alloc)
-      +	if (tr2tls_is_fallback(ctx))
-     - 		return;
-     - 
-     --	if (ctx->alloc > SIZE_MAX / (2 * sizeof(*ctx->array_us_start))) {
-     -+	if (ctx->nr_skipped_regions) {
-     ++		return;
-     ++
-     + 	if (ctx->nr_skipped_regions) {
-       		ctx->nr_skipped_regions++;
-       		return;
-     - 	}
-     --	new_alloc = ctx->alloc * 2;
-     - 
-     --	new_array = realloc(ctx->array_us_start,
-     --			    new_alloc * sizeof(*ctx->array_us_start));
-     --	if (!new_array) {
-     --		ctx->nr_skipped_regions++;
-     --		return;
-     -+	if (ctx->nr_open_regions >= ctx->alloc) {
-     -+		if (ctx->alloc >
-     -+		    SIZE_MAX / (2 * sizeof(*ctx->array_us_start))) {
-     -+			ctx->nr_skipped_regions++;
-     -+			return;
-     -+		}
-     -+		new_alloc = ctx->alloc * 2;
-     -+
-     -+		new_array = realloc(ctx->array_us_start,
-     -+				    new_alloc * sizeof(*ctx->array_us_start));
-     -+		if (!new_array) {
-     -+			ctx->nr_skipped_regions++;
-     -+			return;
-     -+		}
-     -+
-     -+		ctx->array_us_start = new_array;
-     -+		ctx->alloc = new_alloc;
-     - 	}
-     - 
-     --	ctx->array_us_start = new_array;
-     --	ctx->alloc = new_alloc;
-     --
-     - 	ctx->array_us_start[ctx->nr_open_regions++] = us_now;
-     - }
-     - 
-      @@ trace2/tr2_tls.c: void tr2tls_pop_self(void)
-       {
-       	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
-
+diff --git a/banned-die.h b/banned-die.h
+new file mode 100644
+index 0000000000..1cde4035c1
+--- /dev/null
++++ b/banned-die.h
+@@ -0,0 +1,14 @@
++#ifndef BANNED_DIE_H
++#define BANNED_DIE_H
++
++#include "banned.h"
++
++/*
++ * This header lists functions that must not be used by low-level APIs
++ * because they can cause Git to terminate.
++ */
++
++#undef die
++#define die BANNED(die)
++
++#endif /* BANNED_DIE_H */
+diff --git a/trace2.c b/trace2.c
+index c23c0a227b..8c974dee87 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -17,6 +17,8 @@
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
+ #include "trace2/tr2_tmr.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ static int trace2_enabled;
+ static int trace2_redact = 1;
+diff --git a/trace2/tr2_cfg.c b/trace2/tr2_cfg.c
+index bbcfeda60a..757dfeae8d 100644
+--- a/trace2/tr2_cfg.c
++++ b/trace2/tr2_cfg.c
+@@ -7,6 +7,8 @@
+ #include "trace2/tr2_cfg.h"
+ #include "trace2/tr2_sysenv.h"
+ #include "wildmatch.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ static struct string_list tr2_cfg_patterns = STRING_LIST_INIT_DUP;
+ static int tr2_cfg_loaded;
+diff --git a/trace2/tr2_cmd_name.c b/trace2/tr2_cmd_name.c
+index b7b5a869b7..f378bef4cf 100644
+--- a/trace2/tr2_cmd_name.c
++++ b/trace2/tr2_cmd_name.c
+@@ -1,6 +1,8 @@
+ #include "git-compat-util.h"
+ #include "strbuf.h"
+ #include "trace2/tr2_cmd_name.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ #define TR2_ENVVAR_PARENT_NAME "GIT_TRACE2_PARENT_NAME"
+ 
+diff --git a/trace2/tr2_ctr.c b/trace2/tr2_ctr.c
+index ee17bfa86b..20618a65b2 100644
+--- a/trace2/tr2_ctr.c
++++ b/trace2/tr2_ctr.c
+@@ -2,6 +2,8 @@
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
+ #include "trace2/tr2_ctr.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ /*
+  * A global counter block to aggregate values from the partial sums
+diff --git a/trace2/tr2_dst.c b/trace2/tr2_dst.c
+index 5be892cd5c..555ac7cb9e 100644
+--- a/trace2/tr2_dst.c
++++ b/trace2/tr2_dst.c
+@@ -5,6 +5,8 @@
+ #include "trace2/tr2_dst.h"
+ #include "trace2/tr2_sid.h"
+ #include "trace2/tr2_sysenv.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ /*
+  * How many attempts we will make at creating an automatically-named trace file.
+diff --git a/trace2/tr2_sid.c b/trace2/tr2_sid.c
+index 131b4f5a62..1d4f018f66 100644
+--- a/trace2/tr2_sid.c
++++ b/trace2/tr2_sid.c
+@@ -3,6 +3,8 @@
+ #include "strbuf.h"
+ #include "trace2/tr2_tbuf.h"
+ #include "trace2/tr2_sid.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ #define TR2_ENVVAR_PARENT_SID "GIT_TRACE2_PARENT_SID"
+ 
+diff --git a/trace2/tr2_sysenv.c b/trace2/tr2_sysenv.c
+index 4abc218514..7fa58eba91 100644
+--- a/trace2/tr2_sysenv.c
++++ b/trace2/tr2_sysenv.c
+@@ -4,6 +4,8 @@
+ #include "config.h"
+ #include "dir.h"
+ #include "tr2_sysenv.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ /*
+  * Each entry represents a trace2 setting.
+diff --git a/trace2/tr2_tbuf.c b/trace2/tr2_tbuf.c
+index c3b3822ed7..d623e55a81 100644
+--- a/trace2/tr2_tbuf.c
++++ b/trace2/tr2_tbuf.c
+@@ -1,5 +1,7 @@
+ #include "git-compat-util.h"
+ #include "tr2_tbuf.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ void tr2_tbuf_local_time(struct tr2_tbuf *tb)
+ {
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index 5a0381791f..36a746cc10 100644
+--- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -13,6 +13,8 @@
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
+ #include "trace2/tr2_tmr.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ static struct tr2_dst tr2dst_event = {
+ 	.sysenv_var = TR2_SYSENV_EVENT,
+diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+index 924736ab36..82995e510f 100644
+--- a/trace2/tr2_tgt_normal.c
++++ b/trace2/tr2_tgt_normal.c
+@@ -11,6 +11,8 @@
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
+ #include "trace2/tr2_tmr.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ static struct tr2_dst tr2dst_normal = {
+ 	.sysenv_var = TR2_SYSENV_NORMAL,
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index 4eb9289f95..96a5bc7f10 100644
+--- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -14,6 +14,8 @@
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
+ #include "trace2/tr2_tmr.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ static struct tr2_dst tr2dst_perf = {
+ 	.sysenv_var = TR2_SYSENV_PERF,
+diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+index 7b023c1bfc..49bd505d62 100644
+--- a/trace2/tr2_tls.c
++++ b/trace2/tr2_tls.c
+@@ -3,6 +3,8 @@
+ #include "thread-utils.h"
+ #include "trace.h"
+ #include "trace2/tr2_tls.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ /*
+  * Initialize size of the thread stack for nested regions.
+diff --git a/trace2/tr2_tmr.c b/trace2/tr2_tmr.c
+index 038181ad9b..275091c693 100644
+--- a/trace2/tr2_tmr.c
++++ b/trace2/tr2_tmr.c
+@@ -3,6 +3,8 @@
+ #include "trace2/tr2_tls.h"
+ #include "trace2/tr2_tmr.h"
+ #include "trace.h"
++/* banned-die must be last. */
++#include "banned-die.h"
+ 
+ #define MY_MAX(a, b) ((a) > (b) ? (a) : (b))
+ #define MY_MIN(a, b) ((a) < (b) ? (a) : (b))
 -- 
 gitgitgadget
+
