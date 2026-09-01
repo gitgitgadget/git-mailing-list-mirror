@@ -1,232 +1,512 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazolkn19013085.outbound.protection.outlook.com [52.103.33.85])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118D13264D9
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 21:37:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.85
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788298667; cv=fail; b=lPkQzqOiyyjdvYzntAwXp8o16atrZ2yKHhZytFUeBm1rzDzxDxgubEx0o8R/optsukn6fW9Jj7z2CG97o8kFdGHR3wPP0hv2rt8WLi9dO1/vA1w/2pzJ7wXKRv4NG7WVbdhkhmXQ5MBwh1jXqBkL4I3lYc+xIu7Ayaw+o57PxHM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788298667; c=relaxed/simple;
-	bh=xDyQocn1m31nNpgH35O2IE6WX9wU4GKtvMD1zi8IRQM=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=ry6BvEVXAPtI4oN/w3K5ntG5IERpOER5N2PU1yPQvEWU+Ele1b1FKHMrLi10pEl4R3Zgocf/DtuGSwq0uNGRwzYPqBUX9Uqkt5C2GhNMLB16P2cohu8shB/Ea5BVQrJUoco8u7STVFMshof8qwahQ2Usa229+vS5LgFIAKxbMzc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=seBvajOY; arc=fail smtp.client-ip=52.103.33.85
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="seBvajOY"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=U+HiMKqQezUg9JQMtuSjTG/6c6dpQhA2H5QFAOdH40jD/vCwdSIV+QN9vSLwNY8Ad3QElk5C7ojtrkPiyq7+6pdILzUOw2/Yz+4N9MXV/ijpeS07Tmy6lbPOujZpvcSnygwSx+EwngKNss7gz6o5l1RmPiDodWAsQw1V1dVLa0BSl9aKcxpkn/pHQTtt815IqbMTscUkWJuiJXvziRe/tNQe6cinpCDDnzun6RzyB5pmYbE+lsMLQ5LDqsisI9lastCpoj90UzkOsRmJDcRyreQsPZUsjtrCK3faQuO78WTV//E6gYcyUorYH8nyLgCBIQsGBXOFUMEifwXgyrK1og==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xDyQocn1m31nNpgH35O2IE6WX9wU4GKtvMD1zi8IRQM=;
- b=Ls5pDAxJgzAJR6usAAmEnHsfiWbXOX1GukV9r4Dk+iXtJ1psV0M34h6ZRwv/hRiI9oe0ZMNhW5QcQbvq3TVxu67/eqYWG5DLNK3lXQZkUKrD7dn+JC2iulP0tendg30YF6/aoIx2ufZMNFFpLzXOLfE93b46nnHnHq4VLC6QLRP2lY/eCAgeMqIyc1rzTdjC8RzkG2OHKW8WKRjDqUKxIHhXwxWdxoKKIsa7iaiZDZvORDGvFtEyFBOc9m4OV8GantWgUT4QXl5/W5xszltG00PMzFnnklyRsnd6O4nuC2v9pp7q+smbPG83Us3ndcruo2l4l1hIQA9ZYtZaHK4YwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xDyQocn1m31nNpgH35O2IE6WX9wU4GKtvMD1zi8IRQM=;
- b=seBvajOYbNntDcNND6V8u9AcSgWYIna844BneUsO8HDDN3AEmoDnx+pxfUf6bGTQ6lErBocz/SCSB4AoHdSjaYp0XJ/VazwIHXyCpC4465NWCOO/KGiRcBTRN7WGhYCMZpfzHXRaiSDE+NA5EORzZ6h+2F4LTND0Wn51GdQ/Ov+J3aOBmnl2PazqqJuPkfa1OYbafEknx4JVSOdL1trvri/DmY5XtnzWp8zsCyWShkz09ETGkP2XbB3IdV8IwcOB+Vs2zHGfP9J1sW5L8DiAMrBc1Ym+2rSWelvbBkT+MGg/Ycgc5k1+xPMNriOtY/xSpLpSse+UXxuRtoZz7/3Iog==
-Received: from AM0PR02MB4450.eurprd02.prod.outlook.com (2603:10a6:208:f4::27)
- by GV2PR02MB11276.eurprd02.prod.outlook.com (2603:10a6:150:2a8::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.10; Tue, 1 Sep
- 2026 21:37:42 +0000
-Received: from AM0PR02MB4450.eurprd02.prod.outlook.com
- ([fe80::3b82:1ad3:b24a:7baf]) by AM0PR02MB4450.eurprd02.prod.outlook.com
- ([fe80::3b82:1ad3:b24a:7baf%5]) with mapi id 15.21.0360.008; Tue, 1 Sep 2026
- 21:37:42 +0000
-From: Skybuck Flying <skybuck2000@hotmail.com>
-To: Git <git@vger.kernel.org>
-Subject: Re: AI Textconv filter misconfiguration on Windows leads to silent
- corruption of diff output (ongoing investigation)
-Thread-Topic: AI Textconv filter misconfiguration on Windows leads to silent
- corruption of diff output (ongoing investigation)
-Thread-Index:
- AQHdKSpeW10CNT+9OEuLP9VqvpTkMLaYG2wMgAAB2zCAACCveYAAtQjxgCFVgo+AAAToGYAAFFl0
-Date: Tue, 1 Sep 2026 21:37:42 +0000
-Message-ID:
- <AM0PR02MB4450923337E1B2DAAD688B09B3A82@AM0PR02MB4450.eurprd02.prod.outlook.com>
-References:
- <AM0PR02MB445096594555DAD1D9EE1505B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB445083767BAE669D4656CA6CB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB445013B3CDAAAD361FD93A86B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB44501AFB0A97E2E097B8795AB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB445092119D0BA1921E2BAADFB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB4450EF826479360A3A262277B3A82@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB4450BB21D265D843560BCA0DB3A82@AM0PR02MB4450.eurprd02.prod.outlook.com>
-In-Reply-To:
- <AM0PR02MB4450BB21D265D843560BCA0DB3A82@AM0PR02MB4450.eurprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM0PR02MB4450:EE_|GV2PR02MB11276:EE_
-x-ms-office365-filtering-correlation-id: 763601d9-314b-49a8-5201-08df087140ef
-x-ms-exchange-slblob-mailprops:
- /OoUGmN/RpWGTxMtatzpld+Cz2zns/tXOu8BJW0g1hYJ+tU4c8FcsJR80tiaTgPWUjOQpD1iIaktxXmWrSr98tU6k+cNhZmx1IV4l0FOdCfUH7bJ2zSISeXvWYRfuLZicDKNmJsOT9GWTk4TBGvQkJyrIjdUtsEriLYInqLmROwe3Eq08lvQ1f79LQx8fBMZL4iRIbSXLY8POV7YOcgyZCGmMxTXWLokV2ZoYRBSOMjr3hJiUN+7yFEjtr8IDDXjxqwRgEjlLEwsW+7LprXoZEbshoSjP/TlWP6sUv/igFNEAGEy4aGMluBxwxXgenj8oCEu0atmXLYSdBZfXvlLvMPnvopxe+HPPUdidESM14ey823U/sokpmg69ObNzsYg3pJsf0XdBK0DoYGykgxtuspv8bhkLQQx59W3v79W9rY7tcOCMZg23CgT7UdGcrqLlz9Hm69VmoBPSC6fIuFC+I71SLDDgEgm8FWcq3y7k7XH5RmwY9GbPglsQhL5LjgB5deluiJh6DgELYaDW1tdv4XtNMNEYc62JFL6R0woTFW8S8nPQLphm9r7sT/eCXxnbVIBxz2o6trPFHG0aU1hVIlM8qPJRxvBf46BzI7cgxNQBxX5O072GTwm+nEPD8FniiiCsedg7HXQgsIEcgyq++0AcC9aG04Dzdim3askv5FXwsX4LeoAKa2a+8MmR/audwdtN1+F2gvSyf3KHbaSgs2IEV1s2hl2LicyC2QCzr/V8zBoK2y3lRhZVo34MRr3
-x-microsoft-antispam:
- BCL:0;ARA:14566002|37011999003|15080799012|15030799006|41001999006|13031999006|55001999006|24021099003|51005399006|25010399006|8062599012|19110799012|8060799015|31061999003|40105399003|2607281247196008|10035399007|34005399003|31101999003|102099032|440099028|26104999009|3412199025;
-x-microsoft-antispam-message-info:
- =?utf-8?B?QjZQWWhzM3IvbytnZFZVdmVUdktmdkFRSksvS1NOdzlBK1JvZUpQQ1k3MHRa?=
- =?utf-8?B?WmJITWoyZ0xUaWhaT2xhdkVpNSszbENyL2swMFlSV2Y2aksrRkk3Z05yK21z?=
- =?utf-8?B?WkZDTUNGb0Y2WS9JWTNqZm1zZkxIRnhtUW5UbHpvbjBENjFZRjdVSmNKK0FJ?=
- =?utf-8?B?dzBhYkpMYnJVdW5SakpoK1kwQ21SRGFhV1ZYN3RWeTZzc3RVM00rQkxQT3Nl?=
- =?utf-8?B?dXUvWVRMT3NqNWNLWnUwTml2YmVxS1hscmtTVWg5aldjUDZtZ0xBRDdnRzVy?=
- =?utf-8?B?UW9PcVNlZ2xaTUlYSGJYQjMyWWdkWjdPR0tlbE94ajBqUW9qd2dzRkM5WmFZ?=
- =?utf-8?B?d0VWY01BSFR0dmtSbHVZVW1pTlBhWVJKVlYvSEFyTG9UcXhBb3kyMEplaHNP?=
- =?utf-8?B?bERBMGdyZ3BzSUxISDRqa3grbmIrWWpHZHJHWHYrSTgwMlh5S0VPL1ZFTTEy?=
- =?utf-8?B?bVVpS0hvSEo4ZUFKRW40VlFsdmorWHhhUDFZQkpOWUpjTHlUS1QwZG4vT0tW?=
- =?utf-8?B?VGlUVHlFT215bDFiUjkyQlA2am93UTVid0JDUkFCTVFwQitQY2FWNzdHWkwz?=
- =?utf-8?B?R1YyemFJazluVmVlUmo3QTA5aFpZcVNzd3JvY092Q3owcUF1b09mUVQycldj?=
- =?utf-8?B?VDR1UUNUSWMva0piZ1VGa2ZqTU5HWGs3bFJqK2tMbEt4R0Y3d0F3UHdLOERs?=
- =?utf-8?B?OVE1NFdhMHUzQ2pGUWQzUjV1RUlQUlBLRWJjbVJlc2tWelV4QTU2THhyNytk?=
- =?utf-8?B?TjFEMFVTODVrb2o2Ukl2TklSamROdUE0SlJyVlNMWjNKKzVHaVVnT1V4eVdL?=
- =?utf-8?B?ZTRXdmtma2VFbk5PSUt0WUxCNStDZ2dxYXc5ZUZQb3pyekNFQzZBZGtRL0hL?=
- =?utf-8?B?NHFyM2tXVlZmNzlDSHgvSGRPTjliWGJqRnNRSHpCdTlqaG8wZ053a1JoRkdv?=
- =?utf-8?B?YUhWWkV0ZGF6WituY1I2N3JHdWptWWRmcXZDZFdOdEhPL3Nnak5tQnY1ODRJ?=
- =?utf-8?B?MXpJQUlNNWxJTTZTbWhhUENDOVR3Yjc4RW5uemg3cEc0cXg3V3hsUTlWdXNW?=
- =?utf-8?B?d1pTaFVsd3Z3amVxM0NQY0VXUml3YktlcWZIMHY4S3IranIrdDlDZDdsakhQ?=
- =?utf-8?B?UnpIT0o5eFBwY1JxM3Q5NHNGVGVkTWxKdGp0b05qRzVpeHo1YW1uS3pVSGFO?=
- =?utf-8?B?dkZxR3RQai8wZXRTRUpjMjRleGNPQTczaGZlSHJvNGFwQWVRL2VOMEpFL2N2?=
- =?utf-8?B?YlFaRUNaTjZNL0JaRnh3ZVRrNmVwbUpHVXo0OEEvZmtBZEhEbDB2N0xhZ0xK?=
- =?utf-8?B?Mnhjd3RsT0cyMGsvL1NKNUhCNmJPZTdmS2VXbS9KZUY2Tmc5aE1QbXVyYklD?=
- =?utf-8?B?L2pBMnBqdGJvRk4wOHhBaUJ2blQvRjhrZklXNlFMcDdoT0l2U1V0VW1YQUVD?=
- =?utf-8?B?TVlCaVV2M1VvWkJRMHpLbGhLd1U5K01aVjJ6ekZlMkxMTG5hOSs5WkxmVjhN?=
- =?utf-8?B?QUFSS0IwZEREOFY5ckw0NUdwLy9RbDRzdEhPUURTN055Rzg0OHJoaFFaRUcz?=
- =?utf-8?B?RWJ4dz09?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?Q1RxbUM3eCtiZ0o0eDc4dW8vOGNlUyt2NTJGbzFuNFdTb0t6TXkybkprTGgx?=
- =?utf-8?B?OGRPUlhMaTAwWkRFck5Ga3dBRFk0Ym1BV0J0TXo3YURjdFpGWkt4elFRVGZC?=
- =?utf-8?B?VDZVZGhKa0ZXMWtRY28yRGZhb1plM1ZQVk1qQkx2SjBOWjNKSHd0NG4xajhT?=
- =?utf-8?B?amZaSjNvRGE4MlQwWVlzRXZvYUVBK0RsWWpMMzFtclAyUDJSZnRoNnY4d2Nh?=
- =?utf-8?B?RzFCais3bExBc1N5eS8raHpHY1dDL0hFRFl3SEJ6NlVJTDVVN2FJQ0lZZzBH?=
- =?utf-8?B?L2N5YnFPK3JBZ0JXZFk0YzFSYWhTMUU5dC82bUFDSzRpQU95WlNLSDlrd3pM?=
- =?utf-8?B?dlpoRzA0bURaRHpPMCt2QVAzZ2c5Y0FMQ2IwNktVVnFTNkszZXNpWThZUzBY?=
- =?utf-8?B?MDR1aEU0eGRsN1VaWkRDL3JmTC90OTFNdTJOK0NRaUpGUFJLZDR1cjYrRUFu?=
- =?utf-8?B?MU1KMDVhTDNSME0vUHlWV1lZc3B0N0tXdWdONGlPcXFFNzQ2L2hTLzZVN0Jp?=
- =?utf-8?B?R1dWRG1YVHhETDFJdm1lVHNnQ0ExZmZ0VEQzUWR4ZGx5OGdLSG1wWGUyeW9l?=
- =?utf-8?B?YTBNSUIwazZxT0dsUUpXVjNtVXByK0JkWUVqZTFOeFJnRHpIVGV0eTRYNVdQ?=
- =?utf-8?B?NkRLcDNkbno1eURCaCt5RG9qbDlhZC9ONFFwK2l2Q3pUY1RzekNtaXA4clRK?=
- =?utf-8?B?MVRydzRGUTFlSk9rd21CUkRZVkx3Sm0zMlF3Q28xaVJjanVDa1lrdTdlcEhT?=
- =?utf-8?B?UlR5d3B6aFhyM0JSWDEycHJvQUI2MDczcThXVVJZQXYyZldubkxJNHM4ekdC?=
- =?utf-8?B?ZUw2c1c4UUJVK1lzbWZMWU82U3JUTDRrYlpjREpJRDZhOGhwSmlMU1pFdC9v?=
- =?utf-8?B?SVNtOVdsWHIzbzN6bk5xbVBYVGRlcU04WDJrekszUFI0c1ppU2plYk4yM2pj?=
- =?utf-8?B?V1BCbHdxU1lwd3ZPd0xHMjNPMms1RzdaTDhXTUU0ZVpsQzlJRXljKytEb2tM?=
- =?utf-8?B?bjlaTUZnOGpiVFk2b0ZFVVZaL1Z1c3hqSmJmd1hKc2FhLytkaW9Va0E1R0JZ?=
- =?utf-8?B?RXloakxuZE45NXliZHpEZUQvVkg4aUNVRW9IUFgrb3BkUks5YTJMVzRPYmQ3?=
- =?utf-8?B?SFNOR1NkWVg2UlJzMVpNWXdGV09jTE9UUWJtT2JVN25vRy9ESStnRVNVNXhQ?=
- =?utf-8?B?UytLR3VqLy9HSUJNWWdBWlhnMDl4WjBOM0hsczNjL2FnM2hQdno3NzV3dlow?=
- =?utf-8?B?YkxPRXJHUUF6Uko2N04vK01TSkZmL2ptdzFWb2VzcFpwNzFKRGxhVktNRmU0?=
- =?utf-8?B?UDgvNFVKWmFybzY4UzdiRkN1YTQ4aFk5dkY1RjJUM0RqYkhnZExJWjhLSDB6?=
- =?utf-8?B?NDVXOWIwNlJXdzh2RFB3Z0swcm5wdmgwR2k5OFNucUNPZXJwNHpRa2trejRp?=
- =?utf-8?B?M3ZXbERucTJkZDBocVR6QlNybFpxSmwxRVpuVlJxQzhxcUNaSFZJUHFESXA3?=
- =?utf-8?B?V3l4T0I5WXVpMldwOU1WelJvV0xFY1RNdldiWjI4anFjaWFGOHZkNVNwd1JJ?=
- =?utf-8?B?ckxQQlFNVW9aN1RuMmxYSS80aklOUE8zN3dhWkxIalpsYm5SZ3hYNncwSExE?=
- =?utf-8?B?M0xpZmtvMUFrVnQvcHp1UTJzbU1ac3hWSnVmNVVuZUdyanZZM2JIMm42ZzJh?=
- =?utf-8?B?bHZVc0Q4OFI1RDZpY0pwMUxHLzVqTnM5MHkyVkJXR2VkajhmYkNRL25iN0JM?=
- =?utf-8?B?TUJKRlJYOXcxcXNqdmdJS25rUWlrbDhwd2RLMkVZVjFPcnVLKzZWTmh3RDVX?=
- =?utf-8?B?T0pPUGZaa2czRTh5SWpTWGxMdmRQWmNxQUVMejBDWjlzcDAzRkk1N0hOQmFn?=
- =?utf-8?B?RXROd3gxK0svalBRcDJmdDJROGdLOHdWcS9UZ0EvWXhKeFM2YllyVmgzNkFS?=
- =?utf-8?Q?6vZGua3xwdjEZnLne0Q0Cox2/NH7Axq/?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19269351C27
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 21:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788299711; cv=none; b=FdZnBylimFDyHSJX1Fb7foF+fXCatoGhzgvgddcizL4ukI78NG0E7VBrdSwtKMvpxJtF+cnL4dfpo+Vc+7ZHJj2h0ubN9kIY3nWMmp2bUY/tXfJnP0WlyTGMaZl07lzezQjo+9b0J22JTqI5XCqgPUQ6Q08hv+KY22SqKc3Z5Ds=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788299711; c=relaxed/simple;
+	bh=b6pWsla4JPa0X5H3sxdbQDXsbFAAUDGARLoPoCbsp/Q=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dMPsFEwAwkKXqPFhH+qFeanXoKVYyQvp6/qvxgiiN4H2Or6ZQjIc0ZCa0kbZp1AgnkAbpAY0WV/FZK/kuwMEdPqCCdr+Psc7lJuzJyo3I5Ld1hGq2mUBoR0/SUV+1iNj1Nos1wJNqbLyfoOelhS1SJ67uMTbSGsy1i5I1JeNXqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-255-187-253.cpe.net.cable.rogers.com [99.255.187.253])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 681Lji01024735
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 1 Sep 2026 21:45:45 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Skybuck Flying'" <skybuck2000@hotmail.com>,
+        "'Git'" <git@vger.kernel.org>
+References: <AM0PR02MB445096594555DAD1D9EE1505B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB445083767BAE669D4656CA6CB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB445013B3CDAAAD361FD93A86B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB44501AFB0A97E2E097B8795AB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB445092119D0BA1921E2BAADFB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB4450EF826479360A3A262277B3A82@AM0PR02MB4450.eurprd02.prod.outlook.com>
+In-Reply-To: <AM0PR02MB4450EF826479360A3A262277B3A82@AM0PR02MB4450.eurprd02.prod.outlook.com>
+Subject: RE: AI Textconv filter misconfiguration on Windows leads to silent corruption of diff output (ongoing investigation)
+Date: Tue, 1 Sep 2026 17:45:38 -0400
+Organization: Nexbridge Inc.
+Message-ID: <000601dd3a5b$3e4be8a0$bae3b9e0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-9f624.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR02MB4450.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 763601d9-314b-49a8-5201-08df087140ef
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Sep 2026 21:37:42.3591
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR02MB11276
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQG/A74nuxZ9S0nr6fdPAV8IovWWEQKY/cdqAdcK/JwB4Zs92AGG/tONAULMUxa2rc9REA==
+Content-Language: en-ca
+msip_labels: 
+X-Antivirus: Norton (VPS 260901-8, 9/1/2026), Outbound message
+X-Antivirus-Status: Clean
 
-SW4gc2hvcnQ6IFBORyBmaWxlcyB3ZXJlIGNvcnJ1cHRlZCwgYnV0IERMTHMgZmlsZXMgbm90ICEK
-CkhpIEdpdCBkZXZlbG9wZXJzLAoKSSBhbSBzdWJtaXR0aW5nIGEgZGV0YWlsZWQgcmVwb3J0IGFi
-b3V0IGEgc2VyaW91cyBpc3N1ZSBJIGVuY291bnRlcmVkIG9uIFdpbmRvd3Mgd2hlcmUgYSBnbG9i
-YWxseSBjb25maWd1cmVkIEdpdCB0ZXh0Y29udiBmaWx0ZXIgc2lsZW50bHkgY29ycnVwdHMgYmlu
-YXJ5IGZpbGVzIGR1cmluZyBjaGVja291dC4gVGhlIGNvcnJ1cHRpb24gb2NjdXJyZWQgd2l0aG91
-dCBhbnkgd2FybmluZ3MsIGFuZCBvbmx5IGJlY2FtZSB2aXNpYmxlIHdoZW4gY29tcGFyaW5nIEdp
-dOKAkWNoZWNrZWTigJFvdXQgZmlsZXMgd2l0aCB0aGUgb3JpZ2luYWwgdmVyc2lvbnMgZG93bmxv
-YWRlZCB2aWEgY3VybC4KClRoaXMgcmVwb3J0IGRvY3VtZW50cyB0aGUgY2F1c2UsIHRoZSB0ZWNo
-bmljYWwgbWVjaGFuaXNtLCB0aGUgcmVwcm9kdWN0aW9uIHN0ZXBzLCB0aGUgZml4LCBhbmQgdGhl
-IGZ1dHVyZSByaXNrcy4KCi0tLQoKU3VtbWFyeSBvZiB0aGUgaXNzdWUKQSBQTkcgZmlsZSBpbnNp
-ZGUgdGhlIHJlcG9zaXRvcnkgaHR0cHM6Ly9naXRodWIuY29tL29wZW5haS9vcGVuYWktb3BlbmFw
-aSBiZWNhbWUgY29ycnVwdGVkIGFmdGVyIGNsb25pbmcuIFRoZSBzYW1lIGZpbGUgZG93bmxvYWRl
-ZCB2aWEgY3VybCB3YXMgaW50YWN0LiBUaGlzIGltbWVkaWF0ZWx5IHN1Z2dlc3RlZCB0aGF0IGEg
-R2l0IGZpbHRlciB3YXMgcmV3cml0aW5nIHRoZSBmaWxlIGR1cmluZyBjaGVja291dC4KClRoZSBy
-b290IGNhdXNlIHdhcyBhIGdsb2JhbCAuZ2l0YXR0cmlidXRlcyBmaWxlIGNvbnRhaW5pbmc6Cgog
-ICAgKiB0ZXh0IGRpZmY9bGZjbGVhbgoKQ29tYmluZWQgd2l0aCB0aGUgZm9sbG93aW5nIGdsb2Jh
-bCBkaWZmIGRyaXZlciBjb25maWd1cmF0aW9uOgoKICAgIGRpZmYubGZjbGVhbi50ZXh0Y29udiA9
-IHNlZCAtZSBzL1xyLy8KICAgIGRpZmYubGZjbGVhbi5iaW5hcnkgPSBmYWxzZQoKVGhpcyBjb25m
-aWd1cmF0aW9uIGZvcmNlcyBHaXQgdG8gdHJlYXQgKmFsbCogZmlsZXMgYXMgdGV4dCwgaW5jbHVk
-aW5nIGJpbmFyeSBmb3JtYXRzLCBhbmQgdG8gcnVuIGEgdGV4dGNvbnYgZmlsdGVyIHRoYXQgcmVt
-b3ZlcyBjYXJyaWFnZSByZXR1cm4gY2hhcmFjdGVycy4gQW55IGJpbmFyeSBmaWxlIGNvbnRhaW5p
-bmcgMHgwRCBieXRlcyBpcyBzaWxlbnRseSBtb2RpZmllZCBkdXJpbmcgY2hlY2tvdXQuCgotLS0K
-CldoeSBQTkcgZmlsZXMgd2VyZSBjb3JydXB0ZWQgYnV0IERMTCBmaWxlcyB3ZXJlIG5vdApQTkcg
-ZmlsZXMgY29udGFpbiBzdHJ1Y3R1cmVkIGJpbmFyeSBjaHVua3MgKHRFWHQsIGlUWHQsIHpUWHQp
-IHRoYXQgbWF5IGxlZ2l0aW1hdGVseSBpbmNsdWRlIENSL0xGIGNoYXJhY3RlcnMuIFdoZW4gdGhl
-IHRleHRjb252IGZpbHRlciByZW1vdmVzIENSIGJ5dGVzLCB0aGUgY2h1bmsgbGVuZ3RocyBubyBs
-b25nZXIgbWF0Y2ggdGhlIGFjdHVhbCBkYXRhLCByZXN1bHRpbmcgaW4gYSBjb3JydXB0ZWQgUE5H
-LgoKRExMIGZpbGVzLCBvbiB0aGUgb3RoZXIgaGFuZCwgdHlwaWNhbGx5IGNvbnRhaW4gbm8gQ1Ig
-Y2hhcmFjdGVycyBhdCBhbGwuIEJlY2F1c2UgdGhlIGZpbHRlciBvbmx5IHJlbW92ZXMgQ1IgYnl0
-ZXMsIERMTCBmaWxlcyByZW1haW4gdW5jaGFuZ2VkIHNpbXBseSBiZWNhdXNlIHRoZXJlIGlzIG5v
-dGhpbmcgZm9yIHRoZSBmaWx0ZXIgdG8gcmVtb3ZlLiBUaGlzIG1ha2VzIHRoZSBjb3JydXB0aW9u
-IGFwcGVhciDigJxzZWxlY3RpdmXigJ0sIGJ1dCBpdCBpcyBwdXJlbHkgYWNjaWRlbnRhbC4KCkFu
-eSBiaW5hcnkgZm9ybWF0IGNvbnRhaW5pbmcgQ1IgYnl0ZXMgaXMgYXQgcmlzay4KCi0tLQoKUmVw
-cm9kdWN0aW9uIHN0ZXBzCjEuIENyZWF0ZSBhIGdsb2JhbCAuZ2l0YXR0cmlidXRlcyBmaWxlOgoK
-ICAgICAgICogdGV4dCBkaWZmPWxmY2xlYW4KCjIuIENvbmZpZ3VyZSB0aGUgZGlmZiBkcml2ZXIg
-Z2xvYmFsbHk6CgogICAgICAgZGlmZi5sZmNsZWFuLnRleHRjb252PXNlZCAtZSBzL1xyLy8KICAg
-ICAgIGRpZmYubGZjbGVhbi5iaW5hcnk9ZmFsc2UKCjMuIENsb25lIGFueSByZXBvc2l0b3J5IGNv
-bnRhaW5pbmcgYmluYXJ5IGZpbGVzLgoKNC4gQ29tcGFyZSB0aGUgYmxvYiB3aXRoIHRoZSB3b3Jr
-aW5nLXRyZWUgZmlsZToKCiAgICAgICBnaXQgc2hvdyBIRUFEOnBhdGgvdG8vZmlsZSA+IHJhdy5i
-aW4KICAgICAgIGZjIC9iIHJhdy5iaW4gcGF0aC90by9maWxlCgpJZiB0aGUgYmluYXJ5IGNvbnRh
-aW5zIENSIGJ5dGVzLCB0aGUgd29ya2luZy10cmVlIGZpbGUgd2lsbCBkaWZmZXIgZnJvbSB0aGUg
-YmxvYi4KCi0tLQoKQ2F1c2Ugb2YgdGhlIHByb2JsZW0KVGhlIHBhdHRlcm4gIioiIG1hdGNoZXMg
-ZXZlcnkgZmlsZS4gIApUaGUgYXR0cmlidXRlICJ0ZXh0IiBmb3JjZXMgR2l0IHRvIHRyZWF0IGV2
-ZXJ5IGZpbGUgYXMgdGV4dCwgb3ZlcnJpZGluZyBiaW5hcnkgZGV0ZWN0aW9uLiAgClRoZSBkaWZm
-IGRyaXZlciAibGZjbGVhbiIgYXBwbGllcyBhIHRleHRjb252IGZpbHRlciB0aGF0IHJld3JpdGVz
-IGZpbGUgY29udGVudHMuICAKR2l0IGFwcGxpZXMgdGhpcyBmaWx0ZXIgZHVyaW5nIGNoZWNrb3V0
-LCBub3Qgb25seSBkdXJpbmcgZGlmZiBvcGVyYXRpb25zLgoKVGhpcyBjb21iaW5hdGlvbiBndWFy
-YW50ZWVzIGNvcnJ1cHRpb24gb2YgYW55IGJpbmFyeSBmaWxlIGNvbnRhaW5pbmcgQ1IgYnl0ZXMu
-CgotLS0KClNvbHV0aW9uClRoZSBjb3JyZWN0IGZpeCBpcyB0byByZW1vdmUgdGhlIGdsb2JhbCAu
-Z2l0YXR0cmlidXRlcyBmaWxlIGFuZCB0aGUgZ2xvYmFsIGRpZmYgZHJpdmVyOgoKICAgIGRlbCBD
-OlxVc2Vyc1w8dXNlcj5cLmdpdGF0dHJpYnV0ZXMKICAgIGdpdCBjb25maWcgLS1nbG9iYWwgLS11
-bnNldCBjb3JlLmF0dHJpYnV0ZXNmaWxlCiAgICBnaXQgY29uZmlnIC0tZ2xvYmFsIC0tdW5zZXQg
-ZGlmZi5sZmNsZWFuLnRleHRjb252CiAgICBnaXQgY29uZmlnIC0tZ2xvYmFsIC0tdW5zZXQgZGlm
-Zi5sZmNsZWFuLmJpbmFyeQogICAgZ2l0IGNvbmZpZyAtLWdsb2JhbCAtLXJlbW92ZS1zZWN0aW9u
-IGRpZmYubGZjbGVhbgoKQWx0ZXJuYXRpdmVseSwgcmVzdHJpY3QgdGhlIGZpbHRlciB0byBrbm93
-biB0ZXh0IGZpbGUgZXh0ZW5zaW9ucyBpbnNpZGUgaW5kaXZpZHVhbCByZXBvc2l0b3JpZXMuCgot
-LS0KCkZ1dHVyZSByaXNrcwpHbG9iYWwgLmdpdGF0dHJpYnV0ZXMgcnVsZXMgYXJlIGFwcGxpZWQg
-dG8gZXZlcnkgcmVwb3NpdG9yeSBvbiB0aGUgc3lzdGVtLiAgClVzaW5nICIqIiB3aXRoICJ0ZXh0
-IiBvciBhbnkgZmlsdGVyIGlzIGV4dHJlbWVseSBkYW5nZXJvdXMgYmVjYXVzZToKCi0gR2l0IHNp
-bGVudGx5IHJld3JpdGVzIGJpbmFyeSBmaWxlcyBkdXJpbmcgY2hlY2tvdXQuCi0gQ29ycnVwdGlv
-biBpcyBub3QgZGV0ZWN0ZWQgYnkgR2l0LgotIENvcnJ1cHRpb24gZGVwZW5kcyBvbiBmaWxlIGNv
-bnRlbnRzLCBtYWtpbmcgaXQgdW5wcmVkaWN0YWJsZS4KLSBVc2VycyBtYXkgbm90IHJlYWxpemUg
-dGhhdCBHaXQgaXMgbW9kaWZ5aW5nIGZpbGVzLgotIEFueSBmdXR1cmUgcmVwb3NpdG9yeSBjb250
-YWluaW5nIGJpbmFyeSBmb3JtYXRzIHdpdGggQ1IgYnl0ZXMgd2lsbCBiZSBjb3JydXB0ZWQuCgpU
-aGlzIGNvbmZpZ3VyYXRpb24gZWZmZWN0aXZlbHkgY3JlYXRlcyBhIHN5c3RlbS13aWRlIGNvcnJ1
-cHRpb24gdmVjdG9yLgoKQSB3YXJuaW5nIG9yIHNhZmVndWFyZCB3aGVuICJ0ZXh0IiBpcyBmb3Jj
-ZWQgZ2xvYmFsbHkgbWlnaHQgaGVscCBwcmV2ZW50IGFjY2lkZW50YWwgbWlzdXNlLgoKLS0tCgpD
-b25jbHVzaW9uClRoaXMgaXNzdWUgZGVtb25zdHJhdGVzIHRoYXQgZ2xvYmFsIHRleHRjb252IGZp
-bHRlcnMgY2FuIHNpbGVudGx5IGNvcnJ1cHQgYmluYXJ5IGZpbGVzIG9uIFdpbmRvd3MuIFRoZSBj
-b3JydXB0aW9uIGlzIHN1YnRsZSwgdW5wcmVkaWN0YWJsZSwgYW5kIGRpZmZpY3VsdCB0byBkaWFn
-bm9zZS4gUmVtb3ZpbmcgZ2xvYmFsIGZpbHRlcnMgYW5kIGF2b2lkaW5nICIqIiBwYXR0ZXJucyBp
-biBnbG9iYWwgLmdpdGF0dHJpYnV0ZXMgZmlsZXMgaXMgZXNzZW50aWFsIGZvciBkYXRhIGludGVn
-cml0eS4KClRoYW5rIHlvdSBmb3IgeW91ciB0aW1lIGFuZCBjb25zaWRlcmF0aW9uLgoKQmVzdCBy
-ZWdhcmRzLApTa3lidWNrCg==
+On September 1, 2026 4:14 PM, Skybuck Flying wrote:
+>MORE GOD DAMN PROBLEMS WITH GIT AND CR/LF FILTERS.
+>
+>I DOWNLOADED/GIT CLONED:
+>
+>https://github.com/openai/openai-openapi/tree/main
+>
+>I NOTICED:
+>
+>https://github.com/openai/openai-openapi/tree/main/assets
+>
+>WAS CORRUPTED.
+>
+>(CORRECT DOWNLOAD METHOD USES TO PROVE FILE IS INTACT ON SERVER):
+>
+>curl -L --output "K:\Delphi\Specifications\OpenAI API\github version =
+3.1.0 (1
+>september 2026)\assets\openai-api-referencev2.png"
+>https://raw.githubusercontent.com/openai/openai-
+>openapi/master/assets/openai-api-reference.png
+>
+>GOOD THING I INSPECTED IT JUST OUT OF CURIOSITY.
+>
+>I IMMEDIATELY EXPECTED GIT FILTER TO BE THE CAUSE.
+>
+>DIAGNOSIS COMMANDS.
+>
+>"
+>Microsoft Windows [Version 10.0.22631.6199]
+>(c) Microsoft Corporation. All rights reserved.
+>
+>C:\Users\skybu>git config --global core.autocrlf false
+>
+>C:\Users\skybu>git config --system core.autocrlf false
+>
+>C:\Users\skybu>git config --local core.autocrlf
+>fatal: --local can only be used inside a git repository
+>
+>C:\Users\skybu>git config --global --get-regexp filter
+>
+>C:\Users\skybu>git config --local --get-regexp filter
+>fatal: --local can only be used inside a git repository
+>
+>C:\Users\skybu>git check-attr -a openai-api-reference.png
+>fatal: not a git repository (or any of the parent directories): .git
+>
+>C:\Users\skybu>type .gitattributes
+>* text diff=3Dlfclean
+>C:\Users\skybu>git config --global --list core.autocrlf=3Dfalse =
+core.eol=3Dcrlf
+>core.sshcommand=3DC:/Windows/System32/OpenSSH/ssh.exe
+>core.attributesfile=3DC:\Users\skybu\.gitattributes
+>user.email=3Dskybuck2000@hotmail.com
+>user.name=3DSkybuck Flying
+>user.signingkey=3DI:\Informatie\Van mezelf\SSH =
+Keys\PrivateKey\GitSigningKey
+>gui.recentrepo=3DV:/FuckingWhore/vite-wallet
+>cinnabar.version-check=3D1743733941
+>credential.http://localhost:3000.provider=3Dgeneric
+>includeif.gitdir:V:/AI0001/.path=3D~/.gitconfigs/.gitconfig-ai0001-v2
+>includeif.gitdir:V:/AI0002/.path=3D~/.gitconfigs/.gitconfig-ai0002-v2
+>includeif.gitdir:V:/AI0003/.path=3D~/.gitconfigs/.gitconfig-ai0003-v2
+>includeif.gitdir:V:/AI0004/.path=3D~/.gitconfigs/.gitconfig-ai0004-v2
+>includeif.gitdir:V:/AI0005/.path=3D~/.gitconfigs/.gitconfig-ai0005-v2
+>includeif.gitdir:V:/AI0006/.path=3D~/.gitconfigs/.gitconfig-ai0006-v2
+>includeif.gitdir:V:/AI0007/.path=3D~/.gitconfigs/.gitconfig-ai0007-v2
+>includeif.gitdir:V:/AI0008/.path=3D~/.gitconfigs/.gitconfig-ai0008-v2
+>includeif.gitdir:V:/AI0009/.path=3D~/.gitconfigs/.gitconfig-ai0009-v2
+>includeif.gitdir:V:/AI0010/.path=3D~/.gitconfigs/.gitconfig-ai0010-v2
+>includeif.gitdir:V:/AI0011/.path=3D~/.gitconfigs/.gitconfig-ai0011-v2
+>includeif.gitdir:V:/AI0012/.path=3D~/.gitconfigs/.gitconfig-ai0012-v2
+>includeif.gitdir:V:/AI0013/.path=3D~/.gitconfigs/.gitconfig-ai0013-v2
+>includeif.gitdir:V:/AI0014/.path=3D~/.gitconfigs/.gitconfig-ai0014-v2
+>includeif.gitdir:V:/AI0015/.path=3D~/.gitconfigs/.gitconfig-ai0015-v2
+>includeif.gitdir:V:/AI0016/.path=3D~/.gitconfigs/.gitconfig-ai0016-v2
+>includeif.gitdir:V:/AI0017/.path=3D~/.gitconfigs/.gitconfig-ai0017-v2
+>includeif.gitdir:V:/AI0018/.path=3D~/.gitconfigs/.gitconfig-ai0018-v2
+>includeif.gitdir:V:/AI0019/.path=3D~/.gitconfigs/.gitconfig-ai0019-v2
+>includeif.gitdir:V:/AI0020/.path=3D~/.gitconfigs/.gitconfig-ai0020-v2
+>includeif.gitdir:V:/AIMain/.path=3D~/.gitconfigs/.gitconfig-aimain-v2
+>merge.tool=3Dmeld
+>mergetool.prompt=3Dfalse
+>mergetool.keepbackup=3Dfalse
+>gpg.format=3Dssh
+>commit.gpgsign=3Dtrue
+>log.showsignature=3Dtrue
+>gpg.ssh.allowedsignersfile=3DI:/Informatie/Van mezelf/SSH
+>Keys/GitAllowedSigners/GitAllowedSigners.txt
+>diff.lfclean.textconv=3Dsed -e s/\\r//
+>diff.lfclean.binary=3Dfalse
+>
+>C:\Users\skybu>git check-attr --all -- openai-api-reference.png
+>fatal: not a git repository (or any of the parent directories): .git
+>
+>C:\Users\skybu>
+>"
+>
+>HYPOTHESIS BY CO-PILOT AND POSSIBLE FIX:
+>
+>The **smoking gun is now visible**: your global config + your global =
+attributes file
+>**are applying a custom diff filter (`lfclean`) to *all files*** =
+=E2=80=94 including PNGs.
+>That is exactly why your Git=E2=80=91downloaded PNG is corrupted while =
+the curl version is
+>intact.
+>
+>Let me break it down cleanly and give you the exact commands to verify =
+every part.
+>
+>---
+>
+>## =F0=9F=8E=AF Core finding: your global `.gitattributes` is rewriting =
+files You showed:
+>
+>```
+>C:\Users\skybu>type .gitattributes
+>* text diff=3Dlfclean
+>```
+>
+>This means:
+>
+>- `*` =E2=86=92 **every file**, regardless of type
+>- `text` =E2=86=92 Git treats **every file as text**, even binaries
+>- `diff=3Dlfclean` =E2=86=92 Git applies your custom diff driver
+>- Your diff driver is defined as:
+>
+>```
+>diff.lfclean.textconv=3Dsed -e s/\\r//
+>diff.lfclean.binary=3Dfalse
+>```
+>
+>This forces Git to:
+>
+>- run `sed -e s/\r//` on files
+>- treat them as **non=E2=80=91binary**
+>- strip carriage returns
+>- potentially corrupt binary formats (PNG, JPG, ZIP, EXE, DLL, etc.)
+>
+>Curl does not run Git filters =E2=86=92 curl file stays intact.
+>
+>Git does run filters =E2=86=92 Git file becomes corrupted.
+>
+>This is 100% the cause.
+>
+>---
+>
+>## =F0=9F=A7=AA Commands to confirm the corruption mechanism
+>
+>### 1. Check what attributes Git applies to your PNG ``` git check-attr =
+--all -- openai-
+>api-reference.png ```
+>
+>Expected output (because of your global `.gitattributes`):
+>
+>```
+>openai-api-reference.png: text: set
+>openai-api-reference.png: diff: lfclean
+>```
+>
+>If you see this =E2=86=92 confirmed.
+>
+>---
+>
+>### 2. Check the raw blob stored in Git (to see if corruption happens =
+on checkout)
+>``` git show HEAD:openai-api-reference.png > raw.png ```
+>
+>Then compare:
+>
+>```
+>fc /b raw.png openai-api-reference.png
+>```
+>
+>If `raw.png` is intact but the working=E2=80=91tree file is corrupted =
+=E2=86=92 the corruption
+>happens during checkout due to filters.
+>
+>---
+>
+>### 3. Show all filters Git knows about
+>```
+>git config --show-origin --get-regexp diff git config --show-origin =
+--get-regexp filter
+>```
+>
+>You will see your `lfclean` diff driver.
+>
+>---
+>
+>### 4. Show your global attributes file path ``` git config --global =
+core.attributesfile
+>```
+>
+>It points to:
+>
+>```
+>C:\Users\skybu\.gitattributes
+>```
+>
+>This file is applied to **every repository** on your system.
+>
+>---
+>
+>## =F0=9F=9B=A0=EF=B8=8F How to fix it (choose one)
+>
+>### Option A =E2=80=94 Remove the global `.gitattributes` (recommended) =
+``` del
+>C:\Users\skybu\.gitattributes ```
+>
+>### Option B =E2=80=94 Restrict the rule to text files only
+>Replace:
+>
+>```
+>* text diff=3Dlfclean
+>```
+>
+>With:
+>
+>```
+>*.txt text diff=3Dlfclean
+>*.pas text diff=3Dlfclean
+>*.dpr text diff=3Dlfclean
+>```
+>
+>### Option C =E2=80=94 Mark binary files correctly
+>Add:
+>
+>```
+>*.png binary
+>*.jpg binary
+>*.zip binary
+>*.exe binary
+>*.dll binary
+>```
+>
+>---
+>
+>## =F0=9F=93=8C Why this happened
+>You created a global `.gitattributes` with:
+>
+>```
+>* text diff=3Dlfclean
+>```
+>
+>This is extremely dangerous because:
+>
+>- Git thinks **every file is text**
+>- Git applies your custom diff filter to **every file**
+>- Binary files get corrupted on checkout
+>
+>This is why:
+>
+>- **curl file =3D correct**
+>- **git file =3D corrupted**
+>
+>---
+>
+>## =F0=9F=94=8D Want me to help rewrite your `.gitattributes` safely?
+>I can generate a clean, safe version tailored to your Delphi workflow.
+>Pick one:
+>
+>- fix global attributes
+>- create safe Delphi attributes
+>- audit all Git filters
+>
+>
+>
+>Apperently Co-Pilot now has the ability to send e-mails, funny =
+functionality, risky
+>too ! Expect another melissa ai virus soon ? ;)
+>
+>Anyway I copy & paste it's reply here in plain text:
+>
+>```
+>Hi Git developers,
+>
+>I'm writing to report a reproducible corruption issue caused by global =
+Git attributes
+>and diff filters being applied to binary files during checkout.
+>
+>Summary of the problem
+>A PNG file downloaded via Git becomes corrupted, while the same file =
+downloaded
+>via curl remains intact. The corruption is caused by a global =
+`.gitattributes` file that
+>marks all files as text and assigns a custom diff driver:
+>
+>* text diff=3Dlfclean
+>
+>The diff driver is defined globally as:
+>
+>diff.lfclean.textconv=3Dsed -e s/\\r//
+>diff.lfclean.binary=3Dfalse
+>
+>This forces Git to treat every file as text and run a textconv filter =
+that strips carriage
+>returns. When applied to binary formats (PNG, JPG, ZIP, EXE, etc.), the =
+checkout
+>process produces corrupted files.
+>
+>Reproduction steps
+>1. Create a global `.gitattributes` file containing:
+>   * text diff=3Dlfclean
+>2. Define the diff driver globally:
+>   diff.lfclean.textconv=3Dsed -e s/\\r//
+>   diff.lfclean.binary=3Dfalse
+>3. Clone any repository containing binary files.
+>4. Compare a binary file from the working tree with the raw blob:
+>   git show HEAD:path/to/file > raw.bin
+>   fc /b raw.bin path/to/file
+>
+>The working-tree file differs from the blob, confirming corruption =
+during checkout.
+>
+>Expected behavior
+>Binary files should remain untouched unless explicitly marked with =
+filters.
+>
+>Actual behavior
+>Git applies the global attributes and diff driver to all files, =
+including binaries, causing
+>corruption.
+>
+>Request
+>I would appreciate guidance on whether Git should:
+>- Warn users when global attributes force text filters onto binary =
+files, or
+>- Provide safeguards to prevent textconv filters from being applied to =
+known binary
+>formats.
+>
+>Thanks for your time and consideration.
+>
+>Best regards,
+>Skybuck
+>```
+>
+>version 2:
+>
+>Here is the **clean, corrected, plain=E2=80=91text reply**, in a =
+**single code block**, clearly
+>explaining:
+>
+>- the **cause**
+>- the **solution**
+>- the **future risks**
+>
+>You can paste this directly into the Git mailing list.
+>
+>```
+>Hi Git developers,
+>
+>I want to report an issue where Git corrupts binary files during =
+checkout when a
+>global .gitattributes file forces all paths to be treated as text and =
+assigns a diff driver.
+>
+>Cause of the problem
+>My global attributes file contained the line:
+>
+>    * text diff=3Dlfclean
+>
+>Because the pattern "*" matches every file, Git applies "text" and =
+"diff=3Dlfclean" to all
+>paths, including binary files such as PNGs. The "text" attribute forces =
+Git to treat the
+>file as text even when its content is clearly binary. The assigned diff =
+driver runs a
+>textconv filter:
+>
+>    diff.lfclean.textconv =3D sed -e s/\r//
+>    diff.lfclean.binary =3D false
+>
+>This causes Git to rewrite the file during checkout, stripping carriage =
+returns from
+>binary data. As a result, the working-tree version of a PNG differs =
+from the blob
+>stored in the repository, and the file becomes corrupted. A copy =
+downloaded via
+>curl remains intact because curl does not apply Git filters.
+>
+>Reproduction steps
+>1. Create a global .gitattributes file containing:
+>       * text diff=3Dlfclean
+>2. Define the diff driver globally:
+>       diff.lfclean.textconv=3Dsed -e s/\r//
+>       diff.lfclean.binary=3Dfalse
+>3. Clone any repository containing binary files.
+>4. Compare the blob with the working-tree file:
+>       git show HEAD:path/to/file > raw.bin
+>       fc /b raw.bin path/to/file
+>
+>The working-tree file is corrupted while the blob is correct.
+>
+>Solution
+>Remove the global rule or restrict it to actual text file extensions. =
+For example:
+>
+>    *.txt text diff=3Dlfclean
+>    *.pas text diff=3Dlfclean
+>    *.md  text diff=3Dlfclean
+>
+>Alternatively, explicitly mark binary formats:
+>
+>    *.png binary
+>    *.jpg binary
+>    *.zip binary
+>    *.exe binary
+>
+>Deleting the global .gitattributes file entirely also resolves the =
+issue.
+>
+>Future risks
+>Global attribute rules are applied to every repository on the system. =
+Using "*" with
+>"text" or any filter can silently rewrite binary files, break archives, =
+corrupt
+>executables, and cause difficult-to-diagnose data loss. Users may not =
+realize that Git
+>is modifying files during checkout, especially when the corruption is =
+subtle. A
+>warning or safeguard when "text" is forced globally might help prevent =
+accidental
+>misuse.
+>
+>Thanks for your time and consideration.
+
+Just some musings from my own frustration in this area.
+
+Having gone through some similar things, I would ignore CoPilot. There =
+are other words I would use as well but they are not for polite company.
+
+Set autocrlf=3Dinput not false. Also it is a good idea to set =
+ignorecase=3Dtrue and filemode=3Dfalse on Windows.
+
+Git tends to give preferential treatment to text files, only looking at =
+the first hunk (whatever that might be) looking for non-text characters. =
+CR is text, so a file containing those near the front will probably be =
+consider text unless explicitly marked as binary. If you are sure you =
+have binary files, declare them. Do not assume git will always get it =
+right - although .EXE, .ZIP, .JPG, and .PNG are pretty much always =
+binary.
+
+I am going to assume something there, that the clean/smudge and diff =
+engines are not guaranteed to be subject to autocrlf processing before =
+receiving the files. It might be or might not be, depending on what git =
+feels like doing given the state of the file. You would have to go look =
+in the code on the version you have to be certain, but don't count on it =
+in future.
+
+The other problem you may to face, and I have been there, is that =
+clean/smudge and textconv filters definitely *do not like* binary files =
+if not declared as binary, and sometimes even then. You are dealing with =
+stdin and stdout, so have to know how the filter/textconv is opening the =
+files. I have seen platforms that always open in "r" instead of "rb", =
+which was a problem. I had to hack around that using %f in textconv. I =
+have also seen people write textconv programs without awareness that =
+they might get binary data, and that blows up runtimes badly when you =
+hit a NUL in an input buffer after an fgets() in C.
+
+I wish you luck in your adventure.
+Randall
+
