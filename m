@@ -1,115 +1,140 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6E430E85B
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 13:42:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF33377A9E
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 13:47:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788270171; cv=none; b=I2Zg8xvUZ5F3vcleEZnA4h5z/YJuWOscHtWfUeyax6ShKtgjW93QihyNDvh3uJbLaz6vpnh15J3pWgeM3sLe6ThV3/lSLK19eBziiBSN9v22CwIoa4Akyw2ivSF4eVRnrdvqAowBFYMng4rkPjzQxIvdZIEA0d+62YZWG6NHTTM=
+	t=1788270477; cv=none; b=hc4Od+nZjvWVwGUz+MrESEzkPIdjLEYlpNq9Qqi98ETFgWgYTAXztp2HlhNNBh8I58MhzGpAnrIKdySSRt1TTH2nIdXHusJEH3KU57NPW/zMq2prTwM3vkJ3UWdhugoomla+7a6WU62P4yCvv9hsmQmsb/pfP9JUJHaIqP29XWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788270171; c=relaxed/simple;
-	bh=ro5Icq2qngwxrJu2mLJNS0RioBT86kQbvbpgZ17kHu4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UMPCbaiwZrtH2KieqYQcmghhHfZPrCYwqZGbeyj8uioSGQ6OwybaslrJyW/xNG0CN9LP8ruozvJHcTx9FFQk+e/6wdg3qA8C6xQdG+hi62LiSDMVtPwcygfRaRIt4GHpnA6BLbeJTNu8/fAHRidqF+dgUxWFE6DgiWX0TlQ2rNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cyjFxtjl; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788270477; c=relaxed/simple;
+	bh=C2PB3YfNQAjJVNVW7B7IS+6x3i9NK6/Dl0P1m/MIBMo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IRyP2JoSEgxnVnPSF97hztJPjjQWKGLXuA6W4Uq5ZD97CUKzmm5HByREKYxIPl32kPidl57lKZ9bB7SQLBT4zvFnz5jq2DWRJJCbhNNx1EGfDCEJlCCDcY2noZ6D1mp7KKv6gG8H37T2Nm07jMiXLxfexV85ZoeNvDSfIbPkJFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iRprWah4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U4y0Vaa/; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cyjFxtjl"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-93906e8a5feso482148285a.1
-        for <git@vger.kernel.org>; Tue, 01 Sep 2026 06:42:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788270169; x=1788874969; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+1vFXQuOizqBvZNp9IStxNYJrbprix7EA8WQB9jTJrk=;
-        b=cyjFxtjlE5pU3tiZgG8p2vMpCDNnvUD9s8Dn0iWet1MngU19qQxThWqav4XZTHKWuZ
-         UrvNEeNUHxPQwOKi8jhkU7+GTeP2hdJc0d+KasvrHq2JHUubF0BJvEMvZ7WobCCbGWdY
-         Gq8rN3DZpxAfz+ZS+iows1xbx5NpwId3np/W4LUfRqd/TfT0WEvsta7m8yR/h0cxL+8N
-         buhk5Riis8Z6Brawm8YwdmMfvc80vUIKLVSAcYRe2ew0WXm2q3dtFHOICNZ3LwXJCyCb
-         DGnnKQxo1Mzle3BRAEIv7GFwhatUSNwdnA5b/yXuBiaYLauYmubtZ6XYyrjZkatRYdeI
-         gBZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788270169; x=1788874969;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+1vFXQuOizqBvZNp9IStxNYJrbprix7EA8WQB9jTJrk=;
-        b=FMXwGEeUY170/lLSa6hlVFT6MwlP+Z2igeRb5/hYxX6FJgTPZyTc1PTTuI/J3EmBLv
-         ZtYuYQv7CtVKBLDrIQxMlsDdknp0VQP5edLAJfrY5Ujyo3yRaWBZHqnhYr5PX5D/R4s4
-         Bs4gCp8x/5bmSJDCIhe6pMsILATCYsaRVLZ+939k166mK3YQhK2J1GwYjMcgCdnh4CE9
-         /6ybKc8Ui3NBSvpRimy5jf08aI0TrEBOfhaVQRMOWaz3AnEyGgpodsqIw5gXoo8jv6Vh
-         jKw/nCgYC+I4HDcQ8V95n3O+ww3M3fojfP1ZPJO2X0PUDjDzzBAU2cCD6e77qmBssccG
-         /FbA==
-X-Forwarded-Encrypted: i=1; AHgh+Rqrj8boGstaRLBMJlLXJOD91oGtaFxGIjUipdDFkxdQ0ZOPmq0/MsYA98Ncl4J+7OCU/Fc=@vger.kernel.org
-X-Gm-Message-State: AFuF++mawGrY20jWpRH4X+ijJG8+Z+kGwuaFiHamRIoRcy0p57fBBZCt
-	R9ph9xcZUUZ1OG8utL4FnFDk+G1/gpKPfLJSaWYglcwBE2qZXErV7dbV
-X-Gm-Gg: AR+sD12FL1AyYGNYG1vZ+EowvmPiJa9pywmDE95+SPpYnR9Hr7uYZky+CSNfSApYi0u
-	xMBpKn0nqRP4kjlSTZyNqEyMDGX2g6mmksXfpl/A4GUy4Iy6r4i8bj6+zLvBsPO1mJQCspKrrhg
-	oksMU1C0j3DS7BmbHyxZ4T7XHQ/74vyVKXDWei1fDA+B26VnMm79hIAtm3Mj7GWw0fn07qTwR4a
-	xlhZ9Wp0SPkSwvZAhd9T/FdevampCafYHnUNOsmA9FH6lkW5gGDHw/umfn43ISr7Qi8AyhVuerI
-	aas9CGh8DnleE3LxuEJNKKehVXen/o6+M8VariWCaB3rhw5k6nkNNh4K9QzLuxhaQu3Cqmj68Q/
-	mC19noxLqSzkFoKMSN7DTlHfFipZeW1BV+rRsV+gJHYlugq/dK7aHvQrSlKBPFWf9DbP6tZgtj5
-	3JE6XaY23IfovWlXRa+W+3sNCgqCqvilFkGdQnf4IzFz9bSxySf6nnFqALXC2LBCItwt7Q4iHmQ
-	eKrHDAw0ddGhGhc6CiF3zS3ODgkcxUIR9QJYbt8AyTfRoJd3sdvPGNuDb35Dz6ot9CWT/YLMf0Q
-	8p3bzvI+Z9ItpEQ=
-X-Received: by 2002:a05:620a:6cc5:b0:937:6c0a:9b65 with SMTP id af79cd13be357-93913783d56mr3646306985a.7.1788270169067;
-        Tue, 01 Sep 2026 06:42:49 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-939173da67dsm1025065985a.34.2026.09.01.06.42.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Sep 2026 06:42:48 -0700 (PDT)
-Message-ID: <c2c2d78a-52da-4814-9d05-ac757b164817@gmail.com>
-Date: Tue, 1 Sep 2026 09:42:46 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iRprWah4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U4y0Vaa/"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0D44F1D00095;
+	Tue,  1 Sep 2026 09:47:54 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 01 Sep 2026 09:47:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788270473; x=1788356873; bh=3dHDS1KsUI
+	ZYlHFrRPn0H8oYbcu8Mvnc6/H+MfAx6rE=; b=iRprWah4fw9xKXMHuxAgGI64WT
+	LqfnhcYivQRDcJqgrpx3mhx62EBJXM9gzTQM/KbUOu2MwF0XfyvHpLU0IyDT+5S9
+	afqBxtg7XnT053INCvEGU31z762gmvB3ddx212EokIeQwAfn/fj7WXuNyyi2gFug
+	DmAXoVlwDXWBut32KHVFfKJeZ5j6LGMujRYK/3XFfi5yrM7jBjIJXAbMbENz0V7r
+	VP6p5n3b4dKB0QBdOgi0bvEL7ukKxDjA2CkxZxJIPsBuEw20zzTzQKvOn3LsMB+y
+	7JHB1GI8q9mD+EIH9tHDJpt0azFyiMmWYJdavzKmg+3GyZc2UM3r9W3Lbh7Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788270473; x=1788356873; bh=3dHDS1KsUIZYlHFrRPn0H8oYbcu8Mvnc6/H
+	+MfAx6rE=; b=U4y0Vaa/Bx1iq3Aj/0EPIPmQTcq4vSaExCPA6LIdugs0LTlJSu3
+	2q9UDZXY1b74m0S/Gzt064tCnrn0zcCmyA/RWVTp5hfe8K7IReickHaoVEzaWoBE
+	Hm/Ew+h/YLGRJ9voSRC62M3KeB+6dVzAWMgsKnd4O9nnygd7a5mRpIBkcwfTOOuE
+	qgz/xd+JWEw/Tcf18dkOzbVm5Mcahc6Fjgtm36ZXUIdm6kK9/ulIJWJS7zeU42aG
+	gPuO1IMi/5ZVkvvgKQcqeFUqH935Xxdf7KmKK1n6jLhHfIA3pAR7Szw6CJPvGILH
+	PX4sSvkvYI9K2fSDnwCW60TZu7cfHkXPYXQ==
+X-ME-Sender: <xms:ideWancOSjI23bnc7P9r1D0245o5AafhZ4Y2HT2xkzF4LpCxHhsurA>
+    <xme:ideWag5UrHGmF3fhsEj4vgS5LYHjinqnKRDCwvJgyCWgMRTOtxyzzbVqlbpXyzSz5
+    imB3EXwYS1beKKEv5XvQjy7l0uOuJ3bjfjzSatP6DgSu6xBMOeIhcg>
+X-ME-Received: <xmr:ideWaqW4jyPDezFCT6tmsMwlcMGVyi68oJAFeIgcAf4cPkFxZeFL4VdjyoaVlEF7KXvpn665kLblB06E6IN8ohPF5uc7eY8YBQ>
+X-ME-Proxy-Cause: dmFkZTFBRy2RAsg6alMnHtus8Ty3VOjD90csj6KvGxIlm1XpfRpHXpVF4W6jpYcmcPzov+
+    xNRdNc4fwBBSxu+agb7TMt76uH4WvQmi+hrYIL3Sv4faz4U+R+2F0c/nysybdYSw9p4PfQ
+    h/bI9e6vbyZ++JmOmC1n67dpFFvKpxk3mKd1Jq3Ru2LWQeFL/QdaMJ8d6YKIOaYIBg8lGZ
+    dsmPiBvC/gUM4xy4BEkwGmDlTpSg1jXPk4MkEwobP3VvDM4ESmZAQXcW25z73OV5wpeROw
+    vFa6l8Gp7qRZLT6RRb23hswcLOwNYnURwp6BrmDm87t/cLS2aqz0uiY9iwwFWn/pxknQh7
+    z8SFEx1+r6j1pJ4VAT7TJYGaduo7pItBfnIV/qaZK38+ypb+wWio5nDEIq5Nokx8KbLRx+
+    AEE198Gs4/vH1/Wdrnd5UJOirc4pFgDF9DRL0al0fmjCu8vOdEvMgTV8LrpyU8iJ4zyKcz
+    44cuANYkxyLcvxADMycArt6X/U8uP3Ij51vByDsBHohPV8FaTbRPKFzReKgIt5+LAAPrEF
+    yYfQs4lzfD/wzAhIJyKwbZxtcPDvm+tgMmsas5jiG0OUheMl/SCU3MFWzG12GJ7ILVTIXB
+    hdhWECM+S4R1eZomXLwndw3GSvMaD9/5KPvHgFttoNxHa5W7s4uMnAJ+KX6w
+X-ME-Proxy: <xmx:ideWav5LH3Y6wHr-ERX6CCj7kqhyzuOY_QqfFyRb3gAeN6RU3HG_0g>
+    <xmx:ideWalpeNyJxP2ywuWDxwfrsX4byGVmNYhCg0yfQ6Jpe-FI5ucRjxg>
+    <xmx:ideWaikngOZlTwaD1SMF5jIdcpJW6dE_K9RheQFss0qtfZOVcKHnOQ>
+    <xmx:ideWahP5k_2EudwBX5AThik_s44oWM77jT259CUxrVv_8B8C7_HthA>
+    <xmx:ideWagYtrQbQA_YCAq2hwVbYFd14JR72lpLlLAVuQ7P9ePK7dZlB5GIB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Sep 2026 09:47:52 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Gusted <gusted@codeberg.org>,  Jeff King
+ <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 6/6] last-modified: keep per-path Bloom filters for
+ wildcard pathspecs
+In-Reply-To: <87mru1wcyi.fsf@emacs.iotcl.com> (Toon Claes's message of "Tue,
+	01 Sep 2026 11:14:13 +0200")
+References: <20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com>
+	<20260831-toon-speed-up-last-modified-v3-6-2bbb864acf93@iotcl.com>
+	<xmqq8q5lvc1i.fsf@gitster.g> <87mru1wcyi.fsf@emacs.iotcl.com>
+Date: Tue, 01 Sep 2026 06:47:51 -0700
+Message-ID: <xmqqv78pt75k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] trace2: stop allowing die()
-To: Jeff King <peff@peff.net>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, gitster@pobox.com, Taylor Blau <ttaylorr@openai.com>
-References: <pull.2178.git.1784131932489.gitgitgadget@gmail.com>
- <pull.2178.v2.git.1787684181.gitgitgadget@gmail.com>
- <20260827052318.GC176544@coredump.intra.peff.net>
- <a41bdb3b-1fe7-4c1e-9d16-72390d93503b@gmail.com>
- <20260901050129.GB1075462@coredump.intra.peff.net>
- <20260901050311.GA1077240@coredump.intra.peff.net>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260901050311.GA1077240@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 9/1/2026 1:03 AM, Jeff King wrote:
-> On Tue, Sep 01, 2026 at 01:01:30AM -0400, Jeff King wrote:
-> 
->>> I don't have much knowledge of CodeQL, but the following vibe-coded
->>> .ql script is able to detect these transitive calls and demonstrate
->>> the issue:
+Toon Claes <toon@iotcl.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Toon Claes <toon@iotcl.com> writes:
 >>
->> Yeah, I think the whack-a-mole can be solved with static analysis that
->> actually understands the complete (possible) call tree. And then you
->> wouldn't even really need your banned-die.h, because you'd have the real
->> thing.
-> 
-> Just to be clear, I am not opposed to banned-die.h in the meantime if it
-> is helpful to your goals. The whack-a-mole is not something I would
-> choose to spend time on, but you are welcome to. ;)
-It's helpful in the sense that it demonstrates progress during the
-refactor, but it's less helpful as a long-term protection. Which you
-point out quite well.
+>>> diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
+>>> index df73c7d0d0..75b18ee83b 100755
+>>> --- a/t/t8020-last-modified.sh
+>>> +++ b/t/t8020-last-modified.sh
+>>> @@ -290,6 +290,32 @@ test_expect_success 'last-modified with Bloom filters and --show-trees' '
+>>>  	)
+>>>  '
+>>>  
+>>> +test_expect_success 'last-modified with Bloom filters and top-level wildcard' '
+>>> ...
+>>> +		GIT_TRACE2_PERF="$(pwd)/off.perf" \
+>>> +			git -c core.commitGraph=false last-modified -r HEAD \
+>>> +			-- "*.c" >expect &&
+>>> +		test_grep "data .* bloom_queries:0$" off.perf &&
+>>
+>> Ah, OK.  With GIT_TEST_COMMIT_GRAPH=1 exported from the test harness
+>> environment, 'git -c core.commitGraph=false' would not be effective
+>> here.  You would need to do something like:
+>>
+>> 		GIT_TEST_COMMIT_GRAPH=0 GIT_TRACE2_PERF="$(pwd)/off.perf" \
+>> 			git -c core.commitGraph=false last-modified -r HEAD \
+>> 			-- "*.c" >expect &&
+>>
+>>> +		GIT_TRACE2_PERF="$(pwd)/on.perf" \
+>>> +			git -c core.commitGraph=true last-modified -r HEAD \
+>>> +			-- "*.c" >actual &&
+>>
+>> And in the case where GIT_TEST_COMMIT_GRAPH=0 comes from the
+>> environment, you might want to be explicit about setting the
+>> variable here as well.
+>
+> Thanks for this suggestion. Yeah, I didn't notice it makes CI fail.
+>
+> But a little bit of a followup question, I noticed I also should be
+> setting these in [PATCH 5/6], but test don't fail if not set
+> appropriately.
 
-I could easily send a v4 that removes patch 1 and all references to
-banned-die.h with a focus on "die() less in trace2" to start this
-reduction, but with the knowledge that it isn't sufficient, yet.
+Yeah, I noticed it when I queued the two fixup commits near the tip
+of 'seen'.  I wrote it off as the test *not* checking everything.
+If the test is about what the command does and not about how the
+command exactly does its thing, you may not notice the difference
+as long as two code paths both produce the right results.
 
-Thanks,
--Stolee
-
+So some tightening of tests might be needed, if we care.
