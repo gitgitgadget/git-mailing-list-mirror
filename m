@@ -1,104 +1,220 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-103.mta1.migadu.com [95.215.58.103])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5E1479894
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 09:21:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED40476CC2
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 09:29:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.103
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788254483; cv=none; b=qYYwXHMTjYeEYs4oCFaOr5bRytFIuLBJ/ya7Ij+3Pl/x+XDUgl+BI7ZeM60BufkFTe/tnVCPKlsDgWbpM2AK+dPdY6pJvqF9CN2t2f+/TlQiW+yZThwRFOLLtYFSfUHCB8dq8QzuU1WYTp/0D8nz35P0fGC+izBFTEM3a2s8RTU=
+	t=1788254974; cv=none; b=pwDoTH5L4geKMljozhRRcTQL7KIi927CTegYjWFIyqllzmP6KXYmUdDKzafFWD32OsqjXTW57n8/FaiT+souXA474e80gKmJo6jV7LtoZTIrVGf1LplNnb8kAMmofpxsa99iKl2lM84s2R34ZO6Dt1dAN82b07QpFM4NBoFaojc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788254483; c=relaxed/simple;
-	bh=tuTUCzutvBEi3g5ezLoopRJgJ2Ali8zOSVjQ+P1uqDU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g4KDH6hgCMeX6WdpwCPWJ8uXj9WxTOfLPtMNLCCkuk85j/83GE/BaWb/8V4gZ4Nv6kvZesXJamaujp/oIOWJ5ey42Z8qVTBmWF5hrrbnl1qSMIMZgmgSQuaFZDpuxU8UAdVQ/B76qZge8LXhCRfdQhAR9RIl+OxFLnWS1ed7r3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XAmAKq1x; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1788254974; c=relaxed/simple;
+	bh=NEzdcAFdosHEj9j0q4RN19WhH1Od6VMVBGL1SgZycD4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=nVZJh/eKgII7GgpSOG05wzKZAbzWi8hE/JZgT0yOR1Wj8Y3a5xdL9GqFvJf58bsELqEIqtSVf3acsN9CUuTy1m5qvp/lDPqUcgn5Ix4XNlP900ZxhMxJjfHIp4rrdeudlJDnDYaDfMK3Tvk7woNx77XsLH9v3EiIOUdZOSOgxcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=cHsBuDYX; arc=none smtp.client-ip=95.215.58.103
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XAmAKq1x"
-Received: (qmail 7555 invoked by uid 106); 1 Sep 2026 09:21:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tuTUCzutvBEi3g5ezLoopRJgJ2Ali8zOSVjQ+P1uqDU=; b=XAmAKq1xodH3W5yZcmIQkJHTXnyjpL/XUuWtF9jbeyRzsPVvCJAiElPON7u2dnapvr3o5pZvVo5OyaGsJBiDhhE3ZEIg0n1Bo2lbc0UzIL/dmgnxlCuY+kmZS4pzYKdI56DN/s8BVd0nkW19iHqSYp4eqBrABON8OUcNYEuDA1IHy9aHEThsQV1QBjWuWtRTY0auJkGy1rV5JvH9tcIT2fwv25DtyvD1nI5HSu54wYyv0M2sQ+DTRrX3H1F79sKN9lZ44gFmFsc8J2T78cX36gWIpSSj+V9cIBNWhdeJrjrK/cJKDGMteZdDkUzwhAs5pNbTGeEUGiyAZrbvvmnWHA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Sep 2026 09:21:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 35448 invoked by uid 111); 1 Sep 2026 09:21:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Sep 2026 05:21:20 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 1 Sep 2026 05:21:20 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Nicolas Le Cam <niko.lecam@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] revision: hang on to "freed" argv elements
-Message-ID: <20260901092120.GA2979683@coredump.intra.peff.net>
-References: <20260830215555.2660035-1-niko.lecam@gmail.com>
- <20260901062815.GC1075462@coredump.intra.peff.net>
- <apaSDqIEyc82Q_zE@pks.im>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="cHsBuDYX"
+X-Envelope-To: git@vger.kernel.org
+DKIM-Signature: a=rsa-sha256; bh=NEzdcAFdosHEj9j0q4RN19WhH1Od6VMVBGL1SgZycD4=;
+ c=simple/simple; d=iotcl.com;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788254967; v=1; x=1788859767;
+ b=cHsBuDYX0mIe1ta10z1/VxLuB/sqLNaeh3XVjnLQU/urp/AI7FqJEuAGmGfTRtJiVYdEc91g
+ YypjQpuC4acFv2rISIO4h9TgiOcMbEDbbxzZnRDy72Mhlp3QMijVUCzfOwvMPtmofGXSn0icSgw
+ RQ2i7IB17+3M/qh3pF2f+xnw=
+X-Envelope-To: git@vger.kernel.org
+Received: by mta11.migadu.com with ESMTPS id b62ad75e9f65c7fb;
+	Tue, 01 Sep 2026 09:29:27 +0000
+X-Mizu-Trace-ID: b62ad75e9f65c7fb
+X-Migadu-Flow: FLOW_OUT
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH v4 0/6] last-modified: use the pathspec's Bloom key to
+ pre-filter commits
+Date: Tue, 01 Sep 2026 11:10:20 +0200
+Message-Id: <20260901-toon-speed-up-last-modified-v4-0-a09949800404@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <apaSDqIEyc82Q_zE@pks.im>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4XNzarCMBCG4VuRrI1kktBGV96HnEV+JjqiTWliO
+ QfpvZ9UEcWFLr9heN4ryzgQZrZZXNmAI2VKXR16uWD+YLs9cgp1MylkI1poeEmp47lHDPzS85P
+ NhZ9ToEj14IRGC1GCUcCq0A8Y6fem737uO1/cEX2ZyfnjQLmk4e+WH2H+e5Taj6URuOAahAYTw
+ TSgt5SKP618OrO5NMqnZcQXS1arDaZ1LqCNa/duqRdLwWdLVUs650yjrY9r9WpN0/QPjQ6bXnA
+ BAAA=
+X-Change-ID: 20260716-toon-speed-up-last-modified-b04ea1f21831
+In-Reply-To: <20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com>
+References: <20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com>
+To: git@vger.kernel.org
+Cc: Gusted <gusted@codeberg.org>, Jeff King <peff@peff.net>, 
+ Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>
+X-Mailer: b4 0.16-dev-9febb
 
-On Tue, Sep 01, 2026 at 10:51:26AM +0200, Patrick Steinhardt wrote:
+We have received a report[1] git-last-modified(1) is slow compared to
+git-log(1) if you want to find the last commit for all entries in a
+directory. For example running the following command on ziglang/zig[2]:
 
-> > This fixes the prefix case above (which is now tested in t3903), and
-> > should fix any other stray cases. Though I could not find any; we use
-> > OPT_STRING only in the prefix diff options, and very few revision opts
-> > store strings. Those that do (like --format and --encoding) already make
-> > a copy of the string. They do not need for us to hold on to the memory
-> > longer, but it does not hurt them if we do.
-> 
-> So the fix could've been as trivial as you mention above, where we
-> simply perform a copy of the string for "--src-prefix", and everything
-> else works just fine?
+   $ git last-modified -t --max-depth=0 $OID -- doc/langref/
 
-Well, and --dst-prefix, and also any other cases that get added later.
-And keep in mind that --src-prefix and --dst-prefix are not even in the
-revision code, but in the diff code. So we'd be creating a very subtle
-requirement for somewhat far-away code to adhere to.
+Turns out to find results about 2.5 times slower than:
 
-> In any case though, your approach is more defensive and makes it way
-> harder for such use-after-free bugs to be introduced going forward, so
-> I'm in line with the proposed patch.
+   $ git log --name-status -c --format=commit%x00%H %P%x00" \
+       --parents --no-renames -t -z $OID -- :(literal)doc/langref
 
-Yeah, defensive is exactly what I was going for.
+Now the latter needs some post-processing to come to the same results,
+the total solution still is faster than integrating
+git-last-modified(1).
 
-> > +static void mark_argv_for_free(struct rev_info *revs, const char *str)
-> > +{
-> > +	if (!str)
-> > +		return;
-> > +	strvec_push_nodup(&revs->argv_to_free, (char *)str);
-> > +}
-> 
-> Hm. Doesn't this mean that we take ownership of the string and then
-> eventually try to release it when releasing the vector? I wonder whether
-> this could introduce subtle lifetime issues where the caller passes a
-> non-heap-allocated string.
+After some research we've discovered the Bloom filters aren't used
+optimally. But it turns out the code powering git-log(1) can fairly easy
+be reused. We do this in a few steps:
 
-Yes, that's exactly the point. We are replacing a call to free() with
-one that passes ownership to a strvec which later frees it. If somebody
-is passing a non-heap string along with free_removed_argv_elements, then
-everything was already broken.
+ - Patch 1 & 2 prepare revision.[ch] to expose the helper to check if
+   revs maybe changes in Bloom filter.
+ - Patch 3 & 4 prepare a similar helper, but this one is needed when
+   git-last-modified(1) is called with `--show-trees`.
+ - Patch 5 uses these helpers in git-last-modified(1).
+ - Patch 6 is a bonus change, which optimizes when working with wildcard
+   pathspecs.
 
-> I don't think it's that bad when seeing where we use these. But I feel
-> like hiding this fact by marking the parameter as `const` is a bit of a
-> weird design choice. I'd much rather prefer we force this onto the
-> callers so that they are aware of this, but I haven't seen the end
-> result of that. So maybe it's just too ugly.
+Below are benchmarks on the ziglang/zig repository for the
+`doc/langref/` directory (with commit-graphs written using
+`--changed-paths`):
 
-You can see the effect already in the diff. In the preimage all of the
-callers had to cast away const-ness in order to pass the string to
-free(). We could keep doing that here, but since this function has
-exactly one purpose (to free the string we pass it) it seems like a nice
-syntactic convenience to push the cast in here.
+    Benchmark 1: master: last-modified -z -t
+      Time (mean ± σ):      61.9 ms ±   1.8 ms    [User: 57.1 ms, System: 4.0 ms]
+      Range (min … max):    58.5 ms …  68.9 ms    150 runs
 
-Though you may want to look at the "2/1" I sent, which pushes the check
-for free_removed_argv_elements into this function. And then the cast and
-that check are side-by-side.
+    Benchmark 2: HEAD: last-modified -z -t
+      Time (mean ± σ):      31.8 ms ±   1.3 ms    [User: 27.1 ms, System: 4.2 ms]
+      Range (min … max):    29.7 ms …  35.6 ms    150 runs
 
--Peff
+    Benchmark 3: git log -t
+      Time (mean ± σ):      22.1 ms ±   1.2 ms    [User: 16.7 ms, System: 5.0 ms]
+      Range (min … max):    20.1 ms …  26.6 ms    150 runs
+
+    Summary
+      git log -t ran
+        1.44 ± 0.10 times faster than HEAD: last-modified -z -t
+        2.80 ± 0.18 times faster than master: last-modified -z -t
+
+Comparing HEAD to master, there is about 1.95x speedup on running `git
+last-modified -z -t. `git log -t` is still slightly faster though.
+
+But without `-t` the speedup is even bigger:
+
+    Benchmark 1: master: last-modified -z
+      Time (mean ± σ):      60.7 ms ±   4.5 ms    [User: 56.5 ms, System: 3.8 ms]
+      Range (min … max):    57.5 ms …  96.2 ms    150 runs
+
+    Benchmark 2: HEAD: last-modified -z
+      Time (mean ± σ):      16.2 ms ±   1.4 ms    [User: 13.3 ms, System: 2.7 ms]
+      Range (min … max):    13.9 ms …  20.4 ms    212 runs
+
+    Benchmark 3: git log (no -t)
+      Time (mean ± σ):      22.0 ms ±   3.7 ms    [User: 16.8 ms, System: 4.9 ms]
+      Range (min … max):    18.7 ms …  37.6 ms    150 runs
+
+    Summary
+      HEAD: last-modified -z ran
+        1.35 ± 0.25 times faster than git log (no -t)
+        3.74 ± 0.42 times faster than master: last-modified -z
+
+This makes sense because without `-t` we can use the Bloom filter more
+optimally.
+
+Similar timings are seen across a few other repositories (like GitLab's
+monolith gitlab-org/gitlab).
+
+[1]: https://lore.kernel.org/git/17f356ff-7bfb-47f5-b714-62a95cc8b821@codeberg.org/
+[2]: https://codeberg.org/ziglang/zig
+
+---
+Changes in v4:
+- Override GIT_TEST_COMMIT_GRAPH when passing `-c core.commitGraph=` in
+  t8020 tests.
+- Link to v3: https://patch.msgid.link/20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com
+
+Changes in v3:
+- Add trace2 "bloom_queries" and use it in test to verify top-level
+  wildcard behavior.
+- Link to v2: https://patch.msgid.link/20260807-toon-speed-up-last-modified-v2-0-7d87bbdeaf9b@iotcl.com
+
+Changes in v2:
+- Make the public helper revs_maybe_changed_in_bloom() return a bool
+  instead of a tristate.
+- Keep the bloom_keyvecs_nr precondition before get_bloom_filter() and
+  return early from the key vector loop.
+- Add commits 3 & 4 to add helper used with `--show-trees`.
+- Use Bloom filter correctly with `--show-trees` and add test to prove.
+- Rerun benchmarks to compare results with and without `--show-trees`.
+- Link to v1: https://patch.msgid.link/20260717-toon-speed-up-last-modified-v1-0-410418f18614@iotcl.com
+
+---
+Toon Claes (6):
+      revision: move bloom keyvec precondition into function
+      revision: expose check for paths maybe changed in Bloom filter
+      bloom: add helper to check if any key in a vector is present
+      revision: add Bloom check that includes parent directories
+      last-modified: check pathspec against Bloom filter first
+      last-modified: keep per-path Bloom filters for wildcard pathspecs
+
+ bloom.c                  | 12 +++++++++++
+ bloom.h                  | 11 ++++++++++
+ builtin/last-modified.c  | 28 ++++++++++++++++++++++++++
+ revision.c               | 52 +++++++++++++++++++++++++++++++++++++-----------
+ revision.h               | 20 +++++++++++++++++++
+ t/t8020-last-modified.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 160 insertions(+), 12 deletions(-)
+
+Range-diff versus v3:
+
+1:  645c5d1ddf = 1:  dbb1ad8e96 revision: move bloom keyvec precondition into function
+2:  3fa70e300d = 2:  6f0d62fe6c revision: expose check for paths maybe changed in Bloom filter
+3:  d30e3fea71 = 3:  1c09e9ecba bloom: add helper to check if any key in a vector is present
+4:  7b5cc70022 = 4:  7c7792e057 revision: add Bloom check that includes parent directories
+5:  5cb67a54b1 ! 5:  ac5a6bd427 last-modified: check pathspec against Bloom filter first
+    @@ t/t8020-last-modified.sh: test_expect_success 'last-modified merge undoes change
+     +		test_commit touch-b d/b &&
+     +
+     +		git commit-graph write --reachable --changed-paths &&
+    -+		git -c core.commitGraph=false last-modified -t HEAD -- d/a \
+    -+			>expect &&
+    -+		git -c core.commitGraph=true last-modified -t HEAD -- d/a \
+    -+			>actual &&
+    ++		GIT_TEST_COMMIT_GRAPH=0 \
+    ++			git -c core.commitGraph=false last-modified -t HEAD \
+    ++			-- d/a >expect &&
+    ++		GIT_TEST_COMMIT_GRAPH=1 \
+    ++			git -c core.commitGraph=true last-modified -t HEAD \
+    ++			-- d/a >actual &&
+     +
+     +		test_cmp expect actual
+     +	)
+6:  c94f744a0f ! 6:  3524a202e7 last-modified: keep per-path Bloom filters for wildcard pathspecs
+    @@ t/t8020-last-modified.sh: test_expect_success 'last-modified with Bloom filters
+     +		test_commit sub-c d/b.c &&
+     +
+     +		git commit-graph write --reachable --changed-paths &&
+    -+		GIT_TRACE2_PERF="$(pwd)/off.perf" \
+    ++		GIT_TEST_COMMIT_GRAPH=0 GIT_TRACE2_PERF="$(pwd)/off.perf" \
+     +			git -c core.commitGraph=false last-modified -r HEAD \
+     +			-- "*.c" >expect &&
+     +		test_grep "data .* bloom_queries:0$" off.perf &&
+     +
+    -+		GIT_TRACE2_PERF="$(pwd)/on.perf" \
+    ++		GIT_TEST_COMMIT_GRAPH=1 GIT_TRACE2_PERF="$(pwd)/on.perf" \
+     +			git -c core.commitGraph=true last-modified -r HEAD \
+     +			-- "*.c" >actual &&
+     +		test_grep "data .* bloom_queries:2$" on.perf &&
+
+
+---
+base-commit: c73e85354c275c9d409b26445089bc16940fc527
+change-id: 20260716-toon-speed-up-last-modified-b04ea1f21831
+
