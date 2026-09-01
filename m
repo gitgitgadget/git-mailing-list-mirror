@@ -1,38 +1,38 @@
-Received: from mta0.migadu.com (out-121.mta0.migadu.com [91.218.175.121])
+Received: from mta1.migadu.com (out-115.mta1.migadu.com [95.215.58.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB2E4766A3
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 09:29:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.121
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66ECE477E51
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 09:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.115
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788254979; cv=none; b=q6Dc6WuOHAKm1mCJH1ZAihiqCXPIOUy0aoJk9WxbR2mLMCILpvJsZfzsNG0/NTfSSJQHZ8U/YSGCMPDdedB5dGwA2Oi6UlLEQwhA9kaEmzpxO6+WX90wEyfczUWu10PHLnE+GXoV+dJ1iMZPaAewO2SXd7zkyrO+OFpVUlQX9do=
+	t=1788254982; cv=none; b=Uo/aCvoEt/6lJoDxh7AuyXmH8+YEVqMG9kNpexzJATXVtt9U2Rh2Mzw/Bvcn4sztKfR0/OtdymAkxU5xnJrSXOCFNV1WhVsc0iPx2lIpZERV+47IIL0LLwc9/6mmgFCVgyDaDmdIlH0Cc5inVZappKKVg/vMX7PqSmXg1I38YY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788254979; c=relaxed/simple;
-	bh=LgPkPMn6Skvxyx8zlGokeWGs2vAMfPS36yvtiFtiIbg=;
+	s=arc-20240116; t=1788254982; c=relaxed/simple;
+	bh=H26zG09TPACFdRHTREs7kYkds78kmmu5EgAdUG670H0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qaM8T5vyMTj5E0XpYZcZaFM2jJm2lI/awfT8xbgWcK0UEkwDnq/QAI/p8a8hsOyVFj4RY5b/3eu9C//0zazmU7ZQvCUOhLHDRO/3p05TMpfwCV2zBopyaRPBD0g2o5YE4watCkkQ0SJQZpsykqh8/sh0r2FW5YWXZ0F63mCELmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=j9eyB9Mi; arc=none smtp.client-ip=91.218.175.121
+	 In-Reply-To:To:Cc; b=d5PwKXzuXQ+tLmqUfgPyXcHiTDIyFPjXpEc5rimVZT4Aoa/MH3NrfMK/DKZRh4KMud4bVDInNsNVq5cmJ83wcwet02x86o5J028Y4+liZaOf5gb8Se1qqsUZxVZ3J13Id2+3J7Y+DmvDHwl4ybcOwVCGNqlwxfT1qfkAo859fl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=NchgqM1L; arc=none smtp.client-ip=95.215.58.115
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="j9eyB9Mi"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="NchgqM1L"
 X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=LgPkPMn6Skvxyx8zlGokeWGs2vAMfPS36yvtiFtiIbg=;
+DKIM-Signature: a=rsa-sha256; bh=H26zG09TPACFdRHTREs7kYkds78kmmu5EgAdUG670H0=;
  c=simple/simple; d=iotcl.com;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788254975; v=1; x=1788859775;
- b=j9eyB9Mi4ETuk0ins7XRNC2vtWS7DFNAsKIedvdNuqOHV6ugUFIF3cP40CVg6/cLJQ/EidsI
- mtbP4BjHsXgVin6pV4vzbVS8LY9MrUzE7c1GApLOgIa+SYTwn7puPRNwBC1ZdzdmeZWAiFaO0Pr
- EVprhZcopNcBLiW/ioGHQDMU=
+ t=1788254978; v=1; x=1788859778;
+ b=NchgqM1Lu4s/K8vsAbQCTwI2RnzH1tdKKtTW8+xQ//HWoDiq6DuAzzPliDvmkxSAuN2zF4pG
+ CEd5e4CFmAIF4FUBJNJHVdH5gmB47BjOKzFWTH4mx19Ep18GnGey8tCleCUnjrsDFwjThqEoRC8
+ 6033WXWZUVpjB+ULo09O1XvU=
 X-Envelope-To: git@vger.kernel.org
-Received: by mta10.migadu.com with ESMTPS id 48ae9ac49039a6b5;
-	Tue, 01 Sep 2026 09:29:35 +0000
-X-Mizu-Trace-ID: 48ae9ac49039a6b5
+Received: by mta10.migadu.com with ESMTPS id 23454e885c5dce8c;
+	Tue, 01 Sep 2026 09:29:38 +0000
+X-Mizu-Trace-ID: 23454e885c5dce8c
 X-Migadu-Flow: FLOW_OUT
 From: Toon Claes <toon@iotcl.com>
-Date: Tue, 01 Sep 2026 11:10:22 +0200
-Subject: [PATCH v4 2/6] revision: expose check for paths maybe changed in
- Bloom filter
+Date: Tue, 01 Sep 2026 11:10:23 +0200
+Subject: [PATCH v4 3/6] bloom: add helper to check if any key in a vector
+ is present
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,7 +41,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260901-toon-speed-up-last-modified-v4-2-a09949800404@iotcl.com>
+Message-Id: <20260901-toon-speed-up-last-modified-v4-3-a09949800404@iotcl.com>
 References: <20260901-toon-speed-up-last-modified-v4-0-a09949800404@iotcl.com>
 In-Reply-To: <20260901-toon-speed-up-last-modified-v4-0-a09949800404@iotcl.com>
 To: git@vger.kernel.org
@@ -49,124 +49,88 @@ Cc: Gusted <gusted@codeberg.org>, Jeff King <peff@peff.net>,
  Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.16-dev-9febb
 
-check_maybe_different_in_bloom_filter() looks up a commit's changed-path
-Bloom filter and consults it to see whether the commit might have
-modified any of the paths in the pathspec that `revs` was set up with.
-In a follow-up commit we want to reuse this logic from another builtin.
+The changed-path Bloom filter of a commit stores a key for every changed
+path together with each of its leading directories. To query if a path
+was changed, bloom_keyvec_new() fills a key vector the same way: a key
+for the given path and one for each of its leading directories. For
+example, for "a/b/c" the vector holds keys for "a/b/c", "a/b" and "a".
 
-That caller, however, has already looked up the commit's Bloom filter
-for its own purposes, so having the function look it up again would mean
-a redundant lookup.
+A Bloom filter can only ever prove absence. When a key is not in the
+filter, the path it was made for definitely did not change. When it is
+in the filter, the path may have changed, as the key can be a false
+positive.
 
-Extract the filter-consulting part into a new public function,
-revs_maybe_changed_in_bloom(). This function takes an already looked-up
-`struct bloom_filter` instead of a commit.
-The existing check_maybe_different_in_bloom_filter() becomes a thin
-wrapper that looks up the filter and delegates.
+bloom_filter_contains_vec() looks up all keys of a vector and reports
+whether all of them are present. That answers: Is this path maybe
+changed by this commit?
 
-Expose the new function via revision.h so other builtins can reuse the
-exact same filtering that `git log <pathspec>` performs.
+A caller that also cares about the directories containing the path asks
+a different question: Is this path, or any directory leading up to it,
+maybe changed by this commit?
 
-The existing function check_maybe_different_in_bloom_filter() returns a
-tristate value. This returns either:
+Consider the Bloom filter of a commit that changed "a/b/d". It holds
+keys for "a/b/d", "a/b" and "a", so looking up the vector of "a/b/c"
+with bloom_filter_contains_vec() reports that nothing changed, even
+though "a/b" and "a" did.
 
- * `-1` : No Bloom filter was used.
- *  `0` : The commit definitely did not change any of the paths.
- *  `1` : The commit maybe changed one of the paths.
+Add bloom_filter_contains_any_vec(), which reports whether any key in
+the vector is present. It returns 0 only when none of the keys are in
+the filter, which means the path and all directories leading up to it
+definitely did not change.
 
-These return values are used to keep count of false-positives. But
-because the new function revs_maybe_changed_in_bloom() is not involved
-in counting statistics, it returns a boolean value telling whether the
-commit definitely did not change any of the paths, or maybe changed some
-of them.
+There are no callers yet, one is added in a subsequent commit.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- revision.c | 30 ++++++++++++++++++++----------
- revision.h | 12 ++++++++++++
- 2 files changed, 32 insertions(+), 10 deletions(-)
+ bloom.c | 12 ++++++++++++
+ bloom.h | 11 +++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/revision.c b/revision.c
-index 6a6a1b6fa0..ed46b90b00 100644
---- a/revision.c
-+++ b/revision.c
-@@ -750,7 +750,6 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 						 struct commit *commit)
- {
- 	struct bloom_filter *filter;
--	int result = 0;
- 
- 	if (!revs->bloom_keyvecs_nr)
- 		return -1;
-@@ -765,18 +764,29 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 		return -1;
- 	}
- 
--	for (size_t nr = 0; !result && nr < revs->bloom_keyvecs_nr; nr++) {
--		result = bloom_filter_contains_vec(filter,
--						   revs->bloom_keyvecs[nr],
--						   revs->bloom_filter_settings);
-+	if (revs_maybe_changed_in_bloom(revs, filter)) {
-+		count_bloom_filter_maybe++;
-+		return 1;
- 	}
- 
--	if (result)
--		count_bloom_filter_maybe++;
--	else
--		count_bloom_filter_definitely_not++;
-+	count_bloom_filter_definitely_not++;
-+
-+	return 0;
-+}
-+
-+bool revs_maybe_changed_in_bloom(struct rev_info *revs,
-+				 struct bloom_filter *filter)
-+{
-+	if (!revs->bloom_keyvecs_nr || !filter)
-+		return true;
-+
-+	for (size_t nr = 0; nr < revs->bloom_keyvecs_nr; nr++)
-+		if (bloom_filter_contains_vec(filter,
-+					      revs->bloom_keyvecs[nr],
-+					      revs->bloom_filter_settings))
-+			return true;
- 
--	return result;
-+	return false;
+diff --git a/bloom.c b/bloom.c
+index caf22f9831..b96534e6e3 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -607,6 +607,18 @@ int bloom_filter_contains_vec(const struct bloom_filter *filter,
+ 	return ret;
  }
  
- static int rev_compare_tree(struct rev_info *revs,
-diff --git a/revision.h b/revision.h
-index acf6d06b24..67778558e1 100644
---- a/revision.h
-+++ b/revision.h
-@@ -68,6 +68,7 @@ struct string_list;
- struct saved_parents;
- struct follow_pathspec_slab;
- struct bloom_keyvec;
-+struct bloom_filter;
- struct bloom_filter_settings;
- struct option;
- struct parse_opt_ctx_t;
-@@ -495,6 +496,17 @@ void reset_revision_walk(void);
-  */
- int prepare_revision_walk(struct rev_info *revs);
- 
-+/**
-+ * Consult a changed-path Bloom filter to determine if the commit to which the
-+ * filter belongs might have changed any of the paths in the `revs`.
-+ * prepare_revision_walk() needs to be called in advance to ensure
-+ * pathspec key vectors are set up.
-+ *
-+ * Returns false iff the commit definitely did not change any of the paths.
-+ */
-+bool revs_maybe_changed_in_bloom(struct rev_info *revs,
-+				 struct bloom_filter *filter);
++int bloom_filter_contains_any_vec(const struct bloom_filter *filter,
++				  const struct bloom_keyvec *vec,
++				  const struct bloom_filter_settings *settings)
++{
++	int ret = 0;
 +
- /* Drain the commits linked list into the priority queue. */
- void rev_info_commit_list_to_queue(struct rev_info *revs);
- /**
++	for (size_t nr = 0; !ret && nr < vec->count; nr++)
++		ret = bloom_filter_contains(filter, &vec->key[nr], settings);
++
++	return ret;
++}
++
+ uint32_t test_bloom_murmur3_seeded(uint32_t seed, const char *data, size_t len,
+ 				   int version)
+ {
+diff --git a/bloom.h b/bloom.h
+index 92ab2100d3..f508db23ad 100644
+--- a/bloom.h
++++ b/bloom.h
+@@ -164,6 +164,17 @@ int bloom_filter_contains_vec(const struct bloom_filter *filter,
+ 			      const struct bloom_keyvec *v,
+ 			      const struct bloom_filter_settings *settings);
+ 
++/*
++ * bloom_filter_contains_any_vec - Check if any key in a key vector is in the
++ * Bloom filter.
++ *
++ * Returns 1 if **any** key in the vector is present in the filter, 0 if none
++ * of them are.
++ */
++int bloom_filter_contains_any_vec(const struct bloom_filter *filter,
++				  const struct bloom_keyvec *v,
++				  const struct bloom_filter_settings *settings);
++
+ uint32_t test_bloom_murmur3_seeded(uint32_t seed, const char *data, size_t len,
+ 				   int version);
+ 
 
 -- 
 2.55.0.679.g6767b8d81c
