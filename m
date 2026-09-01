@@ -1,92 +1,120 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E59261388
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 04:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116EA3B28D
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 05:00:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788238447; cv=none; b=DK6SArR/PYBEM6Lj/37Yul8rSh9ka/9XF5FsFTgAnLoG8qgrbILDwnTtPZzfj01vP0yF37Ip+WR1LZ4PZ4iHvYkqv4KGofusDuhbdsb3aBeRTC8N7zxNiNO7/a71Rt98kyMqJ7IvOh61R6Tj3M9YsDUpvPqU9/M2iqPwkVymEAY=
+	t=1788238860; cv=none; b=lSVX2ocM4mV8gdD5A+7Ai25wqAmTIZDrSSGPc3z8CUfAKwCMqu3I4eYCO6ZyIwxW0J7JUbYDNwnOgDuYnlhsVOK/WYdlO/xnN4psV+VLVfu237p/AGsHHCjw3DNXh9nRvXjmhC48z8zyMr8zudvYEagzqlzQq+C5BD9FwRFxexU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788238447; c=relaxed/simple;
-	bh=L/DYYH1uObkUubOKNo7br9fJGcWntEhSTA1AcaEeKp4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LeVgU2Uf618kzoHbYV/HvKP18pj3Kl0rhp4ctWIRplK0PNW/5CVbHMjOtQF6Wonnx8RtB6rO/UOHeGN/nFr9lKC5bFXBU0v9Et0AMYSSoqRamk5U+zFnVrNQ5VvF+L0Bt8MoiK+Eg+uulLU+Bumoh8N8M42kXYtUXc4LWHrMFms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=IADc0W3q; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1788238860; c=relaxed/simple;
+	bh=I+q8Kl5opJobGgNCNiI6lHUmKDCs1JsDOnwE+nC6PCA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Df6TbYf4Xiu0Tyr1lPcnbn7THJQqwp/wDT1IoY2w8mlQHeEYhAOuWTzTp0A8/iXIABdN318KPG+e0YW6cSk7IUr4vqJsc0Zf8sq26VgitQGWyJxnb/teIHlEeslJoC35jTTK55kDkWMltelb30lGnW8hAys73zBJ9D8F/2JrlqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TGxc4BWI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CybNi/Md; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="IADc0W3q"
-Received: (qmail 6859 invoked by uid 106); 1 Sep 2026 04:54:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=L/DYYH1uObkUubOKNo7br9fJGcWntEhSTA1AcaEeKp4=; b=IADc0W3qBJp/Jb9KW9uCb2yMHtMDmX5GkYVV7ODh/PW0GYaCcYxSYsyAwNeYeuEESKOBzsDHgfRusDN/QojYuasu07gSb1mGiLv9GKCHa8K+V3ah8tDEf79xdrmIvBGm2S/TLvk8fddZ8LaQpw+PVA8l9l+bbKvpp+wOVxIz9s4v/nFohwEPzl1dROQIm9NC5tRpVr2qaH4qBtvOM8D4Fr0bFrchEF9LA3rUr62CJ1Q1x75bkKAZtQfyD+5X5M+PT12zrEVbrCi/zRmt6/zBCOxlw6DXciM1ZaEvYK3uokhfpGpc03bo9lCdjOVKjfW5pYjgKQnquFxYzjYlCuH5aQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Sep 2026 04:54:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 33061 invoked by uid 111); 1 Sep 2026 04:54:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Sep 2026 00:54:03 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 1 Sep 2026 00:54:03 -0400
-From: Jeff King <peff@peff.net>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>,
-	Tian Yuchen <cat@malon.dev>
-Subject: Re: [PATCH v6 3/3] core: convert build-time USE_NSEC into runtime
- core.useNanosec
-Message-ID: <20260901045403.GA1075462@coredump.intra.peff.net>
-References: <cover.1787231825.git.ben.knoble@gmail.com>
- <cover.1788206466.git.ben.knoble@gmail.com>
- <0a611f614041b165140da7f2546c058178cdbfce.1788206466.git.ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TGxc4BWI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CybNi/Md"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F21657A00BE;
+	Tue,  1 Sep 2026 01:00:57 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Tue, 01 Sep 2026 01:00:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788238857; x=1788325257; bh=p2ACjmL/Kx
+	eOfpbqKxP97wIuI6yqJlJlShxs5tTjvX0=; b=TGxc4BWIDe9+Y55UPsxgmQKdJr
+	evbPqOU0DLKQJexCCLvQzqZp1S18fFO6iUgZiauVPFaMhkEaTBIy95AdApDvleIn
+	45ogelabT2doIYavEi6A01faDBgNxJE0o5buolmvJM+Fep4pck1Zjx40LBPqAnJO
+	xGUfQ5IOQEfeb4/1HWJGO4OE/RM5Zpxq1G27twOw6f8MAJhJikTQSVRqwNewaDow
+	44AUAFMcw0Esk+Lisfq8pe1N1E0R4+cGuRVQCRCQdQIZITgdgPYdUCczoxxAONef
+	Zj0ObZ/pgAhgndSGdYdwSNTyYh9nX4myfQngeXM8bCmB73NPALTNtXNrWJDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788238857; x=1788325257; bh=p2ACjmL/KxeOfpbqKxP97wIuI6yqJlJlShx
+	s5tTjvX0=; b=CybNi/MdgQ7HvvzKCC99CwGVDsQJ1awPYNbPKYnNDaXRjnGdQ5y
+	vZ9v79Fk36KybYFoGiuzAQafBehj3MPd8Z0fPklBzfA3HCfX1UvLazZBRBP/CH74
+	XsHqZs3tlr4oN9RgQGZgJBdQz4jC5c0l7ALcUfpXKj4VgnOvES3d7J/3cT91dgvY
+	jqAVsSrWPqZpAxMx1ZOC4rYedfrHu1XiBqejkDCPbumX+1iYGPrizkK52WSS7rwb
+	ep93UnpfJSL0WWPpKnEQ+t6pmCHQdvO7wpC0WMZP7IzHsvKOJeW46VyLo3x7JjZJ
+	dCBntaUKr5eWMh/c/yYQjLiJyErqlZW8Pmg==
+X-ME-Sender: <xms:CVyWasl5hMt5i0cr7mymcY2E556jG6IPwlaqDJPhFKYkL3zlcZdqrA>
+    <xme:CVyWavixjzc-bxp5pv7NQCtZQXHfaF-NBbjP71yaSwtnMXGvij_yNaj8MZRN6gMmk
+    GqzGE0bJ10Ze5KqHrVv82Ii0NZZ2SkbBg8Hf4vQpGRwO4gcnOMvqA>
+X-ME-Received: <xmr:CVyWakfxdivHjdTOeHDZnUfDjv6n7btuJ36opbFCsknycpVqExNFqFG9HNVzdOdxoQbIA5Fyr0nABcZwx_ujOSQnE4A8t5Zgbw>
+X-ME-Proxy-Cause: dmFkZTEduq+HziRlbUNvG/pzXlnPebYXNv8hxTjiNdpboMj/5YrYntRKvy8pS+KnfVyts7
+    iN3gUyA0LOqLxXdmEaIRBJSGK3jMQoe8QuOmMtZf9hEPQDhVGwnVBkZRWwLN3QdGi/y8ps
+    rA7GvapRCLFP3nt8pROdRZ7Fkh0fO0GcuPKfP5lZet0kkxkvSH04O2v4xhEO0xxqzrVNx4
+    A2dGTd6IBS7S81VC4YW9lp5viHQmsbMIL/0LptAWI7KUW9G9Pmt+BICqreIyxary8ynvDH
+    hM+dVv0AtNtRmMWU/ADAC2hQB1OEgQUmbMYP8odtQ4cQA07eKHnMmy6ySzQxQcHNrjLiT8
+    jsQqRa4LkTcpbFHQwS6cvkX3Z+Nzbe6rR0RgMyvmw5qIgwK5OppiIYHJfIALUgEVaDtxJv
+    nkul62R83rJ7cWsJ1afxZeMEyt+T9TVPBGy6OcctirmbUGpzeR4VPSqxh0GzfM9JglELkH
+    8/FBWA7bo3rZXa9hFRcNAjZVx0qYc+CtYbQy6FRI2wunogjTgQswqqWMmDmnhufsz9rVsS
+    xQ6n0gCTpDiHAEgYgs3WdYbqMH9nSwHkB4Sv/gFrYcKQoE/orCROAOnEkDf9wOUti4E1TD
+    fPs1hKw7ZPNEMA/BkyDzy6CQe7TjL7CkRIpOaAkeAOkpP4/OB/JIvvJK4Zvw
+X-ME-Proxy: <xmx:CVyWavj0y0FPhR4CECFVBMtjUJuLzo8dbbQc50a1E9HdmCXSAIgARQ>
+    <xmx:CVyWaszsA429JrtJReZ229sKvpxcPzh9-o6Zzq1EC5-Wzh5uyMuZfg>
+    <xmx:CVyWarM5q1RxTyPfICArKgVvhkXo6OFc9KHWyAQfPn3OTgpLh3k8og>
+    <xmx:CVyWatXZylutvghDj1y13yfVXk4vvfnIDQwec-g6qAa0YkEu3JOfHg>
+    <xmx:CVyWarX8yMq0yWrByednRw45zuwDG_w5oYqquUSGQKO4TMDp2CvRUmUa>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Sep 2026 01:00:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Andrew Pleeter via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Andrew Pleeter <andrewpleeter@gmail.com>
+Subject: Re: [PATCH v2] builtin/ident: add new 'ident' command
+In-Reply-To: <20260901043944.GA1074757@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 1 Sep 2026 00:39:44 -0400")
+References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
+	<pull.2388.v2.git.git.1788220746663.gitgitgadget@gmail.com>
+	<20260901043944.GA1074757@coredump.intra.peff.net>
+Date: Mon, 31 Aug 2026 22:00:56 -0700
+Message-ID: <xmqqzey1tvjr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0a611f614041b165140da7f2546c058178cdbfce.1788206466.git.ben.knoble@gmail.com>
+Content-Type: text/plain
 
-On Mon, Aug 31, 2026 at 04:01:37PM -0400, D. Ben Knoble wrote:
+Jeff King <peff@peff.net> writes:
 
-> diff --git a/environment.c b/environment.c
-> index 6676e6f5ae..c83cf44839 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -571,6 +571,13 @@ int git_default_core_config(const char *var, const char *value,
->  		return 0;
->  	}
->  
-> +#ifndef NO_NSEC
-> +	if (!strcmp(var, "core.usenanosec")) {
-> +		cfg->use_nanosec = git_config_bool(var, value);
-> +		return 0;
-> +	}
-> +#endif
+> On Mon, Aug 31, 2026 at 11:59:06PM +0000, Andrew Pleeter via GitGitGadget wrote:
+>
+>> While existing plumbing commands like 'git var' and 'git config' expose
+>> individual pieces of identity and configuration, discovering what identity
+>> and signing key will actually be attached to a new commit requires multiple
+>> independent queries and manual correlation. 'git config' only reads raw
+>> values without performing environment overrides or GECOS detection, while
+>> 'git var' returns full ident strings with timestamps without exposing
+>> commit signing status.
+>
+> This is just my gut reaction, but: would it be simpler to teach git var
+> to provide those broken-down pieces than to introduce a whole new
+> command?
 
-This hunk made me wonder if we even need to do any build-time magic here
-at all. If your platform doesn't support nanosecond stat entries, then
-you're probably not going to ask for core.usenanosec in the first place.
-But if you do, I think the code still works; we fake the entries as "0",
-so they'd always yield a racy tie, just as if core.usenanosec was
-disabled.
+We long timers among our reviewer base already expressed the same
+sentiment.
 
-I guess you might be able to get into a funny state, though, if you
-build two versions of Git, one with NO_NSEC and one without, on a system
-that actually does support nanosecond timestamps. Because IIRC even if
-we aren't _using_ the values, we still store them in the index. So an
-index generated with the regular build would store the actual nanosec
-stamps, which would then get a false comparison using the NO_NSEC
-version.
+> My main feeling on suggesting this is that:
+>
+>   1. We already have a lot of commands, and this one feels very
+>      specialized.
+>
+>   2. Most of these suggestions could make git-var better for reading
+>      idents _and_ for reading its other variables.
 
-That seems quite unlikely to happen in practice, and there is a certain
-amount of "if it hurts, don't do that". But it's not like by dropping
-this #ifndef we could get rid of NO_NSEC. So it would not simplify the
-code overall, nor the number of build knobs that we expose to the user.
-So it probably is reasonable to keep it.
+And you said it the best among our responses, I think.
 
-I haven't been following the topic closely, but from my cursory read
-everything else looked as I'd expect it to.
-
--Peff
+Thanks.
