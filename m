@@ -1,81 +1,84 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169C73542F6
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 22:47:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB923D16EF
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 23:25:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788302828; cv=none; b=W4i3Ayi3MeCtC1UsfkBmBWqUp1pnyzLGA0Y0pRtuP3t1l3BLUTNIyn9K1tQ6VVEXu2VQ5WsWcJzkfgpItUNaCoxqCBblc5GsyXRSFz41nOXe9awl3+KMJ8ZTsrehSIoKG2BMXkoxV2uPtcT2zyuglw9aSyKHb/uYRRDYK/XINcQ=
+	t=1788305152; cv=none; b=X0H5qTVL/jdsBeajb6Hd5JEA6MhSAXIXOXx4+uwEoNaTPxQGQ7MuT2wDUyjzol8F8ugm1it4K72GZP1AOwL7CZUq6r2W748KSyQTnIpCcT5M+XOdZ0xZ9R4xZiZ9FZF0fCfSR8S3h/CSGBm4IaSTF8SM4o9gyDE9zzCuHckHRt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788302828; c=relaxed/simple;
-	bh=Vd+UjMIe5mtAerxQ7A5RWPfjFHZG4/kv8FpcnkzhmzY=;
+	s=arc-20240116; t=1788305152; c=relaxed/simple;
+	bh=pocjikOK31jQ3wpVl1JsSIwZHJ8YfFPe94Mgji+tgBQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JRYmmhYeMu3Xumf+mp9cTR2U3bfEXhMwAQKZt4rhZksGCs+XRIYwF3PjW79ekqDLf6LPMl/CPm17gOUzZR0A9gSlpg7i66DDZF/SsVqLUcjlL5ls536a/woiFrKcxyRkE78tI+rEFEdUGy3f1DN+jVgm9ac2tGfxv5YJFhdnG+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZTF1tdgu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IrrKbZJI; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=L05KvCWbfpXI4j1jLOJjFPSBJXVMr445zuWWq253GwLPN5dhpnpHcG6dnyS6KoQgnBM1/18t0fHUVw+XT94K9RFVYYRr+aR4+tS0i4MgYceGtELk/IOwi++dma9xNJ9eklwi5yWOJMXMj3ryaoq4eBb1mIDdTcVk8jVucHpB9YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=q/Eudkgy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kq9W0M7G; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZTF1tdgu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IrrKbZJI"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 51C167A00E5;
-	Tue,  1 Sep 2026 18:47:06 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 01 Sep 2026 18:47:06 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="q/Eudkgy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kq9W0M7G"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 715D21D000A6;
+	Tue,  1 Sep 2026 19:25:50 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 01 Sep 2026 19:25:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1788302826; x=1788389226; bh=4vrIHfcd8i
-	c7efFqerGEHhGXK1sljdRd7VMWKW/hOu8=; b=ZTF1tdguGfODaaAOhu+Fyki0q8
-	woKB1eSZRUhuI/aQ3r+YurSM+XkF2EzmJm0kU/bN7hvMqd1tRULXUpGMmaSnCVoi
-	IOixor5X/WxgfLjLPMp94pQwBR5QiNsLjmz3OfUFCmUEYBM6+6CSichS4nUIOr3a
-	fZqMjayUjSQTIrL2w13oe0ki8uCytO05Df+q3dTET64ATnOPDoJ6QFeRF6Vj0Xln
-	d9vlb98JuTLVIXnNkYcV9HFKDYuPnRvMR0MtRTEBHnuXkLqcHmB9UGBc/PfVW0Kk
-	2CS0gU4M4V3nKkzwszW4Sf7PfuOuc1yqZYsYmT8wJwtkENr2f5vY2kxEp/Ag==
+	:subject:to:to; s=fm2; t=1788305150; x=1788391550; bh=CIAG5bIVgN
+	vw4kWhJ6pSnFhvsCGXgBBIvGRnBKqIUpw=; b=q/Eudkgy4x6PgZUGqaxk1vxjKO
+	sh/qTm8B1hHjE0x2wGprrUMhUvtOuGvlj5id9VWfTo5XaJfUA9ypPUZYpTRs5wwm
+	ske8BHmR3WsrELTUICK8Xu57wAmZ9QcOgW8vkCOIBGgZeTOfCL/T7qmENUxoU6sE
+	3hWoSLTXLW4DDkxAWVVGkFssgq5L7+A0BPZkOHHFuV8dn8ydjToVVymA6aFEFWk0
+	KWJymhLhlULzlBpmIBcE4X7fuLH5EP19QeK26el55cei41dFpHMUmOOjCghlteIW
+	xs+HeZMJaJdcK0jG66wnxSHK4E9Oo0G7CpYIcGNzSofioJmtb9Tf1EyOfKhA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788302826; x=1788389226; bh=4vrIHfcd8ic7efFqerGEHhGXK1sljdRd7VM
-	WKW/hOu8=; b=IrrKbZJIV84Yvec3vffCk60ZEfycb5CZlq1YXT6m6ctwSjg+IUN
-	c37QRHzka07OuWvD+kWp1XBT2CZf9QszFnQ+aI2NYFplPzBDw1zQ3RNEDP2cLAWI
-	cnBctqyLiuyYLln6kQdEIAc/95pTFkVUtDF+c4LNWjE1PvvLhQ9Vu+xvXgGYpRhx
-	mfAGgWDXSMokC3L6wUVldromiCVWX4Qi7lc2NvIXBdnUaxMpzgd2BNTvvbyDo8gk
-	681rRatac+RZYj+eOYENkSkuTINMkMVWFQS2cUmQYMqSKqfN0xS4xn+3nBrGEv3w
-	e94dHYovlgLHyusti+E6/KaDiryOqVM0f5A==
-X-ME-Sender: <xms:6lWXavry9-ZVn-MaTPlmzE3T42UdfsEwGgwGPuqP-bQmDFGVbZAfnw>
-    <xme:6lWXahEIKZinjtChTojytU2gevS4fnM5sABSUE901TiUkb44E2nK261CLGOuQCmAn
-    793Qrd0urjMZYAht-0NrnUKxSyJ6OiIJszL6ceGosKeSpO0XdUhJMM>
-X-ME-Received: <xmr:6lWXapm94Qix9l-Rb911OIQXzlekYIbWu7TJwiQEuS5ieyVsq2TB5Qj8KRaHBfnQN41fiGodc-SSvBjwxXloY577BYIymySW2w>
-X-ME-Proxy-Cause: dmFkZTEDY2puQN+F/mQ3t93MLTG88eF90wLxZ1ftGXoSnRjoipDdTmvUzYYKANgJs88X3z
-    752CMLPzJvW8hrLwEWdMsXhqSiJ4Yy6KHQwA9Gz9Mi4aLJjPwSXeoZdhXZ9bOJ+rzxjHP3
-    rwrk3JUtw/Vmjx7gtOzQ6v6Dr0QczR4svTriKyRE+LImAlMIqlD5KA0HTlqlEq1PklI9WE
-    HX8CzWBmKhNBCmeHg46C/nqqY2VCmLy3unmsYFSxrxkAXJmGE4gqG8uYc8C/UrzwaHWb4n
-    82qPVsrfqRbExtGkS1Ow4JeQ7TCqs8HHD8XkHnwwA4RHGogb3636pkoZSogLtofNPH3ocn
-    9Oj2VARvvxzusZTJMb0unpdojxbQeTO9hM/yA36P2USp22avhAWN/BIqA0adb+hMJ/o8Q/
-    NuJULNHr5EjyRLs69WbL8nabzHHjwWq0BAgR48Cm1DHS23E9Nc0wV0wAyVZdA0PhpvEPgv
-    oLMsv0SuauC7HRaDexLMVtSmlt0J3PxHMlib7Gnb1fGGu3E9vxB4hZNbAdto4VA3g9Qk6l
-    knopJuhM3KtbGIBFdDeXjNGasrKiUOt9VRMQltR7C2siTDxHZ0KKZqubQ1QwpI33BiVbZO
-    sXuhsS1j6tzjjF/BwKzkdBLYXDoRpFS9SOSpu7CRdNwl2Z6xnvhmRPOcJ1ZA
-X-ME-Proxy: <xmx:6lWXasmzS_jsDsqauLb7mVQEy-zZj_IQaMxuWg4pGDryHmZsP0rdsA>
-    <xmx:6lWXaiuebzGKzl1xZP30dXV1wAfJlXzf7Y58aoHBdnFn2eVyeLhUVA>
-    <xmx:6lWXanl71niuTSnCgS8eKNxVuu27r91jYPfGKQbFrAll1g8gvLZrow>
-    <xmx:6lWXaltSoFVRAq7BSaJVS1BNCau0afFZ1bjRNim95w59u2cOTwht_A>
-    <xmx:6lWXapPSRmdub7fZpXkuY8o1cT6eEIfu7nlcfrI-suNLUnzG_BLCvOdv>
+	1788305150; x=1788391550; bh=CIAG5bIVgNvw4kWhJ6pSnFhvsCGXgBBIvGR
+	nBKqIUpw=; b=Kq9W0M7GvaFrv/tZ/a+wzDll3WaeZQ5l/pVjtpvjdIYLgsJ3b/u
+	+XmaFyxHkccCIsaeXxajd7H1Amv/0C0mjzPgdHaS/Ry9C+k9C3z/3X5FzEet8MTs
+	KhUmdxvVPTbkbBZqlgXzd5Nc2JHYBzl5ybNCxcNHv9M9j2HNR/UtqCTJ0e/fEF3q
+	JnvGZrBKA8ETO3vKxLL2yyvEirOvjWWWud2syVfantPJZ4GqK6nwUA0utGHeyRqQ
+	AkBXjLa6Wg4BE23PvLCQHeHnkPe0M6ulHQ7ieLiS1rHPDUzVkiRmKmdU7bo1/1Q9
+	HBntR942090Ezkvs/fGWYBMJRllLdO3mwcg==
+X-ME-Sender: <xms:_l6Xambgc9cb0pF2XnAF1LDZVtiMvk1mkdL0vUgNzOOGYED0YL_79Q>
+    <xme:_l6Xag0nzNs1x-kghIWfZISajemmVx4jjgPYOX8oJ7hk60gH24TZQDyF4imB4blog
+    Ds7MtDlD6SJqPA8hIFGRQYPxfK9A6a2_rUGKa2_m29OCGxBQ9empA>
+X-ME-Received: <xmr:_l6XauVWfHv4zwkVfwidKnuGA33nbEdkrSQgLhzqxFKr9pUvSuFixOxQ2caH7-8tCFmO8RF5Ao_bmvJNWHM3hwwSyDB1yTMVCg>
+X-ME-Proxy-Cause: dmFkZTGs2BGgg1gNqTrMzrHBZ5qAw9QXo0dwgB6iXKjVtQiRdf8JxVwe6ZQ4ia0p8Tjzg5
+    7rCyAEu+13HaLZnVTcQnwidNPZaWOUGOZHWi5tUjw9o5hwW0oRU3EsYcxz2zEomUut9pR2
+    QpvhsFTQ9t/rx60qXPFwNGkZXCioYipabnSlkMeBN/fdUHOiS5fafKdEh5jXD5+5RwKsBw
+    dcQrzhwF5YdOFV7Ta8ToW1DjJux0YBvPgnUn7ux6RlSjdr5hqWlNUVazmHlzu2tTz8+hLK
+    8QYrAKVB7+/Uk0fMyMecVSwjAxFOFAS5WYujTVV2U1NpvEghgY4nQpl/66kATYOObFdscm
+    jMTL+EZXaaoH6HyZkvBiviewnJJNH5QJ5L1iiKwmhsDBB0mZJTx6n6MUuJ78CAUmkmlb+i
+    0dAJCo89Xyq2Hea0XzFVdyfK60O28UFy5JzLmC8SIW3vP4LUTbapDeCOnKbryopuBK5NG9
+    IdGhR0/WQDnIjqlyfuXrgUmR6zPRxrsLbRAwNJBiSurSRV/Oe+QkIA4lsw9bGXgYHbWSyx
+    lG25UA3USdm/jc8G2bKIgSOtHkAtxqVyOUchphZ0Sq3UL0fBz79mvS2fllGY6x0u3QswRO
+    UAg7Eb1x+L/7z9bll+nzSZZVikHbDRuR+6w3fvCvfOhnVtYJ2sWjuG8Zv+fA
+X-ME-Proxy: <xmx:_l6XaiVB6ePUKcsH6DvE7ocTSwL7yNQ-mp0bl9Pq9zOg1wRRWzbz1A>
+    <xmx:_l6Xald2VSn7EfFXx_o798vY3JVWO6l56eyh1Gv4r3wkB3KJW-b1tQ>
+    <xmx:_l6XajUOe_Y7eE03opstcGhifXgDw9ugQJv5UVDqPSC5kE8Q6z1Q-Q>
+    <xmx:_l6Xame01_0UCmgM6mkHD6nL3Y1KrjuglvR6FXnw4tLmtBf5NpAWsg>
+    <xmx:_l6Xao1D305KzzyoboPQIfM6LSuApj5BrVVGeMRqIn8scoCdq7CKUZJ8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Sep 2026 18:47:05 -0400 (EDT)
+ 1 Sep 2026 19:25:49 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/12] cache-tree: remove dependency on `the_repository`
-In-Reply-To: <20260901-pks-odb-registering-in-memory-sources-v1-1-97a312d5fa25@pks.im>
-	(Patrick Steinhardt's message of "Tue, 01 Sep 2026 13:09:00 +0200")
-References: <20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im>
-	<20260901-pks-odb-registering-in-memory-sources-v1-1-97a312d5fa25@pks.im>
-Date: Tue, 01 Sep 2026 15:47:04 -0700
-Message-ID: <xmqqmru0lhcn.fsf@gitster.g>
+Subject: Re: [PATCH v2 6/8] checkout: restructure switch, restore, and
+ checkout entrypoints
+In-Reply-To: <CAOLa=ZTHGAfRZJKjrB=u-AxiUWgL2p_5HijdfJmCN_wJCE8BqA@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 1 Sep 2026 07:14:42 -0700")
+References: <20260828225206.310500-1-gitster@pobox.com>
+	<20260830204835.1040408-1-gitster@pobox.com>
+	<20260830204835.1040408-7-gitster@pobox.com>
+	<CAOLa=ZTHGAfRZJKjrB=u-AxiUWgL2p_5HijdfJmCN_wJCE8BqA@mail.gmail.com>
+Date: Tue, 01 Sep 2026 16:25:48 -0700
+Message-ID: <xmqqik4olfk3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,47 +88,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> diff --git a/cache-tree.c b/cache-tree.c
-> index a220372a42..6e4d82f3e8 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> ...
-> @@ -775,7 +781,7 @@ struct tree *write_in_core_index_as_tree(struct repository *repo,
->  	int was_valid, ret;
->  
->  	was_valid = index_state->cache_tree &&
-> -		    cache_tree_fully_valid(index_state->cache_tree);
-> +		    cache_tree_fully_valid(repo, index_state->cache_tree);
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> cmd_switch(), cmd_restore(), and cmd_checkout() pass their options
+>> to checkout_main(), which parses options and configuration,
+>> validates and dispatches to checkout_branch() or checkout_paths().
+>>
+>> Now that option initialization, validation, and branch setup have been
+>> split into dedicated helper functions, restructure cmd_switch(),
+>> cmd_restore(), and cmd_checkout() to invoke these helpers directly and
+>> dispatch to checkout_branch() or checkout_paths().
+>>
+>> In cmd_restore(), handle the --staged default from_treeish = "HEAD" and
+>> resolve opts.from_treeish into new_branch_info and opts.source_tree.
+>>
+>> This allows us to remove checkout_main() and enum checkout_command
+>> as they are no longer needed.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  builtin/checkout.c | 297 +++++++++++++++++++++++----------------------
+>>  1 file changed, 149 insertions(+), 148 deletions(-)
+>>
+>> diff --git a/builtin/checkout.c b/builtin/checkout.c
+>> index 2edaca5539..b18515ac7f 100644
+>> --- a/builtin/checkout.c
+>> +++ b/builtin/checkout.c
+>> @@ -1341,12 +1341,6 @@ static void setup_new_branch_info_and_source_tree(
+>>  }
+>>
+>>
+>> -enum checkout_command {
+>> -	CHECKOUT_CHECKOUT = 1,
+>> -	CHECKOUT_SWITCH = 2,
+>> -	CHECKOUT_RESTORE = 3,
+>> -};
+>> -
+>
+> Okay so this is how the first commit fits in. Now it makes sense.
 
-Here you use "repo".  I do not know offhand if the two callers of
-this function write_in_core_index_as_tree() are correct (they are in
-builtin/history.c and not my code), but if they are, then "repo"
-should match "index_state->repo".  And if they aren't, this code is
-broken.
+Yes.  The point of the series was to get rid of the monolithic
+checkout_main() that everybody goes through.  And the enum is
+primarily for that monolith to decide which code path the original
+request  is about.
 
-Either way, passing index_state->repo would be the right thing to do
-here.  Perhaps write_in_core_index_as_tree() should be corrected to
-drop its "repo" parameter.
-
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 154d6d40a1..20e6d6d824 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> ...
-> @@ -2086,7 +2087,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->  			}
->  
->  			if (!o->skip_cache_tree_update &&
-> -			    !cache_tree_fully_valid(o->internal.result.cache_tree))
-> +			    !cache_tree_fully_valid(the_repository, o->internal.result.cache_tree))
-
-The o->internal.result is a full fledged istate instance and comes
-with its own repository.  It may or may not be the same as
-the_repository.
-
-If this were a misconversion, it would argue strongly for a thin
-wrapper I suggested in the other message, that only takes an istate
-instance and infers which repository and which cache-tree to work
-with.
+In the step that gets rid of the monolith, the enum no longer
+becomes needed, even though an error message with advice to tell
+which options are mutually incompatible may need to know the exact
+name of the option.  That makes [1/8] more reasonable than passing
+enums around.
