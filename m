@@ -1,81 +1,80 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01A047CC99
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 11:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3969247D475
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 11:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788260992; cv=none; b=pM8IQd5bsYbBDBU+1gFT0btvkh7/qXGP6jMx7UGcQnfJmvSlQmoqvpqg1P1/DCMQopPO9DnBa9VNP6D04Tp8FoTlJwbowpPGac5R0PSBRfUhFrBjRAWO6po2OMVzTpA2QNq037/eTVjmfnCOdObWUSyqZPZNeQSzr5aV7UV23l4=
+	t=1788260995; cv=none; b=jIZvjzbFNcRxTDp6XtytYuWJjG8HY8V6pVELqBJK7sv4BBTe/nPumIV5MkdrZO3BtO1YpOSe615CMOmjTjVb6M5aaz1O/Is8UTdeJ8na2l6tov7M7cAPMOnhlV8ZJHJbYDMVzAxT4PudYpvEFFIvvqiuxOoziXuJKqhVDAvuUX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788260992; c=relaxed/simple;
-	bh=ptya8iBbCl/fsUdYq5iBi/S4H4SM+6WLr4GVCVXv/rk=;
+	s=arc-20240116; t=1788260995; c=relaxed/simple;
+	bh=5fJfsKhP2gcnHy7KKiOUiaS6IIAUfV+7Ihu1D5XwQGk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JX+L9SPB0R5mrtw1E+Igbh87ueCE+a6Fvw5OhyvKbr9fgfL3oS54TgwRMBtQ5cuCMhwx0Gwp+XOwDd4yZh/L+9w0jiFogAhtWI9KASrNyBOsnQxzBRzgOgYq80DmiACB5SQpuTPfrJ1RrcwemZVDSc0vIrqKjT4pTRVUzWyf9rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VctDwe0Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SyVLIYLh; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=nIXBYu0dDjO5iA6M2DbK1VkIWbGmhuMmkrQjSfg4B0zYcBzp7t9Uy9WD2tzyuAJSHwzVNzs0m7zjnld3krH23CFUBcp6oEWLjQpKv+ldx9eYO0s+VDVaT+cJ+jv+59A+/kUAyCUmNX8Qmu8ahTLSiLPpHc50P0QLIWenxHcBJZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GgGDCOWs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BTWiiMcX; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VctDwe0Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SyVLIYLh"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GgGDCOWs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BTWiiMcX"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id B5CA3EC00EA
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 07:09:50 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 70222140004E
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 07:09:53 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 01 Sep 2026 07:09:50 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 01 Sep 2026 07:09:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788260990;
-	 x=1788347390; bh=t9hsW+tLmhyhYjlZQ3DOL31zmcvFRxYHCyg/d9tUTYA=; b=
-	VctDwe0QayBU/EeAyVG6cugdGB5qcKonb+UUTLJxV318LMGLzkkhWATeAJyKvpe+
-	0S2jLY9q/En+hFmav8/eznjcfH2FWWwe4w5VWTOrkwlcSs3vU5ogoSU4aSakCZRj
-	i/XiIHGMFKNfRvVrd3qh5PGwvnLD4S13lP1DKRLfpNci0OzmPDvgdfWqANSsKJS4
-	jzgH/paTvD3lc5yABX73KEpd1LwVSxerPSnp5u8gS77cFnAW21cZtWhxAgA4BZoY
-	5xcHfA5OSDMcHT1i2nNVbfH7mNgsLnRCfmzzWrRJIF6VNg4bZQP1pnNKQTjyN5xe
-	t8tDV8PrH7oU7dloCp7y2w==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788260993;
+	 x=1788347393; bh=yfrIIl6h5COz+C5GPro6hzOpqICSN0DFRp3rLh1hI1s=; b=
+	GgGDCOWsDT/Kfo1R8jehhYW9QGqYWdgI9ua60Qq62kNlCaU13DrnKgdig2ZGUgum
+	JQBClv2scu9KALUKy5Aku30UKLclkhuj8lPKmfLYgItRECke9CVxQ63BUgNyxNBa
+	9nTriV3JfifnY8UdK+iXlagQObBes5AMTM+DGkQI0JqkqArmgED0QIsjz0q2jQg7
+	fW/WPUpyNFltkxLbk8r30+qmk954zL66M538AUy0urOl7v6oWdktLx6HiTDo0yL6
+	nZRXxCtd9PJBRFUybvekTk51Z2dKY3ZhzjDTzgnJvd44gr2y7LGPkSYaH4/b5cfr
+	T8HtZ8EMB7lf4XhQujqUsA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788260990; x=
-	1788347390; bh=t9hsW+tLmhyhYjlZQ3DOL31zmcvFRxYHCyg/d9tUTYA=; b=S
-	yVLIYLhmwBdbTa7IHtDdBZtiNWsQOQMBBg4nXUU0vN5ndjc1qPZlP0cY7qpNhWkc
-	MZunUERMUW83rIMkPqoP5xMRt+t0/g2Uu5jIeUA2qWkAg85qmJEPIzsxekrLWgq0
-	X6QNa1FXu8hjUs0YnXgCsDHY4S8xfBzl1G/hrdCYubGhbbob0Kcpx+sxB8lrPyOV
-	19yNpCoeUeD+OBfhGj4hAVB4uZX4GtFPS7DMR/yIQuoGbYmpgybNy8x8cmQJL4G/
-	l50e8kjzjC6fDMZxnxt/7sAgBrWvPz6vAnEK57xDPmWnSOtmOK25R3S6KllUi1yW
-	YRp0pXWVwjZkBl5/MFlUg==
-X-ME-Sender: <xms:frKWatYY0HUuhoD1wsPbqHp2naGnJbhPyZ80PYgzXCZFbntU4XfWkg>
-    <xme:frKWarXr0j-jbGJM20-zDN6hH1_S8qXZEyzlMmLDEzyCcdyrkSIEHbSrCRPKMyWnJ
-    NuRh3CvN5yiJNFULB37ktINFv_zxeyxLEFTKTLKbhu-wfy2vP_VDw>
-X-ME-Received: <xmr:frKWalllkWnTZThEdEIgrfrVKMQiOx2bDuxtTWqTxRDTyigGT4ZSJQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788260993; x=
+	1788347393; bh=yfrIIl6h5COz+C5GPro6hzOpqICSN0DFRp3rLh1hI1s=; b=B
+	TWiiMcXhEKL1NQ/R78U9Cs9yPgM9CooDcJN6mI/Lu6Y8BdWySU4hqTFYZPMGB8o1
+	nvTZNxqSvV1cUr0GSMRmiBI0x72Ts5dhfIZZhMZmPSas4iUJCs2grUOitps2Hbuq
+	cJ91cFwe3D13Ybq+LKmrAF27vfboOVjE/1jGKN7FE8SBLnVC1sdy2nNVIXKEfay8
+	DJNrGFQCfvfAJki/fAQ/Hp3dFCyUS1fLMoH1rDF4jP8DQSmpvvnBIi2yjHLkgG2N
+	mczx6GTeqw0VXOLegJYfJESkVa9/ZLORlJZxmqMBhNy9+BTKAtQI2Ql2zKAmNQth
+	1QTCY1F1mBqQN8U4y9JuA==
+X-ME-Sender: <xms:gbKWaomrCR9q1kgNFd8XyYykI54nCI3pLA04HFbjq37TpnciuRvSeA>
+    <xme:gbKWauwzJ37ar_OQzR2SK2CLSv9XG2X6WmNGyDfa56sSo-_x6KAd_boM4xYak0bn8
+    lhGJ3MarAT0YE0VWBxhdNoNBagN02Gf9d3QRk6IsTd97Kls8uYu8kM>
+X-ME-Received: <xmr:gbKWasSOCfH5-M1a78VJ4CX2hj7spGeY50NKsk84GE6i1eqJygyDSQ>
 X-ME-Proxy-Cause: dmFkZTEN9g1Fe0QNve9ECoP2TiUiX4EEH5POEiwmRiQIlHZ+xDbzHkU7NDd2M3NVK6/umO
     bXXkzUK3COWchLgt1/LK6gQ+MqeSaO5Oixh8RPOTrogDUVvdApPqyytnFYWyXEx31a/UW/
     VrRjQoyTePvVd8NFe+FYtwmzmG6MTjOdJtb92EaY7FcVv+MSIEhwv9SzJucvjBA0gTjUZ5
     irBlskFAJd/x0/Ql5UqM+PWol2xq0PhHqo6xS2QHAKohbPBqVxfe/t/HxXIdPstzFq1tQ2
-    zZWYaDW+dfkh9KQoVCr2N9lwFiWtupwGIIOt/EhVGn/DGYrANZ/6T7aifXl4bC+/EDNaNV
-    o/B5+v0VwRpA36+GoZS2H4vT+oONBFCRX7dEtY2TSb2ed8nszddII9rdo5adBWuF/FtsSv
-    MXIgz0bz+SBuAjZ5hnPd8jcitpmabFLZcfPqru9qhEqJUVxrdPjA9Yb2WGA/43vduSDzM1
-    a8A/7gzgDLo6Aqt5mos6Nmc2UANs22d75NLBPR6izv+Te5dpqsxXkebJAGwh0u8nUjdMRP
-    72ABbolMBvHi6czD3Md8nqpcNYxoKbapO7WJFqJ268PdciHU+Sliq4uZVZT+BTt43o1OfK
-    76HD+00cN3scNdV/Y/Kp0BEFAvAM7fCDUePhcOCSXcDEwwWtzxPiaGsNs24w
-X-ME-Proxy: <xmx:frKWagyed5i4NZY0z9BUULFtHFFst-XD9XIkfQ4FzBezhJJ8ltSI4A>
-    <xmx:frKWaogIIh_QHlP14m2MhMl0DLMKO5KF-6EWbMEBun_ROyp_v_67oA>
-    <xmx:frKWatW-MmTZQNIv2N5VoCLBu6zrMQppHhZ3wGc5MDL0F98Stfm3eA>
-    <xmx:frKWai2oafKzKDZjlJow6RZmsLBqV6RDI9MhKXeyounVOSsQK1rr2A>
-    <xmx:frKWan6I_yRNxKquIG23aIfe_BC4gXsfWWfONNh-hF1beuhw8jAZKnDQ>
+    zZWYaDW+dfkh9KQoVCr2N9lwFiWtupwGIIOt/EhVGn/DGYrANZ/6T7aifXl4bC+/EDNajs
+    fGf6Er7SQpUyVKq9dgrOiIxw1CI9Fkfr7ti70ffotR5HlmRCLxsHk9hkMcxXxJKQeiRMbm
+    U4iqWfzk/dN6izBlUJNhri1Ykjq46h5+oLHUIijUxAMjOU5uFNFwSYBnx7Z2lijpuiUtIx
+    V4/MBn/Pw2E716buQ8zZhPk6EKGaUJFbpehzxWQH1ToMznwYl+YvaukRhonthTtEFITr4J
+    4rIVBoKiho4z7GGg77eJkc4gRvcViAflCXYiIdrnSoieuPOQYHBZnUK2m28cEhTglcWNZV
+    EThHp4M/tJXNhldSph8aUSeErNUokpLcOceHufj+/nVTbYSQsXfR2Ghhw5Zg
+X-ME-Proxy: <xmx:gbKWaptiezTr2hxch4E5QHoFtm6aTW-TXTTw7ofKqVn-2g9n4VV1JQ>
+    <xmx:gbKWamszKSVUk7Zqp7N81ohodxJ0I69GZ-AuAlbmfN6sHx8uyPS3pw>
+    <xmx:gbKWanzzC8nmfrLtaPcWS3TaSGum3YvoZEBjRngrZRYer-xB-mucow>
+    <xmx:gbKWakgdJ2SivmScHfoMsS43jK3n-k9fD0CHsymzUkDHNmFx-JZuxw>
+    <xmx:gbKWas2OSXqL46usx6hQGj7vm9A_KSD4LVTpP3ukI8jhwCH-ggIr87fd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 1 Sep 2026 07:09:50 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 1 Sep 2026 07:09:52 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dd4202c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 6094c845 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 1 Sep 2026 11:09:58 +0000 (UTC)
+	Tue, 1 Sep 2026 11:10:01 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 01 Sep 2026 13:09:06 +0200
-Subject: [PATCH 07/12] tmp-objdir: drop unused function to register
- alternate
+Date: Tue, 01 Sep 2026 13:09:07 +0200
+Subject: [PATCH 08/12] odb/packed: fix memory leaks when freeing source
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,56 +83,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260901-pks-odb-registering-in-memory-sources-v1-7-97a312d5fa25@pks.im>
+Message-Id: <20260901-pks-odb-registering-in-memory-sources-v1-8-97a312d5fa25@pks.im>
 References: <20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im>
 In-Reply-To: <20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-The last caller of `tmp_objdir_add_as_alternate()` went away in
-bdee7b3013 (builtin/receive-pack: stage incoming objects via ODB
-transactions, 2026-07-10) and is unused now. Remove the function.
+When freeing a "packed" source we don't close either its packs nor its
+multi-pack indices. This can cause memory leaks in case we create an
+ad-hoc packed source. As we used to always link packed sources to the
+main object database we never noticed this issue until now, but it's
+going to surface in subsequent commits where we stop linking them.
+
+Plug the memory leaks by closing the source first.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- tmp-objdir.c | 5 -----
- tmp-objdir.h | 6 ------
- 2 files changed, 11 deletions(-)
+ odb/source-packed.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 0eaa79ffd7..deaaf6ba2e 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -321,11 +321,6 @@ const char **tmp_objdir_env(const struct tmp_objdir *t)
- 	return t->env.v;
- }
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+index 1d90e714e6..166e76e2d6 100644
+--- a/odb/source-packed.c
++++ b/odb/source-packed.c
+@@ -844,6 +844,7 @@ static void odb_source_packed_free(struct odb_source *source)
  
--void tmp_objdir_add_as_alternate(const struct tmp_objdir *t)
--{
--	odb_add_to_alternates_memory(t->repo->objects, t->path.buf);
--}
--
- struct odb_source *tmp_objdir_replace_primary_odb(struct tmp_objdir *t,
- 						  int will_destroy)
- {
-diff --git a/tmp-objdir.h b/tmp-objdir.h
-index 81eb927413..05f0d08d10 100644
---- a/tmp-objdir.h
-+++ b/tmp-objdir.h
-@@ -55,12 +55,6 @@ int tmp_objdir_destroy(struct tmp_objdir *);
-  */
- void tmp_objdir_discard_objects(struct tmp_objdir *);
+ 	chdir_notify_unregister(odb_source_packed_reparent, packed);
  
--/*
-- * Add the temporary object directory as an alternate object store in the
-- * current process.
-- */
--void tmp_objdir_add_as_alternate(const struct tmp_objdir *);
--
- /*
-  * Replaces the writable object store in the current process with the temporary
-  * object directory and makes the former main object store an alternate.
++	odb_source_close(source);
+ 	for (struct packfile_list_entry *e = packed->packs.head; e; e = e->next)
+ 		free(e->pack);
+ 	packfile_list_clear(&packed->packs);
 
 -- 
 2.55.0.979.g7e5102b832.dirty
