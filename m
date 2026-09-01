@@ -1,159 +1,126 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B094854E0
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 17:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9220396B76
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 17:31:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788282770; cv=none; b=SwanpFlYceNyQdNjvpIQSFjFNDjWujlDDApZiW/Qgu/ofy4sL3v3ZGic/MK80/UW+MB6iH3HnIjh7g5jvph/mADXglU2hEcnddr6M0ETByNonalKLLWv94TnI5bETVnaEyhF/3fOTEas/86khL2eElbaPMWulwK0bkFcu4hKkgI=
+	t=1788283900; cv=none; b=uUpCq2h47wRm5X5fm5kBUdjM3zGN6gvdaufFR9wtwYX6Eky3RrB4ra5rbqB1EjwkHUbCpoijehkL6tD/GyQtm7NNfHyujjzBUuH8jz82i7Jvp8WL9p6kpJGaZ2xWT82aHE/X/h0W+FksembSSpO38v7JVFd4s4161bSMkD70r5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788282770; c=relaxed/simple;
-	bh=4WkkeHU4Uvu8XTBURfju/q3/jIfoCKpGWYmJxC0Ltvo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MHd76iQ0+0XHsHi3IXmjCsCnophixkhQNLB3sxCV5yDvRFSBj4Zarj8TApJt73LC/GLzwWet4I8TNSQ9FfotUa1D1jYISJJD+JjNum3lH+Lk7LK3SS7LFJPqsX0JNmz+STcBpYT/Ealg2hO/UdZH/kcyvOVuhxmT+7EGtSRVyzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MSpFK/Mm; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788283900; c=relaxed/simple;
+	bh=kdk49M59s5Es4HnjGMdaFNQe21PXaCS8+pezarIKYFo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dNWACw+WYjxVXEGyp0sPA7/bpTvIb0Y9DueQBL6MstpIPWXd9RtVUJYIQfpVBeOXk5LB5RKUFf6vL43rh0ZVgPIFtneI6/UXO0zQgSjjvhz1/v67QT3pInn7SmUqOIejL2Wt7J5FKXJr98ccVTpMsOR9lNnC3zyYffVqtouS29w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BHt8IupA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UlpyI/da; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSpFK/Mm"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-90e828b309eso1273146d6.1
-        for <git@vger.kernel.org>; Tue, 01 Sep 2026 10:12:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788282768; x=1788887568; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=unCO7qme7pTnXPquEKOUwPrcZuX9YYPGO0tBjtiPk04=;
-        b=MSpFK/MmCPvn6tsgb+1mev1/Ho3V+Nay051iDaxlFgunLxeDvNvxs9FdiTEgI02UpW
-         b14y4eiaAqziRkLkGqsjk720UDu9kaFsDEw5VCrtfHUx8I5ZkOy6n4+FiCwIcKlpBItt
-         4/h7wN8cqrORVCltXSZEqGcwqM+Jh1qAO97Z9v4pfCyeyxFCrqg6eFti8X9JGl5LHhlf
-         vOZ8wrVDDisKDRzWTRUpW5+yCMiRUv/mCOJZnwGyIysS8yQeFXEh8KhZ3w5N1tHCbiks
-         iTvTBqcDO3SaL5vctoym9BpQa3ZmLVlArAJpbufYC9yARwQCWIzKQQeZGmwmAGdbUI0X
-         s2jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788282768; x=1788887568;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=unCO7qme7pTnXPquEKOUwPrcZuX9YYPGO0tBjtiPk04=;
-        b=WFi9+GrsjY4AhIQXftoxgepsz0BAg7oTX4u+tMV/zh/s9q5FWwNJc/UBRkrEB19blq
-         ebD/Pi4XaK/j2TV9ln4h5pZCOEakwb/TQh44KCw8XuXxztRivkzZbFNd26ZtBACXXn8J
-         4azLoYKCZN2qFvgkH9IitPg4PNCU25eClsQPx98i3VWfvdusDsazbwtYUr2QEwfwGTr2
-         UV6pIyBLriX6JgEF0AZa0EUJrDxZ0SgpHjGMH8hAkD9XGGms2hwwKWZemMtP6FnXL4p7
-         99/sbW6UBBg5eWzRTT0/XTEjkEMUR/wJp6551JenyDPkQ2SkoCaAnv2uQHqC/0wf7UHT
-         1lgg==
-X-Forwarded-Encrypted: i=1; AKwUvBw7NU7kTWE8cD4wQngRHsd7NLMPoFgUpgr9215O3j7dNDTPRGBay/O1WtGE7XVo5mSKTss=@vger.kernel.org
-X-Gm-Message-State: AFuF++kVme/C/QiVxIaAvt2KqOqELUTbISkc+Tbk7U1kMj0LN7mk18MC
-	10DXFBKPIbRTZroKIkyLy2GnL3WuDNPhUwWdx1813zHjbgO4n8XjJ8XF+Tx5+g==
-X-Gm-Gg: AYBFou16/OqW/tiu7e+6wYvJvsUi22GJWPJt2/XiySbZDojDHb4MRbLeCuOgDNqswo0
-	Ed16rDX8ioyIXMkNhKvS8YNfRD5FsKyZHgcEV04IEsZWgi4o4i0oNK6t3xmy2rrpu/L9h0HuhXT
-	0j7xHzeSI/8VGzv6HTZu1Exm+h6aiTSjOkBdTuGJ4dYOPEXthQODAkzUIq+wAFSKMOy/19UPy3n
-	UzO1Op6MGmbUImXzxb8j8xKWSAeTj8jSI71qSTmpbNUUor1dkz/cen5cOgeuBfwM+sItSW89Ngh
-	NylmKau9QSpqo3ZeQtMOlt0Z5n9mEGQN0kHV34OUoHLmklEpsy+neYzT3Oksz/EFazFZceoVaqd
-	Swc6UJBxtd/dlw03vl9/rrierRxZf0u9QMLs5waJzqozEVoQKtF9RyU3Zlhmo6hMGNJX9eTSKNo
-	C/LQ7cj9dGnwKgKvyoWn4nQpzrgM0Gf4o4A04qamkZGusdvZ4jjOqXeylTqGro8Wgy/FlOooumX
-	0rFlwqxQRPeQ4iiDa9lDIe1QahT/Vo1IEStudyVqnoAP7WpZBDxCgUiZeAORd9Onvcwz0VOyZzI
-	9pCpSWwcMJ2402Ge
-X-Received: by 2002:a05:6214:3f87:b0:90a:807d:31ad with SMTP id 6a1803df08f44-90e929943c6mr142139306d6.26.1788282767566;
-        Tue, 01 Sep 2026 10:12:47 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90ce8769b76sm104247326d6.13.2026.09.01.10.12.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Sep 2026 10:12:46 -0700 (PDT)
-Message-ID: <2729941e-c682-42dd-ac82-9d59c9c9668e@gmail.com>
-Date: Tue, 1 Sep 2026 13:12:44 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BHt8IupA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UlpyI/da"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id A3F9F1D00111;
+	Tue,  1 Sep 2026 13:31:37 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 01 Sep 2026 13:31:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788283897; x=1788370297; bh=eQc9v2AJd8
+	er+tAJXTZe9HzICUfNFvfHUWN97UoNQZY=; b=BHt8IupABRDr2M9ndS8il3q5Ig
+	AhZB6jQczVNZ+s09rbzNJn/C4uMZJnQpdScaU/wNBJLn44E4z/4aTMngqovLOK6y
+	vK1Knl8BMKaTaToBBoLDodGuaVycr6ihmMjBfT95Zf++aWMNhe5+FmcstvUZ3tYn
+	zMvMo2J4dEt0HFTofQoQk0nNhDXF7GGIrbkLjXkJd0gNX1UWDRNm3nJug8JJCtd3
+	/qaztzfS1a1IydlITZOYMEt9qFXT3paOCrLJk+5tYJ34u7hYuWejyR7UoA4cEF3a
+	FfLqv/wBsTUSWzq80h+oM9ZvNsOjZq2CCCvwINErfznxdI+nr0WpeDtLLtrQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788283897; x=1788370297; bh=eQc9v2AJd8er+tAJXTZe9HzICUfNFvfHUWN
+	97UoNQZY=; b=UlpyI/dalIVpBlaSuxXkCK3HIGi5Rf7oDSI6y1Q3uwvzQ+B+GJg
+	r/2L/0xrlC4ScGQxmiLWw1yjNFGk0kGHJ42SjDgr/28QzNo4k4YrqP61ZWqusvut
+	WgrUDq79DrDYmxlyDiZ5aZ062fgbvd5AERW44ffLY14h+aVay9nvsPTGLp6GU4EK
+	WOeA8nqKGbtpJDfRn7xuewRv1wlYNQMXFAtl3IfyZDcBUuJAL81eZsuP99eCF2RZ
+	0hbo6NaaUQA9FtdJJaveVXE4afbjHyujtg/rjmS04OwOkwxoZfO5blN7ZVQZJR1a
+	mkzUpoR+B1t4kz+T3op7Yg4DgmhA7S7qT2A==
+X-ME-Sender: <xms:-QuXagw8-bBmTQZ32i8jeP3Hhxb9X7uWzcRNV0UOHPfOy9qkq8SeQw>
+    <xme:-QuXarI_TiR_DgmkDo2qPNrrXqH1r1QFnTTziuQ_mprws16AGXyE_vVRs5KXNw4Hs
+    d0RlmF2O7vmbhtRt00FKD9-vujUP5bemY-n0HFd2bA7XETvVYUXtA>
+X-ME-Received: <xmr:-QuXaqqdtXloOaONdnW3nk8qZuZBj9jPIpyUaHB-TZz_yE491BdvOnLk4CBe0kMpHxHTz1x3xNxfQtgxN0Zi__M69tiQ2rPQBA>
+X-ME-Proxy-Cause: dmFkZTFKEvlWXZMJDFQV1xn5JTQy9A2lAHnFAyDkdKvPZpsf0KPei3icCYm7ziV8PhrYZw
+    Eh1fXBP+LppQ8eCRF3H6b/gL9GdOdfKnZhNS6xY1PEwTZBYR1CfHMkSaGCj0gC4n+K32B5
+    sKqVv06Yh6+Niyn2MgUHkrOZmpzMW1pysfthYcGcUK0gXnDx9HITvkStY4GzzTDjS2INgP
+    w4BX304+MNdecfjNXWPN/Pr6Ii19PjBIVOUbqXa2uewFkzeP2XJlQ5AXL+JCOXAT6Bpohi
+    /iRU8EqbEr5SshUtVquCRSOT6eybQm41izBUB38ZL2x28AgylDnUdThko9pxhRrrVYHfAa
+    w9+7Z4yp6JZjXt9Fc2JYQBCDh5xFdMs+8N7kAsrgfKW2/vSZvIrqg6rgy8N8KJ30otXMQH
+    ti647ZBYLQZ5NM55+2gjHkqJ/FuQ8LuFHT2sbrTiHZbu5NxhCQ8WgF7VFLKr4b4FRh8hJB
+    I5BHpIhXR7LUL9iLxkDQS960DVFzYjKYXDZFhzxE5lGLZ4rF2peuhM4BpiGQ0S8nfcbXuV
+    tOC1pitG5on/9tel4cnuo/hUmxwymVMEGH25uhCMqWpK9Lim2WTAceNZvDDJEeFMavybNX
+    xrfYvQYPzPf0R79eDWu5/I31REYwVHeXICCgwO69iRB+BtPb7ViFnfwRX30Q
+X-ME-Proxy: <xmx:-QuXaqIHVEgYWNfWkHa8cfB0fuentn_DTsi9KaWEdWCaZBY8klCLqQ>
+    <xmx:-QuXavSIEAVGqRGeRI6dbhkN8iS05Jv1bf0bCHk4cqKywb1BXegEFA>
+    <xmx:-QuXapvhAeA4W9AY6BF_I9UBMwvRGPKXd41KgMgU799AqfsZwLQXag>
+    <xmx:-QuXagaZm8xDVe2azjTZRf3PtaZ1lm4qguUgQmjpxos5exD-tR7erw>
+    <xmx:-QuXalaICWHnZpWYckRPv2_dKLTszzH0_BTYn9_PaRp91oGWFhRH-6Ra>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Sep 2026 13:31:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v3] checkout: separate autostash conflict advice from
+ branch-switch message
+In-Reply-To: <7dbebce0-1814-4b0b-8167-6a464d893612@gmail.com> (Phillip Wood's
+	message of "Tue, 1 Sep 2026 14:42:19 +0100")
+References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
+	<pull.2364.v3.git.git.1788256199679.gitgitgadget@gmail.com>
+	<7dbebce0-1814-4b0b-8167-6a464d893612@gmail.com>
+Date: Tue, 01 Sep 2026 10:31:35 -0700
+Message-ID: <xmqqtso8swso.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] packfile: recover when a multi-pack-index names a
- removed pack
-To: Elijah Newren <newren@gmail.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
- Jeff King <peff@peff.net>
-References: <pull.2207.git.1787092446.gitgitgadget@gmail.com>
- <pull.2207.v3.git.1787986831.gitgitgadget@gmail.com>
- <9b0966df9a060df215d8aec7816875d42651d5bb.1787986831.git.gitgitgadget@gmail.com>
- <944945ab-dde7-41e5-af92-fc520485fc53@gmail.com>
- <CABPp-BEK8f4Dh=3z-Q768iBV-d-wdpXGSKhsfFacGwHEFabZKA@mail.gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BEK8f4Dh=3z-Q768iBV-d-wdpXGSKhsfFacGwHEFabZKA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 9/1/2026 12:47 PM, Elijah Newren wrote:
-> On Tue, Sep 1, 2026 at 8:26 AM Derrick Stolee <stolee@gmail.com> wrote:
->>
->> On 8/29/2026 3:00 AM, Elijah Newren via GitGitGadget wrote:
->>> From: Elijah Newren <newren@gmail.com>
->>
->> I'm late in reviewing this patch, so forgive me responding inline as
->> I discover how it works.
->>
->> tl;dr: Good patch. LGTM.
-> 
-> Thanks for taking a look; I wanted to point out two minor clarifications...
-> 
->>> +     /*
->>> +      * Recovery for a concurrent-repack race: a stale MIDX may still name a
->>> +      * vanished owning pack even though the object survives in another pack
->>> +      * the same MIDX covers.  The regular fallback above skips MIDX-covered
->>> +      * packs, and repreparing the on-disk pack set does not reload the
->>> +      * borrowed, cached MIDX, so scan its packs directly for the survivor.
->>> +      *
->>> +      * Do this only on the second read, by which point repreparing packs has
->>> +      * already had a chance to find an object merely relocated into a new,
->>> +      * uncovered pack; only a genuine hidden duplicate reaches here.
->>> +      */
->>
->> This comment does a lot of important context-setting to show
->> that we are in a very narrow case: the stale MIDX has multiple
->> packs that contain the requested object, but the "newer" one
->> was deleted without creating a new packfile, so we need to
->> look at each contained pack for the object from its pack-index.
-> 
-> Actually, a new packfile is typically created, it just doesn't have
-> the object in question -- and doesn't need to, because a pre-existing
-> (also midx-covered) pack already has it.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Thanks. That helps me understand why this can occur regularly
-enough to be triggered in the wild.
+> Hi Harald
+>
+> On 01/09/2026 10:49, Harald Nordgren via GitGitGadget wrote:
+>> From: Harald Nordgren <haraldnordgren@gmail.com>
+>> 
+>> "git checkout -m" stashes the user's local changes when it cannot
+>> perform the checkout, and then applies the stash.  When applying the
+>> stash results in conflicts, the advice on how to deal with them is
+>> printed directly on top of the branch-switch message ("Switched to
+>> branch ..."), making the two hard to tell apart.  Print a blank line
+>> in between so that the advice and the branch-switch message are
+>> visually distinct.
+>> 
+>> To make this possible, "git stash apply", "pop" and "branch" now exit
+>> with status 2 when applying the stash entry resulted in conflicts, in
+>> which case the stash entry is left in place; other failures exit with
+>> status 1, as before.  The exit statuses are documented in the "git
+>> stash" documentation.
+>
+> Other commands such as merge-tree and merge strategies use 1 to indicate 
+> conflicts and another non-zero exit code for errors. That matches the 
+> way grep and diff use the exit code to distinguish differences from 
+> errors. It is confusing if we start using a different convention here. 
+> I've left a few comments below, but the exit code is my main concern. It 
+> would be nice to separate out the stash changes into a separate commit 
+> as well.
 
->>> +     if (midx_result == MIDX_FILL_OWNER_UNAVAILABLE &&
->>> +         (flags & OBJECT_INFO_SECOND_READ)) {
->>> +             struct multi_pack_index *m = store->midx;
->>> +             uint32_t i;
->>> +
->>> +             for (i = 0; i < m->num_packs + m->num_packs_in_base; i++) {
->>> +                     struct packed_git *p;
->>> +
->>> +                     if (prepare_midx_pack(m, i))
->>> +                             continue;
->>> +                     p = nth_midxed_pack(m, i);
->>> +                     if (p && packfile_fill_entry(p, oid, e, bad_pack))
->>> +                             return 1;
->>> +             }
->>> +     }
->>> +
->>
->> This is hopefully a very rare case, but it's good to have
->> this "fall back to O(num packs)" situation.
-> 
-> It's actually a fall back to O(num_packs_in_the_midx); on developer
-> laptops that's probably about the same as O(num_packs), but on busy
-> servers constantly receiving pushes, the total number of packs often
-> dwarfs the number of packs in the midx.
+This is half my fault.  I should have made it clear that my sample
+code was merely to illustrate the need and ability to allow the
+callers to tell general errors and specific failure modes.  I agree
+with you that "1 if X, other non-zero exit if error" would fly much
+better.
 
-Thanks. You're absolutely right that I was not specific enough and
-in server situations this loop will be very short.
-
-Thanks,
--Stolee
-
+Thanks.
