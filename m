@@ -1,320 +1,116 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3291F4A5EA5
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 18:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEA644A418
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 19:57:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788288677; cv=none; b=RaaeogmSstMqgqMKFY0IjYXkfHEjrcmkEuTaED3lX3Vaml4WCJlwBIOCh6dHKg4aFTEl3qbmrjOpQt1Eu8fqC6ij1Jb7M35OA24Bd3htqF/5HDI5BFtCyEYkMheCTebGlSIix29Bdu87PEU4v3cQ9tKcMLyMXPFYUHgYwuUSKC0=
+	t=1788292655; cv=none; b=Z7QL6IdyvHr6XUjiuBM2PGjM2D60IjJPkudJTIupzOfV9qllrJXUxKZwf5fgBgs4X1iFzwMxDNAgK9MuWwRy5g56ez9ERVURJHy2IzKBIMKJidqBE+fwD9aj52CbtB9SPF2CtMBKNFUjyMGgb9h9JBrhQNBTstLFfGckVljt4NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788288677; c=relaxed/simple;
-	bh=LS1q6e4Vt4x297ZvIl3sL7goB2fni7UnZJG8b0A1mew=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unXagfyqPZ6CYxZq7GW5FcdDDdW4g0epdKkBaXJCCAVL+KFZQuLL01WlOB/GEyoBURthDorAGTkaL3EK4LPFeFPc1z2k3RUwPc+OKysICzxcpi+lkbp4Rjdi6tnmRNLtiqa5VP07qrny4Owl9gLXc2fhAQdxnvdHr5GSlkiuLus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oV//58og; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788292655; c=relaxed/simple;
+	bh=PesAM8OSiztoqk2LlSZTJ3SfCffJEX+t4IMwyEwkHQw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HjT0I1YAqjRV70vt7kp2fD6U+lGb3eC0FiIs/ZsDOCZSLHiHsSH9pom7zNEdQarDCAI6k7KInd2N2yHh7/KdHJJ5rKcwmOdi/kX0RvEmBlCFaqboIVt9ZeFJO82/SWoz+JkxwCKOvqTCEQd1bmzWluo4HWRaM4UyYwcVXOIB/iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CqQgZR6x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y/QnSbHp; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oV//58og"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-398b3d66515so240201a91.0
-        for <git@vger.kernel.org>; Tue, 01 Sep 2026 11:51:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788288674; x=1788893474; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=K617IIZDRvaoo1q6wYUe7bvKuOWAGUANIWVhutzbJsg=;
-        b=oV//58ogBE/v0VvUX4huTm2m1HjkM/CYe4YRlc4Ch6fqqpFLaoFntFHhOeRf6mv0Lz
-         bAO6f1gSH9fIyXjMKoZ98ld8B0CIPdiocNYLxaoutEKrK+EBZybHMnPWo7ipyTZXYJIp
-         3MbukyvLVASBtkASicGk2bAw/yRI5ViaclW9k5WGy0CgtNFqkRC/tZt3JHol9QdrLpEo
-         WXq6OuEofZ+IbAVdfciLFFXcUc9YihihNhVOJubOhgO8q1d7E8ESajeXdbOeP11s//Nb
-         D8NlV5Ei5Aduoodm03YndApiZHWDxsLnrlvyiiM6sPH7gO5/Slwp9bSCeYtUnVhHyJS+
-         Vj5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788288674; x=1788893474;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=K617IIZDRvaoo1q6wYUe7bvKuOWAGUANIWVhutzbJsg=;
-        b=ERo30vOIeVvRjEYRK91L/H31ee4OjZ4GSIA8P4er6rSk7OWKOZracT0WroysBAVuan
-         eJVv73MQBLwL4T8RlnguIC4r2zIqHauGgei3jre6AGz4+k4EIspp0D/rjPl5EBtLJJZN
-         /FyVnxQ5t9ZqixEpYkwYZprshzrtlVQ72NxEJr8HGaY9VuL0kI2/t3+qRivYYkQpK2mn
-         eAEIjVtuzpHgxlqjnt3IXsRcm7UQSsPFiCM+f3JcFMNXmT/BgJ3f0M92fmoS8y0ZKzpo
-         92UR1Syo6FcxJPThQsLcw3uLEwFBq6iXQpTMzrD4dBwipf9Up+DNaTbWDsZsysCntTF/
-         h8RQ==
-X-Gm-Message-State: AFuF++lbN/LyTnbJK0OV5GxB5sIxFc6sYmpgj/lAE4hyHarvnagt8skb
-	W4auPcUbTqckXI+VfN3O3cQt8MIfSowjS2c/vMh1M+XlD/JgUXP+APLPqUr+ww==
-X-Gm-Gg: AYBFou0D1ckD0GXcQNE6x2IAfwc3Dg2avz+AfZQsgUyZwy49PfFMEalGw0LDvGLPo3/
-	Rz9n4WRnK8BVRKr6TagW85nKBT29v/k1+HRfhGNUDEHVznPwtfoakOoVVfCRNRXV82Us3ro8Wk9
-	J0g6+A5NPiT0MtMvlGi9/XV5cPr4NbSc0u1kI9WYrowEUdQrS6UoaxEK8A/OJcXyRdK2yTVRTKh
-	YYY1oqgItRaMLbe6Rq0tATHH/JyXTCClZIkiyCKYkogfURi2Xtq/vzCexmRYvd/D6K5v9cvxCpY
-	lWcwekanYPjQ2ToqQckjlLy4C8TiMBO8skPLTaEo886xEPnf/cFSxAnCwuZrKBRZswDeH+gAIDy
-	jvhM2kWBJPaBeAlqQQ5l31iaEPcPmho0CiRVUOOBU4x6swSMqr5VM/Ey4mEHmM6TRC6vYz1vj9O
-	KQRoiFmrkJ9Wrd1BFTgL4DqAo6n35DzipOJhQN2mvIf9I3epGsm1YxuecgFBkGy3rUYZ0gWseTy
-	Jrr1y1EKGXfbxp5/Gq7mWJt1izxSM9GHiy8t/rQShPD8SSQ5XmYABmAFJVDqvwOXTsfhlKabn9J
-	bJIMoGgIEsIiTCmxS2/R35WOMw+QwfsegLQf2CkgVSGA
-X-Received: by 2002:a17:90b:4fca:b0:396:65dd:4093 with SMTP id 98e67ed59e1d1-39ae83d787dmr167862a91.14.1788288673916;
-        Tue, 01 Sep 2026 11:51:13 -0700 (PDT)
-Received: from localhost ([2409:40e3:179:3f2e:d589:805a:9631:7949])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39ae0dfe6b6sm954817a91.1.2026.09.01.11.51.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2026 11:51:13 -0700 (PDT)
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-To: git@vger.kernel.org
-Cc: chriscool@tuxfamily.org,
-	toon@iotcl.com,
-	ps@pks.im,
-	karthik.188@gmail.com,
-	justin@parity.io,
-	peff@peff.net,
-	phillip.wood123@gmail.com,
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH v2 1/1] rev-list: add --missing-only option to filter output
-Date: Wed,  2 Sep 2026 00:21:00 +0530
-Message-ID: <20260901185100.33948-2-siddharthasthana31@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260901185100.33948-1-siddharthasthana31@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CqQgZR6x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y/QnSbHp"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id C488E1D0004D;
+	Tue,  1 Sep 2026 15:57:32 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 01 Sep 2026 15:57:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788292652; x=1788379052; bh=vHRObSNZ0l
+	i9CaL+gdaeJOH2Raibonw5Rpx70L8M0yk=; b=CqQgZR6xGqx1Bolwei9A7NplKu
+	/4TrvzCOZDsY2kySbgZcJD0ufKZYdkgrKS+GLdg7siUOPI5O/ZYIHUk2q7/oMIEw
+	O2L21exNmpfp2lyVaWLmhlabii6letNbvmbw9XOmWFjE6FHRtT6Bdleh+GpZOyZ0
+	8ITCSrrkvMfucBBKzTKjCb0/bp/7iUPb1I8uzTEcKZXP6OWOayhmB7hJAVICK6sw
+	zAjQ0ydGdqVPfOlBMb0UPqrnLNIwXggFhM25FS3GqrgSj7d6Jy9cUGmrpL00uAEw
+	xQcKAxdEtufJMt+GBaaHG0MnfSc6XXy6RkwuYjKF8uHryVCCJz88cVUg6yBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788292652; x=1788379052; bh=vHRObSNZ0li9CaL+gdaeJOH2Raibonw5Rpx
+	70L8M0yk=; b=Y/QnSbHptBCybvQnQJvGRizsZzV2Ys6mBqIHCUTLWbNgFhAmxXa
+	+tViP21DcfC8Ih+NOi+oDpxSxS5Xus2at5hkyCWdqnkqa3oxKnbHMiwUb1tBSddq
+	QzEQ8X8hBhmdbErjOklpBprho+9tU32kTAQEPGcaB2g/0+zeTcOR9uvlr4EZQkoV
+	cH7OXRS/0mFLb3Eu0wkn5imsj/uony0V49CkGoorXugzA3MtbRRsyIF/k7qsd6Ur
+	8G/yj/JtV4FhJlDT745rJVZNNHk1QwZ/NDct9uJUg4wuyVLt6GKSyvE2NdUMYrcP
+	IZpa0dKiJDKW/vZ+upGN1eiBanc4U9N7kuw==
+X-ME-Sender: <xms:LC6XaggV_yZP-HAfHsb649wqg2gxbqrRuKExG1bDjlPLCwUzlRklEg>
+    <xme:LC6XalkLrZIc-Emu-bMndRU02-1kpsKcjYSFTfNKTuffopYnRRvBPUuoUTXDgoOjc
+    2qrp4mg3twvSqNtPlINIDiNk2llvk6HTIHCP9vTMkHNW6l7Qxx4GCI>
+X-ME-Received: <xmr:LC6XasgDkgP_h7KhRoa5X3fUEQMPJzfhchMnfX6Z7_tPzFg0hhzsLUVxEszICHkLaN9HoJc0kV0cU6ZUAuUSP10TO6DhMVd8Fg>
+X-ME-Proxy-Cause: dmFkZTEHgtJQA0fjV6rkcQmx/6Yz5GQrX7gCloQtJGc8B0oC9GyvjvafJEnwAUKqHw/xld
+    d8GCpIkfthVtT4tF2DRMnrtSqtfJ85/yytCWGnYnheIBXvG1YKBZiTWprv6fGoFg9TfjPY
+    /FVEqr/gHOAkDyNjk54WUXEY2LyZInWXg1S5nubaGXynzCOSxfLa1g4KUlfsMNisiUWNga
+    c0XhgPz9aXtlNFrb/WqysPFpEt0N8XkYkUmz6e5SKWiKSsFKhd9n5hZ6BRpkYgD4W5BvJ6
+    1hVoUTD+nc71y49w6sBxD+To0Ap4bajPCL85B9WVYPXv5NtDYHmSv8O3GcOZvE16n6tlFy
+    C05hcNmdi129HvgcqVEdlL69HiBAJaQjb2jVbvONZ/VcwXTW6hhsNmuZFpym4ry7kiXODZ
+    /bEwTXfxwfaM8Y7ZUXUhiayN5G87lGqGvyL9Kw9+u7zcE7z9qFbZb98E3uqZq6eLgMhoZ1
+    y5IWJUafUKu4Kn9HzcrBJ+0bGViRFCR4xvVwHUQguI/OOp5ZPEU3ptLrMb6W2L+hXQKJGe
+    WICd0To8dQ9tuoVwJv0oIhphCPvM+wuP6AZvrJ/F+fDN2lx1LeC/zh66bqOz373lRXCFpU
+    UXR0ULRi8Mzu2DAQp0ALGrEAtDbuNi/r2lKBMPDPiW76yWDrU4M7Ci6FTr5g
+X-ME-Proxy: <xmx:LC6XaoFNZtHl-L2PmwcrNEXxiLbMKCxpl5g6j6Egqf42Oz9laXxIkQ>
+    <xmx:LC6Xauu9Or8UBY-paFwcvsjacp33fFWWmnqwS3j2jn4e9VYDbjrxfg>
+    <xmx:LC6Xapd2Suo-PXZQuR-QejEjjICcGYUbm8HsfZU3xDfxqbpLOrOBTA>
+    <xmx:LC6XakmRNIHV8YQ8sT7CGZqffx31EzsHtjyiYC7AuwFdO4OdJ9qxBA>
+    <xmx:LC6XaqWSBTC5UeyYuQTmyG5uTky2MDcnlkzEFKREX7_WMsanABTRCGl5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Sep 2026 15:57:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc: git@vger.kernel.org,  chriscool@tuxfamily.org,  toon@iotcl.com,
+  ps@pks.im,  karthik.188@gmail.com,  justin@parity.io,  peff@peff.net,
+  phillip.wood123@gmail.com
+Subject: Re: [PATCH v2 0/1] rev-list: add --missing-only option to filter
+ output
+In-Reply-To: <20260901185100.33948-1-siddharthasthana31@gmail.com> (Siddharth
+	Asthana's message of "Wed, 2 Sep 2026 00:20:59 +0530")
 References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
- <20260901185100.33948-1-siddharthasthana31@gmail.com>
+	<20260901185100.33948-1-siddharthasthana31@gmail.com>
+Date: Tue, 01 Sep 2026 12:57:30 -0700
+Message-ID: <xmqq1pbcsq1h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-When working with partial clones, callers often need only the missing
-object IDs. Today that means post-processing --missing=print to drop
-present objects and strip the leading '?':
+Siddharth Asthana <siddharthasthana31@gmail.com> writes:
 
-  git rev-list --objects --all --missing=print | perl -ne 'print if s/^[?]//'
+> At GitLab, Gitaly uses rev-list --missing=print on partial clones to
+> find missing objects. The output mixes present and missing objects and
+> prefixes missing ones with '?', so we post-process it. --missing-only
+> avoids that.
 
-Add --missing-only. Use it with --missing=print or --missing=print-info
-to print only missing objects. --missing= still picks the format;
---missing-only only filters. The leading '?' is omitted. With
-print-info, path= and type= are still shown.
+Not an objection to the feature (as it can already be done with
+post-processing), but stepping back a bit, how is this list of
+missing objects used?
 
-Require --missing=print or --missing=print-info. Reject --count and
---disk-usage.
+You know what objects you currently have.  They refer to other
+objects, some of which you may lack.  You can get a list of them,
+and then what?  After fetching them from 'origin', you will have
+a new set of missing objects (e.g., after fetching a missing
+commit, its parents become known and missing; after fetching a
+missing tree, the blobs and trees contained in it become known
+and missing).
 
-Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
----
-Changes from v1 include:
-1. Replace --missing=print-only mode with a separate --missing-only flag
-   (Phillip, Patrick, Stolee).
-2. Require --missing=print or --missing=print-info.
-3. Die when combined with --count or --disk-usage (Stolee).
-4. Keep enum comment alignment (no spacing churn).
-5. Keep print-info path=/type=; only drop '?'.
-6. Simpler tests with test_cmp (Phillip).
+Fetching missing objects a batch at a time sounds like too much
+back-and-forth to peel the onion, if the process using
+'--missing-only' is trying to find out what it wants to fetch,
+and would be a rather inefficient way to backfill a shallow
+clone.  So I wonder how this fits into the larger picture.
 
- Documentation/rev-list-options.adoc | 13 ++++++++
- builtin/rev-list.c                  | 42 ++++++++++++++++++++++---
- t/t6022-rev-list-missing.sh         | 49 +++++++++++++++++++++++++++++
- 3 files changed, 99 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index fd831f0ec6..bd9f345690 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -1083,6 +1083,19 @@ If some tips passed to the traversal are missing, they will be
- considered as missing too, and the traversal will ignore them. In case
- we cannot get their Object ID though, an error will be raised.
- 
-+`--missing-only`::
-+	When used together with `--missing=print` or `--missing=print-info`,
-+	suppress all output for present objects and print only the missing
-+	ones.  The selected `--missing=` format is preserved (so
-+	`--missing=print-info` still emits `path=` / `type=` fields), but the
-+	leading ``?'' prefix used by the non-`-z` forms is omitted.  This is
-+	useful for scripting, as a simpler and faster alternative to
-+	post-processing the output of `--missing=print`.
-++
-+This option is incompatible with `--count` and `--disk-usage`.
-+It is an error to use `--missing-only` without `--missing=print` or
-+`--missing=print-info`.
-+
- `--exclude-promisor-objects`::
- 	(For internal use only.)  Prefilter object traversal at
- 	promisor boundary.  This is used with partial clone.  This is
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 02818b81c6..09c6d27220 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -111,6 +111,13 @@ enum missing_action {
- 	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
- };
- static enum missing_action arg_missing_action;
-+static int arg_missing_only;
-+
-+static inline int should_collect_missing(void)
-+{
-+	return arg_missing_action == MA_PRINT ||
-+	       arg_missing_action == MA_PRINT_INFO;
-+}
- 
- /* display only the oid of each object encountered */
- static int arg_show_object_names = 1;
-@@ -156,7 +163,14 @@ static void print_missing_object(struct missing_objects_map_entry *entry,
- {
- 	struct strbuf sb = STRBUF_INIT;
- 
--	if (line_term)
-+	/*
-+	 * --missing-only filters present objects out of the walk output.
-+	 * It still uses the selected --missing= format for missing ones,
-+	 * except the human "?" prefix is omitted (script-friendly OIDs).
-+	 */
-+	if (arg_missing_only && line_term)
-+		printf("%s", oid_to_hex(&entry->entry.oid));
-+	else if (line_term)
- 		printf("?%s", oid_to_hex(&entry->entry.oid));
- 	else
- 		printf("%s%cmissing=yes", oid_to_hex(&entry->entry.oid),
-@@ -246,6 +260,11 @@ static void show_commit(struct commit *commit, void *data)
- 		return;
- 	}
- 
-+	if (arg_missing_only) {
-+		finish_commit(commit);
-+		return;
-+	}
-+
- 	if (show_disk_usage)
- 		total_disk_usage += get_object_disk_usage(&commit->object);
- 
-@@ -384,6 +403,8 @@ static void show_object(struct object *obj, const char *name, void *cb_data)
- 	if (finish_object(obj, name, cb_data))
- 		return;
- 	display_progress(progress, ++progress_counter);
-+	if (arg_missing_only)
-+		return;
- 	if (show_disk_usage)
- 		total_disk_usage += get_object_disk_usage(obj);
- 	if (info->flags & REV_LIST_QUIET)
-@@ -749,12 +770,17 @@ int cmd_rev_list(int argc,
- 			revs.exclude_promisor_objects = 1;
- 		} else if (skip_prefix(arg, "--missing=", &arg)) {
- 			parse_missing_action_value(arg);
-+		} else if (!strcmp(arg, "--missing-only")) {
-+			arg_missing_only = 1;
- 		} else if (!strcmp(arg, "-z")) {
- 			line_term = '\0';
- 			info_term = '\0';
- 		}
- 	}
- 
-+	if (arg_missing_only && !should_collect_missing())
-+		die(_("--missing-only requires --missing=print or --missing=print-info"));
-+
- 	die_for_incompatible_opt2(revs.exclude_promisor_objects,
- 				  "--exclude_promisor_objects",
- 				  arg_missing_action, "--missing");
-@@ -864,6 +890,9 @@ int cmd_rev_list(int argc,
- 			continue;
- 		}
- 
-+		if (!strcmp(arg, "--missing-only"))
-+			continue;
-+
- 		usage(rev_list_usage);
- 
- 	}
-@@ -910,6 +939,11 @@ int cmd_rev_list(int argc,
- 	    (revs.left_right || revs.cherry_mark))
- 		die(_("marked counting and '%s' cannot be used together"), "--objects");
- 
-+	die_for_incompatible_opt2(arg_missing_only, "--missing-only",
-+				  revs.count, "--count");
-+	die_for_incompatible_opt2(arg_missing_only, "--missing-only",
-+				  show_disk_usage, "--disk-usage");
-+
- 	save_commit_buffer = (revs.verbose_header ||
- 			      revs.grep_filter.pattern_list ||
- 			      revs.grep_filter.header_list);
-@@ -967,8 +1001,7 @@ int cmd_rev_list(int argc,
- 
- 	if (arg_print_omitted)
- 		oidset_init(&omitted_objects, DEFAULT_OIDSET_SIZE);
--	if (arg_missing_action == MA_PRINT ||
--	    arg_missing_action == MA_PRINT_INFO) {
-+	if (should_collect_missing()) {
- 		struct oidset_iter iter;
- 		struct object_id *oid;
- 
-@@ -994,8 +1027,7 @@ int cmd_rev_list(int argc,
- 			printf("~%s\n", oid_to_hex(oid));
- 		oidset_clear(&omitted_objects);
- 	}
--	if (arg_missing_action == MA_PRINT ||
--	    arg_missing_action == MA_PRINT_INFO) {
-+	if (should_collect_missing()) {
- 		struct missing_objects_map_entry *entry;
- 		struct oidmap_iter iter;
- 
-diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-index 1e472a45af..1bd2c3bc4f 100755
---- a/t/t6022-rev-list-missing.sh
-+++ b/t/t6022-rev-list-missing.sh
-@@ -198,6 +198,55 @@ do
- 	'
- done
- 
-+for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
-+do
-+	test_expect_success "rev-list --missing-only with missing $obj" '
-+		oid="$(git rev-parse $obj)" &&
-+		path=".git/objects/$(test_oid_to_path $oid)" &&
-+
-+		mv "$path" "$path.hidden" &&
-+		test_when_finished "mv $path.hidden $path" &&
-+
-+		git rev-list --missing=print --missing-only --objects \
-+			--no-object-names HEAD >actual &&
-+
-+		echo $oid >expect &&
-+		test_cmp expect actual
-+	'
-+done
-+
-+test_expect_success "--missing-only requires --missing=print or --missing=print-info" '
-+	test_must_fail git rev-list --missing-only --objects HEAD 2>err &&
-+	test_grep "requires --missing=print" err
-+'
-+
-+test_expect_success "--missing-only is incompatible with --count" '
-+	test_must_fail git rev-list --missing=print --missing-only \
-+		--count --objects HEAD 2>err &&
-+	test_grep "cannot be used together" err
-+'
-+
-+test_expect_success "--missing-only is incompatible with --disk-usage" '
-+	test_must_fail git rev-list --missing=print --missing-only \
-+		--disk-usage --objects HEAD 2>err &&
-+	test_grep "cannot be used together" err
-+'
-+
-+test_expect_success "--missing-only works with --missing=print-info" '
-+	oid="$(git rev-parse HEAD:1.t)" &&
-+	path=".git/objects/$(test_oid_to_path $oid)" &&
-+
-+	mv "$path" "$path.hidden" &&
-+	test_when_finished "mv $path.hidden $path" &&
-+
-+	git rev-list --missing=print-info --missing-only --objects \
-+		--no-object-names HEAD >actual &&
-+
-+	# Filter keeps print-info fields; only the "?" prefix is dropped.
-+	echo "$oid path=1.t type=blob" >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success "-z nul-delimited --missing" '
- 	test_when_finished rm -rf repo &&
- 
-
-base-commit: 1630431f326e15fcde608827b5ff38422528eb59
--- 
-2.54.0
-
+Thanks.
