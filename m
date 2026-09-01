@@ -1,118 +1,171 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBD9342510
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 00:28:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBF5363C74
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 00:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788222485; cv=none; b=LFcR80oJdzPFnK6/kiYUbnpvi9tw6nI9E2hU8OaMDMipFLfQahO9Pk+AeJGD1VXtImYBMxIBu1+cW4tL4b/9hux2pbssjQddQ4g7KhwiiWaeDtRR7Qd+O3aDfj++D2h1eWhmBDKMx7ncckLLtdHN19bpKuZOt7tmHeW6HRJu0Ww=
+	t=1788222935; cv=none; b=l3H0d48Sl1ClncYiSRBBeiJ/EgqJ7TjFP9E1q5X4sTW75D0sdCSy5G4jtZ0hi5oLB3o6zjD02/lG8RLItK29zz32Njhq2t76WOlOx7vOwnO1u2xPh8QomKeKzWFuz0rlQRFsyT5onHXy7HEfAK7rWdzK11nv6XxZeqIbQP6OQeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788222485; c=relaxed/simple;
-	bh=xfrvMieCluWWEivG7c+WsgN5b4TELFOztko//8JIm7w=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=aOAJ/A1flXwk0F56z3jllstj8tMScer+k0H+5jvKkwD5rDybF0VUzJb1wbb1GW1aSw7LfPQM4KiJaOUWGwh9/jKxu+nMB3qDpTEFjLHuAsre4bUasBxUXB12AjmtDh/J/KcoOAVhGgSnfxs2mWSebOYLHWZHqP85oEc+c/xvuls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F8HHRKGr; arc=none smtp.client-ip=209.85.215.177
+	s=arc-20240116; t=1788222935; c=relaxed/simple;
+	bh=Mm/8Kphdkh++js41FyQX3f8mOatf+y035IrO+xOVkiU=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=HdOEYDQPjQOGLHX+q9mevXMGiZQEd8M7xYgSHL9FzYSAFpvYtorhepVJ8wjUAfQD8Kpc/39huxO4sNVc7ttZXoMLulbvkgT1V7DMf3i2fLo5+QO99NDKXpFpep+EimfWZul8HEa+KlBKQlE1tOOkHRIX7YX87AmTjmEg6PTzdyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PMhAHJ1m; arc=none smtp.client-ip=209.85.128.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F8HHRKGr"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-cc1c3d79b9bso3645849a12.3
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:28:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PMhAHJ1m"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-86162c086f8so8677577b3.1
+        for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788222482; x=1788827282; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=+FHHxyZWuTvwfxVMWptB5jhtf/iKs7NIjyBFyqXHjLs=;
-        b=F8HHRKGrrpEnP6HxU97g8gv5WvZG1KSr6aD82h45wl30NYGIVtIb1ZQyRzeLRNYS4I
-         fIryEgAX7baj89+7gejXpRcOfdjQdRNwRE03Sj5gmimzJScUrvo9aDat5TxujHLjeCvr
-         jag398Et0NhUQ6G52WGF03VKa90+dHG76QCE54IJMp0CjXzIECLysIFbnLfESZZJHnTi
-         BQloiiCtjEpLvsdBDVuka6smNIVqtT4ZfAq14WIRhzzt1ijykBzAqLlhFPXZJNCuXON/
-         TVPE88yef65aKaxu/tCuHEEJG2m5/cUg+utwnD2Mi4ASkGyaJUwn9Qj3P0xNKqGiVnvC
-         f7hw==
+        d=gmail.com; s=20251104; t=1788222931; x=1788827731; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Mm/8Kphdkh++js41FyQX3f8mOatf+y035IrO+xOVkiU=;
+        b=PMhAHJ1mppfupmONU412itestU9ZAj/G5AIRG/nwOIWpzuv5fRn47YkjY9K2erao48
+         Gou87qeAmeGBJZPYXxoztCRjh38vb4TYUNEeeNa8M5jhDNxmRMIavuHZbuwUyR3QfwWM
+         G2aIT9U/gQG4UUl62k3kmbEITWs1MKxMut/oieR2RoKrA5EhvQPkhDVv3qY+Dljf8mhs
+         jvjVEcV6L+RhDkSVbbAmiUPy99hWebFJSXB3jdWpMlxrVyeLsaWTCMU8kLLrnJT14iW/
+         0JLuz2DWiyYfjoH43m9pzcvN5QNVnUONWL0Cgon6EbSAsJalF7mb45YkAmr76iKKOGtR
+         i3Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788222482; x=1788827282;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20251104; t=1788222931; x=1788827731;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+FHHxyZWuTvwfxVMWptB5jhtf/iKs7NIjyBFyqXHjLs=;
-        b=oE9PD4deIFIhZDnrEv9SGvpHaZprT33cknX5qzYCQtadlQZHW4LUEYeO3Qt6VfpApj
-         EalAVQzBu9L3W6vxCrILKNj5RelwjKKXVf8Fd70wnFqdq9/3CynitdAZswES44clSGTL
-         3//1G1uhPLW7MUeyqeRSweP+a6oMnOlq58umW96Gtf2SZBxa6anWtcFDjDcQdOruTMow
-         Ct2dy1CE8imGwfIzceqEDqGZ6pu4d+IH1ctg4vQ+UkOZQexpUDUT6m4UQmmZAtcwfy6Q
-         US43ujUhrVGZ+lyc9cmktnF/Zxw18LUHKf/TiKp1fhY3xEt7iVWUUmz/3Rn0MOWf//oU
-         pVQg==
-X-Gm-Message-State: AFuF++mVmtNEt+OT4wzpxlOALiY/yuyPiGERAcKtlZXvtmgnwO2VU3m8
-	XAjQYGKX0B+IsEp0Y6bp/mYHdlSDaZSmxM0yF8K8upwn3YtyJgGRc3z8e0X/NeCc
-X-Gm-Gg: AYBFou3AmZWX8pVAQYwMzXaYA2suuE8W6AKloW6XN9UYDKy/T7B8hSV9XuhuhoangEJ
-	5Cdz/0kgiOOLeC2kTfuLKrhaBI+N8cC4bUB0WLMZKQams2tC0QEociPmyHWD7ihut7r0PkwWrA4
-	uzColHTmy6er1VJFhbaSMD6GzLeX2DqmzS4Mz084wN4tPA6R3SGYJgfrZkff8hSv3VdDlTcP3vC
-	YJGviPopksb9YVZvdxskhBafWFJ4+viN2ymlcqVT3BY3gEBBUEbirn7Al5DTYgCw69CKZcKyj9w
-	A1fugLCeBVPfdSS8JaHV4+RO3yQtD1rs1FE2PvvDLsl7i+cN1baUYYXJRBXxDzfI8FU1/3PGlVG
-	5u9ELG8wtLwSsNrGbZfVJg6zsZPXXTF8RVD8PSUTTY4bOU8hdtAwNfiZ03wxSQFcGwmfjKbQwK9
-	nCjCdsPMS71Xjg/AT8UOYrJ73HiN39gOE16Qib8qwH199llgOmj3TF/TZemxC5iQE+
-X-Received: by 2002:a17:90b:1d43:b0:398:9be6:f995 with SMTP id 98e67ed59e1d1-39907e05739mr5992639a91.20.1788222482411;
-        Mon, 31 Aug 2026 17:28:02 -0700 (PDT)
-Received: from [127.0.0.1] ([172.185.55.133])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-142e0d18eaasm34316693c88.1.2026.08.31.17.28.01
+        bh=Mm/8Kphdkh++js41FyQX3f8mOatf+y035IrO+xOVkiU=;
+        b=HtYJSK2bw9Uo++oeO7JcvjQGavgOrHbMBGo+1eIXMY7OABxyNDzv0fhdSUfGbMkbp8
+         0esc9bnQKiAG7w/RzoMaIlA7FL/umHgyO9jjm/EO2isWxWCh/UFq5/lY6nv61APHY/BF
+         u+kJ/Fj0+NJy+a7r1ukDRJL94E7tLKv/oZrJpQmBQdupcoDt/x0ELQUPgCyGxia6vj2X
+         d44+9hVW5tG99fIFrywzqiEMD1ryTtx93Hjy+YxNIVf+oqC4R6DoAzfSbYIPr3L3AcRh
+         0b4ufdt5SUF7Nd6m97SGAogkpJb1XAnNXZFp3Rz6p8VJtHyTJu8H2NCWuz3qEKfI/G1r
+         lpng==
+X-Forwarded-Encrypted: i=1; AKwUvByE1i5bEyhf2GBkFKCbkqE7KzYEN9Z9mbioHzMNJ/f2oFn3pe8903DFiNAwqTfPP1USzeM=@vger.kernel.org
+X-Gm-Message-State: AFuF++ldnMru7vJmHLSgP0cu2nhjJGvSmqj08RzKkc2FhG4s7zT4lWtM
+	WN0Im+Dtyn2OjCpmfWxCDUDSCq9kyc1Og1CHvmBOy01ppFfqeSyp7pJD2Pp2jKDJupI=
+X-Gm-Gg: AYBFou16lGETxiOopN1ilMVD1+lUpxSgHu3LyOcgr+MEXfL2zljWWXWNB3Q+8/y2cAe
+	Rg6SRfROAAbmT5H09WVJiRM7GDFv0H/nJ8944za3EfxLtuYcOPd8w/JHYC185HvRtXocVuuhrSF
+	tdPE+3XXL+nSbo9l9v1gepyzLT/7Q+BUPin8JIDaKZBdcrD2BX4v/P4D48ERLVZrPmABToexB8M
+	0W8hgK3lfZLfEaoVJCHuUDen5mZXeeTqAA894xGwIFtprYXc06EB4StJyIV3SToYsKhJIT0Oux1
+	WayhyfTyLG78EMND1o/Jqq8ZRc00VcrzR0aSnFPQqKa1iLEm7mNg1HsNIPnUHWlGmGsDyTj3t9W
+	YiD8knQQlddtQMtBvNytCcvIHbc5vLqAoCbmSZwXEgGyHlndwJiXa5lpq6c+QHbN+0G+kvLyd2F
+	GsAPYcPr2W/PVhYCEocYKWmSS8rrzSV4qWtrIH1hgMIRi9CfpWu5pB1kdqcElwvzDmeT4+AWg0j
+	xE7Sd8MF3rt09j/DQfk6DTS2srFZUoYlGWnbZEgiI8MPG6kfu/cKXrXAevzHkoy3k9MXWG9oHZh
+	EVnis0a9NUOm0KE9UfUgA031IgHheuq5eeZtL2xqH+Tn4WXv
+X-Received: by 2002:a05:690c:389:b0:853:fc17:6054 with SMTP id 00721157ae682-869487f6216mr9173127b3.3.1788222931269;
+        Mon, 31 Aug 2026 17:35:31 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:f45e:1544:1409:e870])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-869cca3c804sm2038057b3.6.2026.08.31.17.35.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 17:28:01 -0700 (PDT)
-Message-Id: <d8d11ad246b2e5ca73ea131e908d74111bb0fcf9.1788222476.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2171.v4.git.1788222476.gitgitgadget@gmail.com>
-References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
-	<pull.2171.v4.git.1788222476.gitgitgadget@gmail.com>
-From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 01 Sep 2026 00:27:56 +0000
-Subject: [PATCH v4 3/3] t/lib-httpd: document writing concurrency-safe CGI
- helpers
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 31 Aug 2026 17:35:30 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Michael Montalbo <mmontalbo@gmail.com>,
-    Michael Montalbo <mmontalbo@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v5 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
+Date: Mon, 31 Aug 2026 20:35:20 -0400
+Message-Id: <B48D3D3E-E5C5-47DE-AD67-C8C6CB11E27C@gmail.com>
+References: <apWUGfzQxx7vArpo@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ Olamide Caleb Bello <belkid98@gmail.com>, Todd Zullinger <tmz@pobox.com>,
+ Yuchen Tian <cat@malon.dev>
+In-Reply-To: <apWUGfzQxx7vArpo@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: iPhone Mail (23D8133)
 
-From: Michael Montalbo <mmontalbo@gmail.com>
 
-Update t/lib-httpd.sh to document the fixes applied to
-apply-one-time-script.sh and http-429.sh for future developers working
-on helper scripts. Add concrete examples of patterns and anti-patterns
-that should be considered when handling state management.
+> Le 31 ao=C3=BBt 2026 =C3=A0 18:06, Patrick Steinhardt <ps@pks.im> a =C3=A9=
+crit :
+>=20
+> =EF=BB=BFOn Mon, Aug 31, 2026 at 08:57:49AM -0400, D. Ben Knoble wrote:
+>>> On Mon, Aug 31, 2026 at 5:27=E2=80=AFAM Patrick Steinhardt <ps@pks.im> w=
+rote:
+>>> On Sun, Aug 30, 2026 at 08:27:13PM -0400, D. Ben Knoble wrote:
+>>>> On Sun, Aug 30, 2026 at 5:15=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
+om> wrote:
+> [snip]
+>>>> I would happily prove that at least none of our existing tests fail
+>>>> with core.useNanosec=3Dtrue, but I'm not really sure how to shove
+>>>> configuration into every test invocation of git. Even if we could, I'm
+>>>> not sure we necessarily want to add another CI job for that (though
+>>>> that's a separate matter).
+>>>>=20
+>>>> In particular, (among others) I have not received any concrete comments=
 
-Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
----
- t/lib-httpd.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+>>> for
+>>>>=20
+>>>>> Comments welcome: I haven't touched any tests; I saw a bunch of hits
+>>> for
+>>>>> "git grep racy t" but wasn't sure how to fit this particular change in=
+,
+>>>>> especially since it won't be equally valid on all systems? Advice
+>>>>> welcome.
+>>>>=20
+>>>> so if there's at least a way to exercise this path on all the tests on
+>>>> my system (which should support it), that would probably be a good
+>>>> thing.
+>>>=20
+>>> Yeah, I simply don't have a good answer here. It's messy, and I'm not a
+>>> fan of the current direction of `repo_config_values()` because nobody
+>>> has yet stepped up to untangle it from `the_repository`. I gave it a
+>>> quick shot at one point in time, but the result was messy at best
+>>> because of how we populate it via `repo_config(git_default_config)`.
+>>>=20
+>>=20
+>> I took a quick look (being unfamiliar), and yeah, it does seem pretty
+>> tangled. I suppose one way to go about it would be to have repo_config()
+>> forward the repository argument through configset_iter to the config_fn_t=
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index a216e5376f..8ca09fe85b 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -159,6 +159,17 @@ prepare_httpd() {
- 	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH"
- 	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
- 	cp "$TEST_PATH"/proxy-passwd "$HTTPD_ROOT_PATH"
-+	# Apache can run the following scripts concurrently per request. Make
-+	# sure any state management logic is resilient to race conditions.
-+	#
-+	# For example:
-+	#   - use "mkdir dir" to ensure only one request "succeeds" under some
-+	#     condition (see http-429.sh).
-+	#   - chain (&&) atomic operations like "rm marker" (no -f) with the
-+	#     logic that "claims" the marker instead of relying on a separate
-+	#     "test -f" and "rm marker" check (see apply-one-time-script.sh).
-+	#   - use scratch file names that include the process ID ($$), so
-+	#     concurrent requests do not overwrite each other's state.
- 	install_script incomplete-length-upload-pack-v2-http.sh
- 	install_script incomplete-body-upload-pack-v2-http.sh
- 	install_script error-no-report.sh
--- 
-gitgitgadget
+>> callback? I'm a bit surprised (leaving aside how pervasive the_repository=
+
+>> is otherwise) to see it doesn't already do that :)
+>>=20
+>> Is that the approach you took? Or, where else did you feel hung up about
+>> the resulting code? Just wondering.
+>=20
+> Yeah, that's what I did. I don't quite remember what was awkward about
+> it though. It might've been that callers have to be aware whether a repo
+> is initialized, and whether it has all info to be able to read its own
+> configuration? Or I was trying to make it auto-lazy-load or something
+> like that, but because our config subsystem is so fragile that led to
+> lots of weird edge cases.
+>=20
+> Sometimes I really wonder whether that whole caching layer is even worth
+> it. We already store the configuration as part of the configset, so
+> caching the parsed values probably does not buy us a lot. For some very
+> central aspects like the bareness of a repository or the location of the
+> worktree it probably even makes sense, but for everything else... I
+> dunno. By now I feel like it would make more sense there to find
+> localized solutions specific to subsystems instead of having that one
+> big global struct that has weird semantics.
+
+Interesting, yeah. I can=E2=80=99t say I=E2=80=99m too motivated to look int=
+o this further, personally, but the config system seems fairly complex=E2=80=
+=A6
+
+Maybe I=E2=80=99ll take a tour of it one day though, depending on the next i=
+tch I scratch ;)
+
+>>> In any case, if we see that your changes interact badly with some edge
+>>> cases that we don't currently have on our radar then we can still
+>>> refactor the series and move the value into `struct repo_settings`
+>>> instead, as that structure works alright with different repositories.
+>>=20
+>> This sounds reasonable to me. If nothing else, this series might become
+>> good motivation to untangle repo_config_values=E2=80=A6
+>>=20
+>> Sounds to me like we might be ready for 'next'?
+>=20
+> Works for me.
+>=20
+> Patrick
+
+Thanks!=
