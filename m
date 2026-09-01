@@ -1,84 +1,81 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FA125B0A5
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 11:17:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6B7EECB
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 11:26:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788261441; cv=none; b=GDDoXD7wrJ+wn29JgRo3MKcibr9xVR+dVT+5yrstBa8tS8N7GJAm1+/1j1lf+hz/98ER+g6BAxSAMQSchVitS3ApHylSpBjTiTUE7kz1E8Pw8eSSYqDG/ai/cykuJAIz6koG90/M1LTvrfJc5NwD0X+QdlgdTPK6COgG/yaMumM=
+	t=1788261990; cv=none; b=cP4AskaArkHzF/XxlsOomxQEoGiYXrHTlXt6t36LyHjVtngdwHOusQ3b8fOb8J0kTVl/PxlAmFvYyY9fCSHxIMfVS+B+hjuNdcZA9HSiyoWsym4tZ2/thYzlxFwwrf7sYbVanu6zRn3DkR7CakCTEDZULOd3FyqbD1aU1RIFo5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788261441; c=relaxed/simple;
-	bh=X7Ch4vCyryearq8ZfUIFmCvoQUXu/giDE2rHXHEDT7s=;
+	s=arc-20240116; t=1788261990; c=relaxed/simple;
+	bh=QGOltjyLHKyXdp6z8YxabQ5SKRNIfdK7qPoNmcOL5l4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DzWH0bFURu3wfUFiDLf587UWabnI9gcNjQ47jBooa8lIL1lGghGRVGUUFTQ5gTfCapTlTTJFvsxPvkHuEW/27VFUrXSP4LHLjnST8bcX6n9AOYH/CmF+aaZk3RUSWsnmmyq21J6KFbgwNbBQkZnahLVKKEliAjE6eUE0UepcWEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P9UskWl8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gaLDuJC4; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZaTEfVe3cXe1BWeivm0wchXEjgTEUvLc/jlLcoR94HYq/spdTALFFxFeogh07esxJi9y1RsNk1gjkDvRlquM2OAcnAdUqsvenLWNfO2T74RlmpjTN4MUm9WSl2lse8fBKBLwP1rJrrZTel5w8AEJuwywi+sTYgJNj7zB3EDOeqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bDEUv/se; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GwXZVwj+; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P9UskWl8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gaLDuJC4"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7D5FE140011F;
-	Tue,  1 Sep 2026 07:17:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bDEUv/se";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GwXZVwj+"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 77B42EC0218;
+	Tue,  1 Sep 2026 07:26:28 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 01 Sep 2026 07:17:19 -0400
+  by phl-compute-07.internal (MEProxy); Tue, 01 Sep 2026 07:26:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788261439; x=1788347839; bh=OLqwweA+Z2
-	5cY40doKmBAIrhGB8nvVy9jTkpsgi3Q9I=; b=P9UskWl8Z6AVw9wHZbO2o9CoIq
-	b1YQnDd/RDCj+KABEWw1PQZtvBe6lfFN2+UkbrydBw08jLwnUag0maxubVX0osa+
-	VBvXKVa12yI3Ojr/IFEQFYHE8mIl3IgSxeDxi3iWu6BqEn4bLcrGMEaa14Caa8Pv
-	KiTRBKx2G0z+mlm32j+OnCZkrhahMZyJRv5k7GbN9Nmj39Y/cD58eVMtfchfqxw+
-	UDJDZn44AmNt+DQ/wTlVhRlMUvGE1a6rOmB5s98SeHa3LL/oxzaNS7HS63dZocGg
-	TY8v/kAUBochmq+gA0jUjq9/Cao6fuUgftSiNrMuuEztb+Q9eetg5eEioajA==
+	:subject:to:to; s=fm3; t=1788261988; x=1788348388; bh=bVlnCUxNUN
+	2O1vYbwNMear5qAluR+z7sL3YlbOmFm78=; b=bDEUv/seeu2SXA06nFDjG0tApf
+	hYHoaJeqAWkm+g6Ijw0LeZ8f0S4G/U4ijLdrV4Cjs4PiBbDzviQpRz+BvjE8cpyC
+	M5ZKwmks1RliM0nxgTt9kYtS17iL7/UTHZmW9uxIXXK3affH2Wm5D46VLMaF3bJ2
+	iMSPPeDgAgBFaKhjvrsz/2VbmhcjJoANH+wFCCJfiCDO5YVdpz+MIj9IkA39H114
+	1fISwgmbc4g1P5TzxUJ+savfGR34Wj+Dh2Wu1Coz/+EoxF30MKCsNdKcXhyr0mTo
+	QPfHuZyIzgRZEnj2xm5VG1kvWwECEqhb8NU//BIrijJ4qxnZfF1TQaFLI6CA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788261439; x=1788347839; bh=OLqwweA+Z25cY40doKmBAIrhGB8nvVy9jTk
-	psgi3Q9I=; b=gaLDuJC447G/L9jV2zzKf8VYUCVDXTwusWi50C204kMp2rocobw
-	gJlm71huDEpXYH1kF2L3VrCJHwBwObMkW3ifm6DfeFX4aQ/xebS+LkNtpJKFOdk9
-	TloRsfnPZXKY/4Xh3U/f5QA9XeEEBZdxY7jnoL3/+bt6rnLDgSYj2Wv0d6kROw0F
-	OhJfgy3we7qFmXzZbzoX6TCMtQ/QGCjdE0bEDRVdi0fuNmNK+PRULgldSVK7T1GE
-	TVbpDu96e/bDir2TSXvcX5o7T7l5Clgi8YD8A21/jKb1RPDO3ocza0pVHe1L+VPO
-	Z9en6TBKnZxT7vhRB1AE1LY0siwMs13ZN0g==
-X-ME-Sender: <xms:P7SWal2FLh_eg8FVq2KQWWT1aV-5r03epZBwwppa_0yEia1EcMoeKA>
-    <xme:P7SWajhOLlycHY2RcQGZoW3gfPBjob8rBwlkURmYuEC86xnt2AtSbiP6LdQsh4dZo
-    b-kWg3dbIEmyml-iJ6-LnZH6_OtzwaTgY-yL2ptfsLFuvjRO3A4CQ>
-X-ME-Received: <xmr:P7SWajSmG7qxnpqIRXx9LHX2f-OeWxNg1ma3jl9PXrb6C-UKchP3gw>
-X-ME-Proxy-Cause: dmFkZTFba+pbvBezrs1fmQ9QmNFOEwMeDO1O6I/H4s9fbvlxMTumFlu/oldFOtd5bVioBh
-    66b+PM7MTE0itZdNMH3BLRZNLViWQLRpTe7EaOPrFoy/g5xfri7LTTzAr69SSa9sPwgX6H
-    eLUfbNPdZzKbfmVuwsZicEDDo2ssdbSp3d60qVPK81Ak1G8MC6ndvN7pJ8mJHHZ8W8HZPq
-    TUNY+8cyqL/6u0kVc1k1AYkE4imW1p1oHWYDQBMsDGqONw//8rd+2skf/vj2WT7rYMUEYM
-    KIbppAbvGyAgvr+fq8FKl2tVgUagUOVvRJw3f1DY3BxB37jDOtqKeNDW2KahRpmPDjLTry
-    fZQGJboV5CdY2fnNtWygGmQPGJx7Jz0hDVpxuyyfyama1wSIdbbnLbozcqvuBITb9yEp8a
-    GkovjEDm3t8utQCtxXmrA4v8lTSCmdcKUxQlpmbk5pb2M5bh8slHMHicf5Rq9hkHnr622B
-    w4Ts+U/zQ8tcCzbkZisU08idQb9hBLKRudGUb9k7VjDHPxp83JGhpiDFGXLes/+1pFIqk3
-    O1dV5KjqvnocCGGX43NB1NQ5TwtauzvTzOjYtVPHap2YRHgldDDfWFAhAcXR3D4JpKLSjH
-    +eKcx7BQtMAxDJuABknnOKGvOnayQo2JJj8sAjDpu+o4ZWlpedl4vB9fRUUA
-X-ME-Proxy: <xmx:P7SWasj_0k2w7IwMKSxxq2YvhrUpTbUkymzv3nbt5YoREUHctdUuPg>
-    <xmx:P7SWar4TZlsplfhKDH0NuKfvC9vRDFSrdzVUM0Kx5-T09Y5uzpXqlg>
-    <xmx:P7SWahCd7KHa6m82J512tdnppesX0SpXSxYamGwiU7y1uNIGytorKg>
-    <xmx:P7SWaqZJbp8ViPdnKu0HbZvF5VgNVL7rkr8MqPnSRqrn-pXfO7aH0Q>
-    <xmx:P7SWav9Jxv62sjDEqufitE3EFvboOZbkhqf3j8AGbjGV7UyhT3AXt7tD>
+	1788261988; x=1788348388; bh=bVlnCUxNUN2O1vYbwNMear5qAluR+z7sL3Y
+	lbOmFm78=; b=GwXZVwj+Bry/7i3kGWAlDVJW7qxn+kxpKonzDS3+vu4p1cHr1kz
+	Qetggq6tEa2gHTZ0tkY3i6acPnC0vO086lxEGjZHTaYYbZKecyJ+6rUcqZvRevY8
+	1B0ICgSFSBVAI4/iGWUu77wm3PEQwFdoDWYAWKHRwS5nKqaNVasXpxtAi9WOQGld
+	6XWVIvBw92b37jPV3wy4brF4ACqLKYzb0WrInX0aPihc74ak/DDrOux94pIJmgt9
+	Ga6i8awbncv81SxX881G1FFslcxI5hm/nRqrWLXh8x/3IHU6ortADmDI9RMV1BWm
+	OxfH64IaY4Vju0/sJnk6upN0htTREhdTfoQ==
+X-ME-Sender: <xms:ZLaWam3VSm733fLq0rBYJc5DwYZGxxJOh289jC8fug7kLqp8it1Orw>
+    <xme:ZLaWavFsrFAhMTJaVMsiH9RNRjgph40g_CMCqiuRapaH0YJIR9YbQve2uF0L0BabD
+    R5Gyp_ZuNXx5i2yxwkmw46DKxm6iFWdAIi1QiWynxMceSBHzbDLhOw>
+X-ME-Received: <xmr:ZLaWasjev-MmZJgn95KS4XunHoFtCgg3xRst6s8OG00JSjtMj91Z0Q>
+X-ME-Proxy-Cause: dmFkZTEGUnJaAg3vh7xbCDuPYTzGd7oL8wzpj0eKZltnkAdInNNRYDrYpdOBJLIqXrpYKT
+    lnQK35X8vXacOjgGxmqq8JeUm5LIsy9yhi90knQP5hmqZncFikuaswaVgJAYQdncZKqWVN
+    3jAf0X1ixWAS5CS5AmfItb4LCQ0RjrtxtyBstaaNZhvrhQo5PEHTBc9JAik52ZY2M/ufT0
+    tVUaFyfkT8xXFfJAB6YJWyME/6hHFtxXj8lXSVjYHMcEPh3BKfXzaJ84wsul7ycqgAa1iO
+    eAL2JDvN2I0dm33gM35cDtVuyMt9s8x+Q2qAuWFIahNaauJ5l7k3eLgg9yU2Twbb/yaJrr
+    njXPSbwqK6Mq7dus3Rb34cGN8hE+8AUDAawjwlXnMtHU3p+jf4Z9DcmyRbq9xh83laMLp2
+    kT2RqEaI0ReAxz/0/ZdyRr0MniuYAC1onfPjSOxSrqq9yC7nkWB7qlQI7FxQEP/3a0CYR0
+    Phbh7EILlSWo21aBjUzi93yYGcu7FL4/NnhOIMk1nFcuLVlMab3D+0YZxC7aFu7vTY4/Pi
+    IJjxDJ293umtoD7a6dnWrxveWOt7Yz3fKfxWQvW3bj9TcuKpEiVm3srcbC5NZFx2EpIX8b
+    vXCecaJlrGznfSpEVqPeQNkg1hRnJN3h4vph4dFyVHMbCgqbqJFlNWzWU1EQ
+X-ME-Proxy: <xmx:ZLaWai_UE1MNF0EwMBJVEFbePXOzfWT_gzvjmULzUquJf7YhR2oUhQ>
+    <xmx:ZLaWaroPLncqYJTkxybc4KX85r4bWsZXYmFni4aC7QGsQg8-bmb6Lg>
+    <xmx:ZLaWap-5zYm2JX2woUkwQ3KQUtzncX6O-GrQUUBjIkxyO6fl5ThG_w>
+    <xmx:ZLaWanWVhV1BO2ZSgRlaKsjOuP6G9j8WstMxCRCBLl4xiip-CbVcsg>
+    <xmx:ZLaWaiMeoKrzAoGmjoSpcVYsRkwIFP6s_pJphQf7XwyPA0KgVQwwe0Aw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Sep 2026 07:17:18 -0400 (EDT)
+ 1 Sep 2026 07:26:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bcd79b01 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 1 Sep 2026 11:17:26 +0000 (UTC)
-Date: Tue, 1 Sep 2026 13:17:11 +0200
+	by mail (OpenSMTPD) with ESMTPSA id bc004502 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 1 Sep 2026 11:26:35 +0000 (UTC)
+Date: Tue, 1 Sep 2026 13:26:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH v4 3/3] t/lib-httpd: document writing concurrency-safe
- CGI helpers
-Message-ID: <apa0N7VNNkcKurbi@pks.im>
-References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
- <pull.2171.v4.git.1788222476.gitgitgadget@gmail.com>
- <d8d11ad246b2e5ca73ea131e908d74111bb0fcf9.1788222476.git.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2026, #13)
+Message-ID: <apa2XPxAFyUXveJY@pks.im>
+References: <xmqq33vuw0ht.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,36 +84,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d8d11ad246b2e5ca73ea131e908d74111bb0fcf9.1788222476.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqq33vuw0ht.fsf@gitster.g>
 
-On Tue, Sep 01, 2026 at 12:27:56AM +0000, Michael Montalbo via GitGitGadget wrote:
-> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-> index a216e5376f..8ca09fe85b 100644
-> --- a/t/lib-httpd.sh
-> +++ b/t/lib-httpd.sh
-> @@ -159,6 +159,17 @@ prepare_httpd() {
->  	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH"
->  	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
->  	cp "$TEST_PATH"/proxy-passwd "$HTTPD_ROOT_PATH"
-> +	# Apache can run the following scripts concurrently per request. Make
-> +	# sure any state management logic is resilient to race conditions.
-> +	#
-> +	# For example:
-> +	#   - use "mkdir dir" to ensure only one request "succeeds" under some
-> +	#     condition (see http-429.sh).
-> +	#   - chain (&&) atomic operations like "rm marker" (no -f) with the
-> +	#     logic that "claims" the marker instead of relying on a separate
+On Mon, Aug 31, 2026 at 12:31:10PM -0700, Junio C Hamano wrote:
+> * ps/fetch-packfile-uris-parallel (2026-08-21) 2 commits
+>  - fetch-pack: allow parallelizing packfile URI fetches
+>  - fetch-pack: prepare for threaded fetching of packfile URIs
+> 
+>  The `git fetch` and `git clone` commands have been optimized to
+>  download packfile URIs in parallel when the new
+>  `fetch.packfileURIThreads` configuration is set, significantly
+>  speeding up fetches from servers that advertise multiple packfiles.
+> 
+>  Expecting a reroll.
+>  cf. <apUUiv4SD0-W8QS3@pks.im>
+>  source: <20260821-pks-parallelize-fetching-packfile-uris-v1-0-0df52d9427ce@pks.im>
 
-Nit: I would have written "with the logic that is guarded by the marker"
-instead of "claims".
+Please evict this topic for now -- it's creating lots of conflicts with
+a series that Justin is about to send that converts git-fetch-pack(1) to
+use object transactions. I'll then resend my series once Justin's series
+got merged.
 
-> +	#     "test -f" and "rm marker" check (see apply-one-time-script.sh).
-> +	#   - use scratch file names that include the process ID ($$), so
-> +	#     concurrent requests do not overwrite each other's state.
->  	install_script incomplete-length-upload-pack-v2-http.sh
->  	install_script incomplete-body-upload-pack-v2-http.sh
->  	install_script error-no-report.sh
-
-Other than that the whole series reads a lot better now, thanks.
+Thanks!
 
 Patrick
