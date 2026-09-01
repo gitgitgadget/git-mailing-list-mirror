@@ -1,71 +1,70 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C11B33A71B
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 00:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24B435950
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 00:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788222482; cv=none; b=O6gJcunjia3vXjR+XpxcTjx3MyWqzWPPd2repwUdurD0gIRTurWRQLIaORExPJFnlFTDdxV4daHsNrYQUUY+bSUYawEOGLm/gyj5NOEEwkiCxJPodYZd5gFm5htKH7nn2rEPy7ty7LvJ3iV40w4FP/oY0QDyVvoeq0cEb/1/AmI=
+	t=1788222483; cv=none; b=ieGA4mjAMhhzRuM9RQxP31iB4xAB5C2DiLTqdFBm1q7K2iD6VICAbdf0c24R/NpEmxVaH2ld+kM6bOOPJKiYyNj+ZCHyOoKGu1q9sa+Sjt3X9pA0HI8eqEyCM/fToDogmjaWXGGAXv30Q3KKMKzb/XC9PJzi1+Delth6NcNzxYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788222482; c=relaxed/simple;
-	bh=qjUJ/7V7AxWjs2aczvuOdhFzxx816TwPue8YAKrIiZQ=;
+	s=arc-20240116; t=1788222483; c=relaxed/simple;
+	bh=L3JdVzODKTGM1H+8HQhxzLKEx8EJE95uk8LZasb6a/8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=YHwqTq4tDBd5AG6UbWy78hNzDA4yzWB9pdTwFQiEtqJz9Updh3XrdNyZmdWN+iZcRtsQYtDHhpWyyEiP5gY60gbpvcVXlLrnb60mZrWFfKa15ZKrtb7HUMaFSqaqOGcb+6K3tILrc5XGIdYXjWHoCZ+1s/lxxBKldbUx/Vozppg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jHJtUFTj; arc=none smtp.client-ip=209.85.214.170
+	 MIME-Version:To:Cc; b=L07KDV3QBWgAYnpMkE2ZPAXmobGUbmePqxR0STGVGJ2oyq6Gp7diYm3BDA68lwKDm1MKy2vuGDujihMRhAM83ixGo71g9ilEPB5+2mzC6mT4rpmmSqsRPMr3yrIyDpUDYMkfsvIjj5YtTqkGnxvIJCR9oDZZwre5cY2hwAhPfQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qH9TgPDn; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHJtUFTj"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2d6efd73032so3639395ad.0
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:28:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qH9TgPDn"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d560775ca2so29809365ad.1
+        for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:28:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788222479; x=1788827279; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788222481; x=1788827281; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=XWABB9docqJ4DARDbcyv+S7U3X01an+YMBzPqf2ySlY=;
-        b=jHJtUFTjTfob/MbCHSWoGcwr7LtlcltAWpLYjzDOqIl9MOOGqS9gq4f/DaYvuUESvC
-         BTKzcEikk34DyEtv5M+JkpPAMRJfmgmCs/wKJJ1iSOjwLFa2wDRplfqIhH1KRJa8F+No
-         5JSZtKlR99ZZpWgQW3fKC1I10lwSN1IK9C59DtMeBY+598uG4dLO8AQQ3s4h4nk8x50I
-         NuQSGOP1qQsl1gEmkyyas+p/jyl79ArHyrwEqMG1UJH1zJ+J9+33Wngg+uv0ge5wWsf/
-         xBHdWByrzXbPLCkB/hViPYKfuSGDJGhL1kwQaa1fIZ7NYqjTX4d9VkKYurr2N2232A95
-         /tBw==
+        bh=6dllLVuZeVpPrjdecSBEixYqoC6MYFsswZEtVXEe9ns=;
+        b=qH9TgPDnsenwzfbr0E3n9twxql3GWpUIXqEtd8vP3F4vQzWsc+ROQkYFuoGpcuxyW8
+         lP74KeYQH26gwmTJTvwcl13NH0yqP6/w+n/Z6ZEXLtnKbmDiPLfGPKsgEQW8a098/Lkg
+         Uf4fFeuBos79Uil5EaI7UuuWFnJkSjYfzGCofqEhxvy/mugSxjIvaVcb+Y1r/u8/8ZPp
+         CbWHSTIQekBMRByPG3JQTbyGNyg5PqGO4yIKfqE9TzSaOt56bONGulmV9cga1OOKQr+7
+         AKRG8zdrUyIqBIWay1GzdDrf1gCfJqVUUmprIGVaXJ6RH2Cp4ssT1hoF+hhy+pE/dPvM
+         +svA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788222479; x=1788827279;
+        d=1e100.net; s=20251104; t=1788222481; x=1788827281;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=XWABB9docqJ4DARDbcyv+S7U3X01an+YMBzPqf2ySlY=;
-        b=XTgzfFCMLRmJWaTiytjGpSSw+uZT8VrlQzzMQrzM0wGMzP6qmKHdXw5m+E8oq1RZXq
-         KiO/huRZBa65i7eEAHqP+rdHin24FZYtfA3VL4O9dUGOG0KJ8GCzg1Q+Gdc5EkG7gbS1
-         lELUGXXOUmoUE/d/yi/l5A1wPQRX6L8SsInIOFjdo7nzil6/Ifzcxv5AWUy7GzT5ZvtI
-         zg5vu7+uiHS3/4hl0dbhZbzVa5epPQB9YQD5u9G4xEN/VExgr19PxRtZku1fubvgRMCi
-         +/VzCjGfVAllwrdzkJxBL9EdjYtp7X9s9dPwOkDrBM/IcPj6Np8I0a5frAm8QjNyZOo8
-         hRfA==
-X-Gm-Message-State: AFuF++lYZsGT7ObEXNuIEHoOBNp4iIa6b9grIGkj3m8V3Wzr95SLPVB8
-	ZBCwUJSCGrCxmyXbgKxVniw5nAsQGQhAh2ZaOHrOxm8NcqGK4LIdSgbuW8xova8u
-X-Gm-Gg: AYBFou3EgsszR0AYRUoEImhmOHRgqgqLV/Cn0S5vLvK8GFH+f2ycCm4l0xZggmh7SzW
-	Z9s+eCx+SBsXSFYqNFPLWlvuLGJMJAJysAdp6ejSMO4icgizKKPhUNxbb0kVhs8FiwK/3tXntHr
-	RoX+UwH8gIy+BGClDvStmSs5GdbIMdCalgA2qkObp0l8Htv6oWs6J8koiJvrcgkhzHTNUD5Xb0+
-	kuPc38oJBHsxAAyOoBVK48TF9bBweuDgnHwuP25cgin5kI5pvLs2xpp4oWEgf2ANbQY8kXC+XiJ
-	cEhfwEmFI+/Rg9VANOpv0QJBnWe/gO3D0JwE/n641xWaAaNDrlw1MzFLmGHumH5zVu80ZDevKgx
-	VhjR91aHxxwPjXw1tcQz6TjDduaBSIw26GD7SsOMSr3s/5piZj8ISrJzxYbtrOI02mH8KEDiSCY
-	SZBGfizPU8nBMMOZ/hAMkb2O3WfnSlZf2xB54e9K0L/f0/Y1f2k4iR9DY/qOHoDeuO
-X-Received: by 2002:a17:903:2410:b0:2d9:2b1b:878a with SMTP id d9443c01a7336-2d9526c2cdfmr15709405ad.10.1788222479216;
-        Mon, 31 Aug 2026 17:27:59 -0700 (PDT)
+        bh=6dllLVuZeVpPrjdecSBEixYqoC6MYFsswZEtVXEe9ns=;
+        b=XB3sebhEz0x2/rHZULKILqi/XHWVNRq+xPsRWxjfoY/RYR/8gtwnxjH8/00WtM/jtN
+         uhk2Azffs3o0cFoknTFXSWKJIhdUWu297urai3dunePKbo5A77ht561/ayth9RQZevdb
+         HwBHAmze1ngG4IqJfPEAAmvPO6G6vJGSNG8e3PXLe6pd41mMrjfAYoHMwQEhm8FPS4fH
+         zWovztRpwRBZK+3239ledmg2TNbElOe4pZk1GbnkxqaxTEPo8FA+De6Uc9slCl6M3gU2
+         d2UTVpJc28QMAeJEj4bjfY7Fx/2AD/ZolbDFB6RpAy27ZxbvNxBtUuq+ViAPHMBXuPJr
+         lt5g==
+X-Gm-Message-State: AFuF++nji3WLjFX6n8Aic0zoWIwZTwLhVPZlExn2MxLZFPCKqt/ogbf3
+	ylNvjb1uaB6BZ0tPeC2KcznDulMT3tqe/VNQKHEst/zSb9AvyZFZKjxiNkAC3WmS
+X-Gm-Gg: AYBFou3Z/rIEklbwWaKbrQFVZrwVJTT3chYY7kTPaj1PJ2PNDQ4AcuOxk8y48J1FyBk
+	yAHngOfpKmg/PeUdW+b/L26CyDbAwvtJ/jle92ZDsX31cCbgLxIggpgZiE9zqKtJN27a2QjNA0r
+	YTJzdeD1CMF97bCkmy9dhgvH81CY/3ej6jfldVKMj+dFNi812YKXoMz3Q1EAYkFVI9dd8Ni3G4I
+	Ia9aQ8+TiDh+Q54O0CCNGZhITlrX8IqY62VvLcvQiuFx2nimtdU3gJE3v8fDp6o9gr+bC8wH4ZN
+	OisxXTYfHTA0OBU7F0xnyugZX40Wm7sMdm8u2EQ26S7dEpRCqTM6fjJrI6m8i5NrRYcHEx7VxLD
+	HxQriCdgPMNUT6cExnFB0cZyoNxpl4WZ2bLpLD3AMj5m/b7WeOTfo+aylBmFcu3nKKGVlrFPKIS
+	pww2eeo9rak+tlg+kw9I4CdYDvLRyBrAi40KHuPVNsZWrF4Smb/MOKQydUwCIJAlLLiw==
+X-Received: by 2002:a17:902:e950:b0:2d9:438e:b70d with SMTP id d9443c01a7336-2d9438ebad4mr88598745ad.1.1788222480840;
+        Mon, 31 Aug 2026 17:28:00 -0700 (PDT)
 Received: from [127.0.0.1] ([172.185.55.133])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3286f7bc825sm38773447eec.9.2026.08.31.17.27.58
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3286f99585csm32051923eec.21.2026.08.31.17.28.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 17:27:58 -0700 (PDT)
-Message-Id: <e202142f1999a57d485cae0d50a1a7c1afa50763.1788222476.git.gitgitgadget@gmail.com>
+        Mon, 31 Aug 2026 17:28:00 -0700 (PDT)
+Message-Id: <79396d491fe15c94a4e4c079d1109b425dcf966a.1788222476.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2171.v4.git.1788222476.gitgitgadget@gmail.com>
 References: <pull.2171.git.1783479584.gitgitgadget@gmail.com>
 	<pull.2171.v4.git.1788222476.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 01 Sep 2026 00:27:54 +0000
-Subject: [PATCH v4 1/3] t/lib-httpd: fix apply-one-time-script race under
- concurrent requests
+Date: Tue, 01 Sep 2026 00:27:55 +0000
+Subject: [PATCH v4 2/3] t/lib-httpd: make http-429 first-request check atomic
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,201 +81,80 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-apply-one-time-script.sh is a test helper that executes a
-"one-time-script" responsible for modifying the response normally
-returned by git-http-backend. apply-one-time-script.sh should run
-"one-time-script" once and return a modified response once. However,
-sometimes a race between multiple concurrent requests causes
-apply-one-time-script.sh to misbehave and return multiple modified
-responses or an empty response that results in:
+http-429.sh is a helper for testing retry logic. It uses "test -f" to
+check for the existence of a state file and later uses "touch" or
+"rm -f" on that file to determine if it should return a 429. This method
+of managing state can fail if the helper script is invoked concurrently.
+However, this failure does not currently manifest itself since the
+helper is invoked sequentially.
 
-  fatal: ... The requested URL returned error: 500
-  fatal: could not fetch <oid> from promisor remote
-
-This can be seen in the flaky failure of t5616.47 on the macOS CI
-runners.
-
-Fix the logic that checks if "one-time-script" has returned its modified
-response by chaining "rm one-time-script" with its execution. This
-ensures a racing script does not also have the opportunity to execute
-"one-time-script".
-
-Add t/t5567-one-time-script.sh to verify the race is fixed. Implement a
-stub "git-http-backend" that intentionally invokes a concurrent request,
-and check that only one modified response is returned without error.
+As a preventive measure, fix the state management logic so it relies on
+an atomic mkdir operation to mark that a 429 was returned. When
+$retry_after is "permanent", always return 429 now that we do not rely
+on a state file that is "touch"ed and "rm"ed to indicate when to respond
+with a 429.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- t/lib-httpd/apply-one-time-script.sh | 38 +++++++----
- t/meson.build                        |  1 +
- t/t5567-one-time-script.sh           | 96 ++++++++++++++++++++++++++++
- 3 files changed, 121 insertions(+), 14 deletions(-)
- create mode 100755 t/t5567-one-time-script.sh
+ t/lib-httpd/http-429.sh | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/t/lib-httpd/apply-one-time-script.sh b/t/lib-httpd/apply-one-time-script.sh
-index b1682944e2..eac21a3a8e 100644
---- a/t/lib-httpd/apply-one-time-script.sh
-+++ b/t/lib-httpd/apply-one-time-script.sh
-@@ -6,21 +6,31 @@
+diff --git a/t/lib-httpd/http-429.sh b/t/lib-httpd/http-429.sh
+index c97b16145b..1a5d7987db 100644
+--- a/t/lib-httpd/http-429.sh
++++ b/t/lib-httpd/http-429.sh
+@@ -3,7 +3,7 @@
+ # Script to return HTTP 429 Too Many Requests responses for testing retry logic.
+ # Usage: /http_429/<test-context>/<retry-after-value>/<repo-path>
  #
- # This can be used to simulate the effects of the repository changing in
- # between HTTP request-response pairs.
--if test -f one-time-script
--then
--	LC_ALL=C
--	export LC_ALL
-+test -f one-time-script || exec "$GIT_EXEC_PATH/git-http-backend"
-+
-+LC_ALL=C
-+export LC_ALL
+-# The test-context is a unique identifier for each test to isolate state files.
++# The test-context is a unique identifier for each test to isolate state directories.
+ # The retry-after-value can be:
+ #   - A number (e.g., "1", "2", "100") - sets Retry-After header to that many seconds
+ #   - "none" - no Retry-After header
+@@ -26,14 +26,16 @@ repo_path="${remaining#*/}"  # Get rest (repo path)
+ # The repo name is the first component before any "/"
+ repo_name="${repo_path%%/*}"
  
--	"$GIT_EXEC_PATH/git-http-backend" >out
--	./one-time-script out >out_modified
-+out=out.$$
-+modified=out-modified.$$
-+"$GIT_EXEC_PATH/git-http-backend" >"$out"
+-# Use current directory (HTTPD_ROOT_PATH) for state file
+-# Create a safe filename from test_context, retry_after and repo_name
+-# This ensures all requests for the same test context share the same state file
++# Use current directory (HTTPD_ROOT_PATH) to hold state directory
++# Create a safe directory name from test_context, retry_after and repo_name
++# This ensures all requests for the same test context share the same state directory
+ safe_name=$(echo "${test_context}-${retry_after}-${repo_name}" | tr '/' '_' | tr -cd 'a-zA-Z0-9_-')
+-state_file="http-429-state-${safe_name}"
++state="http-429-state-${safe_name}"
  
--	if cmp -s out out_modified
--	then
--		cat out
--	else
--		cat out_modified
--		rm one-time-script
--	fi
-+# Since Apache can execute this script for multiple requests
-+# concurrently, we chain "rm one-time-script" with the logic
-+# for generating a modified response. If the "rm" ran separately,
-+# a concurrent request could pass the "test -f" above and
-+# erroneously result in multiple modified responses or an empty
-+# body depending on the race state.
-+#
-+# We discard stderr for ./one-time-script since it is possible
-+# ./one-time-script has been removed already, which is expected
-+# sometimes. In this case, the unmodified response will be returned.
-+if ./one-time-script "$out" 2>/dev/null >"$modified" &&
-+   ! cmp -s "$out" "$modified" &&
-+   rm one-time-script 2>/dev/null
-+then
-+	cat "$modified"
- else
--	"$GIT_EXEC_PATH/git-http-backend"
-+	cat "$out"
+-# Check if this is the first call (no state file exists)
+-if test -f "$state_file"
++# Check if this is the first call (no state directory exists), or if
++# the retry-after-value is "permanent", which indicates a 429 must be
++# returned for every request (even if the state directory exists).
++if test "$retry_after" != permanent && ! mkdir "$state" 2>/dev/null
+ then
+ 	# Already returned 429 once, forward to git-http-backend
+ 	# Set PATH_INFO to just the repo path (without retry-after value)
+@@ -52,9 +54,6 @@ then
+ 	exec "$GIT_EXEC_PATH/git-http-backend"
  fi
-+rm -f "$out" "$modified"
-diff --git a/t/meson.build b/t/meson.build
-index a25f37d2f5..e4d0b6dc4e 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -716,6 +716,7 @@ integration_tests = [
-   't5564-http-proxy.sh',
-   't5565-push-multiple.sh',
-   't5566-push-group.sh',
-+  't5567-one-time-script.sh',
-   't5570-git-daemon.sh',
-   't5571-pre-push-hook.sh',
-   't5572-pull-submodule.sh',
-diff --git a/t/t5567-one-time-script.sh b/t/t5567-one-time-script.sh
-new file mode 100755
-index 0000000000..a8429ef3c3
---- /dev/null
-+++ b/t/t5567-one-time-script.sh
-@@ -0,0 +1,96 @@
-+#!/bin/sh
-+
-+test_description='apply-one-time-script CGI helper is safe under concurrent requests'
-+
-+. ./test-lib.sh
-+
-+HELPER="$TEST_DIRECTORY/lib-httpd/apply-one-time-script.sh"
-+
-+test_expect_success PIPE 'helper only serves one rewritten response for concurrent requests' '
-+	mkdir workdir fakebin &&
-+	ENTERED="$PWD/entered" &&
-+	GATE="$PWD/gate" &&
-+	export ENTERED GATE &&
-+	mkfifo "$ENTERED" "$GATE" &&
-+
-+	# A stub git-http-backend that returns a response based on
-+	# $ROLE. For $ROLE = modify, return the response string
-+	# "packfile", which ends up being modified by the example
-+	# one-time-script below.
-+	#
-+	# Otherwise, run the branch returning a response that
-+	# should be passed through, and block until released
-+	# by "read -r $GATE".
-+	write_script fakebin/git-http-backend <<-\EOF &&
-+	printf "Status: 200 OK\r\n"
-+	printf "Content-Type: application/x-git-result\r\n"
-+	printf "\r\n"
-+	if test "$ROLE" = modify
-+	then
-+		printf "packfile\n"
-+	else
-+		echo entered >"$ENTERED"
-+		read -r released <"$GATE"
-+		printf "refs\n"
-+	fi
-+	EOF
-+
-+	# An example one-time-script for apply-one-time-script
-+	# to execute. Checks for "packfile" in the response
-+	# that will be returned, and replaces it with a
-+	# modified response. Passes through responses without
-+	# "packfile" in them.
-+	write_script workdir/one-time-script <<-\EOF &&
-+	if grep packfile "$1" >/dev/null
-+	then
-+		sed "/packfile/q" "$1" &&
-+		printf "REPLACED\n"
-+	else
-+		cat "$1"
-+	fi
-+	EOF
-+
-+	GIT_EXEC_PATH="$PWD/fakebin" &&
-+	export GIT_EXEC_PATH &&
-+
-+	# Ensure $GATE has a reader so the test does not block indefinitely if
-+	# the helper is buggy and "echo released >&9" below does not unblock
-+	# the unmodified response gate.
-+	exec 9<>"$GATE" &&
-+
-+	# Launch the passthrough request in the background. Record its pid
-+	# so it can be killed when the test finishes if, for some reason, the
-+	# request stays blocked and would stall a test runner.
-+	{ (
-+		cd workdir &&
-+		ROLE=passthrough sh "$HELPER" >../passthrough.out 2>../passthrough.err
-+	) & } &&
-+	passthrough_pid=$! &&
-+	test_when_finished "kill $passthrough_pid 2>/dev/null || :" &&
-+
-+	# Wait until the passthrough request is "in-flight" and paused
-+	# mid-response.
-+	read -r entered <"$ENTERED" &&
-+
-+	# Launch the request for a modified response while the passthrough
-+	# request is concurrently "in-flight" and paused.
-+	(
-+		cd workdir &&
-+		ROLE=modify sh "$HELPER" >../modify.out 2>../modify.err
-+	) &&
-+
-+	# Unblock the passthrough request, allowing git-http-backend to
-+	# complete its response.
-+	echo released >&9 &&
-+	{ wait "$passthrough_pid" || :; } &&
-+
-+	test_must_be_empty passthrough.err &&
-+	test_must_be_empty modify.err &&
-+	test_grep "Status: 200 OK" passthrough.out &&
-+	test_grep "Status: 200 OK" modify.out &&
-+	test_grep REPLACED modify.out &&
-+	test_grep ! REPLACED passthrough.out &&
-+	test_grep refs passthrough.out
-+'
-+
-+test_done
+ 
+-# Mark that we've returned 429
+-touch "$state_file"
+-
+ # Output HTTP 429 response
+ printf "Status: 429 Too Many Requests\r\n"
+ 
+@@ -67,8 +66,7 @@ case "$retry_after" in
+ 		printf "Retry-After: invalid-format-123abc\r\n"
+ 		;;
+ 	permanent)
+-		# Always return 429, don't set state file for success
+-		rm -f "$state_file"
++		# Always return 429
+ 		printf "Retry-After: 1\r\n"
+ 		printf "Content-Type: text/plain\r\n"
+ 		printf "\r\n"
 -- 
 gitgitgadget
 
