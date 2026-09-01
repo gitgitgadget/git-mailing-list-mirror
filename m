@@ -1,102 +1,131 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192353603C2
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 04:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCD32C3257
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 04:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788237312; cv=none; b=BfmqwruGuUcKRvp7qbAnddxIKj51zCpzpda0MkxdLLlMrWbxyMpIOugMLJP6FHg9FBi6fK6A7Ef/ppwhkv4pfMTGEiQoxjfDelsK+1n6N8zdjNGa/7Sx4y5D9tPwwC46rv39dWY6KATaq9dHkKs4Jx5YALQx3FArLYp4BWbLifU=
+	t=1788237588; cv=none; b=if2oOVON3QTk4szGf9s19O53hKq59mwiF34OP50XFimwStpJv4MYqpSt/t9yhL/jo3UXqvo06a1goBD69UO3+MzfkJWKb2vQ5yt4CJDZkJrj+j83RzetbMhKRPnBiMigGN4bPg8LQ9vXlQU2+zkaOf0EHbgyX+89aXNp3OhHxyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788237312; c=relaxed/simple;
-	bh=24u3Q8SlwW22auf8+uO1jWPuLYUrdiTR5K6aSt/woBY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kxYSpjMj1venarfMQ3hQSVSnaDa3lubEfbMGa3Gyoaek0yp00/puTq1jdGx62uFc1vWMdof5mns7cyUUE9JlxJN7hwrBYj4XY4nexhF7Ii36C2aNbkCShzpaeSNj5WNsFHvtOlsWIqrZDt7hLS4lBEszDcw04NJ+FjVShYc3VsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FWzYIoGS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=czGBkVpJ; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788237588; c=relaxed/simple;
+	bh=F4kFXVITUOCqpZx1jj4UmdC78hbOTBDH8TsThXCWcoc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K867Dwz5g8Z3PP2w2K17POLV4vGJ4eSlkasfscy9GJeltlA5QMcG1wLRc9Cp6E8YCQxsscWyZlZmTMJBSu1cbQxHD+8JCs/JoQJh+YOsw0qYuNdfDaBmfxEN/yCrHWtqsnZD3ahppgzvW+zGVUXHsSVw10QQcFfOBxwhPdaWqf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LiXNs90k; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FWzYIoGS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="czGBkVpJ"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0F4661D0010E;
-	Tue,  1 Sep 2026 00:35:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 01 Sep 2026 00:35:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1788237309; x=1788323709; bh=uB3sedcgo4
-	zj/EMgKpn6ctCgz9CCN9ANKjKCDzXtH2M=; b=FWzYIoGSKknE//cghFG7d/yZUV
-	u8H/BvUxLH9y0o01klwakwq00G1cqAZmAHNga/HSQdZebtNNed/vU92YJ/wVL5Is
-	9EvKPDFm4ZrprC50j+zD4dj19ZfBrcFevZeeI08LIPEfuK+4s7r5YrAu+fmAMwxx
-	wjDIQzDt5+u4NWE0CAq0I0biDOPzjSawpCv2lLH4Hioz9knpEhltw72c1ZH1E5Mv
-	qlllnV9NNWkpqaSMCWMAP5UuIKemsctvyg2tcrB/nTzgeij52zEzGUhlCUBo8DqY
-	gm6iVsOeff+ouloOYfD36YtJaKJUkbAXF9dsy2p0EvOhqXDQYmt0x4s46kbQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788237309; x=1788323709; bh=uB3sedcgo4zj/EMgKpn6ctCgz9CCN9ANKjK
-	CDzXtH2M=; b=czGBkVpJ/ZZ6/Ya3F2/4kET5OxO9qpFvu+0Ja3nzdnSwbT2wznI
-	KidEctkd0mdo3MTrmTN7nkHumNVtKglaJYJiECnwsh0NyCKRpHsyE007Tf6K2wK2
-	QQzJtiNUD/fHW1rOkyZcokCqg33WVRbiMTT9Ry7toZOKv8lyWqvkaA9NK9PXiSFY
-	8HMl/QCZnhfJbmeGNgAo3M4u5MrjDE0ljEGBbsLiYCB4iIY8/0z08DbP6JvBTHT3
-	WY0UIWrfgJpwUiUHHDZAodEzuE08r+YrZnZSlx9Yi9TQv4oYRuTyo2x24qMEkIsC
-	4hjRheZX+Hqy6NFCdG+y4mExlJQKonf82fQ==
-X-ME-Sender: <xms:_VWWagwSnxHpXGchmxxtU-XkkpuHmAUDoJIcAbvtklmLBJEllTirGQ>
-    <xme:_VWWamh7z3QXlU8TFXcS7hIkji4nxsxQq0Gxp7jj_c-X_1ql8JG8D3vBbHR2deC8U
-    4X7a094RLkFmBs-xdCyIhvAQVbOrGe8R9Cb6SS1XvtDWlUvdhGCnU4>
-X-ME-Received: <xmr:_VWWaknXWgQWHdLHsai6D_UtGCqzsAdID5R2T52MgWH5zyWg1SFkdRzgraUUFqKOgu3w8nQAQ1rvK9oKrAyiqbSAtUaYZ5bA8g>
-X-ME-Proxy-Cause: dmFkZTG4PD6r8yuA9tqoe2Nf/l78p7OszAiS3YrYNK38YkxIdEOpGiN1L781ui5qAG5yyL
-    MGOLTg/4geZsOTyjJFIEgjDRWE5o/1rbEUHOS169A173jgwZIAifYLa/0Z+/GkXtqa+XCI
-    wB8yufOaIUF6fi5O74PRUKvb1atORe93kznyQwFwlTrBoRiLcTfoXrUISxSle66+494zXL
-    YYv7XxRtlZbRkwEh/esC707dvO6F4smIoIlfnaBEtTHK/JIenqEBHQne+TzNRSwiAMIdxe
-    BgP21bRUPWdMbvqW5hXMykfJ/RdzLep5U9yQG5JTCPy8D+t7D99EZ6PJUuNGDY12Bqkbql
-    oYJSpRx/mN+JLoedjawzyUkQpJ2ZerK0a6mF1s+/4l5JzgQ5+tfSX/EgOMEEEvy3fEDt4Y
-    Yakx/uI4d/Ct+w/cEori+ZDlpK7s17/owY5A+LQivVrkTxrZvu4Tt1j5wvadPBsyiwlKyw
-    kznqoRIjDk8Rn4gnJvAtPcEHKr7gqmAt4YzOHezkg9qCg9KaPDnL5EWuUMclfooRQsk6/j
-    VCqfVRn0LI8dUjNHQ3ukp5miLWJd7aJmswfm6zX+vrqH9PgM8RnxYLpqq9kBGDOV5hFcaf
-    ND3mjNF2mafsYvgsCr4x8SQAmgU9UBdSdqnjFbPvFi0Znq4lPfXBQOsJbMOw
-X-ME-Proxy: <xmx:_VWWakiuFMznyo1vPeAK_GyfmbQYybBslNhAcbkjSynOHevxE8iSFA>
-    <xmx:_VWWag25d9sbQ6QhxddM2CmAaSr-FSw6Ksuyt4krbLOOyy5JhlEulw>
-    <xmx:_VWWalLYhDLSMla6coNpb2m0uDS_GbqiHFqGvpQU_G_a_MWJgSJPMw>
-    <xmx:_VWWaowiXNgrg7_mQPUdaVSYXTXNlogvkm_uumt_x3X9qnogyt71bw>
-    <xmx:_VWWagNR6knXUNMQAx2CrtCTLqtfRah5PV6yIEjGoE3R0Sj1lDsWTtmz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Sep 2026 00:35:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Todd Zullinger
- <tmz@pobox.com>,  Olamide Caleb Bello <belkid98@gmail.com>,  Tian Yuchen
- <cat@malon.dev>
-Subject: Re: [PATCH v6 3/3] core: convert build-time USE_NSEC into runtime
- core.useNanosec
-In-Reply-To: <0a611f614041b165140da7f2546c058178cdbfce.1788206466.git.ben.knoble@gmail.com>
-	(D. Ben Knoble's message of "Mon, 31 Aug 2026 16:01:37 -0400")
-References: <cover.1787231825.git.ben.knoble@gmail.com>
-	<cover.1788206466.git.ben.knoble@gmail.com>
-	<0a611f614041b165140da7f2546c058178cdbfce.1788206466.git.ben.knoble@gmail.com>
-Date: Mon, 31 Aug 2026 21:35:07 -0700
-Message-ID: <xmqq4ig9vbb8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LiXNs90k"
+Received: (qmail 6827 invoked by uid 106); 1 Sep 2026 04:39:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=F4kFXVITUOCqpZx1jj4UmdC78hbOTBDH8TsThXCWcoc=; b=LiXNs90kUzYDaGQyWDdJh43fogs83MOhnufzzevoDcQxPPvA4jNwiFRo+yDEntxGP4dnW/I54r0ejqoLpQLbLDzafgiLPhH+f8Hir9Dzi3wX59PSHQiiuwmrQ+rh+r/G8vDkPb4sFTxHOnzK93UTEj5a4BSFKs9pJHSuOiwpaQI0eoG98P6N8cANKvx+7L2/XDyS1BD7GBoGtAM9efVKecSSNFMVClzSIkKT88Z0sUvqwIGfgtYzW6D74y/zCbcVBxrcX0h/y/eAtXrWQaAodBuEZDy7AbSRdA1VvO5XJq22wyXORRlTu+m1JmWd39aONbQ8a38EOOudXHWohuZTKQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Sep 2026 04:39:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32865 invoked by uid 111); 1 Sep 2026 04:39:44 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Sep 2026 00:39:44 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 1 Sep 2026 00:39:44 -0400
+From: Jeff King <peff@peff.net>
+To: Andrew Pleeter via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Andrew Pleeter <andrewpleeter@gmail.com>
+Subject: Re: [PATCH v2] builtin/ident: add new 'ident' command
+Message-ID: <20260901043944.GA1074757@coredump.intra.peff.net>
+References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
+ <pull.2388.v2.git.git.1788220746663.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.2388.v2.git.git.1788220746663.gitgitgadget@gmail.com>
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+On Mon, Aug 31, 2026 at 11:59:06PM +0000, Andrew Pleeter via GitGitGadget wrote:
 
-> +core.useNanosec::
-> +	If true, use nanosecond precision for ctime and mtime
-> +	comparisions between the index and the working tree (if Git
+> While existing plumbing commands like 'git var' and 'git config' expose
+> individual pieces of identity and configuration, discovering what identity
+> and signing key will actually be attached to a new commit requires multiple
+> independent queries and manual correlation. 'git config' only reads raw
+> values without performing environment overrides or GECOS detection, while
+> 'git var' returns full ident strings with timestamps without exposing
+> commit signing status.
 
-comparisions?
+This is just my gut reaction, but: would it be simpler to teach git var
+to provide those broken-down pieces than to introduce a whole new
+command?
 
-> +	was compiled to respect this option).
-> +	This is unsafe on some platforms;
-> +	see link:technical/racy-git.html[Racy Git]. False by default.
+This works now:
+
+  git var GIT_COMMITTER_IDENT
+
+but why not:
+
+  git var GIT_COMMITTER_NAME
+  git var GIT_COMMITTER_EMAIL
+  git var GIT_COMMITTER_DATE
+
+Those are well-known names already; they're what we use for reading in
+the broken-down values from the environment. And likewise for
+GIT_AUTHOR_*.
+
+Let's see what else is in your feature list:
+
+> 'git ident' provides a unified command with additive, composable options:
+>   - Identity scope selectors (-a / --author, -c / --committer) choose
+>     which identities to format (defaulting to both when neither is specified).
+
+I think that works by switching between the two var families above.
+
+>   - Component selectors (-n / --name, -e / --email) choose which parts
+>     to format (defaulting to full 'Name <email>' when neither or both are
+>     specified).
+
+We don't allow mix-and-match here (nor even multiple values!), so you'd
+have to do:
+
+  ident="$(git var GIT_AUTHOR_NAME) <$(git var GIT_AUTHOR_EMAIL)"
+
+I think it would be reasonable for git-var to accept multiple values and
+output them one per line (or with NULs via "-z"). That doesn't really
+make things easier in shell, but it might help scripts in other
+languages.
+
+We _could_ go as far as providing a format language like we do in
+for-each-ref, etc, where we offer to shell-quote. And then you can do:
+
+  eval "$(git var --shell-quote --format='
+		name=%(GIT_AUTHOR_NAME)
+		email=%(GIT_AUTHOR_EMAIL)
+	')"
+
+but IMHO that is probably going too far. It sometimes lets you simplify
+shell use of the tool at the expense of a weird and complicated
+interface (I kind of which we didn't have it in for-each-ref).
+
+>   - -v / --verbose prepends 'Author: ' or 'Committer: ' role labels.
+
+Seems like something that git-var might benefit from, too.
+
+>   - -s / --signing-key resolves and outputs the commit signing key.
+
+Likewise, this feels like it should be a git-var entry.
+
+>   - --porcelain produces machine-readable key-value pairs.
+>   - -z / --null terminates output records with NUL bytes.
+
+Likewise.
+
+
+My main feeling on suggesting this is that:
+
+  1. We already have a lot of commands, and this one feels very
+     specialized.
+
+  2. Most of these suggestions could make git-var better for reading
+     idents _and_ for reading its other variables.
+
+-Peff
