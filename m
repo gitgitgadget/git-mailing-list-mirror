@@ -1,171 +1,121 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBF5363C74
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 00:35:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5750A1DFDA6
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 04:19:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788222935; cv=none; b=l3H0d48Sl1ClncYiSRBBeiJ/EgqJ7TjFP9E1q5X4sTW75D0sdCSy5G4jtZ0hi5oLB3o6zjD02/lG8RLItK29zz32Njhq2t76WOlOx7vOwnO1u2xPh8QomKeKzWFuz0rlQRFsyT5onHXy7HEfAK7rWdzK11nv6XxZeqIbQP6OQeU=
+	t=1788236366; cv=none; b=XTgBUmLxPJtAYiTQWSBYtrfS/rq4QHqsmFjMwgP7tz8vPN77Wd8oCaUKwxUvpxuHvMQWi3dBFwV6JvchA/w6Z24+eUp8RU23J9lQijAt99PX3YvrWmg85gEdbJS2hZO7k8rkazUU4A31YgBi81b9l7EIRV7zB7IWXuhCZq0IEFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788222935; c=relaxed/simple;
-	bh=Mm/8Kphdkh++js41FyQX3f8mOatf+y035IrO+xOVkiU=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=HdOEYDQPjQOGLHX+q9mevXMGiZQEd8M7xYgSHL9FzYSAFpvYtorhepVJ8wjUAfQD8Kpc/39huxO4sNVc7ttZXoMLulbvkgT1V7DMf3i2fLo5+QO99NDKXpFpep+EimfWZul8HEa+KlBKQlE1tOOkHRIX7YX87AmTjmEg6PTzdyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PMhAHJ1m; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788236366; c=relaxed/simple;
+	bh=BIfxoNo5Mid0aWnhLTK0BSrF3rMkNzUudiDWPLZSrUY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WDD4AnAv25cwDMfZ6oMigJgG3+HgWfNpRu6YoIf7ex6TbQO/83CmaTnn0yo9HIZ3BjLGsoHLJmbthEZMesm4NEo7McxNOhBaG7MN5eHuT/zsUOLvnZzR4gHpyXZdl4CdYFmC6s9qEt1ZNolY4tiaThplGuRi0DoqKMu4fVPrIvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PxHnns7s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PaB4D334; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PMhAHJ1m"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-86162c086f8so8677577b3.1
-        for <git@vger.kernel.org>; Mon, 31 Aug 2026 17:35:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788222931; x=1788827731; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Mm/8Kphdkh++js41FyQX3f8mOatf+y035IrO+xOVkiU=;
-        b=PMhAHJ1mppfupmONU412itestU9ZAj/G5AIRG/nwOIWpzuv5fRn47YkjY9K2erao48
-         Gou87qeAmeGBJZPYXxoztCRjh38vb4TYUNEeeNa8M5jhDNxmRMIavuHZbuwUyR3QfwWM
-         G2aIT9U/gQG4UUl62k3kmbEITWs1MKxMut/oieR2RoKrA5EhvQPkhDVv3qY+Dljf8mhs
-         jvjVEcV6L+RhDkSVbbAmiUPy99hWebFJSXB3jdWpMlxrVyeLsaWTCMU8kLLrnJT14iW/
-         0JLuz2DWiyYfjoH43m9pzcvN5QNVnUONWL0Cgon6EbSAsJalF7mb45YkAmr76iKKOGtR
-         i3Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788222931; x=1788827731;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Mm/8Kphdkh++js41FyQX3f8mOatf+y035IrO+xOVkiU=;
-        b=HtYJSK2bw9Uo++oeO7JcvjQGavgOrHbMBGo+1eIXMY7OABxyNDzv0fhdSUfGbMkbp8
-         0esc9bnQKiAG7w/RzoMaIlA7FL/umHgyO9jjm/EO2isWxWCh/UFq5/lY6nv61APHY/BF
-         u+kJ/Fj0+NJy+a7r1ukDRJL94E7tLKv/oZrJpQmBQdupcoDt/x0ELQUPgCyGxia6vj2X
-         d44+9hVW5tG99fIFrywzqiEMD1ryTtx93Hjy+YxNIVf+oqC4R6DoAzfSbYIPr3L3AcRh
-         0b4ufdt5SUF7Nd6m97SGAogkpJb1XAnNXZFp3Rz6p8VJtHyTJu8H2NCWuz3qEKfI/G1r
-         lpng==
-X-Forwarded-Encrypted: i=1; AKwUvByE1i5bEyhf2GBkFKCbkqE7KzYEN9Z9mbioHzMNJ/f2oFn3pe8903DFiNAwqTfPP1USzeM=@vger.kernel.org
-X-Gm-Message-State: AFuF++ldnMru7vJmHLSgP0cu2nhjJGvSmqj08RzKkc2FhG4s7zT4lWtM
-	WN0Im+Dtyn2OjCpmfWxCDUDSCq9kyc1Og1CHvmBOy01ppFfqeSyp7pJD2Pp2jKDJupI=
-X-Gm-Gg: AYBFou16lGETxiOopN1ilMVD1+lUpxSgHu3LyOcgr+MEXfL2zljWWXWNB3Q+8/y2cAe
-	Rg6SRfROAAbmT5H09WVJiRM7GDFv0H/nJ8944za3EfxLtuYcOPd8w/JHYC185HvRtXocVuuhrSF
-	tdPE+3XXL+nSbo9l9v1gepyzLT/7Q+BUPin8JIDaKZBdcrD2BX4v/P4D48ERLVZrPmABToexB8M
-	0W8hgK3lfZLfEaoVJCHuUDen5mZXeeTqAA894xGwIFtprYXc06EB4StJyIV3SToYsKhJIT0Oux1
-	WayhyfTyLG78EMND1o/Jqq8ZRc00VcrzR0aSnFPQqKa1iLEm7mNg1HsNIPnUHWlGmGsDyTj3t9W
-	YiD8knQQlddtQMtBvNytCcvIHbc5vLqAoCbmSZwXEgGyHlndwJiXa5lpq6c+QHbN+0G+kvLyd2F
-	GsAPYcPr2W/PVhYCEocYKWmSS8rrzSV4qWtrIH1hgMIRi9CfpWu5pB1kdqcElwvzDmeT4+AWg0j
-	xE7Sd8MF3rt09j/DQfk6DTS2srFZUoYlGWnbZEgiI8MPG6kfu/cKXrXAevzHkoy3k9MXWG9oHZh
-	EVnis0a9NUOm0KE9UfUgA031IgHheuq5eeZtL2xqH+Tn4WXv
-X-Received: by 2002:a05:690c:389:b0:853:fc17:6054 with SMTP id 00721157ae682-869487f6216mr9173127b3.3.1788222931269;
-        Mon, 31 Aug 2026 17:35:31 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:9092:700:f45e:1544:1409:e870])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-869cca3c804sm2038057b3.6.2026.08.31.17.35.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 17:35:30 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PxHnns7s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PaB4D334"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 867347A0140;
+	Tue,  1 Sep 2026 00:19:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 01 Sep 2026 00:19:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788236363; x=1788322763; bh=ovk5d/dpxa
+	TRiGuzTDiuuIwmjxn1Y9bvmK5DUH4YCfw=; b=PxHnns7sfgM5Paxd6PQl3YBmo/
+	h+dW/RlUlvAYelKuY+t5JXgcCAXJSsNm6EoqaOixpNzQnzUERA2MSvBOQ7j5CUuz
+	FJs6cuRQyMENROC1BPU/Mw5K6DSk2B99tQLJx0wC0bgG0Uj2+9YPJLed3CQTUMGo
+	nZbe1VsuFcB1eKJlEDeDTkZzWRsiT297Fhz1XuIvoQsUBzFZ6moTCFCMeIRKIlNG
+	fQsz2kHtHC6U0bKhGJyse17Ek+cgr7ofVT//1MVCjXJD41YiUBMPQMxGX2sTv/Ey
+	YlEK+5xs9tdB4j1vXXChRpRekcQZRWzoK3Cs4tgXriUPFvMmV04KYKsEdERw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788236363; x=1788322763; bh=ovk5d/dpxaTRiGuzTDiuuIwmjxn1Y9bvmK5
+	DUH4YCfw=; b=PaB4D334mz3emFLjCtTtsXBg3mxfudFvMJeszBo0PQSmrN7E5hL
+	1rNZmJRkXhdn2aRFA62b+EfPmqdlgjMhfnVfg0BkHgTVbePgGnDb8NfiTqnPpSYe
+	5Fwallh/0iBJeI1sqqsMFKpXcqnQxWwgl88QVlo8WbcVeRZZC+MgXh3UKE53U40L
+	tCEDptIfisgXK5lrsbAoO/d7hanVcRzY8co7zz5+pccRe+K8ke4JefoS85amRt8R
+	QacpCbxdpVzrIUZti6pBTl69kIeisbivSG9MDLawKRNOP07gBlddD0Flpr6UHCsd
+	90fLfO56Mkilbea67xO3RwGGWX+WJRYtviQ==
+X-ME-Sender: <xms:S1KWakf12b8x8ybQX3bpOIhA6iTpa3ZfkPQMGzbfwJb2UsPMgMa5MA>
+    <xme:S1KWap56ECmp2rxwVslibDb7JS3bF3G0XzQ-FkjqoHByFza7ZCQyqW7ChmLsrNhj0
+    35g8BxsYGvDdrjJzGoUqy-QB3gxOClc18br-HTimykiywmAI_fsEuk>
+X-ME-Received: <xmr:S1KWavWDmaA-zJju5QCmpogLel0ARhDKaR3GddKs52MXG4zkGA3c0O2ogfKA8k7XJpV9qKttF-vJLMGSwO5a8sAPSRCQuBuLEQ>
+X-ME-Proxy-Cause: dmFkZTFJRvhlX4HGOEnvpNY6XmpC5Ni2Oc/Wi2PpUySkM3hPQDha5WYg2MoPIRoHf/idOB
+    0qHXMIZO4gL6QQvannYYENLUk9Q7Jktmrn6PdSd0tcJsrw+rftjIADHfQYjREjdTdEjL+R
+    Lj4cvh7aCo9SmLS3uitrQYKJtwscZBudd3yEGmWcEOpstG5e/0bJ4Jh2HuD7FiKxLodYmf
+    HoDy4mXCXjD5qzOKoU+au/IjmB8OQyFiBJVXHB5ADQiT83TIAaiUrKndM5JB+Z9+U7LRBj
+    jyCBtnMxkHVIlxxMfWjiEwLIZm2wnNMM9/Um7/CwuZ4Ofb/BJg1SS33SKve2EYBfoDFKNb
+    46Rr3uFrh0y/breahWTtffzlw052QdBaIisf58kPDqDO8P/w1wRlmdfoFbCIuBLQe8T1Az
+    QAkPRE9K81rnnpuwNwZiGXM0SsNpcN1H1G/x5ifXqIzK3yBNG6TlqLo19gPfVV/HbajmD8
+    3j2BBsXxPb7wV4jy80hMQX1nMMJpmVSmDJhziJoivq1fDIPvGclqt1xhf29A0G7DPsTH+V
+    sYIbqib+KKy6M45bLwPGaUrkl37atTJmbi+JS+PYCpJB7Iw7sDrK7sNZW1qxgO13enea+P
+    VLbalgfPR9NvQSH4wPFqVFLgHTw4tSFRkAkRXAUATAglvTO+IThYdZf30Q6w
+X-ME-Proxy: <xmx:S1KWag69tE34jNmfw71K6B8rKCHiz3J0nZ6J3x1eGAMc3wuCLVMP8Q>
+    <xmx:S1KWairiLEvDmSDrGIsT2KS7sNkABsNg0lR-WuVbFNpEjmLKuQtCZg>
+    <xmx:S1KWarkmNs-w7YZK0AhSem_MVl8z2IIxakrD-0L1Zcb5zj7cvG7BfQ>
+    <xmx:S1KWamMpbQ_JscF_nXulr_Go_8UYPYg-I1gvHxuq3H40PaLatQCQrA>
+    <xmx:S1KWalaVzev09Hc9ZuMho9FhfP_gk6q3Y51ldhXLd6Y3QbA5xOLVgl8T>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Sep 2026 00:19:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Gusted <gusted@codeberg.org>,  Jeff King
+ <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 6/6] last-modified: keep per-path Bloom filters for
+ wildcard pathspecs
+In-Reply-To: <20260831-toon-speed-up-last-modified-v3-6-2bbb864acf93@iotcl.com>
+	(Toon Claes's message of "Mon, 31 Aug 2026 17:18:46 +0200")
+References: <20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com>
+	<20260831-toon-speed-up-last-modified-v3-6-2bbb864acf93@iotcl.com>
+Date: Mon, 31 Aug 2026 21:19:21 -0700
+Message-ID: <xmqq8q5lvc1i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v5 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
-Date: Mon, 31 Aug 2026 20:35:20 -0400
-Message-Id: <B48D3D3E-E5C5-47DE-AD67-C8C6CB11E27C@gmail.com>
-References: <apWUGfzQxx7vArpo@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- Olamide Caleb Bello <belkid98@gmail.com>, Todd Zullinger <tmz@pobox.com>,
- Yuchen Tian <cat@malon.dev>
-In-Reply-To: <apWUGfzQxx7vArpo@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Toon Claes <toon@iotcl.com> writes:
 
-> Le 31 ao=C3=BBt 2026 =C3=A0 18:06, Patrick Steinhardt <ps@pks.im> a =C3=A9=
-crit :
->=20
-> =EF=BB=BFOn Mon, Aug 31, 2026 at 08:57:49AM -0400, D. Ben Knoble wrote:
->>> On Mon, Aug 31, 2026 at 5:27=E2=80=AFAM Patrick Steinhardt <ps@pks.im> w=
-rote:
->>> On Sun, Aug 30, 2026 at 08:27:13PM -0400, D. Ben Knoble wrote:
->>>> On Sun, Aug 30, 2026 at 5:15=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
-om> wrote:
-> [snip]
->>>> I would happily prove that at least none of our existing tests fail
->>>> with core.useNanosec=3Dtrue, but I'm not really sure how to shove
->>>> configuration into every test invocation of git. Even if we could, I'm
->>>> not sure we necessarily want to add another CI job for that (though
->>>> that's a separate matter).
->>>>=20
->>>> In particular, (among others) I have not received any concrete comments=
+> diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
+> index df73c7d0d0..75b18ee83b 100755
+> --- a/t/t8020-last-modified.sh
+> +++ b/t/t8020-last-modified.sh
+> @@ -290,6 +290,32 @@ test_expect_success 'last-modified with Bloom filters and --show-trees' '
+>  	)
+>  '
+>  
+> +test_expect_success 'last-modified with Bloom filters and top-level wildcard' '
+> ...
+> +		GIT_TRACE2_PERF="$(pwd)/off.perf" \
+> +			git -c core.commitGraph=false last-modified -r HEAD \
+> +			-- "*.c" >expect &&
+> +		test_grep "data .* bloom_queries:0$" off.perf &&
 
->>> for
->>>>=20
->>>>> Comments welcome: I haven't touched any tests; I saw a bunch of hits
->>> for
->>>>> "git grep racy t" but wasn't sure how to fit this particular change in=
-,
->>>>> especially since it won't be equally valid on all systems? Advice
->>>>> welcome.
->>>>=20
->>>> so if there's at least a way to exercise this path on all the tests on
->>>> my system (which should support it), that would probably be a good
->>>> thing.
->>>=20
->>> Yeah, I simply don't have a good answer here. It's messy, and I'm not a
->>> fan of the current direction of `repo_config_values()` because nobody
->>> has yet stepped up to untangle it from `the_repository`. I gave it a
->>> quick shot at one point in time, but the result was messy at best
->>> because of how we populate it via `repo_config(git_default_config)`.
->>>=20
->>=20
->> I took a quick look (being unfamiliar), and yeah, it does seem pretty
->> tangled. I suppose one way to go about it would be to have repo_config()
->> forward the repository argument through configset_iter to the config_fn_t=
+Ah, OK.  With GIT_TEST_COMMIT_GRAPH=1 exported from the test harness
+environment, 'git -c core.commitGraph=false' would not be effective
+here.  You would need to do something like:
 
->> callback? I'm a bit surprised (leaving aside how pervasive the_repository=
+		GIT_TEST_COMMIT_GRAPH=0 GIT_TRACE2_PERF="$(pwd)/off.perf" \
+			git -c core.commitGraph=false last-modified -r HEAD \
+			-- "*.c" >expect &&
 
->> is otherwise) to see it doesn't already do that :)
->>=20
->> Is that the approach you took? Or, where else did you feel hung up about
->> the resulting code? Just wondering.
->=20
-> Yeah, that's what I did. I don't quite remember what was awkward about
-> it though. It might've been that callers have to be aware whether a repo
-> is initialized, and whether it has all info to be able to read its own
-> configuration? Or I was trying to make it auto-lazy-load or something
-> like that, but because our config subsystem is so fragile that led to
-> lots of weird edge cases.
->=20
-> Sometimes I really wonder whether that whole caching layer is even worth
-> it. We already store the configuration as part of the configset, so
-> caching the parsed values probably does not buy us a lot. For some very
-> central aspects like the bareness of a repository or the location of the
-> worktree it probably even makes sense, but for everything else... I
-> dunno. By now I feel like it would make more sense there to find
-> localized solutions specific to subsystems instead of having that one
-> big global struct that has weird semantics.
+> +		GIT_TRACE2_PERF="$(pwd)/on.perf" \
+> +			git -c core.commitGraph=true last-modified -r HEAD \
+> +			-- "*.c" >actual &&
 
-Interesting, yeah. I can=E2=80=99t say I=E2=80=99m too motivated to look int=
-o this further, personally, but the config system seems fairly complex=E2=80=
-=A6
-
-Maybe I=E2=80=99ll take a tour of it one day though, depending on the next i=
-tch I scratch ;)
-
->>> In any case, if we see that your changes interact badly with some edge
->>> cases that we don't currently have on our radar then we can still
->>> refactor the series and move the value into `struct repo_settings`
->>> instead, as that structure works alright with different repositories.
->>=20
->> This sounds reasonable to me. If nothing else, this series might become
->> good motivation to untangle repo_config_values=E2=80=A6
->>=20
->> Sounds to me like we might be ready for 'next'?
->=20
-> Works for me.
->=20
-> Patrick
-
-Thanks!=
+And in the case where GIT_TEST_COMMIT_GRAPH=0 comes from the
+environment, you might want to be explicit about setting the
+variable here as well.
