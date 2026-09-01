@@ -1,70 +1,69 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A3038E8CC
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 14:21:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770CB3B14D0
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 14:21:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788272516; cv=none; b=okkNXYErGVEssUEKfhSqKdwc9EVOHjBZRQG9zIlIqmLE8Bx/ITv4gJHB67cWsiJE74N9snyPl33lN2eR7EXSrq2dxX9fOwbIcPi1GR5/k87+QgjxCeqVVP8iRoo2I9vUsIqdLyVpIUeTIVc0hGtVZ/DOEtaEuyoOtAFN9nsq96E=
+	t=1788272518; cv=none; b=KrWmFjBdvI6oSUZJrK3YkfLzxl1duuEXuU5ljxQ2E3rOERwGTSUScngXGgg02bOOY0ELM6PDPSIZ1C0edP6tp7QuwA6GEqNQe4T1pfwKVYWFnnJ2EUePEenLx9+Hoxcs5hrUxqwK8KYeH4jw90vhIbdgpMNz4dX4lIT1V2STSlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788272516; c=relaxed/simple;
-	bh=VhPiiQPBt4bV2IVLYGykO0jLIN73YCj+uY3Qrz10mbs=;
+	s=arc-20240116; t=1788272518; c=relaxed/simple;
+	bh=xvOLceDWsKebrIqtZrybEkp7hM7uZ7gmBmeMRIECuM4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DiGknijatFj45Ywey95A7xwotiuxrbs00YZ4c0ifLqEYzyR5N1RNoWkuO+5O3ka4sgDhidkS/pKvt98vW8LErwdK3gqxmrkZOTXNhjItubpyActHO/cS/RsXQn/pKRxFB2VAcs5yCVVoRtBps4VG4lGOdjNh0iHcOzgJMzJlnTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HQrbE1iz; arc=none smtp.client-ip=209.85.222.170
+	 MIME-Version:To:Cc; b=i9y3vg0qfhRMVHqUvuHaWOwYuUIWL9B/LepqqkAVbq6sqjFclEgXKnZpA0CkTPucJTxkg0UHp8PGQ+Cu7mbmkJ53jihVOA584MRuVZfmUrG76DOEjiNUWgX8k8Jk9ajcpLGobNphiUhdbX+qBIuIe8T77+c46TTupR+iHzkeKmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c5AmPPFG; arc=none smtp.client-ip=209.85.222.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HQrbE1iz"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-936623c6dd3so114082785a.0
-        for <git@vger.kernel.org>; Tue, 01 Sep 2026 07:21:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c5AmPPFG"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-9371bcf1f8fso347459685a.1
+        for <git@vger.kernel.org>; Tue, 01 Sep 2026 07:21:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788272514; x=1788877314; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788272515; x=1788877315; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=erFLYHvYkJXXp1Iz+TexscG3VUIqDMEbI92tjpQ88HE=;
-        b=HQrbE1izUeQi6ExNneLjKBqdZpziDbZR+HLJKwvjOGRs5UeW6meXgJseo+gDUovbaX
-         cT6CQY25Wwm9aaQqWxaNXvBzFK+P02ymm7vc8d1g2RTT9JNETF6yTqRPkpI/3M+bEiQS
-         z/5uZ99pxzMP6e6evLWhGYMIdNi9D1JZKrgbMfyrGiZo+FOWsp0JgtV84KWKYHJvk/7a
-         K6c6cVLzBHfhyqB6I3NqVPLBx1vGrrUJU1GPINhioYdayLBb7vWwDWJdcObemSq9aNWi
-         +u1WK7hdz2PR3LzNuXqgBo7uJ+kXG7QVs6Vb9eBMkuBhyWv0A09i9OhbJ5O/334kJRCA
-         KEkg==
+        bh=UMtObwUrDNmmFpfjW7+vU8cK/N1GIogid0JSAc4ngD8=;
+        b=c5AmPPFG7wtBO43Aa+ugU0T+AkRCGadv3EeQqR5PUv8QNTMpQGflM2t61I1yUIED0Q
+         4TeoX6cfGdnsBxAQRJ6xpf0OVmGbofHj2Qpt+HLzoKofWmAofekkueQiv4zdnHO657H/
+         0QlzURpBqgZX0GweHdBwOaItSAAiizFiG74dYEP4uy3hjSUpXe+3jR1c5Tat9WLi0UEk
+         DlrkTwf1Q5h3hrekDrGAFNMDHERkQ+c3hJnRuhs9ML++Eu6JiUz8mhzwloWirS6WISDs
+         ikyOasW0wKXLWDj+Q99UHAQ5wOcLU8utKid6mREEb+tl9xNGBK1Xh9JZuLiZJ4B+165T
+         P7og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788272514; x=1788877314;
+        d=1e100.net; s=20251104; t=1788272515; x=1788877315;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=erFLYHvYkJXXp1Iz+TexscG3VUIqDMEbI92tjpQ88HE=;
-        b=ewF9XnDxbLiq268GAEJniCplpSZFmVjQqQmtA/5E9yAFD4GlTL/+kvaTQ+OR+EAEoW
-         fNf/f+6rxu04xSjzydWxUAZEsX/8oN4CcTze32MhXpLQ181l94DmiVtmzsDZok9zFHO5
-         /tJ9bzYYoRoDmqKxFXJBw/MIM1/uK6WnHaPRaVhYUrFubZShA4wVNuqvO0cj3/o8x4lb
-         awUIeZjEjJAe0LjHHUyErpoNh1tcaAuEg4u9YtpSAHy0MR6/tDWqV4mUPTRzkJhwpr3l
-         ttYRArJb9rZDJgUodrjBZNmuMaWOV5fVtRN3lv8aMp4R1t5vKtjuQbeBBMkcx5BYfK0T
-         YMog==
-X-Gm-Message-State: AFuF++lRNlApR6fINLRK77d611RBk5QTZcFZi+CegkzKYc9xj39x0oVY
-	gqkz98XzzNmf/+kbtqGoBGsJ/YJxWJ5IVF9dxQeUPnGIr5hdpEYTBJJgWXOPdUTY
-X-Gm-Gg: AR+sD1089y76Ve1aolrQrLS82kpiyvt1QNc0m1s5Lbjbm9mDo7TGJ7bC4IByL73+6ga
-	cq5TVSiZ2umNcb5D3nRk/qsMngBRvzRbSSU1uj9orBuHypsIIZM9KVHc4sVesYenKZXbX32hbAp
-	VG37dPRB/rcgwehPiTa3RCBKhjmDgf6wUisYtqvYUGiBH8DWtk0ssmjef6sgUBEf5EwY04WcQ21
-	eiGGRJDeyWg+i9RRHRkZpfrn8YzvGZWaMZmu4nyPYIU1h1w8orAO98eXmKB/AnIQvmJ3/1ELMQl
-	QMwrauiE41VK/N5OJcqQ0e3YsBI/W0biOxrRZ1gz971O8IyyV1slAuxr3lmkkzCvIt/v2vTxjyP
-	zeUbpeqPin8Zo9Ix4i2vL4nvVvt5VIO5Lawgi/Vc4WIceAMX4O+dDugf0WChtQTm0dIxbbELD0w
-	sLY+mGLgev2bn9hfH+s3JgES34hRE5jKpjMnSlELj/vGqO9aDB8k6wW2oJ8ro22WX6
-X-Received: by 2002:a05:620a:5687:b0:939:4baf:5b99 with SMTP id af79cd13be357-9394bce9476mr609544585a.18.1788272513521;
-        Tue, 01 Sep 2026 07:21:53 -0700 (PDT)
+        bh=UMtObwUrDNmmFpfjW7+vU8cK/N1GIogid0JSAc4ngD8=;
+        b=HC+doqd5OZjmIQuWAr7aMkqdeu30w9aGgXyxmPGRa71AUvNxXhmBlOy6a8+mLVOwoH
+         V0eG6g4Ad+qNhVuUYVUVumDsE8kIREvRVtXobDlf2TjGVBAkmlQFGUw52RpKBkUVWE+w
+         ywFSz/aN1nbE2/1YaGAU/BDyMD2RPurqIH02qWHwhBm/UWct4LAjFHQHVFZUWqKEAlSM
+         zS+mwCuUrY236va5hz088VNTO6TW+naXkuxeQ8zOkfbGRG7aGlIsuScYP++QvyDocGKH
+         JL0ugV+j2Lw2a2e3M0AGxKabVCGReL+XiP5TS00vAVUqQvr0d6aPjyfgEtBkMsVt/9yg
+         ALqQ==
+X-Gm-Message-State: AFuF++kTrxYWloQIVg/CtPzzFDgBy+3FftVKhDvSqJ9TUTe3T+CkkOBE
+	Lw3OUqpsEp3ZNuJk/OU0g4kDlaGLF/BvrEaJbX3Ri0iLHoMRmf42M+lTmRr+6IdH
+X-Gm-Gg: AR+sD12gVqzaZe8FYHQVNe9IqBI1zpZnoJNKZF2VdApChqMasPuhfTtY+sRpWYdbErr
+	0E4aQe+UwVordpmGE8LliIiGjr7axjQlQ/brSGxhmgoONH7OLfp+SUP69ptzILbvLc/5u1b/uZ/
+	enj2P4Bi0+PXYS5li6hyKnEX4LzSlbxLVN5llQnw+yEgUMrjCXE7HLS7PRq6b5FLMAhODbJfkzL
+	dO4mxGxWYFvqGOaQVZ63AfBCjTcZXtsslV7nHFrAVaDZzOxlguDPijYlKju9OQBU5KCjqiY1/t+
+	10rKHwCmRHP/mFAmfc7FYdgmJygOKQ9LN8PBGaCv9LNUpYSEWigMi7KphUrQ2koPOOT6CkRnQFM
+	8qZUrlBfUQJm/HxRxiwQyjrs22EzEBt7sG5ReuYIbFDW+sWDQ3tEJmbA4Rhb3beixd2UU7mYhnO
+	79Oj0w6V5ZTFvGRl1N9wY//TDQY65stLjrnW+ZOb5+H7q6/MxZMjatA1FOiqNix68=
+X-Received: by 2002:a05:620a:8086:b0:939:16f6:4d01 with SMTP id af79cd13be357-93916f64e85mr3727770685a.21.1788272515060;
+        Tue, 01 Sep 2026 07:21:55 -0700 (PDT)
 Received: from [127.0.0.1] ([57.154.218.74])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9393adc1dcdsm485058785a.36.2026.09.01.07.21.52
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93918b0f825sm1016995785a.40.2026.09.01.07.21.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2026 07:21:52 -0700 (PDT)
-Message-Id: <2b7f58a037592325c2cb9b52bf8f1ef434bd6202.1788272509.git.gitgitgadget@gmail.com>
+        Tue, 01 Sep 2026 07:21:54 -0700 (PDT)
+Message-Id: <7a24630fb944aa34adebde1e9087383080c04406.1788272509.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2213.git.1788272509.gitgitgadget@gmail.com>
 References: <pull.2213.git.1788272509.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 01 Sep 2026 14:21:48 +0000
-Subject: [PATCH 1/2] rust: pick a GCC-compatible Cargo target under
- MSYS2/MinGW
+Date: Tue, 01 Sep 2026 14:21:49 +0000
+Subject: [PATCH 2/2] ci(windows): build with Rust
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,90 +80,89 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When Git is built under MSYS2/MinGW with Rust support enabled, the
-Makefile expects `cargo build` to drop a `target/release/libgitcore.a`
-that is linkable by the same MinGW GCC used for every other object.
-With Rust installed via `rustup` (the way it ships on the
-GitHub-hosted `windows-2022` and `windows-11-arm` runners that build
-microsoft/git), the default toolchain targets the MSVC ABI; cargo
-then writes `target/release/gitcore.lib` instead, which the MinGW
-`ld.exe` cannot consume:
+The Windows runners used by Git's GitHub workflow's `windows-build` job
+ship `rustup` plus a `*-pc-windows-msvc` default toolchain (see
+https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
+and
+https://github.com/actions/partner-runner-images/blob/main/images/arm-windows-11-image.md),
+but no precompiled `std` for `*-pc-windows-gnu` or
+`*-pc-windows-gnullvm`. With the Makefile now picking a GCC-compatible
+target triple based on `$(MSYSTEM)`, the build step needs that
+precompiled `std` to be installed before invoking `make`, otherwise
+`cargo build --target <triple>` fails to find a usable `std` for the
+chosen target.
 
-    LINK git-shell.exe
-    D:\git-sdk-64-minimal\mingw64\bin/ld.exe: cannot find target/release/libgitcore.a: No such file or directory
-    collect2.exe: error: ld returned 1 exit status
+Add a step between the SDK setup and the `make` invocation that selects
+the matching triple from `$MSYSTEM` (which
+`git-for-windows/setup-git-for-windows-sdk` exports for every subsequent
+step) and runs `rustup target add` for it. The mapping mirrors what
+`config.mak.uname` derives from `$(MSYSTEM)` and `$(HOST_CPU)`, just
+enumerated explicitly here since CI has direct knowledge of which MSYS2
+subsystems the matrix actually exercises (`CLANGARM64` for the ARM64
+runner, `MINGW64` for the x86_64 runner). Technically, we only need to
+handle MINGW64 at present, but the switch to UCRT64 is imminent, and the
+other case arms serve as a very fine documentation of what people should
+do for other MSYSTEM values.
 
-See https://github.com/microsoft/git/actions/runs/27341625000 for the
-full log.
-
-Let's define the correct target. Re-use (and fix) the existing
-`HOST_CPU` variable for that purpose. Avoid relying on environment
-variables that are simply not defined in Git for Windows' minimal SDK
-that Git uses in its CI runs.
+For a `staticlib` crate-type `cargo build` does not invoke an external
+linker, so no further toolchain components (e.g. the `gnullvm` LLVM
+linker) need to be installed; `rustup target add` alone is sufficient.
 
 Assisted-by: Claude Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile         |  3 ++-
- config.mak.uname | 24 +++++++++++++++++++++++-
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ .github/workflows/main.yml | 24 ++++++++++++++++++++++++
+ ci/lib.sh                  |  3 ---
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index fac3e8879c..bf2a11c08a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -959,7 +959,7 @@ RUST_LIB_NAME = gitcore.lib
- else
- RUST_LIB_NAME = libgitcore.a
- endif
--RUST_LIB = target/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
-+RUST_LIB = target$(if $(CARGO_TARGET),/$(CARGO_TARGET))/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
- endif
- 
- GITLIBS = common-main.o $(LIB_FILE)
-@@ -993,6 +993,7 @@ endif
- ifndef DEBUG
- CARGO_ARGS += --release
- endif
-+CARGO_ARGS += $(if $(CARGO_TARGET),--target $(CARGO_TARGET))
- 
- # For the 'sparse' target
- SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
-diff --git a/config.mak.uname b/config.mak.uname
-index 0b63be10b7..720d9ba3ed 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -758,7 +758,29 @@ ifeq ($(uname_S),MINGW)
- 			MINGW_PREFIX := /$(shell echo '$(MSYSTEM)' | tr A-Z a-z)
-                 endif
- 		prefix = $(MINGW_PREFIX)
--		HOST_CPU = $(patsubst %-w64-mingw32,%,$(MINGW_CHOST))
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 85cfedf5b0..d85e6c434f 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -114,6 +114,30 @@ jobs:
+     steps:
+     - uses: actions/checkout@v6
+     - uses: git-for-windows/setup-git-for-windows-sdk@v2
++    - name: Install GCC-compatible Rust target
++      shell: bash
++      run: |
++        # The hosted Windows runners ship a rustup-managed Rust whose
++        # default toolchain targets the MSVC ABI. That produces a
++        # `gitcore.lib` which the MinGW GCC used by the rest of the
++        # build cannot link. Install the precompiled `std` for a
++        # GCC-compatible target triple matching the MSYS2 subsystem;
++        # the Makefile selects the same triple via $(MSYSTEM) and
++        # passes it to `cargo build --target`.
++        case "$MSYSTEM" in
++        CLANGARM64) target=aarch64-pc-windows-gnullvm ;;
++        CLANG64)    target=x86_64-pc-windows-gnullvm  ;;
++        CLANG32)    target=i686-pc-windows-gnullvm    ;;
++        UCRT64)     target=x86_64-pc-windows-gnullvm  ;;
++        MINGW64)    target=x86_64-pc-windows-gnu      ;;
++        MINGW32)    target=i686-pc-windows-gnu        ;;
++        *) echo "::error::Unsupported MSYSTEM: $MSYSTEM"; exit 1 ;;
++        esac &&
++        rustup target add "$target" &&
 +
-+		# A rustup-managed Rust on Windows defaults to the MSVC ABI and
-+		# produces a `gitcore.lib` that the MinGW `ld.exe` cannot link.
-+		# Pick a GCC-compatible Rust target triple matching the MSYS2
-+		# subsystem instead: `*-pc-windows-gnullvm` for the Clang/LLVM
-+		# subsystems (which on Windows is also the only choice for
-+		# ARM64, where no MinGW-GCC port exists) and `*-pc-windows-gnu`
-+		# for the MSVCRT-based MinGW subsystems. For a `staticlib`
-+		# crate-type Cargo does not invoke an external linker, so
-+		# `rustup target add <triple>` is sufficient.
-+                ifneq (,$(filter %ARM64, $(MSYSTEM)))
-+			HOST_CPU = aarch64
-+                else ifneq (,$(filter %32, $(MSYSTEM)))
-+			HOST_CPU = i686
-+                else
-+			HOST_CPU = x86_64
-+                endif
-+                ifneq (,$(filter CLANG%, $(MSYSTEM)))
-+			CARGO_TARGET = $(HOST_CPU)-pc-windows-gnullvm
-+                else
-+			CARGO_TARGET = $(HOST_CPU)-pc-windows-gnu
-+                endif
-+
- 		BASIC_LDFLAGS += -Wl,--pic-executable
- 		COMPAT_CFLAGS += -DDETECT_MSYS_TTY \
- 			-DENSURE_MSYSTEM_IS_SET="\"$(MSYSTEM)\"" \
++        # Ensure that cargo.exe is found even with the minimal SDK's restricted PATH
++        CARGO="$(type -p cargo.exe)" &&
++        echo "export PATH=\$PATH:${CARGO%/cargo.exe}" >>/etc/profile
+     - name: build
+       shell: bash
+       env:
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 6c52154eac..c6ccbf8c17 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -391,9 +391,6 @@ linux-asan-ubsan)
+ osx-meson)
+ 	MESONFLAGS="$MESONFLAGS -Dcredential_helpers=osxkeychain"
+ 	;;
+-windows-*)
+-	export NO_RUST=UnfortunatelyYes
+-	;;
+ esac
+ 
+ MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
 -- 
 gitgitgadget
-
