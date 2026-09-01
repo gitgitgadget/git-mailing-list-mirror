@@ -1,255 +1,99 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5162FE59C
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 22:24:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9FB4A207E
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 22:26:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788301492; cv=none; b=Esog0okjBuVMR+NxJT0RcarjTb6Uk2EBVzZBGvvZAzxRF2yAfXmtdMcmg8zTx9QeWPDF8HMDvTKcH8A6dpi78aCVym0/2vQ044nhw5ytDoFAZvKQwb4itVruQu/MBlhA8SDofLgxsVJ+rmVUm7oWwLZfb9ArKQpFLKPGJ4QeCQM=
+	t=1788301621; cv=none; b=KQ7OH7V1U8dRjQiSjMU42s6Wpq0ZXD9lHK8r3Bw1ljTtBu8rt6NEc+MNYwkbWoJTqzw0Id/dLKbJgAnP49Ie044830TlQl3Wfh1FYWXDF69GKS3ed5JSKqVqEkrBPdICbiefBAzI9R0eTd/uKyqWIGAGMQlkiWa116JSsDsDcDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788301492; c=relaxed/simple;
-	bh=vSLcJf/1bQJCvgG1292pgdH1VcB0KpPI1Y00aKjaHxM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bXHRwDSdw73xKFHVl19R8eQVy3O3LNGiIRimBCCnuhTftKQVzYH72n50D9CQp2QsBGj4kWqTrpgCjxDRCs4tKOFT9cpNpvB2RMlnWRMOiU/Dfe4krXIFeNhFSEBYfQnPrMwE1C6Eqn+rNTgHQakUeb7mzRiav9+Sa1FY+RwTD4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AdiokLWn; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788301621; c=relaxed/simple;
+	bh=XvHOhsgMUgvk3JLB36vHnijpkETzhggZ+dDH1TqQMkM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G8ZQB2oYIeDQ49GrXrdp7WWAHNdCXjvwIEBxOCFXdRjfe5Pb2bd9zpuRaqhF3DAKsaloR+GvyFUpELu+pE+NQWgzaF9sawK+Z4EhwFtuSlfKqa/3tE3T+arpDJ0y+hJQ979c4tt8WQEZZmUmpbnT+EJ8md099zws2CMlCGPsbyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HcyEGdtM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NhatvwtL; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AdiokLWn"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-39682983a0fso478951a91.3
-        for <git@vger.kernel.org>; Tue, 01 Sep 2026 15:24:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788301490; x=1788906290; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=zbHRMyB4uIGQxz3wRIwT+jsG1/MCH00G/l4hgRRI0KE=;
-        b=AdiokLWnZtneD/xlRd1wAafFQGwRWG2E+YUdTrlrhvnDTYn9wefCEcR5gqdrG7myC2
-         RMIlqHcuaiDteExqfbfRLuZJ7BPN4yFeKDTo5KLHG6rppIngDpgmHfPXFcDqxzVjngMD
-         xMGF2g400gxog5brTmINuTok9eILCDx8xTT7tftBX9t5NbFgs6nsInrR0jFbVG8qdHjR
-         f8GS29seJXWWslqLSl8gwuRULwHkwq8FGxfBvGgpC1mzK9isQw9097tNPdj+2rvFRX1N
-         6sPm3d/B0yz3NBL/u3LZLAlInLM0pK4PiSC8ODuUOf3qxQIy4ecOg/OLPULSech3PDsI
-         ebLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788301490; x=1788906290;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zbHRMyB4uIGQxz3wRIwT+jsG1/MCH00G/l4hgRRI0KE=;
-        b=sP1iz/B7p1TELzjyFHKIF2KATZ72Tztqv3qEPuS9k9PboNVX80RcbPiUbbUUIscUt+
-         lCHTQKoKYOZEME/1feEnZB9f3MjY88B6PqXZRPPuW9VTJcsAwCcTIyuWptjnqeiXftht
-         4v23yfumAIFckvCK78L1gnjH+wxMXaZkTFQMHY8Zoel72IQpX0+y14XVQdkDoxZEU5AG
-         QaimuU5z7f0OFzmsOpp56TkzmTso+JhM3WLcvWV7xidhjLU6kZt9cVNnRr5cp4iXExcW
-         fZlJ/oXBwAzV+GgVsgje5fO5LfiVuUEeAmqk8zgZf8vmaRjHHull4spKq7bXf6F3DYys
-         f3Nw==
-X-Gm-Message-State: AFuF++l9syB4OowwQIgfDPurJQObXsJwe6SZxIcsGZ3EGH6z+SWIbZTx
-	mprLsnapfZgxZPXv0BDPGcV/uOckdQchF/5QzHSPP3Hno2kYkR5hvy+XauLdfML1
-X-Gm-Gg: AYBFou2uJfqvJIfEdr0N/P0RfUyC4egXvlTf4G4W3xmHs2cKEUvNXIRNSATog2E0QdZ
-	bk+O9OOKcN9Zk2nxyN3vehvvzrw/ROzpcL1Yi7snqHp8ZHoIkLCzR+W7mKdZ4fpT2WjqVTyJB/g
-	JmLj4fJ13QmUrReNXU6r2da0+DUsMH2hOxIVAgJD2o5z4UJBnYO9shqPq+FBjRLgG67XeCfA4sk
-	/0SgMi4oxbRxeZBjjmkZ/7papIuHEChBsk2BnUWxkGCVDi/kVBTmXzcwyBpHduP4aPkda33fFvu
-	XdJFa8SwMD+OOpxlMCVuUEI0t2ROXadYPM3fmb/KxCvCfLepUn5KR9jLg9JO+XVfGy1lzdIDDk3
-	wbkEY5zW6QRMH6GJ53H5XOfzKj9SBOhuwQQBfU/CSJlj7ydwQ50c/L/R2oc4RcJeas0QhH86OXl
-	QjThVdjso40u5vbSrKpNBgBgp2dyLH1+olJMGcRLH1u7+TIgQjjbE74A8jubYj
-X-Received: by 2002:a17:90b:4fc6:b0:398:c315:fa6f with SMTP id 98e67ed59e1d1-39aee04acdamr230086a91.14.1788301490425;
-        Tue, 01 Sep 2026 15:24:50 -0700 (PDT)
-Received: from [127.0.0.1] ([134.33.70.23])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-32f079c3110sm1128802eec.6.2026.09.01.15.24.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2026 15:24:49 -0700 (PDT)
-Message-Id: <b93b26ed9ff6fd37a7533885efb90df9982610c6.1788301481.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2389.v4.git.git.1788301481.gitgitgadget@gmail.com>
-References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
-	<pull.2389.v4.git.git.1788301481.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 01 Sep 2026 22:24:41 +0000
-Subject: [PATCH v4 5/5] commit: refuse partial commits during conflict
- resolution
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HcyEGdtM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NhatvwtL"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 62D2B1D00054;
+	Tue,  1 Sep 2026 18:26:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 01 Sep 2026 18:26:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788301608; x=1788388008; bh=lSjPmto2FO
+	+UW8DFQfXBUhMh7THS4NC8m/rgAiKulKU=; b=HcyEGdtM/suBmnW11P05mK5Bn3
+	A1FdB160Vtahj43DSMl4krCBE+QbfzUF1XdVLZAvyRwveRBzVkbC6L+K/MAaExza
+	e7WxLc/Lpp/79PJyaB86LXTiA5spWSLzzp1gFd68fC+kZAaYJEYiHMVplJQh/k//
+	rywd0b7UC2ZeKOGMVeib/sgSf4/jKs8GRvnAjFKRJ9ea2Y1e0XGV+RL9e2mYAIf+
+	q8ri39vb3as49a7jlOaM8krr2q4EjzW9donowayGtWZycCnCpiKZlaHsl7aBUQt6
+	cjRQmYiXMXlBN6EMG4CPVi0S22+94yqGQByOP5hoHQ0z+LT8B/dP9O2sHv1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788301608; x=1788388008; bh=lSjPmto2FO+UW8DFQfXBUhMh7THS4NC8m/r
+	gAiKulKU=; b=NhatvwtLk2/HNDOAy/O+fKFdmuYRI0N9FUPX5b73//zbQ02Jd9g
+	6rSANSrXT9CiOfT+1yXgHCuxYoE+Eeq/iRJNTWg7fFEyJ4Mqd6T5CDnaaCI0OLOj
+	g1ACkJSMu93MObD6+fFuxrr3EjrBad8VKla33xEBYLZ0C096kXHF/1X6ijIeulv5
+	VOPaEDx8Z98qiKYrWkpAJMI6TkKXWUlNXnqHyVVuPQ/F+HMjgdqHVqjbntPBGmD1
+	G6K+Np7iz8v+qma5REoi1Td0N+md4Hbm9vIFyplRdgg7m+r0h4nV2M+nCKwHgOaQ
+	dF6d7XfGEFN9UItmkUhClGSc7nxx8A6iXvw==
+X-ME-Sender: <xms:KFGXanm-KwG94dlumrWCydT2t0DynVawiSo6ZQsU2XMwENs5c4xCgw>
+    <xme:KFGXaiTHHgR4LDKMVaPZp4x92Bx_8t36HMVD4nwo6zCe3DkfQTcjVnlDjk-7t3f5q
+    ItKQ_zPj9eDkz0ltpxYU4BivJLoIN3yqSVfH61JrR8QUmyUi9eTpyk>
+X-ME-Received: <xmr:KFGXarAqs2li-aYdnr7ZarwQnQQUzuMGchIBTUDVcJgBdgvOxfTOnBBOYaQFH5uyNaMVBqtTNt7AotjvH0lvS1DWHFs-9UBqSw>
+X-ME-Proxy-Cause: dmFkZTE7SXXivgGr3cKllNmyAecIQqcSFcksGJGosQHsyNi79kNMIhvrE9K0J+ZT6wHceQ
+    L9my8sqjf14BTeGbE4gkmPcOw9hX/NIUuHCuxWpx85xmHx6lZ2WdcWVR16ymAO3fItZ12H
+    xWXp/YzflK7W4e7wK1NzlzCTFyO6GJd+oqyZBxzRwlCsQTj7oJ9rzOQlng79EubPohH4jc
+    X7GlowoMu/G+KDpUnG5/4IYAro5jns08i78guQ8jqMP644nIu6rUknYNAOvS/OtpEL+Rlm
+    IO2xUEUI9n45EocMGrm48xuhfyi2TjezS2+wp1gXCbQX+wjApn1AY7I3AdmI4xaKNWKur/
+    Io8z08id5w/VSx+HxcyI3/9/K6n1NSY0YFwvLZhNgq3ksLklbmgbx6JuAMxm3Zx3AWKTlP
+    gF/A8/w4Yvhrnmq5W8SKwVlmAims65/oQl1dm2+NkhgSKfAOgeC6ZDKGp9UwwHTVt+wcLQ
+    8jUuBbcDVWWOj777+bJloPw6chHmN4jPFxLuakTeLCsiGr0UMGkK0ei0iMeqsroYCjle+m
+    jzqL2xOeZmFr7/H7eOqe8vrVFRw/DWkHQFRKoZzx0/lvxwHXZttQCTr0Og4/QindHV8yPz
+    03uCsZPreJRLatxz9frEwQgfDE+qId7HPMmPCPbXf7cO59Q8ZPq8fS+net6g
+X-ME-Proxy: <xmx:KFGXapTQrdzlWMUgd5wrDxj8BGiuxC-9gMLoTLfpijQTB1CNowT7sA>
+    <xmx:KFGXappCOCqOABVOSDJkYp2hic2QDqkJh3reHNHsHUaiWacvdOdhbw>
+    <xmx:KFGXarw4VILkAFkcklfvbbAwfHvqtoB78M-wNmnoRqboOXEMEJA30w>
+    <xmx:KFGXauIZ-OvXhkfhg4n_yBUX95psRD3XaSr8fg5l6_wk1qyH90dcFw>
+    <xmx:KFGXaiaXoONesjcWe6lWOYynD7xnTsHCAQyW9B4L_JdocVTMJ5u7KOrs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Sep 2026 18:26:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 06/12] odb: remove infrastructure to register submodule
+ sources
+In-Reply-To: <20260901-pks-odb-registering-in-memory-sources-v1-6-97a312d5fa25@pks.im>
+	(Patrick Steinhardt's message of "Tue, 01 Sep 2026 13:09:05 +0200")
+References: <20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im>
+	<20260901-pks-odb-registering-in-memory-sources-v1-6-97a312d5fa25@pks.im>
+Date: Tue, 01 Sep 2026 15:26:46 -0700
+Message-ID: <xmqqv78oliah.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
 
-From: Elijah Newren <newren@gmail.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
-Similar to the previous commit, just as `git commit --amend` is a
-foot-gun during conflict resolution, so is a partial commit (`git commit
-<paths>`).  Recording a conflict resolution is about capturing the state
-of the entire tree on top of HEAD, not a subset of paths.  For many years
-we have rejected partial commits in the middle of
-  - a merge
-  - a cherry-pick
+> The preceding commits have removed the last two users of
+> `odb_add_submodule_source_by_path()`. The mechanism was only ever
+> meant as a transitional crutch while migrating submodule object
+> access away from "add the submodule ODB as an alternate of
+> the_repository" towards explicitly passing the submodule repository,
+> see a35e03dee0 (submodule: lazily add submodule ODBs as alternates,
+> 2021-08-16). Remove it.
 
-but, just like amending, this was never extended to the other operations
-that can also leave conflicts to resolve:
-  - an `am` operation
-  - a revert
-  - a rebase that stopped for conflict resolution
-
-Reuse sequencer_ongoing_operation(), introduced for the analogous
-`--amend` check, to detect these and refuse the partial commit.  A rebase
-that stopped because a pick became empty is not conflict resolution and,
-as an earlier patch established, is deliberately left permitted.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/commit.c                | 24 ++++++++++++++++++-----
- sequencer.h                     |  5 +++--
- t/t3404-rebase-interactive.sh   | 34 +++++++++++++++++++++++++++++++++
- t/t3507-cherry-pick-conflict.sh | 11 +++++++++++
- t/t4151-am-abort.sh             | 11 +++++++++++
- 5 files changed, 78 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 284fc7fdc6..4e0fd58f0a 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -515,11 +515,25 @@ static const char *prepare_index(const char **argv, const char *prefix,
- 	 */
- 	commit_style = COMMIT_PARTIAL;
- 
--	if (whence != FROM_COMMIT) {
--		if (whence == FROM_MERGE)
--			die(_("cannot do a partial commit during a merge."));
--		else if (is_from_cherry_pick(whence))
--			die(_("cannot do a partial commit during a cherry-pick."));
-+	switch (sequencer_ongoing_operation(the_repository, whence)) {
-+	case ONGOING_NONE:
-+		break;
-+	case ONGOING_MERGE:
-+		die(_("cannot do a partial commit during a merge."));
-+	case ONGOING_CHERRY_PICK:
-+		die(_("cannot do a partial commit during a cherry-pick."));
-+	case ONGOING_REBASE_NOW_EMPTY:
-+		/*
-+		 * A pick that became empty is not a conflict, and creating
-+		 * a new commit (partial or not) poses no problem.
-+		 */
-+		break;
-+	case ONGOING_REVERT:
-+		die(_("cannot do a partial commit during a revert."));
-+	case ONGOING_AM:
-+		die(_("cannot do a partial commit during an am session."));
-+	case ONGOING_REBASE_CONFLICT:
-+		die(_("cannot do a partial commit while resolving conflicts during a rebase."));
- 	}
- 
- 	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
-diff --git a/sequencer.h b/sequencer.h
-index fb4a744208..61ebc2ca40 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -279,8 +279,9 @@ int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
- 
- /*
-  * An in-progress operation that records its result (often a conflict
-- * resolution) as a new commit on top of HEAD, during which amending
-- * HEAD via "git commit --amend" is almost always a mistake.
-+ * resolution) as a new commit on top of HEAD.  Some ways of invoking
-+ * "git commit" -- amending HEAD, or a partial commit -- are almost
-+ * always a mistake during such an operation.
-  */
- enum ongoing_operation {
- 	ONGOING_NONE = 0,
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 4e6c3e2f19..8c63682b7f 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1970,6 +1970,40 @@ test_expect_success 'commit --amend is refused at an apply-backend conflict stop
- 	)
- '
- 
-+test_expect_success 'partial commit is refused at a rebase conflict stop' '
-+	test_when_finished "git rebase --abort" &&
-+	git checkout --detach conflict-branch &&
-+	(
-+		set_fake_editor &&
-+		FAKE_LINES="1 3" &&
-+		export FAKE_LINES &&
-+		test_must_fail git rebase -i A
-+	) &&
-+	echo resolved >conflict &&
-+	git add conflict &&
-+	test_must_fail git commit conflict 2>err &&
-+	test_grep "cannot do a partial commit while resolving conflicts during a rebase." err
-+'
-+
-+test_expect_success 'partial commit is refused at an apply-backend conflict stop' '
-+	test_when_finished "rm -rf apply-backend" &&
-+	test_create_repo apply-backend &&
-+	(
-+		cd apply-backend &&
-+		test_commit base file &&
-+		git branch -M mainline &&
-+		test_commit upstream file upstream &&
-+		git checkout -b side mainline~1 &&
-+		test_commit conflicting file side &&
-+		test_commit unrelated other &&
-+		test_must_fail git rebase --apply mainline &&
-+		echo resolved >file &&
-+		git add file &&
-+		test_must_fail git commit file 2>err &&
-+		test_grep "cannot do a partial commit while resolving conflicts during a rebase." err
-+	)
-+'
-+
- test_expect_success 'todo has correct onto hash' '
- 	GIT_SEQUENCE_EDITOR=cat git rebase -i no-conflict-branch~4 no-conflict-branch >actual &&
- 	onto=$(git rev-parse --short HEAD~4) &&
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index 42de398f76..c3d024c97f 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -375,6 +375,17 @@ test_expect_success 'commit --amend of revert fails' '
- 	test_grep "in the middle of a revert -- cannot amend." err
- '
- 
-+test_expect_success 'partial commit during a revert fails' '
-+	pristine_detach initial &&
-+
-+	test_must_fail git revert picked &&
-+	echo resolved >foo &&
-+	git add foo &&
-+	test_must_fail git commit foo 2>err &&
-+
-+	test_grep "cannot do a partial commit during a revert." err
-+'
-+
- test_expect_success 'successful revert does not set REVERT_HEAD' '
- 	pristine_detach base &&
- 	git revert base &&
-diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
-index 9313a074b2..c80269e015 100755
---- a/t/t4151-am-abort.sh
-+++ b/t/t4151-am-abort.sh
-@@ -74,6 +74,17 @@ test_expect_success 'commit --amend during a failed am fails' '
- 	git am --abort
- '
- 
-+test_expect_success 'partial commit during a failed am fails' '
-+	git reset --hard initial &&
-+	cp file-2-expect file-2 &&
-+	test_must_fail git am 000[1245]-*.patch &&
-+	echo resolved >file-1 &&
-+	git add file-1 &&
-+	test_must_fail git commit file-1 2>err &&
-+	test_grep "cannot do a partial commit during an am session." err &&
-+	git am --abort
-+'
-+
- test_expect_success 'am -3 --skip removes otherfile-4' '
- 	git reset --hard initial &&
- 	test_must_fail git am -3 0003-*.patch &&
--- 
-gitgitgadget
+Yay.  Very nice.
