@@ -1,89 +1,84 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F9C420898
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 17:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AF94854F2
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 17:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788283968; cv=none; b=Pk2SfSRgn/kAm+BypDzN+yq0QJtHoRb6cy5hA7DySSKLd3Vbxq2e88i9uz3PQYu43RTl88tZ15gc68YWkuz11TwYpdOL5PcB1Ng/iwpaax2vfvdADJFu70pkmEY+XlgimA1pBRIt0dcWyVufsFLJ1LRMH4CH9aGlBlwYY19Y3iU=
+	t=1788284854; cv=none; b=LS5u5abp4yIgCWLVlDi9lu9jY5nmt5F2DJ7ytut+5nRc1WrCK7CpO89wYNNoe4LVzBUpxpP1nAwJXuX4pRlZKQxYtCpZTDoRFBJDvwINNgO8BjQGnG9EqRk9F26DtAcpB3lvTXGuQkFimkT3N8cgcgykXHuEGqZQd2R1b3ZLzYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788283968; c=relaxed/simple;
-	bh=D0Tlu0KcNYm3SK+mIQGSxZUGYN4L79PJ96NPfbZqoCo=;
+	s=arc-20240116; t=1788284854; c=relaxed/simple;
+	bh=c0xcMh/dvd8aZMLNTTCOEqcgrMZTr8s4nRG2aP19H1k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DBFt59yksLpNi1mTuZCS66+UcUOBVQAuWYh49OypUHW2LDhnAQiENqPBrJCMGMWaAc6TXvWuyQFlFP0rWLN+u+rRCD/KDR5ntTDVAAsGuoy6/BrbSEW9i+geoHsYxR+tBhOnSEjoqyNcxCVM2DYCZH7jEidaFvCQkLShWjWwa5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j4Ob0GsI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i3EcPn/s; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=pjxuo6EuhR7rgdX9u98KP32VmL3qhGNH6FA3Gd8F0yqADzqZQe88V0GRsj2IcPilZKXvE8tV1zRGIGaDJmUpWPqG5AYQcaBxOFQMD86/PB1E0bQ603TVdcLuFI5U0omBTe2nD4b+PUBUFSgajW2TDzGSQF8r/KILpBga7Yz8R48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xDh17jEZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PjfqW4gp; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j4Ob0GsI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i3EcPn/s"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xDh17jEZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PjfqW4gp"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1BB631D00116;
-	Tue,  1 Sep 2026 13:32:46 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 01 Sep 2026 13:32:46 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id 309011D00125;
+	Tue,  1 Sep 2026 13:47:31 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 01 Sep 2026 13:47:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1788283965;
-	 x=1788370365; bh=WguX5Z9b3z3H5r62+J7w0+yabkkzSqslCs1VEvtaUw0=; b=
-	j4Ob0GsIAhpJZxUsIqf8aIHaV4mitUkmpZlt3Ax4BBSv/wQ8EufNtaeKlvBok6iT
-	G8SbXMwqHzku56YS9EZnhwYFgktLflq3SZ8qGqFbbCVc0IQkvsJGJaLuct4MnakZ
-	UkHOYfiHWWQPcGuxxjZleAorYcwrUGCEDWrPCdIdNiMoe9Tif6iCsWJntoiUPRJI
-	1DKkMcv2D7Ye+kuZ9xrjwMOfA43d5aScXRvzJB3nMFF5ODYEP8p1qX4Rgmg8CD0h
-	45XVvsxV9cnYSLxJzQshTzz4g9Ny3QzaeMDLtrdySC2dsbHhj91ldhLTuHaANjt1
-	bj8AH/U/0Fedu8x9jZARyQ==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788284851; x=1788371251; bh=CWmfPChx+L
+	znf4QCUP0kd/g6T9r1sTI4XWVD+7dep+I=; b=xDh17jEZpktr0+bq3n5urPjf08
+	1B+smw3AEgb4XkUcs+10AQ7jRfeEgt/UD3+IBttjB49fOhlmPdNxKlP7tVulExW7
+	aa9jbYVz4IwTkehG+W4z824R+aXJud8MxSBpSUpLkF6/NfCFMMJQJvOgbsB0ysjl
+	K9MrRNtqbJzxd9lArNXWHJi7vnLDOfqtmjdaiyoz4Zcb09v3E2eGsqS24A7apMLe
+	wJwme/H3w+zy2UX+jFXZBttsXvbXqsrJ4kfVgwbFQpLnTIL38vNDkWa0JMlMSp4o
+	QjgiTSzwS/z/VH9UY+UAdooZ+CiJPZg7MbRzOQ204R11rtq1Y8f+gqFx0MZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788283965; x=
-	1788370365; bh=WguX5Z9b3z3H5r62+J7w0+yabkkzSqslCs1VEvtaUw0=; b=i
-	3EcPn/s8rC3Iarst5t7zLhM3kRWGP1xUTCMoSpfbkMPSVee6UjFK49Fkf0iVu9qd
-	gDV2bpgFfSYeliuSCIb5Q2XG8zwpBKGneY8Yb8gtDbhaommCqfxWiN0Lm6UPgGUm
-	oTZknWvIgnFv6fc6Drjl7aOCYKURQAVsr/0RDmbdrPGQYKgb2kz1CzRGqdeYzrei
-	HmKUZqLuCcw/DmWXx5UENSHqdLqTWGNcg3wy+a3oqiB0nu1XgJIld2jBVrqQpk9m
-	D/eAnIn1rtK7h4UnbRAmPfsPRTcxi9VczXFsprTJwxW5lZNvRsTEN0SNEXE8U6Ea
-	ucR1YAJBWqyYqKWVA+oNw==
-X-ME-Sender: <xms:PQyXauxo-CtUM34td_U0pVNodmCD115VcvlpQ_nkBG9MR8IwBFmBTw>
-    <xme:PQyXasi4ZkecFulj0w468BDspp4PYAflDOk2jW34AJezmdz0CEiDv1lJWX2AOA6KG
-    EmHkuo2fUGdX147UHL50KvNECzUfQvh8IHI-RbtQ7xlNr4TGWAFANE>
-X-ME-Received: <xmr:PQyXaik5ZGQ3qUNJXJdoHUvTltTGPd2DXggKwDng2qyLSpEse8q3LJc7M0BOHMLKBx_fdW6Uqm9qGWvktUQ9o6Wh0OlJ5FMVWw>
-X-ME-Proxy-Cause: dmFkZTFCgLo3ZI5o8jiK14yOrb7mDJlnkDAV+H0TSH0ktwHGTrnaAofuikXHXWBabAPMmw
-    jUL47TtRRtNyVnKppde4gPfyMc+ar5bGMZwN4Kaw44LeMnO0hzucWL1zrMUGVAHT8xq/qF
-    U1chkrcY3fuYaspO0WKlnHnl957GXWr4ix5YPdANY/53zy4T4cQr5PuDmCP32MIiFGG+Ii
-    HD7XhbsZMtgChoS3k5FtmSWX0qO5opMF6KzrpZph/g3DbKWFDkZOvOHii9zH5lyuxnrv8w
-    /nS3IYHAuVK7+2G27S/2tMZy+ac5ZIWtRaY3+OQjPmYiJdaLDPVXRZvDU0HuDWBnrYEzgC
-    MCtObD9Vbj45Lk+8cMjpViV9U7PmNFvSmHbWFVk226WPYmJAOrCiW2YhAnem9Nk9zxIF2k
-    BuFcVIBhbARXvNTbyhlnGYG3lNesEs/LKdIEawIDvZQ0uODHmcTA3fyCC2mWK/jXMw2KsJ
-    3YQIofLcR3Lzf+Izrg+5wkMPyWkltH30BF4XlxJ5gsSjR+3T+R+DP0HuWV4/ajFWxOyc7i
-    wLTFiuJPUb7+ThK+/ed4eGC0tECTUDhFSiiDVTr84ASUkKqJONHEVfKFe/7oMI1+vsHAK4
-    N+qei+XDvP9WKQim5O0dxqfha3OqJUKOpLYXbFhT41shYd60hlOpaeMWc0MQ
-X-ME-Proxy: <xmx:PQyXaqiagpjLwIBVQEDJWdVIncrSXseYznuU4fdKKJKCYJImhLGUiQ>
-    <xmx:PQyXau2dI9EqGatuSmuUnMAdJhtDZHlJQdi563G_ckMuCfWLBP_Nyg>
-    <xmx:PQyXarKL1nq54zEoUbYR4xhxAQ0k4Lm-zW0GjsHflZ4YGYgEEUYFVg>
-    <xmx:PQyXamzCzaZzJ0P00yEwgIDwdgpFrPS9Pa3c1kICBThBQ7dxUoh35w>
-    <xmx:PQyXamOhE1fwiSd5uqnPfaefaBH60H1wJMtRKYrJaZd75PH-6ydwdq9r>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788284851; x=1788371251; bh=CWmfPChx+Lznf4QCUP0kd/g6T9r1sTI4XWV
+	D+7dep+I=; b=PjfqW4gphx4++sDrGO+WK8E03Xpf2MObu9AmBaYLhANIp+SBgne
+	kS9ymnNpAIB90iPjcqGt8tno7iF6abtFiCCKXDFA7ZUkA0FGFs5xAEG6YT6xhxCo
+	DBvLwMdKefM1QC+BfbVvcogWlpfQX0UYuXDITDo+lJLHJZGpe6ah5rCfyxsD0tWT
+	Pcu/cn0PUA6yrn/NWLyTO9pzhWzKSFsGxzW9Qe8CEGhKn8HELgDG22Mw5yyZIQON
+	5Z4gMdqACcp/E8+IXMCLOYs5vQirSEHnIXmgJBnRdTMtK2EpKCOq5BWQFh+cO7PO
+	Gs78tlsfU27qdG5NPFcHBay+ONzcD8nHIxw==
+X-ME-Sender: <xms:sg-Xams_DgC9x8gst0BdamoJXD162OPWQBLP8Uggzam4rrvay-ngdw>
+    <xme:sg-Xai4agcWsKKm83aKFWsVjIXfq09VC3b-M1Z0U5ajtPQU8VkOVYAlTzhifdH6Fc
+    8d_ixI9pUjUoTAtHJacXYBAd2LRg2h7DecHFS2FWYZw-ZFqkgdNMSM>
+X-ME-Received: <xmr:sg-XavKBY1Buy121O1XC_h4uVPeThYhGpPz5-fpSGPfkPmE9FsI76POvwBgjKYc_s2OPgyFzxoMiLcgYg2WMD4FlIaoDYUmxQg>
+X-ME-Proxy-Cause: dmFkZTFqTPg9TALpynG9QTik/V4bZ2WoRf8wEniR+PenhLdLC/wN4vw9Kvt61wdQnBV+DH
+    vNhOGT54vug5tWkNNG9vRXOMHeGCizFOvhn4uqSdtOolUCPYazWW54vL5zAAWReUxAycaq
+    P6b3fF1tHOkgUp88lmiaq+P9WkPgiI+kf2dcVgzC/l+NT3ObwnqVd4iJa861h1LC9awcGK
+    xu79vJxlUeNXsRuqlE1naLf9TRlm3JATy5m3utJ2L//0SuFMNsZ1/7ZwwgCxq4ViLpgqLe
+    EHBgyirJ7zD9jCHOL/R5EFUrWaa6nLccvKOF+R1mdIsmgJdRt0qBwqp2jUl9h5Jv/YgDpp
+    FyDYfSFB7hkfekIrmCZJbp3BRRt6fM8sWGW9/F8n4fmDBVwjqqgsHaSEd5rtNhOoW9lxpx
+    fIZL53pT8weeyVr5cCNg2ihyx11T4Fk3NxQgVyQahgp8uSUp6Y60EDTzrvYkhaLAKumR+H
+    bbJUZS5pY/Y0JF97LGfmreEasS3iefXrdBdRfnQ4x7N+rE6L/EHmsEIbdoS103M5heePVg
+    mHB/anAua5QcKG4znb6B7mo32t8LL8/cn6UGlyuvx2j/aQgrOc5ynyMpGIWXhWfgvXimLu
+    c7CvpVTbbRcuSG/ZQcJMCcB28X5XLH9Gd+3Xop0Mz91nqIySddHuJJPNrwVw
+X-ME-Proxy: <xmx:sg-Xaq5DADElG_X3Cys1hnUWOcLhWdJ_zFZ5DBVT5pgSnqIMmOLehA>
+    <xmx:sg-XaqygtMw2RUkxxUKT4STRUMEWTwykiRAmshnOyFen_ss1q92slA>
+    <xmx:sg-XamZyZMISQbBlYJ6qUJQWrN2Yc5wCtkW-1JH8isr8Kgnjn-SALg>
+    <xmx:sg-XakRjZ1vzTmm0FURUf6ivoiNWw82ASRRrylMxDSmFFEp4avtEpw>
+    <xmx:sw-Xau4JVgdeUeAgBDPMd3MgpSlCu1Wx9N4d26LZEPqt6ATgA2eNTURd>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Sep 2026 13:32:45 -0400 (EDT)
+ 1 Sep 2026 13:47:30 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Todd Zullinger
- <tmz@pobox.com>,  Olamide Caleb Bello <belkid98@gmail.com>,  Tian Yuchen
- <cat@malon.dev>
-Subject: Re: [PATCH v6 3/3] core: convert build-time USE_NSEC into runtime
- core.useNanosec
-In-Reply-To: <CALnO6CBKWpmTZW+Z74JsTQvr864vFsvwvRJeKAu3LfXZJK-1Yg@mail.gmail.com>
-	(D. Ben Knoble's message of "Tue, 1 Sep 2026 08:38:45 -0400")
-References: <cover.1787231825.git.ben.knoble@gmail.com>
-	<cover.1788206466.git.ben.knoble@gmail.com>
-	<0a611f614041b165140da7f2546c058178cdbfce.1788206466.git.ben.knoble@gmail.com>
-	<xmqq4ig9vbb8.fsf@gitster.g>
-	<CALnO6CBKWpmTZW+Z74JsTQvr864vFsvwvRJeKAu3LfXZJK-1Yg@mail.gmail.com>
-Date: Tue, 01 Sep 2026 10:32:44 -0700
-Message-ID: <xmqqpkywswqr.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 3/8] checkout: validate stage and merge option
+ compatibility in checkout_paths()
+In-Reply-To: <CAOLa=ZTA=xmPnEkMsncwd=3iZA62nsXq0jk-KiUr=GU7OUhh1Q@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 1 Sep 2026 04:53:23 -0700")
+References: <20260828225206.310500-1-gitster@pobox.com>
+	<20260830204835.1040408-1-gitster@pobox.com>
+	<20260830204835.1040408-4-gitster@pobox.com>
+	<CAOLa=ZTA=xmPnEkMsncwd=3iZA62nsXq0jk-KiUr=GU7OUhh1Q@mail.gmail.com>
+Date: Tue, 01 Sep 2026 10:47:29 -0700
+Message-ID: <xmqqld9ksw26.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,34 +86,52 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> On Tue, Sep 1, 2026 at 12:35 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> @@ -591,6 +591,10 @@ static int checkout_paths(const struct checkout_opts *opts,
+>>  		die(_("'%s', '%s', or '%s' cannot be used when checking out of a tree"),
+>>  		    "--merge", "--ours", "--theirs");
 >>
->> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->>
->> > +core.useNanosec::
->> > +     If true, use nanosecond precision for ctime and mtime
->> > +     comparisions between the index and the working tree (if Git
->>
->> comparisions?
->>
->> > +     was compiled to respect this option).
->> > +     This is unsafe on some platforms;
->> > +     see link:technical/racy-git.html[Racy Git]. False by default.
+>> +	if (1 < !!opts->writeout_stage + !!opts->force + !!opts->merge)
+>> +		die(_("git checkout: --ours/--theirs, --force and --merge are incompatible when\n"
+>> +		      "checking out of the index."));
+>> +
 >
-> Ouch, good eyes. Obviously should be "comparisons"---I've amended
-> locally but will hold onto the new version for a bit.
+> Doesn't checkout_paths() also get triggered when using '--patch',
+> shouldn't this go below...
 >
-> As this topic is not in next yet, I presume that sending a new version
-> with the typofix is the correct thing to do. I'll wait a while today
-> to see if any other comments trickle in.
+>>  	if (opts->patch_mode) {
+>>  		enum add_p_mode patch_mode;
+>>  		struct interactive_options interactive_opts = {
+>>
+>
+> ...this block? As the original checked for `opts->patchspec.nr`
 
-Yeah, and in the meantime I'll locallly amend what I have.  If we do
-not hear any other issues in a few days perhaps we can do without
-the final reroll that way.
+Sorry, I do not quite understand your question.  
 
-Thanks.
+The "if (opts->patch_mode)" block indeed appears in checkout_paths()
+and when "--patch" is given the control comes here.  Are you worried
+about
+
+    git restore --patch --merge --theirs
+
+triggering the option compatibility check, instead of ignoring it
+and directly jumping into the patch mode?
+
+>> @@ -2063,11 +2067,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>>
+>>  	opts->pathspec.recursive = 1;
+>>
+>> -	if (opts->pathspec.nr) {
+>> -		if (1 < !!opts->writeout_stage + !!opts->force + !!opts->merge)
+>> -			die(_("git checkout: --ours/--theirs, --force and --merge are incompatible when\n"
+>> -			      "checking out of the index."));
+>> -	} else {
+>> +	if (!opts->pathspec.nr) {
+>>  		if (opts->accept_pathspec && !opts->empty_pathspec_ok &&
+>>  		    !opts->patch_mode)	/* patch mode is special */
+>>  			die(_("you must specify path(s) to restore"));
+>> --
+>> 2.55.0-884-g76cf8659c2
