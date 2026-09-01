@@ -1,512 +1,121 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19269351C27
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 21:55:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E42045DF7F
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 22:03:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788299711; cv=none; b=FdZnBylimFDyHSJX1Fb7foF+fXCatoGhzgvgddcizL4ukI78NG0E7VBrdSwtKMvpxJtF+cnL4dfpo+Vc+7ZHJj2h0ubN9kIY3nWMmp2bUY/tXfJnP0WlyTGMaZl07lzezQjo+9b0J22JTqI5XCqgPUQ6Q08hv+KY22SqKc3Z5Ds=
+	t=1788300231; cv=none; b=mCBB/EAhsaADqZX3+zs5DHKDcXb02kOeB2tK9slYRDvjpo++q35ymWz2JgXQYemhie8OGZSESIWoZx+h3QVrZLJbEbmylg0Qw41MRux4w0zf5G2HvKdJ8ZjdKDtmtvs0FapK6dH87BD7Xsr4Czs036ltlGNZrSNZxruXN/UURuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788299711; c=relaxed/simple;
-	bh=b6pWsla4JPa0X5H3sxdbQDXsbFAAUDGARLoPoCbsp/Q=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dMPsFEwAwkKXqPFhH+qFeanXoKVYyQvp6/qvxgiiN4H2Or6ZQjIc0ZCa0kbZp1AgnkAbpAY0WV/FZK/kuwMEdPqCCdr+Psc7lJuzJyo3I5Ld1hGq2mUBoR0/SUV+1iNj1Nos1wJNqbLyfoOelhS1SJ67uMTbSGsy1i5I1JeNXqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-255-187-253.cpe.net.cable.rogers.com [99.255.187.253])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 681Lji01024735
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 1 Sep 2026 21:45:45 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Skybuck Flying'" <skybuck2000@hotmail.com>,
-        "'Git'" <git@vger.kernel.org>
-References: <AM0PR02MB445096594555DAD1D9EE1505B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB445083767BAE669D4656CA6CB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB445013B3CDAAAD361FD93A86B3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB44501AFB0A97E2E097B8795AB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB445092119D0BA1921E2BAADFB3DD2@AM0PR02MB4450.eurprd02.prod.outlook.com> <AM0PR02MB4450EF826479360A3A262277B3A82@AM0PR02MB4450.eurprd02.prod.outlook.com>
-In-Reply-To: <AM0PR02MB4450EF826479360A3A262277B3A82@AM0PR02MB4450.eurprd02.prod.outlook.com>
-Subject: RE: AI Textconv filter misconfiguration on Windows leads to silent corruption of diff output (ongoing investigation)
-Date: Tue, 1 Sep 2026 17:45:38 -0400
-Organization: Nexbridge Inc.
-Message-ID: <000601dd3a5b$3e4be8a0$bae3b9e0$@nexbridge.com>
+	s=arc-20240116; t=1788300231; c=relaxed/simple;
+	bh=QybbSgMFq4DclmEucH95G3jM0BPBSnpK2m2lXtOK/lY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SFT4nRHAUbQ3G49+FYNgNlryE0cb62zVvfwNKsqP7Y/ljg8NYsSE9kbagD70oFGpv0nTdcEk7b4GO5KLJUwgGXoeryByGSNQAy++JCHvrlLsLm5wOSctiSm7+7qAkrOgBQtAsETnyu2LfXxSv6nAPvxJANP5rrc3aPvEkBm+Beo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iH/Raw9o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UvalKrz7; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iH/Raw9o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UvalKrz7"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1C51A1D0011D;
+	Tue,  1 Sep 2026 18:03:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 01 Sep 2026 18:03:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788300225; x=1788386625; bh=x0VysqTEv3
+	s3AdujLV/HpXQQIsvZes/hm9XQlwNu2Ak=; b=iH/Raw9obYggAbIpIb0J7jTUS+
+	uO+dm9gp75/BAasabht+lGwqztsXgs1cmybPq/bMkKMEsL8UzxIJr/3aC2qLsBCC
+	b2vy/zbJlUZu6ww1xWKSNF5f3U+5zo6+80+vnK83tKOqVm3p1bzeAJ1QPDSO/XdW
+	iol2GoAErk4SUKDkpsvH7TBcU+jg/2t3yDtex/4wQtyTRwJ5GLuI3TVqCCDbaTlB
+	W53Y6VlAx/GukKfhgjMXoNA34YpQqlT+KkduL80mS7dhYJtJj7YdsRRjYtdwIjhC
+	JygfTwgi1VGNOM8tBdiyccR/79uhXPIXdZ+itD8EdIts5wb8soUXYcew/JZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1788300225; x=1788386625; bh=x0VysqTEv3s3AdujLV/HpXQQIsvZes/hm9X
+	QlwNu2Ak=; b=UvalKrz7amTUW5YqMHHXVyreYnSzl0ooARc2wQ0+8k7AkTVrZnT
+	Xyfm2RV4q3+VSKUKzqtGmy+DZNxbUL9kSpMDMTfHcHKlGMF3+8lIi/mKSsH/L237
+	C6cOAbyzZiLE/2FhtrFP1qAdS8RvW8vMNDAFtyi0CIlsXk0YzODmrUuaImO+UqMT
+	dhGH1e+Dk2fU2la9+kcWK8lTlEE/QTV/3e7aSwxcJInph/bzaI/7FztXu9whz9nr
+	ANmfyaYpT45JHntqL+PcP6lQqiiZdNR72/g32i87yhyJ/BdTa210Q1vTP15MsSND
+	whbwGh9o8ZK37R00Uwujgz1TfLIeuBx4t9A==
+X-ME-Sender: <xms:wUuXav1FNC_-CNAGivH0CPXbmBjjgCJp0yqJwcin0Zg4D09uF1SPRA>
+    <xme:wUuXalgSMa010RjWVqE-d6rLHARmjZbggYoeAiuUEmlgBUuWtls23WlgwDZHPzYJD
+    Ll5dupPMMFZFw8dEs9o1rQIsV402M6QdZnaVvXAMLlYPLNHhmGRKqk>
+X-ME-Received: <xmr:wUuXatTn_UGQbTfr_BsFcBVcaTYps3NlWmktKA0jeBHOpj62kl0NXfqeIfE-vqmQFskF_azeTN5rKiibhNP5949aT4ddLW7UJA>
+X-ME-Proxy-Cause: dmFkZTGXloAYMlsDDI/qZRzFxWWW4XO3G2PdhcR2mtVpL5gJR+q3bMvOlhf1WmCzzpvKHg
+    f8rBtBYTCE/ieHNVq+8240T5s2aNAsRSkj1QHOjEB8MpijXXx5ncj3Zdp6IOBroB0Z/OqH
+    J0sdVtRHXy+n/pNZ+poUi1b+2ehUlX/gxdvuM2/T0re06yX9MK6nRyaKpImSn7i9rpsc7C
+    1TUqFSITokqgwMoVStFp3T4b+ZA9Eqs8yIkRo9cN6lrrNkkstZWKMAin7nhD0FXZdTMLK9
+    CU6yS+H93gOBLRYcgyEtnkjBFv8bie89lwjTMfhhjA4EMsLkPk9KnYZQ2RtjG4/69XcwTV
+    3hBt7V3iLxBkxG0InsiC64y46q1iEme11WfejnIyNq610ZXPFywDCaMsJ/QI0kHcSXaMrQ
+    4Tjtoxpjk9HNgMTmXU+k3HaVoUwu65RdLlHwREl3NldPJsPuXsWzgod8A9zHhWjxw5iUdo
+    m/ZHxtc18bVwVZD/FrGMBy4G28SwD1wz8TFHVazmKXB/ZbMgou2sLg/kwtjymm4R+Go9Ey
+    JWR3CfnzqbDcd1yG3C/QeQKRp/i7gaPgWFz0qUY7T+4RhuvUdytvgORWvjRXlu/Uri/Avd
+    tQv2Yw3HyqXoCbPOLE35QVji9izVDOS+s7W+Dz3PUX//cSTR0F1TC8SsMtfA
+X-ME-Proxy: <xmx:wUuXauiwnq9KPc3ZzaO4j765x2347oQ__1O4yo54C4FwbN9_S20nyg>
+    <xmx:wUuXal4-wwmBl8PzpAeIkOgka-F6bQImdgOkVfxuAVfhgxz_0YOpdQ>
+    <xmx:wUuXajCDY595DyxFlTAUHSJyP_6WFntijlG-CpaaCoxF6xHHJlZavw>
+    <xmx:wUuXakYFT0OI52DnDLVAUQoqhzyqvhpx1coV6vwRVnx7T6S7vSKUIA>
+    <xmx:wUuXalqM3CoqqNmYXSx7dvquqQXdejx0-EtCglj4fJnzs2XJXdl71nSg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Sep 2026 18:03:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/12] cache-tree: remove dependency on `the_repository`
+In-Reply-To: <20260901-pks-odb-registering-in-memory-sources-v1-1-97a312d5fa25@pks.im>
+	(Patrick Steinhardt's message of "Tue, 01 Sep 2026 13:09:00 +0200")
+References: <20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im>
+	<20260901-pks-odb-registering-in-memory-sources-v1-1-97a312d5fa25@pks.im>
+Date: Tue, 01 Sep 2026 15:03:44 -0700
+Message-ID: <xmqqzey0ljcv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQG/A74nuxZ9S0nr6fdPAV8IovWWEQKY/cdqAdcK/JwB4Zs92AGG/tONAULMUxa2rc9REA==
-Content-Language: en-ca
-msip_labels: 
-X-Antivirus: Norton (VPS 260901-8, 9/1/2026), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain
 
-On September 1, 2026 4:14 PM, Skybuck Flying wrote:
->MORE GOD DAMN PROBLEMS WITH GIT AND CR/LF FILTERS.
->
->I DOWNLOADED/GIT CLONED:
->
->https://github.com/openai/openai-openapi/tree/main
->
->I NOTICED:
->
->https://github.com/openai/openai-openapi/tree/main/assets
->
->WAS CORRUPTED.
->
->(CORRECT DOWNLOAD METHOD USES TO PROVE FILE IS INTACT ON SERVER):
->
->curl -L --output "K:\Delphi\Specifications\OpenAI API\github version =
-3.1.0 (1
->september 2026)\assets\openai-api-referencev2.png"
->https://raw.githubusercontent.com/openai/openai-
->openapi/master/assets/openai-api-reference.png
->
->GOOD THING I INSPECTED IT JUST OUT OF CURIOSITY.
->
->I IMMEDIATELY EXPECTED GIT FILTER TO BE THE CAUSE.
->
->DIAGNOSIS COMMANDS.
->
->"
->Microsoft Windows [Version 10.0.22631.6199]
->(c) Microsoft Corporation. All rights reserved.
->
->C:\Users\skybu>git config --global core.autocrlf false
->
->C:\Users\skybu>git config --system core.autocrlf false
->
->C:\Users\skybu>git config --local core.autocrlf
->fatal: --local can only be used inside a git repository
->
->C:\Users\skybu>git config --global --get-regexp filter
->
->C:\Users\skybu>git config --local --get-regexp filter
->fatal: --local can only be used inside a git repository
->
->C:\Users\skybu>git check-attr -a openai-api-reference.png
->fatal: not a git repository (or any of the parent directories): .git
->
->C:\Users\skybu>type .gitattributes
->* text diff=3Dlfclean
->C:\Users\skybu>git config --global --list core.autocrlf=3Dfalse =
-core.eol=3Dcrlf
->core.sshcommand=3DC:/Windows/System32/OpenSSH/ssh.exe
->core.attributesfile=3DC:\Users\skybu\.gitattributes
->user.email=3Dskybuck2000@hotmail.com
->user.name=3DSkybuck Flying
->user.signingkey=3DI:\Informatie\Van mezelf\SSH =
-Keys\PrivateKey\GitSigningKey
->gui.recentrepo=3DV:/FuckingWhore/vite-wallet
->cinnabar.version-check=3D1743733941
->credential.http://localhost:3000.provider=3Dgeneric
->includeif.gitdir:V:/AI0001/.path=3D~/.gitconfigs/.gitconfig-ai0001-v2
->includeif.gitdir:V:/AI0002/.path=3D~/.gitconfigs/.gitconfig-ai0002-v2
->includeif.gitdir:V:/AI0003/.path=3D~/.gitconfigs/.gitconfig-ai0003-v2
->includeif.gitdir:V:/AI0004/.path=3D~/.gitconfigs/.gitconfig-ai0004-v2
->includeif.gitdir:V:/AI0005/.path=3D~/.gitconfigs/.gitconfig-ai0005-v2
->includeif.gitdir:V:/AI0006/.path=3D~/.gitconfigs/.gitconfig-ai0006-v2
->includeif.gitdir:V:/AI0007/.path=3D~/.gitconfigs/.gitconfig-ai0007-v2
->includeif.gitdir:V:/AI0008/.path=3D~/.gitconfigs/.gitconfig-ai0008-v2
->includeif.gitdir:V:/AI0009/.path=3D~/.gitconfigs/.gitconfig-ai0009-v2
->includeif.gitdir:V:/AI0010/.path=3D~/.gitconfigs/.gitconfig-ai0010-v2
->includeif.gitdir:V:/AI0011/.path=3D~/.gitconfigs/.gitconfig-ai0011-v2
->includeif.gitdir:V:/AI0012/.path=3D~/.gitconfigs/.gitconfig-ai0012-v2
->includeif.gitdir:V:/AI0013/.path=3D~/.gitconfigs/.gitconfig-ai0013-v2
->includeif.gitdir:V:/AI0014/.path=3D~/.gitconfigs/.gitconfig-ai0014-v2
->includeif.gitdir:V:/AI0015/.path=3D~/.gitconfigs/.gitconfig-ai0015-v2
->includeif.gitdir:V:/AI0016/.path=3D~/.gitconfigs/.gitconfig-ai0016-v2
->includeif.gitdir:V:/AI0017/.path=3D~/.gitconfigs/.gitconfig-ai0017-v2
->includeif.gitdir:V:/AI0018/.path=3D~/.gitconfigs/.gitconfig-ai0018-v2
->includeif.gitdir:V:/AI0019/.path=3D~/.gitconfigs/.gitconfig-ai0019-v2
->includeif.gitdir:V:/AI0020/.path=3D~/.gitconfigs/.gitconfig-ai0020-v2
->includeif.gitdir:V:/AIMain/.path=3D~/.gitconfigs/.gitconfig-aimain-v2
->merge.tool=3Dmeld
->mergetool.prompt=3Dfalse
->mergetool.keepbackup=3Dfalse
->gpg.format=3Dssh
->commit.gpgsign=3Dtrue
->log.showsignature=3Dtrue
->gpg.ssh.allowedsignersfile=3DI:/Informatie/Van mezelf/SSH
->Keys/GitAllowedSigners/GitAllowedSigners.txt
->diff.lfclean.textconv=3Dsed -e s/\\r//
->diff.lfclean.binary=3Dfalse
->
->C:\Users\skybu>git check-attr --all -- openai-api-reference.png
->fatal: not a git repository (or any of the parent directories): .git
->
->C:\Users\skybu>
->"
->
->HYPOTHESIS BY CO-PILOT AND POSSIBLE FIX:
->
->The **smoking gun is now visible**: your global config + your global =
-attributes file
->**are applying a custom diff filter (`lfclean`) to *all files*** =
-=E2=80=94 including PNGs.
->That is exactly why your Git=E2=80=91downloaded PNG is corrupted while =
-the curl version is
->intact.
->
->Let me break it down cleanly and give you the exact commands to verify =
-every part.
->
->---
->
->## =F0=9F=8E=AF Core finding: your global `.gitattributes` is rewriting =
-files You showed:
->
->```
->C:\Users\skybu>type .gitattributes
->* text diff=3Dlfclean
->```
->
->This means:
->
->- `*` =E2=86=92 **every file**, regardless of type
->- `text` =E2=86=92 Git treats **every file as text**, even binaries
->- `diff=3Dlfclean` =E2=86=92 Git applies your custom diff driver
->- Your diff driver is defined as:
->
->```
->diff.lfclean.textconv=3Dsed -e s/\\r//
->diff.lfclean.binary=3Dfalse
->```
->
->This forces Git to:
->
->- run `sed -e s/\r//` on files
->- treat them as **non=E2=80=91binary**
->- strip carriage returns
->- potentially corrupt binary formats (PNG, JPG, ZIP, EXE, DLL, etc.)
->
->Curl does not run Git filters =E2=86=92 curl file stays intact.
->
->Git does run filters =E2=86=92 Git file becomes corrupted.
->
->This is 100% the cause.
->
->---
->
->## =F0=9F=A7=AA Commands to confirm the corruption mechanism
->
->### 1. Check what attributes Git applies to your PNG ``` git check-attr =
---all -- openai-
->api-reference.png ```
->
->Expected output (because of your global `.gitattributes`):
->
->```
->openai-api-reference.png: text: set
->openai-api-reference.png: diff: lfclean
->```
->
->If you see this =E2=86=92 confirmed.
->
->---
->
->### 2. Check the raw blob stored in Git (to see if corruption happens =
-on checkout)
->``` git show HEAD:openai-api-reference.png > raw.png ```
->
->Then compare:
->
->```
->fc /b raw.png openai-api-reference.png
->```
->
->If `raw.png` is intact but the working=E2=80=91tree file is corrupted =
-=E2=86=92 the corruption
->happens during checkout due to filters.
->
->---
->
->### 3. Show all filters Git knows about
->```
->git config --show-origin --get-regexp diff git config --show-origin =
---get-regexp filter
->```
->
->You will see your `lfclean` diff driver.
->
->---
->
->### 4. Show your global attributes file path ``` git config --global =
-core.attributesfile
->```
->
->It points to:
->
->```
->C:\Users\skybu\.gitattributes
->```
->
->This file is applied to **every repository** on your system.
->
->---
->
->## =F0=9F=9B=A0=EF=B8=8F How to fix it (choose one)
->
->### Option A =E2=80=94 Remove the global `.gitattributes` (recommended) =
-``` del
->C:\Users\skybu\.gitattributes ```
->
->### Option B =E2=80=94 Restrict the rule to text files only
->Replace:
->
->```
->* text diff=3Dlfclean
->```
->
->With:
->
->```
->*.txt text diff=3Dlfclean
->*.pas text diff=3Dlfclean
->*.dpr text diff=3Dlfclean
->```
->
->### Option C =E2=80=94 Mark binary files correctly
->Add:
->
->```
->*.png binary
->*.jpg binary
->*.zip binary
->*.exe binary
->*.dll binary
->```
->
->---
->
->## =F0=9F=93=8C Why this happened
->You created a global `.gitattributes` with:
->
->```
->* text diff=3Dlfclean
->```
->
->This is extremely dangerous because:
->
->- Git thinks **every file is text**
->- Git applies your custom diff filter to **every file**
->- Binary files get corrupted on checkout
->
->This is why:
->
->- **curl file =3D correct**
->- **git file =3D corrupted**
->
->---
->
->## =F0=9F=94=8D Want me to help rewrite your `.gitattributes` safely?
->I can generate a clean, safe version tailored to your Delphi workflow.
->Pick one:
->
->- fix global attributes
->- create safe Delphi attributes
->- audit all Git filters
->
->
->
->Apperently Co-Pilot now has the ability to send e-mails, funny =
-functionality, risky
->too ! Expect another melissa ai virus soon ? ;)
->
->Anyway I copy & paste it's reply here in plain text:
->
->```
->Hi Git developers,
->
->I'm writing to report a reproducible corruption issue caused by global =
-Git attributes
->and diff filters being applied to binary files during checkout.
->
->Summary of the problem
->A PNG file downloaded via Git becomes corrupted, while the same file =
-downloaded
->via curl remains intact. The corruption is caused by a global =
-`.gitattributes` file that
->marks all files as text and assigns a custom diff driver:
->
->* text diff=3Dlfclean
->
->The diff driver is defined globally as:
->
->diff.lfclean.textconv=3Dsed -e s/\\r//
->diff.lfclean.binary=3Dfalse
->
->This forces Git to treat every file as text and run a textconv filter =
-that strips carriage
->returns. When applied to binary formats (PNG, JPG, ZIP, EXE, etc.), the =
-checkout
->process produces corrupted files.
->
->Reproduction steps
->1. Create a global `.gitattributes` file containing:
->   * text diff=3Dlfclean
->2. Define the diff driver globally:
->   diff.lfclean.textconv=3Dsed -e s/\\r//
->   diff.lfclean.binary=3Dfalse
->3. Clone any repository containing binary files.
->4. Compare a binary file from the working tree with the raw blob:
->   git show HEAD:path/to/file > raw.bin
->   fc /b raw.bin path/to/file
->
->The working-tree file differs from the blob, confirming corruption =
-during checkout.
->
->Expected behavior
->Binary files should remain untouched unless explicitly marked with =
-filters.
->
->Actual behavior
->Git applies the global attributes and diff driver to all files, =
-including binaries, causing
->corruption.
->
->Request
->I would appreciate guidance on whether Git should:
->- Warn users when global attributes force text filters onto binary =
-files, or
->- Provide safeguards to prevent textconv filters from being applied to =
-known binary
->formats.
->
->Thanks for your time and consideration.
->
->Best regards,
->Skybuck
->```
->
->version 2:
->
->Here is the **clean, corrected, plain=E2=80=91text reply**, in a =
-**single code block**, clearly
->explaining:
->
->- the **cause**
->- the **solution**
->- the **future risks**
->
->You can paste this directly into the Git mailing list.
->
->```
->Hi Git developers,
->
->I want to report an issue where Git corrupts binary files during =
-checkout when a
->global .gitattributes file forces all paths to be treated as text and =
-assigns a diff driver.
->
->Cause of the problem
->My global attributes file contained the line:
->
->    * text diff=3Dlfclean
->
->Because the pattern "*" matches every file, Git applies "text" and =
-"diff=3Dlfclean" to all
->paths, including binary files such as PNGs. The "text" attribute forces =
-Git to treat the
->file as text even when its content is clearly binary. The assigned diff =
-driver runs a
->textconv filter:
->
->    diff.lfclean.textconv =3D sed -e s/\r//
->    diff.lfclean.binary =3D false
->
->This causes Git to rewrite the file during checkout, stripping carriage =
-returns from
->binary data. As a result, the working-tree version of a PNG differs =
-from the blob
->stored in the repository, and the file becomes corrupted. A copy =
-downloaded via
->curl remains intact because curl does not apply Git filters.
->
->Reproduction steps
->1. Create a global .gitattributes file containing:
->       * text diff=3Dlfclean
->2. Define the diff driver globally:
->       diff.lfclean.textconv=3Dsed -e s/\r//
->       diff.lfclean.binary=3Dfalse
->3. Clone any repository containing binary files.
->4. Compare the blob with the working-tree file:
->       git show HEAD:path/to/file > raw.bin
->       fc /b raw.bin path/to/file
->
->The working-tree file is corrupted while the blob is correct.
->
->Solution
->Remove the global rule or restrict it to actual text file extensions. =
-For example:
->
->    *.txt text diff=3Dlfclean
->    *.pas text diff=3Dlfclean
->    *.md  text diff=3Dlfclean
->
->Alternatively, explicitly mark binary formats:
->
->    *.png binary
->    *.jpg binary
->    *.zip binary
->    *.exe binary
->
->Deleting the global .gitattributes file entirely also resolves the =
-issue.
->
->Future risks
->Global attribute rules are applied to every repository on the system. =
-Using "*" with
->"text" or any filter can silently rewrite binary files, break archives, =
-corrupt
->executables, and cause difficult-to-diagnose data loss. Users may not =
-realize that Git
->is modifying files during checkout, especially when the corruption is =
-subtle. A
->warning or safeguard when "text" is forced globally might help prevent =
-accidental
->misuse.
->
->Thanks for your time and consideration.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Just some musings from my own frustration in this area.
+> The "cache-tree" subsystem still depends on `the_repository`. Adapt it
+> to instead use repositories provided via the context, either as a new
+> parameter or the one passed in via `struct index_state`.
+>
+> Besides getting rid of `the_repository`, this also removes the last
+> dependency on registering submodule sources with the main object
+> database. When reading gitmodules from a submodule's index we implicitly
+> read that object via `the_repository`'s object database, which is of
+> course wrong. This works though because we would then register the
+> submodule's object database with the main object database, but a later
+> patch is going to get rid of that mechanism.
 
-Having gone through some similar things, I would ignore CoPilot. There =
-are other words I would use as well but they are not for polite company.
+As "the_repository, " is quite a long string, many lines bust our
+usual ~70 column limit, but other than that the changes look quite
+straight-forward.
 
-Set autocrlf=3Dinput not false. Also it is a good idea to set =
-ignorecase=3Dtrue and filemode=3Dfalse on Windows.
+We probably should make the cache_tree_fully_valid() into file scope
+static.  Your new cache_tree_fully_valid() that takes the repository
+and a cache_tree, which will be file-scope static, will gain a new
+thin wrapper around it, i.e.,
 
-Git tends to give preferential treatment to text files, only looking at =
-the first hunk (whatever that might be) looking for non-text characters. =
-CR is text, so a file containing those near the front will probably be =
-consider text unless explicitly marked as binary. If you are sure you =
-have binary files, declare them. Do not assume git will always get it =
-right - although .EXE, .ZIP, .JPG, and .PNG are pretty much always =
-binary.
+    int has_valid_cache_tree(struct index_state *istate)
+    {
+	return cache_tree_fully_valid(istate->repo, istate->cache_tree);
+    }
 
-I am going to assume something there, that the clean/smudge and diff =
-engines are not guaranteed to be subject to autocrlf processing before =
-receiving the files. It might be or might not be, depending on what git =
-feels like doing given the state of the file. You would have to go look =
-in the code on the version you have to be certain, but don't count on it =
-in future.
+Migrate the callers outside cache_tree.c file to use it; outside the
+implementation, nobody has any business talking about a subdirectory
+of any cache-tree, or any cache-tree outside the context of the istate
+it belongs to.
 
-The other problem you may to face, and I have been there, is that =
-clean/smudge and textconv filters definitely *do not like* binary files =
-if not declared as binary, and sometimes even then. You are dealing with =
-stdin and stdout, so have to know how the filter/textconv is opening the =
-files. I have seen platforms that always open in "r" instead of "rb", =
-which was a problem. I had to hack around that using %f in textconv. I =
-have also seen people write textconv programs without awareness that =
-they might get binary data, and that blows up runtimes badly when you =
-hit a NUL in an input buffer after an fgets() in C.
-
-I wish you luck in your adventure.
-Randall
-
+Other than that, looking good.
