@@ -1,84 +1,85 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF33377A9E
-	for <git@vger.kernel.org>; Tue,  1 Sep 2026 13:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2B52F260C
+	for <git@vger.kernel.org>; Tue,  1 Sep 2026 13:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788270477; cv=none; b=hc4Od+nZjvWVwGUz+MrESEzkPIdjLEYlpNq9Qqi98ETFgWgYTAXztp2HlhNNBh8I58MhzGpAnrIKdySSRt1TTH2nIdXHusJEH3KU57NPW/zMq2prTwM3vkJ3UWdhugoomla+7a6WU62P4yCvv9hsmQmsb/pfP9JUJHaIqP29XWI=
+	t=1788270623; cv=none; b=JL3ybOYLiBrdU8xzGVL5Wq1tjBQvoY5WTTUjr4f5WUQehCNrxjaW+RWvFmMSfUtUibFjj4G8YSLP0vGsgWC+YZ8FgCqkyG25FlfMRf0NR/z+mqiT705AibDfUgVZ62RYdrlcMwFEhuQOrkx1nfBWvnGNl7pPfgtVOyBTPtiEo9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788270477; c=relaxed/simple;
-	bh=C2PB3YfNQAjJVNVW7B7IS+6x3i9NK6/Dl0P1m/MIBMo=;
+	s=arc-20240116; t=1788270623; c=relaxed/simple;
+	bh=hQHZz8iRpVo5drZby6Cgay3qV6Q8yT00r6T13kcwb+M=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IRyP2JoSEgxnVnPSF97hztJPjjQWKGLXuA6W4Uq5ZD97CUKzmm5HByREKYxIPl32kPidl57lKZ9bB7SQLBT4zvFnz5jq2DWRJJCbhNNx1EGfDCEJlCCDcY2noZ6D1mp7KKv6gG8H37T2Nm07jMiXLxfexV85ZoeNvDSfIbPkJFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iRprWah4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U4y0Vaa/; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=pS9eE7V4mMq4PMkmtWG30iJXdBhN2ZmWwj06VwPMgmTffcLf9tFhA0LT6beWNMW4pRSg14JGqKsCB8mhAu03RHd1LesN+YyiXGDSexxjS4hm5rj+VTn1lLb3pWsyBIeVfxRNlpzuNLIUOAJfyGm+rw/kIPtVJ3LwG3JSgbblTvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i19BL6gu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U3HYWEgN; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iRprWah4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U4y0Vaa/"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0D44F1D00095;
-	Tue,  1 Sep 2026 09:47:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i19BL6gu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U3HYWEgN"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3745C1D000B6;
+	Tue,  1 Sep 2026 09:50:21 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 01 Sep 2026 09:47:54 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 01 Sep 2026 09:50:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1788270473; x=1788356873; bh=3dHDS1KsUI
-	ZYlHFrRPn0H8oYbcu8Mvnc6/H+MfAx6rE=; b=iRprWah4fw9xKXMHuxAgGI64WT
-	LqfnhcYivQRDcJqgrpx3mhx62EBJXM9gzTQM/KbUOu2MwF0XfyvHpLU0IyDT+5S9
-	afqBxtg7XnT053INCvEGU31z762gmvB3ddx212EokIeQwAfn/fj7WXuNyyi2gFug
-	DmAXoVlwDXWBut32KHVFfKJeZ5j6LGMujRYK/3XFfi5yrM7jBjIJXAbMbENz0V7r
-	VP6p5n3b4dKB0QBdOgi0bvEL7ukKxDjA2CkxZxJIPsBuEw20zzTzQKvOn3LsMB+y
-	7JHB1GI8q9mD+EIH9tHDJpt0azFyiMmWYJdavzKmg+3GyZc2UM3r9W3Lbh7Q==
+	:subject:to:to; s=fm2; t=1788270621; x=1788357021; bh=MseVf7sg5p
+	DmMIUB0Gf3CEoza4p2v6m6gyM8S2GUGG8=; b=i19BL6guEXE6GkagG63+AS9Ka1
+	+EdCI3yEHc6iGOv+bzFMuIRLUVG+oU6KQBtE3m0VGJKx5+ljRyFkD0LS+d3yLL+J
+	HYNdNAl8dGas2QW1JB2RSt1PFM3M3uT1rUVoB1igFziULnoZFBy6f3gGfBy++qZm
+	32gWg+nIVAMibB8YTdrz/q4+i5pw2o592SbkoHsV+edl5aAV52jUfUFhOXAH1wbI
+	3FWEC/RIz2X0V3TyQmAMz41h2LlvJZ31pPmHelIPDACY3CNhaMWnLlKI9Jiv2JM6
+	O5+CmfR3C8jMA0lxRVojrDEHrkKBEshxIaqABM1TA0YarGEZ22CA7/oD1YUg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1788270473; x=1788356873; bh=3dHDS1KsUIZYlHFrRPn0H8oYbcu8Mvnc6/H
-	+MfAx6rE=; b=U4y0Vaa/Bx1iq3Aj/0EPIPmQTcq4vSaExCPA6LIdugs0LTlJSu3
-	2q9UDZXY1b74m0S/Gzt064tCnrn0zcCmyA/RWVTp5hfe8K7IReickHaoVEzaWoBE
-	Hm/Ew+h/YLGRJ9voSRC62M3KeB+6dVzAWMgsKnd4O9nnygd7a5mRpIBkcwfTOOuE
-	qgz/xd+JWEw/Tcf18dkOzbVm5Mcahc6Fjgtm36ZXUIdm6kK9/ulIJWJS7zeU42aG
-	gPuO1IMi/5ZVkvvgKQcqeFUqH935Xxdf7KmKK1n6jLhHfIA3pAR7Szw6CJPvGILH
-	PX4sSvkvYI9K2fSDnwCW60TZu7cfHkXPYXQ==
-X-ME-Sender: <xms:ideWancOSjI23bnc7P9r1D0245o5AafhZ4Y2HT2xkzF4LpCxHhsurA>
-    <xme:ideWag5UrHGmF3fhsEj4vgS5LYHjinqnKRDCwvJgyCWgMRTOtxyzzbVqlbpXyzSz5
-    imB3EXwYS1beKKEv5XvQjy7l0uOuJ3bjfjzSatP6DgSu6xBMOeIhcg>
-X-ME-Received: <xmr:ideWaqW4jyPDezFCT6tmsMwlcMGVyi68oJAFeIgcAf4cPkFxZeFL4VdjyoaVlEF7KXvpn665kLblB06E6IN8ohPF5uc7eY8YBQ>
+	1788270621; x=1788357021; bh=MseVf7sg5pDmMIUB0Gf3CEoza4p2v6m6gyM
+	8S2GUGG8=; b=U3HYWEgNfBX6+aaXoF315SiduSOmjGx4ZY0ZDtMdgzw+ftdZQvz
+	YmBAWRbqPuI3uXqNuBkTu248KcEsd31TMiTZPM1jFg02P4U4syXCXpk3KEuf4vCZ
+	dGlU1AQHkAiZNFJdYwQ56BAoOyy+/mVcS+Kkvod1w/5D76pQzRbgYTm65zIRKI1D
+	2fawNVxcO564amASHSC3I1ig3rnIkAD+NhUi5j1kKtzAOQpQWKrkAFzFu+YfPFLb
+	JnPcaVwnCCYOCofiZIP+spXycQzEUp+gs2uWvHmRsPMpQ3XK/kuw5ecgUmxP30LN
+	mX234+Hpj4DX0/JFBDV9zKmUIhFHLb2/gZA==
+X-ME-Sender: <xms:HNiWaj34rz7ANQZxX_A5NIrl2fm_OfDn2zTgIfUJVdn7Y-vwVcPC3g>
+    <xme:HNiWao9mXKMsmX6v3PTlFjZ3BaIhricD9WJ6uCgqZ03aVnJXDPLr_JWkr9NYEalns
+    VZVGBe5Y6nDgZoTXAZZrGReBaOnvA-3_hvKA05MDmrU_imqBgVD_n4>
+X-ME-Received: <xmr:HNiWasO3YsMooRD6t-4n2nnNGaiw16QM382POGfZCxyRxWp9BrkrwrS4YRbP6_A8FRuy5nlaO3QoD1NnJG63zhSE81rDwM2XPw>
 X-ME-Proxy-Cause: dmFkZTFBRy2RAsg6alMnHtus8Ty3VOjD90csj6KvGxIlm1XpfRpHXpVF4W6jpYcmcPzov+
     xNRdNc4fwBBSxu+agb7TMt76uH4WvQmi+hrYIL3Sv4faz4U+R+2F0c/nysybdYSw9p4PfQ
     h/bI9e6vbyZ++JmOmC1n67dpFFvKpxk3mKd1Jq3Ru2LWQeFL/QdaMJ8d6YKIOaYIBg8lGZ
     dsmPiBvC/gUM4xy4BEkwGmDlTpSg1jXPk4MkEwobP3VvDM4ESmZAQXcW25z73OV5wpeROw
-    vFa6l8Gp7qRZLT6RRb23hswcLOwNYnURwp6BrmDm87t/cLS2aqz0uiY9iwwFWn/pxknQh7
-    z8SFEx1+r6j1pJ4VAT7TJYGaduo7pItBfnIV/qaZK38+ypb+wWio5nDEIq5Nokx8KbLRx+
-    AEE198Gs4/vH1/Wdrnd5UJOirc4pFgDF9DRL0al0fmjCu8vOdEvMgTV8LrpyU8iJ4zyKcz
-    44cuANYkxyLcvxADMycArt6X/U8uP3Ij51vByDsBHohPV8FaTbRPKFzReKgIt5+LAAPrEF
-    yYfQs4lzfD/wzAhIJyKwbZxtcPDvm+tgMmsas5jiG0OUheMl/SCU3MFWzG12GJ7ILVTIXB
-    hdhWECM+S4R1eZomXLwndw3GSvMaD9/5KPvHgFttoNxHa5W7s4uMnAJ+KX6w
-X-ME-Proxy: <xmx:ideWav5LH3Y6wHr-ERX6CCj7kqhyzuOY_QqfFyRb3gAeN6RU3HG_0g>
-    <xmx:ideWalpeNyJxP2ywuWDxwfrsX4byGVmNYhCg0yfQ6Jpe-FI5ucRjxg>
-    <xmx:ideWaikngOZlTwaD1SMF5jIdcpJW6dE_K9RheQFss0qtfZOVcKHnOQ>
-    <xmx:ideWahP5k_2EudwBX5AThik_s44oWM77jT259CUxrVv_8B8C7_HthA>
-    <xmx:ideWagYtrQbQA_YCAq2hwVbYFd14JR72lpLlLAVuQ7P9ePK7dZlB5GIB>
+    vFa6l8Gp7qRZLT6RRb23hswcLOwNYnURwp6BrmDm87t/cLS2aqz0uiY9iwwFWn/pxknQb3
+    nRTuA24r9fp43amYPUztVR1rCi2DoHuEJ9gkymk+yqn5obymE2vqGqn3ODdViyWvv6S+xm
+    OB3V6HvQu+eQQ5x2ME1ldQnvjeSkvvEJUFrGOidcdyYqx8m2V3tzhmYgjMz+3+fZbgLa9q
+    Th1xNtdiMeTQ68UKZMoUK0pZldklBHsizmB5jbSHuhbdEvVKaxjGDPOXf01uBbEMt+wLk3
+    I2EeSv7iK2ZJBx8KqxJaLNh/b8LdYsopDftKjF5pQpjKA/V02XqIJGbDwylzXdCEmjor7d
+    Pu03pKYA451KCgCE/wZX4FmZOq2p8elEYCpv/2tQBIC/Ewf0uO0ZCSddB/zw
+X-ME-Proxy: <xmx:HNiWakeahuk-byvgDN8taB5IYxX0ztKIySFV0vsvUjFK8D3c4NtzJg>
+    <xmx:HNiWajU3dV3Qos7vmyxb7OHFwlTj-FFMa348wzgjrEIhFXRPlir73g>
+    <xmx:HNiWakh5WvkY9-NM6SGAoWaHmmgfTRjj5ueSSmFDsJ1UbCFlT9Z-Qg>
+    <xmx:HNiWaq-bFQk7i0Mg7S0r8TFPKzxXOYtTsLJYqX6njmOl8gXXi9cp8Q>
+    <xmx:HdiWajv7aiCtb9tcBWuo_TdCKDf3vOREsesOuvRbpG0f8eLNfqdy2UoB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Sep 2026 09:47:52 -0400 (EDT)
+ 1 Sep 2026 09:50:20 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Gusted <gusted@codeberg.org>,  Jeff King
- <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 6/6] last-modified: keep per-path Bloom filters for
- wildcard pathspecs
-In-Reply-To: <87mru1wcyi.fsf@emacs.iotcl.com> (Toon Claes's message of "Tue,
-	01 Sep 2026 11:14:13 +0200")
-References: <20260831-toon-speed-up-last-modified-v3-0-2bbb864acf93@iotcl.com>
-	<20260831-toon-speed-up-last-modified-v3-6-2bbb864acf93@iotcl.com>
-	<xmqq8q5lvc1i.fsf@gitster.g> <87mru1wcyi.fsf@emacs.iotcl.com>
-Date: Tue, 01 Sep 2026 06:47:51 -0700
-Message-ID: <xmqqv78pt75k.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v2] checkout: print blank line after autostash conflict
+ advice
+In-Reply-To: <af051ecf-0d94-4dc1-a6e5-0184b2b6e1f1@gmail.com> (Phillip Wood's
+	message of "Tue, 1 Sep 2026 10:31:42 +0100")
+References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
+	<pull.2364.v2.git.git.1788177601572.gitgitgadget@gmail.com>
+	<xmqq4igaxl5t.fsf@gitster.g>
+	<af051ecf-0d94-4dc1-a6e5-0184b2b6e1f1@gmail.com>
+Date: Tue, 01 Sep 2026 06:50:19 -0700
+Message-ID: <xmqqqzjdt71g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,53 +89,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Toon Claes <toon@iotcl.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> 	ret = run_command(&child);
+> 	if (ret > 1)
+> 		ret = -1;
 >
->> Toon Claes <toon@iotcl.com> writes:
->>
->>> diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
->>> index df73c7d0d0..75b18ee83b 100755
->>> --- a/t/t8020-last-modified.sh
->>> +++ b/t/t8020-last-modified.sh
->>> @@ -290,6 +290,32 @@ test_expect_success 'last-modified with Bloom filters and --show-trees' '
->>>  	)
->>>  '
->>>  
->>> +test_expect_success 'last-modified with Bloom filters and top-level wildcard' '
->>> ...
->>> +		GIT_TRACE2_PERF="$(pwd)/off.perf" \
->>> +			git -c core.commitGraph=false last-modified -r HEAD \
->>> +			-- "*.c" >expect &&
->>> +		test_grep "data .* bloom_queries:0$" off.perf &&
->>
->> Ah, OK.  With GIT_TEST_COMMIT_GRAPH=1 exported from the test harness
->> environment, 'git -c core.commitGraph=false' would not be effective
->> here.  You would need to do something like:
->>
->> 		GIT_TEST_COMMIT_GRAPH=0 GIT_TRACE2_PERF="$(pwd)/off.perf" \
->> 			git -c core.commitGraph=false last-modified -r HEAD \
->> 			-- "*.c" >expect &&
->>
->>> +		GIT_TRACE2_PERF="$(pwd)/on.perf" \
->>> +			git -c core.commitGraph=true last-modified -r HEAD \
->>> +			-- "*.c" >actual &&
->>
->> And in the case where GIT_TEST_COMMIT_GRAPH=0 comes from the
->> environment, you might want to be explicit about setting the
->> variable here as well.
->
-> Thanks for this suggestion. Yeah, I didn't notice it makes CI fail.
->
-> But a little bit of a followup question, I noticed I also should be
-> setting these in [PATCH 5/6], but test don't fail if not set
-> appropriately.
+> would catch run_command() failing and stash dying or being killed by a 
+> signal.
 
-Yeah, I noticed it when I queued the two fixup commits near the tip
-of 'seen'.  I wrote it off as the test *not* checking everything.
-If the test is about what the command does and not about how the
-command exactly does its thing, you may not notice the difference
-as long as two code paths both produce the right results.
-
-So some tightening of tests might be needed, if we care.
+;-)
