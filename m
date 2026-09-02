@@ -1,80 +1,79 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167A6449B1A
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:35:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16E4320A00
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:35:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788356108; cv=none; b=sZJsvK7nIXYTX/NKWDtI2VRxCM2So76GoTFBXAFtLzVymNiJWR7G4CEZ2b+bEwTpmFLtIhXTwRtuEHSpBcv1sX7wVaVlg2+LSGcu/oPglua9r2eJ8KcvcEYvy0L4l6SKu3fwNSltpmzQI8f8rhdHyyxJoiJRHsrBBOLCNabatyE=
+	t=1788356109; cv=none; b=mdNnXIc5rrDpxJ1WKxhEOj+2xWy+iSbho7gUbba0Lc4KzXfN+lRD2IJbUedCdOvOSGwiEOmjTiXmPG2uFZB03RZYX/daX3El0hXo1cxTWuSHzAcxMiK+OCkBbTRtekJpeyUXWuTI+y8Vo+sqCYN9C2BrmjgrcyboDkWsCjwHjNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788356108; c=relaxed/simple;
-	bh=wKZT3LD54UvP2br+1R2sGr9KGjEUV+lvkjtc4WR3W3U=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=HqbBqVLq5/rsQXDxNtBF6xMus5adisrYie5car05ZJRPlGfbxLQWnlrVbs9Y6V6RhG24eCKTVubbZf3dY388nQahTls2vWnB2Ux3jX+cAGWVsbdLyujuJF7DxH3Mnuzj1oD4cd+sWzKZ1XN76reffsUm3u2f0ocb25qD32/q+MI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=w9mSegE+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i8wjlP89; arc=none smtp.client-ip=202.12.124.156
+	s=arc-20240116; t=1788356109; c=relaxed/simple;
+	bh=uE260/TZSZGGl3IrOi8eh9VJ04K+fqpEN7vd3HHy7rY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=alebl8sFguxthco3Ot3HAWHKFwMCU4b0nfBosAPALNx0QDVaMpSPjfsK+2b/CC18lsp7n3gdmQchqIl2YM/zzxkoy0QZjn2NhYq8ZDEQ88QSIv7rKTG+75wGIKyo0O90tiiy25IW4wgWx9uTkXTcsr+r+rZ0FeGAFCbp1Hko3QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D8AWIadT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=arVevS2V; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="w9mSegE+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i8wjlP89"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D8AWIadT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="arVevS2V"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BEA8F7A0126;
-	Wed,  2 Sep 2026 09:35:03 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 02 Sep 2026 09:35:03 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id 7AEDD1D0014E;
+	Wed,  2 Sep 2026 09:35:05 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 02 Sep 2026 09:35:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788356103;
-	 x=1788442503; bh=z7DE/RugGijotYllLnpdeyziLmF7be/RO11fxd4ilx4=; b=
-	w9mSegE+qqtJHh3A1JhI9Mjn0CZz0saTJMbVoREvM5v+1iQRhq7xvHZESYdIbaC0
-	7QpqEujos2njg7YjcOjMNGCN6ARxeDWDR/r73c8A1ZeWsV875lXGEvWAlij4VLhE
-	vq/JlAkptgkLEYVkaoWIaHARfQvHf0BfqZ5hpoR6sKCpypGcoIVwU6HWjgviVYk9
-	2H1XqCmTNOlLf1SE/s6UcoV/GoeFtcT1VBZRHjgvih7e7GH1iX91O8VRz5elVvi3
-	TJHmWUDVUxEN89OzD3n0qdGunZ8zKpWzXLfPQr00ozbKmbTguo7211YDeeTh+NYo
-	xbRvIYvMxHsiNLXA/S8I6Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788356105;
+	 x=1788442505; bh=jvqFG9PRHMnPp12LhAmNmJXIbKpSIZzbpx4x9tAJU84=; b=
+	D8AWIadTbN2lAsvq37qtkmkyyqOwXSJ5YwwHnlG479QMLpGPsst4HXR1Gse9ZO+A
+	fP95Li1hHHgep/rS0fgCnKDfAOpNO2kuhJL06TJslqEAf4sKULKZvlnDXp2SE8Ma
+	h9I2vTSNqcgFEC8/038oqBm0UE1muqpRJPImvkrj7dI2TKBpwS2ZjkSbyNVrqlwd
+	UP7t1oLjyl0E7oCzv71RAxjBcWhJt4hj/HfawsO7uPBcS+SBLQ3b2f0L8nbwUKL/
+	52ooNvYeEZ1sGJl4Af+boNn673MPkzXXLoh7X9TfVGgjeMrb0DnBFklpbH1hVKQM
+	psb8nviPRjUanTa7uASIlA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788356103; x=
-	1788442503; bh=z7DE/RugGijotYllLnpdeyziLmF7be/RO11fxd4ilx4=; b=i
-	8wjlP89g4P1ngoMGgzzOz7JqqqDMuK/OtKRLRACLYht7+NvtxwWnE4/IJSb4PvOC
-	rC2Z+UfzXfWrOogcvrbq+2HQYAoT5LHK6IpSb4Jv8zyDaJDWvwyAKuPwVSv+r1Q9
-	y2l942inIlO4P7QPHh+OPp+F5bxUU1U3bNeHauWncgt/w7f+9bmfE6lBHmFTiwWd
-	aIshc19Aik/rdDDpcgaELjH5HcoGtnsw/HVMDA/M4aTZeVE0fkN5cfLUa2t3Mnfu
-	di5rpX/kulmMZL3KZqHi7p0iaF+Zl8cnxOoGP0h13gW2VYqqZc5MAGhfyv5i+6gf
-	m45zOs1RdpzuU/nb40TzA==
-X-ME-Sender: <xms:ByaYagFrFVZ8Pr1uWDRcobQv02ofM9D_YhY21t7QYyuWspDXyP2H2A>
-    <xme:ByaYavUUwUDNqfmCXesCHT9S_1AfqWCONb-aIp4b2_-5BRD5_Rn5x4nnQbMCXUO1U
-    pIYVJLT4SvcynNAdPeIilZCg7MREK4XL4WiJAWaVe0w4WDLf4cJjk4>
-X-ME-Received: <xmr:ByaYanwALwfAMBg0Jeq80fZmIikjMr22MDv3zDcjpNgg4Xnut4DCrOLI3Hk1KqS_rBWk-FU>
-X-ME-Proxy-Cause: dmFkZTFDJIjCNgWtAyh5/vcuHgugFNLLp/jc1QCYr29zyC91U2D13/xnGmBtUxETlhA9Ul
-    p56cmeMSUkmW7Gs0eYlRMuMrSQ07cjOyw0kG1MFXB0wIdmPQMGXJmo/AGzCtV8X9RQBJUS
-    55cyF4/gbwoA2SwWg8r6n2oAyniBaVy+ldZorD5fg7uYuwZ5yBhQwFI8Q+Mr658bQ8UJRs
-    JQ1C39kt0cQvayNhP+O0eGQ2ckg9wuycSeqCIFtzfyV7VBN6oE5anBOzF/1nzwOAE9xKCz
-    CQlKFn1ld4K2dJgtTqbQswikMuBg7TbVGdFvEuMkDzZl4JX+CBKZ7vl3O9YoQmBsvt+uap
-    723mzxolqoFTxhJm5cNu6/50ip0X2uFZUAEbfBliIJAzxGsYymCZa2MfS6z60u9CRMNi2m
-    QSP8vVHQIEQPkiRRD1YbQplWnuDGpfuDzo2ONWTdMvGzMB9Zr9F2bBIypithOUyhse6HFL
-    JYocxKnH2whVOsKWVfAcMdpH2octepOoIG7KXO/PMOnDvNVPuDVrwYtfER5PlYyPbsXx/j
-    ISrCJNIVv95/vHzjaJR+xKNzqsqsNpLlGwxhBgTVuHgfM6LEzgTZL3F/ZpPQcs9ZNMT+1U
-    ckcnJ4YbrxrcaUyU6hw8Iypp4ORjPCI/s0x18xhblUsUcPUCFh+fsHv3vLiQ
-X-ME-Proxy: <xmx:ByaYatPlnGuPvB-hzYLuzK0649pC4bfct8M2glWmPXhK9tVyhHNzBA>
-    <xmx:ByaYao7qk4qKtRDfgoGxquKlvVqkar3iJ4F8duwyM_rlC4DO28puHA>
-    <xmx:ByaYauNdNuJ_FG1DFlv18zz7Z3kzuzWnQYKxns3sKQj9n7aR2E_1XQ>
-    <xmx:ByaYammeWGyQ-897Bg_aMfy23KfdJmFLNTvX5nfyQqi1-Xfqv7S1gw>
-    <xmx:ByaYarcNaY0LPVqgFj03mZ_Zk6Og-Nstn6n6wWxycvZA9sXNIQpqBdzK>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788356105; x=
+	1788442505; bh=jvqFG9PRHMnPp12LhAmNmJXIbKpSIZzbpx4x9tAJU84=; b=a
+	rVevS2V1XXPgQFBX7XPOS/JkVCOiRsOYExRKwMHdRBklhaj74Sbmc4MTvvD2/u+L
+	4T0CpDbSxbc5eLNVqwXd3H7Ahgyfwy3YN9i+D3MEBYMlseoq0I0AiJQYvJFw6ciz
+	zqy8U91cm/zmuAg9U7HjIWcsgc36X5K18NzR/4G68O2vncnRftYA8+KssGeubwQS
+	9bSEmlABMemqHzxIbMSPeaIudQexHYPKC3tiWfGYUeNLmYdjSL2qnAk22qt0lJdw
+	YDE/Hw+J3Mp8v1gOU/htckW3i5Ih2TdOddoBoOczn/jCJ6fM9Zk1QjIWv3c97vKZ
+	VhLl6NSlZyImiwCLFvKyA==
+X-ME-Sender: <xms:CSaYaosm2PSDcyH3zC3MfBph94G8B4HNjAuumynDhUrjTOX9km_pwA>
+    <xme:CSaYarfqYF3KPrQ3NPQuUS6wzY2-bgZdmgQDtUjAEpXh8-Ebp4goUTLyCj4usnZOf
+    H8KY16tyzGaQATZ7noGJA9kI1GfnOg2c2wcNokfkW17IOwdlmjnHA>
+X-ME-Received: <xmr:CSaYahZQIRyCg9vqjAFjGLQO7xX23RsuXDcSuFUtAmkfsUTE-qSWyE_RkRepTU_ImP7uatE>
+X-ME-Proxy-Cause: dmFkZTEYhr9e4Ywlb1TBHLwsOW3Qx1tjtKD+uhP71WKh33QJrNZx9AVMt7nD22Jis4lPrv
+    MTCD/EPB8RsDNVjlqEtIpjdnI06qWWOaQew+wKEg9KR8NEV3XDj5+C+lq0GNXMUCyo4igS
+    5U9v+KFkw0Evpwnc6cWUohg4b6qCrXyvPX0B7hrQw7zRUjz5YwzGQrgU3UxDXxxyR53YC+
+    YQIYAIRjLTSjVluUg4RI0n2rU5GvrWBHjQHZRsaSRDQMiPpgohYZUdgz5LN2ECLLwBR9zC
+    HYaTCafKUfTxhWvjtOGLyd4VXGi9YWUXrplxaROw1Cvb4DVWcs3zD8ZSMBcPlpw1IaHWYD
+    3bxi+zNx1CAbMkLgrvq/Cc1D9txGWpqfDNtFqhjR/2bRuXjuPDQYVyKIdqDET4DGYJTJX2
+    4AN7+ckbShLKC1s4N1Ae4yx3U/2L7EtoNW+PyK+z3xVhEBAInh+TNa0ZrYsj7vo0kIO63J
+    zbhM6KWx1D7JuDROPWSUCPgZ9DxuDt9bN5gl0b9LX+xbuLh3mqix9a/me/OIAcoYwpFVOW
+    dg1HZUnG076PoBqCpQxpFtzcfsUt0t7mhHelCl61V+ncvPWQKIDBfknUdG+BIy0VpDCU1d
+    YwBeKedYbvsy4vZaEmNMmrhrPWE0uq3HvZpvLjzifaTN8n9de/50TZPm+7hQ
+X-ME-Proxy: <xmx:CSaYamUmRfiHLHl9mNb5HLja0VHmLPEoERW4l52pcN43x4dMXZ9KIA>
+    <xmx:CSaYariU0rqhALpg-ZY_XcbMRrRacC8mgwVMrQjvMLZAQBHfg3Jx8g>
+    <xmx:CSaYasWNfgS3k4laUrFs50F3wptoa20geoMp0vMKfRZvmHc8GEne6g>
+    <xmx:CSaYaqMNcgD12GQOFZFcZmvqpAWRCRaQi5n2lf2J1V1GN6cSMKxT2A>
+    <xmx:CSaYakFW8kYvNUoNHBpc8E9sstpVYBuyBnAjLUrtBn5T8UJavmLB-TUx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Sep 2026 09:35:02 -0400 (EDT)
+ 2 Sep 2026 09:35:04 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3da9d759 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Sep 2026 13:35:05 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 02f19864 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Sep 2026 13:35:10 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 00/13] odb: stop registering in-memory sources
-Date: Wed, 02 Sep 2026 15:34:48 +0200
-Message-Id: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
+Date: Wed, 02 Sep 2026 15:34:50 +0200
+Subject: [PATCH v2 02/13] cache-tree: remove dependency on `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,292 +82,385 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42OTQ6DIBSEr2JY9zWAxZ+ueo/GhcJTaSMYnpo2x
- rsX9QJdTjLzfbMywmCR2D1ZWcDFkvUuBnlJmO5r1yFYEzOTXGa8EALGN4E3DQTsLE1x7DqwDgY
- cfPgC+TloJCiK7FZoU6o8VSyyxoCt/RyeZ3VmmpsX6mmH740+0iLhOLKIvXc6S/6vcxHAoczrV
- Eij2lqqR9xd7cCqbdt+QBSGu+kAAAA=
-X-Change-ID: 20260811-pks-odb-registering-in-memory-sources-88648cd95735
-In-Reply-To: <20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im>
-References: <20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im>
+Message-Id: <20260902-pks-odb-registering-in-memory-sources-v2-2-c6ca12fdea4d@pks.im>
+References: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
+In-Reply-To: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+The "cache-tree" subsystem still depends on `the_repository`. Adapt it
+to instead use repositories provided via the context, either as a new
+parameter or the one passed in via `struct index_state`.
 
-the object database has a list of sources that is used for two
-different purposes:
+Besides getting rid of `the_repository`, this also removes the last
+dependency on registering submodule sources with the main object
+database. When reading gitmodules from a submodule's index we implicitly
+read that object via `the_repository`'s object database, which is of
+course wrong. This works though because we would then register the
+submodule's object database with the main object database, but a later
+patch is going to get rid of that mechanism.
 
-  - We use it to track the list of alternates.
+You can verify that we indeed no longer depend on this mechanism by
+running tests with `GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=true`. Without
+this patch we fail in t1092, with this patch we never register submodule
+object databases anymore.
 
-  - We use it to track temporary in-memory sources that we create for
-    various purposes. Most importantly, this is used to link object
-    database sources from submodules into the main store.
-
-This dual-use is quite awkward, as it mixes two different levels of
-concerns and thus as a consequence makes both harder to reason about.
-It's also a source of bugs: we make assumptions about the ordering of
-sources all over the place, and we furthermore assume in other places
-that the sources only contain alternates in the first place. I don't
-think this surfaces in the form of real bugs, but I've long disliked
-this dual-use.
-
-Furthermore, we want to migrate handling of alternates into the "files"
-backend itself in a subsequent patch series. This is most importantly to
-fix a performance regression by making the backend own all of its
-alternates, but it also fixes a couple of longer-standing design issues
-that I've been struggling with [1].
-
-Most importantly though: this whole machinery is not even needed at all.
-A couple years ago we have already refactored our codebase so that
-submodule sources don't even have to be linked into the main object
-database anymore. And all the other use cases where we link sources into
-the main object database can be trivially converted, too.
-
-So this patch series does exactly that: it removes the mechanism to link
-ad-hoc sources into the object database entirely. This ensures that the
-list of sources is exactly the list of alternates, and that makes it
-easier to move them into the "files" backend in a subsequent patch
-series.
-
-There is one exception though: creating transactions still creates a
-temporary quarantine directory. This mechanism is left as-is for now,
-but as it's an implementation detail of the "files" backend anyway
-that's not conflicting with our above stated goals.
-
-This series is built on top of 1630431f32 (The 21st batch, 2026-08-31)
-with ty/repository-fetch-if-missing at 508ec9837c (repository: move
-fetch_if_missing into struct repository, 2026-08-15) merged into it.
-There's still two merge conflicts, but these are trivial to resolve: in
-"odb.c" and "odb.h" you simply remove both ours and theirs, and in
-"builtin/multi-pack-index.c" you only need to munge the parameters a
-bit.
-
-Changes in v2:
-  - Adapt `cache_tree_fully_valid()` to take a `struct index_state` as
-    input instead of taking both a repository and a cache tree, as
-    suggested by Junio.
-  - Link to v1: https://patch.msgid.link/20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: <amLgMqkqxR8mKIbT@pks.im>
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (13):
-      cache-tree: drop `the_repository` in `cache_tree_fully_valid()`
-      cache-tree: remove dependency on `the_repository`
-      submodule-config: remove uses of `the_repository`
-      submodule-config: stop using `the_hash_algo`
-      submodule-config: stop registering submodule sources
-      builtin/grep: stop registering submodule ODB as source
-      odb: remove infrastructure to register submodule sources
-      tmp-objdir: drop unused function to register alternate
-      odb/packed: fix memory leaks when freeing source
-      builtin/multi-pack-index: refuse unknown sources with "--object-dir="
-      t/helper: adapt read-midx to not link ad-hoc source anymore
-      t/helper: stop registering alternates in "ref-store" command
-      odb: remove the ability to link sources ad-hoc
+ cache-tree.c    | 78 +++++++++++++++++++++++++++++++--------------------------
+ cache-tree.h    |  5 ++--
+ read-cache-ll.h |  5 ++--
+ read-cache.c    |  9 ++++---
+ unpack-trees.c  |  7 +++---
+ 5 files changed, 57 insertions(+), 47 deletions(-)
 
- builtin/checkout.c                     |  2 +-
- builtin/commit.c                       |  2 +-
- builtin/fetch.c                        |  2 +-
- builtin/grep.c                         | 28 +++-------
- builtin/multi-pack-index.c             |  3 +-
- builtin/submodule--helper.c            |  8 +--
- cache-tree.c                           | 95 +++++++++++++++++++---------------
- cache-tree.h                           |  7 +--
- odb.c                                  | 42 ---------------
- odb.h                                  | 22 --------
- odb/source-packed.c                    |  1 +
- read-cache-ll.h                        |  5 +-
- read-cache.c                           |  9 ++--
- sequencer.c                            |  2 +-
- sparse-index.c                         |  2 +-
- submodule-config.c                     | 59 +++++++++++----------
- submodule-config.h                     | 12 +++--
- submodule.c                            |  2 +-
- t/README                               |  7 ---
- t/helper/test-read-midx.c              | 43 ++++++++++-----
- t/helper/test-ref-store.c              |  8 ---
- t/helper/test-submodule.c              |  4 +-
- t/t5319-multi-pack-index.sh            |  9 ++--
- t/t5526-fetch-submodules.sh            |  3 --
- t/t5531-deep-submodule-push.sh         |  3 --
- t/t5545-push-options.sh                |  3 --
- t/t5572-pull-submodule.sh              |  3 --
- t/t6437-submodule-merge.sh             |  3 --
- t/t7418-submodule-sparse-gitmodules.sh |  3 --
- t/t7814-grep-recurse-submodules.sh     |  3 --
- tmp-objdir.c                           |  5 --
- tmp-objdir.h                           |  6 ---
- unpack-trees.c                         |  9 ++--
- 33 files changed, 168 insertions(+), 247 deletions(-)
+diff --git a/cache-tree.c b/cache-tree.c
+index 6103b3fcb3..b8cbb5da22 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+@@ -298,12 +297,14 @@ int cache_tree_fully_valid(struct index_state *istate)
+ 						istate->cache_tree);
+ }
+ 
+-static int must_check_existence(const struct cache_entry *ce)
++static int must_check_existence(const struct cache_entry *ce, void *cb_data)
+ {
+-	return !(repo_has_promisor_remote(the_repository) && ce_skip_worktree(ce));
++	struct repository *repo = cb_data;
++	return !(repo_has_promisor_remote(repo) && ce_skip_worktree(ce));
+ }
+ 
+-static int update_one(struct cache_tree *it,
++static int update_one(struct repository *repo,
++		      struct cache_tree *it,
+ 		      struct cache_entry **cache,
+ 		      int entries,
+ 		      const char *base,
+@@ -341,7 +342,7 @@ static int update_one(struct cache_tree *it,
+ 	}
+ 
+ 	if (0 <= it->entry_count &&
+-	    odb_has_object(the_repository->objects, &it->oid,
++	    odb_has_object(repo->objects, &it->oid,
+ 			   ODB_HAS_OBJECT_RECHECK_PACKED | ODB_HAS_OBJECT_FETCH_PROMISOR))
+ 		return it->entry_count;
+ 
+@@ -382,7 +383,8 @@ static int update_one(struct cache_tree *it,
+ 		sub = find_subtree(it, path + baselen, sublen, 1);
+ 		if (!sub->cache_tree)
+ 			sub->cache_tree = cache_tree();
+-		subcnt = update_one(sub->cache_tree,
++		subcnt = update_one(repo,
++				    sub->cache_tree,
+ 				    cache + i, entries - i,
+ 				    path,
+ 				    baselen + sublen + 1,
+@@ -446,10 +448,10 @@ static int update_one(struct cache_tree *it,
+ 		}
+ 
+ 		ce_missing_ok = mode == S_IFGITLINK || missing_ok ||
+-			!must_check_existence(ce);
++			!must_check_existence(ce, repo);
+ 		if (is_null_oid(oid) ||
+ 		    (!ce_missing_ok &&
+-		     !odb_has_object(the_repository->objects, oid,
++		     !odb_has_object(repo->objects, oid,
+ 				     ODB_HAS_OBJECT_RECHECK_PACKED | ODB_HAS_OBJECT_FETCH_PROMISOR))) {
+ 			strbuf_release(&buffer);
+ 			if (expected_missing)
+@@ -481,12 +483,12 @@ static int update_one(struct cache_tree *it,
+ 		/*
+ 		 * "sub" can be an empty tree if all subentries are i-t-a.
+ 		 */
+-		if (contains_ita && is_empty_tree_oid(oid, the_repository->hash_algo))
++		if (contains_ita && is_empty_tree_oid(oid, repo->hash_algo))
+ 			continue;
+ 
+ 		strbuf_grow(&buffer, entlen + 100);
+ 		strbuf_addf(&buffer, "%o %.*s%c", mode, entlen, path + baselen, '\0');
+-		strbuf_add(&buffer, oid->hash, the_hash_algo->rawsz);
++		strbuf_add(&buffer, oid->hash, repo->hash_algo->rawsz);
+ 
+ #if DEBUG_CACHE_TREE
+ 		fprintf(stderr, "cache-tree update-one %o %.*s\n",
+@@ -496,16 +498,16 @@ static int update_one(struct cache_tree *it,
+ 
+ 	if (repair) {
+ 		struct object_id oid;
+-		hash_object_file(the_hash_algo, buffer.buf, buffer.len,
++		hash_object_file(repo->hash_algo, buffer.buf, buffer.len,
+ 				 OBJ_TREE, &oid);
+-		if (odb_has_object(the_repository->objects, &oid, ODB_HAS_OBJECT_RECHECK_PACKED))
++		if (odb_has_object(repo->objects, &oid, ODB_HAS_OBJECT_RECHECK_PACKED))
+ 			oidcpy(&it->oid, &oid);
+ 		else
+ 			to_invalidate = 1;
+ 	} else if (dryrun) {
+-		hash_object_file(the_hash_algo, buffer.buf, buffer.len,
++		hash_object_file(repo->hash_algo, buffer.buf, buffer.len,
+ 				 OBJ_TREE, &it->oid);
+-	} else if (odb_write_object_ext(the_repository->objects, buffer.buf, buffer.len, OBJ_TREE,
++	} else if (odb_write_object_ext(repo->objects, buffer.buf, buffer.len, OBJ_TREE,
+ 					&it->oid, NULL, flags & WRITE_TREE_SILENT ? ODB_WRITE_OBJECT_SILENT : 0)) {
+ 		strbuf_release(&buffer);
+ 		return -1;
+@@ -523,7 +525,7 @@ static int update_one(struct cache_tree *it,
+ 
+ int cache_tree_update(struct index_state *istate, int flags)
+ {
+-	int inflight = !!the_repository->objects->transaction;
++	int inflight = !!istate->repo->objects->transaction;
+ 	struct odb_transaction *transaction;
+ 	int skip, i;
+ 
+@@ -535,14 +537,14 @@ int cache_tree_update(struct index_state *istate, int flags)
+ 	if (!istate->cache_tree)
+ 		istate->cache_tree = cache_tree();
+ 
+-	if (!(flags & WRITE_TREE_MISSING_OK) && repo_has_promisor_remote(the_repository))
+-		prefetch_cache_entries(istate, must_check_existence);
++	if (!(flags & WRITE_TREE_MISSING_OK) && repo_has_promisor_remote(istate->repo))
++		prefetch_cache_entries(istate, must_check_existence, istate->repo);
+ 
+ 	trace_performance_enter();
+ 	trace2_region_enter("cache_tree", "update", istate->repo);
+ 	if (!inflight)
+-		odb_transaction_begin_or_die(the_repository->objects, &transaction, 0);
+-	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
++		odb_transaction_begin_or_die(istate->repo->objects, &transaction, 0);
++	i = update_one(istate->repo, istate->cache_tree, istate->cache, istate->cache_nr,
+ 		       "", 0, &skip, flags);
+ 	if (!inflight)
+ 		odb_transaction_commit_and_finalize_or_die(transaction);
+@@ -554,7 +556,8 @@ int cache_tree_update(struct index_state *istate, int flags)
+ 	return 0;
+ }
+ 
+-static void write_one(struct strbuf *buffer, struct cache_tree *it,
++static void write_one(struct repository *repo,
++		      struct strbuf *buffer, struct cache_tree *it,
+ 		      const char *path, int pathlen)
+ {
+ 	int i;
+@@ -580,7 +583,7 @@ static void write_one(struct strbuf *buffer, struct cache_tree *it,
+ #endif
+ 
+ 	if (0 <= it->entry_count) {
+-		strbuf_add(buffer, it->oid.hash, the_hash_algo->rawsz);
++		strbuf_add(buffer, it->oid.hash, repo->hash_algo->rawsz);
+ 	}
+ 	for (i = 0; i < it->subtree_nr; i++) {
+ 		struct cache_tree_sub *down = it->down[i];
+@@ -590,15 +593,16 @@ static void write_one(struct strbuf *buffer, struct cache_tree *it,
+ 					     prev->name, prev->namelen) <= 0)
+ 				die("fatal - unsorted cache subtree");
+ 		}
+-		write_one(buffer, down->cache_tree, down->name, down->namelen);
++		write_one(repo, buffer, down->cache_tree, down->name, down->namelen);
+ 	}
+ }
+ 
+-void cache_tree_write(struct strbuf *sb, struct cache_tree *root)
++void cache_tree_write(struct repository *repo,
++		      struct strbuf *sb, struct cache_tree *root)
+ {
+-	trace2_region_enter("cache_tree", "write", the_repository);
+-	write_one(sb, root, "", 0);
+-	trace2_region_leave("cache_tree", "write", the_repository);
++	trace2_region_enter("cache_tree", "write", repo);
++	write_one(repo, sb, root, "", 0);
++	trace2_region_leave("cache_tree", "write", repo);
+ }
+ 
+ static int parse_int(const char **ptr, unsigned long *len_p, int *out)
+@@ -632,13 +636,14 @@ static int parse_int(const char **ptr, unsigned long *len_p, int *out)
+ 	return 0;
+ }
+ 
+-static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
++static struct cache_tree *read_one(struct repository *repo,
++				   const char **buffer, unsigned long *size_p)
+ {
+ 	const char *buf = *buffer;
+ 	unsigned long size = *size_p;
+ 	struct cache_tree *it;
+ 	int i, subtree_nr;
+-	const unsigned rawsz = the_hash_algo->rawsz;
++	const unsigned rawsz = repo->hash_algo->rawsz;
+ 
+ 	it = NULL;
+ 	/* skip name, but make sure name exists */
+@@ -665,7 +670,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 		if (size < rawsz)
+ 			goto free_return;
+ 		oidread(&it->oid, (const unsigned char *)buf,
+-			the_repository->hash_algo);
++			repo->hash_algo);
+ 		buf += rawsz;
+ 		size -= rawsz;
+ 	}
+@@ -693,7 +698,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 		struct cache_tree_sub *subtree;
+ 		const char *name = buf;
+ 
+-		sub = read_one(&buf, &size);
++		sub = read_one(repo, &buf, &size);
+ 		if (!sub)
+ 			goto free_return;
+ 		subtree = cache_tree_sub(it, name);
+@@ -710,16 +715,17 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 	return NULL;
+ }
+ 
+-struct cache_tree *cache_tree_read(const char *buffer, unsigned long size)
++struct cache_tree *cache_tree_read(struct repository *repo,
++				   const char *buffer, unsigned long size)
+ {
+ 	struct cache_tree *result;
+ 
+ 	if (buffer[0])
+ 		return NULL; /* not the whole tree */
+ 
+-	trace2_region_enter("cache_tree", "read", the_repository);
+-	result = read_one(&buffer, &size);
+-	trace2_region_leave("cache_tree", "read", the_repository);
++	trace2_region_enter("cache_tree", "read", repo);
++	result = read_one(repo, &buffer, &size);
++	trace2_region_leave("cache_tree", "read", repo);
+ 
+ 	return result;
+ }
+@@ -810,7 +816,7 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
+ 	hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
+ 
+ 	entries = read_index_from(index_state, index_path,
+-				  repo_get_git_dir(the_repository));
++				  repo_get_git_dir(index_state->repo));
+ 	if (entries < 0) {
+ 		ret = WRITE_TREE_UNREADABLE_INDEX;
+ 		goto out;
+@@ -866,7 +872,7 @@ static void prime_cache_tree_rec(struct repository *r,
+ 			struct cache_tree_sub *sub;
+ 			struct tree *subtree = lookup_tree(r, &entry.oid);
+ 
+-			if (repo_parse_tree(the_repository, subtree) < 0)
++			if (repo_parse_tree(r, subtree) < 0)
+ 				exit(128);
+ 			sub = cache_tree_sub(it, entry.path);
+ 			sub->cache_tree = cache_tree();
+diff --git a/cache-tree.h b/cache-tree.h
+index 4b3f60d6db..7a2177de83 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -28,8 +28,9 @@ struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
+ 
+ int cache_tree_subtree_pos(struct cache_tree *it, const char *path, int pathlen);
+ 
+-void cache_tree_write(struct strbuf *, struct cache_tree *root);
+-struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
++void cache_tree_write(struct repository *repo, struct strbuf *, struct cache_tree *root);
++struct cache_tree *cache_tree_read(struct repository *repo,
++				   const char *buffer, unsigned long size);
+ 
+ int cache_tree_fully_valid(struct index_state *);
+ int cache_tree_update(struct index_state *, int);
+diff --git a/read-cache-ll.h b/read-cache-ll.h
+index 8eb266cfd1..066dd8bc3b 100644
+--- a/read-cache-ll.h
++++ b/read-cache-ll.h
+@@ -269,9 +269,10 @@ void validate_cache_entries(const struct index_state *istate);
+  * the given predicate. This function should only be called if
+  * repo_has_promisor_remote() returns true.
+  */
+-typedef int (*must_prefetch_predicate)(const struct cache_entry *);
++typedef int (*must_prefetch_predicate)(const struct cache_entry *, void *cb_data);
+ void prefetch_cache_entries(const struct index_state *istate,
+-			    must_prefetch_predicate must_prefetch);
++			    must_prefetch_predicate must_prefetch,
++			    void *cb_data);
+ 
+ /* Initialize and use the cache information */
+ struct lock_file;
+diff --git a/read-cache.c b/read-cache.c
+index 8044ff820b..e40f290bb3 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1748,7 +1748,7 @@ static int read_index_extension(struct index_state *istate,
+ {
+ 	switch (CACHE_EXT(ext)) {
+ 	case CACHE_EXT_TREE:
+-		istate->cache_tree = cache_tree_read(data, sz);
++		istate->cache_tree = cache_tree_read(istate->repo, data, sz);
+ 		break;
+ 	case CACHE_EXT_RESOLVE_UNDO:
+ 		istate->resolve_undo = resolve_undo_read(data, sz, the_hash_algo);
+@@ -3012,7 +3012,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 	    !drop_cache_tree && istate->cache_tree) {
+ 		strbuf_reset(&sb);
+ 
+-		cache_tree_write(&sb, istate->cache_tree);
++		cache_tree_write(istate->repo, &sb, istate->cache_tree);
+ 		err = write_index_ext_header(f, eoie_c, CACHE_EXT_TREE, sb.len) < 0;
+ 		hashwrite(f, sb.buf, sb.len);
+ 		if (err) {
+@@ -3733,7 +3733,8 @@ static void write_ieot_extension(struct strbuf *sb, struct index_entry_offset_ta
+ }
+ 
+ void prefetch_cache_entries(const struct index_state *istate,
+-			    must_prefetch_predicate must_prefetch)
++			    must_prefetch_predicate must_prefetch,
++			    void *cb_data)
+ {
+ 	int i;
+ 	struct oid_array to_fetch = OID_ARRAY_INIT;
+@@ -3741,7 +3742,7 @@ void prefetch_cache_entries(const struct index_state *istate,
+ 	for (i = 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce = istate->cache[i];
+ 
+-		if (S_ISGITLINK(ce->ce_mode) || !must_prefetch(ce))
++		if (S_ISGITLINK(ce->ce_mode) || !must_prefetch(ce, cb_data))
+ 			continue;
+ 		if (!odb_read_object_info_extended(the_repository->objects,
+ 						   &ce->oid, NULL,
+diff --git a/unpack-trees.c b/unpack-trees.c
+index f6bb1e6d2b..1802809ad3 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -416,7 +416,8 @@ static void report_collided_checkout(struct index_state *index)
+ 	string_list_clear(&list, 0);
+ }
+ 
+-static int must_checkout(const struct cache_entry *ce)
++static int must_checkout(const struct cache_entry *ce,
++			 void *cb_data UNUSED)
+ {
+ 	return ce->ce_flags & CE_UPDATE;
+ }
+@@ -477,7 +478,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 		 * Prefetch the objects that are to be checked out in the loop
+ 		 * below.
+ 		 */
+-		prefetch_cache_entries(index, must_checkout);
++		prefetch_cache_entries(index, must_checkout, NULL);
+ 
+ 	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
+ 
+@@ -487,7 +488,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 	for (i = 0; i < index->cache_nr; i++) {
+ 		struct cache_entry *ce = index->cache[i];
+ 
+-		if (must_checkout(ce)) {
++		if (must_checkout(ce, NULL)) {
+ 			size_t last_pc_queue_size = pc_queue_size();
+ 
+ 			if (ce->ce_flags & CE_WT_REMOVE)
 
-Range-diff versus v1:
-
- -:  ---------- >  1:  4870d0661d cache-tree: drop `the_repository` in `cache_tree_fully_valid()`
- 1:  a4e2648526 !  2:  755652bfe1 cache-tree: remove dependency on `the_repository`
-    @@ Commit message
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-    - ## builtin/checkout.c ##
-    -@@ builtin/checkout.c: static int merge_working_tree(const struct checkout_opts *opts,
-    - 		}
-    - 	}
-    - 
-    --	if (!cache_tree_fully_valid(the_repository->index->cache_tree))
-    -+	if (!cache_tree_fully_valid(the_repository, the_repository->index->cache_tree))
-    - 		cache_tree_update(the_repository->index, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
-    - 
-    - 	if (write_locked_index(the_repository->index, &lock_file, COMMIT_LOCK))
-    -
-    - ## builtin/commit.c ##
-    -@@ builtin/commit.c: static const char *prepare_index(const char **argv, const char *prefix,
-    - 				       LOCK_DIE_ON_ERROR);
-    - 		refresh_cache_or_die(refresh_flags);
-    - 		if (the_repository->index->cache_changed
-    --		    || !cache_tree_fully_valid(the_repository->index->cache_tree))
-    -+		    || !cache_tree_fully_valid(the_repository, the_repository->index->cache_tree))
-    - 			cache_tree_update(the_repository->index, WRITE_TREE_SILENT);
-    - 		if (write_locked_index(the_repository->index, &index_lock,
-    - 				       COMMIT_LOCK | SKIP_IF_UNCHANGED))
-    -
-      ## cache-tree.c ##
-     @@
-     -#define USE_THE_REPOSITORY_VARIABLE
-      #define DISABLE_SIGN_COMPARE_WARNINGS
-      
-      #include "git-compat-util.h"
-    -@@ cache-tree.c: static void discard_unused_subtrees(struct cache_tree *it)
-    - 	}
-    - }
-    - 
-    --int cache_tree_fully_valid(struct cache_tree *it)
-    -+int cache_tree_fully_valid(struct repository *repo, struct cache_tree *it)
-    - {
-    - 	int i;
-    - 	if (!it)
-    - 		return 0;
-    - 	if (it->entry_count < 0 ||
-    --	    !odb_has_object(the_repository->objects, &it->oid,
-    -+	    !odb_has_object(repo->objects, &it->oid,
-    - 			    ODB_HAS_OBJECT_RECHECK_PACKED | ODB_HAS_OBJECT_FETCH_PROMISOR))
-    - 		return 0;
-    - 	for (i = 0; i < it->subtree_nr; i++) {
-    --		if (!cache_tree_fully_valid(it->down[i]->cache_tree))
-    -+		if (!cache_tree_fully_valid(repo, it->down[i]->cache_tree))
-    - 			return 0;
-    - 	}
-    - 	return 1;
-    +@@ cache-tree.c: int cache_tree_fully_valid(struct index_state *istate)
-    + 						istate->cache_tree);
-      }
-      
-     -static int must_check_existence(const struct cache_entry *ce)
-    @@ cache-tree.c: static struct cache_tree *read_one(const char **buffer, unsigned l
-      
-      	return result;
-      }
-    -@@ cache-tree.c: struct tree *write_in_core_index_as_tree(struct repository *repo,
-    - 	int was_valid, ret;
-    - 
-    - 	was_valid = index_state->cache_tree &&
-    --		    cache_tree_fully_valid(index_state->cache_tree);
-    -+		    cache_tree_fully_valid(repo, index_state->cache_tree);
-    - 
-    - 	ret = write_index_as_tree_internal(&o, index_state, was_valid, 0, NULL);
-    - 	if (ret == WRITE_TREE_UNMERGED_INDEX) {
-     @@ cache-tree.c: int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
-      	hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
-      
-    @@ cache-tree.c: int write_index_as_tree(struct object_id *oid, struct index_state
-      	if (entries < 0) {
-      		ret = WRITE_TREE_UNREADABLE_INDEX;
-      		goto out;
-    -@@ cache-tree.c: int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
-    - 
-    - 	was_valid = !(flags & WRITE_TREE_IGNORE_CACHE_TREE) &&
-    - 		    index_state->cache_tree &&
-    --		    cache_tree_fully_valid(index_state->cache_tree);
-    -+		    cache_tree_fully_valid(index_state->repo, index_state->cache_tree);
-    - 
-    - 	ret = write_index_as_tree_internal(oid, index_state, was_valid, flags,
-    - 					   prefix);
-     @@ cache-tree.c: static void prime_cache_tree_rec(struct repository *r,
-      			struct cache_tree_sub *sub;
-      			struct tree *subtree = lookup_tree(r, &entry.oid);
-    @@ cache-tree.h: struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const c
-     +struct cache_tree *cache_tree_read(struct repository *repo,
-     +				   const char *buffer, unsigned long size);
-      
-    --int cache_tree_fully_valid(struct cache_tree *);
-    -+int cache_tree_fully_valid(struct repository *, struct cache_tree *);
-    + int cache_tree_fully_valid(struct index_state *);
-      int cache_tree_update(struct index_state *, int);
-    - int cache_tree_verify(struct repository *, struct index_state *);
-    - 
-     
-      ## read-cache-ll.h ##
-     @@ read-cache-ll.h: void validate_cache_entries(const struct index_state *istate);
-    @@ read-cache.c: void prefetch_cache_entries(const struct index_state *istate,
-      		if (!odb_read_object_info_extended(the_repository->objects,
-      						   &ce->oid, NULL,
-     
-    - ## sequencer.c ##
-    -@@ sequencer.c: static int do_recursive_merge(struct repository *r,
-    - 
-    - static struct object_id *get_cache_tree_oid(struct index_state *istate)
-    - {
-    --	if (!cache_tree_fully_valid(istate->cache_tree))
-    -+	if (!cache_tree_fully_valid(istate->repo, istate->cache_tree))
-    - 		if (cache_tree_update(istate, 0)) {
-    - 			error(_("unable to update cache tree"));
-    - 			return NULL;
-    -
-    - ## sparse-index.c ##
-    -@@ sparse-index.c: int convert_to_sparse(struct index_state *istate, int flags)
-    - 	if (index_has_unmerged_entries(istate))
-    - 		return 0;
-    - 
-    --	if (!cache_tree_fully_valid(istate->cache_tree)) {
-    -+	if (!cache_tree_fully_valid(istate->repo, istate->cache_tree)) {
-    - 		/* Clear and recompute the cache-tree */
-    - 		cache_tree_free(&istate->cache_tree);
-    - 
-    -
-      ## unpack-trees.c ##
-     @@ unpack-trees.c: static void report_collided_checkout(struct index_state *index)
-      	string_list_clear(&list, 0);
-    @@ unpack-trees.c: static int check_updates(struct unpack_trees_options *o,
-      			size_t last_pc_queue_size = pc_queue_size();
-      
-      			if (ce->ce_flags & CE_WT_REMOVE)
-    -@@ unpack-trees.c: int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
-    - 			}
-    - 
-    - 			if (!o->skip_cache_tree_update &&
-    --			    !cache_tree_fully_valid(o->internal.result.cache_tree))
-    -+			    !cache_tree_fully_valid(the_repository, o->internal.result.cache_tree))
-    - 				cache_tree_update(&o->internal.result,
-    - 						  WRITE_TREE_SILENT |
-    - 						  WRITE_TREE_REPAIR);
- 2:  bedb614b5c =  3:  46bbe548a6 submodule-config: remove uses of `the_repository`
- 3:  8fa02cdd5c =  4:  65f8634bda submodule-config: stop using `the_hash_algo`
- 4:  ebf1dfb548 =  5:  4faf4fdd57 submodule-config: stop registering submodule sources
- 5:  dfe1a212f7 =  6:  dee5aca311 builtin/grep: stop registering submodule ODB as source
- 6:  1644e49419 =  7:  2ce128799a odb: remove infrastructure to register submodule sources
- 7:  3f3ccfba74 =  8:  0a174f6304 tmp-objdir: drop unused function to register alternate
- 8:  f1341b797b =  9:  d22c376cd2 odb/packed: fix memory leaks when freeing source
- 9:  c1f6d9ebdd = 10:  09405ade4c builtin/multi-pack-index: refuse unknown sources with "--object-dir="
-10:  c5b9c1c96e = 11:  557b3ab923 t/helper: adapt read-midx to not link ad-hoc source anymore
-11:  3f43f73cd8 = 12:  78b26c172a t/helper: stop registering alternates in "ref-store" command
-12:  4c670d726f = 13:  1ca49caf1c odb: remove the ability to link sources ad-hoc
-
----
-base-commit: e5d60560f61f520e9ea350645a6cc9770b0f1607
-change-id: 20260811-pks-odb-registering-in-memory-sources-88648cd95735
+-- 
+2.55.0.979.g7e5102b832.dirty
 
