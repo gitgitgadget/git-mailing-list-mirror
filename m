@@ -1,132 +1,130 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8051E366057
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 05:57:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDF136B92E
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 06:25:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788328654; cv=none; b=TTkfek3oItEvWmgsjQ1Fyj93Ny9h5WhG81oosEoGA/T+gOcjkOrul9V40FK3Zn0BTbuKMCmE4+7NP9fqFPwammYHRcRPrRYjph0rs2+YtByfP6juUs7blc8Dn+Bq8XFKi7fTOTU22jBDW+tOf4a9K0JN4t2IJYwwxwaDj/zF4Z0=
+	t=1788330353; cv=none; b=hbAFcnAYu2s0semF/NC2O6cdx3S4cBqMnPCFRWUrUAlR0MEauxy/nXXroF0rckR8dP59SrIkTlRzp3xtE91uXEXSsRfgoBbRPGsGL6ibNvvs0O7Sp9ZYroMlG/22tWrQZ2uSzPLlEMKEv0No+M5FDhxP65MQKX1Ln8p+pJDWpJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788328654; c=relaxed/simple;
-	bh=pLjGhXndnQDBtSMM6UAlLZZK92c1ZRepOEV9BLeTWaA=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MD9fkva2QNrGwl95C+ekxvgYRnaatePihKCw1hYs5aQLGZ6HFs/KIey1mskQBcueYGk8Qgu26s2Hno522BGS9Ui4t6Qul4RenlrenIDoQ8+dr0AJcc6PZKkv7BvMoUFkxv8ByB9w8NwGqfrekLR9w0nkHHlRWvvr/p6NHY9olXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UP9glvnC; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1788330353; c=relaxed/simple;
+	bh=6WmvBtWX0zkvT8mh+arOMX3HqsrjBgS2LIF8IAWPWmI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=npZ81N5sRDY49tGZfwbeP2YdxfD2NFhRKWZu1upNdl9Q5ryNh+n8IbY3SbpiEvj31Q8+MvoqIpahz5J2VEgNWRGaQFdGymTvdWUSUM/R8A1XicmeuGW1SFhIiiHGtwCVx5gAw0sbQJ5XRJu4rRH6cvWGsSBqM3xFm3jmqfJpOt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JgXujVM4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PNSZuqvp; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UP9glvnC"
-Received: (qmail 9968 invoked by uid 106); 2 Sep 2026 05:57:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pLjGhXndnQDBtSMM6UAlLZZK92c1ZRepOEV9BLeTWaA=; b=UP9glvnCtmpk+my0E6zk9IAsdktXsRlz9Ow0NsLVAWT56Fi0mx7WjgcFhdtt/d2wtz18xtqfgqRqwTBACPHT94DuCvyPMv8cKTgVlLjzpHlxeYjT54JY78qub2gOW8GFLQ9FAO/SxMpj0/IOUHUolJP02MWhDWxuaIGapQhQfbd9y9P+JfaWIQbpFQJOW3a8gbYO6U9OBjkKUzqFXJpaV6DR2sfq000kVbVkkbtcSdu/C+M7nvxmCi173lsHJySfW3Y2HDxQaTUk9jR/ASGaVyfZuI1+4F2gRtJjXERm4fRlKUh9iFSoUCEouwNpocg/+ufj2x1RtmqsUfesRGK/lA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 02 Sep 2026 05:57:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 46859 invoked by uid 111); 2 Sep 2026 05:57:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Sep 2026 01:57:31 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 2 Sep 2026 01:57:30 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Subject: [PATCH 2/2] submodule--helper: free URL when repository setup fails
-Message-ID: <20260902055730.GB41747@coredump.intra.peff.net>
-References: <20260902055117.GA41587@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JgXujVM4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PNSZuqvp"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id AC80FEC024D;
+	Wed,  2 Sep 2026 02:25:50 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Wed, 02 Sep 2026 02:25:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1788330350; x=1788416750; bh=6de15sKgm1
+	1rUagFGyhzzOomdYC3QxmLgQTVuXxYNxc=; b=JgXujVM462lrI3+RSA/mcV/vA2
+	ZgG/jnfKz8Fj0SJFhRMz+Q/1XvirD1uupTriwSY9fmtualN90QL0N97rZceKOcUw
+	4YrHt6Ekv3uQiCxaCtMKJCG26wxXADg7JEwcwdW/O0IFno1G7WMbbyFSX4sLlvMb
+	3u6nV6Vs+LoYj1BKaBQsbsP6c2FKLwfOIKJQO6/exnlouc4ExTCQE3Zpitpq/iLK
+	HD4gXCYlNF+dCnyEOdpbzDspaauKuZjaCGlJVjdRU/kGHpqCRQlY/E5Q10mw5bMd
+	h3o0XW6hGZJmxd41EhWllzAv9tWp1M7Mr51DYH/RkC3CbyRbLY7nLtfd0Asw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788330350; x=1788416750; bh=6de15sKgm11rUagFGyhzzOomdYC3QxmLgQT
+	VuXxYNxc=; b=PNSZuqvp8dfhqUAuJ2Gi88ZRcmRNtJC1hqADf0iYKUsKM2GQWDE
+	KWL7oaX9RP8jbZ03rRDrOfMmFSpPkgnxgnOrrnGDn7nWBEJlG7SYRQJbwPSHKW4r
+	vSpnXdHZlb1NhnyXwkv+qwEiHz+C5B7HmG+SZQ7xsKg4nNGql7T6nnOWWrbrCk3+
+	BAdYvjwMhgyBJIXwSc1oU7aLkQcpnVG7JP19jKU9gtgh3eGJfikaIhAqm9z9AsSe
+	fjAKPvutmGPivLWVhtSITCX7WtdfajUmYs+qMkT1dL14J/zdpLMXiJYf8wZOqFvV
+	OwPBz4MoV8+jdDalN6rW5FEzGpg8ZDepeJA==
+X-ME-Sender: <xms:bsGXapQrqkR5snD2ZKgNZKcBhSnagLOU_0uz-xH6lZeNQDngERpb0Q>
+    <xme:bsGXappsOL8cGiEROGuKGYZlsJDfLiTFfgzROeJIEDxPqD07spEQ9NIVK68KWWmvr
+    8J4RCzqtOzh3BMHya6Tte4EyVza1PPtdV5HE56eULSuhc8MniUt9vY>
+X-ME-Received: <xmr:bsGXanIso2mNLXUTF17dqo5Ed1dBOlSkyOK_d0VmDHOSF8ELIhvkoak7Ot0oaGcchQM8IkkR6wcsci_Gc7D55kRsyPsxGbvkyw>
+X-ME-Proxy-Cause: dmFkZTGilXaknvXtWaFAnuRXp57ZppvJ8VdeFqIIdLNnO5RBP9EllAJpUeG2pukRHsh1iC
+    avsLYjJrg9j7UbJmPCgmCNC9g2HdTMWH51agX1Lo48wIMEEYePDvID9R3s3U0znnNfJsKr
+    nzFdAiv0hZCz4y4bHs+ICodSeJBzzTjoVy7peSZtVXEYbFvN/EFNapYO5Bu9AXcSoQR1wC
+    RvxNZZObHpzurVGNKDSq6kh7va0mGS8tRme3eWeL2VQm9XGOtMAc1v2eT6utEwG0rZh9yZ
+    fE4oYcQq0u+xajDutFVnRjeQCfem2R9orhDxxNDjFaXE06Ufjx1kc4bFHw8lCvh9DIoLdG
+    1QhL7uL2+7ODUo7xfkod2de1XQRIcNJHeogmNBjNnWLigUJ04/Y1pJRxupuTsoRHa8BMT+
+    ev5/1dOYdaUbUzn8jY24Jn3GoKWyocgUUzdep7SFapRsH7gykxIpcNbi0kz0Q0FUF6XBHz
+    hiNqSfOcgfIOuLqlq9krt0ySVtumLWzm0mosfNqs8wXi9h+puFamb5fey70jrF1VK0WKaE
+    by8a0UOpKPfcZeIhiPJk2zxoD/ACVFjBeWVJccADvumF8qLZC8Mbnizi8KchctJDj7W+/t
+    ZU1rTO77h/9TQ958LmjKLiyflGioqu/bx3v4RDrACaRCw8x3mihEUU3aEjQg
+X-ME-Proxy: <xmx:bsGXasqCIe8ZXxCwGJHEDUUKezm1B8qRTwzjAGpvlL1BjwKgySSI4A>
+    <xmx:bsGXavzoE-CK2JWMKLBicYnvjfnTwKBz0JfrOD7ThdthuQdvpQTJkg>
+    <xmx:bsGXagP1GKDIp5_LgqYkxNfD-pECoGdkpo41IQBmXEuIS5vWoPHOHw>
+    <xmx:bsGXak5MvmU-aIIwa9JS8JQ8cADLexirXpItOQGOLfmURYQzlUIPXA>
+    <xmx:bsGXajB0orylZVVo7LH_aDEfXMLztT6yVibPRAOrsbjLP7c-HfLAp77t>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 2 Sep 2026 02:25:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] rust: pick a GCC-compatible Cargo target under
+ MSYS2/MinGW
+In-Reply-To: <2b7f58a037592325c2cb9b52bf8f1ef434bd6202.1788272509.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Tue, 01 Sep 2026
+	14:21:48 +0000")
+References: <pull.2213.git.1788272509.gitgitgadget@gmail.com>
+	<2b7f58a037592325c2cb9b52bf8f1ef434bd6202.1788272509.git.gitgitgadget@gmail.com>
+Date: Tue, 01 Sep 2026 23:25:48 -0700
+Message-ID: <xmqqy0dkjhjn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260902055117.GA41587@coredump.intra.peff.net>
+Content-Type: text/plain
 
-If repo setup fails, we'll return an error without freeing the allocated
-url string, leaking the memory. The test suite does trigger this error,
-but never with the leak. We only allocate a url if submodule_from_path()
-returned something, but our tests use other situations, like totally
-nonexistent submodules.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-We can cover this case by asking about a submodule that exists but which
-has not been initialized. The new test fails with SANITIZE=leak.
+> +                ifneq (,$(filter %ARM64, $(MSYSTEM)))
+> +			HOST_CPU = aarch64
+> +                else ifneq (,$(filter %32, $(MSYSTEM)))
+> +			HOST_CPU = i686
+> +                else
+> +			HOST_CPU = x86_64
+> +                endif
+> +                ifneq (,$(filter CLANG%, $(MSYSTEM)))
+> +			CARGO_TARGET = $(HOST_CPU)-pc-windows-gnullvm
+> +                else
+> +			CARGO_TARGET = $(HOST_CPU)-pc-windows-gnu
+> +                endif
 
-The smallest fix would just be a call to free(url), but I think it's a
-little nicer to set up a dedicated out-path for cleanup here. The
-previous commit made it safe to call repo_clear() even if
-repo_submodule_init() fails.
+Assuming HOST_CPU is x86_64 in the above, as UCRT64, unlike
+CLANG{ARM64,64,32}, does not match CLANG%, I presume that the above
+gives "x86_64-pc-windows-gnu" to builds with MSYSTEM set to UCRT64.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/submodule--helper.c             | 10 +++++++---
- t/t7426-submodule-get-default-remote.sh | 17 +++++++++++++++++
- 2 files changed, 24 insertions(+), 3 deletions(-)
+There is this "we only need MINGW64 but the switch to UCRT64 is
+imminent, and others are for documentation" part we see in the
+[PATCH 2/2]
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index e7cd3225fa..469e3dbcc9 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -80,6 +80,7 @@ static int get_default_remote_submodule(const char *module_path, char **default_
- 	struct repository subrepo;
- 	const char *remote_name = NULL;
- 	char *url = NULL;
-+	int ret = 0;
- 
- 	sub = submodule_from_path(the_repository, null_oid(the_hash_algo), module_path);
- 	if (sub && sub->url) {
-@@ -96,9 +97,11 @@ static int get_default_remote_submodule(const char *module_path, char **default_
- 	}
- 
- 	if (repo_submodule_init(&subrepo, the_repository, module_path,
--				null_oid(the_hash_algo)) < 0)
--		return die_message(_("could not get a repository handle for submodule '%s'"),
-+				null_oid(the_hash_algo)) < 0) {
-+		ret = die_message(_("could not get a repository handle for submodule '%s'"),
- 				   module_path);
-+		goto out;
-+	}
- 
- 	/* Look up by URL first */
- 	if (url)
-@@ -108,10 +111,11 @@ static int get_default_remote_submodule(const char *module_path, char **default_
- 
- 	*default_remote = xstrdup(remote_name);
- 
-+out:
- 	repo_clear(&subrepo);
- 	free(url);
- 
--	return 0;
-+	return ret;
- }
- 
- static int module_get_default_remote(int argc, const char **argv, const char *prefix,
-diff --git a/t/t7426-submodule-get-default-remote.sh b/t/t7426-submodule-get-default-remote.sh
-index b842af9a2d..0379c9f044 100755
---- a/t/t7426-submodule-get-default-remote.sh
-+++ b/t/t7426-submodule-get-default-remote.sh
-@@ -60,6 +60,23 @@ test_expect_success 'get-default-remote fails with non-submodule path' '
- 	)
- '
- 
-+test_expect_success 'get-default-remote fails with uninitialized submodule' '
-+	test_when_finished "
-+		git -C super config -f .gitmodules --remove-section submodule.uninitialized &&
-+		git -C super update-index --force-remove uninitialized
-+	" &&
-+	(
-+		cd super &&
-+		git config -f .gitmodules submodule.uninitialized.path uninitialized &&
-+		git config -f .gitmodules submodule.uninitialized.url ../sub &&
-+		head=$(git -C ../sub rev-parse HEAD) &&
-+		git update-index --add --cacheinfo 160000,$head,uninitialized &&
-+		test_must_fail git submodule--helper get-default-remote \
-+			uninitialized 2>err &&
-+		test_grep "could not get a repository handle" err
-+	)
-+'
-+
- test_expect_success 'get-default-remote fails without path argument' '
- 	(
- 		cd super &&
--- 
-2.55.0.1067.gf7fc94a55c
++        case "$MSYSTEM" in
++        CLANGARM64) target=aarch64-pc-windows-gnullvm ;;
++        CLANG64)    target=x86_64-pc-windows-gnullvm  ;;
++        CLANG32)    target=i686-pc-windows-gnullvm    ;;
++        UCRT64)     target=x86_64-pc-windows-gnullvm  ;;
++        MINGW64)    target=x86_64-pc-windows-gnu      ;;
++        MINGW32)    target=i686-pc-windows-gnu        ;;
++        *) echo "::error::Unsupported MSYSTEM: $MSYSTEM"; exit 1 ;;
++        esac &&
++        rustup target add "$target" &&
+
+that maps UCRT64 to "x86_64-pc-windows-gnullvm"
+
+I do not know if it is intended.  If so, please ignore.
+
+Thanks.
