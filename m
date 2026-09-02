@@ -1,37 +1,37 @@
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60929463B91
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 12:22:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BF847DF87
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:11:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788351777; cv=none; b=EDgn5le+WLITIFI3QywKO6isxhmEa8CJHmLC+eKLDvnSgVZL6Xkp6j0PDyH9qkik09A1i7Hiy/62CeSdCuZtvR1w4LgHIceoALoEypuCOcM9yw0BQygQDHiP5tG92BnQrwLYz36utzwZ/KLaHyCeXpcFE5uf00QQIJrIKgweCJI=
+	t=1788354706; cv=none; b=uFMZU2O1zlXwDcCf0824f9pFRjxBdx8RfvGEdBwic5/wwQv/UFMxfQxQC/45mbPtZcyrstK7aTu1QxYn6gkKyNyT94ZeCypjke8DNCo5+csODu4jqStJCvlf/dvblxuqFPeMDg3vDYmSTPPxSEGPPy0q0X78C0o//WUSVIF4xfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788351777; c=relaxed/simple;
-	bh=Hgo0UKJg7x+shhQyePuQ+EN+R6xmdcboBrIuLcZgyJA=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=rLLkbqJlzncGddrd3Fnno7YkvmH0KZ9mm3l1cRTaUh75KQh5LhgOi1qfQYXMXXOGrYClnCB+3noRb2qwmLttAfyU+b057nPg3E9wE8RzUgdC8wBhTO+Is5CUmyqIyv3u0J4pYXzNnC4aGp1IydLNJoUM+SSoyovpR7T2V9dE2ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de; spf=pass smtp.mailfrom=ytausch.de; dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b=kn4AWfug; arc=none smtp.client-ip=80.241.56.151
+	s=arc-20240116; t=1788354706; c=relaxed/simple;
+	bh=dqPvr1LI+/CBIrbJUdfjpSrSROhy04fqZ7XZD/Q0URw=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=e90adE7TnwkjltK1uP0vkypz/NSyMwLnHcjUM32bStUiYHfv/n8wLbFXZ5kc4QBqC5ZqcZF87YQoBofO3s3PsnCFiRDGqRT5jOHibIomSCiPL1IjLrMIYmPbqvYYJyuSqMAibuZj+5UETeDgduCllR01bhqjzA8CalNLCkw5lN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de; spf=pass smtp.mailfrom=ytausch.de; dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b=geQ1QPQM; arc=none smtp.client-ip=80.241.56.161
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ytausch.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b="kn4AWfug"
+	dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b="geQ1QPQM"
 Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4hZhhC0shgz8tyL
-	for <git@vger.kernel.org>; Wed, 02 Sep 2026 14:22:51 +0200 (CEST)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4hZjc46ccczKmHV
+	for <git@vger.kernel.org>; Wed, 02 Sep 2026 15:04:20 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ytausch.de; s=MBO0001;
-	t=1788351771;
+	t=1788354260;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding;
-	bh=1gv3TolJ/emY0nfjcWvi6KsfmvKTF8gWxgJ98vVGVXY=;
-	b=kn4AWfug+LfNqTxqD6z/1pNXmqx+BfTVuT7dUd6AWHNfYseQz2uRt/URIJzXpK2GXDTLxP
-	a3WpLincYjiPwWgEiGjEL6mcj4gs+VntpO1xUW2PijfoOLwT11fsrJKq8pRdzjSENdHRMQ
-	uUOQ4IQhoYvzew2v8YXza2qickWnsiBFOg5O3syiApS7qVeo5Vv3C9dKAiiDlJfZl/P9cu
-	u0O+m/gdQTz5u/rQumf009jN3Njl3rgj78aNgnWeaX3gSK1RrhhG+jg8qZZj2Da9CVK50v
-	5YoD/qJNjYkoLIWEqBjJbn9pb5VvRr/X3rBHwaUshzUHOiT9/JxFO2c5cDLdMQ==
+	bh=6VTIyceb6H7v0ifHhjI1vKzg261G0Q75m512khErPyM=;
+	b=geQ1QPQMUG7XFXZdM3+NL1fD84HMG2Afa+gpWM4S3fvW/3Urrxo+4ll3JhzTexQrnn0z7E
+	GJRSmneEgNfmFpSwtKgjli7PVWrrpX/Nq5VdWoI5II44iaEfplSVq5IbfhSkcy60OMgq/K
+	RUyDrgfprYdgh2CQb4U13EtpEeAMbvylHV+fa/oDxsiSFUwsd+cUJ44blQ13YYR4c9hSYR
+	JkLBVH/+gaLkFDrcVlY/aKlAiV9HzJ7FOiols2uZZiQOY8h1VTs5J31FETEPz5JOeqmO4H
+	SfSKabueXPUG+0EtqWxe0GUjGnVla1IgaaanDNGU4cera+3cporNuwbJ//ihaA==
 From: Yannik Tausch <dev@ytausch.de>
 Content-Type: text/plain;
 	charset=us-ascii
@@ -42,89 +42,204 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
-Subject: [PATCH] dir: do not apply prefix to negative pathspecs
-Message-Id: <0CA8678D-0540-4A2E-B314-B9BEB04E2BF5@ytausch.de>
-Date: Wed, 2 Sep 2026 14:22:39 +0200
+Subject: [PATCH] dir: find common prefix among positive pathspecs
+Message-Id: <AA085B7A-F528-458A-8AA9-7664480997AE@ytausch.de>
+Date: Wed, 2 Sep 2026 15:04:09 +0200
 To: git@vger.kernel.org
 
-common_prefix_len() derives the common prefix solely from positive
-pathspecs, skipping those marked with PATHSPEC_EXCLUDE. However,
-match_pathspec_with_flags() also passes that prefix when matching the
-negative pathspecs.
+common_prefix_len() skips exclude pathspec items, but uses n =3D=3D 0 to
+identify the initial item and items[0] as the comparison source. When
+an exclude item comes first, the function returns zero even when all
+positive pathspecs share a directory.
 
-A negative pathspec may be shorter than the prefix. In that case,
-match_pathspec_item() advances item->match beyond its allocation and
-subtracts the prefix from item->len, producing a negative matchlen. It
-then dereferences the out-of-bounds pointer. If the resulting byte is
-not NUL, matchlen is converted to size_t when passed to ps_strncmp(),
-which may cause a much larger out-of-bounds read.
-
-The problem can be reproduced with AddressSanitizer:
-
-    make SANITIZE=3Daddress CFLAGS=3D"-g -O0" git
-    git init test &&
-    cd test &&
-    DIR=3D$(printf "a%.0s" {1..150}) &&
-    mkdir -p "$DIR" &&
-    touch "$DIR/f.txt" &&
-    git add -A &&
-    git commit -m test &&
-    ../git ls-files -- "$DIR/" ":(exclude)xy"
-
-This reports a heap-buffer-overflow. Without AddressSanitizer, the
-output may depend on the contents of memory following the negative
-pathspec.
-
-Fix the bug by using a zero prefix when matching negative pathspecs.
-Add a regression test that combines a positive pathspec with a longer
-common prefix and a shorter, unrelated negative pathspec.
+Track the first positive item explicitly. Return its match and the
+common prefix length together so that common_prefix() and
+fill_directory() use the correct string. Add a unit test with an
+unrelated exclude before two positive pathspecs that share a directory.
 
 Signed-off-by: Yannik Tausch <dev@ytausch.de>
 ---
 
-Note that I already sent information about this issue to the git =
-security
-mailing list on July 31, where I was informed that a fix of this kind =
-does
-not require an embargo.
+This patch is based on =
+https://lore.kernel.org/git/0CA8678D-0540-4A2E-B314-B9BEB04E2BF5@ytausch.d=
+e/T/#u.
 
- dir.c                       | 2 +-
- t/t6132-pathspec-exclude.sh | 9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ dir.c                | 51 +++++++++++++++++++++++++++-----------------
+ t/unit-tests/u-dir.c | 28 ++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+), 19 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 95d8a1cce9..7072715389 100644
+index 7072715389..441c1795a1 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -593,7 +593,7 @@ static int match_pathspec_with_flags(struct =
-index_state *istate,
- 	if (!(ps->magic & PATHSPEC_EXCLUDE) || !positive)
- 		return positive;
- 	negative =3D do_match_pathspec(istate, ps, name, namelen,
--				     prefix, seen,
-+				     0, seen,
- 				     flags | DO_MATCH_EXCLUDE);
- 	return negative ? 0 : positive;
+@@ -212,9 +212,19 @@ static int fnmatch_icase_mem(const char *pattern, =
+int patternlen,
+ 	return match_status;
  }
-diff --git a/t/t6132-pathspec-exclude.sh b/t/t6132-pathspec-exclude.sh
-index 9fdafeb1e9..ad919cc739 100755
---- a/t/t6132-pathspec-exclude.sh
-+++ b/t/t6132-pathspec-exclude.sh
-@@ -183,6 +183,15 @@ EOF
- 	test_cmp expect actual
- '
 =20
-+test_expect_success 'negative pathspec shorter than positive pathspec =
-prefix' '
-+	git ls-files -- sub/sub/ ":(exclude)sub2" >actual &&
-+	cat <<-\EOF >expect &&
-+	sub/sub/file
-+	sub/sub/sub/file
-+	EOF
-+	test_cmp expect actual
-+'
+-static size_t common_prefix_len(const struct pathspec *pathspec)
++struct pathspec_prefix {
++	const char *match;
++	size_t len;
++};
 +
- test_expect_success 'multiple exclusions' '
- 	git ls-files -- ":^*/file2" ":^sub2" >actual &&
- 	cat <<-\EOF >expect &&
++/*
++ * Find the common prefix of positive pathspec items. The returned =
+match
++ * points into the first positive item and is not NUL-terminated at =
+len.
++ */
++static struct pathspec_prefix find_common_prefix(const struct pathspec =
+*pathspec)
+ {
+-	int n;
++	struct pathspec_prefix prefix =3D { 0 };
++	int n, first =3D -1;
+ 	size_t max =3D 0;
+=20
+ 	/*
+@@ -237,44 +247,47 @@ static size_t common_prefix_len(const struct =
+pathspec *pathspec)
+ 		size_t i =3D 0, len =3D 0, item_len;
+ 		if (pathspec->items[n].magic & PATHSPEC_EXCLUDE)
+ 			continue;
++		if (first < 0)
++			first =3D n;
+ 		if (pathspec->items[n].magic & PATHSPEC_ICASE)
+ 			item_len =3D pathspec->items[n].prefix;
+ 		else
+ 			item_len =3D pathspec->items[n].nowildcard_len;
+-		while (i < item_len && (n =3D=3D 0 || i < max)) {
++		while (i < item_len && (n =3D=3D first || i < max)) {
+ 			char c =3D pathspec->items[n].match[i];
+-			if (c !=3D pathspec->items[0].match[i])
++			if (c !=3D pathspec->items[first].match[i])
+ 				break;
+ 			if (c =3D=3D '/')
+ 				len =3D i + 1;
+ 			i++;
+ 		}
+-		if (n =3D=3D 0 || len < max) {
++		if (n =3D=3D first || len < max) {
+ 			max =3D len;
+ 			if (!max)
+ 				break;
+ 		}
+ 	}
+-	return max;
++	prefix.match =3D first < 0 ? NULL : =
+pathspec->items[first].match;
++	prefix.len =3D max;
++	return prefix;
+ }
+=20
+ /*
+- * Returns a copy of the longest leading path common among all
++ * Returns a copy of the longest leading path common among all positive
+  * pathspecs.
+  */
+ char *common_prefix(const struct pathspec *pathspec)
+ {
+-	unsigned long len =3D common_prefix_len(pathspec);
++	struct pathspec_prefix prefix =3D find_common_prefix(pathspec);
+=20
+-	return len ? xmemdupz(pathspec->items[0].match, len) : NULL;
++	return prefix.len ? xmemdupz(prefix.match, prefix.len) : NULL;
+ }
+=20
+ int fill_directory(struct dir_struct *dir,
+ 		   struct index_state *istate,
+ 		   const struct pathspec *pathspec)
+ {
+-	const char *prefix;
+-	size_t prefix_len;
++	struct pathspec_prefix prefix;
+=20
+ 	unsigned exclusive_flags =3D DIR_SHOW_IGNORED | =
+DIR_SHOW_IGNORED_TOO;
+ 	if ((dir->flags & exclusive_flags) =3D=3D exclusive_flags)
+@@ -284,13 +297,13 @@ int fill_directory(struct dir_struct *dir,
+ 	 * Calculate common prefix for the pathspec, and
+ 	 * use that to optimize the directory walk
+ 	 */
+-	prefix_len =3D common_prefix_len(pathspec);
+-	prefix =3D prefix_len ? pathspec->items[0].match : "";
++	prefix =3D find_common_prefix(pathspec);
+=20
+ 	/* Read the directory and prune it */
+-	read_directory(dir, istate, prefix, prefix_len, pathspec);
++	read_directory(dir, istate, prefix.len ? prefix.match : "",
++		       prefix.len, pathspec);
+=20
+-	return prefix_len;
++	return prefix.len;
+ }
+=20
+ int within_depth(const char *name, int namelen,
+@@ -394,7 +407,7 @@ static int match_pathspec_item(struct index_state =
+*istate,
+=20
+ 	/*
+ 	 * The normal call pattern is:
+-	 * 1. prefix =3D common_prefix_len(ps);
++	 * 1. prefix =3D find_common_prefix(ps).len;
+ 	 * 2. prune something, or fill_directory
+ 	 * 3. match_pathspec()
+ 	 *
+@@ -411,11 +424,11 @@ static int match_pathspec_item(struct index_state =
+*istate,
+ 	 * prefix part when :(icase) is involved. We do exact
+ 	 * comparison ourselves.
+ 	 *
+-	 * Normally the caller (common_prefix_len() in fact) does
++	 * Normally the caller (find_common_prefix() in fact) does
+ 	 * _exact_ matching on name[-prefix+1..-1] and we do not need
+ 	 * to check that part. Be defensive and check it anyway, in
+-	 * case common_prefix_len is changed, or a new caller is
+-	 * introduced that does not use common_prefix_len.
++	 * case find_common_prefix() is changed, or a new caller is
++	 * introduced that does not use find_common_prefix().
+ 	 *
+ 	 * If the penalty turns out too high when prefix is really
+ 	 * long, maybe change it to
+diff --git a/t/unit-tests/u-dir.c b/t/unit-tests/u-dir.c
+index 2d0adaa39e..8b558e0391 100644
+--- a/t/unit-tests/u-dir.c
++++ b/t/unit-tests/u-dir.c
+@@ -45,3 +45,31 @@ void test_dir__within_depth(void)
+=20
+=20
+ }
++
++void test_dir__common_prefix_skips_excluded_pathspecs(void)
++{
++	struct pathspec_item items[] =3D {
++		{
++			.match =3D "unrelated/path",
++			.magic =3D PATHSPEC_EXCLUDE,
++			.nowildcard_len =3D 14,
++		},
++		{
++			.match =3D "foo/bar",
++			.nowildcard_len =3D 7,
++		},
++		{
++			.match =3D "foo/baz",
++			.nowildcard_len =3D 7,
++		},
++	};
++	struct pathspec pathspec =3D {
++		.nr =3D ARRAY_SIZE(items),
++		.magic =3D PATHSPEC_EXCLUDE,
++		.items =3D items,
++	};
++	char *prefix =3D common_prefix(&pathspec);
++
++	cl_assert_equal_s(prefix, "foo/");
++	free(prefix);
++}
 
+base-commit: 1630431f326e15fcde608827b5ff38422528eb59
+prerequisite-patch-id: 256750f07ff447732869d1aadde2f1050e7bb169
+--=20
+2.55.0=
