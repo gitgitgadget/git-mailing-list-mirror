@@ -1,80 +1,80 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703BF49E5E6
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8725C49F104
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788356117; cv=none; b=L/9ZVMwyuW2HwsPrOyv/t++x59ATWommmj9z8f15hk5/mxxVgo/nA6Z4hW4wC6uxvKDoe1oduMwdiDMYBuaosfkd/xzgnhCedfhmOxUvoUEWiyWvD0HPAFpLSD/qunO+X/aXH6DFejqpvz039N6noQf1DU13s3/QfEgYI6lzU0s=
+	t=1788356121; cv=none; b=JnOo+njUTwY7YZFPlkvOMtPexIK3MPCIWcPtctTkXKDLGLo5B5AsnpaoyRk+ybBarojZWTidzc1KZ75nWbVj0xTybAsoU6zDN24WTTGyYpx08CnccO41iMlEK8TZ7W1UdrCmxU6dGStw1gwuZ2OcSCltzVdr+rTjr5NhI8JV/50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788356117; c=relaxed/simple;
-	bh=g5to7um8cVXQtARvuhZ/NmwkNatRoYV1mbc2bTt3FMk=;
+	s=arc-20240116; t=1788356121; c=relaxed/simple;
+	bh=RIqLVBkeeyTtgu2eMcoud/ISO9lq9vnccaqM4fI+wpI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=m92iMwLMIxWXuB9bdT+++KVe+1Db/dwb65G1CyWhdgFJVvLT1hPbOtp028n4XQ+hP6iWb9cvCAWhtGtZjqJ3MWKUFMC/Sz6ld9xxY9NIMvl7MVhyHP52PTguNbEffHErWpNa3B90shtXBw+t8breLh2YQ9LNNnpt8+7OmguRkl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OvZ5DFsf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HmRU5Xz8; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=ANcePkD8bS/ONI5IO80OlzcWKDz3Vo/RTNLLB1EH6G+Q6dcqMxHbg89z/msx02Fo1MFXvPsdZLrYYlyv+vi28qQKogPNBE3V0rVBp6xINakpuau5ufEyB1DWkFIEn50AqTyrMFvz+JfmPMt5a3jiH1Z5u4qmpdvAj1xa/omv2UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dw+yXITg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aFHzOPe2; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OvZ5DFsf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HmRU5Xz8"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id B65861D0014E;
-	Wed,  2 Sep 2026 09:35:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dw+yXITg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aFHzOPe2"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id C1E0C1D00049;
+	Wed,  2 Sep 2026 09:35:16 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Wed, 02 Sep 2026 09:35:14 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 02 Sep 2026 09:35:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788356114;
-	 x=1788442514; bh=P92uI5T9jjdVvNJ+ml4jNJklaVU6G6K6eWrMiEBkmO4=; b=
-	OvZ5DFsf5ePHUDnTWEWIRYttw6FHGoOqNBu2v3jbTqCOHgPPDGkglpJwtY5m7Iqf
-	L6qUB4gsZ+7G9RvovIKE8+VTrduNWbYVkeEe2Zf42WpyR7o+bcSQGUlH2SL2bwoq
-	0i8eN+llsxprwYz4aiAl18qJQSQgbMgl2Hx5Elur16tYlLxu0Op6VpYrtZH5wVz5
-	sAIZVxuFrzBc4jANoHb4yb2TUtwVyar+2giEXjttYSADvv1a8CxJMK8OeUmbcbE+
-	uzVE4pWb8J0jaN+Obpivj/Qx1bfaHa1D8yorkjsXFK7f2rjZSNTpLLAAIBZRQExj
-	4wNPTB3BYYQ0rmieYKeA2A==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788356116;
+	 x=1788442516; bh=ajrMtw8j4R53XYKIE+8BGi1AxRELjmiF+gb/wyQ5LIw=; b=
+	Dw+yXITgFprMb3CrlNNwLXsoUIsNEzFxWqD8mQR3amMuiJP6NN8mhTXbSpjq1gEY
+	LZ2yIopnATwTVBqw9dP4l4Ty8k/c7EAYVrQDy7+njR5Vd/Mzbw7SMsJDr0pE8gEQ
+	jYX/GeVXytBiWzjkrOw1Wjw3VWSPipLpS+qCDHsssP7X6KA4azSFjgyRmRI2vTKL
+	tR8USvhz47K9ZHdDUqzV6dWTcgi7QhbZ8FgtcgNtw/D4l939o31n5mrY+YJGaOSB
+	4ux8vS2PMHusjPrb9bgEQe6gRr/s5jS9b66/G1c+1G8ZjOS1bKwsMjjBhSMoOupl
+	k/GoUljjO35D1UfWgn4D3A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788356114; x=
-	1788442514; bh=P92uI5T9jjdVvNJ+ml4jNJklaVU6G6K6eWrMiEBkmO4=; b=H
-	mRU5Xz8/S3HGwIvwPw1f5Z45qZHQ13XVKyD3xdxVLSIbl0USZmGg0+7lMAjRFNsN
-	IDmjw5+LPCOiJdI28AJnB98UsZpYo79pWQF6ddwPe9fcFd83MctSoUMLJjd74L6L
-	30MoSFXS7MVreQdJ/47ZKzXKgh19sF0QbTpLxubr31icBqKUvAEz4lDtthiM0uZb
-	BWG/reDGHsL9eviWR5I9TbUeB/zhq2Zho47XUS6sQzOSuPx6CubXc/D3tBVAS27E
-	PqeVmAmzkV2XXc2+VxcWhSnhMPBo2nAEBp5jh1qPdIWtErDq9+OO0HtMo0gU2jS5
-	E6+481zRpOoAqclTyteWA==
-X-ME-Sender: <xms:EiaYajQ-ON0D7IPSjcfG13QeZmBTW1ZPMOpoY2RsM3imsh-eIihLCQ>
-    <xme:EiaYaqzTWAHq7A9HBkO0L8Bv3ld5eUWNUUfj913wJy1foHicoMUeExCIvqf60cp9f
-    XKZYV1LJRDT1fYJAU-i0g3DIsW5ixEI8ceQlhv0yiWNZtaO2wOrOEA>
-X-ME-Received: <xmr:EiaYamee198grNwsYcqPK3qIReYDyArG06FoPUHWYNIvAeCWvbkCRI-LD2k0A3Hea1R8P20>
-X-ME-Proxy-Cause: dmFkZTEYhr9e4Ywlb1TBHLwsOW3Qx1tjtKD+uhP71WKh33QJrNZx9AVMt7nD22Jis4lPrv
-    MTCD/EPB8RsDNVjlqEtIpjdnI06qWWOaQew+wKEg9KR8NEV3XDj5+C+lq0GNXMUCyo4igS
-    5U9v+KFkw0Evpwnc6cWUohg4b6qCrXyvPX0B7hrQw7zRUjz5YwzGQrgU3UxDXxxyR53YC+
-    YQIYAIRjLTSjVluUg4RI0n2rU5GvrWBHjQHZRsaSRDQMiPpgohYZUdgz5LN2ECLLwBR9zC
-    HYaTCafKUfTxhWvjtOGLyd4VXGi9YWUXrplxaROw1Cvb4DVWcs3zD8ZSMBcPlpw1IaHWG7
-    exaNJoTrNUV6UUqlY/STHtyLA9XQI7Bgi0XCzfD0nfjdRr/Ee4y2pio2p5a4eN8LSdTcF+
-    pxtmY7lIYKoVwf2UtaSJJrDEMH4aKnQqfGn/IBlM3mMU74eyI783IKGsgYpZvOgB5/nbEv
-    QrVUNwEnU+V5wSR76YWONGdh90WWpAkybDLcrv7wmdQNuTNnYl23UycLYZCmoYb4q1dwat
-    fsDi9y/THuDrut26n+eKedETcUsVw9511h5HBl9wiIgWXyAoCEp1T8iv7zp9oVD9g4xcv6
-    dJudBXWhbpAzYAHEHamJA9yAjTo5xeFSVfx2X0Yw4jfx9yldABok8tAfbF3g
-X-ME-Proxy: <xmx:EiaYauJE7YePAkMTdUjoHNHdlyMAGEg5_Z5sptqfFE4sSHetAiO2zg>
-    <xmx:EiaYavHdB3Ls_liL_QSCxK9zXTdpf4xUJI_pwmrzACdfN7FWcWOoiQ>
-    <xmx:EiaYagrxg9TXpsh0DE-PhxxVlkO983JlCVauGKfAs-kE-nxB-_1rDw>
-    <xmx:EiaYagRQicMKxbGlIqZVf7IDBqabA2YAQXrUv-QvtquBXVId1NsY7w>
-    <xmx:EiaYamp2rCLeRLCg6OkoP6UnP0yeq7r_b0rfw5FLUo7zy8fIJfYYS7Gz>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788356116; x=
+	1788442516; bh=ajrMtw8j4R53XYKIE+8BGi1AxRELjmiF+gb/wyQ5LIw=; b=a
+	FHzOPe2+JdFyp7+L4t+JSTvQsA5X7wwroh+N/IG2jc0HOUo25Tos1jSRQ7EihPxo
+	gGN6oclF+to4v2dPDw6yPjmui9G5Wvk3bNLTlwxHGN5PJvE1Hu9yu8B+xACeLnSa
+	XHM0GBZYAKz+5TbkrD9pOEkclEJ3aVUHGKdCR+vrrg0q2lxKgt7gm+PJVT75lL5u
+	VsM/GeLbKS3imOqb3h3kBUY8TpfPuyc2a2bOmZOrJY9kpsQurQ8/cN0dsKeCglGn
+	1oq42AVsP1aaWKKcSORgrmKzBmZGG7SsWWmilRJA9d5b45Ngg4djsDI9tHn439kT
+	O8WexWebcm7u0FK4pvi3w==
+X-ME-Sender: <xms:FCaYarSn07BzShw7FL0UfVhh4qD43tVAJ8zJFgAorbdchnqjAp_keg>
+    <xme:FCaYaiy_Tf1PtqzydGEMGuY_U_Lwtdn7ocfC_AZPFYIiQBtiuauGDbQsUfFEawr7v
+    iV5ykpTXep31FnpTn8lviF4waU87NhAEQpukboDnzsz1Q2s_x6NgiE>
+X-ME-Received: <xmr:FCaYaufjtEy6vuImi5Idc2leMPAA5RW3t0CfKYevZjDW99I-cGIObbUjJDokMTWONYc32kw>
+X-ME-Proxy-Cause: dmFkZTGrKOyneZupe5mOAQPCzJ04iP7AmLoFfKmvCbE1PXGMupxk+V2NHymWcC4MTqxXOZ
+    qKq9wTecS2icL0DdCtTOCKdnafWbnAKgdH0wDaR59e/kpg4eReC0lLpo1evFjFMIgvnYon
+    R2hs/5JOn9f3OdQ+vxHFb1QyrsNQEv+x0IdyoER3mghIqNxh/lgxkwG7av+ggFwoKfIkeu
+    C1JKjSxfbfW7SEzYHMwa58HzzfC3iAL4Xe0WqbEAZkixIKWw5MujaEcHt0BX6zRfJxMnJz
+    Bp+bTfsYkt7cMLy/SwKjfahsGUCnP+pXCap9lrxYaxGr/JafFjNSixolp5e/H25iF1cxql
+    pX2T/HuSvlsxl1REFr6qKwa0W+n8hiPiowMj5WMSw3DU5XkIdKfTi85shiwCqZCzmywcJp
+    YjGp3Ubq3xronXkgyogVg3dvBmj3vWcpcMJQHwvr5r0WmjMi2PE8pyYNoyQ8/eap8zhH3P
+    y/CuzuFOuvy2Yz3CjLk/m9GDum4zucHIZSMaDTNHZ1vzBZj5Ix5En2Rlm44l+yF5QLKUhs
+    +DDjbRkqlJhgAcOpQDmD6/BxooGeBHyWtaE2Xnv7ac78b2QQ3De2P9KzaSE4IQHAg3VXOA
+    4R6BrZIVhpnvv6Afkhn3OxyZuBU+YUJgfeTFVERmh1SADqyJoHiha4K4LlHA
+X-ME-Proxy: <xmx:FCaYamLclMDF0nPDMCEEJdcrbd6Nq5oFYXbac-y9Mmv3z_UK3NbfKw>
+    <xmx:FCaYanFfgM1oCdOGgiDBg2aZ8sI0qU9_PWsruDbfitszDaMfKCJhPw>
+    <xmx:FCaYaooULG3qxH2-5HTNsPUyG0z1bFtdr72Ph5oUqawcbhoyAfoQeg>
+    <xmx:FCaYaoRtBY3IhSbveKcJkmL2FWmfQgciCTti4zmlAEc86akbu1hi7g>
+    <xmx:FCaYauqfupORXwRgpRPTB--hvYeAi7gCkEv4RvGV1zeVbfZho3UQ896n>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Sep 2026 09:35:13 -0400 (EDT)
+ 2 Sep 2026 09:35:15 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 65492073 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Sep 2026 13:35:19 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 2886d2f2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Sep 2026 13:35:21 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 02 Sep 2026 15:34:54 +0200
-Subject: [PATCH v2 06/13] builtin/grep: stop registering submodule ODB as
- source
+Date: Wed, 02 Sep 2026 15:34:55 +0200
+Subject: [PATCH v2 07/13] odb: remove infrastructure to register submodule
+ sources
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,80 +83,261 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260902-pks-odb-registering-in-memory-sources-v2-6-c6ca12fdea4d@pks.im>
+Message-Id: <20260902-pks-odb-registering-in-memory-sources-v2-7-c6ca12fdea4d@pks.im>
 References: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
 In-Reply-To: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-Same as with the preceding commit, git-grep(1) registers each
-submodule's object database as an in-memory source of the main object
-database before grepping it. This was introduced as an eager alternate
-registration and converted into the lazy mechanism via 8d33c3af0b (grep:
-use submodule-ODB-as-alternate lazy-addition, 2021-08-16).
+The preceding commits have removed the last two users of
+`odb_add_submodule_source_by_path()`. The mechanism was only ever
+meant as a transitional crutch while migrating submodule object
+access away from "add the submodule ODB as an alternate of
+the_repository" towards explicitly passing the submodule repository,
+see a35e03dee0 (submodule: lazily add submodule ODBs as alternates,
+2021-08-16). Remove it.
 
-Starting with 0693806bf8 (grep: add repository to OID grep sources,
-2021-08-16), the command instead knows to pass submodule repositories to
-our workers, which means that those now use that repository to look up
-objects, too. As a consequence, registering submodule sources as
-alternates is not required anymore.
-
-Remove the logic to register submodule sources. Unfortunately, this does
-not allow us to get rid of the object read lock as initializing the
-subrepository is still racy.
+As GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB is now a no-op, remove its
+documentation and the exports from the test suite, as well.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/grep.c | 26 ++++++--------------------
- 1 file changed, 6 insertions(+), 20 deletions(-)
+ odb.c                                  | 36 ----------------------------------
+ odb.h                                  | 14 -------------
+ t/README                               |  7 -------
+ t/t5526-fetch-submodules.sh            |  3 ---
+ t/t5531-deep-submodule-push.sh         |  3 ---
+ t/t5545-push-options.sh                |  3 ---
+ t/t5572-pull-submodule.sh              |  3 ---
+ t/t6437-submodule-merge.sh             |  3 ---
+ t/t7418-submodule-sparse-gitmodules.sh |  3 ---
+ t/t7814-grep-recurse-submodules.sh     |  3 ---
+ 10 files changed, 78 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 073dfaaf45..b045f8a488 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -463,16 +463,6 @@ static int grep_submodule(struct grep_opt *opt,
- 	ALLOC_GROW(repos_to_free, repos_to_free_nr + 1, repos_to_free_alloc);
- 	repos_to_free[repos_to_free_nr++] = subrepo;
+diff --git a/odb.c b/odb.c
+index 6d5943e5ea..2f8a70a90c 100644
+--- a/odb.c
++++ b/odb.c
+@@ -388,12 +388,6 @@ struct odb_source *odb_find_source_or_die(struct object_database *odb, const cha
+ 	return source;
+ }
  
--	/*
--	 * NEEDSWORK: repo_read_gitmodules() might call
--	 * odb_add_to_alternates_memory() via config_from_gitmodules(). This
--	 * operation causes a race condition with concurrent object readings
--	 * performed by the worker threads. That's why we need obj_read_lock()
--	 * here. It should be removed once it's no longer necessary to add the
--	 * subrepo's odbs to the in-memory alternates list.
--	 */
--	obj_read_lock();
+-void odb_add_submodule_source_by_path(struct object_database *odb,
+-				      const char *path)
+-{
+-	string_list_insert(&odb->submodule_source_paths, path);
+-}
 -
- 	/*
- 	 * NEEDSWORK: when reading a submodule, the sparsity settings in the
- 	 * superproject are incorrectly forgotten or misused. For example:
-@@ -498,18 +488,14 @@ static int grep_submodule(struct grep_opt *opt,
- 	 *	ditto.
- 	 *
- 	 * Note that this list is not exhaustive.
-+	 *
-+	 * NEEDSWORK: initializing the subrepository is not thread-safe,
-+	 * either, as it may cause us to race around `get_main_ref_store()`. We
-+	 * thus need to hold the object-read lock to serialize all readers with
-+	 * one another.
- 	 */
-+	obj_read_lock();
- 	repo_read_gitmodules(subrepo, 0);
--
--	/*
--	 * All code paths tested by test code no longer need submodule ODBs to
--	 * be added as alternates, but add it to the list just in case.
--	 * Submodule ODBs added through add_submodule_odb_by_path() will be
--	 * lazily registered as alternates when needed (and except in an
--	 * unexpected code interaction, it won't be needed).
--	 */
--	odb_add_submodule_source_by_path(the_repository->objects,
--					 subrepo->objects->sources->path);
- 	obj_read_unlock();
+ static void fill_alternate_refs_command(struct repository *repo,
+ 					struct child_process *cmd,
+ 					const char *repo_path)
+@@ -549,23 +543,6 @@ void disable_obj_read_lock(void)
+ 	pthread_mutex_destroy(&obj_read_mutex);
+ }
  
- 	memcpy(&subopt, opt, sizeof(subopt));
+-static int register_all_submodule_sources(struct object_database *odb)
+-{
+-	int ret = odb->submodule_source_paths.nr;
+-
+-	for (size_t i = 0; i < odb->submodule_source_paths.nr; i++)
+-		odb_add_to_alternates_memory(odb,
+-					     odb->submodule_source_paths.items[i].string);
+-	if (ret) {
+-		string_list_clear(&odb->submodule_source_paths, 0);
+-		trace2_data_intmax("submodule", odb->repo,
+-				   "register_all_submodule_sources/registered", ret);
+-		if (git_env_bool("GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB", 0))
+-			BUG("register_all_submodule_sources() called");
+-	}
+-	return ret;
+-}
+-
+ static enum odb_read_status do_oid_object_info_extended(struct object_database *odb,
+ 							const struct object_id *oid,
+ 							struct object_info *oi, unsigned flags)
+@@ -614,16 +591,6 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
+ 			}
+ 		}
+ 
+-		/*
+-		 * This might be an attempt at accessing a submodule object as
+-		 * if it were in main object store (having called
+-		 * `odb_add_submodule_source_by_path()` on that submodule's
+-		 * ODB). If any such ODBs exist, register them and try again.
+-		 */
+-		if (register_all_submodule_sources(odb))
+-			/* We added some alternates; retry */
+-			continue;
+-
+ 		/* Check if it is a missing object */
+ 		if (odb->repo->fetch_if_missing && repo_has_promisor_remote(odb->repo) &&
+ 		    !already_retried &&
+@@ -1109,7 +1076,6 @@ struct object_database *odb_new(struct repository *repo,
+ 	CALLOC_ARRAY(o, 1);
+ 	o->repo = repo;
+ 	pthread_mutex_init(&o->replace_mutex, NULL);
+-	string_list_init_dup(&o->submodule_source_paths);
+ 	hashmap_init(&o->source_by_path, odb_source_by_path_cmp, o, 0);
+ 	o->source_paths_icase = -1;
+ 
+@@ -1166,8 +1132,6 @@ void odb_free(struct object_database *o)
+ 	odb_close(o);
+ 	odb_free_sources(o);
+ 
+-	string_list_clear(&o->submodule_source_paths, 0);
+-
+ 	free(o);
+ }
+ 
+diff --git a/odb.h b/odb.h
+index 248ee9cdfa..54548efc55 100644
+--- a/odb.h
++++ b/odb.h
+@@ -89,12 +89,6 @@ struct object_database {
+ 	unsigned long object_count;
+ 	unsigned object_count_flags;
+ 	unsigned object_count_valid : 1;
+-
+-	/*
+-	 * Submodule source paths that will be added as additional sources to
+-	 * allow lookup of submodule objects via the main object database.
+-	 */
+-	struct string_list submodule_source_paths;
+ };
+ 
+ enum odb_new_flags {
+@@ -224,14 +218,6 @@ void odb_restore_primary_source(struct object_database *odb,
+ 				struct odb_source *restore_source,
+ 				const char *old_path);
+ 
+-/*
+- * Call odb_add_submodule_source_by_path() to add the submodule at the given
+- * path to a list. The object stores of all submodules in that list will be
+- * added as additional sources in the object store when looking up objects.
+- */
+-void odb_add_submodule_source_by_path(struct object_database *odb,
+-				      const char *path);
+-
+ /*
+  * Iterate through all alternates of the database and execute the provided
+  * callback function for each of them. Stop iterating once the callback
+diff --git a/t/README b/t/README
+index 9a9daaf2af..f831c5355b 100644
+--- a/t/README
++++ b/t/README
+@@ -462,13 +462,6 @@ GIT_TEST_CHECKOUT_WORKERS=<n> overrides the 'checkout.workers' setting
+ to <n> and 'checkout.thresholdForParallelism' to 0, forcing the
+ execution of the parallel-checkout code.
+ 
+-GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=<boolean>, when true, makes
+-registering submodule ODBs as alternates a fatal action. Support for
+-this environment variable can be removed once the migration to
+-explicitly providing repositories when accessing submodule objects is
+-complete or needs to be abandoned for whatever reason (in which case the
+-migrated codepaths still retain their performance benefits).
+-
+ GIT_TEST_REQUIRE_PREREQ=<list> allows specifying a space separated list of
+ prereqs that are required to succeed. If a prereq in this list is triggered by
+ a test and then fails then the whole test run will abort. This can help to make
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 7b3b7359da..37d7373b36 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -3,9 +3,6 @@
+ 
+ test_description='Recursive "git fetch" for submodules'
+ 
+-GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
+-export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+-
+ . ./test-lib.sh
+ 
+ pwd=$(pwd)
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+index 7d239dd31f..73429ec6e3 100755
+--- a/t/t5531-deep-submodule-push.sh
++++ b/t/t5531-deep-submodule-push.sh
+@@ -5,9 +5,6 @@ test_description='test push with submodules'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+-GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
+-export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+-
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
+index fb13549da7..239edd7d62 100755
+--- a/t/t5545-push-options.sh
++++ b/t/t5545-push-options.sh
+@@ -5,9 +5,6 @@ test_description='pushing to a repository using push options'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+-GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
+-export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+-
+ . ./test-lib.sh
+ 
+ mk_repo_pair () {
+diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+index 42d14328b6..9969a3294e 100755
+--- a/t/t5572-pull-submodule.sh
++++ b/t/t5572-pull-submodule.sh
+@@ -2,9 +2,6 @@
+ 
+ test_description='pull can handle submodules'
+ 
+-GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
+-export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+-
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+ 
+diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
+index 107e13afbc..1546d5f773 100755
+--- a/t/t6437-submodule-merge.sh
++++ b/t/t6437-submodule-merge.sh
+@@ -5,9 +5,6 @@ test_description='merging with submodules'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+-GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
+-export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+-
+ . ./test-lib.sh
+ 
+ #
+diff --git a/t/t7418-submodule-sparse-gitmodules.sh b/t/t7418-submodule-sparse-gitmodules.sh
+index dde11ecce8..cf94e30e78 100755
+--- a/t/t7418-submodule-sparse-gitmodules.sh
++++ b/t/t7418-submodule-sparse-gitmodules.sh
+@@ -12,9 +12,6 @@ The test setup uses a sparse checkout, however the same scenario can be set up
+ also by committing .gitmodules and then just removing it from the filesystem.
+ '
+ 
+-GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
+-export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+-
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+index e1cf53dc9e..3d149d34c1 100755
+--- a/t/t7814-grep-recurse-submodules.sh
++++ b/t/t7814-grep-recurse-submodules.sh
+@@ -9,9 +9,6 @@ submodules.
+ TEST_CREATE_REPO_NO_TEMPLATE=1
+ . ./test-lib.sh
+ 
+-GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
+-export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+-
+ test_expect_success 'setup directory structure and submodule' '
+ 	echo "(1|2)d(3|4)" >a &&
+ 	mkdir b &&
 
 -- 
 2.55.0.979.g7e5102b832.dirty
