@@ -1,80 +1,79 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1280E2BDC0E
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:35:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0633649F10F
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788356132; cv=none; b=dINyYZ5Ka4zFh+4E5vpql4rTLzHppEHQfS7JbK0oCcC/upHR2/efyNmYG4zcECxOVv5PfNRzrDchgs1J3PoSK7IYpvbOkkZsDSzI01weiF0m8fBxDW+VmTEvvSbzgnjOgiluy95puTPC2hthYztccL+RA9OgWgLDzZmgYuAEY1g=
+	t=1788356134; cv=none; b=YWWHmibHAOp4dKnxUWo8vwauq2+wKymGQDUXXZ9AO3x72N5ygaHGxk4Cwymf0S0aiFdq7fAMX+i8CGkh8s+8kVH1FwIfCxTrDAGAxa8lR97htFQNmowU0sfFAhr9qMkNWmJEhMOLl7YG0hELgdSlMlnOWMcPkAtXlzVp0iVO9sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788356132; c=relaxed/simple;
-	bh=J2kRrCXjzuRjx+UTJXBOeatJfiQ1KHbhBTF2IX5HaQQ=;
+	s=arc-20240116; t=1788356134; c=relaxed/simple;
+	bh=t3SZebhGthAGCpNqV4n9HiJOC5F47PiapXAEWfN/xyU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LfJl2wMtF5dndJtlSEzYL/QayROu71nty+32/4VJSwiu1NvJlVlkuIe9CtMw4JzW7UCWTXv7x0qo+5n0o3R1tEO2zZhQVSEs0W6QYEkoFrAqwbbK/lKdYrHOGgVijX+ENBZMiWNUEApgzUIoltf4IA9ec0A9kG5fZNnxv22rVaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DdUfMDT0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cf5wGxbN; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=Will2a7Y/IY1ryM+nmhARl4A2hPVQkcCon2y6gAI9IIffP69FvVJqSDYReyvRU6zuqlilivkr/26/qu55/J1y7H9Hc2a28+0zlZTdDHbEmrpU01KH3afVGHx+Csfsurk4GsVUsoR/mHEBYVRC/wkEZ3ETJEMt17nIBa9YBKnx1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bUCLzN3x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EVUISMkf; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DdUfMDT0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cf5wGxbN"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1D11B1D0014A;
-	Wed,  2 Sep 2026 09:35:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bUCLzN3x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EVUISMkf"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2A5157A0126;
+	Wed,  2 Sep 2026 09:35:32 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Wed, 02 Sep 2026 09:35:29 -0400
+  by phl-compute-07.internal (MEProxy); Wed, 02 Sep 2026 09:35:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788356128;
-	 x=1788442528; bh=AGeOz+oYNt03Nn8YivgCF/T5Pw5Lfku1ENnIxDrM4cg=; b=
-	DdUfMDT07tmJu51LXTKMAJ1Ndjc0LMd+y1D9D5HroPS4un1Dy59wUMPOsVyQlKoX
-	KbsM/rkM3MBDU9YAdvFLzMi32Vl8Z4ZjfWTqCFf1/b0FCGO5QpWYdh5SWqThuORH
-	c757mu34QM1E5nnUs7BwB+hKjV4uX17VWdC+dP+G6BEHEBQX1SbTvbw9k4BWmZE4
-	EA9lKyvyGeId8BiJ7FX2o/AhobG8v0ZBamjOfgKPpWcK0VxxhIM0UhxDV9vMLvHx
-	Oow1+YtX4zpbH3PwuiXS7JN1SHTQu8TQTmAow2M7PJBM/uAUqWZtguCrDm9SZCbm
-	S50IGWv6nqrXAt8DoemZRQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788356132;
+	 x=1788442532; bh=/xYB3y8sXLcL/rk4yRDdsPvnyvsBIx5Z8NF1QXD+MKs=; b=
+	bUCLzN3xmWa4s3RKLd5zXGmzqzH/wJytK2mWuDnabpXqpmdGKkrwVA0Mofew8Cot
+	4hvyCccvsbOrM46cvjwszsEaarvHGgyAbNJL0XFEk3Xk5o+0nKw3pquWLn+1zhVg
+	5kfeWQu83B+Ik5ZW2qAZ84K2tWbvvX5tvjbQY99LyXySKbO2EDUAgDt99pgcFInx
+	KYIo73yDuoscLMz/VRAwiU43n53pt/jOy9MpiqGBIPE8BVEgy25M/oyzElA9rnfW
+	0RVViVCkVJ1lJTfKY9pgb3GMSRsxtr/KFb6QWWSTREH20twuBSgVWvxve/M/56w6
+	c4XRfM5yVTJcmOUKqtrM0g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788356128; x=
-	1788442528; bh=AGeOz+oYNt03Nn8YivgCF/T5Pw5Lfku1ENnIxDrM4cg=; b=C
-	f5wGxbNXftVcWdnUFRbzALKeZLyyfhOd8BjO4Ntu4yyMKJC06/cc3DaRha83yMS5
-	5b9F77Pj+4z8jHugloq4/1kcJjKHkuRO6gGnlf5awWzd3tfnz8AY+8r6KpD6iXyE
-	du9s1ZfaUtowaaWGVPCMNpmdacXjYsHb1dlLHbmWr/637wNyEc6VEeVxE4nmRmqL
-	cgJdXHqz2ebZkTFTamGZzia55SA1YW9F1ab1Hwmt9LrrWWwHVp4LqeJrV1gpOHjJ
-	uTKOwXP5o1orrYsdXzB3JUWxS4Ww/PZsaR0nev4ahn60sTFz/V0SLE3TBxSzUROD
-	DBaaBj5X9vQNBkf4Zo4Pg==
-X-ME-Sender: <xms:ICaYasn7NiIz8ivabRUu64kNIq_X7EvjtM8clYNP2jNG8H5gcKHiCA>
-    <xme:ICaYah1qfzuDD6jFP_5WGahgGbEnDWko9txSTjq9VgZLOUkw1Ts33xp6XjaLNBA5h
-    zlFE5qiuGAHdlD3h6aIspQRGorYC3OblMl0Q_33M2DdmAFp0CK8jb0>
-X-ME-Received: <xmr:ICaYaoQym_urWsHgqh8Ib4KhfYC2TkljJpJIno6Og21sxRyrr8PzNtREWBeestpc18SX9Qk>
-X-ME-Proxy-Cause: dmFkZTGrKOyneZupe5mOAQPCzJ04iP7AmLoFfKmvCbE1PXGMupxk+V2NHymWcC4MTqxXOZ
-    qKq9wTecS2icL0DdCtTOCKdnafWbnAKgdH0wDaR59e/kpg4eReC0lLpo1evFjFMIgvnYon
-    R2hs/5JOn9f3OdQ+vxHFb1QyrsNQEv+x0IdyoER3mghIqNxh/lgxkwG7av+ggFwoKfIkeu
-    C1JKjSxfbfW7SEzYHMwa58HzzfC3iAL4Xe0WqbEAZkixIKWw5MujaEcHt0BX6zRfJxMnJz
-    Bp+bTfsYkt7cMLy/SwKjfahsGUCnP+pXCap9lrxYaxGr/JafFjNSixolp5e/H25iF1cxiK
-    2Hu1VGGBMKB1QhagUoBBMZir3dTY8HJUaa7hLdHeHMSDWOuUyVbH7koNxiBJAlt4n6h9Aa
-    LlL6zZiP5VUpqE7UACJaHmNT0pRoUEzpIUe+w7iYcdPwM7QumsUo99yn7ONZDsAiJ6wQGN
-    gWlKZQ5A/XjiUCkpwtIHj9ZqeLQksUcW45oWV0vjwrsniwXYhwk52kd6/kr4cdzg3GEI9l
-    qUIP1v3GPZZ43lhUxv8sL52B9P27LS7WpXnkQ21Is0sv03rddDLdi0THz8Qpz5ybCJ6GIz
-    iIw8ntu3AWrqnoxOP9d/OlfbA8ckqO/81fcPLoubSrfeOpiA809XDY+84ydQ
-X-ME-Proxy: <xmx:ICaYajtjAcLLr4YlGPB55HRaxU4X-dnZgsEGxVEwDqivJ7hmfifGww>
-    <xmx:ICaYata_6GdsooJjx6wFOUpb-uU0vB2lsomcM_o9G5PMA4xur4YrRg>
-    <xmx:ICaYaovdU2Uyaj2o9F1tvtEz7iVxmKH9XbZ9MV5gTXmYoDeb8dSXEg>
-    <xmx:ICaYavHoeB_TD0GHSZBZYlHSLEst0ZyY4574M3K1bkf-5TIzoc4prw>
-    <xmx:ICaYan-iyuJg_JyMiSeRvDanO2gsogWEjlmalmiUaL1KS5tiK5Eozlgw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788356132; x=
+	1788442532; bh=/xYB3y8sXLcL/rk4yRDdsPvnyvsBIx5Z8NF1QXD+MKs=; b=E
+	VUISMkf5+98FAvGJXHVSmxnsaHfc3QUHiV1jnt2WbtQNrKTK6nXmHK1UTY8JFJKK
+	0BQxucdqYHEh0X9xxBe2Qae1m+MauMcxc4LZbSXNA/rr4EzpVmYDf1VeCRc5hveH
+	QKchjjQV8OOdC8vgrfcc4iwERUw6GGxNZFfW9cP3QO4t6PBTKEZB0b9d5l8vhPx2
+	+aaEFng/2TArR123ymj8B27JezAFTVKaaGQLwXoodrGxB8I3nvHiTxIQNICVgMp5
+	GO+RtOstuzJWPdC8/aFIDXsb9sOrEvxCyFu03mFRLw7P5U8BcOBZMcp9bo68v7Nt
+	2SlzvP47RYNT3teWoMPgA==
+X-ME-Sender: <xms:IyaYaunPVbq-Ub2LF5b2a61ZZnJJU2L5vcuyYHhYI4gN5cCSCX8a0g>
+    <xme:IyaYar17tABa59kaq9MYUseCvUvvq_4QoKbhJTIHlMlBhVQJWEW0V93KWOaAU1CM1
+    totXM402_GdGr5zi5ENLAN0IqJtYjbOBskaZlA8Kx6r3cLGMwKHLO4>
+X-ME-Received: <xmr:IyaYaqRziaDeQ-LJUVpicMBcFXEDMjucJq_zYcMEmtclW4jU5bJ94seH6ogV02tuaLrAoTo>
+X-ME-Proxy-Cause: dmFkZTG4ZQ307c0r+GT+cG0MbckYhWlAFFJxCbC0xT9lvs2dpNbfp5F9i62CHGxLqxgQEe
+    1KClkHVJPGKYIUdzMTZI3Wayv9loYYluTZTMLtBxFxFx6yRoVtEs/1+0189PyMCQH1L56C
+    4/84m+fxkLWTwq7X++7tLMV+dCd46hrgvE/2HnstGCs2lxTTPV1QPl1CAIe+19hO2dqMGo
+    z/R/W1DbWne0aicrH1l+gKAEg55+PhiT1pD2GHQUC6IMshvIH8K5QQPcdDBjCz5r1rQWpU
+    tSVYKTo0wvI7lPxKf7umF/8t+XwgUF1IQNPP+0YcwY/RmETnSnMzYq3vMEuyh6kueB4rdq
+    fwjPsOtRPTn0W3NVEnkTkBN0iuSA8Z/R2X5BWP+VgpGolTP+uTKLOaB8WM+/T8Yf3VVRmo
+    BMtqaUwj6gIce74WXAtaWcgpdan9U6xEHygM20iviR7nn4PDQrcvAF4ZbuijM/eac7tOmz
+    1Dw7es1AUQpmdWSkyFDgnipW+bDMz8mDWNRIXgJQlW6fIi0l5qNyhxSc+xJbZcZ9e+91PH
+    +M5JUNmDAJQcDk3xDvW+YfQzryKAbbSbTElsorX5KMBXcydXLs5sx3GPgto2wRaG1KYlFE
+    DfdvTyCiINmhIFg4todGm7G1kPsGOd/OLScdOm15WHFrphdX5xkHxvclU28Q
+X-ME-Proxy: <xmx:IyaYatvdddMFf-4tkQvQZ5EayIjkzUQYT7WlhC_16cFsR7y7EUMdhg>
+    <xmx:JCaYava1LEiCgCJo1tlssHjrIs1QD1UuIXn4qBu61qjdWgOXb_qMFA>
+    <xmx:JCaYaitp5JatZfetChPPAa8VX1mRW6MJQuFPR669cXmddZSNGtWVLg>
+    <xmx:JCaYahEc9o7NyIXXquCPePCe3dnGyI7xhT3AGM146ynu0plXN2my4w>
+    <xmx:JCaYap8GhpSzCaEwKGNW9EN6FlKHeSDJxB-Iy5GGilYIbKqGzK4WGaUr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Sep 2026 09:35:28 -0400 (EDT)
+ 2 Sep 2026 09:35:31 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id be670e1b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Sep 2026 13:35:33 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id dbca90ad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Sep 2026 13:35:36 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 02 Sep 2026 15:35:00 +0200
-Subject: [PATCH v2 12/13] t/helper: stop registering alternates in
- "ref-store" command
+Date: Wed, 02 Sep 2026 15:35:01 +0200
+Subject: [PATCH v2 13/13] odb: remove the ability to link sources ad-hoc
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,54 +82,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260902-pks-odb-registering-in-memory-sources-v2-12-c6ca12fdea4d@pks.im>
+Message-Id: <20260902-pks-odb-registering-in-memory-sources-v2-13-c6ca12fdea4d@pks.im>
 References: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
 In-Reply-To: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-When using the "ref-store" command we support access to multiple
-different reference stores. As part of that we allow the caller to
-explicitly exercise stores of a submodule. This allows us to verify
-low-level behaviour of submodule stores, which is exercised in t1406.
+Over the course of this patch series we have adapted all callers of
+`odb_add_to_alternates_memory()` to not do so anymore. Remove the
+function.
 
-When doing so we also link the submodule's object database into the main
-object database. The intent of this is that it allows us to access
-objects of the submodule, too. But that functionality is not even
-needed anymore: when creating a submodule reference store, we will first
-initialize the submodule repository and then initialize the store with
-that repository. And as the reference subsystem doesn't depend on
-`the_repository` anymore all subsequent object lookups performed by the
-reference store will be routed to the submodule repository.
-
-It is thus not needed anymore to register the submodule object store
-with the main object database. Remove the call.
+This series of refactorings doesn't only simplify our code base. More
+importantly, with those changes in place we can now unconditionally
+assume that the list of sources linked to the object database only
+consists of the primary source and its alternates. This serves as the
+foundation to eventually move handling of alternates into the "files"
+backend itself.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/helper/test-ref-store.c | 8 --------
- 1 file changed, 8 deletions(-)
+ odb.c | 6 ------
+ odb.h | 8 --------
+ 2 files changed, 14 deletions(-)
 
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index 5a9a3053d9..db58f00589 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -74,14 +74,6 @@ static const char **get_store(const char **argv, struct ref_store **refs)
- 	} else if (!strcmp(argv[0], "main")) {
- 		*refs = get_main_ref_store(the_repository);
- 	} else if (skip_prefix(argv[0], "submodule:", &gitdir)) {
--		struct strbuf sb = STRBUF_INIT;
+diff --git a/odb.c b/odb.c
+index 2f8a70a90c..5fe081496f 100644
+--- a/odb.c
++++ b/odb.c
+@@ -247,12 +247,6 @@ void odb_add_to_alternates_file(struct object_database *odb,
+ 	odb_add_alternate_recursively(odb, dir, 0);
+ }
+ 
+-struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
+-						const char *dir)
+-{
+-	return odb_add_alternate_recursively(odb, dir, 0);
+-}
 -
--		if (!repo_submodule_path_append(the_repository,
--						&sb, gitdir, "objects/"))
--			die("computing submodule path failed");
--		odb_add_to_alternates_memory(the_repository->objects, sb.buf);
--		strbuf_release(&sb);
+ struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
+ 						    const char *dir, int will_destroy,
+ 						    struct odb_source **prev_source)
+diff --git a/odb.h b/odb.h
+index 54548efc55..9025239df5 100644
+--- a/odb.h
++++ b/odb.h
+@@ -258,14 +258,6 @@ int odb_has_alternates(struct object_database *odb);
+ void odb_add_to_alternates_file(struct object_database *odb,
+ 				const char *dir);
+ 
+-/*
+- * Add the directory to the in-memory list of alternate sources (along with any
+- * recursive alternates it points to), but do not modify the on-disk alternates
+- * file.
+- */
+-struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
+-						const char *dir);
 -
- 		*refs = repo_get_submodule_ref_store(the_repository, gitdir);
- 	} else if (skip_prefix(argv[0], "worktree:", &gitdir)) {
- 		struct worktree **p, **worktrees = get_worktrees(the_repository);
+ /*
+  * Read an object from the database. Returns the object data and assigns object
+  * type and size to the `type` and `size` pointers, if these pointers are
 
 -- 
 2.55.0.979.g7e5102b832.dirty
