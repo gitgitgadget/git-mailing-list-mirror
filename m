@@ -1,322 +1,437 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3681938A728
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 18:23:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C84A357A25
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 18:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788373439; cv=none; b=RcjvqA4aw/kXFs01TNO/NZqM5wiUD+mKZfifYcxCjgHAtbjjL+LRKR1djC78mxhOrcNi1KJz59s4IQbM9Xz30qvf2t147hiWJY3ZyotNGGmk3v1oHf0nPhyRylmajAOpjF4eheUBoPnpqkZcHAJIb34b/dFd4BjCO0TUsj8yoeE=
+	t=1788373747; cv=none; b=Z7BCmhJ4ag5kKlJB0VeRmBKRwIlKptWkhF4O0Lol/+BANO2bKWmaHS+bntTSfTgDDjvyuVE8zeZeAF1xMNiMSzD4hfS7rN0nQ0IWPQW+EXcsV3VnEz8UZuExFgs5zoAAS3zRkBqZ7lkjtJKw63pIcslhpWuyqgUJj6XHgAfWL98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788373439; c=relaxed/simple;
-	bh=Do+9uG2DBSMD1HIKYvoEmFoUiAA45P+7iGKYVtuvcqs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UV0hPOxbRZQmNFHH5TwbHx67v9mRE12luR1xw1RPKe73RJC6pVWYqZgBTJ4yXVZNVKouq0uF+a1NfZ9ljw+NZZgUQ/VBTcEXoJirO7ulqDWRMovJ0jz9EgNcCRu/alxNZ80toaQfrYrO9qK/kkqwjo2ilHhTTtnDDjDRqvTGLRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HeRZs7wf; arc=none smtp.client-ip=209.85.219.49
+	s=arc-20240116; t=1788373747; c=relaxed/simple;
+	bh=zPCn01oYH64jokNRG/aavIfwHzeYnWyNNwbW9l8FOqw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=o3QTTaiXjTiC3HV7UDQ1QzY2UuY4DymGrmtqrDO480zW7fVOvSEGzlyRlw8mOb8ef1ycE7c95CVphWopkd/wtL5EjldOo1H65Byz9y49HrVG7S/lJmT2ZJkDdtsr/o/dXA2v5vaV/pYInPTohbVayfcq2w0nekKaNuMP0knIOhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sMHZuu9q; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HeRZs7wf"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-90ce08834feso20219106d6.0
-        for <git@vger.kernel.org>; Wed, 02 Sep 2026 11:23:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sMHZuu9q"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2d58efc7356so18592105ad.1
+        for <git@vger.kernel.org>; Wed, 02 Sep 2026 11:29:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788373437; x=1788978237; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jXwEEhtrfSgzkRNvOVNPp41tyJnhVAPFxz8MlOw/jE8=;
-        b=HeRZs7wfObIBrIVtNGfB8w/h8sGQAnNWLqh8SDWPU8O5nDGXYjencfoLCboRH8n3qC
-         oGntOIWVgTeYdl1oxzOGeV4tCQnTCrVbCrtGPPQsVvG0spcYQGIlxvld1e+T6DtFzeRj
-         ZJmUDMJMaVSHHUesadwAN3Czow6368a+UvRDDpo/XI0VYKAly/WMhrRs6K5PtSx+KEOS
-         jPQVlQCg3YxG/8xsxiwd9C/eCkaEv21ikO4tyq4g1PFV6F3Q25AnXYXT6BQO+AOkSfhQ
-         6b4pO13JnpaoLLNrznM8SUOPz5bj3UjdGzMIce+rD5l8AXOSeryea7QLFGpzAwX38ds4
-         IX/w==
+        d=gmail.com; s=20251104; t=1788373744; x=1788978544; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=9fUXHEhMyMy62DWaW+PxIj0xSV970hOHJSpKPxPJbA4=;
+        b=sMHZuu9qPCkbwZJJBribCEstgwwR8ILJO4RJKAO19o+MDRh+b9KI49Vm+qzCQIklrm
+         At04d7UPhejmmQZdjOycQwyetTuJ7GTX/sRtdMdZ3TaOENq7Dlm6Ybsf04f060qFGeb4
+         5o7Zp0jrpQAbUVUHI9/sksehiwwEHMdQ6ZvcyFHbg7hmUAXhCd+OIB+tiNzJ3aPmbzdu
+         rpFTObuWzpxE+gGSHuTryUeH6FsT+gAIOL+j8tz9Wiw7CnlepjNkrKD4mc+3/lAD4Wxy
+         q+QlHtxgVKm9GCO/MU52+C2zMuWjQCQ+dRFoSg03Hj/7suFNmXFibKK/f2B6+bL/HbLI
+         dyJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788373437; x=1788978237;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jXwEEhtrfSgzkRNvOVNPp41tyJnhVAPFxz8MlOw/jE8=;
-        b=NjGzHF5KD/ZRzBGlvvnutAOieaPAxmnor30nrL2dh3OiLn2r01F0tA1TUHbyVMMkQa
-         nEfQHNosDE3/3hpPobEGL7pRWLMSORhFwygIxGILswU5riKaxd5fyej2Z5SzeD1+n3yF
-         UOgoTr+0tIHN9jIEPKDxOO0pcU3wiYk2RplYYD4/ia6WybW+x07pCGTTfYXhBe0NGFxS
-         ljvn3FaaJhV+WkZaNLDYIfmRpbZHUbzlyCkPML9RqTcfHg9cpoNXbMBMcA82QU2Bc25v
-         NvGoipLPdniczvs1k7nOgbyIEkuJS6NTQtvQR3cMmQirAIUmmwxpjbhmtbdBixlYXSAP
-         w1EA==
-X-Forwarded-Encrypted: i=1; AHgh+Rr8SZultMo2dUqtRCbq+mS66rHAfw5YnL7pZSwO6w6OSXcZUu9RrEnfa0AwoHBmzG/D698=@vger.kernel.org
-X-Gm-Message-State: AFuF++nDtbTulvTjNgUSOQOMBX6De0YQ7IKKhsqQ56c7EeD928CWabDP
-	gYLSxjBS6leg6BxsyBS5HK5nAcoE0tFCpHVx9JAVIEy3c43jptbTTOgf
-X-Gm-Gg: AR+sD13CSRm1a5+ZzGwWv/IQsfTzZxVBZeFb3a4/ClK5OsRZPEy2V5QFAokHYUqRYE7
-	bTVxQALEb6X05UluOx45TDO3gA0+LDBsscSAE396ffrQjjV/G9T1yxy6p2mBvl0xo0V3me9i2W2
-	0GvhG3yOAiGt1B6X9+vlaXG7Oil3uQ+LztRXX1hfvWhptLl37S7CQDyozrBVdK5wAV71zOos1cw
-	CZnghIKE2qVfKFYhVvdRF2bjQ8yERfNpuAD+iwd6cw7iH5G1yeBGsU8y60RWbem9eVYe741G4s/
-	/H5AaBBijMlQriU8o0NCJAaVKN8jh96WOVNGWBrQFq+wraezs3SIxhjxgdq7h0FPuhE0pxgA3FC
-	LUr9shsJf7t4cvWQ01R9pcauJ65JwIlQlWTRhto1iaMqm7vX+YtrYDrZbvdVgTDofyS4RzF+9XC
-	XWiE1GPIoxKpRdwn5s3zYqUCgpSDgwVrm4N66Jkbf8uvqIkvJ+lqa4idryJY1GEqnUpJU+NzMjs
-	uvfm8visKIRyLPWRKGlrhn316y+9Gm59G4idXYMMLlCUARJQgBAjh7tRLo+mpSRQPr1W7dayMTF
-	HVWVug8qdNmp+QEhQrCdlFmiJ0GzmrHSObLmim9rFgiCMJDHbnkQPXo+0cICt43Z2ALyrAlwD1a
-	R8qWYiRITzCBuag==
-X-Received: by 2002:a05:620a:1989:b0:937:d6e8:59b0 with SMTP id af79cd13be357-93960de248dmr856178185a.10.1788373436657;
-        Wed, 02 Sep 2026 11:23:56 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9395f398a18sm269332785a.37.2026.09.02.11.23.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Sep 2026 11:23:56 -0700 (PDT)
-Message-ID: <f9de9449-2e32-483d-937d-45b847143b29@gmail.com>
-Date: Wed, 2 Sep 2026 14:23:55 -0400
+        d=1e100.net; s=20251104; t=1788373744; x=1788978544;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9fUXHEhMyMy62DWaW+PxIj0xSV970hOHJSpKPxPJbA4=;
+        b=iW3TqCCNQC8WSD1ejUVBoVOgCU0/DU8C0IMRMme3y8wFxEiKbDkgnlv4cpbHqSPLsN
+         eaIs6fTQc2gKZDJFwkbM2jHnREZlS9aZofpiEbr4/ow0EsiugZF5FS8JgcSW+nq0ujQB
+         uXgq6lkGCXeL9aigHc9g3JhhPeS1ir6nr5cNhXefTTxb3cWjSFN7o4SM+c9TZsXf7hph
+         T5DjGXU4oTK3O0cXWgW0nFvYBeMttaARA5KwwH0FpNOkloR8+uvZt5r5tCdiyXiLrWVi
+         zK5uLryItr+uH9x2yNjWg79shIDcNnw+DAFj2MmvrYTnW7y2FdRHQK0yqh2GBXUP6tp3
+         pKZQ==
+X-Gm-Message-State: AFuF++nFO+YPHeUifcP0PbDcVXE/VpxXgpQTMETDUHaKn0ZjWBt5QMg0
+	XETI/7jdIg7gi2+euGx9UH7Su1Ml7f4+sorxhyW/xg7U/FUJnJya/UGtLMBy7A==
+X-Gm-Gg: AYBFou2bAk7tT8MYwSvzHP1/rJ5OxOdrKtgn9Rnj+B/HmeQgmhmnu/2PpxigufedbWh
+	4UBI4Bo2EZ55e7yUSU14Rd7rMAt9eJRGTp3hjM2F5XPeECg3KYJ5Cl0Y4vrFrfQ+1yYiYTA92zE
+	mkbPFS+TWc38QzIUStyhk6Ct8WMuTt+Ofm0e3Yz4o4OUWDsgxc9kpwxEtc82Dosn6cbKx5Z6BzI
+	Nwl4LR4Owx633C/0uiC+b4Xl427G24ypmzEFlnbl2HYyg9QZAma1onCwuLIJK+bWi9/jT14X8OR
+	Vh4l61dsIjL9bB+c+nYwn/0Ab7l2J+OAXF217o2wDzClz5f8OmpVfd39kcwgdEphhKtqYYugeds
+	LFVkBRlfilwLbDn5EpVQWLo/Xq2HNqXnbs9sI4f/e3oxKPtie7OEilylAImTb2OsQettBbGciF/
+	PVyV5KCYAh0ALB+UvL0+cx+IIaPgEOxWXKoDpQH7lYw9MguCL872zmTolA1IyVbQ==
+X-Received: by 2002:a17:90b:2787:b0:381:1c96:829b with SMTP id 98e67ed59e1d1-39aede91c1bmr10997777a91.3.1788373744343;
+        Wed, 02 Sep 2026 11:29:04 -0700 (PDT)
+Received: from [127.0.0.1] ([20.64.182.58])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39b08766a2dsm620951a91.15.2026.09.02.11.29.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Sep 2026 11:29:03 -0700 (PDT)
+Message-Id: <pull.2364.v4.git.git.1788373743.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
+References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 02 Sep 2026 18:29:01 +0000
+Subject: [PATCH v4 0/2] checkout -m: refine autostash fallback
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] send-pack: avoid sending the whole tree when pushing
- from a shallow clone
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>
-References: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
- <pull.2208.v2.git.1787684776048.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.2208.v2.git.1787684776048.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-On 8/25/2026 3:06 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> When pushing from a shallow clone, even if we only have made a small
-> one-line change to a tiny file, we often push the entire toplevel tree
-> of files.  For large repositories, this could be gigabytes instead of
-> kilobytes.
-> 
-> The reason for this is that the push likely lacks the commits the
-> receiver has advertised, so it walks back to its shallow grafts.  Since
-> it doesn't know that the server has anything, it sends the entire tree
-> for the graft.  It would also send the parents of the shallow graft,
-> except the shallow clone doesn't have those by construction.  We thus
-> are forced to assume that the server has the parents of the shallow
-> graft -- if it doesn't, the server's receive-pack will reject the push.
+Avoiding checkout -m autostash retries when no tracked local changes exist
+and visually separating autostash conflict advice from the subsequent
+branch-switch message. Addresses #leftoverbits from here:
+https://lore.kernel.org/git/cfd09dbf-8d77-4464-8030-3a0ffb4aeae7@gmail.com/
 
-I was ready to assume this patch was fully correct, but then I asked
-an AI agent to review it and it found an interesting subtlety that
-puts the entire approach in question. It also presents an alternative
-approach that is much simpler and helps improve things immediately.
+Changes in v4:
 
-The gist is that we can attempt to push a shallow object to a remote
-that _doesn't have that commit or its parent_. This gets rejected by
-the remote as not allowing a shallow update.
+ * Conflicts now exit with status 1 like merge-tree, other failures exit 128
+   so exit 1 unambiguously means conflicts. Stash changes split into their
+   own commit.
+ * The autostash apply helpers use the return value (enum
+   stash_apply_result) instead of an out-parameter, and only claim conflicts
+   when git stash apply actually reported them.
 
-The problem occurs when this shallow update is attempted alongside
-another non-shallow branch being pushed that also has some "new"
-objects reachable, so the "assume the remote has the shallow
-commit" condition leads to novel failures due to that other ref
-update not having full connectivity.
+Changes in v3:
 
-Here's a test for t5538 that the AI agent generated, and I
-massaged into something more understandable/readable:
+ * Use enum for git stash return values, to separate conflict from generic
+   error.
 
-# A ref that passes the client's checks can still be rejected by the receiver.
-# Its shallow graft must not trim objects needed by another ref in the shared
-# pack, since a non-atomic push should still allow that other ref to succeed.
-#
-# The client has two unrelated shallow histories ("x" marks a shallow graft).
-# Blob O is present in A1 and is reintroduced by cY on topic:
-#
-#                 contains O
-#                    |
-#       A0----------A1(x)---cX          refs/heads/A
-#
-#       B0----------B1(x)---cY          refs/heads/topic
-#                              \
-#                               contains O
-#
-# The receiver has only the B history.  Both of its refs A and B point to
-# the same B1 commit as full history. It has neither A1 nor blob O in its
-# object database.
-#
-# The '--force' option lets the force-push of A from client to receiver
-# pass the client's checks, but the receiver rejects A because it will not
-# adopt A1 as a new shallow root.
-test_expect_success 'shallow push does not over-exclude via a remotely rejected ref' '
-	# origin: two unrelated histories; only branch A has blob "shared"
-	git init remote-reject-origin &&
-	(
-		cd remote-reject-origin &&
-		git checkout -b A &&
-		test_commit --no-tag has-shared sh shared &&
-		test_commit --no-tag A1 &&
-		git switch --orphan B &&
-		test_commit --no-tag B0 &&
-		test_commit --no-tag B1
-	) &&
+Changes in v2:
 
-	# receiver: commit B1 is exposed as both B and A and lacks A1
-	git init --bare remote-reject-receiver.git &&
-	(
-		cd remote-reject-origin &&
-		git remote add receiver ../remote-reject-receiver.git &&
-		git push receiver B:refs/heads/B B:refs/heads/A
-	) &&
+ * Simplify logic and combine to one commit.
+ * Test full output with test_cmp.
 
-	# client: each remote branch tip is a shallow graft
-	git clone --depth=1 --no-single-branch \
-		"file://$(pwd)/remote-reject-origin" remote-reject-client &&
+Harald Nordgren (2):
+  stash: reserve exit status 1 for conflicts
+  checkout: separate autostash conflict advice from branch-switch
+    message
 
-	old_a=$(cd remote-reject-receiver.git && git rev-parse A) &&
-	(
-		cd remote-reject-client &&
-		git remote add receiver ../remote-reject-receiver.git &&
+ Documentation/git-stash.adoc |  9 +++++
+ builtin/checkout.c           | 15 ++++----
+ builtin/stash.c              | 32 ++++++++++++-----
+ sequencer.c                  | 66 ++++++++++++++++++++++--------------
+ sequencer.h                  | 19 +++++++----
+ stash.h                      | 21 ++++++++++++
+ t/t3903-stash.sh             | 25 ++++++++++++--
+ t/t7201-co.sh                | 16 ++++++---
+ 8 files changed, 149 insertions(+), 54 deletions(-)
+ create mode 100644 stash.h
 
-		# Force makes A pass the client-side non-fast-forward check. The
-		# receiver will reject it because A1 is a new shallow root and
-		# receive.shallowUpdate is disabled.
-		git checkout A &&
-		test_commit --no-tag cX &&
 
-		# topic is independently valid but needs the shared blob from A1.
-		git checkout -b topic B &&
-		test_commit --no-tag reintroduce sh shared &&
+base-commit: 1630431f326e15fcde608827b5ff38422528eb59
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2364%2FHaraldNordgren%2Fhn%2Fgit-checkout-m-leftoverbits-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2364/HaraldNordgren/hn/git-checkout-m-leftoverbits-v4
+Pull-Request: https://github.com/git/git/pull/2364
 
-		test_must_fail git push --force receiver A topic 2>err &&
-		test_grep "remote rejected.*shallow update not allowed" err
-	) &&
+Range-diff vs v3:
 
-	# The non-atomic push should reject A without affecting topic.
-	(
-		cd remote-reject-receiver.git &&
-		test "$old_a" = "$(git rev-parse A)" &&
-		git rev-parse --verify topic
-	)
-'
+ 1:  8e1979dd6c ! 1:  ff43221802 checkout: separate autostash conflict advice from branch-switch message
+     @@ Metadata
+      Author: Harald Nordgren <haraldnordgren@gmail.com>
+      
+       ## Commit message ##
+     -    checkout: separate autostash conflict advice from branch-switch message
+     +    stash: reserve exit status 1 for conflicts
+      
+     -    "git checkout -m" stashes the user's local changes when it cannot
+     -    perform the checkout, and then applies the stash.  When applying the
+     -    stash results in conflicts, the advice on how to deal with them is
+     -    printed directly on top of the branch-switch message ("Switched to
+     -    branch ..."), making the two hard to tell apart.  Print a blank line
+     -    in between so that the advice and the branch-switch message are
+     -    visually distinct.
+     +    "git stash apply", "pop" and "branch" exit with status 1 both when
+     +    applying the stash entry resulted in conflicts and when they fail for
+     +    other reasons, so callers cannot tell the two apart.
+      
+     -    To make this possible, "git stash apply", "pop" and "branch" now exit
+     -    with status 2 when applying the stash entry resulted in conflicts, in
+     -    which case the stash entry is left in place; other failures exit with
+     -    status 1, as before.  The exit statuses are documented in the "git
+     -    stash" documentation.
+     +    Follow the convention of "git merge-tree" and the merge strategies,
+     +    which exit with status 1 to indicate conflicts and with a different
+     +    non-zero status for errors: those subcommands now exit with status 1
+     +    only when applying the stash entry resulted in conflicts, in which
+     +    case the stash entry is left in place, and exit with status 128, the
+     +    status die() uses, when they fail for other reasons.  Document the
+     +    exit statuses.
+     +
+     +    cmd_stash() used to collapse the return values of the subcommand
+     +    implementations to a boolean.  It now maps negative values, which
+     +    signal a failure, to 128 and passes everything else through as-is.
+     +    The only implementations that return a positive value are "apply",
+     +    "pop" and "branch", which return the value of do_apply_stash():
+     +    "apply" returns it directly, and "pop" and "branch" drop the stash
+     +    entry, via do_drop_stash(), which always returns 0, only when the
+     +    application succeeded.  The positive value is always 1, as
+     +    do_apply_stash() only returns a positive value when the three-way
+     +    merge was unclean.
+     +
+     +    Make the convention explicit by introducing enum stash_apply_result
+     +    with the values STASH_APPLY_CLEAN, STASH_APPLY_CONFLICT and
+     +    STASH_APPLY_ERROR, and use it for the in-process autostash helpers,
+     +    too.  They spawn "git stash apply" and can now tell conflicts apart
+     +    from other failures, e.g. a crash or death by signal of the child,
+     +    which map to exit statuses above 1.  Since we know the stash entry
+     +    was saved, tell users so in the error message instead of leaving them
+     +    wondering what happened to their stashed changes.
+      
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+     @@ Documentation/git-stash.adoc: include::includes/cmd-config-section-all.adoc[]
+      +EXIT STATUS
+      +-----------
+      +
+     -+The `git stash` subcommands exit with status 0 on success and non-zero
+     -+on failure.  The subcommands that apply a stash entry, i.e. `apply`,
+     -+`pop` and `branch`, exit with status 2 when applying the stash entry
+     -+resulted in conflicts, in which case the stash entry is left in place.
+     -+Other failures exit with status 1 (usage errors exit with status 129).
+     ++The `git stash` subcommands exit with status 0 on success.  The
+     ++subcommands that apply a stash entry, i.e. `apply`, `pop` and `branch`,
+     ++exit with status 1 when applying the stash entry resulted in conflicts,
+     ++in which case the stash entry is left in place, and with a non-zero
+     ++status other than 1 when they fail for other reasons.
+      +
+       
+       SEE ALSO
+       --------
+      
+     - ## builtin/checkout.c ##
+     -@@ builtin/checkout.c: static int switch_branches(const struct checkout_opts *opts,
+     - 	int flag, writeout_error = 0;
+     - 	int do_merge = 1;
+     - 	int created_autostash = 0;
+     -+	enum stash_apply_result autostash_res = STASH_APPLY_CLEAN;
+     - 	struct strbuf old_commit_shortname = STRBUF_INIT;
+     - 	struct strbuf autostash_msg = STRBUF_INIT;
+     - 	const char *stash_label_base = NULL;
+     -@@ builtin/checkout.c: static int switch_branches(const struct checkout_opts *opts,
+     - 				git_config_push_parameter(cfg.buf);
+     - 				strbuf_release(&cfg);
+     - 			}
+     --			apply_autostash_ref(the_repository,
+     --					    "CHECKOUT_AUTOSTASH_HEAD",
+     --					    new_branch_info->name,
+     --					    "local",
+     --					    stash_label_base,
+     --					    autostash_msg.buf);
+     -+			autostash_res = apply_autostash_ref(the_repository,
+     -+				    "CHECKOUT_AUTOSTASH_HEAD",
+     -+				    new_branch_info->name,
+     -+				    "local",
+     -+				    stash_label_base,
+     -+				    autostash_msg.buf);
+     - 		}
+     - 		if (ret) {
+     - 			branch_info_release(&old_branch_info);
+     -@@ builtin/checkout.c: static int switch_branches(const struct checkout_opts *opts,
+     - 	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit && new_branch_info->commit != old_branch_info.commit)
+     - 		orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit);
+     - 
+     -+	if (autostash_res == STASH_APPLY_CONFLICT && !opts->quiet)
+     -+		fputc('\n', stderr);
+     - 	update_refs_for_switch(opts, &old_branch_info, new_branch_info);
+     - 
+     - 	if (created_autostash) {
+     -
+       ## builtin/stash.c ##
+      @@
+       #include "object-name.h"
+     @@ builtin/stash.c: static void unstage_changes_unless_new(struct object_id *orig_t
+       
+      -static int do_apply_stash(const char *prefix, struct stash_info *info,
+      -			  int index, int quiet,
+     +-			  const char *label_ours, const char *label_theirs,
+     +-			  const char *label_base)
+      +static enum stash_apply_result do_apply_stash(const char *prefix,
+      +					      struct stash_info *info,
+      +					      int index, int quiet,
+     - 			  const char *label_ours, const char *label_theirs,
+     - 			  const char *label_base)
+     ++					      const char *label_ours,
+     ++					      const char *label_theirs,
+     ++					      const char *label_base)
+       {
+     + 	int clean, ret;
+     + 	int has_index = index;
+      @@ builtin/stash.c: static int do_apply_stash(const char *prefix, struct stash_info *info,
+     - 	clean = merge_ort_nonrecursive(&o, head, merge, merge_base);
+       
+       	/*
+     --	 * If 'clean' >= 0, reverse the value for 'ret' so 'ret' is 0 when the
+     + 	 * If 'clean' >= 0, reverse the value for 'ret' so 'ret' is 0 when the
+      -	 * merge was clean, and nonzero if the merge was unclean or encountered
+      -	 * an error.
+     -+	 * Translate the value of 'clean' so 'ret' is STASH_APPLY_CLEAN
+     -+	 * when the merge was clean, STASH_APPLY_CONFLICT when it was
+     -+	 * unclean, and a negative value if it encountered an error.
+     ++	 * merge was clean, and 1 if the merge was unclean or a negative value
+     ++	 * if it encountered an error.
+       	 */
+     --	ret = clean >= 0 ? !clean : clean;
+     -+	ret = clean >= 0 ? (clean ? STASH_APPLY_CLEAN : STASH_APPLY_CONFLICT)
+     -+			 : clean;
+     + 	ret = clean >= 0 ? !clean : clean;
+       
+     - 	if (ret < 0)
+     - 		rollback_lock_file(&lock);
+     -@@ builtin/stash.c: static int do_apply_stash(const char *prefix, struct stash_info *info,
+     - 
+     - 	if (has_index) {
+     - 		if (reset_tree(&index_tree, 0, 0))
+     --			ret = -1;
+     -+			ret = STASH_APPLY_ERROR;
+     - 	} else {
+     - 		unstage_changes_unless_new(&c_tree);
+     - 	}
+      @@ builtin/stash.c: int cmd_stash(int argc,
+       	strbuf_addf(&stash_index_path, "%s.stash.%" PRIuMAX, index_file,
+       		    (uintmax_t)pid);
+     @@ builtin/stash.c: int cmd_stash(int argc,
+      +	if (fn) {
+      +		ret = fn(argc, argv, prefix, repo);
+      +
+     ++		/*
+     ++		 * The subcommand implementations return 0 on success, a
+     ++		 * negative value on failure, and STASH_APPLY_CONFLICT
+     ++		 * when applying a stash entry resulted in conflicts.
+     ++		 * Map failures to 128, the status die() uses, so that
+     ++		 * exit status 1 unambiguously indicates conflicts.
+     ++		 */
+      +		if (ret < 0)
+     -+			return 1;
+     ++			return 128;
+      +		return ret;
+      +	} else if (!argc)
+       		return !!push_stash_unassumed(0, NULL, prefix, repo);
+     @@ sequencer.c: static int apply_save_autostash_oid(const char *stash_oid, int atte
+       			strvec_pushf(&child.args, "--label-base=%s", label_base);
+       		strvec_push(&child.args, stash_oid);
+       		ret = run_command(&child);
+     -+		if (ret && ret != STASH_APPLY_CONFLICT)
+     ++		if (ret > 1)
+      +			ret = STASH_APPLY_ERROR;
+       	}
+       
+     @@ sequencer.c: static int apply_save_autostash_oid(const char *stash_oid, int atte
+       				  "do not want to resolve them now, run \"git reset --hard\" and\n"
+       				  "apply the local changes later by running \"git stash pop\".\n"));
+      +		else if (attempt_apply)
+     -+			ret = error(_("could not apply autostash"));
+     ++			ret = error(_("could not apply autostash; "
+     ++				      "your changes are safe in the stash"));
+       		else
+       			fprintf(stderr,
+       				_("Autostash exists; creating a new stash entry.\n"
+     @@ stash.h (new)
+      +	 * The stash could not be applied because it resulted in
+      +	 * conflicts.  The stash entry is left in place.  The "git stash
+      +	 * apply", "pop" and "branch" subcommands exit with this status
+     -+	 * in this case.
+     ++	 * in this case, mirroring the convention of "git merge-tree" and
+     ++	 * the merge strategies.
+      +	 */
+     -+	STASH_APPLY_CONFLICT = 2,
+     ++	STASH_APPLY_CONFLICT = 1,
+      +
+      +	/* Something went wrong. */
+      +	STASH_APPLY_ERROR = -1,
+     @@ stash.h (new)
+      +#endif /* STASH_H */
+      
+       ## t/t3903-stash.sh ##
+     -@@ t/t3903-stash.sh: test_expect_success 'apply with custom conflict labels' '
+     +@@ t/t3903-stash.sh: test_expect_success 'stash.index=false overridden by --index' '
+     + 	test_cmp expect file
+     + '
+     + 
+     +-test_expect_success 'apply with custom conflict labels' '
+     ++test_expect_success 'apply exits 1 on conflicts' '
+     + 	git reset --hard initial &&
+     + 	test_commit label-base conflict-file base-content &&
+       	echo stashed >conflict-file &&
+       	git stash push -m "stashed" &&
+       	test_commit label-upstream conflict-file upstream-content &&
+      -	test_must_fail git -c merge.conflictStyle=diff3 stash apply --label-ours=UP --label-theirs=STASH &&
+     -+	test_expect_code 2 git -c merge.conflictStyle=diff3 stash apply --label-ours=UP --label-theirs=STASH &&
+     ++	test_expect_code 1 git -c merge.conflictStyle=diff3 stash apply --label-ours=UP --label-theirs=STASH &&
+       	test_grep "^<<<<<<< UP" conflict-file &&
+       	test_grep "^||||||| Stash base" conflict-file &&
+       	test_grep "^>>>>>>> STASH" conflict-file
+     @@ t/t3903-stash.sh: test_expect_success 'apply with empty conflict labels' '
+       	git stash push -m "stashed" &&
+       	test_commit empty-label-upstream conflict-file upstream-content &&
+      -	test_must_fail git stash apply --label-ours= --label-theirs= &&
+     -+	test_expect_code 2 git stash apply --label-ours= --label-theirs= &&
+     ++	test_expect_code 1 git stash apply --label-ours= --label-theirs= &&
+       	test_grep "^<<<<<<<$" conflict-file &&
+       	test_grep "^>>>>>>>$" conflict-file
+       '
+       
+     -+test_expect_success 'apply exits 2 on conflicts and keeps the stash entry' '
+     ++test_expect_success 'pop exits 1 on conflicts and keeps the stash entry' '
+      +	git reset --hard initial &&
+     -+	test_commit exit-code-base conflict-file base-content &&
+     -+	echo stashed >conflict-file &&
+     -+	git stash push -m stashed &&
+     -+	test_commit exit-code-upstream conflict-file upstream-content &&
+     -+	test_expect_code 2 git stash apply &&
+     ++	echo stashed >file &&
+     ++	git stash push -m pop-stashed &&
+     ++	test_commit pop-upstream file upstream-content &&
+     ++	test_expect_code 1 git stash pop &&
+      +	git stash list >list &&
+     -+	test_grep stashed list
+     ++	test_grep pop-stashed list
+      +'
+      +
+     -+test_expect_success 'pop exits 2 on conflicts and keeps the stash entry' '
+     ++test_expect_success 'stash branch exits with a non-1 status on errors' '
+      +	git reset --hard initial &&
+     -+	test_commit pop-exit-code-base pop-file base-content &&
+     -+	echo stashed >pop-file &&
+     -+	git stash push -m pop-stashed &&
+     -+	test_commit pop-exit-code-upstream pop-file upstream-content &&
+     -+	test_expect_code 2 git stash pop &&
+     ++	echo stashed >file &&
+     ++	git stash push -m branch-stashed &&
+     ++	test_expect_code 128 git stash branch conflicting-branch refs/heads/does-not-exist &&
+      +	git stash list >list &&
+     -+	test_grep pop-stashed list
+     ++	test_grep branch-stashed list
+      +'
+      +
+       test_expect_success 'stash show --include-untracked includes untracked files' '
+       	git reset --hard &&
+       
+     -
+     - ## t/t7201-co.sh ##
+     -@@ t/t7201-co.sh: test_expect_success 'checkout -m creates a recoverable stash on conflict' '
+     - 	test_must_fail git checkout side 2>stderr &&
+     - 	test_grep "Your local changes" stderr &&
+     - 	git checkout -m side >actual 2>&1 &&
+     --	test_grep "resulted in conflicts" actual &&
+     --	test_grep "git stash drop" actual &&
+     --	test_grep "git stash pop" actual &&
+     --	test_grep "The following paths have local changes" actual &&
+     -+	cat >expect <<-EOF &&
+     -+	Your local changes are stashed, however applying them
+     -+	resulted in conflicts.  You can either resolve the conflicts
+     -+	and then discard the stash with "git stash drop", or, if you
+     -+	do not want to resolve them now, run "git reset --hard" and
+     -+	apply the local changes later by running "git stash pop".
+     -+
+     -+	Switched to branch ${SQ}side${SQ}
+     -+	The following paths have local changes:
+     -+	M	one
+     -+	EOF
+     -+	test_cmp expect actual &&
+     - 	git log -p -1 --format="%gs%n%B" -g --diff-merges=1 refs/stash >actual &&
+     - 	sed /^index/d actual >actual.trimmed &&
+     - 	cat >expect <<-EOF &&
+ -:  ---------- > 2:  935fa0a9ae checkout: separate autostash conflict advice from branch-switch message
 
-This test passes before this patch, but fails after.
-
-As I was working on this test case, the key step that will fail with the
-current patch is the test_grep here:
-
-	test_must_fail git push --force receiver A topic 2>err &&
-	test_grep "remote rejected.*shallow update not allowed" err
-
-because the error that will be returned instead is more of a hard failure.
-This failure "at grep time" is something I added. If this line doesn't
-exist, then the 'git rev-parse --verify topic' fails which shows that we
-are able to break the receiver repo with this push, as the second ref
-update is accepted even though the packfile isn't complete.
-
-> +static int check_to_send_update(const struct ref *ref, const struct send_pack_args *args);
-> +
-> +/*
-> + * Add the shallow grafts (nr_parent == -1), which are reachable from the
-> + * refs being pushed, to the pack boundary ("haves") as uninteresting
-> + * (negative) tips so the generated pack leaves out everything beneath them.
-
-This "which are reachable from the refs being pushed" is the key problem,
-I think. We need to verify that the shallow commits are reachable from
-the refs advertised by the remote.
-
-> + * Walk only from the pushed tips, and only until a graft: using a graft
-> + * that does not bound the pushed history could exclude an object we are
-> + * genuinely sending (if it is also reachable from that unrelated graft).
-> + * Stop early at any commit the peer already has, since it is a negative
-> + * the peer can use and the graft beneath it would be redundant.
-> + */
-> +static void append_reachable_shallow_grafts(struct repository *r,
-> +					    const struct ref *refs,
-> +					    const struct oid_array *advertised,
-> +					    const struct oid_array *negotiated,
-> +					    const struct send_pack_args *args,
-> +					    struct oid_array *haves)
-
-When I asked the agent to implement something that instead cared about
-whether the remote refs could reach the shallow commits, it deleted this
-method in favor of having your push.shallowexcludeboundary setting enable
-push.negotiate when the local repo is shallow:
-
-	repo_config_get_bool(r, "push.shallowexcludeboundary",
-			     &shallow_exclude_boundary);
-	if (is_repository_shallow(r) && shallow_exclude_boundary)
-		push_negotiate = 1;
-
-That was sufficient to pass the new test, as well as all other tests you
-added, except one. I'm not sure if we need a new option or if we should
-recommend push.negotiate in more places (plus these new tests).
-
-These new tests are great:
-
-> +test_expect_success 'shallow push only pushes what is necessary' '
-> +test_expect_success 'push.shallowExcludeBoundary=false sends full tree' '
-> +test_expect_success 'shallow push does not over-exclude for an accepted ref via a rejected one' '
-
-This test that you are adding is hinting at some of this behavior of the
-new test I added, except the multi-ref push causes unexpected behavior:
-
-> +# push.shallowExcludeBoundary (default true) omits the shallow boundary
-> +# snapshot from the pack, since an ordinary receiver already has it.  The
-> +# exception is a receiver willing to adopt a *new* shallow root
-> +# (receive.shallowUpdate): it genuinely needs that snapshot, so the default
-> +# optimization leaves it unable to graft the new root.  Verify the receiver
-> +# rejects such a push (rather than corrupting itself), and that setting the
-> +# config to false restores the full snapshot and lets the push succeed.  This
-> +# is the tradeoff that motivates the config knob.
-> +test_expect_success 'default push to a shallowUpdate receiver rejects a rootless snapshot' '
-> +	git init seed-origin &&
-> +	test_commit -C seed-origin s1 &&
-> +	test_commit -C seed-origin s2 &&
-> +	test_commit -C seed-origin s3 &&
-> +
-> +	# depth-2: a shallow graft at s2, pushing s3 on top of it
-> +	git clone --depth=2 "file://$(pwd)/seed-origin" seed-client &&
-> +
-> +	git init --bare seed-receiver.git &&
-> +	git --git-dir=seed-receiver.git config receive.shallowUpdate true &&
-> +
-
-Here is the chunk that doesn't work with the push.negotiate approach:
-
-> +	# Default (optimization on): the s2 boundary snapshot is withheld, so
-> +	# the receiver cannot graft the new root and rejects the push, leaving
-> +	# the ref uncreated.
-> +	test_must_fail git -C seed-client push \
-> +		"file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded 2>err &&
-> +	test_grep "remote rejected" err &&
-
-but specifically it's because the remote doesn't reject it. The client
-makes the appropriate adjustment.
-
-> +	test_must_fail git --git-dir=seed-receiver.git rev-parse --verify seeded &&
-> +
-> +	# Opt-out: the full snapshot is sent, so the same push now succeeds and
-> +	# the new shallow root is grafted.
-> +	git -C seed-client -c push.shallowExcludeBoundary=false push \
-> +		"file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded &&
-> +	git --git-dir=seed-receiver.git rev-parse --verify seeded
-> +'
-So the diff on your test becomes
-
--       # Default (optimization on): the s2 boundary snapshot is withheld, so
--       # the receiver cannot graft the new root and rejects the push, leaving
--       # the ref uncreated.
--       test_must_fail git -C seed-client push \
--               "file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded 2>err &&
--       test_grep "remote rejected" err &&
--       test_must_fail git --git-dir=seed-receiver.git rev-parse --verify seeded &&
--
--       # Opt-out: the full snapshot is sent, so the same push now succeeds and
--       # the new shallow root is grafted.
--       git -C seed-client -c push.shallowExcludeBoundary=false push \
-+       git -C seed-client rev-parse HEAD^ >expect &&
-+       git -C seed-client push \
-                "file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded &&
--       git --git-dir=seed-receiver.git rev-parse --verify seeded
-+       git --git-dir=seed-receiver.git rev-parse --verify seeded &&
-+       test_cmp expect seed-receiver.git/shallow &&
-+       git --git-dir=seed-receiver.git fsck
- '
-
-Thanks,
--Stolee
-
+-- 
+gitgitgadget
