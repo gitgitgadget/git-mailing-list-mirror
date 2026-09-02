@@ -1,80 +1,80 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8725C49F104
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:35:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E956E49F10D
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:35:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788356121; cv=none; b=JnOo+njUTwY7YZFPlkvOMtPexIK3MPCIWcPtctTkXKDLGLo5B5AsnpaoyRk+ybBarojZWTidzc1KZ75nWbVj0xTybAsoU6zDN24WTTGyYpx08CnccO41iMlEK8TZ7W1UdrCmxU6dGStw1gwuZ2OcSCltzVdr+rTjr5NhI8JV/50=
+	t=1788356124; cv=none; b=cfiMUxDG1ZwNsaH655u8sDlmoefJDOgOrshOmkParhJnIsGqo94AIVNYvaAn20FpUBZ1oxjYre8Nn4O45pAC2M6sAwSy0vPcArScmIJT+ly+rnCDhtTH3pvKFJOdqfAzw3q7nysEt2tSFyTXhxFGZAQN3JFv33COdMDxUGOFXwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788356121; c=relaxed/simple;
-	bh=RIqLVBkeeyTtgu2eMcoud/ISO9lq9vnccaqM4fI+wpI=;
+	s=arc-20240116; t=1788356124; c=relaxed/simple;
+	bh=ptya8iBbCl/fsUdYq5iBi/S4H4SM+6WLr4GVCVXv/rk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ANcePkD8bS/ONI5IO80OlzcWKDz3Vo/RTNLLB1EH6G+Q6dcqMxHbg89z/msx02Fo1MFXvPsdZLrYYlyv+vi28qQKogPNBE3V0rVBp6xINakpuau5ufEyB1DWkFIEn50AqTyrMFvz+JfmPMt5a3jiH1Z5u4qmpdvAj1xa/omv2UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dw+yXITg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aFHzOPe2; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=LrXAv4srPp2/XwLu4KwqibxsXiyArbbJxCHBfe65JVder2RVw+nhiAV/pWJHwRPIwZ8iFLn2LDVZqKnWBVWq6vSkXXWS80AqYmkFIb3ZmVKS/6C6zo337OqEYJets0hEEKzAbugQgYogo+k64ax/pIriwr2GhFn1SH4TQ7uhgoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WbOf3qk9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Npf6cVJo; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dw+yXITg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aFHzOPe2"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id C1E0C1D00049;
-	Wed,  2 Sep 2026 09:35:16 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WbOf3qk9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Npf6cVJo"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CE74D7A00D7;
+	Wed,  2 Sep 2026 09:35:19 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 02 Sep 2026 09:35:16 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 02 Sep 2026 09:35:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788356116;
-	 x=1788442516; bh=ajrMtw8j4R53XYKIE+8BGi1AxRELjmiF+gb/wyQ5LIw=; b=
-	Dw+yXITgFprMb3CrlNNwLXsoUIsNEzFxWqD8mQR3amMuiJP6NN8mhTXbSpjq1gEY
-	LZ2yIopnATwTVBqw9dP4l4Ty8k/c7EAYVrQDy7+njR5Vd/Mzbw7SMsJDr0pE8gEQ
-	jYX/GeVXytBiWzjkrOw1Wjw3VWSPipLpS+qCDHsssP7X6KA4azSFjgyRmRI2vTKL
-	tR8USvhz47K9ZHdDUqzV6dWTcgi7QhbZ8FgtcgNtw/D4l939o31n5mrY+YJGaOSB
-	4ux8vS2PMHusjPrb9bgEQe6gRr/s5jS9b66/G1c+1G8ZjOS1bKwsMjjBhSMoOupl
-	k/GoUljjO35D1UfWgn4D3A==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788356119;
+	 x=1788442519; bh=t9hsW+tLmhyhYjlZQ3DOL31zmcvFRxYHCyg/d9tUTYA=; b=
+	WbOf3qk98Jq5axll5pvww+9WhNdPqoHs/bdK3sVl/Y6CP8nUjuFeWc2z7xpmumQi
+	ZdbC3lqspOVqk5hLJDYHkzPaiSzjMV4dtWYmcnQtN0VkujfV4P5yz871HiNzRrRK
+	ju3oe1vb4Qg0NFr9lsA7UdsfrP4dOedmzjq3w6U8wYgtiiPKSLL/HDq9RD0fo5vh
+	csJWB5kdG5o989eAvy9I0gz2cZMrSUsRgpkB/DID2PCtSZTmhYPJjUykJG/4LUxi
+	Ccm0VEiUKej9xV0tZIYUbCOxpbzO+eBXAoXOjGwakEklSIDXU/S/cW6UmUu65Kc4
+	usPwT3ofWbeyNiEDGOzKFg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788356116; x=
-	1788442516; bh=ajrMtw8j4R53XYKIE+8BGi1AxRELjmiF+gb/wyQ5LIw=; b=a
-	FHzOPe2+JdFyp7+L4t+JSTvQsA5X7wwroh+N/IG2jc0HOUo25Tos1jSRQ7EihPxo
-	gGN6oclF+to4v2dPDw6yPjmui9G5Wvk3bNLTlwxHGN5PJvE1Hu9yu8B+xACeLnSa
-	XHM0GBZYAKz+5TbkrD9pOEkclEJ3aVUHGKdCR+vrrg0q2lxKgt7gm+PJVT75lL5u
-	VsM/GeLbKS3imOqb3h3kBUY8TpfPuyc2a2bOmZOrJY9kpsQurQ8/cN0dsKeCglGn
-	1oq42AVsP1aaWKKcSORgrmKzBmZGG7SsWWmilRJA9d5b45Ngg4djsDI9tHn439kT
-	O8WexWebcm7u0FK4pvi3w==
-X-ME-Sender: <xms:FCaYarSn07BzShw7FL0UfVhh4qD43tVAJ8zJFgAorbdchnqjAp_keg>
-    <xme:FCaYaiy_Tf1PtqzydGEMGuY_U_Lwtdn7ocfC_AZPFYIiQBtiuauGDbQsUfFEawr7v
-    iV5ykpTXep31FnpTn8lviF4waU87NhAEQpukboDnzsz1Q2s_x6NgiE>
-X-ME-Received: <xmr:FCaYaufjtEy6vuImi5Idc2leMPAA5RW3t0CfKYevZjDW99I-cGIObbUjJDokMTWONYc32kw>
-X-ME-Proxy-Cause: dmFkZTGrKOyneZupe5mOAQPCzJ04iP7AmLoFfKmvCbE1PXGMupxk+V2NHymWcC4MTqxXOZ
-    qKq9wTecS2icL0DdCtTOCKdnafWbnAKgdH0wDaR59e/kpg4eReC0lLpo1evFjFMIgvnYon
-    R2hs/5JOn9f3OdQ+vxHFb1QyrsNQEv+x0IdyoER3mghIqNxh/lgxkwG7av+ggFwoKfIkeu
-    C1JKjSxfbfW7SEzYHMwa58HzzfC3iAL4Xe0WqbEAZkixIKWw5MujaEcHt0BX6zRfJxMnJz
-    Bp+bTfsYkt7cMLy/SwKjfahsGUCnP+pXCap9lrxYaxGr/JafFjNSixolp5e/H25iF1cxql
-    pX2T/HuSvlsxl1REFr6qKwa0W+n8hiPiowMj5WMSw3DU5XkIdKfTi85shiwCqZCzmywcJp
-    YjGp3Ubq3xronXkgyogVg3dvBmj3vWcpcMJQHwvr5r0WmjMi2PE8pyYNoyQ8/eap8zhH3P
-    y/CuzuFOuvy2Yz3CjLk/m9GDum4zucHIZSMaDTNHZ1vzBZj5Ix5En2Rlm44l+yF5QLKUhs
-    +DDjbRkqlJhgAcOpQDmD6/BxooGeBHyWtaE2Xnv7ac78b2QQ3De2P9KzaSE4IQHAg3VXOA
-    4R6BrZIVhpnvv6Afkhn3OxyZuBU+YUJgfeTFVERmh1SADqyJoHiha4K4LlHA
-X-ME-Proxy: <xmx:FCaYamLclMDF0nPDMCEEJdcrbd6Nq5oFYXbac-y9Mmv3z_UK3NbfKw>
-    <xmx:FCaYanFfgM1oCdOGgiDBg2aZ8sI0qU9_PWsruDbfitszDaMfKCJhPw>
-    <xmx:FCaYaooULG3qxH2-5HTNsPUyG0z1bFtdr72Ph5oUqawcbhoyAfoQeg>
-    <xmx:FCaYaoRtBY3IhSbveKcJkmL2FWmfQgciCTti4zmlAEc86akbu1hi7g>
-    <xmx:FCaYauqfupORXwRgpRPTB--hvYeAi7gCkEv4RvGV1zeVbfZho3UQ896n>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788356119; x=
+	1788442519; bh=t9hsW+tLmhyhYjlZQ3DOL31zmcvFRxYHCyg/d9tUTYA=; b=N
+	pf6cVJoYIv3VUELGW0prcQ4o1OW22IlZpvyz0q/csY1v5PoVF6dwZjN0HX8FvoFE
+	g5lYvo3Auywcs/q7Y+E4E6NytnwonWmsFf8ImriICGP/FoOrWJzCBdsU3naLgCT3
+	+sRwJBdIm3zTr2gCOF4lktyflakDnbmltiSoCZoOwO3qTXUqQ+V04yhwtbDX21R1
+	TzsK1JsHU1PNCjZP2pJ7F2zVlwVbEAC4OhTx6dZ+deOA1FkPcLndA74cgJ1DntXc
+	y2fScnPY8FtdktH4xxF69udvV1ojkIEFiLnLH371Q/yZB/264bC1teAE7oYrXDYN
+	71kNPs0rdWsX+fkf2eGcQ==
+X-ME-Sender: <xms:FyaYanxBJ41k-2Bx-QPAHV4YbEDBVtK8BqQuBhfUILVg5EVMzo51XA>
+    <xme:FyaYalTpbx2um99Cdy_Ydd-X0r0-BddWHV8F7bazsMeYiBPIcVE5_U4fOPXK7cl_b
+    bXGQ4mWCxinupK2ZjyYPRQVl6JE07xx14SYhj3Yq_EdKkWvhM7L>
+X-ME-Received: <xmr:FyaYau_GADq5fVkkmOV_m-MJzyAtMyJcPEIQRUuVJckT4FXuCfOPDP1uTFJ55KLymm5pdrs>
+X-ME-Proxy-Cause: dmFkZTGarp81zQ7N+tVloiKE1UqEKo0TVx0DnqHMpG6tMyQeDzUmcFcqTqyBBzbj/dcO5i
+    LbwQfQxzSJ/F7OuO0073mk61IQ/Y8QnqdvT0Cr0J/Ktw/2nNIdZkmNKQbG5Lv0TtSadPXV
+    YJt6BUBe6YFSCSD1qpSFa/W35EhkQFVZ98mE1SmX6MccP/ThCItsxEprn1+jCE0GLkhjxp
+    eKRtFU/89dfPD68WyuyQKALyLXoqw1wCy6OPvHcwWR8+2ZpQeL7r9dqYEF6p6YoRGIlX8w
+    o8emwGeKpvI/scQeTi2FSXkIEvCq8KSzb2gwGhf9Hz3p6vR0ZHYB0fTSrgYYu9P2x0jiJN
+    kUnYfjAUAv8KLSWLbqk0Eic8EKgxFcRydzx1pi2SX5ZF3NuAsgLvr0N7lZCbmPERtF4Cb4
+    F8SdUkmzEvNdASPn81VXZ3PmgCOZ7rWWmSew/gr+eb6ZMQMUmeB+ZXh8VhzWx5e25CP+LH
+    Ue7FDlBTkYd4jKxwgSpQIVTpOQglvAn5/BSNnJH+Fi8ALrOCcIZQFJm3d7QYWJyT+WQJJO
+    DRb9VEJM9LOKLtr04YOidAIkg1ERqnr9PvtKq7tr1v5TQfB5h7TNfWHmjnICM+ZjE1TX56
+    MDi6OBMeE56aCrbPiQxJbrlmkYYIT0mXmzkmsq++9XyYLAJGVT4cY8QMvlXA
+X-ME-Proxy: <xmx:FyaYasq2PTPFvt2NKz5obqC924tCavwis76gK5NlXmrj1WgC9yFosA>
+    <xmx:FyaYarnNftvEvkIDmF75EpCl-5z2S9TEsuGZ0crRhL6Y_kxBC4aGdw>
+    <xmx:FyaYajK59RPxm81EoI66_RjdhxFjFxNoXpRAFTuoOGQzaXwXMw9Pnw>
+    <xmx:FyaYagx5rzWSpdyPiCmaYUCevrEyesd_DDwNLRcZlGT_743Jw3el6w>
+    <xmx:FyaYarK9BlBWlIuwNE2eu8SbETaXFWHSjY8nCJnj7CO7P0xajERzxkMx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Sep 2026 09:35:15 -0400 (EDT)
+ 2 Sep 2026 09:35:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2886d2f2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Sep 2026 13:35:21 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 71807745 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Sep 2026 13:35:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 02 Sep 2026 15:34:55 +0200
-Subject: [PATCH v2 07/13] odb: remove infrastructure to register submodule
- sources
+Date: Wed, 02 Sep 2026 15:34:56 +0200
+Subject: [PATCH v2 08/13] tmp-objdir: drop unused function to register
+ alternate
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,261 +83,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260902-pks-odb-registering-in-memory-sources-v2-7-c6ca12fdea4d@pks.im>
+Message-Id: <20260902-pks-odb-registering-in-memory-sources-v2-8-c6ca12fdea4d@pks.im>
 References: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
 In-Reply-To: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-The preceding commits have removed the last two users of
-`odb_add_submodule_source_by_path()`. The mechanism was only ever
-meant as a transitional crutch while migrating submodule object
-access away from "add the submodule ODB as an alternate of
-the_repository" towards explicitly passing the submodule repository,
-see a35e03dee0 (submodule: lazily add submodule ODBs as alternates,
-2021-08-16). Remove it.
-
-As GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB is now a no-op, remove its
-documentation and the exports from the test suite, as well.
+The last caller of `tmp_objdir_add_as_alternate()` went away in
+bdee7b3013 (builtin/receive-pack: stage incoming objects via ODB
+transactions, 2026-07-10) and is unused now. Remove the function.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.c                                  | 36 ----------------------------------
- odb.h                                  | 14 -------------
- t/README                               |  7 -------
- t/t5526-fetch-submodules.sh            |  3 ---
- t/t5531-deep-submodule-push.sh         |  3 ---
- t/t5545-push-options.sh                |  3 ---
- t/t5572-pull-submodule.sh              |  3 ---
- t/t6437-submodule-merge.sh             |  3 ---
- t/t7418-submodule-sparse-gitmodules.sh |  3 ---
- t/t7814-grep-recurse-submodules.sh     |  3 ---
- 10 files changed, 78 deletions(-)
+ tmp-objdir.c | 5 -----
+ tmp-objdir.h | 6 ------
+ 2 files changed, 11 deletions(-)
 
-diff --git a/odb.c b/odb.c
-index 6d5943e5ea..2f8a70a90c 100644
---- a/odb.c
-+++ b/odb.c
-@@ -388,12 +388,6 @@ struct odb_source *odb_find_source_or_die(struct object_database *odb, const cha
- 	return source;
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index 0eaa79ffd7..deaaf6ba2e 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -321,11 +321,6 @@ const char **tmp_objdir_env(const struct tmp_objdir *t)
+ 	return t->env.v;
  }
  
--void odb_add_submodule_source_by_path(struct object_database *odb,
--				      const char *path)
+-void tmp_objdir_add_as_alternate(const struct tmp_objdir *t)
 -{
--	string_list_insert(&odb->submodule_source_paths, path);
+-	odb_add_to_alternates_memory(t->repo->objects, t->path.buf);
 -}
 -
- static void fill_alternate_refs_command(struct repository *repo,
- 					struct child_process *cmd,
- 					const char *repo_path)
-@@ -549,23 +543,6 @@ void disable_obj_read_lock(void)
- 	pthread_mutex_destroy(&obj_read_mutex);
- }
- 
--static int register_all_submodule_sources(struct object_database *odb)
--{
--	int ret = odb->submodule_source_paths.nr;
--
--	for (size_t i = 0; i < odb->submodule_source_paths.nr; i++)
--		odb_add_to_alternates_memory(odb,
--					     odb->submodule_source_paths.items[i].string);
--	if (ret) {
--		string_list_clear(&odb->submodule_source_paths, 0);
--		trace2_data_intmax("submodule", odb->repo,
--				   "register_all_submodule_sources/registered", ret);
--		if (git_env_bool("GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB", 0))
--			BUG("register_all_submodule_sources() called");
--	}
--	return ret;
--}
--
- static enum odb_read_status do_oid_object_info_extended(struct object_database *odb,
- 							const struct object_id *oid,
- 							struct object_info *oi, unsigned flags)
-@@ -614,16 +591,6 @@ static enum odb_read_status do_oid_object_info_extended(struct object_database *
- 			}
- 		}
- 
--		/*
--		 * This might be an attempt at accessing a submodule object as
--		 * if it were in main object store (having called
--		 * `odb_add_submodule_source_by_path()` on that submodule's
--		 * ODB). If any such ODBs exist, register them and try again.
--		 */
--		if (register_all_submodule_sources(odb))
--			/* We added some alternates; retry */
--			continue;
--
- 		/* Check if it is a missing object */
- 		if (odb->repo->fetch_if_missing && repo_has_promisor_remote(odb->repo) &&
- 		    !already_retried &&
-@@ -1109,7 +1076,6 @@ struct object_database *odb_new(struct repository *repo,
- 	CALLOC_ARRAY(o, 1);
- 	o->repo = repo;
- 	pthread_mutex_init(&o->replace_mutex, NULL);
--	string_list_init_dup(&o->submodule_source_paths);
- 	hashmap_init(&o->source_by_path, odb_source_by_path_cmp, o, 0);
- 	o->source_paths_icase = -1;
- 
-@@ -1166,8 +1132,6 @@ void odb_free(struct object_database *o)
- 	odb_close(o);
- 	odb_free_sources(o);
- 
--	string_list_clear(&o->submodule_source_paths, 0);
--
- 	free(o);
- }
- 
-diff --git a/odb.h b/odb.h
-index 248ee9cdfa..54548efc55 100644
---- a/odb.h
-+++ b/odb.h
-@@ -89,12 +89,6 @@ struct object_database {
- 	unsigned long object_count;
- 	unsigned object_count_flags;
- 	unsigned object_count_valid : 1;
--
--	/*
--	 * Submodule source paths that will be added as additional sources to
--	 * allow lookup of submodule objects via the main object database.
--	 */
--	struct string_list submodule_source_paths;
- };
- 
- enum odb_new_flags {
-@@ -224,14 +218,6 @@ void odb_restore_primary_source(struct object_database *odb,
- 				struct odb_source *restore_source,
- 				const char *old_path);
+ struct odb_source *tmp_objdir_replace_primary_odb(struct tmp_objdir *t,
+ 						  int will_destroy)
+ {
+diff --git a/tmp-objdir.h b/tmp-objdir.h
+index 81eb927413..05f0d08d10 100644
+--- a/tmp-objdir.h
++++ b/tmp-objdir.h
+@@ -55,12 +55,6 @@ int tmp_objdir_destroy(struct tmp_objdir *);
+  */
+ void tmp_objdir_discard_objects(struct tmp_objdir *);
  
 -/*
-- * Call odb_add_submodule_source_by_path() to add the submodule at the given
-- * path to a list. The object stores of all submodules in that list will be
-- * added as additional sources in the object store when looking up objects.
+- * Add the temporary object directory as an alternate object store in the
+- * current process.
 - */
--void odb_add_submodule_source_by_path(struct object_database *odb,
--				      const char *path);
+-void tmp_objdir_add_as_alternate(const struct tmp_objdir *);
 -
  /*
-  * Iterate through all alternates of the database and execute the provided
-  * callback function for each of them. Stop iterating once the callback
-diff --git a/t/README b/t/README
-index 9a9daaf2af..f831c5355b 100644
---- a/t/README
-+++ b/t/README
-@@ -462,13 +462,6 @@ GIT_TEST_CHECKOUT_WORKERS=<n> overrides the 'checkout.workers' setting
- to <n> and 'checkout.thresholdForParallelism' to 0, forcing the
- execution of the parallel-checkout code.
- 
--GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=<boolean>, when true, makes
--registering submodule ODBs as alternates a fatal action. Support for
--this environment variable can be removed once the migration to
--explicitly providing repositories when accessing submodule objects is
--complete or needs to be abandoned for whatever reason (in which case the
--migrated codepaths still retain their performance benefits).
--
- GIT_TEST_REQUIRE_PREREQ=<list> allows specifying a space separated list of
- prereqs that are required to succeed. If a prereq in this list is triggered by
- a test and then fails then the whole test run will abort. This can help to make
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 7b3b7359da..37d7373b36 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -3,9 +3,6 @@
- 
- test_description='Recursive "git fetch" for submodules'
- 
--GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
--export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
--
- . ./test-lib.sh
- 
- pwd=$(pwd)
-diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
-index 7d239dd31f..73429ec6e3 100755
---- a/t/t5531-deep-submodule-push.sh
-+++ b/t/t5531-deep-submodule-push.sh
-@@ -5,9 +5,6 @@ test_description='test push with submodules'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
--GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
--export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
--
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
-index fb13549da7..239edd7d62 100755
---- a/t/t5545-push-options.sh
-+++ b/t/t5545-push-options.sh
-@@ -5,9 +5,6 @@ test_description='pushing to a repository using push options'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
--GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
--export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
--
- . ./test-lib.sh
- 
- mk_repo_pair () {
-diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
-index 42d14328b6..9969a3294e 100755
---- a/t/t5572-pull-submodule.sh
-+++ b/t/t5572-pull-submodule.sh
-@@ -2,9 +2,6 @@
- 
- test_description='pull can handle submodules'
- 
--GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
--export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
--
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
- 
-diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
-index 107e13afbc..1546d5f773 100755
---- a/t/t6437-submodule-merge.sh
-+++ b/t/t6437-submodule-merge.sh
-@@ -5,9 +5,6 @@ test_description='merging with submodules'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
--GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
--export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
--
- . ./test-lib.sh
- 
- #
-diff --git a/t/t7418-submodule-sparse-gitmodules.sh b/t/t7418-submodule-sparse-gitmodules.sh
-index dde11ecce8..cf94e30e78 100755
---- a/t/t7418-submodule-sparse-gitmodules.sh
-+++ b/t/t7418-submodule-sparse-gitmodules.sh
-@@ -12,9 +12,6 @@ The test setup uses a sparse checkout, however the same scenario can be set up
- also by committing .gitmodules and then just removing it from the filesystem.
- '
- 
--GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
--export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
--
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index e1cf53dc9e..3d149d34c1 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -9,9 +9,6 @@ submodules.
- TEST_CREATE_REPO_NO_TEMPLATE=1
- . ./test-lib.sh
- 
--GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
--export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
--
- test_expect_success 'setup directory structure and submodule' '
- 	echo "(1|2)d(3|4)" >a &&
- 	mkdir b &&
+  * Replaces the writable object store in the current process with the temporary
+  * object directory and makes the former main object store an alternate.
 
 -- 
 2.55.0.979.g7e5102b832.dirty
