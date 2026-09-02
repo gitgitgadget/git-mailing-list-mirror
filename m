@@ -1,69 +1,69 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9494ACC76
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 17:23:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F0C4A99A6
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 17:45:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788369800; cv=none; b=M2H9ypLKs/p7VPDlTyxztGNz94I80NAupYQoJ+qHS/7EYYYaOcRePCUHPlxHUyrIqYp1kDfTdjCzCi1/EKnZoVnbnb8n0BIuXSAqUhJYJQIKC0oP6Xx8xW8vJ0npn4RhUKtdtIV2B137w1SzlJ/EmbtDzGIsSN3TsP0DwI405qA=
+	t=1788371129; cv=none; b=VmN7sYK2dLdAY52LSDbtrw34Wahn51vOUI5vfOUvpt0XmMmxbVTCW+/YeEBCNVyKzWrILSV2iwikwGkigi0VHkRTgRmjjGS5bO6vbl+aY1JeGvMTQ8UGuJuTzQp7SS5oUPOdun9my/AhBQQoQCUHSa0rQRE8+679B1HIbWEOFOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788369800; c=relaxed/simple;
-	bh=2YBLr+5jR23R+hb1mfVULbUOnVTwHUiY/YoqCH81Mjw=;
+	s=arc-20240116; t=1788371129; c=relaxed/simple;
+	bh=1nC3pXjFWoo09O0JVtyPLnpihRrcHQiFfjEf92f1Jv8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=NlK8vVom75VRXw7gV3EIidWLzaZmRVE0ZjRGGTIpUMiQAu7/C31+RrT9VSLnYrHz0+5DXee9vo4SUxUGIJXRctOJRyTg3F/1E8RVTiPMP7veBkJoWEoeEax/Anm/sykciXVhgab3j1tcE76DAuWIvxXX8RhHYJmFJ5H/jKxd/0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UTwrnc1+; arc=none smtp.client-ip=209.85.215.173
+	 MIME-Version:To:Cc; b=G5NF8tnLEj72+ASmuB/29vfIsWsisdvXP1hAn3u65/bSeM3xq2MjhxwpN5yNYN+M1ESx8zWcDUyo8odVhy/MZ7ilxGJAwWcg/IJFDKQOOaXsXzXGM+NdHuqhdjhTtxAJPNxNKO0eiP7zbqlrZaJnOGzGMSjxZ5Xe7gwkvEEPp/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RPYp1NZM; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UTwrnc1+"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-cc1a4c62804so1419901a12.3
-        for <git@vger.kernel.org>; Wed, 02 Sep 2026 10:23:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RPYp1NZM"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3990fe066ebso1097546a91.1
+        for <git@vger.kernel.org>; Wed, 02 Sep 2026 10:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788369798; x=1788974598; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788371126; x=1788975926; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=7lmk8fqv9b5R+bJupWDrCebAgOyeCLKyvhLyMG3hxWo=;
-        b=UTwrnc1+VbsuCdoqxKDvZAqrdRf30EJ4EMdBb3UYcSl0+8C9gQdPkn723LqTsrzXrp
-         2ZQhXjomvQaKSGPiz2iAlgIv+NlljBA7e+2eV5QuAcuA3PIJRG6cuLa8hYKTOTk97TnN
-         P4rVR1PXK0x6m9msoDRNQXPMUNbxtUHjzLryu3Qj9LpSdEOT8UP9T/TZ4fBgdrruKUhu
-         igVZUQwSOZwptOTuXKfd5bmke6zSv3F7Ixwxkpcp9tqrHusIApDZQUS7Wk4LOUjyy6IP
-         w8+hRxHTMoedt6ycJam1I+9Zkr4FHfQahVGUl7U2dvL6dwPsFi+/TxgGv22rVNKrIM69
-         qkNg==
+        bh=ThjpiU+OTdts+fCqFoM88uuuZLEeSkegjaGaXRobL5Y=;
+        b=RPYp1NZM0sD8ITmm5HtZQzhWh7LuC8a3de6tzgiiCS/Yn4zwcNSPEB/Oq3vSk22GlX
+         qfl6TFXFN4DdvJ++/eLKmVcjzKCZ6ElDaPKoOYhOkfXR91XkQXHg7O1BrYTxt0cQFSng
+         s/RGtD9225wP7bv3hscZyw9Y/ZJH/1Ars7IPtC8zn0airQ8za+d4EtxyeQ9yb3h0Jo2R
+         Qz2l7dn0jpMD51I3HyhGXdcaOp0UkangWEHuWPzMQlUL7Ke64If+F/Hj4iHcaSZIZM8b
+         bHdlZTEGv/Rd3bwQwuRwaYJ49RSxsrjcXjQA/3Wb18qV22cZVM2t+iGMPRN3isyP54c1
+         ceug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788369798; x=1788974598;
+        d=1e100.net; s=20251104; t=1788371126; x=1788975926;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=7lmk8fqv9b5R+bJupWDrCebAgOyeCLKyvhLyMG3hxWo=;
-        b=GnJrukpywHrbCfRSSWBOd/pg1y8V2cP4+63rj5qrYRrVRY7n6c/TW3aAr2BxCYe9aX
-         eACqped/YmEZYb9tXq62JvPBK9b/OFzojaccG2U4Txl4G0emYDRBJvQTfdFrJTKmpNlP
-         KaBfAkjgOeq787iuV+d7crNsMaLUVFubFxs6ayTCAdW5CzqPCnp9IBQaUywnQwbFrPk5
-         yRJGO0ZN+FIXH5bpJlUVdiutEFDxwZoc37h3ZT+Bkz2sXRQGAILwtW/s7/o0oi3NduAi
-         XFvIjmgVZVgwxXBd1ymC4DnQqG3asDQDBE8ogbv6DNiy3NpopKZfyI9uB9SIz3Yo/e62
-         74sQ==
-X-Gm-Message-State: AFuF++mjAGx11P6EjGVxsVRV0STyZReRqtI8IJCn3bNzOpmjQQfHle8A
-	nbgE1PhPtnA6YQitnqysDdtnKjCCvuCL1I8TROhybhXqxfSdw/8pHOBy91fang==
-X-Gm-Gg: AYBFou30jePiA37QhBC62uopNNpnhn8R57RQsEISjsaOgdYQ6OdVsNTBWnMY4LFBl4N
-	QkxkyLJMG8g905+eCjuSLGfQGItI3tjxDNIJaaYcOtK3/vxxzulccG7U6zVJgHcgzQxr60MAX9/
-	6e75QAvmbZQCyBP7kdpF2igQx+Z0ZVQv3xBYA/eDC36KBKqF0vLT+/20UsdODP56ieTMfsbM6es
-	wPdOUj86eOqq03TKm+nMS+bzX+wDMR50Y+7ErpTmFis3kqSfYW7Pd62csMKM8G2LTvtskA5qtCb
-	2lKXTviPD4yQdfIw7qKqHhZ9wls670H50ZX2TLhXPPv/xXbgRHC8Sj5YArRQd8QWxAYhsextjkU
-	VysiieYZ39edo3/NsFf3v42Qns0TB3pbPlqoAzIpdQPmAXObNWbaeb2d5Wyy+FMKtF7/Yq1VEKZ
-	F2FTpLsq8DuXMiTQ3vBYDqJwGYFMzhXcLmeuM9GIw1edM2lp6q1D53T+DjKg+eow==
-X-Received: by 2002:a17:90b:1811:b0:398:9beb:5c18 with SMTP id 98e67ed59e1d1-39aee178ab7mr8494777a91.19.1788369797412;
-        Wed, 02 Sep 2026 10:23:17 -0700 (PDT)
-Received: from [127.0.0.1] ([52.161.69.160])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1430eb22012sm7582145c88.12.2026.09.02.10.23.15
+        bh=ThjpiU+OTdts+fCqFoM88uuuZLEeSkegjaGaXRobL5Y=;
+        b=HB1y+gOu+c2GV3Bnutn8veyzH84QFgjUnR8KFMgaSs5biTjDKR0/M7NVGjX3tDjFeY
+         YUoAf+BOsE46fNVOJPys8sX28M5p+cP2PGkwhDWxChq96pnWk8tUfhH7IQNX0Wu4FKt0
+         gF1sekmuG+Mz0CEq01O0pwqELCVKrWfOpH3jGwgVndEuG7YOGy2hs0MrRA/DqKHJrwqU
+         2ctJsBW327P2Ua66f6JUWoFXIu0TeswqXt9fJqD+WOLzoyrhBNhSn9tdQXocZIksTSE9
+         tBvIYbqRwQ0l6orx2FWStuQ0Q+iTSo21pBKJXfqnjcno6hu1/XCbBlE86XAWg369mBVq
+         06Zw==
+X-Gm-Message-State: AFuF++kVreS/EjiTEVOUuF3AlkAVpiTsW0Pql9J85ICrdYcLdPJaGq+q
+	qFWJIQvKZ7YTbbWPgYZ/PVp2DznhaAucIxZBdah2d/Zxkj+uObk0tgGGpOtLmg==
+X-Gm-Gg: AYBFou1ToHl/ZKWfcorEEE/r+OgzAf9vv3uZk1XMZodT6zoJmifrrnkztD3APQJKLf9
+	vMd6ynQPvfk4rXADZDBW3dnvBKOQQGkZl5gE99iss0nouN1P67+1oKOAUOngryUoUe+DkiDnKei
+	A2iMp+5DMy4pZS3XalEEtWf20YNARYt/KNDeXa8TNr0/HP953x73FLRNDsm9dTfSaKLQdW0m7Aj
+	1BREoDj89nawdA93WrLsXlqNnm/oJxJ8L916AW05isXhtcWx9VpWLxoE0Gumy1VR3B8xDXtwweY
+	aCDqwnrIEWvAkhhDGCUuNCwUwQYyE+JCM+NjcftLSkzWcdZ5iaspHDmH9ZTFIgVSfRk2xA9Y+ZD
+	w85+qiMFur0iZE10kYg3l2+o+qyz53HHkZ9ajrYBzAIaIcoCZX2x6NckfRrW/p1mVbwbcN7DFgo
+	/inM92q8icY8Z34GYr6hG+lcOb3jV0cxTpcqCz1aBGqRSA4wcvug==
+X-Received: by 2002:a17:90b:5828:b0:38e:2e86:ed02 with SMTP id 98e67ed59e1d1-39aee0850bcmr9996493a91.14.1788371126055;
+        Wed, 02 Sep 2026 10:45:26 -0700 (PDT)
+Received: from [127.0.0.1] ([128.24.161.177])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-32f07beb704sm8789440eec.30.2026.09.02.10.45.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 10:23:15 -0700 (PDT)
-Message-Id: <pull.2215.v3.git.1788369794965.gitgitgadget@gmail.com>
+        Wed, 02 Sep 2026 10:45:24 -0700 (PDT)
+Message-Id: <pull.2215.v4.git.1788371123325.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2215.git.1788365862670.gitgitgadget@gmail.com>
 References: <pull.2215.git.1788365862670.gitgitgadget@gmail.com>
 From: "Alessio Attilio via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 02 Sep 2026 17:23:14 +0000
-Subject: [PATCH v3] hooks: introduce 'hooks.allowNoVerify' configuration
+Date: Wed, 02 Sep 2026 17:45:23 +0000
+Subject: [PATCH v4] hooks: introduce 'hooks.allowNoVerify' configuration
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -116,136 +116,28 @@ Signed-off-by: Alessio Attilio <alessio.attilio@protonmail.com>
     This setting is intended for workflows and managed environments to avoid
     inadvertent bypasses, without altering Git's server-side security model.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2215%2Fkairosci%2Fhooks-allownoverify-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2215/kairosci/hooks-allownoverify-v3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2215%2Fkairosci%2Fhooks-allownoverify-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2215/kairosci/hooks-allownoverify-v4
 Pull-Request: https://github.com/gitgitgadget/git/pull/2215
 
-Range-diff vs v2:
+Range-diff vs v3:
 
- 1:  4e594568de ! 1:  cc98af8a9a hooks: introduce 'hooks.allowNoVerify' configuration
-     @@ Commit message
-          as an authoritative security boundary; authoritative policy enforcement
-          belongs on the server (such as via pre-receive hooks). However,
-          developers often invoke '--no-verify' out of habit or muscle memory,
-     -    accidentally skipping local checks.
-     +    inadvertently skipping local checks.
-      
-     -    To address both 'security theatre' concerns and avoid breaking legitimate
-     -    emergency escape hatches ('big red button'), this implementation:
-     +    To address concerns regarding false senses of security without breaking
-     +    legitimate emergency escape hatches, allow configuring the variable to
-     +    'true' (the default), 'warn', or 'false'. In 'warn' mode, Git permits
-     +    the bypass while emitting a warning to standard error, ensuring
-     +    visibility without interrupting urgent workflows.
-      
-     -    1. Introduces granular values:
-     -       - 'true' (or 'always', default): '--no-verify' is permitted normally.
-     -       - 'warn': '--no-verify' is permitted, but prints a warning to stderr.
-     -       - 'false' (or 'never', 'error'): '--no-verify' is disallowed by default.
-     +    When set to 'false', Git aborts execution and provides actionable advice
-     +    explaining that the setting is an ergonomic workflow guardrail. To avoid
-     +    trapping developers during broken hook scripts or critical hotfixes,
-     +    the guardrail can be overridden by passing '-c hooks.allowNoVerify=true'
-     +    or by setting the 'GIT_ALLOW_NO_VERIFY=1' environment variable. This
-     +    prevents developers from having to resort to destructive workarounds
-     +    such as removing hook files or clearing execute permissions.
-      
-     -    2. Preserves the emergency break-glass escape hatch:
-     -       When configured to 'false', Git does not create a dead-end. It outputs
-     -       actionable advice explaining that the setting is a workflow guardrail
-     -       against accidental bypass, and documents how to override it in an
-     -       emergency via 'GIT_ALLOW_NO_VERIFY=1' or '-c hooks.allowNoVerify=true'.
-     -       This eliminates the need for developers to resort to destructive local
-     -       hacks like deleting hooks or chmod -x.
-     -
-     -    3. Centralizes the validation logic in 'hook.c' and 'hook.h' via
-     -       validate_no_verify().
-     +    Centralize the option verification logic across all affected commands into
-     +    validate_no_verify() in hook.c.
-      
-          Signed-off-by: Alessio Attilio <alessio.attilio@protonmail.com>
-      
-     @@ Documentation/config/hooks.adoc (new)
-      +Allowed values are:
-      ++
-      +--
-     -+* `true` (or `always`): `--no-verify` is permitted normally. This is the default.
-     ++* `true`: `--no-verify` is permitted normally. This is the default.
-      +* `warn`: `--no-verify` is permitted, but Git prints a warning on stderr.
-     -+* `false` (or `never`, `error`): `--no-verify` is disallowed and Git aborts
-     ++* `false`: `--no-verify` is disallowed and Git aborts
-      +  with a fatal error accompanied by advice explaining how to override it.
-      +--
-      ++
-     @@ hook.c: int run_hooks_l(struct repository *r, const char *hook_name, ...)
-      +		return;
-      +
-      +	maybe_bool = git_parse_maybe_bool(val);
-     -+	if (maybe_bool == 1 || !strcasecmp(val, "always")) {
-     ++	if (maybe_bool == 1) {
-      +		return;
-      +	} else if (!strcasecmp(val, "warn")) {
-      +		warning(_("bypassing hooks with '%s' is discouraged by 'hooks.allowNoVerify'"), opt);
-      +		return;
-     -+	} else if (maybe_bool == 0 || !strcasecmp(val, "never") || !strcasecmp(val, "error")) {
-     ++	} else if (maybe_bool == 0) {
-      +		advise(_("this repository disallows '%s' as a workflow guardrail against accidental bypass.\n"
-      +			 "In an emergency (e.g. broken hook or urgent hotfix), you can override it with:\n"
-      +			 "  git -c hooks.allowNoVerify=true <command>\n"
-     @@ hook.c: int run_hooks_l(struct repository *r, const char *hook_name, ...)
-      +		warning(_("unknown value for 'hooks.allowNoVerify': '%s'"), val);
-      +	}
-      +}
-     -+
-      
-       ## hook.h ##
-      @@ hook.h: int run_hooks(struct repository *r, const char *hook_name);
-     @@ hook.h: int run_hooks(struct repository *r, const char *hook_name);
-      +void validate_no_verify(struct repository *r, const char *opt);
-      +
-       #endif
-     -+
-      
-       ## t/meson.build ##
-      @@ t/meson.build: integration_tests = [
+ 1:  cc98af8a9a ! 1:  a9f75413d3 hooks: introduce 'hooks.allowNoVerify' configuration
      @@ t/t7599-hooks-allownoverify.sh (new)
-      +	test_grep "bypassing hooks with .--no-verify. is discouraged" err
-      +'
-      +
-     -+test_expect_success 'hooks.allowNoVerify=never disallows --no-verify' '
-     -+	test_config hooks.allowNoVerify never &&
-     ++test_expect_success 'hooks.allowNoVerify=0 disallows --no-verify' '
-     ++	test_config hooks.allowNoVerify 0 &&
-      +	echo "change14" >>init.t &&
-      +	git add init.t &&
-     -+	test_must_fail git commit --no-verify -m "fail never" 2>err &&
-     -+	test_grep "hooks.allowNoVerify" err
-     -+'
-     -+
-     -+test_expect_success 'hooks.allowNoVerify=error disallows --no-verify' '
-     -+	test_config hooks.allowNoVerify error &&
-     -+	echo "change15" >>init.t &&
-     -+	git add init.t &&
-     -+	test_must_fail git commit --no-verify -m "fail error" 2>err &&
-     ++	test_must_fail git commit --no-verify -m "fail 0" 2>err &&
       +	test_grep "hooks.allowNoVerify" err
       +'
       +
-     -+test_expect_success 'hooks.allowNoVerify=always allows --no-verify' '
-     ++test_expect_success 'hooks.allowNoVerify=1 allows --no-verify' '
+     ++test_expect_success 'hooks.allowNoVerify=false disallows git am --no-verify' '
+     ++	test_when_finished "rm -f patch && git am --abort || true" &&
+     ++	test_config hooks.allowNoVerify false &&
+     ++	git format-patch -1 --stdout branch-merge >patch &&
+     ++	test_must_fail git am --no-verify patch 2>err &&
+     ++	test_grep "hooks.allowNoVerify" err
+     ++'
+     ++
+      +test_expect_success 'hooks.allowNoVerify=false still runs hooks when --no-verify is not used' '
       +	test_when_finished "rm -f pre-commit.log" &&
-     -+	test_config hooks.allowNoVerify always &&
-     -+	echo "change16" >>init.t &&
-     ++	test_config hooks.allowNoVerify 1 &&
-     ++	echo "change15" >>init.t &&
-      +	git add init.t &&
-     -+	git commit --no-verify -m "commit always" &&
-     ++	git commit --no-verify -m "commit 1" &&
-      +	test_path_is_missing pre-commit.log
-      +'
-      +
-      +test_done
-     -+
+      +	test_config hooks.allowNoVerify false &&
 
 
  Documentation/config.adoc       |   2 +
@@ -259,8 +151,8 @@ Range-diff vs v2:
  hook.c                          |  29 +++++
  hook.h                          |  12 ++
  t/meson.build                   |   1 +
- t/t7599-hooks-allownoverify.sh  | 208 ++++++++++++++++++++++++++++++++
- 12 files changed, 296 insertions(+)
+ t/t7599-hooks-allownoverify.sh  | 216 ++++++++++++++++++++++++++++++++
+ 12 files changed, 304 insertions(+)
  create mode 100644 Documentation/config/hooks.adoc
  create mode 100755 t/t7599-hooks-allownoverify.sh
 
@@ -479,10 +371,10 @@ index 7f53cca7d1..ce6ca1f6bf 100644
    't7602-merge-octopus-many.sh',
 diff --git a/t/t7599-hooks-allownoverify.sh b/t/t7599-hooks-allownoverify.sh
 new file mode 100755
-index 0000000000..f02c0b1709
+index 0000000000..75e6e65ef0
 --- /dev/null
 +++ b/t/t7599-hooks-allownoverify.sh
-@@ -0,0 +1,208 @@
+@@ -0,0 +1,216 @@
 +#!/bin/sh
 +
 +test_description='support hooks.allowNoVerify configuration to disallow --no-verify'
@@ -584,6 +476,14 @@ index 0000000000..f02c0b1709
 +test_expect_success 'hooks.allowNoVerify=false disallows git rebase --no-verify' '
 +	test_config hooks.allowNoVerify false &&
 +	test_must_fail git rebase --no-verify main branch-merge 2>err &&
++	test_grep "hooks.allowNoVerify" err
++'
++
++test_expect_success 'hooks.allowNoVerify=false disallows git am --no-verify' '
++	test_when_finished "rm -f patch && git am --abort || true" &&
++	test_config hooks.allowNoVerify false &&
++	git format-patch -1 --stdout branch-merge >patch &&
++	test_must_fail git am --no-verify patch 2>err &&
 +	test_grep "hooks.allowNoVerify" err
 +'
 +
