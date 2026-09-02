@@ -1,85 +1,84 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BAA3B42C7
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 19:52:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DD642E410
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 20:08:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788378760; cv=none; b=lazKnpMhP9zganAVtM4Pqdx6PxrVzKOHwwFoq+QfdDX5W2k6GKLtCiZ1c9n2xD8lnhFSSpK5ykpCp0bz6TSx1q+MSzejH7dV3mkiojfq5F2AUoR/9eyLwI0K/xyeujqsuGZAiqrhm4NSO8HpermYQvBdECIFTZulDLlJi3WYrZ8=
+	t=1788379718; cv=none; b=MFX76SU7+s0v+ZAQjfCtAKM6sPvzBXwzwDiCOsPjLJxi50vGZJ7xlZoeJI6dtNJ2FgQu1KuycyS2yjN6kEHrHH9/T9ctE3+bJ8oCCz4yR3X3gQ5nqSXsJr5wNOJAWPXcKfRnYXjGjpEcbu6Ij4iEdsHpjju9RD9tCFcHxT8AA9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788378760; c=relaxed/simple;
-	bh=mu+fogzVQcAI6B08S8beYK9nKc++Qocgywwutfu91RA=;
+	s=arc-20240116; t=1788379718; c=relaxed/simple;
+	bh=aLcJP8AOc4IdGUWEEv6VxhS98y+hzhvKcErvBAPZEIA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iCTH40G1zaGqEWtHI4q55FLL427gctOn8lRTuIR9QpteZrDS30aJUWWS5Td3d/j97RvG+ng2ljMBt15Qj0J2PUEWBDg+Ezpz9u4Un2+Fi/L7FSF2NYwmKv+eq0DrfyVqpE6cLfYTE1uQKnzEFDpxvF8CIWfT5MbO9VoKziMZ1lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dBAUgqzi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RAxTm7vI; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=lBb0cktm1zBiGZ2bNJclFtaEl8go6f5g+dST6IanuUUdJ27TSaCycuwB/R4gwvMp7iJEcPPuTNNK6vY4ljcE7mfK1hn1lUk8rD0iWnD9MgtqypwOnOTWPCDHdLjemuHPhnlk3nWI2BEWcXThHWfPfuggA6SX13W4jTwAH+xSvpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tC64aMJk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ualWl1wS; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dBAUgqzi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RAxTm7vI"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id D33C01D000B0;
-	Wed,  2 Sep 2026 15:52:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 02 Sep 2026 15:52:32 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tC64aMJk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ualWl1wS"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F41907A0147;
+	Wed,  2 Sep 2026 16:08:35 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 02 Sep 2026 16:08:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788378751; x=1788465151; bh=Zicr227oqU
-	FLMknsnNSUsmu/vr2w3Isfqk+7Uqjb4SI=; b=dBAUgqzi241jK9X5Wkf3ZzqSIe
-	BJTv/kml9Q320SBFU6Gy+d6dtqWRqz7dBbh3yG0f659Jl8Sm/RTdqedF4tux1hbF
-	Tl+76j0pDFkE7m2HRLUkr0BaWWyNfgiTuy0svdjXeDza7ZlJFFwbwcLdyWcchPpr
-	iq/UdMimn6sqbF1kaxe8hYqgCs9gugXW0LzsPKZPjeFk9BqCW1zw0bkUKtqkNLh/
-	TSfwG090JGlz8FDAyv+eAhwxYGFzPgvchcppjqXmw5KClxhjgSDDne1hDYR/FQcn
-	/jR/u+pryRky8P6+S2/2U+3MQFzCrIzWuTfqcHRUHyYm9qRzERrOObrAVJDg==
+	:subject:to:to; s=fm3; t=1788379715; x=1788466115; bh=LPphEd/zyP
+	tbcxJb1T86/DqKm3Od4YW/JhudTWH85EY=; b=tC64aMJkJVdTP1RufKp7aFeqqO
+	q0r5j0FOJ3Lb2o952hkuroH5pInfqjtUeb2UuH2i0DNjpCjx6LfYGdtb4xk+Plap
+	w1iAr4l4P0kJxM2dFY2vEho5e6oonCvCB7lMrt8F+/HNkRq8ZEgjl9cTSlvJR3on
+	4ZWYk4q/Jl1VQlc+5ak5EK0ZW9vlFzeyiAVzxzvIKy7bxra8bHWn0Hi4iqA0TdwK
+	wX8Jm9b95hscxn0lfbsRfESf1xD46bGZXB7R429sotYb5PMDzd5iikb/WedceAEE
+	Vlaya0VXtpkA6o0rKpyIi0Cj3+4UJbC7OeLVvhaoZUa2BpKqVhl3vFsFZZbA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788378751; x=1788465151; bh=Zicr227oqUFLMknsnNSUsmu/vr2w3Isfqk+
-	7Uqjb4SI=; b=RAxTm7vIUxCbwXXu+laBB5MByte4qMuvf6Y9CFng9FOqNV7pHle
-	xiu4t6FJv94ulSrRT790aq2XNRT/54kPGDMg48tumPK6v01LXn5nSzVdFmnwnJQT
-	mHrDWfbCC+Gd5R6pkiKzF3LI1yo2SbRWI10V82uCoYXeHdXcWRQwHGHudurCTy3D
-	YW07qfPIyVYNIrOFu30y82kWa1HxmgCEtZUNfxIWFxRx1T2bOWAy515AF8rUdAsm
-	IRkKqbr7FevWJBygpkO6GsPSn9pFWNGKxN86WFU2v0TbRKRn+5CxfAAUOHsyBtHH
-	gPUNWkQrWUeIm/TH1VsnCfPKdhSM6eMr55w==
-X-ME-Sender: <xms:f36YapT_XIO0oU9d9n-KddJsiNed-7yRuHVM6OFGxLlbGEQQw_L6qg>
-    <xme:f36Yapqw1IvZ8wNqTctle3bVYKqgaaDVWgTt5_EQOByn5mQvyPmWCTcJHMS21oHek
-    wv41jQYONIooxxIaClk6UasrorL5tNOsvgCp_V-eYb2BW_A2HnxzQ>
-X-ME-Received: <xmr:f36YanIgRJ34eLmM7JemFKSv0_6Y8znTPQtkF0Oo5nscosDEqmzDHNo0NLYmFz2ALoW3OuI0iHUplqWgpRPPJDzyL1bOXov8dQ>
-X-ME-Proxy-Cause: dmFkZTF9xYGVwqUG+lXw1HXtf6YNnIOGPXWkb9HZjFw5+XIhffgaubiZmlo05W7sD4q73N
-    xnM2NoUiUEYRn5np93cAlWLKmoxJfGr6OGBkkTs3pfrbCnDSoWQlDJXXa7iYs3pQ/Um6bv
-    Zrb66dmieCpbqh+uzkXS+xXaHO/15hy3HdvMcX2ij5d4IAv3vjVmYa+jo+rpCgPQQbdvR5
-    CyGZPWXnazbIzCCwnp4C/OWPU3uym91zHXZFWpG5dj2IswmS/Sdsgk7hdeBX8cY0OLtdsX
-    x9VO/z6j76WcR6Ht1NzPsf+hSYiTGf39HXv9bndtYG2AfJUpu19/FGI/X+MQRpu8tbFkFf
-    TcQOf+IOGYM8TR2OIvg5IXGxu6JrZ4HTilxF1NMgNX1Imqx1S2sPcaeGveqKNbDFCtfzKM
-    c7LgPIu6c6ML/sdCUh9UmVpehZwMlANjom0w7xRgK7YHwzZ0TUS+VwhaXMqLpBPXjXG6MD
-    rYBNUDcrZkTVmqrmVYc0nV4Nm36QNVAS8NA2dpbtRyDALpWwcWmxj2sKlIc4QXgjUtzS39
-    nk2oIzZrruRnQHlo04riXCIpauAG8Yx+2J1FqX/0MVW4lTzKrhhgEDvBTzYhLOT1ImR7KY
-    ffcmWo9JCpMcdur6SCt5B306vi+OLd4bvxliDEe+0njLPsYy11U96oJYP34A
-X-ME-Proxy: <xmx:f36Yaspm4XU8zxOipqIxV6BOitK2xySfrDMdkST-p7xOu_XIb6vUIQ>
-    <xmx:f36Yavz8n9aO0WDPQgGmOvT4hHuG9Q0fyo393DP60CkOaN7VOzZhQQ>
-    <xmx:f36YagN5tePLq0fM6bRHkA7ewZNID4nmkGR66LJEEu-tzW61YvojeQ>
-    <xmx:f36Yak6A-n2i493C2tGWDayoYcddYSREfA0GO2uzG-iybUf92RsPQg>
-    <xmx:f36Yan5pLtkDsoKIWaR9PJEVAk6sEgAkD73oWXPX2sJL4pHdAPdvxe01>
+	1788379715; x=1788466115; bh=LPphEd/zyPtbcxJb1T86/DqKm3Od4YW/Jhu
+	dTWH85EY=; b=ualWl1wSFrj4xYigYewU4SrKO0+n1IQ9zBdpCG6T/drR14U4bmU
+	A0BYlyu02HU2knGti7UFu2hvevytuaY8o/WCN4lO9M5nsCl5eapZSH3p0XliNgeV
+	0lFiYRkOOnXDefFEL7jnrOGLPhJBs3sG2yXmTZUgey9sCEYeogIvKt2SSl+0qAZ8
+	tc+x/10R0Psu2g9Bie+wfOwdvAdwU8ZaI9p8CPFs8rfAcnD1K72VnIrsNbdWM8DZ
+	WFAJOYj8VT1Y08KYOIAbM3xLIU3KXA3yukM8Uk8Ho1wKspPMfc3HTU6b9GguE0El
+	WFbwrTY1WmJzLlx2jtrsxlQlzKBjuCC808w==
+X-ME-Sender: <xms:Q4KYarTzdOMOzt8JKPklrY0zRQubB0Cw6wA3icXA52cOCyH4cmmTYA>
+    <xme:Q4KYajpi3MjIuQLL2Nu_SZUQeFIIojjBAgt9Jmvy6n4hFC7zhXj-Bk5S2D_3iIJ8x
+    oV-fnUt9kkB0QxVBynL-vGZVJw0N-QBOW2UBMbgT8h61ny4BI2MfWQ>
+X-ME-Received: <xmr:Q4KYapKBoAKRXC-Bxc93-HUtYtoFsLZgggQ7qE7YmxoOMEUFqPOJPnmzfPJyc0Qy85yzAmHykayJnDWMui3KmVRrE2qu4LlP2w>
+X-ME-Proxy-Cause: dmFkZTGuI+6oNP45z8L12AZefMSCSt3BrZQ8hnrXLxHG4c8ZQVtimnuxr/eUyq1i3Zc6eJ
+    RLPTirXK70h7q3rEqrsU+onrCePGpseOsoLP+vb+7I0aQJY3daSen0yzolQBgbvv+yuC7S
+    MmgPcxCWoFUksDYCrLrXYFXi9h64Z3pTLFWVq1QUYIOdVErCd72eYKGa5+81PBwdBanQgD
+    N5GApTptqoD+z9JL9RXC74+A6zGqc66LVoFtUo/BjrfX6Q9gvIyiT/qZm1vH4WlTy8vEQE
+    4/t2oc+7wAwn6XzB7gPxV4zIuQMxDckPhVAUPFi67NnBqT8tsFTu1Vg09rwzFG4CU6pGtv
+    k61bMM611bINQWJ7z/4wmk3+FuqhbSZQ4PvvWepeN7oTlhZza9tQD8nW14nzA0QPprmdCW
+    t3jE/XdFdu4EZM7+KgQqdvzUH6R7lhjgyocv2s/Km+ZPiQGbbcNhW6wpUhU/DOM95pJ/g3
+    h5PJJty/qQdpKQHNMvv836puOt51z3cjZP3LkX7JgNGP4mHB8p6jWFkbHv6uH6bZW7/hbi
+    VfQWXfEJwMTR7Ksnf3nLY1UiZVPFe5e64NpA/xDAxVo431dr2sG1LDOP3RwRSYEpAEE0KF
+    FvPAZTPfxP3PYGyHqKXMBaMneZiao8soTYT0HIevIIKqpjDGktf5BF9Xa2bw
+X-ME-Proxy: <xmx:Q4KYamqB-eZ8nQKdbn3thqo-TcvTGC60fGurcLajXzArgDmo1HT3PQ>
+    <xmx:Q4KYahwTT_E40F80PV41uUEaY7UvdH6wy1mMLCMgCSoVYKV15uAbhA>
+    <xmx:Q4KYaqOkorMh9qQNGFhcAqOQJRjedjrzjyFxYdLgpo4xwrmTKkm5yg>
+    <xmx:Q4KYam7TpxLyxHg7tlDF1s9VmSy5oSJQQhycIYEMwrG2lThynUor7w>
+    <xmx:Q4KYah4M1pC3-v0Cb7tINdhvYY5I9Dyl_-2B7M4wI5DqpmxL7cWOlrkX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Sep 2026 15:52:31 -0400 (EDT)
+ 2 Sep 2026 16:08:35 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Harald
  Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v4 2/2] checkout: separate autostash conflict advice
- from branch-switch message
-In-Reply-To: <935fa0a9ae69f269a8a79f213f02aa4ed1e8279b.1788373743.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Wed, 02 Sep 2026
-	18:29:03 +0000")
+Subject: Re: [PATCH v4 1/2] stash: reserve exit status 1 for conflicts
+In-Reply-To: <xmqqwlt3h1oc.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	02 Sep 2026 12:51:31 -0700")
 References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
 	<pull.2364.v4.git.git.1788373743.gitgitgadget@gmail.com>
-	<935fa0a9ae69f269a8a79f213f02aa4ed1e8279b.1788373743.git.gitgitgadget@gmail.com>
-Date: Wed, 02 Sep 2026 12:52:30 -0700
-Message-ID: <xmqqse3rh1mp.fsf@gitster.g>
+	<ff4322180294c784bcd5f4e92b35e4b334324ddc.1788373743.git.gitgitgadget@gmail.com>
+	<xmqqwlt3h1oc.fsf@gitster.g>
+Date: Wed, 02 Sep 2026 13:08:34 -0700
+Message-ID: <xmqqmrtzh0vx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,24 +88,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
+> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> "git checkout -m" stashes the user's local changes when it cannot
-> perform the checkout, and then applies the stash.  When applying the
-> stash results in conflicts, the advice on how to deal with them is
-> printed directly on top of the branch-switch message ("Switched to
-> branch ..."), making the two hard to tell apart.  Print a blank line
-> in between so that the advice and the branch-switch message are
-> visually distinct.
+>> From: Harald Nordgren <haraldnordgren@gmail.com>
+>>
+>> "git stash apply", "pop" and "branch" exit with status 1 both when
+>> applying the stash entry resulted in conflicts and when they fail for
+>> other reasons, so callers cannot tell the two apart.
+>>
+>> Follow the convention of "git merge-tree" and the merge strategies,
+>> which exit with status 1 to indicate conflicts and with a different
+>> non-zero status for errors: those subcommands now exit with status 1
+>> only when applying the stash entry resulted in conflicts, in which
+>> case the stash entry is left in place, and exit with status 128, the
+>> status die() uses, when they fail for other reasons.  Document the
+>> exit statuses.
+>>
+>> cmd_stash() used to collapse the return values of the subcommand
+>> implementations to a boolean.  It now maps negative values, which
+>> signal a failure, to 128 and passes everything else through as-is.
+>> The only implementations that return a positive value are "apply",
+>> "pop" and "branch", which return the value of do_apply_stash():
+>> "apply" returns it directly, and "pop" and "branch" drop the stash
+>> entry, via do_drop_stash(), which always returns 0, only when the
+>> application succeeded.  The positive value is always 1, as
+>> do_apply_stash() only returns a positive value when the three-way
+>> merge was unclean.
+>>
+>> Make the convention explicit by introducing enum stash_apply_result
+>> with the values STASH_APPLY_CLEAN, STASH_APPLY_CONFLICT and
+>> STASH_APPLY_ERROR, and use it for the in-process autostash helpers,
+>> too.  They spawn "git stash apply" and can now tell conflicts apart
+>> from other failures, e.g. a crash or death by signal of the child,
+>> which map to exit statuses above 1.  Since we know the stash entry
+>> was saved, tell users so in the error message instead of leaving them
+>> wondering what happened to their stashed changes.
+>>
+>> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+>> ---
 >
-> apply_autostash_ref() reports whether applying the stash resulted in
-> conflicts via its enum stash_apply_result return value, so only print
-> the blank line in the conflicted case.
->
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->  builtin/checkout.c | 15 +++++++++------
+> The above is on the overly verbose side.  The first two paragraphs
+> give enough discussion and the remainder mostly repeats with small
+> details sprinkled in, which can probably be shortened to 1/4 of the
+> amount of text, but it is OK.
 
-This iteration looks good to me.
+Just for fun, I complained to an AI agent I had nearby with the
+above four lines of critique, which spit back the following as a
+replacement for the last two paragraphs.
+
+    Update cmd_stash() to map negative return values to 128 while
+    passing positive values through.  Formalize this with enum
+    stash_apply_result and update the autostash helpers accordingly
+    to distinguish conflicts from errors and inform users that their
+    stash was preserved.
+
+As I said it is OK already, you do not have to adopt this shortened
+version, but I personally think that this level of detail is enough.
