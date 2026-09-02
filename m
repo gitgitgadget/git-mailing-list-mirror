@@ -1,148 +1,176 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0633649F10F
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:35:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788356134; cv=none; b=YWWHmibHAOp4dKnxUWo8vwauq2+wKymGQDUXXZ9AO3x72N5ygaHGxk4Cwymf0S0aiFdq7fAMX+i8CGkh8s+8kVH1FwIfCxTrDAGAxa8lR97htFQNmowU0sfFAhr9qMkNWmJEhMOLl7YG0hELgdSlMlnOWMcPkAtXlzVp0iVO9sY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788356134; c=relaxed/simple;
-	bh=t3SZebhGthAGCpNqV4n9HiJOC5F47PiapXAEWfN/xyU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Will2a7Y/IY1ryM+nmhARl4A2hPVQkcCon2y6gAI9IIffP69FvVJqSDYReyvRU6zuqlilivkr/26/qu55/J1y7H9Hc2a28+0zlZTdDHbEmrpU01KH3afVGHx+Csfsurk4GsVUsoR/mHEBYVRC/wkEZ3ETJEMt17nIBa9YBKnx1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bUCLzN3x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EVUISMkf; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1570132B126
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 14:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788357895; cv=pass; b=JSfBUB/cRx3Gb2Ao3LDzHWIqPUsSFMmu5+zDsXQorz7xB8MjYxeteuo1RqR7QIxT7+FU0fvxeoxcuO9/2vAESJymjQ2755lCiHEi+FoV3gFdPiIdXfLIHY+5cjZLy/5v6TKqy6XzeOsAUgrkK51Q8FPx32MMKYqboo/dazlRZTA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788357895; c=relaxed/simple;
+	bh=rHDsrgHnwuhjD5ynJimm8etB/5q2NjvlvaDnlGDdkPs=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=NDnTXMqyYxjwej6CakrnDGtKSPG9TArIYGPJt6FYwExCu1P7qdvCmLW26pmky6P0o69jiFxD5wf81SKNHoDwU2FtdliqXJeiKKysuqShCBPokFfOmixDkMepLtYtdblS+fEx/25eXnJjzUzH1NwqF+NHzSjGCPyHKtGufYtBRRk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WMQoL7r4; arc=pass smtp.client-ip=209.85.221.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bUCLzN3x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EVUISMkf"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2A5157A0126;
-	Wed,  2 Sep 2026 09:35:32 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Wed, 02 Sep 2026 09:35:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788356132;
-	 x=1788442532; bh=/xYB3y8sXLcL/rk4yRDdsPvnyvsBIx5Z8NF1QXD+MKs=; b=
-	bUCLzN3xmWa4s3RKLd5zXGmzqzH/wJytK2mWuDnabpXqpmdGKkrwVA0Mofew8Cot
-	4hvyCccvsbOrM46cvjwszsEaarvHGgyAbNJL0XFEk3Xk5o+0nKw3pquWLn+1zhVg
-	5kfeWQu83B+Ik5ZW2qAZ84K2tWbvvX5tvjbQY99LyXySKbO2EDUAgDt99pgcFInx
-	KYIo73yDuoscLMz/VRAwiU43n53pt/jOy9MpiqGBIPE8BVEgy25M/oyzElA9rnfW
-	0RVViVCkVJ1lJTfKY9pgb3GMSRsxtr/KFb6QWWSTREH20twuBSgVWvxve/M/56w6
-	c4XRfM5yVTJcmOUKqtrM0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788356132; x=
-	1788442532; bh=/xYB3y8sXLcL/rk4yRDdsPvnyvsBIx5Z8NF1QXD+MKs=; b=E
-	VUISMkf5+98FAvGJXHVSmxnsaHfc3QUHiV1jnt2WbtQNrKTK6nXmHK1UTY8JFJKK
-	0BQxucdqYHEh0X9xxBe2Qae1m+MauMcxc4LZbSXNA/rr4EzpVmYDf1VeCRc5hveH
-	QKchjjQV8OOdC8vgrfcc4iwERUw6GGxNZFfW9cP3QO4t6PBTKEZB0b9d5l8vhPx2
-	+aaEFng/2TArR123ymj8B27JezAFTVKaaGQLwXoodrGxB8I3nvHiTxIQNICVgMp5
-	GO+RtOstuzJWPdC8/aFIDXsb9sOrEvxCyFu03mFRLw7P5U8BcOBZMcp9bo68v7Nt
-	2SlzvP47RYNT3teWoMPgA==
-X-ME-Sender: <xms:IyaYaunPVbq-Ub2LF5b2a61ZZnJJU2L5vcuyYHhYI4gN5cCSCX8a0g>
-    <xme:IyaYar17tABa59kaq9MYUseCvUvvq_4QoKbhJTIHlMlBhVQJWEW0V93KWOaAU1CM1
-    totXM402_GdGr5zi5ENLAN0IqJtYjbOBskaZlA8Kx6r3cLGMwKHLO4>
-X-ME-Received: <xmr:IyaYaqRziaDeQ-LJUVpicMBcFXEDMjucJq_zYcMEmtclW4jU5bJ94seH6ogV02tuaLrAoTo>
-X-ME-Proxy-Cause: dmFkZTG4ZQ307c0r+GT+cG0MbckYhWlAFFJxCbC0xT9lvs2dpNbfp5F9i62CHGxLqxgQEe
-    1KClkHVJPGKYIUdzMTZI3Wayv9loYYluTZTMLtBxFxFx6yRoVtEs/1+0189PyMCQH1L56C
-    4/84m+fxkLWTwq7X++7tLMV+dCd46hrgvE/2HnstGCs2lxTTPV1QPl1CAIe+19hO2dqMGo
-    z/R/W1DbWne0aicrH1l+gKAEg55+PhiT1pD2GHQUC6IMshvIH8K5QQPcdDBjCz5r1rQWpU
-    tSVYKTo0wvI7lPxKf7umF/8t+XwgUF1IQNPP+0YcwY/RmETnSnMzYq3vMEuyh6kueB4rdq
-    fwjPsOtRPTn0W3NVEnkTkBN0iuSA8Z/R2X5BWP+VgpGolTP+uTKLOaB8WM+/T8Yf3VVRmo
-    BMtqaUwj6gIce74WXAtaWcgpdan9U6xEHygM20iviR7nn4PDQrcvAF4ZbuijM/eac7tOmz
-    1Dw7es1AUQpmdWSkyFDgnipW+bDMz8mDWNRIXgJQlW6fIi0l5qNyhxSc+xJbZcZ9e+91PH
-    +M5JUNmDAJQcDk3xDvW+YfQzryKAbbSbTElsorX5KMBXcydXLs5sx3GPgto2wRaG1KYlFE
-    DfdvTyCiINmhIFg4todGm7G1kPsGOd/OLScdOm15WHFrphdX5xkHxvclU28Q
-X-ME-Proxy: <xmx:IyaYatvdddMFf-4tkQvQZ5EayIjkzUQYT7WlhC_16cFsR7y7EUMdhg>
-    <xmx:JCaYava1LEiCgCJo1tlssHjrIs1QD1UuIXn4qBu61qjdWgOXb_qMFA>
-    <xmx:JCaYaitp5JatZfetChPPAa8VX1mRW6MJQuFPR669cXmddZSNGtWVLg>
-    <xmx:JCaYahEc9o7NyIXXquCPePCe3dnGyI7xhT3AGM146ynu0plXN2my4w>
-    <xmx:JCaYap8GhpSzCaEwKGNW9EN6FlKHeSDJxB-Iy5GGilYIbKqGzK4WGaUr>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Sep 2026 09:35:31 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dbca90ad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Sep 2026 13:35:36 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 02 Sep 2026 15:35:01 +0200
-Subject: [PATCH v2 13/13] odb: remove the ability to link sources ad-hoc
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WMQoL7r4"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5c65d654c23so438632e0c.3
+        for <git@vger.kernel.org>; Wed, 02 Sep 2026 07:04:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788357893; cv=none;
+        d=google.com; s=arc-20260327;
+        b=VMNR5I6QZio057FPSZcGo2jDSYoEBIhIGSpp0SqXTiM9VcDmOXDz6futz37Mi5ffgS
+         Ibhfs9FsMsN4JftMVq2WqUCGfBRaKY2Ozcvhl3vIH/zvxQog3nC4/83wM+Acm5q7BQ6S
+         V7nFmye06v+7fUzhr1CbV3I9UuqOfIXNlKgmO44m5pO3l7xnvpdDOY0RXSEZmqk0WND1
+         nyi1PawXvn5W792gca1urMB9MLA6QxufzMIJmw59wpA4JrqpTuy5SAxpip04J74SIFXE
+         frC6Pue+rOolDBPigWeSyJWDFA52sYQ6QECfq5BREJL56qo+prQn6LcL1QUxwum4ERVF
+         Tcig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=rHDsrgHnwuhjD5ynJimm8etB/5q2NjvlvaDnlGDdkPs=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=OxzxRE9gSC7lcTzjY3RTq5KyyuveMXV6wAzgU/cKeoAPsaqz1Uqd9feLh5IPA+bHqY
+         dIJzHvtdfmzgLyQrYobQhukeq4aGq3z2HjAdR2uTzRS3HLBUxaNhOAFm6di/HV7TRSzU
+         KVimhR8qb82sbCSdKvnEoFQJWmPC9nwFhbTMoZu/oY+rrADZigCsakuZHxphdTpD7MHm
+         a81Q6iZzYiXB9iZaQUmH6IWhx4vuGrFBjV93BC3TrF6r3j+MJ9OMYLfThDMYdpewTzHw
+         SUwdGatFLe8aA+CRk2b8Z6FF0MN3IU4vF/h6furM3wcy+M4WkXJaOEC+MVmix2oZupb1
+         VM7w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788357893; x=1788962693; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=rHDsrgHnwuhjD5ynJimm8etB/5q2NjvlvaDnlGDdkPs=;
+        b=WMQoL7r43Qi0kRyI/qXnrAuyjSvswUlZ72MlPgzo3B2cQf0jqAtTFD/ASbxjWMdZlW
+         FVc4+8y5wnUHlYET2pWcIEn7p3WNoDjb5rZxJmOo+YHJ6oOz4eqAzPxEkwSpfEvDz2ez
+         VfEwDf+bDGWY30FRUKToRVsWLNjvZoQDEqQHpG9Aa47V9yUC/2eRiZ0Nc79eAN7Z+9EH
+         Ume94D0MMf1XTqLzyf64yPt4l2Mu8KseSZ6pbAKm3DoCWe9kd2wRFKhmKIsTkqEqfiVS
+         fapQaXl2gPfjj8akXNyLdVbSQrDmCnCl8oSE6GXuCf7V4DDUqfuwP+k6qkhdJA2VDJaH
+         MHwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788357893; x=1788962693;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rHDsrgHnwuhjD5ynJimm8etB/5q2NjvlvaDnlGDdkPs=;
+        b=Db9KGlRdfNu0EWzklY6LITiVgdsgGZptL+4FvNO4jbaBM9KLtEPSPhNrQCn5n5EBhI
+         mWR18YuE1oFPYPJCeRASPpgd9o8IE0qOPDedHNXP+5AZrP+9QfWtmoXYwmgecxMKwNTN
+         FDpVDdsUFnQHZ6qpVETDvuNy2bxSNZJJW4FkpRv4bM9xUS3bSCTa09kPu8sFi3HuwA5Y
+         aJmb930N7HbRdyNAf8ZIkJip3iDE6Be06kPdIwHAX0me5fT0S7byys/fbqHPkLHMb5FE
+         A+7A/QQYvoIupeaUWQb2dey6vuGKMjq6Z49iIqor/QLCSjcEtafstzH8PLGvUkj90hWz
+         oTTg==
+X-Gm-Message-State: AFuF++nw8q+3anPju/70oDJxGpvhoDVjNLCX2xfZKJIAnzYaqsJHZqAK
+	+PSk8ipXk/SVVmwJSkXNPTSC6kCk/PlfoNqPgBTFTBbpm/A6Lxl3R2XRoPKS+Ce+YCzvbdn7LG1
+	M+sECSoB8bTw1vQ03UEKFAT2FChrXtmgx8IewlgasmA==
+X-Gm-Gg: AYBFou0/v+MfswGvlMjh46NZq+g9CRVSxPIZ/QshBkb32SNYaFMZmr1yDWIO60EH4DK
+	GmJP4lWmxcLD5p1cVIDnQoAmGiF2aVczurqPVk7y9veLpQUDMvHgSQLT3jNuq9gCPhiuoUUPx+M
+	PzQSk/u6i8tAb45tjHOzPTjw01YBEGDuNG2hncSNceXuLeLAKjP1wFxdq4GQHRLV3lo+whZudxh
+	eyvVODkqcFdeYMcfBHM0te9EgXGt85/AVj+YPA7dnkE8EA9XERwCfzB41QddNFe8E/cODoD71dg
+	6oQyj3hnpFJO6cSIHbvHnifH/I1JQ0FTV4Z1B93e3NyYCJY=
+X-Received: by 2002:a05:6122:3284:b0:5bd:aba5:3830 with SMTP id
+ 71dfb90a1353d-5c7d23a6cf7mr1923840e0c.0.1788357888016; Wed, 02 Sep 2026
+ 07:04:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260902-pks-odb-registering-in-memory-sources-v2-13-c6ca12fdea4d@pks.im>
-References: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
-In-Reply-To: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
+From: Simon Cheng <cyqsimon@gmail.com>
+Date: Wed, 2 Sep 2026 22:04:37 +0800
+X-Gm-Features: AcwNN1UAijhBTYFbp42NglBdWQFkqrJUA-BlseVR8giI6co3thMmmka9B9h4pzE
+Message-ID: <CA+itcS2ViLXMdXHFZpNah=jnEBc3sf-Zympb_f0GzftN99Lppw@mail.gmail.com>
+Subject: Inconsistency in commit message handling
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset="UTF-8"
 
-Over the course of this patch series we have adapted all callers of
-`odb_add_to_alternates_memory()` to not do so anymore. Remove the
-function.
+When creating a normal commit using `git commit -m MSG`, an additional `\n` is
+appended to the end of `MSG` before going through cleanup. However when creating
+a merge commit using `git merge --no-ff -m MSG BRANCH`, this additional `\n`
+appears to be missing.
 
-This series of refactorings doesn't only simplify our code base. More
-importantly, with those changes in place we can now unconditionally
-assume that the list of sources linked to the object database only
-consists of the primary source and its alternates. This serves as the
-foundation to eventually move handling of alternates into the "files"
-backend itself.
+Under default configuration this has no impact because `commit.cleanup
+= default`
+is equivalent to `commit.cleanup = whitespace` when non-interactive. Therefore
+the additional `\n` simply gets cleaned up and nothing happens.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+However in my case it does cause some trouble. I use the
+`prepare-commit-msg` hook to
+inject some comments into my editor to help me write during interactive commits.
+This is the hook, with all irrelevant fluff removed:
+
+```
+#!/usr/bin/env bash
+COMMIT_MSG_FILE=$1
+echo "# My additional comments" >> "$COMMIT_MSG_FILE"
+```
+
+I also set `commit.cleanup = strip` so that these comments also get
+cleaned up for
+non-interactive commits.
+
+And this works for normal commits interactive, normal commits non-interactive,
+merge commits interactive, but NOT merge commits non-interactive.
+Since `git merge --no-ff -m MSG BRANCH` does not append a `\n`, these comments
+actually clobber merge commits. `git merge --no-ff -m "Merge message"
+BRANCH` ends up
+having a message like this: "Merge message# My additional comments".
+
+I hesitate to call this a bug because arguably it's just some behaviour quirks
+that my hook script should handle. But I think it is fair to call this
+inconsistent,
+and it creates surprises for the user as it did for me. I would prefer
+that `git merge`
+adds this `\n` too.
+
 ---
- odb.c | 6 ------
- odb.h | 8 --------
- 2 files changed, 14 deletions(-)
 
-diff --git a/odb.c b/odb.c
-index 2f8a70a90c..5fe081496f 100644
---- a/odb.c
-+++ b/odb.c
-@@ -247,12 +247,6 @@ void odb_add_to_alternates_file(struct object_database *odb,
- 	odb_add_alternate_recursively(odb, dir, 0);
- }
- 
--struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
--						const char *dir)
--{
--	return odb_add_alternate_recursively(odb, dir, 0);
--}
--
- struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
- 						    const char *dir, int will_destroy,
- 						    struct odb_source **prev_source)
-diff --git a/odb.h b/odb.h
-index 54548efc55..9025239df5 100644
---- a/odb.h
-+++ b/odb.h
-@@ -258,14 +258,6 @@ int odb_has_alternates(struct object_database *odb);
- void odb_add_to_alternates_file(struct object_database *odb,
- 				const char *dir);
- 
--/*
-- * Add the directory to the in-memory list of alternate sources (along with any
-- * recursive alternates it points to), but do not modify the on-disk alternates
-- * file.
-- */
--struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
--						const char *dir);
--
- /*
-  * Read an object from the database. Returns the object data and assigns object
-  * type and size to the `type` and `size` pointers, if these pointers are
+What did you do before the bug happened? (Steps to reproduce your issue)
 
--- 
-2.55.0.979.g7e5102b832.dirty
+1. Add the aforementioned `prepare-commit-msg` hook.
+2. Set `commit.cleanup = strip`.
+3. Run `git merge --no-ff -m "Merge message" BRANCH`.
+4. Run `git show`
 
+What did you expect to happen? (Expected behavior)
+
+The merge commit has message "Merge message".
+
+What happened instead? (Actual behavior)
+
+The merge commit has message "Merge message# My additional comments".
+
+What's different between what you expected and what actually happened?
+
+My injected comments did not appear on a new line, and hence failed to
+get cleaned up.
+
+
+[System Info]
+git version:
+git version 2.55.0
+cpu: x86_64
+built from commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+rust: enabled
+feature: fsmonitor--daemon
+gettext: enabled
+libcurl: 8.21.0
+OpenSSL: OpenSSL 3.6.3 9 Jun 2026
+zlib-ng: 2.3.3
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Linux 6.18.48-1-lts #1 SMP PREEMPT_DYNAMIC Fri, 28 Aug 2026
+11:47:30 +0000 x86_64
+compiler info: gnuc: 16.1
+libc info: glibc: 2.44
+$SHELL (typically, interactive shell): /usr/bin/bash
+
+
+[Enabled Hooks]
+prepare-commit-msg
