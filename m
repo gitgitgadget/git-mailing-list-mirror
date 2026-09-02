@@ -1,86 +1,84 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA90B47F2F8
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 21:26:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2061411A01
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 22:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788384372; cv=none; b=M/kE/CIKxAPsQHTmDZhiSCtOpy58Ki8CjcNmI2hRnC/ysqJD5iFPi/df+n1mG2HSkpwjihjdBRTK8xRu/a5LQlvv1Z337ze0w5D1mbtb1y0DSvllfPohPDpaApMocOqFzBuB3Fn++oJoqzOlGpDln0jmIOGm3eLYN//0Zai/8Es=
+	t=1788387094; cv=none; b=G0V/2etgSXbTUaoBLmnMngBwmN56j55Kw9RuEaHg+dROA1zXdFyGz4+dLBD1RscvOFEkRg9a0iHxvTVlVj+YAAkR5FQANSLtU9UYEjwTAfMSxv/Nm4thH6Vb3eY14FLQgjNLyZ9TvUF8voi19xVbhP3Oz1PDMXK+oXPr0LkPuCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788384372; c=relaxed/simple;
-	bh=2YRsvoYAXO9bzEhYDXw/myTmZ+z6TLzWrjdLZHZsxlo=;
+	s=arc-20240116; t=1788387094; c=relaxed/simple;
+	bh=ki0er0TJwibfHvV0XbPZr9Yu+oKvwlSleQYPDmCs/GU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ekgMDuqD9dFLPQzE4fOnfiqU6QxtSdDOJFaFbBph2/MAGXFRYzm+1Kyvc9A75zZiAtdIW+SBIrJskh8xFDKBq1oasbo7cvlPwYcO7/011SKwBmXS8wYmHiaPG5gSnsUNd0tTwYXXfs/ukablf48a8+POyVLsDz+6a9W2bhE8afU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=t/SUMrzq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TWF4i16t; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=BqmSPvn9hcxCy2fHfEHkJP0Z9MwQ/ivh6gcDgkH0fAKIt9xz4K8k5+EyShdmmMO/wV83hZ+7PCLSblFl8N4s8BhUCsu0YhwjJ2xtACKjCGd6IO65zrfWhG0yip2b3djEjFtEAK5mJAr5Q0CYPG5jx8n05i+lP35i9KqG04BY66Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EWKN9ykV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hb87qs/8; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="t/SUMrzq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TWF4i16t"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 18AD41D0004D;
-	Wed,  2 Sep 2026 17:26:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EWKN9ykV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hb87qs/8"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 848501D0001A;
+	Wed,  2 Sep 2026 18:11:24 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 02 Sep 2026 17:26:06 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 02 Sep 2026 18:11:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788384365; x=1788470765; bh=URAc4tYG3Q
-	M6qbx81EBCCNocdvONduqPUS+ICyaoZIE=; b=t/SUMrzqFZqBmX3b/xLc7Nirfe
-	4EK43hH2EcaLaiCP5Drbfk09hum6oO0vMGHbXfZ+4TlWxkY26eAT9LVcL2HD/PLp
-	e/qvPP1iVKpSFoUcZNBhCYJaFP7rjui9ABBygyrG4n3O8yhdM8TzvmpW62vKz5xr
-	eOxv0KLamdHKBObasXjkCezId61H9bUW7ktCPhH+5/A0mSre/moh4ZsERpI+OtTv
-	L1upGT72B1Cm6cOJq49YNH0CfPfrZyy7hM41zz1oHSPBqAnA0Vt0DmZGvUqUDSwe
-	usXj4dMNKATUlV1mpeTf6F2a6mIFDYxxtR7B0OU9h9Hn3qVNvULJhimLvYvw==
+	:subject:to:to; s=fm3; t=1788387084; x=1788473484; bh=OcMccW4Oep
+	q+fBQxzyUsNTK9iGcdj/DVgechI9zvNMo=; b=EWKN9ykVTKm/G0imR8XgL9hkFH
+	nhy1i2LQbfanTqsCsCwb6m/B1ImLSVpA16dSWI64aVauoDub3LFrF8jinRUTrUaY
+	LNQ2kZxLyR4EOqugwZXwxOOwgVKliNt2l5cb79razTtjP4Iy79zkG8RcT/WkcxAJ
+	xVNW7EUxY+Pf/ZlS9hkhzIajJexlFah60JcpsEU/Ok5o4hngmI67zwdFWp/WLFfa
+	DoCikmD4taIzxuTQv9C60UjwHCM2LxKauzpPWQW4oHtkcdMmyQiiJxJmh5OxhIkg
+	4Y3bKfRbVfTFBEZD8YOl1mA67c2OMWq+5oXv67n2RMHPy812Tfi71N15snjg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788384365; x=1788470765; bh=URAc4tYG3QM6qbx81EBCCNocdvONduqPUS+
-	ICyaoZIE=; b=TWF4i16tI3o10iJDDkxEyzNHz11wdAD2yeyNSk2OFrRwnz4+KMC
-	xfHgMdf1qL7kt3zEQJJJcnL1cE9vkBbGIyGmKbZXK9sVqgZJ/W/BEgddAfqeRptm
-	7Rr+Vb0yFP0aPxvtdnkM9h1ToALr6zvq4CX9paqtnTBsoCZEoESAfdSxe3StttMI
-	2f318W4RvFc6gXEr8jSwI54K2D+6EYdhaKEmvYZx1achByOycKUeChL2iNIPflCW
-	iiJEuU0KQrow0KxBPlUx1wE2VNlhPEpusUKgNBbqMX5I2IB8IqaY1gKtanJIcc0x
-	ke4+b30X5pQNxnA9cd/+PzQkh9pQLvwPPTA==
-X-ME-Sender: <xms:bJSYakyazCkkT4sVMp0VEj8D5mgWRAlTqelyu4_KAGsjutAa_hGIQg>
-    <xme:bJSYak3hmTxGXKoHt9f-DXb9nwQLOq6SQkd1mo70lThmU9n_eJweLgRfsC1PqrTss
-    H88hJAB0LgSRTt0H8DVXf_HiHQTKNNmCTiFywmgECyoLPE_N8NM_aM>
-X-ME-Received: <xmr:bJSYaqxUkvpZkWhKI4FjUJ5JusyyyC68opLstwBasEwJt3RB0cfQR7EVKEsGX17U-8IsmCEB4PSMnILvbwPOeXL5MZYdwJROww>
-X-ME-Proxy-Cause: dmFkZTEWWZo5IHO8I1jXSPYbkbaJtDgDCOtjL/2t2cCh6FAzPQQG2dfo4fYy0v1w2WwcGd
-    21i7QdT+z9T2X4P6BeJkgCcBPWELNeMktGg368Hk1P18T4qgDLlXPhjSbPDhprkZlMNcGl
-    VQVieky/G4S57eFCiDDJHKtLIs3Ood9UDytJnvHw8CY0hgL67KCF2iBQkQSINED/clE1dn
-    fE0uq5ZqR45gP/VnSUrNSs2hLTuAvBjE2oIbIzRAUXazV09iDHz/zG3/egFPdUOl5VDvkw
-    KPvfYshEiImLqEPuddNZnVwWYSq6TWkA3jBnHMGpvWDTdCX5nBAFedZcl5G05GfbGojuIQ
-    5pa7qgBXxV2KJYat1Rp/WJFPYLJShS1HbtqzBVlzCzqrnSucVq7UdItLFD1X3FPNDzM0bV
-    XsWin9iRz1kq+yRJ8LueFSfj+cDSZ6rdYGzY8gjQRVzPAuQ9D8Q+dfX9gzBwsntPe8DYDq
-    +AAMick08GkU98AQZK1i7vZtii7VTSu2a9r7F6L/WfMWI+2ceQD57erPETQF0YcezQsSSL
-    vdc8suprwRm7qtwZi1fv6DbJPLTbt+SO4AoTTiqX+lxaCL+RJMR2ogNIpaxxuLO31GLjZg
-    R+06SVRUJH6QIl3y/HP202XGjKtQgB5lKh2YDkoIZls4G7xaIN/zcjhma7xg
-X-ME-Proxy: <xmx:bJSYapWWZY_pceeH0FdwV-Ondp1y_bIDxrD8f-zqTUQH3SImagtA4A>
-    <xmx:bJSYam_TBLeH6Z9c61-Wqu8YppuqWTEsE4QXldvLefXiXXI0-S-yow>
-    <xmx:bJSYass3Wkj2KEjqT5BToD6LauK2okIzDDNHwkqgqA4cE_3vPVkzIA>
-    <xmx:bJSYam2MbukLGQl8gwH_jZHM3XsDZY4WcvR25DpKgr5ltCXq3MFiDA>
-    <xmx:bZSYanPJFR3WVNVTjeQvaCfkvoWcQTl9r00AsLPXQEA0DSAjqbvSs5KC>
+	1788387084; x=1788473484; bh=OcMccW4Oepq+fBQxzyUsNTK9iGcdj/DVgec
+	hI9zvNMo=; b=hb87qs/8p6OuIn4TXOmLdrL4uEssX1M+a0/28T3H/MYVtw8aClz
+	qPW8AGeIqMmHWq3Ny+CS9J+/zO+Bsk0yOqcCQMRecaJNTnhefP2KkvnjOAanbOzA
+	hnTPzo/wYcELUU0oEiliHPC/3hs2S4XF9Q7upaVb4YamrkoqVF+ixspU3a/92HgE
+	mjhjPRZcAFXVUgDOTbOcL97gPDVqgn7+rFOvGuNb8bTTNCH//fLWQXcMPRTisKZD
+	Eno9MYQIaYlR2gzQXHwIs/3kYOQPapGcIIApXNydpqEWq1xM1xK7XwGy4Fdqr3W4
+	09jNhSGOjf6L1nxzksW6jcE5VkCiihwtBTQ==
+X-ME-Sender: <xms:DJ-YaqMwtl-5QmNnOeJWxFXBZsb8O-g5FwQAI50fcOCgN_kdSDTSiA>
+    <xme:DJ-YargHPdPdUN29KyisxzkJa8sA5QgiEzAL4J0sGsu4cL2QtyY562QZHSRktS-oR
+    HEqqApAxxJhGtxUX61jW_P2Wo6Eb4L-UYFftcqGGlMLBDfzhTA6qes>
+X-ME-Received: <xmr:DJ-Yak5uqfri5_GvHMjT2n4DUrlnaQPMc2eRERaOc4kga3829E1vmeQgkRgYiDJ7qaf0SlEG21Vtm5VpnABPM41mMKzTdVXAHw>
+X-ME-Proxy-Cause: dmFkZTEzOf9KCv9wSYD1gwKnp+u6pRoRj2yJ1eN7gH+hYhEhqMwPuIhagIVG3fdzYMcmly
+    /KRUzjJTdC9qPQc52O1qWf4P5nFL8x5Ux0gvt+Y1I00W7M6ykAAv1v/PCu//UlmG4BVFFF
+    5jQy0To48wPGsIszRsj3uV4Q3lOSlI9pr5calv4iHC5jgU45pg3RSFUH1E4ScdsjUBTYXP
+    1iyxznp3mUNPVh7+PXn4xD2nYtSE3Vgi+z+MAuSU1U0veDcvMb5rpMkQ0kml7dPG42g5Uu
+    OStzvRtjziZ9k3E3ILJXVQ3Zdd7i6sGGj5Jwsf4l5s6HvoW5bqqrRldE6LKaNskZUYOfG/
+    +vj8g+3hYDb71hIKutM5oQIYAz1bZz64Xn2ZLMOBqxJIoi+14thLXT3fnmI+3viCVZtsny
+    vULq7HF2dbrguq1ONzvwcHuFK4cwHBIY87xPbfrwZDVGofnf93RV2bOw/RwTEtui7hz/QS
+    HmBBjs+CUNK1Qtld4z7AVaENX1USOBuxKmJXVMpePxlvIWsrw4guRT3goGwmXfVoloAnl5
+    Fvk4SV2blxsZJJBn5PLcO2fvFjlPEZN5GvCQABSylrGk4hfwSbceorC/aI5czCQSLMhCag
+    dib1LW9BUgOX2SmiYwSGec3Pcq3rKeuE3Pn5/sMhR2npoXDuRRXjRlrYSllA
+X-ME-Proxy: <xmx:DJ-Yaq3AslT_J5l5EBGwpSfiuVTH2kcilHJqbR_XXKh-Vwdu4HoC5g>
+    <xmx:DJ-YanunM9CGiXlLZgig27dVCjk_o20gNDMse34ipmJgXgsTJ8AGVA>
+    <xmx:DJ-Yao6HfC_Q7_ShLJ3Ahdwkex-xlQdbMTgsqlZeaDLDvtsO7cBOmA>
+    <xmx:DJ-YardHvv0bNFspBUUHQR2Qt68rK4rDzq7v8d-EGi5XFtFzCFQP-w>
+    <xmx:DJ-YahgjVCIRUcosT-lWD5it-S9nTRNQwJn1QpEI5sUscz54mqeFRRcW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Sep 2026 17:26:04 -0400 (EDT)
+ 2 Sep 2026 18:11:23 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org,  chriscool@tuxfamily.org,  toon@iotcl.com,
-  ps@pks.im,  karthik.188@gmail.com,  justin@parity.io,  peff@peff.net,
-  phillip.wood123@gmail.com
-Subject: Re: [PATCH v2 0/1] rev-list: add --missing-only option to filter
- output
-In-Reply-To: <29b5003e-48b3-490b-a4ec-c57088acc441@gmail.com> (Siddharth
-	Asthana's message of "Wed, 2 Sep 2026 01:57:51 +0530")
-References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
-	<20260901185100.33948-1-siddharthasthana31@gmail.com>
-	<xmqq1pbcsq1h.fsf@gitster.g>
-	<29b5003e-48b3-490b-a4ec-c57088acc441@gmail.com>
-Date: Wed, 02 Sep 2026 14:26:03 -0700
-Message-ID: <xmqq5x0ngxas.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
+ <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH 1/6] parse-options: add early_scan_options()
+In-Reply-To: <20260902161047.476753-2-christian.couder@gmail.com> (Christian
+	Couder's message of "Wed, 2 Sep 2026 18:10:42 +0200")
+References: <20260902161047.476753-1-christian.couder@gmail.com>
+	<20260902161047.476753-2-christian.couder@gmail.com>
+Date: Wed, 02 Sep 2026 15:11:22 -0700
+Message-ID: <xmqqy0djfgmt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,12 +88,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
->> ...  So I wonder how this fits into the larger picture.
->
-> Happy to clarify this in the commit message / docs in a v3 if useful.
+> So users must spell these specific options in full. This restriction
+> could be lifted in the future though, once the scanner is adapted to
+> accept a command's full option array, as this would give it the
+> complete context needed for safe abbreviation matching.
 
-Yeah, strengthing the description of the motivation in the proposed
-log message is always a good way to sell your ware ;-).
+It is unfortunate that end-users cannot tell if they are dealing
+with a system before of after "once the scanner is adapted"
+happened, so they must be trained to always spell the options in
+full to make use of the commands that use this feature.  It at least
+does not regress relative to the ad-hoc early scanners these selected
+commands have that do not even understand what they are parsing, so
+it may not be too bad.
+
+Stepping back a bit, the burden on programmers to use this would be
+to write in a separate notation what options there are in addition
+to what they feed the real parse_options(), which cuts both ways in
+the sense that because this does not take parse_options(), commands
+that do not use parse_options() can still use it, but those that do
+already use parse_options() need additional work to use eary_scan.
+
+And then once the scanner is adapted to accept the full option array,
+the programmers only need to discard the struct early_scan_option[]
+they wrote and replace it with the struct option[] they already have?
+Or would the calling convention to the scanner also change when it
+happens (oother than replacing the pointer to struct early_scan_option[]
+with another pointer to struct option[])?
+
+> +static const struct early_scan_option *
+> +find_early_scan_option(const char *arg,
+> +		       const struct early_scan_option *options,
+> +		       const char **value)
+
+Because you return one single element from the incoming array of
+options, it is mildly misleading to call the variable/parameter
+"options" here and everywhere else.  Let's stick to "arrays are 
+named singular, so that option[4] names 4th option" convention.
+
+> +{
+> +	if (!skip_prefix(arg, "--", &arg))
+> +		return NULL;
+> +
+> +	for (; options->name; options++) {
+> +		const char *rest;
+> +
+> +		if (!skip_prefix(arg, options->name, &rest))
+> +			continue;
+
+"--option" on the command line, after getting stripped the leading
+"--", may begin with "option", and that name may be in the option[]
+table, in which case ...
+
+> +		if (!*rest) {
+> +			*value = NULL;
+> +			return options;
+> +		}
+
+... we found a hit.  But shouldn't option->takes_value be consulted
+before we return to signal the caller that the next arg is an option
+value before we return from here?  It looks a bit uneven as we do
+that for stuck form "--option=value" here.
+
+> +		/* Only an option taking a value can be stuck to one. */
+> +		if (*rest == '=' && options->takes_value) {
+> +			*value = rest + 1;
+> +			return options;
+> +		}
+
+And if the option[] table had "opt", then "--option" on the command
+line may begin with "--opt" but "ion" is an excess that is not a
+stuck value, so we do not consider it as a match.  OK.
+
+> +	}
+> +	return NULL;
+> +}
+
+If we are to write a separate function anyway, I wonder how much
+more work to write a early_scan_option() parser that does take a
+real "struct option[]" array.  Its elements already know if they
+take a value or not.  For expediency, it may be OK to start by
+simplified parser that does not handle unique prefix and other
+complexities like callback functions of the real parser, but at
+least it would reduce the burden on the programmers quite a bit if
+we used the real struct option[] array, I suspect.
+
 
