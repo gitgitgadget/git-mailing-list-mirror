@@ -1,163 +1,145 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0514A92F7
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 18:52:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCE64AA1DE
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 19:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788375149; cv=none; b=jbrTeWpfa5SDGAUzGjqcS3vNO9vwyL5GzMJteuw/EH0YdvgSGIVVteYiXo9pb0zv4Y4QrDusP9hkrSU/52xNvlyTaiJ9QLBMiZcbRHl36Q/BNpF411CCHunn1jBOxRiBfcZ/LmuvdIzqqsu40gdEFy9SsxWgfltE5BrRmkQIgXY=
+	t=1788375954; cv=none; b=E3EteZXCWbo40OUiYBrtYFxli7cZdCVNWCS9QSHE/XsibIaEo19frqvCt1P1Pb7OA+s1DJg5TE6B5+jOab8598zgVBAi/Huj9lCYgeSvdrGHYE1bDXZIemjCmCUIVUUmdFSJydy42Pvz46eHmymks2Cm9YmwJaRlMaIKTIfLT/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788375149; c=relaxed/simple;
-	bh=U1cyUOU0Z4ecLp/SKJKIk6D7PlVCKkjC7D/w4A/ZL7A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VC1AQQ4veVgA87YYhntdBBVxPg1k4RZi7oWUNUWFC2tOZ3zrcRosaDR+uTjt5mNC3DlrZNE2kX0g2dZZjHMEXw+m7GBqjms96yw99KP1puRO+DAhcorhMy/Hld1F7Fj87QpKMlPQO8uC+EDbjv8vgQ0mOKrCT6mjTOOmsqbHVpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gDWQpeRc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CFKLzNJo; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788375954; c=relaxed/simple;
+	bh=D7tTYG7SwIg0JW5dYX/17I9P2rNcO35gfhVZQvP3AnY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WFtPo5vk2nAhjWlez6YngHbYjVL79xB7Q4qRUkqrv3sIvjw3MY6zm44egkGBO5KRm6vRYHHi6+0EXbYW0f1SQz7FrtGYEQT7VYTBPUZtATlSClthJiMs9yoewVU6x2hKVKjEsT1pUnLFP+QI81D9Q03DV4knvVFiMezVaUzQ2I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rrt/r46Y; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gDWQpeRc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CFKLzNJo"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 495351D000A8;
-	Wed,  2 Sep 2026 14:52:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 02 Sep 2026 14:52:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788375146; x=1788461546; bh=5t8+VttYof
-	v/LCPnP78AenesFlxIVbfpMK4wDRSxlOw=; b=gDWQpeRcjTDj+efDxOl/gQhgia
-	pK+JuES86GQK9a89YuEW6nsQooZxVlyTKpEJTYdk5vJOoUOcUCEVKHlkdbGOc6xg
-	IoJbYYvDIViFC9xNLl7EznFV+vS5gRUXd7sGWFFrCDVZscFIBcFQ0ebKlpYqD4q3
-	85KA5SzfzlnSBi1C2hk385T3R42PYYNn4xrJfCodu8+QR8zN8mZtBgwaDHRE4fjG
-	1JAbk4PVUhxov0g2ElyeFMFuP3NfE8Celx57N6XOv1tDGNByg+kVRApLpZOl7M10
-	mOdQEF3QuqK40Vy06O9AHiB6mHcmRwdrTGZFVT+um+X7AD2XSnQiyGJJHX2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788375146; x=1788461546; bh=5t8+VttYofv/LCPnP78AenesFlxIVbfpMK4
-	wDRSxlOw=; b=CFKLzNJoiB7MJsHbVRbdcboNMIaxC2VxCIwvppKYVBmxQn0Gti2
-	PJUnxmDAlZsqQDuB25chyGAHl0DcP7ITiYWhHmNr5WFoDhZXodoobjH5jVybHwMg
-	Vd9h46Q5jcOmciUaXPopscgipYTcH6HbcbSzJUZNA2jVu94nEwKUXtmpoKxDbp+B
-	yPE6C8G+L53ur9ifXMlOciwIbKZVb2DNp2aa46fSfynDbfD9w9+flLjMouOOfLfA
-	GvAN3uQieUg56/Wg40RG8/NDeSlu03Y7A5D2mBXfQYpRFrWr1TpsqDHp/5kTT2Gh
-	W6rre7aGsZP0XUWYVpJlW9k9M+d2jRUdcQA==
-X-ME-Sender: <xms:aXCYavmIpXGkZv7CollNpOFef7t_8_uFbxdJYvasIsKxRS2jTiVJDQ>
-    <xme:aXCYalboyoKGZdNFd8b6oIZclcgFOW1ZieAtvIDZO0L-q1mthutpctQg8Cldf8ZqC
-    Q1A7kOu4nKcM-yWx-1luvohro9KsiDHC1MfqDaIafXWuVhLGLiA4Q>
-X-ME-Received: <xmr:aXCYapQFiEe7SFbuMeLaTyqIxIQtARwbrOBS2Fp9SYQuNBqm6yH1qhTgRIT8INa1YQHOSd2-qAXFVxJTLbDC9fBpkVQFqQ9jbw>
-X-ME-Proxy-Cause: dmFkZTFu/Hth5+pxyF4PHmKWi9PpspYqA+94uDqxY+E9MfSx+H05VJIzcnlw49l8jaLQUW
-    j7M3rPrQfCgN75SVRwX890oRR/WUMe4ELkxI8p0alZYU65PLfAr0J5A21HmA5UjCKmV0pN
-    2NjUCmjbegSQAyZOn03qTIHzZYfc5i8kolmz+dArZQdpW5dXkHYvep21Mj2ZdezfBQ15E2
-    E+fS0x2tVBWTiJaNlNzeUaKeRyyEfNHpOntfWdptkBSH+UtHeNNOU1qeqy6cbnUgZ0KHKg
-    kiwijNSQjWJVYJd8LVpwlmNtPBA7Lkdgk5vYOQamjBuFkU+n1jYgyxCAkpK4UQwEm+s7cK
-    GqG/lt8QcYUI0oxjRd9DVd8FtP2iuFr5uupNsRyKXNJUbCjMuo0WIXy81TsN7+L0nmM/Km
-    oArrPwog4V2d7xZPEkh9mERzfyGhKGJXuIeCrO9TvCP+DW0NJPfuNvGdsTxQfSmPPAudqv
-    ejIdCos+DjW7syTEBE0ohWkUGL/k4mkvxw8dH/b7LFv4LlgGUmwWaQoQxDtxKDmqV13CNu
-    YhktGBe+er1mpSx0W7H2SKRfFXl7VXr5Gdr0b6oIS2oIIHLEcELuDfgl+4v9VrmkweFUYe
-    KqYBS21ejmyO1Lb3AqYuROCRt0dBnMSyinxTgQPwx4JQo+oGcVDZKGxEIMEg
-X-ME-Proxy: <xmx:aXCYansN6jNhptqIkKl3QeGqJr55BD5lm7VcnvzX3SMyZVshrNh55A>
-    <xmx:aXCYajFvqPvTTVVKXwqTAUZbfZAp5WkQVIIvK9xAGQaF_SY709oB6A>
-    <xmx:aXCYagwUa4uC7GCO7I-4iWus3UIwnn8NEmrfx3X8rnilXRv54RsNVA>
-    <xmx:aXCYal1NsTy6-RkvtUapolWljIbk4aE0wGx3FtgnwJQyT-tndBAjLg>
-    <xmx:anCYahbQyqF0JCo8kZatqSNsKrVK3hWogtEB4A5-9OZKdn-4fdvjeIaz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Sep 2026 14:52:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 0/6] Standardize early option scanning to fix argument
- parsing bugs
-In-Reply-To: <20260902161047.476753-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Wed, 2 Sep 2026 18:10:41 +0200")
-References: <20260902161047.476753-1-christian.couder@gmail.com>
-Date: Wed, 02 Sep 2026 11:52:23 -0700
-Message-ID: <xmqqpkyviizc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rrt/r46Y"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-517dc520840so16329351cf.3
+        for <git@vger.kernel.org>; Wed, 02 Sep 2026 12:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788375952; x=1788980752; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=35p7e6ZMq6IrASR9Z+811Xzx6KKPMB47tjav8WKfxtM=;
+        b=rrt/r46YxHZyu0iGgW60m1hTNree+KQCj/oIIU/BDVhEYmzmo1llXXwmZXKSj+80xg
+         DT9djNDRPpkrglcmrfQ1B1KRpJ71T194FkQjALJOWInvT9RaHQYDhEvUNobCO5zJs3vM
+         gkxsblXUOW7zbPPe9Aa3/HoRxiusUP9zBSOjqp1bcWOAnBTiTe4eIWyQ9G5TBrpltHqc
+         7znhohrD5nPQIO+bebhx4EDc2SRczNhHy2Ui4NtwFqZOuAIe/R6sQO6uWGI3+93oyJtX
+         jBd6Y8ZiGNbfcEmzecnGwcL+S3Fk4M3tR3Yh28q0s9jM0WPeRxyd95STyWpDXAID4CwK
+         iQCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788375952; x=1788980752;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=35p7e6ZMq6IrASR9Z+811Xzx6KKPMB47tjav8WKfxtM=;
+        b=kc09/Bl0kVi3UUGXaz8sC+rNXlzI6A/YKZDC/GGOOGTO9o/D+W368/wLXrUCehMpIb
+         5aFQkNBPGYAbB/iamPdbQysBC1HpRrLB+c+fkLPBII0EJ8kvRs47WaJuRDMCqz2MsLcj
+         mu0YMNFkxIK61A0YDoLWVQKHTFDjwnfJX9ce9CXfWWRx9sj6P6lM8mBznbmVDLletzu8
+         yq6R+Nf7SDFI0zg3xfkpSPUUIaNsHERhxo7g0GHRPZ6RTuuRMAqdzSpPtuQSZ4TdklSA
+         wMooAef7yo67q/J4upR0141odH5OVMeSf4WYrkzd/nx6d29ctvjTrZNeBpj3OcXbCWDT
+         Vnyw==
+X-Forwarded-Encrypted: i=1; AKwUvBx4Q5/wagVs7V4qgAltjUmkZCsWUidx0op4jczsN+96mMWaJ4cIDJ1O3JPpu1+9tQLqhvo=@vger.kernel.org
+X-Gm-Message-State: AFuF++kH1g9uY2YmwrTdfZ/AoB/94DqQYtUOC/LIJxU0O1KqUrFRZvhu
+	V3Dkou2he6QHTkV8yj7yIonbtKb/g/UBrjVwnMZNxpH/AT1OrKO98tc0
+X-Gm-Gg: AYBFou05g9g+iG7WiuQABgx0CdImCjaZ33TiLeyVuoux9IPwEtwib+2s5gnwkCK3ifL
+	Wzx7SQWyVQrfh1saGyg2Cd9dr9/CQ3oyAObIEZJQ0AVjtNhlAQmxe8tls47oPwu6N5LRw2fzIH4
+	kNw6Bn009YtnoWaGBQEeZZgzapGRSUT34wURVOMBQtEW2yElaRQGL3Ol2GRXOdKTp1PnGnqQcpi
+	dUSFssNRxxXnAFK2bieH7cR5itJjBP9A9P98GnJFTyntzs3CjTMmHZj/8WdQA/Tp+B7ESGhH6iu
+	Ax+vKeT6wZE1kAsOusKA3SiKig2cxtoGNrW3dV6oqrzy0OZBtdGL9n3rEtd7n+7GYTTLaKbcL6M
+	Sk4cySklvZK4kX4hQpVpmDOWwKSUZ0oPOl8htEAZLipduEGOLz/ZEQ1sAJEc3zRbV+xnFyVuUGr
+	MAKr/WOTUF0dOYvvYcMdH+VOy/JdrBpAB3OZfN2jmTxpJNE7JC33v9KDr4Lu2XTpK6U4Ungzn0z
+	jfpk4cX/qJLwQX7sCQ2LWLVW5E5lWt8pjfdBNvooeJcus7CydixWslSCX7QeOKx5d0QVHvt76DL
+	x6LEzicoa1ifCOQ3hWjkNgYlst2nXON691D1iqxoTjqNSjUs57sCQPV6zh67cS3I0JuG0mRlHNH
+	yvuMPLSggdNuB8KtILfbUclvK
+X-Received: by 2002:ac8:7f93:0:b0:530:178a:9de8 with SMTP id d75a77b69052e-53036cc63a6mr83313421cf.22.1788375951913;
+        Wed, 02 Sep 2026 12:05:51 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-530331dc455sm25108151cf.15.2026.09.02.12.05.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Sep 2026 12:05:51 -0700 (PDT)
+Message-ID: <1d6a4047-fa41-45cc-8097-88680e8ea67d@gmail.com>
+Date: Wed, 2 Sep 2026 15:05:50 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] send-pack: avoid sending the whole tree when pushing from
+ a shallow clone
+To: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
+ <aohP7GMx9oX3ZCsQ@pks.im>
+ <CABPp-BHJj-b=ieva3-=zaCAyvn5UtNQqNT0Q76YCpqZAjO-8VQ@mail.gmail.com>
+ <aovW5bxu1F8jYKYl@pks.im>
+ <CABPp-BHwa7QM=XDuO=9xqm-OL8dn8uGf1=rv+sgBRQ9hHKMFuQ@mail.gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CABPp-BHwa7QM=XDuO=9xqm-OL8dn8uGf1=rv+sgBRQ9hHKMFuQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Christian Couder <christian.couder@gmail.com> writes:
+Sorry that I missed this portion of the discussion talking about
+push.negotiate. Coming back to correct that.
 
-> A number of commands perform an early scan of their arguments to look
-> for specific flags or structural separators (like `--`).
->
-> These hand-rolled early scans are often fragile. They especially fail
-> to account for options that take their value as a separate
-> argument. This leads to disagreements between the early scan and the
-> actual parse_options() pass. For example, the early scanner might miss
-> a special option entirely, or mistakenly treat an option's value as
-> the `--` path separator.
->
-> To allow these commands to safely skip option values during their
-> early scans, this series introduces a new "early-scan" sub-API into
-> the existing "parse-options" API.
+On 8/25/2026 1:00 AM, Elijah Newren wrote:
+> On Sun, Aug 23, 2026 at 10:30 PM Patrick Steinhardt <ps@pks.im> wrote:
+>>
+> [...]
+>> TIL, thanks. I don't think I was even aware of "push.negotiate", and I
+>> mostly went by the folklore of "just clone with --depth=2" that I saw
+>> repeated on many sites.
+>>
+>> But this and all of your other answers make me lean strongly into the
+>> direction that the fix is at the wrong level, and the proper fix really
+>> is to enable "push.negotiate" by default.
+> 
+> I don't think that fixes the problem, though:
 
-Yay.
+You are right that the following cases are somewhat common.
 
-> This is deliberately implemented as a new simple and fast scan, which
-> has some limitations, instead of a full refactor and reuse of the
-> parse_options() code,
+>   a) Users can do a shallow clone of a specific branch for a specific
+> pull-request/merge-request.  Then the pull-request/merge-request is
+> rebased, and sensitive data removed due to a leaked secret.  The
+> shallow graft is no longer common.  Pushing from the shallow clone
+> should fail, but it shouldn't have to send several gigabytes of data
+> in order to get the failure message.
+>   b) (Very similar to a) Users can do a shallow clone of one repo (a
+> local repository cache?) and then push to another; the shallow graft
+> thus may not be common.  An error is expected, but sending gigabytes
+> of data to get the error isn't.
 
-Sigh.  In other words, we hate these ad-hoc prescan that are buggy
-badly enough to replace them all with yet another ad-hoc prescan
-that is know to behave differently from the real thing?
+For this case (b) I can think of it as doing a shallow clone of a
+base repo (https://github.com/git/git) and then needing to push to
+a user-owned fork (https://github.com/derrickstolee/git) and the
+fork not advertising reachability to the shallow commit.
 
->  - `git bisect start --term-good -- <not-a-rev>` mistook the term name
->    `--` for the revision/path separator, so <not-a-rev> was rejected
->    as an invalid revision instead of being treated as a path.
+I think the difficulties here is that your approach is assuming
+something about how "non-advertised" objects may exist due to either
 
-Sorry, I fail to see much practical value in this.
+ a) delayed garbage collection, or
+ b) shared object databases across a fork network.
 
->  - `git rev-parse --default -- <not-a-rev>` did the same, reporting
->    "bad revision <notarev>" while any other default value gives the
->    usual more helpful "ambiguous argument" error.
+I don't think these are reasonable assumptions to have by default,
+so we need to be really clear about the reason to use this setting.
 
-Neither in this one.
+As your test demonstrates, some amount of "our assumption was wrong"
+is built in, so we should have a way for users to respond quickly
+or automatically (retry without the setting?).
 
->  - `git fast-import --depth 5 --allow-unsafe-features` silently
->    ignored `--allow-unsafe-features`, refusing unsafe features from
->    the stream.
+The multi-push case that I brought up is tricky, though. It may
+be very narrow, and HTTP servers would be protected, but we should
+avoid allowing corruption over file:// protocol.
 
-On the other hand, this may be a very good thing.
+Thanks,
+-Stolee
 
-Is the reason why the ad-hoc pre-scan failed to see it was because
-it did not realize 5 is a value to the --depth option?
-
-> All of these commands call parse_options(), but for `git bisect` and
-> `git rev-parse`, the specific functions doing the early scan
-> (bisect_start() and cmd_rev_parse()'s main loop) parse their own
-> options by hand after the early scan and have no `struct option` array
-> for those options.
->
-> If bisect_start() and cmd_rev_parse() were converted to use
-> `struct option`, they could use early_scan_options_from_options() and
-> would not be affected by limitations 1), 2) and 3) above, as both use
-> the early scan only to locate `--`.
-
-I imagine that in the long term we would rather see a properly
-refactored parse-options machinery perform the prescan (perhaps with
-some kind of "dry-run" option given to the machinery) than yet
-another ad-hoc parser like this topic introduces.  It would be very
-good if this interim solution at least took the same 'options[]'
-array so that when we have the real thing in the future we do not
-have to redo the conversion effort.
-
-By the way, how does this interact with your other topic that has
-been stalled for quite some time?  Would moving this one forward
-help the other, or do they not have much relevance to each other?  I
-would rather not see two topics of non-trivial size stalled on a
-single author at the same time, so ...
-
-Thanks.
