@@ -1,245 +1,117 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BF847DF87
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:11:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B79249E5FC
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 13:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788354706; cv=none; b=uFMZU2O1zlXwDcCf0824f9pFRjxBdx8RfvGEdBwic5/wwQv/UFMxfQxQC/45mbPtZcyrstK7aTu1QxYn6gkKyNyT94ZeCypjke8DNCo5+csODu4jqStJCvlf/dvblxuqFPeMDg3vDYmSTPPxSEGPPy0q0X78C0o//WUSVIF4xfI=
+	t=1788355218; cv=none; b=rOWQp+Zpcg1LM5LO62ePTWgHfFZNaVXvwVO21mBm/9vSmBRqnbJqg4ch+z27VCdX+Jz5bPRF/q0PDglagphZcqKEl/UTE1zuzQWbOVER5LhcTYt0eG78LME6BxMMR6a2l8PBAzZAmAJn04eyKzIxAJLY1xfG447kSEMvf8fSbeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788354706; c=relaxed/simple;
-	bh=dqPvr1LI+/CBIrbJUdfjpSrSROhy04fqZ7XZD/Q0URw=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=e90adE7TnwkjltK1uP0vkypz/NSyMwLnHcjUM32bStUiYHfv/n8wLbFXZ5kc4QBqC5ZqcZF87YQoBofO3s3PsnCFiRDGqRT5jOHibIomSCiPL1IjLrMIYmPbqvYYJyuSqMAibuZj+5UETeDgduCllR01bhqjzA8CalNLCkw5lN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de; spf=pass smtp.mailfrom=ytausch.de; dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b=geQ1QPQM; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ytausch.de
+	s=arc-20240116; t=1788355218; c=relaxed/simple;
+	bh=z5OfIMHVDoyoTzm1PA9ABpL7Q8pVWrdMByeYLrdSF4A=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=pr49scJ/czTCdlFmX3Xu6eqk2fd+f+xYuoP6UK2xzGULyOUstvsV11Nao4XoDrSDnjgGueyOx7t4M1hN942aRs0ydulJW+zII6BU3fPdYNeQXuCSZAb6vrKwjIGbdbEufsTVSWo7N1/hU58SJxA91ZzbSkQ6IP0N9ZrbsQlqGUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=kLqb2Cqz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ds4bUruM; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b="geQ1QPQM"
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4hZjc46ccczKmHV
-	for <git@vger.kernel.org>; Wed, 02 Sep 2026 15:04:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ytausch.de; s=MBO0001;
-	t=1788354260;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=6VTIyceb6H7v0ifHhjI1vKzg261G0Q75m512khErPyM=;
-	b=geQ1QPQMUG7XFXZdM3+NL1fD84HMG2Afa+gpWM4S3fvW/3Urrxo+4ll3JhzTexQrnn0z7E
-	GJRSmneEgNfmFpSwtKgjli7PVWrrpX/Nq5VdWoI5II44iaEfplSVq5IbfhSkcy60OMgq/K
-	RUyDrgfprYdgh2CQb4U13EtpEeAMbvylHV+fa/oDxsiSFUwsd+cUJ44blQ13YYR4c9hSYR
-	JkLBVH/+gaLkFDrcVlY/aKlAiV9HzJ7FOiols2uZZiQOY8h1VTs5J31FETEPz5JOeqmO4H
-	SfSKabueXPUG+0EtqWxe0GUjGnVla1IgaaanDNGU4cera+3cporNuwbJ//ihaA==
-From: Yannik Tausch <dev@ytausch.de>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="kLqb2Cqz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ds4bUruM"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 19DBA14001AE;
+	Wed,  2 Sep 2026 09:20:15 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Wed, 02 Sep 2026 09:20:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788355214;
+	 x=1788441614; bh=Gg/TLiPfV49zk2prolo7nNhIc3YRZaz85wKM6scA2B0=; b=
+	kLqb2CqzDqiVvyh8kk4caQXXNx900a+RpJvblThBdV3WN1S0GldnoilhiutMtZ1C
+	9ArTwd0qYn6sb5EyYL/f6L50rfwRFnVhteMlqEWNYbNn3YwRz68l6FmfgGisUZkO
+	b9UMI9qx7wQQezEP/+hTzZlsGMjNX1bALgLSBW4xO6l0GpHNfNF5GY2fcRisL3dR
+	QVpgW3Ke7DIINSZfwPNamUjl9fRgirAoGXWy33tg+3J6vA3hKiuch7hVmKc/uJtY
+	B8tGWlIHHnOu0/8xLRfrOioTkYl4mkTb+mWOI9D+ZDYRovyEty5Iyxt4BbNY7j2q
+	GCWXriwAgLfa30mOVJ8KBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788355214; x=
+	1788441614; bh=Gg/TLiPfV49zk2prolo7nNhIc3YRZaz85wKM6scA2B0=; b=d
+	s4bUruM5bBv2IHc+gTR0uINSFh3aHX37xMfLQTLWYFfMUDPLWUPLbLvbSroBMD2g
+	qB7T7NHCkRGnDdzLjnC+HCXrACEJq0QhCeEaYHslqdwz9BunWF7whg++Vn4xkr8H
+	/oJjqsrOL6DJnNaZlp9rJrKzWHp9PQxqJnLoggUT22Lqie0wKYhTdKb1p72wQQ9x
+	Pz3lIjpxG7lJjiUBFTx82JHHhqfgPvHzSDO8/Nvw/aSDycHxbnEaGpElvnLrGYBV
+	+sNcEKguOVgICAfk08OVIP42GNJNSzafVgFwlS2qqhTqVfteZoi92DTtO1/godw7
+	XIYCneNlFm0489USPe+Cg==
+X-ME-Sender: <xms:jCKYaj1q4OY0w8fM60Tx1zqBQJEWsgDDtc1bcTgI1Bveo2WtzOxwqw8>
+    <xme:jCKYas7dyp7bLKxC1-dEewzX36kjjfHCTM5ErqxkW0gX5Vp_lf1EX8rCb8-tFDIIV
+    SbuIuy61VctRiiE_MwEbJHC-6TNEqrv_-YAtlQ9gHz0oGZnvYyYDHw>
+X-ME-Proxy-Cause: dmFkZTFyHatfJK9nE3wc2ntn5gS+Ogg2iX8HlruucPGvVjWMuxJszi00MhKnepbwo8Ayj5
+    hRaIy9baYIULxHOpHIwoVYzzAx74H47gQJKHOFtfoJ61TfMKOJXvtRjUAaGEnrFRlXcGEx
+    hsijXAfB5pkVA+00B3fs8RS9TXRapJJuiKB+lSsiiq890q3FJjRh4LglWZl5j1ZQOTW6OT
+    VdINGVDpo7yl0dhoS7bADIZUrUzncyAlnnGlV1WfGXAkSCHUfWAbtm37lWHG529mi+hILT
+    /+c3pVp2CvCB30Y9PdLSuzN5TQV+elZ09ka/qXCqFt1i1Bq0sYNG5LpFFkOHyDxTqkBXn4
+    M8sKLBmavqqWBad8FWONLWYJnV1uiSj3bkP49EaRZkEBlnSEYogtk4p+k5D8iN08zsv5k1
+    K/Wma0dPYVs7ftWnOvzXKgXiWWnWUYnCutmhgsLaAlqDETJD8XZ4ExtNhbInSHGFKAvPmN
+    QAIGsGV6LC2E8CuKl2tuyO7gQELdOrkxE5SRVIX1OjKhGiRO7b6zDPg2GXr0zUUSI+cX6c
+    W6DYOqzwAZX1e4KOW251mPKbgeECG2Zool8z9LfsEuFCFTvzpFUJ4MYAj1HoyKkYs4KUG9
+    SNGyn/JUQ06JueGTMAk1JTDz/jqX2zDX8XGy57vOGNXt2kBIE5YmXWehWrag
+X-ME-Proxy: <xmx:jSKYaqjavV549W7XDXss7jtB86cIoqJIGEVT4Z169TsrR2yfgTExIQ>
+    <xmx:jSKYao9SA1RdZGIHht47H18WaJPNOU08QGoEEVH5hRWpcvWQSOWtiw>
+    <xmx:jSKYapoeMcmyWakFC8snFyGT3yCN-9FEJv6xklO1co22BQKMeDg29g>
+    <xmx:jSKYav9O-CoUpVxHanC7Tc_JxttmJZ9ok5lxa4MZFWbOeMF6yhfcig>
+    <xmx:jiKYasql9p_MnCDRzyw4SZHUF5n6cnZ96KZxULZZ9HZcI5l9azPYR7Gt>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id 71E0422C007F; Wed,  2 Sep 2026 09:20:12 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Subject: [PATCH] dir: find common prefix among positive pathspecs
-Message-Id: <AA085B7A-F528-458A-8AA9-7664480997AE@ytausch.de>
-Date: Wed, 2 Sep 2026 15:04:09 +0200
-To: git@vger.kernel.org
+MIME-Version: 1.0
+X-ThreadId: Aaez0ouLjM7B
+Date: Wed, 02 Sep 2026 15:19:52 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Message-Id: <b3c66de3-0ced-446f-9bd6-73412a8c92b5@app.fastmail.com>
+In-Reply-To: <xmqqpkz24193.fsf@gitster.g>
+References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
+ <format-patch_learn_--range-diff-notes.c5a@msgid.xyz>
+ <xmqqjypfp2vl.fsf@gitster.g>
+ <16315616-097a-4fe2-8665-010e424afd8b@app.fastmail.com>
+ <xmqqbjan6q7l.fsf@gitster.g>
+ <9335a35f-e9c0-4e62-812c-e5855c201003@app.fastmail.com>
+ <xmqqpkz24193.fsf@gitster.g>
+Subject: Re: [PATCH 3/3] format-patch: learn --[no-]range-diff-notes
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-common_prefix_len() skips exclude pathspec items, but uses n =3D=3D 0 to
-identify the initial item and items[0] as the comparison source. When
-an exclude item comes first, the function returns zero even when all
-positive pathspecs share a directory.
+On Fri, Aug 28, 2026, at 19:13, Junio C Hamano wrote:
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+>
+>>> I do not know.  My preference actually is not to introuce a new
+>>> option whose interaction with the existing --notes option cannot be
+>>> defined in simple terms.
+>>
+>> Let's drop this topic then.
+>
+> That is fine by me.  I was hoping that you'd come up with a way to
+> add this new option with simpler-to-explain interactions.  E.g.,
+> when only --notes exists on the command line, it is used as the
+> material compared by the range-diff and as the material inserted
+> into the final output, but when both options exist, they work
+> independently, i.e., --notes gets used only as the final output,
+> while --range-diff-notes gets used only for comparison material,
+> or something like that.
 
-Track the first positive item explicitly. Return its match and the
-common prefix length together so that common_prefix() and
-fill_directory() use the correct string. Add a unit test with an
-unrelated exclude before two positive pathspecs that share a directory.
+This is how it works. The `--range-diff-notes` behavior that the doc
+discusses is just the special case when the list of notes for the range
+diff is empty.
 
-Signed-off-by: Yannik Tausch <dev@ytausch.de>
----
-
-This patch is based on =
-https://lore.kernel.org/git/0CA8678D-0540-4A2E-B314-B9BEB04E2BF5@ytausch.d=
-e/T/#u.
-
- dir.c                | 51 +++++++++++++++++++++++++++-----------------
- t/unit-tests/u-dir.c | 28 ++++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 19 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index 7072715389..441c1795a1 100644
---- a/dir.c
-+++ b/dir.c
-@@ -212,9 +212,19 @@ static int fnmatch_icase_mem(const char *pattern, =
-int patternlen,
- 	return match_status;
- }
-=20
--static size_t common_prefix_len(const struct pathspec *pathspec)
-+struct pathspec_prefix {
-+	const char *match;
-+	size_t len;
-+};
-+
-+/*
-+ * Find the common prefix of positive pathspec items. The returned =
-match
-+ * points into the first positive item and is not NUL-terminated at =
-len.
-+ */
-+static struct pathspec_prefix find_common_prefix(const struct pathspec =
-*pathspec)
- {
--	int n;
-+	struct pathspec_prefix prefix =3D { 0 };
-+	int n, first =3D -1;
- 	size_t max =3D 0;
-=20
- 	/*
-@@ -237,44 +247,47 @@ static size_t common_prefix_len(const struct =
-pathspec *pathspec)
- 		size_t i =3D 0, len =3D 0, item_len;
- 		if (pathspec->items[n].magic & PATHSPEC_EXCLUDE)
- 			continue;
-+		if (first < 0)
-+			first =3D n;
- 		if (pathspec->items[n].magic & PATHSPEC_ICASE)
- 			item_len =3D pathspec->items[n].prefix;
- 		else
- 			item_len =3D pathspec->items[n].nowildcard_len;
--		while (i < item_len && (n =3D=3D 0 || i < max)) {
-+		while (i < item_len && (n =3D=3D first || i < max)) {
- 			char c =3D pathspec->items[n].match[i];
--			if (c !=3D pathspec->items[0].match[i])
-+			if (c !=3D pathspec->items[first].match[i])
- 				break;
- 			if (c =3D=3D '/')
- 				len =3D i + 1;
- 			i++;
- 		}
--		if (n =3D=3D 0 || len < max) {
-+		if (n =3D=3D first || len < max) {
- 			max =3D len;
- 			if (!max)
- 				break;
- 		}
- 	}
--	return max;
-+	prefix.match =3D first < 0 ? NULL : =
-pathspec->items[first].match;
-+	prefix.len =3D max;
-+	return prefix;
- }
-=20
- /*
-- * Returns a copy of the longest leading path common among all
-+ * Returns a copy of the longest leading path common among all positive
-  * pathspecs.
-  */
- char *common_prefix(const struct pathspec *pathspec)
- {
--	unsigned long len =3D common_prefix_len(pathspec);
-+	struct pathspec_prefix prefix =3D find_common_prefix(pathspec);
-=20
--	return len ? xmemdupz(pathspec->items[0].match, len) : NULL;
-+	return prefix.len ? xmemdupz(prefix.match, prefix.len) : NULL;
- }
-=20
- int fill_directory(struct dir_struct *dir,
- 		   struct index_state *istate,
- 		   const struct pathspec *pathspec)
- {
--	const char *prefix;
--	size_t prefix_len;
-+	struct pathspec_prefix prefix;
-=20
- 	unsigned exclusive_flags =3D DIR_SHOW_IGNORED | =
-DIR_SHOW_IGNORED_TOO;
- 	if ((dir->flags & exclusive_flags) =3D=3D exclusive_flags)
-@@ -284,13 +297,13 @@ int fill_directory(struct dir_struct *dir,
- 	 * Calculate common prefix for the pathspec, and
- 	 * use that to optimize the directory walk
- 	 */
--	prefix_len =3D common_prefix_len(pathspec);
--	prefix =3D prefix_len ? pathspec->items[0].match : "";
-+	prefix =3D find_common_prefix(pathspec);
-=20
- 	/* Read the directory and prune it */
--	read_directory(dir, istate, prefix, prefix_len, pathspec);
-+	read_directory(dir, istate, prefix.len ? prefix.match : "",
-+		       prefix.len, pathspec);
-=20
--	return prefix_len;
-+	return prefix.len;
- }
-=20
- int within_depth(const char *name, int namelen,
-@@ -394,7 +407,7 @@ static int match_pathspec_item(struct index_state =
-*istate,
-=20
- 	/*
- 	 * The normal call pattern is:
--	 * 1. prefix =3D common_prefix_len(ps);
-+	 * 1. prefix =3D find_common_prefix(ps).len;
- 	 * 2. prune something, or fill_directory
- 	 * 3. match_pathspec()
- 	 *
-@@ -411,11 +424,11 @@ static int match_pathspec_item(struct index_state =
-*istate,
- 	 * prefix part when :(icase) is involved. We do exact
- 	 * comparison ourselves.
- 	 *
--	 * Normally the caller (common_prefix_len() in fact) does
-+	 * Normally the caller (find_common_prefix() in fact) does
- 	 * _exact_ matching on name[-prefix+1..-1] and we do not need
- 	 * to check that part. Be defensive and check it anyway, in
--	 * case common_prefix_len is changed, or a new caller is
--	 * introduced that does not use common_prefix_len.
-+	 * case find_common_prefix() is changed, or a new caller is
-+	 * introduced that does not use find_common_prefix().
- 	 *
- 	 * If the penalty turns out too high when prefix is really
- 	 * long, maybe change it to
-diff --git a/t/unit-tests/u-dir.c b/t/unit-tests/u-dir.c
-index 2d0adaa39e..8b558e0391 100644
---- a/t/unit-tests/u-dir.c
-+++ b/t/unit-tests/u-dir.c
-@@ -45,3 +45,31 @@ void test_dir__within_depth(void)
-=20
-=20
- }
-+
-+void test_dir__common_prefix_skips_excluded_pathspecs(void)
-+{
-+	struct pathspec_item items[] =3D {
-+		{
-+			.match =3D "unrelated/path",
-+			.magic =3D PATHSPEC_EXCLUDE,
-+			.nowildcard_len =3D 14,
-+		},
-+		{
-+			.match =3D "foo/bar",
-+			.nowildcard_len =3D 7,
-+		},
-+		{
-+			.match =3D "foo/baz",
-+			.nowildcard_len =3D 7,
-+		},
-+	};
-+	struct pathspec pathspec =3D {
-+		.nr =3D ARRAY_SIZE(items),
-+		.magic =3D PATHSPEC_EXCLUDE,
-+		.items =3D items,
-+	};
-+	char *prefix =3D common_prefix(&pathspec);
-+
-+	cl_assert_equal_s(prefix, "foo/");
-+	free(prefix);
-+}
-
-base-commit: 1630431f326e15fcde608827b5ff38422528eb59
-prerequisite-patch-id: 256750f07ff447732869d1aadde2f1050e7bb169
---=20
-2.55.0=
+That this wasn=E2=80=99t clear is the fault of the doc here.
