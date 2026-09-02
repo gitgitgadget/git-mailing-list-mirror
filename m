@@ -1,145 +1,136 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCE64AA1DE
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 19:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F8B4A99B3
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 19:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788375954; cv=none; b=E3EteZXCWbo40OUiYBrtYFxli7cZdCVNWCS9QSHE/XsibIaEo19frqvCt1P1Pb7OA+s1DJg5TE6B5+jOab8598zgVBAi/Huj9lCYgeSvdrGHYE1bDXZIemjCmCUIVUUmdFSJydy42Pvz46eHmymks2Cm9YmwJaRlMaIKTIfLT/g=
+	t=1788376480; cv=none; b=J8xLEXa3RoHnlYHNrzFe4SzdLTyCq3JsmRWTGVgPe/DJxGb3KA7a9DmAbzgzUMPyE7hZ5SGgbWm0qINQV7GMD65abOnEqG+S5eB9YTrmdDwnfAbGvGDhUPEuoHOmxESYNcUp4ofWmt2seJ/27PyZ5akwyUhqR+nAtHrrXlVphK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788375954; c=relaxed/simple;
-	bh=D7tTYG7SwIg0JW5dYX/17I9P2rNcO35gfhVZQvP3AnY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WFtPo5vk2nAhjWlez6YngHbYjVL79xB7Q4qRUkqrv3sIvjw3MY6zm44egkGBO5KRm6vRYHHi6+0EXbYW0f1SQz7FrtGYEQT7VYTBPUZtATlSClthJiMs9yoewVU6x2hKVKjEsT1pUnLFP+QI81D9Q03DV4knvVFiMezVaUzQ2I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rrt/r46Y; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788376480; c=relaxed/simple;
+	bh=lsXK4gLmuTPc01dHKSPnAcdWGrLo2DbtrEnmnPXfTUI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Hv9IQrXmPe64xgt0SRRIqta3S9HotTZAO2uk36WqySiRRTADaNWj5qHIuG9gWdBW2J7JYqqgwjZ7HyR0oFvf4CqbCOkhixqFdlEk7gdwKfoF0XcABPdeVlavqYdTJQuxRCrjBIOhH94UtGFRfkt4B2xxaFN6Cf4LmwyEIwckblU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z4xORkB2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fNzzmmC3; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rrt/r46Y"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-517dc520840so16329351cf.3
-        for <git@vger.kernel.org>; Wed, 02 Sep 2026 12:05:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788375952; x=1788980752; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=35p7e6ZMq6IrASR9Z+811Xzx6KKPMB47tjav8WKfxtM=;
-        b=rrt/r46YxHZyu0iGgW60m1hTNree+KQCj/oIIU/BDVhEYmzmo1llXXwmZXKSj+80xg
-         DT9djNDRPpkrglcmrfQ1B1KRpJ71T194FkQjALJOWInvT9RaHQYDhEvUNobCO5zJs3vM
-         gkxsblXUOW7zbPPe9Aa3/HoRxiusUP9zBSOjqp1bcWOAnBTiTe4eIWyQ9G5TBrpltHqc
-         7znhohrD5nPQIO+bebhx4EDc2SRczNhHy2Ui4NtwFqZOuAIe/R6sQO6uWGI3+93oyJtX
-         jBd6Y8ZiGNbfcEmzecnGwcL+S3Fk4M3tR3Yh28q0s9jM0WPeRxyd95STyWpDXAID4CwK
-         iQCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788375952; x=1788980752;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=35p7e6ZMq6IrASR9Z+811Xzx6KKPMB47tjav8WKfxtM=;
-        b=kc09/Bl0kVi3UUGXaz8sC+rNXlzI6A/YKZDC/GGOOGTO9o/D+W368/wLXrUCehMpIb
-         5aFQkNBPGYAbB/iamPdbQysBC1HpRrLB+c+fkLPBII0EJ8kvRs47WaJuRDMCqz2MsLcj
-         mu0YMNFkxIK61A0YDoLWVQKHTFDjwnfJX9ce9CXfWWRx9sj6P6lM8mBznbmVDLletzu8
-         yq6R+Nf7SDFI0zg3xfkpSPUUIaNsHERhxo7g0GHRPZ6RTuuRMAqdzSpPtuQSZ4TdklSA
-         wMooAef7yo67q/J4upR0141odH5OVMeSf4WYrkzd/nx6d29ctvjTrZNeBpj3OcXbCWDT
-         Vnyw==
-X-Forwarded-Encrypted: i=1; AKwUvBx4Q5/wagVs7V4qgAltjUmkZCsWUidx0op4jczsN+96mMWaJ4cIDJ1O3JPpu1+9tQLqhvo=@vger.kernel.org
-X-Gm-Message-State: AFuF++kH1g9uY2YmwrTdfZ/AoB/94DqQYtUOC/LIJxU0O1KqUrFRZvhu
-	V3Dkou2he6QHTkV8yj7yIonbtKb/g/UBrjVwnMZNxpH/AT1OrKO98tc0
-X-Gm-Gg: AYBFou05g9g+iG7WiuQABgx0CdImCjaZ33TiLeyVuoux9IPwEtwib+2s5gnwkCK3ifL
-	Wzx7SQWyVQrfh1saGyg2Cd9dr9/CQ3oyAObIEZJQ0AVjtNhlAQmxe8tls47oPwu6N5LRw2fzIH4
-	kNw6Bn009YtnoWaGBQEeZZgzapGRSUT34wURVOMBQtEW2yElaRQGL3Ol2GRXOdKTp1PnGnqQcpi
-	dUSFssNRxxXnAFK2bieH7cR5itJjBP9A9P98GnJFTyntzs3CjTMmHZj/8WdQA/Tp+B7ESGhH6iu
-	Ax+vKeT6wZE1kAsOusKA3SiKig2cxtoGNrW3dV6oqrzy0OZBtdGL9n3rEtd7n+7GYTTLaKbcL6M
-	Sk4cySklvZK4kX4hQpVpmDOWwKSUZ0oPOl8htEAZLipduEGOLz/ZEQ1sAJEc3zRbV+xnFyVuUGr
-	MAKr/WOTUF0dOYvvYcMdH+VOy/JdrBpAB3OZfN2jmTxpJNE7JC33v9KDr4Lu2XTpK6U4Ungzn0z
-	jfpk4cX/qJLwQX7sCQ2LWLVW5E5lWt8pjfdBNvooeJcus7CydixWslSCX7QeOKx5d0QVHvt76DL
-	x6LEzicoa1ifCOQ3hWjkNgYlst2nXON691D1iqxoTjqNSjUs57sCQPV6zh67cS3I0JuG0mRlHNH
-	yvuMPLSggdNuB8KtILfbUclvK
-X-Received: by 2002:ac8:7f93:0:b0:530:178a:9de8 with SMTP id d75a77b69052e-53036cc63a6mr83313421cf.22.1788375951913;
-        Wed, 02 Sep 2026 12:05:51 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-530331dc455sm25108151cf.15.2026.09.02.12.05.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Sep 2026 12:05:51 -0700 (PDT)
-Message-ID: <1d6a4047-fa41-45cc-8097-88680e8ea67d@gmail.com>
-Date: Wed, 2 Sep 2026 15:05:50 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z4xORkB2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fNzzmmC3"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 10F4F7A0018;
+	Wed,  2 Sep 2026 15:14:37 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 02 Sep 2026 15:14:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1788376476; x=1788462876; bh=zFaYWV2D8N
+	FZgn+1NrBGW95jFLhm+bjvvpbFYOM3SLQ=; b=Z4xORkB29G6UenqGF0jC6kV3ow
+	1wUAVdxCUAsrBvaatSJ8ctBcM6fTwFyQs/D7GM5t5s3tcxdEKW6g/zJ5Ufz5vPRF
+	JRI/vuPpJCA08BcLX1UmVDOYTzG+9nr+HfOYYyGu0yHE5xPPzvTS3AxQmme2Mb/T
+	MARUZbuzpEbBH++i7teewyo82yQvXJhfer77TiM7FKnnwQRiqfBAi9jTVmIUS1Dc
+	tm6peRdsUJ4C+vWQd0mRC/hdQrKVgaYIwnMp7JII9uli1cm3hyiytkISdk4XJiRc
+	RxHPNQRieINZ1+YLOr/Z4c/25psLFoUYks1b2yywA9mCLvJnOxg/QH2KadRw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788376476; x=1788462876; bh=zFaYWV2D8NFZgn+1NrBGW95jFLhm+bjvvpb
+	FYOM3SLQ=; b=fNzzmmC3IEhsXq4eCGp3aDPhCXYm/z5O3RTFjFahXcjNcw0iXfA
+	NykVHUXhbktF8MYA9tNJJb/7zp8Yxag4ydF5zxfNxt46ZFZ1RZoAOjlhkVwHDyyt
+	HJ/3drH7tdSkSHfHbmnnnRs6RQSLYNBFC+SF3m5rf9UrZCphEn6EO3Ji2QB5stgZ
+	IyLJ3TBrv1060etWk4iUEfQ6Mh0WcqBjX4u2T+C9hDpOynWeCOV3Mq5iAT4G9SfG
+	7sHRHhK1whqvAw70N3VzT3IKR5hw6IY+Y6hkVplBCGmm7DwMsWy2kLWS1qL8UWZ1
+	cvc9uR1YPFWpRQ5JJdiaqmKiYAIMshTNFVg==
+X-ME-Sender: <xms:nHWYagL9r7V_HZMM9-Ai6FMi5w9copA_MjCvbA4F2rwtJ-MkEA72_Q>
+    <xme:nHWYag30xQF_fkz_X9Ptf4dRpUuTxs_RYQDCsWILSzsFG0Aet7UrOIYIlaZyXNzPP
+    jxY8IAqLoVs_V0hlD5cIiETRtEHAsksLxvwIxk2_d_ZFQZU_F_t>
+X-ME-Received: <xmr:nHWYau5rPSRYn92ptQvfQk36pCW1IXJQUhDle6CUgqELGs584c9prJsAzCN3amAWyp5cNF4VwBc8xEIdBgIkqaiQ1YvV4yLayw>
+X-ME-Proxy-Cause: dmFkZTFQsrMR+xfC3juwpe2sESMC7YGUrFoWyHDA77vpMlf+fHTSeeD4Yszv6gYHjXYel1
+    xpGngYwuAmuWmjx/rATGGk9dToNBIUb4rSa7eADM5GsWBAFj2RU/VHpge/AgEo2lCwiEjL
+    xykHGG6h1KbFM1Ad6hwqMDGDH6XDO4VUDuviKC4YtRaMAsG0ujTyUZ7SqN0v3Eu/BILpwA
+    5M3g+lZI/WyxJGO04KKT3aVq6qxCLoiGbyPKrjfGcnwni7kfYbHTuLuczi6U/2BiE002rz
+    OrWN6a34mTTwkZ1tKqBHctFM7BdD86AYGk7oh3sPMjF1QS/KDwZ3E1E+FLGrthp+utExqe
+    J/2a4Hu7Y2l9FzhyxusXNESRe5IMudq1R6529PftbWikMEN0LYbMFotwgU0a7kFrm0Q2zA
+    FD3SX9UW2g7N+F0y31wCShI9KkO+wmmlgpzGUF3HUDeqT/I4P4Tx4lLsxQ46wpOGAcCuXc
+    vQBL24QYqDzDHxfBCaHlzxAPvdVySFe2aQPDh4i26+C3q+Y9bevunPrDkdJ4tTaQl16XtH
+    8F0c6P18fnvRXwZme+NGlNeu/28k+Cax/m6yK+qGmGuJtUFEyAJO5r98FN2E/8BsWIEmnq
+    zzk8wUhF9ndkmM7iHpJ5sjMvPQK7pDUHfOtOfzZ6I2SZXwdbL+Tr2FLlPtfA
+X-ME-Proxy: <xmx:nHWYah8o1NKhOQLwekpJliDGjngEKx4_NP4-6UUFj6-NingHweqJlQ>
+    <xmx:nHWYatVKz7I0eQKroQ6G1GvjhqwUFOVIX8alJU2kNm7NNty6GvWfGg>
+    <xmx:nHWYaso1Q6B78hutWct8vmTljZHByLlN53YAQ4_rlzRIrdCtF68mWQ>
+    <xmx:nHWYavkgtvQDz8ZiUc6TKmVjeoI3jCID2PWdk_C6AYsPDGA7o2AH8g>
+    <xmx:nHWYatHOug1D5v5kBU_tEvYeQOwsbI_BTuDe_4LwnlSwd3z7j5Sv9uUc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 2 Sep 2026 15:14:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com,
+  kristofferhaugsbakk@fastmail.com,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v5 3/3] hook: introduce the receive-report hook
+In-Reply-To: <CAOLa=ZTfPq3r3b7EDOSrG0-uSFQGgu-k3agPJgUV9xao8WsQrw@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 2 Sep 2026 07:42:19 -0700")
+References: <20260901-758-introduce-hook-v5-0-35cdc6be3cc1@gmail.com>
+	<20260901-758-introduce-hook-v5-3-35cdc6be3cc1@gmail.com>
+	<xmqq4ig8uco1.fsf@gitster.g>
+	<CAOLa=ZTfPq3r3b7EDOSrG0-uSFQGgu-k3agPJgUV9xao8WsQrw@mail.gmail.com>
+Date: Wed, 02 Sep 2026 12:14:34 -0700
+Message-ID: <xmqqik4nihyd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] send-pack: avoid sending the whole tree when pushing from
- a shallow clone
-To: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
- <aohP7GMx9oX3ZCsQ@pks.im>
- <CABPp-BHJj-b=ieva3-=zaCAyvn5UtNQqNT0Q76YCpqZAjO-8VQ@mail.gmail.com>
- <aovW5bxu1F8jYKYl@pks.im>
- <CABPp-BHwa7QM=XDuO=9xqm-OL8dn8uGf1=rv+sgBRQ9hHKMFuQ@mail.gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BHwa7QM=XDuO=9xqm-OL8dn8uGf1=rv+sgBRQ9hHKMFuQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Sorry that I missed this portion of the discussion talking about
-push.negotiate. Coming back to correct that.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-On 8/25/2026 1:00 AM, Elijah Newren wrote:
-> On Sun, Aug 23, 2026 at 10:30 PM Patrick Steinhardt <ps@pks.im> wrote:
->>
-> [...]
->> TIL, thanks. I don't think I was even aware of "push.negotiate", and I
->> mostly went by the folklore of "just clone with --depth=2" that I saw
->> repeated on many sites.
->>
->> But this and all of your other answers make me lean strongly into the
->> direction that the fix is at the wrong level, and the proper fix really
->> is to enable "push.negotiate" by default.
-> 
-> I don't think that fixes the problem, though:
+>> In any case, if the actual ref updates and the reported ref updates
+>> result can be made different, somebody then needs to step in and
+>> reconcile the inconsistencies, no?
+>
+> Naturally, the server is in charge of that, this is similar with the
+> pre-receive or proc-receive hooks. In that aspects this is very similar
+> to the proc-receive hook which transfers the responsibility of updating
+> refs to the owner of the hook.
 
-You are right that the following cases are somewhat common.
+I am afraid that my point probably did not come across clearly.
 
->   a) Users can do a shallow clone of a specific branch for a specific
-> pull-request/merge-request.  Then the pull-request/merge-request is
-> rebased, and sensitive data removed due to a leaked secret.  The
-> shallow graft is no longer common.  Pushing from the shallow clone
-> should fail, but it shouldn't have to send several gigabytes of data
-> in order to get the failure message.
->   b) (Very similar to a) Users can do a shallow clone of one repo (a
-> local repository cache?) and then push to another; the shallow graft
-> thus may not be common.  An error is expected, but sending gigabytes
-> of data to get the error isn't.
+I am talking about the repository on the user's local workstation
+from which 'git push' was run.  The server reported that the push
+failed, so the remote-tracking branches in the local repository
+reflect that the push did not succeed.  In reality, however, the ref
+transaction was already committed on the server.  When the user runs
+'git fetch' after the failed 'git push' returns, they may see that
+the server actually accepted the update.  The server cannot be "in
+charge" of that, as it is incapable of resolving this discrepancy.
 
-For this case (b) I can think of it as doing a shallow clone of a
-base repo (https://github.com/git/git) and then needing to push to
-a user-owned fork (https://github.com/derrickstolee/git) and the
-fork not advertising reachability to the shallow commit.
+Only the user, by choosing to fetch again, can reconcile local state
+with the server.
 
-I think the difficulties here is that your approach is assuming
-something about how "non-advertised" objects may exist due to either
+>> The way pusher perceives the state of their remote repository they
+>> just pushed to, which they learn from the output of receive-report
+>> hook, would have no link to reality when this hook is used on the
+>> remote side.  This may matter because the "git push" updates its own
+>> remote-tracking branches to match what the remote says (i.e.,
+>> pretends as if "git push" was immediately followed by "git fetch" to
+>> the same remote).
+>
+> For remote tracking, that's exactly the conservative behavior we want
+> from the hook. When the hook reports 'ng', the client does not update
+> the reference to a new value, meaning the push did not happen and that
+> is what we want to convey.
 
- a) delayed garbage collection, or
- b) shared object databases across a fork network.
+But still the server side did already commit the ref transaction so
+the update has been made.  Here is how the proposed commit log
+message explained this:
 
-I don't think these are reasonable assumptions to have by default,
-so we need to be really clear about the reason to use this setting.
-
-As your test demonstrates, some amount of "our assumption was wrong"
-is built in, so we should have a way for users to respond quickly
-or automatically (retry without the setting?).
-
-The multi-push case that I brought up is tricky, though. It may
-be very narrow, and HTTP servers would be protected, but we should
-avoid allowing corruption over file:// protocol.
-
-Thanks,
--Stolee
-
+>>> Note that in either failure mode, ref updates already applied by
+>>> execute_commands() are not rolled back. The hook can cause the client
+>>> to perceive the push as failed, but cannot undo server-side changes.
