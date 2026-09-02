@@ -1,171 +1,163 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784BB376BEA
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 18:29:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0514A92F7
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 18:52:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788373749; cv=none; b=LzsivCh6wH6N3h7KeTtFvsG+rFxymRiEVDD4EKJ5pIkZ5tK3WIUYec12/aLNviNMZBYYyD+qRE8vNhi/wfHfF/LSbGPwJaf2z+ocJ2CY8Y0n+aQ8TiWuaNIUFbTZJuco8tQdgfujYb7fn/FOyNddTktjzB8aT2E2nG1Jfq9EUe0=
+	t=1788375149; cv=none; b=jbrTeWpfa5SDGAUzGjqcS3vNO9vwyL5GzMJteuw/EH0YdvgSGIVVteYiXo9pb0zv4Y4QrDusP9hkrSU/52xNvlyTaiJ9QLBMiZcbRHl36Q/BNpF411CCHunn1jBOxRiBfcZ/LmuvdIzqqsu40gdEFy9SsxWgfltE5BrRmkQIgXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788373749; c=relaxed/simple;
-	bh=eEk7XfKYMCdthtRWDKkDFI8TlWdaZsEHj5J1+n8HxHU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=VjFf/6tz5y5D67JlqeXowFyApusM0qIKbdWs2oGR5bKt4OFrdLhhuUbzSwXl0TrZKJKoTkREsRkZZ+nQ2M5vOAG9lfTiJlkFbyCa3L6gX+xukZLOL0WiUA1fxeVo1va/stlYIPzwVpHTNiytH4SLH+duO8L17Vm/60xov/8IzGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UXXVrX9H; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788375149; c=relaxed/simple;
+	bh=U1cyUOU0Z4ecLp/SKJKIk6D7PlVCKkjC7D/w4A/ZL7A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VC1AQQ4veVgA87YYhntdBBVxPg1k4RZi7oWUNUWFC2tOZ3zrcRosaDR+uTjt5mNC3DlrZNE2kX0g2dZZjHMEXw+m7GBqjms96yw99KP1puRO+DAhcorhMy/Hld1F7Fj87QpKMlPQO8uC+EDbjv8vgQ0mOKrCT6mjTOOmsqbHVpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gDWQpeRc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CFKLzNJo; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UXXVrX9H"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2d9201076b3so17596295ad.0
-        for <git@vger.kernel.org>; Wed, 02 Sep 2026 11:29:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788373747; x=1788978547; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=o+Jl7cTFnZ+kFNnwevg37HswN8AIQhH3A0v/dqujMes=;
-        b=UXXVrX9HQLKMe2EDxEWaW7vM32KSHukJ0EF/2efFYVjXG6OVDgU62hgpfVKm7lABoc
-         bFg5CGNVhbcOjMW+PteTT0TKafsADxuUDvZCOAdXSW95essumkuMC1nsY3MXd8O3D7VM
-         gg/2iCOKyfbBqJfC/XIArZYj8PDTndnepkQE35WoFXmflu2anaS1qYQnfAbYsNhB2dob
-         bEgZrcE+4OHKhR3bJpAqTo2RspKbiHS1+PGinBsO413gewIDVpmOoZLZJ56ICxhpDApb
-         BpyMsXu7HrZGY5i+SFJ29hFDfOyXDAXc2jdrYTcWutQMKElAgjntBnR8bInFKqIWGK8a
-         13eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788373747; x=1788978547;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=o+Jl7cTFnZ+kFNnwevg37HswN8AIQhH3A0v/dqujMes=;
-        b=laAOKH9L5Ve5uLtFPp8e9wNvpsYhEI7kGj4Yu5jj1sNGTl7kU86e7UOy9VwNgDH1Wq
-         FyS70qWe41Ab3ksChVtPhfC0tAc1GQoQ2u0eOlY5Rh9oltl5PhKNs+rFQs5yJD4pyFwt
-         S9OWbD8fVYbljfdkjU+CJ6dS8pkvSwzrmTfPYbLYoDYcf5FB9wpSuDmzzusgG6IrT8Cz
-         Jdd8W8ZRCl63gGopYkj8lVStAhJKeCnZtlbY+TQ5bTTyIE1SvF+ALSgAR0K2B7iDDYTx
-         t7bKxEmvAvA6ph38Fhdgud/F4K1YgHX2us8FjbMRQz/DRpVh+5v0rHN7v4kKJyxJcDwb
-         SvnQ==
-X-Gm-Message-State: AFuF++khL/QasThi3Kfnzrypa9VARrpp1QH2OYfziKy4T4Lp/nxcZ4D+
-	IqCPmQ2dBqF5rSz1QwCqZXO+3HKdY/BjDkpj7sYPFc1k/KvaYUVNCcoxWw22zb5R
-X-Gm-Gg: AYBFou3uUoPzWcO0SQ8aPyLIERptIN873a9hy7dyHaJs9uIh7jH8+5zgcZLK1fC8tZv
-	2bn7GtEs/KRfE6ug6xi5l4z7A9pDH1EHTswxRLPvyPbqzdeUGAhGRXrANNJkxOBCqS+L58eLrrt
-	1UVkup9OLNMFSjSOTVWD+qJwCNKYw5TDOA5PhqCiA8QUyB/7anEdaHl+EpLU14Ce1oZVPJOJyCf
-	OdkhyC/iZ/g78uzosobCKsxiQdGCaIRuCu8p4Ru4dSWRDx2t0I18VlHU/b5PBmdFfGkHehjqkBd
-	og0YsvA6PuoZETKGPK8rVsebUEHmpKJ+u5ehSRCZ0t2PNtvBaN00bkQZghpjv/rMLk8iSL6J4Um
-	C4JMoaO8Xa89cb8hhRHn7LWHKH5OhI0c9TumSJvwI0AZUgWfkDPFlpoVT4VkzqQfnNtVhMistY2
-	50KkBybV+7OX5kizF48vUoqPbez6JgK9915ru+/h2NpJ4/UgXnynwtYKg3+C3ISQ==
-X-Received: by 2002:a17:902:fc4f:b0:2d9:216a:cdd3 with SMTP id d9443c01a7336-2daec774106mr102854325ad.18.1788373746593;
-        Wed, 02 Sep 2026 11:29:06 -0700 (PDT)
-Received: from [127.0.0.1] ([20.64.182.58])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dadd39e8e2sm16841495ad.33.2026.09.02.11.29.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 11:29:06 -0700 (PDT)
-Message-Id: <935fa0a9ae69f269a8a79f213f02aa4ed1e8279b.1788373743.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2364.v4.git.git.1788373743.gitgitgadget@gmail.com>
-References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
-	<pull.2364.v4.git.git.1788373743.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 02 Sep 2026 18:29:03 +0000
-Subject: [PATCH v4 2/2] checkout: separate autostash conflict advice from
- branch-switch message
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gDWQpeRc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CFKLzNJo"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 495351D000A8;
+	Wed,  2 Sep 2026 14:52:26 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 02 Sep 2026 14:52:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1788375146; x=1788461546; bh=5t8+VttYof
+	v/LCPnP78AenesFlxIVbfpMK4wDRSxlOw=; b=gDWQpeRcjTDj+efDxOl/gQhgia
+	pK+JuES86GQK9a89YuEW6nsQooZxVlyTKpEJTYdk5vJOoUOcUCEVKHlkdbGOc6xg
+	IoJbYYvDIViFC9xNLl7EznFV+vS5gRUXd7sGWFFrCDVZscFIBcFQ0ebKlpYqD4q3
+	85KA5SzfzlnSBi1C2hk385T3R42PYYNn4xrJfCodu8+QR8zN8mZtBgwaDHRE4fjG
+	1JAbk4PVUhxov0g2ElyeFMFuP3NfE8Celx57N6XOv1tDGNByg+kVRApLpZOl7M10
+	mOdQEF3QuqK40Vy06O9AHiB6mHcmRwdrTGZFVT+um+X7AD2XSnQiyGJJHX2Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788375146; x=1788461546; bh=5t8+VttYofv/LCPnP78AenesFlxIVbfpMK4
+	wDRSxlOw=; b=CFKLzNJoiB7MJsHbVRbdcboNMIaxC2VxCIwvppKYVBmxQn0Gti2
+	PJUnxmDAlZsqQDuB25chyGAHl0DcP7ITiYWhHmNr5WFoDhZXodoobjH5jVybHwMg
+	Vd9h46Q5jcOmciUaXPopscgipYTcH6HbcbSzJUZNA2jVu94nEwKUXtmpoKxDbp+B
+	yPE6C8G+L53ur9ifXMlOciwIbKZVb2DNp2aa46fSfynDbfD9w9+flLjMouOOfLfA
+	GvAN3uQieUg56/Wg40RG8/NDeSlu03Y7A5D2mBXfQYpRFrWr1TpsqDHp/5kTT2Gh
+	W6rre7aGsZP0XUWYVpJlW9k9M+d2jRUdcQA==
+X-ME-Sender: <xms:aXCYavmIpXGkZv7CollNpOFef7t_8_uFbxdJYvasIsKxRS2jTiVJDQ>
+    <xme:aXCYalboyoKGZdNFd8b6oIZclcgFOW1ZieAtvIDZO0L-q1mthutpctQg8Cldf8ZqC
+    Q1A7kOu4nKcM-yWx-1luvohro9KsiDHC1MfqDaIafXWuVhLGLiA4Q>
+X-ME-Received: <xmr:aXCYapQFiEe7SFbuMeLaTyqIxIQtARwbrOBS2Fp9SYQuNBqm6yH1qhTgRIT8INa1YQHOSd2-qAXFVxJTLbDC9fBpkVQFqQ9jbw>
+X-ME-Proxy-Cause: dmFkZTFu/Hth5+pxyF4PHmKWi9PpspYqA+94uDqxY+E9MfSx+H05VJIzcnlw49l8jaLQUW
+    j7M3rPrQfCgN75SVRwX890oRR/WUMe4ELkxI8p0alZYU65PLfAr0J5A21HmA5UjCKmV0pN
+    2NjUCmjbegSQAyZOn03qTIHzZYfc5i8kolmz+dArZQdpW5dXkHYvep21Mj2ZdezfBQ15E2
+    E+fS0x2tVBWTiJaNlNzeUaKeRyyEfNHpOntfWdptkBSH+UtHeNNOU1qeqy6cbnUgZ0KHKg
+    kiwijNSQjWJVYJd8LVpwlmNtPBA7Lkdgk5vYOQamjBuFkU+n1jYgyxCAkpK4UQwEm+s7cK
+    GqG/lt8QcYUI0oxjRd9DVd8FtP2iuFr5uupNsRyKXNJUbCjMuo0WIXy81TsN7+L0nmM/Km
+    oArrPwog4V2d7xZPEkh9mERzfyGhKGJXuIeCrO9TvCP+DW0NJPfuNvGdsTxQfSmPPAudqv
+    ejIdCos+DjW7syTEBE0ohWkUGL/k4mkvxw8dH/b7LFv4LlgGUmwWaQoQxDtxKDmqV13CNu
+    YhktGBe+er1mpSx0W7H2SKRfFXl7VXr5Gdr0b6oIS2oIIHLEcELuDfgl+4v9VrmkweFUYe
+    KqYBS21ejmyO1Lb3AqYuROCRt0dBnMSyinxTgQPwx4JQo+oGcVDZKGxEIMEg
+X-ME-Proxy: <xmx:aXCYansN6jNhptqIkKl3QeGqJr55BD5lm7VcnvzX3SMyZVshrNh55A>
+    <xmx:aXCYajFvqPvTTVVKXwqTAUZbfZAp5WkQVIIvK9xAGQaF_SY709oB6A>
+    <xmx:aXCYagwUa4uC7GCO7I-4iWus3UIwnn8NEmrfx3X8rnilXRv54RsNVA>
+    <xmx:aXCYal1NsTy6-RkvtUapolWljIbk4aE0wGx3FtgnwJQyT-tndBAjLg>
+    <xmx:anCYahbQyqF0JCo8kZatqSNsKrVK3hWogtEB4A5-9OZKdn-4fdvjeIaz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 2 Sep 2026 14:52:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
+ <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH 0/6] Standardize early option scanning to fix argument
+ parsing bugs
+In-Reply-To: <20260902161047.476753-1-christian.couder@gmail.com> (Christian
+	Couder's message of "Wed, 2 Sep 2026 18:10:41 +0200")
+References: <20260902161047.476753-1-christian.couder@gmail.com>
+Date: Wed, 02 Sep 2026 11:52:23 -0700
+Message-ID: <xmqqpkyviizc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Christian Couder <christian.couder@gmail.com> writes:
 
-"git checkout -m" stashes the user's local changes when it cannot
-perform the checkout, and then applies the stash.  When applying the
-stash results in conflicts, the advice on how to deal with them is
-printed directly on top of the branch-switch message ("Switched to
-branch ..."), making the two hard to tell apart.  Print a blank line
-in between so that the advice and the branch-switch message are
-visually distinct.
+> A number of commands perform an early scan of their arguments to look
+> for specific flags or structural separators (like `--`).
+>
+> These hand-rolled early scans are often fragile. They especially fail
+> to account for options that take their value as a separate
+> argument. This leads to disagreements between the early scan and the
+> actual parse_options() pass. For example, the early scanner might miss
+> a special option entirely, or mistakenly treat an option's value as
+> the `--` path separator.
+>
+> To allow these commands to safely skip option values during their
+> early scans, this series introduces a new "early-scan" sub-API into
+> the existing "parse-options" API.
 
-apply_autostash_ref() reports whether applying the stash resulted in
-conflicts via its enum stash_apply_result return value, so only print
-the blank line in the conflicted case.
+Yay.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- builtin/checkout.c | 15 +++++++++------
- t/t7201-co.sh      | 16 ++++++++++++----
- 2 files changed, 21 insertions(+), 10 deletions(-)
+> This is deliberately implemented as a new simple and fast scan, which
+> has some limitations, instead of a full refactor and reuse of the
+> parse_options() code,
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 55e3a89a85..c960f98287 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1166,6 +1166,7 @@ static int switch_branches(const struct checkout_opts *opts,
- 	int flag, writeout_error = 0;
- 	int do_merge = 1;
- 	int created_autostash = 0;
-+	enum stash_apply_result autostash_res = STASH_APPLY_CLEAN;
- 	struct strbuf old_commit_shortname = STRBUF_INIT;
- 	struct strbuf autostash_msg = STRBUF_INIT;
- 	const char *stash_label_base = NULL;
-@@ -1237,12 +1238,12 @@ static int switch_branches(const struct checkout_opts *opts,
- 				git_config_push_parameter(cfg.buf);
- 				strbuf_release(&cfg);
- 			}
--			apply_autostash_ref(the_repository,
--					    "CHECKOUT_AUTOSTASH_HEAD",
--					    new_branch_info->name,
--					    "local",
--					    stash_label_base,
--					    autostash_msg.buf);
-+			autostash_res = apply_autostash_ref(the_repository,
-+				    "CHECKOUT_AUTOSTASH_HEAD",
-+				    new_branch_info->name,
-+				    "local",
-+				    stash_label_base,
-+				    autostash_msg.buf);
- 		}
- 		if (ret) {
- 			branch_info_release(&old_branch_info);
-@@ -1255,6 +1256,8 @@ static int switch_branches(const struct checkout_opts *opts,
- 	if (!opts->quiet && !old_branch_info.path && old_branch_info.commit && new_branch_info->commit != old_branch_info.commit)
- 		orphaned_commit_warning(old_branch_info.commit, new_branch_info->commit);
- 
-+	if (autostash_res == STASH_APPLY_CONFLICT && !opts->quiet)
-+		fputc('\n', stderr);
- 	update_refs_for_switch(opts, &old_branch_info, new_branch_info);
- 
- 	if (created_autostash) {
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 0ddd1ad7aa..9ea9462914 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -236,10 +236,18 @@ test_expect_success 'checkout -m creates a recoverable stash on conflict' '
- 	test_must_fail git checkout side 2>stderr &&
- 	test_grep "Your local changes" stderr &&
- 	git checkout -m side >actual 2>&1 &&
--	test_grep "resulted in conflicts" actual &&
--	test_grep "git stash drop" actual &&
--	test_grep "git stash pop" actual &&
--	test_grep "The following paths have local changes" actual &&
-+	cat >expect <<-EOF &&
-+	Your local changes are stashed, however applying them
-+	resulted in conflicts.  You can either resolve the conflicts
-+	and then discard the stash with "git stash drop", or, if you
-+	do not want to resolve them now, run "git reset --hard" and
-+	apply the local changes later by running "git stash pop".
-+
-+	Switched to branch ${SQ}side${SQ}
-+	The following paths have local changes:
-+	M	one
-+	EOF
-+	test_cmp expect actual &&
- 	git log -p -1 --format="%gs%n%B" -g --diff-merges=1 refs/stash >actual &&
- 	sed /^index/d actual >actual.trimmed &&
- 	cat >expect <<-EOF &&
--- 
-gitgitgadget
+Sigh.  In other words, we hate these ad-hoc prescan that are buggy
+badly enough to replace them all with yet another ad-hoc prescan
+that is know to behave differently from the real thing?
+
+>  - `git bisect start --term-good -- <not-a-rev>` mistook the term name
+>    `--` for the revision/path separator, so <not-a-rev> was rejected
+>    as an invalid revision instead of being treated as a path.
+
+Sorry, I fail to see much practical value in this.
+
+>  - `git rev-parse --default -- <not-a-rev>` did the same, reporting
+>    "bad revision <notarev>" while any other default value gives the
+>    usual more helpful "ambiguous argument" error.
+
+Neither in this one.
+
+>  - `git fast-import --depth 5 --allow-unsafe-features` silently
+>    ignored `--allow-unsafe-features`, refusing unsafe features from
+>    the stream.
+
+On the other hand, this may be a very good thing.
+
+Is the reason why the ad-hoc pre-scan failed to see it was because
+it did not realize 5 is a value to the --depth option?
+
+> All of these commands call parse_options(), but for `git bisect` and
+> `git rev-parse`, the specific functions doing the early scan
+> (bisect_start() and cmd_rev_parse()'s main loop) parse their own
+> options by hand after the early scan and have no `struct option` array
+> for those options.
+>
+> If bisect_start() and cmd_rev_parse() were converted to use
+> `struct option`, they could use early_scan_options_from_options() and
+> would not be affected by limitations 1), 2) and 3) above, as both use
+> the early scan only to locate `--`.
+
+I imagine that in the long term we would rather see a properly
+refactored parse-options machinery perform the prescan (perhaps with
+some kind of "dry-run" option given to the machinery) than yet
+another ad-hoc parser like this topic introduces.  It would be very
+good if this interim solution at least took the same 'options[]'
+array so that when we have the real thing in the future we do not
+have to redo the conversion effort.
+
+By the way, how does this interact with your other topic that has
+been stalled for quite some time?  Would moving this one forward
+help the other, or do they not have much relevance to each other?  I
+would rather not see two topics of non-trivial size stalled on a
+single author at the same time, so ...
+
+Thanks.
