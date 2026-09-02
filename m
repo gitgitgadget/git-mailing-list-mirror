@@ -1,67 +1,67 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B94E377EDC
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 15:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7CF366042
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 15:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788363555; cv=none; b=JXDwCDANNwc9Jv+jxS2Dzoo4zeQbsOtSpG4qSfg5dqsRzzZxBEDBPOu8yytTg4ukxI34pEEnV1RfZs6X52wPCFSMfkdmcjR8hGzGJcvAomDAKpTPO52cx2fDFGD8pO8YWxyH4XlLTUwxaL2PTCeEZsyRUbGqaFUruoeXdQOhxb8=
+	t=1788363563; cv=none; b=H0eQHrL5JLTr6X1QeN+LDw0c4ZYigTfq5zyLOWsTeMQfR45P5Pe4OKv6iApfwhSiwV3wQIr6RbmgyNyXPHG6uCHOQYYD1vamojsPX89yMg7qQocowKXiEx2+uxZCeIyhi6fioCqIY4Ip7F5fDpqZbXHLRsoDCQPlcSWN9AUZp6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788363555; c=relaxed/simple;
-	bh=0X+g+Jrl6fiYNW/uhNAQY1Wrj6ab1uHlJ8xOPMoW+Oo=;
+	s=arc-20240116; t=1788363563; c=relaxed/simple;
+	bh=EBQosKmu6p7yITSnYMORFgHByindP/mQrJbS+oQJWI8=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=dWtNLTneqIzzK6bUBWZMPGoWwoFrwz1mMPWZCs2BugbSr16wiF3++jRxFfU7IXXn6OlcmWRtozyRchrRWIP4QBfFsmL47PJNJdbeus/YbQtNg2rfmZN1s34AjegTkSmdPXJIjHxA9KWnz5a+cRKUbKwRlrBDVWaBVb7iUuP0sZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cDkc9sxX; arc=none smtp.client-ip=209.85.221.51
+	 In-Reply-To:Content-Type; b=keWhuPVMuAnuO9+L6Cs4r9ftCHSVUvAIG6tp41MQtECUTgWGQl+s1KRu1Nz3uf/EOYS9QNnw81KZG1fXEOSxGQeo3likAxmOqpsZrk6oGkaQhgK6yd173V6liR1VakCkTPzlxrh0Devtg9S34hNhxQ3jlNgBB04aGPucxQwGMWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pREP0IPq; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cDkc9sxX"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-482f9309813so1211764f8f.1
-        for <git@vger.kernel.org>; Wed, 02 Sep 2026 08:39:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pREP0IPq"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4995b0343c1so12742015e9.3
+        for <git@vger.kernel.org>; Wed, 02 Sep 2026 08:39:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788363551; x=1788968351; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788363557; x=1788968357; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qH9eTjTIYI82TpXjQ6tVKF5LY71MrwnInOJQ6Kaxg3Y=;
-        b=cDkc9sxXbpZOF0drP23pkEBvOJx1qYYV3q+aOCC+P9k+OKACe8xPnHXbfCt//Df970
-         DxnjOwz/gWp/cImFUL1sucdyE+aO29ik/Kd8D98WnBStEBbdJ3lBtkK5Hx1O/BLfnqKj
-         XzBrBz87yvHizU+cT/eorpO7U7tFAlDWmWt2l8f8hnfxs4nQNIRlQymx2aX66/51Vmgp
-         T9MNR0Dblr5IOLDfKJwio5UTV6/79zqKAzT4eILdEtGb1RF4twZ9T6M7I9qh43Frl0Gw
-         V9vIepKlULw3JsTZbEgJkS8Ehad3aQn+ILNPgCgn7pKLTyA+axX0pjNRPk4L1xy1TGCq
-         T36A==
+        bh=OKu2B/yD2Q/36xWJGrz0jrLffSKALMQ6tDQbLslev0Q=;
+        b=pREP0IPqcfBxyik5hhfiXzvTWV5XIww7PCE3eVcMXXMYmBYPPjJlYnscbXZy1MQ/bc
+         RBiHPmCj5blzDj7SmyHr/J2yVbQshZi9MJi4Is+uZ5ewWJN8UFfwORCwHOq84HfL7oye
+         ceQVZfsjqG62uhXR+IuXFJr/bMg/TdIIYgr2Zk3upSEB1KxKwdBzbSKRF5swz6+O+uN3
+         WWyAlB9fK3Vrp4pjeg9famtCbXeim04PXQVVabBEENLChONyOhyNhWAxK4zriBXQBRXh
+         OlqsRCvm5gtp6G0YltWhEWMbLHvZPjt03lFUvpr8Sl2iJYIKZr0M0UWExx1zM2RH3596
+         dzyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788363551; x=1788968351;
+        d=1e100.net; s=20251104; t=1788363557; x=1788968357;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=qH9eTjTIYI82TpXjQ6tVKF5LY71MrwnInOJQ6Kaxg3Y=;
-        b=dvasHtpnK7i002dyVrHTs6MxbIA41JmBEtLUQFV8LEekUUs8xEohF+RISGR1A5Bx9t
-         z3DZvH3dOaZKYSosIGqhYkMUM9gbyAKstDYwMhjca7lniFhl2RqhxXBPcDvoCNR5cyiG
-         WbFlWvjEvYWkvVo+TLvVyVgRByx9u8AZbhZFTXWeTxCCCON43RjMN1TDwA2sDfT6jjtU
-         IEvKO04AHhMnJ1h09etubMU5CSUbWpNSIst4HELv3NxCQGqqq55A/cdFAhiZkElzEUsj
-         3eidmG7iaRRfoEXCtQgUDSzQII62dVIMK/vVQqKmGHjIaPXh4Zp/nvfVuq2JsvadGgkO
-         98nQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxzwcr86SDOtzXOv3vmrGNl2cmawebMzNAtnDMj+UpvJQQyUpPEXoEEC/tU1YAqeNg3iig=@vger.kernel.org
-X-Gm-Message-State: AFuF++kye9C38K5zi06QtGyc24TIZ8aMBYSpZ+riJ/Lr7B7QcQA00eu8
-	fZ+Z8YPwxbYIAuSnwVPI1jGK+NYoDNlnGoplmNPzQvI+DfYYygRgf4US
-X-Gm-Gg: AYBFou1CQiZ00rpzby0bKnMXYYO4n/tPB7qEHFsFFoRaB9//UWifw9GArylmfqNTf/U
-	3tOqIWiLUllALOY4+KQTWbAimkH2pqSSVA1K2KhWc5YaTghofY/GjduhtVl8lQi9asWaw8X7vPk
-	fCLJgsCx/DktLs1547zbO7pkxERwUc26uW5Xz39YKtN8GOsBkJ0vQaF2y/bEbjrkUdNuEB4htx3
-	wS/oFisoM7/wnJUF/JjRmJ6qWvk+6YgEA0giChXXijBz+TSlwPU1gpQQXsMi1RZGGtiESii/I2P
-	L+CRHQ2RgygdUEGuJ6f/7FuWSk8t7kYEgq9upiuJDxPSGhekBceGV1e4FYJprRlbw2WNGzLIikd
-	HekYhG7ko2EIKMtGGzxUeh7eYjPBtyMgODmQKKjANO3pHaw6Rbpt3/CuzTi+EczBywos/i07J7k
-	9Nyg/HXStxkdatlv991M6ZLA7dCNLXVyBRR5eoX3J3xKNz8B6RDfdmI7yYPh7TLi6LI8zyoi4dY
-	65MnpocnfhjyvV80jCtzb0brHuDdt+Fpu/xsionPcE=
-X-Received: by 2002:a05:6000:186e:b0:47f:8b24:ef01 with SMTP id ffacd0b85a97d-48488deedd2mr10219111f8f.1.1788363550678;
-        Wed, 02 Sep 2026 08:39:10 -0700 (PDT)
+        bh=OKu2B/yD2Q/36xWJGrz0jrLffSKALMQ6tDQbLslev0Q=;
+        b=Mhy8W/35QgFammV8bPoBfR+3VG+y+7CClXiCnpszhDi2Y+x+kODBcE5J6L21onOa+N
+         3MlWq6MFcMHgcZVrLNhN7vKp60ZZUKpZeVRA9H43Ew94VkslYMXcLqR9dk6Q44fK76/6
+         bXMTBG2fkO3PwFDYrbdjUs1ArK/VJmzCCLdaLx8K7DfUA+hVVOsPzEja7SMDtFYtH4zY
+         5iHsj7BNaGwiW07w6ktgR7EqG2FXBUILnCQ/NaMz3xX/N5XcWI+QBV42Dxzw1Bl5XlM1
+         xTKckIYA78Ipsa94IGz6VWHwOtn/+cm3sXsCzqgA0pWbeiSLYRNfEPuP5kbHoCx3gKed
+         DsOQ==
+X-Forwarded-Encrypted: i=1; AHgh+RoAgY7jkGDK7gutr2zLjjfh1xZOtJ5KtU1Z4GCFmJunD46nh+2W9/AdV2uwCv+LLDCvhC0=@vger.kernel.org
+X-Gm-Message-State: AFuF++nT2asOHhVr8kK2LpClDru61O7o85vrC9ofrxOj7KPBTBaPcorv
+	qqNvfs094pVTGvCAOun8wku6vqC8EQZp+5ghV3vGKFfhZ+rDfGOFk5Yk
+X-Gm-Gg: AR+sD13llLMcOZ7BDQxJ9tXQK4smyrGkLEY6FOBm2xQi1c4vq7Hvg03w5VnjTlE7JOC
+	D+nhqAsxFBR+BRWpXbbPtbsPYjWBUuemfNxt8OuX00SV5pJXIOHHBXgBX3aXFBpCjOmS90rEmaL
+	wtmAyrZOUlGHbG4S1SIbCWbq0QfrsY+YwgxVVdzX56Iygx6zU+aNa8KPgQ0fp0NL5VFE19r2aUh
+	Cd4R/dg/enaMMN11668qICzr0Q9YH5sVUCkfdcHaXJB2wrpVda8/kuECc3HuZX73Ua8z7/NtFYS
+	GxhLhdsPTd81y3D2TbN0ZCjfDo/CCNj1JChxWg03R6QCs298YtUMJWW952WjkqkmoIgHvrvhO0Q
+	nj/9H0BufQ+3eVDmBDsjeMdtvQRNd1Km6AZDh0Co5zHY6k06K4godkpmuxvEp3V5mgCgHpTHYUg
+	MtRVYA37Hu5eGtPdO9r3hl4RjMfdqPWQjDh246d9DYhUlc10GMnXwB7C2usdxxjC3w8/GR+1RQd
+	LoUIawEWlbPciL517fuPxbkCiU2KBLPIdKSJrLN/zI=
+X-Received: by 2002:a05:600c:530e:b0:49c:d618:e341 with SMTP id 5b1f17b1804b1-49ce584bb4amr118429025e9.14.1788363556716;
+        Wed, 02 Sep 2026 08:39:16 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48448eea5b4sm7275212f8f.27.2026.09.02.08.39.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48448eea5b4sm7275212f8f.27.2026.09.02.08.39.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Sep 2026 08:39:10 -0700 (PDT)
-Message-ID: <1c3f07e0-63c0-483d-8e46-e4edbdd6991a@gmail.com>
-Date: Wed, 2 Sep 2026 16:39:09 +0100
+        Wed, 02 Sep 2026 08:39:16 -0700 (PDT)
+Message-ID: <9950415d-ca3b-453b-9b0f-28c09a3d7f23@gmail.com>
+Date: Wed, 2 Sep 2026 16:39:15 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,16 +71,16 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 1/5] commit: clarify FROM_REBASE_PICK and
- is_from_rebase() names
+Subject: Re: [PATCH v4 2/5] commit: allow a partial commit when a rebase pick
+ becomes empty
 To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>
 References: <pull.2389.git.git.1787721681893.gitgitgadget@gmail.com>
  <pull.2389.v4.git.git.1788301481.gitgitgadget@gmail.com>
- <bd361679b9144682d664e8cfcf9fc2cbd8511b4d.1788301481.git.gitgitgadget@gmail.com>
+ <a0b9900437e7c2833960e5046b5acb6703f014b9.1788301481.git.gitgitgadget@gmail.com>
 Content-Language: en-US
-In-Reply-To: <bd361679b9144682d664e8cfcf9fc2cbd8511b4d.1788301481.git.gitgitgadget@gmail.com>
+In-Reply-To: <a0b9900437e7c2833960e5046b5acb6703f014b9.1788301481.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -89,131 +89,74 @@ Hi Elijah
 On 01/09/2026 23:24, Elijah Newren via GitGitGadget wrote:
 > From: Elijah Newren <newren@gmail.com>
 > 
-> Commit 430b75f7209c (commit: give correct advice for empty commit during
-> a rebase, 2019-12-06) introduced a FROM_REBASE_PICK enum value and an
-> is_from_rebase() function.  Those names failed to convey that they were
-> specifically about hitting a commit that becomes empty when rebasing.
-> Clarify their names now.
+> For years, we disallowed partial commits during merges or cherry-picks.
+> In commit 430b75f7209c (commit: give correct advice for empty commit
+> during a rebase, 2019-12-06) it was noted that the "cannot do a partial
+> commit during a cherry-pick" message was also printed when rebasing a
+> commit that became empty, and rather than drop the check in that case,
+> that commit opted to make the message print the actual operation that
+> was in progress.
 > 
-> While at it, change `whence == FROM_REBASE_NOW_EMPTY` to use
-> `is_from_rebase_now_empty(whence)`.
+> Since a commit that has become empty comes without conflicts, a new
+> partial commit poses no problems; remove the error in that case.
 
-This looks good, the new names are much clearer
+I'm not quite sure what I think about this. When we stop for a commit 
+that becomes empty, we write CHERRY_PICK_HEAD and .git/MERGE_MSG so the 
+user can preserve the commit by running "git commit --allow-empty". That 
+makes me think we should complain about a partial commit. It also seems 
+inconsistent with "git cherry-pick" where we still disallow a partial 
+commit when we stop for a commit that becomes empty.
+
+On the other hand, if the user has asked to edit the commit then 
+allowing a partial commit would probably make sense as we know they 
+wanted to modify it in some way. As I can't make up my mind I think its 
+fair to say I don't have a strong opinion either way.
 
 Thanks
 
 Phillip
 
+> 
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->   builtin/commit.c | 14 +++++++-------
->   sequencer.c      |  2 +-
->   wt-status.h      |  6 +++---
->   3 files changed, 11 insertions(+), 11 deletions(-)
+>   builtin/commit.c              | 2 --
+>   t/t3404-rebase-interactive.sh | 5 ++---
+>   2 files changed, 2 insertions(+), 5 deletions(-)
 > 
 > diff --git a/builtin/commit.c b/builtin/commit.c
-> index 28f6174503..17cc27e53e 100644
+> index 17cc27e53e..01b79185e7 100644
 > --- a/builtin/commit.c
 > +++ b/builtin/commit.c
-> @@ -520,7 +520,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+> @@ -520,8 +520,6 @@ static const char *prepare_index(const char **argv, const char *prefix,
 >   			die(_("cannot do a partial commit during a merge."));
 >   		else if (is_from_cherry_pick(whence))
 >   			die(_("cannot do a partial commit during a cherry-pick."));
-> -		else if (is_from_rebase(whence))
-> +		else if (is_from_rebase_now_empty(whence))
->   			die(_("cannot do a partial commit during a rebase."));
+> -		else if (is_from_rebase_now_empty(whence))
+> -			die(_("cannot do a partial commit during a rebase."));
 >   	}
 >   
-> @@ -893,7 +893,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->   	 */
->   	else if (whence == FROM_MERGE)
->   		hook_arg1 = "merge";
-> -	else if (is_from_cherry_pick(whence) || whence == FROM_REBASE_PICK) {
-> +	else if (is_from_cherry_pick(whence) || is_from_rebase_now_empty(whence)) {
->   		hook_arg1 = "commit";
->   		hook_arg2 = "CHERRY_PICK_HEAD";
->   	}
-> @@ -1086,7 +1086,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->   		if (amend)
->   			fputs(_(empty_amend_advice), stderr);
->   		else if (is_from_cherry_pick(whence) ||
-> -			 whence == FROM_REBASE_PICK) {
-> +			 is_from_rebase_now_empty(whence)) {
->   			fputs(_(empty_cherry_pick_advice), stderr);
->   			if (whence == FROM_CHERRY_PICK_SINGLE)
->   				fputs(_(empty_cherry_pick_advice_single), stderr);
-> @@ -1333,7 +1333,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
->   			die(_("You are in the middle of a merge -- cannot amend."));
->   		else if (is_from_cherry_pick(whence))
->   			die(_("You are in the middle of a cherry-pick -- cannot amend."));
-> -		else if (whence == FROM_REBASE_PICK)
-> +		else if (is_from_rebase_now_empty(whence))
->   			die(_("You are in the middle of a rebase -- cannot amend."));
->   	}
->   	if (fixup_message && squash_message)
-> @@ -1353,7 +1353,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
->   	if (amend && !use_message && !fixup_message)
->   		use_message = "HEAD";
->   	if (!use_message && !is_from_cherry_pick(whence) &&
-> -	    !is_from_rebase(whence) && renew_authorship)
-> +	    !is_from_rebase_now_empty(whence) && renew_authorship)
->   		die(_("--reset-author can be used only with -C, -c or --amend."));
->   	if (use_message) {
->   		use_message_buffer = read_commit_message(use_message);
-> @@ -1362,7 +1362,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
->   			author_message_buffer = use_message_buffer;
->   		}
->   	}
-> -	if ((is_from_cherry_pick(whence) || whence == FROM_REBASE_PICK) &&
-> +	if ((is_from_cherry_pick(whence) || is_from_rebase_now_empty(whence)) &&
->   	    !renew_authorship) {
->   		author_message = "CHERRY_PICK_HEAD";
->   		author_message_buffer = read_commit_message(author_message);
-> @@ -1887,7 +1887,7 @@ int cmd_commit(int argc,
->   		if (!reflog_msg)
->   			reflog_msg = is_from_cherry_pick(whence)
->   					? "commit (cherry-pick)"
-> -					: is_from_rebase(whence)
-> +					: is_from_rebase_now_empty(whence)
->   					? "commit (rebase)"
->   					: "commit";
->   		commit_list_insert(current_head, &parents);
-> diff --git a/sequencer.c b/sequencer.c
-> index 65afd100d9..d336c309ca 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -6956,7 +6956,7 @@ int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
->   		    !repo_get_oid(r, "REBASE_HEAD", &rebase_head) &&
->   		    !repo_get_oid(r, "CHERRY_PICK_HEAD", &cherry_pick_head) &&
->   		    oideq(&rebase_head, &cherry_pick_head))
-> -			*whence = FROM_REBASE_PICK;
-> +			*whence = FROM_REBASE_NOW_EMPTY;
->   		else
->   			*whence = FROM_CHERRY_PICK_SINGLE;
+>   	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index ff11abb2f2..3588e16543 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1858,7 +1858,7 @@ test_expect_success 'post-commit hook is called' '
+>   	test_cmp expect actual
+>   '
 >   
-> diff --git a/wt-status.h b/wt-status.h
-> index e9fe32e98c..2143f50b49 100644
-> --- a/wt-status.h
-> +++ b/wt-status.h
-> @@ -41,7 +41,7 @@ enum commit_whence {
->   	FROM_MERGE,      /* commit came from merge */
->   	FROM_CHERRY_PICK_SINGLE, /* commit came from cherry-pick */
->   	FROM_CHERRY_PICK_MULTI, /* commit came from a sequence of cherry-picks */
-> -	FROM_REBASE_PICK /* commit came from a pick/reword/edit */
-> +	FROM_REBASE_NOW_EMPTY /* rebase applied a pick that became empty */
->   };
+> -test_expect_success 'correct error message for partial commit after empty pick' '
+> +test_expect_success 'partial commit is allowed when a rebase pick becomes empty' '
+>   	test_when_finished "git rebase --abort" &&
+>   	(
+>   		set_fake_editor &&
+> @@ -1867,8 +1867,7 @@ test_expect_success 'correct error message for partial commit after empty pick'
+>   		test_must_fail git rebase -i A D
+>   	) &&
+>   	echo x >file1 &&
+> -	test_must_fail git commit file1 2>err &&
+> -	test_grep "cannot do a partial commit during a rebase." err
+> +	git commit file1
+>   '
 >   
->   static inline int is_from_cherry_pick(enum commit_whence whence)
-> @@ -50,9 +50,9 @@ static inline int is_from_cherry_pick(enum commit_whence whence)
->   		whence == FROM_CHERRY_PICK_MULTI;
->   }
->   
-> -static inline int is_from_rebase(enum commit_whence whence)
-> +static inline int is_from_rebase_now_empty(enum commit_whence whence)
->   {
-> -	return whence == FROM_REBASE_PICK;
-> +	return whence == FROM_REBASE_NOW_EMPTY;
->   }
->   
->   struct wt_status_change_data {
+>   test_expect_success 'correct error message for commit --amend after empty pick' '
 
