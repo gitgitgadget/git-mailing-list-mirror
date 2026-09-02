@@ -1,597 +1,322 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F0C4A99A6
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 17:45:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3681938A728
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 18:23:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788371129; cv=none; b=VmN7sYK2dLdAY52LSDbtrw34Wahn51vOUI5vfOUvpt0XmMmxbVTCW+/YeEBCNVyKzWrILSV2iwikwGkigi0VHkRTgRmjjGS5bO6vbl+aY1JeGvMTQ8UGuJuTzQp7SS5oUPOdun9my/AhBQQoQCUHSa0rQRE8+679B1HIbWEOFOg=
+	t=1788373439; cv=none; b=RcjvqA4aw/kXFs01TNO/NZqM5wiUD+mKZfifYcxCjgHAtbjjL+LRKR1djC78mxhOrcNi1KJz59s4IQbM9Xz30qvf2t147hiWJY3ZyotNGGmk3v1oHf0nPhyRylmajAOpjF4eheUBoPnpqkZcHAJIb34b/dFd4BjCO0TUsj8yoeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788371129; c=relaxed/simple;
-	bh=1nC3pXjFWoo09O0JVtyPLnpihRrcHQiFfjEf92f1Jv8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=G5NF8tnLEj72+ASmuB/29vfIsWsisdvXP1hAn3u65/bSeM3xq2MjhxwpN5yNYN+M1ESx8zWcDUyo8odVhy/MZ7ilxGJAwWcg/IJFDKQOOaXsXzXGM+NdHuqhdjhTtxAJPNxNKO0eiP7zbqlrZaJnOGzGMSjxZ5Xe7gwkvEEPp/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RPYp1NZM; arc=none smtp.client-ip=209.85.216.54
+	s=arc-20240116; t=1788373439; c=relaxed/simple;
+	bh=Do+9uG2DBSMD1HIKYvoEmFoUiAA45P+7iGKYVtuvcqs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UV0hPOxbRZQmNFHH5TwbHx67v9mRE12luR1xw1RPKe73RJC6pVWYqZgBTJ4yXVZNVKouq0uF+a1NfZ9ljw+NZZgUQ/VBTcEXoJirO7ulqDWRMovJ0jz9EgNcCRu/alxNZ80toaQfrYrO9qK/kkqwjo2ilHhTTtnDDjDRqvTGLRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HeRZs7wf; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RPYp1NZM"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3990fe066ebso1097546a91.1
-        for <git@vger.kernel.org>; Wed, 02 Sep 2026 10:45:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HeRZs7wf"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-90ce08834feso20219106d6.0
+        for <git@vger.kernel.org>; Wed, 02 Sep 2026 11:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788371126; x=1788975926; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ThjpiU+OTdts+fCqFoM88uuuZLEeSkegjaGaXRobL5Y=;
-        b=RPYp1NZM0sD8ITmm5HtZQzhWh7LuC8a3de6tzgiiCS/Yn4zwcNSPEB/Oq3vSk22GlX
-         qfl6TFXFN4DdvJ++/eLKmVcjzKCZ6ElDaPKoOYhOkfXR91XkQXHg7O1BrYTxt0cQFSng
-         s/RGtD9225wP7bv3hscZyw9Y/ZJH/1Ars7IPtC8zn0airQ8za+d4EtxyeQ9yb3h0Jo2R
-         Qz2l7dn0jpMD51I3HyhGXdcaOp0UkangWEHuWPzMQlUL7Ke64If+F/Hj4iHcaSZIZM8b
-         bHdlZTEGv/Rd3bwQwuRwaYJ49RSxsrjcXjQA/3Wb18qV22cZVM2t+iGMPRN3isyP54c1
-         ceug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788371126; x=1788975926;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1788373437; x=1788978237; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ThjpiU+OTdts+fCqFoM88uuuZLEeSkegjaGaXRobL5Y=;
-        b=HB1y+gOu+c2GV3Bnutn8veyzH84QFgjUnR8KFMgaSs5biTjDKR0/M7NVGjX3tDjFeY
-         YUoAf+BOsE46fNVOJPys8sX28M5p+cP2PGkwhDWxChq96pnWk8tUfhH7IQNX0Wu4FKt0
-         gF1sekmuG+Mz0CEq01O0pwqELCVKrWfOpH3jGwgVndEuG7YOGy2hs0MrRA/DqKHJrwqU
-         2ctJsBW327P2Ua66f6JUWoFXIu0TeswqXt9fJqD+WOLzoyrhBNhSn9tdQXocZIksTSE9
-         tBvIYbqRwQ0l6orx2FWStuQ0Q+iTSo21pBKJXfqnjcno6hu1/XCbBlE86XAWg369mBVq
-         06Zw==
-X-Gm-Message-State: AFuF++kVreS/EjiTEVOUuF3AlkAVpiTsW0Pql9J85ICrdYcLdPJaGq+q
-	qFWJIQvKZ7YTbbWPgYZ/PVp2DznhaAucIxZBdah2d/Zxkj+uObk0tgGGpOtLmg==
-X-Gm-Gg: AYBFou1ToHl/ZKWfcorEEE/r+OgzAf9vv3uZk1XMZodT6zoJmifrrnkztD3APQJKLf9
-	vMd6ynQPvfk4rXADZDBW3dnvBKOQQGkZl5gE99iss0nouN1P67+1oKOAUOngryUoUe+DkiDnKei
-	A2iMp+5DMy4pZS3XalEEtWf20YNARYt/KNDeXa8TNr0/HP953x73FLRNDsm9dTfSaKLQdW0m7Aj
-	1BREoDj89nawdA93WrLsXlqNnm/oJxJ8L916AW05isXhtcWx9VpWLxoE0Gumy1VR3B8xDXtwweY
-	aCDqwnrIEWvAkhhDGCUuNCwUwQYyE+JCM+NjcftLSkzWcdZ5iaspHDmH9ZTFIgVSfRk2xA9Y+ZD
-	w85+qiMFur0iZE10kYg3l2+o+qyz53HHkZ9ajrYBzAIaIcoCZX2x6NckfRrW/p1mVbwbcN7DFgo
-	/inM92q8icY8Z34GYr6hG+lcOb3jV0cxTpcqCz1aBGqRSA4wcvug==
-X-Received: by 2002:a17:90b:5828:b0:38e:2e86:ed02 with SMTP id 98e67ed59e1d1-39aee0850bcmr9996493a91.14.1788371126055;
-        Wed, 02 Sep 2026 10:45:26 -0700 (PDT)
-Received: from [127.0.0.1] ([128.24.161.177])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-32f07beb704sm8789440eec.30.2026.09.02.10.45.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 10:45:24 -0700 (PDT)
-Message-Id: <pull.2215.v4.git.1788371123325.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2215.git.1788365862670.gitgitgadget@gmail.com>
-References: <pull.2215.git.1788365862670.gitgitgadget@gmail.com>
-From: "Alessio Attilio via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 02 Sep 2026 17:45:23 +0000
-Subject: [PATCH v4] hooks: introduce 'hooks.allowNoVerify' configuration
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=jXwEEhtrfSgzkRNvOVNPp41tyJnhVAPFxz8MlOw/jE8=;
+        b=HeRZs7wfObIBrIVtNGfB8w/h8sGQAnNWLqh8SDWPU8O5nDGXYjencfoLCboRH8n3qC
+         oGntOIWVgTeYdl1oxzOGeV4tCQnTCrVbCrtGPPQsVvG0spcYQGIlxvld1e+T6DtFzeRj
+         ZJmUDMJMaVSHHUesadwAN3Czow6368a+UvRDDpo/XI0VYKAly/WMhrRs6K5PtSx+KEOS
+         jPQVlQCg3YxG/8xsxiwd9C/eCkaEv21ikO4tyq4g1PFV6F3Q25AnXYXT6BQO+AOkSfhQ
+         6b4pO13JnpaoLLNrznM8SUOPz5bj3UjdGzMIce+rD5l8AXOSeryea7QLFGpzAwX38ds4
+         IX/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788373437; x=1788978237;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=jXwEEhtrfSgzkRNvOVNPp41tyJnhVAPFxz8MlOw/jE8=;
+        b=NjGzHF5KD/ZRzBGlvvnutAOieaPAxmnor30nrL2dh3OiLn2r01F0tA1TUHbyVMMkQa
+         nEfQHNosDE3/3hpPobEGL7pRWLMSORhFwygIxGILswU5riKaxd5fyej2Z5SzeD1+n3yF
+         UOgoTr+0tIHN9jIEPKDxOO0pcU3wiYk2RplYYD4/ia6WybW+x07pCGTTfYXhBe0NGFxS
+         ljvn3FaaJhV+WkZaNLDYIfmRpbZHUbzlyCkPML9RqTcfHg9cpoNXbMBMcA82QU2Bc25v
+         NvGoipLPdniczvs1k7nOgbyIEkuJS6NTQtvQR3cMmQirAIUmmwxpjbhmtbdBixlYXSAP
+         w1EA==
+X-Forwarded-Encrypted: i=1; AHgh+Rr8SZultMo2dUqtRCbq+mS66rHAfw5YnL7pZSwO6w6OSXcZUu9RrEnfa0AwoHBmzG/D698=@vger.kernel.org
+X-Gm-Message-State: AFuF++nDtbTulvTjNgUSOQOMBX6De0YQ7IKKhsqQ56c7EeD928CWabDP
+	gYLSxjBS6leg6BxsyBS5HK5nAcoE0tFCpHVx9JAVIEy3c43jptbTTOgf
+X-Gm-Gg: AR+sD13CSRm1a5+ZzGwWv/IQsfTzZxVBZeFb3a4/ClK5OsRZPEy2V5QFAokHYUqRYE7
+	bTVxQALEb6X05UluOx45TDO3gA0+LDBsscSAE396ffrQjjV/G9T1yxy6p2mBvl0xo0V3me9i2W2
+	0GvhG3yOAiGt1B6X9+vlaXG7Oil3uQ+LztRXX1hfvWhptLl37S7CQDyozrBVdK5wAV71zOos1cw
+	CZnghIKE2qVfKFYhVvdRF2bjQ8yERfNpuAD+iwd6cw7iH5G1yeBGsU8y60RWbem9eVYe741G4s/
+	/H5AaBBijMlQriU8o0NCJAaVKN8jh96WOVNGWBrQFq+wraezs3SIxhjxgdq7h0FPuhE0pxgA3FC
+	LUr9shsJf7t4cvWQ01R9pcauJ65JwIlQlWTRhto1iaMqm7vX+YtrYDrZbvdVgTDofyS4RzF+9XC
+	XWiE1GPIoxKpRdwn5s3zYqUCgpSDgwVrm4N66Jkbf8uvqIkvJ+lqa4idryJY1GEqnUpJU+NzMjs
+	uvfm8visKIRyLPWRKGlrhn316y+9Gm59G4idXYMMLlCUARJQgBAjh7tRLo+mpSRQPr1W7dayMTF
+	HVWVug8qdNmp+QEhQrCdlFmiJ0GzmrHSObLmim9rFgiCMJDHbnkQPXo+0cICt43Z2ALyrAlwD1a
+	R8qWYiRITzCBuag==
+X-Received: by 2002:a05:620a:1989:b0:937:d6e8:59b0 with SMTP id af79cd13be357-93960de248dmr856178185a.10.1788373436657;
+        Wed, 02 Sep 2026 11:23:56 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9395f398a18sm269332785a.37.2026.09.02.11.23.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Sep 2026 11:23:56 -0700 (PDT)
+Message-ID: <f9de9449-2e32-483d-937d-45b847143b29@gmail.com>
+Date: Wed, 2 Sep 2026 14:23:55 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Alessio Attilio <hello@kairosci.dev>,
-    Alessio Attilio <alessio.attilio@protonmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] send-pack: avoid sending the whole tree when pushing
+ from a shallow clone
+To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>
+References: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
+ <pull.2208.v2.git.1787684776048.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.2208.v2.git.1787684776048.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Alessio Attilio <alessio.attilio@protonmail.com>
+On 8/25/2026 3:06 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> When pushing from a shallow clone, even if we only have made a small
+> one-line change to a tiny file, we often push the entire toplevel tree
+> of files.  For large repositories, this could be gigabytes instead of
+> kilobytes.
+> 
+> The reason for this is that the push likely lacks the commits the
+> receiver has advertised, so it walks back to its shallow grafts.  Since
+> it doesn't know that the server has anything, it sends the entire tree
+> for the graft.  It would also send the parents of the shallow graft,
+> except the shallow clone doesn't have those by construction.  We thus
+> are forced to assume that the server has the parents of the shallow
+> graft -- if it doesn't, the server's receive-pack will reject the push.
 
-Introduce the 'hooks.allowNoVerify' configuration variable to control
-whether the '--no-verify' (or '-n') command-line option is permitted
-during operations executing client-side hooks (commit, push, merge,
-rebase, am).
+I was ready to assume this patch was fully correct, but then I asked
+an AI agent to review it and it found an interesting subtlety that
+puts the entire approach in question. It also presents an alternative
+approach that is much simpler and helps improve things immediately.
 
-Client-side hooks execute in the user's local repository and cannot serve
-as an authoritative security boundary; authoritative policy enforcement
-belongs on the server (such as via pre-receive hooks). However,
-developers often invoke '--no-verify' out of habit or muscle memory,
-inadvertently skipping local checks.
+The gist is that we can attempt to push a shallow object to a remote
+that _doesn't have that commit or its parent_. This gets rejected by
+the remote as not allowing a shallow update.
 
-To address concerns regarding false senses of security without breaking
-legitimate emergency escape hatches, allow configuring the variable to
-'true' (the default), 'warn', or 'false'. In 'warn' mode, Git permits
-the bypass while emitting a warning to standard error, ensuring
-visibility without interrupting urgent workflows.
+The problem occurs when this shallow update is attempted alongside
+another non-shallow branch being pushed that also has some "new"
+objects reachable, so the "assume the remote has the shallow
+commit" condition leads to novel failures due to that other ref
+update not having full connectivity.
 
-When set to 'false', Git aborts execution and provides actionable advice
-explaining that the setting is an ergonomic workflow guardrail. To avoid
-trapping developers during broken hook scripts or critical hotfixes,
-the guardrail can be overridden by passing '-c hooks.allowNoVerify=true'
-or by setting the 'GIT_ALLOW_NO_VERIFY=1' environment variable. This
-prevents developers from having to resort to destructive workarounds
-such as removing hook files or clearing execute permissions.
+Here's a test for t5538 that the AI agent generated, and I
+massaged into something more understandable/readable:
 
-Centralize the option verification logic across all affected commands into
-validate_no_verify() in hook.c.
+# A ref that passes the client's checks can still be rejected by the receiver.
+# Its shallow graft must not trim objects needed by another ref in the shared
+# pack, since a non-atomic push should still allow that other ref to succeed.
+#
+# The client has two unrelated shallow histories ("x" marks a shallow graft).
+# Blob O is present in A1 and is reintroduced by cY on topic:
+#
+#                 contains O
+#                    |
+#       A0----------A1(x)---cX          refs/heads/A
+#
+#       B0----------B1(x)---cY          refs/heads/topic
+#                              \
+#                               contains O
+#
+# The receiver has only the B history.  Both of its refs A and B point to
+# the same B1 commit as full history. It has neither A1 nor blob O in its
+# object database.
+#
+# The '--force' option lets the force-push of A from client to receiver
+# pass the client's checks, but the receiver rejects A because it will not
+# adopt A1 as a new shallow root.
+test_expect_success 'shallow push does not over-exclude via a remotely rejected ref' '
+	# origin: two unrelated histories; only branch A has blob "shared"
+	git init remote-reject-origin &&
+	(
+		cd remote-reject-origin &&
+		git checkout -b A &&
+		test_commit --no-tag has-shared sh shared &&
+		test_commit --no-tag A1 &&
+		git switch --orphan B &&
+		test_commit --no-tag B0 &&
+		test_commit --no-tag B1
+	) &&
 
-Signed-off-by: Alessio Attilio <alessio.attilio@protonmail.com>
----
-    hooks: introduce 'hooks.allowNoVerify' configuration
-    
-    Introduce 'hooks.allowNoVerify' as an opt-in workflow guardrail
-    (default: true) to prevent accidental bypass of hooks via '--no-verify'.
-    This setting is intended for workflows and managed environments to avoid
-    inadvertent bypasses, without altering Git's server-side security model.
+	# receiver: commit B1 is exposed as both B and A and lacks A1
+	git init --bare remote-reject-receiver.git &&
+	(
+		cd remote-reject-origin &&
+		git remote add receiver ../remote-reject-receiver.git &&
+		git push receiver B:refs/heads/B B:refs/heads/A
+	) &&
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2215%2Fkairosci%2Fhooks-allownoverify-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2215/kairosci/hooks-allownoverify-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2215
+	# client: each remote branch tip is a shallow graft
+	git clone --depth=1 --no-single-branch \
+		"file://$(pwd)/remote-reject-origin" remote-reject-client &&
 
-Range-diff vs v3:
+	old_a=$(cd remote-reject-receiver.git && git rev-parse A) &&
+	(
+		cd remote-reject-client &&
+		git remote add receiver ../remote-reject-receiver.git &&
 
- 1:  cc98af8a9a ! 1:  a9f75413d3 hooks: introduce 'hooks.allowNoVerify' configuration
-     @@ t/t7599-hooks-allownoverify.sh (new)
-      +	test_grep "hooks.allowNoVerify" err
-      +'
-      +
-     ++test_expect_success 'hooks.allowNoVerify=false disallows git am --no-verify' '
-     ++	test_when_finished "rm -f patch && git am --abort || true" &&
-     ++	test_config hooks.allowNoVerify false &&
-     ++	git format-patch -1 --stdout branch-merge >patch &&
-     ++	test_must_fail git am --no-verify patch 2>err &&
-     ++	test_grep "hooks.allowNoVerify" err
-     ++'
-     ++
-      +test_expect_success 'hooks.allowNoVerify=false still runs hooks when --no-verify is not used' '
-      +	test_when_finished "rm -f pre-commit.log" &&
-      +	test_config hooks.allowNoVerify false &&
+		# Force makes A pass the client-side non-fast-forward check. The
+		# receiver will reject it because A1 is a new shallow root and
+		# receive.shallowUpdate is disabled.
+		git checkout A &&
+		test_commit --no-tag cX &&
 
+		# topic is independently valid but needs the shared blob from A1.
+		git checkout -b topic B &&
+		test_commit --no-tag reintroduce sh shared &&
 
- Documentation/config.adoc       |   2 +
- Documentation/config/hooks.adoc |  24 ++++
- Documentation/git.adoc          |   5 +
- builtin/am.c                    |   3 +
- builtin/commit.c                |   4 +
- builtin/merge.c                 |   2 +
- builtin/push.c                  |   3 +
- builtin/rebase.c                |   3 +
- hook.c                          |  29 +++++
- hook.h                          |  12 ++
- t/meson.build                   |   1 +
- t/t7599-hooks-allownoverify.sh  | 216 ++++++++++++++++++++++++++++++++
- 12 files changed, 304 insertions(+)
- create mode 100644 Documentation/config/hooks.adoc
- create mode 100755 t/t7599-hooks-allownoverify.sh
+		test_must_fail git push --force receiver A topic 2>err &&
+		test_grep "remote rejected.*shallow update not allowed" err
+	) &&
 
-diff --git a/Documentation/config.adoc b/Documentation/config.adoc
-index f67dcd2f8e..2ba351e6ee 100644
---- a/Documentation/config.adoc
-+++ b/Documentation/config.adoc
-@@ -508,6 +508,8 @@ include::config/help.adoc[]
- 
- include::config/hook.adoc[]
- 
-+include::config/hooks.adoc[]
-+
- include::config/http.adoc[]
- 
- include::config/i18n.adoc[]
-diff --git a/Documentation/config/hooks.adoc b/Documentation/config/hooks.adoc
-new file mode 100644
-index 0000000000..d94ac4b9b5
---- /dev/null
-+++ b/Documentation/config/hooks.adoc
-@@ -0,0 +1,24 @@
-+`hooks.allowNoVerify`::
-+	Specifies whether the `--no-verify` (or `-n`) command-line option
-+	is permitted in commands that run client-side hooks, such as `git commit`,
-+	`git push`, `git merge`, `git rebase`, and `git am`.
-++
-+Allowed values are:
-++
-+--
-+* `true`: `--no-verify` is permitted normally. This is the default.
-+* `warn`: `--no-verify` is permitted, but Git prints a warning on stderr.
-+* `false`: `--no-verify` is disallowed and Git aborts
-+  with a fatal error accompanied by advice explaining how to override it.
-+--
-++
-+In an emergency (for example, when a local hook crashes or during a critical
-+production hotfix), this guardrail can be overridden without modifying
-+configuration files by setting the `GIT_ALLOW_NO_VERIFY=1` environment variable
-+or by passing `-c hooks.allowNoVerify=true` on the command line.
-++
-+NOTE: Client-side hooks execute in the developer's environment and belong to
-+the user. This configuration serves strictly as an ergonomic workflow guardrail
-+against accidental bypasses (such as muscle-memory `-n` or automated scripts),
-+and must not be relied upon as a security boundary. Authoritative enforcement
-+must always be implemented server-side (for example, via `pre-receive` hooks).
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 8a5cdd3b3d..1b3af061a3 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -1018,6 +1018,11 @@ on some performance improvements or features). This variable currently
- only affects clones and fetches; it is not yet used for pushes (but may
- be in the future).
- 
-+`GIT_ALLOW_NO_VERIFY`::
-+	If this Boolean environment variable is set to true (e.g. `1`), permits the use
-+	of `--no-verify` (or `-n`) even when `hooks.allowNoVerify` is set to `false`.
-+	This serves as an emergency override mechanism for workflows when hooks fail unexpectedly.
-+
- `GIT_OPTIONAL_LOCKS`::
- 	If this Boolean environment variable is set to false, Git will complete any requested operation without
- 	performing any optional sub-operations that require taking a lock.
-diff --git a/builtin/am.c b/builtin/am.c
-index e9623b8307..c79b9a82f0 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2457,6 +2457,9 @@ int cmd_am(int argc,
- 
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 
-+	if (state.no_verify)
-+		validate_no_verify(the_repository, "--no-verify");
-+
- 	if (binary >= 0)
- 		fprintf_ln(stderr, _("The -b/--binary option has been a no-op for long time, and\n"
- 				"it will be removed. Please do not use it anymore."));
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 28f6174503..ef28c2cb9e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -19,6 +19,7 @@
- #include "environment.h"
- #include "diff.h"
- #include "commit.h"
-+#include "hook.h"
- #include "add-interactive.h"
- #include "gettext.h"
- #include "revision.h"
-@@ -1316,6 +1317,9 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 	finalize_deferred_config(s);
- 
-+	if (no_verify)
-+		validate_no_verify(the_repository, "--no-verify");
-+
- 	if (force_author && !strchr(force_author, '>'))
- 		force_author = find_author_by_nickname(force_author);
- 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 5b4eb23a83..0e6c2d4345 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1408,6 +1408,8 @@ int cmd_merge(int argc,
- 		parse_branch_merge_options(branch_mergeoptions);
- 	argc = parse_options(argc, argv, prefix, builtin_merge_options,
- 			builtin_merge_usage, 0);
-+	if (no_verify)
-+		validate_no_verify(the_repository, "--no-verify");
- 	if (shortlog_len < 0)
- 		shortlog_len = (merge_log_config > 0) ? merge_log_config : 0;
- 
-diff --git a/builtin/push.c b/builtin/push.c
-index 2377b5af55..98830da7f7 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -12,6 +12,7 @@
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
-+#include "hook.h"
- #include "refspec.h"
- #include "run-command.h"
- #include "remote.h"
-@@ -746,6 +747,8 @@ int cmd_push(int argc,
- 	packet_trace_identity("push");
- 	repo_config(the_repository, git_push_config, &flags);
- 	argc = parse_options(argc, argv, prefix, options, push_usage, 0);
-+	if (flags & TRANSPORT_PUSH_NO_HOOK)
-+		validate_no_verify(the_repository, "--no-verify");
- 	push_options = (push_options_cmdline.nr
- 		? &push_options_cmdline
- 		: &push_options_config);
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 10a306310c..dff28f0119 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1299,6 +1299,9 @@ int cmd_rebase(int argc,
- 			     builtin_rebase_options,
- 			     builtin_rebase_usage, 0);
- 
-+	if (ok_to_skip_pre_rebase)
-+		validate_no_verify(the_repository, "--no-verify");
-+
- 	if (options.trailer_args.nr) {
- 		if (validate_trailer_args(&options.trailer_args))
- 			die(NULL);
-diff --git a/hook.c b/hook.c
-index d10eef4763..f972c66bd2 100644
---- a/hook.c
-+++ b/hook.c
-@@ -858,3 +858,32 @@ int run_hooks_l(struct repository *r, const char *hook_name, ...)
- 
- 	return run_hooks_opt(r, hook_name, &opt);
- }
-+
-+void validate_no_verify(struct repository *r, const char *opt)
-+{
-+	const char *val = NULL;
-+	int maybe_bool;
-+
-+	if (git_env_bool("GIT_ALLOW_NO_VERIFY", 0))
-+		return;
-+
-+	if (!r || repo_config_get_value(r, "hooks.allownoverify", &val))
-+		return;
-+
-+	maybe_bool = git_parse_maybe_bool(val);
-+	if (maybe_bool == 1) {
-+		return;
-+	} else if (!strcasecmp(val, "warn")) {
-+		warning(_("bypassing hooks with '%s' is discouraged by 'hooks.allowNoVerify'"), opt);
-+		return;
-+	} else if (maybe_bool == 0) {
-+		advise(_("this repository disallows '%s' as a workflow guardrail against accidental bypass.\n"
-+			 "In an emergency (e.g. broken hook or urgent hotfix), you can override it with:\n"
-+			 "  git -c hooks.allowNoVerify=true <command>\n"
-+			 "or:\n"
-+			 "  GIT_ALLOW_NO_VERIFY=1 git <command>"), opt);
-+		die(_("the use of '%s' is disabled by 'hooks.allowNoVerify'"), opt);
-+	} else {
-+		warning(_("unknown value for 'hooks.allowNoVerify': '%s'"), val);
-+	}
-+}
-diff --git a/hook.h b/hook.h
-index 27bb1aeb2e..b9e0b6703c 100644
---- a/hook.h
-+++ b/hook.h
-@@ -280,4 +280,16 @@ int run_hooks(struct repository *r, const char *hook_name);
-  */
- LAST_ARG_MUST_BE_NULL
- int run_hooks_l(struct repository *r, const char *hook_name, ...);
-+
-+/**
-+ * Check if the use of '--no-verify' (or '-n') is permitted according to
-+ * the 'hooks.allowNoVerify' configuration and 'GIT_ALLOW_NO_VERIFY' environment
-+ * variable.
-+ *
-+ * If permitted, this function returns normally (or emits a warning if configured
-+ * to 'warn'). If disallowed, it outputs advice on how to override the workflow
-+ * guardrail in an emergency, then aborts with die().
-+ */
-+void validate_no_verify(struct repository *r, const char *opt);
-+
- #endif
-diff --git a/t/meson.build b/t/meson.build
-index 7f53cca7d1..ce6ca1f6bf 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -945,6 +945,7 @@ integration_tests = [
-   't7526-commit-pathspec-file.sh',
-   't7527-builtin-fsmonitor.sh',
-   't7528-signed-commit-ssh.sh',
-+  't7599-hooks-allownoverify.sh',
-   't7600-merge.sh',
-   't7601-merge-pull-config.sh',
-   't7602-merge-octopus-many.sh',
-diff --git a/t/t7599-hooks-allownoverify.sh b/t/t7599-hooks-allownoverify.sh
-new file mode 100755
-index 0000000000..75e6e65ef0
---- /dev/null
-+++ b/t/t7599-hooks-allownoverify.sh
-@@ -0,0 +1,216 @@
-+#!/bin/sh
-+
-+test_description='support hooks.allowNoVerify configuration to disallow --no-verify'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup test repository and hooks' '
-+	test_commit init &&
-+	test_hook --setup pre-commit <<-\HOOK_EOF &&
-+	echo "pre-commit executed" >>pre-commit.log
-+	if test -f fail-pre-commit
-+	then
-+		exit 1
-+	fi
-+	exit 0
-+	HOOK_EOF
-+	test_hook --setup pre-push <<-\HOOK_EOF &&
-+	echo "pre-push executed" >>pre-push.log
-+	if test -f fail-pre-push
-+	then
-+		exit 1
-+	fi
-+	exit 0
-+	HOOK_EOF
-+	git init --bare remote.git &&
-+	git remote add origin remote.git &&
-+	git push -u origin main &&
-+	rm -f pre-commit.log pre-push.log
-+'
-+
-+test_expect_success 'default: --no-verify is permitted for git commit' '
-+	test_when_finished "rm -f pre-commit.log" &&
-+	echo "change1" >>init.t &&
-+	git add init.t &&
-+	git commit --no-verify -m "commit with no-verify (default)" &&
-+	test_path_is_missing pre-commit.log
-+'
-+
-+test_expect_success 'default: -n is permitted for git commit' '
-+	test_when_finished "rm -f pre-commit.log" &&
-+	echo "change2" >>init.t &&
-+	git add init.t &&
-+	git commit -n -m "commit with -n (default)" &&
-+	test_path_is_missing pre-commit.log
-+'
-+
-+test_expect_success 'default: --no-verify is permitted for git push' '
-+	test_when_finished "rm -f pre-push.log" &&
-+	rm -f pre-push.log &&
-+	git push --no-verify origin main &&
-+	test_path_is_missing pre-push.log
-+'
-+
-+test_expect_success 'explicit hooks.allowNoVerify=true allows --no-verify' '
-+	test_when_finished "rm -f pre-commit.log" &&
-+	test_config hooks.allowNoVerify true &&
-+	echo "change3" >>init.t &&
-+	git add init.t &&
-+	git commit --no-verify -m "commit with no-verify allowed" &&
-+	test_path_is_missing pre-commit.log
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false disallows git commit --no-verify' '
-+	test_config hooks.allowNoVerify false &&
-+	echo "change4" >>init.t &&
-+	git add init.t &&
-+	test_must_fail git commit --no-verify -m "should fail" 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false disallows git commit -n' '
-+	test_config hooks.allowNoVerify false &&
-+	echo "change5" >>init.t &&
-+	git add init.t &&
-+	test_must_fail git commit -n -m "should fail" 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false disallows git push --no-verify' '
-+	test_config hooks.allowNoVerify false &&
-+	test_must_fail git push --no-verify origin main 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false disallows git merge --no-verify' '
-+	test_config hooks.allowNoVerify false &&
-+	git checkout -b branch-merge main &&
-+	echo "merge change" >merge_file &&
-+	git add merge_file &&
-+	git commit -m "merge commit" &&
-+	git checkout main &&
-+	test_must_fail git merge --no-verify branch-merge -m "merge fail" 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false disallows git rebase --no-verify' '
-+	test_config hooks.allowNoVerify false &&
-+	test_must_fail git rebase --no-verify main branch-merge 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false disallows git am --no-verify' '
-+	test_when_finished "rm -f patch && git am --abort || true" &&
-+	test_config hooks.allowNoVerify false &&
-+	git format-patch -1 --stdout branch-merge >patch &&
-+	test_must_fail git am --no-verify patch 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false still runs hooks when --no-verify is not used' '
-+	test_when_finished "rm -f pre-commit.log" &&
-+	test_config hooks.allowNoVerify false &&
-+	echo "change6" >>init.t &&
-+	git add init.t &&
-+	git commit -m "normal commit" &&
-+	test_path_is_file pre-commit.log
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false enforces hook execution (hook failure prevents commit)' '
-+	test_when_finished "rm -f fail-pre-commit pre-commit.log" &&
-+	test_config hooks.allowNoVerify false &&
-+	touch fail-pre-commit &&
-+	echo "change7" >>init.t &&
-+	git add init.t &&
-+	test_must_fail git commit -m "failing hook" &&
-+	test_must_fail git commit --no-verify -m "cannot bypass" 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false still runs pre-push hook on git push' '
-+	test_when_finished "rm -f pre-push.log" &&
-+	test_config hooks.allowNoVerify false &&
-+	git push origin main &&
-+	test_path_is_file pre-push.log
-+'
-+
-+test_expect_success 'CLI -c hooks.allowNoVerify=false overrides local true' '
-+	test_config hooks.allowNoVerify true &&
-+	echo "change8" >>init.t &&
-+	git add init.t &&
-+	test_must_fail git -c hooks.allowNoVerify=false commit --no-verify -m "override" 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'local hooks.allowNoVerify=false overrides global true' '
-+	test_config_global hooks.allowNoVerify true &&
-+	test_config hooks.allowNoVerify false &&
-+	echo "change9" >>init.t &&
-+	git add init.t &&
-+	test_must_fail git commit --no-verify -m "local override" 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'CLI -c hooks.allowNoVerify=true overrides local false' '
-+	test_config hooks.allowNoVerify false &&
-+	echo "change10" >>init.t &&
-+	git add init.t &&
-+	git -c hooks.allowNoVerify=true commit --no-verify -m "override false with CLI true"
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=false provides emergency override advice' '
-+	test_config hooks.allowNoVerify false &&
-+	echo "change11" >>init.t &&
-+	git add init.t &&
-+	test_must_fail git commit --no-verify -m "fail advice" 2>err &&
-+	test_grep "GIT_ALLOW_NO_VERIFY=1" err &&
-+	test_grep "git -c hooks.allowNoVerify=true" err
-+'
-+
-+test_expect_success 'GIT_ALLOW_NO_VERIFY=1 permits git commit --no-verify even when configured to false' '
-+	test_when_finished "rm -f pre-commit.log" &&
-+	test_config hooks.allowNoVerify false &&
-+	echo "change12" >>init.t &&
-+	git add init.t &&
-+	GIT_ALLOW_NO_VERIFY=1 git commit --no-verify -m "emergency commit" &&
-+	test_path_is_missing pre-commit.log
-+'
-+
-+test_expect_success 'GIT_ALLOW_NO_VERIFY=1 permits git push --no-verify even when configured to false' '
-+	test_when_finished "rm -f pre-push.log" &&
-+	test_config hooks.allowNoVerify false &&
-+	GIT_ALLOW_NO_VERIFY=1 git push --no-verify origin main &&
-+	test_path_is_missing pre-push.log
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=warn permits --no-verify and warns on stderr' '
-+	test_when_finished "rm -f pre-commit.log err" &&
-+	test_config hooks.allowNoVerify warn &&
-+	echo "change13" >>init.t &&
-+	git add init.t &&
-+	git commit --no-verify -m "commit with warn" 2>err &&
-+	test_path_is_missing pre-commit.log &&
-+	test_grep "bypassing hooks with .--no-verify. is discouraged" err
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=0 disallows --no-verify' '
-+	test_config hooks.allowNoVerify 0 &&
-+	echo "change14" >>init.t &&
-+	git add init.t &&
-+	test_must_fail git commit --no-verify -m "fail 0" 2>err &&
-+	test_grep "hooks.allowNoVerify" err
-+'
-+
-+test_expect_success 'hooks.allowNoVerify=1 allows --no-verify' '
-+	test_when_finished "rm -f pre-commit.log" &&
-+	test_config hooks.allowNoVerify 1 &&
-+	echo "change15" >>init.t &&
-+	git add init.t &&
-+	git commit --no-verify -m "commit 1" &&
-+	test_path_is_missing pre-commit.log
-+'
-+
-+test_done
+	# The non-atomic push should reject A without affecting topic.
+	(
+		cd remote-reject-receiver.git &&
+		test "$old_a" = "$(git rev-parse A)" &&
+		git rev-parse --verify topic
+	)
+'
 
-base-commit: 1630431f326e15fcde608827b5ff38422528eb59
--- 
-gitgitgadget
+This test passes before this patch, but fails after.
+
+As I was working on this test case, the key step that will fail with the
+current patch is the test_grep here:
+
+	test_must_fail git push --force receiver A topic 2>err &&
+	test_grep "remote rejected.*shallow update not allowed" err
+
+because the error that will be returned instead is more of a hard failure.
+This failure "at grep time" is something I added. If this line doesn't
+exist, then the 'git rev-parse --verify topic' fails which shows that we
+are able to break the receiver repo with this push, as the second ref
+update is accepted even though the packfile isn't complete.
+
+> +static int check_to_send_update(const struct ref *ref, const struct send_pack_args *args);
+> +
+> +/*
+> + * Add the shallow grafts (nr_parent == -1), which are reachable from the
+> + * refs being pushed, to the pack boundary ("haves") as uninteresting
+> + * (negative) tips so the generated pack leaves out everything beneath them.
+
+This "which are reachable from the refs being pushed" is the key problem,
+I think. We need to verify that the shallow commits are reachable from
+the refs advertised by the remote.
+
+> + * Walk only from the pushed tips, and only until a graft: using a graft
+> + * that does not bound the pushed history could exclude an object we are
+> + * genuinely sending (if it is also reachable from that unrelated graft).
+> + * Stop early at any commit the peer already has, since it is a negative
+> + * the peer can use and the graft beneath it would be redundant.
+> + */
+> +static void append_reachable_shallow_grafts(struct repository *r,
+> +					    const struct ref *refs,
+> +					    const struct oid_array *advertised,
+> +					    const struct oid_array *negotiated,
+> +					    const struct send_pack_args *args,
+> +					    struct oid_array *haves)
+
+When I asked the agent to implement something that instead cared about
+whether the remote refs could reach the shallow commits, it deleted this
+method in favor of having your push.shallowexcludeboundary setting enable
+push.negotiate when the local repo is shallow:
+
+	repo_config_get_bool(r, "push.shallowexcludeboundary",
+			     &shallow_exclude_boundary);
+	if (is_repository_shallow(r) && shallow_exclude_boundary)
+		push_negotiate = 1;
+
+That was sufficient to pass the new test, as well as all other tests you
+added, except one. I'm not sure if we need a new option or if we should
+recommend push.negotiate in more places (plus these new tests).
+
+These new tests are great:
+
+> +test_expect_success 'shallow push only pushes what is necessary' '
+> +test_expect_success 'push.shallowExcludeBoundary=false sends full tree' '
+> +test_expect_success 'shallow push does not over-exclude for an accepted ref via a rejected one' '
+
+This test that you are adding is hinting at some of this behavior of the
+new test I added, except the multi-ref push causes unexpected behavior:
+
+> +# push.shallowExcludeBoundary (default true) omits the shallow boundary
+> +# snapshot from the pack, since an ordinary receiver already has it.  The
+> +# exception is a receiver willing to adopt a *new* shallow root
+> +# (receive.shallowUpdate): it genuinely needs that snapshot, so the default
+> +# optimization leaves it unable to graft the new root.  Verify the receiver
+> +# rejects such a push (rather than corrupting itself), and that setting the
+> +# config to false restores the full snapshot and lets the push succeed.  This
+> +# is the tradeoff that motivates the config knob.
+> +test_expect_success 'default push to a shallowUpdate receiver rejects a rootless snapshot' '
+> +	git init seed-origin &&
+> +	test_commit -C seed-origin s1 &&
+> +	test_commit -C seed-origin s2 &&
+> +	test_commit -C seed-origin s3 &&
+> +
+> +	# depth-2: a shallow graft at s2, pushing s3 on top of it
+> +	git clone --depth=2 "file://$(pwd)/seed-origin" seed-client &&
+> +
+> +	git init --bare seed-receiver.git &&
+> +	git --git-dir=seed-receiver.git config receive.shallowUpdate true &&
+> +
+
+Here is the chunk that doesn't work with the push.negotiate approach:
+
+> +	# Default (optimization on): the s2 boundary snapshot is withheld, so
+> +	# the receiver cannot graft the new root and rejects the push, leaving
+> +	# the ref uncreated.
+> +	test_must_fail git -C seed-client push \
+> +		"file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded 2>err &&
+> +	test_grep "remote rejected" err &&
+
+but specifically it's because the remote doesn't reject it. The client
+makes the appropriate adjustment.
+
+> +	test_must_fail git --git-dir=seed-receiver.git rev-parse --verify seeded &&
+> +
+> +	# Opt-out: the full snapshot is sent, so the same push now succeeds and
+> +	# the new shallow root is grafted.
+> +	git -C seed-client -c push.shallowExcludeBoundary=false push \
+> +		"file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded &&
+> +	git --git-dir=seed-receiver.git rev-parse --verify seeded
+> +'
+So the diff on your test becomes
+
+-       # Default (optimization on): the s2 boundary snapshot is withheld, so
+-       # the receiver cannot graft the new root and rejects the push, leaving
+-       # the ref uncreated.
+-       test_must_fail git -C seed-client push \
+-               "file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded 2>err &&
+-       test_grep "remote rejected" err &&
+-       test_must_fail git --git-dir=seed-receiver.git rev-parse --verify seeded &&
+-
+-       # Opt-out: the full snapshot is sent, so the same push now succeeds and
+-       # the new shallow root is grafted.
+-       git -C seed-client -c push.shallowExcludeBoundary=false push \
++       git -C seed-client rev-parse HEAD^ >expect &&
++       git -C seed-client push \
+                "file://$(pwd)/seed-receiver.git" HEAD:refs/heads/seeded &&
+-       git --git-dir=seed-receiver.git rev-parse --verify seeded
++       git --git-dir=seed-receiver.git rev-parse --verify seeded &&
++       test_cmp expect seed-receiver.git/shallow &&
++       git --git-dir=seed-receiver.git fsck
+ '
+
+Thanks,
+-Stolee
+
