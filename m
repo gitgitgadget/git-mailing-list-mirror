@@ -1,120 +1,117 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD852E738A
-	for <git@vger.kernel.org>; Wed,  2 Sep 2026 19:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF643803CF
+	for <git@vger.kernel.org>; Wed,  2 Sep 2026 19:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788377007; cv=pass; b=U49utEZ7NfNkfV54L2TP8jae09vOiq87L/9JypZ12aUJO1kyFOt7VAPhJ2pf1/KM3sswW0445petHfbGWyaRqKtAzdm9uoEoHlGrRKEimNEKlYUSac/GHBEUfUDFCKadA6CjZSLP3G1Smulhfy1wWYFX6Xu4OtSEuzTdfio/HrI=
+	t=1788377248; cv=pass; b=o3/q11hdRY+bttvAe2dmED4HdsGgQ3FIa548Rfx7hPyTpi3CtryOH1ShDfmejaZmG/anktbaL7zyZ7SBU/qp8yWQUEZFbjGLozEqGRYHm8dBU5yBUrQUnq08SV+0CIBvvYkHRwWzNrpfUVzA7Ih0UwvPV5O2Kwd8hrfB2exjEDA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788377007; c=relaxed/simple;
-	bh=VMrDJBaa66KuFv0csy6O3qvERz8n2AoF6opzPYnVMGQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b7QDc6RbeSkAHaGM0+8nbmjx6phB6avZSM28JxrGDOK/90jErlWzwyZsYBQ5hqxZVYF34EbJvTvk9DYWfJwxKUdrmezUiZcbYh+O3ZDQ/igTNQHa1n0VPBVq5Heqw1yS0n+DTgwpBbX0GOVdH5oHHbCbEXmuM3Q/PL0zkh+6QHc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a2pfLKQW; arc=pass smtp.client-ip=209.85.216.45
+	s=arc-20240116; t=1788377248; c=relaxed/simple;
+	bh=a0jEpr5q2AgOUdl438IIkSEo9cEYhH8mtw27eM+3qBU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=nrZfKdgyJMK8Ze+hEZdWfDA3PaQACzEZsQ9A/RPOmZ3wHYgLSK2RFrABa0j1FFdpQmk0srCKHviQfMNhfnEpGyMGLrVY/Kw/Aidbebq9Rr0MH2hyPnKOxYWANUE82a614QadqV/5r28zTL+uR7cEpw9h4jN/xt4WR7t3OPPdS3k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B0sijcSn; arc=pass smtp.client-ip=209.85.215.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a2pfLKQW"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3964e76d0f4so1767356a91.3
-        for <git@vger.kernel.org>; Wed, 02 Sep 2026 12:23:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788377006; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0sijcSn"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-cc1c8d4a959so1296021a12.3
+        for <git@vger.kernel.org>; Wed, 02 Sep 2026 12:27:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788377239; cv=none;
         d=google.com; s=arc-20260327;
-        b=fhQpjWjdxqQWUuCdaZdxpH6wMp3jqmBngjKVdWDAbYBkq6pflYt7vOt5HfTn0EwF3K
-         2ChmTPxh7GsWS/kU+wX1hNxDoZjPnPUy2B9qDy8EQVKyUF5LT04i5v795Qm9ObHaYPcD
-         Bxnv6qq0rPXT8uGDHiBqn6ftIDmWst2SylyZibOCrqq8ZxpPbaM7Bs0gRtnpFSgCcGEw
-         3yhyX+l/7iOeg7HJfP5EpBYkqoVJUXacvUhhB7eMF+0sP8GfK/Np8S00nx8famTOFMuI
-         sFiCf2d6RKvFPZXJY8S4q/dgZTuqcMubTU+P1Q8vkQWTXsCPc2m3nMcNCIzGbokOglyK
-         J9gw==
+        b=RLE2/d14QpYY7RniRFe9Zj810Qq26yMInzocRHNrxOJf5/lK6mS8UbxykhntFu/pJC
+         f5kBa4e6B3bXxI17EL+HLD/Xd+r6QgwqIdvkFlWKwode0xn//9MUWVB0z6xyiiuEwyiI
+         OpwXyomsMG5kP3cp0nFH7k6MROvEkC1AoDOkPhORZXiBQiXEMHG2c49UHTR/26X9c/n4
+         ippxB756dossyx8BDVm/i7hWb7scwx/Adij6Mo6Yq+EJPms8fr1sJLdhNtBB2X57mf7V
+         vY8NBSOE0h6XrIjIXzP7t6RZftul9XvbmOkeCXLCUhJ/8x6q9Wc5yqYTVzhfPzABQZpD
+         BLMA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=VMrDJBaa66KuFv0csy6O3qvERz8n2AoF6opzPYnVMGQ=;
-        fh=YlvwB1jrZi605gi3niB67Bi90wUDMc2WViKkk2TGGgI=;
-        b=hAT3M5vuIyiiw0B0e7CkTGb5JmkrVv4cXDdiAFhJewJ9NBpfkThYsCs2wZ1MAL+ptA
-         /tu9feUNkMgcfzy1nhWYwM11hdB7Db3xfEQMGEiJGNgCFF+cW2Dn0QE/TmWKZIZhxYCy
-         3ONflL7F1nhzv0leiVNm9NDx4+W0xwY9Qiro5Pp4qWkHuTibHqPJGLlPImOIBRih+8Lz
-         kZz/1BWq7ZXPJfRHTxVvJk9LPYGnaC4+YEsqs+0JV2Wl1GTmyEQ7Bf4wt0coh/hsC7nc
-         8WZXl9vA9we2LIu3oB1dS7o6kvyULaXrCiNKFinRr1omfEyM4N4xXm4tYefQnjjVz4cj
-         SA8w==;
+         :mime-version:dkim-signature;
+        bh=5tQmSj8MkF4wLTKD07tmqy+KRdmyHXYAFL3qPzMKviM=;
+        fh=nYFzfhBEk3egmZjYiXDJWWoxlIFIUnZU8sfU7GNtrQI=;
+        b=rBVLKOcQD/OrvfnTfKmkHqOoPcK5QH37N2f25AJCkxxoVq2AXUrDMDgZB9jywah4mB
+         s9uGcad/Rbu1EW+sVpDDt5Tseg0Q2LKGW13KJXk4UhpOuNLIU3RXrM2cYfyTqFEHZDTY
+         NoNSx2WAEQqmdVzAShxlYFS4/LtjpWfCUJkBZvkzdrLIItW+U+phm9xoixppsbxvl82H
+         FDviiF1aQsga5Vz14Pr3FuTTpj6IXPdU5JkCJfLNmLu7ILjUk+9lspUT4XLWPWE+iYLQ
+         GQyh5VLXjo7cyKQVKH316gFvWwgVUFfxkhc1bKmtpH6yYqsJGfim7qfr4YNMDGU6lX4E
+         z1aQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788377006; x=1788981806; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788377239; x=1788982039; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=VMrDJBaa66KuFv0csy6O3qvERz8n2AoF6opzPYnVMGQ=;
-        b=a2pfLKQWqvL2nW0kqxOsFUwGkAkMMDr4mNbDEdR7Cn4dbrdXF7RmgHLGX5lAWUMMmJ
-         /mmLi2NJJgkE+BVmOoRfvZWfd3wX+DLyTFmVol/zgNshApWU2hef/QFxQOPwCMoyORhA
-         Ia2f9DGw8ezHrtsVv9oXsngEmypnPBEcmnFMUCQ8Lyb9oIU9EL/WLglWqE9UHE9QXzZ2
-         rRW8vmHsc4M660f6rnTq3eTZfHEsSREWPQdCyWZH7sPlMwHVjg+NiDwxU8jgCwiHwaC7
-         f+7kxlmqQMP5hKCMPDURkvFYCvlQrwEn/rWAq8yqLFnHRii4IVthdiK/SkBAqt58usXa
-         a+Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788377006; x=1788981806;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :date:from:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VMrDJBaa66KuFv0csy6O3qvERz8n2AoF6opzPYnVMGQ=;
-        b=Br06Knpm86PeVZoYuMdW5i8EER1m85OQhoB1jKZcRF6fC4mOHJ9e6iK4EZdrcLvz3o
-         TvpbxdK/9SA+lfLhWaiji8pi5U8FHh410tLzSLcmBZWff9ovvD09Q8D0osH3LmNFSBdc
-         jv5urdXRb1MC9QGYo30R3kdMGxxKrSRCjkgFyP5YLESaHmBZLgjQyzn1jgrGRmdvadKA
-         eiem88Obs/dwLbLz5ObGISOZkVFH3Alsc+719wjurUrl4w9Ood36cd/z8HESqlscN5Ii
-         wpvrsd+P3plg3UwpQhuUDNPyBqs8jRVHI7bt/ZYUKhsVXvT+rDA/rDTp0ZwgX2t90niH
-         8JfQ==
-X-Gm-Message-State: AFuF++m+UZB/x6r5aiPcW3fXK1KS6F7j4Qy7+TpY3jNZcKjGemjL+lUC
-	SSx3vtHfMte7ydq8bEs6ii6MHEPhhi1Jb5txHcXovf1j+GSG5xcll/gSSX+Ur3++Sq42D418PtB
-	2nAYX3E0GjTYXeUB8yqwx6wyGEGAMctk=
-X-Gm-Gg: AYBFou3Mf0H/oAYM5DAgbQ/X59VpP9L2/6zcWQh3DQDGG5iWWTEAQ+qL8rzggWdSRWi
-	F9DLlFTDIQTAXtk57rRaWyVndvI2hL165QMDhUEeRu4h+rskeJdSb9AizXSJ9bQhlu8YO6DGLiH
-	thwTwYYcieZftlvMqOEB4Sxf+jeG9VWI3H8fcOYYMrNKKzC2IH/nB3vkU2CiD3Vw5+ieMlhow/X
-	1KuNSA4Oe7/9RumQJ+/bYAQxWwI80S+9sj9yvTnnwogDmwxpgDwAR9PhYV6/Ge92nitJReTgwZA
-	1OXpk/A5mPMPk5mFKGGJA6/Xv1CVS+5pzWlXOO5Z8mJPWhTpUoYCXD+UvgM9LApjeZiS9ZvnY9X
-	i4WhIl4pXGuV1lxsWFoY02FkNcbCL3oz2KKz/ARK0hBqG2OStweo/kSwDWuXXtzLBHXe9oeYkQi
-	Rz5vROjnrdubUsaOX1dRDPgmHGUhubKgZVboSpnHY=
-X-Received: by 2002:a17:90b:4b0f:b0:38f:dec8:f7e9 with SMTP id
- 98e67ed59e1d1-39aee152d1cmr9761120a91.12.1788377005801; Wed, 02 Sep 2026
- 12:23:25 -0700 (PDT)
+        bh=5tQmSj8MkF4wLTKD07tmqy+KRdmyHXYAFL3qPzMKviM=;
+        b=B0sijcSnWFH4drJCOoJ/RyZ4SDxAD+LAKdMIWz0Onsl1GvMsY+G3WLuyAkhVgi07fj
+         WAlIlgevN+Yfwqil5j19tuUVmgbs5e+aXr/EFkVuAdZWq06anbb+l4zcWAy1a63PtRFo
+         mFUN9uiwNhzcNj3+0BA5b/+/CEYzamlH6QFjuHBKCKek1c2ElzAib3wk/0QWiRn/fr0Y
+         dfhIX8TCFyXOTAzQCefto3xL6/DmMyj5/Qe1XMYSyZCSdojNbcFO4xbXE5mh6k5esFm+
+         fOWxcY7xUPr9qZbrwAIn3k12XY70lmZZD+chK84TKqW6GWrZ/OXPw9DWvy9PWYzImNOb
+         ErXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788377239; x=1788982039;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=5tQmSj8MkF4wLTKD07tmqy+KRdmyHXYAFL3qPzMKviM=;
+        b=lPN36QkQ1m/aek2JqIAts30uj1sKCvTPGEoQqgo515giSkoYEEFNkBLy7/w4kJxiDO
+         jG5N08+cQORqi12XoiZZtYCqJ03uH3ksSBSU2Ni3Bfmb82JSseGPgS3QM8XZxEcnD9/i
+         jueOCSlPiOlOPNJ51ns0AUvlBp/tocSvLmp8+6h5eDBs/fwkJZ67c/IVFxvUiRWe+Ie0
+         qSI0qr+ay+UWj5dfyhKjjO9tPqR5fw2pKZaeLah3YOz8Ouq60AxrsordSt4+yUTDyvYq
+         ACGIHubwfhwB8rmp5QQcb3PhlvhNpyZPwWfa0ZPBDJF5dyXgGk3FcvMX9PbUBAmtcZLg
+         j89g==
+X-Gm-Message-State: AFuF++mpWc3jZVe+P5E0gOL52p/gAVMoSeanwPZK2qkKNEi84zSn+Nll
+	41q+lle1J5/utf/nKsbo6yioLRWxC5k9r4wCn2rc9IxWM4QiuQbZ6olGZLHvVYc5GP/gWFBaHPS
+	HiBtSwsn4XALDkxNg/Nu0J0BWcvpUH/sqvQER
+X-Gm-Gg: AYBFou3+G5oDShpF/tjNZYiNin41rjMUwxnJSEgiOEuQRQIM3ZYMOZGkfWE/EMxF5df
+	M8v/WH8x8THyFBZwtzeJjAseTAsC5WdFYnbqjl9CEWXOp2MXBovddmWHlOEXj01Xi+zJF9RxG5i
+	24ARlft2FawNdKpQhBISo8FxB4iHDBtqlgeSmeI8ISnKs3809YetYmH/KhlTGIyRolPKjS265eS
+	u6GAkevPlq5df0XRHF5HnDEcwu+ZOZ/j2LAkyUF/RgUa4RIx94EsjG863FVp/jF2spp/MppUadt
+	++34xPw+rKYoXJfwl6nRCFDdzcsoGbB290YTzSGVSlseUQ4bi0i/YZyTJhnTN+rvbMkIZiCSJAG
+	GXRjK3iuv5o6CuR6ksj2c0Hd/15JestomtuX9nff5+Q9dXHYMK1rC8CPFUunmgsO35xaI0xPWcW
+	/lnbjuiaWgdG1bHEaPJ4ByPCFaQN8X
+X-Received: by 2002:a17:90b:560c:b0:398:9bd1:3211 with SMTP id
+ 98e67ed59e1d1-39aee0e3e98mr11155945a91.18.1788377238713; Wed, 02 Sep 2026
+ 12:27:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP8UFD33n1h587u5W+akp0MGHAgt5uMqpJVJ6HeZqTGDr2Ahig@mail.gmail.com>
- <CALnO6CB_MMDrq_R8USxqVrg7+dBQaTLR-mo0DhX4QktUyOOOPw@mail.gmail.com>
-In-Reply-To: <CALnO6CB_MMDrq_R8USxqVrg7+dBQaTLR-mo0DhX4QktUyOOOPw@mail.gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 2 Sep 2026 21:23:13 +0200
-X-Gm-Features: AcwNN1XK49n7qkYIWfTWMdAv6GiKVFIm3I3VCfr8YxoSd291neK3DD7SzaDXCcg
-Message-ID: <CAP8UFD0vvKV=FLFqh+_d7Rff6O0WNmiOWCESjHWf2o-tv39s3g@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 138
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
-	Jakub Narebski <jnareb@gmail.com>, Markus Jansen <mja@jansen-preisler.de>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, =?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+Date: Wed, 2 Sep 2026 21:27:05 +0200
+X-Gm-Features: AcwNN1WeLY5Fza4A-4mb5VXtx7aYeIyx1Yx_F3z3WMF4RGXPnBTeB3Evi-Hbq4w
+Message-ID: <CAP8UFD1LKsxiR6BCHxj_GdAVC35=dyGNMi3rPQo6uYhfkgUnRw@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 138
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
 	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
 	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>, 
 	Kristofer Karlsson <krka@spotify.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>, Tuomas Ahola <taahol@utu.fi>, lwn@lwn.net
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 1, 2026 at 2:46=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
- wrote:
+Hi everyone,
 
-> FWIW, the following post discussing benchmarks around topics related
-> to this series (I think?) and the release of v2.55.0 was shared in
-> Discord:
->
-> https://lnkd.in/p/eYGZb79T
->
-> May be of interest.
+The 138th edition of Git Rev News is now published:
 
-Thanks for the link, it's indeed interesting.
+  https://git.github.io/rev_news/2026/08/31/edition-138/
 
-The article is already quite long though, and in the "Reviews"
-articles I prefer to focus on what happens on the mailing list, so I
-will not add it to the article.
+Thanks a lot to Simone Arpe, =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec, D. Ben Knobl=
+e and Tuomas
+Ahola who helped this month!
+
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+  https://github.com/git/git.github.io/issues/860
