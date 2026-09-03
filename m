@@ -1,113 +1,147 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC5E28C5B1
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 07:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788421953; cv=none; b=LaE62uR5U1OG7lz0aA3gj6LGPsq9dpJGLsB/ZtYjbGFO7OmYBBnMOIVhO9bwXITCDiXxaC1xsOoLAsuf6mSaxz8Ua5VoquJ6ox/kbssLuF6Bsl6fzuk1c9jmbIJE/3FlczeUZyrOngZ9iNHTkoRIbbYMMuCZIZgK0TQ9AUjfKjA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788421953; c=relaxed/simple;
-	bh=uglI3CqfLmRLdb4Y5KiA9dNvlnW/kka8otaDMbRXvJE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pRcCujXxBtoA2Vq1+qDWeIfgiDOaiaPrwzpfrHQ7HwC6Wgp8OlquH0yhK4iHvkBRaPNQeJXgOdAG0kbY0+dud2q1fLtKjXcy/CWZB5og1FLHvAU/Leh0Kir36w6IV4B0enb1fnodjVkRun+7dROoMlRUlkMZ2/31+3MGRPcElMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=r0VAZ5YQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pGMgixYF; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C111E2D5C83
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 08:11:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788423082; cv=pass; b=Km7HsMSrufTnbWNk2yipvKNbKFrHQ1bNlLSRdITs9iVomDr9bv1jBNT2M8cM/XPIL+8P0aW7J2n/TroM9qxH99G2Ux06szAkuR/eweQl7U/Wcdt5jr/SkF6uFVRIIJAXS65E6yOu9A3pb3aoPqQ0oj2ucCFoC9ojO9dtyxSgy3k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788423082; c=relaxed/simple;
+	bh=oWIdlIPQCoDphFau2p8lMwMkVyJGyaBZcPZPv0G1F/k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GiVJjFSnTdI6PjBnh6gbt/D9zvY9MAxd43IqDqX7pfgYYkmnFRI1OeStrEUwZ0Yy9ijSKrRFmHaqZtfGW10W6ntooOv9TnKTZwnoWFuBPUSxrjM3NzA4itCjz+WZBuAqqoBTAfoBPHQbsdhiUGR8kJuJSM6GBm7eXL5hUXqyKHA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=q+AcwDn2; arc=pass smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="r0VAZ5YQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pGMgixYF"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id D98E41D000B9;
-	Thu,  3 Sep 2026 03:52:30 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 03 Sep 2026 03:52:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1788421950; x=1788508350; bh=pwpcCag0Gw
-	tTwGdISktuuAg/bJY2VYVyl5jT+8nk6Qg=; b=r0VAZ5YQ5WJaKHtLwO/z/5zQDk
-	e86tSbI4EnKDhG7Lf4IUx0lxM7qbJ/ip2N3Q2VADN6qJZnJJAiRVSmlsWEjgHb1l
-	NxA1MwS6wGPhDrF9spga1Qxjeh4jG2DNQuaHOrYJOdAMk89LCRglGG9N2viWc+tJ
-	0YujyTW88JP+6ro2G2KeTnq7y6FMj/m67VEbPdUzUJvr4DwZlfrFB6UTRePluj4O
-	vq+yZyWgF64SJw5wTwJqrtxjzufIL3Vhu/t742ygW2qaC20RGY14mEKLb7qPVj3j
-	1Wqva8RF8Zsy8xwtG/X3Ri4qHPZ1mqpah7CMEtx4hcfOetNVfvDESddGfGWw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788421950; x=1788508350; bh=pwpcCag0GwtTwGdISktuuAg/bJY2VYVyl5j
-	T+8nk6Qg=; b=pGMgixYFoTJxAaxTPRsOjn8E3x2fVlieM37kNUpiiySqaTpQOxY
-	q+/IaJdnRcgZw05hUYf+j1D/2BNgIlyl/510hPLJBaw0fWgqQA0ZMJ6FzeCbVd/J
-	8wyXCdAfnB62wif8BXahG1HfXNryR6JwhKyM/GLTFnsy6QT3aAG6WcetWwHvGHDS
-	PKle1gagF5ydN769W+Qzvnqa1yPFwfE7URcXKkobx4oxqfivANB5EpyHzVdm5QGC
-	7xvtrGh/pfNhUbEoH09/X9DtlUYRpfcTrNbuOQA6YXUnq2/3gcbWuL65rsvyxQxe
-	U0AYwmkP1g8Md6OiATH4DoEGMe8t5PaTBOQ==
-X-ME-Sender: <xms:PSeZam4MWYC3_xxcw2Rnc7vTSwGfI3kLFM6gNv8JNyrkYJ2BNqz9IQ>
-    <xme:PSeZarVsE88qwPevctnHlvtWrEcYduwXjmjSGW9YIxjNO5OrI3wlCswp1w_sz8gxM
-    Tz5p4oiwxsI7ldtaLJ-bOhu5M1gMRpxDGpGm7hZO793yGZb14EWKQ>
-X-ME-Received: <xmr:PSeZao_6tlPXCqwR6OP0Vos4ZQEy_qAxV8iwaXmEgSyhPMtCkfh4Xw>
-X-ME-Proxy-Cause: dmFkZTGkNbEDaByze6oomEVv+23bnOntoTBTBYzzgT2B0hFOeca9eOskvYykxAhh77+o68
-    vVaPCvKFq652qIOIQQxRqA+VXPaehH0ipRhME4lOusKsTIrDsyCEZI4v0k3vo4T3hHD12X
-    jIElwNU2r7LeCSVZxvjTqcPel0Dn5EkcZYxPV6rAD7KnehnISDzNASe7G6yyFb/S6hM7hF
-    ZaF9GM1fU84pOAzj3rkAZfN6TtRMJUy+v4o4IQgb38eBuYV7qfUxnLSCY2HQ4rwiewB+3n
-    uPLnT9IkYBky02pLIzAO99XiOJpAwpPpskzk2gUN673POSnUG9yVRFCIQMg+7gcLIoYRo1
-    Y1jYpvo9oKrHscqI00HgcTJD1NE5gLXcWE81u0qhuJXp7J+fgK8YE4LxoVFGX0J30ePetC
-    qlNdh2MLfiyv/hSJnou65PlF+ZDLwkcE9mb1ueE5bSZRE+Pt5vWJdgFvTyR5W9q1UrsDqN
-    K7YAg734Tx/B6z5vGZYv33fJZkM7T6+wVR9wme9yMlwifuqaRi2G30jCtZqghcx5r+Mpaj
-    YKLTAcEhDpqmMFZ/X/wDEmJpn3K4ikjVNZemjf+0ld9adV78wMg1mjMjWbJgVPgPcD+vzE
-    DOZnwMvaXw6nKbrH/v0abp+VyoolkGb6MlH30gdleUSSBsdC5BuDwfDCyfJw
-X-ME-Proxy: <xmx:PSeZankPBiPJVo46TJrTCI4RvHSrkUfIWVq62Rqt1tJ600XTqa0S8g>
-    <xmx:PSeZamXfGTA9EWvVG7P2XifRRIbuW8xk02KG-qWbklvaLNy0Mgu3zw>
-    <xmx:PSeZakEGdsYWZL7ElHoN8X6kzSipVI7Lm5fGEFWWpNMGWSevQ7XTbg>
-    <xmx:PSeZaqfM4OCC70y9oUHFOMqQye-cV28DUVsikG8Z_gRdD8OztLM5jw>
-    <xmx:PieZakHEDvRX0BipUvBim12oOP0XrkiCFMIeY_HZBTRBZWv0KlpHScWa>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Sep 2026 03:52:28 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 51c8a2ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 3 Sep 2026 07:52:31 +0000 (UTC)
-Date: Thu, 3 Sep 2026 09:52:18 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jinbao Chen <zkd18cjb@mail.ustc.edu.cn>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v2] history: do not dereference NULL when parent tree is
- missing
-Message-ID: <apknMr9Jk-CzdLAR@pks.im>
-References: <5438d465.ab31e.1a062047bd5.Coremail.zkd18cjb@mail.ustc.edu.cn>
- <20260903063657.2067303-1-zkd18cjb@mail.ustc.edu.cn>
+	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="q+AcwDn2"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-836c4474028so27087797b3.0
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 01:11:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788423077; cv=none;
+        d=google.com; s=arc-20260327;
+        b=EvbcT+52C2p1yPSTY2228r4powr47qaKtaNfAtd6iA3T89KFwJR+bL63b0T4nSdHYA
+         bygomzqmyhng0zvzvPPqI4yTTp8rt/nLjG1k1DsulJTaLhkMkl0P2sjkfU3FpNIKfYgt
+         DYYlNnXM2S/PtZS9SCHhQA9YUYJHO8/X83pwqAPKPkjogxgRU/vcZP0WCxF0ez4Lnc7D
+         tTjnj3wgaWFlUW7uSKWrbm8TZGH7KeKiLeQg8McxD7vapiRiOX6e8hKtruHwRAqD3FZz
+         v/IL3KuiH5M7w77IwWohhghbRqIwQ3mg5TLDVaoc83rTzJEULkOWeiF4A+NrQHIWb8Lg
+         2eKg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=oWIdlIPQCoDphFau2p8lMwMkVyJGyaBZcPZPv0G1F/k=;
+        fh=H5q+GNFzQQWddu3jvPC5d4syvERE0ngQShm6yy24H7E=;
+        b=HajiwC4hgzGpODYVWtBadRr/cDV2j696xJgm0GxFtRcAhr6/SWqovEatZgYhddElYr
+         y9XL08z988O8uXgYSW3THzvOU1L8LaVb/1xR2otQcNHpRVX6aq7W3oAO+67k5y4gJiar
+         FDiNNvaHmGjzXkCWLRigNZ/SI1+eVrlY5Mf7h/tTjRE3KDogQxEyHy+qPx5xw1Lge5Vc
+         xyk+RpkSueEcmWeGVWwz1wCOvx/l8kNKfSm/Mry+iXDfbEItVhCECVgawJJ8U0qhmvuS
+         MvfR0T0Y9JBcBVJCuPsEqTfLfeO/NFzIS0/P3l3LhsHp5xSZIVBHsoquoWJTeeOP7RJU
+         zjOw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=thomasbachem.com; s=google; t=1788423077; x=1789027877; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=oWIdlIPQCoDphFau2p8lMwMkVyJGyaBZcPZPv0G1F/k=;
+        b=q+AcwDn2D9HhYl066sLKWYwICOVwVLeX+1lVz7iai0+Gx97/IZobMdd0bhGE44AmEp
+         VzaKGLOca4mZzLTF6IjhOwxc/IOKk6O+dMKu+oGC83XWtnzarURz53rEoozDmo2WAdPq
+         Yg42DjDOZVMCyo0LVVJYqQTBbF/FHiPrWczRcCHMNb15h8lgTZoB+B4z3vT302wRweGJ
+         C6o5WDSNbX5tNmGGsJnvCzjasLJLdVP/X/xarGAbKIuWkBA9UYHRXfUt6gtU5Xy3hrK8
+         KARFEsAJmJ4wEyH1YFXBCDgoSjpC9ZJZ3Art34vdg3sxyWHR2abuLJYH/mYtA8cQsIbQ
+         HtOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788423077; x=1789027877;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=oWIdlIPQCoDphFau2p8lMwMkVyJGyaBZcPZPv0G1F/k=;
+        b=kU8sqqb0/nKCdf6nzBrYAtzjhvIyLgkyfpZp3z+jMHO4oenIc7atjp+UBebSfP+q/y
+         pHSkvtHTD/sBgMEL2ZGJ7SXU7sr9E6LhBv5CxDVRS9nwwvy3xuC8Rob6HVMVZlXuZhpj
+         IiC2hgWPaPXSdx4IJAy3UUNDuUeWz9b0nE0fp7mQgxJbvhjNgpyorrWU5t/3Yfl2aGf5
+         ej82Im5VPu7pviQTgi0pRkOSO9+JYJTP38k+6DC9/g7HYLNsBDuLnBOcccmVk0lxv0sj
+         SKj3rQrcquQmIrHs+HZGlbdsuleVKwVD/H2DpV9ovhsjE/TvRosG+f7XIQSHA8NND0u5
+         uS/A==
+X-Forwarded-Encrypted: i=1; AKwUvBx+0j1N4V8v6GmmP0jXSdOYZuolkoLQXoDFXTcmi4nBxMQRLpzRfkhjkSGNQMfZPM8a6Wc=@vger.kernel.org
+X-Gm-Message-State: AFuF++lRhcTLuE/7LqWdiDVJ28z7GC1QIMT8o3SqFOTx0fqRxU9jTfqs
+	/Lxsyo9Rh/FogK2G+fPDn6uoT6F9fWA/F6Ce1V0sXOnXoA/mRW78U08eevWum9H5MElqDisVHHP
+	SYbzn4bEeYG8MjFozebS3ap8+TzAi4Z7UpwLG4t+FTGgwdtwnfESN5Z8LuGZABIs=
+X-Gm-Gg: AYBFou22Pq5DnhzzScwH7wgxIbn4umjUWTyPOiJEgo4eo99nwONgPsXUYFjGZ2tS5qi
+	zsyN+Yb8Kbv3iOGD3DzF2ROwWOMEXre04W6bPgVHKJ583ofv0MlkEM5T46DufxIiLn6r4UxGOZN
+	4O4AYf9fFAF8FJU/BXm69EEFwlU0j1KQGR3eixvxhah8kYi/XCVXDTYNsxHtNEBFdNel0wJ/UDH
+	zFg5+Y8QZwEDYLq+lVU6Lb/x4fal4n6lnte0KwpIZKb01gghzS8UlyC0+A92m3cFsH0vm+Rup8T
+	kpDqqarjThA27AzmDNZ5OYDnAiVGiqvRbYu2F23M+o+YWp9jyF5m1gh3qy3EGbExLLKEgPP+GLw
+	Tpr34SLh02RGeFA==
+X-Received: by 2002:a05:690c:c505:b0:823:2ad3:d392 with SMTP id
+ 00721157ae682-86c5492dda5mr59084287b3.31.1788423077404; Thu, 03 Sep 2026
+ 01:11:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260903063657.2067303-1-zkd18cjb@mail.ustc.edu.cn>
+References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com> <apkkVAYOqjfAsp9-@pks.im>
+In-Reply-To: <apkkVAYOqjfAsp9-@pks.im>
+From: Thomas Bachem <mail@thomasbachem.com>
+Date: Thu, 3 Sep 2026 10:11:05 +0200
+X-Gm-Features: AcwNN1VleSd1byvBWMVttPqpWzGfCPNuXey2u-PEoW6H2hdNT-MXBiYD1jH-7cA
+Message-ID: <CAA0xjtp+Og_k7BYZfwX-LRW_8TAiCyp846+Mhk+hERM_GmRYkA@mail.gmail.com>
+Subject: Re: [PATCH] rerere: keep a background gc from killing a rebase
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Sep 03, 2026 at 02:36:57PM +0800, Jinbao Chen wrote:
-> write_ondisk_index() dereferences the return value of
-> repo_parse_tree_indirect() unconditionally.  If the parent commit's
-> tree object is missing from the object store (corrupt repository,
-> object removed by tooling, or incomplete restore), the function
-> returns NULL and "git history split" crashes with a SIGSEGV.
-> 
-> Guard the parse result and error out gracefully, following the
-> codebase convention for objects that cannot be loaded.
-> 
-> Signed-off-by: Jinbao Chen <zkd18cjb@mail.ustc.edu.cn>
-> ---
-> Thanks for the review!
-> 
-> Changes since v1 (no functional changes):
-> - Dropped the parenthetical note about the UBSan diagnostic from the
->   commit message, as suggested.
-> - Sent with the From address matching the Signed-off-by.
+Hi Patrick,
 
-Thanks, this version looks good to me!
+On Thu, Sep 03, 2026 at 09:40:04AM +0200, Patrick Steinhardt wrote:
+> I think this hints that we should tweak the default value of
+> "maintenance.rerere-gc.auto". The way it's currently written we indeed
+> are quite aggressive with spawning `git rerere gc`, and I agree that we
+> should tweak it. And in the best case we'd not only respect whether we
+> have a specific number of entries, but we should also respect whether
+> those would be garbage collected in the first place.
+>
+> I'll send a patch series later today to do this.
 
-Patrick
+Thanks. Checking whether anything would actually be pruned sounds
+right to me. It takes the frequency away, not the race, so I'd still
+do the sequencer part Phillip asked for.
+
+> Having a locking timeout is sensible anyway, I think. It does not only
+> solve races with a concurrent maintenance run, but also with concurrent
+> writers.
+
+Phillip found the wait unfortunate and I offered to drop it. You would
+keep it. I think the two fit together: wait up to rerere.lockTimeout,
+then warn and return -1 instead of dying, so the caller goes on
+without rerere this once. The gc passes 0 and does not wait. That
+takes the die out, which is what broke the rebase. The wait stays,
+bounded to a second, but skipping rerere is not free either: it can
+mean resolving a conflict again that rerere had already recorded, and
+a second is cheap next to that. With the sequencer no longer spawning
+the gc and your heuristic change, it should rarely come to either.
+Phillip, would that work for you?
+
+> We should instead pass `LOCK_REPORT_ON_ERROR`, as the lockfile machinery
+> knows better why exactly locking has failed.
+
+Agreed on the text, which also names a stale lock. But the callers
+that go on without rerere then exit as if it were disabled, "git
+commit" with 0, so for them I'd print it as a warning through
+unable_to_lock_message() rather than let LOCK_REPORT_ON_ERROR call it
+an error. An explicit "git rerere forget" or "clear" fails as before.
+
+> I think we can easily combine those two branches and simply set the
+> timeout value to 0 in case we see the flag.
+
+Yes, that folds into one call.
+
+So v2: setup_rerere() waits up to rerere.lockTimeout, 0 for the gc,
+then warns and returns -1 where the caller can go on, with the
+sequencer patch on top. I'll reroll once Phillip has had a look.
+
+Thanks,
+Tom
