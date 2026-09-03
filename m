@@ -1,135 +1,133 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C5F511E66
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 20:11:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C033955F1
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 20:46:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788466281; cv=none; b=npXxJDoGSFI1wN0U1BJP38AfLZ57sZqdAL+85bhg6V4fxZLQ1b4ET0lMAqAq7aUofvPI9M1/j1qGm86j76URwkhqQChHdXSbEsbKGWxUEo6AcCdNEFiTn7+jFBot8M2OFONIR2JDcLSqBz2A5fm2jLIR8yfVJWCRzHDMwHAX9qk=
+	t=1788468366; cv=none; b=IwOpG45g3yuOxOOP8eiPo8OfBhrC32cNwVCQmQ1NOFUoydJnJESiG6P2509S7ubPtn+/0FDxneZ/yZuDF6VmanbX4RbwbkSEE4v7tdVbNvetH16QPrh2P5rN6z68yG7MhJ8Z1x1HDXpj9X73Bt53gnB9w+1f+drUWdMR4on1JIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788466281; c=relaxed/simple;
-	bh=XaIq5W99Hn/3lUZn1twyJU4qOg4iRNlM2aQYMd5oKB0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=r6qwTOa4HMML4kQywEl8C3u5UJLkEyPo1lrs2ZEFysxP0yMibZvprwj4oenOTamD0g4NM9pLwN3nAG3iCM1b2CK+Li+V+71VSYmaA/ZIU+QGl2H5s5rIu9wzFq56k43PYa0p66BcwNQQNWTpwoxNQ/GqKIZgL2i4+jLR00tp0zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e5DdodAs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cgOHU/Yx; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788468366; c=relaxed/simple;
+	bh=TvobM/yVA16ij1ECDG8RwzfzcMr3TvoVPyR2p6lwt50=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=O4Ynfz7SuE7lOj8u7Q4tf3ZmbBorelUp34ylGsF6QMrNEcOBJb+TfgHDoM5niw6BPBVCyttVPi8NkFMxUES6Dc0mH9Bmd8T7JzGcgeqNccqWqG0i9aMmje4BOiHgjwgmeTN39/60tS7bsCgSLUQFOkvwHM4EHLEdQIH1hgyBdlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VNzC4qu8; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e5DdodAs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cgOHU/Yx"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C3A7B7A01A9;
-	Thu,  3 Sep 2026 16:11:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 03 Sep 2026 16:11:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788466267;
-	 x=1788552667; bh=95jc36vH0TWc+UOMRgliAoQf5jm+u3lO/4Wj6ncVUmc=; b=
-	e5DdodAsCQsAH5yZ/12q75HxaPLQdgKMti3tE8mqpe4ZsW00H0XQX5t9emQSPRAk
-	GnrFD/sldlvL52YrHbfirrMOuh6hTIupoKNPmGnThUWreN7sgt/z1WdzSZVWhgZW
-	GVgmD8nrhNI854KKpqm0SVAcvNiuCh9wSzJzgqs11IUx0k6e8San1GGP+2xGqe1W
-	XdzUfdWxCvnSCMy1IguOScMYZ5LOLdVfLuf5/pvb5cd/jSTJxyFxLs/iw5MJ8eWh
-	4dCdmtUa213/HC9h9JGBZYCvU41SYLD6auzp/QXLsb7iY0RgXdjD8igTKCLFKbIW
-	C1zae6/AL12VF+dDJNPvQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788466267; x=
-	1788552667; bh=95jc36vH0TWc+UOMRgliAoQf5jm+u3lO/4Wj6ncVUmc=; b=c
-	gOHU/YxTaVOoL2uG/G3a9I5VST3nE2VOs/EyguHV/8IEMpr3CiHIZV+DkohOyNTh
-	Q4KinGs8m3k8r09Ei33NAsvRqhdLR1zwtaouG41h2LLktXs6vW2lVya+bpyYrghD
-	DUvtOjJM7HO9U9eVG2cx+XJxPVQAxol3efMRAPtkgrlAjOH8DfGsWgQrVm9MQwsO
-	iq5p3fT22fIDrv86EeVKFcdMibGR6NaDUP/Y0IQpgjvC7vTgt/C7KnnIfG6qC1G8
-	70+SiKj86qPgZiIWjdUzRU/c+Du+ssXLRJo29qHRY8vnzyhb6U+bU+JbsTHcywKZ
-	P8/jdttuOgVaTqZ76zsVA==
-X-ME-Sender: <xms:W9SZavs9AreMa7ClXwihBnObTPS-CjesoZEfPQgmsgeLPripbiYvgg>
-    <xme:W9SZan7d2W7wJqYcy12UH79TtegzESpTOhIoVM4b1xFa_VVAJU2HmZ67Ejs4uIMyQ
-    FeKea92y3cHaSqASwOcw_fOnnEt6hhwbNQsfzuQgU0x-ZpybURrMDqi>
-X-ME-Received: <xmr:W9SZagKLaJhPuswIl38c0NH47DO2RrQvHJIuWTRKBeTR8kV354JuYM7DNnzHA4cDQZ1Uc9MLmHh1EbCmg1V0ARV0ZY38psTeUw>
-X-ME-Proxy-Cause: dmFkZTE1m2xnJVzexbAtfCgQTK3W1AUnlMrc4OqbhbbH416vwQm2VUebr8Bld4I205cnrX
-    R7E+8kgUArJosZwpAtW7W8P9LdtYWnx5vri4Y3lF6URz7iAMjkE87oEIXdV6L/eA5OMwC+
-    kIwzc+vcFP7f4P0FS3E5+wJrsF2xQiF52bBcqz6SS3/sk6AsQsvZPMTpnAB24Hv3YeYJSF
-    isQFlcHCBZXTYSs+dtNsPz+/pkfwRSzKu3C7pjhWFMlHjfkj+K0ir/hT8tgQkRr5EgzTtC
-    ybXnk+Jx3Um/Kl1wzeK9PxI6MPtX6L4fKTb9Hieb0SZupE9xDvj9rje9bk0REQKhVN84uF
-    1vvDsXqP68WNZx0H/p+YoD5dhuM4c2gKkR5bw3Du1/PDlPRfDBgEMQqv94IDs4mi8wEo9K
-    aZOBFDICDgCkDQdfJsmXuN1p+nsOURH2JoQlmjBO74e2TCsQ4NA79mjou/0Pdd65Lez/aM
-    D7sx1mtg1QXu0Yh5kFCWnwzJVVkp6riXr4IEYWeq7zxSZvY9Oi8AbY3T/AH81/QEET4lMN
-    lu4RHu6HTo7Y0OuaGRjhM8HUDXQCnd/ZISSdiP14HnTKRY9TRHha/T4OUIPsfeqRRi8Jng
-    /p52HKCACaUQm+xNjDUfYaFFW7RbEpuAxb5PLdvfvYK1D/T2PlIQsH7A3ghg
-X-ME-Proxy: <xmx:W9SZan5_CZzzOaAvFV6qIC_IF8tQJElKCXaVsKcyPyANJUxIUJZaTw>
-    <xmx:W9SZajz4Hy_wp2zFlo-5Aloluvl6UPBvHJsm2GRMDoDkLVrbyre5Gg>
-    <xmx:W9SZarYahLPgfX7EaXnLhel81wCzs4s0COCel8aBb7NQv7Peai7xmA>
-    <xmx:W9SZalTt2QA3SevlPEukWIO-tB_FMMwdQlIh_bU6TQO8gpKObkiNqA>
-    <xmx:W9SZaj4Rthg-GTMfsNR1VrSjC3UsZlf7dQJMGdeedmoxLpjrwCT2pszC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Sep 2026 16:11:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aleksei Sviridkin <f@lex.la>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] push: fix --force-if-includes when remote-tracking ref
- has no reflog
-In-Reply-To: <20260903200015.36849-1-f@lex.la> (Aleksei Sviridkin's message of
-	"Thu, 3 Sep 2026 23:00:15 +0300")
-References: <20260903010547.85469-1-f@lex.la> <xmqq5x0mfgyh.fsf@gitster.g>
-	<20260903200015.36849-1-f@lex.la>
-Date: Thu, 03 Sep 2026 13:11:06 -0700
-Message-ID: <xmqqo6ee9jtx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VNzC4qu8"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2d6f9e2f681so3102005ad.3
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 13:46:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788468360; x=1789073160; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=2oGOok6vEUPHG3vlx6XJw58LiCjM7XOzzpWE6cggG6U=;
+        b=VNzC4qu8FQf3K1tP1YhDITwBBiX3X68W0ItzXEuZww1mELfpuvj1efkNHlCc4yxW8/
+         T30xPS5rrXKjwsX6/x8utpu/D6lXfo0ZJ8g62mvuSvq8BrGIEDD2tFsj+OtjaXTLKU49
+         FGTHiWpINwl28zUwDn2RBEHloOnOG6YzCSLzDgDvgo6SAXrevM1NR30XC+fpcxpPM99Q
+         esi8YwdynfDdR14JIHTpkr3SJqfLWLgwKn+O/iI0UGdIo4g88UpONWsZEhB2xQHcqZbB
+         FS5IjEogMhoVNongTJXviC0+5HCyiWdBe/G5Psa0CWhGF9W6OM/PlmjxGcAQkB310rkB
+         SGPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788468360; x=1789073160;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=2oGOok6vEUPHG3vlx6XJw58LiCjM7XOzzpWE6cggG6U=;
+        b=UnnxsTjDkyrz9m2iU/HlZGL2O2mR8q5NK95QJMER0lLZnXKr5r67PYDAWtT0CeiTOR
+         3ge+1K0m1iSydUD6MkYAsqCZjROiMcJA50O/xBOg86Z6nJHmX3QrCfhABKyKROAYMUhT
+         aPPbPWxyk86Vz5plgsbJ9apL8n1MSQTagUp9UTMtdWUnoge8U4pysV0OR70i6sYRD1uS
+         nRMwmU6DPI2GMZYRdtz5433nQq3PgZZlG8Axs0a52t6o49ULAVf4GcWAmBxAKXrFV1Xb
+         ELIgsN4IVezIHe9ioMi9wIWejW4utEKHTg2t+41Hji2rWoP3j9KNokYiptUp0EVeD07A
+         Lhtw==
+X-Gm-Message-State: AFuF++mVExoBejajUyBQztl66UnAhUlVM3p343GqdTmrPRO2up5GxiWx
+	weqgSEmu/LU1jiHPyCdWnA9KvcwddeuhQLrneuoCc2BcJTsINDoaPD9XtRFRFg==
+X-Gm-Gg: AYBFou3MdEvumjSu2hAQIyfmb6rlkXF9vTw0jU6TBudSTLxsMafl9BheS84T+yLZ7M+
+	i9Mq0NdP+4hTJZsjMsNY1Fbm3uQvGSOmbsnPlyKhZuQF3Q2MJRqTuvI8T1mV3sAs1UIF19DDwIo
+	0dMUNnbujrjok0CNCV1DSqVDDjGktvyMC42Dr24Hl49xqpK4b2Akzip+MWYVOalbscKTnM7Kp7w
+	6eFwAQs8tmul3rhPgl+j9vrPkjfKHS/WQ9JgXDZlNcDIl8b/tTM1KLDsMC/0cNdjFOWgp8+iKP0
+	HnkkXXi/3MRFA/fbvuj5Xdhv+XAvae2MVs5RC5+Jgl4b4eYurLOM5ej5CBOY++e4OE/YdA2Bs1l
+	2MnUtYakueks+FlnLQodegZZ/5i0nyBZG7gJBQ5W+AdCBKJRj3cRq04LJ5q7sR6CEHRDhzluUc9
+	Sl2jXV1W9aHyBatakVT04B05GCFx5SBrG7l1Df7QvLZ6OcEvKOMly8QzvwgQtsrvgpTq4LA0WZK
+	ljAiE4IgqFTS2xE0C0HE08lApNNYeXgkvRVpehs+n9moKfr0NoESwdRixCo8qOLeqAoJ8G6OUi1
+	PvWswGnBRtFHnGOR4EnDrK+s
+X-Received: by 2002:a17:903:1ae3:b0:2d9:54:fc69 with SMTP id d9443c01a7336-2db1247f4d0mr25242655ad.7.1788468360171;
+        Thu, 03 Sep 2026 13:46:00 -0700 (PDT)
+Received: from localhost ([125.17.164.154])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2db149c15besm929815ad.61.2026.09.03.13.45.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Sep 2026 13:45:59 -0700 (PDT)
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+To: git@vger.kernel.org
+Cc: chriscool@tuxfamily.org,
+	toon@iotcl.com,
+	ps@pks.im,
+	karthik.188@gmail.com,
+	justin@parity.io,
+	peff@peff.net,
+	phillip.wood123@gmail.com,
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH v3 0/1] rev-list: add --missing-only option to filter output
+Date: Fri,  4 Sep 2026 02:15:50 +0530
+Message-ID: <20260903204551.65592-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260901185100.33948-1-siddharthasthana31@gmail.com>
+References: <20260901185100.33948-1-siddharthasthana31@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Aleksei Sviridkin <f@lex.la> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->> your sign-off must be the last line in the trailers.
->
-> I took Assisted-by from the kernel, which asks for it. I could not find
-> anything either way in git's guidelines, so I followed the kernel. I will
-> put the sign-off last in v2, and drop Assisted-by if you would rather not
-> have it.
+v2 added --missing-only as a filter next to --missing=print /
+--missing=print-info. Junio asked how the missing list is used, so
+this v3 only updates the log message.
 
-I didn't mean to say that Assisted-by was useless.  What I meant was
-that "LLM" on that trailer has no information contennts.  Which LLM?
+It is a one-shot walk. Gitaly uses --missing=print when packing a
+quarantine and treats '?' lines as objects that must already be in
+the main repo. Tests do the same (is this blob still missing).
+--missing-only is that list without the prefix, not a fetch loop.
 
-We have the following in Documentation/SubmittingPatches by the way.
+Based on 1630431f32 (The 21st batch, 2026-08-31).
 
-[[ai]]
-=== Use of Artificial Intelligence (AI)
+Changes from v2:
+- Stronger motivation in the commit message (Junio).
+- Link to v2:
+  https://lore.kernel.org/git/20260901185100.33948-1-siddharthasthana31@gmail.com/
 
-The Developer's Certificate of Origin requires contributors to certify
-that they know the origin of their contributions to the project and
-that they have the right to submit it under the project's license.
-It's not yet clear that this can be legally satisfied when submitting
-significant amount of content that has been generated by AI tools.
+Thanks,
+Siddharth
 
-Another issue with AI generated content is that AIs still often
-hallucinate or just produce bad code, commit messages, documentation
-or output, even when you point out their mistakes.
+---
+Siddharth Asthana (1):
+  rev-list: add --missing-only option to filter output
 
-To avoid these issues, we will reject anything that looks AI
-generated, that sounds overly formal or bloated, that looks like AI
-slop, that looks good on the surface but makes no sense, or that
-senders don’t understand or cannot explain.
+ Documentation/rev-list-options.adoc | 13 ++++++++
+ builtin/rev-list.c                  | 42 ++++++++++++++++++++++---
+ t/t6022-rev-list-missing.sh         | 49 +++++++++++++++++++++++++++++
+ 3 files changed, 99 insertions(+), 5 deletions(-)
 
-We strongly recommend using AI tools carefully and responsibly.
+Range-diff versus v2:
 
-Contributors would often benefit more from AI by using it to guide and
-help them step by step towards producing a solution by themselves
-rather than by asking for a full solution that they would then mostly
-copy-paste. They can also use AI to help with debugging, or with
-checking for obvious mistakes, things that can be improved, things
-that don’t match our style, guidelines or our feedback, before sending
-it to us.
+1:  3c89e6bc38 ! 1:  c751ff41a4 rev-list: add --missing-only option to filter output
+    @@ Commit message
+     
+           git rev-list --objects --all --missing=print | perl -ne 'print if s/^[?]//'
+     
+    +    This is for a one-shot walk, not a fetch loop. Callers already have
+    +    --missing=print and strip the leading '?'. Gitaly does that when packing
+    +    a quarantine: '?' lines are objects that must already exist in the main
+    +    repo. Tests do the same (is this blob still missing). --missing-only is
+    +    just that list without the prefix.
+    +
+         Add --missing-only. Use it with --missing=print or --missing=print-info
+         to print only missing objects. --missing= still picks the format;
+         --missing-only only filters. The leading '?' is omitted. With
 
-
+base-commit: 1630431f326e15fcde608827b5ff38422528eb59
