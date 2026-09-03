@@ -1,158 +1,210 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D601E389107
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 09:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332E33D0939
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 09:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.171
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788427291; cv=pass; b=IAJ+/zTPh8BzRJwYEOX17wQcaiOlrz1UbMQUP0fqUwjBzeVoVZBUtJc1m4PZ9LdlIu4ZyGqpmnQiX67CzUscfI4G/GfAxHt1vLFWIZqSv9qy3nx6ryy8ipbMotYiTLhzMunOKprYdhnZyxlXoYqZEwj3DqoHCWRpioOI5F05uW8=
+	t=1788427379; cv=pass; b=uDG/j1B9H0aPUP/i5inNTMy1kGKvu9b5A7AUxQvUJA38IEFQK0owh7+RqmTrC6h6D5IXoitzDEbhuKInhJfQbpZo8BI4M9AeaPM5aZB6X4/GhOKR2HYOZdnvuPdAoCTawOspkqEjRb1btzEJanJ35r/AfAWc2u5f6OmrPlPLZ2g=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788427291; c=relaxed/simple;
-	bh=xCDNWparFqFJhDW4fwzwVzUo/a6w69M6nInRRZj5Fck=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JKTfmpdyBafaiYW0aFOKBfzTpK3xkD5QWuoXA7qPxWcd6Hrctq36f02EkXjgjtQL+7j1o5C0f3aDz4eTYbmlEkWOkJJwUl/MaS3RYfU0QjGvwulPbjpLoKVt9LmHbEVyO/4Po0S5b612qeBB8zo/C42ls/IFIN6+J2lr5youjuE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JJDrpXmT; arc=pass smtp.client-ip=209.85.221.180
+	s=arc-20240116; t=1788427379; c=relaxed/simple;
+	bh=Q01VJdXU7hu8In8YwwCgMH0lfW8cBJy7Xq0oJgYeGVI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P0w6Wg/CjxJQmjafJuPqWN8RyarPP2x6dezrB1lcF5M1f+G8r46D1meDEJq8zwR0me8KlMxNWrhTGtXndj9RFojMt2aGScltV129gS7ai5L/RAe4NRarZo+Jq+zmN5aTq8MEb6sXN7EaBPp1ZYoM+p5whpGmHX19hxaJWja3x9A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oX1b1sWx; arc=pass smtp.client-ip=209.85.167.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JJDrpXmT"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-5bf959b820cso2030960e0c.3
-        for <git@vger.kernel.org>; Thu, 03 Sep 2026 02:21:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788427289; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oX1b1sWx"
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-4b383347fa6so640674b6e.0
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 02:22:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788427371; cv=none;
         d=google.com; s=arc-20260327;
-        b=AAcK1Cgs4XUz5pe3qSbGmTZcTgeeWQFD5QWUGcax/TPzelCDy34/LqphJ5At/+sgp8
-         Xgrtmeec1ZzoQeX2icCC2ASVzIue2QVzvp9CsknIF//AT5JrAk77ltDLQHehcJy5pb0J
-         QDPyWcVOYsTgYfgT8Eakw84SIsp0o5oxbK6z4AqmBxRMpuXbfHaFyzJoDsKZWa8ybhT8
-         i4LxXaefNOK6q6jB+7aiEiBn9k/rC6Rb4xpFi3SwRD5u74nsLuv+9Y2vEKj3+OJ7YNDx
-         717GC1qFNo2TPpNIYzaW7EUNAKd5Yuq9Nc7OcrXUvL4IYaAho/eELxoPRYFOtLxAvg5j
-         lBRA==
+        b=Ze45eRjx/d6nuRzJJ0qoBP6eWWydcD97PU8lZpiOLSVCQAL0gbYkruyXQdLtNdTX6L
+         7gyOA5tvK72etHMF7bpNB093JKIUna7dbFKY8ojzp47xPp2FrE3clYao0lh/bkJizyEC
+         aJoUqAeibaj2g+bLnpepQEoQ2CM5PIqXG8UDV7I3RfbjebPR147oGlr0JiOXQLki3PSC
+         Aa1tlO+iiwjEMYs9AEI2BKBq2lEdKUBQns7QT6UZllFIkyeVJDpKLeJU/Me55SVHim71
+         yoUvjiAlDTzn38CyCoVQ2TudX+TqdTBKu78NEPOWdX18Bm4NJIx6El5V/E5siRsB9H2+
+         CsBg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=/8zNKoD45CCRn9l+48OMr5nSYfXfaUPYeqvNxWJk2iM=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=Qu1CqUHlLZtywwKha63YH1FhFkSxBfRCdTBBa6kCmLHaG95bUKLBj+F2bAdPjcXf4v
-         yQMw5t/0ayVn7EWnPlEu4WsrTGjTuvrLfvNFObI5okgcaRfaBdqJzMb0mrT+Hrz587NY
-         Rj/cTPt3ywjmFIn8hDVAI06cL2BprAb0+Z2YyHtOiqSQLnVZJEYD570kvm27KeejB4Eo
-         CxWAGigHZjOImRQBu7/5SQtgV07uaq6yOXTapmWhWYaJ2xZoZZ7dsEcmX0tZJi8r4Olq
-         4a+wvjQIH/hkYALmLUsLfg0HU1eZ9byB1+3eIEF6/zbDZNjWa3oXMfETer2MeKECEvzY
-         lLyA==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=3LxjGRin7H78cFPIs4mBKk38MtmuL8GPwtbGI3bI2/s=;
+        fh=RJLyHhk6XYmGRKacuJHFt80xqW2z1572kN3rk6ia4ts=;
+        b=o1kZUO3Nnnp9k1n034GCENjV9gnp75vALu5Y537Zp9kmp6GnbLr9SLPoqyNhn+NyK3
+         ln4Dkp18thkZelN+KeBOwqKeGoPqYECra2zaF17knmgv18kpWGqmiyK1McsFGptrejgV
+         I0w7N/lBgrczFDw/Kcj1/u/9D3kETq3R1Atv9vkql3QsUOag4v1cyP54yySY4WfVrfCI
+         XhKNyjXF1gdhXnpbGKcEo/HWoJJu8+zfhvbtgYlQdClOs7CO90QKGSjcY8WkxNQUfBoS
+         0qgTXvcNKw/XT1fiPMD262aceUhQfbudoFMMQb1nzmrf8htOZypH0jzNTJYXTIoUpqrI
+         wD9Q==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788427289; x=1789032089; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/8zNKoD45CCRn9l+48OMr5nSYfXfaUPYeqvNxWJk2iM=;
-        b=JJDrpXmTnMQIqv8nX6VnsBJBPkxvHuHm+1Ocr2nLL6mcpm1KzoDLNAbWG6njbAqIa/
-         xwWrFiNqZ0entJjygN3yHlKtZNgNVpRjXzGAHsWxQvWnV+Lwuk5xZ6EX31QKRNf+7Muo
-         YLCFz5CukmkU9p9xZUurQGLuLmDOUinRV/secQBEZE51hDbXWZp+ggGgHe954V1uE3Ex
-         DXlL8Ax8C7sIthIQ0O3DIFK72EJ18f+MqIQjm7OP4YG7OVjUGuEH41B3h0pr2CnMwiPm
-         avs8WXjtrNKHG6AOe5jxSDTAlATmfBHZkoBXwxLPtFvsFiqZLBv5CMyx+9WVgxptQ9TS
-         XkBg==
+        d=gmail.com; s=20251104; t=1788427371; x=1789032171; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=3LxjGRin7H78cFPIs4mBKk38MtmuL8GPwtbGI3bI2/s=;
+        b=oX1b1sWx5G/olinz+3ZwKOCr0VewDvx2XiZ6Rrconi13oi3dZD3jRmvY5LepbqsZ9t
+         Fo6cvwZKKLoR0UY3N89+JrWxjCwNq0lsab3RENgq/wMJGF1VzrfE7A2V7xwGwSuzkz/m
+         uicIO72EwpyeYyiG0KjIdphhPyJpckUm1bRpqiN6Yq0O9ACic7QqPuhoWpAxv7pc48e+
+         kQYDzzJ2UNACYU8CQg/2390SGdna26ZoDA9o9H4ZkLMapCNBwokjKmvGY3TAhTM2r2x8
+         h4hz9ilPxxGjd5UMk3yobUcnG0ePNS2rRz/9n9rqabds78qrYfQTfFnI+S5TTrANZFMs
+         foOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788427289; x=1789032089;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/8zNKoD45CCRn9l+48OMr5nSYfXfaUPYeqvNxWJk2iM=;
-        b=jv+h+Zq2qLp6d1fODeuX2R6GPVnb9wIaTbBB8ibqRMNfzY+3SnoH/cdPrS5I8kirFO
-         9x8lx4AWUgEIHN1N1/LHszFFP0kRhEXnth+v5woLwzvDU9sCwR41hGlyFwzycGxRlkdz
-         ztHU4lzkzHR4GVV/XqDA2cjdg/kBQTo34TXVmQy3IJuOtprABFcBNRJPXFZUhPqs53fc
-         N6GExPCZn+ejBiIxS5q9yPq+3LqKJYZy10aGFMLab1/b7mnNa+ZImJ8Z4IjSGri9+y+m
-         J/w7Bs54wBJAnqkZNM4Ut2j4YuAga6EwKrKGYHfyGL1jNU1+zC9Fhw6BBVFoN1AtqA35
-         J/SQ==
-X-Gm-Message-State: AFuF++nOQGUB0xiPnry+abO6FAE0MN/m8MDOWNQpIqDM185RiMAY+IMI
-	6JU1Fo+/Y9Gxr+oMU/oBSHN9I5TEj69MozmY58aVyp1YudYuas5d2WuIQRnx5QDzW10Ly3CJYpY
-	J1YxGqXUFNrYCQdhzWNt65MLKhETYibg=
-X-Gm-Gg: AYBFou2V9phPBStvvXjUHz1b8sjrCav8rHQ/qHdVPQGUCv2X9HgpaZb4ZR22+degtII
-	gadTw0G3E2cHBXtOKlUHZGHShU70n74xxMwFyrkS0LFwH71NUO38TWFdq3eeWZnWsJXshHRgihD
-	mbQGS/Rc3OR/cZgicF2rwc6I+zpCKIY/ioOg9S/cN8ze6kjp8994euSKMLrmElbfhaqWG0Qa5n/
-	cRzv49P/sMUfm7TXgDMvW1XR3g2MDftOmyGWUx9Q9RXOp/ekwZtvV+kO8D8tIv+eC0zTmg+xcgT
-	oJZQvMrepWftVDcBJ+5kaM4OdB+5s7WufwkA3X6c8CKXnQ42xiJeuOS1Yoxn/V0mYXFf5gqtRo/
-	p/mKpNRmbn1Hs9z0uR3JyJ+h9T3TI5u2ktoI=
-X-Received: by 2002:a05:6122:794:b0:5c7:a844:493 with SMTP id
- 71dfb90a1353d-5c7d235ddadmr4723666e0c.0.1788427288621; Thu, 03 Sep 2026
- 02:21:28 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Sep 2026 04:21:26 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Sep 2026 04:21:26 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqo6efff9l.fsf@gitster.g>
-References: <20260828225206.310500-1-gitster@pobox.com> <20260830204835.1040408-1-gitster@pobox.com>
- <20260830204835.1040408-4-gitster@pobox.com> <CAOLa=ZTA=xmPnEkMsncwd=3iZA62nsXq0jk-KiUr=GU7OUhh1Q@mail.gmail.com>
- <xmqqld9ksw26.fsf@gitster.g> <CAOLa=ZSQs5umaTxT6RKQJdnnAEbK+AHgj0n5yiTM0jsbZcyiig@mail.gmail.com>
- <xmqqo6efff9l.fsf@gitster.g>
+        d=1e100.net; s=20251104; t=1788427371; x=1789032171;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3LxjGRin7H78cFPIs4mBKk38MtmuL8GPwtbGI3bI2/s=;
+        b=HPKxODOWl9uWGqvmcojhyaydbBO0WIjwIg4pItJ9QzqM1js18NviV/b9jFoPLzLd2j
+         65x2/ygudC4EUB+cd2SSdta0Sd+qKuzjLhRIk+VgMUzzUnvnO+V4tjnPW0sg/X3cwZGQ
+         GaAkVubRO0ba0xIn/VVoWdjN8F3thTrO74A5OieJzZDn4z21ImN9mc0UmqDlcTwoYxUV
+         Xijg5nRZsanzOw7747GW2Gjkat/8E2NR21pKPUOMvxCsI714MPxXduRq+Ku/w5QuOCJs
+         kn7pJX4qikPmlTAo4723sN9OdWXKzNWguApyatA4tUiZ2vYLOz1QeuGFiTdJCB11ss3V
+         K7WQ==
+X-Forwarded-Encrypted: i=1; AKwUvBz3TZ08gDm825Ffi5+DWtG/7n92poPa9ieB//DI+Fxuyz4kYf68yH7WzORF3CPBwRSS4gE=@vger.kernel.org
+X-Gm-Message-State: AFuF++nej9bNOStIzrrOHEzcnZ+cT3Dw2aZgoO4Yyh7/ybNsQstXGcZX
+	Nq153jLbXaoriY4yAR1Ml5o+XknKQxuGUX88A5CQDwfO/zBZfeysnXbv6XeVEM4FHW1datu3p1Y
+	FeQtnPZMd4tiWqYktJmuOJ0AzeOmDJYg=
+X-Gm-Gg: AYBFou0XQnkrBA5SXKhi4uGp7Ok9EYaCfBlErZbUuTjNpZvPeGqfSsWyUEkdV9YlZ5V
+	QQ2gKTM6Wclvdu1kGMqTQLW0W6kpclRM5hgVMXUse4kkKXgwjkaUlAVOBIEVt3pbpqQJKofC1pc
+	hKaGUK/38J66BiHA3PB9dILNTh+BX/O1XceGEU1YHpUwgFUPyFcFtrmAek1jWDOEtVhUo+nsacr
+	Bo+sDcAtUIEbTWpqHrGEz5JgSykQD/4S2852QngCf34uZDR+/6SVzv4rN4uaQRfxNBTGjwU5Mht
+	lGfx/YtPWx7qc0NZtTaPIHmln9kTBG1yz556Ms1pWw8e0qH1+eDsR5ZCr+YeuKu0EjPqzWJUVB9
+	N3REmlYDilqv+2rUkGmyaHK51rMThvk6RbUi+JJKP7jj09VCQQUPfC7gKCyIg1GQQATso+uF/
+X-Received: by 2002:a4a:e90a:0:b0:6b4:117e:53a with SMTP id
+ 006d021491bc7-6b58679127dmr2913043eaf.20.1788427371097; Thu, 03 Sep 2026
+ 02:22:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 3 Sep 2026 04:21:26 -0500
-X-Gm-Features: AcwNN1XPZ0eM1J-wqyiwKXMlDzcZ2uNhAOcvUUC4TdgbpO324TslaOI1xWDHeAQ
-Message-ID: <CAOLa=ZSeVEAxmckAmApQ4jsOnQ9=nK5+H0-10s-TmFWqGU-URg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/8] checkout: validate stage and merge option
- compatibility in checkout_paths()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000003edba7065a90ad72"
-
---0000000000003edba7065a90ad72
+References: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
+ <pull.2208.v2.git.1787684776048.gitgitgadget@gmail.com> <f9de9449-2e32-483d-937d-45b847143b29@gmail.com>
+In-Reply-To: <f9de9449-2e32-483d-937d-45b847143b29@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 3 Sep 2026 02:22:39 -0700
+X-Gm-Features: AcwNN1XfZfnmqaUdXRgy-lZXOlikiK7MLK5lLIEpPgdSg1pdioOB2PrQDoKXoFA
+Message-ID: <CABPp-BFi5xCg+cV-udwaq75QsV45mHmSu07ZGxTwp-1GP3YN0A@mail.gmail.com>
+Subject: Re: [PATCH v2] send-pack: avoid sending the whole tree when pushing
+ from a shallow clone
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Stolee,
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+On Wed, Sep 2, 2026 at 11:23=E2=80=AFAM Derrick Stolee <stolee@gmail.com> w=
+rote:
 >
->> Sorry if I was unclear. I was stating that the condition udner which the
->> check runs is now difference. Previously we checked `opts->pathspec.nr`,
->> but now `checkout_paths()` is also entered for '--patch' without any
->> path spec.
->>
->> Having a closer look, it seems to be okay. Because in patch mode, each
->> of the combinations is already rejected before in `checkout_paths()`.
+> On 8/25/2026 3:06 PM, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > When pushing from a shallow clone, even if we only have made a small
+> > one-line change to a tiny file, we often push the entire toplevel tree
+> > of files.  For large repositories, this could be gigabytes instead of
+> > kilobytes.
+> >
+> > The reason for this is that the push likely lacks the commits the
+> > receiver has advertised, so it walks back to its shallow grafts.  Since
+> > it doesn't know that the server has anything, it sends the entire tree
+> > for the graft.  It would also send the parents of the shallow graft,
+> > except the shallow clone doesn't have those by construction.  We thus
+> > are forced to assume that the server has the parents of the shallow
+> > graft -- if it doesn't, the server's receive-pack will reject the push.
 >
-> Yes, that was why I did not see what difference between the code
-> before and after the change you were concerned about.
->
->> It still might be good to have a sentence in a the commit message, since
->> the guard did change and the reasoning why that is safe is not so
->> obvious.
->
-> Perhaps.
->
-> Having done this, I do not particularly think these changes and
-> refactorings are all that useful.  As unit of reusable code, an
-> entire command (like "git restore") may still be too coarse and
-> callers would want a finer grained control out of "Git restore
-> callable from C programmatically, without having to go through
-> run_command() interface", which means the caller has to still
-> formulate argv[] array in order to call them.  These 8 patches may
-> give us a good starting point, but it merely scratches the surface.
+> I was ready to assume this patch was fully correct, but then I asked
+> an AI agent to review it and it found an interesting subtlety that
+> puts the entire approach in question. It also presents an alternative
+> approach that is much simpler and helps improve things immediately.
 
-I do think there is merit in merging this down since it leaves us in a
-better place than before.
+The bug you found here is a really good discovery; thanks for sending
+it along.  I think there are still some misunderstandings, though,
+which I think may significantly affect the resulting conclusion.
 
---0000000000003edba7065a90ad72
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 8822de60bba5abd4_0.1
+> The gist is that we can attempt to push a shallow object to a remote
+> that _doesn't have that commit or its parent_. This gets rejected by
+> the remote as not allowing a shallow update.
+>
+> The problem occurs when this shallow update is attempted alongside
+> another non-shallow branch being pushed that also has some "new"
+> objects reachable, so the "assume the remote has the shallow
+> commit" condition leads to novel failures due to that other ref
+> update not having full connectivity.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xWlBCUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK0ppQy85RlliLzB1NVloUlFVUWlWTk9kUGI4R3MreQpaaTBNWUJ4bytG
-NHFWUG40OUhPVnBMYUd4Z0o4MlBNd1NETTlnbUIxZUNzWkhqcDlqMTdVTUJ5SW00ZFhpbFMrCkl2
-UHlHRlZiQ2lwdm40L1JDeW9GS3BINGVNL1hhUHV1WmkxaVRRK1cvS2s1aXRSbnhpTkZJTTIxdk0w
-dHBGa1QKM1ZkM1dFOENvQ1prdUR2SGlLR0pvMHZjdzVxZXBHTHZTMmwwd0R1SkxXUXVsZWwrSVVX
-MlZWMTNxZjZrT0o0QQp4YURTODJLbm9RMTdwUnZnRGJRTmM1Lzg1dXlicllJRVQrNnNLNUNyQ3Np
-VnJ2ejhFbGwyZDAyVUlaQlZKbkFUCnREakdoR1crdVdldENQeFBGNWRxaUczOWZCRWVmdTlXL0x6
-Z0JRMmpZbGh3UEVGWk5qSEp4MzJmWXhKZndaZmIKR21WU0trTW9HZmNuYXVLNmFzakNqTSt1UEQv
-dnd0Nk5ZVm5oVmxJL0p6VU4wa1duSnJ5bGkwYUx2TVNmMldNUwpORk91QlMzVi82anIxUlVVWFVU
-bzFoV0VqWkZqeVpjaDhlZWJ5dHpVSVY0YXBHZEE3WGhlUzJQZDV5WEM1bEJiCktLWlVHSUFndStV
-UExpbEorZU9KbVZLQ3Q1YzdzZzZqb3V1dlRCMD0KPVlHVEcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000003edba7065a90ad72--
+Ah, I already had a similar test ("does not over-exclude for an
+accepted ref via a rejected one"), but this is a different variant I
+overlooked.  Good catch.
+
+> Here's a test for t5538 that the AI agent generated, and I
+> massaged into something more understandable/readable:
+>
+[...]
+>
+> This test passes before this patch, but fails after.
+>
+> As I was working on this test case, the key step that will fail with the
+> current patch is the test_grep here:
+>
+>         test_must_fail git push --force receiver A topic 2>err &&
+>         test_grep "remote rejected.*shallow update not allowed" err
+>
+> because the error that will be returned instead is more of a hard failure=
+.
+> This failure "at grep time" is something I added. If this line doesn't
+> exist, then the 'git rev-parse --verify topic' fails which shows that we
+> are able to break the receiver repo with this push, as the second ref
+> update is accepted even though the packfile isn't complete.
+
+Isn't this self-contradictory?  Saying "git rev-parse --verify topic
+fails" means that `topic` was not created on the server.  Saying "the
+second ref update is accepted" claims it was created on the server.
+
+Also, I'm not sure where you got "break the receiver repo" from.  When
+I re-run your exact testcase against the v2 patch, it is not broken:
+  - git fsck passes
+  - `A` remains unmodified
+  - `topic` was also rejected
+which seems to be guaranteed by 52fed6e1ce07 (receive-pack: check
+connectivity before concluding "git push", 2011-09-02).
+
+In particular, `git rev-parse --verify topic` failing here is the
+*safe* outcome which means the push was denied.  So, the case you
+provided has no corruption.  In fact, all that has happened is that
+this shallow push caused the pushes to fail.  A simple re-push of
+individual refs by the user seems like the natural next step.
+
+However, the error message returned for this testcase is inscrutable;
+by my count the potential error messages here are about half a dozen
+depending on the exact codepath that is triggered based on a few
+tweaks of config settings, and the unpack-objects ones are
+particularly bad.  So we really ought to make those error messages
+better, and perhaps provide a hint to the user to just retry pushing
+individual refs as a simple workaround; that'd point out to the user
+that does hit your usecase that there's a really simple "recovery"
+path for them.  I've got some patches to fix that up.
+
+> When I asked the agent to implement something that instead cared about
+> whether the remote refs could reach the shallow commits, it deleted this
+> method in favor of having your push.shallowexcludeboundary setting enable
+> push.negotiate when the local repo is shallow:
+>
+>         repo_config_get_bool(r, "push.shallowexcludeboundary",
+>                              &shallow_exclude_boundary);
+>         if (is_repository_shallow(r) && shallow_exclude_boundary)
+>                 push_negotiate =3D 1;
+>
+> That was sufficient to pass the new test, as well as all other tests you
+> added, except one. I'm not sure if we need a new option or if we should
+> recommend push.negotiate in more places (plus these new tests).
+
+Yeah, as noted elsewhere in this thread, there is a flowchart of
+reasons why push.negotiate=3Dtrue will fail to solve the problem.  You
+have since commented in that thread, so we can leave that discussion
+over there.
