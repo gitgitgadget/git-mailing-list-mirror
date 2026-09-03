@@ -1,96 +1,157 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31725448CE8
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 13:42:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB794B147A
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 13:50:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788442978; cv=none; b=clCpwDwvK/jn+835sQMe+4sCE1pX2hlDUm1usF8E9EpHn2O/wnvilZplTXDtY9fCkuL7GVPH1wcE6+DoJkXZ34Jx8IhM7G3iPTV93NO8irqcbEC3HzgkP1rDo/DtUp9cwC9EJcz8pcL/ZlUP7kr7o6ijm1X2SreBov7Iyp/Cuyk=
+	t=1788443456; cv=none; b=jiuyWtASY7ZbK2g4HtWgk/M9FCgq/vsuv3IAOJ7XNRTMBcMpoSe/pAq8IM30ko9CQ7C18ivZwnsO5lMiLuYhlpfwABHyAbTYgPGMmC1KpuQn9wJ1jQ63xFfyRWMgTACPv+huxPEarYBfRvi366+bT9MD0yVqTPs8E1ajnHdtiIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788442978; c=relaxed/simple;
-	bh=SzrLvEIWdaBm/m3bVV2UyMGyrWnlAhB01GQGD4hEqcA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Yu9UUQ3d4Uih+Les9EwF5ilH11r2Yjbch1mN12CmCoRV8zQ/gQLnQhGvHA2uSXwwFO7Bg+wugSxGX1s9XPozaEUTo1AmijVJK+QmHiOs1/qSJHhyhOnVAr2ogDBZGHpk0wNE6zY90GiZQipSx5Yl12O9S+1717jLxQAnLLecJAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s2iOJuLT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gg7c/6ih; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788443456; c=relaxed/simple;
+	bh=QhVZAxNbea6shRSMLLVRV5l/McanDgltXPUG9v6OhOM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ofeNstW3m3AT0PERx08UoY8spqtuNZUfX/9nz7oiim3Dp3Shul8wIUnoltfmujpw2RaSS79+Ab3cniA83PJf48PIZp4IJNBM6GfEt5351c1cPjAQf68qGkkMoDj/0e0UsNnHyWFUH2kuVWpcqHXv4ftPaypxEZbhZlgkfvfO00w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GpQ6FZd7; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s2iOJuLT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gg7c/6ih"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0B66D7A00B4;
-	Thu,  3 Sep 2026 09:42:35 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 03 Sep 2026 09:42:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788442954; x=1788529354; bh=+65v+V6BV4
-	EYVF1nNPStoqZP04svWQesKdO5FTxoT2k=; b=s2iOJuLTZove2uEH3zX56BT3In
-	jq6CaGxO+vasIB9bGSCQssA/JfbXP3o7kYCQAoHfj13T5s4KCX8dNLuaJkwe8zif
-	6BXMBgH50YSfME8nqkO1gBmKxZFmYg8HLqXyZxwZoIjwyW2rFYeE6OyJnc3opBrm
-	j5KxX/6sMa5w3Ceuf8B4s3ibdqqoyj2K4YJrepSBlwDh7/KCLW2opSPVRO9YISDY
-	e7ZqCknbe7Vq0XFY7I4TNyXpXyJ2NGWA4IclBDjd2xI6kb6571LsuWbk+wSjzJlH
-	kaTlYcIICnuA535/OmMLFG9f133QGmmWMZvDwdF9ax6YtYJ1g23jz95RVdNQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788442954; x=1788529354; bh=+65v+V6BV4EYVF1nNPStoqZP04svWQesKdO
-	5FTxoT2k=; b=gg7c/6ihbYYZrn016JL4S/0U0qWfsavw3aikJrwCVK69mKwjdQ4
-	XJC5ry/2/90ub4T4hHWhf6ZCdw1ezeWhu1ArB5+Oj5Rz6dqifWFLTFl+gvFiHe10
-	0iVVRlQNwYl1MUn1PtW6/ahoHsbnWQNALeZ6Xzdea2o/aUk5dE8ceYs6BqMGvIpj
-	U8yEJfKvzeMarF5EEzvOiIiqaqckHY5/Gi+36XiAEDdLqMnDXJIzsp1smwUBUyOl
-	8naA6JpPYxbuJI145IDLWrcaOMCL2IhuHedoet6b7vMUvxF694g6mSB77EBE8mU4
-	BVhGFSssfs5Ip12zExFX54tccrIuky4GbUQ==
-X-ME-Sender: <xms:SnmZaixpNKyN2SB5LvBuBe-W3DGuXlSeAlwE44yZ98aMP2zaAIKXbw>
-    <xme:SnmZalQQjeg0UMpw9JZMFEYkS0zX5FwRSZue2fPWD_tUmLL55AZKeLTKAu0Y2GFz9
-    5T_yMYd8tpjzsiGv92uGlZ8eCrAQmzQi_b3rKBhm1WXW4hzd9uAXg>
-X-ME-Received: <xmr:SnmZapV5FRSd8cY4y9cSlxOvOK6S_OdCINkmg4tYZEDqaJSWyzkvcuWx4R2YB9OegUkMaK4K1UKx0e531zqtmWps8-6AJW46qg>
-X-ME-Proxy-Cause: dmFkZTFhRQtgPPm2tPLL3HMrF3NkbOps0BvbPfPRm7TwFx6I5cUmGx49MV3IQIzchwW312
-    RvY3gWTQ0ZF8AC//99HXwLMvQClfa3vgrEoSFD+JJqNi3yaoOwAfYTUG66dPfUB6UjB/as
-    8NbDdx23ezpeItnAO8MC38KkyBlMNOkG9W859cM326xSu8H9TAmDCTvxtQYvg9WR7hWlvv
-    RoZ6VKRFjwMIQuh+PiNrmlg5NOGAjbkKjvNuLiJrKVxjDG1NJuML8JpVBybVZ3qTos7hwr
-    BpUUJmIHM13fqS9KMCZzT85NtKMgfS12JX8Cl3KGhMe13KpgbnHhuhiLOHGF5UvWEYfAHW
-    eCTzjYih1O2ipdGTf8KqW0wu6q/rbGeMOG5sol2RlEZ8BvzVGafLmxmcY5L230IAeuC0Su
-    PJjkqgeiDIs0VPVx/JeSmap7cTAaG+1fwcgDAr3jXPXDuRv5/wCnCbpYhPc8wEt7afJrrU
-    NYekezpApIAqFTwdRDE7qZdsjtCVct/PyCZJy/OHq2s7QHCvtNbFCmYvOnRfb9bkhRznof
-    I8/Su1GC6+sEFuZ3PSfmP2d19M3blLPSfZOs9XNwiew8q/QozKkfYPRSKJ4GCO5XBtRToa
-    eTFfCcfCBvIenf6XTc+HmMbtAZMkU9wAkAbjX2Eg31prkA/pnauNBDQKHq/A
-X-ME-Proxy: <xmx:SnmZanaw3PzP5hxJ5EewcOp_C5PAyd9pmBcwORjwHZDJAT55Hhe9Nw>
-    <xmx:SnmZav1bip5RO7HN9bdIVNSgQF2Lp4Q8aYzz8hI6rSVVpdaEpcZyNQ>
-    <xmx:SnmZapjGYFFpJavjKY3Y0fnk_0u_sgvq5J78djci-R1hLs7CcFK6ww>
-    <xmx:SnmZajYyrAQSPaGVRGSuF3sdCt7VFG59YwLZOyuMJPpb1arNZIElIA>
-    <xmx:SnmZaqctrZDYFI2NQVF-tn1pmVUyToQMF_MclnMWf8-jdZM3Z5S4bSJY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Sep 2026 09:42:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: Wolfgang Faust <contrib-git@wolfgangfaust.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] imap-send: add --draft to set IMAP \Draft flag
-In-Reply-To: <MAUPR01MB1154649CE9D154B98459B09CEB8B62@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Thu, 3 Sep 2026 11:12:50 +0530")
-References: <761c3f1b-e280-48b1-a2ad-770b68be3434@slotpi01m90>
-	<MAUPR01MB1154649CE9D154B98459B09CEB8B62@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 03 Sep 2026 06:42:33 -0700
-Message-ID: <xmqqfqzqfo3a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GpQ6FZd7"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-485852d03a4so340621f8f.0
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 06:50:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788443441; x=1789048241; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=DV+AMu5biXiRi5TKZ0loBHe6Ze1TZWkhoCPY/csvI9g=;
+        b=GpQ6FZd7eHuieLH5g5rFYmKsRtGZJ3LPnk7pMfCpueROiigcXcx4ko7Sj/kgdi5Te4
+         2+GT+dgTIzW2YIWW9whlvEK98N40PHwfG7uao56Hyfr+/hAfbtdnziTHcG6nf57/4f1t
+         CMDIK6r8qyjT0ODi0Y11dfkH83Aa47qItbCexjy+NsusB5+Z+2dMEXjdvgwgimq17Pvo
+         D+yb1s0TZuBadERut5oKG0LusWEcVh72fObfL7jb5T5CwiHmJYGmSV1DRinPR3DfydeE
+         AVbO9+fbXv2jaPMQDNpnm5ZGKmmSHEH5331saIJvYNek0XKckLgEbVRaczvmAkHwib66
+         gaDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788443441; x=1789048241;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DV+AMu5biXiRi5TKZ0loBHe6Ze1TZWkhoCPY/csvI9g=;
+        b=eIHILeh0xY20bByIxb9e4FBhKqr/lehLb8BlFv7TJppmJI6Yl037r639CgXbt71jD8
+         dbawLCFL6j0lPgk8QD+akRGfv/FN361r66UAR0AmjRXGWmzcKcFoNqvC7aEjeDitTzXE
+         pfgBLIPqHDWHd1EA69uLXhit5YwZPpPGAWmTyZbZqcy0KoKBP/6vDSt27lTfrL2IPctf
+         6r+UDLIeZW1W+uaW7sLQncXhF3Xc/WT93ER0WLxLMcdnE58INTeXUYtQt4JXQQYLJ4Hd
+         feG8L38TFpa7xi1GFLgejjEEG6we5QO/63yq7GGXhzXjYd1rq2HolG2ude//HlprAQwT
+         jmlQ==
+X-Forwarded-Encrypted: i=1; AKwUvBx/BRvVm3251oM14sKUYWETH6/tZPGzd6bzY/RsiZzqvWG7AVEUI740hEl2k7UuWjnAZiI=@vger.kernel.org
+X-Gm-Message-State: AFuF++lO/8rvHpmHRi6jyzur3CTyElxmLkxKer6XCeBq0R6cjepV5uO3
+	i7oA8/KJk5HEiZBeopueUJpdlN5UM9fcXS//MAtLa5CmiSAirj59ogvNlabalA==
+X-Gm-Gg: AYBFou2wLadCcHvH8feAYqfPA4Tf0JrTiveLPJxohi3XfZLL+6eVF115dEcekQxxABx
+	jVh0l9u8d3+vonzCrGTgh7K/FA4Bx/mjYTSii7ios82kS0ZLrK7N7DOSuyvIA1GG0wWQZLkVzR1
+	DhNcWwyYyUNZQq2C8OzGKPT4dzMvssGILHsthfsyms47gFp6DgU9KHT5+BjNPFA34JgtnBuT1cI
+	5EFkeSG5aqLVofbOKZ+fgziJQY9gchaz+NwugylXvdaVdKO7O5lq2MO+uRzHUugVIsfZOoEPr4+
+	gquWQB5lvk5UA4UMvgT9YVC1LqtZfPdK5bpV0+i1UPMsUT969MFx0m5rl1HxV+TU/mz3PtK1/+G
+	5a1Ky6WG7UL1WZugdxIlofLi6grYIUGNoyPCSYZUa1RuutGTYvHxTCzG/RbHPD392hrE0LlZ4T3
+	1PkkYPP1PXZOLTKrMailxnbisxV4oZ7RGuuoo+fxroklgWpUPHp6WcBim4stBsnjHICscXz3N18
+	atYr329RXS9KXMKcDqLI/boHFloa9IXaXW4Ag6wtFI=
+X-Received: by 2002:a5d:59c7:0:b0:484:4880:449d with SMTP id ffacd0b85a97d-48586028d0fmr976156f8f.3.1788443440628;
+        Thu, 03 Sep 2026 06:50:40 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48448e7315bsm14224102f8f.7.2026.09.03.06.50.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Sep 2026 06:50:39 -0700 (PDT)
+Message-ID: <ca3b91b6-254c-4b86-adb8-da3217e9f6e7@gmail.com>
+Date: Thu, 3 Sep 2026 14:50:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rerere: keep a background gc from killing a rebase
+To: Patrick Steinhardt <ps@pks.im>, Thomas Bachem <mail@thomasbachem.com>
+Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Junio C Hamano <gitster@pobox.com>
+References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
+ <apkkVAYOqjfAsp9-@pks.im>
+ <CAA0xjtp+Og_k7BYZfwX-LRW_8TAiCyp846+Mhk+hERM_GmRYkA@mail.gmail.com>
+ <apkwpKTGaMwTf0Hz@pks.im>
+Content-Language: en-US
+In-Reply-To: <apkwpKTGaMwTf0Hz@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Aditya Garg <gargaditya08@live.com> writes:
+Hi Patrick and Thomas
 
-> I'm not sure if its acceptable to use newer versions of curl.
->
-> This patch was rejected because of this reason: https://lore.kernel.org/git/7108764f437a25079c95a25c227eb79f9f4aee6a.1753273554.git.gargaditya08@live.com/
+On 03/09/2026 09:32, Patrick Steinhardt wrote:
+> On Thu, Sep 03, 2026 at 10:11:05AM +0200, Thomas Bachem wrote:
+>> Hi Patrick,
+>>
+>> On Thu, Sep 03, 2026 at 09:40:04AM +0200, Patrick Steinhardt wrote:
+>>> I think this hints that we should tweak the default value of
+>>> "maintenance.rerere-gc.auto". The way it's currently written we indeed
+>>> are quite aggressive with spawning `git rerere gc`, and I agree that we
+>>> should tweak it. And in the best case we'd not only respect whether we
+>>> have a specific number of entries, but we should also respect whether
+>>> those would be garbage collected in the first place.
+>>>
+>>> I'll send a patch series later today to do this.
+>>
+>> Thanks. Checking whether anything would actually be pruned sounds
+>> right to me. It takes the frequency away, not the race, so I'd still
+>> do the sequencer part Phillip asked for.
+> 
+> Yes. Ideally, I'd think that we should both introduce the grace period
+> for locking the file and adapting the heuristic used by the maintenance
+> strategy. 
 
-A huge difference is that the patch in the thread you pointed at did
-not come any way to build with older versions.  The patch in this
-thread is different, isn't it?
+I agree
+
+> Whether we should completely disable auto-maintenance when in
+> the sequencer... I dunno. In any case, that feels like another separate
+> topic that should probably be discussed in its own series.
+
+We've seen other bugs reported related to auto-maintenance triggered 
+during a rebase such as the one dscho fixed recently. While I can see 
+repacking might be helpful during a very large rebase, I do not think 
+garbage collection is useful - all the objects and rerere entries that 
+are created during the rebase are going to be too fresh to be collected. 
+So I think it would be a good idea to disable auto maintenance in a 
+rebase and see if anyone complains. If it turns out to be a problem we 
+can figure out how to make it repack incrementally.
+
+>>> Having a locking timeout is sensible anyway, I think. It does not only
+>>> solve races with a concurrent maintenance run, but also with concurrent
+>>> writers.
+>>
+>> Phillip found the wait unfortunate and I offered to drop it. You would
+>> keep it. I think the two fit together: wait up to rerere.lockTimeout,
+>> then warn and return -1 instead of dying, so the caller goes on
+>> without rerere this once. The gc passes 0 and does not wait. That
+>> takes the die out, which is what broke the rebase. The wait stays,
+>> bounded to a second, but skipping rerere is not free either: it can
+>> mean resolving a conflict again that rerere had already recorded, and
+>> a second is cheap next to that. With the sequencer no longer spawning
+>> the gc and your heuristic change, it should rarely come to either.
+>> Phillip, would that work for you?
+> 
+> I think that having the wait is a sensible thing to do, as the race was
+> a preexisting one that was only uncovered by the change to the default
+> maintenance strategy. It can also happen with two concurrent processes
+> that both happen to write rerere entries. You wouldn't normally see the
+> wait anyway, so in the happy path nobody will really care. And in the
+> cases where you would see it the user is probably more happy to wait a
+> bit than having Git die (or just not write a rerere entry at all).
+
+I don't object to the timeout as part of the solution. My objection was 
+based on it being the only solution as it is inconvenient to the user if 
+they have to wait for background maintenance jobs and it does not stop 
+the rebase from failing if the timeout is too short.
+
+Thanks
+
+Phillip
