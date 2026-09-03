@@ -1,67 +1,67 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63D546A5FD
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 12:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA71F4A8401
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 12:55:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788440132; cv=none; b=fI7Vu+TVfP/FqD1jFW9SUBelUMrEDlDz/5quZ3z/2t9wFjRjFRMtTck3+118Ub+YecPKYfdchTvl5LBwlYhst9x0qTpho3wdt9oFOY1XNeEflhdcGt7jj7eeaVo60/dHNx6vJLFmFFJmIofXAuhGJnR9I/WUfF9Seqz0BehZ8oY=
+	t=1788440134; cv=none; b=GXk+GDEYQ4qqlAvoaE/UxOQglpG0WIGsatc/Bz02RJPAMJreiT3bRAahUYAUoVWrp0LZsKJ+dmrpO9xwIiXql28lhH5t0UtgsndwF22bVe5H2EKgbIjUCTLn+QNgdSdKU/N7CMrWHGcbuoa/dbaSF/Kn5Zh6RfqbaHIDsjku41s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788440132; c=relaxed/simple;
-	bh=PboDIHgMGgk1CPRXDVRA32Qul2Zk0axjJA94jEDhMoQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CMjJTY/9lqQiiUaspxKEuNRh0/cGxd07aPRgW6SUi7FKqIPWVoha2eJwJQhGNeaxKx4JMI7dDxVUmqwkbs6N8QjZxk1P5z8AB/YX5M530CvGwkvONlYn+VKD+m3l02CgkrHYbp84j5VEq376Sg1wYVcL6YTOf8ujS8nPXfgkWyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=FU/vgroN; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1788440134; c=relaxed/simple;
+	bh=SAAv9+pA5+jKP5+L0N7kqwhjZDHleBCq7w6WkEvNDN8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=E1DGr39oGspNkvEhsnFihmbUes76RMXipurwNIJvzOZTzoRp2uhuhgZKQFc0uxkbNup0dhyooFhy1Uo70EpmaA0ZeU1NRaBwuyqX+0S4ZAfyXvSlux2RigTqFlDgpHDEcXPXe3Ym4isWZwGzkgx3urQUFOpYELXN2eIn0InSH5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=c1mPNJ+n; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lex.la
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="FU/vgroN"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-485850cf499so176876f8f.3
-        for <git@vger.kernel.org>; Thu, 03 Sep 2026 05:55:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="c1mPNJ+n"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-49b8eeb3ff2so21161245e9.2
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 05:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lex.la; s=google; t=1788440129; x=1789044929; darn=vger.kernel.org;
+        d=lex.la; s=google; t=1788440131; x=1789044931; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=BABp5Wn2jCHEgIHKwS4+Ci4pZs/4w2mj5FC7QjaYBrA=;
-        b=FU/vgroNBTHH7WB30I19UzNjSQtu1y70Hp/3g4YQVbAOZtq9udeP9x7Y5lZwIdOfUm
-         /vk03QWTLWhRZjm84WaOArQ1OZWuvdtmwziiWEZY8yhc+VqX4uxrE+0xjT9I/iN1w+j+
-         jmZOW1P/JbhKNdkTZ7DDGFDiMplPTA/nOSIH9uG0UdpExvIJPGQTjs/oNVEyScX1gqhl
-         +axdwtDePB/mcu2z4UGheEv4ywtLmovOYYq3lKZOBKXGmkrVyX9bP9ueo3AI9/XhH1qC
-         aRzihzJIu7N3F5pigKWWCcfhPvuNpcmHCoxOsMnC2A8NXEGt7gr/mES+sRgN+FbRQ5J2
-         S9SQ==
+        bh=EoMVD8dFcthCryGKU+AB3FsyB2Yma9031FlJi0Pjd0E=;
+        b=c1mPNJ+n9vLkg3qwWuaEsATnR5NkuSWNSqx5HjCCOUj0J7NyX0GfUlaaXZa0EdU4W2
+         GZFmUME3bjAf8PNj5DS4na07pozTZKGiBfGzcwNNf/mDeKXeQuwe8vxZ7Jov9zisqoqd
+         HEk29DcpF+UxHH4F/XJPkvHj6puS6ust8JN0j5eRl8yT+YyZSMVvw7iTKj/Iu9TxGYze
+         HbFvNKl3doujq2qQA39p79bhPrc4caLJzoSTSLXIp2ZQwZRFoQY56UpJ63kh13qYNEZQ
+         CR0cbW/Y7l/Wn9aBJ8xPHkhoA9cLfPLlBIN/Yd1CoAqz7ZIpdKlV8xROe9Yo1IqmGKxj
+         lP2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788440129; x=1789044929;
+        d=1e100.net; s=20251104; t=1788440131; x=1789044931;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=BABp5Wn2jCHEgIHKwS4+Ci4pZs/4w2mj5FC7QjaYBrA=;
-        b=SqmJvkos+gBt7YhV1YuXnQ6JkIWwsbB5uCd+lMNrM0H2KtlcUUcznEebTCSzOZzupf
-         FQeQVJYM3SaoH3pLz9N4/+4mfPmwjBNkzFuTtlhCIMPOSKF9HOsapnQtssdBdk3V/VsX
-         oBIAS24/p7HuCyDznON/oQFdSLoYRpnxXhNNfM9i2hFuX843yE0R6TlBNm6aPWBfqTc1
-         i44G4mXrP4BDTfkteQIERRrNbWgE/zuxWe42nhMO8W8cyeaS8re9uLNtD0U1oFFnpHp8
-         mIkcBZz0oWXR6TOU7bscyJ4kkXzjq9Cj7sxGAId26TBqYIYMl99r00xcyPf51pv6NwZb
-         LblQ==
-X-Gm-Message-State: AFuF++lbkzgj6CnecRdAmhi3KNR4F8V4lBktoCp+vGgsJrasLvS5lxRU
-	Kle06r7vW4FET6NqWu7ulGAvlqNEgWEDTltKmkX68TxDDRWdUy4bS2pUMdjgR8HIbTZcwNrMVvq
-	UVnYFjUQzBg==
-X-Gm-Gg: AYBFou3CID9cNokMJUbTUEXQLfk8KkPWeHUk8QFjaOVpk9je+1gf5wUGSvgjLYd/Uon
-	z14t3QxyPEhpE8BscYIn/8dekso2uFjpNLerKC5gM1xO4GLxX046SKu0bYH8wujQUnXG8Mt+5ka
-	rF16sqh67pSS4q6mu1xNQTLjgz3lgNEUfOV7ba6Tq3HIsGkE2tIqzoZVbYPMYjlbGBOovtYoIl2
-	vU3fex9N4qAPo/pQU2TMq9/dxzEy64tv6vA899aluGWHK/YnZe8pMJTkPvSOXAs3VZPqgESHiBT
-	re0jct+4XqUMcsOEAoNj8X6cuqUCNOvXVwfs7DXVxNM7je9992dVYP2lOhyg5RkhhPXZzn5OZAp
-	hnzULkOqKFpP4FGc9R02GVEH0v/gJuBs5GeEzIL/N2xA7TM4hk4nMr9M6kf+mwVY5M61ovGJdXR
-	f4SmXc9OdHTQES3RdsCVzSvxswJbsXQ7WRmRmAdl3ANB8Lp09nwyJSk2s/o9nyzILqqE9H
-X-Received: by 2002:a5d:6d52:0:b0:481:5167:abda with SMTP id ffacd0b85a97d-48488f06d5emr18123669f8f.9.1788440129069;
-        Thu, 03 Sep 2026 05:55:29 -0700 (PDT)
+        bh=EoMVD8dFcthCryGKU+AB3FsyB2Yma9031FlJi0Pjd0E=;
+        b=HIk83SpQxq1VziejwCo92wtkym2rwE028ku2NHZ7of7R8HcHbbLMKPjD4S+lqjOcWH
+         Z8y1ZgRa5h1GWESHJJx4JJIXqdUIxNEawl7aaO8dyuEtRUwhcFmTLxPg4292+3LDffPd
+         u3+1r76sSt2BuHXYBt/20O22EV/QFqy64rdgsYEj5uk5pVi5hMuOqXXzPIeJCeT2mSRr
+         6wSHLIpu1TKW/NyrmqrgtZZt14TrUKj7A5MUXkjmBVZUnfLeh7O6bH/3sa9oGlkx4XXy
+         HWVGTf+VRKtnVi1ic0MDG8RXfKBrDDkmu5Ads8b8NwNYelqIzhBO73WI0BgDvKmuEIq0
+         vYnA==
+X-Gm-Message-State: AFuF++kpsO8rAktDRUZ22AJRyIJcCvC1d/54VgdggLmQJeiTGWOznq6i
+	FrqXILKIfRJAt48tTY9XX1VvMIJjOMNo1qKTPtFud/A468Xr7/Hb9BSuoP46Qk9uS+tAAIU8wYo
+	mPAsJEjSm/A==
+X-Gm-Gg: AYBFou0Tx0Z661znSZnWH0bTX4LkU7/ovtckI+S9h8OpVk5ZLEkyfbNEKUmZQPBvrda
+	F2idf6kiPAoP+U/HGOnAaPmP/w2kS/angmN2yvZhry96ci7ClpKBzJ1AAxeo7KxxJSUciMe5UNw
+	ulfrNgp2jR462XpoDXHGoY/gcgDAW0/7m9oErryF3VcwoLfPYQD4B0gXmqVW3SqSPXq55v2PdGh
+	9Nob98QGwzeNPzTYzpA3x1Q0BiKfw/nRsbdhx5ToQ293gMVGKCtACK+BfOoNw3ZaeE0ovrx2P2E
+	rcVeUzjyDZGyXiIQISYAyJXUsyiVkS2gYGw5FwNS43G5r8M9hyQzDM7Qpo7/wqQEbhwtqevARrZ
+	ptOcJPEwyS+/upqBYweL+YAaRzfAW6r0ukcA5HJFdUh9loaVgje3X+3OZljzPa+dPGYsqI/cP06
+	ktOnuJULU/1ogj0KLcnSHLe1yeQtRWmITMgzX1iwuU/3hMFt5phWZyj/GpnCXp4KaCFhXc
+X-Received: by 2002:a05:600c:5489:b0:499:4e47:eaf2 with SMTP id 5b1f17b1804b1-49ce58092a6mr189252435e9.6.1788440130993;
+        Thu, 03 Sep 2026 05:55:30 -0700 (PDT)
 Received: from ownbook.home.lex.la ([84.17.55.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48448e81718sm13491911f8f.16.2026.09.03.05.55.28
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cee5e6115sm73168065e9.14.2026.09.03.05.55.30
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 03 Sep 2026 05:55:28 -0700 (PDT)
+        Thu, 03 Sep 2026 05:55:30 -0700 (PDT)
 From: Aleksei Sviridkin <f@lex.la>
 To: git@vger.kernel.org
 Cc: Aleksei Sviridkin <f@lex.la>
-Subject: [PATCH] git-contacts: ignore blame boundary commits
-Date: Thu,  3 Sep 2026 15:55:27 +0300
-Message-ID: <20260903125527.67934-1-f@lex.la>
+Subject: [PATCH] pack-objects: prefetch in the order objects are checked
+Date: Thu,  3 Sep 2026 15:55:29 +0300
+Message-ID: <20260903125529.67971-1-f@lex.la>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -71,229 +71,213 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-git-contacts asks "git blame" which commits last touched the lines a
-patch modifies, limiting the annotation to the last five years. Blame
-charges lines that did not change inside a limited range to the commit
-where its traversal stopped and marks that entry with a "boundary"
-line in the porcelain output, which the parser has ignored since
-4d06402b1b (contrib: add git-contacts helper, 2013-07-21). The
-boundary commit is therefore imported like any other, and its author
-and the people named in its trailers end up in the list.
+get_object_details() sorts a pointer array by pack and offset and
+hands each object's position in that array down to prefetch_to_pack(),
+which reads it as a position in to_pack.objects. That second array is
+in the order the traversal added entries, so the batch of objects to
+fetch starts at an unrelated entry.
 
-Such a commit usually did not touch the file at all. Blaming a change
-to builtin/receive-pack.c stops on a commit that only touched
-builtin/fetch.c, and its author is proposed as a reviewer while the
-people who actually wrote the lines are left out, as the age limit
-intends. Those commits also pad the commit count each name is weighed
-against, hiding real contacts under the ten percent threshold. Over
-the hundred non-merge commits below 3cb9185f65 (The 22nd batch,
-2026-09-02), twenty-seven lists lose a name, nine of them becoming
-empty because nothing inside the window touched the lines, and three
-gain a name the padding had hidden.
+An object missing from a partial clone sits in no pack, and the offset
+sort places such entries ahead of packed ones. The index is small
+enough that the batch still covers every missing object in a freshly
+cloned repository. Loose objects held locally sort by object name
+among the missing ones, and enough of them move the index past entries
+that are themselves missing. Those never enter the batch, end up with
+no recorded type, and are fetched one at a time as the pack is
+written. Packing a list of 2 missing and 16 locally present loose
+objects takes two fetches rather than one.
 
-Read each blame run to the end before deciding, and register only the
-commits it did not mark as a boundary, so that a commit stays a
-contact as long as some hunk is really blamed on it. Ask for --root as
-well, because blame marks the initial commit of a repository as a
-boundary too, and in a repository younger than the window that commit
-did write the lines it is blamed for. The cut-off commit of a shallow
-clone is parentless in the same way, so it still passes as a contact
-inside the window, a wrong answer this change leaves alone. The manual
-page says that every commit "git blame" mentions is consulted, so note
-the exception there as well.
+Index the sorted array in prefetch_to_pack() so the batch holds what
+the caller has not reached yet.
+
+This was introduced by e00549aa9b (pack-objects: prefetch objects to
+be packed, 2020-07-20).
 
 Assisted-by: LLM
 Signed-off-by: Aleksei Sviridkin <f@lex.la>
 ---
 
 Notes:
-    Notes for the list, deliberately kept out of the commit message.
+    Measured on a synthetic repository of 5000 commits, each adding one
+    file, cloned with --filter=blob:none over file:// so that all 5000
+    blobs are absent.  Fetch invocations counted from GIT_TRACE2_EVENT
+    child_start records, objects per fetch read from the --pack_header
+    argument index-pack is given.
     
-    Where this is written down, since it bears on how the bug survived.
-    git-blame(1) documents the behaviour under SPECIFYING RANGES: lines
-    that have not changed since the range boundary are blamed for that
-    range boundary commit, with --since=3.weeks given as the example.  So
-    the script has been relying on documented blame behaviour and reading
-    it wrongly, not fighting blame.  The porcelain marker itself is not
-    documented anywhere: THE PORCELAIN FORMAT lists author, committer,
-    filename and summary, and mentions neither boundary nor previous.
-    That is the likely reason the field was ignored in 2013.
+      input to pack-objects              before        after
+      fresh blobless clone, --revs       1 fetch/5000  1 fetch/5000
+      8 absent blobs, then 400 loose     8 fetches/1   1 fetch/8
     
-    Why no --is-shallow-repository gate was added.  In a shallow clone
-    blame does attribute the truncated history, and it attributes it to
-    the cut-off commit, which is grafted parentless.  The marking is
-    decided in blame.c: a commit is reported as a boundary when it
-    carries UNINTERESTING, which is set either because its date is older
-    than --since or because it has no parents and --root was not given.
-    Since --root is now always passed, the age limit is in practice the
-    only source of boundary marks this script can still see.
-    Asking for --root therefore spares the shallow cut-off commit, so it
-    stays a contact, and it stays exactly as false a contact as it was
-    before this change.  Gating on git rev-parse --is-shallow-repository
-    would only let the script pick a different wrong answer, and picking
-    one is a separate decision from the boundary bug fixed here.
+    The first row is the ordinary case and does not move.
+    pack_offset_sort compares the in_pack pointer before anything else,
+    and an object that is not present has none, so every absent entry
+    lands ahead of every packed entry.  On a fresh clone the first absent
+    object is therefore at sorted index 0, and reading 0 as a
+    traversal-order index selects the whole array by accident.
     
-    On the window condition in that sentence.  The age test runs before
-    the root test, so --root cannot rescue a cut-off commit that is
-    already older than five years, and such a commit is skipped like any
-    other out-of-window commit.  Checked both ways on a four-commit
-    repository shallow-cloned at depth two: with the cut-off dated 2012
-    the old script offers it and this one does not, and with the cut-off
-    inside the window both scripts offer it.  That is what a non-shallow
-    repository does with an equally old commit, and it is what the age
-    limit is for.
+    The second row is the shape the fix is for.  Loose objects have no
+    in_pack pointer either and sort by object name among the absent ones,
+    which moves the first absent object to a nonzero sorted index.  The
+    scan then starts that far into the traversal-order array.  In this
+    input it collects nothing at all, promisor_remote_get_direct()
+    returns early on an empty list, type -1 is recorded, and each object
+    is fetched by itself while the pack is written.
     
-    Why the skip is per blame run rather than global.  %blamed and
-    %boundary are lexicals inside get_blame() and are rebuilt on every
-    call, while %seen stays file-scoped.  One hunk's blame may stop on a
-    commit that another hunk's blame attributes real lines to.
-    Accumulating boundary commits across runs would suppress the second
-    attribution too, dropping a commit that genuinely wrote part of the
-    patch because an unrelated hunk happened to end on it.  Per-run
-    state registers the commit as soon as any single run blames it for
-    real.
+    Alternatives considered:
     
-    Running the script on this patch demonstrates the change, and the
-    result looks alarming until you work it out.  The script itself was
-    last modified in 2017, so nothing inside the five-year window touched
-    the lines this patch changes.  The current script prints one name,
-    the author of whatever commit sits at the five-year mark, and the
-    patched script prints nothing at all.  The empty list is the honest
-    answer: inside the window there is no contact to offer, and the name
-    the current script offers was never one.
+      Drop the start index and scan all of to_pack.objects.  Obviously
+      correct, and it removes a parameter rather than adding one.
+      Rejected because it repeats the lookups for entries the caller has
+      already checked, object_index_start of them on every call.
     
-    Falling back to the boundary commit when the list comes out empty was
-    considered and rejected.  Under git send-email --cc-cmd an empty list
-    means no Cc line, but the boundary commit is a stranger by
-    construction, so a wrong Cc is worse than none, and the list address
-    itself does not come from this script.
+      Pass the unsorted index instead, entry - to_pack.objects.  One line
+      at the call site and no new parameter.  Rejected because it only
+      guarantees that the triggering object is in its own batch.  The scan
+      would still cover an arbitrary suffix of the traversal order and
+      leave out absent objects the caller has not reached.
     
-    The three lists that gain a name gain it because the denominator
-    shrinks.  For 429dd07aa0 the current script weighs each name against
-    eleven commits, one of them a boundary, and Robin Jarry lands at one
-    mention in eleven, 9.1 percent, just under the threshold.  Drop the
-    boundary commit and the same single mention is one in ten, and he is
-    printed.
+    Left alone on purpose:
     
-    The 100 commits measured are master's history rather than maint's,
-    which is where the recent traffic is.  The proportions do not move
-    elsewhere.  Over maint's own last 100 non-merge commits: 29 lists
-    change, 24 lose a name, 8 of those go empty, 5 gain one.  Over 300
-    commits of master: 88, 76, 27 and 12.  In every sample the emptied
-    lists are a subset of the ones that lost a name, and no list both
-    loses and gains.
+      prefetch_to_pack() keeps its opening brace on the declaration
+      line.  CodingGuidelines says nothing about function braces, but
+      .clang-format carries BreakBeforeBraces: Linux, so this is a rule
+      rather than a habit.  It arrived with the commit named above and
+      is one of 9 such definitions under builtin/, 2 of them in this
+      file, the other being is_not_in_promisor_pack().  This patch
+      rewrites that declaration, so moving the brace would cost one
+      character.  Left out because it is not what the patch is about,
+      and it is the same edit wherever it lands.
     
-    An unrelated defect in the same file, left alone on purpose.  Every
-    object-name regex in the script demands exactly forty hex
-    characters:
+      check_object() takes entry, sorted_by_offset and object_index, and
+      entry == sorted_by_offset[object_index] holds without being
+      written down.  Deriving entry in the callee would make the
+      mismatch this patch fixes impossible to express again.  Kept as it
+      is because a function that checks one object reads better taking
+      that object, and the file has one caller.
     
-    	if ($line =~ /^([0-9a-f]{40}) commit (\d+)/) {
-    	if (/^([0-9a-f]{40}) \d+ \d+ \d+$/) {
-    	if (/^From ([0-9a-f]{40}) Mon Sep 17 00:00:00 2001$/) {
+    Noticed nearby, not touched: pack_offset_sort() orders entries by
+    comparing struct packed_git pointers that do not point into one
+    array, which C99 6.5.8p5 leaves undefined.  The second paragraph of
+    the message rests on that comparison sorting NULL first.  It holds on
+    every platform git runs on and predates this patch by years.
     
-    In a SHA-256 repository the object names are sixty-four characters,
-    nothing matches, and the script prints an empty list and exits
-    successfully.  This is also why the boundary branch added here tests
-    defined($cur) first: the group header does not match, so $cur is
-    never set, while the boundary line itself still matches and would
-    otherwise index the hash with undef and warn under use warnings.  The
-    guard keeps such a repository as silent as it was before this patch
-    rather than half-fixing it.  Behaviour today:
-    
-    	$ git init --object-format=sha256 r && cd r
-    	$ ... two commits, each carrying a Signed-off-by ...
-    	$ git contacts 'HEAD^!'
-    	$ echo $?
-    	0
-    
-    That silence is there before this patch as well, so it is not a
-    regression, and repairing it means all three regexes at once.  It
-    wants its own patch.
-    
-    A second one, noted for the same reason.  Three subprocess pipes are
-    closed without checking the exit status -- in get_blame(),
-    parse_rev_args() and scan_rev_args() -- while import_commits() and
-    mailmap_contacts() both die on a non-zero $?.  A blame that fails is
-    therefore indistinguishable from a blame that found nothing.  This
-    patch does sharpen the consequence without causing it: an empty list
-    is now a legitimate answer, so the silent-failure case and the
-    correct case look alike where before an empty list was already
-    suspicious.  Still older than this patch, and still not repaired
-    here.
-    
-    A third, and the cheapest of them.  The final loop prints keys
-    %$contacts unsorted, so Perl's hash randomisation reorders the output
-    between runs: five runs over the same commit here produced five
-    different orderings of the same four names.  That makes the output
-    awkward to diff and awkward to pin in a test, which matters if anyone
-    wants to add the test surface this directory has never had.  One sort
-    fixes it.  This patch does not go near the print loop.
-    
-    Based on maint rather than master: the behaviour has been wrong in
-    released versions since 4d06402b1b in 2013, and SubmittingPatches asks
-    for the oldest integration branch a change is relevant to.
+    The test asserts one fetch round for a packing request of 2 absent and
+    16 loose objects, and counts two without the code change, under both
+    SHA-1 and SHA-256.  Which objects sort where depends on the hash, so
+    the test checks its own precondition, that at least one loose object
+    sorts before the first wanted one, instead of assuming it.  A hash
+    change turns the test into a failure rather than into one that passes
+    for the wrong reason.
 
- contrib/contacts/git-contacts      | 16 +++++++++++-----
- contrib/contacts/git-contacts.adoc | 12 +++++++-----
- 2 files changed, 18 insertions(+), 10 deletions(-)
+ builtin/pack-objects.c | 13 +++++++-----
+ t/t5300-pack-object.sh | 45 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+), 5 deletions(-)
 
-diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-contacts
-index 85ad732fc0..25a918ae92 100755
---- a/contrib/contacts/git-contacts
-+++ b/contrib/contacts/git-contacts
-@@ -62,18 +62,24 @@ sub get_blame {
- 	my ($commits, $source, $from, $ranges) = @_;
- 	return unless @$ranges;
- 	open my $f, '-|',
--		qw(git blame --porcelain -C),
-+		qw(git blame --porcelain -C --root),
- 		map({"-L$_->[0],+$_->[1]"} @$ranges),
- 		'--since', $since, "$from^", '--', $source or die;
-+	my ($cur, %blamed, %boundary);
- 	while (<$f>) {
- 		if (/^([0-9a-f]{40}) \d+ \d+ \d+$/) {
--			my $id = $1;
--			$commits->{$id} = { id => $id, contacts => {} }
--				unless $seen{$id};
--			$seen{$id} = 1;
-+			$cur = $1;
-+			$blamed{$cur} = 1;
-+		} elsif (defined($cur) && /^boundary$/) {
-+			$boundary{$cur} = 1;
- 		}
- 	}
- 	close $f;
-+	for my $id (keys %blamed) {
-+		next if $boundary{$id} || $seen{$id};
-+		$commits->{$id} = { id => $id, contacts => {} };
-+		$seen{$id} = 1;
-+	}
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 27048bbb4d..448ddb99eb 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2227,12 +2227,13 @@ static int can_reuse_delta(const struct object_id *base_oid,
+ 	return 0;
  }
  
- sub blame_sources {
-diff --git a/contrib/contacts/git-contacts.adoc b/contrib/contacts/git-contacts.adoc
-index dd914d1261..725e2be6f4 100644
---- a/contrib/contacts/git-contacts.adoc
-+++ b/contrib/contacts/git-contacts.adoc
-@@ -37,11 +37,13 @@ DISCUSSION
+-static void prefetch_to_pack(uint32_t object_index_start) {
++static void prefetch_to_pack(struct object_entry **sorted_by_offset,
++			     uint32_t object_index_start) {
+ 	struct oid_array to_fetch = OID_ARRAY_INIT;
+ 	uint32_t i;
  
- `git blame` is invoked for each hunk in a patch file or revision.  For each
- commit mentioned by `git blame`, the commit message is consulted for people who
--authored, reviewed, signed, acknowledged, or were Cc:'d.  Once the list of
--participants is known, each person's relevance is computed by considering how
--many commits mentioned that person compared with the total number of commits
--under consideration.  The final output consists only of participants who exceed
--a minimum threshold of participation.
-+authored, reviewed, signed, acknowledged, or were Cc:'d.  Commits that `git
-+blame` marks as a boundary of its search are skipped, since they need not have
-+touched the lines at all, so a patch may end up with no participants.  Once the
-+list of participants is known, each person's relevance is computed by
-+considering how many commits mentioned that person compared with the total
-+number of commits under consideration.  The final output consists only of
-+participants who exceed a minimum threshold of participation.
+ 	for (i = object_index_start; i < to_pack.nr_objects; i++) {
+-		struct object_entry *entry = to_pack.objects + i;
++		struct object_entry *entry = sorted_by_offset[i];
  
+ 		if (!odb_read_object_info_extended(the_repository->objects,
+ 						   &entry->idx.oid,
+@@ -2246,7 +2247,9 @@ static void prefetch_to_pack(uint32_t object_index_start) {
+ 	oid_array_clear(&to_fetch);
+ }
  
- OUTPUT
+-static void check_object(struct object_entry *entry, uint32_t object_index)
++static void check_object(struct object_entry *entry,
++			 struct object_entry **sorted_by_offset,
++			 uint32_t object_index)
+ {
+ 	size_t canonical_size;
+ 	enum object_type type;
+@@ -2389,7 +2392,7 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
+ 	if (odb_read_object_info_extended(the_repository->objects, &entry->idx.oid, &oi,
+ 					  OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_LOOKUP_REPLACE) < 0) {
+ 		if (repo_has_promisor_remote(the_repository)) {
+-			prefetch_to_pack(object_index);
++			prefetch_to_pack(sorted_by_offset, object_index);
+ 			if (odb_read_object_info_extended(the_repository->objects, &entry->idx.oid, &oi,
+ 							  OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_LOOKUP_REPLACE) < 0)
+ 				type = -1;
+@@ -2619,7 +2622,7 @@ static void get_object_details(void)
+ 
+ 	for (i = 0; i < to_pack.nr_objects; i++) {
+ 		struct object_entry *entry = sorted_by_offset[i];
+-		check_object(entry, i);
++		check_object(entry, sorted_by_offset, i);
+ 		if (entry->type_valid &&
+ 		    oe_size_greater_than(&to_pack, entry,
+ 					 repo_settings_get_big_file_threshold(the_repository)))
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 73445782e7..d94e3d0630 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -650,6 +650,51 @@ test_expect_success 'prefetch objects' '
+ 	test_line_count = 1 donelines
+ '
+ 
++test_expect_success 'prefetch objects that sort after locally present ones' '
++	test_when_finished "rm -rf batch_server batch_client" &&
++
++	git init batch_server &&
++	test_config -C batch_server uploadpack.allowanysha1inwant 1 &&
++	test_config -C batch_server uploadpack.allowfilter 1 &&
++	test_config -C batch_server protocol.version 2 &&
++
++	for i in $(test_seq 1 8)
++	do
++		echo "content $i" >batch_server/file$i || return 1
++	done &&
++	git -C batch_server add . &&
++	git -C batch_server commit -m initial &&
++
++	git clone --filter=blob:none --no-checkout \
++		"file://$(pwd)/batch_server" batch_client &&
++	test_config -C batch_client protocol.version 2 &&
++
++	git -C batch_client rev-list --objects --all --missing=print >objects &&
++	sed -n "s/^?//p" objects | sort >absent &&
++	tail -n 2 absent >wanted &&
++
++	>loose_names &&
++	for i in $(test_seq 1 16)
++	do
++		echo "loose $i" |
++		git -C batch_client hash-object -w --stdin >>loose_names ||
++			return 1
++	done &&
++	sort loose_names >loose &&
++
++	# Objects that are in no pack are visited first, in object name
++	# order, so at least one locally present object has to be visited
++	# before the first wanted one for this to test anything.
++	awk -v limit="$(head -n 1 wanted)" "\$0 \"\" < limit \"\"" loose >earlier &&
++	test_file_not_empty earlier &&
++
++	cat wanted loose >to_pack &&
++	GIT_TRACE_PACKET=$(pwd)/trace_batch \
++		git -C batch_client pack-objects --stdout <to_pack >/dev/null &&
++	grep "fetch> done" trace_batch >donelines_batch &&
++	test_line_count = 1 donelines_batch
++'
++
+ for hash in sha1 sha256
+ do
+ 	test_expect_success "verify-pack with $hash packfile" '
 
 base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
 -- 
