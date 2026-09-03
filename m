@@ -1,85 +1,85 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60E1501F35
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 18:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614324FC8D2
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 18:13:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788459130; cv=none; b=qp+Uji0Szg1QVBrE6i4q5beAHIe5TmB1J0H7HKsh28MMTfmOIxIUpaUDkfC5IqCUAMCOYQMhF5cPJ6NtfQ1hzfEplJs176xmf+M/A7x6hpl4T/0JOOwvZ9athZyYuzNlDouPbP8P8uL55dbBpjifyHqzSAg9qMVSMT+SXk3/0uo=
+	t=1788459213; cv=none; b=qpDRb4B45fXB3wQTP/MRQSbyCGMRUkc+74ZsZDom8bHNRCRQS7km7GmLE6sv0NEcNu0WbM+HBoA+ev9AqvMVEDX3uqTJK+9asJEVevXJv8FFiobKePsEF1n4goOM89fRmS3tOaJskWXN5wkdzqGN/nHk2yBUs3s94flQFCD6Nms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788459130; c=relaxed/simple;
-	bh=km+pH6zDUwEZbHCiN/uKuDv60vvupmouapmyKBkNmhM=;
+	s=arc-20240116; t=1788459213; c=relaxed/simple;
+	bh=vJaaSZNxF1qD69NT5IfqB8SlT89dFtregiX3p6UQmEU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hxIlWL7h0gJlkMFfCLM/9ih/5Tkox71Q1u9wdgqzNYZ/bDrLdIPlDz8pJCSVRmBoqzdUK8wTMSS1crl3ZxR07V8YCkfpzxSD2D7IPhXVlnVJxpyPDFc3adFI0KBrXixnKZ0U9XWcn2vZvAjvkgZiKOKq2+wGxPU0HXoQrzX2G2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IHOhZe7/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pLY9AN7s; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=BJ6o8Puap8/8vDtPIuctXO4WjCNt4n+AS2WKpLM3h/FeuMHn8AhgQ9jtB5Mq5WtPX5RCrwZj+zhERzYOWAbqE5cb8ONy45pGu5+rxrRfFCwBBFljXF3nP30FhZqWRxKORCctqs9c74cg9HmgPazbOClpvPdP4zLjUQbxjD0Cqsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ApG6NhZD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MUJEdLlB; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IHOhZe7/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pLY9AN7s"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 053801D000B8;
-	Thu,  3 Sep 2026 14:12:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ApG6NhZD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MUJEdLlB"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6DF057A00DB;
+	Thu,  3 Sep 2026 14:13:31 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 03 Sep 2026 14:12:02 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 03 Sep 2026 14:13:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788459121; x=1788545521; bh=gyMDSXLNJa
-	GEHy6MeaHfasL1pkaJ27ukJ1x5VQ7Sd9Q=; b=IHOhZe7/QEDAEywgdKl8GytXQY
-	BaQxcWjTzqhQpGRsxMEr3ehvBrMnueacAbHMfKuFHiP1F33aqGLwAuUPgGIXbtMh
-	rmGLL5Z2q4d/mFR9hdzerSE6hg3ds54vkM+nBbiOBdHo0SvWFAVr2olRRmDBNnKe
-	kB4GiX4rDoM5Z1xGHOzXyU3q9ZCoqqPbiCCR2HTYipm73M11uUKFcQh9wHBUinfC
-	loZo/WfVHlxMFIRkFs/cVcnGS8gXMx/lgmrt+ah+tUwV5vdDDtdVR/qqazkAT5Y6
-	tEZOKO/XcVuxtoX88dDr6tT5HfdTsX16yJ1YasPlEef0tm5MGYt5ZBFnfvLg==
+	:subject:to:to; s=fm3; t=1788459211; x=1788545611; bh=VWsfTCGKQl
+	w+mMFJLsnr9UsKQnvq829/ojXYCnqXTVA=; b=ApG6NhZDChD4PJiNPxouAphGJu
+	oy9aCTNmAumTkE6VHruF5a9h9rRsKtEPBn3tPZAWxEs7VXSzny0rwW88N2CYPy66
+	VIM/76Vk9yMIRN/3wrB3XJvWQwleahktCnjv/rrDKaU9qiWUS8+5fCA/+a434BKF
+	30yfY83MnWvIG7k5AnW7lNFZxJhY2IQZaLo+zkqiLffKrVJtMRc1/9NJOZ7Yp1if
+	XAp+4nfkCJeGzzR/BfqOml0Ml+2997o5C3Xu3tnc6AVvDh2NneCQxMnWkBJU1x1C
+	7IC3P82yUO3vGWop1w+vCB2kw9qqnfrYraSxMCdLiiOJEoNf/iZqgGVBfu+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788459121; x=1788545521; bh=gyMDSXLNJaGEHy6MeaHfasL1pkaJ27ukJ1x
-	5VQ7Sd9Q=; b=pLY9AN7sh/G25DzGuxnSccMVUPm4G0YMtdCsNO+pVkHbEjQ6ziV
-	AthzbnAM91iMrpK6lQn0Kw5m23/JIVV1QpYf7EALGOuiC/NbxxCpS44b8KoAzAvH
-	zeEUv301bURCZMJtl0r3kHWuhRnOQCYbchk35mLlLSitR1hHvuiFv/a5RZmsCZLz
-	wzeEU1nHHlF10Sd8dSCAtI51Wn1/S1BkoDVNrTpElJidasjxK6llc1h6x+ppnpAJ
-	zdBTPJPCYeTgY1A92Y3X97d81ZevvELwIUMQJKhRnAOmOq+D5ydcCJe1VtBYAOrE
-	kK+XxJLqBSvYPGLlDcVX2nKqA9rCUmXlFPg==
-X-ME-Sender: <xms:cbiZavP077j5Vw2-Zf5Wo4yN7-hRfHEX2Fk5ouvijbMQqFkUf8IAvA>
-    <xme:cbiZahaVE5Dx8gvmV_1yFfqYyH4n_N1AX9RznKGiT-6FGJi85-nfKXI9aA7JdMtbY
-    8rXiSSpwKwHP_rVhFEKZTyuYT5IeLNTMXrc0Uoc3AyxyKVZxL7IXtM>
-X-ME-Received: <xmr:cbiZarpGDqkMs3R0L2e03YUY6sOZZE5HrLueWRPfSxjNJkTidVVSBm0crKy0PK5gejMUJa5gb7ovXFGLIAtpD_vpDvY_IBKF9g>
-X-ME-Proxy-Cause: dmFkZTEGUNq2RrpoHL5BbK+g+uFwh4scm/SWkYzvzVmt2u8rHOIjxXVrtNxc/5IKOYVPPa
-    barjmzodk2GsFXAl5YqON6V+pbZqkV6oOKSdH3TGZ0Vo15TsjABFvJnxc0RTLiMAZcZMRH
-    WDeS4Ym7NvbiGJt4jlSIgF6f6rdIzfeCnZA5D+D7LqLKngYAzgBm4ln5J4anYaCUHHK96Z
-    i6mitZn2STCcYPbZ83VvTcLeiWRZ93xZph/2Se+No+JqY8UGmOFLpk63qoCLhagn4sjjxa
-    9LMhEV/z9sPpYcSTIUGnnJmvf38I9bkr7yH+fIqduAl2ISen2Eh81++pbq/G3Jt/8pCKGK
-    Fiqsqy5Awjd1lkoe0oTg9rsy0WeSR6YHP6u+R8rbLwXhtZ/dngCv/oIGcTNZKKQ8R+QNMy
-    t3zDx6NWY0ar/qAYyt4ejrA9r/pu4lYWFnrQhUvfeiIQ/PIbsosGYF7XYADeLWbc4oEqdc
-    tmczc88VB0RZLGVxFYydYjWEn4ey0R0y9VVpEsLBMcQwH+4txOj7toC+VwaV989PKGofA5
-    R089pgFiPjr2a5mNp/hCZXTrJ//HriEdsTY3FFN+SA9aAbWQv/iVWAxh70mlW5bVe3O93I
-    trKkgObh380XnGU1XKANWKj/Z88uouHVSSZdVoEh4rXpKejj4UXgfoxXPutA
-X-ME-Proxy: <xmx:cbiZata84TYDpsCGxWndW1RQpvcx5cziyN5fm6Sr8vuqBlvwWmM09g>
-    <xmx:cbiZarQmb0GtxQxWR_8s2SZzhBRhbnRT4tq7NPtf721C4afOQmMy0g>
-    <xmx:cbiZas6zmolkF58LOGrzQWOC06vUMfMVPvHRMW5bTopdo1q3KeL4Hw>
-    <xmx:cbiZaoysJGigP9tSr1fYqdBPKKtxplnc2DhgLMFL4C0QkfTBh_WN3Q>
-    <xmx:cbiZakWt6HEIvlssdfhZh7aqdIUGC_yv3-1dAiO5BVN09LD4tK21apkk>
+	1788459211; x=1788545611; bh=VWsfTCGKQlw+mMFJLsnr9UsKQnvq829/ojX
+	YCnqXTVA=; b=MUJEdLlBUDbNTnGHFNsQPm0nchIK2prZJ1K7B3uF4XCq/sTiIG/
+	t6u8BjtAl8pydiWqeQEO6BuSeJeXpDLlPieJwWFM+WcyBZkV4mZIPSBHMU9KefuY
+	kiHevQUjahOCDBZQZUIWWyB3eYRFuAFtpBIKqU1JYJhJq1dL6eYIQoxiETUGBSnC
+	U+CHrye4D3deeHmtyknMOBq9yhF6SCKLpKb693hNrQTuGOv4nNdP4ZXt2x0mxR98
+	1iJLuBjBNm7bKyFDl1h6v7ClgHFLihTRudgJV8tR0fBRVAReiOk4dHyBgTQW/5uk
+	1O/AuMiZKKajdgjrKoF4QDuSwUC5u6cECFA==
+X-ME-Sender: <xms:y7iZaiMoNtJa-WIpiS2YuhDaNzm8IzrN_4XjHRSPeUBhEvaGZ0eUTA>
+    <xme:y7iZaoaANDWSxtJWMBpPUfbB5AhUzo672z_7tsnQa78T8dYuNdl253P6_3oVUiEPb
+    1LaOGpKTeqaSwbV_-p2rRcjNQR3OadD7k5S9HaOA9ylgJJ96A1AXE0>
+X-ME-Received: <xmr:y7iZamol2bY1cj2X10RHRyA6Z09XuB9Gp6ET34Qlr2uORA70kHvMwMgS6o526-nsFwtWgebKtbjyc8Apqkkm3p6AJ-cvVcyTsQ>
+X-ME-Proxy-Cause: dmFkZTFGDaJ26UxFhg1lFJihm0FeMu+BTGJ0Uw8/kA3rEBCPSGpwYByhImkStS/W7EQIRN
+    yAzwTbAaw1oUxE+lgFsomsmRt76i3YaL67XzeasJ6BZaBpgoqjPsHAwg34V3EU9jhN8pD1
+    igeGBgJZM223MHFGkohBKodMyD8BCI3A4Fg4SOArRQok0tDBdtL5lNLcG5dQ9gR4k+Cbk0
+    R3x2VbFrorr7bXfOFgnGbkfOFQoFsmcHcP9mFVc2dFjYnJydEMhsnhRFZuxITO9a0HYjW8
+    Q6vfmQ1viR5WSwhiCoy3gFbtNhi5qOZHNbRMnWDcdnIETODgsPHCdfd7iWzS4Axj5DpmnA
+    QMpmqqxclfh0di94/v25DJ7Nl0DGaMyof3L5AJXuXkiQk7mGri5XETmfsc/IiN0riDEFUU
+    lVBvLOyJWyEBBTRy6bz1j2O2N3svFZBp/IJiw+849HJoxeMonwr6RE0txIoQ9wqsp1FI1o
+    oaw/p79WE1GTKX7rx4xJuWMf9Mn4EhZ2hFJHOL9oYILrylQGyVGzTeSJQDPD3+yLb0Kz4H
+    dKbH8WhkynOwaEFwXh6/6Ug/YaFBhC/JyXDUj0Ldvi9iQzkO1mj39x07WPrtCnQa1yToln
+    8HNxuQ5hyMU5OZanYmpvCELFCLD0/pJ0hQTN2jCfxcfgoT0y3SKYSnHZp+jQ
+X-ME-Proxy: <xmx:y7iZasatlERlfpD-ivkBqWFVEJDATmU2VH8Pno9SUF2qGwlmINDpYA>
+    <xmx:y7iZauRcVxjRq32f1g5ec6ZXQiFeIleb1JRVhBGBn2XYE9Q9ZRjC4A>
+    <xmx:y7iZaj7maD9WLTHYNGku92KWPZaFzxWy2gS_kCJBLNPPIGz-i1actA>
+    <xmx:y7iZajzGgLHMx91idfZoJJUFI9P0e4vYJoSoqaCGUSuoXZ-VXsLy-Q>
+    <xmx:y7iZarVKDob7zShmz536JWCnvnX9CEjujvBNUaID5jyYpY9ta85ZXb5A>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Sep 2026 14:12:00 -0400 (EDT)
+ 3 Sep 2026 14:13:30 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Yannik Tausch <dev@ytausch.de>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] dir: find common prefix among non-exclude
- pathspec items
-In-Reply-To: <27FF785F-F5D5-44EC-93C2-5BD67BD99147@ytausch.de> (Yannik
-	Tausch's message of "Thu, 3 Sep 2026 12:04:51 +0200")
+Subject: pathspec: match and original in pathspec_item are const
+In-Reply-To: <xmqq4ig6cihc.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	03 Sep 2026 11:11:59 -0700")
 References: <AA085B7A-F528-458A-8AA9-7664480997AE@ytausch.de>
 	<xmqqecfbk2eb.fsf@gitster.g>
 	<81EC0E28-13E7-4D10-BD07-3601124CBD77@ytausch.de>
 	<886A25E6-8854-4AF6-BF0B-CFB57B673026@ytausch.de>
 	<27FF785F-F5D5-44EC-93C2-5BD67BD99147@ytausch.de>
-Date: Thu, 03 Sep 2026 11:11:59 -0700
-Message-ID: <xmqq4ig6cihc.fsf@gitster.g>
+	<xmqq4ig6cihc.fsf@gitster.g>
+Date: Thu, 03 Sep 2026 11:13:29 -0700
+Message-ID: <xmqqy0dib3ue.fsf_-_@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,22 +89,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Yannik Tausch <dev@ytausch.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +void test_dir__common_prefix_skips_excluded_pathspec_items(void)
-> +{
-> +	struct pathspec_item items[] = {
-> +		{
-> +			.match = "unrelated/path",
-> +			.magic = PATHSPEC_EXCLUDE,
-> +			.nowildcard_len = 14,
-> +		},
+> This unfortunately triggers
+>
+> t/unit-tests/u-dir.c: In function 'test_dir__common_prefix_skips_excluded_pathspec_items':
+> t/unit-tests/u-dir.c:53:34: error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
+>    53 |                         .match = "unrelated/path",
+>       |                                  ^~~~~~~~~~~~~~~~
+>
+> Other than that, looking good.
 
-This unfortunately triggers
+We may want a preparatory patch before this step.
 
-t/unit-tests/u-dir.c: In function 'test_dir__common_prefix_skips_excluded_pathspec_items':
-t/unit-tests/u-dir.c:53:34: error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
-   53 |                         .match = "unrelated/path",
-      |                                  ^~~~~~~~~~~~~~~~
+----- >8 -----
+Subject: pathspec: match and original in pathspec_item are const
 
-Other than that, looking good.
+No existing code modifies these two strings in pathspec elements
+after they are created via these two pointers.  Declare them as
+"const char *" to stress on this fact and cast away constness from
+the code that frees these two strings.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ pathspec.c | 4 ++--
+ pathspec.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git c/pathspec.c w/pathspec.c
+index f78b22709c..06b7065372 100644
+--- c/pathspec.c
++++ w/pathspec.c
+@@ -749,8 +749,8 @@ void clear_pathspec(struct pathspec *pathspec)
+ 	int i, j;
+ 
+ 	for (i = 0; i < pathspec->nr; i++) {
+-		free(pathspec->items[i].match);
+-		free(pathspec->items[i].original);
++		free((void *)pathspec->items[i].match);
++		free((void *)pathspec->items[i].original);
+ 
+ 		for (j = 0; j < pathspec->items[i].attr_match_nr; j++)
+ 			free(pathspec->items[i].attr_match[j].value);
+diff --git c/pathspec.h w/pathspec.h
+index 5e3a6f1fe7..fc1b9465ad 100644
+--- c/pathspec.h
++++ w/pathspec.h
+@@ -35,8 +35,8 @@ struct pathspec {
+ 	unsigned magic;
+ 	int max_depth;
+ 	struct pathspec_item {
+-		char *match;
+-		char *original;
++		const char *match;
++		const char *original;
+ 		unsigned magic;
+ 		int len, prefix;
+ 		int nowildcard_len;
