@@ -1,73 +1,73 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F39329E55
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 21:45:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811B3317145
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 21:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788471957; cv=none; b=tK4e81t6k1WwEf0ZkcsbDmbbGcmiMm4KJU+fCZyrbshPrHXNRt3/i7OhsUbsz0XzNHwOR3XXf2kztkwctVwBI+Tn/JNrSKD/w+twP8pmftLzIdoq0cl7jrD9FRvTtgMAIH8C2x8/fyY4zKixZaNEiuFWA+JO+82lRnzmyzIhUOc=
+	t=1788471959; cv=none; b=NjDlenBp9SD76mj1QuXcrkPxCrOn9WfV7tCPquJbEkqfey5Yn+JLSAu4/sxZ+p2w5746chCUjGExYmmAwKC8aNBNLDcK43XKwxgGQAtqqhwZYdgpUrRM2kqVzo+2sZuAvOnA5fwHpkyeSqtTip8uV6swObXfP6XJNfKFwgQYfes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788471957; c=relaxed/simple;
-	bh=aR3halcjib+71noWDdRlyYUHkqRZ9dHd4s19C6P+bnk=;
+	s=arc-20240116; t=1788471959; c=relaxed/simple;
+	bh=HfT/S0wjln0NA0rDBo2W2jwRrRxFXfLKmF7Tdz6O7JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SAK1k/F6srlECyvshYT7hCkEIoDMqOKxp5Bbc7m2ryxHWF+yQ7EyNMlQ8vPB3cXk3Af1sAvP3SAU8PTYAmaRTM7xCdqQAWXKRtfZrq3yray4E8hNKtBFz2FPMRqxo2Sri8QfEPyxwicm+gHS6cE+2scxAt5uBuHxGWqtEKOstwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=awwmty4z; arc=none smtp.client-ip=209.85.221.49
+	 MIME-Version; b=qRy41Tk2948oJiIteF+cHaD8psBETVZ3eUU5N3CjTvUOuIatCbai/+oX+tsd9YIKtB+Z5rWWA6G6Fcfr3VD8KeJPzfIeQW4/GXpNrQjduRRyJlNPPdMmQJShTe+o4bj2UJ2xBwLu83PReWis9DsK3qIigtj1cY4YAD/6L+EXcuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=cRWHCYGo; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lex.la
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="awwmty4z"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-48584dc164fso337752f8f.0
-        for <git@vger.kernel.org>; Thu, 03 Sep 2026 14:45:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="cRWHCYGo"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4921eed3fa2so2988555e9.0
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 14:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lex.la; s=google; t=1788471953; x=1789076753; darn=vger.kernel.org;
+        d=lex.la; s=google; t=1788471955; x=1789076755; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=hjU1dB+m8NkxYbdp8wu2XJZaIjaatAM4TQBAiBbHcAc=;
-        b=awwmty4zROjTUe26ps6QgPu9qW8QLameyzIw9Zfj8grxWkQr1ul6wvhZmySAovQwVL
-         pJzy0/9iKb//lRX6rBt9cz04sRmsDbm9oou6oq/IykRLoPlFFhX/6pNE3ds+a4ierqM9
-         GKXia/hzAUrCG+/2w+TVbCg/z9u5IvYvdgArW8uMqiB1WMbpQecK/eo3ytE6JDCjZDR6
-         JxEynPh2M1W03m6U+PP9NuDxQ0vW9NMp+FOsFdiILytDcuGCJ7RIBp0Vn5oLF/FlmvL7
-         Gj1d1GoE7Ot/7P/nlYJ6Ks/XGaUjKZBjRBSK1sdNsSje9suiXFHuhCc+bKegvvrs8Ut6
-         cTXg==
+        bh=2gyKoRUBqvGScPNyQl7ZTVDJNd1Jd0wDjPZfahXCOAo=;
+        b=cRWHCYGoXE67FwZ+JmxNS3o+9hp2jLfw0plBOR4QWo+9z9FYUZgnVpNynfJ7mGZssF
+         yyRUkSYqDPguSHMzvm1FITLTgGWKj6EvWfiHPewTzNHHdp6CCcVxdoMz+f4VlgQ5kW6K
+         utQXYFrA+GPVi3Z9H7IvBZgqr+HWjkXJbnblxCkahndtZDbFxssvmcRhopRR8N/wgkit
+         cfS3LDZTf4jllMMRwIUYV2gr0akGSwimGS0Q7UjlvD4rfB4BKEELmRFuwHmGy2Nrw1cZ
+         3k5LsdT6sdj48Im7/d3io34HBEVsG1OAiUHLnzzH2SDmq0Xsnfn2pjYMI+NvKJaGqA9Z
+         hhPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788471953; x=1789076753;
+        d=1e100.net; s=20251104; t=1788471955; x=1789076755;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=hjU1dB+m8NkxYbdp8wu2XJZaIjaatAM4TQBAiBbHcAc=;
-        b=TjHkfJXsjyeoltv0/XLWpqGb6jb3jnMsHUKElAjD8qWrwVNyonr6o6MAoFmNmiNKA/
-         j64OadhJw1dHjerQ88+mTOxOYVzJDH7vD3K1eE4O0AiJ9byZovrkcCzZsXirogcSZEXn
-         AiSfGCv4I0vz204QgANupd71nU7XU5bVbgopjbNfwJdO2RQqQBklyLRcEr1ygQfGrR31
-         4Xh0cfEueSnSIdFSCN583/AgYxBgjtmWOybsnHu645aCNjEvy/csDrf3ApI/GLR9zPM/
-         aKlv8y9nEwhT8vN6ZrBcjiDNNceYYVEMqNImh6DyZA6ODPToSMY5nHH7gEDLiNyC/OBl
-         sUPg==
-X-Gm-Message-State: AFuF++krSH9zzB72mXpE5jIcxaiiwED5rdvPZw8xYJWceAIA1orqPpZR
-	BrANE/JaUrxJOXJVY7pLl5hqVCLCwx+1BP8kBxw+gPBDoI8EOWAs3U3aPC+ZX5FLpDiA6AI4Pw0
-	2riV1YvOqLw==
-X-Gm-Gg: AYBFou3ghUKdV6tiAYFJnMbcVrB9Ul5UxRKccYmvJjJORof8C7WgS0y0eQYOa7wYmJB
-	3CMSxa6PzZFS18XxuHW1c/zV2UKCoF39EevR54sgk3b6en+wifR5mQ40k795b9gnHSgP2ya3xl9
-	tDAh9HOt5ClLngJPiRnDBzIQYOxevXbzwmCPCrtH3S3JFqHGVbUkMS8v8IsbvvjwwOjXtWI8Pap
-	J7usnvSlHCGZlnd2TjEym6vJfZu3E9o8e8r/mSsY7ndnFyrxvzOjsTUr0VjbS+wtZwOXbTsz0VI
-	ZVP5TWbhymM4ZRxIt6L1E3vt1wfYTv1I1zUF1YH4MpXolplogxHpRxb7zUugTXRnHkv1Gvf81Hy
-	J1RvxLrNCBcWRFyDXj2H8aYWGKBpkLcPg7FzpHN0nHqIXPWj4AV46LoCCikY5dhBkltBQ5sMF8P
-	3Kjv34FIIMCYBet0fB/8mLu1ykCVWfgBhAtGl7fovusBcO1xjklVmxLIqB5L0UDkWf2ktM
-X-Received: by 2002:adf:e004:0:10b0:485:826f:3fc1 with SMTP id ffacd0b85a97d-485872b6a85mr2743994f8f.16.1788471953435;
-        Thu, 03 Sep 2026 14:45:53 -0700 (PDT)
+        bh=2gyKoRUBqvGScPNyQl7ZTVDJNd1Jd0wDjPZfahXCOAo=;
+        b=P2VSrQSpS6aNw5D1VF9+ld3ohIiJlGZfWZzqsrmdH1HyFqyvd2wqI2OLzWp+USZag9
+         Lpb0ZS1Zip7sEboQXKWp4/d3LX0jZlhn8Wr2GVf3loUD8EjgXhKadCo+0x1UDp/2/Ic/
+         Whgpf6BEikj9IRkfb7YoINLeC2UnqFnNL61q15SnqlEnIwyqTOMXTErdSTp+JBsxZ2kZ
+         cZYQVniWIwn2huzr3a2n1p2CxA+m6MpQkepXhF9jeSfr6Rc5VsaQmowOx5CF/+6hHT4q
+         RTxc8tesQDTXKc8l9Qo4y2kzw3SOxxgEYfHQSYzX1Dk1//yty3qzjvq6HrcEkd6ld47x
+         TEug==
+X-Gm-Message-State: AFuF++lRsmNFJpWq1gF59o+nY7QR+sFowARq+lns/cB0ixQPEYOVnzaB
+	X7DXZj6S7Y7y5J07gmeIOFIy6t6pWNwcD26d+lpvXljZODIDKqJ5p7xbmVwAVfAI5ouw6iVRSEl
+	dzndcRXVZKw==
+X-Gm-Gg: AYBFou19G9QAUaoPAWZF5LR6Pufgh3OvmEfL7ghZbTjDVm6LaOSiau45++kkwekf+3E
+	c8mRwb0wbG2RBEKZzBh5YOaTq4vSNFhyr4viUOEIz/mitNUgUWaunfoC0cnJKuChC3W/Qnd/QBx
+	rGEjWeh0/OrdbxfSwIkC7q3i1ov48DRJIIOS3cZMNp3b93k6JVYXZI6BD6rG815VNiK1vxCtHur
+	fFE8cA/1J+3H4HlGjmRqcZtsAS8R5HPTtppCi5XJjTC0Wh/rVqvBYLGHgmAbGS807oRh7ieqMm/
+	YgqYAZn1Hupoji0sF40RoA1a+Sk+iDeOHROc5s0TqUl0sL3Zcn5JhULEfmIbEWpsNFdWLefqxRj
+	FSk3tMJqH3ddMJPgYkzb+Z1X5ezBPuqOkNU0UTvpREyL5A+tIXZtETUtZPMmV2PvCIoIHMzRp+E
+	q4SVjTAz81OSDCsHD3zYycfZxvgDSTErgDJg9SEKjsNNNuRTqXobN35EbJgxQduDr45/XY
+X-Received: by 2002:a05:600c:3e0a:b0:495:6e68:5df2 with SMTP id 5b1f17b1804b1-49cf8267a36mr17661955e9.12.1788471955414;
+        Thu, 03 Sep 2026 14:45:55 -0700 (PDT)
 Received: from ownbook.home.lex.la ([84.17.55.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485883a9b49sm1154436f8f.17.2026.09.03.14.45.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cee80eda4sm98527905e9.15.2026.09.03.14.45.54
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 03 Sep 2026 14:45:52 -0700 (PDT)
+        Thu, 03 Sep 2026 14:45:55 -0700 (PDT)
 From: Aleksei Sviridkin <f@lex.la>
 To: git@vger.kernel.org
 Cc: Aleksei Sviridkin <f@lex.la>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push: fix --force-if-includes when remote-tracking ref has no reflog
-Date: Fri,  4 Sep 2026 00:45:51 +0300
-Message-ID: <20260903214551.53918-1-f@lex.la>
+Subject: Re: [PATCH 1/2] t3507: pin CHERRY_PICK_HEAD absence for a conflicting --no-commit
+Date: Fri,  4 Sep 2026 00:45:53 +0300
+Message-ID: <20260903214553.53942-1-f@lex.la>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <xmqqo6ee9jtx.fsf@gitster.g>
-References: <20260903010547.85469-1-f@lex.la> <xmqq5x0mfgyh.fsf@gitster.g> <20260903200015.36849-1-f@lex.la> <xmqqo6ee9jtx.fsf@gitster.g>
+In-Reply-To: <xmqq7bl29g2p.fsf@gitster.g>
+References: <20260903125524.67889-1-f@lex.la> <xmqq7bl29g2p.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,24 +77,23 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 Junio C Hamano <gitster@pobox.com> writes:
-> I didn't mean to say that Assisted-by was useless.  What I meant was
-> that "LLM" on that trailer has no information contennts.  Which LLM?
+> It is not apparent what problem, if any, the description
+> above claims the commit addresses.  Nor is it clear why
+> checking these combinations is relevant.
+> [...]
+> Can you help me understand the above two paragraphs a bit better?
 
-On "which LLM": I took the trailer from the kernel, and they dropped the
-model name on purpose. Christian Brauner's 816d9992d9ed
-(coding-assistants: simplify attribution) turned
-Assisted-by: AGENT_NAME:MODEL_VERSION into a bare Assisted-by: LLM,
-because naming the model "provides free advertising to proprietary
-software companies while adding little or no useful information". It
-fits my case anyway: this went through a router mixing models from three
-vendors, so there is no single model to name, and git's guidelines don't
-ask for one either. In case you are curious: k3, sol-5.6, fable 5.1,
-opus 5 and sonnet 5. If you would still rather I drop the trailer, I
-will.
+The test pins the one combination t3507 did not cover. The file already
+checks CHERRY_PICK_HEAD after a conflicting pick, after a clean pick, and
+after a clean pick under --no-commit, but not after a conflicting pick
+under --no-commit. That is the case a user hits by accident: the pick
+stops on conflicts, they resolve and run "git commit", and the original
+author is not restored. --no-commit never wrote the ref, d7e5c0cbfb skips
+it on purpose. Your reading is right and Gemini's is backwards: under
+--no-commit we do not want CHERRY_PICK_HEAD, and the test asserts it is
+absent. Without it, teaching git to write the ref there would leave the
+whole file green.
 
-I read the AI section. These are small fixes, I went through the whole
-change myself and can explain any part of it. I'll keep what I send
-lean.
-
-v2 with the sign-off last and the test_when_finished fix goes out once
-24 hours have passed since v1.
+The message was unclear, sorry. "it" was that missing case and
+"siblings" the three existing checks. v2 with a reworded message goes
+out once 24 hours have passed since v1.
