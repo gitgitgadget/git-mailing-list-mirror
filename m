@@ -1,148 +1,129 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614324FC8D2
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 18:13:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67ACD363C53
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 18:16:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788459213; cv=none; b=qpDRb4B45fXB3wQTP/MRQSbyCGMRUkc+74ZsZDom8bHNRCRQS7km7GmLE6sv0NEcNu0WbM+HBoA+ev9AqvMVEDX3uqTJK+9asJEVevXJv8FFiobKePsEF1n4goOM89fRmS3tOaJskWXN5wkdzqGN/nHk2yBUs3s94flQFCD6Nms=
+	t=1788459404; cv=none; b=dOAjYukS85NdRB4cGKSsGbGOEYcAEMEV4Gz7/xHYg+9axk/Oh+iUksaAi3WE6WQLz8xGLCRvwVnHckvjqGDmE5tgN2OnrbTLSmO17ZPxiKdq2X3FJrwT0zbdfDpXB3+37sFP0d5ndrV8EO4TUmUrE0ggbVvE7fCYcNu6b3BuLSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788459213; c=relaxed/simple;
-	bh=vJaaSZNxF1qD69NT5IfqB8SlT89dFtregiX3p6UQmEU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BJ6o8Puap8/8vDtPIuctXO4WjCNt4n+AS2WKpLM3h/FeuMHn8AhgQ9jtB5Mq5WtPX5RCrwZj+zhERzYOWAbqE5cb8ONy45pGu5+rxrRfFCwBBFljXF3nP30FhZqWRxKORCctqs9c74cg9HmgPazbOClpvPdP4zLjUQbxjD0Cqsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ApG6NhZD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MUJEdLlB; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788459404; c=relaxed/simple;
+	bh=KHmJioPj/xSKsBz+lwPrkNZT6gqIHatrdwb2Ax301VY=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=Xix5+yKpKOjZxPbWAMi+HmTx10OdpMMk7HfvkceJoMTIbDMAALe+MOLMXricooeqtxI1V8B18aPfUc/NQ7Q0kovYyT9y1GUf11OefiyI16GwikLk83EBddRUMetLADCvgIbmN74MQF6P2Mvlk0YE5nWTEMvKSGZgCFkdqTUwUk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CIDZ5muc; arc=none smtp.client-ip=74.125.224.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ApG6NhZD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MUJEdLlB"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6DF057A00DB;
-	Thu,  3 Sep 2026 14:13:31 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 03 Sep 2026 14:13:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788459211; x=1788545611; bh=VWsfTCGKQl
-	w+mMFJLsnr9UsKQnvq829/ojXYCnqXTVA=; b=ApG6NhZDChD4PJiNPxouAphGJu
-	oy9aCTNmAumTkE6VHruF5a9h9rRsKtEPBn3tPZAWxEs7VXSzny0rwW88N2CYPy66
-	VIM/76Vk9yMIRN/3wrB3XJvWQwleahktCnjv/rrDKaU9qiWUS8+5fCA/+a434BKF
-	30yfY83MnWvIG7k5AnW7lNFZxJhY2IQZaLo+zkqiLffKrVJtMRc1/9NJOZ7Yp1if
-	XAp+4nfkCJeGzzR/BfqOml0Ml+2997o5C3Xu3tnc6AVvDh2NneCQxMnWkBJU1x1C
-	7IC3P82yUO3vGWop1w+vCB2kw9qqnfrYraSxMCdLiiOJEoNf/iZqgGVBfu+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788459211; x=1788545611; bh=VWsfTCGKQlw+mMFJLsnr9UsKQnvq829/ojX
-	YCnqXTVA=; b=MUJEdLlBUDbNTnGHFNsQPm0nchIK2prZJ1K7B3uF4XCq/sTiIG/
-	t6u8BjtAl8pydiWqeQEO6BuSeJeXpDLlPieJwWFM+WcyBZkV4mZIPSBHMU9KefuY
-	kiHevQUjahOCDBZQZUIWWyB3eYRFuAFtpBIKqU1JYJhJq1dL6eYIQoxiETUGBSnC
-	U+CHrye4D3deeHmtyknMOBq9yhF6SCKLpKb693hNrQTuGOv4nNdP4ZXt2x0mxR98
-	1iJLuBjBNm7bKyFDl1h6v7ClgHFLihTRudgJV8tR0fBRVAReiOk4dHyBgTQW/5uk
-	1O/AuMiZKKajdgjrKoF4QDuSwUC5u6cECFA==
-X-ME-Sender: <xms:y7iZaiMoNtJa-WIpiS2YuhDaNzm8IzrN_4XjHRSPeUBhEvaGZ0eUTA>
-    <xme:y7iZaoaANDWSxtJWMBpPUfbB5AhUzo672z_7tsnQa78T8dYuNdl253P6_3oVUiEPb
-    1LaOGpKTeqaSwbV_-p2rRcjNQR3OadD7k5S9HaOA9ylgJJ96A1AXE0>
-X-ME-Received: <xmr:y7iZamol2bY1cj2X10RHRyA6Z09XuB9Gp6ET34Qlr2uORA70kHvMwMgS6o526-nsFwtWgebKtbjyc8Apqkkm3p6AJ-cvVcyTsQ>
-X-ME-Proxy-Cause: dmFkZTFGDaJ26UxFhg1lFJihm0FeMu+BTGJ0Uw8/kA3rEBCPSGpwYByhImkStS/W7EQIRN
-    yAzwTbAaw1oUxE+lgFsomsmRt76i3YaL67XzeasJ6BZaBpgoqjPsHAwg34V3EU9jhN8pD1
-    igeGBgJZM223MHFGkohBKodMyD8BCI3A4Fg4SOArRQok0tDBdtL5lNLcG5dQ9gR4k+Cbk0
-    R3x2VbFrorr7bXfOFgnGbkfOFQoFsmcHcP9mFVc2dFjYnJydEMhsnhRFZuxITO9a0HYjW8
-    Q6vfmQ1viR5WSwhiCoy3gFbtNhi5qOZHNbRMnWDcdnIETODgsPHCdfd7iWzS4Axj5DpmnA
-    QMpmqqxclfh0di94/v25DJ7Nl0DGaMyof3L5AJXuXkiQk7mGri5XETmfsc/IiN0riDEFUU
-    lVBvLOyJWyEBBTRy6bz1j2O2N3svFZBp/IJiw+849HJoxeMonwr6RE0txIoQ9wqsp1FI1o
-    oaw/p79WE1GTKX7rx4xJuWMf9Mn4EhZ2hFJHOL9oYILrylQGyVGzTeSJQDPD3+yLb0Kz4H
-    dKbH8WhkynOwaEFwXh6/6Ug/YaFBhC/JyXDUj0Ldvi9iQzkO1mj39x07WPrtCnQa1yToln
-    8HNxuQ5hyMU5OZanYmpvCELFCLD0/pJ0hQTN2jCfxcfgoT0y3SKYSnHZp+jQ
-X-ME-Proxy: <xmx:y7iZasatlERlfpD-ivkBqWFVEJDATmU2VH8Pno9SUF2qGwlmINDpYA>
-    <xmx:y7iZauRcVxjRq32f1g5ec6ZXQiFeIleb1JRVhBGBn2XYE9Q9ZRjC4A>
-    <xmx:y7iZaj7maD9WLTHYNGku92KWPZaFzxWy2gS_kCJBLNPPIGz-i1actA>
-    <xmx:y7iZajzGgLHMx91idfZoJJUFI9P0e4vYJoSoqaCGUSuoXZ-VXsLy-Q>
-    <xmx:y7iZarVKDob7zShmz536JWCnvnX9CEjujvBNUaID5jyYpY9ta85ZXb5A>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Sep 2026 14:13:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Yannik Tausch <dev@ytausch.de>
-Cc: git@vger.kernel.org
-Subject: pathspec: match and original in pathspec_item are const
-In-Reply-To: <xmqq4ig6cihc.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	03 Sep 2026 11:11:59 -0700")
-References: <AA085B7A-F528-458A-8AA9-7664480997AE@ytausch.de>
-	<xmqqecfbk2eb.fsf@gitster.g>
-	<81EC0E28-13E7-4D10-BD07-3601124CBD77@ytausch.de>
-	<886A25E6-8854-4AF6-BF0B-CFB57B673026@ytausch.de>
-	<27FF785F-F5D5-44EC-93C2-5BD67BD99147@ytausch.de>
-	<xmqq4ig6cihc.fsf@gitster.g>
-Date: Thu, 03 Sep 2026 11:13:29 -0700
-Message-ID: <xmqqy0dib3ue.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CIDZ5muc"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-66bd7857841so152350d50.3
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 11:16:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788459402; x=1789064202; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Tb6FTlD8wK8cE1txj+9Hxwk3MWXeSQxd1Fek8pZOpGk=;
+        b=CIDZ5mucnrqQYipK6S+3bVFFZrWEXh/4YohrOWh7vEeyCqnfnaqwPHUPbykJ8+9cIC
+         cNf35v3lqkX+o5TKIgWRsejHWafO11juGcgMdh2MQunqcuUgn79j2feIExcohC+zGSNJ
+         ArlafeK2C6S/YIyjnKt0a/zMQb6DjzARQWj0/AJxmF+IfC6tuQfZlY8UbbJ1lFhNdMIU
+         2grgM9nyysSuhVYQjxbavh7VlsfJN+t3sLl33JqlKFBMMTl/1zVLTb2XBR5JZGUp5OTZ
+         z4poT/nQMPEJDf0irPIjbA73xc5t7gBS8u8cxKozYx0i+aJ5Y7ZFbc5I7uWiWQ/M8nTK
+         lt2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788459402; x=1789064202;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Tb6FTlD8wK8cE1txj+9Hxwk3MWXeSQxd1Fek8pZOpGk=;
+        b=a1DuvU/tdNK++PkhEA3+Igb/AkaKtXduNCa5YpMpqqQDpZejMkWGIuUgE7EB6+jLxq
+         ChNA8L6DWOqNdgsQ3Ldt+nOZcBQH56HxVGs3HpTXtoVHEJCRTUPDETQ7wuyIHJ3PE5s7
+         2LQGmpzo29pcafKZl8gY4mFncxo0VXu38sTI+XPHXsyuYnO++j5QZ3nxteJO72T8fIL0
+         0+RoS057j0WWKFvWawdvik6hA79oM61e2zn5vXMQzeTqopr0ZPJd3EQG71icAyfuHfaW
+         3ile7x52+Pou/W2XDuqB16rtBDEY57wsPWxHNh7uDZ2gAEnfsQhUYuntEWnXamb7veeZ
+         qwKg==
+X-Forwarded-Encrypted: i=1; AKwUvBx8Wb+ThJAEm2k6Nn8sp6LAJ4Wt274iAGoSkfwuv42ns7ODMhpcxqQCfEeiBRaxellEU44=@vger.kernel.org
+X-Gm-Message-State: AFuF++lhuRp/YvRkp6bCEdDnP1UTv3nVuJkrUU/8Uyh1iCaZ2jWHraDN
+	ltwXcxxjS/MLN/HLwupGfw6onMH8GMaJm6InRK9qyfygTLZ3w2aC7fYH
+X-Gm-Gg: AYBFou0zULoTvM+c2AF35ljQphvFmoFe/zLgYpVIKuyS7w98J9wFLBp6FdXrropKf0T
+	W6vts+SjrNPlQgJcBso7+9hFa9tZaMEiq/OwmFgYcsyUfonIUgxqlaVUgqbQU2Ysce8hYacTFhZ
+	+1v1Ef3VL29Ry5mNlYORIAG4T7lZ3+rgXZ1J3Ac+sxodhHIOfBZTwn+n55wupiXdvp1OCjEnx72
+	68odqwaWBQtC7hxEW6yBlGmVN+Pqj803Olbii7zzeM/HTf6Prqd5z1LGz/YUW+bxsTk1F/AGB1g
+	W08VJiLF0WwDWrKw30vCsZhIMCXOA7QAN7sjThltBpCdfllf3EG2J8p/ANZE3Z16ZK5mq09+TfB
+	9Mx90mXJkq8atWcC+KJNTeht2M8aTGT2eM3v0XE2YPdbBsxHXqX+yEw6v27Z/qhv/V5col/e45M
+	NYZk1CBtbT+QbY0+27ltXWWp03nNT5H9Hy5ZeqiBrKCgxwHcrGxqh25VHvHe1Lk+7ozBAKBaz3Y
+	16x4CNbGFiZ4HanAU3nBWbyJ4OYbXmbjogGGOvZdJDLd3hGqZV09MHvRe6phrrWJuzvKNZgFvL6
+	u5AqWTf6ULGd0j0bdSohsmKWJ0oU9QmIMrJiww==
+X-Received: by 2002:a05:690e:1c2:b0:66f:afdc:b49b with SMTP id 956f58d0204a3-66fb57643fdmr200126d50.0.1788459402188;
+        Thu, 03 Sep 2026 11:16:42 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:dd08:3986:f73c:a217])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66fb4939b30sm477237d50.15.2026.09.03.11.16.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Sep 2026 11:16:41 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v6 3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
+Date: Thu, 3 Sep 2026 14:16:31 -0400
+Message-Id: <D0BA1B32-1CAD-4328-A612-75A648413017@gmail.com>
+References: <xmqqbjaefhwo.fsf@gitster.g>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>,
+ Olamide Caleb Bello <belkid98@gmail.com>, Yuchen Tian <cat@malon.dev>
+In-Reply-To: <xmqqbjaefhwo.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> This unfortunately triggers
->
-> t/unit-tests/u-dir.c: In function 'test_dir__common_prefix_skips_excluded_pathspec_items':
-> t/unit-tests/u-dir.c:53:34: error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
->    53 |                         .match = "unrelated/path",
->       |                                  ^~~~~~~~~~~~~~~~
->
-> Other than that, looking good.
+> Le 3 sept. 2026 =C3=A0 11:56, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
+rit :
+>=20
+> =EF=BB=BFBen Knoble <ben.knoble@gmail.com> writes:
+>=20
+>>> I still am worried that something that sits this deep in the
+>>> callchain can easily BUG() when working on a repository that is not
+>>> the_repository due to the use of repo_config_values(), and we might
+>>> be better off adopting safe default when istate->repo is different
+>>> from the_repository, but other than that, I think the series is in
+>>> great shape.
+>>>=20
+>>> Thanks.
+>=20
+>> Yea. See previous messages re: convincing the test apparatus to
+>> set this globally. If I could run it that way at least locally, it
+>> would go a little ways towards scaring those BUGs out into the
+>> light.
+>=20
+> I am not worried too much about the current code.  I am more worried
+> about how much this will hinder future development of new features,
+> e.g., diff or status recursively going into submodules without
+> spawning subprocesses, which is done for grep already.
 
-We may want a preparatory patch before this step.
+Sure. Some kind of safe default could alleviate that.
+But seeing recent work in these areas convinces me that
+we should use this as impetus to lift the restriction, and
+I worry that papering over it will remove that impetus.
+Still, if a later series needs such a band-aid, I suppose it
+can add the safe fallback. And that=E2=80=99s where testing would
+be nice for automatic feedback on new such interactions.
 
------ >8 -----
-Subject: pathspec: match and original in pathspec_item are const
+> Testing and
+> seeing 'git grep --recurse-submodule' not hitting a BUG() does not
+> assure us all that much, as I do not think it needs to deal with
+> racily clean entries any specially.
 
-No existing code modifies these two strings in pathspec elements
-after they are created via these two pointers.  Declare them as
-"const char *" to stress on this fact and cast away constness from
-the code that frees these two strings.
+A prior reply of mine to Patrick specifically mentioned diff=20
+with submodules, I believe. But I agree that positive evidence=20
+is probably better than negative evidence.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- pathspec.c | 4 ++--
- pathspec.h | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git c/pathspec.c w/pathspec.c
-index f78b22709c..06b7065372 100644
---- c/pathspec.c
-+++ w/pathspec.c
-@@ -749,8 +749,8 @@ void clear_pathspec(struct pathspec *pathspec)
- 	int i, j;
- 
- 	for (i = 0; i < pathspec->nr; i++) {
--		free(pathspec->items[i].match);
--		free(pathspec->items[i].original);
-+		free((void *)pathspec->items[i].match);
-+		free((void *)pathspec->items[i].original);
- 
- 		for (j = 0; j < pathspec->items[i].attr_match_nr; j++)
- 			free(pathspec->items[i].attr_match[j].value);
-diff --git c/pathspec.h w/pathspec.h
-index 5e3a6f1fe7..fc1b9465ad 100644
---- c/pathspec.h
-+++ w/pathspec.h
-@@ -35,8 +35,8 @@ struct pathspec {
- 	unsigned magic;
- 	int max_depth;
- 	struct pathspec_item {
--		char *match;
--		char *original;
-+		const char *match;
-+		const char *original;
- 		unsigned magic;
- 		int len, prefix;
- 		int nowildcard_len;
+All-in-all, I=E2=80=99m not inclined to change the shape of this series
+at the present point in this discussion, but if you (or others)
+feel strongly about this =C2=AB safe default =C2=BB being a requirement,
+I will find some time eventually.=
