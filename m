@@ -1,133 +1,125 @@
-Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE824252C9
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 10:03:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20DA472F73
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 10:03:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788429837; cv=none; b=mbonskHkPW4ctN3r8fWCMhlxpW7o7RH39NY7TpXpYW82iYOFo+VlyjVFk5csew34VwrKdEZMqYilPiJTI36UMXBQxvP119QTxynH6BV96KynVFzXdfWEtr5G2Jsmw67+dGdQOk9ZWZM2UiHQuLmpmS7kYj2iLcNbntpEfmtUYzs=
+	t=1788429843; cv=none; b=LJli8hBbIljvkHTN98EHdOVwWywF8o8tgUtCjGQeC02PorXRGQyLKS0/h5Yyi3egmrCV4/1RMoafacvvoFy3/2iK6+OC3SKxwEW2rEAFl4+DaJb6tARC9oNdKq6QnpwNip8zHK8VPlm42J+hHjk9llxAjkGWWxwU1Ytz/G+A9Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788429837; c=relaxed/simple;
-	bh=UHBMe94+L4jPSut5GiHGc1jGbEFRUWbzd2GDDHSBuqg=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=mTZE/gz3U5mJDxsmQFclprcE9p7DsXDEu6mkm2arYRnEXUtZCtwRLAl+Vo8mtKQ/E6ERmitylXw0nacnEHV1kun+eFpW21J7dm5rZxsxp2H8ZQ1FltoUrO4CD+Ks8ijjRpgN0f/XiLFQRza0RuX4aewCpRKHKEXztKWtA4YSODE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de; spf=pass smtp.mailfrom=ytausch.de; dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b=bHeNM+Ne; arc=none smtp.client-ip=80.241.56.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ytausch.de
+	s=arc-20240116; t=1788429843; c=relaxed/simple;
+	bh=G2A7ay7oDmfxJ+/JCVln6gMIyUoCKph1vs2WAmKrj6o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T0OQoM2GwTCpXw0Q0N3K9fuFT3NA4coDYNvLzZ2w/AKxx5QFlOoGkP1WRKCGK65ItUijgsHGRBOlH2xaO42cw6XDBe0X1CR2ODLbQnOxWTmT3ySO1Ym5XbNaY62J9TObvHZG9kQ7eBRq3cwBbCx5JfJN4LuETZur1kA1oSRkojU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F2Mm+wH8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q0b24s/V; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b="bHeNM+Ne"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4hbFYF0pmHzMlH0;
-	Thu, 03 Sep 2026 12:03:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ytausch.de; s=MBO0001;
-	t=1788429825;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=NKxMrAucIekyVmchIeFZ2rY9ZtdERNTRs1IKHb7OZy0=;
-	b=bHeNM+NevX3sOq3pxrMnkJW1Y3zfuEwC5oKkHWdU18/AYlRv7ksFRJri78zPUrCIxM626L
-	YmLNuHH6do5C4OlfvzBKKMncPY+6WIVio+/P95F+ajBArwTodLS0EcikjJCAjlqkhMudvW
-	6t6nAKlEaW68YSB68V2fTsn9v3/hg7ADeJvpjtdJMIHgJsPUKCRqIU9r13s4Rkx5jJKfqn
-	B9LH3R/DZ32a8aZ7PFzOfkREyLju88eJuCSq8QnCBouiBehVAuDzbpcST0eMjAvZVYNnCG
-	TSmXZQLEdsRewZKX8oc4jgjdoq9KE4Tx79T8WH7LQ4WDLsaZYrMOpubqwUPNhw==
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F2Mm+wH8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q0b24s/V"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 938EA1D00150;
+	Thu,  3 Sep 2026 06:03:50 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Thu, 03 Sep 2026 06:03:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1788429830; x=1788516230; bh=BjFg8OGIli
+	sszqT8YiAXY9CcnXj7JXjVdYm5BL63rj4=; b=F2Mm+wH8Wr75M2hD1W289oWgO0
+	wUljbiJZGlG8abOe6Mi4HNyRnphACsWg1Um9UobHt1zaLrnIu397cNTXP90N2dQk
+	oBv676dVLrICzhwjskq2BVZ3GX5Rs6qgMioAa/fMo/sQKtlE1CsoLMiku2/+kze7
+	DJoVqe3+YP5Nt+fCceAVDRQRkP0JSHR+xCZ/hwKYli7kXiUK/Ord7rm9zkKTlePS
+	IfBIjl8sUdVG2v4sU/3FfFv78SLPW8crFP6umfemeulHFXrPsHYYoKIssFynrYiA
+	zS17SzF+r4A9WM25T/M8kNKZ0b43PwQzz+ghXk1uqyORR7PlRM1vnkEBcdzw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788429830; x=1788516230; bh=BjFg8OGIlisszqT8YiAXY9CcnXj7JXjVdYm
+	5BL63rj4=; b=Q0b24s/VxD/1Faj/zEJ4pLCJbB5BESVcV+2rDJgiH+uBwKACBX6
+	IXbaK+H67IopQt+sIulGhP1fhIm8oOttA70a0a8Dkt7fiKphFnf8XExYymVeqMLB
+	JDu/QatpSF/y2dKLjNl2u6qDCzbJsT3X4iIpr6OCqC1MnK+tllUYkE++pzLVc/kG
+	bLw0WY3iaDOvzdU6tjU3BTysayyxbwDWiyUlKh2FfyIo+4Naob49x03qHEn4FE0o
+	Wwe0tGVXKlbmHwL+83eRq/k6etzBMXsKKhwMRYJ36VvZSVj6QXHeXytXZNu3NdqV
+	Vk6E66/gDwUVzPM7W3UUax6rIobOAf3RQpA==
+X-ME-Sender: <xms:BUaZavrviyNXbAheY-G7rgohTOy1SfCnDycT7xipVy0KzZOJeQbuNg>
+    <xme:BUaZai85lcbYwsi74qgC-kkQjds1Wty2VgEIpRPblSAsqTpEQvsIYQorpdPZLTg0h
+    tJsX_RM7aCQq5OUdPG3XFOW0p_ri-PErejbWLfKD6RrpUG1Lyt5QfQ>
+X-ME-Received: <xmr:BUaZajdis352yQHd2K3kOKReHVnoPqOh88kdKWl3XDXxxM8sCw3ekQ>
+X-ME-Proxy-Cause: dmFkZTFi60GcvFnvry02xxBuL3KSmu6IyNJ+R11mHwXXtZe3Dx5+qQ3b4yu0oo+M9D/WpL
+    rkrAyZ0ntpQnhJ9Wd79oRFUhv+XXFxqplKcOtWndV/Ao+jMrZPDjIHBY2dnlLA3+leVAy/
+    +/uH/qE/euLtDCElye+28Wkmvzf9p6lwHYNA2VMLm+CgMhyHbGiJjuzRTBRVOuoPaGZf2z
+    63ML1nfZCzf4lwssapzBEcBs8apgU6gJlgXy9gmSe3TKX01Lov+tReOZ02Dwf+VkwyJc4W
+    WmfHscBOr+RW9UsQRJvBzSIFgTVgBd/OjUAr46J6ptMVV6+VHxcDFOCgBgCCU/b08ISGlL
+    LM7yslQ9z8xkZ/v4Y7KaRkx2K2UMibLOu8/kWb6oaX3rB9qBO2I1TP+GYQiu8Qys9q9BSg
+    3LOSm89VeUQzAxNd7u6b+kycQiRO+kMwCupLVv1HDdfkVBEnVlABcLrgLkGWzgTWmROWVz
+    OeiMvdR+ltdZCBKYCSkBOOne8h8gAvnS6RYArTYx5JPhBKnnE/Qy2K3UG8tUsnQy5CKCbg
+    ecd5uu7Tg/+FYyXnCMK4r9ZCb3IlQXIuls4RjQVlKA6RMeYomWxdr3/UUybwKACxFbNC2O
+    ErbVg0PU0qdMBtjIiKsp4PB7ZT4E2xr+hsxr9fuG4xY5PqgLtBYZU/D/B05g
+X-ME-Proxy: <xmx:BUaZakJaguh4LKt3IfrYkQVJpwN5IoAXJKFskqQ1zmMLLgFKK84BYA>
+    <xmx:BUaZargweJveAQNvdMPAov-4vcK95B24EMVSeSuwsmgTZfVT8ObX6g>
+    <xmx:BUaZaqQSYKYzYOUpleV6dBmb2ZltrN4vlRl55HCgMUBAST1eNCLWAQ>
+    <xmx:BUaZatUjG3p6tGxfJFunUpiVeO3HLQFbQr_1Ekt7KYawz9nyqVAK6w>
+    <xmx:BkaZamzKhFviCunVOXTLrk9wBxWoBrz7CVfnAcKxrCkstlMC-FW6ilZ4>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 3 Sep 2026 06:03:48 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ba0dc5ec (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 3 Sep 2026 10:03:51 +0000 (UTC)
+Date: Thu, 3 Sep 2026 12:03:39 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com,
+	kristofferhaugsbakk@fastmail.com,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v6 3/4] receive-pack: move message generation to separate
+ function
+Message-ID: <aplF-zxlGRqZs6tf@pks.im>
+References: <20260903-758-introduce-hook-v6-0-6283b1fb9b1c@gmail.com>
+ <20260903-758-introduce-hook-v6-3-6283b1fb9b1c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Subject: [PATCH v2 1/2] dir: do not apply prefix to negative pathspecs
-From: Yannik Tausch <dev@ytausch.de>
-In-Reply-To: <886A25E6-8854-4AF6-BF0B-CFB57B673026@ytausch.de>
-Date: Thu, 3 Sep 2026 12:03:32 +0200
-Cc: Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0617001F-13BB-4548-A10A-89877977CFB5@ytausch.de>
-References: <AA085B7A-F528-458A-8AA9-7664480997AE@ytausch.de>
- <xmqqecfbk2eb.fsf@gitster.g>
- <81EC0E28-13E7-4D10-BD07-3601124CBD77@ytausch.de>
- <886A25E6-8854-4AF6-BF0B-CFB57B673026@ytausch.de>
-To: git@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260903-758-introduce-hook-v6-3-6283b1fb9b1c@gmail.com>
 
-common_prefix_len() derives the common prefix solely from positive
-pathspecs, skipping those marked with PATHSPEC_EXCLUDE. However,
-match_pathspec_with_flags() also passes that prefix when matching the
-negative pathspecs.
+On Thu, Sep 03, 2026 at 11:28:00AM +0200, Karthik Nayak wrote:
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index a9a3d21c24..9ac10465ac 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -2535,67 +2535,72 @@ static void update_shallow_info(struct command *commands,
+[snip]
+> +static void report(struct command *commands, const char *unpack_status)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +
+> +	generate_report(&buf, commands, unpack_status, REPORT_STATUS_V0);
+> +
+> +	if (use_sideband)
+> +		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
+> +	else
+> +		write_or_die(1, buf.buf, buf.len);
+> +	strbuf_release(&buf);
+> +}
+> +
+> +static void report_v2(struct command *commands, const char *unpack_status)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +
+> +	generate_report(&buf, commands, unpack_status, REPORT_STATUS_V2);
+>  
+>  	if (use_sideband)
+>  		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
 
-A negative pathspec may be shorter than the prefix. In that case,
-match_pathspec_item() advances item->match beyond its allocation and
-subtracts the prefix from item->len, producing a negative matchlen. It
-then dereferences the out-of-bounds pointer. If the resulting byte is
-not NUL, matchlen is converted to size_t when passed to ps_strncmp(),
-which may cause a much larger out-of-bounds read.
+A bit hard to see, but aren't these two functions now exactly the same
+except for the enum passed to `generate_report()`?
 
-The problem can be reproduced with AddressSanitizer:
-
-    make SANITIZE=3Daddress CFLAGS=3D"-g -O0" git
-    git init test &&
-    cd test &&
-    DIR=3D$(printf "a%.0s" {1..150}) &&
-    mkdir -p "$DIR" &&
-    touch "$DIR/f.txt" &&
-    git add -A &&
-    git commit -m test &&
-    ../git ls-files -- "$DIR/" ":(exclude)xy"
-
-This reports a heap-buffer-overflow. Without AddressSanitizer, the
-output may depend on the contents of memory following the negative
-pathspec.
-
-Fix the bug by using a zero prefix when matching negative pathspecs.
-Add a regression test that combines a positive pathspec with a longer
-common prefix and a shorter, unrelated negative pathspec.
-
-Signed-off-by: Yannik Tausch <dev@ytausch.de>
----
- dir.c                       | 2 +-
- t/t6132-pathspec-exclude.sh | 9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/dir.c b/dir.c
-index 95d8a1cce9..7072715389 100644
---- a/dir.c
-+++ b/dir.c
-@@ -593,7 +593,7 @@ static int match_pathspec_with_flags(struct =
-index_state *istate,
- 	if (!(ps->magic & PATHSPEC_EXCLUDE) || !positive)
- 		return positive;
- 	negative =3D do_match_pathspec(istate, ps, name, namelen,
--				     prefix, seen,
-+				     0, seen,
- 				     flags | DO_MATCH_EXCLUDE);
- 	return negative ? 0 : positive;
- }
-diff --git a/t/t6132-pathspec-exclude.sh b/t/t6132-pathspec-exclude.sh
-index 9fdafeb1e9..ad919cc739 100755
---- a/t/t6132-pathspec-exclude.sh
-+++ b/t/t6132-pathspec-exclude.sh
-@@ -183,6 +183,15 @@ EOF
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'negative pathspec shorter than positive pathspec =
-prefix' '
-+	git ls-files -- sub/sub/ ":(exclude)sub2" >actual &&
-+	cat <<-\EOF >expect &&
-+	sub/sub/file
-+	sub/sub/sub/file
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'multiple exclusions' '
- 	git ls-files -- ":^*/file2" ":^sub2" >actual &&
- 	cat <<-\EOF >expect &&
---=20
-2.55.0
-
+Patrick
