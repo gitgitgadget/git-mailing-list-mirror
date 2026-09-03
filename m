@@ -1,103 +1,183 @@
-Received: from ustc.edu.cn (smtp.ustc.edu.cn [202.38.64.46])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 697703F12CE
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 06:37:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.38.64.46
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE773B0AC6
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 07:40:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788417445; cv=none; b=gqZhoH3w9XXLQf2yL+mub6pWUw7QJvLEiMpRIxj+nSw3d4N/tJeLsTxGzNxJaYNVJXQI6+dXkPS5QEYHbcmrYLrwd0pdvEYpTwYRelj+P3FfSd0BOtvkJxa4ql3hY2kaBTriGq13YS40Uh51mkDqNbKbcSeU0K4QMW2PJlIco+A=
+	t=1788421224; cv=none; b=up7QiLH40aNPBDUSXpXEnSjY6x3gZnMY9mT/wr4Ie+JsAoJxcMJ/+mMLbZyTYdnYEEpc0buZEwImMRvvX4Rv8Wp/504U91h9KSs9kn7cjmD27uWK0eshJEmHWNpC2Ws2goftU/9fHO6Dafiwph0V1wwCDKciFqdnquDzsTvxyIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788417445; c=relaxed/simple;
-	bh=fhpAA7vV39shfpd1Oe/iJGdu8kMV4cbZTixRznWE8cc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZtXbiSdMMgDAgg3Cqb3fK33aLiyQ+Rt3yxYYezPF66H0ZRjpANSvr6VgV2FR3v76X56i8W4AB84S/l/35HL4o7kZlYeyUHMt87pJnUeANckhTBtvsUMdjPG6kCLq6kxfM8gfkfJWctmJnrm601b2u4NG7HnE/mKqhi5Nz+ciHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mail.ustc.edu.cn; spf=pass smtp.mailfrom=mail.ustc.edu.cn; dkim=pass (1024-bit key) header.d=mail.ustc.edu.cn header.i=@mail.ustc.edu.cn header.b=M+7SKljR; arc=none smtp.client-ip=202.38.64.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mail.ustc.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ustc.edu.cn
+	s=arc-20240116; t=1788421224; c=relaxed/simple;
+	bh=pW+YZKlD/Dr//KjZE6nznbg0YtzV9vFvb/LngxZgOh8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NjJGuC0Z5oEifZeQZ7KKrMxEe3gh4OWex8at4BHuhvyV3IrAFWxrj+GTjgpVujUZCYRCetYau1luR78FrCF8VgVU+rth21rs7rKwDUDbYvs2OBB5vdnq6Eyx3xZ3DfwKzzoJy/oyh2jaILFuuMPNFOSoH1Pb5+LvEzujJy6Pzoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PN6Lgd9j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qmgcJj38; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mail.ustc.edu.cn header.i=@mail.ustc.edu.cn header.b="M+7SKljR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=mail.ustc.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:Date:
-	Message-ID:In-Reply-To:References:MIME-Version:
-	Content-Transfer-Encoding; bh=mLymMKE3XI+cwzWz30zX+KjWIlMLLfXdSj
-	KE3noDtSQ=; b=M+7SKljRYCr56xeWhKJx8loAwhtyx4V2b9YUgPfyHFbADUOVBm
-	OswyH9CGGgh2CwRVrt/D6T2hPWZMkDOEQNlG1XBu9R75LsY1PrF2f5/5gxMccNCb
-	LG/8Y3GF/PIN0POG0ZN4/W4Ll7+/CnnYrDQTKS7wJVARtCDDi8S79zA5E=
-Received: from c7393ccae90d.ustc.edu.cn (unknown [210.45.70.69])
-	by mailimap2024 (Coremail) with SMTP id 3pYKCgDn7DOJFZlqMKXVAA--.690S2;
-	Thu, 03 Sep 2026 14:36:57 +0800 (CST)
-From: Jinbao Chen <zkd18cjb@mail.ustc.edu.cn>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PN6Lgd9j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qmgcJj38"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 99F931D0011E;
+	Thu,  3 Sep 2026 03:40:21 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 03 Sep 2026 03:40:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1788421221; x=1788507621; bh=Vh/WrFYTl/
+	YJ+70bZ+MLj2nry7fiA/fYVyy2LCr8Smw=; b=PN6Lgd9jN/HZ5tYfM6GWzN7Mnt
+	VsnPuW77bQi+K6QbgB1KDbio9mARMHDG0R5qNNgzzakdFuSNR7YtrFBTI4DmhYLI
+	1qQpGXVbbFH2X2Fl+vn4dtrzxhVqiYIGYq0+zbhMhVEp8T+KNq5+8A+DWSRE+WL/
+	tzLPPro2W98froCW7fScpVQOTQaK56JI/mUmrHpP4jKnkwJzYzjegh5y3FOs71Pa
+	TXoqkoxMV1Vr9HhaITnqEx/VcyJ/Z35GDjYCkYeprnXnc5ex5Ms05TnN7Yw9KD6f
+	lQFB9Yp3uHdevUHv5+D/LP1Jui0S+kR9vksxMpxQcFqas4VpYcZZZ+ucqraA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788421221; x=1788507621; bh=Vh/WrFYTl/YJ+70bZ+MLj2nry7fiA/fYVyy
+	2LCr8Smw=; b=qmgcJj38agMwN2lhN2HMiDwaW6/61TmV9GSoah2wGiwwyR3yjPm
+	zCoGYEr0B4lnR4rvVJkJ34E8uIj8scsABGyzgdRnmyTqfOE4kbeRYuPha9qkpoJy
+	QwLFpRF8Imz6Ke4TNjS0EP9gDjgfpUcoeRPv/GxzZyYdvgCbOQ05eeSyJ3+Nkqsw
+	Platm2qRhh38MPcZ0pRsKQRpkGfCzSJD49ipRIvzmEBIlqwOk3A4b2f8qX/4wa7o
+	+1OQnAwk4+kPKLp2oTgkgeo79zDaENPaskJt5Fw1BTX2DUyad9TVgIl4TaOm44B1
+	+PIcauql+MTTfRVl0Vg9ahxIElLJMKUA9RA==
+X-ME-Sender: <xms:ZCSZaryGK2uDPYHWenOJnN3YQEwv6JDsOe-UKBSiA5lT9-Knv0FhfA>
+    <xme:ZCSZakxwhn8Kqrxi03hVlIKjLTGZH7ZUWP10YiFBSU9mrY1CPgEGRDsucU8ltPSLJ
+    LApBNNDAJOx6GdCDwqcEfjLGHWktot5kLqr37dO-ZIAhKnP6yJczQ>
+X-ME-Received: <xmr:ZCSZalbVR7htPfeAqK3lYJWPflp_yABuu9oBNhMolfUXkF_1By3cVA>
+X-ME-Proxy-Cause: dmFkZTE/j4rIBAobMBGqjzhLPJ6sj54XEGgoNndrIgsB8U0L9xCGmFJs6ZPCJ9ahrQpFIv
+    3KPkNW1Zw/GRDWRls8H4IhzBDd+47wt3tnCA/mAGMEW+SIM/kYbFufJl5iFajmSeh+IGli
+    XByHFwNZM4/iUyEMzLwsph+Y4ZCh2iH7ksCXezrvjYm2BOBbM8pip63ldRLaHOGLU57Kvz
+    NXnHrSvoClyK85cBsg4kg5SLrmW03ZVVXd5QBtyFIKm+99cZtThxOBj0ckF0XmdnufiWNv
+    wVySeOjOcVDHvH0LAMo3mOdZMqt1dImeA1hOoK2jxYpH8xiya3miqysFZizuCn+BFPu5Xw
+    iwKCU/90ofK/YG2LdpRr5v5LbSv2ImUmw8WWo7G/Z68KLdnjA2tGaqv0VMdK13jy3BHDM2
+    WK/SvCRrl0IOl2+yW2y/i5W8M3A2EkJwOAllBzxzBminX6DdsenuB7+L55cXHjRLQ1IhTw
+    RJt8/kpz1+Gdc9QcvTAMiMt/d5FzQOxSg/aXsDGqS3LRdGQfG3eg5rnCL3D814Rukk61eI
+    r2dyhhD/79UijroL2kV0GIlVkJzS9+eLxsq+5/yfUoA6/5Z7rD05GbLuO5+4Dd/3KHwNY1
+    XsQ7sFN3BK00+qE3Fq7F55GtbgFiODnIA/vsU8Ok+1sz/2CIypYiTzrFztcA
+X-ME-Proxy: <xmx:ZCSZalVzhUO3KwPnjRQVzmU1qg1-IXJCxuxNMrOn0iNwfIayieJ1RQ>
+    <xmx:ZCSZajjBBQTAbIx_t9AscucWhyOR0jDzFrXpVduyONRvrOAGLYGRbg>
+    <xmx:ZCSZajvWHIk1ckekwfRrLmaPf1slsdzLElYOGWQ5FqMqd1-B7XyYuA>
+    <xmx:ZCSZas6T5zpkWwmT3gI9Vr5gV6TWpflUlQj0PKARjiSSy6nW6B8AgQ>
+    <xmx:ZSSZatZ3X4kyxjCit6n2iRvYI7XJXLAaNhUCq3r_qOAIBLJcmPTB1lBY>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 3 Sep 2026 03:40:19 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b0f6f630 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 3 Sep 2026 07:40:21 +0000 (UTC)
+Date: Thu, 3 Sep 2026 09:40:04 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
 	Junio C Hamano <gitster@pobox.com>,
-	Toon Claes <toon@iotcl.com>,
-	Jinbao Chen <zkd18cjb@mail.ustc.edu.cn>
-Subject: Re: [PATCH v2] history: do not dereference NULL when parent tree is missing
-Date: Thu,  3 Sep 2026 14:36:57 +0800
-Message-ID: <20260903063657.2067303-1-zkd18cjb@mail.ustc.edu.cn>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <5438d465.ab31e.1a062047bd5.Coremail.zkd18cjb@mail.ustc.edu.cn>
-References: 
+	Thomas Bachem <mail@thomasbachem.com>
+Subject: Re: [PATCH] rerere: keep a background gc from killing a rebase
+Message-ID: <apkkVAYOqjfAsp9-@pks.im>
+References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:3pYKCgDn7DOJFZlqMKXVAA--.690S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Aw4fCF1rCF13XF1xJrWxCrg_yoW8Gr17p3
-	929w4YkrWIvr43CFWkGF1rJFyj9w1xGr15CFWSk34xurnxCrn3tr1S9Fy5u3WUZaySva4F
-	vF45Jas8WF4DCrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvq14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26F1j6w1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
-	6r4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
-	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
-	AVWUtwCY02Avz4vE14v_GF1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
-	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
-	14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
-	IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
-	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0x
-	ZFpf9x0JUFQ6JUUUUU=
-X-CM-SenderInfo: p2ngimxfmeqzxdloh3xvwfhvlgxou0/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
 
-write_ondisk_index() dereferences the return value of
-repo_parse_tree_indirect() unconditionally.  If the parent commit's
-tree object is missing from the object store (corrupt repository,
-object removed by tooling, or incomplete restore), the function
-returns NULL and "git history split" crashes with a SIGSEGV.
+On Wed, Sep 02, 2026 at 08:31:37AM +0000, Thomas Bachem via GitGitGadget wrote:
+> From: Thomas Bachem <mail@thomasbachem.com>
+> 
+> Since 2.54 unscheduled maintenance uses the "geometric" strategy, so
+> the "git maintenance run --auto --detach" behind every "git commit"
+> runs "git rerere gc" in the background whenever rr-cache has an entry.
+> That includes the "git commit" the sequencer runs for a resolved pick
+> on "git rebase --continue".
 
-Guard the parse result and error out gracefully, following the
-codebase convention for objects that cannot be loaded.
+I think this hints that we should tweak the default value of
+"maintenance.rerere-gc.auto". The way it's currently written we indeed
+are quite aggressive with spawning `git rerere gc`, and I agree that we
+should tweak it. And in the best case we'd not only respect whether we
+have a specific number of entries, but we should also respect whether
+those would be garbage collected in the first place.
 
-Signed-off-by: Jinbao Chen <zkd18cjb@mail.ustc.edu.cn>
----
-Thanks for the review!
+I'll send a patch series later today to do this.
 
-Changes since v1 (no functional changes):
-- Dropped the parenthetical note about the UBSan diagnostic from the
-  commit message, as suggested.
-- Sent with the From address matching the Signed-off-by.
+[snip]
+> The gc needs the lock: it removes every rr-cache directory it finds
+> empty, and a rerere that has just created its directory but not yet
+> written the preimage looks exactly like that. So keep the lock and fix
+> both orders. When the gc finds the lock busy, let it warn and do
+> nothing this time, the way "maintenance run" treats its own lock, so a
+> manual "git rerere gc" sees the warning and the maintenance task and
+> "git gc" see a clean exit. When the gc holds the lock, let every other
+> caller wait it out instead of dying at once, for rerere.lockTimeout
+> milliseconds with the semantics of core.packedRefsTimeout: 1000 by
+> default, 0 for the old behaviour, -1 for an unbounded wait. Walking a
+> 20000-entry rr-cache takes about 0.4 s here.
 
- builtin/history.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Having a locking timeout is sensible anyway, I think. It does not only
+solve races with a concurrent maintenance run, but also with concurrent
+writers.
 
-diff --git a/builtin/history.c b/builtin/history.c
-index 000155ad9c..097631f5ba 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -786,6 +786,10 @@ static int write_ondisk_index(struct repository *repo,
- 	opts.dst_index = &index;
- 
- 	tree = repo_parse_tree_indirect(repo, oid);
-+	if (!tree) {
-+		ret = error(_("unable to parse tree %s"), oid_to_hex(oid));
-+		goto out;
-+	}
- 	init_tree_desc(&tree_desc, &tree->object.oid, tree->buffer, tree->size);
- 
- 	if (unpack_trees(1, &tree_desc, &opts)) {
--- 
-2.53.0
+> diff --git a/rerere.c b/rerere.c
+> index 8232542585..22d114262b 100644
+> --- a/rerere.c
+> +++ b/rerere.c
+> @@ -32,6 +32,7 @@ static int rerere_enabled = -1;
+>  
+>  /* automatically update cleanly resolved paths to the index */
+>  static int rerere_autoupdate;
+> +static int rerere_lock_timeout_ms = 1000;
+>  
+>  #define RR_HAS_POSTIMAGE 1
+>  #define RR_HAS_PREIMAGE 2
+> @@ -876,6 +877,8 @@ static void git_rerere_config(void)
+>  {
+>  	repo_config_get_bool(the_repository, "rerere.enabled", &rerere_enabled);
+>  	repo_config_get_bool(the_repository, "rerere.autoupdate", &rerere_autoupdate);
+> +	repo_config_get_int(the_repository, "rerere.locktimeout",
+> +			    &rerere_lock_timeout_ms);
+>  	repo_config(the_repository, git_default_config, NULL);
+>  }
+>  
+> @@ -908,12 +911,26 @@ int setup_rerere(struct repository *r, struct string_list *merge_rr, int flags)
+>  
+>  	if (flags & (RERERE_AUTOUPDATE|RERERE_NOAUTOUPDATE))
+>  		rerere_autoupdate = !!(flags & RERERE_AUTOUPDATE);
+> -	if (flags & RERERE_READONLY)
+> +	if (flags & RERERE_READONLY) {
+>  		fd = 0;
+> -	else
+> +	} else if (flags & RERERE_SKIP_LOCKED) {
+>  		fd = hold_lock_file_for_update(&write_lock,
+> -					       git_path_merge_rr(r),
+> -					       LOCK_DIE_ON_ERROR);
+> +					       git_path_merge_rr(r), 0);
+> +		if (fd < 0) {
+> +			warning_errno(_("unable to lock '%s', skipping"),
+> +				      git_path_merge_rr(r));
+> +			return -1;
+> +		}
 
+We should instead pass `LOCK_REPORT_ON_ERROR`, as the lockfile machinery
+knows better why exactly locking has failed.
+
+> +	} else {
+> +		/*
+> +		 * A background "rerere gc" holds the lock for as long as it
+> +		 * takes to walk rr-cache, so wait it out rather than die.
+> +		 */
+> +		fd = hold_lock_file_for_update_timeout(&write_lock,
+> +						       git_path_merge_rr(r),
+> +						       LOCK_DIE_ON_ERROR,
+> +						       rerere_lock_timeout_ms);
+> +	}
+
+I think we can easily combine those two branches and simply set the
+timeout value to 0 in case we see the flag.
+
+Patrick
