@@ -1,180 +1,154 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423614E56F3
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 16:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632174EA367
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 16:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788452203; cv=none; b=VPJ7wsQ8aTuMk/c+7jzZrcuyrIVpSkL4Fre3KAfOD7/kN6uyzvcBky72qltr0mi9J5xx2PYFreabRNk3xyf4CSe0Qi0lQoEOesZm5a8/V3OdY3JvJgKbvICG0XXhIDPRHN+IjvZAZ6suVMJDAO+vlj5Z2KVZX91Xnox9GemQgbE=
+	t=1788452267; cv=none; b=jCfxh5hzTnQ5pUY2gUmAsbetqR89Xx7DOVzGH69G7QlC45slBc/8GSnLqtZWwzkeTB39+4n14oNYpluRsKcXjf1if2EqefO12EnkmwANhPyEQjt6PP95YTOmDQ82dF96y1Avkx3+QRAugLdajiRVch/Qfd/4lJD8WqWZt4WSCp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788452203; c=relaxed/simple;
-	bh=/94fDBBSD/y+R13Q9fkHQSXjwbggj6vDy6wn3LckrU8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Hzd3K8UnyyxFMHMGN+HkEjZtWIoJUbRJNovMSnCV4BQdXmeLmaFFEatB2qRs9jG2/hlis2FeEyz3UMPF+MEwsG8K/TadzPa+cnVR/TCIoPSfMfmvszKrF3cWvuNLXo2qHr4z1qwJSJ1CNMWfQAyJAKnWUW905h9CQtQXj2krxwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JR4MuOSB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V05kIBUR; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788452267; c=relaxed/simple;
+	bh=O5XKP1vaRz242GMsU7lfAYdPBQgrEgI3Wiixcs2zYc0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=HKcXQLL47Z942YIcUEvowqeych4dGrBgih8O57rxfpd30uN8gxkX6a0xlVpI7pAwGBDwNF02PHGShMU9NUqhgMoI8E2Z0Fqpj+c4b1LBPoeI+oK+MmUNFTtGybPAyNEmkEoPjFI6e6FxAD6Q9UPHSPOeBMScdSlActmZBmUW9D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j9qYOXHW; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JR4MuOSB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V05kIBUR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 75A4B1D00027;
-	Thu,  3 Sep 2026 12:16:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 03 Sep 2026 12:16:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788452201; x=1788538601; bh=9wDGyLwO6O
-	B6H7lY02m4RGggk4cPp15G8XjsTrOLrOk=; b=JR4MuOSBzXSebQWm0mhfB2acw/
-	pbTInHU56NN7LJvjjPvX0xSP8mSg5+abFbhN8pj5+rgflobSuKZlloaJV5CUuNtR
-	cvJxZvWthjEinCoJcFxx3+M5nu22MmU9Jus9VFLfqxi1FtIfsae+5hW5Y+jPf1Vq
-	2HCyy4s0I8v9f/o4BEv7NkpOstd3hEq0rxc6KbHF3mdeg0Mztt+T8y8HI/hPpCOH
-	mKs3/j8KD4iIaTQVtFGiZ3iU/Egv/G5I9a2yCkVsRi5hPiAXO4sSriDTF/oTkr3e
-	/ITEnCKSbB2wd3Xs1AJu1c6NEdd4dFm7IiPfEMwnqLmUreiBxMX0EEGYNhCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788452201; x=1788538601; bh=9wDGyLwO6OB6H7lY02m4RGggk4cPp15G8Xj
-	sTrOLrOk=; b=V05kIBUR4OqIQVTlmaSBVGJnPS4wtJKFSJ5PHF/o6/lNOf8izs2
-	z1fsHgRtuxLCaagXKD9krJRaJ7UmA0LxfGAacx9ZmKTRX9PlXc8VvEVk9gs60Coc
-	SLjCEFbVhIyQJ0eiXu7SYgEML4PiRc6oFNrDDEXDHxleEs7ZHZA8A6buOVfypZgj
-	UpcGoZp0giHFRDoX7yri6kw4QbCDhKVVFtYIkMg8V6XPJNHIL0MAsEW06MwOmlD+
-	opt8qDsevtTYppu35wpzFaxRzuevG9evZEwvQToS9QwPVxKHpxKRzSqdVUmeDpSp
-	kFpewTmux82aUnkT06ZZ/jB83LRMnnh/x9w==
-X-ME-Sender: <xms:aZ2ZalOJ-5AmYcVJBqlnDRpUKZNEWFZXeIiWWOCq6ngPVGXaX8Mtvw>
-    <xme:aZ2Zau3wKmYA5mRXF4Ds3hzQyZtP6KTosOtybHI0i2vEpOqEQd3UpU8TirhM8xj8C
-    yuGhf8EW4_dhJfFGM3lpR8BzOa1eKPZAI6I1XFNkvdQLY2c_p-U6w>
-X-ME-Received: <xmr:aZ2ZaskVTFi9bDcfkoQ6HVFzPLhmqT0VMCG6Y8gwNyDr-2rTxeFCdJ_7H0JGdoOkyktdOFicwY9tDR1X8OKuhMQwHjmgvRED2g>
-X-ME-Proxy-Cause: dmFkZTEQTRIEaaoekEmJrQiehIvZMBJFCpYsDEKhAs99P3uFZGxp38s/S3sbdj/g0rHmHR
-    PNoUMMNnXX+HJhBHhFCkIalOiVuCBXnSuyhkW+44S/pQj4ZeL8d4ISj5u1U4xXghRGpuzq
-    g4AGxm/2WFvAvQ/1K0YfbbFgSJrV4OHsL0FCsQlT2BiGHNDt7zp2t02jJotkANQHq2LRPk
-    25e7fzGpyuj/NKMfey9u0TmyBSVZU03yDMH1yAH8m8dx49dxXj/SjhHMwDwQB0YARBhiKE
-    IxtP3tlN7o4a2Gbm1fXRlYnpHDHZp5637w7Xc549FZgFhFFrCv9Q2YyAKx5r23bFI6bjVU
-    7ROwmdaWg9BHRN9nsdCZu7gGHZ96EyjYnOpe94ZZ7/bvSJci5vVOaTyqdlalpQ50L5rgOP
-    7MHzsbRfK42j7ss3r5LKTtUH8j+GSFiS4bdjkE2CYvm8oOI+US3cdh4tPmdtgFUVJABPze
-    VCNI98+RAMh7MplvF9tnxBRj9/CmHmGsHrK2wQLdHo8/afkS9KgoCfiYUXZJzNkWef26G5
-    u16lAOW0zpb28Mg0nu7ktV3WsJqMWiK0THev9ioey29gkEGwPZQtI3GLyUXIINjDoXOplW
-    XmD1TgzN/magbysZy7UEaPMdjFZjnCbdHblgL5Isoz3I4p+J4V26yaKTQLEA
-X-ME-Proxy: <xmx:aZ2ZatUG5dyvPMRjy677VCCJGPKRBJwlMYKp8pNwpTYmnm4iMKLNVA>
-    <xmx:aZ2ZaqsDGQldDaOietK4YYAwpzExDJce4BcBXLkigHn3ugVq2WS10Q>
-    <xmx:aZ2ZaoaLkggjprsc5qI1Fgl9xzLf73wdHb79AaGwrex1w_W22Gcc2A>
-    <xmx:aZ2ZahUUgXlcXwV47PDilz7m9WPPh6pyq22bM3ZL0G3_T1kc04j8rA>
-    <xmx:aZ2Zat-QgXwlFgdqZSLVRrbwrBURdd3Lw8PqRJKaqqAa0hbfYuaUffJg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Sep 2026 12:16:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aleksei Sviridkin <f@lex.la>
-Cc: git@vger.kernel.org,  Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
-  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] push: fix --force-if-includes when remote-tracking ref
- has no reflog
-In-Reply-To: <20260903010547.85469-1-f@lex.la> (Aleksei Sviridkin's message of
-	"Thu, 3 Sep 2026 04:05:47 +0300")
-References: <20260903010547.85469-1-f@lex.la>
-Date: Thu, 03 Sep 2026 09:16:38 -0700
-Message-ID: <xmqq5x0mfgyh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j9qYOXHW"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7f4f3683fbcso8503a34.0
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 09:17:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788452264; x=1789057064; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=UGB2i/QkJoVav5uW3gzNrm4HOPShbrm4foTt9mu789o=;
+        b=j9qYOXHWKWD28oiGceFJnD2Sg8hQDNdso/4h4SYuRI+IEabPB0+BP/ZwFQuiyeey70
+         xsTbX39P31vdjvJL9V1ECP0wRtpgy/jGEDWh8AqgBJtI98lB1dBHuXp7MrcPOhgU6HEg
+         kB8If4TFyh1tYIjUSpi98BhIrnkTQeXnKxZ0M7EMGNoPWyxrM+3M72N8J1BT4FcVAPPf
+         XaT4zUwTmLSMebjiywob3MVgljvwuhN2mVwp1qkQ1sGwUwe5hl7SMPQ9cANDqiwYhYOf
+         2IsBm2+3WBeTLGCiMwJDdptHAb0CaIpe/RE5mK4cVehw0YXy5dH7/KVFBahcNR21wKq/
+         T0DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788452264; x=1789057064;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=UGB2i/QkJoVav5uW3gzNrm4HOPShbrm4foTt9mu789o=;
+        b=fe0gi9jMdDkGunzGu4dXqsCZMPVgTzPpk9k3P8RPmBLxJoOZsBceq9Pqm+iAXFgSE2
+         N7x6+ZR/04f9buYb7SfrWUtfoi0St01I/EXkP+R3IdL6SeHeM98QnnvAtg3pfd5NIgMI
+         gvhxY5dQ43e/2G60UwTxngswhyUn9sPKiYMXHnBUdNmLH4IuWcMRZ5LxuJBp1FLg5ery
+         FGovUYwPn57MdQga3D8lUE83yWGsxuSPKAA7igKea9UNrN/tSkkxLS7suy7h5f9lN4to
+         H6/ZbRcZznUwFDeXi5kFcfjsaljLvoYWqYhgsPumLJVgxdR7gtf+lFD6/Y9iCC+rsL32
+         5zvA==
+X-Gm-Message-State: AFuF++nReoNLrWuEb/JoP1hk13leWbeUE0ypNm5rpya4iSv9tT1YK0fg
+	McpeGH+SEzAYdbecldibQEvl1EH7m7HYZMU2JZ+xfExtXz9Wj9M3hoYq4WHkEg==
+X-Gm-Gg: AYBFou14peIxPoI4lz4wjyg6NYTwI9uKftWe4tNPcvhEqnULgfS8TMb8wcOIbhBDZ7b
+	NEQn6s/sSEWrwbPvmlo91nzCPWbCSexlorSKbx0AZGlWg6Rh+qL0w6SFnhBBeANrWsTIiTpiV6d
+	qybBethOsmEHe7y+RyOox9Lzs0Qxeffje6qRSuCcpmqYuc1vNvqoYDPxZ9jhoU6H7sbLkowRzVR
+	cWBUZxfej6EUdOKXvSoG6QXXP5Z/hukAuYuKzDWbtjvurjuc+uHGKTjFyzQ1iVHzOlZCoD84K/H
+	93ljv97uVzlWKRPXiJkO2dhv8YLqJJm+LTpzlzYLgTC0kCMeKV/r2wtAlhpahLxAw5umypp666W
+	9zq53gmHJKjoHRGd2F63vOo9RsToptnKb1VrMyDe6A+QqxNLjoLkNhleGc9k1E2WpEs1av4qMCt
+	ydfpylDYihz3c3djBiYtRhre/ti0LkwJDGytutTlbOTdZ7fY1n1DiEPkRJK5Tfbpo3
+X-Received: by 2002:a05:6830:6ea5:b0:7f9:5a3:c241 with SMTP id 46e09a7af769-7f905a3c462mr1593706a34.24.1788452264246;
+        Thu, 03 Sep 2026 09:17:44 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.176.148])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f9f6793f53sm299788a34.6.2026.09.03.09.17.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Sep 2026 09:17:43 -0700 (PDT)
+Message-Id: <pull.2216.git.1788452262806.gitgitgadget@gmail.com>
+From: "chib via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 03 Sep 2026 16:17:42 +0000
+Subject: [PATCH] git-gui: drain the cat-file pipe before closing it
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: chib <chib@foxmail.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    chib <chib@foxmail.com>
 
-Aleksei Sviridkin <f@lex.la> writes:
+From: chib <chib@foxmail.com>
 
-> Since 99a1f9ae10 (push: add reflog check for "--force-if-includes",
-> 2020-10-03), is_reachable_in_reflog() stops walking the reflog of the
-> local branch at entries older than the newest reflog entry of the
-> remote-tracking ref. That timestamp is read by a callback of
-> refs_for_each_reflog_ent_reverse() into a variable that is never
-> initialized, so when the remote-tracking ref has no reflog the walk
-> is cut off at whatever happens to be on the stack.
->
-> With the files backend a remote-tracking ref created by "git clone"
-> has no reflog and does not get one until it moves. On my machine the
-> leftover value exceeds any real timestamp: the walk stops at the very
-> first entry, never reaches the "Created from" entry that "checkout
-> --track" wrote, and the push is rejected with "remote ref updated
-> since checkout" although nothing on the remote has changed.
->
-> Initialize the timestamp to zero, so that a remote-tracking ref
-> without reflog makes the walk cover the whole reflog of the local
-> branch, as documented.
->
-> Signed-off-by: Aleksei Sviridkin <f@lex.la>
-> Assisted-by: LLM
+commit_committree opens "git cat-file commit <parent>" to read the tree
+line for the empty-commit check, reads only the first line, and then
+closes the pipe while the rest of the commit object (often several
+kilobytes of commit message) is still unread.
 
-The last line adds no useful information, though.  Besides, you are
-fully responsible for whatever LLM emitted and contributed into this
-patch, so your sign-off must be the last line in the trailers.
+On Linux this is harmless: the child process dies of SIGPIPE when it
+keeps writing, and that is not reported as an error when the pipe is
+closed. On Windows there is no SIGPIPE: the native git.exe gets a
+broken-pipe error when writing and exits with a non-zero status. Tcl's
+[close] then surfaces that as "child process exited abnormally", the
+commit is aborted, and the index lock is released with nothing
+committed. The failure only shows up once the parent commit's object is
+larger than the pipe buffer: in testing with Git for Windows 2.52,
+objects up to ~6.5 KiB always succeed while objects of ~9 KiB and up
+fail 10 out of 10 times (the threshold is around the 8 KiB pipe
+buffer). Amending a commit with a long message therefore triggers it
+reliably while short commits slip through. Reading the pipe to EOF
+before closing fixes it 10 out of 10 times, and is harmless on POSIX
+platforms where the same test succeeds either way.
 
-> ---
-> The new test fails without the fix on my machine (macOS, arm64). As
-> the value read is uninitialized, other platforms may pass it by luck.
+Read the rest of the pipe before closing it, mirroring what the amend
+path already does when loading the parent commit's message.
 
-The code change looks good.
+Signed-off-by: chib <chib@foxmail.com>
+---
+    git-gui: drain the cat-file pipe before closing it
+    
+    commit_committree opens "git cat-file commit " to read the tree line for
+    the empty-commit check, reads only the first line, and then closes the
+    pipe while the rest of the commit object (often several kilobytes of
+    commit message) is still unread.
+    
+    On Linux this is harmless: the child process dies of SIGPIPE when it
+    keeps writing, and that is not reported as an error when the pipe is
+    closed. On Windows there is no SIGPIPE: the native git.exe gets a
+    broken-pipe error when writing and exits with a non-zero status. Tcl's
+    [close] then surfaces that as "child process exited abnormally", the
+    commit is aborted, and the index lock is released with nothing
+    committed. The failure only shows up once the parent commit's object is
+    larger than the pipe buffer: in testing with Git for Windows 2.52,
+    objects up to ~6.5 KiB always succeed while objects of ~9 KiB and up
+    fail 10 out of 10 times (the threshold is around the 8 KiB pipe buffer).
+    Amending a commit with a long message therefore triggers it reliably
+    while short commits slip through. Reading the pipe to EOF before closing
+    fixes it 10 out of 10 times, and is harmless on POSIX platforms where
+    the same test succeeds either way.
+    
+    Read the rest of the pipe before closing it, mirroring what the amend
+    path already does when loading the parent commit's message.
 
-It is a bit surprising to see the fallout from a change 6 years ago
-to be addressed now, and makes me wonder what else changed recently.
-Certainly year 2026 is not the first year in which macOS on arm64
-started becoming widely used, or you are not the only user of Git on
-that platform.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2216%2F1dao%2Fgui-drain-catfile-pipe-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2216/1dao/gui-drain-catfile-pipe-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2216
 
->  remote.c            |  2 +-
->  t/t5533-push-cas.sh | 18 ++++++++++++++++++
->  2 files changed, 19 insertions(+), 1 deletion(-)
->
-> diff --git a/remote.c b/remote.c
-> index 00723b3..6d30169 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2751,7 +2751,7 @@ static int check_and_collect_until(const char *refname UNUSED,
->   */
->  static int is_reachable_in_reflog(const char *local, const struct ref *remote)
->  {
-> -	timestamp_t date;
-> +	timestamp_t date = 0;
->  	struct commit *commit;
->  	struct commit **chunk;
->  	struct check_and_collect_until_cb_data cb;
-> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-> index cba26a8..77f46f3 100755
-> --- a/t/t5533-push-cas.sh
-> +++ b/t/t5533-push-cas.sh
-> @@ -396,4 +396,22 @@ test_expect_success '"--force-if-includes" should allow deletes' '
->  	)
->  '
->  
-> +test_expect_success '"--force-if-includes" should allow forced update when remote-tracking ref has no reflog' '
-> +	rm -fr dst src &&
-> +	git init --bare dst &&
-> +	git push dst main main:branch &&
-> +	git clone --no-local dst src &&
-> +	test_when_finished "rm -fr dst src" &&
+ lib/commit.tcl | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-You'd want to move "test_when_finished" immediately before "git init
---bare dst", no?  That way, you can clean things up after any or the
-"init", "push", "clone" fails (as well as the main part of the test
-that is done in the subdirectory).
+diff --git a/lib/commit.tcl b/lib/commit.tcl
+index 89eb8c7b73..5e5f879f0e 100644
+--- a/lib/commit.tcl
++++ b/lib/commit.tcl
+@@ -386,6 +386,10 @@ proc commit_committree {fd_wt curHEAD msg_p} {
+ 		set fd_ot [git_read [list cat-file commit $PARENT]]
+ 		fconfigure $fd_ot -encoding iso8859-1
+ 		set old_tree [gets $fd_ot]
++		# Drain the pipe before closing it: on Windows, closing it
++		# while git cat-file still has output to write makes the
++		# child process exit with a failure status.
++		read $fd_ot
+ 		close $fd_ot
+ 
+ 		if {[string equal -length 5 {tree } $old_tree]
 
-> +	(
-> +		cd src &&
-> +		# a clone leaves the remote-tracking refs without reflog
-> +		# entries with the files backend, but not with reftable
-> +		git reflog expire --all --expire=all &&
-> +		git switch -c branch --track origin/branch &&
-> +		git reset --hard HEAD^ &&
-> +		test_commit D &&
-> +		git push --force-if-includes --force-with-lease="branch"
-> +	)
-> +'
-> +
->  test_done
->
-> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+base-commit: 5dcb97869546d600a114ef422a135e2e909c923c
+-- 
+gitgitgadget
