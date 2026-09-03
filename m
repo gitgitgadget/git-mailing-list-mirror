@@ -1,67 +1,67 @@
 Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA71F4A8401
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 12:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122104A8A1C
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 12:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788440134; cv=none; b=GXk+GDEYQ4qqlAvoaE/UxOQglpG0WIGsatc/Bz02RJPAMJreiT3bRAahUYAUoVWrp0LZsKJ+dmrpO9xwIiXql28lhH5t0UtgsndwF22bVe5H2EKgbIjUCTLn+QNgdSdKU/N7CMrWHGcbuoa/dbaSF/Kn5Zh6RfqbaHIDsjku41s=
+	t=1788440137; cv=none; b=eV4oFISBBbp3ZfTxW4hORttQNeW9A2l8voWdBD0SRfbrLa+pnQoNdtUTxGXFMNlF+a1fnTGxgpulKYCza4Fyx3pa7io4fEkhDKzcFYG6fFB0CAodfv2LOMxlRYVo1r9XbuwMG7VW0RlKTaPPcrq+1Ki1/U6NQqX/K9SfN7wbuVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788440134; c=relaxed/simple;
-	bh=SAAv9+pA5+jKP5+L0N7kqwhjZDHleBCq7w6WkEvNDN8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=E1DGr39oGspNkvEhsnFihmbUes76RMXipurwNIJvzOZTzoRp2uhuhgZKQFc0uxkbNup0dhyooFhy1Uo70EpmaA0ZeU1NRaBwuyqX+0S4ZAfyXvSlux2RigTqFlDgpHDEcXPXe3Ym4isWZwGzkgx3urQUFOpYELXN2eIn0InSH5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=c1mPNJ+n; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1788440137; c=relaxed/simple;
+	bh=RlbZHiPNp+KrtLMUypKGOqIwo2PXWgpSsSy10Y+pq/Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Rrer2upqRd4oQQTBulo/v/4o7FC22lSSb8GNsI5FpZr8VieulmttS0SNs75FPO2Ye+Yt7QvrtJkWEGZZGSqsBVzGJr4KKcgDM/yob+qsCkL4Y6wg38VXaxv3YkINXec8UtZaY92BHvZeUoPQl9q17zh20DmwuJMmY35PW6upyZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=NSKMt2xP; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lex.la
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="c1mPNJ+n"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-49b8eeb3ff2so21161245e9.2
-        for <git@vger.kernel.org>; Thu, 03 Sep 2026 05:55:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="NSKMt2xP"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-49b0d78a801so19563545e9.2
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 05:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lex.la; s=google; t=1788440131; x=1789044931; darn=vger.kernel.org;
+        d=lex.la; s=google; t=1788440133; x=1789044933; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EoMVD8dFcthCryGKU+AB3FsyB2Yma9031FlJi0Pjd0E=;
-        b=c1mPNJ+n9vLkg3qwWuaEsATnR5NkuSWNSqx5HjCCOUj0J7NyX0GfUlaaXZa0EdU4W2
-         GZFmUME3bjAf8PNj5DS4na07pozTZKGiBfGzcwNNf/mDeKXeQuwe8vxZ7Jov9zisqoqd
-         HEk29DcpF+UxHH4F/XJPkvHj6puS6ust8JN0j5eRl8yT+YyZSMVvw7iTKj/Iu9TxGYze
-         HbFvNKl3doujq2qQA39p79bhPrc4caLJzoSTSLXIp2ZQwZRFoQY56UpJ63kh13qYNEZQ
-         CR0cbW/Y7l/Wn9aBJ8xPHkhoA9cLfPLlBIN/Yd1CoAqz7ZIpdKlV8xROe9Yo1IqmGKxj
-         lP2w==
+        bh=FfV0XAfKKXjankkYOCyRy2+MXYYfHnZ4uEcwKPaL1QM=;
+        b=NSKMt2xPuRplY8diKCztIF9CvDRZfQInuyAkrZMHzdtoUNxCkm34OtX6+tBCVfdeBz
+         8z6t6TuBWpbOyyx0ASTORV5rDyVV3I8cd2nqnV/Cfbix/zHQYCQGXy2+mVkqdE+9+ya/
+         9CTLVpHxF3rSwzQZEHgshutNJOt1R71/1NLdGhe3h6Nl6Y4ptgELdmqFv5TKyDYGo5CY
+         DJTT590RaRRTyvTEodG0epb4O8fv7nmXSY/yrahpQiVLwo4/LaIrFOFHEqd/5NQGPeal
+         HDnK+GNsTMc+Dnw3vYsmHSj16eWz0CwEUySNvHuKq90UOjq91ai0v/ZalRpLRK/7JSJj
+         ga5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788440131; x=1789044931;
+        d=1e100.net; s=20251104; t=1788440133; x=1789044933;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=EoMVD8dFcthCryGKU+AB3FsyB2Yma9031FlJi0Pjd0E=;
-        b=HIk83SpQxq1VziejwCo92wtkym2rwE028ku2NHZ7of7R8HcHbbLMKPjD4S+lqjOcWH
-         Z8y1ZgRa5h1GWESHJJx4JJIXqdUIxNEawl7aaO8dyuEtRUwhcFmTLxPg4292+3LDffPd
-         u3+1r76sSt2BuHXYBt/20O22EV/QFqy64rdgsYEj5uk5pVi5hMuOqXXzPIeJCeT2mSRr
-         6wSHLIpu1TKW/NyrmqrgtZZt14TrUKj7A5MUXkjmBVZUnfLeh7O6bH/3sa9oGlkx4XXy
-         HWVGTf+VRKtnVi1ic0MDG8RXfKBrDDkmu5Ads8b8NwNYelqIzhBO73WI0BgDvKmuEIq0
-         vYnA==
-X-Gm-Message-State: AFuF++kpsO8rAktDRUZ22AJRyIJcCvC1d/54VgdggLmQJeiTGWOznq6i
-	FrqXILKIfRJAt48tTY9XX1VvMIJjOMNo1qKTPtFud/A468Xr7/Hb9BSuoP46Qk9uS+tAAIU8wYo
-	mPAsJEjSm/A==
-X-Gm-Gg: AYBFou0Tx0Z661znSZnWH0bTX4LkU7/ovtckI+S9h8OpVk5ZLEkyfbNEKUmZQPBvrda
-	F2idf6kiPAoP+U/HGOnAaPmP/w2kS/angmN2yvZhry96ci7ClpKBzJ1AAxeo7KxxJSUciMe5UNw
-	ulfrNgp2jR462XpoDXHGoY/gcgDAW0/7m9oErryF3VcwoLfPYQD4B0gXmqVW3SqSPXq55v2PdGh
-	9Nob98QGwzeNPzTYzpA3x1Q0BiKfw/nRsbdhx5ToQ293gMVGKCtACK+BfOoNw3ZaeE0ovrx2P2E
-	rcVeUzjyDZGyXiIQISYAyJXUsyiVkS2gYGw5FwNS43G5r8M9hyQzDM7Qpo7/wqQEbhwtqevARrZ
-	ptOcJPEwyS+/upqBYweL+YAaRzfAW6r0ukcA5HJFdUh9loaVgje3X+3OZljzPa+dPGYsqI/cP06
-	ktOnuJULU/1ogj0KLcnSHLe1yeQtRWmITMgzX1iwuU/3hMFt5phWZyj/GpnCXp4KaCFhXc
-X-Received: by 2002:a05:600c:5489:b0:499:4e47:eaf2 with SMTP id 5b1f17b1804b1-49ce58092a6mr189252435e9.6.1788440130993;
-        Thu, 03 Sep 2026 05:55:30 -0700 (PDT)
+        bh=FfV0XAfKKXjankkYOCyRy2+MXYYfHnZ4uEcwKPaL1QM=;
+        b=nqcxvh0+CeQvl0f1a/SghVx/A2waLnQLhXhOVb6YP+0c+eFvDzWO73c4EHIcoshCn1
+         8x2aFrTrXPFaiQgN4O53d0d6hLbF2M68qkzGqAe9KFWTTp3Df3DOzSIz8cnfgAjT57z6
+         M2Eqh5HlNke6Z1xIbl4vEckBGx3jS8HX7+WKmusqIJAd3SpvTP6idgHNKXTMAtkHJY3p
+         5nj5dhSJOmNLLrT0mhxtjBc1eZ/FCR3KB5GXL1aX6KfxDYdOWo1DEs2v4TZmlxbnfS2m
+         ykt5n3LLi9XEbDzyCAR+bmKaBrWUYxBYnWjmqfHw0aCeUnFX85BrLiWJQ9fm0fs1Zrnh
+         W55A==
+X-Gm-Message-State: AFuF++kEHhmPrOU6xlhIqyJHNdfL56S+kq5wsg5Oe9j7JT3vb0WOhHFx
+	+7Sbek/Ysv+uqaCVAsm05DYKmJgnUqgkxNLMsuBUB3fzSviQeJO+x0oH4+F6cklsy9E68INXe+G
+	Jd4xYIIavrQ==
+X-Gm-Gg: AYBFou0sD+MZd1FaWZw3IGdq9wKWk2krt+F8KPct2aA77QTgHfR/iPf/uqLoNPnV52G
+	OWunXZDZWsGSUyjj5JMucakwuQkDOaNDjNFyCEc/AnQGZdJB7Q3Yat8/NDnAjb2e3dj58hXg8Hp
+	t3XFHs2j7kmOtiVzUE4YD76yfjs3SARyofufnjzMvSnNvM5eG1pNXpLTiQj/gftlo3lHeuXho4a
+	nrCvY+D0M+HikikX2olc1xnshawt49LkuunSMGsq49pQibfhKydNjqSlsfJH6ZLmIn2qDi9ZV3J
+	/+hh407bircelKNfNKXPYjvF5mDDPrXYOnHyGtMNT+SXfQtoawVuHvHyhkHJLzEHRGyXiD+DE4z
+	Z6u/P8zUC38zqTBm+xV+xnHmteabx4mSRYxA0RFbo2L855bx5UMgdmDR0F3EMf01xEkWqzbh/8e
+	VbY6jFSJ8nCg+vDV2wtDFH8qxY49mJT4aOcii6sVHdJMOUAdvvYKfp9MUITDWZ3TGRBX+y
+X-Received: by 2002:a05:600c:6992:b0:49a:a101:4157 with SMTP id 5b1f17b1804b1-49ce58034admr235553535e9.7.1788440132880;
+        Thu, 03 Sep 2026 05:55:32 -0700 (PDT)
 Received: from ownbook.home.lex.la ([84.17.55.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cee5e6115sm73168065e9.14.2026.09.03.05.55.30
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cee6158e9sm70023135e9.12.2026.09.03.05.55.32
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 03 Sep 2026 05:55:30 -0700 (PDT)
+        Thu, 03 Sep 2026 05:55:32 -0700 (PDT)
 From: Aleksei Sviridkin <f@lex.la>
 To: git@vger.kernel.org
 Cc: Aleksei Sviridkin <f@lex.la>
-Subject: [PATCH] pack-objects: prefetch in the order objects are checked
-Date: Thu,  3 Sep 2026 15:55:29 +0300
-Message-ID: <20260903125529.67971-1-f@lex.la>
+Subject: [PATCH] technical/partial-clone: narrow the one-at-a-time fetch limitation
+Date: Thu,  3 Sep 2026 15:55:31 +0300
+Message-ID: <20260903125531.68044-1-f@lex.la>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -71,213 +71,291 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-get_object_details() sorts a pointer array by pack and offset and
-hands each object's position in that array down to prefetch_to_pack(),
-which reads it as a position in to_pack.objects. That second array is
-in the order the traversal added entries, so the batch of objects to
-fetch starts at an unrelated entry.
+The design doc says that dynamic object fetching invokes fetch-pack once
+for each item, and that it tends to be slow because objects are fetched
+one at a time.  Neither passage says which code paths this applies to.
 
-An object missing from a partial clone sits in no pack, and the offset
-sort places such entries ahead of packed ones. The index is small
-enough that the batch still covers every missing object in a freshly
-cloned repository. Loose objects held locally sort by object name
-among the missing ones, and enough of them move the index past entries
-that are themselves missing. Those never enter the batch, end up with
-no recorded type, and are fetched one at a time as the pack is
-written. Packing a list of 2 missing and 16 locally present loose
-objects takes two fetches rather than one.
+promisor_remote_get_direct() takes an array of object IDs and hands the
+whole array to a single fetch subprocess per promisor remote it tries.
+Ten of its eleven call sites pass a collected list: builtin/backfill.c,
+builtin/grep.c, builtin/index-pack.c, builtin/log.c,
+builtin/pack-objects.c, diff.c, diffcore-rename.c twice, merge-ort.c
+and read-cache.c.  The eleventh, in odb.c, passes a single object and is
+the fallback taken when a lookup fails with no batch fetch in front of
+it.  Through builtin/pack-objects.c, a push out of a blobless clone into
+a destination with no shared history issues one fetch carrying every
+missing blob.
 
-Index the sorted array in prefetch_to_pack() so the batch holds what
-the caller has not reached yet.
+The bullet describes that fallback, and the commit that added it records
+checkout as an exception in the same file.  v2.17.0, the first release
+with dynamic fetching, had one batching caller beside the fallback, and
+nine more were added over the following releases, the last two in
+v2.55.0.  7ca3c0ac37 (promisor-remote: lazy-fetch objects in subprocess,
+2020-08-17) is why that bullet still names fetch-pack: it moved the fetch
+into a "git fetch" subprocess and rewrote the "Fetching Missing Objects"
+section to match, without touching the limitation.
 
-This was introduced by e00549aa9b (pack-objects: prefetch objects to
-be packed, 2020-07-20).
+Scope the limitation to the fallback, describe the batch path where the
+fallback is introduced, and name the subprocess the code actually forks,
+as this file already does where it describes fetching.
 
 Assisted-by: LLM
 Signed-off-by: Aleksei Sviridkin <f@lex.la>
 ---
 
 Notes:
-    Measured on a synthetic repository of 5000 commits, each adding one
-    file, cloned with --filter=blob:none over file:// so that all 5000
-    blobs are absent.  Fetch invocations counted from GIT_TRACE2_EVENT
-    child_start records, objects per fetch read from the --pack_header
-    argument index-pack is given.
+    Verified against origin/maint (e9019fcafe, Git 2.55).
     
-      input to pack-objects              before        after
-      fresh blobless clone, --revs       1 fetch/5000  1 fetch/5000
-      8 absent blobs, then 400 loose     8 fetches/1   1 fetch/8
+    Call sites of promisor_remote_get_direct(), with the last argument
+    shown, from a grep over *.c with the definition excluded:
     
-    The first row is the ordinary case and does not move.
-    pack_offset_sort compares the in_pack pointer before anything else,
-    and an object that is not present has none, so every absent entry
-    lands ahead of every packed entry.  On a fresh clone the first absent
-    object is therefore at sorted index 0, and reading 0 as a
-    traversal-order index selects the whole array by accident.
+        builtin/backfill.c:49        ctx->current_batch.nr
+        builtin/grep.c:829           to_fetch.nr
+        builtin/index-pack.c:1509    to_fetch.nr
+        builtin/log.c:2726           to_fetch.nr
+        builtin/pack-objects.c:2244  to_fetch.nr
+        diff.c:7471                  to_fetch.nr
+        diffcore-rename.c:128        to_fetch.nr
+        diffcore-rename.c:899        to_fetch.nr
+        merge-ort.c:4484             to_fetch.nr
+        read-cache.c:3736            to_fetch.nr
+        odb.c:601                    1
     
-    The second row is the shape the fix is for.  Loose objects have no
-    in_pack pointer either and sort by object name among the absent ones,
-    which moves the first absent object to a nonzero sorted index.  The
-    scan then starts that far into the traversal-order array.  In this
-    input it collects nothing at all, promisor_remote_get_direct()
-    returns early on an empty list, type -1 is recorded, and each object
-    is fetched by itself while the pack is written.
+    The batch entry point.  promisor_remote_get_direct() calls
+    fetch_objects() once per promisor remote it tries, and fetch_objects()
+    spawns one `git fetch --stdin` and writes the whole array to it.  A
+    second request happens only when a remote fails, and carries the
+    objects still missing.  The function returns void, and when every
+    remote has failed it die()s only for oids that is_promisor_object()
+    confirms, otherwise returning with nothing fetched -- so a batch
+    having asked for an object does not mean the object arrived.
     
-    Alternatives considered:
+    Why the text states no count and names no callers.  The batching call
+    sites do not partition by mechanism, so no "N of them do X" sentence
+    is true.  diff.c:7471 is reached both directly from diffcore_std
+    (diff.c:7502) and as missing_object_cb (diff.c:7362,
+    diffcore-break.c:73), the latter firing from diff.c:4615 only after a
+    lookup carrying OBJECT_INFO_SKIP_FETCH_OBJECT has failed.
+    diffcore-rename.c's two are that same callback mechanism.
+    builtin/pack-objects.c:2244 is neither: prefetch_to_pack() is a direct
+    call from the miss branch of check_object() (:2392) and collects from
+    the pack list rather than from the misses.  builtin/backfill.c:49
+    fires from the path walk whenever current_batch.nr reaches
+    min_batch_size.  A timing claim fails too: only checkout collects
+    before the work starts.  builtin/grep.c:829 fires after
+    collect_blob_oids_for_treeish() has walked the treeish,
+    merge-ort.c:4537 calls prefetch_for_content_merges() from inside
+    process_entries(), and builtin/index-pack.c:1509 sits in
+    fix_unresolved_deltas() (reached at :1391 after the pack is parsed)
+    and prefetches delta bases rather than the objects being indexed.
     
-      Drop the start index and scan all of to_pack.objects.  Obviously
-      correct, and it removes a parameter rather than adding one.
-      Rejected because it repeats the lookups for entries the caller has
-      already checked, object_index_start of them on every call.
+    Reproduction.  Server: 20 commits x 100 files, every file rewritten
+    each commit, 2000 distinct blobs, uploadpack.allowFilter=true.
+    Client: git clone --filter=blob:none --no-local --no-checkout, then
+    the trace2 event fetch_objects() already emits, so one event is one
+    subprocess and its value is the request size:
     
-      Pass the unsorted index instead, entry - to_pack.objects.  One line
-      at the call site and no new parameter.  Rejected because it only
-      guarantees that the triggering object is in its own batch.  The scan
-      would still cover an arbitrary suffix of the traversal order and
-      leave out absent objects the caller has not reached.
+        git checkout main                      1 request   100 objects
+        git grep -e unique main -- .           1 request   100 objects
+        git log --patch main                  19 requests  200 then 100 x18
+        git push <empty dest> main             1 request  2000 objects
+        git cat-file --batch < 200 oids      200 requests    1 object each
+        git checkout-index --all             100 requests    1 object each
     
-    Left alone on purpose:
+    Second server, one file grown by a line per commit over 30 commits, to
+    make blame walk the whole history:
     
-      prefetch_to_pack() keeps its opening brace on the declaration
-      line.  CodingGuidelines says nothing about function braces, but
-      .clang-format carries BreakBeforeBraces: Linux, so this is a rule
-      rather than a habit.  It arrived with the commit named above and
-      is one of 9 such definitions under builtin/, 2 of them in this
-      file, the other being is_not_in_promisor_pack().  This patch
-      rewrites that declaration, so moving the brace would cost one
-      character.  Left out because it is not what the patch is about,
-      and it is the same edit wherever it lands.
+        git blame main -- grow.txt            30 requests    1 object each
+        git log --patch main -- grow.txt      29 requests   28x1 and 1x2
     
-      check_object() takes entry, sorted_by_offset and object_index, and
-      entry == sorted_by_offset[object_index] holds without being
-      written down.  Deriving entry in the callee would make the
-      mismatch this patch fixes impossible to express again.  Kept as it
-      is because a function that checks one object reads better taking
-      that object, and the file has one caller.
+    Two things follow.  blame is porcelain and reaches the fallback one
+    object at a time, faulting in one object per revision it walks --
+    neither blame.c nor builtin/blame.c contains a prefetch,
+    fill_origin_blob() goes straight to odb_read_object(), and
+    diffcore_std()'s prefetch gate never fires for blame's internal
+    diff_opts because it needs one of DIFF_FORMAT_{DIFFSTAT,NUMSTAT,PATCH,
+    SHORTSTAT,DIRSTAT} or a pickaxe.  So the remaining limitation is not
+    confined to plumbing.  Do not state a total for it: the run above used
+    --no-checkout and saw 30, while the same 30-commit history in a
+    default `git clone --filter=blob:none` sees 29, because the clone's
+    own checkout batch-prefetches the HEAD blob.  The rate is the durable
+    fact, not the count -- which is why the commit message asserts
+    neither.
     
-    Noticed nearby, not touched: pack_offset_sort() orders entries by
-    comparing struct packed_git pointers that do not point into one
-    array, which C99 6.5.8p5 leaves undefined.  The second paragraph of
-    the message rests on that comparison sorting NULL first.  It holds on
-    every platform git runs on and predates this patch by years.
+    And a batching call site is routinely reached with a one-element list:
+    pathspec-limited `log --patch` diffs one file per commit, so diff.c's
+    to_fetch.nr is 1 almost every time.  The per-request size a batching
+    caller achieves depends on how much work the command has in front of
+    it, not on the call site, which is why the text keys on whether a
+    batch fetch covers the object rather than on how many objects it
+    carries.
     
-    The test asserts one fetch round for a packing request of 2 absent and
-    16 loose objects, and counts two without the code change, under both
-    SHA-1 and SHA-256.  Which objects sort where depends on the hash, so
-    the test checks its own precondition, that at least one loose object
-    sorts before the first wanted one, instead of assuming it.  A hash
-    change turns the test into a failure rather than into one that passes
-    for the wrong reason.
+    Release in which each batching call site first shipped:
+    
+        v2.17.0  unpack-trees (c0c578b33c), today read-cache.c
+        v2.22.0  diff.c (7fbbcb21b1)
+        v2.23.0  builtin/index-pack.c (8a30a1efd1)
+        v2.27.0  diffcore-rename.c inexact_prefetch (95acf11a3d)
+        v2.29.0  builtin/pack-objects.c (e00549aa9b)
+        v2.33.0  diffcore-rename.c basename prefetch (1aedd03afb)
+        v2.33.0  merge-ort.c (2bff554b23)
+        v2.49.0  builtin/backfill.c (1e72e889e7)
+        v2.55.0  builtin/grep.c (854061ea54)
+        v2.55.0  builtin/log.c for `git cherry` (463c1bfc2b)
+    
+    The design doc commit 637fc4467e shipped in v2.16.0, one release
+    before the lazy-fetch machinery itself (88e2f9ed8e, v2.17.0), and
+    already recorded checkout as an exception to the bullet it added.
+    
+    Pre-existing, each wanting its own patch, none touched here.
+    
+    - The V0 bullet's premise and its consequence are both stale, and the
+      consequence is false on two independent grounds.  Premise:
+      protocol.c:46 returns protocol_v2 when protocol.version is unset
+      (eb049759fb, v2.29.0) and fetch_objects() sets no override.
+      Consequence: under protocol_v2, handshake() in transport.c calls
+      get_remote_refs() only `if (must_list_refs)`, and
+      fetch_refs_via_pack() leaves must_list_refs at 0 when every
+      to_fetch entry has exact_oid (transport.c:472-480) -- which the
+      lazy fetch always does, because its hex-oid refspecs set exact_sha1
+      (refspec.c:105) and so exact_oid (remote.c:2093).  Measured it:
+      GIT_TRACE_PACKET on a blame that triggers 30 lazy fetches shows 60
+      `command=fetch` packets, zero `command=ls-refs`, and zero refs/
+      advertisement lines.  So no ref advertisement happens at all on this
+      path, let alone a full one.  One release invalidated both halves of
+      that bullet: 7ca3c0ac37 and eb049759fb are both v2.29.0.
+    - The Future Work item at line 291, "Investigate pack protocol V2 to
+      avoid the info/refs broadcast on each connection", was done by
+      eb049759fb.
+    - protocol.h:34-35 documents the opposite of the code: "If
+      unconfigured, a value of 'protocol_v0' is returned" against
+      protocol.c:46 returning protocol_v2.
+    - The `rev-list --missing=print` bullet suggests `git log -p A..B` may
+      want to prefetch in bulk itself; diffcore_std() has done that since
+      7fbbcb21b1 (v2.22.0) whenever the output format needs blob data.
+    - prefetch_to_pack() is reached with an index into the wrong array.
+      get_object_details() fills sorted_by_offset[i] with to_pack.objects
+      + i, QSORTs by pack_offset_sort, then calls check_object(entry, i)
+      with the sorted counter, which prefetch_to_pack() uses to index
+      to_pack.objects.  The correct index is entry - to_pack.objects.  The
+      push measurement above survives this only because pack_offset_sort
+      compares IN_PACK() pointers, so objects in no local pack sort first
+      and the first miss lands at index 0.  No reproducer built, so read
+      it as "the batch can miss objects it meant to cover".
+    - "once *for each item*", kept from the base text, is strictly at
+      least once per item: a failing remote sends the same single oid on
+      to the next remote (promisor-remote.c:280).
+    - The push sentence in the commit message is scenario-specific, not a
+      statement of the code's condition.  prefetch_to_pack() fires on any
+      failed odb_read_object_info_extended() for an object being packed,
+      with no shared-history test, and it collects the pack list from the
+      trigger index onward rather than "every missing blob".  The upstream
+      test 'prefetch objects' in t/t5300-pack-object.sh, added by
+      e00549aa9b, is the same scenario with a single-batch assertion and
+      would be the firmer anchor.
+    
+    Declined, with reasons.  Restoring "without having asked for it in
+    advance" to the limitation bullet is refuted, not merely declined:
+    builtin/pack-objects.c and diffcore-rename.c's two callbacks both
+    discover their misses mid-flight and still batch, so that clause is
+    the exact false discriminator earlier rounds removed.  Shortening the
+    ten-path list in the commit message is declined because a "ten of
+    eleven" count without its evidence is the set claim a reviewer asks to
+    see verified.  Double-quoting "git fetch" rather than backticking it
+    follows the two pre-existing occurrences in this same file, at lines
+    176 and 332, under CodingGuidelines' instruction to imitate existing
+    conventions.
+    
+    On the claim that the V0 rot predates 7ca3c0ac37, which is wrong and
+    worth recording because of how easy it is to reach.  A `git log -S` on
+    a feature name finds where it landed and not where it was reverted, so
+    a feature that landed, was reverted and re-landed reads as
+    continuously present.  Reading the tagged trees is what shows it.
+    684ceae32d did default
+    fetch to v2 in v2.26.0, but 11c7f2a30b reverted it in v2.27.0.  Read
+    straight off the tagged trees, get_protocol_version_config() returns
+    protocol_v2 in v2.26.0, protocol_v0 in v2.27.0 and v2.28.0, and
+    protocol_v2 again in v2.29.0 via eb049759fb (2020-09-25).  So when
+    7ca3c0ac37 landed on 2020-08-17 the default was v0 and the bullet's
+    premise was still true; eb049759fb falsified it five weeks later in
+    the same release.  The citation in the commit message attributes only
+    the fetch-pack naming to 7ca3c0ac37, never the V0 premise.
+    
+    Base branch: maint, deliberately.  SubmittingPatches' "Choose a
+    starting point" splits on fixing bugs in the released version against
+    adding features, not on regression against clarification, and a
+    documented statement that misdescribes released behaviour is a bug in
+    the released version.  For a maintainer who prefers master,
+    retargeting is free: the patch applies cleanly there (git apply
+    --check --3way), and master's one newer change to this file,
+    508ec9837c (repository: move fetch_if_missing into struct
+    repository), touches a single line in a different bullet.
+    
+    The V0 bullet admits no in-scope fix, and the two states are worth
+    recording because reviewers have asked for each in turn.  With the
+    bullet reworded, the two sentences left standing become this patch's
+    own and both are false, so that state is out.  With it untouched, this
+    patch scopes the bullet above it to the fallback while the V0 bullet
+    keeps saying "each object is requested via fetch-pack" unscoped -- at
+    the merge base both bullets were equally broad, so the asymmetry is
+    this patch's doing.  Neither state is clean, and no third state is
+    reachable without correcting the protocol version and the info/refs
+    sentence, which is a separate claim needing its own justification.
+    Chose the untouched state: every sentence this patch asserts is true,
+    and what is left is an adjacent pre-existing error rather than a new
+    one.
+    
+    Why the V0 bullet is left exactly as upstream has it.  An earlier
+    revision of this patch deleted its "which means that each object is
+    requested via fetch-pack" clause, to remove a contradiction with the
+    new paragraph above.  That made the two remaining sentences this
+    patch's own, and both are false, so the clause was restored: editing a
+    sentence makes the author answerable for the sentence left behind.  V0
+    is therefore untouched here and stays a pre-existing problem, recorded
+    above.
+    
+    Checks: `git show --check` clean, no commit-message line over 75
+    columns, `make -C Documentation lint-docs` exits 0.  No manpage render
+    was attempted: asciidoctor, asciidoc, xmlto, docbook2x-texi and
+    dblatex are all absent here.
 
- builtin/pack-objects.c | 13 +++++++-----
- t/t5300-pack-object.sh | 45 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 53 insertions(+), 5 deletions(-)
+ Documentation/technical/partial-clone.adoc | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 27048bbb4d..448ddb99eb 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2227,12 +2227,13 @@ static int can_reuse_delta(const struct object_id *base_oid,
- 	return 0;
- }
+diff --git a/Documentation/technical/partial-clone.adoc b/Documentation/technical/partial-clone.adoc
+index e513e391ea..757a92eddf 100644
+--- a/Documentation/technical/partial-clone.adoc
++++ b/Documentation/technical/partial-clone.adoc
+@@ -141,8 +141,10 @@ remote and then retry the object lookup.  This allows objects to be
+ For efficiency reasons, no check as to whether the missing object is
+ actually a promisor object is performed.
+ +
+-Dynamic object fetching tends to be slow as objects are fetched one at
+-a time.
++This fallback asks for a single object per request, so it is slow when
++many objects are missing.  Code that can name several missing objects at
++once passes the whole list to promisor_remote_get_direct(), which
++requests the set rather than one object at a time.
  
--static void prefetch_to_pack(uint32_t object_index_start) {
-+static void prefetch_to_pack(struct object_entry **sorted_by_offset,
-+			     uint32_t object_index_start) {
- 	struct oid_array to_fetch = OID_ARRAY_INIT;
- 	uint32_t i;
+ - `checkout` (and any other command using `unpack-trees`) has been taught
+   to bulk pre-fetch all required missing blobs in a single batch.
+@@ -247,11 +249,11 @@ remote in a specific order.
+ - Repack essentially treats promisor and non-promisor packfiles as 2
+   distinct partitions and does not mix them.
  
- 	for (i = object_index_start; i < to_pack.nr_objects; i++) {
--		struct object_entry *entry = to_pack.objects + i;
-+		struct object_entry *entry = sorted_by_offset[i];
+-- Dynamic object fetching invokes fetch-pack once *for each item*
+-  because most algorithms stumble upon a missing object and need to have
+-  it resolved before continuing their work.  This may incur significant
+-  overhead -- and multiple authentication requests -- if many objects are
+-  needed.
++- Dynamic object fetching invokes a "git fetch" subprocess once *for
++  each item* when it goes through the object lookup fallback, because
++  the object has to be resolved before the work can continue.  This may
++  incur significant overhead -- and multiple authentication requests --
++  if many objects are needed.
  
- 		if (!odb_read_object_info_extended(the_repository->objects,
- 						   &entry->idx.oid,
-@@ -2246,7 +2247,9 @@ static void prefetch_to_pack(uint32_t object_index_start) {
- 	oid_array_clear(&to_fetch);
- }
- 
--static void check_object(struct object_entry *entry, uint32_t object_index)
-+static void check_object(struct object_entry *entry,
-+			 struct object_entry **sorted_by_offset,
-+			 uint32_t object_index)
- {
- 	size_t canonical_size;
- 	enum object_type type;
-@@ -2389,7 +2392,7 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
- 	if (odb_read_object_info_extended(the_repository->objects, &entry->idx.oid, &oi,
- 					  OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_LOOKUP_REPLACE) < 0) {
- 		if (repo_has_promisor_remote(the_repository)) {
--			prefetch_to_pack(object_index);
-+			prefetch_to_pack(sorted_by_offset, object_index);
- 			if (odb_read_object_info_extended(the_repository->objects, &entry->idx.oid, &oi,
- 							  OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_LOOKUP_REPLACE) < 0)
- 				type = -1;
-@@ -2619,7 +2622,7 @@ static void get_object_details(void)
- 
- 	for (i = 0; i < to_pack.nr_objects; i++) {
- 		struct object_entry *entry = sorted_by_offset[i];
--		check_object(entry, i);
-+		check_object(entry, sorted_by_offset, i);
- 		if (entry->type_valid &&
- 		    oe_size_greater_than(&to_pack, entry,
- 					 repo_settings_get_big_file_threshold(the_repository)))
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 73445782e7..d94e3d0630 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -650,6 +650,51 @@ test_expect_success 'prefetch objects' '
- 	test_line_count = 1 donelines
- '
- 
-+test_expect_success 'prefetch objects that sort after locally present ones' '
-+	test_when_finished "rm -rf batch_server batch_client" &&
-+
-+	git init batch_server &&
-+	test_config -C batch_server uploadpack.allowanysha1inwant 1 &&
-+	test_config -C batch_server uploadpack.allowfilter 1 &&
-+	test_config -C batch_server protocol.version 2 &&
-+
-+	for i in $(test_seq 1 8)
-+	do
-+		echo "content $i" >batch_server/file$i || return 1
-+	done &&
-+	git -C batch_server add . &&
-+	git -C batch_server commit -m initial &&
-+
-+	git clone --filter=blob:none --no-checkout \
-+		"file://$(pwd)/batch_server" batch_client &&
-+	test_config -C batch_client protocol.version 2 &&
-+
-+	git -C batch_client rev-list --objects --all --missing=print >objects &&
-+	sed -n "s/^?//p" objects | sort >absent &&
-+	tail -n 2 absent >wanted &&
-+
-+	>loose_names &&
-+	for i in $(test_seq 1 16)
-+	do
-+		echo "loose $i" |
-+		git -C batch_client hash-object -w --stdin >>loose_names ||
-+			return 1
-+	done &&
-+	sort loose_names >loose &&
-+
-+	# Objects that are in no pack are visited first, in object name
-+	# order, so at least one locally present object has to be visited
-+	# before the first wanted one for this to test anything.
-+	awk -v limit="$(head -n 1 wanted)" "\$0 \"\" < limit \"\"" loose >earlier &&
-+	test_file_not_empty earlier &&
-+
-+	cat wanted loose >to_pack &&
-+	GIT_TRACE_PACKET=$(pwd)/trace_batch \
-+		git -C batch_client pack-objects --stdout <to_pack >/dev/null &&
-+	grep "fetch> done" trace_batch >donelines_batch &&
-+	test_line_count = 1 donelines_batch
-+'
-+
- for hash in sha1 sha256
- do
- 	test_expect_success "verify-pack with $hash packfile" '
+ - Dynamic object fetching currently uses the existing pack protocol V0
+   which means that each object is requested via fetch-pack.  The server
 
 base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
 -- 
