@@ -1,345 +1,114 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAC4386441
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 05:05:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF6535E1D5
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 05:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788411933; cv=none; b=GiyM6mHOziqMWq+JVBsieJL4HSYyKeXvYKMUEhTeTtWkh+OX5keAoOBVOrpoGH3x05PAu/f7Xje1eYJTeHAmjE7I678brpWE5nY6zZTGQnGuFRvCzf3lXD10OFy36iQWkdsNEfFzavsuvFNm/aKk4FCW/Qnwxngefgur4GFT2iE=
+	t=1788412554; cv=none; b=Qb6pPFYcjmlwYkcZE6ozcTKqp5hiIkPISY/2UH5mvzBFlxVJA9twQZ/Ryv7FADymdVvfAyir1I/yMUWgVMUIM43WmLQHJdzsSVi9JP0RZQ/KU/mXosQkC73cCWHw7jEDguIB6CAw3W2erLXE9/0uU6ki3dKVJKe5BFgkTE0YB5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788411933; c=relaxed/simple;
-	bh=di22ndcDp0p8dGlBH6kqqSX+SU5eJeV6xcYFRKQ35cw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Dt9u+Q+GkSmcd5rPL720AP0cVBFJ1b7Tl1z6jhdvFLvfJjDa944/CrQMyn7IltjTPFiWBqnYxq289KZTr3FEPgILVwdMhonAtUgfcDm+sfXFnYckaosyHcLcmd0L4Q0TFQtU/qdNkqrFKGSrtKyjA5m2kwTby+qo2cJRUj1wQ2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/zEMfyv; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788412554; c=relaxed/simple;
+	bh=x3Z0oYr6EjOfrnoNxHIfoifW2WgZlEEe9yJAPLRdejA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GRYc+lyHVN9HSeNvseANniF6PjPFnaG2+HWg8hdF9nFgbiq7uG+7f2CcTgYl1zwxlY1ll8DdoySDlZNA7HFcqTGJM2B+iTqb4Yj0CPTtYeQdfhYuT/vYvqVZZAG8KyvvYHqnM4EGwlwsJykYhctqVnS5LxgB8WxQcmcIUkTxi90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fHLO7ujf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VWHmrB7C; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/zEMfyv"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-936623c6dd3so72912285a.0
-        for <git@vger.kernel.org>; Wed, 02 Sep 2026 22:05:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788411930; x=1789016730; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=y3tYSVpdTdWMFEDtEghhfCBGVeXtKXJkCdx6FeFvMw0=;
-        b=A/zEMfyvTOct2N2Pj+G3yIqdxgrE5nsWa4MaCEHFqGVjC3dDppEYPvuw5a2XWF90NX
-         hxFOGMLlQS7oNdLzbDIwibe9JfZGj5VFqtK4wkXcW7+6qezT0YVSlLSKjKsLgmZswGp/
-         lFrWwNCDkRsQ4mwpFJbhf7kApKFzTL1XpHkGTincySdeO8RaVuuDeDR7dDBcHPxXyQ14
-         ZzB1fv9JMxVNHtwWjdbhxT7P3Op60c/Q1PPy/7Nco5VaV01mus7kyT2dCAsdWW48t5bH
-         Hg5Tp45zGMq0x8RW6Obzhg8Hl4GLcK/xFf48cINWgif73Z2ATMU5b8CPzgLJQIxjLDBd
-         8FIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788411930; x=1789016730;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=y3tYSVpdTdWMFEDtEghhfCBGVeXtKXJkCdx6FeFvMw0=;
-        b=CX2noflVEQy3ky+Oyf13zij+0abG2V3a552z2ysPokZaI+vQcbn9W+2zOizpy6KaiJ
-         6P9pBVE3Kfghzr7eWhqiHRCG+WeODmWy3tivNO4g+/s8Xhn4ZSJ4T4nMK7OrwOz4zZHl
-         B1AlyWx4IqZB0P8WGWFCcEHvPJsH5sT2xBtVuK32MTFYsqCMxW869JKMDEK4GljNz2/c
-         lXM2/8xCglr9OMqp4saYaNZCIgXxF1A2NpDrW+dJM3k3+rV8Ljz5kqOrVyksBnnrFWR9
-         la8S4Dd9moIKlMg4Em6/RKZkWorsPMpb64HWJVj4x8/BNe5cxetAXfRCCK2ZZFAvY3gH
-         up7A==
-X-Gm-Message-State: AFuF++kYxQDt8K3mg2P60spdSQ7/I3GXs06R9q0uJvsc1JYxJU10F+mL
-	r6IwVU6cIpuSAVKIXvD1gsvfhyWDdGXVjQn9euyEkJ5wVMHkH1vHr79srqAILQER
-X-Gm-Gg: AYBFou2vQZTXk7FWRJrDdpZNufcEirbXPLBN0NzFnQwOEG7tcHChUU5jfbLBUHyjlYO
-	fOmMeMEebDkToIboZAy7UzpYvMzgyIELd9P1PkWXEniix+UubOC3zCLU6XkP85LpTWNa5Kyek74
-	R/eTvl97oo/pJGAB4oIlixxywAD4UJ2xHXjj+xLo/bOH5PtT9Bk/6wCORyF6j9mCh8lQjb+fhVd
-	Onwlf6pyplJhC15DxvWWhYlOeDCRRlq41gSn9fxpYuuPqwQ5a5Mbr9ZZQmjvK+N/3xp6A/GR/4C
-	3JVUHT6xCXFgcyHp7oYlrYKzxwjEtIYrAvKRnusxXgeVAc/7O2PPyqE0SgXjhrwoVWTk16YN4Sd
-	brDjaPQFrgLm1z25/vvj4sF2Kgn3crmHuR9E8jgs8vmozUvuWw6ZucAiU5oOFuZgzUSdPbyMU2h
-	h0gX+3Uvyi6+nAW09MSwHVo7Hey0L93ZGte9GjBgdNHQo1209Sqhd5j2iWjE0mbFRX
-X-Received: by 2002:a05:620a:400a:b0:939:4a3d:2a06 with SMTP id af79cd13be357-93972f0379emr94283585a.10.1788411929847;
-        Wed, 02 Sep 2026 22:05:29 -0700 (PDT)
-Received: from [127.0.0.1] ([48.217.140.230])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9395f3fb661sm396382785a.47.2026.09.02.22.05.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 22:05:29 -0700 (PDT)
-Message-Id: <cff5c124ecd9e28ea66921cebfa356ca38aa7c1e.1788411919.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2152.v3.git.1788411919.gitgitgadget@gmail.com>
-References: <pull.2152.git.1781806593.gitgitgadget@gmail.com>
-	<pull.2152.v3.git.1788411919.gitgitgadget@gmail.com>
-From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 03 Sep 2026 05:05:19 +0000
-Subject: [PATCH v3 7/7] diffcore-pickaxe: limit -G to the -L tracked range
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fHLO7ujf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VWHmrB7C"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id DFFC31D000CC;
+	Thu,  3 Sep 2026 01:15:51 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 03 Sep 2026 01:15:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1788412551; x=1788498951; bh=A6UVcErF0z
+	sJzsWaxDnqRgS4tFpObQXn/h3yDN5oKLo=; b=fHLO7ujfVLSC+LhZbtdNVUKda1
+	rJ02razmbXYfV1Vd90qj7ShBcK7MRyGA0MWGmekiTr1lPlja0um7hE/+zGBnAAVx
+	hUiLOaXAtBA36zeNO0oT4+Qs17LMKaWxGHato6IbiVBogL0mrTk65UzhuRwYX+vd
+	D9Z7nfaCTT03lo1GTWCEeziZcj38Uiup36qctrw+ynuf7K475IN6BP43+bnY6lRr
+	Q2zw377FwyJq0gkxmzYbkMydgq25tfDoiuenG3Ea2pTdd8hTq0cHv7R1yPYDhX6m
+	mfZnwegtmI6ShCJzaC1IOBRSqwclTTTdvHxGcGLZYtizDRnvhtpBZLIjBvPA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788412551; x=1788498951; bh=A6UVcErF0zsJzsWaxDnqRgS4tFpObQXn/h3
+	yDN5oKLo=; b=VWHmrB7CWFWjfQKFH6o0ArSIJeefejz3BDlt85iimu4/kDMyrZ7
+	oGKDW4tX8bB9cSDr7Hiv6hs3yxHFvKNlKhE0hVL9hRbECVoQxPQsQpKHc4o6POsL
+	+aSvmJpKACSy7DwGq5p35kELA/3nKObm/BZ9t29gNeyei8Sw10/ACubR3yNZ5Jja
+	uH48YnpLLwUzonPOmnlB4wvO5fwFtwSH/4nrOiX0XG6YzmzlQ+iYE4UtMTHGB3Iv
+	ap41X/5zA3RTrr2fKW2+TF2SBHQ45HVruNXhIre0eRAIzkobKLHmepJS4ejq1cmQ
+	DH69j6/NhiOsuj0mWwlBZWJcRt6g6+pFecg==
+X-ME-Sender: <xms:hwKZah27gCs-lWiLFGteBviJzTMHiEKlnotVLVbR1Bep6W2SHfxiLw>
+    <xme:hwKZaviweYSdKnA4XoWn80nvKAghbkpE-ned6UVn5iClhyk5whCK7Hl5BUSinM-1u
+    rVI1VSSz8ib3EyYcSivhzBgYuXIz7IORqm3hi4bSdXdeFdI5y3bP54>
+X-ME-Received: <xmr:hwKZavQx7SUg1BWsWkseV6WQpHq3_8uA8VeyNYLVv-hVzf11Isljnw>
+X-ME-Proxy-Cause: dmFkZTEd7h9nGMRUh8DS44pl1oqfNjWPOv8x0SKKQxY4nHdTldzbhF5eRl28paT1yzD+JP
+    HsVR7zGvVfm7e5SgWkBTbgmo79WcvV/z9ZO+xI8MtTDZLt8R3DIjwwLImDw0hlHkn70HlF
+    iywB5JXhcPS1QRpb9KAmuTqRVz8loMcyAVqDttHMxZTCG5X1V5EbIRxG9A/kQphTInwDum
+    Qx2twqZ+m5i95+G9gN1QWJud9BfZ4lrdlUVRdPGGUpkR3bIfWpP7SLY5RI8EJGJST2vfCO
+    tDM2LHPOlq/yDpJkbhVOX8ygT2ZDf7m/V5SlYHTbPaFfzNM+t2GCNl6H1eLGYRfcdYGdMg
+    i5VF4UB08o/M7rUO2vfcmzBe4ZmNOh0kqEEpNfgF4V43U2/+8boitQK7X9e20JnBpVKWKU
+    hEhVrTuwBT+YdoXHcOCm3H/PwdM6hzEAYfoh04ZnY5qwXabWcXymGvmO08JbvkFlucdIzx
+    kYAYc4bcI7v4TuMba/jOIkln/6MS0uHA+F5As5Qn1PhhBRHzzAK7KKeXNiXfYH78SEOa2b
+    zI/uhWFhd/dqCnF5AE/qu5QZv9Fk4VZ7dClWy80hb5Qiwia2oMTaAJTtweKEAxC2XgX2P0
+    reReGouZkr0O9kZ0jU1fbMVLbtDILknQvabIFwld7W5FqLYifaKXIqXNLJIQ
+X-ME-Proxy: <xmx:hwKZaogAms5VmJlIhLuwCpTiY9OBJ3fqd2vcDf8ll-SPTSp3rK03GQ>
+    <xmx:hwKZan7lzSuO9KTOXO6bgMYrkHrhrCnkuyQ_d4W7iFNKZlTdqV5eMw>
+    <xmx:hwKZatBrk4FO-gQsAx5hZR_yrh7oRIWLBBGGDeR2B6DY9OFj84gNgQ>
+    <xmx:hwKZambRNNBRQa3_zm5uxJsWbp5uKhyzM1GVustYgaQbOp1NjQSOhw>
+    <xmx:hwKZakT0y2JFjWk8nXqz3UW3rSSNXTCGDUy5kFHfVZimlq9zgV11YCUb>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 3 Sep 2026 01:15:50 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 10a2c508 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 3 Sep 2026 05:15:52 +0000 (UTC)
+Date: Thu, 3 Sep 2026 07:15:39 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] repository: make repo_clear() idempotent
+Message-ID: <apkCe9CKvYvM6Hy9@pks.im>
+References: <20260902055117.GA41587@coredump.intra.peff.net>
+ <20260902055526.GA41747@coredump.intra.peff.net>
+ <20260902062940.GA47676@coredump.intra.peff.net>
+ <20260902064907.GB47676@coredump.intra.peff.net>
+ <apfoNaZL8dg9OpbL@pks.im>
+ <xmqqpkyvk45f.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Michael Montalbo <mmontalbo@gmail.com>,
-    Michael Montalbo <mmontalbo@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqpkyvk45f.fsf@gitster.g>
 
-From: Michael Montalbo <mmontalbo@gmail.com>
+On Wed, Sep 02, 2026 at 09:29:48AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > I was at one point wondering whether the parsed object pool should
+> > really be an implementation detail of the object database -- parsing
+> > objects should not have to depend on the repository, ...
+> 
+> We need to be a bit careful here, as the above directly contradicts
+> our earlier design choice to have things like hash algorithm as
+> properties of a repository instance.
 
-Teach -G to only search the line ranges specified by -L.
-Teaching -S is left as future work, so it still matches the entire
-file even if -L is specified.
+Yeah, true. The question though is whether it really makes sense to
+always propagate down the full repository, or whether we should instead
+propagate only what matters. We do of course require the hash algorithm
+(and potentially the compatibility hash algorithm) in these subsystems,
+but propagating these two pieces of information might be the saner
+approach compared to always making the full repository available.
 
-Rather than being part of diff.c's builtin implementations, the
-diffcore-pickaxe functionality interacts with xdiff-interface as a
-separate component. Add a sibling to xdi_diff_outf(), called
-diff_emit_line_ranges(), that limits emitted lines to the given line
-ranges.
+In any case, I eventually discarded the above idea anyway.
 
-Use diff_emit_line_ranges() when searching text if line ranges have
-been specified. If textconv is enabled, use normal diffing instead of
-diff_emit_line_ranges() since line range tracking relies on the line
-coordinates of the original, pre-textconv file.
-
-Update documentation and add tests accordingly.
-
-Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
----
- Documentation/line-range-options.adoc |  4 +-
- diff.c                                | 11 ++++
- diffcore-pickaxe.c                    | 30 ++++++++--
- t/t4211-line-log.sh                   | 81 ++++++++++++++++++++++-----
- xdiff-interface.h                     | 10 ++++
- 5 files changed, 115 insertions(+), 21 deletions(-)
-
-diff --git a/Documentation/line-range-options.adoc b/Documentation/line-range-options.adoc
-index 4a7ab97d75..52e1262fd7 100644
---- a/Documentation/line-range-options.adoc
-+++ b/Documentation/line-range-options.adoc
-@@ -19,6 +19,8 @@
- +
- Patch formatting options such as `--word-diff`, `--color-moved`,
- `--no-prefix`, and whitespace options (`-w`, `-b`) are supported,
--as are pickaxe options (`-S`, `-G`) and `--diff-filter`.
-+as are pickaxe options (`-S`, `-G`) and `--diff-filter`. `-G` is
-+limited to the tracked range. In contrast, `-S` is evaluated over the whole
-+file and may select a commit with a change outside the tracked range.
- +
- include::line-range-format.adoc[]
-diff --git a/diff.c b/diff.c
-index 49b6732c81..1a3571d229 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2701,6 +2701,17 @@ static int line_range_filter_diff(struct line_range_filter *filter,
- 	return ret;
- }
- 
-+int diff_emit_line_ranges(mmfile_t *one, mmfile_t *two,
-+			  const struct range_set *ranges,
-+			  xdiff_emit_line_fn line_fn, void *cb_data,
-+			  xpparam_t *xpp, xdemitconf_t *xecfg)
-+{
-+	struct line_range_filter filter;
-+
-+	line_range_filter_init(&filter, ranges, line_fn, cb_data);
-+	return line_range_filter_diff(&filter, one, two, xpp, xecfg);
-+}
-+
- static void pprint_rename(struct strbuf *name, const char *a, const char *b)
- {
- 	const char *old_name = a;
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index b0915be86f..2425fe8101 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -16,7 +16,8 @@
- 
- typedef int (*pickaxe_fn)(mmfile_t *one, mmfile_t *two,
- 			  struct diff_options *o,
--			  regex_t *regexp, kwset_t kws);
-+			  regex_t *regexp, kwset_t kws,
-+			  const struct range_set *ranges);
- 
- struct diffgrep_cb {
- 	regex_t *regexp;
-@@ -42,7 +43,8 @@ static int diffgrep_consume(void *priv, char *line, unsigned long len)
- 
- static int diff_grep(mmfile_t *one, mmfile_t *two,
- 		     struct diff_options *o,
--		     regex_t *regexp, kwset_t kws UNUSED)
-+		     regex_t *regexp, kwset_t kws UNUSED,
-+		     const struct range_set *ranges)
- {
- 	struct diffgrep_cb ecbdata;
- 	xpparam_t xpp;
-@@ -65,8 +67,12 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
- 	 * An xdiff error might be our "data->hit" from above. See the
- 	 * comment for xdiff_emit_line_fn in xdiff-interface.h
- 	 */
--	ret = xdi_diff_outf(one, two, NULL, diffgrep_consume,
--			    &ecbdata, &xpp, &xecfg);
-+	if (ranges)
-+		ret = diff_emit_line_ranges(one, two, ranges, diffgrep_consume,
-+					    &ecbdata, &xpp, &xecfg);
-+	else
-+		ret = xdi_diff_outf(one, two, NULL, diffgrep_consume,
-+				    &ecbdata, &xpp, &xecfg);
- 	if (ecbdata.hit)
- 		return 1;
- 	if (ret)
-@@ -119,8 +125,13 @@ static unsigned int contains(mmfile_t *mf, regex_t *regexp, kwset_t kws,
- 
- static int has_changes(mmfile_t *one, mmfile_t *two,
- 		       struct diff_options *o UNUSED,
--		       regex_t *regexp, kwset_t kws)
-+		       regex_t *regexp, kwset_t kws,
-+		       const struct range_set *ranges UNUSED)
- {
-+	/*
-+	 * -S counts needle occurrences in each whole blob. Limiting this to
-+	 * an -L range is left as a follow-up; for now -S ignores the range.
-+	 */
- 	unsigned int c1 = one ? contains(one, regexp, kws, 0) : 0;
- 	unsigned int c2 = two ? contains(two, regexp, kws, c1 + 1) : 0;
- 	return c1 != c2;
-@@ -132,6 +143,7 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
- 	struct userdiff_driver *textconv_one = NULL;
- 	struct userdiff_driver *textconv_two = NULL;
- 	mmfile_t mf1, mf2;
-+	const struct range_set *ranges;
- 	int ret;
- 
- 	/* ignore unmerged */
-@@ -169,7 +181,13 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
- 	mf1.size = fill_textconv(o->repo, textconv_one, p->one, &mf1.ptr);
- 	mf2.size = fill_textconv(o->repo, textconv_two, p->two, &mf2.ptr);
- 
--	ret = fn(&mf1, &mf2, o, regexp, kws);
-+	/*
-+	 * -L limits the search to the tracked range, but the range is in
-+	 * pre-textconv line coordinates that do not map onto textconv
-+	 * output, so search the whole file when textconv is enabled.
-+	 */
-+	ranges = (textconv_one || textconv_two) ? NULL : p->line_ranges;
-+	ret = fn(&mf1, &mf2, o, regexp, kws, ranges);
- 
- 	if (textconv_one)
- 		free(mf1.ptr);
-diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
-index 2a542aa643..2354400d1c 100755
---- a/t/t4211-line-log.sh
-+++ b/t/t4211-line-log.sh
-@@ -703,24 +703,18 @@ test_expect_success '-L suppresses deletions outside tracked range' '
- 	test $(grep -c "^diff --git" actual) = 1
- '
- 
--test_expect_success '-L with -S filters to string-count changes' '
-+test_expect_success '-L with -S selects only the matching commit' '
- 	git checkout parent-oids &&
--	git log -L:func2:file.c -S "F2 + 2" --format= >actual &&
--	# -S searches the whole file, not just the tracked range;
--	# combined with the -L range walk, this selects commits that
--	# both touch func2 and change the count of "F2 + 2" in the file.
--	test $(grep -c "^diff --git" actual) = 1 &&
--	test_grep "F2 + 2" actual
-+	git log -L:func2:file.c -S "F2 + 2" --format=%s --no-patch >actual &&
-+	echo "Modify func2() in file.c" >expect &&
-+	test_cmp expect actual
- '
- 
--test_expect_success '-L with -G filters to diff-text matches' '
-+test_expect_success '-L with -G selects only the matching commit' '
- 	git checkout parent-oids &&
--	git log -L:func2:file.c -G "F2 [+] 2" --format= >actual &&
--	# -G greps the whole-file diff text, not just the tracked range;
--	# combined with -L, this selects commits that both touch func2
--	# and have "F2 + 2" in their diff.
--	test $(grep -c "^diff --git" actual) = 1 &&
--	test_grep "F2 + 2" actual
-+	git log -L:func2:file.c -G "F2 [+] 2" --format=%s --no-patch >actual &&
-+	echo "Modify func2() in file.c" >expect &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'setup for trailing deletion test' '
-@@ -1007,4 +1001,63 @@ test_expect_success '--check does not report blank-at-eof outside the range' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '-L -G is limited to the tracked range' '
-+	git checkout --orphan grep-range &&
-+	git reset --hard &&
-+	cat >gp.c <<-\EOF &&
-+	int func1()
-+	{
-+	    return ALPHA;
-+	}
-+
-+	int func2()
-+	{
-+	    return BETA;
-+	}
-+	EOF
-+	git add gp.c &&
-+	test_tick &&
-+	git commit -m "add gp.c" &&
-+	sed -e "s/ALPHA/ALPHA2/" -e "s/BETA/BETA2/" gp.c >tmp &&
-+	mv tmp gp.c &&
-+	git commit -a -m "touch both functions" &&
-+	git log -L:func2:gp.c -G BETA --format=%s --no-patch >actual &&
-+	cat >expect <<-\EOF &&
-+	touch both functions
-+	add gp.c
-+	EOF
-+	test_cmp expect actual &&
-+	git log -L:func2:gp.c -G ALPHA --format=%s --no-patch >actual &&
-+	test_must_be_empty actual
-+'
-+
-+test_expect_success '-L -G searches the whole file under textconv' '
-+	git checkout --orphan grep-textconv &&
-+	git reset --hard &&
-+	cat >tc.c <<-\EOF &&
-+	int func1()
-+	{
-+	    return F1;
-+	}
-+
-+	int func2()
-+	{
-+	    return F2;
-+	}
-+	EOF
-+	git add tc.c &&
-+	test_tick &&
-+	git commit -m "add tc.c" &&
-+	sed -e "s/F1/F1 + 1/" -e "s/return F2/return FINDME/" tc.c >tmp &&
-+	mv tmp tc.c &&
-+	git commit -a -m "change both funcs" &&
-+	echo "tc.c diff=tc" >.gitattributes &&
-+	git log -L:func1:tc.c -G FINDME --format=%s --no-patch >actual &&
-+	test_must_be_empty actual &&
-+	git config diff.tc.textconv cat &&
-+	git log -L:func1:tc.c -G FINDME --format=%s --no-patch >actual &&
-+	echo "change both funcs" >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index 2428456629..4151bc2097 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -46,6 +46,16 @@ int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
- 		  xdiff_emit_line_fn line_fn,
- 		  void *consume_callback_data,
- 		  xpparam_t const *xpp, xdemitconf_t const *xecfg);
-+
-+struct range_set;
-+/*
-+ * Like xdi_diff_outf(), but forwards only the lines within the given
-+ * postimage line ranges to line_fn.
-+ */
-+int diff_emit_line_ranges(mmfile_t *mf1, mmfile_t *mf2,
-+			  const struct range_set *ranges,
-+			  xdiff_emit_line_fn line_fn, void *cb_data,
-+			  xpparam_t *xpp, xdemitconf_t *xecfg);
- int read_mmfile(mmfile_t *ptr, const char *filename);
- void read_mmblob(mmfile_t *ptr, struct object_database *odb,
- 		 const struct object_id *oid);
--- 
-gitgitgadget
+Patrick
