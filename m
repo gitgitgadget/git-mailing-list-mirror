@@ -1,115 +1,95 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6298350EBEA
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 19:45:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A52F50AC29
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 20:00:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788464770; cv=none; b=f5It3aX8qalld1oPENKcyDUffGa06FRg9obiKkqdwPNIoEt3u7+IYjs3HI6XbQgMIGLrp6GFPyyB7tePDBGKCWVkH0zjL1fK1wUEwf7pcqkjxPMZESVEMZUa34NOh1IFT+vL/BCAoCi/nTAiT+9smwfcks8I0GOljNJG0RZP5j4=
+	t=1788465626; cv=none; b=tkN5eg+p+jcadZ+yKCA+fS0GdWlZCER+T25JKFIEQWVby7Acm5lMTVz1WgRaoWlfno30CjVyN991YO6/Nw6yyW13aR6QI3ECsru41t290P5eut/N0ymBgRklG1gNNgpPaXIXiQYCyr40lyStW0L65HlJhqcfJR0kTIXyh+P7ia4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788464770; c=relaxed/simple;
-	bh=8/GrueIJUycIYpH1YdkPwMKnlApEaSb+IgLBIaSZMQU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uyZBSn6m3q9JiQ0Rc8hZ9gF2w7JU8eBoqa90ILGWvfCekNz7OZNPfcUlw3vCYBE3mvb9S3D5Tpj3pRRNqxgAd+PukGryn1sboSguOHzfZ4uMxXT+sy6GEsLr/sLvX3XlnaZzHKlix8/YqZx/1/QqjEJ9Mn6iQ3OruFteyDvdpmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=em/p9cmJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K7u9BW8E; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788465626; c=relaxed/simple;
+	bh=Q58dpy7qdCAvjfelp7ZdVla0IMPVsOwdBOvH6OD5ug0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tvkrpLvY3D0bdtKfl67ATr5F877PVd3G5KgweKxDQzlxKHCUXiIzsgk0ylQbTr9nF3LKG424fCVjkMxdZROUOYHmVpJumh3WBiR4hkfkzEeOdD2eiqZcbjnhP3pwLmAhDBk4dN27KSCAYOgUVQzU4xwN4fKkPQIY63MPERLL288=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=HCLx9AIs; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lex.la
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="em/p9cmJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K7u9BW8E"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 40B337A01A0;
-	Thu,  3 Sep 2026 15:45:53 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 03 Sep 2026 15:45:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788464753; x=1788551153; bh=KkLRMlo088
-	RyZ9LALo1QkyWbBxzhOFbZHC6r57Qm/ew=; b=em/p9cmJ0jTUrK5n/3ASMSAlNY
-	ZmOZHpU1BO/MxQW7tCK8F2MaOHqA+ozL7bn0qljsqy+iaf3qGyp5nkhfP0kd2gK2
-	2QGTvZaaRM7oJmwbVR2ujOTgX/saNcT8PucbFcUO3dZlzPCGt0jia3NH9pip2FTz
-	faVIKdKgzAZhSRGJz6QNZ1gvLBLIhUUSXl97M+7wKA+op0p5SlRQ/VkkeB/lc8hI
-	e8PrUtFV6Y/zzI1SDyO+P6DZysiTqECAnBUXo8p7owcWF4yq1HZ0/i1CECf9HgzP
-	hjzWyk38Dt5DM6VUAVVJjRQD+1TG4LtZXoefGUvlXX510UhY8xO2LhCfgPsg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788464753; x=1788551153; bh=KkLRMlo088RyZ9LALo1QkyWbBxzhOFbZHC6
-	r57Qm/ew=; b=K7u9BW8E4TxZf6YNtd9akvYKk9oV1a+mTwVramibuIIX/vgVb+O
-	ssOpBuxbSGf+mkkI7sBa33WTdKvEl1SII5+M8FhGCCIjEewCd6nxYSRh3lmLlvgg
-	4c0jEHqHi7Rm73dc+T8YfEnGXLk5O82Sj5detzE4hUAuwYGHLls5xfkAHF9jXyTz
-	x7ypEmC9KnbHHJijws8ixM0qVHV88/p60TemA6NyrdDmvF8uIHBbGARMN2L2t0ol
-	0mMVYTZwyff6egczk3kASgIQ2f1uRKgjyd4pIv082P8TVKEpwwrJYgGrnNblcEkS
-	VMvtg9iCfPCOQb0YiWo1G9aBnuQGkWw8otg==
-X-ME-Sender: <xms:cM6ZaiEjSv8W9_6x_jhj2vrM0GP61bErXIbK0bFb91OmCXIKSwtutA>
-    <xme:cM6Zak3FLdTjXtHei0kXRp-bET9JJo-f_cV5n9hbV7AHaFflqxF2hnoFdQRvjwHHC
-    8LGYTbEcMqEh11kMksgVEcL1w1l0TUBwtV4IEDXe24_eWUF-nz4nMFG>
-X-ME-Received: <xmr:cM6ZasPs0VSHNnX7c1FSB9jzwXUb8r_k0B2dbKTdcUILWRdn8DFVPBWhYwKlhh0BZjhZsQA9NKDrT-sbY5F55PlZYGOU7Vzncg>
-X-ME-Proxy-Cause: dmFkZTGFPiw1XQMSgZy/9gqC/ot1ouqYg8jVxoLjkhCZQqNqyxX4HKxqrDAN9HV+avEPYM
-    wnJx5baHsXModqwOVAyVJSIA1kgvImv3TE78gkYFyD6q16d5NuLkhhHFmZx9+KroYHBkTS
-    kzK5GgHr3N9rGe1JfQYsZZAnCPlN5UHyX/zsHxZLTpRFvYzWsmXsauQC5XaQ7ZOdvkg4dA
-    t8UlDK3/P7+cMn0WIDst8xk3mgya3fDn5cGOjpKsmd2XUybLggl+d/nYTMzLrsyx5Ptjig
-    RKQPTgz02XdMVox2boOhx/ofOTXlr9CbFKonrtsWbvVg2QefrgyiH2oK33xQtRYiLfTtIS
-    oX/UcxH3sWC55avp9tFPVxJ6/D0amkUMBCk3Is4dm7YtvCHJL2J17yGNTT5iomndwKqDgt
-    wGjz3CFzr9axfrqyq8U6X1TqxAyQfWaM60l2B/dA9+PQNWEK42CwzrrjH0qejYs4fRHet0
-    esKjuflHz9+tilIBIDcT42F9EIJN71nqQbM9wCPsKIllmyMSdaj3m7r07ILRL3hAIc+4g3
-    8/8xg4dDwDwFrZ+TTPssEipICe3R/ddZYIYVYP/sJm1MBN2/3M74Swecg8TFp7PPcMO7po
-    LJeAqFwST+RnxQEDESXzccJSiDlBSuNEbMcmbVl3vV9kKXfEcdaYxjJUiqeA
-X-ME-Proxy: <xmx:cM6Zar5a2RnkqQT-BmF0tWsgwPR8nHfJ3ITS-Ajm1WA3vtiAlYpCZA>
-    <xmx:cM6Zau2ecwqmRh5nFZklHcwqHvtd2XOC05gVymSnXtncJLyEqU-ctg>
-    <xmx:cM6Zakza8FMuH2z3QDxtxu3sLewQnpX4IrrM4dMiNkkTrbcPDhr53w>
-    <xmx:cM6ZaguVgJD-nI5_KJOXi-DYfWHnTlDMayqVbCyhuwJUBsjRKnxC3w>
-    <xmx:cc6ZaiRbOFCjUXImVAIMbQc79b74cvObOnOcLYDewavGZskptKEyepUH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Sep 2026 15:45:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  Harald Nordgren via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] stash: reserve exit status 1 for conflicts
-In-Reply-To: <CAHwyqnW8sdnDcncpZpaMD8fmWaj+WJQxhA4G-Y+L5PTW=h3k6Q@mail.gmail.com>
-	(Harald Nordgren's message of "Thu, 3 Sep 2026 21:09:52 +0200")
-References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
-	<pull.2364.v4.git.git.1788373743.gitgitgadget@gmail.com>
-	<ff4322180294c784bcd5f4e92b35e4b334324ddc.1788373743.git.gitgitgadget@gmail.com>
-	<xmqqwlt3h1oc.fsf@gitster.g>
-	<002b1324-0f7f-45ec-9f67-624a41801ff7@gmail.com>
-	<CAHwyqnVp6BVGx3+UCqBC_gOCuyq1c62uNi1f7Wyfpxd1KdyM9A@mail.gmail.com>
-	<xmqqqzjab2ho.fsf@gitster.g>
-	<CAHwyqnW8sdnDcncpZpaMD8fmWaj+WJQxhA4G-Y+L5PTW=h3k6Q@mail.gmail.com>
-Date: Thu, 03 Sep 2026 12:45:50 -0700
-Message-ID: <xmqqwlt29l01.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="HCLx9AIs"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-48441fa5c37so167298f8f.3
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 13:00:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lex.la; s=google; t=1788465618; x=1789070418; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Q58dpy7qdCAvjfelp7ZdVla0IMPVsOwdBOvH6OD5ug0=;
+        b=HCLx9AIsor5JuFy0rBGtIvYGGLPaCYsm+UKYHlqK3GPWaHziw+BGv+81+kj284AkoG
+         kTipKOdpLOSAwYcoP9STUABf7+aGPSyzdFjluby+4H4JXe/qKqXHVa0OxSCFVSrpbdDD
+         S/7Ggou3sSPU4jsLmQo45m4iN4TouX8IXlk+dn5bMHL0PaiCUk1iwODIK0USyE7Uhw6z
+         jLJoY8q/YBR1oAqUYcWI/lE9nXa3URAsDzoklbV5CbR+W61JVMuZfKC6SJAJjYvZ7Xed
+         j3LSeLBUDLxHzXjDOsfH3eQhP0iQqz3M7mKjfhvmq6PQIYpkcld9Ak+GU4yssx2Z3lrO
+         OGpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788465618; x=1789070418;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Q58dpy7qdCAvjfelp7ZdVla0IMPVsOwdBOvH6OD5ug0=;
+        b=QfBfiCeep+IVPFEHwcpDKmHEHjwjQSHODqY580rcF7j598MO8vQm9JMTAL2+XX3ide
+         z8NkufiSU3bADhhZ2er0EXaByro7Vf/4trIkrrHz34jXZIaW+cGNrnQMQeBiyK9syGJe
+         gvneEW+3LPqm0kM2QREkGilE//nyTcRhoKmD0AnnEK0cmLvlT7vKuoh9IrHHzSoLGMFH
+         emLrDLeSmIyYnz9wp7emZ+umjFLyBWtiYEpG5J9mOq86pyF/rHAt7ckZPV8+zDQCBlkm
+         q1pq4MHBdsUwZ9wgW4m2c++jN/2qXhsaM4EeGjKinpLxLNy/hYphSFG2oqG82aHQbz8m
+         8GTA==
+X-Gm-Message-State: AFuF++kNUEgj8WN2djTTe2Xhr8KlgG5ubhL3MsoJjc7i1S9Ng0odz4Oc
+	lM5SRgSa+NW+ogua+oQOLNN6mt6KHj1rxtvYFiv65JRp1lU1k1uD1bV1Y5gAR86wBS1IVZMawIp
+	l2jUSrA+DyQ==
+X-Gm-Gg: AYBFou1iMTGrqEpUxOf7KHdsr5TiVv3xh1rNvZ8/me5ZfAvMr5bWPVmvBO5akb54/+L
+	n211EEnOwfeX3toDAbqP3DA2k78VUu7E3RH8BsEB4t2aDfX8moRLp4pZRpNutfphrSu6RVCVpUv
+	OjA6T5AnS0v2eBiJ/HyXstOwGn2KRTGaA80jsDEsqEDoW7sqy5TSaYPLC1AR3RHB2VkUVJsYUfy
+	asW6kvtgT5RoQQI3aLg2eq86UuKogZilgL2eKhgIZCJ0cyVZFzGNeiCONH6TFQDZW6iDQ7OyNfL
+	xTXjHYlD0x/CCmg73LI9jaT9W3FXfFnjgu9Rw4DRUORnexlWn4EhcSLcv7khvVPcvZgorA7UGUb
+	bGfGSdyaNVZ0IW07osw+X8Q87xAJFzZCAnZRj6RHA1qqJbejoHehdZNcUB3Zy/w9kklHH6AFACW
+	9Y+18KtmS6z420uNKcKEkOQTU0OawaWfLhJCoWSoofbjvVNi/yJxa/NRFgmx3M+6FGxtcFLhk8v
+	LeiY+0=
+X-Received: by 2002:a05:600c:a44:b0:49c:dcec:bd27 with SMTP id 5b1f17b1804b1-49cf821e7a5mr7349695e9.8.1788465617571;
+        Thu, 03 Sep 2026 13:00:17 -0700 (PDT)
+Received: from ownbook.home.lex.la ([84.17.55.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cf7736132sm8526935e9.12.2026.09.03.13.00.16
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 03 Sep 2026 13:00:17 -0700 (PDT)
+From: Aleksei Sviridkin <f@lex.la>
+To: git@vger.kernel.org
+Cc: Aleksei Sviridkin <f@lex.la>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] push: fix --force-if-includes when remote-tracking ref has no reflog
+Date: Thu,  3 Sep 2026 23:00:15 +0300
+Message-ID: <20260903200015.36849-1-f@lex.la>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <xmqq5x0mfgyh.fsf@gitster.g>
+References: <20260903010547.85469-1-f@lex.la> <xmqq5x0mfgyh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+> your sign-off must be the last line in the trailers.
 
->> >> > Style.  Once one of "if", "else if" and "else" cascade gains
->> >> > {braches}, others should do so as well.
->> >
->> > I would love to have a linter rule for this, since I keep forgetting
->> > and it's a waste of time for others to remind me.
->>
->> Does our .clang-format file already cover this?
->
-> I don't think so. When GitHub CI runs, it doesn't complain about
-> mismatched braces.
+I took Assisted-by from the kernel, which asks for it. I could not find
+anything either way in git's guidelines, so I followed the kernel. I will
+put the sign-off last in v2, and drop Assisted-by if you would rather not
+have it.
 
-A local "make style" while you develop runs
+> It is a bit surprising to see the fallout from a change 6 years ago
+> to be addressed now, and makes me wonder what else changed recently.
 
-	git clang-format --style file --diff --extensions c,h
-
-which tells the command to check only the parts of the system that
-you touched.
-
-I do not think it is used in CI.  
+The date is read from uninitialized stack, so it only bites when the
+leftover happens to be larger than a real timestamp. That is build- and
+layout-dependent, not really macOS/arm64 specific. I hit a layout where
+it triggers every time, so the test is reliable here, but on another
+build it can pass by luck, as you saw.
