@@ -1,158 +1,271 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011026.outbound.protection.outlook.com [52.103.67.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8A74BA9E7
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 14:37:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.26
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788446264; cv=fail; b=XhbVe5Y3cTMqkQCbMPWAhIcYSo8jfo/+D0emJLmms98o8jkKV/cN0qA9G83YKm6btokuq47zUi7u7H70X3A+NBp9KotD1gseEk0DLhkU8ZavrJpiRZnZ74+NFItJlk97aSpwIkhJfj4SFRBh40iMHnGAEu3itpQiUHjt/MOM2oU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788446264; c=relaxed/simple;
-	bh=MpxlOeVIQL/1+nzL6B1Fvmyh/p2AiGllq7oHYFKQGEI=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=mIzrl6mIvG8w4um9kZdek3mdxFJJ7OwbPK2EAwC3WyyFfqoih2k/7XrfyhdR5DErlLlTe4vIg4wzsAG4waD8SlI2ylfkkbZ+pS0wnQJxHGBahMLvt8FHw6QgNg6WrdR7HA5gTHAd1fGwKo+xytWTI6ZdrTM7j+IEOIjeOAKccWs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=uQsvXSr9; arc=fail smtp.client-ip=52.103.67.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9BB4BB810
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 14:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788446412; cv=none; b=MkoHYyu2MWsjqPJDgI2L7sVrHu5rxl/7UCqUzpVZwfOApjyQoRiHjzputmkf/HkP2fPfFUlkmOKeuJLiH1ogCGj3Qxo2pjHDj3ouuRPnVZAo3SCR8EU3iwhA4piPE8ubWniqvB2/c6lmdLSWnQmlLICvsO/M2XQf6GHDm0+9jp0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788446412; c=relaxed/simple;
+	bh=jRXRRIrRl0WBfCBV/G1jwKIXYvx3Vqbu5tWuW0vffkE=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=e1nj8XF3dZShZKKEb2R7A4sKoZZPJLiJHKe5jVJA+duNhK4oCBVeVyYBj/OVGADm7VjQbB5hRygUwpa1e9BEeiFKT/vW6rnZXXYvndi3Y2GJfbBlleF/5p06wNCvu0JFLs0hbCHNHHswO4TIPqWKZkeK1aexjtQyEEshE+6WC4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CL/S7ClO; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="uQsvXSr9"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LxcZ5GIz1PK9Fkqi7u3+3yQM3MUVr1lD+77Y5SuRczHi57C0XeFscQ11KWoUlMnmuExZprd13kyV3oz5Pad3DI0HuYznt6iF3r9aiehXYryjMr3pgTNlXGr68M7i3ttVjABszilkONeFFimA2oGJLSZNn3EB2a1G3FiARTLiXe0kmYbgOjNwBvDSbSh1bqNEXLFdppoTUpbENwn0fCTgGCKhvr44jBXieyw0r1L2eEiyAGVaFuS8gVRarKpGrO/jgUSz3ocSoBmriQMxymYM+V+9xLVfkSbAcTiPmlDIwAfB2ZHkc/l6nGYbUGICnLu7GK1jK3x+XeFlnMbSXhtqoQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MpxlOeVIQL/1+nzL6B1Fvmyh/p2AiGllq7oHYFKQGEI=;
- b=FBn1K2bhpvz8V+dINfZg2qOD3O+kjzfOTdYQ797KbNk9tIVGcOZX4kf+o9g0ybuCoG0WoY8sHUCKfH+4Sdmd1eRl2enun0shrTQ3WKKchkP+r+M3kRDDahp6yLwJyzINSHpuP3aG0szYj3nY9wtNTm+m/pepa0Lq7sTiA/gM501+Na/f+HQT9uMwTQruTt33fefibKT3rTQI4D1qr0r4lNsTFthRwTIiFKKW4lojHRbetIaZRJpORdDDgnsh5V5b5+x0b+AEWxYbnBehggVVq+LZublV1UhLtVa07Y+6QS+TXnaIqSwEtdxNkNyORdFFdWuxHk+geEOvOBLkbwU+Bw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MpxlOeVIQL/1+nzL6B1Fvmyh/p2AiGllq7oHYFKQGEI=;
- b=uQsvXSr9W/yiFyGz/ctz0fPCUaq6UD1sKjAbLqubt8F2mVPcQssBOVkhrfdyMjITrv9zpYb2NvDe7RRHX0WTslIa3hKejPvHxt+ecqZWuR5j6Rms88Mx71kZd9RmIvG4QsMV8oxY7Lm7585HKCqC0kV29Tn6kgYwjijHiMi6Wa0d0UzkoDvYqgJ5+P+1XsXZn26xN1r1ACI+xxPxMoYYEfy8wXf1meRqZVy1Qkx7txkut9KSHfPFH6YuP6ltGmeM6+1B8LcuEGxtUyFsjLOWET1q8er0Uw9h4iDipRyKk3wzlLYQggbFAgGzJReQC8oJNnuEKjdiBjXATObFdSQhUg==
-Received: from MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:19c::18) by PN3PR01MB6205.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:80::5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Thu, 3 Sep
- 2026 14:37:33 +0000
-Received: from MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::1fed:9b0b:69b:9295]) by MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::1fed:9b0b:69b:9295%4]) with mapi id 15.21.0382.007; Thu, 3 Sep 2026
- 14:37:33 +0000
-From: Aditya Garg <gargaditya08@live.com>
-To: Junio C Hamano <gitster@pobox.com>
-CC: Wolfgang Faust <contrib-git@wolfgangfaust.com>, "git@vger.kernel.org"
-	<git@vger.kernel.org>
-Subject: Re: [PATCH] imap-send: add --draft to set IMAP \Draft flag
-Thread-Topic: [PATCH] imap-send: add --draft to set IMAP \Draft flag
-Thread-Index: AQHdOnANfPSsa15P30WxlynTjDaI47a8WTwAgACGEOGAAA9Vmw==
-Date: Thu, 3 Sep 2026 14:37:33 +0000
-Message-ID:
- <MAUPR01MB11546486A8DD9C23224D52607B8B62@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
-References: <761c3f1b-e280-48b1-a2ad-770b68be3434@slotpi01m90>
-	<MAUPR01MB1154649CE9D154B98459B09CEB8B62@MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM>
- <xmqqfqzqfo3a.fsf@gitster.g>
-In-Reply-To: <xmqqfqzqfo3a.fsf@gitster.g>
-Accept-Language: en-IN, en-US
-Content-Language: en-IN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MAUPR01MB11546:EE_|PN3PR01MB6205:EE_
-x-ms-office365-filtering-correlation-id: ab8d18fc-8ec9-4d75-92d2-08df09c8e429
-x-microsoft-antispam:
- BCL:0;ARA:14566002|14091999006|51005399006|31061999003|15080799012|24021099003|55001999006|6072599003|8062599012|8060799015|19110799012|25031999004|25010399006|40105399003|1602099012|10035399007|2607281247196008|102099032|4302099013|3412199025|440099028;
-x-microsoft-antispam-message-info:
- =?utf-8?B?U2d0YUNyS3ZscHQ1YnVrVERJWW8xRTdQbWhqbEl1UFRsbzJRajlYVlZDYjdp?=
- =?utf-8?B?ZTZqTFUxejZmYnRVZzg3QVZsSlVmT0E3Zi9DY1JneFNhNlVPZW1oTUFxM3k1?=
- =?utf-8?B?a1FmRnpJT0RENHR0Vys0MXA3ZGg5dkptdDU2clQrSmpnT2t4NXIrTUc4N01I?=
- =?utf-8?B?ZVFLR1NsRnViS3E4Y28rYk1VYkJNNnEvNGc2VDArV2tiRGlLcXUwZDJ6UDRV?=
- =?utf-8?B?K3ZTbXZacDlLVURjRHRBQWRacHhCU3FFMCtLUHl2TSs3dGpwcHdmTkhMMi8r?=
- =?utf-8?B?bUhpV2FCQXpaVWt1NnVzSk5LclRYQUFXTDU5WHlGSGxYWjZvWHJJdVlEQTha?=
- =?utf-8?B?KysrNk5zaHMyNXY0WmkyMWM0VndoNVBPeEJvUDN6QW9oMDB6Ukk2M0Y3MDdr?=
- =?utf-8?B?bzJwQXRuVWlidElOemNQRlZvZGFGQy91Tm5yMTl4UVU5N3JJZnNQZlp6R2Ur?=
- =?utf-8?B?V3pmd2N4dWxKSkl4U0JsdHlMZ05EeDRsYWczdjE5a1JiWFMyZmE2ZXcweHBw?=
- =?utf-8?B?bzFTMzhCZ29hZ0VHcFA2Mk5UbDJkelJyMWhCSFk3d1JENXBVSFZlZ3BYQlQ1?=
- =?utf-8?B?aE53K1BESkw4cmQ0WGRpWDQ5ZXNjczg4TmF6bWFaTVdjSjNPZ1lnTENNVjNz?=
- =?utf-8?B?OCtWTlRTbE4wSmdKWis1a3BKWVFJOGR4VGhBVm9lL1hZd0puMkNWK2xQdE9S?=
- =?utf-8?B?bndjQ2txM3pUSXkxR0JDRWlWdjkyRFh2R0lHMWZQSGE5NDl3ay9CTlJNbnBB?=
- =?utf-8?B?U2NDWjR2dS80VVBHODMwRUo2LzRyaEZDWHltN2t5a2g5QTFvYVpyQTlnQUUv?=
- =?utf-8?B?bS96RUU4SGJ1YXd2K1UxMUFySCtrVVVWczk0MEVSMFdydDBRMlpPNEpVTjdn?=
- =?utf-8?B?L2JTdS9td1F5SlhEcHhNVHRCUFRhT0c0T0QwbEhVNFIyTnZtSHo3UHZxNkRQ?=
- =?utf-8?B?NWdtVFRYdDV5RVRZWmdCWUM0dDdJdG5jd2tCN0wwb0k2eXM4NGpyWnhDUUg1?=
- =?utf-8?B?TlV6MmNIWjNXZFZ1dU5HQjcxZ0t6SEJGV0VjdFdtNk93b2FBaFVMK3lkckEw?=
- =?utf-8?B?dzJmZkZ5NDR5NFhHMkhwT3h1TjMrWWIvR0JHZFZ0RDcvT1BPOXZENHRoWVpN?=
- =?utf-8?B?QkJ0TTl1QU5HTXNXcGl4VlJFd1VWZi96ajYyMW1UcWRrVnV2WGM5SzcwVzBE?=
- =?utf-8?B?ejBIT2ZmRlUwaG9tdFVJK0xiT2FtVWxyNTFDSjhLT0MvczVnbm5MQ09HRDV2?=
- =?utf-8?B?OXByUE02R2thOHdwek5LMXp6TWxQS1gxN09uclpNWldMRjVNRlhZdkp5Qi9H?=
- =?utf-8?B?VEpUdVdJL0YzaWtMNndERlVtRnp5S1JuaTlqR0wzUlM3Sk5uVzFCckgvZVR6?=
- =?utf-8?B?ZlpoMVoyOWc5ait5bFJvTW9VWlpNajVXUHJrdXNZaWtlR0VMTDlrZG9oZVBp?=
- =?utf-8?B?VjBScUdhUTgyZVRDQmZKTWw1a3lxNy8vU3grZnIyR0JISVJZdGUrcXVzV3lH?=
- =?utf-8?B?bzVGYTAxNk1XWXhnaDNYSmRWeklhRlJwV2tTNmkwcFFZYTExVEUyV2pRdmRP?=
- =?utf-8?B?OVNBZz09?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?V0lHUURIKys4RnRYSXIraWs0SlV4Nm41cU1LalRaWC9leUNtRjl0b09pQnlY?=
- =?utf-8?B?MmxQTmx6bUhKYko2Qlpxc09YSUZETUtuZzRtaGE2Vzc0YUZMZjZaRThKZVpP?=
- =?utf-8?B?NlJua0FVZzMrTWh4L3kyMisxMFlrTDJhSXE4RjJMb2NianNYd2hrZVgwdGZD?=
- =?utf-8?B?TVROY29xejBFNUhZenlwVUpvaW4xS1p2UFVuVlBOUitvazRPNHBOZU05TkJw?=
- =?utf-8?B?WWxyVHBDVldaTHVQY3B3eDUxNUNMVGZQZnFNVHB1WjE4S3IvaThaM1pLdlZM?=
- =?utf-8?B?cnF0bXFnNEZGdDFWdEZtbU0yVkZRR1Q4TXFOclBiTzFOM3RQa0FyVTRmem1r?=
- =?utf-8?B?LzhidzdCc3VCQkF1bGREaFE0SjM0UzBhKzdkWnpYNFRRZzlPQ0poK1BzcXJL?=
- =?utf-8?B?TXhVaTE5KytHNEtWTVloSXVrNmZIa3ZIR3Z5bUtpWTBIUGJvMXo4aWNzeSsx?=
- =?utf-8?B?c2FtbG1pOE5DaGRiNk1nOCthNlZ3cmRjbWpkYmxKWWVURVhEQ1VSck9JYy9l?=
- =?utf-8?B?aTd0MzJrM2NPSmxHckJnb0ttTTlmWUtXV3RYVS9Qa1QyblErY1ZzR3JSYnhj?=
- =?utf-8?B?aGRxS0NJQTV4MGErU0tRWGVrRm5FN0NmdHJvRUIzTnpaaVFBcnBOZ0RTRnZa?=
- =?utf-8?B?NnVmMDQ1Y3dZQ3MvdDVVbWpvakxUTGloeWtnT2d1d05PcDhBdTlPWndKRm9n?=
- =?utf-8?B?NHBjSkorZHVEdVlqcmFLd1U1Y3Y0R1FrZlBYQmRVeVBXdjlucC9sR2NyQjVF?=
- =?utf-8?B?eU1rSDFvWmlmSGZkNmJuMVZlRGFUeG5yRzNOQU1LSjZ0TE5rVFJuczZ6ajVY?=
- =?utf-8?B?VGlQL1F0amFISzVNUDdoRkZuRVRaTjZ4NGRBT0RPQzh0cVIwbUZIa1JxaXlG?=
- =?utf-8?B?eUVXV0Z6WmpPQndzMTlYZlJzbnl1VnMwbXFrNlRjT01sMUFTajZoUWNWVjh0?=
- =?utf-8?B?VEF6UFhrNURYcGh4TlVINmdNdTdCRGtGTWxKSGdJVGJSb2lpbCtNRm5uS1lZ?=
- =?utf-8?B?OC9jdFVwOEtwQ2R2R1U0VjBVQk5Cc1pZeFdjZEppU2c5bEdNa2NTL1NNUzRl?=
- =?utf-8?B?WjFnZUFHQ0tKc0E1TUxVWk50Ukk5ajFKUW5OaHZEc3JTTWlQRCs2STl2MVV2?=
- =?utf-8?B?MXl5akpWWVFSbWUyZ0NzeDZkaFJHTEZBQkV6ejhvNmkwcGRFbGZrZ0JOMEpq?=
- =?utf-8?B?cXVwU0FGK3FqSk5ObDQvOWw5dVNBeDBRTVpwQXVPMXhOOG9zQlh1amhqaldy?=
- =?utf-8?B?bUJxb1Q1NUs0OUNOMEZ5ekFNNHdzcmcrQjhyREpWSGNiRHJzT2RkZEhiZlBH?=
- =?utf-8?B?cWIrZGVXK3N6dXduNmdVQVU3cVdQc1pxaFNxTFhwOTBaRG5tODNTYjBFcDhX?=
- =?utf-8?B?bmU3Z0lvMWhnREZmWXlPelpEQ0xia1MxOHlPakVFdTB1WkRKU3BTSlJUdWNG?=
- =?utf-8?B?T1lLb00xMWI2QXpndHZxVnEwcWdMMFVzM1VjM1FRZ01BLzZmNHNGdjhRZUtv?=
- =?utf-8?B?MmZtUHEwcFVVU0FLVjIrcWVVM2t5akFlYkIzZ2pQSnJpSjBld2FkRHZuMWRj?=
- =?utf-8?B?RXliNGs5R2dCNmgvdUFjWVRhTTZFUG5pUjQweDRCVDh6a3R5em9NUjBuOENR?=
- =?utf-8?B?d3lkTUJwOElHZ1UwSGVFY25za085TDZ3c2hrbTA5RjZnYXhqZFhPVlZKdHZB?=
- =?utf-8?B?ZWhXa3ozRVY4NGZoZWxHUkZRL0hSTkpENmtLN2pFSGIyMGN4VW1HQXFOV0Rq?=
- =?utf-8?B?UUhDREdENHorZ2Jkcmd3V0J1dDVCQXlqYVFJZHJYWHRqbE1XYnZpbjlwWm1o?=
- =?utf-8?B?d0IrYzF5VVNGNkFuSkVMbm10RHc1WFFzYkZFOXg0cUZ4cmpwZm0wSUh0bmRT?=
- =?utf-8?B?R3g4VExDZnVtN3ZEUUhYQ2lBS0pxbkIweHREVnkrU2hHQm5WUDlzVkgwalkw?=
- =?utf-8?Q?y1QVF/bPmXjSurN1RfiASV+IQy0PvnV6?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CL/S7ClO"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5b60bc6b4eeso1540110e87.2
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 07:40:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788446403; x=1789051203; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Jk4yy/583nTgRSd5TzkSzIlTri9h6v4Ik8GJi4I3/Zc=;
+        b=CL/S7ClOPLEc5BNvYOX1LOAt2ltNEvAz2tPPa+9PkmKUDKwwRWsvcoYNysPODCH1h8
+         H2kLWpm0y2olbWOFYXIpemKmXMXtljn7gCia+nsEfvj+7d+Hu5FAa4gF5Yyle7q75jpm
+         IrHc8/i3NhFQMzmb/L/o/VtE6vdQKL8rcwnJXEHOuauLbV6zwTGOBaaq1K5m5jTjboOS
+         kvwWVA1tdzVyF6eDaqjTg1j+kLpwoC9leFxpEirQjPIhxOC2vlVS50YABPmreth75WCZ
+         utodOYEuLWWKq4xPMg2z3e1qeGMhTXU1H0BZCjc40kiotuATJty6Tjiy6fisJFN6hc7h
+         hi8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788446403; x=1789051203;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Jk4yy/583nTgRSd5TzkSzIlTri9h6v4Ik8GJi4I3/Zc=;
+        b=Flq657r/+Hhy0tD5a92FmKJFtbpf+pdObda+Wir+YvWrnZJ0brlD0jDKfgDQIDSJBV
+         v4dlBskmT9cDZww+mK8n+7w5eyw26kxOthr4QkL8Bdt9DJ2V4uKu3rWMcxxEjltaAxl0
+         OU9v9sh7DvAspn3UATdYFKt3KqyV+J3J/SkxUxhF/twl+UZK6prvm+5YRGJj3smLh/an
+         9p74yogyXRtawl2R+XtCkHXeZ+WA6YjxsJd5QEaUBuSg6HWtQNDalTCSNyPmZw/ugTnv
+         Z7Du9s1gfhWUjOtzFR8iO2gf9Cuzdp/0kxShE7CrRBJtdrWgd3pWzGcrSZ2CHHoklr2P
+         BUYQ==
+X-Gm-Message-State: AFuF++ld2xwjbEWJL7sTt8axom3TXGpzhcwbjntplTQJPxk34YzTSwen
+	FbFOmwp2BaqgIcJQM71LC80P3AG9DnyZNWceLpj4H+6h0UQCVArRF0foKqFACfod
+X-Gm-Gg: AYBFou2bJy3chaJre9ORCe2sEXZGSj3JNdEHH0gTRLMiWLTOIW3l0klTrjiiRsASm58
+	A+SRQQQc9OnsmKOte/vNJHV+BP0F+d/tL6ved0WFjGLFLq34GfX+COui7tkIb3OZ5zo5msZ9ihh
+	G939qHwpPyL8oMrUfb6dwArP07VTBnTh9rbv9b8UtGPVfeqqxXX8Hj56AgW+XXYZA2/KAJpt4Dg
+	op4Utr5gqvd6jexe1uojF5Kg9cIDWqsti32bXXuN+ra9RcctmH4osLQWxdYKQQ1uOGdC9EnXoeU
+	xo5wHluurW3phuQgdGUEukD+/whkrpkweUZnD13KQncslckPpY4mQRPiyzskNQ4uRyOM2YSEHmg
+	hAJduPbtXq+YPp/CT09PNmA94Fl6nClBChkVbDrKkmVa1mpnx/tvVNCzwbJIUTLcKZ+GKHP25yQ
+	0Rwk/2FueCmP3Oj3p+/NeyVr+rBdcJ/lnWAYEYeHH/TmuCHeZEqIoZHa90lCY5fLnNOQ==
+X-Received: by 2002:a05:6512:3984:b0:5b1:5ab5:ea09 with SMTP id 2adb3069b0e04-5b6080d1d4bmr4090977e87.0.1788446402460;
+        Thu, 03 Sep 2026 07:40:02 -0700 (PDT)
+Received: from [127.0.0.1] ([130.131.215.214])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b606b1cbe6sm1375704e87.20.2026.09.03.07.39.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Sep 2026 07:39:59 -0700 (PDT)
+Message-Id: <pull.2364.v5.git.git.1788446398.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
+References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 03 Sep 2026 14:39:56 +0000
+Subject: [PATCH v5 0/2] checkout -m: refine autostash fallback
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-63b91.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11546.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: ab8d18fc-8ec9-4d75-92d2-08df09c8e429
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2026 14:37:33.5891
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB6205
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-U28gd2UgY2FuIHN0aWxsIGNvbnNpZGVyIHRoYXQgcGF0Y2ggaWYgSSBhZGQgdmVyc2lvbiBjaGVj
-a3MgcmlnaHQ/DQoNCj4gT24gMyBTZXAgMjAyNiwgYXQgNzoxMuKAr1BNLCBKdW5pbyBDIEhhbWFu
-byA8Z2l0c3RlckBwb2JveC5jb20+IHdyb3RlOg0KPiANCj4g77u/QWRpdHlhIEdhcmcgPGdhcmdh
-ZGl0eWEwOEBsaXZlLmNvbT4gd3JpdGVzOg0KPiANCj4+IEknbSBub3Qgc3VyZSBpZiBpdHMgYWNj
-ZXB0YWJsZSB0byB1c2UgbmV3ZXIgdmVyc2lvbnMgb2YgY3VybC4NCj4+IA0KPj4gVGhpcyBwYXRj
-aCB3YXMgcmVqZWN0ZWQgYmVjYXVzZSBvZiB0aGlzIHJlYXNvbjogaHR0cHM6Ly9sb3JlLmtlcm5l
-bC5vcmcvZ2l0LzcxMDg3NjRmNDM3YTI1MDc5Yzk1YTI1YzIyN2ViNzlmOWY0YWVlNmEuMTc1MzI3
-MzU1NC5naXQuZ2FyZ2FkaXR5YTA4QGxpdmUuY29tLw0KPiANCj4gQSBodWdlIGRpZmZlcmVuY2Ug
-aXMgdGhhdCB0aGUgcGF0Y2ggaW4gdGhlIHRocmVhZCB5b3UgcG9pbnRlZCBhdCBkaWQNCj4gbm90
-IGNvbWUgYW55IHdheSB0byBidWlsZCB3aXRoIG9sZGVyIHZlcnNpb25zLiAgVGhlIHBhdGNoIGlu
-IHRoaXMNCj4gdGhyZWFkIGlzIGRpZmZlcmVudCwgaXNuJ3QgaXQ/DQo=
+Avoiding checkout -m autostash retries when no tracked local changes exist
+and visually separating autostash conflict advice from the subsequent
+branch-switch message. Addresses #leftoverbits from here:
+https://lore.kernel.org/git/cfd09dbf-8d77-4464-8030-3a0ffb4aeae7@gmail.com/
+
+Changes in v5:
+
+ * Improve commit messages.
+ * Create helper do_stash_apply.
+
+Changes in v4:
+
+ * Conflicts now exit with status 1 like merge-tree, other failures exit 128
+   so exit 1 unambiguously means conflicts. Stash changes split into their
+   own commit.
+ * The autostash apply helpers use the return value (enum
+   stash_apply_result) instead of an out-parameter, and only claim conflicts
+   when git stash apply actually reported them.
+
+Changes in v3:
+
+ * Use enum for git stash return values, to separate conflict from generic
+   error.
+
+Changes in v2:
+
+ * Simplify logic and combine to one commit.
+ * Test full output with test_cmp.
+
+Harald Nordgren (2):
+  stash: reserve exit status 1 for conflicts
+  checkout: separate autostash conflict advice from branch-switch
+    message
+
+ Documentation/git-stash.adoc |   9 +++
+ builtin/checkout.c           |  15 +++--
+ builtin/stash.c              |  33 +++++++---
+ sequencer.c                  | 113 ++++++++++++++++++++++-------------
+ sequencer.h                  |  19 +++---
+ stash.h                      |  21 +++++++
+ t/t3903-stash.sh             |  25 +++++++-
+ t/t7201-co.sh                |  16 +++--
+ 8 files changed, 181 insertions(+), 70 deletions(-)
+ create mode 100644 stash.h
+
+
+base-commit: 3cb9185f65410273787f74333cc027d2ea5daada
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2364%2FHaraldNordgren%2Fhn%2Fgit-checkout-m-leftoverbits-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2364/HaraldNordgren/hn/git-checkout-m-leftoverbits-v5
+Pull-Request: https://github.com/git/git/pull/2364
+
+Range-diff vs v4:
+
+ 1:  ff43221802 ! 1:  fe22b1bfa6 stash: reserve exit status 1 for conflicts
+     @@ Commit message
+          status die() uses, when they fail for other reasons.  Document the
+          exit statuses.
+      
+     -    cmd_stash() used to collapse the return values of the subcommand
+     -    implementations to a boolean.  It now maps negative values, which
+     -    signal a failure, to 128 and passes everything else through as-is.
+     -    The only implementations that return a positive value are "apply",
+     -    "pop" and "branch", which return the value of do_apply_stash():
+     -    "apply" returns it directly, and "pop" and "branch" drop the stash
+     -    entry, via do_drop_stash(), which always returns 0, only when the
+     -    application succeeded.  The positive value is always 1, as
+     -    do_apply_stash() only returns a positive value when the three-way
+     -    merge was unclean.
+     -
+     -    Make the convention explicit by introducing enum stash_apply_result
+     -    with the values STASH_APPLY_CLEAN, STASH_APPLY_CONFLICT and
+     -    STASH_APPLY_ERROR, and use it for the in-process autostash helpers,
+     -    too.  They spawn "git stash apply" and can now tell conflicts apart
+     -    from other failures, e.g. a crash or death by signal of the child,
+     -    which map to exit statuses above 1.  Since we know the stash entry
+     -    was saved, tell users so in the error message instead of leaving them
+     -    wondering what happened to their stashed changes.
+     +    The only subcommand implementations that can return a positive value
+     +    are "apply", "pop" and "branch", which return the value of
+     +    do_apply_stash(): "apply" returns it directly, and "pop" and "branch"
+     +    drop the stash entry, via do_drop_stash(), which always returns 0,
+     +    only when the application succeeded.  do_apply_stash() only returns a
+     +    positive value when the three-way merge was unclean.  cmd_stash() now
+     +    maps negative values to 128 and passes positive values through as the
+     +    exit status, so exit status 1 unambiguously indicates conflicts.
+     +    enum stash_apply_result makes the convention explicit, and the
+     +    autostash helpers use it to tell users that their stashed changes
+     +    were saved when applying them fails.
+      
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+     @@ builtin/stash.c: int cmd_stash(int argc,
+      +		if (ret < 0)
+      +			return 128;
+      +		return ret;
+     -+	} else if (!argc)
+     ++	} else if (!argc) {
+       		return !!push_stash_unassumed(0, NULL, prefix, repo);
+     ++	}
+       
+       	/* Assume 'stash push' */
+     + 	strvec_push(&args, "push");
+      
+       ## sequencer.c ##
+      @@
+     @@ sequencer.c: void create_autostash_ref(struct repository *r, const char *refname
+      -				    const char *label_ours, const char *label_theirs,
+      -				    const char *label_base,
+      -				    const char *stash_msg)
+     ++static enum stash_apply_result do_stash_apply(const char *stash_oid,
+     ++					      const char *label_ours,
+     ++					      const char *label_theirs,
+     ++					      const char *label_base)
+     + {
+     + 	struct child_process child = CHILD_PROCESS_INIT;
+     +-	int ret = 0;
+     + 
+     +-	if (attempt_apply) {
+     +-		child.git_cmd = 1;
+     +-		child.no_stdout = 1;
+     +-		child.no_stderr = 1;
+     +-		strvec_push(&child.args, "stash");
+     +-		strvec_push(&child.args, "apply");
+     +-		if (label_ours)
+     +-			strvec_pushf(&child.args, "--label-ours=%s", label_ours);
+     +-		if (label_theirs)
+     +-			strvec_pushf(&child.args, "--label-theirs=%s", label_theirs);
+     +-		if (label_base)
+     +-			strvec_pushf(&child.args, "--label-base=%s", label_base);
+     +-		strvec_push(&child.args, stash_oid);
+     +-		ret = run_command(&child);
+     +-	}
+     +-
+     +-	if (attempt_apply && !ret)
+     ++	child.git_cmd = 1;
+     ++	child.no_stdout = 1;
+     ++	child.no_stderr = 1;
+     ++	strvec_push(&child.args, "stash");
+     ++	strvec_push(&child.args, "apply");
+     ++	if (label_ours)
+     ++		strvec_pushf(&child.args, "--label-ours=%s", label_ours);
+     ++	if (label_theirs)
+     ++		strvec_pushf(&child.args, "--label-theirs=%s", label_theirs);
+     ++	if (label_base)
+     ++		strvec_pushf(&child.args, "--label-base=%s", label_base);
+     ++	strvec_push(&child.args, stash_oid);
+     ++
+     ++	switch (run_command(&child)) {
+     ++	case 0:
+     ++		return STASH_APPLY_CLEAN;
+     ++	case STASH_APPLY_CONFLICT:
+     ++		return STASH_APPLY_CONFLICT;
+     ++	default:
+     ++		return STASH_APPLY_ERROR;
+     ++	}
+     ++}
+     ++
+      +static enum stash_apply_result apply_save_autostash_oid(const char *stash_oid,
+      +							int attempt_apply,
+      +							const char *label_ours,
+      +							const char *label_theirs,
+      +							const char *label_base,
+      +							const char *stash_msg)
+     - {
+     - 	struct child_process child = CHILD_PROCESS_INIT;
+     --	int ret = 0;
+     ++{
+      +	enum stash_apply_result ret = STASH_APPLY_CLEAN;
+     - 
+     - 	if (attempt_apply) {
+     - 		child.git_cmd = 1;
+     -@@ sequencer.c: static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply,
+     - 			strvec_pushf(&child.args, "--label-base=%s", label_base);
+     - 		strvec_push(&child.args, stash_oid);
+     - 		ret = run_command(&child);
+     -+		if (ret > 1)
+     -+			ret = STASH_APPLY_ERROR;
+     - 	}
+     - 
+     --	if (attempt_apply && !ret)
+     ++
+     ++	if (attempt_apply)
+     ++		ret = do_stash_apply(stash_oid, label_ours, label_theirs,
+     ++				     label_base);
+     ++
+      +	if (attempt_apply && ret == STASH_APPLY_CLEAN)
+       		fprintf(stderr, _("Applied autostash.\n"));
+       	else {
+ 2:  935fa0a9ae = 2:  d18ff3ea9a checkout: separate autostash conflict advice from branch-switch message
+
+-- 
+gitgitgadget
