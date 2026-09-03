@@ -1,102 +1,63 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263ED379C5E
-	for <git@vger.kernel.org>; Thu,  3 Sep 2026 18:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37B63B7777
+	for <git@vger.kernel.org>; Thu,  3 Sep 2026 18:57:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788461620; cv=none; b=sbdvjA1W9aBTjN6an7YVx0XpFMkcEpkgdATeyFwt6HDpRoqBUeyyv6PWKvEfwuME5mruMs7fF7Qhx+ahsAbSBqX0yongN6J826tc9/U9xs5ClSZW8rnE3jZamO6A/l2lS/CY1NiS25QPefGmAwDBEif/obo+08qV4AA2xsEfVu8=
+	t=1788461881; cv=none; b=Jj10lK66mXBM2+uDYfwFpxaQyvl8Gd6F9xjMSeTc1hHWgVYGtLyWHuzEnqQPG2scAxmKhGzH1vVzHWaFODPs9sqdiT0nBb33nbTernU+kpiGuVNClRZ9OktdbNar/iBwtvBsOFXOkBGirq/gkwpBMcHavy7zzT1aK0XvbWItMd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788461620; c=relaxed/simple;
-	bh=rGbBF0hQZ6nUgMegudO+sk9QSO+c4gAeh3GT+MFdokE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YcuWLzf784EO8q7qGFEDUGn96AwqWtx2Jr+P2sozHC9CjSop1Xyq+QGgIFZh7PyFR3JGUCHCqZELCUjStHwtk3cW4iiKHrl8qs14lBow1AKbLtPLxODuAF2gwKpZ+/cD/N/u0NiExLagF0I+mF/8CJWSN9+MmYDIXarGzS6bF6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dtSjpK4L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UT41cVxB; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788461881; c=relaxed/simple;
+	bh=cZAAgj987aGZrp1XmNpLkJdRnHkn3VYZmRAxh6qgkr0=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=auO3rLcGBpy9GKSuHYAYYRhBI0u9xlfL/nmXZsb0VsUGQ3uYxbSPuHqX7wQqHCuVWSbiJWbOahwzf0kYIN74Sr+sbvTQKcr/zFzmqobJj55+VgzE+zs8g47sm5V8ugkX5n9n2N4cNBIoi6XndSccCXgn+PnJV/HXbCLTZctIwmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de; spf=pass smtp.mailfrom=ytausch.de; dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b=BSIK0Iyo; arc=none smtp.client-ip=80.241.56.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ytausch.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ytausch.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dtSjpK4L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UT41cVxB"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 86D7A7A0160;
-	Thu,  3 Sep 2026 14:53:28 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 03 Sep 2026 14:53:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788461608; x=1788548008; bh=ysLUh1Df9L
-	5CoX5rlMxauNGVf94ddDNf36NDpCscb20=; b=dtSjpK4LB4E3Zr7cVu89Z0zwkc
-	36oWqkwU163uwrbe1mGsXzm9CykmwuEA7ZIz4t5y+1setTrOD10xj5z7sduNLf+D
-	d0jDYIj6q0gFRJ6NS7xJzNdUiPwp8Up8NYOzwC7pEK0vL18liaTS6jzPZdTZDMGD
-	hkqzl3f5NkG4PNQeQDJJRgoKWpK4MPmeEN708zOfUJqLHAnz2ZsdTfHNxeK1kB9e
-	AKJCe1dFaSdqtk+iGMpfwJVdOdecj1uJ4HMfNdCKfaoShxquYfQ0IMWbMUHiCBD6
-	P6vdFLWRm4xXX0QL/gJKBOMkljaDeFRUeqohtipQV1a0GHniBdCvHbGWFI5w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788461608; x=1788548008; bh=ysLUh1Df9L5CoX5rlMxauNGVf94ddDNf36N
-	DpCscb20=; b=UT41cVxBiUfiXud8dq2XWvm0eXrONplAFeREH8MOsfrFqDunV9b
-	7wVkm1OEW8tlb1vsrEk1MVtorrdTNEpcoVYFxy5Fftq4SKEMv8wQf9micf/z4q5V
-	tRvne+CZUBSYkxa77d5eTzJ9kfpZXXfZLDcBDmIBKtZ4jFtuuPTb5SimUDUcGVKH
-	L6KHxLBOHcKrTRpJ6dVit6qZQQ1ySD/1uT/E1M08Jqp8OSmuORFqRBBEHlXc8ruQ
-	Fb4bDwrZP3Zcinv5F446G1biTyOQ8GVs90G1C1IdPSeqUi/NlO6vQ+xhZ8+oPwQ7
-	cHy3uenX6FaaD2Cpv5SRZ+61WS4lRXtCU3g==
-X-ME-Sender: <xms:KMKZaiQfCcL0b4xSvLjfNPAhs5uEh3-vXY180DnXs0ifMZhS9gMD8A>
-    <xme:KMKZauqAOdgieLbiI0sVK17KBUKwYu-MbHaz5A23B1Gd-gU98J70JejjZqlgSZh1Q
-    nWZv4cktG3aBoeI3f9x4PAFhuGsU7bRJMPHgpJmE_yhdRbQUg9lWw>
-X-ME-Received: <xmr:KMKZaoKyGCFnX1stb4fo5iSzWzWU0-ITZ2gFFEfnhbHawzsMBwZGhja6gwaHAlNYhDX_ig5DjdzyQGrEeKuA2VMUn-xdUE5Lpw>
-X-ME-Proxy-Cause: dmFkZTFlQNoQXbtyJiznBtm1nxS+b0eC8uMMsNMHUi73j8yh/dcOcrM0/V3ch5eKirDuKe
-    T9PVe9qbYbMXXfDpIm1D8/r5VTWXXLU4229/bsQYY4+TXJyRwhG+ZwfN0c1X4EInf5PhW1
-    biyra0+CF9DhfLm4ICh2LNRvTtbrICk3ao8GShNS5DnVf9rw4pbn1tmz2qAEHLVnlPJh3r
-    o6Pds9dR9nxX0KlunTBgPyUcy1CVpuEuoJmEr487Ekktb7i+36Zr8nFkp9uNL5u66m518j
-    chqbYAh1tbRF4M336+CKXhYX3wqn6rLCK0wbnJ1MNvznmNuPCpSjintLLI68JRXyv5vOQa
-    j51eT8Ef0sKmbQlfkySxeXlhM9vG0Oh+xTHwYrOyNi1kEm1ts50ElshGFAIEBZ7rqefofV
-    ZAdISSUv5+L5kYJTb5ydp93NkJ/dKILPJQ5Qe1HmNtqesIl+1afpPeXn/5yJt7x8ZOH/O5
-    3AARNLb00Zd5YlvWY4VyC+pbvOo/fJbBqBUZJm0H0hq/2stzDDM0YCZA5R6BzeshSdwgJq
-    FAtnoM83t2sgRxw8UmF2D+YZJ5DJHrVRUfzI7EfHaPIXaO9f9hDC7G13G8Rm9Gh6WykdAM
-    OlfEbeGZLTlySn/OyaKU8umdqtGvuki5jFILi7rRpmwjlLedhP3U+QzplQBQ
-X-ME-Proxy: <xmx:KMKZapr3XRnzSgyMZbTlNzvNh9cLtns3HhXq6wKE89icrDAqGLEclw>
-    <xmx:KMKZaoyFhDzOzGG-Jgifju0QK6JtLNbyYj5CmJDxSnULTOaIkAsy_Q>
-    <xmx:KMKZalP-dF3s5G5gTskOaJLIWIudKip4QfVj6iSVPkZAPma5e0DPmA>
-    <xmx:KMKZal4jDKz1NKwG9olcUY_mhYkhyzNWYyqxnwMOwuQt6nRcVza0Fw>
-    <xmx:KMKZak4e6kyh_YqLBgM2YJN6wdy_ZNVhCGHrtUs916LNn547ZRNAMkFe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Sep 2026 14:53:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v5 0/2] checkout -m: refine autostash fallback
-In-Reply-To: <pull.2364.v5.git.git.1788446398.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Thu, 03 Sep 2026 14:39:56
-	+0000")
-References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
-	<pull.2364.v5.git.git.1788446398.gitgitgadget@gmail.com>
-Date: Thu, 03 Sep 2026 11:53:27 -0700
-Message-ID: <xmqq7bl2b1zs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ytausch.de header.i=@ytausch.de header.b="BSIK0Iyo"
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4hbTPS1tnHz8t4x;
+	Thu, 03 Sep 2026 20:57:48 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ytausch.de; s=MBO0001;
+	t=1788461868;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=7XM9/tJsRtTmsywEk1ZOY0JVbVvI8atNeCkxcwsZ8gI=;
+	b=BSIK0IyooL1YwhOMANWA7nn9/lb8wKgchQDIkFclGf+Z1DHZT+DxeZ3l3sVs29DTmKKfLX
+	AL5qKjiCCHhVW+AZva0W49br5z4mF0SV87GnNThEeN7jCMavyV7Ohq8sGqtx8U8Y75qkuA
+	Zh4GE1SoQRsbOfUqZF8AoQ39hJ8R797jUvPhMAdAKKPYPmq00cqcMbsPKeZ5MMjD1edq+P
+	S9efAXc0UInbvOvT4k4UepEl/qiF+t4opyJRnkK2osGjkAQ3v861igtPumCZT9AA1BRSI4
+	5edlVPuWzfEA3PKuMAJhow1bKT1EXDhgHgl1cV+mqGXYZp79o1Z18e/z3ICQAA==
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From: Yannik Tausch <dev@ytausch.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: pathspec: match and original in pathspec_item are const
+Date: Thu, 3 Sep 2026 20:57:36 +0200
+Message-Id: <15ABB1A3-AAA6-4F53-B46C-C92E0B529520@ytausch.de>
+References: <xmqqbjaeb22p.fsf@gitster.g>
+Cc: git@vger.kernel.org, dc@diogocastro.com
+In-Reply-To: <xmqqbjaeb22p.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Avoiding checkout -m autostash retries when no tracked local changes exist
-> and visually separating autostash conflict advice from the subsequent
-> branch-switch message. Addresses #leftoverbits from here:
-> https://lore.kernel.org/git/cfd09dbf-8d77-4464-8030-3a0ffb4aeae7@gmail.com/
->
-> Changes in v5:
->
->  * Improve commit messages.
->  * Create helper do_stash_apply.
+> The 'const' patch will be queued separately, and a synthetic base will
+> be prepared for your two-patch series by merging the 'const' patch on
+> a recent tip of master.
+> 
+> Unless you have other changes, there is no need for you to send a
+> three-patch series.  We do not need to take the 'const' patch hostage
+> to the 'pathspec' patch.
 
-Both patches look good to me.  Thanks.  Will queue.
+Okay, anything I need to do now since I already submitted this as v3?
