@@ -1,252 +1,285 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143282D73A0
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 13:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B5D2EEE75
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 13:12:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788527123; cv=pass; b=hxahjF5ztshDxEX5hU8tFlxjehOoMCSrQYSN0MaKAIZwleNIYodyswOAP+TkmA5RGQHK7dN7GMRdRY0yMSi5vtbaqLRQGY7kl1uOIoE5STlt5mPYXeMNIpAGamlnUuksOMWU73S7u0rRdJ3W2wF+P/JpOscbZd5ExZc8c38fCCI=
+	t=1788527559; cv=pass; b=NbHzXko6zk7TVHZNfK/Q2bfdiI8HvqT7LF0Jiohy4hXCYa50mkweLS1JrrtazEp2F+CtMIyhDWVEl1ofs48li17+g6gEiisaO4o0vvv7+/6LaRmnRx3UnGF5tigAaofU76jh7cS2tute9b1mlfvYG++1579LV//jRc+01wR3xCw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788527123; c=relaxed/simple;
-	bh=9tT8R/AmJc9AccVFoR0SC6p+3i6AREVyaPxUMWVrjz0=;
+	s=arc-20240116; t=1788527559; c=relaxed/simple;
+	bh=na0d/Rhy+OuywFX/DhoG7loF0RnHKGZz8dH5DpLSs5w=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=sm17UVnyt1KdSNwOkZJIvWf76j+SIRievKHxGG5gwEB1ROy+Lo7Dyr5z4rYMqbgwc+LxoBxigsXWxS8PK+WeKBXbYf6s8ycsplQUP3OFccqQu5VJlu55tjM5xXTR/TAaJ5/Fqsk3h/o9Zd46xkAZq0knHwfKnHNxLOpy6KCiumU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DsOc9Izl; arc=pass smtp.client-ip=209.85.217.43
+	 To:Content-Type; b=hHEfdwfOppoCapD/S7YUYah25CGtoh/I/EagZ48tHjXOHQ1DoFPdxmZ7sX3z7vLFixacq4sH6zIW7mg6SLPO63MNwpWRIPJEoKKN707gkr2IFdR8A/lfgVCjgRCZGAk6llVrnM974kO3frBTj46YUzWQIaexfIZ0VNp/+nGO40s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SxCmMJ/j; arc=pass smtp.client-ip=209.85.222.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DsOc9Izl"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-782af6c753cso963085137.3
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 06:05:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788527121; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SxCmMJ/j"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-97e986f1996so298316241.0
+        for <git@vger.kernel.org>; Fri, 04 Sep 2026 06:12:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788527557; cv=none;
         d=google.com; s=arc-20260327;
-        b=qpehr4zM0F5f3MoV8cigrnJBWYMxwWOB0Lm1ES6jlXFiLS8/e7OCi6qOw+rsSeKAuu
-         /oUZkSXE7ZRKD87WGAb0I8olg2GxkhLetZsrdNCM4XT0Ly6T6Oz5Dzwmzpf4grOPYHN4
-         5JN383GM0ju+0Rs7ebd+oDuDeHAc/ybQkkxRsrXQ3AO220y1j1ckrGTHywiw0k/j9Fp/
-         Kaup3TikzpQkpTjVzqUVJjiHDElbGPCvmkVjNc1/3CvoJjm7i8sJxNRHPbqv25OswUI0
-         te6kj8ggxBEBZ43V2lPisD2PSm1m1873XOKc9cl/cFrhCEBp0mVxbTyNSqtgC/D4laQL
-         cmVA==
+        b=Sj6FCtEV0g7fngWntKfXJ/MIunWvhTMRNnxuRz8oy0tmVJ/8gpSOQIkbSzlcJYYiSd
+         hm0xGL03EH1FCrFvnCPSn8hRnL7BX18ghdehRQ1+jKM/0TBn/uje0at17ynxQlvMmZ3L
+         qKyFcHoVaLat1CgtQWv5J0FuMUIoGBva35bF60CV9J6nHgpWYTxgx798+qXmKPQ8JReQ
+         O6oEDB0XuxAqnjS2WVS2n/FFgelOpDSYwiMfhwiiSaZw9Q/8DS5oyrAj68Z0pKuxlsTY
+         ziJHzoA/Kd7alBe5WcksP6I3GFoKvtWk1qVLyRiASi1OKRE7HcvYFELm9oTvULTTWOH3
+         m9Hg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :dkim-signature;
-        bh=wbrK+/ckowjenKibpOBHDJc2LjTkqUl6AE9K4mh5emI=;
-        fh=hVHT3MgKz0qiUfp0H9ZiWAps/Wo9m/QSQFJdyo/fSe0=;
-        b=YXySPsLYb4DkCngjN6qmMellZ5kdZrdr2XtEOEwf+chZ/1jJ20pS7BXlSQrSY8iGsA
-         KhmD/2feiOmWMYTR4Gqt1W3frSB4ASdChb50cyACTAup4TWNN0I3duqSlTSn1m8rMAQS
-         vP8ThcGR6wPN4yoXQ5cChsxS5cKqEKr3DCEFQFdqjIpSMc2qqPpxxgoLNpUcMAzlRGGk
-         M902okgNTLBkCL7Szmo96aLp/lsepM8T9cSLSZ4NWq9HVjn2H995K2u3QOh0jAItmK9d
-         GvWRVZpjE47rI9PLzk4eb/M6ef6ZjvppwY+bPOsPEFVbvmTpC0rBsQBt0Zgu4QHBvTnW
-         mK3w==;
+        bh=THSm+DHKZJN2CsKv9s/h9u0Y9DY5qEDcluYcExZJZSI=;
+        fh=YoXfyQqEPOuZBbujubIberArLJXchVeKdjv0XxeQrC8=;
+        b=SYU05+z++dx4xCAdTUjjLA4g4PknUH/ORi7aBdeIuNAUzXCxm/CXPeZNB+O+Pz6a2U
+         SSAnmbKHGsGBtyP3s+8PzdCcj88yAa26OnGD7dhrsFitE1/yjPuPrxk3yEpQUG1JfZDJ
+         9ubpzDn2rN9KEM9pzzW52cg3pUZirikVbGrZLP2ZsA08TfVHv6rPmdDKy28UKtEYzNBD
+         N5FesWv8S8/fx9/jByGWaeURhpC5jKK8XRZaRFZNlERMxd57X614ucP+7D/Ljlp1PgSd
+         XK9psdfB1XWZVVrXcH7a7zZwCbKxbG5w0pKWmiuCyfIm96ZVJbjmkAv0BJRmU6fV491D
+         u2tg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788527121; x=1789131921; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788527557; x=1789132357; darn=vger.kernel.org;
         h=content-type:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=wbrK+/ckowjenKibpOBHDJc2LjTkqUl6AE9K4mh5emI=;
-        b=DsOc9IzlHQ2/p+sJlsf7JdSbpTiiHmfmlv9Jm2kLBgGnv9x8hqFm6A+mCnoUNtqiL6
-         Lodd0IxWkXCeZ068Z2Y1bg275NuqGH/sL+ZDgdNFosGFJj7uNs39lMg2B2py7i6XLy3j
-         onV+rRWKegi6WZ2xmgO9eqqjiC5oNKRhWE7YmGaVOoJuqURpxU7ORunhXZ/v3FXKt3Xp
-         5/fIEbaNfPkFyrKM5bNNt4FVRH+Am99Llz99CYY4q5fDLetU2k9sxR6FXL+UqIXromeE
-         UMAtSlda1aos9QSDxywGkUiJ8kggwQ1kLQ6Kkc4hu/PSjZRutGwM3CRGZkR2cyB5wCpV
-         STUw==
+        bh=THSm+DHKZJN2CsKv9s/h9u0Y9DY5qEDcluYcExZJZSI=;
+        b=SxCmMJ/jmubcSib1L8V7+HZuJOYVxovtD5vHicW74/sLZs2ABfTF2vU8rhDFfazzi3
+         ufVp/GAzJf5P+POWc1jR1Yvx1ukix3QxRGw4nGOWXT/uIhMlwXXDYvugue9wFeHStvzP
+         G7dOdke9JsFr/M/wpJtFXdk7QOoKJ4HZgnV27OHXwSLdDEyDcncVL0o+5mi8qDEivKtS
+         CcrPI8Cq5i7oZyVoXycaV5dYYxcOlNLpqAT/5JdlRDp5WI7PfeBIp20XwbFjoRNP9eYG
+         GXkeBbf0g3w5MSvk+iqSVhwhKHzeMcIh05gz6IXPfbZW/faKiGvHoImpwDz6U6YW+Sfa
+         nzlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788527121; x=1789131921;
+        d=1e100.net; s=20251104; t=1788527557; x=1789132357;
         h=content-type:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=wbrK+/ckowjenKibpOBHDJc2LjTkqUl6AE9K4mh5emI=;
-        b=FiDvYjxZ5oQEKFNiaflEnunPW1Hei4/Y9yTY54wzdAT4J1lGtn5SzJNActruqzDdc2
-         z7NFZc0lg1WCq/gEuYFLa2wpl+pE/xKbm6kIourtIdTfp15Lp+o+LSbMNjTgAr3fIj1z
-         FJaGNpWp94wbkNCzzv5lzyxZWQs1xY1FGv95Dlqtq/verei35kuhm1pvTwviq8IoYNCK
-         QHKZ2smbW0ChXLOsJyhKZrT0DDGM9CfYer6N17cCBxwLdBMoLwFlHX6Xr7Ailcb4eLrT
-         2abfmw2lJbHlmtSxTBf4/G0px8u6YgvNRfXzK9AJr6EX/QBl/dnFKapJlBVCH+4lAICQ
-         lHfQ==
-X-Forwarded-Encrypted: i=1; AKwUvByKcQ8zxyE9QVbjeizaU4Y6/jFx9XbTklIUeWFQDNfOAbiGX3VbgvRf7VfOm0pSkxe0X8Q=@vger.kernel.org
-X-Gm-Message-State: AFuF++mkZjOgqhba3b3CkoTjIP7tfO4yU9aMrbPRT0F23RErUra0Wt8l
-	ME41Gjp4F5EsH4YOVyKlVlOGzm0pZgYVeIV2MzpaL4v2giLIeZyHLSnskH2D8T0PdDabwWgpTrF
-	n2yFSGT69Q1EA+H7t0+mAqqPV6bcf3oU0Ef01
-X-Gm-Gg: AYBFou34lmmTblBZblzKl+9QURQW2LzzeSEzfIStsmuB+AP8W39JLvVWWRIcKh2wpwa
-	bHqY6XXT6cFZz+GeMX4yrKsIAEYTMAPqqZWD3p79/I37dbDdiedMeuiHeW1OClSIK3oUTzDt7DC
-	d+lk+wUAME2mTMD6a7KkgDbF2Bu/D9JORQQBrUUAhLdpDSVs0FrlQXM4zMXyvIjdTRsu6uzh3FY
-	0zDoksNYbMCVPwKEni8V55NeOqrLN6vzFCg9C0dPUV+Hz4VIMXAnmCJ0GTbmic5TOtZf8RVEDyb
-	Tsu4JayfQyWCOxOR8rUsTHPOWCPnZBVFjK8oYsAGyygi3rnS5DFJBMyi1sm3O3niwiY8ud0FS82
-	CRbksAgI8Zvr2kPfPhNzUKpr5HY4lLhBWe7Y=
-X-Received: by 2002:a05:6102:1481:b0:784:b9ec:9144 with SMTP id
- ada2fe7eead31-78a4a9c3a45mr2163766137.8.1788527120891; Fri, 04 Sep 2026
- 06:05:20 -0700 (PDT)
+        bh=THSm+DHKZJN2CsKv9s/h9u0Y9DY5qEDcluYcExZJZSI=;
+        b=I4mdldDmtaa8AXdzx8ZDZoK4WmijfTP01P2U0DKV24b0gnUSLNsvBDY3e2FYFtvRBA
+         vgUwq+wiwpQqAwBw+88gTNMU75XEmcM26uMEWuAMfQ8jq7OaOtAXHLO370lrL4KuDby2
+         ENlI3v+d3mWmb+s/CAqobQvZNz2zPtXDVNo47Shwim2bEnQ8RNghaAnlMjzgF9gdXlp6
+         +ZBsgaQRdzbgs7qfQMI9qE0hDUWUzx5FnEsvQGReQ42RWJdpUG0/BM2mwVUiFiNSXK0j
+         Xdc5feTeYVEG9ZZjtdu9hvcGiXxlQqIHHrcoafXcnnQ0o5eGLbLUYDu3cr12ThEKqLtA
+         UfAQ==
+X-Forwarded-Encrypted: i=1; AKwUvBybA757T0M4NetHmnLQPUXijK09jmKcgldH6WNwkBmmK2F9AyjxUybfWzznznq4i+hX9X0=@vger.kernel.org
+X-Gm-Message-State: AFuF++mOcco5+4Wm0jdXWYiA/Q55ULdLjRYcGuPROCSAyFDRSkxqHDoK
+	/6go1OUTp8r6lJoKyzEPLo4V8ChJTjdKegzru+T67NLMKOs2lyA46AAAcRAtBKGrVaqwFBMklzG
+	eDuYorfrHay7ifN2xwEdw9wLpEyJa3HRJFzZ2
+X-Gm-Gg: AYBFou3Zh/wBWEYSmRcoq5xliD4o/lASiHTjxdZaazL2B9iR8c9EP1U21xC+EnUTu3L
+	PN4lOPj6M9pfnJDea+zNmZLICRMf9TcXZHeYTlLuQddArRVJ76grZNc5MZgkucxgLomYVRnNkyW
+	gp2q5LZWzcy3VxHJhzP66kSPKAFgrUdO/drfwZUzB1V+KKQmxMOM1TqT7Mh78sgH0ATN9RyO1pF
+	IBUPbCnuu7/axr7Efv3F3dIrdMXaR1tYeX6kad1ifOnbuE4r3i3/0zfaxB7WcZC4xdEGyHiVwas
+	Tq3gfI39cpiQphbNkOBrO7PijT57g7O6Q+LXQ3nvCbG4KDmpiogvKczUdxYNK1FnuSeiHZAb6Jc
+	+52n2xIdzhl0XOCnZWXWreP5kyliaGAidnGQ=
+X-Received: by 2002:a05:6102:160e:b0:778:5369:763d with SMTP id
+ ada2fe7eead31-78a4a6df1c0mr1606591137.1.1788527556583; Fri, 04 Sep 2026
+ 06:12:36 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 4 Sep 2026 09:05:20 -0400
+ HTTPREST; Fri, 4 Sep 2026 09:12:35 -0400
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 4 Sep 2026 09:05:20 -0400
+ HTTPREST; Fri, 4 Sep 2026 09:12:35 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260904-b4-pks-unify-ref-storage-format-v1-1-08144e5004ff@pks.im>
+In-Reply-To: <20260904-b4-pks-unify-ref-storage-format-v1-7-08144e5004ff@pks.im>
 References: <20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im>
- <20260904-b4-pks-unify-ref-storage-format-v1-1-08144e5004ff@pks.im>
+ <20260904-b4-pks-unify-ref-storage-format-v1-7-08144e5004ff@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 4 Sep 2026 09:05:20 -0400
-X-Gm-Features: AcwNN1WZkV6Mr4Ww0ARPratLRsf_VfbgZ2u7ImYE0r5s6a-8f-ZwvCBpCW_Q8Gk
-Message-ID: <CAOLa=ZQO05kg6ekVJf-0Hkmq8rMVQuGox6O7DJL6mMTRA7_HLw@mail.gmail.com>
-Subject: Re: [PATCH 01/11] builtin/init: rename "--ref-format=" to "--ref-storage="
+Date: Fri, 4 Sep 2026 09:12:35 -0400
+X-Gm-Features: AcwNN1VHZEcRT3BSZv8brEuD924l4qA1oFw4yKkXtK1WECSQ78DeQjTIbP4B7rQ
+Message-ID: <CAOLa=ZR3xtwK_EzxjaOc0qN0oE51oDaKk4UMBTJqP+g+exr-Dg@mail.gmail.com>
+Subject: Re: [PATCH 07/11] refs: expose function to parse reference URIs
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000b67815065aa7ebf3"
+Content-Type: multipart/mixed; boundary="000000000000ae809e065aa80562"
 
---000000000000b67815065aa7ebf3
+--000000000000ae809e065aa80562
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Back when we gained support for reftables we of course introduced the
-> ability to control the reference storage format that is used by newly
-> created repositories. This infrastructure has grown over time, and
-> unfortunately without consistency:
->
->   - The command line parameter to specify the ref storage format is
->     called "--ref-format=", while the corresponding repository extension
->     is called "refStorage".
->
->   - In most cases we refer to the "ref storage format" in our docs, so
->     calling it "--ref-format=" is being inconsistent with them.
->
->   - It is possible to override the ref storage format via an environment
->     variable that is called "GIT_REFERENCE_BACKEND", which is not even
->     remotely consistent with anything else.
->
->   - There is also an "object format", but that format does not control
->     how we store objects but rather whether we use SHA1 or SHA256.
->
-> So in summary, it's a huge mess.
->
-> This problem is about to become even worse though, as we're soon going
-> to introduce an object storage extension. This extension is the
-> equivalent to the ref storage extension, and of course we also want
-> users to be able to control which object storage format new repositories
-> are using. But we cannot properly name that parameter without creating
-> even more inconsistencies:
->
->   - "--object-format=" would match "--ref-format=", but that parameter
->     name is already taken to specify the hash function.
->
->   - "--object-storage=" would be a good fit, but be inconsistent with
->     "--ref-format=". Asking the user to execute `git init --ref-format=
->     --object-storage=` just feels extremely awkward.
->
-> Instead, this and subsequent patches will fix the mess by consistently
-> referring to the ref storage format as "ref storage" throughout all
-> options, environment variables and config settings. This new name much
-> more closely indicates that it is about how we store data and finally
-> brings consistency into this area. We will keep the old names working of
-> course for the sake of backwards compatibility.
->
-> Start with git-init(1).
+> In the next commit we're about to add more sites that want to parse a
+> reference backends URI into a format and payload. Expose a new function
+> `ref_storage_format_by_uri()` that enables this.
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  Documentation/config/init.adoc         |  2 +-
->  Documentation/git-init.adoc            |  4 ++--
->  Documentation/git.adoc                 |  2 +-
->  builtin/init-db.c                      | 16 ++++++++-------
->  t/perf/p1401-ref-store-tombstones.sh   |  4 ++--
->  t/perf/perf-lib.sh                     |  2 +-
->  t/t0001-init.sh                        | 24 +++++++++++------------
->  t/t0610-reftable-basics.sh             | 14 ++++++-------
->  t/t0611-reftable-httpd.sh              |  2 +-
->  t/t1400-update-ref.sh                  |  2 +-
->  t/t1423-ref-backend.sh                 |  6 +++---
->  t/t1460-refs-migrate.sh                | 36 +++++++++++++++++-----------------
->  t/t1900-repo-info.sh                   |  6 +++---
->  t/t5510-fetch.sh                       |  8 ++++----
->  t/t7424-submodule-mixed-ref-formats.sh |  2 +-
->  15 files changed, 66 insertions(+), 64 deletions(-)
+>  refs.c  | 23 +++++++++++++++++++++++
+>  refs.h  |  4 ++++
+>  setup.c | 48 ++++++++++++------------------------------------
+>  3 files changed, 39 insertions(+), 36 deletions(-)
 >
-> diff --git a/Documentation/config/init.adoc b/Documentation/config/init.adoc
-> index 7b4abdaf8b..9c78440192 100644
-> --- a/Documentation/config/init.adoc
-> +++ b/Documentation/config/init.adoc
-> @@ -15,7 +15,7 @@ endif::[]
->  	this config.
->  `init.defaultRefFormat`::
->  	Allows overriding the default ref storage format for new repositories.
-> -	See `--ref-format=` in linkgit:git-init[1]. Both the command line
-> +	See `--ref-storage=` in linkgit:git-init[1]. Both the command line
->  	option and the `GIT_DEFAULT_REF_FORMAT` environment variable take
->  	precedence over this config.
-
-[snip]
-
-> @@ -83,7 +83,7 @@ int cmd_init_db(int argc,
->  	unsigned int flags = 0;
->  	int bare = startup_info->force_bare_repository ? 1 : -1;
->  	const char *object_format = NULL;
-> -	const char *ref_format = NULL;
-> +	const char *ref_storage = NULL;
->  	const char *initial_branch = NULL;
->  	int hash_algo = GIT_HASH_UNKNOWN;
->  	enum ref_storage_format ref_storage_format = REF_STORAGE_FORMAT_UNKNOWN;
-> @@ -109,8 +109,10 @@ int cmd_init_db(int argc,
->  			   N_("override the name of the initial branch")),
->  		OPT_STRING(0, "object-format", &object_format, N_("hash"),
->  			   N_("specify the hash algorithm to use")),
-> -		OPT_STRING(0, "ref-format", &ref_format, N_("format"),
-> -			   N_("specify the reference format to use")),
-> +		OPT_STRING(0, "ref-storage", &ref_storage, N_("format"),
-> +			   N_("specify the reference storage format to use")),
-
-shouldn't we use 'ref-storage' for the argh value too?
-
-> +		OPT_STRING_F(0, "ref-format", &ref_storage, N_("format"),
-> +			   N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
->  		OPT_END()
->  	};
+> diff --git a/refs.c b/refs.c
+> index 92d5df5b71..951db56113 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -54,6 +54,29 @@ enum ref_storage_format ref_storage_format_by_name(const char *name)
+>  	return REF_STORAGE_FORMAT_UNKNOWN;
+>  }
 >
+> +enum ref_storage_format ref_storage_format_by_uri(const char *uri,
+> +						  char **payload)
+> +{
+> +	enum ref_storage_format format;
+> +	const char *schema_end;
+> +	char *name;
+> +
+> +	schema_end = strstr(uri, "://");
+> +	if (!schema_end) {
+> +		name = xstrdup(uri);
+> +		if (payload)
+> +			*payload = NULL;
+> +	} else {
+> +		name = xstrndup(uri, schema_end - uri);
+> +		if (payload)
+> +			*payload = xstrdup(schema_end + 3);
+> +	}
+> +
+> +	format = ref_storage_format_by_name(name);
+> +	free(name);
+> +	return format;
+> +}
+> +
 
-So we stay backwards compatible by leaving the old 'ref-format' as is.
-Makes sense.
+Okay, we move the existing code in setup.c to the refs.c and clean it
+up.
 
->  	int ret;
-> @@ -173,10 +175,10 @@ int cmd_init_db(int argc,
->  			die(_("unknown hash algorithm '%s'"), object_format);
+>  const char *ref_storage_format_to_name(enum ref_storage_format ref_storage_format)
+>  {
+>  	const struct ref_storage_be *be = find_ref_storage_backend(ref_storage_format);
+> diff --git a/refs.h b/refs.h
+> index 9979446d15..ee3b8a62ef 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -17,6 +17,10 @@ struct worktree;
+>  enum ref_storage_format ref_storage_format_by_name(const char *name);
+>  const char *ref_storage_format_to_name(enum ref_storage_format ref_storage_format);
+>
+> +/* Parse a reference storage URI in the format "<format>[://<payload>]". */
+> +enum ref_storage_format ref_storage_format_by_uri(const char *uri,
+> +						  char **payload);
+> +
+>  enum ref_transaction_error {
+>  	/* Default error code */
+>  	REF_TRANSACTION_ERROR_GENERIC = -1,
+> diff --git a/setup.c b/setup.c
+> index dfe05d9a03..3be7dac452 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -632,21 +632,6 @@ static enum extension_result handle_extension_v0(const char *var,
+>  		return EXTENSION_UNKNOWN;
+>  }
+>
+> -static void parse_reference_uri(const char *value, char **format,
+> -				char **payload)
+> -{
+> -	const char *schema_end;
+> -
+> -	schema_end = strstr(value, "://");
+> -	if (!schema_end) {
+> -		*format = xstrdup(value);
+> -		*payload = NULL;
+> -	} else {
+> -		*format = xstrndup(value, schema_end - value);
+> -		*payload = xstrdup_or_null(schema_end + 3);
+> -	}
+> -}
+> -
+>  /*
+>   * Record any new extensions in this function.
+>   */
+> @@ -689,16 +674,13 @@ static enum extension_result handle_extension(const char *var,
+>  		return EXTENSION_OK;
+>  	} else if (!strcmp(ext, "refstorage")) {
+>  		unsigned int format;
+> -		char *format_str;
+>
+>  		if (!value)
+>  			return config_error_nonbool(var);
+>
+> -		parse_reference_uri(value, &format_str,
+> -				    &data->ref_storage_payload);
+> -
+> -		format = ref_storage_format_by_name(format_str);
+> -		free(format_str);
+> +		FREE_AND_NULL(data->ref_storage_payload);
+> +		format = ref_storage_format_by_uri(value,
+> +						   &data->ref_storage_payload);
+>
+>  		if (format == REF_STORAGE_FORMAT_UNKNOWN)
+>  			return error(_("invalid value for '%s': '%s'"),
+> @@ -2069,16 +2051,12 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+>  			 */
+>  			ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
+>  			if (ref_backend_uri) {
+> -				char *format;
+> -
+> -				free(discovery.format.ref_storage_payload);
+> -
+> -				parse_reference_uri(ref_backend_uri, &format, &discovery.format.ref_storage_payload);
+> -				discovery.format.ref_storage_format = ref_storage_format_by_name(format);
+> +				FREE_AND_NULL(discovery.format.ref_storage_payload);
+> +				discovery.format.ref_storage_format =
+> +					ref_storage_format_by_uri(ref_backend_uri,
+> +								  &discovery.format.ref_storage_payload);
+>  				if (discovery.format.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+> -					die(_("unknown ref storage format: '%s'"), format);
+> -
+> -				free(format);
+> +					die(_("unknown ref storage format: '%s'"), ref_backend_uri);
+>  			}
+>
+>  			if (apply_repository_format(repo, &discovery.format,
+> @@ -2806,18 +2784,16 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+>
+>  	ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
+>  	if (ref_backend_uri) {
+> -		char *backend, *payload;
+>  		enum ref_storage_format format;
+> +		char *payload;
+>
+> -		parse_reference_uri(ref_backend_uri, &backend, &payload);
+> -		format = ref_storage_format_by_name(backend);
+> +		format = ref_storage_format_by_uri(ref_backend_uri, &payload);
+>  		if (format == REF_STORAGE_FORMAT_UNKNOWN)
+> -			die(_("unknown ref storage format: '%s'"), backend);
+> +			die(_("unknown ref storage format: '%s'"), ref_backend_uri);
+>
+>  		repo_fmt->ref_storage_format = format;
+> +		free(repo_fmt->ref_storage_payload);
+>  		repo_fmt->ref_storage_payload = payload;
+> -
+> -		free(backend);
 >  	}
+>  }
 >
-> -	if (ref_format) {
-> -		ref_storage_format = ref_storage_format_by_name(ref_format);
-> +	if (ref_storage) {
-> +		ref_storage_format = ref_storage_format_by_name(ref_storage);
->  		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
-> -			die(_("unknown ref storage format '%s'"), ref_format);
-> +			die(_("unknown ref storage format '%s'"), ref_storage);
-
-Funny that we error'd out with 'ref storage' while the name was
-ref_format.
-
->  	}
 >
->  	if (init_shared_repository != -1)
-[snip]
+> --
+> 2.55.0.1007.g17ff1f9808.dirty
 
---000000000000b67815065aa7ebf3
+Then, modify all the call sites to use the new function. Makes sense.
+
+--000000000000ae809e065aa80562
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: cfc144129aff282e_0.1
+X-Attachment-Id: 66f0f1f3e600b03b_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xYXdnNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md3RvQy85Qjl2MC8yeml1bjVlTlVoTmIxZ2pRV29EZQpKcHgxQ1hwTklT
-ODFKT2dpbW1ldVFQeVhEdCsySjRDUHZObDdqU1huYmxEMG5haFZqRExZKzlkR2dCV256TnArCjQx
-cFFkejFHYnE3cXhaN21uSUZDVlJNNEhvVHkzNDg4YmdHZ0lPb3Z1MUlpdEpmTExmY2JoSTFoMmdR
-bTNaWVUKMXhwOWF6bzFnTnQ5aTk3N01BRWZGTXY3UXYySi9RQmdrNCtickkxYU90K0pmQ2pTVm9t
-SnZHOFBiUnkrSEI4Kwp4OXl4Mll0Mk1uamZpallvY0JhbkFIdGJLeHhPUnZiMW1OWUVmMng2NEJR
-VXFOekFZTE1UaStsbHBWZ2ZJazlHCmwxaUJNZVM4SmpFQm9wc0FzSnBZalFBQTUxOTFqNlpXNjhu
-dFd3R1NDajhLUFVpeU5jRGFETXhyalBpeUk2bzUKRS9Nb05KcFRwMXlZUG14dlJrLzVCcE1ETENt
-QmxJMDNyNG95c05CUzYvTTMzbkpRaHBUbURHTWpHVWVVYXFPaQpwQVY2MHRkeDVOWjRuQ2lrakdk
-LzcyZDZnVVpzME42M3JJbGc4QW1sOWtHam5lL0piUTJJOVh6VS82UHhHa2g3ClR1NmFUTG1OOWM0
-R1ZLU3RZbTNYdW14bFZsdEV3cHB0Y043TVpGUT0KPU9FaUMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xYXc4SVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNFR5Qy8wVUlRZWxmVUVhNS9mUmJYaDFSZUxzKy8yZgp6MEQ3d0pTL0Vv
+NDMxOEF2OUN5WGpuVFJFMG1SVFBtQjhsRlB2TVR1ckFZUXRZaktTL0hzSEJ1UHJvQzBPOFd2Cmpr
+SXFpcE1jVmd0MzNJNy84Rzl1QTNGN3ljUmwwVUw1MU1jcXdvd01tQUYwcEgzbFd0R3l0aldQUk5T
+NmlKQTAKaWk0QnZXVkgvWTlQL3VhdHVJNFB0c2YyTVBmOWdyTWdDY21MNUtpZHA4MDhpeThTVGp6
+cnlPcCtUam93NWI5SwpSMUdWaXpuOXphU0VFeGJuVDN3NElJdkE4cDdZWXBNbEtQQVcwaDRRQzgr
+RUdiMGhVdlVFRUUvTm5QL2c5bVVuCk54Z1QxT0tKR0k1a1JyUXpUSjZ5bmR2SVMzWWJGQjVxSzAw
+bmk1VWNsajVmdzc3bzBkK0dHNWRhZ2w0bkFGdWQKRVQ2VHhFNjF3bE5VU1lMUUs5aXZ0anpVZ3h1
+b0FmbVVpWnpOeFo5SjBXQ2tES3M1enBVQk9Ha2p4VUZmdTYyRQo0MGxvcWJWdkxrQnhzQ0hEMmtI
+ei9VbE01bmh3TFUyS1ZXVFIwd3VOZkxxNnp1Wk9tS2VFREpMTll3K0FMK3RSCjRZWlc1S2U1aXFO
+THFLeE14c0NZb2NRSGJ5RXZiTWRrK21LOGxOdz0KPWhtcTUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000b67815065aa7ebf3--
+--000000000000ae809e065aa80562--
