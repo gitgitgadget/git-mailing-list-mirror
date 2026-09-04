@@ -1,67 +1,68 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3553E3CF207
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 09:53:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7775844213B
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 09:57:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788515614; cv=none; b=s/QY1chQNv8jjnJKRSB2gGEytwbW94P0wMtvnF+iNjmRqXr3o+D28qTw58no+ClYtl5zsjSZWgQNr4QFSNhffDzzshBrKHFxbGIROIWWso3L0JrXzPTmiJCBvo0sWqJXuYbxDVj7zgEjQmJMek4k8ZVgZphogWToyQlPWv4Y2qY=
+	t=1788515863; cv=none; b=bW7W1po8FV+zSSt4yIgV+yzw8OZ/miw07amFWJna8vH4e+AjkowtEXeN7CBHiabwRBFJpYfJyJa7Yo+9oFrPrONIZlD1tAYcV/3DX4Z8yCTN8/zUiri0Jeu+sxb+EwqA9nUa124DDjMgn2wLrg2n4P6Nli91dOOzowfP6EUp41Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788515614; c=relaxed/simple;
-	bh=hS3WNEfxyY4FCuzk6naMm5+v5mHS+COZY5Tz9xFYV20=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZQaCsAi8qEN6lZy2JHPSuMG38p+MLco8bfMt7Z135l1uVi5su4TtoJMyiSFxXvceoDoVBdySyGKpWiHWSVcT7O3j30+f0weBN2mB+thCSHCa7R78t0BEmddZ6E8MlApqT2PwzWoaifHuJEzVK/6SmgtTplfNkOWSrPTsis4utM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+co0vxY; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1788515863; c=relaxed/simple;
+	bh=/gFMC+fTtiltmvHFfcVQka8u8QqfGemjt8nVQPmVI/s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=HFDEzdhJF3HY83T1PoU31W9c/8fOaxkdA5u0vJoKNxiGv1btFBLmjVRyO3sNChFjC10GVzUsWFaRIZDF1ILe1TUIDYSy9X7d85/RYptsVJd1suj9Nxzqtg5xV2QdIVaq1AeQoLbOiaLNnY5LuiIvnm6H8uStM3JPc+GeRoaIAt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l6gFfOJP; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+co0vxY"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-490cf322ed0so8413095e9.1
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 02:53:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l6gFfOJP"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4998b5a63e2so8617055e9.1
+        for <git@vger.kernel.org>; Fri, 04 Sep 2026 02:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788515611; x=1789120411; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788515859; x=1789120659; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
+         :content-language:references:to:subject:reply-to:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=KxWD0Db1iKs3GD0TM5Cvo22T+i2p/poTYDV6gdoe+ys=;
-        b=b+co0vxY8Mf+0QefyrGgZgPwqR/ZqXkpTjrGmyG6oQ7LtcYNv2tM/PUtXOUmR2PJDO
-         YtO9ineg7lYDdn+f+XoijECLeZulsY2LCIX45EmQPO32kgqM9yfO8a/a1TxX/DqlWo8K
-         yYR++SX6eMrdihtRXp48ZRMY9QHslnWt/K9v1sBh3AMc8Egz/+UdEMWEUIE+orlxpCSx
-         C10QhyQ0GSaD7C1M9Od2nnGK+8LPsqjBxdo+okeZxJZFJmRULqGhbCCq5OQIaaMYcXfw
-         /x/mkBiT+hotKZIYdulmisd4yGTR6RBWCk1khPIfNWRiILc5xm9t0RRbZzNjrkGEUU+S
-         gwnQ==
+        bh=t3FggJiznuKGgT8fnHPi6oQMznnLfiuF2qESgTYpNjA=;
+        b=l6gFfOJPHCuSaH00TCr3vVGLMRP6WUh8VQ/iCF/DW3PlToKz1uDK4yR3H76LqsMFXg
+         +1viZPVWZIPW3uWduhzO00k8rwYu0LMFuwr2lXM3Ug8NrvNNYW2InttYTrq++rZIOEso
+         JSmPNPgww9J6H5HWCTGKzSNUVYeUlkVws6WdTjzmsyDWxdBp7KTmSCOIo5SfJDyugICn
+         t4qvm57vmJAVHBXQm6ThKz1R0G3Aa801Qa7aZSdhOjgnIyr9Kb8mxXSdaDgFxWSi3LPL
+         0Noim0WWzYmdv5sqBZaayRVaMKJs4fGAlOZ9rinn3t/wi3jXT9ttu/PQ3jwj/QWXXRUS
+         tndA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788515611; x=1789120411;
+        d=1e100.net; s=20251104; t=1788515859; x=1789120659;
         h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
+         :content-language:references:to:subject:reply-to:user-agent
          :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=KxWD0Db1iKs3GD0TM5Cvo22T+i2p/poTYDV6gdoe+ys=;
-        b=FECyv5rKkI7xKNaD0ABns6RIgZKmU8Mdk01gFeWfqfbAEjRuHW9Rk87UWTtpNaUEzl
-         TknFwerkjWe7pNI80O/5AlnGJgxuP6Bk6H65G9XLIOp07m3pCn6E+HVB2heIwtIoTusl
-         0dwadLKVY6TagWlnXE9hC8mUuPSKL4URtg5TFtOWOEYl7BB9M7W6y9QNOQQrjB7wvIdE
-         6ZoR1hYpOTj6ZC8gHgdQqMMPzh+nHTYz8iuMAznpovIMW+3JM8+peOSIxVbVtsHobzcd
-         aqBu5Emw7H0k5//LOz9uOZ6SEeWHUA61hCcyqWO4qCaaLY/2WA08bB0QDl94dy/vRE07
-         JUCA==
-X-Gm-Message-State: AFuF++n1NqEvClFhWnuieYeK0+nLnxgYV4m1HmPf/CzLaSs+WQHRV1T0
-	LAeMtPeEKRmnaon8wN8/EUAM3EYGLgsvd4hlRnHLnGCGFo9c41jg09ItHVGzPw==
-X-Gm-Gg: AYBFou2ss2VoQrlGqgTA34vUMbhlD/a4rKtQG/zzt5Kapvk9n4dju0zvPLOUOsLLE4D
-	+T0mVlS8fBwHMo9D4wEGGstMJti0WN9OHsDx3BwxopvJCeXdUwYeJQGwOJjvWscLSg+y7KeTIeI
-	jYJhAkKupkaMFpaO+L/+Mup1N030XlWOB6I7t9ogQ8/fPIcGQ/D07e2a3dFasEw1SByOgJ8WUZz
-	AimxdVV8sWskZbqrf1QSxjVoqFOkzMQ+TK47GYavG/hH1pYxyqjAw/FlG3eBMWqkdunNW0yw41S
-	hplPN1X8jU/or7WmsTtItlxrpY2e/1+r9BfQmk6BebU3wU+BP4YxvgTtlZKzJetzxT98RbBQu2x
-	dNCfVgIPVUF6XXvQ9riROZ3etgiBjJ87AvebK9IsaZoBGLmD69Gn4i7vU58u7N9RZEYg2oAdoRO
-	yVbWDxCNvw5lmBghFIK6Z1K0oStxloy4hJpEuf5WUs0fbhTP+XZXzsB5y8nqUh4ujzzBEJGbJwy
-	NR0DovndlpyodcbylMz8axsok3RGBo/qHMH6c05QCkZAKwL/Xn0UA==
-X-Received: by 2002:a05:600c:474a:b0:49c:e42b:a4ac with SMTP id 5b1f17b1804b1-49cf823f60amr44287575e9.11.1788515611066;
-        Fri, 04 Sep 2026 02:53:31 -0700 (PDT)
+        bh=t3FggJiznuKGgT8fnHPi6oQMznnLfiuF2qESgTYpNjA=;
+        b=lj+wI++y1Uv2ySWVVhtTLmISJjSMOx98rOzXUXkXG55bcw6QqqQ545oZzTxIEloPc7
+         n/5KAMS7W8nFRgiNW85p3dNzdwY0T1WgTpi+lz4PVrlvQ/010wG6jj8fRZpaqjiwNLYC
+         jf9PvJMNOaZww86cDXgRi3mA9C6pBrA9fiwL6yeZE0rAhTkTTYaxEK4KCPhWZpg5Z8FV
+         ZxreKQQM3A8iHr08Fmhx+h/cofsMHuhcxpB+rJ8I/8ywvrZF4o7NbnOuwxdEalUKFLu9
+         P4FmUgN+52Vlom4JZ+f+GwWGUbmo6nLAV/o32rKStyfy+OS+t8HT83jLSbpu0B319GOR
+         cg6g==
+X-Forwarded-Encrypted: i=1; AKwUvBwgD28/C1M8uLbkeY2OEFILfizlHEm+MxVNDU71hl9aUtolkxBL0Ecra9F+S1h1Jkgzm4M=@vger.kernel.org
+X-Gm-Message-State: AFuF++lqIKSTFSeZdh0scYDmWWiveF/AH6JCm3o9VXVAYOGzM8D9I9Dk
+	9+omSaub0T0hDKfvI6Ha90xqsXxMMrW7hZoALYUIYb0uoDWX7q0C6yMD
+X-Gm-Gg: AYBFou1qyr4ZEuWKWyqGkAzZ7u7RD3FG7mhfF10KzXCPeV+J7MpSrzaBX9ntyRxNqMK
+	S5WYr0fHxn+TMZ9PGizmMsz6gxuhnnG7A//j1lkc6NmkNcyNoWFeXx2+ftLyfhuBO7FWmWXnWGS
+	WJ0B/bOYA7QbN0U1NA5gbKRBUfaENQBH3SnYcS4EIZ/iwKAoACUTOt3p5+rfrhDYInyRyi85mj2
+	aN6WkJtz24IB82FaDtgnWwcopeKzd2EybkizVh/FIGW0qz3sLGiD1wZjZwU/BZAEtr6rcNJRB0u
+	30f7hjN7ModWsjQ9fGbmnZX9PXPCQUpj+Xu6iAII6osuGgrShv8emqj76IT+APerDwtl6grNx6k
+	l63yZdRmVD8pUHubH9NCnALmRL4Y/umKuXl/iyzEzuUnkhlnSZqY9QQVQWhoiV6cwXYm/JM9sYS
+	g1JnLTqdwE8RnqFI0HVFhwG0MXBwy8eK7NTJVPWyReEzHg9vz14eeYYUNrJu1Bj0d2aVqKEc1JD
+	Vn/8jx/sokJlCmmVnCDQfErISgxr86IlBZ1SWl7V+8=
+X-Received: by 2002:a05:600c:3551:b0:499:8b13:3a98 with SMTP id 5b1f17b1804b1-49cf8224cd8mr50884675e9.4.1788515859403;
+        Fri, 04 Sep 2026 02:57:39 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cf770fcf5sm54772485e9.6.2026.09.04.02.53.30
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49ce55259ecsm141620235e9.2.2026.09.04.02.57.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2026 02:53:30 -0700 (PDT)
-Message-ID: <5a5c7552-8fc8-48be-abf6-063aa31f7711@gmail.com>
-Date: Fri, 4 Sep 2026 10:53:29 +0100
+        Fri, 04 Sep 2026 02:57:38 -0700 (PDT)
+Message-ID: <5e77651d-38a1-451e-b96b-33c91c414eb5@gmail.com>
+Date: Fri, 4 Sep 2026 10:57:38 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,78 +73,68 @@ User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH 1/2] t3507: pin CHERRY_PICK_HEAD absence for a conflicting
  --no-commit
-To: Junio C Hamano <gitster@pobox.com>, Aleksei Sviridkin <f@lex.la>
-Cc: git@vger.kernel.org
-References: <20260903125524.67889-1-f@lex.la> <xmqq7bl29g2p.fsf@gitster.g>
+To: Aleksei Sviridkin <f@lex.la>, git@vger.kernel.org
+References: <20260903125524.67889-1-f@lex.la>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqq7bl29g2p.fsf@gitster.g>
+In-Reply-To: <20260903125524.67889-1-f@lex.la>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 03/09/2026 22:32, Junio C Hamano wrote:
-> Aleksei Sviridkin <f@lex.la> writes:
-> 
-> I shamelessly asked an AI agent I had nearby to guess what your log
-> message might have meant and got the following.  I am not sure if
-> that matches what you wanted to say, or if it is totally off the
-> mark, but at least I can follow what it is trying to say, even
-> though I do not think if that matches reality (for example, when
-> "--no-commit" is in effect, we probably do not want CHERRY_PICK_HEAD,
-> even though the version of the text given by Gemini below claims it
-> is needed).
-> 
->      When a cherry-pick is run with the --no-commit option and halts
->      due to conflicts, Git must still write the CHERRY_PICK_HEAD ref.
+Hi Alexsei
 
-No, with --no-commit it must not write CHERRY_PICK_HEAD. I agree the 
-commit message is confusing and could be much shorter.
+On 03/09/2026 13:55, Aleksei Sviridkin wrote:
+> The tests here check the ref after a conflicting pick, after a clean
+> pick and after a clean pick under --no-commit, but not after a
+> conflicting one under --no-commit.  That is the combination a user
+> runs into by accident: the pick stops with conflicts, and the ref
+> "git commit" would take the authorship from is not there.
+> 
+> Pin it next to its siblings.
+
+What does pinning a test mean?
+
+> Letting the ref be written under
+> --no-commit when the pick conflicts leaves the rest of the cherry-pick
+> tests green, so nothing else guards that path.
+> 
+> Assisted-by: LLM
+> Signed-off-by: Aleksei Sviridkin <f@lex.la>
+> ---
+>   t/t3507-cherry-pick-conflict.sh | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
+> index 44596cb1e8..2ce2e88184 100755
+> --- a/t/t3507-cherry-pick-conflict.sh
+> +++ b/t/t3507-cherry-pick-conflict.sh
+> @@ -100,6 +100,12 @@ test_expect_success 'cherry-pick --no-commit does not set CHERRY_PICK_HEAD' '
+>   	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
+>   '
+>   
+> +test_expect_success 'failed cherry-pick --no-commit does not set CHERRY_PICK_HEAD' '
+> +	pristine_detach initial &&
+> +	test_must_fail git cherry-pick --no-commit picked &&
+
+We already have a test that checks the advice that's printed when there 
+are conflicts, so could just add
+
+	test_must_fail git show-ref --verify CHERRY_PICK_HEAD
+
+there. Because that test checks the command's output, we know that the 
+cherry-pick has failed due to conflicts, and not some other reason. 
+Using test_must_fail() here without checking the error message means we 
+don't verify the reason that the cherry-pick failed.
 
 Thanks
 
 Phillip
-  >      This ref is necessary because a subsequent "git commit" relies
->      on it to preserve the authorship metadata of the original
->      commit.
+> +	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
+> +'
+> +
+>   test_expect_success 'cherry-pick w/dirty tree does not set CHERRY_PICK_HEAD' '
+>   	pristine_detach initial &&
+>   	echo foo >foo &&
 > 
->      Add a new test alongside the existing cherry-pick tests to
->      verify this behavior.  The test suite currently checks for
->      CHERRY_PICK_HEAD after a conflicting pick, after a clean pick,
->      and after a clean pick with --no-commit.  However, it lacks
->      coverage for a conflicting pick with --no-commit.  Indeed, if
->      Git is modified to stop writing the ref in this specific
->      scenario, all existing tests still pass.  This new test closes
->      the coverage gap.
-> 
-> 
-> 
-> 
-> 
->>
->> Assisted-by: LLM
->> Signed-off-by: Aleksei Sviridkin <f@lex.la>
->> ---
->>   t/t3507-cherry-pick-conflict.sh | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
->> index 44596cb1e8..2ce2e88184 100755
->> --- a/t/t3507-cherry-pick-conflict.sh
->> +++ b/t/t3507-cherry-pick-conflict.sh
->> @@ -100,6 +100,12 @@ test_expect_success 'cherry-pick --no-commit does not set CHERRY_PICK_HEAD' '
->>   	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
->>   '
->>   
->> +test_expect_success 'failed cherry-pick --no-commit does not set CHERRY_PICK_HEAD' '
->> +	pristine_detach initial &&
->> +	test_must_fail git cherry-pick --no-commit picked &&
->> +	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
->> +'
->> +
->>   test_expect_success 'cherry-pick w/dirty tree does not set CHERRY_PICK_HEAD' '
->>   	pristine_detach initial &&
->>   	echo foo >foo &&
->>
->> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
-> 
+> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
 
