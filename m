@@ -1,84 +1,80 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F75450EBE9
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 17:06:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A924EE847
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 17:15:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788541570; cv=none; b=Q+DHwhSc5+NpB+vcU33v6wp7f4qwXGPMTWAvsiFZMtY4b53DqPzSLf4CY8MasAciz9fj3PHH0Dz9Aj+3z7BBWitzLNndfVPLYi6SqTUtINGW67w0e79oF9NCgNYrxS6b7GStjskYwYdZmuhPd2DNZ7zLkjRud9rncjNsosufClk=
+	t=1788542114; cv=none; b=P6u8tTCWWKJgObI0Vr63Nj7TbvQhYPxbZNBIpbwpfDBQIfD7kmzHwM8b8uWd+0oAW25eSqlMf8JcmD8vGJACNg7L+NLjrPJMMOtGpZmJEdIdJoX3otcn2r1Nyy0i+Y44Ssr8Yc9F4C3t5yUyeQr0rWEf67qaf/mgl8p52csDrL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788541570; c=relaxed/simple;
-	bh=ti99fFINOayOlkkxnQ3oDV7NQIdYnZCM93qRWQesXCY=;
+	s=arc-20240116; t=1788542114; c=relaxed/simple;
+	bh=qLty1GzodKQ2Mxrybm8V40LUWhmoa5GscMQf1ASH3e8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lNVaNGLkYRdrRvKjEDf2c8/qdqTekUBiSnVbccbDDseDdOFxjNjOPHz8hDuRUcPUZQhBTyLWfkiNNEXySsVmV3fXrFLJotEwVTxfFbUVI8xTbwk7oPPPwQ2qhdGsaNKjv0KBKF2LiKgkw86xT+R0eDcsTCM43h8706vaPYLipyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j+Ou3jei; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nt//c8Io; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=ROJfjSDF/5J0BVXQwr7fMellfbtoAjLdLGmGWGRh2X3moIYxOx5V/K4vNRJECSAr3UO9HoZGLLYx8IaZDQLNxRHyDbdph3jOUIo5m/UhE6SbzJaBEaPk51o8jYDhAfeS6Lu2vjawe/As6SfeB+7uZ+b/RmdcmN15NE1/Nvey+8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PWPAhg9b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VQufDYmH; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j+Ou3jei";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nt//c8Io"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PWPAhg9b";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VQufDYmH"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8FE2E140003C;
-	Fri,  4 Sep 2026 13:06:06 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 353E5140010D;
+	Fri,  4 Sep 2026 13:15:12 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 04 Sep 2026 13:06:06 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 04 Sep 2026 13:15:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788541566; x=1788627966; bh=k/qWsKI62e
-	heDyMgYI8Q9sxKTovdzn+gq0Al1hxaJVc=; b=j+Ou3jeiCRiD0dBWgas0O4yG7V
-	WDNpQmFlHp5doOw+5M7oO0qL+f8Si693tq05Y8Mdm0a1Sp/wkl9eV/+wMloDF8xt
-	TFruT3lW1hsiSoAaRSuLU9FLpkI2AAY/p85Xtc34ZzlJYh91Utnus1Ud7vPtX8Cn
-	WH6+cQ7zszTd4I5Mt+wafICEEMQ7ZEBH4iIzc7R6C2hrxCHgHFDm3EPcslycz9LD
-	+64WDBmh9YJxeg/FiV+98zl0cnH4BaKtHw7vz7w1AJqn5+CQVfV2AvO95RCrh9wI
-	ZYXbr8z9LyZ1HUJlqThd1aJFp1mJPRh/nNzTaDrg4sg+gv4bb0nyhVAYxLxQ==
+	:subject:to:to; s=fm3; t=1788542112; x=1788628512; bh=xwuG1EPIQn
+	Z0fjSv0s2zcQYlujkOvldg7tTxQLaxIy4=; b=PWPAhg9bNgil8tatVAg8qF1KD6
+	03FDtqorHLCzc32V08OnaZhN8USeEbu5JEe71dXmSyNqpitI5Mdc8K2YEGi8WDDo
+	dUzWrLP9ZEJL/H30Rr1rUqh17Po10Phv9vVyw+FpuMEQEunJnvOTU5awyLqeXwXs
+	lzLzwRVdvmETJlazC0j+xluxgCiQcoy4JOEzCg0cpNKx1hzLW2rfLBQzXPUefDyW
+	SeFq2HcSsy1G0cV+cKpjU7ZybIkCeRVSIb+DGyxMJdhs0qF2BZ3YYMcq0DWQdPVB
+	KA7bQbyAOXSMPL/1Fx7Lxm1VayRyjcCo9pYxJXw/fTHk34NG3NNt+U/bM9pQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788541566; x=1788627966; bh=k/qWsKI62eheDyMgYI8Q9sxKTovdzn+gq0A
-	l1hxaJVc=; b=Nt//c8IoLKP65ere4s/u4huc8YEyVsbQ8z+Ec6+V1jTEBGRwKyW
-	QC+o3aEVEMxX7K3c56Mg4g4bBDxjPdvItc5Uljg2blUQYSBcmLDTqsUrCtbbeZsy
-	WOPVnlpKh+vO2EpUMvPU/xSVaMOAlknTJB8haMxB/ztxlhuyZnSQtZxpB+oVHCIr
-	H3mjk79VAQBSfLLXqvXOeCQp1RDSvxaCDVJW0qBlILP9hz4UqPOmClxMhDG8FpHA
-	uE9+1X0g/I1e0YgNMqGK/rpAef5ByEQWS1E6YJBdzRFnANwY2ezP1+bLUcgGED9B
-	h0ztNtVyplmLOR5XVI4N9BjFY8BuvuDpGqw==
-X-ME-Sender: <xms:ffqaalzuOycN743mhxth__Qkr-7W1sN5yWLJnztSwvK4-vxBWAlT8A>
-    <xme:ffqaal-TKqB27qNopEPP08GkMORcyIFrGpFt9l6JWBTR8Ea65vf227yBWy2Yixz6I
-    0XDPOdzbhTOt8uQSJKm2fHlIiKmaonu7i0Ym1H2kAB8I7HcDGuMFfU>
-X-ME-Received: <xmr:ffqaatjt0PefGuHERcYTLe0fsFtDzwLobVuKkWpi4NWQaIYn7eITHX9RJmrruTrmwpMfohWp6ZaKNsq6nfbzo9nJa3_fG9r6JQ>
-X-ME-Proxy-Cause: dmFkZTFjZJe6dtltOA7XfDh1BU5yAgBwY7oreDy9iERn7LClv0RAw2yIUk8tL3p+Wcs7QJ
-    79IycW8//gT+qFPwDHLmDfOj1SzMJTjLvX2c6oo2bL+F8A8wz5TrvJ8wlnatxF9bi4U0kg
-    8XhFxYGWYWw83u23tpKDgM3IGGTzOe4pnG2khw7Av7u0cLd4NjwYeM0NUyHnaWw9xEfSTN
-    ll6dgZYxiaPrguF6fyoSDV9xwqFouG43nDjB0qgJ/7wY7Kbn9e5HNE97OSqhWHnIfFMVOB
-    eVzYqxWIrFha991XBEdqUIvOnUrzHT+VmKF7lKVtJKW6DI10hiJLp0XIqeJuODed7fuulG
-    oUvTca1QHpoWUI/iEYhUGj7GhuPTg5fivWMmDgcTxVLvnGubz41zcsHCCU+4GfWjWk2cnT
-    qa+JgIUBSKb3UZVbbo6UCmkAuD3EhsuI/vdFiLjiQ2oRrjc0x3QJ8+x1CeF5mOHM5Hb8t3
-    n6MhMsNAMv8zrBqce6wLKxm68eXAntZbAa4/2Q7/nymWPtb1Nh/RQCMFJLjZZN9nGGEGKg
-    OY/YpuJrbk6y3y4uCMd7ycSpMPsEjBhPiO5DYASZDMCtfEkYhD52AbwfSFQ97cFljrOoH/
-    hRLov9GzgYvg3VlfaONcLeKjBSLGaRWFBcczF4cXehfYOsuab2/QJ/H0wRgQ
-X-ME-Proxy: <xmx:ffqaasG0Eh8QrN8B3MuYALxJXUxvpOgS2ruN5mWT948iPxFFqfmrcw>
-    <xmx:ffqaas-3In1lEQoc1W6qViaBA_SkLzUuFUwcX3evaV3mRnF4zt1S7w>
-    <xmx:ffqaajw4KfxTmxshdJMejtI55HS0h__7IT9YZL2FUKtgL2uYCmD6GQ>
-    <xmx:ffqaaoOX79gvklwBXrne35k-2ntnHSJkB1aBXE9zKcfHmY_sEN7FKg>
-    <xmx:fvqaao8F0XuWZaGpfyDuFnN-jpIfQzwhNs0zjHiE5IDrikTBii2GJLXY>
+	1788542112; x=1788628512; bh=xwuG1EPIQnZ0fjSv0s2zcQYlujkOvldg7tT
+	xQLaxIy4=; b=VQufDYmH9Ks1aNxreNHRVDDcjmU5dcaCQq9W0/8gvLWhlTU5b8J
+	8Ofb8oKjp71e1fid5pBAEIcdX+Qs3o8ulwzYKuKtAdpJWbcuE/0L0B3+3qES7/IH
+	hBL4qOCZCyGCxw5xtM0bEvJEbjh18nIKsNP+aJLcBVxtKA2yzEBhkpGC3Krze/GO
+	45K7U8dZmIyxuihluMLCxm9UQ/Y7b3jn1PA3IoHLS/LLsk4FCraLrT3ibdao8b73
+	jp/nfYBk6PRReneF2Xzt2i7Ut7h4HPJHFXm839RZXPtH369Uh0kd/tEyfWiCdfMu
+	4R53KLm7xZiKGcLqFaGTQLayLCNd0W1hPJQ==
+X-ME-Sender: <xms:oPyaarxk5UMd5NAwtXqKD0b1WZw-Rz-DRuG6oDgc-9i8ioF3rYBKXA>
+    <xme:oPyaaqSMq0lw_tVyY2I02QO0DFnZZYmdV-5eADUFshZM3XCAZIAaXhOGiZqjIHRvd
+    0XZ4qF1morSZGdWOhgtAn8ciqMNhVUfgWCJlFTAXW_okHc2vfwJOcw>
+X-ME-Received: <xmr:oPyaaqVHgMtJmDtsCzdKPJFiVjFWoN2RDcAWAC2Gl6B_KNpaAIkKrWrlO1RoHMqjyDoUPf8XUDjlySt5KLMDhMcXQHa9MPcezg>
+X-ME-Proxy-Cause: dmFkZTF4P7S0HXiVgJjMnS8NPHXeG0FkdAKCiIhvLMZmCqxPmtGesfCJJXzyVkNFBaycd2
+    RV6Qu0Y2wPNkVAkUKFT8lD3oEB8ETWxBe1j3Y8xuE7ltHyTW0mT402GEkWhiiLaiU0cPiA
+    zo/ovCPMy3AaUKtke2bRL2/3Mpw0h0+mMCvYHTAOz//+7lpB3diA0YNeiua7tAfy0FkGRi
+    bHQo4SdlRtM52/NrexXOWhtnWpNL+TmoFyCWnvHKn79UtfS370JXa9mvvYxUZ4QBXmD6CN
+    9Vq/FR9BVe6r+ZK9uKvkTYyTJGMAuLdpydR1hxCcKXwWN4WoiB6s3sL+N/rKOjS7Xh2SXm
+    fl6mg7XsMHYmX5/e7TiV+0coLnaBCTpZIRHAdERDMm7wLiV/esMikPB/JBpifjdLZCR1J5
+    uiVk8QvTJhG4dW7UBJjGhWcRxmBi0KpEcuNqPWlbr6vMs/gstAuwbPv5Yh/BD+bI2XhUKx
+    k/XZxmGoO4VNb0p3nD1fup5ZoYAguB04VCvYrfeZaVfqTdWroHi7Ftw/1JN3QjobImPvcQ
+    TS8bb18K9O4V4pK5xLMJgAMWiOKLa16JUrDt/kqg0HAKBPtevlUOvA8Wrl8Ylllo4w8ZzA
+    HWfKEdmN+ZQJRJ0T/tgGKipK3IUYue2AbmEAbF8UAonTsquQeVd18pm/Y9iQ
+X-ME-Proxy: <xmx:oPyaakbNOOHie8EOneQDOqrhDSUlDFXIJyJKPdwHp2wGF5rUxzQPPQ>
+    <xmx:oPyaao2AZYswqlzYkbs_KqIB8lVa1CUcA4lIDtLkk-HhiVcRPM2eJQ>
+    <xmx:oPyaaui3SKIoCMIexR1ivff49BvP5uFHN3G2fT6es3KNDuy5j-dvpw>
+    <xmx:oPyaakbR-69rsXLfki3gips7i00FdySazcBC9lV7O3QuYe13uzEeTg>
+    <xmx:oPyaah2OpjVSj4tDtWBBMWyB64ruN2WIdXR7k2rJ9a3qk7LiaqrZV4z2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Sep 2026 13:06:05 -0400 (EDT)
+ 4 Sep 2026 13:15:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  Thomas Bachem <mail@thomasbachem.com>
-Subject: Re: [PATCH v2] rerere: keep a background gc from killing a rebase
-In-Reply-To: <5e613735-60e2-429d-a5bb-1a4f03578604@gmail.com> (Phillip Wood's
-	message of "Fri, 4 Sep 2026 16:21:34 +0100")
-References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
-	<pull.2214.v2.git.1788507876543.gitgitgadget@gmail.com>
-	<5e613735-60e2-429d-a5bb-1a4f03578604@gmail.com>
-Date: Fri, 04 Sep 2026 10:06:03 -0700
-Message-ID: <xmqqfqzp3q10.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 00/11] Fix inconsistent ref storage format terminology
+In-Reply-To: <20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im>
+	(Patrick Steinhardt's message of "Fri, 04 Sep 2026 12:36:01 +0200")
+References: <20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im>
+Date: Fri, 04 Sep 2026 10:15:10 -0700
+Message-ID: <xmqq8q5h3plt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,60 +84,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Overall, this commit message is rather long and it would be helpful if 
-> you could distill it to remove unnecessary and unrelated details.
-
-Hear hear.
-
->> +rerere.lockTimeout::
->> +	The length of time, in milliseconds, to retry when trying to
->> +	take the rerere lock while another process holds it, typically
->> +	a background `git rerere gc`.  When the time is up, the command
->> +	warns and goes on without rerere.  Value 0 means not to retry
->> +	at all; -1 means to try indefinitely.  Default is 1000 (i.e.,
->> +	retry for 1 second).  `git rerere gc` does not retry, and
->> +	`git rerere`, `git rerere forget` and `git rerere clear` fail
->> +	instead of going on.
+> Hi,
 >
-> Why do those commands fail rather than wait?
-
-Isn't locktimeout about waiting?
-
-After waiting enough, why should it not fail but proceed?
-
-When there is somebody holding the lock, they acquired the lock
-exactly because they did not want to see others (including
-ourselves) to touch the rerere database until they are done.
-
-The description "`git rerere gc` does not retry" is highly
-questionable.  None of the others retries, either.
-
-What makes `git rerere gc` different among all is not that it does
-not retry.  It just does not insist doing a GC and instead leaves
-without doing anything (and without failing).
-
-I think this is justifyable as the actions visible to end-users of
-"rerere gc" is a vague "discard old enough crufts to gain the
-diskspace back" (as opposed to "I know this particular entry is old
-enough and I want to see it gone right now").
-
-Compared to that, with "git rerere forget", the end-user explicitly
-says "I know the specific rerere entry i just saw reused is *wrong*
-and I want to get rid of it".  If another process holding the lock
-prevents it from being carried out, I'd prefer to see it fail loudly
-and let me know that the entry I wanted to remove is still there (so
-if I retried the same merge, I'll see the same mistaken resolution).
-
->> +		if (fd < 0) {
->> +			warning_errno(_("skipping rerere, unable to create '%s.lock'"),
->> +				      git_path_merge_rr(r));
+> back when we gained support for reftables we of course introduced the
+> ability to control the reference storage format that is used by newly
+> created repositories. This infrastructure has grown over time, and
+> unfortunately without a lot of consistency:
 >
-> A background job that the user did not explicitly start printing to the 
-> terminal is rather confusing as it is likely to get mixed in with the 
-> output of whatever is running in the foreground.
+>   - The command line parameter to specify the ref storage format is
+>     called "--ref-format=", while the corresponding repository extension
+>     is called "refStorage".
+>
+>   - In most cases we refer to the "ref storage format" in our docs, so
+>     calling it "--ref-format=" is inconsistent with them.
+>
+>   - It is possible to override the ref storage format via an environment
+>     variable that is called "GIT_REFERENCE_BACKEND", which is not even
+>     remotely consistent with anything else.
+>
+>   - There is also an "object format", but that format does not control
+>     how we store objects but rather whether we use SHA1 or SHA256.
+>
+> So in summary, it's a huge mess.
 
-Very good point.
+Unless you are unifying them all into a single ref-storage-format, I
+do not see much practical difference between ref-storage and
+ref-format.  They are both with insufficient clarity and details.
 
-Thanks.
+ref-format fails to convey "format" of what aspect of ref it is
+about (among "storage", "name", and others), ref-storage fails to
+convey what aspect of ref storage it is talking about (among
+"format", "medium", and others).
+
