@@ -1,119 +1,112 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B110501F3F
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 18:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788547697; cv=pass; b=L/UpuwN0TPCj6zvYJVM4fSFSsDObkwvauceQimTpr/1yhXoP/9AG3+MFAaEKeWrglM7upPPPUKfCd6yw+SBqsZemLoRq9LRz6YAbZr4GfP0m96R6KXYCiLUrHO5RWzqrSVkMggjj9yHMbdKw6iph604Aw3Ha0MB8NGLj1N4hhTg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788547697; c=relaxed/simple;
-	bh=lHj7WLSd8lklFPwwu/afG/QtNqpbcWDaEDJgoRy3PJc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UZegor1K2b35d2kP1wCSpCzlU8X2yRwuhQzhR0KdvThRu2m9Lt+OYnz2CXYiaGp+MhKqVyhn08dLXYKqy12yNd9FJrxIB5Ra1kYJgpjebPK1aH1S7cJQsb+iDgwFFblVIRJS3Md0ZX5vkkDrL1+TZUmENT+iYH39U2ilF5ixZcA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4980fe6b3beso18332595e9.0
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 11:48:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788547693; cv=none;
-        d=google.com; s=arc-20260327;
-        b=E+UAT5E1pilLutlpz1t56B2CBr3iP3HrDpAlHXZYQf6HVi9HHsuH6aiWCBWFesuHf6
-         J+8nNPVL1AFkCN0LklXUUkN7cHwe7SqZSoDHLFbqZUlEV7hx2mxTnglB9jwoAPzOQOzq
-         IaIXmZxnLmv0oOdyF4VD75U006pSFGWzbb81yWHMcgzBViuJx8p6SUppK8Tbprl3aQRD
-         igZSqSOQ/X1j3jMF7vz1apMc14OisvZ6K2WC3JdwR6xvlis5/Fe+zS+mhygx5MIr24nF
-         4uZgI57AEAwVIjHeotJ1YKlV1KtjYySR8PA8GV4EWxMzOIyPhQBuIYtDOcIuzZT6LHZb
-         7Wfw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version;
-        bh=7AhIrYcp2uA06Iixxth3SFZz9Aa1fC0nFH3vGZu+ybw=;
-        fh=anyqXcJa+fgiqxjkSnttRt7wAhh2FcfGkcVESvoAkwk=;
-        b=QjdatIvAoG23Vb4gKnDBvwKywcHjEwRRRnJtn1d/xsMrWv2TWNdwiS4Wja917oys6d
-         mggrjnXHC9z7UV6zeno4S3lMz2upuK9jPHMmLqYfSPmZW0YZFWMoFyneGDqALDjtyGCM
-         Q+GK9kBol5oji6pefjrYZnGyj+yVaFicpUnYWPotaieIBQ/kwKjg6aanZwte+d9H5WRb
-         QgmVjagpY5+RAuv2bLJDrCGkl7owx3+iBujZsQDK5vGgE3J1ZCFutxRZTOL645UyiwVz
-         A+UEf8Rt9/bAf5wZPngwU1fPdW+szB9QZt+rL+05lu1cAqprUulK54Q684n14ZGx3np/
-         7pDw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788547693; x=1789152493;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=7AhIrYcp2uA06Iixxth3SFZz9Aa1fC0nFH3vGZu+ybw=;
-        b=X7Em6rvWyTJbMtv0xs+rd9ywTNP6/tPTfPucOqVUOwnO4ATRiV3iOof7/En2hjGVmc
-         A0SUuEyEnSKSuDq0VbUTSBmMeAl9EY+ET/T+cyIO4yQ3rbEgs+6T5Q3xUgbS0C2KQP3s
-         AgdowmXo5rmUF/o9KLxiVZgLxsNMh6GvcRup36HUKr2qCopAj2Odrw1xBlUbsgn9cFdR
-         rIUt1qI0FDGFv+k/3bD/EHL50yKCYBL99FDv016PlVqBkk9DzYmRMFT9QxsSvI5yyrPr
-         gjSLia/NycLohSgrENesHgHCrEOpstoEUS9eI/LI4vxE26XZhZG1MUwMqJXk5qoJ5iEh
-         gSJw==
-X-Gm-Message-State: AFuF++mIri7WMrOJZAkkRrdvsmtf1AfdYUg8ex/sg/mLCZoyKCXEwUGa
-	Aq/sfzgRHvgmQtgnvG8SarCvFjjpRpGARiP5nTrAjbqFDC0CgSp/7u62vCE0T8U/+9ANDs3vl2I
-	BoBhOnhjft/95pa6lejdDqiGCFBkTsK4=
-X-Gm-Gg: AYBFou2YscEE6NGumNoZRWQlIJeIGCZs9qgcMFnl4MGwncGDwB6iIFoyTvgXTlTAADE
-	PvqL6wVpVuuhaN52cmC/iOueYe0rnGOsXzTk1PEZH7ztJ/AFAu7xKVzPeA/iAbB68YCKyOviJOC
-	J9VY0P/r3VBdjfj4sYZIU2uS1/vhrQNL1EuHaPqJK6ijj8kJa5j/X8J6gBbbip2WeftMZOiFxhv
-	sZUNQniKNfEn/UdTdiVoEFkqNG6gyHiOdzM+FEgJACH54gyr21ADDv+SntA2pSRxiLhyXjf8CFZ
-	W5hVcPRurVSGpamjpB8MTlKTW9cCCsjwmUylNKXMXiNdzEjT/3cvAkKS7y3Sm3Azr0sHlCXia0G
-	PVsP6edZ9k6z7lLJW8nQ/EQ0w72lqvuHQRb+swGzqgL2e7hA2TWbFSJAdorZph0Xix7I2YjIP9f
-	1Keg+85Tuvc7A3UncFKKN+
-X-Received: by 2002:a05:600c:3544:b0:49b:8f5e:51fb with SMTP id
- 5b1f17b1804b1-49cf82bea0amr63272475e9.3.1788547693374; Fri, 04 Sep 2026
- 11:48:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8DD3E8C65
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 19:08:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788548935; cv=none; b=Lj9GRmefk0uRFHvMmFE9/XvA4hn7cK6cLRkhTf9jpliv0zfJut7Tw0Mo3bM9qxTkMQxgw6Ju12Sh1ZOhH9IjH9YrGESk6qUTzoeYtabbNvNralOjXYBM/1yOWvcuPc9WHp8xVL3n1pC5suHwG57G9qRQ+ATn3z2KrFVFxlq6Unk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788548935; c=relaxed/simple;
+	bh=xOuHkkSzavBFHbPnmmhfoJ5GJ2ebuUuM21iQMx8Dcq0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JsZCYyqyf+UlXwLzJdXl/X69jW/DRD7hBHNrkemK0qEQKLp36bSpSk4/ybvUQ88GWdwKsc49W3+P7U0r/ZtBCJ6jHrZztTbMEpLvioooHMOp5htdpvO/zO2SjWSYQb9H/bzLFswIOLdkCOwSAlF/Gw0ySIWvH/qdCszho0uakTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jdQm3mD3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T3etaeJt; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jdQm3mD3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3etaeJt"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3165D1400023;
+	Fri,  4 Sep 2026 15:08:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 04 Sep 2026 15:08:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1788548928; x=1788635328; bh=jeHMF6HHcw
+	jzRm9nTJ2AjnPAQadWcDJnlEquwh4il5c=; b=jdQm3mD3bK21b4tU0t8cn57me6
+	wUKJfqy9hK10MKc4ftyQKWrXQYheOCopcGIcqdDT2ih1d+0VWh/79ZePB2ewEvEB
+	5dVM7uklfQRzVU656WmCAbeXokvwJgNe3682LL2YnTjRzs7wAYKBMY233jyP/Hce
+	jRrWZ26NH2zxyaWKSPnj/IVDlf/3lUPkprh+YFvvh9oES19gZrN+9qOAvdxeCxm4
+	Oj5XK67CJXoVf/f39PBTpPVCCGBRYhcyyLihJFpgMMUOnarS1JGFplQOjj2B+5uo
+	vSn5YedPZl5nbVyURwCHQwRbUxaN1GUwTg79sNXK5N8eGfJtk8v5uOSzcdqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788548928; x=1788635328; bh=jeHMF6HHcwjzRm9nTJ2AjnPAQadWcDJnlEq
+	uwh4il5c=; b=T3etaeJtgBNemJOKa5vgC/6S/x8Luv3f2XqphIB92x28KbPcAHi
+	kDtqEfxkXUBbVmJV/q3r187/6sMhXhS39CsNrqzdc6+v2Oa6DE6y0v6e0NklsdUq
+	Vktba6+fobA+jVvd102ye3tx/Ecdfu3UyDT/FNYcqHu/Q1/0x/HBpVHb5T5M/wT8
+	N2QwxqYXn7HcCdyqcrupmuWSRY7lA9mqjJmkyBmrg9nPmgU2irG9ulaWmR8t3pl1
+	rKw8MNOx4FFgUiYdjrKtO/sCLawZtf2EAXPwFTejyKW6ktZHzSZqwzr2+8KIDvG5
+	iKhyG5JDLMhtdhY9MfUU5pxRiJZ+1XAVHJg==
+X-ME-Sender: <xms:PxebakIuTBfnhqLpYi3SGwUdnPfoIR4pPMZy30-SJrO2_RavfRwzkQ>
+    <xme:PxebatdtxCH9t6t_b7nLvrl4eFl6pqz4hEX-X28UDwsKevCzzpHPQ8fnQB3hmJEyC
+    0pTVEEEpPfVmCJ73lrLW-V-G5BZI4xBjc0bzzP82b3QOxi3v3Vqg-k>
+X-ME-Received: <xmr:Pxebar-9-_Up22otRwEuTmfNHB3GIEZ8-S1xeFGOVtX3-5rZlIohZTCMV3_cinv6698dFABwwenETgGeupfBCSKVYBp7jFEWOQ>
+X-ME-Proxy-Cause: dmFkZTGgEMjES3BsM4ZtE8ELtU50ai2Sk7zSv/jNVFXp8Q/QW4WnPmnsMMFyjzLuK9LYoq
+    7waAKzRwWst6nwQxIy31MtsPmrAL7prqSf9Xf96Awn6pC+k7OZ4ORckxRt+gVSJ8BB2rSS
+    JIDQLC2jy/XWHjQhsPl+6U5PL6qnL2mKAMkQaGoPaY5hpvwWeXOW7XgvyNJ/6M4Y5HnByi
+    +RBlkJdgWwVOuIqYrvRw1Gd3PveK6uVrSLmb5Kwc62YK9FzR2yqvKP2EYd/ZigabL8uRoN
+    RPWeMGBtcm+Buc+NxpHBK4uq9ocy9Jm7sN4/ScpedNxbCOIL5r/J0Ra3KatmZhStbFHhPM
+    t5NVktXZ2upDpS9NWLroPuYwe3S+THxnVPX9wHjMD+7YYIjcQYl8PRp7SXFkcgybLK0pn8
+    4u1puzQtprPOHABcQ9630tweFOkMGLXaMHmdCw04yAHtJgCV6jc/5ZP3velhpDEY/sFh5g
+    L/GY6HX6sUe9Hy199PX/81tKKJ6qsVrOk3pAx7i6ZZ5Q2eJWe0M2Atyo91e03KTmArT7G2
+    G/MKb5UGL9JedhWKV/SAwnb9lBpWPrlGopi9sYDshJMIaceBORXzU698I+tnkMLitVbEMv
+    iKaDq4zKjjQFM28hgRGYSVMaYpKFrCD51eKOUqbzNNDKhVk28RVWiKuUjjqA
+X-ME-Proxy: <xmx:PxebaiqD7QWFHPqy_0reStjC_DhH4NkitWvjl0XNyS8Cx-kd7BnW6A>
+    <xmx:PxebaoALuU7oNzirCZRxOpYHyd7WcHco8wQFsM9fqq-LJUqCINp_iw>
+    <xmx:Pxebaszp7F1a4NehR01xuEl6pAL0IukbM6XVxfqxdIaOJID57EUR9A>
+    <xmx:Pxebat2vQDOlFz6n3XiM3dcBf6R6Xaxmk5SdLzhJ4zdzLakw2YOOLQ>
+    <xmx:QBebaqE9LcDqH2LC8j7bbnjo5Ja47oC_xRnCX_OsJxb-52KWaYjLl_k->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 4 Sep 2026 15:08:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  Thomas Bachem <mail@thomasbachem.com>
+Subject: Re: [PATCH v3] rerere: keep a background gc from killing a rebase
+In-Reply-To: <pull.2214.v3.git.1788537081930.gitgitgadget@gmail.com> (Thomas
+	Bachem via GitGitGadget's message of "Fri, 04 Sep 2026 15:51:21
+	+0000")
+References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
+	<pull.2214.v3.git.1788537081930.gitgitgadget@gmail.com>
+Date: Fri, 04 Sep 2026 12:08:45 -0700
+Message-ID: <xmqq4ig44ywy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260518112225.73172-2-erik@cervined.in> <cover.1779792311.git.erik@cervined.in>
- <b3fc743abf5d35fbb23c7483836de292ad5bffda.1779792311.git.erik@cervined.in> <xmqq1pbkefh0.fsf@gitster.g>
-In-Reply-To: <xmqq1pbkefh0.fsf@gitster.g>
-From: Erik Cervin Edin <erik@cervined.in>
-Date: Fri, 4 Sep 2026 20:47:35 +0200
-X-Gm-Features: AcwNN1V7r6KVWAoOM5EAUitIkvdQS9_W6af_qUBXX2ElczgYCo877G6EZbG-lJo
-Message-ID: <CA+JQ7M__GOnM9LHt0txry-G2z2CKhdZr0b-rU=Yd_A0gCEwmaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] commit: allow -c/-C for all kinds of --fixup
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Wed, 26 Aug 2026 at 23:31, Junio C Hamano <gitster@pobox.com> wrote:
-> Sorry, but this topic has been hanging without getting any reviews
-> on the list for quite a while.
->
-> Any takers?
+"Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I'm a little unfamiliar with this part of the mailing list, but yes,
-it's been a while. I've been assuming people are busy with other
-things, which is ofc okay. If there's anything I can do on my side to
-help make this easier I'm happy to. I may be slow to respond since I
-check this thread less frequently these days.
+> semantics of core.packedRefsTimeout, then warn and go on without
+> rerere: a lost recording or replay is nothing next to a rebase that
+> cannot continue.
 
-FWIW I've been dogfooding these options to reword commit messages the
-last few months and found it pretty useful so far.
+I do not understand the logic at the latter half of the above
+sentence.  During a rebase, any and all opportunity to reuse a
+conflict resolution you made earlier is preferrable.
 
-> One small thing I noticed appears here:
->
-> > @@ -1341,7 +1346,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
-> >               die(_("options '%s' and '%s' cannot be used together"), "--squash", "--fixup");
-> >       die_for_incompatible_opt3(!!use_message, "-C",
-> >                                 !!edit_message, "-c",
-> > -                               !!fixup_message, "--fixup");
-> > +                               !!logfile, "-F");
-> >       die_for_incompatible_opt4(have_option_m, "-m",
-> >                                 !!edit_message, "-c",
-> >                                 !!use_message, "-C",
->
-> This blocks -C, -c, -F from being used together.  But the next
-> opt4() covers these combinations already:
->
->         die_for_incompatible_opt4(have_option_m, "-m",
->                                   !!edit_message, "-c",
->                                   !!use_message, "-C",
->                                   !!logfile, "-F")
+I would be fine if "we cannot grab the lock so let's skip without
+doing 'rerere gc' at all".  But if a conflicted step in rebase that
+stops and leaves conflicts in the working tree fails to record the
+preimage of a conflicted path, and makes the user realize that was
+what happened only after the user spends significant amount of work
+to resolve the conflicts and the resolution is not added to the
+rerere database, that is a huge loss.
 
-That looks like it's worth a second look. I'll be away for a few weeks
-but I'll take a look at that when I get back.
+Perhaps it is just the way the above three lines is stated and what
+the code actually does may not be problematic, but I am not sure if
+that is what the latter half of the above sentence is trying to say.
+
+Thanks.
