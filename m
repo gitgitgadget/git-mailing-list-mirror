@@ -1,192 +1,109 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7B5374E79
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 22:45:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788561961; cv=pass; b=BE1EsLv4ftUMS4Klhx6FZe41KgLELD9jrQiAz8Gd/mMHpJrLfvZlqTg2/3sLBGDjqJ8Y5k2UKBhCMLcS7ZSeAS5oNaYi4nWVe6jzh32Yq+mjx/IdbzJKXKm5lrXd+CkwlEH8umL7ojiuAgJdICzaQpbKtaPOnCzZzx3299H3lVo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788561961; c=relaxed/simple;
-	bh=Tzqo29I/iFjh9emdR/RYmQc+gOaUWIn+GwBVbB6tYXU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cdAeY+n3Kng43BvIutkf4sqg4nc/mHMMqEfnWU4Q5mvzU2dauikMQlEP7eyqjOGeCujNwPNMsjukadKkm53gEnalpadCOnWmUyHphSCatRVonER3GmHdLCpktAs1enSPMlypeuMKDImCbNVhzbAycWXBIx+qij3ZvU6LBCQjTMY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hNO0eGrH; arc=pass smtp.client-ip=209.85.217.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D69037F74A
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 23:10:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788563432; cv=none; b=fmuxoICDlC4a+ibIwHI4259encPfkm/b49WMBV2fyX7fteUL37wnqT6Qd764EMiUu6tFnTQxjYEgQjsFmeGRQddi1ydz3OG0sYPCR0KXovKTJxr9VSrMo+icofTit+q8vJa2K5D3cIgePMiNhQuVuxz/JuLOorQpzlaYEtg/rmY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788563432; c=relaxed/simple;
+	bh=xebjwstHQpWPUWfuMT6kNr+YJVOcHxZZiQFcOHcuUg8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=huXqdwB14oHemOdb4IiC9JLfA/DNSSNhwRNv+WgHSl7dcQiYHBxPF6/nhHGztZ3av1XyirYKHlS2pRBkU3pFAxPrU/2tqMzzZb2ALsP/TQlzR1w37oC+DXaGsDC94N1pCIOngzmE+cP6HV6GX5liLouSxui0wWx8dtoSd1BOgi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=artagnon.com; spf=pass smtp.mailfrom=artagnon.com; dkim=pass (2048-bit key) header.d=artagnon.com header.i=@artagnon.com header.b=UcR4EckF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QjA+wrgy; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=artagnon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=artagnon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hNO0eGrH"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-7466771f1caso545979137.0
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 15:45:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788561959; cv=none;
-        d=google.com; s=arc-20260327;
-        b=rABwHGZ2btRuHrE5mjn1ep07Smw+SrqLhSSfbX5DwZYxL5s420fygzJw16bWQbHUWr
-         JVijjUKMLc/fwl1U6MwhdRpLKVikzlu0iM7Ih2ZMvUwd8ySx+vjzMEs1zYsZBQSqkryq
-         aBFYohKvinTvOR1UCTe2Ql6Nv8iv9W7Dv0CEmnsGHl9HvgRSOzGeYFS0izb0zL0WRIp6
-         L2EBf5zKpQ5hLGeNp6zDIlg00nPBVuE5EDLUUSChF8jjODWc50DuJxhmdsT9t6WcUfOc
-         VEZVhlMKZnIn7E0K4ih8zXDom3etD7ydHXHp0LA92zmiIK59Gwk3zSJSmlG4yVoam+Uw
-         LWog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=GrnHtIvpjz/uqJ5uOGmxhPsYco2Z+1zJP8vDTEwM5xQ=;
-        fh=OC1BfFa/kcscKsACxQrP88IBuV8wbIvuWZCpT8TbozQ=;
-        b=Qb2xqAkgnWi41hLOuPuJs2idZ6hzLrJCQYuET9SUR7vDOp35eF58k6LVpGOcQORJiO
-         I+BC6uCxDQc9YIfi2F0suiyzSGwkIIm5j1LoHeOecjSx9SUVeAogMHWfQVQ/yVN4EIV2
-         HyRVWs7ikWKEYV8Mqn86+Dk0D+S47jCBCBuEF2tmZK1t34E966pV/edMPweO5A6GzAB2
-         aWy3U/PLorMF/XVJ016YNMqfUmb+wT5/1LQjrlgmGHK1cvnof6sp5c9Et+5zZwhyvEPf
-         tbo2zujr08MboRtMdiLPrLX62WfTrOR3YStReZPkbxOP/HT6gxwKURnFetmhkkLAbHUj
-         Q95g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788561959; x=1789166759; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GrnHtIvpjz/uqJ5uOGmxhPsYco2Z+1zJP8vDTEwM5xQ=;
-        b=hNO0eGrH9i0gkw3MkFI1s1gxMTWBZ95a+GuD6KfbZGJFUFT3Y45oD1blAy7NH+TT1Y
-         2c3nnjfrWvCBIHvckfOm9azPfek34/8kACfXGDBZIQDtEj24oWqw5kfLdezeuSb8jnsn
-         7h2NoqPyK/bRJaUTAxjhdRVpwuFPhAoAAJ/12C35Z6mpF91m24kE2bDe2XyU2QJ7xNTR
-         QiI34Bg1oBY0z1MW3lLIKKPkYqVmR8SotQv8vGRmObDxu3oRjYTfwAMonmEOBB2U3aVZ
-         KdKyNUP2ZB/HuP9V2GGhDRPWZbwgju8eHL6RcTpNBjiTQ1ROIUz86SO9fMAaAkbRsMl8
-         doxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788561959; x=1789166759;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GrnHtIvpjz/uqJ5uOGmxhPsYco2Z+1zJP8vDTEwM5xQ=;
-        b=gqupPuOMnAmLm0ylw5xmuMQ8k80FuQTVokz+KJuidwE3SgGyxxPG4tLFSuo1MI//JT
-         C67CaUWMRf4ifc/BRDepQz6RLK0AyckOYaXicf4Y+iVq7w5NlhsfqM/QUbJnIoLQ8Y98
-         JkqWC8CMyWH6KeSwVMIxgUXWWfjeRv0EhZ7vfHWBFQUpIP6ewskCA0XWzYNHlBSZeH2k
-         E86DgQ3dsv1w14bglAFDPtryyCLpGYMsmWbQQknvet+YL4ywkR/ac5NUPFUGZr6GIFtj
-         ciXbc3g4Asjo5vSOnu7yYyDaMCKOlhWhRyGI0kpd5MUdKjZsCfHa200HLUEwL6Qrrmk0
-         B18w==
-X-Forwarded-Encrypted: i=1; AKwUvBz1BxJMqhDbvhXNHh7tPiUvK3EezlLSgAYWtyhyRwglmq3yZIQeMndkb3E6PGffkioifqA=@vger.kernel.org
-X-Gm-Message-State: AFuF++nDO55Scr9AkwGeqk/bf3necDosICHY5uyLFheNKO6jBMfcwnHM
-	esRyJdLWP53QuM1JyA3Jhj8BgSVlKT6v/Js6apb38iBucsaIkMf7QJJ6u9LXcJ9BKS4SYaKXCBh
-	pLxva3njbjCB/qjkI4EPdj9TgXQWqA28=
-X-Gm-Gg: AYBFou3IR5Pnqvw0NQeRDhn+5MOMJ+30IhjEfYd2JwvJbt6cAdTnQQUueZZyM6FlSp3
-	RWZg5oolzSI6QPH6TlaxV6AmtA5LRxTL0m/D24wcfu3MwPAfBm/Cu8W9reW47SaZgdN4IPnvvWx
-	R5W4xMrCgxMNZ0ZUECheIoMTZ80kPKODV5qCdzBo+VCKhofsGxAv6eWhnM8OpJPFF6iyAAlpJVW
-	1BYy1a2zcVT0dGrEOoQKPcl1jcNAyn149uOvvKY8UUSGk2atcShaVgFZ78Gy7zE33trd4qBmo8h
-	0YsTObSHy/YpBiSGqi1v+u5AV6rMCqocS492V/jv8wh80VqW2mEHEkMY+JxKzOlj6BgES2KiONF
-	7WYBS+HDNb+XjNElhzCvXqWY7EEsaTsKO3sg=
-X-Received: by 2002:a05:6102:2d04:b0:785:eb33:87a8 with SMTP id
- ada2fe7eead31-78a4a883885mr2941042137.4.1788561958497; Fri, 04 Sep 2026
- 15:45:58 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 4 Sep 2026 15:45:56 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 4 Sep 2026 15:45:56 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
-References: <20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im>
- <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
+	dkim=pass (2048-bit key) header.d=artagnon.com header.i=@artagnon.com header.b="UcR4EckF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QjA+wrgy"
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 532587A00C4;
+	Fri,  4 Sep 2026 19:10:29 -0400 (EDT)
+Received: from ams-imap-13 ([10.64.2.33])
+  by ams-compute-02.internal (MEProxy); Fri, 04 Sep 2026 19:10:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1788563428;
+	 x=1788649828; bh=DOE3RCUA2vv8mYd/Ol7Rq7m3jBjsCS88Zvdx4KrsxrA=; b=
+	UcR4EckFRcxqR5kFVIYYy0/wOLaIT5jyjwkcZ2yCj8ZS9sctsP+n0c73OhAbVV8Q
+	EAqe6q3lDeO/zhIXM5a4F/1Hg9ainIUHAkm8mpbQcESBx57mWCvpMm4et9bShS21
+	3QvF4+/4fglxh1VCo2Sanl4G3edn3yu9qDxAuPI8wKYS8XYJmZHp4JYZXu9s/UgY
+	eGcniWVWORI5nWNbgNvstXQGvdJfaktEP38VYSKHyjzt1yw1zowWmu70KzBo1iNN
+	0PzShHSi0EYOy3+BxCOe1Ok5heN4BrodBPw9fWJtXmJVyEdjs8Z7BHGsTDLRhXWX
+	+rBNYINWr2WcE3A3w6RpBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788563428; x=
+	1788649828; bh=DOE3RCUA2vv8mYd/Ol7Rq7m3jBjsCS88Zvdx4KrsxrA=; b=Q
+	jA+wrgy2qrI/fYD8j9qaS305HwKR6sGp79B00IflfdM534UwlVQlre6k3nCKzQKh
+	nLXqmuk8Q45TcIEc/QyI1ie5SFesVM0PGQc9iXy4p4ip/8sCpRIeAtE6gshUQVya
+	xlmb5Vlirijovvf7k22TpSsgTU5sENyK4vD17Xrw/GFsyBdkrgJ4rlBomIPEy7JK
+	Vlh4/ayedwp2U0aOpMObtjPuVOGp6PES0dZ4x9GWb+tY7Wl8rpaVsGjY1El39uZh
+	Ap8S/O1r3tCp4R2RAsStE8G5/rj6XYHCyQj9m6TNX9OOHGcOqQ36xpOm4V0SmZaL
+	dL/A/Ti1V6RDc6eQj5trQ==
+X-ME-Sender: <xms:4U-bauSpcoo3eUfNRa5EGOkf8NVvuGpatVrZBUvQd_hu13OJbFiEVQ>
+    <xme:4U-baukBNCnCnmPvK-dpLRMAMgegUIRvBdOsvZAY86GzQCGpWrOoEeTKqucEDnUzK
+    CcyMrpbVyTCEiyTX8QuTjGemBYzV9m8Djo90JEWZnym-FN5UOY3DR4>
+X-ME-Proxy-Cause: dmFkZTEgBHxHJb9Ydqi1MczhA6e8CeGciXvRxTjW5CTwblsd0JM6q6EuCDzau7aSIEwPV7
+    LmiOzlzCeAIro9bMnp2PC80Yx3M1uLx7JKJmvWHaWInHPIm4wJOtW/bH9XV+6k+IMBUutF
+    gbD+ieh7gXMHxWmH8Wmw/FvRHYseZovv3JjstKkOhWTZxjICULGUuC9OcOYPKq99KQ10Fw
+    LGxVHb2U0t5ZC7ZKVx/u7a0agmLlQES3yT1mR04subHB91d6Yi3mMWy81yxqrjb4bgy8X4
+    wanRfsmktPwlP6lDgfTQz+XGZeeRJceu0OQi4Vf5o9rdcP1Rpboqq+GyN9WDDdpkVEyjDn
+    5ivzm+6EoV60dZbc2/JUJ9QTk1EU9E53dEjoNCberqASng5QRxBoAkElg+T9IUhny6dVxb
+    0xlLSiBJwdhWEl9zhiB+lcyVBNIAASus5vIQ25L8CSJfhUZMEnKxRFTt/qKNslr/bxd98D
+    WoZCLeaoLArhx6+lclBjhRXE4Yo9jsmzxEz0463g8HgNAyPKXON71NNprrR/umxiCOHuIF
+    E+ugkK4qk+ejG8fEQxoggVl2FZO5OAv89yaH+e3viHER5Yr8WS0Zp0KNHOUG4EaONwJULd
+    2qjvrNmdotkd+CE9exbQZ4YCifHe7U7j2EEZD7kTfWlVizO0OzxN8GQ6YatQ
+X-ME-Proxy: <xmx:40-bag9SC4OuJlosoFPWy45rzErQFdqdgqmrFIqEk8BMMthrUSjnBg>
+    <xmx:40-bamqzOceVf1QvQTkkRWNYFcbdD5wK6LDuyKEetCYXhZmVnzQA2Q>
+    <xmx:40-batkdQeao6vcBD3ccT78atBGLlo3PzrqlTxMvqnGkwwZCJ9x0zA>
+    <xmx:40-batKWLtpNGy1ezawP4XK0aNTwnJlpUrONI2uf8FrY7waw3Dpidg>
+    <xmx:5E-bajDCZMnuHywRbR16tpbyFQZPlAgvJcJ8WP4fBcSE7N5vCFfymb4l>
+Feedback-ID: ifc014702:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id DFBDCF80082; Fri,  4 Sep 2026 19:10:25 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 4 Sep 2026 15:45:56 -0700
-X-Gm-Features: AcwNN1U762K3TMQE6qagfL8WrE3L53siPKjqrEEND1B2iiWsDD_DYDbl5wQnGUg
-Message-ID: <CAOLa=ZQVRJwRqapa8p+fdW2VL652vh5=TJ_ToNGXXM1z=aiXBg@mail.gmail.com>
-Subject: Re: [PATCH v2 00/13] odb: stop registering in-memory sources
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000320d46065ab0083d"
+X-ThreadId: AHWNdWDjOfzF
+Date: Sat, 05 Sep 2026 00:10:05 +0100
+From: "Ramkumar Ramachandra" <r@artagnon.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: "Git List" <git@vger.kernel.org>
+Message-Id: <14ec96fa-897c-4bf6-a2e9-cd0c6e9b4474@app.fastmail.com>
+In-Reply-To: <5ae09f8a-4acd-4c70-9088-3322195ed08c@app.fastmail.com>
+References: <7fb200e9-ff28-4b22-9d9e-dbdec83c2835@app.fastmail.com>
+ <apsaaQrngwYIVeVM@fruit.crustytoothpaste.net>
+ <5ae09f8a-4acd-4c70-9088-3322195ed08c@app.fastmail.com>
+Subject: Re: User report on git 2.55.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
---000000000000320d46065ab0083d
-Content-Type: text/plain; charset="UTF-8"
+Ramkumar Ramachandra wrote:
+> brian m. carlson wrote:
+>> Do you maybe have some sort of security software running on your Mac?
+>
+> I think it's clean, but it's still a possibility that the workplace 
+> installed something recently: I don't see any other strange symptoms 
+> with any other software though, and everything seems to working 
+> reliably? Perhaps the most common task: I run llvm tests over 30 times 
+> a day on different changes, and it never reports any spurious failures? 
+> I will nevertheless ask the IT team at my workplace if something that I 
+> can't see was installed. I don't use my personal laptop for llvm work, 
+> so doing that comparison is not possible.
 
-Patrick Steinhardt <ps@pks.im> writes:
+I found the malware: it's Crowdstrike Falcon x(
 
-> Hi,
->
-> the object database has a list of sources that is used for two
-> different purposes:
->
->   - We use it to track the list of alternates.
->
->   - We use it to track temporary in-memory sources that we create for
->     various purposes. Most importantly, this is used to link object
->     database sources from submodules into the main store.
->
-> This dual-use is quite awkward, as it mixes two different levels of
-> concerns and thus as a consequence makes both harder to reason about.
-> It's also a source of bugs: we make assumptions about the ordering of
-> sources all over the place, and we furthermore assume in other places
-> that the sources only contain alternates in the first place. I don't
-> think this surfaces in the form of real bugs, but I've long disliked
-> this dual-use.
->
-> Furthermore, we want to migrate handling of alternates into the "files"
-> backend itself in a subsequent patch series. This is most importantly to
-> fix a performance regression by making the backend own all of its
-> alternates, but it also fixes a couple of longer-standing design issues
-> that I've been struggling with [1].
->
-> Most importantly though: this whole machinery is not even needed at all.
-> A couple years ago we have already refactored our codebase so that
-> submodule sources don't even have to be linked into the main object
-> database anymore. And all the other use cases where we link sources into
-> the main object database can be trivially converted, too.
->
-> So this patch series does exactly that: it removes the mechanism to link
-> ad-hoc sources into the object database entirely. This ensures that the
-> list of sources is exactly the list of alternates, and that makes it
-> easier to move them into the "files" backend in a subsequent patch
-> series.
->
-> There is one exception though: creating transactions still creates a
-> temporary quarantine directory. This mechanism is left as-is for now,
-> but as it's an implementation detail of the "files" backend anyway
-> that's not conflicting with our above stated goals.
->
-> This series is built on top of 1630431f32 (The 21st batch, 2026-08-31)
-> with ty/repository-fetch-if-missing at 508ec9837c (repository: move
-> fetch_if_missing into struct repository, 2026-08-15) merged into it.
-> There's still two merge conflicts, but these are trivial to resolve: in
-> "odb.c" and "odb.h" you simply remove both ours and theirs, and in
-> "builtin/multi-pack-index.c" you only need to munge the parameters a
-> bit.
->
+Case closed.
 
-This was a bit of a dense read for me, mostly as I'm not too familiar
-with the code here. So I can not so confidently say that the series
-looks good :)
-
-> Changes in v2:
->   - Adapt `cache_tree_fully_valid()` to take a `struct index_state` as
->     input instead of taking both a repository and a cache tree, as
->     suggested by Junio.
->   - Link to v1: https://patch.msgid.link/20260901-pks-odb-registering-in-memory-sources-v1-0-97a312d5fa25@pks.im
->
-> Thanks!
->
-> Patrick
-
-[snip]
-
---000000000000320d46065ab0083d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 2f41adbef5710836_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xYlNpSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMk43Qy80ckpiSlZOVWlPSWZxa0VnU1FPV3FpSnVUWQoyaitBWkZ2MUtR
-WnA1VWNhaUVyZzZiam5MamdFejdvRlRWbFY3d0VVUy9vT0JvVGplSVZ0MWRqTjRPcVFZQkVYCjhF
-ZjhJUURuZ2dwR0YvNTV2T2YyTng4NDhWK1Q3cE1DYmM5UUxwVk9KY09rMmwvaFhyNXdNNDZ4MUo1
-MFhBRE8KUmdYaWZYQ1djUFc1ZFpzS0prb21KdlJTY2Z6eXFkZWd0bFM3VGZUOXFFTXBVbW5aK1RD
-bzNFS3VBM25vNnlvNQpOSUNWUzFCQ3ZqN215SklIc0hPNFplK1ZRb3lxQTZZNEJlWXVtQUJhQVh3
-a2tkWTBydmJlTkxTaWN2MjZhdWVQCjFWdDgrVkR5TUhTRnVud05EZGMyVGQrSHE5ejF4UUFSNW1Y
-RnQ1UHV4M3hJdklFYVNlZGtvOTVvV2tPekR5QzAKcXdBTzZQU1B1WGtGd0I0UmdLYVdKOEY4bUdm
-dDM5UEFDZXpKZzhSSU1pT2gzTHFaUTFETVcvVFhZNThkK1FuRQpTUGFqZXZNS0pMNVQ5U2xYc3JJ
-OGR0K2FMeXBCZ2N4Z1Uzdkp2VzNvbGtMVkVyOCtuYWFwZlg3MUJjQTlGZTFDCnEzNitEdTVSZzR4
-VE9GaHM3eWhtZWRIY09ZY2hLMkdleUszRWlRdz0KPUVaajYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000320d46065ab0083d--
+Warm regards,
+Ram
