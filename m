@@ -1,67 +1,67 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006254E80DC
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 15:03:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CE937F31B
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 15:09:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788534214; cv=none; b=uoKO104iRik+Lgv4rSxwBmAQPe8icYkOlqnek4y5sYtfhSXIoCvvt0UJpM6fsfWpg8xYiuForn/ascqFxmHXmcyTZKacHOLQ7lTxkeTFpnYqGOjFPQEQO6fc7XqvSI/3Vk4a6dZvaycwRJfI1vPO7qFFWsSeFChfHXq+hkIv1ao=
+	t=1788534597; cv=none; b=JVqwkkzUwuCgXtoPTt7ziflZNkLmsvnPqU2Y1YxGkZqo84AO2iDlpuUBPNN9vDITDmcvwDrjSqRZI9KJIjMqMzqSdLcMb+M47f4GIZxqjw+WB1+yglJko+NAepq3eK7s+Y28pKOt2ApjW4cbb3OdXyieBNackiZedzhUvNjIcv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788534214; c=relaxed/simple;
-	bh=JeA831CBnkXkNWq2jjXoENGeZPIAbmPOjutjhozAqhs=;
+	s=arc-20240116; t=1788534597; c=relaxed/simple;
+	bh=654AcJ7FjPDYTYiaZsgGX7n+mfAAMz9HOAM674F+4BE=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=diHUVlfL909XpbMB1/03rPKVDnYrJUz14nyt70UMO8V0tGrgBoQJEAineTRMqyzdUT6vByF2ga8lplFsHrtKbxfEKOU4TeS+OAUZqPzDOqhJufbBUhbkVYhtU3D1Dorxb/wx0/DJJFk94gnarBhl4Mhbhj0Sv2vposu2DrRjWzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HFzq7nCD; arc=none smtp.client-ip=209.85.208.54
+	 In-Reply-To:Content-Type; b=hVGyFuJv7Fqm5PJekQd+GSD1Na4x10u3TG9tD/tsDOyM9NQHgJBeIr8YhjGDn8E/1hL1cmujvWM52Cp6UC/znFzwwdwpPgQlN4ahVL6ao+VOJpwnfmUvKLqdUXjyd5ATpffO+wH4HhY3pWHG3GpYYvr559rVsGoVEHZHk2sPUIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nP2z5U7u; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HFzq7nCD"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-69c108fee7fso1536255a12.3
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 08:03:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nP2z5U7u"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5b159850b16so1086998e87.3
+        for <git@vger.kernel.org>; Fri, 04 Sep 2026 08:09:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788534211; x=1789139011; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788534593; x=1789139393; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mn7fBgfY1l9bdB+xkMwLwWsEMO8NXfUu4GGfhlrumBg=;
-        b=HFzq7nCDmfRmm7CTwBZFyeVXMEGmeW2LUtxxQSQ9KPxbVO5Q4rjFY15+MEXmDz5Qav
-         G0ygxWF7wIT3L8ke2EGQ1oCNtDo2hJL57H1qTwKyC9npk7Wnz0eReCOLQ6WNfJ4EiyS6
-         cpDaB2BF8jpRHxmR6s5W2MGY5JbAEzt4JW5QqEK7ggRznDHTRosWEGkFoClnRf20BlJ4
-         6KwmlNLEyvTRtoQYE8zVU2AujYgkEPqIc+N7Ld2vybp1TvHj4FfY54f94fsPcOCgIa7s
-         ZTjSbJBvKpcOtBv8VcFEkFYFxAsGdTiG1G0qye4PQi3ikOsrm2WsYURF51BCwSImjvTR
-         oqOQ==
+        bh=H0QwtWyxOh3d1pfcWRB5Lbm0NzngTnZ6efbkhlk8U90=;
+        b=nP2z5U7u9VQKAxDdUzGmBXTTN/+9lkMndcPDBMxjPKFv7+Wzs6JxUs2Qr5WYBlgn5W
+         Z5SJeugGlLvEIuKHEVWw39hmP0l9J9beFso5S97DsO2xG3HV2fcbjlBe7+kPzh7Snst6
+         F8Uqs+Hb5ApGpOET5iUWFx9DP9eZRMpH2Utd1P+B2p2pT5kdJexdI6Z0MiTQg7Txc+uq
+         yvv5FJ7UH88Gq4DiMZpj1wBA0W6xnG0dyih/J+b4eT5UClquuTUw81RwlHL7HkEsNKIM
+         WvnfcRAWth85nQsLvJUv7tNsUcZnB15iqDd1F1sEtOg2RYP0UZCgMB7f+gCL+wZaca8u
+         dmEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788534211; x=1789139011;
+        d=1e100.net; s=20251104; t=1788534593; x=1789139393;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=mn7fBgfY1l9bdB+xkMwLwWsEMO8NXfUu4GGfhlrumBg=;
-        b=goX7pQMTLXsxCIW8g6lIJCvP07x79boBqCUDANp4j3lY6gYLbvRAxR16rWdIMQ6N/a
-         pDt1M/SmPnloSLJiyL4w4j5zbiFklF4VhllqLGqk+qhZkMjTXmgUZ5ZnEmRXAHhooP5V
-         /sV1LZ4GPxcN6TS27ryr1W7ytVo4oeFZParSIKEAmjcJk7EzsN7DQc+xVYfwG9p1lGZq
-         Odqpu1DjT8mXqFME8OY9zGinxgPaRHLrEjbnKkbhcbGWE4tZKvyuLZekdZc6KI/qVVRn
-         3UURHDrmVDAwgRCLhL+EQuplMbk2dhOZ2vKSXGKLkDgSygi4Qcd62ulou3nvJUUrQuhP
-         ji4A==
-X-Forwarded-Encrypted: i=1; AKwUvBwW+oqGdI8lhU5H1cg5wji5FF1Jq2N1ukkHnlzIFKbQPakk7eFfS8BDpEeM691QACOASyc=@vger.kernel.org
-X-Gm-Message-State: AFuF++m4bIXj9VOHI7kXen1DLaOkge9u6zU7zXvWQbqV4+DAuY6zEPu/
-	UKj2mPgGidFnKA1OFqZn7D9+/mLUaMYAAoB+K17pq4jj4Vl212ECq3Np
-X-Gm-Gg: AYBFou1FkDfhSUKROfXLqBlVcbwfj2IjVUtiK26jNldBAHINdDsc3h7f41a8XqSMoSF
-	Vb9eLu1Mb9SRA7RmVIuaZSCwmLmBDt43vWCEDAEGznh67OCQkrJ8DfERVPPB+T3WBrUjiA71EF5
-	4jzRzvdmHspDOsfLs8Ov7yXvpybZkPFmxRMQ+hXbaArdITL0DqaAGBVjkcx+fNDvPzYsmeve4GV
-	74W7BOEsd0H/yZZMc+T0/C9rzwE6pBIp36pdpmrAPr/X1JMfBr6lNNfDIjOadb8ne1uVcF235E8
-	RRaw+CeZc5uobfvPnrNrwarc0NwhBjiuxcKhW4RwEUgjAuWMaauEEbZ/Ki8RfrnWUcqgncZlSgm
-	TiW1ZmI5j2An6uJ7XgFLBTIiK2SmSNJqxhVvA4EvgUWl5xyfLaXbkNOJMLAvXDiXsIcAlggwTe6
-	9BnTfnIJD+SEx6OksPwcQkoDO/0UHvOGYDWbcp2/OOfinK1Kqr9t4hWLWwIHkNwBxk7cx7Q2z46
-	aU3xot+AGntPdy3sQVxquju2iAVNgWWZwRN8BixZxo=
-X-Received: by 2002:a05:6402:3789:b0:6a7:ea54:393 with SMTP id 4fb4d7f45d1cf-6a7ea542680mr1630541a12.36.1788534210303;
-        Fri, 04 Sep 2026 08:03:30 -0700 (PDT)
+        bh=H0QwtWyxOh3d1pfcWRB5Lbm0NzngTnZ6efbkhlk8U90=;
+        b=Cr13uXD/w6gktVd0vBTY6HfYz5SpV7Re8xp/AKVLpBxzoK4NA1l8lUoebk8N5l5k0q
+         Y0G9ar3YI1EfZuHtJvG11XoVKmSBWdrBaAvpLMxC2/TF05HCeRxfpFJIo8ozwmPLntTB
+         5RU1bEdSIwUkj8kqAT8GnJL5AzOG/uxCIcVBPZHgAw/ASyQALPFYZxUdXCWtmycCTMzm
+         yTZLaGWudXPrGmltvoLqnd4xQ8u6ckHMFuimRP0ZUGFZXCz7r5hbw8BGMBXObngf3ygL
+         LQ5iIwv+aNncYLlno5eh/uGhSkv0yY7i6k7NxvebLxjXzVatuetY1DFbUJ6rp3DACWTt
+         UnHg==
+X-Forwarded-Encrypted: i=1; AKwUvByp0FdR3wgJ3A2dg8tUrtOIA165h+pNt6EDVE3Ou1Ki/tpqIqA1y63yW6Z/2CVyCgkk9aE=@vger.kernel.org
+X-Gm-Message-State: AFuF++lJOD/1ZzlDClz/WXCVHhUYrD+wOC58NpylcK7aqVYCVFySCRA1
+	iBiDQf6QF3if211sl+iQv4ce/khu7nUr+4+Y22mUxy0fIScixgGgUacL
+X-Gm-Gg: AYBFou1aQexwZjK4ugdMhMx+W6PA0nypyJF29ywUyZEBt+Y1hD6/izYL8KmO8xi8RR8
+	++MQ4sxobJ44Sf+op8q14wgEQqfluua1Slwqam68KWgLEdX7dnkgK4gGzRbK1xftelUzLUTX3wS
+	pK/zkBT9T/VZ9xXaJRGtXlJx0EvOp/ktIEm/krBHroJ1eZpYH1c/aHwmJVbFnGwRfnIFkwysNFW
+	8WG67iirlo1oAM/i16vZYP4iUoymPh8olPS3URXx2wLsHL3pnlmFrx0uP5Ps4uOKRH/cm4NXcB9
+	DA4uI6Gv3e+KJr+Vp1EBlyXMrlXtimGN1aZOz/wgYXx6OwzxAS1ya1rK1HnFwVTYHPsg2HcczQB
+	qps/gfkhiIzfXpRf4N9ddSPEc60ryiTf5h/VS6PxT1SmFnp+i8q3u/J6ErMj/aofDDVAoTXe4Uo
+	UCkzUtDd9Kdxcwzv6owtwV55slKzz5YrpaxUNxmMwE1MlygVefAtGZsZl4S+ADr0CTrAI1X/oUD
+	HfXzVgpemv+6lNXKAmfMcx2ytvJ1YQPekP3y5ucOiI=
+X-Received: by 2002:a05:6512:224c:b0:5b6:425:4bef with SMTP id 2adb3069b0e04-5b61706a350mr1964527e87.32.1788534592746;
+        Fri, 04 Sep 2026 08:09:52 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a7e6bee8e8sm1409524a12.23.2026.09.04.08.03.29
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b6166f6c98sm585054e87.37.2026.09.04.08.09.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2026 08:03:29 -0700 (PDT)
-Message-ID: <845f8476-3105-4174-af51-9dd74147ea33@gmail.com>
-Date: Fri, 4 Sep 2026 16:03:28 +0100
+        Fri, 04 Sep 2026 08:09:52 -0700 (PDT)
+Message-ID: <99b6da14-e03a-472b-b7a3-81162dc74166@gmail.com>
+Date: Fri, 4 Sep 2026 16:09:50 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,99 +70,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 1/2] sequencer: run auto maintenance once a rebase is done
-To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
- <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- Johannes Schindelin <johannes.schindelin@gmx.de>,
- Thomas Bachem <mail@thomasbachem.com>
-References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
- <3415a4dcbf3c83f85aed3d806d897f5f4906715d.1788508426.git.gitgitgadget@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 1/2] stash: reserve exit status 1 for conflicts
+To: Harald Nordgren <haraldnordgren@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
+ <pull.2364.v4.git.git.1788373743.gitgitgadget@gmail.com>
+ <ff4322180294c784bcd5f4e92b35e4b334324ddc.1788373743.git.gitgitgadget@gmail.com>
+ <xmqqwlt3h1oc.fsf@gitster.g> <002b1324-0f7f-45ec-9f67-624a41801ff7@gmail.com>
+ <CAHwyqnVp6BVGx3+UCqBC_gOCuyq1c62uNi1f7Wyfpxd1KdyM9A@mail.gmail.com>
+ <xmqqqzjab2ho.fsf@gitster.g>
+ <CAHwyqnW8sdnDcncpZpaMD8fmWaj+WJQxhA4G-Y+L5PTW=h3k6Q@mail.gmail.com>
+ <xmqqwlt29l01.fsf@gitster.g>
+ <CAHwyqnU2c3T_i0gvkqiPPM7UYr8t5bzynr66iG4Z6YUKqZk1Cg@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <3415a4dcbf3c83f85aed3d806d897f5f4906715d.1788508426.git.gitgitgadget@gmail.com>
+In-Reply-To: <CAHwyqnU2c3T_i0gvkqiPPM7UYr8t5bzynr66iG4Z6YUKqZk1Cg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Thomas
+[Cc'd Karthik for a view on the CI style job]
 
-On 04/09/2026 08:53, Thomas Bachem via GitGitGadget wrote:
-> From: Thomas Bachem <mail@thomasbachem.com>
+On 04/09/2026 09:16, Harald Nordgren wrote:
+>> A local "make style" while you develop runs
+>>
+>>          git clang-format --style file --diff --extensions c,h
+>>
+>> which tells the command to check only the parts of the system that
+>> you touched.
+>>
+>> I do not think it is used in CI.
 > 
-> The apply backend runs "git maintenance run --auto" from
-> finish_rebase() once it has applied its patches, and so does "git am"
-> on its own. The merge backend reaches finish_rebase() only on the
-> paths both backends share in builtin/rebase.c: an abort, a branch
-> that is already up to date, and a fast-forward. A rebase that
-> replays commits never runs maintenance at its end. It creates most
-> of its commits in process, and only the "git commit" it spawns for a
-> resolved, reworded or squashed pick, the "git merge" a "rebase -r"
-> spawns for an octopus merge or with a strategy, and whatever an exec
-> command runs kick maintenance off, in the middle of the rebase. Run
-> it where the sequencer finishes a rebase, after the autostash is
-> applied, as finish_rebase() does, so that both backends end a rebase
-> the same way, and so that the next commit can keep it out of the
-> commands a rebase spawns. builtin/rebase.c could run it instead once
-> run_sequencer_rebase() returns, but the sequencer is where the rebase
-> finishes, and the autostash and the state cleanup that surround the
-> run in finish_rebase() are there as well. prepare_auto_maintenance()
-> closes the object database before the spawn, so the sequencer holds
-> nothing a repack would need to replace.
+> It seems to run as part of CI and doesn't catch it then:
+> '.github/workflows/check-style.yml'
 
-It would be nice if the two backends shared more of the cleanup code, I 
-don't think there is a good reason for them not to share the code that 
-copies notes, applies the autostash and switches HEAD back to the 
-branch, but that is outside the scope of this change. So adding a 
-separate call to the sequencer code seems reasonable. I wonder if we 
-should do this for cherry-pick and revert as well; certainly cherry-pick 
-can create a lot of loose objects and does not necessarily call "git 
-commit". If cherry-pick does call "git commit" and trigger background 
-maintenance it is susceptible to the same problems as rebase, so we 
-should probably treat them the same.
+My recollection is that we made that job never fail because clang-format 
+does not always do a good job of following our style guide and the 
+output is not guaranteed to be stable across different versions. That 
+makes its value debatable as I don't think many people (anyone?) bother 
+checking the output to see what suggestions it made. It would be a lot 
+simpler for contributors if we just devolved style decisions to 
+clang-format so no one had to think about or comment on the style. 
+Whether that tradeoff is worth it depends on how far the output of 
+clang-format deviates from our preferred style.
 
 Thanks
 
 Phillip
-
-> 
-> Assisted-by: Claude Fable 5.1
-> Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
-> ---
->   sequencer.c                | 5 +++++
->   t/t3418-rebase-continue.sh | 8 ++++++++
->   2 files changed, 13 insertions(+)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index 65afd100d9..f58ad254be 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -5297,6 +5297,11 @@ cleanup_head_ref:
->   			run_hooks_opt(r, "post-rewrite", &hook_opt);
->   		}
->   		apply_autostash(rebase_path_autostash());
-> +		/*
-> +		 * We ignore errors in 'git maintenance run --auto', since the
-> +		 * user should see them.
-> +		 */
-> +		run_auto_maintenance(r, opts->quiet);
->   
->   		if (!opts->quiet) {
->   			if (!opts->verbose)
-> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-> index cb5c3a1cb5..2c34cf8a01 100755
-> --- a/t/t3418-rebase-continue.sh
-> +++ b/t/t3418-rebase-continue.sh
-> @@ -395,4 +395,12 @@ test_orig_head () {
->   test_orig_head --apply
->   test_orig_head --merge
->   
-> +test_expect_success 'rebase runs auto maintenance at its end' '
-> +	git checkout -b one-exec main^ &&
-> +	test_commit F4 &&
-> +	test_must_fail git rebase -x false main &&
-> +	GIT_TRACE2_EVENT="$(pwd)/finish.txt" git rebase --continue &&
-> +	test_subcommand_flex git maintenance run --auto <finish.txt
-> +'
-> +
->   test_done
 
