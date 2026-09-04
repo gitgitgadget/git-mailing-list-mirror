@@ -1,90 +1,82 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C238D4F0544
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 15:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA4D4F55C3
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 15:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788535315; cv=none; b=uUy6dLcojIwFDvIxbueCvFXrl1kJEmT2I/otDfzIBuzyKP5cOlAaw0NC0vPIWpTSt1XnL/NYScXrEphZpveW9Nh9tLDEYamQSghTwVVibnLYGkhLqgyZrln3zGY044gQZHavYYCULCIrki+eADrsLJxHx/YmzbiLWcf7Oiein6I=
+	t=1788536533; cv=none; b=BDz8KLgULOnprWF8O0uGXJmfMA1vCTpc7o1kfbnLrPCh3aNtHG6bTIiuHPa/KHaKaWvJyQMEX4yntqfkmQimFPdHR5AaNJdRsKy8+SjN3IRuvIgIV5Z0DIOHUuXMIEhnYHovadtkUQtRRlbZ1sKPumcaaiM/qwChPwFns7xZ7jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788535315; c=relaxed/simple;
-	bh=ca3Kvcb3snmEQLfGh4pR2czBL5IP+inJLePb3dMOFBo=;
+	s=arc-20240116; t=1788536533; c=relaxed/simple;
+	bh=R9jLqtmZuIDhK2/SDpplVkpkDUtqXcTx9mLm/goG5wY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iL60TKHpm5b7bZXZa/1uqpnrW8woCOYQerLyXHjdjqnYNejx5gsZDT2NKJF+aNYu6wZulE8HQFZ8ckXR3NjujUo+Vv9b3GkVMXVCnIIA7Jh7MdvEeDi8QGfMxlCqSyQBAgNWpNupuG0qmCO3KNwxx6ApNvMk0qb3lc4azv5M5dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VLmTfgDW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sICobund; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=nz2zJSOaqIz5lTd3wwgUAkTv8Mh3sq01NAOF0+QbAm4S00bNl7GzshNkF9W1uN6DOsLzVfhg4zbo6v5j3jIauFxAl9GysjLpH5fZ9SoBOl/smh3OvEtkLuztvYtMEbJ/n2nyRyCE/XukahMFpreikzq8OV5EmRRpbjFSwb8B+vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sM0VslQr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BjZlWO2F; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VLmTfgDW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sICobund"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E87EC140011E;
-	Fri,  4 Sep 2026 11:21:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sM0VslQr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BjZlWO2F"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DBE351400129;
+	Fri,  4 Sep 2026 11:42:09 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 04 Sep 2026 11:21:52 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 04 Sep 2026 11:42:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788535312; x=1788621712; bh=jkSveXhyE9
-	KUx71TG+qy9AUiQ6wTUSIBXv+m1n9+yEI=; b=VLmTfgDWRDjSwWqUBYKhML1Y33
-	juPWOx68EXwiWF0qYOtNeAhwEwTT6jpv4LC4leykBXcbLlJ6DXNE29PxBQWNRr/i
-	unnCKXxVYlq11xac8o4jj5ovI98hpezadzN9WwcAPnp4kiV+onnzEGlVIaSIFNCa
-	74GHfvoDVFyDrYRDO2WuKdRvvmo94xq9LrU8MhZKqh4bykOuiKEiRqF60cUUM+lT
-	RCksqL5lunX2z4T6JbrFZLSduecCXV38+9bwVS+LjBGH4BOM+rx+PBuD6V2XAgcU
-	4MQEg5xl/ITdYkJcCXDnsjjA0PQgC8rQsE3qV5m0ATJpTChYk/HxlRsxe+Sw==
+	:subject:to:to; s=fm3; t=1788536529; x=1788622929; bh=nKdQTgPcBZ
+	g84mktXhDVhur/8yDJNrdm16PvplTWnXo=; b=sM0VslQrCfgQ1Upa6WDByMRpgf
+	bpqo6koJKvZQ0porhnA3iPAz4furx1xD/mofcswluuq5yC18oFI94ycjZtJ4sPAz
+	GwDiMMqQZ/leeYN2y+WAJ97tQ073qRNqmN8wwR0IFQNiPiSRP9SZoAIfyP6kE0Sl
+	hj0gXMHqyU/uyUYKX/JLlmuvXKQ/1ioY6YOdknLwOZGD3x1Lj63XjrmOdOG7L8gl
+	WWmNabGNBICA4108u7+LBBbpupoZJ5c19+z4nEeaODZD2C7NCRILn74XBlJw/5D6
+	j+A2jqcR0ndNyjJhi8h6Ldz1WtbjUFXAfBzkM0m6AlpwhWNfWyKJGqjFV0Kg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788535312; x=1788621712; bh=jkSveXhyE9KUx71TG+qy9AUiQ6wTUSIBXv+
-	m1n9+yEI=; b=sICobundlAeLxinrcbYMokiQnnAc0G6WdJHy88/S2iarbcV/xNL
-	YCg9jw9RujALQ0VFveuq6fph2NNpPucqKQy/gkVn/D1Ls3mpWYo3qKZwa3D6YtzR
-	YVezD/MMVeGCgzOn+UZ74Jp9JVDh+2gsIBVYdK3kkAZFmdziJbbJiWjl0ftgA3oV
-	+4WnUeFt/uxg3yx9VnARbW2CKUFda+SNfV7Xm3athBYSJ1LhN5JxteQz6m2TGrJi
-	9hUMbgCbxxaySl81kzchVacxIdKovZJfEbIlAhpmKUTMdVjNW/5r9OQ7c6S8TcR8
-	8IC0xXy2dLM8VtrDZLEBliXSYAPNHMUJ/hA==
-X-ME-Sender: <xms:EOKaapPvihM_dkDnoT0Rsa2PsTimOl9iLflZGOrmylj9XO3AY5vFkw>
-    <xme:EOKaatc9iwDdkXwM66BcT1XuWVJ28IpWAl2s7q9uDshX7jnb8eMpRQr5fYtYgajZT
-    o3PMDYVTDH3Hp_bflxES3x60WQb9-yxNeeJc4GOMSE04i_74LYMH7A>
-X-ME-Received: <xmr:EOKaaoU7Iv7916Iz6fSF0z812XKHMlXCMXK8zumEZi6K53Fc7q1Xva4tr8iGvQHUBYfF-wh6q-YgMFVw6zNfvkt7hkzuXeuY_w>
-X-ME-Proxy-Cause: dmFkZTF+L2LPezd83q5rY5tbhE+DOSYbyhofdVjXNl0PyYHnJytdM/gm7TzDuFmDUNBJ1S
-    /zDya0Ie9vxRtSPI97dx9eRNlSD0MLxhOqDZvzXlci+y1iGdVsEvFMurAOg7pJvbhjgbJA
-    sIL/k+0rLkp0AUUfcsepNUrxXYmw7q+R+Bif6RYkgaS1COjhEN/Y6Ogmb8ZE9jREbp7ELm
-    nWh+ChPLpn5aGuHEDAoLhU0EhAjhPfSPKluaqfEgFZhndI9JW3lAIGLUBIl7owx76YeLjk
-    EPtbrWxEkSrJCvDpJeujJpvdeyVqMJmuGl8zqylEnUyMti8LGA7gh3S/kgRSvt5xtgTzsX
-    3EnOCRnTHGm1uy3MHvxx8ScWOSBrxd/XyY1YutQaeUj7+4A1aT40yCPCX0QhB5hmnvID9x
-    SRMo7mEFdxp9+vrCtkJ6jwy40VKHJ2OgcmOyHpE7GKXkKaObKlJVQtY7jSQngcDZbsjPWC
-    D2Q13so0sqB9167PBWcZhhurX6y96m+OcYYcpmfSVaN16W3X5fIvx0t+pMRHE3O70By6dV
-    JfkirzdayUqObpzKAjdn3QbjeuaX1X2kyYiA7vgMcz2mQ+2g4lwglmqFhjqmuEJiERztVE
-    7noy8jEFWGfmnZ79fsKCHmttIPkgwUWSqyfC/noA0cY5T6A3I1BHbhODvFyQ
-X-ME-Proxy: <xmx:EOKaalgvpS7OS7-JJkkPqvaNUnspPoDMdorMl-z8HG8YzrQlGXG-Mw>
-    <xmx:EOKaan-AN5A9nSPuduskMSA-wpCC-TiIiyo3DNEvNyTnD2A00ViPyQ>
-    <xmx:EOKaanYRmdOoANAKMEgZq2w_HZWMugkP2EU1kdOXRJp0zh2WswmzoA>
-    <xmx:EOKaau3NZ1PkyjHI_eBept49S_Xxl3wl5sDiuwuwCInAF4ppXp0opA>
-    <xmx:EOKaavxLfiwmfV87dMmFbs1hpKBLGlhCO4GXsuhRWWZqZC9yCnKLyvB8>
+	1788536529; x=1788622929; bh=nKdQTgPcBZg84mktXhDVhur/8yDJNrdm16P
+	vplTWnXo=; b=BjZlWO2F0NaKHQz8expkKbALnL9dHFZYAE+aRaZoxpBGi5KokSh
+	Tbdp7lotS1o5ECXznmt09yzip/sC++h+U3ao2R//wRWPrZdUtsxoXDiF0u7teGft
+	7E2YGHuuw3asT0h8UOLhOv5zMqqweJv/z3fb6gWhCK1wRR3d86FEWjVNooQlHIot
+	9tHudEBwcwFEV5XcffoQyqFb53X8qwm1mCgHQoiNCEjEjr0KI0D0kIi1jtnVrlSI
+	gZgqCUGlRyvai2VEfasXWduxlGNaIuc/Xzs3NiW8QiwZvdN5MeNidiS1daqn3c+/
+	bdN7uCFuTENdImfrkqTf2Z13Fu5cW/IiCfg==
+X-ME-Sender: <xms:0eaaasSEIcK3P0lIJlY4JxDgLlvODXTfCmmvmEr-f53eeN4Thopxfw>
+    <xme:0eaaahOXD9SJ9hLUtUQfXY6wN17dFqYIfOIsHxwn1rXe_0XOKYrdc7Ns5V7aPCFuq
+    AUtZuX-khoTXPym-M1J4120MGOfNSoMI9kGjX_yztGhbHbYAqJ-ZA0>
+X-ME-Received: <xmr:0eaaanNtYEA24iA9EQcKKdIBXp1mNoQ9QrnfUqbUAdX2PQ22oKt8mZ_sNOsj7e5k6hhgCoh3o5T3za8DhJYYHzTRUl2PFo6xZA>
+X-ME-Proxy-Cause: dmFkZTGynyakDcUfz1fNhyPw+3KkjlXyS8xOHVcHWdu8zzhySOJK7DsV/htNunWAmwUts+
+    ezj8M+6/q2oaGcGLcWEF5LO7ix/xVTLe4SeNpcEqzyyOsfMUFWCiNPOhiGL6dJg47/C81q
+    jScHMgdDbw8WQfgxGRUhA2+MegLUPb5KU96yy4HNhPUPJ3mzpskLJCJFLJCzzSZiulrNE+
+    x40k7KFFwg1jiHMxhgUOPFU5aoziJad7XaF85XH4TqTRgSL5iXSwh+eHy+khObGFs6ED3U
+    wes/8tL6673VRaz1VIhChxGG2w6RlUheqVxVJ8Fxp7GNYdABBPXoxLnkhVKZMTZSBHqLJr
+    BN2meJe/ls2mqigdRHUdROtzL1laddnO0Ec7vM275K8fmlsSfsoyENVltIZtFqt/pt3TNn
+    k+oFasdBBXnfhcE1ZrbvsxSWPDYQCn2KPJ0+iNquXWIOQn+FZS6BZADrieyHEx/7iSfgx9
+    Xv3KTnlWi1ZjFTF5W4SxyiqRXt5PjBziIfEtMyNV0TtpO4GsGTGDKvwbGe1h+8BVFzFhbQ
+    A+fuLdGqG29iKMRCN7Wu6b1dKERWkYrjdemtiZ08ST9o3/OIkG5uPPOKTzpeUJeeZJFozS
+    ARnJ2IbK8+6xuQ/gZvJI/G5AlI7lnXvlVw4pV3cxB/ZBNbpEPS92gmMf/7GQ
+X-ME-Proxy: <xmx:0eaaaptvMpS5Zm6kgiY9OTvHHlkql-aLNiIWTwxEKRfjetQNYhzckw>
+    <xmx:0eaaapVCBCFYiw6n9IHe2FuVG4524OpnC53FOBls_egdOqjkmsZYrQ>
+    <xmx:0eaaapu4j4RrbQWHUWkcFZhzYuVXZZg9aojIzuUZN3IIbWOV38t1sQ>
+    <xmx:0eaaatXlw5drlW1yzKVz3FiC1JqdEXRZLSsCXZvxIM0uFksIJuS-Zw>
+    <xmx:0eaaahO3BjQebaASZrvb4kqeduQvTqyHdkYm-EnFSqLFCAOEdng9BXUh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Sep 2026 11:21:51 -0400 (EDT)
+ 4 Sep 2026 11:42:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  Harald Nordgren via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] stash: reserve exit status 1 for conflicts
-In-Reply-To: <CAHwyqnU2c3T_i0gvkqiPPM7UYr8t5bzynr66iG4Z6YUKqZk1Cg@mail.gmail.com>
-	(Harald Nordgren's message of "Fri, 4 Sep 2026 10:16:17 +0200")
-References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
-	<pull.2364.v4.git.git.1788373743.gitgitgadget@gmail.com>
-	<ff4322180294c784bcd5f4e92b35e4b334324ddc.1788373743.git.gitgitgadget@gmail.com>
-	<xmqqwlt3h1oc.fsf@gitster.g>
-	<002b1324-0f7f-45ec-9f67-624a41801ff7@gmail.com>
-	<CAHwyqnVp6BVGx3+UCqBC_gOCuyq1c62uNi1f7Wyfpxd1KdyM9A@mail.gmail.com>
-	<xmqqqzjab2ho.fsf@gitster.g>
-	<CAHwyqnW8sdnDcncpZpaMD8fmWaj+WJQxhA4G-Y+L5PTW=h3k6Q@mail.gmail.com>
-	<xmqqwlt29l01.fsf@gitster.g>
-	<CAHwyqnU2c3T_i0gvkqiPPM7UYr8t5bzynr66iG4Z6YUKqZk1Cg@mail.gmail.com>
-Date: Fri, 04 Sep 2026 08:21:50 -0700
-Message-ID: <xmqq7bl16nzl.fsf@gitster.g>
+To: Aleksei Sviridkin <f@lex.la>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] push: fix --force-if-includes when remote-tracking
+ ref has no reflog
+In-Reply-To: <20260904124433.12840-1-f@lex.la> (Aleksei Sviridkin's message of
+	"Fri, 4 Sep 2026 15:44:33 +0300")
+References: <20260903010547.85469-1-f@lex.la>
+	<20260904124433.12840-1-f@lex.la>
+Date: Fri, 04 Sep 2026 08:42:07 -0700
+Message-ID: <xmqqzexx58hc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,59 +86,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Aleksei Sviridkin <f@lex.la> writes:
 
->> A local "make style" while you develop runs
->>
->>         git clang-format --style file --diff --extensions c,h
->>
->> which tells the command to check only the parts of the system that
->> you touched.
->>
->> I do not think it is used in CI.
->
-> It seems to run as part of CI and doesn't catch it then:
-> '.github/workflows/check-style.yml'
+>  static int is_reachable_in_reflog(const char *local, const struct ref *remote)
+>  {
+> -	timestamp_t date;
+> +	timestamp_t date = 0;
+>  	struct commit *commit;
+>  	struct commit **chunk;
+>  	struct check_and_collect_until_cb_data cb;
 
-I never make any pull request to this project, so I didn't even
-notice its existence.
+This gives a known value to the "date" variable, solving the issue
+of using an uninitialized variable.  But how do we know if "0" a
+reasonable fall-back value?  Why is it better than "now" or perhaps
+"2 weeks ago"?
 
-My question was more about what is in .clang-format file we already
-have and if it would have caught this.  I was actually hoping that
-"RemoveBracesLLVM: true" we have at the end, which is explained like
-so
+We pretend that the latest entry of the remote-tracking ref was from
+year 1970.  And then that timestamp is used as a cut-off time for
+check_and_collect_until().  What's the ramification of that?
 
-    # Remove optional braces of control statements (if, else, for, and while)
-    # according to the LLVM coding style. This avoids braces on simple
-    # single-statement bodies of statements but keeps braces if one side of
-    # if/else if/.../else cascade has multi-statement body.
+> Since 99a1f9ae10 (push: add reflog check for "--force-if-includes",
+> 2020-10-03), is_reachable_in_reflog() stops walking the reflog of the
+> local branch at entries older than the newest reflog entry of the
+> remote-tracking ref. That timestamp is read by a callback of
+> refs_for_each_reflog_ent_reverse() into a variable that is never
+> initialized, so when the remote-tracking ref has no reflog the walk
+> is cut off at whatever happens to be on the stack.
 
-would help us, but it only can do a small subset of what we want,
-i.e., excess braces around both or either if/else body are removed
-(see [*] below), and it cannot add braces around all the bodies of
-if/else if.../else cascade only when one of them require them, it
-seems.
+This is almost good as-is.  I'd end the above with "... has no reflog,
+the variable that holds the timestamp stays uninitialized".
 
+> With the files backend a remote-tracking ref created by "git clone"
+> has no reflog and does not get one until it moves. On my machine the
+> leftover value exceeds any real timestamp: the walk stops at the very
+> first entry, never reaches the "Created from" entry that "checkout
+> --track" wrote, and the push is rejected with "remote ref updated
+> since checkout" although nothing on the remote has changed.
 
-[*] effect of RemoveBracesLLVM.
+That describes what happens (eh, rather, what does not happen) when
+that uninitialized timestamp is more recent than the current time.
 
-git clang-format --style file --diff --extensions c,h
-diff --git a/git.c b/git.c
-index dfd62d4010..c8df287d70 100644
---- a/git.c
-+++ b/git.c
-@@ -61,11 +61,10 @@ static void exclude_helpers_from_list(struct string_list *list)
- 	size_t i = 0;
- 
- 	while (i < list->nr) {
--		if (strstr(list->items[i].string, "--")) {
-+		if (strstr(list->items[i].string, "--"))
- 			unsorted_string_list_delete_item(list, i, 0);
--		} else {
-+		else
- 			i++;
--		}
- 	}
- }
- 
-make: *** [Makefile:3503: style] Error 1
+It does not explain why it is sensible to set it to year 1970, which
+would force everything to be inspected.
