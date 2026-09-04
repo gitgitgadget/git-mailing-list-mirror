@@ -1,85 +1,84 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3EC449B0C
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 15:57:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FE03E5A0A
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 16:14:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788537457; cv=none; b=gbSwSbKD1xC5HQhgZjBtLmf7h/4d33iTNiI7yT+k/Gio7MZEOQGNPe+6QxgIXg2vcsDYs6iCqvLnl/xqtwuhZLyd4NRjBQCXDtrlYVDPIaPp0QrN0cuQJONOZYnK8uDj/Wy0bqvpkcsR8xGr3cUe6YNjB6Hx7wXfJYbyzbeULd4=
+	t=1788538496; cv=none; b=RgGZEeuqb+Njk1W1LwlhuUq3vw+1TfBsqMj6lbBuPMjtw8rLzMm1wV2BqHzgdsiADK9Y1jdEQNq7Q7iB/5NGaBOxO1OsS6GeA+HUivSHfXOglCVEyjf/awnBp8EBanpzTHcWaAn1SZOvjGbaKF+xNXEbDFkAKAVNMhB4Tka7nUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788537457; c=relaxed/simple;
-	bh=W6V4LK2Zt2Vxj0Bz+C2krbv0Bao5iat6TZuuCcckG3c=;
+	s=arc-20240116; t=1788538496; c=relaxed/simple;
+	bh=asU6squaP9/YiquZvJnZQPWO1rtvYbowQQgvujg94Gc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IbCwUrxS8ZtayhpBYgIKwKSfkWJ6GGEL+X758fv3F1FBppVvykW0pw2X7S6raythbRmW3ig61ty+/lgVCKtCnbFRg98ENiAr5agQzXorwq/jl5E+vkdEskTNaY7590rDHvfZVat5IPOk9uRwJTu26AXh0sWYSzSBRTcoqRke39Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EperSlIK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X+54TN+Z; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=kb+wlaLnEHw3gJOdNW0qKGIRM7cJnIo6bYR5PnbwxIslZPZq1Hmdh9sMAwF8uuRCKqzvUfxPmhD3AEEccKxo1p8kXWQguOfCZ2uQCllI8p1IvG9fdYSI0Xx6w0YQ6O3XauICc5qNilygaUrQKAcdGnSUP9ikqiwt9g5NPP4zO+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QNtwayky; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DHLx1xGl; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EperSlIK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X+54TN+Z"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QNtwayky";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DHLx1xGl"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 164DB14000F1;
-	Fri,  4 Sep 2026 11:57:35 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 67AA6EC01CD;
+	Fri,  4 Sep 2026 12:14:53 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 04 Sep 2026 11:57:35 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 04 Sep 2026 12:14:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788537455; x=1788623855; bh=/ezAyK6vVn
-	jH843Uu4VLiPLSSfj8frD6kCPS6FxBqoQ=; b=EperSlIK0gBEmrt5Od7ooOO4Ht
-	Vl6X3+oSTrqFnlwJhM4X/g6xQ0T32ykzY634Td2c9CjOnq42cyq6+8GM6gFjlepm
-	+Pxk4cUQcVqRk1mezQ1nsdn1GSeJ9A1VS88o9YwY44to6fCAvcMpGg7thwSRLI4d
-	Ykk/yJ0S65yDsAq/kYZcRjFGAkElnKdUe3+trVzP6HXr6jmTrD3fN2TusCb4ZTSD
-	K3WbuBDK90OQzmTDj2mki68O6Jvqw/WcjJ9ssaH+VJ+rhvxJ4XCTI9FewvqFLBXN
-	MpqfYHJf/jCw/9fkfYEOcQw4GrbroYyt9KOC4CgyCov69NwxmZVA75iVynjQ==
+	:subject:to:to; s=fm3; t=1788538493; x=1788624893; bh=fuqPFe91J1
+	fFhKwge0WIIf67AjLUc1YsUcv2ULCMWvQ=; b=QNtwaykyM4ZQBXXEMMF9vqndUe
+	Bl5uQDQ78oxmu3kcgBe3N8JfDqgvZHu2eIq8ZnblkklKqgJJdecnJlmjbpej7VUe
+	I31axbtvNsZ7RG7eE45fMiFlozdHHU3cbtR1tiGOa83fuact2bDLiS79d4Ssn1BZ
+	fmu5MuJFbwT+Zk+UymbAqWHXhGsPnayQ7xx6cK2oUrNPYHe6zg50yEJPPy7w1A1l
+	HFdSZmywnLuTRJSGFJyoRq0T7lussAXEIKMFw6Ci0OusDe4PN/z7nRgsdPeWjNFN
+	ZpWWXSdin23pje7zfEyMy5vfaSp9d0fEvktE7yZwjvYV5xxaKuOMEtv2oKhA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788537455; x=1788623855; bh=/ezAyK6vVnjH843Uu4VLiPLSSfj8frD6kCP
-	S6FxBqoQ=; b=X+54TN+Z3b3GIq3bLgB4xtIxV3rxDgur05x/gmVx6YGyLP7P1g+
-	T+4qi612SmJ4EssX2XVZWpGdNtJ+JyLS8dWIZRFISPS4O48TjJQDWXKzfan5/7W+
-	i5u8bd+ILjLbslKep0ruKcNMojmWWHwBh/nylYZPMDbLTN+uZeypOQrHytsfxT1x
-	FsPSCIBdqf4D9fs8OTOHsetLL+j8pg0bEnUUowm2VpMyjZcIn4g3fM1FZj9RfRGB
-	j/e5k301dXJ/oja5rok6dLSKB5W3v2/z+JeBYR2+J5bjml84DAWyOo4S/AFOrJsF
-	ux1GZXf8+pDZwiFIgeSkHtcpOpbGsdLbmHQ==
-X-ME-Sender: <xms:buqaanGGZsobPG2OwNHl2xgACEnqMEbIHiaN-xtLTU1L2ZU-sV_u0Q>
-    <xme:buqaamnIajfE-K85-7m4Y9-KQi6uNJf5rOmEaV8b9p33pOJOiv87K-1cJiy-lZU4F
-    XJCbsNvWQk36HboXfLjRTc4KJbmWsFU4XbqtO6NbXYPXasWxMTvgpA>
-X-ME-Received: <xmr:buqaaraGlUJJHvCoAMjqB-mGkjPb_FN0KnXb7Ctwm7YiA7HsGRJHUpUQ8MC9oq59woWFk9hTksxTNjvkAEXXSUNFwcE2jajNeQ>
-X-ME-Proxy-Cause: dmFkZTFnhltei96otmoUd8Y0o+gCNRWA6/5LA+l66Jrp4zOIZ9JMLkKQRO0qugJTpjO25+
-    iFRM1fjZ7YhGfUO4v//SmL4Qv8LoN+BQuD8WGGxciiYJdOzumjEUvNBGAEtpPQwfUCDeeG
-    vl/J5d+3ZWgK9V3qc5E+SJc1BbwFDQ4K4xUoSi8Au0qpobcryraR1nBoxH651Azbl9yd2Z
-    ZfiUKR0qRSv2RkjXXg6lsVhnjYVjh7AwzxFRKBAvVPi58BIidMj0Xrg1pNGbAAeLMujl+c
-    pFgAcKalW9mWycFIxN1CYrfduf74Ri+29gKKqwFtSHq+VjUkdTLDpGwnEEzo7O+oEjGmZC
-    wFqvVDCsQn/Qqvf3pgSDEoGKt3CfAoAQMHN7rfK7edyHu3tullY7Sep4QMZHA1yVovEzz+
-    dgZaAvSYrdzb07wNwGqQCoV7tTeFbi+RiJOMyBYyMRj0T2qku18t9eIOsrclFTi5SK5X3l
-    Z4388J3dmQjZwFo6woBfLdJ5YYLaBO5ypDi0yu+jMiJdueXEUfjPR/bU6qq7wgMfsVuSc0
-    7dyZkbk5MzYnQW9EkCX+3AC4DRXJYm2a42a2OvzpmRh9ynla1XR7xuwbMPcCq4GAKWNaoQ
-    K3JscFfPJjQgxSiyn9jyT2xXEHWZfL+B/V1J//VeysAbhFlT0gQkVxeeaCVQ
-X-ME-Proxy: <xmx:buqaarFNKUNNvLEUiVTw2CJ60GHmXhNCgokWk2C-LvsixfZUb3jckg>
-    <xmx:buqaasLuQxk_CpLlROhM-9ciPtSiPm7uko4eQOlaOszFyicVpr8s6w>
-    <xmx:buqaamNUlHNY_4fE230XKBu63ZjnIjVQWSRFM1snH3t5-0d1m5GerA>
-    <xmx:buqaask7F5NCAa2G9jPPjxIUCTpIuPcaP37IMSb6oRs7bQS9AbFkeQ>
-    <xmx:b-qaav8BxLX-31FTsQk4hrb9cY6fmrkuyN_OsJ0GjvZ-6Yppugk5IaDe>
+	1788538493; x=1788624893; bh=fuqPFe91J1fFhKwge0WIIf67AjLUc1YsUcv
+	2ULCMWvQ=; b=DHLx1xGlvo5T6Pd3Km49WGTCAyEOh/tX5w53ZJcf683XyiqUV3Z
+	oLjER8wi/T3GevPNh/g57j8dfOflIzUnG7JLaDrg7qvMkA8v14M8P+83L1/wwp83
+	pmzIUMMx/dxWu487QrnoVu0jkeVj4Qaiu18HlqMg7soEc8IxXGbkP+Q4AsW8mNde
+	AmhmVlBmVe4U/5rzRhT8rjRcKLFj8iGYyLHUsfLw0dbDlH0uT35JkouH0uJ504aO
+	qWGKLI1Z5ac7+2q6yTbAPMBAlnole2vRPDqq3paB0+U4Tlb3z4BP0Fmg3xFseq91
+	UHjnJVmp9rgvp8HiSU/6Fu3LgNXQDM4ysvA==
+X-ME-Sender: <xms:fO6aaro2gJYLdS1Kn2uqmqwdNbnu2pMuCAqFpB3-qw2M8iVggCdWkQ>
+    <xme:fO6aau_YJ-nV0GamtjxtU8VGzmKS1leigMiFyOPLSxlGqrQEa4tmHb3niPqleX1uR
+    I62E1Q6Xgf9bborcFAPSdUqFDw6VcLNGF363PLn8c-aldjM5kcTNK1G>
+X-ME-Received: <xmr:fO6aavfmp7cNH-4eBmfd4m-U_WTd_iKlNbbPlGS6QPGcL-pNEgEQF-668abou4f9eoVSkimNmVAe6zlkOkfvrPoHpq-secpR6g>
+X-ME-Proxy-Cause: dmFkZTFV9YFOzgumuwRcswUNdhMUqc7+Q4Bev/DsZhC6j4Ixy3qISXU8LqWfBSZYgrnGdb
+    3R56nbO5mEilUg5Wr7yAiEI4owZ1K5eFalWKEg2lq8aloLp+lj6nGH70E9C+Fj1C3WLPbW
+    7rxGjnTupgxEsRGemmHf5tHM1Sr8kh7kzFatuLpfkG9Z7+1sbiyfwzXYe8OkxR8VPShWIt
+    AFVtM5AyhjjwOshI8UukergYOyuqIY/V0jViZSGF2xjaH1W44IPqPo2RKOe6RnWD1GjJD3
+    1L9qUpzSYiFCUn1WkIYOkmsKMdKzkkqDNheYlk9GTxvZ/evLg3T81BBYS7xsyhQ0Rr5zrp
+    mWi4HlGO3/+Pfojokb7ei/QuwmbtxZsobwNWB1ztDwcm0j8qPK+pqmUPYzqUuEZHYwhQ9z
+    E5zQXo5S6Pwy0YSadlMH+AU4NQB/tAmZrcgzuZrq8YT0W5nc6rQa8W+1Kar0rovuP9gRQJ
+    V8ngFXjmhX+kiBjFcpzI5DkVliouG1EEByf+zF6wVHVBKREGJ22KavCexFqtvGnPYKXWjW
+    +vO3eo1vbwgJHUOSXr4/az1ffMK6Chzkx9BPFqRM4A9UaUEmKbnhPgVBm0aYwzbxezqzie
+    TBIdrZAksvFuRbikVrKDrnGMN0VVKiiKCtl0q9YzK9F+hbWaHGhNpgF2qggA
+X-ME-Proxy: <xmx:fO6aagJg47hh-9i9tIHEjlqYrxhL5RdCmksH428s8tY-VgeqMm9-kA>
+    <xmx:fO6aangj8kwN9mcVTETHFay5ia7LuTWoUjHpFtSgR2m8lptJ3Aa3pw>
+    <xmx:fO6aamTuZBCCBYRzDgLDSWuTYnBAlzwJTT5i0q8Vg0TC8R_1UxzowQ>
+    <xmx:fO6aapU0mxBGX3rDX4jTqcI19-YtjBIPyWHv_oHVh_EZtLOAK78FPA>
+    <xmx:fe6aallVxThULwwnm-gE0L3-pMCBVymfY-jQ7ZCDYBPew2ncutlnpoqU>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Sep 2026 11:57:34 -0400 (EDT)
+ 4 Sep 2026 12:14:52 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Andrew Pleeter via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Jeff King <peff@peff.net>,  Andrew Pleeter <andrewpleeter@gmail.com>
-Subject: Re: [PATCH v3] var: support broken-down idents, default key,
- multiple args, and -z
-In-Reply-To: <5634fdc4-d0f8-493d-b401-3c9753524034@gmail.com> (Phillip Wood's
-	message of "Fri, 4 Sep 2026 10:11:30 +0100")
-References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
-	<pull.2388.v3.git.git.1788403792962.gitgitgadget@gmail.com>
-	<5634fdc4-d0f8-493d-b401-3c9753524034@gmail.com>
-Date: Fri, 04 Sep 2026 08:57:33 -0700
-Message-ID: <xmqqqzj957rm.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Thomas Bachem <mail@thomasbachem.com>,  Derrick
+ Stolee <stolee@gmail.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 0/2] builtin/maintenance: improve heuristic for
+ "rerere gc"
+In-Reply-To: <xmqqfqzp6pir.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	04 Sep 2026 07:48:44 -0700")
+References: <20260903-b4-pks-maintenance-rerere-gc-heuristic-v1-0-9929c45a9788@pks.im>
+	<20260904-b4-pks-maintenance-rerere-gc-heuristic-v2-0-b1691121fe1c@pks.im>
+	<xmqqfqzp6pir.fsf@gitster.g>
+Date: Fri, 04 Sep 2026 09:14:50 -0700
+Message-ID: <xmqqld9h56yt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,65 +88,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->>   	if (value)
->> -		printf("%s=%s\n", var, value);
->> +		printf("%s=%s%c", var, value, eol);
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> A key can contain "=" so this format is ambiguous. When the user passes 
-> "-z" we should use the same format as "git config list -z" which avoids 
-> that ambiguity
+>> Hi,
+>>
+>> as reported and discussed in [1]. Thanks!
 >
-> 	printf("%s%c%s%c", var, eol == '\n' ? '=' : '\n', value, eol);
+> Can you, and everybody else, refrain from forcing all readers to
+> visit a different message to understand what it is?  It does not
+> help that [1] is a full description of both problem and solution
+> that is not designed to be a summary to begin with, and to add
+> insult to injury, it is AI slop wall of text that mistakenly thinks
+> that more is better.
 >
->>   	else
->> -		printf("%s\n", var);
->> +		printf("%s%c", var, eol);
+> Perhaps you could have distilled the essense down to several lines?
 >
-> It would be worth checking what "git config list -z" does when there is 
-> no value and matching that. Does it print "key\n\0", or "key\0"?
-
-By "key" do you mean "var"?  The namespace of "var" for "git var"
-proper (like GIT_COMMITTER_IDENT) are very much under our control,
-but it also gives all the configuration variables, whose names can
-indeed have '=' in a three-level varlable name.  This is an
-excellent suggestion.
-
-> I think we should break out of the loop when arg is "--", or does not 
-> begin with '-', and treat the rest as variable names to print. There is 
-> not need to support "git var GIT_AUTHOR_NAME -z GIT_AUTHOR_EMAIL" in a 
-> plumbing command.
-
-Not limited to plumbing, but anywhere in Git.  Let's stick to and
-force users adopt the simple rule that "git help cli" gives them.
-Options first and then args, among which revs coe first and then
-paths after disambiguating "--".  I know as historical wart some
-commands may take dashed options after args, but I am fine if we
-tightened the rule at Git 3.0 boundary to more strictly enforced
-the option/argument ordering rule.
-
->> [...]
->> -	printf("%s\n", val);
->> -	free(val);
->> +		printf("%s%c", val, null_term ? '\0' : '\n');
+>     Since Git 2.54, background maintenance triggers after a commit
+>     runs "git rerere gc", which acquires the MERGE_RR.lock.  During
+>     rebase, a subsequent sequencer commit also tries to acquire this
+>     lock within milliseconds.  Due to use of LOCK_DIE_ON_ERROR,
+>     whichever arrives second aborts, causing rebase failures.
 >
-> Multi-valued variables are a bit of a problem here, they're built on the 
-> assumption that the individual values do not contain a newline, but as 
-> they are paths I'm not sure that is necessarily true. With -z it would 
-> be better to print '\0' after each value as we do in list_vars(). 
-> Ideally we wouldn't use a single string to pass multiple values around, 
-> but a simple fix would be to use '\0' to separate the individual values 
-> instead of '\n' so that we can split them unambiguously when we print them.
+> I'll leave it as an exercise to readers to summarize the solution
+> part that this series (not the original one) proposes to make.
 
-Hmph, what does "git config -l" do for multi-valued keys?  We should
-mimick it, I would think.
+Hmph.
 
-Another thing that might be worth doing is to see if we can separate
-out "git config -l" handling out of "git var" with a breaking change
-at big version boundary.
-
-> Thanks for working on this, being able to specify multiple variables 
-> that are printed unambiguously is a really useful improvement.
-
-Indeed.  Thanks, both.
+So the two-patch series is not about what happens when two "rerere
+gc" trigger in quick successions, and even with the "improve"d
+heuristic, the second "rerere gc" would fail the same way when when
+another one is already running?
