@@ -1,81 +1,80 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9561F30F938
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 07:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F4A330B3F
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 07:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788505410; cv=none; b=k2sGhd+yz3kfdCNEr0dQZLtplFMCLNyTKxBCiT6xMlkme1PiIgodC+xZ9dfTCTLJ7m+RRHASD0nRIcXlX9oSZXBlfi+pEXk/GJ9yXqxGFZmAVlZehySJjR9Lz5uj6ZAel4oqUjym1hjHr8jVmNEqLISYjXOGCh+Cu5+PCAc8D4k=
+	t=1788505412; cv=none; b=XNYzyYPqryM99EffxKX9BpyEuMEAgOa6boqhvSmmDfr3zKymJfzFcXU+TysWzomsKGcaOrlD6cC2F/mmrKJB57flpZhmpAt10we5kS1Stjyxt6b/LuR6DxFRzHGDMZYaczcIxNDF3cdgt1N+uhsUDZNqpQyoEOo24iiyU+/VT1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788505410; c=relaxed/simple;
-	bh=n56wlG37YQKF41/3wPhcKn8zacwCYy2chJFd2KBfFLU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=Xq3/4pb/RLhNE0sHdHX5RrDdkU6bOUvnXnI7Kv6VIV6yKXlTeuwILFUS4ipzPK5XJvnrClq/lsXhkzQGHcfmFG6Npf1kMMVSu46VPD0yxB9YWR7NKQQkJUG5hMQ5vNJT5QueoGLUdqPX9QSA0iSuUmyIOc4cIuojpuxO2Q5LK/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pCAj+XXU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ap3YYK70; arc=none smtp.client-ip=202.12.124.154
+	s=arc-20240116; t=1788505412; c=relaxed/simple;
+	bh=D0hswkoYIt25MB6+f1TlUPxqGPHuMUaq7pl25qhaKhA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=rvU8LSdti4M5XQ8z4az0wuFvxv8NniYL+Fdh3lydWapXPv/zLUoD4Vm2r8OCrI6Yo2rkjoWCKlpF7jKHr4899SzOh+RbJiWS++gx+SwyBrx999lfZxs1qpLgyB/EtEZrXlBMsasyu7BqKoTSzeoyfSMUwqGniZKIQqzHzUHDKqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E/kyAiba; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U/Ga48Np; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pCAj+XXU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ap3YYK70"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 97FF57A0112;
-	Fri,  4 Sep 2026 03:03:27 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 04 Sep 2026 03:03:27 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E/kyAiba";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U/Ga48Np"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 769057A017C;
+	Fri,  4 Sep 2026 03:03:29 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 04 Sep 2026 03:03:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788505407;
-	 x=1788591807; bh=4WA5DrF1TEhEyVMK+9xuPl9KBLvAbSTK39EJML/UM7E=; b=
-	pCAj+XXUKDnMY4EVx0E6gTYaQbHjU2UCqMYolvBqiiggUv+ptGCt943z0rSkUiFa
-	sDFG47DBAV9k13fLzDsinvG6NUcxQgU4T+gSnt6wngdynf3KvrOuZsBn99WcRU1y
-	McFzB5RF4qLLoRd7uUHiflnKVbM42b2RwlS3xnlUREWFCqfnMuUJzP0fC2GZ7CGu
-	+/zs7jJuNO3UOtEjWO5ab6uvMkdF3ixqMFzOrnDCD+7aMKItD9P5qAoHDfpYcryT
-	W7C+8LBCDXeuVMufN3gxI9OKCbOGtyF4ixl7W9qUNn9TwONaG/fTjLy1SRTYYVBg
-	ZBKEBV7IOGI8CRcT8OinnA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788505409;
+	 x=1788591809; bh=rh53c+u+rBba+073vmr0snaDYm/DHoDqRGu+hMQLebk=; b=
+	E/kyAiba7/gkbbKL0uFbVMOO7ysrEuyDGcQSySFRmvzN282zyTIo9JA26b+vApCJ
+	9QAZQ6VMTilunNTcVkldXpCtfTHZ+65BZ0FNZUo2JrWYvxIGAzqwxO2KT+9uLe3Z
+	f0XdhEoaOP8/ijQ+e+GY2WZ/dbGJxeOBUyXtQ0BLCz83CwKOvFvEBVRaCEgJVzIS
+	oyZWbVp2CsSrdfAQz4MLmZqOhhBdl3zJ9lRXBEs+Wp47UmqTIUvex4tuQCus+ZkR
+	T4N9oYp+kvD+UCpg+KHr9cHW4ZwwLpDpP8R5pVLT7pDEXOLCdsY7SRniN3GBC+33
+	h8iE3tB5ylF6tec4M35w+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788505407; x=
-	1788591807; bh=4WA5DrF1TEhEyVMK+9xuPl9KBLvAbSTK39EJML/UM7E=; b=A
-	p3YYK70mcA9X9Th3SIqTx4KT3cbn77lRp0RXddm/IzhZ2qHXh8gucWysgENEST/R
-	F4SXCs9F9qhysmyT5ZBbq221j8W+RG62LmbvxHP3Dk/qXTxNghXnTEiP/2oOzUcs
-	G2RRnT8XSmx0VZHTjtEYrhwouhoakMrTO37xzBFnae60JoeOVQY3awXgXtmZ/lfv
-	9avjWOPvxBYI1ZJNzFv5Kdf5NU2QprtBSqdPhCHcVZhjmwiVBnKkeHbBsCPKOS9w
-	0dkWg5HrbZ1hRBBfY3D4FAU9BKRDjVH4ycIW9sakVRZZ/+Do7RazHkl9xIrD+R+p
-	e+EDs3wFFcdOsj+i+IBcA==
-X-ME-Sender: <xms:Pm2aamHAErJvOvhSk08Z3dohg0bykZpqgSFfosMyjhsS66lzlntNIA>
-    <xme:Pm2aalIdX_vj4pzLjAdFYEJP3rHvXAZJ1vq9QclbfHocDb8Kkx3nIBIUUp3ioq4A1
-    VEFSnFP2EsjmLM4dLt3xoNsWyHIeS1FgRMOwgdxKfSYPJa3NwjP1_A>
-X-ME-Received: <xmr:Pm2aaqldsEz3Oiox0OVBcsO9Z2M_T19Tl0NNNki1bOrH0ws7fUIM54kaRXhz1GiMJFHoTA>
-X-ME-Proxy-Cause: dmFkZTEkUk3t8PrQCFPbSwCm+1z+WZGXg2l+fwb5J3RjkV+jKpC6lwPOa+MRtJFC8u/1cX
-    Wj9JmUMJ1f6xkOgU5nJB4jCBF6Ja8D8ppC9i8erkOx1T2WaDYbvPSEBxm3O/CSkx6Sc4mw
-    MqHQ2qlwvPSf6/qAFfj2U47O0PiuaPqSEileffN6fT98R8/EOFVlQVa7XYH5tvkYyoJNid
-    sCUX4hPIKfa4jjoKtdBYUMwvZ1zjIzMlsywcl5xmVILRTLD5VAmdzgERs6Gyuarz984gkO
-    ksAFP7Gf1tQDLEJn3fGV/AC9XKBKPAysKK1oPQai+5JBXblTvc0wYQEzSIEyokZFsBa9Qx
-    /Gxi8AtnUqEbPP2VOCpAr78ll5obGxB7X6aXnRPsqky3E1IAfVBSEFvCVV3vaKouMpE/4M
-    ZF+FmtWJfjGf/Kr0GUl3m4/5+ANPHX5mtn2io2AJP0rCr2MhzRKr8Do2sH82IceBfuIULu
-    Hgze8CRYT8f202zkqJ5asQK4XIJBz/92pWYAiQmIjE6C9O7Z3XDSIJjjosGXk80XThFVoO
-    j20p27hSVumTBBnXYnojKijiS8s37z5XHKMLOwM/ZRFSwoytLK/tlLP4eb+QYeNb6KdWKy
-    FlKiZF4sf8xLMdpWoB+t2Y30P/BbCg2n1FODha+DQ9hExombcFSqxHFQ8qAw
-X-ME-Proxy: <xmx:Pm2aatQEoE_cxD9Xc8oCglsy9HYdWD-ozPTGZemGEpzwfM0vbVDv3Q>
-    <xmx:Pm2aasKZ0362bHH94JcjHbCY1O-sA7lt5cs6gHB-WRzlEMPQW-0DZQ>
-    <xmx:Pm2aajCqQTJzatoxIBU6Sf4ADeVWlT_ekQNnV8zD0B23mo1GNz1BoA>
-    <xmx:Pm2aalApL4zpbdE7gK0KsjgP6heKwPZ_QDyCT4S6A4c9NIe4cy8qxw>
-    <xmx:P22aareMZ0UGBeFsjAhE7LKFErc7maGRaVMypZcokAPLBu-30er1kIH2>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788505409; x=
+	1788591809; bh=rh53c+u+rBba+073vmr0snaDYm/DHoDqRGu+hMQLebk=; b=U
+	/Ga48Np+Hl/cGIbFNsduBM1pnrkTHL8otxy2gGOaCtSKwzQTtAxZa3fzBFPSHWCu
+	4lrfSEbHVz6MqSBxBNoynwvuRHNHOBPGop137xvrM+aHXO8B+vRzoYv9MMEutliG
+	Dbzap7Yvd4wGFyroYuFITwOVdKEuCTBlnzhrdHKVS80gTz80MPNUzo9f+l12MurQ
+	XDQsKxT8Um5AdkeOJhK2Kc0GgVyMhA5YWj3e2tpSxicZJzUcjWqTxlkDxo9GfJ+l
+	4JPm7CD02Qlk0PO/bAUA6Mj0gY7oYvRFe0ViLaCZydC0jbK0RrFVK4iAUFvut/Ur
+	bOO8/G++PxltAUZjd4otg==
+X-ME-Sender: <xms:QG2aatuL9Du5aGv9Z4shYPhlu2pPzvIx4QVJ-DoOaiidpw9IypPkdg>
+    <xme:QG2aakRcyu38htK2n2MdqKbjGQ3e1kyrE8W5P13PulzvbSIJRdP4qDLO0xgIce9aX
+    hiEgn1sSAHZ1x2Uo6Alo_3ffwFvAvfqdRc5tVZ0qKVTA6TwVjsnXa4>
+X-ME-Received: <xmr:QG2aarOW_8G2Rtvj1-i_0UzgTmhe14euJAyXWsnZHmBmuqJgqpskVxWi4v991M6L5Ourww>
+X-ME-Proxy-Cause: dmFkZTGVxpEbTiL0a6QZDlLcuh66bBAYzjmWd/VRITNpyP+7M4QPWHV4ovO2BoYmtgdeBR
+    5im2N8xIR9TaTMgncMXKz+wZMnbFNMXOUGm5WavG4qwnisKnGjZZK+hmbGaM8tQfC5YeRu
+    AS6PzFnei6poirU4D/9LxF3JyasrR7GM2f6FRi39n+EEQ2nQl1KyV77jp6tSPIrFEMBuor
+    6o8/horu7mW+//77cPyfkZ4L61Wc1qxn9NEKdGr33bOs1v4SD277xsMPlfoCkZ30dJEOl5
+    3rUDQJtO1Jh/LzNlIpJ44yckB0w+tUTYNmMvKCsaBZSmhfNKyvH7zlqx+6nPvMOygy2dTH
+    5KjsG3hz93rIolyZWX727uRRkTt6X0/CVu/bBraHFvjJ0W4att7IqO50znn1yM/7jk3lda
+    Wlj86kLizCtq+RCUL4jxyjxhTgghN68jOIeyT+4OkBoRSW9L2Rjlg97PHVMT26IWtj2N4F
+    YmMR/VFz9HxHhHoAe7ap1bnLjpraH9Ddq7gnbvEXv22hzyhCntyhblxD2G59IMRGmEoCK9
+    QBChtCMbWHU/oajka6rqyHiW9royu0iWE2HINDdrlQYTvyoTm+j+O41NBwsDb1IZ3DF40t
+    uMMN6OAU0i2r/j6Vny7zuX17beCTJoDYyQl0MIKn0/YptkeBcXRYm+BIK0FQ
+X-ME-Proxy: <xmx:QG2aahZK0rCCkCAynd-Tze_9FENZhJrBA6TBrNRlNrSlR9xrBLQTKQ>
+    <xmx:QG2aatxiTCB0TaNDRmvrr0zSQVQJSEZvxfaLvJoMv7baqR_9UYAiDg>
+    <xmx:QG2aakKmVGeKUWIhwU7CKAjkuPhjr9talrMR0a-2mEv3SSJaqwjapA>
+    <xmx:QG2aavqoVDDhWA0dxxjHMtK-cEafrVRgUwmEPJ6b4KAh8aPid2mSCw>
+    <xmx:QG2aavlto9Gnf35t4BF2TKVomM2oGR4TkFZ4AzKGytNcyrMhRdpOhyBr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Sep 2026 03:03:25 -0400 (EDT)
+ 4 Sep 2026 03:03:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 16cd12d3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Sep 2026 07:03:23 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 3700c580 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 4 Sep 2026 07:03:25 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/2] builtin/maintenance: improve heuristic for "rerere
- gc"
-Date: Fri, 04 Sep 2026 09:03:04 +0200
-Message-Id: <20260904-b4-pks-maintenance-rerere-gc-heuristic-v2-0-b1691121fe1c@pks.im>
+Date: Fri, 04 Sep 2026 09:03:05 +0200
+Subject: [PATCH v2 1/2] rerere: extract logic to determine whether entries
+ are stale
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,154 +83,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/5WOSw6CMBCGr0Jm7ZhannXlPQyLUkYYDYW0QDSEu
- 9viCcy/+pL/tYEnx+ThmmzgaGXPow0gTwmYXtuOkNvAIIUshBIpNhlOL4+DZjuT1dYQOorCzmB
- Pi2M/s8GySBuhlc5FKyGUTY4e/D6G7vWP/dI8ycyxPTr6EBzd53iyXqLv79H1ggKVkspkuVZlV
- d1C6swD1Pu+fwEyQ+jf6wAAAA==
-X-Change-ID: 20260903-b4-pks-maintenance-rerere-gc-heuristic-763b0a9a50d2
-In-Reply-To: <20260903-b4-pks-maintenance-rerere-gc-heuristic-v1-0-9929c45a9788@pks.im>
-References: <20260903-b4-pks-maintenance-rerere-gc-heuristic-v1-0-9929c45a9788@pks.im>
+Message-Id: <20260904-b4-pks-maintenance-rerere-gc-heuristic-v2-1-b1691121fe1c@pks.im>
+References: <20260904-b4-pks-maintenance-rerere-gc-heuristic-v2-0-b1691121fe1c@pks.im>
+In-Reply-To: <20260904-b4-pks-maintenance-rerere-gc-heuristic-v2-0-b1691121fe1c@pks.im>
 To: git@vger.kernel.org
 Cc: Thomas Bachem <mail@thomasbachem.com>, 
  Derrick Stolee <stolee@gmail.com>, 
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.15.2
 
-Hi,
+When garbage collecting rerere entries we need to figure out whether any
+given entry is stale before pruning it. In a subsequent commit we're
+about to introduce a second caller that wants to determine staleness,
+but the logic is not currently reusable.
 
-as reported and discussed in [1]. Thanks!
+Extract the logic to compute staleness by introducing two new helper
+functions `rerere_gc_cutoffs()` and `rerere_id_is_stale()`.
 
-Changes in v2:
-  - Restore `prune_one()`.
-  - Handle "maintenance.rerere-gc.auto" values explicitly.
-  - Rename `rerere_gc_estimate()` to `rerere_gc_needed()`.
-  - Link to v1: https://patch.msgid.link/20260903-b4-pks-maintenance-rerere-gc-heuristic-v1-0-9929c45a9788@pks.im
-
-Patrick
-
-[1]: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (2):
-      rerere: extract logic to determine whether entries are stale
-      builtin/maintenance: improve heuristic for "rerere gc"
+ rerere.c | 44 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 31 insertions(+), 13 deletions(-)
 
- Documentation/config/maintenance.adoc |  8 +--
- builtin/gc.c                          | 28 +++--------
- rerere.c                              | 94 ++++++++++++++++++++++++++++++-----
- rerere.h                              |  6 +++
- t/t7900-maintenance.sh                | 61 +++++++++++++++++------
- 5 files changed, 144 insertions(+), 53 deletions(-)
+diff --git a/rerere.c b/rerere.c
+index 3d3bd0db16..073422dbf3 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -1173,22 +1173,44 @@ static void unlink_rr_item(struct rerere_id *id)
+ 	strbuf_release(&buf);
+ }
+ 
+-static void prune_one(struct rerere_id *id,
+-		      timestamp_t cutoff_resolve, timestamp_t cutoff_noresolve)
++static void rerere_gc_cutoffs(struct repository *r,
++			      timestamp_t *cutoff_resolve,
++			      timestamp_t *cutoff_noresolve)
++{
++	timestamp_t now = time(NULL);
++
++	if (repo_config_get_expiry_in_days(r, "gc.rerereresolved",
++					   cutoff_resolve, now))
++		*cutoff_resolve = now - 60 * 86400;
++	if (repo_config_get_expiry_in_days(r, "gc.rerereunresolved",
++					   cutoff_noresolve, now))
++		*cutoff_noresolve = now - 15 * 86400;
++}
++
++static bool rerere_id_is_stale(struct rerere_id *id,
++			       timestamp_t cutoff_resolve,
++			       timestamp_t cutoff_noresolve)
+ {
+ 	timestamp_t then;
+ 	timestamp_t cutoff;
+ 
+ 	then = rerere_last_used_at(id);
+-	if (then)
++	if (then) {
+ 		cutoff = cutoff_resolve;
+-	else {
++	} else {
+ 		then = rerere_created_at(id);
+ 		if (!then)
+-			return;
++			return false;
+ 		cutoff = cutoff_noresolve;
+ 	}
+-	if (then < cutoff)
++
++	return then < cutoff;
++}
++
++static void prune_one(struct rerere_id *id,
++		      timestamp_t cutoff_resolve, timestamp_t cutoff_noresolve)
++{
++	if (rerere_id_is_stale(id, cutoff_resolve, cutoff_noresolve))
+ 		unlink_rr_item(id);
+ }
+ 
+@@ -1206,18 +1228,14 @@ void rerere_gc(struct repository *r, struct string_list *rr)
+ 	DIR *dir;
+ 	struct dirent *e;
+ 	int i;
+-	timestamp_t now = time(NULL);
+-	timestamp_t cutoff_noresolve = now - 15 * 86400;
+-	timestamp_t cutoff_resolve = now - 60 * 86400;
++	timestamp_t cutoff_noresolve;
++	timestamp_t cutoff_resolve;
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+ 	if (setup_rerere(r, rr, 0) < 0)
+ 		return;
+ 
+-	repo_config_get_expiry_in_days(the_repository, "gc.rerereresolved",
+-				       &cutoff_resolve, now);
+-	repo_config_get_expiry_in_days(the_repository, "gc.rerereunresolved",
+-				       &cutoff_noresolve, now);
++	rerere_gc_cutoffs(r, &cutoff_resolve, &cutoff_noresolve);
+ 	repo_config(the_repository, git_default_config, NULL);
+ 	dir = opendir(repo_git_path_replace(the_repository, &buf, "rr-cache"));
+ 	if (!dir)
 
-Range-diff versus v1:
-
-1:  343dbf1c0c ! 1:  1b0b7a7b9a rerere: extract logic to determine whether entries are stale
-    @@ rerere.c: static void unlink_rr_item(struct rerere_id *id)
-      		cutoff = cutoff_noresolve;
-      	}
-     -	if (then < cutoff)
-    --		unlink_rr_item(id);
-     +
-     +	return then < cutoff;
-    ++}
-    ++
-    ++static void prune_one(struct rerere_id *id,
-    ++		      timestamp_t cutoff_resolve, timestamp_t cutoff_noresolve)
-    ++{
-    ++	if (rerere_id_is_stale(id, cutoff_resolve, cutoff_noresolve))
-    + 		unlink_rr_item(id);
-      }
-      
-    - /* Does the basename in "path" look plausibly like an rr-cache entry? */
-     @@ rerere.c: void rerere_gc(struct repository *r, struct string_list *rr)
-      	DIR *dir;
-      	struct dirent *e;
-    @@ rerere.c: void rerere_gc(struct repository *r, struct string_list *rr)
-      	repo_config(the_repository, git_default_config, NULL);
-      	dir = opendir(repo_git_path_replace(the_repository, &buf, "rr-cache"));
-      	if (!dir)
-    -@@ rerere.c: void rerere_gc(struct repository *r, struct string_list *rr)
-    - 		for (id.variant = 0, id.collection = rr_dir;
-    - 		     id.variant < id.collection->status_nr;
-    - 		     id.variant++) {
-    --			prune_one(&id, cutoff_resolve, cutoff_noresolve);
-    -+			if (rerere_id_is_stale(&id, cutoff_resolve, cutoff_noresolve))
-    -+				unlink_rr_item(&id);
-    - 			if (id.collection->status[id.variant])
-    - 				now_empty = 0;
-    - 		}
-2:  c8a52f0663 ! 2:  1ceb798cdf builtin/maintenance: improve heuristic for "rerere gc"
-    @@ builtin/gc.c: static int maintenance_task_rerere_gc(struct maintenance_run_opts
-     -	if (!dir)
-     -		goto out;
-     -	should_gc = !!readdir_skip_dot_and_dotdot(dir);
-    -+	if (limit <= 0)
-    -+		return limit < 0;
-    ++	if (!limit)
-    ++		return 0; /* never prune */
-    ++	if (limit < 0)
-    ++		return 1; /* always prune */
-      
-     -out:
-     -	strbuf_release(&path);
-     -	if (dir)
-     -		closedir(dir);
-     -	return should_gc;
-    -+	return rerere_gc_estimate(the_repository, limit) >= (size_t)limit;
-    ++	return rerere_gc_needed(the_repository, (size_t)limit);
-      }
-      
-      #define OPTIMIZE_FIELDS_FROM_GC_CONFIG(cfg, aggressive) \
-    @@ rerere.c: static int is_rr_cache_dirname(const char *path)
-      	return !parse_oid_hex(path, &oid, &end) && !*end;
-      }
-      
-    -+size_t rerere_gc_estimate(struct repository *r, size_t limit)
-    ++bool rerere_gc_needed(struct repository *r, size_t limit)
-     +{
-     +	timestamp_t cutoff_resolve, cutoff_noresolve;
-     +	struct strbuf buf = STRBUF_INIT;
-    ++	bool needed = false;
-     +	struct dirent *e;
-     +	size_t count = 0;
-     +	DIR *dir;
-    @@ rerere.c: static int is_rr_cache_dirname(const char *path)
-     +			if (rerere_id_is_stale(&id, cutoff_resolve,
-     +					       cutoff_noresolve)) {
-     +				count += 256;
-    -+				if (count >= limit)
-    ++				if (count >= limit) {
-    ++					needed = true;
-     +					goto out;
-    ++				}
-     +			}
-     +		}
-     +	}
-    @@ rerere.c: static int is_rr_cache_dirname(const char *path)
-     +		closedir(dir);
-     +	free_rerere_dirs();
-     +	strbuf_release(&buf);
-    -+	return count;
-    ++	return needed;
-     +}
-     +
-      void rerere_gc(struct repository *r, struct string_list *rr)
-    @@ rerere.h: int rerere_remaining(struct repository *, struct string_list *);
-      void rerere_gc(struct repository *, struct string_list *);
-      
-     +/*
-    -+ * Estimate the number of stale entries that a run of "git rerere gc"
-    -+ * would prune.
-    ++ * Check whether garbage collection for rerere entries is needed, which is
-    ++ * the case when there's at least `limit` stale entries that would be pruned.
-     + */
-    -+size_t rerere_gc_estimate(struct repository *r, size_t limit);
-    ++bool rerere_gc_needed(struct repository *r, size_t limit);
-     +
-      #define OPT_RERERE_AUTOUPDATE(v) OPT_UYN(0, "rerere-autoupdate", (v), \
-      	N_("update the index with reused conflict resolution if possible"))
-
----
-base-commit: 3cb9185f65410273787f74333cc027d2ea5daada
-change-id: 20260903-b4-pks-maintenance-rerere-gc-heuristic-763b0a9a50d2
+-- 
+2.55.0.1007.g17ff1f9808.dirty
 
