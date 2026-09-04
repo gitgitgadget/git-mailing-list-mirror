@@ -1,140 +1,203 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7775844213B
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 09:57:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7232445AFA
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 10:36:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788515863; cv=none; b=bW7W1po8FV+zSSt4yIgV+yzw8OZ/miw07amFWJna8vH4e+AjkowtEXeN7CBHiabwRBFJpYfJyJa7Yo+9oFrPrONIZlD1tAYcV/3DX4Z8yCTN8/zUiri0Jeu+sxb+EwqA9nUa124DDjMgn2wLrg2n4P6Nli91dOOzowfP6EUp41Y=
+	t=1788518178; cv=none; b=lMjS5Rptaw0PimdSqBrDQD5Zj/0Srp+Ysa8NTN9nL4OuwzoCo5twdUJFnD4ap446bRnVxmsLQ0M2fyGZW9xhbtPatPhXqvjLUzO4MdOYIL5mcMTjZ9bdKcRsFmrxoJtVLdH6/rii7dQ1Y8cXlfpt22ey5DB72hSlOuflfGImkbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788515863; c=relaxed/simple;
-	bh=/gFMC+fTtiltmvHFfcVQka8u8QqfGemjt8nVQPmVI/s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=HFDEzdhJF3HY83T1PoU31W9c/8fOaxkdA5u0vJoKNxiGv1btFBLmjVRyO3sNChFjC10GVzUsWFaRIZDF1ILe1TUIDYSy9X7d85/RYptsVJd1suj9Nxzqtg5xV2QdIVaq1AeQoLbOiaLNnY5LuiIvnm6H8uStM3JPc+GeRoaIAt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l6gFfOJP; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788518178; c=relaxed/simple;
+	bh=FcV/Xngrnb9ONgYiz7sYsFu/Sc6iJgL/rbAnq6EB34E=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=mt1GcNDo3iRrYQWOx98HhzLgbKqqrXPnmh9c3BA78B5I3sJzoIxGFLLGl6D+y2yeBfecRtlv34E5qPBGKBXncOiFhsOJO7L5p9zxXP+7k52scG3nnmR938JwguVGxcePQpMfWZMRetScJXgX08Nw59YgDuyMmHQw/WmTaUPYdl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=km1b9uPp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aU+A6lev; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l6gFfOJP"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4998b5a63e2so8617055e9.1
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 02:57:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788515859; x=1789120659; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=t3FggJiznuKGgT8fnHPi6oQMznnLfiuF2qESgTYpNjA=;
-        b=l6gFfOJPHCuSaH00TCr3vVGLMRP6WUh8VQ/iCF/DW3PlToKz1uDK4yR3H76LqsMFXg
-         +1viZPVWZIPW3uWduhzO00k8rwYu0LMFuwr2lXM3Ug8NrvNNYW2InttYTrq++rZIOEso
-         JSmPNPgww9J6H5HWCTGKzSNUVYeUlkVws6WdTjzmsyDWxdBp7KTmSCOIo5SfJDyugICn
-         t4qvm57vmJAVHBXQm6ThKz1R0G3Aa801Qa7aZSdhOjgnIyr9Kb8mxXSdaDgFxWSi3LPL
-         0Noim0WWzYmdv5sqBZaayRVaMKJs4fGAlOZ9rinn3t/wi3jXT9ttu/PQ3jwj/QWXXRUS
-         tndA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788515859; x=1789120659;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=t3FggJiznuKGgT8fnHPi6oQMznnLfiuF2qESgTYpNjA=;
-        b=lj+wI++y1Uv2ySWVVhtTLmISJjSMOx98rOzXUXkXG55bcw6QqqQ545oZzTxIEloPc7
-         n/5KAMS7W8nFRgiNW85p3dNzdwY0T1WgTpi+lz4PVrlvQ/010wG6jj8fRZpaqjiwNLYC
-         jf9PvJMNOaZww86cDXgRi3mA9C6pBrA9fiwL6yeZE0rAhTkTTYaxEK4KCPhWZpg5Z8FV
-         ZxreKQQM3A8iHr08Fmhx+h/cofsMHuhcxpB+rJ8I/8ywvrZF4o7NbnOuwxdEalUKFLu9
-         P4FmUgN+52Vlom4JZ+f+GwWGUbmo6nLAV/o32rKStyfy+OS+t8HT83jLSbpu0B319GOR
-         cg6g==
-X-Forwarded-Encrypted: i=1; AKwUvBwgD28/C1M8uLbkeY2OEFILfizlHEm+MxVNDU71hl9aUtolkxBL0Ecra9F+S1h1Jkgzm4M=@vger.kernel.org
-X-Gm-Message-State: AFuF++lqIKSTFSeZdh0scYDmWWiveF/AH6JCm3o9VXVAYOGzM8D9I9Dk
-	9+omSaub0T0hDKfvI6Ha90xqsXxMMrW7hZoALYUIYb0uoDWX7q0C6yMD
-X-Gm-Gg: AYBFou1qyr4ZEuWKWyqGkAzZ7u7RD3FG7mhfF10KzXCPeV+J7MpSrzaBX9ntyRxNqMK
-	S5WYr0fHxn+TMZ9PGizmMsz6gxuhnnG7A//j1lkc6NmkNcyNoWFeXx2+ftLyfhuBO7FWmWXnWGS
-	WJ0B/bOYA7QbN0U1NA5gbKRBUfaENQBH3SnYcS4EIZ/iwKAoACUTOt3p5+rfrhDYInyRyi85mj2
-	aN6WkJtz24IB82FaDtgnWwcopeKzd2EybkizVh/FIGW0qz3sLGiD1wZjZwU/BZAEtr6rcNJRB0u
-	30f7hjN7ModWsjQ9fGbmnZX9PXPCQUpj+Xu6iAII6osuGgrShv8emqj76IT+APerDwtl6grNx6k
-	l63yZdRmVD8pUHubH9NCnALmRL4Y/umKuXl/iyzEzuUnkhlnSZqY9QQVQWhoiV6cwXYm/JM9sYS
-	g1JnLTqdwE8RnqFI0HVFhwG0MXBwy8eK7NTJVPWyReEzHg9vz14eeYYUNrJu1Bj0d2aVqKEc1JD
-	Vn/8jx/sokJlCmmVnCDQfErISgxr86IlBZ1SWl7V+8=
-X-Received: by 2002:a05:600c:3551:b0:499:8b13:3a98 with SMTP id 5b1f17b1804b1-49cf8224cd8mr50884675e9.4.1788515859403;
-        Fri, 04 Sep 2026 02:57:39 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49ce55259ecsm141620235e9.2.2026.09.04.02.57.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2026 02:57:38 -0700 (PDT)
-Message-ID: <5e77651d-38a1-451e-b96b-33c91c414eb5@gmail.com>
-Date: Fri, 4 Sep 2026 10:57:38 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="km1b9uPp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aU+A6lev"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id D5CD21D0012D;
+	Fri,  4 Sep 2026 06:36:14 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 04 Sep 2026 06:36:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1788518174; x=1788604574; bh=9pYHCVOj3E
+	2VT2NoElgqk5PMFBdMpjGi8FDRep0f4h4=; b=km1b9uPpfRZ1sM4lGkzP2mflL0
+	zL65KkWLbZzAqCalXalyzdykSZeTeAS78bKAvDqq4rWKvqVDKLOxArD9/yt6SQ9z
+	QZLXcNA65Yz/SuAJKTog6nuNHSExxm9KteMxXzQcY+zW0Pr1uEBMdH7y77Wc4wH4
+	AprOgTbPe4XLcBX+8Dizmwf/HAuyLxhTV6ad045EBXnS6AqgyIQ0fzwS5EAIqZl5
+	dOyBkjNHvAH/KT+nmj9iwB1hZ169PhqYyNyYYdMyNO6nisJashTh7VU/3UlHcjew
+	TwCXMiXpAxT2bzA0DVgBaEKe2V/8ewzmEqa/VIBnhlPPM03V9bM1ymxRT2ZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1788518174; x=1788604574; bh=9pYHCVOj3E2VT2NoElgqk5PMFBdM
+	pjGi8FDRep0f4h4=; b=aU+A6levxEljyv4SGaIh9GczXCewjSv+Mokhdp24W3QA
+	BSxz9si4kVomSyFY6vpstqP7Jb8BkQBk//zrCMVLtrIJhAScNzPQnNkvFVBQuqv2
+	cXKt08ZfXrLGjoThz901y7+xqxbxEVq/ksPYVoTeZZ3koXRZ5hOnM+GF+ruk2cPb
+	43unzo73ZgYJidBcVjwJ7sq3Att4c6+5IKTJVXNJ7m1LL+a6XlheXIOwfZzJMfls
+	F7WBZLwzmV4U4mPybDf/rrBrgDnoysZvFuorHAUCMxbk5lnvdx/JCw7Uu/VJdUMB
+	ZAh719bIdpbP1OpSLQJl0k01FzV0jf01iKrmuveadQ==
+X-ME-Sender: <xms:Hp-aamOZe6zTgy4oTAllgQ8rpZ_fm2ZJWrDoWNuoDpbqnlE3fJIBuA>
+    <xme:Hp-aaq_gRpaWq04SHj7_Z3pcejEq2H5kaMzXTYy0bZcJi-0gJozlRKhVpfeBArq1W
+    rNofoLEXrTHXL20pGMMX5VnxnBj3wlIpMIKpHc0ikozZkYrEVyQMTY>
+X-ME-Received: <xmr:Hp-aaq7ap8GvBn8lszpC0lG04k7EtvEts5mAAzIecHvUjYapib0XupGp6zeS5-a74snZ3w>
+X-ME-Proxy-Cause: dmFkZTGuT0qoCsAmtineiKRwumxkIQsklkerLsYGpcsfNWH16cEfcCu9QyXpb9OiPO5vRJ
+    KY4KSySP1t5onFxVSNEP8IOt0A14Uz8Hor7v9SUr83KF0pAGGejc76YlQR8LTX82AwpqcN
+    rNa2Da87aeKgvN9U5RLZbSkx/sP8+FIkEzDWPiGx9FdjaRY0/bu+6Gny0FnrsZvd2OTBE7
+    F6ui//Bqr9VqTZJ3PM8+M1B4KwTbOEyiZZsxbedohh8e4h07DJprjNXbGOj6ld770xkdid
+    H0eWH7akYawRt3UIUUmt64ZS2AdbdHbs6OE8h/4WTXCIXRiiXarC9ZSEjDUpUc9JB4qAE/
+    eOM0cztPk8dnqtuS7r99aq0QmVg79L7Jmn8ts+U+yNAVFlOhGOT11AVdFZ/89CIRSvNlu+
+    xSfF0x0mbsIMtW6prQJ3pp2rMzAmhjDd4JQNVXlbs4GnAUmUn/22Lx0wy/3IwJM1Zl4yc+
+    htX9RLb78+CLcsKcjUs3jdzmKrzWdpuw2aG/qZ59giYXoHF30Rco90hn9VquV0yyogyQLT
+    KEuHLggVULOOIKni9sJhS2PzmkVX+O566peO8gun0Vd+eNR5gkp5fnYk13mGvWd/ohQX29
+    fp0zh6e0h9zWhoCfgrXfULUT9xK0X1zeqpuGT4NV3KtthJ4Wf/IdndsOw3Bw
+X-ME-Proxy: <xmx:Hp-aah25MudVfqLGs5A7BxWG5bwWEZKqcCHEkGUWzQ5SbErv0pVMaQ>
+    <xmx:Hp-aahBda7lfwPQPOsVCOAcG-_tuJVvhqMH_bWuksD9MNogiQI62Dw>
+    <xmx:Hp-aaj3rqrAcwjwGQXbdYBSX9PBW8b37ocwu1ftLpxjk9PgrjvNuQQ>
+    <xmx:Hp-aarup72V7MNuKJxZitzDlMUfRVKViD9JvcDJ8wMUSAPFUuNHDJg>
+    <xmx:Hp-aao8ynrhP_tJObTKFQXqsUucSQqHHAMmPP4aC9htdJoQ8hAiC7_5U>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 4 Sep 2026 06:36:14 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d83fc2d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 4 Sep 2026 10:36:12 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 00/11] Fix inconsistent ref storage format terminology
+Date: Fri, 04 Sep 2026 12:36:01 +0200
+Message-Id: <20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] t3507: pin CHERRY_PICK_HEAD absence for a conflicting
- --no-commit
-To: Aleksei Sviridkin <f@lex.la>, git@vger.kernel.org
-References: <20260903125524.67889-1-f@lex.la>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20260903125524.67889-1-f@lex.la>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWNQQrCMBAAv1L27MKmllr9inhI0o2uYlKyqVhK/
+ 27U48Aws4JyFlY4NStkfolKihXMrgF/s/HKKGNlaKnt6Ugdug6nh+IcJSyYOaCWlG31QspPW5D
+ 8YIKj/dAfDNTKVB15/w7ny591dnf25ZuFbfsAzqN8CYMAAAA=
+X-Change-ID: 20260904-b4-pks-unify-ref-storage-format-0c81fb038671
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15.2
 
-Hi Alexsei
+Hi,
 
-On 03/09/2026 13:55, Aleksei Sviridkin wrote:
-> The tests here check the ref after a conflicting pick, after a clean
-> pick and after a clean pick under --no-commit, but not after a
-> conflicting one under --no-commit.  That is the combination a user
-> runs into by accident: the pick stops with conflicts, and the ref
-> "git commit" would take the authorship from is not there.
-> 
-> Pin it next to its siblings.
+back when we gained support for reftables we of course introduced the
+ability to control the reference storage format that is used by newly
+created repositories. This infrastructure has grown over time, and
+unfortunately without a lot of consistency:
 
-What does pinning a test mean?
+  - The command line parameter to specify the ref storage format is
+    called "--ref-format=", while the corresponding repository extension
+    is called "refStorage".
 
-> Letting the ref be written under
-> --no-commit when the pick conflicts leaves the rest of the cherry-pick
-> tests green, so nothing else guards that path.
-> 
-> Assisted-by: LLM
-> Signed-off-by: Aleksei Sviridkin <f@lex.la>
-> ---
->   t/t3507-cherry-pick-conflict.sh | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-> index 44596cb1e8..2ce2e88184 100755
-> --- a/t/t3507-cherry-pick-conflict.sh
-> +++ b/t/t3507-cherry-pick-conflict.sh
-> @@ -100,6 +100,12 @@ test_expect_success 'cherry-pick --no-commit does not set CHERRY_PICK_HEAD' '
->   	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
->   '
->   
-> +test_expect_success 'failed cherry-pick --no-commit does not set CHERRY_PICK_HEAD' '
-> +	pristine_detach initial &&
-> +	test_must_fail git cherry-pick --no-commit picked &&
+  - In most cases we refer to the "ref storage format" in our docs, so
+    calling it "--ref-format=" is inconsistent with them.
 
-We already have a test that checks the advice that's printed when there 
-are conflicts, so could just add
+  - It is possible to override the ref storage format via an environment
+    variable that is called "GIT_REFERENCE_BACKEND", which is not even
+    remotely consistent with anything else.
 
-	test_must_fail git show-ref --verify CHERRY_PICK_HEAD
+  - There is also an "object format", but that format does not control
+    how we store objects but rather whether we use SHA1 or SHA256.
 
-there. Because that test checks the command's output, we know that the 
-cherry-pick has failed due to conflicts, and not some other reason. 
-Using test_must_fail() here without checking the error message means we 
-don't verify the reason that the cherry-pick failed.
+So in summary, it's a huge mess.
 
-Thanks
+This problem is about to become even worse though, as we're soon going
+to introduce an object storage extension. This extension is the
+equivalent to the ref storage extension, and of course we also want
+users to be able to control which object storage format new repositories
+are using. But we cannot properly name that parameter without creating
+even more inconsistencies:
 
-Phillip
-> +	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
-> +'
-> +
->   test_expect_success 'cherry-pick w/dirty tree does not set CHERRY_PICK_HEAD' '
->   	pristine_detach initial &&
->   	echo foo >foo &&
-> 
-> base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+  - "--object-format=" would match "--ref-format=", but that parameter
+    name is already taken to specify the hash function.
+
+  - "--object-storage=" would be a good fit, but be inconsistent with
+    "--ref-format=". Asking the user to execute `git init
+    --ref-format=reftable --object-format=sha256 --object-storage=foo`
+    just feels extremely awkward.
+
+So this patch series aims to clean up this huge mess that we (well, to a
+large extent I) have created, by bringing consistency to our command
+line switches, environment variables and config options to all use "ref
+storage" instead. And that also paves the way for the eventual "object
+storage" switches.
+
+As a cherry on top, this patch series also extends the "--ref-storage="
+switch to allow URIs in the form of "files://foo/bar" to bring it in
+line with all the other ways to specify the ref storage format that
+already allow for URIs.
+
+Thanks!
+
+Patrick
+
+---
+Patrick Steinhardt (11):
+      builtin/init: rename "--ref-format=" to "--ref-storage="
+      builtin/clone: rename "--ref-format=" to "--ref-storage="
+      builtin/refs: rename "--ref-format=" to "--ref-storage="
+      builtin/submodule: rename "--ref-format=" to "--ref-storage="
+      builtin/rev-parse: rename "--show-ref-format" to "--show-ref-storage"
+      help: rename "default-ref-format" to "default-ref-storage"
+      refs: expose function to parse reference URIs
+      setup: refactor how we configure the ref storage format
+      setup: rename ref storage format environment variables
+      setup: rename "init.defaultRefFormat" to "init.defaultRefStorage"
+      setup: allow "git init --ref-storage=" to specify a payload
+
+ Documentation/BreakingChanges.adoc     |   2 +-
+ Documentation/config/feature.adoc      |   2 +-
+ Documentation/config/init.adoc         |   6 +-
+ Documentation/git-clone.adoc           |   2 +-
+ Documentation/git-init.adoc            |   9 +-
+ Documentation/git-refs.adoc            |   6 +-
+ Documentation/git-rev-parse.adoc       |   2 +-
+ Documentation/git-submodule.adoc       |   8 +-
+ Documentation/git.adoc                 |   8 +-
+ Documentation/ref-storage-format.adoc  |   8 +-
+ builtin/clone.c                        |  18 ++--
+ builtin/fetch.c                        |   2 +-
+ builtin/init-db.c                      |  19 ++--
+ builtin/refs.c                         |  11 ++-
+ builtin/rev-parse.c                    |   2 +-
+ builtin/submodule--helper.c            |  24 +++--
+ contrib/completion/git-prompt.sh       |   2 +-
+ environment.h                          |   1 +
+ git-submodule.sh                       |  20 ++--
+ help.c                                 |   2 +-
+ refs.c                                 |  23 +++++
+ refs.h                                 |   4 +
+ setup.c                                | 162 ++++++++++++++++++---------------
+ setup.h                                |   2 +-
+ t/perf/p1401-ref-store-tombstones.sh   |   4 +-
+ t/perf/perf-lib.sh                     |   4 +-
+ t/t0001-init.sh                        | 126 +++++++++++++------------
+ t/t0610-reftable-basics.sh             |  34 +++----
+ t/t0611-reftable-httpd.sh              |   2 +-
+ t/t1400-update-ref.sh                  |   2 +-
+ t/t1419-exclude-refs.sh                |  16 ++--
+ t/t1423-ref-backend.sh                 |  62 +++++++++----
+ t/t1460-refs-migrate.sh                |  54 +++++------
+ t/t1500-rev-parse.sh                   |   8 +-
+ t/t1900-repo-info.sh                   |   6 +-
+ t/t5510-fetch.sh                       |  14 +--
+ t/t5601-clone.sh                       |   6 +-
+ t/t7424-submodule-mixed-ref-formats.sh |  30 +++---
+ t/test-lib.sh                          |   8 +-
+ 39 files changed, 407 insertions(+), 314 deletions(-)
+
+
+---
+base-commit: 3cb9185f65410273787f74333cc027d2ea5daada
+change-id: 20260904-b4-pks-unify-ref-storage-format-0c81fb038671
 
