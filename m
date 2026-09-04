@@ -1,65 +1,69 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E9D3D9041
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 07:53:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72DC385D9E
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 07:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788508430; cv=none; b=LymY7MNTGD8TR4u5MQm+G82DL6rC6ZXykj8HLebmuRCMmxSid8naEzbqCGYSlakuMLgl6CoE8V1450Xx5sfAPwwa/TX59vjRMz6z4jE1Ko14SModl7kw9YYOCPHj6FeF0YDFIY3egvEAntgB/ZMfGPbKcYVZvf1+meG7GbJ2MCQ=
+	t=1788508431; cv=none; b=l8iKqWAXqadumwa3fBd+aPof8kNo5CAn1h2Fu19SH4gf5ZN0tLsJQs4R6NAvu2G03NS5sXxlLd4Q3RmCQCQqkxmY5m3OlUV1qY2Jb4IqMwXhFzzgN1d//INhOxjAmELo8mKiXkpRN8S7Mf+Ed183CICn00AU07cPPTNB1eFuoVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788508430; c=relaxed/simple;
-	bh=hMSrWieTm35NlUrfp5FV/1p4V4+87Xqe2vPnKQJ5xpc=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZIl0wIXyP5TT3jAMZ6U2C0hNU8OytMhcHkp688ttYVJ69XCKw2kQzzAAsZRPPbBuzgwoFerxxqoM3Mjddyojo3h80XmHqE3BZxPAc2PBJoTtp4cxCjFSXtdJxCnWjp11J9cY9xtRdQPWpILR2gTsgaMCa/iTVccPusOuZ4r+MX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BkUTTYcE; arc=none smtp.client-ip=209.85.222.176
+	s=arc-20240116; t=1788508431; c=relaxed/simple;
+	bh=vnwq3lLZKL0LGUmXILqql5Pank1crLy+FxYeHJU6n9E=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=nG08BweNa+6b6E9VUhTkP5Lh8Tzq7bKqRFkD/tZh3HqB6CQarCTV3e4yAfWYQb4fdeH96aUqjjERu4nzeazkOmovedq5XcFgm07KymkWeGAvb7L+lV0kc6hHTrOdIC4Z33oDGRHs5MH4n8ru3JHFOFrKPo9PqRzaqJJPAdO3Gyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5ySWYaV; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkUTTYcE"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-93903d81a82so57695485a.2
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 00:53:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5ySWYaV"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-5304310b3e0so8603071cf.3
+        for <git@vger.kernel.org>; Fri, 04 Sep 2026 00:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788508427; x=1789113227; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788508428; x=1789113228; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=bqjebayDC8XUnhWDRMaUgYnLvabGJBcQSbgjkeyxLqw=;
-        b=BkUTTYcEmeBBoQQ90EXujaoVqtSxyOFSTRwnPoFw44YWUc6HGpBN7kKmYdAx1wnFrY
-         PN0WZTf78HHeB+iPMq8w3Jdd2B+d+OKKUt6upfCS8gqiIr/O8lwIndvRNc3O7oAqB4AQ
-         sCN4P+WaTBlD+8xe2j9hyQRwE7a3BNj/rqJotlLvFwHfpGVydhQpdjYdugX6mxxqt8Wx
-         7gAfVYfcpq8VjV7PFKe47XzmBWuTYgUPq4jMzshQFGXoAjabJvgIpuya+NibEwQkcI8T
-         ZE5j8RAdaRzHhS64pf8X6EvrTbL9/Hq/exwN4RFmt4nbCWRA3uAwgx3rUWQpzmSvkv9u
-         +RiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788508427; x=1789113227;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=bqjebayDC8XUnhWDRMaUgYnLvabGJBcQSbgjkeyxLqw=;
-        b=Dh/J5H3oRsHqMfG0Yr9VTMhhi5siX6nuXjJZQy2DkY2d4pEMsRurSF/F6SfK3f2545
-         90nIS8kPVU1s47bvuz9wiS/4b5XpA5uRuRvQHCCMFGTYWEQ2YbGkdk/ouy87rH4MJL2z
-         7LS3DOMSm5mOsbhRY7Eu56uiyBes4Oag1KIc+rRLxFn/6d4crVpDrJepFzkezFgc7f+u
-         iFh7fbKUOAOXX648HT9BXWx1xijzZYds7DHyiiXzrnGj84IHV4SM5uSXyJQx574C7fpi
-         KmInpv61S5SaLv9Wq+YsqU57R0f6XapNJsHS3NS6CX4bL93klWPeYoQwfQoRXWqjNkq8
-         fVHw==
-X-Gm-Message-State: AFuF++n2rKQFgCPIfRGSanuPioEi48YNtNM067yn3p1Noawh5HQ+oZeF
-	ecsPK0MyeTQyxE8rwaFZr+Nf3PiqmbdT7AyRPoflJ6TzzHQmMS1yeuXTJJzhCFcE
-X-Gm-Gg: AYBFou3vv0a+Ab0jn6/uBe9UNkIiE1i6NtG8QRLuQHcodwc1s4v1+n+cBu+SZCfB0aB
-	FyDVOz0qlXTe0y4mYuAh43o9sK6GJQMFOUw4EjitB/VscioXAhrApINPlSQz40bXCbOr3ymDWcE
-	5UvdLfM8Zo0MOftjkWBiMwUJpKerQDJxni8Sq0BdrxgtTj7nJM0Lv+PITedMke9SrmYzwq3G2bU
-	xWN9RjiZ5wAGbjwithPZyNi6f1vKzuH/c0jIZrZzOoD46hTEKLL8p57AvQ+y/ef6iBm/oBrOjdZ
-	5yCZaq2ZcszlwBjL1ibOyFW1BKf8Eebx0GKnptt8IxVaNp4QG0+NBiHaJdPYy2AXvdtP/VSlKuX
-	hT4ToMlVoz8J48PpcNoQbbCIdBLfp8nTslgT+zh8kYq7sm6I2S9GRgGAP/SGlKxiam5RG+YIg2q
-	HF52dObMvdImiBDJPB0WrfMjRCGOnfdwRTt6Myqxgbz0B541ikdljLXYJ/f8LyH5qh
-X-Received: by 2002:a05:620a:4392:b0:930:987d:9cd7 with SMTP id af79cd13be357-939802efaf3mr451724885a.11.1788508427518;
-        Fri, 04 Sep 2026 00:53:47 -0700 (PDT)
+        bh=Ht29EA8p9bGKHjKxK50zw4VZhRA6YkHNUT6RlgltNXY=;
+        b=C5ySWYaVy7JHPPZukIf3Mg7ZoDgmGtX1HbiOq3glT8SBBXLcqj/nvGPA1tAfo+i4mM
+         Vo9hPNOMBJ+e7qzT6bbJhNWFPUknXMnscDpGeMBWqUKxbBgkyhxHA4p/t7lBQvqoEIxI
+         fwFGSxcpAF3wwNn81BWRAcaeZ7XqWW4MRI/B5S4S8hVc3C2q4jQgvQDTA2LwuhFzqpO4
+         r1eZo/FmPSCdn79ZwaXHeH9pyOis7Rj1J8BEJmRX22V0yBR4eYa+920HC9ugY49alEpl
+         tKnqBwEJEyx7U2hhi1fF37VL1rrBQ6jBOBtdZqa7TuHlLAVUMPQTBsZghQi3goxLQVxQ
+         87gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788508428; x=1789113228;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Ht29EA8p9bGKHjKxK50zw4VZhRA6YkHNUT6RlgltNXY=;
+        b=EAmdRL+NyibrHv4Is90arVhklG5sI+VJAiZ3dStTDmDnOb8LtI3f4QnozsCp46+v0X
+         yn2NP2yTsDcgIQZgbklvSmG2mlJvM8MUKuynzf28qqs7E22Fr2qHanQWtgTf4y8oikKz
+         N/Gj3vuHsm49qP01HGDKE5lZ0Dvb3iaNT3nKetgTfvUyoYe4nq1JRE5X7gAjqL3w/SlW
+         zBAH+lWC2Imwt1D+W7aq52+RNQ5PTTzHmfyv4j4hM8QhtblfBFrC/7113oWwM8tu9fAO
+         l3FU7/iXO5jlvUcBAcb9Hy+kkngLrl5V0qg+R7ALam4m10gJtFpOQENeZRPgJ60MQ5to
+         bwqw==
+X-Gm-Message-State: AFuF++l82sZfnYaDq1BgouQs+xSnKim6Np/OausXsxd6c/zPDPjnb3S5
+	Y8bEG4rSdSdKIqfrukWnJms5qMWVbk8Rh9EXyqOomopEzyoUR5K77/dd1pnOCrZb
+X-Gm-Gg: AYBFou3hFsWMrbkwh8WLvCFhx9S2nFgoP9EOq0m2CPkB1WujuElpvq5PRb3vxmmDS4L
+	hI8aQdAPiCDeUtlsiE6N0g93mz7PMATI5/DJ7+NZxl1tmostGKVwxfkpCHcuaYimhGr3qzeQqUv
+	GZWPQs1H0Yxrr9VymqCPYMHL+SKvE0Uoxpl8jJ50zWfUdctIgHjLHRIY0kLL1DSyEcwRzDcOOad
+	awBTYuQQgsnunO8sESRnz4pA78d4WLXAXD27GQ1fSiHKtC8qoRG0hgRu4M4t4Vl7ELNjTrAZe46
+	r+/aQTTauc+CU+khNpeVwCEZoUXWVkKZHibNumMLiMon4WVeEY+VCkJBDiUTrdGinfXih7otZuO
+	FfcCXnLvqH52KA8zvtkv4I6uuCzPQnneynQlfclSqgw1d6ll+ihugaRkyTTivanfbfImCO3ThVB
+	2duumPbta2tfhnuX0mEMT5bIiLDPPpT7nSLvhhYnuRdHvGesYMGS1Eoo7qDob4ZZyJ
+X-Received: by 2002:a05:622a:4d48:b0:52f:a196:79a6 with SMTP id d75a77b69052e-53054989e92mr48780361cf.33.1788508428440;
+        Fri, 04 Sep 2026 00:53:48 -0700 (PDT)
 Received: from [127.0.0.1] ([172.210.149.50])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9397fb90d6csm156861985a.33.2026.09.04.00.53.46
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-530541436b1sm15398771cf.12.2026.09.04.00.53.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2026 00:53:47 -0700 (PDT)
-Message-Id: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
+        Fri, 04 Sep 2026 00:53:48 -0700 (PDT)
+Message-Id: <3415a4dcbf3c83f85aed3d806d897f5f4906715d.1788508426.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
+References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 04 Sep 2026 07:53:44 +0000
-Subject: [PATCH 0/2] sequencer: leave auto maintenance to the end of a rebase
+Date: Fri, 04 Sep 2026 07:53:45 +0000
+Subject: [PATCH 1/2] sequencer: run auto maintenance once a rebase is done
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,46 +78,71 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
     Patrick Steinhardt <ps@pks.im>,
     Junio C Hamano <gitster@pobox.com>,
     Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Thomas Bachem <mail@thomasbachem.com>,
     Thomas Bachem <mail@thomasbachem.com>
 
-While looking into the rerere lock race in [1], the "git commit" a rebase
-spawns for a resolved pick turned out to be about the only place a rebase
-with the merge backend runs auto maintenance, and it runs it against the
-rebase itself. Phillip asked for auto maintenance to be kept out of a rebase
-altogether [2], and for the merge backend to run it once at the end the way
-the apply backend does [3]. Patrick would rather see that discussed on its
-own [4], hence this series.
+From: Thomas Bachem <mail@thomasbachem.com>
 
-Patch 1 runs auto maintenance where the sequencer finishes a rebase, as the
-apply backend does. Patch 2 then passes maintenance.auto=false and gc.auto=0
-to the "git commit", "git merge" and exec commands a rebase spawns, so that
-a rebase runs it once, at its end. Cherry-pick and revert are left as they
-are.
+The apply backend runs "git maintenance run --auto" from
+finish_rebase() once it has applied its patches, and so does "git am"
+on its own. The merge backend reaches finish_rebase() only on the
+paths both backends share in builtin/rebase.c: an abort, a branch
+that is already up to date, and a fast-forward. A rebase that
+replays commits never runs maintenance at its end. It creates most
+of its commits in process, and only the "git commit" it spawns for a
+resolved, reworded or squashed pick, the "git merge" a "rebase -r"
+spawns for an octopus merge or with a strategy, and whatever an exec
+command runs kick maintenance off, in the middle of the rebase. Run
+it where the sequencer finishes a rebase, after the autostash is
+applied, as finish_rebase() does, so that both backends end a rebase
+the same way, and so that the next commit can keep it out of the
+commands a rebase spawns. builtin/rebase.c could run it instead once
+run_sequencer_rebase() returns, but the sequencer is where the rebase
+finishes, and the autostash and the state cleanup that surround the
+run in finish_rebase() are there as well. prepare_auto_maintenance()
+closes the object database before the spawn, so the sequencer holds
+nothing a repack would need to replace.
 
-Based on master. Independent of [1], which makes the rerere lock non-fatal:
-with both, a rebase neither spawns the gc nor dies on one that something
-else spawned.
+Assisted-by: Claude Fable 5.1
+Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+---
+ sequencer.c                | 5 +++++
+ t/t3418-rebase-continue.sh | 8 ++++++++
+ 2 files changed, 13 insertions(+)
 
-[1] <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
-
-[2] <ca3b91b6-254c-4b86-adb8-da3217e9f6e7@gmail.com>
-
-[3] <86efb07c-a0ce-49b0-b4eb-7d6b4bbaeccc@gmail.com>
-
-[4] <apkwpKTGaMwTf0Hz@pks.im>
-
-Thomas Bachem (2):
-  sequencer: run auto maintenance once a rebase is done
-  sequencer: keep auto maintenance out of the commands a rebase spawns
-
- sequencer.c                | 32 ++++++++++++++++++++++++++++++++
- t/t3418-rebase-continue.sh | 26 ++++++++++++++++++++++++++
- 2 files changed, 58 insertions(+)
-
-
-base-commit: 3cb9185f65410273787f74333cc027d2ea5daada
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2217%2Fthomasbachem%2Frebase-auto-maintenance-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2217/thomasbachem/rebase-auto-maintenance-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2217
+diff --git a/sequencer.c b/sequencer.c
+index 65afd100d9..f58ad254be 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5297,6 +5297,11 @@ cleanup_head_ref:
+ 			run_hooks_opt(r, "post-rewrite", &hook_opt);
+ 		}
+ 		apply_autostash(rebase_path_autostash());
++		/*
++		 * We ignore errors in 'git maintenance run --auto', since the
++		 * user should see them.
++		 */
++		run_auto_maintenance(r, opts->quiet);
+ 
+ 		if (!opts->quiet) {
+ 			if (!opts->verbose)
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index cb5c3a1cb5..2c34cf8a01 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -395,4 +395,12 @@ test_orig_head () {
+ test_orig_head --apply
+ test_orig_head --merge
+ 
++test_expect_success 'rebase runs auto maintenance at its end' '
++	git checkout -b one-exec main^ &&
++	test_commit F4 &&
++	test_must_fail git rebase -x false main &&
++	GIT_TRACE2_EVENT="$(pwd)/finish.txt" git rebase --continue &&
++	test_subcommand_flex git maintenance run --auto <finish.txt
++'
++
+ test_done
 -- 
 gitgitgadget
+
