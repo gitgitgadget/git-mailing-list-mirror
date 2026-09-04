@@ -1,334 +1,155 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE4D472F7A
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 10:36:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788518204; cv=none; b=FcAkH4YFeg7kXqewJXuQxuEP1Wf+HvU92BVO4D2oDGUIlXS4hebQS6GrCpVXLs6BEhHWcPgXADgtsUv/z58LUzRf+MmvMrVnWz1A+yMOd1sDzPWds7yhtgxQ8eqYCAYRar7qcwFX70kXPI78tN8lNMws475eC20d80GBQhuokOA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788518204; c=relaxed/simple;
-	bh=YcY/UC5eQ5/qCx1r1lMVyZO42h9YSQTmBydqevDoJGo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eRtol9o7Pv0RPskg5azf3ZTih8lP69ekI6wbb2C3GKx4XOD74PB/0axy+iVujLo8hZVfzfJs5sg3IOt7qGF71rLCNXaEhYcFVX07PbKxdeQoMu/5ez4TeLLuBSw2Jp5gbZo3bZBi7ImTJa+uVmDnpwQwTtPOtoFQOXtVXLMZJq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VoiMjqVm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Iny6rUll; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4359A3BFAE2
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 10:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788519134; cv=pass; b=lIwFe0AfBrFHtPY2FZvQSPWA3jaG6PjIKtS11lgZEmIUhkFF2yAMRqw48KFUldPQDseQ9LayhopADp3T22NcokcoXRSA1N5eRPSp17fgCZKFi12ko8yHta5E3FhndZaTs+x8eOLxE9P30y83pu0Bq/xoAIGvMm7W7/8fgj0BQcw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788519134; c=relaxed/simple;
+	bh=o7AbM5r05d6zGGcQ9wmdw5YzprF4n9K0gSa0Tyw5EIo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RGajDZqQ9uhJTEKx2rzpA0nmXi6hWEoGCYJkuEvN84zqJU2TgSnStumT3buCs7U3xq+iA1OJohUNB9wF5wRrGRfSADKTbYiVRonb5Cd99LijsOYqqj/rG+DUtmX4xSWjU5ZyeVzlFQmncSzItg7bTFFR/ReMdEpUic6nuqQFI7I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FJ4LrPXb; arc=pass smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VoiMjqVm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Iny6rUll"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D412B7A0121;
-	Fri,  4 Sep 2026 06:36:41 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 04 Sep 2026 06:36:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788518201;
-	 x=1788604601; bh=GsIBVOeUsFnZYpOM+sMFygcIvr5eWwJGWzRfCL23tJw=; b=
-	VoiMjqVmh+1Hg05OxvBfhQPOZaxCfXiLpxA23+BJrayEoHpKe1vNypx6QLEejOAj
-	g3VJXHXAMAQISigi5Ycdp5nmZVgNnPb1YMjFlYmfP7L09Hm+BPAfaTG6vQvwpogB
-	2cqgHEIVeeh3NHDLF2cLvForkEuBfBnrpbsHw4a1iZuLWQoXerPYBVcpMT/teos/
-	7QyTto/rXyDNcbezZe4pOdJ6xot8dSXS5GIGlW6DetndYjis7IcrbyFYgPj0MLEm
-	yMCzIzHDBvDavtNekj3/UjKfF6JW217vVWFQ2KWlD4jURHKo/B6hkp1s1fZUwb/j
-	7uZbeyGlF1RZX54GqILnHQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788518201; x=
-	1788604601; bh=GsIBVOeUsFnZYpOM+sMFygcIvr5eWwJGWzRfCL23tJw=; b=I
-	ny6rUll5LErOJ4TCCaUmCavozlsaqnaZgsHP+jnwkK09qoaPzbLiP/sh68EzoptW
-	R8jHu4iz+5W6aST6T6+nqnCV+lHoVpGuBJ7pX4Y/afpA8B7dFX1exAAKSiZ+K3Sc
-	bMFdQTFGA4DYZzqqKTpaZwEewYE2AAD5n8WQRdx4FbuXsvowCz81zEYg6i5dfKts
-	oNITuQEBzSKPw3+7MOTsXH+ZhKr0B1borewwuxOeooK82hpuNGFxdMfJJCU+X9jr
-	+sceWOQjEY3hPb8w7uoDtRONBwIvbF458iwPqWTcAB1QEw6uw2prSqg8R/pb9cp6
-	dtYe+5VWabFjNniAFg6JQ==
-X-ME-Sender: <xms:OZ-aatfKIGlk-4CXXHx2-d7F5JdBkC-nZbVVy4_ewdfId4qdSd6FrA>
-    <xme:OZ-aahMn-4HHH8icMQbpwxMINmXUf0YflvWb1_8lwjKN7aXBSoLjUFxPKLjYZn2sS
-    yWxhiH2eHY5o74mDZEJbQPg8Yt9-IFmc7U8hHieXfWra5nFhk3golo>
-X-ME-Received: <xmr:OZ-aakKr17Djw0NJufGEvDhLbkkWgn6RtLvGJW7sEo4ovXEjZ2h9fwC6T6Y6AOJSDR7b9Q>
-X-ME-Proxy-Cause: dmFkZTElBvVE6E5RNyDOXHnK2tbZa/mM28PH2HbCaSAgpB78c1GLA7C/P1/2DKwXqgqWjF
-    iP69FDnnoqzNzOTaOXEfIMrk+AkOMCCReVH7eSyIA7NG3ldKX6iFnGFfHTvY9eSyaIi61x
-    Cn0jvycE2KOFF7DS7MhENVb3qqRk6FL5x0TGVhmg1yqL439kJwLMwvwM5QLyiRdVIoJBEs
-    Hj6h+4Cz+Aalivrc2tTVfRTn8PQkYLgXBi9t5TEiOA6bN0QEEGE2g6l/okGEl4OfXNujSh
-    Z+GIqKPnvkfvfg0HdKj1CmAkAnuQcFltCQeINqobqkRKId/ntUQ0eOxU6X+Wt0WwvuP5i+
-    DDzZhtMqUvWi2E9Gx39vy3lvWSYkAhBdj6vW7otEOSnpP53Tjpg/ey0iJlvt402bOsPnJ2
-    Z4/IoSRzxONO536ARIbHVeZ+7VWf9Fne9EKdp7DJccJeKCbWbX7AhqcrwhalbRXh2/Uyu/
-    pdzpcrT/87T8PYyslQuD/82+VPFRk3gmKzVeH4TC9V5agkxr1cXMygbBSNBs5gVtqwjBtl
-    pXQwPBiRIAs5Dl/CqfDXbHAPT4+Kr9Q3hqHclEh7uhYYoOJog4ZooVVt+gxq5R3SB71ccP
-    1+mxCD3GQ1WCrH9SVnsOJQOvUv4Pq+6U3UdFiS4HYoD/8wXyqQDVr4+D2G1g
-X-ME-Proxy: <xmx:OZ-aaiGAY1QR9NrmDzHeoaAVWMCmW0-4ZZ3c2TbYgit0QyEzn2EZoA>
-    <xmx:OZ-aasSxrfnOlqrtSX83r22TzSjpfQLXb6xSJDJDtXQ6K8i3bvpzJA>
-    <xmx:OZ-aauGz8tIqCnRF1IfrVa7Rc4mPMhSyvvHE7EuRILfvcxx_WXch9w>
-    <xmx:OZ-aao9v86tcJSf8eA95agFo171_NvUuPS7abjZxvTwLm2eJuf83Xg>
-    <xmx:OZ-aakNbNk6QSCks5XNsw61FFlKhvo-KlpAczKMrZOXfyPift0Id2frO>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Sep 2026 06:36:41 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f18632fe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Sep 2026 10:36:40 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 04 Sep 2026 12:36:12 +0200
-Subject: [PATCH 11/11] setup: allow "git init --ref-storage=" to specify a
- payload
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FJ4LrPXb"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cc1c9879395so752333a12.1
+        for <git@vger.kernel.org>; Fri, 04 Sep 2026 03:52:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788519132; cv=none;
+        d=google.com; s=arc-20260327;
+        b=jnv1MPOh7+85HYBmITjAjAzvN56YeEzw8gIXk86yWAIN+RFIAwiW4vonqHNdCjQbhU
+         +qS7mE9H8fi6OAIuc4FojPaQ2fP42YECggYyemik655ablp+5xAhLRSueSyEs67EVSaN
+         Wrbk0ki9qSMHJgoHRrdY6OM2g7Bfz4ZdIl9J/WqdCmFHqD8ZjVJcv6RbwNNI2YQRK97W
+         ZTKAMOedVqCSQUtOY4Vn8R+3v+G8doBS84ElI6Mw1p7FKohOR6a3CZw7Lgj2plrVjAbd
+         IbVsQTMzbGX8RRJWRy8LIp8d7/MRPfTi7mbnCvAhxtqcUXNViPZyQ1X9rFAX14LBuv/K
+         5b/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=9rjyix+IVuCAxkVw3d8mzfwtf1WpY2d1Te8aiDzECX4=;
+        fh=Q6DVfnlQTNM7ojy2bWQ8BjMeFtwIaL7bO4hgxDyn09g=;
+        b=pTsu1FVaqmYP4+dW3VMtjnXc0dhMYtXBV6QalAWJ+dt+Xqn1IfdHYQwyNrhqCbJ14/
+         BndGOzigtcH6xZPf4MBpGBhPdvXoAeJgCxLdJDHoGSM12F3ftLHl1lGVIYK7xLThvaI/
+         TLl2bew13eJazErL2zp3dLR45IPU75WAKx68c6BFXW0INI29qBWHaZUM5zMlTYa3PiPk
+         E6GZX8QyWXJosH08UFGRm7Orc12abQ+GGZOxJHFNyEWo1hHDOilUMBpfFFvKT6Eg8dFL
+         v4HoFRgKV2748/jQVxYw6/BDpxfv41glOa3z1MJIY0N0BDHhK4lhZ2fIQyQSPtD8uWyp
+         dwaQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788519132; x=1789123932; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9rjyix+IVuCAxkVw3d8mzfwtf1WpY2d1Te8aiDzECX4=;
+        b=FJ4LrPXbYiQwscrCysDRAzTtTUZd+/c3vgvW0IfAaOrmuRiAiPs2I8oHSVlMj7T5Lg
+         3wJkw+mIeLsh4EZrQtmpchQYIMNydkYiRDRNBHuUlDL48DaG8yT1Oz3jaHXWYtq5+Xr1
+         iz6teYH1VWCOZUJWJRR5uAvitGOiArpRv9ch2UQanbdc2BXDMTE1A8jKFVAnpiyOM75L
+         wq1Y29Tyyml2o7GUdCnatR8JOiO1MRzDxNo8E9YCe9jrLIa5wd7oCsAyBQtx8MT38Nst
+         m2oxHnDbOmPWth7WKdYFvVVnK4wT4BwkReI5IpSN1r5ZdCCK7tNvX6hi1nEejAFzjdna
+         vhpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788519132; x=1789123932;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=9rjyix+IVuCAxkVw3d8mzfwtf1WpY2d1Te8aiDzECX4=;
+        b=oyKmbUQ91ngq2FOdKDEw/DoekTxGxsAOmZJHwXimA3nDeRJCtq22aK1BJ92Ylobfy6
+         UiuJOuBpTl53ZrIkJRr842eMVVTXrUeYaL7hvRICAYUe9h3AlgNmvyoHSbUWzbMgJu1S
+         q+jzk2oPnRkfZ+Rv7V8fZT4h9+nHAaQVaiQC+0Hs62lo0FmTzXQ/zgjrqpdLtoq8Nxyx
+         m5iTbzs5eMe0MbiZV/DwbWfJaMTgnxzZfwoSFMSy9BFQ3RvTm2LOR4CFOz8jzlVQLid7
+         Jlwp3ROaX0t0M2r76Wyp6+oEMBEd3Qqjtc2JVsmIlxasO+EMZs8+lqX5HsnM9qvQf1cb
+         9sEw==
+X-Gm-Message-State: AFuF++mM9xTBDhqkbS0UAnB1zd0Aco6RRKBYvFCEPvZXBR/HVr4Qf4Md
+	B6dIg8Drt79lREBZL/ghQVUQMzwbdXxOZse7IVYUNsrPfzq/d4nTY2ZrNBPyNHt8F6WzPhaLOek
+	g0YEgbZyWko2lfT+t6HLEmPK1Xzj/ypo=
+X-Gm-Gg: AYBFou1L9U8UEbxXw47F6zAurHUgtfTnZ9Qr1rt2V0bh/WIqRYWswvkPqpRSeWbQpHq
+	IQRj+wmauGOTefhUpweLQfUi9XieQfWPuJbrCQPvB+1y4Hlou8AwXBU4ubTAxuFLd9/AOVIE50L
+	D1L6ZaJju0RyRq3U1HWqcO/wAYBPLuwMhQLZ1/f8HOuI73IWiRlkHcdlXf+1SFVFrILRoAhZYCr
+	jUPayPqsVJ3ufU50TUnktK00VwkuWmOSzV/0ahotOLlnEfoJ9nNeV6hZikXAXjHsJ4r/TqAuz+I
+	3FU9Mm2l1JrPL8UM+QZoj3BV364JP7UGNMc+dclZdl9gBabvRfIqwA+5XENnhL4JvualeXjlK1U
+	PvtgYfmW9hDQCObUE7auFWtakCueO9Kb9
+X-Received: by 2002:a05:6a00:2d91:b0:846:8b22:4933 with SMTP id
+ d2e1a72fcca58-8616bd5c57amr6992595b3a.17.1788519132169; Fri, 04 Sep 2026
+ 03:52:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260904-b4-pks-unify-ref-storage-format-v1-11-08144e5004ff@pks.im>
-References: <20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im>
-In-Reply-To: <20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15.2
+References: <20260810174047.6524-1-r.siddharth.shrimali@gmail.com>
+ <20260813200830.84348-1-r.siddharth.shrimali@gmail.com> <20260813200830.84348-7-r.siddharth.shrimali@gmail.com>
+ <s0vqzjavw8p.fsf@gmail.com>
+In-Reply-To: <s0vqzjavw8p.fsf@gmail.com>
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Date: Fri, 4 Sep 2026 16:21:33 +0530
+X-Gm-Features: AcwNN1XOcW9dZjCQMoIAF1B263-tCGUix82UUD_Pz6iUen4rVZmhxk51FM0jxI0
+Message-ID: <CAGWgyh9B=re06aofii9VFB1xOwEeTtxYE=7T14m9WFAx1ORpMg@mail.gmail.com>
+Subject: Re: [GSoC PATCH v5 6/6] builtin/repack: add guards for --drop-filtered
+To: Samuel Bronson <naesten@gmail.com>, Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com, 
+	siddharthasthana31@gmail.com, ttaylorr@openai.com, ps@pks.im, 
+	johannes.schindelin@gmx.de, l.s.r@web.de
+Content-Type: text/plain; charset="UTF-8"
 
-Reference storage backends can be configured with a payload via the
-"extensions.refStorage" config key and the "GIT_REF_STORAGE" environment
-variable, both of which accept a URI in the format
-"<format>://<payload>". The payload may contain backend-specific
-information, for example an alternate refs directory or which database
-references should be stored in.
+Hi Samuel,
+Thanks for the review and your RFC!
 
-The `--ref-storage=` option of git-init(1) and git-clone(1) does not
-know about payloads though: its value is parsed as a plain format name,
-so backends that require a payload cannot be conveniently set up at
-initialization time via the command line.
+I have a few suggestions:
 
-Teach the option to accept the same URI syntax. Also, document the
-optional payloads for both the "files" and "reftable" backends.
+On Fri, 4 Sept 2026 at 03:24, Samuel Bronson <naesten@gmail.com> wrote:
+> > +                     for (i = 0; i < istate->cache_nr; i++) {
+> > +                             const struct cache_entry *ce = istate->cache[i];
+> > +
+> > +                             if (oidset_contains(&drop_oids, &ce->oid))
+> > +                                     die(_("cannot drop '%s' (%s): it is referenced by the current index"),
+> > +                                             ce->name, oid_to_hex(&ce->oid));
+>
+> The bad news: dying at this time is *not* convenient, especially after
+> we've finished that *entire* enumerate_promisor_blobs(), (which is kind
+> of slow for a step with no progress output, btw).
+>
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-init.adoc           |  5 ++++-
- Documentation/ref-storage-format.adoc |  8 ++++++--
- builtin/clone.c                       |  4 ++--
- builtin/init-db.c                     |  9 +--------
- setup.c                               | 14 +++++++++-----
- setup.h                               |  2 +-
- t/t0001-init.sh                       |  2 +-
- t/t1423-ref-backend.sh                | 30 ++++++++++++++++++++++++++++++
- 8 files changed, 54 insertions(+), 20 deletions(-)
+Thats actually a very good point :)
+I agree with this: aborting the whole operation because a single blob
+is referenced by the index is a poor trade-off, since it happens only
+after the full enumerate_promisor_blobs() walk has already
+run.
 
-diff --git a/Documentation/git-init.adoc b/Documentation/git-init.adoc
-index 54cff89dfe..182fc7c203 100644
---- a/Documentation/git-init.adoc
-+++ b/Documentation/git-init.adoc
-@@ -58,7 +58,10 @@ values are `sha1` and (if enabled) `sha256`.  `sha1` is the default.
- include::object-format-disclaimer.adoc[]
- 
- `--ref-storage=<format>`::
--Specify the given ref storage _<format>_ for the repository. The valid values are:
-+Specify the given ref storage _<format>_ for the repository. Backends that
-+require additional configuration accept a payload in the form
-+`<format>://<payload>`, for example a connection string identifying the
-+database that shall store the references. The valid values are:
- +
- include::ref-storage-format.adoc[]
- 
-diff --git a/Documentation/ref-storage-format.adoc b/Documentation/ref-storage-format.adoc
-index c5e29ec831..21d62557b7 100644
---- a/Documentation/ref-storage-format.adoc
-+++ b/Documentation/ref-storage-format.adoc
-@@ -1,8 +1,12 @@
--`files`;; for loose files with packed-refs.
-+`files[://<path>]`;; for loose files with packed-refs. The optional payload can
-+be specified to change the root directory where references are created. A
-+relative path will be resolved relative to the repository's common directory.
- ifndef::with-breaking-changes[]
- 	This is the default.
- endif::with-breaking-changes[]
--`reftable`;; for the reftable format.
-+`reftable[://<path>]`;; for the reftable format. The optional payload can
-+be specified to change the root directory where references are created. A
-+relative path will be resolved relative to the repository's common directory.
- ifdef::with-breaking-changes[]
- 	This is the default.
- endif::with-breaking-changes[]
-diff --git a/builtin/clone.c b/builtin/clone.c
-index c4f9dc7472..ce54088c51 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1030,7 +1030,7 @@ int cmd_clone(int argc,
- 		option_single_branch = deepen ? 1 : 0;
- 
- 	if (ref_storage) {
--		ref_storage_format = ref_storage_format_by_name(ref_storage);
-+		ref_storage_format = ref_storage_format_by_uri(ref_storage, NULL);
- 		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
- 			die(_("unknown ref storage format '%s'"), ref_storage);
- 	}
-@@ -1188,7 +1188,7 @@ int cmd_clone(int argc,
- 	 * their on-disk data structures.
- 	 */
- 	init_db(the_repository, git_dir, real_git_dir, work_tree, option_template,
--		GIT_HASH_UNKNOWN, ref_storage_format, NULL,
-+		GIT_HASH_UNKNOWN, ref_storage, NULL,
- 		do_not_override_repo_unix_permissions,
- 		INIT_DB_QUIET | INIT_DB_SKIP_REFDB);
- 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 763ee47d21..e30da2936a 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -86,7 +86,6 @@ int cmd_init_db(int argc,
- 	const char *ref_storage = NULL;
- 	const char *initial_branch = NULL;
- 	int hash_algo = GIT_HASH_UNKNOWN;
--	enum ref_storage_format ref_storage_format = REF_STORAGE_FORMAT_UNKNOWN;
- 	int init_shared_repository = -1;
- 	const struct option init_db_options[] = {
- 		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
-@@ -175,12 +174,6 @@ int cmd_init_db(int argc,
- 			die(_("unknown hash algorithm '%s'"), object_format);
- 	}
- 
--	if (ref_storage) {
--		ref_storage_format = ref_storage_format_by_name(ref_storage);
--		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
--			die(_("unknown ref storage format '%s'"), ref_storage);
--	}
--
- 	if (init_shared_repository != -1)
- 		repo_settings_set_shared_repository(the_repository, init_shared_repository);
- 
-@@ -251,7 +244,7 @@ int cmd_init_db(int argc,
- 
- 	flags |= INIT_DB_EXIST_OK;
- 	ret = init_db(the_repository, git_dir, real_git_dir, work_tree,
--		      template_dir, hash_algo, ref_storage_format, initial_branch,
-+		      template_dir, hash_algo, ref_storage, initial_branch,
- 		      init_shared_repository, flags);
- 
- 	free(template_dir_to_free);
-diff --git a/setup.c b/setup.c
-index b81d4f134a..20a2fbb292 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2727,7 +2727,7 @@ static int read_default_format_config(const char *key, const char *value,
- }
- 
- static void repository_format_configure(struct repository_format *repo_fmt,
--					int hash, enum ref_storage_format ref_storage_format)
-+					int hash, const char *ref_storage_uri)
- {
- 	struct default_format_config cfg = {
- 		.hash = GIT_HASH_UNKNOWN,
-@@ -2738,6 +2738,7 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 		.ignore_repo = 1,
- 		.ignore_worktree = 1,
- 	};
-+	enum ref_storage_format ref_storage_format;
- 	char *ref_storage_payload = NULL;
- 	const char *env;
- 
-@@ -2788,8 +2789,11 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 	 *   6. Otherwise, we fall back to the default ref storage format
- 	 *      compiled into Git.
- 	 */
--	if (ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN) {
--		/* nothing to do */
-+	if (ref_storage_uri) {
-+		ref_storage_format = ref_storage_format_by_uri(ref_storage_uri, &ref_storage_payload);
-+		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
-+			die(_("unknown reference storage format specified via command line: '%s'"),
-+			    ref_storage_uri);
- 	} else if (((env = getenv(GIT_REF_STORAGE_ENVIRONMENT)) ||
- 		    (env = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT)))) {
- 		ref_storage_format = ref_storage_format_by_uri(env, &ref_storage_payload);
-@@ -2834,7 +2838,7 @@ int init_db(struct repository *repo,
- 	    const char *real_git_dir,
- 	    const char *worktree,
- 	    const char *template_dir, int hash,
--	    enum ref_storage_format ref_storage_format,
-+	    const char *ref_storage_uri,
- 	    const char *initial_branch,
- 	    int init_shared_repository, unsigned int flags)
- {
-@@ -2871,7 +2875,7 @@ int init_db(struct repository *repo,
- 	 * is an attempt to reinitialize new repository with an old tool.
- 	 */
- 	read_and_verify_repository_format(&repo_fmt, repo_get_git_dir(repo), NULL);
--	repository_format_configure(&repo_fmt, hash, ref_storage_format);
-+	repository_format_configure(&repo_fmt, hash, ref_storage_uri);
- 	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
- 		die("%s", err.buf);
- 
-diff --git a/setup.h b/setup.h
-index 763fd384e8..79e0640743 100644
---- a/setup.h
-+++ b/setup.h
-@@ -265,7 +265,7 @@ int init_db(struct repository *repo,
- 	    const char *real_git_dir,
- 	    const char *worktree,
- 	    const char *template_dir, int hash_algo,
--	    enum ref_storage_format ref_storage_format,
-+	    const char *ref_storage_uri,
- 	    const char *initial_branch, int init_shared_repository,
- 	    unsigned int flags);
- void initialize_repository_version(struct repository *repo,
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index b481d763ff..7cdebc8ff3 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -833,7 +833,7 @@ done
- test_expect_success 'init with --ref-storage=garbage' '
- 	test_when_finished "rm -rf refformat" &&
- 	cat >expect <<-EOF &&
--	fatal: unknown ref storage format ${SQ}garbage${SQ}
-+	fatal: unknown reference storage format specified via command line: ${SQ}garbage${SQ}
- 	EOF
- 	test_must_fail git init --ref-storage=garbage refformat 2>err &&
- 	test_cmp expect err
-diff --git a/t/t1423-ref-backend.sh b/t/t1423-ref-backend.sh
-index e8285548ca..dc43e1c438 100755
---- a/t/t1423-ref-backend.sh
-+++ b/t/t1423-ref-backend.sh
-@@ -254,6 +254,36 @@ test_expect_success 'initializing repository with alt ref directory' '
- 	)
- '
- 
-+test_expect_success 'initializing repository with --ref-storage and payload' '
-+	test_when_finished "rm -rf repo refdir" &&
-+	mkdir refdir &&
-+	BACKEND="$(test_detect_ref_format)://$(pwd)/refdir" &&
-+	git init --ref-storage="$BACKEND" repo &&
-+	verify_files_exist repo/.git refdir &&
-+
-+	git -C repo config get extensions.refstorage >actual &&
-+	echo $BACKEND >expect &&
-+	test_cmp expect actual &&
-+
-+	test_commit -C repo 1 &&
-+	git -C repo refs list >out &&
-+	test_grep "refs/tags/1" out &&
-+
-+	# Reinitializing the repository is fine when not specifying any format.
-+	git -C repo init &&
-+	# Reinitializing with the same backend is fine, too.
-+	git -C repo init --ref-storage="$BACKEND" &&
-+	# Reinitializing without a payload should fail.
-+	test_must_fail git -C repo init --ref-storage="$(test_detect_ref_format)" 2>err &&
-+	test_grep "attempt to reinitialize repository with different reference storage payload" err &&
-+	# Reinitializing with a different payload should fail, too.
-+	test_must_fail git -C repo init --ref-storage="$(test_detect_ref_format)://$(pwd)/other" 2>err &&
-+	test_grep "attempt to reinitialize repository with different reference storage payload" err &&
-+
-+	git -C repo config get extensions.refstorage >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'cloning repository with alt ref directory' '
- 	test_when_finished "rm -rf source repo refdir" &&
- 	mkdir refdir &&
+> While I do want to keep the index blobs, I do *not* want to cancel the
+> whole operation over them.
 
--- 
-2.55.0.1007.g17ff1f9808.dirty
+one caveat: oidset_remove() mutates drop_oids in place, and the
+--dry-run printer iterates drop_oids afterwards. So with this change,
+--dry-run would stop listing the index-referenced blobs, when it should
+still report them as candidates it would skip. Instead, we can collect the index
+OIDs into a separate 'skip-set' and have both the dry-run output and the
+real drop consult that, rather than removing from drop_oids directly.
 
+As a follow-up note, the planned drop-log work will need to account
+for this: a blob skipped here was never dropped, so it must not be
+recorded there.
+
+> The following seems much more convenient:
+>
+> -- >8 --
+> Subject: [RFC] builtin/repack: just don't --drop-filtered index blobs
+>
+> Instead of dying when we would drop a blob referenced by the index, just
+> ... don't drop it. (Retain the explanatory message as a warning.)
+>
+> This allows `git repack -a --filter=blob:limit=0 --drop-filtered` to
+> work in non-bare repositories that have non-trivial files around.
+>
+> Not done:
+>
+>   - Fixing the tests to match
+>
+>   - Allowing `--filter=blob:none`
+
+Thanks,
+Siddharth Shrimali
