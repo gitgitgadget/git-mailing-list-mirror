@@ -1,153 +1,158 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17659503BFC
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 16:43:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788540196; cv=pass; b=axBlmv86HmdLLgmKfbGuwoLb4RBlnbCcze9KTywrnFc/69CQK/e+locZOIz1vvBBsZY0jGo+p+W80AcNcaUOtXIAntzvYQnd1n2O61T89uv3sDLpdFhvpGRcAdKnBPI1ypS/sH2rjRg/cUSk5N+KMw2akw4BGBpsNAsdNDjGg/Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788540196; c=relaxed/simple;
-	bh=WPtLQlKeWl/fGoxExxbtfPkiNqxA0JGP8P3BuwLFie8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ppb+LoePGwbuqnlQWtQt+TLDZvgMPOdB8ofj8KG6isNW6uuQXasyjUuCh7pIDk8CPFmdMaXGJ6JHIv64YJMni2GeIWPLa9W3X3TWexDj0+mQFWNMqoXie2GMMKFvf+XNn3GC+3H3piWcdSwQ1AUysXL2fG2H40N3nJpTuWGRKK4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BJhuks1b; arc=pass smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE3038F25C
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 16:43:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788540215; cv=none; b=NHZ3RnFCr9CuscPRipfwZegHgTKFcv34+hC49QBK2BGYKzbeOssFxm45jW/LdpIG9hiqzWtJcVdbBADQ/1XPuQPDQyWY1zRWsS7PVCn4VY2hqaNg2YEBBf5j9aVoSrLhioZAE5HYELktr69NAXTiDbW07N+BiWTL3aird0IvK3A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788540215; c=relaxed/simple;
+	bh=Zt/DJS93VkuGThRepsr2Stnrw+WgGMXsafchl3JLicU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kv+TJDk8Ak7mVxCuywRW3Vdjl0e7BUce8La59KH84DQ1WE+ab+j21WvoiGbDnPbkDclK1gH0kT52XZtRfUNZlEbqcWMau/2vIlIEMkQZUkwsoLKQw5FcivPwXHumigNfq/C5clHDJCzp+79u2YHEBeoJHLkbrRK8qhyjDZO4G+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c/8X/Z68; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p9csB7UK; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJhuks1b"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6a60f0dbeccso1789366a12.0
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 09:43:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788540193; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MfTHKZiE6Hree8QuTd3r2qm064nd7ZhmoM4llZWNhY7+XB2KZsi0KWkD2zQI2o5z1A
-         yyQoeTCI2zwCFo9UdKRFNKZ6jiawO/IZQ6gKi8XucMbQbJA+ytkC6TwWyKnho0w9BUQe
-         V1eg/ZW2eKv5oON6XqEd7yWX8PHtylFgjlZ5FAW4RqU+LnehBDRGsj1Z5mfbYZsDXPuF
-         yii/sUJgJfXoHN/AbAtdCBOWw0OsWlIhc3mItIIeItlKznCao9LCS+RiUI2Oh/VvpX0e
-         kYJ7GCzv6cyR6OcxTgX9jsQ8ixbOSFYdmaMppu0tzzE9MvACED1DHQ5mKnwcBxPGAvtc
-         giaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BLTWQJD59XId3eNlxaFTAXE9aK0w9X4gusui3FV1Oq0=;
-        fh=GrbUA6j5pWrFgcQspFlVdso3UWthctSYZtYMvxCXq2E=;
-        b=QZr6mYI0XPG3z8wwV5fHOUvAiJj5GY91JZIt+akm3z1Se+brTqrmC5+EVzzjJTcg8T
-         Zz+Iw/PU9BMVRKdsDfhHr7hU21EeRq7r0cNmHtsCOrhr2SzpO7zhr1Oo3iL2CK8AJayN
-         ZVD2zToUnBe1YQRuR8GjDyiFP+p4tXFlIRz3BUivF0eTBEc8XcHh18em0K388qNFom8B
-         q6Kmdg+D7KVurESPdJ69V4XcsCFfR9qEPPHyx05lzp70T489UwVnzgegGh2GU86Vzr1Y
-         lAPLunrGVAw6zPmef0+j+yZQTU+hZst6J1udlK8kTS7qoj6QvoP4tNDQrqCWchwN+Yc7
-         lN5w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788540193; x=1789144993; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=BLTWQJD59XId3eNlxaFTAXE9aK0w9X4gusui3FV1Oq0=;
-        b=BJhuks1b5VBeQSb8HGeGJARvcqUZcaQyOECFYmxGdQW6zfDBNGx7wrDpC7Y2pcazPg
-         p8eoUVTYck9BNePusCZnueEMm7YwgL+7tBHsUJWh3167089uG4/gbkCDYu4A46WnMQFu
-         Z27LLj8hvPCFjnrgogO4DOlJP9jAGCL+Vj6vkDKBrVqUsolKLY9yI56WrufjaeAv7c9Q
-         P4v6ZzZx7Ry1/fAU2kKaK5LmZdr92p7y4t2fnjK1SHtqmS57SFVmvVfyon1GPcdyfOFt
-         IR6x1V3B4lexVRj2zeE1Kk17nlzdi2LniLVRkz4+cXAhUnbnojf2A1eugEIcxSMuAPAZ
-         V/OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788540193; x=1789144993;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BLTWQJD59XId3eNlxaFTAXE9aK0w9X4gusui3FV1Oq0=;
-        b=lQTBFQgYSYlOHyWY31b8U0lBNA69dOiycFYvZontSsV8A8HssOQMXvvX1sR+HVh3nz
-         UTB8d4Plboy5Qq6g5hdZewDhM0psYFtzAZf4qqerQPFQVHsqSlfkbC/EtaulnMoZ5H9j
-         xM1COy52WW0mEIkLsTSea6+I7FPO+IZQMiYV0F0ggHQhQpEtuLaMUXsWAmmZOa/oHRsn
-         ZMnd5qK5RT7E0bUUTd4lmjAg3H22XRK9Dnl2eFpKw37gAPDM55/DVTNZ+id1oJC7pgKK
-         JG6ZkRP9wQzzSRSP6EaVozIvZF7LZsmOXRGlyZ74X4HfAXpsWrONFofmtsJYwr/BFZGb
-         k1hw==
-X-Forwarded-Encrypted: i=1; AKwUvBzG28Q3G1S8e1iGTfGkuZg0VgWMkrBTwZElyBtWh5+jDE/MLEPlon7EEBJEhqcdu3AVp2E=@vger.kernel.org
-X-Gm-Message-State: AFuF++kTKvXyvWa4FwgRQI/XOO5L17Pqi3mZKohhiF0VoJqVXSh9YfRE
-	ZKpkqGfmoXjGYhspHwMvUOnYbW+EO8dbnhKUJbWab05OEGlF8b6X6j5gq29VDjnVy4OpuD8pNHq
-	yuyjbRzWA4RmzSX/MoW+PWtqyqkSbq9w=
-X-Gm-Gg: AYBFou3wfEKSM6YoHpJ2NCCpv+ogwv7T7ZR6x4Tuiis5GzJWGXTlNQHvd6FYOXXUvIs
-	7CPjW1RWuK1M7QvFDWXGErjer1rogTPWmXvtU+ZTs7xRtTHz6PIT+SgcU9rk5BmGpE1UEWjlW/l
-	2wIWr1OL6Cvd82Ux7RlFefgGz5U1CLl3jL2ljgfejVSdAJQdtrjOOPdQqVb8L6mRxlBOvOi4hiR
-	jL1FKPzam221avZ1fsh/l2KmOg5ceMSkulXRasaHQAJm2ObwxP8JAEmVizZY+NmBzhdZZpMMUxA
-	4I39H6IR1Bp7MbHmR0Lc17XAgJhcwt8mTuh/0dBN
-X-Received: by 2002:a05:6402:3220:b0:6a7:ea54:38a with SMTP id
- 4fb4d7f45d1cf-6a7ea541ee8mr2171614a12.27.1788540193029; Fri, 04 Sep 2026
- 09:43:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c/8X/Z68";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p9csB7UK"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CFE691400108;
+	Fri,  4 Sep 2026 12:43:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 04 Sep 2026 12:43:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1788540212; x=1788626612; bh=lFev4N/dAT
+	3vGE7fil2VDCVggzlHtXWxaPaVQdDc5yY=; b=c/8X/Z68vAxV0m22m4bO/ytXM5
+	GkRDFX5Md1rhjZsnK8rid97+ydx0OmYcLHldY25pdoTAbD4aLPNu22+VpSLn87Lb
+	Mx9TcxauHBn9ae3neq9KDyQteCijN3fVAOqH1lrsQi0otF0UI36T8OjGSEPJn79j
+	uuTJfUmiy0VhQ93lWstc3ScvTmPErfe46cIdHXEDmCyoRYjijnpHbzXLCpcRQmQP
+	4VnyNXhX8P0tVxpt+df+u01eT4jnmmJSTCHN05BqX3gq/HTBdqVRuq2s0fKm32Qp
+	Xyjn/F8bGXec3/LxQyyXqY4PPj81Zusm/cYcGRdAIYDMN1t6AEuqttfE05eg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788540212; x=1788626612; bh=lFev4N/dAT3vGE7fil2VDCVggzlHtXWxaPa
+	VQdDc5yY=; b=p9csB7UKUafp2ZBJT859kZnNzVWDMJOs1BC+AcsMIV6aO0edQCv
+	eZDeDJ1gddKtO5NLD/N/A2HaIhrJzTNKLdc5uVQGVbHigXSXjZmPJcAFiVSaAI0S
+	RlaFkCYsJZJipIICOJ86hNQeS0uCousfvZDhmilV2iNA+B6+HfOnce6dRQ/C15Gu
+	R9MT9wfNKNXCI/iGOKDCS6Z0HDNbP8ONYUJ8TsUEjnWFpGuKYthg4z52wjnroH7B
+	JBaK+R+wJhbGcYErI/rwgBb1hJ1HDq1TtdlTQ5FTGe3cKUL2mlV1RkICXHOt6Pli
+	I+iHkkK2wQly9eJC5Ji3yNVGcrgiwbUTclg==
+X-ME-Sender: <xms:NPWaaqwwlQcIFZkxyHLsg_21RFTDmen9agVWPEIQb6iInnE8GbXtbQ>
+    <xme:NPWaatQB_61bpsowj6CA71fARlZAvvn4IQKmgJbJ46pDOyxWS8al1BRgTUFnjiY-c
+    DEMV_TR8rAmvsEQR_FrekyL0DlQo22R8e2JpWu8JkCpZb65BwwV3x0>
+X-ME-Received: <xmr:NPWaahVNkibUOj8TaMbR_NCFCLhFK2GUv3wY0tSoFUQGDXnixCfeujyU7JJR40YXgxQTd035C0dI4eCpCG07mXE7fQCTymS2Hw>
+X-ME-Proxy-Cause: dmFkZTGDlh3b3HlrCiNg0oDdZHCAYZmwfdbNnKh33loFsmElz2IK1u0s5ZwDtbF+3Uuu6s
+    l0i8gv3FE7LRNViMuXXf6zMN1fgl3esEInwqHyWach7Zh2sb0MVDJQBjQyg/tBVNCT5QSR
+    Tn2bgCNrWKLLqZQJUCQRm3g+X95I9P7dqYIVLTgA0iGTtMnxk/NfrM2z8vOToAss8cwqI7
+    CtDAtG9EoEghY1GAt4O60MrX0BhZz1mv09c1eMHvB/C+/m6Gp5hoYus42ZOqMhCJaWp70O
+    rstQtHqFILyhdinywL+iZGYftYkc9qGN4Iwc+jhpE9RjpT+6H5YSvvD0zayplNL4VpFZVZ
+    IxTtTvLgOrjF5SQX9DOnwgYc1cvhHkUypBb4l5V1/wOu3hw6LFwCmACN9vD3MPlyA20Anu
+    Me6bkqn4wE1jbjjyNTBYFWr7acMNiaZ6VMXP2fRp5yGF4d41AcouM39sUVnTdXA27twqbh
+    VqT8Bz94AuS52dv58sJlXOmXoq4/9KbnviktlGnptAG0IrqotyGi3056I06LDvGc+7JKAU
+    f+3XaWW39xJQp/Z9Me4LwWBlLV+jajBxrKK24noO5rWm1Rb+Q2QvGDFztnXuxyu6x4DCJ4
+    GRCBA6eL4a+zzOfrBaoSQ5RKtBUJIqg5uC6ypX1OXGPnjq12O6Ho2skokomg
+X-ME-Proxy: <xmx:NPWaava9B_wdufThk6m7qcOQWBYnNOh6Qx0jSTx36OfobArwPbdqDA>
+    <xmx:NPWaan0bAGTIVzAAGkjxeN5VEzuAK42vMqC5PmBe6t6Va5MNm2IrbA>
+    <xmx:NPWaahhQkLiV_srY7WuIOEHrtELUgXjWOUk7EUG820FMd_3b1sSBWQ>
+    <xmx:NPWaara9cmsowj3E2bIZ2cH0aXEssE7APSn54EXQeYyjRRTjmw87fQ>
+    <xmx:NPWaaqqnksF0FM7PhAbPY5tPQSTWSDMneyRmJDNAM6ySGnwDhhH-8hqK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 4 Sep 2026 12:43:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Yannik Tausch <dev@ytausch.de>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] dir: find common prefix among non-exclude
+ pathspec items
+In-Reply-To: <CABPp-BF6hps9DibSV4ghbowkOD-NfEsHYFdLoKab0hCfEi9rgw@mail.gmail.com>
+	(Elijah Newren's message of "Thu, 3 Sep 2026 22:02:06 -0700")
+References: <AA085B7A-F528-458A-8AA9-7664480997AE@ytausch.de>
+	<xmqqecfbk2eb.fsf@gitster.g>
+	<81EC0E28-13E7-4D10-BD07-3601124CBD77@ytausch.de>
+	<886A25E6-8854-4AF6-BF0B-CFB57B673026@ytausch.de>
+	<27FF785F-F5D5-44EC-93C2-5BD67BD99147@ytausch.de>
+	<CABPp-BF6hps9DibSV4ghbowkOD-NfEsHYFdLoKab0hCfEi9rgw@mail.gmail.com>
+Date: Fri, 04 Sep 2026 09:43:31 -0700
+Message-ID: <xmqqy0dh3r2k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2364.git.git.1784993669.gitgitgadget@gmail.com>
- <pull.2364.v4.git.git.1788373743.gitgitgadget@gmail.com> <ff4322180294c784bcd5f4e92b35e4b334324ddc.1788373743.git.gitgitgadget@gmail.com>
- <xmqqwlt3h1oc.fsf@gitster.g> <002b1324-0f7f-45ec-9f67-624a41801ff7@gmail.com>
- <CAHwyqnVp6BVGx3+UCqBC_gOCuyq1c62uNi1f7Wyfpxd1KdyM9A@mail.gmail.com>
- <xmqqqzjab2ho.fsf@gitster.g> <CAHwyqnW8sdnDcncpZpaMD8fmWaj+WJQxhA4G-Y+L5PTW=h3k6Q@mail.gmail.com>
- <xmqqwlt29l01.fsf@gitster.g> <CAHwyqnU2c3T_i0gvkqiPPM7UYr8t5bzynr66iG4Z6YUKqZk1Cg@mail.gmail.com>
- <99b6da14-e03a-472b-b7a3-81162dc74166@gmail.com>
-In-Reply-To: <99b6da14-e03a-472b-b7a3-81162dc74166@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Fri, 4 Sep 2026 18:42:36 +0200
-X-Gm-Features: AcwNN1WpY42IR21s29lPKKiIYgPL2ihcBt1OCn-rJ04uh9V4oY5SF52c7SXw41o
-Message-ID: <CAHwyqnXoxmgstsczTkkFDQbi2oN5aH8sg57zBtj1WEvqWy_zRg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] stash: reserve exit status 1 for conflicts
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Sep 4, 2026 at 5:09=E2=80=AFPM Phillip Wood <phillip.wood123@gmail.=
-com> wrote:
+Elijah Newren <newren@gmail.com> writes:
+
+> This to me looked more like what you are changing, and I had a hard
+> time figuring out why you were changing it.
+
+While I share this assessment,...
+
 >
-> [Cc'd Karthik for a view on the CI style job]
+> Does the following alternative correctly capture your intent and change here? :
 >
-> On 04/09/2026 09:16, Harald Nordgren wrote:
-> >> A local "make style" while you develop runs
-> >>
-> >>          git clang-format --style file --diff --extensions c,h
-> >>
-> >> which tells the command to check only the parts of the system that
-> >> you touched.
-> >>
-> >> I do not think it is used in CI.
-> >
-> > It seems to run as part of CI and doesn't catch it then:
-> > '.github/workflows/check-style.yml'
 >
-> My recollection is that we made that job never fail because clang-format
-> does not always do a good job of following our style guide and the
-> output is not guaranteed to be stable across different versions.
+> dir: preserve pathspec prefix optimization with leading excludes
+>
+> Directory walks use the common directory prefix of non-exclude
+> pathspec items to avoid scanning unrelated portions of the working
+> tree or index.  Exclude items only remove paths from that candidate
+> set, so they do not need to widen the traversal.
+>
+> When an exclude item is the first pathspec item,
+> common_prefix_len() fails to establish a comparison base and returns
+> a zero-length prefix.  The result is correct, but git unnecessarily
+> traverses from a broader starting point even when all non-exclude
+> items share a directory.
 
-Thanks for the history! Seems that when linter output is not
-consistent between versions, then version pinning is necessary.
+... I do not think this is true.
 
-> That
-> makes its value debatable as I don't think many people (anyone?) bother
-> checking the output to see what suggestions it made. It would be a lot
-> simpler for contributors if we just devolved style decisions to
-> clang-format so no one had to think about or comment on the style.
+What happens inside dir.c::fill_directory() is driven only with the
+return value of common_prefix_len(), which already ignores and has
+always ignored the negative pathspec elements.
 
-My professional opinion is that a consistent style, auto-enforceable +
-auto-fixable, is extremely valuable, because it removes an entire
-class of code review discussions. I almost never care which style is
-chosen, as long as it's the same everywhere.
+What this [2/2] changes is what string common_prefix() returns.  If
+you have "!x/b" "a/b" "a/c", common_prefix_len() goes over the two
+positive ones "a/b" and "a/c" and correctly notices that "a/" is
+common among the positive ones and its length is 2.
 
-I tried today to apply the full clang-format output and it was A LOT.
-Doesn't mean it shouldn't be done, but it would need to be done at a
-carefully chosen time because there will be lots of conflicts on all
-in-flight topics.
+The problem this patch fixes is that common_prefix() used to always
+grab the first two bytes of the element that happens to be at the
+beginning of pathspec, so a pathspec ("!x/b" "a/b" "a/c") would have
+given you "!x" as the common prefix string, which obviously is
+bogus.  The common_prefix() is only used in two code paths that are
+quite distant from here.  It is clear there is a bug (i.e., the code
+that wants to be passed "a/" in such a case cannot be happy to see
+"!x" instead), but it is totally unclear what the end-user visible
+effect of that bug (i.e. what happens when overlay_tree_on_index()
+passes an incorrectly computed common_prefix() when "git ls-files"
+is run with "--with-tree=<treeish>" option?).
 
-> Whether that tradeoff is worth it depends on how far the output of
-> clang-format deviates from our preferred style.
+> Use the first non-exclude item as the comparison base and return its
+> string together with the prefix length, allowing callers to start
+> from the recovered directory prefix.  Exclude matching continues to
+> use full paths, so this restores the optimization without changing
+> which paths are selected.  Add a unit test covering an exclude item
+> before two non-exclude items with a common directory.
 
-In the best of worlds, the preferred style is exactly what the linter
-dictates, then these two are equivalent.
+I do not think this is what this patch does.  What you are
+describing is this bit:
 
+>> -static size_t common_prefix_len(const struct pathspec *pathspec)
+>> ...
+>>                 size_t i = 0, len = 0, item_len;
+>>                 if (pathspec->items[n].magic & PATHSPEC_EXCLUDE)
+>>                         continue;
 
-Harald
+which dates back to the very beginning of negative pathspec elements
+support introduced at ef79b1f870 (Support pathspec magic :(exclude)
+and its short form :!, 2013-12-06), I think.
