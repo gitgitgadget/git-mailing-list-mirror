@@ -1,152 +1,158 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11513CA4AF
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 22:09:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788559760; cv=none; b=EhhL8g7jd1G8NSwC5FDLMT5k57QrMiXss5CMXKFBnsBEJejeY2LQQ6x48eiRXHmIhAmjf9FbGDhxtTC1FcDzfAmOWW/ex4xHdPio39+kUwbZ7RLivPSoXuwV4EdR34F0O2EH+s1gUVhbY6slEjK6oYGDFokq3c3DBobBrxNcLRI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788559760; c=relaxed/simple;
-	bh=SscAYP71x8Zjl8cHpzGypNQw6tf9Y+LHJRMa7bMX6JM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iPP8lBJYJu+7OUbulajdiEcan7Wbq+77awoxy9rB+mP+mgWPnZMoG/bf5WkmOF/0IwoZSundYzuvznFDhN5gn4igERKTm9uqt8Y1OjIXDPAX+bSiPuGFHb/koXprM27v8eMWerW+2HqxfYtvkj3jlF+0Z5x/3pvoaLOY4gQs8V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=o0ZGFl1I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ivPElLMr; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03324423A66
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 22:28:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788560890; cv=pass; b=Cw2LkbL1gvliLvh/BXTpV4j75zFZ1lWtyMbnJQ3x60uhb1GRyLBuBgHdKg5MNGclKdCnZ4uwgTCIL567Riud/ZN1/jCua0ksA1mcEDRxHCujN16SbVwBHpynOQkok/VTZMG7YtYtMJS+NBaMhy3B/8rVLzd4Lf6HtiXsdCLtehM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788560890; c=relaxed/simple;
+	bh=z4gP4RuQJbvEvtRuApO+RfylnaiAeik1J2sPdKXuo2A=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GrF/4cO63lFY1E0yHfu4pqAV/3xp1zWcBARsPFlLNgua3cqSk+nYnxcUxXSEzhhvJzskgAcQQiTOc6I+j4iNw1knlv/DHncPrqYrsaiqGlGxBRlePbZw770fEV8uYelJ28dKwXcAAaW4RSsxpn6JwNrxGiMUUTJlg+KcjgIVQMU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fJe264DU; arc=pass smtp.client-ip=209.85.217.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="o0ZGFl1I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ivPElLMr"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id D5A22EC019D;
-	Fri,  4 Sep 2026 18:09:17 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 04 Sep 2026 18:09:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788559757; x=1788646157; bh=5LLSgfs+50
-	K65MMPDhQ/awAfsGiSakiTWVnTZLLXM1A=; b=o0ZGFl1IdykH/cN5nssK6LkFxI
-	t0i8bZmNQDLX1w3T/PU3koC1mHqCPMk+hkKZdfVbXXt/AQkGY0pPmUDvchzzeNZ0
-	q7O3h4I2QYAYHQF0RUGN0KwvoE6gzHblNmOVV6dHnoiR7dQ7+zinf6UoH8YMnElG
-	pQYVDDOvIgVNZ/kyhKGzRDfzt56ip2as0hjtpU9WH2bj85azLe7X27mEPWrzaCOO
-	tcpYVQIJ8VKK1Lfmy5KZIsfMYs5sQauH+J0zbCbqtwdgXJIYRjn6LmJV2FH7qQvD
-	xm/3nZTEMAzXZwNi0OzUFS2EC6lqBLH4hV+hwGX/Kawolm/TdKLIZj3jQiTA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788559757; x=1788646157; bh=5LLSgfs+50K65MMPDhQ/awAfsGiSakiTWVn
-	TZLLXM1A=; b=ivPElLMrLkvb7neT7xM6+EmXAWsgUCC6ix07pGSYgAqSOwI4mmW
-	i956dGAosWPABNjnJ7ZMMYEYsMYBdYYJWOJufM3LB6N3o5V5zULmK/7fdrME4SaI
-	6NVMPh9L74oOySmxAfDCuS252KvuQhfUOCX6J2BEbFNX+B6AnWqd3iPZdp7SKsl9
-	EoZLa29a6nfJhcIFYbBoMubGeNG+fGiQxnfetj2oGXhMp3XLwPrL+8by6RUvxUXy
-	qLrTPHuqr0AedYZDNiDI3D7/O06KxaJawhFfmEe3bPi+7GnpAhxdtZh+hY0HxtXC
-	SAGhCBzpcKazfxjtIaHgwb9y6vWqLdbqfhg==
-X-ME-Sender: <xms:jUGbaravTk6222q_DdsrvpybqjV9N-JfQO7ryV_uCyN1crpiwFD5Cg>
-    <xme:jUGbahQ7U_SeHH3hSogtz5xnf4OVzaj3UPi5o2-7IsbWMa8kRFOmuF_p4-wWOlABI
-    GH1VotklXBCl20hmTtlwN7JBU0zXThukNVH3Uxme1v0dsYMRuOrx4yS>
-X-ME-Received: <xmr:jUGbamSyBkBAUhX04RQqlNMg4M54sD9WQ6sy9yeZLHPGjP2juqqssANsMRQlROfXSFWQugSaZ20izSHfeu0rJu9fzeOTtwGuzg>
-X-ME-Proxy-Cause: dmFkZTFAwvyC+jTQsfxhG17OlGV8mTr3eOixhdH549U6fZOOCrBfYLqxfeMO95pv1lwc/V
-    F0ENscqC5Q2Bx95pksoZpjkifZd0+BGJ1kf7EKuxa7X4zpfl+AhJYGn1plqQLIy+8TNMDg
-    omHv/aG31JqO8zjHzyde7QcvIvnfs+iyGSlpcqX5288DKMjgPLkmZkAw8AijgwY8XzAkmi
-    iRrEKyPwlUNM0XBlbeDVODmEErZdAQFL+Ot/VRnhj/KRKrle1h9aaBIIBuridvBql/ZPQF
-    MRXA9yPDSSCYzJgukR8S8Px8mE57FruVEswNbDUjQtxbs3RnHfawnUcEhNeQ17In0Qudqu
-    RRzkcpxVNAG2OcZEWEKQqBfjD5RfVZvqHy4vB7YFeZjGeJfdoj+nsfCCn8iz11e4U1g0+1
-    kAscV8Sok2rtY8lkfzBxdSDC8oUfTe0gREHhsNPjTdco3d1ha0FYVAtd271IklX6ZWOpD8
-    EHEDCjBBbZiiW7uEU8W9I5zf01QhKTqOgunVpqTIyqj//dXVlsJmjCbL6xz0PxoxpyqGyd
-    z7tkGSMrGJxC7BwBkBb3CUk/UzbfvV9ZzEVPpCW00DCa8VOwfbq3LDbUhsob2tthZ3O++z
-    NI2FDKgqHLzJE7EqHG2PHu3Ol7FC/Ysxowuae5pPjLje+bMzGXlUqBsgpBBQ
-X-ME-Proxy: <xmx:jUGbatT28PhEZmYfQiodJ_CmNx1Sf3gvwOR-pHIETzFaTZR6p4iIMw>
-    <xmx:jUGbaj5N4RTuTNH2jsSmRR2138acXnQqQAdBJ-kgzjvKQwMsybwxAw>
-    <xmx:jUGbah3xd0y9eclImLUHiIOULKAuzAjLGtPcBlDffzvvp3QL4fwnWA>
-    <xmx:jUGbamD_phSyL2gK1dHfti0mlCcWAOOgtdmYonc4AJy0geA6I3EMlQ>
-    <xmx:jUGbagiqBIsZ34uvJnK1eme22J_DQdjSTbulwKJTQg3ZknX0vojSPbcO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Sep 2026 18:09:17 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org,  jltobler@gmail.com,  lucasseikioshiro@gmail.com
-Subject: Re: [GSoC Patch v5 2/7] repo: add path.superproject-root with
- absolute and relative suffixes
-In-Reply-To: <20260825175818.645579-3-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Tue, 25 Aug 2026 23:28:13 +0530")
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
-	<20260825175818.645579-1-jayatheerthkulkarni2005@gmail.com>
-	<20260825175818.645579-3-jayatheerthkulkarni2005@gmail.com>
-Date: Fri, 04 Sep 2026 15:09:15 -0700
-Message-ID: <xmqqh5k43bzo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fJe264DU"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-782df51b4c1so1160204137.3
+        for <git@vger.kernel.org>; Fri, 04 Sep 2026 15:28:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788560888; cv=none;
+        d=google.com; s=arc-20260327;
+        b=DzUQF+++tsS1yvJeexzEKG6LtY/HsQKh5rHEa3FX8yZIQ6eXABzn1eK0OdRpFqN0en
+         /5WK243eqOCeCaDnx/Fa40REbglzEzUcKozTLFhfLjZIgrRBUj2OU+R1fG7ztt5c7mz/
+         Yn3rAKgKBwmRXa2A6a0lpyWHGu36QxxtdUML6WSrRSCfzFVK9ek269xAFSUuG3bjiHP0
+         KmYW302CRn2VvdZaRAfiU04xsj5rFAQBV6rkLB1V1hEptOqSjOzYjwQwwIlMiIAdw2YC
+         DLArkTVWWmUxUMY0Nc3Mqt1TfnKCu7sCXRTOTkfIDeifhJGF/3KW8vS1doGsw187ZE+n
+         GDiA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=z4gP4RuQJbvEvtRuApO+RfylnaiAeik1J2sPdKXuo2A=;
+        fh=9BsKQlvaannSBUTFslioMsfMlt3358bYk2KAh9y78Qs=;
+        b=LSuoUCFHeZpZN3gs3oJYd/m515G62+Z/uIx82Gb1c1oEINVr5JBPKmlHM8cFQkYIEs
+         2tmAWHwdMn9WW/XjXejMhf6y7YCpjiDbC8Hr8/Faynv8N/dsF0DEvHhVhA9t+6RS8fB5
+         lX0S9clorMThzHHdomZF/0HLMU6eAHd0WXOmpFrIqtm2EzOXCWNRVigmr+0Vrrx4dQXm
+         QMeX70At5zK8l3nwt9u1kIr07bBZw1zcGIQ4dXKGGgiWYjwmuNgc/NjodqCG94R9ETNs
+         5vMMszbDg15No9ZByJShrlRFpuAvgzhTY4BWIDRvW2/cLGjYE334oFh08JyeIMycjXSz
+         Ytcw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788560888; x=1789165688; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=z4gP4RuQJbvEvtRuApO+RfylnaiAeik1J2sPdKXuo2A=;
+        b=fJe264DUPDhdR5d+n1XDNeV/0aV0PsyFsDqttRggpKgX9xm2fmTEu8mdahqtlyNlM6
+         EUTBXAZhvuXm+cSlM5nl0yNFDzMW1pDhwb0TsgSvZ9AVlhcZ8eWU4oUlJFwS64ItyU9t
+         FdOTGfu7zU7ZMt+TM2kKDhmBDuJ0N5aQm2R9qEdRugju/VizbHAHRS6lzKjLfxWRY2cJ
+         lWzmgOH6AGhTjTL88X4U1+fTumgDSle5B5YPPf9vCl9wJqjDvcqy7ubDzFh1+EHN3e6C
+         +J4lUtfesxmfhLRjZteaj/hIpxRcxalHFTWW0lJhKSVJBVKWWw30TqigFONEcN986MG4
+         Hgeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788560888; x=1789165688;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=z4gP4RuQJbvEvtRuApO+RfylnaiAeik1J2sPdKXuo2A=;
+        b=H9/09WrTt6saU8QkwdmbhyI4HJcZ/a1P+8fvWCHAChVMJUAZQQA41+JJoOlYh/Z4/p
+         fvxGISNSEcEt66wl7ichoSv257epTmLImehux07+Qu1rBuyF5ftQpZNBPZ4H+RjprNgD
+         Owfa+AZQ61G5O0OWmUj8BD2TzE2gKGbGbifZtBU+5pnh7MfuSSeRBz3XhUU+/RHIYunB
+         Xb6xQNmf9h1a7s8k8l01ofxFHzjFLEyggIIN4lRFVjJ2U3hH/NLMab6/SIHkdhOFKHpx
+         JmNSvx8L7D5I3Y5f9nAZAi0xcV4vfcnYSMVyKZ/jTISlfI5hJ++dOAWN1tSaq7/aIDDM
+         73Fw==
+X-Forwarded-Encrypted: i=1; AKwUvBya9TYc56YgSMidrylFa9KcXHG7ds33mu9AOiMESr2erAGxEm1UKCQ3+aQihPmMv/CBHP8=@vger.kernel.org
+X-Gm-Message-State: AFuF++lDfYw37RSDdiPIAzZDl1qhJPLxSgMnKvnmQfYS6ySK17aA4JbD
+	+/VR9QFnppm9DZ1agvPwbeEXcM028ibVB4Z6MDqG1g4kVkzMNbJNL5Y6IWiM70XZ33LhtbcfKC7
+	vqQxDgt+lZC53cbFCUlhV+nAdQUP4axumlcxs
+X-Gm-Gg: AYBFou3cFm9/yf/qND4bBChDh03aoyV3r9QOncM5T4uMJfLcEMvr7Rk8Mz4/ZDVNa0O
+	0wdAZOP4nZD6UOBjwpNQAVQB9icEhlh3lW1Unu5YjBwnDOfcm5OZYxMqmWH/JxU+zfKcNl+TjgZ
+	Lkquto12wUs0IhX+d6QJtz38Gr/QlEiCZqZl00rg7txgWbOPT0dnyGjw69WjzMlR9UO3XeQLxmG
+	l8JIJSFrSBC5PkYOkI64nrNf+pnllmRiXUKh5AirgEIpRnbdHNdpx6I/IWAJK274Fg7D9H90jNd
+	pLCGyygg/pAY+CCl/cmXs+fabsRDqAn1pfpSWy0kXGSCeJa3TGl1QBfGK2T3Ss37DolHWI7nxJi
+	WSX0j00P7dKxoNw//OX5dp8StnkuiPmxijwU=
+X-Received: by 2002:a05:6102:6447:b0:778:f972:32eb with SMTP id
+ ada2fe7eead31-78a4aa9259cmr3805633137.12.1788560887785; Fri, 04 Sep 2026
+ 15:28:07 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 4 Sep 2026 15:28:07 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 4 Sep 2026 15:28:07 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260902-pks-odb-registering-in-memory-sources-v2-2-c6ca12fdea4d@pks.im>
+References: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
+ <20260902-pks-odb-registering-in-memory-sources-v2-2-c6ca12fdea4d@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Fri, 4 Sep 2026 15:28:07 -0700
+X-Gm-Features: AcwNN1VRQkXr-SLOTY2zIVEVz3DXtj0xB5dwox_qS1vP1p38BYeTferQSDCFFwI
+Message-ID: <CAOLa=ZQ=oCDtjAQXNXe51DvKUCCk0CK1EuM+QKhJ3iH8YiS+mw@mail.gmail.com>
+Subject: Re: [PATCH v2 02/13] cache-tree: remove dependency on `the_repository`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="00000000000060656d065aafc863"
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+--00000000000060656d065aafc863
+Content-Type: text/plain; charset="UTF-8"
 
-> +static int get_path_superproject_absolute(struct repository *repo UNUSED, struct strbuf *buf)
-> +{
-> +	struct strbuf superproject = STRBUF_INIT;
-> +
-> +	if (!get_superproject_working_tree(&superproject)) {
-> +		strbuf_release(&superproject);
-> +		return 0;
-> +	}
-> +
-> +	format_path(buf, superproject.buf, "", PATH_FORMAT_CANONICAL);
-> +	strbuf_release(&superproject);
-> +	return 0;
-> +}
-> +
-> +static int get_path_superproject_relative(struct repository *repo, struct strbuf *buf)
-> +{
-> +	struct strbuf superproject = STRBUF_INIT;
-> +
-> +	if (!get_superproject_working_tree(&superproject)) {
-> +		strbuf_release(&superproject);
-> +		return 0;
-> +	}
+Patrick Steinhardt <ps@pks.im> writes:
 
-Here get_superproject_working_tree() does not care what repository
-we are working on.  Shouldn't it be updated to take "repo" as a
-parameter?
+> The "cache-tree" subsystem still depends on `the_repository`. Adapt it
+> to instead use repositories provided via the context, either as a new
+> parameter or the one passed in via `struct index_state`.
+>
+> Besides getting rid of `the_repository`, this also removes the last
+> dependency on registering submodule sources with the main object
+> database. When reading gitmodules from a submodule's index we implicitly
+> read that object via `the_repository`'s object database, which is of
+> course wrong. This works though because we would then register the
+> submodule's object database with the main object database, but a later
+> patch is going to get rid of that mechanism.
+>
+> You can verify that we indeed no longer depend on this mechanism by
+> running tests with `GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=true`. Without
+> this patch we fail in t1092, with this patch we never register submodule
+> object databases anymore.
+>
 
-Since it begins like this:
+Interesting, to sum up if I understand correctly, somewhere in the call
+chain of looking up the gitmodules from the submodules index, we end up
+using 'the_repository' instead of the submodule's repo structure.
 
-    int get_superproject_working_tree(struct strbuf *buf)
-    {
-            struct child_process cp = CHILD_PROCESS_INIT;
-            struct strbuf sb = STRBUF_INIT;
-            struct strbuf one_up = STRBUF_INIT;
-            char *cwd = xgetcwd();
-            int ret = 0;
+This is of course wrong, because we use the wrong repo, the consequence
+is that the lookup fails, but we have a last ditch effort of adding all
+submodules as alternates and retrying the object read, this succeeds.
 
-I suspect that it based its decision on where you happen to be.
+So this patch fixes the repository being correctly passed down. Meaning
+we no longer need to add the submodules as an alternate.
 
-It means that when I have a checkout of "git", with a submodule
-"sha1collisiondetection" at its top level already populated, in,
-say, /var/tmp/x/ directory, the following happens.
+[snip]
 
-    $ cd /var/tmp/x/git
-    $ git repo info path.gitdir.absolute
-    path.gitdir.absolute=/var/tmp/x/git/.git
-    $ git -C sha1collisiondetection repo info path.gitdir.absolute
-    path.gitdir.absolute=/var/tmp/x/git/.git/modules/sha1collisiondetection
+The changes look good.
 
-    $ D=/var/tmp/x/git/.git/modules/sha1collisiondetection
-    $ git --git-dir="$D" repo info path.superproject-root.absolute
-    path.superproject-root.absolute=
-    $ git -C sha1collisiondetection repo info path.superproject-root.absolute
-    path.superproject-root.absolute=/var/tmp/x/git
+--00000000000060656d065aafc863
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 512a4c1e3859c397_0.1
 
-The last two ought to match, but only the latter works correctly.
-
-Before this series starts reporting path.superproject-root,
-get_superproject_working_tree() needs to be corrected to work on the
-repository in question (instead of relying on where the process
-happens to be), no?
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xYlJmVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNmRqREFDa1hQd1hEMzdHY1V3UnRtQzZEbkdwSHF6YwpPc2kzZEUydGM5
+bHFyZWZ6aGRZNmRxVy93ditQajBiUnN5R0JMbGRIT0RxOUk3WVhBeEU4VWcwTVYzdDdPNjM4ClNx
+QVl3bjNBVWlCQ3V5RlpyaFJxZm9uc1Z0N0dINVZJZkJnMElQV2EvL2p6Qk4rdXRmcEZreVFRT2Qr
+MmhtbFIKWHZUWFdoMkxzYktoMG5vS0RHZ01vWU9FZHVrZXViSmJZRDZpZDJlVkRtaHVTYkdvaS8x
+OEVVa21sb2FtRnc5SwoxZ1h0aFlQM2VhZnNITm9EQlhCdVdrZ0FwcDNTRXZMNm1qNGNER2ZhS285
+bXl3OTlYNG4wbm1JT2pJUHpublYzClhZYUJ6bG5lVWxXdmhOMkt6M2RyNWhZL0tyRFZOR0Y3bjh1
+aE1JQWlPOHpJMFBFaXgxVmlBaU93dGo1dWhNdUgKTWRWa09zY1NvSFArSmN6MGxHZlpQaEhGYjlP
+cVlTN3c3N3JFTHVEbFVaREZ4b3Fhb2lScXYrV2JDaEloTDBWUApnYlBDWE8xdDNBV0hCRlZNUlR3
+Z3RzVXRtQ3Z0czNOUEp1Sk03cGJRbCtxWDZIamc2Sm1JVTd3ZVVLUmJsV3BiCllUc04rZGRqelZX
+YzhnMXdPd3VUUThSOWp4RUFYb1ZzR21iZWxFTT0KPXoxYXgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000060656d065aafc863--
