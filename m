@@ -1,71 +1,71 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F75A3BD64A
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 15:51:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517943BED42
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 15:51:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788537092; cv=none; b=Xg4lGQFOoZ5aCc7OsHDALtu1/BeYq3asKf1sHeR8nRK/yzoUL6v9sPjXOfmfkGgUOOQjAMJCHJjUFXQj8KDtdwtw/Cm+Xx5iRXFvKESMv9dSgDwOiRwNkBwCqN4F22mgg1e5Tp0CcQ7nBheoGJxVATmeuzw18KKgDw6UI27FHUs=
+	t=1788537093; cv=none; b=bh5kE+iMY13Eyij6IsHc5r5iJy8FmemFsA5gbbTI2X0ojTlLQyZHa5GxfRuFjFgW+5Bli51y2IfkJCh9uU1Avo/65uXVZqbkvjaGOWRvOV2nxHGj+YPxj2NpOMXEG4l8kI9qC79U4lukDtU8r6bJXNn0WhT0MiDCXXTTMqjaY1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788537092; c=relaxed/simple;
-	bh=+neXbSDJ5dQLNTmRU8oAOqqdh2nqeVhECoN8rb2kg8k=;
+	s=arc-20240116; t=1788537093; c=relaxed/simple;
+	bh=FVJuSUVKePoAVqDzlzt4AfyVeAfme2i4pwSwoe/87u8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=TR95N2kqO48pEPgfMSk95AFIrLGhLoaSszaXQZZi5BIqaaM5KOSZuFqc2El4dE6C8/xA0VAzlak3Q42ITJ4kexYplAPUygEhMjnTPQxrbfFAKoxFmnr+ijs0Y6fkZQNmiBPkljx56yBeww0mWmJeMzdS49rSZA22LWb/iVIrIKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PzIijCTi; arc=none smtp.client-ip=209.85.210.42
+	 MIME-Version:To:Cc; b=m/bfiTc/Ouy6ywB+VuC4t2G8z8CYo25oCjiDeJkovZMmO3bHgGx+25O6ROB0ygsdMbhRHR/GfNeB+aRjUk1ZCNAE6NdFBsjGyv3eeR+GWM29+V53elZ3comD+4BIMV8PhVsdMYZIdoXsfb5YTe+88eG5HHWmkQXwo0qOjJesu+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OgdwUctC; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PzIijCTi"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7f4f824de5dso612630a34.2
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 08:51:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OgdwUctC"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2d8f265cbe6so9110985ad.0
+        for <git@vger.kernel.org>; Fri, 04 Sep 2026 08:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788537090; x=1789141890; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788537092; x=1789141892; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=GUCk5ZswPZFGEk6qoPTRr4KJEBIAH+/Oc79X53w6Mfo=;
-        b=PzIijCTi4L5YmljRQnZkt2NLOX0CwVXH3dML3BKjFbf1b4RX2ZQ7UG7lQpespNt8p1
-         ZCEjrhSKzSn2NGG5SFjXY1moDt0NKueI3NkMN9gnsMPm6kArv0w8/4kY1Nidpp0NL/yJ
-         32Av9AwZBpcyjKiuuS5psPjH9W8UfhjFrG3EINmNlRYmCaimuKzLY/h6r8M7MciUvKTH
-         Uy4mTS0lHiA6cf4chDJBMRx54TTPIr6Vt2oKBF1SPAOMa4g3HaZYpay7Lt501yKHrSIQ
-         bfTzPFBxOpy5YwYbZ1k3jKIjlhiWIyapUPMIUyXtwU0FsMm6ZEOw1bhHsFFlPuynB7lm
-         sqLQ==
+        bh=cx+MCD13jGIX8BHMCKBXALjD0HVZNvZVay1jApAG+yI=;
+        b=OgdwUctCltjKdEz4lQP+T+ryCyNcoXI7fdYgnDO8fXndgPsLGxoLtMdmUVDxtlGzfn
+         nqJVofM7MgBvYK9dZouN7TigDEUciuhP9fk8M+F7S7KUtwW63J4Vn8YZEWbqLW8Dfk6X
+         Gg6MhpTqanKABSya7mB4vh+PkhF8uzBkr99tEL9JF1n8GAW4r1gtQPUBebjWT9kpGjCb
+         lCS9uHHkxMCx4M8DAHchfYQXPeewrrb9Q2Ajad5bekAikVn424AJBHSyf56RSqQjrnbk
+         MZlXbXnsIKgrI9YVUaeXdMRLjs7M4NGntM3zbOCcH2C0oYnbup2XiK0nE3UBt9P3gcad
+         fNGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788537090; x=1789141890;
+        d=1e100.net; s=20251104; t=1788537092; x=1789141892;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GUCk5ZswPZFGEk6qoPTRr4KJEBIAH+/Oc79X53w6Mfo=;
-        b=UbfOPbtSDYllOZZ/Y0vXnvDO3+4YuNd6c7afr3ig47rwfMmsJet23tgXBQGEu5gLox
-         HXL+ixB8SWRPpkogY4raZYnxx0R8GSs6hxAu7C5plbf3MArIIn451/L1Lw0pyAuvO6Yh
-         c6QYfHHnxNTwlb6yVtR+0hOITYn0PjmlIVgdQxmspus80uqeiozxMQLmTF31E9KVReu0
-         uVDnp7ZduI/X8Zmk0c5JHX+4kK4I73brgrrfwXGOG9SouPTA4sHfo88PfBRfzwSPZxdG
-         xdCkNT4du+hDuMnINHcYRMN0TPUc1HCQzYMHf3nxNo8/Uu/EIyT1V1b+lj/kN4lYWqQx
-         1RZg==
-X-Gm-Message-State: AFuF++mVvUyCY5H8XBr45j2466U+17sgRvUk4iVe4EUugiIY0I+0nPjj
-	vHye53Xn17/yNF3TYIeMQbcvJEyh2eTjv/ukHWwDaf51TEMlYtxqfFkye55jozsC
-X-Gm-Gg: AYBFou2byuH+6051gfO9jJoNXG5Wo1sMIxeNlwWXPJZo19VGy/L6Jcjc/BE0tsrCTmg
-	XZEFnjXgQTd8xtMC6gCycVDvlwoEqj0EUMZCbNzDZDQGhwlTpmVphv6HPTXxwypXCxDHau/d0+b
-	cgg6BV7VgaMYJpDhiZpvj+eJJPOSfTOKlV5jncVD1TeJoIxH7q++RyJ/Mz2y8N34uOqtO5zj2Zh
-	srSfdIjYP+4YgB0VYk8q+BZgm9yuVPEvbpHZCmLbFb3aNAhFyJ2gWYRougbOWY66jPZ/iwbSvrN
-	UclSuDpdQqaC3xvX9z7olSLKBxKIob41YHWsPBw7F67lFnWbaxX2UrlZ6+Rnaqd+Ayx2THg7Kxo
-	/41NAUL71x9rrLCGFYBRFXlTkKFxakMPbx+FJZY+MtYdR2UmuIux/PFgaDOZihttc6hBCqm95s4
-	Xhg0xiFIbNJ3JUVLcYZzhgjjfTRS+yIPAVSXWCZopHbgLDAc5skCJa12COmRbYijNGy3W9Kpvso
-	A==
-X-Received: by 2002:a05:6820:991:b0:6b1:c679:7117 with SMTP id 006d021491bc7-6b6faee2795mr5094558eaf.4.1788537089625;
-        Fri, 04 Sep 2026 08:51:29 -0700 (PDT)
+        bh=cx+MCD13jGIX8BHMCKBXALjD0HVZNvZVay1jApAG+yI=;
+        b=gXmjgdmgv7ruDdwl0/8dNu+W8qg2Hr5XtzXghb2cn0Ami8zeUKOqSQlS7YVzfS2oBF
+         Z9N/5xAK7BVvqGT20BIXcLOf5xjj/rFKc1Gf9sFG3AEmwJxnF8cKD1ZmfxxaEsbQv8wi
+         aQHyRKe5qqHLfRucm3ufOQehwBLceLjWbMvGb6nwvS3pCLFEt4aeFNdjrWEJXF2XmcFB
+         ufXsCjtYBDkCPf4jXXJmnk6V9FIPYX6ox8ajr2syE2bTPf2qqBqrfve/ft0F18KHAdh9
+         aXr97rZlM+9eGmjrWO/dftlWNqzedhn612F3SoA2LoRtGRur2Z4MS7uX/YjCt0VKRbZ5
+         X+uw==
+X-Gm-Message-State: AFuF++l1A4qOzAyoWrxpg9Iz7T9VAQMXuKcw9O+i7SnumMVVZeJdfV8T
+	7TP5BVKfxW1fqXDmNAdrCk1p6dmgWXogAab2S3UyAtORo54gnmrLtQce5clbTOkN
+X-Gm-Gg: AYBFou3bpe7ca3ir1NNKcMqvVQ4NezzOAdSCg7WCqTlbee8e2qgEv9oDcLsgzBLu4Iu
+	ZTMplrRuxsQn6QohawdDGqTl2JLhK7JYAGcuZWvvkL2jzaZulJXga0HIs6H5EqdTTsWHaWntkKy
+	c5MAUanv4o+8EQ7ykczBL0r8XDxAxjatATJH7Y6Y3t39vlXzCIWlxjhBd4sEl3+SFhJOR+ugTdA
+	Rd15i05IJEKDRBr97saVKk1FE4LSpyg3xQ5dRYQhITtn16hGO7uFjIHklU0/VpzKUPO/FNDq7fT
+	kUctapE1EGpQLP6ul+aIo/rhg2T1IcZ6unOKDZqbFVBQdecMIYJIZWOvkF8q2sLq4UGNbPmk4uR
+	ka/i+98qF+9r/8zIy3uXLC7pE7hmIEDageKPbG0BGolcP/Ox+bKo7ocovxYktxJ3fMxTyIXMUH6
+	qoSdf+4NvYDMazKthAlxNwBkTVS8NxPv+g9bdPxwsT64zS6zRBSmKkYoiBDcKrc9Y=
+X-Received: by 2002:a17:90b:2f46:b0:398:9c39:520f with SMTP id 98e67ed59e1d1-39b261e763dmr11022759a91.15.1788537091336;
+        Fri, 04 Sep 2026 08:51:31 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.247.7])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3339a534152sm7387426eec.10.2026.09.04.08.51.28
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3339a534df1sm8776598eec.7.2026.09.04.08.51.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2026 08:51:29 -0700 (PDT)
-Message-Id: <ef8087e80db18c511e31dd9c7dd6ea3d57dd543c.1788537086.git.gitgitgadget@gmail.com>
+        Fri, 04 Sep 2026 08:51:30 -0700 (PDT)
+Message-Id: <baab8d4876441ea883044c34bb5584631e30e1ec.1788537086.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2217.v2.git.1788537086.gitgitgadget@gmail.com>
 References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
 	<pull.2217.v2.git.1788537086.gitgitgadget@gmail.com>
 From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 04 Sep 2026 15:51:24 +0000
-Subject: [PATCH v2 1/3] config: add git_config_append_parameter()
+Date: Fri, 04 Sep 2026 15:51:25 +0000
+Subject: [PATCH v2 2/3] sequencer: run auto maintenance once a sequence is
+ done
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,82 +85,106 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Thomas Bachem <mail@thomasbachem.com>
 
-Split the part of git_config_push_split_parameter() that formats one
-GIT_CONFIG_PARAMETERS entry into a helper that appends it to a strbuf,
-so that a caller can build a value for a child's environment without
-knowing the quoting. The sequencer is about to do that.
+The apply backend of "git rebase" runs "git maintenance run --auto"
+from finish_rebase() once it has applied its patches. The merge
+backend, "git cherry-pick" and "git revert" do not run it when they
+finish. They create their commits in process, and only the "git
+commit" they spawn for an edited message or a resolved conflict, the
+"git merge" a "rebase -r" spawns and an exec command start it, in the
+middle of the sequence.
+
+Run it where the sequencer finishes, so that every sequence ends the
+way the apply backend does, and so that the next commit can keep it
+out of the commands a sequence spawns.
 
 Assisted-by: Claude Fable 5.1
 Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
 ---
- config.c | 20 +++++++++++++-------
- config.h | 10 ++++++++++
- 2 files changed, 23 insertions(+), 7 deletions(-)
+ sequencer.c                     | 18 +++++++++++++++---
+ t/t3418-rebase-continue.sh      |  8 ++++++++
+ t/t3510-cherry-pick-sequence.sh | 10 ++++++++++
+ 3 files changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/config.c b/config.c
-index d9019e7e6c..e0bb29b53d 100644
---- a/config.c
-+++ b/config.c
-@@ -450,18 +450,24 @@ static int git_config_include(const char *var, const char *value,
- 	return ret;
- }
+diff --git a/sequencer.c b/sequencer.c
+index 65afd100d9..67e1c38762 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5313,6 +5313,12 @@ cleanup_head_ref:
+ 			return -1;
+ 	}
  
-+void git_config_append_parameter(struct strbuf *env, const char *key,
-+				 const char *value)
-+{
-+	if (env->len)
-+		strbuf_addch(env, ' ');
-+	sq_quote_buf(env, key);
-+	strbuf_addch(env, '=');
-+	if (value)
-+		sq_quote_buf(env, value);
-+}
++	/*
++	 * We ignore errors in 'git maintenance run --auto', since the
++	 * user should see them.
++	 */
++	run_auto_maintenance(r, opts->quiet);
 +
- static void git_config_push_split_parameter(const char *key, const char *value)
- {
- 	struct strbuf env = STRBUF_INIT;
- 	const char *old = getenv(CONFIG_DATA_ENVIRONMENT);
--	if (old && *old) {
-+	if (old && *old)
- 		strbuf_addstr(&env, old);
--		strbuf_addch(&env, ' ');
--	}
--	sq_quote_buf(&env, key);
--	strbuf_addch(&env, '=');
--	if (value)
--		sq_quote_buf(&env, value);
-+	git_config_append_parameter(&env, key, value);
- 	setenv(CONFIG_DATA_ENVIRONMENT, env.buf, 1);
- 	strbuf_release(&env);
- }
-diff --git a/config.h b/config.h
-index b66dd08007..fcf48f6245 100644
---- a/config.h
-+++ b/config.h
-@@ -22,6 +22,7 @@
-  */
+ 	/*
+ 	 * Sequence of picks finished successfully; cleanup by
+ 	 * removing the .git/sequencer directory
+@@ -5577,10 +5583,14 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
+ 			res = -1;
+ 			goto release_todo_list;
+ 		}
+-	} else if (!file_exists(get_todo_path(opts)))
+-		return continue_single_pick(r, opts);
+-	else if ((res = read_populate_todo(r, &todo_list, opts)))
++	} else if (!file_exists(get_todo_path(opts))) {
++		res = continue_single_pick(r, opts);
++		if (!res)
++			run_auto_maintenance(r, opts->quiet);
++		return res;
++	} else if ((res = read_populate_todo(r, &todo_list, opts))) {
+ 		goto release_todo_list;
++	}
  
- struct object_id;
-+struct strbuf;
+ 	if (!is_rebase_i(opts)) {
+ 		/* Verify that the conflict has been resolved */
+@@ -5698,6 +5708,8 @@ int sequencer_pick_revisions(struct repository *r,
+ 			BUG("unexpected extra commit from walk");
  
- /* git_config_parse_key() returns these negated: */
- #define CONFIG_INVALID_KEY 1
-@@ -186,6 +187,15 @@ int git_config_from_blob_oid(config_fn_t fn, const char *name,
- 			     enum config_scope scope);
- void git_config_push_parameter(const char *text);
- void git_config_push_env(const char *spec);
+ 		res = single_pick(r, cmit, opts);
++		if (!res)
++			run_auto_maintenance(r, opts->quiet);
+ 		goto out;
+ 	}
+ 
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index cb5c3a1cb5..2c34cf8a01 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -395,4 +395,12 @@ test_orig_head () {
+ test_orig_head --apply
+ test_orig_head --merge
+ 
++test_expect_success 'rebase runs auto maintenance at its end' '
++	git checkout -b one-exec main^ &&
++	test_commit F4 &&
++	test_must_fail git rebase -x false main &&
++	GIT_TRACE2_EVENT="$(pwd)/finish.txt" git rebase --continue &&
++	test_subcommand_flex git maintenance run --auto <finish.txt
++'
 +
-+/*
-+ * Append `key=value` to the GIT_CONFIG_PARAMETERS value in `env`, quoted
-+ * the way git_config_from_parameters() reads it, so that a child can be
-+ * given configuration on top of what this process was given. A NULL
-+ * `value` appends a boolean entry.
-+ */
-+void git_config_append_parameter(struct strbuf *env, const char *key,
-+				 const char *value);
- int git_config_from_parameters(config_fn_t fn, void *data);
+ test_done
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index 5777dff496..304981ccd6 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -721,4 +721,14 @@ test_expect_success 'commit descriptions in insn sheet are optional' '
+ 	test_line_count = 4 commits
+ '
  
- /*
++test_expect_success 'cherry-pick runs auto maintenance once it is done' '
++	pristine_detach base &&
++	GIT_TRACE2_EVENT="$(pwd)/single.txt" git cherry-pick picked &&
++	test_subcommand_flex git maintenance run --auto <single.txt &&
++	GIT_TRACE2_EVENT="$(pwd)/sequence.txt" \
++		git cherry-pick anotherpick yetanotherpick &&
++	grep "\"child_start\".*\"maintenance\"" sequence.txt >maintenance &&
++	test_line_count = 1 maintenance
++'
++
+ test_done
 -- 
 gitgitgadget
 
