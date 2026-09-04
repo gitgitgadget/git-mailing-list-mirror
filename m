@@ -1,142 +1,158 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856813B7B7B
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 05:21:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499298; cv=none; b=hupkdGS0B06S17bla4zbZ7esNx2iUlxBkRGiJA3IgiO1H/MkZWawAtsnkzMhk9dzXNF05UsiKfyXYDYSUoxRo5BuXFuc7Ha0lVDdtRxkFV0DYk/b13QkV6B3kmGxIFEAWCfcCM037Y6uSnpUUb5/4AkMqJfuTPihASCTUgSiGbM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499298; c=relaxed/simple;
-	bh=Zz4ltyPCy1zJd6h55rbqqevs9HBIS08jrXIVvhTT4lY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tl8u/en+BT0n7ExNTU1iXK/i9uInHFb0/7iJ4hrpVAT+L3ay2iLcRDFTKgdDHz3CxD/oT6gxEoi5/JH+JpRU38grRzmHDrUpkN0mhD6kzhwBEQG40bpnBz/hfqCLJbJVh75MeZirswgEsWc5aIMEXaNypr2lUHJ6MLz9qySjl/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RHSEcyAH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wmzHAVZo; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9CD248F64
+	for <git@vger.kernel.org>; Fri,  4 Sep 2026 06:03:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788501805; cv=pass; b=sh4wPpcBqXfIHYlslw2cgbaWErhBI7D21R65FuxsY5VSXD/DUUWqvYWzDOvSU7elYxVAB/XhfT/WyAGVXtO3nzNe0+KWkpzjyIyRpei/62BFzeAB3HeuNDmkyyGMJmoSW5n513dQyQdz3cOZINzsYDo3jC/PL8kol/RlJWENkFs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788501805; c=relaxed/simple;
+	bh=jIOD1UB6XP1dXgXTbKxKHhB0gBe7+20Z0G5shSfuiiM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tdfnjJGkuEu84Q/Wt4xTIyptxMe5ZaW3VujZ0WPDIyu25Asr5dbIVzP1I25ft1ktZeEUIHT/5Dlq+eL50Rgh0KOvGLP75Avt//ZoKgBKzEW75HpoxgC9tSxqS0mMgZLuocaYWrRMA0Pavfn/niZNJwEHfyU8P4YY4ZvVazgotSs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GNKI/bFP; arc=pass smtp.client-ip=209.85.167.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RHSEcyAH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wmzHAVZo"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id CB5081D000D8;
-	Fri,  4 Sep 2026 01:21:35 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 04 Sep 2026 01:21:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1788499295; x=1788585695; bh=IxJiCX+9TR
-	lQaDWT6g8YwYFFvdvxKvfvX/bvCF+H3uk=; b=RHSEcyAHvFX3ySkfbdnUu+kWFt
-	H8lIw5P6SoVmXb69417CLfqk/Ft18EH5zv525TN2Zy/tv2Rr/enPiheGjkuJou6m
-	/7TVKLY9S2RPBWVx4n/Bjha7ge+fJU2RtJ9HY0ZYFW+yWrZ8Pr1cKGt0tAZOquzz
-	CpUznwuU4K2yUbGUD3ng954TCOA53SJI0Uli3Q+ONzqkOo0rGuVdb5pnhl85qTRf
-	Jy3G/C4DOvPFJSOuIwnB4YajHFwM461AZnxyN4bRXbLK4+mFKieKXt7zs8/hvQ+i
-	k0HxfKJfLzmDPbGcEhVOYQmYw3WbKSsTydo+vyUKBmX+2RzWHYhTu/wWUbGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788499295; x=1788585695; bh=IxJiCX+9TRlQaDWT6g8YwYFFvdvxKvfvX/b
-	vCF+H3uk=; b=wmzHAVZok0f9I+EchP6uLVGYTN/Ug5qLCCRHhf5LgawfQd72BcF
-	07CbCbwuhRdh5lXFuKzyidxKfIfFkdCOeOBYzUN4YP0JxfrE9ri9aNWxUGnVeeOq
-	JiqUvAONfDMK6NXTkQcXheBDdaW6g7oQEF+1pp35IHDUo2cA4lAj3PW13rZZ08dD
-	7fBxVHpK0YRWV4zG06KWpt2+YC1lu1OzRW+UryJdzdnHoM8vSwpzfrFCd0FBQTZO
-	lc2z3TgnF5wAb1I8qNWuWrcN+luVNpUEtY6LNSkIf/Z2eLqzNYAXjJhL3HHUKTfb
-	40N1H3abNKQZi8D6hPMHacntUcCu2zZssAg==
-X-ME-Sender: <xms:X1WaauqD3sPqnSzk_h9H4zK_h8vWEc-xmAynNtjJR7lV1zU2dFgy9g>
-    <xme:X1WaamGcO4UqcoN2xaQ8ehg7EiCuNJVxZWJHZV1-J5Wqort3y6MVj3IOQmtrFv3e-
-    4UtO4CvhFFErLXQ6SIyJzE_IQ7TcCo0gFT6bdNvnXwf18whitspXFt5>
-X-ME-Received: <xmr:X1WaaiwJ494Y2bc2fH212YcpR8NBuqPIIhIj5H9UJoQKqLos8SnyLPJt5hGCmHzA0W3PMA>
-X-ME-Proxy-Cause: dmFkZTF3QyCRob4IqRP/e/wuB/IY5aqSM5K5sM7yiE/pRKqX28FANqz4uRUE+QiAxGveTk
-    3UURCa8QLFLF908m8MmPNAUQoN8FBkmhKV/DB3BQtijnLjqJr5So75oyzX5B/uH7D0y/Hi
-    pMjESOHGi30xg/F2XXF+Rsi5HA86zkFbakfEISCpGBcMIUHs5T/73Szqlvjt3jxkFKXiKx
-    DlqAlZdWn811hadLNrnR3v+S/vZnh8IChj8M9uWBMN9AnSZ5dgFJ69sRdYbVndsFLgbpOP
-    60WYNdT44cpH4xMXIe9bYDloRwSycSFVksQCihLpcQO1KEecjjsP9C4UP1Btzw4X4p0hqM
-    bqjCzKwprvy8BcJek3ARZMXwxNCaum3/1KAeGQFkXboT43tTMu3/khwKTSjcE98iHNh/ou
-    O7Jj/NwlrgreS+Cy2yn6XR2PSFZ4TXFvV27lGIFCJSEWbVYEAYP5N23A3BNxUq0CxlxvKv
-    2tls3g85JFhTugOVVrHFLgNUBqWNDGLmztMf8tizk8eh0Y/wGJDqvtPHRkF05OafUgro84
-    RmsuPiuNTiUhbKqKmixHwwp60paTsUtJVXGHeV3wxJmlb3qaqSUWDYFO9FrDD8FMVa8Pxc
-    VzhN6RDvwSSQaY6zP0HIF5pxc5fGhr1Ww8wnJANB60mxbyhtD2bsVEb2r+5g
-X-ME-Proxy: <xmx:X1WaajqDYwUx8bUzODKWri1NfTu4wYd3ZEmmQg9y7BQREaqOJeNIOQ>
-    <xmx:X1Waakji6ROhRRZcKI3AmuIV0L_IgTPbJQCLq_IQUhV2YtA7aYtahQ>
-    <xmx:X1WaaoibVEn7apYUjtBok9EeDhp3bmXul9xmBWOZdHGBIaUEp8d33Q>
-    <xmx:X1WaaiiTwxN9IUrrI3zBS5pBgBqqrd8pYHsDbAV1hkk51Jw_e7qs1g>
-    <xmx:X1Waai1QlBxKmt82GTBa7xgG0jdH3oWSZ2PAHT3pRq1LsG_D0Xa7ggLg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Sep 2026 01:21:34 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e08a6b94 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Sep 2026 05:21:34 +0000 (UTC)
-Date: Fri, 4 Sep 2026 07:21:25 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org, Thomas Bachem <mail@thomasbachem.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/2] builtin/maintenance: improve heuristic for "rerere
- gc"
-Message-ID: <appVVYr6oW0fyMRD@pks.im>
-References: <20260903-b4-pks-maintenance-rerere-gc-heuristic-v1-0-9929c45a9788@pks.im>
- <20260903-b4-pks-maintenance-rerere-gc-heuristic-v1-2-9929c45a9788@pks.im>
- <2ca2b4db-1fd9-46e8-9385-260a12af43bb@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GNKI/bFP"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-4b1bf68b387so279490b6e.2
+        for <git@vger.kernel.org>; Thu, 03 Sep 2026 23:03:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788501802; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Ro801H7qZc8aoYjH0phkQ4/Df6ZKzzl3aLZZWDnlEgQ3H5qEixZUu9EPWH3q8fXGvZ
+         56BVEAZgHYv0CzuuV+9OlnwsYXvtZjSPb6OU0biAn+gALVuLbH6nFh2LZY18ZpBWtP3c
+         joyLsqdrM26QpwEBJZAqa1Q0+maifQ4gpF98NsC+CJ0OAky8U+WskvuKEaTI0wMMJ7Sp
+         29SoyEW/1PSfoY3hnloC/5RVj7hcFJXnIWtEdFQGeQNg9/9ZiTiL0P9jCdNFuq3I/FPG
+         k0KZD/zQ1OrpgnsmBTQzbXhQSDL/IeF62FwV17kJSbOPBpCOhivW8akU4Lu6ymnL7rXg
+         fklw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=QOefjXkTP8aS+EkqAwJ+HL4aLtlJN53dIm4anI9aQQ4=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=ivU4lMF741j4mo4O5GgX3Og6QpYElQ8/i/VND0jNJLS14CbwIvN20e13J1VVkVFPr5
+         CTYGdZRF7kKZ4usUx/gqAOYLSIat1QDNr19c0WxDcdHox6B2hq7nnNf8G+UjougNAGz/
+         ldLU3mTPjeq2PeZfk0GEEEeqte+xkZoTMxjzYY9xNnHh55R3uoppmsbq+gqfcmjhDL7A
+         gQQxHen5PGG+8ec450AJuczNQStr2YczwAqKDW8UD2iMNjZdKeYDb65TDSuV1netjKiZ
+         ZsjkjbAWV4OyO79/NEhBEyDlBrDV85g59DSa28tpqZi1xng19906FTV0o0BozRWlOT6I
+         hiRA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788501802; x=1789106602; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=QOefjXkTP8aS+EkqAwJ+HL4aLtlJN53dIm4anI9aQQ4=;
+        b=GNKI/bFPIbyeG0A2Jo8p3DTw0Q8vkOy3fNN8tGlEdTa760SBXNSk0PkA5i7u0bty9g
+         FbhqesQ9NktWJjL5Dy66QfOJL4FaJcXbxTCkz4xpb8i5zNtRccwikFC97O7IyRZ+Hi7k
+         rF5l8lbWxRbIC5sEH7iphcEJVjgJVt1UhU4CDVqwqsIKC4kazPWYVAy+h7RQiWGJKAYY
+         pazJo+jph8yuKsjxTPsm85tmU0GlrUDPu7j6DJhJh7p1mTOQc2lIgz5bb3Y6qXsNsu/7
+         rYEd0hbwHbUJyb1lTw3ca4uXZcjHg2PX//TnZoMSOruznYCPwi+3hK3Us9AH0E5P0j2G
+         z7xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788501802; x=1789106602;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QOefjXkTP8aS+EkqAwJ+HL4aLtlJN53dIm4anI9aQQ4=;
+        b=WVPqppdbQnvF2ovYvU/OODifJdwSRT8ehMjWQKvG9NvIb9zPdy19MFZnN7Y5yv0uKp
+         o7vzTba4MUjcwZqH24nvnFQMJ7smgGyBYu2DPSL7Q63JD7FfjKlR5OR4DGJpr6m5fq3O
+         B9+aVkmPWcE0VLSccuyLBz27iHqLEM6vRl2GOnVAnLh8PW5D5FLvAzdmSTeViV7Ij+i6
+         3qwuDBhwAHereW5izDCyOsctlV2xmgzVAjTbiyz15Nw00CB+9IjftP40gsqmS1CRWIbA
+         t5eZm0Abzpy+CpDH/G8qtXQ5ZHoDsPt325xQIUU1Yj4cjh4d/OylkL82NCSuAdqbFnfU
+         QdHQ==
+X-Gm-Message-State: AFuF++lXPedq9etZmAUNvaBW+yw1Jnusvf3KhnX3wmIY8l1tB271eDIw
+	zCCboeaF/4522dq0//TM6xJ8sYoZ6G0pQNJmFUh2HgqL7n6V/ZnSYTcuGmWV6klS5HjcWfiqn2P
+	hkmzLlS1nG2GxuJIRo95Pk+lqUm9pRmfkFw==
+X-Gm-Gg: AYBFou2wqkMf8/j9CZ+9XLSr76Yr0q7EtQLgjgtDPY40NcYHs+eCnFcSuTAgCeBcxAa
+	R46HOTvbTROql+eB9ZFTU/xUCG739Zl+JrQ7DERPAC/Tu5WVRr9SI0f5fg2VW+1wrAy7iiOL73+
+	vIBZ9tTulAWEWe2y5BFaPKZ2oQBGrpAsAZ5Q99FhXOabkmbteDNORxmPd3pD52eKFPJvuOZp2oa
+	BYc0vl5HeJE3oyClDQEslgYS9lVL1fWjX+KBn8oEu5OcwHu9e0CkkVp/zuqJuYEUng+7bJ375A9
+	KK11IZo9v3xJWmlunf2JMkBq9DLMruhJHlRe2bdOKBjyRvQH/sxc2gF7pbHiShFNoa4VaTxR07R
+	GmVfrNBmZcVwhgQl5JpIMND40rJdGosVKe2eXzqzLTuNvWRMeMOEt+JRPDXTdwQ==
+X-Received: by 2002:a05:6808:1b9b:b0:4b5:5bfb:f25f with SMTP id
+ 5614622812f47-4b9623cf7d2mr3115079b6e.20.1788501802027; Thu, 03 Sep 2026
+ 23:03:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2ca2b4db-1fd9-46e8-9385-260a12af43bb@gmail.com>
+References: <xmqqjyp3f7mr.fsf@gitster.g>
+In-Reply-To: <xmqqjyp3f7mr.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 3 Sep 2026 23:03:11 -0700
+X-Gm-Features: AcwNN1WfZUOffjP-ufZ9QHlsQ9AlqA_garkk63-ZAFbMkpTPcinVb8U4fr6DF5Y
+Message-ID: <CABPp-BE+_YhTpOODe1OP7LWdEj9MKV71OCVSd+exWKSoh+1+2A@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2026, #01)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 03, 2026 at 10:19:33AM -0400, Derrick Stolee wrote:
-> On 9/3/2026 5:04 AM, Patrick Steinhardt wrote:
-> > diff --git a/builtin/gc.c b/builtin/gc.c
-> > index de2f9e7fed..9147418a61 100644
-> > --- a/builtin/gc.c
-> > +++ b/builtin/gc.c
-> > @@ -396,31 +396,13 @@ static int maintenance_task_rerere_gc(struct maintenance_run_opts *opts UNUSED,
-> >  
-> >  static int rerere_gc_condition(struct gc_config *cfg UNUSED)
-> >  {
-> > -	struct strbuf path = STRBUF_INIT;
-> > -	int should_gc = 0, limit = 1;
-> > -	DIR *dir = NULL;
-> > +	int limit = 512;
-> >  
-> >  	repo_config_get_int(the_repository, "maintenance.rerere-gc.auto", &limit);
-> > +	if (limit <= 0)
-> > +		return limit < 0;
-> 
-> This is cute, but works. It's logically equivalent to
-> 
-> 	if (!limit)
-> 		return 0;
-> 	if (limit < 0)
-> 		return 1;
-> 
-> which would map more directly to the two documented cases. It takes
-> the slightest amount of mental processing to connect the docs to
-> the format you have.
+On Wed, Sep 2, 2026 at 6:27=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+[...]
+> * jk/rev-info-argv-to-free (2026-08-31) 2 commits
+>  - revision: simplify mark_argv_for_free() callers
+>  - revision: hang on to "freed" argv elements
+>
+>  The memory ownership of argv elements passed to the revision
+>  machinery has been made more robust by keeping logically "freed"
+>  elements alive until the rev_info struct is released, preventing
+>  use-after-free bugs when options store references to them.
+>
+>  Will merge to 'next'?
+>  cf. <apaSDqIEyc82Q_zE@pks.im>
+>  cf. <apayIuf9kXQcQPvS@pks.im>
+>  cf. <xmqq8q5ksvd8.fsf@gitster.g>
+>  source: <20260901062815.GC1075462@coredump.intra.peff.net>
 
-This also existed in the preimage, but I agree it's harder to read than
-really necessary. Will improve while at it.
+I think it's good to merge down.
 
-> > +	return rerere_gc_estimate(the_repository, limit) >= (size_t)limit;
-> >  }
-> 
-> I do like that this method is simpler in the builtin code in favor
-> of a method that has access to rerere internals.
-> 
-> I do wonder if rerere_gc_estimate() should be
-> rerere_stale_above_limit() instead, as we are not using any callers
-> that care about the resulting number other than "is it at least limit?"
+> * tc/replay-linearize (2026-08-31) 3 commits
+>  - replay: offer an option to linearize the commit topology
+>  - replay: resolve the replay base outside pick_regular_commit()
+>  - replay: add helper to put entry into replayed_commits
+>
+>  The 'git replay' command has been taught the '--linearize' option to
+>  drop merge commits and linearize the replayed history, mimicking 'git
+>  rebase --no-rebase-merges'.
+>
+>  Will merge to 'next'?
+>  cf. <CABPp-BF1=3DDZAxX5Now4pCKPi8=3DcpXo506z=3D8QVu2vYCSiKdqMA@mail.gmai=
+l.com>
+>  source: <20260831-toon-git-replay-drop-merges-v9-0-61c4232c6f36@iotcl.co=
+m>
 
-Agreed, the current name isn't great. I'm somehow hestitant to use
-`rerere_stale_above_limit()` too, though. I'll adapt it to
-`rerere_gc_needed()` instead.
+Yes, I think so.
 
-Thanks for your review!
+> * en/midx-missing-pack-fallback (2026-08-29) 4 commits
+>  - packfile: recover when a multi-pack-index names a removed pack
+>  - mktree: do not use OBJECT_INFO_QUICK when checking objects
+>  - mktree: plug per-tree leak in --batch mode
+>  - replay: fail gracefully when a merge input is unreadable
+>  - Merge branch 'ps/odb-generic-corrupt-objects' into en/midx-missing-pac=
+k-fallback
+>
+>  The object lookup machinery has been taught to gracefully recover
+>  when a multi-pack-index points to an owning pack that was removed
+>  during a concurrent geometric repack, and 'git replay' has been
+>  fixed to not segfault when reading such missing objects.
+>
+>  Will merge to 'next'?
+>  cf. <20260831231005.GA973618@coredump.intra.peff.net>
+>  cf. <374bffe1-47ff-4cb6-9d69-f4b7da7292da@gmail.com>
+>  source: <pull.2207.v3.git.1787986831.gitgitgadget@gmail.com>
 
-Patrick
+I believe so; it was acked by Peff, Patrick, and Stolee.
+
+Stolee and I did add some extra discussion, but not about any changes
+to make, but rather clarifications about why the bug occurred
+frequently enough to affect production, and more detailed measures of
+the cost of the fallback to fix the bug.
