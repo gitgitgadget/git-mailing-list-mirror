@@ -1,73 +1,74 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB7F27AC45
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 17:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0996F4E80B8
+	for <git@vger.kernel.org>; Sat,  5 Sep 2026 17:13:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788628428; cv=none; b=LQO/BKn5qMaAfVv24O0RN1h0L79WQMjRomNdL4O2kOfi7OLdLgeAVPkck9pP2UFe+HFBBxP4OeEwro1vdTA3XarxMrgE7wELMkOpeLD4KSTYuvqYHuB2mHwD9ZMeOn+k5PK6e/7Qd8HmVfX9y7jNu3sx5Bbam0Ic9i8kW7oF28Q=
+	t=1788628430; cv=none; b=Ag7gyHKLzxOvEB8r6nLW+PU52UJKuOHpc4SVKcQkJ5GfJgTeJmwmJvv54S3yRxvfaVxcmFHHTl7EPgy7E+D/dJZjs6rc5vZT82XppC0pLbNIaFNFDtc/WPDKf8FHcRSkY+U76+/vWCEDavqA5RBONDsXnlS6HmZkkoTUYTnh1U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788628428; c=relaxed/simple;
-	bh=2aGcUYlMamxEpIbRA+UeKWW1jGuoaXd7miWuBsLwXUM=;
+	s=arc-20240116; t=1788628430; c=relaxed/simple;
+	bh=lXTDhX9PQ7awXxLqLrTs7uKU1tgQsa7yJqsPhVZMVio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLLKBe6MPtRLQanNGKgePmRTYKF9k0kIvvrT+BuLRClji/P6ZGHNN28gqDCaxkDCpNf4mIJFjXc7i3uBUfBhlBXTb5mfLVN0wpLHqZxl1SdyzE2nsVgoocxpCspb87o9wr+f0Bo2OA2uSiD1KqC+u/KLo3KiwdgnNfEjz2+tMKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=ivjlaUCt; arc=none smtp.client-ip=209.85.221.41
+	 MIME-Version; b=XrcG+Y7acn/3gXIcEGrXzsjvJtHZaRx7ewO6y82okGEaxu0Sma6H9vUzInbtjMm5NUq8xqaZAoX+srQ9ZiXRyMZzR8XEXjQ31dMPYKLenxFHEs0JgAbTN+rwotMNyAycXrmKun7Tsz9Sr6lRuevEZtPq1W4zixvS6jSEEH8Dnqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=ArlOfq6b; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lex.la
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="ivjlaUCt"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-48441fa5c37so1465871f8f.3
-        for <git@vger.kernel.org>; Sat, 05 Sep 2026 10:13:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="ArlOfq6b"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4995b0343c1so28421915e9.3
+        for <git@vger.kernel.org>; Sat, 05 Sep 2026 10:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lex.la; s=google; t=1788628425; x=1789233225; darn=vger.kernel.org;
+        d=lex.la; s=google; t=1788628427; x=1789233227; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=2aGcUYlMamxEpIbRA+UeKWW1jGuoaXd7miWuBsLwXUM=;
-        b=ivjlaUCtXTuBh+mgRP6J6l1stvcOzsyR0ODd0wQdCJrAcp0H+sxvXAZNa7ScNAsoyW
-         50V/QcsLNhNPJ3nlWo0e4IBkZzlHMGKuytpI+gEAAfDqHXHGG/X+yfGvtPBBfRn78jrj
-         /AahiVEtaQ9NGs0DtguJyEeRw7dbdWstQr+a7SQmNLVmMuwO4zS9CSeahkCfnwcUFxcH
-         DbJYwRdijPszK/8vqWH+PLkEouA97Tscjsy4x1NxTgnMMlA205+UMqhK1jvaLkHbdXqb
-         M0YEVo5j5A2CZEplLsdyF99ysdX6OG8qC1H1Dx9tJooGmJpXjzr23zc/WJwQOQMKdsMP
-         l4JQ==
+        bh=lXTDhX9PQ7awXxLqLrTs7uKU1tgQsa7yJqsPhVZMVio=;
+        b=ArlOfq6bwCJn9ZVrezIkUHx/U1rQieHYFTkkvk55RZaZVJTvUM5dmwLCDNHUvRPAsy
+         M1JBhKSKQzcPOXQrQmBOUpTlZ13mqCGQmfLYus5IBNYaX5M4bVzHK+qVwdSnWhIjfBbL
+         3/3lk1UtjC6N36gSShIvlRT3T0Kyitk5ZYBPhkt+mcB9L7wGEx7km/KptuFhSatIuoPe
+         AzY71I7QJdaMa1xfBFuIr+WzWXsT+W3pkW3wcmItkOmL0OhvtRIIQ6WakOLTjEFKqb65
+         rq68JFT6T+ykSS4h55F6ZeVcRh0vI1DapXQUjSKsX/5rbPUTy2GmxjhU7uULT4cXXBFo
+         cedw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788628425; x=1789233225;
+        d=1e100.net; s=20251104; t=1788628427; x=1789233227;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2aGcUYlMamxEpIbRA+UeKWW1jGuoaXd7miWuBsLwXUM=;
-        b=RghEzO7dXQ3ehakcGxk7Zi03TqwPnx0DNRh2bJmuNndMCZdY0j+BAWr4CpjtaC/TdB
-         D0vmsysIA7qMTjE3EbzfOjmeH7b1dPhvXSuSqtn++OcpYBAUKw4YxAypDBfGKdXCV9tv
-         iP3gZxQgcqFfmXwWBTthz7jcQPhKVYp6pzvzhKLqDjTwOSB7FIuB/bQeL8j33i7dPw+q
-         /uzEIUA+XyNhkWGw/4Z8xAMmZnz0A+e33wJ/6xreSB0tmk4cgSjELqwHZI9n8MED6DjI
-         R/ofMf3VcJi+jhXONRzmfRQ/6dR57h97+mURXCWnTwiqiyYQPwJxkWYc2X2MeZdh4mCS
-         Js1Q==
-X-Gm-Message-State: AFuF++mEHU19R9Agk9Sbc5DlUtdVKSBu8Tp2cSAri9qWvYHMzRWwkvvm
-	6C1gqMoZzZ86kQMDtH8BLxBVky1cq2YciAdwP2krZmne4Qcbu7Wdl3OIdFXWNFDLkteecYdVLEi
-	Ruq4Obd9YAWz/
-X-Gm-Gg: AYBFou0E1tKiPcV/7WmIaY2IzpUCGbT88RjFqzKVChjEH8lTvZA65SDPyqCJAKKYw6s
-	7PRniWwjv+eBU9Zueqk+FxCLT8arl/UclmNRUJ+nq473iGbscMg8UccCCOrNzmieDxWTNBtrEsg
-	cPG5Gi6LzVPnDkOslLUG2WOSkbAoiudIu49FCJxR+oXKzhJkHeygmHFBTK/cbpeDDAs0893HZSl
-	Kh3Dv2vG+6M/9AtJs+zU7iITYzDWD8ny+00GRkyqD6frVpW7jQjJclSJcZ5RuGMlWmovjtvdwZ3
-	BAfBvBFmSoMnI/O9FUNrpnE5iDWsG02OOfWN34wkZYvnifJXKnRn5j762EYLWuJB3WxiSVL2E30
-	Y64CeP2kuLXlxtxeysZx0Du5oNDdme7+qAlAb4awQPzg79Clb7KoYV3VVML21PjZjTd2SmsCSRg
-	yLbJTqRVvH9xF3BhTOEgRVtvipBZF1JN6qk1eiOsWmVfty6OL2zA3J9Bgt8AKqfQWEqaEM
-X-Received: by 2002:a05:6000:230c:b0:485:8a46:b3cc with SMTP id ffacd0b85a97d-4858a46b4fcmr10618984f8f.52.1788628425412;
-        Sat, 05 Sep 2026 10:13:45 -0700 (PDT)
+        bh=lXTDhX9PQ7awXxLqLrTs7uKU1tgQsa7yJqsPhVZMVio=;
+        b=AGgzFGSZn21BSgXT0Rsg9IEtPemaCLkIqsNYkkpZefDuTOoVMMsKMK02aqsmIsp/3E
+         46wcz/QL62tJQIc6rb5hDGFtqmskZg0M1khRbn3fJd0r5XbC3CPhNpGCtX+wdYkoR95k
+         Y+YeImzf38FdOoakNqRRsewqO78SzRQfmtpZb4ILc/leDocmRlX8MLBVP91kQkd9Q1tp
+         Tk94+aZn1Yt0Mm3NVUx3PRBJizJFR9yEJ8nT47dku+Ih1cV+/dECTgUZJ16Li/LVxME1
+         lq2CTgm2cSfxvDNTRgHfoa5wubj/2IlhJcAU8N55i43hTe6RHK/QJxO1D7+oXz8hnDfz
+         pn/A==
+X-Gm-Message-State: AFuF++k1Cua3QEEzC9SCqnM0N8VJps7cuMulEj6FDPdP3Ie2SGvcpu4e
+	LfnPTsGSd9C+16If0C98im1pIFMO7fRuQ+y1J9PnN9eCiP/baNmOTBEpmhC9+X1HmPTiBRwAQNt
+	JgTXpCTOnw/+K
+X-Gm-Gg: AYBFou0g3gAr4cHJveuVGTMgoH8Y4cU3rBVVZSpb24Cf9dDasZixfnINYcer5u1IkCW
+	zWoRXrWb56qg9vK/sA/AG0Uv0BUBIeOtPWoJTHcxMGDYjnwTkrNeRVbctZjIguq4GzoOkgDrDwj
+	daqn7+Hm98kIyCdkaOnqFFIUCmxCWz9JkG6f8ruNhrpq+589VR6H0TMq5HDInELEVe6gpZd7xBe
+	LnIcsZWFuq/KR/4GA7I7cleMWjR0e/e+BUCWjzGCz9ZXjEXe0khRj7Qa6vBmPrG2j90DdBBw4kv
+	SvDMdZ8cu+EiSVHe2f+d/W20CeC6Go/RBzEmZc+muP/BNjT1c52tpGZ2XlrHlX9z0fb6xzh4Kr4
+	mEpp/1Yd++ukq0GoLEpqJjCdngyL9nM1KMFL/qL0LeijY+MdqHFHhCE0K7/pvuq+unRYn7p65MR
+	wbqljJ0UnfB7yhjHGqB3tND4XI6fC8nbIRaDXYNWBVAzybkkmq+Jxe0mwvZMr/uyMuZIxz17NUi
+	38bbMw=
+X-Received: by 2002:a05:600c:358d:b0:49d:797:8488 with SMTP id 5b1f17b1804b1-49d0797853emr30861845e9.1.1788628427293;
+        Sat, 05 Sep 2026 10:13:47 -0700 (PDT)
 Received: from ownbook.home.lex.la ([84.17.55.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48588390e30sm14922056f8f.7.2026.09.05.10.13.44
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cf772692dsm195898875e9.10.2026.09.05.10.13.46
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 05 Sep 2026 10:13:45 -0700 (PDT)
+        Sat, 05 Sep 2026 10:13:47 -0700 (PDT)
 From: Aleksei Sviridkin <f@lex.la>
 To: git@vger.kernel.org
 Cc: Aleksei Sviridkin <f@lex.la>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push: fix --force-if-includes when remote-tracking ref has no reflog
-Date: Sat,  5 Sep 2026 20:13:43 +0300
-Message-ID: <20260905171343.34722-1-f@lex.la>
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 1/2] t3507: pin CHERRY_PICK_HEAD absence for a conflicting --no-commit
+Date: Sat,  5 Sep 2026 20:13:45 +0300
+Message-ID: <20260905171345.34749-1-f@lex.la>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <xmqqpkyt3qul.fsf@gitster.g>
-References: <20260903010547.85469-1-f@lex.la> <xmqq5x0mfgyh.fsf@gitster.g> <20260903200015.36849-1-f@lex.la> <xmqqo6ee9jtx.fsf@gitster.g> <20260903214551.53918-1-f@lex.la> <xmqqpkyt3qul.fsf@gitster.g>
+In-Reply-To: <6d9595fc-6dc0-4bbc-b060-b34d782c6215@gmail.com>
+References: <20260903125524.67889-1-f@lex.la> <20260903214553.53942-1-f@lex.la> <6d9595fc-6dc0-4bbc-b060-b34d782c6215@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,16 +77,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
-> I prefer patches with human-readable explanations and known origin.
+Phillip Wood <phillip.wood123@gmail.com> writes:
+> I don't follow this at all - where is the existing check that
+> CHERRY_PICK_HEAD does not exist when "git cherry-pick --no-commit"
+> stops for conflicts?
 
-Dropped the trailer. You will not see it again.
-
-On origin: this comes out of git's own tree, not an outside corpus, and
-that is why every claim in the message names a file or a commit you can
-check. The change here is one line, timestamp_t date; becoming
-timestamp_t date = 0;. I read the whole thing and can explain any line
-of it, and the sign-off is what carries that.
-
-v3 uses your wording for the first paragraph and explains why zero is
-the right fallback rather than "now" or a fixed age.
+There is none. That was my error: the guard in do_pick_commit() is
+shared, but the suite only exercises the clean pick. v3 adds
+test_ref_missing CHERRY_PICK_HEAD to the conflicting advice test, the
+helper you pointed at.
