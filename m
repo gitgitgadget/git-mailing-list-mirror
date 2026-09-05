@@ -1,110 +1,104 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09B5212542
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 05:42:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788586938; cv=pass; b=gO+w3JcMYAIww3NBQGW/Q8TQjQkcOuoNjacW3LiwQ+Us4RwWY6EU0ugFEOi/8YNzGv0nIWYkM/pjVanKh3yEgq3yoQGU1RdxnU1UJX+9aODPdJpsdDsErxlSoz0k+VKqkPtNoUvzKhXu6gDQX1nkOdZv3ptZBxVu/kBYegz84kk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788586938; c=relaxed/simple;
-	bh=XyPmaHbpbxTx4fw6I5Gtffocc/l1q0JyadVOn++n1Kw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=psEvtcKemI2+oeblvbSrh7cSdM3Wf8juBh9e7WT1cWp8vS2dXkuEfgJHO+G7jtyYuvrCfQtjFbKg4Ai8uQoecWr0eHT9O93iUUPhzGA8atCRDBkL924cxBNSyDKHH4oCZIu04uOpANh8xIZ4MNklYSAj3yCDQkpt0t/vfxSUuMA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=CaIif5gS; arc=pass smtp.client-ip=74.125.224.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1322733DEF7
+	for <git@vger.kernel.org>; Sat,  5 Sep 2026 06:30:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788589816; cv=none; b=YFKW940ptzIKZ602SPIlgRbI3x7GtfZi3OTFjGr4mrAJTBJGUxaJtKOsGN0ImLzw7jFp+QZR0t4Qa/HHnpeXAssvewzD/Pkn45j2r+zgNcCCm/fyovyYb+nmQPyPt51kgJUnlYLKhamUotQigye4nVVxtl+pwbg563FZPSiYB8Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788589816; c=relaxed/simple;
+	bh=7XVSqUlGtx6m1xW1+ZGbD/81Zu7Gl7XKzN6H9IyIahQ=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=cb8gfjwaaFUehJexB22LYVMWuvV3m+1xYOkzYnIOf8C4PhIyZ8CqZiWJxzxM/ABa9OwKq4EMR7Ab7gu9PDNi9LTDjqCrtn3YNQ0WAf5w7gbotYk88d9s151pozaUjJWjUua5I8iu7iKdHyAH7S6A1n5saNXDybgLAL5POImla10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=o8XA8O5W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uC08FxXs; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="CaIif5gS"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-66f78cba2e1so1858053d50.3
-        for <git@vger.kernel.org>; Fri, 04 Sep 2026 22:42:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788586934; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YXbPM49WDXCJsbYoxE6MfAcTBOsheu8wfUVWoa09mltr/4t6UnwNzwKgyDOkmQsEwQ
-         WXBy2aJGbalTp3F4yXAYCS6tttrbbKdv4CgZSQvDarIPZ01aIYncQsk3Fum2Qj9uDlbw
-         ExgdPF2OJyxjlwS/wUM+FHqMmBJgg8HHuX/mvsuqXWUpTrdV7pqfXKV4z3sGmrK+guKt
-         jHYK+Wvp1ZxdnyZOAuBqSvzg9IJG629vJrrqpfWth4Qpi+xnAoyMZpBXIHxrn2XHl6NU
-         L3vIqi8iM73kic2xkIUAVRhCiigrx5LGN9/v0KkXZE1ZiNlqDUrGOSQ/NuEpWZvLWP9V
-         qwHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=QVo9x3tU7nO4TMcgnEdcwdRNPEB0D3r0V3ZcPhRJV58=;
-        fh=B4xWB+FGXOTbjOmSImyCDTJrSmSxCk3OUUi821w/3eE=;
-        b=ZD/I394A3ZrfHELytO8DAqEcQwWeJRniBu3OOFj9QEj3wfNnZT9AfInQf1gWYUWyfE
-         XXFBw+WyGtzDpHlzUcGvcAMakXFdHxLJ7WsctpITUvOHUPbskRhub6jKwbSIN9AHO+/O
-         zGTZn1Fx/Qb/isdzTgFWEVRwiFNMQUjzokLjwNpAB5QL+RQGP9dsDB5qM6SrnBjEEYjD
-         dFz0GGmfuQ2oRos8PHjjUMvnZqAj3W6lcTara5pCz6T6a0HrdgVoni32H9Pmd3lqQQDQ
-         RmaupJIqhggy77Mq7AaOdvouVs6I9LYB8eLnnvfoAXBu0ydtoE1VpcLMYgmjUO4xRURK
-         6V4w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thomasbachem.com; s=google; t=1788586934; x=1789191734; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=QVo9x3tU7nO4TMcgnEdcwdRNPEB0D3r0V3ZcPhRJV58=;
-        b=CaIif5gSL2YSAUHBrX+nThnRUxeueIaHF1QUJ3P6GS4/cQx4AHp8IYNj5HpOdzmKS4
-         KTRBW1Vvq2O0Ojn/fpUfxEnW9y8+LWwbzqXPhoT+KArMSb+FC6M256cuuSjhhrRX189S
-         fCG78SP+DVc/A/fm0IyYBQoZL2008ejnNO/9nxzc9QCpiGfxoaPl47m8eO7Y4uFGdE2m
-         IPWiHf/XvjitdxpeSQ6BgmcIbgxb7OY6j8UANI1tAj6sHX/OmlKSz3lWRC3hg1EMqSgU
-         XxB1GevoDrevhLgViMAQmWnbiySF3Ot7lUaFjMuMWUny2GCceyU2bEL1WPmo6vb4aCAE
-         CZKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788586934; x=1789191734;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=QVo9x3tU7nO4TMcgnEdcwdRNPEB0D3r0V3ZcPhRJV58=;
-        b=cE5sVuo3V9oyI5GmkOT/UDTNgHcEQrPYkluqJy1tAkJguYkyWfnvCe9HfGOu4Q1xMT
-         9N3DCd1JX+cifXdTdLW6AU8XWUZ7K3UqiHI+zqUSeXhjZ2nw/TZS8DRDmhVc9zI2iXjE
-         k1Dt1AFEk+EMUEHXRouDuaVXGNE9C3SijT2NxAKi0Mrv6SgudVm2yrej761Zqfna8S5U
-         ZLZF3NNWU3PUng/o2szzuklpxb9htntUOH8tnBFjjTrgk7/osK1IYuOHE26RUgc5F3FM
-         bbhBvK/ZGBbDcnxf5pXwEQBbp/iQYRE0y7brT4F2oQavMNR4Pi/l2MD6t9aHcR5lXGp3
-         x2zQ==
-X-Gm-Message-State: AFuF++mi0dHGL57z9H52oQZSWpvaQ3F8lodgcY3McJSmfDiv7psF0ye7
-	O+5UCslIfKgte7BIPrKWlmI8hVcFXJw3MQGxZkSAgjo6v/8vmlMTEJFdT4fSUsqY/51TEwufi8i
-	BHR6rLq5fqpkPCOam7fSV0PNIRh+QKfQWYq8AQ5btjg==
-X-Gm-Gg: AYBFou3q5kWIl/z9FVxLzqEaK5LDq3szQRFh/LZ4hPuWuz6TpRqh1eCPCP+l7xPkVV8
-	uVSkhibCYxJXxu0nHKIHK6wAiEvErNECyHD90UjuKLMTBogG+/MJjGBHmAiIoLvJP6LdXAnnPI1
-	s61SUFxeyXZP7n4hATEQuTuVtd8HJJEaABBRFvvGlgZHSbrNwog5VoPMGa/dNaGkwUbhsmaZ7Be
-	/behuFZB+gN+uiT7MQoA2sBeJDAHPrla3cu6NzxR43N0bcsoSxXgMprGU84nUPaIQrEiK/xDpK4
-	fG7dOuSrtTrP9BenoTAsL8yNM/MAiY/c6vCUmzJ41OIr0CfhlEP9PbletT8b7vYoLX2FhkZrGyG
-	ZgG0=
-X-Received: by 2002:a05:690e:2590:b0:66d:7f5:37b1 with SMTP id
- 956f58d0204a3-66fb59b568emr2608096d50.18.1788586934443; Fri, 04 Sep 2026
- 22:42:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="o8XA8O5W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uC08FxXs"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 36587140017C;
+	Sat,  5 Sep 2026 02:30:11 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Sat, 05 Sep 2026 02:30:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788589810;
+	 x=1788676210; bh=naL6z2O7aMEAdM5LvC4JHzlgf0AZokcbFCr1Yb60Rbg=; b=
+	o8XA8O5W83V5AIJy6Bmr20hE1thdl5fY2/DcFpxThu+a4zyJJKEM9Kh6/Mb4cXlO
+	1bQIq9CWb2tVvYGn5BcE6ifBsy3Py7STuDAbdxiFaWyYGQDzYg/DjRjgo8ioS3g7
+	dHjDWdZ7jd8rrhr5vm/wi9vc/2xYKNhXIOtIukmvqcz0LAilcsMrHtRLMCtI9N0i
+	IlXjKsfU9AMxPeXaDe5sssngdQgTPhviUhAELG7QLJrxdLPN+Z9rcsff91OCs05r
+	FqzxpIZCuIc62yQCbsKwxolLGpceiSTvircM5pxUxipKmF/pq8GcGKFgD+674GIi
+	TTFTpxwHT7f0bROdgXnPEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1788589810; x=1788676210; bh=n
+	aL6z2O7aMEAdM5LvC4JHzlgf0AZokcbFCr1Yb60Rbg=; b=uC08FxXsOK0jbbVnW
+	oqtbFcPL3G6hiC1ppez/VPs7QncQ6TsoLbUE+MqVbvee/wL6qdNhV/3Zf1ca4aMD
+	TDU/tRfGX+aiLjcaur4w+i1x4oEhM6gGDq+5IcMHktNFQKIS1tFyJC0yh7QPfyYi
+	GeE9+QuMRAU0T8/44BdNv//UM7lC3w5QEmRhwZcMXuLc+E37CHl1FX9qRpT8cZUR
+	67lNkUv8CpyBkUOvmbZuIPe1Czg4SDHDeYTHOTNyJXHOPP6ONpp8kptf4+Ud/d2r
+	MSRVFwjblc9F2EdAzqTcOnFfU0XN8qw52e5b6GKLXEVEAxCYQgR9Z4pNAuAfOKnK
+	GhDFQ==
+X-ME-Sender: <xms:8LabajMyO9OBbzoVJ7khD6fB197i1XsKezOJGrrsnR4RA6hDYHdjqbg>
+    <xme:8LabaowF4XuOGwmVsd0mFKwMyS8bE57QT42e82eWUEMJpEeDJ56VrM7DDoVuS92xy
+    X8jQdyhhkpi67-zvetJ36G-2oVfUfePEQ7NFtkb4lfDrYVKywlNzw4>
+X-ME-Proxy-Cause: dmFkZTEwUhQ4JTWaqUifUBP3ZWnMVGxUurcjLlAxnm89YiDixeXyw02tIFm2kK2r5B0PNa
+    MSw0fbLan0hUTPHeui/oqJj3IYgEthxCOnKukcXivJmCvZ7nU9QRRsdN6a4edL70MClpUv
+    KmkxSudPLSb+Q/gJJ7axgoiWwCFjk/JjRN0thWtbu/8fa34FA+R/DdOEEcxqO9TKYeNZBR
+    5JgH9uarHAFc3FYqVp0dF5b6FKOp+DE+RqwJ/4wvUVClJtfUP+sZ4Yay1zetKC0NPjAFUC
+    FrZcmH/ZX0scsLT/Yw4hs0i3xffPvKfZeKhH2SBh9IfaTTWXt8Gykhopy7hPjVc5poFVjp
+    SEIDlppQkExtQlS7ZxIsMDaYQKFMWsvdRJEhcT3bLYwsgHyuRav8TO2XQ81a2SAAEcpH4x
+    Iqj8uauEaiemyVIcBIKxnR+sD/JzIj0CnTrSjap2IXQM65mphvKx1Rantq5wPSDP50zH5a
+    yn702dwyJdhjlq+Q09+DWOCfaLsa6nzrN4sP8U8/BrXstRrHTYJm70fcSOUXKDJDE2/MPv
+    R35JjnIzZXwO2ypiMzHsDIQWcx1WN2/yad5OvNw4zaxrJI7O+4wbRryBWMTtgXrpPa2CPq
+    cI1tJU6ibxEV3DP1X6r+e0tMlGqPnH+MnzV1iA4xM1sjYb9DbmSgDAS3XIAw
+X-ME-Proxy: <xmx:8babah6M0vIDRj8Vs1vuwNBGCRqgHyqjtSuLqTI2qUO0QUT7MmAEVA>
+    <xmx:8babas3lCuVvLyqxJs8FM-4Tk0AQzPZiOmo5fSvh1Qt5_hjfw0o__Q>
+    <xmx:8babagCE3NhR6AlENbN4GJRbz4BXDhf1EoXnqThVFn7r0qQwk15Y2g>
+    <xmx:8babam0fFMJUV6HPp4GWhhTXOI7-pLi9gHzViyz7UWozmv6Bs4GlaA>
+    <xmx:8rabaiiotYCmu48a45F7Jf5QSpiWuNY_cajYh2XZaqPIw8GvkhFyl5yl>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id AD55022C007F; Sat,  5 Sep 2026 02:30:08 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
- <pull.2217.v2.git.1788537086.gitgitgadget@gmail.com> <9a6fc0427a8bc7e7abcc0518214b1dafc2efaa6a.1788537086.git.gitgitgadget@gmail.com>
- <xmqqwlt03e6k.fsf@gitster.g>
-In-Reply-To: <xmqqwlt03e6k.fsf@gitster.g>
-From: Thomas Bachem <mail@thomasbachem.com>
-Date: Sat, 5 Sep 2026 07:42:02 +0200
-X-Gm-Features: AcwNN1Vh7hegFQKFOQFZvF9N2pvOvvQhZV_l91seYYQBfwJfc6a2Tzx_tVT3omo
-Message-ID: <CAA0xjtokUaNPxwucZ6p_-G6DsmEMsX9JfR4UOwZK=crvEd5fAQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] sequencer: keep auto maintenance out of the
- commands a sequence spawns
-To: gitster@pobox.com
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk, ps@pks.im, 
-	johannes.schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Date: Sat, 05 Sep 2026 08:29:48 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <9461175c-b6cc-415e-9344-fa19c194876d@app.fastmail.com>
+In-Reply-To: <xmqq7bl03723.fsf@gitster.g>
+References: <xmqq7bl03723.fsf@gitster.g>
+Subject: kh/doc-datamodel
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
+On Sat, Sep 5, 2026, at 01:55, Junio C Hamano wrote:
+> * kh/doc-datamodel (2026-08-23) 4 commits
+>  - doc: datamodel: link to the glossary
+>  - doc: glossary: link four of the terms to gitdatamodel(7)
+>  - doc: git: link to the gitdatamodel(7) tutorial
+>  - doc: git: list gitdatamodel(7) as a concept guide
+>
+>  The gitdatamodel documentation page has been linked from a handful
+>  of key documentaiton pages.
+>
+>  Will merge to 'next'?
+>  cf. <apUrC_ROf9lyiuAm@pks.im>
+>  cf. <954865cf-5984-4e0d-9e8c-7c874896a1f2@app.fastmail.com>
+>  source: <V2_CV_doc_datamodel_advertize.c20@msgid.xyz>
 
-On 04/09/2026 23:21, Junio C Hamano wrote:
-> Does this have to be a "struct strbuf", not "const char *"?  The
-> latter makes it clear that it will never change its value once you
-> built it in disable_auto_maintenance().
-
-It doesn't. I'll make it a char * that replay_ctx_release() frees,
-built the way you sketch, in the next version.
-
-Thanks,
-Thomas
+Please don=E2=80=99t merge to `next`. I will make a new version to addre=
+ss
+Julia Evan=E2=80=99s review. Thank you.
