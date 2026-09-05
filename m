@@ -1,114 +1,163 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE86E4ADD8C
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 17:01:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFA24E66D4
+	for <git@vger.kernel.org>; Sat,  5 Sep 2026 17:13:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788627687; cv=none; b=MIKVcDddCI/K7ULwdruycYCmp829sp0IVvvBcyjAHsLJIrcoDv6ktm3zHaaKlDbB/tANiAAS1szWKi4BnTsLPP/1oGhxr4eDbJb3POO+SlvARvNFBkh/F8YjWWkKcJJft12jon+TSl1foFiu88DTcQ5cro8W8j7GMHqbdepiWV4=
+	t=1788628416; cv=none; b=Mg9nfZYK9KBWZ25I+50hZk1kIDKFjxVslM13+l25LAh7Aw5Npq9v1vNfohWX57zhXrQlLNF2/Jd0YuBi/calBaMVmoe4LO99kTNdbsTkdanGE0KE+moK8oY8tltoV2bzQNdxHi2kYwRypOvLQpeikHxGZXAo4VdpfjqVjmf3s+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788627687; c=relaxed/simple;
-	bh=lqAG3S/Q3e/EfbAXJnhEDNSQwEcrJ5voZMrkpnIrOpc=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=SQD+E2itzWKtlgX7cenVxufqjx/g8FQ3tv96IUDyxMeF2fXLuZ7afDZMu5xL8WaBpJhYJA82m1r7MduCzc0jakOYvH9mnTACJ+Cft7ativzUq9BVxYccqTdfIis2VmHx4Xn4DUIsKxVb9QcIu2b4PhuvN5IDJ29dmmogNcE6sW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=DyOj14g+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hNMhCsh4; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1788628416; c=relaxed/simple;
+	bh=ddX8ttWJl2zHfwcBKHgN/2G+G7NR1x0S5wJW0Vrvel8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=nyb3AJe17NIphH2H5SO0Fl+73qJqPolvyDNJYvQfWbp/xyrE0veU31YWBeP0EQJ8Nvr/fRaLntsQCO22o49w0xP4r2aa7zszh+tM6yYDyNghelyoz48MflP8JgUuv2vTDP0d5ncJPxerlDq97+JoEOd92D2d+Ru8uw1nOppYH5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=jXeGwgfJ; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lex.la
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="DyOj14g+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hNMhCsh4"
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A802F7A0056;
-	Sat,  5 Sep 2026 13:01:24 -0400 (EDT)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Sat, 05 Sep 2026 13:01:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788627683;
-	 x=1788714083; bh=Wo0IsUZKxdfiZHdAl3XMTkmVbRtANWl0d0PIcEZe+Wc=; b=
-	DyOj14g+ChttO++iIFRoTnUmNv6A9ndmirm6YFFGDkPHI61m0PpJ1bupPps+Jkir
-	oQLsK0IiKOdGnGLb0MS6YGrmzRgn1CHXBeWxKxKLp0irspq6/7L/wdDkmYOKJuHy
-	/IyqdCzPZ9g5BUWpcBnLsU+Gpfq+2NSVj+nvj7zUqdr7bQMSltVCPX13cVXeQtyG
-	70FIjn5RffVqZYO1txKDK6XpnmAhmQhpVuqnuiaIB6lUwW2jmF5qbFIwoNT+uAMM
-	GnZOHrpShoXz8lLEQg+RXjBXfSNvwaCsd6L4S40qQQxGILCYsY4gRH0OBxQQAc0z
-	vBV0fjXzXXweIXSxQIGgYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1788627683; x=1788714083; bh=W
-	o0IsUZKxdfiZHdAl3XMTkmVbRtANWl0d0PIcEZe+Wc=; b=hNMhCsh4EaoXNZYZ4
-	Wyszp/2DJkPzaraM/Lbg+Z0RN8oWKuiGrfPjSYkWhAoDR9S/78ABRlpHBlC9xYas
-	j2bdCVERdN6HDJoGvzGEXl/rFUMv7bBOXRpd8NzWrhEUNk7sy9CISWLqB0sRJOGe
-	2eYiyxtpzdHXjaUn/oYcyeJHD7ZwroPrSJeMKPN6cMdouREnpU9EHnI/WaINcUFs
-	wbW7FxGwAHGvRA4BCMacoe6vUxwzG3eVDQ6cRHZVZViVfekh/qB9HTiYFagVuMUt
-	cRcVD4XF2q5YM8rM5oRIsax0UvfKsNfGuFwVcxpV623gFioYOHNnMuitIExXudJS
-	Q9J/A==
-X-ME-Sender: <xms:4Uqcalpsmz_3OzsHxrlxP0a9GVSR0uUOgqUJ9IiRbaaEYEFGziJaMpw>
-    <xme:4UqcaifSDIPI9MTb97XwlFzJi6s-09NujrUTRb4u6nWQBQm1EHwnxprIDTPPRXdcr
-    hU0Y4OqvSm2R9BNDrm67sKJJegxC92_D9x2lBHBGKlZpZlISXRNWUw>
-X-ME-Proxy-Cause: dmFkZTGzkOP0Oj1dU1QhwYsvE7SRzUYsx/FONA5fdk6u1AMi92oAOtEq5W+diweO7itrSU
-    S2SnDENnp+TpXeBx+xOyKvZbK+D0R7QKCKpCsJpZm9Kmizt9DoDqlIDGUHCjz80eAoBhTb
-    f2tKGI3DmdtmqeY81+t1Zsrqay35g/h9aNUI8jWhftDwmIt6WadQe6tpEFwuikKgPPYXlg
-    lY3nXMUhmtudO9PQQZbScOpTE5iG1eJQt4wmOO10p3zed09PMpByIfYF2ho/FqYlStCidb
-    QN3eX6cueqlgEWkDlOyLoAqoc18TaXu1gRbSjL33QkdTysYS/FbHwfErUrmKuZTfVb46c1
-    aQ1P+O49fBv0IMSmJXKJZwYSIfM8uk0gWnYRjI9nKt3Sgk5ENHlfgLQpGN+r/t6IglcSLW
-    ROiBXGxn1s2VnM16VMA3zXEl+s6ag4YGSVFHU1zJY6SBR7uKSOkX3PD2PS5d/lbJlkpk8c
-    PxYUD8JUVfqTS8VgwaZ9cDqyuLI78o1aJXiv8Tg/0qs8wc9W5DUGbixG5N3jXzpzuQaik5
-    7FS3RZTRfiyr3EPY2ND7641O77r1APJGhM4CYMczF/qlnwsxov1ncef8wZpZUvJdCeBgXc
-    0rLCu548waJHPkg6K9p955FkpiAfpWdq413xZrKnUtIK4oqPEa2xwJAR6Cdw
-X-ME-Proxy: <xmx:4kqcagWeYTHiTcvQaFgNUm_o0wO8weEwFr_4_CUgHs6WXZswX1jkaQ>
-    <xmx:4kqcaigP_-QJ2kBVfE-wLip8iDRirtFTDlcgf0xNBx3mEOz2gnIjPw>
-    <xmx:4kqcar_h3TpWPnpOriVhFO0Ic3oBF-X-E7WC84MdWoIeblVNsonlwQ>
-    <xmx:4kqcasCj9sSyMhgxpPNJEK-b51b33FEhj7DcHyG0XXbBW9N_QUgS8Q>
-    <xmx:40qcalPzmjcQT_8BmIJbz57rUMB-H779-XS-Q_fdr258tZvSKwyf8tj9>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 6394022C007F; Sat,  5 Sep 2026 13:01:21 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="jXeGwgfJ"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-49ccfbe062eso18192895e9.3
+        for <git@vger.kernel.org>; Sat, 05 Sep 2026 10:13:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lex.la; s=google; t=1788628413; x=1789233213; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=I+1Wg1OHObIRX9SUBC2Bwv7iwYXRfuQNHv2QJnAVXAo=;
+        b=jXeGwgfJndJnKTk2aXR6QHojygAvgQtDDakVcJs6YeD/JNsb3436S2x9FWmO6e8WZ6
+         TLOYS2nk2HabqZ1CF790cVGMEOnRRyH7SlCxazV0j3K/s+wL7hdt7oNJqvqcUm/j+hw2
+         hqHfANF0b3hd8CS3Qf42fLmCs5CpM7zs/1BvM7cxKbw+0shiJ1w4FT6ZNr5ugFnRe54D
+         Gpr6pl3vi2yKFFxUzXcx+Dv2nqxYcbJqpGFbUyJJJbiC8RE71QcwTxLaYJQZs8kajWY3
+         K2tMRyomCrsSD3Wgg+AaVAv6uaGJNWC/CKcF/HfIB3wg86gn/dHR6p+n//P+cWfNuJbn
+         J05Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788628413; x=1789233213;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=I+1Wg1OHObIRX9SUBC2Bwv7iwYXRfuQNHv2QJnAVXAo=;
+        b=sGuzTfLFvGndYmzS4TfpumwSRxyvy2rirR9JfU3cFgL4XU7AaxvTeX+V6waMURWRa5
+         z+aSlHYdC3NRlcEgDUp2hZ29L8DijkndRCWyJ5DtLtQpHKAYXSgVH/BWwyG5X+AO+WY/
+         BIQci/qpKU69EmuEmq0kUCMyB0MltmjNEWIn1RkgU0jIpauPzyfKhhOyxBmVPq3mIM9G
+         TYdGy9G/3Rm8HUhMukazpmMaoVfyM1SP1FLvisFSecFFkiIi/Z68gclJMNIQariD5bpg
+         iwPi+XzZN2ynqWUfoG9zbne6fludTfdd+ggEGOeI6JWNVNMmXtkOSgVSSEEUISXH3UMl
+         +k2g==
+X-Gm-Message-State: AFuF++mvFblsNmdpsF/KfWU6XoaDpbpQpYvtTs+k9B4/QQAlIpwFGdtm
+	W89bv3LUEcArqCUFZziXdnBUwGlmPP3AXZC/emVof3a0Zdgf8J+4tqRGQcyFkpqROoO8EkWT6eq
+	MtTVPC5JjSlJy
+X-Gm-Gg: AYBFou3t5nQtpz62aQOr414qY3lXozECRqx48i/3bAJJjgxsD+oJ0TZTahBVJOn7F1f
+	okxa9R9cvzknZlRSxTAfODQfU4+N8ClQMcxWa8keY3giJnATZScN9aOCdi/2nhsOWE/meACWd+B
+	VpoGn9fDruDLYxoXqNeKvmWrd3PgdbmdHgh/PoY5QEV2KerpdZ5fAe3TqRL6FHS6Yop1V3iXOiA
+	OunLWWK38vbjIAhQ6nsJwma9y4eLEVw/wyAraUQeQD4064cHWzX9HS3Zz1rmEeUSu5cNUXJ5WKX
+	JxwbDtOH79ZW/96vpnXIfQ45cftHFegLR2nG1NryxYEZPMmqJgPJms5c41FSa9iMeOwo2BG7mtX
+	/hL5nWnikVHduoc+SjvRQWzODDG6fNHcV7qIyB8XgEfytfWhvgsx10BVzW876KWba1oEPCLaChC
+	aG5nH/EbERvn/RzA88LDVrsc+iqk5VbsoPl372vd2mO/NoHQvni6pU8URejWlZLKlaalChpGn4/
+	8WTMnk=
+X-Received: by 2002:a05:600c:64c6:b0:49c:fa20:cc02 with SMTP id 5b1f17b1804b1-49cfa20ccaemr108358575e9.25.1788628412627;
+        Sat, 05 Sep 2026 10:13:32 -0700 (PDT)
+Received: from ownbook.home.lex.la ([84.17.55.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49ce5927b68sm272038735e9.1.2026.09.05.10.13.31
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 05 Sep 2026 10:13:32 -0700 (PDT)
+From: Aleksei Sviridkin <f@lex.la>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Aleksei Sviridkin <f@lex.la>
+Subject: [PATCH v3] push: fix --force-if-includes when remote-tracking ref has no reflog
+Date: Sat,  5 Sep 2026 20:13:30 +0300
+Message-ID: <20260905171330.34646-1-f@lex.la>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260903010547.85469-1-f@lex.la>
+References: <20260903010547.85469-1-f@lex.la>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AA5_BBXhTxhZ
-Date: Sat, 05 Sep 2026 19:00:47 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Fabian Kratz" <fabian.kratz@proton.me>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-Message-Id: <abd6ddbb-7981-4b1b-b050-73ced5b2960b@app.fastmail.com>
-In-Reply-To: 
- <T7GtKqbLStRVv4G9RYr5tCWEEkfQ5s-KzbS0OeeKfVArboamsIObGafTbl_XHsXRcCP3XjsR0xEqOsU3OzGVIurZWLGOnsUO9ZUn9UG0XHo=@proton.me>
-References: 
- <T7GtKqbLStRVv4G9RYr5tCWEEkfQ5s-KzbS0OeeKfVArboamsIObGafTbl_XHsXRcCP3XjsR0xEqOsU3OzGVIurZWLGOnsUO9ZUn9UG0XHo=@proton.me>
-Subject: Re: Typo in man page for git-merge
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Fabian
+Since 99a1f9ae10 (push: add reflog check for "--force-if-includes",
+2020-10-03), is_reachable_in_reflog() stops walking the reflog of the
+local branch at entries older than the newest reflog entry of the
+remote-tracking ref. That timestamp is read by a callback of
+refs_for_each_reflog_ent_reverse(), so when the remote-tracking ref
+has no reflog, the variable that holds the timestamp stays
+uninitialized.
 
-On Sat, Sep 5, 2026, at 18:29, Fabian Kratz wrote:
-> Hi, I just read the git man page git-merge and believe that I found a
-> typo/error in an example. I don't know if this is the right place to
-> post this, but this is the section:
->
->> Assume the following history exists and the current branch is "master":
->>
->>               A---B---C topic
->>              /
->>         D---E---F---G master
->>
->> Then "git merge topic" will replay the changes made on the topic branch since it diverged from master (i.e.,
->> E) until its current commit (C) on top of master, and record the result in a new commit along with the names
->> of the two parent commits and a log message from the user describing the changes. Before the operation,
->> ORIG_HEAD is set to the tip of the current branch (C).
->
-> I believe ORIG_HEAD is actually set to G here, not C. My own
-> experiments support this and it's what I would expect after reading the
-> explanation.
+With the files backend a remote-tracking ref created by "git clone"
+has no reflog and does not get one until it moves. On my machine the
+leftover value exceeds any real timestamp: the walk stops at the very
+first entry, never reaches the "Created from" entry that "checkout
+--track" wrote, and the push is rejected with "remote ref updated
+since checkout" although nothing on the remote has changed.
 
-This was fixed in Git 2.51.0. Specifically in 953049ee (docs: correct
-ORIG_HEAD example in "git merge" documentation, 2025-07-05).
+The cut-off is an optimization that rests on an assumption: an entry
+older than the moment the remote-tracking ref last moved is not
+expected to be the one being looked for. Without a reflog there is
+no such moment, hence no cut-off to apply. Initialize the timestamp
+to zero to say exactly that: timestamp_t is unsigned, so no entry
+compares older than zero and the comparison never fires. Using
+"now", or any fixed age, would instead cut the walk off at the first
+entry older than that bound, which is how the failure happens in
+the first place. The price is paid only when no matching entry is
+found: the walk then reaches the oldest entry and falls back to the
+merge-base check over what it collected, where the cut-off would
+have stopped it earlier.
+
+Signed-off-by: Aleksei Sviridkin <f@lex.la>
+---
+Changes since v2:
+  - reworded the first paragraph as you suggested
+  - explain why zero is the fallback rather than "now" or a fixed age
+  - dropped the Assisted-by trailer
+
+ remote.c            |  2 +-
+ t/t5533-push-cas.sh | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/remote.c b/remote.c
+index 00723b385e..6d301698ca 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2751,7 +2751,7 @@ static int check_and_collect_until(const char *refname UNUSED,
+  */
+ static int is_reachable_in_reflog(const char *local, const struct ref *remote)
+ {
+-	timestamp_t date;
++	timestamp_t date = 0;
+ 	struct commit *commit;
+ 	struct commit **chunk;
+ 	struct check_and_collect_until_cb_data cb;
+diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+index cba26a872d..bb8878c593 100755
+--- a/t/t5533-push-cas.sh
++++ b/t/t5533-push-cas.sh
+@@ -396,4 +396,22 @@ test_expect_success '"--force-if-includes" should allow deletes' '
+ 	)
+ '
+ 
++test_expect_success '"--force-if-includes" should allow forced update when remote-tracking ref has no reflog' '
++	rm -fr dst src &&
++	test_when_finished "rm -fr dst src" &&
++	git init --bare dst &&
++	git push dst main main:branch &&
++	git clone --no-local dst src &&
++	(
++		cd src &&
++		# a clone leaves the remote-tracking refs without reflog
++		# entries with the files backend, but not with reftable
++		git reflog expire --all --expire=all &&
++		git switch -c branch --track origin/branch &&
++		git reset --hard HEAD^ &&
++		test_commit D &&
++		git push --force-if-includes --force-with-lease="branch"
++	)
++'
++
+ test_done
+
+base-commit: e9019fcafe0040228b8631c30f97ae1adb61bcdc
+-- 
+2.55.0
+
