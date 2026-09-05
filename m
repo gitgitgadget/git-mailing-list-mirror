@@ -1,82 +1,81 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B846D223DC6
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 16:29:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EEC340A6B
+	for <git@vger.kernel.org>; Sat,  5 Sep 2026 16:32:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788625805; cv=none; b=WMQ0gBEo0+ngg6NuGZC6uIz/tsJxsE7lG53GsGjdVZ0PJ1CqPiGTmAexd9JP0bDcMDPKoJ4f6q+zwPnSEvRLYgmcYbWzvM5Eo4EB2Ns4cGTaSk4HN1KRyDG16Tx7/WEqa3Znl3KsIPf+NwdJAx3zAmvdkw0rZznF9g/wefe/vo8=
+	t=1788625972; cv=none; b=nqyuBWappTuzyssWpqPlkdR+CS2x552e9WwuNWFGdRXg4aD47+Yb6QTodg0bv/aJaruyLRdyBLoI0cu+4eyaT7vcXm+XHrvm3uXq8G3DTBNWWAFQXBL+Q7IQFPzWffoVsqmLAkJuQ0cPeZK343qAfK3+PeuclSqHETP0nZdbWyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788625805; c=relaxed/simple;
-	bh=mUGr1/wxvwz8Q3K6bculryA3DIThks2tHQ/WkXKGekk=;
+	s=arc-20240116; t=1788625972; c=relaxed/simple;
+	bh=k+LMs+zjh3kgTLOClyFdQvamromE1bvusoUQ1uQGHYY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ozsj73MPa/KXPS1AFBXSHRatfuH5Q5RD+kv7e+Ia7pan3WenrOP8Zc6DTrnkfTK/JsoE/AOVx8ChvZ6/xRXrz4Ch5ATX6hArMCLKA9gNrP8wOBh2jf6Fn9k+Pj7upaxPz2TN9WXzAn0gcyMq6QJzoIcrwYFB39LN1ME6wFdClCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YbJ1MHud; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O6/dr3jN; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=VJqTxrMPpRldWaqQ97MOBnnQV56DyY0RQuBe6OUJu+QljeNNAqwrmYXr3ZUm3sGoVVDoHTfiThNhNN3A+IZa10jzYUxQHoxgyWu2KAE1YFfmlTCCWG6EkJ+k12goguGWy2p9FLS+jS1th4Sv2bRu3NaYdrTrdG2UKwGV6O65B9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mdevXAdn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rPrR/3n9; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YbJ1MHud";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O6/dr3jN"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 356511D000CB;
-	Sat,  5 Sep 2026 12:29:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mdevXAdn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rPrR/3n9"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4AB047A0129;
+	Sat,  5 Sep 2026 12:32:47 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 05 Sep 2026 12:29:54 -0400
+  by phl-compute-06.internal (MEProxy); Sat, 05 Sep 2026 12:32:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788625794; x=1788712194; bh=ZJSb61dcC5
-	U0q8tcgidKsLtdKK3VqAiuriQb+MfOVh8=; b=YbJ1MHudfgm5WlmI/6w1Fqpj+t
-	FhzqpHFwqujaToX6aUetmSSN3WxwVg7sXx7loWH6mEK+QJB+i/3ZUQ1SrTkDZGXQ
-	JFLrnTUoo5vWTwDMqHuTJmdpe/PZ7EonCn6Vnxx5Zkjc6gkD+Y/JVFdKoG7oGbC3
-	8lDQBK/r0hmPUk/VFxoMueEhjR6dWcdJ1Rgu27J744TYb9PHW/iVqxj54/gCi+Fy
-	V36Buc7RUsVA9BNeGIW15R6BG9CwPSgQh/aIwxZ9xVj1Y2NzuEq4hTo/aQyvGLJS
-	iZcFzEMN9I3lmN7GI5fnvP1wapJVmisVV3FM49EszuefSD8vO1QN2o7rDgMw==
+	:subject:to:to; s=fm3; t=1788625967; x=1788712367; bh=GilpXloc6u
+	xxli4FqXTJ1WCr5xWEmVZNV8sct9cqstg=; b=mdevXAdnyNsNbS8ndh+9g386wq
+	cDjOBGzvEOf0RFU+wDJienjclmkb2k9OjqVxRZyECSXJXUJyjxY9WlwbyWoXJ4Bq
+	jRHqfQ2uKYkJEbFtRsnD97VWSke4Z63ERIFi8aOG7P5S6n14STuTQJZEFQQoNKoA
+	Yb0AIe4585fqvuNyQQwq1RQRjFYl/jnKfmG3LDzAB7s7sCJ9uJvzNBbJirmh/ea8
+	chRwAQwrM8yKJCFWwE33N6X8RQ78fSImlS6LHzpwV8VI8OvNMfAXhSFp3ZbUP08K
+	d4gnlVuAJT2Rx08yl9uhB8PLX+k/rjasPNjK2kjAdpXtxQlZcuDDIs/RdUFg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788625794; x=1788712194; bh=ZJSb61dcC5U0q8tcgidKsLtdKK3VqAiuriQ
-	b+MfOVh8=; b=O6/dr3jNhZk/23tZqp8YdcpEkwbRBrW5o0r1GHC2FpgLoOGWvD+
-	+6MOKBKcfgPt8AT5a49BEOXq2yZqPfmsTOas4L84zA2lCjQ6EdHd719fSc7WzMM/
-	vTzVl6wd4+Dvr4tiSugHinz3msH/FeLLRiF8M3r5Hipq1y/stYW/9faSPYEQzb0l
-	FtU/JgV98HKgQ7geBS88GTaxVPVcvpm0dOhKfhjIb4/Ilao7bg3TFA9eQX/ZPc5M
-	XoWdvbtCvPR+rS+Crp3lSj1LUz4IWCBU0mCLiItX1N1zjrdEKL+AFu+xyzaYa1DB
-	yjw2iEtlrFTPUuOhUEv/0ggfeTzJl/cbQ+g==
-X-ME-Sender: <xms:gUOcaiwPO5F-8JIQ76kE5lVZ3NtcUCqgDHgHfR6ogIHt5ke4taVDKw>
-    <xme:gUOcahgG1T6deX4-GeYj0531_LI53mbf8wcrWdbpDHeDlc74pQU1ZkbgJZV58205J
-    EA10MVioybEhkrUD9GiXXV-Xy0WTu7Us7U9ZJeDg3SvzSatRpOVE4k>
-X-ME-Received: <xmr:gUOcatyrF3tZuKWVcWxopcVptqr_CmxzTRZTrzfOH960b8l1K3dqsY56KhPcoo50HMQOWKwcM2MZcg6dnBJvJxFMAm8zu-Opglhw>
-X-ME-Proxy-Cause: dmFkZTF6ByjzyVBERtOuSL9KKdmBXvQsDrIDSWH1/nbN1UhUZcLmev1tGb/nBx/9OPrgpF
-    sYJT6wqknGOIUL1rgX18f81q/RezQsJ5Lan5GpvYyY3H7eb19SocbsbbcZpiw9TlH+8+k5
-    ao9GbNBgZ9Gmqabq0ZQ58aPc3AH0bGyiQgza+ibFg4BdR0eA4L1sNdQdSv0wYcx4b1Rvp2
-    3L26CZ5rAlsU8Ah+K4GtfnzoldnRhy2LIeDEh3QkzWLpJ8q/nQcaP2R7xJV73otkUzFt0q
-    PAphPAeu+TMgYAbZeqE48WuT56nyO4nWK2yiSueXQc5LoU0fLv99p5LEQLO5i6WxNbTFB5
-    CQP5UZI3u9lv2iu4hYMTgRBAPv3el3Y3q3OSUgqz9+mR6SZ0CMm3Rw5eWvtaAXpwEd38fg
-    jHLwMDybyCRDcLDXMRIUeIbOWwPJj4hVzAGxqcli1S+3RhK64drXq2c7ZuiLrUiA0UI0M+
-    VMTR8CGm6ClqbEPcCSMdfTerkYUKqFiJoSA2mMUj3IygofuDnOwfj2pV/y90GBBNEl/E8f
-    /HVGNj5+MgKlY5sTjyfhFfji5IsF1Kbl+9cDSSg7nxm/YF+7kAwLU1IqEAERT3cs45JPUh
-    7c3hrueE7VinXRSrmgUaFeAmVjqiVLZokXFL3W808maUKzglIENY2DwnDCXA
-X-ME-Proxy: <xmx:gUOcakJQrU5UvV5JeU-OFK1w-oolsh7DRCLDcvvu7JqjQ9iP7cqWMw>
-    <xmx:gkOcakT5T3lTOp8qnZpzHkvXl6he5PHa1koddiqQKh4WjPNGT-WcFA>
-    <xmx:gkOcaspDg7HVoBFzq_ChLNbdrhVXxT66-BxSyez2IHlZA2xbGs6ifw>
-    <xmx:gkOcapoZMpGkTnYnC8HEd_uOe0XqBPciCAa-Ws58lpawKVwghq2Zrg>
-    <xmx:gkOcaqIIrUQxM4kd-Z7Kinvhg1jAJGxMO_hSY--yfbUtcEPBMYV3gS4c>
+	1788625967; x=1788712367; bh=GilpXloc6uxxli4FqXTJ1WCr5xWEmVZNV8s
+	ct9cqstg=; b=rPrR/3n95bba5ulTiC5nUSfNH6zKosr+BVlSbvii7zL3v52YFJK
+	Z0WeVlJDKEPI90yfXPr2yt8sMhy2EkPJr64egfVoQCNt4K/dGWDcZSP1tTAwxKxp
+	lbn5rdTaVOBYLu7mACGNEQc/Djb8nQ2q0zt1DGf7C7nYlMj5+3mK28X7MvF1zIzh
+	+KpITqMXwxg9Vr6PimH61JkL6Sfk2Lxj8EVKGazgTw0iSRU1ENK9hS63boqICe/Q
+	JWyUHQxb1zfyH/iRPToUDVKDyqedZKh+USeoBZ/xTY2grQxgaMFoYGR36gLbBGfW
+	zwrqLAe8J9dLWHV5KQfjII17iTDXkey+Nxg==
+X-ME-Sender: <xms:LkScagxW1KEAHXzGuLSzdWLiX_7MRWf2_AheztEpH969rzYUX1j5sg>
+    <xme:LkScarJR9IL23jFJ-GphI_ep_R00n7sTEnUocm1LWa1Vng7dIAYJhjfjYtMZ2zRjz
+    ydDj3ILGTjmtzRaBqupi9uvTDWqbEg1eXJziUnVIDPtCvuEBbTgSDY>
+X-ME-Received: <xmr:LkScaqpHl5JhVuf-ba5uUfGGEirEOF4D2SJDSUd6NoNav3ylrtTi627LVzhlUxcD-L1i4dbQq1W2abIzy2LGMi40DjpaphB7r-4m>
+X-ME-Proxy-Cause: dmFkZTEW0pCA6CZyKymC9OKjMzBB7uqvoEHhrSbiy9MDgHOOwPk8BXIa6NK9gcf8Sxe6AZ
+    U8NEVJZu46HSlUMQA61kbt6boCBtUMncnQc+fg6uG/iABJlv/3tRHvPGyOwxNsGkbM9uU8
+    K6rpwapPk99Iss3A0ZAxrm0fqAP9UfNrf3mdi+opDKk7olA5m86Dij2u54+tvDQCC5faIy
+    rP+QUjaEnL3cFBh6Mnppjq0uTjHeKcw/38W+Yzz8ME6iaSiO7OnUInN5R2CJEOfrf0A7PH
+    4DoDgIV+YI+5jdKMxEB+Yvc0wr/nMnhdjj9GzWEv9utzExDxnwuvbXzsbcEuQKgv48Q/r7
+    1Q5FU/pmMxBeBKiNgEU+F0ZHj6t4cjvVbu2l0NAQ2NEFrH95FLqQX0qTzOZWEs/hkK/ybz
+    hKCjkFhlMBK8WPA9rAJWkkhrUvmlTgVsUifOAnjypYHr/33DoPAJ5QBhcarnhYVn0tdmSN
+    b04Rz54svyVurejy6tREqqTVM8XsNz7jkm7J9bZCeeKDoBjCuCOzyHGfe8xbI3rDcu5wdg
+    UejijrMxNo9m0h5j+W5jkuAsDjcU8y8wFBdHKOP+ir8U8kH3HgAl0lUT0UeKKXhOfH3vLJ
+    Z4Yo3CybiT3LBYF5mdBxMTTvLmjTwG39viS218EMCIMhtEstkSLSnyYJPDmg
+X-ME-Proxy: <xmx:LkScaqJpJVe3ooMaFOTAhD0WOcg7CQvPAKOYD5_-pTqJTOH4yrfqXg>
+    <xmx:LkScavRCQ8phue3vWRI9k7-JIadyG9DgcpVkeew0Q-8974IZKwjnZw>
+    <xmx:LkScapsTt-F-0LiH3W99ft8bEGdrWe2SiC_fK-rCcKuLINosIWN8wA>
+    <xmx:LkScagbjrWnOaUxF7G_Fcr-CNMcwukPPcYbw4rDF6S2CxjKXLLMMwg>
+    <xmx:L0Scau0UzaRCiDqp_CaKkfA_lYh2cOmyYfm6Lm_ygnu8cw08s7D6sBHx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 5 Sep 2026 12:29:53 -0400 (EDT)
+ 5 Sep 2026 12:32:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Aleksei Sviridkin <f@lex.la>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] doc: cherry-pick: note --no-commit skips
- CHERRY_PICK_HEAD
-In-Reply-To: <20260904124435.12865-1-f@lex.la> (Aleksei Sviridkin's message of
-	"Fri, 4 Sep 2026 15:44:35 +0300")
-References: <20260903125524.67889-1-f@lex.la>
-	<20260904124435.12865-1-f@lex.la>
-Date: Sat, 05 Sep 2026 09:29:51 -0700
-Message-ID: <xmqqik4j64qo.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] ci: bump debian-11 job to debian-12
+In-Reply-To: <20260905135822.GA3914811@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 5 Sep 2026 09:58:22 -0400")
+References: <20260905135822.GA3914811@coredump.intra.peff.net>
+Date: Sat, 05 Sep 2026 09:32:45 -0700
+Message-ID: <xmqqecf764lu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,64 +85,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Aleksei Sviridkin <f@lex.la> writes:
+Jeff King <peff@peff.net> writes:
 
-> diff --git a/Documentation/git-cherry-pick.adoc b/Documentation/git-cherry-pick.adoc
-> index 42b41923d5..24a28d4e65 100644
-> --- a/Documentation/git-cherry-pick.adoc
-> +++ b/Documentation/git-cherry-pick.adoc
-> @@ -25,7 +25,8 @@ happens:
->  1. The current branch and `HEAD` pointer stay at the last commit
->     successfully made.
->  2. The `CHERRY_PICK_HEAD` ref is set to point at the commit that
-> -   introduced the change that is difficult to apply.
-> +   introduced the change that is difficult to apply, unless the
-> +   `--no-commit` option was given.
->  3. Paths in which the change applied cleanly are updated both
->     in the index file and in your working tree.
->  4. For conflicting paths, the index file records up to three
-> @@ -101,6 +102,11 @@ OPTIONS
->  +
->  This is useful when cherry-picking more than one commits'
->  effect to your index in a row.
-> ++
-> +This option does not record `CHERRY_PICK_HEAD`, so a plain `git commit`
-> +afterwards records you, not the original author, as the author.  When a
-> +single commit is picked this way, `git commit -c <commit>` keeps the
-> +original authorship and log message.
+> Debian 11 just recently went out of its LTS period, and is unmaintained
+> by the project (there is "Extended LTS", but it is a paid service
+> provided by a third party).
+>
+> The point of the debian-11 job was to cover older releases in the LTS
+> state, per ac112fd4f0 (Add additional CI jobs to avoid accidental
+> breakage, 2024-10-31). Bumping to debian-12 will cover us there for the
+> next 2 years.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I started looking at this because I got an apt failure on a debian-11
+> job today. It might have just been a transient mirror failure (although
+> it reproduced for several minutes afterwards). But this seems like the
+> right step forward anyway.
+>
+> I tested the GitHub job, but not the GitLab one. They should be pulling
+> the same docker images, though, so I would expect it to Just Work.
 
-While the added text does not say anything false, I am not sure if
-the last sentence hits the mark.
-
-Maybe we should hint that this is a deliberate design decision
-behind the '--no-commit' option, perhaps in the description of that
-option?
-
-The reason 'cherry-pick --no-commit <commit>' does not record
-<commit> in CHERRY_PICK_HEAD is that the command is meant to work as
-a better version [*] of 'git show <commit> | git apply'.  The point
-of the operation is that you can continue to futz with the resulting
-modified working tree to build your own work, and in that context,
-you do not want the original authorship information.
-
-So "When a single commit is ...", while not false, misses the point.
-After continuing to futz with the resulting modified working tree to
-build your own work, which may include picking (with the same
-'--no-commit' option) many more commits or writing your own code, you
-may still want to borrow a large part of the commit message from a
-commit, and 'git commit -c <borrowed-commit>' would be the natural
-thing to use.
-
-But that advice belongs in the 'git commit' documentation, not the
-'git cherry-pick' documentation.
-
-Other than that, looking good.
-
-Thanks.
+Thanks.  I also noticed debian-11 job failing.  Will queue.
 
 
-[Footnote]
- * "better" because unlike patch application, it can use 3-way merge
-   machinery to take the full file contents to wiggle the changes
-   from a different context into the code that is currently checked
-   out.
+
+>
+>  .github/workflows/main.yml | 6 +++---
+>  .gitlab-ci.yml             | 6 +++---
+>  2 files changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 205325eb33..a0c3f53c6d 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -411,9 +411,9 @@ jobs:
+>          # A RHEL 8 compatible distro.  Supported until 2029-05-31.
+>          - jobname: almalinux-8
+>            image: almalinux:8
+> -        # Supported until 2026-08-31.
+> -        - jobname: debian-11
+> -          image: debian:11
+> +        # Supported until 2028-06-30.
+> +        - jobname: debian-12
+> +          image: debian:12
+>      env:
+>        jobname: ${{matrix.vector.jobname}}
+>        CC: ${{matrix.vector.cc}}
+> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+> index 0242283c3c..cd6fd4a504 100644
+> --- a/.gitlab-ci.yml
+> +++ b/.gitlab-ci.yml
+> @@ -71,9 +71,9 @@ test:linux:
+>        # A RHEL 8 compatible distro.  Supported until 2029-05-31.
+>        - jobname: almalinux-8
+>          image: almalinux:8
+> -      # Supported until 2026-08-31.
+> -      - jobname: debian-11
+> -        image: debian:11
+> +      # Supported until 2028-06-30.
+> +      - jobname: debian-12
+> +        image: debian:12
+>    artifacts:
+>      paths:
+>        - t/failed-test-artifacts
