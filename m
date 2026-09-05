@@ -1,184 +1,120 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010EB44062B
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 10:01:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51251D6DA9
+	for <git@vger.kernel.org>; Sat,  5 Sep 2026 12:07:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.179
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788602489; cv=pass; b=AbzSKHAObppk6XOtjQH5CDMfOXKq1D9Yhv4nbfAowDfXcE9QTt/p6DtC34NzJUFcYWXD/T36nsGnz8nrjl55pehkw6ml4MDCkzEGhdgsJwTIu1awB1ljqaSWUSbTqRL2Hby4R4SlGBoCaKLeKjvSyBZOb2DpJNa/4fvCZen788Q=
+	t=1788610065; cv=pass; b=mmYushmMx8l8Q01/Ml3Z+ZE06Kkyj0KSqPN6IWtC48VSXxBRwX+Jc+9qhSyrkzDvfxCJhCaI8zwmw9sQmS8YtGrZhFGzXapBPT58bCBrl0X/vHSK1lnUwox+c1CNfvCKaQ4cUgFb6UHYR9GL8wZA/GPJ2riS4FEh3V60ad7O7Uc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788602489; c=relaxed/simple;
-	bh=f598xynJCs9MwksuZreuXYxFwyHfHBpA3PYtnCajpEY=;
+	s=arc-20240116; t=1788610065; c=relaxed/simple;
+	bh=hkywG2KphYDmivzPcgVi5FRlGta1KwIgRMycd00rtXo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YSWVB0zlowzy/riZ+DmvGZHt0B6Zxi3kAAnRpUwKxI98wlrm+7gjlWsLGNR/pYovxR4pNHo6ZJg2CkgpjxMowqDhYPMP/TXngTZPkr4A2+PoEXIlDLeNg/wGJ/b2pz9uaGynORqZ1eS5fIB0Y9EEk0VXR5GAwsLqhnGhOqqC4CA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T5JCeBmX; arc=pass smtp.client-ip=209.85.167.175
+	 To:Cc:Content-Type; b=AwCUA/Fh1qjDgHz4fS3Q2DtnZTUr8yXVpayWvnAWM4bDqsc5sOq/6IToCYFpekY3zEvaCGkyaLRex162Mlexys1QVwZsxWnqy8TQFU8FHaihawuiy5qYQo+xcdg8ORCIhJvikSq5aFb2R7CDBEZ7oqzMY7zB9VSTzIByPJSsO+s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sl7Z6d8N; arc=pass smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T5JCeBmX"
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-4a46a53abc9so1952505b6e.3
-        for <git@vger.kernel.org>; Sat, 05 Sep 2026 03:01:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788602486; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sl7Z6d8N"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2ce98cb8165so20983055ad.1
+        for <git@vger.kernel.org>; Sat, 05 Sep 2026 05:07:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788610063; cv=none;
         d=google.com; s=arc-20260327;
-        b=OoVw7uLqN6Q9zFqTBlpqaIe3a10IDrF3wgQAMLHOvJDsBB9plTjFyvXec+IkoltcdK
-         77t2tMnUSMB8/+1Z7Som5vC2ueF212iLfrE+0oYWjWct8+EbkYOEq1MUn6p5UZkz8U8x
-         UzAb+g6l/epdF4Qf0MMHvR8dob4v0bYBcK3dyfuBwK4JX4LxxYTDv7mOKKv1gg1/wjQZ
-         b/CmMXGPMfHJBd34aKMteHUw0xcBjd9luz8yn0C6erhNoceChypyjA6X8Tt7OXYYMLC5
-         039kc+nCA6+l9TGGwUrNx5HBFQxuxLtiwEqeQQX1/y7qeh8pEWERq7HaU5lpqa6Sksvk
-         wqeg==
+        b=OofLCflO1gKsacle+asINqFUzftFN/Y1GZCAGJiJD2vbze57GZeiwiHijzOPI9Xr6a
+         Sgt9IBxj6ZokA4Ewc7kjoAJEBGOCGmrnh1zGRI9Tpfy+bHdwBvux4U21CCqOROImdnd8
+         S2p7SbL3SuhS/OMLfS8nI+GfXgAaCcvCchWiJVrgcqYPOjFvtNByLjVGFPT8nQgDylfZ
+         JnMHImAUJi8TKYcqCpzG6onf3rGLtkvN+yMwh0Z8zkuIQit8aq9jpwP2IXpcVVI7Adv9
+         w5p/ZGV6StVccW4IgzU1SxIZVFnVcfF3eXnB4MHM+8EFHF0LPC8xd8AzIql4jWwqgSNm
+         d+YA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=NMsRlPIy5X/EMi4KsOVYOKv9YFbKBmzgt1iq2AY0htc=;
-        fh=rfLjIwn2a57wX7vvUPf5sv7xoXYLkb1by0ZOpcDOxJM=;
-        b=ZTqj4qpWcHWzwxC3kQtPlbLVGTIUrU57zKG4+8VGPxzRUnwOEN98WR7e73iGil6Byc
-         sIrmcXQVag7m6wh5OuWASPhIAMRxfcP/eNob5BEuwQJBDVsdm/EWg8wLPJbbmiQuf3su
-         LHyBZDhi3YJrPl2UR8tGWDlsS47xb3KNNutsIRIpq6z+H3R5xiwEQFAm/ZqdbDIA9tZ1
-         pDbmokkQbkC/KKuHZ+tOovwqPPi+hPPUa1Sg7jqb+2rDxev0LX1pGQX8TV9bAOSqjyyo
-         /xfr0ZnPKU3md9Ti4L7EA75E/uI2MxpyKId5AcJCuPcS+x2F3o/QCQsEjptENJnQsY1z
-         /pKA==;
+        bh=m8sjWGhIObwuMMsMWhhG72BT6czrgPMryze/SP9hYqk=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=I4m1aVYUagp9VbNju2IAMQcNawrexregY/WRec1AHg8LeKe/b+ZxUJOVnMiSDltNp4
+         MrBckBrskTE6nuAURQ7D9gxraxkdWWzMrFFKxgGSazKpuQKl618s77VMDoiTo3aMtbYd
+         NMJseFwbE5GGayOED8toTMbEiq7phEHcE7es4mppPbLYl0xKW+6CRGijabXNTlOgnt/K
+         JupzyDTDgYNB3iPzRHHUHcaQ0BX763rWjuIs1Rc8tl73NhzoLogTC/PgkD2aoLGxkIgC
+         Zk8glA1AaiP/82GJQtODYuCtVaeQ0jJ6ytGYycGa9M5UoyuDAKy4CskJv7mBdrAdyFhu
+         ajFg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788602486; x=1789207286; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788610063; x=1789214863; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=NMsRlPIy5X/EMi4KsOVYOKv9YFbKBmzgt1iq2AY0htc=;
-        b=T5JCeBmXuTyRrkcFxXpetIB6LG7qmZABpuUchWnfOtwCv1Yx6RN3wvBQ5bb+Mb/120
-         ebLC13bfVqMWAkMstAWKmjUI0yaoZeoe5BbYouJCU0GyxeifSXm0Iz4bUNT8wfQ08jvo
-         AfHsQoyXY/BUaz2w/FBA6AzcQRGEeqxeG99fyVUiqppOUru9GG/qF9pHSNt9fEhX9OPw
-         rw1yWrTsGQXb25yMrqCPBtKHkdsHhPvBXpE5DB8G6DpNCcDQatxgrR2H5sFXBxVwy7Gk
-         MUq8qA8WXf7Ig/yZoFvYyMACq09+GdZx/ewHFSbDHEbf5PlDzJ+wEagHkaF1dawpWab3
-         h9Zg==
+        bh=m8sjWGhIObwuMMsMWhhG72BT6czrgPMryze/SP9hYqk=;
+        b=Sl7Z6d8NgY0N0NU3N82YJtkBq4fscVbhprK/y4CpaNyfZQGBTUO5rO0WePEST7l83t
+         v97NvAPmLt5+y+eBHZm9EPxvNAkNQdTG5EfG90bCYIKTIVwwWNdLg9vk16PtFfBZnVIU
+         OLW3YRQi3QsgYTXsePJKmXbSf7VKcWSoto96DvkT88gIQZ8mB2tfL0xA7GPPJGIdbwWM
+         yBgzcT0GCcQs/3vljk0SbcpdGTmSa2u7BTlBm7FcjhqQgwaqCORuSiqMTMp6dmDm8Qv1
+         M92Xob0jr28A05TeRVq84pgM0gdy/N18idQ9MIu4qI68wCpLxVdAcFmuXmd9ntX/oN0V
+         CYLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788602486; x=1789207286;
+        d=1e100.net; s=20251104; t=1788610063; x=1789214863;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=NMsRlPIy5X/EMi4KsOVYOKv9YFbKBmzgt1iq2AY0htc=;
-        b=A0wgMuDfiku0CeDaG9hGWGrNCvt9ZMmzUzqpLXUep/Ja0tglXOLBc+MzA/AplZeihp
-         jEsU4pIIuqpRDofAV3VVbYXkzsL/zOE/lfVK07BaCl1qTvf7GQvRziQUL9MUCejGjtuy
-         RooeKotKTfYnk6Of7Ph514p91Qc2c+sAMGN/bVSNAjvSj0unJnQe8eJb7M+fuKkAgTCB
-         tyDFIQ2Wtsxmsw0bq7E9m5CyMmSTsVT0600tz8rN8OgBdq+ZamWlHVdUUbxdQ0sTvWWm
-         RVnwwwbWqLSbMgLKN6JtkDxrmNvD+c2ScXu6H1vN4VHCP81AV5P7h3dWTmqABrNCS9UA
-         jasA==
-X-Gm-Message-State: AFuF++m9GH8+ZcuYtlMiHd5EP0EgzKBuprp8DRmBTCZbToE4GwMHhURc
-	OS7AIM65tXWYg75P2WmCz21bgPRVgM2s/lQdcZ6AyJEklEgNcefdxYlOsm4lU2FFaBZjka/V6pi
-	evUH+a+bCyPvs9mirMVYKwbo3PN/KmgI=
-X-Gm-Gg: AYBFou3ZLQFiBkzWw3GQMmzJ72AvPlIiGt4iQBDnT84lFhgBz3cwz6l4zCypKS75Bvk
-	AYuWnW0s0tNoSUJWAyF7/k/i1cRCHCGP+c/W1/bYR0mQcKHQO9whEi13KbJugPMkW3qkTsSTyvD
-	9us7kAs5Dv29QpEap1nSFA5mmCeLxK2NlVwc08MocAYS90QTzU4gDtf9hM+JrdHSg77iKF986tY
-	JfDz/TUjmUZ8sJbv4uZ4fyKPYvSRIccH0l5pCTyC854LhsCAm7yE+dxrLRFfYsMz74qZGD8dyC7
-	stVVQ9pD3suoeZ29YAQBto3g0YFuhB4LZYEYgTkPcjw5FGYtsOf83YwPmCfFjw2cdQYpyAuRpBg
-	rzm7oR3UglHK8NWZ4QhN1etwlB0i3ir2Xw3ozKSkSR8+ImILvB4yYRjr+CovKORzG+8kwWCaihA
-	==
-X-Received: by 2002:a05:6808:3a0e:b0:4b9:e5fa:8910 with SMTP id
- 5614622812f47-4b9e5fa8f4fmr5436966b6e.35.1788602485709; Sat, 05 Sep 2026
- 03:01:25 -0700 (PDT)
+        bh=m8sjWGhIObwuMMsMWhhG72BT6czrgPMryze/SP9hYqk=;
+        b=EFZPXvVB4ejX+CfuZqBON3c3MoSQqMeZAxvwc0J+sN/0JAvkmX6/JgyLwG1UaJw3Do
+         x6P+96C9uA9JWgw5n1+aZT93/v9R/Qc/z0qV1vG5iyW6omJx0sDMGaoWhV4w7QOwF6uw
+         I59XGMoTI2AB1vH++lELJaod72blQwqUlUNjRKIHyiWGlH8jkAlTJw/Lsnp+UqcvZFZp
+         6zwmXbNxPPuAK836tIFmxZ2m1yE4LAPEoHoGxfMaXynCH1fSXTW3gEew+sGevmXyPn5M
+         /cbXvbJ/iGCExKZIK5WSYylzsJVWVogTNOQyDHXebHp48TELlFGcGsO8czg/tgmrIzeI
+         IdGQ==
+X-Gm-Message-State: AFuF++kU8GMT3aLg1mN0377fLEX8ucfgkSr4dMP3bhBmCa8u6KELgLPy
+	VD/ykLnSouMtuiYGSYaqvlTZxX5BUHyGVP8L+pS4Gwwsxk6ahrwMnxLv20/g3asC0/7ezwWSRSr
+	bnR6VQboEUruHKj0RqhVrfMOVAVzkdGu9UWm5
+X-Gm-Gg: AYBFou3ce849j2Hmq0fhPP6EHjMFap0K0UsmUYD3DgwVze0sfeLjxeD5xjFW/tVKN9o
+	vKk6xaOJqIkD33IebVrV/VtoCboQX3nfiwdlEiKEb5blLxudOFmQtInOvDYE/kPbwCP3P6EgNoi
+	Ke1oFw13wAw2lmfB4azhIICaJDS1Jua7x9ClwV1BhFtQxtuiUyDpSpRb1QfHWc9C3dcE/X/YJY4
+	mJ38HY1sV3OA4II2zR8/6RdcPwdqPl02GsVcxtbmwgTeg3gfSA/yGjgYsowIUS21Do/jN4UsoAj
+	ZBCdyb0zRWO3lNHElLiiQ+dtzHqhujtUTRybBf7NyvLG7MkPLNmn2ZY1VbbMCjnt5wrq06YWJhQ
+	6nl3n318r5+fzEgDRFLy7QxZ90xCZo82GRB4EncqF7brulZlegUjeij637gKJNdb8Afhy4sd+
+X-Received: by 2002:a17:903:380e:b0:2d9:80b:1674 with SMTP id
+ d9443c01a7336-2dafaf6070amr177653605ad.8.1788610063072; Sat, 05 Sep 2026
+ 05:07:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
- <20260825175818.645579-1-jayatheerthkulkarni2005@gmail.com>
- <20260825175818.645579-3-jayatheerthkulkarni2005@gmail.com> <xmqqh5k43bzo.fsf@gitster.g>
-In-Reply-To: <xmqqh5k43bzo.fsf@gitster.g>
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Date: Sat, 5 Sep 2026 15:31:14 +0530
-X-Gm-Features: AcwNN1VaMlWdxeEc8Zg8IqSXSS-yBGwx025ctESU-lxpS2l3hAf68y4er7caSfQ
-Message-ID: <CA+rGoLf-BMh_BNUwi4k7NCLakbxP8vTuLbQKctX2K6MTK5b1yA@mail.gmail.com>
-Subject: Re: [GSoC Patch v5 2/7] repo: add path.superproject-root with
- absolute and relative suffixes
+References: <xmqq7bl03723.fsf@gitster.g>
+In-Reply-To: <xmqq7bl03723.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Sat, 5 Sep 2026 08:07:31 -0400
+X-Gm-Features: AcwNN1VbS6cosDR9ksoYUCNlSmjh3exsEoVjvZ4lyjQpXO4EEmVpxZdY5FIGUgg
+Message-ID: <CALnO6CBALuJ2DTm3_NSH1=Q4DLEFWO1EKHQeHPCg+Luh9cY_qA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2026, #02)
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, lucasseikioshiro@gmail.com
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 5, 2026 at 3:39=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+On Fri, Sep 4, 2026 at 8:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
 rote:
+> * dk/use-nsec-runtime (2026-08-31) 3 commits
+>  - core: convert build-time USE_NSEC into runtime core.useNanosec
+>  - environment: align repo_config_values_init with struct declaration
+>  - meson: expose knob for xmlto relative links in manuals
 >
-> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+>  The build-time knob 'USE_NSEC' for nanosecond stat precision has been
+>  converted to a runtime configuration 'core.useNanosec', allowing
+>  distributions to bundle one binary that adapts to filesystem
+>  capabilities dynamically.
 >
-> > +static int get_path_superproject_absolute(struct repository *repo UNUS=
-ED, struct strbuf *buf)
-> > +{
-> > +     struct strbuf superproject =3D STRBUF_INIT;
-> > +
-> > +     if (!get_superproject_working_tree(&superproject)) {
-> > +             strbuf_release(&superproject);
-> > +             return 0;
-> > +     }
-> > +
-> > +     format_path(buf, superproject.buf, "", PATH_FORMAT_CANONICAL);
-> > +     strbuf_release(&superproject);
-> > +     return 0;
-> > +}
-> > +
-> > +static int get_path_superproject_relative(struct repository *repo, str=
-uct strbuf *buf)
-> > +{
-> > +     struct strbuf superproject =3D STRBUF_INIT;
-> > +
-> > +     if (!get_superproject_working_tree(&superproject)) {
-> > +             strbuf_release(&superproject);
-> > +             return 0;
-> > +     }
->
-> Here get_superproject_working_tree() does not care what repository
-> we are working on.  Shouldn't it be updated to take "repo" as a
-> parameter?
->
-> Since it begins like this:
->
->     int get_superproject_working_tree(struct strbuf *buf)
->     {
->             struct child_process cp =3D CHILD_PROCESS_INIT;
->             struct strbuf sb =3D STRBUF_INIT;
->             struct strbuf one_up =3D STRBUF_INIT;
->             char *cwd =3D xgetcwd();
->             int ret =3D 0;
->
-> I suspect that it based its decision on where you happen to be.
->
-> It means that when I have a checkout of "git", with a submodule
-> "sha1collisiondetection" at its top level already populated, in,
-> say, /var/tmp/x/ directory, the following happens.
->
->     $ cd /var/tmp/x/git
->     $ git repo info path.gitdir.absolute
->     path.gitdir.absolute=3D/var/tmp/x/git/.git
->     $ git -C sha1collisiondetection repo info path.gitdir.absolute
->     path.gitdir.absolute=3D/var/tmp/x/git/.git/modules/sha1collisiondetec=
-tion
->
->     $ D=3D/var/tmp/x/git/.git/modules/sha1collisiondetection
->     $ git --git-dir=3D"$D" repo info path.superproject-root.absolute
->     path.superproject-root.absolute=3D
->     $ git -C sha1collisiondetection repo info path.superproject-root.abso=
-lute
->     path.superproject-root.absolute=3D/var/tmp/x/git
->
-> The last two ought to match, but only the latter works correctly.
->
-> Before this series starts reporting path.superproject-root,
-> get_superproject_working_tree() needs to be corrected to work on the
-> repository in question (instead of relying on where the process
-> happens to be), no?
+>  Waiting for response.
+>  cf. <xmqqbjaefhwo.fsf@gitster.g>
+>  source: <cover.1788206466.git.ben.knoble@gmail.com>
 
-Yes, precisely.
-I didn't think of it that way.
+Reply is at <https://lore.kernel.org/git/D0BA1B32-1CAD-4328-A612-75A6484130=
+17@gmail.com/>
+:)
 
-`get_superproject_working_tree()` currently relies on xgetcwd() rather
-than inspecting the target repository, which causes explicit repository
-contexts like --git-dir to break.
+Of course, you'll get there when you get there. Other commenters welcome.
 
-I will update `get_superproject_working_tree()` to take repo
-and update its callers accordingly, along with adding test coverage for
---git-dir in v6.
-
-Regards,
-- K Jayatheerth
+--=20
+D. Ben Knoble
