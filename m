@@ -1,37 +1,43 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52E2368D55
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 13:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD352744F
+	for <git@vger.kernel.org>; Sat,  5 Sep 2026 14:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788616706; cv=none; b=PwANIAUrIbj78HLAy8VJf2jlDyh0XPE6DuHM6pt3RFTjdRHb23e44FUB9oZomE9q/meai9TnSAM3DUNkpEWPRM1qqeHXOSt5FX0eO96WhdrOnGtyH7kUJYcKSaLvBIs9u1lx/afJaG+HRI2FW6xT3mQdvN6uKTrJMSk4gxPijhE=
+	t=1788616949; cv=none; b=BAUo+kdXecTX5kvAvwRrokMNYAWIOGcSbvkx6pnHrTVXiaoJuMbkklOrB619Fu/y/N9NKLIC5P0De+pTvWqGIG6JaLNMynwt27VnM0WbPj0yBBJLEIszXFaEZZ05E1bM3+icwDUWFLqmrUhzXavLqFXqLo2E+fT/4xnb7MWyNmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788616706; c=relaxed/simple;
-	bh=dXeujyQp8yl0winnLK07c2OOPVFTFYqds2WaqYFFhRs=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=suJhdofXwusY/pCQ+dP0Z+pJggwborjovbpwa75B0u7zC4xYjAKyX2Huj5aUaUZB10hhFUSJEKoe+3nuQZUXJkkRyst2MowEwA6PnAnlJcUpqzUOHrvuaxbiUvr2tLtObrChwE1WtnA5ETYExhN/to3BuA1v2txI2jgGmU36yCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VwwvwlWT; arc=none smtp.client-ip=217.216.95.84
+	s=arc-20240116; t=1788616949; c=relaxed/simple;
+	bh=xmN7UC+RrFII69W8HibUTh4ScJJyIvUHP2clbPt6na8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k89M1/bpno23WfEt9ZBv26SBd5ZJwzpVUudevYrdxUAQRtShI3xnr9U1FW0BRfcaSWxECNqwo4uiRvYhaHC3UegyIYgWiB4N7B6Od/bVZHj6Jf6qKnQwodKeBfxzf54fz2Tt4xB1c7AQAC4Ks5Yrcc2tXqHdO+tTTexkTh+nFWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ehgDIYzK; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VwwvwlWT"
-Received: (qmail 18738 invoked by uid 106); 5 Sep 2026 13:58:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=dXeujyQp8yl0winnLK07c2OOPVFTFYqds2WaqYFFhRs=; b=VwwvwlWToYg+V7TflGSe4X3hJyUM2Ojqs7D3d6LooYbCxvL3SI7p0eWCNKt1dSsY8KWg+nenc0rmgD/VKyKws/FZ2FiQzSLMEcm7noR95p55KHnfotrpIXCpdpIpD8NjwuRQQVO3HTaL0dZOpJ84M/9Zn5m2qJtaEovhiAs0y1eVMXzLF3BEQIO5jOzY7sX918a6fEXPnJ9YI4m2RmYJEQErhVrAoy8NO5VhQyI8fjmX9qtwvQesYK7qaiSxxHCbrnM3ulSXbHY0oUGSmLRXBeccuvmCJO8ZmRyOmK8+aOp4Z8B6aZCZjCJdUtjuCoG/cDPdnXKntOb2UYn9LN5zfA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ehgDIYzK"
+Received: (qmail 18755 invoked by uid 106); 5 Sep 2026 14:02:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xmN7UC+RrFII69W8HibUTh4ScJJyIvUHP2clbPt6na8=; b=ehgDIYzKh6LsQVmCIFizr0lkabkLPAeY62p45A6HgDXHSVWR3c6LAeksp56j4jEfw9wnlxX38NQDEsFvTIu+wO/mD9ZpoIw8/KEI07q3sCSWqdjC4NpTmfjQHBqiDQckZQjmG8yK9Lx8zswPqyYTLYQ2E5RiQo7YmR4rFPUMjiWztFIOuXkgfrVIXbWZzUe5I4ZeFz1OJd2n1OoCIJlZQJA/U2fJtDnR4NAUjkgM+iNM7iD3fRykYlMf4mBvC28HL8rlt+mONTDf0Tq7EJvr5U0GB62Rx7MTRy2y2PV6T+pBnDU+XSZz/gNMX6UqLZDzp8msqKMBB+hd10StCCogSw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 05 Sep 2026 13:58:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 05 Sep 2026 14:02:17 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 93257 invoked by uid 111); 5 Sep 2026 13:58:22 -0000
+Received: (qmail 93364 invoked by uid 111); 5 Sep 2026 14:02:17 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 05 Sep 2026 09:58:22 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 05 Sep 2026 10:02:17 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 5 Sep 2026 09:58:22 -0400
+Date: Sat, 5 Sep 2026 10:02:17 -0400
 From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH] ci: bump debian-11 job to debian-12
-Message-ID: <20260905135822.GA3914811@coredump.intra.peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 2/2] ci: use system asciidoctor
+Message-ID: <20260905140217.GA3914642@coredump.intra.peff.net>
+References: <20260902071113.GA70165@coredump.intra.peff.net>
+ <20260902071613.GB641414@coredump.intra.peff.net>
+ <apfWhYF6nmcFGKE3@pks.im>
+ <20260902090146.GA1791728@coredump.intra.peff.net>
+ <apfzihj-1YAhn5lT@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,63 +46,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <apfzihj-1YAhn5lT@pks.im>
 
-Debian 11 just recently went out of its LTS period, and is unmaintained
-by the project (there is "Extended LTS", but it is a paid service
-provided by a third party).
+On Wed, Sep 02, 2026 at 11:59:38AM +0200, Patrick Steinhardt wrote:
 
-The point of the debian-11 job was to cover older releases in the LTS
-state, per ac112fd4f0 (Add additional CI jobs to avoid accidental
-breakage, 2024-10-31). Bumping to debian-12 will cover us there for the
-next 2 years.
+> On Wed, Sep 02, 2026 at 05:01:46AM -0400, Jeff King wrote:
+> > On Wed, Sep 02, 2026 at 09:55:49AM +0200, Patrick Steinhardt wrote:
+> > 
+> > > One thing that we might have to worry about is compatibility with _old_
+> > > versions of asciidoctor. Now that we're using a more modern version of
+> > > it we might start relying on features that weren't available in older
+> > > versions, and we wouldn't notice anymore. So we kind of have the reverse
+> > > problem now.
+> > 
+> > Right, this is the "we could in theory check both" path I mentioned
+> > earlier.
+> > 
+> > v1.5.8 is sufficiently old that I don't think we need to care anymore.
+> > We can still take bug reports if somebody happens to use it and finds a
+> > problem. Checking other older versions isn't likely to be that
+> > interesting (the next version after 1.5.8 is 2.0.0, which had a higher
+> > than usual chance of breaking things).
+> 
+> Yeah, I agree. We can still reconsider if we ever hit a scenario where
+> it caused problems after all.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I started looking at this because I got an apt failure on a debian-11
-job today. It might have just been a transient mirror failure (although
-it reproduced for several minutes afterwards). But this seems like the
-right step forward anyway.
+BTW, after having dug into Debian versioning for another patch this
+morning, I bothered to look at which asciidoctors they ship. Even Debian
+11, which just went out of LTS, was on asciidoctor 2.x. Ditto for RHEL8,
+which has a 10-year cycle (it hasn't been 10 years since asciidoctor
+2.0.0, but it luckily was released in the right part of the cycle).
 
-I tested the GitHub job, but not the GitLab one. They should be pulling
-the same docker images, though, so I would expect it to Just Work.
+I don't think that changes our conclusions. Just adding a little bit of
+research for posterity.
 
- .github/workflows/main.yml | 6 +++---
- .gitlab-ci.yml             | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 205325eb33..a0c3f53c6d 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -411,9 +411,9 @@ jobs:
-         # A RHEL 8 compatible distro.  Supported until 2029-05-31.
-         - jobname: almalinux-8
-           image: almalinux:8
--        # Supported until 2026-08-31.
--        - jobname: debian-11
--          image: debian:11
-+        # Supported until 2028-06-30.
-+        - jobname: debian-12
-+          image: debian:12
-     env:
-       jobname: ${{matrix.vector.jobname}}
-       CC: ${{matrix.vector.cc}}
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 0242283c3c..cd6fd4a504 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -71,9 +71,9 @@ test:linux:
-       # A RHEL 8 compatible distro.  Supported until 2029-05-31.
-       - jobname: almalinux-8
-         image: almalinux:8
--      # Supported until 2026-08-31.
--      - jobname: debian-11
--        image: debian:11
-+      # Supported until 2028-06-30.
-+      - jobname: debian-12
-+        image: debian:12
-   artifacts:
-     paths:
-       - t/failed-test-artifacts
--- 
-2.55.0.1127.g25100ff258
+-Peff
