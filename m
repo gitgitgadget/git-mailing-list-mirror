@@ -1,126 +1,270 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3003C379C56
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 17:30:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E52B3FB7C1
+	for <git@vger.kernel.org>; Sat,  5 Sep 2026 18:57:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788629418; cv=none; b=Yi5ge9qdn+f2e4cmvPrlrmghUVDahHAKJkG/5r9DWSgL8nFcutFklVFqgZcOyxPNuMzly0k7raMhJoKduEFJP0NbkF/FnWgwS2aS2pnQFP85E12UOmbpAy16smsTu4HIRlHYZT8jVKYGxmGFPd2adIDHyvONyvMmqxz1P/JFcLM=
+	t=1788634637; cv=none; b=GEuO8t9QcEogSdbrwVgnRxRCVQIYP+DbpuLb5Qi4u82tUNToWthjI7NnAAdswcw6V5Fj/lq7eWz+FwfxXn+vkseucjGG2OmGoV4qEYGpo0x+YsPJxPwzcU3dQFr71sHz4AO/LWiaMWy3KMXlNj09JDRWNknMxO3hr4tsUMHTxUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788629418; c=relaxed/simple;
-	bh=cBUhHZXFUKOnYPO3Vf78R6+ca5ye0bnPbrO6cxDZa08=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qTW5faCZ3kdsfqqf1Ngrf3La07rmWPJB9rKPFWgAQCFj8o0TdQDdrWpW+eDSdnm/YF3dSD5MdLoQuDweFuT43e6rGYfroh/xfyCkErSiXJfRnIkNFWsLske5aB7uzBt8wXFTWyNkVQk+jukFDpLLAReVF85+0bwFq3Wi9tUo1A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=TyRmXzbd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WITWCl9t; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1788634637; c=relaxed/simple;
+	bh=9sgLQeawx9i4tYV+tltfOhWOo9fQkhFkYgrhqRdNRxo=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=gbHI1OWxgLinvYPYRip/KJ7Z44N9N9kw3rM184eWtkot8aoap5tsfWeAqH944MKPu9HmrkRElsmxeOJqWY4BGTZ2qVjWcuL3+Iou/Ip5ZVd484gJQJ2EfYfv7Gi5++rt16cEH7QfMLWMW8JbtlmR6BR9TYkvxWaU+KjM0X3V0rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TN3wluDF; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="TyRmXzbd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WITWCl9t"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 181071D0008B;
-	Sat,  5 Sep 2026 13:30:15 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Sat, 05 Sep 2026 13:30:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788629414;
-	 x=1788715814; bh=2Zysfx+lzAiXyEm9I/dKpgOWYDCcr2P/1w7m59LQpJ4=; b=
-	TyRmXzbdO4ZL1id010TObxbyYtUTiWBFNAiY5SLwFkLTttCx6c1GvmWDm5BT3pRR
-	OCXe/EjJ0If+ZySVLD/LPZr2TP324KXxpWoe/DGK1gCxjVw5pIYMLAb06yXXTHsA
-	8kqVBMZNNqXZ58B/YsmBoLfpOIQvJDwKN45q9Xbdc34ztVubWaTFISMc8Xfyg5Wf
-	b3BNVTFlLyPi6Bn/8Kv0CCYTzEeedaliU0k/z2eTW7VFbsRzMG0HzrZhljBh92sa
-	wiNJDbi+/ddZGLrGbB9AYjdTDfSPXwxLGSTLdaB364EK4I22FMA8btQNjWD1booj
-	pvvd187d06BXssiU7sz6qA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788629414; x=
-	1788715814; bh=2Zysfx+lzAiXyEm9I/dKpgOWYDCcr2P/1w7m59LQpJ4=; b=W
-	ITWCl9tyUuaF1rUdj4OYixtou7cQ3JUEjL+K9ThU8eGwN9mLfIGC1u/hOzFKG5yE
-	jT4vX12nZp1SfPfTTMTIal/tSMFmj4t8lvVdkxI1FTQ1Fwuo3PNMx6u0gD25XlHA
-	OShVa2EtUIiLPB6GAprRa9BgnPvnINZX1mcQLLyaNp7gcj7eoGgmUExo18H/v5no
-	uh7s3ojRnshaX9B9YkU+Mbwpop+97QDmfU0XOJSL8F2/DmOsQ3+vGXuANQWAHsXq
-	jZQphzmCJggzZ/iJd9vHZf5qfTNgDqcuNlmPgOBXMSI3WJc57qWjm5rPaZZRWMtv
-	kOlNR8yWq+G97BVgEMA0A==
-X-ME-Sender: <xms:plGcaoEzcYa1o9Wiz6vjpS_Gz7_7loHbBqnJrDaQQvuQrcQJsysSsII>
-    <xme:plGcaoWUk67flPKcwkpxAqz5XSxik1Yoid7JWikJ-T1qFFo_GLMhP6icii43SB4lz
-    AXuivIe3KGHpAnoSEjblBk9N22ycJ91klo1nqmqN2UJdxhdHZfRsA>
-X-ME-Received: <xmr:plGcanLIy5pfH55CrLAxVJVSWo9tCp1P51nE8fAPOuMC0paB8helMwawIhwygN37Bq9YmL8jarddxtXcN9PozbiOeyzHAaOnIVxnuP15pvfdgUEvgFOxifE>
-X-ME-Proxy-Cause: dmFkZTGxWbvk2P4qPNiFNfsjBBdOxH+e/v6VTm2pIPfhBHXExY9YtnPdsFEZ9EtpljFn/Z
-    wiDkhu5btqivN0Pp1ORcC1aOPtxOHXJnEvKzR8lwDUPxhIpDfonTS+WD/e3ZgKzrkKqkg7
-    aXTNc7q2Y7OgUY1RRYTm3CFDwUSvqtBibHWDOyeLQ7F71zy//o7KxNJ0CVSJFy10CsfyEN
-    ZsDkK9lm+Zu5/cweP+Qq6tzrgulLefQl3aFTp9hkNK/R87gi+UD5/gz5vdqvbiihF1C/kF
-    /Geu81eMH++bKG4IpAnhI3XGpkI0vW8V9pSIAA5nYxMuzO2jRwE+nTYZU0llPXFdpbW/TT
-    ud65lUdQnRd2b4uhGW+jywqd74WpjNFdZ06m83wi8V3KdIL6rANg1YikYijVrmPkAWXSTl
-    QNKkb4YRUFP9IQEV+10gbQ944Q198x5nTeLbIoaQARE3iwe19XdRphGYTv+sIrd7FnW8l9
-    noYCvpyf1t0hHv+LhauALZqKo+4bpmR/rMJDYRbNCgfpR7WIWv/H8dkN7g2wpNXo5yyN03
-    YEgorBSGLEDTCYldmqw+nYIFMlMivp8V51PUPDJBQ++2midJXK7u5Omso+QQtAstziqyw8
-    bYv5TMp9CW3eSb99BJBANuvaIFl5J5IrM1TJ5heMvrStGKRikdXEuI0olHtQ
-X-ME-Proxy: <xmx:plGcao_SEn0spoNLng5hHDZmKp5eYQy_R-PGKk8AFjL_Gdrr8GB9Lw>
-    <xmx:plGcaqJWRfV6P79MvoiNSNfSwVsQcXFCBbUn6GD33yTzeJEGBQeZng>
-    <xmx:plGcatm8SWLaOPniD-JmD747htIthO6gMXd8HKzNMPrLYLJGI004IQ>
-    <xmx:plGcauNxB-eMXHjpXLjn6ZvMOM3FRRtpOj2wzEFnUfAuf_jJxL-Jng>
-    <xmx:plGcatxdwA8JrZWl4tODwBoigFsX4qnkAqqi0IqMpuqHBo5Z6D6AUsXC>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 5 Sep 2026 13:30:13 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Patrick Steinhardt <ps@pks.im>,
-	Julia Evans <julia@jvns.ca>
-Subject: [PATCH v3 4/4] doc: datamodel: link to the glossary
-Date: Sat,  5 Sep 2026 19:28:15 +0200
-Message-ID: <V3_datam_to_glossary.c82@msgid.xyz>
-X-Mailer: git-send-email 2.55.0.13.g85d2d65e389
-In-Reply-To: <V3_CV_doc_datamodel_advertize.c7e@msgid.xyz>
-References: <CV_doc_datamodel_advertize.bea@msgid.xyz> <V3_CV_doc_datamodel_advertize.c7e@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TN3wluDF"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-85b293528a9so30388537b3.1
+        for <git@vger.kernel.org>; Sat, 05 Sep 2026 11:57:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788634634; x=1789239434; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:content-type:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Dp5SK0lfpK4Dgs+134wKsMdt7cxHA55BfyxAxOI8Wdg=;
+        b=TN3wluDFNNbdSPZogU6KMcMc9ypC0u3FtHPYpE8I39lt14Dl4lrLfGav09hkTkidZ9
+         /xGe7J0FHS6aYXZCq/3j+pwpOfDCg+BIOLgUoJkvmjNJLrqRo0a8sGFUj83APQtbUr9r
+         IqoJ2/IARUNh//Z9uzmxnwfNM0tSd/XPa8hWxQuqKxvP820KrIrB+JdUEP46Ob80U8jg
+         C1v3PocT6M8DYy35corXvJmE5eji4wL0nkAWG6m4huiwa3pDnLTSIDcxz0WdZ7XrzAOp
+         OGXg3WDxgxOENj+Dodbsk3wU4nmNuFsBMkfKffZBAciMWj4EBqp2fnIIeCMJtJS5EAmd
+         iDkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788634634; x=1789239434;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Dp5SK0lfpK4Dgs+134wKsMdt7cxHA55BfyxAxOI8Wdg=;
+        b=etZlOTl9/PF+JhDurZwy5wbz0tIqB7lKR3ql66tPnzpHtBugK8Ygm28tcH6Xi2nhKo
+         RbK5SmE3bw7+T0BzCxjxuxc4Ld2oeibQst2q5BFgTJT7OwQeaXEiRs7VpTjV60GNaxVR
+         PdUlNGgCywH2wbI8sxEfjo5j5BgWqOZJbHyMA0myPtiAA58hSRmPbcGZ0XAVrGToD/cQ
+         EmtXSyurIhEANg9iUEzwKQs1niG6KinxYzSJa4/mc1/BGfKKBGV2oIRUaZB2sNvEN0dW
+         +B+OLHMp+FrkZQzLOFaS6KwRZhlrxQosyngPh7k9FeSqleUMCR1JJgz9BUHbAJA5mFio
+         yURg==
+X-Gm-Message-State: AFuF++ldNmK81Oo4TljT3H5E1vV51x6+fytNH/nEr1v3rdBl3HHTCs9H
+	LQwKXzuwhTm3Z22qpeKJ4tocIOcaaZ4lxyeoxtlBlFrRrIqxCC2JR/kJl4RrGk0j
+X-Gm-Gg: AYBFou3cdvWfLfJFpxJwykcT0yuHbSeJGVjpiJbJeNc6TpKBPzFRCTZniawNH0parHk
+	GOyX1o+mf/El13IgLaJldrXehJNeKjSLPnGURoS6appU3M9Pf4A9IpqKVtc93RhXQTIN0xA+Z8B
+	s4iyPa4qYs4R5tJ0IsMHmV3wFlHXpGzmRnq8VGAPW0qo6ZhM6FJYbUmAswuRJIasQPmu0Ba7J4l
+	Az2HPs9RaFSMwddLKSdAg1XuNcVdKYgTuY8cZSfrBcQI0ZJY1boL38xD/eZ6yRdh+RgJPjq/NDo
+	4MZfUWkjJuDelcBS2ZrVJL28rk+SRTsnyAPqI6T9SURFoL460dcyVEOMZnsBCKnIkIJlBtTBF7C
+	pH2cRLFL3BWKCY5XlJ+v5Y0Snt2/AhEOB02D/S/NTt0DguKhePCWgzK0QyW+9t7tIt2YH9qacvq
+	oVm8UliA2NXd9/yn7Z+a+bLC3o8Xg7KgW+2dvPSoPCFdY8BhI8KgjsMxzzwMZWGhaCCuMz/oRM1
+	U5/chN8FdR2ukT630Z8iSU1SAMSyqM32bLHZJc9+YT3Gir/5SIfPWJEcv1dCOZaAFGacf+f22Az
+	8lrCoeX9sUUimkZO+zdWD1vkGYSgj+OrFrOZDDtix/+gGu0=
+X-Received: by 2002:a05:690e:4401:b0:66f:c1bc:4040 with SMTP id 956f58d0204a3-66fc1bc85d0mr875862d50.33.1788634634595;
+        Sat, 05 Sep 2026 11:57:14 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:9092:700:1145:a589:6cad:356])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66fc939d4edsm1487705d50.4.2026.09.05.11.57.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Sep 2026 11:57:14 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 1/2] push: check pushed ref for --force-if-includes
+From: Ben Knoble <ben.knoble@gmail.com>
+In-Reply-To: <20260904210122.431757-2-tyler@tylercipriani.com>
+Cc: git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
+ Stefan Haller <lists@haller-berlin.de>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Tyler Cipriani <tyler@tylercipriani.com>
+Date: Sat, 5 Sep 2026 14:57:03 -0400
+Message-Id: <D37B05ED-1B23-4B05-8B4B-EA770C85E0F3@gmail.com>
+References: <20260904210122.431757-2-tyler@tylercipriani.com>
+To: Tyler Cipriani <tyler@tylercipriani.com>
+X-Mailer: iPhone Mail (23D8133)
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-We linked from the glossary to the data model page in the last commit.
-It can also be useful to link the other way for readers who might want
-to reference more terminology.
+> Le 4 sept. 2026 =C3=A0 17:01, Tyler Cipriani <tyler@tylercipriani.com> a =C3=
+=A9crit :
+>=20
+> =EF=BB=BF"--force-if-includes" ensures, "tip of the remote-tracking ref is=
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+> reachable from one of the 'reflog' entries of the local branch."
+>=20
+> But check_if_includes_upstream() uses the local per-branch reflog based
+> on the destination branch rather than the branch being pushed; using
+> ref->name vs. ref->peer_ref->name.
+>=20
+> This can cause confusing rejections or unintended data loss.
+>=20
+> Using a command like:
+>=20
+>  git push --force-if-includes --force-with-lease origin src:main
+>=20
+> False rejections: when src is an up-to-date branch, but main is
+> out-of-date or nonexistent, then the includes check will fail telling
+> users the remote ref has been updated since the last checkout.
+>=20
+> Data loss: when src is an orphan/out-dated branch, but main is
+> up-to-date, then the if-includes check will allow the push, clobbering
+> the remote main.
 
-Notes (series):
-    v3:
-    • Drop the running text mention of gitglossary(7). Just use the link in See
-      Also.[1]
-      🔗 1: https://lore.kernel.org/git/5e12e3ad-a80c-4c7b-81f7-e028e461fdd1@app.fastmail.com/#t
+Hm. This case *could* be by design, to rewind and potentially
+modify a remote branch, discarding new work I=E2=80=99ve already checked.
 
- Documentation/gitdatamodel.adoc | 4 ++++
- 1 file changed, 4 insertions(+)
+But the includes check is about reminding to do such a check.
+So failing and requiring me to bypass the check seems ok.
 
-diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
-index dcfdff0346f..56b7635c199 100644
---- a/Documentation/gitdatamodel.adoc
-+++ b/Documentation/gitdatamodel.adoc
-@@ -300,6 +300,10 @@ $ git reflog main --date=iso --no-decorate
- 4ccb6d7 main@{2025-09-29 15:16:48 -0400}: commit (initial): Initial commit
- ----
- 
-+SEE ALSO
-+--------
-+linkgit:gitglossary[7]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
--- 
-2.55.0.13.g335083658c8
+> Find local reflog using ref->peer_ref. When using a refspec like
+> HEAD:refs/heads/main, we resolve HEAD to a branch and use that reflog.
+> In a detached HEAD state, the reflog cannot tell us if the history
+> being pushed includes the tip of the remote, so the push is rejected.
 
+This seems to be what I reported in the mail your cover
+letter cites. So, am I reading correctly that this is no change
+from current behavior?
+
+=E2=80=A6ah, patch 2 addresses that specifically. Which, I now
+remember you said in the cover as well. Oops.
+
+It *could* be worth clarifying in the proposed log message that we are only p=
+reserving behavior here, but that=E2=80=99s a very small nit.
+
+> Skip deletions:
+>=20
+>  git push --force-if-includes --force-with-lease origin :main
+>=20
+> ref->deletion is set after apply_push_cas (which triggers
+> check_if_includes_upstream). The ref->peer_ref name is "(delete)".
+> Instead check with is_null_oid to detect and allow deletion.
+>=20
+> Reported-by: Stefan Haller <lists@haller-berlin.de>
+> Reported-by: D. Ben Knoble <ben.knoble@gmail.com>
+> Signed-off-by: Tyler Cipriani <tyler@tylercipriani.com>
+> ---
+> remote.c            | 24 ++++++++++++++++-
+> t/t5533-push-cas.sh | 65 +++++++++++++++++++++++++++++++++++++++++++++
+> 2 files changed, 88 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/remote.c b/remote.c
+> index 00723b385e..326af76eeb 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2806,7 +2806,29 @@ static int is_reachable_in_reflog(const char *local=
+, const struct ref *remote)
+> */
+> static void check_if_includes_upstream(struct ref *remote)
+> {
+> -    struct ref *local =3D get_local_ref(remote->name);
+> +    struct ref *local;
+> +    const char *name;
+> +    int flag;
+> +
+> +    if (!remote->peer_ref)
+> +        return;
+> +
+> +    /* A deletion has no local history to check against. */
+> +    if (is_null_oid(&remote->peer_ref->new_oid))
+> +        return;
+> +
+> +    name =3D remote->peer_ref->name;
+> +    if (!strcmp(name, "HEAD")) {
+> +        name =3D refs_resolve_ref_unsafe(get_main_ref_store(the_repositor=
+y),
+> +                           "HEAD", 0, NULL, &flag);
+> +        if (!name || !(flag & REF_ISSYMREF)) {
+> +            /* detached HEAD: no per-branch reflog to consult */
+> +            remote->unreachable =3D 1;
+> +            return;
+> +        }
+> +    }
+> +
+> +    local =3D get_local_ref(name);
+>  if (!local)
+>      return;
+>=20
+> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+> index cba26a872d..0c02151747 100755
+> --- a/t/t5533-push-cas.sh
+> +++ b/t/t5533-push-cas.sh
+> @@ -396,4 +396,69 @@ test_expect_success '"--force-if-includes" should all=
+ow deletes' '
+>  )
+> '
+>=20
+> +test_expect_success '"--force-if-includes" should allow forced update whe=
+n using differently named branches' '
+> +    setup_src_dup_dst &&
+> +    test_when_finished "rm -fr dst src dup" &&
+> +    (
+> +        cd src &&
+> +        git fetch &&
+> +        git switch -c newbranch origin/main &&
+> +        git rebase HEAD --onto HEAD^ &&
+> +        git push --force-if-includes --force-with-lease origin newbranch:=
+main
+> +    )
+> +'
+> +test_expect_success '"--force-if-includes" should allow forced update fro=
+m HEAD' '
+> +    setup_src_dup_dst &&
+> +    test_when_finished "rm -fr dst src dup" &&
+> +    (
+> +        cd src &&
+> +        git fetch &&
+> +        git switch -c newbranch origin/main &&
+> +        git rebase HEAD --onto HEAD^ &&
+> +        git push --force-if-includes --force-with-lease origin HEAD:main
+> +    )
+> +'
+> +
+> +test_expect_success '"--force-if-includes" should reject forced update fr=
+om differently named branches when local lacks remote ref' '
+> +    setup_src_dup_dst &&
+> +    test_when_finished "rm -fr dst src dup" &&
+> +    (
+> +        cd src &&
+> +        git fetch &&
+> +        git switch main &&
+> +        git reset --hard origin/main &&
+> +        git switch --orphan orphan &&
+> +        test_commit I &&
+> +        test_must_fail git push --force-with-lease --force-if-includes or=
+igin orphan:main
+> +    )
+> +'
+> +
+> +test_expect_success '"--force-if-includes" should reject forced update fr=
+om HEAD when it lacks remote ref' '
+> +    setup_src_dup_dst &&
+> +    test_when_finished "rm -fr dst src dup" &&
+> +    (
+> +        cd src &&
+> +        git fetch &&
+> +        git switch main &&
+> +        git reset --hard origin/main &&
+> +        git switch --orphan orphan &&
+> +        test_commit I &&
+> +        test_must_fail git push --force-with-lease --force-if-includes or=
+igin HEAD:main
+> +    )
+> +'
+> +
+> +test_expect_success '"--force-if-includes" should reject forced update fr=
+om detached HEAD' '
+> +    setup_src_dup_dst &&
+> +    test_when_finished "rm -fr dst src dup" &&
+> +    (
+> +        cd src &&
+> +        git fetch &&
+> +        git switch main &&
+> +        git reset --hard origin/main &&
+> +        git switch -c newbranch origin/main &&
+> +        git checkout HEAD^ &&
+> +        test_must_fail git push --force-if-includes --force-with-lease or=
+igin HEAD:main
+> +    )
+> +'
+> +
+> test_done
+> --
+> 2.47.3
