@@ -1,161 +1,104 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB443793B1
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 15:23:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E396353ED9
+	for <git@vger.kernel.org>; Sat,  5 Sep 2026 15:48:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788621786; cv=none; b=nSGSCDbUY8Z5j7RxQZ0nd2yIkxWGYeM/OzcFnYNuBeQARBayW+V6qWOUWi4FOn393dgrr2Cj4FTDz2DKJVa9x2fcT0xhen0dQxkeWogi5yuRICMPvips8joE/hXW59h19enEJeKqAFTsc+3T1C9wDhj17aNSKAP6MMgpjOHS9HE=
+	t=1788623304; cv=none; b=SvbqZV2+wcazr9f8XmZLz7sYdiUUd/UtKlpg3Z9ix980xY3JqaZ2tmUCOHTNTlNUQWh19EfGFz4ZmtdcTF8dbz1JrtknuQte+oqt+OOujvAVQO21hm1ZDmZ2Isv3O79h4R639obrpdmKK7Z9CZ36T+AgJNBo1vDSPrRJo3+QJMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788621786; c=relaxed/simple;
-	bh=+YHZYIkZ71gYqGy4nQLq4g+qsqCfiWimifzX9Nl4yKU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K62J/6mabaz8COkdNrdEY8Jc7GEkbzy34qB0qiSYEm3NkxpkLhDYwhUIwKRWtDiwmHqruLQ6+kY/vRbpdgh32rvQe3oLgwn7Rr6HF+3LCSRDVFKQ4uNe1RgG4uCWhmaAfqcgJsRo8J/J8Iv5UIZV9erV5C37fR4JMzlczpZWRIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XdfPs9lT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qQdrlOty; arc=none smtp.client-ip=103.168.172.146
+	s=arc-20240116; t=1788623304; c=relaxed/simple;
+	bh=lTTavRyMfO4vtdW2E6R6AxJotC28qitb3XvqBn+Ss/o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iD0tk5fgalY8da0RnUiKn0+FxHWF80Cqn6mDTYcB4AAvylpHk35SBpoIcU6Z9xENl1FfzNl51vv6zneN8ic96gDevnOWJdoZ81MT+spfP3oJF3KPMSSVkOl5VY9pJq5JQ9I5xehc74wSbwCp2eEC0hJw0yNWHCoJqRK0sa5+ugA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TpEGWhXN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pILi8oHU; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XdfPs9lT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qQdrlOty"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 02367EC00F8;
-	Sat,  5 Sep 2026 11:23:03 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Sat, 05 Sep 2026 11:23:03 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TpEGWhXN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pILi8oHU"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id D79081D000CA;
+	Sat,  5 Sep 2026 11:48:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sat, 05 Sep 2026 11:48:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788621782;
-	 x=1788708182; bh=BumlT/qSriQSdGrGiLxzTZHnCWXDVMX12gUDOzpM53w=; b=
-	XdfPs9lTBMYC+W3MyC/3/6BehvsflxlyEOjGiCMGT5fICLmsV4/Yl6fZwSDVvdxL
-	OzMS1Tf3Tn7ljswwD+xUr+HGxgKQl4KuQpn7vRXyJGuGviJ1/gamvKi2wkJ9mAoo
-	GueQ5kD7WdhDKmIQoenuaDsKknwUhW8Z8sYWoq46wKauBcpEGQ6BjNsxiuqNiCRU
-	ItayLpQUubxCn7UrplJ7whH1NJakxNyooEgyZOMuhosaKadRRlGb4JXJJVN0Yt7O
-	JEEM2MDa0d7hQEUDUv0lV4bGanXFi7qKOJMn9yckH4i4EC3HVVPLfSA9C0WZQX3b
-	92PZd6IXh7wQ5KeytRwLtQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788623301;
+	 x=1788709701; bh=tHXIiPR8DH/43icNc6ebxXFe4KCl/4PNo2D7EImoYFU=; b=
+	TpEGWhXN7Wk5GDzobWr8GgF6KTvTyCg1VvfnjGG81KewzEmoCaaMz3YDhZF0hG5L
+	9cXA5VvjZfalIqBGqBapNlfRhBfuL5Jnf3xYujxT/0fs8LGQT8v8/yOx8ou6El8g
+	YeaUqt1PsoIyyy5SHFPyl009m2XZXEeB9Pw/X+JjMVBDnkpW3JajVt47W67kigiE
+	Ne+SZvB4Y5cW/POC7PiXrPraZ5vMs+U+Ws5CNQnB0/h5gFARsB2yF86Kk8QSy22P
+	qcBt+vlvXA+k4KUe+1Y2+9K242sMVeSx4oKuwhvb1QoGizMBAB+fCrHbETRHyZO/
+	cx2dBtZu4GYCvmoP+oeItg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788621782; x=
-	1788708182; bh=BumlT/qSriQSdGrGiLxzTZHnCWXDVMX12gUDOzpM53w=; b=q
-	QdrlOtyNGlt0j22vvXz47ZuZY9KcEFfqkPlgE4fJ+nEAN5/HiqSGCws2/aeC2Qpz
-	LBFgA9K9rT/rj2om2yk0UjyF9rXSsrq6POnjdZNYpHLyIJtTf/ycHuu7+5vCml07
-	oQGu6j2e/R3oOmWakbIzaagwuXs6RA25s37sBkxmzDt8Ufm9N+xo/eZ63HTnoR7i
-	nW+vUyHA6739OH4jx6bXkWArbln5PnYue35IQG7U3qG2rF/lR0az1R3o2m0FzKBv
-	m3FlsbwArJ3xlwDYY3CwYm2pw/SC+ahF2JGJasOdYBuEFzCPhy80cQvLu30u0QQz
-	ugCI+UCkbuR893KlfBEyw==
-X-ME-Sender: <xms:1jOcatk6na4QoLXLlre5_bMRyUq5ZPOQH76L9UHDJkgoKfVEMpsvZA>
-    <xme:1jOcavvqCSXKYGE95xmbCd2G8mwPT99Vzv0Ixqpw_-Z69HR3GQfsFE5-GkEfiDeVl
-    A3otxbPFBKzFh0AVV2hjORCKWoFX7eqSj5_rRmNIsBZg6ppGZgQ4A>
-X-ME-Received: <xmr:1jOcar8hzZoTLHJ7pErX-QRucJeRpPzgS3S7iiynj5gjR2X5ktxi0J97NRIycVO_ikHn1FhmXf-v3rdY7K1f2mjmAHBOHkbbauJ2PtqQMExaDlScv_XojP4>
-X-ME-Proxy-Cause: dmFkZTEvZtGGPVW0lccZYSWhBqmuTbjBNmoUIC+NhA02ye96S4lp+y4nbEvbjj8pIxVmzb
-    OnaEgtHTuOtG0y4dvT14EEl2ZLUNPlevNZvQvkRC4mZfkAW8yo+BmwF4CUP+Wj4GViMPg0
-    UgO5pzKbZMOkrEhFANA/z8OcHGZ6heczRR35Jht3v+y3SeQ2DW9R/wqs4+qgPhRrQVEvYJ
-    maarRMsqGU9VX2M8WDI8iNWmGB220An9dQImJCk/xZFyo8Y4eUwY+Xx3uv3hGgO7B3/NjF
-    KFY31L77E5pwJLu5QF7yEA87Jxgg+1oKmrWERx8/1mt3UzEWHMpEGPZeBzXOtviSDtAbkm
-    3NPZNgWYv57A76uFk/Ky6RIxNuURtd7Ll7UufzCDVmG0cDCfrr2L+TtTtQSWGXPKP5q30H
-    s2dJKEl4E0gwzSXaUXdGE7sMtqTfw5jiHjCZYvYUqJ1OaBg/H09vbL319C5uFuIq+X8wM9
-    ZS11atH5nVkOgtXn4zjpHYjeWOTuGyTdNHxuHhLnkWNcRuPPMyu5Dsiob1kZfSF/hIKhRm
-    bDABgOcC3xybWkEVZ31Y6Bns5kdelMWd5/1dkOtVlNyeulfGe1wgEZYMTZdbCqz9rscBJe
-    N76xFAQgtxaZcVq3j8qWfcGOyb0XcPo45ZsKjwPxNkTWatY04BguXEZ+3ChA
-X-ME-Proxy: <xmx:1jOcapMiXnm26VkHsbGsdTJxJ-MHuqYN_hoZNJIie5zlQ-Z4YKvCBA>
-    <xmx:1jOcapGHvs5ToU2j9iu3P2ocA8cfHJeRjXLq_R7azAtu0p-FYKDh_A>
-    <xmx:1jOcanRYlPBy9zBhBPrEQ7WbYojXwx_tWSbuV-NxuVkO_D0oQx77Lw>
-    <xmx:1jOcamspyy-bzi47V5fTDZ2sXlgUkqL2ox1S-NvkVs6ypuVGCiR9xA>
-    <xmx:1jOcavW1XkAiBS9E6mBhUB2AKAMLoOP9iMNUwkZJ1IIIvXUCI-QF-dA->
-Feedback-ID: ia13843cf:Fastmail
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788623301; x=
+	1788709701; bh=tHXIiPR8DH/43icNc6ebxXFe4KCl/4PNo2D7EImoYFU=; b=p
+	ILi8oHU6h55G8kQyqjiK4joDbaKJH8jgT947oY7BPabaUTM7AGNvTLBB7kBczro+
+	1eB6SHXmNPiSIxZTxGTIRCXY8KLGBUU5l9SVyAhAcORMyPmaGxKEBanqHhUh5psw
+	HGu+yloPmqJE7Zhc8MR9+6Z66yfNqx1FGqkhhXRqujBT0lwJdQczX4WfdpjAQ6Dy
+	InGKntnRk6HaFOz7Z1c3PuDFcxHDbpYIHVWA9kY/tHXjFL2HA9jRDY92Zz44rFJl
+	uUEnaovP+bimqvRZZBqltBl0lrXcWlLc4WL9psbeoR/OTWptGouOdnuTyFTEWqby
+	+fvxzvXWQ0QWG0nwuWTyA==
+X-ME-Sender: <xms:xTmcalY3bqoAxhYSmPJU0Jbn7uavynnfmg3ApaA0BRB3sJ3A8wm0Og>
+    <xme:xTmcaj3Lvt89EScFGLkMtEbKQp5NcxNx_HO0QcGbg6gW82hKcETSYuArhn5q4QKcm
+    x8Bel2GA9jNUKbYDngkcxl1nNxtlSTBhYr6OvYA--1B6tFLsU8-c40>
+X-ME-Received: <xmr:xTmcalVfjyUUk1i0YVts03g1ojWDTvjl7meaHY9YEfzurUMC6xEIypQha884bN9KeCU-j3SESlNBnjsTCAYb4U0Vjd28lvefYpi5>
+X-ME-Proxy-Cause: dmFkZTGTlt3NLYUWpaKM/OzcgscHpYyVP2NxwXVYHLMREztufawXFrPhccl1ltGfDq+ltS
+    BMFyNwaxL7pqxlzJhYkFgrwX/D+W0P0rzcZNK8RQwRmM+NRwpePchf8tZ1mhbzspuO/PIj
+    IPB1Gra2g4xKHUL4FF3SO3lwWD2CcZwlqJE0WgJneTBZgt62bnZIv4nneSUiB8bjT6Ii69
+    blPbpCoNQrl7JLkL3a7afrNw79KdKMQyCemaiNgAz/2WZj6MNKIYvW9An5aC44Mg1CwUZB
+    x7/UO7SR4afvvvQ48UM4ZgmAaYJ/xjbVN3I+bEAX4P7ZCKTp0XZpvc54PszD3SL/RM5mIQ
+    cqEBLZPUvFJho8TSo3iWH3+eVz15NBHsnTNIQT82bHIYwkB9NJTyn88796KsxQSwPes3Of
+    OYokQ73FfYDopvr/YgBRb6q2QbWprzSD7GC5ZRVkv6xXJ3MWpdzh/NR23B54PGW30Bp5yp
+    6mZIcfPSZmqD+jhsogV3ddciOX5FIPpF693NDENzwOa61sWgFtt+DIU3mB1zIvZi77znX0
+    iip8g7+Gmqi23wPABPLBlvXTGYHImh+eHYl7CbK4zII2JyXAupOqT/cifE1JYcNDIvdDxQ
+    WEXIx/6aQWU+iUYRzppHNFe5awGLcf6rUc15M3X8t9QghrRMLHp6uAkV7aPA
+X-ME-Proxy: <xmx:xTmcatV42E4FLkzAolnc3UC_d9BQk7n1HyTB5gKlwPLx40k2186wMg>
+    <xmx:xTmcakdMeJMGekipRkAJe04Vcn_vQPvRFaAfbSLJnf36yDrjap4n5g>
+    <xmx:xTmcamXFxcykOjew5M5EuSQAKgE12eCOKxM-EETql6zsqkLks_Wdnw>
+    <xmx:xTmcatfTfNxy2laqi8U9I21V0dPNr6GKW38-FtgXdDrrXblqQ2HfJA>
+    <xmx:xTmcar-buZQ0tbwVfF9z72PQKazLDmcPs8_j3r2F1V7Djo5AetIijQHP>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 5 Sep 2026 11:23:02 -0400 (EDT)
-Date: Sat, 5 Sep 2026 11:23:00 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
-	=?iso-8859-1?Q?Jean-No=EBl?= Avila <jn.avila@free.fr>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 2/2] ci: use system asciidoctor
-Message-ID: <20260905152300.Zo2Zl39n@teonanacatl.net>
-References: <20260902071113.GA70165@coredump.intra.peff.net>
- <20260902071613.GB641414@coredump.intra.peff.net>
- <apfWhYF6nmcFGKE3@pks.im>
- <20260902090146.GA1791728@coredump.intra.peff.net>
- <apfzihj-1YAhn5lT@pks.im>
- <20260905140217.GA3914642@coredump.intra.peff.net>
+ 5 Sep 2026 11:48:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: kh/doc-datamodel
+In-Reply-To: <9461175c-b6cc-415e-9344-fa19c194876d@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Sat, 05 Sep 2026 08:29:48 +0200")
+References: <xmqq7bl03723.fsf@gitster.g>
+	<9461175c-b6cc-415e-9344-fa19c194876d@app.fastmail.com>
+Date: Sat, 05 Sep 2026 08:48:19 -0700
+Message-ID: <xmqqfqzn7l8c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260905140217.GA3914642@coredump.intra.peff.net>
 
-Jeff King wrote:
-> BTW, after having dug into Debian versioning for another
-> patch this morning, I bothered to look at which
-> asciidoctors they ship. Even Debian 11, which just went
-> out of LTS, was on asciidoctor 2.x. Ditto for RHEL8, which
-> has a 10-year cycle (it hasn't been 10 years since
-> asciidoctor 2.0.0, but it luckily was released in the
-> right part of the cycle).
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-FWIW, asciidoctor in RHEL and clones is part of the add-on
-EPEL repo from the Fedora project.
+> On Sat, Sep 5, 2026, at 01:55, Junio C Hamano wrote:
+>> * kh/doc-datamodel (2026-08-23) 4 commits
+>> ...
+>>  Will merge to 'next'?
+>>  cf. <apUrC_ROf9lyiuAm@pks.im>
+>>  cf. <954865cf-5984-4e0d-9e8c-7c874896a1f2@app.fastmail.com>
+>>  source: <V2_CV_doc_datamodel_advertize.c20@msgid.xyz>
+>
+> Please donâ€™t merge to `next`. I will make a new version to address
+> Julia Evanâ€™s review. Thank you.
 
-Being part of EPEL rather than the base RHEL is largely why
-the version bumps happen in what is otherwise a relatively
-static base OS -- EPEL is run by volunteers and allows for
-pushing breaking changes a bit more liberally than RHEL
-itself.
-
-(Asking free laborers to be on the hook for backporting bug
-and security fixes for 10 years doesn't go down all that
-well, unsurprisingly.)
-
-Looking at the Fedora/EPEL asciidoctor commit history¹, it
-looks like I pushed commits to bring it up to 2.0.20 for
-EL-9² before I stopped contributing.  Those changes have
-never been pushed out though, so it doesn't look like
-anyone's really minding the ascidoctor packages in EPEL
-these days.
-
-¹ https://src.fedoraproject.org/rpms/rubygem-asciidoctor
-² https://src.fedoraproject.org/rpms/rubygem-asciidoctor/commits/epel9
-
-As none of the CI jobs are installing documentation against
-any RHEL-like targets, this doesn't matter much.  But if we
-were, we'd need to install the 'epel-release' package before
-installing asciidoctor, perhaps something like this:
-
-  diff --git i/ci/install-dependencies.sh w/ci/install-dependencies.sh
-  index 10c3530d1a..119e12041d 100755
-  --- i/ci/install-dependencies.sh
-  +++ w/ci/install-dependencies.sh
-  @@ -32,6 +32,10 @@ alpine-*)
-   		bash cvs gnupg perl-cgi perl-dbd-sqlite perl-io-tty cargo >/dev/null
-   	;;
-   fedora-*|almalinux-*)
-  +	case "$distro" in
-  +	almalinux-*)
-  +		dnf -yq install epel-release >/dev/null
-  +	esac
-   	case "$jobname" in
-   	*-meson)
-   		MESON_DEPS="meson ninja";;
-
-> I don't think that changes our conclusions. Just adding a
-> little bit of research for posterity.
-
-Ditto. ;)
-
-I'm happy to see more Asciidoctor support.  It seems to
-produce moderately better output than Asciidoc, in my
-experience.  Though I admit I haven't looked closely at
-Asciidoc after development picked back up a little to add
-Python 3 support and keep the project going.
-
--- 
-Todd
+Thanks.
