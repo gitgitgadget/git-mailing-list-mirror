@@ -1,454 +1,121 @@
-Received: from mail4.engw.org (astra5088.startdedicated.net [62.138.8.142])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9392B175A97
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 00:06:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.138.8.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6072F2DB7BB
+	for <git@vger.kernel.org>; Sat,  5 Sep 2026 02:17:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788566786; cv=none; b=t0SP9rO3W4lqxFCRmqvJxKzcImCGRvSACynF76JRemr/DA+5vHK/pS1+FItidFFpPZ1c+lnpbp8F5HwTd6viVzFOZ8x8yHY846x45NXfSEpQDCFLeKM3lP4+RsxDl/17R85yFO40OWP7e83or4MHBJq/rN/xCufBKl3tsyYazGw=
+	t=1788574635; cv=none; b=fZ33/Txx75rE7GDkLaiZiJnSKYipKIN0MSnbe62/9l9lgzxDdlozGnpKuG2rKzpHh1j1Sj/PCwiSpljUYi0j+FREpRExpmJBEEAxY6nMpn1/ZN3GGL+C3nvufCVLS7pa8EBs7iwpNJfk5UijjpNW7g32sJMhdgw6oZjbcocaWCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788566786; c=relaxed/simple;
-	bh=4OjbbLbwpsnu9sSIzz1IBt0tNYGPuxRrRXHdZk1jM7o=;
-	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-Id; b=hWlVTW02e8pq03ANkGnEFAUMVmMtJm74QmxLEqNbVsq8TCZY5N/ewrnT7thJOfarbfbG16+xJ1UNWCGhAiaea/s3I8SVnZlSVf0/zQS+eu+yKCt0GR75t2yW4G+Ep6hawnRKb4O+P9plG8+RokoYfdaHPZpwPOnhexZ9IfeVxdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mail4.engw.org; spf=none smtp.mailfrom=mail4.engw.org; arc=none smtp.client-ip=62.138.8.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mail4.engw.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=mail4.engw.org
-Received: from localhost (localhost [127.0.0.1])
-	by mail4.engw.org (Postfix) with ESMTP id 5E4B55343810
-	for <git@vger.kernel.org>; Sat,  5 Sep 2026 00:27:12 +0200 (CEST)
-Received: from mail4.engw.org ([127.0.0.1])
- by localhost (mail4.engw.org [127.0.0.1]) (amavis, port 10032) with ESMTP
- id my64YrJxNilL for <git@vger.kernel.org>;
- Sat,  5 Sep 2026 00:27:12 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mail4.engw.org (Postfix) with ESMTP id 1D668532BF1F
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 20:36:44 +0200 (CEST)
-X-Virus-Scanned: amavis at engw.org
-Received: from mail4.engw.org ([127.0.0.1])
- by localhost (mail4.engw.org [127.0.0.1]) (amavis, port 10026) with ESMTP
- id psHuBRy4L4q3 for <git@vger.kernel.org>;
- Fri,  4 Sep 2026 20:36:44 +0200 (CEST)
-Received: from 10.0.2.15 (mail4.engw.org [62.138.8.142])
-	by mail4.engw.org (Postfix) with SMTP id 1EFCB522EF13
-	for <git@vger.kernel.org>; Fri,  4 Sep 2026 19:20:58 +0200 (CEST)
-From: "Dr. G. PETRAKIS" <no.reply@mail4.engw.org>
-To: <git@vger.kernel.org>
-Subject: git@vger.kernel.org   ICAMCS 2026
-Sender: "Dr. G. PETRAKIS" <no.reply@mail4.engw.org>
+	s=arc-20240116; t=1788574635; c=relaxed/simple;
+	bh=2saVQhcmoXNu99Ns1CKCYbuYKi/aY5gwYfLsbKcQ5Ls=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M291aJbpJ7tIvKld/yW7Pa+GKuPWkdhFdU+JcGZ5ULf2rCU9yKcMqPHhGO5nFCTar4BAtC0681kpRO+WfMwJ12nZi54eRFGPsB5bnD2tsoqX/UajKp6qIelHd9+IFS1wqCUQQX+Bfxq++nTMQDLTXwJ4AF8iAkMi3zzPOVMNrr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=caVopQMX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PT4ZgY3u; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="caVopQMX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PT4ZgY3u"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3DE9E7A0098;
+	Fri,  4 Sep 2026 22:17:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 04 Sep 2026 22:17:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1788574632; x=1788661032; bh=Jnp+NxlP+E
+	55reTwaqxuWIrTvOoq/GtgOWysIiaQMlk=; b=caVopQMXBk/WVycIKeNmM+ZDgJ
+	v+CzhhK7+5E9l2b/YFTikvRrz+CWCHQAPfM98Ug5lW0ivWyxbwCsjSlH0snkTk1L
+	wrS1uZ+pSSrGqQ17bTAs4n8437mfGs8CpVJt0lXckYfLvwaOgNWPeOlOkrbYHOd7
+	Hw5DILJ85rlU4NvV80/3M+APBOPkH1iViRlv4zhswp95yYy1Vl9/x6bg0FUEufSX
+	PdE3d9hUzzW5+qt3wlWQQHo0heNFuYM9knJa/X0sPHYiT7MYQxPgnLfT0Ibe+lXe
+	VwQzFPmtoOQOLkpd4QIoIbEDN1YpUjpP5c5KlDeMKD5h1XbmQw0NCAB8nLwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788574632; x=1788661032; bh=Jnp+NxlP+E55reTwaqxuWIrTvOoq/GtgOWy
+	sIiaQMlk=; b=PT4ZgY3u7BkRxKjhgFGkU1Slb/XHyVzIekgjn8+v60upxXxeEia
+	xSWXrondqppGnV7bYD675f6MvXh9sN8VqCsHh3xZYR2ynD/4APxtF0hh5/hTdgGm
+	NXUDSfyW1y/DVQCAs7s42N+FaJqv7FEELVCZJST4ajQdTzPVS6FMiqLYzeX2JDpt
+	LAAAFKjWrLF6oSv4LfbZo82+Gh0DyN5ClMMj31jnqMPBimWL45dO7dSEuXEdoedK
+	G+Ob/WfsPzElmN9ANoSrJyNDJNkKGbV7h2cgweTTY+nQqt6RKhe8815CBf2vuJOT
+	dBKdqA/UkT92M55Hi6pIE39kemCED612dwQ==
+X-ME-Sender: <xms:qHubamBa40Amdq8FG9XOKIiraqGYHVtItTxyncm6KTLw0uzudxWtgA>
+    <xme:qHubanh7rtdpgFbLN9t6dIOXNzil7qUqxuyNeBdvZWOLRZewGcdkzlKrSI3Nzsy0h
+    oKPHEMz2dLpxXyRT1YLJ7-rZsuW4MgYWCd9T7yfPVrk9AfY197joME>
+X-ME-Received: <xmr:qHubaulvwugGoQkmY6jDaVc82nuTtrkmVmSyAaZwJBSOpQjcPgntndCsE7EcbqE95GKHHDmKFfo5bgG8VYDrWO-ib_kBFDqS9A>
+X-ME-Proxy-Cause: dmFkZTEucn5EMTqbgxEukAjbiwaHigTwfADNqkETERN7280dCZlwneKAe5GjpkC9oZqiaA
+    c/V5uQB3/atrFSvRUt9t6qwHhiSB1vgriMVrEtWx33J/v97c1UUiZOpioYd7UWCp03hey8
+    nxRtvbsH1huBPIal35YnkzrFfaZnBNbVSOmfWanQgMC2luWLwWFUo1wWvqD5ptV/6z5OXy
+    YXf0S0+64/BVtaD59icjwSuV1CirYXdvo79OLKD39GdB8cX8kwCPD1IibiEEyoEggMtG8w
+    Kz3KomCE91UXIPQcciN0j6pH0+nHYk1id9yKYONqrpEHBkCFaVuqvjYHl3t6iBmW2TFdMu
+    /qRNC9rSXy5t4ttaLhtwuDYMj2TR+/60wihvLYVWuZ5k/gSJaAkAVK9dj9NEBrpO/eJHYU
+    QpYOMcgosgAP4H+a4lreF4r26HDorGs0/6kptk5IYTWwrc2936K8y4eGar8yLx2d0Gw1Uq
+    xa+9LLT6wAFO87RkSsKzNydYjKfGsB/W1MxZr03WWYRIHzlOZ9Ba5iK3FvZ/yOhix/WtO9
+    HB/Gh0hK+uGrBSfaJZbQYdsLEh7v7WLbykxGV/x4fiuBha1mZ+ja6V0qB5icDFtVv3mqbq
+    Iyl8qXK3XFW8agnpwQNaL23zU4YxZ2lXM5u1KPPqHgagP5innzJ69UUE92hQ
+X-ME-Proxy: <xmx:qHubajoKQd2e2IDfH0vaKuzF_oGd8pmLZFUIcnLRQEJoxec-wKb2aA>
+    <xmx:qHubanGsmgpe-Ng9iZfUxvGb9VYtgy3Nheud73ryAzWeH8tyAS0Qxw>
+    <xmx:qHubavw_i7__zDi_df0Oxebw6zoocQV-cL8NVVfg-lmk8x13CBxDTg>
+    <xmx:qHubasq5Abac7v0fa7vl-OsrxPfhkD8CF2536sIe47Xhp_3TbFgj5w>
+    <xmx:qHubavUYs7rY1FPVpbbjnTF4A4ZkLPENO4WfY2w3scZSli4qaRoTR1iF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 4 Sep 2026 22:17:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Mark C. Chu-Carroll via B4 Relay"
+ <devnull+markchucarroll.fastmail.com@kernel.org>
+Cc: git@vger.kernel.org,  "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Subject: Re: [PATCH 1/2] Update shell tests to use semantic functions
+In-Reply-To: <20260904-file-tests-use-shell-functions-v1-1-b66f9cb4adbe@fastmail.com>
+	(Mark C. Chu-Carroll via's message of "Fri, 04 Sep 2026 16:35:52
+	-0400")
+References: <20260904-file-tests-use-shell-functions-v1-0-b66f9cb4adbe@fastmail.com>
+	<20260904-file-tests-use-shell-functions-v1-1-b66f9cb4adbe@fastmail.com>
+Date: Fri, 04 Sep 2026 19:17:10 -0700
+Message-ID: <xmqq1pb830ih.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Date: Fri, 4 Sep 2026 20:20:59 +0300
-Reply-To: "Dr. G. PETRAKIS" <dr.g.petrakis@gmail.com>
-Message-Id: <20260904172059.1EFCB522EF13@mail4.engw.org>
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Dear Colleague,
+"Mark C. Chu-Carroll via B4 Relay"
+<devnull+markchucarroll.fastmail.com@kernel.org> writes:
 
-We warmly invite you to join us in one of the world=92s most enchanting c=
-ities for the 6th
-International Conference on Applied Mathematics & Computer Science (ICAMC=
-S 2026),
- taking place in Venice, Italy, from October 24 to October 26, 2026.=20
-www.icamcs.co
+> -		if test_have_prereq MINGW && test -f /proc/$shell_pid/winpid
+> +		if test_have_prereq MINGW && test_path_is_file /proc/$shell_pid/winpid
 
-ICAMCS 2026 is designed not only as a forum for cutting-edge scientific e=
-xchange, but
-also as an inspiring gathering where fruitful collaborations can spark in=
- an atmosphere
-of genuine camaraderie.
+This is Wrong.
 
-Why Participate?
-1. Prestigious Publishing Opportunities: Accepted papers will be publishe=
-d by Springer
-Verlag, with selected high-quality contributions invited for fast-track e=
-xtension into
-indexed ISI / Scopus journals.
+First think what the point of "test_path_is_file" and other helpers
+is.  Once you understood them, you would never write them as part of
+conditional expressions like the above one.
 
-2. A Complimentary Guided Excursion for All: We believe shared experience=
-s build the
-strongest academic bonds. All registered participants are invited to a fr=
-ee, specially
-curated excursion across Venice and the picturesque island of Lido, offer=
-ing a unique
-perspective of Venetian heritage away from the usual tourist rush
+A conditional statement like this "if" does *not* want to shout when
+the test condition it used to switch between its "then" (and "else"
+if it has it) is not satisfied.  If this "test -f" does not find the
+named /proc/$shell_pid/winpid file, it does not mean that we
+detected a breakage in the system that is being tested.
 
-3. Warm Hospitality & Networking: Registration includes two full networki=
-ng luncheons,
-allowing you to unwind, connect with peers, and enjoy fine Italian gastro=
-nomy in good
-company.
+After looking at a handful of hunks from the top of this patch, it
+seems there are many more similarly wrong conversions among them
+than a few that are good, and I won't look at the remainder of the
+[1/2] or [2/2].  Sifting the two large patches that lack sign-off
+that span across many files and finding salvageable bits is not
+something I would spend my weekend on.
 
-4. An Unforgettable Setting: Immerse yourself in the timeless magic of th=
-e Venetian
-lagoon. From the winding canals and elegant gondolas to iconic landmarks =
-like St. Mark=92s
-Basilica, the Doge=92s Palace, and the golden shores and Art Nouveau char=
-m of Lido, Venice
-in late October provides a serene, poetic backdrop for thoughtful discuss=
-ion.
+This kind of conversion first needs to understand what each
+invocation of "test -X" is really trying to check and why.
+Brain-less mechanical conversion is not sufficient and will produce
+a wrong conversion like the above one.
 
 
 
-
-Key Details at a Glance
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Conference: 6th International Conference on Applied Mathematics & Compute=
-r Science
-(ICAMCS 2026)
-
-Dates: October 24=9626, 2026
-
-Location: Venice, Italy
-
-Submission Details & Guidelines:  www.icamcs.co
-
-
-
-Whether you are presenting your latest research or looking forward to enr=
-iching
-discussions by the waterfront, your presence will add immense value to ou=
-r scientific
-community.
-
-We would be truly delighted to welcome you to Venice this October. Please=
- feel free to
-reach out if you have any questions or require an official letter of invi=
-tation.
-
-
-
-
-See Photos from our previous conferences here  =20
-https://m.facebook.com/groups/170490584383306/
-=20
-
-Invited papers will be published in one of the following publication venu=
-es:
-
-
-
-a) Book Chapter Publication in Springer Nature
-
-Recent Advances in Circuits and Systems
-
-and
-
-Recent Advances in Communications and Computers
-
-Published by Springer Nature
-
-
-Editors:
-
-Nikos E. Mastorakis, Technical University of Sofia, Sofia, Bulgaria
-Imre Rudas, Obuda University, Budapest, Hungary
-Michalis Katehakis, Rutgers University, New Jersey, USA
-
-You may view our previous volumes here:
-https://www.mcsi-conf.org/springer-books.php
-
-
-
-
-
-b) Journal Publication
-
-International Journal of Education and Information Technologies (Impact F=
-actor: 0.4
-
-https://npublications.com/journals/educationinformation/Indexed in ISI We=
-b of Science,
-EBSCO, ProQuest, IET, AMS, ACM, Scilit, and Google Scholar.
-
-
-
-c) IEEE Proceedings of COMCONF 2026 that will be sent to IEEEXplore, Scop=
-us, ISI, EI
-Compendex, Zenodo, ResesrchGate, GoogleScholar
-
-
-
-d) Journal Publication
-
-MDPI, Special Issue in the Journal Symmetry
-Please, upload your invited paper until October 15
-
-
-
-Chairmen and Committee
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-General Chairmen
-
-Prof. Claudio Guarnaccia
-
-University of Salerno
-
-Salerno
-
-Italy
-
-
-
-Prof. Nikos E. Mastorakis
-
-Technical University of Sofia
-
-Sofia
-
-Bulgaria
-
-
-
-Prof. Vincenzo Niola
-
-University of Napoli
-
-Napoli
-
-Italy
-
-
-
-Prof. Vassiliki Kontargyri
-
-University of West Attica
-
-Egaleo, Athens
-
-Greece
-
-
-
-Prof. Ioannis F. Gonos
-
-School of Electrical and Computer Engineering
-
-National Technical University of Athens
-
-Iroon Polytechneiou 9, 15780
-
-Athens, Greece
-
-
-
-Prof. Lambros Ekonomou
-
-University of Pedagogical and Technological Education (ASPETE)
-
-Makrikosta Estate, GR 15121, Marousi
-
-Athens, GREECE
-
-
-
-International Scientific Committee
-
-Prof. Ludovica Adacher
-
-University of Rome 3
-
-Rome, Italy
-
-
-
-Prof. Maria Alessandra Ragusa
-
-Delegate of the Rector for Internazionalization in scientific field
-
-Dipartimento di Matematica e Informatica, Universita di Catania
-
-Viale Andrea Doria, 6, Catania, Italy
-
-
-
-Prof. Paolo Fuschi
-
-Universita Mediterranea di
-
-Reggio Calabria, Italy
-
-
-
-Prof. Vincenzo Barrile
-
-Mediterranean University of Regio,
-
-Regio,
-
-Calabria,
-
-Italy
-
-
-
-Prof. Ravi P. Agarwal
-
-Department of Mathematics
-
-Texas A&M University-Kingsville
-
-700 University Blvd., MSC 172
-
-Kingsville, Texas 78363-8202, USA
-
-
-
-Prof. Martin Bohner
-
-Curators' Distinguished Professor of Mathematics and Statistics
-
-Department of Mathematics and Statistics
-
-Missouri University of Science and Technology
-
-Rolla, Missouri 65409-0020, USA
-
-
-
-Prof. Feliz Minhos
-
-Departament of Mathematics
-
-University of Evora
-
-Portugal
-
-
-
-Prof. Stanislaw Migorski
-
-Jagiellonian Univeristy
-
-Krakow, Poland
-
-
-
-Prof. Julian Scott Yeomans
-
-Schulich School of Business,
-
-York University, Toronto, ON, M3J 1P3, Canada
-
-
-
-Prof. Yoel Tenne
-
-Department of Mechanical and Mechatronic Engineering,
-
-Ariel University Centre,
-
-Ariel 40700, Israel
-
-
-
-Prof. Rene V.Mayorga
-
-Faculty of Engineering and Applied Science
-
-University of Regina
-
-3737 Wascana Parkway, Regina, Saskatchewan, S4S 0A2
-
-Canada
-
-
-
-Prof. Dusan Krokavec
-
-Department of Cybernetics and Artificial Intelligence, Technical Universi=
-ty of Kosice,
-
-Kosice, Slovak Republic
-
-
-
-Prof. Lenka Pribylova
-
-Masaryk University, Czech Republic
-
-
-
-Prof. Dimitris Kazakos
-
-Institute of Electrical and Electronics Engineers
-
-and Professor of Mathematics in Texas Southern University,
-
-Texas, USA
-
-
-
-Prof. Marcin Marek Kaminski
-
-Chair of Structural Reliability, Technical University of Lodz
-
-Faculty of Civil Engineering, Architecture and Environmental Engineering
-
-Al. Politechniki 6, 90-924 Lodz, Poland
-
-
-
-Prof. Zhenya Yan
-
-Key Lab of Mathematics Mechanization (KLMM)
-
-Academy of Mathematics and Systems Science
-
-Chinese Academy of Sciences
-
-Beijing 100190, P.R. China
-
-
-
-Prof. Elias. C. Aifantis
-
-Professor of Mechanics Aristotle,
-
-University of Thessaloniki, Thessaloniki, Greece
-
-
-
-
-
-Prof. Hassan Al-Zoubi
-
-Al-Zaytoonah university of Jordan
-
-Amman, Jordan
-
-
-
-Prof. Xiaodong Zhuang
-
-Electronics Information College, Qingdao University,
-
-Qingdao 266071, China
-
-
-
-Prof. Dimosthenis Kyriazis
-
-Department of Digital Systems, University of Piraeus,
-
-Piraeus, Greece
-
-
-
-Dr. George Manias,
-
-Department of Digital Systems, University of Piraeus,
-
-Piraeus, Greece
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Should you want to unsubscribe, send an email to dr.g.petrakis@gmail.com
-with Subject   " UNSUBSCRIBE git@vger.kernel.org "
-Include the command  " UNSUBSCRIBE git@vger.kernel.org "  only in the Sub=
-ject of your
-email
-Do not include it in the body of your email, please.
