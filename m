@@ -1,90 +1,86 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B9730BB94
-	for <git@vger.kernel.org>; Sun,  6 Sep 2026 17:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982613BBFD0
+	for <git@vger.kernel.org>; Sun,  6 Sep 2026 17:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788714760; cv=none; b=snU9tXQEiP4DJuE+r3zSqC/i2r7N66R8F0moq9t5Z6Pkmh4aniwhFuhTRGqUd7re34h/oo8tlq5QHYWdRQG7NwYk3mD5UPII2cdg8CaF0IHDuVxq72CRn1NKWndansl6+Eo43pqokzFvQWZpDYK69i/D1zUPHA+0KtgdASl8KSc=
+	t=1788714859; cv=none; b=UGBt82h+9n1apN9CtQy7H3nRW0K1Kjr8vbWU1KwlTFZ15dPp/ojpE1wBBrNY6qBp57FJtr7seRwvPs2df/ohbUFEakvhzb5vf/4uOkCSxkVhLt3FGfx/w6ovG1izn+y6esqJJ36/37UV6MEVKNP+ubNR7EZmvsYq1FKzirkABJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788714760; c=relaxed/simple;
-	bh=PcLsNwioDrtaPeUnrvvJ2Rf1ThawJ8fiP4y4H6zvdZg=;
+	s=arc-20240116; t=1788714859; c=relaxed/simple;
+	bh=hZ5CGzqNfrAZ+jYF/F017+Q6AgALmriKEthwsEqkYm4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=J+qtjVbo7+Y08bnUKlDTKCv5OPRfvPxZN8xxC0oXxvKf9WKedep9SwMvtBTeSxWUMTCxKNcJkvF5rfuw92i1WrpTQ1Dp/oz/0RjHXm6yoHaVy9kISXyXnn2FclESsJThBo17wz4DHqvjhbxkStpy1NMZ98evgks9MpBIxF/NpBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VA3E+G2x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uDBDFfZv; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=SljRjo1CfhxjKqKqi8RN/gHBhG6s2s9T3RRhFLmIwFX1QPNwZBwzaVjSyv5ON5OF6tGEn0o1CFgP6bUM5MvhNJfa3h9jyEl9lhXdRSyx4uKomcyKZCWHVIKkkGi8ivyHDR93fJtkWuEfCjm7sCDmyM0rwWzQMALvyxZx4AttTDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uD9p4nyu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m/meEQAn; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VA3E+G2x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uDBDFfZv"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6AB3914000EE;
-	Sun,  6 Sep 2026 13:12:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uD9p4nyu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m/meEQAn"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AC19014000F1;
+	Sun,  6 Sep 2026 13:14:16 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 06 Sep 2026 13:12:37 -0400
+  by phl-compute-01.internal (MEProxy); Sun, 06 Sep 2026 13:14:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788714757;
-	 x=1788801157; bh=PqaunqT44y21m9qgH9Gggb58DfhEyiBSqMF1gbJwLPg=; b=
-	VA3E+G2xrDsxxaY1jimHJ9EdFCc/qWdLV/mGDNojrB394O5/O59kS52WzpmG+tp7
-	UVaFwEe72TmsVRzIQ+JpInafCn5KY+D/Dk/Uj6sCNRUEssF76kzJJhlmhHAkuwNv
-	AXpQgIkzKL8da+oROH9Tw0uCZZ8RV9l1EJ0RiaFF0LG+DKtA8HSFcWrpb6bj01wT
-	S+7ppfx5D7Je/VnTQSZZzr4DVjyPcnjli0NGlZ4cyG9E77CB142D2nZaO6uMGuQj
-	8MtvIE/XNR79AxILVQtGeXv9rnH3xZrEvWx85PW549mGnydZ5PIg1tRWADteLTi7
-	sV0N2deUnnmPY17xia6nzg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1788714856; x=1788801256; bh=hZ5CGzqNfr
+	AZ+jYF/F017+Q6AgALmriKEthwsEqkYm4=; b=uD9p4nyu64gD3DdRpwPpfCo9XV
+	D/lXuHa4OxIDAL5jsnqFluxbfiGtL437WMKeOM0Ya+qXsQrI5QGaggRp54B8HRWQ
+	mynISOPxK8EES3erQEIYEstvlJqHB/IyYVhyICdSI2WMW0gMkEZYqHKoucxyaFco
+	5WWwXkC/R/5exi/C8Ro2oaW2Oip7wjmtDwazuMd4a4YvhV0RYTNAqaDn18Pbcw4R
+	UgY8flGO19hii1tXN/J2ZtUjN2xtReOI6a6ovzpmvc2EIrXyO7ZBbEvkUkmVfsmX
+	WNhh3PG8YCQ22CMI+KrO3N/PyiomnrMo4Uj2pqGfIvBJpv0THpn4nXMES4rw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788714757; x=
-	1788801157; bh=PqaunqT44y21m9qgH9Gggb58DfhEyiBSqMF1gbJwLPg=; b=u
-	DBDFfZvZAo9AXbI0lNRT3oRF1jgDfoo4WUQNUfZVyEvy83/6sNz7s9nCsECPGwjN
-	fkt3jA5PA4gv3xauxYs6acRUQgyhvtckhDPuvcetWKZ0ApcfozhSl0UKsL1Dea13
-	fXexs1qVQOSf75pbIa16j+3SubrEZPsFXzb63g1b46LSO8oUKgIx2HkKP5nchOW9
-	REJuMm8PpVdSlSY5oJbMT3T020NU6fNtyAozhHX3kqQn1z2LuKZtiedwYIM2F+Fj
-	LQqUtijWqPulwvRadekHRcBbwM1BJmuXguyOGTdWS78oB+uIZpwuVGFQTaQIg8Sr
-	Bh+lEGLA9lIDgIlGqlHhg==
-X-ME-Sender: <xms:BZ-dajYGMaA0j4UbVr3SeAw_8GirIVGQNJ9wwEMZwwJgGv2hB0N7CA>
-    <xme:BZ-dap0gDoDJIUJ79Riy3x0z6_ArnF__G4_P97IR27DQPdOrR0ArKt5pWKNfweFEL
-    PaQfmbm7gQSkvT2Wd-CqOkdCdMm8dcQJknh3CMGStjMZZ-PBzLR>
-X-ME-Received: <xmr:BZ-dajX5iqI3A1JsyflfLTSWvFUA5C-jMc9MZcmy5RnEZsR7B08gg529O0pdrhNB2xX8OiBvIdfhKladUkHqrCzyG6aAoF3aa6gC>
-X-ME-Proxy-Cause: dmFkZTFW2hMTZuNs7hp2YY6o1jK+b684GMbikvcm8/fNLsuCqcUNgS7qpWMwcxbJ22nqhy
-    xbo0VXfubidNTyVrZRFLfm4OtC1iaO6VvI7ImbkntSinPXqoGB/1xb1Bwf+z0BbpBeE5z9
-    sWjs+FeogyKBCnEwyIqR8ENnXA0bBPRzN/ZaTcj3oZEhTg6PPjITFyVagrxmiXE+UA2cVB
-    mQqCiEWbQffvefZdMGUMK4O3/tg0Twwy/z8MV0Ln3PCOxqzo46OVXXsEA28ACooKO1ZVk+
-    sBW6gY/YcOcJExQuPcVb2WT2965n747HPdeYfG+Ueh1QAYpimjmwCnhDmcK7zgsYvdJIZB
-    pCTxySxs8m8hmXScAhrTeO1Q5dcClb0qw/9o4jsIjboX1ICZ95LpzNcmh00HchGveWDQiy
-    9Gra3AxlQke0F5KQuYMQ+gCNoA5QNihxozp1yqGkmS3GzaNiBhdH8DITo5ae8NmWgI/u/d
-    6pCnrUZKb4tXXp9ccxxPVaegcfxOOJ/mmu2h69ZflDM6PHq4dv7OQx8+jC+5BQr9WbtJw7
-    iEp7JlmUgMw2Q1nAbdEXewHRpMgDTGU1JNNwP1EJeAZUZWD95sZMmpgmhjPppafeftSpDR
-    67cizZeWYHdyj8ceHP2VC6P7BFK/aXVRbibLt/FZNM2qoBIp0wuXjwpQtbVg
-X-ME-Proxy: <xmx:BZ-dajU9uKw1k1FYv1K1nrv7tt2jCw837TEspUUNsNySPpWp_GUfXg>
-    <xmx:BZ-daicprd5BNw8x7n1NjdbSgbOLEW41Wwmh23SlfGZ_O3PpflCtMQ>
-    <xmx:BZ-dasUQOS_4Zep5kXsqZVcWk1-AaA0B-5_Nplwac_tS4umFTbpTrA>
-    <xmx:BZ-darcrzBkLOU2DhriTKrFJWF08XL4J1u5mDLHHFsvvExHFnHqNQA>
-    <xmx:BZ-dah8hP1m23eutSgVkf3lO14jdJjf8PnijkscNt0S_6bBjc-X6USSK>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788714856; x=1788801256; bh=hZ5CGzqNfrAZ+jYF/F017+Q6AgALmriKEth
+	wsEqkYm4=; b=m/meEQAnQLWsBY9n7y9UukiEBlAc2rd40gM0u5CzWWNgFkusyv6
+	Na6X8a86WpMraY2LcMZ1YDcsMDhIkAHOYp85XZ56R4j3griNQu3fJg2noEhvmQ89
+	bHVG90jlvFqOxv/cFgDsmCuss7T2B507ISsAnvhGsiGzSIoAFpoKaBk6z4bbUGmB
+	QY6KuVXVCdZ4TNwWkmWE4it1KYKBqikZBZX4/l5+hCH2RTXmvgrlHDkYTXl3Sapi
+	ryIRkQE2dVhXk8yxjXsR2wUaEBggGItStlU5QfB6T6e4prtnIpq0x9QAoqOQC320
+	G2Era4FU3IRrJ0wmx580jP7QAZqhXYnAK6g==
+X-ME-Sender: <xms:aJ-datTmvwnRP-cax8qRHQZ3mUckcyNQFtIk6ax1uOKTt6T5GlpL0w>
+    <xme:aJ-datqmtE785yCCHeDfSz4t06e8rKSxOFg3ImDZKvulOETZNGhYMk4FvGjEfy4Ay
+    PmtALKZyRPACApeOUh--8KvQAiYjMslqKQS4vYaLU2g2XtVq85QpgE>
+X-ME-Received: <xmr:aJ-darJ53VAYzat4GLnFurLCklEDrr3IwbdhszBzJIiAl9iYh3APc2csn-dSP7ErS0PytmoBRZArap-Eu0pjiY7BqBWJJKho83zt>
+X-ME-Proxy-Cause: dmFkZTGvqj4Lj6a1xqIILClEjrIPnjrykcPnAuvw5MRfFbiTR62/7oHqObEwfU1CZte1nI
+    KuGyhEGfN9AVBWHwSVw8vB98OgrGdaoqKxPheZCmAmJ6aac/os8/7fvu34/YpFWQpbYMQk
+    spOZQhb1GwF7/oBLzzBM8Oo9AwitZzVbuNYlZFtpn4GBFyQPSII6ana2avkEy/t3drXKdz
+    NfDlnYZpgIVATYa8CrDg0D45SDTzH+my+7Qab087lkspsTczQJUHQRaDXTOvWKbvxURl+5
+    OG2HooqLnHnNY8D7WBwo2ArxwJS5xwRL/q+BVX2mJOU6bwprAJawk5wcqV03TDRjxU3qtE
+    vh7WjzMJu/AJsZWWEEqcl3sKblyEO8azoq0APzetMcm/PiRwh2SfKcqY1EwlwU+1iHHATR
+    Iz/EZWZR81OHqkkz6NiB/d8fEAmhCaw5Gop0FIhdKCvqkAH2EjbXA8BDZq78XwNJvYeSyZ
+    PqO1QvGOSwPeB5DOUj9f3abFu67yQXiR8dKNeKGsNHjxrmDSOWDdCXFiFFMgl9n/hOLaf8
+    hW4PIAh8kwnlmd1YPZg2O6PFcJAPBlowwI9/82BpTGTDQgh3k1u3vJCx/bJEkhHkDsAI58
+    x66a0OMY3xy2CA6CUhE3c7Sqg/2OcpA60q0PJ2iFsTGF1ziOEQ+xwRn25Cvw
+X-ME-Proxy: <xmx:aJ-dagrnW3sj_5jLSVoF3YNCO_5VZ_0C2eyTLdBdg2NcIasbd7aUYA>
+    <xmx:aJ-dajwYAvYR6FfX2KHgwHqxvhGjcPG5rcGeZO6Jctbk2ezbSs3JrQ>
+    <xmx:aJ-dakOT9gMcnwa0qm8Pjgl--_NrvhiEtQTIZZmG8ji4BlJ_K30kNg>
+    <xmx:aJ-dao4tSGrKKbqY6sh82SbHr8jnYM31JKeeAz0Q45y5r9qVFtNXtA>
+    <xmx:aJ-das7S5YWfXGFg5KEIzz87CmZHMnodg3-g54qWQ8epnlAnPZUvaQly>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 6 Sep 2026 13:12:37 -0400 (EDT)
+ 6 Sep 2026 13:14:15 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/3] format-patch: learn --[no-]range-diff-notes
-In-Reply-To: <e3b7ef75-08e6-4529-ac75-56f800d2f4a4@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Sun, 06 Sep 2026 09:22:27 +0200")
-References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
-	<format-patch_learn_--range-diff-notes.c5a@msgid.xyz>
-	<xmqqjypfp2vl.fsf@gitster.g>
-	<16315616-097a-4fe2-8665-010e424afd8b@app.fastmail.com>
-	<xmqqbjan6q7l.fsf@gitster.g>
-	<9335a35f-e9c0-4e62-812c-e5855c201003@app.fastmail.com>
-	<xmqqpkz24193.fsf@gitster.g>
-	<b3c66de3-0ced-446f-9bd6-73412a8c92b5@app.fastmail.com>
-	<e3b7ef75-08e6-4529-ac75-56f800d2f4a4@app.fastmail.com>
-Date: Sun, 06 Sep 2026 10:12:35 -0700
-Message-ID: <xmqqcxuq483g.fsf@gitster.g>
+Cc: "Aleksei Sviridkin" <f@lex.la>,  git@vger.kernel.org,  "Thomas Bachem"
+ <mail@thomasbachem.com>
+Subject: Re: [PATCH] push: fix --force-if-includes when remote-tracking ref
+ has no reflog
+In-Reply-To: <fdf8fa9c-1e6a-4f7c-bbe3-a0b41cdaabd4@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Sun, 06 Sep 2026 11:39:29 +0200")
+References: <20260903010547.85469-1-f@lex.la> <xmqq5x0mfgyh.fsf@gitster.g>
+	<20260903200015.36849-1-f@lex.la> <xmqqo6ee9jtx.fsf@gitster.g>
+	<20260903214551.53918-1-f@lex.la> <xmqqpkyt3qul.fsf@gitster.g>
+	<20260905171343.34722-1-f@lex.la>
+	<fdf8fa9c-1e6a-4f7c-bbe3-a0b41cdaabd4@app.fastmail.com>
+Date: Sun, 06 Sep 2026 10:14:14 -0700
+Message-ID: <xmqq8q5e480p.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,127 +88,12 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
 "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> Seeing as how the doc was unclear and did not spell out how you can
-> build two separate list of notes, here’s a draft of a rewrite:
->
->     `--range-diff-notes[=<ref>]`::
->     `--no-range-diff-notes`::
->             Used with `--range-diff`, tweak what notes to display in the
->             range diff.
->     +
->     The default behavior is to display the same notes in the range diff as
->     on the patches; see `--notes`. But you can use these options to use a
->     different list of notes. For example, say you have given three notes
->     refs to `--notes`. At this point those same three notes will be
->     displayed in the range diff. But then you pass
->     `--range-diff-notes=<ref>`. Now the range diff will only display
->     _<ref>_. You can of course pass more refs to this option, just like
->     `--notes`. And you can also turn off all notes with
->     `--no-range-diff-notes`.
+> By commit message volume, I would have expected the commit messages (if
+> they are LLM-assisted) to read more like Jeff King log messages given
+> the corpus training.
 
-Up to this point it is quite clear how the two interact.  Even
-though it does not appear in the above paragraph, the rules
-essentially are "Without --range-diff-notes, the refs that are
-specified by --notes are used for both purposes" and "When you use
---range-diff-notes, --notes and --range-diff-notes give independent
-sets of notes, the former is shown only in the output, the latter is
-used only for comparison".
-
-But the following paragraph, while it may be correctly describing
-what the code does, does not tell me why you would even want to do
-so.  
-
-For example, if you have --notes=foo --notes=bar always given in an
-alias, i.e.
-
-    [alias] fmt = format-patch --notes=foo --notes=bar
-
-but in one invocation you would want to use different set of notes
-only for comparison, you would
-
-    git fmt --range-diff-notes=
-
-if you do not want any notes participate in the comparison, or
-
-    git fmt --range-diff-notes=bar
-
-you want only 'bar' to be used in the comparison.
-
-If you had --range-diff-notes=foo in a similar way in an alias,
-
-    [alias] fmtr = format-patch --range-diff-notes=foo --notes=bar
-
-you may need a way to tell that 'foo' no longer participates in the
-comparison with
-
-    git fmtr --no-range-diff-notes
-
-If the rule is that once you say --no-range-diff-notes the internal
-state is reset and the command behaves as if no --range-diff-notes
-option is ever given [*], then that would still leave --notes=bar so
-the command would beave as if
-
-    git format-patch --notes=bar
-
-were given, which means bar will now affect both, so if you want
-'bar' not to be used for comparison, you would need some way to
-pretend as if you said
-
-    git format-patch --range-diff-notes= --notes=bar
-
-and ...
-
->     +
->     You may want to turn off this notes override behavior after it has been
->     activated. Use this sequence to do that:
->     +
->     ----
->     --no-range-diff-notes --range-diff-notes
->     ----
->     +
->     Now the range diff is back to displaying the same notes as the
->     patches. Going back to the three `--notes` example: now the range diff
->     will show all three notes again.
-
-... may be a way to do so, perhaps?
-
-BUT I think that is a strange interpretation and notation.  Normal
-people would rather assume, once you said --no-range-diff-notes, you
-do not want any notes to be used for range-diff comparison.  IOW, I
-find the earlier rule [*] that makes --no-range-diff-notes only tell
-the command to pretend that no --range-diff-notes is ever given,
-which leads to the above conclusion, a source of confusion.
-
-If the rule were "if you say --no-range-diff-notes, you are saying
-that you do not want any notes used for range-diff" (and similarly
-"if you say --no-notes you are saying that you do not want any notes
-used"), would it make the workaround in the last part unnecessary?
-Under such a world order, 
-
-    git fmtr --no-range-diff-notes
-
-would mean that --no-range-diff-notes tells that you do not want any
-notes participate in the comparison, so any --notes in the alias
-definition of fmtr would be used only for the final display.  And
-
-    git fmtr --no-range-diff-notes --range-diff-notes
-
-would tell the command that on top of the previous state, you are
-adding 0 notes to the set of notes used for comparisons, so it would
-be a no op.  If it were
-
-    git fmtr --no-range-diff-notes --range-diff-notes=bar
-
-then you'd let --notes in the fmtr alias definition to be used for
-final display, --range-diff-notes in the fmtr alias definition to be
-totally ignored, and bar is used for comparison.
-
-Would that logically make sense and make it easier to understand?
-
-Thanks.
-
+;-)
