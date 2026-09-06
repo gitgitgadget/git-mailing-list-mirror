@@ -1,101 +1,98 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A587935DA6D
-	for <git@vger.kernel.org>; Sun,  6 Sep 2026 16:50:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A97E8472
+	for <git@vger.kernel.org>; Sun,  6 Sep 2026 17:03:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788713461; cv=none; b=rj3WvPipouReYXJGcQVAw4bFNz3gRGDMyLbu2Th2+EVxW6e0GADgfJQK3iJwJGJEIVo9Dn+2dBIhGmBlqxeYUwvcwGVK/EyIvtTO7Qh1SZaAfW8wDA1kVScHFTB/7rf9AOhD0W0+JyY7mDfoe8UMWI/r3uq0HPElr65oFNr+vHs=
+	t=1788714183; cv=none; b=IpJfP24wD2fiQcpefqbq1Jpl5F5VvDGSQheDDUYKYxp401XhtpYrHQtzPX35icTWFWHidCX2V+yqBwWplXxCM+4ZFkOLTqN2djBvQHXhqe9tdwYqNQfE4lsxec03g0S1d+MofMfS7Rtn2zc/Amqvf1t3SeAsIZc2ROpTYhGnnXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788713461; c=relaxed/simple;
-	bh=YVaGCL16KywWhB16+/VtncCID5vrMyL+9jC3/t4AKAA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2nvB/ADEDkbN6Gfmt4CsZRdY0sayFN9vL1nm0cmB3eli3zn/VpERr7mWOkH5Z2pSUNrnw3bbCuNbS/8Tj7DddRdhXDMD59QJBoD/vncTLe3DsyCm0dClQiG7XntL3QohCIieTQ1aY6ZKepsicE7xuXYrDJ/cg2YX4AwSkOaZkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=EkUGYDHW; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lex.la
+	s=arc-20240116; t=1788714183; c=relaxed/simple;
+	bh=F/mQfOIhxZ93vkinzBiOFJu/4sbwZW/7gtvExOfxJXA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gGrpuAF9njLaCJI9Ms/dg3Zy56LnI7Y6R5GXgnxE5WYwwNex+ljbL8wQ8FFGKMzCWa6LfcgcqjGcHI7SAOCX7JEJ31hXR3GVtghKTeXTx+sxlau5AexDDpxTj8u6q/kg/VvMhOIbTqI9OpRi+Go0QDVIDCfGr3hNViytTxGmH4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DR3d1Jym; arc=none smtp.client-ip=209.85.160.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="EkUGYDHW"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-49b965570d7so32097685e9.0
-        for <git@vger.kernel.org>; Sun, 06 Sep 2026 09:50:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DR3d1Jym"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-465cfc7e33dso1620359fac.1
+        for <git@vger.kernel.org>; Sun, 06 Sep 2026 10:03:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lex.la; s=google; t=1788713456; x=1789318256; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=YVaGCL16KywWhB16+/VtncCID5vrMyL+9jC3/t4AKAA=;
-        b=EkUGYDHWdmM68b5VZ6mA5/htcVRejllbZXn/SnpB46OzYNnx9p5Z0qPxjtIRZ51IuZ
-         T7iT6Fr1/nUDp/DGXo4J0wQj0LXwQxcehHJDX4B5rFAzJKFHS+bd9ltFFaSeIgyl14PK
-         GSaINSNerQqCpyVemF2ZSagtnK4+2lqI7INinXrCohgM9BsvYyaNgqI/yIJBzAc66S8s
-         nUdJXpDezWA2d4MT+i+D5twFoLnSbNNojqj6wfEZRh3v3K/K1x6IE+6mGQx0ODqKyAwQ
-         eGi5QCDa1G7H5zq0j0Dcb4esfxwHLuNOFGxL8EULPZgj9nxneRtlQzFrxN+nboNu6PCb
-         r7Mg==
+        d=gmail.com; s=20251104; t=1788714181; x=1789318981; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=a04a9FIorE+bO1GnlAKdVlhCXOqBDHIf016nru+nwz0=;
+        b=DR3d1JymNSseX9IVMyiusjUZj2T/hPWFoKar8xQUjDrrwmK/Z8Mhl6T9ZURNxha709
+         zrALBT00pbxEPgMdCVwLcfgEbQ/m3+ual77n4rzAwrRJDOFu/dUC8zyShphSsgu9a3HI
+         nzqZxaZIZCOnX8t3wa0eBTdL1yhm2e7jE9lFBVoRFlwbUB11jU6nijbiX9Z0T7qwPpEq
+         QTQhhHPW9wE8ndAcvlAK/Kf6ri3hDpbMY1JQgB4etcEQQHzs8rQWNDLKgF+/aaQ9Hadt
+         DGNLfWGUjC2yCKw/6lfWh2SGKltaPNxbc74z4m6ykk5qubhd6av+zRGTH9sdqUSUtaQ/
+         96iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788713456; x=1789318256;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=YVaGCL16KywWhB16+/VtncCID5vrMyL+9jC3/t4AKAA=;
-        b=BIpWXpmFu86WtxuOZMP56TxXK48Km+Q/mDkP4Xezhew1aFlhcP+45sxdFwDzqR+J+5
-         wMCeehFbKfXsEi8WxatuD8+mgLRRNnl+3okRtAJEwhYLdzhW2TWekEYFBL35N9AJWiGO
-         qdvMQdU0yjd52w/x5uyrU1bGhl8dT3u1HvBWIgS4MctfikD1e6jblk+xooIr9zWGXXHY
-         B1cqsACTj/Qpiv66P4sOvG0ZbQr9GjYyreV8pqXGyjwFnLBFtf4OzH6KAPNBSHHEfXXA
-         9O5UL/o9snKM8p0hyRkoQTq0QvFH9C63eoT7SS3H4Tx+4vCmOnzPc7G9l6XpP6iSX8N7
-         KaKQ==
-X-Gm-Message-State: AFuF++msHbyqVkRhbDgGTWtzeZIj9CRYPsp5BbomO9oYXVtHtKaaK8Gk
-	fZRK7DrH4v8Q34lFfV6Up+HDxRbGdGr3bB2u7ABEjbVShKheHAtf6mXRh73lijIMcXuwTEQOCHH
-	QQ59DG2n4Wr8Q
-X-Gm-Gg: AYBFou0APLwizLZ3TsEhjMZ7ovtvjRX/the0XDPhyCW36L37AOWYHIH7tL119nXP/9O
-	oc+j7KS2Ks4W9srI5HjarB6tnpxSrpDINYTvCIumTHor/XvF1tvq1bAiWWc2RrtHsQK3CmHlGaD
-	kM0zLioZjRLdAfuBTdoBmp1iLe4v0FLZTLBPvvPhSi9js5/qntNf4MyE8uISxMF64XhK+X3i6dE
-	iYLoPgb6MFqQBXIrO20fXS+56YFX2E9DXi79pDTE7RC7Ozdi0ihAFpMUb0TZUB3w5AyJVHeA9ju
-	6izZRaA28Ihqu+MQdhaAeDNqanVpJ9JQ1D/bVhgW3pKH0s52dMBmPaqxM1hhUs4ShCnr/NrNrUN
-	kiUTX2YBHI/l8Xbsr6RVQghkpT4DrUxx/FWVVVxUWFF8REk0gtBfrfj7BMoN/HcSozD/raeEPmZ
-	L+ETsdybjnbcVDpdZ10GZDIcJyu2NBxYlAkEpded0zPQqWaUL2cwBEkOBn+B13NA==
-X-Received: by 2002:a05:600c:154f:b0:49c:fc6e:8cb5 with SMTP id 5b1f17b1804b1-49cfc6e8ee3mr174215265e9.25.1788713455366;
-        Sun, 06 Sep 2026 09:50:55 -0700 (PDT)
-Received: from ownbook.lan ([195.181.160.196])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485883a9b49sm19151582f8f.17.2026.09.06.09.50.54
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 06 Sep 2026 09:50:54 -0700 (PDT)
-From: Aleksei Sviridkin <f@lex.la>
-To: git@vger.kernel.org
-Cc: Aleksei Sviridkin <f@lex.la>,
+        d=1e100.net; s=20251104; t=1788714181; x=1789318981;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=a04a9FIorE+bO1GnlAKdVlhCXOqBDHIf016nru+nwz0=;
+        b=shx0VM9mgY3QJXLoqlae1fqRiKqhpmbvGZM/+153JZ99n1hs/ndVsOQ0rwB1LKPig5
+         eAFgyLO954ZJWy0Wsxon6KR03Yw7ux9xsU41vxThbWNSLQqHocQ9SgKJ/joqehfucBmU
+         aAdUTYyy6xiQDUTr+GRF3I3Ce89v5f/IA5sKz2ECuTi5aZDCYCdVN5lzuEuBQLNxrjxL
+         sFy/55VJLnmhcd/Y9WKlRI8c+erOunwasmFqsKCO3CJ03jm4kM1vUo9lOyeejfLe2G1m
+         aj1gdLmnLfyDO4o/M3UNfuFpt8Y3u63+ywssd38vC8NFboi+OyGgxP1wcbGrPdCNeS3q
+         y6uQ==
+X-Gm-Message-State: AFuF++kKw9dEojkEtzIPEgFen/HayvgYAzb5sJ2StgTxCkKzuWTIEtkv
+	lqEeUKuS6bei485dgRWBzrq4PNtsnLqbCfNua1ttsLejwSm2IBfzX5M6
+X-Gm-Gg: AYBFou03efiL7IkuL44wYLEOoSFDIvQNb2NKCLuFSU6utDDmsPbMgDlFZgDfPpowmbF
+	adIq3dR08jAd7Ozd0jYyJ4SQUuiawMrJW3z1NwEaI9zGdJuH5inreA1qniWhWlEn204yVRSFYYO
+	+vg1ewqki5MFaJ3wI/W+KKlVz7yIs3zt1RncNYlBr9DoFV6pzS3TRLjqyJjmxJZBgI20FSTgtG0
+	WjnftJqv4Fse3A5RbK0qBuEaOWbNlQPJtSOgMoO70CBfrMjU1wQgcjto18W2+7/QYjx71JwWI34
+	cmHk/CL8Q049KygRyJsM2FauphR9bL+eFW4x7xWLYU6+1btlo66u2NjHcCEfxCe1hxPC+zT0d3z
+	fz/wfO0vdWzQXnFZIuTgsidCVU5E4WW/nj25NmHXWoBbNsOA8SOyTiN/HGt7rbynLxZGUPSFrLO
+	uaEHcbZ2C4mKXywtb/EBARcJnb9B7ZMsQwdrmymqdUjTj3d656qo7V8JtUfGfF2HHAmdiLPuZX9
+	ZE6eKZDaQ6/vw==
+X-Received: by 2002:a05:6870:968e:b0:475:e235:906 with SMTP id 586e51a60fabf-475e2350fb4mr9148027fac.36.1788714181026;
+        Sun, 06 Sep 2026 10:03:01 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-475543f5ac5sm8257322fac.8.2026.09.06.10.03.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Sep 2026 10:03:00 -0700 (PDT)
+Date: Sun, 6 Sep 2026 12:02:57 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>, 
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] push: fix --force-if-includes when remote-tracking ref has no reflog
-Date: Sun,  6 Sep 2026 19:50:52 +0300
-Message-ID: <20260906165052.21780-1-f@lex.la>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <xmqq33vn5hsq.fsf@gitster.g>
-References: <20260903010547.85469-1-f@lex.la> <xmqq5x0mfgyh.fsf@gitster.g> <20260904124433.12840-1-f@lex.la> <xmqqzexx58hc.fsf@gitster.g> <xmqq33vn5hsq.fsf@gitster.g>
+Subject: Re: [PATCH v2 6/8] odb/source: support writing alternates when
+ creating the database
+Message-ID: <ap2bu85Ut_bN4wkt@denethor>
+References: <20260831-pks-odb-write-alternates-at-creation-time-v2-0-aecd2382ba1c@pks.im>
+ <20260831-pks-odb-write-alternates-at-creation-time-v2-6-aecd2382ba1c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260831-pks-odb-write-alternates-at-creation-time-v2-6-aecd2382ba1c@pks.im>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Which suggests to me that gc.reflogExpire or 90 days ago would be a
-> lot more reasonable than year 1970 to use as a fallback cutoff date.
+On 26/08/31 12:02PM, Patrick Steinhardt wrote:
+> +struct odb_create_on_disk_options {
+> +	/*
+> +	 * Alternates that shall be written into the newly created object
+> +	 * database. Whether or not this option can be handled is specific to
+> +	 * the backend.
+> +	 */
+> +	const struct strvec *alternates;
+> +};
 
-Entries older than 90 days do survive. The reflog expires when gc or
-"git reflog expire" runs, not on its own, so I could build a branch
-whose matching reflog entry is 200 days old and still sitting there.
+So ODB interface here still exposes a way to signal alternates to the
+backend, but an alternative backend may not actually use alternates at
+all. Out of curiousity, does this mean git-clone(1) options such as
+"--shared" should only be allowed to work with the "files" backend? Or
+should the expected behavior of such options just be backend specific?
 
-A/B on one scenario with only the fallback differing: with now minus 90
-days the push is rejected, with zero it goes through as a forced update.
-The branch was created at the remote tip 200 days ago, that entry being
-the matching one, rewound below the tip 150 days ago, one recent commit
-on top, so the tip is not an ancestor of anything newer.
-
-It takes two crossings of the bound to bite, which is why my first two
-attempts to reproduce it failed. The match is tested before the
-cut-off, so the entry sitting at the bound is still inspected, and the
-merge-base fallback still covers the case where the tip is reachable
-from something collected. You need a non-matching entry past the bound
-and the tip unreachable from what was collected.
-
-v3 went out a few hours before your mail; its third paragraph argues
-zero over "now" or a fixed age. Your call.
+-Justin
