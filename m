@@ -1,70 +1,71 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD17380FEE
-	for <git@vger.kernel.org>; Sun,  6 Sep 2026 07:25:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDCC3A6B67
+	for <git@vger.kernel.org>; Sun,  6 Sep 2026 07:25:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788679508; cv=none; b=nKdFsU9g7fbs7G46SqJgwNzqXmX6I9R0dsmN76bGn2z6JN+ZsNrNGnXSxCnF+UT0SPvt9O0iOGERclQ46Lwnya2tQ9UQ/xQFEr11OZiK49Adwe6PcgLisoAgG1SW5bJxlILZgO2YGGqVLucDiKBefgOuEHORtH0qRrYSfXSvOYE=
+	t=1788679509; cv=none; b=rUPW+kXldEvmHHRQanlDFZSUtODtqOOrUsJjxoCz3lWLoBX0+hZC+AJYZ+nQ5/4GW4JjEOaMJbDp0MfcJK9ZFWS0kAGZ5G6bhUHUyH4dg/DHo4hMnF66JXQFgkWS3WoE0f91pNgz4oP3DI+gWyvCMf9B1Hw8veBnEQOe+VG1r5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788679508; c=relaxed/simple;
-	bh=XX3gWpEmRWLNUqq67kfJd6Sc3ArB4ZHkidZJxqoVyYg=;
+	s=arc-20240116; t=1788679509; c=relaxed/simple;
+	bh=TsV8O13c9/Qy4rq3AQdK/yuKyfLMmXTMvEY44usoJuU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lj5+GsgbkzTT1OzRLjSlJ3B+hTxOASPYPl1SaWNx1QTBfcgmeUY1muIAr8wYtcO1fEm7f+Wjhz/n39wlHpMuOhmdDxN+9rQn0zWljBM5SPU0VwWAUG2qq12CPQb+0YH6v9c0PD7jWaZnwvQxdRV2Y9r788JnqAFZK1dEjabAkYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CVZB1iWJ; arc=none smtp.client-ip=209.85.216.53
+	 MIME-Version:To:Cc; b=u+HKg0JDFWMWJOQ5bEvQvd5tutyAiln5U+KLr00sDjV4K65+rqx12BUsycs1+TfSd6V7efM5+lUmGuvQn1M3bEvgyP9kUkJUFZZerlwIxlnD3yFokwxZzw2o4o3cauB0Q4qLlVgBAJoc2IZXbeE+UN13w8aEef34T0Iyx2+1ADc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NxkgQjEC; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CVZB1iWJ"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-398d2b28acfso1762948a91.1
-        for <git@vger.kernel.org>; Sun, 06 Sep 2026 00:25:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NxkgQjEC"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-39682983a0fso2690816a91.3
+        for <git@vger.kernel.org>; Sun, 06 Sep 2026 00:25:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788679505; x=1789284305; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788679507; x=1789284307; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=UJswaK2vh5W6rHtvSPNdqL8cbX1cuhVgDJt+y5Xc9VY=;
-        b=CVZB1iWJnxpEbCke6alXW0z960wksbJLx7piHyfqkymzadwsf/mVajXGoHTodBVm1E
-         C+P72ze4TePMbzKTVnKVldkV1YSgIX/vt0gMiLsSyE+DOwtS3zB8Ms0lzkHxn0mXL0nj
-         aYMLX3bIoV1mJYZ6wh8ae0acXW4rDuh5p9vHZxhgtB66u3saY6pf0yQDkKrkcnuDl6d1
-         +5Xv3BiQLHnn7n2/Cet9/zVQdpXsof0sCoPnnLaDaLOr62ecTaObRG+blh+aJr/FDyyY
-         3PgQo2KvefXzX43u/0YYA21RGNmkEwan3UT6ln361N/ySr0n7TWAoOs0a9ScZ4/cSEJl
-         b49A==
+        bh=8Dx/xPYgpGNASflmpiadqQlrP4hMXnYGnLEjvTXpIUE=;
+        b=NxkgQjECTePcwsMR/hxl1tUB1UqgKMiEOWcSyuwFC64Frozjk0eips9kQDcEQVIGRX
+         bnJQaTL4pXHOi5ml/Nm6JCFa9HuMHxduRFuzpT7kKPa63GoU27xmE0xY6725qR7aurLr
+         oo0BSX1mw2b9W814auybLMDRJnLrt0RUpaoZkLRfpUIzFBoO0It7gVCe8o/2Eb1PXuM+
+         w1g40pIyyghBt0IsqjoeUkf2Enf+T+AsmjL3xpEMfVJPJsY30JmkeX7ZUdg+wgMCVQC+
+         9ug/LghPh2VuGPEBktPT+/eUwBmoerljRix/Asn1KGnh/K5TpEyy2H5qikA74klMn/GO
+         icsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788679505; x=1789284305;
+        d=1e100.net; s=20251104; t=1788679507; x=1789284307;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=UJswaK2vh5W6rHtvSPNdqL8cbX1cuhVgDJt+y5Xc9VY=;
-        b=dzt4YrXHkyuU4T9aBDDXvbzk1DFCXjMzsdvhiQ6Q4zrdI7EqoritbgNNPLLd+OzACl
-         oZXqWwforQcivLGoJpZOc5Z4WNpYsMDpW2NBZ9mlNHAff0PMrq6+7O7LlVVXT9UVYSY2
-         NhpG4Jz/J3a2IaTS+Vm5DJQv6+Lg3aCOgE0GV2Zr8a+ZjiDvrAJUNzOnnYx5raSUhU+1
-         JE8GvoZVef0LQLpGm0zSogdwtJ4JeDv5Or/Fm0hiRb5KsHtJEwUzjxxwKaS44CgkjIkN
-         WO81IGD7EcxW8aAwZBS6R+5VFdn8a/cfM4FjG8nzFk5phpOBInC8ICaj/RUXOEOGEP/i
-         e8aA==
-X-Gm-Message-State: AFuF++kzDdLU/91iI0srsIB8s+0g8h+aMKVXmLU0m7b4bpU8RJHchE19
-	Rh2XszEVBfHilZwu8JriBP3LQUOBXGWA7+OuDYnndghdGjaAvgqh9bqpqMtT9Cx3
-X-Gm-Gg: AYBFou1TeWZ2ZVR1v4snGyfoMun3ASDFvjum9nGmwshwNsSmEXoX0n6ejT4O06UFY4r
-	teInBCOdy6VaUJCLRCAfeXQIgjtCyJ9nKBajMdFF0b7O/jq0nDDucNHTOdGRZfKuISyWuX2Rizq
-	oOD/LtIwb5LPh90Dv3o7EGlTJE7KujHP2e9BGroO6ieCDbhnAFcZ3ANAtq7oSZZ31wiaZueAWoj
-	ime8D6P18EMr6dDOVltTt7IzZLu57h3i/uSajl1HQDkEIRslnxgesJ8lP9zJN7e7Benq3GHqvlN
-	297peZzZUE4MCon+DD+iVFFGSp8BQHUedkf748CGmzAl7ITrgtEubRPv+lr4lst7OnXc8poBFwb
-	sQ/vK/J1NnUajpCTjEGy7y46WNDqdhlHU5JxFGPIgswc5pCaWIm0xw0CpO2fMFwYjBHD1jR0XEz
-	Ijkb4HLjUVtmGG2sk0htAmjIKH8JzwqMn30zLULvFIME8MFY20fWELRVi/YRMXQA/L
-X-Received: by 2002:a17:90b:4c4e:b0:399:1b64:e0d7 with SMTP id 98e67ed59e1d1-39b262aaf32mr25813742a91.19.1788679505118;
-        Sun, 06 Sep 2026 00:25:05 -0700 (PDT)
+        bh=8Dx/xPYgpGNASflmpiadqQlrP4hMXnYGnLEjvTXpIUE=;
+        b=Oxic7+wMfld9Pm3pn9ITolFGYXRIBAiL382Xan3MKBIooJZjpNtj+lR6CWh+bgcSgn
+         PpEPf8xGuczZihPYGhkCRHBLhuUajJfNFJZu/podHEjKdE9KNxgOQk0jyHo+zKjSH14K
+         dkYXlYv2yCiqg1RPX3CpwCMS1bMzM3PTNe1/q19d8UCDKy/OLXqzjaJtvfVhupHF2mu9
+         b5QqmXB8jaq8yok5jxfoz4zt3cBctvEG0gedAW8wC7g9QBfsGXfWv+5h0QARAwK2e7BO
+         g70Yr1GBYHfo7nTFmIL/25GU708hgd2dRvHWTKjc+zfezt7yHM/lbbmD9NuMb77Ykj+x
+         uj8g==
+X-Gm-Message-State: AFuF++njsgR7kxkYViuI+xSjHPe1i5EObkQsAu14CpId/rFLwU7QP5cM
+	g/SvvWZrVxPH8r7BJerk+oF6aJg1F2NzRovAphz22u+TbVNhalKQlu4Bx/uY5PdG
+X-Gm-Gg: AYBFou3OGVYnnnH8QaexWlbnQOiQxq3LpDPp4gplbjAWlDbLGPJQL6NyN+sDQc4I937
+	BFaAx3qUoTr+Xj4Y/SobzQUGNvUmLzf8mh2FJcPoGaFHSEdcwAdW51Nxb9TMa9wM6NOP3tOZbP5
+	uj2kFmkJoaeHsBBdcdGG+jI07XnmW2T8Um7sCR/UOqnZ/wME8HajADWdc28hn0XQxPsV9g+s881
+	FSaCqiXSSaRKqOXYv5trXqT0NIPprGuepttfzgW7676hZv1BK6BXy6WvvLGZlje6/ELNsS+xyq7
+	V1d+Zy3ZinfEUspSkA3m0v+GCk1R97JLkwxemzIWjEec9r2qa5alhjD9cbZYX+qFI2pKUscXItg
+	rhBVjNcm22a5kB0pCS9sBQiPJ0RmSI/9nv4qwO02nDC+KjQKcdP5guudGsf8QV6HZmp7coYQNfx
+	jqAJC/MTgWII80VOOL8TLPYZ3/EOEkL9OeP2iHEDHZo84TlnKmFy2CVd19/JUPPww=
+X-Received: by 2002:a17:90a:d646:b0:398:9bd5:490d with SMTP id 98e67ed59e1d1-39b26214798mr26934261a91.20.1788679506924;
+        Sun, 06 Sep 2026 00:25:06 -0700 (PDT)
 Received: from [127.0.0.1] ([104.209.15.61])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-143243767e1sm15672705c88.6.2026.09.06.00.25.04
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3339befdefcsm16333164eec.29.2026.09.06.00.25.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Sep 2026 00:25:04 -0700 (PDT)
-Message-Id: <74a52a632e81e12a0b3fceebb50756c4fa434bb5.1788679500.git.gitgitgadget@gmail.com>
+        Sun, 06 Sep 2026 00:25:06 -0700 (PDT)
+Message-Id: <fc21ecf8327722ed02b656a85e76b4a60371597b.1788679500.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2208.v3.git.1788679500.gitgitgadget@gmail.com>
 References: <pull.2208.git.1787295352016.gitgitgadget@gmail.com>
 	<pull.2208.v3.git.1788679500.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 06 Sep 2026 07:24:56 +0000
-Subject: [PATCH v3 2/6] receive-pack: avoid repeating connectivity errors
+Date: Sun, 06 Sep 2026 07:24:57 +0000
+Subject: [PATCH v3 3/6] shallow: reject missing boundaries without
+ disconnecting
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,57 +84,106 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Elijah Newren <newren@gmail.com>
 
-receive-pack first checks all proposed ref tips together. If that bulk
-connectivity check fails, it checks each tip separately to identify
-which ref updates need "missing necessary objects".
+An incomplete shallow push can refer to a boundary commit the receiver
+does not have. remove_nonexistent_theirs_shallow() drops that graft, so
+paint_down() does not recognize it as a boundary and dies when parsing
+the missing commit. The client then sees only that the remote hung up.
 
-The bulk check already reports rev-list's diagnostic. The per-ref checks
-repeat it merely as a side effect of attributing the failure,
-potentially once for every broken ref. Silence their stderr while
-retaining their exit status and the per-ref rejection.
+Treat an absent commit as the end of that traversal path rather than
+aborting receive-pack. This lets paint_down() process the remaining
+commits, after which the connectivity check rejects each affected ref
+with "missing necessary objects". A present commit that cannot be parsed
+still indicates corruption and remains fatal.
 
+Assisted-by: Claude Opus 4.8 & GPT-5.6 Sol
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/receive-pack.c  | 7 +++++++
- t/t5410-receive-pack.sh | 6 ++++--
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ shallow.c               | 16 +++++++++++---
+ t/t5538-push-shallow.sh | 46 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e6e54ba55f..8079901bb6 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1785,6 +1785,13 @@ static void set_connectivity_errors(struct command *commands,
- 			/* to be checked in update_shallow_ref() */
+diff --git a/shallow.c b/shallow.c
+index 8e244a5669..c6f7437022 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -659,9 +659,19 @@ static void paint_down(struct paint_info *info, const struct object_id *oid,
+ 		if (c->object.flags & BOTTOM)
  			continue;
  
-+		/*
-+		 * The bulk check already reported rev-list's diagnostics;
-+		 * this per-ref pass only attributes the failure, so keep it
-+		 * quiet rather than repeat those errors for every ref.
-+		 */
-+		opt.quiet = 1;
-+
- 		odb_transaction_env(transaction, &env);
- 		opt.env = env.v;
+-		if (repo_parse_commit(the_repository, c))
+-			die("unable to parse commit %s",
+-			    oid_to_hex(&c->object.oid));
++		if (repo_parse_commit_gently(the_repository, c, 1)) {
++			/*
++			 * remove_nonexistent_theirs_shallow() may have
++			 * dropped a missing boundary, leaving it unmarked
++			 * as BOTTOM. Let the connectivity check reject a
++			 * missing commit, but still die on a corrupt one.
++			 */
++			if (odb_has_object(the_repository->objects,
++					   &c->object.oid, 0))
++				die("unable to parse commit %s",
++				    oid_to_hex(&c->object.oid));
++			continue;
++		}
  
-diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
-index 09d6bfd2a1..20d221044f 100755
---- a/t/t5410-receive-pack.sh
-+++ b/t/t5410-receive-pack.sh
-@@ -68,9 +68,11 @@ test_expect_success TEE_DOES_NOT_HANG \
- 	# Replay captured git-send-pack(1) output on new empty repository.
- 	git init --bare remote.git &&
- 	git receive-pack remote.git <out >actual 2>err &&
-+	depacketize <actual >actual.raw &&
- 
--	test_grep "missing necessary objects" actual &&
--	test_grep "fatal: Failed to traverse parents" err &&
-+	test_grep "missing necessary objects" actual.raw &&
-+	test_grep "fatal: Failed to traverse parents" actual.raw &&
-+	test_must_be_empty err &&
- 	test_must_fail git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
+ 		for (p = c->parents; p; p = p->next) {
+ 			if (p->item->object.flags & SEEN)
+diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
+index afab456b32..10ca7833d8 100755
+--- a/t/t5538-push-shallow.sh
++++ b/t/t5538-push-shallow.sh
+@@ -164,4 +164,50 @@ test_expect_success 'push new commit from shallow clone has good deltas' '
+ 	test_region pack-objects path-walk config-push.txt
  '
  
++test_expect_success 'incomplete shallow push rejects without disconnecting' '
++	git init raw-origin &&
++	git -C raw-origin checkout -b A &&
++	test_commit -C raw-origin --no-tag has-shared sh shared &&
++	test_commit -C raw-origin --no-tag A1 &&
++	A1=$(git -C raw-origin rev-parse HEAD) &&
++	git -C raw-origin switch --orphan B &&
++	test_commit -C raw-origin --no-tag B0 &&
++	test_commit -C raw-origin --no-tag B1 &&
++	B1=$(git -C raw-origin rev-parse HEAD) &&
++
++	git init --bare raw-receiver.git &&
++	git -C raw-receiver.git config receive.fsckObjects false &&
++	git -C raw-origin push ../raw-receiver.git \
++		B:refs/heads/B B:refs/heads/A &&
++
++	git -C raw-origin checkout A &&
++	test_commit -C raw-origin --no-tag cX &&
++	cX=$(git -C raw-origin rev-parse HEAD) &&
++	git -C raw-origin checkout -b topic B &&
++	test_commit -C raw-origin --no-tag reintroduce sh shared &&
++	topic=$(git -C raw-origin rev-parse HEAD) &&
++
++	# Declare A1 and B1 as shallow, but omit them and their objects from
++	# the pack. This mimics an incomplete shallow push without relying on
++	# send-pack to create one.
++	{
++		printf "shallow %s\nshallow %s\n" "$A1" "$B1" |
++		packetize &&
++		printf "%s %s refs/heads/A\0report-status object-format=%s\n" \
++			"$B1" "$cX" "$(test_oid algo)" |
++		packetize_raw &&
++		printf "%s %s refs/heads/topic\n" "$ZERO_OID" "$topic" |
++		packetize &&
++		printf 0000 &&
++		printf "%s\n%s\n^%s\n^%s\n" "$cX" "$topic" "$A1" "$B1" |
++		git -C raw-origin pack-objects --stdout --revs
++	} >input &&
++
++	git receive-pack raw-receiver.git <input >out 2>err &&
++	depacketize <out >out.raw &&
++	test_grep "ng refs/heads/A missing necessary objects" out.raw &&
++	test_grep "ng refs/heads/topic missing necessary objects" out.raw &&
++	test_grep ! "unable to parse commit" err
++'
++
+ test_done
 -- 
 gitgitgadget
 
