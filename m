@@ -1,40 +1,40 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871BF525A8F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84752525A8D
 	for <git@vger.kernel.org>; Mon,  7 Sep 2026 20:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788811203; cv=none; b=BsLDMrpfyTxEc/482OPDWYGNpn3m9O1F86gSaTJmJBY49+XwU4qgm03w3yvkkmVTGDxy+f9BmTrOpTeTiRsNcoCGnZI/HBhOoB3tdaBDsTHPE7Bi9Lit3SUrn5+vbBEPbmnhl/p46ijrtQMC+6bn3NqHMz/bEB50adqL1QbIppQ=
+	t=1788811203; cv=none; b=Gg2R2WKoohq2S3LID6UMMecQIMEyZe8doDufkmL5249SUBQ2dIckW+iY5409sjxTyLDed0OmaMWvOv4O6k00gXhxN8r+ab1YadZ9DK7S3Y1hT0nZv1F2sHkKpqLeMjmOKV7eY/++GwRKbasL51I47k9AQj+MbbMEnQixw/hZz7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788811203; c=relaxed/simple;
-	bh=DYO8HhQrni6XNrRkqdXBV0/F1Ge/UuvxFn/G2t0HrUI=;
+	bh=YqfSkbOrK1uNpeBgJjAs2W2lpzUQFVP9LkCb59gVCf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AiC9OjTJ0zIsMV7IyjcRH3fmH169Yo+aU5R0De98PUwYLJW0F+44cJYtTAVz4xOvGXG6t7G6RmM9b0Ijumup+mWf8wzz6dQ8SsT67fgDVnH6bhi3L47fRQQ28J/4GNSJ9UMCs5T7XA4meznQ/ScupsLrbbRHld5WLhf9VnY3sYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Yf+JNELL; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=CY6aBoUailmXAnWCjMNn0GxT8Ji0aVV7emp/asbj6cxx3fBv6VsiKninL0/urVT3yxsprmiZeejsJoqme2SnL6ckBi+kKsUR0FLA6miHgtrs4LUVmeNYV2Y13l2tCvysVM9rbKgiO9Sb9LUOSF7GYLr1JDAJVqDQ+VrcZJmgvew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=m6vF+jBX; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Yf+JNELL"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="m6vF+jBX"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1788811198;
-	bh=DYO8HhQrni6XNrRkqdXBV0/F1Ge/UuvxFn/G2t0HrUI=;
+	bh=YqfSkbOrK1uNpeBgJjAs2W2lpzUQFVP9LkCb59gVCf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=Yf+JNELLaBx/cC648A4Ehs+a/5//KEQCrpME1VNPzNkL9kOL+NtuHYxSpLUybc2Z+
-	 7oDg4yDJYENA8BeQqa4lhyF+fwFMNclFvICcRcrOm2h67zgtZW9dXKG8hThxlTWq1c
-	 tBHJ3T8pyjKrFJUDlvue9cpZ3luj9V/EZyN5pR2NHA4HU5gAVt++8ho2yFHBrTbTcK
-	 MYvheY4+TNjYoym3z6RkKzCOyALYHg435Xa1dqgH1EwNs5viP3Dm3sR6XVhuDFla5V
-	 VLgZrIyQvqaLB9cBbXo+fNVWjmXXeFkqWKBglF4waKaHIVK7mVagkLS1TcgHMmy453
-	 cJQ6uXNRYBLo5BOblD0cz/2hx7eyNYwBWcrEcqkCGmhcn0/fgstJt1xycuE+fPgUXZ
-	 KyLzp4wbyHlcRZhbW/hDm83owcyxy7TI/FgwIsOyCMVF/C8KPVrDxoDhWe3d4f4Z65
-	 AvyDMpv/g40IME1QTigjp5gtK0w2TPdHBGvieUH6xF+ozz3jE4B
+	b=m6vF+jBXtW8TDZZYrFcquIcSumru4l43FmKnFJ185er284vCcz3P/Ht/nMI5X+Le2
+	 hR/Lg4+Q/8SN4ghtbBFbzmtoAet60OUGaWtYAAOw547qkxmgvOqsd/J7qeA/m8PDeE
+	 32XeLgGUG/E8NQb5ew54iM0+QliG09pULF51tVzGB8DGVOaeqL6gRaIWaI5oUYy3aw
+	 3mihiQExznYhmji9fqiluA/BUEHsGhWAEr/xY2ZwUrhH2sWpGRcVN2Vjaj6aCQMDuI
+	 vbkEeum+2pLfNRSWfrEXJOMHWQjdqDzojfJ21gQWdBYkItHoBKdOnNDJ+4eolSvywD
+	 si0Fw5JAMqo0oBe327Q8hxkm0pbEdN9K2xF63kkToUDaHOLFyKqartTwPvvB+w4dh/
+	 ksSZHL51rzurHVzd/Sf6rIY+fBYt9adNMMYB83cow/zUsy4cj2335/iACtbphzjkUC
+	 MJSNPl7L/wC6btjLxBZjTrrB8lWAQKsltXg1l6TR71SVO+aaiIh
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7b23:2dc:c9d2:f0e4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3E71C201ED;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4A43E231F1;
 	Mon,  7 Sep 2026 19:59:58 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
@@ -42,9 +42,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 5/7] object-name: use hexval
-Date: Mon,  7 Sep 2026 19:59:38 +0000
-Message-ID: <20260907195941.1024289-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 6/7] t5324: adjust tests for corrupt commit-graph
+Date: Mon,  7 Sep 2026 19:59:39 +0000
+Message-ID: <20260907195941.1024289-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
 In-Reply-To: <20260907195941.1024289-1-sandals@crustytoothpaste.net>
 References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
@@ -57,49 +57,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We've open-coded a different implementation of parsing hex values here
-when we already have a perfectly good one in hexval.  This
-implementation will almost certainly be slower because it isn't
-table-driven, unlike the other one, and since it's not constant time it
-has no other advantages either.  To tidy things up and prepare for
-future work, switch to hexval in this case.
+In a future commit, we'll no longer allow uppercase object IDs.  When
+that happens, t5324 will fail because the error message from corrupting
+commit-graph files will be different.  The current test looks for an
+error message that occurs when the commit-graph file has a name that is
+parseable as a valid object ID but is not a valid commit-graph file
+(which, on case-sensitive systems, is of course checked case
+sensitively).
 
-Because hexval returns an unsigned int, check to see if the value is
-invalid by looking for any bits beyond a single unsigned character.  In
-addition, be sure to continue to force the hexadecimal value to
-lowercase.
+However, in the future, we need the object ID to continue to be valid,
+and that means that the hex character we use must be lowercase.  In
+SHA-256, though, one of the characters we want to corrupt is
+legitimately already an "a", so switch to using the character "b" in
+both of these cases, which is the correct character for neither SHA-1
+nor SHA-256.  If we adopt another hash algorithm in the future, we may
+need to adjust these values again.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- object-name.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ t/t5324-split-commit-graph.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/object-name.c b/object-name.c
-index 4eda8c8eac..8f2da51547 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -236,20 +236,13 @@ static int parse_oid_prefix(const char *name, int len,
- {
- 	for (int i = 0; i < len; i++) {
- 		unsigned char c = name[i];
--		unsigned char val;
--		if (c >= '0' && c <= '9') {
--			val = c - '0';
--		} else if (c >= 'a' && c <= 'f') {
--			val = c - 'a' + 10;
--		} else if (c >= 'A' && c <='F') {
--			val = c - 'A' + 10;
--			c -= 'A' - 'a';
--		} else {
-+		int val = hexval(c, HEX_KIND_OID);
-+
-+		if (val & ~0xff)
- 			return -1;
--		}
- 
- 		if (hex_out)
--			hex_out[i] = c;
-+			hex_out[i] = tolower(c);
- 		if (oid_out) {
- 			if (!(i & 1))
- 				val <<= 4;
+diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+index bf7ba0e558..53cddfe437 100755
+--- a/t/t5324-split-commit-graph.sh
++++ b/t/t5324-split-commit-graph.sh
+@@ -349,7 +349,7 @@ test_expect_success 'verify after commit-graph-chain corruption (base)' '
+ 		test_must_fail git commit-graph verify 2>test_err &&
+ 		grep -v "^+" test_err >err &&
+ 		test_grep "invalid commit-graph chain" err &&
+-		corrupt_file "$graphdir/commit-graph-chain" 30 "A" &&
++		corrupt_file "$graphdir/commit-graph-chain" 30 "b" &&
+ 		test_must_fail git commit-graph verify 2>test_err &&
+ 		grep -v "^+" test_err >err &&
+ 		test_grep "unable to find all commit-graph files" err
+@@ -364,7 +364,7 @@ test_expect_success 'verify after commit-graph-chain corruption (tip)' '
+ 		test_must_fail git commit-graph verify 2>test_err &&
+ 		grep -v "^+" test_err >err &&
+ 		test_grep "invalid commit-graph chain" err &&
+-		corrupt_file "$graphdir/commit-graph-chain" 70 "A" &&
++		corrupt_file "$graphdir/commit-graph-chain" 70 "b" &&
+ 		test_must_fail git commit-graph verify 2>test_err &&
+ 		grep -v "^+" test_err >err &&
+ 		test_grep "unable to find all commit-graph files" err
