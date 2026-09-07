@@ -1,80 +1,80 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B27B4582DC
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 11:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B0928640B
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 11:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788780042; cv=none; b=coOAL6X0Di533g2YzSs81f+cWVpU4d3a1gG1Lnbkhip+MiCu6rOPDE6ByspHJVFMvCkBjL0Q07DM/s7HTLJLjSLoZguG5iFt34LD3QRUq7EM3IrOWFCOUMif9Ttl15KLKfzZkINhAVpumbIuS1Fw0yIR8ahzi/5bP15EZsHxuAw=
+	t=1788780046; cv=none; b=fMyisNpKOesMyCuPiAwEBoT5xhaBl5JWUo+SoVNpA9X5Lm+w5biv0uepJaalYYyhOJbJoXZQwbBdECpUe7cK/Riq57UFiUqC69QZwuRMMJjTKM9FCdhYQdfOnGT+fMEssGP1rC3+MJ60sISrejTzNxXqVC0fJBxS/cV8sYywiOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788780042; c=relaxed/simple;
-	bh=cxh+lZtwres2zCOIfLK0RCTJevAc0iop9+O6Ar69Ivo=;
+	s=arc-20240116; t=1788780046; c=relaxed/simple;
+	bh=Bjq0YZAqQFqrm1YRow8ySWYIlt8d4VW3q1IsLInohYA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OR7mJINe93/SAhPW+UWCHI0jypU/0kwRZwR7U3nM6A6EWP8887zKEn4Iu3t1r4y4ON/Zs4L0LtKoeVDPqI+1PhPsu29VEAj5Mtg+FOnRcoo/oQ+29rkd0SF0+to/ywntJN3QADijmOXZ1uis1TL2IC9nWAmnoBF2z6cZoTVUx3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dXo4lEwo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eig28fZ1; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=D7V/CCMkWj6cDgOtxZdjl7xVo6E3EBp+jCWnWMgidWtkd56Y15j+sgPvfc+PWfjg2xQFkx9px1ECyZJu94SAkPZq5cyb/ZAb9B+aRsCmdgzfdIjx3XqDbOAEzRyqNP/zNRnj6a82dDb/ocrASiu9op5QkrfG7YGOnSlLXKRpUSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Hdrwn7NI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bUydBFZS; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dXo4lEwo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eig28fZ1"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 601A514001C5;
-	Mon,  7 Sep 2026 07:20:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Hdrwn7NI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bUydBFZS"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4C66F14001CA;
+	Mon,  7 Sep 2026 07:20:39 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 07 Sep 2026 07:20:36 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 07 Sep 2026 07:20:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788780036;
-	 x=1788866436; bh=snYcr/tcTnPF38fzxX8BaFNZXlaj5tV4DLGlnaT5YWQ=; b=
-	dXo4lEwoXkzR4aT1Tgwy7SsfvQ0/Xg4Ial8UsJgrKaD3dxkqe3pUl2KLB6n2y7YQ
-	4eePlAE/sYmUhC7oc8q0ASw2RZKsJTBFLqd79KeplX1bYQeBXr1yXxE54s8DzTHv
-	B7NTz/MHymluoxuaUVJDOg2+C8kvDVwvaxKqthwIaACWQIe4awnFOZ8qg9tWQHh5
-	oKrUqtL36f7UwiKIsmAPknc4demgeOZvO8zCr1bOiD8ZwVuPBX9sV+5gUgGYw7ig
-	xUc4hRA4kzFsU5gIqhnUtbyA5696tIEW22suIGKah7Tmr6ltpqdft6O88RQ/YNYD
-	iOPGKfjl5/pBWHlvuH8W6g==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788780039;
+	 x=1788866439; bh=zFnXdm29ETRuAEVFR6fOvg5DDof9WSmV55NQdWmwsMQ=; b=
+	Hdrwn7NI0hAl+SRzTPrnKrkqM0OHWF7jKeMpW99HbV8KWZ/g+Fkud/L4E6sQYPVd
+	vgqyfEi2U3SrSMVFtmt0TvrhUqs4i4pBvg2cooqBzgRwCWY9DnE+EmbolzLgb9q3
+	nZ0bOCEn6eGkxJK/nI+Mk3V0vz+es0ZXAfiF9JGkaboGcYbqdfcBMbcJk4bhJ8/H
+	7sBJEIft7vf1uKUVGcifQwSjCm/g8KWhWPRHBkcIpDuK0tX/smxDk9ocoCWH9p6p
+	4ASRGaGK/1DlGlbmW3JogKHTHMEe/JHHAD9FfIH6YobYnIIoa0hfhgAnZBs6C7vm
+	cEdxe/S/xL+7psM7RmduJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788780036; x=
-	1788866436; bh=snYcr/tcTnPF38fzxX8BaFNZXlaj5tV4DLGlnaT5YWQ=; b=e
-	ig28fZ18JQte1q87EogNyMV5vyQbW4STAONGZBRRx6T1exQnLsViKzzbd4EQGIg6
-	1LHPbt1GMHwXz4Z8ymKm9MH3jXAapDGHdFJtaCnK1AVYXv4uVvALF0tha/6AT0GI
-	c+Lj1NVSPacyY9rlb8dsPg1L0jmCj8MZrWjtfwsKP3jfqy2zvVKyDYwK/MqN1XhY
-	N2YslMlUuImjqaRFV1cbY7RtKdFBe12h5uYc5Y575aBcg395rKEG0wa3k/JlYhhG
-	TSzy1OTTiEk8QyJDUn4Ekf+pbDXxVD/006NhZdKiZjIEuQbtVV3eEJ56akyyenTj
-	dmTp+yZlOe5uD1pKnmqbA==
-X-ME-Sender: <xms:BJ6eauCvNsT85bK0d3qWHHskL95bzlvu2SHyT5eJRto9TpvYN2B11A>
-    <xme:BJ6eav8ZnsE_Q90LOF4Zi8O9j3G8YP54ioB7avp-B-1qdhEmQkdauQLtR5zEsUlMt
-    8ohifKUc06XbAPT1voUYJLep9jzAbXt9OdMwhNU5b81h_ceAQKZag>
-X-ME-Received: <xmr:BJ6eau8zPsmvuh9Xc_HpdttvvdI8pmVUL1kI4WMXc2iu4Vy4u0p_HQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788780039; x=
+	1788866439; bh=zFnXdm29ETRuAEVFR6fOvg5DDof9WSmV55NQdWmwsMQ=; b=b
+	UydBFZSVpAan3MyhWf7b1X4Ik1NPi2CZzeyR0GiQMZrDG9J/lzO987D0qzIqbbex
+	VMl9+kUPalt5bppPeCNS1w8k/YXcQm98E28mIqLSIN2uv+V5QfD9U6zbReoOxEdN
+	hx8rYB60bXsRSrdvRqaQT+nJw2lTyATTkydyHa/nz64efGTG1aVuOUM8A5JIOwFJ
+	+sB+a5sgaf8MBx+PebJVZ/5pfgJUurRj3eQyoj0meYFDhlCRqEZrnaHN4kjkKyAz
+	F9QtpVyJKlY0Oo2ihbhitEZnSgzmsxEqlruWKGWy2s/nfI05Ijm9kveM8T814YTN
+	WmARGaZxkaJqwu3K/dPvQ==
+X-ME-Sender: <xms:B56ealle3tNZi_o98A-r4-djIEfnqoGI1TMq6M_-KRiAAHSu4JKuFg>
+    <xme:B56eaoQZUNjucFgmMZq_hFwrxCsuvlxSSKcVcsNVsvdwIgk9Wo3xYUa1quDWHHiJv
+    3eEjo2-V8NphtPoyiB3PnqWszrldwv_TRq8KQQD2gGHUcSPpUFrmxs>
+X-ME-Received: <xmr:B56eapB9NUNMs3TBHSDMYTUpWA93MqvKD2mWBc55UNbMEz0OlMNA1g>
 X-ME-Proxy-Cause: dmFkZTEU+csHYvBo9fMYwV3wknAtUSE4SJO0BUQi53xPlseR/gNYI/1nqdGQqVSAlOZjQd
     4l4U+XllsvZqrni2Eec7ZpTaSCKzhBvzOVpCUnAc6LTxJe0zNbgTYyDSzDv3ROAKV1EFYH
     Bx7i+VjTkrj7+yADyLZfC+VgUeQR2ODyNHcvnBvS08LcP9yK0Ar5jOwFYHKPS7P+ZyrIU9
     43fHMkwpKPdLr84bgJ9NgnRDJ1cBOAz/SRYPOGgsns1KFSsbOTQ/K8oZhdQmsg4XqNJkVb
-    xyo317as6nauYcrux5Qoi8NFl3mE7HjkjrBL9oDRSzbFL9MtMr+KveMXO0+iOMUks7hoaX
-    vuXDJkMyNCPuYfOuI0w86yLlt5Q28qucYwxjsFwOR2YN79JvPoiqtN0c9iayUA++eDYZ5/
-    35lG6a8u6/F2EfzwVUQCKFIkTUZGJu0GCsdFrYw23BNDbNC55YhAbo/WFYT+NVBRnHq9gH
-    oY5yHLuLIodtwz8IDZ1Yaw+Te0MU5hgjG7BNmIO0eII0rbJe68sK8pIlDiEZrOBHTh/jwE
-    9dYntVQ1o2q7s6CMucTonr3jyUIjfHqu/ET0SsdJPtRGWQ/Tjs2o/s0ZHeT4ca6ShbOGK/
-    uM0mNhprKW4UKClLqLjcNFCvDxTAoPcYBksOcS9TSnVX+xrkkWhBp7K6HLBA
-X-ME-Proxy: <xmx:BJ6eamdaQ53uJ-HPRXOO_T76chG052qpQ1cXlY6m46yRLpWfTfHo0g>
-    <xmx:BJ6eanGDO4w4xJL5G3NFw8-s4IrTc1NsM7PM9YUAWOr2qSE8xG6wtA>
-    <xmx:BJ6eakf-K2IeBzo1UkZBU0psuVxtSokujRPfOfy-r_8OjDQdmVSVgA>
-    <xmx:BJ6eahEYdrz44WY5ieer4fvyvIBgThT7BgjHC7P-gA7fsAA53TA8dw>
-    <xmx:BJ6eav-YUYWNnF2qc1bdhTYibSDTuHo8x4-dkoKcmP8piyx8LJ2yfoQi>
+    xyo317as6nauYcrux5Qoi8NFl3mE7HjkjrBL9oDRSzbFL9MtMr+KveMXO0+iOMUks7hooV
+    SneSAx5NpJ5MEbryyIJlmLpU+PTdZIZbbPCx7w4Lq4CXdjVIlh4noIus+r9uf8fBI5twtA
+    cQrFOEEyFaAkdLtdVSFVPmaLG11OPtPbO5j9DvSsYKT/59eb6r9aiOX2qkUauNt5uACYmb
+    0iGMO4Ur19ihdlwG8CngB8+LaVGpu0+Lz1aGvPDixI/2COU4x7BQKiwjIt1yXgHNUGEcnJ
+    ZRoMpHIvVCN2EK/cnSI1nAlp9M3s+NhX1bdKooFDD9uBZ+mCIkc1CXMOJQEjjnLey+3eKc
+    7O8qi3O+fn8QsXbgZ2kavGpVfFs/qbckCP5AXrcn3KrI+EX4eUI1U4fGzoYw
+X-ME-Proxy: <xmx:B56eavRZIDabMi7SHkNLKLaaznaB46SupXOvBpf2N1rLw4wsWkGlzA>
+    <xmx:B56eanoA6QtHZM9A0zbGqGedzE3gVZXd0llnGUIY6u5GrfYTnZbDEQ>
+    <xmx:B56eahxRrK-kOHTKgbzNhQA9xxAhw1JgKoas4-sxWXqvJ-rhsgRXdw>
+    <xmx:B56easK64BgA8yvpF5rJX0Pza47JmRFCBw0Sp4Kjz2k6MnVtZcRheg>
+    <xmx:B56easRQB5K-P1Q2VsE_h9MmZqkzLWm0vdRsRo8fVhZEMQfvVwhSl2GJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Sep 2026 07:20:35 -0400 (EDT)
+ 7 Sep 2026 07:20:38 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 648c3877 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Sep 2026 11:20:35 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c67d8466 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Sep 2026 11:20:38 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 07 Sep 2026 13:18:44 +0200
-Subject: [PATCH v2 10/11] setup: rename "init.defaultRefFormat" to
- "init.defaultRefStorageFormat"
+Date: Mon, 07 Sep 2026 13:18:45 +0200
+Subject: [PATCH v2 11/11] setup: allow "git init --ref-storage-format=" to
+ specify a payload
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-b4-pks-unify-ref-storage-format-v2-10-6733c90ca5b0@pks.im>
+Message-Id: <20260907-b4-pks-unify-ref-storage-format-v2-11-6733c90ca5b0@pks.im>
 References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
 In-Reply-To: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
 To: git@vger.kernel.org
@@ -91,144 +91,290 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-With the same reasoning as for git-init(1), rename the
-"init.defaultRefFormat" config option to "init.defaultRefStorageFormat"
-and keep the old name as an alias.
+Reference storage backends can be configured with a payload via the
+"extensions.refStorage" config key and the "GIT_REF_STORAGE_FORMAT"
+environment variable, both of which accept a URI in the format
+"<format>://<payload>". The payload may contain backend-specific
+information, for example an alternate refs directory or which database
+references should be stored in.
+
+The `--ref-storage-format=` option of git-init(1) and git-clone(1) does
+not know about payloads though: its value is parsed as a plain format
+name, so backends that require a payload cannot be conveniently set up
+at initialization time via the command line.
+
+Teach the option to accept the same URI syntax. Also, document the
+optional payloads for both the "files" and "reftable" backends.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/BreakingChanges.adoc |  2 +-
- Documentation/config/feature.adoc  |  2 +-
- Documentation/config/init.adoc     |  2 +-
- setup.c                            |  8 +++++---
- t/t0001-init.sh                    | 16 ++++++++--------
- 5 files changed, 16 insertions(+), 14 deletions(-)
+ Documentation/git-init.adoc           |  5 ++++-
+ Documentation/ref-storage-format.adoc |  8 ++++++--
+ builtin/clone.c                       | 14 +++++++-------
+ builtin/init-db.c                     | 17 +++++------------
+ setup.c                               | 16 +++++++++++-----
+ setup.h                               |  2 +-
+ t/t0001-init.sh                       |  2 +-
+ t/t1423-ref-backend.sh                | 30 ++++++++++++++++++++++++++++++
+ 8 files changed, 65 insertions(+), 29 deletions(-)
 
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index 73bb939359..c2cef3f528 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -156,7 +156,7 @@ Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>,
-      "packed-refs" file.
+diff --git a/Documentation/git-init.adoc b/Documentation/git-init.adoc
+index 7e407d3ef1..e078369ed7 100644
+--- a/Documentation/git-init.adoc
++++ b/Documentation/git-init.adoc
+@@ -58,7 +58,10 @@ values are `sha1` and (if enabled) `sha256`.  `sha1` is the default.
+ include::object-format-disclaimer.adoc[]
+ 
+ `--ref-storage-format=<format>`::
+-Specify the given ref storage _<format>_ for the repository. The valid values are:
++Specify the given ref storage _<format>_ for the repository. Backends that
++require additional configuration accept a payload in the form
++`<format>://<payload>`, for example a connection string identifying the
++database that shall store the references. The valid values are:
  +
- Users that get immediate benefit from the "reftable" backend could continue to
--opt-in to the "reftable" format manually by setting the "init.defaultRefFormat"
-+opt-in to the "reftable" format manually by setting the "init.defaultRefStorageFormat"
- config. But defaults matter, and we think that overall users will have a better
- experience with less platform-specific quirks when they use the new backend by
- default.
-diff --git a/Documentation/config/feature.adoc b/Documentation/config/feature.adoc
-index 924f5ff4e3..e258770591 100644
---- a/Documentation/config/feature.adoc
-+++ b/Documentation/config/feature.adoc
-@@ -25,7 +25,7 @@ reusing objects from multiple packs instead of just one.
- significantly smaller in the presence of certain filename collisions with Git's
- default name-hash.
- +
--* `init.defaultRefFormat=reftable` causes newly initialized repositories to use
-+* `init.defaultRefStorageFormat=reftable` causes newly initialized repositories to use
- the reftable format for storing references. This new format solves issues with
- case-insensitive filesystems, compresses better and performs significantly
- better with many use cases. Refer to Documentation/technical/reftable.adoc for
-diff --git a/Documentation/config/init.adoc b/Documentation/config/init.adoc
-index f82fcf25e6..10d6aba3ff 100644
---- a/Documentation/config/init.adoc
-+++ b/Documentation/config/init.adoc
-@@ -13,7 +13,7 @@ endif::[]
- 	`--object-format=` in linkgit:git-init[1]. Both the command line option
- 	and the `GIT_DEFAULT_HASH` environment variable take precedence over
- 	this config.
--`init.defaultRefFormat`::
-+`init.defaultRefStorageFormat`::
- 	Allows overriding the default ref storage format for new repositories.
- 	See `--ref-storage-format=` in linkgit:git-init[1]. Both the command line
- 	option and the `GIT_DEFAULT_REF_STORAGE_FORMAT` environment variable take
-diff --git a/setup.c b/setup.c
-index e2bb04410f..52ad0f417d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2697,7 +2697,8 @@ static int read_default_format_config(const char *key, const char *value,
- 		goto out;
+ include::ref-storage-format.adoc[]
+ 
+diff --git a/Documentation/ref-storage-format.adoc b/Documentation/ref-storage-format.adoc
+index c5e29ec831..21d62557b7 100644
+--- a/Documentation/ref-storage-format.adoc
++++ b/Documentation/ref-storage-format.adoc
+@@ -1,8 +1,12 @@
+-`files`;; for loose files with packed-refs.
++`files[://<path>]`;; for loose files with packed-refs. The optional payload can
++be specified to change the root directory where references are created. A
++relative path will be resolved relative to the repository's common directory.
+ ifndef::with-breaking-changes[]
+ 	This is the default.
+ endif::with-breaking-changes[]
+-`reftable`;; for the reftable format.
++`reftable[://<path>]`;; for the reftable format. The optional payload can
++be specified to change the root directory where references are created. A
++relative path will be resolved relative to the repository's common directory.
+ ifdef::with-breaking-changes[]
+ 	This is the default.
+ endif::with-breaking-changes[]
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 93be65efcd..808a40c4fb 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -901,7 +901,7 @@ int cmd_clone(int argc,
+ 	char *option_origin = NULL;
+ 	struct string_list option_not = STRING_LIST_INIT_NODUP;
+ 	const char *real_git_dir = NULL;
+-	const char *ref_storage_format_str = NULL;
++	const char *ref_storage_format_uri = NULL;
+ 	const char *option_upload_pack = "git-upload-pack";
+ 	int option_progress = -1;
+ 	int option_sparse_checkout = 0;
+@@ -981,9 +981,9 @@ int cmd_clone(int argc,
+ 			 N_("any cloned submodules will be shallow")),
+ 		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+ 			   N_("separate git dir from working tree")),
+-		OPT_STRING(0, "ref-storage-format", &ref_storage_format_str, N_("format"),
++		OPT_STRING(0, "ref-storage-format", &ref_storage_format_uri, N_("format"),
+ 			   N_("specify the reference storage format to use")),
+-		OPT_STRING_F(0, "ref-format", &ref_storage_format_str, N_("format"),
++		OPT_STRING_F(0, "ref-format", &ref_storage_format_uri, N_("format"),
+ 			   N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
+ 		OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
+ 				N_("set config inside the new repository")),
+@@ -1029,10 +1029,10 @@ int cmd_clone(int argc,
+ 	if (option_single_branch == -1)
+ 		option_single_branch = deepen ? 1 : 0;
+ 
+-	if (ref_storage_format_str) {
+-		ref_storage_format = ref_storage_format_by_name(ref_storage_format_str);
++	if (ref_storage_format_uri) {
++		ref_storage_format = ref_storage_format_by_uri(ref_storage_format_uri, NULL);
+ 		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+-			die(_("unknown ref storage format '%s'"), ref_storage_format_str);
++			die(_("unknown ref storage format '%s'"), ref_storage_format_uri);
  	}
  
--	if (!strcmp(key, "init.defaultrefformat")) {
-+	if (!strcmp(key, "init.defaultrefstorageformat") ||
-+	    !strcmp(key, "init.defaultrefformat")) {
- 		ret = git_config_string(&str, key, value);
- 		if (ret)
- 			goto out;
-@@ -2709,7 +2710,7 @@ static int read_default_format_config(const char *key, const char *value,
- 
- 	/*
- 	 * Enable the reftable format when "features.experimental" is enabled.
--	 * "init.defaultRefFormat" takes precedence over this setting.
-+	 * "init.defaultRefStorageFormat" takes precedence over this setting.
+ 	if (option_mirror) {
+@@ -1188,7 +1188,7 @@ int cmd_clone(int argc,
+ 	 * their on-disk data structures.
  	 */
- 	if (!strcmp(key, "feature.experimental") &&
- 	    cfg->ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN &&
-@@ -2781,7 +2782,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 	 *      deprecated equivalent "GIT_DEFAULT_REF_FORMAT".
- 	 *
- 	 *   5. The default ref storage format for new repositories as
--	 *      configured via "init.defaultRefFormat"
-+	 *      configured via "init.defaultRefStorageFormat" or its deprecated
-+	 *      equivalent "init.defaultRefFormat".
- 	 *
+ 	init_db(the_repository, git_dir, real_git_dir, work_tree, option_template,
+-		GIT_HASH_UNKNOWN, ref_storage_format, NULL,
++		GIT_HASH_UNKNOWN, ref_storage_format_uri, NULL,
+ 		do_not_override_repo_unix_permissions,
+ 		INIT_DB_QUIET | INIT_DB_SKIP_REFDB);
+ 
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 63f33154c0..48074cb235 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -83,10 +83,9 @@ int cmd_init_db(int argc,
+ 	unsigned int flags = 0;
+ 	int bare = startup_info->force_bare_repository ? 1 : -1;
+ 	const char *object_format = NULL;
+-	const char *ref_storage_format_str = NULL;
++	const char *ref_storage_format_uri = NULL;
+ 	const char *initial_branch = NULL;
+ 	int hash_algo = GIT_HASH_UNKNOWN;
+-	enum ref_storage_format ref_storage_format = REF_STORAGE_FORMAT_UNKNOWN;
+ 	int init_shared_repository = -1;
+ 	const struct option init_db_options[] = {
+ 		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
+@@ -109,9 +108,9 @@ int cmd_init_db(int argc,
+ 			   N_("override the name of the initial branch")),
+ 		OPT_STRING(0, "object-format", &object_format, N_("hash"),
+ 			   N_("specify the hash algorithm to use")),
+-		OPT_STRING(0, "ref-storage-format", &ref_storage_format_str, N_("format"),
++		OPT_STRING(0, "ref-storage-format", &ref_storage_format_uri, N_("format"),
+ 			   N_("specify the reference storage format to use")),
+-		OPT_STRING_F(0, "ref-format", &ref_storage_format_str, N_("format"),
++		OPT_STRING_F(0, "ref-format", &ref_storage_format_uri, N_("format"),
+ 			   N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
+ 		OPT_END()
+ 	};
+@@ -175,12 +174,6 @@ int cmd_init_db(int argc,
+ 			die(_("unknown hash algorithm '%s'"), object_format);
+ 	}
+ 
+-	if (ref_storage_format_str) {
+-		ref_storage_format = ref_storage_format_by_name(ref_storage_format_str);
+-		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+-			die(_("unknown ref storage format '%s'"), ref_storage_format_str);
+-	}
+-
+ 	if (init_shared_repository != -1)
+ 		repo_settings_set_shared_repository(the_repository, init_shared_repository);
+ 
+@@ -251,8 +244,8 @@ int cmd_init_db(int argc,
+ 
+ 	flags |= INIT_DB_EXIST_OK;
+ 	ret = init_db(the_repository, git_dir, real_git_dir, work_tree,
+-		      template_dir, hash_algo, ref_storage_format, initial_branch,
+-		      init_shared_repository, flags);
++		      template_dir, hash_algo, ref_storage_format_uri,
++		      initial_branch, init_shared_repository, flags);
+ 
+ 	free(template_dir_to_free);
+ 	free(real_git_dir_to_free);
+diff --git a/setup.c b/setup.c
+index 52ad0f417d..4ece4725a5 100644
+--- a/setup.c
++++ b/setup.c
+@@ -2727,7 +2727,8 @@ static int read_default_format_config(const char *key, const char *value,
+ }
+ 
+ static void repository_format_configure(struct repository_format *repo_fmt,
+-					int hash, enum ref_storage_format ref_storage_format)
++					int hash,
++					const char *ref_storage_format_uri)
+ {
+ 	struct default_format_config cfg = {
+ 		.hash = GIT_HASH_UNKNOWN,
+@@ -2738,6 +2739,7 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+ 		.ignore_repo = 1,
+ 		.ignore_worktree = 1,
+ 	};
++	enum ref_storage_format ref_storage_format;
+ 	char *ref_storage_payload = NULL;
+ 	const char *env;
+ 
+@@ -2788,8 +2790,12 @@ static void repository_format_configure(struct repository_format *repo_fmt,
  	 *   6. Otherwise, we fall back to the default ref storage format
  	 *      compiled into Git.
+ 	 */
+-	if (ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN) {
+-		/* nothing to do */
++	if (ref_storage_format_uri) {
++		ref_storage_format = ref_storage_format_by_uri(ref_storage_format_uri,
++							       &ref_storage_payload);
++		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
++			die(_("unknown ref storage format specified via command line: '%s'"),
++			    ref_storage_format_uri);
+ 	} else if (((env = getenv(GIT_REF_STORAGE_FORMAT_ENVIRONMENT)) ||
+ 		    (env = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT)))) {
+ 		ref_storage_format = ref_storage_format_by_uri(env, &ref_storage_payload);
+@@ -2834,7 +2840,7 @@ int init_db(struct repository *repo,
+ 	    const char *real_git_dir,
+ 	    const char *worktree,
+ 	    const char *template_dir, int hash,
+-	    enum ref_storage_format ref_storage_format,
++	    const char *ref_storage_format_uri,
+ 	    const char *initial_branch,
+ 	    int init_shared_repository, unsigned int flags)
+ {
+@@ -2871,7 +2877,7 @@ int init_db(struct repository *repo,
+ 	 * is an attempt to reinitialize new repository with an old tool.
+ 	 */
+ 	read_and_verify_repository_format(&repo_fmt, repo_get_git_dir(repo), NULL);
+-	repository_format_configure(&repo_fmt, hash, ref_storage_format);
++	repository_format_configure(&repo_fmt, hash, ref_storage_format_uri);
+ 	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+ 		die("%s", err.buf);
+ 
+diff --git a/setup.h b/setup.h
+index 763fd384e8..f04d2984b4 100644
+--- a/setup.h
++++ b/setup.h
+@@ -265,7 +265,7 @@ int init_db(struct repository *repo,
+ 	    const char *real_git_dir,
+ 	    const char *worktree,
+ 	    const char *template_dir, int hash_algo,
+-	    enum ref_storage_format ref_storage_format,
++	    const char *ref_storage_format_uri,
+ 	    const char *initial_branch, int init_shared_repository,
+ 	    unsigned int flags);
+ void initialize_repository_version(struct repository *repo,
 diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index af9a7ba958..fe5bc3d3e1 100755
+index fe5bc3d3e1..f1d227f271 100755
 --- a/t/t0001-init.sh
 +++ b/t/t0001-init.sh
-@@ -659,9 +659,9 @@ test_expect_success 'GIT_REF_STORAGE_FORMAT refuses to reinitialize with differe
+@@ -833,7 +833,7 @@ done
+ test_expect_success 'init with --ref-storage-format=garbage' '
+ 	test_when_finished "rm -rf refformat" &&
+ 	cat >expect <<-EOF &&
+-	fatal: unknown ref storage format ${SQ}garbage${SQ}
++	fatal: unknown ref storage format specified via command line: ${SQ}garbage${SQ}
+ 	EOF
+ 	test_must_fail git init --ref-storage-format=garbage refformat 2>err &&
  	test_cmp expect err
+diff --git a/t/t1423-ref-backend.sh b/t/t1423-ref-backend.sh
+index 525b2a19b4..ee2bb66b99 100755
+--- a/t/t1423-ref-backend.sh
++++ b/t/t1423-ref-backend.sh
+@@ -254,6 +254,36 @@ test_expect_success 'initializing repository with alt ref directory' '
+ 	)
  '
  
--test_expect_success 'init warns about invalid init.defaultRefFormat' '
-+test_expect_success 'init warns about invalid init.defaultRefStorageFormat' '
- 	test_when_finished "rm -rf repo" &&
--	test_config_global init.defaultRefFormat garbage &&
-+	test_config_global init.defaultRefStorageFormat garbage &&
- 
- 	echo "warning: unknown ref storage format ${SQ}garbage${SQ}" >expect &&
- 	git init repo 2>err &&
-@@ -714,9 +714,9 @@ do
- 		test_cmp expect actual
- 	'
- 
--	test_expect_success "init with init.defaultRefFormat=$format" '
-+	test_expect_success "init with init.defaultRefStorageFormat=$format" '
- 		test_when_finished "rm -rf refformat" &&
--		test_config_global init.defaultRefFormat $format &&
-+		test_config_global init.defaultRefStorageFormat $format &&
- 		(
- 			sane_unset GIT_DEFAULT_REF_STORAGE_FORMAT &&
- 			git init refformat
-@@ -753,9 +753,9 @@ test_expect_success "--ref-storage-format= overrides GIT_DEFAULT_REF_STORAGE_FOM
- 	test_cmp expect actual
- '
- 
--test_expect_success "GIT_DEFAULT_REF_STORAGE_FORMAT= overrides init.defaultRefFormat" '
-+test_expect_success "GIT_DEFAULT_REF_STORAGE_FORMAT= overrides init.defaultRefStorageFormat" '
- 	test_when_finished "rm -rf refformat" &&
--	test_config_global init.defaultRefFormat files &&
-+	test_config_global init.defaultRefStorageFormat files &&
- 
- 	GIT_DEFAULT_REF_STORAGE_FORMAT=reftable git init refformat &&
- 	echo reftable >expect &&
-@@ -775,10 +775,10 @@ test_expect_success "init with feature.experimental=true" '
- 	test_cmp expect actual
- '
- 
--test_expect_success "init.defaultRefFormat overrides feature.experimental=true" '
-+test_expect_success "init.defaultRefStorageFormat overrides feature.experimental=true" '
- 	test_when_finished "rm -rf refformat" &&
- 	test_config_global feature.experimental true &&
--	test_config_global init.defaultRefFormat files &&
-+	test_config_global init.defaultRefStorageFormat files &&
- 	(
- 		sane_unset GIT_DEFAULT_REF_STORAGE_FORMAT &&
- 		git init refformat
++test_expect_success 'initializing repository with --ref-storage-format and payload' '
++	test_when_finished "rm -rf repo refdir" &&
++	mkdir refdir &&
++	BACKEND="$(test_detect_ref_format)://$(pwd)/refdir" &&
++	git init --ref-storage-format="$BACKEND" repo &&
++	verify_files_exist repo/.git refdir &&
++
++	git -C repo config get extensions.refstorage >actual &&
++	echo $BACKEND >expect &&
++	test_cmp expect actual &&
++
++	test_commit -C repo 1 &&
++	git -C repo refs list >out &&
++	test_grep "refs/tags/1" out &&
++
++	# Reinitializing the repository is fine when not specifying any format.
++	git -C repo init &&
++	# Reinitializing with the same backend is fine, too.
++	git -C repo init --ref-storage-format="$BACKEND" &&
++	# Reinitializing without a payload should fail.
++	test_must_fail git -C repo init --ref-storage-format="$(test_detect_ref_format)" 2>err &&
++	test_grep "attempt to reinitialize repository with different reference storage payload" err &&
++	# Reinitializing with a different payload should fail, too.
++	test_must_fail git -C repo init --ref-storage-format="$(test_detect_ref_format)://$(pwd)/other" 2>err &&
++	test_grep "attempt to reinitialize repository with different reference storage payload" err &&
++
++	git -C repo config get extensions.refstorage >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'cloning repository with alt ref directory' '
+ 	test_when_finished "rm -rf source repo refdir" &&
+ 	mkdir refdir &&
 
 -- 
 2.55.0.1007.g17ff1f9808.dirty
