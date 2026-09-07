@@ -1,79 +1,79 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C052646F4AB
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 11:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84F347012A
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 11:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788780020; cv=none; b=kl8iBQmT6PMwOOZxfyxlRgcOupLZEkdVBEJx6SKdmLa+7/Y7qGeYo22kWNnORghtEe7BGuUeyYE/8Kxpqkibe0gJ5P8uS2cJ+HMJ92X9aYh00PzhoIaBjgYuPoyDnmGyit0LORxtluFbPkk2SIECQr/6NTJd9edAL+KR/2TC2Nk=
+	t=1788780023; cv=none; b=XEj56cOYzSE8hlsiwPk1tv8d70wSAXmDCQ/LeVHLpa4DMq1Yim55jrxFGmoohnLQ+mYCvatCS/24AS2z26S0JG4fGQiHhRLi/6+5ThpGQw7Av4N0vygtFE9AoQE8hzFt9WDYXXk3dqxfSk3sS3OnTIBM2sHHCXOjz0AqgrunG00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788780020; c=relaxed/simple;
-	bh=pDQNtHIyXHV6/2or7V3fSGbmfxjta6T2dqXDO7y52Zg=;
+	s=arc-20240116; t=1788780023; c=relaxed/simple;
+	bh=KXYGnRejJK1mvp7H3DsfxfnNv8ykXPa1SDLIgELSaJ0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iTE0coBSHEHcVe8+BnNrMuVNRy/GZPq5g9FpsXJxmhwawBmHu9ZPItTQQf8heOzKphQCuJQDtOsTl+RbYpc79Fuw/TCN6w4jCBDTANdVjlINnMkfCL4pchCC0LpehuJ43vheBLOE1aS9QU8uRqJTSw9UHJ/flNEOdAsNWjfDaXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=psWD6zOc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MhOieOSZ; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=hmQsYRSP0ECnTWET3AJqB7X/bsyEOL7y4lpDmBDne79RqvRIKGOERf1Q9R4HFPtQX+Efek2nEMduK+24sYLcEiNxPex2u9lnCUf6jX71n+FZBpBfpzdrIUnY6RQrxYhPy/EnC7e9eH09GJSsngbPWCDb6DFFv7xqi41nZ2aYzP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KR5mF4Pu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g7lbRXu/; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="psWD6zOc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MhOieOSZ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D3BE914001CA;
-	Mon,  7 Sep 2026 07:20:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KR5mF4Pu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g7lbRXu/"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D0C2414001CA;
+	Mon,  7 Sep 2026 07:20:20 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 07 Sep 2026 07:20:17 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 07 Sep 2026 07:20:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788780017;
-	 x=1788866417; bh=H9Clmpy0DBI94MnDgeVQLabvoCPLkGwFAyDDzVWgPvA=; b=
-	psWD6zOcEPQZp2szJmzuvbnB/6TM3lTD8w2HXDplKcwoUgMenoj1aKen2yaZ1j24
-	jVN2xcL2X+voS9a+XnHpdBM6sycSdgh4mNFlZ6O0uutIphxj8mNCo8jyIvqE6TRY
-	ush52mYsbj5CbJ0WJ07jPXARzC8OOAx0YpIjHXhuf5+UDcnDRh4EjftwFYkaa/Qc
-	Zu0uiPeeF3UwJ+w37BTJjSxHz7fJalyGM0S8w1r0zXuAUhuxGzX9t+joTGB4U9eo
-	4UW/X/EOi8qhUmYEoeeDu8knp/7/1oqaIrn8nEOjwYSPGG/40HaeA4FCFhy7Q/jp
-	fvr+YZNK6CRom80JAdNQAQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788780020;
+	 x=1788866420; bh=L0MhAcmekCfRmsfFOuwNbgAzo0BAxNw++RABB7Egesg=; b=
+	KR5mF4Puz3SQu1fAgPGPGzI1lDDawpGl0EMgM1g2QeLrR+pWIK8hICrEnB5pI6g7
+	PLLlAJiySkyM7a5Wb/WdecCBZ21UXCnOzjNbvWRDWpWdGiBjUNLRF3tP7A7PHirc
+	22qqdnqnbZ1yxud6CssDfe20cA9VzTuwUWESSrbPMJ46780M/hZ9lnGHyW92fPwW
+	sIaoOnB6Y+a6c2zqImNokCu1WzNHFCbtW4pOrwUYoNxqASTYzTBTbnfSAOAJbPEX
+	tbRpGQTbwuavoDPjsfbSq9tkvzMwxDBOG+XLj+OyrlDz32aY5vngvxipjgywS1Di
+	IYJRPs25h+9R8e/PzxH0hQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788780017; x=
-	1788866417; bh=H9Clmpy0DBI94MnDgeVQLabvoCPLkGwFAyDDzVWgPvA=; b=M
-	hOieOSZWesDsagVtMkS4JhNJIlL4XeVwMNVUyYG7fOevK//G0i5EYlUReElaXvz7
-	gEV4KqAK5pjkH0GBvtC836QFaez+p9+uRjB2lv+VDp+N9/eN6BqnuKLJcOVBLXod
-	VFyR6aod9vjOz1oZWniWSlxre68bNgWSLPhrVtaWL9IBbHawWmxeCSaMoLX7SZg9
-	P8+Hele1txQoeO5/4rJK4vl0zOnzCVhKbRPbPmdmXNVY7vXlOs75DsW+Ow211trT
-	UNhXp7jfatpPBrh0mzLBsR+yxGeMG3HyrgNp4phZApgS1E2uSVUB7E7db+NPr8lY
-	Wbbet2hzc+T+oBYwmHm0g==
-X-ME-Sender: <xms:8Z2eajlfr1Gnnx6tljldviWL1tZ0ruQWCqIEGI1SJkXLsEtBOJBjxg>
-    <xme:8Z2eauS4lj9uxsoXa7R7Y4QZgAKPha7FM4-g3r5vhGee8J7HimPQWeYuMyMGEQv-5
-    GJzP_ojvOjjbB9lnJosYTGSdtXnZ63CtWtRmL0rZH47G7LnEipxIBU>
-X-ME-Received: <xmr:8Z2eanCZ99tcpLaLZj6209miu-W3iXYPjyfotS2tqZZBvgG9AA2Gmw>
-X-ME-Proxy-Cause: dmFkZTEODmYfhcE6MkClXmAzaz/u/B/AKDElneu4mL0qUxdd8dsBrCmOKXS1tHl60eVFV2
-    SymYRFYzuiLUqyPPFAGooBAERtLvf0X1LhcjqzMnX7gdc7DtqXstRRoihdSALfCxoWFzJG
-    BbbIbG0MP1m8AhEq/eZrNtPsqwDGfS6kNpj3lzhC6fPFYomNFvg9RKzjO2WnGUQd1KA2IH
-    sWYk5pONmMX+mdXpmpfGC22NTMapciJwOTHnIl8o4jd+7ZhCw8vFlPa824pJltjvaD3N4A
-    MUB/oyFdCvhdQMSVTPOi3Wa2Ehbr/+fSxb1kUGZO2C7ytEHmk7HxP5nm8sCCeE5hTY4Ua7
-    o1chx2ghqiIao4V/i0DM58nMBsASG4DP85Jks9d5kl/vgg71nxsYaz4Qv+G+4W3zjsCUKm
-    hmeF93U8Drlb4q2ZRZbkqzim2m6+nhYpB+9SSqVuMbMDArxudkvQ2PJjmr4zBm9HOJaZZS
-    o4nQcttyasGFaft7RZT3CwMNZYlWAfuXhID+IEC3w8QTt23JdhYVov96pKqvUP6pAkHI7N
-    LVJbepNSmaee/0+WELO46qWqRJgJhrHqEvW1zIpO3bvC/5iankrqfDEl4piAoKVdXSCuhw
-    GvQDsi64KMk0YrqtY27o3NMhmZx9iRAclVLO7GjUhy7nFicfWa80DmTduxlw
-X-ME-Proxy: <xmx:8Z2ealR4UZgVG0z9HI3F-Q2cLsqcwFYiQdb57A91DShgFf_zqLJbow>
-    <xmx:8Z2ealovnTy4T8oKxFV-1l-29FKXJhcAUfC2b9dhpqQ6ockMM1ROKQ>
-    <xmx:8Z2eanyGAcXuVjQUb57ErnbEYpsPPaR7PED9pd5OcNB69xfYj_N2YA>
-    <xmx:8Z2eaqK0nDBvQBgqofFqoS4kFc8VYAO8b-fGXE-nrYKTce5-jQ5w6A>
-    <xmx:8Z2eaiToqlzXWm76eB_4dgXJq69-TqWRfCfjy_tdEy7v0HTpHVp-1rRJ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788780020; x=
+	1788866420; bh=L0MhAcmekCfRmsfFOuwNbgAzo0BAxNw++RABB7Egesg=; b=g
+	7lbRXu/kj9oueLD+MikZDYhZAo8dsiPXx2diLiTeraSJCwTBKPJXSnHQWDLHX9S+
+	4dc8IJraHIVwhFvM+5xP+tD6Aitab6LoxhCig+tmP7K75vRKTi72/nky3CrT6zwC
+	YO5xRfu1qbJk1/Pm5ggDNfVTYhQ7xitWRp5JeMU8bMXWHoxIeABqYCQxHlGZv6gd
+	YKxeL7TeSWVNzAgZvwcA2FYugurlQnf3gRCFwT5owFCjASFcOf3JTWGb/yxLk/17
+	syGnsYDe5Tj/77JSlpsyCMDk99yAKNEXUORzJi51FRx0i5esQaGhKw9c5b8dtAUD
+	1tvIVuuIti10YyeBT1ANA==
+X-ME-Sender: <xms:9J2eapxnKlSm8XHDhAIALj7UQ1kujD1klRv2wvr6WL68YjrHei2yBg>
+    <xme:9J2eags9xmx6e7gWhZqMWM3PyCMAKY4rsuJbbL9pCvse4AFZL__EUR-R3rOAvy9uc
+    kS_tc_RvOvR_7w0pU713f37_teyWald1yrvUNli6AtUB2VFyi2v4g>
+X-ME-Received: <xmr:9J2eagvo4W8-KbioM_-m1iQSXbUNyMWzpuM4RyvyLT6VuAFKk6fNQg>
+X-ME-Proxy-Cause: dmFkZTGh+ntQuPPRCjeOHi8eBWK5m+vsTdo4B135eNBn9xjB4a9zN4GRxrRt7ufClAIl3+
+    7DTVnBB+chKMByq92+dilJ4J+ILxHOo9af3b8PgjbNehM6+mCpLBsjD3DQkDpjdeMGk5nY
+    H9OqniAY0yEl8KfSnUeS3mQRawSxd1v+F+nankPtzxY0uHouSCiFQxjyazTc735sN+T2hS
+    tLX+Lss1Br8/c+GWKysXtyMdZ6sVtBOUcm1gaRtzH0naLjwcySt0SPM/ivMPpz87mbX3F8
+    7t45YSMSrFLlOVO2l5h6HEcV0S/0CjeD7oPCkYvLI6bXUqDTcrPC6ykW3ArnoyZBSMXnKH
+    vWp0p+QpJ69q633HRllsVUevTAt6FI3GckRg7gBWuo2A9/j1DH2mzgbPjGVr74jWHPPrp5
+    jlo1r1K+z35lrlW1V4Nlp9KGW8PC+PIQh7zrPBOGpHRcrV4zCCDFdR1dHyzCp3RjrRDiDP
+    8EmtR7ALU9629Y1CkcxRlSXyCAf3F8n8wpUURkYTbNf36fMivid8s6YVl0e4zVXH98uuGI
+    eN5/OHreqAnGiK2QX+SY4zWYlyPw7EsMOekStG2ihvUJHJd85GYy4M6zSsHI81+jgc6sQz
+    zh30nPOvV8h670IUkJsdebFUxjWb2jalhZbx5KYoLZd7nUva3irqB2+swufg
+X-ME-Proxy: <xmx:9J2ealMymPbiHARpWftmKfSOe3bzdKHZRvnL3X10hRbtQqyLBgUjSg>
+    <xmx:9J2eau166YTlCdqE9u-nwYJ6zDjIWqlVPcJ5AGnc8NIZCIYNSxFRwA>
+    <xmx:9J2eahPG5z6xVOhwCxMRhXAYHBjGdcFt0iDOkbv46hEF5dD9wJFghQ>
+    <xmx:9J2eau1x-4VmepmpV0NUcs2EbhaTUgdPrj0h3sVTd62tgl_apDbXtg>
+    <xmx:9J2ealW4GVIHEmwLYX2UIlkFY7puhRVI5nJslKg8Z8-kL2-w0GVD7W_G>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Sep 2026 07:20:17 -0400 (EDT)
+ 7 Sep 2026 07:20:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4bcef3c5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Sep 2026 11:20:16 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9e5e7b10 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Sep 2026 11:20:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 07 Sep 2026 13:18:37 +0200
-Subject: [PATCH v2 03/11] builtin/refs: rename "--ref-format=" to
+Date: Mon, 07 Sep 2026 13:18:38 +0200
+Subject: [PATCH v2 04/11] builtin/submodule: rename "--ref-format=" to
  "--ref-storage-format="
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-b4-pks-unify-ref-storage-format-v2-3-6733c90ca5b0@pks.im>
+Message-Id: <20260907-b4-pks-unify-ref-storage-format-v2-4-6733c90ca5b0@pks.im>
 References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
 In-Reply-To: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
 To: git@vger.kernel.org
@@ -94,201 +94,240 @@ X-Mailer: b4 0.15.2
 With the same reasoning as for git-init(1), rename "--ref-format=" to
 "--ref-storage-format=" and keep the old name as an alias.
 
+Note that this commit is a bit more complex compared to the others as we
+also need to adapt the submodule helper for consistency. But overall,
+the changes are straight-forward and in the same spirit.
+
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-refs.adoc            |  6 +++---
- builtin/fetch.c                        |  2 +-
- builtin/refs.c                         | 11 +++++++----
- t/t1423-ref-backend.sh                 |  8 ++++----
- t/t1460-refs-migrate.sh                | 12 ++++++------
- t/t7424-submodule-mixed-ref-formats.sh |  2 +-
- 6 files changed, 22 insertions(+), 19 deletions(-)
+ Documentation/git-submodule.adoc       |  8 ++++----
+ builtin/clone.c                        |  2 +-
+ builtin/submodule--helper.c            | 24 +++++++++++++++---------
+ git-submodule.sh                       | 20 ++++++++++----------
+ t/t7424-submodule-mixed-ref-formats.sh |  8 ++++----
+ 5 files changed, 34 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
-index 9063892651..09e9bde939 100644
---- a/Documentation/git-refs.adoc
-+++ b/Documentation/git-refs.adoc
-@@ -9,7 +9,7 @@ git-refs - Low-level access to refs
- SYNOPSIS
- --------
- [synopsis]
--git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
-+git refs migrate --ref-storage-format=<format> [--no-reflog] [--dry-run]
- git refs verify [--strict] [--verbose]
- git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [(--sort=<key>)...] [--format=<format>]
-@@ -97,8 +97,8 @@ OPTIONS
+diff --git a/Documentation/git-submodule.adoc b/Documentation/git-submodule.adoc
+index 722d827908..d22fd4a5b0 100644
+--- a/Documentation/git-submodule.adoc
++++ b/Documentation/git-submodule.adoc
+@@ -34,7 +34,7 @@ COMMANDS
+ With no arguments, shows the status of existing submodules.  Several
+ subcommands are available to perform operations on the submodules.
  
- The following options are specific to `git refs migrate`:
- 
--`--ref-format=<format>`::
--	The ref format to migrate the ref store to. Can be one of:
-+`--ref-storage-format=<format>`::
-+	The ref storage format to migrate the ref store to. Can be one of:
+-`add [-b <branch>] [-f | --force] [--name <name>] [--reference <repository>] [--ref-format <format>] [--depth <depth>] [--] <repository> [<path>]`::
++`add [-b <branch>] [-f | --force] [--name <name>] [--reference <repository>] [--ref-storage-format <format>] [--depth <depth>] [--] <repository> [<path>]`::
+ 	Add the given repository as a submodule at the given path
+ 	to the changeset to be committed next to the current
+ 	project: the current project is termed the "superproject".
+@@ -72,7 +72,7 @@ location, and only the superproject's URL needs to be provided.
+ git-submodule will correctly locate the submodule using the relative
+ URL in `.gitmodules`.
  +
- include::ref-storage-format.adoc[]
+-If `--ref-format <format>`  is specified, the ref storage format of newly
++If `--ref-storage-format <format>`  is specified, the ref storage format of newly
+ cloned submodules will be set accordingly.
  
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ab7db2be06..687909c0c4 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1848,7 +1848,7 @@ static void ref_transaction_rejection_handler(const char *refname,
- 			"can either accept this as-is, in which case you won't be able to\n"
- 			"store all remote references on disk. Or you can alternatively\n"
- 			"migrate your repository to use the 'reftable' backend with the\n"
--			"following command:\n\n    git refs migrate --ref-format=reftable\n\n"
-+			"following command:\n\n    git refs migrate --ref-storage-format=reftable\n\n"
- 			"Please keep in mind that not all implementations of Git support this\n"
- 			"new format yet. So if you use tools other than Git to access this\n"
- 			"repository it may not be an option to migrate to reftables.\n"));
-diff --git a/builtin/refs.c b/builtin/refs.c
-index 5cd21c25fe..53b12accaf 100644
---- a/builtin/refs.c
-+++ b/builtin/refs.c
-@@ -10,7 +10,7 @@
- #include "refs/refs-internal.h"
+ `status [--cached] [--recursive] [--] [<path>...]`::
+@@ -139,7 +139,7 @@ If you really want to remove a submodule from the repository and commit
+ that use linkgit:git-rm[1] instead. See linkgit:gitsubmodules[7] for removal
+ options.
  
- #define REFS_MIGRATE_USAGE \
--	N_("git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]")
-+	N_("git refs migrate --ref-storage-format=<format> [--no-reflog] [--dry-run]")
+-`update [--init] [--remote] [-N | --no-fetch] [--[no-]recommend-shallow] [-f | --force] [--checkout | --rebase | --merge] [--reference=<repository>] [--ref-format=<format>] [--depth=<depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter=<filter-spec>] [--] [<path>...]`::
++`update [--init] [--remote] [-N | --no-fetch] [--[no-]recommend-shallow] [-f | --force] [--checkout | --rebase | --merge] [--reference=<repository>] [--ref-storage-format=<format>] [--depth=<depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter=<filter-spec>] [--] [<path>...]`::
+ +
+ --
+ Update the registered submodules to match what the superproject
+@@ -188,7 +188,7 @@ submodule with the `--init` option.
+ If `--recursive` is specified, this command will recurse into the
+ registered submodules, and update any nested submodules within.
  
- #define REFS_VERIFY_USAGE \
- 	N_("git refs verify [--strict] [--verbose]")
-@@ -44,9 +44,12 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
- 	enum ref_storage_format format;
- 	unsigned int flags = 0;
- 	struct option options[] = {
--		OPT_STRING_F(0, "ref-format", &format_str, N_("format"),
--			N_("specify the reference format to convert to"),
-+		OPT_STRING_F(0, "ref-storage-format", &format_str, N_("format"),
-+			N_("specify the reference storage format to convert to"),
- 			PARSE_OPT_NONEG),
-+		OPT_STRING_F(0, "ref-format", &format_str, N_("format"),
-+			N_("specify the reference storage format to convert to"),
-+			PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
- 		OPT_BIT(0, "dry-run", &flags,
- 			N_("perform a non-destructive dry-run"),
- 			REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN),
-@@ -62,7 +65,7 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
- 	if (argc)
- 		usage(_("too many arguments"));
- 	if (!format_str)
--		usage(_("missing --ref-format=<format>"));
-+		usage(_("missing --ref-storage-format=<format>"));
+-If `--ref-format <format>`  is specified, the ref storage format of newly
++If `--ref-storage-format <format>`  is specified, the ref storage format of newly
+ cloned submodules will be set accordingly.
  
- 	format = ref_storage_format_by_name(format_str);
- 	if (format == REF_STORAGE_FORMAT_UNKNOWN) {
-diff --git a/t/t1423-ref-backend.sh b/t/t1423-ref-backend.sh
-index 9ae295cf3d..ab119a6568 100755
---- a/t/t1423-ref-backend.sh
-+++ b/t/t1423-ref-backend.sh
-@@ -144,7 +144,7 @@ do
- 				test_commit 2 &&
- 				test_commit 3 &&
+ If `--filter <filter-spec>` is specified, the given partial clone filter will be
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 511fff9562..93be65efcd 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -725,7 +725,7 @@ static int checkout(int submodule_progress,
+ 		}
  
--				git refs migrate --dry-run --ref-format=$to_format >out &&
-+				git refs migrate --dry-run --ref-storage-format=$to_format >out &&
- 				BACKEND_PATH="$dir/$(sed "s/.* ${SQ}.git\/\(.*\)${SQ}/\1/" out)" &&
- 				test_refs_backend . $from_format "$to_format://$BACKEND_PATH" "$method"
- 			)
-@@ -159,7 +159,7 @@ do
- 				test_commit 2 &&
- 				test_commit 3 &&
+ 		if (ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
+-			strvec_pushf(&cmd.args, "--ref-format=%s",
++			strvec_pushf(&cmd.args, "--ref-storage-format=%s",
+ 				     ref_storage_format_to_name(ref_storage_format));
  
--				git refs migrate --dry-run --ref-format=$to_format >out &&
-+				git refs migrate --dry-run --ref-storage-format=$to_format >out &&
- 				BACKEND_PATH="$dir/$(sed "s/.* ${SQ}.git\/\(.*\)${SQ}/\1/" out)" &&
- 
- 				test_refs_backend . $from_format "$to_format://$BACKEND_PATH" "$method" &&
-@@ -186,7 +186,7 @@ do
- 				test_commit 2 &&
- 				test_commit 3 &&
- 
--				git refs migrate --dry-run --ref-format=$to_format >out &&
-+				git refs migrate --dry-run --ref-storage-format=$to_format >out &&
- 				BACKEND_PATH="$dir/$(sed "s/.* ${SQ}.git\/\(.*\)${SQ}/\1/" out)" &&
- 
- 				run_with_uri . "$from_format" "$to_format://$BACKEND_PATH" \
-@@ -218,7 +218,7 @@ do
- 			test_commit 2 &&
- 			test_commit 3 &&
- 
--			git refs migrate --ref-format=$to_format &&
-+			git refs migrate --ref-storage-format=$to_format &&
- 			git refs list >out &&
- 			test_grep "refs/tags/1"	out &&
- 			test_grep "refs/tags/2"	out &&
-diff --git a/t/t1460-refs-migrate.sh b/t/t1460-refs-migrate.sh
-index 8aded6597e..204dd79b41 100755
---- a/t/t1460-refs-migrate.sh
-+++ b/t/t1460-refs-migrate.sh
-@@ -42,7 +42,7 @@ test_migration () {
- 		print_all_reflog_entries "$repo" >expect_logs
- 	fi &&
- 
--	git -C "$repo" refs migrate --ref-format="$format" "$@" &&
-+	git -C "$repo" refs migrate --ref-storage-format="$format" "$@" &&
- 
- 	git -C "$repo" for-each-ref --include-root-refs \
- 		--format='%(refname) %(objectname) %(symref)' >actual &&
-@@ -77,7 +77,7 @@ test_expect_success "missing ref storage format" '
- 	git init repo &&
- 	test_must_fail git -C repo refs migrate 2>err &&
- 	cat >expect <<-EOF &&
--	usage: missing --ref-format=<format>
-+	usage: missing --ref-storage-format=<format>
- 	EOF
- 	test_cmp expect err
- '
-@@ -86,7 +86,7 @@ test_expect_success "unknown ref storage format" '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
- 	test_must_fail git -C repo refs migrate \
--		--ref-format=unknown 2>err &&
-+		--ref-storage-format=unknown 2>err &&
- 	cat >expect <<-EOF &&
- 	error: unknown ref storage format ${SQ}unknown${SQ}
- 	EOF
-@@ -107,7 +107,7 @@ do
- 			test_when_finished "rm -rf repo" &&
- 			git init --ref-storage-format=$from_format repo &&
- 			test_must_fail git -C repo refs migrate \
--				--ref-format=$from_format 2>err &&
-+				--ref-storage-format=$from_format 2>err &&
- 			cat >expect <<-EOF &&
- 			error: repository already uses ${SQ}$from_format${SQ} format
- 			EOF
-@@ -119,7 +119,7 @@ do
- 			git init --ref-storage-format=$from_format repo &&
- 			git -C repo worktree add wt &&
- 			test_must_fail git -C repo refs migrate \
--				--ref-format=$to_format 2>err &&
-+				--ref-storage-format=$to_format 2>err &&
- 			cat >expect <<-EOF &&
- 			error: migrating repositories with worktrees is not supported yet
- 			EOF
-@@ -211,7 +211,7 @@ do
- 			git init --ref-storage-format=$from_format repo &&
- 			test_commit -C repo initial &&
- 			git -C repo refs migrate --dry-run \
--				--ref-format=$to_format >output &&
-+				--ref-storage-format=$to_format >output &&
- 			test_grep "Finished dry-run migration of refs" output &&
- 			test_path_is_dir repo/.git/ref_migration.* &&
- 			echo $from_format >expect &&
+ 		if (filter_submodules && filter_options->choice)
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index e7cd3225fa..55eaaab38f 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1941,7 +1941,7 @@ static int clone_submodule(const struct module_clone_data *clone_data,
+ 					     item->string, NULL);
+ 		}
+ 		if (clone_data->ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
+-			strvec_pushf(&cp.args, "--ref-format=%s",
++			strvec_pushf(&cp.args, "--ref-storage-format=%s",
+ 				     ref_storage_format_to_name(clone_data->ref_storage_format));
+ 		if (clone_data->dissociate)
+ 			strvec_push(&cp.args, "--dissociate");
+@@ -2057,8 +2057,10 @@ static int module_clone(int argc, const char **argv, const char *prefix,
+ 		OPT_STRING_LIST(0, "reference", &reference,
+ 			   N_("repo"),
+ 			   N_("reference repository")),
+-		OPT_STRING(0, "ref-format", &ref_storage_format, N_("format"),
+-			   N_("specify the reference format to use")),
++		OPT_STRING(0, "ref-storage-format", &ref_storage_format, N_("format"),
++			   N_("specify the reference storage format to use")),
++		OPT_STRING_F(0, "ref-format", &ref_storage_format, N_("format"),
++			     N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
+ 		OPT_BOOL(0, "dissociate", &dissociate,
+ 			   N_("use --reference only while cloning")),
+ 		OPT_INTEGER(0, "depth", &clone_data.depth,
+@@ -2357,7 +2359,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	if (suc->update_data->require_init)
+ 		strvec_push(&child->args, "--require-init");
+ 	if (suc->update_data->ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
+-		strvec_pushf(&child->args, "--ref-format=%s",
++		strvec_pushf(&child->args, "--ref-storage-format=%s",
+ 			     ref_storage_format_to_name(suc->update_data->ref_storage_format));
+ 	strvec_pushl(&child->args, "--path", sub->path, NULL);
+ 	strvec_pushl(&child->args, "--name", sub->name, NULL);
+@@ -2801,7 +2803,7 @@ static void update_data_to_args(const struct update_data *update_data,
+ 			strvec_pushl(args, "--reference", item->string, NULL);
+ 	}
+ 	if (update_data->ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
+-		strvec_pushf(args, "--ref-format=%s",
++		strvec_pushf(args, "--ref-storage-format=%s",
+ 			     ref_storage_format_to_name(update_data->ref_storage_format));
+ 	if (update_data->filter_options && update_data->filter_options->choice)
+ 		strvec_pushf(args, "--filter=%s",
+@@ -3010,8 +3012,10 @@ static int module_update(int argc, const char **argv, const char *prefix,
+ 			SM_UPDATE_REBASE),
+ 		OPT_STRING_LIST(0, "reference", &opt.references, N_("repo"),
+ 			   N_("reference repository")),
+-		OPT_STRING(0, "ref-format", &ref_storage_format, N_("format"),
+-			   N_("specify the reference format to use")),
++		OPT_STRING(0, "ref-storage-format", &ref_storage_format, N_("format"),
++			   N_("specify the reference storage format to use")),
++		OPT_STRING_F(0, "ref-format", &ref_storage_format, N_("format"),
++			     N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
+ 		OPT_BOOL(0, "dissociate", &opt.dissociate,
+ 			   N_("use --reference only while cloning")),
+ 		OPT_INTEGER(0, "depth", &opt.depth,
+@@ -3659,8 +3663,10 @@ static int module_add(int argc, const char **argv, const char *prefix,
+ 		OPT_BOOL(0, "progress", &progress, N_("force cloning progress")),
+ 		OPT_STRING(0, "reference", &add_data.reference_path, N_("repository"),
+ 			   N_("reference repository")),
+-		OPT_STRING(0, "ref-format", &ref_storage_format, N_("format"),
+-			   N_("specify the reference format to use")),
++		OPT_STRING(0, "ref-storage-format", &ref_storage_format, N_("format"),
++			   N_("specify the reference storage format to use")),
++		OPT_STRING_F(0, "ref-format", &ref_storage_format, N_("format"),
++			     N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
+ 		OPT_BOOL(0, "dissociate", &dissociate, N_("borrow the objects from reference repositories")),
+ 		OPT_STRING(0, "name", &add_data.sm_name, N_("name"),
+ 			   N_("sets the submodule's name to the given string "
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2999b31fad..8632194138 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -95,13 +95,13 @@ cmd_add()
+ 		--reference=*)
+ 			reference="$1"
+ 			;;
+-		--ref-format)
++		--ref-format|--ref-storage-format)
+ 			case "$2" in '') usage ;; esac
+-			ref_format="--ref-format=$2"
++			ref_storage_format="--ref-storage-format=$2"
+ 			shift
+ 			;;
+-		--ref-format=*)
+-			ref_format="$1"
++		--ref-format=*|--ref-storage-format=*)
++			ref_storage_format="$1"
+ 			;;
+ 		--dissociate)
+ 			dissociate=$1
+@@ -147,7 +147,7 @@ cmd_add()
+ 		$progress \
+ 		${branch:+"$branch"} \
+ 		${reference:+"$reference"} \
+-		${ref_format:+"$ref_format"} \
++		${ref_storage_format:+"$ref_storage_format"} \
+ 		$dissociate \
+ 		${name:+"$name"} \
+ 		${depth:+"$depth"} \
+@@ -302,13 +302,13 @@ cmd_update()
+ 		-r|--rebase)
+ 			rebase=$1
+ 			;;
+-		--ref-format)
++		--ref-format|--ref-storage-format)
+ 			case "$2" in '') usage ;; esac
+-			ref_format="--ref-format=$2"
++			ref_storage_format="--ref-storage-format=$2"
+ 			shift
+ 			;;
+-		--ref-format=*)
+-			ref_format="$1"
++		--ref-format=*|--ref-storage-format=*)
++			ref_storage_format="$1"
+ 			;;
+ 		--reference)
+ 			case "$2" in '') usage ;; esac
+@@ -385,7 +385,7 @@ cmd_update()
+ 		$rebase \
+ 		$merge \
+ 		$checkout \
+-		${ref_format:+"$ref_format"} \
++		${ref_storage_format:+"$ref_storage_format"} \
+ 		${reference:+"$reference"} \
+ 		$dissociate \
+ 		${depth:+"$depth"} \
 diff --git a/t/t7424-submodule-mixed-ref-formats.sh b/t/t7424-submodule-mixed-ref-formats.sh
-index 5eaf689d74..9081401509 100755
+index 9081401509..2ef85289b3 100755
 --- a/t/t7424-submodule-mixed-ref-formats.sh
 +++ b/t/t7424-submodule-mixed-ref-formats.sh
-@@ -94,7 +94,7 @@ test_expect_success 'status with mixed submodule ref storages' '
- 	git init main &&
- 	git -C main submodule add "file://$(pwd)/submodule" &&
- 	git -C main commit -m "add submodule" &&
--	git -C main/submodule refs migrate --ref-format=$OTHER_FORMAT &&
-+	git -C main/submodule refs migrate --ref-storage-format=$OTHER_FORMAT &&
+@@ -44,7 +44,7 @@ test_expect_success 'add submodules with different ref storage format' '
+ 	test_commit -C submodule submodule-initial &&
+ 	git init upstream &&
+ 	test_ref_format upstream "$GIT_DEFAULT_REF_FORMAT" &&
+-	git -C upstream submodule add --ref-format="$OTHER_FORMAT" "file://$(pwd)/submodule" &&
++	git -C upstream submodule add --ref-storage-format="$OTHER_FORMAT" "file://$(pwd)/submodule" &&
+ 	test_ref_format upstream/submodule "$OTHER_FORMAT"
+ '
  
- 	# The main repository should use the default ref format now, whereas
- 	# the submodule should use the other format.
+@@ -63,7 +63,7 @@ test_expect_success 'recursive clone propagates ref storage format' '
+ 	test_ref_format upstream/submodule "$GIT_DEFAULT_REF_FORMAT" &&
+ 
+ 	# The cloned repositories should use the other ref format that we have
+-	# specified via `--ref-storage`. The option should propagate to cloned
++	# specified via `--ref-storage-format`. The option should propagate to cloned
+ 	# submodules.
+ 	git clone --ref-storage-format=$OTHER_FORMAT --recurse-submodules \
+ 		upstream downstream &&
+@@ -82,7 +82,7 @@ test_expect_success 'clone submodules with different ref storage format' '
+ 
+ 	git clone --no-recurse-submodules "file://$(pwd)/upstream" downstream &&
+ 	test_ref_format downstream "$GIT_DEFAULT_REF_FORMAT" &&
+-	git -C downstream submodule update --init --ref-format=$OTHER_FORMAT &&
++	git -C downstream submodule update --init --ref-storage-format=$OTHER_FORMAT &&
+ 	test_ref_format downstream/submodule "$OTHER_FORMAT"
+ '
+ 
+@@ -122,7 +122,7 @@ test_expect_success 'recursive pull with mixed formats' '
+ 	# Clone the upstream repository such that the main repo and its
+ 	# submodules have different formats.
+ 	git clone --no-recurse-submodules "file://$(pwd)/upstream" downstream &&
+-	git -C downstream submodule update --init --ref-format=$OTHER_FORMAT &&
++	git -C downstream submodule update --init --ref-storage-format=$OTHER_FORMAT &&
+ 	test_ref_format downstream "$GIT_DEFAULT_REF_FORMAT" &&
+ 	test_ref_format downstream/submodule "$OTHER_FORMAT" &&
+ 
 
 -- 
 2.55.0.1007.g17ff1f9808.dirty
