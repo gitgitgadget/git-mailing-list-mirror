@@ -1,123 +1,59 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from outbound.pv.icloud.com (pv-2002f-snip4-11.eps.apple.com [57.103.64.231])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656C23AC0C3
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 14:47:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A65A499F3D
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 16:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.64.231
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788792481; cv=none; b=l1JjouXaZvHbiiuH6n/gaBNHcslyztWdqzu7l+Yc3QO4J8xFwGPO1nlY9EGNRDZy0ljZNxtbFi/6cmQD4TXw9rNMVAf2V/TWnd7b932xKRFsYGPQ+1oaalI5ZoCY4lUK/KqIrXhDmbzwWdAFn+u3CyJGhElVuayk5ZzXKAwRhbk=
+	t=1788797155; cv=none; b=oGsu0UW+CqwwQjdO4sS92RsqbTjjdNS6wOrJAd18t7vBo7LFkXUcqINMurNz0pwu7LAq8wm5Fj/e/+3ddSmrI4/32kM+ygcnOPAxNjlfAZnEk8WLWQf9oihJNfOYHMNwjPOPEdKHjY8pany63LYTcWzIejLDJDPLVewVkqGNEkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788792481; c=relaxed/simple;
-	bh=OpOciAB0SfhW4CgbTGJXyUWeFXU5GUWLYfgTPVvIUSY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o8Li/1Se8ZzVudAm7AV6bjvbbwJ8b9fQE8EAl0t3BSBnGbAP+zFZvgUijk0HrRwRyCGNE+6k7W3WJFR0v4x60T0BrPsva/oBVTxIaAb+McZih/WYm3ksIoi+U7Zrcgv6YMTyuFe+hkg62Ih1DB6yjRPm2NnS2T+sF5tFA5DXWrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=xzxQf4OA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Uv+rrPxI; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1788797155; c=relaxed/simple;
+	bh=NC2pn0l9RB7WOMtmh4tt3OapAQJOxzZX81rIrbLaRU4=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=FVuPfX0gdkulYuNiWgN6y2mbmX9kDjA3fGS1lwLKbgJlLd1I0YEVUL8XrsouDU6SZqF0fz0DJlxcEvQc2sjT23A3XAIq/92ffY90V/5GubxAFVN80T72W5OxKnEVViU3idxfjjv8vepEwIfjEebxCDUJjkhZZteqz3gvzqQKbAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=OrGfvoJP; arc=none smtp.client-ip=57.103.64.231
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="xzxQf4OA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Uv+rrPxI"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6A5757A0086;
-	Mon,  7 Sep 2026 10:47:58 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 07 Sep 2026 10:47:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1788792478; x=1788878878; bh=aAAh6q5tBi
-	25OVbh+hUMTpiQ146Htt9vb2KOBJh7w0A=; b=xzxQf4OA7gG9unu4OAhDLoTijO
-	O2yX0X+JBSCeP4Iu+JTQivrAg85kX5YsAmx2dZ/F/aCPvaJS9iKpywosLE57OQt3
-	aHOcyP4wW9W0RUpPjhfKA/ofvpbkgSdLhJweoVgEWcvA5PePzC3uhihsaO0yEH3h
-	5PE5AfC1DJ+gCFy1gOnS26gl5vC7NC2653OMBAjsFLO3u5rCZSvUytpm19zRABzl
-	NXaqXH25/C0YOLA6+zYb3GrEqnn6YKtorXlamNj64soD+8t8S4AVzGtdsjRaDl32
-	sfYNqxNIkM6eAn1NBTIaSm0js+JP7PV1CoEHlZl+rc7I+vA1ja3gbM/nkYWg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788792478; x=1788878878; bh=aAAh6q5tBi25OVbh+hUMTpiQ146Htt9vb2K
-	OBJh7w0A=; b=Uv+rrPxIx3PO6Y7q0HkOxNrddpSEbimdS85mHYvpZa6z6T+o3ju
-	Hw72e8ALCJ5L1htzYFgXqsBqSDrls957JEYpF+Po0t3ug0lbPULAqOLwGf+aqEpA
-	aXns6NAk35KaMBnSZ3XW+1z5J0vsySelkjL8KLjqkibwY7/n6GQpKjR5GuGD9wj0
-	FMZyGRDB3Y71pYuXzHLpI6ER1BKhIVTCNc9GlmacucgAajjT+uwqi9na3y/3BteR
-	vz55ItvgeIa2WdOAjxU8lp0xRfO5Diy3CTThZZiDxUA0THGZR2XMBrUng9JW8yXL
-	t1DAs8RP6E6crQYqewOCqvOFcdt7OsH6rgw==
-X-ME-Sender: <xms:nc6eanQtWfTxY3Nj3gQ6bLYSf9eShgaFKtIrWRQLXRKzYEDHpP3-Dg>
-    <xme:nc6eaiECrIs_SeRJBTIXiX4brg5ckacqiKD5gIYrDB_YpgZl-ykIkUR3sn5dbtySI
-    NcuUbJtLY4nEXD2OKNW2fe8MhHLRVGElVL4GghNs0eKn3lOaoIaOm6b>
-X-ME-Received: <xmr:nc6eakFdCP1yqpGodDHylvi5KTQzvBoqpYNvL8ZxsB0TRDs36L3OeQ>
-X-ME-Proxy-Cause: dmFkZTG0DnD7BQ/jfif7UNQTIC/Ys+JyOnWxXeKGguyPRq9ttoaksyVi11sSK6KA3FcQK1
-    Vtbbx9Fn2U+ay07MblZv6sF1ebzlKt1oPEqCpYjec/DtlvRyalzQARMHMvlCMU4I0NzZ3v
-    4Ye++gorGx0ag59m+rbOmVkE5HYqVH8hjdoCyqFRBhvG+ikXGh0SNJTlDK9+Jlw5SCEP0V
-    aMq067699sbvLripEfdjc6BRVHaRcG1jq4hYyocb4b2aGvErZsS/oBhybbBRShw28jtZtK
-    CcxZW6rMSiHUS4M9JuLCzpPb6s3HQcriQnqbuC7d+zgYCf58S1mkwq+7o2/3XQxQlU58SQ
-    tGlUW0+URTbPil2h7ha8i3v6133b4eDACba5dV+Nn9Chsk6dp+boqlD+YIvqiNaeHDEbO4
-    QF0qI6QJPvY+7KWSJo4nCpBbnqHwiSKU1QiwW/qAkW9NDLujr4oYlBhQ+V37YI1j7h60uQ
-    cfpHORSoH4f/SnyG0NEmyl/MHYB/l/jmb2AzWeoYTjYUJr8QNRn2RmpMXHwmod2c3WM45U
-    Q9X+JRAWSDW3SvCyARSNyBo7zQQvh6FPZdcZDI/SNA1s/QRAOeWktQ2KVsQFaTGjr5uXHZ
-    ATxr7P3fYHTBhu8bhu4bmu71egE+bNRNMi7bqBaXA/U2ArKTNnIo8QD8ubWQ
-X-ME-Proxy: <xmx:nc6eaoQ5dCU6gCXsAeNnWQHFpjpLPQzIWwgpP2sxND2Lfe-Rs69TWQ>
-    <xmx:nc6eatKL4eloMo-cozDTz5fk-zYXaSP_3w50asuwDOHj3o5SCilWCw>
-    <xmx:nc6earY4DTmULuZSP7LHDHzNubcDqcIFk4AFw7-FO0ixs2QOLHY9Bw>
-    <xmx:nc6ean-FoDIjurv9U4xQESb7LDTae9Iq16tv2kksvkl-N0VbUeKUHA>
-    <xmx:ns6eavXC79TB7pnhwVpCGkTa_ONppUNJxCgnF7vBg-ppr-zBNz8ZQG1a>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Sep 2026 10:47:56 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 77235430 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Sep 2026 14:47:53 +0000 (UTC)
-Date: Mon, 7 Sep 2026 16:47:51 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Thomas Bachem <mail@thomasbachem.com>
-Subject: Re: [PATCH v2 1/3] config: add git_config_append_parameter()
-Message-ID: <ap7Ol5baYwXTn6R_@pks.im>
-References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
- <pull.2217.v2.git.1788537086.gitgitgadget@gmail.com>
- <ef8087e80db18c511e31dd9c7dd6ea3d57dd543c.1788537086.git.gitgitgadget@gmail.com>
- <ap5yT0sOtLQQa4AY@pks.im>
- <b395ea0d-37aa-471a-a70a-6b2c278ad64e@gmail.com>
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="OrGfvoJP"
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-1a-60-percent-2 (Postfix) with ESMTPS id 3ACCA18005D0;
+	Mon, 07 Sep 2026 16:05:51 +0000 (UTC)
+X-ICL-RepId: 01a07c9e-67ab-7c01-b0b6-3758290bc6b8
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhAB0MGXQJeCEwDQwBLVxQEFVwDGQJWFVcMWhlSK1sTVRdGCRkIXR0ZHldQXgheH0wcHQ5YBhICWkUBTV8OXh8EF0YZVQRHHl1WQxsZAlEcVg1XQ1QEX1BJDEFQbFoARxdIHV0ZWW9QXRwOBFQHXQVdVlACWktfGV1FDy4PLQcxfDsBQHFfd0MUTHVYAUYLNApPHihzW3dJfE9wWHVTAjBQG18CQg8cE1YVDU1DEkIVBBFQAVgeVg==
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1788797152; x=1791389152; bh=NC2pn0l9RB7WOMtmh4tt3OapAQJOxzZX81rIrbLaRU4=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=OrGfvoJPEdg0UGu8X2QEi+b2ZPjd5CJASzmCSt2n7wl488L5yRgOZzx/VzbJwsY6HvdzUF6He3ArfY4wkMZ53UVeAGOjTke6PDjAf3ePW82+YpUg0bwf8s7R8uBzFlJczL2E1NLiWuNPIL9ulVgzKFd09wBEFzAkTQ2IKwxaxtv45CJINKMQKI/ytKPnsw5YH/HFgA9Salo5InbRCVbcCWMzaivAlfaWpo1HjXkzjiwXiUO5h4peJKgzhn3kpzR+lFQwPSUIRYDPXqiu9JXn5/9YljpIdHkJcocx54tP3V+Qg0l6+DOn/iJKoEofcx8h4kmdmkpli5iuGPzJKs6k5A==
+Received: from smtpclient.apple (unknown [17.156.192.29])
+	by p00-icloudmta-asmtp-us-west-1a-60-percent-2 (Postfix) with ESMTPSA id AF8FF18005FF;
+	Mon, 07 Sep 2026 16:05:50 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: mon.identite@icloud.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b395ea0d-37aa-471a-a70a-6b2c278ad64e@gmail.com>
+Mime-Version: 1.0 (1.0)
+Date: Mon, 7 Sep 2026 12:05:18 -0400
+Subject: Je vais pas 
+Message-Id: <C8F5AEC2-F4E3-4F56-9D37-ED0E9E7C5B80@icloud.com>
+To: git@vger.kernel.org
+X-Mailer: iPhone Mail (24A5390f)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA3MDE3OSBTYWx0ZWRfXyLb98UtgrHAH
+ X/IBhIRX8dLiMryjVo+LVRz8Nn/9R7LIcBCsB6fBQiWJ7JZmRHE9VEDFVejRogftHyNpXPENOWe
+ dmXgWR4il3AgPPsNfTLd9FqJ+VIIaxewDW6mEnujE8/g9GfXLPTToHcEzAp/1htXiyijk8eqRwc
+ DktlrNe82YZN6pbTrlI3xJlmn76e+O6wIZSBtpsSWLe9aOeuYAYqqpme7GhCClvDA23HvrjqdYk
+ Y8/Ao42FTnGkptNs1y59EpQaUAuWalVG0AbuyY6JYtdxIHELAlulPty68DAJSSQ0eJs1ad1JyN9
+ dC7+9D6zixAa53VY3oKJit1iWogIxDcW6eIB9pE6lKm+FuwQZT2IIEMyjzq2Gs=
+X-Proofpoint-ORIG-GUID: 3bM8PFk6nE1tnOXjl4AXd5nCkwJ5dHXz
+X-Authority-Info-Out: v=2.4 cv=WvEm8Nfv c=1 sm=1 tr=0 ts=6a9ee0df
+ cx=c_apl:c_pps:t_out a=aW9mcIavGNWWFvFFKOxBSA==:117
+ a=aW9mcIavGNWWFvFFKOxBSA==:17 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=x7bEGLp0ZPQA:10 a=cHTQyyNem8IA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=yByyWrLn35C_8_xOOowA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 3bM8PFk6nE1tnOXjl4AXd5nCkwJ5dHXz
+X-JNJ: AAAAAAABPBhjX9nNOSEUnX9TktybeOUbdXDNLzHAOzfg8GKVDCdGp3yO70G676aVBv8F2ZVxgMNl5Owh7KmTakhMlf/iQsVVALfD5Exz0zUepG/XxeZOPJeS/Qj/cR0t+2sRCyNIqRFxZTqAQOrGPytGIDQNGqOi4ggPozuykhg7+7EufCakh1YUUm9zVJ1Eyjxmcn1m28Hjg+1ua2nOp+NUOMuW9KwwL5NNZgCIId6GeJP5pF+ICvHwp2OWNoozncGMYS+85+fl+rBy79INZW6MQgu5BkYWMQvjaWNTpP5LyXcLyziTItKLjZgSvpUEkyIGKtSaj22evvhi/+lkdrvhaDH0W76jh2lcgyjkGy4kj/bqdWpgykI7g8oiW47wOUKHTtSx0+VessOHTYZmxdioFdABtlJ8JHEGpJDdEFbG6kkJJUlIICHeXAvi3iqYQKWr3ocbYZ4YDapjlppsdycOLuctsmgZbno+YZIZAlTqzz3g9eL/cTWhnShUd2SIS6o8MwHuHfU1rUZjXXMR1wr9xi1Mxl7Q6Kic1gCinwQivqsZNHQQSRTNvTTntJhJzNcAega0xAu2wAHjplMZzIlB8X6I+HNB6HG5/sy6UnMiIJoF3NUzKknBcfbyyoVMYi4WrCOcE1s524IBb6+zKyWZ0pa9SCltqw6MyuxHTsUBFBPW6urr9wO2dOVmU83JjXA8V9r7w/x5Rudn6WfR1wZxKp651gk3x1b8OW7rAtRyARJZmO3pd+oVbzxOhg/K8ET9fSuz2fR9rzL8M1dufWZBhnz6WUJQFw6IdhAZktwhzUDrrb0V3391sI7F8/Op8Jj432siw3oQMDn63SAy6lM7dkumfZOgf/51t4KvSSGKdezoZcnJk8KZLHhJumM/FKgVAUQSLn3QUOXijIAiiqmDVsG2Jr1Vu8Xc5bsQUQszanQhcabY6zp4bzZPTjdJzisXCBlmKusAq97//eFrLCSrXcQ0dqc
+ /xcx9KXamqlPsvzURc2flhY+sljVQXrrQh//WaB4qKkpWj2yLcF5UIS6E6YsW26+DJf/CXmRp9WD4HHuGC75BH8yXcxB4TknY3vU4ZORyq3nghh5pGwT59ThVKZEkV987xpw87p3uT/pCs4EXhgStQIcYIya8cb4gsF8T6qCj/glXSDgcF2myEQZvPFZUeo2WK11LkrtX9PNo8j1UD0WaY5JFh4no4p7kfuYscMz6KYnLGUA/moYrM6Cmvx856AoqXjvm
+X-Apple-Category-Label: MTc2MjE0MDYxOTk6JGNhdGVnb3J5JF9QZXJzb25hbCw=
 
-On Mon, Sep 07, 2026 at 02:24:34PM +0100, Phillip Wood wrote:
-> On 07/09/2026 09:14, Patrick Steinhardt wrote:
-> > On Fri, Sep 04, 2026 at 03:51:24PM +0000, Thomas Bachem via GitGitGadget wrote:
-> > > From: Thomas Bachem <mail@thomasbachem.com>
-> > > 
-> > > diff --git a/config.c b/config.c
-> > > index d9019e7e6c..e0bb29b53d 100644
-> > > --- a/config.c
-> > > +++ b/config.c
-> > > @@ -450,18 +450,24 @@ static int git_config_include(const char *var, const char *value,
-> > >   	return ret;
-> > >   }
-> > > +void git_config_append_parameter(struct strbuf *env, const char *key,
-> > 
-> > Nit: callling this `env` assumes a bit too much about what this buffer
-> > is going to be used for. I'd have called it just `buf`.
-> 
-> Are we ever likely to use this outside of GIT_CONFIG_PARAMETERS? If not then
-> I think env is a good name because it hints at where this function is used.
-> Isn't the whole point of this function to allow us to append settings an
-> environment variable?
 
-Potentially, even though this function doesn't really require that at
-all. So it may or may not be used outside this current use case.
-
-Anway, as I've said it's only a nit, so I won't insist on a change here.
-
-Patrick
+Envoy=C3=A9 de mon iPhone=
