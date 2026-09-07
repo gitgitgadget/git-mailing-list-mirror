@@ -1,80 +1,80 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45B6477299
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 16:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AC351D52F
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 16:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788799015; cv=pass; b=j82bUbxzm3m6qcS6pr1iJYwY85DI1iXm7+6/JcukceZUofNO8gD7S2HLswlBgp9ZGcwauUvdEjam7D14LF/EM9TEQRESQGRQVDFcmB6jAm1Bk5DVYomXH7rgn50McC6eovDo0lEE6tQXWJVNrD+323lj4ztfdMdhoALP0Ugl30s=
+	t=1788799043; cv=pass; b=Jd3fvHJLeyYqiE86p7Q5Cxp8zo1rwXmtaAfFa6QLOYStEQcCg1KTfWbcQjIyjm5MA3zJ+3mBOheBIg57NNOtODsad35z/nTYarLIKzzkoik7ILhnySxbi/Qo2c6Emyl4DWe9tvrCgMdxBBPX7rtLsECS66Z0dT383Qxbwecjn4I=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788799015; c=relaxed/simple;
-	bh=V/n2wS2VHQqwYia1PLaCHHbZ/XlcmQfkaJGOGYIg0CA=;
+	s=arc-20240116; t=1788799043; c=relaxed/simple;
+	bh=nZex6+n/sqw+h48z7Or8EJkw+lP2kA2eVi3kkmMJUUI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F2IRR4SQT+s9fJkxs4ZfMz9NYdP85+3u0Ur7LteihRX4PxDlN4yaxXab+3xjTeNE+344nqAnc+SvC49n7tmX3s9E2MsbY7zS3mBH6IG3ZpACz1WV0JMnEnUId+Vl6p+UMwt8OPlY0lMmXcl5G6Tubc+hu4ljd6Qj3f4yNYCPg4w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=qgKMENrl; arc=pass smtp.client-ip=209.85.128.177
+	 To:Cc:Content-Type; b=h23JUCsbKCpAsJ50W/gZpzEJrkgsRdhVCVNXv14+MWPVsldqYjV1BVDV0aNuQR0N8xZvGtbDydTLwoQKxZH+scQpwamGbtq7Dwr4ndmdwYMA8epn+W6mHPJ0sFPKr4qZK1dYx4qZ7TBS9wUxc6/NapNohZ3joxIpEpqGR34C7/Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=BZkMw+uq; arc=pass smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="qgKMENrl"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-86162c086f8so39940627b3.1
-        for <git@vger.kernel.org>; Mon, 07 Sep 2026 09:36:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788799013; cv=none;
+	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="BZkMw+uq"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-836c8bde2dcso16201937b3.0
+        for <git@vger.kernel.org>; Mon, 07 Sep 2026 09:37:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788799041; cv=none;
         d=google.com; s=arc-20260327;
-        b=h6jWEIfjNmqd1czdrJdHaObEGb+iTN9H6XGVZBIjskpHsA8RQRL+YoasqownGDq8yQ
-         QLblWHSchWIXTvhkAoByzZZdVK3CG2BiKzUhI1fhCrsav/dNX2iPHJG9vsLWPH1Kbt28
-         Vrb0bZtu/HVxwlgnAmHW1DJuGQA1TzXSJJ388ss5+7jVPl5dD6t9FMKOHCjDq/etpUFy
-         8iPB1V46ZJvYtWYopq/m+hGhw3ipjqcv9zkBCuWyETplfoptIfpB/HGYQANdQKOJA8Ey
-         6AkGkztbN90If1W+WdLEoUouUd6tJ4EHpnXmPinWVhgAY8yxuwv5igFJ8OGcqjhFyPTr
-         592g==
+        b=qAC8KuMoDuQP41NDYz7zU16x2a32KDMwtV3RnwqEVGG76cR1699GYS0VjVjnPE7XXu
+         ZUPBHU3cqMpU9cwxH1g5N/pyjvwxQ69UuF0AwYPar7Krcxa9jsWNsTDrQAILQJk0pqRh
+         k0+6uX4wpCu8L+MwbwAGXKDATCwOrPZ+PlaNewqw50LDn96FVF5uWP5/NvKWZtLlEi+B
+         FloQSHEqrkJw4+p0JQLm0ffIqVVQfAIsduUSrqR7ry+eAIhIbvT1fPg9rZMx+GZhNH5r
+         M5GGdKQuD7TqyYNvEwMWiAUQzqjEzKK8NNKhSrwDUFA6ks6eqKYqilgNlxozd8+ZwG0M
+         zcuQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=Ws10Y9J22JYNvdpCiv+DWl+VhkaVgQ5FV92BukoIKD4=;
+        bh=2JLRhv6rUgkL2c4Zu6vxscqb9nCShT0WlBsxX6l928U=;
         fh=iLJxgP8DAFLrDQjsB0Cddp9OF9hbFU6T6ON0ac1dnV4=;
-        b=h5ddGttUJsQPzKoQPTsq0DHd1E7Ha0rpJFmWgtAInfjJee0fzSpcyIlNSHb7xev2n3
-         LlcRDEIr31PX7R0SloYlAMJTvNM/nDiZYyc4QIGGXdZ+Txp3vkuEdf+rN/s2iKjVeWms
-         TKpxtdvs3NNHkEO8xq1rGdNxZtX4yMNJyBnqZIjrui9Nez2AFtprPi52qcYNfqtzwC7B
-         LzCBizlCJeGBV3v3Fpi9awa5TSP2/YAzryv7zy0r9EnBPVL/2VDNDE5qNc3OwccQ7siJ
-         QBa0o0xKeH3qCAq7tll4xyj38yGCJSxLjWkROdD2XOViNbXLJHZOjWp57kGi9J+VxiNf
-         9QIQ==;
+        b=gCfuBPvbMRMLJej5nw67nai7qYpY/qDmMf3JE3E1MwJGMYwvD0imYSSr/Rw/fYa54g
+         xpDCDobruEIxpL/CPkG30LvGGxLVlf3urE7k1zfZybR/dgGW0uv0JfKSHS88fqENPkhY
+         cZSDvXwZh4ahnf9JTnQACogq08CASc839Bp80o29kTUSkCjWocQGDjogEvKWW0UMbcTP
+         aJujkawkggcJ9boI14qAaWHLENsW43JrWNhs56cXGIiznJDZilQ48njwG1B9yrdJ2iNi
+         2K3I5I/r/3Uht/naq+bKDVoqlpzUDu25vZ2WqnQ2mQPHpVGPUOzyzAZ3wgQ0gfedUzZe
+         CNYA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thomasbachem.com; s=google; t=1788799013; x=1789403813; darn=vger.kernel.org;
+        d=thomasbachem.com; s=google; t=1788799041; x=1789403841; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Ws10Y9J22JYNvdpCiv+DWl+VhkaVgQ5FV92BukoIKD4=;
-        b=qgKMENrlRO3ioY2KKLX2g9nzfJeFXgFd8gi9gZpLXuV29EpmIfsKcVPt5pT6BuFOzR
-         MTQ5VBZTgTIeHmZCsiyBg5H4j41wWTvYOwvmrpceLqmScP21BsC7tAfOUQEFPPBYyEjy
-         fmIV2ILCKbgoM8Y1pg1+NmZm+cb/T6lO5vmzy4d0qJu7sVZFZ+R/jNFrfpbqkFEuQ8jy
-         z47g2nErepkT1IgQHgCUqObjj0ETmA8EqcU+roLBB4Zj77rK0EyYAak9xRyvc/ujEyyV
-         f5hV/ex1N4hvPYUUuS1xXy8HiWijwroRWcs9NWqxJt9auW/2JLV6C06RIOn1Q98Xi5Cy
-         b4cg==
+        bh=2JLRhv6rUgkL2c4Zu6vxscqb9nCShT0WlBsxX6l928U=;
+        b=BZkMw+uqPzVrqU2q+kTRd4wyCYogQAuE1EJfRfinwBLkStGDSUQBcXJOo2EOKd6y21
+         68kWLPuUMhnKl735wXV+/37vHn5pSxixThFC+Gpkh4zYAZ0zHTDntE3M19VQ4nGR2pyI
+         mUtEFNO3/iwbquX6TGHYfqN0ygD/okhAZLTYmCTO2OMCPpc2AhEMr7LDad5Zsjl5ScBA
+         S6RyChpWcuJEYknhx5RJz8qqdpTQJkc6O6RizK+MNSrBSE1s/dpEzrU80nCWQYX6VPt5
+         L98qUzHFrdvGdxAZKU7zWuJUVO+4gyhLdYatX1w6i9F5Rxl79OG6qgaG3B35a2V/BOfu
+         8WlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788799013; x=1789403813;
+        d=1e100.net; s=20251104; t=1788799041; x=1789403841;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Ws10Y9J22JYNvdpCiv+DWl+VhkaVgQ5FV92BukoIKD4=;
-        b=jRigK/yyRFSSVlJ2nJygLZ6DvLiX9BncLidNQWJe3Ho+EJPBKNJpEEVM+fD8ONcQDO
-         v0FlKdTuToypbfHXZ++8c3yXvyLXQqBfq4V6wXve/j9Dm+812HX5eaEFilzmBBg7CJR+
-         7+rfZxpMHzGxoYOFKOZwximig5+GWq0ADNqd7HZKCHLzY+h9Sj/2q6INAjQX2qgWW/JJ
-         xdFc+4tAuffJ/lBuwc5ceKcw9ORlEhyuHXi8/ydQPew+BpgtY0/vcjSWYtBgy4pg/qT8
-         VnzcfmLlQSDdMvJZEDYnsataG0XwjmGAVkQXsH4a0uh+HJc9zNfSf6GBILC3l5bHecxc
-         zUOg==
-X-Gm-Message-State: AFuF++m2El4Ch3qIx5B4BRmdmVW638gXdX2cr0Fl8BxEbyFnas8EoZa0
-	hwNat1/WYw+g2z0tlj63n2xDOHvGvKqV09lHChPLduSK5iEJILfTG5WnTLclPOqiUkYNZQXgc2d
-	PLjbZA8kJ4BCoXFb+gCoo86AF9YGhJ98HlqBz1zrQ/Hhfv61/YVGKHWgNFoWk+6c=
-X-Gm-Gg: AYBFou0Qcd88b3+gk5RdpTmpQjWT4LjacJJyXhL9cCw4upyzI5Lc2eSGhB+asDxpxqf
-	BWyT3fMoZXU87ppBHGXYhfNrmeUmB1HNWVbgzHTKq66Z5REF3HWfXaljCo8+VEoWBF7LodLNkC2
-	ISzQkSRL343CBuQ+NFGArt77Cy2yQkwDTvCrUmwPvY4z4HM08MpKu7oP9C4z7MsdSPkdDaN8uTp
-	9hlylj2hISgIpsZkQj/hgbUulHPhpDtOl6t9oB/GxvPZiow1uARQDuZBsoWviniTewbbKW37K1Y
-	kkudIbd5BJl6YpodxeFrG+iFwiw6EyL9xlD54qxtbLztg6knXCFOiAJJsx5EOql2uwXM+CDhb15
-	7kNk=
-X-Received: by 2002:a05:690c:e3c3:b0:862:5a77:285d with SMTP id
- 00721157ae682-86e66c799b2mr103198837b3.0.1788799012680; Mon, 07 Sep 2026
- 09:36:52 -0700 (PDT)
+        bh=2JLRhv6rUgkL2c4Zu6vxscqb9nCShT0WlBsxX6l928U=;
+        b=oEHqA7Fbd7TuGeFdNR/ItDvdKr98/VwT3UUh7wVYypXi/NOMHyNE8vcVCSctqCs4mE
+         umnvAsKId+hHMW2Ry78EVY8tO6AKqqoPODIDIUJh0xuR/kOXr1aauEt43Olz7Y4pugNF
+         KBLDSqj3DP97nF/fXaryrsmiVBr2o0rrr5TqaPbwCRaOuwpjvhEAN+A/8KoJX8fssh0G
+         NUDspF1VEDvXzs2aCh//ncJayFV4lkdY30FHGN8QjFNYxFZReTELuyFCWMWS9KIg+Q7E
+         0X1R7cc2hPiHKikxM39Enc8aWU3ipN25v+H8ucTtlnAGgGKEDLI4W6jvUe1SpUcp+BF9
+         0oGA==
+X-Gm-Message-State: AFuF++lQ8DfezMMDKgIxakHPQBGmm8Gr9FmUcUbiJg+utuVE/0i6Tro/
+	RxxYlVbkG+hw6ZsqChNGobo++QBYaP5N0qGj/6WljwOoPk7oLqDwcxFYx0oI0FvOo2RWBNj6Nn4
+	d/J85z2XaDh7YLpCn9ya0CzfqfYBSRTItcnujalqN/mqGoAsBtb/zpsCV8WQjWVw=
+X-Gm-Gg: AYBFou0CT11EJemBZoaLJYyC2Z/zvQhAEmMGEYby6j+w7jxDA0xZojniEyhp99nO8gN
+	jjXIz0V0/m9b/SnnCJpLFnvTkCosMlCEu3YHDQQ02Vxufn1HLi9A9qk8JblTQlRMdHlIpY+/+Rb
+	L4F2DbRWrNz57CFgBwhmGl9gnGmPs3bQStflB9qdaGby2qj6nXXgoFU3MiD7O4000wW7YiJwnPN
+	4AVtswdxhsMnUFcCcpErsz8Gbpudro1LD0l5NA4MXhvEUvbheIlyeCgNU2UPhaFDWmC55NMvQ8D
+	I9BddIegXY9XQmg/JFGXDLgDwLnY80rdfS6wLDfF7zPl+uUrsRn6VTeqwRPbGhuS6GRwy40I/22
+	LSXp0
+X-Received: by 2002:a05:690c:6508:b0:873:5c0f:28d with SMTP id
+ 00721157ae682-8735c0f03eamr65394497b3.55.1788799040863; Mon, 07 Sep 2026
+ 09:37:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,14 +82,15 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
- <pull.2217.v2.git.1788537086.gitgitgadget@gmail.com> <baab8d4876441ea883044c34bb5584631e30e1ec.1788537086.git.gitgitgadget@gmail.com>
- <d09ef622-1398-4e38-8a04-8542e7347a98@gmail.com>
-In-Reply-To: <d09ef622-1398-4e38-8a04-8542e7347a98@gmail.com>
+ <pull.2217.v2.git.1788537086.gitgitgadget@gmail.com> <9a6fc0427a8bc7e7abcc0518214b1dafc2efaa6a.1788537086.git.gitgitgadget@gmail.com>
+ <7493f0b7-a6cb-4b7d-bfd4-f4a318ff7e32@gmail.com>
+In-Reply-To: <7493f0b7-a6cb-4b7d-bfd4-f4a318ff7e32@gmail.com>
 From: Thomas Bachem <mail@thomasbachem.com>
-Date: Mon, 7 Sep 2026 18:36:40 +0200
-X-Gm-Features: AcwNN1XYX68zEnzUICbM1H755uEy5nldzhjFW4a9T9yf5K-OgzgaBYVWWvdCa1E
-Message-ID: <CAA0xjto++XQ6SZVfr5hWq2+CzeBsqSmTOLq_5UvL5s-0HDzaxw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] sequencer: run auto maintenance once a sequence is done
+Date: Mon, 7 Sep 2026 18:37:10 +0200
+X-Gm-Features: AcwNN1WC37QY02jy_qwSvSvlxPV_h8y5aJbeI2zGKYCnDYg6gV7uOpB7xrSddKA
+Message-ID: <CAA0xjtoUBHcEJA6_EGgiy2eXghb3duMpTi=KBkxt08fV0c5Arw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] sequencer: keep auto maintenance out of the
+ commands a sequence spawns
 To: phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, 
 	johannes.schindelin@gmx.de
@@ -97,56 +98,59 @@ Content-Type: text/plain; charset="UTF-8"
 
 Hi Phillip,
 
-On 07/09/2026 15:25, Phillip Wood wrote:
->      The merge backend which is also used by "git cherry-pick" and "git
->      revert" does not run it when it finishes.
+On 07/09/2026 15:24, Phillip Wood wrote:
+> I don't think maintenance is actively working against other commands, it
+> just creates lock contention. Maybe something like
 >
-> would be clearer to me
+>      When the sequencer runs "git commit" or "git merge", either directly
+>      or via a user supplied exec command, those commands run "git
+>      maintenance --auto --detach" which can cause lock contention with
+>      the sequencer.
 
-Yes, I'll use that.
+I'll use that. The repack case is a bit different, though. It can
+delete a pack the sequencer still has open, which 65cda10d5b had to
+work around, so I'll keep one sentence on it.
 
-> Like Patrick I cannot understand what this is saying, let alone whether
-> it is saying anything useful.
+> This is pretty hard to understand. What does 'the commit of one "git
+> rebase --continue"' mean? Also whether the next pick needs to take
+> MERGE_RR.lock is conditional on there being conflicts which isn't at all
+> clear.
 
-I've spelled it out in my reply to Patrick and will rewrite the
-message that way.
+I meant the "git commit" that "git rebase --continue" spawns for a
+resolved conflict. Its maintenance run can still hold MERGE_RR.lock
+when the next pick conflicts and rerere needs it. I'll write it like
+that.
 
->      Run "git maintenace --auto" at the end of all sequencer operations,
->      ...
->
-> would be clearer to me
+> What does that mean?
 
-That too.
+Once the spawned commands no longer run maintenance, a long sequence
+can pile up loose objects, and nothing packs them before the run at
+the end. I don't know whether a sequence can get long enough for that
+to matter. I'll say it like this, or drop it.
 
-> Anyway this change is at the end of pick_commits(), just before we
-> finish so looks like the right place to call run_auto_maintenance()
+> Talking about the shell here is unnecessarily confusing as the command
+> is not necessarily run by the shell: if it is a single word that does
+> not contain any shell metacharacters it is passed directly to exec()
 
-Patrick would rather have one exit shared by both rebase backends. In
-my reply to him I've proposed moving the call out of the sequencer
-into builtin/rebase.c and builtin/revert.c, the way am.c leaves it to
-rebase.c today. Say if you'd rather keep it here.
+Right, the environment reaches the command either way. I'll drop the
+shell from the message.
 
-> It is a shame the single pick variants of "git cherry-pick" and "git
-> revert" do not share the same code path as the multiple pick variants.
-> continue_single_pick() runs "git commit" without calling
-> run_git_commit() which is also unfortunate, but means that we could just
-> rely and "git commit" to call run_auto_maintenance() for us.
+> This comment isn't wrong but sounds like an LLM, rather than something a
+> person would write.
 
-That works until the next patch, which turns auto maintenance off in
-every command the sequencer spawns, this "git commit" included. So
-somebody has to run it afterwards. With the call in builtin/revert.c,
-cherry-pick does that itself once the continue returns.
+I've rewritten it:
 
-> Do we want to assert that we don't run auto maintenance up to this point?
+/*
+* Don't let the commands we spawn run auto maintenance. It would
+* race us for MERGE_RR.lock or delete packs we still have open,
+* so it runs once at the end of the sequence instead.
+*/
 
-Yes, I'll add that, and the next patch will extend this test instead
-of adding its own.
+> Shouldn't this just extend the test added in the previous patch, rather
+> than duplicating the coverage for auto maintenance being run at the end
+> of a rebase?
 
-> Using test_grep here would mean we get some useful test output if there
-> are not matches in the file. Without that test_line_count just says the
-> line count didn't match and prints an empty file.
-
-Will do.
+Yes, I'll extend both tests from the previous patch instead.
 
 Thanks,
 Thomas
