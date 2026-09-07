@@ -1,137 +1,105 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893A6525A90
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 20:00:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91702367B92
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 20:58:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788811206; cv=none; b=asQspFygf5c+LfQpHjHAR/TlKLG2JrDYXSfgkHT81MXclnvVE/8hfpSCNL82y5cznfpxuJ6ZfJj0fMIh5SBtgzli5VLDutpceSJybTO/axqcXvTuCML0KeDwa0amg5xv4ibVJOpEd51bFYrz+OjP/y7lmqizGPEhRbxyRWxxy+I=
+	t=1788814685; cv=none; b=LirWeWEixdBgp7za1+fBQ/ZN8msJeNkWAxxvjXRNw3XcIAxifEcO/6gof4tdudjDfxUa855FyNC4IMBClJQR3LEHu5xxPHxCiCklix2qH8lKd41pjy46Cp2i59ab5IJTmtp9rmZetyV96QHoEL9eShD4tdVlVpMtW1zpuv9bb6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788811206; c=relaxed/simple;
-	bh=UOOtxNUDDjMQf2JNzWrQhgxbeoOU0OhWUMaCHx7EsXc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWCr4DvSkE3vpVH9fgeFsRct3aeI5MHXuWHQdJA/k5vD2wJMVMnjPXKSdRK2EJn6QiMhjNe5Yb/TEWsSDe01So/30fXLnoTFGip3OVaMNW7dnp9sdEvBvBhe0OeV/nOVDU6HopIQv6F/relsdsfcKPv1BIJt9G0rEz5wrVF4Xgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xjC3wQ+L; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1788814685; c=relaxed/simple;
+	bh=0AaclvKCvRYnlx74We87TTZ9pw4GbwbLQlO248Rq0ps=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lGyR6mrMJNYB1GvXiBTf/E9t+JzjRCyJHH43uW06Lmt2skDLb90b+V/81bM9tgaU8QvZzdD4YcjgXg4+yo1+AiIguBbKZxDIpUZyI104VuHxHGGY+GUkNdq87eK3QbA4UD5itEdj26K/i3e/h9B+uIerVMGufsKqorh9Cz21KZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hb82JHAH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GqT4TrtU; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xjC3wQ+L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1788811198;
-	bh=UOOtxNUDDjMQf2JNzWrQhgxbeoOU0OhWUMaCHx7EsXc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=xjC3wQ+LM40LyIPoSl6wxV8tsQERbJSIdtwoJiDKgEc1nQelspRys7CrMWfU4xLYZ
-	 c8+ds6OCWA+AT65SLMQO2EN+h5/+TOMnFouwnI5b6DVI6oLDpeIkAxuKOYE4qFOpFo
-	 5mE8WnjE6ZEoV1nZGwYt3z9FJz0xIyM3FLIysupspimnc9xNVmBrCpP97D+78+wIPH
-	 20gmeGyt0ATT7xZT4MSOZ+0XSvcEce76//klBcDONF7lyuPMugWjm9lkueRp1GVXzH
-	 QgqYCruxaM7jeGnat263KncUnA06l0lAUaOwh1dAOVtehxPo+kQQn9Z10zqlMA/0gM
-	 cG47yzpr9nQL+BoOXjuAbWtoTNMd3Urry3sycKrvzw6byYjhKDoj09c/iFsTMhm3qb
-	 LdNfdVLeZFwF8APGDoi2Cigh2jntJN04hqPg5RpPF64a1Ru7e4ycU/fj3vRnxiV/Jh
-	 oEE03Z1hcgWBiieQloeeAp20f9rmoqGfWift8esivnVy6LnJkh9
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7b23:2dc:c9d2:f0e4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 54F51231F2;
-	Mon,  7 Sep 2026 19:59:58 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 7/7] hex: allow only lowercase object IDs in breaking changes mode
-Date: Mon,  7 Sep 2026 19:59:40 +0000
-Message-ID: <20260907195941.1024289-8-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
-In-Reply-To: <20260907195941.1024289-1-sandals@crustytoothpaste.net>
-References: <20260729233215.398654-1-sandals@crustytoothpaste.net>
- <20260907195941.1024289-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hb82JHAH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GqT4TrtU"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id ACE37EC0245;
+	Mon,  7 Sep 2026 16:58:02 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 07 Sep 2026 16:58:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1788814682; x=1788901082; bh=aLHeMiDTQ6
+	7aUuxYfNo3hGVlZ54GBGSATRfYrogjLYk=; b=hb82JHAHPjMdHJcqjVAm9xiP/7
+	gBVYBtHpQE0IQyh846PncJCOTWMWGHjF+0sgiLD1wJ0eqjLMJuL72xDYrzGWwD3d
+	kBADjUaZNJdQwu/obXpIYyqnlq+Vz7MZ1DvgiIPh4WbgvovykKc0OFmSpGWYa+Da
+	fhocNlR8PWwDhwn8l58s3V8T9lMM0kM5s80RXedrOAtTFhXcZYXI/dNG4lKZPBTx
+	y12XnJwblVhoGhnY/8eyF911klh51Tn5S3t+E3LH6e5AWV1fYQSHPXsmtGXgm1Bs
+	9FWRuuZyRXDd+jY9QtLwhZ1oEHHwfTQt/EWwhSjB1av7X7d4K8fF6ef1Lbiw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788814682; x=1788901082; bh=aLHeMiDTQ67aUuxYfNo3hGVlZ54GBGSATRf
+	YrogjLYk=; b=GqT4TrtUBXCw+J3oVTvwIE+lgdxJlPC0ykS4yALy7j+POAfLsln
+	kI5B1rsmc5I5TX4gVcrXdbKg3gjcDkP8woec4rk5EItyqfDuk5HkMRjQPpooXsGf
+	sfIuRFPyesosDIl2jekvP1QTXtzo81DIxXhaCJMIa47QFhN+7UW7EG8lJd+qIS7L
+	5PyvuolmRiWDlW7Y7KndiMFx/3Jta649egzXfXS2vABP3CEF9B7+bGsyxAd+Cu8g
+	G1wOG6r8DUp0SEIOPZ33TSVhsh6qx1zzBUWVT/TNIACSQ9Jhjapb6vnR9xKzcA34
+	0TRm72K4r7ZVthUxlRVyZoN2cQj14/hHG8Q==
+X-ME-Sender: <xms:WiWfaiIDBycZxtt4XVuBoIXr_u-N012E4UmagRSd0fHTvKcQ_1LEdw>
+    <xme:WiWfaq1P1NgGaGeu_jSESHxa6-8sW9vbvKS-lut261cv7MHG2t1TUACgT7pX0luvr
+    ui49k23BMDP8k2fRORfhL-R5VOTT_C4dDiIIGyK7K2zVYo_gwZbsaw>
+X-ME-Received: <xmr:WiWfag4vLNP6vGSiZskn80AlcrYDTB4RwSPS9ldz40JzWaS6qLa9t-Ox8k2czOH3V-hXy6u5ChvDIgIPwGKm3jOmXE07xuHNmkP7>
+X-ME-Proxy-Cause: dmFkZTGEzHr3U5NmtwU5E01plZLrDKdz5RgWB8tcF/xo31L8y8HyR9feRezPIOHDZg01wu
+    Wlsx2qFBAjmVLMDOayeh3xpeV9L59Bht8PlTU/ZHMui18D3sGtAu7IspFOUBBrmJR0FwXp
+    hon6TeCrpR8q0X2zry4y11yAt0FTrZJVKN7CePIgw24Ss6VAAq9vHI4uTh/7sfPZj6NOEX
+    xxp+6UuRKYkr+XVIWMsuQU29A/r5nLlkCrvHr/pnXtn06YNXez2Xsj8SwhavrYls5Y3PEW
+    6fZ6OxasoMQaE+P0WC4Gaiy5S/4pUC66vP61jSHGdUv0PyYCp2zdcDNvUhCHeXit+i4tZL
+    5jI7CoZtW9B0hx9wjfioaRG3lQRmhBwjTvELjt44wAF0W0t8pJJFW79EIkE+HVMguhlyy9
+    0ufhQYJqQtGPnwfVOCc84bqFLuZ4mmLjQELCxSXRen/pKk1stKUz5vcCQT38WhW+NYjvkO
+    WUzwz5LEhgyGhoRnp0NHEn1k+WXhqQlfF/uC/YEvK9QWHNS7kh+ldUX/W0OZC+h85K8Zp+
+    CCEhSWPcXB4pDx+rFdQWE9lJl9BMuMJBntpw+ioSEe79BrIlE/bIh59apKxsqrP+GdbS1Y
+    sz1y/p7slebd/+1XnkNj0z33+bxWOWmph9Puhyq0NkA7uqOmeDnQkdlbw6WQ
+X-ME-Proxy: <xmx:WiWfar_8S3Ox67gnz8kcO8lphCV6w5KlNhH6XHTODzQOUq_AJJBoKw>
+    <xmx:WiWfavWSXHJrA0-il2ttwbf4ZN7HqBk1lgkidV3oWpVIddvUMiDLyQ>
+    <xmx:WiWfamqrt1uJprR12qXbgTUoolmaZcWa1yVNIt8c42sUJVq7PbmUbA>
+    <xmx:WiWfahn2eZYfL3h2st2bmAWscw87G9sE9jNyqoAywDbBT9o5hnNePQ>
+    <xmx:WiWfanHupeotQrjv1SozoR3Vyf3iqTTL0qkqLSST8CjUSPjqDvUcJPdQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Sep 2026 16:58:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com,
+  kristofferhaugsbakk@fastmail.com,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v7 4/4] hook: introduce the receive-report hook
+In-Reply-To: <20260904-758-introduce-hook-v7-4-6c66f0a3a572@gmail.com>
+	(Karthik Nayak's message of "Fri, 04 Sep 2026 23:28:52 +0200")
+References: <20260904-758-introduce-hook-v7-0-6c66f0a3a572@gmail.com>
+	<20260904-758-introduce-hook-v7-4-6c66f0a3a572@gmail.com>
+Date: Mon, 07 Sep 2026 13:58:00 -0700
+Message-ID: <xmqq7bkw3hk7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Git has historically allowed either lowercase or uppercase hex for
-object IDs, but it has always emitted only lowercase.  This has caused
-people to expect only lowercase and not handle uppercase.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-As an example, Git's own example hooks look for "[0-9a-f]" in several
-places, but there are many other Git-adjacent pieces of software,
-including Gitolite, which make the assumption that object IDs are always
-lowercase.  This is not to criticize the authors of these projects, but
-rather to point out how common this assumption is.  In fact, it's so
-common that we had only one test in our codebase that failed when we
-reject uppercase object IDs.
+> @@ -2469,6 +2510,12 @@ static void report(struct command *commands, const struct strbuf *unpack_status,
+>  
+>  	generate_report(&buf, commands, unpack_status, version);
+>  
+> +	if (run_receive_report_hook(&buf)) {
+> +		strbuf_reset(&buf);
+> +		override_cmds_error(commands, "receive-report hook failed");
+> +		generate_report(&buf, commands, unpack_status, false);
+> +	}
 
-More critically, it leads people to make security-based assumptions that
-an object ID either does not contain uppercase characters or that an
-object ID can be expressed uniquely in hex form, neither of which are
-currently true.  Git itself normally uses binary object IDs, which
-avoids many of these problems, but most other projects deal primarily in
-hex object IDs, so they are more affected.
+Hmph, what does 'false' mean here?  Didn't you mean to use the same
+"version" like you used in the previous call in the preimage?
 
-In preparation for Git 3.0, only allow lowercase hex object IDs in
-breaking changes mode and document this as well.  Add a new test to
-verify we reject new uppercase object IDs.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/BreakingChanges.adoc | 5 +++++
- hex-ll.h                           | 4 ++++
- t/t1503-rev-parse-verify.sh        | 5 +++++
- 3 files changed, 14 insertions(+)
-
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index 73bb939359..dbc46d14e3 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -171,6 +171,11 @@ JGit, libgit2 and Gitoxide need to support it.
-   matches the default branch name used in new repositories by many of the
-   big Git forges.
- 
-+* Git will accept hex object IDs only in lowercase. The fact that Git has
-+	historically allowed uppercase characters in hex object IDs has been the
-+	source of a variety of bugs and security problems in software using Git. We
-+	don't expect most users to notice any change.
-+
- * Git will require Rust as a mandatory part of the build process. While Git
-   already started to adopt Rust in Git 2.49, all parts written in Rust are
-   optional for the time being. This includes:
-diff --git a/hex-ll.h b/hex-ll.h
-index 9da76f17e8..2f9c8d7c25 100644
---- a/hex-ll.h
-+++ b/hex-ll.h
-@@ -6,7 +6,11 @@ enum hexkind {
- 	HEX_KIND_LOWER = 1,
- };
- 
-+#ifdef WITH_BREAKING_CHANGES
-+#define HEX_KIND_OID HEX_KIND_LOWER
-+#else
- #define HEX_KIND_OID HEX_KIND_MIXED
-+#endif
- 
- extern const signed char hexval_table[256];
- extern const signed char hexval_lc_table[256];
-diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
-index 87638a4a2c..f07b45de5a 100755
---- a/t/t1503-rev-parse-verify.sh
-+++ b/t/t1503-rev-parse-verify.sh
-@@ -60,6 +60,11 @@ test_expect_success 'works with one good rev' '
- 	test "$rev_head" = "$HASH4"
- '
- 
-+test_expect_success WITH_BREAKING_CHANGES 'rejects uppercase revs' '
-+	UC_HASH=$(echo "$HASH1" | tr a-f A-F) &&
-+	test_must_fail git rev-parse --verify "$UC_HASH"
-+'
-+
- test_expect_success 'fails with any bad rev or many good revs' '
- 	test_must_fail git rev-parse --verify 2>error &&
- 	test_grep "single revision" error &&
