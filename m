@@ -1,79 +1,79 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D8943BDB4
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 08:25:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563B843E092
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 08:25:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788769553; cv=none; b=CF+T4n19wIJbHEgQcUirYkCG468txU9UAAkY7Za80F6XIGmz5iZOBVCK/jwwTKWhQYkFQWTaW2N3ClV39QkmG9f0eIuvZk18Gj+aeKD5r0WhBwlUa0EieAFj+LXQmwWZwJQUdVh+Nd8IK8VsEQvEkmL9E/UkOzSGzN1zCUlroYU=
+	t=1788769556; cv=none; b=Ha2ADQC/WqpPTk6SIpK0Rfz0uFInNkBUcOUPJf5Gtx5ZjllNlPfrXv5oG/bCJ46FRZSAT1ncHD05OCMsgQ+IwgBjyqDlGHDmvqIAH3wlHuPwRbioqTS7YGaiH9msza0GiBeqgItQfHkeuIfO7Ax4BXOA6hP+VWyIJn9jA9cAZgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788769553; c=relaxed/simple;
-	bh=fnIcn9xNAgVohwbvzYW7dtQeWtsWO3SHduk06bdS5HE=;
+	s=arc-20240116; t=1788769556; c=relaxed/simple;
+	bh=6cjVqZaweOo/p1gQhW+Il9apL/zj5Odw5NFcnyjtB20=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pqvmt7kbBz2frzhmfNvy1fIKsfyfQLUGU7o0NGx3JSMGPsDG1s9p05IlXeAgrLmlhe+CMBfoepziHnY/UkRW+tyhrOPPE2wPLAiIRjGfI4srEXcx7XL1KprdEZfbwPFiBC15lu2IQzPgyCwrfZZM7yC8m8PUtS8Ly4onXFwhi30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n547X7/I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MkLcxiX2; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=jyncbvXY/Bbvm4O3z29T3Mh6u2di6+lSofUb9JJamGK0t9nCX8SGHR6/LYyDxJtxmAWH7zzZkRjcn1Xtyc1uZ6oIRqHHt4BTNYkp2XhWfJ73/9qi+0LkCqSD8NWxA70hb6hGtPkRTKpqN1B8IOgWNKmjr2MTaRWC9xfm6s7abHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nBWbNucC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GnTvY8Lj; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n547X7/I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MkLcxiX2"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1F3ED1400210;
-	Mon,  7 Sep 2026 04:25:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nBWbNucC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GnTvY8Lj"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 40F5DEC01C2;
+	Mon,  7 Sep 2026 04:25:53 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 07 Sep 2026 04:25:51 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 07 Sep 2026 04:25:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788769551;
-	 x=1788855951; bh=345Yzcu1dl0idWcL6fRX0e1V5v8w9n3e1PDHU3puzlk=; b=
-	n547X7/IY269WLxJ05qAXiIP/kAquaUEc/6NBuiEg+Wqtyu4tCbwa8usqFW3lMTw
-	NEZlO5j9JPSPj291AudwF1IIbshj5CLQjxer5QiPQQsDcS8WaoVapLgcMh6xel9/
-	NW1qi8vrmRFQodT4pxMnPxDaefzjjou5lXlolNK92On2Htv4n8DCThrjbHb4epMF
-	Ny0aq8tibxffY6tLQ7Bxw5hXmmTJ9EbEF0d3jtb4CIg3C1ET8yNS3gAxpq3EmSqx
-	Fo7TBlNGLiJdBuM7BGEaUTelVBCBJbMugdgzbxlIN0v/ZJSbnzXCA4RClPkcBMm6
-	G5ad8kkoBq8EJ7RsFDKfpQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788769553;
+	 x=1788855953; bh=bslHxKImcUG3O+LCmhIRK0c/sq/JbXC9crkGRVYuhB0=; b=
+	nBWbNucCSZbukWv3fTUcGCzsXgM94WxMdPDQRm3c65ak96HoZ/MHkOmWjZEza8CC
+	X1wLz0kHB6NtG+o4PWWjCoXuLPr146rbf6mXC5M17v/EFEArdFtZbIFdNr/pXJEj
+	qM2xeZeI4Hz6lbDeIKz52NkjY3xXbbuEAxhzPz/VKI3udFMDGz0MRPUMsZALHmMG
+	n3wUfavGZYi3hl/f24o6A4i0RvZ99lFhQDA0SuZB7dl1c6IUXEfIFwIfMWrpxpPx
+	M/PR5AVGYrQKcM+l7DAfl4Uhic29+Kd57TBc1EyJaGh02lCaIWErrJmijDY7GxyA
+	oGnVO9o4bUconNtYLWrrHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788769551; x=
-	1788855951; bh=345Yzcu1dl0idWcL6fRX0e1V5v8w9n3e1PDHU3puzlk=; b=M
-	kLcxiX2rrNLzwYlA2n1d6CkO/3dbWwckewJ3NIPv8VzRsQiWyZ94IYoP9atKXx81
-	PY9CZFy/SHHVM2BFLzKYuzPMMd2bgKoU1N4T8tM8Q7tRNGPc6sNN41pzjL33vbqN
-	/CYIcRffOxQnagxqr2xjvYzqTBnpOVr/RWuDwoz5bUq9skfh1bWThl4rcHz2XtT7
-	68g6ZKucxVU4npzjYQ48IuSIHHWrh7ieD2MxlXvu+kzeB0WXQImRm/tzUrVzvmGW
-	WvtocWmK9KFLbsH3TfeefZ+UOVQ1vzbxZ3qakDMRB8/+YEdm0s4exl8NtJq59n0R
-	RqoVstYeecLGLar7DNPlA==
-X-ME-Sender: <xms:D3Weas-m4N1AtDzJvvEtNMkbdMzUxaC2eJuZLcsDCjCHGq6031deIQ>
-    <xme:D3WearvAh_qQY9gkvGkHV3PVNfMkHqY9x890jE8A-RqNP4ZJFYPaV2yhdGKzEKhww
-    g77yHurkno2_ggaajlQPt-Q21GuHVLBNVFH5-Sth6Pg5nwdFQY4Ig>
-X-ME-Received: <xmr:D3WeanAfQ-eGNrnXadzDIFFurvJxqsZ8Nzu7BLP4BwWYKD4Th2n77A>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788769553; x=
+	1788855953; bh=bslHxKImcUG3O+LCmhIRK0c/sq/JbXC9crkGRVYuhB0=; b=G
+	nTvY8LjtL8FY6Nm/CooDN3TqSHNyKPIofqoGy0Is7BQaPkkjEBivjfoGUnEi0nvO
+	YKrzZ27EfaT2e+GrdputbrQ28FdbMNjTAk8MXYFEcAHyxvQbn9scdITCk4yN31df
+	UPdPeeRfqjSZv5NwBPt09rf7zG40SPasLkeRHKBjivE09/ZUskuxjomyL2mlYcEq
+	cpgQUL3wHIcAfeItbxbq+mKDTZY+v4f/2fG7FSVBaG34DsEkdbWuYGUvXfSDq/kl
+	h3w0wJYbF9ouQ8IWMKRY/HwD21mlVbX71aqFhcbH8G2Gb5xLkzxCMfXiJXFXc48X
+	EkFNCCAuIBil8Sy46Sflg==
+X-ME-Sender: <xms:EXWeas7_zy4GGtNcWmrSlWp0nNe4N6TosCN7Xk6u4vIvyOOv7FCgLQ>
+    <xme:EXWeak6_eaehl-jIfsYnQFiLS6EEUOpq9_CdHffpjK0wi8LFo-Lr3fOunSBaiVIsN
+    PnRbM-PAYiKLWYd5FWPpUUSMYoAMhBa4VNZjLwKBGRwnPwXIXPLsbs>
+X-ME-Received: <xmr:EXWeageWiB4xhKOFbMXMeIJoOAlx00jDOES8SI7pechsfmNXyyrkMg>
 X-ME-Proxy-Cause: dmFkZTFyLnsnXJs777FxsqcHvlzsV4urKyexW3K0A8vOJAOpgvOc5x5wNV4lt+eIqFqGzl
     8eYKtuoNlkVgnNv7hhczE9YTTY8alxBLhhMhaOVxF56CvA8MajbHzByNeaNbgZhKoQ83X+
     kjdUZ26eZD7TYJAMfdiA7fOK/MJXPy6/tKVB7bc10vvxuQEX/JY07OcGV4T4akvwWw02v6
     0h7HUid6hlebYTHq8zGUk91cgHbiDyLqAYAn5s7gtO6upjjSgB28oiJEbkELaS3X3XYC3q
-    FXDNx12rxyDpcBPASmj4RYqLexG5z2LibBtD7BQ7+XIABMrkBSfZP1jUp0D7ex5HjpgPOX
-    8WLLoP8QxxvbV56NVAfZfMZXT2y5VRt1xPaJFpEiPIZbCPeOCsSB2w128pdBlGsqZ2vVUO
-    ree13fBPsipmL92iuJXGgOEKa6sdz/TvlPdnpkGjtmRuDt+tkaWASTMow6iGyGVpwIskFe
-    7z6L/zJYVlTwsWRwxK6fXa40mecBJudMIyHvlfvbnwE/oNPHulTnTRLs27+h5VqByjejnu
-    9/F7CEC2l6r9VUJrIoWV5qoQvF4zhnqaiih0/o8TuQJl5SIz+FKE6O1Y6khNPjv9mjcA1s
-    7zDYqAEbE0ZXLhuxl71p2iI2qjYaeZNh1xGBRfsJkpdvc/eM88Mqnc2i7eOg
-X-ME-Proxy: <xmx:D3WearUQM7pc6vaWmnzy3-Exfyog7RvqVeBwJAcUUI_qOMLGOMETXg>
-    <xmx:D3WeatDw3TJb5D-mLSm6Ny0N4oFo6frpUjeBRAx8G7LFruRz89EUNw>
-    <xmx:D3Weam-2ML2b3S4NxltgniVjUfpIoStoGd02KNzx0blgHJmkZpTUPA>
-    <xmx:D3WeasF65EkAusP1QvwgoJK3s56_oSVDjuUj0Nt59z2tfwyR1n6v9A>
-    <xmx:D3WeajCX0xNb6o7Dute8viNPcuV1-_ml8zQ9S6d1kKEL9BJfJoi_wOoL>
+    FXDNx12rxyDpcBPASmj4RYqLexG5z2LibBtD7BQ7+XIABMrkBSfZP1jUp0D7ex5HjpgPGT
+    p2YUqjnb0OZPvfnsEL00yDDtQduzTmoZx/6vmeWQAguum4QgOAp0AE09m2V+qgYZzIuzmE
+    l6eV/A3XeLedtlcmHqGSSjgaWh5dJislkvtGjjT/Wu8mK7T1vX4mTXWm/6Mrk4Ui/jgER9
+    Du1IApLo7vUmIbNlM6R2sX/wgKJs6ky8KZLjy3mKZwfwAQLX+5H6MNksxf1iEXgXDa88YJ
+    oiHE8bVQD9yZihhyaIHJMI7JB2GNNcVMGCEWiaDKQoXpzmPS/zey6dt2n002v4dXC6KJ4q
+    VpIoS7OwmBbXr5GdGTHZVMugsG1zuiB3/HJu9ItmV5P2T7Yvr/yptCzf763Q
+X-ME-Proxy: <xmx:EXWeagA5hvATlMiXQNqi2REtvcRHLVUk6Gnimzq92jii4VXyYAnniw>
+    <xmx:EXWear96nTkG4ytu6MEHI-e_EPtt2jRzeBh1fP-2gLPISJ1cn5N2sA>
+    <xmx:EXWeajIr_xySf03k9QPWctRGJhJoK4WZBQtTrW3ubQw6J6mAjp2oWQ>
+    <xmx:EXWeashjd09RS_4DyIgzjWSqiMHo5xTEJFFsRq6rN9rSwGx1L2-tCw>
+    <xmx:EXWeajI8pdqV48Y3Mg-fmWfUyc0y7sp6ddu3yjt_o8Am6t9gonGIjDLI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Sep 2026 04:25:50 -0400 (EDT)
+ 7 Sep 2026 04:25:52 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e2b2e1ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Sep 2026 08:25:49 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a17c3986 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Sep 2026 08:25:52 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 07 Sep 2026 10:25:38 +0200
-Subject: [PATCH v3 1/9] setup: split up concerns of `init_db()`
+Date: Mon, 07 Sep 2026 10:25:39 +0200
+Subject: [PATCH v3 2/9] builtin/clone: defer setup of the object database
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-pks-odb-write-alternates-at-creation-time-v3-1-735d0b5b3e00@pks.im>
+Message-Id: <20260907-pks-odb-write-alternates-at-creation-time-v3-2-735d0b5b3e00@pks.im>
 References: <20260907-pks-odb-write-alternates-at-creation-time-v3-0-735d0b5b3e00@pks.im>
 In-Reply-To: <20260907-pks-odb-write-alternates-at-creation-time-v3-0-735d0b5b3e00@pks.im>
 To: git@vger.kernel.org
@@ -90,289 +90,87 @@ Cc: Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-The function `init_db()` is responsible for creating the on-disk
-directory structure required for a Git repository. It is used by both
-git-init(1) and git-clone(1), and because their expected behaviour is
-different we support a couple of flags:
+When cloning a repository we defer initialization of the reference
+database. This is because we don't yet know all details required for us
+to initialize the refdb in the first place. Most importantly, what we
+are missing is information about the object hash.
 
-  - The `QUIET` flag controls whether the command is quiet or not. For
-    git-init(1) this is user-controllable, whereas for git-clone(1)
-    we're always quiet.
+We don't do the same thing for the object database yet, but here we
+essentially have the same problem. While the "files" database does not
+need any information about the object format at creation time, alternate
+backends are likely to require that information so that they can
+properly set up their data structures.
 
-  - The `EXIST_OK` flag controls whether a preexisting repository is
-    okay or not. For git-init(1) it is, for git-clone(1) it's not.
+Besides this forward-looking future proofing though, we also have a
+second use case for deferring initialization of the object database,
+namely alternates. When initializing the object database we do not yet
+know whether we'll need alternates or not because this depends on the
+repository we're about to clone from. If it is a local repository and
+the user has passed "--refernce{,-if-able}", then we will end up writing
+alternates into the object database.
 
-  - The `SKIP_REFDB` flag controls whether the reference database should
-    already be created or not. For git-init(1) we do, but for
-    git-clone(1) we don't because it does not yet know about the default
-    branch and about the remote object hash.
+The ugly part though is that we cannot determine where the repository is
+getting cloned from before it has been initialized. While we of course
+already have access to the user-provided URI, that URI can be very well
+rewritten via "url.<base>.insteadOf". We can of course read the global-
+and system-level configuration to resolve it. But we explicitly resolve
+the URI a second time after we have initialized the repository because
+it can happen that we copy a ".git/config" over from our templates, and
+that file may cause us to rewrite the path.
 
-Furthermore, we're about to add another divergence in behaviour, where
-we have to also skip creation of the object database in git-clone(1).
-This is becoming quite cumbersome though.
+In a subsequent commit though we'll start to write alternates as part of
+the repository initialization, so we'll need to have the URI properly
+resolved before we can initialize the object database. This is ugly, but
+as mentioned above it makes sense for us to defer its initialization
+anyway so that we also know about the object hash already.
 
-Instead of introducing another flag, start to split up concerns of the
-function so that we never create the reference or object database. This
-becomes the responsibility of the caller, which is thus free to defer
-their creation to a later point in time. This lets us get rid of most of
-the divergent behaviour:
+Defer creation of the object database until after we have resolved the
+URI.
 
-  - We don't need the `SKIP_REFDB` and a potential `SKIP_ODB` flags
-    anymore.
-
-  - We don't need the `QUIET` flag anymore, as nothing prints output
-    except for the final status message that tells the user that the
-    repository has been (re)initialized. But as this message is specific
-    to git-init(1), we can easily move it there.
-
-The only piece of information we still have to convey is whether or not
-reinitialization of a preexisting repository is okay. This is handled by
-a new `reinit_ok` pointer that, if non-`NULL`, indicates that it is okay
-to reinitialize the repository. Furthermore, the pointer will be written
-to to indicate whether the repository was reinitialized or not, which we
-need in git-init(1) to print the correct initialization message.
-
-With these refactorings, `init_db()` is named quite misleadingly though,
-as we don't create any of the reference or object databases anymore.
-Rename it to `create_repository()`.
+Note that this also requires us to defer the call to `setup_reference()`
+until after we have created the object database. While you might think
+that this function has something to do with references ("refs/*"), it is
+in fact responsible for setting up alternates. Consequently, we can only
+call it after we have created the object database already.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c   |  9 +++++----
- builtin/init-db.c | 32 ++++++++++++++++++++++++--------
- setup.c           | 54 +++++++++++++++++-------------------------------------
- setup.h           | 22 ++++++++++------------
- 4 files changed, 56 insertions(+), 61 deletions(-)
+ builtin/clone.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 5b25cca510..904d2d859f 100644
+index 904d2d859f..bdcbd7aa1b 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -1185,10 +1185,10 @@ int cmd_clone(int argc,
- 	 * repository, and reference backends may persist that information into
- 	 * their on-disk data structures.
- 	 */
--	init_db(the_repository, git_dir, real_git_dir, work_tree, option_template,
--		GIT_HASH_UNKNOWN, ref_storage_format, NULL,
--		do_not_override_repo_unix_permissions,
--		INIT_DB_QUIET | INIT_DB_SKIP_REFDB);
-+	create_repository(the_repository, git_dir, real_git_dir, work_tree,
-+			  option_template, GIT_HASH_UNKNOWN, ref_storage_format,
-+			  do_not_override_repo_unix_permissions, NULL);
-+	create_object_database(the_repository);
+@@ -1188,7 +1188,6 @@ int cmd_clone(int argc,
+ 	create_repository(the_repository, git_dir, real_git_dir, work_tree,
+ 			  option_template, GIT_HASH_UNKNOWN, ref_storage_format,
+ 			  do_not_override_repo_unix_permissions, NULL);
+-	create_object_database(the_repository);
  
  	if (real_git_dir) {
  		free((char *)git_dir);
-@@ -1445,6 +1445,7 @@ int cmd_clone(int argc,
- 	initialize_repository_version(the_repository, hash_algo, the_repository->ref_storage_format, 1);
- 	repo_set_hash_algo(the_repository, hash_algo);
- 	create_reference_database(the_repository, NULL, 1);
-+	startup_info->have_repository = 1;
- 
- 	/*
- 	 * Before fetching from the remote, download and install bundle
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index e96b1283b7..f2c7e3be6d 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -80,7 +80,7 @@ int cmd_init_db(int argc,
- 	char *work_tree = NULL;
- 	const char *template_dir = NULL;
- 	char *template_dir_to_free = NULL;
--	unsigned int flags = 0;
-+	int quiet = 0;
- 	int bare = startup_info->force_bare_repository ? 1 : -1;
- 	const char *object_format = NULL;
- 	const char *ref_format = NULL;
-@@ -102,7 +102,7 @@ int cmd_init_db(int argc,
- 			.flags = PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
- 			.callback = shared_callback
- 		},
--		OPT_BIT('q', "quiet", &flags, N_("be quiet"), INIT_DB_QUIET),
-+		OPT_BOOL('q', "quiet", &quiet, N_("be quiet")),
- 		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
- 			   N_("separate git dir from working tree")),
- 		OPT_STRING('b', "initial-branch", &initial_branch, N_("name"),
-@@ -113,7 +113,7 @@ int cmd_init_db(int argc,
- 			   N_("specify the reference format to use")),
- 		OPT_END()
- 	};
--	int ret;
-+	int reinit;
- 
- 	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
- 
-@@ -247,14 +247,30 @@ int cmd_init_db(int argc,
- 		die(_("--separate-git-dir incompatible with bare repository"));
+@@ -1311,9 +1310,6 @@ int cmd_clone(int argc,
+ 		strbuf_reset(&key);
  	}
  
--	flags |= INIT_DB_EXIST_OK;
--	ret = init_db(the_repository, git_dir, real_git_dir, work_tree,
--		      template_dir, hash_algo, ref_storage_format, initial_branch,
--		      init_shared_repository, flags);
-+	create_repository(the_repository, git_dir, real_git_dir, work_tree,
-+			  template_dir, hash_algo, ref_storage_format,
-+			  init_shared_repository, &reinit);
-+	create_reference_database(the_repository, initial_branch, quiet);
+-	if (option_required_reference.nr || option_optional_reference.nr)
+-		setup_reference();
+-
+ 	remote = remote_get_early(remote_name);
+ 
+ 	if (!option_rev)
+@@ -1342,6 +1338,10 @@ int cmd_clone(int argc,
+ 	if (option_local > 0 && !is_local)
+ 		warning(_("--local is ignored"));
+ 
 +	create_object_database(the_repository);
++	if (option_required_reference.nr || option_optional_reference.nr)
++		setup_reference();
 +
-+	if (!quiet) {
-+		int len = strlen(git_dir);
-+
-+		if (reinit)
-+			printf(repo_settings_get_shared_repository(the_repository)
-+			       ? _("Reinitialized existing shared Git repository in %s%s\n")
-+			       : _("Reinitialized existing Git repository in %s%s\n"),
-+			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
-+		else
-+			printf(repo_settings_get_shared_repository(the_repository)
-+			       ? _("Initialized empty shared Git repository in %s%s\n")
-+			       : _("Initialized empty Git repository in %s%s\n"),
-+			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
-+	}
- 
- 	free(template_dir_to_free);
- 	free(real_git_dir_to_free);
- 	free(work_tree);
- 	free(git_dir);
--	return ret;
-+	return 0;
- }
-diff --git a/setup.c b/setup.c
-index d90654f584..8c7b97f92e 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2647,7 +2647,7 @@ static int create_default_files(struct repository *repo,
- 	return reinit;
- }
- 
--static void create_object_database(struct repository *repo)
-+void create_object_database(struct repository *repo)
- {
- 	/*
- 	 * Create the "objects" directory in the common directory. This is done
-@@ -2822,17 +2822,17 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 	}
- }
- 
--int init_db(struct repository *repo,
--	    const char *git_dir,
--	    const char *real_git_dir,
--	    const char *worktree,
--	    const char *template_dir, int hash,
--	    enum ref_storage_format ref_storage_format,
--	    const char *initial_branch,
--	    int init_shared_repository, unsigned int flags)
-+void create_repository(struct repository *repo,
-+		       const char *git_dir,
-+		       const char *real_git_dir,
-+		       const char *worktree,
-+		       const char *template_dir,
-+		       int hash,
-+		       enum ref_storage_format ref_storage_format,
-+		       int init_shared_repository,
-+		       int *reinit_ok)
- {
--	int reinit;
--	int exist_ok = flags & INIT_DB_EXIST_OK;
-+	int reinit_ignored;
- 	char *original_git_dir = real_pathdup(git_dir, 1);
- 	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
- 	struct strbuf err = STRBUF_INIT;
-@@ -2840,10 +2840,10 @@ int init_db(struct repository *repo,
- 	if (real_git_dir) {
- 		struct stat st;
- 
--		if (!exist_ok && !stat(git_dir, &st))
-+		if (!reinit_ok && !stat(git_dir, &st))
- 			die(_("%s already exists"), git_dir);
- 
--		if (!exist_ok && !stat(real_git_dir, &st))
-+		if (!reinit_ok && !stat(real_git_dir, &st))
- 			die(_("%s already exists"), real_git_dir);
- 
- 		apply_and_export_relative_gitdir(repo, real_git_dir, 1);
-@@ -2877,8 +2877,10 @@ int init_db(struct repository *repo,
- 
- 	safe_create_dir(repo, git_dir, 0);
- 
--	reinit = create_default_files(repo, template_dir, original_git_dir,
--				      &repo_fmt, init_shared_repository);
-+	if (!reinit_ok)
-+		reinit_ok = &reinit_ignored;
-+	*reinit_ok = create_default_files(repo, template_dir, original_git_dir,
-+					  &repo_fmt, init_shared_repository);
- 
- 	if (repo_settings_get_shared_repository(repo)) {
- 		char buf[10];
-@@ -2901,29 +2903,7 @@ int init_db(struct repository *repo,
- 		repo_config_set(repo, "receive.denyNonFastforwards", "true");
- 	}
- 
--	if (!(flags & INIT_DB_SKIP_REFDB))
--		create_reference_database(repo, initial_branch, flags & INIT_DB_QUIET);
--	create_object_database(repo);
--
--	startup_info->have_repository = 1;
--
--	if (!(flags & INIT_DB_QUIET)) {
--		int len = strlen(git_dir);
--
--		if (reinit)
--			printf(repo_settings_get_shared_repository(repo)
--			       ? _("Reinitialized existing shared Git repository in %s%s\n")
--			       : _("Reinitialized existing Git repository in %s%s\n"),
--			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
--		else
--			printf(repo_settings_get_shared_repository(repo)
--			       ? _("Initialized empty shared Git repository in %s%s\n")
--			       : _("Initialized empty Git repository in %s%s\n"),
--			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
--	}
--
- 	clear_repository_format(&repo_fmt);
- 	strbuf_release(&err);
- 	free(original_git_dir);
--	return 0;
- }
-diff --git a/setup.h b/setup.h
-index 763fd384e8..c4aa464caa 100644
---- a/setup.h
-+++ b/setup.h
-@@ -256,23 +256,21 @@ int apply_repository_format(struct repository *repo,
- 
- const char *get_template_dir(const char *option_template);
- 
--#define INIT_DB_QUIET      (1 << 0)
--#define INIT_DB_EXIST_OK   (1 << 1)
--#define INIT_DB_SKIP_REFDB (1 << 2)
--
--int init_db(struct repository *repo,
--	    const char *git_dir,
--	    const char *real_git_dir,
--	    const char *worktree,
--	    const char *template_dir, int hash_algo,
--	    enum ref_storage_format ref_storage_format,
--	    const char *initial_branch, int init_shared_repository,
--	    unsigned int flags);
-+void create_repository(struct repository *repo,
-+		       const char *git_dir,
-+		       const char *real_git_dir,
-+		       const char *worktree,
-+		       const char *template_dir,
-+		       int hash_algo,
-+		       enum ref_storage_format ref_storage_format,
-+		       int init_shared_repository,
-+		       int *reinit_ok);
- void initialize_repository_version(struct repository *repo,
- 				   int hash_algo,
- 				   enum ref_storage_format ref_storage_format,
- 				   int reinit);
- void create_reference_database(struct repository *repo, const char *initial_branch, int quiet);
-+void create_object_database(struct repository *repo);
- 
- /*
-  * NOTE NOTE NOTE!!
+ 	transport = transport_get(remote, path ? path : remote->url.v[0]);
+ 	transport_set_verbosity(transport, option_verbosity, option_progress);
+ 	transport->family = family;
 
 -- 
 2.55.0.1007.g17ff1f9808.dirty
