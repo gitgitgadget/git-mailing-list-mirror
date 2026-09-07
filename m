@@ -1,84 +1,84 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F409041A510
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 07:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305363A382B
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 07:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788766872; cv=none; b=ZitTEFgA/9AwHlzavFlnJqjvgZoDrl3V1eQdqWofkLw7Dp8bU7ajhj3UeVPQw9yEWvUhJKCx1eR5xOp678rp4yG+euM3Ou2G9ghjUSIK38C6ocz8LJNApcB89HmO0N6Xt2Xc3fQfeFTrJbp3dSQme675h9QcBVPlwxdnVsBP8yE=
+	t=1788767403; cv=none; b=O4teB7AcJqzk9GOSJhW9zjyQoUBHxfSCycjwQX1jB/GMnF4WMemG0EPjw2b5pCXWAPqeJAB4ipb1F2zwJ2w8GCAt8sbnhf0sEcg6W43igKV7LPc8hprco1VCGnng26bMevZeR33wg2swOJkJJGZZP7hvaY2JHNwB+A+/8PHczI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788766872; c=relaxed/simple;
-	bh=6ojqilPsRjAJH5T7bm9fppYmOf9FPjr3M99yKAUk2M8=;
+	s=arc-20240116; t=1788767403; c=relaxed/simple;
+	bh=YYPQyFrrKhccIqaG3hqPFeIMIODe+6o008S4YCqbM+I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tk7xWMR4JOSp59SKJHrOzX0obNv12uhdwgXzlfB96FY0nw1SD5p8ofL89hDzU3SaCWlHsc7vDiY3KSkGcCPE+NYkJvlz1Me4xxHLAK4D4RxXpS2n3svChwQXGlCo0OaLMHYwPoJJ67dxPEjIKSXxcRpMnyK3vBa2k9P+wDz/SUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PsgMtLgC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yQNo3Qa7; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=eGknYuH3O0lBaF1sUd8RiBmzBZe+21B6bwcqAbpcBq7Vkjsex1yxvDv2Ltiv/dzwNqdekmEE+zcYuziKmw5wuD/uIR+3Ez54jcBitXQXgcjqjhj7MXpuzeCYK7y1rObsDy1z44+/zgH9zW8zSHlCdOkkxvZhiWIUdwpIVEA6CnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vocm6i5r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T90j4XnD; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PsgMtLgC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yQNo3Qa7"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2A9EA1400202;
-	Mon,  7 Sep 2026 03:41:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vocm6i5r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T90j4XnD"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 185611400202;
+	Mon,  7 Sep 2026 03:50:01 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 07 Sep 2026 03:41:10 -0400
+  by phl-compute-07.internal (MEProxy); Mon, 07 Sep 2026 03:50:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1788766870; x=1788853270; bh=i98xOL74ro
-	HsQiZEEBDVR4IW1bqoazhiiGoPAedmLAA=; b=PsgMtLgCvIkuk5XRyuCbjhX8uV
-	T8p24VfjB6TStGO4fa6AKxJAIH4GpsyQxiFk0tOW/FZ7GoTeefx3JOcYWRQy82RW
-	doe7YN5j6ogtfJSHmdREg5w3oDY0DJ+LEMQbYWeZOmsDuMezehwFh3y+IhsJBdVF
-	TCXx7kxVhWaGdS2BK55p2KbYbjxu/BHWkEvt9Qe5GXQ+HOgCMp+iBqnh7f9mC1k5
-	nkuc+jyBKX/KxjNKDIBhquvrVNuXXbWLsvNxp0egnmvgef0L5HwGBhd932Sgj0AC
-	WBLqHnCvsVQkSzGEVFGeYSu2ZPY8YG3NfRNRK5/dZekCrHigPOKqI1mCC+hA==
+	:subject:to:to; s=fm1; t=1788767401; x=1788853801; bh=lBhrHB/uzy
+	fKBPXse5wx7zHQWdqIzSsq9oLvVbY9eK0=; b=vocm6i5rSwVKjPDnoJkGYc4FVY
+	Ut5cSqsh+J4MeTFyC4ijLPkw/oFTZXB3bG3wKHkJDgqyglyE9p/X1zthzfd0ljXG
+	3RJD0wcrf0VPNS8G0cDsAL70+nBFc8p6u1MBtMbkGvsYzoiXeenKIosQSXVv8Hiz
+	xPEw6HTXJyLCgEn7gD3z1MG3v2ZjnRN5yQgMZBj166Cfik+2ypB0QG3IEWE+TSCY
+	WeRvqpot4euVn9Wz3BEmyMd0jesFRfl9IcYO8Xfj0Stl5TI6RYpVRf3WlfFFvO/D
+	N3gZrHhfrhj/ggv++xfihtXxi2mqtlSbPiQZEf1aLRdv44ubFtOfg2krMiVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788766870; x=1788853270; bh=i98xOL74roHsQiZEEBDVR4IW1bqoazhiiGo
-	PAedmLAA=; b=yQNo3Qa7Z57+ibCGiG9V0zuS1vskIKSoNXfIC5zV+X273pBrV8c
-	6l/YFiQF1H988pfBj/Mn2/s9wOHaJaaoRshjE24mF0tcOXZtLS18jsOsziXsNJXD
-	MNA0MVY/LzD/2nNN40Ur0wrLYo6Ii3VvcFmudHceQLrinAj2JICcbCZVcd9x38z5
-	Xlkt2B+ylO+UD5WFQy7tu5j0ADfFBhQLH4EC6/OzsamlCQqiSJvRgOgj5FgNp7E1
-	4rhOGDD+iUpPtZWjyaB4lOX0MfokKTRnCUPKzr7mHQUiaSX4ynVmAtNvVJW30sfG
-	YeGzkGjS+XfslXcjtbebBf1iuU/oPsSMBmA==
-X-ME-Sender: <xms:lWqeauv6XJrtSikiH24YewfOMK-Cs83Tsk-w5p0jzrnEFPeorVCRRw>
-    <xme:lWqeagm1v5KFFFRdrgJ2GhgbAcZauDY7f2vOQZtGH44B2fpvgD2vqX_GDt4Kdan8S
-    qGfBS9NDMhMpRWUa8UCYkhoTBsKf-z4xwF32-mSKHLH02OWour-IAA>
-X-ME-Received: <xmr:lWqeaoyEjm7A9V77rf-Th_l-AzYdyAW92qFSMoraYD_c39uTf7mW3Q>
-X-ME-Proxy-Cause: dmFkZTElsAXJQstPNiBx+qmhQ+eNgOaO3gs9Bhl5ZW/YB4E0K5pNfgGGWYPE/MOFNgHtNt
-    UoG8CrQDPsKDdON7jydT/uabIhecm1za27mf/nkyNRU27ycv+GuwTNqlbMl8cddQLiHeT4
-    ukQFHAZqUM8MiXd7msJRdfNULP9r+GwZcVRGaR/YWi7vEA9Flut2Hyw8VCgvOPToeKazS/
-    SsIY0+F96p+2YEfLQ92uFalPVp/wbvwpj8rvoqyROzwEvXBYr7+aa4/KXP3iYXay+zzXE6
-    rtuLYLOoZ4aw9OmYIvGZyAKj9sV7E/aiFEkikqZTdKSY+oB0coCrAhNt2UT+ptSp/mPNKV
-    uWjJ02vfmmVRUXcb1Verv2podo7+Ev+5lVf7orbFrVaQiAe+3yaB+JgE/7Ig6RZezvttTm
-    2yUv2NzJOKb+6FlJeEai1/8EDg4m5QZUt+92BlOUSIytGfr9mCz+tdkrCsS997WhzKR66w
-    9qtmWXFYj5YVumwJynKPheceQA3k9/WA35XxQ5IiS9/8f6AugOucyXRC/k2ItteZ+KLcnA
-    e8TEXGimMhZUDI1ARXoLonqIBlY0LXvdOHU1ekxFn3BhylXA3v+L9fF90uP9ssv03LkWF1
-    TEuAijJAHdHsASAtoHKGyz3eDB/S5VPR/2Dy+v8oD0rpjQQx21Ds/LeIrcUQ
-X-ME-Proxy: <xmx:lWqeaqN_DQ0XPda-FqWA2k4umrk2lN04d3DNCD7Fho3sIspNT9aoTA>
-    <xmx:lWqeasoLIauOxT-J3e6AL3k9qDRq7ro1dlV3ACWVCFcF-e-n6lPFEg>
-    <xmx:lWqearHbpOATf2Q6WMTyFrcWxhrQWUPtXjUzVkdaPMk5EgAsVXFV0g>
-    <xmx:lWqeahoArKxlJvEKOGZFLJM7XH5Lp-ikxfcjafsAe4NR6Sl1flyfqQ>
-    <xmx:lmqeaoPcg76To_4dbT8o2LfbMoOAk-8ZiZEsZJNT35f67f8KeZePp84G>
+	1788767401; x=1788853801; bh=lBhrHB/uzyfKBPXse5wx7zHQWdqIzSsq9oL
+	vVbY9eK0=; b=T90j4XnDgHC7h6eOta6nux5s1KQ1TqIb2+Ybkz3+EZGShAIyZ+1
+	fiS0tediGHwl9j8My9hTtsSJg97T9fThnUdvfpv5tbvu9S98Thh9iPNCOB2CXtI+
+	d4HRTxuFuBCyOQ/hA48dOz/YZlfTht+AxibT5OlP1nuoJQpf/hjlsC67YEuXZMSr
+	9/lDTsaKX+aLW70O5a7lCXTwv6HuZtmYv1GSOcRjqBtHMnlSNT24L5gjOfVDfZRL
+	PFIfq0Oa472n9GJv7kn4cni7QX/dF3bzUQbpb3GaWVJwrtqJgRJ5IlXzdU9CRJZr
+	KOVxuLRT0MJewnopGSwcPgHT5tU499Ir6aA==
+X-ME-Sender: <xms:qGyeatlq9XN8xWspZphkBIW92goYnOOXAw-BYvNNI-QuIYtdAA8G-Q>
+    <xme:qGyeagRsWz0pQ4f1r_sRbf8CO21K2c1dimFB7h-xMP8NOkUXAd11LFdX6lpm1jaOc
+    PEETltoSXfDctfNgDJD2pR_jfudQv_wIRmTQ4ayWRGICSqWdxQM3g>
+X-ME-Received: <xmr:qGyeahCeJoOsokjPr73FJl9Ssxl_xH1wZA7CJZzn2qvsRIykwLQWNw>
+X-ME-Proxy-Cause: dmFkZTGIfEMd0QspF6Fwv4c84alGxsyPIoycVHSiL0/nOmaH7O1Uj6EvSKOGPrxcMGKhBo
+    t1nwnrpIrRlIYj8bW8rzwYfl/q1ZaxpBA++og7T8OrDkljwPlFBEicOSIIVpJ+WTN2S7W3
+    6qe0R8xPg82LyTKg74i23/3ooIXFxPGD7clxoZ6CI7mRJkpb+UKAtFQdX0DyJA7HsjcxyI
+    2uswq3ehtYFh/NE4li27/vXObQJdg5wqwrDGuWByVwakkMe8HoK48IeN8bdv+xXw4U7wiy
+    Ponv7Qk5heyPdDkk15aCbDkdZ91anPviP5kzQVPmfxabSMQkFGE+wWh338VvWqf7NfCZC9
+    vYn2aNEL51pcT99yiDsoDRuhXbjZsJafjg6aQ6wQARSwissxOllzQAIZcUhtOtyz7lccWN
+    pC4yIY7Gzu0cE0UrUdp1hsuzv6LrxucxgMe8JaO8JUfarB+YTunl/w0ZrGkayywG9DDRk0
+    zAy7ShGBtzqE4+SmfxnOpcy+pnxH9XOzPZ2r1QpYAfDgnNof0UV2bsumYnJsbKkivferd5
+    GC1pRaIzI5WHMtwSd7FtjtcZBViNrHDBgQJ2JPQdzt6zsAT0Cego3EjIKfl2fCnszLwTeP
+    V/48n/OLUW+znonKRPz1h7sTqTkA6FplyG1DLb6hjHjY8WgA/Hm88voD5Abw
+X-ME-Proxy: <xmx:qGyeanQw_gijrGeI2h2IyortWcm27UzGA1aVl0rHzA2boQq9GA0evw>
+    <xmx:qGyeavpUFOEaHI3EnHpKMYeNZs3gLqru63rvSgHNOVCYEgWG3FA84Q>
+    <xmx:qGyeapxLCkeIXt434FMKR7N-4dk4lr56Wd7C5zgZ9Owgc_2Ixr4FgA>
+    <xmx:qGyeakJj8-gkicHcACDVGT_vf8nE93FMbqr3Q_-fFytgOrxrfJ0LWA>
+    <xmx:qWyeakTDApWqrBgzuDrzHj9K72eapUavlMcxB2tBI05dWy01p6JBrmx0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Sep 2026 03:41:08 -0400 (EDT)
+ 7 Sep 2026 03:50:00 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 54be2e1e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Sep 2026 07:41:06 +0000 (UTC)
-Date: Mon, 7 Sep 2026 09:41:03 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 4be7cf7b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Sep 2026 07:49:59 +0000 (UTC)
+Date: Mon, 7 Sep 2026 09:49:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Bachem <mail@thomasbachem.com>
-Subject: Re: [PATCH v3] rerere: keep a background gc from killing a rebase
-Message-ID: <ap5qj9wckDeKlI7i@pks.im>
-References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
- <pull.2214.v3.git.1788537081930.gitgitgadget@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 02/13] cache-tree: remove dependency on
+ `the_repository`
+Message-ID: <ap5spPyWgga9b315@pks.im>
+References: <20260902-pks-odb-registering-in-memory-sources-v2-0-c6ca12fdea4d@pks.im>
+ <20260902-pks-odb-registering-in-memory-sources-v2-2-c6ca12fdea4d@pks.im>
+ <CAOLa=ZQ=oCDtjAQXNXe51DvKUCCk0CK1EuM+QKhJ3iH8YiS+mw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,52 +87,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.2214.v3.git.1788537081930.gitgitgadget@gmail.com>
+In-Reply-To: <CAOLa=ZQ=oCDtjAQXNXe51DvKUCCk0CK1EuM+QKhJ3iH8YiS+mw@mail.gmail.com>
 
-On Fri, Sep 04, 2026 at 03:51:21PM +0000, Thomas Bachem via GitGitGadget wrote:
-> From: Thomas Bachem <mail@thomasbachem.com>
+On Fri, Sep 04, 2026 at 03:28:07PM -0700, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> A "git rerere gc" holds MERGE_RR.lock for as long as pruning rr-cache
-> takes, and since 2.54 the auto maintenance after every commit runs
-> one whenever rr-cache has an entry. The commit a rebase spawns for a
-> resolved pick starts it too, and the sequencer's repo_rerere() at the
-> next conflict wants the lock a few milliseconds later. Both take it
-> with LOCK_DIE_ON_ERROR, so whichever comes second dies. When it is
-> the rebase, the index is written but the state for "git rebase
-> --continue" is not, and every later continue refuses with "you have
-> staged changes".
+> > The "cache-tree" subsystem still depends on `the_repository`. Adapt it
+> > to instead use repositories provided via the context, either as a new
+> > parameter or the one passed in via `struct index_state`.
+> >
+> > Besides getting rid of `the_repository`, this also removes the last
+> > dependency on registering submodule sources with the main object
+> > database. When reading gitmodules from a submodule's index we implicitly
+> > read that object via `the_repository`'s object database, which is of
+> > course wrong. This works though because we would then register the
+> > submodule's object database with the main object database, but a later
+> > patch is going to get rid of that mechanism.
+> >
+> > You can verify that we indeed no longer depend on this mechanism by
+> > running tests with `GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=true`. Without
+> > this patch we fail in t1092, with this patch we never register submodule
+> > object databases anymore.
+> >
+> 
+> Interesting, to sum up if I understand correctly, somewhere in the call
+> chain of looking up the gitmodules from the submodules index, we end up
+> using 'the_repository' instead of the submodule's repo structure.
+> 
+> This is of course wrong, because we use the wrong repo, the consequence
+> is that the lookup fails, but we have a last ditch effort of adding all
+> submodules as alternates and retrying the object read, this succeeds.
+> 
+> So this patch fixes the repository being correctly passed down. Meaning
+> we no longer need to add the submodules as an alternate.
 
-Haven't we said that this race is not exclusive to `git rerere gc` with
-a concurrent writer though? It also happens between two normal writers.
-So it's good to have the context that we discovered this race because of
-the changed heuristics in maintenance, but we should clarify that it's a
-longer-standing conceptual issue.
-
-> diff --git a/Documentation/config/rerere.adoc b/Documentation/config/rerere.adoc
-> index 3a78b5ebb1..14ef193545 100644
-> --- a/Documentation/config/rerere.adoc
-> +++ b/Documentation/config/rerere.adoc
-> @@ -10,3 +10,13 @@ rerere.enabled::
->  	enabled if there is an `rr-cache` directory under the
->  	`$GIT_DIR`, e.g. if "rerere" was previously used in the
->  	repository.
-> +
-> +rerere.lockTimeout::
-> +	The length of time, in milliseconds, to retry when trying to
-> +	take the rerere lock while another process holds it, typically
-> +	a background `git rerere gc`.  When the time is up, the command
-> +	warns and goes on without rerere.  Value 0 means not to retry
-> +	at all; -1 means to try indefinitely.  Default is 1000 (i.e.,
-> +	retry for 1 second).  `git rerere gc` does not retry at all.
-> +	`git rerere`, `git rerere forget` and `git rerere clear` retry
-> +	the same way, but fail when the time is up instead of going on.
-
-I'm not a 100% sold that it's sensible to just skip writing the rerere
-entry. But maybe it's more sensible to regress gracefully compared to
-just aborting the whole command?
-
-In any case, I feel like this change warrants its own preparatory commit
-so that we can discuss separately why it's a good idea to ignore those
-failures.
+Yup, exactly this.
 
 Patrick
