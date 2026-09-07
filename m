@@ -1,80 +1,80 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84F347012A
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 11:20:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9884F470121
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 11:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788780023; cv=none; b=XEj56cOYzSE8hlsiwPk1tv8d70wSAXmDCQ/LeVHLpa4DMq1Yim55jrxFGmoohnLQ+mYCvatCS/24AS2z26S0JG4fGQiHhRLi/6+5ThpGQw7Av4N0vygtFE9AoQE8hzFt9WDYXXk3dqxfSk3sS3OnTIBM2sHHCXOjz0AqgrunG00=
+	t=1788780027; cv=none; b=b4VnXs+S+or70Do1jkcGrLHYa8VhcaI22677NkGTEx17VHclXQWfTEqbvpWa9nxKwn0PaxjsJ+jknSSX+P2P8YraMsx7UHlHMGZ2TnMXasaN9rbvkoG5Y5rGaVm9eNtkjDhNrvW9VbbPMhIxYpzswKf9Dxp7T4g+BSNp7/VNcUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788780023; c=relaxed/simple;
-	bh=KXYGnRejJK1mvp7H3DsfxfnNv8ykXPa1SDLIgELSaJ0=;
+	s=arc-20240116; t=1788780027; c=relaxed/simple;
+	bh=dNvViGomOt2XdztsZ1vdN9fBGUat+VZb0GhsXfOo1O8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hmQsYRSP0ECnTWET3AJqB7X/bsyEOL7y4lpDmBDne79RqvRIKGOERf1Q9R4HFPtQX+Efek2nEMduK+24sYLcEiNxPex2u9lnCUf6jX71n+FZBpBfpzdrIUnY6RQrxYhPy/EnC7e9eH09GJSsngbPWCDb6DFFv7xqi41nZ2aYzP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KR5mF4Pu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g7lbRXu/; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=eICY0E6XmhJLYoADxHyI7Fkxlqvd02h9ZSkquGgPMxJigolIMkmyv4ncSO68D83Hg9To1UWfSNHA6MZKRCbKqT98PXjZmcklDJ7lysdqvE1rQWUy943aK5lhkz0TDVVSCAAMvNISnZvTUpg3Lfon/ZEbs9oPBjJUiUcJAT/uUlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QzSfZwLF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N9afeJkw; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KR5mF4Pu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g7lbRXu/"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D0C2414001CA;
-	Mon,  7 Sep 2026 07:20:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QzSfZwLF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N9afeJkw"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id BFA8EEC0230;
+	Mon,  7 Sep 2026 07:20:23 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 07 Sep 2026 07:20:20 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 07 Sep 2026 07:20:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788780020;
-	 x=1788866420; bh=L0MhAcmekCfRmsfFOuwNbgAzo0BAxNw++RABB7Egesg=; b=
-	KR5mF4Puz3SQu1fAgPGPGzI1lDDawpGl0EMgM1g2QeLrR+pWIK8hICrEnB5pI6g7
-	PLLlAJiySkyM7a5Wb/WdecCBZ21UXCnOzjNbvWRDWpWdGiBjUNLRF3tP7A7PHirc
-	22qqdnqnbZ1yxud6CssDfe20cA9VzTuwUWESSrbPMJ46780M/hZ9lnGHyW92fPwW
-	sIaoOnB6Y+a6c2zqImNokCu1WzNHFCbtW4pOrwUYoNxqASTYzTBTbnfSAOAJbPEX
-	tbRpGQTbwuavoDPjsfbSq9tkvzMwxDBOG+XLj+OyrlDz32aY5vngvxipjgywS1Di
-	IYJRPs25h+9R8e/PzxH0hQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788780023;
+	 x=1788866423; bh=A5lCkl65+tjvWSl9KAIMNipe22xeI1u1PWYNFnuhUu8=; b=
+	QzSfZwLFXvWMJeIi1cu520pbo658RMx9bv+/7cS67wU9AfOhZa0bFdFZ4Keonl9i
+	648Ixo3XFNcGPcmklHpNfMOCQG6f4zs2gl1veFYA2ZS2hQWmYtaHpq+7rBDjmkV4
+	S5aGsVXPN+W7ArSQCCgpG0zIQhz/hfZZn7q/2c6ug/JQz+fU8ZWeZa7e7+Itr+Kw
+	1YrpeqCy0r7mFqDHEm6CjOMhSXX4NwLEpsDPILFkkceOJsrv3HDW5oscKF62imyT
+	pOzodQZqf+VaoNVPiq/PWpj4AhsNvN0RRjwpo/7DvVMW1jNhwgoV+r4iGQ9TFI46
+	HTkqfyP/4JoFe6tk3WUNvg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788780020; x=
-	1788866420; bh=L0MhAcmekCfRmsfFOuwNbgAzo0BAxNw++RABB7Egesg=; b=g
-	7lbRXu/kj9oueLD+MikZDYhZAo8dsiPXx2diLiTeraSJCwTBKPJXSnHQWDLHX9S+
-	4dc8IJraHIVwhFvM+5xP+tD6Aitab6LoxhCig+tmP7K75vRKTi72/nky3CrT6zwC
-	YO5xRfu1qbJk1/Pm5ggDNfVTYhQ7xitWRp5JeMU8bMXWHoxIeABqYCQxHlGZv6gd
-	YKxeL7TeSWVNzAgZvwcA2FYugurlQnf3gRCFwT5owFCjASFcOf3JTWGb/yxLk/17
-	syGnsYDe5Tj/77JSlpsyCMDk99yAKNEXUORzJi51FRx0i5esQaGhKw9c5b8dtAUD
-	1tvIVuuIti10YyeBT1ANA==
-X-ME-Sender: <xms:9J2eapxnKlSm8XHDhAIALj7UQ1kujD1klRv2wvr6WL68YjrHei2yBg>
-    <xme:9J2eags9xmx6e7gWhZqMWM3PyCMAKY4rsuJbbL9pCvse4AFZL__EUR-R3rOAvy9uc
-    kS_tc_RvOvR_7w0pU713f37_teyWald1yrvUNli6AtUB2VFyi2v4g>
-X-ME-Received: <xmr:9J2eagvo4W8-KbioM_-m1iQSXbUNyMWzpuM4RyvyLT6VuAFKk6fNQg>
-X-ME-Proxy-Cause: dmFkZTGh+ntQuPPRCjeOHi8eBWK5m+vsTdo4B135eNBn9xjB4a9zN4GRxrRt7ufClAIl3+
-    7DTVnBB+chKMByq92+dilJ4J+ILxHOo9af3b8PgjbNehM6+mCpLBsjD3DQkDpjdeMGk5nY
-    H9OqniAY0yEl8KfSnUeS3mQRawSxd1v+F+nankPtzxY0uHouSCiFQxjyazTc735sN+T2hS
-    tLX+Lss1Br8/c+GWKysXtyMdZ6sVtBOUcm1gaRtzH0naLjwcySt0SPM/ivMPpz87mbX3F8
-    7t45YSMSrFLlOVO2l5h6HEcV0S/0CjeD7oPCkYvLI6bXUqDTcrPC6ykW3ArnoyZBSMXnKH
-    vWp0p+QpJ69q633HRllsVUevTAt6FI3GckRg7gBWuo2A9/j1DH2mzgbPjGVr74jWHPPrp5
-    jlo1r1K+z35lrlW1V4Nlp9KGW8PC+PIQh7zrPBOGpHRcrV4zCCDFdR1dHyzCp3RjrRDiDP
-    8EmtR7ALU9629Y1CkcxRlSXyCAf3F8n8wpUURkYTbNf36fMivid8s6YVl0e4zVXH98uuGI
-    eN5/OHreqAnGiK2QX+SY4zWYlyPw7EsMOekStG2ihvUJHJd85GYy4M6zSsHI81+jgc6sQz
-    zh30nPOvV8h670IUkJsdebFUxjWb2jalhZbx5KYoLZd7nUva3irqB2+swufg
-X-ME-Proxy: <xmx:9J2ealMymPbiHARpWftmKfSOe3bzdKHZRvnL3X10hRbtQqyLBgUjSg>
-    <xmx:9J2eau166YTlCdqE9u-nwYJ6zDjIWqlVPcJ5AGnc8NIZCIYNSxFRwA>
-    <xmx:9J2eahPG5z6xVOhwCxMRhXAYHBjGdcFt0iDOkbv46hEF5dD9wJFghQ>
-    <xmx:9J2eau1x-4VmepmpV0NUcs2EbhaTUgdPrj0h3sVTd62tgl_apDbXtg>
-    <xmx:9J2ealW4GVIHEmwLYX2UIlkFY7puhRVI5nJslKg8Z8-kL2-w0GVD7W_G>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788780023; x=
+	1788866423; bh=A5lCkl65+tjvWSl9KAIMNipe22xeI1u1PWYNFnuhUu8=; b=N
+	9afeJkwFaIjkG0lGPLJIAPawuFarz4ur3+kXp7dh70K+ZQlECccD7Vdf2JdMt+xZ
+	vUMuBf4v19porY/BB6ziPEmGWPKrtPxcwny4sJ9fKWiweMI+Va4qOfePUrNCYUv8
+	cs1yTJXGEY1C4TtP04B4Y+7DQHci3pFhmyR6F9jb2ksTPjYqpmAJE+kFZa88539V
+	dZ/fvh4NPnQE8SqadlXg286nGvSEPbW25VzACw+vmSzmNNZhzgJaQCsQxzgY2Ya6
+	JnMRMz9xbsWNDV5+zuTUw4EODne2aChv0RzvKaPtcQsaozUb7xUNA/v+FBDUdpdr
+	t1jiOOf47b+kdwiGciZTg==
+X-ME-Sender: <xms:952eakxF9t8PtZo2eCRRmXe1uUCrvHBOh_DUAVLAkuTibu38jVHc1A>
+    <xme:952eavvA_xm-9Geh4oRJGdsArAUWduE92UKqiZL4b2J0bn9YdjnE34DMiod8I-v2v
+    vPkC-OQp2GzBLKC7yeYqVSWXD90EoAgHQusTREQ2GAHneRgOtPDDUo>
+X-ME-Received: <xmr:952eaju1KJ_7LZRQhaNNfJ5xxGTyaTBGV5L1Ra-wTnOjt6K9HIJrXA>
+X-ME-Proxy-Cause: dmFkZTEODmYfhcE6MkClXmAzaz/u/B/AKDElneu4mL0qUxdd8dsBrCmOKXS1tHl60eVFV2
+    SymYRFYzuiLUqyPPFAGooBAERtLvf0X1LhcjqzMnX7gdc7DtqXstRRoihdSALfCxoWFzJG
+    BbbIbG0MP1m8AhEq/eZrNtPsqwDGfS6kNpj3lzhC6fPFYomNFvg9RKzjO2WnGUQd1KA2IH
+    sWYk5pONmMX+mdXpmpfGC22NTMapciJwOTHnIl8o4jd+7ZhCw8vFlPa824pJltjvaD3N4A
+    MUB/oyFdCvhdQMSVTPOi3Wa2Ehbr/+fSxb1kUGZO2C7ytEHmk7HxP5nm8sCCeE5hTY4Uk+
+    FkhTyO3Akp2Sv1kwRyrtA48mf+haQJlJuYztjEbqW/XKzsDM9MoR8ylVIerGAtsJybgd4E
+    c2MMCyWc3P29CJuZbfK+C9r+c1jWHYv2zMI9/fngLRk6WXpff2czeopNRECZOrJOzl0HG6
+    2jo2hwQWpQhWxdNUENFcODomWlJHwi4BXiwpPQfA2DU1G3l7K9OllbVJmeN2WJcUSJM7mZ
+    9AIusWkxCaPrJ9wb+OZrKoC9kudsfVoTQl2BQL+i7Kuk8jlp288uwwydk1d4j6Nl4HHSQ9
+    2w2f8LICic6tvfehMZiwQJia3xIeVM7X9NhxkDVRD5opCy3ausBGEfd4rRMg
+X-ME-Proxy: <xmx:952easOvVnwNAULX6itnM5TKm6V5P0gogBVxyaMFatJi-U19hofIOw>
+    <xmx:952eap2D917PY97wXdKC8N3wdC19J5ckF1Jromh43nxwxOjcejIhTQ>
+    <xmx:952eagOZ71R2OcKdAd2M3ZhlseuFNZmM0I01CCQWSv7hPDjk0TDgxA>
+    <xmx:952eah3iE4SV_ypW6gSyldBKyUtMRnk359U3VARYZ-Y5Q-xIp4j-lA>
+    <xmx:952eavtSLw3CQgaoDciBX8JcA4Ss8JF4mmqFAf5lmRbYq3yf8hOTKuwS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Sep 2026 07:20:19 -0400 (EDT)
+ 7 Sep 2026 07:20:22 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9e5e7b10 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Sep 2026 11:20:18 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a8f0ce74 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Sep 2026 11:20:21 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 07 Sep 2026 13:18:38 +0200
-Subject: [PATCH v2 04/11] builtin/submodule: rename "--ref-format=" to
- "--ref-storage-format="
+Date: Mon, 07 Sep 2026 13:18:39 +0200
+Subject: [PATCH v2 05/11] builtin/rev-parse: rename "--show-ref-format" to
+ "--show-ref-storage-format"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-b4-pks-unify-ref-storage-format-v2-4-6733c90ca5b0@pks.im>
+Message-Id: <20260907-b4-pks-unify-ref-storage-format-v2-5-6733c90ca5b0@pks.im>
 References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
 In-Reply-To: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
 To: git@vger.kernel.org
@@ -91,242 +91,386 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-With the same reasoning as for git-init(1), rename "--ref-format=" to
-"--ref-storage-format=" and keep the old name as an alias.
-
-Note that this commit is a bit more complex compared to the others as we
-also need to adapt the submodule helper for consistency. But overall,
-the changes are straight-forward and in the same spirit.
+With the same reasoning as for git-init(1), rename "--show-ref-format"
+to "--show-ref-storage-format" and keep the old name as an alias.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-submodule.adoc       |  8 ++++----
- builtin/clone.c                        |  2 +-
- builtin/submodule--helper.c            | 24 +++++++++++++++---------
- git-submodule.sh                       | 20 ++++++++++----------
- t/t7424-submodule-mixed-ref-formats.sh |  8 ++++----
- 5 files changed, 34 insertions(+), 28 deletions(-)
+ Documentation/git-rev-parse.adoc       |  2 +-
+ builtin/rev-parse.c                    |  2 +-
+ contrib/completion/git-prompt.sh       |  2 +-
+ t/perf/perf-lib.sh                     |  4 ++--
+ t/t0001-init.sh                        | 36 +++++++++++++++++-----------------
+ t/t0610-reftable-basics.sh             | 16 +++++++--------
+ t/t1460-refs-migrate.sh                |  4 ++--
+ t/t1500-rev-parse.sh                   |  8 ++++----
+ t/t5601-clone.sh                       |  2 +-
+ t/t7424-submodule-mixed-ref-formats.sh |  2 +-
+ 10 files changed, 39 insertions(+), 39 deletions(-)
 
-diff --git a/Documentation/git-submodule.adoc b/Documentation/git-submodule.adoc
-index 722d827908..d22fd4a5b0 100644
---- a/Documentation/git-submodule.adoc
-+++ b/Documentation/git-submodule.adoc
-@@ -34,7 +34,7 @@ COMMANDS
- With no arguments, shows the status of existing submodules.  Several
- subcommands are available to perform operations on the submodules.
+diff --git a/Documentation/git-rev-parse.adoc b/Documentation/git-rev-parse.adoc
+index 5398691f3f..f794ceef22 100644
+--- a/Documentation/git-rev-parse.adoc
++++ b/Documentation/git-rev-parse.adoc
+@@ -331,7 +331,7 @@ The following options are unaffected by `--path-format`:
+ 	requested and no compatibility algorithm is enabled, prints an empty line. If
+ 	not specified, the default is "storage".
  
--`add [-b <branch>] [-f | --force] [--name <name>] [--reference <repository>] [--ref-format <format>] [--depth <depth>] [--] <repository> [<path>]`::
-+`add [-b <branch>] [-f | --force] [--name <name>] [--reference <repository>] [--ref-storage-format <format>] [--depth <depth>] [--] <repository> [<path>]`::
- 	Add the given repository as a submodule at the given path
- 	to the changeset to be committed next to the current
- 	project: the current project is termed the "superproject".
-@@ -72,7 +72,7 @@ location, and only the superproject's URL needs to be provided.
- git-submodule will correctly locate the submodule using the relative
- URL in `.gitmodules`.
- +
--If `--ref-format <format>`  is specified, the ref storage format of newly
-+If `--ref-storage-format <format>`  is specified, the ref storage format of newly
- cloned submodules will be set accordingly.
+---show-ref-format::
++--show-ref-storage-format::
+ 	Show the reference storage format used for the repository.
  
- `status [--cached] [--recursive] [--] [<path>...]`::
-@@ -139,7 +139,7 @@ If you really want to remove a submodule from the repository and commit
- that use linkgit:git-rm[1] instead. See linkgit:gitsubmodules[7] for removal
- options.
  
--`update [--init] [--remote] [-N | --no-fetch] [--[no-]recommend-shallow] [-f | --force] [--checkout | --rebase | --merge] [--reference=<repository>] [--ref-format=<format>] [--depth=<depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter=<filter-spec>] [--] [<path>...]`::
-+`update [--init] [--remote] [-N | --no-fetch] [--[no-]recommend-shallow] [-f | --force] [--checkout | --rebase | --merge] [--reference=<repository>] [--ref-storage-format=<format>] [--depth=<depth>] [--recursive] [--jobs <n>] [--[no-]single-branch] [--filter=<filter-spec>] [--] [<path>...]`::
- +
- --
- Update the registered submodules to match what the superproject
-@@ -188,7 +188,7 @@ submodule with the `--init` option.
- If `--recursive` is specified, this command will recurse into the
- registered submodules, and update any nested submodules within.
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 43693454d5..ec33c19bdf 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -1134,7 +1134,7 @@ int cmd_rev_parse(int argc,
+ 				}
+ 				continue;
+ 			}
+-			if (!strcmp(arg, "--show-ref-format")) {
++			if (!strcmp(arg, "--show-ref-format") || !strcmp(arg, "--show-ref-storage-format")) {
+ 				puts(ref_storage_format_to_name(the_repository->ref_storage_format));
+ 				continue;
+ 			}
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 6186c474ba..754a5edc9a 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -466,7 +466,7 @@ __git_ps1 ()
  
--If `--ref-format <format>`  is specified, the ref storage format of newly
-+If `--ref-storage-format <format>`  is specified, the ref storage format of newly
- cloned submodules will be set accordingly.
+ 	local repo_info rev_parse_exit_code
+ 	repo_info="$(git rev-parse --git-dir --is-inside-git-dir \
+-		--is-bare-repository --is-inside-work-tree --show-ref-format \
++		--is-bare-repository --is-inside-work-tree --show-ref-storage-format \
+ 		--short HEAD 2>/dev/null)"
+ 	rev_parse_exit_code="$?"
  
- If `--filter <filter-spec>` is specified, the given partial clone filter will be
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 511fff9562..93be65efcd 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -725,7 +725,7 @@ static int checkout(int submodule_progress,
- 		}
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index 3ce49fd423..846ecc35c3 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -135,7 +135,7 @@ test_perf_create_repo_from () {
+ 	source_git="$("$MODERN_GIT" -C "$source" rev-parse --git-dir)"
+ 	objects_dir="$("$MODERN_GIT" -C "$source" rev-parse --git-path objects)"
+ 	common_dir="$("$MODERN_GIT" -C "$source" rev-parse --git-common-dir)"
+-	refformat="$("$MODERN_GIT" -C "$source" rev-parse --show-ref-format)"
++	ref_storage_format="$("$MODERN_GIT" -C "$source" rev-parse --show-ref-storage-format)"
+ 	objectformat="$("$MODERN_GIT" -C "$source" rev-parse --show-object-format)"
+ 	mkdir -p "$repo/.git"
+ 	(
+@@ -153,7 +153,7 @@ test_perf_create_repo_from () {
+ 	) &&
+ 	(
+ 		cd "$repo" &&
+-		"$MODERN_GIT" init -q --ref-storage-format="$refformat" --object-format="$objectformat" &&
++		"$MODERN_GIT" init -q --ref-storage-format="$ref_storage_format" --object-format="$objectformat" &&
+ 		test_perf_do_repo_symlink_config_ &&
+ 		mv .git/hooks .git/hooks-disabled 2>/dev/null &&
+ 		if test -f .git/index.lock
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index df9a2ff2da..b4f19d8077 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -657,7 +657,7 @@ test_expect_success 'init warns about invalid init.defaultRefFormat' '
+ 	git init repo 2>err &&
+ 	test_cmp expect err &&
  
- 		if (ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
--			strvec_pushf(&cmd.args, "--ref-format=%s",
-+			strvec_pushf(&cmd.args, "--ref-storage-format=%s",
- 				     ref_storage_format_to_name(ref_storage_format));
+-	git -C repo rev-parse --show-ref-format >actual &&
++	git -C repo rev-parse --show-ref-storage-format >actual &&
+ 	echo $GIT_DEFAULT_REF_FORMAT >expected &&
+ 	test_cmp expected actual
+ '
+@@ -669,7 +669,7 @@ test_expect_success 'default ref format' '
+ 		git init refformat
+ 	) &&
+ 	git version --build-options | sed -ne "s/^default-ref-format: //p" >expect &&
+-	git -C refformat rev-parse --show-ref-format >actual &&
++	git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
  
- 		if (filter_submodules && filter_options->choice)
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index e7cd3225fa..55eaaab38f 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1941,7 +1941,7 @@ static int clone_submodule(const struct module_clone_data *clone_data,
- 					     item->string, NULL);
- 		}
- 		if (clone_data->ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
--			strvec_pushf(&cp.args, "--ref-format=%s",
-+			strvec_pushf(&cp.args, "--ref-storage-format=%s",
- 				     ref_storage_format_to_name(clone_data->ref_storage_format));
- 		if (clone_data->dissociate)
- 			strvec_push(&cp.args, "--dissociate");
-@@ -2057,8 +2057,10 @@ static int module_clone(int argc, const char **argv, const char *prefix,
- 		OPT_STRING_LIST(0, "reference", &reference,
- 			   N_("repo"),
- 			   N_("reference repository")),
--		OPT_STRING(0, "ref-format", &ref_storage_format, N_("format"),
--			   N_("specify the reference format to use")),
-+		OPT_STRING(0, "ref-storage-format", &ref_storage_format, N_("format"),
-+			   N_("specify the reference storage format to use")),
-+		OPT_STRING_F(0, "ref-format", &ref_storage_format, N_("format"),
-+			     N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
- 		OPT_BOOL(0, "dissociate", &dissociate,
- 			   N_("use --reference only while cloning")),
- 		OPT_INTEGER(0, "depth", &clone_data.depth,
-@@ -2357,7 +2359,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 	if (suc->update_data->require_init)
- 		strvec_push(&child->args, "--require-init");
- 	if (suc->update_data->ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
--		strvec_pushf(&child->args, "--ref-format=%s",
-+		strvec_pushf(&child->args, "--ref-storage-format=%s",
- 			     ref_storage_format_to_name(suc->update_data->ref_storage_format));
- 	strvec_pushl(&child->args, "--path", sub->path, NULL);
- 	strvec_pushl(&child->args, "--name", sub->name, NULL);
-@@ -2801,7 +2803,7 @@ static void update_data_to_args(const struct update_data *update_data,
- 			strvec_pushl(args, "--reference", item->string, NULL);
- 	}
- 	if (update_data->ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
--		strvec_pushf(args, "--ref-format=%s",
-+		strvec_pushf(args, "--ref-storage-format=%s",
- 			     ref_storage_format_to_name(update_data->ref_storage_format));
- 	if (update_data->filter_options && update_data->filter_options->choice)
- 		strvec_pushf(args, "--filter=%s",
-@@ -3010,8 +3012,10 @@ static int module_update(int argc, const char **argv, const char *prefix,
- 			SM_UPDATE_REBASE),
- 		OPT_STRING_LIST(0, "reference", &opt.references, N_("repo"),
- 			   N_("reference repository")),
--		OPT_STRING(0, "ref-format", &ref_storage_format, N_("format"),
--			   N_("specify the reference format to use")),
-+		OPT_STRING(0, "ref-storage-format", &ref_storage_format, N_("format"),
-+			   N_("specify the reference storage format to use")),
-+		OPT_STRING_F(0, "ref-format", &ref_storage_format, N_("format"),
-+			     N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
- 		OPT_BOOL(0, "dissociate", &opt.dissociate,
- 			   N_("use --reference only while cloning")),
- 		OPT_INTEGER(0, "depth", &opt.depth,
-@@ -3659,8 +3663,10 @@ static int module_add(int argc, const char **argv, const char *prefix,
- 		OPT_BOOL(0, "progress", &progress, N_("force cloning progress")),
- 		OPT_STRING(0, "reference", &add_data.reference_path, N_("repository"),
- 			   N_("reference repository")),
--		OPT_STRING(0, "ref-format", &ref_storage_format, N_("format"),
--			   N_("specify the reference format to use")),
-+		OPT_STRING(0, "ref-storage-format", &ref_storage_format, N_("format"),
-+			   N_("specify the reference storage format to use")),
-+		OPT_STRING_F(0, "ref-format", &ref_storage_format, N_("format"),
-+			     N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
- 		OPT_BOOL(0, "dissociate", &dissociate, N_("borrow the objects from reference repositories")),
- 		OPT_STRING(0, "name", &add_data.sm_name, N_("name"),
- 			   N_("sets the submodule's name to the given string "
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 2999b31fad..8632194138 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -95,13 +95,13 @@ cmd_add()
- 		--reference=*)
- 			reference="$1"
- 			;;
--		--ref-format)
-+		--ref-format|--ref-storage-format)
- 			case "$2" in '') usage ;; esac
--			ref_format="--ref-format=$2"
-+			ref_storage_format="--ref-storage-format=$2"
- 			shift
- 			;;
--		--ref-format=*)
--			ref_format="$1"
-+		--ref-format=*|--ref-storage-format=*)
-+			ref_storage_format="$1"
- 			;;
- 		--dissociate)
- 			dissociate=$1
-@@ -147,7 +147,7 @@ cmd_add()
- 		$progress \
- 		${branch:+"$branch"} \
- 		${reference:+"$reference"} \
--		${ref_format:+"$ref_format"} \
-+		${ref_storage_format:+"$ref_storage_format"} \
- 		$dissociate \
- 		${name:+"$name"} \
- 		${depth:+"$depth"} \
-@@ -302,13 +302,13 @@ cmd_update()
- 		-r|--rebase)
- 			rebase=$1
- 			;;
--		--ref-format)
-+		--ref-format|--ref-storage-format)
- 			case "$2" in '') usage ;; esac
--			ref_format="--ref-format=$2"
-+			ref_storage_format="--ref-storage-format=$2"
- 			shift
- 			;;
--		--ref-format=*)
--			ref_format="$1"
-+		--ref-format=*|--ref-storage-format=*)
-+			ref_storage_format="$1"
- 			;;
- 		--reference)
- 			case "$2" in '') usage ;; esac
-@@ -385,7 +385,7 @@ cmd_update()
- 		$rebase \
- 		$merge \
- 		$checkout \
--		${ref_format:+"$ref_format"} \
-+		${ref_storage_format:+"$ref_storage_format"} \
- 		${reference:+"$reference"} \
- 		$dissociate \
- 		${depth:+"$depth"} \
+@@ -692,7 +692,7 @@ do
+ 		test_cmp expect actual &&
+ 
+ 		echo $format >expect &&
+-		git -C refformat rev-parse --show-ref-format >actual &&
++		git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+@@ -700,7 +700,7 @@ do
+ 		test_when_finished "rm -rf refformat" &&
+ 		git init --ref-storage-format=$format refformat &&
+ 		echo $format >expect &&
+-		git -C refformat rev-parse --show-ref-format >actual &&
++		git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+@@ -713,7 +713,7 @@ do
+ 		) &&
+ 
+ 		echo $format >expect &&
+-		git -C refformat rev-parse --show-ref-format >actual &&
++		git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+@@ -721,16 +721,16 @@ do
+ 		test_when_finished "rm -rf refformat" &&
+ 		GIT_DEFAULT_REF_FORMAT=garbage git init --ref-storage-format=$format refformat &&
+ 		echo $format >expect &&
+-		git -C refformat rev-parse --show-ref-format >actual &&
++		git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+ 	test_expect_success "reinit repository with GIT_DEFAULT_REF_FORMAT=$format does not change format" '
+ 		test_when_finished "rm -rf refformat" &&
+ 		git init refformat &&
+-		git -C refformat rev-parse --show-ref-format >expect &&
++		git -C refformat rev-parse --show-ref-storage-format >expect &&
+ 		GIT_DEFAULT_REF_FORMAT=$format git init refformat &&
+-		git -C refformat rev-parse --show-ref-format >actual &&
++		git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 		test_cmp expect actual
+ 	'
+ done
+@@ -739,7 +739,7 @@ test_expect_success "--ref-storage-format= overrides GIT_DEFAULT_REF_FORMAT" '
+ 	test_when_finished "rm -rf refformat" &&
+ 	GIT_DEFAULT_REF_FORMAT=files git init --ref-storage-format=reftable refformat &&
+ 	echo reftable >expect &&
+-	git -C refformat rev-parse --show-ref-format >actual &&
++	git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -749,7 +749,7 @@ test_expect_success "GIT_DEFAULT_REF_FORMAT= overrides init.defaultRefFormat" '
+ 
+ 	GIT_DEFAULT_REF_FORMAT=reftable git init refformat &&
+ 	echo reftable >expect &&
+-	git -C refformat rev-parse --show-ref-format >actual &&
++	git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -761,7 +761,7 @@ test_expect_success "init with feature.experimental=true" '
+ 		git init refformat
+ 	) &&
+ 	echo reftable >expect &&
+-	git -C refformat rev-parse --show-ref-format >actual &&
++	git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -774,7 +774,7 @@ test_expect_success "init.defaultRefFormat overrides feature.experimental=true"
+ 		git init refformat
+ 	) &&
+ 	echo files >expect &&
+-	git -C refformat rev-parse --show-ref-format >actual &&
++	git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -783,7 +783,7 @@ test_expect_success "GIT_DEFAULT_REF_FORMAT= overrides feature.experimental=true
+ 	test_config_global feature.experimental true &&
+ 	GIT_DEFAULT_REF_FORMAT=files git init refformat &&
+ 	echo files >expect &&
+-	git -C refformat rev-parse --show-ref-format >actual &&
++	git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -794,7 +794,7 @@ do
+ 		git init --ref-storage-format=$from_format refformat &&
+ 		git init --ref-storage-format=$from_format refformat &&
+ 		echo $from_format >expect &&
+-		git -C refformat rev-parse --show-ref-format >actual &&
++		git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+@@ -814,7 +814,7 @@ do
+ 			test_must_fail git init --ref-storage-format=$to_format refformat 2>err &&
+ 			test_cmp expect err &&
+ 			echo $from_format >expect &&
+-			git -C refformat rev-parse --show-ref-format >actual &&
++			git -C refformat rev-parse --show-ref-storage-format >actual &&
+ 			test_cmp expect actual
+ 		'
+ 	done
+@@ -933,7 +933,7 @@ test_expect_success 'init with includeIf.onbranch condition' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git -c includeIf.onbranch:main.path=nonexistent init repo &&
+ 	echo $GIT_DEFAULT_REF_FORMAT >expect &&
+-	git -C repo rev-parse --show-ref-format >actual &&
++	git -C repo rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -942,7 +942,7 @@ test_expect_success 'init with includeIf.onbranch condition with existing direct
+ 	mkdir repo &&
+ 	git -c includeIf.onbranch:nonexistent.path=/does/not/exist init repo &&
+ 	echo $GIT_DEFAULT_REF_FORMAT >expect &&
+-	git -C repo rev-parse --show-ref-format >actual &&
++	git -C repo rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -951,7 +951,7 @@ test_expect_success 're-init with includeIf.onbranch condition' '
+ 	git init repo &&
+ 	git -c includeIf.onbranch:nonexistent.path=/does/not/exist init repo &&
+ 	echo $GIT_DEFAULT_REF_FORMAT >expect &&
+-	git -C repo rev-parse --show-ref-format >actual &&
++	git -C repo rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index d325f17a14..b6db54430a 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -27,7 +27,7 @@ test_expect_success 'init: creates basic reftable structures' '
+ 	test_path_is_dir repo/.git/reftable &&
+ 	test_path_is_file repo/.git/reftable/tables.list &&
+ 	echo reftable >expect &&
+-	git -C repo rev-parse --show-ref-format >actual &&
++	git -C repo rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -38,7 +38,7 @@ test_expect_success 'init: sha256 object format via environment variable' '
+ 	sha256
+ 	reftable
+ 	EOF
+-	git -C repo rev-parse --show-object-format --show-ref-format >actual &&
++	git -C repo rev-parse --show-object-format --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -49,7 +49,7 @@ test_expect_success 'init: sha256 object format via option' '
+ 	sha256
+ 	reftable
+ 	EOF
+-	git -C repo rev-parse --show-object-format --show-ref-format >actual &&
++	git -C repo rev-parse --show-object-format --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -156,7 +156,7 @@ test_expect_success 'clone: can clone reftable repository' '
+ 
+ 	git clone repo cloned &&
+ 	echo reftable >expect &&
+-	git -C cloned rev-parse --show-ref-format >actual &&
++	git -C cloned rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual &&
+ 	test_path_is_file cloned/file1
+ '
+@@ -171,11 +171,11 @@ test_expect_success 'clone: can clone reffiles into reftable repository' '
+ 	git -C reftable rev-parse HEAD >actual &&
+ 	test_cmp expect actual &&
+ 
+-	git -C reftable rev-parse --show-ref-format >actual &&
++	git -C reftable rev-parse --show-ref-storage-format >actual &&
+ 	echo reftable >expect &&
+ 	test_cmp expect actual &&
+ 
+-	git -C reffiles rev-parse --show-ref-format >actual &&
++	git -C reffiles rev-parse --show-ref-storage-format >actual &&
+ 	echo files >expect &&
+ 	test_cmp expect actual
+ '
+@@ -190,11 +190,11 @@ test_expect_success 'clone: can clone reftable into reffiles repository' '
+ 	git -C reffiles rev-parse HEAD >actual &&
+ 	test_cmp expect actual &&
+ 
+-	git -C reftable rev-parse --show-ref-format >actual &&
++	git -C reftable rev-parse --show-ref-storage-format >actual &&
+ 	echo reftable >expect &&
+ 	test_cmp expect actual &&
+ 
+-	git -C reffiles rev-parse --show-ref-format >actual &&
++	git -C reffiles rev-parse --show-ref-storage-format >actual &&
+ 	echo files >expect &&
+ 	test_cmp expect actual
+ '
+diff --git a/t/t1460-refs-migrate.sh b/t/t1460-refs-migrate.sh
+index 204dd79b41..ecf6411288 100755
+--- a/t/t1460-refs-migrate.sh
++++ b/t/t1460-refs-migrate.sh
+@@ -53,7 +53,7 @@ test_migration () {
+ 		test_cmp expect_logs actual_logs
+ 	fi &&
+ 
+-	git -C "$repo" rev-parse --show-ref-format >actual &&
++	git -C "$repo" rev-parse --show-ref-storage-format >actual &&
+ 	echo "$format" >expect &&
+ 	test_cmp expect actual
+ }
+@@ -215,7 +215,7 @@ do
+ 			test_grep "Finished dry-run migration of refs" output &&
+ 			test_path_is_dir repo/.git/ref_migration.* &&
+ 			echo $from_format >expect &&
+-			git -C repo rev-parse --show-ref-format >actual &&
++			git -C repo rev-parse --show-ref-storage-format >actual &&
+ 			test_cmp expect actual
+ 		'
+ 
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 4174ca40c3..30bf8a4d0a 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -241,19 +241,19 @@ test_expect_success RUST 'rev-parse --show-object-format in repo with compat mod
+ 	)
+ '
+ 
+-test_expect_success 'rev-parse --show-ref-format' '
++test_expect_success 'rev-parse --show-ref-storage-format' '
+ 	test_detect_ref_format >expect &&
+-	git rev-parse --show-ref-format >actual &&
++	git rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'rev-parse --show-ref-format with invalid storage' '
++test_expect_success 'rev-parse --show-ref-storage-format with invalid storage' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+ 	(
+ 		cd repo &&
+ 		git config extensions.refstorage broken &&
+-		test_must_fail git rev-parse --show-ref-format 2>err &&
++		test_must_fail git rev-parse --show-ref-storage-format 2>err &&
+ 		test_grep "error: invalid value for ${SQ}extensions.refstorage${SQ}: ${SQ}broken${SQ}" err
+ 	)
+ '
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 202d86bc83..06f6121f82 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -168,7 +168,7 @@ test_expect_success 'clone with files ref format' '
+ 	test_when_finished "rm -rf ref-storage" &&
+ 	git clone --ref-storage-format=files --mirror src ref-storage &&
+ 	echo files >expect &&
+-	git -C ref-storage rev-parse --show-ref-format >actual &&
++	git -C ref-storage rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ '
+ 
 diff --git a/t/t7424-submodule-mixed-ref-formats.sh b/t/t7424-submodule-mixed-ref-formats.sh
-index 9081401509..2ef85289b3 100755
+index 2ef85289b3..9707744644 100755
 --- a/t/t7424-submodule-mixed-ref-formats.sh
 +++ b/t/t7424-submodule-mixed-ref-formats.sh
-@@ -44,7 +44,7 @@ test_expect_success 'add submodules with different ref storage format' '
- 	test_commit -C submodule submodule-initial &&
- 	git init upstream &&
- 	test_ref_format upstream "$GIT_DEFAULT_REF_FORMAT" &&
--	git -C upstream submodule add --ref-format="$OTHER_FORMAT" "file://$(pwd)/submodule" &&
-+	git -C upstream submodule add --ref-storage-format="$OTHER_FORMAT" "file://$(pwd)/submodule" &&
- 	test_ref_format upstream/submodule "$OTHER_FORMAT"
- '
+@@ -6,7 +6,7 @@ test_description='submodules handle mixed ref storage formats'
  
-@@ -63,7 +63,7 @@ test_expect_success 'recursive clone propagates ref storage format' '
- 	test_ref_format upstream/submodule "$GIT_DEFAULT_REF_FORMAT" &&
- 
- 	# The cloned repositories should use the other ref format that we have
--	# specified via `--ref-storage`. The option should propagate to cloned
-+	# specified via `--ref-storage-format`. The option should propagate to cloned
- 	# submodules.
- 	git clone --ref-storage-format=$OTHER_FORMAT --recurse-submodules \
- 		upstream downstream &&
-@@ -82,7 +82,7 @@ test_expect_success 'clone submodules with different ref storage format' '
- 
- 	git clone --no-recurse-submodules "file://$(pwd)/upstream" downstream &&
- 	test_ref_format downstream "$GIT_DEFAULT_REF_FORMAT" &&
--	git -C downstream submodule update --init --ref-format=$OTHER_FORMAT &&
-+	git -C downstream submodule update --init --ref-storage-format=$OTHER_FORMAT &&
- 	test_ref_format downstream/submodule "$OTHER_FORMAT"
- '
- 
-@@ -122,7 +122,7 @@ test_expect_success 'recursive pull with mixed formats' '
- 	# Clone the upstream repository such that the main repo and its
- 	# submodules have different formats.
- 	git clone --no-recurse-submodules "file://$(pwd)/upstream" downstream &&
--	git -C downstream submodule update --init --ref-format=$OTHER_FORMAT &&
-+	git -C downstream submodule update --init --ref-storage-format=$OTHER_FORMAT &&
- 	test_ref_format downstream "$GIT_DEFAULT_REF_FORMAT" &&
- 	test_ref_format downstream/submodule "$OTHER_FORMAT" &&
+ test_ref_format () {
+ 	echo "$2" >expect &&
+-	git -C "$1" rev-parse --show-ref-format >actual &&
++	git -C "$1" rev-parse --show-ref-storage-format >actual &&
+ 	test_cmp expect actual
+ }
  
 
 -- 
