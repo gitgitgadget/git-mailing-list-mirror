@@ -1,79 +1,80 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF44A46EF89
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 11:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221C746EC84
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 11:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788780033; cv=none; b=UOT291VxauF15kMWTeONSMHQreSIf8+MjG+D7oCE2DIF04FtWHdhwM1W38H5PNNYAYm5CEwVyY5qed5UX+ZTURWbrgndveueB5hB5uxyQozbe5JVZ5sUz6IKxaabrKP4r29PXP0abgXcLWxE9J7G3xSUzxLAVvDRUQGvotNZK/o=
+	t=1788780037; cv=none; b=hEKSYJcxM5SWy0QL80KeEbfSlNE9LVKgPZxXBXqcdsQLpLp6rmknoDBTDrYzVpjG3q3/zUqkp2XKr+EjtQCgFNlaOracfEEpIG/p43TMXX68YK2nkWeO+zpPoTWx349CDrQFNBbHIsZZhacrgepyx0WR/9EonNvuUwy6Vg6tJy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788780033; c=relaxed/simple;
-	bh=kZ6PP6N1H8nb0acl7atQoFUzOVn63MLRLrfCe2ThUcw=;
+	s=arc-20240116; t=1788780037; c=relaxed/simple;
+	bh=DW9CgyNqvYHrxIIomdYo19ivp4NsOmTufLJBsE1IJFk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JF5m9SQEgOKOMZstJDT36KwKfFlvsKxfdxbZxovaufpYAXnzypDCbkcQxuR/1uuSG6wRkvwewIkjGRFsez0dEcHIfwYYk951cObC3hiDdVnhe8NOgB57ihPc9jJvekSxtGlq//1pvJAHXyqnAajUMVhhT0+ghpXfqaaPTGSQZ2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=in8fFXfn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BXdtXLRP; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=sgDMxunVmEXP+kY0E7tZTg4paaEHLOK/CdUSwh06VFCh6DENBorqDvGnPrLunYSTa5dWj7zf8W3ToLAk1TzkAgPMsEiWj9DNtDfVmYMFmAUVz+NhioCRuvoxxh6V+eDLccif8VkH9WC0qzc52r5wGV1zCQzJDCaULvAvmaUI3Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ILIBNjnL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZWRDAeVF; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="in8fFXfn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BXdtXLRP"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 98A54EC0232;
-	Mon,  7 Sep 2026 07:20:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ILIBNjnL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZWRDAeVF"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 849FBEC0230;
+	Mon,  7 Sep 2026 07:20:31 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 07 Sep 2026 07:20:28 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 07 Sep 2026 07:20:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1788780028;
-	 x=1788866428; bh=XEQX/m5B6XKnv+PVMhyZq8Ehs+q+GxEQta/Sxj7hBoY=; b=
-	in8fFXfnO79ilv4IfjMW4+mPzj3EbzS8j/nTFdd5kkGz+2vyKy2dzXLOI5InOwsl
-	JDPGqmPPdF2HEj/EXBTRFZGGHiRHgDNiI/dMTyM2QKcF63fhAOYDC68zalALY01V
-	depyqhsrUUMHU7EOhbSvH5GMtpFHb7RwDaGKLbrUhW/y6seqSCoOquwIcNNwS4w4
-	FEsuYXH+IE8/WICUes/Qvi9Y1+iAf2v7eoV4iI71LWw7Ym4c+R5tO0YJ8kIDvmB4
-	cgkyjyeXJA6gXO9ZItmaW+iDk7qmaaCoeaFZ17HYvLbSrkuDmxQvpyJnxvhwazPw
-	g/rLhwv8k7CSPZkJRZs66g==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788780031;
+	 x=1788866431; bh=hvtIOnb6mRLc82aBPSh4D20K2UxiEbVOdPeIBukYc7Y=; b=
+	ILIBNjnLQtkB1mwzuFRLpEGYxQ2H62WEyBj0ucfQg8P0wK9COLcCzA74//KqlNa0
+	WKNCq19M5zhS2RTa7y8sk72DJlJ8CIHdbHa4ghypJxNcdQbhH2WIUxpk8gUgc9HB
+	wqZoc89ibkcTBbRtgjv347irQqJSs655mAEVBu6oWTIS6bI9SwUZKrG/9puVYx+J
+	ySsAmRY8eO4bvf+5DNIGvF6quLcKo/Gc7oqDQ/GbqFskHUd44gQuzr/8UryvFLxf
+	2iMpYb+9t4D7NgoTUfVg4jHdjc5wC3ABpoykeQRjO+nsTvHKsKLmtVkRn9nNfcA7
+	HIpAVZWBBlnJDyFAIqPUFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788780028; x=
-	1788866428; bh=XEQX/m5B6XKnv+PVMhyZq8Ehs+q+GxEQta/Sxj7hBoY=; b=B
-	XdtXLRPD4PnjbSFbbPExoFL8jeDpeSdq2gNZOEPhqAmQtHUmUaN5UcRHbkQNev9/
-	TsZ9ocbiG0g1toI72n/taKaZeVBPuJgbhOeNZ4Ffc/XfMh3GcMTddAuykyG1egRB
-	whypW8CzR/3n7puyRPo3s7nJ6+bgfNdBgLZAsOG82G5tBRRdSQNUKEROZZU0RyrC
-	3AmMeKr0mgfpiTWWDlZhcOAxWBS8TnFOV0979FcMQhM4oBrY5kRZekXSJHiNtaBZ
-	JsvXXhnnNLwonWRNwRlDIfH8vNq2JVre5TSmNc4Foznh5fke1B3PUaVvjylFgD6E
-	dFLxY/NTstNEo5iyHWkuQ==
-X-ME-Sender: <xms:_J2eahCzfgI6judFF3hJ3JJ7w7eyQMnI2V6lKvxp6ZIhSmPdOHifsA>
-    <xme:_J2eam-VZIlfdiPZF5_Ed0zsEtewqZEFKph9Wtm9l8H4RCuJXsagA8i30DmjPsJsy
-    agHoYa4ZX7TN_6fm9KjEDLbaVUywhanSoIM6Km_MhzzOdcYHVH22Q>
-X-ME-Received: <xmr:_J2eap9i5xZrGFPlGL2fv0X-Jzwc6pcC5zW__TyAxvA_2ZV2nmFw7A>
-X-ME-Proxy-Cause: dmFkZTEAK+4goiDsG2Vmg+ED1KAmsv7YZp0N0BHxTCS367xRZk9Ys2RQ/ypkGiDHqXjXk8
-    IfrsYpJC3kgu7tNLAHxpka6Q/g7Eq0NVfpnpxbBJ8jMyt48JqLOwADlJurbyrlCDydgb14
-    Pc2Q6dpryZTbKJYnot3lpl/+Xggy8TcjlVWbkPP4ag/plZtkk6Kh6FtYGlp4J8DigPGi8+
-    EhLNMEFOUUgA3DyHvEnEscg6zIFIBIBK7rK46EVuSYQqJYGNq9QZe/aqk4+h7rZPKK6qtX
-    thLFXKQ1zQP83Z0RgtpsAxzn2SVh3M7w4DDwdIkvutBxMEdllU4lofdPVzGM+UuAN5OHoS
-    /1coEex2assFD0dlxrW7SinTWvQn0ddCWlQCnCrr6NxUFU/JSqvlfB6c4z9F6ptVaqD4D4
-    8rjXLO+0A3iXwKcF93us8cODeiG9+a6OHwp1iPDYho9Zy0i7mP4uC46bJdRGlg9Bii0qp1
-    lEvSksbPOs6zx5A+2Fk84bArAArOGcD/10kXv+ihDgte3+HnrfpsGUxIHK5iiNeyAV1Hon
-    eZ3VoJ6QdtVFMj5D7g9mTW4a5/xhsLcC+dH5AQa77+/jVrTLZj/chNCzPfBxrAfS/ruI5g
-    mNej9Jy6J4Ft0ozvZLlycGDo8HNb/3SbU44kJqECMRJXs8PUb0CgMTN286kg
-X-ME-Proxy: <xmx:_J2ealdbflj5Vw3pqS0U-b2zfAoSIxU-IhfckkTdiJnRxZWxWpuoBw>
-    <xmx:_J2eaqGJckTWixn9yzRah2Lo8sDUKToUrClWAFQi48SfvNKXbbA3vg>
-    <xmx:_J2earfAaJXotzzfnSVGzam3CQxsS8P9vAi_tdrvIS9uPC5Q-vCXmA>
-    <xmx:_J2easGBRYPPaWb7SFNQ7koZ1elm0qlGaZLcfvLIJ_koAy-BM6109w>
-    <xmx:_J2eam_AStZOpCHVPXrn4T2mNsL2y34AtX8glLyx5-J7t1Zy3SBNi4ZG>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788780031; x=
+	1788866431; bh=hvtIOnb6mRLc82aBPSh4D20K2UxiEbVOdPeIBukYc7Y=; b=Z
+	WRDAeVFJfwb1rrslM7B4ljyhaF/hwmGCJa7Egv+3KAM5+CootSbfFkegiZGqZJiv
+	+NsEAfo3rFyfrnbbKqlwfz6B3uxpJvo8MfDeTlYq5bXUYkIqfXLPYbCNy2bKfXS9
+	G5wK2n2ge/z1JlDEW2wGeJxWKihXPTm4uOOJYtBGXHVs/alGZHUnUDXs6+widVOv
+	VrJNMF0qkBSd0EZXeTpo4S8aT0o3H5r35zfZ4BYMtEbaSnYQFMpiJoGhZb4SGgb4
+	iBOcvXay3goKqVo5V/2l8hr7Wd4pUu+qmaZepEt7z8r97OYqycN5ETcyaNuBdjOl
+	jBH6VXF8vG8BHqnDgXU7Q==
+X-ME-Sender: <xms:_52eaoh2PPx0lJJPqaR_vXwrKG2SaZ0ch5hoUNmnaEWOZX-gBxOFwA>
+    <xme:_52eaoefbp9V7lpOSM2XdEJwIgAqex2nQ2hHrLv_CrWrAffHQJcDq5m_6Pg2eOVWU
+    IfzryJYUXdanS8WdOEpJQ02iJUtJOPnPcgCJISHaqFOovjjrpdYy54>
+X-ME-Received: <xmr:_52eatc-X5zl54mhddIDsfMUShYBbZXX3quGwzSTVuO9Skb_QyB0fA>
+X-ME-Proxy-Cause: dmFkZTEODmYfhcE6MkClXmAzaz/u/B/AKDElneu4mL0qUxdd8dsBrCmOKXS1tHl60eVFV2
+    SymYRFYzuiLUqyPPFAGooBAERtLvf0X1LhcjqzMnX7gdc7DtqXstRRoihdSALfCxoWFzJG
+    BbbIbG0MP1m8AhEq/eZrNtPsqwDGfS6kNpj3lzhC6fPFYomNFvg9RKzjO2WnGUQd1KA2IH
+    sWYk5pONmMX+mdXpmpfGC22NTMapciJwOTHnIl8o4jd+7ZhCw8vFlPa824pJltjvaD3N4A
+    MUB/oyFdCvhdQMSVTPOi3Wa2Ehbr/+fSxb1kUGZO2C7ytEHmk7HxP5nm8sCCeE5hTY4Ukh
+    rIIpin37w35mXfRWH14+Rl8xWHP0kgoiREMnBtagGGqAq7sR5F/pBCuQqZII2rzKrYdP+/
+    rcbxe72ZauhLPBt24wz6tZk9iYJ18KTXJ2Vlj+73Bico8j0kD0Z5X4Ss+Rab8cdTMoTrzB
+    GXLjpJZX8sBhxS4j/ECULKiC7XJlE6rOhLDA0Kg9+DJvgsPBe/ObY1A3I/aNIiFOQXRLTb
+    /nvdIdw2o+3tFxAGnEQpit43kHT+kJJkx0mrdFz8aNP3KnvRpBivFue5/RKZ0naqL58Fiw
+    XN+gtBxfe1aD4B3nUyoNsIQAgJjO7fnUIhn12zd8R/p3WwDVyscfAfKqvGBg
+X-ME-Proxy: <xmx:_52eai9vAXBD_UaFe5JF-fQEipCEfIQKgt4hA1nPHqmEH9YcsFGKtA>
+    <xmx:_52eapkMNqZ5vcepZ_bq_U5K9ygE8-992eGpSW48lRP2L-mxJY5zaw>
+    <xmx:_52eak9U8qmEIGhhbwGFFsnUChUmSNmITmBvmn3D7l8DywYuwJHj3A>
+    <xmx:_52eannpk7z-wvpTupIbC2y09-KAx7-ot8uUkjzzJ_-G1QnVioD60w>
+    <xmx:_52eaodYZZCWV5DMvqIvqirFzNjDGwdHBeHExUFA74wDLnsLS5qi3KMG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Sep 2026 07:20:27 -0400 (EDT)
+ 7 Sep 2026 07:20:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b1321b4a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Sep 2026 11:20:27 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c59776f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Sep 2026 11:20:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 07 Sep 2026 13:18:41 +0200
-Subject: [PATCH v2 07/11] refs: expose function to parse reference URIs
+Date: Mon, 07 Sep 2026 13:18:42 +0200
+Subject: [PATCH v2 08/11] setup: refactor how we configure the ref storage
+ format
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-b4-pks-unify-ref-storage-format-v2-7-6733c90ca5b0@pks.im>
+Message-Id: <20260907-b4-pks-unify-ref-storage-format-v2-8-6733c90ca5b0@pks.im>
 References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
 In-Reply-To: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
 To: git@vger.kernel.org
@@ -90,157 +91,229 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-In the next commit we're about to add more sites that want to parse a
-reference backends URI into a format and payload. Expose a new function
-`ref_storage_format_by_uri()` that enables this.
+When (re)initializing a repository we need to figure out the ref storage
+format that the repository ought to use. This logic is surprisingly
+complex, as we have grown a lot of different mechanisms over time to
+configure the format. Unfortunately, as a result of this organic growth,
+the logic that configures the storage format has grown very complex.
+
+The biggest culprit here is that we're mixing the logic that determines
+the desired storage format with the logic that validates whether the end
+result is sane. This leads to some repetitive code, and makes it very
+easy to forget validation for some of the branches.
+
+In fact, the way we handle GIT_REFERENCE_BACKEND shows exactly one such
+edge case where we don't properly validate. When initializing a
+repository with one storage format and then reinitializing it with the
+environment variable set to a different format then we'd corrupt the
+repository because we silently change the format:
+
+    $ git init repo
+    $ git -C repo commit --allow-empty -m message
+    $ GIT_REFERENCE_BACKEND=reftable git -C repo init
+    fatal: could not open '.../refs/heads' for writing: Is a directory
+    $ git -C repo log
+    fatal: your current branch appears to be broken
+
+Refactor the code so that we clearly distinguish between these two
+different concerns. This lets us clearly spell out the precedence order
+and makes the whole logic significantly easier to extend going forward.
+
+Note that the new logic intentionally changes the precedence order so
+that "GIT_REFERENCE_BACKEND" is now overridden by the
+"--ref-storage-format=" command line option. This matches our usual
+precedence order, where explicit command line arguments override
+environment variables.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c  | 23 +++++++++++++++++++++++
- refs.h  |  4 ++++
- setup.c | 48 ++++++++++++------------------------------------
- 3 files changed, 39 insertions(+), 36 deletions(-)
+ setup.c         | 103 +++++++++++++++++++++++++++++++++++---------------------
+ t/t0001-init.sh |  12 ++++++-
+ 2 files changed, 75 insertions(+), 40 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 92d5df5b71..951db56113 100644
---- a/refs.c
-+++ b/refs.c
-@@ -54,6 +54,29 @@ enum ref_storage_format ref_storage_format_by_name(const char *name)
- 	return REF_STORAGE_FORMAT_UNKNOWN;
- }
- 
-+enum ref_storage_format ref_storage_format_by_uri(const char *uri,
-+						  char **payload)
-+{
-+	enum ref_storage_format format;
-+	const char *schema_end;
-+	char *name;
-+
-+	schema_end = strstr(uri, "://");
-+	if (!schema_end) {
-+		name = xstrdup(uri);
-+		if (payload)
-+			*payload = NULL;
-+	} else {
-+		name = xstrndup(uri, schema_end - uri);
-+		if (payload)
-+			*payload = xstrdup(schema_end + 3);
-+	}
-+
-+	format = ref_storage_format_by_name(name);
-+	free(name);
-+	return format;
-+}
-+
- const char *ref_storage_format_to_name(enum ref_storage_format ref_storage_format)
- {
- 	const struct ref_storage_be *be = find_ref_storage_backend(ref_storage_format);
-diff --git a/refs.h b/refs.h
-index 9979446d15..ee3b8a62ef 100644
---- a/refs.h
-+++ b/refs.h
-@@ -17,6 +17,10 @@ struct worktree;
- enum ref_storage_format ref_storage_format_by_name(const char *name);
- const char *ref_storage_format_to_name(enum ref_storage_format ref_storage_format);
- 
-+/* Parse a reference storage URI in the format "<format>[://<payload>]". */
-+enum ref_storage_format ref_storage_format_by_uri(const char *uri,
-+						  char **payload);
-+
- enum ref_transaction_error {
- 	/* Default error code */
- 	REF_TRANSACTION_ERROR_GENERIC = -1,
 diff --git a/setup.c b/setup.c
-index dfe05d9a03..3be7dac452 100644
+index 3be7dac452..38fa5e854c 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -632,21 +632,6 @@ static enum extension_result handle_extension_v0(const char *var,
- 		return EXTENSION_UNKNOWN;
- }
+@@ -2674,7 +2674,7 @@ static void separate_git_dir(struct repository *repo,
  
--static void parse_reference_uri(const char *value, char **format,
--				char **payload)
--{
--	const char *schema_end;
--
--	schema_end = strstr(value, "://");
--	if (!schema_end) {
--		*format = xstrdup(value);
--		*payload = NULL;
--	} else {
--		*format = xstrndup(value, schema_end - value);
--		*payload = xstrdup_or_null(schema_end + 3);
--	}
--}
--
- /*
-  * Record any new extensions in this function.
-  */
-@@ -689,16 +674,13 @@ static enum extension_result handle_extension(const char *var,
- 		return EXTENSION_OK;
- 	} else if (!strcmp(ext, "refstorage")) {
- 		unsigned int format;
--		char *format_str;
+ struct default_format_config {
+ 	int hash;
+-	enum ref_storage_format ref_format;
++	enum ref_storage_format ref_storage_format;
+ };
  
- 		if (!value)
- 			return config_error_nonbool(var);
- 
--		parse_reference_uri(value, &format_str,
--				    &data->ref_storage_payload);
--
--		format = ref_storage_format_by_name(format_str);
--		free(format_str);
-+		FREE_AND_NULL(data->ref_storage_payload);
-+		format = ref_storage_format_by_uri(value,
-+						   &data->ref_storage_payload);
- 
- 		if (format == REF_STORAGE_FORMAT_UNKNOWN)
- 			return error(_("invalid value for '%s': '%s'"),
-@@ -2069,16 +2051,12 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 			 */
- 			ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
- 			if (ref_backend_uri) {
--				char *format;
--
--				free(discovery.format.ref_storage_payload);
--
--				parse_reference_uri(ref_backend_uri, &format, &discovery.format.ref_storage_payload);
--				discovery.format.ref_storage_format = ref_storage_format_by_name(format);
-+				FREE_AND_NULL(discovery.format.ref_storage_payload);
-+				discovery.format.ref_storage_format =
-+					ref_storage_format_by_uri(ref_backend_uri,
-+								  &discovery.format.ref_storage_payload);
- 				if (discovery.format.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
--					die(_("unknown ref storage format: '%s'"), format);
--
--				free(format);
-+					die(_("unknown ref storage format: '%s'"), ref_backend_uri);
- 			}
- 
- 			if (apply_repository_format(repo, &discovery.format,
-@@ -2806,18 +2784,16 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 
- 	ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
- 	if (ref_backend_uri) {
--		char *backend, *payload;
- 		enum ref_storage_format format;
-+		char *payload;
- 
--		parse_reference_uri(ref_backend_uri, &backend, &payload);
--		format = ref_storage_format_by_name(backend);
-+		format = ref_storage_format_by_uri(ref_backend_uri, &payload);
- 		if (format == REF_STORAGE_FORMAT_UNKNOWN)
--			die(_("unknown ref storage format: '%s'"), backend);
-+			die(_("unknown ref storage format: '%s'"), ref_backend_uri);
- 
- 		repo_fmt->ref_storage_format = format;
-+		free(repo_fmt->ref_storage_payload);
- 		repo_fmt->ref_storage_payload = payload;
--
--		free(backend);
+ static int read_default_format_config(const char *key, const char *value,
+@@ -2699,8 +2699,8 @@ static int read_default_format_config(const char *key, const char *value,
+ 		ret = git_config_string(&str, key, value);
+ 		if (ret)
+ 			goto out;
+-		cfg->ref_format = ref_storage_format_by_name(str);
+-		if (cfg->ref_format == REF_STORAGE_FORMAT_UNKNOWN)
++		cfg->ref_storage_format = ref_storage_format_by_name(str);
++		if (cfg->ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+ 			warning(_("unknown ref storage format '%s'"), str);
+ 		goto out;
  	}
+@@ -2710,9 +2710,9 @@ static int read_default_format_config(const char *key, const char *value,
+ 	 * "init.defaultRefFormat" takes precedence over this setting.
+ 	 */
+ 	if (!strcmp(key, "feature.experimental") &&
+-	    cfg->ref_format == REF_STORAGE_FORMAT_UNKNOWN &&
++	    cfg->ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN &&
+ 	    git_config_bool(key, value)) {
+-		cfg->ref_format = REF_STORAGE_FORMAT_REFTABLE;
++		cfg->ref_storage_format = REF_STORAGE_FORMAT_REFTABLE;
+ 		ret = 0;
+ 		goto out;
+ 	}
+@@ -2724,18 +2724,18 @@ static int read_default_format_config(const char *key, const char *value,
  }
  
+ static void repository_format_configure(struct repository_format *repo_fmt,
+-					int hash, enum ref_storage_format ref_format)
++					int hash, enum ref_storage_format ref_storage_format)
+ {
+ 	struct default_format_config cfg = {
+ 		.hash = GIT_HASH_UNKNOWN,
+-		.ref_format = REF_STORAGE_FORMAT_UNKNOWN,
++		.ref_storage_format = REF_STORAGE_FORMAT_UNKNOWN,
+ 	};
+ 	struct config_options opts = {
+ 		.respect_includes = 1,
+ 		.ignore_repo = 1,
+ 		.ignore_worktree = 1,
+ 	};
+-	const char *ref_backend_uri;
++	char *ref_storage_payload = NULL;
+ 	const char *env;
+ 
+ 	config_with_options(read_default_format_config, &cfg, NULL, NULL, &opts);
+@@ -2761,40 +2761,65 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+ 		repo_fmt->hash_algo = cfg.hash;
+ 	}
+ 
+-	env = getenv("GIT_DEFAULT_REF_FORMAT");
+-	if (repo_fmt->version >= 0 &&
+-	    ref_format != REF_STORAGE_FORMAT_UNKNOWN &&
+-	    ref_format != repo_fmt->ref_storage_format) {
+-		die(_("attempt to reinitialize repository with different reference storage format"));
+-	} else if (ref_format != REF_STORAGE_FORMAT_UNKNOWN) {
+-		repo_fmt->ref_storage_format = ref_format;
+-	} else if (env) {
+-		ref_format = ref_storage_format_by_name(env);
+-		if (ref_format == REF_STORAGE_FORMAT_UNKNOWN)
+-			die(_("unknown ref storage format '%s'"), env);
+-		if (repo_fmt->version < 0 ||
+-		    repo_fmt->ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+-			repo_fmt->ref_storage_format = ref_format;
+-	} else if (cfg.ref_format != REF_STORAGE_FORMAT_UNKNOWN) {
+-		repo_fmt->ref_storage_format = cfg.ref_format;
++	/*
++	 * We have the following order of preference when configuring the ref
++	 * storage format:
++	 *
++	 *   1. Explicit override via the command line, like in `git init
++	 *      --ref-storage-format=`.
++	 *
++	 *   2. Explicit override via the environment with
++	 *      GIT_REFERENCE_BACKEND.
++	 *
++	 *   3. Existing repository format. All the subsequent sources only
++	 *      kick in when there is no repository yet.
++	 *
++	 *   4. The default ref storage format for new repositories as
++	 *      configured via "GIT_DEFAULT_REF_FORMAT".
++	 *
++	 *   5. The default ref storage format for new repositories as
++	 *      configured via "init.defaultRefFormat"
++	 *
++	 *   6. Otherwise, we fall back to the default ref storage format
++	 *      compiled into Git.
++	 */
++	if (ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN) {
++		/* nothing to do */
++	} else if ((env = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT))) {
++		ref_storage_format = ref_storage_format_by_uri(env, &ref_storage_payload);
++		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
++			die(_("unknown ref storage format specified via %s: '%s'"),
++			    GIT_REFERENCE_BACKEND_ENVIRONMENT, env);
++	} else if (repo_fmt->version >= 0) {
++		ref_storage_format = repo_fmt->ref_storage_format;
++		ref_storage_payload = xstrdup_or_null(repo_fmt->ref_storage_payload);
++	} else if ((env = getenv("GIT_DEFAULT_REF_FORMAT"))) {
++		ref_storage_format = ref_storage_format_by_name(env);
++		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
++			die(_("unknown ref storage format specified via %s: '%s'"),
++			    "GIT_DEFAULT_REF_FORMAT", env);
++	} else if (cfg.ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN) {
++		ref_storage_format = cfg.ref_storage_format;
+ 	} else {
+-		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_DEFAULT;
++		ref_storage_format = REF_STORAGE_FORMAT_DEFAULT;
+ 	}
+ 
+-
+-	ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
+-	if (ref_backend_uri) {
+-		enum ref_storage_format format;
+-		char *payload;
+-
+-		format = ref_storage_format_by_uri(ref_backend_uri, &payload);
+-		if (format == REF_STORAGE_FORMAT_UNKNOWN)
+-			die(_("unknown ref storage format: '%s'"), ref_backend_uri);
+-
+-		repo_fmt->ref_storage_format = format;
+-		free(repo_fmt->ref_storage_payload);
+-		repo_fmt->ref_storage_payload = payload;
+-	}
++	/*
++	 * If we have a preexisting repository we need to verify that its
++	 * current ref storage format does not change.
++	 */
++	if (repo_fmt->version >= 0) {
++		if (ref_storage_format != repo_fmt->ref_storage_format)
++			die(_("attempt to reinitialize repository with different reference storage format"));
++		if ((ref_storage_payload || repo_fmt->ref_storage_payload) &&
++		    strcmp(ref_storage_payload ? ref_storage_payload : "",
++			   repo_fmt->ref_storage_payload ? repo_fmt->ref_storage_payload : ""))
++			die(_("attempt to reinitialize repository with different reference storage payload"));
++	}
++
++	free(repo_fmt->ref_storage_payload);
++	repo_fmt->ref_storage_format = ref_storage_format;
++	repo_fmt->ref_storage_payload = ref_storage_payload;
+ }
+ 
+ int init_db(struct repository *repo,
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 6f4431bed7..ca44dfc1ce 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -643,12 +643,22 @@ test_expect_success DEFAULT_REPO_FORMAT 'extensions.refStorage with unknown back
+ test_expect_success 'init with GIT_DEFAULT_REF_FORMAT=garbage' '
+ 	test_when_finished "rm -rf refformat" &&
+ 	cat >expect <<-EOF &&
+-	fatal: unknown ref storage format ${SQ}garbage${SQ}
++	fatal: unknown ref storage format specified via GIT_DEFAULT_REF_FORMAT: ${SQ}garbage${SQ}
+ 	EOF
+ 	test_must_fail env GIT_DEFAULT_REF_FORMAT=garbage git init refformat 2>err &&
+ 	test_cmp expect err
+ '
+ 
++test_expect_success 'GIT_REFERENCE_BACKEND refuses to reinitialize with different storage format' '
++	test_when_finished "rm -rf refbackend" &&
++	git init --ref-storage-format=files refbackend &&
++	cat >expect <<-EOF &&
++	fatal: attempt to reinitialize repository with different reference storage format
++	EOF
++	test_must_fail env GIT_REFERENCE_BACKEND=reftable git init refbackend 2>err &&
++	test_cmp expect err
++'
++
+ test_expect_success 'init warns about invalid init.defaultRefFormat' '
+ 	test_when_finished "rm -rf repo" &&
+ 	test_config_global init.defaultRefFormat garbage &&
 
 -- 
 2.55.0.1007.g17ff1f9808.dirty
