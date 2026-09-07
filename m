@@ -1,151 +1,138 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220144508F8
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 10:07:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A650938DC6F
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 10:19:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788775666; cv=none; b=q7U6qGUTnGVrphmsOTq6R5+bwu0dExf0MzGWfFlf57mYYjdwm69KypCOlWvWHvPurfHHh9/IHMM2iX9ylxA1vq0gmeIGBcL8R79vru1gMDhj2l1UShLvVYElXAih7hqOIsXkvJmu6qk2Kweu8klG7HuOeTPzerR53p5R01taDUI=
+	t=1788776354; cv=none; b=YwnoO07AfCV7LC+6yBAFKYHvZRQSYTUYZ379ntfDI8AZLu/gA+5EUB529912tzfNG+OAEDtdahQAw7gAtPHsnEKV6JcMP+47qd11TFUC1i7CApRoLaandXdmYIWdMkAFaVo7cWnSUnbhUfNF3VhpjhhHzpOax52JCdGEcshR2Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788775666; c=relaxed/simple;
-	bh=Lz4rgT6j+YFKkMlE2BxegdHbt7eY/LjLuW/ZOb2LeII=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=InaXtej74kjIntcsOTBcDGdmxKlsB8jFYyu2fWh9kAyqTBaTX1yIF0WyObr/V452EAQiJhTvnfAWbKqjhXLyHGAIYraIyH+wgYQ8jWZhJFu4Rqh65Aa98J2jS2YtvHcADXa+IDab/IZ63Ishl0N8WgmWJOkAvW6679YDvLfhyrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FrRz14bq; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788776354; c=relaxed/simple;
+	bh=tj11UwIGbNo8r6Nw9nTFHHcYsvyoYU+m/+rnSMU8yvg=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=RGQ7Y9sNhtfeUGqkycPn/MNfQZsXkdrex2U7hPyk+Xqu3hFwAAgjHDI8a3dlDGry834ZgFT3hzKULnGRORYMBTwQ082+ORKu3pAb+AjKP5I9RwwQy8/oy9WuuD/IWzdbTpUFTMNfC5x22ogasQtQwDIXBnsmTOBUJUU9KQp1D4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=qr+NEBJ8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fBCfRKQB; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FrRz14bq"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c1600d040e4so565810366b.1
-        for <git@vger.kernel.org>; Mon, 07 Sep 2026 03:07:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788775663; x=1789380463; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4hBzzNGHNQx0ppP2u+EgiLTZ9IplZDQ8gm367lhqiik=;
-        b=FrRz14bqmzxfI0KRCoCFnRzsedGMUkgngYPwT3BxM7A46BOS5GyqfoO6tZnjKn/BWr
-         DEBZiDp8nS+GYZ8IXVicx3XP4gfz8kodotd2v2227qGY6JaV0iJgCpM93BxFu89CSE3B
-         u5w3hJKscsUxhWNCohB02aik9oCFNx1biPE2JPplo1dvzxBtfbaMu19jTYeG8gllyVYz
-         jCMd18BpkDja0xdw99fwTTvzFUUfv3vZ2ooV5yoCU0FsDH9thVbaa00ijkaF5h8XY+II
-         o8xvLNM2a5e2lQgIdduD9qEzh2pWvHSptVKI4o0X6YJqp5SF+aqM5FlSbWQwWtemWgBJ
-         UmbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788775663; x=1789380463;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=4hBzzNGHNQx0ppP2u+EgiLTZ9IplZDQ8gm367lhqiik=;
-        b=gRzisz3lObbFJ/O5YQE5sYd7A+XZr/TYTN0K2hRjjMHLgZ538XP7rfDZkEkfwAC7Hs
-         454n2gpn0ytFaXjNoxYsoQt93DAMN1724MbDF9oWhJ3SYNcslTqFyFFnVnlVUjZTkBwU
-         e54P2W4Ulh1mmQ0mDJX8ic3/FjnSwuvE8wScgAfFt+Q8h76x8GwDNe4IWeR2HB4etkfl
-         43zVKHcCnRQcm2bZO+RjeFuBYRgH0aX5VBIkwh+dCiSSYkRlsSLHvnRzO169DXE7kO5u
-         1RYs7+OKivS400wEj/WBEihZUAg8b3QEQwoTQdYbl6+mSXhFiE1Aftm5B6BhDmeO4KPw
-         VfgA==
-X-Forwarded-Encrypted: i=1; AKwUvBxA3cz7HopOtamtfliOwinwmzj3kcZ4TcwFYVf+H9UXTkdhWGlE3UgEOzPYzgs3munxENA=@vger.kernel.org
-X-Gm-Message-State: AFuF++m8X16FtXTQ6lFcvGozN7tbMbn8fafKTZbkK+kZWrZQU1HzImq7
-	0+xReUG2R7w57I7Dc9qsrWJt3Zg+/oo0rMsXq7SSnujBlccp9abEtXLM
-X-Gm-Gg: AYBFou1WbTv5DEvEBLAtREK1YAmqJPVpbFAzhbKzDUijOyW9M6e08GaDqq3Mhi45Ycj
-	L/Zq/NmzgFNjYfTtQLLbQrdhZTv+RtHtIw4wP4yX3XHo0KMdfjhKPT48cJVqFWgQxvWE4alQUdO
-	kbAG7O9d9S49Ee/YrD3jg8tJ8KcziHf/+IAzQ2QdeViypAr06JiRab2mwDg7VCWMNp9fxAJLjLl
-	3o7qcCdq3HW8c9ZUapT47bfktbaW3EguQqzMyVZ2Jj+C65ymxWzsXiLy/LHPamoJwTXnkVrJQe8
-	ZrEZdpIsNG5GABsFhXMqt7+9lMdZVXMj24GaktF+z2Z6xzfNz1OoxDK1PueK5XEjCRwTE47QOou
-	N3umUYndfLVsMLAK3GDvl5PH8D3vfO4NHsjfnw+kY5+8jClXEAkEanzArFNdb2GN9rG4/TNLFR5
-	eG30sgo4/dnkMcvmoXRTO1/ETxyZsUx9HaNNstWVjzfhkc2gm0xlWRfQgZO/CktAzZNk/lvbYkz
-	NVTwLXRjRz4nUbQsDhPnRjeWhKgKgf7tSmhecvnk6fE
-X-Received: by 2002:a17:906:4792:b0:c26:3341:b8f6 with SMTP id a640c23a62f3a-c263341bcddmr388698266b.31.1788775663076;
-        Mon, 07 Sep 2026 03:07:43 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c260d5bd68esm430447366b.57.2026.09.07.03.07.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Sep 2026 03:07:42 -0700 (PDT)
-Message-ID: <595d0d45-7000-4c52-8430-f18ce8f99c71@gmail.com>
-Date: Mon, 7 Sep 2026 11:07:41 +0100
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="qr+NEBJ8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fBCfRKQB"
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0DBA4EC022C;
+	Mon,  7 Sep 2026 06:19:10 -0400 (EDT)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Mon, 07 Sep 2026 06:19:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788776350;
+	 x=1788862750; bh=ei/mms+GZusNrQYnGcFHBAtSVHeIQFagMclMl+hX+xA=; b=
+	qr+NEBJ8XHrAQQg47QglLnLO/K+6kQ0RFZpUm2SXEW53qFEHTSOhJaXDgUBigJdT
+	+rXNp1X0kmgQ3JnGeraLh9+prFyuS1h1WMq5Tvb9BeqDjgAie8COQe/+x4ZoF0Ts
+	hjV4Ak3KdZXy1E0JlfPcAbnqAwj/YF7W9d0wjGIskkK1qqG574cxCEaDySceLNmZ
+	A9i3JeZ2200kYxxgCD79z75XHNF3miCRDiXdTYZdEy+SqdMBp8hL2UUd+903KzZH
+	QW2i4VEccT2Fhq3liXSFcWTtEGcjTnutnLpjqgEKgQQNnNAJkGD0O72JzqbtxGg/
+	bZHAh83+fFLiaZCtYSRTKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1788776350; x=1788862750; bh=e
+	i/mms+GZusNrQYnGcFHBAtSVHeIQFagMclMl+hX+xA=; b=fBCfRKQBF9kpBpICD
+	tSf9wQSwgoTNL9dGss77fUG7oMRgiUFx5Z0tEpvi6A9D2bG3FD5j1ZTWvkceO4p+
+	vWyrunGeVMdejHxlc1dmiXrqsfxkQ1Bh6VCB6DWYq02ZjXtsCHJbSH9UOLqreMCB
+	d++nmpYGSmRvCqZ9zbsfnAerVBgFAGstI4w3RJtA1L6zKmUjJr0pRcb0EXHqVpjW
+	ewK+kn3Dxeyab9EyOrJ80FtcjXxgqo+MUcVXQDebu+PbK5NoBvVmuOCQ1+z3YiU3
+	Yb1rnoB+wxJ36XM6FfmphjLsqh3KEheZUF8z9jGSNn6NizQqrPPMyA6PCilLGSc8
+	an8xw==
+X-ME-Sender: <xms:nI-eapKBdqqSgX1fwx7OHpygj1Ho2OJcXoUkj4794Ia1hOGrwBBN0zQ>
+    <xme:nI-eav8qBfebUvj3KpKGD_6OCAqYJIuYZOHf4X1JLBES3Vbpw7Y3kLGRq2TJGCvJx
+    irIogxvViz5m6C8ykoHhfPKObkuYTNZ6IMGj87q09AE4uptwfzCUmw>
+X-ME-Proxy-Cause: dmFkZTGzUZdkv50vBBFXH2wYNoZIAs3WfFv7yFrG1+kz1HtTbccG5x0fUa4YOCelprS9ax
+    COEAIt2SRMVaYOaAKcbuc6BcR6o8dJy1DoWXzemDZQlfHerMJiA5kmiOWNJJLW5f1WQjfI
+    lBeWSDC1i+lPxzqKUX2n9a3oWKJhEn6ztYsBSJuZw6sjppCsboF9dlhdC60ANP1bb9EQBq
+    TY5JyrAwyTNXJz63x9tl9FVhfCOjhbDPRf7T0nXmRAU5+nps+DD4eQT6Co7QB+wH4jQXzQ
+    99pRRyDMZoTrCJMAW9ugW1Qb9viLZ5KbARsfrmnsuqcGEWg5fyuIwH5u4jDL0ysY6MZHrG
+    Nu3aWIQ5IyOL2VhXOQ4RqofKbimyRA+UrQljBp2TGWZWXRf+EvZB6gl1f0jeKIjftRLGvo
+    UEhgqiZoUqZfUw5F6vL6KEp+thaMpIQhwtjnmVcHpO4sh+3Su9tg9fHqD6tG7dBEWfIck9
+    aunz5HACGjdWmXaPxhgm1wYoITZimYI8254SVtIyikfKn928J3oVv2KKOxoT72oYUau6vx
+    kWnRjO26+tNbAx4Rf5m8/hui3Foa+bMpU0xAF0r8dPaTkbSyQ5pJEpN5M0p5vJOG/IL8AG
+    xo4AITFLoy9t5PyLrqn4XUl7sfv9xCVXkine1oejRmRPlLdsR1BW3A3prGfw
+X-ME-Proxy: <xmx:nY-eajNuYyRrJnEbg1QUcWxh87b1kAAUTuX8BfnwKkVJ8EQGojz4QQ>
+    <xmx:nY-eavfn_CnGLyRzodtqY_LTIpDAXvbGa1qSEc41pqMd8DRNE7W-hg>
+    <xmx:nY-eaiVr4FdtOIC32kvOMfgaVowmstWrPDFJpzdNk-_o5nrDbZOhgQ>
+    <xmx:nY-eang26eqdE0zLPwUBOWMEt_8SIDImactgC4kkMrXjgY9R-j2HJg>
+    <xmx:no-ealX6kzFsjbPhTFd5zdaG1tgg5uOpSrixeKjmt9hpkBXl07vZuKqY>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id AC9D822C007F; Mon,  7 Sep 2026 06:19:08 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] rerere: keep a background gc from killing a rebase
-To: Thomas Bachem <mail@thomasbachem.com>, phillip.wood@dunelm.org.uk
-Cc: gitgitgadget@gmail.com, git@vger.kernel.org, ps@pks.im, gitster@pobox.com
-References: <pull.2214.git.1788337897490.gitgitgadget@gmail.com>
- <pull.2214.v2.git.1788507876543.gitgitgadget@gmail.com>
- <5e613735-60e2-429d-a5bb-1a4f03578604@gmail.com>
- <CAA0xjtrkjaOC_+jhN=Vjm9e0T+iqAZeeMKx-ymVaQcLA37bm-w@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAA0xjtrkjaOC_+jhN=Vjm9e0T+iqAZeeMKx-ymVaQcLA37bm-w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-ThreadId: AdgGK3U4SE6s
+Date: Mon, 07 Sep 2026 12:18:48 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Brigham Campbell" <me@brighamcampbell.com>, git@vger.kernel.org,
+ "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>,
+ "Taylor Blau" <me@ttaylorr.com>
+Message-Id: <9f455224-f156-493f-a21c-27a8922f3360@app.fastmail.com>
+In-Reply-To: 
+ <20260907-maintenance-doc-bullet-fix-v1-1-dc08dbe61a82@brighamcampbell.com>
+References: 
+ <20260907-maintenance-doc-bullet-fix-v1-1-dc08dbe61a82@brighamcampbell.com>
+Subject: Re: [PATCH] doc: Make asciidoc bullet items separate
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Thomas
+On Mon, Sep 7, 2026, at 09:15, Brigham Campbell wrote:
+> Fix conjoined bullet items in maintenance asciidoc file.
+>
+> Signed-off-by: Brigham Campbell <me@brighamcampbell.com>
+> ---
+>  Documentation/config/maintenance.adoc | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/config/maintenance.adoc
+> b/Documentation/config/maintenance.adoc
+> index da8be9f812..c778ab09ac 100644
+> --- a/Documentation/config/maintenance.adoc
+> +++ b/Documentation/config/maintenance.adoc
+> @@ -41,6 +41,7 @@ The possible strategies are:
+>  This repacking strategy is a full replacement for the `gc` strategy
+> and is
+>  recommended for large repositories. This is the default strategy for
+> manual
+>  maintenance.
+> ++
+>  * `incremental`: This setting optimizes for performing small
+> maintenance
+>    activities that do not delete any data. This does not schedule the
+> `gc`
+>    task, but runs the `prefetch` and `commit-graph` tasks hourly, the
+>
+> ---
+> base-commit: 3cb9185f65410273787f74333cc027d2ea5daada
+> change-id: 20260907-maintenance-doc-bullet-fix-d351253f8a91
 
-On 04/09/2026 16:55, Thomas Bachem wrote:
-> On 04/09/2026 16:21, Phillip Wood wrote:
->> With Patricks patches that's no-longer true I think. I think a better
->> motivation, as the cache is per-repository, rather than per-worktree, is
->> concurrent writers running in different worktrees.
-> 
-> MERGE_RR is per worktree, though, and so is its lock:
-> 
->      $ git -C linked rev-parse --git-path MERGE_RR
->      /path/to/main/.git/worktrees/linked/MERGE_RR
-> 
-> so writers in different worktrees never meet on it. What they share is
-> rr-cache, which a gc in one worktree prunes under its own worktree's
-> lock only. That is a gap of its own, and not one this patch closes.
+I wonder if this gives different results for asciidoc and asciidoctor.
 
-Oh, I didn't realize the lock was per-worktree. So the lock "rerere gc" 
-takes does not actually stop another process running in a different 
-worktree from altering the rerere cache.
+=E2=80=A2 asciidoctor: seems that the bullet list is correct with or wit=
+hout
+  this change (no change)
+=E2=80=A2 asciidoc: needs this change
 
-> What remains after Patrick's series is any "git rerere gc" that runs
-> while a command records a conflict, from "git gc", from a maintenance
-> run, or from auto maintenance once enough entries are stale. The v3
-> message says it that way.
-> 
->> Overall, this commit message is rather long and it would be helpful if
->> you could distill it to remove unnecessary and unrelated details.
-> 
-> Done, it is a quarter of the size now.
-> 
->> Why do those commands fail rather than wait?
-> 
-> They wait like everything else, and once the time is up they fail
-> instead of going on without rerere, which is all they are for. That
-> way a stale lock gets the usual advice to remove it. The config text
-> said otherwise, fixed.
+Note that I=E2=80=99ve made enough asciidoc/tor mistakes so I=E2=80=99m =
+not that
+reliable of a witness.
 
-That's good, I think I'd maybe misunderstood what the original patch was 
-trying to say.
+I also idly wonder why git-scm renders this bullet list as it ought
+to. This hunk has not been modified for a while. The second paragraph
+which ostensibly made it conjoined was d9bccf2e (builtin/maintenance:
+introduce "geometric" strategy, 2025-10-24).
 
->> It might be worth adding a check above here that BUG()s out if the
->> caller passes an incompatible set of flags.
-> 
-> Added, for RERERE_NOWAIT with RERERE_LOCK_OR_DIE and for
-> RERERE_READONLY with either.
-> 
->> A background job that the user did not explicitly start printing to the
->> terminal is rather confusing as it is likely to get mixed in with the
->> output of whatever is running in the foreground.
-> 
-> The detached maintenance run has no terminal: daemonize() closes the
-> standard descriptors and reopens them on /dev/null, so the gc's
-> warning goes nowhere when it loses the lock. Where it cannot detach,
-> on Windows, it runs in the foreground of the commit that started it
-> and there is no race to lose. The warning the user does see is the
-> foreground command's own, when it gives up waiting.
-
-Thanks for clarifying that
-
-Phillip
-
-> 
-> Thanks,
-> Thomas
-
+https://git-scm.com/docs/git-config
