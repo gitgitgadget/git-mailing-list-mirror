@@ -1,59 +1,153 @@
-Received: from outbound.pv.icloud.com (pv-2002f-snip4-11.eps.apple.com [57.103.64.231])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A65A499F3D
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 16:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.64.231
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788797155; cv=none; b=oGsu0UW+CqwwQjdO4sS92RsqbTjjdNS6wOrJAd18t7vBo7LFkXUcqINMurNz0pwu7LAq8wm5Fj/e/+3ddSmrI4/32kM+ygcnOPAxNjlfAZnEk8WLWQf9oihJNfOYHMNwjPOPEdKHjY8pany63LYTcWzIejLDJDPLVewVkqGNEkE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788797155; c=relaxed/simple;
-	bh=NC2pn0l9RB7WOMtmh4tt3OapAQJOxzZX81rIrbLaRU4=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=FVuPfX0gdkulYuNiWgN6y2mbmX9kDjA3fGS1lwLKbgJlLd1I0YEVUL8XrsouDU6SZqF0fz0DJlxcEvQc2sjT23A3XAIq/92ffY90V/5GubxAFVN80T72W5OxKnEVViU3idxfjjv8vepEwIfjEebxCDUJjkhZZteqz3gvzqQKbAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=OrGfvoJP; arc=none smtp.client-ip=57.103.64.231
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E4447ECF7
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 16:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788798936; cv=pass; b=OZg7ONGeTi1aX6qIX6xzkCCczCccb/SnWDtc2I9c8mlxzAaO07ltXn3A70/G+SpP8y4w86cZuyzIvRAxoJ8OiZ1l6iCbRWtPInOvBOSgKhEna2uCtj7NJ6AOtuYZC6hAyHM4Nof1Zjvl5S/xNR24IYw4w6/t3sF4tcxi7llgsHA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788798936; c=relaxed/simple;
+	bh=FJr4MKXXnc7KQ5zGHQ6Pr6WSCQq3k1WYF4y/Ud2V/nY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KnojISmVKugpgT2VpUDsnjf7YGF+hH/ChuIMfpaJEzW0JYsB7xWo5+82gjm5xubkQD4RZV5sYmM7rOu5/wx01oVTCHvuAYzK18RSHVTKxebLJlWID3INIOKqajcSuK6nhG4xtnNRBeV1hxmkJhodB26t5xVxjddiyuj6QRp2Cb0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com; spf=pass smtp.mailfrom=thomasbachem.com; dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b=yW4KDwID; arc=pass smtp.client-ip=74.125.224.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thomasbachem.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thomasbachem.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="OrGfvoJP"
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-west-1a-60-percent-2 (Postfix) with ESMTPS id 3ACCA18005D0;
-	Mon, 07 Sep 2026 16:05:51 +0000 (UTC)
-X-ICL-RepId: 01a07c9e-67ab-7c01-b0b6-3758290bc6b8
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhAB0MGXQJeCEwDQwBLVxQEFVwDGQJWFVcMWhlSK1sTVRdGCRkIXR0ZHldQXgheH0wcHQ5YBhICWkUBTV8OXh8EF0YZVQRHHl1WQxsZAlEcVg1XQ1QEX1BJDEFQbFoARxdIHV0ZWW9QXRwOBFQHXQVdVlACWktfGV1FDy4PLQcxfDsBQHFfd0MUTHVYAUYLNApPHihzW3dJfE9wWHVTAjBQG18CQg8cE1YVDU1DEkIVBBFQAVgeVg==
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1788797152; x=1791389152; bh=NC2pn0l9RB7WOMtmh4tt3OapAQJOxzZX81rIrbLaRU4=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=OrGfvoJPEdg0UGu8X2QEi+b2ZPjd5CJASzmCSt2n7wl488L5yRgOZzx/VzbJwsY6HvdzUF6He3ArfY4wkMZ53UVeAGOjTke6PDjAf3ePW82+YpUg0bwf8s7R8uBzFlJczL2E1NLiWuNPIL9ulVgzKFd09wBEFzAkTQ2IKwxaxtv45CJINKMQKI/ytKPnsw5YH/HFgA9Salo5InbRCVbcCWMzaivAlfaWpo1HjXkzjiwXiUO5h4peJKgzhn3kpzR+lFQwPSUIRYDPXqiu9JXn5/9YljpIdHkJcocx54tP3V+Qg0l6+DOn/iJKoEofcx8h4kmdmkpli5iuGPzJKs6k5A==
-Received: from smtpclient.apple (unknown [17.156.192.29])
-	by p00-icloudmta-asmtp-us-west-1a-60-percent-2 (Postfix) with ESMTPSA id AF8FF18005FF;
-	Mon, 07 Sep 2026 16:05:50 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: mon.identite@icloud.com
+	dkim=pass (2048-bit key) header.d=thomasbachem.com header.i=@thomasbachem.com header.b="yW4KDwID"
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-66c744a00edso2952388d50.2
+        for <git@vger.kernel.org>; Mon, 07 Sep 2026 09:35:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788798931; cv=none;
+        d=google.com; s=arc-20260327;
+        b=cB6TLqo8Wv3JRMIHV490llJwCR0POGoyCC06fFZDWE9JvZGDquOSEzOQIvCKTExbdx
+         zHlIxb3iMdxIuye7DRcjb1YAKBCYef3nFK9rEr+9McPfC4mGpCbgca6d5pwR2yEhaLsQ
+         iOMOTTPiWnfk8HleSYEo0/5gxbo0kn/hXVYlXnFV+5mWAZTqMRByfb3vmTwXFf1/X+8+
+         PT04YgzAnFPFsuY7ayePcziAhgCTgwIhQ4lzSfBis2Uv5ta63kAOwC8UCB1uJqsodl79
+         7ce1lli8nbn7N/9LagXmmcOPDByiDNN9kDXLO4JjpdRMimmPfj5PAnyNfxHh5cKpR5Mv
+         HkPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=FJr4MKXXnc7KQ5zGHQ6Pr6WSCQq3k1WYF4y/Ud2V/nY=;
+        fh=DODnQCqkWDdUbsQb+QVlPbHuCSEyESHAv6/EsgoeJ7A=;
+        b=rAfjg+0X5qUBB5zhJ5b9abzkJFBHp07S67bmTaEXWUg4a3bqxaHpEYp7nsYgGGyqOi
+         Erowg4PVmOgNODzp8Q1SsJN1ApeIzrfVzqR9ME+fvfmVxlUn7LdwoMwcr5DD7qkkIzha
+         T+GnOOf2U97+CA2Suvga3E3nLI3DuLvi8Lv4SoricWdtMAdp5fKMil+FHR4UMXliSSj8
+         sE+tyA2zVNnVtv5XX6rku2lWl+9V2sMGcuUHc4/GfD6rGzl5W1E65VshG30oGFMBwvzj
+         02ahAs6ayOfFnTZgyH/xX6hiAejsAad2jAZlYkwWRSdTIl+g72T7ZsRkmFfofZV+yneN
+         fyCQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=thomasbachem.com; s=google; t=1788798931; x=1789403731; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FJr4MKXXnc7KQ5zGHQ6Pr6WSCQq3k1WYF4y/Ud2V/nY=;
+        b=yW4KDwIDSMDuEWNwZ62jmXIXPXLbnuy8uvPQVYSRCKWKW0+2WoH32JXluY/n76YiSN
+         gL80VClxKnMyPh35Z+JcCPMJ+ZW9syWkgokcUGPAqzUY9yDzKvLcONqE3FuLAqb4Bekv
+         Ftv3/GOOvyQ+yhyooS8Mscsit18xGfJXX39Lf3onB59ZrmzI+RwgNLjL2Q2NqTbfSM1N
+         bIpNBcVTuOMz6ygPL+ig1Rq6DY+gTwBYGf5q3fovX2qVRU8M5TqAQ5S0RK6oLa8DtEgM
+         9cQUZ1TEQfqz1dHtfo+H9vgrH4jPv5+o/kRDAGNAk2VUiX4rXaBsgS3RDkYImPL/ehpi
+         zyFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788798931; x=1789403731;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=FJr4MKXXnc7KQ5zGHQ6Pr6WSCQq3k1WYF4y/Ud2V/nY=;
+        b=YuplQ+Exd5Ff1nR3urTPPprD1gV9EujKBF5AO5PPypIddIMeDylsvU9So6ucvtxJ8n
+         cNxiqI5cQfJY7CjtEzqdtXeui+dDqzgpgow8Dfzq/zYZ+RbKfZ4eRv2egb3Z1MZqwpXo
+         niYTEy7Om9GOoTIYT4ufgQ+BLwmPv+GcG0lrv0K8x4sCm/5MJI6WGbIpIJlsj2ka2BJj
+         L3TTFq25maKKqQymrgPp9PAijEsTAHaw/EVkthT46s7T93ydQsxVAUz7ECrycojQjpC/
+         Rp/A2sodi5KUp3MM64VG7PI03ogwb4b7Tx+aSTdJsMxSCf+WME6X65y6fS+SpNlKWhP3
+         W3zA==
+X-Gm-Message-State: AFuF++k/xZhYzyT+oZc8rCmvHioGxiScO+rVfGATVpdQH3U4rBqzrXXx
+	ZjoWNKGUA0UgaF+rOwvQrJdcxw2h2Lih2FFufYX7P2k1gwwbMGN+KqWd2QuQSDaElS7K2OCbWxA
+	r4nt2cQIxbQ5uYTEJ9uStlcOD2qPSygY+GZRTabB03A==
+X-Gm-Gg: AYBFou3Fg7luB2SbDO0lMzzsZZBrWCy+/Z5bhBbJ2FCohQH76PR+3qtS1MvlPkt6CfA
+	kwywIXxlkykFDsySHBVew5OZWDncmE3YHgAo7lUTT8PmKpZRQyR3XpATjGe1ipL4k5nnd/ul4Js
+	cDhzoGBe8V1kDjFN/13tD9mAD49dZXoJeIs2VxHtlK3g2LCzOrgh40A2qnm21lZ1WuTGWhXG+mD
+	CD6oqRQqsmRrA68OwQsOrPTVTd+cyMYz5FZ2KCsuz6ZJfWCaN7ZtKJ0GUNIarlYXgsTYlo5KLFb
+	y0uDXr6YxfPwUIMGJTtLTcs41z1m9NWVSlAt7SbnaIPWc7yw+0wyt/X20ZM2TsuYzrWaEJpyE5/
+	sf10=
+X-Received: by 2002:a05:690e:2599:b0:66f:c1be:a668 with SMTP id
+ 956f58d0204a3-66fc1bead79mr3944116d50.90.1788798931178; Mon, 07 Sep 2026
+ 09:35:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Mon, 7 Sep 2026 12:05:18 -0400
-Subject: Je vais pas 
-Message-Id: <C8F5AEC2-F4E3-4F56-9D37-ED0E9E7C5B80@icloud.com>
-To: git@vger.kernel.org
-X-Mailer: iPhone Mail (24A5390f)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA3MDE3OSBTYWx0ZWRfXyLb98UtgrHAH
- X/IBhIRX8dLiMryjVo+LVRz8Nn/9R7LIcBCsB6fBQiWJ7JZmRHE9VEDFVejRogftHyNpXPENOWe
- dmXgWR4il3AgPPsNfTLd9FqJ+VIIaxewDW6mEnujE8/g9GfXLPTToHcEzAp/1htXiyijk8eqRwc
- DktlrNe82YZN6pbTrlI3xJlmn76e+O6wIZSBtpsSWLe9aOeuYAYqqpme7GhCClvDA23HvrjqdYk
- Y8/Ao42FTnGkptNs1y59EpQaUAuWalVG0AbuyY6JYtdxIHELAlulPty68DAJSSQ0eJs1ad1JyN9
- dC7+9D6zixAa53VY3oKJit1iWogIxDcW6eIB9pE6lKm+FuwQZT2IIEMyjzq2Gs=
-X-Proofpoint-ORIG-GUID: 3bM8PFk6nE1tnOXjl4AXd5nCkwJ5dHXz
-X-Authority-Info-Out: v=2.4 cv=WvEm8Nfv c=1 sm=1 tr=0 ts=6a9ee0df
- cx=c_apl:c_pps:t_out a=aW9mcIavGNWWFvFFKOxBSA==:117
- a=aW9mcIavGNWWFvFFKOxBSA==:17 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
- a=x7bEGLp0ZPQA:10 a=cHTQyyNem8IA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yByyWrLn35C_8_xOOowA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 3bM8PFk6nE1tnOXjl4AXd5nCkwJ5dHXz
-X-JNJ: AAAAAAABPBhjX9nNOSEUnX9TktybeOUbdXDNLzHAOzfg8GKVDCdGp3yO70G676aVBv8F2ZVxgMNl5Owh7KmTakhMlf/iQsVVALfD5Exz0zUepG/XxeZOPJeS/Qj/cR0t+2sRCyNIqRFxZTqAQOrGPytGIDQNGqOi4ggPozuykhg7+7EufCakh1YUUm9zVJ1Eyjxmcn1m28Hjg+1ua2nOp+NUOMuW9KwwL5NNZgCIId6GeJP5pF+ICvHwp2OWNoozncGMYS+85+fl+rBy79INZW6MQgu5BkYWMQvjaWNTpP5LyXcLyziTItKLjZgSvpUEkyIGKtSaj22evvhi/+lkdrvhaDH0W76jh2lcgyjkGy4kj/bqdWpgykI7g8oiW47wOUKHTtSx0+VessOHTYZmxdioFdABtlJ8JHEGpJDdEFbG6kkJJUlIICHeXAvi3iqYQKWr3ocbYZ4YDapjlppsdycOLuctsmgZbno+YZIZAlTqzz3g9eL/cTWhnShUd2SIS6o8MwHuHfU1rUZjXXMR1wr9xi1Mxl7Q6Kic1gCinwQivqsZNHQQSRTNvTTntJhJzNcAega0xAu2wAHjplMZzIlB8X6I+HNB6HG5/sy6UnMiIJoF3NUzKknBcfbyyoVMYi4WrCOcE1s524IBb6+zKyWZ0pa9SCltqw6MyuxHTsUBFBPW6urr9wO2dOVmU83JjXA8V9r7w/x5Rudn6WfR1wZxKp651gk3x1b8OW7rAtRyARJZmO3pd+oVbzxOhg/K8ET9fSuz2fR9rzL8M1dufWZBhnz6WUJQFw6IdhAZktwhzUDrrb0V3391sI7F8/Op8Jj432siw3oQMDn63SAy6lM7dkumfZOgf/51t4KvSSGKdezoZcnJk8KZLHhJumM/FKgVAUQSLn3QUOXijIAiiqmDVsG2Jr1Vu8Xc5bsQUQszanQhcabY6zp4bzZPTjdJzisXCBlmKusAq97//eFrLCSrXcQ0dqc
- /xcx9KXamqlPsvzURc2flhY+sljVQXrrQh//WaB4qKkpWj2yLcF5UIS6E6YsW26+DJf/CXmRp9WD4HHuGC75BH8yXcxB4TknY3vU4ZORyq3nghh5pGwT59ThVKZEkV987xpw87p3uT/pCs4EXhgStQIcYIya8cb4gsF8T6qCj/glXSDgcF2myEQZvPFZUeo2WK11LkrtX9PNo8j1UD0WaY5JFh4no4p7kfuYscMz6KYnLGUA/moYrM6Cmvx856AoqXjvm
-X-Apple-Category-Label: MTc2MjE0MDYxOTk6JGNhdGVnb3J5JF9QZXJzb25hbCw=
+MIME-Version: 1.0
+References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
+ <pull.2217.v2.git.1788537086.gitgitgadget@gmail.com> <baab8d4876441ea883044c34bb5584631e30e1ec.1788537086.git.gitgitgadget@gmail.com>
+ <ap5yVFNEFm2vdP1B@pks.im>
+In-Reply-To: <ap5yVFNEFm2vdP1B@pks.im>
+From: Thomas Bachem <mail@thomasbachem.com>
+Date: Mon, 7 Sep 2026 18:35:20 +0200
+X-Gm-Features: AcwNN1WXduIkQXZcBzYRJINXJ2ejTOqh7FHOALId5SxITRR2N6X_x7PSCja52R0
+Message-ID: <CAA0xjtqy3jOPWAGL9Cr0B+VnHAkZF0=cVCxKNqMiVJpfbdpomA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] sequencer: run auto maintenance once a sequence is done
+To: ps@pks.im
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk, gitster@pobox.com, 
+	johannes.schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Patrick,
 
-Envoy=C3=A9 de mon iPhone=
+On 07/09/2026 10:14, Patrick Steinhardt wrote:
+> This paragraph just doesn't parse for me, it's really hard to tell what
+> it even wants to say.
+
+Sorry, I'll rewrite it. What I meant: the apply backend runs auto
+maintenance from finish_rebase() when it is done. The merge backend,
+cherry-pick and revert create their commits in process and never run
+it themselves. It only runs when they spawn a command that runs it
+anyway: "git commit" for an edited message or a resolved conflict,
+"git merge" for an octopus merge or a custom strategy in "rebase -r",
+or a git command in an exec. So a clean sequence never runs it, and
+one with conflicts runs it after each resolution, in the middle of the
+sequence.
+
+> Besides moving stuff around to prep for the next commit, what does this
+> change? Like, do we now run the command in cases where we didn't before?
+> And if so, what are the consequences of doing so?
+
+Yes. After this patch every sequence that finishes runs it at the end,
+like a "git commit" or an apply backend rebase does. The next patch
+stops the runs in the middle, so it ends up as one run per sequence.
+The case that changes is a sequence with no conflict to resolve and no
+message to edit. Such a sequence never ran it at all, so its loose
+objects waited for the next commit. It is the same
+"git maintenance run --auto --detach" as after a commit, so it runs in
+the background and does nothing unless a threshold is met. I'll put
+that in the message.
+
+> It's surprisingly many sites where you add the call to
+> `run_auto_maintenance()`. My hope was that there is a single exit path
+> somewhere that is used by both the "apply" and "merge" strategy that we
+> could adapt to unify when exactly we run auto-maintenance across both
+> backends.
+
+There is none inside the sequencer. run_specific_rebase() calls
+finish_rebase() for the apply backend only,
+"merge backend cleans up after itself" as the comment there says.
+Sequences end inside pick_commits(), and a single cherry-pick or
+revert never creates sequencer state at all and returns straight to
+builtin/revert.c. That is where the three sites come from.
+
+I could instead do what the apply backend already does. am.c skips
+maintenance in rebasing mode and leaves it to rebase.c. If the
+sequencer leaves it to its callers the same way, run_specific_rebase()
+runs it for the merge backend too, once its state directory is gone,
+and run_sequencer() in builtin/revert.c runs it for cherry-pick and
+revert. Every entry into the merge backend returns through
+run_specific_rebase(), --continue and --skip included, so nothing is
+missed. The sequencer then never runs it, the change is in the two
+builtins only, and the rule is short: the command runs it once when it
+is done, and nothing it spawns does. Is that what you had in mind?
+
+Thanks,
+Thomas
