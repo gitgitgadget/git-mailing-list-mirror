@@ -1,182 +1,149 @@
-Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA04A44C673
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 09:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.204
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788773446; cv=pass; b=iyAGvCvCMVsD643t7w1hLEVDGsR6XorR6BH5LTyG22C61mjBfyK8HOLo1Ajpp1xg2TGL/UHCFWDZUoHFM6cRMRXIx7kWq41jTEhbB5AJY7XQNkHBS1mWUX8AWBzPl0TtUI9hVRne/sk3rXSEP2O4n96obTSK5lN3ivio2GnDR4M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788773446; c=relaxed/simple;
-	bh=H37t44PM/gCeHRfOmFtghWOrIvDU5DDzqoDf3zqTx7A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=N9ORMLN/23eFetbe52YxxAldkI2iibVOwAKOGGvdKop7RIRivw1SFcOHZe5U5D6dSgsA4UCD7grleSrhIjMAZEQsSUJyt4fELcdwYPuCrO5NDnfuYdGmXPngOwQ57GSUZikNYq065x9oKORxIIWdHESZvdG485KouW/hRI3YVWo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Dqk2CJmw; arc=pass smtp.client-ip=74.125.230.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D333BB66B
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 10:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788775242; cv=none; b=byNNF5xWgDiU7f5oJOWsUxCi8nNeiSAPRFcjzxgmT706gbcJwR9x4M48jt+pvPPx+fSERNvzVdCtqE6Mb+FvCVJzmxbN574rf8RAxhw1eogY3ca9/5GcUWKJYQ9Ixa5yah5/v0VHqpu29YSnswIE2+TGXJ8dTX+MJWmRp8sCM10=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788775242; c=relaxed/simple;
+	bh=Us/00F8YhmSwC/y2Yzjjiy7brxGxIIPJvZTHm/M7fXU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C8YkA87BoGcdeLkQa5021e/whlqpRcaiArUHZu9q+UKPzRZL+NWLNTuMKHEtCQCmrunJMs6K3gLQ9YhMas6qCtPUW9rh8xwfcq5PYCn0FxcmXuJMz4uo6h2zYNa7CtHn8/JEs52D5hBlPzaUCeG3WkDUg2WwB2rwhdEOmGUCnHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jRDy1biL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q8jU99Jr; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Dqk2CJmw"
-Received: by mail-qk2-f12.google.com with SMTP id d75a77b69052e-5306706e89dso309441cf.1
-        for <git@vger.kernel.org>; Mon, 07 Sep 2026 02:30:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788773443; cv=none;
-        d=google.com; s=arc-20260327;
-        b=RAQ76KhhWVXsaYONa3W6dxckoEYq56koIcrcWZCLBYI/dMkqxL6VpnxjTlHP6C57XV
-         zUffYbXaitltzwGHW7AiEPgIKkrkGUEj6bncCOjtQZ9aGfCMLWutdXFJyS6N9mtjVat5
-         CpBftgtU48RwG6hz5iiaTk0TFmKSrl7Z9sZWHC1yNhRjR/fytNTLa6rqhH6MpmwGy6jH
-         oPusmfBDS3kwD2BzN5CCYc7ezgLCDXVxIa8NFAHVP9J3lUVwx6uaS7VMiMntGCL1IiS1
-         bObVVBOOg6kE+7Ol9O2L4jmiXgIWG9hFcDQtlZjzksTpfW99s/fpbDKh7NhaOxSWEtkd
-         HAJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Joo3KFvFG3FFpMifQ3cnM0RgHPTGyfnVfoaMSZ+twR0=;
-        fh=4vLwwOu76q/8OHz7mGPUoW5x5SU161IohxSqhF88pRA=;
-        b=KwuA87EQ1hsuwhG+MsqFuF2iUOzNMzmil41UdSxTrBX0WoCT0ZlG4wAZeoqlrWOeLR
-         0sO8CIX+PXfJ0/icjXQXPsqEmFhnUPlrTEezIPaUdDaJPAt1SkUH7r+k6ynjkx9UMLce
-         jIrNxFef87Oh8IkN+FNctzGOxloEXbvkGGKBB/lVsd30Lm9oGCoLUxVColLYCzs/o+y6
-         uYfAefWEFAdb4gdx9//nf5xvfGKIvQHdxt8HZ6tnYHBiw5ez4aeeHexYXu8zgNPjCPJT
-         hkmX2Vi/VsCYW4iv+dklFl4Q/HhJQkIHNWvgt7IQmrR2WAghiHpoidfnKF5TGVpy3bWY
-         aykQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1788773443; x=1789378243; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Joo3KFvFG3FFpMifQ3cnM0RgHPTGyfnVfoaMSZ+twR0=;
-        b=Dqk2CJmwu3WZTpqmnA9ZpSvM9l8lfTCs9XhdO+p7V0zwYOGIG669yVSfhaF0wgDsRt
-         +PKt2hhhdhH/frKBScO8PuF9hgLp92+jGsPdN0P0junEME1JBh+zsS1gVulSfU3ScOlB
-         q5irg1ILYqStmx0MjWsT1RroFVtQp5y/bREjxFqtDhoKvd8WMtbkALRF1tdDSM3xU3jk
-         HLovolKGyPiQTE14FUX72Cv52neVCnugXKoa7TANz+IEHeQIRmwPjuKNiKCMisscKrTW
-         dfkT4lkDv7ziTpgBY2wyrAaMZh/G2excFo75C+HBFR0GYKnS+4qREESVSk7ebZqHC4Sd
-         fB8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788773443; x=1789378243;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Joo3KFvFG3FFpMifQ3cnM0RgHPTGyfnVfoaMSZ+twR0=;
-        b=ECB78HZ0I0dKGOb+VnkAuy7GlMcB6UJGhq8kExqJF98YxhZ0V6va7o0J+3vXICNiat
-         VoEAwE43vD2/wrhBHiX7XLASU74PS8rHSvNDsWLWMByyKGjN02BItcH9p98XgeQX6h1P
-         2cJQzGm7k+gXYWIcLdeByyS8gJuUxi0dQyLF6b6o/7gnDIuUSNTOyd50ILNQIwcnmttG
-         6xj5H7Eukhgr70RdqNkmHQiUFTERvSJWzHL43d4+EMvz71WqYCF/S5sXDsD4QOyHRSef
-         ZLRvhDDY4ju/Irvt1NRUbiOVUqIFDBiXO92TEni88aYeitqNK4qvfTY/iIcogQjLW5+q
-         2dTA==
-X-Forwarded-Encrypted: i=1; AKwUvBxogPBUrvBTc5zuEFXlzWHaKH04QAljo01gvs80ICjkII9fbURlqK/KXH3Cn80D81Z2ncI=@vger.kernel.org
-X-Gm-Message-State: AFuF++mg+GudD4ayGQw3hLBKyW9V0n5vkGfo+EJmKg7Bex792hfx3dYu
-	CNl8hN+nC238gswuxPXappLz17/4TO63/FgxxLSAEcqB1soEwmtbnvsenOsBlhJteixANhSu67A
-	5JI92u2xgaxwlCQIsVHuDu8cxTUtA0Xk7ZTJ7UNJv
-X-Gm-Gg: AYBFou38PtJH+UWIxVlmFczN6PXprtvwpz7diOrYdEbqVYXAR84QFj6v6iIkui4LXsW
-	f7xnYEuOeh1fjxg2tCXFobtdXYfCM6A06qBazxnf9qAtGMEEdqwgZ78iFg2K1Ojqr3a6qNtfmhy
-	zIaLCceim0TwtTJ9QHbW1DIby5NNkW9937+H9RG/WNNMIX20QESs15f0Ue86V26KGFGIyMzReUN
-	27eYkWiSJa8Aj+fcbLoajpgDZYw6c+fN3Y3C26B9END2wyetE9bVedmo8SepyqI/Sx85VLD1vIT
-	eeaRvxNwYHtkHZmRJ7rAtV1yEy7Vw5+iLFi/Ehwt+WBUHGnXcNH0E0DfnheV03PWT+/5aOsnO34
-	=
-X-Received: by 2002:ac8:5a56:0:b0:530:5ed7:50f0 with SMTP id
- d75a77b69052e-53084da738dmr8671371cf.13.1788773442792; Mon, 07 Sep 2026
- 02:30:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jRDy1biL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q8jU99Jr"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id C460CEC0252;
+	Mon,  7 Sep 2026 06:00:39 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Mon, 07 Sep 2026 06:00:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1788775239; x=1788861639; bh=zKrXHTMaMh
+	35j/OxuMyKzj7KBNNGOG7U7fcoVjrZ5bo=; b=jRDy1biLCLFMBvmV8hbpjIZzIl
+	cMFDIcYuLSkD601RgMp6xMAAvaBeJBE05+txJYkkIp0HAjuCGMcmuRmFp7XNOUO5
+	dbmo2oRXMCEensjGh8kzlA/VxukPS8q43XZ+PbXO+3BXqQgIen8CpB+QFpMFqhnc
+	D8kUwPyQuz1wMrbscyKY8A9oBy+wQfxHs98yDfcGIS9KqDxJ/RNl2a+qDhGbkN/R
+	oKimQXU/MQNaHm9MEOkwTx//PC1BkfZcxYtI2/uLI7CW2x6VeeW/SY1v1H7ds4Hf
+	4a57C7HUivIpoGFfOPCBr0AuKHADvUsVDDHKaxFXvvusdi32rsCzfTM2VqLA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788775239; x=1788861639; bh=zKrXHTMaMh35j/OxuMyKzj7KBNNGOG7U7fc
+	oVjrZ5bo=; b=q8jU99Jr8hue0N7YFZX+yxC60oMnK4PthX670eydOIRIKXjtujR
+	PkLVp5to6eWvAqNpgobxR7KA/BtkT1lMiHcx7lX6FGD/4EAvTRmsXQ5axe7mklIA
+	Q6I4MRb/hJISFn+iCs5ZmyL815ANfyNnieI2j2i/Ax8YNFXLT+tt9UyRlxHlASo/
+	qlexkDIxG7mLqNXnwAa0VgKE353z7KAmhlcFwX9o5Clkc3ew/txfz2HozDg7+G0h
+	KQfqumc0gie+lQM6jhmoenL7EfUdNlwBx82HkU+H4eNLUUgdEsROi6dnsJY+6rZ/
+	JQHGa5H7tEmjObiQJ9EcglDiuIUafCXXYBA==
+X-ME-Sender: <xms:R4ueak3ORRpV1CI-3yIQVtxf9Ep8ltw4hkg-Z-Ty3WAD6Nr7FUmlqg>
+    <xme:R4ueamj83437Dhpw63YMawzhjRVok_O71NRvpS1xbIXAC_jVyhi0XmqIMuYz5nIcj
+    eqQJbo7Z0iZjQjDW2DRhusXg7WTTjU6ezpKrYqw6zFR8sKyWNg0ww>
+X-ME-Received: <xmr:R4ueaqTwgbk84FAWlGnCIhqbWewj5XRJ2RZGjySv2xQDv-fXPkuqqQ>
+X-ME-Proxy-Cause: dmFkZTFjtrdzRhHyrncbdeiuBHmzjYu3x6nT1nAxmZ1ASNF7F0rglmrx9obfSHfkyatjL0
+    DAoH3k/CB15XYKD3QROZmXw5a0lLd0Dzly5UGJ+CpX3xeH4KB1jxaPy0E08Ym//P9vg3r/
+    VmZuzalniYT5nxXOVGsTVL7sYtmPxITHJVyke+TgQuUIRCa/BIMY2qcG1DsQyS6rdpnGEA
+    LxCSjsMFUuyIRX2GbIhWRBEMAUsutBGava0ZtUJnoQHXzcIFPgc/GT72QY/9I0Mw1Dqqe4
+    F/YYMrPfZj8BtLfLg3hBCiYBSWEN4Ix8hYNr6/WDPUj9lMnnrAZS1yVF/UVLTyYBPGXrba
+    L6T17joVdcM/wcF80Fil1xUXt7lNxbaDeRXvFkXrWdSJL/ESsKqWYskLCn8QgARzpsQytH
+    oftWZkhqzc6wFFPSfwQ9aRkFQpW5Ij3CUz/7NYfPdPsRhMnK37lODG3/MjfIvd/kl2qcTs
+    QMJMYG50grY87HGR1DMN8ybS/hqgKX9S+KsBlR9gyui9K8X9SCejBZSInevRupQ2BDKfKL
+    19dUB180bdSadLP48R0cR3RqZERW9ysUgwrLgz0CR8NriNsn4Sq3jt4byjYqH5/G7ZDHus
+    r2tDcJZ2Q0pQpiC8JpK5zUBlDV8MLxNdGitXO7A3u7A+XIk0qJ5VT0zhDmFA
+X-ME-Proxy: <xmx:R4ueanhRgbKPnzeXXChLMqzr4c1PITQ3TTFmmWkNMBBmijlL3RRZ_Q>
+    <xmx:R4ueaq77QsUodEhUQTQVoyK7WyQ8EROJUjXfA3zUznIg1pdzyeeydg>
+    <xmx:R4ueakD-nB7PaPz24EOdJX73ZN9ljQyqJS39BaJgunKoL67gw0hoCQ>
+    <xmx:R4ueahbLGGacW6vXdx4izgxT8311yX4WdAHTDoJfM2gnag8WTeAElA>
+    <xmx:R4ueaqg41usqkUOt9uwfyS931ibgniI-Dj6lwsHVyTYOxRl2fF8hOvaX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Sep 2026 06:00:38 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 501cd61d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Sep 2026 10:00:37 +0000 (UTC)
+Date: Mon, 7 Sep 2026 12:00:29 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 00/11] Fix inconsistent ref storage format terminology
+Message-ID: <ap6LPf0Ks1xTTp4z@pks.im>
+References: <20260904-b4-pks-unify-ref-storage-format-v1-0-08144e5004ff@pks.im>
+ <xmqq8q5h3plt.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqmrtu50av.fsf@gitster.g> <ap2tjx0z7kiFjDM9@fruit.crustytoothpaste.net>
-In-Reply-To: <ap2tjx0z7kiFjDM9@fruit.crustytoothpaste.net>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Mon, 7 Sep 2026 11:30:31 +0200
-X-Gm-Features: AcwNN1UP9WMrF9XtAER-N7ZrVTRUA3tPw5yW4cCcEHSLteACBHjH1yu-DcdBVIA
-Message-ID: <CAJoAoZkfNDBVt6RJg4rGAfB1SLp3O0Nh+_w6Ge5oebj67KJXrQ@mail.gmail.com>
-Subject: Re: What will come after Git 2.56?
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8q5h3plt.fsf@gitster.g>
 
-On Sun, Sep 6, 2026 at 8:19=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2026-09-06 at 07:03:20, Junio C Hamano wrote:
-> > http://tinyurl.com/gitcal tells us that the current development
-> > cycle for Git 2.56 will conclude around the end of this month.  As
-> > our typical development cycle lasts between 8 and 12 weeks, we will
-> > have exactly one more cycle after that before the end of the year.
+On Fri, Sep 04, 2026 at 10:15:10AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > Hi,
 > >
-> > Now, the question is what that release should be called.  A few
-> > thoughts.
+> > back when we gained support for reftables we of course introduced the
+> > ability to control the reference storage format that is used by newly
+> > created repositories. This infrastructure has grown over time, and
+> > unfortunately without a lot of consistency:
 > >
-> >  (1) Git 3.0: it is tempting to conclude the year with a big
-> >      version bump.  Splash!
+> >   - The command line parameter to specify the ref storage format is
+> >     called "--ref-format=", while the corresponding repository extension
+> >     is called "refStorage".
 > >
-> >  (2) Git 2.99: by leaving no more room until 3.0, we will
-> >      conclude the year with a version that is still in the 2.X
-> >      series, but will hopefully force us to seriously prepare for
-> >      a big version bump with the first release of the year 2027.
+> >   - In most cases we refer to the "ref storage format" in our docs, so
+> >     calling it "--ref-format=" is inconsistent with them.
 > >
-> >  (3) Git 2.98 (or 2.97): we admit that we are not ready for even
-> >      (2) and chicken out, leaving us breathing room for a few
-> >      more preparatory releases before the big one.
+> >   - It is possible to override the ref storage format via an environment
+> >     variable that is called "GIT_REFERENCE_BACKEND", which is not even
+> >     remotely consistent with anything else.
 > >
-> >  (4) Git 2.57: doing business as usual.
+> >   - There is also an "object format", but that format does not control
+> >     how we store objects but rather whether we use SHA1 or SHA256.
 > >
-> > Needless to say, this is not a popularity contest, nor is it even a
-> > democracy.  Regardless, we should review what we have in the
-> > 'BreakingChanges' document and ask ourselves how ready we are.
->
-> There are a few remaining things I think we should consider in regards
-> to this:
->
-> * forge support for SHA-256 on the remaining major forges (I have an
->   update to provide about this at Git Merge);
+> > So in summary, it's a huge mess.
+> 
+> Unless you are unifying them all into a single ref-storage-format, I
+> do not see much practical difference between ref-storage and
+> ref-format.  They are both with insufficient clarity and details.
 
-Looking forward to it; support missing from GitHub is probably the
-thing that leaves me the most concerned about landing 3.0. On the one
-hand, the Git project is of course independent from GitHub, but on the
-other hand, pragmatically speaking, the majority of our users still
-host there, and it will be potentially quite confusing for people
-creating a new repo and trying to push.
+Well, the important difference is that we don't have conflicting
+concerns of "--ref-format=" and "--object-format=" anymore, where the
+former cares about the storage format and the latter cares about how the
+objects themselves look.
 
-However if there isn't a solid commitment on timeline from GitHub then
-it's less appealing to wait - it seemed like a lot of the work that
-was happening in 2026 was because of the looming pressure of 3.0
-coming out in the fall.
+> ref-format fails to convey "format" of what aspect of ref it is
+> about (among "storage", "name", and others), ref-storage fails to
+> convey what aspect of ref storage it is talking about (among
+> "format", "medium", and others).
 
-> * any updates on libgit2 and its support for SHA-256 and reftable; and
-> * the lowercase-only object IDs series, which I will be sending out a
->   re-roll for today or tomorrow and which is a breaking change that we
->   may want to soak for a release or two.
->
-> I think anyone else who is not already extremely far along on SHA-256
-> (and reftable, for software working with local repositories) is likely
-> not worth considering.  JGit and Gitoxide were both informed that
-> SHA-256 was coming in Git 3.0 at least a year ago, for instance.  (I
-> know because I did the informing.)
+In any case, I'm happy to call this "ref-storage-format" instead. I
+don't care too much about the naming, I really only want to fix the
+scope conflict we have with the above two flags, and be consistent.
+Resolving that scope conflict gives us a path forward for introducing
+the object storage format extension and its accompanying flags.
 
-I believe GitOxide received some initial support this year and I'm
-expecting for that work to continue over the next handful of months,
-FWIW.
+So with your suggestion, it would be:
 
-As an aside - Google cares about landing it in GitOxide because jj
-also needs it to support SHA-256... but even with GitOxide support
-there is still some work to happen in jj itself to make it work. We
-are working on it but it's not ready still, fwiw.
+  - "--ref-storage-format=" and "--object-storage-format=" control the
+    storage format used by Git.
 
->
-> Similarly, I am not aware of anyone who is seriously undertaking Rust
-> support for platforms that do not already support it, so I don't think
-> that should be a blocker, either.
->
-> So my gut reaction would be that maybe 3 is the best choice.  2.97 might
-> be nice, or we could be more careful and go with 2.95 and then skip
-> ahead to 3.0 whenever we're ready.
+  - "--object-format=" would continue to control the hash used for
+    objects. This is still a tiny bit messy, as it could've been called
+    "--object-hash=" if you ask me. But on the other, maybe we at one
+    point in the future we will introduce an actual new representation
+    for objects? If so, it gives us a bit more flexibility.
 
-For what it's worth, for our Google distribution I think we would
-disable SHA-256 for new repos via system config until we have GitHub
-support (and honestly probably JGit support), anyway. So that makes me
-want to say "meh, I don't care, why not release 3.0"... but not
-everyone has the luxury of distributing the system config to a whole
-swath of people like we do.
+Will send a new version along these lines. Thanks!
 
-> --
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
+Patrick
