@@ -1,122 +1,233 @@
-Received: from send215.i.mail.ru (send215.i.mail.ru [95.163.59.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486A14C77BB
-	for <git@vger.kernel.org>; Mon,  7 Sep 2026 12:56:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.59.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F95D501F53
+	for <git@vger.kernel.org>; Mon,  7 Sep 2026 13:24:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788785803; cv=none; b=WEjCD6lDOWg7tkaNMcZUd2YnInybxvyj02+reVfJkK662MlhdxuvQTqE48XLLOxX1IieuPsyJ1uJDozPWIyTPudoKeVOTh9paVzELEkP2m3qGhHFFq/c0UULIJHs49+N3+Tg9A/fSlev4Q8oztbsnyI2SWv2QeC7w+BkHRba6yo=
+	t=1788787465; cv=none; b=rzCx56Im6vizsjmZbbMNKvrZJx9CQM1/Fh+0Dmr2WcAdKINK8xFF3/t0HDHD3LUTSAf5/sijZb3TivPJ0pOHzAWOi37VVBU7g+jc+jU81A4PXv1V1yO0Sqvu6BoTYqesLJTmLcJ1s7PvkEEHLmBH7lpgRXX5HBZEVfGk5U0g3mM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788785803; c=relaxed/simple;
-	bh=Xec+S24LQKgfbbmEQ2PjnIGBbV65eNk7deEBdCNA/8s=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SOohT/wrm5Asx+BiyOFgtIcAflMHIzTGLDYcZlroUICXBD+3tzA9tu2m+S10YiqpIMVVHZhKBXx3fUJxl96wOwf75VKGaiz7CJAHCwK506qucgRWVH39um9VLAh1BfDFuavra2Mv7PtcWKQLszXtVLMgCe9706L9l9IO9tHVxms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=ln8jfJL4; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=jjjtPLOE; arc=none smtp.client-ip=95.163.59.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
+	s=arc-20240116; t=1788787465; c=relaxed/simple;
+	bh=vD2VubceZzZYQUK2KQk6yHZNYiCM6ZTPLnQ4ARsd1HM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=oIxHZy6TIAQnKZR/XfQ+bqhYY99z97d5rIfFq1OT6XbTmsJIMwkyCvGsapV9gKS0XuqezFFNkcMIw0mbBaWDqI1nIBBn5is/+c+F60ZFwZwMK6yg5QUEOqmoQP5VLvZRwbDzOK5QlG5Fq4g5MlrBg+yi31Yopao9XE8avt1YRHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NCPuOmgv; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="ln8jfJL4";
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="jjjtPLOE"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
-	To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=XkcmBiLLL8ffhZeGfVmChekXo9+IAK0PDW7Cq1ZJzng=; t=1788785793; x=1788875793; 
-	b=ln8jfJL43JwQn78e2JKDLmW5+/abRj+KR6EUnBhnFJWATarUGJm5az1ZHHXNKSppiLKgQZgovqw
-	a6sQ9YLKEseDz/lJgFesDOQjOpapibwVQqkXZDMKUlmLqD92F32lSo/AD2f5fvDqOCZrkRcoh3OCE
-	gG4pG5GwyHISV39tEwNxMpU2p6Z2/t0cs5RO/vmUXhBatPErtHf/Kpu/eAdTQVrVA/0zcKwAaGEwp
-	zH6kEn/GEgS08JlPD1obLS2vf/EC3hEmmlbCCwLn5TeeEqQ/NGd56yHv+aW2xJ2WRDyuQa9CpZ/G1
-	zvQT7dUbSXvKkajSkcswmU6E3SzqVGMsie8A==;
-Received: from [10.113.97.100] (port=44384 helo=send128.i.mail.ru)
-	by exim-fallback-679568fb9b-7tngq with esmtp (envelope-from <ub4nal@mail.ru>)
-	id 1x3YtZ-00000000BH0-0wzX
-	for git@vger.kernel.org; Mon, 07 Sep 2026 15:56:21 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
-	To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=XkcmBiLLL8ffhZeGfVmChekXo9+IAK0PDW7Cq1ZJzng=; t=1788785781; x=1788875781; 
-	b=jjjtPLOE+ktHr2EcvLdRad5q/kPPCWWXjkvakHlps2TZf248yivGduhQaflgjUnjJfM0b5pYVEQ
-	YieKem3hPXfwxygnf/nSBUvfvFIwKLGJxvD1xDtyhXMdybIVHDJVHOz2jsgP232Rt9EI+oIAKcx+0
-	fdGpcJVLPpGB+4jYukW/bsNGTgqOv/3NpHAPNAFSRfOtveoJDLEMzPOZYtNFlvxMyhFzMhcsg8wzW
-	l1aezgWN5dkst/0U8qQ1HzYV6perE5LF0XOosUYr/E5bCzQBnu0I2T0/05177tJTGUzEwEEUAkWOh
-	cy+23RWiOAdevmg2ifdYqZo8q1LVbvbMvGQQ==;
-Received: by exim-smtp-569b45c49c-z9dfm with esmtpa (envelope-from <ub4nal@mail.ru>)
-	id 1x3YtQ-000000001RJ-1snw; Mon, 07 Sep 2026 15:56:12 +0300
-Received: from vatem (localhost.localdomain [127.0.0.1])
-	by vatem.localdomain (Postfix) with ESMTP id D33E49F633;
-	Mon,  7 Sep 2026 15:56:11 +0300 (MSK)
-From: Vsevolod Myalitsin <ub4nal@mail.ru>
-To: git@vger.kernel.org
-Cc: Vsevolod Myalitsin <ub4nal@mail.ru>
-Subject: [PATCH] advice: use global config for default branch name
-Date: Mon,  7 Sep 2026 15:56:09 +0300
-Message-ID: <20260907125610.23458-1-ub4nal@mail.ru>
-X-Mailer: git-send-email 2.50.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCPuOmgv"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6a051b737d8so3037806a12.1
+        for <git@vger.kernel.org>; Mon, 07 Sep 2026 06:24:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788787457; x=1789392257; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=OkbNqM0+uhC0toZIcXuWe2zYdenPODw0NI9HBTy9fRc=;
+        b=NCPuOmgv7PZjna7rbhGi064Vy+3wYrpsKi/LfN22Ed/JL5zpuT3OSEVkLPQEEQNYyu
+         EBThw/Ymuw9qLYc4MsreKCnrgrwJb+AnLq4UikHTFH7GGj+9JkKuaKRVVlXvze0z9rPw
+         ePI5PL5AA3Z/JyZEySATmhwljoo3+8DaSzGvFVB3ocAdHtxCi7Vdq2nZpJ5QmeKXDZ0m
+         U+Olzs0IlG4qYX4E48IPR5Kaal/gOJfbkuEWvXBM4R2zhtQNKveEbrgRUxkgCJozB/qw
+         vSBfqYuoGsDWaRYukb7HGnXwZfGp8GJTes9kPE3VPUv2m4Mzc5L6vQ9kDqCSJ//BC3cY
+         oBFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788787457; x=1789392257;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=OkbNqM0+uhC0toZIcXuWe2zYdenPODw0NI9HBTy9fRc=;
+        b=W+F+/la7uTMCDDf5T8zuAhVvHSioswlkcKMRoYdOR77kl1FMmQY/aXwgdtFt1gU2/W
+         3rlkLTGIeae7uycyCXyxZW2cKxtuqFaeizvlTqKEz5EI0IjbTP5DMtfHIR/bFMazsSIO
+         ZhaastLwGaes34r7EIJzLGLRDquXeqnKE9g/fqiWVNxV7ydJ74CbDAL0zy8Os9vHg4WU
+         44q1cBWhUn0ZtAz9qF20iGDOeCbAQG6h29IhKL1gRC2jEBc+uGzLjPkyzkoDyezDD0+m
+         RQ0Y3gTCaysQDj6bn/aYlpzwM7P8QEVFP+rYf9meN47vM0lh4NwT5PnvtkppBVtse+lE
+         08UQ==
+X-Forwarded-Encrypted: i=1; AKwUvBwcDkCkrHyx7ygiNb/40CaB9tPewa+SeZ62lFlrauqMJCCS/BI6XeFnE1nFzq8OGWc1kAk=@vger.kernel.org
+X-Gm-Message-State: AFuF++koR0jT0bV+vFzLHj37WCifjipL86ze18wspcUtgD8POic5gxSS
+	+aqY7o5zQIMjhbG3uKaIWkq2KX1iNwSq/2C7RkKH2gRT5iLLLFr6wZTk
+X-Gm-Gg: AYBFou1sDfcfKwA/4HZqYYm3ZG1GHdVjMeX0WeWkoc8fxfgyL3qjFbQ6VayKmrmzb/x
+	4LEWPb/AUO7oPy6qsfQMnKrPkXDwcaGOYkJh9MS9x3hqfW8Cqm8RDRODg007FU3/zb0te3n0TqC
+	HzxzALI9F6bsm7jMNOq+Ncmh3sL+RIsSnoomQDBAQULxfLotppwBrg8RGK5t/o3LEnj+en/Jbt5
+	RrjKKtSVM0oMp/77HrDrkp79HuvtFKuq9NOlmyxMg4eOhjnrA8oLJ+Jrf0WkUDIiE8g2Rd3Ypxi
+	QL54Jq8JNEm1usdaJySqDot1Gg+yIx3OiOlonDSyb9PsXRmZNdw50Jy6Stv4D22KOgU8D4w4jwI
+	walTZ2HfH+bdnL71UHRxlaxpEo960Mq3d3AiaGnGrJRjG8cYSlUA3XIgxl500C7jAc6B2s1UGni
+	oMEPh7JgBzeUt1t0jzcBkwf9Ml3x6d8iDnk/kA0un7U7erVOzNBi4y2tkKq728WM3akIXyMBl8Z
+	r3xtdAmkFJdbD6Ly7ZiYzulJviHTf+fpNLdol4cLy0=
+X-Received: by 2002:a05:6402:52d8:b0:6a7:ee54:f8a3 with SMTP id 4fb4d7f45d1cf-6a7ee5500c2mr6597861a12.39.1788787456136;
+        Mon, 07 Sep 2026 06:24:16 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a7e68e9889sm4278590a12.22.2026.09.07.06.24.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Sep 2026 06:24:15 -0700 (PDT)
+Message-ID: <7493f0b7-a6cb-4b7d-bfd4-f4a318ff7e32@gmail.com>
+Date: Mon, 7 Sep 2026 14:24:13 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD968A9E3B9DC3E6DB183EEDAA3DA4B2A7192A137F17A8DA995182A05F53808504055CF562CDAE707D63DE06ABAFEAF6705380C6A132C1FA3F57E605DAABF73511EF649426FA9741B02
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7CB1634DB9A2F7B99EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB5533756682FC6F8CF4E8B7272EFB3DEC817DB0D8EAFE5053E29CE8AAF580FB744627A3ED8EEF46B7454FC60B9742502CCDD46D0DB861051D4BA689FCF6B57BC7E64490618DEB871D839B73339E8FC8737B5C224901F8F2FECC0250C8CC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C0B27420F9988F54058941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C0272DDD408E5FE5607B076A6E789B0E97A8DF7F3B2552694AD5FFEEA1DED7F25D49FD398EE364050FCCD848CCB6FE560CA68A47777D5C6D9CB3661434B16C20ACC84D3B47A649675FE827F84554CEF5019E625A9149C048EE33AC447995A7AD182BEBFE083D3B9BA73A03B725D353964B0B7D0EA88DDEDAC722CA9DD8327EE4933F735096452955E3444A83B712AC0148C4224003CC83647689D4C264860C145E
-X-C1DE0DAB: 0D63561A33F958A5523E7A8629AB4DFA5002B1117B3ED69602C89247D60F810030E4A65F242F5898823CB91A9FED034534781492E4B8EEADF12279BA039A6965C79554A2A72441328621D336A7BC284946AD531847A6065A17B107DEF921CE79BDAD6C7F3747799A
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34C77DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D65953DD9FC3A48122C39F2494184EC1A3243E5DE4B9A94C98C5FBFB34BA2DC195C57666EEDE6B8CCC8FB8341EE9D5BE9A0A3A22D15DFA75B3C17D6C756288F9F73ED44701B143BBEADE8CD93680B12512CF4C41F94D744909CEFACD6B4B6D928230F8CCC96A59B602D5CC2E138FFB4ACBED
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXOcIETfglQORZ0zpDET4Zrk3igikrdHlWN0ahGgtOrE0DLEd9SnCO68=
-X-Mailru-Sender: 288943BA7BCC8BBA065C24D5D0D78BBD559D4A0D8E0B4EB03DE06ABAFEAF6705380C6A132C1FA3F5A165F1893FAC5C75730F10A35ECD6C905A92E71CC7C3152D8DFEC3831B33C4D004BC3E28E37B34A4E9BE5789416A142FC25A2993B28EC86D9FF92CA8FAC60DF8EAB4BC95F72C04283CDA0F3B3F5B9367
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B49A33C8AABF03C2F7F5DD75A6CD6FF65AA59D56933CB21E86049FFFDB7839CE9E656977AF4D7889C97A57C5020460F54FE7CD808BA7404DFCAE2420C2C4203DD9E86FAB092591067A
-X-7FA49CB5: 0D63561A33F958A5D18BFE2360A573EE5002B1117B3ED6968974DBE95E3F4AAF477B8DB6B08738FF02ED4CEA229C1FA827C277FBC8AE2E8B54F520D093A0DF28
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpLaIlvAR6h4id02YH9mgeCTAyYoNlVO8a5LOd0Z6w/fc/6fRdNTWYqs=
-X-Mailru-MI: 20000000020000000000000800
-X-Mras: Ok
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 3/3] sequencer: keep auto maintenance out of the
+ commands a sequence spawns
+To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
+ <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Thomas Bachem <mail@thomasbachem.com>
+References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
+ <pull.2217.v2.git.1788537086.gitgitgadget@gmail.com>
+ <9a6fc0427a8bc7e7abcc0518214b1dafc2efaa6a.1788537086.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <9a6fc0427a8bc7e7abcc0518214b1dafc2efaa6a.1788537086.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The advice for configuring the default branch name
-suggests disabling it with "git config set
-advice.defaultBranchName false". This setting is
-useless because it neither affects the current
-repository nor newly created repositories.
 
-Suggest using "git config --global" instead.
 
-Signed-off-by: Vsevolod Myalitsin <ub4nal@mail.ru>
----
- advice.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+On 04/09/2026 16:51, Thomas Bachem via GitGitGadget wrote:
+> From: Thomas Bachem <mail@thomasbachem.com>
+> 
+> The "git commit" and "git merge" the sequencer spawns, and the git
+> commands an exec runs, each start "git maintenance run --auto
+> --detach", which then works in the background against the sequence
+> itself. 
 
-diff --git a/advice.c b/advice.c
-index 63bf8b0c5f..64ca4613b4 100644
---- a/advice.c
-+++ b/advice.c
-@@ -96,7 +96,7 @@ static struct {
- 
- static const char turn_off_instructions[] =
- N_("\n"
--   "Disable this message with \"git config set advice.%s false\"");
-+   "Disable this message with \"git config %s advice.%s false\"");
- 
- static void vadvise(const char *advice, int display_instructions,
- 		    const char *key, va_list params)
-@@ -107,7 +107,8 @@ static void vadvise(const char *advice, int display_instructions,
- 	strbuf_vaddf(&buf, advice, params);
- 
- 	if (display_instructions)
--		strbuf_addf(&buf, turn_off_instructions, key);
-+		strbuf_addf(&buf, turn_off_instructions,
-+			strcmp(key, "defaultBranchName") ? "set" : "--global", key);
- 
- 	for (cp = buf.buf; *cp; cp = np) {
- 		np = strchrnul(cp, '\n');
--- 
-2.50.1
+I don't think maintenance is actively working against other commands, it 
+just creates lock contention. Maybe something like
+
+     When the sequencer runs "git commit" or "git merge", either directly
+     or via a user supplied exec command, those commands run "git
+     maintenance --auto --detach" which can cause lock contention with
+     the sequencer.
+
+> A "rerere gc" started by the commit of one "git rebase
+> --continue" holds MERGE_RR.lock when the next pick needs it, and a
+> repack deletes packs the sequencer still has open, which 65cda10d5b
+> (sequencer: release the ODB before spawning git commit, 2026-08-12)
+> had to work around.
+
+This is pretty hard to understand. What does 'the commit of one "git 
+rebase --continue"' mean? Also whether the next pick needs to take 
+MERGE_RR.lock is conditional on there being conflicts which isn't at all 
+clear.
+> The loose objects a sequence creates wait for the run at its end that
+> the previous commit added.
+
+What does that mean?
+
+> Whether a sequence can be long enough to
+> suffer from them before that remains to be seen. Pass
+> maintenance.auto=false and gc.auto=0 to the spawned commands through
+> GIT_CONFIG_PARAMETERS, which the shell of an exec command hands on to
+> whatever it runs,
+
+Talking about the shell here is unnecessarily confusing as the command 
+is not necessarily run by the shell: if it is a single word that does 
+not contain any shell metacharacters it is passed directly to exec()
+
+> appended after the user's own -c settings so that
+> ours win, and built once per run. A command the user runs while the
+> sequence is stopped, like "git commit --amend" at an edit, is not the
+> sequencer's to control and still runs maintenance.
+> 
+
+> @@ -1107,6 +1114,27 @@ static int run_command_silent_on_success(struct child_process *cmd)
+>   	return rc;
+>   }
+>   
+> +/*
+> + * A sequence runs auto maintenance once it is done, not from every command
+> + * it spawns along the way: their background "rerere gc" or repack would
+> + * race the sequencer for locks and files it still holds.
+> + */
+
+This comment isn't wrong but sounds like an LLM, rather than something a 
+person would write.
+
+> +static void disable_auto_maintenance(struct replay_opts *opts,
+> +				     struct child_process *cmd)
+> +{
+> +	struct strbuf *params = &opts->ctx->config_parameters;
+> +
+> +	if (!params->len) {
+> +		const char *old = getenv(CONFIG_DATA_ENVIRONMENT);
+> +
+> +		if (old && *old)
+> +			strbuf_addstr(params, old);
+> +		git_config_append_parameter(params, "maintenance.auto", "false");
+> +		git_config_append_parameter(params, "gc.auto", "0");
+
+This is much nicer now we have the helper function and the calls to 
+disable_auto_maintenance() that I've trimmed all look good.
+> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+> index 2c34cf8a01..cf6d20ce79 100755
+> --- a/t/t3418-rebase-continue.sh
+> +++ b/t/t3418-rebase-continue.sh
+> @@ -403,4 +403,22 @@ test_expect_success 'rebase runs auto maintenance at its end' '
+>   	test_subcommand_flex git maintenance run --auto <finish.txt
+>   '
+>   
+> +test_expect_success 'rebase spawns no auto maintenance before its end' '
+> +	git checkout -b two-conflicts topic &&
+> +	test_commit F2-again F2 222 &&
+> +	test_must_fail git rebase -x "git commit --allow-empty -m exec" main &&
+> +	echo resolved >F2 &&
+> +	git add F2 &&
+> +	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/mid.txt" \
+> +		git rebase --continue &&
+> +	test_subcommand_flex git commit <mid.txt &&
+> +	test_subcommand_flex ! git maintenance run --auto <mid.txt &&
+> +	echo resolved >F2 &&
+> +	git add F2 &&
+> +	GIT_TRACE2_EVENT="$(pwd)/end.txt" git rebase --continue &&
+> +	test_subcommand_flex git maintenance run --auto <end.txt &&
+> +	grep "\"child_start\".*\"maintenance\"" end.txt >maintenance &&
+> +	test_line_count = 1 maintenance
+
+Shouldn't this just extend the test added in the previous patch, rather 
+than duplicating the coverage for auto maintenance being run at the end 
+of a rebase?
+
+> +'
+> +
+>   test_done
+> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+> index 304981ccd6..57a77d91bd 100755
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -731,4 +731,21 @@ test_expect_success 'cherry-pick runs auto maintenance once it is done' '
+>   	test_line_count = 1 maintenance
+>   '
+>   
+> +test_expect_success 'cherry-pick spawns no auto maintenance before it is done' '
+> +	pristine_detach initial &&
+> +	test_must_fail git cherry-pick base..anotherpick &&
+> +	echo resolved >foo &&
+> +	git add foo &&
+> +	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/mid.txt" \
+> +		git cherry-pick --continue &&
+> +	test_subcommand_flex git commit <mid.txt &&
+> +	test_subcommand_flex ! git maintenance run --auto <mid.txt &&
+> +	echo d >foo &&
+> +	git add foo &&
+> +	GIT_TRACE2_EVENT="$(pwd)/end.txt" git cherry-pick --continue &&
+> +	test_subcommand_flex git commit <end.txt &&
+> +	grep "\"child_start\".*\"maintenance\"" end.txt >maintenance &&
+> +	test_line_count = 1 maintenance
+
+Again why do we need a separate test, rather than extending the one 
+we've just added in the previous commit?
+
+Thanks
+
+Phillip
+
+> +'
+> +
+>   test_done
 
