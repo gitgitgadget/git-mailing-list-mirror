@@ -1,209 +1,101 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4F439658D
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 08:23:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788855832; cv=pass; b=QH7OXsgah6lv3YwEfyMmWWX2GvX1XSk+xXcVq46ETO342Eg+uYCCdSN7pDGwusWLt6PSN9oICxX8ox9j/9+77ym8H4PRvGAvSAh+h9vGgB7v9ECT/UhKZkOTvbste6DbtIbetCX3wW2GaFB/9Jh3baf8Fw17+VTbZc0zeKT4Tu8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788855832; c=relaxed/simple;
-	bh=PvH4hpkmnepACov8A+ll8PBfxuL0hXe7IRHgafr3l48=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=oJOgeM+Dbn93Eo70MXQDOQh/FJytVgR39XL38dKkyGXUC+FQMDeEUQfkljNf9JWy9eM4pqdGp6AmA/nPf4YgrpCmEPPaNltbIYOt1bpUw2u+0Sy0Nzq7nU2iC2iwrla1yWmtIYNG6p+0Hqgv66z7Zg/M0NgwtKLM/C939siD8qg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=databricks.com; spf=pass smtp.mailfrom=databricks.com; dkim=pass (2048-bit key) header.d=databricks.com header.i=@databricks.com header.b=Aanagt8T; arc=pass smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=databricks.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=databricks.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957DB3D2FF7
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 08:26:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788856004; cv=none; b=pgIY7Dy1xLp30XhOYPrmhsZEjmy4rx2R4Q0xk17l5+9tyect+GkDv98FY80ZbzOTMwzTOEaUGwnMgZ5/Tgpp03Ty95GDVzTqUuKkFd09REXGm3Q2hJRh78yBWlCnh33/qe/1swZ0LBJAWQgaX+mwwaeHBQpuCaPLyU5wKckNydM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788856004; c=relaxed/simple;
+	bh=mzM7fui0Sm1gE8bffFXRsPRM0cdAdBKNlCZCCFchDqI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cVJs/V012hFzjog+h4kY1fYryZ46En66OsQy2GvrRUzZ4kAQYnu7zO/6ejwZpcwLi3QWFeGUYYuClQNKieACuFoN7vHJfJH2kxkT3wnYDV09+Ww1+Z/OOPfAzhA6YSc/aTfIuNG58ghsVlGfbKw7nItkkFMY0586pHb0YugxBEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lSgakyS3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=obC0+d5p; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=databricks.com header.i=@databricks.com header.b="Aanagt8T"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-4b28d7c729fso2761784b6e.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 01:23:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788855829; cv=none;
-        d=google.com; s=arc-20260327;
-        b=kYY41lRz8FtkAt8BfFLM6Acrb9d2BG0EqrSYqIQxHHrvuwew+UjoZf8cS2vIzh+/Yz
-         gN+P7zYjYCweIKCvVh5p+PRBHrQ1m04J++Gcqp8eXhrO/40TUO+FmoB1uMd12uEi9Rrl
-         DYnYx+hSlqZab5Pe+Tkh6lifDMmrLCJSlOR8B0QpmfqsJFJbkII4VqVdxshTaBzv3IlO
-         87IJX57/SID5r3icZhkX9CNqHaQkN8QeEOw8cPl7brjCs3bD0znDfVc1X/efnH8IVlbo
-         j3vE08Rzv6mj+z+mauJJlW2NaCXcjU8NCd6HR5V41P/aJVt+2PeXBvDouk3m+Z2Oj8DB
-         oU/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=nX0ltAdLfEU9pZlc8wUFOC6C8QsxRzozae9GjMkNC2c=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=K7Qd4m9QS9LGsZs2ZwkBKH1yqKr4y2cjopqDYeTA2jc+GI+BROgXnfaMN8LYvZpLIm
-         MDbKBIYjbtDhVqrai3bBpapRyCVZo4w3KdbOS9DpwZmxbocg4hedgcb8I3q1++pJAE/f
-         071cy/QwappieyToOHX20rMh4zyDxhXR7LfRCNH7cfM7e4O1v0ms8NgdlDcF1sHIfddX
-         GgaCOp3/HVAhXhJ6enbTBFSUa653G7IDtMfV0E1LTVHJgxCygMosaaPno/VH5OTKLSrH
-         W8uOrecskGMN5lX9uTdllMvkTBEfPPOjGx1K58hQTQDTA1aRb+1DATkSDrZpK37g/Hy7
-         bdRw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=databricks.com; s=google; t=1788855829; x=1789460629; darn=vger.kernel.org;
-        h=content-type:to:subject:message-id:date:from:mime-version:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=nX0ltAdLfEU9pZlc8wUFOC6C8QsxRzozae9GjMkNC2c=;
-        b=Aanagt8Th/4o0JgSmov9DqR9jY8JWUBprFEbnGGKbZ7ZDsprvsL7eoNTTWZHOgxqaM
-         G3k6FMCSVzMnElZDd4WYTsuX0aeiseFNIz0p7I+T+r0kSdeocDm+XIWUKAx7KIJ9qzXQ
-         XPZCEgKaCmyj37rnFv83a/0eByPR3liXbATVSAl94/jMx+OG6wkh3B81UIfVLU4iNLdQ
-         RTbxrQsKjA1SHH6PmHdFi6ej1Kt6xoRMvJpxmstzbaW73QqHVnu8p3LeTwDbPEyTne0u
-         8GmqC8SiM/i05kGN6wwlpn+/K/DjHi+QUNWjjQ2VogSssD4u2xmDphEpa651LZo7w6p6
-         5lEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788855829; x=1789460629;
-        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nX0ltAdLfEU9pZlc8wUFOC6C8QsxRzozae9GjMkNC2c=;
-        b=dMdnkrBa0AqnMjil95JNwUBlRV4S6JftUiK5Zog30nQHDsZhJViIEG9kQlFeZ9m9/o
-         rljMuArp2cr1P86I4iVNPVG/8pvZd2ycJ6Gnhm3sLGthE+qSZIWSOXJJe+Iyt1YqaVg6
-         Q2t6azB5j96jQq7+Cqek5Zqgh7V7zlKqidIsLAXYMOWfeb9zV2hyYCl5CeJpKJE08nfS
-         TNI5SbwnxUeQ7SBVul7073/AZ7jL6wYNkobB/f5PYsccIiI3xUpTDTxoUvymCHEPly4M
-         JC8pfufbuaKepavw5YuWZ0mE42X7hUtMXkhOkgBwKNco3zDOxYPTg1nEPSRMxxydtrmR
-         3gBg==
-X-Gm-Message-State: AFuF++ldN4At6XsDSEtMYICa1n35HZMB/KG00/U2Zp+BZy4xn+aYCiB0
-	wnKjZML843jFuhYhwvsBivmYzSZZKNoFKzwcREZvEbPJuSLdOgnxxcvVC5lPDXAhylVU5umHU4B
-	39NZVawi5SvTMyOqh+Wgj88BPSLN9+NXNVd4t0Niq5DMK68oX32pd/iRJaA==
-X-Gm-Gg: AYBFou36SmsbJdPkBy1+0C5C3kyCZaRRBjq1PcFKZROfJzTws7zsKFEe46jMwgom16o
-	P84D+LuB/Ot1cfrd1jISyGQ3uP841Fs0TpzryKtqe+rdUUviO4G1WuwmZZXvlecYIRPgr3XIlqs
-	Ct2H454KF3LzZe+MxBpUhCS0lFZptWZqmuev500U3wvou/AlmhMWxzyMUP9GBtRpFYlnYd6ZKI0
-	r5Vdro6r2H3RrCjBXkMd4osuQ9hXsGCnAYHtUz0Ym/8VnYsrao+VBDrnmk6eRARQBPKXL7XAPq5
-	pgg6BVIe8ewEHmwWkel+XJ83Jp7FFKv1Sf6BzRM92xHKgg==
-X-Received: by 2002:a05:6808:1a20:b0:4b5:5bfd:518e with SMTP id
- 5614622812f47-4b964a27b4emr15913328b6e.20.1788855828720; Tue, 08 Sep 2026
- 01:23:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lSgakyS3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="obC0+d5p"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 97238EC000C;
+	Tue,  8 Sep 2026 04:26:41 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 08 Sep 2026 04:26:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1788856001; x=1788942401; bh=mzM7fui0Sm
+	1gE8bffFXRsPRM0cdAdBKNlCZCCFchDqI=; b=lSgakyS3xcaLAirBPa8XXdohR+
+	of6F7BmL6asihHP/AusjubhXvUVzS3xuN1BfyZffBwJ1hfIaw0LQe7jPEm0bzkQS
+	m/8nIJDEpJiEaIvekmvRJRdjygkcLSjN2Vx5zgOwru19j8UKBSgDQkhshXUSD9pi
+	75Nhp6pVknzCV+72D0J8JzOr3eN9q08EgIcw2MOLP/9dBXslUP2l0u1NbQO/yCNk
+	MAzoQWyOHJIk3p1mynGDHxTp3QVjgVA2aTLjFidbuoOQ4iA/MKfKTbYRT+1XpnUg
+	NvAhzw6wtsSK0BRB2X5vrtBY4togdSj7Q2gQiUOpMfXgxsS5FQue/I1X8yYg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788856001; x=1788942401; bh=mzM7fui0Sm1gE8bffFXRsPRM0cdAdBKNlCZ
+	CCFchDqI=; b=obC0+d5pe6+opGsQ4CDxPJj2Lp0S5TtysfGEKL2DkoOYgUsZwMn
+	tDbOnVlqeeAHmHdk34PYLRXf/1xUwNoQeaFbF3BBqQuhfpd21Z23riFCDv/K6irt
+	OBzONai7omKS+XiJVfjFo98jjNXhVMEfEEYmeJJyBm2jMvu19PEll2VrduT/WHTM
+	QeswOtY4Rukkeyr9zSlIkH1HuSz/aajGWUDDeY6SZ5DWBn/2WTkD3in076nwXbCN
+	bkAxWHbXNf4CJm/HPZpwNo+D0tFAmmHkgaEj6dBGi7AXA13iqSiobKbPYJckG/kb
+	YOe1GqWel6xplIIgLbR2EBL8Kzu1AF+/w6Q==
+X-ME-Sender: <xms:wcafanfd7Gww_Yg3IE7u2NEGUafxyyH4mI7DLVkbtpWVB2K3xBTaug>
+    <xme:wcafakotWT3O5xnM_EA9ekOEm8moh_urydOXRyOkhVuQUCJz4Xl2tQriO_k4gt6k1
+    FMxJUF22hYppEIho02PY4tCE_puPdtN4xLknr5cigswobj08JV9W-8>
+X-ME-Received: <xmr:wcafat7MXl41e-EIhDys5uFiCoEHXkvASPbyHYQwNCer1hvZmy611hIBBAGte03Tj6nDuQU>
+X-ME-Proxy-Cause: dmFkZTFuVYK1O+NrxZgm/F3nEaAh8GD4b/ZgcD0qFVD3d5m6juhGc/JEI9jfzrjzSmLNMG
+    RV3KvGHEGh0Y+uob1iSXvOhVZ2d3n/8W6pvz8BUiUziLtR3UEfJAX5ZCeRux/TmsikJqAd
+    b/PoKgmZ+BBIW0HiWCgvCvTD98pl+F8roj0xCaMhQUhCsxeH8Yq997ij3ltnxUyEK8I6P7
+    5aUcgFAUmkyLsINzjWtDE24U9IOTym2FIo8a7aVr1kbc4agV9wUt91837q1O0dX4DH8ypq
+    QY3kTJGwLhTK6uMempl9A/4jOu1kvfO4ckkkDglzX/Vd9+u5nUmmdRrOLFoMuVwGybmAjK
+    GCcE6zAblGdHMExhsjHjAyRDqbM6R5dCYPOfRM4dWzLHs5O1njuwjD0YBXM19Ik6F8imyN
+    cBvT5z/xW2FfO0Ed1OK2B9n56lmZAFIJKuHxSECoDT4Id1Lmg1u9yPIybhvAtRhzzuYGgL
+    8g3uaqqnj3CcfrAS+H3yiXsbbT0tAcbSbGJ8g9aRIvLVrfT8vJibE6NZFjsJ8rnMutsjUu
+    V0U80uyVdVWQ0w9oh2iesDdz0EOxKQm9kcwcsl+lr1gsNjWon87tMs0Ul6MIBMo06tZPjX
+    ecAyKEJxtbLTmQRsRpoHUWZd18HRxemYmkp3jddcYqTpwqQPaYTrH4vF3/ng
+X-ME-Proxy: <xmx:wcafaioy36O4HUbXAJfoJV943jMSNZ5bZirWGQOvLg8Ic7t_ddxPfg>
+    <xmx:wcafaniTM2JcMOs6XcIk2lt8p_dcjAHPBmHwY14e8hlqeY5JCo222w>
+    <xmx:wcafakIbpTPEIQaJPAt6e12Eb5pm5kfR1srkr5kfobS1Ku45xj38vA>
+    <xmx:wcafavDwdB7Go-QJIPl1cnsOEwx7hMpRDgKljNwVdvZL_7DnrSVxyA>
+    <xmx:wcafakwIN9eHtF0MLp1ampjZ5xkigfd7kllplLdNnF_388FUQJqHuR73>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Sep 2026 04:26:40 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2ecdccc6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 8 Sep 2026 08:26:38 +0000 (UTC)
+Date: Tue, 8 Sep 2026 10:26:36 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Beat Bolli <dev+git@drbeat.li>
+Cc: git@vger.kernel.org, Oswald Buddenhagen <ossi@kde.org>
+Subject: Re: [PATCH 1/3] imap-send: prepare for OpenSSL 4.1
+Message-ID: <ap_GvB8Lonkn0nEy@pks.im>
+References: <20260907211210.2621693-1-dev+git@drbeat.li>
+ <20260907211210.2621693-2-dev+git@drbeat.li>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Peter Elmers <peter.elmers@databricks.com>
-Date: Tue, 8 Sep 2026 10:23:37 +0200
-X-Gm-Features: AcwNN1UshcuZ67j60WjPO9AnH-wzKGRE-avj7qylOxB9QXsNpA8AWlaA2fD7fwU
-Message-ID: <CALY5j-0K-LfowAavH8X3UfZ24eAsoX=xew=KTt=4uCfZrdwXQw@mail.gmail.com>
-Subject: [BUG] git bundle create with bitmaps omits tree required by
- advertised ref
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260907211210.2621693-2-dev+git@drbeat.li>
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+On Mon, Sep 07, 2026 at 11:12:08PM +0200, Beat Bolli wrote:
+> OpenSSL master (to be v4.1 after the release) renamed the function
+> ASN1_STRING_length() to ASN1_STRING_get_length(). Map the new name to
+> the old one if we're compiling with a pre-4.1 version.
 
-I created two sibling commits with the same root tree, stored one at a local
-branch and the other at a remote-tracking ref, wrote a pack bitmap, and created
-a bundle that included the local branch while excluding the remote-tracking
-ref.
+I can see [1] that the new functions indeed exist now. But it doesn't
+say anything about the old functions, they still exist and don't seem to
+be deprecated. So why do we even have to switch to the new function?
 
-Adding `-c pack.useBitmaps=false` appears to fix the issue.
+Patrick
 
-The following script reproduces the issue:
-
-#!/bin/sh
-set -eu
-
-repro_dir=$(mktemp -d)
-source_repo="$repro_dir/source.git"
-recipient_repo="$repro_dir/recipient.git"
-
-git init -q --bare -b main "$source_repo"
-git -C "$source_repo" config user.name A
-git -C "$source_repo" config user.email a@example.com
-
-empty_tree=$(git -C "$source_repo" mktree </dev/null)
-base=$(printf 'base\n' | git -C "$source_repo" commit-tree "$empty_tree")
-git -C "$source_repo" update-ref refs/heads/main "$base"
-git clone -q --bare "$source_repo" "$recipient_repo"
-
-blob=$(printf 'change\n' | git -C "$source_repo" hash-object -w --stdin)
-shared_tree=$(printf '100644 blob %s\tfile\n' "$blob" |
-  git -C "$source_repo" mktree)
-remote_tip=$(printf 'original\n' |
-  git -C "$source_repo" commit-tree "$shared_tree" -p "$base")
-local_tip=$(printf 'rewritten\n' |
-  git -C "$source_repo" commit-tree "$shared_tree" -p "$base")
-
-git -C "$source_repo" update-ref refs/heads/feature "$local_tip"
-git -C "$source_repo" update-ref refs/remotes/origin/feature "$remote_tip"
-git -C "$source_repo" repack -q -ad --write-bitmap-index
-git -C "$source_repo" bundle create "$repro_dir/broken.bundle" \
-  feature ^refs/remotes/origin/feature
-
-git -C "$recipient_repo" bundle verify "$repro_dir/broken.bundle"
-git -C "$recipient_repo" bundle unbundle "$repro_dir/broken.bundle"
-git -C "$recipient_repo" cat-file -e "$local_tip^{tree}"
-
-The resulting commit and object topology is:
-
-                         refs/remotes/origin/feature (excluded)
-                                         |
-                                     remote_tip
-                                    /          \
-                            parent /            \ tree
-                                  /              \
-                              base                shared_tree
-                                  \              /
-                            parent \            / tree
-                                    \          /
-                                     local_tip
-                                         |
-                              refs/heads/feature (advertised)
-
-Both tip commits have `base` as their parent and `shared_tree` as their root
-tree. The bundle advertises `local_tip` and excludes `remote_tip`.
-
-What did you expect to happen? (Expected behavior)
-
-After `git bundle verify` confirms that the recipient has every declared
-prerequisite and `git bundle unbundle` succeeds, every object required by the
-advertised `feature` commit should be available. The final `git cat-file`
-command should exit successfully.
-
-What happened instead? (Actual behavior)
-
-`git bundle verify` reports that the bundle is okay and `git bundle unbundle`
-succeeds, but the final command (cat-file) exits 128:
-
-fatal: Not a valid object name <local-tip>^{tree}
-
-The advertised local commit object is present, but its root tree is absent.
-
-What's different between what you expected and what actually happened?
-
-The bitmap-backed bundle omits an object required by an advertised ref without
-declaring the excluded sibling commit as a prerequisite. A recipient containing
-all declared prerequisites can therefore accept the bundle but cannot traverse
-or check out the advertised commit.
-
-Anything else you want to add:
-
-Adding `-c pack.useBitmaps=false` to `git bundle create` makes the final
-`git cat-file` command succeed.
-
-`pack.useBitmapBoundaryTraversal=true` did not prevent the omission in a
-separate run of the same commit topology.
-
-So it looks like a bitmap format bug.
-
-Relevant documentation:
-
-https://git-scm.com/docs/git-config#Documentation/git-config.txt-packuseBitmaps
-https://git-scm.com/docs/git-config#Documentation/git-config.txt-packuseBitmapBoundaryTraversal
-https://git-scm.com/docs/git-bundle#_object_prerequisites
-
-[System Info]
-git version:
-git version 2.54.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: disabled
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Linux 7.0.0-1012-aws #12~24.04.1-Ubuntu SMP PREEMPT Wed Aug 12
-14:00:57 UTC 2026 x86_64
-compiler info: gnuc: 9.4
-libc info: glibc: 2.39
-$SHELL (typically, interactive shell): /usr/bin/zsh
+[1]: https://docs.openssl.org/master/man3/ASN1_STRING_length/
