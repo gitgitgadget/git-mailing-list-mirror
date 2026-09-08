@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0211C36B93A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0221748E0DC
 	for <git@vger.kernel.org>; Tue,  8 Sep 2026 19:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788896703; cv=none; b=gtJj45UJgATuxO42rclOxcDQMa0nXwopm0wTMo8WHlmYX5ZrUo45SCxmQtn4hKBAQ+/UxMDxBFrGWlXEMLDs9nbPKOCC63qzzFmi414pDrb7vYnyYrqlnNJpSbFEyZXAV1++KKqwUXJoZ6HW/vhIixoJVtFANLKc4WxsSlAUM9I=
+	t=1788896703; cv=none; b=pkplCrkKxK/8ykM5b2n5KB2TlFvRMEAl9IMxc91pR0AtAKGOwVueYG5p42YetuLIC10zE5vL5IZxCYUznrXiugkV9CYJ0XyWeZmNohAbqdn3ibVxMoBGDiyqQuzrmwCq2oS9LaJTeGOlCEyoc6lJHV6ABvYopIjNee1wiJjrqsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788896703; c=relaxed/simple;
-	bh=ob3lO711FvuEn45yWeybckH753ynETznTETSLtLx1nI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=meBl9T75opfqliC3dPBiKDEq3b1ZfiVvvWUs7VCo/oO6RuXZyVJaEwLDM8z7/vkzs6GWxAUGL5lvTZDlr2L4clcLjUnJecu3n7SCXzJJ6HFO2CbcauXcueIHFpdBpQWvYJmy82m+9OCasA7Kowgt0MbkKpNts4IpE+u/uXZcGa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XfCAEDPO; arc=none smtp.client-ip=10.30.226.201
+	bh=OATzhZDKqJ14hD6q/YAw40YMvNZ3Yr1efhI3qfOorks=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=beGG1V2gZHzgzt1bs6kwQmuK25OfJpqS/p/CoMleG4dQTR9ag6EdvYfz8huDV5G13aOIoDkbcvtwrdOYBiNTPUlvcH+cVZIg2oUk7kq8e400wGGBS7oQMzmlSaH86/SMF3dBb0bl+F9o7YLWIqCCThRgLExZscVKvtNYS05oIPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fO3DAWBC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XfCAEDPO"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 60AF5C2BCB8;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fO3DAWBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6F6F9C2BCFA;
 	Tue,  8 Sep 2026 19:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1788896702;
-	bh=ob3lO711FvuEn45yWeybckH753ynETznTETSLtLx1nI=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=XfCAEDPOLi0apgeof0+Y0a+k06hIVHD9quCfZ8rbjkRz5QZC3M6oNM7qQJWjNfgFl
-	 Kc/gdjg/tJpc86ymFCdhSeYvXTbvzcMWpTHyeR82ryozvrNQpIol0qRghCeCZL2gjH
-	 tEAOHdb4A6dk0bslzxOsjw6+tFPqMlnkbbpPv+3iij8GU0KHWKQ8HoHeFwssAGBM2R
-	 ehwxR/vmdQR4CUlV5hMnm+avbYNUM0KrMdov5RbWBr+vNmkkVi0Ipw9YqfwleU75HT
-	 kdRJiIWE/aPoUD//Ki7RKn4vOQ4TxhhLq5joNKx7IqqYVhV4BrODYEjGVuK2W68I+J
-	 ioUSR9CKegbwg==
+	bh=OATzhZDKqJ14hD6q/YAw40YMvNZ3Yr1efhI3qfOorks=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=fO3DAWBCEbN2A+/Ygnr9QnwY75SEV298u9MyJmlwcseHpq7xQjmMl9zL2AjGvQxmc
+	 Ae+6uCnRWlWMUOefH9sKwQMwI0jXCiGVWHl7/TeahHmPZ0XFcBqmK/5jhGxsnZHqiC
+	 jMv3L818oqaWSbBhZX0AYZFmMP9s/9uuY2ol3hrKyHypHjG6z+y9kWbalmkelCDPoz
+	 8NCsfcFaxmWXb0p3r+FPsFutUw6EtlJFUi9b4H4fMhKt2fayUkyE0+wCllfAWNKTEU
+	 j2rEPLKt+AVPYmDdOY7xXqjBDWhcDR2ZFhT/2cjuzEzh96CCyWmP1Puj9Wmt5wZ3a9
+	 FL422SbO+boig==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 344E3C79FAA;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C787C79F82;
 	Tue,  8 Sep 2026 19:45:02 +0000 (UTC)
 From: "Mark C. Chu-Carroll via B4 Relay" <devnull+markchucarroll.fastmail.com@kernel.org>
-Subject: [PATCH 0/3] Update t40* tests to use modern style.
-Date: Tue, 08 Sep 2026 15:44:52 -0400
-Message-Id: <20260908-modernize-t4001-v1-0-cab3933a173f@fastmail.com>
+Date: Tue, 08 Sep 2026 15:44:53 -0400
+Subject: [PATCH 1/3] Update t4001 to use modern syntax.
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,20 +40,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBBA0avIrDUZJYKriEXVlJEoaREh7q5Yv
- sX/F3hyTB6q6AJHO3uebUASR6AHZXsS3AWDRJljiYWY5o6c5ZPEmiEmwrRZmqLUSpkSQrU4Mnx
- 8x7r57bd2JL2+G7jvB240ABBzAAAA
-X-Change-ID: 20260908-modernize-t4001-fb43302caaf9
+Message-Id: <20260908-modernize-t4001-v1-1-cab3933a173f@fastmail.com>
+References: <20260908-modernize-t4001-v1-0-cab3933a173f@fastmail.com>
+In-Reply-To: <20260908-modernize-t4001-v1-0-cab3933a173f@fastmail.com>
 To: git@vger.kernel.org
 Cc: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=589;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2308;
  i=markchucarroll@fastmail.com; h=from:subject:message-id;
- bh=ob3lO711FvuEn45yWeybckH753ynETznTETSLtLx1nI=;
- b=owGbwMvMwCUWOPFJle/8tn2Mp9WSGLIWpO66OHmLU/+LwwXNpXPmGh89xLp7BV/ix+RzUckGB
- w0cqzcLdZSyMIhxMciKKbL8/yfQ+IrlgYRf0LtPMHNYmUCGMHBxCsBE/hQx/C+csGte6L6s4rUf
- 4tw5PIxPat+6//Kc/JGTAme6j+6Ry77AyLA6xfzQHYuPU2vUJu+72zejufiBnKotj67jxWUPPlV
- GljMBAA==
+ bh=tYfimROY4pM4hcIs4mrY96uFgq+P8MDoIKlkcUrM5Jw=;
+ b=owGbwMvMwCUWOPFJle/8tn2Mp9WSGLIWpO7W2m265owa90T3lPVPFKvkMnWjax7cd3Rc/+L4r
+ Eml4Qn8HaUsDGJcDLJiiiz//wk0vmJ5IOEX9O4TzBxWJpAhDFycAjCRpX8YGTb9YSicc0HuwG5n
+ uXNKz1Qy9ee73Vi+jiPBSuCGoUNK62xGhispD857bGHe/85getSq3cdV5B58znplvXRG40+3tzl
+ d59gB
 X-Developer-Key: i=markchucarroll@fastmail.com; a=openpgp;
  fpr=FFFE1081EA04E0184E52EEF25191E47A4D9F86BE
 X-Endpoint-Received: by B4 Relay for markchucarroll@fastmail.com/default
@@ -61,21 +60,83 @@ X-Endpoint-Received: by B4 Relay for markchucarroll@fastmail.com/default
 X-Original-From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
 Reply-To: markchucarroll@fastmail.com
 
-Signed-off-by: Mark C. Chu-Carroll <markchucarroll@fastmail.com>
----
-Mark C. Chu-Carroll (3):
-      Update t4001 to use modern syntax.
-      Update t4009 to use modern style.
-      Update t4010 to use modern style.
-
- t/t4001-diff-rename.sh   | 31 +++++++++----------
- t/t4009-diff-rename-4.sh | 54 ++++++++++++++++-----------------
- t/t4010-diff-pathspec.sh | 78 ++++++++++++++++++++++++------------------------
- 3 files changed, 82 insertions(+), 81 deletions(-)
-
+From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
 
 ---
-base-commit: b8242b093d9e941a34460d715e3ce616a34ac3fe
-change-id: 20260908-modernize-t4001-fb43302caaf9
+ t/t4001-diff-rename.sh   | 31 ++++++++++++++++---------------
+ t/t4009-diff-rename-4.sh |  8 ++++----
+ 2 files changed, 20 insertions(+), 19 deletions(-)
+
+diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
+index ad474100af..2aa161c217 100755
+--- a/t/t4001-diff-rename.sh
++++ b/t/t4001-diff-rename.sh
+@@ -88,28 +88,29 @@ test_expect_success 'setup' '
+ 	EOF
+ '
+ 
+-test_expect_success \
+-    'update-index --add a file.' \
+-    'git update-index --add path0'
++test_expect_success 'update-index --add a file.' '
++    git update-index --add path0
++'
+ 
+-test_expect_success \
+-    'write that tree.' \
+-    'tree=$(git write-tree) && echo $tree'
++test_expect_success 'write that tree.' '
++    tree=$(git write-tree) && echo $tree
++'
+ 
+ sed -e 's/line/Line/' <path0 >path1
+ rm -f path0
+-test_expect_success \
+-    'renamed and edited the file.' \
+-    'git update-index --add --remove path0 path1'
+ 
+-test_expect_success \
+-    'git diff-index -p -M after rename and editing.' \
+-    'git diff-index -p -M $tree >current'
++test_expect_success 'renamed and edited the file.' '
++    git update-index --add --remove path0 path1
++'
++
++test_expect_success 'git diff-index -p -M after rename and editing.' '
++    git diff-index -p -M $tree >current
++'
+ 
+ 
+-test_expect_success \
+-    'validate the output.' \
+-    'compare_diff_patch current expected'
++test_expect_success 'validate the output.' '
++    compare_diff_patch current expected
++'
+ 
+ test_expect_success 'test diff.renames=true' '
+ 	git -c diff.renames=true diff --cached $tree >current &&
+diff --git a/t/t4009-diff-rename-4.sh b/t/t4009-diff-rename-4.sh
+index 59e71e3acd..8f86dc7274 100755
+--- a/t/t4009-diff-rename-4.sh
++++ b/t/t4009-diff-rename-4.sh
+@@ -19,10 +19,10 @@ test_expect_success \
+     tree=$(git write-tree) &&
+     echo $tree'
+ 
+-test_expect_success \
+-    'prepare work tree' \
+-    'sed -e 's/HOWEVER/However/' <COPYING >COPYING.1 &&
+-    sed -e 's/GPL/G.P.L/g' <COPYING >COPYING.2 &&
++
++test_expect_success 'prepare work tree' '
++    sed -e "s/HOWEVER/However/" <COPYING >COPYING.1 &&
++    sed -e "s/GPL/G.P.L/g" <COPYING >COPYING.2 &&
+     rm -f COPYING &&
+     c1=$(git hash-object COPYING.1) &&
+     c2=$(git hash-object COPYING.2) &&
+
+-- 
+2.53.0
 
 
