@@ -1,145 +1,256 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C1334F48F
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 09:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788861440; cv=pass; b=J1r1Za3W8X2Xqx2juxUSuTlgIc8tKmCRLk6VQkzKR7l19dsbyZA/jtBeXK+zzm7nlLac+OccDlqMo6gxQQfagutxBPB6idR0uMXhXD1JwhsjDNZYFsXVhs2p7lQxLDZL8sFeT4aAQwcgiLeeS8BeAKJ81Ups8mi+3yI8MdvDtEY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788861440; c=relaxed/simple;
-	bh=J2OhIeIjC47mGSgWhgKaio4wDx6OeWbEoE5w12Fms2U=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SrjLRsMO5/hhckzMKHtqUZS/9aqlR4vy83qaC550WzWbu8OxRvn4bBfL1YxjuqohekWTdJr7wQzr+9nKKJ0YuFPEat5e2WMuV9uB0eZND1TW5gG9g31/cCvthejF5cygCueMY+wioqgB2eSX//E0EtPYieNcDUYImSfAfCLik4I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YqWJCU39; arc=pass smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20184F4735
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 10:27:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788863228; cv=none; b=g5PgZn7PiIRsr1sK0G6e6cfZVwWp3pfc1XadVMlo7GmpLlAXM8GqkW/Yr3EUD/NMzrPPkQ0sG67zcJ1SE5Swvg3OcxWNKT3TB1Bbckac3eDF81nvvUcCNBItc1HHI1MzX9cGzAQMinmCImyO28t2qzK2MjSmPM26B/GZ1tjN+wg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788863228; c=relaxed/simple;
+	bh=7Rg/T3BClcSWqpgfcM2odzau0j5YEKrv9LI3rekKbu8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=X8sMlrauiT0drlPYno9dD2oidfQNBoosVCT/sxk6o8ci71g5gxT2BHCVKzt8TGL2EbSWLLfFT/Ma99Zi2kdlDO9DvfoDXKsqXDHjT3E6mPSJebNOkg8V0366myqwY6xXwm8rkqBu9pp79xS+PH0fTK7SAf1fltawHRYix2gT4bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r34nGoSt; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YqWJCU39"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5bfa4c51c2aso1792022e0c.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 02:57:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788861438; cv=none;
-        d=google.com; s=arc-20260327;
-        b=n9hf4NvmL9A82v5VyEQ0BYzDzXqxBxP175yo46vzzLiP8M3oAERpicwE9wEFkXptci
-         DSY7y9+0511FflRBR9XxBkWAXdpbkUagqgKpM1eSEzP2YM+kj3CzZ6VsDsXH5y34FMn6
-         3X2GbHENSkhtBB+V2hXr7i/8LRvEr2SNmEDn+SqgM14qi5p55G40nifc3P9VBIPo4Rqi
-         T4lUJvO8PhZ7dLtOxtg8PrppnsHKdhxa6gUE1Uru+BfuWbvPHnA1+jU2OqQ2Esq1MSoU
-         3xJDmpQR02lpu61gpdaEHBArGG0VsLDD7bSGnSrRtSs/mHwM+btWzamjF44vYFYhSNoT
-         4WWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=uDciJAArqovFR3Kh/6dCeawqglUagxgT94uPiL0fACk=;
-        fh=D4uDqIpMAU76UF3y7kLhifPMaIKyWsi4/hRzYZ8Ccvc=;
-        b=Loz0cl2WHt6rdrPuHYr2LjDTfd2FNcn665BdZ/1iHneT3wfiveiyIDSjgF1VxGBYT9
-         4ummK0jzGLo69dxZw+fjXv+ErRnCoicbunuZ0dXEAvB8SD49NfOdNhGy7mnLVo7MxhL2
-         KJGKjjwpV29X5V7a6W31QQAZTY9OJmpdvd0RBKzEWRU1aCOIOabJ5c4vLPOjWUrXcw0X
-         wWE/sxLiG1xLNF527XAIavZE7s8PfuLJB5lEIwQSuYWqGVLq8QbKnD9WFr7DOYtM3al8
-         r3DR/zXodYZonO6oCqRB0/yFmR/HsATBgR1vds4wcuUZY6HzVh5Wyi9sIyNJru+jYWeL
-         fgYA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r34nGoSt"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-48431648f33so3681603f8f.0
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 03:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788861438; x=1789466238; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=uDciJAArqovFR3Kh/6dCeawqglUagxgT94uPiL0fACk=;
-        b=YqWJCU39lbMx24GOi0+vtp7cD5kIn4qeV13zueJQ4IRlk4UtsaldJ+YCBoFg0EnhO2
-         2eVRhLT8Cv4V779p/PlvmRuasEUAaLX90G3/BeJvvhVENViZKAubxYoOA9mclCtZkOiX
-         UiqPg7ZZIiJjNQeav0byWeas7pwy3qpZ1gXqO81dUSxyYDi1hJDHVjTExuqG0vNvnO4a
-         sPo3aEQRQa1Neb9+0abqPCJlg8oXncygZMvjJgPlsUwnxhcDQDOMbnIBXDNgwh2BmP8r
-         XFqSRlQC1CsL0EPznmz8SCGP6teE/gbFHMIfhiK6QXMaucoWqQQo05/dvzNy6fulYBC+
-         Z3dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788861438; x=1789466238;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1788863225; x=1789468025; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
+         :mime-version:message-id:date:subject:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=uDciJAArqovFR3Kh/6dCeawqglUagxgT94uPiL0fACk=;
-        b=efvcQX5RWpD6iFRqPHMpYGmuCrlkC1FNyPUF5B/lZhMv1yobJGxL4G9xS3UC1ezd86
-         ElGOwGt3GffG9cz6WPrfDyzoFIsHHViOJT1OR4p1iRXZH3PYmn8nttkiAAw+vcfdOrFZ
-         hhtu1pSPL4dXquzCDzEj+oVFJNN+DioIjoKcjO/1qDIhx4LYWTJcCxXWkyWDuAbPZ0vI
-         hQXB+tIXohC5aRcV1bRn62drAc8Oc7LWEC0I52OY4ta8isAl9y4Jal36aHzi2U7MkI2h
-         F7r8FR3XvAlsOr80ycVWnGF9D80nsgfwS5mS0U+kT0w0LXV1ZVX35kiI6OK3iS7ak41D
-         3znw==
-X-Gm-Message-State: AFuF++nOu9J4tQsgZbaKspMgsJTs4hNwmd21aGU+DaIWXbYWTX5PdQye
-	IfklZ+fFIGStDp1dhkbIE8FT6VeZTWuH/WGtI24/oSKKlZz+WiK06MFNqY/nWwvvwoDOR7Ll2Py
-	ppH7YRo71vRJwL+yRjwhDW85yZAtz8Nk=
-X-Gm-Gg: AYBFou2b59bP/Bp72SRHxJFGVymKm802gpmdK8O1K4f5yWv1oH2MybcFmbI1K6Ihogg
-	C3Z+yH7hmL41b1s7cGxpZCNFRTBQnth9Vef3fpQjefdZOVopFjMqD/5bkWayZiwXh1qqNsSG37l
-	Ms6syPPJ038nxS4O3kd3n7Ix538hOhR6yB7sOUdxyIB7Q1omgEsTE7STlLGVz3uGSoHVwfZcKC/
-	bS9/AHcRl65kP5fR2QYWFkmioEGra4K8pUQSfqXP9QPcWhGA//8csT5Zm5F8KMXxOoV7n/n1eIu
-	TqYl6OUYyoP9d134/CfO6XOTYgswKh2qfTgOdyRIkbexetR3CS3wQfqRN4rDq+iToV4heh/OVTx
-	nwAfBpSOiZs72ahF525uZOfyLRAdfpHo04M8=
-X-Received: by 2002:a05:6122:da0:b0:5c7:ae9a:a056 with SMTP id
- 71dfb90a1353d-5c7ed457809mr11832136e0c.8.1788861437760; Tue, 08 Sep 2026
- 02:57:17 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 8 Sep 2026 02:57:17 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 8 Sep 2026 02:57:17 -0700
+        bh=o+PbNdCqJQUSXHncYI8vOQP7Y8g7RakpciN+G3vWBm0=;
+        b=r34nGoStM1pQRm/Dmdx9yNUHevGkqK/MtxVRZv5CVoNokMH1ox/XQw/964AFs736Eq
+         5sxbyFUgexK8gXf3Bv9IIUfbXDc/MacC7eblSXG01RG3ZsJgYoCDY2jVKOmwaIVrpKzy
+         qnToBDeFFJYE5GGOwVaSqSMDXDMGx+Jf0z4hXB3/oBQ5azHwvay3aDk0/RMYP0PGsSI9
+         Z4F9P3P7by0sfrdy4xGAk77dbiBcmBAIH3KMnSSt/zyz0S2DVf7/DvYfDacT/lWgidG8
+         q64TZ1EMF6rAvOHRkN3u96OvPevQSJQgPedloBGWzOVtrrjV1d6SELU3SQXKCrZcH1Zm
+         uwEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788863225; x=1789468025;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:content-type
+         :mime-version:message-id:date:subject:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=o+PbNdCqJQUSXHncYI8vOQP7Y8g7RakpciN+G3vWBm0=;
+        b=EG1ftTAreHbuVMM86yihB8WJ0+iomUE4oOgmfU4fSKaN4bMJk7I1+wefo3aQKfI8ok
+         Z4a5DWZtnF0jhsW7Fgv/PzQhOZOVMpEyLLgLE0j++sG9tR2ganKkvOLLgCxRQoTnOf6A
+         uIsTTg2ir0WJMKhgC/mxH8GXjEYXEhQwfaaArF8SBeK4ISaliBCxKfDzLkNGh0kFyK6F
+         LrS/KlJIas56zsX/jOFjhJzyf+oZeRfVhSuTFT5jgyNcDiYrHAMX+Qo18X3CLNjwh5kg
+         L9Xv2GqXIBaAzz9n6mEPCWHmJQgPsKb/k8fO3gjMzekivtu15KOmWpgcJh/mij2qjwlT
+         MJpg==
+X-Gm-Message-State: AFuF++k4fyAjcrgqaSG2YeAx+CqIqZCva4l5DJQemJWM45i5XXEp4m0X
+	ToVPVEiVwFxO14Pb8yKmyouvE+vV4kjrQV1gIilAIgqX0MnCDdW/GQnT
+X-Gm-Gg: AYBFou3Mv3IBII3Dsn5d3bOqTTOV+Vy8BHSW0PZzD8YjON05wTNKqYsKhmKTRU4uwzM
+	w91HMbRu0mDGwkZYK/p+tmQdwAwxj3FUMBVKvYlv18Qf2d99Op7r1l+pcI+wnezG2BEkF3A5aWn
+	deqytIJwB8FjPYwYGYCtYhLNy3UdJlSu5Qq/0ohqO8Laasmi/oOeV0nTxTMAZ2kSRkL3srAYsfA
+	0m/Ca3NJGS/Ch2Z7B8XaXaMgJnoT+q3dafXmaUQ3yrCknaIEUDPUemgPmihXy0qVIkFHqMfoAl3
+	n9m7IvYIeVJHyqrKWFMcjUlO+2UBuDVvDrmWfcwWo2k25e96mXC0G01mEAc0wjPJMoLpNaCeT00
+	D+DraygmTEFT121n78ziEfesubvKmJp1Riu+ixT2K2xiss6a8x895iW7u4p2443fr5tf6IIqw65
+	YZHuV6lRM9Q1tCH7bKxWcbyQVuywcj4XkuVW782WMxtHHuw0TX8KpRNgCJHaPaZfgrpkPskh8Ab
+	jYb2LjB+A3QU5le9lXZmfavaws=
+X-Received: by 2002:a05:600c:1d04:b0:49d:7d4:5f0d with SMTP id 5b1f17b1804b1-49d07d4602bmr184719765e9.16.1788863224682;
+        Tue, 08 Sep 2026 03:27:04 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:8109:d906:4e00:ed36:96cf:ac4a:2747])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485885be1c1sm34446572f8f.32.2026.09.08.03.27.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2026 03:27:04 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq7bkw3hk7.fsf@gitster.g>
-References: <20260904-758-introduce-hook-v7-0-6c66f0a3a572@gmail.com>
- <20260904-758-introduce-hook-v7-4-6c66f0a3a572@gmail.com> <xmqq7bkw3hk7.fsf@gitster.g>
+Subject: [PATCH v8 0/4] hook: introduce the receive-report hook
+Date: Tue, 08 Sep 2026 12:27:00 +0200
+Message-Id: <20260908-758-introduce-hook-v8-0-be88a671ae1f@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 8 Sep 2026 02:57:17 -0700
-X-Gm-Features: AcwNN1XaUe7ZydbWdd8UEWgzV7icbu07WenlbcbGge9awQ6zXx9GD7cvg-OV-v4
-Message-ID: <CAOLa=ZTNMwJkXZ_CuKdR0F+_ZAxtr+eK6o=tjgUg4O4vFgPDpg@mail.gmail.com>
-Subject: Re: [PATCH v7 4/4] hook: introduce the receive-report hook
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, jltobler@gmail.com, 
-	kristofferhaugsbakk@fastmail.com, Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: multipart/mixed; boundary="0000000000008cec6c065af5c298"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23Qy07DMBAF0F+pvMbIj/jVFf+BWNiTcWugMUrSC
+ FTl37GLECHycqTxueN7IxOOCSdyPNzIiEuaUh7KYB8OBM5+OCFNfZmJYEIzywU1ytI0zGPur4D
+ 0nPMbVUH66CL3Bi0pDz9GjOnzjj6//MzTNbwizFWqG+c0zXn8uqcuvO79BthWwMIpp9bb3jrUy
+ kr7dLr49P4I+UJqwCI2hOBNQhQCHUMRjQcBcU/ILdE1CUkZ7ZxTQkfmmRZ7otsSukl0hdCBd84
+ o3ztl9oT6Ixxrf0QVQiroQQeUAHxP6C0hm4SuVwgrA4/BBQ57wmyJdhemEqBrE9Ir86+LdV2/A
+ fs4CaBYAgAA
+X-Change-ID: 20260812-758-introduce-hook-5b3af9f1a7e8
+In-Reply-To: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
+References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im, gitster@pobox.com, jltobler@gmail.com, 
+ kristofferhaugsbakk@fastmail.com, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+ Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6805; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=7Rg/T3BClcSWqpgfcM2odzau0j5YEKrv9LI3rekKbu8=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqf4vbCHqvUgVEiQ8axcAWQU5yLHBkqwaQQw
+ trrw7SQYgDkw4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqn+L2AAoJED7VnySO
+ Rox/5MwMAIl8Xej16UH6tNxrVoeQuyTDmRLh3SK6LZCnzS/nWWIvTLAGeS76ZRNR/A4kvnF5q9R
+ hj/rgGVssQ6cvNATKw/8H+Hv6PllafVq365TLWo/jCYl50hsvuR0Ae9paNc1o8Ek0lbbVrj0vvF
+ Undc6jYEEjtDc3/vw4nUoTvev4fyV5oVdMaRqHn23wwXU8EPG/3W3f5XoK1rtFWG+dIj7L4PUFZ
+ fUQ1zSAiBG4tQfujznBWNMwT+U3JeKVZq9aJ4IkEEp1eknIputx9SmCj02jzA2or7rIP6Uvvo0a
+ 85fudnLI34hg8mw3DW4dDI7zex8w/XqNlzTe7+9qIe6TFrMR8tZLK5Qh+dULBP10QVxuLGYR89L
+ +EyAwNSjxXNaInAhyO+Gn6GM982PYvtiWWYkdDC5LSbBPGtJQZWDGKyohzC3Le5deTIdt4OH6fm
+ yB/u+PDBWon5SmV8BD4d6BbEHkMt89tk6XkrdE/392S1xvjuj3wk5Ab2bYljqU28+3GzQ/tc9f7
+ ec=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
---0000000000008cec6c065af5c298
-Content-Type: text/plain; charset="UTF-8"
+Introduce a new receive-report hook which kicks in after the reference
+transaction is complete, but before the report is sent to the client.
+The hook receives the pkt-line encoded report in its stdin and its
+stdout replaces the report transferred to the user. If the hook exits
+with a non-zero exit code, all references are marked as rejected.
 
-Junio C Hamano <gitster@pobox.com> writes:
+The first patch, adds missing documentation to 'git-receive-pack.adoc'.
+The second patch refactors code and the third patch contains the new
+hook.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> @@ -2469,6 +2510,12 @@ static void report(struct command *commands, const struct strbuf *unpack_status,
->>
->>  	generate_report(&buf, commands, unpack_status, version);
->>
->> +	if (run_receive_report_hook(&buf)) {
->> +		strbuf_reset(&buf);
->> +		override_cmds_error(commands, "receive-report hook failed");
->> +		generate_report(&buf, commands, unpack_status, false);
->> +	}
->
-> Hmph, what does 'false' mean here?  Didn't you mean to use the same
-> "version" like you used in the previous call in the preimage?
+---
+Changes in v8:
+- Fix spelling mistake s/UNKOWN/UNKNOWN
+- Remove a stale comment from previous version.
+- Fix an argument which wasn't changed with the previous version's
+  changes.
+- Link to v7: https://patch.msgid.link/20260904-758-introduce-hook-v7-0-6c66f0a3a572@gmail.com
 
-Indeed. It doesn't trip any test as we override the command error, so
-the version argument passed as `false` here is never used.
+Changes in v7:
+- Removed report_v2() since it is the same as report() with the new
+  changes.
+- Used a switch statement instead of an if/else for the enum.
+- Removed an unnecessary curly brace.
+- Also rebased on top of latest master (3cb9185f65 (The 22nd batch,
+  2026-09-02) as there were conflicts.
+- Link to v6: https://patch.msgid.link/20260903-758-introduce-hook-v6-0-6283b1fb9b1c@gmail.com
 
-Will change.
+Changes in v6:
+- Introduce a new commit which introduces `enum report_status_version`,
+  use that and drop static variables in the codebase.
+- Reword the commit message and documentation to:
+  - State further why reference-transaction cannot be used.
+  - State the responsibility of the hook owner to undo and reference
+    changes if needed.
+- Link to v5: https://patch.msgid.link/20260901-758-introduce-hook-v5-0-35cdc6be3cc1@gmail.com
 
---0000000000008cec6c065af5c298
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: fcc1abeaa04106e8_0.1
+Changes in v5:
+- Rewrote some of the commit messages and documentation.
+- Renamed the function `generate_response` to `generate_report` to avoid
+  ambiguity.
+- We now override the cmd's error_strings, this avoids the whole
+  precedence issue with the earlier series.
+- Also add information about how we can override the unpack status to
+  fail the push and add a corresponding test.
+- Thanks to Patrick for the review!
+- Junio: This causes conflict with next ('jt/receive-pack-pluggable-writes')
+  similar to before, please let me know if its better for me to add that
+  dependency.
+- Link to v4: https://patch.msgid.link/20260826-758-introduce-hook-v4-0-6b14975ad957@gmail.com
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xZjIvc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1melVaQy8wUVZVcm5Hd2k2Ynd2czFzd2kvOEVPYWNnNQpGRXJmUzFXS2dO
-MGY5M041bWhiNTZFSFE3WSthZHJmMFZYRjFRZmNQZmpPaDYwSDBLMEJFS3UvcktJenVzZFJWClYy
-U1RaL3pCcE5PNW04QjV0ME41RENwVm9MV0Q5WlBod1VJNDM0SnhtWlF2QjdkSUtsK1lvOE5WMVIv
-Yjh5b3UKS2t6N24yZjRpQ0pPWHp3RmlndkJIMlBUTWpVNGl3ZHFSc25sNnhDcDdTZytiMmxpbUxT
-WTFJYms5a25QRi9VRgpZVzRoYVFwcUtsOFZQenNjcUtwdEI5Z0RPWUlMdjg0MEdpY0JPVUVURjZR
-UnkvSlMvUjNsWDIzWjZjYXl3dzF5CkJHa0tMaDVEQnBmdWUvODBCNmVnTE0rMTl3UklVQXI3SEZx
-OC9oVmN0NHdUNmUreVA5U2k0ZHpnb0tnV2pNQnAKQW9GTk1mTUh1SGM3eXZJTkJYMjBXdUh2Wnk0
-MUtoRytoN0gvT3lrYVRzeDVqWkg2Y1ovb3RrcytnVnE0UWd0eQpqNi9pQmVqRHE2YW5rNHMwZWJ4
-TzZpdE9abzNQcXNyL3FYU3IyZVN5ME10bXZQUlVaOXc4YTJoRnkrZzZxcXFDCmZCU2tjZjBZdEdJ
-SDZJOWlFcEYwaXR0NitDNUZaNC80NGlQcHRCRT0KPUtPc0kKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000008cec6c065af5c298--
+Changes in v4:
+- Change the name of the hook to be 'receive-report' to avoid ambiguity.
+- Link to v3: https://patch.msgid.link/20260824-758-introduce-hook-v3-0-499526f0a062@gmail.com
+
+Changes in v3:
+- Move out addition of proc-receive hook doc to 'git-receive-pack.adoc'
+  into a new commit.
+- Add a new commit to move out the response generation in receive-pack
+  to a new function.
+- Instead of die-ing on non-zero exit code, we modify each reference to
+  indicate that the hook failed.
+- Instead of correctly listing out the protocol, link to
+  linkgit:gitprotocol-pack[5], as the protocol also differs between v1
+  and v2.
+- Link to v2: https://patch.msgid.link/20260821-758-introduce-hook-v2-1-e90e2f7ac2cf@gmail.com
+
+Changes in v2:
+- Modify the documentation and commit message to be more verbose.
+- Add documentation to 'git-receive-pack.adoc'
+- Use 'ret' as the variable name for the return code.
+- Modify the test to also check for the 'remote:'.
+- Link to v1: https://patch.msgid.link/20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com
+
+ To: git@vger.kernel.org
+ CC: ps@pks.im
+ CC: gitster@pobox.com
+ CC: jltobler@gmail.com
+ CC: kristofferhaugsbakk@fastmail.com
+ CC: phillip.wood123@gmail.com
+
+---
+Karthik Nayak (4):
+      doc: add proc-receive hook info in 'git-receive-pack.adoc'
+      receive-pack: drop static variables to track report status version
+      receive-pack: move message generation to separate function
+      hook: introduce the receive-report hook
+
+ Documentation/git-receive-pack.adoc |  17 +++
+ Documentation/githooks.adoc         |  61 ++++++++++
+ builtin/receive-pack.c              | 146 +++++++++++++++--------
+ t/meson.build                       |   1 +
+ t/t5412-receive-report-hook.sh      | 224 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 401 insertions(+), 48 deletions(-)
+
+Range-diff versus v7:
+
+1:  a80b77f284 = 1:  55f08ef482 doc: add proc-receive hook info in 'git-receive-pack.adoc'
+2:  116699bd30 ! 2:  df5840c4fa receive-pack: drop static variables to track report status version
+    @@ builtin/receive-pack.c: enum deny_action {
+      };
+      
+     +enum report_status_version {
+    -+	REPORT_STATUS_UNKOWN = 0,
+    ++	REPORT_STATUS_UNKNOWN = 0,
+     +	REPORT_STATUS_V0,
+     +	REPORT_STATUS_V2,
+     +};
+    @@ builtin/receive-pack.c: int cmd_receive_pack(int argc,
+      	struct shallow_info si;
+      	struct packet_reader reader;
+      	struct odb_transaction *transaction = NULL;
+    -+	enum report_status_version version = REPORT_STATUS_UNKOWN;
+    ++	enum report_status_version version = REPORT_STATUS_UNKNOWN;
+      
+      	struct option options[] = {
+      		OPT__QUIET(&quiet, N_("quiet")),
+3:  e36b4e7a21 ! 3:  d7c3b7ed55 receive-pack: move message generation to separate function
+    @@ builtin/receive-pack.c: static void update_shallow_info(struct command *commands
+     -static void report(struct command *commands, const struct strbuf *unpack_status)
+     +/*
+     + * Generate the response to be sent to the client invoking 'git-receive-pack(1)'.
+    -+ * For v2 protocol, set `detailed_report` to true, which will also add detailed
+    -+ * report per reference update.
+     + */
+     +static void generate_report(struct strbuf *buf, struct command *commands,
+     +			    const struct strbuf *unpack_status,
+4:  e7c1c0d196 ! 4:  d0e632235a hook: introduce the receive-report hook
+    @@ builtin/receive-pack.c: static void update_shallow_info(struct command *commands
+     +
+      /*
+       * Generate the response to be sent to the client invoking 'git-receive-pack(1)'.
+    -  * For v2 protocol, set `detailed_report` to true, which will also add detailed
+    +  */
+     @@ builtin/receive-pack.c: static void report(struct command *commands, const struct strbuf *unpack_status,
+      
+      	generate_report(&buf, commands, unpack_status, version);
+    @@ builtin/receive-pack.c: static void report(struct command *commands, const struc
+     +	if (run_receive_report_hook(&buf)) {
+     +		strbuf_reset(&buf);
+     +		override_cmds_error(commands, "receive-report hook failed");
+    -+		generate_report(&buf, commands, unpack_status, false);
+    ++		generate_report(&buf, commands, unpack_status, version);
+     +	}
+     +
+      	if (use_sideband)
+
+---
+base-commit: 3cb9185f65410273787f74333cc027d2ea5daada
+change-id: 20260812-758-introduce-hook-5b3af9f1a7e8
+
+
+Thanks
+- Karthik
+
