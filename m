@@ -1,482 +1,118 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from send146.i.mail.ru (send146.i.mail.ru [89.221.237.241])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097003090CD
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 13:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353E3560AC2
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 14:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.241
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788875694; cv=none; b=adGCxCfcsGENl3R8sdxtLUDCxLycLq6ZRIrpxypFUYfIB5LyT94UO+tUTv6EZWu2vhW5dF9ZZCkfPxPQhrGw4+B9zcQwU33Zm1y81ALteZE/GeVYX1i+nSN3dO7Lgke1caZ/cLNUdYTG4SefQpdaOwS94MoaAqgvBeNbOtVTyN8=
+	t=1788879562; cv=none; b=k4meeLgiyzHLc/HKc4hK4u+0MIikttZjuzvdsuzZXT9LuEcuCXIwEbI/xIkXOrKvXvy9iJ+N0Favz/oZPsetrnqwdB6/P6JRAzO1ROaoDe2l3hSTJTxnHP8C0sAiDtr2R2FwsIVnLmcx3ue2TnDNv8J76zOt7ACsrssEppAQeig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788875694; c=relaxed/simple;
-	bh=STYlPTWQwtXAxZ3EuhtYglwn751pY8h+F7beUC6632s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VAPGX+6CR9P6dwcRVzuJLeRUXuBph8I4E1FDAutqtBcsOqEOTEvjcIjwQ3wQ7eKaYD/JUnkery5TmkpK0HxfQcLDi7JobZ2ThKS32wcjIOe08hz9IyOo66x0wfW4QDmDiW8MyTe1W5QgXy+sZ7uoRkyrIMblt4uFc2+CKGrXDMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VPAWsrU0; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788879562; c=relaxed/simple;
+	bh=XPSL6Qs5Me0YIVcCPA90LnJbagAQVvgto5CihBEIIPA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=N7Y3Mm3/+0g7TeOdPcn7T5HsnigkfAN4gEcULlg3RFuRC8WfvQiCsZQoPHLx738ymgW6dt31ZArrrNb/G2PjioB35z+7xjGJvxVSb+J0YgKHqoKQqX6SiTFn3iTmhOyarF5qBC4/5Td5PAAfDtWOnj5TjqtQjx2AL/ozqHPlpAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=d5rbH0UL; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=KcRkFw4r; arc=none smtp.client-ip=89.221.237.241
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VPAWsrU0"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-49d05d51553so25253065e9.2
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 06:54:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788875686; x=1789480486; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=TMEGA66ZG2LLoYJRDx3a5tcP1z+GMt0OeoyOqlGkVOE=;
-        b=VPAWsrU0tWEZvcXpu5pkLgE+qh91ykVoNoKAOAYqn+uTLuApfjKMJg3LjEXCrNpjRx
-         bnP1nfvhRgxoPr2w/ksQFbLt7LJjCnZOoc5sLu/Uy68hrdDlAuA5z9JQwUwfdFQ9og9o
-         kDk5M+Gm9FjqcHjqnFMBjHUB4u89c+mQkdE1qXdGRjdlDLZIF4w/jqVqUyWNY1IhCbGx
-         saWnjT+XQctQ9DPqTn07TX+Cd3vsc8aKPc6WDvR/bHIgi+sctPiJMT9IGFf6RWft94lL
-         Pm20PBodLEiqRxhCMHh394DW+Imn7+n10vJVHL61cg/kytn4UH6AAQ5CPAD7kO9UF7aA
-         4mYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788875686; x=1789480486;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=TMEGA66ZG2LLoYJRDx3a5tcP1z+GMt0OeoyOqlGkVOE=;
-        b=LFLzvh+bT1E8z+x0AnRnwgUE51X7b5yTSyEga1GSvaOTnUr2Z/bFAZKYcbBt313Hk/
-         1PkPZm63t1rtInsZfBZf2m3Zm3GjaQzUg/paRmKBAD5ziphTj44q++0hx4Jrgk723qNu
-         nAQjJz6batMSS00EQXEGZP2V9OPEc1j3/aDCnMo72fch9PN3uSdI8JDLfBGImFYAyesq
-         0Oh85Rpu/8H/M+CO8AXZ+gJiOxandge+WlS8PdpO7Bt5Eadl1UZMyCPlPXLByDTHRNn5
-         Qwe2KbrMxIc5xehAEY4sGIpyXad9ePHGvK4npFQTdUDBYqDGYTJpwzTeCZD9srdHfpOC
-         vh0w==
-X-Forwarded-Encrypted: i=1; AKwUvBzX0e1OcbTnwh4PQW+LpLzIQ9OXm+GsDFFwtq7yf6p9/rRRSOFiosOOUCMpfsrAnMydWIc=@vger.kernel.org
-X-Gm-Message-State: AFuF++l4XlJwg5gyJlfxucPGjFd31VPR4A2U9lxzYfoPW14eJDrIcPn8
-	9Llbu4WJufk5580L6X0TJu/vz8Mid7C8xM1xZi0MX6m5aA4EnmH9Xjkq
-X-Gm-Gg: AYBFou2q/B7yxosFbQFbD8XsEImcoXaozIT47kncYMe16dHO/S2yiJelO2wFPCYAQq+
-	8mc/2IQwU6Z2rUbgoePMUUTcVyyMncJqpAFkMv+qZKX+YF22Dhd01aaCQF1vE4t2kMjsb4Yq3Rc
-	ntf5u0YF3CwwdV8WDBGp4nDN+hCN6FDcY3bXCMgxAw1m1vDFs9Bacsaku1kT157BbrLyi7q3mag
-	CyzOeYI9dLW6oCvO1auKlRtUqtXCmgT0QHS4Bkx8Sso/b8APPrDr3LQDL+HRdUhz8a9MveE7S7f
-	OEVI71CQp7GwcxyojoYFBqOq8qcwQVURJlOKwC2vJoyWRz2BlTMeLUEsGixgZ31s+lPRMGR/xpZ
-	PCRBrE5Ob4xf34J2Gc+9K3od5huccRxFUlfP++Djf9KmiEA1On7ZEmIopeGzbwNHc7NV28lnF2j
-	UZHGtvyqgvMRbKWxAkP5uU3zAQ2sSiWiVQ2VkEQ5hRnsBGYEgJnBkge+ZDjtdnQ+tNjr0+Wwnd5
-	TltdIUDrDDiS0KbjzCmvRNQSzvjH/xDVBBH88HZLSI=
-X-Received: by 2002:a05:600c:8b25:b0:49c:fc6e:a3da with SMTP id 5b1f17b1804b1-49cfc6ea704mr270954835e9.25.1788875685578;
-        Tue, 08 Sep 2026 06:54:45 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49ce551bf7asm320623005e9.2.2026.09.08.06.54.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Sep 2026 06:54:44 -0700 (PDT)
-Message-ID: <1a38944e-9895-474a-a6ad-277638aa49d0@gmail.com>
-Date: Tue, 8 Sep 2026 14:54:42 +0100
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="d5rbH0UL";
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="KcRkFw4r"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=3yqBxrG5D6FNYODURsknC7qgOo/mYpuIcSlMNjbcbqw=; t=1788879542; x=1788969542; 
+	b=d5rbH0ULx3aueNeX9+tYpnczCil9WokJowFW0TjXMeUd7iwq4ynCMbofn2p486R870o+uhxaU3Q
+	x3jxvB/Os80Un8MyBHMS/L5/Pd6PFBd489POWh4BkrOQa327r37iagw9/RryGNMuCepmDG1JOZe+V
+	F1XZrDJf2Q7vw9UgfZDUo1g5dPGIgWeeFEw3Y82VNJy+sMY5A+8USoYM4ZjVIxvIY5drUM/N3lpEr
+	uvOEgMhSZBfEZixXjPHNQmwmMBK8SYPp+7TXK6BV74ZoseYpI8xxDRnlgvUg9UZVofObHexkH/fcM
+	YBfNongV2rvbi2hrCIp8PBu/gVqZOGgg49CQ==;
+Received: from [10.113.54.84] (port=49946 helo=send127.i.mail.ru)
+	by exim-fallback-679568fb9b-x8b6q with esmtp (envelope-from <ub4nal@mail.ru>)
+	id 1x3x37-000000003xE-0aWp
+	for git@vger.kernel.org; Tue, 08 Sep 2026 17:43:49 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=3yqBxrG5D6FNYODURsknC7qgOo/mYpuIcSlMNjbcbqw=; t=1788878629; x=1788968629; 
+	b=KcRkFw4rtWSmBBaEnRE/r1jHy+P0KtF7iMj1UcujSqHRA340kYbE9dKj20Mn4NJpZFqSYEW7Lhj
+	y5uOegeud5UhIK1fyD1z2TJcWhRI/K6/f/UDBCWr65MtYNUwxdwloq+lfdZXl7sG/51UoXvNUg4jZ
+	WjHfzJUH+zytUFakpz3oA80BjNwmXfka0OO0CqsSur18bxOoJki9/c0mTk6iYYiHZqtA0M2ErwSCi
+	I+ib6cS1FKSDC4XijFqXXnNE6ru/81FqOvlS9CP+hN/aB7w49SPpErTorDalDJkNkNxI9Iio1OTuh
+	bYIQmazLdW9mapaPLUdmiTezvX6s/BPIjW+w==;
+Received: by exim-smtp-569b45c49c-q7xwg with esmtpa (envelope-from <ub4nal@mail.ru>)
+	id 1x3x2x-00000000KLP-3nCB; Tue, 08 Sep 2026 17:43:40 +0300
+Received: from vatem (localhost.localdomain [127.0.0.1])
+	by vatem.localdomain (Postfix) with ESMTP id 20C709F60D;
+	Tue,  8 Sep 2026 21:56:54 +0300 (MSK)
+From: Vsevolod Myalitsin <ub4nal@mail.ru>
+To: ben.knoble@gmail.com
+Cc: git@vger.kernel.org,
+	ub4nal@mail.ru
+Subject: [PATCH] advice: use global config for default branch name
+Date: Tue,  8 Sep 2026 21:56:52 +0300
+Message-ID: <20260908185653.34702-1-ub4nal@mail.ru>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <90671DEB-7A41-47DA-B865-AB963AEC11D1@gmail.com>
+References: <90671DEB-7A41-47DA-B865-AB963AEC11D1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4] var: support broken-down idents, signing key, multiple
- args, and -z
-To: Andrew Pleeter via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
- Ben Knoble <ben.knoble@gmail.com>, Andrew Pleeter <andrewpleeter@gmail.com>
-References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
- <pull.2388.v4.git.git.1788840593177.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.2388.v4.git.git.1788840593177.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Mailru-Src: smtp
+X-7564579A: 78E4E2B564C1792B
+X-77F55803: 4F1203BC0FB41BD91BA70916A571E71FE21F1A6AFFE43A014CDD982F972E0AB3182A05F538085040E12BA7F62BDBA6F33DE06ABAFEAF6705F50017B865728801C23B2EE2932AAA6B0A58214F65DFC571
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7FEAC828D2BF6EC3CEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB5533756682FC6F8CF4E8B7271C79A5CB3F8727B30FE8B4BC318AA5988EB95A9D32CD17A98EEF46B7454FC60B9742502CCDD46D0D874EE23814B0CD5BF6B57BC7E64490618DEB871D839B73339E8FC8737B5C2249BAA8CD687FCDB2EBCC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C07734D68A6916D8318941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C0EE22D061DCDCC2FC7B076A6E789B0E97A8DF7F3B2552694AD5FFEEA1DED7F25D49FD398EE364050FB28585415E75ADA9269E641683F5DD3FB3661434B16C20ACC84D3B47A649675FE827F84554CEF5019E625A9149C048EE9ECD01F8117BC8BEE2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8BE9D2F02AC1970E4575ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
+X-C1DE0DAB: 0D63561A33F958A5993B3F9FAE8B1ED75002B1117B3ED6964E53F3F29D4ADCC0406406D89DD9EB8A823CB91A9FED034534781492E4B8EEADA3FB0D9844EF8EC5C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
+X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE1918E10F71CB4DF9F9677DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D6591C3491C67CFDE42F492164B68B83CC6AFD6EE4E440CD7D1E4EEC7F145EF79033FCF855452EB223D6B8341EE9D5BE9A0A05CD3CC52AF5F0195B460D670C54626A77E6624DD3E9A3276536EB022892E5344C41F94D744909CEFACD6B4B6D928230F8CCC96A59B602D5CC2E138FFB4ACBED
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXOcIETfglQORZ0zpDET4ZrlAo0bq3TDyw6dS7By1zzJx6C8VmW8r1Hk=
+X-Mailru-Sender: 288943BA7BCC8BBA065C24D5D0D78BBD9667CAC08BFC4BFD3DE06ABAFEAF6705F50017B865728801A165F1893FAC5C75730F10A35ECD6C905A92E71CC7C3152D8DFEC3831B33C4D004BC3E28E37B34A4E9BE5789416A142FC25A2993B28EC86D9FF92CA8FAC60DF8EAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4C6F4A01E7934A2008BB6C5049C2F2A1F128A48790C36EB04049FFFDB7839CE9E656977AF4D7889C92F6ADE82CF78210979DD060A094FA0CB4AFDAC4B08D5C4D247E1CF2962BFF63E
+X-7FA49CB5: 0D63561A33F958A512DD010A7758E9375002B1117B3ED696008F30A15880FCDDA744AD9922FCBB6E02ED4CEA229C1FA827C277FBC8AE2E8B54F520D093A0DF28
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpLaIlvAR6h4id02YH9mgeCTAyYoNlVO8a1SpzZpj/QBfAUjbEn3QGK8=
+X-Mailru-MI: 20000080020000000000000800
+X-Mras: Ok
 
 
+I considered using an "is_global(key)" helper, but I think adding a field to "advice_setting" is cleaner.
 
-On 08/09/2026 05:09, Andrew Pleeter via GitGitGadget wrote:
-> From: Andrew Pleeter <andrewpleeter@gmail.com>
-> 
-> While 'git var' exposes GIT_AUTHOR_IDENT and GIT_COMMITTER_IDENT,
-> extracting individual components (name, email, or date) currently
-> requires callers to manually parse the composite string. Furthermore,
-> there is no way to query the resolved commit signing key through
-> 'git var', and the command only accepts a single variable at a time.
-> 
-> Teach 'git var' to expose individual identity components and commit
-> signing configuration, and allow querying multiple variables with
-> optional NUL-termination:
-> 
-> - Add GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and GIT_AUTHOR_DATE.
-> - Add GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL, and GIT_COMMITTER_DATE.
-> - Add GIT_SIGNING_KEY to resolve the key that would be used to sign
->    the resulting commit if you were to run 'git commit' right now.
-> - Allow passing multiple variable arguments (e.g., 'git var
->    GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL') to output each variable
->    sequentially.
-> - Support '-z' to terminate variable outputs with NUL bytes.
-> - Format 'git var -l -z' using the same convention as 'git config
->    list -z' (newline separating key and value, NUL separating entries).
-> - Delimit values of multi-valued variables with NUL when '-z' is given.
-> - Use parse_options() to strictly require options before arguments.
-> - Update Documentation/git-var.adoc and t/t0007-git-var.sh.
-> 
-> Signed-off-by: Andrew Pleeter <andrewpleeter@gmail.com>
-> ---
->      var: support broken-down idents, signing key, multiple args, and -z
->      
->      Teach git var to expose individual identity components and commit
->      signing configuration, and allow querying multiple variables with
->      optional NUL-termination.
->      
->      
->      Changes since v3:
->      =================
->      
->       * Renamed GIT_DEFAULT_KEY to GIT_SIGNING_KEY per feedback from Phillip
->         Wood and Junio C Hamano; dropped the alias mechanism and
->         commit.gpgsign check.
->       * Used parse_options() with PARSE_OPT_STOP_AT_NON_OPTION in
->         builtin/var.c, strictly enforcing that options precede variable
->         arguments.
->       * Adopted git config list -z format (key\nvalue\0) for git var -l -z to
->         prevent ambiguity with = in config keys.
->       * Delimited multi-valued variable outputs (e.g. GIT_CONFIG_GLOBAL) with
->         NUL bytes under -z.
->       * Replaced char part in ident_part() with enum ident_part.
->       * Split synopsis in Documentation/git-var.adoc into separate lines for
->         -l and <variable>..., and removed awkward legacy phrasing ("of a
->         piece of code").
->       * Added tests in t/t0007-git-var.sh covering the new -z format,
->         multi-valued -z, and argument ordering.
-> 
+The change is quite small:
 
-That all sounds good, lets look at the code ...
+ struct advice_setting {
+     const char *key;
++    int global_hint;
+     enum advice_level level;
+ };
 
-> diff --git a/builtin/var.c b/builtin/var.c
-> index cc3a43cde2..6fc037543a 100644
-> --- a/builtin/var.c
-> +++ b/builtin/var.c
- > [...]> +static char *git_signing_key(int ident_flag UNUSED)
-> +{
-> +	char *signing_key = NULL;
-> +
-> +	/*
-> +	 * An empty string in user.signingkey allows overriding and
-> +	 * clearing a key defined in an outer (e.g. global) config.
-> +	 */
-> +	if (!repo_config_get_string(the_repository,
-> +				    "user.signingkey", &signing_key)) {
-> +		if (!signing_key || !*signing_key) {
-> +			free(signing_key);
-> +			return NULL;
-> +		}
-> +		return signing_key;
-> +	}
-> +
-> +	signing_key = get_signing_key_id();
-> +	if (signing_key && !*signing_key) {
-> +		free(signing_key);
-> +		return NULL;
-> +	}
- > +	return signing_key;
- > +}
+Then the scope is specified directly for the relevant advice:
 
-Looking at sign_buffer() in gpg-interface.c it looks like git calls 
-get_signing_key() to obtain the default key - why are we doing something 
-different here? I'm also still curious how this is expected to be used.
+	-[ADVICE_DEFAULT_BRANCH_NAME] = { "defaultBranchName" },
+	+[ADVICE_DEFAULT_BRANCH_NAME] = { "defaultBranchName", 1 },
 
-> -static void list_vars(void)
-> +static void list_vars(int null_term)
->   {
->   	struct git_var *ptr;
-> -	char *val;
-> -
-> -	for (ptr = git_vars; ptr->read; ptr++)
-> -		if ((val = ptr->read(0))) {
-> -			if (ptr->multivalued && *val) {
-> -				struct string_list list = STRING_LIST_INIT_DUP;
-> -
-> -				string_list_split(&list, val, "\n", -1);
-> -				for (size_t i = 0; i < list.nr; i++)
-> -					printf("%s=%s\n", ptr->name, list.items[i].string);
-> -				string_list_clear(&list, 0);
-> -			} else {
-> -				printf("%s=%s\n", ptr->name, val);
-> -			}
-> -			free(val);
-> +	char delim = null_term ? '\n' : '=';
+And used when building the hint:
 
-We are in control of the variable names and we know they do not 
-currently contain '=' so we don't currently need a different format here 
-with '-z'. However it is possible that might change in the future (for 
-example using "GIT_PAGER:<my-command>" to return the pager for 
-"<my-command>" that could be an alias containing '=') so using the same 
-format as config keys is probably a good idea. We should document the 
-format above.
+	 static void vadvise(const char *advice, int display_instructions,
+	-                    const char *key, va_list params)
+	+                    const char *key, int global, va_list params)
+	 {
+	     ...
+ 
+	     if (display_instructions)
+	-        strbuf_addf(&buf, turn_off_instructions, key);
+	+        strbuf_addf(&buf, turn_off_instructions,
+	+                    global ? "--global" : "", key);
+	 }
 
-> +	char eol = null_term ? '\0' : '\n';
-> +
-> +	for (ptr = git_vars; ptr->read; ptr++) {
-> +		char *val = ptr->read(0);
-> +
-> +		if (!val)
-> +			continue;
-> +
-> +		if (ptr->multivalued && *val) {
-> +			struct string_list list = STRING_LIST_INIT_DUP;
-> +
-> +			string_list_split(&list, val, "\n", -1);
-
-As I said before, I think we should switch to using '\0' instead of '\n' 
-when we build the multivalued string so that we can safely handle values 
-that contain '\n'.
-
-> +			for (size_t i = 0; i < list.nr; i++)
-> +				printf("%s%c%s%c", ptr->name, delim,
-> +				       list.items[i].string, eol);
-> +			string_list_clear(&list, 0);
-> +		} else {
-> +			printf("%s%c%s%c", ptr->name, delim, val, eol);
->   		}
-> +		free(val);
-> +	}
->   }   
-
-> @@ -207,42 +346,76 @@ static const struct git_var *get_git_var(const char *var)
->   static int show_config(const char *var, const char *value,
->   		       const struct config_context *ctx, void *cb)
->   {
-> +	int null_term = cb ? *(int *)cb : 0;
-
-This seems unnecessarily complicated, can't we just make sure we always 
-pass a non-null pointer cb? Also '\0' is known as NUL, not NULL.
-
-	int *nul_term = cb;
-	char term = *nul_term ? '\0' : '\n';
-	char delim = *nul_term ? '\n' : '=';
-
-and then use term and delim below.
-
-> +
->   	if (value)
-> -		printf("%s=%s\n", var, value);
-> +		printf("%s%c%s%c", var, null_term ? '\n' : '=',
-> +		       value, null_term ? '\0' : '\n');
->   	else
-> -		printf("%s\n", var);
-> +		printf("%s%c", var, null_term ? '\0' : '\n');
->   	return git_default_config(var, value, ctx, cb);
->   }
->   
->   int cmd_var(int argc,
->   	    const char **argv,
-> -	    const char *prefix UNUSED,
-> +	    const char *prefix,
->   	    struct repository *repo UNUSED)
->   {
-> -	const struct git_var *git_var;
-> -	char *val;
-> +	int list = 0;
-> +	int null_term = 0;
-> +	int i;
-> +	struct option options[] = {
-> +		OPT_BOOL('l', NULL, &list,
-> +			 N_("list all variables")),
-> +		OPT_BOOL('z', NULL, &null_term,
-> +			 N_("terminate entries with NUL")),
-
-The help is correct, we should use nul_term as the variable name. Using 
-parse_options() is a nice improvement.
-
-> +		OPT_END(),
-> +	};
->   
-> -	show_usage_if_asked(argc, argv, var_usage);
-> -	if (argc != 2)
-> -		usage(var_usage);
-> +	argc = parse_options(argc, argv, prefix, options,
-> +			     var_usage, PARSE_OPT_STOP_AT_NON_OPTION);
->   
-> -	if (strcmp(argv[1], "-l") == 0) {
-> -		repo_config(the_repository, show_config, NULL);
-> -		list_vars();
-> +	if (list) {
-> +		if (argc)
-> +			usage_with_options(var_usage, options);
-> +		repo_config(the_repository, show_config, &null_term);
-> +		list_vars(null_term);
->   		return 0;
->   	}
-> +
-> +	if (!argc)
-> +		usage_with_options(var_usage, options);
-> +
-> +	for (i = 0; i < argc; i++) {
-> +		if (!get_git_var(argv[i]))
-> +			usage_with_options(var_usage, options);
-
-Do we really need to walk all the var names here - can't we just error 
-out if we see an invalid one later?
-
-> +	}
-> +
->   	repo_config(the_repository, git_default_config, NULL);
->   
-> -	git_var = get_git_var(argv[1]);
-> -	if (!git_var)
-> -		usage(var_usage);
-> +	for (i = 0; i < argc; i++) {
-> +		const struct git_var *git_var = get_git_var(argv[i]);
-> +		char *val;
-> +
-> +		val = git_var->read(IDENT_STRICT);
-> +		if (!val)
-> +			return 1;
-
-If the user asked for multiple vars to be printed, erroring out because 
-one is not set is not very friendly, It would be better to print a blank 
-record and continue.
-
->   
-> -	val = git_var->read(IDENT_STRICT);
-> -	if (!val)
-> -		return 1;
-> +		if (git_var->multivalued && null_term && *val) {
-
-Why "*val" ?
-
-> +			struct string_list values = STRING_LIST_INIT_DUP;
->   
-> -	printf("%s\n", val);
-> -	free(val);
-> +			string_list_split(&values, val, "\n", -1);
-> +			for (size_t j = 0; j < values.nr; j++) {
-> +				const char *s = values.items[j].string;
-> +
-> +				printf("%s%c", s, '\0');
-
-If we're printing multiple var then the caller has no way to tell if a 
-var has multiple values which makes it tricky or impossible to match up 
-the values we print to the vars that were requested. We could change the 
-output format when multiple vars are requested to print the var name as 
-will like we do with '-l', or we could print an extra terminator after a 
-multi-valued var and properly document which vars are multi-valued. The 
-latter means the caller can match up the values without worrying about 
-parsing the var names.
-
-Thanks
-
-Phillip
-
-> +			}
-> +			string_list_clear(&values, 0);
-> +		} else {
-> +			printf("%s%c", val, null_term ? '\0' : '\n');
-> +		}
-> +		free(val);
-> +	}
->   
->   	return 0;
->   }
-> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-> index 2b60317758..27cc595291 100755
-> --- a/t/t0007-git-var.sh
-> +++ b/t/t0007-git-var.sh
-> @@ -276,4 +276,99 @@ test_expect_success '`git var -l` works even without HOME' '
->   	)
->   '
->   
-> +test_expect_success 'get author identity components' '
-> +	test_tick &&
-> +	echo "$GIT_AUTHOR_NAME" >expect.name &&
-> +	echo "$GIT_AUTHOR_EMAIL" >expect.email &&
-> +	echo "$GIT_AUTHOR_DATE" >expect.date &&
-> +	git var GIT_AUTHOR_NAME >actual.name &&
-> +	git var GIT_AUTHOR_EMAIL >actual.email &&
-> +	git var GIT_AUTHOR_DATE >actual.date &&
-> +	test_cmp expect.name actual.name &&
-> +	test_cmp expect.email actual.email &&
-> +	test_cmp expect.date actual.date
-> +'
-> +
-> +test_expect_success 'get committer identity components' '
-> +	test_tick &&
-> +	echo "$GIT_COMMITTER_NAME" >expect.name &&
-> +	echo "$GIT_COMMITTER_EMAIL" >expect.email &&
-> +	echo "$GIT_COMMITTER_DATE" >expect.date &&
-> +	git var GIT_COMMITTER_NAME >actual.name &&
-> +	git var GIT_COMMITTER_EMAIL >actual.email &&
-> +	git var GIT_COMMITTER_DATE >actual.date &&
-> +	test_cmp expect.name actual.name &&
-> +	test_cmp expect.email actual.email &&
-> +	test_cmp expect.date actual.date
-> +'
-> +
-> +test_expect_success 'get multiple variables' '
-> +	test_tick &&
-> +	cat >expect <<-EOF &&
-> +	$GIT_AUTHOR_NAME
-> +	$GIT_AUTHOR_EMAIL
-> +	$GIT_COMMITTER_NAME
-> +	$GIT_COMMITTER_EMAIL
-> +	EOF
-> +	git var GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'get multiple variables with -z' '
-> +	test_tick &&
-> +	printf "%s\0" "$GIT_AUTHOR_NAME" "$GIT_AUTHOR_EMAIL" >expect &&
-> +	git var -z GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'get multi-valued variable with -z' '
-> +	TRASHDIR="$(test-tool path-utils normalize_path_copy "$(pwd)")" &&
-> +	HOME="$TRASHDIR" XDG_CONFIG_HOME="$TRASHDIR/foo" git var -z GIT_CONFIG_GLOBAL >actual &&
-> +	printf "%s\0" "$TRASHDIR/foo/git/config" "$TRASHDIR/.gitconfig" >expected &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'git var -l -z' '
-> +	git var -l -z >actual &&
-> +	tr "\0" "\n" <actual >actual.lines &&
-> +	echo "$GIT_AUTHOR_NAME" >expect &&
-> +	sed -n "/^GIT_AUTHOR_NAME$/{n;p;}" actual.lines >actual.author &&
-> +	test_cmp expect actual.author &&
-> +	echo false >expect &&
-> +	sed -n "/^core\.bare$/{n;p;}" actual.lines >actual.bare &&
-> +	test_cmp expect actual.bare
-> +'
-> +
-> +test_expect_success 'get GIT_SIGNING_KEY with user.signingkey configured' '
-> +	test_config user.signingkey "TEST_KEY_ID" &&
-> +	echo "TEST_KEY_ID" >expect &&
-> +	git var GIT_SIGNING_KEY >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'get GIT_SIGNING_KEY fails when unset' '
-> +	test_config user.signingkey "" &&
-> +	test_must_fail git var GIT_SIGNING_KEY
-> +'
-> +
-> +test_expect_success 'git var -l lists new variables' '
-> +	git var -l >actual &&
-> +	test_grep "^GIT_AUTHOR_NAME=" actual &&
-> +	test_grep "^GIT_AUTHOR_EMAIL=" actual &&
-> +	test_grep "^GIT_AUTHOR_DATE=" actual &&
-> +	test_grep "^GIT_COMMITTER_NAME=" actual &&
-> +	test_grep "^GIT_COMMITTER_EMAIL=" actual &&
-> +	test_grep "^GIT_COMMITTER_DATE=" actual
-> +'
-> +
-> +test_expect_success 'git var -l lists GIT_SIGNING_KEY when configured' '
-> +	test_config user.signingkey "TEST_KEY_ID" &&
-> +	git var -l >actual &&
-> +	test_grep "^GIT_SIGNING_KEY=TEST_KEY_ID" actual
-> +'
-> +
-> +test_expect_success 'options must precede variable arguments' '
-> +	test_must_fail git var GIT_AUTHOR_NAME -z
-> +'
-> +
->   test_done
-> 
-> base-commit: 2c3adbb2c475981e340c79fdc5e7f4f9b5d9054e
-
+This keeps the information about the intended config scope in "advice_setting", rather than making "vadvise()" depend on specific advice keys.
