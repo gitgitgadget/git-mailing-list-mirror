@@ -1,124 +1,145 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A039D2EEE6E
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 04:17:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BD537E5C8
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 05:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788841026; cv=none; b=PDmVfyACxMnYbPIuGcCvOaErXnQVsi7vNPye0f+7tNq7kPrcD+CT8gwgPoM9hcPCilHfys8ZmnGknR+d98E3M0LblI5ce1DqJ5TuuahVlrzMZo8KpxKlPmltaz3AygsCchthdJ8feWQpwtpIxCMSzLI9dx6BytfJXIo4yeCqHoc=
+	t=1788846621; cv=none; b=QhyDCbZhqydfcZDq1DpjlFDG65d9zKSd7IOpVywMhf+Wp6VoRHsD7IAHhiURK+pbG2eKod/d1RVmVfYuZ+XJ9/ns+ZDDkNNkTg292A5RuXCIk6pzbjz5S/AFmm9aPCBrn81MFFf/j/M6Wmcpb2czW1iuUsBmD5M5voGHofCi6Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788841026; c=relaxed/simple;
-	bh=MX02SC6D1SBT/pp7e3EEIZAOM4VqErdK1IrAZjKxBIw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=udDgbOAhgl5k/Uzjc1JvsGgEDItocJ7LDxCqTBaDsyBTa4WRbUwsZTRVvkD0vpE3V7MRfSawA2JA+dMYl1xiOyqodMNRhSG1I8/YUJyY2fkqI4mf/bHGFt0bKUN1Qo0UZ8jn9vPKNPDy6Q/UO/uWzTCfzIZY2pNWH7CP4KW3Ak4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BO3VVq37; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GP386lp9; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788846621; c=relaxed/simple;
+	bh=missBVeu7TLdJleubb6MTDrNNSZ3pSr7XWvQAaksfJE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YnriThqjh66rxNr/YUfioeJnfEWqV8/FYTsjWkvbThDcq4KcqvxAlLg8U051ybmzBCR41nhu0/iJ9ny+SsoH0pFZa60NP7WTu5ELXRPO/UzqaqHGp3ysRbafnSjPiPt0x5jyJQkiEZ/3KjP325Cv2hq7ZHHsT81lqPxqk/QxiXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c3cJg/cb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ULglg2i2; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BO3VVq37";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GP386lp9"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 435E87A0062;
-	Tue,  8 Sep 2026 00:17:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 08 Sep 2026 00:17:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c3cJg/cb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ULglg2i2"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 05174EC00C9;
+	Tue,  8 Sep 2026 01:50:18 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Tue, 08 Sep 2026 01:50:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788841023; x=1788927423; bh=Dl8pXXBMfb
-	FNbIAunKMV2x9Ir0MmGfUhdgdqxXBAIzQ=; b=BO3VVq37prCT4aONOgM7S3wyiU
-	OXm+ixcv9Er6eqxBHAugYYRjjrrUD6cXB8pDr59UsFdOd6gKQMKin/dhdzsD0Zzh
-	6UfIMC5TTtaJkHh9HqET715mAW1/620ZKvJW1onqcRhCs9hijXT73uVcrC6M+zec
-	AvfMq08e/Qy/2KNUX73PLYvGECWw9pTv00Os/wuoTHLFQy4QR2nMdpmnPI3JN0vL
-	657TFunaAGFBQImdwCTGZibcG/Q9CpNaPtJ9S/XqQP5OfKXlGGvgEW98bzYn3SkZ
-	oAZ7BXzUwyGEkOgiE3EPU58AFFO7ONbfAELjC8fsB7QI3Y1KkuROQ4gGCmDQ==
+	:subject:to:to; s=fm1; t=1788846618; x=1788933018; bh=IGRK9bdC9i
+	4p1vMZhDAAB6vBqBcdAE55GmjDYCxPUVk=; b=c3cJg/cb2CoibuiIUpMh7PMxJH
+	yCwac2BFJ9eHnzh6B2EdVUPNBTxdIR9yZc2/lFqYqxHfWMitMuNuOopxPDWWfoES
+	k6tq6E6v87NFDp/zr8mj7EDfDPa+HNXOrowU1a613lH5JjdUOjk5wrnsbmbKoFOs
+	7Uu1gG2D/nnx9I6jyHHRBO0jmWKGUleV1cj7hHMuo7ths4wfTI7GtUKNR6x8q5Xx
+	lpQEToTq0TVe7M3rZhS7KqueBwj2b5lIdcWO88YocpmDN3Oif69WKy3/uLn7V7+a
+	6UdhkMc5p0K8poqw/CX3se1u1AztNgUi17ac24bkoZznXnXDIO5D6uxtRvkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788841023; x=1788927423; bh=Dl8pXXBMfbFNbIAunKMV2x9Ir0MmGfUhdgd
-	qxXBAIzQ=; b=GP386lp9evtRpph4FJJ9kntKIDh+yNOpUTk4tU000KUbDtT2Fz/
-	o8KOs/k6xAiKvfoP8jGXhBnN3Rg4O82/ZYjUBGpSvudCqkB5keuCm5VWT+XxUcVJ
-	E/IwwGRxb3fTRQHXZHX3jCOfh6tMfNgNUgD84T7kYQ/eKTYikQWutjeCy5t4EwUn
-	rKX1uJhEFauVXlS8YSC7U47OD37tMeyxxQumkc8cyhZhkSDssbiZuxTM4iIm5og/
-	9eCJFj6nwBhyVSZ3CgkTbuJQvOKOpcz3cePQUbN4GfwWW734PrjjR0exQFnpTsAr
-	XIgy5ie1Yu5iAAdHLUbF71dzVxdb6X/psIg==
-X-ME-Sender: <xms:PoyfaumCwortN59kg50M9jtjmXHuM9wLxNd49nkZ34ZNdgfxJVj42w>
-    <xme:Poyfas3Tafb9lvOgpLa0ywT4FjvCpW1GFv-2Juva2LvfISLsxgd-bZ6QZW9uj5e5k
-    3JbESGxTXMq0NSx8-9RjPPR7Tcv-NvtZIJQawU9aGhw-B-qduK2Zg>
-X-ME-Received: <xmr:PoyfahpqP3QUwiHDMTg2zU6PCO6A2QoXHSxTgGOWXvj-9USDI17kaVkUhG5B2669omJ_K0eY_zXIaA1A3Pd10E1QWj6j4txaNyYD>
-X-ME-Proxy-Cause: dmFkZTFo736QRn8Tarb0EGRmqr2QKbVa0YApezstdwRk40oHPgDaRDOb3y//+v0faSQjYO
-    MlNbh61kUJGsR/+UrDI+aMHI5TC3pWX4wEfxsOkGBGLQhBhsf420E3FoVxtXrNq+p6l2Xe
-    pxJm750/Loj4KAdQ850GYOwSb8wqa72m5VgpfemIXz0XV4te/yrNvKlFsumBu+ZO6cXpnH
-    yx+iQizbr+Nm/tIwJwjzvLdZmJG0mQSrcMo2ZV+0KATJ76GhAi3aUC+767qFHslaq0LaX7
-    F77FyrNGgdaCU0HFEK+OjTsnO6SKIiTDoZiDeN0TLqQ2x1XLB6dgIWxyG1nZRCHVvsokij
-    sT76g+fJdBFHhgp+7mud7reSrzyemkfkLyCeAWLWpxCWfFcg7J++NwEMAJTLPs0Xbk07Bg
-    7iYhS+wPzEyeBZ8DKbJaEWV6w8gk07nGZHCU2Y0rGa04cAaJvUMXdHPka4srGeXipv2sBQ
-    t0G6Dms7Z24LWzmXGN//gT8WbpdpAEcMsy4dvArN4z5ybmX92wzSZ6EDiiRTph9wzD/Jz8
-    1dx3G7UA/7Xv5TzIj1Q1BLBYIMfVcx8ndVkvInfm7+9xlCSzboPNyipzPVfAqomQDLlpqa
-    OOqL0ywSjwLTKjpXUicSnI+4vcVg2ns93maa3VZI71XAb2hUCpP6/royfl7g
-X-ME-Proxy: <xmx:PoyfaheXa60yJQFVJOKZUpmaHWmR7g2tNv7wj-qlSRf4anOpQruscg>
-    <xmx:P4yfaoo0A2nIOiVDSkqwLlRf_c5fWY_cEkO6gMHGLps4nmgfgVklFA>
-    <xmx:P4yfaqGoXwFX64cjoMWm9tOvg0B01oKOnNb4JOu1f2a1t6XMbnsL-g>
-    <xmx:P4yfaguGkiGMgkv7Gw7KuNlD5oG3tGft53QB8WJGhH7_BdS05vx19Q>
-    <xmx:P4yfakmeueYjugAUd3MvHB0bscD0VDv8UfWUdw0UG6E7TvkDKT8Z9fI8>
-Feedback-ID: if26b431b:Fastmail
+	1788846618; x=1788933018; bh=IGRK9bdC9i4p1vMZhDAAB6vBqBcdAE55Gmj
+	DYCxPUVk=; b=ULglg2i2k85lYd0s/x0EnpxdLv2gFyq9ylyg1a3j/8uME5Rt1Wu
+	rXVNRlcbo0wcPcSfAvb8+qWuAXh1PacRHF2d6G7raQZn6D0JhoSHbQwRDWYVcXwU
+	BN5gjt/FNrVq9T8LikjYdm7qqZzKPpqtHxd0oL7wii9JB5vXuj0uUl0H7xitrooH
+	aaq1gCUqoU6dVBx2J+a9eUcQnOr2t0IM1eDZBtlQ2Dt2asS3e1ab2HQMy8T+cAz7
+	pBceKVJcHti6ICdy2wdnxtk/eOvLcX2zZ+msEez8MJwt/RqH7coaVXwSE71b4Li5
+	pqSSxT7Auvmia75ymJQS99QDY3mT/Bf9QiA==
+X-ME-Sender: <xms:GaKfaojN7f6K3v7zB-XDvx9Hr1FG-pOPh6hGB0xPUI2YRIyBucbUEQ>
+    <xme:GaKfaijd6SCniu_BKheMlV1W_58yRa7CUB2wRYH3yYTbYWT5AF8X6dyx5KtRWvW0E
+    Xf40Hak9QMkbM06FbiEnt8uUeEybSaQ4se6o1Q3BaTxpL00ZYxpRg>
+X-ME-Received: <xmr:GaKfagLXOub58JWZhZjZgSIdDGBEO5Ju9paynz6e1BiKL3SXdj-7ODDa4IKbHDLbWETFPAg>
+X-ME-Proxy-Cause: dmFkZTFXHIwx/okMKAc3hZIrQiAlOgoCPdyIphISJY+a5vHFee2rG9KUlGb5ZvGAWSuAVC
+    e28cy0bIrCD/VbWCdbIyCQLhyYtu/HyHYdU00fFDDjMwycR1tIaqFLBXgkRi5p+xwhTg0W
+    Tq2fuq7wg7vd/AAsjkhxL+vlEnhM5zIt0+d673Pf/DsD3mmQoHNaphGg1ltXuqdBl/y2Aw
+    PxyxoRXyOPCpN3Y6u2E6TpKFDdr0cZ6E29BJyId+rt4ok/BStbC1vdNJJ/0A2/6S61dgcx
+    4L/5rGg23pTj8IbB2u1ww73uaGRTCyXTWq1g9yXXL787MrlKP/Lj0ylKhA83mlul66Tjq3
+    +JaKpZOcKXJeit6yB9yKrKUJvzXeKT78OH84RoHM+MQklQxVi68VgINf9cHi3LtdfVogWE
+    IIW69kjDvV3pXFNr4h1wGJd667JVlCckgo0KzPY3UWEgFa2V4xZWLWwIHe4x6uLZKTmX4F
+    umWinNbP8pzQ8EPNraiwMvFRYrnfNcmYamVqAoKgl9TjcEPLBLNRayOweFjAd62x2JhF8x
+    0O63l9gYM4vSoaGdyVzAbbQ8z1j/FbRwMj1EpxpUBdR+Ji3bp7WqNoG95fPsLtkkOg6HOU
+    zmA4nq87lBPaiQg6F+Ls8PLsfvN8tTEKbfCBS+ns+Wd3QLUfhRBWXvtvrbZw
+X-ME-Proxy: <xmx:GaKfapGxDdrqtDOqpsktIvzmqG4NN7T3utqf-OynGOwt9qmh6CNcsQ>
+    <xmx:GaKfasQoQuumm-5dxFzCLKyXxBBVIEm76P4cSwxvXSiUnYEGQ8KaUw>
+    <xmx:GaKfate07B97IwOSvPSLotWcEoU-A3_apjfsUqc3zGvsGC8xbhKVwg>
+    <xmx:GaKfajqEObO_gEu85O_Fl82D1IY831uZE8C7rsF21Qu2LcU12MfiDg>
+    <xmx:GqKfahiodr-GrIfMNOW41YKFZwKPtfUxzrHOLbvXvlG8DCDDIjcMnHvX>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Sep 2026 00:17:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Beat Bolli <dev+git@drbeat.li>
-Cc: git@vger.kernel.org,  Oswald Buddenhagen <ossi@kde.org>
-Subject: Re: [PATCH 1/3] imap-send: prepare for OpenSSL 4.1
-In-Reply-To: <20260907211210.2621693-2-dev+git@drbeat.li> (Beat Bolli's
-	message of "Mon, 7 Sep 2026 23:12:08 +0200")
-References: <20260907211210.2621693-1-dev+git@drbeat.li>
-	<20260907211210.2621693-2-dev+git@drbeat.li>
-Date: Mon, 07 Sep 2026 21:17:01 -0700
-Message-ID: <xmqqfqzkz8aq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 8 Sep 2026 01:50:16 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4f915cb5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 8 Sep 2026 05:50:13 +0000 (UTC)
+Date: Tue, 8 Sep 2026 07:50:10 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Thomas Bachem <mail@thomasbachem.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk, gitster@pobox.com,
+	johannes.schindelin@gmx.de
+Subject: Re: [PATCH v2 2/3] sequencer: run auto maintenance once a sequence
+ is done
+Message-ID: <ap-iEoeY7XKjeZgL@pks.im>
+References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
+ <pull.2217.v2.git.1788537086.gitgitgadget@gmail.com>
+ <baab8d4876441ea883044c34bb5584631e30e1ec.1788537086.git.gitgitgadget@gmail.com>
+ <ap5yVFNEFm2vdP1B@pks.im>
+ <CAA0xjtqy3jOPWAGL9Cr0B+VnHAkZF0=cVCxKNqMiVJpfbdpomA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA0xjtqy3jOPWAGL9Cr0B+VnHAkZF0=cVCxKNqMiVJpfbdpomA@mail.gmail.com>
 
-Beat Bolli <dev+git@drbeat.li> writes:
+On Mon, Sep 07, 2026 at 06:35:20PM +0200, Thomas Bachem wrote:
+> On 07/09/2026 10:14, Patrick Steinhardt wrote:
+[snip]
+> > It's surprisingly many sites where you add the call to
+> > `run_auto_maintenance()`. My hope was that there is a single exit path
+> > somewhere that is used by both the "apply" and "merge" strategy that we
+> > could adapt to unify when exactly we run auto-maintenance across both
+> > backends.
+> 
+> There is none inside the sequencer. run_specific_rebase() calls
+> finish_rebase() for the apply backend only,
+> "merge backend cleans up after itself" as the comment there says.
+> Sequences end inside pick_commits(), and a single cherry-pick or
+> revert never creates sequencer state at all and returns straight to
+> builtin/revert.c. That is where the three sites come from.
+> 
+> I could instead do what the apply backend already does. am.c skips
+> maintenance in rebasing mode and leaves it to rebase.c. If the
+> sequencer leaves it to its callers the same way, run_specific_rebase()
+> runs it for the merge backend too, once its state directory is gone,
+> and run_sequencer() in builtin/revert.c runs it for cherry-pick and
+> revert. Every entry into the merge backend returns through
+> run_specific_rebase(), --continue and --skip included, so nothing is
+> missed. The sequencer then never runs it, the change is in the two
+> builtins only, and the rule is short: the command runs it once when it
+> is done, and nothing it spawns does. Is that what you had in mind?
 
-> OpenSSL master (to be v4.1 after the release) renamed the function
-> ASN1_STRING_length() to ASN1_STRING_get_length(). Map the new name to
-> the old one if we're compiling with a pre-4.1 version.
->
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
->  imap-send.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/imap-send.c b/imap-send.c
-> index 0d16d02029..977d78005c 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -219,12 +219,17 @@ static int ssl_socket_connect(struct imap_socket *sock UNUSED,
->  
->  #else
->  
-> +#if (OPENSSL_VERSION_NUMBER < 0x40100000L)
-> +// map to the pre-4.1 name
+Maybe. The question is what kind of impact it would have on other
+subsystems. I think the most important part that I'm after is that the
+commit message explains design decisions like this, as it gives the
+reader the required context to be able to evaluate the patch.
 
-Style?
+And please stay mindful of LLM-generated commit messages. For most of
+the part they are just completely useless as they tend to ramble without
+conveying any useful information. The commit message is the place where
+you yourself sell the change to us, and by explaining the changes well
+you demonstrate that you understand what you're sending to the mailing
+list.
 
-> +#define ASN1_STRING_get_length(s) ASN1_STRING_length(s)
-> +#endif
-> +
->  static int host_matches(const char *host, const ASN1_STRING *asn1_str)
->  {
->  	const char *pattern = (const char *)ASN1_STRING_get0_data(asn1_str);
->  
->  	/* embedded NUL characters may open a security hole */
-> -	if (memchr(pattern, '\0', ASN1_STRING_length(asn1_str)))
-> +	if (memchr(pattern, '\0', ASN1_STRING_get_length(asn1_str)))
->  	    return 0;
->  
->  	if (pattern[0] == '*' && pattern[1] == '.') {
+An LLM-generated commit message on the other side demonstrates nothing
+like that. So in many cases, it's actively hurting your own mission as
+people do notice that it's not generated by humans.
+
+It's fine to use LLMs to help you with drafting the commit message. But
+what we're asking is that you double or even triple check what was
+generated and whether the generated message (1) makes sense and (2) is
+understandable by a normal human being.
+
+Thanks!
+
+Patrick
