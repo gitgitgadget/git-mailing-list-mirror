@@ -1,82 +1,87 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35CD4B4865
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 20:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7AD3B0AE9
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 20:57:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788900518; cv=none; b=lXNsOUlOaf83j4ZEZc1HhQtgPtGwo9fvhqUICTzpI9h1tQ3GQXvVZOMM0NUTf8nZ73V+v7oingZ4lxe2I63FVwmEIrXtAMyGVPCvhb4V1+50gdh5MxxnwuBCSJ7kgKRGHeOM/59M1yBxiZITHhEB7gWiikcnP0IkvyIVMshThe0=
+	t=1788901031; cv=none; b=ekWyKcdlItBtqio0Tl8LrQQLYVi71eD+I86afUlBtzylPdx12FlXtU0njXCIZdPPfCop9r4XYWKmU/gWYm3jGnjJsFuKYmA/rjZIwWEnG+hE3Lqw3rST9B/pJMy/RHkhmxBD1ffsjPAQ/QYYY5iXDmLPan91kV/bXUpxFcdfpyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788900518; c=relaxed/simple;
-	bh=11LKq91I1F/91vzT3s2gXJf4tG0ebEL4t0wlWd8VpC4=;
+	s=arc-20240116; t=1788901031; c=relaxed/simple;
+	bh=3rHXCQTcAcDeAypkyVW1c82bfK/ixsfxPj7P68TviPY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ckb5Mj5aNz03NxtO5RB4QprbSQ+iPK/UeNWhDVaTOw1QQm/L416/yTiDovlse5CEul6lyV/Tl/gtOypXdPUQUkNjVmsGPpWVOwm/64rIRt8U095+GCh+f1qDjJY4fFBgoUyLyERpyYo51VuFNG0e12taKaiacDXgMrWA8h2Fy2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=smUoliW2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tVGUYT9w; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=gpsQGAMzJRdzb2g5S47relF0aNHxBhv6hipe8CjbZR3/qco1LxQgdXOYesMwboCszzbnrkB1bN6xj6o2tSX4Np6B7WzjK6FGcLJa4OC8MTCCKzlyQCbHN0J1er2T0nVebhVWZaljSlI2jz9duLtcw6vK4LrPuYTpvtHFOYAzyKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XUnF3WUb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gjXb8CSV; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="smUoliW2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tVGUYT9w"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id E91C2EC01AD;
-	Tue,  8 Sep 2026 16:48:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XUnF3WUb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gjXb8CSV"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8A164EC01C5;
+	Tue,  8 Sep 2026 16:57:08 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 08 Sep 2026 16:48:35 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 08 Sep 2026 16:57:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788900515; x=1788986915; bh=NSTVeqPmYF
-	WJaxMnUbV7gwj9HG1BD6hScImSTlRsXUQ=; b=smUoliW2hHndtUfJ9AtabpahD1
-	IDZ3ZcmxjVFYu4ob7fXOLGTUz3Oo2BS4BwKti6dNue5g+FGtHIkWxU0AkCECB+6Z
-	rmAzSzdquqTdtKleZmtdF/FKnSwOOkSPx0bl2BODUJ3KslauRhjzgdmcwzaa6h2D
-	rOgC9dZ7J97DY29ZBYDIz8W1ZEjYHGHbwvDhT7Ded8kBbze0cSqbtR3vM1GVpG7R
-	Gh0BBMNu2o8Uxh+xqoAoPazboLjvO8wz/q3w0nhts6+Goe2rkjLOfjyI0w0EZJjh
-	KaZ+xa1IhDeijX87ezz/w0bO5Nx8XPhKtMfcQ8jQsoilqwDgKWfy/ZQrjpCA==
+	:subject:to:to; s=fm3; t=1788901028; x=1788987428; bh=4wer33HEnD
+	Lkm7yQIUeL5NFYJw7djwSWv++o/odIOos=; b=XUnF3WUb9Fq6n2qs4uH5MnWc1J
+	zCGluxPsbe/o7od6SdNRyGLtoC2atxi+QL3DyPGMZdCNHU9vYlmK5w41wE/DZOnd
+	vBmOeS9cxqXceRMsZHtOgTbadsorfaGSBJ3ZC6FPywgg3zNj0I3RwZWdkgWAuZXh
+	qc/OZgyX/X/zmHbA0APIGhhJlc4kh0cJ7TalP7R9bZGySVJPaGD87qV2aTQxeLI+
+	tWWosOcYd95aS62LDOGEGeAvpdR6XO016BdKCUXsIZi6fXGBlZT9UtlGd+/tKTL2
+	P8EkmOeAKoQ0EoJafwtDP3CLPQ5IiBDsqTSD3bCYSIm3ig7oKqeD3pdL7hPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788900515; x=1788986915; bh=NSTVeqPmYFWJaxMnUbV7gwj9HG1BD6hScIm
-	STlRsXUQ=; b=tVGUYT9wromJ4Jwyr+ZZ1zV6hTUenSNa2kWhVSckNuGq7wjVLok
-	2NsaCI69s6PWViCDBKQUVs1yOuiRG15UDP20iCkRyMKGyt/GtTZYIshdnw/nAxys
-	/e8KE6v/Wm+ZY756FY2Q2O+srbgYLHJ2kD+bQJljHnEhx7y5KBmdqtpkehCYEowe
-	nerEyAQHkD1Hrwdn66Jx44ZrG/Jm3bbgh4jARU9ZzPKUlw0elBR/RCs+Cs6g8zTO
-	AB/UfNQx3+Wutx9nqQ3sRUCweZDb0O9rUhhUITebs2b6DNyv/+y7Ojza+iY0U58B
-	cCQbaeoy5Mh268YzveMcdmYdIJhtZ4ef05A==
-X-ME-Sender: <xms:o3SgatZzHT6cZBdGBt3xDuLwLV2X0zE2qI-vXgALmJNCgsnICTL72w>
-    <xme:o3SgarZWE6mn2N_g_PGQjORFx4vM0zXSzTJDIGBqMKszYqtXC4eKNM-tGIzOyJ3Yl
-    CgkImZAZVAUlxHxFowgIzIpkXNzcvYONeygWVW_e07D3gY7izBk4w>
-X-ME-Received: <xmr:o3Sgak991Y5r7KBwebxcjL4Zgfr3DF0oIZewAreanYtevPeIzDHfkXIWsL6GHyncyigJhCdN27dkqQkWIGJgzZc9F_7XrGLE5CHR>
-X-ME-Proxy-Cause: dmFkZTEVie6+qXjCNb3+tE4Xs+IKltHchcM2e6VE63oowFgmy5sJahza/jxXMkrI4fbLGm
-    sivnNpnVNujkP6moP/oRW/XTk3zbp/3k93ta21pwcEg3TBffKAewyzhjiEvyhDB9CSQGJQ
-    jDgGosNZdE/Gsr0IS8WGMgJYdd4szAYPE4j3L3qPd/WrrW4K0WoxUAVw9KtOYrFJIb40kw
-    cK8LVEflcFbcncFBIuY4J16osQFdX/3dBBjPaqmDoRqFaH2b7XqM4Rszx96QXxOT0/TZxm
-    WLxsEoAKXkERoUlzin4dCEjFf1+peKs17fi5j/lMf6RdgsUGfceBQMeUfUfGSP6RhuOJir
-    GgrJ2/0OcjdELaN1xlv+EjRsgs19Jaxyy44REHJaWFmwIXW+g/Y4x3lr4WotCDGsEysa44
-    igXiIAKVLhJ0RaYndfjDyWXv1vRzJ+bsoTwS8aqAy3rTanCI9EmogLNk1ggpp8EuJMmI2w
-    oLR+XC3az+9EWOYkvDJFSkLwbA6ZDXgJqmfjH4Lvl+awelTHUyCpvnJHx/ngtdxW5TJXLF
-    G4HUc9eK92fshnOv8u1KRPm7XXxmQhLnNy2+NnXjMtN79uxITywQJv5YZVhcKCbQIHW2vJ
-    CfmGwDVNdXNlRdYT/3JXcXKteDA+BbfuJs5hSpTEF/N3Wr9yXSX1F+3DVvZQ
-X-ME-Proxy: <xmx:o3Sgaqhib3_WssHm25HWmRKD6oMxy29-Lz17a7Z1St1YmoqNyIXeqQ>
-    <xmx:o3SgakcnMaUcMV32sGclknggh8APbIwZHgilcHR4MEZYc2eD8_JIiA>
-    <xmx:o3SgahrRQZX-fkpcVDdj4ge3McBTo7uhWCBCQv4q67vLMTcLiFwZEQ>
-    <xmx:o3SgapB3xoYcucZbnYY4KqQg-jS9br5ASNbv-jX4G9fgBBSZVwSHlQ>
-    <xmx:o3SgakvYGLP1QCQaTnBm98PDXJi_K0cct0o3MnJmRser2OAFdUDDarOy>
+	1788901028; x=1788987428; bh=4wer33HEnDLkm7yQIUeL5NFYJw7djwSWv++
+	o/odIOos=; b=gjXb8CSVh82xII84gHjYhCIaKnavislXBMtrmD5nDll8pgwjxH3
+	a08tcrW6oAr2lOn2We74yll+5UUgzEAIUI5jANCP17RMbwePEwscko+sB3EiesB0
+	a7+WE+04U4i+PpyKsUBVIG5V21s1cSIgSuHmWVJIlagXvzYrVH4kKoD2zTTrbgKj
+	kysXrRn5VD0pVaZUcfM5TmXxpuyHv8ZYrOtRzdFKQviEhW0PPWTnUG0EZSJAs4v0
+	XrSv6i5gubjSxYDcBeEaWOWgJc13Q5gf5OyCjRwVFRpoFLB/qQzzpJ6UXy60zn1L
+	QCvWW+DqaeVCwtfDrjR7E13qfCc8LKfC9/g==
+X-ME-Sender: <xms:pHagagkJrY_uEptlldjK2ld5u6PCuqz4kAGsculMb5A-ENJPwv-peQ>
+    <xme:pHagasbV4jyhdpp75mqAQmpEXoGdH9y05UCzBBv8RVTDyalS0dmTZMqH5cscG5rXe
+    enYEEz59zt-hIx3mXhPnLk5KF9rg5povhtvn5zQCbHPOKOzC2pDfpc>
+X-ME-Received: <xmr:pHagajEi0_KYWFX7yn5gQpiRoNsydCBc-2CHSRIEYzw2ElLcZQcHMhd3-RrECvLm7JS_90Kn4opz9iePuRszouKKBirwirKACjE7>
+X-ME-Proxy-Cause: dmFkZTFLFA8vJBxaD0W0uqRnUHiyhoiL1p71G7T3YuVgS7N6I3KZNy2/p/5todQE0OvCFA
+    9E9ONPfkU26hkPh8h/qUteGIGd330CSIwCK7TTHpS/K5Ovx2p+IeGCMIgN/DrkjH3NVmHk
+    f+VMqybCUaSL6DIuNLwC/NiQKX8j4L1ZJeen1xGhpPeHJ28JtinmkruVc/R+PwO26810tc
+    d84OK32BiWjaGL6g41JUG4kMWXdJXzJvegJJxoYePs1AV1sepp8mMp3BQUw7QxiRO++i98
+    w+skHAYEA6AkAqQlQN/Wj85hs3jopxQuTR8B1VOdow1Tx89OwUjhd7dvZWPNOsqpENoZL3
+    55nisMJIpI1Kx+NuMo4Aiy8ZWPunzVM2H8OS7/1y1DecfbSc3a2eQgc3UBjPDNRIfCZXe0
+    tnLlSk2PdyyKX9b0OXrgUHFdSSTHI2xKPdI+S2skOBKeBxq5WQUbWK9yte+gkZfl6px6M7
+    Nj+cpM2LZp6WOkZGCTplFSfCzM+166oboCxTXE2JYdXcv7sND6MmhPVNV9GHqG3sFPNaN+
+    5LsTlFaB+Ub6+r0yN26OY2ICa/IxD173s52FlQPQ+W/gfZsOrNiXP0Dhu6jfx5DQtYAebK
+    SqSfdSlSpIYJLKAzzX+tpIzu274dt5aR+ecn+5fsjYdmQYHwWWcTbW86mp1g
+X-ME-Proxy: <xmx:pHagajaWPkhPeL2MK9nRpoBfRaUz1zuBJ6T7mbxcN1kFy6PaPIzl9g>
+    <xmx:pHagavxQgKfGEWGUqV6KVzEzJSL-ERL2mzz9WMQTeJIrJ16_e6vLfg>
+    <xmx:pHagatRat6MNiZm887acWS_xG-z0MmdBv3xxyJAT1IpTsV6cglBXWQ>
+    <xmx:pHagakKN3JfSDTTRMHGmEv0RyGv4iSYbzovsPZM0lYTc9uPUytjxOQ>
+    <xmx:pHagap3jnKw-KyjvCA9Nnbq36vHMkjWIu_tajcHi4QrCl5ay6_u2OGgn>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Sep 2026 16:48:35 -0400 (EDT)
+ 8 Sep 2026 16:57:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Mark C. Chu-Carroll via B4 Relay"
- <devnull+markchucarroll.fastmail.com@kernel.org>
-Cc: git@vger.kernel.org,  "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-Subject: Re: [PATCH 1/3] Update t4001 to use modern syntax.
-In-Reply-To: <20260908-modernize-t4001-v1-1-cab3933a173f@fastmail.com> (Mark
-	C. Chu-Carroll via's message of "Tue, 08 Sep 2026 15:44:53 -0400")
-References: <20260908-modernize-t4001-v1-0-cab3933a173f@fastmail.com>
-	<20260908-modernize-t4001-v1-1-cab3933a173f@fastmail.com>
-Date: Tue, 08 Sep 2026 13:48:34 -0700
-Message-ID: <xmqqpkynv599.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Matt
+ Hunter <m@lfurio.us>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Tuomas Ahola <taahol@utu.fi>,  Harald
+ Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v15 4/8] history: add skeleton for squash subcommand
+In-Reply-To: <8ad1faaa9a4ab71560b4e9321886706164518e9e.1788900120.git.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Tue, 08 Sep 2026
+	20:41:55 +0000")
+References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
+	<pull.2337.v15.git.git.1788900119.gitgitgadget@gmail.com>
+	<8ad1faaa9a4ab71560b4e9321886706164518e9e.1788900120.git.gitgitgadget@gmail.com>
+Date: Tue, 08 Sep 2026 13:57:06 -0700
+Message-ID: <xmqqik4fv4v1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,164 +91,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Mark C. Chu-Carroll via B4 Relay"
-<devnull+markchucarroll.fastmail.com@kernel.org> writes:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Subject: Re: [PATCH 1/3] Update t4001 to use modern syntax.
-
-Documentation/SubmittingPatches::[[describe-changes]]
-Documentation/SubmittingPatches::[[summary-section]]
-
-> From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+> From: Harald Nordgren <haraldnordgren@gmail.com>
 >
+> Add the entry point and option parsing for "git history squash". Pass
+> the remaining arguments through setup_revisions() so the command accepts
+> revision ranges and rev-list options, while restoring the ordering and
+> simplification settings required by the fold if an option changes them.
+>
+> Require at least one BOTTOM revision. The squashed commit needs a commit
+> outside the selected range to serve as its base, so a single positive
+> revision is not a sufficient range.
+>
+> Keep this step limited to defining the revision input contract so graph
+> validation and the rewrite can be added independently.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 > ---
+>  Documentation/git-history.adoc |  1 +
+>  builtin/history.c              | 94 ++++++++++++++++++++++++++++++++++
+>  t/t9902-completion.sh          |  1 +
+>  3 files changed, 96 insertions(+)
 
-Documentation/SubmittingPatches::[[sign-off]]
+Nice.  As the "complete 'git history'" topic is now in, with this part
 
->  t/t4001-diff-rename.sh   | 31 ++++++++++++++++---------------
->  t/t4009-diff-rename-4.sh |  8 ++++----
->  2 files changed, 20 insertions(+), 19 deletions(-)
->
-> diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
-> index ad474100af..2aa161c217 100755
-> --- a/t/t4001-diff-rename.sh
-> +++ b/t/t4001-diff-rename.sh
-> @@ -88,28 +88,29 @@ test_expect_success 'setup' '
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 38cf221718..978c42c629 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -3227,6 +3227,7 @@ test_expect_success 'git history subcommands' '
+>  	fixup Z
+>  	reword Z
+>  	split Z
+> +	squash Z
 >  	EOF
+>  	test_completion "git history --" ""
 >  '
 
-There are a bit more in the differences between this ancient style
-and the modern style.  Not just the title appearing on the first line
-and the body is opened with a single quote at the end of the first
-line, the body is indented with a single tab.
+being a part of this series, I no longer need to worry about making
+an evil merge for this ;-).
 
->  
-> -test_expect_success \
-> -    'update-index --add a file.' \
-> -    'git update-index --add path0'
-> +test_expect_success 'update-index --add a file.' '
-> +    git update-index --add path0
-> +'
-
-Also in "modern style", the tests are split at more logical
-boundaries.  As the topic of this test is "diff rename", our purpose
-of this test script is not to catch a crashing "update-index --add".
-We are not interested in finding "update-index --add" to fail and
-see "not ok" for such a failure.  This step is merely the first step
-of building the tree object to be compared later with a modified
-index.
-
-> -test_expect_success \
-> -    'write that tree.' \
-> -    'tree=$(git write-tree) && echo $tree'
-> +test_expect_success 'write that tree.' '
-> +    tree=$(git write-tree) && echo $tree
-> +'
-
-Likewise, we are not interested to find out what object name the
-resulting tree object gets.  "echo" here were placed long ago merely
-for debugging purposes.
-
->  sed -e 's/line/Line/' <path0 >path1
->  rm -f path0
-
-And in "modern style" tests, we strongly frown upon tests doing
-anything outside test_expect_success blocks.  This is a preparation
-to pretend that path0 was "renamed" to path1, and it is concluded ...
-
-> -test_expect_success \
-> -    'renamed and edited the file.' \
-> -    'git update-index --add --remove path0 path1'
->  
-> -test_expect_success \
-> -    'git diff-index -p -M after rename and editing.' \
-> -    'git diff-index -p -M $tree >current'
-> +test_expect_success 'renamed and edited the file.' '
-> +    git update-index --add --remove path0 path1
-> +'
-
-... with this step.
-
-> +test_expect_success 'git diff-index -p -M after rename and editing.' '
-> +    git diff-index -p -M $tree >current
-> +'
-
-And the output is obtained.  Again, it is not like we are happy that
-this "diff-index" does not crash, so in "modern style", we do not
-split a logically test like this at this point.  We want to see the
-command produce, without segfaulting, its output to the file "current",
-and we also want to see that the result matches what we expect.
-
-> -test_expect_success \
-> -    'validate the output.' \
-> -    'compare_diff_patch current expected'
-> +test_expect_success 'validate the output.' '
-> +    compare_diff_patch current expected
-> +'
-
-In addition, in "modern" style, it is more common to name the file
-that the actual output goes "actual", and the file that has the
-expected contents "expect", and compare "expect" with "actual".
-This test has compared contents in two files with wrong names, and
-compares them in a wrong order.
-
-Taking all together, it would look more like this, I would imagine.
-Of course as "expected" has been renamed to "expect" in the initial
-set-up part, the fallouts in the remainder of the test script also
-needs to be dealt with, which is left as an exercise to the reader.
-
- t/t4001-diff-rename.sh | 31 +++++++++++--------------------
- 1 file changed, 11 insertions(+), 20 deletions(-)
-
-diff --git c/t/t4001-diff-rename.sh w/t/t4001-diff-rename.sh
-index ad474100af..61d651d1db 100755
---- c/t/t4001-diff-rename.sh
-+++ w/t/t4001-diff-rename.sh
-@@ -26,7 +26,7 @@ test_expect_success 'setup' '
- 	Line 14
- 	Line 15
- 	EOF
--	cat >expected <<-\EOF &&
-+	cat >expect <<-\EOF &&
- 	diff --git a/path0 b/path1
- 	rename from path0
- 	rename to path1
-@@ -88,28 +88,19 @@ test_expect_success 'setup' '
- 	EOF
- '
- 
--test_expect_success \
--    'update-index --add a file.' \
--    'git update-index --add path0'
--
--test_expect_success \
--    'write that tree.' \
--    'tree=$(git write-tree) && echo $tree'
-+test_expect_success 'path0 renamed to path1 with minor edit' '
-+	git update-index --add path0 &&
-+	tree=$(git write-tree) &&
- 
--sed -e 's/line/Line/' <path0 >path1
--rm -f path0
--test_expect_success \
--    'renamed and edited the file.' \
--    'git update-index --add --remove path0 path1'
-+	# edit and rename
-+	sed -e 's/line/Line/' <path0 >path1 &&
-+	rm -f path0 &&
-+	git update-index --add --remove path0 path1 &&
- 
--test_expect_success \
--    'git diff-index -p -M after rename and editing.' \
--    'git diff-index -p -M $tree >current'
-+	git diff-index -p -M $tree >actual &&
- 
--
--test_expect_success \
--    'validate the output.' \
--    'compare_diff_patch current expected'
-+	compare_diff_patch expect actual
-+'
- 
- test_expect_success 'test diff.renames=true' '
- 	git -c diff.renames=true diff --cached $tree >current &&
+Thanks.
