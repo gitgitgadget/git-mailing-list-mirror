@@ -1,118 +1,114 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk2-f5.google.com (mail-qk2-f5.google.com [74.125.230.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97234A0157
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 18:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB7D5921EF
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 18:16:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788891144; cv=none; b=KDQxPWdWYqvze+OVcZkDrSUibbysIFcz3kUa9WufbX7ikpARp44wwniAz8suVM4PGiRwd3fghw6jL+x/gv32qK9Yn4x1iD5934CtYH7LIMHTErXFs1Rh7VK4cDfoUfFu5LPzrzjj4ek5eHkMjBK+BKvDwGx07kJhuLb/zDVfGWQ=
+	t=1788891410; cv=none; b=DdMdCHKcsJb/7/PhJ9FhB2wq3Pz9CjTiS7J9knoQFJniC8WKDKXnZtRhfBtkvNPxVnfXInAtrmsAKRrzx3e0hWMxeZKNvXTJBI3quvq/sxw6cuPp8hHCwZbJMeiRGXFEQwxWDtfoaStQZ33ktAFOFTDIfTUk9vcaORZFNuCcDJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788891144; c=relaxed/simple;
-	bh=G5gWw2r4XaWNEcvX81mWrfCT1JrI0OFAwEsSItLEdG4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XBhVbFlHcPSj+M/IT/lrSx/oCPDzNDIgTB8IsSfg8+9qyNs80QmuX6GsRCJx7CApfrjhVMqNv+cJqq73kY20E26ZlQNQ94XPwGrT0YUWV4AF0+Zej/l+Zbp3WZ3XmHM8HcciRCLoqOp+Paipm4eBS2I5nOdUAK+xi4T0iPcQ4zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TjIokyot; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BbmUSPMS; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788891410; c=relaxed/simple;
+	bh=KMPltRydC2icAbKDBwabLsN7Q/am2tEkojW1NZkK5/o=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=cLgt0cO+wP09N3nWb9IsZVJOklFf9u1jYVGTEUZZLMyZ/A01y+fEjNRVwEHjUA4kAU3QIXnBG88RtxPB1guGQewb9lpJt32jFeLbATY9bBm30yj2nL/WTs4hoclf1RmKfa+35M8A0rqPKwsCe4FPEPMoJdlC9yS1dznlhAEKTaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=ezu+tSN+; arc=none smtp.client-ip=74.125.230.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TjIokyot";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BbmUSPMS"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8414DEC011C;
-	Tue,  8 Sep 2026 14:12:21 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 08 Sep 2026 14:12:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788891141; x=1788977541; bh=uLeBBTVgnL
-	O8aY8xNS/Qnuuej4LjrSuBuYVmUONqEh0=; b=TjIokyotVKJxtLLvbCLfH0NeoO
-	xdVmVAaCSkMRvKMs4NOQgmFYjSeAMZodfJi9zbfo/jJGZHPFxcTtfRoJSUoFoETM
-	tYz7bDnHbJ1e5sWAZxnUrqRDf9OyEY1u/kQgQqCMYwz9K0yA6Wh2aGdplPRcQTo2
-	fzdDuy++K2OEIq6MG5zYMb5v8TE3c5KioyYOb03rVgEOaob6n49AbK5SsUuP/BWD
-	BIBShW6dQQ2TYpdyxFd2nTdYanT7I0VKiTMOsl2ZOCFp3cmH4zRBCimmWJcQMNfZ
-	4oK4q7I0VB8faKHj9L8DdPWRs5AHZDBW9WpMdxY2q/TaFGi1InuYSY5Z+9Ig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788891141; x=1788977541; bh=uLeBBTVgnLO8aY8xNS/Qnuuej4LjrSuBuYV
-	mUONqEh0=; b=BbmUSPMS+lSaMR1h8mY6vaKv5aDnIU+yDjw2LQuWTf4EznwF5hC
-	lxJ1i0g5oc6gM8PIKM9C5+YzWg9hL9hcpy/ENeU0iGDjJF/OH0hp4vHtg8pr2BPt
-	+ZXyb3Z+CN5ax2ZhtLv5p82mwgfiWJOpgwPusSZd9zaXo+N2VC89XBMmcHyHqHo4
-	2S0IRQLN2MZkq/BIbuhX1To4k/MGyiqjrhDmoOqRTpb9Jz1XvOckCdlKTgJ2XK3A
-	eJ0ZBJb3AbZE4hIIWqIPZMP6TsNqQuRL3KzqsOTRzhONKXktnsbx5/5vouSZ5lND
-	JlN/9ydoSSSIHlV4ejQbOTVoCRBdVUXntYQ==
-X-ME-Sender: <xms:BVCgatBhEL_cWTnTeDZw3upy8w6DnY_xsRVpCrpqe75c2YjZPbkxFA>
-    <xme:BVCgaqmAAyx0i42SOCw2X0SNIufm6B4bjRXiktXDTlO3UahrQAzT85naaE9wQSGEl
-    lHTsDSVti6yk_EJw9jMkFBHxUJ5oX-wyvok4UpML1QLqZiowUX99No>
-X-ME-Received: <xmr:BVCgauxbbqDu65-q5h1T2aEarBGqGJQSVhsVpAkYtmT_fIH6QzyoiUe4_Iu1VHyv8QvkxeMOK4noTwYpCY3ZosMoRzZE-mHFtqiq>
-X-ME-Proxy-Cause: dmFkZTGhWO6TP7KoYORew/wXoxQbM/US06bWX45wWulkFYeF3yKroeo80G1lHMZQHWzhQw
-    0XcdeCvJ8xzKdufdvuuUObPHZYK95vafy2IDzEZZL8ff4NlELV4A4+ALyV1im6jMBNuMrs
-    UPQNkVgWzu6sA8C5s6k9VaGMHU5LJ2uBPh/Osnsu0JR+hZ+amy8EkpgT4zRdPjt+L2HHcF
-    U3Ttc8PpSSZTiZCFnm8fAmKxt2y2k3yQWLwuSnHLmApFByu2B9Fs8RJQPQA1Uvk5IUnnOg
-    2nPpsj5T9V35wK+IpJ2YByZ7vDikqT+bEFu87iYV0beI/I/nUZ64cEHPYWyZ2HVB5mqVI7
-    nJ4xE+g49Uw3kIOYr8vMW5bsUtLLIGVcsPU8KcfTWYYvfNlGgo5TH3I4qEuvdM8efyWkOU
-    7u7R6i4KfppvkIaR9AEGOmIDaS8mvVJhhHOkjhBywoHw6WHxn7KMvtKND24+yqMw/aspvK
-    1aR5uy3djy1o2WAxBZJ9G6abEP8ciFNwtE5ITrzm0AkcHJ73el41r882C/+YbUUwhVzRYC
-    H8CdkkXL0PObDkL7kNMuRu2bzKWDdpBmkNSMJzEBugveXBa+4vGYKUKR+Ylz0ySHBu3z7M
-    px3CdfQzxtwSCRapP+OzhinaRytEqwOnnLt71beWIo2oN1q9poSKrUg7aDGQ
-X-ME-Proxy: <xmx:BVCgakRJDFD8j9fz9XN9HszE9KRn-l6acVd6yMoUaxY0ycGWiscZfg>
-    <xmx:BVCgam_Y_MloXJOFfoQE7q6xqwbyhvkPjjueOxLPJ8OWtSCmYh0gOQ>
-    <xmx:BVCgaivfJ9QwwoZykdQsYcFHinMek-LAJ8aknZlekaWlZr86w_Wz0Q>
-    <xmx:BVCgauP34a960TXGoJBpm6jFWnpCzOrsUqDxhcvH3AOFUsgtarcxzA>
-    <xmx:BVCgahG-ifeXRDWbDDKvbd6Bs1lVnZiuWNBs2hqRQkucEjvCyjRB0xzf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Sep 2026 14:12:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Karthik
- Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v3 4/5] promisor-remote: prevent infinite recursion when
- lazy fetching
-In-Reply-To: <20260908164129.560396-5-christian.couder@gmail.com> (Christian
-	Couder's message of "Tue, 8 Sep 2026 18:41:28 +0200")
-References: <20260813154748.2378747-1-christian.couder@gmail.com>
-	<20260908164129.560396-1-christian.couder@gmail.com>
-	<20260908164129.560396-5-christian.couder@gmail.com>
-Date: Tue, 08 Sep 2026 11:12:19 -0700
-Message-ID: <xmqqqzj3wr24.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="ezu+tSN+"
+Received: by mail-qk2-f5.google.com with SMTP id d75a77b69052e-52ff498cf90so30532921cf.0
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 11:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=openai.com; s=google; t=1788891408; x=1789496208; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-disposition:content-type
+         :mime-version:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=XqcAwkbAv1lHx33l+hpOJy4osE9a/0j4K0CxMawdYcQ=;
+        b=ezu+tSN+N/mEihZtjW3FOj4fthu9R0tzXW0llRjfU22v4YRj6wCx33WW4sv4bnK4sR
+         VciGnPU7Gh78owNFH2L7IwsFNtgB0xKQDSmiyGdg6Lm0WxA7MECWCm8ABmTZR56knb+q
+         0Um+Cu3eTyytBWBC6eJUsodENKBmXiEqrey8s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788891408; x=1789496208;
+        h=content-transfer-encoding:content-disposition:content-type
+         :mime-version:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=XqcAwkbAv1lHx33l+hpOJy4osE9a/0j4K0CxMawdYcQ=;
+        b=sb8KoFgIL47dQOVJIoODacbNvqMp+a6qROagOCNxLf+FTo+dhEN0olSfuvRioZodUS
+         9kgyAcdyOQpFyt5Rddw1wIZMLFdkxUw3aZXjizlYB4sdnwrql/IS9wr/re/B/vt3ts8q
+         gmT38kyVckGlN5nNoAdozq05w5rheEqxwiIPESQ9Uz1ZnR/wWlDqayxuZgQU4DXeb4dA
+         5XAX/1Sz0XAbI02NHTfqZgakkzeCND2hQKBkwROfxDYlhvuOF0VFI+vdtHUQVNnQOn+O
+         WTIqTDR+lagxubNEvX7iRzL1j35K3Lu9Gk6tjtEq6t1pYvuvMZmX39tp7wnQmd+zgtRq
+         f/SQ==
+X-Gm-Message-State: AFuF++nfVRESzHc5zKiUBrbMENiXr87+SO7Z5Uv7JcgqxbN2DD9/W6AG
+	2KLzoNTZgLWF0KQRtEGcqSNAQp5E0MbPl27iWUh+IAY4D57bzvNTWDnMmFALWDPX0T6jmY9tbfk
+	OucHBgWkrcBkG
+X-Gm-Gg: AYBFou355nvha2/+R3JYFzpsZDNOfhtCmGDntgEL6P7GzKyHXZ9hknuPUN5eg+ZMrvp
+	hd2Bae6Q6jUuloQEX/2XgKLuDMLubv/QP/qQ+NDKbcdGXxfKBXuK2Ji9XzCKUOF4UG1gOiTgTSi
+	b91yNEO/USRI2+Y+v9y1ZYFEpuyDWcDNw1Xm+K2JsGIiDWUjhcDHDMTfKL6kb6zsVT1anpel9Ju
+	eFQdlrj3/ujlILX3g4FtSvBpIKRxNqwqITXJg99DZoJxVMuTiEIHXB86t36Nsp7urp/Oy8oN73x
+	Kl3dm1nyh5bqYshOuKTxLV65An9c/NqD1TS3qa5MaZCfyscTWjaxu7lWffPbZJCXlRVuDrPlFLs
+	taMZ4Ov23QA5v1xcmv49cE9S31R4I7jDTq3C3xRFw1bOyVRNFlwfQG3cvRFn+QJB0NfEhPnx5iA
+	RzLiUnJ/bwTa7HIWhCSez1qwdKr+yVcqX28KU2C7kryxYGjXDn5aEqtPAhQGVFthyKtI1Jrg6Lr
+	K32ihla0cOuimJ3C7QFAIffZhGDgy6AwPxmKy5/BkcMOgv99FjqBNLb
+X-Received: by 2002:a05:622a:1113:b0:52c:ce3:6428 with SMTP id d75a77b69052e-530548106demr344602221cf.16.1788891407707;
+        Tue, 08 Sep 2026 11:16:47 -0700 (PDT)
+Received: from com-79390 ([40.76.104.167])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9104049d30asm123919016d6.0.2026.09.08.11.16.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2026 11:16:47 -0700 (PDT)
+Date: Tue, 8 Sep 2026 13:16:45 -0500
+From: Taylor Blau <ttaylorr@openai.com>
+To: git@vger.kernel.org
+Cc: Scott Chacon <schacon@gmail.com>
+Subject: [ANNOUNCE] Git Contributor's Summit 2026
+Message-ID: <aqBRDSkgC4wrUUL4@com-79390>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi everyone,
 
-> It does not recurse forever in practice, but only because each level
-> adds one more variable to the environment of the child process, so
-> after a while `exec()` fails with:
->
->     fatal: cannot exec 'git-upload-pack ...': Argument list too long
->     fatal: unable to fork
->
-> To avoid this pathological case altogether, let's use a new
-> `GIT_INTERNAL_LAZY_FETCH_DEPTH` to count the recursion depth, and let's
-> check that it doesn't exceed a MAX_LAZY_FETCH_DEPTH limit (set to 5 for
-> now).
+With Git Merge coming up next week, here are the details for this year's
+Contributor's Summit:
 
-Good.
+  When:  Friday, September 18th, 10am–4pm (UTC+1)
+  Where: Audrey's, Santiago de Alfama, Lisbon (private room)
+  What:  Contributor's Summit
+  Who:   Git (& related projects) contributors[^1]
 
-Does it have to be "unsigned long", though?  Just like oid_nr, I'd
-prefer to see a number whose range or signedness does not matter in
-practice be typed as platform natural "int".  Even though one could
-argue that "anything_nr cannot be negative so it must be unsigned",
-or "int might be too small for some platforms" or "int or ulong have
-different width on different platforms", or even "anything we count
-we should count in size_t", I do not think any of them is a good
-argument against it, especially when the value we start with is 5
-;-).
+(If you're not able to attend in person, but wish to join remotely,
+please let me know off-list. Our room has AV capabilities, and I'll send
+remote attendees the details as we get a bit closer.)
+
+We'll meet alongside the unconference, with lunch from 1:30–2:45pm. The
+full Git Merge schedule is available here:
+
+    https://git-merge.com/#Schedule
+
+As in previous years, we'll use the summit to discuss topics of interest
+to people working on Git. If there's something you'd like to discuss,
+please add it to the topic sheet:
+
+    https://docs.google.com/spreadsheets/d/1ianyjHMV8EHVfHvwFfNa3SAFu5NIIBLyKyD-pU8LArQ/edit
+
+Please include your name and a short description, along with any
+relevant details. There's no need to prepare a formal presentation; an
+open question or something you'd like feedback on is plenty.
+
+We can leave the voting and note-taker columns blank for now. We'll vote
+on and prioritize topics together when we meet.
+
+Safe travels, and looking forward to seeing folks in Lisbon!
+
+Thanks,
+Taylor
+
+[^1]: if you're not sure whether that includes you, please ask!
 
