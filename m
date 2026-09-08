@@ -1,70 +1,70 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8CF3B95F8
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 20:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051663BB12A
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 20:42:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788900129; cv=none; b=b4xsx2i6cnB8VhgPhEkbQq+6TNhW/HRToEZbYSKQkBY9EOAkoNaRp+v0OJpvSFGLX8qeXqsMUdTEbRgidpsWW1KVjqSjK2plIyJdhjQXqpTSfwe3CiSj7RpWR048EhADRT/mJ/pm5SoHDGn7EwzQiL9pqRq93y2oGYT3cBF3un4=
+	t=1788900132; cv=none; b=duJTx0MpU5qAAQY7gS9KLI4WNM609J6fA42dIP19CJ61XGn9i9h2pKybyc0xxu1tVFXUXQWy/slAW+f/j48qZfWrJRrs/GVF5HKjreRV/QQlP7VUor5NLEohS3zsEEdQ6G8jDmGuSg9D2W8TxTVQZ3si30y36mXWBjQJtN9ermc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788900129; c=relaxed/simple;
-	bh=K37Vy3t2IcBlDOqRvBTHvVVfz7ixNR9aea5J6g0XJNU=;
+	s=arc-20240116; t=1788900132; c=relaxed/simple;
+	bh=yc3jpPkJm0ttjVbIC2VTulGnPyOYq1vWdWY4aCdc+KA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jbtOh89cJSgBqlEXLWGQkn6BWClbuuaoGyvMYvvB3Aw6bu3lqbT4u0jsqYIH8EcuVPYZGI68OkBHUrFbssD+JAA21D03mXE4k1jIiBYIxl7kvy2rUSmJtoF4iorSszUmLIHGL76tkkCU1RiZToyFi5oXPRoaQ7wmNM8n+zL9oVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cjCSAhb/; arc=none smtp.client-ip=209.85.222.174
+	 MIME-Version:To:Cc; b=p6KoX4Kvtuudr4qHJD50hue1eTm2gWCqTWdN1rVHhTj1aLIfUwcK4mTpl2bPMYbgiH1Hh5LrRdWaPI4lLocCpzdSMG9LksSRrFs4vN/3/CV3tdG7zj7IvK7EcAq0y7T6aiaXT6X7d2Sbv2ijLAoqsKb5485XER8XiLPThvkdUxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Om395rYv; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cjCSAhb/"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-9399d91ee7aso334888485a.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 13:42:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Om395rYv"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-90cc64570deso72153746d6.0
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 13:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788900127; x=1789504927; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788900130; x=1789504930; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=plT7pxYJHGOqrG839OkKJFRqWO7V8v5l+sB9dyVMuuI=;
-        b=cjCSAhb/J9LrKZi9WbuujuVvlbDN0AM2GEYr/0jHOMhykas6CO4WNuMIlU7eYVuvvE
-         Q//KRAvliYnnm+GBNZEX6SjMzQi6N7Rs12OHfiPigWosGJC70+kIOdjKry3iFBe/90SK
-         hFgQVEa/qM5hXVSq2XTNBVitexDFcOwsEGVjpsfmlvsINIz7Fc2gK7Xo06LGJ2oeH7Qy
-         LQNW3UJJ7+sNqXY552vMGXhz22VQ3MR3JuM0kl2bz7Dl3Hc5p6lZfPIHR/nolb0HraZs
-         KEUc6rOQYa0AHPiLxPwRBYCSOv5S5ZBlz8fyiIuss93n4drtIhvM8eCS4OdusXSpqcy/
-         mcNw==
+        bh=mSSB+rSYomHR8tAwlmtGtklFDi9f3F7doejqrcy56k4=;
+        b=Om395rYvkg35QdxyQl0/yrM+nMqXVeU+bk2alaWGndMxdeTridDVGPMSatxPNqXpoP
+         XA3MZJIIdibSPGm7unktkbRTWASnDYXBK6b+70GBiOK/Bsewt0pAC4gxtS4D7OBE+4oc
+         tlxMRut2LtHPYRP16fC+P/9FHV8TvO1ht1FI4yVV071entWGFFRRYQdVcKTJ0rDyHejX
+         CvY/51y8IgVMIGLobMQjM6y0BRx952crb01WO3qz6+yTVY7H4QPlQxo86kgYNZjM7CLo
+         b2ahHjTJEOixGolPjLC/SWVPQim+yYCv8ITWBCcQpEmE4AhDLTuT+7+1plTxH3nzLiW7
+         mA8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788900127; x=1789504927;
+        d=1e100.net; s=20251104; t=1788900130; x=1789504930;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=plT7pxYJHGOqrG839OkKJFRqWO7V8v5l+sB9dyVMuuI=;
-        b=FbeeD8wxUGj/6JAVuAHd4dOoqyuRz6/AvmCweX3d3Ma+FB2GocLgBPPZ+oFhEEAZiX
-         9i7um15guRuMsNDwUdJA23Xyh+mMAy7Ua49lVqMnVthxFIE/0fpEvaLGIU8k3MDHVIjU
-         FBvm/6+jgU7u8+jIE7mJkbFpwS5Zusb7p8ur+ji0xoo2/rTnKUiB5on974Do5yZHLE7T
-         U4BlONMA8hP9UgtMXK/+zei1cu9lcSYGWuY1c2n+r8WblUM1e65/U8vjQVGYhEjymcS6
-         6p5mZgVDsQCeJBukchKQyFKEN5MZxegPcniEm7eeOlYKWzM+7vjT0BxGhqyRJsUTHwHm
-         znZA==
-X-Gm-Message-State: AFuF++niDC3ann41svh6eiT/q+b+ivnoF9LaMi/TtnM1ayG4uXuWtvke
-	EdlqNMA6OkGENKz8FyNTDOd4FKQl6K4W9PUJHHhYkbEb60AXLwu3A3+ao8lB/Ei7
-X-Gm-Gg: AYBFou11/EogEA2lxbupoyluGq/gyyG84hNp70kNpLPH03p6+nZ4kQ7gacD8ZmEKSEq
-	qYSFEhasym0dSKZZm1UD9PcdkLZW1wxB4zLd0TWcw+upmvhm4tgj0Yb4uFVrAwDd5lHr/GUROuB
-	39J167WjVjsxY5Q5sLbPshGayVCztelR2dOnULjBKr1uX1Vqy8RPbiOw8Z6hX1scx9fTrwGzILg
-	alIc3XxYZ2Z1LJjfz3+2BLYdF6ob/0au1Jkg3ukRWa6NbQk4QUFPs06F97NXsoWsGCepQ2TppuK
-	XWlvYdADRV2zoMmLRTCIM8GvncrQAjog3qGqcEaSxBY2lgZOn1TYkadXcrwoepsfez2UkIYStHr
-	iYxB+pTcBtu8GTXkMSZC7tqcnTXf3Q2OZllAqcLAyksZXXbhgrx0WwKpFG4EyuHOCbiyKze0kZS
-	KS5DxsQeP+Hd8heARbZolSEg5Ug0nva/ZN/2/U3IoFtN6ln+YF1ebTnovuDUWuIP+kZA==
-X-Received: by 2002:a05:620a:618e:b0:934:946d:599d with SMTP id af79cd13be357-939806dc5c8mr3401854485a.33.1788900127188;
-        Tue, 08 Sep 2026 13:42:07 -0700 (PDT)
+        bh=mSSB+rSYomHR8tAwlmtGtklFDi9f3F7doejqrcy56k4=;
+        b=sipKrMqZeTN7S83DCui4WJ9LLv+i3OtCmeLnsOb0Y1L2sH9IBUtlTzj1kUtiaEtuIv
+         G5w7OmfTnydaPF3psEixJhdZxTi47KC67qbxrYTDbyeVN1Z/fauFJ4kdJOpvoR0gwuhz
+         4CKGeEHqeRv2WOpq2O/1RwPgk8CJ8mrhs5P3hL8YR5xXqKe/j//xDfOxb/X2No0CNVsA
+         Et0vqXFzvy5+KwmX9p1Q0KuuNoF/rULMp64VyQhF+9g40KRRZKV5dqA/ahQ2HDgFuQNP
+         VjTH29P7aUbrNiAwgDZ5ElVYsR1x8Yj6K7EUzFdaMAUSQAaRds4ZNso5mO7pzkkyKt98
+         pIdw==
+X-Gm-Message-State: AFuF++kczA4nQZ75oUXYJt1MehHIYy00FnQPOM/dPprmWwIonas5rguF
+	8KkYlNfObRA5e8ZROhPfgt/3N1nizFoawGDs/dqf92cTzJpkd5GjW7Pef737u83A
+X-Gm-Gg: AYBFou3e5oYso4ISRRrqqLDUMDsdyufVhtvAKd8V6GOWnVNbGrGhLRKt09GzFNLf3IW
+	vjJqSK5Y+o8JgiS7NCalhw6uePwTqUz2CIiSMYrKX3eUr+PC6PZ07ZwaDQ6uxPcOzJhG508Gj5O
+	ilZ4k6fugOh//B9XX4fp3w04lVpJlISWfBRsHW63rEASLbecwgVVVDhSfTSNEbZ6gnfqhT96CG+
+	puuwA+2gYIbdcA7vdJWDcXKiiDLfIM5qy2Zpel5om7zsUecQSJ4srfQARfLdZ39hdyRoET8rNdQ
+	K1njxGrftsyAIbVUR82KqymsJR+u0Ivw4h22CBrebRWNZBoXg3XmalGSVo5B5l55h2gok9SQUMY
+	vKxLAMx+lkq6f+brtE5bhb6cSjsE6nWScUnVurdjqkJ3xqlK3fzfTOiff6bMkeHzkOyKiufiwKb
+	BK8bhqkNI7Gr2oHOlfwUz4KH/uRe7YNQKRV822gjcbj09mXmtSvp+sNaxblOjJdX8l
+X-Received: by 2002:ad4:5747:0:b0:910:3923:cc76 with SMTP id 6a1803df08f44-9103923d1admr348304826d6.31.1788900129585;
+        Tue, 08 Sep 2026 13:42:09 -0700 (PDT)
 Received: from [127.0.0.1] ([20.106.198.166])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-939af600829sm506115185a.2.2026.09.08.13.42.06
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91040646d59sm124882906d6.8.2026.09.08.13.42.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2026 13:42:06 -0700 (PDT)
-Message-Id: <4d30ff193697145e45692bc0fd022da43c76b868.1788900120.git.gitgitgadget@gmail.com>
+        Tue, 08 Sep 2026 13:42:09 -0700 (PDT)
+Message-Id: <8da033364685e6b88aa4bc2b44cc2a93b34e97a8.1788900120.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2337.v15.git.git.1788900119.gitgitgadget@gmail.com>
 References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
 	<pull.2337.v15.git.git.1788900119.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 08 Sep 2026 20:41:57 +0000
-Subject: [PATCH v15 6/8] history: protect branches when squashing a range
+Date: Tue, 08 Sep 2026 20:41:59 +0000
+Subject: [PATCH v15 8/8] history: support editing squashed commit messages
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,265 +86,448 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-A local branch that descends from the selected graph without containing
-its tip cannot be replayed as a descendant of the squashed commit. Find
-those branches with ref-filter before creating any replacement objects
-and refuse the operation unless --update-refs=head was requested.
+Open the editor by default when squashing and provide --no-edit as the
+opt-out. Record the exact commits selected by the revision walk,
+rearrange that todo list with the sequencer's autosquash machinery, and
+build the message template from the resulting order.
 
-Limit this protection to local branches, matching the refs that the
-default history rewrite mode updates; tags and remote-tracking refs
-remain untouched. Sort the blocking refs and print their short branch
-names so the user can decide whether to move them or leave them behind.
-
-Add advice.historyUpdateRefs for the hint that points to
---update-refs=head.
+Match interactive rebase's treatment of marker messages: comment out
+fixup! messages, retain squash! bodies, and let amend! replace its target
+unless a preceding squash! requires both bodies. This keeps message
+editing aligned with the marker validation used by the no-edit path.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/config/advice.adoc |  4 ++
- advice.c                         |  1 +
- advice.h                         |  1 +
- builtin/history.c                | 70 ++++++++++++++++++++++++++++++--
- t/t3455-history-squash.sh        | 39 ++++++++++++++++++
- 5 files changed, 111 insertions(+), 4 deletions(-)
+ Documentation/git-history.adoc |  18 ++-
+ builtin/history.c              |  97 +++++++++++++++-
+ t/t3455-history-squash.sh      | 197 +++++++++++++++++++++++++++++++++
+ 3 files changed, 305 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
-index 81f80a9274..3d91c90eda 100644
---- a/Documentation/config/advice.adoc
-+++ b/Documentation/config/advice.adoc
-@@ -59,6 +59,10 @@ all advice messages.
- 	forceDeleteBranch::
- 		Shown when the user tries to delete a not fully merged
- 		branch without the force option set.
-+	historyUpdateRefs::
-+		Shown when `git history squash` refuses because a local branch
-+		cannot be rewritten as a descendant of the squashed commit, to
-+		tell the user about `--update-refs=head`.
- 	ignoredHook::
- 		Shown when a hook is ignored because the hook is not
- 		set as executable.
-diff --git a/advice.c b/advice.c
-index 63bf8b0c5f..401d047391 100644
---- a/advice.c
-+++ b/advice.c
-@@ -58,6 +58,7 @@ static struct {
- 	[ADVICE_FETCH_SHOW_FORCED_UPDATES]		= { "fetchShowForcedUpdates" },
- 	[ADVICE_FORCE_DELETE_BRANCH]			= { "forceDeleteBranch" },
- 	[ADVICE_GRAFT_FILE_DEPRECATED]			= { "graftFileDeprecated" },
-+	[ADVICE_HISTORY_UPDATE_REFS]			= { "historyUpdateRefs" },
- 	[ADVICE_IGNORED_HOOK]				= { "ignoredHook" },
- 	[ADVICE_IMPLICIT_IDENTITY]			= { "implicitIdentity" },
- 	[ADVICE_MERGE_CONFLICT]				= { "mergeConflict" },
-diff --git a/advice.h b/advice.h
-index 66f6cd6a77..3f0b4f0485 100644
---- a/advice.h
-+++ b/advice.h
-@@ -25,6 +25,7 @@ enum advice_type {
- 	ADVICE_FETCH_SHOW_FORCED_UPDATES,
- 	ADVICE_FORCE_DELETE_BRANCH,
- 	ADVICE_GRAFT_FILE_DEPRECATED,
-+	ADVICE_HISTORY_UPDATE_REFS,
- 	ADVICE_IGNORED_HOOK,
- 	ADVICE_IMPLICIT_IDENTITY,
- 	ADVICE_MERGE_CONFLICT,
+diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+index fb04a67685..2e2e31f521 100644
+--- a/Documentation/git-history.adoc
++++ b/Documentation/git-history.adoc
+@@ -133,8 +133,9 @@ given, for example `HEAD~3..HEAD ^topic` to additionally exclude what is
+ already on `topic`. Rev-list options may also be given, but any that would
+ change how the range is walked are overridden with a warning.
+ +
+-With `--no-edit`, the oldest commit's message is preserved, except that an
+-`amend!` commit targeting it replaces its message.
++An editor opens pre-filled with the messages of all the folded commits so you
++can combine them. With `--no-edit`, the oldest commit's message is preserved
++instead, except that an `amend!` commit targeting it replaces its message.
+ +
+ The selected commits must form a connected graph with a single tip and must
+ not include a root commit. Every parent of a commit after the oldest one must
+@@ -148,6 +149,13 @@ of markers for one target is combined into a single commit. With `--no-edit`,
+ the last `amend!` message is used if there is one; a `squash!` or `amend!` is
+ otherwise refused if folding it would discard its message.
+ +
++The editor template mirrors `git rebase -i --autosquash`: each `fixup!`,
++`squash!`, or `amend!` is grouped under the commit it targets rather than
++shown in commit order. A `fixup!` message is dropped (commented out in full),
++a `squash!` keeps its body with only the marker subject commented, and an
++`amend!` replaces its target's message, unless a `squash!` folded into that
++target first, in which case it keeps its body like a `squash!`.
+++
+ A local branch descended from a selected commit but not from the range tip
+ cannot be rewritten as a descendant of the result, so with the default
+ `--update-refs=branches` the command refuses. Rerun with `--update-refs=head`
+@@ -163,6 +171,12 @@ OPTIONS
+ 	objects will be written into the repository, so applying these printed
+ 	ref updates is generally safe.
+ 
++`--edit`::
++`--no-edit`::
++	For `squash`, open an editor to combine the messages of the folded commits.
++	This is the default; use `--no-edit` to keep the selected message without
++	opening an editor.
++
+ `--reedit-message`::
+ 	Open an editor to modify the target commit's message.
+ 
 diff --git a/builtin/history.c b/builtin/history.c
-index 6541a397e8..e65b76b59f 100644
+index 8176f6794e..2d88bc4352 100644
 --- a/builtin/history.c
 +++ b/builtin/history.c
-@@ -1,6 +1,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "builtin.h"
-+#include "advice.h"
- #include "cache-tree.h"
- #include "commit.h"
- #include "commit-reach.h"
-@@ -16,10 +17,12 @@
- #include "path.h"
- #include "read-cache.h"
- #include "refs.h"
-+#include "ref-filter.h"
- #include "replay.h"
- #include "reset.h"
- #include "revision.h"
- #include "sequencer.h"
-+#include "string-list.h"
- #include "strvec.h"
- #include "tree.h"
- #include "tree-walk.h"
-@@ -1061,6 +1064,7 @@ static int setup_squash_revisions(struct repository *repo,
-  * of the oldest commit.
-  */
- static int resolve_squash_range(struct repository *repo,
-+				bool update_branches,
- 				int argc, const char **argv,
- 				struct commit **oldest_out,
- 				struct commit **tip_out)
-@@ -1069,6 +1073,8 @@ static int resolve_squash_range(struct repository *repo,
- 	struct commit *commit, *oldest = NULL, *tip = NULL;
- 	int ret, tip_count = 0;
- 	bool walk_started = false;
-+	struct ref_filter filter = REF_FILTER_INIT;
-+	struct ref_array refs = { 0 };
- 
- 	ret = setup_squash_revisions(repo, argc, argv, &revs);
- 	if (ret < 0)
-@@ -1101,9 +1107,12 @@ static int resolve_squash_range(struct repository *repo,
- 			 * Allow parents that match the parents of the
- 			 * squashed commit.
- 			 */
--			for (q = oldest->parents; !seen && q; q = q->next)
--				if (p->item == q->item)
-+			for (q = oldest->parents; !seen && q; q = q->next) {
-+				if (p->item == q->item) {
- 					seen = true;
-+					commit_list_insert(commit, &filter.with_commit);
-+				}
-+			}
- 			if (!seen) {
- 				ret = error(_("parent %s of commit %s is "
- 					      "outside the revision range"),
-@@ -1119,12 +1128,17 @@ static int resolve_squash_range(struct repository *repo,
- 				o->flags &= ~SQUASH_TIP;
- 			}
- 		}
--		if (!oldest)
-+		if (!oldest) {
-+			commit_list_insert(commit, &filter.with_commit);
- 			oldest = commit;
-+		}
- 		tip = commit;
- 		tip->object.flags |= SQUASH_SEEN | SQUASH_TIP;
- 		tip_count++;
- 	}
-+	clear_object_flags(repo, SQUASH_SEEN | SQUASH_TIP);
-+	reset_revision_walk();
-+	walk_started = false;
- 
- 	if (!tip_count) {
- 		ret = error(_("the revision range is empty"));
-@@ -1141,6 +1155,49 @@ static int resolve_squash_range(struct repository *repo,
- 		BUG("an in-range commit must have a parent");
- 	}
- 
-+	commit_list_insert(tip, &filter.no_commit);
-+	filter.kind = FILTER_REFS_BRANCHES;
-+	if (update_branches &&
-+	    filter_refs(&refs, &filter, filter.kind)) {
-+		ret = error(_("could not filter refs"));
-+		goto out;
-+	}
-+	if (refs.nr) {
-+		struct ref_format format = REF_FORMAT_INIT;
-+		struct ref_sorting *sorting;
-+		struct string_list sorting_options = STRING_LIST_INIT_DUP;
-+		struct strbuf branches = STRBUF_INIT;
-+		struct strbuf err = STRBUF_INIT;
-+
-+		format.format = "%(refname:short)";
-+		if (verify_ref_format(&format))
-+			BUG("invalid branch format");
-+		string_list_append(&sorting_options, "refname");
-+		sorting = ref_sorting_options(&sorting_options);
-+		ref_array_sort(sorting, &refs);
-+		for (int i = 0; i < refs.nr; i++) {
-+			strbuf_reset(&err);
-+			strbuf_addstr(&branches, "\n  ");
-+			if (format_ref_array_item(refs.items[i], &format,
-+						  &branches, &err))
-+				BUG("could not format branch name: %s", err.buf);
-+		}
-+		/*
-+		 * TODO: also check HEADS from other worktrees.
-+		 */
-+		ret = error(_("the following branches cannot be rewritten as "
-+			      "descendants of the squashed commit:%s"), branches.buf);
-+		advise_if_enabled(ADVICE_HISTORY_UPDATE_REFS,
-+				  _("Use --update-refs=head to rewrite only "
-+				    "the current branch and leave such branches "
-+				    "untouched."));
-+		strbuf_release(&err);
-+		strbuf_release(&branches);
-+		ref_sorting_release(sorting);
-+		string_list_clear(&sorting_options, 0);
-+		goto out;
-+	}
-+
- 	*oldest_out = oldest;
- 	*tip_out = tip;
- 	ret = 0;
-@@ -1150,6 +1207,8 @@ out:
- 	if (walk_started)
- 		reset_revision_walk();
- 	release_revisions(&revs);
-+	ref_filter_clear(&filter);
-+	ref_array_clear(&refs);
+@@ -1266,6 +1266,10 @@ static int squash_check_subject(struct repository *repo,
  	return ret;
  }
  
-@@ -1183,8 +1242,11 @@ static int cmd_history_squash(int argc,
- 	if (argc < 2)
- 		return error(_("command expects a revision range"));
- 	repo_config(repo, git_default_config, NULL);
-+	if (action == REF_ACTION_DEFAULT)
-+		action = REF_ACTION_BRANCHES;
++static int build_squash_message(struct repository *repo,
++				const struct strbuf *todo_buf,
++				struct strbuf *out);
++
+ static int setup_squash_revisions(struct repository *repo,
+ 				  int argc, const char **argv,
+ 				  struct rev_info *revs)
+@@ -1319,6 +1323,7 @@ static int setup_squash_revisions(struct repository *repo,
+  */
+ static int resolve_squash_range(struct repository *repo,
+ 				bool update_branches,
++				bool edit_message,
+ 				int argc, const char **argv,
+ 				struct commit **oldest_out,
+ 				struct commit **tip_out,
+@@ -1327,11 +1332,13 @@ static int resolve_squash_range(struct repository *repo,
+ 	struct rev_info revs;
+ 	struct subject_data subject_data = SUBJECT_DATA_INIT;
+ 	struct commit *commit, *oldest = NULL, *tip = NULL;
++	struct strbuf todo_buf = STRBUF_INIT;
+ 	int ret, tip_count = 0;
+ 	bool walk_started = false;
+ 	struct ref_filter filter = REF_FILTER_INIT;
+ 	struct ref_array refs = { 0 };
  
--	ret = resolve_squash_range(repo, argc, argv, &oldest, &tip);
-+	ret = resolve_squash_range(repo, action == REF_ACTION_BRANCHES,
-+				   argc, argv, &oldest, &tip);
++	subject_data.edit_message = edit_message;
+ 	ret = setup_squash_revisions(repo, argc, argv, &revs);
  	if (ret < 0)
- 		return ret;
+ 		goto out;
+@@ -1344,6 +1351,10 @@ static int resolve_squash_range(struct repository *repo,
+ 	while ((commit = get_revision(&revs))) {
+ 		struct commit_list *p;
  
++		if (edit_message)
++			strbuf_addf(&todo_buf, "pick %s\n",
++				    oid_to_hex(&commit->object.oid));
++
+ 		if (!commit->parents) {
+ 			ret = error(_("cannot squash down to root commit"));
+ 			goto out;
+@@ -1457,6 +1468,13 @@ static int resolve_squash_range(struct repository *repo,
+ 		string_list_clear(&sorting_options, 0);
+ 		goto out;
+ 	}
++	if (edit_message) {
++		strbuf_reset(&subject_data.squash_message);
++		ret = build_squash_message(repo, &todo_buf,
++					   &subject_data.squash_message);
++		if (ret < 0)
++			goto out;
++	}
+ 
+ 	*oldest_out = oldest;
+ 	*tip_out = tip;
+@@ -1464,6 +1482,7 @@ static int resolve_squash_range(struct repository *repo,
+ 	ret = 0;
+ 
+ out:
++	strbuf_release(&todo_buf);
+ 	clear_object_flags(repo, SQUASH_SEEN | SQUASH_TIP |
+ 			   SQUASH_AMEND_TARGET);
+ 	if (walk_started)
+@@ -1475,6 +1494,76 @@ out:
+ 	return ret;
+ }
+ 
++static bool amend_replaces_target(struct todo_list *todo, int target)
++{
++	for (int i = target + 1; i < todo->nr &&
++				 todo->items[i].command != TODO_PICK; i++) {
++		if (todo->items[i].command == TODO_SQUASH)
++			return false;
++		if (todo->items[i].flags & TODO_REPLACE_FIXUP_MSG)
++			return true;
++	}
++	return false;
++}
++
++static int build_squash_message(struct repository *repo,
++				const struct strbuf *todo_buf,
++				struct strbuf *out)
++{
++	struct todo_list todo = TODO_LIST_INIT;
++	struct replay_opts opts = REPLAY_OPTS_INIT;
++	int nr_commits, ret;
++
++	if (todo_list_parse_insn_buffer(repo, &opts, todo_buf->buf, &todo) < 0 ||
++	    todo_list_rearrange_squash(&todo) < 0) {
++		ret = error(_("could not prepare the squash message"));
++		goto out;
++	}
++
++	nr_commits = todo.nr;
++	for (int i = 0; i < nr_commits; i++) {
++		struct todo_item *item = &todo.items[i];
++		const char *message, *body;
++		size_t commented_len;
++		bool skip, squashing;
++
++		squashing = item->command == TODO_SQUASH ||
++			    (item->flags & TODO_REPLACE_FIXUP_MSG);
++		if (item->command == TODO_PICK)
++			skip = amend_replaces_target(&todo, i);
++		else
++			skip = !squashing;
++
++		message = repo_logmsg_reencode(repo, item->commit, NULL, NULL);
++		find_commit_subject(message, &body);
++
++		if (skip)
++			commented_len = strlen(body);
++		else if (squashing)
++			commented_len = squash_subject_comment_len(body, 1);
++		else
++			commented_len = 0;
++
++		if (!i)
++			add_squash_combination_header(out, nr_commits);
++		strbuf_addch(out, '\n');
++		add_squash_message_header(out, i + 1, skip);
++		strbuf_addstr(out, "\n\n");
++		strbuf_add_commented_lines(out, body, commented_len, comment_line_str);
++		strbuf_addstr(out, body + commented_len);
++		strbuf_complete_line(out);
++
++		repo_unuse_commit_buffer(repo, item->commit, message);
++	}
++
++	ret = 0;
++
++out:
++	todo_list_release(&todo);
++	replay_opts_release(&opts);
++	return ret;
++}
++
+ static int cmd_history_squash(int argc,
+ 			      const char **argv,
+ 			      const char *prefix,
+@@ -1519,14 +1608,11 @@ static int cmd_history_squash(int argc,
+ 	strbuf_join_argv(&reflog_msg, argc - 1, argv + 1, ' ');
+ 
+ 	ret = resolve_squash_range(repo, action == REF_ACTION_BRANCHES,
++				   edit,
+ 				   argc, argv, &oldest, &tip,
+ 				   &message_template);
+ 	if (ret < 0)
+ 		goto out;
+-	if (edit) {
+-		ret = error(_("message editing is not supported yet; use '--no-edit'"));
+-		goto out;
+-	}
+ 
+ 	ret = setup_revwalk(repo, action, tip, &revs);
+ 	if (ret < 0)
+@@ -1538,7 +1624,8 @@ static int cmd_history_squash(int argc,
+ 
+ 	ret = commit_tree_ext(repo, "squash", oldest, message_template,
+ 			      oldest->parents, base_tree_oid, tip_tree_oid,
+-			      &rewritten, 0);
++			      &rewritten,
++			      edit ? COMMIT_TREE_EDIT_MESSAGE : 0);
+ 	if (ret < 0) {
+ 		ret = error(_("failed writing squashed commit"));
+ 		goto out;
 diff --git a/t/t3455-history-squash.sh b/t/t3455-history-squash.sh
-index df92aa4f6c..b1f65de5f5 100755
+index fb06637aaf..d21e9d9fc4 100755
 --- a/t/t3455-history-squash.sh
 +++ b/t/t3455-history-squash.sh
-@@ -62,4 +62,43 @@ test_expect_success 'rejects a merge parent outside the range' '
- 	test_grep "parent .* of commit .* is outside the revision range" err
+@@ -381,6 +381,203 @@ test_expect_success 'squashing fixups into a merge' '
+ 	sed 1,2d msg | test_commit_message HEAD
  '
  
-+test_expect_success 'prints branches that cannot follow the squash' '
-+	test_when_finished \
-+		"git switch -f $GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME; \
-+		 git branch -D feature" &&
-+	git checkout -f -b feature start &&
-+	test_commit C1 &&
-+	test_commit C2 &&
-+	git checkout -b topic-1 start &&
-+	test_commit C3 &&
-+	test_commit C4 &&
-+	git checkout C3 &&
-+	test_commit C5 &&
-+	git checkout feature &&
-+	git merge C5 &&
-+	test_commit C6 &&
-+	git checkout -b topic-2 C2 &&
-+	test_commit C7 &&
-+	git checkout feature &&
++test_expect_success 'edits every message and aborts on an empty result' '
++	git reset --hard start &&
++	stage_file b &&
++	git commit -m "re-one subject" -m "re-one body line" &&
++	test_commit --no-tag re-two file c &&
++	test_commit re-three file d &&
++	head_before=$(git rev-parse HEAD) &&
 +
++	write_script empty-editor <<-\EOF &&
++	>"$1"
++	EOF
++	test_set_editor "$(pwd)/empty-editor" &&
 +	test_must_fail git history squash start.. 2>err &&
-+	test_grep "^error: the following branches cannot be rewritten" err &&
-+	test_grep "^  topic-1$" err &&
-+	test_grep "^  topic-2$" err &&
-+	test_grep "^hint: .* --update-refs=head" err
++	test_grep "Aborting commit due to empty commit message" err &&
++	test_cmp_rev "$head_before" HEAD &&
++
++	write_script editor <<-\EOF &&
++	cat "$1" >edited &&
++	echo combined >"$1"
++	EOF
++	test_set_editor "$(pwd)/editor" &&
++	git history squash start.. &&
++
++	cat >expect <<-EOF &&
++	# This is a combination of 3 commits.
++	# This is the 1st commit message:
++
++	re-one subject
++
++	re-one body line
++
++	# This is the commit message #2:
++
++	re-two
++
++	# This is the commit message #3:
++
++	re-three
++
++	# Please enter the commit message for the squash changes. Lines starting
++	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
++	# Changes to be committed:
++	#	modified:   file
++	#
++	EOF
++	test_cmp expect edited &&
++	check_log_subjects -1 <<-\EOF
++	combined
++	EOF
 +'
 +
-+test_expect_success 'advice.historyUpdateRefs silences the hint' '
-+	git reset --hard three &&
-+	git branch -f mid HEAD~1 &&
++test_expect_success 'handles fixup!, squash! and amend! like rebase' '
++	git reset --hard start &&
++	test_commit --no-tag mark-base file b &&
++	stage_file c &&
++	commit_with_message "fixup! mark-base\n\nfixup body\n" &&
++	stage_file d &&
++	commit_with_message "squash! mark-base\n\nsquash remark\n" &&
++	stage_file e &&
++	commit_with_message "amend! mark-base\n\namended message\n" &&
 +
-+	test_must_fail git -c advice.historyUpdateRefs=false \
-+		history squash start.. 2>err &&
-+	test_grep "^error: the following branches cannot be rewritten" err &&
-+	test_grep "^  mid$" err &&
-+	test_grep ! "hint:" err &&
++	write_script editor <<-\EOF &&
++	cat "$1" >edited
++	EOF
++	test_set_editor "$(pwd)/editor" &&
++	git history squash start.. &&
 +
-+	git branch -D mid
++	cat >expect <<-EOF &&
++	# This is a combination of 4 commits.
++	# This is the 1st commit message:
++
++	mark-base
++
++	# The commit message #2 will be skipped:
++
++	# fixup! mark-base
++	#
++	# fixup body
++
++	# This is the commit message #3:
++
++	# squash! mark-base
++
++	squash remark
++
++	# This is the commit message #4:
++
++	# amend! mark-base
++
++	amended message
++
++	# Please enter the commit message for the squash changes. Lines starting
++	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
++	# Changes to be committed:
++	#	modified:   file
++	#
++	EOF
++	test_cmp expect edited &&
++	check_log_messages -1 <<-\EOF
++	mark-base
++
++	squash remark
++
++	amended message
++
++	EOF
 +'
 +
- test_done
++test_expect_success 'groups fixups under their targets in the editor' '
++	git reset --hard start &&
++	test_commit --no-tag alpha file a1 &&
++	test_commit --no-tag beta file b1 &&
++	stage_file a2 &&
++	commit_with_message "fixup! alpha\n" &&
++	stage_file b2 &&
++	commit_with_message "fixup! beta\n" &&
++
++	write_script editor <<-\EOF &&
++	cat "$1" >edited
++	EOF
++	test_set_editor "$(pwd)/editor" &&
++	git history squash start.. &&
++
++	cat >expect <<-EOF &&
++	# This is a combination of 4 commits.
++	# This is the 1st commit message:
++
++	alpha
++
++	# The commit message #2 will be skipped:
++
++	# fixup! alpha
++
++	# This is the commit message #3:
++
++	beta
++
++	# The commit message #4 will be skipped:
++
++	# fixup! beta
++
++	# Please enter the commit message for the squash changes. Lines starting
++	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
++	# Changes to be committed:
++	#	modified:   file
++	#
++	EOF
++	test_cmp expect edited
++'
++
++test_expect_success 'lets amend! replace its target message in the editor' '
++	git reset --hard start &&
++	test_commit --no-tag mark-base file b &&
++	stage_file c &&
++	commit_with_message "amend! mark-base\n\namended message\n" &&
++	stage_file d &&
++	commit_with_message "squash! mark-base\n\nsquash remark\n" &&
++
++	write_script editor <<-\EOF &&
++	cat "$1" >edited
++	EOF
++	test_set_editor "$(pwd)/editor" &&
++	git history squash start.. &&
++
++	cat >expect <<-EOF &&
++	# This is a combination of 3 commits.
++	# The 1st commit message will be skipped:
++
++	# mark-base
++
++	# This is the commit message #2:
++
++	# amend! mark-base
++
++	amended message
++
++	# This is the commit message #3:
++
++	# squash! mark-base
++
++	squash remark
++
++	# Please enter the commit message for the squash changes. Lines starting
++	# with ${SQ}#${SQ} will be ignored, and an empty message aborts the commit.
++	# Changes to be committed:
++	#	modified:   file
++	#
++	EOF
++	test_cmp expect edited &&
++	check_log_messages -1 <<-\EOF
++	amended message
++
++	squash remark
++
++	EOF
++'
++
+ test_expect_success '--update-refs=head only moves HEAD' '
+ 	git reset --hard three &&
+ 	git branch -f other HEAD &&
 -- 
 gitgitgadget
-
