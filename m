@@ -1,113 +1,137 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4C9572683
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 16:24:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788884687; cv=pass; b=KBBF/rHa+ZmzrKjlxQAoXa0d/usGj019UHSPUgPmf8Oqd9xX6iKqGK+VAA/SlyzkzuK0w9KRFmUuiqSxftXpjkKbeyVNzNqPO71mLEXEKpK2AD4TaZ8eiB8ajAf7bm10rFJ9kxNw6UVFKod7WjTZkRRn6EGJiTS3AyqDlxke3Gk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788884687; c=relaxed/simple;
-	bh=7iA4XdzMt1KM1dYDj5nqmi8EB//PvfO2xk8Nv8Qe+ww=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i1b2HMiBMEETqeme0Ry/1A5smZECumPVmrEI8hbdO7zYcpiLSCxcPbmT8UsYvYUbg09zazYfIlN6ltNBTcclZSKq4v2QDoJqzU396gYdVaQi9gJjQLwT1e4a22xFpPuPrKQ1Sck01xiA2IoK+mWb41smd7DaER7gQufA6NPORso=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V2kGPHai; arc=pass smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C008857EDA7
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 16:31:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788885087; cv=none; b=j93lu3gcceRcqQaXNR15UVqTyIttFQT3nFW2Bqj3goRbLRGb1jKRYhyCqoPlcCiaKtCfcOwMMmVD2bh4xIzLBE8LN6YGoWXNry7axjSz0FaRmAu+1VsJuzS1qOtYUpB2+fSe85MBEl/PNnHNEAjcMKf77Vbjrd287yjGVHZkuyw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788885087; c=relaxed/simple;
+	bh=1hm72KFNi9bSVCyOcCESo1+mS33KK3vSRnEqlKFwh/Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZH6xs0rhj80RlX03kTN127o4a30wRNtMyzLoa9SDaTpVQJlnAo74eYFb/0miPFVJgYaYLMeliFhX0nc6kf8yI5qOkEBVQomjrwkiV9hYJrImA5XfvA9IFAOFUCiejQsl/OL9GxP/nxsIDUUDYim9uRqAEmD48YuCQ7pChhyjzR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IZ6nM6YV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mT+fDeuV; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V2kGPHai"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cc1c8d4a959so3234184a12.3
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 09:24:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788884685; cv=none;
-        d=google.com; s=arc-20260327;
-        b=CShXEDvRnyg2MkHLua9Mkz/14wdG65R5AZF+pHADrhqHg8w82CyRxQLbhXV7JWhcst
-         BICrWGMSRNEM7J+1Eh+WbPW/34GzrnQl3MjT58YJA6l+5QFek6Sciv6yCAzru7djmyvY
-         p7nkPQUeR+5pqfx0PVPPF+EwTXA0n0f5+mPFgHrBIWN9ZiQdgOZ/OWFeCWSoxq8rZAK7
-         6USr8N7koF/KbeoJZ+qJrjN5iosnBoU3d5CckfvM1ws+9TvN0iIkjku4OEP2XUS8NEho
-         7o5jQsGR0TnFK/wYOXw2FyFU6OYuDkYqO1Cd2hyJNeR1HqdxvNhdCqBYUZV6b0qkVC7M
-         eetQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=7iA4XdzMt1KM1dYDj5nqmi8EB//PvfO2xk8Nv8Qe+ww=;
-        fh=693jtoZSsGxcO3g2vCZOFI2EHkMwHfMiK15qwxBZI74=;
-        b=ODjhsW9c+b4MBpj/XUk82hs2nVDXeCE1z8VaCUuHXrQJKSmGi5ATa0OwM2jhWuefow
-         glx1aGD1+a50AGE69vONyZpsKV0Gtoj17yLqrRocnSGCNZKxNQI0PE3rW+9UgDOztYWN
-         /OEpgR9zEEwUj5Sxy621cNYpa+tdCgOUsSD/UsG8jKLidbG65xG9X2SjvVKRBMu6+lnn
-         7C47d++VEptjIOEQp+rwUWrdpJr+FDuwbBUBVdOs1U0hmxJEbcMlnL/y9F4M6RySlskC
-         JItGKrKvWALeS9dGbPAT8EKZ+HeEidUkKKI/DQ9Ks6MQzuu25/3UuL3Rz/H8T5+0Gb9F
-         McbQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788884685; x=1789489485; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=7iA4XdzMt1KM1dYDj5nqmi8EB//PvfO2xk8Nv8Qe+ww=;
-        b=V2kGPHaiiqvxh7P5bKiJQq/+mrx7H1I/7DTl5R6cFCe9ckAAp6CsspBZAG3K5xmNlF
-         6mZyPgJImhMbC/W7tz40p5kRn7TomGhzMsCLAnCe4qyPtRuCIi/L/GPB7HLVZheeudi4
-         y6SCGeoN36cng6G32HC2vhKBQDDv1WxcovOIuabtLxZ4+2C56nOS4ve1Y5T5QFop7Cgc
-         x9Ee3Vh8a+O6O2lm/psyELGOtYikQwtp9wFZvo5ksjbnKf3sT2TWskUpnQXO20JUchuf
-         VrJAsnkm1X8kMLgfq18CqNpKHD0CrZ7imOR7EITrxR9LQ6EJjMXndnU7ElURZzhUlrnK
-         EQbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788884685; x=1789489485;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7iA4XdzMt1KM1dYDj5nqmi8EB//PvfO2xk8Nv8Qe+ww=;
-        b=nTBZqL/ODw6TIp7FbAw+WMHk5DzSvlWvfRyQC02EztB2EVAJfIw2AvCA0kWpG9HEGf
-         WMe3vlTuRcsyLmJMqzuQRIgZGGbeJvgPD+35MPbcVbkYoUgOBvaUepeI40fGeVN81zng
-         LSgd+mfJe+sWEhHlmY8gcFtTq9Fj1+mTCHA+zqiN2P5GQ2T1FTWy2QSVoyFkm0C7FCCn
-         Qn3qtyy+a552Of3P6VT2+PEw0zc6ayUz8Ji1qlgbISLSDvzimNBGDhKQzQ3yVUdnqxqW
-         fVxu46zCnasgHW2quDmM0HdTGSaP1Z7nKOQetGgcjU1Rp1ewi1CT+E68b+ftwpHqYDoh
-         YPaQ==
-X-Gm-Message-State: AFuF++myqHeGdLDAzoRoZ2lKMhp+7DLSRnODbiyKdZw+JlUMkbQAtJVj
-	89lbO54GTPXtfOGYfWqI0wxn695rYPwatToXPTbIV3Qs3+aFWe5L8iUtk7xa3AKu05h/MkXaDC3
-	jkLItkkglqV0oopcEKkOKyNfv/qx+9lbwFA==
-X-Gm-Gg: AYBFou3l/2WHNjdpubt3yv2eKPpvzF/CEcabQWMOw5aSRJPtzYT8ELZFWJtEbMrMBE5
-	kan/pCQjI7PT91gqcKPWRIlsdzXzugLxrC0rocOYkydazYEFEcKysWf2TSSbLT8nY3FG5kzW+99
-	zGLWjVidspocJvcmQVOmG7DNameQ7ZapCqKoAbjjzHn+ibGrYmGfr0LCZcJh8rmarRD0Y3ssJT+
-	t+f6QV+f1w1c+Z+Mcyw+gjq/Cz/0vCi8TpmXtE1FGsj5xtXiZKf7HlVvqMInYqZuwwqBy0hT2QM
-	DP169Y5QwfgqINZaYuC0vDl857XZAa+3NPFd3kNiXoKDbPtKxaOY3KaRtSwXZ1DbBKzAyXcXcFD
-	rT0wRCv/9VamneTR9YCMe6QwJWExQiAnHEiDVtUL6uapSOo1vpgNaMMMgDVj8Ml267B5q/lcrgk
-	slP9V6JoVACS73JJTmgLc=
-X-Received: by 2002:a05:6a21:2291:b0:3d0:88f5:f812 with SMTP id
- adf61e73a8af0-3da39d147e0mr44284581637.10.1788884684857; Tue, 08 Sep 2026
- 09:24:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IZ6nM6YV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mT+fDeuV"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A074A140007E;
+	Tue,  8 Sep 2026 12:31:24 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 08 Sep 2026 12:31:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1788885084; x=1788971484; bh=wE77vE1DPo
+	Q72JRmhVDVVcZaDLXZa6LCImZvkGvmWP4=; b=IZ6nM6YVR5lk0ZdzuduC2GxG3h
+	UWyPyuDezfqx/4WIuqq3INWI7EuMOPKMy99J3nZuwz10VsgSGCKFg9yVUxb/3aSr
+	daQ+N/3FbVfkJA45ZNxsgcEiKUPfWCfJsTRJfjT68qiu1sA/mGXNo+cGC7RQ6UKb
+	H62WWfQ2NA8h79IC6uh+D3VvLlww/HTERBCptDz5sm5vikNNNhehBfU61zmF5Uiz
+	6D5YiytTYwYojnCM2ajV7GWV+oO7ajcU63RVRf0lbaXswAKDFsxQa/Wx6hyFXYnV
+	zMLVAn3E/BihOIG14MD7dBE3uC+Sc+4coSbyaI7eb0lnN2Qv/R2xRSxMzWNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788885084; x=1788971484; bh=wE77vE1DPoQ72JRmhVDVVcZaDLXZa6LCImZ
+	vkGvmWP4=; b=mT+fDeuVa1dk6yH/iK5QGIEF8MdY6slkbrggqM0hLI91Jy1iv7j
+	Mjpaf2klCfksy2HWz/wyOzeCt+IH6eDU0/6KjEamIq8oYULeWPAQ4qt0eqo1Yxv0
+	NFkqhSE25Pzh63aFcQ6lWDe3cCzmDKS9FGrgE0huuvevh1SQ7MM8vUR1TegDusv9
+	eOYMX+QIdOoY27fO4gmqqE7AQ9Obfa8SLhxp/lPd6MP4nihRieb6UCia90e5yydq
+	rtic6DnIjJy6jY9KZJaR+oSTZMdkrAzqbs+znJV219b+ZAkc9FbRW4HgcFYyCgT7
+	pgROkf7dGriqq4G/xGxKHOszc9G9L/LQqOw==
+X-ME-Sender: <xms:XDigam36nYEZDlWn6g9GT43FeS69lSQhq0bIAF1E8SDhZtWYPv3vNg>
+    <xme:XDigagFP7OQm5lEmEutp7Hn0KPSwUfr6YcSzLjJoF1jaxo0n9n_Xk9eOZHvWIhW2E
+    SK5vbab6Zd7loSujikRYcPGfxFsRdzMkfAidkWk4nrZvgMmK-EKSeMv>
+X-ME-Received: <xmr:XDigaj6XbuiHTbVfPNVkQQ9_tHAjP11ig5TNE_JwvkMVe8Xe6ABWClrBF2y02e7PKYt0dG-81zxL-2t6XGvvkHpHpIoS1d_9-ChR>
+X-ME-Proxy-Cause: dmFkZTFe7LGyAexvx3gvHRn7nAKedIZ8hCmj6H1seOiymQRcLTqCDhw01+vtFR97ycyRMf
+    O67oB+9PMyWfrBdtYhcjz8ik7k2AXMOxUQ3XQrkJOHP5jg06tFUaDJtUdmbXUaGn89uQx/
+    pF47w3keLeyWYQ+cMRnpxKwdqJgTsOwfiuhg+1n03BAgIorwBrGlO0zwlkpOtPGlOWcVXA
+    R+id7SkQGMX7Q3GscE7/QKIy7CwAMhiRO3WDUU/tTndEgAgIgcIl6nvTLk8SPUNakENJRG
+    ziTaE7sIy6oeNmZENXVrm5182jFanv+8ObD8Wrsi1O8mubUl0rRCB1racEp1g/hHLqCMkD
+    e8fWh350AvoI8X1dQ8kn+JcLa0b8o6i2XZzoSJ1NwEcSmAqp0Z5LL7WTN12bcvw0LfzlUk
+    Qc+XyHu3kVW7lkswD+M39A1xEwEmUJRq1o5h5vc1157NrsSrJO35sZ3vWKJNWGgK2gqpZ0
+    mmh5roUtHGujlw5yck1zb0cunL14yp/QfWKW/cwREjDa8qS32RQEI+GteURoDRuYKRdZwj
+    Q0nU4Ym1WKWdbdIcbXKK7WlLexqEBckCGgkI3xQgGzzL5eI9wNBwt0uH5QZXX0bhHy7v8w
+    W/FY8e+q4OuM7uDOPmABbh5ckXyECRjKkXcvajJgpeo/CBB+15s6Yg42u+Rg
+X-ME-Proxy: <xmx:XDigamsnQF2KjA_i2K6yn5_sVjQayiI687F3Xw6x73yickTTcVCXIQ>
+    <xmx:XDigak4goCXUtCW9KgTv8GWoNrBWXcDb00Q1Ja5RKNVTCy0OEg7dUw>
+    <xmx:XDigahUjspz_MJKwOUNMurJE8zaD4iFCx7LUR6Cll-Z9ANeBMgNcoQ>
+    <xmx:XDigam_hpNhSjE9XD3tsVdGbQ8g5kNNCGPi6D-C_zS_I0huAjFh-Tg>
+    <xmx:XDigagobSOl23vmJmXoBL-z67QS8e1ItMtwCGeHJjEsC7mmP5rxw9jHt>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Sep 2026 12:31:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Vsevolod Myalitsin <ub4nal@mail.ru>
+Cc: ben.knoble@gmail.com,  git@vger.kernel.org
+Subject: Re: [PATCH] advice: use global config for default branch name
+In-Reply-To: <20260908185653.34702-1-ub4nal@mail.ru> (Vsevolod Myalitsin's
+	message of "Tue, 8 Sep 2026 21:56:52 +0300")
+References: <90671DEB-7A41-47DA-B865-AB963AEC11D1@gmail.com>
+	<20260908185653.34702-1-ub4nal@mail.ru>
+Date: Tue, 08 Sep 2026 09:31:20 -0700
+Message-ID: <xmqqik4fyaav.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260908185653.34702-1-ub4nal@mail.ru> <7D54AA3C-0724-4C8A-9CB8-64150CD3A051@gmail.com>
- <7a77ce52-b7d4-4818-9b9b-052d5922db2f@mail.ru>
-In-Reply-To: <7a77ce52-b7d4-4818-9b9b-052d5922db2f@mail.ru>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 8 Sep 2026 12:24:33 -0400
-X-Gm-Features: AcwNN1U6wzWTg_OcKe_fFFsl--SPPvCkUAzOr3_j0_ddP2oGxcqANiLsxAKYFYU
-Message-ID: <CALnO6CAHZXT5rZtwTTXwCFvBELRjzxUmRW3pB6KVyE7ERFJqHg@mail.gmail.com>
-Subject: Re: [PATCH] advice: use global config for default branch name
-To: R4NC <ub4nal@mail.ru>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Sep 8, 2026 at 11:59=E2=80=AFAM R4NC <ub4nal@mail.ru> wrote:
+Vsevolod Myalitsin <ub4nal@mail.ru> writes:
+
+> I considered using an "is_global(key)" helper, but I think adding
+> a field to "advice_setting" is cleaner.
 >
-> > PS it is normal here to bottom-post and quote at least the
-> > relevant parts of the message to which you reply =F0=9F=98=89
+> The change is quite small:
+>
+>  struct advice_setting {
+>      const char *key;
+> +    int global_hint;
+>      enum advice_level level;
+>  };
 
-[snip]
+Should it only about "global vs local"?  I am wondering if we ever
+want to suggest "system".  In any case, these three things are
+called "scope" in "git config --help", so perhaps rename the new
+member to "config_scope" or "scope_hint" or something?
 
-> By the way, is my reply formatting correct this time?
+> Then the scope is specified directly for the relevant advice:
+>
+> 	-[ADVICE_DEFAULT_BRANCH_NAME] = { "defaultBranchName" },
+> 	+[ADVICE_DEFAULT_BRANCH_NAME] = { "defaultBranchName", 1 },
+>
+> And used when building the hint:
+>
+> 	 static void vadvise(const char *advice, int display_instructions,
+> 	-                    const char *key, va_list params)
+> 	+                    const char *key, int global, va_list params)
 
-I think so, anyway :)
+Have you considered going in the other direction to narrow the
+interface instead of widening?  Instead of passing .level and .key
+separately from the caller to this function, I wonder if it makes
+it more future-proof to pass &advice_setting[type].  A call in
+advise_if_enabled() then would become
 
-Thanks again!
+	vadvise(advice, &advice_settings[type], params);
 
---=20
-D. Ben Knoble
+and vadvise() is the only thing that needs to know what members are
+in the advice_setting struct and how they affect the output.
+
+> 	 {
+> 	     ...
+>  
+> 	     if (display_instructions)
+> 	-        strbuf_addf(&buf, turn_off_instructions, key);
+> 	+        strbuf_addf(&buf, turn_off_instructions,
+> 	+                    global ? "--global" : "", key);
+> 	 }
+>
+> This keeps the information about the intended config scope in "advice_setting", rather than making "vadvise()" depend on specific advice keys.
