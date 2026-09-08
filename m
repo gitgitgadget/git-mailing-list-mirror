@@ -1,82 +1,82 @@
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EEE2D3727
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 17:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986AD59575C
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 17:12:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788886947; cv=pass; b=p3+Fv4IM1GwGMOQARu8/hEjeoUNkzsEmKLY8zUVMATzj4randyh4JqEFd6InBcM6U6es8XxF47gHWjnpTbw6NotNFsKvv89g09MsR9nE5RWVeXeRiR9v16uz3o3TPD0s15APdfzgDuGRbDK/hiSbcccPIug5aodKq3CU0h3iyVg=
+	t=1788887523; cv=pass; b=BWEnt/GZ0qrOr9mAhGbbj10uAcK+wJ2VPidR9OSV18z9FUPBDyhIndxaI+aXsVZXoZljz/oOxkdm1eJo+Y490eLmvA8EfYoJ+t3o1cJnLFkx1F781Snm8bH43/soyh0HvfT7o7ZXaV9zWwL/fcx4bqSG6L//fkozfdefnaHIeFM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788886947; c=relaxed/simple;
-	bh=cE8bi38q0bgL8QtikTwv8T6/mFLMalxG8otY6CHtL08=;
+	s=arc-20240116; t=1788887523; c=relaxed/simple;
+	bh=lYh6pBf8ago/JI+B8rT0os1qeJdwTiDtVd5dcHpnmkE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=id6p3+mNnTH7Sz8dVozd7f+lyO60nFzcKMpl6PYJ4uCrnUugB8LfcItQd53PzLX7Bq+BpZYh+GfVw4sfR2DQibe/l6r5kp9NRtG3BNF/bCG7mF2MsDkCYtcixkysMEeQwWem5o0o6XiFTv5HBb3WELz+sq/+RhXvnjPIkMPeEIg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U91ID4kt; arc=pass smtp.client-ip=209.85.161.49
+	 To:Cc:Content-Type; b=ZcchYaReQychli8dcs0V+sEMcIHYKmZ67hvwLXOASnMbYzybM44/83fgtJFiP7vBDDYWbjImk3oHVrEy/lkPMAPC52XFp7Gf8XZ77e8nO3Q6bNrGSu0mhljNQ+7KU5whi6LL4RXnwbnYpECEn71vyKAZZrMv+P445QmML1Zlmeg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s4/Va8d0; arc=pass smtp.client-ip=209.85.161.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U91ID4kt"
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-6b35cc0a8c3so3930406eaf.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 10:02:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788886944; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s4/Va8d0"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-6bc7a8b4802so1195876eaf.2
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 10:12:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788887520; cv=none;
         d=google.com; s=arc-20260327;
-        b=FXw6olm/7sSHx7LPc1/ISRyGY3cjkxTj1S/yFS6Nveico6PT4tR4nRHAE0TMrZ2rhF
-         9Hu5jjhekiVmPuYT8p4yGEFgB9YpZDSFKnKNoYsniwnVmvYz+1f0WkQaohMSTmzfm+pd
-         j2PM3iAMILxAvdfEMpJ4YFGEJjRr7PbMMnSIApnYawCD9RGKzkN9sO6AJaV40sT9Voud
-         6NJEYVnlZok1VZxU74TfnIdbXu6Ckkz9MfZn/Ut0ZcMRleK6ZheTn/kszcHIOgaQXbsO
-         yDZyzlR7D9ysS97aEcHczttBxp5TeVfmoC1SLMVXH5jSm7Ps2c9JQ6BHQMW+VnhvmHMD
-         sVFA==
+        b=M/0F4rMvhW6Cv+14Lsxd7hXlPYvoOxjwI332fMAjAsVehDuqlxRnfIpuOh1/tDz2DI
+         rQGpleRcUjW40Of8k98t4eGYaRRqxckaQgDEYv0i2zZcdEKCdv3P7hYQ3iV2fr/MsZXk
+         OdXHtA2M574AEVvS2XZlPuzs/yq0M8jubNfQRO281UctXjG9v74RMwVQQh5bu/7Zc1V1
+         SrKE281rJ2bjYqae/1HxncbA92wkGW6r+ANvnFb+uHF4D4FNcXhRP2TLQ6NqRX7yaZac
+         AtTBOCiirH6Nqsxa2nxmbOwOy/3YqITRlgwQpT7MDLa1TgfTP7M9s2i0ZrOLuH19frth
+         GOZw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=6ZFPH9pH3SXW/FToLKS+vBNK0lj5MStra9TcfIqvmLw=;
+        bh=4q8YooNvtMqpIFiAqs1UMcByByFAKsHcWPZeuNVxe2k=;
         fh=5nZn0HRpP9ZszniLRQU6Iy8lvPX91CYXGnNouZ7Jmpo=;
-        b=TMVmpUNhxn1SBvyAl05f2So7yhpEzUWKH988f09kETduAb8PpC2q9plzmjVgXiAonW
-         ae74YdAI2gZ6Z9G0JptHVqt3sLF4au5qr/oYhvvHvLZ4QvwyrJZWYRtPMThMSwthuW/w
-         JkC3OWKwhBxbpQe0eNu9Vh1NspBS/I+1WnvUxq2BftzpiV20cSvJfbvobZf0x8dyp0D+
-         Eq0GIUNTn8Stso1grdQGGxp5O9gPKd+IDWTSI63xCcc+fu1ogWLC8yaFjLzSiyRh9cca
-         RWkkIO0PYSldqe6ux0/OR9EFetJs8SFJJRJWJrZHxCr+XIRu+iBDLbUo8saK95o8Maae
-         xHAg==;
+        b=SPX066wOZbtGhFiSyWef3+xRytVdip1GzS7+qly14cQuvI/txyadRRfLZMnMBgM+aC
+         MtjiNVzdJMqfiamC5Xo3ECI3HYznLsGPcGvbP1fE6KsjyYreVJV8Ja6TDy5bjDE2Z28e
+         FPbuD2TeQRejIBZXifGt7ci2/2Rqw2xilVACTGhtNRL+6y/L187eqUph1/cFU00+Sdch
+         t4Xybgc6GxnpuUTTZw0GVmAnIiQn92IddF8XASqzAIGXk1RfuGvW+MPttU6xvqqQ/mqt
+         NMPdvd4KULyy4CTeT2kfNUgB6mCV1lcOwtSUwo41yD2nuM4tsBQCPoNjZZAMCtvpyBuM
+         Kz3A==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788886944; x=1789491744; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788887520; x=1789492320; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=6ZFPH9pH3SXW/FToLKS+vBNK0lj5MStra9TcfIqvmLw=;
-        b=U91ID4ktpxYx2RO2DD4v1s+EnfEseXTyRsyok4Ied9E2a70I/TTmqflSnswW8vg2Bo
-         WLs0JL1VYkIs3OlyRlnIfpeUMlcofjbUo02Dd2kRazvq//eREk+5dyipbqb5yXOisfK+
-         znScYb/KPIsO4Tc8vIumvei7PajqB0kYdbCq7Bcv6NOqX9zbWNMJ3WxZ0GKqPGryqSyX
-         ApEf73cEfW4zlIdt4DXHBIkRo9nx/yZL1HnxTUfyHC6H95tTtY1sPYV8xda7IzBlTJQl
-         OqJtxeh9H1NrjaAtRcKails4hGD6hpocht1VsE5hxTkrX9PTeuTG9Rla0aAcgs5TT0pW
-         aIrQ==
+        bh=4q8YooNvtMqpIFiAqs1UMcByByFAKsHcWPZeuNVxe2k=;
+        b=s4/Va8d0DU4QmOglvagFR/lRrVAONX8jlTp79Y6Ui0X+NmE5gJcRWtmIgXOqgB9Gzh
+         ZThYB64yZM39Srpu78eVR2VMNg2Dwt0Yw0tuFIFjDmdQ1zP4p1TBGh19bUT4pVzfNaZv
+         krfr2vI9cpvoF48TS1furndCD9zAB7+wHhnywtIEVkKUQl+gf75VIWzDjacMbJVzYRUM
+         UTFN8vlr8tXSbI6gGQO+8cRqWrlhTleG7Qwpr03NGLDyi4GfD8L4ER0nBc0xWSZF1seB
+         QAcfPp87ULbwFnv2gLZHIgoZaxGtwSUJ4A2dYUhqkn/6qxkSTmz9L+tfNB5UZDtcMJ7G
+         Z1kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788886944; x=1789491744;
+        d=1e100.net; s=20251104; t=1788887520; x=1789492320;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=6ZFPH9pH3SXW/FToLKS+vBNK0lj5MStra9TcfIqvmLw=;
-        b=PCAcRFgjPh1UhcAPyWWKtMhvE6HCbYsz4OaW2HooRGEJogaLUVm2/gnID9lifUwMJS
-         u1Q+4Nq15bu9nt1z6CZemjn3aaGoLvNf7XDNRugtwzw1JV3XeYLosa24YcinJQcJhQ16
-         jnl1MhJzkcYBlRMmIuEunBfF6tW/Bjm+yiBnKqc2Q406mHOAIdgv0HulR55FFrtFLgOF
-         Hf4EWUaIuMO5QcJd416WsGP6MZ/0Ugin3dB1Jiaw+supAcTD1Nt9AlkVgitsovhaJrVo
-         M46vBAPgGlRAEKfuLh64oF47lzYF1ZuVhEJ9M1rjopbOHpFU8NB6KZ0Pbzjws9rnK5zt
-         GkwQ==
-X-Gm-Message-State: AFuF++k6xFBZ4DjwXJGMzKYNMl/+w9UqFtVeYzlf5OosefOoMiDTHpXV
-	UjJPPor9vwcCjAMVcaUe745pA1z+Dc+HUjdbJwAR/5haubcLWAzd2E2AiUgiqX+X/STVr9sDJjV
-	CwmfkWpwMODQEDS6Cf7hcO/yFKk/SgeE=
-X-Gm-Gg: AYBFou2VEMjClYW8dTvK5AVb2UmAQf5zyU0XgTuLEyzpayeZ4jK56m76D8ZBTVCaZMV
-	Sz1zXEG7KTOQE2/aXcKEIVHcoVYEmLxyqz9T7tTA3LgElg2bj/isTO/DfvC2HE/YxAhq6pEcAat
-	JN/3HJ6G7FwuZt6jy+K4XewdHskl5IvVAhlUFIh6DnXP4k+9Mlev8lrcsFab2clh8PTaAf4G7bG
-	/PU9bdXS5MIKjUuCTsR/0RQkTAuABn0Jkl+q+f4ju5lGIobIgTsr+0ebwmiGWElamiXJY+5ji5m
-	ktiSG1C3x9ah6HY96BuDpal/eHP7ydWuxw0R5QItYtqzLWn2uPmOQ6dpCaLRYdEk6lgcFIuPetm
-	wm5S49BmRcL17aWDPaA5aG9/AYxpbfoQugTS30kRqdgveSZmKmIrj7cOXFa2/xq+1XIu1K3NuJI
-	2GEWqYCgBry3EtrOUznRkcZTT5skhI
-X-Received: by 2002:a05:6820:16a3:b0:6b0:d7aa:5c18 with SMTP id
- 006d021491bc7-6b6fdbbf6acmr16631658eaf.29.1788886943629; Tue, 08 Sep 2026
- 10:02:23 -0700 (PDT)
+        bh=4q8YooNvtMqpIFiAqs1UMcByByFAKsHcWPZeuNVxe2k=;
+        b=bzLPFo2e3peRq9kgx++Lqx0UlCwj7TSQHNBqb4+0fILcscCd0b9/yU4lNIZNnOnVIn
+         lLJnj+z9LC5Lt7r2hHI/mvR6+po/l8AUjA5BixU91mV5U1/3J7mgXAD0BD1laW6+TaJx
+         WLOTKh4CB+hdE0vod2/t+9ju4dFvCbVo9P62PbiyF0ifO+T3nw1wYQ8wOJeoJ2mx3CHa
+         z/qSH0Gg9dvRWhFs59DVD/gXYUND8tkoFPkZVB6uPmCvuA5b7P/5XTVrkWU9yfrEMbIW
+         5p7A5XNcKoHIL0KHMcOw+GIhZfQyO8A9EKrTT3JLcA1seunl29hB6MBODM5SOw25XmTZ
+         jrjg==
+X-Gm-Message-State: AFuF++l9LXBKkxNfwFjGe15uCAD2KH3zLUgjZwPkaLTsv0HxTZ2bXLGd
+	6PP+bOt81cDLGGi+L2N3itr7AiJHmM5GlQAEoBG6KqhDWml88Fg6iaXx7BlFpM20/rr2RcoNLWW
+	ivEJmplKCzalD9Avaj0i+i3sbBZG9iPk=
+X-Gm-Gg: AYBFou0VsoLgmzks6mZvPJl9t69YDEcs2wlHNMP/52sgjykzBGKnQpt7AJz2rzyOxK+
+	58zsXpQ6IgMeZ3oVGG+QbrB/dCzp+Vm3cQyl+1Nd7aJzHT4rYNZ4cdC9UFt7VRoMrzd6NljIUxH
+	FKSWreu7G8gMDtUG+JH3HurV+o1UhKSp8F+cncD8mq9f3LRPlTMzzVit6qgUEAqCIVG2tJ4BTMy
+	t+6ccH/utKgKZtM+SgGimwjFk+jnZL9fHvhKKlcXprqtUWOinUCDKkRyO751jWK7JiIpSGkBvAL
+	GcjlfBDV2j/ONMlrLgC0CbMPW0Hw/QCekwapsb7WQIz8J244bcHXDKckNgMzSJq0QHZugxPLViY
+	yX/eb9MvBt9DJM0D0sziHtSn+hsUzoJsDpWy9C80ALAyHDeSVNycDrxGsXBXfu0SMZG/BvRUBPu
+	q1fHA9WXXvgYWkssDzRd0sLxPB/DHR
+X-Received: by 2002:a05:6820:1508:b0:6b7:83c5:fdf8 with SMTP id
+ 006d021491bc7-6b783c673f9mr15764812eaf.57.1788887520040; Tue, 08 Sep 2026
+ 10:12:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,14 +84,13 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260807135511.1818458-1-christian.couder@gmail.com>
- <20260813154748.2378747-6-christian.couder@gmail.com> <xmqq1pc0mr5i.fsf@gitster.g>
-In-Reply-To: <xmqq1pc0mr5i.fsf@gitster.g>
+ <20260813154748.2378747-2-christian.couder@gmail.com> <xmqqjypsoami.fsf@gitster.g>
+In-Reply-To: <xmqqjypsoami.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 8 Sep 2026 19:02:12 +0200
-X-Gm-Features: AcwNN1Ua1krZqj4tJ3wtxGyKPBTG1JV5q6jfsuESgMr-y8dQHA2ayzF2nTR9pAc
-Message-ID: <CAP8UFD07ssLAAsc_00W3Q=vzPXry-=nK-mO66_eoHxEGTEYAgw@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] builtin/upload-pack: set GIT_NO_LAZY_FETCH to 0 on
- trusted repo
+Date: Tue, 8 Sep 2026 19:11:48 +0200
+X-Gm-Features: AcwNN1UvLhT-eyi4ZquB4euX8yFbmBtuNMd7I-6admzJ-pjCcTqScLtQ3VoiYe8
+Message-ID: <CAP8UFD3DUAYpBpfcrub6CPJ0AHFvJGEi52=eXYwrBT+YXpu7PA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] promisor-remote: factor out lazy_fetch_objects()
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, "brian m . carlson" <sandals@crustytoothpaste.net>, 
 	Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
@@ -99,89 +98,51 @@ Cc: git@vger.kernel.org, "brian m . carlson" <sandals@crustytoothpaste.net>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 14, 2026 at 9:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+On Fri, Aug 14, 2026 at 7:49=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
 wrote:
 
-> To somebody who designed this mechanism, it may have been clear that
-> you are talking about multi-valued configuration variable, i.e.,
+> Perhaps writing it this way would make it easier to tell what is
+> going on.  We try the preferred ones first, and then fall back to
+> the other ones.
 >
->         [uploadpack]
->                 lazyFetchTrusted =3D repo1
->                 lazyFetchTrusted =3D repo2
->                 ...
->                 lazyFetchTrusted =3D repoN
->
-> but the "config entries specify repositories" can be misread to mean
->
->         [uploadpack]
->                 lazyFetchTrusted =3D repo1 repo2 ... repoN
->
-> especially combined with the use of verb "list" in "Listing a
-> repository here tells..." we see below.
->
->         A multi-valued configuration variable, each of which names a
->         repository that `upload-pack` is allowed to ...
->
-> or something, perhaps.  Say that upfront to make sure readers won't
-> waste their time wondering what the syntax is.
+>         return (try_promisor_remotes(..., true) ||
+>                 try_promisor_remotes(..., false));
 
-I have used that in the v3 I just sent.
+Yes, this is used in v3.
 
-> Also, how would one specify a repository?  A URL?  Remote nickname
-> used in
+> But more importantly, I wonder if keeping the list of missing object
+> names in memory will later turn out to be problematic in real-life
+> applications.  Without knowing much about how the current code for
+> bulk dehydrating promisor objects is structured, I expected an API
+> that looks more like:
 >
->         [remote "nick"] url =3D ...
+>  - bulk_download_begin(): performs the early part of
+>    fetch_objects(), sets up connections to the promisor remote(s),
+>    and calls start_command() on the child process.
 >
-> configuration?  Local directory that houses another repository?
-> Something else?
-
-The v3 has improved regarding this as I think it makes it clearer that
-repos are identified by having their git dir, or a parent directory of
-it, in this config variable.
-
-> > +     allowed to lazily fetch missing objects for. By default,
-> > +     `upload-pack` refuses to lazily fetch (see the description of the
-> > +     `GIT_NO_LAZY_FETCH` environment variable in
-> > +     linkgit:git-upload-pack[1]), because doing so would run `git fetc=
-h`,
-> > +     which may execute arbitrary commands specified in the configurati=
-on
-> > +     and hooks of the served repository. Listing a repository here tel=
-ls
-> > +     `upload-pack` that it is trusted, so lazy fetching from the promi=
-sor
-> > +     remotes configured in it is allowed. This is equivalent to settin=
-g
-> > +     `GIT_NO_LAZY_FETCH` to `0` for the matching repositories. An
-> > +     explicitly set `GIT_NO_LAZY_FETCH` takes precedence over this
-> > +     setting.
+>  - bulk_download_this(): after calling the _begin() function above,
+>    it runs around and collects missing objects that it needs to do
+>    its work.  For each such missing object it discovers, this
+>    function is called, which sends the object name down the
+>    '--stdin' file descriptor.
 >
-> It would be interesting to set it to point at itself.  A client asks
-> you to serve a pack, you find some objects you yourself do not have
-> because you fetched lazily from the upstream, and you end up asking
-> you if you have that object (U+1F61B Face with Stuck-Out Tongue =F0=9F=98=
-=9B).
-
-Actually it happens that it could recursively lazy fetch in v2, but
-this has been fixed with a new patch and a few tests in v3. Thanks for
-the suggestion.
-
-> > +Note that this allows lazy fetching from any promisor remote
-> > +configured in the served repository, not only from the promisor
-> > +remotes that the client accepted using the "promisor-remote" protocol
-> > +v2 capability (see linkgit:gitprotocol-v2[5]). The served repository
-> > +is trusted as a whole, including its configuration, so the promisor
-> > +remotes it configures are trusted too. It is the server operator's
-> > +responsibility to make sure that the promisor remotes of a trusted
-> > +repository are also trustworthy.
-> > ++
-> > +This is a multi-valued setting, i.e. you can add more than one
-> > +repository via `git config (--global|--system) --add`. To reset the
-> > +list of trusted repositories (e.g. to override any such repositories
-> > +specified in the system config), add a `uploadpack.lazyFetchTrusted`
+>  - bulk_download_done(): tells the child process that we are done
+>    feeding object names.
 >
-> a -> an before `uploadpack.lazyFetchTrusted`.
+> but that is not what I am seeing.  I guess the current arrangement
+> cannot be avoided, because we are going to fetch from more than one
+> promisor remote.  Under such constraints, the way to deal with a
+> massive number of missing objects will not be "streaming" like I
+> imagined above, but needs to be done differently, like spooling to a
+> file or something silly like that.
+>
+> In any case, except that this avoids checking the environment
+> variable multiple times, I can see that it is a no-op refactoring of
+> the existing code.
 
-Fixed in v3.
+Yeah, I prefer to avoid working on a big refactoring in this area
+until we have evidence showing that there is a bottleneck here.
+
+> Nice and cleanly done.
 
 Thanks.
