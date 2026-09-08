@@ -1,607 +1,596 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A39514759
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 10:27:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B8250EC11
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 10:28:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788863233; cv=none; b=AARyy+gkP7qsAJotEYYOZjOWE7enoohrGUnYchM5PA6XRPfovbQTXiCa4yoOAfELE3+asynPKDUlx0EHh+StHCW+dk77Y/dgBhpiq35Nb01gXXuV+k1OMG5GC2N4XGEja47GjptqnqkO1p7TPqBP5+9ioKH5Ldd42C/IYwn/U8c=
+	t=1788863291; cv=none; b=HSMuHVEZ64eHU8eNcAtO+RZTwB7qg5yutzCNvoEe1FsqCaJOAiZi8xH/VX/7s2tzM2xAmVfr9O0Ysr204JJ8hNTHjeCO7a2HAyMarwWr+m70ypk2Sj15PcG/XBQPxIrLj525Bxk51xJwp9bO7a4E6L2GAcJwo9t3zlc0oAEX4Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788863233; c=relaxed/simple;
-	bh=gHrC2/YHhVSXLSlS16u4AfY7KVkPWWCCH/ZFCWhkFIY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lsVXAvdT//7R9lEyUBD4Z6A0FSjEavteR4fWZ4c0pf9Kme3rGsUfyt8EaAt4pZaX670ZXH47irdLqZyWyyIjAU7A6LhEguCaP2TU+Kddjx5l6+TNTwM4mLW7/I8GVshYZon4y2yyzLVoZuIEQxcaMsWqI+JkQW0gcMSxAF5HmUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oNv6qwUX; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1788863291; c=relaxed/simple;
+	bh=Hd4fBubQqKPXCOM1isQBWVqpDgMXaGv64Ea8JHmnb7w=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=KHNJbl0/oqlXGGyeLhdI4FjkYrR5Ua2BOdhaaez0tYZDcknXRVRNqkeBxlgBQtJ3dDNszDvXk9QJNhjn58ITCB/eQTF3mF3FkJJHiaKlnY/ZSOmIxesu3AxkKfAKtzw9793huTrxpv4rtBHF4VOx0GWm/9XE5oQCo7sXKcR2vNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=coQo0INY; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oNv6qwUX"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-4843e9c5960so4337992f8f.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 03:27:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="coQo0INY"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38dfe910e9dso4852896a91.3
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 03:28:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788863229; x=1789468029; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=V9VimnDRQb5JsH6MwJenn/EZqeiP6nyHnkrlQFEHImQ=;
-        b=oNv6qwUXKIbDyk6Y5ybyrEmaNiQYaw0wMJTUzJlTEPL/eIEzCQRtDKw8TkdDAXHOLx
-         EG2Rmm9d/3K7AC61GJX4rFNSTHcl2pssTAysGtKMfMFAssp/eMYJZUZ1SxQMOH9/id2e
-         wteI+K2aj/4ZR/CkvUoE3r5Gzv0emrsmrhSrrlBNTPhoU/re181nnINDYohF5gcWMq8r
-         gR/gJJishiKyX9rmMroupF4QgASH+1uiBrM/zID+YWE6mVwMnSuCLIH+hm7DallBXe09
-         R4FefmQYU3vz88RBOvOenwC4c3rBQmoEOtZYLeTZHLQ5j5JsGJHNWChKoHZjxQ/lV9WL
-         n/gA==
+        d=gmail.com; s=20251104; t=1788863289; x=1789468089; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=A8wT/BeNqT6DAZpTP/fegcnygX5lfvxqFnH/ogqwfGE=;
+        b=coQo0INYGzCiv1AvjAs+rHlca3kXqWL4Vs8RFYQpXeBpBRwY8hg9TZJOBRiiu+Lzo2
+         sazTSCMDQM24MoHLDEt0FMI9sF2VwuocV0dcJligRgvQqq24qXsvy+HxiyTUd0vo5bWD
+         +FoPO0zGunXgVkaRTebZETRB8lovEN4C2phezfJAll2yCYWAlT0OwuLJByNVxGlknnkD
+         oFGmbi466+8fPzWEMzp/f/GOriYfENbPIMgpAPp0s3mZ5DDQS5e03wNShlcXAC6tVvZb
+         Viqak0WncmB/7PBEU0uAHaRRJ2MDZKvTC/SHQgOOAGHEtGuLV4k2wJoy8103eXnoU/aR
+         mD+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788863229; x=1789468029;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
+        d=1e100.net; s=20251104; t=1788863289; x=1789468089;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=V9VimnDRQb5JsH6MwJenn/EZqeiP6nyHnkrlQFEHImQ=;
-        b=iNrQsRQhoW7fWH/iViBtzSzqp2oyHlNbVYPsYhfrT/JEWyYhAdMAmFWyM9UDhrsGPZ
-         9F77a8rEkJamGaerNGyTIA1Busbrp9+2BdQOTAxZe444SVbHcf/tQxKJy8qn9cNYG96g
-         +P7wGSudZ3KeLNeInOP7umirFdH7F+n/WoLDCxY4OdajeoO/JaXg//jmrPvv5aZpXPQ0
-         wKtrll6sR5g0TuqzYlob99AlvaPk67590Ytf+sr30dygsBTm+8v3jVMQIOinQ7JGRe/6
-         FyXqmon3VQwCYQ+Hwknq94pGYNIqoOyD2SAI9glIHnCtuknSvd+g2EWKCjt2H85XEyWz
-         wB6g==
-X-Gm-Message-State: AFuF++m5enIphVDCwkfKsIlZI4gGZoSFGlWuNeCkXNtTwhQe3dSgmNEu
-	+M3qabjwTcXN09RGfz0Jo3s0pA6dcnrJpHYtYDg5qfT4M76jZlkogQeH
-X-Gm-Gg: AYBFou04VFUTVJg/Em9xypDAQ6Vh3W5xKXwjDpc2EvRwxpk4b0bU8PAJYrhI/L9OtKK
-	YMfr46U4TKOwqtOi+RTeSXgTnskSTGFkVBqzSLJOwrvCvYn9MO554gmE09doaqwdBH5x2DFdaRe
-	Pgued0T91wWGhQRaBu0NYbPcDNJOdg3W8zlSXP+y6fi66FueFlimqqYa5jMjWbv9qFlDO3M+Aht
-	/yTYak66eXd9jMaKVV2rpJcXIyAUzo8tFoOaX9IlqbyZNLaRwrzR9klpbDX7sr4ESoHt6lMpG4J
-	sE60Ss/N8vbtY2RlYl31+ymX3o06G9ao1H8ol0PWZHEtxPU2apsfGqMYV7tdqiD/C6UasK8aaBH
-	KmRPRiyUuLmmrmulo4tgIAvUCHHmPkceqp5lEwSQUZiu9TEAtkplmfFyGfTFkBov7eH1mZnY8jX
-	b7pUYXV2HiPoMAbYgW9wMJL8VFy7/6fmjFjJz2ZH6L6LjOacA308QjYJ1yeNpHztiEQi1uciGtH
-	qAsOfPrQIVoBuuqCixqjt3S16Y=
-X-Received: by 2002:a05:6000:4604:b0:485:8eac:265 with SMTP id ffacd0b85a97d-4858eac02b9mr20335819f8f.57.1788863229071;
-        Tue, 08 Sep 2026 03:27:09 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:ed36:96cf:ac4a:2747])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-485885be1c1sm34446572f8f.32.2026.09.08.03.27.08
+        bh=A8wT/BeNqT6DAZpTP/fegcnygX5lfvxqFnH/ogqwfGE=;
+        b=iNiy+yucn0iI0+/XFNzpErkJVsYu6ioYxxq4E/QvhM5stDGrs5i1F1fUfgPrxe/FuG
+         JRVXh3wOU1VQIRY3GuqWjtBleTG8DFd01PJQSosy7mOvPdtcaMiXcXNzetg6/IYNOxyx
+         FaZviVMvNeVAvTEktHkY5a1SFwM37c+Yw9LSBdgmgyX9TbLtVNFUuidtGpplRSZFTxB+
+         mNFtkvBPsOvJ43VvjAFIWW43voDuo1grmtSow4pOKaTqr37xfAVdADYbP9FpF7dGUdYV
+         n48NVa4ni8CIZsgep8iZDjYkrQmsLJA7vHAlugThUWIA6r3zzBrQnRxaQ3hz320BaSfH
+         IQEg==
+X-Gm-Message-State: AFuF++l4pGQ6tLnpujlxJ5XR+v9Fb7i2DsSTAYqIjmIBvkYj3ew9YyXm
+	IZhwN/5o5shbn9pQC5Ka52QvNCZeYddfd57DikHL+QwTO25smKzG2p6DcFKzbg==
+X-Gm-Gg: AYBFou3534puJrucqIO/GL5RjRgX01BaAp4HdBMFOwXw3eoLWgnkXaNaibdhKzHq5xQ
+	iFT9DFZAZ636/ZySvFGwqr3x4358cOfxr9roa5xP6zhadb8axLBb+W0W7iJyTZnUq96kv03fRoR
+	OOqrexYDeKpDB7qX5QXUztVwU7Jkfi1K+LZMCpjN5YR39Y+ibd0KuvTQNYeKsCsKwl9llyKe6qd
+	NQG2TBR+MgcKzM0ESF/mOv3zkqg3iqdPcwC0xzDYrrS0hvCRYVenKWdWTbOsCPlgsWD/atRkmVX
+	WPNBWFc2vSd9hAKujxO9k0hnobxICCNM29VUipYCwrja8L1Q/bGVnHlWWnavnalSfJdl4/Tj5LA
+	IGWsaybdyWslX8nWHCjUStdhN9GhqRyL/ekjCJ97jCpcSEP7hSo3tChk//C+N/W+znpV32aJ+5O
+	ndp/7Kyw5HPvOYaaTWrTCqFduYIxdXle2sbaUUa5QV/jjWuCxzQCezwBnijU7ZeA==
+X-Received: by 2002:a17:90b:17cf:b0:398:9be8:ea6a with SMTP id 98e67ed59e1d1-39b26216cf7mr42650086a91.23.1788863288322;
+        Tue, 08 Sep 2026 03:28:08 -0700 (PDT)
+Received: from [127.0.0.1] ([68.220.60.10])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3339bdf26c5sm35536519eec.27.2026.09.08.03.28.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2026 03:27:08 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 08 Sep 2026 12:27:04 +0200
-Subject: [PATCH v8 4/4] hook: introduce the receive-report hook
+        Tue, 08 Sep 2026 03:28:07 -0700 (PDT)
+Message-Id: <pull.2217.v3.git.1788863286.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
+References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
+From: "Thomas Bachem via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 08 Sep 2026 10:28:03 +0000
+Subject: [PATCH v3 0/3] sequencer: leave auto maintenance to the end of a sequence
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260908-758-introduce-hook-v8-4-be88a671ae1f@gmail.com>
-References: <20260908-758-introduce-hook-v8-0-be88a671ae1f@gmail.com>
-In-Reply-To: <20260908-758-introduce-hook-v8-0-be88a671ae1f@gmail.com>
 To: git@vger.kernel.org
-Cc: ps@pks.im, gitster@pobox.com, jltobler@gmail.com, 
- kristofferhaugsbakk@fastmail.com, Phillip Wood <phillip.wood@dunelm.org.uk>, 
- Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=19440;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=gHrC2/YHhVSXLSlS16u4AfY7KVkPWWCCH/ZFCWhkFIY=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqf4vfMCRkRLkTWTJWQCMIGo7r+VMfy01ZOc
- 58pTPscFYlk6YkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqn+L3AAoJED7VnySO
- Rox/DTgL/1edUJbvIsGdTGAikCW/fC0oHi+B20dpMm7RURPcxFtuxzqu2gzqb+yY38VTGuiWDCS
- KiFSWh/1qSJk1I6bne/qluogwDlOO+UYJrpn5G1hf+jqyNCMJLs6cWt7tcbSbXaPlM3JPRlhVnQ
- GRAaNJq6xGqMqxT8xlvW6Ij3f1GEYS4SeI+PNgZzM7I54Yti+FegOBBjuj+G4AdF4AJffR8uIvZ
- aHqrJ/bQwTi09Da9FEmCcxxh3KbQ7KBP9un5f1fJanCNady86/8Kd8Mvzk9x7qUtMf5nDj0l3ph
- 2R9f8yeP35y0nYAykHHTSoWqWDg6v/OYn+lhEgUTrgXHWpHMlv0E2wlXHLOICQSlvyZWOUkjHpH
- 9leryJU2+VZu8XVaHgvbNlxCMPrUkDhIe2UQvpEnWX2lVeh0BdNr+D03nRTgk9OFnFyvHKm8wis
- 4KosgCv4N0ykRu8TV4o5BmLS4iuu2db401YVOXlS1Xrx3vdmRlb5g/RQcTDK/8MOtRm8uUlyN65
- KQ=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
+    Patrick Steinhardt <ps@pks.im>,
+    Junio C Hamano <gitster@pobox.com>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Thomas Bachem <mail@thomasbachem.com>
 
-When running 'git-receive-pack(1)', there is no way for the server to
-intercept and modify the status report before it is sent back to the
-client. Servers with custom logic may need to transform or gate the
-report based on the outcome of external logic post reference updates.
+Changes since v2:
 
-This is specially needed for our usecase at GitLab where we have custom
-MVCC logic on top of Git which creates a new version for each push
-operation. The new version is only committed when certain external
-operations post reference transaction succeed. So reporting the correct
-message based on the outcome of these operations is important.
+ * Auto maintenance now runs from builtin/rebase.c and builtin/revert.c,
+   once the command is done, instead of from three places inside the
+   sequencer. That follows the apply backend, where "git am" leaves it to
+   rebase.c (Patrick, Phillip).
+ * gc.auto=0 dropped, maintenance.auto=false is enough (Patrick).
+ * config_parameters is a char * built once with strbuf_detach() (Junio).
+ * Patch 3 extends the tests of patch 2 instead of adding its own. They also
+   assert that nothing runs before a stop, and cover a single pick with
+   --edit and a sequence ending in --skip (Phillip).
+ * Commit messages rewritten: what GIT_CONFIG_PARAMETERS is and looks like
+   (Patrick), what patch 2 changes for the user and why the call moved
+   (Patrick, Phillip), and the comment on the helper (Phillip).
 
-The outcome of these operations is only known after `execute_commands()`
-has returned and before the report is written. There is no point in
-receive-pack where the server can act on that.
+Based on master. Independent of the rerere lock fix in [1].
 
-We cannot use any of the existing hooks as:
+[1] <pull.2214.v3.git.1788537081930.gitgitgadget@gmail.com>
 
-  - The pre-receive hook runs too early, as we haven't updated
-    references at that point yet and we need to have the full view of
-    all resulting updates (both objects and references).
+Thomas Bachem (3):
+  config: add git_config_append_parameter()
+  rebase, cherry-pick, revert: run auto maintenance when done
+  sequencer: disable auto maintenance in spawned commands
 
-  - The update hook is too inefficient as it runs once per reference,
-    and we cannot trivially determine the last update.
+ builtin/rebase.c                | 13 ++++++++---
+ builtin/revert.c                | 19 +++++++++++------
+ config.c                        | 20 +++++++++++------
+ config.h                        | 13 +++++++++++
+ sequencer.c                     | 38 ++++++++++++++++++++++++++++++---
+ t/t3418-rebase-continue.sh      | 17 +++++++++++++++
+ t/t3510-cherry-pick-sequence.sh | 31 +++++++++++++++++++++++++++
+ 7 files changed, 131 insertions(+), 20 deletions(-)
 
-  - The reference-transaction hook is not suited for this. It fires from
-    within `ref_transaction_commit()`, which is before the outcome we
-    need to report is known, so there is no phase at which it could give
-    us the answer. It also does not contain any knowledge regarding the
-    push and cannot communicate with the clients.
 
-  - The proc-receive hook replaces execute_commands() for references
-    matching 'receive.procReceiveRefs'. We need to gate the report for
-    the push as a whole.
+base-commit: 3cb9185f65410273787f74333cc027d2ea5daada
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2217%2Fthomasbachem%2Frebase-auto-maintenance-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2217/thomasbachem/rebase-auto-maintenance-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2217
 
-  - The post-receive and post-update hooks cannot be used as they run
-    too late, at the point where we have already reported success to the
-    client.
+Range-diff vs v2:
 
-Introduce a new 'receive-report' hook. The hook receives the complete
-pkt-line encoded status report on standard input, after all ref updates
-have been applied to the repository by execute_commands() but before the
-report is sent to the client. See linkgit:gitprotocol-pack[5] details on
-the protocol structure.
-
-The hook's stdout fully replaces the report sent to the client.
-receive-pack fully buffers the hook's stdout before acting on the exit
-status, so the exit code is known before the client receives anything.
-This gives two distinct behaviors depending on exit status:
-
-- Exit 0: the hook's stdout is used as the report. The hook can
-  rewrite 'ok' lines to 'ng' lines to signal per-ref rejection to the
-  client while receive-pack itself exits cleanly. The client marks
-  rejected refs as '[remote rejected]' and exits with a non-zero
-  status if any ref is 'ng'.
-
-- Non-zero exit: the hook's stdout is discarded, receive-pack modifies
-  all references to be rejected with a 'receive-report hook failed'
-  error.
-
-In both cases, any output the hook writes to standard error is
-forwarded to the client over the sideband channel and appears as
-'remote:' lines on the client terminal. Writing to stderr alone does
-not affect the push outcome.
-
-Reference updates applied by execute_commands() are not rolled back in
-either failure mode. The hook can cause the client to perceive the push
-as failed, but cannot undo server-side changes. This creates a
-divergence that the server cannot resolve: the client leaves its
-remote-tracking reference at the old value while the update is in fact
-applied, and a later fetch may reveal the update that the push reported
-as rejected.
-
-The hook is therefore only appropriate for servers which can guarantee
-that a rejected update is not observable by any reader. In our case the
-transaction committed by execute_commands() produces a candidate version
-which is not visible to other readers and is only published once the
-subsequent operations succeed, so a report of 'ng' corresponds to a
-version that is discarded rather than published. On a repository where a
-committed reference update is immediately visible, rejecting a push from
-this hook would instead leave the pusher with a view that does not match
-the server.
-
-This hook does not use the config-based hook infrastructure, which
-supports running multiple scripts per hook event. This hook is a
-bidirectional filter: it receives the report on stdin and writes a
-modified version to stdout. Running multiple such scripts sequentially
-would require piping the output of one into the input of the next,
-which the current hook infrastructure does not support. A single-script
-design is therefore a natural fit, and is consistent with how
-'proc-receive' is structured for the same reason.
-
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-receive-pack.adoc |   9 ++
- Documentation/githooks.adoc         |  61 ++++++++++
- builtin/receive-pack.c              |  47 ++++++++
- t/meson.build                       |   1 +
- t/t5412-receive-report-hook.sh      | 224 ++++++++++++++++++++++++++++++++++++
- 5 files changed, 342 insertions(+)
-
-diff --git a/Documentation/git-receive-pack.adoc b/Documentation/git-receive-pack.adoc
-index 5806792ba7..ab668ffa0c 100644
---- a/Documentation/git-receive-pack.adoc
-+++ b/Documentation/git-receive-pack.adoc
-@@ -245,6 +245,15 @@ commands will be executed by this hook, instead of by the internal
- `execute_commands()` function.  This hook is responsible for updating
- the relevant references and reporting the results back to 'receive-pack'.
- 
-+RECEIVE-REPORT HOOK
-+-------------------
-+This hook is invoked by 'git-receive-pack' after all the ref updates
-+have been applied but before the report is sent to the client. The hook
-+receives the complete report in pkt-line format on stdin and its stdout
-+replaces the report sent to the client, which allows the hook to rewrite
-+the outcomes or abort the push completely. See linkgit:githooks[5] for
-+the full protocol description.
-+
- QUARANTINE ENVIRONMENT
- ----------------------
- 
-diff --git a/Documentation/githooks.adoc b/Documentation/githooks.adoc
-index ed045940d1..145642bf05 100644
---- a/Documentation/githooks.adoc
-+++ b/Documentation/githooks.adoc
-@@ -527,6 +527,67 @@ The exit status of the hook is ignored for any state except for the
- status will cause the transaction to be aborted. The hook will not be
- called with "aborted" state in that case.
- 
-+receive-report
-+~~~~~~~~~~~~~~
-+
-+This hook is invoked by linkgit:git-receive-pack[1] when it reacts to
-+`git push` and updates references in its repository. It executes on
-+the repository once after all refs have been updated and after all
-+accepted ref changes are applied to the repository, but before the
-+pkt-line encoded status report is sent back to the client.
-+
-+The hook receives the complete pkt-line encoded status report on
-+standard input, see linkgit:gitprotocol-pack[5] for details on the
-+structure. The hook's standard output entirely replaces the report
-+that is sent to the client. The hook must write a valid pkt-line
-+encoded report in the same format it received. The hook's stdout is
-+fully buffered by `receive-pack` before any data is sent to the client,
-+so the hook's exit status is known before the client receives anything.
-+
-+There are three distinct ways the hook can affect the push outcome:
-+
-+* To reject the push, modify the unpack status from `ok` to the required
-+  error message. While `git-push` will fail, individual references may
-+  still show success messages unless modified.
-+
-+* To reject individual ref updates while keeping `receive-pack` alive,
-+  rewrite the corresponding `ok <refname>` lines to
-+  `ng <refname>[ <reason>]` lines in the output and exit with status 0.
-+  The client will then mark those specific refs as rejected while
-+  treating any `ok` refs as successful. The push as a whole is
-+  considered failed if any ref is `ng`, and `git push` will exit with
-+  a non-zero status on the client side.
-+
-+* To abort the entire push unconditionally, exit with a non-zero
-+  status. In this case the hook's stdout is discarded, `receive-pack`
-+  modifies all references to be rejected with a 'receive-report hook
-+  failed' error.
-+
-+Any output written to standard error is forwarded to the client over
-+the sideband channel and will appear as `remote:` lines on clients
-+using 'git-push(1)', regardless of the hook's exit status. Writing to
-+standard error alone does not affect the push outcome.
-+
-+Note that by the time this hook runs, all ref updates have already been
-+applied to the repository. Neither a non-zero exit nor rewriting refs
-+to `ng` rolls back any ref changes that were already committed
-+server-side. The hook can cause the client to perceive the push as
-+failed, but cannot undo the server-side updates.
-+
-+This means that reporting a reference as `ng` makes the client believe
-+the update did not happen while the server has in fact applied it. The
-+client leaves its remote-tracking reference at its old value, and a
-+later `git fetch` may reveal the very update that the push reported as
-+rejected. Neither Git nor the server can reconcile this; only the user,
-+by fetching again, will find out.
-+
-+This hook is therefore only appropriate for servers which can guarantee
-+that a rejected update is not observable by any reader, for example
-+because the committed transaction produces a candidate state that is
-+discarded rather than published. On a repository where a committed
-+reference update is immediately visible, using this hook to reject a
-+push will leave the pusher with a view that does not match the server.
-+
- push-to-checkout
- ~~~~~~~~~~~~~~~~
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 8310844ab1..cadcc0ac8f 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -992,6 +992,41 @@ static int run_update_hook(struct command *cmd)
- 	return code;
- }
- 
-+static int run_receive_report_hook(struct strbuf *report)
-+{
-+	struct child_process proc = CHILD_PROCESS_INIT;
-+	struct async sideband_async;
-+	int sideband_async_started = 0;
-+	int saved_stderr = -1;
-+	struct strbuf out = STRBUF_INIT;
-+	const char *hook_path;
-+	int ret;
-+
-+	hook_path = find_hook(the_repository, "receive-report");
-+	if (!hook_path)
-+		return 0;
-+
-+	strvec_push(&proc.args, hook_path);
-+	proc.trace2_hook_name = "receive-report";
-+
-+	prepare_sideband_async(&sideband_async, &saved_stderr,
-+			       &sideband_async_started);
-+
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+	ret = pipe_command(&proc, report->buf, report->len, &out,
-+			   report->len, NULL, 0);
-+	sigchain_pop(SIGPIPE);
-+
-+	finish_sideband_async(&sideband_async, saved_stderr,
-+			      sideband_async_started);
-+
-+	if (!ret)
-+		strbuf_swap(&out, report);
-+
-+	strbuf_release(&out);
-+	return ret;
-+}
-+
- static struct command *find_command_by_refname(struct command *list,
- 					       const char *refname)
- {
-@@ -2414,6 +2449,12 @@ static void update_shallow_info(struct command *commands,
- 	free(ref_status);
- }
- 
-+static void override_cmds_error(struct command *commands, const char *err)
-+{
-+	for (struct command *cmd = commands; cmd; cmd = cmd->next)
-+		cmd->error_string = err;
-+}
-+
- /*
-  * Generate the response to be sent to the client invoking 'git-receive-pack(1)'.
-  */
-@@ -2467,6 +2508,12 @@ static void report(struct command *commands, const struct strbuf *unpack_status,
- 
- 	generate_report(&buf, commands, unpack_status, version);
- 
-+	if (run_receive_report_hook(&buf)) {
-+		strbuf_reset(&buf);
-+		override_cmds_error(commands, "receive-report hook failed");
-+		generate_report(&buf, commands, unpack_status, version);
-+	}
-+
- 	if (use_sideband)
- 		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
- 	else
-diff --git a/t/meson.build b/t/meson.build
-index 7f53cca7d1..692e6011c5 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -652,6 +652,7 @@ integration_tests = [
-   't5409-colorize-remote-messages.sh',
-   't5410-receive-pack.sh',
-   't5411-proc-receive-hook.sh',
-+  't5412-receive-report-hook.sh',
-   't5500-fetch-pack.sh',
-   't5501-fetch-push-alternates.sh',
-   't5502-quickfetch.sh',
-diff --git a/t/t5412-receive-report-hook.sh b/t/t5412-receive-report-hook.sh
-new file mode 100755
-index 0000000000..24679de37b
---- /dev/null
-+++ b/t/t5412-receive-report-hook.sh
-@@ -0,0 +1,224 @@
-+#!/bin/sh
-+
-+test_description='test receive-report hook'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+. "$TEST_DIRECTORY"/t5411/common-functions.sh
-+
-+URL_PREFIX="\.\."
-+
-+test_expect_success "setup workbench" '
-+	git init workbench &&
-+	create_commits_in workbench A B
-+'
-+
-+test_expect_success "no report hook, push succeeds" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+	git init --bare upstream &&
-+
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-\EOF &&
-+	To ../upstream
-+	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "passthrough does not alter report" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+	git init --bare upstream &&
-+
-+	test_hook -C upstream --setup receive-report <<-\EOF &&
-+	cat
-+	EOF
-+
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-\EOF &&
-+	To ../upstream
-+	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "non-zero exit reports as hook failed" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup receive-report <<-\EOF &&
-+	exit 1
-+	EOF
-+
-+	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-\EOF &&
-+	To ../upstream
-+	 ! [remote rejected] <COMMIT-B> -> main (receive-report hook failed)
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "hook is invoked and receives report on stdin" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	test_hook -C upstream --setup receive-report <<-EOF &&
-+	tee raw
-+	EOF
-+
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	To ../upstream
-+	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
-+	EOF
-+	test_cmp expect actual &&
-+
-+	test-tool pkt-line unpack <upstream/raw >actual-report &&
-+	cat >expect-report <<-EOF &&
-+	unpack ok
-+	ok refs/heads/main
-+	0000
-+	EOF
-+	test_cmp expect-report actual-report
-+'
-+
-+test_expect_success "hook can modify the report sent to client" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup receive-report <<-\EOF &&
-+	test-tool pkt-line unpack |
-+	sed "s/^ok /ng /" |
-+	test-tool pkt-line pack
-+	EOF
-+
-+	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-\EOF &&
-+	To ../upstream
-+	 ! [remote rejected] <COMMIT-B> -> main (failed)
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "hook can modify the unpack status" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup receive-report <<-\EOF &&
-+	test-tool pkt-line unpack |
-+	sed "s/^unpack ok$/unpack push failed due to server error/" |
-+	test-tool pkt-line pack
-+	EOF
-+
-+	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	test_grep "error: remote unpack failed: push failed due to server error" out &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-\EOF &&
-+	To ../upstream
-+	   <COMMIT-A>..<COMMIT-B>  <COMMIT-B> -> main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "hook can report a custom failure message" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup receive-report <<-\EOF &&
-+	echo "push rejected: service X is down" >&2
-+	test-tool pkt-line unpack |
-+	sed "s/^ok \(.*\)/ng \1 service-x-is-down/" |
-+	test-tool pkt-line pack |
-+	tee raw
-+	EOF
-+
-+	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	test_grep "push rejected: service X is down" out &&
-+
-+	test-tool pkt-line unpack <upstream/raw >actual-report &&
-+	cat >expect-report <<-\EOF &&
-+	unpack ok
-+	ng refs/heads/main service-x-is-down
-+	0000
-+	EOF
-+	test_cmp expect-report actual-report
-+'
-+
-+test_expect_success "hook stderr with zero exit status code" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup receive-report <<-\EOF &&
-+	echo "push rejected: service X is down" >&2
-+	tee raw
-+	EOF
-+
-+	git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	test_grep "push rejected: service X is down" out &&
-+
-+	test-tool pkt-line unpack <upstream/raw >actual-report &&
-+	cat >expect-report <<-\EOF &&
-+	unpack ok
-+	ok refs/heads/main
-+	0000
-+	EOF
-+	test_cmp expect-report actual-report
-+'
-+
-+test_expect_success "hook stderr is relayed to client via sideband" '
-+	test_when_finished "rm -rf upstream" &&
-+	test_when_finished "git -C workbench remote remove origin" &&
-+
-+	git init --bare upstream &&
-+	git -C workbench remote add origin ../upstream &&
-+	git -C workbench push origin $A:refs/heads/main &&
-+
-+	test_hook -C upstream --setup receive-report <<-\EOF &&
-+	echo "hook-stderr-message" >&2
-+	exit 1
-+	EOF
-+
-+	test_must_fail git -C workbench push origin $B:refs/heads/main >out 2>&1 &&
-+	test_grep "remote: hook-stderr-message" out
-+'
-+
-+test_done
+ 1:  ef8087e80d ! 1:  70db5ad084 config: add git_config_append_parameter()
+     @@ Metadata
+       ## Commit message ##
+          config: add git_config_append_parameter()
+      
+     -    Split the part of git_config_push_split_parameter() that formats one
+     -    GIT_CONFIG_PARAMETERS entry into a helper that appends it to a strbuf,
+     -    so that a caller can build a value for a child's environment without
+     -    knowing the quoting. The sequencer is about to do that.
+     +    "git -c key=value" passes its settings on to the git commands it
+     +    spawns through the environment variable GIT_CONFIG_PARAMETERS. The
+     +    value is a space separated list of 'key'='value' pairs with both
+     +    sides single quoted, which git_config_from_parameters() reads back in
+     +    the child. The only place we write such an entry is
+     +    git_config_push_split_parameter(), and it writes straight into our
+     +    own environment.
+     +
+     +    Split the formatting out into git_config_append_parameter(), which
+     +    appends one entry to a strbuf, so that we can build such a value for
+     +    a child's environment without repeating the quoting. The sequencer
+     +    will use it in a later commit to pass settings to the commands it
+     +    spawns.
+      
+          Assisted-by: Claude Fable 5.1
+          Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+     @@ config.h: int git_config_from_blob_oid(config_fn_t fn, const char *name,
+       void git_config_push_env(const char *spec);
+      +
+      +/*
+     -+ * Append `key=value` to the GIT_CONFIG_PARAMETERS value in `env`, quoted
+     -+ * the way git_config_from_parameters() reads it, so that a child can be
+     -+ * given configuration on top of what this process was given. A NULL
+     -+ * `value` appends a boolean entry.
+     ++ * Append a "-c key=value" setting to a GIT_CONFIG_PARAMETERS value in
+     ++ * `env`. The variable carries such settings from a git process to the
+     ++ * git commands it spawns, as a space separated list of 'key'='value'
+     ++ * pairs with both sides single quoted, which git_config_from_parameters()
+     ++ * reads back. A NULL `value` appends 'key'= with nothing after the equals
+     ++ * sign, which stands for a boolean true, like "-c key" on the command
+     ++ * line.
+      + */
+      +void git_config_append_parameter(struct strbuf *env, const char *key,
+      +				 const char *value);
+ 2:  baab8d4876 ! 2:  68a728c5f4 sequencer: run auto maintenance once a sequence is done
+     @@ Metadata
+      Author: Thomas Bachem <mail@thomasbachem.com>
+      
+       ## Commit message ##
+     -    sequencer: run auto maintenance once a sequence is done
+     +    rebase, cherry-pick, revert: run auto maintenance when done
+      
+     -    The apply backend of "git rebase" runs "git maintenance run --auto"
+     -    from finish_rebase() once it has applied its patches. The merge
+     -    backend, "git cherry-pick" and "git revert" do not run it when they
+     -    finish. They create their commits in process, and only the "git
+     -    commit" they spawn for an edited message or a resolved conflict, the
+     -    "git merge" a "rebase -r" spawns and an exec command start it, in the
+     -    middle of the sequence.
+     +    "git commit", "git merge", "git fetch" and "git am" run "git
+     +    maintenance run --auto" when they are done, and so does the apply
+     +    backend of "git rebase". That repacks the loose objects they wrote
+     +    once there are enough of them, expires old rerere entries and does
+     +    whatever other housekeeping is due.
+      
+     -    Run it where the sequencer finishes, so that every sequence ends the
+     -    way the apply backend does, and so that the next commit can keep it
+     -    out of the commands a sequence spawns.
+     +    The merge backend of "git rebase", "git cherry-pick" and "git revert"
+     +    do not. They create their commits in process, so auto maintenance
+     +    runs only when they spawn a command that runs it on its own. That is
+     +    the "git commit" for a resolved conflict or an edited message, the
+     +    "git merge" that "--rebase-merges" spawns for an octopus merge, a
+     +    strategy other than ort or any strategy option, and whatever an exec
+     +    runs. A sequence that needs none of these never runs auto
+     +    maintenance. One that stops for conflicts runs it after each
+     +    resolution, in the middle of the sequence.
+     +
+     +    Run it once when the sequence is done, like the apply backend does.
+     +
+     +    The apply backend leaves that to builtin/rebase.c: "git am" skips
+     +    auto maintenance in rebasing mode, and finish_rebase() runs it once
+     +    the patches are applied. Do the same for the sequencer, from
+     +    builtin/rebase.c and builtin/revert.c, because the sequencer itself
+     +    has no single place where every sequence ends. A sequence of several
+     +    commits ends inside pick_commits(). A single cherry-pick or revert
+     +    never creates the sequencer's state directory and returns to its
+     +    caller as soon as its commit is made. "--continue" and "--skip" have
+     +    entry points of their own. Nothing but those two builtins starts or
+     +    continues a sequence, so that is where we run auto maintenance.
+     +    run_specific_rebase() runs it for the merge backend once the
+     +    sequencer has returned successfully and removed its state directory,
+     +    which it keeps while the rebase is stopped. run_sequencer() runs it
+     +    for cherry-pick and revert when a pick, a "--continue" or a "--skip"
+     +    returns successfully.
+     +
+     +    For the user, a sequence that never stops now runs auto maintenance
+     +    once when it is done, where it never ran it before. That is the same
+     +    "git maintenance run --auto --detach" as after "git commit": it
+     +    detaches into the background by default and does nothing unless one
+     +    of its tasks is due. The runs from the commands a sequence spawns
+     +    stay for now. The next commit removes them, so that a sequence runs
+     +    auto maintenance exactly once.
+      
+          Assisted-by: Claude Fable 5.1
+          Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+      
+     - ## sequencer.c ##
+     -@@ sequencer.c: cleanup_head_ref:
+     - 			return -1;
+     - 	}
+     + ## builtin/rebase.c ##
+     +@@ builtin/rebase.c: static int run_specific_rebase(struct rebase_options *opts)
+       
+     -+	/*
+     -+	 * We ignore errors in 'git maintenance run --auto', since the
+     -+	 * user should see them.
+     -+	 */
+     -+	run_auto_maintenance(r, opts->quiet);
+     + 	if (opts->dont_finish_rebase)
+     + 		; /* do nothing */
+     +-	else if (opts->type == REBASE_MERGE)
+     +-		; /* merge backend cleans up after itself */
+     +-	else if (status == 0) {
+     ++	else if (opts->type == REBASE_MERGE) {
+     ++		int quiet = !(opts->flags & (REBASE_NO_QUIET|REBASE_VERBOSE));
+      +
+     - 	/*
+     - 	 * Sequence of picks finished successfully; cleanup by
+     - 	 * removing the .git/sequencer directory
+     -@@ sequencer.c: int sequencer_continue(struct repository *r, struct replay_opts *opts)
+     - 			res = -1;
+     - 			goto release_todo_list;
+     - 		}
+     --	} else if (!file_exists(get_todo_path(opts)))
+     --		return continue_single_pick(r, opts);
+     --	else if ((res = read_populate_todo(r, &todo_list, opts)))
+     -+	} else if (!file_exists(get_todo_path(opts))) {
+     -+		res = continue_single_pick(r, opts);
+     -+		if (!res)
+     -+			run_auto_maintenance(r, opts->quiet);
+     -+		return res;
+     -+	} else if ((res = read_populate_todo(r, &todo_list, opts))) {
+     - 		goto release_todo_list;
+     -+	}
+     ++		/*
+     ++		 * The sequencer cleans up after itself. Its state directory
+     ++		 * is gone once it is done, and stays while it is stopped.
+     ++		 */
+     ++		if (status == 0 && !is_directory(opts->state_dir))
+     ++			run_auto_maintenance(the_repository, quiet);
+     ++	} else if (status == 0) {
+     + 		if (!file_exists(state_dir_path("stopped-sha", opts)))
+     + 			finish_rebase(opts);
+     + 	} else if (status == 2) {
+     +
+     + ## builtin/revert.c ##
+     +@@
+     + #include "gettext.h"
+     + #include "revision.h"
+     + #include "rerere.h"
+     ++#include "run-command.h"
+     + #include "sequencer.h"
+     + #include "branch.h"
+       
+     - 	if (!is_rebase_i(opts)) {
+     - 		/* Verify that the conflict has been resolved */
+     -@@ sequencer.c: int sequencer_pick_revisions(struct repository *r,
+     - 			BUG("unexpected extra commit from walk");
+     +@@ builtin/revert.c: static int run_sequencer(int argc, const char **argv, const char *prefix,
+     + 	const char *strategy = &sentinel_value;
+     + 	const char *gpg_sign = &sentinel_value;
+     + 	enum empty_action empty_opt = EMPTY_COMMIT_UNSPECIFIED;
+     +-	int cmd = 0;
+     ++	int cmd = 0, ret;
+     + 	struct option base_options[] = {
+     + 		OPT_CMDMODE(0, "quit", &cmd, N_("end revert or cherry-pick sequence"), 'q'),
+     + 		OPT_CMDMODE(0, "continue", &cmd, N_("resume revert or cherry-pick sequence"), 'c'),
+     +@@ builtin/revert.c: static int run_sequencer(int argc, const char **argv, const char *prefix,
+     + 	free(options);
+       
+     - 		res = single_pick(r, cmit, opts);
+     -+		if (!res)
+     -+			run_auto_maintenance(r, opts->quiet);
+     - 		goto out;
+     + 	if (cmd == 'q') {
+     +-		int ret = sequencer_remove_state(opts);
+     ++		ret = sequencer_remove_state(opts);
+     + 		if (!ret)
+     + 			remove_branch_state(the_repository, 0);
+     + 		return ret;
+       	}
+     +-	if (cmd == 'c')
+     +-		return sequencer_continue(the_repository, opts);
+     + 	if (cmd == 'a')
+     + 		return sequencer_rollback(the_repository, opts);
+     +-	if (cmd == 's')
+     +-		return sequencer_skip(the_repository, opts);
+     +-	return sequencer_pick_revisions(the_repository, opts);
+     ++	if (cmd == 'c')
+     ++		ret = sequencer_continue(the_repository, opts);
+     ++	else if (cmd == 's')
+     ++		ret = sequencer_skip(the_repository, opts);
+     ++	else
+     ++		ret = sequencer_pick_revisions(the_repository, opts);
+     ++	if (!ret)
+     ++		run_auto_maintenance(the_repository, opts->quiet);
+     ++	return ret;
+     + }
+       
+     + int cmd_revert(int argc,
+      
+       ## t/t3418-rebase-continue.sh ##
+      @@ t/t3418-rebase-continue.sh: test_orig_head () {
+       test_orig_head --apply
+       test_orig_head --merge
+       
+     -+test_expect_success 'rebase runs auto maintenance at its end' '
+     -+	git checkout -b one-exec main^ &&
+     -+	test_commit F4 &&
+     -+	test_must_fail git rebase -x false main &&
+     -+	GIT_TRACE2_EVENT="$(pwd)/finish.txt" git rebase --continue &&
+     -+	test_subcommand_flex git maintenance run --auto <finish.txt
+     ++test_expect_success 'rebase runs auto maintenance once it is done' '
+     ++	git checkout -b auto-maintenance topic &&
+     ++	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/stop.txt" \
+     ++		git rebase -x false main &&
+     ++	test_subcommand_flex ! git maintenance run --auto <stop.txt &&
+     ++	echo resolved >F2 &&
+     ++	git add F2 &&
+     ++	test_must_fail git rebase --continue &&
+     ++	GIT_TRACE2_EVENT="$(pwd)/end.txt" git rebase --continue &&
+     ++	test_subcommand_flex git maintenance run --auto <end.txt
+      +'
+      +
+       test_done
+     @@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'commit descriptions in ins
+      +	test_subcommand_flex git maintenance run --auto <single.txt &&
+      +	GIT_TRACE2_EVENT="$(pwd)/sequence.txt" \
+      +		git cherry-pick anotherpick yetanotherpick &&
+     ++	test_subcommand_flex git maintenance run --auto <sequence.txt &&
+      +	grep "\"child_start\".*\"maintenance\"" sequence.txt >maintenance &&
+      +	test_line_count = 1 maintenance
+      +'
+     ++
+     ++test_expect_success 'cherry-pick runs auto maintenance once a stopped sequence is done' '
+     ++	pristine_detach initial &&
+     ++	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/stop.txt" \
+     ++		git cherry-pick base..anotherpick &&
+     ++	test_subcommand_flex ! git maintenance run --auto <stop.txt &&
+     ++	echo resolved >foo &&
+     ++	git add foo &&
+     ++	test_must_fail git cherry-pick --continue &&
+     ++	GIT_TRACE2_EVENT="$(pwd)/end.txt" git cherry-pick --skip &&
+     ++	test_subcommand_flex git maintenance run --auto <end.txt
+     ++'
+      +
+       test_done
+ 3:  9a6fc0427a ! 3:  7a353df3d9 sequencer: keep auto maintenance out of the commands a sequence spawns
+     @@ Metadata
+      Author: Thomas Bachem <mail@thomasbachem.com>
+      
+       ## Commit message ##
+     -    sequencer: keep auto maintenance out of the commands a sequence spawns
+     +    sequencer: disable auto maintenance in spawned commands
+      
+     -    The "git commit" and "git merge" the sequencer spawns, and the git
+     -    commands an exec runs, each start "git maintenance run --auto
+     -    --detach", which then works in the background against the sequence
+     -    itself. A "rerere gc" started by the commit of one "git rebase
+     -    --continue" holds MERGE_RR.lock when the next pick needs it, and a
+     -    repack deletes packs the sequencer still has open, which 65cda10d5b
+     -    (sequencer: release the ODB before spawning git commit, 2026-08-12)
+     -    had to work around.
+     +    The "git commit" and "git merge" the sequencer spawns run "git
+     +    maintenance run --auto --detach" as they finish, and so does any
+     +    such command an exec runs. That maintenance then works in the
+     +    background while the sequencer goes on with the sequence, and the
+     +    two get in each other's way. With rerere enabled, the maintenance
+     +    started by the "git commit" of a "git rebase --continue" runs
+     +    "rerere gc", which can still hold MERGE_RR.lock when the next pick
+     +    conflicts. The rebase then dies with "Unable to create
+     +    '.../MERGE_RR.lock': File exists" instead of stopping for the user
+     +    to resolve the conflict. And a repack can delete a pack the
+     +    sequencer still has open, which 65cda10d5b (sequencer: release the
+     +    ODB before spawning git commit, 2026-08-12) works around.
+      
+     -    The loose objects a sequence creates wait for the run at its end that
+     -    the previous commit added. Whether a sequence can be long enough to
+     -    suffer from them before that remains to be seen. Pass
+     -    maintenance.auto=false and gc.auto=0 to the spawned commands through
+     -    GIT_CONFIG_PARAMETERS, which the shell of an exec command hands on to
+     -    whatever it runs, appended after the user's own -c settings so that
+     -    ours win, and built once per run. A command the user runs while the
+     -    sequence is stopped, like "git commit --amend" at an edit, is not the
+     -    sequencer's to control and still runs maintenance.
+     +    Pass maintenance.auto=false to these commands through
+     +    GIT_CONFIG_PARAMETERS, as "git -c" would. We build the value once
+     +    from the one we inherited and append our setting after the user's
+     +    own -c settings so that it wins. The environment also reaches
+     +    everything the command spawns in turn, so a git command run from an
+     +    exec is covered as well. The sequencer also spawns "git stash", "git
+     +    reset" and "git notes", which never run auto maintenance.
+     +
+     +    With the previous commit, rebase, cherry-pick and revert run auto
+     +    maintenance once when they are done, so a sequence now runs it
+     +    exactly once, at the end. A sequence that stops for conflicts used
+     +    to run it at every resolution and now piles up its loose objects
+     +    until the end, as a sequence without conflicts always has.
+     +
+     +    A command the user runs while the sequence is stopped, like "git
+     +    commit --amend" at an edit, still runs auto maintenance. The
+     +    sequencer does not spawn it and has no say in it.
+      
+          Assisted-by: Claude Fable 5.1
+          Signed-off-by: Thomas Bachem <mail@thomasbachem.com>
+     @@ sequencer.c: struct replay_ctx {
+       	 */
+       	unsigned have_message :1;
+      +	/*
+     -+	 * The GIT_CONFIG_PARAMETERS value that keeps auto maintenance out
+     -+	 * of the commands we spawn, built on first use.
+     ++	 * GIT_CONFIG_PARAMETERS for the commands we spawn, with auto
+     ++	 * maintenance turned off. Built on first use.
+      +	 */
+     -+	struct strbuf config_parameters;
+     ++	char *config_parameters;
+       };
+       
+       struct replay_ctx* replay_ctx_new(void)
+     -@@ sequencer.c: struct replay_ctx* replay_ctx_new(void)
+     - 
+     - 	strbuf_init(&ctx->current_fixups, 0);
+     - 	strbuf_init(&ctx->message, 0);
+     -+	strbuf_init(&ctx->config_parameters, 0);
+     - 
+     - 	return ctx;
+     - }
+      @@ sequencer.c: static void replay_ctx_release(struct replay_ctx *ctx)
+       {
+       	strbuf_release(&ctx->current_fixups);
+       	strbuf_release(&ctx->message);
+     -+	strbuf_release(&ctx->config_parameters);
+     ++	free(ctx->config_parameters);
+       }
+       
+       void replay_opts_release(struct replay_opts *opts)
+     @@ sequencer.c: static int run_command_silent_on_success(struct child_process *cmd)
+       }
+       
+      +/*
+     -+ * A sequence runs auto maintenance once it is done, not from every command
+     -+ * it spawns along the way: their background "rerere gc" or repack would
+     -+ * race the sequencer for locks and files it still holds.
+     ++ * Don't let the commands we spawn run auto maintenance. It would race
+     ++ * us for MERGE_RR.lock or delete packs we still have open. Our caller
+     ++ * runs it once the sequence is done.
+      + */
+      +static void disable_auto_maintenance(struct replay_opts *opts,
+      +				     struct child_process *cmd)
+      +{
+     -+	struct strbuf *params = &opts->ctx->config_parameters;
+     -+
+     -+	if (!params->len) {
+     ++	if (!opts->ctx->config_parameters) {
+      +		const char *old = getenv(CONFIG_DATA_ENVIRONMENT);
+     ++		struct strbuf buf = STRBUF_INIT;
+      +
+      +		if (old && *old)
+     -+			strbuf_addstr(params, old);
+     -+		git_config_append_parameter(params, "maintenance.auto", "false");
+     -+		git_config_append_parameter(params, "gc.auto", "0");
+     ++			strbuf_addstr(&buf, old);
+     ++		git_config_append_parameter(&buf, "maintenance.auto", "false");
+     ++		opts->ctx->config_parameters = strbuf_detach(&buf, NULL);
+      +	}
+     -+	strvec_pushf(&cmd->env, "%s=%s", CONFIG_DATA_ENVIRONMENT, params->buf);
+     ++	strvec_pushf(&cmd->env, "%s=%s", CONFIG_DATA_ENVIRONMENT,
+     ++		     opts->ctx->config_parameters);
+      +}
+      +
+       /*
+     @@ sequencer.c: static int continue_single_pick(struct repository *r, struct replay
+       	/*
+      
+       ## t/t3418-rebase-continue.sh ##
+     -@@ t/t3418-rebase-continue.sh: test_expect_success 'rebase runs auto maintenance at its end' '
+     - 	test_subcommand_flex git maintenance run --auto <finish.txt
+     - '
+     - 
+     -+test_expect_success 'rebase spawns no auto maintenance before its end' '
+     -+	git checkout -b two-conflicts topic &&
+     -+	test_commit F2-again F2 222 &&
+     -+	test_must_fail git rebase -x "git commit --allow-empty -m exec" main &&
+     -+	echo resolved >F2 &&
+     -+	git add F2 &&
+     +@@ t/t3418-rebase-continue.sh: test_orig_head --merge
+     + test_expect_success 'rebase runs auto maintenance once it is done' '
+     + 	git checkout -b auto-maintenance topic &&
+     + 	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/stop.txt" \
+     +-		git rebase -x false main &&
+     ++		git rebase -x "git commit --allow-empty -m exec && false" main &&
+     + 	test_subcommand_flex ! git maintenance run --auto <stop.txt &&
+     + 	echo resolved >F2 &&
+     + 	git add F2 &&
+     +-	test_must_fail git rebase --continue &&
+      +	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/mid.txt" \
+      +		git rebase --continue &&
+      +	test_subcommand_flex git commit <mid.txt &&
+      +	test_subcommand_flex ! git maintenance run --auto <mid.txt &&
+     -+	echo resolved >F2 &&
+     -+	git add F2 &&
+     -+	GIT_TRACE2_EVENT="$(pwd)/end.txt" git rebase --continue &&
+     + 	GIT_TRACE2_EVENT="$(pwd)/end.txt" git rebase --continue &&
+     +-	test_subcommand_flex git maintenance run --auto <end.txt
+      +	test_subcommand_flex git maintenance run --auto <end.txt &&
+      +	grep "\"child_start\".*\"maintenance\"" end.txt >maintenance &&
+      +	test_line_count = 1 maintenance
+     -+'
+     -+
+     + '
+     + 
+       test_done
+      
+       ## t/t3510-cherry-pick-sequence.sh ##
+     -@@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'cherry-pick runs auto maintenance once it is done' '
+     - 	test_line_count = 1 maintenance
+     - '
+     - 
+     -+test_expect_success 'cherry-pick spawns no auto maintenance before it is done' '
+     -+	pristine_detach initial &&
+     -+	test_must_fail git cherry-pick base..anotherpick &&
+     -+	echo resolved >foo &&
+     -+	git add foo &&
+     +@@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'commit descriptions in insn sheet are optional' '
+     + 
+     + test_expect_success 'cherry-pick runs auto maintenance once it is done' '
+     + 	pristine_detach base &&
+     +-	GIT_TRACE2_EVENT="$(pwd)/single.txt" git cherry-pick picked &&
+     ++	GIT_TRACE2_EVENT="$(pwd)/single.txt" git cherry-pick --edit picked &&
+     ++	test_subcommand_flex git commit <single.txt &&
+     + 	test_subcommand_flex git maintenance run --auto <single.txt &&
+     ++	grep "\"child_start\".*\"maintenance\"" single.txt >maintenance &&
+     ++	test_line_count = 1 maintenance &&
+     + 	GIT_TRACE2_EVENT="$(pwd)/sequence.txt" \
+     + 		git cherry-pick anotherpick yetanotherpick &&
+     + 	test_subcommand_flex git maintenance run --auto <sequence.txt &&
+     +@@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'cherry-pick runs auto maintenance once a stopped sequence i
+     + 	test_subcommand_flex ! git maintenance run --auto <stop.txt &&
+     + 	echo resolved >foo &&
+     + 	git add foo &&
+     +-	test_must_fail git cherry-pick --continue &&
+      +	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/mid.txt" \
+      +		git cherry-pick --continue &&
+      +	test_subcommand_flex git commit <mid.txt &&
+      +	test_subcommand_flex ! git maintenance run --auto <mid.txt &&
+     -+	echo d >foo &&
+     -+	git add foo &&
+     -+	GIT_TRACE2_EVENT="$(pwd)/end.txt" git cherry-pick --continue &&
+     -+	test_subcommand_flex git commit <end.txt &&
+     + 	GIT_TRACE2_EVENT="$(pwd)/end.txt" git cherry-pick --skip &&
+     +-	test_subcommand_flex git maintenance run --auto <end.txt
+     ++	test_subcommand_flex git maintenance run --auto <end.txt &&
+      +	grep "\"child_start\".*\"maintenance\"" end.txt >maintenance &&
+      +	test_line_count = 1 maintenance
+     -+'
+     -+
+     + '
+     + 
+       test_done
 
 -- 
-2.55.GIT
-
+gitgitgadget
