@@ -1,70 +1,70 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AD33BAD9B
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 20:42:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635EB3B9D91
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 20:43:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788900133; cv=none; b=L2UQgS/SIau74kPo+Hby/PFWRSP7+on5q+FJxJjjxGBOFRCZ5Cg9/ez3txarY8NYLUjDh1aZrc+DfyrvpdDmITh1ZKu3+qYq+OCY52wKTJaBZg1vGESP3K+AdxzECs4WJ/SRHZACOWNm0nFnwLkL/eB0RD618fj0qELk4+n9AfE=
+	t=1788900187; cv=none; b=ss0rro/QeU19iouPcGICDhVezTzb4WlazuYsdDsRsXWmXIwy+HxoVfyM5X8tNGIcNKiiQYHhLTMEvqGHefsr+/c6nPZmfpJU79N1phjKUzm6uFrp1ZwFuiO7jjm6dkYbk0os+2ay3fKgLxJ/iH7rdgiX2MndrDDwBxYgxu6NghQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788900133; c=relaxed/simple;
-	bh=l0Znin7C5JnOpaerSPEsug1d0r/Epm98FYZHvmsSG98=;
+	s=arc-20240116; t=1788900187; c=relaxed/simple;
+	bh=nDJ8OD+i8DIz+DF5lNpoRmGiqKxk1ZIqfKM2tNG0Hrk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ASq0VMXKtgx3vsKwesRRh/Jace6mOmSjv7NYBOKOhQcUMsl9NznbbyInKQhovgMPe5anwCieIm3yDKwRj0oQdO8+72hUTw/loxArCnhUcyMfrxaWsWm5eSDNmCvH8MmCTJ0yt1kEEJuU5GYUXYXA6YOHKLiQczA6qju4pfliGpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XQfb10q7; arc=none smtp.client-ip=209.85.219.50
+	 MIME-Version:To:Cc; b=hJN8xLFqT/pWrya1xSda12759n96r9qpNiwPbb6VrbIVRZGzUWfD8oDaq7mRsh5x/GTInTxoAeh2462vJNgEmp7FV8y1YSr21+Dpc/7MFn6spszmE+7iawEZVxBl4bPs3lD1UZ59idMD/ifpkC0/qk6ntnGSbkq8pLumZs4qKnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kYLktKm6; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XQfb10q7"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-90cd96389efso62339256d6.3
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 13:42:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kYLktKm6"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-84f3ab8750cso3829077b3a.0
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 13:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788900129; x=1789504929; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788900185; x=1789504985; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=pEKdgZ3MluMv9zvbUCx3YzthM9FzVVfHDkFPm3iwmMA=;
-        b=XQfb10q7QsZMPwOw0viYu6RP8icPS1VYW0oOTyoe4CPfK4jnn+c4couKObu52/2bfO
-         itkEUA3bs8RNJWbNBY1Tzhw7KJ3hH1bepQo9k0g3nh6OMDJkeY4yuXD9l8deWm1Pe62J
-         a+MsQOSG/IK5efJdMg/3vZF0e7ffYPu2NtyrjGeTSusUCh/Yb2JoPHgyUgXyJ++2rbWY
-         u/GAqO3fBke09mlyLKSSKE8Thy+2l3je/7i3P7TaURsCO+CFhgDilRU5SuD9NiR62fLV
-         r2rErg02jno2Xb0GbJ0K8Sj15sBOdPmLSjlElrgPXQYhsQFLr5tmG7b4kt39jjT73xiV
-         SQXQ==
+        bh=ECoW117OEQRjnHXvKur9a8tw/weCRTLhrpVvBfgtR2s=;
+        b=kYLktKm6IuwdNBvRDpgYYg6e4Kjxkx1k2tFKoqCUS2u8Na4Kd9TJRUaC/bcLGV4o3s
+         R4zeQBD7oKQTnVjrwIfnxvybHJ+dsQdmj5v0czVe0S0/0CeRtSke2Gs0pVtxB7NO+bfQ
+         9IJvmhSPua6fkGp4gjno6VvG+fXlO4QMtueGdC+dPsYod0hc6yVpwG2/89kFR5/bhQas
+         GUfcKAcec5ypSp7hpjzvufx4Z6Dshyn/j6qepLGsXxZvUBy2meF7AaUot6w1UCJDT2aB
+         z2u3+oMb4/T0GdlhOSeqVjDc7+NMeocnUi/4J9jPTUjvejMA7v5dqoFABTJWYY4HTUhx
+         h7fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788900129; x=1789504929;
+        d=1e100.net; s=20251104; t=1788900185; x=1789504985;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=pEKdgZ3MluMv9zvbUCx3YzthM9FzVVfHDkFPm3iwmMA=;
-        b=pq3L0QprAooKfJT3C4AMSGWahTwqgMHhy0F3ZqpEM4SOTVOWh2O9c8ivkSZICujBKo
-         1Jjodjunbxymolc/xTyF9SLmZLe01nlm/yVyJY4gf+F6zZ/tDEW376LvPnRYs5zuElrm
-         G9qNY/2DvhiDWWF8jDRlduoJSu3IIMEz5e40AeW6QMQKjf+w3NvTFk2yx3I01rwUZH2F
-         taMuXzd39QiuZehhRiCXDX/lBzjoqs3u49g99U8M6vGzrNWr9q7BoPeeQlu8+K76rtD2
-         8MPVi4mJOJ0MszX3GGV2UqO9Xa5CbaFQHvINytKfMqgpWN/uF0j+EIQI4bfbuRnjaYaz
-         T0qg==
-X-Gm-Message-State: AFuF++mAKYgRxNbbDPwQmN8iNKY+M8uUNSe2k2FhxQDW/3NF/b1LvJ/T
-	Du24h6Cc/rKK6LTAAZ/E5LhILaIgK/tJ039cxMhKJFKJZ6cH4IOEo35kVCvgBYfr
-X-Gm-Gg: AYBFou0j1LaC5+JUdb6euC1WLyjZK1IuVRGZtXJYeBmoSx/EKz0kkvRXEUIfkNupkS6
-	5HFITf14jagSmUhPXrnL3yoDRsb6/jniZVb036HTXnIfIU9O5awlfHJElhtKtjF8xY01PVgvcEP
-	S47Oid3/5bO44JKfYAFCa0N2c0pr3f/1oRZvJen5i+Mmh8tbgkLjoRaNEoxpwKFfEQrOy+3zCoR
-	8dpq9c7KIsGuD6GfAYUt40AbELlUx13PiwmC9p02l/9Y7GF+pY+9vk62sZbXzCHLJ8sscC/E/T5
-	ZS4mT9lySMFNbz4Io/m1Jn2BaMps8mB9j8pJy80UaWbL7SsuksYnoIfBhnIBA7pm0h/sybYbMDp
-	OTzELmPtbvaFnq1tdkbLPV5HMFUK4uYp0QLZaIb00Enm4kKgNzvVPW6h10oC+57mIlO239z7V72
-	aZ1K1BxQEwjoLNbAUtIoCOwAydqoex1vknJbaaAVUX/k/GT6JSV3LJeUT2ZluhUDOK
-X-Received: by 2002:a05:6214:4c44:b0:90e:8d45:4b34 with SMTP id 6a1803df08f44-9103eff88demr466466736d6.18.1788900128659;
-        Tue, 08 Sep 2026 13:42:08 -0700 (PDT)
-Received: from [127.0.0.1] ([20.106.198.166])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-910406afaf1sm125386316d6.41.2026.09.08.13.42.07
+        bh=ECoW117OEQRjnHXvKur9a8tw/weCRTLhrpVvBfgtR2s=;
+        b=lD/cTaaJATrnuON0h87jXFbEBy7uC/mMp2qLuCOyBmK1FZHrji648QoLu3ZHXGjVVu
+         GjiIOSCqIz3a9tJ9V5exLz1CkIA+1VuTLgWKTFq+exxpJ3xdtoBRk73v4cwUKVCfu4ZR
+         sjepb9JcvjcL+pFYTyZsN/a8NgMTsFRJDnFvEDblibDoHj29NRZlWaR9vdk8BedIsHbU
+         Y0FGHn2Ks2LA77ilfBbd/VdOcd4ny1qmVNXkXNLFV7v1AUCy/hYeH5yPpoeHexfKGMp/
+         8+aYYpumrKUbc1LOaFGcRYxB+uyL4bFHICe0dVJ3SgcAJ5BTcvHz++OoXEWBphioONaX
+         YQUw==
+X-Gm-Message-State: AFuF++kb7Kbk++0nBkeKPEz34XBeWLC879EC6dS/BnOfBTciQEkIT4vq
+	GvPr8cZfww/Ztb6WRaEbz0a3YuYzCSd5wEpzxV4cGAlIWg1u3pPFEuL9KGyRHA==
+X-Gm-Gg: AYBFou0kSTiKyXn9Sy8yY1yH49n4lWJrvGw2mGdFGHo9QmrzrI3s0kW7dookpckZ9Xt
+	PcEB9s4wDcn5TO9UK5n5CcYltqcDImhnl3iKNC2rbVjJ2YXZJO7P88iHZtCHwWds5lmangUkoLm
+	j7p/bTSiCTxdBvdijCTrxeFZ3l/ggNJ6L77uy7a6hTqYRcLV0PuiM/hN+wwWZQaWSVKxX3lEddD
+	bWe4oYOGuXMZU9zNGE1G3RDss+3vWEt7knHOsbEOSKRkgzGfBH0wk71abp3Jt5Jjc0IzH3DG6ll
+	3H32iPlP9OOT+EgV1rDfvE6OqFOvLOz9KIxFwJO0bP6VVayW1ISTPlnrq6nEq1aoHIMxVF9AlNY
+	5EANFUo0r3GvL9/fRaeP8Q5YDhyI5M4sRiwd3w6o8LCvuMeGstIVcUW069ym8y3ZxeQ46h8zJoS
+	2cp+esIIOM8aSw4Hn8EXv4T6hOAniE4joBfJa+hxbP0hi/dlFK9XEA11zU+0hMFag=
+X-Received: by 2002:a05:6a21:483:b0:3c4:3112:3b with SMTP id adf61e73a8af0-3da3a0a264fmr54302226637.18.1788900184312;
+        Tue, 08 Sep 2026 13:43:04 -0700 (PDT)
+Received: from [127.0.0.1] ([52.155.33.246])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3339a534df1sm44566479eec.7.2026.09.08.13.43.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2026 13:42:07 -0700 (PDT)
-Message-Id: <96349a802e2df9d3f9fed233abe08846ca0f5c9e.1788900120.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2337.v15.git.git.1788900119.gitgitgadget@gmail.com>
-References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
-	<pull.2337.v15.git.git.1788900119.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 08 Sep 2026 20:41:58 +0000
-Subject: [PATCH v15 7/8] history: create squashed commits without editing
+        Tue, 08 Sep 2026 13:43:03 -0700 (PDT)
+Message-Id: <pull.2388.v5.git.git.1788900182711.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
+References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
+From: "Andrew Pleeter via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 08 Sep 2026 20:43:02 +0000
+Subject: [PATCH v5] var: support broken-down idents, signing key, multiple
+ args, and -z
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,1183 +75,1028 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Matt Hunter <m@lfurio.us>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Tuomas Ahola <taahol@utu.fi>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Jeff King <peff@peff.net>,
+    Junio C Hamano <gitster@pobox.com>,
+    Ben Knoble <ben.knoble@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Andrew Pleeter <andrewpleeter@gmail.com>,
+    Andrew Pleeter <andrewpleeter@gmail.com>
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+From: Andrew Pleeter <andrewpleeter@gmail.com>
 
-Create one replacement commit from the resolved range when --no-edit is
-selected. Preserve the authorship and all parents of the oldest commit,
-use the tip tree, and replay descendants through the existing history
-rewrite machinery. Record the complete revision expression in the
-reflog and retain dry-run and update-refs behavior.
+While 'git var' exposes GIT_AUTHOR_IDENT and GIT_COMMITTER_IDENT,
+extracting individual components (name, email, or date) currently
+requires callers to manually parse the composite string. Furthermore,
+there is no way to query the resolved commit signing key through
+'git var', and the command only accepts a single variable at a time.
 
-Resolve fixup!, squash! and amend! subjects while walking the range.
-Reject markers whose targets are not selected and refuse any no-edit
-fold that would discard a squash! or amend! message. A range made
-entirely from related markers can still be consolidated, with the last
-applicable amend! body supplying the message.
+Teach 'git var' to expose individual identity components and commit
+signing configuration, and allow querying multiple variables with
+optional NUL-termination:
 
-Inspired-by: Sergey Chernov <serega.morph@gmail.com>
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+- Add GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and GIT_AUTHOR_DATE.
+- Add GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL, and GIT_COMMITTER_DATE.
+- Add GIT_SIGNING_KEY to resolve the key that would be used to sign
+  the resulting commit if you were to run 'git commit' right now.
+- Allow passing multiple variable arguments (e.g., 'git var
+  GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL') to output each variable
+  sequentially.
+- Support '-z' to terminate variable outputs with NUL bytes.
+- Format 'git var -l -z' using the same convention as 'git config
+  list -z' (newline separating key and value, NUL separating entries).
+- Delimit values of multi-valued variables with NUL when '-z' is given,
+  and output an extra delimiter after multi-valued variables when
+  querying multiple variables to disambiguate the stream.
+- When querying multiple variables, print an empty record for any
+  variable that has no value and continue processing remaining variables.
+- Use parse_options() to strictly require options before arguments.
+- Update Documentation/git-var.adoc and t/t0007-git-var.sh.
+
+Signed-off-by: Andrew Pleeter <andrewpleeter@gmail.com>
 ---
- Documentation/git-history.adoc |  44 ++-
- builtin/history.c              | 324 ++++++++++++++++-
- object.h                       |   2 +-
- t/t3455-history-squash.sh      | 633 +++++++++++++++++++++++++++++++--
- 4 files changed, 968 insertions(+), 35 deletions(-)
+    var: support broken-down idents, signing key, multiple args, and -z
+    
+    Teach git var to expose individual identity components and commit
+    signing configuration, and allow querying multiple variables with
+    optional NUL-termination.
+    
+    
+    Changes since v4:
+    =================
+    
+     * Simplified git_signing_key() to directly call get_signing_key() as
+       used throughout Git (in tag, send-pack, and sign_buffer()).
+     * Renamed null_term to nul_term across builtin/var.c, and simplified
+       show_config() callback handling.
+     * Replaced the redundant pre-validation loop in cmd_var() by validating
+       arguments directly in the main execution loop.
+     * When querying multiple variables, print an empty record (blank line
+       or \0 with -z) for any variable that has no value, and continue
+       printing remaining variables instead of terminating prematurely.
+     * Switched multi-valued variable storage (git_config_val_global()) to
+       internal \0 delimiters, iterating directly through string sequences
+       without allocating a temporary string_list.
+     * For multi-variable queries, output an extra delimiter (\n or \0)
+       after multi-valued variables to clearly mark the end of their list.
+     * Explicitly documented the git var -l -z format and multi-variable
+       handling in Documentation/git-var.adoc.
+     * Added comprehensive tests for unset variables and multi-valued stream
+       delimiters in t/t0007-git-var.sh.
+    
+    
+    Changes since v3:
+    =================
+    
+     * Renamed GIT_DEFAULT_KEY to GIT_SIGNING_KEY per feedback from Phillip
+       Wood and Junio C Hamano; dropped the alias mechanism and
+       commit.gpgsign check.
+     * Used parse_options() with PARSE_OPT_STOP_AT_NON_OPTION in
+       builtin/var.c, strictly enforcing that options precede variable
+       arguments.
+     * Adopted git config list -z format (key\nvalue\0) for git var -l -z to
+       prevent ambiguity with = in config keys.
+     * Delimited multi-valued variable outputs (e.g. GIT_CONFIG_GLOBAL) with
+       NUL bytes under -z.
+     * Replaced char part in ident_part() with enum ident_part.
+     * Split synopsis in Documentation/git-var.adoc into separate lines for
+       -l and <variable>..., and removed awkward legacy phrasing ("of a
+       piece of code").
+     * Added tests in t/t0007-git-var.sh covering the new -z format,
+       multi-valued -z, and argument ordering.
+    
+    
+    Changes since v2:
+    =================
+    
+     * Drop git ident / git whoami subcommand entirely.
+     * Add GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and GIT_AUTHOR_DATE.
+     * Add GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL, and GIT_COMMITTER_DATE.
+     * Add GIT_SIGNING_KEY to resolve commit signing keys.
+     * Teach git var to accept multiple variable arguments (git var <var1>
+       <var2> ...).
+     * Add -z option to terminate outputs with NUL bytes (including git var
+       -l -z).
+     * Update Documentation/git-var.adoc and t/t0007-git-var.sh.
 
-diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-index b660baf94d..fb04a67685 100644
---- a/Documentation/git-history.adoc
-+++ b/Documentation/git-history.adoc
-@@ -44,8 +44,11 @@ at once.
- LIMITATIONS
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2388%2Fanpl1623%2Fmaster-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2388/anpl1623/master-v5
+Pull-Request: https://github.com/git/git/pull/2388
+
+Range-diff vs v4:
+
+ 1:  6fbf973e84 ! 1:  04833673ea var: support broken-down idents, signing key, multiple args, and -z
+     @@ Commit message
+          - Support '-z' to terminate variable outputs with NUL bytes.
+          - Format 'git var -l -z' using the same convention as 'git config
+            list -z' (newline separating key and value, NUL separating entries).
+     -    - Delimit values of multi-valued variables with NUL when '-z' is given.
+     +    - Delimit values of multi-valued variables with NUL when '-z' is given,
+     +      and output an extra delimiter after multi-valued variables when
+     +      querying multiple variables to disambiguate the stream.
+     +    - When querying multiple variables, print an empty record for any
+     +      variable that has no value and continue processing remaining variables.
+          - Use parse_options() to strictly require options before arguments.
+          - Update Documentation/git-var.adoc and t/t0007-git-var.sh.
+      
+     @@ Documentation/git-var.adoc: git-var - Show a Git logical variable
+       
+       DESCRIPTION
+       -----------
+     +-Prints a Git logical variable. Exits with code 1 if the variable has
+     +-no value.
+     ++Prints Git logical variables. Exits with code 1 if any requested
+     ++variable has no value. When multiple variables are requested, an empty
+     ++record (a blank line, or an empty NUL-terminated record when `-z` is given)
+     ++is printed for any variable that has no value, and the command continues
+     ++processing the remaining variables.
+     + 
+     + OPTIONS
+     + -------
+      @@ Documentation/git-var.adoc: OPTIONS
+       	as well. (However, the configuration variables listing functionality
+       	is deprecated in favor of `git config list`.)
+       
+      +`-z`::
+     -+	Terminate entries with NUL instead of newline.
+     ++	Terminate entries with NUL instead of newline. When used with
+     ++	`-l`, the variable name and its value are separated by a newline,
+     ++	and each entry is terminated with a NUL byte.
+      +
+       EXAMPLES
+       --------
+     @@ Documentation/git-var.adoc: endif::git-default-pager[]
+      -lowest priority.  Callers should be prepared for any such path value to contain
+      -multiple items.
+      +values, which are separated by newlines (or NUL bytes if `-z` is given),
+     -+and are listed in order from highest to lowest priority.  Callers should
+     -+be prepared for any such path value to contain multiple items.
+     ++and are listed in order from highest to lowest priority. When querying
+     ++multiple variables, an extra newline (or an extra NUL byte if `-z` is
+     ++given) is printed after the values of a multi-valued variable to mark the
+     ++end of its list. Callers should be prepared for any such path value to
+     ++contain multiple items.
+       
+       Note that paths are printed even if they do not exist, but not if they are
+       disabled by other environment variables.
+     @@ builtin/var.c
+       #include "run-command.h"
+      +#include "strbuf.h"
+      +#include "string-list.h"
+     -+
+     + 
+     +-static const char var_usage[] = "git var (-l | <variable>)";
+      +static const char * const var_usage[] = {
+      +	N_("git var [-z] -l"),
+      +	N_("git var [-z] <variable>..."),
+      +	NULL
+      +};
+     - 
+     --static const char var_usage[] = "git var (-l | <variable>)";
+     ++
+      +enum ident_part {
+      +	IDENT_NAME,
+      +	IDENT_MAIL,
+     @@ builtin/var.c
+      +
+      +static char *git_signing_key(int ident_flag UNUSED)
+      +{
+     -+	char *signing_key = NULL;
+     -+
+     -+	/*
+     -+	 * An empty string in user.signingkey allows overriding and
+     -+	 * clearing a key defined in an outer (e.g. global) config.
+     -+	 */
+     -+	if (!repo_config_get_string(the_repository,
+     -+				    "user.signingkey", &signing_key)) {
+     -+		if (!signing_key || !*signing_key) {
+     -+			free(signing_key);
+     -+			return NULL;
+     -+		}
+     -+		return signing_key;
+     -+	}
+     ++	char *signing_key = get_signing_key();
+      +
+     -+	signing_key = get_signing_key_id();
+      +	if (signing_key && !*signing_key) {
+      +		free(signing_key);
+      +		return NULL;
+     @@ builtin/var.c
+       {
+       	return xstrdup_or_null(git_editor());
+      @@ builtin/var.c: static char *git_config_val_global(int ident_flag UNUSED)
+     + 	git_global_config_paths(&user, &xdg);
+     + 	if (xdg && *xdg) {
+     + 		normalize_path_copy(xdg, xdg);
+     +-		strbuf_addf(&buf, "%s\n", xdg);
+     ++		strbuf_addstr(&buf, xdg);
+     ++		strbuf_addch(&buf, '\0');
+     + 	}
+     + 	if (user && *user) {
+     + 		normalize_path_copy(user, user);
+     +-		strbuf_addf(&buf, "%s\n", user);
+     ++		strbuf_addstr(&buf, user);
+     ++		strbuf_addch(&buf, '\0');
+     + 	}
+       	free(xdg);
+       	free(user);
+     - 	strbuf_trim_trailing_newline(&buf);
+     +-	strbuf_trim_trailing_newline(&buf);
+      -	if (buf.len == 0) {
+      +	if (!buf.len) {
+       		strbuf_release(&buf);
+       		return NULL;
+       	}
+     ++	strbuf_addch(&buf, '\0');
+     + 	return strbuf_detach(&buf, &unused);
+     + }
+     + 
+      @@ builtin/var.c: static struct git_var git_vars[] = {
+       		.name = "GIT_COMMITTER_IDENT",
+       		.read = committer,
+     @@ builtin/var.c: static struct git_var git_vars[] = {
+       };
+       
+      -static void list_vars(void)
+     -+static void list_vars(int null_term)
+     ++static void list_vars(int nul_term)
+       {
+       	struct git_var *ptr;
+      -	char *val;
+     @@ builtin/var.c: static struct git_var git_vars[] = {
+      -				printf("%s=%s\n", ptr->name, val);
+      -			}
+      -			free(val);
+     -+	char delim = null_term ? '\n' : '=';
+     -+	char eol = null_term ? '\0' : '\n';
+     ++	char delim = nul_term ? '\n' : '=';
+     ++	char term = nul_term ? '\0' : '\n';
+      +
+      +	for (ptr = git_vars; ptr->read; ptr++) {
+      +		char *val = ptr->read(0);
+     @@ builtin/var.c: static struct git_var git_vars[] = {
+      +		if (!val)
+      +			continue;
+      +
+     -+		if (ptr->multivalued && *val) {
+     -+			struct string_list list = STRING_LIST_INIT_DUP;
+     -+
+     -+			string_list_split(&list, val, "\n", -1);
+     -+			for (size_t i = 0; i < list.nr; i++)
+     -+				printf("%s%c%s%c", ptr->name, delim,
+     -+				       list.items[i].string, eol);
+     -+			string_list_clear(&list, 0);
+     ++		if (ptr->multivalued) {
+     ++			for (const char *s = val; *s; s += strlen(s) + 1)
+     ++				printf("%s%c%s%c", ptr->name, delim, s, term);
+      +		} else {
+     -+			printf("%s%c%s%c", ptr->name, delim, val, eol);
+     ++			printf("%s%c%s%c", ptr->name, delim, val, term);
+       		}
+      +		free(val);
+      +	}
+     @@ builtin/var.c: static const struct git_var *get_git_var(const char *var)
+       static int show_config(const char *var, const char *value,
+       		       const struct config_context *ctx, void *cb)
+       {
+     -+	int null_term = cb ? *(int *)cb : 0;
+     ++	int *nul_term = cb;
+     ++	char delim = *nul_term ? '\n' : '=';
+     ++	char term = *nul_term ? '\0' : '\n';
+      +
+       	if (value)
+      -		printf("%s=%s\n", var, value);
+     -+		printf("%s%c%s%c", var, null_term ? '\n' : '=',
+     -+		       value, null_term ? '\0' : '\n');
+     ++		printf("%s%c%s%c", var, delim, value, term);
+       	else
+      -		printf("%s\n", var);
+     -+		printf("%s%c", var, null_term ? '\0' : '\n');
+     ++		printf("%s%c", var, term);
+       	return git_default_config(var, value, ctx, cb);
+       }
+       
+     @@ builtin/var.c: static const struct git_var *get_git_var(const char *var)
+      -	const struct git_var *git_var;
+      -	char *val;
+      +	int list = 0;
+     -+	int null_term = 0;
+     ++	int nul_term = 0;
+     ++	int ret = 0;
+      +	int i;
+     ++	char term;
+      +	struct option options[] = {
+      +		OPT_BOOL('l', NULL, &list,
+      +			 N_("list all variables")),
+     -+		OPT_BOOL('z', NULL, &null_term,
+     ++		OPT_BOOL('z', NULL, &nul_term,
+      +			 N_("terminate entries with NUL")),
+      +		OPT_END(),
+      +	};
+     @@ builtin/var.c: static const struct git_var *get_git_var(const char *var)
+      +	if (list) {
+      +		if (argc)
+      +			usage_with_options(var_usage, options);
+     -+		repo_config(the_repository, show_config, &null_term);
+     -+		list_vars(null_term);
+     ++		repo_config(the_repository, show_config, &nul_term);
+     ++		list_vars(nul_term);
+       		return 0;
+       	}
+      +
+      +	if (!argc)
+      +		usage_with_options(var_usage, options);
+     -+
+     -+	for (i = 0; i < argc; i++) {
+     -+		if (!get_git_var(argv[i]))
+     -+			usage_with_options(var_usage, options);
+     -+	}
+      +
+       	repo_config(the_repository, git_default_config, NULL);
+       
+      -	git_var = get_git_var(argv[1]);
+      -	if (!git_var)
+      -		usage(var_usage);
+     ++	term = nul_term ? '\0' : '\n';
+     ++
+      +	for (i = 0; i < argc; i++) {
+      +		const struct git_var *git_var = get_git_var(argv[i]);
+      +		char *val;
+     -+
+     -+		val = git_var->read(IDENT_STRICT);
+     -+		if (!val)
+     -+			return 1;
+       
+      -	val = git_var->read(IDENT_STRICT);
+      -	if (!val)
+      -		return 1;
+     -+		if (git_var->multivalued && null_term && *val) {
+     -+			struct string_list values = STRING_LIST_INIT_DUP;
+     ++		if (!git_var)
+     ++			usage_with_options(var_usage, options);
+       
+      -	printf("%s\n", val);
+      -	free(val);
+     -+			string_list_split(&values, val, "\n", -1);
+     -+			for (size_t j = 0; j < values.nr; j++) {
+     -+				const char *s = values.items[j].string;
+     ++		val = git_var->read(IDENT_STRICT);
+     ++		if (!val) {
+     ++			if (argc == 1)
+     ++				return 1;
+     ++			ret = 1;
+     ++			printf("%c", term);
+     ++			continue;
+     ++		}
+      +
+     -+				printf("%s%c", s, '\0');
+     -+			}
+     -+			string_list_clear(&values, 0);
+     ++		if (git_var->multivalued) {
+     ++			for (const char *s = val; *s; s += strlen(s) + 1)
+     ++				printf("%s%c", s, term);
+     ++			if (argc > 1)
+     ++				printf("%c", term);
+      +		} else {
+     -+			printf("%s%c", val, null_term ? '\0' : '\n');
+     ++			printf("%s%c", val, term);
+      +		}
+      +		free(val);
+      +	}
+       
+     - 	return 0;
+     +-	return 0;
+     ++	return ret;
+       }
+      
+       ## t/t0007-git-var.sh ##
+     @@ t/t0007-git-var.sh: test_expect_success '`git var -l` works even without HOME' '
+      +test_expect_success 'options must precede variable arguments' '
+      +	test_must_fail git var GIT_AUTHOR_NAME -z
+      +'
+     ++
+     ++test_expect_success 'get multiple variables with unset variable outputs blank record' '
+     ++	test_config user.signingkey "" &&
+     ++	cat >expect <<-EOF &&
+     ++	$GIT_AUTHOR_NAME
+     ++
+     ++	$GIT_COMMITTER_NAME
+     ++	EOF
+     ++	test_must_fail git var GIT_AUTHOR_NAME GIT_SIGNING_KEY GIT_COMMITTER_NAME >actual &&
+     ++	test_cmp expect actual
+     ++'
+     ++
+     ++test_expect_success 'get multiple variables with -z and unset variable' '
+     ++	test_config user.signingkey "" &&
+     ++	printf "%s\0\0%s\0" "$GIT_AUTHOR_NAME" "$GIT_COMMITTER_NAME" >expect &&
+     ++	test_must_fail git var -z GIT_AUTHOR_NAME GIT_SIGNING_KEY GIT_COMMITTER_NAME >actual &&
+     ++	test_cmp expect actual
+     ++'
+     ++
+     ++test_expect_success 'get multiple variables including multi-valued variable with -z' '
+     ++	TRASHDIR="$(test-tool path-utils normalize_path_copy "$(pwd)")" &&
+     ++	printf "%s\0%s\0%s\0\0%s\0" "$GIT_AUTHOR_NAME" \
+     ++		"$TRASHDIR/foo/git/config" "$TRASHDIR/.gitconfig" \
+     ++		"$GIT_AUTHOR_EMAIL" >expect &&
+     ++	HOME="$TRASHDIR" XDG_CONFIG_HOME="$TRASHDIR/foo" \
+     ++		git var -z GIT_AUTHOR_NAME GIT_CONFIG_GLOBAL GIT_AUTHOR_EMAIL >actual &&
+     ++	test_cmp expect actual
+     ++'
+      +
+       test_done
+
+
+ Documentation/git-var.adoc |  67 ++++++++--
+ builtin/var.c              | 249 ++++++++++++++++++++++++++++++-------
+ t/t0007-git-var.sh         | 123 ++++++++++++++++++
+ 3 files changed, 383 insertions(+), 56 deletions(-)
+
+diff --git a/Documentation/git-var.adoc b/Documentation/git-var.adoc
+index 697c10aded..40f9f320ef 100644
+--- a/Documentation/git-var.adoc
++++ b/Documentation/git-var.adoc
+@@ -9,12 +9,16 @@ git-var - Show a Git logical variable
+ SYNOPSIS
+ --------
+ [synopsis]
+-git var (-l | <variable>)
++git var [-z] -l
++git var [-z] <variable>...
+ 
+ DESCRIPTION
  -----------
+-Prints a Git logical variable. Exits with code 1 if the variable has
+-no value.
++Prints Git logical variables. Exits with code 1 if any requested
++variable has no value. When multiple variables are requested, an empty
++record (a blank line, or an empty NUL-terminated record when `-z` is given)
++is printed for any variable that has no value, and the command continues
++processing the remaining variables.
  
--This command does not (yet) work with histories that contain merges. You
--should use linkgit:git-rebase[1] with the `--rebase-merges` flag instead.
-+This command does not (yet) replay merge commits onto the rewritten
-+history: if a commit that would be replayed is a merge, the operation is
-+rejected, and you should use linkgit:git-rebase[1] with the
-+`--rebase-merges` flag instead. The `squash` subcommand can still fold merges
-+that lie inside the selected range, subject to the restrictions below.
- 
- Furthermore, the command does not support operations that can result in merge
- conflicts. This limitation is by design as history rewrites are not intended to
-@@ -114,6 +117,43 @@ linkgit:gitglossary[7].
- It is invalid to select either all or no hunks, as that would lead to
- one of the commits becoming empty.
- 
-+`squash <revision-range>`::
-+	Fold all commits in _<revision-range>_ into the oldest commit of that
-+	range. The resulting commit keeps the oldest commit's authorship and
-+	takes the tree of the range's newest commit, so the whole range
-+	collapses into a single commit. Commits above the range are replayed
-+	on top of the result.
-++
-+The range is given in the usual `<base>..<tip>` form, where _<base>_ is
-+the commit just below the oldest commit to squash. For example, `git
-+history squash HEAD~3..HEAD` folds the three most recent commits into
-+one, and `git history squash HEAD~5..HEAD~2` squashes an interior range
-+while leaving the two newest commits in place. Several revisions may be
-+given, for example `HEAD~3..HEAD ^topic` to additionally exclude what is
-+already on `topic`. Rev-list options may also be given, but any that would
-+change how the range is walked are overridden with a warning.
-++
-+With `--no-edit`, the oldest commit's message is preserved, except that an
-+`amend!` commit targeting it replaces its message.
-++
-+The selected commits must form a connected graph with a single tip and must
-+not include a root commit. Every parent of a commit after the oldest one must
-+either be selected or also be a parent of the oldest commit. When the oldest
-+commit is a merge, all of its parents are preserved in the squashed commit.
-++
-+A `fixup!`, `squash!`, or `amend!` commit is refused unless the commit it
-+targets is also in the range, so the fold does not silently absorb a
-+marker meant for a commit outside it. As an exception, a range made up entirely
-+of markers for one target is combined into a single commit. With `--no-edit`,
-+the last `amend!` message is used if there is one; a `squash!` or `amend!` is
-+otherwise refused if folding it would discard its message.
-++
-+A local branch descended from a selected commit but not from the range tip
-+cannot be rewritten as a descendant of the result, so with the default
-+`--update-refs=branches` the command refuses. Rerun with `--update-refs=head`
-+to rewrite only the current branch and leave such branches unchanged. Tags
-+and remote-tracking refs are always left unchanged.
-+
  OPTIONS
  -------
+@@ -24,19 +28,57 @@ OPTIONS
+ 	as well. (However, the configuration variables listing functionality
+ 	is deprecated in favor of `git config list`.)
  
-diff --git a/builtin/history.c b/builtin/history.c
-index e65b76b59f..8176f6794e 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -1011,6 +1011,260 @@ out:
++`-z`::
++	Terminate entries with NUL instead of newline. When used with
++	`-l`, the variable name and its value are separated by a newline,
++	and each entry is terminated with a NUL byte.
++
+ EXAMPLES
+ --------
+-	$ git var GIT_AUTHOR_IDENT
+-	Eric W. Biederman <ebiederm@lnxi.com> 1121223278 -0600
+-
++* Get the author identity:
+++
++------------
++$ git var GIT_AUTHOR_IDENT
++Eric W. Biederman <ebiederm@lnxi.com> 1121223278 -0600
++------------
++
++* Get the author name and email:
+++
++------------
++$ git var GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
++Eric W. Biederman
++ebiederm@lnxi.com
++------------
  
- #define SQUASH_SEEN (1u << 11)
- #define SQUASH_TIP (1u << 12)
-+#define SQUASH_AMEND_TARGET (1u << 13)
+ VARIABLES
+ ---------
+ `GIT_AUTHOR_IDENT`::
+-    The author of a piece of code.
++    The author.
 +
-+static bool is_autosquash_subject(const char *s)
-+{
-+	return starts_with(s, "amend!") || starts_with(s, "fixup!") ||
-+		starts_with(s, "squash!");
-+}
++`GIT_AUTHOR_NAME`::
++    The name of the author.
 +
-+static bool skip_one_autosquash_prefix(const char *s, const char **out)
-+{
-+	if (skip_prefix(s, "amend!", out) || skip_prefix(s, "fixup!", out) ||
-+	    skip_prefix(s, "squash!", out)) {
-+		while (**out == ' ')
-+			(*out)++;
-+		return true;
-+	}
-+	return false;
-+}
++`GIT_AUTHOR_EMAIL`::
++    The email of the author.
 +
-+static void truncate_message_to_subject(struct strbuf *msg)
-+{
-+	const char *eos = strstr(msg->buf, "\n\n");
++`GIT_AUTHOR_DATE`::
++    The date and timezone of the author.
+ 
+ `GIT_COMMITTER_IDENT`::
+-    The person who put a piece of code into Git.
++    The committer.
 +
-+	if (eos)
-+		strbuf_setlen(msg, eos - msg->buf + 1);
-+}
++`GIT_COMMITTER_NAME`::
++    The name of the committer.
 +
-+struct subject_data {
-+	struct strintmap subjects;
-+	struct strbuf subject;
-+	struct strbuf squash_message;
-+	const char *message;
-+	bool edit_message;
++`GIT_COMMITTER_EMAIL`::
++    The email of the committer.
++
++`GIT_COMMITTER_DATE`::
++    The date and timezone of the committer.
++
++`GIT_SIGNING_KEY`::
++    The key that would be used to sign the resulting commit if you were
++    to run `git commit` right now.
+ 
+ `GIT_EDITOR`::
+     Text editor for use by Git commands.  The value is meant to be
+@@ -85,9 +127,12 @@ endif::git-default-pager[]
+     The path to the global (per-user) configuration files, if any.
+ 
+ Most path values contain only one value. However, some can contain multiple
+-values, which are separated by newlines, and are listed in order from highest to
+-lowest priority.  Callers should be prepared for any such path value to contain
+-multiple items.
++values, which are separated by newlines (or NUL bytes if `-z` is given),
++and are listed in order from highest to lowest priority. When querying
++multiple variables, an extra newline (or an extra NUL byte if `-z` is
++given) is printed after the values of a multi-valued variable to mark the
++end of its list. Callers should be prepared for any such path value to
++contain multiple items.
+ 
+ Note that paths are printed even if they do not exist, but not if they are
+ disabled by other environment variables.
+diff --git a/builtin/var.c b/builtin/var.c
+index cc3a43cde2..a6d14d7b35 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -12,25 +12,116 @@
+ #include "config.h"
+ #include "editor.h"
+ #include "environment.h"
++#include "gpg-interface.h"
+ #include "ident.h"
+ #include "pager.h"
+-#include "refs.h"
++#include "parse-options.h"
+ #include "path.h"
+-#include "strbuf.h"
++#include "refs.h"
+ #include "run-command.h"
++#include "strbuf.h"
++#include "string-list.h"
+ 
+-static const char var_usage[] = "git var (-l | <variable>)";
++static const char * const var_usage[] = {
++	N_("git var [-z] -l"),
++	N_("git var [-z] <variable>..."),
++	NULL
 +};
 +
-+#define SUBJECT_DATA_INIT {		\
-+	.subjects = STRINTMAP_INIT,	\
-+	.subject = STRBUF_INIT,		\
-+	.squash_message = STRBUF_INIT,	\
-+}
-+
-+static void subject_data_clear(struct subject_data *data)
-+{
-+	strintmap_clear(&data->subjects);
-+	strbuf_release(&data->subject);
-+	strbuf_release(&data->squash_message);
-+}
-+
-+static int squash_amend_message(struct repository *repo,
-+				struct commit *commit,
-+				struct subject_data *data,
-+				unsigned flags)
-+{
-+	const char *body = data->message + data->subject.len;
-+
-+	while (isspace(*body))
-+		body++;
-+
-+	if (!*body) {
-+		warning(_("ignoring %s (%s): message body is empty"),
-+			repo_find_unique_abbrev(repo, &commit->object.oid,
-+						DEFAULT_ABBREV),
-+			data->subject.buf);
-+		return 0;
-+	}
-+
-+	if (data->edit_message) {
-+		return 0;
-+	} else if (flags & SQUASH_AMEND_TARGET) {
-+		if (starts_with(data->squash_message.buf, "squash!"))
-+			return error(_("squashing %s (%s) would overwrite "
-+				       "'squash!' message, please combine them "
-+				       "using '--edit'"),
-+				     repo_find_unique_abbrev(repo,
-+							     &commit->object.oid,
-+							     DEFAULT_ABBREV),
-+				     data->subject.buf);
-+		if (starts_with(data->squash_message.buf, "fixup!"))
-+			strbuf_splice(&data->squash_message, 0, 5, "amend!", 5);
-+		if (starts_with(data->squash_message.buf, "amend!")) {
-+			truncate_message_to_subject(&data->squash_message);
-+			strbuf_addch(&data->squash_message, '\n');
-+		} else {
-+			strbuf_reset(&data->squash_message);
-+		}
-+		strbuf_addstr(&data->squash_message, body);
-+		strbuf_complete_line(&data->squash_message);
-+	} else {
-+		return error(_("cannot squash %s (%s) that does not target "
-+			       "base commit without '--edit'"),
-+			     repo_find_unique_abbrev(repo, &commit->object.oid,
-+						     DEFAULT_ABBREV),
-+			     data->subject.buf);
-+	}
-+	return 0;
-+}
-+
-+static int squash_squash_message(struct repository *repo,
-+				struct commit *commit,
-+				struct subject_data *data,
-+				unsigned flags)
-+{
-+	const char *body = data->message + data->subject.len;
-+
-+	while (isspace(*body))
-+		body++;
-+
-+	if (data->edit_message) {
-+		return 0;
-+	} else if (flags & SQUASH_AMEND_TARGET) {
-+		if (starts_with(data->squash_message.buf, "fixup!")) {
-+			truncate_message_to_subject(&data->squash_message);
-+			strbuf_splice(&data->squash_message, 0, 5, "squash", 6);
-+		}
-+		if (starts_with(data->squash_message.buf, "squash!")) {
-+			strbuf_addch(&data->squash_message, '\n');
-+			strbuf_addstr(&data->squash_message, body);
-+			strbuf_complete_line(&data->squash_message);
-+		} else {
-+			return error(_("squashing %s (%s) would discard its "
-+				       "message, please combine them using "
-+				       "'--edit'"),
-+				     repo_find_unique_abbrev(repo,
-+							     &commit->object.oid,
-+							     DEFAULT_ABBREV),
-+				     data->subject.buf);
-+		}
-+	} else {
-+		return error(_("cannot squash %s (%s) that does not target "
-+			       "base commit without '--edit'"),
-+			      repo_find_unique_abbrev(repo, &commit->object.oid,
-+						      DEFAULT_ABBREV),
-+			      data->subject.buf);
-+	}
-+	return 0;
-+}
-+
-+static int squash_check_can_autosquash(struct repository *repo,
-+				       struct commit *commit,
-+				       struct subject_data *data,
-+				       unsigned flags)
-+{
-+	commit->object.flags |= flags & SQUASH_AMEND_TARGET;
-+	if (starts_with(data->subject.buf, "amend!"))
-+		return squash_amend_message(repo, commit, data, flags);
-+	else if (starts_with(data->subject.buf, "squash!"))
-+		return squash_squash_message(repo, commit, data, flags);
-+
-+	return 0;
-+}
-+
-+static int squash_check_autosquash_subject(struct repository *repo,
-+					   struct commit *commit,
-+					   struct subject_data *data)
-+{
-+	const char* s = data->subject.buf;
-+	struct commit *target;
-+	struct hashmap_iter iter;
-+	struct strmap_entry *entry;
-+	/* Try skipping autosquash prefixes one at a time to allow
-+	 * squashing
-+	 *     a commit
-+	 *     fixup! fixup! a commit
-+	 *
-+	 * where we may have started with
-+	 *     a commit
-+	 *     fixup! a commit
-+	 *     fixup! fixup! a commit
-+	 *
-+	 * and squashed the first fixup separately from the second
-+	 */
-+	while (skip_one_autosquash_prefix(s, &s)) {
-+		unsigned flags = strintmap_get(&data->subjects, s);
-+		if (flags)
-+			return squash_check_can_autosquash(repo, commit, data, flags);
-+	}
-+	/*
-+	 * Allow "fixup! <hex object id>", but not "fixup! HEAD^" or
-+	 * "fixup! main". If the target is not being squashed check the subject
-+	 * to allow "fixup! abc123" and "fixup! <subject of abc123>" to be
-+	 * squashed together.
-+	 */
-+	target = lookup_commit_reference_by_name(s);
-+	if (target && starts_with(oid_to_hex(&target->object.oid), s)) {
-+		unsigned flags =
-+			target->object.flags & (SQUASH_SEEN | SQUASH_AMEND_TARGET);
-+		if (!flags) {
-+			const char *subject_start;
-+			const char *buffer = repo_logmsg_reencode(repo, target,
-+								  NULL, NULL);
-+			size_t subject_len = find_commit_subject(buffer,
-+								 &subject_start);
-+			char *subject = xmemdupz(subject_start, subject_len);
-+
-+			flags = strintmap_get(&data->subjects, subject);
-+			free(subject);
-+			repo_unuse_commit_buffer(repo, target, buffer);
-+		}
-+		if (flags)
-+			return squash_check_can_autosquash(repo, commit,
-+							   data, flags);
-+	}
-+	/* Try subject prefix matches */
-+	strintmap_for_each_entry(&data->subjects, &iter, entry) {
-+		s = data->subject.buf;
-+		while(skip_one_autosquash_prefix(s, &s)) {
-+			if (starts_with(entry->key, s)) {
-+				unsigned value = (intptr_t)entry->value;
-+
-+				return squash_check_can_autosquash(repo, commit,
-+								   data, value);
-+			}
-+		}
-+	}
-+	return error(_("cannot squash %s (%s): its target is not being "
-+		       "squashed"),
-+		       repo_find_unique_abbrev(repo, &commit->object.oid,
-+					       DEFAULT_ABBREV),
-+		       data->subject.buf);
-+}
-+
-+static int squash_check_subject(struct repository *repo,
-+				struct commit *commit,
-+				struct subject_data *data)
-+{
-+	int ret = 0;
-+	const char *buf = repo_logmsg_reencode(repo, commit, NULL, NULL);
-+	size_t subject_len = find_commit_subject(buf, &data->message);
-+
-+	strbuf_reset(&data->subject);
-+	strbuf_add(&data->subject, data->message, subject_len);
-+
-+	if (!strintmap_get_size(&data->subjects)) {
-+		const char *s;
-+
-+		strbuf_addstr(&data->squash_message, data->message);
-+		strbuf_complete_line(&data->squash_message);
-+		/*
-+		 * Strip a single autosquash prefix to allow squashing
-+		 *     fixup! base
-+		 *     amend! base
-+		 */
-+		s = data->subject.buf;
-+		skip_one_autosquash_prefix(s, &s);
-+		strintmap_set(&data->subjects, s, SQUASH_AMEND_TARGET | SQUASH_SEEN);
-+		commit->object.flags |= SQUASH_AMEND_TARGET;
-+	} else if (is_autosquash_subject(data->subject.buf)) {
-+		ret = squash_check_autosquash_subject(repo, commit, data);
-+	} else {
-+		strintmap_set(&data->subjects, data->subject.buf, SQUASH_SEEN);
-+	}
-+	repo_unuse_commit_buffer(repo, commit, buf);
-+	return ret;
-+}
++enum ident_part {
++	IDENT_NAME,
++	IDENT_MAIL,
++	IDENT_DATE,
++};
  
- static int setup_squash_revisions(struct repository *repo,
- 				  int argc, const char **argv,
-@@ -1067,9 +1321,11 @@ static int resolve_squash_range(struct repository *repo,
- 				bool update_branches,
- 				int argc, const char **argv,
- 				struct commit **oldest_out,
--				struct commit **tip_out)
-+				struct commit **tip_out,
-+				char **message_out)
+ static char *committer(int ident_flag)
  {
- 	struct rev_info revs;
-+	struct subject_data subject_data = SUBJECT_DATA_INIT;
- 	struct commit *commit, *oldest = NULL, *tip = NULL;
- 	int ret, tip_count = 0;
- 	bool walk_started = false;
-@@ -1132,6 +1388,10 @@ static int resolve_squash_range(struct repository *repo,
- 			commit_list_insert(commit, &filter.with_commit);
- 			oldest = commit;
- 		}
-+		if (squash_check_subject(repo, commit, &subject_data)) {
-+			ret = -1;
-+			goto out;
-+		}
- 		tip = commit;
- 		tip->object.flags |= SQUASH_SEEN | SQUASH_TIP;
- 		tip_count++;
-@@ -1200,12 +1460,15 @@ static int resolve_squash_range(struct repository *repo,
- 
- 	*oldest_out = oldest;
- 	*tip_out = tip;
-+	*message_out = strbuf_detach(&subject_data.squash_message, NULL);
- 	ret = 0;
- 
- out:
--	clear_object_flags(repo, SQUASH_SEEN | SQUASH_TIP);
-+	clear_object_flags(repo, SQUASH_SEEN | SQUASH_TIP |
-+			   SQUASH_AMEND_TARGET);
- 	if (walk_started)
- 		reset_revision_walk();
-+	subject_data_clear(&subject_data);
- 	release_revisions(&revs);
- 	ref_filter_clear(&filter);
- 	ref_array_clear(&refs);
-@@ -1234,23 +1497,68 @@ static int cmd_history_squash(int argc,
- 			 N_("edit the commit message")),
- 		OPT_END(),
- 	};
--	struct commit *oldest, *tip;
-+	struct strbuf reflog_msg = STRBUF_INIT;
-+	struct commit *oldest, *tip, *rewritten;
-+	const struct object_id *base_tree_oid, *tip_tree_oid;
-+	char *message_template = NULL;
-+	struct rev_info revs = { 0 };
- 	int ret;
- 
- 	argc = parse_options(argc, argv, prefix, options, usage,
- 			     PARSE_OPT_KEEP_UNKNOWN_OPT | PARSE_OPT_KEEP_ARGV0);
--	if (argc < 2)
--		return error(_("command expects a revision range"));
-+	if (argc < 2) {
-+		ret = error(_("command expects a revision range"));
-+		goto out;
-+	}
- 	repo_config(repo, git_default_config, NULL);
-+
- 	if (action == REF_ACTION_DEFAULT)
- 		action = REF_ACTION_BRANCHES;
- 
-+	strbuf_addstr(&reflog_msg, "squash: updating ");
-+	strbuf_join_argv(&reflog_msg, argc - 1, argv + 1, ' ');
-+
- 	ret = resolve_squash_range(repo, action == REF_ACTION_BRANCHES,
--				   argc, argv, &oldest, &tip);
-+				   argc, argv, &oldest, &tip,
-+				   &message_template);
- 	if (ret < 0)
--		return ret;
-+		goto out;
-+	if (edit) {
-+		ret = error(_("message editing is not supported yet; use '--no-edit'"));
-+		goto out;
-+	}
-+
-+	ret = setup_revwalk(repo, action, tip, &revs);
-+	if (ret < 0)
-+		goto out;
-+
-+	base_tree_oid = &repo_get_commit_tree(repo,
-+					oldest->parents->item)->object.oid;
-+	tip_tree_oid = &repo_get_commit_tree(repo, tip)->object.oid;
-+
-+	ret = commit_tree_ext(repo, "squash", oldest, message_template,
-+			      oldest->parents, base_tree_oid, tip_tree_oid,
-+			      &rewritten, 0);
-+	if (ret < 0) {
-+		ret = error(_("failed writing squashed commit"));
-+		goto out;
-+	}
-+
-+	ret = handle_reference_updates(&revs, action, tip, rewritten,
-+				       reflog_msg.buf, dry_run,
-+				       REPLAY_EMPTY_COMMIT_ABORT);
-+	if (ret < 0) {
-+		ret = error(_("failed replaying descendants"));
-+		goto out;
-+	}
- 
--	return error(_("squashing commits is not implemented yet"));
-+	ret = 0;
-+
-+out:
-+	strbuf_release(&reflog_msg);
-+	release_revisions(&revs);
-+	free(message_template);
-+	return ret;
+ 	return xstrdup_or_null(git_committer_info(ident_flag));
  }
  
- static int update_worktree(struct repository *repo,
-diff --git a/object.h b/object.h
-index dcf30156ca..46cade33fb 100644
---- a/object.h
-+++ b/object.h
-@@ -74,7 +74,7 @@ void object_array_init(struct object_array *array);
-  * bisect.c:                                        16
-  * bundle.c:                                        16
-  * http-push.c:                          11-----14
-- * builtin/history.c:                    1112
-+ * builtin/history.c:                    11---13
-  * commit-graph.c:                                15
-  * commit-reach.c:                                  16-------20
-  * builtin/last-modified.c:                         1617
-diff --git a/t/t3455-history-squash.sh b/t/t3455-history-squash.sh
-index b1f65de5f5..fb06637aaf 100755
---- a/t/t3455-history-squash.sh
-+++ b/t/t3455-history-squash.sh
-@@ -4,11 +4,50 @@ test_description='tests for git-history squash subcommand'
- 
- . ./test-lib.sh
- 
--test_expect_success 'setup linear history' '
-+stage_file () {
-+	printf "%s\n" "$1" >file &&
-+	git add file
++static char *ident_part(const char *ident, enum ident_part part)
++{
++	struct ident_split split;
++
++	if (!ident)
++		return NULL;
++	if (split_ident_line(&split, ident, strlen(ident)))
++		return NULL;
++
++	switch (part) {
++	case IDENT_NAME:
++		if (!split.name_begin || !split.name_end)
++			return NULL;
++		return xmemdupz(split.name_begin,
++				split.name_end - split.name_begin);
++	case IDENT_MAIL:
++		if (!split.mail_begin || !split.mail_end)
++			return NULL;
++		return xmemdupz(split.mail_begin,
++				split.mail_end - split.mail_begin);
++	case IDENT_DATE:
++		if (!split.date_begin)
++			return NULL;
++		if (split.tz_end)
++			return xmemdupz(split.date_begin,
++					split.tz_end -
++					split.date_begin);
++		if (split.date_end)
++			return xmemdupz(split.date_begin,
++					split.date_end -
++					split.date_begin);
++		return NULL;
++	default:
++		return NULL;
++	}
 +}
 +
-+commit_with_message () {
-+	printf "%b" "$1" >msg &&
-+	git commit --allow-empty -qF msg
++static char *committer_name(int ident_flag)
++{
++	return ident_part(git_committer_info(ident_flag), IDENT_NAME);
 +}
 +
-+check_commit_count () {
-+	git rev-list --count "$1" >actual &&
-+	echo "$2" >expect &&
++static char *committer_email(int ident_flag)
++{
++	return ident_part(git_committer_info(ident_flag), IDENT_MAIL);
++}
++
++static char *committer_date(int ident_flag)
++{
++	return ident_part(git_committer_info(ident_flag), IDENT_DATE);
++}
++
+ static char *author(int ident_flag)
+ {
+ 	return xstrdup_or_null(git_author_info(ident_flag));
+ }
+ 
++static char *author_name(int ident_flag)
++{
++	return ident_part(git_author_info(ident_flag), IDENT_NAME);
++}
++
++static char *author_email(int ident_flag)
++{
++	return ident_part(git_author_info(ident_flag), IDENT_MAIL);
++}
++
++static char *author_date(int ident_flag)
++{
++	return ident_part(git_author_info(ident_flag), IDENT_DATE);
++}
++
++static char *git_signing_key(int ident_flag UNUSED)
++{
++	char *signing_key = get_signing_key();
++
++	if (signing_key && !*signing_key) {
++		free(signing_key);
++		return NULL;
++	}
++	return signing_key;
++}
++
+ static char *editor(int ident_flag UNUSED)
+ {
+ 	return xstrdup_or_null(git_editor());
+@@ -99,19 +190,21 @@ static char *git_config_val_global(int ident_flag UNUSED)
+ 	git_global_config_paths(&user, &xdg);
+ 	if (xdg && *xdg) {
+ 		normalize_path_copy(xdg, xdg);
+-		strbuf_addf(&buf, "%s\n", xdg);
++		strbuf_addstr(&buf, xdg);
++		strbuf_addch(&buf, '\0');
+ 	}
+ 	if (user && *user) {
+ 		normalize_path_copy(user, user);
+-		strbuf_addf(&buf, "%s\n", user);
++		strbuf_addstr(&buf, user);
++		strbuf_addch(&buf, '\0');
+ 	}
+ 	free(xdg);
+ 	free(user);
+-	strbuf_trim_trailing_newline(&buf);
+-	if (buf.len == 0) {
++	if (!buf.len) {
+ 		strbuf_release(&buf);
+ 		return NULL;
+ 	}
++	strbuf_addch(&buf, '\0');
+ 	return strbuf_detach(&buf, &unused);
+ }
+ 
+@@ -125,10 +218,34 @@ static struct git_var git_vars[] = {
+ 		.name = "GIT_COMMITTER_IDENT",
+ 		.read = committer,
+ 	},
++	{
++		.name = "GIT_COMMITTER_NAME",
++		.read = committer_name,
++	},
++	{
++		.name = "GIT_COMMITTER_EMAIL",
++		.read = committer_email,
++	},
++	{
++		.name = "GIT_COMMITTER_DATE",
++		.read = committer_date,
++	},
+ 	{
+ 		.name = "GIT_AUTHOR_IDENT",
+ 		.read = author,
+ 	},
++	{
++		.name = "GIT_AUTHOR_NAME",
++		.read = author_name,
++	},
++	{
++		.name = "GIT_AUTHOR_EMAIL",
++		.read = author_email,
++	},
++	{
++		.name = "GIT_AUTHOR_DATE",
++		.read = author_date,
++	},
+ 	{
+ 		.name = "GIT_EDITOR",
+ 		.read = editor,
+@@ -145,6 +262,10 @@ static struct git_var git_vars[] = {
+ 		.name = "GIT_DEFAULT_BRANCH",
+ 		.read = default_branch,
+ 	},
++	{
++		.name = "GIT_SIGNING_KEY",
++		.read = git_signing_key,
++	},
+ 	{
+ 		.name = "GIT_SHELL_PATH",
+ 		.read = shell_path,
+@@ -172,34 +293,35 @@ static struct git_var git_vars[] = {
+ 	},
+ };
+ 
+-static void list_vars(void)
++static void list_vars(int nul_term)
+ {
+ 	struct git_var *ptr;
+-	char *val;
+-
+-	for (ptr = git_vars; ptr->read; ptr++)
+-		if ((val = ptr->read(0))) {
+-			if (ptr->multivalued && *val) {
+-				struct string_list list = STRING_LIST_INIT_DUP;
+-
+-				string_list_split(&list, val, "\n", -1);
+-				for (size_t i = 0; i < list.nr; i++)
+-					printf("%s=%s\n", ptr->name, list.items[i].string);
+-				string_list_clear(&list, 0);
+-			} else {
+-				printf("%s=%s\n", ptr->name, val);
+-			}
+-			free(val);
++	char delim = nul_term ? '\n' : '=';
++	char term = nul_term ? '\0' : '\n';
++
++	for (ptr = git_vars; ptr->read; ptr++) {
++		char *val = ptr->read(0);
++
++		if (!val)
++			continue;
++
++		if (ptr->multivalued) {
++			for (const char *s = val; *s; s += strlen(s) + 1)
++				printf("%s%c%s%c", ptr->name, delim, s, term);
++		} else {
++			printf("%s%c%s%c", ptr->name, delim, val, term);
+ 		}
++		free(val);
++	}
+ }
+ 
+ static const struct git_var *get_git_var(const char *var)
+ {
+ 	struct git_var *ptr;
++
+ 	for (ptr = git_vars; ptr->read; ptr++) {
+-		if (strcmp(var, ptr->name) == 0) {
++		if (!strcmp(var, ptr->name))
+ 			return ptr;
+-		}
+ 	}
+ 	return NULL;
+ }
+@@ -207,42 +329,79 @@ static const struct git_var *get_git_var(const char *var)
+ static int show_config(const char *var, const char *value,
+ 		       const struct config_context *ctx, void *cb)
+ {
++	int *nul_term = cb;
++	char delim = *nul_term ? '\n' : '=';
++	char term = *nul_term ? '\0' : '\n';
++
+ 	if (value)
+-		printf("%s=%s\n", var, value);
++		printf("%s%c%s%c", var, delim, value, term);
+ 	else
+-		printf("%s\n", var);
++		printf("%s%c", var, term);
+ 	return git_default_config(var, value, ctx, cb);
+ }
+ 
+ int cmd_var(int argc,
+ 	    const char **argv,
+-	    const char *prefix UNUSED,
++	    const char *prefix,
+ 	    struct repository *repo UNUSED)
+ {
+-	const struct git_var *git_var;
+-	char *val;
++	int list = 0;
++	int nul_term = 0;
++	int ret = 0;
++	int i;
++	char term;
++	struct option options[] = {
++		OPT_BOOL('l', NULL, &list,
++			 N_("list all variables")),
++		OPT_BOOL('z', NULL, &nul_term,
++			 N_("terminate entries with NUL")),
++		OPT_END(),
++	};
+ 
+-	show_usage_if_asked(argc, argv, var_usage);
+-	if (argc != 2)
+-		usage(var_usage);
++	argc = parse_options(argc, argv, prefix, options,
++			     var_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+ 
+-	if (strcmp(argv[1], "-l") == 0) {
+-		repo_config(the_repository, show_config, NULL);
+-		list_vars();
++	if (list) {
++		if (argc)
++			usage_with_options(var_usage, options);
++		repo_config(the_repository, show_config, &nul_term);
++		list_vars(nul_term);
+ 		return 0;
+ 	}
++
++	if (!argc)
++		usage_with_options(var_usage, options);
++
+ 	repo_config(the_repository, git_default_config, NULL);
+ 
+-	git_var = get_git_var(argv[1]);
+-	if (!git_var)
+-		usage(var_usage);
++	term = nul_term ? '\0' : '\n';
++
++	for (i = 0; i < argc; i++) {
++		const struct git_var *git_var = get_git_var(argv[i]);
++		char *val;
+ 
+-	val = git_var->read(IDENT_STRICT);
+-	if (!val)
+-		return 1;
++		if (!git_var)
++			usage_with_options(var_usage, options);
+ 
+-	printf("%s\n", val);
+-	free(val);
++		val = git_var->read(IDENT_STRICT);
++		if (!val) {
++			if (argc == 1)
++				return 1;
++			ret = 1;
++			printf("%c", term);
++			continue;
++		}
++
++		if (git_var->multivalued) {
++			for (const char *s = val; *s; s += strlen(s) + 1)
++				printf("%s%c", s, term);
++			if (argc > 1)
++				printf("%c", term);
++		} else {
++			printf("%s%c", val, term);
++		}
++		free(val);
++	}
+ 
+-	return 0;
++	return ret;
+ }
+diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
+index 2b60317758..92b68b9ab4 100755
+--- a/t/t0007-git-var.sh
++++ b/t/t0007-git-var.sh
+@@ -276,4 +276,127 @@ test_expect_success '`git var -l` works even without HOME' '
+ 	)
+ '
+ 
++test_expect_success 'get author identity components' '
++	test_tick &&
++	echo "$GIT_AUTHOR_NAME" >expect.name &&
++	echo "$GIT_AUTHOR_EMAIL" >expect.email &&
++	echo "$GIT_AUTHOR_DATE" >expect.date &&
++	git var GIT_AUTHOR_NAME >actual.name &&
++	git var GIT_AUTHOR_EMAIL >actual.email &&
++	git var GIT_AUTHOR_DATE >actual.date &&
++	test_cmp expect.name actual.name &&
++	test_cmp expect.email actual.email &&
++	test_cmp expect.date actual.date
++'
++
++test_expect_success 'get committer identity components' '
++	test_tick &&
++	echo "$GIT_COMMITTER_NAME" >expect.name &&
++	echo "$GIT_COMMITTER_EMAIL" >expect.email &&
++	echo "$GIT_COMMITTER_DATE" >expect.date &&
++	git var GIT_COMMITTER_NAME >actual.name &&
++	git var GIT_COMMITTER_EMAIL >actual.email &&
++	git var GIT_COMMITTER_DATE >actual.date &&
++	test_cmp expect.name actual.name &&
++	test_cmp expect.email actual.email &&
++	test_cmp expect.date actual.date
++'
++
++test_expect_success 'get multiple variables' '
++	test_tick &&
++	cat >expect <<-EOF &&
++	$GIT_AUTHOR_NAME
++	$GIT_AUTHOR_EMAIL
++	$GIT_COMMITTER_NAME
++	$GIT_COMMITTER_EMAIL
++	EOF
++	git var GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL >actual &&
 +	test_cmp expect actual
-+}
++'
 +
-+check_log_subjects () {
-+	git log --format="%s" "$1" >actual &&
-+	cat >expect &&
++test_expect_success 'get multiple variables with -z' '
++	test_tick &&
++	printf "%s\0" "$GIT_AUTHOR_NAME" "$GIT_AUTHOR_EMAIL" >expect &&
++	git var -z GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL >actual &&
 +	test_cmp expect actual
-+}
++'
 +
-+check_log_messages () {
-+	git log --format="%B" "$1" >actual &&
-+	cat >expect &&
++test_expect_success 'get multi-valued variable with -z' '
++	TRASHDIR="$(test-tool path-utils normalize_path_copy "$(pwd)")" &&
++	HOME="$TRASHDIR" XDG_CONFIG_HOME="$TRASHDIR/foo" git var -z GIT_CONFIG_GLOBAL >actual &&
++	printf "%s\0" "$TRASHDIR/foo/git/config" "$TRASHDIR/.gitconfig" >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'git var -l -z' '
++	git var -l -z >actual &&
++	tr "\0" "\n" <actual >actual.lines &&
++	echo "$GIT_AUTHOR_NAME" >expect &&
++	sed -n "/^GIT_AUTHOR_NAME$/{n;p;}" actual.lines >actual.author &&
++	test_cmp expect actual.author &&
++	echo false >expect &&
++	sed -n "/^core\.bare$/{n;p;}" actual.lines >actual.bare &&
++	test_cmp expect actual.bare
++'
++
++test_expect_success 'get GIT_SIGNING_KEY with user.signingkey configured' '
++	test_config user.signingkey "TEST_KEY_ID" &&
++	echo "TEST_KEY_ID" >expect &&
++	git var GIT_SIGNING_KEY >actual &&
 +	test_cmp expect actual
-+}
++'
 +
-+# Checks that the author data of two commits matches
-+# Usage: check_commit_author <rev1> <rev2>
-+check_commit_author () {
-+	git show -s --format="%an <%ae> %ad" "$1" >expect &&
-+	git show -s --format="%an <%ae> %ad" "$2" >actual &&
++test_expect_success 'get GIT_SIGNING_KEY fails when unset' '
++	test_config user.signingkey "" &&
++	test_must_fail git var GIT_SIGNING_KEY
++'
++
++test_expect_success 'git var -l lists new variables' '
++	git var -l >actual &&
++	test_grep "^GIT_AUTHOR_NAME=" actual &&
++	test_grep "^GIT_AUTHOR_EMAIL=" actual &&
++	test_grep "^GIT_AUTHOR_DATE=" actual &&
++	test_grep "^GIT_COMMITTER_NAME=" actual &&
++	test_grep "^GIT_COMMITTER_EMAIL=" actual &&
++	test_grep "^GIT_COMMITTER_DATE=" actual
++'
++
++test_expect_success 'git var -l lists GIT_SIGNING_KEY when configured' '
++	test_config user.signingkey "TEST_KEY_ID" &&
++	git var -l >actual &&
++	test_grep "^GIT_SIGNING_KEY=TEST_KEY_ID" actual
++'
++
++test_expect_success 'options must precede variable arguments' '
++	test_must_fail git var GIT_AUTHOR_NAME -z
++'
++
++test_expect_success 'get multiple variables with unset variable outputs blank record' '
++	test_config user.signingkey "" &&
++	cat >expect <<-EOF &&
++	$GIT_AUTHOR_NAME
++
++	$GIT_COMMITTER_NAME
++	EOF
++	test_must_fail git var GIT_AUTHOR_NAME GIT_SIGNING_KEY GIT_COMMITTER_NAME >actual &&
 +	test_cmp expect actual
-+}
-+
-+test_expect_success 'setup linear history touching two files' '
- 	test_commit base file a start &&
--	test_commit one file b &&
--	test_commit two file c &&
--	test_commit three file d
-+	GIT_AUTHOR_NAME=One GIT_AUTHOR_EMAIL=one@example.com \
-+		test_commit one other x &&
-+	GIT_AUTHOR_NAME=Two GIT_AUTHOR_EMAIL=two@example.com \
-+		test_commit two file c &&
-+	GIT_AUTHOR_NAME=Three GIT_AUTHOR_EMAIL=three@example.com \
-+		test_commit three file d
- '
- 
- test_expect_success 'errors on missing range argument' '
-@@ -29,40 +68,331 @@ test_expect_success 'errors on a single revision that is not a range' '
- '
- 
- test_expect_success 'errors on a range holding a single commit' '
-+	git reset --hard three &&
-+	head_before=$(git rev-parse HEAD) &&
-+
- 	test_must_fail git history squash "HEAD^!" 2>err &&
--	test_grep "single commit; nothing to squash" err
-+	test_grep "single commit; nothing to squash" err &&
-+	test_cmp_rev "$head_before" HEAD
- '
- 
--test_expect_success 'rejects a root commit' '
-+test_expect_success 'rejects root commit' '
-+	# create a disconnected root commit
- 	oid=$(git commit-tree -m root three^{tree}) &&
--	test_must_fail git history squash \
--		--ancestry-path=start "$oid..three" 2>err &&
--	test_grep "cannot squash down to root commit" err
-+	# because we pass --ancestry-path when calling setup_revs() it the
-+	# revision walk will only include commits decended from $oid so
-+	# we need to give it another --ancestry-path commit to actually walk
-+	# any commits.
-+	test_must_fail git history squash --ancestry-path=start $oid..three 2>err &&
-+	echo "error: cannot squash down to root commit" >expect &&
-+	test_cmp expect err
- '
- 
- test_expect_success 'rejects multiple tips' '
- 	oid=$(git commit-tree -m tip -p start^0 three^{tree}) &&
--	test_must_fail git history squash ^start "$oid" three~1 2>err &&
--	test_grep "revision range contains more than one tip" err
-+	test_must_fail git history squash ^start $oid three~1 2>err &&
-+	echo "error: the revision range contains more than one tip commit" >expect &&
-+	test_cmp expect err &&
-+
-+	git reset --hard three &&
-+	git history squash --no-edit ^start three~1 three &&
-+	test_cmp_rev HEAD~1 start^0 &&
-+	test_cmp_rev HEAD^{tree} three^{tree}
- '
- 
--test_expect_success 'rejects a merge parent outside the range' '
--	git reset --hard start &&
-+test_expect_success 'accepts multiple revision arguments with an exclusion' '
-+	git reset --hard three &&
-+	git branch -f keep HEAD~2 &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit start..HEAD ^keep &&
-+
-+	git reflog -1 --format=%gs >actual &&
-+	echo "squash: updating start..HEAD ^keep" >expect &&
-+	test_cmp expect actual &&
-+
-+	check_log_subjects start..HEAD <<-\EOF &&
-+	two
-+	one
-+	EOF
-+	test_cmp_rev keep HEAD~1 &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+
-+	git branch -D keep
 +'
 +
-+test_expect_success 'squashes a branch the current branch is not on' '
-+	git reset --hard three &&
- 	main=$(git symbolic-ref --short HEAD) &&
--	git checkout -b outside-parent &&
--	test_commit --no-tag outside-parent outside x &&
-+	head_before=$(git rev-parse HEAD) &&
-+	git checkout -b off-history start &&
-+	test_commit --no-tag off-one off a &&
-+	test_commit --no-tag off-two off b &&
- 	git checkout "$main" &&
--	test_commit --no-tag outside-main file b &&
--	base=$(git rev-parse HEAD) &&
--	test_commit --no-tag outside-mid file c &&
--	git merge --no-ff -m "merge outside-parent" outside-parent &&
--	git branch -D outside-parent &&
- 
--	test_must_fail git history squash "$base.." 2>err &&
--	test_grep "parent .* of commit .* is outside the revision range" err
-+	git history squash --no-edit start..off-history &&
-+
-+	check_commit_count start..off-history 1 &&
-+	test_cmp_rev "$head_before" HEAD &&
-+
-+	git branch -D off-history
++test_expect_success 'get multiple variables with -z and unset variable' '
++	test_config user.signingkey "" &&
++	printf "%s\0\0%s\0" "$GIT_AUTHOR_NAME" "$GIT_COMMITTER_NAME" >expect &&
++	test_must_fail git var -z GIT_AUTHOR_NAME GIT_SIGNING_KEY GIT_COMMITTER_NAME >actual &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success 'squashes a range into a single commit without changing the tree' '
-+	git reset --hard three &&
-+	head_before=$(git rev-parse HEAD) &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit --dry-run start.. >out &&
-+	predicted=$(awk "/^update refs\/heads\// {print \$3}" out) &&
-+	test_cmp_rev "$head_before" HEAD &&
-+
-+	git history squash --no-edit start.. &&
-+
-+	test "$predicted" = "$(git rev-parse HEAD)" &&
-+	check_commit_count start..HEAD 1 &&
-+	test_cmp_rev start HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	check_log_subjects -1 <<-\EOF &&
-+	one
-+	EOF
-+	git reflog >reflog &&
-+	test_grep "squash: updating" reflog
-+'
-+
-+test_expect_success 'sanitizes rev-list walk options, before and after --' '
-+	git reset --hard three &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit --date-order start.. 2>err &&
-+	test_grep "ignoring rev-list options" err &&
-+	test_cmp_rev start HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+
-+	git reset --hard three &&
-+	git history squash --no-edit -- --reverse start.. 2>err &&
-+	test_grep "ignoring rev-list options" err &&
-+	test_cmp_rev start HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})"
-+'
-+
-+test_expect_success 'squashes an interior range and replays descendants verbatim' '
-+	git reset --hard three &&
-+	final_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit start..@~1 &&
-+
-+	check_log_subjects start..HEAD <<-\EOF &&
-+	three
-+	one
-+	EOF
-+
-+	test_cmp_rev start HEAD~2 &&
-+	test "$final_tree" = "$(git rev-parse HEAD^{tree})"
-+'
-+
-+test_expect_success 'squashes when the base is the root commit' '
-+	git reset --hard three &&
-+	root=$(git rev-list --max-parents=0 HEAD) &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit "$root.." &&
-+
-+	check_commit_count "$root..HEAD" 1 &&
-+	test_cmp_rev "$root" HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})"
-+'
-+
-+test_expect_success 'squashing a mix of fixups' '
-+	git reset --hard three &&
-+	echo fix >file &&
-+	git commit --fixup=two -a &&
-+	echo really fix >file &&
-+	git commit --fixup=one -a &&
-+	echo really really fix >file &&
-+	git commit --fixup=HEAD~1 -a && # fixup! two
-+	echo really really really fix >file &&
-+	git commit --fixup=HEAD~1 -a && # fixup! one
-+
-+	# squashing fixup! with a target that is not being squashed fails
-+	test_must_fail git history squash one.. 2>err &&
-+	test_grep "^error: cannot squash .* (fixup! one): its target is not being squashed" err &&
-+
-+	# squashing fixup! into fixup! with a different target fails
-+	test_must_fail git history squash HEAD~4.. 2>err && # HEAD~4 is fixup! two
-+	test_grep "^error: cannot squash .* (fixup! one): its target is not being squashed" err &&
-+
-+	# squashing a sequence of fixup! commits into their targets
-+	git history squash --no-edit start..HEAD~1 &&
-+	test_cmp_rev start HEAD~2 &&
-+	check_commit_author one HEAD~1 &&
-+	test_commit_message HEAD~1 -m one &&
-+
-+	# squashing "fixup! fixup! <target>" into "<target>"
-+	git history squash --no-edit start.. &&
-+	test_cmp_rev start HEAD~1 &&
-+	check_commit_author one HEAD &&
-+	test_commit_message HEAD -m one
-+'
-+
-+test_expect_success 'squashing "squash!" messages' '
-+	git reset --hard two &&
-+	echo fix >file &&
-+	git commit --fixup=HEAD -a &&
-+	oldest=$(git rev-parse HEAD) &&
-+	echo better fix >file &&
-+	git commit -a -F - <<-EOF &&
-+	squash! $(git rev-parse two)
-+
-+	Append this
-+	EOF
-+
-+	echo an even better fix >file &&
-+	git commit -a -F - <<-EOF &&
-+	squash! squash! two
-+
-+	Append this as well
-+	EOF
-+
-+	# must edit when squashing "squash!" into its target
-+	test_must_fail git history squash --no-edit two^.. 2>err &&
-+	test_grep "^error: squashing .* (squash! [a-f0-9]*) would discard its message" err &&
-+
-+	# squashing "squash!" into "fixup!" appends messages and changes
-+	# subject prefix
-+	git history squash --no-edit two.. &&
-+	test_cmp_rev HEAD^ two &&
-+	test_commit_message HEAD <<-\EOF &&
-+	squash! two
-+
-+	Append this
-+
-+	Append this as well
-+	EOF
-+	check_commit_author "$oldest" HEAD &&
-+
-+	git commit --allow-empty -F - <<-\EOF &&
-+	amend! two
-+
-+	A new message
-+	EOF
-+
-+	# "amend!" does not replace "squash!"
-+	test_must_fail git history squash --no-edit HEAD~2.. 2>err &&
-+	test_grep "^error: squashing .* (amend! two) would overwrite .squash!. message" err
-+'
-+
-+test_expect_success '--no-edit uses last "amend!" message without an editor' '
-+	git reset --hard three &&
-+	write_script editor <<-\EOF &&
-+	exit 1
-+	EOF
-+	test_set_editor "$(pwd)/editor" &&
-+	echo fix >file &&
-+	git commit --author="Fix Me <fix.me@example.com>" --fixup=HEAD -a &&
-+	git commit --allow-empty -F - <<-EOF &&
-+	amend! $(git rev-parse --short HEAD)
-+
-+	The first reword
-+
-+	More detail
-+	EOF
-+
-+	git commit --allow-empty -F - <<-\EOF &&
-+	amend! three
-+
-+	The second reword
-+
-+	Extra detail
-+	EOF
-+
-+	test_commit WIP &&
-+
-+	cat >msg <<-EOF &&
-+	amend! $(git rev-parse --short HEAD^)
-+
-+	The third reword
-+
-+	Excruciating detail
-+	EOF
-+
-+	git commit --author="Someone Else <s.else@example.com>" --allow-empty \
-+		-F msg &&
-+
-+	# squashing amend! updates the commit message
-+	git history squash --no-edit three^.. &&
-+	sed -e 1,2d msg | test_commit_message HEAD &&
-+	check_commit_author three HEAD &&
-+	test_cmp_rev HEAD^ three^ &&
-+
-+	# squashing amend! into fixup! updates subject prefix
-+	git reset --hard HEAD@{1} &&
-+	git history squash --no-edit three.. &&
-+	sed "1s/.*/amend! three/" msg | test_commit_message HEAD &&
-+	check_commit_author HEAD@{1}~4 HEAD &&
-+	test_cmp_rev HEAD^ three &&
-+
-+	# squashing amend! into amend! keeps original subject line
-+	git reset --hard HEAD@{1} &&
-+	git history squash --no-edit HEAD~3.. &&
-+	sed "1s/.*/amend! three/" msg | test_commit_message HEAD &&
-+	test_cmp_rev HEAD~3 three &&
-+
-+	# all amend! messages must target the first commit
-+	git reset --hard HEAD@{1} &&
-+	git commit --allow-empty -F - <<-\EOF &&
-+	amend! WIP
-+
-+	The real message
-+	EOF
-+
-+	test_must_fail git history squash --no-edit HEAD~4.. 2>err &&
-+	test_grep "^error: cannot squash .* that does not target" err &&
-+
-+	# amend! message that targets commit that is not in range is rejected
-+	test_must_fail git history squash --no-edit HEAD~3.. 2>err &&
-+	test_grep "^error: cannot squash .* target is not being squashed" err &&
-+	test_set_editor :
- '
- 
--test_expect_success 'prints branches that cannot follow the squash' '
-+test_expect_success 'squashing fixups into a merge' '
-+	test_when_finished \
-+		"git switch -f $GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME; \
-+		 git branch -D feature" &&
-+	git checkout -f start &&
-+	test_commit F1 &&
-+	git checkout -b feature start &&
-+	test_commit F2 &&
-+	git merge F1 &&
-+	echo fixed >F1.t &&
-+	cat >msg <<-EOF &&
-+	amend! $(git rev-parse HEAD)
-+
-+	merge F1 and F2
-+
-+	reworded
-+	EOF
-+
-+	git commit -a -F msg &&
-+	git history squash --no-edit HEAD^^! HEAD &&
-+	test_cmp_rev HEAD^1 F2 &&
-+	test_cmp_rev HEAD^2 F1 &&
-+	test_cmp_rev HEAD@{1}^{tree} HEAD^{tree} &&
-+	sed 1,2d msg | test_commit_message HEAD
-+'
-+
-+test_expect_success '--update-refs=head only moves HEAD' '
-+	git reset --hard three &&
-+	git branch -f other HEAD &&
-+	other_before=$(git rev-parse other) &&
-+
-+	git history squash --no-edit --update-refs=head start.. &&
-+
-+	check_commit_count start..HEAD 1 &&
-+	test_cmp_rev "$other_before" other
-+'
-+
-+test_expect_success 'refuses to fold a range a branch points into' '
- 	test_when_finished \
- 		"git switch -f $GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME; \
- 		 git branch -D feature" &&
-@@ -85,20 +415,275 @@ test_expect_success 'prints branches that cannot follow the squash' '
- 	test_grep "^error: the following branches cannot be rewritten" err &&
- 	test_grep "^  topic-1$" err &&
- 	test_grep "^  topic-2$" err &&
--	test_grep "^hint: .* --update-refs=head" err
-+	test_grep "^hint: .* --update-refs=head" err &&
-+	test_cmp_rev C6 HEAD &&
-+
-+	# squash succeeds with --update-refs=head
-+	git history squash --no-edit --update-refs=head start.. &&
-+	test_cmp_rev start HEAD^ &&
-+	test_cmp_rev C6^{tree} HEAD^{tree} &&
-+	test_cmp_rev C6 HEAD@{1}
- '
- 
- test_expect_success 'advice.historyUpdateRefs silences the hint' '
- 	git reset --hard three &&
- 	git branch -f mid HEAD~1 &&
-+	head_before=$(git rev-parse HEAD) &&
- 
- 	test_must_fail git -c advice.historyUpdateRefs=false \
- 		history squash start.. 2>err &&
- 	test_grep "^error: the following branches cannot be rewritten" err &&
- 	test_grep "^  mid$" err &&
- 	test_grep ! "hint:" err &&
-+	test_cmp_rev "$head_before" HEAD &&
- 
- 	git branch -D mid
- '
- 
-+test_expect_success 'leaves tags and remote-tracking refs unchanged' '
-+	git reset --hard three &&
-+	git tag -f mark HEAD~1 &&
-+	git update-ref refs/remotes/origin/mark HEAD~1 &&
-+	mark_before=$(git rev-parse mark) &&
-+
-+	git history squash --no-edit start.. &&
-+
-+	test_cmp_rev "$mark_before" mark &&
-+	test_cmp_rev "$mark_before" refs/remotes/origin/mark &&
-+
-+	git tag -d mark &&
-+	git update-ref -d refs/remotes/origin/mark
-+'
-+
-+test_expect_success 'squashes a range whose internal merge has a single base' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	test_commit --no-tag before-side file b &&
-+	git checkout -b inner-side &&
-+	test_commit --no-tag on-inner-side inner x &&
-+	git checkout "$main" &&
-+	test_commit --no-tag after-side file c &&
-+	git merge --no-ff -m merge inner-side &&
-+	git branch -D inner-side &&
-+	test_commit --no-tag after-merge file d &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit start.. &&
-+
-+	check_commit_count start..HEAD 1 &&
-+	check_log_subjects -1 <<-\EOF &&
-+	before-side
-+	EOF
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	test_path_is_file inner
-+'
-+
-+test_expect_success 'folds a merge of a branch that forked at the base' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	git checkout -b base-fork-side &&
-+	test_commit --no-tag base-fork-side side x &&
-+	git checkout "$main" &&
-+	test_commit --no-tag base-fork-main file b &&
-+	git merge --no-ff -m "merge base-fork-side" base-fork-side &&
-+	git branch -D base-fork-side &&
-+	test_commit --no-tag base-fork-tail file c &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit start.. &&
-+
-+	check_commit_count start..HEAD 1 &&
-+	test_cmp_rev start HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	test_path_is_file side
-+'
-+
-+test_expect_success 'refuses a merge whose other parent is outside the range' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	git checkout -b outside-parent &&
-+	test_commit --no-tag outside-parent outside x &&
-+	git checkout "$main" &&
-+	test_commit --no-tag outside-main file b &&
-+	base=$(git rev-parse HEAD) &&
-+	test_commit --no-tag outside-mid file c &&
-+	git merge --no-ff -m "merge outside-parent" outside-parent &&
-+	git branch -D outside-parent &&
-+	merged=$(git rev-parse HEAD) &&
-+
-+	test_must_fail git history squash "$base.." 2>err &&
-+	test_grep "parent .* of commit .* is outside the revision range" err &&
-+	test_cmp_rev "$merged" HEAD
-+'
-+
-+test_expect_success 'folds a range whose tip is a merge commit' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	test_commit --no-tag tipmerge-base file b &&
-+	git checkout -b tipmerge-side &&
-+	test_commit --no-tag tipmerge-side side x &&
-+	git checkout "$main" &&
-+	test_commit --no-tag tipmerge-main file c &&
-+	git merge --no-ff -m "merge tipmerge-side" tipmerge-side &&
-+	git branch -D tipmerge-side &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit start.. &&
-+
-+	check_commit_count start..HEAD 1 &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	test_path_is_file side
-+'
-+
-+test_expect_success 'folds a range whose base is a merge commit' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	git checkout -b basemerge-side &&
-+	test_commit --no-tag basemerge-side side x &&
-+	git checkout "$main" &&
-+	test_commit --no-tag basemerge-main file b &&
-+	git merge --no-ff -m "merge basemerge-side" basemerge-side &&
-+	git branch -D basemerge-side &&
-+	base=$(git rev-parse HEAD) &&
-+	test_commit --no-tag basemerge-one file c &&
-+	test_commit --no-tag basemerge-two file d &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit "$base.." &&
-+
-+	check_commit_count "$base..HEAD" 1 &&
-+	test_cmp_rev "$base" HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})"
-+'
-+
-+test_expect_success 'folds a range with two interior merges' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	test_commit --no-tag two-merge-a file a1 &&
-+	git checkout -b two-merge-s1 &&
-+	test_commit --no-tag two-merge-s1 s1 x &&
-+	git checkout "$main" &&
-+	git merge --no-ff -m "merge s1" two-merge-s1 &&
-+	test_commit --no-tag two-merge-b file b1 &&
-+	git checkout -b two-merge-s2 &&
-+	test_commit --no-tag two-merge-s2 s2 y &&
-+	git checkout "$main" &&
-+	git merge --no-ff -m "merge s2" two-merge-s2 &&
-+	git branch -D two-merge-s1 two-merge-s2 &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit start.. &&
-+
-+	check_commit_count start..HEAD 1 &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	test_path_is_file s1 &&
-+	test_path_is_file s2
-+'
-+
-+test_expect_success 'folds a range with a nested merge' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	git checkout -b nested-outer &&
-+	test_commit --no-tag nested-outer outer x &&
-+	git checkout -b nested-inner &&
-+	test_commit --no-tag nested-inner inner y &&
-+	git checkout nested-outer &&
-+	git merge --no-ff -m "merge inner" nested-inner &&
-+	git checkout "$main" &&
-+	test_commit --no-tag nested-main file b1 &&
-+	git merge --no-ff -m "merge outer" nested-outer &&
-+	git branch -D nested-outer nested-inner &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit start.. &&
-+
-+	check_commit_count start..HEAD 1 &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	test_path_is_file outer &&
-+	test_path_is_file inner
-+'
-+
-+test_expect_success 'folds a range with an octopus merge' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	test_commit --no-tag octo-base file a1 &&
-+	git checkout -b octo-1 &&
-+	test_commit --no-tag octo-1 o1 x &&
-+	git checkout "$main" &&
-+	git checkout -b octo-2 &&
-+	test_commit --no-tag octo-2 o2 y &&
-+	git checkout "$main" &&
-+	git merge --no-ff -m octopus octo-1 octo-2 &&
-+	git branch -D octo-1 octo-2 &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --no-edit start.. &&
-+
-+	check_commit_count start..HEAD 1 &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	test_path_is_file o1 &&
-+	test_path_is_file o2
-+'
-+
-+test_expect_success 'refuses an octopus merge with an arm forked before the base' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	git checkout -b octo-pre &&
-+	test_commit octo-pre-side pside x &&
-+	git checkout "$main" &&
-+	test_commit octo-pre-main file b1 &&
-+	octo_base=$(git rev-parse HEAD) &&
-+	git checkout -b octo-within &&
-+	test_commit --no-tag octo-within wside y &&
-+	git checkout "$main" &&
-+	git merge --no-ff -m octopus octo-pre octo-within &&
-+	merged=$(git rev-parse HEAD) &&
-+	git branch -D octo-pre octo-within &&
-+
-+	test_must_fail git history squash "$octo_base.." 2>err &&
-+	test_grep "parent .* of commit .* is outside the revision range" err &&
-+	test_cmp_rev "$merged" HEAD
-+'
-+
-+test_expect_success 'refuses when a descendant above the range is a merge' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	test_commit --no-tag desc-one file b &&
-+	test_commit --no-tag desc-two file c &&
-+	git tag desc-tip &&
-+	git checkout -b desc-above &&
-+	test_commit --no-tag desc-above above x &&
-+	git checkout "$main" &&
-+	test_commit --no-tag desc-main file d &&
-+	git merge --no-ff -m "merge desc-above" desc-above &&
-+	git branch -D desc-above &&
-+	head_before=$(git rev-parse HEAD) &&
-+
-+	test_must_fail git history squash --no-edit start..desc-tip 2>err &&
-+	test_grep "merge commits is not supported" err &&
-+	test_cmp_rev "$head_before" HEAD
-+'
-+
-+test_expect_success 'refuses to fold a range a ref points into at a merge' '
-+	git reset --hard start &&
-+	main=$(git symbolic-ref --short HEAD) &&
-+	test_commit --no-tag refmerge-base file b &&
-+	git checkout -b refmerge-side &&
-+	test_commit --no-tag refmerge-side side x &&
-+	git checkout "$main" &&
-+	test_commit --no-tag refmerge-main file c &&
-+	git merge --no-ff -m "interior merge" refmerge-side &&
-+	git branch -D refmerge-side &&
-+	git branch at-merge HEAD &&
-+	test_commit --no-tag refmerge-tail file d &&
-+	head_before=$(git rev-parse HEAD) &&
-+
-+	test_must_fail git history squash start.. 2>err &&
-+	test_grep "^error: the following branches cannot be rewritten" err &&
-+	test_grep "^  at-merge$" err &&
-+	test_cmp_rev "$head_before" HEAD &&
-+
-+	git branch -D at-merge
++test_expect_success 'get multiple variables including multi-valued variable with -z' '
++	TRASHDIR="$(test-tool path-utils normalize_path_copy "$(pwd)")" &&
++	printf "%s\0%s\0%s\0\0%s\0" "$GIT_AUTHOR_NAME" \
++		"$TRASHDIR/foo/git/config" "$TRASHDIR/.gitconfig" \
++		"$GIT_AUTHOR_EMAIL" >expect &&
++	HOME="$TRASHDIR" XDG_CONFIG_HOME="$TRASHDIR/foo" \
++		git var -z GIT_AUTHOR_NAME GIT_CONFIG_GLOBAL GIT_AUTHOR_EMAIL >actual &&
++	test_cmp expect actual
 +'
 +
  test_done
+
+base-commit: 2c3adbb2c475981e340c79fdc5e7f4f9b5d9054e
 -- 
 gitgitgadget
-
