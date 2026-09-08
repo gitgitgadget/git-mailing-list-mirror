@@ -1,68 +1,68 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4EC4A2A79
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 09:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CAD52BE4A
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 09:21:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788858477; cv=none; b=LgQ6zXw4n38TdxD5fykjCM4G5Sk1gYuwtzyjYg3JEuKo3mJ/JYK02UiES8olRqTYmW/0uhPE2nLWHN0syAAXINKVhLVnmK3bsAOaYTKdHEHBYiHhAyGscfZbNolQT5JlV5LdgCLSxSzhjTREMNOrJ/JPV0d2SrXE6IDjwzDdnvE=
+	t=1788859303; cv=none; b=HyaNl+yNeK2Pg0PAxZd1jXR/DzbQYOzsjhZevmfahw+66uOkuh5/Puc59Z7FaV0i2sexTD4+b7u9I2VrmYzkGVSKWfhyBqpG7/LmiJAJukM0xDoA1nE13BL8uXhqPLCJKO1lQyufT9D4Sv78ztyCCZ4A+wbsEzuRC+5P8h9S/yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788858477; c=relaxed/simple;
-	bh=o2CHlhWL3z8fw6KKEwl7FihPC/UruOJzFkyNB4nSt1o=;
+	s=arc-20240116; t=1788859303; c=relaxed/simple;
+	bh=RXK8oTCRm4Yuq6Lcxa9rWYKxxzwsmEi6LeINIvy3IdI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DaCTi4wBqK9QVH5HLYHl6dCK/JAiJpiB7cFBxfN8VD5VhvGX/IHF/E48is94YkrZwd/3YSRYHiD8iN7xPWWhQ/t0ZksvvnGSnzLsH0fkQrc7r+9l1GrdDFao40GVkV7vZS2PvWRmr65F7vSMxuiDWpZx+ruzHe5FrcFpkp6Awtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f5SXFufz; arc=none smtp.client-ip=209.85.218.46
+	 In-Reply-To:Content-Type; b=ppe6xx+wyPieN//hzAIkCWTrrn7aF72swebpvkSvqlA5GSvWeR6xJQg2OuCUYmQVE3BVc+2KsKh2tdVKC8ExyWIa9lXxgT4KG00hgKJEwhyg/5aBwXxzqFIQy3jbssKwyhvk0yWOdt0c5x/9SbXLjjGPlfa2lrYMBbd6lEJ60qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ssZepTrx; arc=none smtp.client-ip=209.85.210.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f5SXFufz"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c15cf78d1a2so417010166b.1
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 02:07:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ssZepTrx"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7f48c750afcso3620150a34.0
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 02:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788858474; x=1789463274; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788859301; x=1789464101; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=XWXdvXpYq5WrX/KJV7YGnamE+VrVUbFdzhYOP4Mp9t4=;
-        b=f5SXFufzPFRZ739DJtFHsJLlb6mNxEubzw3X+W5JUoeDQ61kg+C3/0aflCvqg2ozhI
-         eloEzIkqZMuus5ObalZSWhO0dggJRuRqMUPzW6qkS6IDD2rOkHbq6SidlN6rZKHYSoh7
-         ZDh5E3EBbjB0XyPzWPdtwgPQocBwCk4UUZYNY72rxHJGnva8ZP9LBYw25Cb0tfuMdc/o
-         TGvcyIa9y7OeNqpfq2YbfJQt5s/ZQom7SZ6eMu9lLP7ifQmhtUydhBwRTPChtrr3FNNl
-         qYrJBniFLfMSGGXu7c3Q43pDsRSbh7OpLVmHtw2iyD2A3nTmGlTUhcPLTJHGGRtbZnab
-         6Zdg==
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lo6Kv+8Mq0olob0y2rL6X3oYQWhxkTdzHEx3bYE1LX0=;
+        b=ssZepTrxkSm/NbQVi+kIek7LErPb+ocQARdtlXYUJ8sgJvO2V97S1/uCaglpYKhu9k
+         awULcKEeZi8tNg3Bb1UXyL7F0E3zDRSOc2CDViI1kpirxOgNNIwvnQx1xMQDBlRK8Jhw
+         0/t4OcuID0KPUMo/buodiC9DhrgnJ8lLVfSeSwch17ctI1zZhYpaBaId4V19NCBEmjm2
+         OJ+uu5/2dUp41JNpns6dZxkdgDXswbmikdEyF4u3QZfLbVhsKwcps55ATu62grD59duj
+         b6hu19Fq5kEKghkJAB4knOcUsxTpvLzZBRonlXdsdarSKmqg0qt4dHmEP9iquhsDOSFD
+         FqXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788858474; x=1789463274;
+        d=1e100.net; s=20251104; t=1788859301; x=1789464101;
         h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=XWXdvXpYq5WrX/KJV7YGnamE+VrVUbFdzhYOP4Mp9t4=;
-        b=jZYh3p27Mt6ZeeygVutuTHflcfb0qxghZMI7eIxsraLGhBbtTpmNDas7fo8VmpQmyi
-         K1JuNbEeMxsGcDtzIB/HWOSQrFBUEBbFiid7SReYGIULih5I4gRpTDudgEv9Nn0wBFVb
-         nylxaxaaqwX6eL5jIqi+mckOuiAL8exDgRZ7Z2e4QYPou7Tbq5+gFPgSLXNpsmLDOLym
-         XKjrWei1CTC1nGghBm/mQL0XHEN7S4Rk5CZdFgE9JWHD1mOdRk3HPBUV475A+sNasFhr
-         j5JHm+cgWOBi39fU9bigdrpfm4zs6EUmHAcQQZSOFhQqAxxA7BFlWabqiheCXsBS5C6F
-         zpVA==
-X-Forwarded-Encrypted: i=1; AKwUvBygV5sf4lb593+wfd6qNOumq4Uma3Uws6ELjbPyjdvfeXQ57Uba6ZfWH0dWNbCBgJAdcnE=@vger.kernel.org
-X-Gm-Message-State: AFuF++lmjzMZ36NcuPaVerIpJTidMGvJ0Z9bvzWMWHKSwOgPuiJwYgZE
-	jmDzQfFUM+anONTxWHVYMEZ5J3GUhqWbGdzFzn1E+X/2XfILwlL21Fyfw/3dTQ==
-X-Gm-Gg: AYBFou2nAi/JJ295HMsbf4AaIokyWl1FpY3Oabl3csCfS717NfTKscUCT796C5qjJo4
-	Nfm7DfhPunmAvoXbpmGxfY5gS+cEmd3Dm5/pHgRKdslFoZvQvdYCYX7vFnulV7LIs+O3WlD5TRu
-	baOnc/MVOtnQObRNd2mbiflx6wg0LFHPMOTHzf3MXCx1eL7jl3wLFb4g1bx9FZ5nzXTcF5UPqBm
-	+3d2fxUN9mYIQShK2Pd5aMQqbBmS05BpxfU3y4QATDw3QoBEcZKGBGYjVT0VdCi3T8ZleM9Ffmg
-	0Yaxx90UOtF1yCl/FAc+HavpQ0rG2tsHmzD7r1aBklbpwqK0ectUQLKwoIWKPEs89uJ/GNTdZkv
-	01noLP+vRtKiyMDogBTMxa8h5JOAtYE6ECC211s8nADxiQupcYK0sfcQmaGVD26vcfwLZvvmZMv
-	9Fw5QGE9XbHeVSmvZr0Q6w6BOAY46X2c+PiCryUpF+pBo3FZeP0szA5OqJ5g3oxtHz/8UXxIB/S
-	fVCEAA4fTFg+cms90CNpAnLUiUIJpv77gppYN1zRiI=
-X-Received: by 2002:a17:907:c0d:b0:c12:74af:51f3 with SMTP id a640c23a62f3a-c260c7ac988mr1079380866b.6.1788858473529;
-        Tue, 08 Sep 2026 02:07:53 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c260d575fccsm595044366b.37.2026.09.08.02.07.52
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=lo6Kv+8Mq0olob0y2rL6X3oYQWhxkTdzHEx3bYE1LX0=;
+        b=FJs/wdZFGIJNTGzKs0VlmRteJuwHmPDRFLCmK/dt3EOORIRZgHnnOFID1k2y5VBub7
+         LzC1Pl9jCohBMebPozlf2+M0GTounhweYdU6aCi+G2FbMrO6zWV7xHTNSRYXj43Birhi
+         mh2wGv7A1zIeQ3Ib1kp3TmHbVuXRYQZJwOQwy/VVm/qyXGRoK3hY/1lHxarK7IObFLtF
+         KZzSX7klUHu4YSQ/fG6FWwHwLub/iRfg0F5EmOUy95f8yRdQQjwdQGzp4w3YkAi+IVMX
+         RsR3g+O9NUz4EmsPKCFBpz610z78J+9+IJx8ig6fT0DWc3OE4vpmfTiOroSSV1DqknFp
+         j+yg==
+X-Forwarded-Encrypted: i=1; AKwUvBxw1jgUBZYmkWKSkc1JUsKiygIM4Iq0PRmboptFZfmNPWs9TP4dszoHhujBsJytTfKhNvs=@vger.kernel.org
+X-Gm-Message-State: AFuF++lyW2/9Zxd5R49TN7NjoPRt5gLZ9/oBq33adsjr9NiJfkrz4Rof
+	ApOH2+NBTtJXZwDJlkacToQhH4b5AwdxYrqmzk2Eag4ZoCQKioG35r/I
+X-Gm-Gg: AYBFou0CpK5JjalxtQ5oVrsKrxuX/FnfQJe81pX0pWCOzXXmPEskfxdrEVBup0WjQwc
+	WG3J+55fHdI5xPsAAnpSWnKcF7nt/iITmN5J256ytvu0Kr22WZK1yd0lz/bzTlKdmRId6TEqbL8
+	0BmANC4Qy9DB79/QXv+wZKTmrejd0e9e4bMzJVhv+w3e14iJgaxsKaXuCUjlQBoAMHtuoP+ifSU
+	PoP+D+diKKfDTeyT0ssR+hJnCO4kWTpeQuEOhj07LY1X2oleLimSnf1aI1saG67yBgtiA1MJaST
+	vh+SrLqWOOdzGn5nfJa+0iuNsIR0c8IVFtGG7C/fROqCKFkv0H/3Z+wXTMD2/A3Ms27Q73yYM6e
+	jizIwCTGfcPU8MkCX0inTTRda6KQqSDmbNPH1L8HLWPfTU2SB3Sm1X5/2K4x51eE4bvF889Az1P
+	QGNlAov/EQEV65+adurBGNyzy6w2aDpt0MDc/gg6/0k1iNJJdtqnx7CpAN+r7PqC+TNEx+6aIwK
+	ewo
+X-Received: by 2002:a05:6820:809:b0:6b7:83c5:fde9 with SMTP id 006d021491bc7-6b783c6033amr13430663eaf.42.1788859300695;
+        Tue, 08 Sep 2026 02:21:40 -0700 (PDT)
+Received: from [192.168.25.219] ([115.108.41.154])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14332405e92sm28146252c88.8.2026.09.08.02.21.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Sep 2026 02:07:52 -0700 (PDT)
-Message-ID: <f3db3c4c-f80d-4f27-bc5a-e339e62d5ea2@gmail.com>
-Date: Tue, 8 Sep 2026 10:07:51 +0100
+        Tue, 08 Sep 2026 02:21:40 -0700 (PDT)
+Message-ID: <1cbb335d-ed50-4e6d-9d11-bd09de1bcee3@gmail.com>
+Date: Tue, 8 Sep 2026 14:51:37 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,87 +70,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] var: support broken-down idents, default key, multiple
- args, and -z
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Andrew Pleeter via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
- Jeff King <peff@peff.net>, Andrew Pleeter <andrewpleeter@gmail.com>
-References: <pull.2388.git.git.1787690802942.gitgitgadget@gmail.com>
- <pull.2388.v3.git.git.1788403792962.gitgitgadget@gmail.com>
- <5634fdc4-d0f8-493d-b401-3c9753524034@gmail.com> <xmqqqzj957rm.fsf@gitster.g>
+Subject: Re: [PATCH v2 02/11] builtin/clone: rename "--ref-format=" to
+ "--ref-storage-format="
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
+ <20260907-b4-pks-unify-ref-storage-format-v2-2-6733c90ca5b0@pks.im>
 Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqqzj957rm.fsf@gitster.g>
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20260907-b4-pks-unify-ref-storage-format-v2-2-6733c90ca5b0@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Junio
+On 9/7/26 16:48, Patrick Steinhardt wrote:
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 5b25cca510..511fff9562 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -901,7 +901,7 @@ int cmd_clone(int argc,
+>   	char *option_origin = NULL;
+>   	struct string_list option_not = STRING_LIST_INIT_NODUP;
+>   	const char *real_git_dir = NULL;
+> -	const char *ref_format = NULL;
+> +	const char *ref_storage_format_str = NULL;
+>   	const char *option_upload_pack = "git-upload-pack";
+>   	int option_progress = -1;
+>   	int option_sparse_checkout = 0;
+> @@ -981,8 +981,10 @@ int cmd_clone(int argc,
+>   			 N_("any cloned submodules will be shallow")),
+>   		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+>   			   N_("separate git dir from working tree")),
+> -		OPT_STRING(0, "ref-format", &ref_format, N_("format"),
+> -			   N_("specify the reference format to use")),
+> +		OPT_STRING(0, "ref-storage-format", &ref_storage_format_str, N_("format"),
+> +			   N_("specify the reference storage format to use")),
+> +		OPT_STRING_F(0, "ref-format", &ref_storage_format_str, N_("format"),
+> +			   N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
+>   		OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
+>   				N_("set config inside the new repository")),
+>   		OPT_STRING_LIST(0, "server-option", &server_options,
 
-On 04/09/2026 16:57, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->>>    	if (value)
->>> -		printf("%s=%s\n", var, value);
->>> +		printf("%s=%s%c", var, value, eol);
->>
->> A key can contain "=" so this format is ambiguous. When the user passes
->> "-z" we should use the same format as "git config list -z" which avoids
->> that ambiguity
->>
->> 	printf("%s%c%s%c", var, eol == '\n' ? '=' : '\n', value, eol);
->>
->>>    	else
->>> -		printf("%s\n", var);
->>> +		printf("%s%c", var, eol);
->>
->> It would be worth checking what "git config list -z" does when there is
->> no value and matching that. Does it print "key\n\0", or "key\0"?
-> 
-> By "key" do you mean "var"? 
+Ditto here about either deprecating / using OPT_ALIAS.
 
-I meant the config key which is in variable var
 
-> The namespace of "var" for "git var"
-> proper (like GIT_COMMITTER_IDENT) are very much under our control,
-> but it also gives all the configuration variables, whose names can
-> indeed have '=' in a three-level varlable name.  This is an
-> excellent suggestion.
+> diff --git a/t/t7424-submodule-mixed-ref-formats.sh b/t/t7424-submodule-mixed-ref-formats.sh
+> index 1ca245c732..5eaf689d74 100755
+> --- a/t/t7424-submodule-mixed-ref-formats.sh
+> +++ b/t/t7424-submodule-mixed-ref-formats.sh
+> @@ -63,9 +63,9 @@ test_expect_success 'recursive clone propagates ref storage format' '
+>   	test_ref_format upstream/submodule "$GIT_DEFAULT_REF_FORMAT" &&
+>   
+>   	# The cloned repositories should use the other ref format that we have
+> -	# specified via `--ref-format`. The option should propagate to cloned
+> +	# specified via `--ref-storage`. The option should propagate to cloned
 
->>> [...]
->>> -	printf("%s\n", val);
->>> -	free(val);
->>> +		printf("%s%c", val, null_term ? '\0' : '\n');
->>
->> Multi-valued variables are a bit of a problem here, they're built on the
->> assumption that the individual values do not contain a newline, but as
->> they are paths I'm not sure that is necessarily true. With -z it would
->> be better to print '\0' after each value as we do in list_vars().
->> Ideally we wouldn't use a single string to pass multiple values around,
->> but a simple fix would be to use '\0' to separate the individual values
->> instead of '\n' so that we can split them unambiguously when we print them.
-> 
-> Hmph, what does "git config -l" do for multi-valued keys?  We should
-> mimick it, I would think.
+s/ref-storage/ref-storage-format
 
-With -z it nul terminates each value. I wonder if we should be printing 
-the variable names here when the user passes more than one var name. 
-That would make it easier to parse multivalued vars which can have a 
-variable number of values, or we could print an extra delimiter after 
-the last value of multivalued vars like "git merge-tree" does to 
-separate the different sections of its output.
+Rest of the patch looks fine to me.
 
-> Another thing that might be worth doing is to see if we can separate
-> out "git config -l" handling out of "git var" with a breaking change
-> at big version boundary.
-
-Yes, it would be nice to be able to print just the GIT_* vars without 
-having to print the config as well.
-
->> Thanks for working on this, being able to specify multiple variables
->> that are printed unambiguously is a really useful improvement.
-> 
-> Indeed.  Thanks, both.
-> 
+--
+Sivaraam
 
