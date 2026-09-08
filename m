@@ -1,68 +1,69 @@
 Received: from mail-qk2-f5.google.com (mail-qk2-f5.google.com [74.125.230.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB7D5921EF
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 18:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502C859B672
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 18:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788891410; cv=none; b=DdMdCHKcsJb/7/PhJ9FhB2wq3Pz9CjTiS7J9knoQFJniC8WKDKXnZtRhfBtkvNPxVnfXInAtrmsAKRrzx3e0hWMxeZKNvXTJBI3quvq/sxw6cuPp8hHCwZbJMeiRGXFEQwxWDtfoaStQZ33ktAFOFTDIfTUk9vcaORZFNuCcDJU=
+	t=1788891670; cv=none; b=qNPHfNXzcfwSnhu2sjITD15gyieSLeqNyFNzUdWN4TRWFo+z2l3winIgnQ60bQ+xoYjT1LIi8ntomU5CFhpnr79Ma8t6skaIcj6d/cxYeCtkGgVl7dCiydFaYsKFNTddSQhKpXrI/1SkcqYOOBJ5/BRcym81yQgHgDZG43NKuN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788891410; c=relaxed/simple;
-	bh=KMPltRydC2icAbKDBwabLsN7Q/am2tEkojW1NZkK5/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=cLgt0cO+wP09N3nWb9IsZVJOklFf9u1jYVGTEUZZLMyZ/A01y+fEjNRVwEHjUA4kAU3QIXnBG88RtxPB1guGQewb9lpJt32jFeLbATY9bBm30yj2nL/WTs4hoclf1RmKfa+35M8A0rqPKwsCe4FPEPMoJdlC9yS1dznlhAEKTaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=ezu+tSN+; arc=none smtp.client-ip=74.125.230.197
+	s=arc-20240116; t=1788891670; c=relaxed/simple;
+	bh=pVzh4V5k3YZM6s7Zbo46CIXO0x4Og1o0ss7oOaXVeHE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uG+33rrzFMK0oMi8NDlsvufk0hxBpxIY+zvkEVrKxI35sxzNjs1JXPUbTNwlnkZFHB0V5Uo0ltEwovZF2e0dxrJG8NAMfEf9ykZXUcXJJZEw/3iPeqJCUkAu6nxS5zRBjIhNuqitNK5JXPFZHxmhVY7JSn4TiI3OW8Lk4ZHve/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com; spf=pass smtp.mailfrom=openai.com; dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b=UCJm4oAs; arc=none smtp.client-ip=74.125.230.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=openai.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openai.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="ezu+tSN+"
-Received: by mail-qk2-f5.google.com with SMTP id d75a77b69052e-52ff498cf90so30532921cf.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 11:16:48 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=openai.com header.i=@openai.com header.b="UCJm4oAs"
+Received: by mail-qk2-f5.google.com with SMTP id af79cd13be357-939042cc742so252328085a.1
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 11:21:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=openai.com; s=google; t=1788891408; x=1789496208; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-disposition:content-type
-         :mime-version:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=openai.com; s=google; t=1788891668; x=1789496468; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=XqcAwkbAv1lHx33l+hpOJy4osE9a/0j4K0CxMawdYcQ=;
-        b=ezu+tSN+N/mEihZtjW3FOj4fthu9R0tzXW0llRjfU22v4YRj6wCx33WW4sv4bnK4sR
-         VciGnPU7Gh78owNFH2L7IwsFNtgB0xKQDSmiyGdg6Lm0WxA7MECWCm8ABmTZR56knb+q
-         0Um+Cu3eTyytBWBC6eJUsodENKBmXiEqrey8s=
+        bh=9cBU42EYC7ArparLgcnO5hXmCVBaGvotJa4FE8iNwr0=;
+        b=UCJm4oAs1lQMaexST/QvfNiGg9ju2JvgHYJ/9uTFdt6zsMyF0qRrvyCSf0fJTMr6y6
+         4ekRcy49zW2gB4Ooo4Y6TtyhaS+xUPgICv8cNJAHEbBXOfImbC4+9B20U6VbikTxkWir
+         ady2pWnSKUYuOTgYFeFitN9DNVXygNe8tvb0c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788891408; x=1789496208;
-        h=content-transfer-encoding:content-disposition:content-type
-         :mime-version:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1788891668; x=1789496468;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=XqcAwkbAv1lHx33l+hpOJy4osE9a/0j4K0CxMawdYcQ=;
-        b=sb8KoFgIL47dQOVJIoODacbNvqMp+a6qROagOCNxLf+FTo+dhEN0olSfuvRioZodUS
-         9kgyAcdyOQpFyt5Rddw1wIZMLFdkxUw3aZXjizlYB4sdnwrql/IS9wr/re/B/vt3ts8q
-         gmT38kyVckGlN5nNoAdozq05w5rheEqxwiIPESQ9Uz1ZnR/wWlDqayxuZgQU4DXeb4dA
-         5XAX/1Sz0XAbI02NHTfqZgakkzeCND2hQKBkwROfxDYlhvuOF0VFI+vdtHUQVNnQOn+O
-         WTIqTDR+lagxubNEvX7iRzL1j35K3Lu9Gk6tjtEq6t1pYvuvMZmX39tp7wnQmd+zgtRq
-         f/SQ==
-X-Gm-Message-State: AFuF++nfVRESzHc5zKiUBrbMENiXr87+SO7Z5Uv7JcgqxbN2DD9/W6AG
-	2KLzoNTZgLWF0KQRtEGcqSNAQp5E0MbPl27iWUh+IAY4D57bzvNTWDnMmFALWDPX0T6jmY9tbfk
-	OucHBgWkrcBkG
-X-Gm-Gg: AYBFou355nvha2/+R3JYFzpsZDNOfhtCmGDntgEL6P7GzKyHXZ9hknuPUN5eg+ZMrvp
-	hd2Bae6Q6jUuloQEX/2XgKLuDMLubv/QP/qQ+NDKbcdGXxfKBXuK2Ji9XzCKUOF4UG1gOiTgTSi
-	b91yNEO/USRI2+Y+v9y1ZYFEpuyDWcDNw1Xm+K2JsGIiDWUjhcDHDMTfKL6kb6zsVT1anpel9Ju
-	eFQdlrj3/ujlILX3g4FtSvBpIKRxNqwqITXJg99DZoJxVMuTiEIHXB86t36Nsp7urp/Oy8oN73x
-	Kl3dm1nyh5bqYshOuKTxLV65An9c/NqD1TS3qa5MaZCfyscTWjaxu7lWffPbZJCXlRVuDrPlFLs
-	taMZ4Ov23QA5v1xcmv49cE9S31R4I7jDTq3C3xRFw1bOyVRNFlwfQG3cvRFn+QJB0NfEhPnx5iA
-	RzLiUnJ/bwTa7HIWhCSez1qwdKr+yVcqX28KU2C7kryxYGjXDn5aEqtPAhQGVFthyKtI1Jrg6Lr
-	K32ihla0cOuimJ3C7QFAIffZhGDgy6AwPxmKy5/BkcMOgv99FjqBNLb
-X-Received: by 2002:a05:622a:1113:b0:52c:ce3:6428 with SMTP id d75a77b69052e-530548106demr344602221cf.16.1788891407707;
-        Tue, 08 Sep 2026 11:16:47 -0700 (PDT)
+        bh=9cBU42EYC7ArparLgcnO5hXmCVBaGvotJa4FE8iNwr0=;
+        b=rRNE2Yanxibh573zjbZgF/85TRTO05q7N/1ByaU7Sirk04YEDVaVFpJIsddSyWbexV
+         tihTfLYp6wKU+YPa5zdi3oSRauyjRhL100EXVnrXhi8+qFT8A0wObq7mrSN22kSFO0Jk
+         vPcg3ZB9BXabwWIXrEhDHLYwux/op2Ne+BkbIZ/HESOCDtw1yBfVV6RgNm9HRfDCPrzh
+         Nczh6WcIPAEEuU87IAiUHRwt5AG2WOCRb/iYF+WgS2ri6M0mlCJ/8ASBkVZff4km0kUt
+         lCqJS5pmsG0tvY6kHl+fRPRPKjVjzYJKm5/Rl07ffjZgLJUVmHGKlksQi0fJ1QIbfwQh
+         xh1g==
+X-Gm-Message-State: AFuF++mLBAavsgAJ3ihFC5bAhymlrUsxCpXaM1Kn1QvxkWxfQqd/XvzK
+	bqstHvZcc9BX3PoHjqYMJaap9jyTLUzOuL4Mxt61GDmdmtmPrhjTz3iWxbQ460RLAhj92vPj3PP
+	CKbGbdgzb93Mc
+X-Gm-Gg: AYBFou0uaVR4SJJvC0eOEozhuxaMAd7LoA/nScH5Sd73neaR9yPFDp3guyReuuliINq
+	DyqamuJQtML+82WnBsiR3zjH85rxykAMQAkVxOY8LK9nZUXU4lzp4MISDlcoBHCOohVi8Jsz9LA
+	GPzSGh3Y1UcXiwf1Z1qGaKWF7IEIykh17O3pdvcnRIi+zPaICygV2Jnv1tCM7ewzBkOKFYjILD+
+	1aKHRpVjSVzWqI0mMG8Teu3tTkURYMqFIrnblva9PShh+Zu6AYfB5K1NLOdh/XGWnXN3AlrTGVA
+	90U9mTD999XY+FlNAD06VRIzn/G8eN8tCwaIhaJgjVuJDiLJJtwFxIcWWafchoZS1oVA6HWj+g8
+	C2OmW8eo+tPWnAgl1H+/jVig7qV8XBUa0WriZPUFTak8rxavJ8nqytWDTOUu60629ppQUADrDWU
+	sMg/tIVfT/CH/HUt4PjEloQyPWmg7xL+gEj93Kd8HQAZdEWGDlm/XuFW3le9fl+q3gH8o93lkIw
+	0Oi/Jv00V/8ZbbgfDMhHLH+92cU70rKnnW7JXobeihfLA==
+X-Received: by 2002:a05:620a:8386:b0:939:6d22:6fd with SMTP id af79cd13be357-939803712c1mr3036452485a.18.1788891667737;
+        Tue, 08 Sep 2026 11:21:07 -0700 (PDT)
 Received: from com-79390 ([40.76.104.167])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9104049d30asm123919016d6.0.2026.09.08.11.16.47
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9397fbe00f9sm1207600485a.45.2026.09.08.11.21.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2026 11:16:47 -0700 (PDT)
-Date: Tue, 8 Sep 2026 13:16:45 -0500
+        Tue, 08 Sep 2026 11:21:07 -0700 (PDT)
+Date: Tue, 8 Sep 2026 13:20:19 -0500
 From: Taylor Blau <ttaylorr@openai.com>
 To: git@vger.kernel.org
 Cc: Scott Chacon <schacon@gmail.com>
-Subject: [ANNOUNCE] Git Contributor's Summit 2026
-Message-ID: <aqBRDSkgC4wrUUL4@com-79390>
+Subject: Re: [ANNOUNCE] Git Contributor's Summit 2026
+Message-ID: <aqBR4_huOMUY1GwG@com-79390>
+References: <aqBRDSkgC4wrUUL4@com-79390>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,44 +72,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <aqBRDSkgC4wrUUL4@com-79390>
 
-Hi everyone,
+On Tue, Sep 08, 2026 at 01:16:45PM -0500, Taylor Blau wrote:
+> As in previous years, we'll use the summit to discuss topics of interest
+> to people working on Git. If there's something you'd like to discuss,
+> please add it to the topic sheet:
+>
+>     https://docs.google.com/spreadsheets/d/1ianyjHMV8EHVfHvwFfNa3SAFu5NIIBLyKyD-pU8LArQ/edit
 
-With Git Merge coming up next week, here are the details for this year's
-Contributor's Summit:
+Heh. I can't make this sheet public with my OpenAI account, so please
+let me know off-list if you want to add topics and I'll grant you
+access.
 
-  When:  Friday, September 18th, 10am–4pm (UTC+1)
-  Where: Audrey's, Santiago de Alfama, Lisbon (private room)
-  What:  Contributor's Summit
-  Who:   Git (& related projects) contributors[^1]
-
-(If you're not able to attend in person, but wish to join remotely,
-please let me know off-list. Our room has AV capabilities, and I'll send
-remote attendees the details as we get a bit closer.)
-
-We'll meet alongside the unconference, with lunch from 1:30–2:45pm. The
-full Git Merge schedule is available here:
-
-    https://git-merge.com/#Schedule
-
-As in previous years, we'll use the summit to discuss topics of interest
-to people working on Git. If there's something you'd like to discuss,
-please add it to the topic sheet:
-
-    https://docs.google.com/spreadsheets/d/1ianyjHMV8EHVfHvwFfNa3SAFu5NIIBLyKyD-pU8LArQ/edit
-
-Please include your name and a short description, along with any
-relevant details. There's no need to prepare a formal presentation; an
-open question or something you'd like feedback on is plenty.
-
-We can leave the voting and note-taker columns blank for now. We'll vote
-on and prioritize topics together when we meet.
-
-Safe travels, and looking forward to seeing folks in Lisbon!
+I've granted access to everyone with a ticket to the Contributor's
+Summit. If you're missing access to either the sheet, or don't yet have
+a ticket to the Contributor's Summit, please let me know.
 
 Thanks,
 Taylor
-
-[^1]: if you're not sure whether that includes you, please ask!
-
