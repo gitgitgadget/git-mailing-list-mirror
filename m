@@ -1,133 +1,135 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CAD52BE4A
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 09:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788859303; cv=none; b=HyaNl+yNeK2Pg0PAxZd1jXR/DzbQYOzsjhZevmfahw+66uOkuh5/Puc59Z7FaV0i2sexTD4+b7u9I2VrmYzkGVSKWfhyBqpG7/LmiJAJukM0xDoA1nE13BL8uXhqPLCJKO1lQyufT9D4Sv78ztyCCZ4A+wbsEzuRC+5P8h9S/yI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788859303; c=relaxed/simple;
-	bh=RXK8oTCRm4Yuq6Lcxa9rWYKxxzwsmEi6LeINIvy3IdI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ppe6xx+wyPieN//hzAIkCWTrrn7aF72swebpvkSvqlA5GSvWeR6xJQg2OuCUYmQVE3BVc+2KsKh2tdVKC8ExyWIa9lXxgT4KG00hgKJEwhyg/5aBwXxzqFIQy3jbssKwyhvk0yWOdt0c5x/9SbXLjjGPlfa2lrYMBbd6lEJ60qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ssZepTrx; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C032339B978
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 09:22:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788859332; cv=pass; b=OeJV7DCDh1KV8XlicglYomiL94ZP73jZl5Z6EEx2d357KvXt6+IBtHPdH2pRyOzy8JCCUNGGEMQ2JhLs5mELaPpl9hMWpTSVdkfUMAfFTc2sf2aLd4rfT91kOmQ4XfBQtEYCQE5EuqxqQ7DHyM6jxQIXrzXz6pi/TIF4CBZg/1o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788859332; c=relaxed/simple;
+	bh=L9E4FjDY0mUkvOYwL64i53k/pee3J3gIqhQXT8Gthc0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sEMmbbUksnIZNFD7jqk30SdbKBCrggtx6V311KIWwJhb7VhyJYAks9di7uXlJFtzO3o4iaObPhqUrDGx3WVWx1a8QaLVYt7UCHr7hkWkW/Mw0o1O/EP/pnx+pZC8A/iijILmGXUnY/3tgSosyrOBwLcZ0V1H4tYc+GGR4pqoEps=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fmeBqaP0; arc=pass smtp.client-ip=209.85.221.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ssZepTrx"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7f48c750afcso3620150a34.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 02:21:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fmeBqaP0"
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-5c6670fd413so4227573e0c.1
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 02:22:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788859329; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ddsvqHwR5mzqqNkWojee7FuhnwhXt9W7yxCCc8Faoo/PrxsMtVwEWHj0v6uoYSWbS9
+         MzdpinrLt8udZSlK8ydkRn9pxWazQznfwsxmIKXqyodN5IgGYUDPZnF2obW0EnloyRcY
+         5xH3kmfxoRUvrhn39R3FXonBU/NliMqckTpthaLg4p+pA7dvOoEatdcHX6YS27JVRyWN
+         bOoUgKjHsubDQ4sHDx70WMzhil2RaM+hxb82i6m2fksbQJ+dLpt55CZxT86K7d18/iqR
+         MPLaxWtfj1EYoxs780E54PUJSIs0DusDVQBoM1uV7GRN00ZM5xaLPJUCAMTD/JlLMKdF
+         HAkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=BcXp9BA3Qv8nmWf4aFepWlYDEnpn1nNV/J6BwNWu5Ks=;
+        fh=D4uDqIpMAU76UF3y7kLhifPMaIKyWsi4/hRzYZ8Ccvc=;
+        b=Y6U+2p9UKisnlNE7tHcqku6+eb4LBjsgOg3nKnaY5hgSyAN5XmK+nGcaQNmug9vaoF
+         E7UhWzHoitC4yMKnPDVU6B7wNzoemWHdfCFv8MfLv8UAHaIAWdsBq2x0CYLXO2SCgICy
+         rouX/6nmk75vo2YYrzhdpCVY8q2HPE57eHoIJaKGaT6+BQHGNfnXQWgqMARsB+s2ZObm
+         e7x1IJ1U4i2/m/OEiMR3izgi6MlhojP20625B1vW2AvTAPVdlGI+TSWnRn5T+pLPdKpM
+         ZkYzC0qaG0VLlCUOfdOLd+mvZS2GUIMTF2O8k9JTzzxXKzDVaaspTgd4XQxuX2dV99iH
+         5Q1Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788859301; x=1789464101; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1788859329; x=1789464129; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=lo6Kv+8Mq0olob0y2rL6X3oYQWhxkTdzHEx3bYE1LX0=;
-        b=ssZepTrxkSm/NbQVi+kIek7LErPb+ocQARdtlXYUJ8sgJvO2V97S1/uCaglpYKhu9k
-         awULcKEeZi8tNg3Bb1UXyL7F0E3zDRSOc2CDViI1kpirxOgNNIwvnQx1xMQDBlRK8Jhw
-         0/t4OcuID0KPUMo/buodiC9DhrgnJ8lLVfSeSwch17ctI1zZhYpaBaId4V19NCBEmjm2
-         OJ+uu5/2dUp41JNpns6dZxkdgDXswbmikdEyF4u3QZfLbVhsKwcps55ATu62grD59duj
-         b6hu19Fq5kEKghkJAB4knOcUsxTpvLzZBRonlXdsdarSKmqg0qt4dHmEP9iquhsDOSFD
-         FqXg==
+        bh=BcXp9BA3Qv8nmWf4aFepWlYDEnpn1nNV/J6BwNWu5Ks=;
+        b=fmeBqaP0q/D/j+St6RmtQJ7p77Na5BP/aSqfiX6VxQKxaCT2XD09ICCpczaqn2oKjm
+         ktIwVDpUV7dqaDFXX850gDl3KKTcpvTM70mqyYcGy0uzZvu9oQd37jVmYKLZQr2kMZLP
+         mZGiRHs9REhsM1/YKvA1i+81c/ogesS04KCf1MkfPODJWXrVtdYBT4u9okfPH6gONg6H
+         aS7dI2qj3C11b0ALCF9ASuR4RVMzd80qxAnGpfVy17YDMMobsitNZwA58Wz5vxr+hias
+         S67KIhMcHKe+rVceBOkhnXvyBXWTCB5Tb8EiaxiJAn13Xv+7yZb3ZmOYeUt+KkYD/dLv
+         0n3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788859301; x=1789464101;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1788859329; x=1789464129;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=lo6Kv+8Mq0olob0y2rL6X3oYQWhxkTdzHEx3bYE1LX0=;
-        b=FJs/wdZFGIJNTGzKs0VlmRteJuwHmPDRFLCmK/dt3EOORIRZgHnnOFID1k2y5VBub7
-         LzC1Pl9jCohBMebPozlf2+M0GTounhweYdU6aCi+G2FbMrO6zWV7xHTNSRYXj43Birhi
-         mh2wGv7A1zIeQ3Ib1kp3TmHbVuXRYQZJwOQwy/VVm/qyXGRoK3hY/1lHxarK7IObFLtF
-         KZzSX7klUHu4YSQ/fG6FWwHwLub/iRfg0F5EmOUy95f8yRdQQjwdQGzp4w3YkAi+IVMX
-         RsR3g+O9NUz4EmsPKCFBpz610z78J+9+IJx8ig6fT0DWc3OE4vpmfTiOroSSV1DqknFp
-         j+yg==
-X-Forwarded-Encrypted: i=1; AKwUvBxw1jgUBZYmkWKSkc1JUsKiygIM4Iq0PRmboptFZfmNPWs9TP4dszoHhujBsJytTfKhNvs=@vger.kernel.org
-X-Gm-Message-State: AFuF++lyW2/9Zxd5R49TN7NjoPRt5gLZ9/oBq33adsjr9NiJfkrz4Rof
-	ApOH2+NBTtJXZwDJlkacToQhH4b5AwdxYrqmzk2Eag4ZoCQKioG35r/I
-X-Gm-Gg: AYBFou0CpK5JjalxtQ5oVrsKrxuX/FnfQJe81pX0pWCOzXXmPEskfxdrEVBup0WjQwc
-	WG3J+55fHdI5xPsAAnpSWnKcF7nt/iITmN5J256ytvu0Kr22WZK1yd0lz/bzTlKdmRId6TEqbL8
-	0BmANC4Qy9DB79/QXv+wZKTmrejd0e9e4bMzJVhv+w3e14iJgaxsKaXuCUjlQBoAMHtuoP+ifSU
-	PoP+D+diKKfDTeyT0ssR+hJnCO4kWTpeQuEOhj07LY1X2oleLimSnf1aI1saG67yBgtiA1MJaST
-	vh+SrLqWOOdzGn5nfJa+0iuNsIR0c8IVFtGG7C/fROqCKFkv0H/3Z+wXTMD2/A3Ms27Q73yYM6e
-	jizIwCTGfcPU8MkCX0inTTRda6KQqSDmbNPH1L8HLWPfTU2SB3Sm1X5/2K4x51eE4bvF889Az1P
-	QGNlAov/EQEV65+adurBGNyzy6w2aDpt0MDc/gg6/0k1iNJJdtqnx7CpAN+r7PqC+TNEx+6aIwK
-	ewo
-X-Received: by 2002:a05:6820:809:b0:6b7:83c5:fde9 with SMTP id 006d021491bc7-6b783c6033amr13430663eaf.42.1788859300695;
-        Tue, 08 Sep 2026 02:21:40 -0700 (PDT)
-Received: from [192.168.25.219] ([115.108.41.154])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14332405e92sm28146252c88.8.2026.09.08.02.21.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Sep 2026 02:21:40 -0700 (PDT)
-Message-ID: <1cbb335d-ed50-4e6d-9d11-bd09de1bcee3@gmail.com>
-Date: Tue, 8 Sep 2026 14:51:37 +0530
+        bh=BcXp9BA3Qv8nmWf4aFepWlYDEnpn1nNV/J6BwNWu5Ks=;
+        b=NMp42OOMSwenaNqu3xpgoTdsJlRnQfyNjG6HvQcuqTXUhAHl5IOUvlTUPD8N7CCKck
+         xGgolmnWtQ2ZJoMGQRaIZ+wmQb57zGojQeAgZSFSYFuMAlOM1sZ+wOLMGev5gj9STJwu
+         0W7cZV9uQZ7RU9X9sOyLqr2+F9pLCaV0bHc2LtfO7Fsgc3QBINYKB1Od0KUZXNy/bmDo
+         FwFt7Hgt1XRgyHfCKyq1/0+g90kjXrIkp5TAdF5+UDxd3ErgeVFB+2h+/9ttNOJwis8s
+         m8ufYLtG6dG231I9k7J0qNa6ahCSWVL0Dp2z8YGA3qoo5c7B/ANt+4hQqQplDLRktB1F
+         oWeg==
+X-Gm-Message-State: AFuF++mEJwnwLcR9OvSygWtxy8qKH3tGauKQe/iIGAmevlRFtS4JaHrw
+	Q1goVVvCnBwXbd1PvNQawhGzVAbSb4xjrWq8NC8L3Uplmj5015TmV+h8Tz1GUCqzHzZdLjwkFUV
+	p7DRbjUi7/2KINCkDqj4ff+GTVelDKPU=
+X-Gm-Gg: AYBFou1Pcwo95Vm+S/VCugD6Ya5OEFEsOVO8Vr8toLvJSmLhn6WVA9j+H/gLl3m2Qyz
+	BqNnLE9kzaxxX4WYsczSjcQlyeDG5c2eEcxEkcCALiV4VFQpXrsbW1kiF48kFBhYSSY07m5UPHH
+	MQf/uKwuI2XCevJRzTdXQMyLo/0JyYBdMKyZxAEopALrwJPFm/SPsc03N6BrFfDafRygL9Oe9Pf
+	AZCWdECs1hPayWig9poPtO+RMfUaOVlf6kbBB6WjQfsMkGgNXhdewvmLpUzpLkLT28SdE2GRnOJ
+	2j+r7UeRsbVbG3BUj8quhRWWEe8z8Q1nc5rvIXo0r6SkaHCEa8Ecw39uS//oiTyIeuoious9Cca
+	FRg==
+X-Received: by 2002:a05:6102:cb:b0:784:a925:3f0c with SMTP id
+ ada2fe7eead31-78a2ea9acfcmr5989636137.0.1788859329637; Tue, 08 Sep 2026
+ 02:22:09 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 8 Sep 2026 02:22:08 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 8 Sep 2026 02:22:08 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqv78g22ys.fsf@gitster.g>
+References: <20260904-758-introduce-hook-v7-0-6c66f0a3a572@gmail.com>
+ <20260904-758-introduce-hook-v7-2-6c66f0a3a572@gmail.com> <xmqqv78g22ys.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/11] builtin/clone: rename "--ref-format=" to
- "--ref-storage-format="
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
- <20260907-b4-pks-unify-ref-storage-format-v2-2-6733c90ca5b0@pks.im>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <20260907-b4-pks-unify-ref-storage-format-v2-2-6733c90ca5b0@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Tue, 8 Sep 2026 02:22:08 -0700
+X-Gm-Features: AcwNN1XgNfpJZHEXOH6LugX2VysHfvRVbFIFRYUVayTTYl88Be8ijWGLvRh-gDo
+Message-ID: <CAOLa=ZSBqQ2P60VKBcRBekbug=4NiEj2kAmfUcZKK-GDnzSPUw@mail.gmail.com>
+Subject: Re: [PATCH v7 2/4] receive-pack: drop static variables to track
+ report status version
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, jltobler@gmail.com, 
+	kristofferhaugsbakk@fastmail.com, Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: multipart/mixed; boundary="000000000000e58c9d065af54410"
 
-On 9/7/26 16:48, Patrick Steinhardt wrote:
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 5b25cca510..511fff9562 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -901,7 +901,7 @@ int cmd_clone(int argc,
->   	char *option_origin = NULL;
->   	struct string_list option_not = STRING_LIST_INIT_NODUP;
->   	const char *real_git_dir = NULL;
-> -	const char *ref_format = NULL;
-> +	const char *ref_storage_format_str = NULL;
->   	const char *option_upload_pack = "git-upload-pack";
->   	int option_progress = -1;
->   	int option_sparse_checkout = 0;
-> @@ -981,8 +981,10 @@ int cmd_clone(int argc,
->   			 N_("any cloned submodules will be shallow")),
->   		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
->   			   N_("separate git dir from working tree")),
-> -		OPT_STRING(0, "ref-format", &ref_format, N_("format"),
-> -			   N_("specify the reference format to use")),
-> +		OPT_STRING(0, "ref-storage-format", &ref_storage_format_str, N_("format"),
-> +			   N_("specify the reference storage format to use")),
-> +		OPT_STRING_F(0, "ref-format", &ref_storage_format_str, N_("format"),
-> +			   N_("specify the reference storage format to use"), PARSE_OPT_HIDDEN),
->   		OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
->   				N_("set config inside the new repository")),
->   		OPT_STRING_LIST(0, "server-option", &server_options,
+--000000000000e58c9d065af54410
+Content-Type: text/plain; charset="UTF-8"
 
-Ditto here about either deprecating / using OPT_ALIAS.
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> +enum report_status_version {
+>> +	REPORT_STATUS_UNKOWN = 0,
+>
+> Missing 'N'?
 
-> diff --git a/t/t7424-submodule-mixed-ref-formats.sh b/t/t7424-submodule-mixed-ref-formats.sh
-> index 1ca245c732..5eaf689d74 100755
-> --- a/t/t7424-submodule-mixed-ref-formats.sh
-> +++ b/t/t7424-submodule-mixed-ref-formats.sh
-> @@ -63,9 +63,9 @@ test_expect_success 'recursive clone propagates ref storage format' '
->   	test_ref_format upstream/submodule "$GIT_DEFAULT_REF_FORMAT" &&
->   
->   	# The cloned repositories should use the other ref format that we have
-> -	# specified via `--ref-format`. The option should propagate to cloned
-> +	# specified via `--ref-storage`. The option should propagate to cloned
+Sigh! Not the first time for me with this word. Will fix.
 
-s/ref-storage/ref-storage-format
+--000000000000e58c9d065af54410
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d505c6864ba7ade8_0.1
 
-Rest of the patch looks fine to me.
-
---
-Sivaraam
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xZjA3NFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMHRKREFDREgvVlpqbmFDdVJIbjkzc083cUVDRUV0NwpPbFpjSUFPbVFV
+ZVlsMTRtMVVHdFV5TzhvdjBneUFDbjRMNjUrNlNpWlFRN0V4cWRBU0JudU1EUTFWK0ROWSt4ClFl
+VzAwbFhkSjZaaWg5MWtSS09PNkMzVXliY1lmYkQxUEhadStsVnBpeEJmMG1KTXpiZTU5U3UwNG9F
+ZnlYVzgKbFNXZkVQZFpJSkFhaFliSWNpSHVtTEtDMFIzUnA5SG1VWUNydVJyc1poVWtBOU9mZ0NM
+eUxETFJIYVBUQ3YybQorUzdhS0h5MDByZ2RELzh6SkNBNjBlaHB4RTlVSUN0bzdQYWhSdVJxSEc5
+L0RlMnZSQi9FV3ZtY09GTnJDNlFZCjB2TWUvdDUwUDlIWTdpSE1YNzc5YzFMOXM0eiswNy9saTEw
+eTd5VVloZWs4V0txbmlvNmordnlLQnluZmR3bWgKT0Z4U3IyNXJSd3ZnYndZNmVMdHJOQXJvL3h5
+UTVqSGVHNVZxUjBJY0w5UFJ6UGtGTElKQ1pXd2VEMkYrK1FaWgowN3Mycms1RUFxS1ZVYmhqMHQz
+ZXZadmliallCTlJyT3h3NWNMRFRNTmR4ZUl3bThSdWRUYzBvUEVUMzU0ZUFjClVMQ3M2YkRieWVn
+eHRYc1lGbjZCNE81L2Y1LzRwdm9lRWJjbDQxND0KPWhUSFcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000e58c9d065af54410--
