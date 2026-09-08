@@ -1,65 +1,65 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFF356C650
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 16:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE43583AA7
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 16:42:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788885721; cv=none; b=cS1k+zj1nuahc9qwLHVeGMHQh000sa13jDUlHzyW3hpZc+fnSsvlQiqk7eejo0uVxBEbAPT0zgmRrNpQmYo6Kkv+Sqlbx9Jz8/jOUs8NAADDH8ywNdKJLq0nctN6AH13P9BykuCIq36kVg2DLXIBVadJQjIVzvjPaL7pFUy8Cgw=
+	t=1788885722; cv=none; b=c0aS36JSBAQkQpP06YOHwTdyn8NQRhCAje6VF6a490e225/SJauR2s/fdfLApdBmK1EwRqNSwroOQT/BXQx9+whoLxI3yggQjGNpzkVSxUvTcgTNNRD6IEf3PjkoZExuc0VSb2vzh+SEEDysEbHVm1v/bPWYgupDuzMBznmpu6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788885721; c=relaxed/simple;
-	bh=QOrDAzniDi/VaEmYBwcLz8e9yVcOzqJI8KI9PQQdYMw=;
+	s=arc-20240116; t=1788885722; c=relaxed/simple;
+	bh=LeqjNNHyqN5wRgR1cP9zw5hr+d2M01N6pOBpBwmjALU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bU1oeswi8QS70JrGRvqPHujpqTvn5D3xzO20aOiFDaNpZ8aXT8hCgi1aIj+eTbuT07oaa3UWcfSEpIxM8nYHKN5i9H5zG9YvtYT2FykWKACfzXZ6wXvzn0nJqIOyMH5XcY5PdFMWexFXtxvlqzEug7TsYmi61BZearFbcGzWDIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FnNm63P7; arc=none smtp.client-ip=209.85.221.45
+	 MIME-Version; b=KjdCnCcaYWxymQQFnelrXrXNiRaSn8dgAGZkJRKbTcpVaY8ZtuEVZgFZDEDO6kG7FcZX4dso9KaO6X2E6m1BapX2w3B6+ZH2pMAF6vD2Ja3ZCt5GY8HCnfZj9ArUDzI8qinJGlpTJepsYhy+ajnxYxzFjUrwk3xJNICSse4Sua4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YPW+qOO7; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FnNm63P7"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-47f96c5b722so3443028f8f.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2026 09:41:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YPW+qOO7"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-499b2981a7bso52697915e9.3
+        for <git@vger.kernel.org>; Tue, 08 Sep 2026 09:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788885717; x=1789490517; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788885718; x=1789490518; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=rPraoFevRgVwjUVNRd9YHuJ+EegIeJNPUHL7Ou5eExU=;
-        b=FnNm63P7nkyCzAYNgP0xihghNu32uabaXI/8+TT2so05N9dcXdQM0WtwdydBZ5hcii
-         5sRJKHB5mnfyftinuSo70yQbS9ar/V4uKY4RZOypaQDDVOCYKFEdpQt/v3yJSy+dm/Q0
-         VppL+1bUDAFncOKFtRxkbAOs4AROFXGeItO/EfDIqE5+Apj9CVNinnKXEmxfJai7j9lu
-         Wmj1on9c8D3PRId0LspW9ZIVJHKPvtZuxp6BhptjVK/mSiUSge/xJ3oJfwBM+X1Wwy+M
-         a2lY0Nm0feyWILWWvIvwTE4V+zt2lCtxwV5JyM5mPz9rhONFEX71xTI8XTUr4RG5XY6/
-         fITA==
+        bh=AcaT7XI9fWlZEg9RdhkGK3sNKW6EwPfjKHqWUgHPU1A=;
+        b=YPW+qOO7mid7xdrCZHeQADp3Xhi6sfGz7oDRBeMThP2u1cPhLnKS2mo9Gr/K19QWz7
+         N06AyVJnvnrW8WYg0EX8NhhKXZdMDksdA6vXxGE6L4gdpy2YFShrMeAQTg0hzLVlkFhe
+         r0lT/gTLj8eTRMrdkPRn1MsKJg7M6tFkRGRUpWQOPrvmfJN9yZWQLgVcGzAfbO/u/x3P
+         AVgF84qAxMNfzS6zuWolJHvczXsD4U7OrRbThWA2Dwj3aLIhSEkLFUOXjfCtViA1hgul
+         /SfHzXd2l7LX7QMHMluYk/2hjLj/jKMx5xHDxtqn/lk4qMvJnnKE/XwXAE/tXYTjBOjk
+         9SDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788885717; x=1789490517;
+        d=1e100.net; s=20251104; t=1788885718; x=1789490518;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=rPraoFevRgVwjUVNRd9YHuJ+EegIeJNPUHL7Ou5eExU=;
-        b=Evd3pBEqW6zC8wmxAB0CuzYCKB+B1C/bMzyODVRhy6mhWiukpfuivT+KB5ct+rOEnq
-         pqrZQ1Yok0PZiGKgqKuySoAwTMmyq2UCM7swnYxXB47QkJxKJhGwJ6f5CWw4DJ4skjlM
-         UMlxZ4NO6N5iyhXe+e3y50wyeSN6Bu1XtT2I2zpG5f5GEDgvShH6srDYKT6K+ueah358
-         nT87Vgh5uDKxkBJttedmgKHBBJzvvwDgl+A6UIIgf4I9DGfjWzQ7DymLdm+gutsMpB/X
-         f1JzoCXRCMTQpsHKhDc7tNstSCx8q0ko+O7WwWbk4bU3qCQG7kXBpgPR6V192Z3tXjUy
-         LB+Q==
-X-Gm-Message-State: AFuF++m8Md+VbxSRo91HTA/6QiVTc8iKnKYB+tDtMvyjXu8pPR+JhiEB
-	vrmYzwbsZWkbxAsrPhpvaINbBvKYnvjlGn3zcY8VeQ/rWR5kjxjz+GAhyZZTaJ1B
-X-Gm-Gg: AYBFou38cI/V0RXZEM1qUL907YwxlpC3cSILWqtKG4TexKxspcwrAV5YzZJ3n92w/is
-	fG+9KiYZfftIWpxA5E4km2xWahjmNEs50pwqkRP5RgS9W4jeUemYYe86NpWN+tZpeFy1BYoFWqc
-	8LjejlkE5qXubHAXXzhDQlzChSm6P+M8q5r6hIgVl/CnTJ7vcC5PuiswEWJ6MaFtBzCIia0kWRa
-	zSxtpcUQctTQaeoiqGkcsBSAK7roIvkTtSc4/rVaXTFI+GYndc7IFvnxNw4rTNVNEw41JFw102E
-	MFY9pF74YKhppCcwAgLnfVwsv6YMvGw478SUNJq3Zg0AJUfCSIJt7Rn/6Zui7ujN4c3wvqwR/Vm
-	LJhMaRE4VM+GcEugnD1zvBAlcpn8iEAIv63J7Smp/9pkBnRRZKLdNczK/o3tIK0R6kGTFrtMtFx
-	Or8xhc2r3bJXw1FBiiyLm67vVWKD3i2S6z8Y825X5yO1rmEB0pRJLAKp/atb8iHZuWKD3VALu7h
-	MqdzKX02ulpuDHYUMHX1BVUGFjZiJBpmyix3pDOHqbeOl+OAGQDDN5xtiIQSKQLWgnpBaacBE6m
-	7lhsnUzR9+BxQZyVTH0F6z1LqhR6FHisqKnd8i6ED9VBEv7dijKjBFOn0Pbtbt6LTyi6wak4BS0
-	=
-X-Received: by 2002:a05:6000:26d3:b0:481:5b58:c589 with SMTP id ffacd0b85a97d-485870935eamr30529407f8f.10.1788885717120;
-        Tue, 08 Sep 2026 09:41:57 -0700 (PDT)
+        bh=AcaT7XI9fWlZEg9RdhkGK3sNKW6EwPfjKHqWUgHPU1A=;
+        b=DFZrq1BT40lJIVpe1oU8M4DJU7M01hRWEZhRX3V+e/imPNucJIAW0hxPpAUoln47a9
+         1j/BYL6FFKftCkTnYTQ5XrkyoFt/bslny7a9abe+4yUYsE0i8dZcL0Baqt4jDEpXVGIO
+         TG3BuE52PZ1WDmppf5FjjpHFMiEOUwMW5u4Iu0YMY6SJ1uVTGuysbHTr4qK2tdc+WDN0
+         +be0prFwKNR6ZYtOC6nAM1BVnhbXE9hh6q24N+72LzWxJTOsFYRDS6Wn1pkQFONiftbM
+         nxAV3JmsrG4vyXzClXz86ZswrkIEp6FFSlTO6TDYSxIPvwJf1daLBYcj+5TgSHEqZ+Gp
+         JcWQ==
+X-Gm-Message-State: AFuF++m/ScwVsc3RIKNP+YyoPxGLZdQNzV5BUhPmYho6dQf+GT2UDwTL
+	7u0Kv1RdXz2fQCPsk1iMgs2uRRV7LiyFvfW9HueRf3BpfHcGvU98oaZK1U2CtIxw
+X-Gm-Gg: AYBFou2fJGrksdY5wF3ZSZN6IIp7Ua//hhA2YBuF87JtzNDWtX8V3RTQi0uRGTyeJwH
+	Ji21Qs3zBSKMMpam4taU3ZO428oI3sk29EL1yWwrsppRQ97glP3i01BSQp2ZgMWexLiUPFT9SAL
+	m/PxYc70qV1CxOkmE566zq5BdVnTwupuNmgSVZgY7OBZvYfHUwQamm4TruoPSqP3Ybf8Ox8NdQI
+	4/x22402Dyiokolx+SY8J/CYKwaMefKHzqOpuucD0KWCjK4TIsSCJabOdIwDZTjj3AuUJU2PgpC
+	9wQMlGKbohuotAJqyup4nDQcLqzBfErLh05odE6384+EBiX/kSn4D5ZUbF16L773V2oxW8hM4fB
+	nJFK/RoB5XKaqwGJF7/5NGjwGy/ScYDxp+RbEreA+7p7YfkEGdF9d4Ca4e73+embROJdv8a0lGx
+	Vj7Nh8XDx7y3Ra856OVjDv8vaPbXX08tYGMclku4xXGM/Kan4uR1adboMUmVlYQETFgM0gdJt5Z
+	1+eJdqWQym/mGDGpKjWduHiskpNvdkizdlUXwr6whG6mOCiGsZUxxooWlXh1oHTt1xsUvcfk67J
+	YtQH+qaZ+Ah48BMzSC0uCKvXgxzfxhZvcovU8pD+yuDRDNPCT/vkLDW/fGRVfoag4R3c1Mis4jb
+	wmWA8rioHBQ==
+X-Received: by 2002:a05:600c:6087:b0:49c:d52e:d0ea with SMTP id 5b1f17b1804b1-49cf81e3454mr649945235e9.4.1788885718411;
+        Tue, 08 Sep 2026 09:41:58 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48591eb3d3bsm24081689f8f.0.2026.09.08.09.41.55
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48591eb3d3bsm24081689f8f.0.2026.09.08.09.41.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2026 09:41:56 -0700 (PDT)
+        Tue, 08 Sep 2026 09:41:57 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -69,9 +69,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 2/5] setup: extract path_allowlist_apply()
-Date: Tue,  8 Sep 2026 18:41:26 +0200
-Message-ID: <20260908164129.560396-3-christian.couder@gmail.com>
+Subject: [PATCH v3 3/5] upload-pack: read uploadpack.lazyFetchTrusted
+Date: Tue,  8 Sep 2026 18:41:27 +0200
+Message-ID: <20260908164129.560396-4-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.55.0.792.ged91fccac1.dirty
 In-Reply-To: <20260908164129.560396-1-christian.couder@gmail.com>
 References: <20260813154748.2378747-1-christian.couder@gmail.com>
@@ -84,257 +84,135 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In a following commit we are going to check whether a repository is
-part of an allowlist specified in a config variable.
+Previous commits created and prepared the path_allowlist_apply()
+and path_allowlist_config_apply() functions, but used them only for the
+"safe.directory" configuration variable.
 
-To prepare for that let's extract existing code from
-safe_directory_cb() into a new path_allowlist_apply() helper that will
-help with such checks.
+Let's reuse these functions for a new "uploadpack.lazyFetchTrusted"
+configuration variable.
 
-While at it let's make the helper's code simpler and more generic, by
-passing it a `bool (*allow_path)(const char *path, void *cbdata)`
-function that decides if a path is acceptable by the caller.
+It allows us to:
 
-To further simplify how to reuse that new helper, and avoid duplicating
-the config-value handling in a future commit, let's also introduce a
-path_allowlist_config_apply() helper.
+  - read an allowlist from that config variable,
+  - check if the current repo is in that list, and
+  - return the result from a new upload_pack_lazy_fetch_trusted()
+    function.
 
-For clarity, let's change the `int is_safe` to `bool safe` in
-`struct safe_directory_data`.
+As path_allowlist_config_apply() lets each caller decide which paths
+it is willing to accept using a callback, let's pass it a new
+allow_trusted_path() callback. Unlike the "safe.directory" callback, it
+accepts only absolute paths, and not ".", as `upload-pack` always
+serves a repository given by an absolute path, so there is no "current
+repository" for "." to refer to.
+
+Note that a served repository is identified by its git directory, and
+not by its worktree. This is because `upload-pack` uses enter_repo()
+instead of the usual repository discovery, so it never learns about a
+worktree and `r->worktree` is always NULL there. In practice this
+means that a non-bare repository served as "/srv/repo" has to be
+allowlisted as "/srv/repo/.git".
+
+The new upload_pack_lazy_fetch_trusted() function will be used in a
+following commit.
+
+Note that the new config variable should be read only from protected
+configuration files.
 
 Signed-off-by: Christian Couder <christian.couder@gmail.com>
 ---
- setup.c | 138 ++++++++++++++++++++++++++++++++++++--------------------
- setup.h |  50 ++++++++++++++++++++
- 2 files changed, 138 insertions(+), 50 deletions(-)
+ upload-pack.c | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ upload-pack.h |  3 +++
+ 2 files changed, 62 insertions(+)
 
-diff --git a/setup.c b/setup.c
-index dfe05d9a03..366a7dc5c0 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1338,67 +1338,105 @@ static int canonicalize_ceiling_entry(struct string_list_item *item,
- 	}
+diff --git a/upload-pack.c b/upload-pack.c
+index 22573ad365..a300870fa9 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -34,6 +34,8 @@
+ #include "json-writer.h"
+ #include "strmap.h"
+ #include "promisor-remote.h"
++#include "setup.h"
++#include "abspath.h"
+ 
+ /* Remember to update object flag allocation in object.h */
+ #define THEY_HAVE	(1u << 11)
+@@ -1343,6 +1345,63 @@ static int upload_pack_config(const char *var, const char *value,
+ 	return parse_hide_refs_config(var, value, "uploadpack", &data->hidden_refs);
  }
  
-+void path_allowlist_apply(const char *allowed, const char *target_path,
-+			  bool *matches,
-+			  bool (*allow_path)(const char *path, void *cbdata),
-+			  void *allow_path_cbdata)
-+{
-+	char *normalized = NULL;
-+
-+	if (!allowed || !*allowed) {
-+		*matches = false;
-+		return;
-+	}
-+
-+	if (!strcmp(allowed, "*")) {
-+		*matches = true;
-+		return;
-+	}
-+
-+	if (!allow_path(allowed, allow_path_cbdata))
-+		return;
-+
-+	/*
-+	 * A .gitconfig in $HOME may be shared across different
-+	 * machines and the config variable entries may or may not
-+	 * exist as paths on all of these machines.  In other words,
-+	 * it is not a warning worthy event when there is no such path
-+	 * on this machine---the entry may be useful elsewhere.
-+	 */
-+	normalized = real_pathdup(allowed, 0);
-+	if (!normalized)
-+		return;
-+
-+	if (ends_with(normalized, "/*")) {
-+		size_t len = strlen(normalized);
-+		if (!fspathncmp(normalized, target_path, len - 1))
-+			*matches = true;
-+	} else if (!fspathcmp(target_path, normalized)) {
-+		*matches = true;
-+	}
-+
-+	free(normalized);
-+}
-+
-+void path_allowlist_config_apply(const char *key, const char *value,
-+				 const char *target_path, bool *matches,
-+				 bool (*allow_path)(const char *path, void *cbdata),
-+				 void *allow_path_cbdata)
-+{
-+	char *allowed = NULL;
-+
-+	if (!value || !*value || !strcmp(value, "*")) {
-+		path_allowlist_apply(value, target_path, matches,
-+				     allow_path, allow_path_cbdata);
-+		return;
-+	}
-+
-+	if (git_config_pathname(&allowed, key, value) || !allowed)
-+		return;
-+
-+	path_allowlist_apply(allowed, target_path, matches,
-+			     allow_path, allow_path_cbdata);
-+
-+	free(allowed);
-+}
-+
 +/*
-+ * Setting the config variable to a non-absolute path makes
-+ * little sense---it won't be relative to the configuration
-+ * file the item is defined in.  Except for ".", which means
-+ * "if we are at the top level of a repository, then it is
-+ * OK", which is slightly tighter than "*" that allows
-+ * discovery.
++ * Only absolute paths make sense here. Unlike 'safe.directory', "."
++ * is not accepted, as the served repository is always identified by
++ * an absolute path.
 + */
-+static bool allow_safe_dir(const char *path, void *cbdata_)
++static bool allow_trusted_path(const char *path, void *cbdata_)
 +{
 +	struct path_allowlist_cb_data *cbdata = cbdata_;
 +
-+	if (is_absolute_path(path) || !strcmp(path, "."))
++	if (is_absolute_path(path))
 +		return true;
 +
 +	warning(_("%s '%s' not absolute"), cbdata->key, path);
 +	return false;
 +}
 +
- struct safe_directory_data {
- 	char *path;
--	int is_safe;
-+	bool safe;
- };
- 
- static int safe_directory_cb(const char *key, const char *value,
- 			     const struct config_context *ctx UNUSED, void *d)
- {
- 	struct safe_directory_data *data = d;
-+	struct path_allowlist_cb_data cbdata = { .key = key };
- 
- 	if (strcmp(key, "safe.directory"))
- 		return 0;
- 
--	if (!value || !*value) {
--		data->is_safe = 0;
--	} else if (!strcmp(value, "*")) {
--		data->is_safe = 1;
--	} else {
--		char *allowed = NULL;
--
--		if (!git_config_pathname(&allowed, key, value) && allowed) {
--			char *normalized = NULL;
--
--			/*
--			 * Setting safe.directory to a non-absolute path
--			 * makes little sense---it won't be relative to
--			 * the configuration file the item is defined in.
--			 * Except for ".", which means "if we are at the top
--			 * level of a repository, then it is OK", which is
--			 * slightly tighter than "*" that allows discovery.
--			 */
--			if (!is_absolute_path(allowed) && strcmp(allowed, ".")) {
--				warning(_("safe.directory '%s' not absolute"),
--					allowed);
--				goto next;
--			}
--
--			/*
--			 * A .gitconfig in $HOME may be shared across
--			 * different machines and safe.directory entries
--			 * may or may not exist as paths on all of these
--			 * machines.  In other words, it is not a warning
--			 * worthy event when there is no such path on this
--			 * machine---the entry may be useful elsewhere.
--			 */
--			normalized = real_pathdup(allowed, 0);
--			if (!normalized)
--				goto next;
--
--			if (ends_with(normalized, "/*")) {
--				size_t len = strlen(normalized);
--				if (!fspathncmp(normalized, data->path, len - 1))
--					data->is_safe = 1;
--			} else if (!fspathcmp(data->path, normalized)) {
--				data->is_safe = 1;
--			}
--		next:
--			free(normalized);
--			free(allowed);
--		}
--	}
-+	path_allowlist_config_apply(key, value, data->path, &data->safe,
-+				    allow_safe_dir, &cbdata);
- 
- 	return 0;
- }
-@@ -1440,7 +1478,7 @@ static int ensure_valid_ownership(const char *gitfile,
- 	git_protected_config(safe_directory_cb, &data);
- 
- 	free(data.path);
--	return data.is_safe;
-+	return data.safe;
- }
- 
- void die_upon_dubious_ownership(const char *gitfile, const char *worktree,
-diff --git a/setup.h b/setup.h
-index 763fd384e8..6b84fbe507 100644
---- a/setup.h
-+++ b/setup.h
-@@ -304,4 +304,54 @@ struct startup_info {
- extern struct startup_info *startup_info;
- extern const char *tmp_original_cwd;
- 
-+/* Path allowlist */
-+
-+struct path_allowlist_cb_data {
-+	const char *key;
++struct lazy_fetch_trusted {
++	char *repo_path;
++	bool trusted;
 +};
 +
-+/*
-+ * Check the allowlist entry in `allowed` against `target_path`,
-+ * updating `*matches` accordingly.
-+ *
-+ * `allowed` is a single entry of an allowlist of paths, typically one
-+ * value of a multi-valued config variable, already expanded by
-+ * git_config_pathname(). `target_path` is the (normalized) path being
-+ * tested. `*matches` is updated in place:
-+ *
-+ *   - an empty `allowed` resets it to 'false' (so a later, more
-+ *     specific config scope can clear entries from a broader one),
-+ *   - "*" sets it to 'true' (allow everything),
-+ *   - "<path>" sets it to 'true' if <path> equals `target_path`,
-+ *   - "<path>" + "/" + "*" sets it to 'true' if <path> is a leading
-+ *     directory of `target_path`,
-+ *   - anything else leaves `*matches` unchanged.
-+ *
-+ * `allow_path` is called with `allowed` and `allow_path_cbdata`, and
-+ * should return 'true' if the entry is acceptable to the caller. It
-+ * lets each caller decide which paths it is willing to consider, and
-+ * whether to warn about the ones it rejects. Returning 'false' leaves
-+ * `*matches` unchanged.
-+ *
-+ * Callers are expected to invoke this once per allowlist entry,
-+ * typically from a protected-config callback, so that untrusted
-+ * repository config cannot influence the decision.
-+ */
-+void path_allowlist_apply(const char *allowed, const char *target_path,
-+			  bool *matches,
-+			  bool (*allow_path)(const char *path, void *cbdata),
-+			  void *allow_path_cbdata);
++static int upload_pack_protected_lazy_fetch_config(const char *var, const char *value,
++						   const struct config_context *ctx UNUSED,
++						   void *cb_data)
++{
++	struct lazy_fetch_trusted *data = cb_data;
++	struct path_allowlist_cb_data cbdata = { .key = var };
 +
-+/*
-+ * Apply one value of a multi-valued config variable holding an
-+ * allowlist of paths, expanding it with git_config_pathname() before
-+ * checking it against `target_path`. Empty and "*" values are passed
-+ * through without expansion, as interpolating them is not
-+ * meaningful. See path_allowlist_apply().
-+ */
-+void path_allowlist_config_apply(const char *key, const char *value,
-+				 const char *target_path, bool *matches,
-+				 bool (*allow_path)(const char *path, void *cbdata),
-+				 void *allow_path_cbdata);
++	if (strcmp("uploadpack.lazyfetchtrusted", var))
++		return 0;
 +
- #endif /* SETUP_H */
++	path_allowlist_config_apply(var, value, data->repo_path, &data->trusted,
++				    allow_trusted_path, &cbdata);
++
++	return 0;
++}
++
++bool upload_pack_lazy_fetch_trusted(struct repository *r)
++{
++	struct lazy_fetch_trusted data = { 0 };
++
++	/*
++	 * A served repository is identified by its git directory, as
++	 * `upload-pack` uses enter_repo() instead of the usual repository
++	 * discovery, so its worktree, if any, is never known here.
++	 */
++	data.repo_path = real_pathdup(r->gitdir, 0);
++	if (!data.repo_path)
++		return false;
++
++	git_protected_config(upload_pack_protected_lazy_fetch_config, &data);
++
++	free(data.repo_path);
++
++	return !!data.trusted;
++}
++
+ static int upload_pack_protected_config(const char *var, const char *value,
+ 					const struct config_context *ctx UNUSED,
+ 					void *cb_data)
+diff --git a/upload-pack.h b/upload-pack.h
+index d6ee25ea98..b2212992c3 100644
+--- a/upload-pack.h
++++ b/upload-pack.h
+@@ -12,4 +12,7 @@ struct strbuf;
+ int upload_pack_advertise(struct repository *r,
+ 			  struct strbuf *value);
+ 
++/* Is this repo trusted for lazy fetching? */
++bool upload_pack_lazy_fetch_trusted(struct repository *r);
++
+ #endif /* UPLOAD_PACK_H */
 -- 
 2.55.0.792.ged91fccac1.dirty
 
