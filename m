@@ -1,126 +1,160 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1716418FC80
-	for <git@vger.kernel.org>; Tue,  8 Sep 2026 01:17:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45FB2BEFEB
+	for <git@vger.kernel.org>; Tue,  8 Sep 2026 01:28:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788830225; cv=none; b=HFcof6o7A5+EZd9J4LlRdLLeEgGepQPqA/1fTAw173J7R7njNcowwuhsqCq+PvrfA3HXv/6+ALxfJBx8+K03cl78Bj2dh+DV0B8yNzB3Hrcknzq3D1oAi/6jFHksnhqeVm3sZ5j+gET7Zr22h7LGeva3x6NmHO+uFaE3LcWFTo0=
+	t=1788830916; cv=none; b=VOhGnpuNtvBk4MCxKRuDx8V5/qG/aGWub5DxK99TDbz1G+76jnnTzB+RteJhcmmTsWCDLGnip/AoNM1mGBMi8kTtDHAYuMzyFT5P1uP71ZtUbp7xMChhlZeyp+DGWpvx+T1Ql8uHOn0ImSM4vN6E5t9EwA3m7qruJnwQ7KM+MWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788830225; c=relaxed/simple;
-	bh=GjWSXCnJy+AR0n2tPLddBXHH7PW0mW00VmNveBekMes=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a0hi6L+BQBfAsIYy8w1jP5PyFwk+1i8rZtn4RJ3KFgTbK5WaLnHg0bzjaamDCqtvojSqQBv6kEl7qAS7P0ZKGH+YimXeFT8BTM/QITF69I3KSFc3Oahq9gk8ZExpiZpJhxiOfBqZJEwxGOFyLWDJEqsJppGDe8SkViF4GtiFMvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=unDrWn0i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sZEfCUEv; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788830916; c=relaxed/simple;
+	bh=n38P7GNyYV/mdMGjRrRgDN4NQOe77HouDLWYtQuZLKQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CccOc8VYqHqkP6K8z42rWtfNYZEmUURMCKv3umYY214zmFjbUvFt4gCeJpFk7e+55PDTUs5xSywqRBw0hHbI2tyANOTi1m0A+r31yFBgJNUMFELQn8RZboixDTd3vq6BXglNA+otVaYQDQpXw2neegLg9YWxzahk5fsjmEhkO2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=NSJgUBtL; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="unDrWn0i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sZEfCUEv"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4D2D11D00087;
-	Mon,  7 Sep 2026 21:17:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 07 Sep 2026 21:17:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788830223; x=1788916623; bh=m7lKp9HGBf
-	oGAlhrkMVH1e7iNbG36FzSFxRGzQzyk1w=; b=unDrWn0iMYpb0bAUhEyvXTUc+H
-	BdR5T60bE7hUiku6WfEim/twKp/N5nJ+CXtbAqg9KyoQfO1yMmbpM7a3wSCeDq8G
-	frrycQQ17mhOyiwUlF4s/YS/PFb1ywlKlhDlFOJTr3Jd+cQjwniFJrxJHkQSYJm8
-	vxIVYhyK/feykn+sMC+vLLW8kto7xEhGzIw6A32tJY1IiqFqgfjEGTuGPSD7i/1p
-	5FqtBXGmRmgBT7FoNKduVuuwtnA6+oDxIMBQg3rMLCAbdhbo7/WRYXpZ8b41dZh7
-	BIhPOI28qJG9vJkhC9IiIwR2JB06YvqKAwcSxxWskcR0d1yO/nBTPN3NzEvQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788830223; x=1788916623; bh=m7lKp9HGBfoGAlhrkMVH1e7iNbG36FzSFxR
-	GzQzyk1w=; b=sZEfCUEvR+1e5hATQa3AsSY0NXiZvJVQPjpdRpRKf90xoxwaN4b
-	PVLRBcan8nxX2wSKBaAXTG4+UwRskKFRioXV5cdDfCIwASST11oPwKA82NzgbUKg
-	8VD0pWaDs6wjH3TIEa/fWeSanRSjBlwnzR9IBusGWO1czGUhsZLFnSwCXQKgkeRJ
-	vz10AsPKDEeVKx3fyE3af4lu5Hlr+znSMi5xWIXl7AbEHuPrw2oK11K6dNeIGUyJ
-	J5wTjc5fquKhIAeM38hqBA67CzaJlt5S/uWA8o9Bf18yEC623i0Jclk5Tw2WKvSE
-	YVa/RqlZEbtqJu83gdXZbg730mBFa/aIT0w==
-X-ME-Sender: <xms:DmKfakyJuRl3J56JWe3N7zgu-fL3F05GwY_sngZKE7s_xEU1YRiRJQ>
-    <xme:DmKfavR9mIK6e1AaHsUWCbrEwgTxFnqiHfA7GVo2YDCMNhCN9NIeUCG3JM-0yNyrr
-    tLWysbe9xpv4kh24Yj4TqUb_2XFJ7cQ9uORf05DDNo3bN8z_aXINA>
-X-ME-Received: <xmr:DmKfarXm8L4q_0yGMlg2h5uRFB8GdSjpmTgjbmnF_U_ps-CxZ5JGrKz-iDbmln9xaFQqggwczdcHeSXekUaTKwpgs29WaJ2s0Miw>
-X-ME-Proxy-Cause: dmFkZTGSSVZht23Dxm9N7O4V2416WbWE3OnQXvlJ7N0NiA+Bve9oSWtshhGfb1raNEnCT2
-    OfJZdo1OGG0vq4OkUruEoGn86hztcMKmQclO6p+aRqEXYvHHessnzHwMEhwf8d96gQTHqd
-    jesZscFc6+jiO1RvBJl25PBYfUJ7vq7nqCJO4HM+lEzZXYQAidESi/a0OXd5bAblLcyshD
-    9sSx3Qa8m/nExmYrYeVeXOvTy9+a/iFkLct6nf9JGfhwiCfal4LXG8tcG3mykQr2kAAxnH
-    zNUIlRTuB41DmxHw0TSp3q5TFFO5mLHR7xjhfXKP+vq+pe/+TQRMwjQ+eVwLOJ5RMWJUpX
-    0VOJjSbSN4RAIwHUbdGD4M8mRKQXCtXnFQgwA8kEMq2jrbvsj3hYMEr4eiqjC73RMASTAu
-    ZeDp72jeWI/8H6Mlgnj8AvUron+gq7xShAyoO1CNUDippCkMsGHc+ZNmylbgQc/FBbX2qb
-    VEWYPs9Ne1JJY8q+e1Ij1Ih3EQ85m+Tije5EniW5WgpGjNLXhkFMH3jrhpweyz2aTP3Uvf
-    EpQSG87U31qBXUohpsQBj1DkL6EKs2PJZ0Au4GlFTky3oW0q4utDgnwSWrKUwBNa2Vq4xU
-    Qday5rgnJImgbsnTDWhc1HjZQq/4rueIM4LIVG+b2KTvXr1UlpSafsSNFVxQ
-X-ME-Proxy: <xmx:DmKfahbn1DnXGD1Cho9WTfAp33APamnHnh0RTgjxPcPpgh2_iajewA>
-    <xmx:DmKfah1ezbCbTUpbObDdhQcsp0eULTUuxkiM-vvsc7q_OcbiDFpyIg>
-    <xmx:DmKfajhuUQGjekbzKddxiSf2y_AAhh2MuTy0lpA_K4NOPXm9AxZigA>
-    <xmx:DmKfalZRPWzT9-y6uUyCgdhcesQno6Asns8RWlL3XgvvLuUxq6FEPA>
-    <xmx:D2KfanSZTSoMbYUtg4kL9FEYEG1sRC3PKkH2usXd58LOy3Yz-SYAuBPR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Sep 2026 21:17:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NSJgUBtL"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1788830913;
+	bh=n38P7GNyYV/mdMGjRrRgDN4NQOe77HouDLWYtQuZLKQ=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=NSJgUBtLA/sAPIwOAoCcQDFFpLc1XnQRBGJ/RozHbTyQGMlECdQW33KfxIjyt33bJ
+	 68YUBsPHQHOB/eSDZRKGl8/zfbZrC8qU1LgHWNcYGJc/Q1AhosCOJvkFwfxWQrdryC
+	 a5zsrhzfN2upFXACIAEkiXUT3ubaOukzN3ngicWh8BYlzIbk5bD2FU4GC0F4LoCMGp
+	 eUWkMJxx8UFJKJEOjmznto54qTwkpfaSzzbyNvnsSpwFUXwqtvXp1dZQoC5EYcL6EV
+	 t5lUx1M4OIBgefD+o71bAaN8s1S/eY9+xluQD9AGk4FZSnAcK4JowS1f2EV7FsB+z+
+	 FXNxEHK0+ZE74b2g6Mdh1NARnwbS4h9gfWLib5DOR0kg5WKE+4sWJxlW4c7MUJT0iw
+	 R9V2yFE9DmzX5i2GkTp5NDk5WFCtu9cOY12EJ7tgUrFMma6M1A5/Y+mkGh1rAwPac5
+	 tq6y32ADy2jQA7y/D4Qwdxik3ltHV/DpaD54rfl5VxdZxzop2vp
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7b23:2dc:c9d2:f0e4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7099720037;
+	Tue,  8 Sep 2026 01:28:33 +0000 (UTC)
+Date: Tue, 8 Sep 2026 01:28:32 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Beat Bolli <dev+git@drbeat.li>
-Cc: git@vger.kernel.org,  Oswald Buddenhagen <ossi@kde.org>
-Subject: Re: [PATCH 2/3] imap-send: don't expect an ASN1_STRING to be
- NUL-terminated
-In-Reply-To: <20260907211210.2621693-3-dev+git@drbeat.li> (Beat Bolli's
-	message of "Mon, 7 Sep 2026 23:12:09 +0200")
+Cc: git@vger.kernel.org, Oswald Buddenhagen <ossi@kde.org>
+Subject: Re: [PATCH 3/3] imap-send: only check the CN if no SAN DNS names are
+ present
+Message-ID: <ap9kv-ORyzzeUiqb@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Beat Bolli <dev+git@drbeat.li>, git@vger.kernel.org,
+	Oswald Buddenhagen <ossi@kde.org>
 References: <20260907211210.2621693-1-dev+git@drbeat.li>
-	<20260907211210.2621693-3-dev+git@drbeat.li>
-Date: Mon, 07 Sep 2026 18:17:01 -0700
-Message-ID: <xmqqwlswzgmq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20260907211210.2621693-4-dev+git@drbeat.li>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/Qx8fCN6nyO8c0cZ"
+Content-Disposition: inline
+In-Reply-To: <20260907211210.2621693-4-dev+git@drbeat.li>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Beat Bolli <dev+git@drbeat.li> writes:
+--/Qx8fCN6nyO8c0cZ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> -	const char *pattern = (const char *)ASN1_STRING_get0_data(asn1_str);
-> +	int ret = 0;
-> +	size_t len = ASN1_STRING_get_length(asn1_str);
-> +	char *pattern = xmemdupz(ASN1_STRING_get0_data(asn1_str), len);
->  
->  	/* embedded NUL characters may open a security hole */
-> -	if (memchr(pattern, '\0', ASN1_STRING_get_length(asn1_str)))
-> -	    return 0;
-> +	if (memchr(pattern, '\0', len))
-> +	    goto out;
->  
->  	if (pattern[0] == '*' && pattern[1] == '.') {
->  		pattern += 2;
->  		if (!(host = strchr(host, '.')))
-> -			return 0;
-> +			goto out;
->  		host++;
+On 2026-09-07 at 21:12:10, Beat Bolli wrote:
+> Checking the certificate subject's common name may only be done if the
+> subjectAltNames extension contains no DNS entries. If no SAN DNS name
+> matches, there's no match.
+>=20
+> Per RFC 6125 section 6.4.4[1]:
+>=20
+>     As noted, a client MUST NOT seek a match for a reference identifier
+>     of CN-ID if the presented identifiers include a DNS-ID, SRV-ID,
+>     URI-ID, or any application-specific identifier types supported by the
+>     client.
+>=20
+> This change was inspired by a similar commit in the HAProxy project[2].
+
+TLS is not supposed to use the CN at all these days and Go's
+implementation completely ignores it.  subjectAltName is supposed to be
+used in all cases.
+
+> diff --git a/imap-send.c b/imap-send.c
+> index 9a807cdde8..66d3dbfaa5 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -256,11 +256,11 @@ static int verify_hostname(X509 *cert, const char *=
+hostname)
+>  #endif
+>  	const X509_NAME_ENTRY *cname_entry;
+>  	const ASN1_STRING *cname;
+> -	int i, found;
+> +	int i, found, has_san_dns;
+>  	STACK_OF(GENERAL_NAME) *subj_alt_names;
+> =20
+>  	/* try the DNS subjectAltNames */
+> -	found =3D 0;
+> +	found =3D has_san_dns =3D 0;
+>  	if ((subj_alt_names =3D X509_get_ext_d2i(cert, NID_subject_alt_name, NU=
+LL, NULL))) {
+>  		int num_subj_alt_names =3D sk_GENERAL_NAME_num(subj_alt_names);
+>  		for (i =3D 0; !found && i < num_subj_alt_names; i++) {
+> @@ -268,13 +268,18 @@ static int verify_hostname(X509 *cert, const char *=
+hostname)
+>  			GENERAL_NAME *subj_alt_name =3D sk_GENERAL_NAME_value(subj_alt_names,=
+ i);
+>  			ASN1_STRING *subj_alt_str =3D GENERAL_NAME_get0_value(subj_alt_name, =
+&ntype);
+> =20
+> -			if (ntype =3D=3D GEN_DNS && host_matches(hostname, subj_alt_str))
+> -				found =3D 1;
+> +			if (ntype =3D=3D GEN_DNS) {
+> +				has_san_dns =3D 1;
+> +				if (host_matches(hostname, subj_alt_str))
+> +					found =3D 1;
+> +			}
+
+This handles certificates with DNS names but not IP addresses.  So, for
+instance, this match wouldn't work for the certificates for 1.1.1.1
+(assuming they had public IMAP service).
+
+>  		}
+>  		sk_GENERAL_NAME_pop_free(subj_alt_names, GENERAL_NAME_free);
 >  	}
->  
-> -	return *host && *pattern && !strcasecmp(host, pattern);
-> +	ret = *host && *pattern && !strcasecmp(host, pattern);
-> +out:
-> +	free(pattern);
+>  	if (found)
+>  		return 0;
+> +	if (has_san_dns)
+> +		return error("none of the subjectAltNames matches hostname '%s'", host=
+name);
 
-There is a code path that increments the "pattern" variable by 2.
-Running free() on it would not have a pleasant outcome.
+I know OpenSSL has built-in hostname verification that can be used as of
+OpenSSL 1.0.2[0].  Is there a reason we're still doing this by hand?
 
-The pattern we often employ in our codebase is to have a separate
-variable "char *pattern_to_free" and have it used only for a call
-to free().
+Relying on OpenSSL's verification would mean that (a) we would not have
+to worry about getting verification wrong in a security-sensitive way
+and (b) OpenSSL would handle the policy and standards compliance
+functionality.
 
+[0] https://wiki.openssl.org/index.php/Hostname_validation
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-> +	return ret;
->  }
->  
->  static int verify_hostname(X509 *cert, const char *hostname)
+--/Qx8fCN6nyO8c0cZ
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmqfZL8JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ+lEWDFikIH6jq8rMCXT3Z53ctguYHY1wbXSYKegzW8S
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAANhDAQD0Xz3F3dQEHjwxE5Lg2DhTNphN
+0wJQXEtC2olofgHh4gEA7RP62wnM37Lk7fmPlA17l5YhhQdPit41aZPL6DJfhwo=
+=FYD6
+-----END PGP SIGNATURE-----
+
+--/Qx8fCN6nyO8c0cZ--
