@@ -1,107 +1,88 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9011439B970
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 18:25:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788978324; cv=fail; b=lc/hgcaROBTHGGzC18j3n7x0CL9Fm7xSUXLLowWfiOh2gPHdevytJUDfCjCHtbMrZKrfr+t/AL3eojxmDLvGZk9pUQVmlCNt/B9EqGshRg2laWovDOMpVk/WF2VwK9ZJL/EtlmwjIWEegIeO4GXPJSHI9CagQpz8qCV2QtRz648=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788978324; c=relaxed/simple;
-	bh=g1R3rddCa9w85EYEoWIW53D2ZUY1ZuB4MMDn6F2haZw=;
-	h=From:Date:Subject:Message-ID:To:CC:MIME-Version:Content-Type; b=enXGqNZWpgRt3OgKbNoLcSGX4IhnNJzdjrrB7XkE0u05JbR/1Me+NDEVNpwhaQkZj5VSX5K7sCAilIUBG2YFtn+OO5KueRX/iCsB5uwovHsQdNMk3xIxKRoeAV7VP+pywpc27LvLXFMisxGMQhtimWYgaigKd5ETdsQ6864C2w8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Wl1ntGvH; arc=fail smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F7738239B
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 18:31:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788978663; cv=none; b=FqGUXsQiTP+cEmfomcQtwbVZGDC8r0ZJobylS9nrTUUvixknWAwONZBEnApBRSvkfyjnJfCf61LWQIRYkEqE5cCBw4h0wQgZmeugVwAwBEJV4/PeQd1TAcjyzrAPgKO57/2/ugNQn/YK3zJywhCCFIbo8mx5fyPGHns/InaVr0U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788978663; c=relaxed/simple;
+	bh=ohslOpYt9GT+UOqkU+ldxcYlt6wc7fZSYsGlSRbR1Xs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N708b9pc264B7B7juxQKoJF3i0IVYbkxGUDa0mvXy3hvUtIyJ/RdywBgi0TfaHXEx3GZjN72NL+BMlvJnSfsmftw3iNOG+TmULn1rJ9NPVgswFvcUhxWh3v+IYAIox2TS0As42/IkW6gpVDW2O9onoo2hOYfmrVS18roViq2+n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pG3iRviE; arc=none smtp.client-ip=209.85.161.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Wl1ntGvH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788978322; x=1820514322;
-  h=from:date:subject:message-id:to:cc:mime-version;
-  bh=g1R3rddCa9w85EYEoWIW53D2ZUY1ZuB4MMDn6F2haZw=;
-  b=Wl1ntGvHAyhDjp0XD0wQN3Er2BryF3lv+eXpmccoDZwNyJ80lOVLmuvY
-   eJSHZlOlWvy3yZQaEEhDWlMlGE0noaI+1dlyPwHpIzjodDKhT/u8w/0ZT
-   RxhyVoX9sFWqRg1VEItdMlrrCVKmquEaRn6UWTJXN3Satj+9AscqJBIgX
-   NqEWZ/GU5SwGLaCODWyv/LuNdJ5il862LnbYkrNhVATodbIK5ab8zZMnr
-   dy4ep2EKrupI4ZP0SlntSXR50NQz0+U80zoqB1I2n/6i/AzHZJ1u+uIrA
-   P6+S7DTMTjjXpE32UdrRsYQwERWsJGP4ff4XxnTG2qFx97ywiLK/DTMfW
-   g==;
-X-CSE-ConnectionGUID: pEwbbr5DQ3i6y6SZTyM7wg==
-X-CSE-MsgGUID: MWxIYXLjSzaurAN88gU8VQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="89456978"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="89456978"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 11:25:21 -0700
-X-CSE-ConnectionGUID: UQXM/BNERxWsJbMVO5ngTQ==
-X-CSE-MsgGUID: 7ozoG6BqQdawKRk4+6M9uw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="273364299"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 11:25:20 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 9 Sep 2026 11:25:19 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Wed, 9 Sep 2026 11:25:19 -0700
-Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.60) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 9 Sep 2026 11:25:19 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WU3gyfJsyXum5dVncYmfKUAJy+eJNY4wYNBmXztL1+h8b8586+hDqpDHULNqyOldyyPCpdqVbFtDtklNF1ZNAGsY7V/dHksNz0IiXxgEVRWC1Bf1G78p2eBGmOj9cY3dtrVOI3lmYU9usqOktT/NzweQbqur2sUCXTSRFjqSDr17mW9j8N5ZhtyG448OnBNYMj0XUtV8Fdhlzd49m/Kc0tR27R8rtVVNmZ1AWsEcpD5GT/ALM0vHnY+eh2h47hkVIBtugqyhU0gySalyNylFshvl+vvRwbY+jbrPiIMj5NVMruMo32PUuyppGNeGYJS9MRnVz1RrLCg4qvbZbzngCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=g1R3rddCa9w85EYEoWIW53D2ZUY1ZuB4MMDn6F2haZw=;
- b=Q0ua7Cs15PtXgSd88Ju9nqKCezbM2wk9DsRWRDsJrDNC3yviH8Jna4K1MbGZ0vz+cXeXBlmjpoxzlrQZVXuJdb/PWZDtUgC7zGuILL9u0fh9D7Oxbu0NHgNhPHatEKylKkY0KRxmtBzhRC6+gHhkJNuj9p65N/62CEx9EYHDTVdm6F0Ptas4XjNzXUJn8ipjOA9qD2EK4k0WolxfFVQZcHigOhni3MBsYu/I9U1Q9lI5LaXVep29Cm5yhqMOk9dCy6MBNxxBBCSFYEAPtw5LzHkHUCS7r5RTdgX0ZZfISO583SFwDt/nb0UTtE3GqsX93UoXewAf8CjBrcaivb65gQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from substrate-int.office.com (2603:10b6:806:52d::6) by
- SA3PR11MB347531.namprd11.prod.outlook.com with HTTP via
- DS7PR03CA0342.NAMPRD03.PROD.OUTLOOK.COM; Wed, 9 Sep 2026 18:25:17 +0000
-From: "Goli, Pavansankar" <pavansankar.goli@intel.com>
-Date: Wed, 9 Sep 2026 18:25:17 +0000
-Subject: Recall: Issue after updating the GIT version from 2.44.0 to 2.50.1.
-Message-ID: <BUN4RZFP9UU4.8CU9ACYE0A9G2@ph8pr11mb6926>
-To: <git@vger.kernel.org>
-CC: <sudheer.v.badana@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pG3iRviE"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-6b1b3d7f10eso4299084eaf.3
+        for <git@vger.kernel.org>; Wed, 09 Sep 2026 11:31:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788978661; x=1789583461; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=cQ8yKPTjw+gSHp/YZTEgHgIkFrjWv++7n2g2fLJ7/SQ=;
+        b=pG3iRviEXpQFwAQFChskG9QS/URmt4wSxOwq4b/LbDYAiVr7aoK46gauRc+lqe391H
+         bqi5mPQzdVmbVwh09+kHryk2cC91oM93ar/xiQ15DsJWolvxv+UDFaThn0EKo00ATTO6
+         s5bIAgB+UqwUykvnJLJpsur7oj71YpGUp6GQhbZZPWjwg5mh3sknVURKe30VDSo7+FzE
+         Xq9M8y6FU9HV4JhoefBmw9sHrQa6OX1ZyN9vNjExrnlIuKZStb+O5SFAExDGzhcOAr6g
+         cD/GNEj+Ln1bZeccBEs9pSmrTNZlFSD+nWlyOMJCdZrlRM7MizV4o3lBJB/vb5uISms6
+         DCTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788978661; x=1789583461;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=cQ8yKPTjw+gSHp/YZTEgHgIkFrjWv++7n2g2fLJ7/SQ=;
+        b=Y7mIyTlnfgTdbNd7Hf3XLT9c18sCWeAEsRbHZnYzVo1pLY8C8KOtIYkLaKtsblKpZ0
+         epmzBnDOVviWHHoVWHufC3ruONnthThsG8IE1zkM5Dk6IjjJmFv5Kn8S/MCUeEkurp8t
+         iLXjhCRg4+KQyZY9onl5JrGenJ/BWX0oFOH5aAwp0V6kYZ/nQlPhBQhcFV7ejo+5TQ1r
+         JJxNFKQiIOzo9wBqJMycNrRjQtitRHDVUA81QRm0WEhzXl3CV4SsP1s9hHZZ7DY5jw4C
+         IAKLaAkSwN358xjhbeTVEJy1MbSEX1Qgyml29KxetNOpTM1mgbborNrv3j3rXqSgnlL/
+         aBJw==
+X-Gm-Message-State: AFuF++ndDRJCnlB+o0+jdFQdRXi0ZatMLQTOkmMo2zMmR19R0/9bFNlc
+	eyA2sU5YK5W+lqXQsY30sMUIaGo1hTinlRjjGNcjLp8ih30fPy6yhSLMN7FQ1w==
+X-Gm-Gg: AYBFou1+U8cwgohEi4WlUJ1PZCqvMHJBHKXjGujjbYClDRVZ3cpHHTDzx8hoElBR2e1
+	eSQVK00rajEtDS3FTGvWsN+ie5FUtdo+H8hB7hi2BSlu/0sgm9cbMuQMmkIMwVm9cf6xSJE7QWf
+	/J9qErRyymt982K442cMvVrD9cB3P/UvdARi7thet0quiiz/yfUh5L1EwikQY3/l01EoTiyidth
+	tV3spaXIWbvBEs5HJ83CxnrOttFPzwuTMR9EJTs7Ho+An2dFM3YEsQkiPxYMix9XEeCbtjTdWYP
+	2TlWkP4M6pURBjOUQQlftO1DAjfC3+/EQJpk4Q2bjaYbbjnc3RN+BSC8bJcRCF/4PVEQibyy7/J
+	DahTA89iAbFMAqf0bEPF84yUA/g+FMeSLI9ZxK19qlfQXPAGRpkpSQEhNhvL5ligj1Zu81BvsU2
+	7xhtJcJ5scgZpVwsM33fqwjXTicV2/NFd8MSWMTKOafRpQqOZxQUoRf2P7LskcsewEx+/nrjlsL
+	X00hl+nKVwvsD98tSoZxC7n
+X-Received: by 2002:a05:6820:1786:b0:6b7:8415:d78b with SMTP id 006d021491bc7-6b7841619c3mr18866813eaf.54.1788978660820;
+        Wed, 09 Sep 2026 11:31:00 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6b6dce7b751sm20176120eaf.9.2026.09.09.11.30.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Sep 2026 11:30:50 -0700 (PDT)
+Date: Wed, 9 Sep 2026 13:30:49 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 0/9] odb: write alternates at creation time
+Message-ID: <aqGlryiYlgfDtCHr@denethor>
+References: <20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im>
+ <20260909-pks-odb-write-alternates-at-creation-time-v4-0-d8a78ffc32e4@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-MS-PublicTrafficType: Email
-client-request-id: 71cffd6c-a00b-bbc2-a9e6-732f021a1bdc
-request-id: 71cffd6c-a00b-bbc2-a9e6-732f021a1bdc
-X-MS-TrafficTypeDiagnostic: SA3PR11MB347531:EE_MessageRecallEmail
-X-MS-Exchange-RecallReportGenerated: true
-X-MS-Exchange-RecallReportCfmGenerated: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|11063799006|56012099006|10067099003|19003699004|18002099003;
-X-Microsoft-Antispam-Message-Info: wDZ7nqQcnzV7D/hlXpYtqUftRDQz7+Ez/EzPEx4C1rSWeEQSb1UdIBYdYjTEVVar5EJBAhg2sPVOZ2F8T8c7pjKLOoM/0Wlgeu7I2AE/qyiIXK6iWay0rxGTbScPbuK7utU1I/W4Q5WVPT/rMVcyr5g5ouALuz4z4d6Ez6gFrJQ2ybA0X42ZgpGqN43o1B3NKu/1g6oR8G06RsUsBJgOO4DVVEPXAtDikUZvxz/yyMaXJKW97wLoH1Uw52VlByVHFhO9YnQdIcABfo8KpczEoh0uhT6oSDtiOUpGMTF2QijO6wuvKQdmJ9W1IhTvcRipoLT29VNR6CI2JmSzz+ALEv/UOwiv+gt42Jbh5RlNFQYt3o2P0aqjLHbM+go34UU9dylRWI8MYD3KuyaEEl0H2R/Odox9zh6+1dK47qsz/o6L0xHuXqJxfvvNPrNq7k90n60h4+cYr4UXPANETACDNXuQxan9cgaDh80zkXzgHC5b/+kPrIaKloB7js3xuYmg/N1Cv7lcg7/I9Jz6buSR4b9DaqdzTXd5/Ownd80nsuko/IJ5i6szXVB+CpeKCQ97TZcwt+J89+/9pe7N79cYN6bk1x5cV28O33lLK7m2PdNSGa9ahHlSNBJmmZOTSV4HJjr4h2iDIKYe8/wYXIznM9nby3gpj2Om/iq7Wr3G3cI=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(11063799006)(56012099006)(10067099003)(19003699004)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: NOmukiqudv817cQt0E5WRcP2kq3SzJY+pTVhyzOqc81InVIjJTwWSWKTkW2yVeuH+TACQjl8uWEIv3+sKoTYoLb1+sML3wzeXZII81gsrrDyXCRMDwa9T0S4G1oRkZ+6C63bhWm9EVLugE/y4TJAKNcN+UuNXeEN1Luu4EJ1ewEsaCHpZxsN4mxnhKuObkI5KHLIPSYNn6rfatj5Qd50HP7fo6Www8mswVX+isBG5/kBbfDZDJCjbbaGfeZRtiGFo7qe7Cp/s7a1dc7hXkVQVsYey174OW/BtfYBXa88Gn8sULEmBWBKGZdtw+wHJTbsK8dxzwnNwtSmzF8+PI0v6Nsnp6daeiKv1H0EjA3Edjy90wee0QoHrXuXGHQCz5dil3FnAFwrqqGPXo/V2fFo3KhL6kmNd1wwu/O8AIQuwG0HS0gTqZJj/xgETR70OdloaR4dchEHyyWjpV7gRyGYGKcCc0WJOdBph2+mNw6/4Zmvs1MWSgWmsSY0tc4uEdsUjs9i6fX5l3vKYitbJ+KHl5Vv04okjBMdVQbBDfl49RI430y0rPfufkCOXV/r55JV
-X-Exchange-RoutingPolicyChecked: UjNHXlyqxj830NzSSL+I2XGDwOigsdRLnRwWCLe0P2n2E8imtaJ5ikABg1uijqsJWkMKOPRfIDTn+0/XwG5gvjM1500DLqmZWxTKM4wzr2Yo2pNdey3FK+i5s5LJ/+61r6/kxpubxcUIXV05abFOHJMJy1yOGaAgdow2Iu16C/7SkwCwk7XHoYr6Xmkwk5alWVc5AMsNXytgKu30IhnT+IzVMxnrx1FOeSRmCeUjhZSPRpQ+pchlZC77+kEQg2A9VsNz+n3vC6cuzz3q3xOm2j0e9h3PogXtiLCeNLoQmkQJnUQvSvzgi9gdDannC57vrtM5FckwkycMn/gwB8ueeg==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HttpSubmission-SA3PR11MB347531
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2026 18:25:17.7904 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 75bfa74a-f41d-4e9a-3402-08df0e9fb335
-X-MS-Exchange-CrossTenant-TrustedPartner-TransportRecall-OriginalMessageId: =?utf-8?q?=3CPH7PR11MB714835E2FEBDA9AF003FB22E80B02=40PH7PR11MB7148=2Enamprd1?=
- =?utf-8?q?1=2Eprod=2Eoutlook=2Ecom=3E?=
-X-MS-Exchange-CrossTenant-TrustedPartner-TransportRecall-Client: Monarch
-X-MS-Exchange-CrossTenant-MessageRecallSenderObjectId: ca502514-d081-4ec7-a74a-c986bb3158aa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB347531
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260909-pks-odb-write-alternates-at-creation-time-v4-0-d8a78ffc32e4@pks.im>
 
-pavansankar.goli@intel.com would like to recall the message, "Issue after updating the GIT version from 2.44.0 to 2.50.1.".
+On 26/09/09 07:48AM, Patrick Steinhardt wrote:
+> Changes in v4:
+>   - Add documentation for the different functions that play a role in
+>     creating repositories.
+
+Thanks. This version looks good to me.
+
+-Justin
