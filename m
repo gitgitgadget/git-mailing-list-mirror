@@ -1,161 +1,188 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E75439DBD0
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 19:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA633397E81
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 19:09:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788980668; cv=none; b=Cd8Gpzm3/abpsfwIYtT8z/Mg8CcDiE06n2DyEpal2fjU5+1M5Rneztvrjlj1Z8aCnTeoPcu1e/r5VdxDFA38fVPpOB2xIU9hZLHsI0ZuAdn3gZMryVLzC+HyijxswmALqiky4SnmscJoza3rm0U49/TmY5mLe6P/+oIA7MBm3uI=
+	t=1788980983; cv=none; b=LkMntb1TwEIZGMM80kIIY2fB2Da9TiM666pRkC9OtDM8krJaDlNTnIcYfNPXotLXqvXXxzZptoBu9srZDcW5oE4QGoifw6v30IHN+DBM8/gr1FoNjzu+FsCNqNa+gjvOrugNFwOUuJJA8KI6S1xNZAyt49Z4+WuK2O8+xtbFa00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788980668; c=relaxed/simple;
-	bh=T6j0EDn0toGVdd2dJvbrQXe6RLwRWbF4LRyE2zAuWmk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dwuL19xn/hANMC6SJWvn2iCt+ENFSYVPg9DSuTTbtnooJhWPkJEpQGlT84k0FW2u0eGsakFXuPE6tAAhUAY3uJZQhKk43qWFHySXXW2pgsMi6y02g5HFWHLZWNbtV/ZMfvo+b5jPEdVo4MFs7kDBDayUAIaMEp3qOQVGJX6GG24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hoGSVdvp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e+LKIOmk; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1788980983; c=relaxed/simple;
+	bh=6abCopjcFaeW88PuX7YUKu4vX0LEZq+Mj6TdUgIzDM0=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=exqr6ChDzgZ0Rjsqt0zn+sx8Jpel4S6q3mNnGg+gVzqFwRQxiwBYnDTaopkFE2Bq1AVylbou8GdYauElZmyps2IXaJ/2xe9iVy0aqGPrRlKkfsh/oQv4ojXQhsJz0PboyFyEjUCDJD5Sh94bikNRiADzYgndiDK+fsQF+c/lBAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=lAO+jwuc; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hoGSVdvp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e+LKIOmk"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 238EBEC0107;
-	Wed,  9 Sep 2026 15:04:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 09 Sep 2026 15:04:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788980666;
-	 x=1789067066; bh=yiCRVMHeXIcL/t9vwm5feEEqJXvx6TXcAfs7yTjXI+4=; b=
-	hoGSVdvpcfDNWetgO2h4/aLIYLpOqmrN78rurGwd0E3slUsbU+uLN9JKg8kfGAyG
-	oj2cnf5A6UVE8ElhfDCwjD0//JpcjCB6Z0s37fTm/ryuFtynoxJ9GIsu1PiXlC24
-	+wRYxOYydzNNQhfLqrrxcTRZ7eqr/C1p2eXXJrpMM68yE+w9qeYQvWq4BLJ/ECrY
-	mACQyqc0hei9DMHyaadsEJ92hQNpcnQwhW7nHCNa9TQ1MgDv7DMPt3h8rbnwpS/q
-	J8H9dluKi11e4cLA7zL5+xSjBvi+qzecTNtxvYiCnZnIrdu63nUTScYFYY5GKoev
-	+bzcvXKsvnSiBJH3hd1XmQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788980666; x=
-	1789067066; bh=yiCRVMHeXIcL/t9vwm5feEEqJXvx6TXcAfs7yTjXI+4=; b=e
-	+LKIOmkQ4gCr5rlHz4LqB3XYuH5idlX+2cAnT8H6koJGs4xIPM9Al9QVm6Z9ZqEg
-	pod/gAnlW2pATK4NgLIqrHsEHCbNLCJkzwVHH5WGMBfH1YhGROPpRZrxKY9QuzfP
-	2b3JRsMMnmHTWgUkAas8qFLyOQZ1lVSb1GH842u/evHGq+RmUr8Tnz2BZWzOOxoV
-	4RdOanpRxbbdGaWBAjvPylBacfnFQvb+PPxsVj2FMx3uvJGqvNEexVQlwb55WSAG
-	nqmS4et0aJN5cKwZTlnkmWW4FXGTebC337m1edt/b87c9H3hcLcGhfcTLMGfK1zF
-	zZD4XEAtMjg0csgrbXkiA==
-X-ME-Sender: <xms:uq2hapiq7rh-rT7MS17ZvKepzgnUxTJkUYcZiKyyDfilbDS0lUO1tw>
-    <xme:uq2halcq1fCMm41pRchynPwGHyc5AefR54OBwAiph2g7GezOkV1GNoh2mtTShiYId
-    RfiiwdJyx8I5uYwDaefs-avzicpZJQp3-kukfAmgnDCm6ViHmMwjxg>
-X-ME-Received: <xmr:uq2hamc5f73RuvznPoeY629D8rssnDnkJax0p33U8vccmP6NOgHkaJEHExVcQs26RNkjhH1zSGHslG9JYKOELi0J4d3kstRqFC4E>
-X-ME-Proxy-Cause: dmFkZTE25iagNwig3NvB+qIdSjDYCWlUZ3V+YqrgZ7S/gaqq1kIvODKpWj2HeTvDcjKfkQ
-    DuwUt0/XdTfFi/hJV6Uzjx32BKobcuXUZAvqgt40lAlmeJXQBH2bx94ZIBzX2dBWS8Yo9F
-    NEnHGNWXDQuayDCb4fVXdrpPhBXXEGi9RV7nu7L9WKmdl+nYRPbAp1Ebhu5o+f6cHv0Azn
-    QLzL/vl+ivjeLPtlPbU4m81ADTW5VT6QBClJ6CISDgR6dquvBjKr+M7izQkNlIIRnJprIi
-    9vo/9DNVPN6X9Aysq5C1QG2gq3L8zMElxen3GfX9LvlsIHlF9P1OYU4faISXX8WyQZ1XA6
-    DOvyIJ0lFGyrzqS3ZBZkwVU/niQ2zLlLRm6rYdxWCSkm3b+X2GTeVpriYvCwcSmQpZ4wN3
-    euca5AuZvIignU+b8KNMs3N3mlRWYLdpn+t8OXVXbbrDoZQXf5LXsnDphiVPalQsfZnAts
-    lnPEg9h34yB7GlBZpnlK24kmL/8EBGqtEqpGhdxt5j9gT43T+TO0tbjHmkJ3Q5aTdSswf4
-    2jWK2BBmPWAhpbK6C9nVJma9igu61j34YsMDPsjFHPg7HQrPolXGUF17qaemmYZxn0U4oe
-    MceW2v37zEaVZPDTnw+ykBJNXc/bx0lTD2wvKXT0GVEp36E30u6yIhtnAU6Q
-X-ME-Proxy: <xmx:uq2han9-fCI-bo0ycJq9Ogq-wV2vfpCPvels8nxfFCH3qeqps0PJxg>
-    <xmx:uq2haqlxHbJW57YChXcuH5r_kAs0U4XUBxq74InBXJ8sV6udLcRmkw>
-    <xmx:uq2hah-8BKsn01Q3fRX2MFGCJIdHvKEG_UcyloP034uhrctQE30pYg>
-    <xmx:uq2hagn9bs6ApnO2BsmI0iW7DUIrdeivMOvHPiEzStg80u1NrVNiWw>
-    <xmx:uq2hatmPf3-7ZnbN3KyHjcS9Xa9Qm4VdqMgShhUoM1IUa5K2VZHJEDyf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Sep 2026 15:04:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/3] format-patch: learn --[no-]range-diff-notes
-In-Reply-To: <8f0a076b-4822-44e2-a842-cc1e39ae1c1d@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 09 Sep 2026 20:08:17 +0200")
-References: <CV_format-patch_learn_--range-diff-notes.c57@msgid.xyz>
-	<format-patch_learn_--range-diff-notes.c5a@msgid.xyz>
-	<xmqqjypfp2vl.fsf@gitster.g>
-	<16315616-097a-4fe2-8665-010e424afd8b@app.fastmail.com>
-	<xmqqbjan6q7l.fsf@gitster.g>
-	<9335a35f-e9c0-4e62-812c-e5855c201003@app.fastmail.com>
-	<xmqqpkz24193.fsf@gitster.g>
-	<b3c66de3-0ced-446f-9bd6-73412a8c92b5@app.fastmail.com>
-	<e3b7ef75-08e6-4529-ac75-56f800d2f4a4@app.fastmail.com>
-	<xmqqcxuq483g.fsf@gitster.g>
-	<8f0a076b-4822-44e2-a842-cc1e39ae1c1d@app.fastmail.com>
-Date: Wed, 09 Sep 2026 12:04:24 -0700
-Message-ID: <xmqqpkymqm9z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="lAO+jwuc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1788980978; x=1789585778;
+	i=johannes.schindelin@gmx.de;
+	bh=SEZKzMcLOfomB3wChtRdu3vIcrQLrv7NS5rNrgQ7UFY=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=lAO+jwucLNjZ9sntbyZmK3jrQv9SN1AhykdFL+yGOVujRvgg8xw0bdg22WIKHR+W
+	 Pilr6fpWS/kpCpP0sOh2G8kCtBp/fCh0N/0MykAyvofGETK2ZkviivrnyMwJl8r02
+	 1Vob+dqJHoennkGd6j0VZAeawHkpMu5lZWSD+nLj7Sdup230YsnyYC07ihOYFsiqi
+	 jEYeaMzu5GriFNTEUKevmNeEe08wwSAbL2foivVw9QXzQGPBiRRe7KgvMCz/u61St
+	 OPTEZRBhVufDhrm5+s6yptfo/uNUci60A+e0OrA0f3wk/rdtK4kYTytlOr+cWZSi9
+	 cxbqJ5MwEG4wJoAFVA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MBUmD-1wz6k90MFr-00Ar7S; Wed, 09
+ Sep 2026 21:09:38 +0200
+Date: Wed, 9 Sep 2026 21:09:38 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org
+Subject: Re: [PATCH v2 08/12] mingw: rely on MSYS2's metadata instead of
+ hard-coding it
+In-Reply-To: <a5ffcb9c-b223-af4b-7aa7-1a3db31a5f59@gmx.de>
+Message-ID: <3b6d1078-202b-d779-355a-df376c139249@gmx.de>
+References: <pull.2195.git.1785939999.gitgitgadget@gmail.com> <pull.2195.v2.git.1786521173.gitgitgadget@gmail.com> <9de4ea7fc1d250e8e9dfae386424451242cb3daa.1786521173.git.gitgitgadget@gmail.com> <4f4129df-681f-4e99-8b1f-8bb96e206a2d@kdbg.org>
+ <a5ffcb9c-b223-af4b-7aa7-1a3db31a5f59@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:VRpnesYqqTL9U4mKc/iLj3jKWoiO3jpSvVc6UPVrbHWuqbpZnFR
+ 0KVbaGnARz6lBc2YQLHiLUrDOvno5HG4Lnkpkp+yF4eiaKtGHZXkByHDsJNH3lb+dAqN9L8
+ JWvzll8Ec9m8QGANY6BEJ/nK+ONkVVcQjH0RI6Pyy/nQPKxQBW8krZ5faYiUSlc8KJEcfDx
+ 81AGZPwM63Gb91l4P975A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:QzJXYaO7GFU=;7X4KX0lKkPKdgmohk+UNdLOCQUg
+ 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
+ ZcJ7fzfK6sYnNucEq6txkp
+Content-Transfer-Encoding: quoted-printable
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Hi Hannes,
 
-> Side note: using `--range-diff-notes=` (empty arg) to signal no-notes
-> would be inconsistent with `--notes`. Those options just take that
-> value. Then they inevitably output:
->
->     $ git log --notes=
->     warning: notes ref refs/notes/ is invalid
->     [output]
+On Wed, 9 Sep 2026, Johannes Schindelin wrote:
 
-Ah, I didn't know that one.  It sounds like a UI bug we can safely
-fix without worrying about being backward incompatible.
+> On Sat, 15 Aug 2026, Johannes Sixt wrote:
+>=20
+> > Am 12.08.26 um 09:52 schrieb Johannes Schindelin via GitGitGadget:
+> > > @@ -755,6 +749,10 @@ ifeq ($(uname_S),MINGW)
+> > >  		BASIC_LDFLAGS +=3D -Wl,--dynamicbase
+> > >          endif
+> > >          ifneq (,$(MSYSTEM))
+> > > +                ifeq ($(MINGW_PREFIX),$(filter-out /%,$(MINGW_PREFI=
+X)))
+> > > +			# Override if empty or does not start with a slash
+> > > +			MINGW_PREFIX :=3D /$(shell echo '$(MSYSTEM)' | tr A-Z a-z)
+> > > +                endif
+> > >  		prefix =3D $(MINGW_PREFIX)
+> > >  		HOST_CPU =3D $(patsubst %-w64-mingw32,%,$(MINGW_CHOST))
+> > >  		BASIC_LDFLAGS +=3D -Wl,--pic-executable
+> >=20
+> > At this point, MINGW_PREFIX is only used to set prefix.
+> >=20
+> > Only in 12/12 is the variable (and ENSURE_MSYSTEM_IS_SET) used to driv=
+e
+> > C code. Therefore, it seems that the following hunks concerning the
+> > CMake and meson build systems do not belong in this patch, yet, but on=
+ly
+> > in 12/12.
+>=20
+> Ah, right, the following hunks do touch the ENSURE_MSYSTEM_IS_SET stuff.
+> But they _also_ add the `MINGW_PREFIX` stuff.
 
-> I don’t understand why you contrast these two approaches:
->
-> (I’m using `RD` as a shorthand for `range-diff` again)
->
-> 1. `--no-RD-notes` means “revert to whatever `--notes` is up to”, as if
->    no `--[no-]RD-notes` of any kind were ever given
-> 2. `--no-RD-notes` means “no range diff/comparison notes at all”
->
-> Since (2) was the only design I presented. Is the point that you can use
-> these two approaches to eventually find a way to implement the “revert
-> to `--notes` behavior”? Well, if so I understand.
+Gah. My assessment is incorrect. At this point in the patch series, the
+`MINGW_PREFIX` constant isn't used anywhere in the C code. So you were
+absolutely right, those hunks do need to move to 12/12 wholesale.
 
-No.  I thought #1 was what you were doing, which was how I thought
-was the only way for the command line you suggested in an earlier
-message would make sense.
-
-    You may want to turn off this notes override behavior after it has been
-    activated. Use this sequence to do that:
-    +
-    ----
-    --no-range-diff-notes --range-diff-notes
-    ----
-    +
-    Now the range diff is back to displaying the same notes as the
-    patches. Going back to the three `--notes` example: now the range diff
-    will show all three notes again.
-
-Under the interpretation #2, the first --no-RD-notes tells us that
-we won't use notes for comparison, and then the next --RD-notes
-tells us that we use notes listed as parameter to it (which is "no
-notes") for comparison, so the "notes override behaviour" is not
-turned off.  We use no notes for comparison, and use the ones that
-are given with --notes=<note> only for display.
-
-Under the interpretation #1, the first --no-RD-notes would make the
-command behave as if no --RD-notes were even given, and --notes=<note>
-would be used both for comparison and display.  Then --RD-notes that
-says there is no particular notes you want for comparison would make
-the <note> given earlier with --notes=<note> not to be used for
-comparison.  After spelling it out like this, it seems that even #1
-does not turn off this notes override behaviour, either.  I admit
-that I wasn't thinking about interpretation #1 too deeply as I
-wasn't interested in seeing it happen.
-
-So it is good that we agree we want to use the interpretation #2.
-Which means the "You may want to turn off ..." part of the
-documentation inaccurate (I think I've already suggested striking it
-off in an earlier message).
-
+Sorry about the slalom,
+Johannes
