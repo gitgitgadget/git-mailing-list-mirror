@@ -1,84 +1,85 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D4C35C69D
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 17:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41806370ACE
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 17:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788974459; cv=none; b=lapPVkU+yT4ybSVNOVp4Wt1h0zlTQ77JxX0Plnl1MXbjlFHZye9n0F7syYjRJoskGwG463U2pKq9fB1MJ6f87sw6f39OZGa0iaaqKMxS9Ozk8Y5IvrHVn35HmsMfK9G7Qircf9XWhxvPkrDMaL//AT0EtqXtjz99n1KqH6Qb+MM=
+	t=1788974909; cv=none; b=Il9ZcCrb6CiubUG4EdUtDOKhKE4pApHNu2o8c9ACQWB/4IisFLKWiX8vAAG0bAYL1YxFP6HiIlF0RJsp2Q+qSiPEGW9MmohbfUFMGvWjGfVRvyAkNvVL6Qsdos+mDeJ5+om7TWp/eD3C4cpOt/SULrTOr0VMnxJ3z6xOipE7r24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788974459; c=relaxed/simple;
-	bh=KG4g1/j3yxUKJ0DIQRBVvbSAXLlnwhKNPQSV16Ts8Ng=;
+	s=arc-20240116; t=1788974909; c=relaxed/simple;
+	bh=6rzVT9UeiZgaBYiI1uGALTvpm6QOZqaqWSt3lV6RdDM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kcu6MJAhrGbt1LgJnHGfrPRYVajP5xAJKvaAMAJB74XswmTAwyPetd2quVprjxxrmzVV+VpXuwMlgl7yJ2/gLiILQEz3FeI/7ztrzxKq7EYD+8qXaYYGqX3UxuEtnWmI7MJgqOWdNc2kRdDejMMQYhNAKLXEH7PvN3WGImkd8os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a5FC1yYe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V9jLaFt/; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=IcPlKqWyZg4Ai/2Mowt0f7mS9fokahWQkqJP6x6jtU254Xnl3WJRl4Fwj6O98ooUoi5nS1ogbmjzof+fMWOuRfHT1ipHP9WmRXHNvSq87mi5g+oHaVMclCI+FN5Fjrn4d6jJaH717UvoEsUn4bTELd7FsEcqLI4tg2wUduPIIM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EWXOZeek; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tQG/vw/0; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a5FC1yYe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V9jLaFt/"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2E395EC0223;
-	Wed,  9 Sep 2026 13:20:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EWXOZeek";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tQG/vw/0"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5D792EC0216;
+	Wed,  9 Sep 2026 13:28:27 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 09 Sep 2026 13:20:57 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 09 Sep 2026 13:28:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788974457; x=1789060857; bh=tUc5uq+Rwf
-	MQcBZKJkpA+rU86gLEykgUWjzMr2GRRis=; b=a5FC1yYenkChK63MmQFXiDSw8a
-	OcF2KVXKGlDbA+u7B2jhduA/xg6EcG4FML1RtYVrHLJbw10NySWzB1Vprc9d+8Mi
-	1qJn1OO39qizVuBkcm66r9cHc1lou2mCTYlV+8EzTnHY8peh0mZrWr51YsLPGjAz
-	rsh9com+e7gzPfzXHEUNQvQoWFUKLVr5gBh0i32SLyPhtY2IRaXMYq/HnM/VUmH8
-	kxtoCWwGURaw2u39e8QkZ+pTOs9g7w86yD4sqP0/wAyLfoyguIv4EKrEsWv58EVq
-	A+KxrZz5SkcBcTd/eDE4LsO9HF1F5NK/Pq185Ajd5J1hkPsUqYyNWCzSNxLw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788974907;
+	 x=1789061307; bh=qgqSh0PiPpLj3s1Gyqz5Vg2K+RJjG6ILWegc6AASs4Y=; b=
+	EWXOZeeklcT2R69tYIhnPwl7EiezsciB34zUvzWPo0M6oiaoLatHd1LDrUA20Qoo
+	Wey2RiNI8LBoMISLTm0IpwnhZa0s0f9H/UA43WVpMnhzomRxDbLsQwaY9pyVXkNK
+	zDEdNOB8+U00iMYTCvJIZ2YbOEO6W4SQnQMPwgyKkHI6rBBYSMzzgXf+W6RTP2US
+	ZAiMLB1NB4WKgbaO7Ph2luLixPmPKmS7FEsyO7BmfaHo4Nd45dKDCtrABep8vMfk
+	ZKKeJoyG0AvLuUACLT616J3SbfQm47skPlOZ3r7Qf2/tJBqAL49a/MoUPXbGNIKO
+	hqodskjCBaipzFZ9xVmvCA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788974457; x=1789060857; bh=tUc5uq+RwfMQcBZKJkpA+rU86gLEykgUWjz
-	Mr2GRRis=; b=V9jLaFt/KMtiUxne9mkdmsfVrJ13Jil8SbvBNIdEqKfKmiakpbs
-	poG1ApDT9wsMC3b0H4ALUo8SJCwG+h5LUlMcsZNyNS6i3p/QRwARZHvHCSDc48Pc
-	t2VTS7YgRa5Xa2gn1qFkOISXqPi/KKaltnK4rLwR6XhlwbdXnaJ5q5kd6FCoZluB
-	2eZO4TZm+ar9CQznYIqJEqoS5bcPZRPuE7dlt3J2VPPUuBAOAlbjE4i7qyc2uhp7
-	QaskY2Ki4bdglpqrl+bzhgT08vMisawnali/RmHq7BsBiw4v2MQ4qei68M4Euzu8
-	WkDTv39ZNjyOsAsStIdDxrupotJSPJ5P4fg==
-X-ME-Sender: <xms:eJWhapLC-nNPUUs9vd-_li2FCo_FL0oQRw9zqkziBFJXlKU9ooWOVQ>
-    <xme:eJWhal1y2zV4vTjQd4zhPYLwVGNCCNy0-TeWTJth3DNJ7Rm4l82j_K_0k73Xx6wbl
-    UoYFAMifFQb7rcEaBQCp8l_cAw-ZRIcrSOypkcqQd0IZZu8pJUewBg>
-X-ME-Received: <xmr:eJWhav4ToHKoSbYn6RCdw78UoiJF4IYNCBpyJEOPwcevU7CDY6YY2ua409_q-h8tvjuUaN87m22pVVAzzpFtKjcVDVrH-bHd2w2B>
-X-ME-Proxy-Cause: dmFkZTE5GTlbSt3FTnAgCL164pon7nlhZReFB1mx4kJatuFphkM0xkmEHq49wrMDGwdVKh
-    7JCuFxpq7u5YB1vBAgIJvU+k4wOdjlav+MYAk2tczagnNb4J80F7B+OZdlZIO8xPV8A4rG
-    uKCt8QuPMxiQGZTwpaouFRH1LXl0AfQfEFt9iHpUicKhP4Zao//SbAOVjqNexZXjFuStGv
-    Rlp+3F4Z0ZR5sLTMnxstWwvyjzt4LLONj2RM4z+tErTgVVigaPN3yWsLxlWbZTeA2Vgpyl
-    Vw9FNZ6lnhqjm0+y7ywckU3BO+fhOqf/R6Hh/eguzaPKjDmh5oUgO8lD8VtG5bl/gzdHoC
-    1ACPT2rxbnOGnIt4SnD1PT866h2osTPG8+hZ04No/+J+hYTtZroOcIUe9/FaNmY/YatM+m
-    TJ6iLVWGBcGdyQotttRg6u6Y9+vC/ZyRE4HJjDIu8t1LGEFw8iLoD1gsz7duiZ+HYwaJwg
-    bLd8WKW0Rg3udPLBlfD4P36XyoiEOdToiFAATsckfi3SwtYaGzTHFAIs+AADWYtGC49T0o
-    75nREJiUGjVOf/Pbwn8TOf7pia0sNYwKnOABwLJcTHMDJdMLfY8NfTw/51akdW1R1eYrB1
-    8NHiBjD3ZezPVNQT8jcDDF/PCZPkf7aJtYeSk8eegLiDCYq8+Bm7rxOBFR5w
-X-ME-Proxy: <xmx:eJWhau8WlKTNAassetlF6wW20jVlyZkINXaQyEcwi_Lo-1uzU4B1Bw>
-    <xmx:eJWhamXZ1vmwUW9MdloFfuEF4UB9e7QMEFyYynsvUxlRng4hBm27Ow>
-    <xmx:eJWhahpJUPWjMTAzdfXL3k-PGjz-C3Lq4ga4GkgYmaY_CulpvrMt-w>
-    <xmx:eJWhagk6YRj1KQGgDrJf3dke4daOskCQvatzA7HHTiOvXJTHsmljdg>
-    <xmx:eZWhaiH_Vqup-QtOVZDb6_5yqy_ochLf8Tvb4DTzfX-e8mXwdCPeqKyn>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788974907; x=
+	1789061307; bh=qgqSh0PiPpLj3s1Gyqz5Vg2K+RJjG6ILWegc6AASs4Y=; b=t
+	QG/vw/0C3z14RWEnICBI2WlNr7O6EOKTGMjsmF0IFAkwP9Udcs9U6CBi4+ystDFT
+	KQHVfiTnA+V49D3KvLzen+ZgFsAgps1M71J527VOxTRdDui0BZEppZFwva7QSbX4
+	/RXP6yk7rTlnLJw85a1U5DOc8drc7y6OrVy7zJe6I9vCwOpFe+cOfXIL4EsE+E52
+	+Z2ZDnMNzH4PkSDN39jU0wVF8moDBkLruYopaIH1sn9MF/7xoJVWu2+/Y//mmQ7k
+	ePtssUx6NpfVA15npbOEzv1sgUYii/jUJzB9yMNwwD/kUKLws0ObCEK5wUqk3fWS
+	0Ko97qn+ATsSxxqqhMbMQ==
+X-ME-Sender: <xms:O5ehaoxJefLcW9RGWtrgrzag0y84Ih2PTE8KRHLWHty6F8R4ZaUwxw>
+    <xme:O5ehajL_9IXU4z_-D1CSPRY6pAtU7ueWOkWA8ZGIwMuHZhxnqN2yZ-iuLPzSXk0u1
+    eE6NAuifbFXteULXllm75xkSq6vKkjuIIOtqaRkh7vIfb1X9OIel0Qk>
+X-ME-Received: <xmr:O5ehaionwmdtSIG49RIsBooOt6jb5T4s13GcduxZKo2NGiJg_vTk7QpQXUVTrARUZDH36L7wC2vsccvj1PcgyEf7sGc9MKL0A5Rk>
+X-ME-Proxy-Cause: dmFkZTE1dx33gO3dVX4HpXJfnvQ5h2OzW3Kh4+sftGDoM9q+H64p4Wlw+12Z1BdNGFdsgZ
+    /C5uwhM/4zCa6oY5XkW09htDt5H2rDTu/GKpjvsseJGQ1QHrNfqwAoeg0KARYMuiFYXo53
+    iX92en0RGM1jly8Tn7oKsxGXpK1qe57xBBj++jdPB4F5I+4G3at5yi6opQzodeawPGyyyo
+    PUMl/N2wqWu4roHYmBzAKL8+rpKCrXtTLc41cvNstsnPkxMJMA0OCpId9iHUk1AeqhtMqM
+    wHxFrpniAQ6OPRR8oSF1XpR4NRjjYLO7dRQ2ourKjO9aLEkgr0DL8s3Nxkym9L4qGedrAX
+    w85wV8OTYU+Dzgzf/3f50NAmNQMn0VGEyXb1+CoXMZk6P2F5ZnXEhBzUVkeCJOFW5k+Pvh
+    PsSidbF2r9wWxGJyLpLnjbfbS4TwpJ5eXyrSt0RU2mMiij633WHzceCk77CGQz0K4LwAJQ
+    1VuVsK2dwKgHKw89lePyktwAqZXH6MycEXlGOLJvO0Il10gt3b/J/GUqiHuum5JH+4qgHY
+    V02JbGqtJTxlQ/4p77kbuQZ7O866AsH6tNBt9NWil0RULb4lhsE0xtvSnyhg6XKRPe7wDV
+    cSH/Wg3D7l1e9alU7ODukeWS3j8CJYQCmUINnaLPD7hTSJbZiLBxtXBSXytA
+X-ME-Proxy: <xmx:O5ehaiKTM6lV9ViB4t6qrne3xAmwgYAWzs-glQ-N7PEtw76bkE95WA>
+    <xmx:O5ehanTuk7Vsj8jWcs_fvsqJ7XrsBjn8quOYaiq10kiZUvEN63G4Lg>
+    <xmx:O5ehahsZJafz_84FzF2EZ8nNrWX-KRCTTT_7hcTK8523gLNo4u3RxA>
+    <xmx:O5ehaoY6d2Qy9T0BsmTY8pMDVBImVVDkTRkwhQWp3S-YutaBM-Uzqw>
+    <xmx:O5ehagjtxQ_1B1jibWiTsrlGqcMzVCsYZzip_jZx2iENYJMFRRkfDgME>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Sep 2026 13:20:56 -0400 (EDT)
+ 9 Sep 2026 13:28:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,
-  jltobler@gmail.com,  kristofferhaugsbakk@fastmail.com,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v9 0/4] hook: introduce the receive-report hook
-In-Reply-To: <aqF0mbWgYU5rMR-f@pks.im> (Patrick Steinhardt's message of "Wed,
-	9 Sep 2026 17:00:41 +0200")
-References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
-	<20260909-758-introduce-hook-v9-0-3043d417e0ee@gmail.com>
-	<aqF0mbWgYU5rMR-f@pks.im>
-Date: Wed, 09 Sep 2026 10:20:54 -0700
-Message-ID: <xmqqh5jys5mx.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org,
+    Brigham Campbell <me@brighamcampbell.com>,
+    Patrick Steinhardt <ps@pks.im>
+Subject: Re: What's cooking in git.git (Sep 2026, #03)
+In-Reply-To: <2ed6b008-1d15-4007-8db0-b6684ec324c5@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 09 Sep 2026 16:07:32 +0200")
+References: <xmqq5x0gyw9e.fsf@gitster.g>
+	<2ed6b008-1d15-4007-8db0-b6684ec324c5@app.fastmail.com>
+Date: Wed, 09 Sep 2026 10:28:25 -0700
+Message-ID: <xmqqcxums5ae.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,24 +87,41 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> On Wed, Sep 09, 2026 at 04:51:35PM +0200, Karthik Nayak wrote:
->> Changes in v9:
->> - Fix a bug where we were causing a BUG() when no report was requested.
->>   It is perfectly valid for clients to skip the report and we shouldn't
->>   fail when they do so. Thanks Junio!
+> On Tue, Sep 8, 2026, at 10:37, Junio C Hamano wrote:
+>> Here are the topics that have been cooking in my tree.  Commits
+>> prefixed with '+' are in 'next' (being in 'next' is a sign that a
+>> topic is stable enough to be used and is a candidate to be in a
+>> future release).  Commits prefixed with '-' are only in 'seen', and
+>> aren't considered "accepted" at all.  They may be annotated with a URL
+>> to a message that raises issues but they are by no means exhaustive.
+>> A topic without enough support may be discarded after a long period
+>> of no activity (of course, it can be resubmitted when new interest
+>> arises).
+>>
+>>[snip]
 >
-> It's curious that nothing has failed because of this. Are we lacking
-> tests here?
+> There’s also a topic from Sep 7th that I don’t see listed here, for your
+> information.
+>
+> <20260907-maintenance-doc-bullet-fix-v1-1-dc08dbe61a82@brighamcampbell.com>
 
-The "send-pack" client we have will ask for report if the server
-side advertises report-status or report-status-v2 capabilities, and
-there is no way to disable it nor there is no practical need to give
-a way to do so, so unless we are willing to write a custom client,
-or a configuration to disable server capability advertisement, such
-a test is a bit impractical to write.
+It is very likely that anything missing was simply overlooked (It
+also is possible that it wasn't interesting).  It is far easier to
+pick up if you resend it, rather than sending an message-ID of it.
 
+Doing so also shows that somebody other than the original author
+cares enough to do so (especially if the re-sender adds their own
+acked-by).
 
+I think I did not touch it back then because the discussion
+identified needs for further work, and decided to leave it up to the
+author, i.e., if the author cares enough, a final reroll will come,
+at which point I may pick it up, otherwise I can safely ignore such
+a patch even whose author does not care enough.
+
+Thanks for pinging.
