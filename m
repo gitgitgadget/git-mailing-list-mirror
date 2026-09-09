@@ -1,81 +1,84 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DC33D1AA6
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 20:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B2D41E6D6
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 21:07:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788987063; cv=none; b=OXQRBaA51XVfU80Ex4ZsDjqcMgMewNP3r5A30aE25UE8ZfzbtfyYtg5w4oNbvuf026ooV8fosoodFb7aB/llv0dhAvWrTskRzwYpkQmF5Ac0jpTizEX9BJ1z6/eK+xS3yZh2bL+YG3ttUDG+Z+sRWAa2SpvVN+qNHXnboF31BkY=
+	t=1788988045; cv=none; b=X2hWur5EeO5mmqvlyyNb6Lo7IkkHuWJiQG1DNmhj5Zg3OUzNR4Ujp1etcrkiUNxtxw7qkVYphl53zEfeIRWPv4Vnme89nXb0Sk/G+pmUWvYAueHqJHD+eHyGcwD3DvXnV5vXyVZE53hf4/7A4+i9AecXkuBViNg41T8U7opaTPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788987063; c=relaxed/simple;
-	bh=gTk3pnMndl8kRghExdYU7JEY8IVVaJMimbs3E4sxuKQ=;
+	s=arc-20240116; t=1788988045; c=relaxed/simple;
+	bh=l2qByuezVPOOX5bIBztMc5D7tELHWX73UrDJpxloiMg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bN+36Xv1V4Wdun10wdpntLRsgdE8vwKk6as8u5F/jO/+7p1bP8ge4vRGYb62tAaq3WlTEuuqGGHZr5e16gvxil7VRclBjVNK2F7hG1E7AxFJgdl/jawbNF1IQaQMSmq2mxvgMWUkeu1QWOn7h684FBV5EHx6qCSmzZzsLI82Go8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mun7EKvB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WpgTdb6r; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=tWkxwkcRIkw/gBZ6tud0Zb7AQsQwh9Cr7WWd6Lm2LRQFvywfD2p/R/o2ZSE+bmwb9r87+w8r3NrObEDwBavEjTGsTH+pBl5uYcqxWRst7HVMNR3v2lsByLO7E9QT5ZxlZXMlTSi0FGt6STminNvWlg5x1Owt2dK2pJoELbgTGL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X3pv3gg5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sDDtVx+M; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mun7EKvB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WpgTdb6r"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 074FBEC0120;
-	Wed,  9 Sep 2026 16:50:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X3pv3gg5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sDDtVx+M"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AE0D01400041;
+	Wed,  9 Sep 2026 17:07:22 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 09 Sep 2026 16:50:53 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 09 Sep 2026 17:07:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788987053; x=1789073453; bh=ohm0OrakUM
-	Z/cJ02wIiQQwHynyErlF4Vn2Ky8ViEwTQ=; b=mun7EKvBNGW7emfDPmxraHZMhQ
-	MLH+zVpqqksaoe3E6cY78QgfuqRK/TpTgm/fXO9HV5EvW7AuV+5ITd5PyAezVapS
-	KVMeR3v5evknCILagKcjBqMbwDq6BoeYe4LTMtIDpIMQ0GwPZC6X+YMH1jSa9Sr8
-	G5I0TR880ieGSWWIfBUKGOHwjpYRS07kFyrvvNhgEYsV7ks5NVQwisV/u7alQfCb
-	FC5Q91fa67BAPmywF1Zkmu+FF8Uw/KCyWwFta5VuCtrMLg8QhdrSqJ+tTFu7xAKy
-	slrEjnam0F1IyqH/1Muff6HYj5s3RzP3ZxTmZhplzoVtXhXaj8PR3RpTnHFQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788988042;
+	 x=1789074442; bh=F775bzqYUP/wpxrOH5Now9NZ/JrG+g0dmrb7zi92Lao=; b=
+	X3pv3gg5jUzJzQ9j+ZDAK9iRURtdBY4lwX1JrES1WAJKqbhw/3uifVteZEfKy9Ma
+	8VuCeUptQC0mkWCMHUjj+rprZFdP2mHFnOcAnVrNFGc8oaxC5VBn9HWc0hlCCa0h
+	aq+sLJ+xzZq6Q/ZJRkn8pYyRMdUae79loxKjYhggLlS40mEDTcPIYPuOf2iP2cfi
+	yaVkbTAluxi9CyqE6IupfYeKaa937pvM2mO5qdfsd0lSDFp3VaAwnTYGhMvcxJr+
+	4ELHD3/2A9+DnTfZ4z89CLHOGWCwE5zKCoMPxIZantoFxh9fgtmWMNnZwQRW0WqS
+	wwtNb+5b/GXz7/5de69F0Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788987053; x=1789073453; bh=ohm0OrakUMZ/cJ02wIiQQwHynyErlF4Vn2K
-	y8ViEwTQ=; b=WpgTdb6rHEJu8nPJTQa0G88GkpAouTqVQiK/EpMoC+08CgWkfX/
-	PJaXA8DtQdcRlyTgOUyD24aY0OXn70NxKEg08QPs6QvbTK8h55T48JDo+gzqLRmr
-	VBhfS7ysbDYeQ/AmQdkDeNea3vhtjA8dDteQM/pfAVfXL2l1lOjBlpFmULg/jqPY
-	LXmRgN5KmYIelV6hj9Ifj/wRsEvii24hHvOUokTSuEkfKdoHWX8tMrdU9xUcU/Z4
-	G56uskFWCQqC+W6OoNwtxRJFYt4cig8XBLCfpGivlzl0zbgYVpwzoIl82++7XD47
-	3UH9hf1G7NM1uySzqpSzFwbZStPlolVU0eg==
-X-ME-Sender: <xms:rMahaoGxhMpvuv9UVZS3Mj1V0pnpqoNfeNdmOOQ1HNoCBPxQFSYx0g>
-    <xme:rMahalC7VuoRiG_MjP9SzIsFbzzOJg9zaisDBWDxtu0_-HvmLTwL1IAtsXrPU_wrU
-    JplDp-Uz4dnX9jmC6LjxBJ_3qB6JTqW6Ddv7SQgy2sqcNc8Psg0Iw>
-X-ME-Received: <xmr:rMahar_7uglTcvDqRNh2XJ5RMwk25Ze7n1dw4eS1JTWqGxYTWtq58W4QdSkoMSVKvnucGa5xgzz8LyZHr-jIp0i1eQmRLAqtKoMW>
-X-ME-Proxy-Cause: dmFkZTEU/TOGuaToat/ekHAVC4p1Z1qpWEAfVvPoOB5xPREjuVf0lm0wzu2SEmPicnNZ2U
-    gU2+QJYk1S7H7Y7s20Tj7+7GrP9L0rhoI6uu/91mvbnYpzJtNR7W3Owvdr0SGO0Qeb+WKV
-    /GUU0ONBxXb1uaCoz6VtjOeLtNOl2GbScVVhbBBzbtTYwEF7stwOvhdr90npb+UOgdVz+t
-    pDd/hNHyTh5HzjEkyjMlu4C4KagPo3dMwsFKFK22AKfoCwlmOLKvM4EnP9pueOxZN14DOC
-    CcXQZIzRZg7Q/rCeYTFBBkaqdX8EpcQwosAfdzl7/NDgnyMGKC3/zokDk+baPx4M3A0deQ
-    978XqJXbYXLLEPsA0rbBGtmxHbnRB5jOLnbXn1socprFYdrWQJvjCxXO3GhbSDVt0aSISP
-    BiPRrbbCmW/zeJWQGGkcYaDRhJl1nt5q0emOYPTyRGnausaVE9whBn05U/98Dhk94jPpBf
-    EPl8gQv2OvX0V7/gEzW2CXrUQbMYDJkkcuNcBdYwpotdaTeANbIzv3x86QT9oO3vhqLa4u
-    q0KlZkVf4/7M9I0cOu3jJEPPcvz2d5IRCHapXaBDlM3kUAIh750Q0P/5UJEjU7gtKXZSij
-    XU6rIxrb0RBB4+R9pK1jaU6gWm/DRiVUjcoVTheY7lZp+uoHeVrMwfC+i21Q
-X-ME-Proxy: <xmx:rMahahA6zLxRhtdz2mHoR1z2N4XLJJMf_EoPYLN_EFnLi7LjpEv1xg>
-    <xmx:rMahagToVKwj0wh7VFkuCHcyvsh6N8shX2xusqMCDjaprE-texz00Q>
-    <xmx:rMahaouAepN4TwX33VTK_FWWdGc86S5ePu7rY3kEVSHmw1LVI7C2XA>
-    <xmx:rMahas0T0vJ7Fc3wnl5bKylHf8JouaFyZ6h5vXZuY7YpmDwuEh1dDg>
-    <xmx:rcahanOaZd6denPM4G0dijMkhHf7OTKMwwqdhGi1O7vbfLbLTZx5jtpE>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788988042; x=
+	1789074442; bh=F775bzqYUP/wpxrOH5Now9NZ/JrG+g0dmrb7zi92Lao=; b=s
+	DDtVx+ML4C9EM/ihTOhRbvBlwihhHxiTzS0aH0GIvWFYBWtEqtvuyW2h1Oi3Mtj2
+	J5DCxLrlU5Ezky5B6y0X4pn48cf19Z6KfipVoEsyfalQaKftJRlYfB5LyR8JB2lF
+	VEGVV9a2056++EnwAU+bwxMHmCCgA1HroMcniMJH0DXi7bbxmqqHjCs5bYpa2Vjj
+	gs39HaV/qRHQXINaYhTY7bhBAfl3we+F26qkTRM2WCiOWIo3QddM0DKPRpg1RqVX
+	R634syW+l7QB9vP4O9CN6qQmaqU6i+KkiZTqdL4glB2YfdPYBbKVw3TwMFxxCy6b
+	C0SG9SYJAs7ooni7Ut7Gg==
+X-ME-Sender: <xms:isqhag3eW_YbSlNMKfxYLv83E-tIxE4bVKhymyvNqv8wliTimopXBg>
+    <xme:isqhauVBF51-JiljUNo6CXM57FliY1t4ryf1jZLGy9V4pvCRJYVu568QEW-z9oELJ
+    0xZQ8s7ivnTdgOiwCidJbK508-jWRkBrW8Z6ruhmLKEyJHxd9Wmg1Y>
+X-ME-Received: <xmr:isqhaiVQAQZPwaYnMWNP57Py9BE4mEv-RDQDWmGPemgQ7XtC_iHYT4ejwr8tEnvdfm0-vf8hGAk_I81RnGeOLDQB8-oTqLGZGX5B>
+X-ME-Proxy-Cause: dmFkZTFDDcDTBvH6phpNG9fLGNR403s7ECls3VeCbDmzuCsi71kHBiUrDa1KU8dFIUH5lm
+    4zpYqQT+2bHE4kwjPELaXSK+DeKbOH8XTd+A9CDqm7c4VnrVnyUNTsejHD4uiVbpKHC7CZ
+    b+64YXJ8Dlp9/yjrL0Yu/xO4fF5YZU4x4d/zN1dB1pjWI5cZETszQcYPk3ccQUgkDRLr2z
+    legxKw+3nbyo0tuwmDG++ajjQJw/Zp3QtQFuIdQhQZ7k38pE5s+vqPP2DMy8n8rklRPa9u
+    skbdEBY2kr1M4JYWwmhayDbLGQmELrB8uTdGoxDPkQanSOcojiUeQXV5jcbyhxLLfvg3mO
+    kVmuH0Cr85wX6nplnO+D/ujPCtCkFIP++i2SeNDuMAAZuLJUCw79PDZkPnbvlAg01Fsg1q
+    a6EkZ6OcRSHs7cTSttOsg4z8UsuBCYx83JBYUEvT6ONOL/hCCmvWasF9zUizQGdgEE6pqu
+    3asc5tt5UkNvdI+dg03EJEUe4rXddpyNfMJmTqkYtg1IQ5ufLHHZtmW6pNJTWGHoCd2Ign
+    w86Nhgz46Ae4pjpjZYWvJbwEI4qtZvHlGxPCWiVnmzry1+RXQe+zzOMm7V3tuOot6Rna/S
+    tTk26MQJp3JhHAlG/bjy8FJ1S4k8ljV9WIfR12L2HqyKAKlMq29pm1pqkA/A
+X-ME-Proxy: <xmx:isqhalfZDR9RjqoXqgBc0e_0MeiqbiWtSHVYA_8C07sJWy92bhGfDg>
+    <xmx:isqhajU174KDqQ6qsel2yd9UTt5CzDjAK2KgxjB-LDeRl2-a2XTO8A>
+    <xmx:isqhamdPVho1BFyTSBBAaDF4mNt3tpLF8qif2jjWcqCgKaxCOweqRA>
+    <xmx:isqhanMZOarUwfO5wcnIWdL6_3ijWAP8tiGdEYlZWN0x4ZirZ3yA0w>
+    <xmx:isqhaq8mth-nHd8tnd5QnnCb3RAsgmxRUyCdgRjbcQMJCDMpl11yHUg1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Sep 2026 16:50:51 -0400 (EDT)
+ 9 Sep 2026 17:07:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Vsevolod Myalitsin <ub4nal@mail.ru>
-Cc: git@vger.kernel.org,  gitster@pobox.me,  peff@peff.net,
-  ben.knoble@gmail.org
-Subject: Re: [PATCH v3] advice: use global config for default branch name
-In-Reply-To: <20270829004959.90983-1-ub4nal@mail.ru> (Vsevolod Myalitsin's
-	message of "Sun, 29 Aug 2027 03:49:58 +0300")
-References: <20270829004959.90983-1-ub4nal@mail.ru>
-Date: Wed, 09 Sep 2026 13:50:50 -0700
-Message-ID: <xmqqse3ip2s5.fsf@gitster.g>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/4] Makefile: reintroduce REFTABLE_OBJS
+In-Reply-To: <20260909195006.2179119-4-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+	message of "Wed, 9 Sep 2026 21:50:05 +0200")
+References: <20260909195006.2179119-1-szeder.dev@gmail.com>
+	<20260909195006.2179119-4-szeder.dev@gmail.com>
+Date: Wed, 09 Sep 2026 14:07:20 -0700
+Message-ID: <xmqqmrtqp20n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,122 +86,46 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Vsevolod Myalitsin <ub4nal@mail.ru> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> Some advice messages suggest disabling the advice with
-> "git config set advice.<name> false", even when the
-> corresponding configuration should be set at a different scope.
+> Object files under "reftable/" used to be listed in the REFTABLE_OBJS
+> Makefile variable so we could build a static library from them.  This
+> static library was removed in f3b4c89d59 (make: delete REFTABLE_LIB,
+> add reftable to LIB_OBJS, 2025-10-02), along with filling
+> REFTALBE_OBJS with object files.
 >
-> Add a scope hint to advice settings so that the suggested
-> command uses the appropriate config scope.
->
-> Pass the advice setting itself to vadvise() instead of passing
-> its fields separately. Use NULL for advise() calls that are not
-> associated with an advice setting.
+> However, the reftable source files are kind of special, because the
+> reftable implementation is supposed to be easily includable in other
+> projects.  Therefore, the reftable source files don't include
+> "git-compat-util.h", with the sole exception of the purposefully
+> project-specific "reftable/system.c".  Consequently, they shouldn't be
+> compiled with our precompiled header, as it does include
+> "git-compat-util.h".
 
-"""Use this new mechanism to suggest setting advice.defaultBranchName 
-in per-user configuration, not in per-repository configuration, as
-it is way too late once a repository is initialized.""" or something
-along that line is missing here.
+This is the first mention of "our precompiled header" in this
+series, and the first hint that "our precompiled header" would
+include "git-compat-util.h".  It may probably give us a better
+organization to state it upfront at the beginning of the proposed
+log message of this commit.  It is of secondary importance that once
+in the past we used to have REFTABLE_OBJS Makefile variable that
+listed some files (but for completely different purposes).  How
+about explaining it along this line...
 
-> +enum advice_scope {
-> +	ADVICE_SCOPE_LOCAL = 0,
-> +	ADVICE_SCOPE_GLOBAL,
-> +	ADVICE_SCOPE_SYSTEM,
-> +};
-> +
-> +struct advice_setting {
->  	const char *key;
-> +	enum advice_scope scope_hint;
->  	enum advice_level level;
-> -} advice_setting[] = {
-> +};
+    The ultimate endgame of this series is to use the precompiled
+    header facility to speed up compilation, and the plan is to have
+    Git specific headers including git-compat-util.h precompiled.
 
-Looking good.
+    The reftable sources are largely designed to be independent from
+    the Git source proper, and except for reftable/system.c they do
+    not include <git-compat-util.h>.
 
-> +static struct advice_setting advice_setting[] = {
->  	[ADVICE_ADD_EMBEDDED_REPO]			= { "addEmbeddedRepo" },
->  	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec" },
->  	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile" },
-> @@ -51,7 +60,7 @@ static struct {
->  	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
->  	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
->  	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
-> -	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName" },
-> +	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName", ADVICE_SCOPE_GLOBAL },
->  	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
->  	[ADVICE_DIVERGING]				= { "diverging" },
->  	[ADVICE_FETCH_SET_HEAD_WARN]			= { "fetchRemoteHEADWarn" },
-> @@ -96,18 +105,31 @@ static struct {
->  
->  static const char turn_off_instructions[] =
->  N_("\n"
-> -   "Disable this message with \"git config set advice.%s false\"");
-> +   "Disable this message with \"git config set%s advice.%s false\"");
->  
-> -static void vadvise(const char *advice, int display_instructions,
-> -		    const char *key, va_list params)
-> +static void vadvise(const char *advice,
-> +	const struct advice_setting *setting, va_list params)
->  {
->  	struct strbuf buf = STRBUF_INIT;
->  	const char *cp, *np;
->  
->  	strbuf_vaddf(&buf, advice, params);
->  
-> -	if (display_instructions)
-> -		strbuf_addf(&buf, turn_off_instructions, key);
-> +	if (setting && setting->level == 0) {
-> +		const char *scope = "";
-> +		switch (setting->scope_hint) {
-> +			case ADVICE_SCOPE_LOCAL:
-> +				break;
-> +			case ADVICE_SCOPE_GLOBAL:
-> +				scope = " --global";
-> +				break;
-> +			case ADVICE_SCOPE_SYSTEM:
-> +				scope = " --system";
-> +				break;
-> +		}
+    Move the object files in the subsystem from the LIB_OBJS to the
+    REFTABLE_OBJS Makefile variable, so that we can use LIB_OBJS as
+    list of files compiled with precompiled header files and others
+    without
 
-Style.  In our codebase, switch and case are indented to the same
-tabstop.
+... or something like that, perhaps?
 
-> +		strbuf_addf(&buf, turn_off_instructions,
-> +				scope, setting->key);
-> +	}
->  
->  	for (cp = buf.buf; *cp; cp = np) {
->  		np = strchrnul(cp, '\n');
-> @@ -126,7 +148,7 @@ void advise(const char *advice, ...)
->  {
->  	va_list params;
->  	va_start(params, advice);
-> -	vadvise(advice, 0, "", params);
-> +	vadvise(advice, NULL, params);
->  	va_end(params);
->  }
->  
-> @@ -155,8 +177,7 @@ void advise_if_enabled(enum advice_type type, const char *advice, ...)
->  		return;
->  
->  	va_start(params, advice);
-> -	vadvise(advice, !advice_setting[type].level, advice_setting[type].key,
-> -		params);
-> +	vadvise(advice, &advice_setting[type], params);
->  	va_end(params);
->  }
-
-The change to narrow the interface into vadvise() needs to be
-described in the proposed log message.
-
-Ideally, this would be a three-patch series.  API change to
-vadvise() would come first, and then the introduction of advice
-scope mechanism, and finally making defaultBranchName a global
-scope variable.
-
-Other than that, the end shape looks good to me.
-
-Thanks.
