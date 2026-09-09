@@ -1,119 +1,185 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D032649CF29
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 08:54:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788944075; cv=none; b=ANKlUoPP8i4qrmpe/Xd5RFXoWZ64hwaVnUMy0E8IMplqcasF7L5auTek6eTPcKDle3Kj6DtMRmCrsO+occhTWRgas4SfiMXFdNnyORXrVSxVm21RrvvQ1XxbcG/WtFitCbJFqEaKC4jKMGxvBGOr8pB1r2lLOb+j7fYeYoL3nzA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788944075; c=relaxed/simple;
-	bh=N58uD2Yr27qoxjVTzQb13ltL8yWuv3tt3jarJ3oblHs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fjmDj4axSnR7zvvyhVSe0AijpPKs/n+lKcg+F/Syj8yRGLuVZlZ9WXy22GEIdVQ2Tk1eX15W3oMrH4v28gGK4MuuJo233uMpMBvQKF87lNwHTRB2Dwbycg3pd9+5+SDFTfFzk1h8q2hgik8Wma+KQvyGHO5ZvdFspb6WJ1kSsog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a9NVC4/+; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDD9400987
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 09:12:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788945137; cv=pass; b=aDjqwP4Cltr/Zd5Z7lmAMpDWWUJA+EItgFCuvlGtx97NWfu9ZiBrE4FM2dhDT6XwX3tHV4IJoym2WX0A6MB1HBQz2/7p51RePkYyTvu9namAwi/hpe7rH91OMwVlr2CH7kuv61Kpvb0S9/5pn4Z9pz4gJR+wSijV6L8Su3aiOdo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788945137; c=relaxed/simple;
+	bh=d361SIOAXT+FFiqODMd4KPKBboTjnNYy3tdxH3YsAM8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LJbDIAtmmiPO9G+Z+Qt20JasdxnajHSN+GuhrL3UdwwFz3CvLhUPwx4jCt9ahie96OvTJTg/7YCMqAs/8ZJhTwtSJJkqjDKDr6FSvNlOd0wKBWD1/wqM+DdMdeq8lV2uUH0wBmy8fUeYWJU//8xagQj7aY37gC/vr/4nR3NQk5U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NNn/UaO7; arc=pass smtp.client-ip=209.85.215.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a9NVC4/+"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-84e04df8c46so6098186b3a.2
-        for <git@vger.kernel.org>; Wed, 09 Sep 2026 01:54:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NNn/UaO7"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c96c92c0980so3060424a12.3
+        for <git@vger.kernel.org>; Wed, 09 Sep 2026 02:12:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788945136; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MfgcZk3NILorScR9DjoOcvbHXqWWI+4Qi6hTKrPO0RsTcM3iG9rYepbmD4c1h6EvH8
+         svmBzlkxamOBxfrl4KjdH5vTxCP01PD6TW/T767SIqwnS04OsKyTVWuBl2pj864JNQbR
+         kRYQS6NUhH+fYKWzGgZ4NtsVEG/5uuWwK2DsHtbytVTmf7/vOC4V8r/GOq/vtAlbpN9v
+         vOOIEkS1x8xF6m7AwaaLKK6hWA/Qo4MeS7giOKiwDoRqIqu6sPKYStgwkZ/EI39kBs2E
+         bEMJAuqz6oDvsZ4SBOJIpdbr1/m9/HaiMCWwTpzsyzDRZrRnso2D0tXxEhf1s0AoK9gC
+         bSEQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=d361SIOAXT+FFiqODMd4KPKBboTjnNYy3tdxH3YsAM8=;
+        fh=0hZOEHH7Fi06O787RjWtj3trnEAT4KH+3GeYzCEcIzc=;
+        b=Ji+u/8MGh77WozsSdY9tXaBIbC6sIah6KG0QqROOB7onhLc7jwdDUk/gbGts9Ch0QN
+         4SBpVGRgsWQLntPFTshxfOmA4nvXyeKTNtKYeUeRNlIQ20ozinb/3siJJ0pdNRssbbJu
+         zqMR/tK83R1RGpN4AuY+qeOx4rbnQPpWZ3j8gQnjlQWUdLLGFwpn+mLgZeqsnVT+jBxW
+         Uyd4f4OpS9uIr6G3Gg62kKwkLN8EDHXolUX5jht6NWqK5AlE78CVlAhwPQ7X/spX/gZX
+         qf7eu+9GogX1p2sLoooCuuni1sqshL07DJ3iLqjUqNRxXbr6Ws7qqghf6k3g4njU1AFg
+         X5xQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788944073; x=1789548873; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=otL4VAuXdwzbQdw24qhZV0FHht121KR+HfGcSvmuxPU=;
-        b=a9NVC4/+D/uM3bwWYv3++ZZQbbxuNcIkGZWBhG6DTQZ2HTYQbeNvS6fqSSkzkiU/2i
-         NVzz/nFi2ep361DAihhCQxqLDQ73z0cWE76RnyMeEq22e9vrABvxtTGl0IKglafPJI89
-         Y13qDOOPRj3GCUHqlN4z8aWAaLItrKrL/omVid15N6ykW6o63yjELcuUFT2HRiUPQrvm
-         fwiCTu996F6XtEtguLNxOjIL1tNpqz2EbGJTSNzr56zdsm13BJqUPQqQG0RzMn5Xl8cu
-         4gGZS7Hr5em8FP8R6VxciVEi4qMZq3GeFX7OZ4kYMFg2bJuPK8cmHX4hgsRK4zY9putH
-         4eDQ==
+        d=gmail.com; s=20251104; t=1788945136; x=1789549936; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=d361SIOAXT+FFiqODMd4KPKBboTjnNYy3tdxH3YsAM8=;
+        b=NNn/UaO7BTpUVmpVUrEBhReiSSvlg9iaZ1yVgzVTqwYrpU2v0xMz0eVKXW6TEXsjoA
+         jDRBter5ZM/W0uQ0QEFDj0/d5tCTBqs5Vj/CAn2pGpcOolrFwuBffkOUwfMQQe14td6T
+         TYfb/e6XAfic3lZJQ/AwzfZEOE0kHjCXIiOb0zUy7PPk5pfK4vHXxG+7N3aBP6GT+jpG
+         Ktf8rBwqCvWXOhVFkJX7EvHX4I+oKvFvJnDXId8DdOvN4e84NsqaHVzHl2eYKZgn5qWm
+         DfXt/rMi8eviwSHFxBATG7d4yhB/nlFI3V4DT9Yr3+yWqE5pe7Enxb4ABfEtzfYG3zSj
+         PUFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788944073; x=1789548873;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=otL4VAuXdwzbQdw24qhZV0FHht121KR+HfGcSvmuxPU=;
-        b=gyjXJFjLBS2K1ifiLARc5jPxX8MA93vD4G4y5Ke87c5t72VzAUCxjTvLQSe+D+at1d
-         5wq6rSfN6kCUd+MYJEutfUiKw7y+LAWZugF6obdxTm/8RfUvvS/K3YmYzzEnXCbPCcZ0
-         2rPWbSvVobK1DVD8G2RlxvLzx49o1q6ELPvTuFdO2if8bq2g0s9o7Xg+x6dDYYAQI4ir
-         2BBZ4xJ0KP148p/ztjywWo+j0fHF16r9GB9E2fqPPAJnRjESXVaZhjWCpIqVlNzYGurk
-         X90DKW0IQjXhZy7A+mCjFf7jzpi2aZPfRfd7An3TTeH/jBEpKs/frkeIjONGCpWd4DCJ
-         ypLA==
-X-Forwarded-Encrypted: i=1; AKwUvBw3ntEfKY8S7fcF0Z6gRfTnaSqBmiryniatJNPNDU0hltBSw6/1Dl3sQitt4JNMqSdcn8E=@vger.kernel.org
-X-Gm-Message-State: AFuF++nIr6RgGrpF0kwoUI/E12/Be1AYsnLoMtqrcwm+tu1b/6s62jVV
-	80Ko4wIGig+9q05JYw21Scg24u9u48fP2HXaPIw+ypXuxX0Amw1sLN32
-X-Gm-Gg: AYBFou2OfL3LdaZap6wQMoAEU0b8V6LZBFCwIrxIlT+u7L1UH9VOvofRZpGuufgfRJe
-	vhgE8Mjr5S/r0D6reTvIS5gjuORZnLwkpmaGU5q/lLFPTeTlV8zQpFOJlBybF4HncOs4/87hy12
-	1urUSgCs5AWuVJhGkNii9o9R2iJoRl6o45f4SkImBmIbFsf3xAJu/j3g4MV5Mh9nfgNPKA04L2q
-	YbCBtbRLXZpmawfWVWmqc1xXPL5bNsi7aEHQcqTm7su99ZLRCmWAQSZbnzE02qBDiHT8aNR+BmC
-	qx4HxqOzQ/DHQsic6KPNtV5AWuv8pjZmw3lo5D9YgbLMPWDuT7j35q0XmKxsITpVvp/mHvqvm2V
-	SNnoeHxG7PdwjhYb41IZCw89lxSyRsrenQ6v9OIS0ZgjLYQsVjUZ9B1hV3OflqK7GTisk8sVcIl
-	/1Q61wMaHcp92wQqdiPu+ZyurSz7IhmfrllZRgIKMQ0qBzksL1fa4GQUEYABD2DvdrQHaGGLScI
-	5k/A1CWzJD4jHFYZ635zVR0nhTvmpQIk/kg3HjOO/2cScQxhBLu5vs=
-X-Received: by 2002:a05:6a20:7343:b0:3c3:88a5:83e4 with SMTP id adf61e73a8af0-3da39ee2718mr49642769637.10.1788944073220;
-        Wed, 09 Sep 2026 01:54:33 -0700 (PDT)
-Received: from ?IPV6:2406:7400:12b:61a6:e00a:2dbb:bdc9:907c? ([2406:7400:12b:61a6:e00a:2dbb:bdc9:907c])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1434c745a09sm10637623c88.7.2026.09.09.01.54.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2026 01:54:32 -0700 (PDT)
-Message-ID: <b2e0b347-5847-4ed8-bef9-441fc4dccd8e@gmail.com>
-Date: Wed, 9 Sep 2026 14:24:28 +0530
+        d=1e100.net; s=20251104; t=1788945136; x=1789549936;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=d361SIOAXT+FFiqODMd4KPKBboTjnNYy3tdxH3YsAM8=;
+        b=r6vFYSdDQS5cz8l5tS+k5iGNYNZBAyDA8CUGTzcrAY0bVrr1HSazYYMfXVGWvbmyR1
+         l58O5fT7ZinnNsJKrhpqHTGCDxa5Yf1kybNXyRwOmDy1OO3XF7oalzQra8YDrTNFrzmN
+         U4mzUIof7exAFHTBFhqiUPKma7wY/mFQSFnc4Aea3Fhc8fXUhj61ZDrgKcZ0p8lXdctD
+         3GaR/y/aAtk9pmemBsn+9glZVjcbqb95LU77HHNbuLM2vhJMx7Nk7YHPxRMADUCPAmgk
+         JnwWf0IpX4QxJsBIEizJbEmtm6Gy83pzVuBQ6CyeomsnPDyYOUFPtRGxEb2UjRI83138
+         aZow==
+X-Gm-Message-State: AFuF++nK06dWUnjdS7Jq+DbfiwKgcYHyZnQNQaBktxviHeJ2U1kiLRSb
+	PN7xNq8zHx4ayIwlCnxWgeNSgetMVdCaoHBscmgbbFRwXTEli1ov9MLt4Qq/oPHVFHSwHPb2Zqo
+	ke7P3cxz0GPs6NP7+xcJiXjAyIk7hAUOvW67CspU=
+X-Gm-Gg: AYBFou3qeQIsuhNWr3bZSJVEyWiWhbbg9w/m+IASu3Ybg8ProaHpR9Rd+aVtkY48CzW
+	8g5SoPSQRKX+tplp5qfrfnKO70S1/sO3PXnWWhKkuWheiLgo3BB6djDRvDuTjNEYuIsYZzaqzBn
+	sGRW8Uit26LdpfZe/FyrdmJO9nbAue+i0Whk5YHR3nmpW9iGCQaNk5Qenh7FNBOOG4xamtSRwk6
+	ZzPdIGOWlF7YwuSH5QGPYiJJk1ns5AsiMr6LikOouGLyNXN86JSPPWWQobr8xoJyHeoe9zvwTXx
+	bx5k7xGHfvmRoTShpkhrVaJAJgqt2Z6tGSFqvcpe8wqWN1qKz4Fgzsdx/+4U8XeY7fw6MMVeDW0
+	R02xVfbfpuzr7Z/+YK5Dlc1pzsXzmHCZwiL+mdylxpX9IP0zqYLHbvitmdBH44QQHWsPd8pLNGX
+	lGfcFjNt0N4HQaesUz99ZMFh6TMRHJ5CL1a5H14eQ=
+X-Received: by 2002:a17:90b:4cce:b0:38f:240d:b857 with SMTP id
+ 98e67ed59e1d1-39b260dd4e9mr54723196a91.2.1788945135450; Wed, 09 Sep 2026
+ 02:12:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/11] setup: allow "git init --ref-storage-format=" to
- specify a payload
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
- <20260907-b4-pks-unify-ref-storage-format-v2-11-6733c90ca5b0@pks.im>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <20260907-b4-pks-unify-ref-storage-format-v2-11-6733c90ca5b0@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAP8UFD367UD=AomNVHEBnhY-2DQmqTNRcBX6NW7YZywWgOmxTQ@mail.gmail.com>
+ <CAP8UFD0oYnoXgQ84wHbGg3+QhX78Ucn_CXXYOe8uFpReb7X1Ng@mail.gmail.com>
+In-Reply-To: <CAP8UFD0oYnoXgQ84wHbGg3+QhX78Ucn_CXXYOe8uFpReb7X1Ng@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 9 Sep 2026 11:12:03 +0200
+X-Gm-Features: AcwNN1X2Kh9pWTmWnr0FsEW_IF7l9Xg0tTXyR9QcUJwvxXlytsuSxNgGzh0MGUw
+Message-ID: <CAP8UFD1hAjtPuWL8asZ2LzEMJKHGh2oO73n_tsUSADtEHh9b-g@mail.gmail.com>
+Subject: Re: Participating in Outreachy's December 2026 cohort
+To: git <git@vger.kernel.org>
+Cc: Git at SFC <git@sfconservancy.org>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	Pablo <pabloosabaterr@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
+	Tian Yuchen <cat@malon.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 9/7/26 16:48, Patrick Steinhardt wrote:
->   
-> diff --git a/Documentation/ref-storage-format.adoc b/Documentation/ref-storage-format.adoc
-> index c5e29ec831..21d62557b7 100644
-> --- a/Documentation/ref-storage-format.adoc
-> +++ b/Documentation/ref-storage-format.adoc
-> @@ -1,8 +1,12 @@
-> -`files`;; for loose files with packed-refs.
-> +`files[://<path>]`;; for loose files with packed-refs. The optional payload can
-> +be specified to change the root directory where references are created. A
-> +relative path will be resolved relative to the repository's common directory.
->   ifndef::with-breaking-changes[]
->   	This is the default.
->   endif::with-breaking-changes[]
-> -`reftable`;; for the reftable format.
-> +`reftable[://<path>]`;; for the reftable format. The optional payload can
-> +be specified to change the root directory where references are created. A
-> +relative path will be resolved relative to the repository's common directory.
->   ifdef::with-breaking-changes[]
->   	This is the default.
->   endif::with-breaking-changes[]
+On Sat, Sep 5, 2026 at 10:26=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
 
-I think we need to be a bit more careful when modifying this ascii doc. 
-This is also included in Documentation/git-refs.adoc and 
-Documentation/git-repo.adoc.
+> Thank you Usman, Kaartic and Pablo for volunteering to co-mentor!
+>
+> As no one objected to Git participating in Outreachy, I will submit a
+> Community Application for Git very soon.
 
-We need to check if support should also be added to the former. For the 
-latter, I think the inclusion may be fine since it is only for 
-informational purposes.
+I have submitted a Community Application for Git, see:
 
-Rest of the patch looks good to me.
+https://www.outreachy.org/communities/cfp/git/
 
--- 
-Sivaraam
+It says that we are willing to mentor and sponsor 2 interns. Hopefully
+we can have two (co-)mentors for each intern.
 
+> We will still have to sign up as mentors and find and submit projects
+> for interns to work on soon. We have until September 11, 2026, at 4 pm
+> UTC, which is less than one week from now.
+>
+> I have been thinking about the following projects:
+>
+> 1. Continue removing global state (and perhaps start libifying some
+> parts of the code base).
+>
+> I think Tian Yuchen said there is not much work left related to
+> "environment.{c,h}". So maybe we need to adjust the project compared
+> to its previous description or maybe make it about actually libifying
+> some parts of the code base.
+>
+> 2. Improve how command arguments and options are scanned and parsed.
+>
+> There are still a number of places in the code base where command
+> arguments are scanned or parsed using ad hoc hand-rolled code instead
+> of an existing API like the parse-options API or the early-scan API I
+> recently proposed in
+> https://lore.kernel.org/git/20260902161047.476753-1-christian.couder@gmai=
+l.com/.
+> Those pieces of ad hoc parsing or scanning code are often buggy and
+> difficult to maintain. I think porting them to an API while improving
+> that API if necessary can be an interesting project and bring a lot of
+> long term benefits to the project. As the parse-options API is already
+> quite feature-full, there are likely some areas where porting the
+> parsing code to it should be relatively easy which is newcomer
+> friendly.
+>
+> Let me know your opinion about these and if you have other project ideas.
+
+As no other project ideas were suggested, I submitted the project
+ideas I mentioned above. You can see them in the "Approved Projects
+for Git" section of the above mentioned page
+(https://www.outreachy.org/communities/cfp/git/) as:
+
+- Improve how command arguments and options are scanned and parsed
+(https://www.outreachy.org/outreachy-dec-2026-internship-cohort/communities=
+/git/#improve-how-command-arguments-and-options-are-scan)
+- Reduce Git=E2=80=99s global state to enable Git's libification
+(https://www.outreachy.org/outreachy-dec-2026-internship-cohort/communities=
+/git/#reduce-gits-global-state-to-enable-gits-libificati)
+
+The links to these projects are currently only available to approved
+mentors and coordinators. I applied to mentor both of these projects
+as this was required to submit the projects, but I am very much
+willing to remove myself from mentoring one of these projects.
+
+So please apply to (co-)mentor one of these projects, or submit other
+projects you are willing to mentor if you prefer.
+
+Also let me know if you see things that could be improved in these
+projects or the Community Application for Git.
+
+> > Last year the Git community mentored a single intern. For a long time
+> > GitHub or GitLab used to sponsor Outreachy interns working on Git, but
+> > last year both declined to do it, so the intern was sponsored by the
+> > Git project itself.
+>
+> I will start poking people at GitLab about this, but it would be nice
+> if we could get some kind of help with this regarding other companies
+> too.
+
+I have mentioned GitLab, GitHub and OpenAI as organizations that could
+potentially sponsor Outreachy interns. I have also proposed an
+"Outreachy sponsoring" topic to be discussed at the Git Contributor's
+Summit 2026 next week.
+
+Thanks.
