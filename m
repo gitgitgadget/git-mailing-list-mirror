@@ -1,137 +1,136 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E312E3C73F7
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 07:03:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61D7363C72
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 08:01:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788937440; cv=none; b=EDKNtUrjEzRVwHjYfXTiDfOnu1mUbTrpJiEaVSEviEoZ5aYVRzHmxcAmVh48jzXue5VvG7LvAAwZkPqHWTdB/qXn3FMWEG2ZvyuIcV/NUb/Y8LNWMmP3x7AV6WFnpYpadiWAK0Y4DQV2baE15tvK5TdTRyPXW8XI2XATq4MOI9U=
+	t=1788940862; cv=none; b=SzeBYAFfSOmKvQaZ5V5SREOEJ0CLxb1rRmorofhPZM0bVN/H6EqI1UnbpzuhdnGhxLRoZVc41h9yklA64sTiuHNjn9C7VcZddRuKMtnTqPLKylpC2LuVETF4n/fFffRN44GVTQ+kbVeG7FSSHFcrrxvz+Dq0cbBY+R7X/SzKN7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788937440; c=relaxed/simple;
-	bh=JJuaIBkdAjT+nRq0yecnbrY8633YH6ptex9z9OrHyAM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=chFDhID9YE0FB6zaWJFcVImEg5WDKTH953JO2ggimuTORuNdgeGIfLNQuWVxwQEPU8HcxUdJ0YwojIVqemJSv+V2Vi5hgE5Du6+ParQM+rZjIbpVah2Yt7JNaX815X4Hb1Z3WgxAl8nDOjbCh3FiUsHKTatBk7BYZyedm50SlkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aPQc21hG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tfZs1ihr; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1788940862; c=relaxed/simple;
+	bh=qgEyiC+3TYWLO0TLrm1sxMTGpZLfHyEGDHvyPHuQ+hQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=urw0CcPfrp1NCYY6P8A68T0kLCSJzcncDFpHbn/qTlCUbqLj9efJJl5I6ZanSxR6SZ6EwFK3rfxCQXHimRB/SJzYUblJTNlqsRgLj1Kh6j6oVybwx31SaRACBbftDZXuQ4A4KTmrBtX+5R8C+I4LYaSuLAIdJnzlxAtuIGwn6TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rMn98qai; arc=none smtp.client-ip=74.125.228.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aPQc21hG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tfZs1ihr"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id B57BCEC00B4;
-	Wed,  9 Sep 2026 03:03:55 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 09 Sep 2026 03:03:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1788937435; x=1789023835; bh=6Uo4Uik9wO
-	XENP1rcxWq4Rfe/XruPJ09Sv5zDlHNS4M=; b=aPQc21hGZz/Bkg/Mx5sYglRFGm
-	ojgEWKRlLvQ+qKyfEi/MbdLa4rK/4xq4D1oVkqrh6g2qDBpKqpo0NCBapRKE+3By
-	BwmmlfcQijb1A1QfGdcAF8VEYJ+iq5oCWBEsFU036pJUNbdTXEP0FPCk3EhvIaNm
-	5Xffawb6EKR6kxaWdlf+KKQtvAI3kWADRrFzPlgsmOJ54jM+W1pvfndqlnXpi7tO
-	8GhSNsQKSbJzB1rBR534rWQmZwVOk2m9o3bbYezcxR9/ycICSIC3srVodQz/onZh
-	o1ISb1UbdK2Yfe0MWYPKJUp5rgx4WXCSptnY1X0z+8pxp5wm7EXE0YaJe9mw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788937435; x=1789023835; bh=6Uo4Uik9wOXENP1rcxWq4Rfe/XruPJ09Sv5
-	zDlHNS4M=; b=tfZs1ihrOUXwYxeHJZn29da4owEERO62cU2oPkfq6GR87vR6jAb
-	pgcpWCAb2XZhJFcm/RIymh/16Hlh1V3OIv+V62r6HtXvAryucX+6nnRfrPrlMAIe
-	0iQrWR0bc7BZKOAxj6BeG4gCRd1NWd17E+HLdqR1CJ7hXCmWGWP0wXlgj2OiclWS
-	7dzg3xYlK96sDRlrtTXicVl/xywz/4uMxsWb4I7IerDT89+POqmXDoIPYjrgwmx6
-	SDlEgESgKnFrM1/DEus6nSkLJ0oeN/dp28Qx33NR3cjSvBu2rmyxSm5Gf8MEGiua
-	xRgC+eJ6FaKfo1XqHZfLyhzp2E4+ehMYDqQ==
-X-ME-Sender: <xms:2wShaqf9on69TRp07bfW2jLyjxNfxIG1Yds9hhsZZidE8qbUDe87VA>
-    <xme:2wSharPKbGa5L6Ncqe20h-wOofv-0gINo1yHBan2S8_ovqJJQg3bhvdYUDPkQYYBb
-    PfEeU_KyEqNNX5s-WirD9Bzbck6ZiXTAVHA6NaRLHA4QXXi1XbxtBQ>
-X-ME-Received: <xmr:2wShagguXd98e3ojyq4CwUVqIfYVpNFEGK5AE5vYl1bVNjn2Xrf9zedhB80oSRZ7sg-YqQ>
-X-ME-Proxy-Cause: dmFkZTEi3vPitCwY0rccophpCRf8LJn9JhNksaDkw9jWK07M52vOV3j1vWZzsfhIQGUCOS
-    PaBWVDKriLr+DpMBmeI6JBelqN1jHTq69E54lXo9Iw5zJvo6J5NWqf9fZq702TNITRIIf5
-    WbJlQmuuooxZyz8dHoPC2UevajeW7k96IeZBogMa5SRER9YXmoOSCQdve9FdXn2W9q/TRb
-    lTat8gPRAJ2yqRMIrzZhCcoZB9ZQ6gcgK25W5RfR5jJJ2/PQVtTpFftETMrFcq/jWS9dF9
-    hBsLwXEMDAu/lldrrsxlKwbLvDKmBmHUENWBl23xQSwLRk6M0AduRHFJUHJn9E0BmZWzjh
-    nQXfr1EatkvOVuJdqYwoLHmWuUGMqzFtKUVqqayALBcrXVZw/cj9Epk+YZ/t/LXhvBKmF7
-    SIRrLxKrVSmSHivsSJ0K2j0/uj5rIz4aioVCOkINYhi2279W3jqeffe+VnwpOQuVyQK/NO
-    ES/V0Nzq/LRW8S1NCpxdoUA+xauqYl0XknQdClPBk1p2YHS/+I7M9KACqFQeZxYjlnLZ1M
-    KAuOOoIH8h+rkqnC6cIa5HtOtHy+V3XufRDJDPoX1glVJXTkuwsz03kpsouuI1FvEJpBjX
-    MWd3I6L/Nau34zw69uSRziUgs+2/0Ho1/YAOBxd/t6Cab+j480ayxwSOgJXQ
-X-ME-Proxy: <xmx:2wSham3XhwqkKEDkJGWJugoEiO6rMj0F4neWFnPwSv2rYCzkoDS2nQ>
-    <xmx:2wShaijdH1MGU_JN4pE5cN2dyu5imRxU5zWQ8ikzfSoO5eOxl_fQ-g>
-    <xmx:2wShaudnueQvtWP0TWJhTnKdJX4mmgANSE_B9dEV8_CcdflqDPLT2Q>
-    <xmx:2wShatnaKZlcE3xSuEpUqXLm32D-MU2K2z0ivrzPnWIwI0cUJxCh_A>
-    <xmx:2wShakAu-x0KdyqL4sUclU6kxkwr20Dz_LNv-LiZaaL7C1tyHPBSP1w1>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Sep 2026 03:03:54 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8b729063 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 9 Sep 2026 07:03:53 +0000 (UTC)
-Date: Wed, 9 Sep 2026 09:03:51 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 07/11] refs: expose function to parse reference URIs
-Message-ID: <aqEE14FdUFdgMNS2@pks.im>
-References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
- <20260907-b4-pks-unify-ref-storage-format-v2-7-6733c90ca5b0@pks.im>
- <54fc5f97-a8ed-4927-8b48-1b4c3c7b413a@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rMn98qai"
+Received: by mail-pz2-f12.google.com with SMTP id d2e1a72fcca58-859e0bc7dd9so753638b3a.3
+        for <git@vger.kernel.org>; Wed, 09 Sep 2026 01:01:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788940860; x=1789545660; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=QkX/GnJBwHl1EOvnxFZAfki7yTYslzITUYB03p7Uyuo=;
+        b=rMn98qaih0JgiqcaQ6fQdRBsizIlspDRFbmNNtZLeF/18CgQNOXXapxRGFqw75Zg4p
+         dl/Bk0hCYPjmopP7Gg3lApQ02rDtMeQNfOGtwIQ+3LU4PQldPVgR/gAj5Ghn18F1LAMR
+         +DR+Q9yMjXybmlI1GF8UqVOVKyaGExwS394SClG37j/RYepzL6DtcpGKoDDXVMwyLRBI
+         HghfjjcHF9deITst0aqps8lWokDcSznm6JNsAUQsQfeAVk92yJew1i1cE8p7R9LC91Cz
+         KmGYy+GJudj1WmlEe4hoZlvd1va/DUx7BtMFbJzME2fhGAIyUaKh39PmAt6+oHVXGZRP
+         et8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788940860; x=1789545660;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=QkX/GnJBwHl1EOvnxFZAfki7yTYslzITUYB03p7Uyuo=;
+        b=dMauxS36ZvteoPzvW5xnupsf/FKFWv6UY56wFdpaovCWS9E0zgIR7xjOJSyihevFGx
+         BloTKjjHSu13PpESB4f6qpbuweHF9NdKLH2XP6aQeD/oQHczqUfGRfuYZfzsY2zXfTYl
+         ARxufwYUEmnLD3plsFroVnsbl5GAX2xhbp6w17gqEjdG+TnQJ/5j6BbQ/XBS+QM6gBSn
+         0MAcMVFMYI38RoCdv7sqKiNX0EUo8dGE79ESn6rpDsqYO7c7Gk4JKhLIzG30im4YrQcK
+         WqgV9dumUDdUNZX4L5Pl2zu4pRCLuLNEO8NTHevVP5PBDM2PIGOPKmf7iBkdFr17PVjO
+         EQDQ==
+X-Forwarded-Encrypted: i=1; AKwUvByPnnidi1B5UqAMhWbze4IzqewnhtISBz8kykDoSa6cvNAbi4ThgrhTFWlQSVmB2JKYx6Y=@vger.kernel.org
+X-Gm-Message-State: AFuF++kbp9/hS8mXB6koj38Os4qlOxxgNgeVajg+LXmLFoBy055Pk4pQ
+	rq/8TTjtJwu5kBqLovDYuyBoKUfh3n1Xy9OHggUKHayPL6frsAJ7a7YG
+X-Gm-Gg: AYBFou0tynxNHdro/8o+05G6Vb5do9d5iT8MUnZw5wriay8TEqUArWN5KlnS5XdGfar
+	dmTymLyLyr1YGLIXLijiSw8F0gC7lt+9BJoMqJvbuGRePDjgFkOM5OT+fHpyripQJSj9f294ot/
+	Jxuq170ZTeTeQavfNHAb3VZvVZJruObhLBimKdbiRRrIdL6IKAtIhVVGjYaQfdvV2OVuUSVBrKj
+	bIi0bRWq2EKJKevSyK6m2ef/Dv3RiMg/CLDIOVFworHKJem7q7+CPfSAWGIAMCciiJlW46scT8g
+	Sv3oH6dSFnV8QDvtCobfyoka6ep8d+gSjTxYRaJCC7U4sxiQ4+SskVgose20nM4MLQ30zMR2NwP
+	5vJIgJRHY0UM7z658RTxNWuXM23A9dDZpWlbvPPbHQq7T5ggED0hsRsCmiH8lq6RGe15LQKIEph
+	aFWDQkWt28SKHFQCoePNFtYd5GD5ivjG0utQvcIUwGArYlKFMyVJFhkcuOyFtlviweAc2wSMJtM
+	fnmm8PJ+Cm0e0PsSARqK92s/V5Qs52ZDPPGrBe5yjUYOa5jk3nUaqY=
+X-Received: by 2002:a05:6a20:9396:b0:3cc:ec12:a788 with SMTP id adf61e73a8af0-3dabafdfc12mr6861232637.4.1788940859950;
+        Wed, 09 Sep 2026 01:00:59 -0700 (PDT)
+Received: from ?IPV6:2406:7400:12b:61a6:e00a:2dbb:bdc9:907c? ([2406:7400:12b:61a6:e00a:2dbb:bdc9:907c])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3339befe870sm46824001eec.30.2026.09.09.01.00.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Sep 2026 01:00:59 -0700 (PDT)
+Message-ID: <be1c7560-0da6-436e-8f46-073e95bcad07@gmail.com>
+Date: Wed, 9 Sep 2026 13:30:55 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <54fc5f97-a8ed-4927-8b48-1b4c3c7b413a@gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [PATCH v2 08/11] setup: refactor how we configure the ref storage
+ format
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
+ <20260907-b4-pks-unify-ref-storage-format-v2-8-6733c90ca5b0@pks.im>
+Content-Language: en-US
+In-Reply-To: <20260907-b4-pks-unify-ref-storage-format-v2-8-6733c90ca5b0@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 08, 2026 at 07:17:06PM +0530, Kaartic Sivaraam wrote:
-> On 9/7/26 16:48, Patrick Steinhardt wrote:
-> > diff --git a/setup.c b/setup.c
-> > index dfe05d9a03..3be7dac452 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > 
-> > @@ -2069,16 +2051,12 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
-> >   			 */
-> >   			ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
-> >   			if (ref_backend_uri) {
-> > -				char *format;
-> > -
-> > -				free(discovery.format.ref_storage_payload);
-> > -
-> > -				parse_reference_uri(ref_backend_uri, &format, &discovery.format.ref_storage_payload);
-> > -				discovery.format.ref_storage_format = ref_storage_format_by_name(format);
-> > +				FREE_AND_NULL(discovery.format.ref_storage_payload);
-> > +				discovery.format.ref_storage_format =
-> > +					ref_storage_format_by_uri(ref_backend_uri,
-> > +								  &discovery.format.ref_storage_payload);
-> >   				if (discovery.format.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
-> > -					die(_("unknown ref storage format: '%s'"), format);
-> > -
-> > -				free(format);
-> > +					die(_("unknown ref storage format: '%s'"), ref_backend_uri);
-> 
-> If I'm not mistaken, we have now started printing the whole ref storage
-> backend configuration rather than just the name. I could see that we don't
-> actually have any variable that returns just the name part after the
-> refactor. I could also understand that we can't always expect a '://' in the
-> GIT_REF_STORAGE_FORMAT configuration so printing the whole configuration may
-> make sense. But could we possibly improve the error message a bit? May be
-> phrase it as follows:
-> 
->   $ GIT_REF_STORAGE_FORMAT=garbage://hello-world ./git status
->   fatal: invalid ref storage format configuration: 'garbage://hello-world'
+On 9/7/26 16:48, Patrick Steinhardt wrote:
+> diff --git a/setup.c b/setup.c
+> index 3be7dac452..38fa5e854c 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -2761,40 +2761,65 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+>
+> ... snip ...
+> -
+> -	ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
+> -	if (ref_backend_uri) {
+> -		enum ref_storage_format format;
+> -		char *payload;
+> -
+> -		format = ref_storage_format_by_uri(ref_backend_uri, &payload);
+> -		if (format == REF_STORAGE_FORMAT_UNKNOWN)
+> -			die(_("unknown ref storage format: '%s'"), ref_backend_uri);
+> -
+> -		repo_fmt->ref_storage_format = format;
+> -		free(repo_fmt->ref_storage_payload);
+> -		repo_fmt->ref_storage_payload = payload;
+> -	}
+> +	/*
+> +	 * If we have a preexisting repository we need to verify that its
+> +	 * current ref storage format does not change.
+> +	 */
+> +	if (repo_fmt->version >= 0) {
+> +		if (ref_storage_format != repo_fmt->ref_storage_format)
+> +			die(_("attempt to reinitialize repository with different reference storage format"));
+> +		if ((ref_storage_payload || repo_fmt->ref_storage_payload) &&
+> +		    strcmp(ref_storage_payload ? ref_storage_payload : "",
+> +			   repo_fmt->ref_storage_payload ? repo_fmt->ref_storage_payload : ""))
 
-I think "invalid" would be less precise though compared to "unknown", so
-I'm inclined to keep the wording here. I don't think it's too bad that
-we're now printing the whole URI, as that may also make the user wonder
-less about where specifically that string even comes from.
+Rather than a strcmp, wouldn't it be ideal to do the path comparison 
+using strbuf_realpath to make sure we avoid similar paths like the 
+following from failing during reinitialization?
 
-So for now, I'll leave this as-is.
+   $ mkdir store
+   $ git init --ref-storage-format="files://$PWD/store" r1
+   Initialized empty Git repository in .../r1/.git/
+   $ git init --ref-storage-format="files://$PWD/store" r1
+   Reinitialized existing Git repository in .../r1/.git/
+   $ git init --ref-storage-format="files://$PWD/./store" r1
+   fatal: attempt to reinitialize repository with different reference 
+storage payload
 
-Patrick
+This matches with how we actually make use of the path at runtime in the 
+refs_compute_filesystem_location function in refs.c.
+
+Rest of the patch looks good.
+
+-- 
+Sivaraam
