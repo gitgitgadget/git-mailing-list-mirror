@@ -1,85 +1,84 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA543C5848
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 07:03:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E312E3C73F7
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 07:03:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788937431; cv=none; b=X8mP/nsjARGLPwDUW0JDelTx+dA4gSsnQ1Usj6BYMANPa67VBfUOyb+GKiAfPKSN5OLRuzNj7OEB3LWUTyNF5GWigFGSl3rSxArHOQ43NBzoMY9IcwBxd+/AQUzJG55cxwsJwpiBODMzu+9QQMuDMv8qSY85jpO5jis9aTKpcoI=
+	t=1788937440; cv=none; b=EDKNtUrjEzRVwHjYfXTiDfOnu1mUbTrpJiEaVSEviEoZ5aYVRzHmxcAmVh48jzXue5VvG7LvAAwZkPqHWTdB/qXn3FMWEG2ZvyuIcV/NUb/Y8LNWMmP3x7AV6WFnpYpadiWAK0Y4DQV2baE15tvK5TdTRyPXW8XI2XATq4MOI9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788937431; c=relaxed/simple;
-	bh=gSfn3tzrmrF1bylN1LxnRHMB7L3LZ3EPPlGviUyWw9U=;
+	s=arc-20240116; t=1788937440; c=relaxed/simple;
+	bh=JJuaIBkdAjT+nRq0yecnbrY8633YH6ptex9z9OrHyAM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z8wbyVfYRCBERRN286GhSvLENwmnw07/yZTYnTU8YZUNcBm+59xP5kAdK40IzgJpgD5THvc+qEeeoRkF0tgWUzHJMooMlGWjzDagrLIzgM5Xbn50l69cWvn9IuHR8zebkerhoPzvxqYGwQYsToTLI/RRitGksGShx2nWC6D8OkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PYS1qk8C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ay4apWtA; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=chFDhID9YE0FB6zaWJFcVImEg5WDKTH953JO2ggimuTORuNdgeGIfLNQuWVxwQEPU8HcxUdJ0YwojIVqemJSv+V2Vi5hgE5Du6+ParQM+rZjIbpVah2Yt7JNaX815X4Hb1Z3WgxAl8nDOjbCh3FiUsHKTatBk7BYZyedm50SlkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aPQc21hG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tfZs1ihr; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PYS1qk8C";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ay4apWtA"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aPQc21hG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tfZs1ihr"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AC18414000BB;
-	Wed,  9 Sep 2026 03:03:48 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id B57BCEC00B4;
+	Wed,  9 Sep 2026 03:03:55 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 09 Sep 2026 03:03:48 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 09 Sep 2026 03:03:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1788937428; x=1789023828; bh=ETnlpj3bs1
-	zwqiBzh5GVM33pp6CAymZ4JL5z1PHgps4=; b=PYS1qk8Ck5Xzc93L9ud7n0oh10
-	0hbNSoiIvOTSt0FfF5Yw4yLsJ2nXJ7mWy7p8zThCScJpw/sGaQqJF8mpYayQb66U
-	eXljlnI46q++Y29uVgqDU3AwI4esKLhnQp6QdKlXbtAnqNGBB30IFedh0NjSu8Jv
-	BGlae1zhTokHpPqDAKhS3Xo1JNfMVS1xUSAzXoGvrh++XuPDII6ODCH26X7bqjwy
-	SlC9hcE9Yf3XgZBHhapcz3TGxtVF6bP5/asQNsVyf+hWB6EZq6xG90cpVdkVJ+2u
-	jZuumNFG/uA55LYCoZBPHwNC2GQ4IeXCbh9N4xnyatH1FIxBI1P24V18GSgQ==
+	:subject:to:to; s=fm1; t=1788937435; x=1789023835; bh=6Uo4Uik9wO
+	XENP1rcxWq4Rfe/XruPJ09Sv5zDlHNS4M=; b=aPQc21hGZz/Bkg/Mx5sYglRFGm
+	ojgEWKRlLvQ+qKyfEi/MbdLa4rK/4xq4D1oVkqrh6g2qDBpKqpo0NCBapRKE+3By
+	BwmmlfcQijb1A1QfGdcAF8VEYJ+iq5oCWBEsFU036pJUNbdTXEP0FPCk3EhvIaNm
+	5Xffawb6EKR6kxaWdlf+KKQtvAI3kWADRrFzPlgsmOJ54jM+W1pvfndqlnXpi7tO
+	8GhSNsQKSbJzB1rBR534rWQmZwVOk2m9o3bbYezcxR9/ycICSIC3srVodQz/onZh
+	o1ISb1UbdK2Yfe0MWYPKJUp5rgx4WXCSptnY1X0z+8pxp5wm7EXE0YaJe9mw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788937428; x=1789023828; bh=ETnlpj3bs1zwqiBzh5GVM33pp6CAymZ4JL5
-	z1PHgps4=; b=ay4apWtA4hvB9STChW5TTkqCAIY9b7pyIIPX6zluZVVYE+qdoTt
-	KM/chL+06WBs5rqeJ6+9BUdQ6iPSs9sp1TTtdnbax+nu2idTwJaC610xL6Di30P6
-	aN7jrMpqwRoqOq7jdvQFK9MUBc/KjnCDMNTiTLGQfrK37xXRoiOn88cokAQxilhr
-	JHOeZuoDt/dr09nSV5hcSgtklJZ0gNq1wuB5b+th+i/BcIIuFXO0kVBazwzkB8M5
-	z4yyDzyxPKf8b7NOGMvMZQvnGf7buixMFWsSdxSrd0Y3mvi3YOx65/6e0b5+I8OS
-	FeUAlFXhfASDVqmPkNaJ11+ZSc5OdhR0+gA==
-X-ME-Sender: <xms:1ASharYtucypcLT-VSDAkficBpBEwFB2blkh5fFtxHqTutoO5fkvGw>
-    <xme:1AShaha74OTNAhIvDEOIIS7Cn3e7yYVWf6S0Kuy0dORFyKkRa_KVcM_OTQN--jOMm
-    9Y2SWmVMzy9lHcqgvsQ4PC7dh1yHcLwW15dl5_tlmUIKKWgUwGsrck>
-X-ME-Received: <xmr:1AShai9691X56eqGBz7uzh-rz8nUuDsh1a6oczc4M9FGS9rsABh1VVRvb4ftgcVx7rsoqA>
-X-ME-Proxy-Cause: dmFkZTEc1LrQzykGOGRD+1S0nSLhWKhG7NH9rJczC9Xh0m+KNxpvsWTk8MVWfAa/Pg5VGC
-    TvfThAxqogi6G7gtulACNWY8vFINppBzt4rFtETONSWcl9BXkvfk/vj0xIefvInI5PtkDk
-    SJCDDzawpggKyl65GwrzZ8f2tPggHwZUI60+7o73nRKv7R0Y9r5zjLkLbHvHUuVXOEONuI
-    Q01GCdHq6IDiOK/Z+GRdfWKyww6K97Cop0jbameKXsZJjwuVJCmfdrw0E+0T0IbTsQSTqo
-    /65lSgsQTFouDbWQ9MtbyYhcpWzNPBJkT7Redq04TUtE+fgbEXzS1cnkIHhJ6HKxZMgmnI
-    cMT/TN1IpVQ2Zy0b8B2n+geV9U+DUxHbaYmGS9ukJmTW2y2tikjvSTHlEagOIGCYHPEwYG
-    MX6NHEH6/dd8dT4ng4iX7synsKKAxgBlpuIH94/doidaaGBpVKaLqnDNhbvevj7WA429zx
-    QcR71QyoFBEOuYDmyy2N0ikaxHn8DdveERItnKDXN51ZaoH4t4lB6gOp3CgWKKyf7T+nC8
-    Km4XH0IXlKvjA2ldqhIFCs797+qIu/u0LEapXefBKSq6entLx+bVRKTRzvUinjBO53HUIj
-    E65OJ0lUtzWA08U8yGUYhDts9WAFfrbfyiGPce9vK8lpH2t01A5iUQ/ETz+A
-X-ME-Proxy: <xmx:1AShaghOmTC_fnPghX9PQMmybw0ZffzGJUVpwrb8eBpZu1Nw85cNRw>
-    <xmx:1AShaiefAvqXxEt7disrD9ffOmyDPIsdaKOL6S04OA7C3FYfeddDAg>
-    <xmx:1AShanobpaafFnEyCQ4y2rnw2iAg5HaXjQCMJO5ikCpG6PGvHuQ7mw>
-    <xmx:1AShanBiX_P1dAWkuJGLYlTktrsG8IUnHv8WivWnGrxYFTVdFLEg_A>
-    <xmx:1AShaieRWC0_EuZjkpCrm4XntoaZ_D9GeCTYu9dWwIR7CjHoCRzhLC33>
+	1788937435; x=1789023835; bh=6Uo4Uik9wOXENP1rcxWq4Rfe/XruPJ09Sv5
+	zDlHNS4M=; b=tfZs1ihrOUXwYxeHJZn29da4owEERO62cU2oPkfq6GR87vR6jAb
+	pgcpWCAb2XZhJFcm/RIymh/16Hlh1V3OIv+V62r6HtXvAryucX+6nnRfrPrlMAIe
+	0iQrWR0bc7BZKOAxj6BeG4gCRd1NWd17E+HLdqR1CJ7hXCmWGWP0wXlgj2OiclWS
+	7dzg3xYlK96sDRlrtTXicVl/xywz/4uMxsWb4I7IerDT89+POqmXDoIPYjrgwmx6
+	SDlEgESgKnFrM1/DEus6nSkLJ0oeN/dp28Qx33NR3cjSvBu2rmyxSm5Gf8MEGiua
+	xRgC+eJ6FaKfo1XqHZfLyhzp2E4+ehMYDqQ==
+X-ME-Sender: <xms:2wShaqf9on69TRp07bfW2jLyjxNfxIG1Yds9hhsZZidE8qbUDe87VA>
+    <xme:2wSharPKbGa5L6Ncqe20h-wOofv-0gINo1yHBan2S8_ovqJJQg3bhvdYUDPkQYYBb
+    PfEeU_KyEqNNX5s-WirD9Bzbck6ZiXTAVHA6NaRLHA4QXXi1XbxtBQ>
+X-ME-Received: <xmr:2wShagguXd98e3ojyq4CwUVqIfYVpNFEGK5AE5vYl1bVNjn2Xrf9zedhB80oSRZ7sg-YqQ>
+X-ME-Proxy-Cause: dmFkZTEi3vPitCwY0rccophpCRf8LJn9JhNksaDkw9jWK07M52vOV3j1vWZzsfhIQGUCOS
+    PaBWVDKriLr+DpMBmeI6JBelqN1jHTq69E54lXo9Iw5zJvo6J5NWqf9fZq702TNITRIIf5
+    WbJlQmuuooxZyz8dHoPC2UevajeW7k96IeZBogMa5SRER9YXmoOSCQdve9FdXn2W9q/TRb
+    lTat8gPRAJ2yqRMIrzZhCcoZB9ZQ6gcgK25W5RfR5jJJ2/PQVtTpFftETMrFcq/jWS9dF9
+    hBsLwXEMDAu/lldrrsxlKwbLvDKmBmHUENWBl23xQSwLRk6M0AduRHFJUHJn9E0BmZWzjh
+    nQXfr1EatkvOVuJdqYwoLHmWuUGMqzFtKUVqqayALBcrXVZw/cj9Epk+YZ/t/LXhvBKmF7
+    SIRrLxKrVSmSHivsSJ0K2j0/uj5rIz4aioVCOkINYhi2279W3jqeffe+VnwpOQuVyQK/NO
+    ES/V0Nzq/LRW8S1NCpxdoUA+xauqYl0XknQdClPBk1p2YHS/+I7M9KACqFQeZxYjlnLZ1M
+    KAuOOoIH8h+rkqnC6cIa5HtOtHy+V3XufRDJDPoX1glVJXTkuwsz03kpsouuI1FvEJpBjX
+    MWd3I6L/Nau34zw69uSRziUgs+2/0Ho1/YAOBxd/t6Cab+j480ayxwSOgJXQ
+X-ME-Proxy: <xmx:2wSham3XhwqkKEDkJGWJugoEiO6rMj0F4neWFnPwSv2rYCzkoDS2nQ>
+    <xmx:2wShaijdH1MGU_JN4pE5cN2dyu5imRxU5zWQ8ikzfSoO5eOxl_fQ-g>
+    <xmx:2wShaudnueQvtWP0TWJhTnKdJX4mmgANSE_B9dEV8_CcdflqDPLT2Q>
+    <xmx:2wShatnaKZlcE3xSuEpUqXLm32D-MU2K2z0ivrzPnWIwI0cUJxCh_A>
+    <xmx:2wShakAu-x0KdyqL4sUclU6kxkwr20Dz_LNv-LiZaaL7C1tyHPBSP1w1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Sep 2026 03:03:47 -0400 (EDT)
+ 9 Sep 2026 03:03:54 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 698c1bbd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 9 Sep 2026 07:03:46 +0000 (UTC)
-Date: Wed, 9 Sep 2026 09:03:44 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 8b729063 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 9 Sep 2026 07:03:53 +0000 (UTC)
+Date: Wed, 9 Sep 2026 09:03:51 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 03/11] builtin/refs: rename "--ref-format=" to
- "--ref-storage-format="
-Message-ID: <aqEE0PdjrRnLDkGA@pks.im>
+Subject: Re: [PATCH v2 07/11] refs: expose function to parse reference URIs
+Message-ID: <aqEE14FdUFdgMNS2@pks.im>
 References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
- <20260907-b4-pks-unify-ref-storage-format-v2-3-6733c90ca5b0@pks.im>
- <53eac227-1034-4dd5-9f4d-416537dcdd1e@gmail.com>
+ <20260907-b4-pks-unify-ref-storage-format-v2-7-6733c90ca5b0@pks.im>
+ <54fc5f97-a8ed-4927-8b48-1b4c3c7b413a@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,43 +87,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <53eac227-1034-4dd5-9f4d-416537dcdd1e@gmail.com>
+In-Reply-To: <54fc5f97-a8ed-4927-8b48-1b4c3c7b413a@gmail.com>
 
-On Tue, Sep 08, 2026 at 04:25:35PM +0530, Kaartic Sivaraam wrote:
+On Tue, Sep 08, 2026 at 07:17:06PM +0530, Kaartic Sivaraam wrote:
 > On 9/7/26 16:48, Patrick Steinhardt wrote:
-> > index 5cd21c25fe..53b12accaf 100644
-> > --- a/builtin/refs.c
-> > +++ b/builtin/refs.c
-> > @@ -10,7 +10,7 @@
-> >   #include "refs/refs-internal.h"
-> >   #define REFS_MIGRATE_USAGE \
-> > -	N_("git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]")
-> > +	N_("git refs migrate --ref-storage-format=<format> [--no-reflog] [--dry-run]")
-> >   #define REFS_VERIFY_USAGE \
-> >   	N_("git refs verify [--strict] [--verbose]")
-> > @@ -44,9 +44,12 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
-> >   	enum ref_storage_format format;
-> >   	unsigned int flags = 0;
-> >   	struct option options[] = {
-> > -		OPT_STRING_F(0, "ref-format", &format_str, N_("format"),
-> > -			N_("specify the reference format to convert to"),
-> > +		OPT_STRING_F(0, "ref-storage-format", &format_str, N_("format"),
-> > +			N_("specify the reference storage format to convert to"),
-> >   			PARSE_OPT_NONEG),
+> > diff --git a/setup.c b/setup.c
+> > index dfe05d9a03..3be7dac452 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > 
+> > @@ -2069,16 +2051,12 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+> >   			 */
+> >   			ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
+> >   			if (ref_backend_uri) {
+> > -				char *format;
+> > -
+> > -				free(discovery.format.ref_storage_payload);
+> > -
+> > -				parse_reference_uri(ref_backend_uri, &format, &discovery.format.ref_storage_payload);
+> > -				discovery.format.ref_storage_format = ref_storage_format_by_name(format);
+> > +				FREE_AND_NULL(discovery.format.ref_storage_payload);
+> > +				discovery.format.ref_storage_format =
+> > +					ref_storage_format_by_uri(ref_backend_uri,
+> > +								  &discovery.format.ref_storage_payload);
+> >   				if (discovery.format.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+> > -					die(_("unknown ref storage format: '%s'"), format);
+> > -
+> > -				free(format);
+> > +					die(_("unknown ref storage format: '%s'"), ref_backend_uri);
 > 
-> This is a bit of a tangent to the change that the patch aims for.
+> If I'm not mistaken, we have now started printing the whole ref storage
+> backend configuration rather than just the name. I could see that we don't
+> actually have any variable that returns just the name part after the
+> refactor. I could also understand that we can't always expect a '://' in the
+> GIT_REF_STORAGE_FORMAT configuration so printing the whole configuration may
+> make sense. But could we possibly improve the error message a bit? May be
+> phrase it as follows:
 > 
-> The `PARSE_OPT_NONEG` flag made me wonder if we needed the same in other
-> commands that accept this argument too. I tried to take a quick look at the
-> series that introduced the `git refs` command and I could not find any
-> specific rationale behind why the argument to this specific command should
-> have the PARSE_OPT_NONEG flag. May be we could drop the flag for `git refs`
-> command to make it consistent with how the argument is supported in other
-> commands?
-> 
-> Either way not a show-stopper for this series, of course.
+>   $ GIT_REF_STORAGE_FORMAT=garbage://hello-world ./git status
+>   fatal: invalid ref storage format configuration: 'garbage://hello-world'
 
-We might want to do that, yeah. But it's certainly outside the scope of
-this patch series, so I'll not include it here.
+I think "invalid" would be less precise though compared to "unknown", so
+I'm inclined to keep the wording here. I don't think it's too bad that
+we're now printing the whole URI, as that may also make the user wonder
+less about where specifically that string even comes from.
+
+So for now, I'll leave this as-is.
 
 Patrick
