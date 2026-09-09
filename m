@@ -1,128 +1,107 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04122348C4C
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 18:15:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788977753; cv=none; b=TWzKEZpMJjJ10DMgUMC64mrzzM1yE9ydT13fjOFbPA2xhMRGeaKw1ILWedqUSY+Lf9HAlyYeqd+D10NZf2+n1Z2nkuzvYgXK9Pd46pipRV0kdQEo03UE4GHvjjrNiJGHARL0KIiIgYF8gFEgiXk2+klI3aMGrvfeubcfbMNQIa4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788977753; c=relaxed/simple;
-	bh=s1LJRbXkmzpBMhD0UcPgPCRo37NwoDngEq3W+2hmGcs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=baatr74MJo6BaWAu+4DmweJDvoCzwVvcvzp7HU6OK8+9RVmIDa/KtWsDjQZvEvbZz4T1ewDD1CDaOVaL6SvNGRWluWaK7u02fYWtmeOBcOEsQXEA6A+xG3ivgoo6/rZ6G09PwjnHpzLZkEmKttT6D58QIoBiJWriQdTnrIV3AyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AVOsAyMY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S3zs/NZg; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9011439B970
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 18:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788978324; cv=fail; b=lc/hgcaROBTHGGzC18j3n7x0CL9Fm7xSUXLLowWfiOh2gPHdevytJUDfCjCHtbMrZKrfr+t/AL3eojxmDLvGZk9pUQVmlCNt/B9EqGshRg2laWovDOMpVk/WF2VwK9ZJL/EtlmwjIWEegIeO4GXPJSHI9CagQpz8qCV2QtRz648=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788978324; c=relaxed/simple;
+	bh=g1R3rddCa9w85EYEoWIW53D2ZUY1ZuB4MMDn6F2haZw=;
+	h=From:Date:Subject:Message-ID:To:CC:MIME-Version:Content-Type; b=enXGqNZWpgRt3OgKbNoLcSGX4IhnNJzdjrrB7XkE0u05JbR/1Me+NDEVNpwhaQkZj5VSX5K7sCAilIUBG2YFtn+OO5KueRX/iCsB5uwovHsQdNMk3xIxKRoeAV7VP+pywpc27LvLXFMisxGMQhtimWYgaigKd5ETdsQ6864C2w8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Wl1ntGvH; arc=fail smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AVOsAyMY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S3zs/NZg"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 34137EC00D8;
-	Wed,  9 Sep 2026 14:15:51 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 09 Sep 2026 14:15:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1788977751; x=1789064151; bh=2g+OSWuKo+
-	iwn+1MV8R+OU06/6Y5qc28IFLTBrKVJ/c=; b=AVOsAyMY9WVGVQsLAu4GDg3fO8
-	gTwtNWxdkqqNoee4lQEO5IVWaXZ2b7RY70KdxtlL0CvCNtatHH29SBSTMd9DfFb4
-	Rn/5lUlEFmY5mWmurRY+F5Ww9xikV5Qo2PbBVDn7OBNfdzLtIXXmiUqZliazi9nU
-	ilq6eAw/ykzrlEBcdoWfwHT/tSAQJgO6BPYa/1OTD35C6nsTqd1P5gGBrl62N9Yn
-	jKvNAeyAtMsGTO+JdiwUif9VASWtsnqKQlBHSwHaG984c+4D8MIQVf4pxhDCbe1s
-	Gg5hY1bttIm2sa6Do49eq028+A+FX6sHZPn6dcjWtM0zWTbpJAV5Raxm8lkA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788977751; x=1789064151; bh=2g+OSWuKo+iwn+1MV8R+OU06/6Y5qc28IFL
-	TBrKVJ/c=; b=S3zs/NZg6QYQfiXdWfxHnFtMfS1iKBV/j7HPKnBc3xeglrq01r3
-	RO4V7toSTnVLl99qG6FqJV2GicRLa6+6wDSNa8N+ryLQK/vgEzV/6NDTARkCYeXE
-	lOToeq5t7SApQzj9EM5j+BvSuEEjjwErf4o3d4SdbWee9rWypsZVsQs++wpxd140
-	PVyd9ADe1EGdqPSeD9ocd+R3kIwE5f5zFynI2DHkhWJkx/0i2iMd6mne6hNY6Ix3
-	t2XxLaQ5Mk6mhZW6FMJxAE9jdg+kw/WeguZxIBYRKfd5HpdEnOCZcVzSNneM0+wN
-	PWH3da5UiVDezCbPhAtqfoooowSZtMI0aPw==
-X-ME-Sender: <xms:V6KhajGtx6NztaDLEDS3MAfmTFZRSkfrlLqmFwUHZxjvNJLHoojkAg>
-    <xme:V6Khany7nPrshIuQLoxVJy48ExTVAv-Y7tRp3AOxvHGZf0X6TeIMIMyiDl5WoHoBt
-    Iu8llRhmpK40RRRDZCSNdHxLZxk_qG4YV9lf5yiTfazXmcVTcRdQSM>
-X-ME-Received: <xmr:V6KhaihE-xfEuQA7EKK_nKdXjdPJhYItl-aa6VegKsBAzGRzEiFjNRGE5smTtFbrZlFlmhYmA-k8zv_3WF6FcQndts7Gnv5ECcAc>
-X-ME-Proxy-Cause: dmFkZTFxMtnx6DzLoK9Vkw6PD3SD66hj45xkyQB0oE6+8y89KM2mVb5lI8HjlTETNO7uj/
-    JE3CmYbiuOUFsBbapKMgSc/eznTpXHBOUYHoxcvRcn91B5qGZMhpnfpY2Od1MTEEqcOiWi
-    lz89uLSpoUEtW+mB/Izta+JSGG5H+tamUpCn2oKd5IO8rZwG3G2MGs8gN+VK8mfMIW5p0U
-    eUCK0N23Xw9abYl6gRBd1boEhumXkZVBjJ53omk6vwpdvvWdsjFp9E3fiSZuE/w2ehri63
-    2wahavMYgshabh/Ydso4cnMz/AGq4snmsPPuiYaKYQp6AhGyl+JZSd0WK+HuUcnfEDJGr2
-    fU5fghmWE5Ia1VkmsS5TJEs+faa4fyGGHOQ1J6PaMEdI5IEyKF+v0L9gSz0sKfW+GBf9Nw
-    CB9c+yygF9xhia3jcIgh1clfrjitW0ypwXBV1JuVaAIekhq9QBAUb9rSFZNQ5Tj7B/DEak
-    Hd5FgwXiMoBdbW7GgWjGAmucmlExnrprCcw29F0+TolPaIDTF7YELRC0g17E/eCznRqMwz
-    E92hHDmjYo4d0R+8uqXAXkBLM1A2weY4yseHWuBWCTsyuX3vAUDJT/0WXvPv+Xa3AJZUjE
-    xTb6a/igVW5pYJnYAFSJtFRi5Om4G66Ea3gEE55vAGZ9odiKPgD9oC6x03vA
-X-ME-Proxy: <xmx:V6Khaqx44mLXdxVkJounufHcT47QSaz8VA_LVBzy3zNsqzPIhLCggA>
-    <xmx:V6KhatJkyWMVmxWRTBMv4A0SeiI7by3nzxspBA2nBzk7FmIdvoT6TA>
-    <xmx:V6KhapQafoUDQ9KdwIg0A6XRssrQhF-JQzucwyKPlXtzLOPcuRRk4A>
-    <xmx:V6KhatpS1WifYTkTna9iqZ9D9fUN3sNZs43HXdWeHM9dwtO9Oj4fyw>
-    <xmx:V6KhaleNVFmSOVkl8iaM3fuLpQ8yfVUEGQuH6sCF8YRhudjh3i3uzuzN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Sep 2026 14:15:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] command-list: add gitformat-loose(5) and gitpacking(7)
-In-Reply-To: <20260909052501.8448-2-taahol@utu.fi> (Tuomas Ahola's message of
-	"Wed, 9 Sep 2026 08:25:00 +0300")
-References: <20260909052501.8448-1-taahol@utu.fi>
-	<20260909052501.8448-2-taahol@utu.fi>
-Date: Wed, 09 Sep 2026 11:15:49 -0700
-Message-ID: <xmqq1pb2s33e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Wl1ntGvH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788978322; x=1820514322;
+  h=from:date:subject:message-id:to:cc:mime-version;
+  bh=g1R3rddCa9w85EYEoWIW53D2ZUY1ZuB4MMDn6F2haZw=;
+  b=Wl1ntGvHAyhDjp0XD0wQN3Er2BryF3lv+eXpmccoDZwNyJ80lOVLmuvY
+   eJSHZlOlWvy3yZQaEEhDWlMlGE0noaI+1dlyPwHpIzjodDKhT/u8w/0ZT
+   RxhyVoX9sFWqRg1VEItdMlrrCVKmquEaRn6UWTJXN3Satj+9AscqJBIgX
+   NqEWZ/GU5SwGLaCODWyv/LuNdJ5il862LnbYkrNhVATodbIK5ab8zZMnr
+   dy4ep2EKrupI4ZP0SlntSXR50NQz0+U80zoqB1I2n/6i/AzHZJ1u+uIrA
+   P6+S7DTMTjjXpE32UdrRsYQwERWsJGP4ff4XxnTG2qFx97ywiLK/DTMfW
+   g==;
+X-CSE-ConnectionGUID: pEwbbr5DQ3i6y6SZTyM7wg==
+X-CSE-MsgGUID: MWxIYXLjSzaurAN88gU8VQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="89456978"
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
+   d="scan'208";a="89456978"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 11:25:21 -0700
+X-CSE-ConnectionGUID: UQXM/BNERxWsJbMVO5ngTQ==
+X-CSE-MsgGUID: 7ozoG6BqQdawKRk4+6M9uw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
+   d="scan'208";a="273364299"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 11:25:20 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 9 Sep 2026 11:25:19 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Wed, 9 Sep 2026 11:25:19 -0700
+Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.60) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 9 Sep 2026 11:25:19 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WU3gyfJsyXum5dVncYmfKUAJy+eJNY4wYNBmXztL1+h8b8586+hDqpDHULNqyOldyyPCpdqVbFtDtklNF1ZNAGsY7V/dHksNz0IiXxgEVRWC1Bf1G78p2eBGmOj9cY3dtrVOI3lmYU9usqOktT/NzweQbqur2sUCXTSRFjqSDr17mW9j8N5ZhtyG448OnBNYMj0XUtV8Fdhlzd49m/Kc0tR27R8rtVVNmZ1AWsEcpD5GT/ALM0vHnY+eh2h47hkVIBtugqyhU0gySalyNylFshvl+vvRwbY+jbrPiIMj5NVMruMo32PUuyppGNeGYJS9MRnVz1RrLCg4qvbZbzngCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=g1R3rddCa9w85EYEoWIW53D2ZUY1ZuB4MMDn6F2haZw=;
+ b=Q0ua7Cs15PtXgSd88Ju9nqKCezbM2wk9DsRWRDsJrDNC3yviH8Jna4K1MbGZ0vz+cXeXBlmjpoxzlrQZVXuJdb/PWZDtUgC7zGuILL9u0fh9D7Oxbu0NHgNhPHatEKylKkY0KRxmtBzhRC6+gHhkJNuj9p65N/62CEx9EYHDTVdm6F0Ptas4XjNzXUJn8ipjOA9qD2EK4k0WolxfFVQZcHigOhni3MBsYu/I9U1Q9lI5LaXVep29Cm5yhqMOk9dCy6MBNxxBBCSFYEAPtw5LzHkHUCS7r5RTdgX0ZZfISO583SFwDt/nb0UTtE3GqsX93UoXewAf8CjBrcaivb65gQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from substrate-int.office.com (2603:10b6:806:52d::6) by
+ SA3PR11MB347531.namprd11.prod.outlook.com with HTTP via
+ DS7PR03CA0342.NAMPRD03.PROD.OUTLOOK.COM; Wed, 9 Sep 2026 18:25:17 +0000
+From: "Goli, Pavansankar" <pavansankar.goli@intel.com>
+Date: Wed, 9 Sep 2026 18:25:17 +0000
+Subject: Recall: Issue after updating the GIT version from 2.44.0 to 2.50.1.
+Message-ID: <BUN4RZFP9UU4.8CU9ACYE0A9G2@ph8pr11mb6926>
+To: <git@vger.kernel.org>
+CC: <sudheer.v.badana@intel.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+X-MS-PublicTrafficType: Email
+client-request-id: 71cffd6c-a00b-bbc2-a9e6-732f021a1bdc
+request-id: 71cffd6c-a00b-bbc2-a9e6-732f021a1bdc
+X-MS-TrafficTypeDiagnostic: SA3PR11MB347531:EE_MessageRecallEmail
+X-MS-Exchange-RecallReportGenerated: true
+X-MS-Exchange-RecallReportCfmGenerated: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|11063799006|56012099006|10067099003|19003699004|18002099003;
+X-Microsoft-Antispam-Message-Info: wDZ7nqQcnzV7D/hlXpYtqUftRDQz7+Ez/EzPEx4C1rSWeEQSb1UdIBYdYjTEVVar5EJBAhg2sPVOZ2F8T8c7pjKLOoM/0Wlgeu7I2AE/qyiIXK6iWay0rxGTbScPbuK7utU1I/W4Q5WVPT/rMVcyr5g5ouALuz4z4d6Ez6gFrJQ2ybA0X42ZgpGqN43o1B3NKu/1g6oR8G06RsUsBJgOO4DVVEPXAtDikUZvxz/yyMaXJKW97wLoH1Uw52VlByVHFhO9YnQdIcABfo8KpczEoh0uhT6oSDtiOUpGMTF2QijO6wuvKQdmJ9W1IhTvcRipoLT29VNR6CI2JmSzz+ALEv/UOwiv+gt42Jbh5RlNFQYt3o2P0aqjLHbM+go34UU9dylRWI8MYD3KuyaEEl0H2R/Odox9zh6+1dK47qsz/o6L0xHuXqJxfvvNPrNq7k90n60h4+cYr4UXPANETACDNXuQxan9cgaDh80zkXzgHC5b/+kPrIaKloB7js3xuYmg/N1Cv7lcg7/I9Jz6buSR4b9DaqdzTXd5/Ownd80nsuko/IJ5i6szXVB+CpeKCQ97TZcwt+J89+/9pe7N79cYN6bk1x5cV28O33lLK7m2PdNSGa9ahHlSNBJmmZOTSV4HJjr4h2iDIKYe8/wYXIznM9nby3gpj2Om/iq7Wr3G3cI=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(11063799006)(56012099006)(10067099003)(19003699004)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: NOmukiqudv817cQt0E5WRcP2kq3SzJY+pTVhyzOqc81InVIjJTwWSWKTkW2yVeuH+TACQjl8uWEIv3+sKoTYoLb1+sML3wzeXZII81gsrrDyXCRMDwa9T0S4G1oRkZ+6C63bhWm9EVLugE/y4TJAKNcN+UuNXeEN1Luu4EJ1ewEsaCHpZxsN4mxnhKuObkI5KHLIPSYNn6rfatj5Qd50HP7fo6Www8mswVX+isBG5/kBbfDZDJCjbbaGfeZRtiGFo7qe7Cp/s7a1dc7hXkVQVsYey174OW/BtfYBXa88Gn8sULEmBWBKGZdtw+wHJTbsK8dxzwnNwtSmzF8+PI0v6Nsnp6daeiKv1H0EjA3Edjy90wee0QoHrXuXGHQCz5dil3FnAFwrqqGPXo/V2fFo3KhL6kmNd1wwu/O8AIQuwG0HS0gTqZJj/xgETR70OdloaR4dchEHyyWjpV7gRyGYGKcCc0WJOdBph2+mNw6/4Zmvs1MWSgWmsSY0tc4uEdsUjs9i6fX5l3vKYitbJ+KHl5Vv04okjBMdVQbBDfl49RI430y0rPfufkCOXV/r55JV
+X-Exchange-RoutingPolicyChecked: UjNHXlyqxj830NzSSL+I2XGDwOigsdRLnRwWCLe0P2n2E8imtaJ5ikABg1uijqsJWkMKOPRfIDTn+0/XwG5gvjM1500DLqmZWxTKM4wzr2Yo2pNdey3FK+i5s5LJ/+61r6/kxpubxcUIXV05abFOHJMJy1yOGaAgdow2Iu16C/7SkwCwk7XHoYr6Xmkwk5alWVc5AMsNXytgKu30IhnT+IzVMxnrx1FOeSRmCeUjhZSPRpQ+pchlZC77+kEQg2A9VsNz+n3vC6cuzz3q3xOm2j0e9h3PogXtiLCeNLoQmkQJnUQvSvzgi9gdDannC57vrtM5FckwkycMn/gwB8ueeg==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HttpSubmission-SA3PR11MB347531
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2026 18:25:17.7904 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 75bfa74a-f41d-4e9a-3402-08df0e9fb335
+X-MS-Exchange-CrossTenant-TrustedPartner-TransportRecall-OriginalMessageId: =?utf-8?q?=3CPH7PR11MB714835E2FEBDA9AF003FB22E80B02=40PH7PR11MB7148=2Enamprd1?=
+ =?utf-8?q?1=2Eprod=2Eoutlook=2Ecom=3E?=
+X-MS-Exchange-CrossTenant-TrustedPartner-TransportRecall-Client: Monarch
+X-MS-Exchange-CrossTenant-MessageRecallSenderObjectId: ca502514-d081-4ec7-a74a-c986bb3158aa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB347531
+X-OriginatorOrg: intel.com
 
-Tuomas Ahola <taahol@utu.fi> writes:
-
-> Three manpages from sections 5 and 7 are not featured in
-> command-list.txt as concept guides or interface manuals.
->
-> As easy fixes, add gitformat-loose(5) to 'developerinterfaces'
-> and make gitpacking(7) a 'guide'.
->
-> That leaves only gitweb.conf(5) which could be added to
-> 'userinterfaces'.  However, the manual would then appear
-> as "web.conf" in `git help -a` which is just confusing.
-> So, perhaps we are better off by leaving it out.
->
-> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
-> ---
->  command-list.txt | 2 ++
->  1 file changed, 2 insertions(+)
-
-Good eyes.  Thanks.
-
->
-> diff --git a/command-list.txt b/command-list.txt
-> index 63ae2a67c9..955eec6e7e 100644
-> --- a/command-list.txt
-> +++ b/command-list.txt
-> @@ -225,6 +225,7 @@ gitformat-bundle                        developerinterfaces
->  gitformat-chunk                         developerinterfaces
->  gitformat-commit-graph                  developerinterfaces
->  gitformat-index                         developerinterfaces
-> +gitformat-loose                         developerinterfaces
->  gitformat-pack                          developerinterfaces
->  gitformat-signature                     developerinterfaces
->  gitglossary                             guide
-> @@ -234,6 +235,7 @@ gitk                                    mainporcelain
->  gitmailmap                              userinterfaces
->  gitmodules                              userinterfaces
->  gitnamespaces                           guide
-> +gitpacking                              guide
->  gitprotocol-capabilities                developerinterfaces
->  gitprotocol-common                      developerinterfaces
->  gitprotocol-http                        developerinterfaces
+pavansankar.goli@intel.com would like to recall the message, "Issue after updating the GIT version from 2.44.0 to 2.50.1.".
