@@ -1,145 +1,165 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724EB472F7C
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 10:01:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788948065; cv=pass; b=gcg2lh4gag1MNzt+DyyBWBtTUh8FTOkAvtN8d7xo+Spa1n5HuSAA4wD7m5mzCz0O3SPWWMDCLMh4DEvREqSfeqtTzLlSV+gDx3tdDNPeibSlOclJqDYsoov/clzR7ddXBEJXnc2ZTSn4o35+vvSwIbinbuSvXSvNWzYoAZ75pcg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788948065; c=relaxed/simple;
-	bh=cOrnHSnRA4QtE6w9b5k4hz2XUFhDH30VvUwwmIDlohI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nTAgLg6UQCjUVDPt0oXK0ty/EaSsrXmD/V5SWZMWCoOjhM/DULUlTxXd/egYu/FuNbxEy++f2XWYCWNTo4KEdz0V3PTlfFn1X92VaXBRlY0Ln/jdW8GXHYgzxPw0DnUstKS7/xdmNjfcAdfa9U0P84p6L0EFkViAj/gGB8ypyR8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e0u1X5k7; arc=pass smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8C9534476
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 11:12:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788952383; cv=none; b=P+NyT0IRsp5v0Ufp56AV8HSrc/41RPtwaqjqp6DKM5y0/YIPA/uDbd3Jgca7AfvVG6jXFLdfnznWgpTU2W20xpgq5N0zfi3nyMC/Fg6NEQRc/WkfKbvCNZf20Tsy8fk7Nsed5+cs7CoQxYZ7dZIc8RmKBrBBNhx9OZiqir9tqIc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788952383; c=relaxed/simple;
+	bh=0zE68S91AxM22FaQEbG0fDkDaruqw5R4Xz/iF6cKZJA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=VCjTubfEVTl2M0P3Z+TTp4lZZYdO3dC+T/4IWuQaSYrLPqPjy4DxzrKWZHVG/zu5tsjcgYkwKhlmDGQqlJzSfq7r0orVofaf7yOeNwb76+zBnTU6WBbWR+SnumRcweo7XnXLzDbMma7lF8uAsYPiPTw+eE4Ndkft1n9cgO8Lg24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=q5pmnUNa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yPuKSs9v; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e0u1X5k7"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-395cf2535acso5623661a91.1
-        for <git@vger.kernel.org>; Wed, 09 Sep 2026 03:01:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788948064; cv=none;
-        d=google.com; s=arc-20260327;
-        b=k7Akg0r7z45P8S03aYzhIiHTsqOCAhIzmDaMzhFAUcd04JaAT6jPwmI4FY+j/Ss0ID
-         WW+y6t76OCY9PK2UO5oCaqPWbZoPQgsoPGdSE0l9f4AGUe+LOT0CQycvm3OJkYssEH7p
-         W8HtD3voAbVQIaCYFRjiWiURGeaq0WIbpCNOHGIisqQcBIRVSiVkc7P3NhLozAad+mI/
-         xYoKd7dJF1HpUE3s80k7qO92YsHYxwczccJBNaLLkkFfA3QPObA3o6vQTyUBjkcLjR93
-         55y/U9d1OGVt413SX0upCROPbe5eQ958nJFgZxdKd3Os3Q8TtNpOeKjriLtTX4YKQeZs
-         IHBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=mxYWGaxGXsWKaxtvZDQzb7S4bOvE+7HZtSnNqiKWHTk=;
-        fh=5nZn0HRpP9ZszniLRQU6Iy8lvPX91CYXGnNouZ7Jmpo=;
-        b=OdOeJZubwJ3niVbNMdRXiAMaFOfSmsb216Ip8aIBMdsW/BvmK+KmsUCqWNXEfFzGkG
-         mRCGDXwSlhAGbHwOFCYTUwc47tePVi1bF+iNSy1ZDV+kFKApCr34hbcR6/JKAzGHAJHV
-         LASqb/cNhw8u9lIPVFrTsuD0yuireCSkhTFwLVEf1PgV7klkBpbsP6LO8AfJrIj1REQe
-         spLWq6BOYT+YRbFp4P+IeqaNJsZz4UE54j7VFQNm1/IwuD2z96HAhUGvG6XOgF//o6wJ
-         lkfDxR1SOVBtJSeO/1hRv6uIoLFYn9cDt6BFKgHEKyEfFbLjjok7kcu8xBr67I/6GNai
-         1HTQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788948064; x=1789552864; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=mxYWGaxGXsWKaxtvZDQzb7S4bOvE+7HZtSnNqiKWHTk=;
-        b=e0u1X5k7T2EOov8sLpO6KYx/IkIy7Reyl40bdtrd5+2tzvvSDZ4AgRcnPsPve4o1ZD
-         4HR8RgL7x/bTY+ATlKGBGX+RGH/a07EVZ7fZUVdxCHcrwSwh7TR4b/dQimi8E6Ua7nDx
-         SNd5M8QCNW5PVbeHxBSCBLtgeluRehBMmx97DpnopDldSFFof5KFD3XsCRtJ/DFsbimt
-         ufubW/KvGy+PwP2IetSu/XejuxHORuvCDysBENTynxivat8wky7nXcPtdox9plIDiWNr
-         erofSmVaDaju6Xuzv4cqO81k5eRVgpog5m+2/q3NWwTCYdJRfN1NklChIP6xetVLMuHF
-         4GLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788948064; x=1789552864;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=mxYWGaxGXsWKaxtvZDQzb7S4bOvE+7HZtSnNqiKWHTk=;
-        b=ZnzEhWJCnZ62WupA9+tg9uGFB1cSMoiw/cCY9BZ4k8T7AJtTG1AZbgETVY6B/xTIMv
-         2YH16dHVeppX+McqUiL8YjziEJKZbuV6KauXb2ws/bkP8hp1t8UOk5nkyN53p4c62rop
-         2yADX/a0WSjU71PtjQDMKBAmtdvsttYsDRt8jYW5yKUljw/mDpU4+niv3hr6zJ/WT2vX
-         nFRu4398KVcC7ESMWKgBBOmBV93Hual/CJYSRhfwvpjKxS0yGsvladIYjkTkeCc6cQUH
-         fwuesXBOG0k7tUjW0S+njujBdmGhA9hXsEB03sGKzzEmGqOWALVVZZJ8xLQyGyOJdpld
-         VsTg==
-X-Gm-Message-State: AFuF++n1+okVrdnipOnK1wIn3hrtjkESbTur/5/6lDOqB+eQbds/GJ4W
-	5NlaF9J+l9SadbsG9fdiqB30nFXg/w3oaEEza5AUCqKrJawfMQ9bOxLbCzKD03vuZyUuZbo8HkX
-	urF7T9Dx8+XFdBPmGvXIS6RaDDvwOPvs=
-X-Gm-Gg: AYBFou2KVdUqDYUfG7SRMf54wkCAHn9SH+9KQaFacs3ZK/BK760mizvigW9atSdwCDs
-	7TWee1skccmWNsDozmWYQ0X6w+N/cIjy2ZTTU+3fe7ml7YjsRrJrERWf0fWB/ZHCZdu8k7xev+n
-	uqEODVbE5tW1/RvlCzg4K2Cqd52yhzWWHqiCsGP0MNEwdKlJblrbJ84xs9lvoXPSLaK5Rlft//y
-	3WUyV3v32MMCKFOgeqMJcKZj/kzajedY7gUw7ai8fWmKFgGICxfPpwqWkeyATkQRQX6s+SrHbVa
-	AElH7yGNo4j/HrDhtxMfRl4RM9dGGcWkBR2jkO1FRotDGuUGvBEBCozslz9JlqjrmXouPLQ2fHl
-	+H274CHBtSDyQmfk2Ch1ku7lVqsVoCv0rSJJNarrzFoex0Wq4rXzm5RC5OO2inY+e78aUJg5u3+
-	0H/2OHMSAvX0US3e0sJ0vCHcz+DtnX7vxjZcPBl20=
-X-Received: by 2002:a17:90b:35cf:b0:398:9beb:a2bc with SMTP id
- 98e67ed59e1d1-39b0881d765mr43623778a91.30.1788948063719; Wed, 09 Sep 2026
- 03:01:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="q5pmnUNa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yPuKSs9v"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 176C1EC00A6;
+	Wed,  9 Sep 2026 07:12:59 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 09 Sep 2026 07:12:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1788952379;
+	 x=1789038779; bh=43AoWLFXNEoPFHin7DLJgbiWwX+0aMHaI1EFXH+0ppU=; b=
+	q5pmnUNaHZRWrn1v7lu7PmDRNb350AR/NtcMguVx8zCwGQVBz9aWTphBAgEnET6g
+	zacLbfHmtoy/5TIujxGHrebFrht6MSyvq9L1fjuMWtFLyEVrKLgMe+xRyhQZVHiz
+	V4XhoxfgW185zn9aO6EJ/yKIDMTC/JUH1F+JOTjvSlKadjV9vucjLoWLsveFaagW
+	Zo8P7fzXaOZ33LJYCedctYgtdX4uaP43zOf5wY23xFD+hbVB6g2Oykh0tn9JrHS4
+	plAboIleGzcr7VgnVVmncbM7ex+H6KjaYVrDovtFjpgPlgD+CXLYdiEA9DvUuPQE
+	asqUWEnZLnEqs6BMJAnKSg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788952379; x=
+	1789038779; bh=43AoWLFXNEoPFHin7DLJgbiWwX+0aMHaI1EFXH+0ppU=; b=y
+	PuKSs9vSNEThqfj8KJT+ursAIALXYf1y/hK8BGeqQE2c+sCmuD/8ZqzFmZ/A9RZ6
+	wFEoITLMYKwp8iNWNowXXkDETt+CPquwhW7LKjDoIIKAc6E7fh0LxmUNnUSFK6Uf
+	lSZNj97rgEaOzsQ+aoJG5RLkse4QXMgfbpPQJ8tBabimVlOP6Z+p8IEdG9NIC3Ah
+	pTQuw8xgBS5g43GeNwnt/SAbNFmy+depARDHLylwvpPbF2pk1wpZz4dyODYgCNKJ
+	fBnJV5lpNz893/WMMhD3lOzsvKJnO3fyUeD4TW03yesKdcXG4zMsFcJXOKq+W5jl
+	W2cw79OOx77A2Gh06MfVw==
+X-ME-Sender: <xms:Oz-hatXgsw0j8TWI9K-shUeLVetpIVVffZJZhIVdr6VAQK-7riAmFA>
+    <xme:Oz-haknZIM9IKB1q1I6mIF36Qf7Meg9nuYRWNzMSnaJZ8kO0PlqHjNyCz0qCMbxg_
+    hqPZaBuKP6uM3bPYjGvNvuFWWNhB8eJDeSTJ9zsyo7uMcW_zFPwgA>
+X-ME-Received: <xmr:Oz-hauYnar9YvrKnWmkd7A2FdHaC6bqyn5TNC-AZYOYNtLOT_ZIFqIqY62R0iYYeyccCWQ>
+X-ME-Proxy-Cause: dmFkZTE3Kr1NBd8JgUfl84Cb5cL1nWUdKmaXEokJASImL17FtufGP+r88gnlXAgjOipOth
+    P0q/MAO7driC9DWr9Pb2NSvnMboXAXQWKqp8q78rYacR0TIfgyDDisWpv4xgCjkfxpilFV
+    de0BOcTzvSAwUjVggAVO3f0pp6fIXUozrRPx2JvGzCsepeV8jO3cLnixaA4fSCdk4cUvuV
+    rWLiAxUXVbAEgGiBosN+gythNumpxzm2a6dIrhwBK6rKLm4zyqnAIVm4MkYADQfX4sBmuh
+    t+6+cjeSCFtzPIC/cVXe+1M7eMImUQxfOX84m9qkFZENNlkxbbgX53FSMd/vtpKdV6ooWX
+    QeWpsWZos3X8f/htPpa2YWujPNp+IGLFdEReBTiVmtTxM/oUl9xbItE1Xc88X6PNUbVpeK
+    3xaQ3eCwjmqK73SyxUttYq/ZWRoEI7z2TfVTj31b60V6DuqSxZhXVFqCTjD1OcxdVDQeEa
+    I0EViX7SleKjBbTgKw2MadEhIb435YfGCXszQyWSB/pdoa3gtjWb9i3ULnbBhh3MnUGo1t
+    OVAuGp4kQrb3p1/WWWlG0JbTEzfDrVkRZIbeIJFvirLkZ7/aM+FUWc2WXDDX2G5Co2AaCv
+    E/4SKsQo3Rb9QiG84vjnLvN6yI3wphz3RAd/ZNFQ7X5X452kjQRLg/MGK/0Q
+X-ME-Proxy: <xmx:Oz-havOuM_XBYTGkz4xknDSX19BH8ls-elhv8ThatexdXLa9hLOPcA>
+    <xmx:Oz-hajYFdYVa2yuId35lLq3yvcLYivJtoYCEsen0uddxU5fYEP2bZQ>
+    <xmx:Oz-hat0J4OXjDVzlkCU0kTIooZBBCCF4Pc1ZX-yvfcth_bWQDFUz8A>
+    <xmx:Oz-hapfU526JWPddIKJ3mYuPEHIJLxJbNEwnwS6a-DPiGWw_Y0qlXg>
+    <xmx:Oz-hap7psZGiCPtgwamdTp4Ch81qeJWuOoRya9weKGdu1G6W0nMDCkh0>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Sep 2026 07:12:58 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 443aea17 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 9 Sep 2026 11:12:57 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Wed, 09 Sep 2026 13:12:47 +0200
+Subject: [PATCH v3 01/13] parse-options: allow for hidden aliases
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260813154748.2378747-1-christian.couder@gmail.com>
- <20260908164129.560396-1-christian.couder@gmail.com> <20260908164129.560396-5-christian.couder@gmail.com>
- <xmqqqzj3wr24.fsf@gitster.g>
-In-Reply-To: <xmqqqzj3wr24.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 9 Sep 2026 12:00:51 +0200
-X-Gm-Features: AcwNN1VAceDd8bv9m2d37Sq2z10-bvq3EhO4y4C1syLotA-ZS-66sLMkwUnF6Hs
-Message-ID: <CAP8UFD0WUQX4ts_US2Ehdp7hBmEs1_ztjJiGJMYA2ek4awduMg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/5] promisor-remote: prevent infinite recursion when
- lazy fetching
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
-	Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260909-b4-pks-unify-ref-storage-format-v3-1-ca041fb40ad8@pks.im>
+References: <20260909-b4-pks-unify-ref-storage-format-v3-0-ca041fb40ad8@pks.im>
+In-Reply-To: <20260909-b4-pks-unify-ref-storage-format-v3-0-ca041fb40ad8@pks.im>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, 
+ Junio C Hamano <gitster@pobox.com>, 
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+X-Mailer: b4 0.15.2
 
-On Tue, Sep 8, 2026 at 8:12=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > It does not recurse forever in practice, but only because each level
-> > adds one more variable to the environment of the child process, so
-> > after a while `exec()` fails with:
-> >
-> >     fatal: cannot exec 'git-upload-pack ...': Argument list too long
-> >     fatal: unable to fork
-> >
-> > To avoid this pathological case altogether, let's use a new
-> > `GIT_INTERNAL_LAZY_FETCH_DEPTH` to count the recursion depth, and let's
-> > check that it doesn't exceed a MAX_LAZY_FETCH_DEPTH limit (set to 5 for
-> > now).
->
-> Good.
->
-> Does it have to be "unsigned long", though?  Just like oid_nr, I'd
-> prefer to see a number whose range or signedness does not matter in
-> practice be typed as platform natural "int".  Even though one could
-> argue that "anything_nr cannot be negative so it must be unsigned",
-> or "int might be too small for some platforms" or "int or ulong have
-> different width on different platforms", or even "anything we count
-> we should count in size_t", I do not think any of them is a good
-> argument against it, especially when the value we start with is 5
-> ;-).
+The `OPT_ALIAS()` option can be used to create an exact alias that maps
+one option name to the same semantics as another option name. This
+option type is especially useful when deprecating an old name in favor
+of a new one. But curiously enough, we don't have the infrastructure in
+place to properly support this use case because we don't expose the
+ability to hide the alias via `PARSE_OPT_HIDDEN`.
 
-I agree that using a plain "int" seems like the most straightforward,
-but we don't have git_env_int() while we have git_env_ulong().
+Introduce a new `OPT_ALIAS_F()` function that allows the user to pass
+flags and propagate these flags when rewriting aliases to match their
+respective source options.
 
-So would you be fine with something like:
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ parse-options.c | 4 +++-
+ parse-options.h | 5 ++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-    int depth =3D (int)git_env_ulong(LAZY_FETCH_DEPTH_ENVIRONMENT, 0);
+diff --git a/parse-options.c b/parse-options.c
+index 4519ead9dc..51a49792d1 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -925,6 +925,7 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
+ 		const char *long_name;
+ 		const char *source;
+ 		struct strbuf help = STRBUF_INIT;
++		enum parse_opt_option_flags flags;
+ 		int j;
+ 
+ 		if (newopt[i].type != OPTION_ALIAS)
+@@ -933,6 +934,7 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
+ 		short_name = newopt[i].short_name;
+ 		long_name = newopt[i].long_name;
+ 		source = newopt[i].value;
++		flags = newopt[i].flags;
+ 
+ 		if (!long_name)
+ 			BUG("An alias must have long option name");
+@@ -951,7 +953,7 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
+ 			newopt[i].short_name = short_name;
+ 			newopt[i].long_name = long_name;
+ 			newopt[i].help = strbuf_detach(&help, NULL);
+-			newopt[i].flags |= PARSE_OPT_FROM_ALIAS;
++			newopt[i].flags |= flags | PARSE_OPT_FROM_ALIAS;
+ 			break;
+ 		}
+ 
+diff --git a/parse-options.h b/parse-options.h
+index d7f896a933..a0b30f3c04 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -386,13 +386,16 @@ static char *parse_options_noop_ignored_value MAYBE_UNUSED;
+ 	.callback = parse_opt_noop_cb, \
+ }
+ 
+-#define OPT_ALIAS(s, l, source_long_name) { \
++#define OPT_ALIAS_F(s, l, source_long_name, f) { \
+ 	.type = OPTION_ALIAS, \
+ 	.short_name = (s), \
+ 	.long_name = (l), \
+ 	.value = (char *)(source_long_name), \
++	.flags = (f), \
+ }
+ 
++#define OPT_ALIAS(s, l, source_long_name) OPT_ALIAS_F(s, l, source_long_name, 0)
++
+ #define OPT_SUBCOMMAND_F(l, v, fn, f) { \
+ 	.type = OPTION_SUBCOMMAND, \
+ 	.long_name = (l), \
 
-which is similar to the following in builtin/pack-objects.c:
+-- 
+2.55.0.1074.ge7621b4bad.dirty
 
-    name_hash_version =3D (int)git_env_ulong("GIT_TEST_NAME_HASH_VERSION", =
-1);
-
-? Or do you think it's time to introduce git_env_int() in a preparatory pat=
-ch?
