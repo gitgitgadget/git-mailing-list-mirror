@@ -1,139 +1,138 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD3D357D0B
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 09:14:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10282D0C9D
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 09:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788945293; cv=none; b=fDTU3DNu9b43KDflA/0KUX+oPhTVWGPL5zVZfjyUIjHvwMjBcxU+lTGkGMNS5imKqIzcnUU2UyJHg0eJy3Rn1IyQpUtrrHboJ14cedOv13O9AiK4dR7qEuLllgHIv8dAa6XvQ0QxF/weukCGGqmPjfHA4tHUYXkuBeG3akXc50k=
+	t=1788945818; cv=none; b=lI33LElsT9M0qe10FHX0DOJACtI+Yj2Daz0VR2lZZVgg7aVjHB8y4igKUjQHJRj69L3fXSkpvwemroSUI15SYzfLZw+eUcLcOvjHFls22/P9gFn2dzxS8kL8RzZHG3ICnKurwbVXazoxcQeIAWluE9Cpk50np3VUf3xaGB5fkyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788945293; c=relaxed/simple;
-	bh=5RFxGzI5fGHYBN+klPlaHvgRVQaYw02ntjZ/1yg6/aM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DKvWo2DX16Itna3mi3lQv+jnvFWl86nqabLB5zR4hDm9aU/viucllDvB/KMyKnZ4dX944r0U0UKzWl3vpEUgf+nmEjCVVK3EgzOdXY4i40xXKQ92hPO02UBLxxb5IwdCA5C8MLqPx3QmhQhc1EG6XrYV6O08gDh0ZqZuC9NP4Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c9Kh6kLi; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788945818; c=relaxed/simple;
+	bh=kvDEz2Hu2/DEDprJIVyJTLI2ILpEuN9mtvvYKP1+0pY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E6OJTBhBZIE3B4r4hABD0uLPfgDSlE8tSBDMBqPqIMEUwLgwNVY6sU51NBJYMFPoGNMsiBbHolGmIdhL3jS9IwcO4RO6BNPZCWQspU8YQxzQAMeL2yIx7fF26Vnu09OByg4qZZqLj8YtjI8klY0D/NnH3KYSduZswxmffxu9H/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gX2JsKPb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q/sOdV5q; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c9Kh6kLi"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8568e3ecfc3so3888789b3a.3
-        for <git@vger.kernel.org>; Wed, 09 Sep 2026 02:14:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788945288; x=1789550088; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=1xHY8mUHQeDvuTJMDrZWbwZ703nd8PO7epCJp36iWD4=;
-        b=c9Kh6kLipQ4qwpWn0PvUG0UFAM3Eiubm2kdd3qJlnaUw9iX//e6WI0hvQ+/42nKfav
-         DDJdt8bdxh8qaBOBugWBUUGHQWCQKho8raoXOmu5m3fUKRHtWW7SkhZy8SDW34HILqIQ
-         7MXkRcRDT2s7VM8Srmm7fPTwjGrTiA/9xsnCG6bET8LEyDMIFQ/osqWeVVvkW/x8bjll
-         WCg59RsevJAiGvL4xFiMYqMLys+9/wI6+FiMqZ7kd8m98czf0/XLRQqFv62g3iSSLAd2
-         /n31FiyCdXwdviMRTI0OaU9DtPzqPrQy3sTtS/PzT5gd0lEHSa7VOoNDzF36LDkD1/EL
-         guPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788945288; x=1789550088;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1xHY8mUHQeDvuTJMDrZWbwZ703nd8PO7epCJp36iWD4=;
-        b=lYX7reLgSIAlyUodJcayIlFUQ9/1YYryIA97rK9CFaautaoMFEhByXcLX1z0F6FqBW
-         oy2rajqMRyuWgOb1KL/AC04A+mCr55+jRN4GUr4v4pEPseIWyvNUw2bPN7jCoHtpLB7m
-         EVpRRbkBCWw3Erf2o9bh1IAWjSQEuhbAp0VD5JlslbXJTFvR/joxaIfJ1Gcg2/MIr8IN
-         01eo08IlA08h42b6kmGyXgtyijj8s7GrYokYxWp8dPu+6N0rHGvpARjTeaXa2/LCUaok
-         gwjvrmQADhup81c6tRatIGHpE18kQStQVhBI5eM8XYoD5KwuvtYru6xFFlUZfxG61+/d
-         GlmQ==
-X-Gm-Message-State: AFuF++lWPxGsP8P4f45kD8yRD9wKK5p79k9ynQ1wExeZUX9dDJikOnvL
-	Hdq4R5Vve6XBQh6CV1TdnHTTBLk+S3L77dvBD3Oi65F3bz3ZboW5bBMC
-X-Gm-Gg: AYBFou10IS1tQ6KgjrXPwblkushW4QgK0upxlU36bKyeRMZW+Qq+Nfqpj9Q0jLvA08m
-	ryVRkrN2lfH5lbqFu9dT9T+db7XTJbyiyF6nIdUfL+mjDa8BBM78Bdu23kCdB5z0aAVwbW40JeL
-	5+l6htxbfLXADTkSxyllqiwC4o+dzA7nKw2o7yDMJhsSCj6NWbZ2kdSA0ID4UA7aI8AeoEtzZpj
-	F/Duc6GftbKNEbiM4XJEP33KTbV3Q3HTEoXn5TJI11olYgOC4735ATp9sqyGim6mhe7jlJLopWC
-	SqHfkUsuSrJUy9hiw62oWDsPbASm3Ya3eouURI+e7OcwfoVGbMdqCMxmUwEwZ5doeXFaLcTVUUs
-	p9GIVWYi080HAQe6vyyPP0x37atpNFnGHJN11qPTbwWmWD6oiPwMPfAoN7CESG5OWhFnDTBFblg
-	TEVi1pLXfJ+h1rz/9k9W4BVmGgqcZBEVLYdnjRBfuQhMtIp80JFtCvgb0m+WzSbs/ZJ5owKpCEO
-	CruS3/rshKTNuRfCMXsS252+kSnjITgbWPwSmlznSx/j5cp5AHrwRc=
-X-Received: by 2002:a05:6a21:6f16:b0:3d0:868d:8ccb with SMTP id adf61e73a8af0-3da3a0a8503mr56275117637.13.1788945288289;
-        Wed, 09 Sep 2026 02:14:48 -0700 (PDT)
-Received: from ?IPV6:2406:7400:12b:61a6:e00a:2dbb:bdc9:907c? ([2406:7400:12b:61a6:e00a:2dbb:bdc9:907c])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1432424d27asm57327192c88.2.2026.09.09.02.14.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2026 02:14:47 -0700 (PDT)
-Message-ID: <472d9d2b-efea-48a9-98f0-02364b1a9ccf@gmail.com>
-Date: Wed, 9 Sep 2026 14:44:43 +0530
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gX2JsKPb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q/sOdV5q"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id ECDCEEC00B8;
+	Wed,  9 Sep 2026 05:23:34 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 09 Sep 2026 05:23:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1788945814; x=1789032214; bh=3AHs1iAlqu
+	UAEaEzymT8ZnNiP2DQeXLhMRmNWDuZvXE=; b=gX2JsKPb7AJuSh9iYbBsgmwLd0
+	SfUIj0mlpD1Mg4GuS4hqt4g+PoVZ5y6/EU6jgB80vOTBpfLoL4i7zr+jCkJGdZrN
+	jJA2UGBKm/Eb1IUMNK4LIi1wHW+gncEzg/essEIOp199ccPsDZHBSo4i7iZh+YGv
+	nHqRJHaStTShxSUEz5VSLzq7Qw8h5ibhM04iABpcZDwJv7x5EEu+cid8gBj8HyP8
+	0saSujrW81cTmjFlwNRIYuRkORfZ9CIl7SggMdctG06Cmz48XCJ2lPk9Qi+KtFNd
+	5G6wFxk7fwBmUKOUXxYg6nEIAqHMbJtpEYhoDG0q9vSO+CUy1r5Pf/AyM5gg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788945814; x=1789032214; bh=3AHs1iAlquUAEaEzymT8ZnNiP2DQeXLhMRm
+	NWDuZvXE=; b=q/sOdV5qYLnVLSB6yA6kwlbytIcSaU4d/LAa16vIMFjalNF6qpw
+	hpsiHid3NZGHqVfEvEDePT/KuS0o4D64QvUD1Zn4iqzQzfdDQ9H0QrzoBpDaMMUg
+	iAQHEyuwP6n2m9gIpQYy6KG4h+W+j34nRrP+iEQfXH8h5N0r98qrw/E2606ohzjc
+	6UZhnH4WMvNkBQOMEXJENouObNW94gtWBiPmSo9Rw7PV9hmDdxVDf5Jmtm51CVz1
+	kfJXXREoDwZBCRzDjdKsgvHHg/AZXB9Mdz6l7QHS4RCUGP5pA1SprgN5hdZTc4yt
+	/FJxgMQJideBMFSchQdFuG0qIPOIHgjNgOQ==
+X-ME-Sender: <xms:liWhateMQSBZWLBRawnWqpFenL_U-2HfOsshr4VGQSCCt6OD0ypL0w>
+    <xme:liWhaiPi1Ev7HGV52QUd943unREPwn85HNEcj_zz88-v3jHZG04G8DkcwZ2OAcBdB
+    f7Pphqoz0vmvEMfqDvicB_4UwCMiohRpg-BcyCEZ1PepMasoprw5w>
+X-ME-Received: <xmr:liWharjI_cziEuwogK-KY8ZUTX1xBsybB48tT88YcRmJK5cmt9lD6u2_Vh_U7cvrpynJhg>
+X-ME-Proxy-Cause: dmFkZTFRkYaBeIOhonHYd0fRWCptJhQCOECbXmyyZvIhjDwA4EYhW8VkKKsRAqzlZfUzTW
+    zZxm8nO7cu50rM3KSb2Y3WC/xwvXKsXJIfH4AT0z0fDFkVNUckPME/KMF89RmYHRc+Pp5Y
+    dgx4HPzg+TXpISnhXxXwD4+e7ypLA1M5OJbbNT+InscDanRh7hlUeesmwihU2j3IPM/KjH
+    v8ScVhJocyMhRfr/y/ZvT5u2Y9LTO84ZcyYpZeBe/ZVFqC8iYblDwOLeURWUpqjcVy7cP0
+    inpVhJ0cICOcyzlEPDw/p1xmi9ZxbETIDHT3b6Eg2O45go3yHvSi3ABy+8DWwXJ/5jTQH2
+    TvAuKASnAV+UrGXVxQPPjO+CKo/+m4mGAV8MPegpes9qc1wOTMtEAWci1IOU/4xyr9NOLD
+    9wJ38MgSHL67935MbiU1AVkpgYrjojW9Z8yRVRl4mu5ygcO6It970PTghbtounmpMa08ra
+    754IRPNAYU632ZiWmVtC6rC/QuB43kZPnuabjhHZFgL0OuFuMn4Q6rw+hyJekrMISjkwLc
+    4hhFtBnkyitnMeM+ZDA9nFc9g9tYnR/Yo7fRSbnwEh74xzmcYoKe8gzmYoDytKtFBmXx7S
+    V4PCu0yGYVMpu1dvik2n1k/zdFKb13br2kwvFqjhjYbdLMh7Dcpw9Tb93Qqw
+X-ME-Proxy: <xmx:liWhal3UI70ofvndOOGY0uMRKTQFp3GdukRrvp-3UkpkhLZiPkTZ0A>
+    <xmx:liWhalgvCtJuIXRD0MgwKREL8PgVp-fNYzR0V7VdvLI3hddiL_behQ>
+    <xmx:liWhaleGldij96XHpE2hvsGlxK512QsAzSkIClj_Bs1Vng8wnHfg4A>
+    <xmx:liWhaolwe2DjHQpl38_w-RY3ZdefZYOSLj5yWLuTrf4CpwXDWF8LhQ>
+    <xmx:liWhavAEtnd0s816MEnAPDIO8du10eoeS7CatsiZlVwJuD3kNOz6X1ZA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Sep 2026 05:23:33 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 84619a37 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 9 Sep 2026 09:23:31 +0000 (UTC)
+Date: Wed, 9 Sep 2026 11:23:28 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 09/11] setup: rename ref storage format environment
+ variables
+Message-ID: <aqElkBmqoOqb0J5b@pks.im>
+References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
+ <20260907-b4-pks-unify-ref-storage-format-v2-9-6733c90ca5b0@pks.im>
+ <57f08562-ecea-4e51-8e5a-ae3aa91b23d1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/11] builtin/init: rename "--ref-format=" to
- "--ref-storage-format="
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <20260907-b4-pks-unify-ref-storage-format-v2-0-6733c90ca5b0@pks.im>
- <20260907-b4-pks-unify-ref-storage-format-v2-1-6733c90ca5b0@pks.im>
- <aacc3fcb-43e6-4f62-b083-5fbabaa9f494@gmail.com> <aqED9Xn6xibcp9pf@pks.im>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <aqED9Xn6xibcp9pf@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <57f08562-ecea-4e51-8e5a-ae3aa91b23d1@gmail.com>
 
-On 9/9/26 12:30, Patrick Steinhardt wrote:
-> On Tue, Sep 08, 2026 at 02:31:22PM +0530, Kaartic Sivaraam wrote:
+On Wed, Sep 09, 2026 at 01:40:07PM +0530, Kaartic Sivaraam wrote:
+> On 9/7/26 16:48, Patrick Steinhardt wrote:
+> > @@ -2785,19 +2788,21 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+> >   	 */
+> >   	if (ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN) {
+> >   		/* nothing to do */
+> > -	} else if ((env = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT))) {
+> > +	} else if (((env = getenv(GIT_REF_STORAGE_FORMAT_ENVIRONMENT)) ||
+> > +		    (env = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT)))) {
+> >   		ref_storage_format = ref_storage_format_by_uri(env, &ref_storage_payload);
+> >   		if (ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+> >   			die(_("unknown ref storage format specified via %s: '%s'"),
+> > -			    GIT_REFERENCE_BACKEND_ENVIRONMENT, env);
+> > +			    GIT_REF_STORAGE_FORMAT_ENVIRONMENT, env);
 > 
-> I'm aiming for a a quiet deprecation -- the old options keep on working,
-> but we don't show them anymore. We may eventually remove them
-> altogether, but I neither want to warn about use of old options now or
-> even remove them as that would likely cause more negative consequences
-> than is worth it. It's not like we want to soon use the old names.
+> We're getting the value from GIT_REFERENCE_BACKEND_ENVIRONMENT as a fallback
+> but we are mentioning only GIT_REF_STORAGE_FORMAT_ENVIRONMENT in the error
+> message. Would this not be misleading if the value actually comes from
+> GIT_REFERENCE_BACKEND_ENVIRONMENT?
+
+Yeah, fair. I already had this on my radar, but thought that the
+solution was a bit too ugly because it resulted in a bit of duplication.
+I was thus sweeping this under the rug a bit, if I'm being totally
+honest.
+
+Anyway, will adapt.
+
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index 1f0505e412..60a2179a0a 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -575,8 +575,8 @@ export EDITOR
+> >   GIT_TEST_BUILTIN_HASH=$("$GIT_BINARY" version --build-options | sed -ne 's/^default-hash: //p')
+> >   GIT_DEFAULT_HASH="${GIT_TEST_DEFAULT_HASH:-$GIT_TEST_BUILTIN_HASH}"
+> >   export GIT_DEFAULT_HASH
+> > -GIT_DEFAULT_REF_FORMAT="${GIT_TEST_DEFAULT_REF_FORMAT:-files}"
+> > -export GIT_DEFAULT_REF_FORMAT
+> > +GIT_DEFAULT_REF_STORAGE_FORMAT="${GIT_TEST_DEFAULT_REF_FORMAT:-files}"
+> > +export GIT_DEFAULT_REF_STORAGE_FORMAT
 > 
+> Would it make sense to also rename GIT_TEST_DEFAULT_REF_FORMAT to
+> GIT_TEST_DEFAULT_REF_STORAGE_FORMAT for consistency sake?
 
-Understood.
+Oh, that one I completely missed. Good catch, thanks!
 
-> 
-> But I agree that we should keep the old options documented. Otherwise,
-> it might be hard to figure out what those options do in case they for
-> example still exist in an old script.
-> 
-
-Yeah, makes sense.
-
->>
->> Relevant only if we are deprecating the old option: We could change the
->> description of the old option to convey that it is deprecated so that it
->> could be easily distinguished by anyone reading through. I suggest this by
->> noting a similar pattern in `builtin/name-rev.c` for the `--stdin` argument.
-> 
-> We don't really have to update the description as we pass
-> `PARSE_OPT_HIDDEN` anyway, so the option is not even shown.
->
-
-Indeed. I was suggesting to change the description only for the sake of 
-someone who reads the code to quickly get an idea that we have 
-deprecated the old names. The PARSE_OPT_HIDDEN would definitely hint at 
-it but this just a suggestion to make it more obvious :-)
-
-That said, it's fine if we don't change the description too. It isn't a 
-big deal.
-
->> If we don't plan to deprecate, I suppose we could use OPT_ALIAS to clarify
->> that `ref-format` is an alias of `ref-storage-format` similar to how
->> `recursive` is marked as an alias of `recurse-submodules` in
->> `builtin/clone.c`.
-> 
-> I was originally planning to use `OPT_ALIAS()`, but we don't seem to
-> support `PARSE_OPT_HIDDEN` there. Maybe it's better to add a small
-> preparatory patch to support that though.
-> 
-
-Indeed. OPT_ALIAS does have that caveat. A patch to allow the alias to 
-be hidden by choice would indeed be worthwhile.
-
--- 
-Sivaraam
-
+Patrick
