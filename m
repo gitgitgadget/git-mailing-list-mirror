@@ -1,189 +1,114 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E810D47F795
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 15:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD8257ED97
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 15:54:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788968417; cv=none; b=NK08xAg5DOea3fULExsuC4z95pRVi0D9JnmUW0FAnLMLhgeoqYY5NBllQzKxSKVMkoZW1slGC8DCsnwcBzd5Cg44vE0wkU+XAf7OhMlueqBNXc9v8B5h3l33mOiDQzENa+77eteH9KawLN8+INsC06AtIDkZ98WTXFuF7dn9qO8=
+	t=1788969291; cv=none; b=LGDvfqgm4PCHu6Ru6Iw9P5N64oZvT7LNWeYtH4GqXkNN9bDB/Ev5rD3Ue6ukiX/7kLZ+lz75173ISpwy/F5SiXlw8Cs8s2FTT/QkGAltUqnEvNwOHFYjhXNCoYTZUB9voGax7ZtHjP+REtmq/ioik/o6SdjZMpS4P+mPOgGaR9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788968417; c=relaxed/simple;
-	bh=aNTEtdncykOZZY2LdFgO8ReRTRGakNBVvANPNpZNFhw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hdcYQoCdYjFUS/KdZGn7AtZD2iC+GOMyCw1czIhc9A2pRn1neXy1ucutDDMJjcEgixfKskNFrG5L7xZvUwwZ0UkSQAxfE4T26dRWB/iy/mZe3XEufRv4kCwfDdpqnGc3mPPHdUU7fosCGDp7L6DUO9vrDmEpwLpv0sED0mBMd5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MHmuxfIh; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788969291; c=relaxed/simple;
+	bh=8O1i8Oz0f0jHseiYHvIZ4su6aw5omltSsCIQT7xslwQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qjc/Hry/E8sNoJ9oG3i9WFwCSEv1vNaaxSEaHEHF4V4aRZs7i9YIocUZp5u4Dh4AXCsxFu0ZQh1EgsJDkCT4uLRxfaDC646fx5F6b13xYaFtv+XOt63LRSvmyqQgtATwNmhcd8vFsgLri4uazsvb31ujrShymw34gukai11ffbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ICWaCYgv; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MHmuxfIh"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5b5607bd3b5so3803070e87.3
-        for <git@vger.kernel.org>; Wed, 09 Sep 2026 08:40:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788968414; x=1789573214; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=6jfzySJgMfLUzULBzCnRkNDyIxxnPBiiozcvfxjvHmw=;
-        b=MHmuxfIhispJuvYC4FZNhy3vRilF/wYUJGgLuCvQ20Dw38PodEWOkAKhspQlrfPXSs
-         Ki9zB9c8CPGFPODmgkGI/g3pgShnh/iArS1VhjapkJlpxtxqyPn42IPAjmOOkoHf9GDU
-         l4Xq9rmZOZ5B6loPtM8lv13xKWk5ubpXUsGJAK6fKiLB+LxRJWbjL9qKNyEwOFOE9DDV
-         ucz0iEANCr/vAQcvaKTRgMMAzQ9+vswJSwbWJ3UviNDnZqWyMTSIUUijp46SS8bduAEO
-         jK2SJgDQcVA0sMx6uPEkNXzWfTfNwkKT+SbIabqIsdPD4CHMxgVnBerQ5vub7Lgq+sj9
-         vl7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788968414; x=1789573214;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6jfzySJgMfLUzULBzCnRkNDyIxxnPBiiozcvfxjvHmw=;
-        b=XTslyDg48peMC7OAfooccJqePsvRRr0fWwjm/zdyWNy2pDEvp5GrLSssMexSK4Xs30
-         ooPwrqqhrkjOIX5RJnTwuUiPKEoghhlrv0XNYj9zFVSqTHKWXhb6YlSqUEZ2ZoQv96NX
-         A/DMKG62nS+/OXID34reEzXcvaiwxZGbkUuq+n2BWrxrFlu8rE6o2GOFziEj8oZ/eaK0
-         xFbb0CuXFeNyc20+xLQtLA9EGqxAtQ1JV4Ic/kA0AbGNhOgyFnUcVqrqa0IdpOFMNQcp
-         ySVBvz7JqIkt+T1OIr3QDmrh/B50g2M8Uv5NHCMSwcVFFyFEEbg48Boyb/O2sfuMTW3Y
-         XxCw==
-X-Forwarded-Encrypted: i=1; AKwUvBzisDhEWtnsngb0jiMo3WqZi4NHjeoFx13BlecgF39JsNeEs0JEOp8hjvh6juyYy0JseCw=@vger.kernel.org
-X-Gm-Message-State: AFuF++mVhF2vCGnC3k349W44CYfaKz6ZqowtHLY/Mkjz9NdGv2dXVQAD
-	Bc/sEMKZ+XpGJsyJyWtVhofD8/pbVI9SFUV83Qbh1kGkjSMgxvg7NYFY
-X-Gm-Gg: AYBFou1OFE6whWJ49ENmT7+Jf7FLTB4ix0GOJdf1YUvtC5wgUmSBX74qNOi6Tbye846
-	yYtjU0iexCqcKoZJ7MqzCd0S4a1GNRBJE1TW6C+lslWpLgdiJjnORicIJzO8052Vu81uYNSzmcf
-	oULIwXwDYTVoup/PNMl21QsRrIxLPJcWbaGYJEbVIIHNTlmU8+/RtrkSAeV2+owAq0uy8Zw76pz
-	5IOhxtojDE3UeUjEuaHJzi2MHiu9EP4COHhzKFfGkuHk1dRR4XR0Mp9ZSxMuNZE+uueLqduXB6g
-	MSRafkkTH1G54ayyGGdY/yiFhpOftmovDNCeOoEC895fTaBoLod9KpXuvPMPkmaA+AbpAOleMOE
-	ejgVll5U9xbPzhZjCw65s5yT2wjZWDWoSZrDyDHg4NymHPhI+mMKtoZrUeW1YZWoObIxGOhtuX2
-	VTlXnK8leYmqMEjwnL7yXJCvFSZVqHhp/loYuYFFtb3ULWY1BCtR30XZICr3uzVBXdyiCX3v9xc
-	/4XQdYx/FQdjfxtlg9SJ/0r2+IUPG9HJASwWkF9jhKy6CWDppKOHw==
-X-Received: by 2002:a05:6512:304d:b0:5b7:674f:caba with SMTP id 2adb3069b0e04-5b7674fcbe8mr989277e87.13.1788968413693;
-        Wed, 09 Sep 2026 08:40:13 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b6166fcdf9sm3846748e87.46.2026.09.09.08.40.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2026 08:40:13 -0700 (PDT)
-Message-ID: <cd3d98ef-ad80-405d-98b8-fc40e7c5ec9b@gmail.com>
-Date: Wed, 9 Sep 2026 16:40:07 +0100
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ICWaCYgv"
+Received: (qmail 28391 invoked by uid 106); 9 Sep 2026 15:54:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8O1i8Oz0f0jHseiYHvIZ4su6aw5omltSsCIQT7xslwQ=; b=ICWaCYgvwVs/nW0jH98E8rGd1tmDhHZPoUCCe3ZP8k5hCTz3Ve9TFAPYeomCVd6aTO7ng252AIchQXuWivDZ5mx5LFz00E6ODBry8R3pvyNAik0jgnNx6dj6olpwS2u3kU6vIniFoKIBsPQAEImahne5HYoKLq1CMkdGhSGhottFU8CC6HHqqeCIfAImEcE8FyStBPAq9wdxvYRF5N6cXKleZYCl4hCz71/2XGALYWx/dh2BGyrHDzoJrBBuxmu/xiWTutYNmn+n8uNt9lkcO1L5ie7wU3O4H8sjmZ7HIhzza6tTB8ngavw0MhtY4K0H200xdcJe8T+ub50Ckdgggg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 09 Sep 2026 15:54:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 144296 invoked by uid 111); 9 Sep 2026 15:54:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Sep 2026 11:54:40 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 9 Sep 2026 11:54:40 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Vsevolod Myalitsin <ub4nal@mail.ru>, ben.knoble@gmail.com,
+	git@vger.kernel.org
+Subject: Re: [PATCH] advice: use global config for default branch name
+Message-ID: <20260909155440.GA94069@coredump.intra.peff.net>
+References: <xmqqik4fyaav.fsf@gitster.g>
+ <20260908213840.37833-1-ub4nal@mail.ru>
+ <xmqqik4fwoz5.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 3/3] sequencer: disable auto maintenance in spawned
- commands
-To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt
- <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- Johannes Schindelin <johannes.schindelin@gmx.de>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Thomas Bachem <mail@thomasbachem.com>
-References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
- <pull.2217.v4.git.1788942331.gitgitgadget@gmail.com>
- <031b3bd498bd5efee7e0d9752a6dd36fe7a55360.1788942331.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-In-Reply-To: <031b3bd498bd5efee7e0d9752a6dd36fe7a55360.1788942331.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqik4fwoz5.fsf@gitster.g>
 
-Hi Thomas
+On Tue, Sep 08, 2026 at 11:57:18AM -0700, Junio C Hamano wrote:
 
-On 09/09/2026 09:25, Thomas Bachem via GitGitGadget wrote:
-> From: Thomas Bachem <mail@thomasbachem.com>
+> Vsevolod Myalitsin <ub4nal@mail.ru> writes:
 > 
-> Sequencer-spawned commands like 'commit' and 'merge' run
-> background auto maintenance, which interferes with ongoing
-> operations (e.g. 'rerere gc' holding MERGE_RR.lock or repacks
-> deleting active packs).
-
-This is much more concise, but still sounds a bit strange to me. I'd suggest
-
-When the sequencer spawns "git commit", or "git merge", those commands
-run "git maintenance --auto" in the background which can interfere with
-the sequencer (e.g. 'rerere gc' holding MERGE_RR.lock or repacks 
-deleting active packs).
-> Pass maintenance.auto=false via GIT_CONFIG_PARAMETERS to the
-> spawned commit, merge and exec commands. Appending it after the
-> user's own settings ensures it wins, and the environment reaches
-> whatever they spawn in turn.
+> > Yes, I agree that passing the "advice_setting" itself is cleaner and
+> > more future-proof. I will change "vadvise()" to take a pointer to the
+> > corresponding "advice_setting" instead.
 > 
-> Auto maintenance now runs exactly once when the sequence
-> completes. Commands run manually by the user while stopped are
-> unaffected and continue to run auto maintenance normally.
+> One minor glitch is that there is an ad-hoc vadvise() call in
+> advise() that is not tied to any particular entry in the
+> advise_setting[] table.  I think we'd need to give a name to the
+> advice_setting struct type, instanciate an ad-hoc instance on stack,
+> and pass it down the callchain, perhaps like so:
 
-Good, and the implementation changes look correct.
+Isn't this a natural fit for NULL? That ad-hoc call wants to pass the
+notion that there is no matching advice config (or at least not that it
+knows about). And then vadvise() can check:
 
-> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-> index 025787b5f2..16def261b0 100755
-> --- a/t/t3418-rebase-continue.sh
-> +++ b/t/t3418-rebase-continue.sh
-> @@ -398,13 +398,18 @@ test_orig_head --merge
->   test_expect_success 'rebase runs auto maintenance once it is done' '
->   	git checkout -b auto-maintenance topic &&
->   	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/stop.txt" \
-> -		git rebase -x false main &&
-> +		git rebase -x "git commit --allow-empty -m exec && false" main &&
->   	test_subcommand_flex ! git maintenance run --auto <stop.txt &&
->   	echo resolved >F2 &&
->   	git add F2 &&
-> -	test_must_fail git rebase --continue &&
-> +	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/mid.txt" \
-> +		git rebase --continue &&
+  if (conf && !conf->level)
+	...show instructions...
 
-What's this trying to check - there wasn't a conflict so 
-commit_staged_changes() will error out without trying to commit 
-anything. This series is looking pretty good now. Just to let you know 
-I'll be off the list from tomorrow until the middle of next week so it 
-will be a few days before I look at any new versions of this patch.
+which seems natural to me.
 
-Thanks
+As a side note, I think this is revealing some existing shortcomings in
+the callers.  Most of the calls to advise() are doing something like:
 
-Phillip
+  if (advice_is_enabled(ADVICE_FOO))
+	advise("ask your doctor about foo");
 
-> +	test_subcommand_flex git commit <mid.txt &&
-> +	test_subcommand_flex ! git maintenance run --auto <mid.txt &&
->   	GIT_TRACE2_EVENT="$(pwd)/end.txt" git rebase --continue &&
-> -	test_subcommand_flex git maintenance run --auto <end.txt
-> +	test_subcommand_flex git maintenance run --auto <end.txt &&
-> +	grep "\"child_start\".*\"maintenance\"" end.txt >maintenance &&
-> +	test_line_count = 1 maintenance
->   '
->   
->   test_done
-> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-> index 2bea55c3b6..1e3fa1803c 100755
-> --- a/t/t3510-cherry-pick-sequence.sh
-> +++ b/t/t3510-cherry-pick-sequence.sh
-> @@ -723,8 +723,11 @@ test_expect_success 'commit descriptions in insn sheet are optional' '
->   
->   test_expect_success 'cherry-pick runs auto maintenance once it is done' '
->   	pristine_detach base &&
-> -	GIT_TRACE2_EVENT="$(pwd)/single.txt" git cherry-pick picked &&
-> +	GIT_TRACE2_EVENT="$(pwd)/single.txt" git cherry-pick --edit picked &&
-> +	test_subcommand_flex git commit <single.txt &&
->   	test_subcommand_flex git maintenance run --auto <single.txt &&
-> +	grep "\"child_start\".*\"maintenance\"" single.txt >maintenance &&
-> +	test_line_count = 1 maintenance &&
->   	GIT_TRACE2_EVENT="$(pwd)/sequence.txt" \
->   		git cherry-pick anotherpick yetanotherpick &&
->   	test_subcommand_flex git maintenance run --auto <sequence.txt &&
-> @@ -739,9 +742,14 @@ test_expect_success 'cherry-pick runs auto maintenance once a stopped sequence i
->   	test_subcommand_flex ! git maintenance run --auto <stop.txt &&
->   	echo resolved >foo &&
->   	git add foo &&
-> -	test_must_fail git cherry-pick --continue &&
-> +	test_must_fail env GIT_TRACE2_EVENT="$(pwd)/mid.txt" \
-> +		git cherry-pick --continue &&
-> +	test_subcommand_flex git commit <mid.txt &&
-> +	test_subcommand_flex ! git maintenance run --auto <mid.txt &&
->   	GIT_TRACE2_EVENT="$(pwd)/end.txt" git cherry-pick --skip &&
-> -	test_subcommand_flex git maintenance run --auto <end.txt
-> +	test_subcommand_flex git maintenance run --auto <end.txt &&
-> +	grep "\"child_start\".*\"maintenance\"" end.txt >maintenance &&
-> +	test_line_count = 1 maintenance
->   '
->   
->   test_done
+Those won't get the "turn this off with advice.foo instructions". Only:
 
+  advise_if_enabled(ADVICE_FOO, "ask your doctor about foo");
+
+will. So there are many missed opportunities for offering the turn-off
+instructions. Nobody seems to have complained, which makes me wonder if
+the turn-off instructions would be annoyingly chatty if we printed them
+all the time. Most of those calls predate the addition if the turn-off
+instructions and advise_if_enabled(), which was added in 2020. I wonder
+how people would feel if we converted them all and started printing the
+turn-off instructions everywhere.
+
+Anyway, UI philosophizing aside, another obvious pattern for advise()
+is:
+
+  if (advice_is_enabled(ADVICE_FOO)) {
+	/* do lots of work */
+	advise("try %s", results_of_work);
+  }
+
+which _wouldn't_ want to convert to advise_if_enabled(). If that wants
+the turn-off message, we'd want to be able to pass the advice enum to
+advise(), like:
+
+  advise(ADVICE_FOO, "try %s", results_of_work);
+
+at which point we might need a way to pass the NULL advice marker
+somehow (for those cases which really aren't tied to a config value,
+though arguably that is an anti-pattern in itself).
+
+I guess the caller could just do:
+
+  advise_if_enabled(ADVICE_FOO, ...);
+
+inside the block. We know that it's enabled, but it's not like the check
+is expensive.
+
+-Peff
