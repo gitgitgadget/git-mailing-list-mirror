@@ -1,68 +1,68 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEA14A4F09
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DD5486406
 	for <git@vger.kernel.org>; Fri, 11 Sep 2026 21:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789161691; cv=none; b=CUrYPHXSCo6/C5CnEZMNkBkNlksyeOhfQ7v4mvyrMcCe5Bh3nGTIUsQXpKOjafDcmJQUCsGb5SM6vHp+Zd6V25PMRh+1SnGwlCZo+DZC17jePF7FfVo8dt1cBLL3Kts6T+/MPs8fqbIY/5EMxi6hHrkSdJbTzQWWFPNMPDydQbw=
+	t=1789161692; cv=none; b=Q5/OkEi/+Gyv3LiawmvAbO558C8AcEKGVSzVlC76+nckOVUMxsk4C8JOTCcjzPdfoUJLvaC2uX28TxBzAB9PNLpXsaTGglWhh5/XUE7m0B29X5ixRF/32wooS4yZ5fhjtjVwjdBlFg6r+8JlIMPxWCjwXQ2jEOmZi0LQkJ9H09Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789161691; c=relaxed/simple;
-	bh=FWFx7SINTPmDC7CuXz7gSPL7MUyvJRrD2DwiymbCh70=;
+	s=arc-20240116; t=1789161692; c=relaxed/simple;
+	bh=VZ3sDnAeCMUk7YrkNhij3rSE+gNcXj0BugteXwoYJxs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pM8t8mpRHQUf00AvKGC2ITzOZCwCXtwkq+QVrs5zFanFzo/D/LoAttLyZu5v8a7driiNL9wOMhHgwGkV5PR7l6mNciPJhV7htLnQ+ZrKA4TxD4L63d5pbQwCLcUrKohfsRihdMicFE1onzOoGRve+ZX0rlDXeOerlaYd4tUOli4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e3V0qOnP; arc=none smtp.client-ip=209.85.221.54
+	 In-Reply-To:To:Cc; b=m5H57g+Ovm/msSJ0Sdab8VAiHe9X/+hedQohfMw9dhADWwGELl1VT4aiTMeEINeyEESQ2IQllmpoG1JnMWjzBBg3Ojii7lOMQA794PqJ7O/uPD3neXDoHbsVCwzEeTzwXlzJVybu5uZ5VJekF3gxDvuIo/zLQuPEt7d/rPBSaBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fNM6qKSD; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e3V0qOnP"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-485888b3c3dso1320153f8f.2
-        for <git@vger.kernel.org>; Fri, 11 Sep 2026 14:21:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fNM6qKSD"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-482dd6ee390so1223315f8f.3
+        for <git@vger.kernel.org>; Fri, 11 Sep 2026 14:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789161688; x=1789766488; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789161689; x=1789766489; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Q2AZUquSvjrwUZJ3/kpV0yA7yWlFvh3bckc30B8aF9I=;
-        b=e3V0qOnPrKa6d5OKbM7fXfIT+TGEh8wYBq8xgKfYXPpwMjOdNiiwSQ//0ofYpUca2V
-         PRoVA7Q/PnwjsBWxzijYr6H4GYkie+XmeiB0oABza1Fzfg6sGfbZnGIDnNSlcbpUSH+j
-         34PSo5al8138umJxM8l/B/2rfoXphSDucJg7zNlb2g8nYgcwiNdKZjK/w3FbFJZexwgl
-         F24UhehVX7WsWpiFGzjgPt80xX6CNTZkDrtU5WTUL9wksS0vublgdatoHe0W5EkqRyrB
-         zasaPf0Vlun1PFmPGe3qL5hfQUJBoKSUGKDz+Yz9Dv018wRVdVpXT5w5c1wV54tPLOBZ
-         y7ag==
+        bh=f9IigmYKqv60F0rri056n1Aqe9AqJzetp7JeXofJwHg=;
+        b=fNM6qKSDEZnVG0fljh2lYPeAdPdTRzHMjsx6NWcDbMEWONpSIql5lHyqO77Pp/RxRt
+         xvFTJbdHs2Qx0umgkha0lgPXRE5Kc3y3isYJQkDBA4wrmxoGVAAgZNZIfNmWPUQqHRmo
+         OZuCrRVRWNgdryqnOPWuz5Qig/LhJ7gt0vQ6l1xL8NHEYTxcGoT9qWxZPvtFR5vDMq4s
+         8f0gOE2XUeXLHV0bjda9zPhPt/Px+BCB1I8y6t3/c8ScBc18+55IHq+0qfv41yPppSo0
+         WfNiX5P60/l87X1a4yymnyNU99ezxfOC8KEY1v6s5Shnbo/MCul7rOHG+6fajSI2FQ4l
+         aRDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789161688; x=1789766488;
+        d=1e100.net; s=20251104; t=1789161689; x=1789766489;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Q2AZUquSvjrwUZJ3/kpV0yA7yWlFvh3bckc30B8aF9I=;
-        b=BR5MEPEy4C6ssnV/nkPRjVKP/1tnWDYpDxrPbjyw4vRnOVfynOhZ57F/ByRCzXdKUb
-         GPbLE1WTPes91kZHp2LS9J+ngDKCwzl7IwQwPXqoxjGQ4JBR6uU0lZYGHJtS95fAbd1+
-         bjEmBEXA3D5+x08skvyuzcMffPvyt4r4UyLe2aQOdetOHX1vW9HJgToB0KzRYeUDppTc
-         P41rkIVlBJU0K+prwbAPxCahLF6yLYfZ8ldWR4urFFQS7ViIifens56nxvV/uVj9L40M
-         Vswe+QzOXTvPAOOCidgA9Ao0vYXMuRi9yj3NT8GYjQ/nxsRQY1XHvcL0tVWut06zOV1Y
-         bmJA==
-X-Gm-Message-State: AFuF++mc5sM8O2EIljoLzyL57zKXt2Vx13mICimBssiw2q6X4umIogTo
-	lk1PlUWFC7Oe4zYY4V7qe/Nd0TKMKcnkwaqrtrDtpHV4GPovW/rWE2qfAhGCVg==
-X-Gm-Gg: AYBFou0XEGdlDOgzJHxwB8RiQoJREJlTaLGJEQh4mCjV74R4zVgcOL0QX83od/UhvYA
-	jnSUbgQKQn7FCz9ToaQKOkcChMlP+PI0hK1/czv/FQRguxrNH2Wstj01aUfmY03Kuwb9YAfIrKj
-	8OIVZsT+LCoK7/vvVFVrTTT1aTW+WJI8PdzJe4pETTEhjIvEAwI4h0E6yOhwLoSUi6MJzLUF1vn
-	uxUtOD5A/Zns23wUA6KE0hxuqVfickKzE5Y+DP27X+BA8FS4GqEn57J3CiE42Z5ZB5nMRU1g7ul
-	2zh2wFXVmgsEgCR+CQ6O5HMDtO25cStMv2C1GAsuBVRW4Id94T2/mrMd9MECtGdo3ZHuOluLxvN
-	kolqU9okM9mf4KS736nduMwwyknS+45IbbSNrbpD2aeYqFdxOcoQ7AWrZdHwg//OtKjDAqtzjLl
-	nlGlKT89qAG4CbNofzoG4JGxgSUdbBPmDl0ebB0qDjPL4WDWDnT/bgNIM2RhZ8QLDuyavPewIdm
-	pHGyhXp72F7T+ChHe8gFjOiZfJ4/y6eLBJ5SA==
-X-Received: by 2002:a05:6000:607:b0:486:e300:a0c3 with SMTP id ffacd0b85a97d-486eace4e5dmr7450005f8f.12.1789161688245;
-        Fri, 11 Sep 2026 14:21:28 -0700 (PDT)
+        bh=f9IigmYKqv60F0rri056n1Aqe9AqJzetp7JeXofJwHg=;
+        b=H3avufI7NGpWvquP3TlQVMuNsTNA4e2JMezruBdEImVUzehknYOr6c4emQnCoTNAbX
+         dpAR8c+UHKiI6iT5bmXTUkYESLSNe8Fwz0YYVw7Im7qp3VBCaQax1LUPOBUhklel8+Bu
+         tyk5Er6AqtP+Hxn+O5sNVuZ3Am7EVkOfIhG+kB5gB+TwgvEHU9wDicN/Ik8MTh6/tptV
+         ILi4BQ7VPfixWE3TmL9eJDfnLLaO7e/EDkp6vp3UcMNynVx4w503gZ0/bHmB2j8QTBBa
+         jRYhx8tu2cL0lvtfCnl6kIouuoahF9FIhE86o/87DdBQ1q5hY0A64an9313yDn/ZjU+3
+         Ry8g==
+X-Gm-Message-State: AFuF++mqKxJ8G4VL5m/tUM7dQTtt5fN4bwqG7ZrUQ5qor7R+Zx28y/Uf
+	YS55fix7AM7acecWa+ggnzZRbvaWZUrVD28dQ8dV5mWXV8T9Dw7LsWbY
+X-Gm-Gg: AYBFou2Vr4qrT/klGpHzVOANGgVtw4waJwI3DhvtBxXh8FrPsVPbKYUicjfVHvyxs7g
+	60ZW4lwbxpGBt1eaH9Usv0Wu6KulUA5vzqKbQRtqFVhkRM9TxU69k8dv/7suLz/cSnbHATr/Mc4
+	KvSOzkBhBkSwbV49B7i5mQL95Akk/S87nbXseBmt+ARYEu/A1oC2bBfgLe5DNg1iJQzCtHvBwlZ
+	AbY2z1eIJ4vzjP+SK4bzqhYxqtf2LJOzVWHdxptNZ3wKMISU/nLZRFJoaKmxfNqxz8a8UKc2b4E
+	ulEjPv/UMBSLAYRbBVJY6M3hKqe3GmE2Oq/T+b6XTsF2de0GKCxiDNjYCH36bQQLzqqZ+3o8kzn
+	iM1HkKicjEXPk5LmwjRMtYLt/ipV37C0QEmlXOOIEQ9aZzp2rA471zM83Ay91HJBLqgQFJaSeoV
+	4mpG04oun5BOC/NvZh0H6zwt6QpNlJYAyQZjzXLQPScL+D6Zb282tEHIq6wHoiEuxkh8MjpbAMo
+	m30MOUYzfje97iX70QXEjch71kIG79l3GAjyQ==
+X-Received: by 2002:a05:6000:61c:b0:485:8c16:a334 with SMTP id ffacd0b85a97d-486eb338fc0mr7618117f8f.41.1789161689255;
+        Fri, 11 Sep 2026 14:21:29 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:3cb1:ed0d:e325:5fc9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-486eb2ecf2esm9435939f8f.2.2026.09.11.14.21.27
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-486eb2ecf2esm9435939f8f.2.2026.09.11.14.21.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2026 14:21:27 -0700 (PDT)
+        Fri, 11 Sep 2026 14:21:28 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 10 Sep 2026 23:54:07 +0200
-Subject: [PATCH v10 2/4] receive-pack: drop static variables to track
- report status version
+Date: Thu, 10 Sep 2026 23:54:08 +0200
+Subject: [PATCH v10 3/4] receive-pack: move message generation to separate
+ function
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,7 +71,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260910-758-introduce-hook-v10-2-06f9c506631c@gmail.com>
+Message-Id: <20260910-758-introduce-hook-v10-3-06f9c506631c@gmail.com>
 References: <20260910-758-introduce-hook-v10-0-06f9c506631c@gmail.com>
 In-Reply-To: <20260910-758-introduce-hook-v10-0-06f9c506631c@gmail.com>
 To: git@vger.kernel.org
@@ -79,119 +79,157 @@ Cc: ps@pks.im, gitster@pobox.com, jltobler@gmail.com,
  kristofferhaugsbakk@fastmail.com, Phillip Wood <phillip.wood@dunelm.org.uk>, 
  Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3497; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=FWFx7SINTPmDC7CuXz7gSPL7MUyvJRrD2DwiymbCh70=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqkcM5/U+Sc9ZPqUHGBD88258k+3i8IqufLq
- sbV6teg9AmS1okBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqpHDOAAoJED7VnySO
- Rox/+Y0L/iAE/p/gmEE41w1bRuC2XSm5UtTcCsJTGszwKkceb0OfxNpalmLL1e0pHKHL7+PFSON
- 7ymDE+ift5bvzum5z4ao8e68FR7SFhGo7F3tfyMv+bFbz5BIxR76H0K2s5O7kanTW++Nv7gonIL
- vD7I71wb6k1SPvEnvUzAaFVUyOxGh0HWaKqc/oNrbGbEqXXhig0tSiznkwlMNLnfTkAXQnb+dtH
- /PspZi/GrCnFUvaUGwD7fvU1EDhpRKJBBBTagCTSwwo0Kdm40GZVdK1CDsASes19oOV5e+3byZD
- 9xyXIWqzZxU6oX36YjOt0R5OGyXQ0WP82o4Awf/0qeUpiIVFCRcUj6jBZdIiLI0eLOs8OCETsFB
- 9Cs6hfYGcfYFqIOTFqr6BQasC+FmTMy3wEdgiphUusTyHuI/bYwSRITZ8eIABFKYbsACQU+aiwI
- s9lRKBwol9Lo3dAaHZ5rcjw5XlcLaRjVg9ePsMELwrg9gWQojjAlAgcGgYU6ZrnUmW6/m/iND58
- h0=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4571; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=VZ3sDnAeCMUk7YrkNhij3rSE+gNcXj0BugteXwoYJxs=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGqkcM8WXXqWU7FDd1YuDM5UNAj9ivMJ76Q5P
+ jbDWZMmf/r1R4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJqpHDPAAoJED7VnySO
+ Rox/fqEL/32fqLcFhOb1iRPplFxUc5twuzuUtryApfC+/Ce48HheaElpo1eBLzJMufJab7ANPCu
+ JMQTeVp7fC8Zk07vE2Tu5G14F2AFG2SZjDuDtqggZjOQ5/tfcFCumjxG1Dvv0ghnoQTNaLCB2yT
+ Ua2FJhekgDiOqTMvy+TYbMtGfOpSxFLGJ6YifiuPN+hYj/w72DLbY2++kc0LZMDBLSROSo08jGQ
+ 58z21jVuUneefWr16xuB+3IEf0JK4TN4K/Zm69LtkoqtiO3JAUoFeSTTjOpVgrmmKV2L1GLZTGV
+ NRto4oU833VELDccnhfwymP9Ldoo1NYnZuTSmT7yUy5NpNqPO7uUNZniqd9rqQ7GaMsOUmqN1L3
+ Zv8JWbRBownGmbfLQ5U2tPAAd484A2K09l9HlZwTRSKH+87hagvDaNC4RbIc3vB9SuP8UCAK530
+ aMS5YQyqQpcJQGSMKZjamYSxk1K3UA1LbDwwaGUJsvO/5uqkYlRh++WnikDdi4vISGYSiG1Yz06
+ kM=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-In 'git-receive-pack(1)', to track the report status version, we use the
-static variables `report_status` and `report_status_v2`. As the report
-status version is mutually exclusive, using an enum better suits the
-requirement. switch to using a new `enum report_status_version`, while
-also dropping the static variable to make the flow easier to understand.
+After git-receive-pack(1) has committed the reference updates, we call
+either `report()` or `report_v2()` to report to the client which of the
+references we have updated successfully and which updates have failed.
+The only difference between those two functions is that the latter also
+knows to provide a more detailed report about how exactly a given
+reference was updated.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+With this, also drop `report_v2()` as both report functions now are
+similar in structure with only the `report_status_version`
+differentiating them.
+
+In the next commit we're about to add another site that wants to
+generate these reports. Refactor the logic into a shared function that
+can easily be reused.
+
+Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/receive-pack.c | 30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ builtin/receive-pack.c | 75 +++++++++++++++++++++-----------------------------
+ 1 file changed, 32 insertions(+), 43 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e6e54ba55f..75a1788fa5 100644
+index 75a1788fa5..8b1ae4f7f3 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -53,6 +53,12 @@ enum deny_action {
- 	DENY_UPDATE_INSTEAD
- };
- 
-+enum report_status_version {
-+	REPORT_STATUS_UNKNOWN = 0,
-+	REPORT_STATUS_V0,
-+	REPORT_STATUS_V2,
-+};
-+
- static int deny_deletes;
- static int deny_non_fast_forwards;
- static enum deny_action deny_current_branch = DENY_UNCONFIGURED;
-@@ -64,8 +70,6 @@ static int advertise_atomic_push = 1;
- static int advertise_push_options;
- static int advertise_sid;
- static off_t max_input_size;
--static int report_status;
--static int report_status_v2;
- static int use_sideband;
- static int use_atomic;
- static int use_push_options;
-@@ -2191,7 +2195,8 @@ static void queue_commands_from_cert(struct command **tail,
+@@ -2414,67 +2414,58 @@ static void update_shallow_info(struct command *commands,
+ 	free(ref_status);
  }
  
- static struct command *read_head_info(struct packet_reader *reader,
--				      struct oid_array *shallow)
-+				      struct oid_array *shallow,
-+				      enum report_status_version *version)
+-static void report(struct command *commands, const struct strbuf *unpack_status)
++/*
++ * Generate the response to be sent to the client invoking 'git-receive-pack(1)'.
++ */
++static void generate_report(struct strbuf *buf, struct command *commands,
++			    const struct strbuf *unpack_status,
++			    enum report_status_version version)
  {
- 	struct command *commands = NULL;
- 	struct command **p = &commands;
-@@ -2217,9 +2222,9 @@ static struct command *read_head_info(struct packet_reader *reader,
- 			const char *client_sid;
- 			size_t len = 0;
- 			if (parse_feature_request(feature_list, "report-status"))
--				report_status = 1;
-+				*version = REPORT_STATUS_V0;
- 			if (parse_feature_request(feature_list, "report-status-v2"))
--				report_status_v2 = 1;
-+				*version = REPORT_STATUS_V2;
- 			if (parse_feature_request(feature_list, "side-band-64k"))
- 				use_sideband = LARGE_PACKET_MAX;
- 			if (parse_feature_request(feature_list, "quiet"))
-@@ -2500,6 +2505,7 @@ int cmd_receive_pack(int argc,
- 	struct shallow_info si;
- 	struct packet_reader reader;
- 	struct odb_transaction *transaction = NULL;
-+	enum report_status_version version = REPORT_STATUS_UNKNOWN;
+ 	struct command *cmd;
+-	struct strbuf buf = STRBUF_INIT;
  
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("quiet")),
-@@ -2563,7 +2569,7 @@ int cmd_receive_pack(int argc,
- 			   PACKET_READ_CHOMP_NEWLINE |
- 			   PACKET_READ_DIE_ON_ERR_PACKET);
+-	packet_buf_write(&buf, "unpack %s\n",
++	packet_buf_write(buf, "unpack %s\n",
+ 			 unpack_status->len ? unpack_status->buf : "ok");
+-	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (!cmd->error_string)
+-			packet_buf_write(&buf, "ok %s\n",
+-					 cmd->ref_name);
+-		else
+-			packet_buf_write(&buf, "ng %s %s\n",
+-					 cmd->ref_name, cmd->error_string);
+-	}
+-	packet_buf_flush(&buf);
+-
+-	if (use_sideband)
+-		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
+-	else
+-		write_or_die(1, buf.buf, buf.len);
+-	strbuf_release(&buf);
+-}
+-
+-static void report_v2(struct command *commands, const struct strbuf *unpack_status)
+-{
+-	struct command *cmd;
+-	struct strbuf buf = STRBUF_INIT;
+-	struct ref_push_report *report;
  
--	if ((commands = read_head_info(&reader, &shallow))) {
-+	if ((commands = read_head_info(&reader, &shallow, &version))) {
- 		struct string_list push_options = STRING_LIST_INIT_DUP;
- 		struct strbuf unpack_status = STRBUF_INIT;
+-	packet_buf_write(&buf, "unpack %s\n",
+-			 unpack_status->len ? unpack_status->buf : "ok");
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
++		struct ref_push_report *report;
+ 		int count = 0;
  
-@@ -2596,10 +2602,18 @@ int cmd_receive_pack(int argc,
- 				 &push_options);
- 		odb_transaction_finalize(transaction);
- 		sigchain_push(SIGPIPE, SIG_IGN);
--		if (report_status_v2)
+-		if (cmd->error_string) {
+-			packet_buf_write(&buf, "ng %s %s\n",
+-					 cmd->ref_name,
+-					 cmd->error_string);
++		if (cmd->error_string)
++			packet_buf_write(buf, "ng %s %s\n",
++					 cmd->ref_name, cmd->error_string);
++		else
++			packet_buf_write(buf, "ok %s\n", cmd->ref_name);
 +
-+		switch (version) {
-+		case REPORT_STATUS_V2:
- 			report_v2(commands, &unpack_status);
--		else if (report_status)
-+			break;
-+		case REPORT_STATUS_V0:
- 			report(commands, &unpack_status);
-+			break;
-+		case REPORT_STATUS_UNKNOWN:
-+			break;
-+		}
++		if (version != REPORT_STATUS_V2 || cmd->error_string)
+ 			continue;
+-		}
+-		packet_buf_write(&buf, "ok %s\n",
+-				 cmd->ref_name);
 +
- 		sigchain_pop(SIGPIPE);
- 		run_receive_hook(commands, "post-receive", 1, NULL,
- 				 &push_options);
+ 		for (report = cmd->report; report; report = report->next) {
+ 			if (count++ > 0)
+-				packet_buf_write(&buf, "ok %s\n",
++				packet_buf_write(buf, "ok %s\n",
+ 						 cmd->ref_name);
+ 			if (report->ref_name)
+-				packet_buf_write(&buf, "option refname %s\n",
++				packet_buf_write(buf, "option refname %s\n",
+ 						 report->ref_name);
+ 			if (report->old_oid)
+-				packet_buf_write(&buf, "option old-oid %s\n",
++				packet_buf_write(buf, "option old-oid %s\n",
+ 						 oid_to_hex(report->old_oid));
+ 			if (report->new_oid)
+-				packet_buf_write(&buf, "option new-oid %s\n",
++				packet_buf_write(buf, "option new-oid %s\n",
+ 						 oid_to_hex(report->new_oid));
+ 			if (report->forced_update)
+-				packet_buf_write(&buf, "option forced-update\n");
++				packet_buf_write(buf, "option forced-update\n");
+ 		}
+ 	}
+-	packet_buf_flush(&buf);
++
++	packet_buf_flush(buf);
++}
++
++static void report(struct command *commands, const struct strbuf *unpack_status,
++		   enum report_status_version version)
++{
++	struct strbuf buf = STRBUF_INIT;
++
++	generate_report(&buf, commands, unpack_status, version);
+ 
+ 	if (use_sideband)
+ 		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
+@@ -2605,10 +2596,8 @@ int cmd_receive_pack(int argc,
+ 
+ 		switch (version) {
+ 		case REPORT_STATUS_V2:
+-			report_v2(commands, &unpack_status);
+-			break;
+ 		case REPORT_STATUS_V0:
+-			report(commands, &unpack_status);
++			report(commands, &unpack_status, version);
+ 			break;
+ 		case REPORT_STATUS_UNKNOWN:
+ 			break;
 
 -- 
 2.55.GIT
