@@ -1,80 +1,80 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6711E48F855
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 15:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6247369D6D
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 15:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789052974; cv=none; b=RquxcZflufFo7lh0zej6x2tWKfLYEX+AHYT/WiqBdjCLIvZc2cKI5SskOGeenut53DK1hvX3zp0FBIf/EVH+NYEPBDihuJFjV924ywaAbNqJrMi6a7XYZEELjh39V8jP+KaUzYRcx2oL8E64ESon7UBgeQ6mFmBajDOg6waYv5s=
+	t=1789052978; cv=none; b=S/+kIk1XnZfNy8fklPZQqaAL58wRRXt9/BwZkxbMAvOfzLPKGGf1jqsJaRhKUjSlQ72RjuJn3YJRlchF+TsjN9GIlqmhbWWLZl55MA5ZldKj868GF9KLHdiOZIP25HELyR3r35pGR4xkGobtJ3GP6g50ZD0KQ0uVPt8bK8RFHHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789052974; c=relaxed/simple;
-	bh=Q+jtLU1BsGippiD9u64THTEVnhykN+3f80C5noVfULY=;
+	s=arc-20240116; t=1789052978; c=relaxed/simple;
+	bh=vMn6WUdHW+AwtW4KyZhDlzbVm4fqHAm2AAe+GnyImM4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZGfsMuBxJIhEzXzAkXMr+UEOoI7QUc8ArddCGxbgrm9dWvuin0s4Xuowll11RiYw8J2dvAYU/X4F20UvE8V3vQszejrqga+xriNf1rMaC5oBMrLwRLlyRkw227PHwZ9JMsKzgpjarfcRlJqkMm5dFuROqOMRHDKsMIHTwOSR43M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VQsDjY5A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FdxY4NAC; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=d5VLKuMn9Mq+WPjvdbrlbXNLd3SD9FleZe6DU7XYsNVMjwovlO+wcmlqzyJ7tz3b3zyGN2dKbNP+TOtC65+LDLj3Kd0IvtjUDE5E++8mm6ps7RUf5ylIHA44q21Tes8e4nMGupvrhuGUyvSfLeNtvjwDiLZk68PLu6oAFcV8xDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NU6P/cQW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vV2GCgy+; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VQsDjY5A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FdxY4NAC"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NU6P/cQW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vV2GCgy+"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4C4A8EC00D2;
-	Thu, 10 Sep 2026 11:09:28 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 7703FEC01E3;
+	Thu, 10 Sep 2026 11:09:30 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 10 Sep 2026 11:09:28 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 10 Sep 2026 11:09:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1789052968;
-	 x=1789139368; bh=Yo7k91wodyo7uZ+QD+47325koolU5nYeNFFPLbOnOec=; b=
-	VQsDjY5Am4qp1YpIg0xrbvjT1X+dsUQX2dgtRxZrd3SArhCaFVhOWUgNz86E62MS
-	5X/lUMeFMVVSIbMgL5x15IUsoor9PptW5U17IwRv2Zm9WCM3vSmpJ98Wh9iq36Pa
-	pAqfomVXztKHKf+EZ0M0JHxYh5SHRpWT6HoNn4UOjyPr1A2y4hlTn1wQ6Zv05M0D
-	N7AInvIUO8KitJAN4nb0cGi4N1bfK/AnW5wYqKwgIkyrSRfWkcq2Clpra4bD2Kh+
-	pUsV0o+uXC1DnWZRFrXZfzDL7hkmBvGrGiRXJTWx2tJ2yBNuLMgKHcskvrV0U1Iq
-	3P/+sOW5kaJ500kiihY4xA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1789052970;
+	 x=1789139370; bh=eqrHQdzx7qDYsoSG0Mbp+kXInHZJCpG3mOxJvftuchY=; b=
+	NU6P/cQWgWcoHJKB4++YPHX+wVihoNtwAe9MvcyQSiUsg2/b1pKIFhdCu8E5aC88
+	nw7wL0Phdxk70dhr3nGCAo2WU00NY1P6uja1BWxAkkd9epMW7VFde9UdPreTZdHs
+	mxuQdwGrUpguOdioaa8bwCpwwzltk1POblRxnx+mWjIysjCVfj+63s6MXRDdugpS
+	SCkS4MhTckJ1PWOmcZ/Q/6844WW5igD0C1dNSSIQO3ihoTbB/T4xIG1oI+xkHfa6
+	TFY3qsxaHHf8x9ftovcSLrHB/qyWQrEuXCg8bmm0doBXhiKVwnRhW716YnGS47l/
+	kqXwi/1pyyTvlA+xuXA2Xw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789052968; x=
-	1789139368; bh=Yo7k91wodyo7uZ+QD+47325koolU5nYeNFFPLbOnOec=; b=F
-	dxY4NAC+RlVqVT4w1Fvo4G+1oNK3/tEA/c6GVl4rOLbK1knTir94Zw2b1TnMX9bT
-	yO27ER1d/oOQ6iGpFtCL5eLHqd9p/aRuTcX7TrBFAAoITjFNox7omSHOKhoYoG46
-	u96ZKaGpDI9K3h6FAXiwLnxVqgFlpOHVmaEC617oglzW8g44gJXQ0LqrqWfwRDnS
-	Nz0vej1y5NyZJCwGkxBo9/V8Qcp1n0LAtHPxHUKm1dDQL+sJh9kUcpZhTvaxgynD
-	AGY4EyY3esFWEAI6d6656B8wPoSsa4oT1r4DYre7jPEYjf0HyNgvMHaQyz9meuMP
-	EsisUVVKiw/17pwUyF7+Q==
-X-ME-Sender: <xms:KMiiasPI9V3N5RfnhewgXcOvEAvveN7rg6IP2XIpmqm-Eb6VAwQv_g>
-    <xme:KMiiap2T9hwMu2gST1QJLHQ_5cTI72Nl1WbwGyep4ZB1bMHiWmOL__5kiL2n3ib2A
-    CGmL7smGZJ7pru3vQ2jBaLYhA5I3p7tcbx7FV92oxohx6-hNYOTzQ>
-X-ME-Received: <xmr:KMiiarl6artVvQwC-8qApQGFgRENwglPIzAB0YgTjoyv1Azj_3YfMQ>
-X-ME-Proxy-Cause: dmFkZTFmToSEG6cpqmLCQ+r8QOZo2Uv1HNL8Pjsku61QT1eJxv8HAXxDAkSPnus9Vecpme
-    pJafvckUfXllYevYRFBkacQXQBn8rdjuicwUxeuiCeGMLu8JV5gc998H1ANxSJZJOzN8ST
-    fcVH+3fxr6p6VED5/2o1IDBicBEufCXUWBqkwMMuqmPUJ04FWOlsiERIZyEc1auESI2D1v
-    8fOEzyOGNyBRwuu2ZC+3sLGRJwSWFrThXiJ5wahfsXtQegDTI0WAbln4OJXJ+DLBsD59Dl
-    B9aM5LBBYPa4dZUBIuUN0qT0ZLAElCSu868se35c7jrWDNfeTWqToQ3iexsoc34cVFG3tD
-    iDeDsQ/oZLFbIY7tA/OvN/4wpIoNs67P1nIe3M+P48Z+x8w7XjLXGBgv5x3GbIzZMNV7Zz
-    6X72VsihNwKmIMDnDARSHZz+I8oGm7vIo10HDsFyJTpLtnw8e2wQEf9fyTwFlZOhEREdUZ
-    QsRYteLVsRmeaBL40fdosK7f2vFMTcbFzCrVKXX9IX6Rui1lvypOSN7ZgubK1J9xSP+aYi
-    xr1zDq/1fApQUxkGubBwLrX4VIW+KIWVWV/r9mi2adyboWYaBz/JHaYnuZXgS6P/RFVMnO
-    HPyRU47cJvf5dw0iSWJoc6K5keOzKU504a7AWd7Rzt/PBKa2x00Yjv7+U1Og
-X-ME-Proxy: <xmx:KMiiagWhxYxnng1hQB3MbxdgHNIyVVGnV3VDX-QaGQjCZbIe2m2vYg>
-    <xmx:KMiiahvKgXqBIu27TIW6rbYEQaoAt3BmvNDS0SdyD1slMCzXRLgb5Q>
-    <xmx:KMiiajapt4OJ2aiRkgtUFyqu7Sb5OGu1wdzC5mknIw6vVOw_dxL24A>
-    <xmx:KMiiagXYOj9YtY5mWR5DIP5rXFHGy7KS1gelgYxBSBUzB5Chu00SNg>
-    <xmx:KMiiaiziwPhaAgC2T84tPMKWyacDQzL5S_KgEP_06ihEHJ88znxpY3uS>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789052970; x=
+	1789139370; bh=eqrHQdzx7qDYsoSG0Mbp+kXInHZJCpG3mOxJvftuchY=; b=v
+	V2GCgy+S9PejCtvRP39k9o81TugU0AJ2+PgN4E6Szwv8X+FDf1GwMc23TObF6J81
+	bCdQ3lFixfRhNKQdfRmYcwNoXmXe2LzoVEMtNRQ13wCKyqFjQ8o+rr7lu/4ZmD5E
+	fnT1us6enADPo8f+BcSs0l5jR+VLxoxusMc+KBvtOJXMQsb4j7Y63W6MxVP/my+r
+	mTHOk7BWwWqygdNnT+zsBpDRis06oua5OXrIwXvM1bLliGBKW3p5UBevsa/bpOaE
+	NU2GD/azwiLljWP8pbFTZzgwEfG3MtjsZFDSCH6Juc7kxlFrKA8TDXGhsH5Dhfb0
+	J34PMhLuJs+/G9jS6a6lA==
+X-ME-Sender: <xms:KsiiarfgB6O9OYVT5P_gMRHg40V3v9NjAMqOQtIDH3xGsw7VqR-6Pg>
+    <xme:KsiiaoH-H3QxvmPWkapTgzHHEguqJQKd5Duy9jnOQso9hKj1scpUEAghiu_p0qK8G
+    QSNJV7kKr5gQGlXJKfZBpYbaWhPrLGvE82D77gaOzv6Olm4eqQQ0MA>
+X-ME-Received: <xmr:Ksiias3VRVC7zus00yVlWNy_crRoidEfv5O-wz53W3onxzqPVWDK3w>
+X-ME-Proxy-Cause: dmFkZTF+5Wy56B+Wx3ySnb5Cx59QKPLOQu236q+2W/W769TPaDnZkuuZ6ySVZ9pJSqX60I
+    4KnoBOIFigUDciwRh5/L/RnGKTaoNEewuq0njqzCEJrAVeBHtLobMSK78B+3FkPz/ggIMU
+    xsdVnfs4PMJwMJ+arLr5XiQP6/sGsYur6cm7OCaOVgBA33g+KiJVV+ugxArXrsWGshcu/l
+    x9zxt9yXxZkS12K7MVcatieR8K8p2/XFAPtZI8wbyrgYzrTVG29lrkrjg3Gx/XNfNTsgx5
+    OxmR1v95cylk+grcUqYbD44VqN0IFxxmM0WSX9o2us26bpuTNI0rP+P/UYLTgPd4ZQ2Fer
+    0x0Mol8JOAdIMWy3Hbnr686kuaTqbjU5vmhI3zZ83eHlgv7wDcHetUoGnBMm1RkN5yzZSi
+    SKleyZ5S7/G2qeEbYsTsTSH+b95ZMApuUFd2GSUX/vwvAIS5YRLAeEV2lEP+kF7nNjcz+K
+    /4ayHzAwpJychNFFOUDU2MjUi6lat785dqmZO2gAcxDJZSk1lZ/D/HV7Dpzu/lOgD1Ua9U
+    p5ZReOuASM4ryrmzE5yIp83g2Z/pWQQQMmEszXnwZtqWbNXeARpS459/DAAWK58hK9e5J3
+    qGdqoGsWFNgpNwh0wpqbmrFgwTp20J83Dy+lzJ/D9UENmnXEM5Oxcdpk40qA
+X-ME-Proxy: <xmx:Ksiiaolgb1B8xCMELUVkVMk9b9sZQEocLAqmsuodngbK5gzP86W0ZQ>
+    <xmx:Ksiiak_tiFH8mOdEPPBy0kvgxhNUzIo0F-bUdTPuES5bLZOOVRaZlw>
+    <xmx:KsiialpeUgdRD9L2pAzbZB-WnYr6qI7yXR1bUhM_ceMiu8hGs3onTA>
+    <xmx:KsiiallQCHwd6XS7dXYQBKMlgw3DgAgSBD-BWMreQ-FTcAj9X2y7qg>
+    <xmx:KsiiajRTFnvVWWk-eQdKvsS2wmYKG0lKqurGZZvnwH6UlNhrs_4ZsHqK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Sep 2026 11:09:27 -0400 (EDT)
+ 10 Sep 2026 11:09:29 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4d075890 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 10 Sep 2026 15:09:26 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id dfe9f043 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 10 Sep 2026 15:09:28 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 10 Sep 2026 17:09:14 +0200
-Subject: [PATCH v5 4/9] builtin/clone: refactor handling of
- "--reference{,-if-able}"
+Date: Thu, 10 Sep 2026 17:09:15 +0200
+Subject: [PATCH v5 5/9] builtin/clone: move setup of alternates for shared
+ local clones
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260910-pks-odb-write-alternates-at-creation-time-v5-4-8d10c4238edc@pks.im>
+Message-Id: <20260910-pks-odb-write-alternates-at-creation-time-v5-5-8d10c4238edc@pks.im>
 References: <20260910-pks-odb-write-alternates-at-creation-time-v5-0-8d10c4238edc@pks.im>
 In-Reply-To: <20260910-pks-odb-write-alternates-at-creation-time-v5-0-8d10c4238edc@pks.im>
 To: git@vger.kernel.org
@@ -91,126 +91,79 @@ Cc: Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>,
  Justin Tobler <jltobler@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-Users can pass "--reference{,-if-able}" to git-clone(1) to instruct it
-to set up alternates for the newly created repository. This allows it to
-reuse objects from the source repository so that in the best case we
-don't have to clone all objects over.
+When cloning a local repository with "--shared" we add that repository
+to the new repository's alternates. This is done in `clone_local()`,
+which is responsible for performing local clones.
 
-Those options are handled by the confusingly named `setup_reference()`
-function -- without the above context, one might rightfully believe that
-it was about refs, not about alternates. The function itself is rather
-simple: we loop through all provided alternate paths and then, if such
-an alternate is valid, we write it to the object database.
+Move the logic into `collect_alternates()` to unify our setup of
+alternates. Furthermore, this will allow us to set up alternates right
+at creation time of the object database.
 
-In subsequent commits we're about to consolidate the complete setup of
-alternates into this function, and furthermore we'll refactor the setup
-of the object database to handle doing this for us instead of writing
-the alternates into it one by one.
-
-Prepare for this refactoring by collecting the alternates into a strvec.
-Rename the function to `collect_alternates()` to clarify its scope, as
-it does not set up the references itself anymore.
+Note that the logic for cloning a local repository with "--no-shared" is
+not yet part of `collect_alternates()`. This will be handled in the next
+commit, but means that at this step, we may compute `commondir` without
+it being used. It will become used in the next step though.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c | 44 ++++++++++++++++++++++++++++----------------
- 1 file changed, 28 insertions(+), 16 deletions(-)
+ builtin/clone.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index ac5843d7b9..08d913d306 100644
+index 08d913d306..d397fd36b2 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -154,24 +154,26 @@ static char *get_repo_path(const char *repo, int *is_bundle)
- 	return canon;
- }
- 
--static int add_one_reference(struct string_list_item *item, void *cb_data)
-+struct collect_alternates_data {
-+	struct strvec *alternates;
-+	bool required;
-+};
-+
-+static int collect_one_alternate(struct string_list_item *item, void *cb_data)
- {
-+	struct collect_alternates_data *data = cb_data;
- 	struct strbuf err = STRBUF_INIT;
--	int *required = cb_data;
- 	char *ref_git = compute_alternate_path(item->string, &err);
- 
- 	if (!ref_git) {
--		if (*required)
-+		if (data->required)
- 			die("%s", err.buf);
- 		else
- 			fprintf(stderr,
- 				_("info: Could not add alternate for '%s': %s\n"),
- 				item->string, err.buf);
- 	} else {
--		struct strbuf sb = STRBUF_INIT;
--		strbuf_addf(&sb, "%s/objects", ref_git);
--		odb_add_to_alternates_file(the_repository->objects, sb.buf);
--		strbuf_release(&sb);
-+		strvec_pushf(data->alternates, "%s/objects", ref_git);
- 	}
- 
- 	strbuf_release(&err);
-@@ -218,14 +220,20 @@ static void copy_alternates(struct strbuf *src, const char *src_repo)
+@@ -220,7 +220,8 @@ static void copy_alternates(struct strbuf *src, const char *src_repo)
  	fclose(in);
  }
  
--static void setup_reference(void)
-+static void collect_alternates(struct strvec *alternates)
+-static void collect_alternates(struct strvec *alternates)
++static void collect_alternates(struct strvec *alternates,
++			       const char *local_source_repo)
  {
--	int required = 1;
--	for_each_string_list(&option_required_reference,
--			     add_one_reference, &required);
--	required = 0;
--	for_each_string_list(&option_optional_reference,
--			     add_one_reference, &required);
-+	if (option_required_reference.nr || option_optional_reference.nr) {
-+		struct collect_alternates_data data = {
-+			.alternates = alternates,
-+			.required = true,
-+		};
+ 	if (option_required_reference.nr || option_optional_reference.nr) {
+ 		struct collect_alternates_data data = {
+@@ -234,6 +235,16 @@ static void collect_alternates(struct strvec *alternates)
+ 		for_each_string_list(&option_optional_reference,
+ 				     collect_one_alternate, &data);
+ 	}
 +
-+		for_each_string_list(&option_required_reference,
-+				     collect_one_alternate, &data);
-+		data.required = false;
-+		for_each_string_list(&option_optional_reference,
-+				     collect_one_alternate, &data);
++	if (local_source_repo) {
++		struct strbuf commondir = STRBUF_INIT;
++
++		get_common_dir(&commondir, local_source_repo);
++		if (option_shared)
++			strvec_pushf(alternates, "%s/objects", commondir.buf);
++
++		strbuf_release(&commondir);
 +	}
  }
  
  static void mkdir_if_missing(const char *pathname, mode_t mode)
-@@ -999,6 +1007,7 @@ int cmd_clone(int argc,
- 			   N_("uri"), N_("a URI for downloading bundles before fetching from origin remote")),
- 		OPT_END()
- 	};
-+	struct strvec alternates = STRVEC_INIT;
+@@ -357,13 +368,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
  
- 	const char * const builtin_clone_usage[] = {
- 		N_("git clone [<options>] [--] <repo> [<dir>]"),
-@@ -1339,8 +1348,10 @@ int cmd_clone(int argc,
+ static void clone_local(const char *src_repo, const char *dest_repo)
+ {
+-	if (option_shared) {
+-		struct strbuf alt = STRBUF_INIT;
+-		get_common_dir(&alt, src_repo);
+-		strbuf_addstr(&alt, "/objects");
+-		odb_add_to_alternates_file(the_repository->objects, alt.buf);
+-		strbuf_release(&alt);
+-	} else {
++	if (!option_shared) {
+ 		struct strbuf src = STRBUF_INIT;
+ 		struct strbuf dest = STRBUF_INIT;
+ 		get_common_dir(&src, src_repo);
+@@ -1348,7 +1353,7 @@ int cmd_clone(int argc,
  		warning(_("--local is ignored"));
  
  	create_object_database(the_repository);
--	if (option_required_reference.nr || option_optional_reference.nr)
--		setup_reference();
-+	collect_alternates(&alternates);
-+
-+	for (size_t i = 0; i < alternates.nr; i++)
-+		odb_add_to_alternates_file(the_repository->objects, alternates.v[i]);
+-	collect_alternates(&alternates);
++	collect_alternates(&alternates, is_local ? path : NULL);
  
- 	transport = transport_get(remote, path ? path : remote->url.v[0]);
- 	transport_set_verbosity(transport, option_verbosity, option_progress);
-@@ -1638,6 +1649,7 @@ int cmd_clone(int argc,
- 	string_list_clear(&option_not, 0);
- 	string_list_clear(&option_config, 0);
- 	string_list_clear(&server_options, 0);
-+	strvec_clear(&alternates);
- 
- 	free(remote_name);
- 	strbuf_release(&reflog_msg);
+ 	for (size_t i = 0; i < alternates.nr; i++)
+ 		odb_add_to_alternates_file(the_repository->objects, alternates.v[i]);
 
 -- 
 2.55.0.1074.ge7621b4bad.dirty
