@@ -1,77 +1,106 @@
-Received: from send217.i.mail.ru (send217.i.mail.ru [95.163.59.56])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB513B47E1
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 17:54:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.59.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F68499F17
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 17:56:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789062872; cv=none; b=O84VletjNg8lzuvQmsYGfbukAWaoTBw6hdYasTadI4EzhJ1ymSscXroLm6EUGlF4I/XDyvbhFKUucs37no0ElNiw1iz3QVY6aFi/nEmfGXKg0mKyFm3SG+XGgjbg6YmMyoGemgqaUTcmpadBaNyiqv0YLMDEKVb1HeKQKupivjY=
+	t=1789062986; cv=none; b=EjRdTVI2DpmS2qXRU65F7ptnzzWyOSGdxCs9WsUHNHzsgioiskxP4SILK5ti56BP9nUImMzowvYt6hJbjh03lFRTavduuI0cvVmKpFWnlJZz0XWYejSGCaPwSHuYDiLgaZZm2viD1Y6XgEh3fFX92cZYLPss77I4SkfuOlsAmBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789062872; c=relaxed/simple;
-	bh=zHMyw3+DI4mC8Umt/ObFQUvZatbaOqjaylvNqPx/bUU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3pptS4ZD5RorlJyLCZIBFUCz4uMkyKwEq4W++I8eliBR6USpvXDXJVHFLdxW38T4GeARYx0YDaSUlZmB0tXwBIr6WQCMok77SFhcCNOSM3TWJH/1j3xr1ICNobjkYe9H5MYaCcqGFyK40/1IUY+X7eUIWL4sYGpEY2HUKB79e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=x3PPPtEF; arc=none smtp.client-ip=95.163.59.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
+	s=arc-20240116; t=1789062986; c=relaxed/simple;
+	bh=mnGojnksPayLHP9V2z3/JaRhVo7/j6qg5Zrt1gE+haM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=u3bbO6N5WuPIa4YmM2FU65iYs+g6x4gXgK8SQkmAU6zh7Ow5tFVEryp5ehJsic4dyhA2pqM9mMqAfjugalp9jliunAN7rN0hVTCi0Y12rgHM8p6ZEK530FwjClOUOMJ2mo4650BZlBKmoFt6VO4u0xSXKh51iVKQfU8ssjWbAnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pG4k0mHa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ku6zvZXd; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="x3PPPtEF"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=zHMyw3+DI4mC8Umt/ObFQUvZatbaOqjaylvNqPx/bUU=; t=1789062867; x=1789152867; 
-	b=x3PPPtEFLQFqAY11RxOf4u7QALZmCnTL9LqUdNP+IVIFd0QFFDeiunX2Iy0JXYJMm9baTCXHn75
-	EVCJdHKk05TuFt0e3qLzf6cNXMbDHU0QsyXnFf8QrQ27d9CzLQ01b+jOKcv5YkU3Mg4+4HuiDshfM
-	PnrX1YueAOfok/Cx+BX9QkQcSTjxGV4XYyf56OtkxWX9Xo/FFjTQS036LT5lkLS5rdogyRpLJx7bH
-	Kch6mG1U8X9vALKnv4fD/qGsnroeGPqVLh5BoJhbpo7ODELTkFPBxfXWIt9hZ3+fw6437Vy6NWM35
-	vGvhO29TXueQdS3id0MIFuNPLJSSvtNzYEDg==;
-Received: by exim-smtp-569b45c49c-9ks7p with esmtpa (envelope-from <ub4nal@mail.ru>)
-	id 1x4iya-000000000ME-30cE; Thu, 10 Sep 2026 20:54:21 +0300
-Received: from vatem (localhost.localdomain [127.0.0.1])
-	by vatem.localdomain (Postfix) with ESMTP id 158819F633;
-	Thu, 10 Sep 2026 20:54:17 +0300 (MSK)
-From: Vsevolod Myalitsin <ub4nal@mail.ru>
-To: peff@peff.net
-Cc: ben.knoble@gmail.org,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	gitster@pobox.me,
-	ub4nal@mail.ru
-Subject: Re: [PATCH v4 2/3] advice: introduce advice scoping mechanism
-Date: Thu, 10 Sep 2026 20:54:15 +0300
-Message-ID: <20260910175416.115280-1-ub4nal@mail.ru>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260910155247.GA251185@coredump.intra.peff.net>
-References: <20260910155247.GA251185@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pG4k0mHa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ku6zvZXd"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AA1CA14000E3;
+	Thu, 10 Sep 2026 13:56:24 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 10 Sep 2026 13:56:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789062984; x=1789149384; bh=mnGojnksPa
+	yLHP9V2z3/JaRhVo7/j6qg5Zrt1gE+haM=; b=pG4k0mHalngwy2GHSFTuvAUGZy
+	WQyWxovhQyM/D/rj21wtZxEAWOsNyLTjLHh0Yp7mEZNM5xILyRWOFPuZvXca/FHs
+	PaEIO/pUCneIrj3yTCPt737NqDfz++pyrW+2dGEXO2qjYQTvBv0MtGSUy643NncR
+	VNguCfaAP5LgXLCK7B6ER7W5YQrV7Z1HV2AtrHdymj8n7nYd0yQ/1eNbXZGFirRP
+	R7RslPD/sc0WjpT/SHTvJJkQidtIbwi/j9xfxY0fYq57HHC6/w5ccY3MyesJguK4
+	ijBqWD8Nk4q3r5NKizldEDRnXIpcb7eSCmILVUjDAxr+rlZD3tdeTPpG4Ddg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789062984; x=1789149384; bh=mnGojnksPayLHP9V2z3/JaRhVo7/j6qg5Zr
+	t1gE+haM=; b=ku6zvZXdvLf10jFbkD+B9pLciB9QHd0/KSpC2nkAAlb3Au83mkM
+	eAlMN+JbONBNJe+b7GIufwuDyEO7mjU/xRP4eTbe6JqzCz8rfTXlixx9UHtDAWOu
+	86GWTSj3samsyo0Zru0UHpop9ejoob1XpmYFUhVFlLS/G57tx3e4FjQX4MLolCpA
+	9L7zWvdDeU2mB+ezd24oCvoDXsuKuakPhBCpeezcEO+S4jFhE90LWWvjw2PDgIt/
+	QJlZ5Sc0kwOZNj6SAnUCZFuJjThudW0sPoeyBhhMKJGdDcmoDYx4wnkOitd5nEJ8
+	vNsyVJw1WqdSX3mgjOyxYrGaJGqakVedzdg==
+X-ME-Sender: <xms:SO-iavYrk1jahTgbtNoJgtUD0fcjUUb0ErjYyR2dc8jLk89DIEWdbw>
+    <xme:SO-ialZ8Hy4da9QLP6Tx216QKlWiG5haqPSV5W67_hYqOHrMnhB-IsrDPEvm9K3Dh
+    wqMzaoKmWwCX96Ul4YvrR6qf0RBhnSn2q_f8G5rncrjs5KwFLczzQ>
+X-ME-Received: <xmr:SO-iam9CT45XUM8baoI0uvwKaPfnwjqm2b645SsaxaSYwVR1lj4gryovkn5copMm9oV-zO6oDLNaTs8MR9ix1MwFgIWp4oaCOBuv>
+X-ME-Proxy-Cause: dmFkZTFHMI7CppB3qrvWN6acIrnl8APm4g43DEbnv2k0Jl4VACAYvtHc7GpDYURZ7vUJCQ
+    Fhw8C7xh+tjM0F9kqbXZqWgm+1wUW+G3x6fSyUUEra1aOPXsxrTD2dSSBhvP2sQsv5ADBt
+    qARydslPBpVoT5Z6aQ/LjeDcuBIZBgyiOJbhhwCat/ucDqPbvwyTepd0zqvWBR7Rx73SDI
+    RiDDp2E/FMyFZqt1DwEQJX8w0n9/ojpZiddhNsDXGKBptF0Q7ZZwyizI3cjDvxYuU9gbj6
+    utP89sbdXMAjWRgDigV8fAODQMGWHimUehs1yWpXhwHqlOu4IgaWunSsE6wSub2OAnZaoM
+    AJSzjtrB2b6Y3R8C+fjePf1OzgbB0ET6qo2JDYV/gin7lay098Vzljv71PSPWM/aKTFMAL
+    kRqxBmx8ej01Vkoc0bTfR3RyMvwMuYhP99EdqTmOtLtIo09tWJXw5Dh8Sa6lLU3hSMF9G8
+    z6GzdT62kdHixB+ZdV0LIW9WhjVg60re5Js6mNiqn95IG7ZVtclq5YnI4nRn2ROkpk6Giw
+    1H0AgMkVJoIgbQHJVmjNZ+hACTMgBKJfqHL5SqC1/CMxgfyoZsdy1ca90o5AGL41F8N4IG
+    dkMBDIqf1c1b5Cdzql4WEDfZMZVe8Zx6ucQ/14OZ6h3qvJ24shnoDq/+TcSA
+X-ME-Proxy: <xmx:SO-iakgR4ybWf2_2omjd92gVeft1JIJpTpxlktPN6YwojKU-9jd84A>
+    <xmx:SO-iamdB1puxY-W1mZ1dk5PIQrHcmizbTl_LwPRTWsKfVeqcgdcI8A>
+    <xmx:SO-iarqwhsS0v_K-1Rg_myK_73YfAZDP_Xn5UNz1alpNpwfwkyUKhw>
+    <xmx:SO-iarBug29eOFTMsKQTnTsVX4b53ABwhjlPscs1h4DxljyhtvkF7A>
+    <xmx:SO-iamtK9NhQN2P_RcQJPbtPR0ZVycaVhoDPqQcEdNjmbmAnvt-N2WV0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Sep 2026 13:56:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Mark C. Chu-Carroll via B4 Relay"
+ <devnull+markchucarroll.fastmail.com@kernel.org>
+Cc: git@vger.kernel.org,  "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+Subject: Re: [PATCH v2 1/3] Update t4001 to use modern syntax.
+In-Reply-To: <20260910-modernize-t4001-v2-1-ac53e9f5d717@fastmail.com> (Mark
+	C. Chu-Carroll via's message of "Thu, 10 Sep 2026 13:07:33 -0400")
+References: <20260910-modernize-t4001-v2-0-ac53e9f5d717@fastmail.com>
+	<20260910-modernize-t4001-v2-1-ac53e9f5d717@fastmail.com>
+Date: Thu, 10 Sep 2026 10:56:22 -0700
+Message-ID: <xmqqv78ddm7t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: exim-smtp-569b45c49c-9ks7p; auth=pass smtp.auth=ub4nal@mail.ru smtp.mailfrom=ub4nal@mail.ru
-X-Mailru-Src: smtp
-X-4EC0790: 10
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD9344F665CF1C84C2981A1698E91343846DA5D2C916BDB6FA9182A05F53808504017264B994300604B3DE06ABAFEAF6705C0727B65EC3C99DBC87861116BD789A3AF1470CB4BE18E90
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE77633BACAB33B9508C2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6778DA827A17800CE7370F4F695FFFC24BEA1F7E6F0F101C67CDEEF6D7F21E0D1D9295C2E9FA3191EE1B59CA4C82EFA6588F2CE5D204F6F28A2E070BE324C7D3C434645AAEB45A13646F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE715C5AF61602698339FA2833FD35BB23D9E625A9149C048EE33AC447995A7AD1828451B159A507268D2E47CDBA5A96583BD4B6F7A4D31EC0BC014FD901B82EE079FA2833FD35BB23D27C277FBC8AE2E8BAE9A1BBD95851C5BA471835C12D1D977C4224003CC836476EB9C4185024447017B076A6E789B0E975F5C1EE8F4F765FC1A9DEC5B19A4C7AE3AA81AA40904B5D9CF19DD082D7633A0C84D3B47A649675F3AA81AA40904B5D98AA50765F79006379E759133251BCD1BD81D268191BDAD3D3666184CF4C3C14F3FC91FA280E0CE3D1A620F70A64A45A98AA50765F79006372E808ACE2090B5E1725E5C173C3A84C3C5EA940A35A165FF2DBA43225CD8A89FD2A95C73FD1EFF456D8C47C27EEC5E9FB5C8C57E37DE458BEDA766A37F9254B7
-X-C1DE0DAB: 0D63561A33F958A5C8C580008EF525095002B1117B3ED696149AAA05E4ED1B05E772F934B9BCD185823CB91A9FED034534781492E4B8EEADB05233B9BC4759D3
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE1918E10F71CB4DF9F96AB70F9BE574AE9C625B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D65973B96C3F0B6404A73C1C556D31CC29ECFEA0F6680C5FBE969A98B5B6FFEDFCB5FDC5B11A8028E3EAB8341EE9D5BE9A0A7F623429F7A07E0CFDD5435D9FFC9554AAE3218006BB9C129350E1BD188BD56E4C41F94D744909CEFACD6B4B6D928230F8CCC96A59B602D5CC2E138FFB4ACBED
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXOcIETfglQORZ0zpDET4Zrk3igikrdHlWKMy/SrMZ/BUe+eya20PhEY=
-X-Mailru-Sender: AAD8E2226B689FDAECD2CED6BF24A7DE786AB488EA76031FF46189D161B61A0163295D2B0DBB5919B184EB62A9F5F47C54E226A98846702133E8FD7590A32A2E63BD3AF61A418D9396323D2A0E59D4D41AED8EA1FEF7CCBBE2C5234E33BCAA240EACFF33BD5939F7C77752E0C033A69E3453F38A29522196
-X-Mras: Ok
+Content-Type: text/plain
 
-Hi, Jeff!
+"Mark C. Chu-Carroll via B4 Relay"
+<devnull+markchucarroll.fastmail.com@kernel.org> writes:
 
-> I'm really not sure why anybody would use those other flags, though (or
-> even --system, for that matter). After reading the thread again, I get
-> why we want "--global" for advice that only affects new repository
-> creation (like defaultBranchName), since otherwise it could never have
-> any effect. But why would you ever want --system?
+> Subject: [PATCH v2 1/3] Update t4001 to use modern syntax.
 
-I initially looked at Junio's suggestion and, based on his experience, didn't argue with it, and then I didn't come back to that message. I think the patch should contain not + enum config_scope scope_hint; but + bool is_global_hint;, since I myself can't find any scenarios where advice should be disabled at the system level.
+Documentation/SubmittingPatches::[[summary-section]]
+
+Also "git log --oneline --no-merges -60 origin -- t/" may give us
+some hint.
+
+> From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
+>
+
+Documentation/SubmittingPatches::[[describe-changes]]
+
+> ---
+
+Documentation/SubmittingPatches::[[sign-off]]
