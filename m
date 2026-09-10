@@ -1,239 +1,137 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from send127.i.mail.ru (send127.i.mail.ru [89.221.237.222])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2C038E100
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 08:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C08397958
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 08:54:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.222
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789029336; cv=none; b=JdWlPQuvI0I6vBiJFj1du2TCmGbBChxR7qxZG1FR8uMBM465QxbdZrJFAzCfmFOIrbcEpjwnaJa1YJCY1s9zSOrf11Rxr5M4qa1sS9YiQLH5ubPzcV52cL7WvVsPhKvzoPEUaJklCivc/CD7uES3cV+kL7r1+7dvT9fLR7kzznA=
+	t=1789030456; cv=none; b=JmEf80fDaJZ1nLtptWAaXVIUi35BGTBULmmlK74hjC78M9KVvZCD6CubEGzwP6d89IWOQzURPYWZKpKnfjNw7t6ji7PornoH6ZzB85pfKc4+VGx4Pbs4H0lKE4uWHcDMZ0cGLWratGbBoPlc4qmF/eryLo3dF3jpEGy8gjADQg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789029336; c=relaxed/simple;
-	bh=MZEUlYlVJSouhvdW6dhQv+JpIdBQ1dlGPLmGQ/HI96M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jpRsHP+W1neykzCqLOPQzprqJ7kpuPw6U+eUYc2i6lmKKEKA9x5DFKVhh1EDH7euAKcdMCwoo/VkMLEa7bH69M1fRbmn/BvngEz/43801cAtIkOq26F7zgU3QkMwtmCCbB8+vn4YBYtwUdJDriA6ABQYimGo3hGhXbdBM+tl79U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D/tc6qlr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GYkFj/7r; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1789030456; c=relaxed/simple;
+	bh=Fxu5lXICN/2fW6gO1hbO+pUkQqmX55s/xVMEBi+Mj/Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bXJY3pHtjZWO+vgpz265wAt0OI969ZA8G0cSt718JYUHLHhncatrdP+DRQcDbfNP3mnnQrZJ483Xb5G5phWzQutozD/7aJoozve3KjfLq9aWF4/NDWWf1+FdRBMm70xP+tERFzzknMvx0v3lOgeFw7k57TBQr1g8OprWskmqpbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=SC7+E0Xt; arc=none smtp.client-ip=89.221.237.222
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D/tc6qlr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GYkFj/7r"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EAB057A0127;
-	Thu, 10 Sep 2026 04:35:33 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 10 Sep 2026 04:35:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1789029333; x=1789115733; bh=P71aMsSVnt
-	lKlaaHp/y2msR1Ld4SDYZjOx4ijM4Qd8I=; b=D/tc6qlr1bmzH9y4cY0+2Oez0H
-	0tygJ2mSR8qHDU92RUpuhjJZopeAbzNiUSXQ6OQEhE0QW2o4iov2sGFaBxUOI8pM
-	yk5ZyKY5YHAgAl2m2nBVutuxX/R7NdA0oGRgu2yYg0tNA13c0+cAH0NkNr+ofcwg
-	2bkVKETVoP5o024KRtiJy4JXaBLUTenqmeK5WKI8m0t+r6YMECKafJiAzLDicQsB
-	eBqGVkb6qWwsCaIEYNTZXIgIkxI45tm0Gt5w5hYEJmNCaDgci4Eiq5IhPK2shWA3
-	5SN8jkqAmgihh4sxRmQVQXgx6iv+tDjdhE3d/BOfF04yHcqWAAhB20SKBgzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789029333; x=1789115733; bh=P71aMsSVntlKlaaHp/y2msR1Ld4SDYZjOx4
-	ijM4Qd8I=; b=GYkFj/7rjUnRda6yX6QYsOLtyWQrCQ5k0iY+gGyXmbM1yclDqPd
-	7KBLV+pLOAVMMFtpFpQ5kdnIBGrir7rTASqfUtLV4o37gvwjDy4+wf6MR9ROZc8I
-	sfWH0UxTq4CM9IQuMidfG3E0QBZ8NfBOt6Hv/C3Fvz3VTvGEnzyK2Zh7aOZII7eB
-	3b0nMn/Dj+BTra0CW5wdWtLNiwghKr+ScNq624z0dOpiUd9k+1fALThOui6bdOD+
-	IxvduSdq+MkftDYs7DTuSInufHhgkpQ9h8yW1vxMy/q2jecM5cMopzdUR+GE8MFI
-	739V0xRQnJDMBjY4Za7uYIXfcJQW0EVXKZA==
-X-ME-Sender: <xms:1WuiannzejWcMAB6Vdylfp5x1ZEBjggg5RYQgUGuzpFmlirTkuy0lQ>
-    <xme:1Wuiag0AOHau2cPerS0_0446OhURSGVkdVpEDX7ECdNdUelXzHNI-4T3N2qOWI3Yr
-    hi-l_d1_YlgGfW3WHtf1KEkNyRdwfqrQ0Df-HG7zLZXSvtrJcwJn5w>
-X-ME-Received: <xmr:1WuiarSpKCzEvCOT38c9SxGidf6qGGnrknkFIM22Ic-5ebeQEud3OA>
-X-ME-Proxy-Cause: dmFkZTE4cQUiJ5k5OyTBEAgh7SuuUXMXPqTzQWiZNKlDS3ikiWWu3zG2U1IBtzn7ZKKXjf
-    srJKMwOfcYjwL3UqsX/P7Dm0AXTFFfLT/64HcJs/QbLdKJQnMO9PaUZBNGk7UyDsroWogm
-    c+S6uCEVRowusEtw5EcQNFwvZ1tNk9YcMuQZ3rGjw9v5zcI4/xBX/fmB9C2KGzoYJLPp5I
-    KriDTesLGXFX31+FPW5g3reJZH3P1+KFp8SKnnNFwNTx7JwVnqHZh+dOkA8FIM82WalGbB
-    CByxnrB5QWf03rKtaGpoCT6LUvOtr5EMn5rMncz9bLNdu5MUTmyaL4EtxdvwnyRnFU02lE
-    jAXIVeoDsgkPYogTZWhC6+81KBnEYmAJ2JCyb/WHZjV9NsJKkvnhj7G514KVJchgh7deTm
-    ykKvyxNOtEeldYz3tUJZX4PFUfYzvyVIe/UHbaKTO7wh184JTb+Ej5VbKQv/JL7pe8I0We
-    tCIZ5z9jQPmZ02/KrMfojaTUwcHIfTax+l6amoGp/bURZDlTPCfyVmWidwtg3B3WoittRd
-    t/OZVRSudQup3BGOC/BqMBTkagRKaG8xJ87NgkpHNyCcPgqoAtl4bmx3Pd68Om52Tc/hB6
-    IMEmz4+COMqNVG9QHEDZow/ZX+oe6Y5HTa4Ri0MZNL0MFMyRkKOHZ0jvMgtw
-X-ME-Proxy: <xmx:1WuiaqtCkgcmyhsqcnwa4fQgCtx9ioW1zSfNx6fzSHeO6F720wN1Zg>
-    <xmx:1WuiaoaClkqJmazhSP--mtdOpIYfWexyLcarGLlncIHw9vi87eqB_Q>
-    <xmx:1WuianvieSB6AAJmpK4ROQRBnyT_yD3-Kuuu5IdNt9BT1TtViP06mQ>
-    <xmx:1WuiaiGjWKT4pEGrFl2sMl2CowXHwQwUSrOURWBXc4KpLeE-sn8QJg>
-    <xmx:1WuiagW-OvRxkAK-BGmU37PtotI5FcVI7dEYv6qoFy3KILHYPLG4W9AA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Sep 2026 04:35:33 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b399344e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 10 Sep 2026 08:35:31 +0000 (UTC)
-Date: Thu, 10 Sep 2026 10:35:29 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ariel Keselman <skariel@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] refs/files: avoid packed-refs lock for root ref deletion
-Message-ID: <aqJr0ZB8qpthTEGT@pks.im>
-References: <CAMuXvLD_ZsT8Jnfs_x6yO_aW6hrxQyjnuES_b21cq8a7nD=sKg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="SC7+E0Xt"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=nw5acM3kb58GLQFP62ZgPhJRlRHHAlcChwonwVXPBbI=; t=1789030453; x=1789120453; 
+	b=SC7+E0XtMM+PQq0pUb7Lc/WotFzPLLzLtHpvuyFT/kfAb6iODW5if5P2Sx/Nj768RNQx6Yo1Jtr
+	2PbNoib8pt8+lFwu5bbL5suRT4CDvu5Yaoe1ssJWS7Q0nxTspFIdQqrOUjw/pVr2QWUeDj420cvPw
+	x10Z3OY5ruSQusKL0h/X8RMgGg5QB3dw66vhLgqnHoTDp3syrwSFqNuWSA0sxBbyr4kJOU0ahq7bD
+	9cyUWYoTlZseQwqLA+xw3E7bH4fFepIrfXUQoj5SeEfBeCufiP+rcZ83xX5MqbT1JLZYC7dM6jC+7
+	40vfsQ6TMXrT43Eb9kmgKLYpEaEgs5qe8j4A==;
+Received: by exim-smtp-569b45c49c-jnnrz with esmtpa (envelope-from <ub4nal@mail.ru>)
+	id 1x4aXk-00000000NGh-2pYF; Thu, 10 Sep 2026 11:54:05 +0300
+Received: from vatem (localhost.localdomain [127.0.0.1])
+	by vatem.localdomain (Postfix) with ESMTP id E3CE99F60D;
+	Thu, 10 Sep 2026 11:54:03 +0300 (MSK)
+From: Vsevolod Myalitsin <ub4nal@mail.ru>
+To: git@vger.kernel.org
+Cc: ub4nal@mail.ru,
+	ben.knoble@gmail.org,
+	gitster@pobox.me,
+	peff@peff.net
+Subject: [PATCH v4 2/3] advice: introduce advice scoping mechanism
+Date: Thu, 10 Sep 2026 11:53:52 +0300
+Message-ID: <20260910085353.109373-3-ub4nal@mail.ru>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260910085353.109373-1-ub4nal@mail.ru>
+References: <20270829004959.90983-1-ub4nal@mail.ru>
+ <20260910085353.109373-1-ub4nal@mail.ru>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMuXvLD_ZsT8Jnfs_x6yO_aW6hrxQyjnuES_b21cq8a7nD=sKg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+Authentication-Results: exim-smtp-569b45c49c-jnnrz; auth=pass smtp.auth=ub4nal@mail.ru smtp.mailfrom=ub4nal@mail.ru
+X-Mailru-Src: smtp
+X-4EC0790: 10
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD9E52C9190B278547F3E9EC0952131F526FBC1A4C679E9DA31182A05F5380850404C228DA9ACA6FE27E4C0CDCB46A5212A3DE06ABAFEAF6705781C72472C2EDF811964E60332344D73333BECB3000124C7
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE755BE8F535441E38CEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB55337566A08549CA5D964761D42379AD1C95F06F9089AB6642E4212F01E31807D95DE25A8EEF46B7454FC60B9742502CCDD46D0DD2DCF9CF1F528DBCF6B57BC7E64490618DEB871D839B73339E8FC8737B5C2249E232F00D8D26902CA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD18BDFBBEFFF4125B51D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EEB28585415E75ADA94AAC223A686B1DECD8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE362B3BD3CC35DA5882D242C3BD2E3F4C6C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F79006372BF47D31460A3964EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
+X-C1DE0DAB: 0D63561A33F958A5EA87D2A8BAAEC2CA5002B1117B3ED6965D0EB24A19E8B9DAED71F038FC0469933610D81D389A125CDE35189EBF2DEA281E618B5D5F965AFD1BF51D96AE4B494FB2D1C9E48B6DC60AE2A7E19323554B12787CBDA4B9FA07ACC6EC20BF4CFA3F444EAF44D9B582CE87C8A4C02DF684249CC203C45FEA855C8F
+X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34CAB70F9BE574AE9C625B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659F3D561E54C29ECAC15A2B825D0B20235A3160A59B1F61992CFD001C7669BDF94689EAF2EA6462E69B8341EE9D5BE9A0A0E473B2F1CC67542DC2AF3379F0A3F45D662C85EE5227C67C7CEAA0681F5848F4C41F94D744909CEFACD6B4B6D928230F8CCC96A59B602D5CC2E138FFB4ACBED
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXOcIETfglQORZ0zpDET4Zrk3igikrdHlWFpuP5d0Zh5am5/lFOSIJYM=
+X-Mailru-Sender: 288943BA7BCC8BBA2C509D5366AED3E5B676C78F813EF362CC811723C208B41711A4D294405B80565615BDA9201AF9813B7E521F6A5800A996940349D467AF430D26F6DE3BAD3FFE4DFFA654C60F801316CD019DBEDFC45331DC91172AC7F52EF91D4A7208CD43CE3DDE9B364B0DF289AE208404248635DF
+X-Mras: Ok
 
-Hi,
+The advice settings currently do not distinguish between configuration
+scopes. Add a scope hint to advice_setting so that an advice can
+recommend a specific configuration scope when disabling it.
 
-On Wed, Sep 09, 2026 at 11:45:46PM -0700, Ariel Keselman wrote:
-> Hi,
-> 
-> Deleting root refs in the files backend unnecessarily locks
-> packed-refs, even though root refs cannot be packed. This can cause
-> post-commit cleanup to report an error after a successful commit in a
-> linked worktree with read-only shared metadata.
-> 
-> The attached patch skips that lock for root-ref deletion and adds
-> regression tests. All seven new tests fail without the fix and pass
-> with it; broader ref, worktree, and sequencer tests also pass.
-> 
-> AI assistance was used to generate the patch, tests, and commit message.
+Use the existing enum config_scope to represent the scope, with
+CONFIG_SCOPE_UNKNOWN indicating that the default configuration scope
+should be used.
 
-Please consult Documentation/SubmittingPatches. The expectation is that
-patches will not be sent as attachments. I'd recommend using a tool like
-b4 to send your patches, which handles a lot of the nuisances for you.
+Signed-off-by: Vsevolod Myalitsin <ub4nal@mail.ru>
+---
+ advice.c | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
-> From c5d12e97a78123965590553fddc0dd78af3e006e Mon Sep 17 00:00:00 2001
-> From: Ariel Keselman <skariel@gmail.com>
-> Date: Wed, 9 Sep 2026 22:16:50 -0700
-> To: git@vger.kernel.org
-> Subject: [PATCH] refs/files: avoid packed-refs lock for root ref deletion
-> 
-> Deleting a root ref queues a packed-ref transaction in the files
-> backend, even though root refs cannot be packed. For example, holding
-> .git/packed-refs.lock makes "git update-ref --no-deref -d AUTO_MERGE"
-> fail, whether or not AUTO_MERGE exists.
-> 
-> This also affects post-commit cleanup, which deletes AUTO_MERGE after
-> updating HEAD. In a linked worktree with read-only shared metadata,
-> commit succeeds but cleanup reports a packed-refs.lock error. Deleting
-> CHERRY_PICK_HEAD and REVERT_HEAD is affected as well.
-> 
-> Skip the packed transaction for root-ref deletions. Keep loose-ref
-> locking and packed-ref deletion for other refs unchanged.
+diff --git a/advice.c b/advice.c
+index b556c8b38e..12a68ea716 100644
+--- a/advice.c
++++ b/advice.c
+@@ -42,6 +42,7 @@ enum advice_level {
+ 
+ struct advice_setting {
+ 	const char *key;
++	enum config_scope scope_hint;
+ 	enum advice_level level;
+ };
+ 
+@@ -96,9 +97,16 @@ static struct advice_setting advice_setting[] = {
+ 	[ADVICE_WORKTREE_ADD_ORPHAN]			= { "worktreeAddOrphan" },
+ };
+ 
++/*
++ * TRANSLATORS: This is a command line that the user should run.
++ *              Do not translate the part inside double quotes.
++ *              The first %s is the config scope (e.g. " --global"),
++ *              the second %s is the advice key (e.g. "defaultBranchName").
++ */
++
+ static const char turn_off_instructions[] =
+ N_("\n"
+-   "Disable this message with \"git config set advice.%s false\"");
++   "Disable this message with \"git config set%s advice.%s false\"");
+ 
+ static void vadvise(const char *advice,
+ 	const struct advice_setting *setting, va_list params)
+@@ -109,8 +117,21 @@ static void vadvise(const char *advice,
+ 	strbuf_vaddf(&buf, advice, params);
+ 
+ 	if (setting && setting->level == ADVICE_LEVEL_NONE) {
++		const char *scope = "";
++		switch (setting->scope_hint) {
++		case CONFIG_SCOPE_LOCAL:
++		case CONFIG_SCOPE_UNKNOWN:
++			break;
++		case CONFIG_SCOPE_GLOBAL:
++			scope = " --global";
++			break;
++		case CONFIG_SCOPE_SYSTEM:
++			scope = " --system";
++			break;
++		}
+ 		strbuf_addf(&buf, turn_off_instructions,
+-					setting->key);
++				scope, setting->key);
++	}
+ 
+ 	for (cp = buf.buf; *cp; cp = np) {
+ 		np = strchrnul(cp, '\n');
+-- 
+2.50.1
 
-Makes sense indeed. Root refs are never packed, and consequently it does
-not make any sense for us to try to evict them from packed-refs, either.
-
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index a4c7858787..41887f180f 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2981,10 +2981,13 @@ static int files_transaction_prepare(struct ref_store *ref_store,
->  
->  		if (update->flags & REF_DELETING &&
->  		    !(update->flags & REF_LOG_ONLY) &&
-> -		    !(update->flags & REF_IS_PRUNING)) {
-> +		    !(update->flags & REF_IS_PRUNING) &&
-> +		    !is_root_ref(update->refname)) {
->  			/*
-> -			 * This reference has to be deleted from
-> -			 * packed-refs if it exists there.
-> +			 * Root refs cannot be packed. Do not acquire the shared
-> +			 * packed-refs lock when deleting a per-worktree root ref.
-> +			 * Other references have to be deleted from
-> +			 * packed-refs if they exist there.
->  			 */
-
-Nit: I feel like this comment is a bit too focussed on the root refs
-now. A small, incremental change could've been:
-
-	/*
-     * This reference has to be deleted from packed-refs if it exists
-     * there. Note that root refs are never packed, so we don't have to
-     * deltee those from packed-refs.
-	 */
-
->  			if (!packed_transaction) {
->  				packed_transaction = ref_store_transaction_begin(
-> diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
-> index 74bfa2e9ba..b7f3287841 100755
-> --- a/t/t0600-reffiles-backend.sh
-> +++ b/t/t0600-reffiles-backend.sh
-> @@ -519,4 +519,50 @@ test_expect_success 'symref transaction supports false symlink config' '
->  	test_cmp expect actual
->  '
->  
-> +for ref in AUTO_MERGE CHERRY_PICK_HEAD REVERT_HEAD
-
-Isn't it a bit excessive to test for all these different root refs? I
-don't see much value in doing that.
-
-> +do
-> +	for state in existing missing
-
-Likewise, I'm not quite sure what we prove here. Should be fine to just
-test with an existing root ref.
-
-> +	do
-> +		test_expect_success "deleting $state $ref does not lock packed-refs" '
-> +			test_when_finished "rm -rf root-ref" &&
-> +			git init root-ref &&
-> +			(
-> +				cd root-ref &&
-> +				test_commit initial &&
-> +				if test "$state" = existing
-> +				then
-> +					git update-ref "$ref" HEAD
-> +				fi &&
-> +				: >.git/packed-refs.lock &&
-> +				git -c core.packedRefsTimeout=0 update-ref --no-deref -d "$ref" &&
-
-Setting the timeout shouldn't really have any impact on the test result,
-should it?
-
-> +				test_path_is_missing ".git/$ref" &&
-> +				test_path_is_file .git/packed-refs.lock
-> +			)
-> +		'
-> +	done
-> +done
-> +
-> +test_expect_success 'root ref deletion preserves packed refs and their locking' '
-> +	test_when_finished "rm -rf root-ref" &&
-> +	git init root-ref &&
-> +	(
-> +		cd root-ref &&
-> +		test_commit initial &&
-> +		git update-ref refs/heads/packed-branch HEAD &&
-> +		git pack-refs --all &&
-> +		test_path_is_missing .git/refs/heads/packed-branch &&
-> +		cp .git/packed-refs expect &&
-> +		git update-ref AUTO_MERGE HEAD &&
-> +		: >.git/packed-refs.lock &&
-> +		git -c core.packedRefsTimeout=0 update-ref --no-deref -d AUTO_MERGE &&
-> +		test_cmp expect .git/packed-refs &&
-> +		test_must_fail git -c core.packedRefsTimeout=0 update-ref -d refs/heads/packed-branch 2>err &&
-> +		test_grep "Unable to create .*packed-refs.lock" err &&
-> +		test_cmp expect .git/packed-refs &&
-> +		rm .git/packed-refs.lock &&
-> +		git update-ref -d refs/heads/packed-branch &&
-> +		test_must_fail git rev-parse --verify refs/heads/packed-branch
-> +	)
-> +'
-
-And this test feels like it's testing almost exactly what the other
-test does. The only difference is that we have an actual packed-refs
-file, but that can easily be squashed into the other test, too.
-
-That being said, what we're missing is a test that creates a single
-transaction that updates both a root ref and a non-root-ref with a
-preexisting lockfile. Such a transaction should fail even though we skip
-the packed transaction for the roof ref itself.
-
-Thanks!
-
-Patrick
