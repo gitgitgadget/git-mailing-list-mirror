@@ -1,115 +1,94 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39354414415
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 19:54:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBFF496D3B
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 20:11:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789070066; cv=none; b=ZSS87drf5SD8dz40pXQCUStWDEjO0imnfuQJxpt8JxG1nDmJfop2THKCMaCGWcNRMOnZyOixV/xGGG/KRAZEjLXXPfmZHG3VFmMuMOeR89atTzTqRGdyY+IR/Aw63TMZNrKxzV24vhBOet5EbGq4Nh8Yv0/8eO96G9hxTD/CNTI=
+	t=1789071075; cv=none; b=kGoT6BwgzY8fui69mDG2Zuts+oy9jebmV1L9kmugQqWDXW3hSfbXLvXq0IyZxE4FI+ucF9CNF1YF9ENgCYXrBT/SXNQf0xo2oVS1Y1T7HLJRuf8xkzn+x9ZQApHpiXMdvbqta5EDhBFH+9JWyppo4qjUDhTNj1vxXBDFyo9IHvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789070066; c=relaxed/simple;
-	bh=E7fHiqDRIl/weUlrhFupBVfCSX0FqOYLqjEuDNafazo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hCBpEJz1q3OCPm1b9gr54YN/J/brZuJi9Dl9yv95EBjRsNXB425vhP1xahRYSSnVxK88eMJj/hT5syJW7GGzoxKi664Vv5XVtoZpJyayYnJbRYVoYj/gDm0ESPXxvcbd4OOptJHS/Vr7h+Y/vFbb0K51FA18lDWgd+XNLOzgDJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gs92db4V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RrrhZQ8S; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789071075; c=relaxed/simple;
+	bh=5rInuPLyETE2tRBnxHWLf5Z4nMH2WukZ1SR1FcsRJ/M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IjQE1dWkA/wUAfhkjxQZP07dnCrHpyV4MYkeBf4ThqyiYNbizr9V8NIcIBAlvsyCWIgAlUQpaMzV6+ybMuZK5vi1+/Ddo7tJkd5Q6uKIf/zdB8STi0/v4jTzTF9VZp/z8CNBg/gktUJhjOwZmU44KDpgceSV/brtKwosF+vQ0kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QLWNvOn3; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gs92db4V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RrrhZQ8S"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 17EFCEC00C6;
-	Thu, 10 Sep 2026 15:54:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 10 Sep 2026 15:54:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789070063; x=1789156463; bh=JWDB5L1K4Y
-	HVFv3slzyRvtqmxGcG7KbrYLuhj/DPUKI=; b=Gs92db4VWXMKsNTbrg+otJahwN
-	b1ujvrvrIDWL5m9y7KbGbaWe2oO1fKCsx9OTNRq0w6bm55qVAoHou3XGNXhtUGL8
-	bzHDdmExro4DT5WlOLJeuhj+cBGk64LUaM8OFQBhzoDuzTwI3b83ZIYpQzBIhtYH
-	hfuRV105nlgkmHPB9eVRNZa6PweKSqpZnrnAa4WqowLx1GdwbSbkpA9S74ZUl3Xa
-	61S99UGuNzkkPnaFrm46jfUN4qKTcWKLdTBVfMr5hWSSc4/IgQ8W9t81/u/fIpFl
-	TK3Uj1NYMPMKZgAq+5ggJYH4MAWzGqUf+oNIKnO9tAmW3SpM6fLx5k7m+onA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789070063; x=1789156463; bh=JWDB5L1K4YHVFv3slzyRvtqmxGcG7KbrYLu
-	hj/DPUKI=; b=RrrhZQ8SYbGo+yJQfLTkkXtpfwR1yPB/PO/ov+TNzNV0yZyjReu
-	FGodLmKYNqMEwBjzmanuImp7sv7Fc80fXcNDRFHIs0vCzg0G/BpbtnUMtxDKiwty
-	25wc1O6ANxMwyHyxSwreMrxXx2CDfHo0ceqepU7jMxG938n0MNUqv/oVRUoDNq/h
-	U5BdiDNaiyjXyLBULO7twgq1ntiXV1eLSbqepJQPj0L/Qh0mg5FRxKJsRUjzC944
-	Q/jAqBfhYPlSR0erRvAgjOQgDRhPSsGuVNgA4DZQOyPuJZISB3m09O53doR2/f/h
-	VuoPrWtBamGzje9Yv7D8dO/ySpxX9w7O6cg==
-X-ME-Sender: <xms:7gqjasznp9zspgKl8Ius21PNA4rU3rKN5tcGX_ZqlEq_bmuQiSSzhw>
-    <xme:7gqjaj87QF2cWd0KrtG2YfWc2sE7TEf8Ol72vvLJptO7XGvmnmGWnQjbmDrSVSfZk
-    1iCn54nWtgeYT0FEmEJsJWddGFL9D6QvE7jiNmIe5_QnAQS8manXFs>
-X-ME-Received: <xmr:7gqjaoIua_J_vrNZbisE0HsnAcpbKjJou_fG-_A8_YNNHBbo2OhiENLKniLhz_oTzRf7TapU8R2Uu0dBSULbiQjdKoyG4tS1WVuS>
-X-ME-Proxy-Cause: dmFkZTGUvykYuhGxUYJ0BFkh07Gxe/G+AlZrR/C/C0n/RNbsWZpnJHDtUHrf9sniNpfj/6
-    OWVGvtVUrrfMPJ0aa2BTc/XNsGaJjfP0Rxp9KUuYeczpVPjj2zzZfHlnW7J7Fb1HzdG9r6
-    Al66KUpbYuOTmKzV31VKh9dkhD4m92iIc/qWHbeVG47SUBDwr4W3nn+0HobDJQ/44yPSBo
-    TzxKCSDqFZoClOJ2tX5LRekhs6DvjHzefXnI03ksHuTg2TNjw9zq/v/+IaTAUBqFVKpl6M
-    5H1sFmGFFhTQ8vLMsXDvXTJk3yl9nAsWBv8TuN+gIMEmcrebP6HInWOyvT7hbINRQqkiGu
-    X6u2egLwhwCPQICMkeqA08y+NEurnWSXfo5j9fke4iwQqqaRJePJkoVj5/TXuunehrh9oG
-    o4eaaGhS2ARNeMn3GyBk3H1UPxhmSkJBMw7XIlCI4GSwm2arg+0lF7sasXwuaLGHfux16n
-    J8SOEHF3+fzwtGmDu29NsoTrx/z3k/qIemjnRQM9zNAw4IgtySM27FNshjH+vovowNTsmQ
-    banOkZMo7lRWpqxK9j5R4e7ZgoDhBDeNLUBNwdsJyGYLaR4gveYvJZIylCebl5i/BARo0V
-    j0ylgyPSHjT1LIf8fW7vBQGHjk4c09tSlAlsYIoPvReWfZMRJvfYfPhhpyLg
-X-ME-Proxy: <xmx:7gqjahcJMQNKRg6XXSZZtvmAHNxbOW2Zx_EtJjFIF5puhc8riFUV_Q>
-    <xmx:7gqjav9XtSMDeT7blma4WZPjCjC2w0I17WRBsZAkYJVgoDHe6eTHyw>
-    <xmx:7gqjamqwifEcrDNgsjx6QbB7OI8ZYfFFTHS-PcijR7zSDE64FGjVKw>
-    <xmx:7gqjasDP3yf8-BWN0_9BU7sJPjwbA_Q3MK_Q-zzWsqtmiDh3kKndKQ>
-    <xmx:7wqjanYBnh_Whqulvg-NjXbp0e61wy3cfoZ-aYtzrPJxkOgRcZx8oHMz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Sep 2026 15:54:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Vsevolod Myalitsin <ub4nal@mail.ru>,  git@vger.kernel.org,
-  ben.knoble@gmail.org,  gitster@pobox.me
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QLWNvOn3"
+Received: (qmail 32763 invoked by uid 106); 10 Sep 2026 20:11:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=5rInuPLyETE2tRBnxHWLf5Z4nMH2WukZ1SR1FcsRJ/M=; b=QLWNvOn3lXwcb7GELV3nLkx4NqF7R7NCZ0tkhU/dXwX0PCNCt2l+e43s63Fbm/cobUIIW9c2swIQFLkMlCKsIbVBW4KIiWOf0hAzR7fgCn9nKe39Edx1lsn3A2adV5dSRsVF0DPLKCMNZqk6fBsqBrKXBqjLcR9IMdSBdKS5mMMFHw9yaazOE/s2qwknVjKbQ9tvKLo4V0dhPEa8XUhvT1sbB1X7sJmdiMxPJuYYrzRMQaxAVSVu9stqmP5LiLJKH4aiAIF9TDIaTRaslSsTvyTeLf6uhi8b1TrZzGhc6O19vdgMulu75h2ktAXFXY3B+t9qrOYAfTdrl73hlxvQfg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Sep 2026 20:11:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 161164 invoked by uid 111); 10 Sep 2026 20:11:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Sep 2026 16:11:11 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 10 Sep 2026 16:11:11 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Vsevolod Myalitsin <ub4nal@mail.ru>, git@vger.kernel.org,
+	ben.knoble@gmail.com, gitster@pobox.me
 Subject: Re: [PATCH v4 2/3] advice: introduce advice scoping mechanism
-In-Reply-To: <20260910190345.GA903701@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 10 Sep 2026 15:03:45 -0400")
+Message-ID: <20260910201111.GA919731@coredump.intra.peff.net>
 References: <20270829004959.90983-1-ub4nal@mail.ru>
-	<20260910085353.109373-1-ub4nal@mail.ru>
-	<20260910085353.109373-3-ub4nal@mail.ru> <xmqqzexpf78k.fsf@gitster.g>
-	<20260910155247.GA251185@coredump.intra.peff.net>
-	<xmqqpkyldke1.fsf@gitster.g>
-	<20260910190345.GA903701@coredump.intra.peff.net>
-Date: Thu, 10 Sep 2026 12:54:21 -0700
-Message-ID: <xmqqh5jwevbm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20260910085353.109373-1-ub4nal@mail.ru>
+ <20260910085353.109373-3-ub4nal@mail.ru>
+ <xmqqzexpf78k.fsf@gitster.g>
+ <20260910155247.GA251185@coredump.intra.peff.net>
+ <xmqqpkyldke1.fsf@gitster.g>
+ <20260910190345.GA903701@coredump.intra.peff.net>
+ <xmqqh5jwevbm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh5jwevbm.fsf@gitster.g>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Sep 10, 2026 at 12:54:21PM -0700, Junio C Hamano wrote:
 
-> I kind of wonder if _all_ advice should just say "--global". I cannot
-> think of an advice flag that is really repo specific. They are about
-> silencing extra help because the _user_ understands the situation and
-> wants Git to be less chatty.
+> Jeff King <peff@peff.net> writes:
+> 
+> > I kind of wonder if _all_ advice should just say "--global". I cannot
+> > think of an advice flag that is really repo specific. They are about
+> > silencing extra help because the _user_ understands the situation and
+> > wants Git to be less chatty.
+> 
+> I think there are two things in play.
+> 
+>  * If applicability of a piece of advice depends on the workflow
+>    employed, and a user who works on multiple projects that use
+>    different workflows, set of advice messages may want to be
+>    squelched per project, hence "--global" may not be appropriate.
+> 
+>  * "I, a physical single person, understand this piece of advice" is
+>    inherently per user, so squelching a piece of advice that the
+>    physical single person understands globally may make sense very
+>    well.
+> 
+> In hindsight, the latter argument should have been given more
+> weight, but I think the primary thinking back when we designed the
+> customizable advice messages was instead the former.
 
-I think there are two things in play.
+Yeah, my contention is that the first thing doesn't really exist. But I
+admit I didn't carefully go through the list of advice looking for
+counter-examples.
 
- * If applicability of a piece of advice depends on the workflow
-   employed, and a user who works on multiple projects that use
-   different workflows, set of advice messages may want to be
-   squelched per project, hence "--global" may not be appropriate.
+I'd be surprised if anybody really thought carefully about it, though.
+When I introduced advice.* in 2009 (geez, has it really been that long?)
+I had assumed people would just set it in their user config. The actual
+"git config" command advice came much later, but I don't see any
+discussion of global vs local in that thread:
 
- * "I, a physical single person, understand this piece of advice" is
-   inherently per user, so squelching a piece of advice that the
-   physical single person understands globally may make sense very
-   well.
+  https://lore.kernel.org/git/pull.548.git.1581311049547.gitgitgadget@gmail.com/
 
-In hindsight, the latter argument should have been given more
-weight, but I think the primary thinking back when we designed the
-customizable advice messages was instead the former.
+Amusingly that thread also touches on some of the "could we just convert
+everything to advise_if_enabled()" issues we've discussed here. I had
+zero recollection of it, despite participating.
 
+-Peff
