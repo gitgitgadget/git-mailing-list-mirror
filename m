@@ -1,112 +1,258 @@
-Received: from send147.i.mail.ru (send147.i.mail.ru [89.221.237.242])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD26393DE0
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 05:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.242
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C371038DC50
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 06:05:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789016758; cv=none; b=P354lwdm+qwjMGXu3XnHMfG6aOm+jgtCBm9BJam+SLBunoOY1izKhtlPDptIjI3S6vEmztXnEWalWY5loLfv0JY7bCSahKoLO+Tq4kmgV/jOeeISWxFtWmqXCAzV9EstHxMBEsDijeOX5pDKDPhECdeD4ZL81jqFNnOIItxSR8o=
+	t=1789020331; cv=none; b=uxXga/ZAruXSSmfitS+yKVcwFheKcmYEdUwplpBoxBZVk8KeIxzLKkEGTTtydixFXB3DEV4OVeh+szPu7o44UG6E/rIMWXEzt1xkcVoZJ/YL4LaspwEHmM+ezuqfFOIAuC1rS7OZMhBAbP5m6ddwgzGhn6i2Mn0nVtmyDb7g9sE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789016758; c=relaxed/simple;
-	bh=Fwtk3r32z3Wycn0jjAk5Ilbi0f+nfPUX6hOtsRlcMbI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlNcRFZ56/y03eZ9m/TSBaq7SheIkAyBSmxZlSr1KgLDctDw2DUF3NboO24+1ZivDgO8Az9gqrpjw0SgCw2tEoR2rTFFcGhrn85u5fBsl+094ZkSOz3KnnGVrDjD7a/T/Bmc0/gzaQ7PUxP7aogfuJkaorUSoF64EsNMNNW1DBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=wfltpJoz; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=f3DMz+gN; arc=none smtp.client-ip=89.221.237.242
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
+	s=arc-20240116; t=1789020331; c=relaxed/simple;
+	bh=p3kXdoGj6N0IpHcOjqCUoRWJwEic+ofLlIHR5U3iGEQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=r6AD8VuRQW7F3LQu1jp5BjO5XXr3pTsbScQJyjylE754rSKvZpmt6hKCZFzC0ZHph5eJkIYTTkwC9iCnVqIt9rOQJVMpL6MKrdC8kR9ZyqYJO64fLRj6bmRT+4YC8BNw1CeFqEJ1Uf/3nbDubWf1LbnukR9X7l1oe6hR7XVFl1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tEuazSDM; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="wfltpJoz";
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="f3DMz+gN"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=Fwtk3r32z3Wycn0jjAk5Ilbi0f+nfPUX6hOtsRlcMbI=; t=1789016754; x=1789106754; 
-	b=wfltpJozKSSiYpsbAzsERwnzHe/ZXDvZQhpLKoNwpn7nAcAVVXvRQ+s0rvXJY+zVH9VhT9txuBB
-	ew2ifG+8kSTVKRUvdzFEvmOM/8IuR0kCny6XSmXtWEA0Q0xrqai4zpx+hVP2Cut5ph7uoMRqW6ZdE
-	nUS/NNb4ySs0lhtcpbMsleulOEeQVlcf7E0HnGhg3j1O3Wni4viXNNGsg05ToS1b8615PxiAEcpAN
-	zbGoT5Adjx7Zh/V3eXcX2eSkHQMchWp9698M6lRXUM9QJlBLlov7A9/1HTacbY0iGaEl+4mC0VD11
-	HXS71BxXTsxurH8BL6tsbt8lVOC8io4nsaAA==;
-Received: from [10.113.133.241] (port=42090 helo=send104.i.mail.ru)
-	by exim-fallback-679568fb9b-mh82v with esmtp (envelope-from <ub4nal@mail.ru>)
-	id 1x4Wj5-00000000KBh-1nZP; Thu, 10 Sep 2026 07:49:31 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=Fwtk3r32z3Wycn0jjAk5Ilbi0f+nfPUX6hOtsRlcMbI=; t=1789015771; x=1789105771; 
-	b=f3DMz+gNhwDHCAqu2eyL6TDZpemj8HtkvakFYsadyRekDIGkQ/uN1X9SoGMmqrLYqCMKjzgXjGA
-	BC2uvBkwWnDovcaI6fVSDn788QW4xUFlThUTCghVu6e9EvQRH6TSr+7x4A0vGZPhIqsFCySaU3J76
-	ibmdEiMUOPaLymVnrxR6vGQ+m4hWsGBROx4BoneUI39164vMI2ZiKKXZZL1GjASu3tj7dfF3uoQI5
-	rFcy5x2+/FeZZA9WWFnRE1zICwvJBgmekGMj/A5MOQc3FJwsMsPe+XXEtHg+Rv4DAEeDAeMH0DHpt
-	bkQrDOzVwxFk66ZD/jwCNap5JtjdkqqWPHeQ==;
-Received: by exim-smtp-569b45c49c-dx6ms with esmtpa (envelope-from <ub4nal@mail.ru>)
-	id 1x4Whm-00000000Fvt-2mWM; Thu, 10 Sep 2026 07:48:11 +0300
-Received: from vatem (localhost.localdomain [127.0.0.1])
-	by vatem.localdomain (Postfix) with ESMTP id 06A459F60D;
-	Thu, 10 Sep 2026 07:43:08 +0300 (MSK)
-From: Vsevolod Myalitsin <ub4nal@mail.ru>
-To: peff@peff.net
-Cc: ben.knoble@gmail.org,
-	git@vger.kernel.org,
-	gitster@pobox.me,
-	ub4nal@mail.ru
-Subject: Re: [PATCH v3] advice: use global config for default branch name
-Date: Thu, 10 Sep 2026 07:43:07 +0300
-Message-ID: <20260910044307.95376-1-ub4nal@mail.ru>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260909224603.GA195381@coredump.intra.peff.net>
-References: <20260909224603.GA195381@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tEuazSDM"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-398e9698a70so6227156a91.0
+        for <git@vger.kernel.org>; Wed, 09 Sep 2026 23:05:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789020329; x=1789625129; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=9b61cAcjW8DL9nh2ANfQjf16Og2Unq6PNJcUKzcBaxA=;
+        b=tEuazSDMTsmXuFyhrdc8M9j5z3SW7F8p6NKd6iqp01xwvCWakLMkTMW3pBUnxSZV4H
+         cPoaVH00VYgxGlUapuVh9bvzcp1cfdU7MR1fUaLHWbdO91aPi7fB2pZCg6GCdq3KPSG9
+         xBO1Y91ug9s4vNRXq3n5i6PmwRT2Jm0/iLDFIxXwyzqJXiIilGd/ULLwFc1EbFc6ns7+
+         +DKo4CCBNoXq1yGy11/KpRwUgyQdR10swPen0+fWzN53TWqpJbUTe8q+YivkUY1tb2gq
+         aMubSTemOOcyVN82TW0L6PZIXPmlqYLLIeG8A6acgoHg/DxT6ayUvI8dJWr7BPyJDccp
+         p9EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789020329; x=1789625129;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9b61cAcjW8DL9nh2ANfQjf16Og2Unq6PNJcUKzcBaxA=;
+        b=bk2aiwO+pTRq48hqK8h8UeLAwoIowkYI4UKyf4a/VHvZcENPtN4Ee0BqDgvLIp1BcJ
+         zV9AbD+vvWvvB7ie+GApIFibHCeFdpfbY4VvL6kNydTdOwQI6RGs0W4OLtXbZB0sReQy
+         T+NXdjAkOdZrfPid3zigDW46L3bWxmUs0Ke3kI7zQtJUSp7kju4bvLBzge1xc0g6xz6D
+         llaZVYQLhrml14AW+/+VNythpGafS6yal6VSkdgFst/kG0KWetTjjwH/wlI2sk72rXF2
+         cRUjolssF7UwE6cqtcbxxv17FfMhCBWj1DXqhODT2sXKSsrA8D//LbyUdWdTHvAUsg/s
+         mjXA==
+X-Gm-Message-State: AFuF++kiySWah/TnzLPalzknFSHOgNj29xGFoFC5UtteQizzPanP8T1C
+	bU75KklI9HZdvjo/AXK6L4nCHcauUCe4iuqEkK2DouF7tBOL4N1BnKKMiKKosA==
+X-Gm-Gg: AYBFou0e0sUamFa3kzEpxH1ejgio5qwwkVdCUdVz8f48YS549OVhQWBtFP83guImVvF
+	XLj3G7hKvRM7gXIOoM5+pZSbNYu3OmswCtN4EN0KJJ9kMLt3ZOhWKp41FwDN+zvGxKEtJc2hCLZ
+	MOJTZ62Mx/PUJq/H2f2Z+WMoSkj2B/drdKwguJZBgh36O7cqg40BfHQyUwOEQC/KNw+gs0J5XnW
+	XxDy+O8gohUckB5Zxit1Pts4HEcFr9RSLea+LxlPLjh4kbhI3UlsUfsrujzVRyZ8C2P96MWQx4/
+	6e6tlPzF77ZISfh+nr+z+Tr2Rb3SLDRE7hVTUOAAdH4m28H0HlpPV51sss0oLppsmYPBKhOuBG2
+	oMaxZ/nFBKvLg01RLwnefkMyJSw2y9dbKaYiPC51StnTUqlBrnIMIO9LLCNvLJZ3uvzq6N2g5w2
+	SLYTFXAdNiv3IHJQmYUT5fT0yP7hD7dcn9QRqGXNz6ZlnrSAfxJqelKW0I0fboCTRtKsxlhNjs
+X-Received: by 2002:a17:90b:2884:b0:398:e86b:ce14 with SMTP id 98e67ed59e1d1-39b262ab44emr56880215a91.20.1789020328836;
+        Wed, 09 Sep 2026 23:05:28 -0700 (PDT)
+Received: from [127.0.0.1] ([134.33.70.110])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33b95282a73sm1072322eec.31.2026.09.09.23.05.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Sep 2026 23:05:28 -0700 (PDT)
+Message-Id: <pull.2195.v4.git.1789020327.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
+References: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 10 Sep 2026 06:05:14 +0000
+Subject: [PATCH v4 00/13] Upstream some more Git for Windows' patches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-4EC0790: 10
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD95F11291660A1073BCB3B94452D678D35545782B303732F03182A05F538085040FCF0D35E3591344B3DE06ABAFEAF6705AD6C35190495027B749E5C4E1FF9740C4C0C6A52ECAB1499
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE743AE26858062A689EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB55337566A08549CA5D9647613A342A4F63E37DA598AE3AECF4A54D943CAA3C2757A3B68B8EEF46B7454FC60B9742502CCDD46D0D9E541A154B51D14BF6B57BC7E64490618DEB871D839B73339E8FC8737B5C2249957A4DEDD2346B42CC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C0ECC8AC47CD0EDEFF8941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C07D08B698D69CD5617B076A6E789B0E97A8DF7F3B2552694AD5FFEEA1DED7F25D49FD398EE364050F9647ADFADE5905B11133410A2FE6C23AB3661434B16C20ACC84D3B47A649675FE827F84554CEF5019E625A9149C048EE9ECD01F8117BC8BEE2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8B14D78865373AD42775ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
-X-C1DE0DAB: 0D63561A33F958A52B953438A781989F5002B1117B3ED696D4C2DB20570EF47D1BDDAE3D1EA49BEA823CB91A9FED034534781492E4B8EEAD09122B91796FF21FBDAD6C7F3747799A
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE1918E10F71CB4DF9F96AB70F9BE574AE9C625B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D65924F3B34688269FA525313561AEB5542BD70388B13F89909D749562FD84FDDD97381AAD4D6A05F39CB8341EE9D5BE9A0AAAAFCE81DD2B9830AFC2223F3B497BC938AB11A9BDDEEAD7C7CEAA0681F5848F4C41F94D744909CEFACD6B4B6D928230F8CCC96A59B602D5CC2E138FFB4ACBED
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXOcIETfglQORZ0zpDET4Zrk3igikrdHlWEemFktTMvWOsl0Q2O/NArY=
-X-Mailru-Sender: 288943BA7BCC8BBA065C24D5D0D78BBD79CFCEEC49ABE3973DE06ABAFEAF6705AD6C35190495027BA165F1893FAC5C75730F10A35ECD6C905A92E71CC7C3152D8DFEC3831B33C4D004BC3E28E37B34A4E9BE5789416A142FC25A2993B28EC86D9FF92CA8FAC60DF8EAB4BC95F72C04283CDA0F3B3F5B9367
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: 78E4E2B564C1792B
-X-77F55803: 6242723A09DB00B4B9BFAEC4A56250D1B872770CF5EF48563F7DBF5C007E4FB2049FFFDB7839CE9E0464E60879317AFE84F811A7C04C9951A45174583929B460DA591A516CF0B8462D022DBBDB1B0BEF
-X-7FA49CB5: 0D63561A33F958A56EFBD8471CE735065002B1117B3ED6963BE9338D672ECDEE984B9450E8916CCD02ED4CEA229C1FA827C277FBC8AE2E8B54F520D093A0DF28
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpLaIlvAR6h4id02YH9mgeCTAyYoNlVO8a/mge5WbOvyyhiYhUIl8wWs=
-X-Mailru-MI: 20000080020000000000000800
-X-Mras: Ok
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> Any config can work at any scope. These are really just recommendations on where the user might want to write a value.
+With the imminent switch of Git for Windows from the old MINGW64 environment
+(that was deprecated by MSYS2) to the UCRT64 environment, this patch series
+became quite urgent; I will have to work around this patch series not yet
+being in master via setup-git-for-windows-sdk to be able to switch without
+breaking Git's CI builds.
 
-Looking at it from that perspective, this seems obvious to me now. I'll reuse the existing CONFIG_SCOPE enum and treat CONFIG_SCOPE_UNKNOWN as the default location.
+Originally, I noticed that these patches had not been upstreamed yet when
+rebasing a Git for Windows commit to enable Rust in Windows CI.
 
-> TBH, I am not really sure what the criteria are for suggesting one advice option as --global or not.
+Changes since v3:
 
-The motivation for this patch was that "advice.defaultBranchName" currently suggests:
+ * Reinstated the fly-by style fix as a separate commit.
+ * Added Helped-by trailers
+ * Moved and reworded a paragraph from the commit message of 08/12 to 12/12;
+   This should have been done as part of v2.
 
-"git config set advice.defaultBranchName false"
+Changes since v2:
 
-Without an explicit scope, this writes to the local ".git/config". After the repository has been initialized, that particular scenario won't occur again in that repository. However, when the user initializes a new repository, the advice will appear again, which may make them wonder why they ran the command in the first place.
+ * Moved some hunks that belonged into 12/12 out of 08/12.
+ * Dropped a fly-by style cleanup from t0060.
 
-Therefore, I think "defaultBranchName" should suggest using the global scope.
+Changes since v1:
 
-> I'd think most of them are about squelching advice that the user already knows about, and thus they would go into --global.
+ * Fixed the meson-side handling of the MINGW_PREFIX constant (this was not
+   noticed in the Git for Windows project because it does not use Meson to
+   build the project).
 
-I agree that this may apply to many of the advice messages. For this patch, though, I'm specifically addressing "defaultBranchName", where the global scope seems appropriate for the reason above.
+Johannes Schindelin (13):
+  mingw: include the Python parts in the build
+  mingw: stop hard-coding `CC = gcc`
+  mingw: drop the -D_USE_32BIT_TIME_T option
+  mingw: only use -Wl,--large-address-aware for 32-bit builds
+  mingw: avoid over-specifying `--pic-executable`
+  mingw: set the prefix and HOST_CPU as per MSYS2's settings
+  mingw: only enable the MSYS2-specific stuff when compiling in MSYS2
+  mingw: rely on MSYS2's metadata instead of hard-coding it
+  windows: skip linking `git-<command>` for built-ins
+  mingw: always define `ETC_*` for MSYS2 environments
+  mingw: ensure valid CTYPE
+  mingw: allow `git.exe` to be used instead of the "Git wrapper"
+  t0060: adjust the code style
 
-> I didn't really follow the earlier discussion that led up to this patch, though.
+ compat/mingw.c                      | 68 +++++++++++++++++++++++++++++
+ config.mak.uname                    | 61 ++++++++++++--------------
+ contrib/buildsystems/CMakeLists.txt |  9 +++-
+ meson.build                         | 15 ++++++-
+ meson_options.txt                   |  4 ++
+ t/t0060-path-utils.sh               | 33 +++++++++++++-
+ 6 files changed, 153 insertions(+), 37 deletions(-)
 
-The original motivation was specifically the behavior of "defaultBranchName" after initializing a new repository, which is why I considered a global scope recommendation here.
 
-Vsevolod
+base-commit: 5b2471720c93ee30e5764a19f3d3b3ae9ec9712a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2195%2Fdscho%2Fupstream-some-more-git-for-windows-patches-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2195/dscho/upstream-some-more-git-for-windows-patches-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/2195
+
+Range-diff vs v3:
+
+  1:  fd594ffa6c !  1:  0b8ca0e3b9 mingw: include the Python parts in the build
+     @@ Commit message
+          bandwidth), MSYS2 provides very fine Python interpreters that users can
+          easily take advantage of, by using Git for Windows within its SDK.
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## config.mak.uname ##
+  2:  47fc974582 !  2:  9894892ff5 mingw: stop hard-coding `CC = gcc`
+     @@ Commit message
+          This is no longer true in general, not with supporting Clang out of the
+          box.
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## config.mak.uname ##
+  3:  53f1fd5763 !  3:  340dd18f27 mingw: drop the -D_USE_32BIT_TIME_T option
+     @@ Commit message
+      
+          So let's send that option into its well-deserved retirement.
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## config.mak.uname ##
+  4:  ad96aedda6 !  4:  37c6563d74 mingw: only use -Wl,--large-address-aware for 32-bit builds
+     @@ Commit message
+          those builds; UCRT64 versions of GCC, for example, do not know what to
+          do with that option.
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## config.mak.uname ##
+  5:  d67201f9b3 !  5:  0063f2d96a mingw: avoid over-specifying `--pic-executable`
+     @@ Commit message
+      
+          So let's drop the overly-specific definition.
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## config.mak.uname ##
+  6:  b49c42c50d !  6:  e03279a0df mingw: set the prefix and HOST_CPU as per MSYS2's settings
+     @@ Commit message
+          can use those to infer the installation location as well as the CPU. No
+          need for hard-coding ;-)
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## config.mak.uname ##
+  7:  b00d242621 !  7:  29caf78bdd mingw: only enable the MSYS2-specific stuff when compiling in MSYS2
+     @@ Commit message
+          course. In that case, we want to ensure that `MSYSTEM` is set when
+          running `git.exe`, and also enable the magic MSYS2 tty detection.
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## config.mak.uname ##
+  8:  4cc14553dc !  8:  a9665a3304 mingw: rely on MSYS2's metadata instead of hard-coding it
+     @@ Commit message
+          Incidentally, this also broadens the support to all the configurations
+          supported by the MSYS2 project, i.e. clang64 & ucrt64, too.
+      
+     -    Note: This keeps the same, hard-coded MSYSTEM platform support for CMake
+     -    as before, but drops it for Meson (because it is unclear how Meson could
+     -    do this in a more flexible manner).
+     -
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Helped-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+  9:  19c600cbee !  9:  0d2990aa14 windows: skip linking `git-<command>` for built-ins
+     @@ Commit message
+          This deprecation was never finalized by skipping these hard-links, but
+          we can start the process now, in Git for Windows.
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## config.mak.uname ##
+ 10:  b8cc067e92 ! 10:  b5a78f65b6 mingw: always define `ETC_*` for MSYS2 environments
+     @@ Commit message
+      
+          Special-casing even more configurations simply does not make sense.
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## config.mak.uname ##
+ 11:  09c90015fb ! 11:  1bbd0dc6aa mingw: ensure valid CTYPE
+     @@ Commit message
+      
+          This fixes https://github.com/git-for-windows/git/issues/1036
+      
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## compat/mingw.c ##
+ 12:  4a4f24a1ba ! 12:  e8115c158c mingw: allow `git.exe` to be used instead of the "Git wrapper"
+     @@ Commit message
+      
+          This addresses https://github.com/git-for-windows/git/issues/2283
+      
+     +    Note: This keeps the same, hard-coded MSYSTEM platform support for CMake
+     +    as before, and introduces an `msystem' and `mingw-prefix` knob for Meson
+     +    (read: neither CMake nor Meson will automatically inherit the setting
+     +    from the current build environment).
+     +
+     +    Helped-by: Johannes Sixt <j6t@kdbg.org>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## compat/mingw.c ##
+  -:  ---------- > 13:  88403ffc9e t0060: adjust the code style
+
+-- 
+gitgitgadget
