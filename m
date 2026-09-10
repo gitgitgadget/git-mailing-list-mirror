@@ -1,70 +1,70 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72666390987
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 06:05:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA83530EF63
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 06:05:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789020344; cv=none; b=BuvVgxddQfpllr4BJFBR2scZPe4NDubw/hcZoBMj5B5bkhvvQ+Ba+dnXJsJa2CDnKEuBWrhD94CSh/JGzJ+j6GWNZnlQxCNzWGtBhsGDyCTc8gxZLoiaTRS5IreNwHD94k2qDEQxJq1EjnHvGU90V9lpvmE8gk+o7ykBLNqt4LI=
+	t=1789020346; cv=none; b=DEOK7kfJCSBodBH1MnYlUgIc06madNjWOnzydJrPnbo2XsV7wHEXFyQGbK/dzwwbvPggIk90jBXXH0Y8H8TKOVjA1ivHLaVFbw4VCZTYZLRC1EdzUlmw+BDrh72XJq6p+BPOQeOUJo+vuUoHvYnGBavnhJz1GQJmJP4ma9tjWj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789020344; c=relaxed/simple;
-	bh=rH9Pfavc5K3Qnlyr8UkFVzNeOj0jz7zcLCCvBV4JJCY=;
+	s=arc-20240116; t=1789020346; c=relaxed/simple;
+	bh=SDF8Ql2vpVY0av+drlmcTo8RRZG6Yykl0TCxjjJBukY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Wo2GGlahDbqjf+5tiAdACRkbeyn7t1I31LVW4ZyriD5mErY1OlqDZu9/3y/+Ka9LUf3UdaGwtAwKY1rfU+0Mq6DtCRxDcsyX9nssbqHK9ZbV5cy0P+f4fbMLkXG0i6aKpCHRVHm9ppY8oFOzGZsXKnHf46HEnbSYDKXm+vcKdVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K8YEw4Ep; arc=none smtp.client-ip=74.125.227.140
+	 MIME-Version:To:Cc; b=IO15FGH264t67Hoi4/1YDiwIr6R5jA/un6b7ucHwMFE8Oqva1hHDVF87pRs6GGdN6F5791Q7xJrFi9Hu6aCSUvRMJJDe8Rr3rbZW+BlhsD2T6fv1xOqdzswhQQSNOZxQxcI21dmxLIPAL1xTfmO2CS2OruR66qAkprGiwgSQIao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OFyW4kMc; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K8YEw4Ep"
-Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d747eb79f7so7256515ad.1
-        for <git@vger.kernel.org>; Wed, 09 Sep 2026 23:05:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OFyW4kMc"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7eb5bdb50fcso5710399a34.1
+        for <git@vger.kernel.org>; Wed, 09 Sep 2026 23:05:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789020343; x=1789625143; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789020344; x=1789625144; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=IChfxMJLsMeEbkLtwiynmJjWNdJLtQ/TdEgVnSoJRT8=;
-        b=K8YEw4Ep3VC1PRjWCr/oGs8xEz569c5PMIx4GLc26vvwj5YLNvk6dDytXZXunCYgnx
-         Rc1jNFwIQC3fuUtelJngkZlpv/IXfhh9XtKNBqY6myWLizMLgSr2EItDBCdrhHhnHW7o
-         wIkt8AQIWWtB/DDTYYmUB+U/JWtq5aSHMbBf1xniiF507/C7etaSZuQe1YdtwD5ZE/U9
-         +/uJFitlrQeqnjOBHdviZtg/GRCdHbWLCkvtP8qAZhk5c76QNbK6+Y6Q4llId03u3KcX
-         d0p7nswfO5PFVWdwuWoosX//M0v4fdUrlfeHfRFtaRCirOruDo0Q65vea+84L0R4cwsN
-         jn/g==
+        bh=kpQiXvffdWMtOKACJATYQ5TENPZ1ZDDtkQoppdCWGhQ=;
+        b=OFyW4kMc8TB1Bt5Bk6Hyhf7uR2PxavaY7aMvD5GNbj1oQll0FYODNACGfH/y1EyGNU
+         R9kdRO/YT/uHOOLmDEvMKLJ2W/t6h6r340IzvJYKKgIxhv8kqKzuj+Ox7SdQcmHcetfe
+         +j9HraGUcffeRxJ5WxRxVaVgZLLpWMrcvat7Nx6+r4I0s21LDvtctYic2l/h0Cql4AHj
+         wIUJJ9X5yLmUn5I3t0joJeiXth18CRmKCXSadnxocVkePgys2Qecob81k/GuVyOSDjxe
+         yINFnMFmS4fcaA5heh7ssNiPR/Bqx5QFf3Rzxhe/R/lM5LKcdmV+jI110+VTHIS+GtUQ
+         /UvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789020343; x=1789625143;
+        d=1e100.net; s=20251104; t=1789020344; x=1789625144;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=IChfxMJLsMeEbkLtwiynmJjWNdJLtQ/TdEgVnSoJRT8=;
-        b=pTejoCXpx8uT6cDxV7YKakdNczugiFXQ6P7u5l/iQs1VolY9y47bHKJnDSY+vkzROn
-         EiBm7cV49MN9/ne2H4AXQmXQKHtr/vSgVxFdpDIxXwx05n2nU8ElwFonqH+JCfuZCi4i
-         uxO3Juv1NXrvcCjJVsb0NdLPAuTKcoSPq0clQJYi1fNS3/qE7Eat8m5TfjI+pRpcZXHf
-         xhJQ7kXeQYOv/pbl+0jN9Kjr8hwkUO+IeUKcr9JTPRCwXOTJxdbdQ7y/qBNMxabKc5jt
-         kqGrEQB6nS0HZ+jEHKJGJPbUTWTFE8YvyXLbDDyb1jfRKZY+J1WIho5hLWg5rEblCxVd
-         0l0Q==
-X-Gm-Message-State: AFuF++l829ppyFDyapTGrtkJSljbB2E/LHN35mvXOnurdk587ZWDeFFC
-	fkobxvJaH+dlMPdnXI83Qd3P2BwRh76yHECimM7sOQdcniqIPuK/msTOKR8Ckg==
-X-Gm-Gg: AYBFou1ixB8TMC/TATt8EQOhMZ26PnC17njD88lbm/XJprN+MPz5EWcf+72kkRAlcxt
-	kQMpMpwxZas8qFZ38lyrp7fBz31k6UgV55fc1WpzDCGHf/8OTreaExgtesjO1jPtILEUksCizqx
-	x7L/kqbIalSyN1CcQLPxLUd//XYMA4AdYWebrQ0MLn3oNoHE3o+fO5Np4t293aV//Cq+nafQdPL
-	P9ESl3NYWp3rVecJnDRAq3puma0pY3U1Y+MXjdw/hU0CQy+sbQMfyuNBZF4K25QEXlFgKlA6Jaq
-	frX4yqWXrM8Y1xjqCXTAEX26ijWGQZCH3zt3IurNntTnKA4uHWBoJfZweb5j1AkSsyYZonO+yLp
-	Xq0k7ibJJKQ7wohrJ+3m583nn1N8cGk0m+KAHnsQ0h2WezfFePUU7VeolMrH5jroAHB0uKmiWgP
-	m1cNHEvlGFiMusKkxkimdsuZjSGyB9CqYHCSGvh3CZvmxMYqbvTZFm+sTkkSvWEVwLEmjBVRJ+
-X-Received: by 2002:a17:90b:3c4a:b0:39d:6f12:fd47 with SMTP id 98e67ed59e1d1-39d70bb2226mr8820069a91.20.1789020342325;
-        Wed, 09 Sep 2026 23:05:42 -0700 (PDT)
+        bh=kpQiXvffdWMtOKACJATYQ5TENPZ1ZDDtkQoppdCWGhQ=;
+        b=hABrCFReDcYc9wGnAMYvOuawGzSDR3orx+Czubg+N0Zgk6oWWVpaxyd5cTQcmIuWoQ
+         ACOXJuDEolVpoG6pwyaYtAactPho/oTeENybqxcL678f/MRLJEt+n/Gc4ScY+9nJF94Q
+         SZG9zRuV5DiczYqSiP/bnj065JZXwQBGzeegitNssRZ2zIoCRXmhcDGdZmYqQhM8nXjh
+         AfhSVmvyTwbX71po4/BFdCJ0sQzUOrH9zJrvC0aL1tncIuNLj9cXBOkw5cj3l9rrDXv2
+         MJ4c5WhCew3AKS5O7Rh7+ItLNdrP1yFQNIPpqbBQAUpDsCasEpg5QEbZ8T1dUzIZH2D7
+         7luw==
+X-Gm-Message-State: AFuF++m14l7t9ookQCziJoePkcC0d5ECrRuFZYMBpGqVu+jIyzElaikl
+	jJPYcZSms4XfN9eQk1k4Pwfr4MpePqzUSwSDkZWicec+4ORkMIwSTC6Y8psxYA==
+X-Gm-Gg: AYBFou1jaNbAH9ESncqReuoNSf2AoE/W0SeYM2sRdqDZF0in19a2GxfzHeiMFoLagpE
+	5+o5S290ArhG61ZXzQ6Q46j5ktslgQhWswji2pIJ+dCr8G/GESe1ZhqphYGwzeQdi+uHAjuIDy9
+	v3FEBMQvKEii++3VMl7tuuysxed3YbMN0coAvshKmq5utIOtLR5BH0WeIlPV/miNQqeuTOCDiBR
+	MwEUX6PViVip6SuiWqq5FpIjv/j6yMtDY45gII5Xfb5cfBaY9Ev+kih2FKhLlcU8AHK3fsch2JM
+	3wuDdesmQuIIljmJjnn44B1Iqt+PH60zfwp5hRB/2dT520R5hXt+lgDiUzLsRPqRZctKjejvHA2
+	mEScUoZYa+J3ldlcuMFp+8v5ZxYdVi9MBXOCR9LuoRQhFxDoiWkjsjoIhmA3Rt6ckMp3bLV+rX9
+	P3w4XD5zVwzQKJ/kQzRu0B9SKEYsHKDFNuM1EL7hEdg32bnd5DeYiEwu67t9Pc9TY+0GUw5HUE
+X-Received: by 2002:a05:6820:4d03:b0:6b7:83d6:2931 with SMTP id 006d021491bc7-6b783d62f12mr18899065eaf.52.1789020343743;
+        Wed, 09 Sep 2026 23:05:43 -0700 (PDT)
 Received: from [127.0.0.1] ([134.33.70.110])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3339a534152sm47910838eec.10.2026.09.09.23.05.40
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1432424d27asm65561484c88.2.2026.09.09.23.05.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 23:05:41 -0700 (PDT)
-Message-Id: <0d2990aa147482a743da8fdbe4f9ded2e7fd083d.1789020327.git.gitgitgadget@gmail.com>
+        Wed, 09 Sep 2026 23:05:43 -0700 (PDT)
+Message-Id: <b5a78f65b64ea415489f4c8e359636d1bb68bda0.1789020327.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2195.v4.git.1789020327.gitgitgadget@gmail.com>
 References: <pull.2195.git.1785939999.gitgitgadget@gmail.com>
 	<pull.2195.v4.git.1789020327.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 10 Sep 2026 06:05:23 +0000
-Subject: [PATCH v4 09/13] windows: skip linking `git-<command>` for built-ins
+Date: Thu, 10 Sep 2026 06:05:24 +0000
+Subject: [PATCH v4 10/13] mingw: always define `ETC_*` for MSYS2 environments
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,57 +81,49 @@ Cc: Johannes Sixt <j6t@kdbg.org>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-It is merely a historical wart that, say, `git-commit` exists in the
-`libexec/git-core/` directory, a tribute to the original idea to let Git
-be essentially a bunch of Unix shell scripts revolving around very few
-"plumbing" (AKA low-level) commands.
-
-Git has evolved a lot from there. These days, most of Git's
-functionality is contained within the `git` executable, in the form of
-"built-in" commands.
-
-To accommodate for scripts that use the "dashed" form of Git commands,
-even today, Git provides hard-links that make the `git` executable
-available as, say, `git-commit`, just in case that an old script has not
-been updated to invoke `git commit`.
-
-Those hard-links do not come cheap: they take about half a minute for
-every build of Git on Windows, they are mistaken for taking up huge
-amounts of space by some Windows Explorer versions that do not
-understand hard-links, and therefore many a "bug" report had to be
-addressed.
-
-The "dashed form" has been officially deprecated in Git version 1.5.4,
-which was released on February 2nd, 2008, i.e. a very long time ago.
-This deprecation was never finalized by skipping these hard-links, but
-we can start the process now, in Git for Windows.
+Special-casing even more configurations simply does not make sense.
 
 Helped-by: Johannes Sixt <j6t@kdbg.org>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname | 2 ++
- 1 file changed, 2 insertions(+)
+ config.mak.uname | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/config.mak.uname b/config.mak.uname
-index 3a90995587..88bbe1d78f 100644
+index 88bbe1d78f..2f7d445eb3 100644
 --- a/config.mak.uname
 +++ b/config.mak.uname
-@@ -518,6 +518,7 @@ ifeq ($(uname_S),Windows)
- 	NO_POSIX_GOODIES = UnfortunatelyYes
+@@ -519,7 +519,7 @@ ifeq ($(uname_S),Windows)
  	NATIVE_CRLF = YesPlease
  	DEFAULT_HELP_FORMAT = html
-+	SKIP_DASHED_BUILT_INS = YabbaDabbaDoo
- ifeq (/mingw64,$(subst 32,64,$(subst clangarm,mingw,$(prefix))))
+ 	SKIP_DASHED_BUILT_INS = YabbaDabbaDoo
+-ifeq (/mingw64,$(subst 32,64,$(subst clangarm,mingw,$(prefix))))
++ifneq (,$(MINGW_PREFIX))
  	# Move system config into top-level /etc/
  	ETC_GITCONFIG = ../etc/gitconfig
-@@ -710,6 +711,7 @@ ifeq ($(uname_S),MINGW)
- 	FSMONITOR_DAEMON_BACKEND = win32
- 	FSMONITOR_OS_SETTINGS = win32
- 
-+	SKIP_DASHED_BUILT_INS = YabbaDabbaDoo
- 	RUNTIME_PREFIX = YesPlease
- 	HAVE_WPGMPTR = YesWeDo
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+ 	ETC_GITATTRIBUTES = ../etc/gitattributes
+@@ -762,6 +762,9 @@ ifeq ($(uname_S),MINGW)
+                 ifeq (MINGW32,$(MSYSTEM))
+ 			BASIC_LDFLAGS += -Wl,--large-address-aware
+                 endif
++		# Move system config into top-level /etc/
++		ETC_GITCONFIG = ../etc/gitconfig
++		ETC_GITATTRIBUTES = ../etc/gitattributes
+         endif
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ANSI_STDIO=0 -fstack-protector-strong
+ 	EXTLIBS += -lntdll
+@@ -772,11 +775,6 @@ ifeq ($(uname_S),MINGW)
+ 	USE_GETTEXT_SCHEME = fallthrough
+ 	USE_LIBPCRE = YesPlease
+ 	NO_PYTHON =
+-        ifeq (/mingw64,$(subst 32,64,$(subst clangarm,mingw,$(prefix))))
+-		# Move system config into top-level /etc/
+-		ETC_GITCONFIG = ../etc/gitconfig
+-		ETC_GITATTRIBUTES = ../etc/gitattributes
+-        endif
+ endif
+ ifeq ($(uname_S),QNX)
+ 	COMPAT_CFLAGS += -DSA_RESTART=0
 -- 
 gitgitgadget
 
