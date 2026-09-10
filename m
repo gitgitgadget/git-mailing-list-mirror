@@ -1,80 +1,80 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147F44A6CFC
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 15:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8BD4A3D30
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 15:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789052981; cv=none; b=s96X9LCl0xovzLZgj4ZnGKH8kIJZxdC5FghWpS3UqmRLdp/CCClmgpYOpV5TjQmK1KJz4NQPTBckpgvqJ1Jies4dFBRSScqHSWe5OaXRWjxTD9iPQ7PcINZWOU86ByZ6L/JhSwCRi7HgPXVFp5e7ZDxvxy7Uxc5Sr0eOKc61Q60=
+	t=1789052981; cv=none; b=VqBqpTFVQANRc8v8pu7TsMVC6h3kxoTJkQpVw7wH32tJ7ezJBVVpG/A5Hz602N7sjmU6/D81CxNVDD9gjWsHk8DTNqLZAZa/ku++rwiJxWGUsBvwrsJAcFx+wFIb35WPF7VVZh222AcTH6UOPRCL4vKOxG3unG02RlIVIagRqmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789052981; c=relaxed/simple;
-	bh=QuOyBxfcDmowIrfAiQtkUj5qz5T+L3TQcoJdxQQ0rAY=;
+	bh=wtAQzODMpfpPOVm2esc86TxQQ7mVWT0ERVpzRGEtc7s=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XATg/2ErJPHep3X13FMzLENCp83PI2A0/blDl4Su7o9muHkEptPXzQK2+gyo3LCMvEVMR62lOiAYsWFuHYp3u10yT7xOVpgV79Sz4GnqjKMKNzjp6xcqleXSswd683v+BaUyBwrFVVwgDSwk1GG9IrMHzAT6dAkz9oCBVoQYexg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ML0q7vP7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OlTK03I0; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=VRp9q+K0hbnkyFTjhglEDEyokOv6vuoYKbOUaqqMaoPtYuqOnUEZKH9RM4QGQw8b+Uts7WpMbhNQQ1aS+GVg2LzXmLD/U5fB4sXQVODSuhUZBL20eRLcyJSROCfQFZsjvpfdQOEUL034APZObgNxHbCTxqcNt9UL3ab16f7mZEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c+j7m9x9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CGkSojGW; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ML0q7vP7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OlTK03I0"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9E58514000C1;
-	Thu, 10 Sep 2026 11:09:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c+j7m9x9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CGkSojGW"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id D9A86EC00CF;
+	Thu, 10 Sep 2026 11:09:35 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 10 Sep 2026 11:09:32 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 10 Sep 2026 11:09:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1789052972;
-	 x=1789139372; bh=pPjJWkmRnQwlKgnq95fIMUwfIxNSMFkegiUNk0r4YJk=; b=
-	ML0q7vP71/xNcwJ6bsDDDCpXToIoYi04uchD7UOpHMEofwMnISrXsro1fiQwg6aq
-	7K9d7PCVrfGHZ19EeDrmyXsYVcNbA97ZfPTOT2F8xd+SagtyaQ4qAc52RMorTptA
-	VdPcPz8ab46V3gjnoUrHMWxgvSRQzITAS3gT66zHDdQS67FIfz48OUhWvJ4eI0uN
-	iYsaPT6B0CHPgg4nsF2CwpaZE6tu57DI5wEDqCaVdPIBvrTzzluPadXNuASEo+Lc
-	5Nc3fNxwUpHfrWR+tkshZ9D+cM2Pnu2WT7LpUfgxkeiBlEnAPRJ2u7HmS/DYcCTe
-	9/JRmAuXMTXJGJbJWIen0w==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1789052975;
+	 x=1789139375; bh=Bu4I/OjFyzJot8vwBJ9wIzq5Wcr3FXV2VHU/p7YREJo=; b=
+	c+j7m9x96qPqOt0W7turR+dF+h2ZDUU4T3oYQxAPQqZwoMa4jH0hmubmeHCszt2R
+	ErIOaxL2DsvPiIWzKriHbwb7RxhPlT7xNfzckB+hy/FyQQHdWl7XdcPhM0hIKxc3
+	t8l98PvaJLapRiFF4vCjE4V3ZphFrRjryOsioHvG1c4P1+IbadyxUtI1n4HNk+Qc
+	YryjZCAksMGTvTibwfGcp1glodU+NREamB3bwQpsgeQ3zvfQwBiNsID7dZVq1lKJ
+	24RPjxWuuwfMSRInh/Ep1K4AwegbzZEV8slY26pYbFrKwv6zBRJj7HMg7St09+nQ
+	hLe6h9tCedPpC2RAEDAHxA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789052972; x=
-	1789139372; bh=pPjJWkmRnQwlKgnq95fIMUwfIxNSMFkegiUNk0r4YJk=; b=O
-	lTK03I0HGbxHbYYt0J9ZUQ9hPUkr3zUprbAiRtTM5XJ+Cz2WCsVhtG0uwX2dJ336
-	BfwaAEvNSXQq9oeUY9/sGVC2qempaSmxbdyOdBvOXcXZyvBIe0RAXdgk7zo1radr
-	ruoTZv4POgb+SUuDTPZazm92MN6NVmfkh9F7BHewG62kJqMmrqOHvM5h0TtxraFE
-	xrWCqvvEgWui7jn49kDXlkQeO4iZ2Rfd1B2uUrwqKCBOG5BQRD0dWX/uxkmZx4Pl
-	ejufhUKk2wYdt2xrQ2Q2q+Pil3pUeZnTEN+t79WW/0UK7EWkxOvrnpIW3g7t7RtK
-	rlgPzxYgbhrRPCAWFmUbg==
-X-ME-Sender: <xms:LMiialYj83Wm3NE6LkcX_z57pAxHM9ehwnTHCYD_b7o-hdaEPy6kRw>
-    <xme:LMiiajQ2uuxuQk7Q0GccdjzchIdgLSNlwRZA50HCWJy9tVyGjzD_wll01ATlVlxvK
-    BTjFY9leXSenGZD81heds9XFpNT-a9P_9ICAKCl4AXNNeC0A_J-5Q>
-X-ME-Received: <xmr:LMiiagRf_srhSvszrt6SU9g004vaO3M0xq2BdyN0Kf4Fe3r42vZZkA>
-X-ME-Proxy-Cause: dmFkZTF+5Wy56B+Wx3ySnb5Cx59QKPLOQu236q+2W/W769TPaDnZkuuZ6ySVZ9pJSqX60I
-    4KnoBOIFigUDciwRh5/L/RnGKTaoNEewuq0njqzCEJrAVeBHtLobMSK78B+3FkPz/ggIMU
-    xsdVnfs4PMJwMJ+arLr5XiQP6/sGsYur6cm7OCaOVgBA33g+KiJVV+ugxArXrsWGshcu/l
-    x9zxt9yXxZkS12K7MVcatieR8K8p2/XFAPtZI8wbyrgYzrTVG29lrkrjg3Gx/XNfNTsgx5
-    OxmR1v95cylk+grcUqYbD44VqN0IFxxmM0WSX9o2us26bpuTNI0rP+P/UYLTgPd4ZQ2Fet
-    6cghCZTtjMJu5fD1mlocGE7bffMrEVXjwK+wvwFNSzCsoiWjPqRBEMrr5SdHKq8e4q25KU
-    72K5bhLMt/z+fw1XwOkNcWfNu0AOIxBJxSqFWMpUGH4R+asW6KMKxRyUzWbw6pFWYZ3CZQ
-    u5WWYKjD0NIDLK4jkS7J4Mix8efi2uD7WfjOeztsU7J+0fxhiDC43IL2jPs0V6PBmuhFnE
-    DuDfQTtYVi21fBgYmt6HKLo7OQz5+0fbPnYIbqTYALltLbXD4FAP+o5EDu3hhP1FpvAtxs
-    UmdBdsdDZm/FM/bPCkTmk/NCNj6fBhEvx5FwYFfUnO35K6VVk+BJJNbO8RzA
-X-ME-Proxy: <xmx:LMiiavQ2_YzNoqxIoR9C715jLhFu9Lof-ERCwe_7RF-byo1hEJ57wA>
-    <xmx:LMiiat5aNf3uicms-oYRlsItmxARbV8JfUL5KWxvXjF7DpFull58Qg>
-    <xmx:LMiiaj1-_ws2F7wz35je8fjMC9Ayzin9KdopjTk_hXPy4IRmOAxA-A>
-    <xmx:LMiiagDWqEPbQ_gC_iOwcP1nr3pZFCUp-CM2wygLQoKHT8rTdJKEYw>
-    <xmx:LMiiaqsJj6xNlHPw0rXkSfSG7Dl9CIMPCTJYsMjqG0CK1PbWiP4e6cpK>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789052975; x=
+	1789139375; bh=Bu4I/OjFyzJot8vwBJ9wIzq5Wcr3FXV2VHU/p7YREJo=; b=C
+	GkSojGWIhNhTLuBQC3ewbYSWvYWToMkDnWVMxbXL8/QVjSU8gx12ESkTkiZCabtA
+	7nGgL/973F4yoLBhjXbgMgpX/YTna9kTZFd2WjXs6fRqNc6Q9KfQfdVKqn1xRsjv
+	wYfciv3ZeScx7OUGFMZYtZgS1AnidFjrvoReqeHcyepVhSDqpMwFPw7fZ0YDk3OZ
+	IteYfJawP6mGTN7FOf+febfdnn2Pz5rxAwhvv1oT9bWV9CzAuu557EfVzzhMyAEU
+	ust+NDrht2l+/0/ABsudFOwxQNuH/fwaEv10ZkN7HYDLBK1HpTKTuIO0VLxJD2Jy
+	TOOHyCo/pVhxLSbfLndOQ==
+X-ME-Sender: <xms:L8iiauKolAR351-cbek06q1I-kP8-iJB1ZiqcC9G8vaaAzwt-XVS5Q>
+    <xme:L8iiatDai0rC0Mq1xH2xuUyuhSwFQZdBVhb7MkINE5rBaHEjSR1B3Bb3oaiyxXknt
+    VLJBAuDkTKwXzp_T0tg_DqbY6ma76ttw0Kd1kO1fRFXIyJZnhNgVvA>
+X-ME-Received: <xmr:L8iianCd9R4FfF5fhzVz1lLaX0jVKAjxERBK15yS780RsrF2i9-kEg>
+X-ME-Proxy-Cause: dmFkZTFmToSEG6cpqmLCQ+r8QOZo2Uv1HNL8Pjsku61QT1eJxv8HAXxDAkSPnus9Vecpme
+    pJafvckUfXllYevYRFBkacQXQBn8rdjuicwUxeuiCeGMLu8JV5gc998H1ANxSJZJOzN8ST
+    fcVH+3fxr6p6VED5/2o1IDBicBEufCXUWBqkwMMuqmPUJ04FWOlsiERIZyEc1auESI2D1v
+    8fOEzyOGNyBRwuu2ZC+3sLGRJwSWFrThXiJ5wahfsXtQegDTI0WAbln4OJXJ+DLBsD59Dl
+    B9aM5LBBYPa4dZUBIuUN0qT0ZLAElCSu868se35c7jrWDNfeTWqToQ3iexsoc34cVFG3UL
+    +uGhU45zsrXE6WUksKNdewppBn3DGMaZOog/c/1Cl5iKYRWfQPGja8quDR+izPzMeLJTs+
+    1Yl9eHZoSfBbBa7/VCKHW7vAlTKZedXkSXJKfUdr0jR0pngzfl7BLIyY0JhKujUvein5k2
+    zcucHk6UpgbYOM6+yAaTWvY7nFtqbo9hQ+XmSGnnsxGerbRg23aGqLon8vtLR7IaIyzfF4
+    SFbkI/JAmCelrteH8wvjoTCYmjwsPJ9ASnaOX5ThBZ0UGl8Xa28/E6zmubIfNhGDYtNhDL
+    TSJm1Gg+O+JbLqGXgY6KOZFZ5iybGlyiHkgM+cwu6Oy9bZC4Ne8rXNzhI0+w
+X-ME-Proxy: <xmx:L8iiavDS56KCTe0MgxP0ghvMGsxL5RUBsbhsIeeCd9z4H0Su0FnTag>
+    <xmx:L8iiaiotjm5yhZz-TTul7jYPPHGCUZwkByKMBv4Fi_wDBXryPc1tFA>
+    <xmx:L8iiaplQ0eEqRn3EOgNh_9S7l0wEHVUZJunq6GKWSo4j-haHuLyKJw>
+    <xmx:L8iiaiwPzoU9YOgI7O0jQ6TyComWbg-muIUaAsLPNtBzL6XNTux2hw>
+    <xmx:L8iiaueHM80ioeMjT5VILxacEQeiZCyTQppzhBxb3Fp0_0wNCo4bch7Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Sep 2026 11:09:31 -0400 (EDT)
+ 10 Sep 2026 11:09:34 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7919a86d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 10 Sep 2026 15:09:31 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id e6eb7a56 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 10 Sep 2026 15:09:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 10 Sep 2026 17:09:16 +0200
-Subject: [PATCH v5 6/9] builtin/clone: move setup of alternates for
- non-shared local clones
+Date: Thu, 10 Sep 2026 17:09:17 +0200
+Subject: [PATCH v5 7/9] odb/source: support writing alternates when
+ creating the database
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260910-pks-odb-write-alternates-at-creation-time-v5-6-8d10c4238edc@pks.im>
+Message-Id: <20260910-pks-odb-write-alternates-at-creation-time-v5-7-8d10c4238edc@pks.im>
 References: <20260910-pks-odb-write-alternates-at-creation-time-v5-0-8d10c4238edc@pks.im>
 In-Reply-To: <20260910-pks-odb-write-alternates-at-creation-time-v5-0-8d10c4238edc@pks.im>
 To: git@vger.kernel.org
@@ -91,145 +91,188 @@ Cc: Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>,
  Justin Tobler <jltobler@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-Similar as in the preceding commit, move the setup of alternates for
-local clones with "--no-shared" into `collect_alternates()`. With this
-step, the complete setup of alternates is now handled by that function.
-
-Note that besides moving stuff around, it also fixes a bug: previously,
-we did not know to resolve the referenced repository's common directory.
-Consequently, when referencing a worktree we failed to resolve
-alternates. But as `collect_alternates()` already knows to resolve the
-commondir for "--local" we can simply reuse this resolved path for our
-purpose.
-
-Add two tests, the first one of which exercises this bug to avoid future
-regressions. The second test ensures that we properly handle relative
-alternates for a referenced worktree.
+Add the ability to write alternates when creating the object database.
+This change allows us to remove the `write_alternates()` callback in a
+subsequent patch.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c            | 34 +++++++++++++++++++++++-----------
- t/t5604-clone-reference.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 48 insertions(+), 11 deletions(-)
+ odb/source-files.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ odb/source.h       | 17 +++++++++---
+ setup.c            |  4 ++-
+ 3 files changed, 91 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index d397fd36b2..17353a8e1f 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -181,7 +181,7 @@ static int collect_one_alternate(struct string_list_item *item, void *cb_data)
- 	return 0;
+diff --git a/odb/source-files.c b/odb/source-files.c
+index b7b3a297bb..8fe65d91f8 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -18,6 +18,7 @@
+ #include "run-command.h"
+ #include "strbuf.h"
+ #include "string-list.h"
++#include "strmap.h"
+ #include "strvec.h"
+ #include "tree.h"
+ #include "write-or-die.h"
+@@ -51,9 +52,14 @@ static void odb_source_files_close(struct odb_source *source)
+ 	odb_source_close(&files->packed->base);
  }
  
--static void copy_alternates(struct strbuf *src, const char *src_repo)
-+static void read_alternates(struct strvec *alternates, const char *src_repo)
+-static int odb_source_files_create_on_disk(struct odb_source *source)
++static int odb_source_files_create_on_disk(struct odb_source *source,
++					   const struct odb_create_on_disk_options *opts)
  {
- 	/*
- 	 * Read from the source objects/info/alternates file
-@@ -195,29 +195,41 @@ static void copy_alternates(struct strbuf *src, const char *src_repo)
- 	 * to turn entries with paths relative to the original
- 	 * absolute, so that they can be used in the new repository.
- 	 */
--	FILE *in = xfopen(src->buf, "r");
-+	FILE *in;
-+	struct strbuf path = STRBUF_INIT;
- 	struct strbuf line = STRBUF_INIT;
++	struct lock_file alternates_lock = LOCK_INIT;
+ 	struct strbuf path = STRBUF_INIT;
++	struct strset seen = STRSET_INIT;
++	struct strbuf line = STRBUF_INIT;
++	int ret;
  
-+	strbuf_addf(&path, "%s/objects/info/alternates", src_repo);
+ 	safe_create_dir(source->odb->repo, source->path, 1);
+ 
+@@ -64,8 +70,74 @@ static int odb_source_files_create_on_disk(struct odb_source *source)
+ 	strbuf_addf(&path, "%s/info", source->path);
+ 	safe_create_dir(source->odb->repo, path.buf, 1);
+ 
++	if (opts->alternates && opts->alternates->nr) {
++		FILE *alternates, *orig;
 +
-+	in = fopen(path.buf, "r");
-+	if (!in) {
-+		if (errno == ENOENT)
++		strbuf_reset(&path);
++		strbuf_addf(&path, "%s/info/alternates", source->path);
++
++		repo_hold_lock_file_for_update(source->odb->repo, &alternates_lock,
++					       path.buf, LOCK_DIE_ON_ERROR);
++
++		alternates = fdopen_lock_file(&alternates_lock, "w");
++		if (!alternates) {
++			ret = error_errno(_("unable to fdopen alternates lockfile"));
 +			goto out;
-+		die_errno("could not read alternates file '%s'", path.buf);
++		}
++
++		/*
++		 * The alternates file may already exist, e.g. when it has been
++		 * seeded from a template directory. Read any preexisting
++		 * entries so that we don't end up writing duplicates.
++		 */
++		orig = fopen(path.buf, "r");
++		if (orig) {
++			while (strbuf_getline(&line, orig) != EOF) {
++				strset_add(&seen, line.buf);
++				fprintf(alternates, "%s\n", line.buf);
++			}
++
++			if (ferror(orig)) {
++				ret = error_errno(_("unable to read alternates file"));
++				fclose(orig);
++				goto out;
++			}
++
++			fclose(orig);
++		} else if (errno != ENOENT) {
++			ret = error_errno(_("unable to read alternates file"));
++			goto out;
++		}
++
++		for (size_t i = 0; i < opts->alternates->nr; i++) {
++			const char *alternate = opts->alternates->v[i];
++			if (!strset_add(&seen, alternate))
++				continue;
++			fprintf(alternates, "%s\n", alternate);
++		}
++
++		if (ferror(alternates)) {
++			ret = error_errno(_("unable to write alternates file"));
++			goto out;
++		}
++
++		if (commit_lock_file(&alternates_lock)) {
++			ret = error_errno(_("unable to commit alternates file"));
++			goto out;
++		}
 +	}
 +
- 	while (strbuf_getline(&line, in) != EOF) {
- 		char *abs_path;
- 		if (!line.len || line.buf[0] == '#')
- 			continue;
- 		if (is_absolute_path(line.buf)) {
--			odb_add_to_alternates_file(the_repository->objects,
--						   line.buf);
-+			strvec_push(alternates, line.buf);
- 			continue;
- 		}
- 		abs_path = mkpathdup("%s/objects/%s", src_repo, line.buf);
- 		if (!normalize_path_copy(abs_path, abs_path))
--			odb_add_to_alternates_file(the_repository->objects,
--						   abs_path);
-+			strvec_push(alternates, abs_path);
- 		else
- 			warning("skipping invalid relative alternate: %s/%s",
- 				src_repo, line.buf);
- 		free(abs_path);
- 	}
++	/* Reprepare the object database to activate alternates. */
++	odb_reprepare(source->odb);
++
++	ret = 0;
 +
 +out:
-+	strbuf_release(&path);
- 	strbuf_release(&line);
--	fclose(in);
-+	if (in)
-+		fclose(in);
++	rollback_lock_file(&alternates_lock);
++	strbuf_release(&line);
+ 	strbuf_release(&path);
+-	return 0;
++	strset_clear(&seen);
++	return ret;
  }
  
- static void collect_alternates(struct strvec *alternates,
-@@ -242,6 +254,8 @@ static void collect_alternates(struct strvec *alternates,
- 		get_common_dir(&commondir, local_source_repo);
- 		if (option_shared)
- 			strvec_pushf(alternates, "%s/objects", commondir.buf);
-+		else
-+			read_alternates(alternates, commondir.buf);
+ static void odb_source_files_prepare(struct odb_source *source,
+diff --git a/odb/source.h b/odb/source.h
+index ea8675247e..63f1c0c531 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -36,6 +36,15 @@ struct object_id;
+ struct odb_stream;
+ struct strvec;
  
- 		strbuf_release(&commondir);
- 	}
-@@ -320,11 +334,9 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
- 			continue;
- 		}
- 
--		/* Files that cannot be copied bit-for-bit... */
--		if (!fspathcmp(iter->relative_path, "info/alternates")) {
--			copy_alternates(src, src_repo);
-+		/* Alternates were already handled earlier. */
-+		if (!fspathcmp(iter->relative_path, "info/alternates"))
- 			continue;
--		}
- 
- 		if (unlink(dest->buf) && errno != ENOENT)
- 			die_errno(_("failed to unlink '%s'"), dest->buf);
-diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
-index 39a0c318df..9e4b98fdb8 100755
---- a/t/t5604-clone-reference.sh
-+++ b/t/t5604-clone-reference.sh
-@@ -383,4 +383,29 @@ test_expect_success 'dissociate from repo with commit graph' '
- 	git clone --no-local --reference graph.git --dissociate orig clone
- '
- 
-+test_expect_success 'local clone from linked worktree carries over alternates' '
-+	rm -fr base derived derived-wt dst expect &&
-+	git init base &&
-+	test_commit -C base one &&
-+	git clone --shared base derived &&
-+	git -C derived worktree add ../derived-wt &&
-+	git clone derived-wt dst &&
-+	echo "$(pwd)/base/.git/objects" >expect &&
-+	test_cmp expect dst/.git/objects/info/alternates &&
-+	git -C dst fsck
-+'
++struct odb_create_on_disk_options {
++	/*
++	 * Alternates that shall be written into the newly created object
++	 * database. Whether or not this option can be handled is specific to
++	 * the backend.
++	 */
++	const struct strvec *alternates;
++};
 +
-+test_expect_success 'local clone from linked worktree resolves relative alternates' '
-+	rm -fr base derived derived-wt dst expect &&
-+	git init base &&
-+	test_commit -C base one &&
-+	git clone --shared base derived &&
-+	echo "../../../base/.git/objects" >derived/.git/objects/info/alternates &&
-+	git -C derived worktree add ../derived-wt &&
-+	git clone derived-wt dst &&
-+	echo "$(pwd)/base/.git/objects" >expect &&
-+	test_cmp expect dst/.git/objects/info/alternates &&
-+	git -C dst fsck
-+'
+ /*
+  * The source is the part of the object database that stores the actual
+  * objects. It thus encapsulates the logic to read and write the specific
+@@ -106,7 +115,8 @@ struct odb_source {
+ 	 * This callback may be NULL in case the source does not need any
+ 	 * on-disk setup.
+ 	 */
+-	int (*create_on_disk)(struct odb_source *source);
++	int (*create_on_disk)(struct odb_source *source,
++			      const struct odb_create_on_disk_options *opts);
+ 
+ 	/*
+ 	 * This callback is expected to prepare the source so that it becomes
+@@ -356,11 +366,12 @@ static inline void odb_source_close(struct odb_source *source)
+  * Create on-disk data structures that are required for this source to operate
+  * correctly. Returns 0 on success, a negative error code otherwise.
+  */
+-static inline int odb_source_create_on_disk(struct odb_source *source)
++static inline int odb_source_create_on_disk(struct odb_source *source,
++					    const struct odb_create_on_disk_options *opts)
+ {
+ 	if (!source->create_on_disk)
+ 		return 0;
+-	return source->create_on_disk(source);
++	return source->create_on_disk(source, opts);
+ }
+ 
+ /*
+diff --git a/setup.c b/setup.c
+index 8c7b97f92e..37a8e6f124 100644
+--- a/setup.c
++++ b/setup.c
+@@ -2649,6 +2649,8 @@ static int create_default_files(struct repository *repo,
+ 
+ void create_object_database(struct repository *repo)
+ {
++	struct odb_create_on_disk_options opts = { 0 };
 +
- test_done
+ 	/*
+ 	 * Create the "objects" directory in the common directory. This is done
+ 	 * so that the repository can be discovered regardless of the backend
+@@ -2668,7 +2670,7 @@ void create_object_database(struct repository *repo)
+ 
+ 	repo->objects = odb_new(repo, ODB_NEW_HONOR_ENV);
+ 
+-	if (odb_source_create_on_disk(repo->objects->sources) < 0)
++	if (odb_source_create_on_disk(repo->objects->sources, &opts) < 0)
+ 		die(_("failed creating object database"));
+ }
+ 
 
 -- 
 2.55.0.1074.ge7621b4bad.dirty
