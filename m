@@ -1,134 +1,126 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4600A59C97E
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 19:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBEB38C2B8
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 19:44:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789068912; cv=none; b=Fh3ULKJC4F8WlcZ8natNSkbJIwosAXt4xQI6iRFoLopsufOlolBOEkye7vl+LP8KEEFrbtaAoE6dqt6HhEN8m+HEdC4UNPLwUCLde7sIq3mF7quLL9icteASAeYk6QwnwEeTlW7EIFHf3QHHm5HqPKq15exU6oMq4A/eVJucfPo=
+	t=1789069448; cv=none; b=jQXExb1MHgkqIY/gbymnhMbPQmXTtDZJEzYprLIU8wBOo3mXUggPM7AZSAPseEzpiP9hgzF5xKhp/4cuFCn2UA7H+AMHLGw6UsVY0vYsn7/VPNi0sEeKh2l2jpGhvQX7avJlFH3Wr1MpSOl79diFkT2q4gfxjfhMo1gehKV1JUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789068912; c=relaxed/simple;
-	bh=CqgaHFNvqYn/2i/zMja/Q2XC3k5+p2r/SUGmuquqqM4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QEJKOCr/BI7Gx7+8gGI1wgj5KAnLQviid4IPQ5X040+9RYjGqTi3Asi32kRiUOvrGuwdKAATikDUH9NlW7x9CC6WizJbxOcnxAtT5/pKr369ViEleMo6D0D6J7qPsuM2ucAT4bB3y4WYFP0HyOxhDf3H2QpH7ic21i+pkxX44Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g4dYRfGW; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789069448; c=relaxed/simple;
+	bh=72BRD7nvb97Fpeuv8uX/8ZRcRJQqjGmmSOIBg+JC1pY=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=axXxByUHyYBVXK18OK+5FmZ3Qkrjowxh7poTrD1sW1R3Vsn5mQ+SFG4h+Fs3bkxc7GVPkxPYqQQ0YD/fT+RHAN9X0gb+aRpPHES2SjZZlI8fA9B8snAG4k/W2+jkUZtH1XYsQzzQL09Cu3QpsrnLUAY8rjvSMaTIb6jICPAWebA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=HLCvlbPX; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g4dYRfGW"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-49cca4ffdcfso1884915e9.0
-        for <git@vger.kernel.org>; Thu, 10 Sep 2026 12:35:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789068908; x=1789673708; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=SdK7UeMqaWiQA/0xLCLHDh0xeB+P8k2ZjfxfvahtO6I=;
-        b=g4dYRfGWaPH2EpSdPRRhgUP+eVUyMRrpr5cpW8npxlTSfNuC9KymdeK7A4otWdO4bZ
-         F2KSBIL7n1Q2vcskYJsO+/O8Wxx/Fi9dDZtD18dyv24HE7b7wu2h30JJzpDdv9UPjlIL
-         pddnid0NZspTb6KIwU+in29bMIvSwGiLRbuDS05nZuOnl2LNXfsyGytQXVTAzBaq7RLj
-         npiI0brhvMxQrWM2F153H6SEyVmBdwbaTcFQVhOsxGS3jSKJ7tz9hD4WWH66XbyQUoea
-         m03bv1L2kGOyUHjGb90ORTxQYJzHXWu0xeyJXc45HXto9Si5TdlOiTk33MEUH22q4PY/
-         Pq+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789068908; x=1789673708;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=SdK7UeMqaWiQA/0xLCLHDh0xeB+P8k2ZjfxfvahtO6I=;
-        b=Wp7PIILIcwPMMAlFW9+JqG7vxTRg4DfvQQ7+HR85vX90vRoVeUD/FkNaAwe/kN3iMG
-         BjCEmb1T63OeznTnmLX7ZlUs5Js/ojMvamO/EL9Lcm0xAG0yixrA81e7hgXocOBCwmHp
-         0g90uC5/2viQ67w4nf675VWDlkqRvzMaRBLZE+EQFsNLjQ2AcGtCfOGIvpdrhYQxyZ8N
-         TGe8A1RMYOgkWjwenQuJGRIdtzbt70W9FWRYtbpSO2k88QNihpW3zRIHgA/meUVNkCub
-         5/RQhJkKRRAaVmjOm73xx26zKSVZ4E97SOT6Vz8hb+XCF6kURUr5M63hFoNIncxwSyVu
-         iG+w==
-X-Forwarded-Encrypted: i=1; AKwUvBwLEkJtLruZ8YYQyXKyqs3qpk47eLr6WV15WM1lDENPHdAcYypYx3mhecbOODP69xA2wbk=@vger.kernel.org
-X-Gm-Message-State: AFuF++mYnoa84u4O+Q5vxDGO20u219LTuWewsVuNlQUxqvggz+e04/9P
-	2S8DB5LSpNbahH6e6rMc7+NsmpQ8vSS+/bJKqC0eon+UlstHiwsQHf6LuL0tTg==
-X-Gm-Gg: AYBFou3m3B7kjZJtVDe9DBJ2Dw9soUyXNVTUrxKkMmiMHLGoHBwIIkJkmTYkVkYzuKx
-	oWqG3XWK+ErNGkO++E3NQOwG4mBskLqfUgXYuwvSjP4BsTEKxRgdQTV2Am5M8+IwLOZUoGr2I2t
-	+oRa95fnI64kObR4ABrhVNPMtf4QZIbLwJW5pkhEq7CnfbqNoJeLB1vLcbgl8LRiS3D+4RaOBMA
-	q4NhzXBfHwvu+oQ+Zvyj0CuNkajyDT408H8mMeb8l1xNdrgN24PelV+ozXVYAnPms1Jz4VCnn7H
-	DeTZ119fmTuRarSoh3yVcIg67PXx8IXX4joJzFeZ8wF58E8to9/vz1VLwS8XqHia/bdWY7kEkDw
-	wfa5nHANAMI1jDZ1tOtBUS07g4lNNgaZl+4fcsX/UCELT+tbDRkTjW0lvT2eKM6cJ610PwvRwWz
-	vY1ijEnpjSG9kxvkrLJQi2wvKjcLf4fNdRpKBWm1KeTausKAYGqzZNQN0YlIoUtOsBUjbSITyWX
-	IGG7zndtbWPqCjLGo6Er0oCnYyPA+jTBF9y8hR2pdWtgOpHNz98kw==
-X-Received: by 2002:a05:600c:4703:b0:49c:fc6e:a3d7 with SMTP id 5b1f17b1804b1-49e619bfdd3mr5290035e9.22.1789068907524;
-        Thu, 10 Sep 2026 12:35:07 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26c1bfc1sm113867075e9.4.2026.09.10.12.35.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Sep 2026 12:35:07 -0700 (PDT)
-Message-ID: <dd99bc04-09e8-4acd-956a-056eeb666702@gmail.com>
-Date: Thu, 10 Sep 2026 20:35:06 +0100
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="HLCvlbPX"
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 68AJhvdr016442-68AJhvdt016442
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Thu, 10 Sep 2026 22:43:57 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1x4kgf-001yaQ-Jc;
+	Thu, 10 Sep 2026 22:43:57 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Thu, 10 Sep
+ 2026 22:43:57 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 98bab926;
+	Thu, 10 Sep 2026 19:43:56 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: Junio C Hamano <gitster@pobox.com>, Tuomas Ahola <taahol@utu.fi>
+Subject: [PATCH v2 0/2] guides: keep Documentation/Makefile and command-list.txt in sync
+Date: Thu, 10 Sep 2026 22:43:49 +0300
+Message-ID: <20260910194351.20809-1-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260909052501.8448-1-taahol@utu.fi>
+References: <20260909052501.8448-1-taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [ANNOUNCE] Git Contributor's Summit 2026
-To: Taylor Blau <ttaylorr@openai.com>, git@vger.kernel.org
-Cc: Scott Chacon <schacon@gmail.com>
-References: <aqBRDSkgC4wrUUL4@com-79390>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <aqBRDSkgC4wrUUL4@com-79390>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-05.utu.fi (130.232.247.45) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsH
+ BUhYSFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIWkhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWA==
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
+ bh=chFLJ+rqtA8VP/m7Piymn7Fhn6hvI/vB3qkdRFVxd4s=;
+ b=HLCvlbPXr5lb+xV/145GbgaynLhRYARyQ9R7+siK/16Nw7sbi+Xrt/mFymQ+6QzgddsEvMjTXDKO
+	sXjyM+mC0QMCZ1HlKnV7luVmCn5P7L2ZsT41YulFxXAcN7ZYKg8zsnHshPxd2SJgdxgfNTQWi3Ub
+	LiTz6KnUK4yNvOe3L1XQSTXTUVtisGAbS12i1MfjD32biwUg2Pl+qipVlQvWheoGio13eYxhVh1z
+	oj4m2Hm+jiAPm03dL4nLzJHx1962QE65vPsxHlgxq/eKa0mP4QbXUXs3U6A1uik9LxMV2sfvL0Zy
+	eKo5Q3pdrE6eHPJqO3Bip5zHuS7SrzGN7N/gUw==
 
-Hi Taylor
+Documentation/lint-manpages.sh was expanded with a new test
+ensuring that command-list.txt also includes all non-command
+manual pages (concept guides and interface manuals).
 
-On 08/09/2026 19:16, Taylor Blau wrote:
-> Hi everyone,
-> 
-> With Git Merge coming up next week, here are the details for this year's
-> Contributor's Summit:
-> 
->    When:  Friday, September 18th, 10am–4pm (UTC+1)
->    Where: Audrey's, Santiago de Alfama, Lisbon (private room)
->    What:  Contributor's Summit
->    Who:   Git (& related projects) contributors[^1]
-> 
-> (If you're not able to attend in person, but wish to join remotely,
-> please let me know off-list. Our room has AV capabilities, and I'll send
-> remote attendees the details as we get a bit closer.)
+Based on kh/doc-datamodel.
 
-Could you add we to the list of remote attendees please. I'm not 100% 
-sure I'll be free to come but it would be handy to have the link if it 
-turns out I am free.
+Changes in v2:
 
-Thanks
+* [1/2]: Use command-list.txt as the area identifier.
+* [2/2]: Protect variables againtst whitespace breakage per review comment.
 
-Phillip
-> We'll meet alongside the unconference, with lunch from 1:30–2:45pm. The
-> full Git Merge schedule is available here:
-> 
->      https://git-merge.com/#Schedule
-> 
-> As in previous years, we'll use the summit to discuss topics of interest
-> to people working on Git. If there's something you'd like to discuss,
-> please add it to the topic sheet:
-> 
->      https://docs.google.com/spreadsheets/d/1ianyjHMV8EHVfHvwFfNa3SAFu5NIIBLyKyD-pU8LArQ/edit
-> 
-> Please include your name and a short description, along with any
-> relevant details. There's no need to prepare a formal presentation; an
-> open question or something you'd like feedback on is plenty.
-> 
-> We can leave the voting and note-taker columns blank for now. We'll vote
-> on and prioritize topics together when we meet.
-> 
-> Safe travels, and looking forward to seeing folks in Lisbon!
-> 
-> Thanks,
-> Taylor
-> 
-> [^1]: if you're not sure whether that includes you, please ask!
-> 
-> 
+Tuomas Ahola (2):
+  command-list.txt: add gitformat-loose(5) and gitpacking(7)
+  lint-docs: check the guide list in command-list.txt
+
+ Documentation/Makefile         |  2 ++
+ Documentation/lint-manpages.sh | 10 +++++++---
+ command-list.txt               |  2 ++
+ 3 files changed, 11 insertions(+), 3 deletions(-)
+
+Intervall-diff mot v1:
+1:  014da7fdff ! 1:  cb6ce6cad1 command-list: add gitformat-loose(5) and gitpacking(7)
+    @@ Metadata
+     Author: Tuomas Ahola <taahol@utu.fi>
+     
+      ## Commit message ##
+    -    command-list: add gitformat-loose(5) and gitpacking(7)
+    +    command-list.txt: add gitformat-loose(5) and gitpacking(7)
+     
+         Three manpages from sections 5 and 7 are not featured in
+         command-list.txt as concept guides or interface manuals.
+2:  b24d96f732 ! 2:  2dc1ee4514 lint-docs: check the guide list in command-list.txt
+    @@ Documentation/lint-manpages.sh
+      
+      extract_variable () {
+     +	file=${2:-../Makefile}
+    ++	directory=$(dirname "$file")
+      	(
+     -		cat ../Makefile
+    -+		cat $file
+    ++		cat "$file"
+      		cat <<EOF
+      print_variable:
+      	@\$(foreach b,\$($1),echo XXX \$(b:\$X=) YYY;)
+      EOF
+      	) |
+     -	make -C .. -f - print_variable 2>/dev/null |
+    -+	make -C $(dirname $file) -f - print_variable 2>/dev/null |
+    ++	make -C "$directory" -f - print_variable 2>/dev/null |
+      	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
+      }
+      
+
+base-commit: b8242b093d9e941a34460d715e3ce616a34ac3fe
+-- 
+ta/command-list-guides-sync-lint
 
