@@ -1,114 +1,113 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AD9577E4B
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 17:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DD055C1AC
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 17:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789062201; cv=none; b=d3ng8ZdsbRvjudnr4dDMrEmLaeyxV5L+Off19ISYHGi3hxgQVhxwXOW/8k1jmkpx/oJmmBatSnU2O5sNwx4FYVJJ9ae3+PSeaEkODZqaUsQyGdxeXVNwewMHkoFFEgYa9WEnibYehucF0SaHIFQn9lwnrEQP5J62DwL5U6yhwws=
+	t=1789062377; cv=none; b=rute0JOvY9C1PYPTXX21XT3sAwsjregVg9n3qbFli7T+uoBt0XgnXUSlfsA4hS5xUhL2ynL939gkPJAW3m26d38TraM/JAkutnd7B9p0YBfJnRYh0B7mxurg0ld7sHmzqoQcJgkpdhbsKAlq6/wmd7GK163nYIoL5/f6k4AWJ3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789062201; c=relaxed/simple;
-	bh=NGDOe+d5JafNPEEmSx0ulVNLmnCHQOic20XLoOPAZDk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JG4r4Uy1tyDyJ5mogy61Dymj7s++ePEBzHI3iaj4w/raxA6JWHIchhXC3fdjFDKBr1BawBMyd2Cyxo2GouHimp2kosrloW6P+qBEGS3BFUWagIBzzl4fnrgZDS9XALtdcDZHlrLn0AxbAR6xY1TfNslzF8jSPtraNK8fIgbnzwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FNFTwNiD; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789062377; c=relaxed/simple;
+	bh=f9EiR8YY9b+cjNj0VQ0uLnTlsyKLM4kpkc3D0E4eVtI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ye256AcAit6m+iM81mz9NmezWxbV5RTIIFRJIvUpfDGRk1ex6Br41l5CA76SwVrthHzzczT46OkVGPuYMisA+TVCTDEwEXLhNcYEEF70CjgNS214P45Qna/yUmhU9N50AMToRxhIwh9nDWI+XgElcU/GkdUgK5+C3Jr9b2QnZWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=asouqH4U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iI+6gKmC; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FNFTwNiD"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6a9ac6aa620so791705a12.1
-        for <git@vger.kernel.org>; Thu, 10 Sep 2026 10:43:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789062194; x=1789666994; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=PdiEd8xYU5rPygklUMqAFOWL6Yx0BlXwgx4yNPBBm+U=;
-        b=FNFTwNiDHLS2sOUUZFoOpTImEBToLCLjeujp63RDRdgXTmz8G5ASNq89p68i6SJK+z
-         IrrohOI+5kH6c8+1QJPIblHLtVvcq8mhIJxRCnuPzZnJ2QEkl/7Nmfm2qbM7kHs8x7tD
-         fcSjp+0a91tudWp77tlUDk7F5vdAxKDPStdNNZkpkLUmbuHtsELyub/CZ7d/0J2qKYKB
-         j14v0OvaBdggTPVP85USAalBw3pTb7qpAmgyLcWiFAFR9xea/surJ5p3aXpZl7ayjuI2
-         QIdxaYvCmroaIzbOv9Kyy2d0fjZAX0ZKz+U9hqmL2hyRoWEuew9Rjx3afu6bSY9fgMVA
-         douw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789062194; x=1789666994;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=PdiEd8xYU5rPygklUMqAFOWL6Yx0BlXwgx4yNPBBm+U=;
-        b=mGFZ1x6TLScOUJPGZ0qXlTYeMYWdl4YPR7IW2rnZMjYbW/j/mKhUzERKKGR1D+GnSs
-         t+1Y1VuACVF6FvxE8oeIslRw/MW5b74QLuWpvbeBJFMFtmCrGNtP4zpHhZd2VZA2ZCix
-         RQC37uoWEAIhwXdSRwdb6cXfuQqokdwbnNZf3icKkPkCpaBfzK/otjGse+Ybrpfnm0rQ
-         KApUpBCYkReMZDe/NJToLSlF1eV9fyt68aQBWzzC3FnbKlCRavxcIoMH02GZBW+3BKrt
-         3zKS/Hr7zdhaFFScAquZVfm3XKZx+aUGhJAXFFxWU1RXo1Hz7MxssIbUsqVkTnFLAUiy
-         VH6A==
-X-Gm-Message-State: AFuF++lWVP+CobWSfZt7R0fquA46jAeWlYfb5oJcGaT64Mm5B/3Hb41k
-	rKDL9o0xAF/CFbqRSZQnAHC86QuLWfl1Vum+wqz03H8fpeoAOSZvSSUf
-X-Gm-Gg: AYBFou0ZW1XzOR2lDKhRCt32EVfnB8FEujpCzsr/IfokrrAuaU8WHNZ7L19BdPokvH9
-	6rauCRx4iGtL1CX02OmEaLm42ORu+4+88OMYHIGV0nkYDYBMnZm+gqpQMtHt3YXMeQbgO7YWRlZ
-	l9izsw0HgbftjmfWshhbcGIrtFhSPUuKrwAbsXaaoaHJ75VcrqngZbzWkQk307V1wPXE338HDH2
-	hOEijRgr6J0UvabKbvByBhzzvFpfZLD+kmL/AQaXz9y1bg5rD7032FEpytmDGgOi5MYRPGW2LvP
-	d1McfmNs8brL1VhVCZ/l6FxMd4uP7FafKOHreucHOr3xasuflrZMdzkyHkeHlyHDA/BSDM9N21k
-	C2/WEQD7gafi8LNMbvwFcIbvhmJYcKEB0qnsB8A3s+6NITvnNj0hi10A/Xwby+AbYzsvcQWi/Lm
-	jXIgtthhp3hf+UoINIE5RO6s2UdDYtEllv1iPTbifHplX5ChTUu+DhrjuwZhmfdRoaWn9yn9h35
-	n1VTuTqJkhyvlPYrL5orCaw65qwtj3TR8C1K/xca/Hfoq8m+kW0D2E20oU=
-X-Received: by 2002:a17:907:7ba9:b0:c29:42ad:acd0 with SMTP id a640c23a62f3a-c2945f702cfmr302707766b.30.1789062194194;
-        Thu, 10 Sep 2026 10:43:14 -0700 (PDT)
-Received: from localhost (20014C4D24E782008D312CD8C24A9D87.dsl.pool.telekom.hu. [2001:4c4d:24e7:8200:8d31:2cd8:c24a:9d87])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c293039a5e2sm292762366b.43.2026.09.10.10.43.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2026 10:43:13 -0700 (PDT)
-Date: Thu, 10 Sep 2026 19:43:12 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Vsevolod Myalitsin <ub4nal@mail.ru>
-Cc: git@vger.kernel.org, ben.knoble@gmail.org, gitster@pobox.me,
-	peff@peff.net
-Subject: Re: [PATCH v4 1/3] advice: pass the entire advice_setting to
- vadvise()
-Message-ID: <aqLsMDcvqgRZ8MVO@szeder.dev>
-References: <20270829004959.90983-1-ub4nal@mail.ru>
- <20260910085353.109373-1-ub4nal@mail.ru>
- <20260910085353.109373-2-ub4nal@mail.ru>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="asouqH4U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iI+6gKmC"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 72B05EC01DC;
+	Thu, 10 Sep 2026 13:46:00 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 10 Sep 2026 13:46:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789062360; x=1789148760; bh=f9EiR8YY9b
+	+cjNj0VQ0uLnTlsyKLM4kpkc3D0E4eVtI=; b=asouqH4UegAyPJByhWKSdFuPWt
+	B4xCxvg5OCnws8QAq3Gou/GpXk+4DyXUxwjCqtBnhmP4aWcQraOcczfmWfz6jGaj
+	n5pfGpSBdSYpTIUVbmDiV3xfTTc2UDgGwT0xUxFK4oDfe3YSoqgKCc2uFOgAzSr4
+	f0MEnDn9piQUPaaFi1iF7mqkyy1nkiXVMoJid1FN/iL0gHMnZIGNngnXNzvL3p31
+	ZaDatZmWhjdnknQ2ueLPfzkvwaMuVCdIKTutnL91saDNhjNPv9ggjq3NJtzCM+gs
+	BeX2J7yWkXX8nSljv40/Wu0JHquIX5kH8Y/WOj+EkOEwmJg4gwm+D3xmDcGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789062360; x=1789148760; bh=f9EiR8YY9b+cjNj0VQ0uLnTlsyKLM4kpkc3
+	D0E4eVtI=; b=iI+6gKmCFV9jt4EdQZ6CU2QAyeFnoxht7sA2wGGnsz3o5Pc3ZEd
+	AmjRIfTB0iKwyQc1xF1Wfe5kKo1/bo+GbTU+nX4VTHcAEYb/2XA8ej7kwD+B4rXL
+	MtNDfyO5/sZ6To3G6lfQ/JFwk0wnUwv4pK4/avBI6gFoa5zoL8D+weGAlS0Z2lQN
+	684cCYRlJZyG9N7iEv86r9seyb2/LbsBh/ZvAFGS0UHbqX1xBTw77nxXl7qqgB5k
+	WbCi5ONSHEqL7vqb+HP/bT+Cbrgc+/SKBH+h8OKT7dupKjiAW4FLg8zmsV0ds0IH
+	IRxS7vH2C1IBehxZdr/RK/ahwtysPol2NTw==
+X-ME-Sender: <xms:2OyiajAAHBdYXdeerSFF_VfQRhy8P54sci4JJTiYuDKP7gCVIgL35A>
+    <xme:2OyiagYbhOZnuOFb9FbizwzDa4GzdqRh5_MdsuSUzghWQgLxfJzyNZIid6lLayrBq
+    WgnfRAChv7ChBZw5HQV5fk-I7ufrUYyMAUKFsfpZ1g6R69gRJkPs1c>
+X-ME-Received: <xmr:2Oyiam54IZf9LCZjFLwN4CMUjLEsqiC_fryK0C6bPBBnxhkY9Lfh9QfQ-JjmaKyn64llyKa3K_RYAF1ZKbh6A8PrVd_tZYxxDCdm>
+X-ME-Proxy-Cause: dmFkZTF9IyF2tVyz7RuOOW5wWNEhKfF6HExz17dwqIC6t/+smF0NNT654gKd++rFNalJWO
+    yZaCeoD1meF6SZFb+BTrEsKha4H1B+JfUrRHiVxlk2bG65pbTR9ui+XG09ZtLUBoCx1aYM
+    vdRgUh525vjma7NagC67gB1wO2Qr7cX0+hBm3SBrNblANIJNqVUS+WWY/1VTtRflqidAsv
+    xHF63toiwDf96HxeJf8q972uVj1jOwouJ+EgGrg9n8keVg0mJxr9Z7tWauvXurQjfkYKVb
+    G/ZlgGz3e3YWjABRx4ymuZZCBqWdmGgRmBB9MZsuJ5KhjKW/9GuURO3ZS5SZ6DRC8HZ6lQ
+    Z1A1KI0trbUrTOrbxQafJ8BwHHXW79kmmPhLxRrc9u8w1CfxV3IAdatpU6XLUcEY0FB1Q9
+    znejpYWldNqW2VJk1u9MBJiO8R8sSPi9pgIoTjlfee5aPiBO/OOxWmwPyT1WRF5WLSpA/E
+    ixZPiuZ56G1MCx7x2qlcmBXQ3g9VTzYHs3/wS3JixfY8hQQvptLpjQ6aWHlZdMJCfhpBHe
+    UnTucOFllKajBIULd7sM9nRvsb0trKsp0dFdPigo/7utw1Jl/F93B/qu4B+ilbFSVHvgJt
+    6WhPpur+MDWzHIrzTbNAfIAV1/wLrPpf+PUeoH/yEiwcvXii68s+TFMR7JTA
+X-ME-Proxy: <xmx:2OyiahZFfFr_GF-v9aSESzWD7lM3BuNlYDyl-CiHf4Gw2iDeLE38vA>
+    <xmx:2OyialjrWCZuzqxj753J8DGJ7vkbJ7vkNTbpV2Kb2I-t-ELCKHMqQA>
+    <xmx:2Oyiai-eaYBGPn078CvKDZSYokZKk5znz-gbmvG21GA5UhvCZ2pPdg>
+    <xmx:2Oyiagrco3xn66tiX3QICr5UPPTzJOlS9ruOZo39HBZDZkT9pfwSmQ>
+    <xmx:2Oyiarkqw1rQvNDvUydELuswmEffp72ToA9ZSzIZDa-oeT2GtJQmKCqn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Sep 2026 13:45:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mike Hommey <mh@glandium.org>
+Cc: git@vger.kernel.org,  ps@pks.im,  sandals@crustytoothpaste.net
+Subject: Re: [PATCH v4] Move rust gitcore crate to a different subdirectory
+In-Reply-To: <20260910121056.2749578-1-mh@glandium.org> (Mike Hommey's message
+	of "Thu, 10 Sep 2026 21:10:56 +0900")
+References: <20260909013858.1729643-1-mh@glandium.org>
+	<20260910121056.2749578-1-mh@glandium.org>
+Date: Thu, 10 Sep 2026 10:45:58 -0700
+Message-ID: <xmqq5x0df19l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260910085353.109373-2-ub4nal@mail.ru>
+Content-Type: text/plain
 
-On Thu, Sep 10, 2026 at 11:53:51AM +0300, Vsevolod Myalitsin wrote:
-> @@ -98,16 +100,17 @@ static const char turn_off_instructions[] =
->  N_("\n"
->     "Disable this message with \"git config set advice.%s false\"");
->  
-> -static void vadvise(const char *advice, int display_instructions,
-> -		    const char *key, va_list params)
-> +static void vadvise(const char *advice,
-> +	const struct advice_setting *setting, va_list params)
->  {
->  	struct strbuf buf = STRBUF_INIT;
->  	const char *cp, *np;
->  
->  	strbuf_vaddf(&buf, advice, params);
->  
-> -	if (display_instructions)
-> -		strbuf_addf(&buf, turn_off_instructions, key);
-> +	if (setting && setting->level == ADVICE_LEVEL_NONE) {
+Mike Hommey <mh@glandium.org> writes:
 
-There is an opening brace at the end of this line ...
+> Subject: Re: [PATCH v4] Move rust gitcore crate to a different subdirectory
 
-> +		strbuf_addf(&buf, turn_off_instructions,
-> +					setting->key);
+Documentation/SubmittingPatches::[[summary-section]]
 
-... but there is no corresponding closing brace here, leading to
-compilation errors.
+> Having `Cargo.toml` at the top-level of the repository implies that one
+> can run `cargo build` directly, but this doesn't produce anything useful
+> on its own.
+>
+> Additionally, when including the git source as a submodule of a Rust
+> project, it prevents the git source from being included at all in the
+> crate package because cargo skips directories that contain a Cargo.toml,
+> assuming that everything in the directory is relevant to the crate.
+>
+> Move all Rust-specific files into a dedicated `rust/` subdirectory.
+>
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
 
-Please make sure that each and every commit you submit can be built.
+This still leaves the source tree in somewhat inconsistent state.
 
->  
->  	for (cp = buf.buf; *cp; cp = np) {
->  		np = strchrnul(cp, '\n');
+https://github.com/git/git/actions/runs/34505483626/job/102966561269#step:5:120
+
+I do not offhand know if ci/run-rust-checks.sh needs updating or the
+moving of files needs tweaking to avoid the breakage, though.
