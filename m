@@ -1,244 +1,147 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8329A493D48
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 13:36:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789047373; cv=none; b=lz78WMKoe/LBDUhkrk2TELEd8zdL6HejdaqNMyyfwuQuhFb3/HLyVuNqXOnS+Z7LOB4ujGzKz7CWJsAASnrO1wihRKnmFFRF/Hlpohm7ncoHovGT5RwwMuSPL3EzcE3Pvq+9RcoCfdBTBE0tQQtALjy/SpNEU9mLQS1qQNb5bSE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789047373; c=relaxed/simple;
-	bh=b5JthBD4L85Dm2awJUAC3gssbeC/e9DOtF0PY1aateM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TxDYrB20hgH7laQlJqB6kJKyBdTneZyl6rkEYEMZK0E4KGPeSsx4QYADgPa+gtJ2OxOPwreVYMms0qbZEyzwOSO8db1iDX/6+3hZoejAsoVKgMFRPDVvnyu497cFlo8r88CXzrysNaFwnajLzqWIY1JvuLSEAAZEhJcl1BojOJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=daRzrHE2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZfGFofdR; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCB649BD75
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 13:43:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789047785; cv=pass; b=LOspofOwoN8MzjlGXQ29OC/nciBy2fRFhZjFg7KP7AhVRXUjJLaYBXwiSDW/7CJaswcBDw5FAq/WWBVy4MwGnJoTR82knovvkmo5ZG9uLAaKzXK36qBk1ZoGv09YXZ41aoZdUXDrke9rNxkrxkBFbsa7hJrceRVu9WPynvi/UbA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789047785; c=relaxed/simple;
+	bh=SmPDZb/Fzcy5ffwSNp7G/inugSy99rhx0ssJC+IHwic=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c8nwYlzdKEkFK+D9Qdm6cnwZ+F/pqoXJRC0MhrlMMIOQW7ErIY3uN9aSYhKWOXWYr9qYAsmvc6N0XiXDjftH/DD7UeSaflCzwei1AZdgKqtDkQflzrru1F9mlACaWJbJ+p9K9EsgqPYqbPSEJSJKAgpwncif7fvcHe1jMD8HWYw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LN0dz3t2; arc=pass smtp.client-ip=209.85.222.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="daRzrHE2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZfGFofdR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id AFD7BEC01E3;
-	Thu, 10 Sep 2026 09:36:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 10 Sep 2026 09:36:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789047370; x=1789133770; bh=GW8Fmb9zuu
-	mocg0am9FXggxypkAruMubLwCaiQ11HOY=; b=daRzrHE2JOcwUBkAIeVfZlQnxb
-	hHvT5Yugfkbx6nCsqB5PwqBrptnseYEbbkAsSGiMtG1Ice9xzlUg3NjI8rkAdTGw
-	r/r4M+tRgVLkZrg9PLOmxUa41p3yOJYg7AkYOjm4o/jPp18/mZUj4A8dAiLRcmqH
-	U3bvvDrBCQgCsYtfFAgTJo19+8OZm/XRwpwkE/mwh4gUhWytTkurTigu43cnssKa
-	MuYWau4GhCDn9gf4rJp+EEUaOqd3+a0FoC9eXCvR+fkIQh7Ftv0liP1Qc/fSXCoP
-	vjMxr4NcWMzZ0MTSUlYqY9Fbxkb2qhcsi8H4zMNjixXPsdv7YP75F5hyIyIQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789047370; x=1789133770; bh=GW8Fmb9zuumocg0am9FXggxypkAruMubLwC
-	aiQ11HOY=; b=ZfGFofdRWfGnc5OguSA+tG1qaeCTzz6UW6zDUKF8EagiuHPtySB
-	I02AYpTLH/iaRtpSGAVIYJUEIAgQ9eJc0Hw0drRaGfbgdP1OMLth33iNazC3pjPW
-	7yrZhxLftnPLLcopJsqdqLmssOnPaGwKhmqFV8MiN6hD3ZWjJs+hVFFjSbwOMr34
-	Vr83lXgSuCmMCtr+zIIKihi3IHkHQ0adYSjygriAK8ODqoXwCVz6Rlg5We7EcmqJ
-	d+15ppBYotaxZqGIJXbTvgAfsOSOGgUqW/Dqhvj3oD3um41RW9671sCP2qXUBkIt
-	blzYCcnOrqf4RO90f36cXxYYSlhn3q0S1sg==
-X-ME-Sender: <xms:SrKiamuj-thUsrOIhWRKwlaYYt2wHj1FJv-ic2baXKmNfD_hlFosuA>
-    <xme:SrKiavL3nvmnNS1tdhz6YTDuKU_7qmbCbzes-Ipb30F8HN-mZ4B5xFXofo75VAk8L
-    TDe-pWeSV1nxeHPNQI97el_YYkWmLsSvbNWeoOBFN6HCAJb_EM_8sQ>
-X-ME-Received: <xmr:SrKiarlYTtMm4jrNKe_dwXr_saze7OKBtEQEUtRKlIsM-OS-4y8uL1taaM9Winp_sgAzmAqf1AvQ2ZrHXN53i1tqmhXMlEwyy1_C>
-X-ME-Proxy-Cause: dmFkZTGRizg86lPlc/IJCPPtM+YnVpRHJyxXt9WlOVnD+rF/SKVwBiCh7lhAW2K1NwDzTj
-    uC19pnzbjkSFSpbNNGgHi4OPpQRsHk3h+BzH/l0rYZHgUn4t6I+MWdxkmcPVK481K5dgpX
-    dnxxRE95hnLlnQjtmDm1MszBWN1aiz0nhnWJ/SM0sk6KV7c2q0atsxNl6NN1hJwtS4Bbjm
-    Do1+o3Y+AJbTprv/fedKpP3mOZl4/mDmriSJIRzO2NHBVr0MpzHeLOpJDBoXNlbfgkiKmu
-    fAf/ZjbcDoxKQLyeZ07e2H7oY9h1u2pK7ATZMt8daN6zEWCZZt1MuqzbhwsRb2wdn34hjE
-    OUQyEQP/SVe78x6cggN5lhWnJW2SvwWILGHJ8Cn0R1d653QVmv025FZkryl/BN5n9qfu54
-    Rkz9udC/arTyMEm9sZ5MfktMiEXdIhXYDYNtlcb5ihhTKTYm1u4BG7WJkj20HIYm/DJcRO
-    fJ4Vwmafd1SWaS04FkPCaHO3tXpQiVskQqMDlFKlpOEUsFu94A3BfDPMWt1m2zy5kn07LY
-    W6LHuIApAX+snEVM4h05vfusv76rAoHdwH78UEQTwR6ehEDlvhOpo/8sMqNY2TO/PZPugq
-    RniFUNbzx34/+/fDm9HV/DVJRajVrRzLLNqIE9ggZdrWzjw+kYdbNC9DjBBQ
-X-ME-Proxy: <xmx:SrKiaoJsi3jmv_KwW38-v0-VXJ380F1kalQ1PqbunV_a8JsYN6JI-w>
-    <xmx:SrKiao7OJ8H3XB7ncs7gYedCt3Qyg8YyYjXpikR2L4T7TfM-b29p1A>
-    <xmx:SrKiak2lnh9dmwdAMWAUSAEAPCB2bwLAF7ms0pZUUd6HyFmu64jy8w>
-    <xmx:SrKiamcGFDZZB4i7Qpg4a5sfQkgceZ1Zxv92KqiYsigyeYYTVjBLOA>
-    <xmx:SrKiajeU682U5RLyjm9y7BBzAuo9_in7U942Rwy8IyKP8kxq3yrKsMQV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Sep 2026 09:36:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Git mailing list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,
-  Jeff King <peff@peff.net>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2] builtin/history: unuse the commit buffer after use
-In-Reply-To: <20260910114052.325683-1-kaartic.sivaraam@gmail.com> (Kaartic
-	Sivaraam's message of "Thu, 10 Sep 2026 17:09:51 +0530")
-References: <20260614141600.620272-1-kaartic.sivaraam@gmail.com>
-	<20260910114052.325683-1-kaartic.sivaraam@gmail.com>
-Date: Thu, 10 Sep 2026 06:36:09 -0700
-Message-ID: <xmqq4ifxgree.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LN0dz3t2"
+Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-98089686ee7so4081879241.0
+        for <git@vger.kernel.org>; Thu, 10 Sep 2026 06:43:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789047782; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MuSo1gFgvpVkSvCLc2RhsXhymJhOuSNd1fjMD+LT1ksEvZqcQeqnL+8vMX7N+gsSqP
+         ngfIejD3wvhmmeAeIHe3iQIkWkdRJpxYLUzS04UtnMNfQxGyyOQB9GFh+cSuV2/zE+Cz
+         6ojYROakNklXA+LTX5F2qiUJeQJnJT2I2QLUS2ZWpO/52ZeKgPJmspfz+DXxUsoGa8ZE
+         AI0XJ2aeN32oVR4bxkcftQ7+QJjEU1ZoaqSTMpnN5OWMwsu7Zt0c2k6ArHFQVLiI9Mfv
+         PubOwtGVqLtSNtpudfOvmsxxsnFuJGIdJIfxP2zh+YC9IbCDwVAuptPzD2zkE8tXzk5j
+         +TlQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=rI0+3b8IUYos1Bcr8iUtl2xY6wAil820JiLzSCtDb1E=;
+        fh=v/OOScdyXBuJJSpP6BDpOiPXCCd1tXSTp5+qT+6YdYs=;
+        b=iCawZVo93ndAKaE7v43jXy019c9GZLQARvXvgo9WT+sAAk/OiwopOSATzhpspGw7l7
+         +JkA7APHN0Fb4oNGZaxtCt46RXlQIw5C7HUgyMcaZjVNmuIahW6nkldbjX//C0U31jAx
+         vUws9omtzW39gcr6DnRqvewvkgiV5Wc1bud2fLIf+IloNwawFlHr++X3Z16zxAFN4tk3
+         /lbdU4D/sXso9BAsn0GHl413FrgvuQSqfxR1Pam1Hjn5ABo6/uZXzIC7PdaVlQuuipqP
+         SYVHk/65OVojzHwbyfPKvRKKuCHHz8rtNuFsSPkSssN/Cn4ZxfDabCiGQQj/pZybHZhG
+         GHMw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789047782; x=1789652582; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rI0+3b8IUYos1Bcr8iUtl2xY6wAil820JiLzSCtDb1E=;
+        b=LN0dz3t2LKxwkccL6TCFUuDaKhhpbdtz3ls/392GXnmaTjzUhDW0CLo2Ms/Jl7Dpj0
+         MvPzFgBTKzJT4oRnWVm5cxo8a54XzF8jS0sHuZsCTaUc775nt46zLdKe9y33zxFe912x
+         oufW732aGXvBt0tkyzLAvgJYE+qricQO69bFM9dW9N0TlVvhahfzk7aw3ols5EKvnLPl
+         VjAuFxDKzH/OzQ8ol4TKWj+L1n1/oxZHjjFy1q31FIFGThCHQU7BP0Q7TBQFRH/LlE3F
+         eDWFrRFcWKKxeKv3KzfEGya1hegtY/ZSNers/9CLIm2XccCMoTtpX/REKQzqjvLOAocJ
+         e30Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789047782; x=1789652582;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rI0+3b8IUYos1Bcr8iUtl2xY6wAil820JiLzSCtDb1E=;
+        b=OZXZAz6RmoBcQ6tjli1m18zyaaHPoZ+RbNqrXcF3I3iiPaI9xvxj9BK8wwnCAhOjED
+         gMjRW//uzRMSv9A7ahPcdO9C0TRXFlfG4bb5hIXIwmBoeB2suwxdOJNAP4n/GSUbHdT9
+         KI0fYmC8vyPFbx+2BIox7Tn5/CiBLnZ6fpdHLMpO/2rGAfYNtmIwApuZ5DuFlb8HDg0L
+         FYKfkXiZiUpiX2lUAaOLqlR2+X9YTxsMPXBB7P5kWIkgnlw1Q1WlXcOkbeWorX7hSR3S
+         FnhcDaaOmez/1uwU3Gy2N1hv1OVaDWkk72JkxLefueSqcHGHR8k1Ktl7RNV6wtq6oowS
+         LlYA==
+X-Gm-Message-State: AFuF++nDKNZg9p2Tk1JP/DvE3Q6Fx8aiiF4pj1NE0+U6om2y+scJH81m
+	B+HAG1h0df645Ne7cSIJSCYO2IyqpFnJ9ObKRIOhaf4mjFzpqxv5UM3HRsdqHsdT8XaN073gy+f
+	mgxTMiwGSvAVN+EUFC9bPy6IIkjADfTUzzQ==
+X-Gm-Gg: AYBFou3EkyHOvzMYHEy4dMa8tbcLfYD+en2HrWb0x/hgwCb+vK86cNDOItfgvbuDhXK
+	Cg0yHigH3ieEL4G0lPAVArYzJ/LMTcYQvgAxgryOGT1xBEKQZaJSU7/7HTURUZ2bUFD7rSwstDI
+	LdKH8v8ZYbdvP9dlNDpk3kkG83Dvsda/+zEVGsilBsjeMe5sF07b+f8AHh2Qj3yyfKHVQq2DTcE
+	9632tSwG/5n+1rpLG3npxiLT7WazRL/vqnzlXLlxcrQlhtNFCxN+CNYuxHzZiqjV0WqmLyyQebg
+	5MWDnuHZzS57YYgi3xmdEvgjh71VAqOYhNHZWlc4VMci86lNEPN+agoyjPj3s6RcxZVs3KEqHt+
+	6E16Ra7zmUvWEkPYXE0PZF/JwwmIEhAhc7PaRjRzmVSFC
+X-Received: by 2002:a05:6102:8498:20b0:78a:750d:16e8 with SMTP id
+ ada2fe7eead31-78a750d459dmr1083958137.10.1789047782206; Thu, 10 Sep 2026
+ 06:43:02 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 10 Sep 2026 06:43:01 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 10 Sep 2026 06:43:01 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqh5jys5mx.fsf@gitster.g>
+References: <20260818-758-introduce-hook-v1-1-8a8d89e65838@gmail.com>
+ <20260909-758-introduce-hook-v9-0-3043d417e0ee@gmail.com> <aqF0mbWgYU5rMR-f@pks.im>
+ <xmqqh5jys5mx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Thu, 10 Sep 2026 06:43:01 -0700
+X-Gm-Features: AcwNN1XSUDmNCnQ4LeHvMkWgT_GgXO-5Eu0HFnUD9qNbp7Mqn5218-4S-8Wte5Q
+Message-ID: <CAOLa=ZSJOgqiH5wJA7KZ2qPsfyBv21NB6mAwJVX_ZQ7VtWhoAg@mail.gmail.com>
+Subject: Re: [PATCH v9 0/4] hook: introduce the receive-report hook
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, jltobler@gmail.com, kristofferhaugsbakk@fastmail.com, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: multipart/mixed; boundary="0000000000008b964c065b212515"
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+--0000000000008b964c065b212515
+Content-Type: text/plain; charset="UTF-8"
 
-> While running `git history reword` on a commit with `SANITIZE` flag set
-> to `address,leak`, we could observe the following leak being reported:
->
-> -- 8< --
->
-> =================================================================
-> ==122337==ERROR: LeakSanitizer: detected memory leaks
->
-> Direct leak of 263 byte(s) in 1 object(s) allocated from:
->     #0 0x7002c14fd9c7 in malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:69
->     #1 0x5cdd008ec077 in do_xmalloc /me/git/wrapper.c:55
->     #2 0x5cdd008ec185 in do_xmallocz /me/git/wrapper.c:89
->     #3 0x5cdd008ec1fa in xmallocz /me/git/wrapper.c:97
->     #4 0x5cdd005b99d8 in unpack_loose_rest /me/git/object-file.c:216
->     #5 0x5cdd005e45f4 in read_object_info_from_path odb/source-loose.c:174
->     #6 0x5cdd005e4ba0 in odb_source_loose_read_object_info odb/source-loose.c:235
->     #7 0x5cdd005d9f83 in odb_source_read_object_info odb/source.h:413
->     #8 0x5cdd005daaed in odb_source_files_read_object_info odb/source-files.c:93
->     #9 0x5cdd005d1c8c in odb_source_read_object_info odb/source.h:413
->     #10 0x5cdd005d5bdd in do_oid_object_info_extended /me/git/odb.c:592
->     #11 0x5cdd005d7080 in odb_read_object_info_extended /me/git/odb.c:747
->     #12 0x5cdd005d75d8 in odb_read_object /me/git/odb.c:793
->     #13 0x5cdd003d9af7 in repo_get_commit_buffer /me/git/commit.c:399
->     #14 0x5cdd006739ed in repo_logmsg_reencode /me/git/pretty.c:716
->     #15 0x5cdd0012287a in commit_tree_ext builtin/history.c:134
->     #16 0x5cdd00122f33 in commit_tree_with_edited_message builtin/history.c:190
->     #17 0x5cdd00126e44 in cmd_history_reword builtin/history.c:748
->     #18 0x5cdd0012b051 in cmd_history builtin/history.c:1209
->     #19 0x5cdcfffb8faf in run_builtin /me/git/git.c:510
->     #20 0x5cdcfffb9ac6 in handle_builtin /me/git/git.c:786
->     #21 0x5cdcfffba358 in run_argv /me/git/git.c:869
->     #22 0x5cdcfffbaea9 in cmd_main /me/git/git.c:990
->     #23 0x5cdd0030f27f in main /me/git/common-main.c:9
->     #24 0x7002c102a1c9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
->     #25 0x7002c102a28a in __libc_start_main_impl ../csu/libc-start.c:360
->     #26 0x5cdcfffb4134 in _start (/home/sivaraam/.local/bin/git+0x217134) (BuildId: 549c1036ab1f9f4fd55546e5bf31c7bd81b008fd)
->
-> -- >8 --
->
-> A deeper investigation on this reveals the following as the root cause.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I am not sure if you are going to explain the root cause in such a
-way that is understandable by human readers, you would want to scare
-them away with a stack trace.
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>> On Wed, Sep 09, 2026 at 04:51:35PM +0200, Karthik Nayak wrote:
+>>> Changes in v9:
+>>> - Fix a bug where we were causing a BUG() when no report was requested.
+>>>   It is perfectly valid for clients to skip the report and we shouldn't
+>>>   fail when they do so. Thanks Junio!
+>>
+>> It's curious that nothing has failed because of this. Are we lacking
+>> tests here?
+>
+> The "send-pack" client we have will ask for report if the server
+> side advertises report-status or report-status-v2 capabilities, and
+> there is no way to disable it nor there is no practical need to give
+> a way to do so, so unless we are willing to write a custom client,
+> or a configuration to disable server capability advertisement, such
+> a test is a bit impractical to write.
 
-> As part of rewording a commit in `git history`, we get the commit message
-> buffer in the `commit_tree_ext` function. This in turn obtains the buffer
-> from `repo_logmsg_reencode`. In this case, the buffer that we receive from
-> `repo_logmsg_reencode` ends up always being obtained from a call to
-> `repo_get_commit_buffer`. The buffer that `repo_get_commit_buffer` ends
-> up to be one that is not cached in the commit slab but a fresh buffer
-> that is returned from `odb_read_object`. This could be confirmed
-> confirmed by the stacktrace in the leak. A plausible reason for us
-> receiving an uncached buffer might be because the commit comes from the
-> commit-graph.
->
-> In any case, this uncached buffer is expected to be released with an
-> accompanying call to `repo_unuse_commit_buffer` which takes care of
-> free-ing it. This call is missing in the `commit_tree_ext` flow
-> thus resulting in the leak.
->
-> Fix this by ensuring we call `repo_unuse_commit_buffer` on the
-> original_message buffer.
->
-> For those who are curious, the following is a minimal way to
-> reproduce the leak. I'm including this here as the leak does
-> not happen when we get a cached commit obtained from the commit
-> slab:
+Yeah, this is kinda the conclusion I came to. I wanted to add in a test
+but couldn't see a simple way, so I omitted it.
 
-> -- 8< --
-> $ git init scratch
-> Initialized empty Git repository in /me/test-repos/scratch/.git/
-> $ cd scratch/
-> $ touch one && git add one && git commit -m "Commit one"
-> [main (root-commit) 2182f9c] Commit one
->  1 file changed, 0 insertions(+), 0 deletions(-)
->  create mode 100644 one
-> $ touch two && git add two && git commit -m "Commit two"
-> [main 5550f33] Commit two
->  1 file changed, 0 insertions(+), 0 deletions(-)
->  create mode 100644 two
-> $ git commit-graph write --reachable
-> $ git history reword HEAD --dry-run
-> update refs/heads/main eaded0872b14b3937605c77c0042429ca1e3bbe1 fd19e3776c75b8da9555c7c616ce0df9db7c6641
->
-> =================================================================
-> ==122337==ERROR: LeakSanitizer: detected memory leaks
->
-> Direct leak of 263 byte(s) in 1 object(s) allocated from:
->
-> ... snip ...
->
-> SUMMARY: AddressSanitizer: 263 byte(s) leaked in 1 allocation(s).
-> -- >8 --
->
-> This leak could also be triggered in our test suite if we run
-> t3451-history-reword.sh as follows:
->
-> -- 8< --
-> $ make SANITIZE=leak
-> $ cd t
-> $ GIT_TEST_COMMIT_GRAPH=1 ./t3451-history-reword.sh -v -i
-> -- >8 --
+--0000000000008b964c065b212515
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 38d4e7b7517910cd_0.1
 
-Please do not abuse scissors line when you do not mean "discard all
-of the above and exclude it from the resulting commit log message".
-
->
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> ---
-> Changes since v2:
->
-> Just updated the commit message to clarify the root cause
-> more clearly. I haven't added an explicit test case as
-> it wasn't clear if it is really worth it as Peff points out.
->
-> Thank you, Peff, for your help with this!
->
-> On a tangent, I noticed that the leak is only triggereable
-> in the test suite, when we use `make SANITIZE=leak` and not
-> when we use `make SANITIZE=address,leak`. It seems we
-> intentionally disable leak detection in Asan via
-> the following line in t/test-lib.sh:
->
->    prepend_var ASAN_OPTIONS : detect_leaks=0
->
-> I noticed the comment above saying the following
->
->    # If we were built with ASAN, it may complain about leaks
->    # of program-lifetime variables. Disable it by default to lower
->    # the noise level.
->
-> I wonder if it has become stale now as we are fine with the test
-> suite reporting leaks when we build with `make SANITIZE=leak`.
->
-> Would it be worth while to avoid turning off detect_leaks while
-> using Asan?
->
->  builtin/history.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/builtin/history.c b/builtin/history.c
-> index 091465a59e..0e9259b5d7 100644
-> --- a/builtin/history.c
-> +++ b/builtin/history.c
-> @@ -154,6 +154,7 @@ static int commit_tree_ext(struct repository *repo,
->  	free_commit_extra_headers(original_extra_headers);
->  	strbuf_release(&commit_message);
->  	free(original_author);
-> +	repo_unuse_commit_buffer(repo, commit_with_message, original_message);
->  	return ret;
->  }
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xaXMrTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMEpaQy85cFc3bE55VzRzWHdiUm90dDBjeFR3ZHhIQgpqQUhHK2RsdHFB
+WTdOYmc2RUtJb1g4cWdLTFJvUWt2Yjl1S253VXB2eWNaZ1FpZ3FSeDNNSWNPWnlEMVNxZVIvClFI
+ZjR0aHBPR2VpZksxMzFTVFhMT1MxcjJLQVUrTUlHMlhia3BjOEc0NG1lMnpZYWQ5dk1zY0V0dTlT
+Q3VpREwKZ2R1NHlQWmNFdTVQOWRDcXRTVENhUmVhcXQ1bndLRnVObzJBOSt1VHpEb2ZqYjNORU9K
+aW03anN6akViOGFVaAptMjd1Z3lvV1RjRkVPOWVXdmIzQkhETHl0cjNlNHExNVFubmZCOUlMU0U3
+NHZuOThQRTZhRnllcEREVHNEZ0d6Cmt5eHRpWWNuZlB3L1VPdzJSZVdWUWZEVDFjRENIdlFuajBn
+M3lHOWc4V0p5Qk1nUFNUcVlWTUoxSnNiVEtqYkYKK285NFN5ckxsY09yNFphVmJ2MGRuM3RuSnds
+amN4bFNYMVRFZFpHNXJOL1pKd1ozVUkrVmRjdktYQzV4dVcraApXY3JpUEZLbWkxQnFOR245M0w2
+WUpFTjhxS1JhY2t6R2lZYVRObjRYMkoxRTN0QUVudDJsVlFIMzhwQzhBQS9ICmRiRTVkRE9ZSW0z
+UEx0RFVQVHUrRFlwRmV5OEREN0k4QXIvTWcvbz0KPUpGSFcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000008b964c065b212515--
