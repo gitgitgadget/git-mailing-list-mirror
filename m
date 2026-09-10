@@ -1,165 +1,227 @@
-Received: from send78.i.mail.ru (send78.i.mail.ru [89.221.237.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFB5364029
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 09:11:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789031512; cv=none; b=QGeL0lUacazmFyc5Njsn3Spejew3uMeEYjDmSCci7qJyVPYFv+IAzWNYGd5gyaDI0juCNuT03zeOkLOQMMg7NW1kDXWuN+Y0jAsyHiJTwHY7G1e0kPDY93fypECDKnOxGq3TFBxXaeOXwahTbw+CQzzB+xsYLHopPkrpVO1YrJg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789031512; c=relaxed/simple;
-	bh=tiYtPnTrq79E9snEyx8KN/ltHDgwm4hX5/BD0oqJjWI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PBpqkRFvjIfpqm27DWpK1SKreTX7ynFqi+kxrA30rosWRPMUH08DroPwm9BcOhrzuvn4W4bB5Ng2kY/lpSA3FPRhwiDm6+4IBKGTC4qzaViJGluaroyoVlO0yHKvE6UHkxMk0A85zsksN0QbKHqxZVFuuYPtnsBCSfvpEAmZPM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=fEBTKQlV; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=b60S8h8k; arc=none smtp.client-ip=89.221.237.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42263BBFAF
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 09:24:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789032269; cv=pass; b=UOojKmFP+B9sSu+Ijspga0MasFoY8POz/pZecjAUwgca+gTBigWONms7TMEAAARvzQMwnTB8R/Vl0YV57Ma+eRB1KksMGN0HFkGLoouBXXI+R7+15qi4OnJL63zS9Ua8gMR8J5EVzNsvZ1pnRmX6lziQcHyC6AqVvcLWlsbSoLc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789032269; c=relaxed/simple;
+	bh=jF1XrkwGGkr/dBqTMIyrh88nCl8JHUMqKyW4g2GRlTg=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MP29UkdF+9krFP81dU9SCgsk14MxHgrqHHr9PGZYQzfRyIBMQc2A6ezGF7afnEtD9jLKXPnLIi9eegT/hWVSGaVum4HRtQ/ATfy3K46LKrvlq6UtLl/7SBq44bW8mdZNYztYGK070QcD/58pRCbMq3JPBE6ItzYLZJzp2/Gzvv4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JYiN2qAf; arc=pass smtp.client-ip=209.85.222.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="fEBTKQlV";
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="b60S8h8k"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=I9ocqiYssPiaDeeN/Mg4Z3ZjJcotWZxuMy4J5HjYEjQ=; t=1789031507; x=1789121507; 
-	b=fEBTKQlVuyaDvHlhrb+GhsiLHkEBNbjI8qXKXFXWyV4ZhpvEUUPsBBuV7X6FqnZ+S85QbCf/ZdY
-	+0TOcSvLgVfIDmuSR2It7NOHRMlwNC3rxq30BOrgLh54aU5VJQkiu7SGObZqNQRxREuW7r5UJk7SX
-	MOWC6BejVmBSJaxZUcViBOm+Pc/q9H10/DKCk3aG4aCFXqencfOI/XCCYnWXWV9+JJP7P9Nvgkqb8
-	DaMo9FHjX9iYk2OGdO0sYcfbpJbMvNFxXzR33+RSc9qUAQ2neiS4F4Y6i1+Ms/Zf43jimgadnqhl5
-	9ByOis6zSy+oKveNvdyMtlwDho6JSkhKCtiA==;
-Received: from [10.113.196.132] (port=50968 helo=send241.i.mail.ru)
-	by exim-fallback-679568fb9b-rzgpk with esmtp (envelope-from <ub4nal@mail.ru>)
-	id 1x4aZ2-000000004aO-3rQH; Thu, 10 Sep 2026 11:55:25 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
-	s=mail4; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=I9ocqiYssPiaDeeN/Mg4Z3ZjJcotWZxuMy4J5HjYEjQ=; t=1789030524; x=1789120524; 
-	b=b60S8h8kotvak1EPjfsLfeu81tYMzwnsxNkLZ3ODiGR8oAKLiEJE6YXos7bK9079gGcCB8YZSKN
-	PkZQ0ZlR1hU3zxMLV78zv5/qJDhPt83Ew1yGeDjeNIv1Lyd9OijPBxjEErmjjyg47yJrQv/HW7U42
-	Q2MasKA4P18bPDt3Nl3+sUSkLLy8sd9ovomwDdcOCXYB1DeuOl5lbJEFZJmMI7E0eEHxkgqV2EbIK
-	VJ9cMXtQgociz187n2tjyNQCWuy7HVWVCTfnUmkF6+xht87+cdK/J/leFcun/gg3R6Oox62ryttGs
-	YvMSB2lZhjNlKdKgviIgIkekmchq8Hg+rlfA==;
-Received: by exim-smtp-569b45c49c-ljfgv with esmtpa (envelope-from <ub4nal@mail.ru>)
-	id 1x4aXj-000000006ih-3QtV; Thu, 10 Sep 2026 11:54:04 +0300
-Received: from vatem (localhost.localdomain [127.0.0.1])
-	by vatem.localdomain (Postfix) with ESMTP id 21BD09F635;
-	Thu, 10 Sep 2026 11:54:03 +0300 (MSK)
-From: Vsevolod Myalitsin <ub4nal@mail.ru>
-To: git@vger.kernel.org
-Cc: ub4nal@mail.ru,
-	ben.knoble@gmail.org,
-	gitster@pobox.me,
-	peff@peff.net
-Subject: [PATCH v4 1/3] advice: pass the entire advice_setting to vadvise()
-Date: Thu, 10 Sep 2026 11:53:51 +0300
-Message-ID: <20260910085353.109373-2-ub4nal@mail.ru>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260910085353.109373-1-ub4nal@mail.ru>
-References: <20270829004959.90983-1-ub4nal@mail.ru>
- <20260910085353.109373-1-ub4nal@mail.ru>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JYiN2qAf"
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-97cad2f51edso2187062241.1
+        for <git@vger.kernel.org>; Thu, 10 Sep 2026 02:24:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789032257; cv=none;
+        d=google.com; s=arc-20260327;
+        b=m5EKW9ataMhYMDUBqXjWJ9U4Q41yz+gMwZos5CtZqq7QWDef8x6ypAVbDbfGz/X4uk
+         pwKXM64e6pAxJ25ia8aXy5EaZPxEKWSY9Ga8T7dCaThL9qCUcO3EvbEWrz7Q7lfx9qP7
+         xPM0oZZsyFhS62XR3h7PJ/6cmJ4hntK3r1mitLFtRkkJHB0yvgTiSrsnUTL6RQPkT5dE
+         JNw6alm+SLrdvfT795vLjMq8bgnooltHViIRBUMr1plFBjUvgxMg1XTyIEXsSyZbD2BM
+         t+QHF5rs6seredHr92Q4b6IfBPCmcGyhsuskZoXqAAlzaPU0h1eZSaVmOgmxkRs6cnTK
+         TDxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=Dr2v0RS9NB46rKO9J4cSzUxMxJvGfPq9Zh1k7EZW1dQ=;
+        fh=45aPd4Co3gtGBDt5ilXrmkHQRGFBkZ7B57t+RyvimK0=;
+        b=c0nP0ZyxkRwNJ6qdMVsRKD9SOfClQJ1r8CX8RgwV55KWan4ZDGG/1iNj/a7ab1gOoL
+         1HjVGA0Yleyp4ksfl3KdM2xD5uUQ6cv36OtGCEgp+uUeDZAd+eaeeM8ntIk9OXkHXVuZ
+         0XjzkFpCTLcWr/ElrrUSVVGjp/rRJOArOeJZ8nkWS87CLLI0V2KM5mgKA5q7enMxYbtN
+         F2uhX3Quaz+YoXOXgAcREWUA/yduLZ8b/k0yjaHFdIPNHOsPn3pNq+NUZIFoeVBJGPyg
+         MAW/o4BDO+I4rE5KBhat/QtZRxy2aMCCAOR0dUWY1RIkXXVJN+nymxduFYXP6tCK91/l
+         E2qg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789032257; x=1789637057; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Dr2v0RS9NB46rKO9J4cSzUxMxJvGfPq9Zh1k7EZW1dQ=;
+        b=JYiN2qAf/Z4+n4hX1n7i0/deLclUWBcInndS6J8FgJyGkCRkDQ/sDXwM+2GCKBlbmO
+         y+EkgEV+Maw8IPs6+FsN7l4ydusdeNpg6sKjyOc5DswvTirRIZiLMNT5NrvaLFhpwG3f
+         /JwE8KIoOVZX7LkNADQImsOBLWQdlc2kHH5XkmdJyyDSnLWcqMdoAAGwqscvg+hxNeKp
+         INqokBk4I4xRnw9xq9t2Hoze0a/W56NNLLCtQrgBlvDp9LkaK+pa55IDE1ldQhZP3QHw
+         yjq0VFMMpFC4wBXNH3kqiHsQxPq+8LBYfrJiKTmfMNm7LScxaLA0sXRS2RvUevu+2TSi
+         k03Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789032257; x=1789637057;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Dr2v0RS9NB46rKO9J4cSzUxMxJvGfPq9Zh1k7EZW1dQ=;
+        b=VdqjTAu/Q9qCqyW64HxLeg81kVvanJm53cVqLAomthTfp6UAQDi01zDFo1C7hNUXR9
+         2abv45dhqD1If4VRl8rDSVVJe6woRbaVKnLt0gXAGeuHzEedR9m0WCn7u2QBmdlPjLpu
+         Ja4vOicgXWWN7Yu8ufVPTJvmoou2NVYdfUAIEftTdH0Oe3A0GGNaUd3LQt2WgfIu9yqr
+         GFBhsQ1kAkUxv2DBk/xfWYv26q49VOp6Wj3oqLrWiQ0IXZrzbbt1fwwMH8Wbogj/09bn
+         mi0H8T2duDsZXcAMhhcx/FGGzdspWfd7eaVR9CxWpuOVzdNWCP97hgyZ72zd039J/d0A
+         wCYw==
+X-Forwarded-Encrypted: i=1; AKwUvBw1PXCg5vW7Dn4JkCiUNb6Zzvh5nxMLQX4/egruwWx9rJ2KqE+JMc63c/jsgkdeQcZwPic=@vger.kernel.org
+X-Gm-Message-State: AFuF++n+rDzbOU8eUFLwK0nUdCpVm8Ip0wezssLMvAdfGn++N/vCdCRt
+	yvuGQBM8vMOz+jVrNIcdygal0H24WCu0h0cAbRf2HxOUTqaM/FbNf26C8xXG2rf98flz+EjS8DJ
+	nAgQ2ao9l/pUysiVRw7dV/dy1jAnrkLmEAA==
+X-Gm-Gg: AYBFou0j8R4qDJ6Yi7kS5wsTVgL544eQH4xXqnqmnol4QRrxQJlwxPqce+d/Afzeo0p
+	oLHZWOmXz6yEu1f2lU+Nth3TmIiOcN+Hhtb98+XyKWA0Lqcdp04WyB+3NqP5DOqQewNBZZrTZBC
+	v8qx7ZzrGW2nLR01P0l53Al6a7vYmYSf2yrKZyRvc+0FUHWTt4yY7q3QItzSLDDPklydD0ARPm5
+	ZW1peulgtxerU4GQAxcJ/CtQa/Z9vPmeNdhbYTMOAq6lY1aABlF92UoD+nngIRZtB5gvt8vhyS0
+	vUb+54ewgKmHofugQLCz4awjpZ5Rrkgk+kjfEajjMF57rxlJbWyj3MChmBLWNwzV2wkJ1DtJ+7i
+	dyGmLhIQgDx0GHkIrfeynAIQFXCiESvTNsEmhwbAg1qPJ
+X-Received: by 2002:a05:6102:6b01:b0:785:3211:f5e4 with SMTP id
+ ada2fe7eead31-78a4a6c8a04mr18720867137.4.1789032256749; Thu, 10 Sep 2026
+ 02:24:16 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 10 Sep 2026 02:24:14 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 10 Sep 2026 02:24:14 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260909-pks-odb-write-alternates-at-creation-time-v4-1-d8a78ffc32e4@pks.im>
+References: <20260909-pks-odb-write-alternates-at-creation-time-v4-0-d8a78ffc32e4@pks.im>
+ <20260909-pks-odb-write-alternates-at-creation-time-v4-1-d8a78ffc32e4@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-4EC0790: 10
-X-7564579A: B8F34718100C35BD
-X-77F55803: 4F1203BC0FB41BD95F11291660A1073BBCC05EDF39260590CA9602E3119BD3DD182A05F53808504082D47F3CC21017D53DE06ABAFEAF6705C7313055ED5917121964E60332344D732D7423A3730B9AE4
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7ACC115E2004B0725EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB55337566A08549CA5D964761940B9444F0852FF8EB05B0A5CB07BC6DB3913755700F928C8EEF46B7454FC60B9742502CCDD46D0DBC0ADEB1C81BB362F6B57BC7E64490618DEB871D839B73339E8FC8737B5C224901F8F2FECC0250C8CC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C091DAD9F922AA71188941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C0B967CDC049C115457B076A6E789B0E97A8DF7F3B2552694AD5FFEEA1DED7F25D49FD398EE364050FB28585415E75ADA97B089FF177BE8049B3661434B16C20ACC84D3B47A649675FE827F84554CEF5019E625A9149C048EE9ECD01F8117BC8BEE2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8BFF4145385FF5C95075ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
-X-C1DE0DAB: 0D63561A33F958A5EADA052FCFED2F1E5002B1117B3ED69672CEEF6180E4D53E5B6221DB6D7A72AD823CB91A9FED034534781492E4B8EEADBC0994F947283B77C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34CAB70F9BE574AE9C625B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659BD82F700F7571B15DBB2197D46F306D9D35898E96567DB082DED23776CD2B6F73A8F070C29706AF9B8341EE9D5BE9A0AF8724212F5ADC6595514C866012B919D822905350362F750C7CEAA0681F5848F4C41F94D744909CEFACD6B4B6D928230F8CCC96A59B602D5CC2E138FFB4ACBED
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXOcIETfglQORZ0zpDET4Zrk3igikrdHlWFpuP5d0Zh5atEW4g7DlDWI=
-X-Mailru-Sender: 288943BA7BCC8BBA2C509D5366AED3E5B676C78F813EF3620841F56765D88C409E42483D52CC511804F188836FDCF4DE3B7E521F6A5800A996940349D467AF430D26F6DE3BAD3FFE4DFFA654C60F801316CD019DBEDFC45331DC91172AC7F52EF91D4A7208CD43CE3DDE9B364B0DF289AE208404248635DF
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4B9BFAEC4A56250D1B872770CF5EF485635D435BD64EBA55E049FFFDB7839CE9E0464E60879317AFEE385CDF2A6E004CCEB3C5A60A84FCF0B87FAC0662F809A7D83B5F9A865CA8C0C
-X-7FA49CB5: 0D63561A33F958A5C72D638D6AD0E07E5002B1117B3ED6962C947F510960AC58AD864E5BE48A9E5E02ED4CEA229C1FA827C277FBC8AE2E8B54F520D093A0DF28
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpLaIlvAR6h4id02YH9mgeCTAyYoNlVO8a/mge5WbOvyyRHpOXlb3+Yw=
-X-Mailru-MI: 20000000020000000000000800
-X-Mras: Ok
+Date: Thu, 10 Sep 2026 02:24:14 -0700
+X-Gm-Features: AcwNN1Ub-GI9cnU9vllik6ofYwXYiXwfRcqbK7Xgv9W7HxTlcDmQc863ylkSmoE
+Message-ID: <CAOLa=ZQy1G9ZH0abH1uJZ0t1H5B7b3ym_s_gUAs03FiAend9Lw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/9] setup: split up concerns of `init_db()`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>, 
+	Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="00000000000027e6f6065b1d88dd"
 
-Currently, vadvise() takes the advice level and configuration key as
-separate arguments. Pass the entire advice_setting structure instead.
+--00000000000027e6f6065b1d88dd
+Content-Type: text/plain; charset="UTF-8"
 
-This keeps the advice configuration together and makes it possible for
-vadvise() to access additional properties of an advice setting without
-changing its interface again.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: Vsevolod Myalitsin <ub4nal@mail.ru>
----
- advice.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+> The function `init_db()` is responsible for creating the on-disk
+> directory structure required for a Git repository. It is used by both
+> git-init(1) and git-clone(1), and because their expected behaviour is
+> different we support a couple of flags:
+>
+>   - The `QUIET` flag controls whether the command is quiet or not. For
+>     git-init(1) this is user-controllable, whereas for git-clone(1)
+>     we're always quiet.
+>
+>   - The `EXIST_OK` flag controls whether a preexisting repository is
+>     okay or not. For git-init(1) it is, for git-clone(1) it's not.
+>
+>   - The `SKIP_REFDB` flag controls whether the reference database should
+>     already be created or not. For git-init(1) we do, but for
+>     git-clone(1) we don't because it does not yet know about the default
+>     branch and about the remote object hash.
+>
+> Furthermore, we're about to add another divergence in behaviour, where
+> we have to also skip creation of the object database in git-clone(1).
+> This is becoming quite cumbersome though.
+>
+> Instead of introducing another flag, start to split up concerns of the
+> function so that we never create the reference or object database. This
+> becomes the responsibility of the caller, which is thus free to defer
+> their creation to a later point in time. This lets us get rid of most of
+> the divergent behaviour:
+>
+>   - We don't need the `SKIP_REFDB` and a potential `SKIP_ODB` flags
+>     anymore.
+>
+>   - We don't need the `QUIET` flag anymore, as nothing prints output
+>     except for the final status message that tells the user that the
+>     repository has been (re)initialized. But as this message is specific
+>     to git-init(1), we can easily move it there.
+>
+> The only piece of information we still have to convey is whether or not
+> reinitialization of a preexisting repository is okay. This is handled by
+> a new `reinit_ok` pointer that, if non-`NULL`, indicates that it is okay
+> to reinitialize the repository. Furthermore, the pointer will be written
+> to to indicate whether the repository was reinitialized or not, which we
+> need in git-init(1) to print the correct initialization message.
+>
+> With these refactorings, `init_db()` is named quite misleadingly though,
+> as we don't create any of the reference or object databases anymore.
+> Rename it to `create_repository()`.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/clone.c   |  9 +++++----
+>  builtin/init-db.c | 32 ++++++++++++++++++++++++--------
+>  setup.c           | 54 +++++++++++++++++-------------------------------------
+>  setup.h           | 45 +++++++++++++++++++++++++++++++++------------
+>  4 files changed, 79 insertions(+), 61 deletions(-)
+>
 
-diff --git a/advice.c b/advice.c
-index 63bf8b0c5f..b556c8b38e 100644
---- a/advice.c
-+++ b/advice.c
-@@ -40,10 +40,12 @@ enum advice_level {
- 	ADVICE_LEVEL_ENABLED,
- };
- 
--static struct {
-+struct advice_setting {
- 	const char *key;
- 	enum advice_level level;
--} advice_setting[] = {
-+};
-+
-+static struct advice_setting advice_setting[] = {
- 	[ADVICE_ADD_EMBEDDED_REPO]			= { "addEmbeddedRepo" },
- 	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec" },
- 	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile" },
-@@ -98,16 +100,17 @@ static const char turn_off_instructions[] =
- N_("\n"
-    "Disable this message with \"git config set advice.%s false\"");
- 
--static void vadvise(const char *advice, int display_instructions,
--		    const char *key, va_list params)
-+static void vadvise(const char *advice,
-+	const struct advice_setting *setting, va_list params)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	const char *cp, *np;
- 
- 	strbuf_vaddf(&buf, advice, params);
- 
--	if (display_instructions)
--		strbuf_addf(&buf, turn_off_instructions, key);
-+	if (setting && setting->level == ADVICE_LEVEL_NONE) {
-+		strbuf_addf(&buf, turn_off_instructions,
-+					setting->key);
- 
- 	for (cp = buf.buf; *cp; cp = np) {
- 		np = strchrnul(cp, '\n');
-@@ -126,7 +129,7 @@ void advise(const char *advice, ...)
- {
- 	va_list params;
- 	va_start(params, advice);
--	vadvise(advice, 0, "", params);
-+	vadvise(advice, NULL, params);
- 	va_end(params);
- }
- 
-@@ -155,8 +158,7 @@ void advise_if_enabled(enum advice_type type, const char *advice, ...)
- 		return;
- 
- 	va_start(params, advice);
--	vadvise(advice, !advice_setting[type].level, advice_setting[type].key,
--		params);
-+	vadvise(advice, &advice_setting[type], params);
- 	va_end(params);
- }
- 
--- 
-2.50.1
+[snip]
 
+> @@ -2877,8 +2877,10 @@ int init_db(struct repository *repo,
+>
+>  	safe_create_dir(repo, git_dir, 0);
+>
+> -	reinit = create_default_files(repo, template_dir, original_git_dir,
+> -				      &repo_fmt, init_shared_repository);
+> +	if (!reinit_ok)
+> +		reinit_ok = &reinit_ignored;
+> +	*reinit_ok = create_default_files(repo, template_dir, original_git_dir,
+> +					  &repo_fmt, init_shared_repository);
+>
+>  	if (repo_settings_get_shared_repository(repo)) {
+>  		char buf[10];
+> @@ -2901,29 +2903,7 @@ int init_db(struct repository *repo,
+>  		repo_config_set(repo, "receive.denyNonFastforwards", "true");
+>  	}
+>
+> -	if (!(flags & INIT_DB_SKIP_REFDB))
+> -		create_reference_database(repo, initial_branch, flags & INIT_DB_QUIET);
+> -	create_object_database(repo);
+> -
+> -	startup_info->have_repository = 1;
+> -
+> -	if (!(flags & INIT_DB_QUIET)) {
+> -		int len = strlen(git_dir);
+> -
+> -		if (reinit)
+> -			printf(repo_settings_get_shared_repository(repo)
+> -			       ? _("Reinitialized existing shared Git repository in %s%s\n")
+> -			       : _("Reinitialized existing Git repository in %s%s\n"),
+> -			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
+> -		else
+> -			printf(repo_settings_get_shared_repository(repo)
+> -			       ? _("Initialized empty shared Git repository in %s%s\n")
+> -			       : _("Initialized empty Git repository in %s%s\n"),
+> -			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
+> -	}
+> -
+
+I was wondering if the order of initialization changes with the move,
+but it stays the same. So all the changes look good.
+
+[snip]
+
+--00000000000027e6f6065b1d88dd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 2f8b1e0304dd8ced_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xaWR6MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNWUwQy9rQnhZOVhGQTJkMVdEN043eEtXZW5ZMkx0Mgo3c29ySUg0RW5t
+WnBVV3dJWU9zM2NaM2lEclpsajl6RFRTbDkyRkYwRURKcE1tYjVjUWdPa3Q2bUdzd3dETTVlCmdC
+NmoyMExJaW0vbldaeW14S2kzVnUvQWRMNC95WVdqQlBsTEtITm5kRVllTkd4UzEzV05IS1B0aE8v
+VG01RlkKQm9Ha0hOU3duNXV6cTNSUXdjMGpDaDFLSXdtSy92WWE0NU9sL0NibGVGNUlmVEdMWUxl
+ekVNa3BpQUV2ZnpBLwpka3owLzlwdUpMVzY1YU55TVZBdFBLTTFkV3YvOTJRalhvV0ZEV3daM01x
+RXdyZUoveGFmbGpJVHBtNVpsZDBMCmNSM29hWHFUZDBicG1ISkh1NU9KeTIreStTS2M0N3VTSjMr
+ZlZPZUEybE1YNlVOM0F6VWwvb0xuNkpGOERvUnQKSnlnUXQ3QVI0NGovS282bm40TWFEUzVLVWc5
+SXBXNmc3Y2RjYWR1VG9SeTBWdXRiNk1CdUttZmQxUzNsbDhJVwo0b2lnR3d0d0FCbCs4QzFiaXgy
+UHFMWEhJTnk3NGxKRWtMWWlnVDk1L1AzSTQzRzdicU84Zm8wdk9Na1h3c0tkClRkMDlqZUtlUUZy
+ZVdzWml2M2hTbHdnSlFhSUVUM0xJc09oSnRhdz0KPW42OWUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000027e6f6065b1d88dd--
