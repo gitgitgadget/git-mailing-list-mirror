@@ -1,159 +1,276 @@
-Received: from mail-ua2-f12.google.com (mail-ua2-f12.google.com [74.125.226.204])
+Received: from mail-vs2-f12.google.com (mail-vs2-f12.google.com [74.125.227.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB3D45D915
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 11:00:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.226.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECDA46D2B8
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 11:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789038051; cv=pass; b=MAa6+WgGw39iWcSwpKBdIa91LV02GqC1iFoqaKplaiCUxm5SvIkPcuRYkep2Xv3zHWJRgdoC8Rtfm/qL1ESYZSNHGTmkhRrMMHIZA36PJPF66gdWvRhnxuzNLYdNszFXFAH/ynkFNdZlmU2Rwi5v/xcItvqORE2BdJDGatUW3Rg=
+	t=1789038635; cv=pass; b=LBObwZ42BSp4zDDuJWtO/ZY4LfrUr02MEMqbqGAnfY6vtAUQ0gySPAWzUGXVOGArYSHk3hsnavB0lojj0OzGU9CCQUFOArfP6pdToV/+YXXerKQHVptCw0b9GImQZBSgDDq60/mB+3KUa8VXih/sKMVT+IjV1dXnSpujydL4790=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789038051; c=relaxed/simple;
-	bh=kt5xUjjMUaG0OOxa894dUTokmFlHQvMJOTGxRgGiH8o=;
+	s=arc-20240116; t=1789038635; c=relaxed/simple;
+	bh=A6ux1djoKeO4J/ZdzFpIXAnuKHkElRtkE23bDf6I2pQ=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ERonsSDjdyyWMSepyhFsaF2uhRwZ4DhRrUw8k9fkSqwC0Ny8aZIJTml+ybHLP8pGdQsHw3MoGUNHt6Iy8vY3vnb/ZHz5BnBo63OsQAuIF0Efd0RS0bHGo5wWgT317FLKyA9CrAAKnSFtaxJvOcFg0f0KpoGROakHXHeNrMh/UB4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B+O658wY; arc=pass smtp.client-ip=74.125.226.204
+	 To:Cc:Content-Type; b=own5a0ANIAv6EqkLXt3q/L5FbBAJyfvCKFSvKKPU4HKWYm0GGTLWkTcy9D2aBfoP8y7svSjJKyFq53Z9n9A+UO2v82UdHTOsoGF5WKeU/4bvga5S/ImeDD2XXp2NVTABWiJV+as2bAUQ5ueOsOvgckWyHi/eR7aP9pOVZBBOU6Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vthkz0bt; arc=pass smtp.client-ip=74.125.227.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+O658wY"
-Received: by mail-ua2-f12.google.com with SMTP id a1e0cc1a2514c-97e80579b7dso566276241.1
-        for <git@vger.kernel.org>; Thu, 10 Sep 2026 04:00:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789038049; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vthkz0bt"
+Received: by mail-vs2-f12.google.com with SMTP id ada2fe7eead31-78564319a92so296095137.1
+        for <git@vger.kernel.org>; Thu, 10 Sep 2026 04:10:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789038632; cv=none;
         d=google.com; s=arc-20260327;
-        b=MZXTTvmoTB+dZGNfnhgUJQABl2rbd8ciRRMc+kiqUM7BOKIrEPFP+OPwrbgbdT2Qlm
-         AlNZBWrLYs0A3z0kJj9q+Ause2KxavqoNvDAOZ8X2ylQrr6HIuVxFxUI48Ps8AW5fOkX
-         9V0CfMCoVz3u5BgJ6UiTvAykHrQlqQ2RQGneOuQAp7ljc0ksOX7xR7+dLvin2FxiBccM
-         UUIPnlvFVCihPw1GW2nbGx8KFg5cHMKfSCLae8XgWV0PM0+3mQlfZtsMSxJGBt6wYUUW
-         gCDnHW34ECy0RJ0ddBqc78+U0dGGM91tnHpURSQg5wmCpgFzDV8kVLHE5DenrGNzNmeB
-         v1Fw==
+        b=rHdKfgWXZt9TL3jLRq3xQJXo2jzoIldt/gpize5ra51fHHSmV6PS+qxpZVbv3KQq0k
+         cIReJtyj3j5FGCWTbexAWE/fCvqTuHFWgUTBnQ5Bc1DVZ2nFT0NqKjHWCCNOS1Xkxt3K
+         +b7PS6fIRd1OkKB8txhpjrZ3su2J9T5D7mbWyG1G85emBAdfkirM7ghudVlR0X8q/3EG
+         S5ibefM20B4EkWJRrA1QPCQ6K2C3CFhV5eHLkVpmiUNgQidCJxeydF7/03Px0zdkKqnB
+         J32jALblUijabmBsmxTqa9mak/IJrOYW+TpwM7I0u3DjF0Y9SMP7ENMihs/kuM+w9uGZ
+         yzvA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=9ZOfQs2Xgx5cY6CXMv0yC7AQlKRNZoaVncLT2X5RFQg=;
-        fh=cvNq4y25/IdSSGjzFvhhEEDLvTO5bWPKELLJElpGZ/Y=;
-        b=IbG1EtcmE1845srd3frB1gYpHvwxOnj6AyONq1JhHdhz416sOa/SDFFvktVOEwGWeV
-         yekaC5X3b799Jq8DbIyksdY5RCiASdEMHoha7SJswBOHCNWF2BxG2BfjEuAYJFR5rtaj
-         P43w7qGDjR0PmIl3agxSOIdnwU7lrg6Tp+eKxaPmPWXsFFyxhszzj1kmFrw+fwOrCFdd
-         9Y/j9Ri5YuMAJAto5dNwu+XZNJ+zCRS3yMZC/e0ScE9p4hj+GPcR7L3FgglguhVGD3Bx
-         Cxe+Qi98OYdwW7xb5KeZIJgWwll7b78qyfOy3ROTfgujDw67a4QnJ90w7jl1WyK2c0Mg
-         Fx5A==;
+        bh=NdViJJKvcZjWIVzum0cOYihfcuayyzpxE1qpgQ8/aaQ=;
+        fh=RHrV25WUkb8NMF/olzZVhQdEwcTS7QX+UpnYMG7ayiA=;
+        b=QjXUw+QsF6Ov+kpC7BWRbk8Bz+4LNilSUvrSYG50wyfWrR26/trC78Nu6Sz+7o6eBm
+         7hPw0JzSTUOna7pHwd3L58IUgrCGRvxMGg+Iv4qOt+PeeQzGipxyMWWdXUPg+a+23k79
+         rw/Ge0r/v+HuJnYXm5nlMMkX5DUvuYdmHxkctpszq3TmpiLuwQVft+ckfWlu+L0q8U/L
+         3sBt36dw/dbhXz20S0ViJzRYIlI3EcxK0QMAlsJccCPrFGf51NfbWU9DsyOZuDAkeGKO
+         bdKbgIVKwk8sYAsbdMYlW+U+EgcpDJURyDX8eZtbFE10d0wwU4YGSo9sMVDha8DP5e7+
+         4cLg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789038049; x=1789642849; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789038632; x=1789643432; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=9ZOfQs2Xgx5cY6CXMv0yC7AQlKRNZoaVncLT2X5RFQg=;
-        b=B+O658wYHKqg+m58yLjOnS9ozZplyllxucQ970Y60M09YtMHwFfCUpqGIscTgtim4P
-         6N+dhF2yfef+zBgQOIbXsDmSeR3hGfDvYM39dOneSpmfWEM66MJSgaDdu/tZ45XCb0gP
-         HtrfXoASRKXoaDoNz7r8oqEqzaEEP5Bgl/hMNlOFPnF3Oy7tlvrdBWvABGQ5UbLWLrJS
-         oYqL8LgR8AVnn6dwYcTcN4Eg4C7hN6jQHvx0yrCUdreupM4Feujjrqn4wlbWht97QWu1
-         Wn1ap+/ISyI+3oUhA9lMH36jSNLdh1ZMbheurBZaceSgl9pmTr6z+enrxCTtSGN5SelO
-         femg==
+        bh=NdViJJKvcZjWIVzum0cOYihfcuayyzpxE1qpgQ8/aaQ=;
+        b=Vthkz0btPqXbQ8IiJXnDdFf82c+khzd1m/N0VYoWOUNS1nMw3NTm9XE8hMQ3JLwTZY
+         0PVABCMoWzQ7xFFc5tUAsN9S+Vha3AZY2wkL3w+mGN57XoAvCcdX5i4dNxwtnmElkqvo
+         qYYHjG7RldJrxKMgmeWyqHNFuaYv7a59+bqxzxCca0eGyHtWC3SNdBrPVI+vZow96e5C
+         UL6XXx4Ms31MdftJnpy0R25zaASZq7dDGDJ1cizsBo54VFRAX8pZfgVABAEDuvNUevQJ
+         sLuJAKzHZL/fJzEVcghZhqN2xqMgmsEPjPXfB8KZIeU6NzX1jUlgMwVq9lMa9VPrSH6Q
+         Hr9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789038049; x=1789642849;
+        d=1e100.net; s=20251104; t=1789038632; x=1789643432;
         h=content-type:cc:to:subject:message-id:date:mime-version:references
          :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=9ZOfQs2Xgx5cY6CXMv0yC7AQlKRNZoaVncLT2X5RFQg=;
-        b=jHYY7r33vxfiF8gt0k7jlsm5CVwz1tBkEcMyi+TTS/zz6rGiGDievDveBTPTDbrVKC
-         DgKaA1QAoD0cBCUBEL12lFeFwIqAdrd45JOMzgoIb/Et2e7C4aicKna+GVDGoVBPALJd
-         alVd8tKZ5GbENeYtQG8iINzARLeO975L4HJmzvaQsSz/nTeuw4JrCOvB9EXnP+p0jn+n
-         otCa5YPgWwgo5LI2j6RvLH8UMiC8BL7BR6LEws5aLi7EQI9X622LPtVUUte+ot85VjiG
-         SA9nsXU7YzrYJ3GF3wK6xg6OHNI93VQTKNEcqP4MLmt8E7tYpM4xE2ieQG265CJIeSbp
-         R43g==
-X-Forwarded-Encrypted: i=1; AKwUvBxro4P6pv+GKYcOGR3A3e0/3yIVHL49UqlooUbQ21EHt3JdJUxAvJdknXZfZ/0ab3c6hDU=@vger.kernel.org
-X-Gm-Message-State: AFuF++ndyeR+eERRaL5UFEUQLGF5BbrDVGkH28RLYLg7MzbvhwVFSYhq
-	JfjLoJ7/GpOGzYz8rPsquPzauFESn50yy31zhjksFRxHoiST8omOIcNC2tcswclmbdfjQeEc1zM
-	oVDV6qIAKzsW+FSWk8yNffCMjJt35dN+YJQ==
-X-Gm-Gg: AYBFou0Ym3RFWn2rkXs3PoxsjY69l1TDLuOEWkq1TgHL9iwrs/oimw96t2JNDWL9cUy
-	FBrTO/AFHXHZlE6CjrK7Gm2fkHG4QXZoAMdUHpJIDZHTfxPFskJPUMRjJQdWgulhzp3ipVBOokB
-	YvJPE6eiTat/K1zEFBsK7f6bGo1D0gdT+5DzoEjMu7X9Hly305uS9v/ii//hgGHAO4K/KQYnmUH
-	k72mXXnUH3APGDgVcRoPArDySAqEhSGbSLZUeFDj9Qo4pt+KH9h0zL/bn+TLDQ1hOHslZD3lUue
-	HB2b5UJG0lWmOUvvSxM0NgsRKoZCg8AQLB/Z+97J8g8t22aWVWfKz1cb/aM+LraaCo9NaLZqY3D
-	jQDLK3v2DH4zPNou/ExrmwbwNyxFt66ozZ7ZFCafdcf2u2WzJGMIR8G8=
-X-Received: by 2002:a05:6102:8095:b0:783:f3bf:f9aa with SMTP id
- ada2fe7eead31-78f757d562emr4208635137.8.1789038048542; Thu, 10 Sep 2026
- 04:00:48 -0700 (PDT)
+        bh=NdViJJKvcZjWIVzum0cOYihfcuayyzpxE1qpgQ8/aaQ=;
+        b=focTrTwnozl/koPK9vRg+HP38Uo7NH4fKbL6KgCRyi4kTd2W3jQN2zhFwTQOZ0kHiJ
+         QPYto/xVfFL/UuZ1TV+vBrmDrz0uLZWHCiTafUWnkMVeGLJ8hccrSDxqb9z1QQsXIluD
+         7o5wL8jbC4HvsjamM/VfRaACg8CloGfx/SgU7wnDzAUNot0qMkJ0KIpLXkpIiMualk+T
+         xvZZ04KcoJkhQtpU3/70SeRWKDPp+RDLjbdR7CD0VHadpVN863bh6MmFPfqDcarJkBSx
+         jxualdBCUZ1bSSS8oSFBwjGuwpWX4AIauIipET6qVj7xESJ9jVbZ9h0UEgUJzm3GTeO0
+         7C7Q==
+X-Forwarded-Encrypted: i=1; AKwUvBxKbHVSiR78hRbw8zrjuZZP/j6oZM57OicO3lMVBGTGbNX7nk8GrvbFW9PHCC/A2w6GLUE=@vger.kernel.org
+X-Gm-Message-State: AFuF++k61bgCdS56pG+gQiznze8ENFHI+FaKOEs9e3IAD5hk4X7JPEQ8
+	Mieb27eiyJcGnij4hV1FwRyuQmLFsXVYzVaS8USFiPGx9w5erCSIjCgeh0JNe2KzkqRUZr7wGJ1
+	vtmmoO3To3e6jxOle8X8cVEMoZhiEOwo=
+X-Gm-Gg: AYBFou3VZMYGO5kz5eTVf015IPRhMVdnKdSBDfXkEkxfqtQkodEcwvPrfC40nkOQHew
+	WIaVEIDmbeVTBK157ecn7HoCg4F1fJHgvRIHSZTEPB3maLWtI5Vbl6LxwbdTVHHVRfmKnI5j/O5
+	7SzZvIbWFC448PVLGaxWHPpIoHumvgoGvBpgcglz4cVBV3iDr7WP85XUz2k4blR8VhfaRk/HoBV
+	xM5kcuoTjHxkRd9r+h8BSiqnMG6oPJ4Ezw5BS3eRFYudODejBTDTqS6099kYAKa8E2X7hik+ca0
+	ORF49S6ejZRJqTa4VGDG0NTZztn90Mcm43GEJuSjv0Wq9rt7jHckwy67OAVGy90oKsEa3XcqIIT
+	IGPLqSn43U/jPGQwG0vGnFqhQ+1C3AmapxbXBszdHIAZdGgltr8OKLLo=
+X-Received: by 2002:a05:6102:3e95:b0:790:2ae8:32c3 with SMTP id
+ ada2fe7eead31-79075f973bamr3412881137.6.1789038632130; Thu, 10 Sep 2026
+ 04:10:32 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 10 Sep 2026 04:00:46 -0700
+ HTTPREST; Thu, 10 Sep 2026 04:10:31 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 10 Sep 2026 04:00:46 -0700
+ HTTPREST; Thu, 10 Sep 2026 04:10:31 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260909-pks-odb-write-alternates-at-creation-time-v4-6-d8a78ffc32e4@pks.im>
+In-Reply-To: <20260909-pks-odb-write-alternates-at-creation-time-v4-7-d8a78ffc32e4@pks.im>
 References: <20260909-pks-odb-write-alternates-at-creation-time-v4-0-d8a78ffc32e4@pks.im>
- <20260909-pks-odb-write-alternates-at-creation-time-v4-6-d8a78ffc32e4@pks.im>
+ <20260909-pks-odb-write-alternates-at-creation-time-v4-7-d8a78ffc32e4@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 10 Sep 2026 04:00:46 -0700
-X-Gm-Features: AcwNN1ViGfI9C_leVA_k3GGNo9mgh1UpZpQ-eEAfsRyutGvBuCdE3AKf7BiGEwk
-Message-ID: <CAOLa=ZSNC-w3aC_SjhhbemWryvSr7ySZGKTXs8BkYr7AmdKXOA@mail.gmail.com>
-Subject: Re: [PATCH v4 6/9] builtin/clone: move setup of alternates for
- non-shared local clones
+Date: Thu, 10 Sep 2026 04:10:31 -0700
+X-Gm-Features: AcwNN1Vk3ZV3OHyO_oaiOIb5ylzSxbH6yjiqrS65HMhFuVpnz0QEZpX6XbI3O1o
+Message-ID: <CAOLa=ZQaPstiQmXm9=TyWPUxL6X2=Lcqeg6y2XeXzSJDpq-GBA@mail.gmail.com>
+Subject: Re: [PATCH v4 7/9] odb/source: support writing alternates when
+ creating the database
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>, 
 	Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000005fa450065b1ee184"
+Content-Type: multipart/mixed; boundary="000000000000289004065b1f0445"
 
---0000000000005fa450065b1ee184
+--000000000000289004065b1f0445
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Similar as in the preceding commit, move the setup of alternates for
-> local clones with "--no-shared" into `collect_alternates()`. With this
-> step, the complete setup of alternates is now handled by that function.
+> Add the ability to write alternates when creating the object database.
+> This change allows us to remove the `write_alternates()` callback in a
+> subsequent patch.
 >
-> Note that besides moving stuff around, it also fixes a bug: previously,
-> we did not know to resolve the referenced repository's common directory.
-> Consequently, when referencing a worktree we failed to resolve
-> alternates. But as `collect_alternates()` already knows to resolve the
-> commondir for "--local" we can simply reuse this resolved path for our
-> purpose.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  odb/source-files.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
+>  odb/source.h       | 17 +++++++++---
+>  setup.c            |  4 ++-
+>  3 files changed, 91 insertions(+), 6 deletions(-)
 >
-> Add two tests, the first one of which exercises this bug to avoid future
-> regressions. The second test ensures that we properly handle relative
-> alternates for a referenced worktree.
+> diff --git a/odb/source-files.c b/odb/source-files.c
+> index b7b3a297bb..8fe65d91f8 100644
+> --- a/odb/source-files.c
+> +++ b/odb/source-files.c
+> @@ -18,6 +18,7 @@
+>  #include "run-command.h"
+>  #include "strbuf.h"
+>  #include "string-list.h"
+> +#include "strmap.h"
+>  #include "strvec.h"
+>  #include "tree.h"
+>  #include "write-or-die.h"
+> @@ -51,9 +52,14 @@ static void odb_source_files_close(struct odb_source *source)
+>  	odb_source_close(&files->packed->base);
+>  }
+>
+> -static int odb_source_files_create_on_disk(struct odb_source *source)
+> +static int odb_source_files_create_on_disk(struct odb_source *source,
+> +					   const struct odb_create_on_disk_options *opts)
+>  {
+> +	struct lock_file alternates_lock = LOCK_INIT;
+>  	struct strbuf path = STRBUF_INIT;
+> +	struct strset seen = STRSET_INIT;
+> +	struct strbuf line = STRBUF_INIT;
+> +	int ret;
+>
+>  	safe_create_dir(source->odb->repo, source->path, 1);
+>
+> @@ -64,8 +70,74 @@ static int odb_source_files_create_on_disk(struct odb_source *source)
+>  	strbuf_addf(&path, "%s/info", source->path);
+>  	safe_create_dir(source->odb->repo, path.buf, 1);
+>
+> +	if (opts->alternates && opts->alternates->nr) {
+> +		FILE *alternates, *orig;
+> +
+
+So this is similar to what we already do in
+`odb_source_files_write_alternate()`.
+
+> +		strbuf_reset(&path);
+> +		strbuf_addf(&path, "%s/info/alternates", source->path);
+> +
+> +		repo_hold_lock_file_for_update(source->odb->repo, &alternates_lock,
+> +					       path.buf, LOCK_DIE_ON_ERROR);
+> +
+> +		alternates = fdopen_lock_file(&alternates_lock, "w");
+> +		if (!alternates) {
+> +			ret = error_errno(_("unable to fdopen alternates lockfile"));
+> +			goto out;
+> +		}
+> +
+> +		/*
+> +		 * The alternates file may already exist, e.g. when it has been
+> +		 * seeded from a template directory. Read any preexisting
+> +		 * entries so that we don't end up writing duplicates.
+> +		 */
+> +		orig = fopen(path.buf, "r");
+> +		if (orig) {
+> +			while (strbuf_getline(&line, orig) != EOF) {
+> +				strset_add(&seen, line.buf);
+> +				fprintf(alternates, "%s\n", line.buf);
+> +			}
+> +
+> +			if (ferror(orig)) {
+> +				ret = error_errno(_("unable to read alternates file"));
+> +				fclose(orig);
+> +				goto out;
+> +			}
+
+Shouldn't this be checked inside the for loop with every `fprintf` call?
+
+> +
+> +			fclose(orig);
+> +		} else if (errno != ENOENT) {
+> +			ret = error_errno(_("unable to read alternates file"));
+> +			goto out;
+> +		}
+> +
+> +		for (size_t i = 0; i < opts->alternates->nr; i++) {
+> +			const char *alternate = opts->alternates->v[i];
+> +			if (!strset_add(&seen, alternate))
+> +				continue;
+> +			fprintf(alternates, "%s\n", alternate);
+> +		}
+> +
+> +		if (ferror(alternates)) {
+> +			ret = error_errno(_("unable to write alternates file"));
+> +			goto out;
+> +		}
+> +
+
+same here.
+
+> +		if (commit_lock_file(&alternates_lock)) {
+> +			ret = error_errno(_("unable to commit alternates file"));
+> +			goto out;
+> +		}
+> +	}
+> +
+> +	/* Reprepare the object database to activate alternates. */
+> +	odb_reprepare(source->odb);
+> +
+> +	ret = 0;
+> +
+> +out:
+> +	rollback_lock_file(&alternates_lock);
+> +	strbuf_release(&line);
+>  	strbuf_release(&path);
+> -	return 0;
+> +	strset_clear(&seen);
+> +	return ret;
+>  }
+>
+>  static void odb_source_files_prepare(struct odb_source *source,
+> diff --git a/odb/source.h b/odb/source.h
+> index ea8675247e..63f1c0c531 100644
+> --- a/odb/source.h
+> +++ b/odb/source.h
+> @@ -36,6 +36,15 @@ struct object_id;
+>  struct odb_stream;
+>  struct strvec;
+>
+> +struct odb_create_on_disk_options {
+> +	/*
+> +	 * Alternates that shall be written into the newly created object
+> +	 * database. Whether or not this option can be handled is specific to
+> +	 * the backend.
+> +	 */
+
+Would it make sense to formalize errors thrown by backends, so we know
+when a backend specifically cannot handle alternates?
+
+> +	const struct strvec *alternates;
+> +};
+> +
 
 [snip]
 
->  static void collect_alternates(struct strvec *alternates,
-> @@ -242,6 +254,8 @@ static void collect_alternates(struct strvec *alternates,
->  		get_common_dir(&commondir, src_repo);
->  		if (option_shared)
->  			strvec_pushf(alternates, "%s/objects", commondir.buf);
-> +		else
-> +			read_alternates(alternates, commondir.buf);
->
-
-Okay so this is why we did what we did in the prev patch. Makes sense.
-
->  		strbuf_release(&commondir);
->  	}
-[snip]
-
---0000000000005fa450065b1ee184
+--000000000000289004065b1f0445
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: c22107a79ffbfdaa_0.1
+X-Attachment-Id: 302c25373da81cd5_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1xaWpkMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOTBtQy80dkViZ1E4SUh2d0g1QkNUa1BOdGlkcjY3eQpOVUo4Wmdremc2
-RVdLd1ZVY09HMkdYOWp3RjRKdW43czFmZThNMFBaMCs3OEZqbHoxdDNYU0kzdzZXZm13c1hxCk55
-d0dvN2NibDFFYW5yWld2ZzRBakpieHdhUmxHMGJRTmVSbGIvdkVKcTFIUkp5WXVjeXJzYTRWcWcx
-eVMwN24KOVJaS2VLYVowNkV2TnJIM25SYUVIa3JnNUR0QTl3OG9wK2VEOTQzQm5zQ2tZMk1nSVMy
-b05UL1REUDZnUFFLaAppOUNjRzdaSm0zeUZKMk95MWdndkRHaU11cTV3cFhSbUhleG5NengzaDZw
-ZUpiNjZ5c3NuVE90NzlkNzBjcUVzCm1KUUs3WTViZEdNeThtWVJUckZLYzNreUdYR0puYVBTSE5S
-SFVFV3BJRnEyMEpwek5HbGFpblB2aDJYeWh0Wi8KUW45ZTgvY280N2JVaXF5UXBvd3ZDdTI0Znoy
-N2JJSE1CQXB6V3MxWTVnVWN0SnNFbHhzRS9sd2ZqZjlrSFhzYwovL3lLeG05ek9tSmpEWC9FMm1r
-ZENSTElLUjB4cUZ5blNTVjVZWjdsVks5cDVBQzkzYU56bzhRZUNwWU5LWTAxCkVLN1J4Q3pJbytG
-Mmd3L0w3Y0dyUlJYZHc3b2pCWmRIVG1IbDdSUT0KPUxGZXEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1xaWtDVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meVZLQy85YVVPQXRvYnN3U2ZvM3BPUVVoVGphcnA1Vgp5ZWFlL0dhcmFh
+MEtaSzM2VmJINzhGZENTUUdURHJlUmdxemtoUFhKSm03UG95Umxva1FGZjZrZkZSZWdpam13Cmts
+QnZTdzUxOEp1dXhzaHhDWlNYbFRFWVF4NzlMRkVDeWpDYXk4N2p3VjdLbUk2bWZTU2JaY2FFRHNM
+SHRmY2IKUjZ4aGk4d1IvRzcwTXB1TWlnTC8zQlVoSGZxUFVLb3VHN3JSc3A3ZHdrUk5kM1FJU3Js
+QUdhSkNnVXNmR0pPWAplWDZxU1YwS2xJNWRtY2UySTB1ZHovY2RYK3NHb05yT0JGTy82U3JUeUF6
+bE04dFIyWXlzWUFqeW8zVUdZcitUCjFKYXFYaWI4WHM4S2xLR3FhRzNMUzliRUxIRTlUWUhIT0VF
+QUNNMTc3RXJvNkdJNnhmR3p4SWhiZmhndHU0bUYKZmhtMTZRT2RXcjFXdDRQUTNyNnQ4dGQrUGdO
+RnpSZTkzQStVQ1pGQkk5QzhrQWg0SHpiVnF6T1pGRTNUV1FIWQplSzZVZFRiTEZrTHhCa3ZQY0t6
+aXJlR2ZGMGFVR0V3Rk4yWmM1ZnRUYXU0YTdicjJhZHE4N2w2dWI5bDc0ZzJBCks0a0NzeUlScjV0
+UXp4RjB5MzNWeXdNa3pNdGpUOFNKTlVpVDFkdz0KPWFWaEUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000005fa450065b1ee184--
+--000000000000289004065b1f0445--
