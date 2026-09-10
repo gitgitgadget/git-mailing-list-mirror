@@ -1,47 +1,48 @@
 Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBEB38C2B8
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 19:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E425A514E
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 19:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789069448; cv=none; b=jQXExb1MHgkqIY/gbymnhMbPQmXTtDZJEzYprLIU8wBOo3mXUggPM7AZSAPseEzpiP9hgzF5xKhp/4cuFCn2UA7H+AMHLGw6UsVY0vYsn7/VPNi0sEeKh2l2jpGhvQX7avJlFH3Wr1MpSOl79diFkT2q4gfxjfhMo1gehKV1JUE=
+	t=1789069453; cv=none; b=CwewTHbb838YYdOZF8Pb73oRvuwnjSscJYbz8Nsufiitygj+ECNtP2nEHkixcpaDZleEBp+De46mA2tKmWg80RSmKmByOoJMA4ixl+MjjdDPg3MyQEMuyJfhRe4DEZI3IJOYmD4NnwJN/jObBVGoMYZY2aZmAuHK/poMmyiKnRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789069448; c=relaxed/simple;
-	bh=72BRD7nvb97Fpeuv8uX/8ZRcRJQqjGmmSOIBg+JC1pY=;
+	s=arc-20240116; t=1789069453; c=relaxed/simple;
+	bh=BZX8Kpx21e52dh4dAIwt6P+wgW/HXabr2WYU32DCVv0=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=axXxByUHyYBVXK18OK+5FmZ3Qkrjowxh7poTrD1sW1R3Vsn5mQ+SFG4h+Fs3bkxc7GVPkxPYqQQ0YD/fT+RHAN9X0gb+aRpPHES2SjZZlI8fA9B8snAG4k/W2+jkUZtH1XYsQzzQL09Cu3QpsrnLUAY8rjvSMaTIb6jICPAWebA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=HLCvlbPX; arc=none smtp.client-ip=130.232.247.4
+	 MIME-Version:Content-Type; b=CINvlqoDhaTSNAywijrH4MaDgCDGpy2b54BW38aDnYyteaAVLa+XaUZQwfslr7VYIv6zpDg08YtFjRNXh1z1+DQL8GnYoAm4YwoWkAho5EJk+ILvfbG7nmuvl7C0vORYjfgq90xMYnSDFsuYU9RCBBBVQ9QU+JN/ZAHDCo1rZOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=A7ndTTC3; arc=none smtp.client-ip=130.232.247.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="HLCvlbPX"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 68AJhvdr016442-68AJhvdt016442
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="A7ndTTC3"
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 68AJi4jx016481-68AJi4k1016481
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Thu, 10 Sep 2026 22:43:57 +0300
+	Thu, 10 Sep 2026 22:44:04 +0300
 Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.95)
 	(envelope-from <taahol@utu.fi>)
-	id 1x4kgf-001yaQ-Jc;
-	Thu, 10 Sep 2026 22:43:57 +0300
+	id 1x4kgm-001on1-P0;
+	Thu, 10 Sep 2026 22:44:04 +0300
 Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Thu, 10 Sep
- 2026 22:43:57 +0300
+ 2026 22:44:04 +0300
 Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 98bab926;
-	Thu, 10 Sep 2026 19:43:56 +0000 (UTC)
+	by localhost (OpenSMTPD) with ESMTPA id 187354b7;
+	Thu, 10 Sep 2026 19:44:03 +0000 (UTC)
 From: Tuomas Ahola <taahol@utu.fi>
 To: <git@vger.kernel.org>
 CC: Junio C Hamano <gitster@pobox.com>, Tuomas Ahola <taahol@utu.fi>
-Subject: [PATCH v2 0/2] guides: keep Documentation/Makefile and command-list.txt in sync
-Date: Thu, 10 Sep 2026 22:43:49 +0300
-Message-ID: <20260910194351.20809-1-taahol@utu.fi>
+Subject: [PATCH v2 1/2] command-list.txt: add gitformat-loose(5) and gitpacking(7)
+Date: Thu, 10 Sep 2026 22:43:50 +0300
+Message-ID: <20260910194351.20809-2-taahol@utu.fi>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260909052501.8448-1-taahol@utu.fi>
+In-Reply-To: <20260910194351.20809-1-taahol@utu.fi>
 References: <20260909052501.8448-1-taahol@utu.fi>
+ <20260910194351.20809-1-taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,75 +53,57 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: ex19-05.utu.fi (130.232.247.45) To ex19-06.utu.fi
  (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsH
- BUhYSFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIWkhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWA==
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRG
+ BxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZbWEhQSFhIWEhaSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWEhZX0gPARwbHA0aKBgHCgcQRgsHBUhY
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
 X-FE-Policy-ID: 3:5:2:SYSTEM
 X-FE-Hostname: fortymile.utu.fi
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
  h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
- bh=chFLJ+rqtA8VP/m7Piymn7Fhn6hvI/vB3qkdRFVxd4s=;
- b=HLCvlbPXr5lb+xV/145GbgaynLhRYARyQ9R7+siK/16Nw7sbi+Xrt/mFymQ+6QzgddsEvMjTXDKO
-	sXjyM+mC0QMCZ1HlKnV7luVmCn5P7L2ZsT41YulFxXAcN7ZYKg8zsnHshPxd2SJgdxgfNTQWi3Ub
-	LiTz6KnUK4yNvOe3L1XQSTXTUVtisGAbS12i1MfjD32biwUg2Pl+qipVlQvWheoGio13eYxhVh1z
-	oj4m2Hm+jiAPm03dL4nLzJHx1962QE65vPsxHlgxq/eKa0mP4QbXUXs3U6A1uik9LxMV2sfvL0Zy
-	eKo5Q3pdrE6eHPJqO3Bip5zHuS7SrzGN7N/gUw==
+ bh=bz2Jno+u/iilekVBRoEQwAWnwpcCOQP4ADRs5g11TN0=;
+ b=A7ndTTC3DCcdxBRVBf4BV3iDe2KsnjyxLs6hsMjgWbVszOij2cL29DvulDJJb4mEgZx5bYKAEO0q
+	G0GfMOEGBavSLGKcVfYPdPuZ4sqY016Cq0j3lkvvd7XSJ511tjW217QZDRApF1oauniQcQPMQWCa
+	oKThNsD+UtsFNZx5Sks8Lmg9PfRj9riRd0+D/+izNgVXx3GfIh3eHkD54vW87o/H9aJYm7QV3GSP
+	Nxj3OxXjp/o8NElD3UUK0RA7Rj+/Yq4VeOI6Zjob4LxSaDl6JfxBZqbBtMY/SOYz/CqsJW9M9Pn5
+	Mx7U+f06D+ioJyoDIKlzw7LKahwZ5LK7R/+hHg==
 
-Documentation/lint-manpages.sh was expanded with a new test
-ensuring that command-list.txt also includes all non-command
-manual pages (concept guides and interface manuals).
+Three manpages from sections 5 and 7 are not featured in
+command-list.txt as concept guides or interface manuals.
 
-Based on kh/doc-datamodel.
+As easy fixes, add gitformat-loose(5) to 'developerinterfaces'
+and make gitpacking(7) a 'guide'.
 
-Changes in v2:
+That leaves only gitweb.conf(5) which could be added to
+'userinterfaces'.  However, the manual would then appear
+as "web.conf" in `git help -a` which is just confusing.
+So, perhaps we are better off by leaving it out.
 
-* [1/2]: Use command-list.txt as the area identifier.
-* [2/2]: Protect variables againtst whitespace breakage per review comment.
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+---
+ command-list.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Tuomas Ahola (2):
-  command-list.txt: add gitformat-loose(5) and gitpacking(7)
-  lint-docs: check the guide list in command-list.txt
-
- Documentation/Makefile         |  2 ++
- Documentation/lint-manpages.sh | 10 +++++++---
- command-list.txt               |  2 ++
- 3 files changed, 11 insertions(+), 3 deletions(-)
-
-Intervall-diff mot v1:
-1:  014da7fdff ! 1:  cb6ce6cad1 command-list: add gitformat-loose(5) and gitpacking(7)
-    @@ Metadata
-     Author: Tuomas Ahola <taahol@utu.fi>
-     
-      ## Commit message ##
-    -    command-list: add gitformat-loose(5) and gitpacking(7)
-    +    command-list.txt: add gitformat-loose(5) and gitpacking(7)
-     
-         Three manpages from sections 5 and 7 are not featured in
-         command-list.txt as concept guides or interface manuals.
-2:  b24d96f732 ! 2:  2dc1ee4514 lint-docs: check the guide list in command-list.txt
-    @@ Documentation/lint-manpages.sh
-      
-      extract_variable () {
-     +	file=${2:-../Makefile}
-    ++	directory=$(dirname "$file")
-      	(
-     -		cat ../Makefile
-    -+		cat $file
-    ++		cat "$file"
-      		cat <<EOF
-      print_variable:
-      	@\$(foreach b,\$($1),echo XXX \$(b:\$X=) YYY;)
-      EOF
-      	) |
-     -	make -C .. -f - print_variable 2>/dev/null |
-    -+	make -C $(dirname $file) -f - print_variable 2>/dev/null |
-    ++	make -C "$directory" -f - print_variable 2>/dev/null |
-      	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
-      }
-      
-
-base-commit: b8242b093d9e941a34460d715e3ce616a34ac3fe
+diff --git a/command-list.txt b/command-list.txt
+index 21b802c420..6667930e8f 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -224,6 +224,7 @@ gitformat-bundle                        developerinterfaces
+ gitformat-chunk                         developerinterfaces
+ gitformat-commit-graph                  developerinterfaces
+ gitformat-index                         developerinterfaces
++gitformat-loose                         developerinterfaces
+ gitformat-pack                          developerinterfaces
+ gitformat-signature                     developerinterfaces
+ gitglossary                             guide
+@@ -233,6 +234,7 @@ gitk                                    mainporcelain
+ gitmailmap                              userinterfaces
+ gitmodules                              userinterfaces
+ gitnamespaces                           guide
++gitpacking                              guide
+ gitprotocol-capabilities                developerinterfaces
+ gitprotocol-common                      developerinterfaces
+ gitprotocol-http                        developerinterfaces
 -- 
 ta/command-list-guides-sync-lint
 
