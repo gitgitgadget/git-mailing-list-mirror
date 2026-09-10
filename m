@@ -1,119 +1,115 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40447496D49
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 20:26:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789071966; cv=none; b=p9UD6nrElEiyyc+whkzIjE+SXtLvlKOV/Jfoyn6/dlvtZU1+aSWDlJYRrGC4zdNaOniQUZATFKBHQZ50ihQm6kBTXrq8WQ1PZtTU2dGaq8/6gNxYsjZ9ju9VEXt2ZTu6bP3G656Z3utXcrM7G0jhtlONzJgq1vBTiiw5o2w+X94=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789071966; c=relaxed/simple;
-	bh=IJwg2zW83/f6qYKjbHXZefw4KVFOx1mVhm3RI8wVrKM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=j1W9VGw/vZgMg3Kv11itv81IbcIIwj1eqAdmIKgJvsyQuc2RzV1ZX/iu0pexI5uK62yFKX1J4t7reUPJXtPncvIpFWJvUdjWUPKgGVm4AmeaItY5vmKyyNV3tZBZcXiibS6+WF4cMYhi60gL7R5KeDo8TPDqPtvQVRh+2/rBhNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ix5txTQ7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w8wVJR5H; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A967349B5A3
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 22:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789078123; cv=pass; b=MoAygBa1K/YbzGVwHpeYfM7rY7xnnZcHRnTXM77TExJfxmK9k3qPdmxkYpC5ihM6a1cynK51+orgng2u5NtmfdJyD4GoCXo231DbJ/TcwRLbG0a84NQx/BOpwI+pZWKqlm7o78StxdQ6eKZBYwChFJzsv1UakU1kIo2Haf73j3A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789078123; c=relaxed/simple;
+	bh=+Pl9YO3S/O2x69vshOV19waQ5vXwcnIvNCtyx7EA0nY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WqCWYHInOdSQlfqroOJnQhGRPFOI8epHcBIMrwzMZ5iU4bNY7WNJZorlW54ygvobTpvcGS/PeQeMBBk7k9QW+Mv1777D4w+XZJo6wnBCwG6tMedl87Thq3suvTkZwMAR62Mba8FvwOcJBfC4+yfrw3f2wQRPJZ6tXMPIASpHydc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com; spf=none smtp.mailfrom=tylercipriani.com; dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b=A2e2hrFR; arc=pass smtp.client-ip=209.85.161.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tylercipriani.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tylercipriani.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ix5txTQ7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w8wVJR5H"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7695514000FE;
-	Thu, 10 Sep 2026 16:25:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 10 Sep 2026 16:25:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789071958; x=1789158358; bh=ZH2sTDvSuP
-	SRROWaSjLFUs9JBzZ6fnyBpin45ZbyGh4=; b=Ix5txTQ7AxtYcAc9S8Hi63VB00
-	1u08iK9aj7LXINWP9pqQ6G56k4YJMbzhfUnRC4OnvySSsEqq7p0m76xLrE73DAe0
-	lLCly1jfVFD0JW9/qB6NlBnAZz2vdRMcj5xvxjOsOrOXml4jWa6LYGcL8YBrQnYv
-	xkzgQ8T8F3GcTe0+2T+k7syZbojvesHpVdCCWSQ4EyEX0CU4X5oIV2KHkfaUSw7I
-	Wp814ykR+GyV8AeMX//1NAp05WHKXY2iWc/bLwOVo2NhWu6AAb+RF1w3f9MKAxcG
-	Ck0BRg+G78oBkQl32TYsb+GoxtY7eH9ehSwrlbBJE+EwfVJulsBJknltuYLA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789071958; x=1789158358; bh=ZH2sTDvSuPSRROWaSjLFUs9JBzZ6fnyBpin
-	45ZbyGh4=; b=w8wVJR5HlKqG1CksSlM2oB6RyBnI5eOY4it905Wm6uxMFpjqzSR
-	0Ap+ZmKSRpb4R5cB6P4MpQZKfSCHjoxdfVWdkNzX92hE7Yta0jhp9d9KtRPPe55F
-	+kUBXvMzI0CB1osd901GstBIFNfni13TiINAmThfFkbiK+K7vcKbeeZvwF17F6kN
-	ERkWsuTa8e3dAr2APCCruAo4Vosq7smlLVH0fvedAftiCJ3+XpY63nxzc1/5fOxY
-	kAtG5Hlx7SniOpGwlHy8u1Qydq2wmkkihcL/2vMiN/a6f19cELvMDKJzcwAtMgd4
-	JFMNnwNS0jFCrHKVY+9Rcv7h2mWKhdgJ7Kw==
-X-ME-Sender: <xms:VhKjatgkDqZHZ822wWvcocNT2XN1tvuMyit0AcgXhsNupix2wO-KCw>
-    <xme:VhKjalsBsaf-nxpZvnyZ_rh8l3V2zcqY_RNhMgURqQ0xS5BTb-dtxNZmxHAtfZmZ1
-    OAURKIxhhcLgZysv_CLsr0PBPAMh78jblwTHG2sQT2K3F5e_ZbtRro>
-X-ME-Received: <xmr:VhKjam6wPODb2Fy3ko9-EyYNOO8Mor5CorcL8xX6WOQ61HXfjhi1xKAG895FxV4U8mP00GvK_EGBn9tiCXmk0tcNC5v-AY3laFUX>
-X-ME-Proxy-Cause: dmFkZTFgXQQNDlkTdhIu446sCbjxVF46Dex96OLgjs1A5gNluMG0yHVFczD2c3gb+0HEQo
-    kDjEhj24fk287xCGMtiQ2Q+QPfFAbSl2eAaCI9Lspp0kRC/xiEtz1AELrk1zcLdO29ZvgQ
-    kZtQIQgq/q36s0j/B3RZpPNXSObmF7WrffgB08Ou383FcA1uwm5SunQC8gsS0YSYkFzAze
-    unKGAtIGDW6mdIUI5f2uaun17KUcNvaOSMMbp4LfZFWOEHk1GQvGBmho47DPt5yKlwO1in
-    URGYq5vQQsMWXNBrE/6YzF4k2iotH5ISUx7lb0wDhINDIjNU3j3zloeeFHFbExOlq/EgOM
-    T2RvAPzQRhL12CmEJ0sj8qeSmsqbupVDHyZuc9mP1JIanGm1ngDzXl82XalKIqzWJMc0Sb
-    XKIFFdbyqn+OmJVui/KiL75F2SS1HEboAMEdEqyctu7iF1ajqXS5bLtVS1wSaojQvHKUYK
-    kI0G27/Wgxi7l5BeFanhKQtMmljTj0zGy0RdpdFqC68Qq2G6uS8pezIdIsUTFMtbUURk0n
-    3F8dUMq6Sm4OZCK92XY8A13434xpUPIefgP50z506Vew4o0bUQMpSZ9m+IssHJCVxmj3W9
-    QuE89YlldTm5CKWlwBUuRtvCOzzHiraEuZh+6dCsVnQdmtpbJ4M4vC3mnhVQ
-X-ME-Proxy: <xmx:VhKjapNir-2o9gym-F8DYEZiAuv8kPZuJno5Pz6gpAOOYTDGmsb7UA>
-    <xmx:VhKjasvZNobE_oLJqo9nivD_SqvG8mgcZQDZBJYqH3FSeZQ5A17OpQ>
-    <xmx:VhKjakY8W819eo1TgKsVKeWp4BjrBij33W-S-THcUKlHZP4ZJvHkQQ>
-    <xmx:VhKjamwEkLquh3V_irrqKIg3NxfrWlIwQ-OofUY0dPEap8yPkHU6Cg>
-    <xmx:VhKjalzafOrx7PmxUzg-BjhLVabqvni3X2qScPGt7IlMyPdNnyivRjmH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Sep 2026 16:25:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Vsevolod Myalitsin <ub4nal@mail.ru>,  git@vger.kernel.org,
-  ben.knoble@gmail.com,  gitster@pobox.me
-Subject: Re: [PATCH v4 2/3] advice: introduce advice scoping mechanism
-In-Reply-To: <20260910201111.GA919731@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 10 Sep 2026 16:11:11 -0400")
-References: <20270829004959.90983-1-ub4nal@mail.ru>
-	<20260910085353.109373-1-ub4nal@mail.ru>
-	<20260910085353.109373-3-ub4nal@mail.ru> <xmqqzexpf78k.fsf@gitster.g>
-	<20260910155247.GA251185@coredump.intra.peff.net>
-	<xmqqpkyldke1.fsf@gitster.g>
-	<20260910190345.GA903701@coredump.intra.peff.net>
-	<xmqqh5jwevbm.fsf@gitster.g>
-	<20260910201111.GA919731@coredump.intra.peff.net>
-Date: Thu, 10 Sep 2026 13:25:56 -0700
-Message-ID: <xmqqcxuketuz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=tylercipriani-com.20251104.gappssmtp.com header.i=@tylercipriani-com.20251104.gappssmtp.com header.b="A2e2hrFR"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6b35cc0a8c3so346246eaf.0
+        for <git@vger.kernel.org>; Thu, 10 Sep 2026 15:08:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789078120; cv=none;
+        d=google.com; s=arc-20260327;
+        b=c6ZzcO71WQcD94krzUotB6ZLOwvrMyDlokEr2sJft3aNA8qhykySB0QpPoF16AMEjU
+         w9dONddppwbLTnMblnPNeeOAL75JsK5RhoMMWOw5uACkqqPrzXBf9RVAiiAFk45CVmQ8
+         B6BP73dGzq9KHSVdrcuvjVroYvVeVyIECtuOEDyxLno/KYeWIXzYzkBWjPe3ec6/DnfR
+         CWJfELGIq6Ur5V0wS0JTAcNnZzpzQ1Hkvj+fltzSq6FQW+y1R6KbId4/INEMQriPQQVH
+         LXtO0Qnfw5OVXv0K+5uwRCL59XqWov6TG5O2ud/PstEzH6jEWl/xL5EnThySsu1wl76l
+         vLpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=XihY8WJBZvB3126XRVDccTEiZFfxXDa8SOwpqUfj/Gc=;
+        fh=7on8cIw3NIZWw4JuZrn4//f1JrEE7LsGYupBvUWTs8g=;
+        b=SB6AlGVJwBmMsl/Zy27LNzs+8dz4V5qfze89AtmjIYLtKepabRk0oPIKY2gyD576lX
+         kfj92mV+WFxk1bzi5n6yH35oLmfxob5GL606EMoglGM50cmF/r35y5qiYUaUUskTidnY
+         PoI+gmaPr8xvpDjX1bilVUV4SKveZleuM0jLZTPn573Kgq0xjduzT4n2rM9cVh3lNn4r
+         KkmYTbL9MOPPfhG3Do93z1rew2lXuG55x/9yAym6BnlfSwRKQIhvJ6ZOm6NsT5osv7+/
+         YLszk5twfK1HzjK+OJANnU/RHkTKmvpbDufQMEgmtUnXUtfUemWFZq7O8X4yHyVsbtfQ
+         z1Bw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tylercipriani-com.20251104.gappssmtp.com; s=20251104; t=1789078120; x=1789682920; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=XihY8WJBZvB3126XRVDccTEiZFfxXDa8SOwpqUfj/Gc=;
+        b=A2e2hrFRyQtB5k5Gwumr59GY86sFCjpjjvEwBbCIW/eJb2bpWQnHfitw1GmAq2iOe0
+         Y2uYHL4l3pt1rLmZWQ8OTqOJ2OdcULJULqh8yOir+S46n+5C9ss2I+jq83pk2nsm3UIb
+         R4LaX2Er6dTZKjhiqXWQ2W4TopsxbRiFDQiG2vwV7Di1Z+blM8/tlO6Mr7Q0b6UD6SgX
+         ovjjYYQOxbZUH/lIUvRW6jRMBRw5WzfY3HZDvh99MK7V2mssqgYJgncudMxnwL/Pzn9g
+         H8OJlxmw+TR2ROEyZ0LzaelKL2hiwtN2CN9iaak8RsCbbte/TZ+oHxSiHKCDl6RGOm7y
+         vH+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789078120; x=1789682920;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=XihY8WJBZvB3126XRVDccTEiZFfxXDa8SOwpqUfj/Gc=;
+        b=Ihc798A8BofpQ0kHXvo8hPWmWP4RcZzNB4hp81KYiFPgfj8gkTQB54B3RJzB8UD828
+         dahFYP7qy/C0V6pH42y7pJq2I8tjU6ILb6pnCRZztw59EDkIHIkraZbOoao/BUhexWcs
+         Cva3Cr3ulLzFYeXoyoB5D78bhGeaw0k8LbelzbtN3z/YEUJAFak8Eh6w9MgrwTI70iXw
+         Mt4/n/iELmc0LhcUeR+1jAmwW0+TBvY+7rxlZ6pEDLW8rf/saHaDAybVIBGOHeSEzZvc
+         vBsI/mJcLzo3yy594yHWi1GyRqkjSOm+xz7VpYm4/Ccqj11lTU1q8ORH7B8DuURQuj4b
+         Xxbg==
+X-Gm-Message-State: AFuF++kRKHjy5np1sUa7vXZvz1e95K5r9imQHvrBJHxNAAcDoZfB1bZE
+	+0u5divSX7owPwqFqKPbsNLitxtI2g9+yBySln7d0KdIOg6awQyJx2R/EwdZ+BNFJLKrbKHCfIU
+	xVRA5V/EVww+9j70BjI5FM6mUefGGnWblUKyFevqXnQ==
+X-Gm-Gg: AYBFou32c5F/yINgk9vVA8WJkrixL7WlgsO3T8D2LWV08YuO5mwPlUFY/aHvvEOFLRH
+	0jrsUiM2V5mjaHUM2Vrr5+uPqDQvcJ/tGaknFv3qyZNNvoagarH7owHyVww1s8rDxS2LGIuNqKz
+	qRQMRxg0ZiYaejnTjRwZbt1oXwz7Bq4WtMPr5O8x+YcGom2pb6FZFcl0R6cH/N4PDFWsRRTAht4
+	dkXWj994VGtFr9IIocS7lfBwqYDA8fyypHJhWjQbrGeOHxbsIqJ8SkNiN7QuZkw+TnFKYwIWwsE
+	zeB5yLRiJgyJPAAqC/TfR9upSE0telClHbrr8Eza1bZ5TdWMsSluaeE=
+X-Received: by 2002:a05:6820:491a:b0:6b7:46fc:1d3 with SMTP id
+ 006d021491bc7-6c0bd587be9mr588422eaf.50.1789078120618; Thu, 10 Sep 2026
+ 15:08:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260904210122.431757-1-tyler@tylercipriani.com>
+ <20260908222056.1150748-2-tyler@tylercipriani.com> <xmqqld99dk20.fsf@gitster.g>
+In-Reply-To: <xmqqld99dk20.fsf@gitster.g>
+From: Tyler Cipriani <tyler@tylercipriani.com>
+Date: Thu, 10 Sep 2026 16:08:29 -0600
+X-Gm-Features: AcwNN1VYRPye2Ly6mAWI9_gMY1ZEfvgFmlop4ojo5yJ-bAXzHUQjHUyhCs4mV4s
+Message-ID: <CAHLx=Ok_0RntxYo5GsEQTmvxWy7B7S8KDHq=G+G5jWorPz3-3Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] push: check pushed ref for --force-if-includes
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>, 
+	Stefan Haller <lists@haller-berlin.de>, "D . Ben Knoble" <ben.knoble@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
-
-> I'd be surprised if anybody really thought carefully about it, though.
-> When I introduced advice.* in 2009 (geez, has it really been that long?)
-> I had assumed people would just set it in their user config. The actual
-> "git config" command advice came much later, but I don't see any
-> discussion of global vs local in that thread:
+On Thu, Sep 10, 2026 at 12:43=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
->   https://lore.kernel.org/git/pull.548.git.1581311049547.gitgitgadget@gmail.com/
+> Tyler Cipriani <tyler@tylercipriani.com> writes:
 >
-> Amusingly that thread also touches on some of the "could we just convert
-> everything to advise_if_enabled()" issues we've discussed here. I had
-> zero recollection of it, despite participating.
+> > Message-ID: <20260908222056.1150748-2-tyler@tylercipriani.com>
+> > References: <20260904210122.431757-1-tyler@tylercipriani.com>
+>
+> This is incorrectly threaded.  It is not made as a reply to the
+> cover letter of v2; it is a reply to the cover letter of the initial
+> iteration, and breaks automation.
+>
+> The same problem exists for [v2 2/2] as well.
 
-I do not think I added much input into the topic at the
-philosophical design level---just the usual usability and
-correctness review.  No wonder I do not recall anything particular I
-contributed to the discussion there ;-)
-
-It is very much understandable if we didn't mean the "use 'git
-config advice.foo false' to disable" as a cut-and-paste ready
-instruction, and rather meant as a general instruction that any
-intelligent users would tweak for their own situation.  And it is
-not surprising, from such a stance, the 'git config' hint would not
-come with any scope indicator.
+Sorry for that. I had --in-reply-to on format-patch vs. send-email.
+I'll send a v3 with correct shallow threading.
