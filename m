@@ -1,131 +1,121 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F003CB550
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 15:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3E13F39D1
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 15:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789054624; cv=none; b=sccnruZzeBjtdtilKaAfbg60VQQzykKJdCCkKFtKPYGbyNSwc67auj8/kmjFGRQZVvd2bKgccXhz7m6W9GZ1NKsLlMSgK2rgZcnkUNjGflEFwwXbDurtxgY4uoGCBDVLKihZbD3VeDagdzCoXb6QBoOfVKMjbZGSpfgsEBmMRUU=
+	t=1789055572; cv=none; b=gypVpgV5CWjZ9IidioWiGloOq4FsncbTQ7thaLpASB94igPqLrjbE5js4L+RE0THZ/Tj0B/wxAweCaWAa3VknRUWu3yk0IvAfbOeirPH/1FhWQXB3r7SzOS1Liz1O/2DUZjE4b7Zwv3iSsA5GD8AKWWHdnZinw06GiQJmDmB4K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789054624; c=relaxed/simple;
-	bh=eXfY8cCxJ18QcZIn6eJVZztVmqAgGhem6YBocBlNULk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mD70oSC2JyQUJaeLdNKmB/la0uv8Tk+MjZcIH7+JVota1V4pPFi/mvZGq44rH9NlF480Y1SSZhSc3ypBMz+rMftn1WwgoIwwy4xaOs8V2yJGe+I8BsS+0tZw3aO6oh7HSbGDtJ2fcNcXN/HVHJtZ4RHtvlUDPG9mUr+BW16UkjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=caZZqaiz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ctdB0+ZY; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789055572; c=relaxed/simple;
+	bh=+6UN05A5PRSAJoMVlqnjq/JUjph4xtAKSo7E5YJHKYA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X6uqmyFXSShmsUoYcnO+XVzpl0ofa+kRvXE3qpzx7zcfB1owwRaIzLZITNG74OFLCovlB43k7rNMZNBBsZCQYzTZIMd32IfZ3ukSdH41lngEGqkmxh/9DEeuDj6PoBoBjz4diOH+hyOvpFB2mr0plPRHBkj1nX4coOuesbhv12c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PT1Cd+WX; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="caZZqaiz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ctdB0+ZY"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1E5D5140011C;
-	Thu, 10 Sep 2026 11:37:02 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 10 Sep 2026 11:37:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789054622; x=1789141022; bh=+aZR8HrhUz
-	TvEg0C14f1C3hJ4VY8pXIw+oUKBgMdCT0=; b=caZZqaizgK3wBTw7bP9MfqOVhZ
-	uUP+Q83+RIc/mtg6DyVu8tbbECJQyzGn89CZOFg1/8dwWS8p0UhqChBnuRvIWf02
-	wFOINr94Q8eNKn+ZcZ+Wfi7rQLsp7e7g4b6Hfl9wiqdUfqmTfXI7FYiwhK1yA4LJ
-	dDI70r2cqaIeSUcDQwcyBA3wO9CD4D6cfSAo8Gb9GlH5rChLqmQp/YWjeCFF8mKs
-	wQCx4SoYFyIaz3sjSz2VPnDMumtRcTwEvmvtQexIlByfSotXnnHY1VATEBpwonMc
-	GEHWmEKXMaD4srnJnADjEjmvXT38cPaD39rVVYyaNPpEZDwgKcm0709sSsVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789054622; x=1789141022; bh=+aZR8HrhUzTvEg0C14f1C3hJ4VY8pXIw+oU
-	KBgMdCT0=; b=ctdB0+ZYuTQ8gxvIiORmfdibVn6NkCasC/9PRHonKB+6Z5h4o4K
-	JG3QE5EPjQ++nDIp6GrsaKKWIcsIbJAw4TBwTO3xwbW6ceG44k5DmBRh6be12VJf
-	zdcq4xcYzF9LNQrmwyHrVmzkh3So0DIDmbmuIYmma20YQTp3Ts4WJMpaUo1ZmOMn
-	Q2ezmUzashDjfZbUzbhVtCCgqIDQAhZ/KDHXUJtrzMh4MBvhi/PO+W8+xvSOK4+G
-	yHlHmnj8aSyVK3nW8N0+TM6P2Mz+JbL8M5eU8LlyD02h/SjQuskVjEuA7k0uM+Ff
-	ZLEWBU1nILCtlY97z3s3ZRu637st/yLvLjg==
-X-ME-Sender: <xms:nc6iahiAw3dTBPVfaWhBZydrHZzYUUtkS6y3p6XbEviDE0LimlDVSg>
-    <xme:nc6iaptb5IC-YhtpzEn67riq52Up7vUOfrFgSG1hKY4hOh5Zg0dbGx4B1SrM6p0ss
-    fLmbz9Yihm0w4ax0XFRIBI0_BBUDrCvEfQ85_AMZMjCoBJAk-JAcrs>
-X-ME-Received: <xmr:nc6iaq6dLzGNjI67WwrICqzVnLfE02a84aT8wC5nOlzLOsJ3U1hYjupv6VkFPDGORBn85uG8QrDBRorl9A1qipwUrSVVtONeCEry>
-X-ME-Proxy-Cause: dmFkZTEwe584kR1DZiyGCPHJPfVqtul/qsBD9HEO3sOaM3fAfg2f0MpihJyZ5fXkF88CPf
-    9Qw7GRuhXt8AglgOMc2PO1WIeKEd7WOuigJKlz4Punk5hRKBmih+YrbUjSQqcwsa6Y7nqY
-    9GRlnHwrB91uc9EtHELx9oTntSljFzv3ymukNxA3pCdmAaE+LfCpj9sIWCyoX9iS6n3Q/X
-    NYbX0QpXXjAgeP/J8t94zk9cXLHNeSUkHoUbPpMyuAXC8IMovnBZlwxaDzJxZtUTSA9wC9
-    zPjRdB5ZVFsAG4Cwh0167PXaDDKhQupbxt1PJ85Ok6nmmIjvXkSgqV9/KmbxHreQbInPqA
-    aEpuA8wj93AIq+6+pGq7nlcRnsBFyw1/6PUUszvlXcUqyIW2+kT9TmRyF/8Xv1K2vlgmIF
-    e3CrZCpj/P8fXn3KYSBoJV1SvdlBIJYNpfXW8P5ckjOA88T87fgmJtzC/MvSykW1kkY1lc
-    TiHM6o2Ys+DxqwxWbGBMidYkjSBfRC8hnx0s+d/vzhVO/dp96KGsO2qBe7cQ4S3SF5vpZg
-    RnsT+GZvMeXczen5he1ti4xQpnBNIXcco+snWV3GOk50xe+SsQdykk7a0BUuQQyxOIkxk5
-    e1+TTNoEzN6uZmrQ5KBObs3bSgL9DynTiu605V5aPTeAFzok871jerzK91Fg
-X-ME-Proxy: <xmx:nc6iatPmRd1jcxkhwO5_SjgGlT6jILTY6mgd7k6WOPBEY2imDJsy9Q>
-    <xmx:nc6iagupHi9LJoEItwnltPKpwfEyWGHNtRkrGeBmEVPTXuafl7LMow>
-    <xmx:nc6iaob6QYu57fNe-Kaw_68ZVBzOqAqLOP6dn5awmXJe7VCQb1j-Tw>
-    <xmx:nc6iaqyFvMd3hLx8rJIAja-eOfLUNXrFjpmhW0iJhJwSc_lKIDOGFA>
-    <xmx:ns6iaqIZvX1XZsByX7Pa5rgifOqfGeuUqb1g5RSmkbDQXujPoagLxP5q>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Sep 2026 11:37:01 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Vsevolod Myalitsin <ub4nal@mail.ru>
-Cc: git@vger.kernel.org,  ben.knoble@gmail.org,  gitster@pobox.me,
-  peff@peff.net
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PT1Cd+WX"
+Received: (qmail 31141 invoked by uid 106); 10 Sep 2026 15:52:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=+6UN05A5PRSAJoMVlqnjq/JUjph4xtAKSo7E5YJHKYA=; b=PT1Cd+WXRo1hkH/2TnklR+gCO1UWVTqHcLVXYinbTWsHlXOCL3zQPa9QE1bn2Lnu2Wb1fsCAzVLldAUTvj3nQ94kUKpl1Xu7991zMKvfQ/pE3lQ9xeYx8tVJ09npzNlY3kS243mQxHTu6Ya0FRE3YlfnSEfxFMdZ002VUTvgPwd9569eSeYamTHeCd3bqZ7qZv6YhJw7NxZZTcimrC64V+VP+hEgbPQlZkpfiSaghSjDvaMTAGswjD6G+r4cgXt7uA5NMg+XA8ntxgu9E0u4j8XNfzFWiTMixF2QQUVHRr6yEwFR41YdqQIgdUZpr5c0VbNLIqEhXZ/FZPWbIo3vVQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Sep 2026 15:52:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 157067 invoked by uid 111); 10 Sep 2026 15:52:47 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Sep 2026 11:52:47 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 10 Sep 2026 11:52:47 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Vsevolod Myalitsin <ub4nal@mail.ru>, git@vger.kernel.org,
+	ben.knoble@gmail.org, gitster@pobox.me
 Subject: Re: [PATCH v4 2/3] advice: introduce advice scoping mechanism
-In-Reply-To: <20260910085353.109373-3-ub4nal@mail.ru> (Vsevolod Myalitsin's
-	message of "Thu, 10 Sep 2026 11:53:52 +0300")
+Message-ID: <20260910155247.GA251185@coredump.intra.peff.net>
 References: <20270829004959.90983-1-ub4nal@mail.ru>
-	<20260910085353.109373-1-ub4nal@mail.ru>
-	<20260910085353.109373-3-ub4nal@mail.ru>
-Date: Thu, 10 Sep 2026 08:36:59 -0700
-Message-ID: <xmqqzexpf78k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20260910085353.109373-1-ub4nal@mail.ru>
+ <20260910085353.109373-3-ub4nal@mail.ru>
+ <xmqqzexpf78k.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzexpf78k.fsf@gitster.g>
 
-Vsevolod Myalitsin <ub4nal@mail.ru> writes:
+On Thu, Sep 10, 2026 at 08:36:59AM -0700, Junio C Hamano wrote:
 
-> @@ -109,8 +117,21 @@ static void vadvise(const char *advice,
->  	strbuf_vaddf(&buf, advice, params);
->  
->  	if (setting && setting->level == ADVICE_LEVEL_NONE) {
-> +		const char *scope = "";
-> +		switch (setting->scope_hint) {
-> +		case CONFIG_SCOPE_LOCAL:
-> +		case CONFIG_SCOPE_UNKNOWN:
-> +			break;
-> +		case CONFIG_SCOPE_GLOBAL:
-> +			scope = " --global";
-> +			break;
-> +		case CONFIG_SCOPE_SYSTEM:
-> +			scope = " --system";
-> +			break;
-> +		}
+> > @@ -109,8 +117,21 @@ static void vadvise(const char *advice,
+> >  	strbuf_vaddf(&buf, advice, params);
+> >  
+> >  	if (setting && setting->level == ADVICE_LEVEL_NONE) {
+> > +		const char *scope = "";
+> > +		switch (setting->scope_hint) {
+> > +		case CONFIG_SCOPE_LOCAL:
+> > +		case CONFIG_SCOPE_UNKNOWN:
+> > +			break;
+> > +		case CONFIG_SCOPE_GLOBAL:
+> > +			scope = " --global";
+> > +			break;
+> > +		case CONFIG_SCOPE_SYSTEM:
+> > +			scope = " --system";
+> > +			break;
+> > +		}
+> 
+> make DEVELOPER=YesPlease would die due to
+> 
+> advice.c: In function 'vadvise':
+> advice.c:123:17: error: enumeration value 'CONFIG_SCOPE_WORKTREE' not handled in switch [-Werror=switch]
+>   123 |                 switch (setting->scope_hint) {
+>       |                 ^~~~~~
+> advice.c:123:17: error: enumeration value 'CONFIG_SCOPE_COMMAND' not handled in switch [-Werror=switch]
+> advice.c:123:17: error: enumeration value 'CONFIG_SCOPE_SUBMODULE' not handled in switch [-Werror=switch]
+> 
+> We probably should have
+> 
+> 		default:
+> 			BUG("advice settings at wrong config scope");
+> 
+> or something there.
 
-make DEVELOPER=YesPlease would die due to
+It is funny that we would handle LOCAL here (which we do not expect
+anybody to pass) but would BUG() on other stuff like WORKTREE (which we
+also would not expect).
 
-advice.c: In function 'vadvise':
-advice.c:123:17: error: enumeration value 'CONFIG_SCOPE_WORKTREE' not handled in switch [-Werror=switch]
-  123 |                 switch (setting->scope_hint) {
-      |                 ^~~~~~
-advice.c:123:17: error: enumeration value 'CONFIG_SCOPE_COMMAND' not handled in switch [-Werror=switch]
-advice.c:123:17: error: enumeration value 'CONFIG_SCOPE_SUBMODULE' not handled in switch [-Werror=switch]
+So if we are going to do a switch statement, then I'd expect:
 
-We probably should have
+  switch (setting->scope_hint) {
+  case CONFIG_SCOPE_GLOBAL:
+	scope = " --global";
+	break;
+  case CONFIG_SCOPE_SYSTEM:
+	scope = " --system";
+	break;
+  default:
+	/*
+	 * Scope is local or otherwise unsupported; just recommend
+	 * the usual unadorned config command.
+         */
+	break;
+  }
 
-		default:
-			BUG("advice settings at wrong config scope");
+I guess maybe that would surprise somebody who tried to add
+CONFIG_SCOPE_WORKTREE support, and they'd rather see a BUG(). I dunno.
 
-or something there.
+I was hoping we could avoid enumerating things at all here, but using
+config_scope_name() did involve a bit more string construction (and a
+hidden assumption that each scope name has a matching "--foo" option).
 
->  		strbuf_addf(&buf, turn_off_instructions,
-> -					setting->key);
-> +				scope, setting->key);
-> +	}
->  
->  	for (cp = buf.buf; *cp; cp = np) {
->  		np = strchrnul(cp, '\n');
+I'm really not sure why anybody would use those other flags, though (or
+even --system, for that matter). After reading the thread again, I get
+why we want "--global" for advice that only affects new repository
+creation (like defaultBranchName), since otherwise it could never have
+any effect. But why would you ever want --system?
+
+I feel like we are maybe leading poor Vsevolod in circles, though. At
+some point there are diminishing returns for polishing this.
+
+-Peff
