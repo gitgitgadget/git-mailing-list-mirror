@@ -1,104 +1,239 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B0233CEA5
-	for <git@vger.kernel.org>; Thu, 10 Sep 2026 08:31:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2C038E100
+	for <git@vger.kernel.org>; Thu, 10 Sep 2026 08:35:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789029073; cv=none; b=YGSll/EdhuFXfq9OxEaD0kKNbbWA93jsilAef4oLeuxoz+o/kMWI7Hc/rQ7ug97kRcweypoktydL7Zq8ZP8WuJPzK2dlPyIxtj4lyLHT64FgHTwagjANmmag2l4JmOAVQl0f7ThotOz1D1UGTlxIhafZPase4B0YP3Hov27xK6c=
+	t=1789029336; cv=none; b=JdWlPQuvI0I6vBiJFj1du2TCmGbBChxR7qxZG1FR8uMBM465QxbdZrJFAzCfmFOIrbcEpjwnaJa1YJCY1s9zSOrf11Rxr5M4qa1sS9YiQLH5ubPzcV52cL7WvVsPhKvzoPEUaJklCivc/CD7uES3cV+kL7r1+7dvT9fLR7kzznA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789029073; c=relaxed/simple;
-	bh=6F/n8hbPu7W+dP/vnWLh5Ezv3d7WhD54GPXLHU5EiA4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxLb9fc5JvhBQjJhNAnPQel+Nb7oo439eNIx6+e9VBl3cD/ik9RILmWQFWu1OMHHyRMKMeS4+Jdg8dnN0wzg+TFxsuAEoT0u6Ke4zWkIvyX8A2DvkD1zZm60ppxX35pYWjhWXC0aslgDfMIm+Mifzbl0RmxD3Du9mQ3sYoV7o5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la; spf=pass smtp.mailfrom=lex.la; dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b=HD6ro/Vd; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lex.la
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lex.la
+	s=arc-20240116; t=1789029336; c=relaxed/simple;
+	bh=MZEUlYlVJSouhvdW6dhQv+JpIdBQ1dlGPLmGQ/HI96M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jpRsHP+W1neykzCqLOPQzprqJ7kpuPw6U+eUYc2i6lmKKEKA9x5DFKVhh1EDH7euAKcdMCwoo/VkMLEa7bH69M1fRbmn/BvngEz/43801cAtIkOq26F7zgU3QkMwtmCCbB8+vn4YBYtwUdJDriA6ABQYimGo3hGhXbdBM+tl79U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D/tc6qlr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GYkFj/7r; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lex.la header.i=@lex.la header.b="HD6ro/Vd"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-498028b3d5eso64795325e9.1
-        for <git@vger.kernel.org>; Thu, 10 Sep 2026 01:31:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lex.la; s=google; t=1789029069; x=1789633869; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=h08FIf+FQuNwNioBm0jVgdWhDq+xYashQ8AarukCBVU=;
-        b=HD6ro/VdxX79173fLfWFg/jAUoUINmIadqloZtATn91Vn2XtWJl5LFOUkSGiY24XmH
-         PGW3yqe0z7sv4i8DOYq98OiHhicSWHQgiB2JiHHBsHvhyRj4pRqp11Em8Axxqd3y5uzV
-         2JJfDL7J309fH7sMozHXpgF46L5YkvTeQn9OEL/dB9+ugmvz20pZxKZFM1Kr/+jMUCX+
-         QGhZuFG0zv1G0OqXOQrOrnfWtXdWoUWP2qbZw5a2xmcu/8wUXnERjtQp1uHdAZ3RxEFW
-         ppvfylu4kVnsOsCQPe+yT0Xj9+QdNngpaMM5pvFKBXhwLv1c5yIPexOtClOCJjN+d9tG
-         XLqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789029069; x=1789633869;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=h08FIf+FQuNwNioBm0jVgdWhDq+xYashQ8AarukCBVU=;
-        b=SArEVPLgKFB73QV2MPEbfSA38vY2d9ODO+9vHJ3v1H4o/uYMWDjr67zG37Zo+mihf4
-         sTzFtn2KF5H/4tbKKggdo/2KqON8oHcvUm2dm+hI0IhCzoNAv/vG/zpacwWPQjqCSChc
-         mIBUWui5yuSDab0u6PfecihPvuJwJBVmzOb7fUgpxBu0SjkQbeexsyHZvC2GRj1aT+sQ
-         BCG7CO4fNTGh5r/WRg1S2wrCu+mTYbTHuwyVhOMEAeM2omvrnEAHsmI/NV9oLT1NyLHs
-         jvh0NbcQHyyovvLziaCyblVZvb08wC6vVtVYQNTdZvPLsa0DY2Jqf1f9MPC7IeICHtSb
-         HqDA==
-X-Gm-Message-State: AFuF++mZwkFJrMa9H0yK38Z1F8hIoHbATCbM/Q7u6adHBho5TXb0O6R0
-	6+3VPR+CQkkv2SnSGF/1xoHqffSlxdqiLVyXluqCWG9dJGzuLxsk51eoeKg5bA2MatLViT3D11v
-	k5CZ7bgg1V/+V
-X-Gm-Gg: AYBFou27ij324qzU7oqH+sOR9JWiIDMx0FTeR/WkLIXALBKhOMq2ZbdPKEf2aOGRDrh
-	C14d6K+W9uMnSgpY6P/bTBlH5rEwocdUyaRFOYlcqiPAAPJBJjAksdQxLkTmowTO/O98qfvAbHP
-	joVznOTzIVJRTNjnggIxRGfXgnP2K8FSBa3Z1SWg8Xlc9IEsLSZ7ySP3jrLGgvrefVBqgceFedH
-	RrAkIYQyrg//gWvqvl1mXfzB/pI3oBa/0EUVXzAU9id8S+SPNEW6oH7upD9WNRZDpx4ROGtgBCW
-	uCub4dBR3+5JSbDLK/5yUosp8CgIOAxoY0cFQMTCVZdxlPMPUya2gMSQXDkFM6UlWWp2KmZPRiB
-	UMHC9AdUvSj+4i8KRYG1XzpaDXJbh4an3oikjkqbQBJCw0zGdoLLQ7dmptRLagi4rcvxUzdymBo
-	uBcVAl7/Mh4l/7wIWDgRo9t2+YkCi8reszB7vzhQGBIhigZmLWNuAxmarCAhx5UaU/QIVgrkijl
-	w==
-X-Received: by 2002:a05:600d:8498:20b0:49c:cee0:f383 with SMTP id 5b1f17b1804b1-49cf828c65amr283348715e9.16.1789029068854;
-        Thu, 10 Sep 2026 01:31:08 -0700 (PDT)
-Received: from ownbook.home.lex.la ([84.17.55.229])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d20da3354sm92699575e9.2.2026.09.10.01.31.07
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 10 Sep 2026 01:31:08 -0700 (PDT)
-From: Aleksei Sviridkin <f@lex.la>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Aleksei Sviridkin <f@lex.la>
-Subject: Re: [PATCH v2] push: fix --force-if-includes when remote-tracking ref has no reflog
-Date: Thu, 10 Sep 2026 11:31:06 +0300
-Message-ID: <20260910083106.88960-1-f@lex.la>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <xmqqv78dordu.fsf@gitster.g>
-References: <20260903010547.85469-1-f@lex.la> <xmqq5x0mfgyh.fsf@gitster.g> <20260904124433.12840-1-f@lex.la> <xmqqzexx58hc.fsf@gitster.g> <xmqq33vn5hsq.fsf@gitster.g> <20260906165052.21780-1-f@lex.la> <xmqqjyowz9oq.fsf@gitster.g> <20260909065639.47316-1-f@lex.la> <xmqqv78dordu.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D/tc6qlr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GYkFj/7r"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EAB057A0127;
+	Thu, 10 Sep 2026 04:35:33 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 10 Sep 2026 04:35:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1789029333; x=1789115733; bh=P71aMsSVnt
+	lKlaaHp/y2msR1Ld4SDYZjOx4ijM4Qd8I=; b=D/tc6qlr1bmzH9y4cY0+2Oez0H
+	0tygJ2mSR8qHDU92RUpuhjJZopeAbzNiUSXQ6OQEhE0QW2o4iov2sGFaBxUOI8pM
+	yk5ZyKY5YHAgAl2m2nBVutuxX/R7NdA0oGRgu2yYg0tNA13c0+cAH0NkNr+ofcwg
+	2bkVKETVoP5o024KRtiJy4JXaBLUTenqmeK5WKI8m0t+r6YMECKafJiAzLDicQsB
+	eBqGVkb6qWwsCaIEYNTZXIgIkxI45tm0Gt5w5hYEJmNCaDgci4Eiq5IhPK2shWA3
+	5SN8jkqAmgihh4sxRmQVQXgx6iv+tDjdhE3d/BOfF04yHcqWAAhB20SKBgzA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789029333; x=1789115733; bh=P71aMsSVntlKlaaHp/y2msR1Ld4SDYZjOx4
+	ijM4Qd8I=; b=GYkFj/7rjUnRda6yX6QYsOLtyWQrCQ5k0iY+gGyXmbM1yclDqPd
+	7KBLV+pLOAVMMFtpFpQ5kdnIBGrir7rTASqfUtLV4o37gvwjDy4+wf6MR9ROZc8I
+	sfWH0UxTq4CM9IQuMidfG3E0QBZ8NfBOt6Hv/C3Fvz3VTvGEnzyK2Zh7aOZII7eB
+	3b0nMn/Dj+BTra0CW5wdWtLNiwghKr+ScNq624z0dOpiUd9k+1fALThOui6bdOD+
+	IxvduSdq+MkftDYs7DTuSInufHhgkpQ9h8yW1vxMy/q2jecM5cMopzdUR+GE8MFI
+	739V0xRQnJDMBjY4Za7uYIXfcJQW0EVXKZA==
+X-ME-Sender: <xms:1WuiannzejWcMAB6Vdylfp5x1ZEBjggg5RYQgUGuzpFmlirTkuy0lQ>
+    <xme:1Wuiag0AOHau2cPerS0_0446OhURSGVkdVpEDX7ECdNdUelXzHNI-4T3N2qOWI3Yr
+    hi-l_d1_YlgGfW3WHtf1KEkNyRdwfqrQ0Df-HG7zLZXSvtrJcwJn5w>
+X-ME-Received: <xmr:1WuiarSpKCzEvCOT38c9SxGidf6qGGnrknkFIM22Ic-5ebeQEud3OA>
+X-ME-Proxy-Cause: dmFkZTE4cQUiJ5k5OyTBEAgh7SuuUXMXPqTzQWiZNKlDS3ikiWWu3zG2U1IBtzn7ZKKXjf
+    srJKMwOfcYjwL3UqsX/P7Dm0AXTFFfLT/64HcJs/QbLdKJQnMO9PaUZBNGk7UyDsroWogm
+    c+S6uCEVRowusEtw5EcQNFwvZ1tNk9YcMuQZ3rGjw9v5zcI4/xBX/fmB9C2KGzoYJLPp5I
+    KriDTesLGXFX31+FPW5g3reJZH3P1+KFp8SKnnNFwNTx7JwVnqHZh+dOkA8FIM82WalGbB
+    CByxnrB5QWf03rKtaGpoCT6LUvOtr5EMn5rMncz9bLNdu5MUTmyaL4EtxdvwnyRnFU02lE
+    jAXIVeoDsgkPYogTZWhC6+81KBnEYmAJ2JCyb/WHZjV9NsJKkvnhj7G514KVJchgh7deTm
+    ykKvyxNOtEeldYz3tUJZX4PFUfYzvyVIe/UHbaKTO7wh184JTb+Ej5VbKQv/JL7pe8I0We
+    tCIZ5z9jQPmZ02/KrMfojaTUwcHIfTax+l6amoGp/bURZDlTPCfyVmWidwtg3B3WoittRd
+    t/OZVRSudQup3BGOC/BqMBTkagRKaG8xJ87NgkpHNyCcPgqoAtl4bmx3Pd68Om52Tc/hB6
+    IMEmz4+COMqNVG9QHEDZow/ZX+oe6Y5HTa4Ri0MZNL0MFMyRkKOHZ0jvMgtw
+X-ME-Proxy: <xmx:1WuiaqtCkgcmyhsqcnwa4fQgCtx9ioW1zSfNx6fzSHeO6F720wN1Zg>
+    <xmx:1WuiaoaClkqJmazhSP--mtdOpIYfWexyLcarGLlncIHw9vi87eqB_Q>
+    <xmx:1WuianvieSB6AAJmpK4ROQRBnyT_yD3-Kuuu5IdNt9BT1TtViP06mQ>
+    <xmx:1WuiaiGjWKT4pEGrFl2sMl2CowXHwQwUSrOURWBXc4KpLeE-sn8QJg>
+    <xmx:1WuiagW-OvRxkAK-BGmU37PtotI5FcVI7dEYv6qoFy3KILHYPLG4W9AA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Sep 2026 04:35:33 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b399344e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 10 Sep 2026 08:35:31 +0000 (UTC)
+Date: Thu, 10 Sep 2026 10:35:29 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Ariel Keselman <skariel@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] refs/files: avoid packed-refs lock for root ref deletion
+Message-ID: <aqJr0ZB8qpthTEGT@pks.im>
+References: <CAMuXvLD_ZsT8Jnfs_x6yO_aW6hrxQyjnuES_b21cq8a7nD=sKg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMuXvLD_ZsT8Jnfs_x6yO_aW6hrxQyjnuES_b21cq8a7nD=sKg@mail.gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Sorry but I am confused.  Your sample below is with 20000 local
-> reflog worth of activities, which is hardly a "quiet repository".
+Hi,
 
-Two things got joined there. The 20000 entries are the worst case
-for measuring the walk's cost. The repositories that keep entries
-older than 90 days are ordinary ones where "git gc --auto" never
-crossed 6700 loose objects, and that needs no configuration.
+On Wed, Sep 09, 2026 at 11:45:46PM -0700, Ariel Keselman wrote:
+> Hi,
+> 
+> Deleting root refs in the files backend unnecessarily locks
+> packed-refs, even though root refs cannot be packed. This can cause
+> post-commit cleanup to report an error after a successful commit in a
+> linked worktree with read-only shared metadata.
+> 
+> The attached patch skips that lock for root-ref deletion and adds
+> regression tests. All seven new tests fail without the fix and pass
+> with it; broader ref, worktree, and sequencer tests also pass.
+> 
+> AI assistance was used to generate the patch, tests, and commit message.
 
-> Doesn't that mean it is more logical to use the default gc
-> expiration timeout than year 1970 and in any cases using the usual
-> gc expiration would not waste more time than using 1970, right?
+Please consult Documentation/SubmittingPatches. The expectation is that
+patches will not be sent as attachments. I'd recommend using a tool like
+b4 to send your patches, which handles a lot of the nuisances for you.
 
-On time, yes. The cutoff never takes longer than zero. But it saves
-time only by ending the search early, and ending the search early is
-what rejects a valid push. Same repository, matching entry 200 days
-old: the cutoff rejects in 0.086s, zero accepts in 0.322s. Where the
-cutoff cannot change the verdict, both take the same time: 0.070s vs
-0.069s after expiry, 0.319s vs 0.321s with everything inside 90 days.
+> From c5d12e97a78123965590553fddc0dd78af3e006e Mon Sep 17 00:00:00 2001
+> From: Ariel Keselman <skariel@gmail.com>
+> Date: Wed, 9 Sep 2026 22:16:50 -0700
+> To: git@vger.kernel.org
+> Subject: [PATCH] refs/files: avoid packed-refs lock for root ref deletion
+> 
+> Deleting a root ref queues a packed-ref transaction in the files
+> backend, even though root refs cannot be packed. For example, holding
+> .git/packed-refs.lock makes "git update-ref --no-deref -d AUTO_MERGE"
+> fail, whether or not AUTO_MERGE exists.
+> 
+> This also affects post-commit cleanup, which deletes AUTO_MERGE after
+> updating HEAD. In a linked worktree with read-only shared metadata,
+> commit succeeds but cleanup reports a packed-refs.lock error. Deleting
+> CHERRY_PICK_HEAD and REVERT_HEAD is affected as well.
+> 
+> Skip the packed transaction for root-ref deletions. Keep loose-ref
+> locking and packed-ref deletion for other refs unchanged.
 
-The cutoff is faster than zero only where it gives the wrong answer.
-If that trade is acceptable, gc.reflogExpire is a one-line change,
-and the commit message should then say the fallback can still reject
-a correct push when the matching entry is older than the cutoff.
-Your call.
+Makes sense indeed. Root refs are never packed, and consequently it does
+not make any sense for us to try to evict them from packed-refs, either.
+
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index a4c7858787..41887f180f 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -2981,10 +2981,13 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+>  
+>  		if (update->flags & REF_DELETING &&
+>  		    !(update->flags & REF_LOG_ONLY) &&
+> -		    !(update->flags & REF_IS_PRUNING)) {
+> +		    !(update->flags & REF_IS_PRUNING) &&
+> +		    !is_root_ref(update->refname)) {
+>  			/*
+> -			 * This reference has to be deleted from
+> -			 * packed-refs if it exists there.
+> +			 * Root refs cannot be packed. Do not acquire the shared
+> +			 * packed-refs lock when deleting a per-worktree root ref.
+> +			 * Other references have to be deleted from
+> +			 * packed-refs if they exist there.
+>  			 */
+
+Nit: I feel like this comment is a bit too focussed on the root refs
+now. A small, incremental change could've been:
+
+	/*
+     * This reference has to be deleted from packed-refs if it exists
+     * there. Note that root refs are never packed, so we don't have to
+     * deltee those from packed-refs.
+	 */
+
+>  			if (!packed_transaction) {
+>  				packed_transaction = ref_store_transaction_begin(
+> diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
+> index 74bfa2e9ba..b7f3287841 100755
+> --- a/t/t0600-reffiles-backend.sh
+> +++ b/t/t0600-reffiles-backend.sh
+> @@ -519,4 +519,50 @@ test_expect_success 'symref transaction supports false symlink config' '
+>  	test_cmp expect actual
+>  '
+>  
+> +for ref in AUTO_MERGE CHERRY_PICK_HEAD REVERT_HEAD
+
+Isn't it a bit excessive to test for all these different root refs? I
+don't see much value in doing that.
+
+> +do
+> +	for state in existing missing
+
+Likewise, I'm not quite sure what we prove here. Should be fine to just
+test with an existing root ref.
+
+> +	do
+> +		test_expect_success "deleting $state $ref does not lock packed-refs" '
+> +			test_when_finished "rm -rf root-ref" &&
+> +			git init root-ref &&
+> +			(
+> +				cd root-ref &&
+> +				test_commit initial &&
+> +				if test "$state" = existing
+> +				then
+> +					git update-ref "$ref" HEAD
+> +				fi &&
+> +				: >.git/packed-refs.lock &&
+> +				git -c core.packedRefsTimeout=0 update-ref --no-deref -d "$ref" &&
+
+Setting the timeout shouldn't really have any impact on the test result,
+should it?
+
+> +				test_path_is_missing ".git/$ref" &&
+> +				test_path_is_file .git/packed-refs.lock
+> +			)
+> +		'
+> +	done
+> +done
+> +
+> +test_expect_success 'root ref deletion preserves packed refs and their locking' '
+> +	test_when_finished "rm -rf root-ref" &&
+> +	git init root-ref &&
+> +	(
+> +		cd root-ref &&
+> +		test_commit initial &&
+> +		git update-ref refs/heads/packed-branch HEAD &&
+> +		git pack-refs --all &&
+> +		test_path_is_missing .git/refs/heads/packed-branch &&
+> +		cp .git/packed-refs expect &&
+> +		git update-ref AUTO_MERGE HEAD &&
+> +		: >.git/packed-refs.lock &&
+> +		git -c core.packedRefsTimeout=0 update-ref --no-deref -d AUTO_MERGE &&
+> +		test_cmp expect .git/packed-refs &&
+> +		test_must_fail git -c core.packedRefsTimeout=0 update-ref -d refs/heads/packed-branch 2>err &&
+> +		test_grep "Unable to create .*packed-refs.lock" err &&
+> +		test_cmp expect .git/packed-refs &&
+> +		rm .git/packed-refs.lock &&
+> +		git update-ref -d refs/heads/packed-branch &&
+> +		test_must_fail git rev-parse --verify refs/heads/packed-branch
+> +	)
+> +'
+
+And this test feels like it's testing almost exactly what the other
+test does. The only difference is that we have an actual packed-refs
+file, but that can easily be squashed into the other test, too.
+
+That being said, what we're missing is a test that creates a single
+transaction that updates both a root ref and a non-root-ref with a
+preexisting lockfile. Such a transaction should fail even though we skip
+the packed transaction for the roof ref itself.
+
+Thanks!
+
+Patrick
