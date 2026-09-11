@@ -1,73 +1,73 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDEC38D686
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 14:47:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A393612DB
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 14:47:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789138054; cv=none; b=jz6NYEYuamWJLIUrvMnEatp/oQhCZLEvgm7bodTQFEgjpf5ZA9KrIetwcob/magVvYn9evJG8iF85FEGE9nMLaZ7edlZ3mhuGTU6VV3MSFygs3sDdwuXOKJln8bLnIqaY7yK6Aor83KWyEfllOJLR+PGPoi+UzRDqOdYJiVXwdk=
+	t=1789138067; cv=none; b=o6NJnEUsutDEZO0zB/HLoSDpzkx0niYcUJOpOqnxdn1ec1tYEK8OhTaOcCttR1vtYz8M5SIn+3NcxhgeifgFCLfLDHiYzizpwNQi7GjMt6CACwCE7FbOErBoyLPaRa0Q104pV8BpD6zdlcnkVcNI7Hm8o88u9HZSvI/3zY4r5Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789138054; c=relaxed/simple;
-	bh=1fvPf/9Iz4QRNLbohxu361A+gFT8Gf83DPJihifYoP0=;
+	s=arc-20240116; t=1789138067; c=relaxed/simple;
+	bh=SNAK2wBuRIGS5jScHZCQUmHU9dla1Dfud2VOMwnrIMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPfShD/7PAtYpORJVulSpIWZZ0eOAIyi/VKxFQzV5/l92iCzXhlQqHCrjohGdNGNecbTMQLxPK6pMnmCas+K0uEEVPLl9g6GejrpuujP4C1kiETWUrMSkSKlIyiArFvZBbCa4chtBAqE4Z7YeILMH4JLxyEes+sfwMUMHXdtI8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q3EKS+Cn; arc=none smtp.client-ip=209.85.216.45
+	 MIME-Version; b=cVbMxnCEguYOoDWVKr6Qa03K279cjK4Kk5uQZkifYIu7DlQT04wHhypR5/LG+cxFVYE3G6x6fbiTJTx0WaNOLD0yAVaRIoqzWGLuX2TaRFvpNgxrUU0SLs++lr7sE0VlhgMJkZAMaL1DO5N7NCJx+R6NcZLuGqZcrAXtT05BbAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HFtg05s5; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q3EKS+Cn"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3990fe066ebso817633a91.1
-        for <git@vger.kernel.org>; Fri, 11 Sep 2026 07:47:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HFtg05s5"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38ea87caafeso976645a91.3
+        for <git@vger.kernel.org>; Fri, 11 Sep 2026 07:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789138051; x=1789742851; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789138064; x=1789742864; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=KeBx8LqHD1BjzMNzcUV8817n/nkNE42BbeOxlLDGVPY=;
-        b=Q3EKS+CnZ5Y+EPzzFEW6N2T9Kh8yUitnCyED4H0q8iEWvU9GCe9Rn8I9vB8wRRrrrd
-         iiRIkwIT5ppciEtEbzbmxS6ZYFtxJG5i0Yub4sJDXFXthq3YamufckjrOccsFMSYV8L5
-         DikVQKAKyhkve1fVD71Qe0NSqIDpBY49ZH11ApJxOtpJ06OH0qdlI+OY7n0gKNtI2EmN
-         QxRsuq6tNbGZXJButRbPV1T9dJqTRQuqRHUbWVfPYZsHZSQxCuFm6LKuGjQCR6Zq0oXc
-         AVypigpmrymnXD++zoEu6dyR3rukf2X/9DcdF3jvkusezh3cPU4w2TtFAPZpZpYpUKbq
-         k9/Q==
+        bh=xQlpnx4ANvChQoozxWxHe9IFmuUq0cZXEqSANgnVtzM=;
+        b=HFtg05s5i+133ZE69PMoQerxHgVFBZ8bwgQCHgJrSKnx0JoX1t746GkiWa7XP5B9q0
+         NbSNLjZZCx82uIr6biF1QceD9UjHDzh64t5GYXrgYJS87WzqxaRPuRe3vGJo8TM9WJU9
+         RaBixYy38xdtLBN+K+Y7K8KfFf5AZ5a4lqkYaFyZxFXvY6h9e4lktGyfHJRRM3mLvJ87
+         kGM66rNHdekaOvpZVrC8c/dHzux1sdmLRlL7/TQz9mYT7UrHnwCX3+BT0DLf5xYZ8LFS
+         YFYAU9RhdKJZUFBXdn48X/aA0y5r4p3CLRqwCkD9tmQ2gQNvULyNnW+thdMJVONNs2xo
+         KxnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789138051; x=1789742851;
+        d=1e100.net; s=20251104; t=1789138064; x=1789742864;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=KeBx8LqHD1BjzMNzcUV8817n/nkNE42BbeOxlLDGVPY=;
-        b=BtYrxxh4xysZuiD/IW7L6+9AKhg8fG6BWnaQgyS2+8UWobNTaKmw4psz15iOk5Er9Z
-         1N3xC4ZChdemIAVuXlT2fSnwXKV4vin4R1baLnJj0AG76Y9kShzEJPN2yCtd+u4HIcqs
-         elQ87fnaNnyKLDL341AHM5cb6dG+4bITreEUUp880v+QnfhxxvlWiNBtRmSpsTeii0On
-         D3OUveoYcR2GKrkcdiMajN1aUsOpWTkgN2NSpvBDOLBLA2k/Gc/Pu2w3BynL3Sc4BbSZ
-         K2scNiaF8zEbfvsR8qw6pQ+p37uD8Q2JdRC+gGTE449Aau64Ou/S/APlVb9zJU76dipD
-         xCHA==
-X-Gm-Message-State: AFuF++nYl8vG4Fhap6W8oK/w/Y673VROzSKnG1X4cKtYNDtSapd3dWTs
-	T+QGvKTK3m1x/FTZwl7OAIaEzfREEyp6LodK2TtyYWLnuv3pe60S0QE8JE3TNel/
-X-Gm-Gg: AYBFou3m+IXlzgjxrIsVWhhRRKy0Lz4zcPS6RP7hVYSNNwTBbTkgrWZumaILfYV/Bv5
-	NFA06uHWm2nKfR8B3fBgO3X4CtD8l3kZc08jG1tUf9sTkEJ/XoqRz7+5k4/XNVZlYcCGMGitbZR
-	VfdRxHuUhb6p23EpV/7TO9jFHQhgulYKX/yUA2JJEhD3peROl64lZWEOz+zKj40EePMjui0BHTJ
-	yJXaReiSwmCP+djk+u/k7p7lIJcFAA9oJn5dTCTN5BHeOKta8AR93piOezaCFmOXdnXlOjRv+Vw
-	hE28XjV6g1i/0UCqdkBcNIFAGhOu3ra8IH64LwdkCKLKRRdLxjN2E4qaoNtYgByu3E9H/3dGhep
-	MiU9/VzHpPzPlUKTfJwENulkAqNXBbMhk2DXkAnMdX2YSaNKBHbYkOraLBNhUInM0nXamURKq4w
-	jiCOQFZwJmS5UplSPAOmMVCaz2jKXPExYKk0MGyX9Ef2++iB4hFetHyoE5KlhSjfC0cu/Rmn0bY
-	96vXO9LSeDigo/l2a5diKzrfne+bqBQCQoVGQ22rVD0vBZ3YCGsLobrJKoP2P4JnKkPohq4x6AV
-	LqjqQw==
-X-Received: by 2002:a17:90b:440c:b0:39b:57c6:e280 with SMTP id 98e67ed59e1d1-39d9bd65a3bmr7370383a91.7.1789138051413;
-        Fri, 11 Sep 2026 07:47:31 -0700 (PDT)
+        bh=xQlpnx4ANvChQoozxWxHe9IFmuUq0cZXEqSANgnVtzM=;
+        b=sHr6OQW/PDdHNQ/bXQiKevDFmjJME8SqHIYxuvCcV3mJU2Ydgtjayg7/tYwgghoyjx
+         0yVKc+eptuIA4B5byNWZQ1C6mtQ6Z/8CMmOv/2MI0keXaSRtyjUbUCcKLOuSWfOpfWZy
+         Dd9YCzYFcbBCcOWXU9mgFCD5JajvvCWmP2YYwjyeiR0eXz9qow0PYQEmdLJDd2WVzvd/
+         XvtqFCXWWQLaXqMo+Up1cmL8fdpc3EWcUgR4ofv2X3PjH7W5Mu2qgtzrjydu+hfbcFQg
+         DehvhZJskQ4nFUoqqZP55BRWCNVLiHAoVfq/HntqMvtXOhalhZdMO/qXIYCubYiicHFL
+         AUPg==
+X-Gm-Message-State: AFuF++l+5e5sqXNn7kUqHqAhSpz4jDP2Jkth+xH786sUz4gY6ohD9YBH
+	XcXXDG3Qgv/41eC8WSEk30e++hYf6Jm9FwUEUyJujpRunp6CoItu1Phj
+X-Gm-Gg: AYBFou3SbqokH7mJdCk64ZEloRXYtwOVbp6H487r6Lg91KxPz8BL+yMb/6xzE/hY7gx
+	OAJ3AgwumnWL9wYQVHEbmCAghKGAo2YTvZ7dv5n661AsHXWLeS6n1kgmIS4jiYW8ovdiR+PTwvd
+	SSHsEkiQSKued8/ftNuysRvrSqzokqJ6iWayQWqxe8g6773TxUMLCH56q2W3EZWgd0kWYJXYhI2
+	tSEEU9FqrrHMSn467fRiLYOd7mwIzbFCTF1LPMlA6lCbMXXWFOWW54rTIrhcp07NSWaM9PGyy4s
+	ZngMFBEaXn+hMw/Icz9E6Nps32+86Yejs/1cdFy4j2cpbPJ40Xr133VT8MvWhA3hmEU45+FujQW
+	yuc6xA0xwSNsBuNUmclDVCuwgn7frcliKfe15B3vQEZgqtD1msN3zwFTlPRtyDfMC1KTzkCuNXK
+	B2qZ+IJtJdl/5r4M3AtuNs5KGILDhxoguXr0JLWoDHmAGnJQtxSoSGVWiNjgT0I0cPk0NdQ8e75
+	x9cvVnCno0jr4l6lKlSDgq4HaUFoW+vmjMdI6+snv4zcahBblSjBS3rJHdgqfR6LfPlo7pXLQjh
+	QM5rmni58c9QP0FD
+X-Received: by 2002:a17:90b:440c:b0:39b:57c6:e280 with SMTP id 98e67ed59e1d1-39d9bd65a3bmr7371749a91.7.1789138064146;
+        Fri, 11 Sep 2026 07:47:44 -0700 (PDT)
 Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14365b759d0sm7843335c88.7.2026.09.11.07.47.28
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14365b759d0sm7843335c88.7.2026.09.11.07.47.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2026 07:47:31 -0700 (PDT)
+        Fri, 11 Sep 2026 07:47:43 -0700 (PDT)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 To: jayatheerthkulkarni2005@gmail.com
 Cc: git@vger.kernel.org,
 	jltobler@gmail.com,
 	lucasseikioshiro@gmail.com,
 	gitster@pobox.com
-Subject: [GSoC Patch v6 4/7] repo: add path.index with absolute and relative suffixes
-Date: Fri, 11 Sep 2026 20:15:16 +0530
-Message-ID: <20260911144519.1011780-5-jayatheerthkulkarni2005@gmail.com>
+Subject: [GSoC Patch v6 5/7] repo: add path.grafts with absolute and relative suffixes
+Date: Fri, 11 Sep 2026 20:15:17 +0530
+Message-ID: <20260911144519.1011780-6-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.55.GIT
 In-Reply-To: <20260911144519.1011780-1-jayatheerthkulkarni2005@gmail.com>
 References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
@@ -80,13 +80,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The repository index is a fundamental component used by Git and related
-tooling to track the working tree state. Scripts that interact with the
-index currently retrieve its location by invoking
-`git rev-parse --git-path index`.
+The repository grafts file specifies alternate parent relationships for
+commits and may be used by repository tooling that needs to inspect or
+manage grafts. Scripts currently retrieve its location by invoking
+`git rev-parse --git-path info/grafts`.
 
-Introduce `path.index.absolute` and `path.index.relative` keys to
-`git repo info`. This exposes the index file location as a scriptable
+Introduce `path.grafts.absolute` and `path.grafts.relative` keys to
+`git repo info`. This exposes the grafts file location as a scriptable
 config-like key using standard format rules, allowing scripts to
 retrieve it through the same interface as other repository path
 information.
@@ -95,110 +95,92 @@ Mentored-by: Justin Tobler <jltobler@gmail.com>
 Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
- Documentation/git-repo.adoc | 12 ++++++++++++
+ Documentation/git-repo.adoc | 11 +++++++++++
  builtin/repo.c              | 24 ++++++++++++++++++++++++
- t/t1900-repo-info.sh        | 23 +++++++++++++++++++++++
- 3 files changed, 59 insertions(+)
+ t/t1900-repo-info.sh        |  6 ++++++
+ 3 files changed, 41 insertions(+)
 
 diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 20836cf8f6..08ef47750c 100644
+index 08ef47750c..868ab0ed9f 100644
 --- a/Documentation/git-repo.adoc
 +++ b/Documentation/git-repo.adoc
-@@ -128,6 +128,18 @@ values that they return:
- 	The path to the repository's hooks directory relative to the current
- 	working directory. Respects the `core.hooksPath` configuration.
+@@ -119,6 +119,17 @@ values that they return:
+ `path.gitdir.relative`::
+ 	The path to the Git repository directory relative to the current working directory.
  
-+`path.index.absolute`::
-+	The canonical absolute path to the repository's current index file.
-+	Respects the `GIT_INDEX_FILE` environment override. Returns the
-+	configured index path even if the repository is bare or the file does
-+	not exist.
++`path.grafts.absolute`::
++	The canonical absolute path to the repository's graft file.
++	Respects the `GIT_GRAFT_FILE` environment override. The path is
++	returned regardless of whether the file currently exists on disk.
 +
-+`path.index.relative`::
-+	The path to the repository's current index file relative to the current
-+	working directory. Respects the `GIT_INDEX_FILE` environment override.
-+	Returns the configured index path even if the repository is bare or the
-+	file does not exist.
++`path.grafts.relative`::
++	The path to the repository's graft file relative to the current
++	working directory. Respects the `GIT_GRAFT_FILE` environment
++	override. The path is returned regardless of whether the file
++	currently exists on disk.
 +
- `path.superproject-root.absolute`::
- 	The canonical absolute path to the working tree root of the superproject
- 	if the current repository is an initialized submodule. Outputs an empty
+ `path.hooks.absolute`::
+ 	The canonical absolute path to the repository's hooks directory.
+ 	Respects the `core.hooksPath` configuration. If `core.hooksPath` is
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 01666dc17c..9f1858a127 100644
+index 9f1858a127..33f97b03af 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -142,6 +142,28 @@ static int get_path_hooks_relative(struct repository *repo, struct strbuf *buf)
+@@ -122,6 +122,28 @@ static int get_path_gitdir_relative(struct repository *repo, struct strbuf *buf)
  	return 0;
  }
  
-+static int get_path_index_absolute(struct repository *repo, struct strbuf *buf)
++static int get_path_grafts_absolute(struct repository *repo, struct strbuf *buf)
 +{
-+	const char *index_file = repo_get_index_file(repo);
++	const char *graft_file = repo_get_graft_file(repo);
 +
-+	if (!index_file)
-+		return error(_("unable to get index file"));
++	if (!graft_file)
++		return error(_("unable to get graft file"));
 +
-+	format_path(buf, index_file, "", PATH_FORMAT_CANONICAL);
++	format_path(buf, graft_file, "", PATH_FORMAT_CANONICAL);
 +	return 0;
 +}
 +
-+static int get_path_index_relative(struct repository *repo, struct strbuf *buf)
++static int get_path_grafts_relative(struct repository *repo, struct strbuf *buf)
 +{
-+	const char *index_file = repo_get_index_file(repo);
++	const char *graft_file = repo_get_graft_file(repo);
 +
-+	if (!index_file)
-+		return error(_("unable to get index file"));
++	if (!graft_file)
++		return error(_("unable to get graft file"));
 +
-+	format_path(buf, index_file, repo->prefix, PATH_FORMAT_RELATIVE);
++	format_path(buf, graft_file, repo->prefix, PATH_FORMAT_RELATIVE);
 +	return 0;
 +}
 +
- static int get_path_superproject_absolute(struct repository *repo, struct strbuf *buf)
+ static int get_path_hooks_absolute(struct repository *repo, struct strbuf *buf)
  {
- 	struct strbuf superproject = STRBUF_INIT;
-@@ -210,6 +232,8 @@ static const struct repo_info_field repo_info_field[] = {
+ 	struct strbuf hooks_path = STRBUF_INIT;
+@@ -230,6 +252,8 @@ static const struct repo_info_field repo_info_field[] = {
+ 	{ "path.commondir.relative", get_path_commondir_relative },
+ 	{ "path.gitdir.absolute", get_path_gitdir_absolute },
  	{ "path.gitdir.relative", get_path_gitdir_relative },
++	{ "path.grafts.absolute", get_path_grafts_absolute },
++	{ "path.grafts.relative", get_path_grafts_relative },
  	{ "path.hooks.absolute", get_path_hooks_absolute },
  	{ "path.hooks.relative", get_path_hooks_relative },
-+	{ "path.index.absolute", get_path_index_absolute },
-+	{ "path.index.relative", get_path_index_relative },
- 	{ "path.superproject-root.absolute", get_path_superproject_absolute },
- 	{ "path.superproject-root.relative", get_path_superproject_relative },
- 	{ "path.toplevel.absolute", get_path_toplevel_absolute },
+ 	{ "path.index.absolute", get_path_index_absolute },
 diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index 2e7b3867bd..80e025e040 100755
+index 80e025e040..7b0bb0ed42 100755
 --- a/t/t1900-repo-info.sh
 +++ b/t/t1900-repo-info.sh
-@@ -237,6 +237,29 @@ then
- 		'git config core.hooksPath /dev/null'
- fi
+@@ -221,6 +221,12 @@ test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
+ 	'.git' \
+ 	'GIT_DIR="../.git" && export GIT_DIR'
  
-+test_repo_info_path 'index standard' 'index' '.git/index'
++test_repo_info_path 'grafts standard' 'grafts' '.git/info/grafts'
 +
-+test_repo_info_path 'index with GIT_INDEX_FILE override' 'index' \
-+	'custom-index-file' \
-+	'GIT_INDEX_FILE="$ROOT/custom-index-file" && export GIT_INDEX_FILE'
++test_repo_info_path 'grafts with GIT_GRAFT_FILE override' 'grafts' \
++	'custom-graft-file' \
++	'GIT_GRAFT_FILE="$ROOT/custom-graft-file" && export GIT_GRAFT_FILE'
 +
-+test_expect_success 'path.index in a bare repository returns default index location' '
-+	test_when_finished "rm -rf bare.git" &&
-+	git init --bare bare.git &&
-+	(
-+		cd bare.git &&
-+		ROOT="$(test-tool path-utils real_path .)" &&
-+
-+		echo "path.index.absolute=$ROOT/index" >expect.abs &&
-+		git repo info path.index.absolute >actual.abs &&
-+		test_cmp expect.abs actual.abs &&
-+
-+		echo "path.index.relative=index" >expect.rel &&
-+		git repo info path.index.relative >actual.rel &&
-+		test_cmp expect.rel actual.rel
-+	)
-+'
-+
- test_expect_success 'path.superproject-root absolute and relative' '
- 	test_when_finished "rm -rf sub super" &&
- 	git init sub &&
+ test_repo_info_path 'hooks standard' 'hooks' '.git/hooks'
+ 
+ test_repo_info_path 'hooks with core.hooksPath override' 'hooks' \
 -- 
 2.55.GIT
 
