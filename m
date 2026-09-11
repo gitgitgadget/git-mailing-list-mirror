@@ -1,117 +1,283 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52DC49B202
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 16:04:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6DAC310645
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 16:41:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789142693; cv=none; b=jfDfDYu8iy7heBHKZ/QQVZxJPudUIelCP7TZB2Q9WwiJrhePFRhAlnmGOH0uvwF6MHiC5fHK4leJO89N8G1MeVFgR0FmNDrZnUoehyUIU5KeI5ogAV8UqmVspfG0yMr45iiZAH1rDgm4aB2Eud9VjOY/gtXmJIrZQQvBF1fzTts=
+	t=1789144895; cv=none; b=NBf2cgNA6C+oG37jwgbSVxt1GeuSXfLWRdwRgZn2VlDrw0bo58ll6tAmlJtouK+0QIch5Zd/I9V6qKmFZKtMtt7wrliKrcgIupm8ADvUJ779LAwM2FwI0bjCq25eNIQiezwah99EROvcOw0vo3H5793B37Wjo7JkV1ul4jXV4f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789142693; c=relaxed/simple;
-	bh=J/1sGP+mpdyLf4YyezbY1ioEhDtf1JHZZQMPQV1AXpg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=crMFYJER+w2kCjHkOVnKr6ELuc2UI3/eXQygtIF67uX/qubts40277Fop4aZgWF5wS2tcemYp7g5gTqcPnj5ZH0KXPAILGSiq1ZOTttjkjfmzNHBNHYjyLjh1dAg1oJqnSTsd03W/6ZMvRPrnQ71pDMN33/jTZgCgsguc8Prin4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RXrgiYOd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x0UGQNFh; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789144895; c=relaxed/simple;
+	bh=FY6iJpEi6ARWNqhg6LJIBEmmAK8hRMXcsnRzGOGTZug=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Pc/pBhb5SFAcX5MZHXuGkL2T2De/ZDWHK6zlpOewcKPVvUXLSwD/MxFRhXOXJ1fGPHvKW7Z806qc7vsX8/vd9eXPqTG6meWqWJnxtx3NYoWBwtLg+41t/icJTrbVjW4yh789CWQwHLMbQOTLq776HvJTg09HkPYXDsMNpyODK/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q/DGEpgG; arc=none smtp.client-ip=209.85.222.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RXrgiYOd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x0UGQNFh"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D390D1400165;
-	Fri, 11 Sep 2026 12:04:49 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 11 Sep 2026 12:04:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789142689; x=1789229089; bh=lYhOQCPkCw
-	ccfqUYAoV1pGEbFR9102q1YyOf3U5NhQY=; b=RXrgiYOdjLVRiq6vlIxYH8B1A4
-	5dN2VCZD2FGNjjJQApAoXhH6JAJx5/W9UvW4HW88WXBqFnYOk3nmLsdvZOpUAzbF
-	9dykvxNHIGZ7xtMux/CqzFOXmEJ4z+6qwOjeMhKNdpWNFIEORnubGf4lJEmiH9E0
-	U+tJnj0XW7ak3IhhfmWo+ne9JwU7d4GvKyMpHsaXhMZlQNEk+EQge/mRt1rj/ags
-	WrqVLWtVIgvnGUr2UG9s+PmY9UMSC9y3w1eSy2JXLp/Rs8P06aEy0MKrHvGVNJ07
-	66e0zbyIvXEWvQ+W0iffarbh1JSqO57BIMJe9y0dtTrsUZtMjyfwjBVcorLQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789142689; x=1789229089; bh=lYhOQCPkCwccfqUYAoV1pGEbFR9102q1YyO
-	f3U5NhQY=; b=x0UGQNFhlRPqiV0PPGaFhK/zPVfcGYgL2jVoN4i2Rjpj6JfObZj
-	cB0B7UU2zPQrp4ePqvFoHkGJJJupu8Pl62HQJ0VgkqSq4kKet/xazYL9KI7ugGQM
-	K3rDxSPLHrN95aDYx950LITCZqpBEUB0B4IpUBdB/etbrVpc1q9WPM0MpQyMaAnI
-	YKlm7epMh9obrqavghRioP4U5C59q4Yv+YyVI2FjD+yOQSB2NPryHMGKgHWl13ot
-	X8FedRqaL7CApczOIsujPAUgidaxmDEoefqRvxe4J4WclsUzqcwYy5l3ZYELtasW
-	PZDSreh5LkEe7RuV7xEQawhsps76/uFxo4A==
-X-ME-Sender: <xms:oSakarnVlD_QYlrCbYMd8jHJAo17ObB_X9c-pR841vp2kRA0xkqtqA>
-    <xme:oSakamQtwfDtDmbZiWtFeLm-x7JMRbgPHOup3n6c0K2EGftsyLsbMW1r-wVL5fr9m
-    7Ln3HE_7tbWvAcurlIONA4ClV1tMa81TBgQysGq3ervlTy40ct0DE8>
-X-ME-Received: <xmr:oSakavAzttWNetXxjc-pemtTtDB9K2cM47gK3vmUxU6Ziy8dV0yXNq61zN1Y3L9Vp2Zjxq73cLM5r4e1WMg453s3DAZcboGNjd5X>
-X-ME-Proxy-Cause: dmFkZTGAeERKvnrH06HH06TqRfL5vY5RxPY1rSeJKkDP50OSG+zV0s5NoFIWuoIaxrhXPy
-    xLuyoFN47VyaHKR7VrGnoKbDo8vfaX2erIZPH0zhIvDxxjrMs6hF6lNkzh2s3nL3V8TwwW
-    twerLT7DDv3kFLuGfmlt64PCXw84aEmXcwwrhC5WVvtKWwOeDNICLtPUKCXcdVpDgK5NvG
-    jkFWaMOr/hOWHlxzNsE4hMF/mzH1daMF/5zMM3Pup6ucpSzL9et9VofE5D9jNLqNLthZab
-    aQAyipfsaKsfJe6NGsqwTEVbtKiPfBc5oyl4LmRS2rSB6pokdlD5k2F+8s15EJIsnw6RLm
-    VwskE5qLnw3wg+s65fu8WwEgoy5qIYDDvK1Ger7iFOy7xWzGLBy+qI8fc4q7x7zB3ky6j8
-    1v/cLg4m5l9Ko5sQWxx3G+QKupmhjHIhRdBY/szKjpICkl7j1N8xFBwXgF1xT2+Tv/Id5e
-    yScnDAkrWu/cy8+5IvVrJlyg/0IR8+X2AaVs1RWPbmRP+C76ArH5uRGOPpr7TegyAhPGLw
-    8HleT3J2HhrvRdGGeMxl/KyyBkQa1iyNXiYUoEsaQo2j8GIRKre5NuidghWCHRlxWTAdmA
-    L8v9BNbagUEFIMmYo9s9wBI9CVn3FY3fx1kkWSh0bGNsvY+3/R6e/LqhBbWA
-X-ME-Proxy: <xmx:oSakatRASJs7eg5eu6crASR9RVkWmnDOpLLgbuzYCQ67TIfROVAyyQ>
-    <xmx:oSakatqN0w0VGWuFWbPXd4VyBeWDg1UtzqwR97aAcvZdgu2wWzDmtw>
-    <xmx:oSakavzCDtDDmUHQX9Q-FcSsBLUc8Alv69VQH-Ta-uttN1n5ac7YWg>
-    <xmx:oSakaiJ3mo8JdKcGI-kZv9xnUgK2FPB6C6BrCacaj1GNfxHb5QKr_A>
-    <xmx:oSakav8jDC1Jh1u01AJcPJkSsybO_tupaDjM14bTHPZ5CUCie0nretTs>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Sep 2026 12:04:49 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: Re: [GIT PULL] gitk: discourage AI, color preference dialog
-In-Reply-To: <e391e55b-4a23-4b84-8a95-1136449cd171@kdbg.org> (Johannes Sixt's
-	message of "Fri, 11 Sep 2026 09:17:06 +0200")
-References: <e391e55b-4a23-4b84-8a95-1136449cd171@kdbg.org>
-Date: Fri, 11 Sep 2026 09:04:48 -0700
-Message-ID: <xmqq8q57dba7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q/DGEpgG"
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-97cad2f51edso509624241.1
+        for <git@vger.kernel.org>; Fri, 11 Sep 2026 09:41:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789144879; x=1789749679; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=qECiTB0ApnN07uEwS2KVV5VMEsbKDR24gY1TwYNBu1g=;
+        b=Q/DGEpgGmtWkDJSwygefUkg5Vf9jxM/8ERunVJdlhynSNFUZ17dQq24uLZRdixlALV
+         CKyBPYmBmiw74oIjokWNoOH9s5SW3jv9sYRS4BCgrGvlQT3CJgbAGw/kkI4d32af3zdg
+         RqhKZudxn/xJ+K2syUBU5siyJCCfoE/EYE6rqzWaDs9g1M1yXLXJa96ROpOUFhsNtgn8
+         vQPPnUi0huQ+XBEaIpUo/vT55h1rh3KUVrlI7OqQ7NUnHFWCXLQCCC/KP1Q4XCLdpgOS
+         lPkVyb5/SJPmxNlRacQhxCWgdznUwqb4BGJKgd3qQVIeG5dqRT2oeSx1AcvqN3M41O3R
+         Aixw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789144879; x=1789749679;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=qECiTB0ApnN07uEwS2KVV5VMEsbKDR24gY1TwYNBu1g=;
+        b=efoLPS9uyLsE/uLoOhEC7ctO1hFu7rWgmyyImoZPQShCzsE56Xqxz0dA98nvbBbnPh
+         hnhrCu4AUwHAHzpzXAADxiaOjgJE/VD4VUpnrz6LPbY3tFPPFLzNfK7vaVi51NG48smu
+         PnxQDEt3C1YUKQrRkGA0sTNUZuw6kOJGjcVV2HvfreHqZoJt4W0E7nmMLSqOKyEdavOQ
+         ojB+DRFTmRz6I7hWF6LVWADb5rzfAuMkh+Zs2R+kvlvEOVY8dYpjG1Zjz32YB4552lMu
+         YdXsDRb6lI4rXhVrkUPaB1MjYd7p4wjwy7470PhndCdx4oVjRJppujtnfWZaYQ84o2kA
+         O9lw==
+X-Gm-Message-State: AFuF++mpQEwm/5meqNg5H07jzLRM84Th+2+xy5HO7Hq/bXycU6L3GPlN
+	993RV/+WDx4NqDHw+3BjzNdgZScBohwibM9emCHWz7DyGil92gXlEv0NV0zdKQ==
+X-Gm-Gg: AYBFou1qRQg0UCTezn/pzQJxU4bGn5YGAmYkViAYdFjcbVtdWLx1LCGntKInWQrGR4l
+	g1jTBxr6b2UKbuKfaRqhiZ68g9pfGcHzZA/wlenwFlnCRcS9Gw6hfhzwEn5qImcTD6HoNl4pAnq
+	fzE9TyV4PNnX/U26iHDdldgk0pTNrKPQY9xFDRnqSrq09p777lGUK9oIJ37GYlFd9H4VOmu+FoE
+	0HkCnj051FUSBKCtBWlPvfyjUuLHXm0WJBrl+HFeiFjOvLxT0oVAGwG4ScAP2XtEpHHodAFYGwl
+	ZrIgHRZ1d46+Mw1AB8rYev4sSgcL8k81s1uBJ7BjtnuKhafVArEhRYVLUUX7QaDaup69TPP1Ttx
+	EZlkuywzpSRX5H+gTpRhLJ9pl++iXSSMU3YydZSy5YW/HXgs7UZGDydS9a73Vw+j8jwbGySDYPr
+	TikY5Az2iDywyiD40eW2/COH2S7EQK2obe0J7yTaf18ALqhVKKun0HmFaXlzTYB1ODA//ny7ign
+	unx
+X-Received: by 2002:a05:6122:88c:b0:5c8:fa1e:9f5b with SMTP id 71dfb90a1353d-5c8fa1ebc00mr1902607e0c.2.1789144878607;
+        Fri, 11 Sep 2026 09:41:18 -0700 (PDT)
+Received: from [127.0.0.1] ([172.174.167.26])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9120f478bf1sm24674776d6.25.2026.09.11.09.41.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Sep 2026 09:41:18 -0700 (PDT)
+Message-Id: <pull.2401.git.git.1789144877632.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 11 Sep 2026 16:41:17 +0000
+Subject: [PATCH] range-diff: add --matched-only to skip one-sided commits
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-> The following changes since commit f1de86371cb85dd09d55070d139e5fcdc595f026:
->
->   Merge branch 'spanish_pr_bis' of github.com:basuradeluis/gitkbis (2026-07-16 10:53:01 +0200)
->
-> are available in the Git repository at:
->
->   https://github.com/j6t/gitk.git master
->
-> for you to fetch changes up to a6457acb0f56cc2de76bcc12a5d18217973fbba1:
->
->   Merge branch 'js/prefs-color-buttons' (2026-09-04 17:08:34 +0200)
+Reviewing a range-diff often means scrolling past commits that were
+simply added or dropped, when only the ones that correspond between
+the two ranges are of interest.
 
-Thanks, pulled.
+--left-only and --right-only already each suppress one of those
+one-sided groups, so give --matched-only its own name for applying
+both suppressions at once instead of documenting the combination of
+two options whose names read as contradictory together. Internally it
+just sets both flags, reusing the existing suppression logic in
+show_range_diff().
 
->
-> ----------------------------------------------------------------
-> Johannes Sixt (8):
->       gitk: set intitial colors of swatches using the available helper
->       gitk: condense repetitive code around color buttons into foreach loops
->       gitk: show color preferences on the button instead of the label
->       gitk: use more natural language for labels of color preferences
->       gitk: avoid constructing dialog titles from text pieces
->       gitk: move UI for generic colors above diff colors
->       gitk: discourage AI contributions
->       Merge branch 'js/prefs-color-buttons'
->
->  README.md |   7 ++--
->  gitk      | 123 ++++++++++++++++++++++++++++++--------------------------------
->  2 files changed, 63 insertions(+), 67 deletions(-)
+Extend the existing '--left-only'/'--right-only' conflict check in
+show_range_diff() to also reject any combination with --matched-only,
+since all three narrow the output in ways that cannot be combined.
+
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+    range-diff: add --matched-only to skip one-sided commits
+    
+    Add git range-diff --matched-only to only show commits that correspond
+    between the two ranges, skipping ones that were only added or only
+    removed.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2401%2FHaraldNordgren%2Frange-diff-matched-only-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2401/HaraldNordgren/range-diff-matched-only-v1
+Pull-Request: https://github.com/git/git/pull/2401
+
+ Documentation/git-range-diff.adoc | 10 ++++-
+ builtin/range-diff.c              |  5 ++-
+ range-diff.c                      | 11 +++++-
+ range-diff.h                      |  2 +-
+ t/t3206-range-diff.sh             | 63 +++++++++++++++++++++++++++++++
+ 5 files changed, 86 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-range-diff.adoc b/Documentation/git-range-diff.adoc
+index 5cc5e2ed56..58e59e8e3b 100644
+--- a/Documentation/git-range-diff.adoc
++++ b/Documentation/git-range-diff.adoc
+@@ -10,7 +10,8 @@ SYNOPSIS
+ [synopsis]
+ git range-diff [--color=[<when>]] [--no-color] [<diff-options>]
+ 	[--no-dual-color] [--creation-factor=<factor>]
+-	[--left-only | --right-only] [--diff-merges=<format>]
++	[--left-only | --right-only | --matched-only]
++	[--diff-merges=<format>]
+ 	[--remerge-diff] [--no-notes | --notes[=<ref>]]
+ 	( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
+ 	[[--] <path>...]
+@@ -82,6 +83,13 @@ to revert to color all lines according to the outer diff markers
+ 	Suppress commits that are missing from the second specified range
+ 	(or the "right range" when using the `<rev1>...<rev2>` form).
+ 
++`--matched-only`::
++	Only emit commits that have a corresponding commit in the other
++	range, suppressing any commit that exists on only one side. This is
++	the same as using `--left-only` and `--right-only` together. Useful
++	to skip added or removed commits when reviewing how the commits
++	that survived a rebase changed.
++
+ `--diff-merges=<format>`::
+ 	Instead of ignoring merge commits, generate diffs for them using the
+ 	corresponding `--diff-merges=<format>` option of linkgit:git-log[1],
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index e54c0f7fe1..8059f92eaa 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -46,7 +46,7 @@ int cmd_range_diff(int argc,
+ 		.diffopt = &diffopt,
+ 		.log_arg = &log_arg
+ 	};
+-	int simple_color = -1, left_only = 0, right_only = 0;
++	int simple_color = -1, left_only = 0, right_only = 0, matched_only = 0;
+ 	struct option range_diff_options[] = {
+ 		OPT_INTEGER(0, "creation-factor",
+ 			    &range_diff_opts.creation_factor,
+@@ -68,6 +68,8 @@ int cmd_range_diff(int argc,
+ 			 N_("only emit output related to the first range")),
+ 		OPT_BOOL(0, "right-only", &right_only,
+ 			 N_("only emit output related to the second range")),
++		OPT_BOOL(0, "matched-only", &matched_only,
++			 N_("only emit commits that have a corresponding commit in the other range")),
+ 		OPT_END()
+ 	};
+ 	struct option *options;
+@@ -186,6 +188,7 @@ int cmd_range_diff(int argc,
+ 	range_diff_opts.dual_color = simple_color < 1;
+ 	range_diff_opts.left_only = left_only;
+ 	range_diff_opts.right_only = right_only;
++	range_diff_opts.matched_only = matched_only;
+ 	res = show_range_diff(range1.buf, range2.buf, &range_diff_opts);
+ 
+ 	strvec_clear(&log_arg);
+diff --git a/range-diff.c b/range-diff.c
+index 8e2dd2eb19..fa895f5760 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -591,8 +591,15 @@ int show_range_diff(const char *range1, const char *range2,
+ 	struct string_list branch2 = STRING_LIST_INIT_DUP;
+ 	unsigned int include_merges = range_diff_opts->include_merges;
+ 
+-	if (range_diff_opts->left_only && range_diff_opts->right_only)
+-		res = error(_("options '%s' and '%s' cannot be used together"), "--left-only", "--right-only");
++	if (range_diff_opts->left_only + range_diff_opts->right_only +
++	    range_diff_opts->matched_only > 1)
++		res = error(_("options '%s', '%s', or '%s' cannot be used together"),
++			    "--left-only", "--right-only", "--matched-only");
++
++	if (range_diff_opts->matched_only) {
++		range_diff_opts->left_only = 1;
++		range_diff_opts->right_only = 1;
++	}
+ 
+ 	if (!res && read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
+ 		res = error(_("could not parse log for '%s'"), range1);
+diff --git a/range-diff.h b/range-diff.h
+index 9b70a80009..effd10b9b8 100644
+--- a/range-diff.h
++++ b/range-diff.h
+@@ -19,7 +19,7 @@
+ struct range_diff_options {
+ 	int creation_factor;
+ 	unsigned dual_color:1;
+-	unsigned left_only:1, right_only:1;
++	unsigned left_only:1, right_only:1, matched_only:1;
+ 	unsigned include_merges:1;
+ 	size_t max_memory;
+ 	const struct diff_options *diffopt; /* may be NULL */
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index ef92704de3..f85fd0c4ad 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -860,6 +860,69 @@ test_expect_success '--left-only/--right-only' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--left-only, --right-only and --matched-only are incompatible' '
++	test_must_fail git range-diff --left-only --right-only ...common 2>err &&
++	test_grep "cannot be used together" err &&
++
++	test_must_fail git range-diff --left-only --matched-only ...common 2>err &&
++	test_grep "cannot be used together" err &&
++
++	test_must_fail git range-diff --right-only --matched-only ...common 2>err &&
++	test_grep "cannot be used together" err &&
++
++	test_must_fail git range-diff --left-only --right-only --matched-only \
++		...common 2>err &&
++	test_grep "cannot be used together" err
++'
++
++test_expect_success '--left-only, --right-only and --matched-only each suppress one-sided commits' '
++	test_create_repo matched-only &&
++	(
++		cd matched-only &&
++		git switch --orphan combined-old &&
++		test_commit c-first &&
++		test_commit c-old-only &&
++		test_commit c-common &&
++		git switch -C combined-new c-first &&
++		test_commit c-new-only &&
++		git cherry-pick c-common &&
++
++		old_only_oid=$(git rev-parse --short=7 c-old-only) &&
++		new_only_oid=$(git rev-parse --short=7 c-new-only) &&
++		common_old_oid=$(git rev-parse --short=7 c-common) &&
++		common_new_oid=$(git rev-parse --short=7 HEAD) &&
++
++		git range-diff -s --abbrev=7 combined-old...combined-new >actual &&
++		cat >expect <<-EOF &&
++		1:  $old_only_oid < -:  ------- c-old-only
++		-:  ------- > 1:  $new_only_oid c-new-only
++		2:  $common_old_oid = 2:  $common_new_oid c-common
++		EOF
++		test_cmp expect actual &&
++
++		git range-diff -s --abbrev=7 --left-only combined-old...combined-new \
++			>actual &&
++		cat >expect <<-EOF &&
++		1:  $old_only_oid < -:  ------- c-old-only
++		2:  $common_old_oid = 2:  $common_new_oid c-common
++		EOF
++		test_cmp expect actual &&
++
++		git range-diff -s --abbrev=7 --right-only combined-old...combined-new \
++			>actual &&
++		cat >expect <<-EOF &&
++		-:  ------- > 1:  $new_only_oid c-new-only
++		2:  $common_old_oid = 2:  $common_new_oid c-common
++		EOF
++		test_cmp expect actual &&
++
++		git range-diff -s --abbrev=7 --matched-only combined-old...combined-new \
++			>actual &&
++		echo "2:  $common_old_oid = 2:  $common_new_oid c-common" >expect &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'ranges with pathspecs' '
+ 	git range-diff topic...mode-only-change -- other-file >actual &&
+ 	test_line_count = 2 actual &&
+
+base-commit: fa7f9290efe2bd22dd736689597b474b93798e11
+-- 
+gitgitgadget
