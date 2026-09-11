@@ -1,84 +1,84 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D33047126E
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 12:23:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE61846EC7C
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 12:23:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789129422; cv=none; b=i6XOZqibvKqnh8z6PE8ThXXe2VcqCm2gVfEpTPO3PTkHCdMFcJG19TzuY7edkU4r9FPJ8pUb2mt4Rvd1s/wwwJIb1AWW9yQsFSjFxzLHr6JeQ7F4T7VA2OBb9hOJpvizlWM0XH4TIREtqkEOrAh+GokWYyyISVLcpTQeoq06ZVs=
+	t=1789129436; cv=none; b=bxX1mko5EtotE/liKev433OqdXhTLoWLdqJpw53aJCcvaLRybNBiiteLJC4gWIAvSyMnc1Wgd0oUqvhHXmFDulcpaN1VVYRYC762D2m8MTgfX+FWAKExLtFGvTy8nUXdE/bLuaUGvXR5rRcmxuzZ4GjhArBDUL+eg5MlzlHTigo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789129422; c=relaxed/simple;
-	bh=l/8DqVcqdBA4t0CfAQLG/QQ0XFTz0dTZMlpHEGAgbIU=;
+	s=arc-20240116; t=1789129436; c=relaxed/simple;
+	bh=QorjnKVoo0WfWSuta9UaQeVxmwUOJfSw17w+4cIwP3c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lctkDbFM9vK+ZPy+i7jK8lpDaZGwLAN8w3hQ14pOUzvG5APnMrwETwwmnPyhBoI3lo3f2DnVl7ZnbvjCmHyL4uk6TZNfoXpxkeicPYtCTV3Wc7PsWju2v/n+MOeYLopnfOVCL4eCpME1eaaDstR/afaaazA8rugOmRcLkTQv0zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U1Z19Zl2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=akMuEJjK; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=LLeyz7HMLmlWCgqbhAZJ0bd4l6Y0A+zdEx9MrHNRPjlBDbK19EmVlYMsnZM53WLAZ9ueG1Mm3Tj0KCqt/JFSfIr5kyAE1BB6uIJ9uJPifcDGpHwcGBYAgsdmc1IZlKrukCKrnj/XECUehVx79mB21GDbrM2idH5aHt72kEUjQUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M9eHodU1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L2mT7xQT; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U1Z19Zl2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="akMuEJjK"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M9eHodU1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L2mT7xQT"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6289BEC0282;
-	Fri, 11 Sep 2026 08:23:36 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 11 Sep 2026 08:23:36 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B0D011400138;
+	Fri, 11 Sep 2026 08:23:50 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Fri, 11 Sep 2026 08:23:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1789129416; x=1789215816; bh=xZbQHPEsvo
-	HXacFgsdUsbdW/kZsB2r51kMDxHpykPUo=; b=U1Z19Zl20XeO5+nbzgNiojLODV
-	YVeXnfTRhNBYt3lzDV9+M3JntHizQ4sNEsgJLKIbXoTGi1KcZLKqXTzASRhdLo5+
-	xgHLF33P2OmIMlYfJFbJrt7A+aVdbS4/th/DzCAO0mfs7hg3jxbV9B1VAK2fu66j
-	GQkFtOe0X/vcIxXlDvKn3VZ9fMm0pw+hJyFurI67rv1t6wxtyp+RA4q2ylkuKUg4
-	BuyFbetup6Jy389+203mwhOMlaiSZtGKL5x831suY5Bu/OTiEqcUB+Q0TxPLy5XW
-	BYiljOY+eMTD2DVmWUrE9LskOAukBbzCAXcaSO2GbaBMWrYgalTqi8QTt9AA==
+	:subject:to:to; s=fm1; t=1789129430; x=1789215830; bh=RgGzm6X4CU
+	zXCWXSRQ5t0D+DjsqTZ7BCgqD8LODpsFg=; b=M9eHodU1+ArnZf4n7I6O17efgN
+	4az+jGkHUpwhuK7/um9JaTpdohaUM0BrfzuU8ph1MeTfkf9cyew8ELr3R7L2z8lN
+	XydxfqiuWSu7PSY9M7GFqYP/zhVZpBeDnXLcFkRABbpALlt5zwPCPBGoVWE9nlQB
+	PDXi2/sdxkcj7p0CUShlqPcUXqukUlBQKfOK8pGe441mw6KAs+juK2pe+80BX2GD
+	I1hfXeEM6y7yhuzpD8Hz+HTyyU0D3FcmhcsR2gxr1cDaLcwHbVZY7MFLCBSNeRfW
+	sEdkylfN4ZZKg1WijlRVZo4eN3xk4ZW9+KKbyw0GfeTWP3G0sIvpIYbHDFSg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789129416; x=1789215816; bh=xZbQHPEsvoHXacFgsdUsbdW/kZsB2r51kMD
-	xHpykPUo=; b=akMuEJjKwp6BvAz2p2zN6SJ0cqFrxDZdy+c0/RQ8oQ3t+3XUGZt
-	4vyYWZbs8CweWtPl82J1s+W8vAaSqesmlUxmqNmadOqG8HUPwLN/PbwXup4Gnz3J
-	fb/V5ypMKdlYsGJQDIG4a6TtgQyHXTGC0P4mgdEZnArh65cUhdQWJ4O3w7M2EHed
-	HwNFIhb7bE0z6ehUXj8X064RWKh63n/9Ij2mJf2kIozoG2Hq+QSgG+qok1BPAP7o
-	rSidWy3qI/nqQ41+s0w4yQ8Q47PhaQSu0H/oqJ5vNGxU0p2aMH2/Yb7wow7lcWTq
-	MuXy5T/+s5QJh00y/ueQJRcXpNsiO/IUaFw==
-X-ME-Sender: <xms:yPKjamWk3gkHE-ba8ztUBN45QecP9YxlmXRLdS-9eSlul0q1xgdjXg>
-    <xme:yPKjal3FGJMjUsKF9LCW-7XYUJoa2w8VbgyzgN2dEvktegX6UY5gGidH9zvlA1TPn
-    OhTgVrrsz6dqcBVJaTpCjgq8BgcFdd33sKnIrHKLIdzDhlW14pGijhe>
-X-ME-Received: <xmr:yPKjaj0aZGNCHLctasCdszfhxxR4KkFt2m5T97hYZn02SMdOqaX3RdIBoJN2WAntVSJEpA>
-X-ME-Proxy-Cause: dmFkZTEs2iWGcBIV73ja450eg0sA2ip9PEUESkIlRLNRh12zPgwIVaiYFaWkdSxPB0XeO5
-    z01WQRjzBqWJ5uEnUzBnFdh9O2t/XKjAW0OcFG8FSNlM6DzZRH60V4Av4LHxvhcBNjMGwq
-    70eSEC0ErG22FZRP+mlefetcu8w524ygWWByeTdfC/4YO97H+pfAbUq3BM7JvRIZBa0XHt
-    qK6e4udGS+bSnOuzInP/QCubd81Wavn1vbUgpdAuH0GIlvhefZtsyEQLD2hiwS5UpHIqJ4
-    2e4CCFWoHxczWUfodix5K1PEitNRmtcoUYSftxOK4txds88YEQ/L3F5vnoYkmYrT29KxJf
-    dl1nF/NdMe7ekgeV/Lvfsr7TLlXsov2eZZD2gBTtuyfMoLXOzcblCbpGUFVEGs6t1fTw+D
-    YPiRhD/d741SPj52P1ctwhjjHuuA2xWcysHNmfNAcffAoimtVFhWKT1uSsfd3Nxp/a0Zfe
-    uO9vlGjn6gSxe+YkCKy1Fo+nvP6ckRjALhJplbxmHAuYibn8zbB01zI0GE9zdBAwVsHwM0
-    IX45M0BPyBNtXDdprSVOiIyDcyGaLw0+rRGea1VNYSbQJSWv9U50Dim8ZpFDZTAq9FLOAf
-    eTGzauLN7Ty5TY6noxHqqiGmchMdFGUPz6giyRNKvutZQWrt0Ice9KS73Nrg
-X-ME-Proxy: <xmx:yPKjao91z8GW4Z6fTzGuTHAKYfEiXkgTGTubp50JM7coGrd-NtgY4A>
-    <xmx:yPKjag0JWVXAIgcTAc3NX55KsXZbqwjJRLz0O-MNmlT9TSm9iPWLJw>
-    <xmx:yPKjal-S2WBRPO72lcIfBk5kChlhFQwoujVNq52xolnBaEw1_bpsEA>
-    <xmx:yPKjagtt52oelhJRVQQTVbx1eRd2BH7CC9Aiy-HV1CRtXfICZoj8cQ>
-    <xmx:yPKjaiew-XYFbKZ3mGqR1Brg4OQWvZt7O6pZ6AC2fj53FH4Xm-UYqUmN>
+	1789129430; x=1789215830; bh=RgGzm6X4CUzXCWXSRQ5t0D+DjsqTZ7BCgqD
+	8LODpsFg=; b=L2mT7xQTlGDvvCxMHgKs82tQwxcdXrCHTGnGtc+3ljoNKxUyzkm
+	+7FVSWI98GApiHgGypqqKJypTnVotK+K2FrOWnAOuj/SrsLgaaOrhTZNH6jrY5dQ
+	SDK2K2e37aCq+zUD9E5aj2P9P7yzXvhCNfTcT33zbd08FOBSHiI8u4YYXHEgnM71
+	n+dEgZ2SnhYW6TdrM1WtdhEQZAILpVJ58ase34IUBpMerUYC7cbI9ZPkHStL86oA
+	S6MSwA49JEePB+7Kkwh2yjldF0zzptknTNwcFSEdBRkFNOONgA4s0udavXYw5EZZ
+	gCeOUX8bsy8Lmu+GnTm5Tdsj9DIEhi0Q+CQ==
+X-ME-Sender: <xms:1vKjappODwCLMJ2TMGtl4ZySYPEnPP6N0jUllCgWSF6nnHcYQVO4fg>
+    <xme:1vKjajHL7HqXMxp4tBGWY7i5uvzb2Btvf-tHSv-MduwFjG-5xHdYB_dkrTK0R9rhZ
+    ps6lBHjy4YFNmwVq2Py8vhoaO8NYJA6vy65HuwLur-FB8Bg6aApD-I>
+X-ME-Received: <xmr:1vKjajmSChnZGnzudciwVaz5CUVVtbZZjmOsZr-oKOuIaLKrjMWJM0iYWD4M0S0_kJ2FBg>
+X-ME-Proxy-Cause: dmFkZTGLBGvIdDs4PaM1Uuy+AzYb5JZPExlJjvAiM16orIl3o+oUMp6epLSw5b7uf0XtWg
+    UuO+aqdQVX8jNmASy0cFBLoaBcfttsnns9qhCyTgdGlg7V6fQ9/APCfpsTcX8CESjp23vd
+    WTZg5pldLny8yyffohUIOO8mPgjxDNMZy5Robf3vR5Zp10EVzqp5mfVU1bnBmF3yCpg7+V
+    wDflPcPfHddesPKHRkaDn3n/FJrzbwzDQxjcS4VZ0/MmtvvItlujNzvDva7lKBo4UsZWsn
+    4tU/vt+s2D2cgHbHsKZIaNq1k+KZeunSSx2kR1L/4+xKV6vnYlL0xzoLnatjXErq4ILIqE
+    wrTJRGocjelDycQJJwo5rfUiuJhTFHcBgc0EX5+a6N2rvOANSiieE0uXBmxcYJm7VJ6Lez
+    YZAkIVzCVyxzbkio+9eUR++MfSEPRfcm/VeL0+eqjqxAwss/33zvlV2qEqvjrmylkiv4K4
+    vXgzrXnwBZtZZlL33t31RQXsll1xBm666t8ZSjmRKrqAGVp88pg8ZFsynoHMKXeHQx0b1C
+    H1YRIDFl2wHNU48XPBGE/obGCcsb2wKhuPbO4LMrE5pNKPZ67a2cjHyyymFwEmK7D4nWbo
+    HZUCBx3w2iGRLc3fK9fOuxExc76OupqIdQnLimlO7cMaYCIfhPfepBq7yfGg
+X-ME-Proxy: <xmx:1vKjaun7NUyvGKDdelwXT7yS-TXbH8M5dB2JbG2Cyxxc1pX8tThszA>
+    <xmx:1vKjassTfaZ9TaePh5Pmgwe-DU1G-Dh7Z0jbqLf7hUcBrxldvPIZBg>
+    <xmx:1vKjaplQv5ZZDdcMvUnE2EBevq9UOPhD95zLEijhA5US6t_xqmyLlQ>
+    <xmx:1vKjavvQvXpzntyD1W6uV_RJzD6POVSauvsDjX5DMXypsIMxNuCH7A>
+    <xmx:1vKjarH8BN2HkxVFrOWrVRHvaoKYSkltZ1ob1QAmN87W4gyXEgtddqBS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Sep 2026 08:23:35 -0400 (EDT)
+ 11 Sep 2026 08:23:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6c47adaa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 11 Sep 2026 12:23:34 +0000 (UTC)
-Date: Fri, 11 Sep 2026 14:23:31 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 8d6e1570 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 11 Sep 2026 12:23:48 +0000 (UTC)
+Date: Fri, 11 Sep 2026 14:23:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 09/10] builtin/fsck: move multi-pack index
- verification into the packed source
-Message-ID: <aqPyw2mHJ9kt-xna@pks.im>
+Subject: Re: [PATCH v2 10/10] builtin/fsck: move loose object verification
+ into the loose source
+Message-ID: <aqPy0q0LJJCcBgZY@pks.im>
 References: <20260831-pks-odb-source-fsck-v2-0-f9b16ef4957b@pks.im>
- <20260831-pks-odb-source-fsck-v2-9-f9b16ef4957b@pks.im>
- <877bksnior.fsf@emacs.iotcl.com>
+ <20260831-pks-odb-source-fsck-v2-10-f9b16ef4957b@pks.im>
+ <875x0cnio5.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,60 +87,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <877bksnior.fsf@emacs.iotcl.com>
+In-Reply-To: <875x0cnio5.fsf@emacs.iotcl.com>
 
-On Fri, Sep 11, 2026 at 01:14:44PM +0200, Toon Claes wrote:
+On Fri, Sep 11, 2026 at 01:15:06PM +0200, Toon Claes wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/odb/source-packed.c b/odb/source-packed.c
-> > index 2b5dc502f5..9f42552377 100644
-> > --- a/odb/source-packed.c
-> > +++ b/odb/source-packed.c
-> > @@ -14,6 +14,7 @@
-> >  #include "packfile.h"
-> >  #include "pack-bitmap.h"
-> >  #include "progress.h"
-> > +#include "run-command.h"
+> > diff --git a/odb.h b/odb.h
+> > index 0bf6c8d7d2..b87f281cbd 100644
+> > --- a/odb.h
+> > +++ b/odb.h
+> > @@ -218,6 +218,9 @@ enum odb_fsck_flags {
 > >  
-> >  static int find_pack_entry(struct odb_source_packed *store,
-> >  			   const struct object_id *oid,
-> > @@ -897,6 +898,29 @@ static int verify_reverse_indices(struct odb_source_packed *source,
-> >  	return res;
+> >  	/* Display a progress meter, if sensible. */
+> >  	ODB_FSCK_PROGRESS = (1 << 1),
+> > +
+> > +	/* Be extra verbose when checking the database. */
+> > +	ODB_FSCK_VERBOSE = (1 << 2),
+> 
+> Shall we document this one is mutually exclusive with ODB_FSCK_PROGRESS?
+
+But is it really? Sure, we'll potentially have interleaving output where
+we print log messages followed by progress output. But as far as I can
+see, we have nothing where we fully interleave so that the progress
+output would be mangled.
+
+> > diff --git a/odb/source-loose.c b/odb/source-loose.c
+> > index f68d3c4d6c..efef9ca61f 100644
+> > --- a/odb/source-loose.c
+> > +++ b/odb/source-loose.c
+> > @@ -1031,12 +1032,96 @@ static void odb_source_loose_free(struct odb_source *source)
+> >  	free(loose);
 > >  }
 > >  
-> > +static int verify_midx(struct odb_source_packed *source,
-> > +		       struct odb_fsck_options *opts)
-> > +{
-> > +	struct child_process midx_verify = CHILD_PROCESS_INIT;
-> > +	int ret = 0;
-> 
-> I don't see much reason to use a `ret` value instead of using early
-> returns instead.
-
-Fair enough.
-
+> > -static int odb_source_loose_fsck(struct odb_source *source UNUSED,
+> > -				 struct odb_fsck_options *opts UNUSED)
+> > +struct fsck_loose_data {
+> > +	struct odb_source_loose *source;
+> > +	struct odb_fsck_options *opts;
+> > +	struct progress *progress;
+> > +	bool error_found;
+> > +};
 > > +
-> > +	if (!source->base.odb->repo->settings.core_multi_pack_index)
+> > +static int fsck_loose(const struct object_id *oid, const char *path,
+> > +		      void *cb_data)
+> >  {
+> > +	struct fsck_loose_data *data = cb_data;
+> > +	enum object_type type = OBJ_NONE;
+> > +	size_t size;
+> > +	void *contents = NULL;
+> > +	int eaten = 0;
+> > +	struct object_info oi = OBJECT_INFO_INIT;
+> > +	struct object_id real_oid = *null_oid(data->source->base.odb->repo->hash_algo);
+> > +	int err = 0;
+> > +
+> > +	oi.sizep = &size;
+> > +	oi.typep = &type;
+> > +
+> > +	if (read_loose_object(data->source->base.odb->repo,
+> > +			      path, oid, &real_oid, &contents, &oi) < 0) {
+> > +		if (contents && !oideq(&real_oid, oid))
+> > +			err = error(_("%s: hash-path mismatch, found at: %s"),
+> > +				    oid_to_hex(&real_oid), path);
+> > +		else
+> > +			err = error(_("%s: object corrupt or missing: %s"),
+> > +				    oid_to_hex(oid), path);
+> > +	}
+> > +	if (err < 0)
+> > +		goto out;
+> > +
+> > +	if (!contents && type != OBJ_BLOB)
+> > +		BUG("read_loose_object streamed a non-blob");
+> > +
+> > +	if (data->opts->object_cb(oid, type, size, contents, &eaten,
+> > +				  data->opts->object_payload)) {
 > 
-> Because we cannot ensure where this function was called from, shall we
-> BUG() if (!settings.initialized)?
+> Should we guard data->opts->object_cb being NULL?
 
-Good point, but I think it's preferable to call
-`prepare_repo_settings()` instead.
+I don't see a reason for that -- we don't currently have any callers
+that do, and we can still introduce this check if we ever grow one.
 
-> > @@ -912,6 +936,9 @@ static int odb_source_packed_fsck(struct odb_source *source,
-> >  	if (verify_bitmap_files(packed))
-> >  		ret = -1;
-> >  
-> > +	if (verify_midx(packed, opts) < 0)
-> 
-> Any reason why you're checking negative value here and not in the if
-> above?
-
-Not specifically, and in theory both could check for `< 0`. But I
-refrained from doing so when moving around `verify_bitmap_file()`
-because in the preimage we didn't check for a negative value, either,
-and it would have thus caused more questions.
-
-So I think I'd leave this part as-is.
+Thanks!
 
 Patrick
