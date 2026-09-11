@@ -1,197 +1,175 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8963038F25A
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 17:13:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E7D3644C3
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 17:19:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789146823; cv=none; b=Nl0Wivpn1f25z3p6okj5415TO9i54TJl8G13Poy8uJ+DHGx4+FWKfvUmXmJRxIPqLFC+iqdsGt2t4Xy8pWhLy/Zi3ypUFM5bipXP6Ac31m1amb4mAa3GSuWm3ILHjH1A95HVVlNS0Rm7T1oXA4zQ3nyEHOq4dXDGvMi0SMtcAMM=
+	t=1789147172; cv=none; b=IHPvhlo6FAdhIha7ZdfGXhSm/+gVvXEyHWhLgxdTR7hmSzWS1OY1KlE4WQVaXT8I72aDrblPU8gsMbXbtEq09WpAzIMo0gEz7FH+mxNbucve7HHpU2ePw+STqJgvpXFu8+lturyZmh2XyqQRgak5POBnjgsVSgJqJ2doytocm4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789146823; c=relaxed/simple;
-	bh=vJZw2V+dK8uMr29c5aVAPCvxTK4wFhvw3INUtKYWieA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mg84FUb1CZRLBiEGcARqmx3szZrtGGDWREfr7Rai44SgLndcrVo8DJhB8CknmHLEAouAYd5jyaq0brItoUmMMmm4gpbwo5RFA2hsYPnFkde/ecKWoT8uUNL/LGQVvyUFbw/QRXKPvckKnV+LWi/0wxDH0HetTPkU1z+O2l5PHxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=StpRBFZL; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1789147172; c=relaxed/simple;
+	bh=rtg9yVAgyV5wmAxTg6QJ8ij35C5o98oIPdM+googy2Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s66Pz24m7uN9fQkXnMzicxIuPqCmMgRp94mMHcEBiIRDs5Cfg9J4AgeAGID6zbbdlh6Sw6hUCT6sEZDp6WzDQFG9B3MRQT346mx9hEuW6oa7Aa6Tbo49EssrOrS9wR8ATKCw77hCVRvbaLKwFi7iPst57gCcAuR1X61ES1/hc1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KzeAg+xP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Phpu4BTf; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="StpRBFZL"
-Received: (qmail 34699 invoked by uid 106); 11 Sep 2026 17:13:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=vJZw2V+dK8uMr29c5aVAPCvxTK4wFhvw3INUtKYWieA=; b=StpRBFZLnkbBkn4TC+WmBnE8n2LNxnuGMlWBHcFDWDwC1t716lo4imeMK5ihdt9dHmoVLXw9RZJnNQBK50LF6ojlD3VxiWWZqN07XeS192kwvWcjTcukOFuaCH5/4L8zljVYSLMH0w3pd3ZjcssTkEOcTQLNuln/vWSCDrlJsFF+/eVjv/S4HJ/CON847zAc4ocrn3i+e0Dj+igvY9DUuP625uFVGRNcnv8y8k6snyiXF2xckL/3ucn0XGGuca0MCOWFcon5SzCx7iuYwBxYI3PC95DDYzkY9SoG0zBuGesxVqsiWUjfLp5pfW6+chyCaN1nevSBpdYsJqIMxUtIVw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Sep 2026 17:13:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 173850 invoked by uid 111); 11 Sep 2026 17:13:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Sep 2026 13:13:39 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 11 Sep 2026 13:13:39 -0400
-From: Jeff King <peff@peff.net>
-To: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
-Cc: git@vger.kernel.org, Jean Delvare <jdelvare@suse.de>,
-	Elijah Newren <newren@gmail.com>,
-	Usman Akinyemi <usmanakinyemi202@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v2 3/3] merge-ll: use tempfile API for external driver files
-Message-ID: <20260911171339.GC1610200@coredump.intra.peff.net>
-References: <20260911171044.GA1609692@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KzeAg+xP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Phpu4BTf"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 67FE7EC019C;
+	Fri, 11 Sep 2026 13:19:29 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 11 Sep 2026 13:19:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789147169; x=1789233569; bh=uLc40r6aYY
+	vn7hPL5hidMHeK1/cM0ycBn8VBUMMQ3t0=; b=KzeAg+xPHtZGmeIKUn39PAcqR0
+	XWqc35Y6jd6mzLp+q+eb/oiuBa7Qp72Sm/LmMnZYeSvXHDxM4+dbcXRRlJlKXQR4
+	9cXo2pTMGY8Ob+PTH3tvGnfnRN912OgvctX9KNyo0vxFxF8kgX5r2iIWhPvlnWuk
+	XQsHgC+xr87uAROxz/NufmXJDWW/TmxEh0zM86ABtU7yrUi2YRodAg76nH2KNysa
+	WFgb6LYW42MfR3cxo0Z8hHTk0TIMv+Bm5qT4DW02YprfxZI2VRiz6ZIyinPUnq0x
+	Cv5wGUyEi64ND60b6hHXydoLETZCKKcZjNpmOphpWhPf+H8cduOkIEvh8Fjg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789147169; x=1789233569; bh=uLc40r6aYYvn7hPL5hidMHeK1/cM0ycBn8V
+	BUMMQ3t0=; b=Phpu4BTfjhEIdmYiqBmSEJmWH5j5PM2m32rbxpjYE9vApy0yTBy
+	1a3Y87DXgvTC90awmVLIPbRD5DBGblikpYh2rIxflyfar9CBVQAOH+qBMU/8Si/t
+	9LZnSn4miOvhnJOSlTTth/Zg7Ev9KNQX16k3BJJFNceQQPeKrjRC3BMDum/M0fXv
+	36VKWdHIZYTr6OBAb5X0nSZBnlfv41tIjW2NEZjpvYK5l3h8RrOq3UK0teobxsia
+	76JsyS/rI6Dj8SWHg4w636HKxs37CiOfuTTGbhVLHhNno/BBcaAxwhAQ7pVbgnWN
+	r4HfsACOo5jKttC3zKHh1Jje3q5D7Y+Qv4Q==
+X-ME-Sender: <xms:ITikanAOLXV7305dCqzWOJxniDsXheCzYUTQmWSYL_JvYYNABII__Q>
+    <xme:ITikakiGljFmtz2FPRYMYmzoVcscy_UgXPX--E0-wQNwH0R4fXOg1LIjAhy-fugl0
+    fUeAqL0gaEfqybDWHDUZWCekLWCloK55Ai5Q4kBmQJlxXMVVp3wNGo>
+X-ME-Received: <xmr:ITikannqBQLciIw5cOPGji6v_Da13vedW-vUZmRTCmujYUwD3TevSQ_Xf7jSHV7AxnE5jc1HxOsAVe8d9zObEmvixqMI2wTUVTEu>
+X-ME-Proxy-Cause: dmFkZTF6f9z1nLUg64aImp3Nrihp6klaB014BstA6WgVzVocRt/U+UYxcW8KbSuCX8s2Yq
+    62B/pX0MfcXHgg49WzartFngG+BmoF30sAPJ6ClWygi0iVG6CyRxEOzRpCN70tMKfa2RTX
+    E0588wxDXNT6w0jqa70kII0PUkpndJCt5la7TSy2j6/ouC/7j7redXzJ8EmIAia8l2ZOOC
+    2kySHGTsCPMGdIlUpk4ebGGX+jtMjF5cJWDIzElWUhz4AO5YYmicx/JG8uN4S1S2YKjHHT
+    6F0Cbh094CRQlVf1ZlS6ZxgSzwAc0jJ5Bububvy6xhgHZL3F8eLxG2QX4ouPfoPQDL2QGt
+    ybOg/4fT5ELjvotD1oXV4PdpgxCbbIzOMkjcU26CNnEp3HAFy34hWgEldOgLvXmSGnHcqk
+    Y96trFVJYlg8FilC44rszMR/7eSoVEu10xz8UM8cxuTzJ77kZIhuDe5qAUKq6vqMo2UDZj
+    S1dDZcZ48ISoTihPUZ3WRZCV/AgLO5V/BpB3gO3Ekm8tZmZkc4iAF/K0vUFNjFEJGg4qJ6
+    iSDN7ZrRK+mhJExgjIHxVSb7f/Qbaul2MSw+szHjdOov3Gp1pPep3RSLmqnWA+x3h1hDsf
+    MSvqzcWa8PutmPqEhS3ErlH/JDfsqduIEQ/03qQ4LOChoIRrjsGQSzhw19LA
+X-ME-Proxy: <xmx:ITikaoqZ2Rv8hIu4xHhvgYAYL6vPtzbR9j7XkRU7d8Dl6p2tANzhrA>
+    <xmx:ITikaoGREUC1efye90BhJJVlZUhrBzipWZCvMPTdWX2uA1-5BUzLsw>
+    <xmx:ITikaswnt1-Vcy7wF8oNAVlYTvm6BGPsMKN6CBMhf39Ql66LePbtHA>
+    <xmx:ITikalpNuG5Wq9HVJu69sjJujEhSeAyEImzi1YSBw7Uh43lZHBTOqg>
+    <xmx:ITikavGBMB_foR69WxQ85T1W-xz3mWwrdUU24DdkEfUsmSfSbFfnJhCw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Sep 2026 13:19:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH] range-diff: add --matched-only to skip one-sided commits
+In-Reply-To: <pull.2401.git.git.1789144877632.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Fri, 11 Sep 2026 16:41:17
+	+0000")
+References: <pull.2401.git.git.1789144877632.gitgitgadget@gmail.com>
+Date: Fri, 11 Sep 2026 10:19:27 -0700
+Message-ID: <xmqqik4bbt9c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260911171044.GA1609692@coredump.intra.peff.net>
+Content-Type: text/plain
 
-When there's a long(er) running merge driver helper, the user may just
-decide to terminate it with Ctrl+C. That sends a signal to the driver
-prog and to the whole process group as well, including the git merge
-command proper. Hence the cleanup code would not run and .merge_file_*
-files are left behind.
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-We can fix this by using the tempfile API, which auto-cleans files on
-signal or other error. That covers the Ctrl+C case above, as well as any
-other incidental death (e.g., allocation error due to a gigantic
-output).
+> diff --git a/Documentation/git-range-diff.adoc b/Documentation/git-range-diff.adoc
+> index 5cc5e2ed56..58e59e8e3b 100644
+> --- a/Documentation/git-range-diff.adoc
+> +++ b/Documentation/git-range-diff.adoc
+> @@ -10,7 +10,8 @@ SYNOPSIS
+>  [synopsis]
+>  git range-diff [--color=[<when>]] [--no-color] [<diff-options>]
+>  	[--no-dual-color] [--creation-factor=<factor>]
+> -	[--left-only | --right-only] [--diff-merges=<format>]
+> +	[--left-only | --right-only | --matched-only]
+> +	[--diff-merges=<format>]
+>  	[--remerge-diff] [--no-notes | --notes[=<ref>]]
+>  	( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
+>  	[[--] <path>...]
+> @@ -82,6 +83,13 @@ to revert to color all lines according to the outer diff markers
+>  	Suppress commits that are missing from the second specified range
+>  	(or the "right range" when using the `<rev1>...<rev2>` form).
+>  
+> +`--matched-only`::
+> +	Only emit commits that have a corresponding commit in the other
+> +	range, suppressing any commit that exists on only one side. This is
+> +	the same as using `--left-only` and `--right-only` together. Useful
+> +	to skip added or removed commits when reviewing how the commits
+> +	that survived a rebase changed.
 
-Note that there is one gotcha here. The current code uses short,
-relative filenames for the tempfiles (like ".merge_file_abc123"). But
-the tempfile API stores and returns absolute paths. Because we run the
-merge driver as a shell command, this can result in problems if the
-leading directories contain shell metacharacters (like our tests, which
-put a space in the trash directory name for exactly this purpose).
+While conceptually it is the same as giving "--hide-right-only"
+(which would have hidden the right-only entry) and
+"--hide-left-only" at the same time, because the existing two
+options are not defined in terms of "hiding" entries that have only
+one side (which would have logically allowed combining) but instead
+showing "only" one side (which makes it impossible to give them
+together, and indeed that is the first thing
+range-diff.c:show_range_diff() checks and yields an error), this
+description is not accurate.
 
-If we were starting from scratch, I'd say the correct solution here is
-to shell-quote the filenames we put in the command. But doing so isn't
-strictly backwards compatible, because users might have their own shell
-characters. For example, if I configure a driver like this:
+I wonder if the implementation actually can be more like
 
-  [merge "foo"]
-  driver = "my-driver '%O' '%A' '%B'"
+ - give "--hide-left-only" and "--hide-right-only" as synonyms to
+   "--right-only" and "--left-only", and deprecate the original;
 
-then adding extra quoting will screw things up! Strictly speaking, this
-kind of quoting is wrong (it would fail if %A expanded to something with
-a single-quote in it), but it is entirely harmless with the current
-vanilla relative paths. It doesn't seem worth breaking it.
+ - allow them to be given together, which will give the new
+   behaviour you are introducing, i.e., skip steps without both
+   sides from the output;
 
-So let's take the most conservative route, and just continue reporting
-the relative paths.
+ - give a short-hand synonym, "--matched-only", to truly behave the
+   same as giving "--hide-{left,right}-only" together.
 
-Commit-message-stolen-from: Michal Koutný <mkoutny@suse.com>
-Reported-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Jeff King <peff@peff.net>
----
- merge-ll.c | 50 ++++++++++++++++++++++++++++++++------------------
- 1 file changed, 32 insertions(+), 18 deletions(-)
+which would allow the above explanation to be more accurate?  I
+dunno.
 
-diff --git a/merge-ll.c b/merge-ll.c
-index 5a11a9613b..ec0f012b4f 100644
---- a/merge-ll.c
-+++ b/merge-ll.c
-@@ -17,6 +17,7 @@
- #include "quote.h"
- #include "strbuf.h"
- #include "gettext.h"
-+#include "tempfile.h"
- 
- struct ll_merge_driver;
- 
-@@ -174,15 +175,27 @@ static struct ll_merge_driver ll_merge_drv[] = {
- 	{ "union", "built-in union merge", ll_union_merge },
- };
- 
--static void create_temp(mmfile_t *src, char *path, size_t len)
-+static struct tempfile *create_temp(mmfile_t *src)
- {
--	int fd;
--
--	xsnprintf(path, len, ".merge_file_XXXXXX");
--	fd = xmkstemp(path);
--	if (write_in_full(fd, src->ptr, src->size) < 0 ||
--	    close(fd) < 0)
-+	struct tempfile *t = xmks_tempfile(".merge_file_XXXXXX");
-+	if (write_in_full(t->fd, src->ptr, src->size) < 0 ||
-+	    close_tempfile_gently(t) < 0)
- 		die_errno("unable to write temp-file");
-+	return t;
-+}
-+
-+static const char *temp_path_basename(struct tempfile *t)
-+{
-+	/*
-+	 * basename() takes a non-const pointer because it can
-+	 * modify the input string to remove trailing directory
-+	 * separators. We know that we don't have any because
-+	 * this is a clean path generated from our vanilla
-+	 * tempfile template.
-+	 *
-+	 * So casting away the const here is safe, albeit gross.
-+	 */
-+	return basename((char *)get_tempfile_path(t));
- }
- 
- /*
-@@ -197,11 +210,11 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
- 			const struct ll_merge_options *opts,
- 			int marker_size)
- {
--	char temp[3][50];
-+	struct tempfile *tmp_o, *tmp_a, *tmp_b;
- 	struct strbuf cmd = STRBUF_INIT;
- 	const char *format = fn->cmdline;
- 	struct child_process child = CHILD_PROCESS_INIT;
--	int status, i;
-+	int status;
- 	struct strbuf result_buf = STRBUF_INIT;
- 	enum ll_merge_result ret;
- 	assert(opts);
-@@ -211,19 +224,19 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
- 
- 	result->ptr = NULL;
- 	result->size = 0;
--	create_temp(orig, temp[0], sizeof(temp[0]));
--	create_temp(src1, temp[1], sizeof(temp[1]));
--	create_temp(src2, temp[2], sizeof(temp[2]));
-+	tmp_o = create_temp(orig);
-+	tmp_a = create_temp(src1);
-+	tmp_b = create_temp(src2);
- 
- 	while (strbuf_expand_step(&cmd, &format)) {
- 		if (skip_prefix(format, "%", &format))
- 			strbuf_addch(&cmd, '%');
- 		else if (skip_prefix(format, "O", &format))
--			strbuf_addstr(&cmd, temp[0]);
-+			strbuf_addstr(&cmd, temp_path_basename(tmp_o));
- 		else if (skip_prefix(format, "A", &format))
--			strbuf_addstr(&cmd, temp[1]);
-+			strbuf_addstr(&cmd, temp_path_basename(tmp_a));
- 		else if (skip_prefix(format, "B", &format))
--			strbuf_addstr(&cmd, temp[2]);
-+			strbuf_addstr(&cmd, temp_path_basename(tmp_b));
- 		else if (skip_prefix(format, "L", &format))
- 			strbuf_addf(&cmd, "%d", marker_size);
- 		else if (skip_prefix(format, "P", &format))
-@@ -242,13 +255,14 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
- 	strvec_push(&child.args, cmd.buf);
- 	status = run_command(&child);
- 
--	if (strbuf_read_file(&result_buf, temp[1], 0) >= 0) {
-+	if (strbuf_read_file(&result_buf, get_tempfile_path(tmp_a), 0) >= 0) {
- 		result->size = result_buf.len;
- 		result->ptr = strbuf_detach(&result_buf, NULL);
- 	}
- 
--	for (i = 0; i < 3; i++)
--		unlink_or_warn(temp[i]);
-+	delete_tempfile(&tmp_o);
-+	delete_tempfile(&tmp_a);
-+	delete_tempfile(&tmp_b);
- 	strbuf_release(&cmd);
- 	if (!status)
- 		ret = LL_MERGE_OK;
--- 
-2.56.0.rc0.314.g7a874b6915
+> +	if (range_diff_opts->left_only + range_diff_opts->right_only +
+> +	    range_diff_opts->matched_only > 1)
+> +		res = error(_("options '%s', '%s', or '%s' cannot be used together"),
+> +			    "--left-only", "--right-only", "--matched-only");
+
+Don't we have die_for_incompatible_opt3() to do this?
+
+The basic idea sounds good.  The unmatched entries do serve as a
+strong hint that a greater --creation-factor may help.  For example,
+
+> +		git range-diff -s --abbrev=7 combined-old...combined-new >actual &&
+> +		cat >expect <<-EOF &&
+> +		1:  $old_only_oid < -:  ------- c-old-only
+> +		-:  ------- > 1:  $new_only_oid c-new-only
+> +		2:  $common_old_oid = 2:  $common_new_oid c-common
+> +		EOF
+> +		test_cmp expect actual &&
+
+the above clearly shows that the command might compare c-old-only
+and c-new-only with a better creation factor settings.
+
+But because the entries are numbered, gaps in the numbers, like this
+output
+
+> +		git range-diff -s --abbrev=7 --matched-only combined-old...combined-new \
+> +			>actual &&
+> +		echo "2:  $common_old_oid = 2:  $common_new_oid c-common" >expect &&
+> +		test_cmp expect actual
+
+may be sufficient (we can tell that 1 was omitted), except that
+somehow we at least need to be aware that there were only 2 commits
+on both sides (it may be hiding commits 3 thru 99 as unmatching
+pairs and we lose that hint from the new output), which is not a
+huge downside.
+
+Thanks.
