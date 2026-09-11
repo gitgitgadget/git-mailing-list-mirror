@@ -1,102 +1,211 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B1B42848B
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 06:50:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3776441619
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 06:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789109469; cv=none; b=C+C0DY6bsNy3rtrCxzKf7A2FtbdtTPHiwW7AnFkNq1KxNplCVQSGn08wPBH1eUQJks4WMeMqrLngkpqeUBqxHWVS5RWSUbsBVYj3oaDNiK3OzjRyLdFwnUVP5RNya+/Uo4XqUs1wGrtCWSUvM6lxyqNlyQNaQxWoMSYZe3XewxY=
+	t=1789109725; cv=none; b=iWuxxORAHdt17tU52euXvqpgrNztnKz+bsSdI3v8Ei+fHPGeGoimRyzB6rByxwbS/cYopQtC0UwzFzH/Y/i/ssJgo7K4sQXB5M5soqilnt52B/TVj8VSJ1e0bey3cx//a/M+IvvDD8FGkhTo58uRY5kKvvIjBG4j88awh9jhIXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789109469; c=relaxed/simple;
-	bh=z4Cp2mFYlRK1xA1mk7p5IIChIjLChIiC6LNOR6SYyxs=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kBpv385cq2snBKDvwnIxvHZl3BMxq7XamIkS7cbnb8BHO+MVIIsW538egsECsZirAJ7iwn9PNiFSUlWuWk15+tiNRmtlsjFFXAg/JEqxFRdnrbu0k+qPl9FCUEhCdbnttuGj7DB4WEuR3BPWaEeofAmpzvPUHzP6ryOcTWKc7Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=K+o1nrdb; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1789109725; c=relaxed/simple;
+	bh=gYKFVxeIIAPCg8+HX29oBAIPEredR25yLLJDy/kNa4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qR7i38ihiLFlaJbFbVqtSeZ5sg0ikp9LC+OctYUJBo2zAZeGlx8bgrHlo3IVH1qqMCUwhTlZrm9W+Sio8H1oqOWnWN+S9g/szUsAo/yUpWfoR2xp7xFZ16k5o5Rz+UdjW/18hPsjT8O7OCZPSBungsTFAoCu4yvMupqiesEBH6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Mkg4TKdZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KP2Mrc3K; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="K+o1nrdb"
-Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
-	by fortymile.utu.fi  with ESMTPS id 68B6oiPk016639-68B6oiPm016639
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Fri, 11 Sep 2026 09:50:44 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1x4v5v-003ltL-U2;
-	Fri, 11 Sep 2026 09:50:43 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Fri, 11 Sep
- 2026 09:50:43 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id dba4725e;
-	Fri, 11 Sep 2026 06:50:43 +0000 (UTC)
-Date: Fri, 11 Sep 2026 09:50:43 +0300
-From: Tuomas Ahola <taahol@utu.fi>
-To: Junio C Hamano <gitster@pobox.com>
-CC: <git@vger.kernel.org>
-Subject: jk/ci-use-system-asciidoctor
-Message-ID: <20260911065043.0SiOV%taahol@utu.fi>
-In-Reply-To: <xmqqa4ppf1l5.fsf@gitster.g>
-References: <xmqqa4ppf1l5.fsf@gitster.g>
-User-Agent: s-nail v14.9.22
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Mkg4TKdZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KP2Mrc3K"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 609847A00C9;
+	Fri, 11 Sep 2026 02:55:13 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Fri, 11 Sep 2026 02:55:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1789109713; x=1789196113; bh=RLK9SRmuQI
+	5uY2/nt7fkd95Vcvxt+i07pE0skf0FFVE=; b=Mkg4TKdZOhZCuhwmKicPjS9OaC
+	OeRJHgxXZHWhxzzcGBFbS3kvNt27yhTHeepH5MVr7n03hcjSyUtv/qFWEl+uvYNA
+	Wrie7x+bkN0BUhcCYA1jMkJ4m0r8ER3KA0zLbqQHgakQ8MleoAGexd+T3M2OvJpu
+	n7jWdranVYVtnWhVMZJZtJANsb93LyFpzjxsDh9jLTGwyMKUovp5WVZBHsow+hHb
+	6yAVxa+qzN4tZB8vRTU3zMGk+yWvSCN6ZtMTdzRduJ09ppZbIZ/FEcu/2j0mEJMs
+	a5RAN2y4074aqXM7jQuKV1J0hCrc6RdaTczWU1xAe+lisoZK6dUOhjNf+Bew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789109713; x=1789196113; bh=RLK9SRmuQI5uY2/nt7fkd95Vcvxt+i07pE0
+	skf0FFVE=; b=KP2Mrc3Kx+HfB1zGAvqRVSdaJKJrCvuw6PHyJDTcepY83GApq+h
+	CeSwhK7f/+iEAeaE/fGmZw7wEkFjyAvGBOKygjDuZLHJTHe8QGXqJhlWNNnd6Y9Q
+	pWOAfUUhAEolhmJvGXmFmiua//x9xDXaqr+Du8l/mYOG+huvNeKMHFPMqjIsKI0g
+	J1n51GPWCP99qyHkZnAollHWmMnoO0MUJD1u/l+uziu3kP77wBCxoNbJBxO+6NxY
+	OegUruCE+/l46zCpx6iVdYSKtc+XiDcrufLVEVtJDTwvEGuySXFeKh2rlIz8GqXR
+	prjBWcwzr/nJIkPiC6mAtYTZByTQ50z8K/w==
+X-ME-Sender: <xms:0KWjanjk1_qxr21Qc_qUgU6wl7IaSTLJbaKcubgFqwdG9TeciDK8sQ>
+    <xme:0KWjamQbnnJwua57jetEMnOWpDHD1HMjMtnsmvVRe5kgAbj3gxC5jbNF0XGJwhBGz
+    3WLZyLs3rkVFLLZze8ETr6ida3iRmSoWxJA4T4xAnCvERi9yYGN2A4>
+X-ME-Received: <xmr:0KWjapVdYb1TaheurLTzLs2Xql3FsWAFzrZHSpktMxiO322Oc_kfUaYcUdJiz9dSm1WdWA>
+X-ME-Proxy-Cause: dmFkZTEV+JttoCnA4V+/Z0K905orRh+b6OEc7ploZuEr1gjifMLJ/49pzYntwFHzj7xSYj
+    vU/5kI2IMhZ/b4moFvB0QYVaT6ZbIAa5p1q7P4gdx/uH0xpYPiIlEIeBCxddhuaDlvwdjX
+    YJiwg1i4iFMXQ5WyG1dKxNKvHuMbk+IvSrItabIxW6TJ/1S5Nh/vFcDAekj0NSPin6SnyO
+    EpzR7ggeUuUQC3x+ooYVx7WZfMbC+RjJiMYzCSXpg//6TdfsnqwGcwXRfOHFTLEnc/FE+L
+    ZHvdYegDNyJ0iAA1HWiewmP74ak/72guaUxC7jvDZeIv2/FaN+ACWTlt0I+t3uKmwVPrpv
+    kDWccQPVL6bJWc4dPrCK3u63K7byi69waWYbvsb1uhUWTOuR8oRXFi+e4KfbHmAOFfZnjv
+    3aV0XdW19RSs9yVSjrPPfFvybOagLUVfUso5csvchhWDy05Y2Byrr2Cj2Lna1Q3ikqVa+/
+    0SxtJCGkWwCt4hp6v5cBf3GsgC/aqASxtpV5j9Q7Q9WUFlZlGrZ7Vedtoz+ZUwi8J3prm+
+    rlMpQmckhi1IfRq2DKpe2F5MTzPaphBdHOa8EhbCi4bC55B1y3OL8Vv6DVsSWVlnuhRdh/
+    XGXaxn7Mw4RbpAwpKd8e+Mzaa+j3QMmNnfsI5xeSi+60xMDEZlVHouIzc+Bw
+X-ME-Proxy: <xmx:0KWjaqQklCZe4QdVtcpAZiQ_Dt5CpibuXbO5Ff_OpsNam75ZzonwDg>
+    <xmx:0KWjajnG48waMZWJ5m8JxnjWwQV59wMKpyWVXG6yvjv5dYEhUyjUHw>
+    <xmx:0KWjag78611szxBiwWni1kHkpmH0XO_BwEetwXlNUO2qkuD3vVqn4w>
+    <xmx:0KWjaphBsfaaCVE6d8HtPP9Q1K3ShkIk9iwLiWHbzxmVE66RuVRT6A>
+    <xmx:0aWjaml-460Qq2UE9XEbmwvyPQY-v57ChCdD2YmL-b72cmbEWUvCwKke>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Sep 2026 02:55:11 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 0a330957 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 11 Sep 2026 06:55:10 +0000 (UTC)
+Date: Fri, 11 Sep 2026 08:55:03 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Tyler Cipriani <tyler@tylercipriani.com>
+Cc: git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
+	Stefan Haller <lists@haller-berlin.de>,
+	"D . Ben Knoble" <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3 1/2] push: check pushed ref for --force-if-includes
+Message-ID: <aqOlx5dlprfc0bdO@pks.im>
+References: <20260904210122.431757-1-tyler@tylercipriani.com>
+ <20260910230506.1631656-1-tyler@tylercipriani.com>
+ <20260910230506.1631656-2-tyler@tylercipriani.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-15.utu.fi (130.232.247.55) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsH
- BUhYSFpIWVxIWVtYRlpbWkZaWF9GW1hIUEhYSFhIWkhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWA==
-X-FEAS-Client-IP: 130.232.207.30
-X-FE-Last-Public-Client-IP: 130.232.207.30
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=JsghzFDyqpVOTtbhSL7cS7sx/+tH7CaZvphIAOVaOXM=;
- b=K+o1nrdbEoOmvvwTmOctaUFRExVJY/oORAgH5a3IGqfJJiUcp4odvJB5QzwZKmXhZzoK1c40uYKD
-	vmMkNcy1Kac+7+KHGaQJPQOjEiFgrgCFLyXLpeiNPHLmUql8rwSAkpd5j8gDjQFWLqhghYXzK8pC
-	4D7Ia/Da8Fzqfnmhs9kpcH4kg1Ek3RUfV1fBXc7FdGYa4cyaZqvi5KYl3MHaIqe1tQ339tYYex/B
-	3cFSCmlBpLTw+2lbEg+Z50ihkPCDDsO/k44NW/5PwUFYjMBNH1VwYUzMk9JqWoJ+U3R0Cz7Xxx4W
-	+Q3b3UQec0QjpOVBm+vRvvBzUcE6UM/RHCt0oQ==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260910230506.1631656-2-tyler@tylercipriani.com>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> * ps/ci-depends-on-ruby (2026-09-01) 1 commit
->   (merged to 'next' on 2026-09-08 at d0859510f8)
->  + ci: fix missing Ruby dependency in "documentation" job
+On Thu, Sep 10, 2026 at 05:05:05PM -0600, Tyler Cipriani wrote:
+> "--force-if-includes" ensures, "tip of the remote-tracking ref is
+> reachable from one of the 'reflog' entries of the local branch."
 > 
+> But check_if_includes_upstream() uses the local per-branch reflog based
+> on the destination branch rather than the branch being pushed; using
+> ref->name vs. ref->peer_ref->name.
 
-This seems to be duplicated...
+So... in a `git push origin foo:bar` we look up the reflog for "bar" and
+not "foo"?
 
-> * jk/ci-use-system-asciidoctor (2026-09-02) 2 commits
->   (merged to 'next' on 2026-09-08 at e7621b4bad)
->  + ci: drop ALREADY_HAVE_ASCIIDOCTOR variable
->  + ci: fix missing Ruby dependency in "documentation" job
+> This can cause confusing rejections or unintended data loss.
 > 
+> Using a command like:
+> 
+>     git push --force-if-includes --force-with-lease origin src:main
+> 
+> False rejections: when src is an up-to-date branch, but main is
+> out-of-date or nonexistent, then the includes check will fail telling
+> users the remote ref has been updated since the last checkout.
 
-...here---perhaps we would like to fix that when those topics graduate.
+Hm. "up-to-date branch" in relation to what? You mean if we had commits
+A, B and C, with C being the most recent commit, then "src" points to C
+and "main" points to B?
 
-$ git describe --contains --all 7918bd7d08 691dc53e2a
-remotes/origin/next~6^2~1
-remotes/origin/next~7^2
-$ git range-diff 7918bd7d08...691dc53e2a
-1:  7918bd7d08 ! 1:  691dc53e2a ci: fix missing Ruby dependency in "documentation" job
-    @@ Commit message
-           ./ci/install-dependencies.sh: 23: gem: not found
-     
-         The root cause of this is that we never explicitly install Ruby, and
-    -    consequently gem(1) isn't explicitly pulled inus, either. This used to
-    +    consequently gem(1) isn't explicitly pulled in, either. This used to
-         work alright because we transitively pulled in Ruby via asciidoc. But
-         due to an update it seems that we stopped pulling in the transitive
-         dependency, and consequently we don't have gem(1) available anymore.
+> Data loss: when src is an orphan/out-dated branch, but main is
+> up-to-date, then the if-includes check will allow the push, clobbering
+> the remote main.
 
+Right, here "src" would point to B and "main" would point to C.
 
-It's always good not to immortalize typos in 'master' if we can choose.
+> Find local reflog using ref->peer_ref. When using a refspec like
+> HEAD:refs/heads/main, we resolve HEAD. If HEAD is a branch, use that
+> branch's reflog.
+> 
+> But if HEAD does not resolve to a branch (i.e. a detached HEAD), then we
+> reject the push. HEAD's reflog is too broad to tell us if the history
+> being pushed includes the tip of the remote. Rejecting a detached HEAD
+> already happens today (if the same-named local branch lacks the remote
+> tip); now the detached HEAD state is explicitly rejected.
+
+Makes sense.
+
+> Skip deletions:
+> 
+>     git push --force-if-includes --force-with-lease origin :main
+> 
+> ref->deletion is set after apply_push_cas (which triggers
+> check_if_includes_upstream). The ref->peer_ref name is "(delete)".
+> Instead check with is_null_oid to detect and allow deletion.
+
+This part feels a bit off to me. Deletions are the most risky operation
+that we can do, so why would we want to just blindly allow them? There
+may be good reasons for this, but if so those should be documented as
+part of the commit message. It would probably even be sufficient to say
+"it has worked this way before, and we don't want to break that case".
+
+> diff --git a/remote.c b/remote.c
+> index 00723b385e..326af76eeb 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2806,7 +2806,29 @@ static int is_reachable_in_reflog(const char *local, const struct ref *remote)
+>   */
+>  static void check_if_includes_upstream(struct ref *remote)
+>  {
+> -	struct ref *local = get_local_ref(remote->name);
+> +	struct ref *local;
+> +	const char *name;
+> +	int flag;
+> +
+> +	if (!remote->peer_ref)
+> +		return;
+> +
+> +	/* A deletion has no local history to check against. */
+> +	if (is_null_oid(&remote->peer_ref->new_oid))
+> +		return;
+> +
+> +	name = remote->peer_ref->name;
+> +	if (!strcmp(name, "HEAD")) {
+> +		name = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+> +					       "HEAD", 0, NULL, &flag);
+
+Shouldn't we pass `RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE` here?
+Otherwise, the function will return "HEAD" even if it could not be
+resolved, and we don't want to recursively resolve symrefs, either.
+
+Also, is it sufficient to single out "HEAD" here? It could for example
+be that the user passes "HEAD~", an object ID or really any other
+revision, and these should probably not be considered reachable, either,
+right?
+
+Maybe we should instead verify whether this names a local reference and,
+if so, resolve potential symrefs to their target.
+
+> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+> index cba26a872d..0c02151747 100755
+> --- a/t/t5533-push-cas.sh
+> +++ b/t/t5533-push-cas.sh
+> @@ -396,4 +396,69 @@ test_expect_success '"--force-if-includes" should allow deletes' '
+>  	)
+>  '
+>  
+> +test_expect_success '"--force-if-includes" should allow forced update when using differently named branches' '
+> +	setup_src_dup_dst &&
+> +	test_when_finished "rm -fr dst src dup" &&
+> +	(
+> +		cd src &&
+> +		git fetch &&
+> +		git switch -c newbranch origin/main &&
+> +		git rebase HEAD --onto HEAD^ &&
+> +		git push --force-if-includes --force-with-lease origin newbranch:main
+> +	)
+> +'
+
+Nit: missing empty line between these two tests.
+
+Patrick
