@@ -1,95 +1,136 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBFE486404
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 21:33:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A46486409
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 21:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789162432; cv=none; b=R/7XCb57VTJoN9Tw0RnAHowvsPFKsyztpfbLtWaPmt7oeFpNICe0wOf/vmO8uagXYmq711k88czTk1gUYwVE+XYmc7s5fPfVM8/i9N8AraeN2OUb24Z6ZCKoBGaOKKttNGneDRCKXVlRhXeCz/A/8Kqg4qK6p1DFH1NRc1XnfPA=
+	t=1789162758; cv=none; b=MAZJkBeRcxWzgCLH+PeiMiuzeDqfbv8U9e0iCDKztTXwnDID7XSGk395ipj6OR5e0HshjeIdlwE2XZok5XbxdQMhmZ/vzg4E8bXGAuhmPMr1Qejz1C98fxiBM0RtAks9VPPcLWQgneqguH2Ou3/VcyqzcuPZ25XLB8nRHxZcKmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789162432; c=relaxed/simple;
-	bh=LQPtYHJ9G+9dS8xYzfdPPSieaAR30rFJxJjGK5NdNIg=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QOExdxLp1L4hworxBxSRcBReHzB4xxMTVHEDK1CR2KyIkIL2dxGUCdkRXCX99TmSKSNT4O+KCy1F0X/c8B6W4HZqgotI+iN+AF1hdjxLGsyluwo3+GsqCSrTeYEz86qwygLV7W3t0p6b7CTKRueTw/ONpowAcsphUu1LE53Pu1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=aqeOmVwG; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1789162758; c=relaxed/simple;
+	bh=esbFdzPIf6OYVCaEnE7FO3lJXXakLNYWcsBqutUDhJs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Sfu8nvHpF62Jlgfto3jOYb8XvXkgW3ySw20LaHZURMCDhT9LDsVUjl5GVlz0jqqiMhylHePgMd6ewEueJFs5meF38HEGRYmTwtUMi42U6k4RnNgkMEPSlvxKdV+bw4GS8PkNIdBTg0LT5WAnYnH9m4TRFyZXbc63sk8k5jVWuFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aOIF3tNJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hr9A2sOd; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="aqeOmVwG"
-Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
-	by fortymile.utu.fi  with ESMTPS id 68BLXc3Q027899-68BLXc3S027899
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Sat, 12 Sep 2026 00:33:38 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1x58sM-006d7C-Mu;
-	Sat, 12 Sep 2026 00:33:38 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Sat, 12 Sep
- 2026 00:33:38 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 6a0f0d5c;
-	Fri, 11 Sep 2026 21:33:38 +0000 (UTC)
-Date: Sat, 12 Sep 2026 00:33:38 +0300
-From: Tuomas Ahola <taahol@utu.fi>
-To: Junio C Hamano <gitster@pobox.com>
-CC: <git@vger.kernel.org>, =?utf-8?Q?Jean-No=C3=ABl?= Avila
-	<jn.avila@free.fr>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH (RESEND)] ci: use system asciidoctor
-Message-ID: <20260911213338.kLh69%taahol@utu.fi>
-In-Reply-To: <xmqqeceza4k9.fsf@gitster.g>
-References: <20260902071113.GA70165@coredump.intra.peff.net>
- <20260911195250.31201-1-taahol@utu.fi> <xmqqeceza4k9.fsf@gitster.g>
-User-Agent: s-nail v14.9.22
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aOIF3tNJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hr9A2sOd"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9972C7A00F7;
+	Fri, 11 Sep 2026 17:39:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 11 Sep 2026 17:39:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789162756; x=1789249156; bh=2x+FU7AVnq
+	HqJgWyD6VuzV8bu7gUYFNqHlPiketheM8=; b=aOIF3tNJWVShhaQG9XYTeghTS7
+	LZcdjmqfLmNBqoPIl0FUe+ivsfla7QVxt5mOdpD/mmMPvDkb4V8GcVikDioX1CHh
+	2wzk8NEpU6A3497jZ652jlo+F8Uf25iTj5/+S4qO/pAxEBRceIYnG6CzSvV8eCWX
+	abcZqbVO9CV8eMAXqyyHnd29s04cGV92rr1970ndrUrAgkEBvVIJgNzLrndrDzdR
+	N2FqUeaj8UHAgYnVWOS8Y78vOrCwjRfYkZPT6ivcWaK3j/il2Tj1c+NxBPA94z5T
+	MWuifIacpc5sbABMwNzRJRYhrnqZ+4hib7srybdGhpQlysFUIZKmxbpe2Ebg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789162756; x=1789249156; bh=2x+FU7AVnqHqJgWyD6VuzV8bu7gUYFNqHlP
+	iketheM8=; b=hr9A2sOdJQBATwmtomdjSjaeSujRb6A6lDTxSLATf7FhYCpquae
+	StD4F6Oc1ltYtLis8FBuiJm1IBrM+Qdqrspz3jeRcMp6RYzsx995l6HmhV85SiHU
+	ieu0dsjgmslB4Da/+lTteAINV5v2tMHRrTaKBgg9G5LwExRzniUVd9FNZ+kA2dIE
+	tV7o8AXIDpvzX8maOYeYJybN38620kdVkMuivhc8fU72EiZqwzTP+Cfi0Xb2ig/m
+	UaIX/kRDuR1JpjLMNu6dq5wAy0YgyrdxGzNqJgGRfhwI0o8MwH1Ekv6KpIjUQbL+
+	qr6a1MPuq/vNOC3Ajz0caRTV1GNQI/cer6w==
+X-ME-Sender: <xms:A3WkahEblTNeFHJpxlMghp5wvBZLLqPamUS2_ux5sQ5fVLyxvGSfHw>
+    <xme:A3WkanA6KS3ql03jloI_CeutR2xcUQBj6Er35gQ76hQCLJyuB1D5FPrKC4kS_miNa
+    S3ksnOTbE4KT4qs0pgobGVM8s392NDMzLRcmxbr2AbmuukGrVm3MEQ>
+X-ME-Received: <xmr:A3WkahVWA4wT4A3ZBSCxrcp3oG3pZheBwQJqdjG5PZnFCbYFJEUTENp0vZ_BeBA12t-zUaFdTSNVNPvlRvxfmiYj4THWUVyU_qZR>
+X-ME-Proxy-Cause: dmFkZTGOEUSE96qeJ0fhh9ExKF1q7zWRpy+fWesniCTNvIml1aOmETvBwu6+pUdPmva8fm
+    4rNNiLLxRdcji2IWaBiJcOO0HEXQpEkkTovDMM3LcEGD/+fODvq39JH6RURNXfj347nCrm
+    GKVKWVmM+jYUzZ316gJsl+MNrGOyZkPbwc7b0qeAvQqGgSlj3tT/rlCouS714ME1lHjP3n
+    IN7h1qKKOdlHl6xIsMa03uUWrF0BSu9tUs/GIXO7xamQeE9B9vr3y6wQqIcbWdE5JOC1v9
+    UwxEVYwnDlj9H7DzTEbX+LMsnsom+wv6l2g2wfUpY12qmoJSdUyZayPVXgFwsaiRfEPgTJ
+    ZMbeI8k5CDiTAWVzHT+K3YkG1UI43kVeYgh9nGe4bNzBzabw2FGwoqxVkqC2pE28LTusXg
+    K9Gof1NCkbH7CjFLVCtwngNpYGCzIYovYh603MOcHhwNwh84sz5vs7XAsl7XQHRvVeuEVN
+    jiGj7gBWJwF7t4k8IW4KNTMVTK0vHJoZwKwsHNye3dMJqB5f5e69uomFsOCnOvFmQ2gC9m
+    N2kORQxDc48EoTDwzMFIS0DviYKGY729bPq3HtsHGQJnK3sFY6TwZlxRG2X6jCHNaZ/bkv
+    dXYwx8/AHdGxfqXtQkLDJdI4gjgYt6cKRg0x2o7ntCmxsJlwUErHKFiMj9xA
+X-ME-Proxy: <xmx:A3Wkarrka4BRasQDoCnqzbgcOYVR9S5xTigLrUMol__Lj3DFZcIecg>
+    <xmx:A3WkatTawTgNyboFZpwKruEtnKen50y7jRpdZ8gvucBH0x_FdDBGqA>
+    <xmx:A3Wkal2f_XZajwUmf747Ef1es3w_9vOqyF7jmpZP3HjSYKLSakolqQ>
+    <xmx:A3WkapAmc6o54ABHk9X05uUhtQdcRnLWKUqYpORHPD3gNT7EAYIo9w>
+    <xmx:BHWkahT3obfWeDfnncCxTPIhCboR2SdJsdNmSRLL7_eW4asSK13WaWqX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Sep 2026 17:39:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com,
+  kristofferhaugsbakk@fastmail.com,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v10 4/4] hook: introduce the receive-report hook
+In-Reply-To: <20260910-758-introduce-hook-v10-4-06f9c506631c@gmail.com>
+	(Karthik Nayak's message of "Thu, 10 Sep 2026 23:54:09 +0200")
+References: <20260910-758-introduce-hook-v10-0-06f9c506631c@gmail.com>
+	<20260910-758-introduce-hook-v10-4-06f9c506631c@gmail.com>
+Date: Fri, 11 Sep 2026 14:39:13 -0700
+Message-ID: <xmqq33vfa2ny.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-X-ClientProxiedBy: ex19-01.utu.fi (130.232.247.41) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsH
- BUhYSFpIWVxIWVtYRlpbWkZaWF9GW1hIUEhYSFhIXEhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWEhZXkgCBkYJHgEE
- CSgOGg0NRg4aSFhIWVtIGA0ODigYDQ4ORgYNHEhY
-X-FEAS-Client-IP: 130.232.207.30
-X-FE-Last-Public-Client-IP: 130.232.207.30
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=TO5FHGidoLHQqq/eChoUylTlZYNr/Dpi2cITu3+sqms=;
- b=aqeOmVwGkf6xQpkDf8SPEiPjjpe0OhGvh7ajLlsRC0E1Kn0H+A0RUSmOlQN/1nsN3Z3Hgbjca5Iq
-	arAgC9NfhYbhrzrUPkBIcVIMDXkRPS/7qb/bgi/2hvLauA0Hrv+f13Fe5kEzETW/TIGKS7i5mZtu
-	kA0dlOaGvzPBg3qkRy+iWAROdC8FwTrseKDtwxCrousxePgz7frBrCGWQhR0zyDJfwLhbiuoX0PI
-	H9kR9OzkhjMF0XVKXfuo1OVArFTPcrTOwrKtZLN9MHnLv7jz3Hk9+B6gP11aq2X5JSei8qzKTrw1
-	ao+jt8WLyRwzgtPPWzMV2AmX1cF5QVWxvF79xw==
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> wrote:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> Tuomas Ahola <taahol@utu.fi> writes:
-> 
-> > Notes:
-> >     The release notes draft for v2.56.0 already claims that asciidoctor
-> >     has been updated to be installed via the system package manager.
-> >     Clearly it refers to this patch which isn't, however, anywhere near
-> >     the master branch.
-> 
-> I think the description was added to the release notes in 47ce80527c
-> (A bit more for -rc1, 2026-09-11), one integration cycle after the
-> 2.56-rc0 was tagged.  This patch and Patrick's "gem" patch were
-> merged between 2.56-rc0 and 47ce80527c (aka "today's master").
-> 
-> So there is nothing to see here, I think.
+> +static void override_cmds_error(struct command *commands, const char *err)
+> +{
+> +	for (struct command *cmd = commands; cmd; cmd = cmd->next) {
+> +		if (cmd->error_string_owned)
+> +			FREE_AND_NULL(cmd->error_string_owned);
+> +		cmd->error_string = err;
+> +	}
+> +}
 
-These two were indeed merged:
+This is my fault, but like free(), FREE_AND_NULL() can safely be
+called on a variable that already is NULL so we may want to fix up
+after the dust settles, perhaps?
 
-* 4340a709bf (ci: fix missing Ruby dependency in "documentation" job, 2026-09-01)
-* 1c1eed13bd (ci: drop ALREADY_HAVE_ASCIIDOCTOR variable, 2026-09-02)
+ builtin/receive-pack.c      | 3 +--
+ tools/coccinelle/free.cocci | 6 ++++++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-But this is a third one (ci: use system asciidoctor)---it seems it was never
-picked up.
+diff --git c/builtin/receive-pack.c w/builtin/receive-pack.c
+index 9ac7717096..1d5b050beb 100644
+--- c/builtin/receive-pack.c
++++ w/builtin/receive-pack.c
+@@ -2452,8 +2452,7 @@ static void update_shallow_info(struct command *commands,
+ static void override_cmds_error(struct command *commands, const char *err)
+ {
+ 	for (struct command *cmd = commands; cmd; cmd = cmd->next) {
+-		if (cmd->error_string_owned)
+-			FREE_AND_NULL(cmd->error_string_owned);
++		FREE_AND_NULL(cmd->error_string_owned);
+ 		cmd->error_string = err;
+ 	}
+ }
+diff --git c/tools/coccinelle/free.cocci w/tools/coccinelle/free.cocci
+index 03799e1908..c95ffa2a07 100644
+--- c/tools/coccinelle/free.cocci
++++ w/tools/coccinelle/free.cocci
+@@ -43,3 +43,9 @@ statement S;
+   S
+   commit_list_free(E);
+ - }
++@@
++expression E;
++@@
++- if (E)
++-  FREE_AND_NULL(E);
+++ FREE_AND_NULL(E);
