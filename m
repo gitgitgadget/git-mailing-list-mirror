@@ -1,170 +1,103 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ED0353A70
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 13:54:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59D347D95F
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 13:57:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789134865; cv=none; b=kxNYUzgPx/QQ6NTPprmtLgrLYwDvpjFoce2llRbOq6CGh96+okEVQk3IE2JBqhiVqpMNws+7u3awldAXCrM9zVh02Xof/1HKI23cRkUFSsuNYtesWwVaOdIdUgSBIApBUtEOMh6lJ0vHEqrvj09tDoW77DcsTi6t7p5Z432ZuAU=
+	t=1789135059; cv=none; b=Skv9JIPiyj37A77937LZvC1j8fsU0tha89tDQBBlKdAnlepSCrsI3KqfwrYl3GcS3FoxKISk5ZU+REJWSoHb6Q/JnFq5QXL0SL1ORM1g3X47NVxDMqHV10gBxBLqv2PqzZ/pj/87A9gWAnGSIEQv9e2K8dRXGkCrHuj5GbyWaS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789134865; c=relaxed/simple;
-	bh=TCzsxfp5h7/s8UQJWSDwXAKo+KSK/ktfwuuB1DKY1pI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X4775fxH694NRVRzQ/d7dXXEns+YKtlrTiblgITNWMc2bpqUZewmIo7OgvLma6RNPGVr2J7VuqVek/0ZzU+XGXR5V4Lgp0EFPsUTs/YftJoSIohUeSm27mciRyjIiqzEdgGHVkpDUjIQvyyrIFw3kE3u6HFTwazeRmhatKwQRlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=Cq+K1Kpd; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1789135059; c=relaxed/simple;
+	bh=DPbzBZM/grmyAVpqva6aOrp0IK1Cz316uA7XnRpV3PM=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fTIiygkhrHe7P6JZJGantv4w4x6S0RI8gYXhCsFSsbMiGjHAOw4xLm56qbP9ReP5QzS+yBqggNn91etsGGml2eytFuoT/Iao9rFtgSNaVeG1wlyUGwEVAM60v70iQREbjnCxmziehafWaebMd5FitC+0p9tMDrATMCcjCQt1Sg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=jtCtYkb6; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="Cq+K1Kpd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1789134852; x=1789739652;
-	i=oswald.buddenhagen@gmx.de;
-	bh=TCzsxfp5h7/s8UQJWSDwXAKo+KSK/ktfwuuB1DKY1pI=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=Cq+K1Kpd9NKJJDzf0VCCP9lVkH7qHFUZOemKj0c6rvpPOlL3RMD62KdG6YxQfrHi
-	 sEfiXSjVt4++olasz3EH/vy2Vi6hU3jdkC/ebmiCClpNxTsvrubrbK2AnATiwyqn/
-	 pEU60HKjoalN+FqD2zbfQ2lnIP3D2YOCkJyxSbmd/skdHRmCuQTo6tRJb8F4oWScj
-	 vygWU4xvcj//EwsLCzggIn7znghDfbuINYwcRrsVbKdt4ddZcFVhvhDClL66Ug6MR
-	 UMmjrNvD6U+Fv8MNk5ftJegalI4ec0YfWWOf1nfJadoYxhxzPtPOBn7lpumY6gK0s
-	 sMxCMI9SSHmgbuCLBw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M4JmT-1x5Iov1PRR-00BFxS; Fri, 11
- Sep 2026 15:54:12 +0200
-Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
-	id 1x51hj-DyS-00; Fri, 11 Sep 2026 15:54:11 +0200
-Date: Fri, 11 Sep 2026 15:54:11 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, jltobler@gmail.com,
-	kristofferhaugsbakk@fastmail.com,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v9 4/4] hook: introduce the receive-report hook
-Message-ID: <aqQIA37pZL0TZaDR@ugly.lan>
-References: <20260909-758-introduce-hook-v9-0-3043d417e0ee@gmail.com>
- <20260909-758-introduce-hook-v9-4-3043d417e0ee@gmail.com>
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="jtCtYkb6"
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 68BDvGO7021067-68BDvGO9021067
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Fri, 11 Sep 2026 16:57:17 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1x51ki-005Nmu-NJ;
+	Fri, 11 Sep 2026 16:57:16 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Fri, 11 Sep
+ 2026 16:57:16 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id b3034edb;
+	Fri, 11 Sep 2026 13:57:15 +0000 (UTC)
+Date: Fri, 11 Sep 2026 16:57:15 +0300
+From: Tuomas Ahola <taahol@utu.fi>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+CC: "=?utf-8?B?w4Z2YXI=?= =?utf-8?Q?_Arnfj=C3=B6r=C3=B0?= Bjarmason"
+	<avarab@gmail.com>, <git@vger.kernel.org>, Junio C Hamano
+	<gitster@pobox.com>, <rsbecker@nexbridge.com>
+Subject: Re: [RFC PATCH 2/4] .clang-format: Add a
+ BitFieldColonSpacing=None rule
+Message-ID: <20260911135715.N3vhE%taahol@utu.fi>
+In-Reply-To: <YsynY24oV47q7YxU@tapette.crustytoothpaste.net>
+References: <YstJl+5BPyR5RWnR@tapette.crustytoothpaste.net>
+ <RFC-cover-0.4-00000000000-20220711T110019Z-avarab@gmail.com>
+ <RFC-patch-2.4-cb69bfa0d0d-20220711T110019Z-avarab@gmail.com>
+ <YsynY24oV47q7YxU@tapette.crustytoothpaste.net>
+User-Agent: s-nail v14.9.22
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260909-758-introduce-hook-v9-4-3043d417e0ee@gmail.com>
-X-Provags-ID: V03:K1:5Z2Xm+7tSls9dy84/Hz5EsK+qqMb+sCPpUzrOiym+EnL699xKvf
- Rnljlvlvs4qMinP5BjeuSgazHOOgH2id0TYMn972Kixhz64OCsU31yirXsvYMrvusOWTMIR
- rPviafGCMAWnQOCtzolonvV5B/viLrxEhSiK4AxrjQLSH+heq+dRixmURW83ITCz42MSFHQ
- b0YPISTSxSf2b5B0eemQQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:74nOTgxLmE0=;Ew2rAe35d3AvLBm/90vQCJk6yAO
- aSrkGUPOjeaV54dS1tOzsymanoEeI39FyLYHrVulTXVflhKIxBSwUGxrQnfAVbyjrNfedwYlA
- BWQG/5SJ4HjzoUWcRyEDp3hGCLSq8Tse73eYrgn+tRu9z85bBP1Llq+t+KuJk5vh9jctho3hZ
- j+QCiIX3KCtKcoTWf+eH+nSOC+ptLHOeGF2sXWUaBvhtV9j1xdMFSLvH+iWyNSFtNTRK0ugoC
- Qh8LDDTOxAOPigF6KepNRAFx/nUatAMx7jaIgPCi1Uhvumc+b942Qe5sjBtUvn5irimqZlBpA
- bmksG4LaXx/mzPsyoR+jmv0J16tk1NMHLLErF1GjthZIy6BpjqXN+iTLqBqF/CmX2MQP1M+c4
- xheNnYbzWtv4rhvrhbWrKb3Irup6lsWDTM0+nKQPunkwbn9rOqJgpGGT5Fdzud6mRH7x9U8AZ
- w1FjTjMIg5SRzYY/+zpmOkjfO6+qxu03VIiqrVxlsW1lXzZi13ioVDYBnxhXTNCgnUvDNhQxV
- bBYlXHPK3dQuh+zRXDVPBlpu5/H99YBabOg6w1KldUYBmCpuiV4soBtVIZdMMjVTR31KKTdUi
- r6KzPy6xAhGNWatzBw1yRUkP+uePVmat9p33UAiOQhm5pi2GxPaYJnZmKSZBy43DZ9HG78twt
- YeF4tw18NJ8iPI9gFY8Av74kQ/3JdCqxXP/8VJO2y6TATML9DqRHFOXVvpaZJVUwyWffkDMsf
- Ab0RiX5ZXWhn99X/xj1iIoQjEiwo3i6igGJw8i+KKiNdA/KBeBL/LM/GmXA+6DbAlBim43B96
- qs5G1wdNIs0yFIT4XC29kZ1E3D05ILQBdSJsx7WqWDZ7VmkP7NEWtv9XWW5GwQZ168cT92IBY
- TrYTvys9G3KqT2Tipd0zqoEbGHNaFQoNn+mXZ/JLuV+g7LA0CXLWUOoGe0sDPwQlVz0CzcMu1
- bK1H1jqb0cRrQlXCjfnyRiBiE4TjhTvQkYSrkcfq+n42191BVElTRsCam7kPLyvSRGR6eP5QP
- YHhAM+MeTpcfGJGcwftnah1AxOCH9bqOlRD29XTAPuwJin7UlAG9vKjZk7+rkc3hAiEAxp1ZD
- zxmN9PXcyvGujfCu1HA4T0QUqRkSdw2hLjWuYs3cWiQ0MR6IzhfI0entj/+P9/+YLW3LLDRVS
- rk1V895szQMUMPWMIjgSwF+0z4H1Og5yqKTjd7O52hArOAcDPkZlOfTzcujVriPDBF3DFi4L1
- sfBlDiASnSACr1HS1YUSrVK+5Q8RfqRVXIBZt4UmuoRWfLtHktGDH6SzMZAu7wzqgylRaQGTX
- fXYS2SFLUifMNg+OghTWNLfhM+hgku5jkFHIgZzfvp0CKnHHsE0KaLj0sQMMkPP/1XqjqtORf
- l3SobZL6+Q+t41g4txmdzah+EWol4fwvmefTMnPB1fd9zXjmqOiH1HTmJxodJCU4nmiFRvH7e
- QoQPyZdjKlXZdqKOSnq7rGaHuPgGQvYUZnBcT10srziouwQWPzr4dh/6D8ck5fJhhyw5F8Iua
- amvqXs1kp9KlqiKHs6m4NNl6Slhw0Mwe53UWKpZdxXwMoCPKZEka/20Snagh3S4srC4jkYtm+
- zNB30xS73/h5/wxLh1tM2iKC8t3OGU1E2WKnMW4MXnNtFW29v8GxqsnRujD3Pbi7yxsLOjrOo
- vGMxoyhe3WZEkXQCc+2bg9kwK35wRf5Zp1CyZVVg53uV2Kb1y4+t4jtcDTXp3W/KJRqEN0Azn
- l+TS5sHlfCRMFTrenArEb9Ql/pfNSp/SaerF8veFDJvXMtUbOqGQKDB4vyYTc444S04J8wqPZ
- xL0FqCKI8DRcYHDjGO1XgSlCcX6itWkRLiNm4BW0UBLEr+SnVTUlFAtJEs3LjSYuf+OhMA9Xa
- FbCsT66LLdt3xgq/AWJ5RtGw2BYeqDfH5SgObE6ZmKkfbdRWRaTFdhxS7XuC4D+EYGZQwNJZ3
- oMaiTvmt7JPpJpmX6bAWFO8NF5Wg8DicGpE13nUirA3jpZat+5+34n7CfJFCpw84rUYycrhC1
- jwj+/zAVNPqgANS18CMLTgRuiK4lLqqwExOmwmKLo1HoxrRGZr8xPP43neF6oS7dOtpVaS7n5
- mbE6rM51euJDUz320liUz//pRH21Ug0wyMfVWF+6LH/pR/HF0TkKp309Uu4A2tbogE1XDq1yF
- 2q+nY3Ep2a/CDPmxJBFE7hIVSers1smqvYzlOW7vsJ274nmWmABF3KogGlXgtZzW+2YvNkvQR
- 8c7IeLbhT2Ex5PMJKVMRfbGGUpOIxPnue26ndPI+hYAzLr4cNJwHWlaA0RfhW4BuhrE3Od8DA
- jECjzN74YEvN1x2SAWzHxRt4R9sbKZRLl36suK/tHQr3/YJa0E5J1u2rKGXicH9nxUTpMWky/
- WezLL6yjw8e7XkympiRXLECTWq+V8rLWPkJOZ14btGO8TrJN9Os7eVKVf7JNL93CUd/73kpIw
- AVe5+BWINfhDKddKJyxAM178UCzYHOdPWht4jP+1ur4CFn67jhggtMjVRHMfLyMxJfULrYINC
- SClpuqA3zEN9tE4G/vDYh06PHb1ubkVz23N6dTBUlB041hkIxWzBv8yYvIikQYVSTE+2R8GOu
- MoStzcxZ1iF0L7PneJ7rH7nbzIkXRPmh3/MOBNttagRMzOXJ4z95ySaZJubmWC9Rm0oaHUnLD
- o2rjvCZ3pqXYH2iodDiGurB81GK80iteGlcxD+PFciVRe8WcDBa/3I7vr0kaN66xUn0CtB8fa
- 0rTw1HHXRpWmjtuDpGNGht9FMs8aedJ7w/07ue/jIQX2/aseFXtphQgepal5UZJOI2Oiezcq3
- hQj/XUxipbY2GI5Ziy3xq0sAUAlJZrnXAQ6CVzVCB7qnSE+DS3HvE1kpMxXeQQ4/5XKYoQ6yL
- coPtORcwR++u0G5J/RMsLrSMghi6mlgvdGPo/9TCQH1NCvC5OHSox1B0uN7ngJdT8O7UrEVcc
- 5W9KWfwnYOGFyriSHVEMW0JtQNYliqSZyZKUtfQ7cQ8rzciBMnXXIbXwsVf6LRgt7U6QsSRhR
- UHqhtOy8LC3epPnvUIqB3MW4o+GaiN26QQH/Z0ebYoMwfenrhQMGm9xHHxfmARIMfh0mpFTEc
- uAalqDXoNAzG9+11LwA6vK0bJruxbf7Ni6iwI37wXb5T6/VHkirYijyOsjDbpZnvH//8Ppx9O
- rbG/AlQafo36ac2omknSb8EsXRe0u3gsjT5X0ZRohZmnIMF7DTm8PHwpAfZ76/9c8HPUKC0Ju
- OFTHBkUYkIusGnmgV+H4/dDchs0SL1xtHSU8rOMD+1quBHALmaHdMk4tsXwr4KEXYPDacyIhB
- eK2EFuDmEAseNwlbPfKxtVimzK23QepCmtKeCehXXZ9xXe100FZ9jrG6dzo6ZRQ1Up1aUitaD
- Pdv+ucfGnk8GnBp/8OosCOn1treQsYcxcWUtjCo/0yLYUkqykYOLr9ot61rV77QdGE7abodcH
- esJH6haul3vwBMddk44YyCEazUkF0NXPObQfWzT5ggPBxz14xBUkvkI0HYepAogF0lwCDIfSe
- 4YVe0NuLoR5ylXMPFUqFmAjteKX90pi5KvivrTBwEoVbNTFRxtK6mcMSG4jIVDf3JhF8/18JQ
- YHa0k40RQw8NelGF62no5hBGMz/xVvHrcPA5Q0mN4+Pis3DB9m0WZTgDondcRFD3GgI0dUiXm
- X3e3OItSomf9GyP96moN5o6mpOa22+rimzWfISTnc97xBvmQyPyarw4RaxKRIpIQb/mTs77yN
- S2Q3rUywJdFJPxFpObHz4rmk8yirpAjFS2Z7Oo5/4//Tzx8i1BHvxld6+BihB8h1ysC0jQJhb
- nESVpCrdgpVvyKKL0ro3LTJMVH4nhajTbccCux4deAxVBMAhO8pmuFCbFH0tikzsRkX+By7eJ
- zv6uDE8AUYXh8Krj5jZepl+HUPLvBU842U6ReSICG7VEypCHCop3v/79fXNVsysyEijyyetk3
- ZBBPWlAg3FcC+AYxLCCT+fbLKTmy8hbdqA9lgw/8De93JPNgf4CQDcg0ALDZiUgD2Vb/pP6/+
- bAmwqfYQP7WXPfwryocBAQEsO+TojDywtgQ4aTOX2OeVZIxriOBoWw++oG1dt1ZIG/HH1vEV7
- RA5cnCtfNMw3rx2to3VPFOAFpqNyE7GsKTbM5pDY9NNhU9U4qn4xT4tPTesu/C0orQJo11qrK
- eOnM0y2S2cN4qP+0l5I3x8MzMpAkCW1zISUSQZ/E/8z3myVlFRO/6tmlwudOeLLX8I4nSZS3u
- 2SGgGZaEKbrDn+JU3ZFBCBA2j6e5jLHhy3sJK8MW/foffQjVLFXaAIkttxV4j+v6uqO9Q4m/0
- NMbOAvUHVeUR2BxvubIk2n54gQ9qlf3GJxs4igVvd8FWjl0UKnxC7IAg89FZTksf+6wupCv+f
- JLQccdPdu7QIiRR5LPhXVaAZVhjJ/ryGAnLJcsWEXmR6EhQbZMAtc031OSxWL7GoSCB8VHXlH
- CpzGKcyudj0Xe7sxsHivCV4Rh5vEEhxMy6c1a3ifnDG7xBekuWIDFH+nuN0OAHuLUE7LqsxHZ
- ji4hF/HdKilaJUCR3uRBCVJsa/eQEiiKRvBgJ0P8/pt/wdfrEZdOxofVpObX17XuXCC91+2HC
- WTRA+zRsWMiMuDtXQwZRZvn/y44KDba/r83BA4y5AlsUSBoWY2KA0W0SU4EUqbLxwECmG0+w2
- oTGkrOWySflcMkq6U9JsehOMmJCozaimR8NHvVTXbWxJ2EAKsg70fHet/Y82TwiGHuT6b3czr
- YOuj+XPd5YJejQPzGJFU+Q8n6HDv/S5HQzPiT3eebKN5XUPjqRA/W9El45ho3Ir6mEeOgOvOc
- +ZkYmSteoBn0U4h96tuwKTntXu0iDy+EFwuLDPFLqXzNNMk3+/L6hlTLXy+lfjNYFiooEG6er
- xSE0XEqWLvmbqCuDw9YyHbcdpFMXGcdPRc/T+2SWfc5yf5BGa6IIc7wo13ZRWkwz1EuWZSOaX
- kwu+XK41jWKAHf9KxGHzJzGjawyE2nWVJZ4Gf+yDpdy1lRGt0qQDAwzFXZqgjzlZsdB1Or21K
- 0CE24lJ4yqd8CRdzoKFkBLgBth6E4ovoqxnEuDVxZIJpNMiaI7//VjD3O3WlI83bgSYGC2n56
- ZCnRJqlxZn6Qqte7XC2vW05HSn9bdG7zF0ZJUmnP2P+AilOXzUYYwQzqLc8cs1rfoU/mg6NpD
- zXIl0A8A8qkCbhhAdG0orTuTnR1PCEoqSU7E8jG3V0fmhuGeap0gcnruq+BAmcA/xTVc6aQgY
- KnSKcDSBQKDMJcyuQp+/32HNxqGpSSW/kxCxwNydD/fII3bfj+0otivowsQ5MZs9kHsIos23d
- KcuQolTIhdNV6N/M81ErXrsmJaU2vd83kNtq46TJh1R5gBgLh199DKCyAKtqwi5JBIrZMNry3
- shP55dTx10KiuTylYLjdOCQC544XTS01rGt5XolMV3GSU66ItvKmu+x+ahhdFU88NKsgnjIww
- a8TK7hsCH3TxCG1ROkPpnuL3761toU4iHhFkQmxGMB6ibj2PfflN+troUJhFdXLyGg7/EnOdN
- lmDHTbmKqNVPc1TUAn4KCGMozW0VSJqNoJE0kXjyBCHquuCxfYDVwQvXW5bpwYlZKzEiSMoIf
- kcq83ZfH8iTVx18nv+HMDJWReN1lCGTuX64WnPfeaGSriRnUZa/GZeSvV+SXnzk5nqihHsNY4
- fXmNegP2Pgxh0gUcm/oWx3onja8RbmUbxYUFh0LIlYHgMRob+vgPAb5WlFVm9FZtCOFjdNMZ3
- 7CUlcVn04bSWbc1tOzKw1QLH1XKKSBAxiNsl3ZL6cymXE6NB2hvMX++hi57g5Ekzspvbxxjsv
- 4DPNOhr41chtcvR4MScjzPuaVNTPUwgptWw8emlZ+UMsPGD6HQl8IClSOJjfoGFqRpwQlzSET
- PuQ5VykNfO8O8tRs+Z26qvFS0IxQzJsGiXVYA3aRAocF5gU6+dTRtniO884PEOFgWnXNcIMBC
- Dn141ImOW9UyPXPRkwJEouNz460QRpJYZt/Ts6vndH0Mvh8N8DE1Idg96ypqCjM1kRH4Sk9WX
- 6HsKA7BkUEKsVq5N8wdnzesK+FB9tOF4KjrKOrt4l2iZxtK4jkTiWFk+UMV8cc+lx1BBUm6DE
- ZwbuapeewI99/FiaTSzaHC1LtOE+xdRATxKPZiP3f89t4vmK5B9lbdoqolwhJA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: ex19-07.utu.fi (130.232.247.47) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhaWkgaGwoNCwMNGigGDRAKGgEM
+ Dw1GCwcFSFhIWkhZXEhZW1hGWltaRlpYX0ZbWEhQSFhIWEhdSFhIWEhYSFleSAkeCRoJCigPBQkBBEYLBwVIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEc
+ GxwNGigYBwoHEEYLBwVIWEhaWkgaGwoNCwMNGigGDRAKGgEMDw1GCwcFSFhIWlBIGwkGDAkEGygLGh0bHBEcBwccABgJGxwNRgYNHEhY
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=axoiZrCUbrj7M9TXxPGLiNY2liBu58Jv22bqcV85ogY=;
+ b=jtCtYkb6ybBFomZD529zifs0xfRsI/I6XaO6FpkQnSnDKsr9+hK15wXuc8RVdM5To8MjXpvNAdA6
+	ZAiX2N9gjQrN+EiflfSK4U8a8hAAYyFLW6GRYYfOneFdr7zvjsCxHaPpdbx/Atm+xEpPqgDRUBZS
+	4ilcnAMBCUrHe+lOsfDl/SzWSGIfX7+obWifA62aQ+a1RKnm6aCJbJkM6QX1r+jMFIibWAbXxyRP
+	o7JdqTFFMr+EDZPcPU01SfKoWW1pXv47whfTc3he3HHLFIv2vDv/G7R9SKmZqOc3YKpRhdGMo2Au
+	jRrvnperlP7xBuPFumgOwY2McxskiQOTf8o1oQ==
 
-On Wed, Sep 09, 2026 at 04:51:39PM +0200, Karthik Nayak wrote:
->[...]
->Introduce a new 'receive-report' hook. The hook receives the complete
->pkt-line encoded status report on standard input, after all ref updates
->have been applied to the repository by execute_commands() but before the
->report is sent to the client. See linkgit:gitprotocol-pack[5] details on
->the protocol structure.
+"brian m. carlson" <sandals@crustytoothpaste.net> wrote:
 
-i suppose it's a matter of taste/policy, but around this point i find=20
-the commit message's verbosity to be counter-productive:
+> On 2022-07-11 at 11:37:26, Ævar Arnfjörð Bjarmason wrote:
+> > Formatting bitfield as "unsigned foo:1" is the usual style in this
+> > project, not "unsigned foo : 1", which clang-format will use by
+> > default.
+> > 
+> > Before & after this change running "make style-all-diff-apply" will
+> > yield:
+> > 
+> > 	582 files changed, 32029 insertions(+), 29794 deletions(-)
+> > 	579 files changed, 32065 insertions(+), 29818 deletions(-)
+> > 
+> > However this highlights a major limitation in this approach, because
+> > clang-format v12 or newer is required for this rule, but that version
+> > was only released in April 2021.
+> 
+> This isn't supported on Debian stable, which has clang 11.  I think we
+> should expect that to be a viable development target here, and I know
+> it's what some Git developers actually use.
+> 
+> I think for now we should drop this patch, and we can reconsider it in
+> the future.
 
->The hook's stdout fully replaces the report sent to the client.
->[...]
+Hi!
 
-i would cut it down to the parts that aren't redundant with the "proper"=
-=20
-documentation in the diff, keeping in mind that the central question to=20
-be answered by the commit message is "why?".
-
+That was four years ago.  Are we now in a more blocker-free future?
