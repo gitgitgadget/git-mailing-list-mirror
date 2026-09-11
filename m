@@ -1,85 +1,83 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55034490BE8
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 15:40:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87217489891
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 15:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789141261; cv=none; b=Yb5pmwSq/XeBjpc2kcWXI9dTKEc572abWlVLrmuldY6w2Ie1tMcj+soJvTGgrWmqSLdicdagLszF3TgPQxlI9xKAh6UojWvE/vXHXOxVpXuxHceI8ZvztXzqsiEO4JmQf4Ubpf9I6OwSS4yYGnfA1zvPTQHHdqk+Qd7Mef/rPRQ=
+	t=1789141362; cv=none; b=aEvkjOBRdMuvvazhbhL9Eu4grScKWfyHrEr4j5Zc58sFFbtK0QlVKa8OmIgr0KjhyVDa0B9RK6rd5aUtbY9I6AnsaKeZdgYYgrBKK6y/RwBePgVt5UHjBM0Gf1VYd5Im9KieDBNmaHZCGVwld33heISkB+isWk2TEA1TTRlHXOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789141261; c=relaxed/simple;
-	bh=7KcjtXhrbYukISVr9c0ZGTmLh6NNzdjdpf0r6YXyWpI=;
+	s=arc-20240116; t=1789141362; c=relaxed/simple;
+	bh=dxtcRckjxMLndfTZQtWFzt3xIG0n3/ENuyj1jr9/B30=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=orqTCYnscnVZUzkUYCX671O5IiHSnoeAOiinHwN1J4huZSgXgdCvON3J1UinFC3O+O0t5c1zVY8WDxjXl/lCc7kV6g3sKhZpTu7EjO2HghzqLPb3gnUVEQirQEZYR+ADPwfFbxOyHXUvhWhH61XXAQ4rO2H8qHprk3MuKuY+DV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mm4Oeyb4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C5bHGQSo; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=M0i0jTInnkX8ircXmy/wqjfSDxIvc0BaO/f9hYuGJAwHIE29ai4rYuE1MG390A6pEloyLqjjERlVWimGUZNk9pkpcseZUUuZ+z1TuweeCH5EikemL25XKIw4+gbSlq9L5iyo6I5AfDkkhuNTrXA4wjH/iaVAQ2jnzFIYlQv56F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qrZk3ai2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OCQANVR1; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mm4Oeyb4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C5bHGQSo"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 50A4814000DB;
-	Fri, 11 Sep 2026 11:40:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 11 Sep 2026 11:40:58 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qrZk3ai2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OCQANVR1"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7EF2D14001A6;
+	Fri, 11 Sep 2026 11:42:39 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 11 Sep 2026 11:42:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789141258; x=1789227658; bh=Z5rDA8t+tS
-	8CxfB4dimv8AjTH6c5qyuIO2OeeajekAU=; b=mm4Oeyb4BbKxJeitPO6knI3iOn
-	Q6N/ekxcpi6zkoQPMlhPfeldj1WUcfSRtmT6bRaZ/AFWIXmrRN4PURnRTjANAifx
-	ODcRhLnw0nobWBWAsmvCPp18rc5m46xVPwRuDmANuc1RxP8VmC3/ECjCRVfWmSCu
-	BiKaac5Q/Wf8Y1i/2x1HW5u1piGTe0Tv2G6VuM/2UabdusObCkWcN+aZAWPoyZvk
-	4S24Um3z0PiICqEHvcQ5vp4WqlnNL2Bw3WO3aWZ/fN0X7KVy1nxDWmHnLZzrppFs
-	k3D3PFZMfS23unI67urFJMHuYzTo8hX21PtMtloTyG87q6F+vPe8oISFdXZg==
+	:subject:to:to; s=fm3; t=1789141359; x=1789227759; bh=q3eTL21Qhk
+	PBWjtNFGvMCxcB+1RtXHPN7r+s3s0QWw0=; b=qrZk3ai2IK7R4cPzDucZkiA5Tp
+	RF4iwEq6jQ0mAAZBbezc8T1xKRqM92oieHBMs7H/J86Q3FzBzfYDbnT8Z1bwkHpe
+	myaUJQjMom+WKCrI0qRADAqRFFLQmRNdjAjNVnvAAAO+Gpqh6EmZmS3YcMrhXIHP
+	ccie1/29fXLXb+LalMoCPd9UPMcAFrpC2BAl0BiyJR12Seqs1pO0cW3jfoMgiV0+
+	sZfSj+yWIODO7B+JQleM/LUOipa2qBz+KpD8/756MME6W9CzYFw3R6tSl3KjIpXI
+	S7EJvko4rJBX2Yy+s91Zh5KiAQjHPWQx6P5ryR2yM6x5n9RI8RpVf+m1c89w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789141258; x=1789227658; bh=Z5rDA8t+tS8CxfB4dimv8AjTH6c5qyuIO2O
-	eeajekAU=; b=C5bHGQSoncjLnuuiRwY0mNm/z0Y8f3CDAWIxMKgEFtjXF2oz4Xp
-	Hc3B9eg46gC8J3+ixjayeR16YSKIkTGfEHv3tegBKJ0yRm6lMIUs3f6kccOluUi8
-	grYEIW0wxoFDeemt3nC6LqnQ9pboAoayx9+pp7ElhNFPwp6OXyZ4wJtA9kyGi93v
-	esYrajnGnZjYbMeydeCb2/eg1mkRZ1eRTl/xjI+1pOD3wWdLKeSk9dxcdsZn41OO
-	QKCcy+oGs/Ge7qYpRGyROk8idFvAubmXZRBKjh41EvKLRtMwXMA6qdw3br+KzaqE
-	VgJ9a3xY95lxMtsei8cCdCLx2+nUfrLgi+w==
-X-ME-Sender: <xms:CiGkavcDSwGx0RWhJCrnO2e1x4uyngcsXEjnbykxn0qmgcMhm9b_6w>
-    <xme:CiGkakSVnVoWYiHkFTy4fnd40QCECQMKcE4Y21eVyB4jaC48VvfjHIgfvVRRhmNpr
-    v_vker11K5Ll7lJHvI1fUQrINLMCdTppOZSEPjIXuwIe60FP3egVg>
-X-ME-Received: <xmr:CiGkautjcE_KxZdS1oXWqfzl_VUjq6ctyUyAZEER7qSjJ8maRUajH2WE0v1sqMJrKzU0EudxjaxowuxfbrEPl4-ZxDi_Fg5TGxrS>
-X-ME-Proxy-Cause: dmFkZTGwKC1x6BF6tzmxTGZKnWk8LC+y+40cXW01M1uqlpPIVrvPSoGTuQh7GQW114+CTH
-    1/LZJBrEybD6/rhbKGwk/5XgNZW8tWlqsTJSyXFzQ9NqWtQWKeZCaURvFqF4O7koBi1lFU
-    A+cjMf2WCd6XqOcSFnbJQVrpIL9PlPylHGQ6auPxMh93BzewWd5PfqrEJkkEOz1mAJ6Jqg
-    UjkEiWkCaQwnNVmv49OrwUCEZKO7z2h8Cx4kTcixq96Fu/cbFqyQIq5bBL/my8lesxNy/U
-    Eaaowx2KVXHjGXWAiCFXomYdUDOhB+GOPvBnzIvwRIQa2g3N6OZUwOrdP8DJ7i6RcKwxWi
-    doWpX73Znq/8AnrPbTztt78wIT9niGOn9EafG1jjUvH8JC8/U2TiKekTduHGV5RYhZXU99
-    mvazdDuDIXj8jh2LEidvU501v7qJkYAtDigy+gUJcvAb3gjkDJHUBfFYtOG/HJrSY+oXJA
-    4r6PButXGcEw5lH64UQt6+81NGox4JX5MuSk/LlYHvmRzg8s/g2B7Lw2eWm6AUHV2xXwGl
-    m+e6U4IhlxSlcCRys+x6zPnkKvZ/nEq2EAL0/iIXqd5j3w1Gr4/Z4BwzCVntBVy32dAxpo
-    FP0cLzNII7ROzKAetGN+qOxJiqfjQXoVq0/3+n8iFTo0sN/tx9PAw2hoSFgQ
-X-ME-Proxy: <xmx:CiGkatfKLCgVkzJD_fqEe7IfwxF6Q10gmLBjycFwj_N1PfX4Z9C5iQ>
-    <xmx:CiGkagYWwvGBLUkevtAiKD5iw9I54n_eDyyPh8Sx7HLI7x3-hIjALw>
-    <xmx:CiGkanbCrLGo0Jj0mmiAamkBSAe9mS2QUSmOKtGFPEB1Yr_y9uSvrw>
-    <xmx:CiGkatIg0PgYh57-35DPmFFO-33pwx7yY6Ps6Tv1Ve7d1yCBiaGMyA>
-    <xmx:CiGkal97eHQq6fwzGRUOWztdfccs4oUunbzn-D71ip3TiAW1qihih8kW>
+	1789141359; x=1789227759; bh=q3eTL21QhkPBWjtNFGvMCxcB+1RtXHPN7r+
+	s3s0QWw0=; b=OCQANVR1cvP8uhR0xGxTEZCxhyMtaUju7gfQcQIBAyEvT2/uBAJ
+	SYPewbjNpuoraU+OzarjTYi15jECZQj79JNyB6sgZibuczkQZqlbrPblp2qM8ah7
+	4VWQZLLlw+4lpCB+ATk2cstjA3FQz72cOaNPwoCDkSEtdsuelTVODWWjtuo/Avba
+	A2pRTuL5i6FxyTAaSpuDcmZYs06Nr7W7gCweFvl7hddvM8lIt+dW+XCvj2sVUy3K
+	vNyklv1ZVOcMD9a6uCYWVBno5vAS9KSkF2OrxetS2xExBcUm2W3N63U6x4a3aL0I
+	6m4HxeWLoEUCmTwpARXfeluLf14UgT1Aa+Q==
+X-ME-Sender: <xms:biGkarBdelvx5Y4ehS3_BUI42LJfhru1JcvmDtXKIPHFBCBNsVM6xw>
+    <xme:biGkaobqsvz_dFIMwEINraZXLx2mlNMSBZ8sc4xfhtwWMdfWLo0c-qPztQBC-rTUl
+    quf8kWYysLiLcOrMOEQVCBz0Yc3f8YfXaVxOlBEo-8oEzcWJyoyDg>
+X-ME-Received: <xmr:biGkau7RfGGWd70_NQNyb7X-r3cXH9YiugLcB5IYgkJdn0J29wNCxBGBWSQl4bzbcHqmJtPuu4nfBs5jRz59hYVdm50kRKzjjxOH>
+X-ME-Proxy-Cause: dmFkZTF6K4Lys4+V0dCQ78GSjyWfHXCpHkb5pYP00+/Tg5f3vAvbIVscx8K1acOLj/Ri3V
+    oqyskXkrEeIwWgyhoQi/lrLR+mIQZRv+Vun44ag+lgmEMaubb2hfcEpBU+pUWQuAY2j0WZ
+    DHdlF1do1FcBFgdLm/v+VkG9oAnEVkezJRnaoMvDQSicmeCkLkQAagy13MZWc3sD4Hfm34
+    p55Cdxk67mECLBCEk260wnBv+oOlBo9x09soVlfnC/JWzVP3tdVyUQgG01/ZUcpSBfuI/W
+    XPxzcNarnXoKoQaPRL/SaeJJMSDMRqTp5U4kLUJYw4Vet01WoiAuKiJLCX1A4mTfwGSXe8
+    tWbBGrqoOexcxVkV8YkCwBcwHJTaVgEISQ2O779aTqh+Xk0FxB6tdnw7bAyivI/DVHphJ4
+    gdpOJt7MAKp3MqdLbvt0yrHa64XX1bCZ8+VeTPH/5zSZnM9zkMcLFLGj+bnXAIokKvwJVV
+    pd4FC/kzY/QFXO559yTkWNeic+GzHe4YESI9NggCZZPfbxB/3oasF8UFUrVUIbssWCyIJ6
+    C7yTtuoL9YipOJSo1jdmYw28b9znRJ0VLliB2mkYeYLHbFHtEWhAv1aQ+8vhWEVzb5f0bp
+    GrIParU9T3NhwFKetIPSCohiP8tOCZ36MuOgROQZKrNsMcFTYAy7EalvFz7A
+X-ME-Proxy: <xmx:biGkapZgyhd4jqoNX_LoCj4ITPopgPod1seLLP3QN8xgF0GA9BLmEw>
+    <xmx:biGkatigT0cqoQ-9F17FzEm9NSgAY4SNakiBosElNAHbzKI9araPTw>
+    <xmx:biGkaq_lhYIcfg-CPTa--hvzus_yT6FwZJpSHPGs-a-CZpuSywUcbQ>
+    <xmx:biGkaopN67TsXyxDf030U2NPvfA15DlurDlwdFycgBOZpwlF5AdP3Q>
+    <xmx:byGkahKJeDzmjcf4_p1n1xWglHP8oqmCVvhQxiJ5OExTgyn0oQwVDjYl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Sep 2026 11:40:57 -0400 (EDT)
+ 11 Sep 2026 11:42:38 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tyler Cipriani <tyler@tylercipriani.com>
-Cc: git@vger.kernel.org,  Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
-  Stefan Haller <lists@haller-berlin.de>,  "D . Ben Knoble"
- <ben.knoble@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/2] push: fix --force-if-includes detached HEAD advice
-In-Reply-To: <20260910230506.1631656-3-tyler@tylercipriani.com> (Tyler
-	Cipriani's message of "Thu, 10 Sep 2026 17:05:06 -0600")
-References: <20260904210122.431757-1-tyler@tylercipriani.com>
-	<20260910230506.1631656-1-tyler@tylercipriani.com>
-	<20260910230506.1631656-3-tyler@tylercipriani.com>
-Date: Fri, 11 Sep 2026 08:40:56 -0700
-Message-ID: <xmqqtsnvdcdz.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] ci: bump debian-11 job to debian-12
+In-Reply-To: <20260911021933.GA948291@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 10 Sep 2026 22:19:33 -0400")
+References: <20260905135822.GA3914811@coredump.intra.peff.net>
+	<ap5Ttt-2NmM5dRZl@pks.im>
+	<20260911021933.GA948291@coredump.intra.peff.net>
+Date: Fri, 11 Sep 2026 08:42:37 -0700
+Message-ID: <xmqqpkyjdcb6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,93 +87,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Tyler Cipriani <tyler@tylercipriani.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> When a --force-if-includes push is rejected due to a detached HEAD
-> state where there is no per-branch reflog to consult, the advice is
-> misleading:
+> If we track oldstable, then every other year we're not using the oldest
+> supported release (because the prior release is still in LTS). Or we
+> track oldoldstable, which means every other year we're using a release
+> that's no longer supported. Or we flip-flop between them once a year,
+> when oldoldstable goes out of support.
 >
->      ! [rejected] HEAD -> main (remote ref updated since checkout)
->     error: failed to push some refs to '<remote>'
->     hint: Updates were rejected because the tip of the remote-tracking
->     hint: branch has been updated since the last checkout. If you want
->     hint: to integrate the remote changes, use 'git pull' before
->     hint: pushing again. See the 'Note about fast-forwards' in 'git
->     hint: push --help' for details.
->
-> But a `git pull` will not fix this rejection. What is required is either
->
-> - Specify the expected remote tip with --force-with-lease=<ref>:<expect>
-> - Ignore the error with --no-force-if-includes
->
-> Add ref->unverifiable to differentiate between a detached HEAD rejection
-> vs. a remote update rejection.
+> Which makes me inclined to just keep the current scheme: use the numeric
+> codes and just bump them every 2 years or so when they go out of
+> support. And we can even put it off until the out-of-support release
+> starts causing problems like it did here.
 
-Makes sense.
-
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 6021b71d66..9676c6241f 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -319,6 +319,12 @@ static const char message_advice_ref_needs_update[] =
->  	   "remote changes, use 'git pull' before pushing again.\n"
->  	   "See the 'Note about fast-forwards' in 'git push --help' for details.");
->  
-> +static const char message_advice_ref_unverifiable[] =
-> +	N_("Updates were rejected because the tip of the remote-tracking branch\n"
-> +	   "cannot be checked against a detached HEAD. If you want to push anyway,\n"
-> +	   "specify the expected value with '--force-with-lease=<ref>:<expect>'\n"
-> +	   "or use '--no-force-if-includes' to skip this check.");
-
-Good.
-
-> +static void advise_ref_unverifiable(void)
-> +{
-> +	if (!advice_enabled(ADVICE_PUSH_REF_UNVERIFIABLE) || !advice_enabled(ADVICE_PUSH_UPDATE_REJECTED))
-> +		return;
-
-Line that is over +100 column wide?
-
-> +	advise(_(message_advice_ref_unverifiable));
-> +}
-
-This is a tangent, but on a separate thread we were talking about
-consolidating a sequence
-
-    if (advice_enabled(ADVICE_FOO))
-	advise(_(message for FOO));
-
-into
-
-    advise_if_enabled(ADVICE_FOO, _(message for FOO));
-
-This is an example of usage that falls outside of the pattern (not a
-bad thing; just what those who advocate more use of advise_if_enabled()
-need to be aware of).
-
-> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-> index 0c02151747..fe6af3f41c 100755
-> --- a/t/t5533-push-cas.sh
-> +++ b/t/t5533-push-cas.sh
-> @@ -311,7 +311,8 @@ test_expect_success 'background updates to remote can be mitigated with "--force
->  		git switch main &&
->  		test_commit J &&
->  		git fetch --all &&
-> -		test_must_fail git push --force-with-lease --force-if-includes --all
-> +		test_must_fail git push --force-with-lease --force-if-includes --all 2>err &&
-> +		test_grep "remote ref updated since checkout" err
->  	) &&
->  	git ls-remote dst refs/heads/main >actual.main &&
->  	git ls-remote dst refs/heads/branch >actual.branch &&
-> @@ -457,7 +458,9 @@ test_expect_success '"--force-if-includes" should reject forced update from deta
->  		git reset --hard origin/main &&
->  		git switch -c newbranch origin/main &&
->  		git checkout HEAD^ &&
-> -		test_must_fail git push --force-if-includes --force-with-lease origin HEAD:main
-> +		test_must_fail git push --force-if-includes --force-with-lease origin HEAD:main 2>err &&
-> +		test_grep "remote ref unverifiable" err &&
-> +		test_grep "no-force-if-includes" err
->  	)
->  '
-
-Great.
+Sounds sensible to me.  Thanks for thinking this through.
