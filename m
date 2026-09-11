@@ -1,199 +1,209 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B3243CE79
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 12:25:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74FA45FFDD
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 12:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789129524; cv=none; b=ImBoAG7Bz7prG9fgpjDKp7zrfnd0bKFoyY7qild6lIk27ug228ZJqcJ9hhCfCZH7V7qUhyztTijAeQ1zDMBTzcFJDRF3KKZvi/pIE7gQe1B6Ao/4ognyx/+1000ZGMPWYon+IfMcfdtEnhpYWwyHGb/mDbUL5iv18GqP5LAMkp8=
+	t=1789130006; cv=none; b=KfThUuxmb40ciqcWc3hnhTLqIXl3gxvvrmZhHWOB/0RpMiaFXsGvjQ4IHaVQerROL7QqaEXKRMas9QE9EKzkuT/3LVdHKQOo3ZULdm2V9d7Sx4e8Jcm6bdDZVmq1h4Zo701T5dt4ohFun/Z+uKsPZtMolx7KhPvj6c4pWwBjA6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789129524; c=relaxed/simple;
-	bh=RfeOXuI9T0/ebLaWLFu4f5L5uuFlQednZOOnRuxwJZU=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=t1DBCWa4nVUn5/DVRwEdCHMw6OTBgxACo1LQh7+9T0Sy7J/uiYUONqU+JFdfIfIqM9Ob/suOB1Bjt8VGoOba5sADNxWBo55pnHwTKXk545NlJBlfoLItLxKLAP4kpcMS6do79jhyZa5VAqEBpdKilEuMFwMKP0oYoJr9jXcuE4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=UZB/kr3f; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1789130006; c=relaxed/simple;
+	bh=JszuMxaa2pWgOQSN0c4TtVsJ694+exI1Lg3cErscs8Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=aiCiVohnBulqWE08NnfFBOgkbHTt9eJfcY6Xd+Qwd+qd22/tMYxjjo9aA5+MfXr5EUbDYb8GKVLqkusNMBHrNvLyZuv0RghoJqpkMaGTjuAirBnAM69gXk+CHka36UqZ6djhIUKWd6SSgbtABS7iiBLkdmlUMXKfSU7u5LO+mRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J3vJSzf8; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="UZB/kr3f"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1789129509; x=1789734309;
-	i=johannes.schindelin@gmx.de;
-	bh=OmZMbog4yVm8w8gsBnDjR4AvaALY2JryU7a8rkiFFog=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=UZB/kr3f++h1DFLojfSIyTxfgXHAAMWPfqmCzR7n7cRjFlVE9h4tAQfxnHAd+Hy+
-	 hJQeGs67/O1zcTshIpm2N9AEGRKz63R0F8FJPAY/ULO1arqNZdliX2reEaQC5KYki
-	 cWX3UVMKn/EO3f/X5f5iqzf3bSi1HxbLpoThmcwwtvOrxuMVI1aep2N9iEQuOY7Dp
-	 iSZd0MThRqKpa9vsz7e5tpkmbocS5DDYq1T1MTAz79UZOp1STzdeEGLLTn/IjBMSG
-	 dZoRypq3JxnC6WtyvczRrwJv0tcwJ6mWVhSDRh8odB/xJyFeZ4dgNktNjKhtkbS8I
-	 Twv/mr5paRgkkCjYqg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N33ET-1whP0y1ImD-00ru6Y; Fri, 11
- Sep 2026 14:25:09 +0200
-Date: Fri, 11 Sep 2026 14:25:07 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/2] rust: pick a GCC-compatible Cargo target under
- MSYS2/MinGW
-In-Reply-To: <xmqqy0dkjhjn.fsf@gitster.g>
-Message-ID: <040027f8-983b-9c12-5498-330129cd8600@gmx.de>
-References: <pull.2213.git.1788272509.gitgitgadget@gmail.com> <2b7f58a037592325c2cb9b52bf8f1ef434bd6202.1788272509.git.gitgitgadget@gmail.com> <xmqqy0dkjhjn.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J3vJSzf8"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-871c8a36fe3so6861117b3.1
+        for <git@vger.kernel.org>; Fri, 11 Sep 2026 05:33:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789130001; x=1789734801; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=f34TOvBWXXuk1FSRah/NFXPDd/ZbITeFZcvGPXXA0z8=;
+        b=J3vJSzf8b9nlL0omRUhkXxtFSg6WC2WOV1+8R/pWx1lrlJH8Mv1xgp7unZ6PPQqADu
+         YGLLHXAhdR7xaAuFurHdX99u0MHPWsXmzQb0dys38cMWMOwdbzeMXieLo+HnULE7ngng
+         ZMoVIUfRm2Lf0KcjO/4Z6uNHCVYYh6Hzau1HqFcYPW0axu1Vo2+u3eJsR+lp89jYF9kG
+         +is4UNoInqHmD3Yqwi0wrKhGBBHYsyhjaSnO0b46vPLbZGyWVAMLCeUvsT6yLXSCG9Xx
+         MrMCjVM0wgDjomfIHHdbuM66ZbeHoKM+NOLvSRdbf55x5Mfln0TfuRV6FT8f01VyIHtt
+         +XeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789130001; x=1789734801;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=f34TOvBWXXuk1FSRah/NFXPDd/ZbITeFZcvGPXXA0z8=;
+        b=TIQk+jOzEMqx49JjasCmk873pP7jA/8aVuEkSUhZMQxLdrkJ+jZcjjKcsRpf4joAZt
+         9lHe5n704nDpRBD80aYmDngIzgSsZncCBi5gsvuU4vp4XqYopLYSYx+J34UCKBMn2fJw
+         O56HMQlzHoaCVajaadZVq7YIXxACjnhKEjcWLoa1hd8yD/sUGqwl9eW8B/zkhvBEvFHx
+         tRfliLqFzYtFxOuAWF/zxT/FtwhM8cxgaeeiQEE/HnsH2P2SxZin8DzOAAt5+R6f3+Js
+         MjIzMaAbAClHZFWnIBXG+RX/eHmemzWtXyq4kpIFsEOlfVYnUb5KO77OCsGihQLBu0pE
+         A96g==
+X-Gm-Message-State: AFuF++l9NEwAnZHKkbO+Ty0MxY6vOGE/8CbCfmEV6nI+UtJd9egMZ7bd
+	zPUg8M1PQCAsfFxKQulgh8OfijE3d1oJPIp636LAcU+584eBaiOuPrteJ/HcMA==
+X-Gm-Gg: AYBFou2xyWb8JkAEiftyTZdcKGE96m9W9UtAd/ACix873QikVnZ0QihFVfHVPtpiww7
+	Pa13zSqrleO9+wcsz8NQ1rGviRMd13EF17/2RclvwoaVo2kidvz7HvrgLa4HaLfPqoDPZOA11LK
+	HpDvfvD6lyd99AEy3gUA8wgoGvGFhowSle+Og8DVlo9+97ViPMVjg6AJ/M/CPbJu4rpBTbS5gpd
+	PV5y/jb5I+XwZDD1XtaK8/41nLhIdZP8+Grvn6mVBGZ3Sn1Lk0fEU6BYIy2RXJzUCW89TFG3+7b
+	Epob8vb6jAAN4tHCVF6s7SlTfrYvEax1A7iHcWQ22NkN83YafJeOiu+JKvS5l9nAqsz2u1kPNG7
+	VIFrqlMut5crPPpy+v1T7d/kahd0usfpIiA59uaCF/fm1k4iFHZgKGbB8wCTIz121zFRKeFpsiq
+	KaCqukPDA9XA9dx98kDlRnSEbrZ/uCn8GsD7ZxjbYj2U7faE9WrzCDVTvpMrYbaPAZzlL5stpmm
+	OnXwKCeD44eH89TBXoQLxAXXfk/9plgLOYLwTP3QVy2geB/YOc0y6bSq2Q1ezZ3XM/3juzrOCdM
+	k0zvQkgcipEuBBnR3iz+Ww==
+X-Received: by 2002:a05:690c:e155:b0:873:5bb2:6c1f with SMTP id 00721157ae682-884b210acebmr10797837b3.38.1789130000527;
+        Fri, 11 Sep 2026 05:33:20 -0700 (PDT)
+Received: from merguez.lyrebird-fence.ts.net ([2605:a601:9092:700::6])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8848701e82fsm9785247b3.22.2026.09.11.05.33.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Sep 2026 05:33:20 -0700 (PDT)
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: [PATCH v7 0/3] Convert USE_NSEC to runtime config
+Date: Fri, 11 Sep 2026 08:32:26 -0400
+Message-ID: <cover.1789129924.git.ben.knoble@gmail.com>
+X-Mailer: git-send-email 2.55.0.1003.g10538fe699.dirty
+In-Reply-To: <cover.1787231825.git.ben.knoble@gmail.com>
+References: <cover.1787231825.git.ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Provags-ID: V03:K1:Ip4iSWhiG9dYMM7ZB1X4g0Fv9eKzSlnw9qmUIG02bIRx7emQAIC
- 8U/zjiMwD6N6zgQaKvND6qEpN26rD59nTW+fYYkiLoljK6is6SwzNr8452v7LQh8ejLs5LI
- 56oRo+XNdpjRzTJ0pBlo2arIdFllM9vpNscVRIMG64CLBgDJlLfT3LUJnRTGJeKvNvyBVtY
- /JTA7jg5zvGcIp04tjqjQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ZIKF7jdTz94=;+Qymp4c1FRonq5hO9Sqzd+dqfdN
- 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
- S5/5q4+2dj/vKcdFQpXaG16a0QIobMPkpCw==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Junio,
+Topic name: dk/use-nsec-runtime (applied)
 
-On Tue, 1 Sep 2026, Junio C Hamano wrote:
+Topic summary: Expose USE_NSEC as a runtime configuration, since
+build-time is too early for distributing Git [1]. As a result, common
+index-related options, like git-diff, are less likely to hit "racy git"
+problems on supported filesystems.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->=20
-> > +                ifneq (,$(filter %ARM64, $(MSYSTEM)))
-> > +			HOST_CPU =3D aarch64
-> > +                else ifneq (,$(filter %32, $(MSYSTEM)))
-> > +			HOST_CPU =3D i686
-> > +                else
-> > +			HOST_CPU =3D x86_64
-> > +                endif
-> > +                ifneq (,$(filter CLANG%, $(MSYSTEM)))
-> > +			CARGO_TARGET =3D $(HOST_CPU)-pc-windows-gnullvm
-> > +                else
-> > +			CARGO_TARGET =3D $(HOST_CPU)-pc-windows-gnu
-> > +                endif
->=20
-> Assuming HOST_CPU is x86_64 in the above, as UCRT64, unlike
-> CLANG{ARM64,64,32}, does not match CLANG%, I presume that the above
-> gives "x86_64-pc-windows-gnu" to builds with MSYSTEM set to UCRT64.
+[1]: https://git.github.io/rev_news/2026/07/31/edition-137/
 
-Correct.
+Built on master (2c78326f81 (The 11th batch, 2026-08-05)).
 
-> There is this "we only need MINGW64 but the switch to UCRT64 is
-> imminent, and others are for documentation" part we see in the
-> [PATCH 2/2]
->=20
-> +        case "$MSYSTEM" in
-> +        CLANGARM64) target=3Daarch64-pc-windows-gnullvm ;;
-> +        CLANG64)    target=3Dx86_64-pc-windows-gnullvm  ;;
-> +        CLANG32)    target=3Di686-pc-windows-gnullvm    ;;
-> +        UCRT64)     target=3Dx86_64-pc-windows-gnullvm  ;;
-> +        MINGW64)    target=3Dx86_64-pc-windows-gnu      ;;
-> +        MINGW32)    target=3Di686-pc-windows-gnu        ;;
-> +        *) echo "::error::Unsupported MSYSTEM: $MSYSTEM"; exit 1 ;;
-> +        esac &&
-> +        rustup target add "$target" &&
->=20
-> that maps UCRT64 to "x86_64-pc-windows-gnullvm"
->=20
-> I do not know if it is intended.  If so, please ignore.
+Changes in v7:
 
-Since UCRT64 is still using GCC, it should be `-gnu`. Thanks for catching.
+• documentation typofix
+• I opted not to finagle #ifdefs more [2] nor to add a "safe default
+  when istate->repo is different from the_repository" (replies to [2])
 
-Ciao,
-Johannes
+[2]: https://lore.kernel.org/git/842F2470-F158-4E77-AD98-DEA530FC4460@gmail.com/
+
+Changes in v6:
+
+• comment wording tweak
+
+Changes in v5:
+
+• improve message flow in patch 2
+
+Changes in v4:
+
+• fix message typo
+• change #ifdef strategy: only ignore the config variable.
+  Otherwise, use the use_nanosec member unconditionally. Also clarify
+  that config might be ignore depending on build options in the docs.
+• mention potential platform unsafety directly in config doc in
+  addition to the link to Racy Git
+
+Changes in v3:
+
+• #ifdef out use_nanosec when NO_NSEC is requested
+
+As I have heard no comments about the "Todo" lines below, which perhaps
+could more clearly be marked "RFC"/"RFH", I've added this line to call
+them out ;) and renamed them "Comments welcome"
+
+Changes in v2:
+
+• move Best-viewed-with trailer into message body as descriptive
+  text.
+• read core.useNanosec through struct repo instead of parsing
+  config strings. The test suite passes locally this way, though that
+  skipped 151 tests.
+    • CI run: https://github.com/benknoble/git/actions/runs/31701945211
+
+Original cover letter:
+
+Hi all, this series follows up on the previous racy Git/USE_NSEC
+conversations.
+
+• The first patch is a mostly-unrelated documentation fix for Meson, but
+  it came out of something I spotted while reviewing the outputs of the
+  final (main) patch.
+• The second patch is a preliminary no-op reorganization of
+  repo_config_values_init.
+• The third patch is the meat, converting USE_NSEC into core.useNanosec.
+
+There is a small textual and semantic conflict with
+'ty/repo-config-cleanups' in 'seen', since that branch removes the
+comments in 'struct repo_config_values' which this series adds to. (The
+semantic conflict is that, if we drop those comments, we should probably
+not add them to repo_config_values_init like I do in patch 2.)
+
+Comments welcome: I haven't touched any tests; I saw a bunch of hits for
+"git grep racy t" but wasn't sure how to fit this particular change in,
+especially since it won't be equally valid on all systems? Advice
+welcome.
+
+Comments welcome: I wonder if "useNanosec" paints us into too much of a
+corner; that is (slightly more abstractly), we are using *extended
+precision* in the index. Maybe the name and documentation should reflect
+that, so we aren't too committed to "nanoseconds"?
+    • Some platforms could offer extended precision that is not as
+      precise as nanoseconds
+    • Some could offer precision _beyond_ nanoseconds
+
+idk.
+
+v1: <cover.1786103607.git.ben.knoble@gmail.com>
+v2: <cover.1786710807.git.ben.knoble@gmail.com>
+v3: <cover.1787065125.git.ben.knoble@gmail.com>
+v4: <cover.1787231825.git.ben.knoble@gmail.com>
+v5: <cover.1788010335.git.ben.knoble@gmail.com>
+v6: <cover.1788206466.git.ben.knoble@gmail.com>
+
+[1/3] meson: expose knob for xmlto relative links in manuals
+[2/3] environment: align repo_config_values_init with struct declaration
+[3/3] core: convert build-time USE_NSEC into runtime core.useNanosec
+
+ Documentation/config/core.adoc        |  7 +++++++
+ Documentation/meson.build             |  7 ++++++-
+ Documentation/technical/racy-git.adoc | 11 ++++++-----
+ Makefile                              | 12 +-----------
+ builtin/update-index.c                |  2 +-
+ compat/posix.h                        |  1 -
+ configure.ac                          |  6 ------
+ environment.c                         | 27 ++++++++++++++++++++-------
+ environment.h                         |  1 +
+ meson_options.txt                     |  2 ++
+ read-cache.c                          | 15 ++++++---------
+ statinfo.c                            | 14 +++++++-------
+ 12 files changed, 57 insertions(+), 48 deletions(-)
+
+Diff-intervalle contre v6 :
+1:  d612de6c2d = 1:  d612de6c2d meson: expose knob for xmlto relative links in manuals
+2:  12974e07d0 = 2:  12974e07d0 environment: align repo_config_values_init with struct declaration
+3:  0a611f6140 ! 3:  d983e2f0a5 core: convert build-time USE_NSEC into runtime core.useNanosec
+    @@ Documentation/config/core.adoc: core.trustctime::
+      
+     +core.useNanosec::
+     +	If true, use nanosecond precision for ctime and mtime
+    -+	comparisions between the index and the working tree (if Git
+    ++	comparisons between the index and the working tree (if Git
+     +	was compiled to respect this option).
+     +	This is unsafe on some platforms;
+     +	see link:technical/racy-git.html[Racy Git]. False by default.
+
+base-commit: 2c78326f810173a4f3aefd8021f1e07575412481
+-- 
+2.55.0.1003.g10538fe699.dirty
+
