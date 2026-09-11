@@ -1,86 +1,85 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D6A392C5A
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 05:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D567E3ACF1C
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 05:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789103720; cv=none; b=KfvvvNO2171u05cIKlVcOPVZuSHtg1Ane0RKx1/6JPuNjZLl5wCZd0PxzCjBNmHe90l0HrxEulr7+sTkrmKIOOKcie3UCnh+RsHQj2Or+feqcOM3NUPd3I/Abmh+AYS8DQonRyanU+dULA+0DnMUbP1YiGITEm46UvG3jnWetF8=
+	t=1789103723; cv=none; b=ARvuIhOVUYfoHfRQ5IeYF67ujAe3feARES+x4VU5H3Wg9xD34P/5ftvj9P7hxWgg1w7XKDEJ1ynmYLU/wv7sWXBOCPE7n2oXL0WkmSOFhDsErbaqlkMbfrkE3ahb83JsyWGXfRRmcaCWxHKJlgW/DhJ3rpoDR0J6Ak2V4TfA9Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789103720; c=relaxed/simple;
-	bh=EADdvPuj+29EpVSpQqsNzmjGHioB9syAhEtz20WIibI=;
+	s=arc-20240116; t=1789103723; c=relaxed/simple;
+	bh=/uZj00DtlIhS0blBEw/CYIaVwCSKZt6yCuXi1nIpxB8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ezKJi/B1Mn9GhNEcVPpudLF41n33rZNttQKWAZ/SUiCMQCWZGJHRc/jGXJwn0MXWcO/nTz7rpMPXx31AXLLzoSn0LKo6M5ensJKgiAzCyA2xYq0CMzQ4yM9RkysD+YCo4ftHiFg1C1Ve3wFtCO7psaM1Q+qYI1Ay8MwhKaqWBzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HIOAr45E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dQkzEE0F; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=BIl2QtJjSKV4oMuJG1UQGwxx5hoePToMJISBOhkQRpi+BPXcr3FQlg9bgRM4Eg/g+n18dKP1jIy0r0vAOPIA2U84S+j3VSH1gXbCekKRfP+LIPOBgilILl2zVK5spT+mBpHJ48Lj2XDV9mgEkaP/XFnLeHwpz0IcfG3EJfE3bZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KgUHP7Xu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k0g4dlkf; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HIOAr45E";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dQkzEE0F"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id B8912EC06A8;
-	Fri, 11 Sep 2026 01:15:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KgUHP7Xu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k0g4dlkf"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 03A2BEC06C2;
+	Fri, 11 Sep 2026 01:15:21 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 11 Sep 2026 01:15:17 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 11 Sep 2026 01:15:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1789103717; x=1789190117; bh=OC58O1wADr
-	X3BNQsZn7RS74GuFW7enpwA1xPo8vJ32M=; b=HIOAr45ElcZz+yfVmCC+7XisQx
-	MUg5lr05aq/koztMrGpf3hgUigPrExu7ubSc3KE/Y5ckUotKCVZ0ootDNjU+M2iJ
-	t+YFS3BJj9aVmpYJOk04KVcf98771UCEDWyKqyZJXHjCFYbOGCXe+zKutfBed/5o
-	8D3HNeT86F2eMP+gjs7PRV7miFpU1gpZRMB6YQJamw9jwPe4+8yKUl3Z2OxtaGGJ
-	BE9pAUoCRTRJPSkQBxDddW1Js9HqzpUUbAXINQtp/E6K3HqcK8MAaFLdGWpoFcQ1
-	rUv7MwKWvClyAFsklldgZuUZXak741UaBddmaacibFZjXaCKcpaHsJI9N0TQ==
+	:subject:to:to; s=fm1; t=1789103721; x=1789190121; bh=cOoysKpkRR
+	7UBBL1KsreU/tmh/S3JjVrdDgk47UkE90=; b=KgUHP7XuilAz57frYjVHD1QD3/
+	FYbXEcc8wTjI9dQ1slE9KIETs38iGbtGUWw6ZdfhPMH0mNMiVlMVIrfNC7VXn3gI
+	hPxQ0krap/OMAy8toORYjayOdojvAHlRhaOFS3eEyMHU5MMNiECTJzZWnRa2CtjD
+	rYymPdsJt+2l5iqZpu+QhUZzxCnVb9EntluHpicTsFibQluW6WsG/swkpVyjhtad
+	qHrgv8rj/aLMvaQBMTNydPbE5ayfgKuNC9cjbHm/8Jh0v75gRh7yaBtWrPmWCD2o
+	2hlsnV5Jju+oQVJkIT3FVkn3GsVE859Y6a3yoEbHxQljl1vAgFTyKbbjsCGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789103717; x=1789190117; bh=OC58O1wADrX3BNQsZn7RS74GuFW7enpwA1x
-	Po8vJ32M=; b=dQkzEE0FA2iZSAo1JYUjiWToO0eIG9rosXL7mEEkIaV62hOGuIG
-	yqAX6S4fl4d3BeUdT6I3JXffNDZJpC7FMY1CizFmOaLklNyd9OWLNynNGA0VuL5c
-	8dKVWrJMhKupa7RMEVxlXTDLsTwI2573P8adynWpc1duDd9Ui/ubEAQw02BfJiuR
-	XQOkRWkdtFOEHdR0/QP+T5UhWX/nnIYXj/0r3Aif94x1n93aMMPRDtMa4d7nF9l8
-	8DMjNJ27lLliwG15caXIAw6kWzb8d5wDhMngWZq+7IuOvB8tIusnpqlia+CkbqS7
-	l0RGsOMZqxFtHyB41zl/bucaI8u8otPm2Eg==
-X-ME-Sender: <xms:ZY6jagXLd0aNJGxQDEYzf_BuK5rmMJboAK5Eq8TuG1LNTRMT99sEIQ>
-    <xme:ZY6jarfVMDsNv65uuxQq143nMqmCwiMnyD2mwV3K-tFKAYWyASXoq3zUAB19o0zlD
-    EY_YTm0aCFyP96-lUEV9bNtpsarvv9XNMM8PDa805-2knA3QOOJH6c>
-X-ME-Received: <xmr:ZY6jasv7k21lCkD7gvSRc1orxNWvbdDUm9O7ehYxT8saCeS7nX4sLoYpyavAabmcIUHoZA>
-X-ME-Proxy-Cause: dmFkZTGhwnL4QwGgbDsEbFN4d8PKSZGpSIPYR/SpOnmgVigl0dUlI2jbEkut+8/rkIsDe6
-    WxX2sG84RAWhIhfODVlVupHJ7yHjvm5RAkzIeY5b2DA5Z2AWOfcS3T80PPyw/QRKgg0xge
-    shIwIKKEZb2FAySOAqT2In6cYLOwEjgw16T42UJ57yJaVFvp4hxxwVjz/01e/DXcwXNtyi
-    13xDfV+R49hXK3HGMHL7cFftK1GMbuUqDqE9vSucsQSIg42QhkRX0rZ8gc886WQSZ4QsX2
-    MCBzQ3Cqx7O8TwPT46E+3I/lSb8ECTn4pYnsBbm7KmDc8PL2Z74MYQc1Ghjc/Jibq+E5hi
-    ngtW0gKKU7tUr7pl2EHRC3SMRDgEaVx1ol09Py326luodQ9/20ZwjWT3xyOV70INI+FQdd
-    cbwNXDQqPrUzmrL5NG6Jlyf+RIWzAwxmjel2/oIF4VasAQ0zZBvtwcCGAMQ990nR0jQnT8
-    s2GJDyc+LD+dmoQT5yeEGwJheKNDeYQAT2EF/gHXnXsWEN0QljjwUe5iADUro8vfQ5VYpR
-    43WlTEuv1bitqBGNh1ak/0lllEx+M1U0QJ47FxEl1F2OYf9py3at/06l2e/bVTv1Rvnr+3
-    vRWSs6IatDwmiCkCobKFYoIyL7XoGrb+Br4onQvOpOAjODM8U2A0a3/plHKQ
-X-ME-Proxy: <xmx:ZY6jaq_B_0ooASjNKzCtdBXJ9bWqDeuNAHNRPWSN6u47csenIVrGWg>
-    <xmx:ZY6jan1uUjteNGx1GR-jMQX1ZyZx2loZXRWrJu1ogMSJaJMWLe494Q>
-    <xmx:ZY6javCylZaa-i5hzlyh2R5hOVzy67jDMlQcQgpiUrrWZs7WyxRNQQ>
-    <xmx:ZY6jajcY-gdDWN2zOeiefxmIozuNqYWjb3b4K_2VXduznis3VMubVw>
-    <xmx:ZY6jajaTWxueFyzDtISXAMRq8eF3Hm7FhTVlIx1M_vNORtXbyR9wKIJa>
+	1789103721; x=1789190121; bh=cOoysKpkRR7UBBL1KsreU/tmh/S3JjVrdDg
+	k47UkE90=; b=k0g4dlkfFKd4ipMVwJrKgCvuUcdH87b285BdJHQ8qrRK02W8q/S
+	aYxef7Y/bsL6vuEX7H1ZtklfgmMK0oJTK+PfitwDhCeKPDUR/XmDFSteGomb4jYa
+	48YGCIXoLsj7ogiwO0E26tY++hllzwLjH+p3N99dXsdoclkXUVIECvDkQZLhaa9j
+	h/9Y2OKFOJymWK3wRwHDN1z2yhKZQlnOARkSytt0OHXOjb9zm+rTDPWMtLRPstra
+	WhtkYVvNZKrMTYKndbYQ6l/o/9VuGDhxJVeRwbVly5VLvoeWHJnT68Q2UUS7CbHc
+	MFNh6NZohx7lu2rXqx+AzPHm6FBfLKdr58g==
+X-ME-Sender: <xms:aI6jajEONadp3SrQ-mh1v-E9hyvopkQHbNrJGYwpv1MjS1pAD4ddXQ>
+    <xme:aI6janP3r4qbgCNbrxJMIZcRj6_oL63lQqg2NAhJAQ7TRuBvlGv6LzpF7xjyHTmZ1
+    _bDD4xlSEtWCre0CAnzq-K77rQ9guuGqANByNsT1FFwiZyr7zw0ea0>
+X-ME-Received: <xmr:aI6jatdAVKCC6hJ6QInvXRdTAzqY5ABxwqgS-cN-2q5mD-dICroNrfpxmpsFWixq4YkhAA>
+X-ME-Proxy-Cause: dmFkZTGEo/DGXRr6WsB3M20CDFOnECDASavAz7btXzSUbvfiCEAl72FpbFfpXyEmsBPFu/
+    RHjSwIo4aL7UCYlsk4L+wFcxGVqldYgpWooyNt30YzDaJixGZRHgmsxpWqQszHXKI7S+oa
+    4fecYUl8fy/O1ULWFgrQjwoC6NelUt5o9bkTuF5TfexlZcV8NMyb368K4G396W35aUkqwR
+    f+MhuufswUOpzLYJ8GNpu9EP7l/DRTqxQp39aNxWGIovn99vC7LvLGK8rJEJ121prFyyK9
+    xjgyQ9HEiaRsYdZIOlLIIA6K8VRwY4vV4HidbhcS3fSfDLQK+HL9d7TMF5bRRhpktdPUFd
+    mOmQZKajVXzuRYOWqvEsJ5gop867iuZxtfLtFPPn+PutZUF0e1qYU45P/j1MV7CYkqoD8z
+    JnVUbDbAUZ32YmiaaSsadr6ndLczlRHrJc+hAZUD5nlGaRz93ZXcMoTxqjXyU7n6yZz2gV
+    +cuQMrpfaqTtyBzC5OIIxlG2k3flCE/bOC9uLrhKgTNFQe0TG0rhvYonjLeTcJKKCFOgW/
+    yzrYlbnNESCAZLIyAShpN+WklG4fP+TdKb62kR+L7gArgWEJwE2rG6lIigYIC02tXUvn4V
+    vljOIGNPCRaHZIeJ1OrhgJvQECpDpKUpDei1jtfprq1UqZuwCb8tUPLdJErw
+X-ME-Proxy: <xmx:aI6jasvv9bNSNMZ7mc5zYRvmdo2YWMODojMLVGodLOt_1dfDXezQEQ>
+    <xmx:aI6jamk4YePjDkbDZUghyllsqbEgK5DJ6EZIME_8JSX32W3vy_I8pA>
+    <xmx:aI6jamy02zuA7EXHCUlzvgK0jvrayruKgm3-1FZOKgMRwcKuBonmMw>
+    <xmx:aI6jagMibjKutwPMPlzniq5VwuoU__0fsvKKlEjAlM-kL0KFMygcJw>
+    <xmx:aY6japJxrOwtklKnOpJDlSZ_U0kRBf-ELIQ64eqWQlBBjX7MVjYAh7hz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Sep 2026 01:15:16 -0400 (EDT)
+ 11 Sep 2026 01:15:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9fe8ffdc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 11 Sep 2026 05:15:15 +0000 (UTC)
-Date: Fri, 11 Sep 2026 07:15:12 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 9b52f4cb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 11 Sep 2026 05:15:18 +0000 (UTC)
+Date: Fri, 11 Sep 2026 07:15:16 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v4 7/9] odb/source: support writing alternates when
- creating the database
-Message-ID: <aqOOYI9v8M9VYeNN@pks.im>
-References: <20260909-pks-odb-write-alternates-at-creation-time-v4-0-d8a78ffc32e4@pks.im>
- <20260909-pks-odb-write-alternates-at-creation-time-v4-7-d8a78ffc32e4@pks.im>
- <CAOLa=ZQaPstiQmXm9=TyWPUxL6X2=Lcqeg6y2XeXzSJDpq-GBA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/9] odb: write alternates at creation time
+Message-ID: <aqOOZB0wQ8FNGVE6@pks.im>
+References: <20260825-pks-odb-write-alternates-at-creation-time-v1-0-911513ba95c3@pks.im>
+ <20260910-pks-odb-write-alternates-at-creation-time-v5-0-8d10c4238edc@pks.im>
+ <CAOLa=ZRYsJL_0sKnfHD0PJO+5c+BKSMiuN20PeQHKJin82TJDw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,60 +88,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQaPstiQmXm9=TyWPUxL6X2=Lcqeg6y2XeXzSJDpq-GBA@mail.gmail.com>
+In-Reply-To: <CAOLa=ZRYsJL_0sKnfHD0PJO+5c+BKSMiuN20PeQHKJin82TJDw@mail.gmail.com>
 
-On Thu, Sep 10, 2026 at 04:10:31AM -0700, Karthik Nayak wrote:
+On Thu, Sep 10, 2026 at 12:53:21PM -0700, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/odb/source-files.c b/odb/source-files.c
-> > index b7b3a297bb..8fe65d91f8 100644
-> > --- a/odb/source-files.c
-> > +++ b/odb/source-files.c
-> > @@ -64,8 +70,74 @@ static int odb_source_files_create_on_disk(struct odb_source *source)
-[snip]
-> > +		/*
-> > +		 * The alternates file may already exist, e.g. when it has been
-> > +		 * seeded from a template directory. Read any preexisting
-> > +		 * entries so that we don't end up writing duplicates.
-> > +		 */
-> > +		orig = fopen(path.buf, "r");
-> > +		if (orig) {
-> > +			while (strbuf_getline(&line, orig) != EOF) {
-> > +				strset_add(&seen, line.buf);
-> > +				fprintf(alternates, "%s\n", line.buf);
-> > +			}
-> > +
-> > +			if (ferror(orig)) {
-> > +				ret = error_errno(_("unable to read alternates file"));
-> > +				fclose(orig);
-> > +				goto out;
-> > +			}
 > 
-> Shouldn't this be checked inside the for loop with every `fprintf` call?
-
-There isn't really any need to, as the error indicator on file streams
-is sticky. Sure, it would allow us to potentially abort earlier. But
-it's unlikely that this really matters in practice.
-
-> > diff --git a/odb/source.h b/odb/source.h
-> > index ea8675247e..63f1c0c531 100644
-> > --- a/odb/source.h
-> > +++ b/odb/source.h
-> > @@ -36,6 +36,15 @@ struct object_id;
-> >  struct odb_stream;
-> >  struct strvec;
+> > Hi,
 > >
-> > +struct odb_create_on_disk_options {
-> > +	/*
-> > +	 * Alternates that shall be written into the newly created object
-> > +	 * database. Whether or not this option can be handled is specific to
-> > +	 * the backend.
-> > +	 */
+> > writing alternates into the object database currently happens via
+> > `odb_source_write_alternate()`. But while that creates the ability to
+> > create alternates at arbitrary points of a source's lifetime, we don't
+> > use that functionality in the first place. Instead, we only ever write
+> > alternates when creating a new repository.
+> >
+> > This design is suboptimal due to a couple of reasons:
+> >
+> >   - It requires us to have a `write_alternates()` callback, which is
+> >     overblown as we never even write alternates to an object database
+> >     after it has been created.
+> >
+> >   - We're about to make alternates an implementation detail of the
+> >     object database's backend in a future patch series, so alternate
+> >     implementations may not even support them.
+> >
+> >   - The backend has more flexibility with how exactly alternates are
+> >     configured when it itself is in full control over their setup at the
+> >     time where it creates the object database itself.
+> >
+> > This patch series thus refactors how we handle alternates so that we
+> > don't write them ad-hoc anymore. Instead, the series introduces a new
+> > option for `odb_source_create_on_disk()` that makes it handle those
+> > alternates at creation time.
+> >
+> > This is part of the bigger goal of moving handling of alternates into
+> > the "files" backend.
+> >
+> > This series is built on top of 2c3adbb2c4 (The 18th batch, 2026-08-24)
+> > with ps/odb-eagerly-load-alternates at 0076dc9f81 (odb: drop
+> > `alternates_db` field, 2026-08-17) merged into it.
+> >
+> > Changes in v5:
+> >   - Rename `add_one_alternate` and `add_one_alternate_data` to
+> >     `collect_one_alternate` and `collect_alternates_data` to clarify
+> >     their intent a bit.
+> >   - Drop extra parameter in `collect_alternates()`.
+> >   - Clarify why we compute `commondir` even though it's unused.
+> >   - Link to v4: https://patch.msgid.link/20260909-pks-odb-write-alternates-at-creation-time-v4-0-d8a78ffc32e4@pks.im
+> >
 > 
-> Would it make sense to formalize errors thrown by backends, so we know
-> when a backend specifically cannot handle alternates?
+> Looks like you missed my comment/question in
+> CAOLa=ZQaPstiQmXm9=TyWPUxL6X2=Lcqeg6y2XeXzSJDpq-GBA@mail.gmail.com, but
+> otherwise looks good :)
 
-Maybe, but there's nothing that'd use it. So I'm a bit hesitant to
-introduce that right now without us having a way to verify the logic at
-all. We may want to eventually introduce such logic though.
+Oh, indeed, I somehow overlooked that mail. Replied to it now, but I
+don't think it requires further changes. Thanks!
 
 Patrick
