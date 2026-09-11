@@ -1,125 +1,111 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780A8413786
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 19:01:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789153325; cv=none; b=oEkzGtscJJGLUTj7RCaJ1LaqwLxrXTxJbJ4lLUkpIlrsUEOXNj2Hh19ptMC+3Cg+dVeR7hhVUTtSN7t5AoEY/ahFZtEag6iG3+FnIi92WwPfA0YiFyC+MYiiga/nOqGzAAIWRbWtx4qp9V18GWscRFtai9Gk6vBcifcgSpnJQRk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789153325; c=relaxed/simple;
-	bh=W5mqV4qn3lCVmCT6DKT+6R34kdiiFFFH9u5svizWuoo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kKug1us0y7PgsbXss+zVGIhy8lauJVUzSOeN8YmOR4q1Jd9WdyhkBAL/XvxSSJhA9HIYDPk+gWidUE0lfwsGP6rFvE/CkSKrMY68uOc+zEQSV7PU124kuCOTtQXWXfMYAi1c7x2UGtJbGVTDzIqmaprxKbguXutJE93KCZQMAAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d8jV43la; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ia67hd0C; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467E63F1678
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 19:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789153334; cv=pass; b=SeQBHWBl49GmdeOZXxnh/OC0n/T3Zcw5pd+1B1wgpaWIpZ7G3fjLK0YKTiOe6Ph7Vg1aqygTBz2fBpUO6TeYamg/1aJqhrY8sSn/4m9AQ+NKsJf8QxLhG386gPC2T1DWlbZVG523g1tcQr8MIZrZd52jg6uyEl6FOmCqjSYgxnI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789153334; c=relaxed/simple;
+	bh=CGI+RLcT2N4AlwLLvuPxVrk7mSHti0u713wBSIlnvdc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FB9Y6gu2GCCYnHSek7erVqQftIRcMf4JF1JIN5ECNFW0uVn22miFaFtqsfSxGI3Z3i76SvWcRR4yypG42LgS0OM1MtS7ThjMg7ho5GG0aqgVHq6b3//7tzTw9jy7DcuCHLsnQjy/kNN5hxr6xnNTwTA/V26a3svNIKUCWe0vrWQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WbEj5wb2; arc=pass smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d8jV43la";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ia67hd0C"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7044B140003B;
-	Fri, 11 Sep 2026 15:01:45 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 11 Sep 2026 15:01:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1789153305; x=1789239705; bh=+pZxOV7avn
-	s9BrkuX8oY/LAPwikcSGmSt7vWw/QLCoc=; b=d8jV43laGsYy+OHMe3tu+aoNFF
-	EFm0FTJEvZWjKmVi1eLJWo9UaxJ5neLOzaasi5vsHxZP4RQeyiPoZxubiFJIVbJA
-	PUCy9MjdSYtPI7o1FTMY36WjwrLg4RbYm0atxsjTOn0ecAnTAdFPTTaWaIKQgTTM
-	ZCtku8WfqZ+gC4LsJLwz5wSLjRMxWXkOCPrLUjSHTAka+KCMYeLIxjS50Vbjh39U
-	KW5Srg0kIjxVLtEno8DrQUwXizB7LQ89b2LdTDnZJUxw+oe5sPFVVzDrRZI9nW/T
-	TlpMNY4SiPs6oXb7k/7sHi/hQLZ0l7Lvp8LTCmncosq/6tBJJi6L7vs68Azw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789153305; x=1789239705; bh=+pZxOV7avns9BrkuX8oY/LAPwikcSGmSt7v
-	Ww/QLCoc=; b=Ia67hd0Ck6B7R4p/My1NBvk9eMqaVZlqoXgJw7JdYe29ZWxvuIY
-	YhLNbvSyh4OoHHEH0iH1V6mBA3XWclm85qdpSpK/d3pkNRS5MN+UWNAeHNVTEVAS
-	x0zLLWCLuc4209I1c2J/wGHXGtHp4WBfCPJdSeEXPbaqCd6RKwEBs776Zo1fsPji
-	RVD+KyZKT9y4yyz+C+lLGwz+67TA9WSD+vSQO+RWKLR/BVrSZEx7WDTtmcggDcgc
-	oe2v5t0TSifzgJ/qaEIAOtmSgVtzMLEhIwzHXyPNPd4jNyli0Iz0rnaHwc3VcEJK
-	hNFJmGfzb28jxDCGtBbJxFUUVGwswHvA8aQ==
-X-ME-Sender: <xms:GVCkamWChWOfDrf62XtNchIjvdVkoByyFEF4nuCOFbrBQyv7syZnrQ>
-    <xme:GVCkaonirvZjcHZjUemV_5iCrBAHw6cpjtctJCifWlAbvcbwRSkD0Cl8I5qbGlviu
-    jcMqKW4iHL2emu14yNU4irpknNZg5NMsLUUd9QOVX9gFQ5GUs2-dDU>
-X-ME-Received: <xmr:GVCkaoCAkgC9A_mknqxWES6Q4aepdzIbxul_hvU5lbtpzajZE7Hp9NOxEMHUPQ8CgjmFKA>
-X-ME-Proxy-Cause: dmFkZTEo9Yixzx4GUgFkKt3yrZtLKwkoaPj9u406SOh7qcJPEbAynkjkIi7ADtGLiT09jF
-    ur4+/FxQsftycLJf6LBsmllfBhyyyefK3uNfQ1+A7835e7K0CiaiNk1iPqa3ctWYQeilIJ
-    E6DYJLzGvdpYi/AD687obXFRk0rSpKrSDsS0C9Z+c64ni8CpE92shK9cE9eCxYIrePKgOx
-    6f6m66NcWxBoZo05KYOE96n0j4H5f/qOPg9G7lpaYi9Jde3mpakP7dldgKgU45Hqltp+hj
-    aezd3pBPSisAALRIQ+4NIInpwoBJLK//2W1S90BDmE39YuTpQq9QHXZqZJaFJkvxf+0oQm
-    Lnx7Hz4IDdDWlvOakYKRyRomxqpoEDw4J/TwaHDnsUpvnx5mt3TH2ORn8zfiLPuvxs63zd
-    UXLxKp+S3Kl0ZWWsA+Vy8vzU3trJC4AQH6WjOm2LU9C3MekOjlckjyxNcJlYyJjAyZsW/u
-    umtMECmvXvuZvw04SCgixQNBWMmdZkkb7dpbqQfmrjQI6XWh8XvGedzBaQrh5pIhXOyM9p
-    y86HVGipdvyD3JGnqEtZ2lSzeEleioy22UkaTG9OkMADpzoMhvv3ZAgxYhgQH5mLqHYrpk
-    v/nf6vIuegEV+CRzUSdykn8J0asNvLXmH9UuKQ1PCe+AFz+aeGi5zjw8ABYw
-X-ME-Proxy: <xmx:GVCkaof_rXtp62IwRdxveh1W6k81uGQJyfPx7LBFuTf74a4DNLt6eg>
-    <xmx:GVCkajKU44g_KxMURBeQSD_Y-AKufN_dz1pV_l_M5DGchFtBjgNXQw>
-    <xmx:GVCkarfwuldBkOOmb5DwMkd9MgdtNtAJCGYsYPT5aosOsPVeXYiTmQ>
-    <xmx:GVCkaq2aJcWlnogUHqU062cNkCEzxxzS5BFktu_-qrWdCWvUR-L_Dg>
-    <xmx:GVCkahunTKRwuYfAuL2cvHv8ChkjFE64XmQ2XgW1pD2AeLtgJXCcQFKv>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Sep 2026 15:01:44 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0bb5a7fd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 11 Sep 2026 19:01:42 +0000 (UTC)
-Date: Fri, 11 Sep 2026 21:01:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2026, #04)
-Message-ID: <aqRQFQz_E0ZPzrfe@pks.im>
-References: <xmqqa4ppf1l5.fsf@gitster.g>
- <aqOZLBeMLY6NdW2a@pks.im>
- <xmqqld97dbsa.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WbEj5wb2"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6a9879ada9fso2222545a12.0
+        for <git@vger.kernel.org>; Fri, 11 Sep 2026 12:02:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789153322; cv=none;
+        d=google.com; s=arc-20260327;
+        b=RyCSiQzEoeLvvd/jBYYMTISgnFMMD7WuKzi9jiKSR5s1GdCG97Z3Sw9QkTOTAr9WMd
+         7jWagxJ676Ja7MkzaB2toUjF5n28Cxb409XdNuX/N396DFKA2u5lUegALohBXy2DSOxm
+         b2LXIuIf9VVSy9rNk45knH1WN3n0OSCoxRm+e1JmHTF4UG+twRD9DxEZ3gSJAQ160s+r
+         l4qUjdVQbgKOI3Z+1msRuGuJ2R8TgaYr+8McY8AAXFceVjEMQugo6QUydxMP8CcJ0BzW
+         nuPR58U3ccwuUJcsKfHp4EReVTu9U69HP76JjndvG9j+tIZdOl7BqMN7w/5QSt/wuUXW
+         gimA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=DPGuLwOvIENBb0uirOsqWTXKfCU4AJiYe7Xia+ky/pE=;
+        fh=G3qPaPj3R7fS8Jhw+It1iru2gjkTKFU7qXokvOCGpKc=;
+        b=RidAKzSSEpQcuyd3Y5NDQ2s+LFKZYHjJ/fo9Il2j9PgZZ8PIW5bsz9JtuJcc4DxJ1I
+         wvvdBfUGGrnar4pJQvBOSaZYp2Q3Go05qrIa1o5SR8qgK7orNTom0/DRlKrWxkABrMU4
+         lI+D6aNUYwFCIMF1Tfng8Ebjl6tSEHyCECtmmneUyqab8bvo/bmlUTk0Kj4IRx0wD4Np
+         OcqSQa3koimK6IVqe3gT9iVEvZergE1OjEeNT9RYHuE2J2wvwo8i3ioZY7Wx9ptTaV9t
+         k4f9jZ743TpQ+7BXmRGpOZvUON/BBce5kBVnd5u+Lg+t0q8mIGOc+GqKA0TGAVRM8blQ
+         FNbA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789153322; x=1789758122; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DPGuLwOvIENBb0uirOsqWTXKfCU4AJiYe7Xia+ky/pE=;
+        b=WbEj5wb2SRi/fjLPZEKQohZVWgi6JOKwSKwoBohuXqVEMeObOKreTVXhIMU2iHkfng
+         sdHIQiFVptWQ0eFK1MNgLfUAEC2ZEhdcPSo9M7U+1Fi3QWoH1VBZaHqrroQNPwbLJilP
+         XUQF4B+9FH1/fxclIY1n/Q+gwdxjrj35kT8rHmN0K0TYoMzvqv/nnhH6Ly2nwvfr2bM4
+         dL2R6M3uF1uvXZqk0jdqDWaJtS+JXR+r3Dq0JW8bC/jI8NVoaZQ/6KhjPClGi+8cjH0O
+         yI/YlamBpFPLcx0Szcpc9VmZZYn+Yh/UAU73l5MFst4VVFKClDVXX92lV2/XEdi92mqh
+         Ggpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789153322; x=1789758122;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=DPGuLwOvIENBb0uirOsqWTXKfCU4AJiYe7Xia+ky/pE=;
+        b=c9UQXHszmhZCFPj9g9Wfw0Ww8fiCz6cBWP+fTp/1ImynlizEbstt7sify7cCRCmEAP
+         uUUSmaqBZck2xk7z1rYgs/L/rV3rhG7zFs02DtcMd9HcwI/R7OdnYlwIhfp/5Khff7Hd
+         V5rAWzXVw/Umt/oo0t1jfPFAZhjEjKPbqOMpUaffhluEr5fegc5RgrJFeQkW2lGbLX7d
+         9aF3kjO2NQwIG+/AyIDnS8T+QO0SboUsAXr24kE7pzB/Og5c8D9hrhR2arABIcmLCI6X
+         CKL9IxZn3d87917MuZAQT41KtZrxTmR8YsceNlt+eQQxAKolTv1Z1Rj5FjdJFXp1ulvE
+         3PYg==
+X-Forwarded-Encrypted: i=1; AKwUvBwkuMWcBBhnvTcfzuagls7JpeaFoiPlFWM+a8RxfPdDe7Cz2RcMON13HE7vlcT0UzZ425k=@vger.kernel.org
+X-Gm-Message-State: AFuF++kTehs7uJ/yQupwiflMXG3FfcMsY8tvI8vJUMGKGnlMVRVkYtxx
+	tmdu8R/Bt34UeA3qFWGDqiTE8zjjKlvO0ED58+FpH0J0IdprJ53HDyQSJdv9a7FYSZfWOjSs4EM
+	AR3xFfS3bxYLaD0Tc7SmHIkSsQi/XIzQ=
+X-Gm-Gg: AYBFou150e1nQgNsep8r3nyXuwiDmsCyhkOZ12+uYR0wA9IWZBWPxO50FquTR9bzdUJ
+	3SctsAoZ3fIsdE/DZnv0aFnMmA4AKFDBjduEMqKrz7GZtuz5rE1ajvP2HDApkcCXIZ1qmmNLsmN
+	d2XtA4Vj6QWEl6c648D3Jd02l5XuE68NLkzoycYG7+rolkbIa9nNH8PHo9jNJDl8ygOfYo7g1MD
+	VJEFZHcqGzNV8lfoftioC/y3y9iEkjTfsVm/vpghLuruMaRgVQUalfQQFvSK00Hfem2hghTL9I0
+	4ZaaE5uYaiRLuo6IbhJ+PjKKK7x3NHHBeGnu5qgTYKV8KN8ZiUH7Deo=
+X-Received: by 2002:a05:6402:360d:b0:6a7:f2d5:dfcc with SMTP id
+ 4fb4d7f45d1cf-6a9b56b28edmr2334843a12.36.1789153321936; Fri, 11 Sep 2026
+ 12:02:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqld97dbsa.fsf@gitster.g>
+References: <pull.2401.git.git.1789144877632.gitgitgadget@gmail.com>
+ <xmqqik4bbt9c.fsf@gitster.g> <CAHwyqnWkEaQHsp5GtYGL9qg-FYA0Ngt_+omdh8jmw4KfqfX6Uw@mail.gmail.com>
+ <xmqqse3faadj.fsf@gitster.g>
+In-Reply-To: <xmqqse3faadj.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Fri, 11 Sep 2026 21:01:24 +0200
+X-Gm-Features: AcwNN1WG3ED097aj7YP7XJRktukAlbc1U1tsTh7xNxLhe-rY6tKiZagv1_kujIM
+Message-ID: <CAHwyqnWVXuDMAonj1jK9687xhjiT4h-0E2qzhjwPXOTKfMhoGQ@mail.gmail.com>
+Subject: Re: [PATCH] range-diff: add --matched-only to skip one-sided commits
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Sep 11, 2026 at 08:53:57AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > On Thu, Sep 10, 2026 at 10:39:02AM -0700, Junio C Hamano wrote:
-> >> * ps/libgit-in-subdir (2026-07-12) 2 commits
-> >>  . Move libgit.a sources into separate "lib/" directory
-> >>  . t/helper: prepare "test-example-tap.c" for introduction of "lib/"
-> >>  . Merge branch 'ps/odb-source-packed' into ps/libgit-in-subdir
-> >> 
-> >>  The source files for 'libgit.a' have been moved into a new 'lib/'
-> >>  directory to clean up the top-level directory and clearly separate
-> >>  library code.  This topic has been ejected for now, as it causes too
-> >>  many evil merges with other topics.
-> >> ...
-> > I didn't really have the feeling that I was gaining consensus on this
-> > series. Maybe I'll be able to build consensus at the Contributor's
-> > Summit, but until then we can probably just discard this series.
-> 
-> To be fair, I do not think anybody would unwelcome a change that
-> makes the sources easier to navigate---otherwise we wouldn't have
-> odb/ or even builtin/ hierarchies today.  It is just that different
-> people views how easier to navigate a concrete change proposed makes
-> the sources.
+> > Seems like a big change, and deprecated options are a pain in the neck
+> > because we can never actually remove them.
+> >
+> > If we decide to go this way, we might name them "--hide-{left,right}"
+> > and just not introduce a condition that makes them incompatible. Then
+> > "--matched-only" would be pure syntactic sugar and wouldn't even be
+> > 100% necessary to have to achieve this.
+>
+> Or we can just keep the code and fix the documentation.  I think
+> that would be much less impact.
 
-Yeah. Thing is, changes like this are always going to be subjective. I
-expected lots of discussion around this particular one, so I knew that
-it was quite likely that I won't be able to build consensus and that
-there'd be lots of different opinions.
+I agree.
 
-I personally still think that having library sources properly split out
-into its own hierarchy is a sensible first step. But I also agree with
-others that it makes sense to then further group files that belong to
-specific subsystems into their own directories. I don't really see these
-as mutually exclusive, we can have both.
 
-Patrick
+Harald
