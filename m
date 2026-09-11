@@ -1,382 +1,104 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2528619D074
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 20:55:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CED032E696
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 20:58:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789160142; cv=none; b=VerLoPYgbElpWvDO8/qvq59GjCSQSk5b7wRdWjdtlmtYt/jnrR4pkBGg1xIXUnjV3mdal4v5RQ6ZKBGTGYRyiMc2zq3fQyKUBjI1ndvqFz7XjN+z08NOzqIAj1+3hq7/ZASnZ4VQy5v5yxyl0CFCyd5qBZVSBY0eNXX7V4cNWLY=
+	t=1789160298; cv=none; b=My8XGGrLn8fL/gUbRhIDeiNspjOxUo4rcRKpQczOQIzQX63g5jayxe5wc3J5nwf3C9g0gLqBPQCpOcSABT/ekSbMsHxMLKRfW7tijGYehUj4yuR8jTj/rMkr9EqJrU5NKTmJUcRXLWhZDPFXu5rl+odKjaanWaey5rMhy6r46h0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789160142; c=relaxed/simple;
-	bh=/8Z0IProVajhGihun0XEDWsQmw3fBpiLAGc4aVdOqLY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ft/Enw/m/9JYKvA38uQuTC3PG51Xzzx8EQEG6bzb4N3upuMo+6v6KFhI83W6ruUnqYuky7+cb5kNZ87HHoVi8Z9omiVuBvtPUMxzDwDHfgwyCVtDpT7b2ty2K8iiOmCiI9LtxOWYoGIAniK4xvYgWULc7yoSjWs3ut1niMmhjRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=svnJSuDp; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789160298; c=relaxed/simple;
+	bh=9MClX2RpWB3mSAmRDWmKFDOZJS8xmhlikQr/hFip29U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Wt03FFrgf6F5IKPLxJ731iYRtjFhGrn70OsBpRX/kbN2XurSZ7HTGUvd8X3M2U2IZLfcOB1gVDB1wbkeyUqmDEH/bjtlIDSvMyY/M2eJcvSPzXVd+0TELBADSIe8z4K0KXjTlUC7xPLysJ/0g47e+Udio+yaGFqr+MKwB4sYaC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mH4GLFaz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OJrHR2ZX; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="svnJSuDp"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-939f4f694d1so75285985a.1
-        for <git@vger.kernel.org>; Fri, 11 Sep 2026 13:55:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789160140; x=1789764940; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Wz1nc8acoKdplR4hm8TF3fjPXHBNMvNI9XDHL/UEaUQ=;
-        b=svnJSuDpX9pvyHl1qGYSC7UecxleoI+1zDCX6r6MfylVht7lLjfNPPMu2kM3M0o/fP
-         W8HLOg/i2DDv8BvZ4RNKuVM+1YP+ev5/GEDRVnv977B3G9+xMA4SNLKwE4KrhhmNANVT
-         fZM97v/0wyXAdJw/RcLuJdYoNW/J0nWa6RHgX1s9oXm/Mt9WIq0xPenD0Yt/MB5C3mDi
-         07ZLn3nRJwDDPH5WQoJ7Ziuud3jgpn/g1zrPdZI2ImgHE28SUhbzT4kCTz3LHUCirk7r
-         b7qrcxOBpSO/uVukdECDZSHwFvyVkK+RPr/z2PhbR0mMw8tSwJwT58CQ+KdROhNPsjwB
-         8yiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789160140; x=1789764940;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Wz1nc8acoKdplR4hm8TF3fjPXHBNMvNI9XDHL/UEaUQ=;
-        b=gbGijqi0SoMQF7hOCiIIaShG2fZhts1a1kCnKQWPwwWbsX6L3Fl6muRLaIqEOxTicb
-         0ynOXulL4C1LtweA1UgvBZOs0lN7QQBBH/SOon97VtaCM5aVZ/HZa5U0M6db3SpAyssG
-         vC2Q8HSxguIZZIvnpcXuYHmVuPYZGuz84YD7BUqtLr5SscotUssaqwd/8lc3xC8YWRrx
-         eK+ek6vXBCsLVreQ+Q/s+PhpiN3Uh4BSkTdyZ5o6WCA0XD6+GWXX25iBVmtLfJumfBHi
-         g+NiI1yiMYg6EF66SNSiGTAs+MbtQb+1NsndsdGvk5R0tcnS4Y3a9miXqj+bCZQ3fbNl
-         qUCA==
-X-Gm-Message-State: AFuF++kOIwxFx+NragZ4BLXabi/MUrgT7ZSBIF3sq56vdXyr7jwfMxck
-	1tPuLBjzZRxXP65BKmi3mvWY1zO6Ax9vagPLiXpxxv0CjyMhJbUBlUI+cbgJQA==
-X-Gm-Gg: AYBFou0RxijjGebPUxqPwTJiGd6EEZ86n/bdw/JKn5YkphwZOrte+BiMrrfudnoyRfZ
-	eWpmwHPLvjmGFQiqDS3BpdP/tLQmvuyu45z7F/aOKdvEwUkKfVdGiSRb5XaBXVP9ZZNUJPh/Tyh
-	MF8HK2miPDuqe2UyEbuc4TxlMlCuLDCTY4rtB7ocG2YO0UWaWyvuOmXBEIPrLWKA9s0ZZDR0Ey2
-	kr+84H3vuTPqiHcs9QyBiRghWVGo1VdyeqobGkn2t6h/9vkA23qhvJrKCpf1O+/yIkrkyliNEIo
-	aczj/3wftMCaidpuqFP5I7eXt7dM7h4lWoHLM4PQh+Y4n3Mk1HfhEvaW+JxT/grz7GYlPQX88sz
-	U9HYDt150R77gJ7obT1NxzwR+Y5eTO5p71mBrZAjk8b4Tr3SKxETiWe5gaftAFwpSncbt7jmX72
-	5d0m1cM7RlTFpZ9TEcRiMhX38W4kJdEoHUAQQ+k4V2r66r8YyzvaedkwVK3/MFz0BWPNeRt4WLq
-	3o=
-X-Received: by 2002:a05:620a:40d5:b0:939:3100:750c with SMTP id af79cd13be357-939ea0d4de1mr799233385a.22.1789160139537;
-        Fri, 11 Sep 2026 13:55:39 -0700 (PDT)
-Received: from [127.0.0.1] ([145.132.99.128])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-939e811cffdsm329720285a.46.2026.09.11.13.55.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2026 13:55:39 -0700 (PDT)
-Message-Id: <pull.2401.v2.git.git.1789160138305.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2401.git.git.1789144877632.gitgitgadget@gmail.com>
-References: <pull.2401.git.git.1789144877632.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 11 Sep 2026 20:55:38 +0000
-Subject: [PATCH v2] range-diff: add --matched-only to skip one-sided commits
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mH4GLFaz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OJrHR2ZX"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 62CD21D000CA;
+	Fri, 11 Sep 2026 16:58:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Fri, 11 Sep 2026 16:58:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1789160296; x=1789246696; bh=glNVyDHfCG
+	VFEiwg4++fkDaX31exYcAyVM2/hyAE2DE=; b=mH4GLFaz3oGjuw7jq2qQBXzVdQ
+	QaD9CjK7lnEp48GzbYSY2FF7e1XLmRT2V6WogX/a+RMP8DZnEfT29ls8GHc+lSzE
+	U3dQIbzX1JDs9+vlN5ZCMeO3lzmkslMNLighdz/9G3UjdFA8gsyXTSv9x/JZIi9P
+	Fkg8go5yvGSFR+etdZ7cDeA3U7TOZeVsXdn5bHEKC/rimX7q3bF2Vjf8gI6zOdBA
+	eioJOTAeFoWWu/VBnutMoogS8HZvE1NrboUIHsfUBwoS7iG2F6B0OCQJoSJz5/9R
+	rZB4QEIf3Zih2qhRKcjYwZbM3ZXrOnC2ebVBt3AKDFhWrr0CHuvYDxWztEHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1789160296; x=1789246696; bh=glNVyDHfCGVFEiwg4++fkDaX31exYcAyVM2
+	/hyAE2DE=; b=OJrHR2ZXVx//jvtQoiAIDcuVsP7IGEDrEhgeEzSdQ+xOXWrgXd+
+	K+leJ9dZWIIPJdLZf8C4ySRdTY9n9Bg8DqSmtnRc4Mi5crFXYUnk0Cb0UPOZnqWG
+	gEk8hcealfJav20nQB+tofZTIMrQb6qKw9rjnSTag2C4iKxcd2X2iYwuSGlegk3Q
+	D09uSDykhzZj06Xwa7Pl2OjPnK2a68eimGFkOkSDRXle/F7T1+/vnYkohnySkLbN
+	8evrVKcH0eqrT2Qd4Ar9Uap4Kk34xdNksDuzwxSB4jenLUn/2sqhPuZWcOmZGJYq
+	xBN2fcEXzKNNvf3KCE2wgvTLhyBUvco80QQ==
+X-ME-Sender: <xms:Z2ukart1f2x8BTHzu-OazB2malW0OZlZAk9dM-FKHaf7MnUyJDt-LQ>
+    <xme:Z2ukajUJnIP42qdZzH2gZHON2xnrYhn-nnGogHq93MeJ24mnxDBA-_ijmpoDudz4o
+    jwP4V2ssVVzG9g16POLuzP-4trpIx0w1wKykY9SEZRc5Dh_sfoUVsg>
+X-ME-Received: <xmr:Z2ukanEcpE_pxDARSptOmCK3hEBJcwpsuEB2KxsKSWdtqKsgZGJLxBR8-0-vM6GjBi3p9Da4Sel3KVeQHsOJqgG6tVJj35qMbcKK>
+X-ME-Proxy-Cause: dmFkZTFFq4gm48mQBAkeLWIr3sJ7d1+NLt2UG06xmVmEbkKZFydkPnz8yljsAPO+dn3zqb
+    SHgRC4RM+YTJT8OUzhkoV9ZxYIT8vZpqAQ6IPqac24oSv8w9AEI2FNfVCPs2z2rQafyyTE
+    Jsn+L4zHeZaa0K8NpLf08Yo3+80v2y2fcFXf5qz5XmVAxv8b4BDXlnb4N6ak4CjcaRlJzK
+    TFK2MRykTIRK7S4EG7oShv9jagmCVyjAct1K7sgzC8ywiaYPTVRdax6bqpl/bssAyAB7Vq
+    ++JCWQuaBLufBJFZcewlameb5qHwyXlY3pC83U8RvZ8P7IGLxvO809368n8SvrpVr0U9nn
+    DiROxFdYt+PqHgNj0cK668o43ZiO7/mB0IoLgCfurvogtBFR+QIl1mch7I7kbr4zcdG0N/
+    caZhhOYGc22OC+PaQuKK/30R4c29SZzyf4mtwbVN0uSaJmfmORgnRlTv8us3f0cDvN4aI1
+    /Q/NO6apxQKnxJqOOcJur7qkbnmFP9R3Z5KngW7TbZu2uSmepWBzEeR2fmAmOtxoRPQPwE
+    X1mns/omaXkBGMswYWa4NaQLID9icW4GMCFex3OAzbSgwMY8d0m5Zh1kIv1Ju8+x1+3joK
+    WJDwn/BCb59Zcj3Yyc9WjO3kKRuO41bVVPzPoFEwLmkPDK1Bahf8Z9/wIqKg
+X-ME-Proxy: <xmx:aGukal3MOhZTARwIDhw1Wu9j1jT6BKBDqUCARy44AcBdoW0presJvg>
+    <xmx:aGukapNOdov4ohWzVBY5ZPAltJWQus0_6iR-DFW7acgaE1k8h-S0Gg>
+    <xmx:aGukak7gd5nfUnfP127BgDOZGvH18G1z0b_uBs_tYVhntxoZsAA8Hg>
+    <xmx:aGukaj3dsc0QDWDxEdr9_JjGqXU53cc6WqR38YYFqPMFKHuNJWdcNw>
+    <xmx:aGukaiJYU1Dbvo6ZcrTlq-SHytw30khwBkJXSsrkdHjYDFjWVg5k3h1q>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Sep 2026 16:58:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: <git@vger.kernel.org>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH (RESEND)] ci: use system asciidoctor
+In-Reply-To: <20260911195250.31201-1-taahol@utu.fi> (Tuomas Ahola's message of
+	"Fri, 11 Sep 2026 22:52:50 +0300")
+References: <20260902071113.GA70165@coredump.intra.peff.net>
+	<20260911195250.31201-1-taahol@utu.fi>
+Date: Fri, 11 Sep 2026 13:58:14 -0700
+Message-ID: <xmqqeceza4k9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Tuomas Ahola <taahol@utu.fi> writes:
 
-Reviewing a range-diff often means scrolling past commits that were
-simply added or dropped, when only the ones that correspond between
-the two ranges are of interest.
+> Notes:
+>     The release notes draft for v2.56.0 already claims that asciidoctor
+>     has been updated to be installed via the system package manager.
+>     Clearly it refers to this patch which isn't, however, anywhere near
+>     the master branch.
 
---left-only and --right-only already each suppress one of those
-one-sided groups, but they are defined as "only show this side" and
-so cannot be given together, which is exactly why show_range_diff()
-already rejected that combination. Give the "show only the commits
-that correspond on both sides" behavior its own name, --matched-only,
-instead of asking users to reach for a combination that errors out.
+I think the description was added to the release notes in 47ce80527c
+(A bit more for -rc1, 2026-09-11), one integration cycle after the
+2.56-rc0 was tagged.  This patch and Patrick's "gem" patch were
+merged between 2.56-rc0 and 47ce80527c (aka "today's master").
 
-Extend the existing '--left-only'/'--right-only' conflict check to
-also reject any combination with --matched-only, since all three
-narrow the output in ways that cannot be combined.
+So there is nothing to see here, I think.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    range-diff: add --matched-only to skip one-sided commits
-    
-    Add git range-diff --matched-only to only show commits that correspond
-    between the two ranges, skipping ones that were only added or only
-    removed.
-    
-    Changes in v2:
-    
-     * Update docs and commit message.
-     * Use die_for_incompatible_opt3.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2401%2FHaraldNordgren%2Frange-diff-matched-only-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2401/HaraldNordgren/range-diff-matched-only-v2
-Pull-Request: https://github.com/git/git/pull/2401
-
-Range-diff vs v1:
-
- 1:  edb4471088 ! 1:  6d392249a2 range-diff: add --matched-only to skip one-sided commits
-     @@ Commit message
-          the two ranges are of interest.
-      
-          --left-only and --right-only already each suppress one of those
-     -    one-sided groups, so give --matched-only its own name for applying
-     -    both suppressions at once instead of documenting the combination of
-     -    two options whose names read as contradictory together. Internally it
-     -    just sets both flags, reusing the existing suppression logic in
-     -    show_range_diff().
-     +    one-sided groups, but they are defined as "only show this side" and
-     +    so cannot be given together, which is exactly why show_range_diff()
-     +    already rejected that combination. Give the "show only the commits
-     +    that correspond on both sides" behavior its own name, --matched-only,
-     +    instead of asking users to reach for a combination that errors out.
-      
-     -    Extend the existing '--left-only'/'--right-only' conflict check in
-     -    show_range_diff() to also reject any combination with --matched-only,
-     -    since all three narrow the output in ways that cannot be combined.
-     +    Extend the existing '--left-only'/'--right-only' conflict check to
-     +    also reject any combination with --matched-only, since all three
-     +    narrow the output in ways that cannot be combined.
-      
-          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-      
-     @@ Documentation/git-range-diff.adoc: to revert to color all lines according to the
-       
-      +`--matched-only`::
-      +	Only emit commits that have a corresponding commit in the other
-     -+	range, suppressing any commit that exists on only one side. This is
-     -+	the same as using `--left-only` and `--right-only` together. Useful
-     ++	range, suppressing any commit that exists on only one side. Useful
-      +	to skip added or removed commits when reviewing how the commits
-      +	that survived a rebase changed.
-      +
-     @@ builtin/range-diff.c: int cmd_range_diff(int argc,
-       	strvec_clear(&log_arg);
-      
-       ## range-diff.c ##
-     +@@
-     + #include "userdiff.h"
-     + #include "apply.h"
-     + #include "revision.h"
-     ++#include "parse-options.h"
-     + 
-     + struct patch_util {
-     + 	/* For the search for an exact match */
-      @@ range-diff.c: int show_range_diff(const char *range1, const char *range2,
-       	struct string_list branch2 = STRING_LIST_INIT_DUP;
-       	unsigned int include_merges = range_diff_opts->include_merges;
-       
-      -	if (range_diff_opts->left_only && range_diff_opts->right_only)
-      -		res = error(_("options '%s' and '%s' cannot be used together"), "--left-only", "--right-only");
-     -+	if (range_diff_opts->left_only + range_diff_opts->right_only +
-     -+	    range_diff_opts->matched_only > 1)
-     -+		res = error(_("options '%s', '%s', or '%s' cannot be used together"),
-     -+			    "--left-only", "--right-only", "--matched-only");
-     -+
-     ++	die_for_incompatible_opt3(range_diff_opts->left_only, "--left-only",
-     ++				  range_diff_opts->right_only, "--right-only",
-     ++				  range_diff_opts->matched_only, "--matched-only");
-     + 
-     +-	if (!res && read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
-      +	if (range_diff_opts->matched_only) {
-      +		range_diff_opts->left_only = 1;
-      +		range_diff_opts->right_only = 1;
-      +	}
-     - 
-     - 	if (!res && read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
-     ++
-     ++	if (read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
-       		res = error(_("could not parse log for '%s'"), range1);
-     + 	if (!res && read_patches(range2, &branch2, range_diff_opts->log_arg, include_merges))
-     + 		res = error(_("could not parse log for '%s'"), range2);
-      
-       ## range-diff.h ##
-      @@
-
-
- Documentation/git-range-diff.adoc |  9 ++++-
- builtin/range-diff.c              |  5 ++-
- range-diff.c                      | 13 +++++--
- range-diff.h                      |  2 +-
- t/t3206-range-diff.sh             | 63 +++++++++++++++++++++++++++++++
- 5 files changed, 86 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-range-diff.adoc b/Documentation/git-range-diff.adoc
-index 5cc5e2ed56..d448f897d6 100644
---- a/Documentation/git-range-diff.adoc
-+++ b/Documentation/git-range-diff.adoc
-@@ -10,7 +10,8 @@ SYNOPSIS
- [synopsis]
- git range-diff [--color=[<when>]] [--no-color] [<diff-options>]
- 	[--no-dual-color] [--creation-factor=<factor>]
--	[--left-only | --right-only] [--diff-merges=<format>]
-+	[--left-only | --right-only | --matched-only]
-+	[--diff-merges=<format>]
- 	[--remerge-diff] [--no-notes | --notes[=<ref>]]
- 	( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
- 	[[--] <path>...]
-@@ -82,6 +83,12 @@ to revert to color all lines according to the outer diff markers
- 	Suppress commits that are missing from the second specified range
- 	(or the "right range" when using the `<rev1>...<rev2>` form).
- 
-+`--matched-only`::
-+	Only emit commits that have a corresponding commit in the other
-+	range, suppressing any commit that exists on only one side. Useful
-+	to skip added or removed commits when reviewing how the commits
-+	that survived a rebase changed.
-+
- `--diff-merges=<format>`::
- 	Instead of ignoring merge commits, generate diffs for them using the
- 	corresponding `--diff-merges=<format>` option of linkgit:git-log[1],
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index e54c0f7fe1..8059f92eaa 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -46,7 +46,7 @@ int cmd_range_diff(int argc,
- 		.diffopt = &diffopt,
- 		.log_arg = &log_arg
- 	};
--	int simple_color = -1, left_only = 0, right_only = 0;
-+	int simple_color = -1, left_only = 0, right_only = 0, matched_only = 0;
- 	struct option range_diff_options[] = {
- 		OPT_INTEGER(0, "creation-factor",
- 			    &range_diff_opts.creation_factor,
-@@ -68,6 +68,8 @@ int cmd_range_diff(int argc,
- 			 N_("only emit output related to the first range")),
- 		OPT_BOOL(0, "right-only", &right_only,
- 			 N_("only emit output related to the second range")),
-+		OPT_BOOL(0, "matched-only", &matched_only,
-+			 N_("only emit commits that have a corresponding commit in the other range")),
- 		OPT_END()
- 	};
- 	struct option *options;
-@@ -186,6 +188,7 @@ int cmd_range_diff(int argc,
- 	range_diff_opts.dual_color = simple_color < 1;
- 	range_diff_opts.left_only = left_only;
- 	range_diff_opts.right_only = right_only;
-+	range_diff_opts.matched_only = matched_only;
- 	res = show_range_diff(range1.buf, range2.buf, &range_diff_opts);
- 
- 	strvec_clear(&log_arg);
-diff --git a/range-diff.c b/range-diff.c
-index 8e2dd2eb19..67cc751658 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -20,6 +20,7 @@
- #include "userdiff.h"
- #include "apply.h"
- #include "revision.h"
-+#include "parse-options.h"
- 
- struct patch_util {
- 	/* For the search for an exact match */
-@@ -591,10 +592,16 @@ int show_range_diff(const char *range1, const char *range2,
- 	struct string_list branch2 = STRING_LIST_INIT_DUP;
- 	unsigned int include_merges = range_diff_opts->include_merges;
- 
--	if (range_diff_opts->left_only && range_diff_opts->right_only)
--		res = error(_("options '%s' and '%s' cannot be used together"), "--left-only", "--right-only");
-+	die_for_incompatible_opt3(range_diff_opts->left_only, "--left-only",
-+				  range_diff_opts->right_only, "--right-only",
-+				  range_diff_opts->matched_only, "--matched-only");
- 
--	if (!res && read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
-+	if (range_diff_opts->matched_only) {
-+		range_diff_opts->left_only = 1;
-+		range_diff_opts->right_only = 1;
-+	}
-+
-+	if (read_patches(range1, &branch1, range_diff_opts->log_arg, include_merges))
- 		res = error(_("could not parse log for '%s'"), range1);
- 	if (!res && read_patches(range2, &branch2, range_diff_opts->log_arg, include_merges))
- 		res = error(_("could not parse log for '%s'"), range2);
-diff --git a/range-diff.h b/range-diff.h
-index 9b70a80009..effd10b9b8 100644
---- a/range-diff.h
-+++ b/range-diff.h
-@@ -19,7 +19,7 @@
- struct range_diff_options {
- 	int creation_factor;
- 	unsigned dual_color:1;
--	unsigned left_only:1, right_only:1;
-+	unsigned left_only:1, right_only:1, matched_only:1;
- 	unsigned include_merges:1;
- 	size_t max_memory;
- 	const struct diff_options *diffopt; /* may be NULL */
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index ef92704de3..f85fd0c4ad 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -860,6 +860,69 @@ test_expect_success '--left-only/--right-only' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--left-only, --right-only and --matched-only are incompatible' '
-+	test_must_fail git range-diff --left-only --right-only ...common 2>err &&
-+	test_grep "cannot be used together" err &&
-+
-+	test_must_fail git range-diff --left-only --matched-only ...common 2>err &&
-+	test_grep "cannot be used together" err &&
-+
-+	test_must_fail git range-diff --right-only --matched-only ...common 2>err &&
-+	test_grep "cannot be used together" err &&
-+
-+	test_must_fail git range-diff --left-only --right-only --matched-only \
-+		...common 2>err &&
-+	test_grep "cannot be used together" err
-+'
-+
-+test_expect_success '--left-only, --right-only and --matched-only each suppress one-sided commits' '
-+	test_create_repo matched-only &&
-+	(
-+		cd matched-only &&
-+		git switch --orphan combined-old &&
-+		test_commit c-first &&
-+		test_commit c-old-only &&
-+		test_commit c-common &&
-+		git switch -C combined-new c-first &&
-+		test_commit c-new-only &&
-+		git cherry-pick c-common &&
-+
-+		old_only_oid=$(git rev-parse --short=7 c-old-only) &&
-+		new_only_oid=$(git rev-parse --short=7 c-new-only) &&
-+		common_old_oid=$(git rev-parse --short=7 c-common) &&
-+		common_new_oid=$(git rev-parse --short=7 HEAD) &&
-+
-+		git range-diff -s --abbrev=7 combined-old...combined-new >actual &&
-+		cat >expect <<-EOF &&
-+		1:  $old_only_oid < -:  ------- c-old-only
-+		-:  ------- > 1:  $new_only_oid c-new-only
-+		2:  $common_old_oid = 2:  $common_new_oid c-common
-+		EOF
-+		test_cmp expect actual &&
-+
-+		git range-diff -s --abbrev=7 --left-only combined-old...combined-new \
-+			>actual &&
-+		cat >expect <<-EOF &&
-+		1:  $old_only_oid < -:  ------- c-old-only
-+		2:  $common_old_oid = 2:  $common_new_oid c-common
-+		EOF
-+		test_cmp expect actual &&
-+
-+		git range-diff -s --abbrev=7 --right-only combined-old...combined-new \
-+			>actual &&
-+		cat >expect <<-EOF &&
-+		-:  ------- > 1:  $new_only_oid c-new-only
-+		2:  $common_old_oid = 2:  $common_new_oid c-common
-+		EOF
-+		test_cmp expect actual &&
-+
-+		git range-diff -s --abbrev=7 --matched-only combined-old...combined-new \
-+			>actual &&
-+		echo "2:  $common_old_oid = 2:  $common_new_oid c-common" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'ranges with pathspecs' '
- 	git range-diff topic...mode-only-change -- other-file >actual &&
- 	test_line_count = 2 actual &&
-
-base-commit: 47ce80527c56f462cb97db4ca8125342204d3783
--- 
-gitgitgadget
