@@ -1,84 +1,76 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D9B46A5E5
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 22:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D486B4BEE3C
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 22:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789164542; cv=none; b=CZjxnBXSAxESJJQMOTgYTDjU3q56mcA5eqxA4nPe6Z4rbnwZJxoITXQIj6An6PguhhsxbOaaxeZWRIjNPD7doQknYFHtIWsgVxjAFtNDKb3/GivFDRyiUdo3FD97auA57qq00OGaBNSuQ3tjnSlkLTNkjg0U+1MbXtYpu31y0JI=
+	t=1789164591; cv=none; b=D2vGZz1KD+znHrGEnOwHiEIaviP+QY8XRkwUhhsCv+olPETj4Jvsnmiy3RE0FfnkLbIH38bHg3LNxHi1vsLtbDWYh1X9UwI6j/t25g1/BpJgieAFGAR3jSKi/P73WMvLq/y3d3uBrwp2L+2jFNpqE8NJRknOeMDEqqj9JesFzGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789164542; c=relaxed/simple;
-	bh=XQ88bdADAkCJRa5YjAaXV418RkN4bFBDmnmE900srCc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cV8/+oPda8gtUuGUdflRyjRA2wpS0AlX8mu7j4qsgi8yXfCtR7rw03DGOB1qv6XYUL2UtkxYvqWRsGQhg8qRrlZoS1hiPdAejIl9QDGok1oLMV8Ry3jom1OM492w8ZJDWE0qWDacOW0XjxYN/TENW4xi9taLQ2jqG7In94cTAW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X4ANovZg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z7w5U/Bp; arc=none smtp.client-ip=202.12.124.144
+	s=arc-20240116; t=1789164591; c=relaxed/simple;
+	bh=kjQtnHxteuaIiLZ1zHqsTNpUgA15a6wGTrzjMzWdYYc=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lEPy6SP6raaptCIdJiAYEl63W68kAzrxC2QFf9MvXpTysg7CGypp7nJ+YPtfGfxJKvXYGkWt/T5Mny9wMSxqflECLZE2rTlkjS3CZb+xOWX4i3q7ZvtzdfZ4uCgRk4KiyG1RF/1Aid215NM95mr+Ecljdc6VITFyLGZqfMpYndg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l7CxAlq+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ci1LPWWA; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X4ANovZg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z7w5U/Bp"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 064251D00036;
-	Fri, 11 Sep 2026 18:09:00 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 11 Sep 2026 18:09:00 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l7CxAlq+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ci1LPWWA"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 27EDE1D000C8;
+	Fri, 11 Sep 2026 18:09:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 11 Sep 2026 18:09:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1789164539; x=1789250939; bh=xkAqVjdV3t
-	tzxF8QZUwhrOaPv3GG+QIbhvGp8xZQAts=; b=X4ANovZgHAnqW5cOCROs+rSUfF
-	hsxmKCd/X3OcJbyUP+tr22x0AYRnENBYH8iMOAL0ZQ+Gn4akeDSB+0PMdEtoOPjf
-	LLAYQ5evZGnmC6TvXxg/vEZX23+vNibB2osaAvtf9r+Gl9WqZd5KKlBNXprietV2
-	WW97TOeFp9ZNwtkqEjOiWyFH52KMpmLuQXLtYyWL3tYdChDKsNElsLmPddMTeGDD
-	MYAYhnexHc4055BejM6sG9epwYIPqtZey+HDppKWT0lbMENxR4bjf/mOMyz5mW3G
-	VSXnqBL15LoyjSKZBckgl8hq0DjC7kLURsjfYMv/X8/Yx95Qo6fkDTgKSkVg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1789164589; x=1789250989; bh=FHt/0fDQKh7ayoS5Pn3pdEOcOKQkfuri
+	7HtHVZZOoHM=; b=l7CxAlq+LvQO3lHp9e8EQPafXM7g1sANUB4DmbGAkIGXiaw2
+	+sXjz5BugvUtzJHHHWaH28l+D24yZgDtCUvvEXEEBuQA023PRhR42Cf+lmNvA2Ss
+	ngbpAb4WvAEBnrLuGlWO63Gd9sDjqi8AzMsBmefSO+41YvKozujhq6gYwcjmvhCD
+	ziKtXvouuWk7QGbBLkkYWykDObCfPFjKylixavrfgo/OsTUkD7IfCN9bAXm0GGDo
+	P3kgL9ak0i1SPRREgLe2dDbS/jgccInhha0jdeo0hZtoPGR6FTJwiWVoyLs8+6P6
+	NUOGmt/Yz2UT3GDEe7ImfNKN4dX+bQfgPgHBWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789164539; x=1789250939; bh=xkAqVjdV3ttzxF8QZUwhrOaPv3GG+QIbhvG
-	p8xZQAts=; b=Z7w5U/BpkosCD87ZTTi6k7417x5S0fQImN0bPfLmdym2MeLtLNn
-	6y6Hz4MzHXjv5uk7ZMnVEeWDs2lhXN1DlMC1lrgb0svFzkqKRhs9FC+yS9DWxBTG
-	QdaR2wWOx1sPs+wlfKhIB8J8wF9ZmmcWJbN/fKYWvqHsvVcHRXyro6wrXk3s9Lr3
-	jOHefbBBkGBZ7vSwJc5ei48W1EyoxfwHBjko1fB9bSk5G6n4rRSMvn1BKPbNeGev
-	f1YdtPRGNrwXRLWzwV5ZqgKjzVUGTjlxpo+IyG9q3ofmQIsahJvfvntvCc7OhZwU
-	DjJSOqq1K9rahfNLWtvl+B4nQrr4cxT4ZtA==
-X-ME-Sender: <xms:-3ukaourExDPl3gBf7PDUkKfEMGO5z_FWDwbveOa7zmNx9hxZ0hucg>
-    <xme:-3ukasXSz00lX1oYA1OAwPQ5vbWy7QqodzaxE3iHtfMZGc1ImTa0H4WXq6LcvnoyE
-    tUzFmjy-U8AlkpvDoZTqZX-bSdGCaemyJXnLa_WjXRSi92UoFko>
-X-ME-Received: <xmr:-3ukasFOiJ_TN_zPhM1lo3fTuoLbp36WPoPIxubvu4uUABhmfB6cAWING6EUOkeF9jUdpFXc5JBaVu7I4OLSd0KKf9TZ01VXCNGk>
-X-ME-Proxy-Cause: dmFkZTFNekcUyFbBFG+urauTSrwassxu+V9lBVNFnE+W0ikyavj5qyQlFavHxL5Vx2skmy
-    RixMrjRcY7Nw8AHRgmDbFY/Cu0EamovrTMzF7IFsn8iqWDE6BOIbDH71AqDsEuopmXSFvR
-    TZK8mAhJOPkP9BHSQuUBA5/5TbLNGM/ycjOEyhURD5V6PJaEFkTcbmL+fWbGEiQowxO64W
-    3xbXSSyGVxb+jfwrQ+hOemJ9pWviKe7UACNUAi7+XNtsxb9NptEZN/kQNBUCjKUmyciBCn
-    HC46VWxdfwfEHogwyXzu+tlqp50hFhs2ycfNGoTGWC4uvjSVSnAp3Q9C13wLzMVLRGqYQE
-    uCwGTd/h9x01/Ozeedte1J+V9CmWOK9Z5wnH5Bwz4pwdZpfYl9ifbQItqrsHJDB55pEhCm
-    oN+9bIyp7HgcjcwGHgAVInzpov9ZZRT7zpBMCoSbVMIL67JNFZTUcTRV9UpeJhbx/irvAv
-    5ZanJFOxNs3rqWvdlwNiYdSss6Df6WL7rCnY9Qt9x8EB0hoJ1+i86yDMgvSl0kl4kwlyFH
-    hrs7JfKqUvC0cmuGL3m3o6W8HOWi3xD8ngrH33N7ryHE/eONvlpgDL5fmvYeFrngMFZ7LX
-    4Z2+jGR9V1eEqWD8YIN36joor2CIycE3//dTqTR+s2OV64fny1qzXxi2uptQ
-X-ME-Proxy: <xmx:-3ukam0YWOHvYiTGLTkZGJsL6EBZsyG_ZKe8amx_sdJAczZ27RbKpQ>
-    <xmx:-3ukamMRBlhJXsVF6msTGrxO07K8qC35AKaqqn1cjgn4RQaLfIel1Q>
-    <xmx:-3ukat6ydNOZp8ukzvHLKt0uDojGqVFFPQyOSXg4y2zNZXtr0dcgcw>
-    <xmx:-3ukao3kRKBY8kZ7Dg8d0-vDerP4d-sLuIh5I8q4gNuY7Px1-n5I-Q>
-    <xmx:-3ukauFk05v0qxOKIzoSy0iRVTONE-G3DwX7be_ifcuEZq1M2D2bHOHk>
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789164589; x=
+	1789250989; bh=FHt/0fDQKh7ayoS5Pn3pdEOcOKQkfuri7HtHVZZOoHM=; b=c
+	i1LPWWAlfiw25ei9Rem+qf2axOQsTfYmhJYzRZBStFBxLCKvQwOY2U1rbchXDM0M
+	flnwIcnrqgAfYdRpopdBd0UEvD45BYGiLxhRMRflx2mMiampVl+/Po4ClJNjB7rU
+	SiZ9YcTC325jIMVFsmp6QZgLkMHsRyQauNxNU7KEmq7N4Lps06+73FCzw7/g0T5X
+	IxjVT872xK8gkYpb3wncka8+c9rOV5CWdWAq0mwEVXNgPIwBS021LdXrqe0UkKT/
+	7gESNiY8DjXbzHXRRI+OEZQ1fiE+Zb/+3GAGp7Kxf42hrYrYuvAu2S0dT9JzffpQ
+	OtUvw9Xpf6zsU0Fzvf5aA==
+X-ME-Sender: <xms:LHykakT6_HbTfKB9ewy2YRJGjd24Ytt4yEGf5gXAWtF7MvDLvno2Dw>
+    <xme:LHykanxG03nIczBuQJsE6S8XykPBQ6UZUUWZCaNGQqJjLL6Uc1B9jqO-S1nMBBLEp
+    J4QIGKRRb12yQ-3eOwrdUqxEHMj7fQIK3X6S1Gz88tHqOwEFZ9mEQ>
+X-ME-Received: <xmr:LHykavdg4WasH5EM63G0jQ5xtQtiuYzex-hGIC6yihAodzK-Ae4P5whRF64M3eaJ2YwFrcyGrnoNVcYk_qvZU8Ayy1it7be3i0mp>
+X-ME-Proxy-Cause: dmFkZTGaR7Rpy2hRVB57opursSLqbesEswGVBItZ00o7ZvkO5TIUFz3yxjBIn0w6mIGJgw
+    ReXlhJTjS+1jGtpJlyDySKlhVGQpeTEayjeaZvPmUbEXydiwNz1P3g+9dsCdQwc8e6pKrV
+    vIMAsLPK0X1LdY0R0sYmRFrwsVzsGlbN2bdmBamFuik76JEOTHQyQrUmEWFFFR6jOxLzfW
+    KpPgQFcJpkqqaFKChiX2rosiOX504QmiYF6hCIzfp0d0M7meZ4Iu2elKijAmVtDQnUK5Dx
+    i66lQzrRlgEuLy27buoTzFQVk5A2VvUp95eHUuXtzb2HJ3OQnuZCJJDl1zPZM1jJFB5Iln
+    2OR8OiLXT4+56lX0HN84H7cb7X9JDgcPZE5RkyJUgZAQ/BjrRUN5oMP/TrMKVp89Ep336Z
+    lY9Yasi8uji7oSYphiRVOcvAYRgbeH3cvvXw+U+J+Yc521D9oA7tM/ooR2lRpBzbAZZNp6
+    9YVenERojyIOrzQb7tXpXhTB/PZI6l7jJL2TQ4kWmU7z3txd/StzIv5/CaHK8iErtG5Zzq
+    KNmK2WvAfT6o77NiDB7Dj2jzm+5YKBlAZsvPj6ltZS2oMZKQjpZFSBuiPw+jsravBNqlne
+    G3s+Vru+WRJ2HZgEbrohfn29TZj6Vpb2TT90+HOApgiX/dImXj2mi72fIocQ
+X-ME-Proxy: <xmx:LHykajJ8oghk4tWsxZ0h21hxfkOMQpVAheDK9SA2AAWggc69KKMuow>
+    <xmx:LHykagFLomzsfrCFADjoj65eirGaxopTuR7ZWoEaQASce2oyp5K20A>
+    <xmx:LHykatrAALF-lmGXpKCStoMreAzcc4DXefgAwlUZ_Oqh_qPV8GRLHw>
+    <xmx:LHykapSrIrsTk0f4RbBWh8VXye7q01yJaks2GjwrkDbNcGqZhC5ptA>
+    <xmx:LXykanp6ULjji-V_1doztLx17V7JlcpPeiNe3eneMJRGPkwQwHAPaiS8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Sep 2026 18:08:59 -0400 (EDT)
+ 11 Sep 2026 18:09:48 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org,  jltobler@gmail.com,  lucasseikioshiro@gmail.com
-Subject: Re: [GSoC Patch v6 2/7] repo: add path.superproject-root with
- absolute and relative suffixes
-In-Reply-To: <20260911144519.1011780-3-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Fri, 11 Sep 2026 20:15:14 +0530")
-References: <20260716012138.6714-1-jayatheerthkulkarni2005@gmail.com>
-	<20260911144519.1011780-1-jayatheerthkulkarni2005@gmail.com>
-	<20260911144519.1011780-3-jayatheerthkulkarni2005@gmail.com>
-Date: Fri, 11 Sep 2026 15:08:58 -0700
-Message-ID: <xmqqmrtn8mpx.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: [PATCH] cocci: remove risky "if (!E) free(E)" conversion
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Fri, 11 Sep 2026 15:09:47 -0700
+Message-ID: <xmqqld978mok.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,47 +79,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+The current cocci patches try to convert
 
-> Scripts working in multi-repository setups often need to identify the
-> top-level working tree of a superproject from within a submodule.
-> Currently, this is only exposed via `git rev-parse
-> --show-superproject-working-tree`.
->
-> Introduce `path.superproject-root.absolute` and
-> `path.superproject-root.relative` keys to `git repo info`.
-> This exposes the core submodule context via a scriptable config-like key
-> using standard format rules.
->
-> If requested when not inside a submodule, the command returns an empty
-> string.
->
-> Mentored-by: Justin Tobler <jltobler@gmail.com>
-> Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-> ---
->  Documentation/git-repo.adoc | 10 +++++++
->  builtin/repo.c              | 31 ++++++++++++++++++++
->  builtin/rev-parse.c         |  2 +-
->  submodule.c                 | 43 ++++++++++++++--------------
->  submodule.h                 |  2 +-
->  t/t1900-repo-info.sh        | 57 +++++++++++++++++++++++++++++++++++++
->  6 files changed, 122 insertions(+), 23 deletions(-)
+	if (!E)
+		free(E);
 
-Correcting get_superproject_working_tree(), which was introduced by
-bf0231c661 (rev-parse: add --show-superproject-working-tree,
-2017-03-08), is a major part of this step.  The old commit added a
-single test for very basic use but this step makes not-so-basic use
-cases to also work correctly, right?
+into an unconditional call to free(E), with the rationale
 
-It may be a good idea to split this step into two patches:
+    cocci: detect useless free(3) calls
 
- - a patch that corrects get_superproject_working_tree(), that adds
-   a new test or two to t1500-rev-parse.sh, next to where bf0231c661
-   (rev-parse: add --show-superproject-working-tree, 2017-03-08)
-   added its test.  The test would fail without the code fix to
-   demonstrate what we improved.
+    Add a semantic patch for removing checks that cause free(3) to only be
+    called with a NULL pointer, as that must be a programming mistake.
 
- - another patch that uses improved get_superproject_working_tree()
-   to add path.superproject-root.* keys, together with the updates
-   to t1900-repo-info.sh to add tests for the new feature.
+which came from ec6cd14c7a (cocci: detect useless free(3) calls,
+2017-02-11).
+
+Leaving _something_ in ALL.patch output to draw programmers'
+attention is a good thing, but this changes a piece of code that is
+originally a no-op to do something else, which may be even worse.
+
+We could change it to
+
+	if (!E)
+		BUG("free(E) is certainly not what we meant to write");
+
+to force programmers to think.  But it probably is safer to just
+rewrite one form of no-op into a simpler form of no-op.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ tools/coccinelle/free.cocci | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/tools/coccinelle/free.cocci b/tools/coccinelle/free.cocci
+index 03799e1908..3dfaae9dd8 100644
+--- a/tools/coccinelle/free.cocci
++++ b/tools/coccinelle/free.cocci
+@@ -8,16 +8,6 @@ expression E;
+   commit_list_free(E);
+ )
+ 
+-@@
+-expression E;
+-@@
+-- if (!E)
+-(
+-  free(E);
+-|
+-  commit_list_free(E);
+-)
+-
+ @@
+ expression E;
+ @@
+-- 
+2.56.0-rc0-143-g1fea62d0ca
+
