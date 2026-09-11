@@ -1,171 +1,120 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A7E41BA69
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 19:08:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBB4582BBA
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 19:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789153741; cv=none; b=o0kCD2uSnp63k6UkiBeFlKnqvUHTHzDAXRKIr+ZQBCuGeOc/cDQtJaiLAoAZ98vNPioKyA34a+MeLRAYTW8jQSOPy4UP1vRmlIFhzyrUFnc+ohWoC3nIWFsBpX4zPqCTajD7wgtqHqbfW8WCDX1N0Re7FHw9Bl8MIvhl6mU9TWY=
+	t=1789156405; cv=none; b=QRRBv2wY/fAxcozIUGDytLyQ4eyONbyTS21WT237nmoIoWWOt8lWR0OQUQW+qFYsX+fK/69s+DSkplXlXIbOheOX+RC26/lRRxzOFovMR1l0UUdznbVjWo63RTwJCKwyLF9JgtMMEbIxGWi0GfTLYy62bP1YD9itcA6dtwGwUik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789153741; c=relaxed/simple;
-	bh=VhPiiQPBt4bV2IVLYGykO0jLIN73YCj+uY3Qrz10mbs=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OctYY1S3lYddRVbVf6gPGXFMWbcG0Fi0tEwHMJF0yFVY54QP/dPxhwHl+P8o1fgNp7KPKsKxGrW+lG4OaYukz6bZP1hiQtwJv8RFBxC9kPNKsHq8opuqSN8y9Te5T9Ni0ekeAp1pfrxLAy2f+jJfEaskmCmzLUmxOPHNUJHJm2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZbFPufQX; arc=none smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789156405; c=relaxed/simple;
+	bh=heFpzXhdEq83rbkeixA+4H9I6PN9hfXJyfj7BXBeHhg=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=A4VHuAhJ9P9AgGlLQMEw2pz2o0z9LPve3e9sY2jFWSrIjQfdNkwDL1MZKl3SGMQNb/F6LDeOjXYbZydNChfuS0IoQSsBlvz8DFsUNWhY++PKrFduNQX5k6xznp0cOfmQhBgF128c869BcHky85yG2gUQKCv39vEcgt+xsYGqsBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=U48/gJhQ; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZbFPufQX"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-90ceab90152so10785206d6.0
-        for <git@vger.kernel.org>; Fri, 11 Sep 2026 12:08:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789153733; x=1789758533; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=erFLYHvYkJXXp1Iz+TexscG3VUIqDMEbI92tjpQ88HE=;
-        b=ZbFPufQXoOF0iRvpHYxXPymBOiD48xc2frqtRJGS+H6SSY3Ib8S8U3N2AftHFNKGmc
-         Pm8Tax0Nf1JM2PDMuA06kEyQeA9z0t6yEfXpOAmGHrZcd07qdeyqq0vqfQX55C3VPjDU
-         5Un1T0V0C7qoz8YczrHSx7fjrQJJKXOWpaAIwPuxbxfz1n3zGqtgJ/yL++nUIrkDm3Na
-         6bbjbsXt3Cp+s+TRlJiBz1itfOwwGaanr/6vhMZp8rzGVcyCAaBl6YmgncqGjLaXOgPN
-         LUhLz9BspfkdCq5r2Y75enm2a7ZlPmkZXTgouj2x2PhaKj8UBVYKmq/wrDlMZ6DVLwgq
-         1sCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789153733; x=1789758533;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=erFLYHvYkJXXp1Iz+TexscG3VUIqDMEbI92tjpQ88HE=;
-        b=aIlpe7dvR5gytmrV4MtusZAwetpFmwukLMHPXPdN8JLxEeNEC8Qa/gpgDSnjn+CskM
-         qayLyht6BdpGkngWVBnI8vvtqit9+kRH2miWajCJlOwHTxWQjYr+u091IU0aC6NdqnS5
-         NRhYIERSzihybO1Urf/CE5K3IFPRoLRzchHGHe8PwuO/GptPBYcInMEY8TimaMA4q9XU
-         GwPWnAiazRCJpQCIBSgk2VACpkTjYe8xB9n4072z5gRvIVKGOscog1khrlCcqf5jE6ak
-         f+dOjCC7XWYmNhI9lgDwK6ocnu4KXFHLFcbYrLeSk8+xN9ImEdXkkxAhmeOTLqceZukj
-         Pg0g==
-X-Gm-Message-State: AFuF++m+qPwHfentddXQQkhx92iDJB3r1S6VJBWrveQuOdz9y822Slh6
-	iFNeel7DUOTnzggLGkeRYe+xp45ujXiaJlfa8hSVhUffCCuW2tXzsf4KPXZL8g==
-X-Gm-Gg: AYBFou2e1+DIYRhUJbvtuu3oEtx+R2CGFcj8XTcMKhN+obESvfqNSJA0PJYt7B40AOM
-	12C7K72FYxwl7PSirv+Jf4asLw8oV5hPu8ra8F/gVmLegWkJ+IfZn8n34R4ZecnnM6mlRGLxo+F
-	jvXvwh80zjG+NNR5gqm/Ywi8A4og6Hy3Tp4qBrJdzJVik2eoOXm1d/ZJEFeOBGOYca1ebRF1dNp
-	61J3flmiqRxjheEgJIxtj9SyWyTg3O1+XJawGPcaAhZX+Lzk12uwTX9z1KzBaSAnMl1JN/YCRM5
-	MlkOJSXn3Fe1/yAJ4jSr/seJ28CSLVGNovnJtDbFtcd+Xr/hNHXoYDN0GGLfUh7CD+JzhMMweAG
-	iLcShumiGkl59Djg5zTpC1PgMmc0j4J+oWlHtNgJ5WjuAzrRcBjB666xtOhw48Dzf+5JxGfs3W4
-	g+lU8iJS1ZHOVOInI/s6kW5gaT196PxmN32Eo23joWxjCv/5J2+bFTfgCscaSFqCaBk3LK/t7s
-X-Received: by 2002:a05:6214:226a:b0:911:9375:bc33 with SMTP id 6a1803df08f44-912120f2d2bmr73238456d6.30.1789153732637;
-        Fri, 11 Sep 2026 12:08:52 -0700 (PDT)
-Received: from [127.0.0.1] ([68.154.38.19])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9120f4dd2f2sm27859436d6.44.2026.09.11.12.08.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2026 12:08:52 -0700 (PDT)
-Message-Id: <6567eceb32c1bdcff5927c6baf0cadc97af7485b.1789153730.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2213.v2.git.1789153730.gitgitgadget@gmail.com>
-References: <pull.2213.git.1788272509.gitgitgadget@gmail.com>
-	<pull.2213.v2.git.1789153730.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 11 Sep 2026 19:08:49 +0000
-Subject: [PATCH v2 1/2] rust: pick a GCC-compatible Cargo target under
- MSYS2/MinGW
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="U48/gJhQ"
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 68BJqsYk022910-68BJqsYm022910
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Fri, 11 Sep 2026 22:52:55 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1x57Is-006Oi0-SH;
+	Fri, 11 Sep 2026 22:52:54 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Fri, 11 Sep
+ 2026 22:52:54 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id cd339218;
+	Fri, 11 Sep 2026 19:52:54 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: Junio C Hamano <gitster@pobox.com>, =?UTF-8?q?Jean-No=C3=ABl=20Avila?=
+	<jn.avila@free.fr>, Jeff King <peff@peff.net>, Tuomas Ahola <taahol@utu.fi>
+Subject: [PATCH (RESEND)] ci: use system asciidoctor
+Date: Fri, 11 Sep 2026 22:52:50 +0300
+Message-ID: <20260911195250.31201-1-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260902071113.GA70165@coredump.intra.peff.net>
+References: <20260902071113.GA70165@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-10.utu.fi (130.232.247.50) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsH
+ BUhYSFpIWVxIWVtYRlpbWkZaWF9GW1hIUEhYSFhIXEhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWEhZXkgCBkYJHgEE
+ CSgOGg0NRg4aSFhIWVtIGA0ODigYDQ4ORgYNHEhY
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
+ bh=Hr7UgP7i07f2YrMG59nabgYZuEMC4hc3NSWrYkGx2a8=;
+ b=U48/gJhQDAUwgYTaDIfZaQwcXLLpEHFEAghPeNosplfbZnFAsffDAY8rrEfXI95PJomAzNwN46Vf
+	tFeERam0xkEuJME+lb+iRvg/ysG0E0PMSFl9CzMWnNZqT6knS3YnbPxAli7iuDQsRlN5yE5laTt6
+	q4ydqiQVWGQh07oYnMesKaYHA+xKydmJ6PSZupvuzUKdBTtUC8Osxuk8h6HUUeKCO0hqK1IRRDub
+	oFDEabWihHvrvJwfDwmT3ZFbRqUyrmLoEJ+lPofKggjUVAiQY4q0vcF1sFw0QAgT8AR/NKkkzYMd
+	gQp2ASqJk66XyyVoOnGQOOlhuJ5VV4sf3WTwLg==
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
 
-When Git is built under MSYS2/MinGW with Rust support enabled, the
-Makefile expects `cargo build` to drop a `target/release/libgitcore.a`
-that is linkable by the same MinGW GCC used for every other object.
-With Rust installed via `rustup` (the way it ships on the
-GitHub-hosted `windows-2022` and `windows-11-arm` runners that build
-microsoft/git), the default toolchain targets the MSVC ABI; cargo
-then writes `target/release/gitcore.lib` instead, which the MinGW
-`ld.exe` cannot consume:
+Our CI Documentation builds have pinned asciidoctor since 615a6c37e1
+(ci: stick with Asciidoctor v1.5.8 for now, 2019-03-29). Back then a few
+changes were needed to build with the then-new v2.0.0.
 
-    LINK git-shell.exe
-    D:\git-sdk-64-minimal\mingw64\bin/ld.exe: cannot find target/release/libgitcore.a: No such file or directory
-    collect2.exe: error: ld returned 1 exit status
+We've since made those changes, in f6461b82b9 (Documentation: fix build
+with Asciidoctor 2, 2019-09-15) and other commits. So it is not only
+safe to use newer versions of asciidoctor, but preferable: it's what
+people are likely to use for actually building the documentation in
+practice!
 
-See https://github.com/microsoft/git/actions/runs/27341625000 for the
-full log.
+I don't think there's any need to pin to a specific version. We can just
+use what ships in our Ubuntu image, which should give us an arbitrary
+representative version (and if it changes and something breaks, we'd
+want to know).
 
-Let's define the correct target. Re-use (and fix) the existing
-`HOST_CPU` variable for that purpose. Avoid relying on environment
-variables that are simply not defined in Git for Windows' minimal SDK
-that Git uses in its CI runs.
-
-Assisted-by: Claude Opus 4.7
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
 ---
- Makefile         |  3 ++-
- config.mak.uname | 24 +++++++++++++++++++++++-
- 2 files changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index fac3e8879c..bf2a11c08a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -959,7 +959,7 @@ RUST_LIB_NAME = gitcore.lib
- else
- RUST_LIB_NAME = libgitcore.a
- endif
--RUST_LIB = target/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
-+RUST_LIB = target$(if $(CARGO_TARGET),/$(CARGO_TARGET))/$(RUST_BUILD_CONFIG)/$(RUST_LIB_NAME)
- endif
+Notes:
+    The release notes draft for v2.56.0 already claims that asciidoctor
+    has been updated to be installed via the system package manager.
+    Clearly it refers to this patch which isn't, however, anywhere near
+    the master branch.
+
+ ci/install-dependencies.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 2f61fbb07c..d57dce5663 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -164,9 +164,9 @@ sparse)
+ 		libexpat-dev gettext zlib1g-dev sparse
+ 	;;
+ Documentation)
+-	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make ruby
++	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make ruby \
++		asciidoctor
  
- GITLIBS = common-main.o $(LIB_FILE)
-@@ -993,6 +993,7 @@ endif
- ifndef DEBUG
- CARGO_ARGS += --release
- endif
-+CARGO_ARGS += $(if $(CARGO_TARGET),--target $(CARGO_TARGET))
- 
- # For the 'sparse' target
- SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
-diff --git a/config.mak.uname b/config.mak.uname
-index 0b63be10b7..720d9ba3ed 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -758,7 +758,29 @@ ifeq ($(uname_S),MINGW)
- 			MINGW_PREFIX := /$(shell echo '$(MSYSTEM)' | tr A-Z a-z)
-                 endif
- 		prefix = $(MINGW_PREFIX)
--		HOST_CPU = $(patsubst %-w64-mingw32,%,$(MINGW_CHOST))
-+
-+		# A rustup-managed Rust on Windows defaults to the MSVC ABI and
-+		# produces a `gitcore.lib` that the MinGW `ld.exe` cannot link.
-+		# Pick a GCC-compatible Rust target triple matching the MSYS2
-+		# subsystem instead: `*-pc-windows-gnullvm` for the Clang/LLVM
-+		# subsystems (which on Windows is also the only choice for
-+		# ARM64, where no MinGW-GCC port exists) and `*-pc-windows-gnu`
-+		# for the MSVCRT-based MinGW subsystems. For a `staticlib`
-+		# crate-type Cargo does not invoke an external linker, so
-+		# `rustup target add <triple>` is sufficient.
-+                ifneq (,$(filter %ARM64, $(MSYSTEM)))
-+			HOST_CPU = aarch64
-+                else ifneq (,$(filter %32, $(MSYSTEM)))
-+			HOST_CPU = i686
-+                else
-+			HOST_CPU = x86_64
-+                endif
-+                ifneq (,$(filter CLANG%, $(MSYSTEM)))
-+			CARGO_TARGET = $(HOST_CPU)-pc-windows-gnullvm
-+                else
-+			CARGO_TARGET = $(HOST_CPU)-pc-windows-gnu
-+                endif
-+
- 		BASIC_LDFLAGS += -Wl,--pic-executable
- 		COMPAT_CFLAGS += -DDETECT_MSYS_TTY \
- 			-DENSURE_MSYSTEM_IS_SET="\"$(MSYSTEM)\"" \
+-	sudo gem install --version 1.5.8 asciidoctor
+ 	sudo gem install concurrent-ruby
+ 	;;
+ esac
 -- 
-gitgitgadget
+jk/ci-use-system-asciidoctor-for-real
 
