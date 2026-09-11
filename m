@@ -1,95 +1,96 @@
-Received: from mail-oa2-f12.google.com (mail-oa2-f12.google.com [74.125.231.76])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A8049B1FC
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 18:06:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A304A92D7
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 18:06:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789150008; cv=pass; b=a7HEa5jQtZLVwC6M6KC8VHTNKlM54jc/gtcN42oc+u0l8DCRcFfoKLfeAVc9XrNTCgBi+HNLMYuxIzdoy6db90Y8K8XMF/KLgpxm4tkSHXzv66X3Os6kyt4LvAfebj/Qq12RQ7IFsLFGSBPO6vrbJQukPv6Rm+EAESHaLzu9fQo=
+	t=1789150017; cv=pass; b=qqf8Ui5sanLwEGYjM89AIMY/yegUhwttRb1JQhJQDWGpPV0LZJOkRi8JuauCG5HWEapmGgG0iMtzEMIQQG3BPnxdButF/hvgY879SmM/YT7JSL9AXvzFUIHAD68fs2ZweYwtTEmZ4/d7FMicaQjLK9CMekj4z2NLMYpFQXJ3K7E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789150008; c=relaxed/simple;
-	bh=FI7kk/FqoTBH4MMejNNECalm8uvuL/90bGtaMOz7ki4=;
+	s=arc-20240116; t=1789150017; c=relaxed/simple;
+	bh=s4LtqAj6H1n5JFk6vX4jQVbcbFW5Y1UHv5Low1hbFkM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sq7qH7gYlJdKP/1+tFdMxqAaQDAiDcO9lSoggkD2k6TIH/+UtxOm6g4lvKq57Rvb7jAWQQmawJBZVvSW+cPQojRfxRhGIEM5eeNiZGtNVdS0fBh0/UUfwKlCK/05CSIg6dYH0+5J1vrj87XoUvzfiKAV3a7hJZ2YpsvbDXP4Csk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JpgJ2q5a; arc=pass smtp.client-ip=74.125.231.76
+	 To:Cc:Content-Type; b=fqwkKpwefG+olPLCYokNNS5gTknTMb+vfkn1lVt37K1525tYor464bePhsYmJzIoEIYIYPh6rb3eqEzmCJoszMywVoqNgtNf/XVl0XNBbdL4/pXWYkZCZHYcTxYJBwmm1WeFYM7RVdYrhS6nr6u1DeVsVjHEZyjE2vCtXgp9eGA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V9w4CErc; arc=pass smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JpgJ2q5a"
-Received: by mail-oa2-f12.google.com with SMTP id 586e51a60fabf-466cc9ab650so177160fac.1
-        for <git@vger.kernel.org>; Fri, 11 Sep 2026 11:06:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789150005; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V9w4CErc"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-6b0496f4bbcso996509eaf.0
+        for <git@vger.kernel.org>; Fri, 11 Sep 2026 11:06:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789150015; cv=none;
         d=google.com; s=arc-20260327;
-        b=hmkeL899pBiZZqrLZs0Fi2eVaST2xbZ4p8RYTk0pSnpj9Al31W1RmsSguna5lgqVRs
-         IeLbuwGBNg/Xp9qKj7NGgnVUX7OVi27XlHsk4byxQl2AfDEOuwv9i+Q9JR+1Sv7SMVdf
-         O1+Szz0fEqiXjVfPT90LBEEDHComq6apkrEyWM37h4QSDCKMlmUdsHxYCsMjUnY+rO3j
-         h5oMbYMSMAaP+rXMAA7SdbVH2XyWtJdxlSD/+WTdxpFzLeig5KVitM6ZklOUTCFZ16Uf
-         J1ftXvwrzjQZWGDOcB5NIg1yiVNdLznuImV/JLPpHWd0DQFc++XTKtXXVWKy5G0f11eK
-         3ABA==
+        b=GZNf1vdUJTTM8KEB9YucgempVo0h7ogH0Y/Jas5Eb90Y4jJxPzvx3f6RiWTQZuIA2J
+         kajWFS7PyZnPx9VLRbF0VjXl57hpX6PXWAMv2dr7t3VHnklS8TmQ/VgA2q/c2MQUV8lw
+         Y+EZ+/geGO7RGfz14Kx4luU0/fBgJ6tdVI3FIhI6KbqXJ7V0BQGflsvPTUZ8VT9Yj41v
+         USdHP/Fhtqy0fZVw6V+H/uzULd+dJIRepsn3xcfeN6N6cy7x+UEWMO9P6PY7aJgfkRZ+
+         OxdGpOjSZRGX3KwSHr+3lht1JxV6b4E4CpDBN0UY0/APnrd19JsdMEbSanPjqsAKPxwG
+         hloA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=d+6K/jk+gX273yF7kKVV7gf63M6eDEfrENxzOdIXKa0=;
-        fh=iVZ9atAsjbnannISrByOvuVsVNjnlACtbr6yARnVfN0=;
-        b=CBAPCaHdqCvoM8a+kTd8nT9w6zx4U3DIrT27ZFx/JrNHwsVsEEm/dOj1EznejWaUVW
-         ZskYnTHc5MYCWmIhBg+rByBsyHe6JisFSyCIHI36ZQL4kTopiLlEwAaQJK7rvhaK4fvT
-         wQWZbUjqq9zeDfSsOF9Rltoa7/0by4Or6dnx4ha0Wn6CQjRPz6CyHDD8cb9XMLX9q9U5
-         //EaybLGHib7Jc0ZIEjNA8fFju0efVFILlkEJLQQO3ts90TCejfwJPMreYkxfPjoEOK5
-         R8gwEw807/fKXSH5HXJUd/DulqlgHQWC/4bzACdDiDJbPunQ5OnYNAOhVy7PrBTiOTLV
-         OW2w==;
+        bh=VWs9zzcikcmUVWnsOThu0e7EKt+sQwbjoMHymr0F9i4=;
+        fh=BZHgaQ8VeIZtkgjKnadltri0QohAe7KtZH8/bnlqLPo=;
+        b=egGfT+8vAXtwbj3+q8GZD/B30jYs3SYG8Gqx/p43P26lpZtgvJOWLhg8pITg2q+IRx
+         HAAOKeXF/+o3W6rDz0lvL258zn5HFHCq1fH3/0Wh9BPRd0J1u0NT5soYHAEzHq/tfpJM
+         KP02WWtLD/Qi8vY/Bm3vyZ+dPfV+dghMLBIo6cTzqW5Y8tC8FJ8cg821obGb5hn78mbE
+         jVJlf1zbzWWr9a71zhNUSA3OoLtXou6UkveDFGNE4uRvflwCCnuGbuEMZnCM356j5FCM
+         PyImHUrs5ziy4MSCQbN5Jjnk65Omb6fRSNfQepPY2QBbqWVlFOdOg/OARO+wXheh0Hpl
+         1vzw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789150005; x=1789754805; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789150015; x=1789754815; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=d+6K/jk+gX273yF7kKVV7gf63M6eDEfrENxzOdIXKa0=;
-        b=JpgJ2q5aRJdcrjDa4GYYywYriixrz5QKFgDpTOHPtaM44KtPzMPcrO32j3BZXS4T5T
-         wrvcqAO+vpfJq5MlbHNZAoQ3J5cJcPpshZuL9X/3o9ZOM7Q12qvSD9mo0/7FwK3xQIkX
-         WT1iBHIM1J3pTqew8uhDyqOmifsUBBN6KRZpIJgjdko8N3Ac8mc31J3CgER7vyXvPNhS
-         hnrgKQ9soTpuaJ2Ceo2LTrphexXIy9cROnaZoH8ILZb2PTnMb/HfkGyHgxAHlGa3IkHP
-         yHuXLs/HlUghvhBd3kiMlcW2lIvx/+m71UxyaD6fSH2AvitpbUKkQ3VdXWDt9XkJy+WI
-         mljg==
+        bh=VWs9zzcikcmUVWnsOThu0e7EKt+sQwbjoMHymr0F9i4=;
+        b=V9w4CErcPg0Kp3vcBpjuSqw4EmzkmceqUXQwY5f4vvmefRzCrQBXj1d38ba+U10zgf
+         0BPnQo07/j37HNJ+2eCvFS7uk3NuWjQJ8NH/jx/xauLLVJJaSZfSoKXK/L9On6PCwbHY
+         WSoF+51uYviifqQVgXS0tmFlqRpKUz77YXJ2yG9eFTeWXLgTs6y5mV7jHQp2hIwVnlJ8
+         XkMHsQ/+HaJh6f2didZ2gh5SNP3ZAuiONnzb/QDiV8ed5S0pWFCiu6I51Iek63AWyVfS
+         TASPGFDvpgYBFpq3zEFmpJlFcugTHGfUn5qiG0Rex6lrY0QwqEGcNEy5aGpGijkafK3+
+         IMKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789150005; x=1789754805;
+        d=1e100.net; s=20251104; t=1789150015; x=1789754815;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=d+6K/jk+gX273yF7kKVV7gf63M6eDEfrENxzOdIXKa0=;
-        b=EBZMn2aIPwUVXkMLBA+1oUS1E9dSsd1t3eZK/0jNBX8aJE/+huuTQTptvPVOeot7B3
-         CGgevaXrPADizs0J2iku/m1z4uRGUxlxUxZcOx7jzgByn7jly2c3/iMvNnNyvJqrIAFv
-         FkuTHDiN2xQISSwVNIDoGZBU8mt/o2eXoOVs5GjAPvvmeRULSyyHnlbswDeMqnbi+5Fc
-         XNMfthBs5qoOWO5g3RbacJlhYBgat6a/Vn2dTEtDFKISkFHrghM/eZ3ne6Dv4t80eFkl
-         ueecsQlLET3WPnGKynC3vgv+rOWwZS6BpMFDi1ONn0Sbzxe9VgXTWEVg5UyjELNzdRa2
-         6yGw==
-X-Forwarded-Encrypted: i=1; AKwUvBw/dxuGQzDhDD/xbc2O93Aox7F9LShoskId0rWJo6Ep/+mllaGRTi5yYjOA5XP2FGarcic=@vger.kernel.org
-X-Gm-Message-State: AFuF++lg1Og16wgtsWybITtND+u8zTnt3RTgDczZ5LYaE5/Gd0ORirNa
-	LZEbd3sOet/qNKqRMu+QmIOITn0Jy2ba+eRqPYPWweaJSslmyoB9RjMgx+9jVg/1eSavkdj7wtN
-	zVA+RAfyOcJCctqI7qZ5+hptxI85+ygE=
-X-Gm-Gg: AYBFou0pj6nmi6iuonva3IgU7JihOZ4msEIyKUiS2iB32MKgjbQzU/TuXUNwjtaGG9S
-	xzaTApMJMicNKNjzDKEQTyaEePv9joKV4XhiHmqdnYocq3YtAdZy5ijrY497JxhImWRsqSgir5A
-	KZvQCt6lYerUDIcnnY8FdBeKdb+aNLeMWyU1m0bU8QdwRPWiXp9mmYpP94CywcttBJhH+SW/fAD
-	hz5htjj27nzp1dmaCV1xL53/RS8lpqJSJGcdqDdm7ERQuvxarIu3fb6s3EDKVsOlOCjeluBBBkH
-	QNLZjgZ3CfREl2SteYd9C/nJHo486jCjfBfFRc+NmWi5V0a9uumU/4U59PB2wl0t20TZJCZcVe9
-	enF+T7n8FkrcmV2YmgbvCqx18s6CZmRzWw6URsFQG9bdlijnBbgp7FearFIvUODPrUl1h4aHc
-X-Received: by 2002:a05:6820:c3d7:b0:6b7:46fa:16ae with SMTP id
- 006d021491bc7-6c0bde62839mr2782323eaf.67.1789150005477; Fri, 11 Sep 2026
- 11:06:45 -0700 (PDT)
+        bh=VWs9zzcikcmUVWnsOThu0e7EKt+sQwbjoMHymr0F9i4=;
+        b=KN6RD8x/G7TtId/rK7VDaP2ImAv/3wN6XzgxmYrp/vsAlrexq4clW2IyJ4p9WrQfNU
+         JUJtki3CNY9rtqo1xlO5mhstdgC1kBTCZrdx31rTRI8ic+JVhC23L1kE5DSXDxHQO/Qi
+         HZWlP+Xf4jUS2Gy+eh5GqCKTAEYIZ3R3bDJEDE8muuLF5wqcpCqa116stvSJKbBowxXX
+         26x/KmV0ynn98DoqSFF8rV1wjUYKKIGQ18Tv7m/7yGuoT4lbyYi2ukJWYY9IwOEgrSUT
+         mxTWQgdjWkHj/3HROHF2JxnYi4R4bVbN7DFnVTpcxld1U5bEnEMdOc+sTd/OaSPwnM7n
+         cCMg==
+X-Forwarded-Encrypted: i=1; AKwUvBzUkX+RBxz3T9Nb2MwOTKQYTlQqQMQHtSOqd9/laJJ3bu92yPLrb5ACmKhek/dv3z2V66c=@vger.kernel.org
+X-Gm-Message-State: AFuF++mk5h9rQHaP/CmSov61Sjp+jabK9t/IgBXO/dGquZke2BIg81oG
+	+Belviq+tOTPo4KrMx3g0KvDkpNqt9ltQCLn8QUYkv+KR9QV34CvIyO5CtshdxkdP6Nc7ehk8Tc
+	D9eVj7wAJxRCr3RZ0mjZx3XFV7mg2zcQ=
+X-Gm-Gg: AYBFou3Eu+ROLEwEp/1+nmA0AdOx5wHlqxqIZbue4lTkjZFwx6235b4rSawrTN/nc1z
+	1BwYNaSclcXSJhT7VgjkQz7jzqxoLuYOcohxU/Eon24Ze5s0qRTKYe2j9wkF4m67QxLP7r+1xzo
+	0pLRRsPY+OFWGkbeWfMCad6a8y/tRW0iegU9GoF7paYJHNE0M5QVxnByHRjAxNVmI/VVZKS98I/
+	ab+Vbf+RfIxbWkX6uK3/iGjbOVznQLeDSsKnlmiy0yXm8PmJ0GN631EUCGDLp/+D04hzy3449s5
+	1MznAatmKARLF+y13EB7SJVXtsdJMG0FCVbfFq8NsU7fFH6tsA5lRTakvfjDNVQi/ukM9bkERc5
+	PuP3tyNQB8Nov++mXjtax6kFdYpipALwSRQ2AOk+qExL+tCoBmtJNiynAoPZXJJpUV/e3koqT
+X-Received: by 2002:a05:6820:83db:10b0:6c0:dbd:309b with SMTP id
+ 006d021491bc7-6c0bdb6bab9mr2951621eaf.59.1789150014944; Fri, 11 Sep 2026
+ 11:06:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260911171044.GA1609692@coredump.intra.peff.net> <20260911171124.GA1610200@coredump.intra.peff.net>
-In-Reply-To: <20260911171124.GA1610200@coredump.intra.peff.net>
+References: <20260911171044.GA1609692@coredump.intra.peff.net> <20260911171139.GB1610200@coredump.intra.peff.net>
+In-Reply-To: <20260911171139.GB1610200@coredump.intra.peff.net>
 From: Elijah Newren <newren@gmail.com>
-Date: Fri, 11 Sep 2026 11:06:33 -0700
-X-Gm-Features: AcwNN1WI0Fxa2p8au_Ihqc-b8SR24eD9zNdwOcKVavRs5dacxB7m8HXDyJBPep0
-Message-ID: <CABPp-BG9Hkc7i_JxAbYfyzu+b4Mc_pZUr0jJF=vY0jHSARpHzw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] merge-ll: use strbuf to read back external merge result
+Date: Fri, 11 Sep 2026 11:06:43 -0700
+X-Gm-Features: AcwNN1Vo2wdLw_XDI-hAI0JS4H5GY71KFl4VdVGYte0MIG_bTMdMrfsoiC6t7os
+Message-ID: <CABPp-BG6wYkr4wjr-iqak9fYo4+49WvjROdZ_MK5=g27WcUmMA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] merge-ll: catch close() errors when writing
+ external tempfiles
 To: Jeff King <peff@peff.net>
 Cc: =?UTF-8?Q?Michal_Koutn=C3=BD?= <mkoutny@suse.com>, git@vger.kernel.org, 
 	Jean Delvare <jdelvare@suse.de>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
@@ -99,90 +100,40 @@ Content-Transfer-Encoding: quoted-printable
 
 On Fri, Sep 11, 2026 at 10:11=E2=80=AFAM Jeff King <peff@peff.net> wrote:
 >
-> After the external merge runs, we read the file back into a heap buffer.
-> This ancient code does it by hand, but these days we can make the code
-> shorter and less error prone by using strbuf_read_file().
->
-> It's not quite a one-liner replacement, because we have to copy the
-> pointer and size into an mmbuffer_t. Two things to note there:
->
->   1. We can't just pass result->size to strbuf_detach(), since the
->      former uses long instead of size_t (something that we'd ideally fix
->      in the long run, but is way out of scope here).
->
->   2. We can leave result untouched on error; we zero it at the top of
->      the function (confusingly we may still return LL_MERGE_OK and a
->      NULL result if we hit an I/O error, but that is how the function
->      has always behaved, and callers know to check for NULL).
+> When writing out tempfiles for an external merge driver, we catch the
+> case that write() fails, but not the follow-up close(). This close()
+> would usually succeed, but the system could report a delayed write error
+> (e.g., on a network file system).
 >
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
-> Not strictly needed for the rest of the series, but it felt like a
-> cleanup worth doing, and it conflicts textually.
->
->  merge-ll.c | 22 +++++++---------------
->  1 file changed, 7 insertions(+), 15 deletions(-)
+>  merge-ll.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
 > diff --git a/merge-ll.c b/merge-ll.c
-> index ef5287dee8..5b6af15e23 100644
+> index 5b6af15e23..5a11a9613b 100644
 > --- a/merge-ll.c
 > +++ b/merge-ll.c
-> @@ -201,8 +201,8 @@ static enum ll_merge_result ll_ext_merge(const struct=
- ll_merge_driver *fn,
->         struct strbuf cmd =3D STRBUF_INIT;
->         const char *format =3D fn->cmdline;
->         struct child_process child =3D CHILD_PROCESS_INIT;
-> -       int status, fd, i;
-> -       struct stat st;
-> +       int status, i;
-> +       struct strbuf result_buf =3D STRBUF_INIT;
->         enum ll_merge_result ret;
->         assert(opts);
+> @@ -180,9 +180,9 @@ static void create_temp(mmfile_t *src, char *path, si=
+ze_t len)
 >
-> @@ -241,20 +241,12 @@ static enum ll_merge_result ll_ext_merge(const stru=
-ct ll_merge_driver *fn,
->         child.use_shell =3D 1;
->         strvec_push(&child.args, cmd.buf);
->         status =3D run_command(&child);
-> -       fd =3D open(temp[1], O_RDONLY);
-> -       if (fd < 0)
-> -               goto bad;
-> -       if (fstat(fd, &st))
-> -               goto close_bad;
-> -       result->size =3D st.st_size;
-> -       result->ptr =3D xmallocz(result->size);
-> -       if (read_in_full(fd, result->ptr, result->size) !=3D result->size=
-) {
-> -               FREE_AND_NULL(result->ptr);
-> -               result->size =3D 0;
-> +
-> +       if (strbuf_read_file(&result_buf, temp[1], 0) >=3D 0) {
-> +               result->size =3D result_buf.len;
-> +               result->ptr =3D strbuf_detach(&result_buf, NULL);
-
-I know the type mismatch is pre-existing, but the order makes the new
-behavior different. On LLP64, assuming the usual wraparound, a result
-of LONG_MAX + 101  narrows to the negative value  LONG_MIN + 100 .
-
-The old code narrows before  xmallocz() , so it requests an impossibly
-large allocation and dies. The new code allocates the actual buffer
-first, then records a negative size; callers converting that size back
-to size_t could read past the allocation.
-
-Would a simple fail-fast make sense?
-
-if (result_buf.len > LONG_MAX)
-        die(_("external merge result is too large"));
-
->         }
-> - close_bad:
+>         xsnprintf(path, len, ".merge_file_XXXXXX");
+>         fd =3D xmkstemp(path);
+> -       if (write_in_full(fd, src->ptr, src->size) < 0)
+> +       if (write_in_full(fd, src->ptr, src->size) < 0 ||
+> +           close(fd) < 0)
+>                 die_errno("unable to write temp-file");
 > -       close(fd);
-> - bad:
-> +
->         for (i =3D 0; i < 3; i++)
->                 unlink_or_warn(temp[i]);
->         strbuf_release(&cmd);
+>  }
+>
+>  /*
 > --
 > 2.56.0.rc0.314.g7a874b6915
 
-Otherwise, looks nice.
+I got tripped up at first on this patch; if write_in_full() < 0, then
+we won't explicitly close(), but since die will result in an implicit
+close, that's not a problem.
+
+Instead, the only thing that changes is we also die if close() fails.
+
+Looks good.
