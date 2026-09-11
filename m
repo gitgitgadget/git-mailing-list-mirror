@@ -1,89 +1,82 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6814351C11
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 07:34:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E34255E43
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 07:57:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789112078; cv=none; b=g9s/2Sqyw7I8L7xtIqNunPZ47tOhR8p4SqH80x+6t+KKluuydxanmz5hUzsqIGardnLhPiKy2IQoz8fo5umri4qoM7RAa8RdvxcALH91eyY3cUZNXFwM6xJvCxX/oweAzB1AC2mKtXV+H7c72tlW+NLKverWC7teozgh9DzuYLE=
+	t=1789113477; cv=none; b=SFxOnGP/Ys15W1PmZxYuWeaWVX4Y+hY1t1UW8v7IMhuiAYTJQ7FVs1mHE7bMzYoTUWkWEDIIulvQablUwHOUmmNTPk8OmlGU8npIW1xVANtOpYEH1kh7GWu5gQYeUCKEpVDaofXerwIFBZH/A5Plqe1vdKbAw24Knw/9DGOAdvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789112078; c=relaxed/simple;
-	bh=JtMqBo1idz0Bj7dsny4Yv2AcV+uCaAsGysCwr/gVFs0=;
+	s=arc-20240116; t=1789113477; c=relaxed/simple;
+	bh=9xt9b35dACzwz9Yk002mFVCah6jfOnTWbTKnBxUQwho=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UhXUCry34IbdwrILBC36BZv2Ml4p4jM8uj55D9gIB/dsrQ1ynVXWmVzWC5ALFibCdqIf+YgziYjgnLPmryaKNEkubgvbuc+wMpXUtx8h0PJZmaHtTpkE8SV9kS+5AINhCZBXsQambg7BJP+9jLezJCD/wYh74KRxXSvtOxahhBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FqmpWqUX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PZIFtNEe; arc=none smtp.client-ip=202.12.124.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=m+i/2zCCNzpaX0xNWdmd6oMYyaBpWAZLSMmBNM1CTupEqD1KBMsdUqWAFdBbsCrO7didEG7pDGKv4Hk0vtSodJP65F3OUpyfJsBd+we0zERHhO6Jp8+ZKZJSV9iccKjS310PV3UK8dq4B+G5U8h52EyBWWPutGXqGCukGqk/5i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E9yqxIRl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vPT7lQol; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FqmpWqUX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PZIFtNEe"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 706EA1D000FF;
-	Fri, 11 Sep 2026 03:34:31 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 11 Sep 2026 03:34:31 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E9yqxIRl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vPT7lQol"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B0A0A7A00D9;
+	Fri, 11 Sep 2026 03:57:54 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Fri, 11 Sep 2026 03:57:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1789112071; x=1789198471; bh=Y5WSWgUWAK
-	FvRge6qmJ36bUvnrq+zM3rJ7mhXnsWW9w=; b=FqmpWqUXpz+RnwhQOTSDNxF7y1
-	eWs6R/PexXYO1LMkHubkZbO1/nCnBMf22Kw+syAMtx7XxiuBlL8m4XmxBJavI9P5
-	ELAaZOyPj7sLpJ6MJBaRBvfY/surQgDFizEAjGaw3+ajjpoYlmgGLmpomRJXebLA
-	9BtL31g843xHhIzpVCorcpe6JkQsSHqrGj3CW15EWwAeaokTbWqsbEW3JBIg4OWJ
-	lAVuhhuNlWmVKvGtWAi6GJ+VwjpIV8AhP9pHWWD8fz0Spyy6/ZHZRfsE2WQyjsxE
-	TjYtQEN2ItO8CtLGQlOOC+AlPv/M70l+NQfDsO+Ct1U9rAV8qG/471Z+tt8Q==
+	:subject:to:to; s=fm1; t=1789113474; x=1789199874; bh=+lRNjxagiC
+	+aZCIy75QEUYiK7CYOUjgp56w7m0XmsGc=; b=E9yqxIRlmkhw+AbwRNOII3M/hZ
+	wf87EQIhkyj1oaJFXuWcx+DIu2kla9BTrJvbG0KUIzQzkdeZJhQrmmisc2CBH8Iv
+	/2KHv0Jbk8Jk06wPofrflQT8jFp40DZR/U3gafDs+Exs4IdxGVufdPX6ccEBqWCo
+	W0n5+5uBJaJoWyq+9BdCZrK0BcOg2gdiYSLmxyRx3tcN9rvXi4jDdaRZGrgA2lBX
+	2BpWnagWSD0lL15G9lDPmP7NF4RjweojoVmfGJdmn/uZugDE1rcCytvMFAlsToeM
+	QQk4RKh6ASXqSd+u6/Z0ywmOQu36bKmUFouWCq5KtFzqooEQMqpYTcUruUJA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789112071; x=1789198471; bh=Y5WSWgUWAKFvRge6qmJ36bUvnrq+zM3rJ7m
-	hXnsWW9w=; b=PZIFtNEeGbR1lmCMSyXyRguV3z2PaCZiS/sNeFeRfRW+etxr6Kb
-	c/pZ2kDfYUv51uymgCKNlxgR5OMqpFjVJPSKXiCx1uoVbgn2qN7nyFYcKQNZhXBm
-	+kxZxqkCfnDtrxoB17ENbIKKSZxa4YvjvBaWiTSM5XradNuEDeOw7UoIskRk+9o4
-	iIXW684gHe4nazrAGpMGZDNFAT3oT1VB+jdGrBihRA0hsuUZ1Vav7ddrvaUD1r4O
-	NGQMiebLPIK5O1l7KDG7wjLscIZhchwy5QLydyOBUct4BQJ3kb6LKu7bbWjBKIwK
-	8k1m8sPwaQR2WJsWSs/O7vvUDzrDu+vPykw==
-X-ME-Sender: <xms:B6-jalCAK9q6qdMCHINsr2VE7gIn8-HJ56M3MIl-Jz7wa67etTHjfg>
-    <xme:B6-jaosQzMsL8IEUiEuHVoQI2e2yxDnpbHsNAJpmj_czog2-ZkM3xh3iyW0q3KoNe
-    m2tpeosh94MbTK2b6P5ueUGbvWa9gmCf3zUDsXcpFYPejlh66TNls-c>
-X-ME-Received: <xmr:B6-jahfrm8f9N8jtNJ__3oFZst1bNupx0YGbdzfZmtDV-WDmp4QjMmXX2Ps2rKF0jvK4MA>
-X-ME-Proxy-Cause: dmFkZTE4V8SodkG/fUbJMIGgsv5LKmNcFE9Osgf07ttGEJRf55wMH5HdqAYF/EpYEyKjqs
-    3sYzQoG/cEFbSp1zJtsroWxhYfy5UwIpnmvpSfD30IYJreLpWJIUd8FjnV74Z4J980903L
-    B1/OVvGbKQThZ7yK70EEsxBj8b8VEC83qEHFMykmYNE+12a1I5iLhLVzH+JHuQQvCYMG+1
-    /4mT907v3VcjjexYMkTlNsqMad8GBJboSZN0ZwUmCe0ZxDq/VEjZ8/XUN5zeBECX5+B/LV
-    yDHaRUwnTH7mdn6xOaS25Lmza6NjxWiszQImWDrwZ+7LJ5K8M91CnvJUKtVXQ5f6yXg/LC
-    PkhZ3mP9uOoof5qnH8bSAw9SGeaOmsSPTvXdfoIsvcD/yRECXYn/wDQ2CEcdLrGtTY/oAj
-    iwBWmnGx+SwcZfDG0V7bRqy164uZ30kYpr6GmO5yNDQh0/aeAO3fdCf3fOXkgxusqwl4St
-    KwxfI2UREuntFp3DveEbM/w9hw0iao50hOwivy95gU/B1PZoceT2lJToOLdgSmq9yMo1cL
-    jd8/cyq8uNYHJ7Fvh6JWBFi87flyHANFsY40+UjmdedO8tGM4axHlbJ7Dgee3pX/JI+hbN
-    Vv6BUtHeMzmQM6HxfUTIG+FVd4aqeIpxidHKraQzouE/ujkqZ/A6W8/SKibg
-X-ME-Proxy: <xmx:B6-jal8TkUDlB2I0ZKCEy8H_V4vv_5X3gC12MmGbZxj8zmusUNB4PQ>
-    <xmx:B6-jasR5dEVugt7Jw_UAkzLZ8hw2nXHnyGu5PYVOT3xfuArAElWr0A>
-    <xmx:B6-jamrFy_e8PZkUmZVN-GThMTrivyCuT8GglZLFW4P3zRLKWU6p-A>
-    <xmx:B6-japn_ZIybkLd0ewg99fw6dOmfvQCQPMzLK-FDI9VGxM9MYLYKEQ>
-    <xmx:B6-japTikNCudSPL84DJ2wVdz6XAesvEJHLB-THK28eDfKna-XnNWzzC>
+	1789113474; x=1789199874; bh=+lRNjxagiC+aZCIy75QEUYiK7CYOUjgp56w
+	7m0XmsGc=; b=vPT7lQolJWtudfHdCerzxeTUy4tgVsVMH8ENwYMUVqJ8UgeMdlk
+	JrOnT3BlM8Nu2bD4FPsgz/bHJDnzpT1FpecajAgVf6suHpmd9WZQRgKpjULBQzW4
+	WPgExy68l4eqRp/UqcZO8W3hwl0KMHSEVyuZs6KweFhELOTQNWT1Y6Emse/sXEFq
+	lWOVQ4d6VXkQueTS8bYJb0HRoZTLj8Bmblzhe26WWMCe1GXz4jhkghNjSGYAPhYk
+	tgkUWoNG/N8jH9KSuUsrubkCEwc2oihiZec3xnHIlnD4YGOkqNJEkhzkO9Z2GkDC
+	EK1Nz2Vp37fVK4a32463xU/zslbCfyrWlbw==
+X-ME-Sender: <xms:grSjao_omxg0MASbfM9mBdw7iKTbAkQoUI3bqYjJVZKriL7KHIL3sg>
+    <xme:grSjaoJ2-KSd_WSdSNbU4UNWapeYxygWZYnUfK2xS-D8FzyFXHobi6avywRUHg1q9
+    PNye0uvJoIqvw6k9NR3cSICxs4mzvaPww9icL7vfyMPSyn-TgJlVY0>
+X-ME-Received: <xmr:grSjarZJmajaFC_ZzreiFrtIUYPVAgCJ0nnIUziX-MaGeYQ7ihbUSCrN3R6bhrMq5oy80A>
+X-ME-Proxy-Cause: dmFkZTG0T3qYZCnlgeGmPSqKdxfQZuWtbwGXGUEb6jVmohMDhCrc1dSEfUAdTydR8Jv4sQ
+    rP1SFe+9ew2cEWvRt7HIu3zZA2n4daWKLjnfcbrdrFmN736xadqU3TSitML6dtdKL+3dJi
+    5iqxGQx6LsTKem32qgSe/ZCveGo4XVFFI/HHTLoDUFXOdhi72sdQDmKBwR+R5LL+t3kNR5
+    aYSZVmDqhcz7W57pyd/wV+KpT5ms8U0m3HnVczdH0N3vmL13AAHC/rbp31HOT6Ac2JTnea
+    nEBGiPxInvX87X/nZ5ob+dsWZEFwEPYAV2qSN75LhHO3S1lys+SUMybozbRkkY8VOc1OYc
+    k6jH9lqFSCPWTVy1QoH48YlyyEiFrBhfr7MrmP4egFqkor654UiMf4OoxGAEQoNyQ16DJ+
+    UuQkXqcyy22D7csCc3HKbW5qwBFFWPy3oK6JyeEcXK2PLoi3yoQuh5Y8NXB1Py+PsHDqHA
+    CrHukbreYLGQieboC+nURQY1IuzRbz5laocxygNCz3txgNXmAso+325iUrRXz6QUCCKygM
+    MU5wlodD7OqlwJAGg4zv+DwjkHK/lQNyMHPo20Etn111C2flE+FI3UweuedhkJvcOfAsRl
+    uSQdgclDtJQjSac95U/PSPowbKyi4GEKwbw1PURpKMDBCW0roZqt34YzxF4w
+X-ME-Proxy: <xmx:grSjaiJqEDLc_yrVl5ZW0WV96R6D1Mxo3bBPqcmOExgnPQ93GZ-lDQ>
+    <xmx:grSjahA4Ec5qRF4IgUzLpwPjUNihli0pbI6tDME2pzjHOWKgubtHMw>
+    <xmx:grSjavq_BM9XOyyA27DgS6PnJzfFST577EdGk8G5dVEYVI_Rlbd-oQ>
+    <xmx:grSjakhjy50KjsS_dYgWBAeAiGu719OGqovOV-dbhiY_4VON-3vRzg>
+    <xmx:grSjaoRNC3n-s_izFrIDJ16cUvgUAhB7eagvax0ZUGqGAeTSJNPuzZh_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Sep 2026 03:34:29 -0400 (EDT)
+ 11 Sep 2026 03:57:53 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 535ed0ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 11 Sep 2026 07:34:29 +0000 (UTC)
-Date: Fri, 11 Sep 2026 09:34:26 +0200
+	by mail (OpenSMTPD) with ESMTPSA id c34f4d1d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 11 Sep 2026 07:57:52 +0000 (UTC)
+Date: Fri, 11 Sep 2026 09:57:49 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Thomas Bachem via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Thomas Bachem <mail@thomasbachem.com>
-Subject: Re: [PATCH v4 2/3] rebase, cherry-pick, revert: run auto maintenance
- when done
-Message-ID: <aqOvAttPrhUIP_7U@pks.im>
-References: <pull.2217.git.1788508426.gitgitgadget@gmail.com>
- <pull.2217.v4.git.1788942331.gitgitgadget@gmail.com>
- <b7b97262f27782f3271369115496c67f9774b8b2.1788942331.git.gitgitgadget@gmail.com>
+To: Souma <git@5ouma.me>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2 1/2] replay: allow callers to sign commits
+Message-ID: <aqO0fcF-feQHIjks@pks.im>
+References: <20260703145037.69832-1-git@5ouma.me>
+ <20260717145142.39478-2-git@5ouma.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,73 +85,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b7b97262f27782f3271369115496c67f9774b8b2.1788942331.git.gitgitgadget@gmail.com>
+In-Reply-To: <20260717145142.39478-2-git@5ouma.me>
 
-On Wed, Sep 09, 2026 at 08:25:30AM +0000, Thomas Bachem via GitGitGadget wrote:
-> From: Thomas Bachem <mail@thomasbachem.com>
+On Fri, Jul 17, 2026 at 02:51:41PM +0000, Souma wrote:
+
+Sorry for taking so long to review this, I lost track of this series.
+
+> The replay machinery creates commits directly through
+> `commit_tree_extended()`, but callers cannot currently request
+> signatures. Commands that replay rewritten history consequently cannot
+> carry their signing policy through to descendant commits.
 > 
-> "git cherry-pick", "git revert" and the merge backend of "git rebase"
-> create their commits in process, so auto maintenance runs only when
-> they spawn a command that runs it, like the "git commit" for a
-> resolved conflict. A sequence thus runs it in the middle, after each
-> resolution, or never.
+> Add `sign_commit` to `replay_revisions_options` and thread it through
+> commit creation. `NULL` preserves the existing unsigned behavior, an
+> empty string selects the default signing key, and a non-empty string
+> selects an explicit key. Existing callers zero-initialize the options
+> structure, so their behavior is unchanged.
 
-This paragraph still doesn't make a lot of sense. How about:
+Nit: I feel like documenting the exact behaviour of that parameter here
+is a bit excessive. You document it in-code, which is sufficient.
 
-  Commands that use the sequencer with the "merge" backend, like
-  git-cherry-pick(1) or git-rebase(1) with "--merge", create their
-  commits in-process. Consequently, these commands typically don't
-  execute auto-maintenance at all. The only exception is when a conflict
-  happens, as the user would have to manually commit the result via
-  git-commit(1), and that command triggers auto-maintenance for us.
-
-  In contrast to that, the "apply" backend of the sequencer _does_ run
-  auto-maintenance after it has processed the sequence of commits. And
-  this is a sensible thing to do: after all, we may just have written
-  lots of objects, so chances are high that we have something to clean
-  up now.
-
-  Adapt users of the "merge" backend to do the same.
-
-  Unfortunately, there is no single exit point for this backend where we
-  could add a call to `run_auto_maintenance()`. While one might expect
-  that we could simply trigger auto-maintenance in `pick_commits()` and
-  call it a day, a single pick as it is performed by e.g. git-revert(1)
-  never executes that function. So instead, manually trigger
-  auto-maintenance at several sites.
-
-This last paragraph though...
-
-> Run it once when the sequence is done, like the apply backend does.
-> 
-> The sequencer has no single place where every sequence ends: a
-> sequence of several commits ends in pick_commits(), a single pick
-> returns as soon as its commit is made, and "--continue" and "--skip"
-> have entry points of their own. Run it from the two builtins that
-> start or continue a sequence instead: run_specific_rebase() once the
-> sequencer has returned and removed its state directory, and
-> run_sequencer() after a successful pick, "--continue" or "--skip".
-
-... is still kind of dubious. As far as I can see, almost everything
-does end up in `pick_commits()` eventually:
-
-  - git-revert(1) does via `run_sequencer()`, which calls
-    `sequencer_pick_revisions()`, and that calls `pick_commits()`.
-
-  - git-cherry-pick(1) does via the same call chain.
-
-  - git-rebase(1) does so via `do_interactive_rebase()`, which calls
-    `complete_action()`, and that function calls `pick_commits()`. Or
-    alternatively via `sequencer_continue()`, which again calls it.
-
-  - Skipping commits via "--skip" eventually ends up in
-    `sequencer_continue()`, and that calls `pick_commits()`.
-
-The only exception that I could spot is when we abort the sequencer. But
-I'd rather have us call auto-maintenance when `pick_commits()` is done
-and when we abort rather than having every user of the sequencer do it
-manually.
-
-Or am I missing something here?
+The changes themselves look good to me.
 
 Patrick
