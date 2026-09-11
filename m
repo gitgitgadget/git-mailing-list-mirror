@@ -1,366 +1,170 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D2D48988A
-	for <git@vger.kernel.org>; Fri, 11 Sep 2026 13:27:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ED0353A70
+	for <git@vger.kernel.org>; Fri, 11 Sep 2026 13:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789133277; cv=none; b=OfrNWqF5BOPPfIKNetRXgcsplxsNkud2sWymRTSOhAFij0UKG6m+SARQPdBgLo+yQkaDkln4CEzJBBxi9GyyL78oCacyL4+o+/jV/IJGeMIWtkEnkh1lMZuHnk6Lrbtk1r3cSGfFtKu2XpzXkreNE7f3c9O5bWsO2nuptnBb+Yw=
+	t=1789134865; cv=none; b=kxNYUzgPx/QQ6NTPprmtLgrLYwDvpjFoce2llRbOq6CGh96+okEVQk3IE2JBqhiVqpMNws+7u3awldAXCrM9zVh02Xof/1HKI23cRkUFSsuNYtesWwVaOdIdUgSBIApBUtEOMh6lJ0vHEqrvj09tDoW77DcsTi6t7p5Z432ZuAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789133277; c=relaxed/simple;
-	bh=Eze/73n6Y/jyit5wu9rYpAF46zE91CCkTCFeCR50Akw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AwZzBGU/kjKNSKxp5aMX19kz78hoCn5igWvmgHo3l7NyAdZOKkHnT3XTyWfd8nscyuE+nnl1+Vc3EBWrH2rvzIkB5RRkOxgL4Vj8XYsG81KBFgwljgbmRzVTPA8tGUacv/18NItTGBGGd01AD9DC3IuBfrVFKLD+uQN0wZrKFco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=o18keFtu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fCrUY5b7; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1789134865; c=relaxed/simple;
+	bh=TCzsxfp5h7/s8UQJWSDwXAKo+KSK/ktfwuuB1DKY1pI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X4775fxH694NRVRzQ/d7dXXEns+YKtlrTiblgITNWMc2bpqUZewmIo7OgvLma6RNPGVr2J7VuqVek/0ZzU+XGXR5V4Lgp0EFPsUTs/YftJoSIohUeSm27mciRyjIiqzEdgGHVkpDUjIQvyyrIFw3kE3u6HFTwazeRmhatKwQRlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=Cq+K1Kpd; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o18keFtu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fCrUY5b7"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EFE531400105;
-	Fri, 11 Sep 2026 09:27:54 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 11 Sep 2026 09:27:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1789133274;
-	 x=1789219674; bh=H0YYS/01w2KKQLYxA+Vu6na2t2PYkaqB+TNqgLkwc98=; b=
-	o18keFtuj0akiJOCzLbpv8j16RpO2Ks3ERjuTqbiBPLJIFJhidwxMcOq4SaQXuy0
-	adUaUc9V6eul5b2VnWoVEtQUvAGWAbhbgVaUxnbpW5hMdsLITgrcH4G7PzhQniLp
-	YSOWhMQqJfv8N7H2gdvF60CvERFKLHC0LTQzHq1LnCOCE82L86v2CYPRWE+18+OZ
-	aSQAx/12ayP7TUbv1lePgYB16quk2G950VD+TWoFreyg8tTf2oaajtXJfS6lU3hE
-	YcK6rtegNw/eVzi7RF/Ary/xL+H6KAw92LfokQpydl0spWe1CmEWOpDBM2vxGoBL
-	5zDsW0RHT0ol4fhwg73s3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789133274; x=
-	1789219674; bh=H0YYS/01w2KKQLYxA+Vu6na2t2PYkaqB+TNqgLkwc98=; b=f
-	CrUY5b7UgWJeMPkTx6u3r85z4zjWMZDMitudXdSURMQ10WVz3oryToLBONqkKTrv
-	T4e+CYOBPPdwv7pyVZznKVPFnW1lGblMPZLTdG9wPmZpzi+1wyAqJwnbHvDZIt9S
-	x7X60Fvsv9rO6+mzapf72XwlgSJYfydaWMbIfYRSGhcE7Ln7TKSga9MNwk11MzIG
-	z1VdRGduK2iOJr8Ht3SMD2PKrolrepxAQQ19+jdwnz0EkoZqxxeAx1nWEak4KyHW
-	3kbMZtfv7mR4tiJqyr6tkDuj9CFNFAM7xwNAShs/mxCvqZOj9vnsgmOfnrQpIPTB
-	O5c60l4FHDNq7qgW/W8Zw==
-X-ME-Sender: <xms:2gGkah6nRuR6AJUQLRObUIgDGk5bTvRviJSdaPM4viHqhF5r6szkXA>
-    <xme:2gGkamUTtHHLEo_Gm2lrLPcwadJ0TwxRS_lToxmlp82KeJFbkYWqxTJ-WzwLUHpS6
-    vdkdVj92o_NLsHdUet5sL18wpOto2G9IBww9yNjeVn8iUNSOM-SLw>
-X-ME-Received: <xmr:2gGkal0Is95vDIBcPHKArO-FXiiy83q359Xhei9gA69lb8GMOlTQrRLpGJiuq7RalQQV7A>
-X-ME-Proxy-Cause: dmFkZTECg8xxBicj1DZS8ANPYnoLkr6WmqZgUjMjlEg+sGzWjqLplREE0ffvvHBmWPAecg
-    q+c7PBkoqu7i3P61nG0ccczl9tex8wqN0uqAIqkscV+NqvEU3KnvXs7k+hFS/VwVVQQ43c
-    A5FpjBpUNGQKkA3B3tIA+qB36AOfSLZGPRcOW25ujcTxgOzqUBQduBQyZOZe5kUxdKiaJp
-    l/OBoFl3wHXALaR6wymfPNH4IY2Krzm00t/d2XCLL8Dy/KaES604yZutrFoJEyqnQ1FLf9
-    Fn5HVsaR+LB9rj6EHr0E8SreONR8SbYOhAQ3KEI0o4NHBdJmhZ3EPoIyEYihr4bhpRbSN9
-    qVWAb2cbDzcPXmGQMOD9YitQzkXYAvF6dgxJeLVVk539uOd/WDz1fYrwzIP17RLc6eLw4v
-    VZ/u5YqKrwwB+6GDC6JEILBW1OFJXWXqs3DuLugAgb5teGN2swwSl3+USnvP/wyaZcAUsA
-    iYjcew04iGjLsPv2oKTHjqorcwa1ej8rw7qdgd8HtQNNZ2IZHjNydLHVEvlXJCTYMyPTI2
-    MW1FrZlP2cwfSeML9PLvAo5LIk6lVeDMbCWcKo+x5gcepPsQDozeSrIf/uhGGVJFSb76yM
-    DVkUdCpdaqyNWqOyjxjJVk8aMFprZKMRqDZC71olQV5f8GAtfm7sKiT+iNHA
-X-ME-Proxy: <xmx:2gGkaj2hRPBV_e16Z9Wv8oTZluXi0VOuWouKxtgdAuYF1LTKIv7V8Q>
-    <xmx:2gGkao_wsuqNdvVZOrL9v0anV2JLKsFP5U-lmEdetzjDkzqxp-tVJA>
-    <xmx:2gGkag1otoJxk40eN3Z4XE5g1eTPk0uRRwWAUm_aN5S1HR3j4kRq8Q>
-    <xmx:2gGkal8F9Sim_CLAWT2uvvxuPv9MUysvdTiTe8bJv1yXNOjR3ANb-w>
-    <xmx:2gGkaiez5U1OUYauGSrYId4R2UCbfXeJobxAYechQbP6Z3yo628wpiei>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Sep 2026 09:27:54 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e7e418f8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 11 Sep 2026 13:27:53 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 11 Sep 2026 15:27:34 +0200
-Subject: [PATCH v3 10/10] builtin/fsck: move loose object verification into
- the loose source
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="Cq+K1Kpd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1789134852; x=1789739652;
+	i=oswald.buddenhagen@gmx.de;
+	bh=TCzsxfp5h7/s8UQJWSDwXAKo+KSK/ktfwuuB1DKY1pI=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Cq+K1Kpd9NKJJDzf0VCCP9lVkH7qHFUZOemKj0c6rvpPOlL3RMD62KdG6YxQfrHi
+	 sEfiXSjVt4++olasz3EH/vy2Vi6hU3jdkC/ebmiCClpNxTsvrubrbK2AnATiwyqn/
+	 pEU60HKjoalN+FqD2zbfQ2lnIP3D2YOCkJyxSbmd/skdHRmCuQTo6tRJb8F4oWScj
+	 vygWU4xvcj//EwsLCzggIn7znghDfbuINYwcRrsVbKdt4ddZcFVhvhDClL66Ug6MR
+	 UMmjrNvD6U+Fv8MNk5ftJegalI4ec0YfWWOf1nfJadoYxhxzPtPOBn7lpumY6gK0s
+	 sMxCMI9SSHmgbuCLBw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M4JmT-1x5Iov1PRR-00BFxS; Fri, 11
+ Sep 2026 15:54:12 +0200
+Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
+	id 1x51hj-DyS-00; Fri, 11 Sep 2026 15:54:11 +0200
+Date: Fri, 11 Sep 2026 15:54:11 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, jltobler@gmail.com,
+	kristofferhaugsbakk@fastmail.com,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v9 4/4] hook: introduce the receive-report hook
+Message-ID: <aqQIA37pZL0TZaDR@ugly.lan>
+References: <20260909-758-introduce-hook-v9-0-3043d417e0ee@gmail.com>
+ <20260909-758-introduce-hook-v9-4-3043d417e0ee@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260911-pks-odb-source-fsck-v3-10-ef2fdc085e38@pks.im>
-References: <20260911-pks-odb-source-fsck-v3-0-ef2fdc085e38@pks.im>
-In-Reply-To: <20260911-pks-odb-source-fsck-v3-0-ef2fdc085e38@pks.im>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Toon Claes <toon@iotcl.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260909-758-introduce-hook-v9-4-3043d417e0ee@gmail.com>
+X-Provags-ID: V03:K1:5Z2Xm+7tSls9dy84/Hz5EsK+qqMb+sCPpUzrOiym+EnL699xKvf
+ Rnljlvlvs4qMinP5BjeuSgazHOOgH2id0TYMn972Kixhz64OCsU31yirXsvYMrvusOWTMIR
+ rPviafGCMAWnQOCtzolonvV5B/viLrxEhSiK4AxrjQLSH+heq+dRixmURW83ITCz42MSFHQ
+ b0YPISTSxSf2b5B0eemQQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:74nOTgxLmE0=;Ew2rAe35d3AvLBm/90vQCJk6yAO
+ aSrkGUPOjeaV54dS1tOzsymanoEeI39FyLYHrVulTXVflhKIxBSwUGxrQnfAVbyjrNfedwYlA
+ BWQG/5SJ4HjzoUWcRyEDp3hGCLSq8Tse73eYrgn+tRu9z85bBP1Llq+t+KuJk5vh9jctho3hZ
+ j+QCiIX3KCtKcoTWf+eH+nSOC+ptLHOeGF2sXWUaBvhtV9j1xdMFSLvH+iWyNSFtNTRK0ugoC
+ Qh8LDDTOxAOPigF6KepNRAFx/nUatAMx7jaIgPCi1Uhvumc+b942Qe5sjBtUvn5irimqZlBpA
+ bmksG4LaXx/mzPsyoR+jmv0J16tk1NMHLLErF1GjthZIy6BpjqXN+iTLqBqF/CmX2MQP1M+c4
+ xheNnYbzWtv4rhvrhbWrKb3Irup6lsWDTM0+nKQPunkwbn9rOqJgpGGT5Fdzud6mRH7x9U8AZ
+ w1FjTjMIg5SRzYY/+zpmOkjfO6+qxu03VIiqrVxlsW1lXzZi13ioVDYBnxhXTNCgnUvDNhQxV
+ bBYlXHPK3dQuh+zRXDVPBlpu5/H99YBabOg6w1KldUYBmCpuiV4soBtVIZdMMjVTR31KKTdUi
+ r6KzPy6xAhGNWatzBw1yRUkP+uePVmat9p33UAiOQhm5pi2GxPaYJnZmKSZBy43DZ9HG78twt
+ YeF4tw18NJ8iPI9gFY8Av74kQ/3JdCqxXP/8VJO2y6TATML9DqRHFOXVvpaZJVUwyWffkDMsf
+ Ab0RiX5ZXWhn99X/xj1iIoQjEiwo3i6igGJw8i+KKiNdA/KBeBL/LM/GmXA+6DbAlBim43B96
+ qs5G1wdNIs0yFIT4XC29kZ1E3D05ILQBdSJsx7WqWDZ7VmkP7NEWtv9XWW5GwQZ168cT92IBY
+ TrYTvys9G3KqT2Tipd0zqoEbGHNaFQoNn+mXZ/JLuV+g7LA0CXLWUOoGe0sDPwQlVz0CzcMu1
+ bK1H1jqb0cRrQlXCjfnyRiBiE4TjhTvQkYSrkcfq+n42191BVElTRsCam7kPLyvSRGR6eP5QP
+ YHhAM+MeTpcfGJGcwftnah1AxOCH9bqOlRD29XTAPuwJin7UlAG9vKjZk7+rkc3hAiEAxp1ZD
+ zxmN9PXcyvGujfCu1HA4T0QUqRkSdw2hLjWuYs3cWiQ0MR6IzhfI0entj/+P9/+YLW3LLDRVS
+ rk1V895szQMUMPWMIjgSwF+0z4H1Og5yqKTjd7O52hArOAcDPkZlOfTzcujVriPDBF3DFi4L1
+ sfBlDiASnSACr1HS1YUSrVK+5Q8RfqRVXIBZt4UmuoRWfLtHktGDH6SzMZAu7wzqgylRaQGTX
+ fXYS2SFLUifMNg+OghTWNLfhM+hgku5jkFHIgZzfvp0CKnHHsE0KaLj0sQMMkPP/1XqjqtORf
+ l3SobZL6+Q+t41g4txmdzah+EWol4fwvmefTMnPB1fd9zXjmqOiH1HTmJxodJCU4nmiFRvH7e
+ QoQPyZdjKlXZdqKOSnq7rGaHuPgGQvYUZnBcT10srziouwQWPzr4dh/6D8ck5fJhhyw5F8Iua
+ amvqXs1kp9KlqiKHs6m4NNl6Slhw0Mwe53UWKpZdxXwMoCPKZEka/20Snagh3S4srC4jkYtm+
+ zNB30xS73/h5/wxLh1tM2iKC8t3OGU1E2WKnMW4MXnNtFW29v8GxqsnRujD3Pbi7yxsLOjrOo
+ vGMxoyhe3WZEkXQCc+2bg9kwK35wRf5Zp1CyZVVg53uV2Kb1y4+t4jtcDTXp3W/KJRqEN0Azn
+ l+TS5sHlfCRMFTrenArEb9Ql/pfNSp/SaerF8veFDJvXMtUbOqGQKDB4vyYTc444S04J8wqPZ
+ xL0FqCKI8DRcYHDjGO1XgSlCcX6itWkRLiNm4BW0UBLEr+SnVTUlFAtJEs3LjSYuf+OhMA9Xa
+ FbCsT66LLdt3xgq/AWJ5RtGw2BYeqDfH5SgObE6ZmKkfbdRWRaTFdhxS7XuC4D+EYGZQwNJZ3
+ oMaiTvmt7JPpJpmX6bAWFO8NF5Wg8DicGpE13nUirA3jpZat+5+34n7CfJFCpw84rUYycrhC1
+ jwj+/zAVNPqgANS18CMLTgRuiK4lLqqwExOmwmKLo1HoxrRGZr8xPP43neF6oS7dOtpVaS7n5
+ mbE6rM51euJDUz320liUz//pRH21Ug0wyMfVWF+6LH/pR/HF0TkKp309Uu4A2tbogE1XDq1yF
+ 2q+nY3Ep2a/CDPmxJBFE7hIVSers1smqvYzlOW7vsJ274nmWmABF3KogGlXgtZzW+2YvNkvQR
+ 8c7IeLbhT2Ex5PMJKVMRfbGGUpOIxPnue26ndPI+hYAzLr4cNJwHWlaA0RfhW4BuhrE3Od8DA
+ jECjzN74YEvN1x2SAWzHxRt4R9sbKZRLl36suK/tHQr3/YJa0E5J1u2rKGXicH9nxUTpMWky/
+ WezLL6yjw8e7XkympiRXLECTWq+V8rLWPkJOZ14btGO8TrJN9Os7eVKVf7JNL93CUd/73kpIw
+ AVe5+BWINfhDKddKJyxAM178UCzYHOdPWht4jP+1ur4CFn67jhggtMjVRHMfLyMxJfULrYINC
+ SClpuqA3zEN9tE4G/vDYh06PHb1ubkVz23N6dTBUlB041hkIxWzBv8yYvIikQYVSTE+2R8GOu
+ MoStzcxZ1iF0L7PneJ7rH7nbzIkXRPmh3/MOBNttagRMzOXJ4z95ySaZJubmWC9Rm0oaHUnLD
+ o2rjvCZ3pqXYH2iodDiGurB81GK80iteGlcxD+PFciVRe8WcDBa/3I7vr0kaN66xUn0CtB8fa
+ 0rTw1HHXRpWmjtuDpGNGht9FMs8aedJ7w/07ue/jIQX2/aseFXtphQgepal5UZJOI2Oiezcq3
+ hQj/XUxipbY2GI5Ziy3xq0sAUAlJZrnXAQ6CVzVCB7qnSE+DS3HvE1kpMxXeQQ4/5XKYoQ6yL
+ coPtORcwR++u0G5J/RMsLrSMghi6mlgvdGPo/9TCQH1NCvC5OHSox1B0uN7ngJdT8O7UrEVcc
+ 5W9KWfwnYOGFyriSHVEMW0JtQNYliqSZyZKUtfQ7cQ8rzciBMnXXIbXwsVf6LRgt7U6QsSRhR
+ UHqhtOy8LC3epPnvUIqB3MW4o+GaiN26QQH/Z0ebYoMwfenrhQMGm9xHHxfmARIMfh0mpFTEc
+ uAalqDXoNAzG9+11LwA6vK0bJruxbf7Ni6iwI37wXb5T6/VHkirYijyOsjDbpZnvH//8Ppx9O
+ rbG/AlQafo36ac2omknSb8EsXRe0u3gsjT5X0ZRohZmnIMF7DTm8PHwpAfZ76/9c8HPUKC0Ju
+ OFTHBkUYkIusGnmgV+H4/dDchs0SL1xtHSU8rOMD+1quBHALmaHdMk4tsXwr4KEXYPDacyIhB
+ eK2EFuDmEAseNwlbPfKxtVimzK23QepCmtKeCehXXZ9xXe100FZ9jrG6dzo6ZRQ1Up1aUitaD
+ Pdv+ucfGnk8GnBp/8OosCOn1treQsYcxcWUtjCo/0yLYUkqykYOLr9ot61rV77QdGE7abodcH
+ esJH6haul3vwBMddk44YyCEazUkF0NXPObQfWzT5ggPBxz14xBUkvkI0HYepAogF0lwCDIfSe
+ 4YVe0NuLoR5ylXMPFUqFmAjteKX90pi5KvivrTBwEoVbNTFRxtK6mcMSG4jIVDf3JhF8/18JQ
+ YHa0k40RQw8NelGF62no5hBGMz/xVvHrcPA5Q0mN4+Pis3DB9m0WZTgDondcRFD3GgI0dUiXm
+ X3e3OItSomf9GyP96moN5o6mpOa22+rimzWfISTnc97xBvmQyPyarw4RaxKRIpIQb/mTs77yN
+ S2Q3rUywJdFJPxFpObHz4rmk8yirpAjFS2Z7Oo5/4//Tzx8i1BHvxld6+BihB8h1ysC0jQJhb
+ nESVpCrdgpVvyKKL0ro3LTJMVH4nhajTbccCux4deAxVBMAhO8pmuFCbFH0tikzsRkX+By7eJ
+ zv6uDE8AUYXh8Krj5jZepl+HUPLvBU842U6ReSICG7VEypCHCop3v/79fXNVsysyEijyyetk3
+ ZBBPWlAg3FcC+AYxLCCT+fbLKTmy8hbdqA9lgw/8De93JPNgf4CQDcg0ALDZiUgD2Vb/pP6/+
+ bAmwqfYQP7WXPfwryocBAQEsO+TojDywtgQ4aTOX2OeVZIxriOBoWw++oG1dt1ZIG/HH1vEV7
+ RA5cnCtfNMw3rx2to3VPFOAFpqNyE7GsKTbM5pDY9NNhU9U4qn4xT4tPTesu/C0orQJo11qrK
+ eOnM0y2S2cN4qP+0l5I3x8MzMpAkCW1zISUSQZ/E/8z3myVlFRO/6tmlwudOeLLX8I4nSZS3u
+ 2SGgGZaEKbrDn+JU3ZFBCBA2j6e5jLHhy3sJK8MW/foffQjVLFXaAIkttxV4j+v6uqO9Q4m/0
+ NMbOAvUHVeUR2BxvubIk2n54gQ9qlf3GJxs4igVvd8FWjl0UKnxC7IAg89FZTksf+6wupCv+f
+ JLQccdPdu7QIiRR5LPhXVaAZVhjJ/ryGAnLJcsWEXmR6EhQbZMAtc031OSxWL7GoSCB8VHXlH
+ CpzGKcyudj0Xe7sxsHivCV4Rh5vEEhxMy6c1a3ifnDG7xBekuWIDFH+nuN0OAHuLUE7LqsxHZ
+ ji4hF/HdKilaJUCR3uRBCVJsa/eQEiiKRvBgJ0P8/pt/wdfrEZdOxofVpObX17XuXCC91+2HC
+ WTRA+zRsWMiMuDtXQwZRZvn/y44KDba/r83BA4y5AlsUSBoWY2KA0W0SU4EUqbLxwECmG0+w2
+ oTGkrOWySflcMkq6U9JsehOMmJCozaimR8NHvVTXbWxJ2EAKsg70fHet/Y82TwiGHuT6b3czr
+ YOuj+XPd5YJejQPzGJFU+Q8n6HDv/S5HQzPiT3eebKN5XUPjqRA/W9El45ho3Ir6mEeOgOvOc
+ +ZkYmSteoBn0U4h96tuwKTntXu0iDy+EFwuLDPFLqXzNNMk3+/L6hlTLXy+lfjNYFiooEG6er
+ xSE0XEqWLvmbqCuDw9YyHbcdpFMXGcdPRc/T+2SWfc5yf5BGa6IIc7wo13ZRWkwz1EuWZSOaX
+ kwu+XK41jWKAHf9KxGHzJzGjawyE2nWVJZ4Gf+yDpdy1lRGt0qQDAwzFXZqgjzlZsdB1Or21K
+ 0CE24lJ4yqd8CRdzoKFkBLgBth6E4ovoqxnEuDVxZIJpNMiaI7//VjD3O3WlI83bgSYGC2n56
+ ZCnRJqlxZn6Qqte7XC2vW05HSn9bdG7zF0ZJUmnP2P+AilOXzUYYwQzqLc8cs1rfoU/mg6NpD
+ zXIl0A8A8qkCbhhAdG0orTuTnR1PCEoqSU7E8jG3V0fmhuGeap0gcnruq+BAmcA/xTVc6aQgY
+ KnSKcDSBQKDMJcyuQp+/32HNxqGpSSW/kxCxwNydD/fII3bfj+0otivowsQ5MZs9kHsIos23d
+ KcuQolTIhdNV6N/M81ErXrsmJaU2vd83kNtq46TJh1R5gBgLh199DKCyAKtqwi5JBIrZMNry3
+ shP55dTx10KiuTylYLjdOCQC544XTS01rGt5XolMV3GSU66ItvKmu+x+ahhdFU88NKsgnjIww
+ a8TK7hsCH3TxCG1ROkPpnuL3761toU4iHhFkQmxGMB6ibj2PfflN+troUJhFdXLyGg7/EnOdN
+ lmDHTbmKqNVPc1TUAn4KCGMozW0VSJqNoJE0kXjyBCHquuCxfYDVwQvXW5bpwYlZKzEiSMoIf
+ kcq83ZfH8iTVx18nv+HMDJWReN1lCGTuX64WnPfeaGSriRnUZa/GZeSvV+SXnzk5nqihHsNY4
+ fXmNegP2Pgxh0gUcm/oWx3onja8RbmUbxYUFh0LIlYHgMRob+vgPAb5WlFVm9FZtCOFjdNMZ3
+ 7CUlcVn04bSWbc1tOzKw1QLH1XKKSBAxiNsl3ZL6cymXE6NB2hvMX++hi57g5Ekzspvbxxjsv
+ 4DPNOhr41chtcvR4MScjzPuaVNTPUwgptWw8emlZ+UMsPGD6HQl8IClSOJjfoGFqRpwQlzSET
+ PuQ5VykNfO8O8tRs+Z26qvFS0IxQzJsGiXVYA3aRAocF5gU6+dTRtniO884PEOFgWnXNcIMBC
+ Dn141ImOW9UyPXPRkwJEouNz460QRpJYZt/Ts6vndH0Mvh8N8DE1Idg96ypqCjM1kRH4Sk9WX
+ 6HsKA7BkUEKsVq5N8wdnzesK+FB9tOF4KjrKOrt4l2iZxtK4jkTiWFk+UMV8cc+lx1BBUm6DE
+ ZwbuapeewI99/FiaTSzaHC1LtOE+xdRATxKPZiP3f89t4vmK5B9lbdoqolwhJA==
+Content-Transfer-Encoding: quoted-printable
 
-The consistency checks for loose objects are hosted by "builtin/fsck.c".
-These checks are obviously specific to the "loose" backend.
+On Wed, Sep 09, 2026 at 04:51:39PM +0200, Karthik Nayak wrote:
+>[...]
+>Introduce a new 'receive-report' hook. The hook receives the complete
+>pkt-line encoded status report on standard input, after all ref updates
+>have been applied to the repository by execute_commands() but before the
+>report is sent to the client. See linkgit:gitprotocol-pack[5] details on
+>the protocol structure.
 
-Move the logic into `odb_source_loose_fsck()`. Introduce a new "verbose"
-flag so that we can properly retain semantics around whether or not we
-want to print some status messages.
+i suppose it's a matter of taste/policy, but around this point i find=20
+the commit message's verbosity to be counter-productive:
 
-Note that this fixes a bug as a side effect: the progress meter was
-captured in the callback data before `start_progress()` was even called,
-so the per-subdirectory progress updates always operated on a NULL
-pointer and the meter jumped straight from 0 to 256 upon completion. The
-new code only sets up the callback data's progress meter after it has
-been created, so the progress display now advances incrementally again.
+>The hook's stdout fully replaces the report sent to the client.
+>[...]
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/fsck.c     | 91 ++----------------------------------------------------
- odb.h              |  3 ++
- odb/source-loose.c | 89 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- 3 files changed, 93 insertions(+), 90 deletions(-)
-
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 7eaea340b0..4af1d874cc 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -12,7 +12,6 @@
- #include "parse-options.h"
- #include "progress.h"
- #include "packfile.h"
--#include "object-file.h"
- #include "object-name.h"
- #include "odb.h"
- #include "odb/streaming.h"
-@@ -695,88 +694,6 @@ static void process_refs(struct repository *repo, struct snapshot *snap)
- 	}
- }
- 
--struct for_each_loose_cb {
--	struct repository *repo;
--	struct progress *progress;
--};
--
--static int fsck_loose(const struct object_id *oid, const char *path,
--		      void *cb_data)
--{
--	struct for_each_loose_cb *data = cb_data;
--	enum object_type type = OBJ_NONE;
--	size_t size;
--	void *contents = NULL;
--	int eaten;
--	struct object_info oi = OBJECT_INFO_INIT;
--	struct object_id real_oid = *null_oid(data->repo->hash_algo);
--	int err = 0;
--
--	oi.sizep = &size;
--	oi.typep = &type;
--
--	if (read_loose_object(data->repo, path, oid, &real_oid, &contents, &oi) < 0) {
--		if (contents && !oideq(&real_oid, oid))
--			err = error(_("%s: hash-path mismatch, found at: %s"),
--				    oid_to_hex(&real_oid), path);
--		else
--			err = error(_("%s: object corrupt or missing: %s"),
--				    oid_to_hex(oid), path);
--	}
--	if (err < 0) {
--		errors_found |= ERROR_OBJECT;
--		free(contents);
--		return 0; /* keep checking other objects */
--	}
--
--	if (!contents && type != OBJ_BLOB)
--		BUG("read_loose_object streamed a non-blob");
--
--	if (fsck_obj_buffer(oid, type, size, contents, &eaten, data->repo))
--		errors_found |= ERROR_OBJECT;
--
--	if (!eaten)
--		free(contents);
--	return 0; /* keep checking other objects, even if we saw an error */
--}
--
--static int fsck_cruft(const char *basename, const char *path,
--		      void *data UNUSED)
--{
--	if (!starts_with(basename, "tmp_obj_"))
--		fprintf_ln(stderr, _("bad sha1 file: %s"), path);
--	return 0;
--}
--
--static int fsck_subdir(unsigned int nr, const char *path UNUSED, void *data)
--{
--	struct for_each_loose_cb *cb_data = data;
--	struct progress *progress = cb_data->progress;
--	display_progress(progress, nr + 1);
--	return 0;
--}
--
--static void fsck_source(struct repository *repo, struct odb_source *source)
--{
--	struct progress *progress = NULL;
--	struct for_each_loose_cb cb_data = {
--		.repo = source->odb->repo,
--		.progress = progress,
--	};
--
--	if (verbose)
--		fprintf_ln(stderr, _("Checking object directory"));
--
--	if (show_progress)
--		progress = start_progress(repo,
--					  _("Checking object directories"), 256);
--
--	for_each_loose_file_in_source(source, fsck_loose,
--				      fsck_cruft, fsck_subdir, &cb_data);
--	display_progress(progress, 256);
--	stop_progress(&progress);
--}
--
- static int fsck_cache_tree(struct repository *repo, struct cache_tree *it, const char *index_path)
- {
- 	int i;
-@@ -978,8 +895,10 @@ int cmd_fsck(int argc,
- 
- 	if (show_progress == -1)
- 		show_progress = isatty(2);
--	if (verbose)
-+	if (verbose) {
- 		show_progress = 0;
-+		odb_fsck_opts.flags |= ODB_FSCK_VERBOSE;
-+	}
- 	if (show_progress)
- 		odb_fsck_opts.flags |= ODB_FSCK_PROGRESS;
- 
-@@ -1012,10 +931,6 @@ int cmd_fsck(int argc,
- 		odb_for_each_object(repo->objects, NULL,
- 				    mark_object_for_connectivity, repo, 0);
- 	} else {
--		for (source = repo->objects->sources; source; source = source->next)
--			if ((odb_fsck_opts.flags & ODB_FSCK_FULL) || source->local)
--				fsck_source(repo, source);
--
- 		if (odb_fsck(repo->objects, &odb_fsck_opts) < 0)
- 			errors_found |= ERROR_OBJECT;
- 
-diff --git a/odb.h b/odb.h
-index 0bf6c8d7d2..b87f281cbd 100644
---- a/odb.h
-+++ b/odb.h
-@@ -218,6 +218,9 @@ enum odb_fsck_flags {
- 
- 	/* Display a progress meter, if sensible. */
- 	ODB_FSCK_PROGRESS = (1 << 1),
-+
-+	/* Be extra verbose when checking the database. */
-+	ODB_FSCK_VERBOSE = (1 << 2),
- };
- 
- /* Options that shall be passed to `odb_fsck()`. */
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index f68d3c4d6c..efef9ca61f 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -12,6 +12,7 @@
- #include "odb/streaming.h"
- #include "oidtree.h"
- #include "path.h"
-+#include "progress.h"
- #include "repository.h"
- #include "strbuf.h"
- #include "tempfile.h"
-@@ -1031,12 +1032,96 @@ static void odb_source_loose_free(struct odb_source *source)
- 	free(loose);
- }
- 
--static int odb_source_loose_fsck(struct odb_source *source UNUSED,
--				 struct odb_fsck_options *opts UNUSED)
-+struct fsck_loose_data {
-+	struct odb_source_loose *source;
-+	struct odb_fsck_options *opts;
-+	struct progress *progress;
-+	bool error_found;
-+};
-+
-+static int fsck_loose(const struct object_id *oid, const char *path,
-+		      void *cb_data)
- {
-+	struct fsck_loose_data *data = cb_data;
-+	enum object_type type = OBJ_NONE;
-+	size_t size;
-+	void *contents = NULL;
-+	int eaten = 0;
-+	struct object_info oi = OBJECT_INFO_INIT;
-+	struct object_id real_oid = *null_oid(data->source->base.odb->repo->hash_algo);
-+	int err = 0;
-+
-+	oi.sizep = &size;
-+	oi.typep = &type;
-+
-+	if (read_loose_object(data->source->base.odb->repo,
-+			      path, oid, &real_oid, &contents, &oi) < 0) {
-+		if (contents && !oideq(&real_oid, oid))
-+			err = error(_("%s: hash-path mismatch, found at: %s"),
-+				    oid_to_hex(&real_oid), path);
-+		else
-+			err = error(_("%s: object corrupt or missing: %s"),
-+				    oid_to_hex(oid), path);
-+	}
-+	if (err < 0)
-+		goto out;
-+
-+	if (!contents && type != OBJ_BLOB)
-+		BUG("read_loose_object streamed a non-blob");
-+
-+	if (data->opts->object_cb(oid, type, size, contents, &eaten,
-+				  data->opts->object_payload)) {
-+		err = -1;
-+		goto out;
-+	}
-+
-+out:
-+	if (err)
-+		data->error_found = true;
-+	if (!eaten)
-+		free(contents);
-+	return 0; /* keep checking other objects, even if we saw an error */
-+}
-+
-+static int fsck_cruft(const char *basename, const char *path,
-+		      void *data UNUSED)
-+{
-+	if (!starts_with(basename, "tmp_obj_"))
-+		fprintf_ln(stderr, _("bad sha1 file: %s"), path);
-+	return 0;
-+}
-+
-+static int fsck_subdir(unsigned int nr, const char *path UNUSED, void *cb_data)
-+{
-+	struct fsck_loose_data *data = cb_data;
-+	display_progress(data->progress, nr + 1);
- 	return 0;
- }
- 
-+static int odb_source_loose_fsck(struct odb_source *source,
-+				 struct odb_fsck_options *opts)
-+{
-+	struct odb_source_loose *loose = odb_source_loose_downcast(source);
-+	struct fsck_loose_data data = {
-+		.source = loose,
-+		.opts = opts,
-+	};
-+
-+	if (opts->flags & ODB_FSCK_VERBOSE)
-+		fprintf_ln(stderr, _("Checking object directory"));
-+
-+	if (opts->flags & ODB_FSCK_PROGRESS)
-+		data.progress = start_progress(source->odb->repo,
-+					       _("Checking object directories"), 256);
-+
-+	for_each_loose_file_in_source(source, fsck_loose,
-+				      fsck_cruft, fsck_subdir, &data);
-+	display_progress(data.progress, 256);
-+	stop_progress(&data.progress);
-+
-+	return data.error_found ? -1 : 0;
-+}
-+
- struct odb_source_loose *odb_source_loose_new(struct object_database *odb,
- 					      const char *path,
- 					      bool local)
-
--- 
-2.55.0.1074.ge7621b4bad.dirty
+i would cut it down to the parts that aren't redundant with the "proper"=
+=20
+documentation in the diff, keeping in mind that the central question to=20
+be answered by the commit message is "why?".
 
